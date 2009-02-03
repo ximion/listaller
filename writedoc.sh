@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+cd ./docs/
+../tools-samples/pasdoc --write-uses-list --staronly --format latex ../listallgo.lpr ../lipa.lpr ../listallmngr.lpr  ../liupdate.lpr ../lipa.lpr ../liCreator/lipkgcreator.lpr ../liThemeHandler/litheme.lpr ../mainunit.pas ../distri.pas ../dgunit.pas ../ipkhandle.pas ../ipkbuild.pas ../synapse/httpsend.pas ../synapse/ftpsend.pas ../manager.pas ../pkgconvertdisp.pas ../mnupdate.pas ../utilities.pas ../RegExpr.pas ../settings.pas ../swcatalog.pas ../xtypefm.pas ../trstrings.pas ../uninstall.pas ../updexec.pas ../xtypefm.pas ../liCreator/editor.pas ../liCreator/prjwizard.pas ../liThemeHandler/thinstall.pas 

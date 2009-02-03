@@ -1,0 +1,272 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="7"/>
+    <General>
+      <Flags>
+        <LRSInOutputDirectory Value="False"/>
+      </Flags>
+      <MainUnit Value="0"/>
+      <TargetFileExt Value=""/>
+      <Title Value="lipa"/>
+      <UseAppBundle Value="False"/>
+      <ActiveEditorIndexAtStart Value="0"/>
+    </General>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <CurrentMajorRevNr Value="2"/>
+      <CurrentBuildNr Value="49"/>
+      <ProjectVersion Value="0.2.0.1"/>
+    </VersionInfo>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|ppw|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+        <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+      </local>
+    </RunParams>
+    <Units Count="11">
+      <Unit0>
+        <Filename Value="lipa.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="lipa"/>
+        <CursorPos X="116" Y="177"/>
+        <TopLine Value="151"/>
+        <EditorIndex Value="0"/>
+        <UsageCount Value="40"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="abzipper.pas"/>
+        <UnitName Value="AbZipper"/>
+        <CursorPos X="18" Y="170"/>
+        <TopLine Value="149"/>
+        <UsageCount Value="10"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="abbrowse.pas"/>
+        <UnitName Value="AbBrowse"/>
+        <CursorPos X="15" Y="260"/>
+        <TopLine Value="515"/>
+        <UsageCount Value="10"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/fcl-xml/src/xmlread.pp"/>
+        <UnitName Value="XMLRead"/>
+        <CursorPos X="11" Y="44"/>
+        <TopLine Value="87"/>
+        <UsageCount Value="12"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/fcl-base/src/inc/custapp.pp"/>
+        <UnitName Value="CustApp"/>
+        <CursorPos X="3" Y="135"/>
+        <TopLine Value="91"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="../../../../../usr/share/fpcsrc/rtl/objpas/sysutils/sysutilh.inc"/>
+        <CursorPos X="4" Y="64"/>
+        <TopLine Value="42"/>
+        <UsageCount Value="10"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="../../../../../usr/share/fpcsrc/rtl/inc/systemh.inc"/>
+        <CursorPos X="11" Y="780"/>
+        <TopLine Value="758"/>
+        <UsageCount Value="10"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="utilities.pas"/>
+        <UnitName Value="utilities"/>
+        <CursorPos X="43" Y="206"/>
+        <TopLine Value="183"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="15"/>
+        <Loaded Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="distri.pas"/>
+        <UnitName Value="distri"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="RegExpr.pas"/>
+        <UnitName Value="RegExpr"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="ipkbuild.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ipkbuild"/>
+        <CursorPos X="17" Y="416"/>
+        <TopLine Value="364"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit10>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="utilities.pas"/>
+        <Caret Line="92" Column="3" TopLine="59"/>
+      </Position1>
+      <Position2>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="44" Column="26" TopLine="28"/>
+      </Position2>
+      <Position3>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="145" Column="75" TopLine="122"/>
+      </Position3>
+      <Position4>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="224" Column="68" TopLine="201"/>
+      </Position4>
+      <Position5>
+        <Filename Value="utilities.pas"/>
+        <Caret Line="56" Column="85" TopLine="53"/>
+      </Position5>
+      <Position6>
+        <Filename Value="utilities.pas"/>
+        <Caret Line="201" Column="41" TopLine="178"/>
+      </Position6>
+      <Position7>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="236" Column="62" TopLine="214"/>
+      </Position7>
+      <Position8>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="246" Column="45" TopLine="223"/>
+      </Position8>
+      <Position9>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="248" Column="27" TopLine="225"/>
+      </Position9>
+      <Position10>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="251" Column="54" TopLine="228"/>
+      </Position10>
+      <Position11>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="157" Column="57" TopLine="130"/>
+      </Position11>
+      <Position12>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="154" Column="51" TopLine="131"/>
+      </Position12>
+      <Position13>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="259" Column="31" TopLine="235"/>
+      </Position13>
+      <Position14>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="151" Column="67" TopLine="116"/>
+      </Position14>
+      <Position15>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="116" Column="52" TopLine="93"/>
+      </Position15>
+      <Position16>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="149" Column="61" TopLine="126"/>
+      </Position16>
+      <Position17>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="154" Column="85" TopLine="114"/>
+      </Position17>
+      <Position18>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="149" Column="6" TopLine="126"/>
+      </Position18>
+      <Position19>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="137" Column="85" TopLine="129"/>
+      </Position19>
+      <Position20>
+        <Filename Value="distri.pas"/>
+        <Caret Line="161" Column="26" TopLine="140"/>
+      </Position20>
+      <Position21>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="58" Column="49" TopLine="32"/>
+      </Position21>
+      <Position22>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="533" Column="49" TopLine="510"/>
+      </Position22>
+      <Position23>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="582" Column="18" TopLine="543"/>
+      </Position23>
+      <Position24>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="63" Column="59" TopLine="28"/>
+      </Position24>
+      <Position25>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="547" Column="48" TopLine="543"/>
+      </Position25>
+      <Position26>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="126" Column="11" TopLine="76"/>
+      </Position26>
+      <Position27>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="552" Column="85" TopLine="528"/>
+      </Position27>
+      <Position28>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="548" Column="35" TopLine="525"/>
+      </Position28>
+      <Position29>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="549" Column="6" TopLine="532"/>
+      </Position29>
+      <Position30>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="127" Column="44" TopLine="91"/>
+      </Position30>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="8"/>
+    <Target>
+      <Filename Value="./bin/lipa"/>
+    </Target>
+    <SearchPaths>
+      <OtherUnitFiles Value="opbitmap/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/;$(LazarusDir)/packager/units/$(TargetCPU)-$(TargetOS)/"/>
+      <LCLWidgetType Value="gtk2"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <CStyleOperator Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <LinkSmart Value="True"/>
+    </Linking>
+    <Other>
+      <CompilerPath Value="$(CompPath)"/>
+      <ExecuteBefore>
+        <ScanForMakeMsgs Value="True"/>
+      </ExecuteBefore>
+      <CreateMakefileOnBuild Value="True"/>
+    </Other>
+  </CompilerOptions>
+</CONFIG>

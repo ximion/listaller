@@ -1,0 +1,895 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="7"/>
+    <General>
+      <Flags>
+        <LRSInOutputDirectory Value="False"/>
+      </Flags>
+      <MainUnit Value="0"/>
+      <TargetFileExt Value=""/>
+      <Title Value="Installer"/>
+      <UseAppBundle Value="False"/>
+      <Icon Value="0"/>
+      <ActiveEditorIndexAtStart Value="0"/>
+    </General>
+    <i18n>
+      <OutDir Value="bin/lang"/>
+    </i18n>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <CurrentMajorRevNr Value="2"/>
+      <CurrentBuildNr Value="326"/>
+      <ProjectVersion Value="0.1.16.1"/>
+      <Language Value="0809"/>
+      <CharSet Value="04B0"/>
+    </VersionInfo>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|ppw|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+        <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="3">
+      <Item1>
+        <PackageName Value="FCL"/>
+        <MinVersion Major="1" Valid="True"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="SynEdit"/>
+        <MinVersion Major="1" Valid="True"/>
+      </Item3>
+    </RequiredPackages>
+    <Units Count="94">
+      <Unit0>
+        <Filename Value="listallgo.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="listallgo"/>
+        <CursorPos X="60" Y="39"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="199"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="mainunit.pas"/>
+        <ComponentName Value="IWizFrm"/>
+        <IsPartOfProject Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="mainunit"/>
+        <CursorPos X="57" Y="1447"/>
+        <TopLine Value="1424"/>
+        <EditorIndex Value="0"/>
+        <UsageCount Value="199"/>
+        <Loaded Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="abcabext.pas"/>
+        <UnitName Value="AbCabExt"/>
+        <CursorPos X="30" Y="41"/>
+        <TopLine Value="32"/>
+        <UsageCount Value="7"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="abcbrows.pas"/>
+        <UnitName Value="AbCBrows"/>
+        <CursorPos X="10" Y="222"/>
+        <TopLine Value="212"/>
+        <UsageCount Value="7"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="abbrowse.pas"/>
+        <UnitName Value="AbBrowse"/>
+        <CursorPos X="6" Y="542"/>
+        <TopLine Value="480"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="abbase.pas"/>
+        <UnitName Value="AbBase"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="22"/>
+        <UsageCount Value="9"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="abutils.pas"/>
+        <UnitName Value="AbUtils"/>
+        <CursorPos X="23" Y="1400"/>
+        <TopLine Value="1377"/>
+        <UsageCount Value="11"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="../../../../../usr/share/lazarus/components/synedit/synedit.pp"/>
+        <UnitName Value="SynEdit"/>
+        <CursorPos X="54" Y="9"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="7"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="fparchive/abcabext.pas"/>
+        <UnitName Value="AbCabExt"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="17"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="abcabtyp.pas"/>
+        <UnitName Value="AbCabTyp"/>
+        <CursorPos X="52" Y="217"/>
+        <TopLine Value="207"/>
+        <UsageCount Value="7"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="tiCompress.pas"/>
+        <UnitName Value="tiCompress"/>
+        <CursorPos X="59" Y="35"/>
+        <TopLine Value="26"/>
+        <UsageCount Value="7"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="zipfile.pas"/>
+        <UnitName Value="ZipFile"/>
+        <CursorPos X="58" Y="35"/>
+        <TopLine Value="21"/>
+        <UsageCount Value="7"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="abzipkit.pas"/>
+        <UnitName Value="AbZipKit"/>
+        <CursorPos X="17" Y="51"/>
+        <TopLine Value="37"/>
+        <UsageCount Value="8"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="abunzper.pas"/>
+        <UnitName Value="AbUnzper"/>
+        <CursorPos X="15" Y="119"/>
+        <TopLine Value="96"/>
+        <UsageCount Value="9"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="../../../../../usr/lib/lazarus/ide/lazarus.pp"/>
+        <UnitName Value="Lazarus"/>
+        <CursorPos X="11" Y="74"/>
+        <TopLine Value="44"/>
+        <UsageCount Value="7"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="../../../../../usr/share/lazarus/lcl/interfaces/gtk/gtk1object.inc"/>
+        <CursorPos X="1" Y="1430"/>
+        <TopLine Value="1416"/>
+        <UsageCount Value="7"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="abunzprc.pas"/>
+        <UnitName Value="AbUnzPrc"/>
+        <CursorPos X="37" Y="1382"/>
+        <TopLine Value="1375"/>
+        <UsageCount Value="28"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="../../../../../usr/share/lazarus/lcl/fileutil.pas"/>
+        <UnitName Value="FileUtil"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="46"/>
+        <UsageCount Value="7"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="zipfile/zipfile.pas"/>
+        <UnitName Value="ZipFile"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="18"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="../../../../../usr/share/lazarus/ide/lazarus.pp"/>
+        <UnitName Value="Lazarus"/>
+        <CursorPos X="2" Y="98"/>
+        <TopLine Value="85"/>
+        <UsageCount Value="7"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="../../../../../usr/share/fpcsrc/rtl/objpas/sysutils/sysstrh.inc"/>
+        <CursorPos X="10" Y="198"/>
+        <TopLine Value="182"/>
+        <UsageCount Value="7"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="abarctyp.pas"/>
+        <UnitName Value="AbArcTyp"/>
+        <CursorPos X="46" Y="24"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="9"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/fcl-base/src/inc/inifiles.pp"/>
+        <UnitName Value="IniFiles"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="131"/>
+        <UsageCount Value="7"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtklclintf.inc"/>
+        <CursorPos X="1" Y="780"/>
+        <TopLine Value="757"/>
+        <UsageCount Value="9"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="abzipext.pas"/>
+        <UnitName Value="AbZipExt"/>
+        <CursorPos X="34" Y="62"/>
+        <TopLine Value="45"/>
+        <UsageCount Value="7"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="abconst.pas"/>
+        <UnitName Value="AbConst"/>
+        <CursorPos X="27" Y="300"/>
+        <TopLine Value="285"/>
+        <UsageCount Value="7"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/base/hash/md5.pp"/>
+        <UnitName Value="md5"/>
+        <CursorPos X="1" Y="133"/>
+        <TopLine Value="11"/>
+        <UsageCount Value="7"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="artwork/loadform.pas"/>
+        <ComponentName Value="LoadForm"/>
+        <UnitName Value="loadform"/>
+        <CursorPos X="19" Y="24"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="152"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="loadform.pas"/>
+        <ComponentName Value="LForm"/>
+        <HasResources Value="True"/>
+        <UnitName Value="LoadForm"/>
+        <CursorPos X="1" Y="59"/>
+        <TopLine Value="14"/>
+        <UsageCount Value="16"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="../../../../../usr/share/lazarus/components/tachart/taseries.pas"/>
+        <UnitName Value="TASeries"/>
+        <CursorPos X="7" Y="23"/>
+        <TopLine Value="61"/>
+        <UsageCount Value="7"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="lazrichview/richview.pas"/>
+        <UnitName Value="RichView"/>
+        <CursorPos X="77" Y="10"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="150"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="../../../../../usr/share/lazarus/lcl/interfaces/gtk/gtkwinapi.inc"/>
+        <CursorPos X="1" Y="1357"/>
+        <TopLine Value="1341"/>
+        <UsageCount Value="7"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="distri.pas"/>
+        <UnitName Value="distri"/>
+        <CursorPos X="44" Y="2"/>
+        <TopLine Value="27"/>
+        <EditorIndex Value="6"/>
+        <UsageCount Value="59"/>
+        <Loaded Value="True"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="variables.pas"/>
+        <UnitName Value="variables"/>
+        <CursorPos X="13" Y="2"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="137"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="RegExpr.pas"/>
+        <UnitName Value="RegExpr"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="../../../../../usr/lib/lazarus/components/synedit/synregexpr.pas"/>
+        <UnitName Value="SynRegExpr"/>
+        <CursorPos X="19" Y="3833"/>
+        <TopLine Value="3808"/>
+        <UsageCount Value="7"/>
+      </Unit35>
+      <Unit36>
+        <Filename Value="../Listaller/liEditor/lipkgcreator.lpr"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="7"/>
+      </Unit36>
+      <Unit37>
+        <Filename Value="../Listaller/listallmngr.lpr"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="7"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="vsynapse/VisualSynapse.pas"/>
+        <UnitName Value="VisualSynapse"/>
+        <CursorPos X="66" Y="901"/>
+        <TopLine Value="875"/>
+        <UsageCount Value="18"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="vsynapse/synapse/httpsend.pas"/>
+        <UnitName Value="httpsend"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="18"/>
+      </Unit39>
+      <Unit40>
+        <Filename Value="vsynapse/synapse/synafpc.pas"/>
+        <UnitName Value="synafpc"/>
+        <CursorPos X="5" Y="92"/>
+        <TopLine Value="56"/>
+        <UsageCount Value="7"/>
+      </Unit40>
+      <Unit41>
+        <Filename Value="synapse/httpsend.pas"/>
+        <UnitName Value="httpsend"/>
+        <CursorPos X="3" Y="72"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="116"/>
+      </Unit41>
+      <Unit42>
+        <Filename Value="../../Desktop/Test/unit1.pas"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <UnitName Value="Unit1"/>
+        <CursorPos X="44" Y="57"/>
+        <TopLine Value="12"/>
+        <UsageCount Value="7"/>
+      </Unit42>
+      <Unit43>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/lcltype.pp"/>
+        <UnitName Value="LCLType"/>
+        <CursorPos X="3" Y="1543"/>
+        <TopLine Value="1672"/>
+        <UsageCount Value="24"/>
+      </Unit43>
+      <Unit44>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/lclproc.pas"/>
+        <UnitName Value="LCLProc"/>
+        <CursorPos X="1" Y="791"/>
+        <TopLine Value="728"/>
+        <UsageCount Value="7"/>
+      </Unit44>
+      <Unit45>
+        <Filename Value="uninstall.pas"/>
+        <ComponentName Value="RMForm"/>
+        <HasResources Value="True"/>
+        <UnitName Value="uninstall"/>
+        <CursorPos X="24" Y="20"/>
+        <TopLine Value="9"/>
+        <UsageCount Value="7"/>
+      </Unit45>
+      <Unit46>
+        <Filename Value="dgunit.pas"/>
+        <ComponentName Value="DGForm"/>
+        <IsPartOfProject Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="dgunit"/>
+        <CursorPos X="46" Y="205"/>
+        <TopLine Value="157"/>
+        <EditorIndex Value="5"/>
+        <UsageCount Value="117"/>
+        <Loaded Value="True"/>
+      </Unit46>
+      <Unit47>
+        <Filename Value="abdfoutw.pas"/>
+        <UnitName Value="AbDfOutW"/>
+        <CursorPos X="8" Y="114"/>
+        <TopLine Value="95"/>
+        <UsageCount Value="7"/>
+      </Unit47>
+      <Unit48>
+        <Filename Value="listallmngr.lpi"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="7"/>
+        <SyntaxHighlighter Value="XML"/>
+      </Unit48>
+      <Unit49>
+        <Filename Value="utilities.pas"/>
+        <UnitName Value="utilities"/>
+        <CursorPos X="33" Y="225"/>
+        <TopLine Value="222"/>
+        <EditorIndex Value="4"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit49>
+      <Unit50>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/include/lclintfh.inc"/>
+        <CursorPos X="26" Y="106"/>
+        <TopLine Value="44"/>
+        <UsageCount Value="9"/>
+      </Unit50>
+      <Unit51>
+        <Filename Value="gtkstyle.pp"/>
+        <UnitName Value="gtkstyle"/>
+        <CursorPos X="1" Y="90"/>
+        <TopLine Value="27"/>
+        <UsageCount Value="9"/>
+      </Unit51>
+      <Unit52>
+        <Filename Value="translation.pas"/>
+        <UnitName Value="translation"/>
+        <CursorPos X="15" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="66"/>
+      </Unit52>
+      <Unit53>
+        <Filename Value="trstrings.pas"/>
+        <UnitName Value="trstrings"/>
+        <CursorPos X="52" Y="131"/>
+        <TopLine Value="94"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="27"/>
+        <Loaded Value="True"/>
+      </Unit53>
+      <Unit54>
+        <Filename Value="../../../../../usr/lib/lazarus/ide/tododlg.pas"/>
+        <ComponentName Value="TodoDialog"/>
+        <HasResources Value="True"/>
+        <UnitName Value="ToDoDlg"/>
+        <CursorPos X="38" Y="60"/>
+        <TopLine Value="27"/>
+        <UsageCount Value="9"/>
+      </Unit54>
+      <Unit55>
+        <Filename Value="inc/gtk2.pas"/>
+        <UnitName Value="gtk2"/>
+        <CursorPos X="51" Y="51"/>
+        <TopLine Value="29"/>
+        <UsageCount Value="9"/>
+      </Unit55>
+      <Unit56>
+        <Filename Value="gtk2int.pas"/>
+        <UnitName Value="gtk2int"/>
+        <CursorPos X="2" Y="34"/>
+        <TopLine Value="12"/>
+        <UsageCount Value="9"/>
+      </Unit56>
+      <Unit57>
+        <Filename Value="gtkwscontrols.pp"/>
+        <UnitName Value="GtkWSControls"/>
+        <CursorPos X="17" Y="39"/>
+        <TopLine Value="18"/>
+        <UsageCount Value="9"/>
+      </Unit57>
+      <Unit58>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkdef.pp"/>
+        <UnitName Value="GtkDef"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="9"/>
+      </Unit58>
+      <Unit59>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/extra/gtk2/pango/pango.pas"/>
+        <UnitName Value="pango"/>
+        <CursorPos X="3" Y="76"/>
+        <TopLine Value="48"/>
+        <UsageCount Value="9"/>
+      </Unit59>
+      <Unit60>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkdebug.pp"/>
+        <UnitName Value="GtkDebug"/>
+        <CursorPos X="34" Y="39"/>
+        <TopLine Value="25"/>
+        <UsageCount Value="9"/>
+      </Unit60>
+      <Unit61>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkwsstdctrls.pp"/>
+        <UnitName Value="GtkWSStdCtrls"/>
+        <CursorPos X="3" Y="41"/>
+        <TopLine Value="25"/>
+        <UsageCount Value="9"/>
+      </Unit61>
+      <Unit62>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/extra/gtk2/gtk+/gtk/gtk2.pas"/>
+        <UnitName Value="gtk2"/>
+        <CursorPos X="51" Y="51"/>
+        <TopLine Value="29"/>
+        <UsageCount Value="9"/>
+      </Unit62>
+      <Unit63>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/extra/gtk2/gtk+/gtk/gtkstock.inc"/>
+        <CursorPos X="4" Y="82"/>
+        <TopLine Value="16"/>
+        <UsageCount Value="13"/>
+      </Unit63>
+      <Unit64>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/extra/gtk2/gtk+/gtk/gtkenums.inc"/>
+        <CursorPos X="11" Y="276"/>
+        <TopLine Value="266"/>
+        <UsageCount Value="11"/>
+      </Unit64>
+      <Unit65>
+        <Filename Value="waitform.pas"/>
+        <ComponentName Value="WForm"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="waitform"/>
+        <CursorPos X="11" Y="12"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="48"/>
+      </Unit65>
+      <Unit66>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkint.pp"/>
+        <UnitName Value="GtkInt"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="387"/>
+        <UsageCount Value="9"/>
+      </Unit66>
+      <Unit67>
+        <Filename Value="abswstm.pas"/>
+        <UnitName Value="AbSWStm"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="12"/>
+      </Unit67>
+      <Unit68>
+        <Filename Value="synapse/ftpsend.pas"/>
+        <UnitName Value="ftpsend"/>
+        <CursorPos X="49" Y="10"/>
+        <TopLine Value="61"/>
+        <UsageCount Value="12"/>
+      </Unit68>
+      <Unit69>
+        <Filename Value="synapse/ssfpc.pas"/>
+        <UnitName Value="ssfpc"/>
+        <CursorPos X="12" Y="369"/>
+        <TopLine Value="348"/>
+        <UsageCount Value="10"/>
+      </Unit69>
+      <Unit70>
+        <Filename Value="../../../../../usr/share/fpcsrc/rtl/unix/unix.pp"/>
+        <UnitName Value="Unix"/>
+        <CursorPos X="11" Y="132"/>
+        <TopLine Value="111"/>
+        <UsageCount Value="9"/>
+      </Unit70>
+      <Unit71>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/fcl-xml/src/dom.pp"/>
+        <UnitName Value="DOM"/>
+        <CursorPos X="14" Y="220"/>
+        <TopLine Value="199"/>
+        <UsageCount Value="9"/>
+      </Unit71>
+      <Unit72>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/fcl-xml/src/xmlwrite.pp"/>
+        <UnitName Value="XMLWrite"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="13"/>
+        <UsageCount Value="9"/>
+      </Unit72>
+      <Unit73>
+        <Filename Value="../../../../../usr/share/fpcsrc/rtl/unix/sysutils.pp"/>
+        <UnitName Value="sysutils"/>
+        <CursorPos X="6" Y="16"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="9"/>
+      </Unit73>
+      <Unit74>
+        <Filename Value="../../../../../usr/share/fpcsrc/rtl/unix/baseunix.pp"/>
+        <UnitName Value="BaseUnix"/>
+        <CursorPos X="12" Y="19"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="9"/>
+      </Unit74>
+      <Unit75>
+        <Filename Value="../../../../../usr/share/fpcsrc/rtl/unix/unixtype.pp"/>
+        <UnitName Value="unixtype"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="9"/>
+      </Unit75>
+      <Unit76>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/users/src/users.pp"/>
+        <UnitName Value="users"/>
+        <CursorPos X="24" Y="11"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="9"/>
+      </Unit76>
+      <Unit77>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/users/src/pwd.pp"/>
+        <UnitName Value="pwd"/>
+        <CursorPos X="6" Y="93"/>
+        <TopLine Value="92"/>
+        <UsageCount Value="9"/>
+      </Unit77>
+      <Unit78>
+        <Filename Value="bstatfsh.inc"/>
+        <CursorPos X="14" Y="3"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="9"/>
+      </Unit78>
+      <Unit79>
+        <Filename Value="bstatvfsh.inc"/>
+        <CursorPos X="19" Y="7"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="9"/>
+      </Unit79>
+      <Unit80>
+        <Filename Value="../../../../../usr/share/fpcsrc/rtl/unix/unxovlh.inc"/>
+        <CursorPos X="10" Y="18"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="9"/>
+      </Unit80>
+      <Unit81>
+        <Filename Value="ptypes.inc"/>
+        <CursorPos X="2" Y="33"/>
+        <TopLine Value="152"/>
+        <UsageCount Value="9"/>
+      </Unit81>
+      <Unit82>
+        <Filename Value="abzbrows.pas"/>
+        <UnitName Value="AbZBrows"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="79"/>
+        <UsageCount Value="9"/>
+      </Unit82>
+      <Unit83>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/unixutil/src/unixutils.pp"/>
+        <UnitName Value="UnixUtils"/>
+        <CursorPos X="46" Y="154"/>
+        <TopLine Value="53"/>
+        <UsageCount Value="9"/>
+      </Unit83>
+      <Unit84>
+        <Filename Value="bstath.inc"/>
+        <CursorPos X="21" Y="25"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="9"/>
+      </Unit84>
+      <Unit85>
+        <Filename Value="oldlinux.pp"/>
+        <UnitName Value="oldlinux"/>
+        <CursorPos X="2" Y="1618"/>
+        <TopLine Value="1594"/>
+        <UsageCount Value="9"/>
+      </Unit85>
+      <Unit86>
+        <Filename Value="../../../../../usr/lib/lazarus/components/synedit/synedit.pp"/>
+        <UnitName Value="SynEdit"/>
+        <CursorPos X="24" Y="32"/>
+        <TopLine Value="8"/>
+        <UsageCount Value="9"/>
+      </Unit86>
+      <Unit87>
+        <Filename Value="../../../../../usr/lib/lazarus/packager/registration/lazaruspackageintf.pas"/>
+        <UnitName Value="LazarusPackageIntf"/>
+        <CursorPos X="51" Y="10"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="9"/>
+      </Unit87>
+      <Unit88>
+        <Filename Value=""/>
+        <UsageCount Value="9"/>
+        <SyntaxHighlighter Value="None"/>
+      </Unit88>
+      <Unit89>
+        <Filename Value="ipkhandle.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ipkhandle"/>
+        <CursorPos X="44" Y="2"/>
+        <TopLine Value="2"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="36"/>
+        <Loaded Value="True"/>
+      </Unit89>
+      <Unit90>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/forms.pp"/>
+        <UnitName Value="Forms"/>
+        <CursorPos X="3" Y="963"/>
+        <TopLine Value="940"/>
+        <UsageCount Value="9"/>
+      </Unit90>
+      <Unit91>
+        <Filename Value="xtypefm.pas"/>
+        <ComponentName Value="imdFrm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="xtypefm"/>
+        <CursorPos X="74" Y="26"/>
+        <TopLine Value="1"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit91>
+      <Unit92>
+        <Filename Value="aboutbox.pas"/>
+        <ComponentName Value="FmAbout"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="aboutbox"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit92>
+      <Unit93>
+        <Filename Value="../../../../../usr/share/fpcsrc/2.2.2/packages/gtk2/src/gtk+/gtk/gtkenums.inc"/>
+        <CursorPos X="6" Y="285"/>
+        <TopLine Value="262"/>
+        <UsageCount Value="10"/>
+      </Unit93>
+    </Units>
+    <JumpHistory Count="29" HistoryIndex="28">
+      <Position1>
+        <Filename Value="xtypefm.pas"/>
+        <Caret Line="37" Column="20" TopLine="36"/>
+      </Position1>
+      <Position2>
+        <Filename Value="xtypefm.pas"/>
+        <Caret Line="36" Column="20" TopLine="36"/>
+      </Position2>
+      <Position3>
+        <Filename Value="xtypefm.pas"/>
+        <Caret Line="44" Column="21" TopLine="36"/>
+      </Position3>
+      <Position4>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="409" Column="1" TopLine="380"/>
+      </Position4>
+      <Position5>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="704" Column="50" TopLine="681"/>
+      </Position5>
+      <Position6>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="710" Column="1" TopLine="680"/>
+      </Position6>
+      <Position7>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="704" Column="13" TopLine="676"/>
+      </Position7>
+      <Position8>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="825" Column="6" TopLine="794"/>
+      </Position8>
+      <Position9>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="828" Column="5" TopLine="805"/>
+      </Position9>
+      <Position10>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="827" Column="5" TopLine="806"/>
+      </Position10>
+      <Position11>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="11" Column="64" TopLine="1"/>
+      </Position11>
+      <Position12>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="104" Column="34" TopLine="81"/>
+      </Position12>
+      <Position13>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="276" Column="14" TopLine="253"/>
+      </Position13>
+      <Position14>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="277" Column="32" TopLine="253"/>
+      </Position14>
+      <Position15>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="582" Column="1" TopLine="561"/>
+      </Position15>
+      <Position16>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="8" Column="115" TopLine="1"/>
+      </Position16>
+      <Position17>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="104" Column="34" TopLine="81"/>
+      </Position17>
+      <Position18>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="276" Column="14" TopLine="253"/>
+      </Position18>
+      <Position19>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="277" Column="32" TopLine="253"/>
+      </Position19>
+      <Position20>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="422" Column="44" TopLine="410"/>
+      </Position20>
+      <Position21>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="938" Column="57" TopLine="915"/>
+      </Position21>
+      <Position22>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="1183" Column="57" TopLine="1160"/>
+      </Position22>
+      <Position23>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="1216" Column="58" TopLine="1193"/>
+      </Position23>
+      <Position24>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="1299" Column="53" TopLine="1276"/>
+      </Position24>
+      <Position25>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="5" Column="50" TopLine="1"/>
+      </Position25>
+      <Position26>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="938" Column="61" TopLine="915"/>
+      </Position26>
+      <Position27>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="1183" Column="61" TopLine="1160"/>
+      </Position27>
+      <Position28>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="1216" Column="62" TopLine="1193"/>
+      </Position28>
+      <Position29>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="1299" Column="57" TopLine="1276"/>
+      </Position29>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="8"/>
+    <Target>
+      <Filename Value="./bin/listallgo"/>
+    </Target>
+    <SearchPaths>
+      <OtherUnitFiles Value="synapse/;$(LazarusDir)/components/synedit/"/>
+      <LCLWidgetType Value="gtk2"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <CStyleOperator Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <LinkSmart Value="True"/>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+    <Other>
+      <CompilerPath Value="$(CompPath)"/>
+      <ExecuteBefore>
+        <ScanForMakeMsgs Value="True"/>
+      </ExecuteBefore>
+      <CreateMakefileOnBuild Value="True"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Watches Count="1">
+      <Item1>
+        <Expression Value="DescFile"/>
+        <Enabled Value="False"/>
+      </Item1>
+    </Watches>
+  </Debugging>
+</CONFIG>

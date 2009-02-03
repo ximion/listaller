@@ -1,0 +1,111 @@
+object FmAbout: TFmAbout
+  Left = 324
+  Height = 384
+  Top = 260
+  Width = 343
+  ActiveControl = PageControl1
+  Caption = 'About Listaller'
+  ClientHeight = 384
+  ClientWidth = 343
+  OnShow = FormShow
+  Position = poOwnerFormCenter
+  ShowInTaskBar = stNever
+  LCLVersion = '0.9.27'
+  object Image1: TImage
+    Left = 8
+    Height = 90
+    Top = 8
+    Width = 90
+    Proportional = True
+    Stretch = True
+  end
+  object Label1: TLabel
+    Left = 117
+    Height = 19
+    Top = 15
+    Width = 56
+    Caption = 'Listaller'
+    Font.Height = -15
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 117
+    Height = 13
+    Top = 40
+    Width = 63
+    Caption = 'Version ...-...'
+    Font.Height = -9
+    Font.Name = 'Sans'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 117
+    Height = 13
+    Top = 58
+    Width = 163
+    Caption = 'Under Linux desktop environment'
+    ParentColor = False
+  end
+  object PageControl1: TPageControl
+    Left = 8
+    Height = 231
+    Top = 104
+    Width = 324
+    ActivePage = TabSheet1
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    TabIndex = 1
+    TabOrder = 0
+    object AboutSheet: TTabSheet
+      Caption = 'About'
+      ClientHeight = 201
+      ClientWidth = 320
+      object Label4: TLabel
+        Left = 6
+        Height = 88
+        Top = 47
+        Width = 226
+        Anchors = [akLeft]
+        Caption = 'Software installer && manager'#10#10'© 2008-2009 Matthias Klumpp'#10#10'http://listaller.nlinux.org'#10'License: GNU General Public License Version 3'
+        ParentColor = False
+      end
+    end
+    object TabSheet1: TTabSheet
+      Caption = 'Authors'
+      ClientHeight = 201
+      ClientWidth = 320
+      object Label5: TLabel
+        Left = 0
+        Height = 13
+        Top = 0
+        Width = 320
+        Align = alTop
+        Caption = 'Please use https://bugs.launchpad.net/listaller for bug reports.'
+        ParentColor = False
+      end
+      object Label6: TLabel
+        Left = 0
+        Height = 188
+        Top = 13
+        Width = 320
+        Align = alClient
+        Caption = #10'Matthias Klumpp'#10'    matthias@nlinux.org'#10'    Maintainer and developer'#10#10'Thomas Dieffenbach'#10'    giantics@gmx.net'#10'    Developer'#10#10'Dennis Seid'#10'   jumcore@yahoo.de'#10'   Designer'
+        ParentColor = False
+      end
+    end
+  end
+  object BitBtn1: TBitBtn
+    Left = 292
+    Height = 22
+    Top = 351
+    Width = 40
+    Anchors = [akRight, akBottom]
+    AutoSize = True
+    Caption = 'Close'
+    OnClick = BitBtn1Click
+    TabOrder = 1
+  end
+end

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<fpdoc-descriptions>
+  <package name="listallmngr">
+    <module name="manager"/>
+  </package>
+</fpdoc-descriptions>

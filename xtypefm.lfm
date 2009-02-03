@@ -1,0 +1,103 @@
+object imdFrm: TimdFrm
+  Left = 297
+  Height = 145
+  Top = 453
+  Width = 634
+  ActiveControl = btnInstallAll
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsToolWindow
+  Caption = 'Select Installation mode'
+  ClientHeight = 145
+  ClientWidth = 634
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '0.9.27'
+  object Label1: TLabel
+    Left = 8
+    Height = 19
+    Top = 8
+    Width = 187
+    Caption = 'What do you want to do?'
+    Font.Height = -15
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label13: TLabel
+    Left = 24
+    Height = 13
+    Top = 69
+    Width = 241
+    Anchors = [akLeft, akBottom]
+    Caption = 'Make sure that you can trust the package author!'
+    ParentColor = False
+  end
+  object Image1: TImage
+    Left = 8
+    Height = 18
+    Top = 64
+    Width = 18
+    Anchors = [akLeft, akBottom]
+    Proportional = True
+  end
+  object Label2: TLabel
+    Left = 40
+    Height = 13
+    Top = 40
+    Width = 566
+    Caption = 'Your PackageKit version is %p. Listaller needs PackageKit 0.4.2 or higher to work correctly. Plase update PackageKit!'
+    ParentColor = False
+    Visible = False
+  end
+  object Image2: TImage
+    Left = 8
+    Height = 26
+    Top = 32
+    Width = 24
+    Anchors = [akLeft, akBottom]
+    Proportional = True
+    Stretch = True
+    Visible = False
+  end
+  object btnInstallAll: TBitBtn
+    Left = 8
+    Height = 38
+    Top = 90
+    Width = 164
+    Anchors = [akLeft, akBottom]
+    AutoSize = True
+    Caption = 'Install application for everyone'
+    Constraints.MinHeight = 38
+    NumGlyphs = 0
+    OnClick = btnInstallAllClick
+    TabOrder = 0
+  end
+  object btnTest: TBitBtn
+    Left = 276
+    Height = 38
+    Top = 90
+    Width = 89
+    Anchors = [akBottom]
+    AutoSize = True
+    Caption = 'Test application'
+    Constraints.MinHeight = 38
+    NumGlyphs = 0
+    OnClick = btnTestClick
+    TabOrder = 1
+  end
+  object btnHome: TBitBtn
+    Left = 464
+    Height = 38
+    Top = 90
+    Width = 160
+    Anchors = [akRight, akBottom]
+    AutoSize = True
+    Caption = 'Install into my Home-directory'
+    Constraints.MinHeight = 38
+    NumGlyphs = 0
+    OnClick = btnHomeClick
+    TabOrder = 2
+  end
+end

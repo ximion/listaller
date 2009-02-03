@@ -1,0 +1,726 @@
+{ swcatalog.pas
+  Copyright (C) Listaller Project 2008-2009
+
+  manager.pas is free software: you can redistribute it and/or modify it
+  under the terms of the GNU General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  swcatalog.pas is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License v3
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+}
+//** This unit contains code that is used by the catalogue-GUI
+unit swcatalog;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  ComCtrls, Buttons, manager, HTTPSend, XMLRead, DOM, IniFiles, utilities,
+  gtk2, trstrings, blcksock, Process, ExtCtrls, LCLType;
+
+type
+
+  { TSCForm }
+
+  TSCForm = class(TForm)
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    ComboBox1: TComboBox;
+    ImageList1: TImageList;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    CView: TListView;
+    Label4: TLabel;
+    Memo1: TMemo;
+    MnProgress: TProgressBar;
+    DLProgress: TProgressBar;
+    Panel1: TPanel;
+    ScrollBox1: TScrollBox;
+    HQBox: TToggleBox;
+    Splitter1: TSplitter;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure ComboBox1Change(Sender: TObject);
+    procedure CViewClick(Sender: TObject);
+    procedure CViewKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure HQBoxChange(Sender: TObject);
+  private
+    { private declarations }
+    SWLLength: Integer;
+    current: Integer;
+    //** List of all available catalogue servers
+    lsrv: TStringList;
+    procedure OpenCatalog;
+    procedure GetCatalog;
+    procedure HookSock(Sender: TObject; Reason: THookSocketReason;
+const Value: string);
+  public
+    { public declarations }
+    HTTP   : THTTPSend;
+    PB1    : Boolean;
+  end; 
+
+  TCTLEntry = class(TListEntry)
+   public
+    //** Number of the exemplar
+    enr: Integer;
+    constructor Create(AOwner: TComponent); override;
+    destructor  Destroy; override;
+    //** Re-set control positions
+    procedure   SetPositions;
+   private
+    InfoBtn: TBitBtn;
+    //** Real name
+    rnm:     String;
+    //** HTTP-get object
+    xHTTP: THTTPSend;
+    procedure DLHookSock(Sender: TObject; Reason: THookSocketReason;const Value: string);
+    procedure InstallClick(Sender: TObject);
+    procedure InfoClick(Sender: TObject);
+  end;
+
+var
+ //** Path to the current catalogue
+  CatalogPath: String='http://listaller.nlinux.org/repo/catalogue/';
+const
+ //** Path to our server
+  LiSrvPath='http://listaller.nlinux.org/repo/';
+var
+  SCForm: TSCForm;
+  SWList: Array of TCTLEntry;
+  //
+  fActiv : Boolean=true;
+
+implementation
+
+{ TSCForm }
+
+constructor TCTLEntry.Create(AOwner: TComponent);
+begin
+inherited Create(AOwner);
+self.Height:=54;
+
+with Graphic do begin
+Top:=8;
+Width:=32;
+Height:=32;
+end;
+
+with AppLabel do begin
+Font.Size:=14;
+Top:=4;
+Left:=10;
+end;
+
+with mnLabel do begin
+Parent:=Self;
+AutoSize:=true;
+Anchors:=[];
+Top:=34;
+Left:=10;
+end;
+{
+with DescLabel do begin
+Parent:=Self;
+AutoSize:=true;
+Anchors:=[];
+Top:=30;
+Left:=10;
+Caption:='<description>';
+end;              }
+
+with UnButton do begin
+Parent:=self;
+Height:=26;
+Width:=80;
+Caption:=strInstallNow;
+OnClick:=@InstallClick;
+Anchors:=[akBottom,akRight];
+Top:=16;
+Left:=self.Width-90;
+if Gtk2LoadStockPixmap(GTK_STOCK_OK,GTK_ICON_SIZE_BUTTON)<>0 then
+Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_OK,GTK_ICON_SIZE_MENU);
+end;
+
+InfoBtn:=TBitBtn.Create(self);
+InfoBtn.Parent:=self;
+with InfoBtn do begin
+InfoBtn.Caption:='Info';
+InfoBtn.AutoSize:=true;
+if Gtk2LoadStockPixmap(GTK_STOCK_DIALOG_INFO,GTK_ICON_SIZE_MENU)<>0 then
+Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_DIALOG_INFO,GTK_ICON_SIZE_MENU);
+InfoBtn.OnClick:=@InfoClick;
+Height:=26;
+end;
+
+end;
+
+destructor TCTLEntry.Destroy;
+begin
+InfoBtn.Free;
+inherited Destroy;
+end;
+
+procedure TCTLEntry.DLHookSock(Sender: TObject; Reason: THookSocketReason;
+const Value: string);
+begin
+Application.ProcessMessages;
+//HTTP
+if Assigned(xHTTP) then begin
+if (xHttp.Document.Size>0) then begin
+  SCForm.DLProgress.Max:=xHTTP.DownloadSize;
+  SCForm.DLProgress.Position:=xHTTP.Document.Size;
+ end;
+end;
+end;
+
+procedure TCTLEntry.InfoClick(Sender: TObject);
+var cdir: String;tmp: TStringList;i,j: Integer;
+begin
+   case id of
+     0: cdir:='all';
+     1: cdir:='education';
+     2: cdir:='office';
+     3: cdir:='development';
+     4: cdir:='graphic';
+     5: cdir:='network';
+     6: cdir:='games';
+     7: cdir:='system';
+     8: cdir:='multimedia';
+     9: cdir:='other';
+    end;
+    SCForm.HQBox.Visible:=true;
+if FileExists('/tmp/listaller/catalogue/'+cdir+'/texts/'+rnm+'.txt') then begin
+tmp:=TStringList.Create;
+tmp.LoadFromFile('/tmp/listaller/catalogue/'+cdir+'/texts/'+rnm+'.txt');
+for i:=0 to tmp.Count-1 do
+if (LowerCase(tmp[i])=copy(GetEnvironmentVariable('LANG'), 1, 2))
+and (tmp[i+1]='------') then break;
+
+SCForm.Memo1.Lines.Clear;
+SCForm.Memo1.Lines.Add(AppLabel.Caption);
+SCForm.Memo1.Lines.Add('--------');
+for j:=i+2 to tmp.Count-1 do
+if tmp[j]<>'------' then
+SCForm.Memo1.Lines.Add(tmp[j]) else break;
+if i+1=tmp.Count then begin
+for i:=0 to tmp.Count-1 do
+if tmp[i]<>'------' then
+SCForm.Memo1.Lines.Add(tmp[i]) else break;
+tmp.Free;
+ end;
+SCForm.Memo1.SelStart:=0;
+SCForm.Memo1.Visible:=true;
+SCForm.HQBox.Checked:=true;
+end else begin SCForm.Memo1.Lines.Clear;SCForm.Memo1.Lines.Add(strNoInfo);SCForm.Memo1.Visible:=true;SCForm.HQBox.Checked:=true;end;
+end;
+
+procedure TCTLEntry.InstallClick(Sender: TObject);
+var tmp: TStringList;cdir: String;t: TProcess;i: Integer;
+begin
+   case id of
+     0: cdir:='all';
+     1: cdir:='education';
+     2: cdir:='office';
+     3: cdir:='development';
+     4: cdir:='graphic';
+     5: cdir:='network';
+     6: cdir:='games';
+     7: cdir:='system';
+     8: cdir:='multimedia';
+     9: cdir:='other';
+    end;
+
+    SCForm.Label2.Caption:=strDLSetUp;
+    //Workaround for LazProblem
+    xHTTP:=THTTPSend.Create;
+    xHTTP.Sock.OnStatus:=@DLHookSock;
+    xHTTP.keepAlive:=true;
+     //Set HTTP settings
+    xHTTP.ProxyPort:=SCForm.HTTP.ProxyPort;
+    xHTTP.ProxyHost:=SCForm.HTTP.ProxyHost;
+    SCForm.PB1:=true;
+   tmp:=tStringList.Create;
+   xHTTP.HTTPMethod('GET', catalogpath+cdir+'/'+rnm+'.todo');
+   tmp.LoadFromStream(xHTTP.Document);
+   if not DirectoryExists('/tmp/listaller') then CreateDir('/tmp/listaller/');
+    if not DirectoryExists('/tmp/listaller/catalogue') then CreateDir('/tmp/listaller/catalogue/');
+     if not DirectoryExists('/tmp/listaller/catalogue/cache') then CreateDir('/tmp/listaller/catalogue/cache');
+   // ShowMessage(tmp[0]);
+   if (pos('http://',LowerCase(tmp[0]))>0) then begin
+    xHTTP.Clear;
+    for i:=0 to SCForm.SWLLength-1 do
+      SWList[i].UnButton.Enabled:=false;
+     SCForm.CView.Enabled:=false;
+
+     SCForm.current:=enr;
+     SCForm.BitBtn2.Enabled:=true;
+   if not xHTTP.HTTPMethod('GET',tmp[0]) then begin if SCForm.BitBtn2.Enabled then ShowMessage(StringReplace(strErrContactMan,'%h','http://listaller.nlinux.org',[rfReplaceAll]));
+   SCForm.Label2.Caption:='Ready.';xHTTP.Free;tmp.Free;exit;end;
+
+    if FileExists('/tmp/listaller/catalogue/cache/'+ExtractFileName(tmp[0])) then DeleteFile('/tmp/listaller/catalogue/cache/'+ExtractFileName(tmp[0]));
+    xHTTP.Document.SaveToFile('/tmp/listaller/catalogue/cache/'+ExtractFileName(tmp[0]));
+    xHTTP.Free;
+
+   SCForm.Label2.Caption:=strInstalling;
+   SCForm.BitBtn2.Enabled:=false;
+   SCForm.current:=-1;
+   Application.ProcessMessages;
+  t:=TProcess.Create(nil);
+  t.Options:=[poWaitOnExit];
+  t.CommandLine := ExtractFilePath(Application.ExeName)+'listallgo '+'/tmp/listaller/catalogue/cache/'+ExtractFileName(tmp[0]);
+  t.Execute;
+  t.Free;
+  end;
+   tmp.Free;
+   for i:=0 to SCForm.SWLLength-1 do
+      SWList[i].UnButton.Enabled:=true;
+      SCForm.CView.Enabled:=true;
+   SCForm.pb1:=false;
+  SCForm.Label2.Caption:=strReady;
+end;
+
+procedure TCTLEntry.SetPositions;
+begin
+inherited SetPositions;
+
+with Graphic do begin
+Top:=8;
+end;
+
+with UnButton do begin
+Height:=26;
+AutoSize:=true;
+//Width:=80;
+Anchors:=[akBottom,akRight];
+Top:=16;
+end;
+UnButton.Left:=Width-UnButton.Width-8;
+
+with InfoBtn do begin
+Height:=28;
+Top:=16;
+Anchors:=[akBottom,akRight];
+end;
+InfoBtn.Left:=self.Width-InfoBtn.Width-UnButton.Width-16;
+
+with AppLabel do begin
+Top:=4;
+Left:=54;
+end;
+with mnLabel do begin
+Top:=36;
+Left:=66;
+end;
+with DescLabel do begin
+Top:=24;
+Left:=60;
+end;
+
+end;
+
+function FindChildNode(dn: TDOMNode; n: String): TDOMNode;
+var i: Integer;
+begin
+Result:=nil;
+for i:=0 to dn.ChildNodes.Count-1 do begin
+if LowerCase(dn.ChildNodes.Item[i].NodeName)=LowerCase(n) then begin
+Result:=dn.ChildNodes.Item[i].FirstChild;break;exit;end;
+end;
+end;
+
+function FindChildNode2(dn: TDOMNode; n: String): TDOMNode;
+var i: Integer;
+begin
+Result:=nil;
+for i:=0 to dn.ChildNodes.Count-1 do begin
+if LowerCase(dn.ChildNodes.Item[i].NodeName)=LowerCase(n) then begin
+Result:=dn.ChildNodes.Item[i];break;exit;end;
+end;
+end;
+
+procedure TSCForm.BitBtn1Click(Sender: TObject);
+begin
+  close;
+end;
+
+procedure TSCForm.BitBtn2Click(Sender: TObject);
+begin
+  if current>-1 then
+   if Application.MessageBox(PChar(strctDLAbort),PChar(strAbort+'?'),MB_YESNO)=IDYES then begin
+   if not Assigned(SWList[current]) then ShowMessage('Oops!');
+   BitBtn2.Enabled:=false;
+   //SWList[current].xHTTP.Sock.StopFlag:=true;
+   SWList[current].xHTTP.Abort;
+   DLProgress.Position:=100;
+   end;
+end;
+
+procedure TSCForm.ComboBox1Change(Sender: TObject);
+begin
+ if ComboBox1.ItemIndex= 0 then
+ begin CatalogPath:=LiSrvPath+'catalogue/'; GetCatalog(); end else
+ begin
+  CatalogPath:=lsrv[ComboBox1.ItemIndex]; GetCatalog();end;
+end;
+
+procedure TSCForm.CViewClick(Sender: TObject);
+begin
+CView.Enabled:=false;
+  OpenCatalog();
+CView.Enabled:=true;
+end;
+
+procedure TSCForm.CViewKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+CView.Enabled:=false;
+  OpenCatalog;
+ CView.Enabled:=true;
+end;
+
+procedure TSCForm.GetCatalog;
+begin
+//Get catalogue info
+    HTTP.HTTPMethod('GET', catalogpath+'contents.xml');
+    if not DirectoryExists('/tmp/listaller') then CreateDir('/tmp/listaller/');
+    if not DirectoryExists('/tmp/listaller/catalogue') then CreateDir('/tmp/listaller/catalogue/');
+    HTTP.Document.SaveToFile('/tmp/listaller/catalogue/contents.xml');
+    Label2.Caption:=strReady;
+    OpenCatalog;
+end;
+
+procedure TSCForm.FormActivate(Sender: TObject);
+var cnf: TIniFile;ls: TStringList;I: Integer;
+begin
+if fActiv then begin
+  fActiv:=false;
+
+  Label2.Caption:=strDownloadCTBase;
+  SWLLength:=0;
+  CView.Items[0].Selected:=true;
+  HTTP := THTTPSend.Create;
+  HTTP.KeepAlive:=true;
+  HTTP.UserAgent:='Listaller-GET';
+  //Set HTTP settings
+  cnf:=TInifile.Create(ConfigDir+'config.cnf');
+    if cnf.ReadBool('Proxy','UseProxy',false) then begin
+    HTTP.ProxyPort:=cnf.ReadString('Proxy','Port','');
+    HTTP.ProxyHost:=cnf.ReadString('Proxy','Server','');
+    end;
+  cnf.Free;
+
+  lsrv:=TStringList.Create;
+
+  try
+  //Get catalogue list
+  HTTP.HTTPMethod('GET', LiSrvPath+'clist.srv');
+  HTTP.Document.SaveToFile('/tmp/listaller/cservers.srv');
+  ls:=TStringList.Create;
+  ls.LoadFromFile('/tmp/listaller/cservers.srv');
+
+  for I:=0 to ls.Count-1 do begin
+    ComboBox1.Items.Add(copy(ls[i],1,pos(' ',ls[i])-1));
+    lsrv.Add(copy(ls[i],pos(' ',ls[i]),length(ls[i])));
+    end;
+  ls.Free;
+  except end;
+  HTTP.Clear;
+  //Add Hook
+  HTTP.Sock.OnStatus:=@HookSock;
+
+   GetCatalog();
+  end;
+end;
+
+procedure TSCForm.HookSock(Sender: TObject; Reason: THookSocketReason;
+const Value: string);
+begin
+Application.ProcessMessages;
+//HTTP
+if (Http.Document.Size>0) then begin
+  DLProgress.Max:=HTTP.DownloadSize;
+  DLProgress.Position:=HTTP.Document.Size;
+ end;
+end;
+
+procedure TSCForm.OpenCatalog;
+var xn    : TDOMNode;
+    doc      : TXMLDocument;
+    cdir,nid : String;
+    i,k,cid      : Integer;
+begin
+//Read catalogue info
+   ReadXMLFile(doc,'/tmp/listaller/catalogue/contents.xml');
+//Clear List
+CView.Enabled:=false;
+for i:=0 to SWLLength-1 do
+   SWList[i].Free;
+   SWLLength:=0;
+
+    case CView.Selected.Index of
+     0: cdir:='all';
+     1: cdir:='education';
+     2: cdir:='office';
+     3: cdir:='development';
+     4: cdir:='graphic';
+     5: cdir:='network';
+     6: cdir:='games';
+     7: cdir:='system';
+     8: cdir:='multimedia';
+     9: cdir:='other';
+    end;
+ Label2.Caption:=strOpenPage;
+// ScrollBox1.Visible:=false;
+   if cdir<>'all' then begin
+   xn:=doc.DocumentElement.FindNode(cdir);
+   k:=0;
+   MnProgress.Max:=xn.ChildNodes.Count+1;
+    for i:=0 to xn.ChildNodes.Count-1 do begin
+        k:=i+1;
+        SetLength(SWList,k);
+        SWLLength:=k;
+        Dec(k);
+        SWList[k]:=TCTLEntry.Create(SCForm);
+        SWList[k].Parent:=ScrollBox1;
+        SWList[k].id:=CView.Selected.Index;
+        SWList[k].enr:=k;
+
+        if xn.ChildNodes[i].Attributes.GetNamedItem('lname')<> nil then
+        SWList[k].AppLabel.Caption:=xn.ChildNodes[i].Attributes.GetNamedItem('lname').NodeValue
+        else
+        SWList[k].AppLabel.Caption:=xn.ChildNodes[i].NodeName;
+
+        SWList[k].VLabel.Visible:=false;
+
+        SWList[k].DescLabel.Caption:=FindChildNode2(xn.ChildNodes[i],'sdesc').Attributes.GetNamedItem('std').NodeValue;
+        if FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),copy(GetEnvironmentVariable('LANG'), 1, 2))<>nil then
+           SWList[k].DescLabel.Caption:=FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),copy(GetEnvironmentVariable('LANG'), 1, 2)).NodeValue;
+        if FindChildNode(xn.ChildNodes[i],'author')<>nil then
+           SWList[k].MnLabel.Caption:=strAuthor+': '+FindChildNode(xn.ChildNodes[i],'author').NodeValue
+        else SWList[k].MnLabel.Visible:=false;
+           nid:=xn.ChildNodes[i].Attributes.GetNamedItem('idname').NodeValue;
+        if not DirectoryExists('/tmp/listaller/catalogue/'+cdir) then CreateDir('/tmp/listaller/catalogue/'+cdir);
+        if not DirectoryExists('/tmp/listaller/catalogue/'+cdir+'/icons/') then CreateDir('/tmp/listaller/catalogue/'+cdir+'/icons/');
+        if not DirectoryExists('/tmp/listaller/catalogue/'+cdir+'/texts/') then CreateDir('/tmp/listaller/catalogue/'+cdir+'/texts/');
+        SWList[k].rnm:=nid;
+
+        if IsInList(LowerCase(nid),instLst) then SWList[k].UnButton.Enabled:=false;
+        SWList[k].SetPositions;
+      try
+       if not FileExists('/tmp/listaller/catalogue/'+cdir+'/icons/'+nid+'.png') then begin
+        HTTP.HTTPMethod('GET', catalogpath+cdir+'/icons/'+nid+'.png');
+        HTTP.Document.SaveToFile('/tmp/listaller/catalogue/'+cdir+'/icons/'+nid+'.png');
+       end;
+       if not FileExists('/tmp/listaller/catalogue/'+cdir+'/texts/'+nid+'.txt') then begin
+       ShowMessage(catalogpath+cdir+'/texts/'+nid+'.txt');
+       HTTP.HTTPMethod('GET', catalogpath+cdir+'/texts/'+nid+'.txt');
+       HTTP.Document.SaveToFile('/tmp/listaller/catalogue/'+cdir+'/texts/'+nid+'.txt');
+       end;
+       except end;
+
+        if FileExists('/tmp/listaller/catalogue/'+cdir+'/icons/'+nid+'.png') then
+          SWList[k].SetImage('/tmp/listaller/catalogue/'+cdir+'/icons/'+nid+'.png');
+
+          Inc(k);
+          MnProgress.Position:=k+1;
+         Application.ProcessMessages;
+end;
+   end else begin
+//Load all packages
+   k:=0;
+while cdir<>'other' do begin
+if cdir='multimedia' then begin cdir:='other';cid:=9;end;
+if cdir='system' then begin cdir:='multimedia';cid:=8;end;
+if cdir='games' then begin cdir:='system';cid:=7;end;
+if cdir='network' then begin cdir:='games';cid:=6;end;
+if cdir='graphic' then begin cdir:='network';cid:=5;end;
+if cdir='development' then begin cdir:='graphic';cid:=4;end;
+if cdir='office' then begin cdir:='development';cid:=3;end;
+if cdir='education' then begin cdir:='office';cid:=2;end;
+if cdir='all' then begin cdir:='education';cid:=1;end;
+ xn:=doc.DocumentElement.FindNode(cdir);
+ if xn<>nil then begin
+ MnProgress.Max:=xn.ChildNodes.Count+1;
+    for i:=0 to xn.ChildNodes.Count-1 do begin
+        k:=k+1;
+        SetLength(SWList,k);
+        SWLLength:=k;
+        Dec(k);
+        SWList[k]:=TCTLEntry.Create(SCForm);
+        SWList[k].Parent:=ScrollBox1;
+        SWList[k].id:=cid;
+        SWList[k].enr:=k;
+
+        if xn.ChildNodes[i].Attributes.GetNamedItem('lname')<> nil then
+        SWList[k].AppLabel.Caption:=xn.ChildNodes[i].Attributes.GetNamedItem('lname').NodeValue
+        else
+        SWList[k].AppLabel.Caption:=xn.ChildNodes[i].NodeName;
+
+        SWList[k].VLabel.Visible:=false;
+
+        SWList[k].DescLabel.Caption:=FindChildNode2(xn.ChildNodes[i],'sdesc').Attributes.GetNamedItem('std').NodeValue;
+       if FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),copy(GetEnvironmentVariable('LANG'), 1, 2))<>nil then
+           SWList[k].DescLabel.Caption:=FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),copy(GetEnvironmentVariable('LANG'), 1, 2)).NodeValue;
+        if FindChildNode(xn.ChildNodes[i],'author')<>nil then
+           SWList[k].MnLabel.Caption:=strAuthor+': '+FindChildNode(xn.ChildNodes[i],'author').NodeValue
+        else SWList[k].MnLabel.Visible:=false;
+           nid:=xn.ChildNodes[i].Attributes.GetNamedItem('idname').NodeValue;
+        if not DirectoryExists('/tmp/listaller/catalogue/'+cdir) then CreateDir('/tmp/listaller/catalogue/'+cdir);
+        if not DirectoryExists('/tmp/listaller/catalogue/'+cdir+'/icons/') then CreateDir('/tmp/listaller/catalogue/'+cdir+'/icons/');
+        if not DirectoryExists('/tmp/listaller/catalogue/'+cdir+'/texts/') then CreateDir('/tmp/listaller/catalogue/'+cdir+'/texts/');
+        SWList[k].rnm:=nid;
+
+        if IsInList(LowerCase(nid),instLst) then SWList[k].UnButton.Enabled:=false;
+        SWList[k].SetPositions;
+      try
+       if not FileExists('/tmp/listaller/catalogue/'+cdir+'/icons/'+nid+'.png') then begin
+        HTTP.Clear;
+        HTTP.HTTPMethod('GET', catalogpath+cdir+'/icons/'+nid+'.png');
+        HTTP.Document.SaveToFile('/tmp/listaller/catalogue/'+cdir+'/icons/'+nid+'.png');
+       end;
+       HTTP.Clear;
+        HTTP.HTTPMethod('GET', catalogpath+cdir+'/texts/'+nid+'.txt');
+        HTTP.Document.SaveToFile('/tmp/listaller/catalogue/'+cdir+'/texts/'+nid+'.txt');
+       except end;
+
+       try
+        if FileExists('/tmp/listaller/catalogue/'+cdir+'/icons/'+nid+'.png') then
+          SWList[k].SetImage('/tmp/listaller/catalogue/'+cdir+'/icons/'+nid+'.png');
+       except end;
+
+          Inc(k);
+         Application.ProcessMessages;
+         MnProgress.Position:=k+1;
+end;
+ end;
+   end;
+   end;
+   ScrollBox1.Visible:=true;
+   CView.Enabled:=true;
+  Label2.Caption:=strReady;
+end;
+
+procedure TSCForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+var i: Integer;
+begin
+  HTTP.Free;
+  lsrv.Free;
+  for i:=0 to SWLLength-1 do
+    SWList[i].Free;
+    SWLLength:=0;
+    fActiv:=true;
+end;
+
+procedure TSCForm.FormCreate(Sender: TObject);
+var tm: TPicture;bmp: TBitmap;a: String;
+begin
+  //Add images to list
+  tm:=TPicture.Create;
+  a:=ExtractFilePath(Application.ExeName);
+
+  bmp := TBitmap.Create;
+  bmp.width := 24;
+  bmp.height := 24;
+  bmp.TransparentColor:=clWhite;
+  bmp.Transparent:=true;
+
+  with ImageList1 do begin
+  tm.LoadFromFile(a+'graphics/categories/all.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'graphics/categories/science.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'graphics/categories/office.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'graphics/categories/development.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'graphics/categories/graphics.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'graphics/categories/internet.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'graphics/categories/games.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'graphics/categories/system.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'graphics/categories/multimedia.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'graphics/categories/other.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  end;
+  tm.Free;
+  bmp.Free;
+
+  //Translation
+  Label3.Caption:=strCategory;
+  Label1.Caption:=strWInstallDl;
+  CView.Items[0].Caption:=strAll;
+  CView.Items[1].Caption:=strEducation;
+  CView.Items[2].Caption:=strOffice;
+  CView.Items[3].Caption:=strDevelopment;
+  CView.Items[4].Caption:=strGraphic;
+  CView.Items[5].Caption:=strNetwork;
+  CView.Items[6].Caption:=strGames;
+  CView.Items[7].Caption:=strSystem;
+  CView.Items[8].Caption:=strMultimedia;
+  CView.Items[9].Caption:=strOther;
+  Memo1.Lines.Clear;
+  Memo1.Lines.Add(strNoInfo);
+  BitBtn1.Caption:=strClose;
+  BitBtn2.Caption:=strAbort;
+end;
+
+procedure TSCForm.FormDestroy(Sender: TObject);
+var p: TProcess;
+begin
+ p:=TProcess.Create(nil);
+ p.Options:=[poUsePipes,poWaitOnExit];
+ p.CommandLine:='chmod 777 -R '+'/tmp/listaller/catalogue/';
+ p.Execute;
+ p.Free;
+end;
+
+procedure TSCForm.FormResize(Sender: TObject);
+var i: Integer;
+begin
+  for i:=0 to SWLLength-1 do
+  SWList[i].SetPositions;
+end;
+
+procedure TSCForm.HQBoxChange(Sender: TObject);
+begin
+  if not HQBox.Checked then begin
+     Memo1.Visible:=false; Splitter1.Visible:=false; end else begin
+     Splitter1.Enabled:=true;
+     Memo1.Visible:=true;
+     end;
+end;
+
+initialization
+  {$I swcatalog.lrs}
+
+end.
+
