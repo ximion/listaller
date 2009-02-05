@@ -1,0 +1,44 @@
+IPK-Source.Version: 0.8
+<?xml version="1.0"?>
+<package type="linstall" version="0.8">
+  <architecture>i386</architecture>
+  <application name="Listaller Creator">
+    <version>0.2b</version>
+    <license>/home/matthias/Development/listaller/listaller-base.gtk2/COPYING</license>
+    <description>/home/matthias/Development/listaller/listaller-base.gtk2/liCreator/desc.txt</description>
+    <dsupport>Ubuntu,openSuSE</dsupport>
+    <author>Listaller Project</author>
+    <maintainer>Matthias Klumpp [matthias@nlinux.org]</maintainer>
+    <icon>/home/matthias/Development/listaller/listaller-base.gtk2/graphics/listaller_creator.png</icon>
+    <sdesc std="Application that helps creating IPK packages">
+      <de>Anwendung, die das Erstellen von IPK Paketen vereinfacht</de>
+    </sdesc>
+    <group>Development</group>
+    <appcmd>$INST/liCreator/licreator</appcmd>
+  </application>
+ <build>./make.sh;../install-creator.sh DESTDIR=./pkbuild</build>
+ <disallow>ioNothing</disallow>
+ <profile1 id="0">Standard</profile1>
+
+  <DepDEB>
+    <d1>http://dfn.dl.sourceforge.net/sourceforge/listaller/listaller_0.1.16a_i386.deb &lt;listaller&gt;</d1>
+  </DepDEB>
+  <DepRPM>
+    <d1>http://dfn.dl.sourceforge.net/sourceforge/listaller/listaller_0.1.16a_i386.rpm &lt;listaller&gt;</d1>
+  </DepRPM>
+  <DepUbuntu>
+    <d1>http://dfn.dl.sourceforge.net/sourceforge/listaller/listaller_0.1.16a_i386.deb &lt;listaller&gt;</d1>
+  </DepUbuntu>
+  <DepopenSuSE>
+    <d1>http://dfn.dl.sourceforge.net/sourceforge/listaller/listaller_0.1.16a_i386.rpm &lt;listaller&gt;</d1>
+  </DepopenSuSE>
+</package>
+!-Files #0
+>$INST/liCreator
+../bin/licreator
+195f7bd6242782f35819a9600dbb74aa
+../graphics/listaller_creator.png
+aa0b5d7a5dab287a422f06c121ed8cf0
+>$APP/
+../liCreator/ips/licreator.desktop
+0351ef79d187dbed8599f612c0a2012c

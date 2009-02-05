@@ -1,0 +1,18 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Type=Application
+Name=Listaller Manager
+GenericName=Install/Uninstall software
+Comment=Allows you to install and manage applications
+GenericName[de]=Software installieren/deinstallieren
+Comment[de]=Hilfsprogramm zum Installieren/Deinstallieren von Anwendungen
+Name[de]=Listaller Manager
+Icon=listaller
+Exec=listallmgr
+Categories=Utility;
+StartupNotify=false
+Terminal=false
+ExternalInst=true
+MimeType=application/x-ipk;
+Patterns=*.ipk;

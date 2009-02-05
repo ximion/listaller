@@ -30,7 +30,7 @@ type
  { TPackInfo }
   TPackInfo = record
    desc: TStringList;
-   pkName, Maintainer: String;
+   pkName, Maintainer, Author: String;
    Version: String;
    build, depDEB,depRPM: TStringList;
    path: String;

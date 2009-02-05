@@ -1,0 +1,20 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Listaller Creator
+GenericName=Builder for Listaller Setups
+Comment=Allows you to create your own Listaller-packages
+Icon=$INST/liCreator/listaller_creator.png
+Exec=$INST/liCreator/licreator
+Categories=Application;Development;Programming;
+MimeType=text/installer-source;
+Patterns=*.ips;
+Path=
+StartupNotify=true
+Type=Application
+X-DCOP-ServiceType=none
+X-KDE-SubstituteUID=false
+X-KDE-Username=
+GenericName[de]=Programm, um Listaller Packete zu erstellen
+Comment[de]=Alpha Version des creators, mit dem Sie Installationen erstellen können
+Name[de]=Listaller Creator

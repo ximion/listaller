@@ -1,0 +1,825 @@
+{ prjwizard.pas
+  Copyright (C) Listaller Project 2008
+
+  prjwizard.pas is free software: you can redistribute it and/or modify it
+  under the terms of the GNU General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  prjwizard.pas is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+}
+//** Graphical wizard for IPS creation
+unit prjwizard;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  Buttons, ExtCtrls, ComCtrls, EditBtn, Grids, popupnotifier, FileCtrl, FileUtil,
+  MD5, Menus, XMLRead, XMLWrite, DOM, editor, LCLType, GTK2, utilities;
+
+type
+
+  { TfrmProjectWizard }
+
+  TListallerPackageType = (lptLinstall, lptDLink, lptContainer);
+
+  TfrmProjectWizard = class(TForm)
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    btnAssignShortDescription: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    btnAddLangCode: TButton;
+    Button6: TButton;
+    chkShowInTerminal: TCheckBox;
+    ComboBox1: TComboBox;
+    DirectoryEdit1: TDirectoryEdit;
+    Edit1: TEdit;
+    Edit10: TEdit;
+    Edit11: TEdit;
+    Edit12: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    edtShortDescription: TEdit;
+    Edit5: TEdit;
+    Edit6: TEdit;
+    Edit7: TEdit;
+    Edit8: TEdit;
+    edtLangCode: TEdit;
+    FileNameEdit1: TFileNameEdit;
+    FileNameEdit2: TFileNameEdit;
+    FileNameEdit3: TFileNameEdit;
+    FileNameEdit4: TFileNameEdit;
+    FileNameEdit5: TFileNameEdit;
+    GroupBox1: TGroupBox;
+    GroupBox10: TGroupBox;
+    GroupBox11: TGroupBox;
+    GroupBox12: TGroupBox;
+    GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    GroupBox4: TGroupBox;
+    GroupBox5: TGroupBox;
+    GroupBox6: TGroupBox;
+    GroupBox7: TGroupBox;
+    GroupBox8: TGroupBox;
+    GroupBox9: TGroupBox;
+    Label1: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    Label2: TLabel;
+    Label20: TLabel;
+    Label21: TLabel;
+    Label22: TLabel;
+    Label23: TLabel;
+    Label24: TLabel;
+    Label25: TLabel;
+    Label26: TLabel;
+    Label27: TLabel;
+    Label28: TLabel;
+    Label29: TLabel;
+    Label3: TLabel;
+    Label30: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    ListBox1: TListBox;
+    lvPackageFiles: TListView;
+    Memo1: TMemo;
+    MenuItem1: TMenuItem;
+    Notebook1: TNotebook;
+    Page1: TPage;
+    Page2: TPage;
+    Page3: TPage;
+    Page4: TPage;
+    Page5: TPage;
+    Page6: TPage;
+    Panel1: TPanel;
+    PopupMenu1: TPopupMenu;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    SpeedButton3: TSpeedButton;
+    SpeedButton4: TSpeedButton;
+    tvShortDescriptions: TTreeView;
+    tvDependencies: TTreeView;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure btnAssignShortDescriptionClick(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure btnAddLangCodeClick(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure Edit1Change(Sender: TObject);
+    procedure Edit2Change(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure Label28Click(Sender: TObject);
+    procedure lvPackageFilesDblClick(Sender: TObject);
+    procedure lvPackageFilesKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure MenuItem1Click(Sender: TObject);
+    procedure RadioButton1Change(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
+    procedure SpeedButton4Click(Sender: TObject);
+    procedure tvDependenciesClick(Sender: TObject);
+    procedure tvDependenciesKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure tvShortDescriptionsClick(Sender: TObject);
+    procedure tvShortDescriptionsKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+  private
+    function CreateScript(aType: TListallerPackageType): TXMLDocument;
+    { private declarations }
+  public
+    { public declarations }
+  end; 
+
+var
+  frmProjectWizard: TfrmProjectWizard;
+  //** IPK/IPS type that should be created
+  CreaType: TListallerPackageType;
+
+implementation
+
+{ TfrmProjectWizard }
+
+procedure TfrmProjectWizard.BitBtn2Click(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TfrmProjectWizard.BitBtn1Click(Sender: TObject);
+begin
+  if CreaType=lptContainer then
+  begin
+    NoteBook1.PageIndex:=0;
+    BitBtn3.Enabled:=false;
+  end;
+  BitBtn3.Caption:='  Next  ';
+  if (CreaType=lptDLink) and (NoteBook1.PageIndex=4) then
+    NoteBook1.PageIndex:=NoteBook1.PageIndex-1;
+  NoteBook1.PageIndex:=NoteBook1.PageIndex-1;
+  if NoteBook1.PageIndex<=0 then
+  begin
+    BitBtn3.Enabled:=false;
+    BitBtn1.Enabled:=false;
+  end;
+end;
+
+function TfrmProjectWizard.CreateScript(aType: TListallerPackageType): TXMLDocument;
+var
+  s: String;
+  i,j: Integer;
+  xdoc: TXMLDocument;
+  mn, hn, cnt, xn: TDOMNode;
+const
+  strBool: array[0..1] of String = ('false','true');
+begin
+  xdoc := TXMLDocument.create;
+  Result := xdoc;
+  mn:=xdoc.CreateElement('package');
+  TDOMElement(mn).SetAttribute('version','0.8');
+  case aType of
+    lptLinstall:  TDOMElement(mn).SetAttribute('type','linstall');
+    lptDLink:     TDOMElement(mn).SetAttribute('type','dlink');
+    lptContainer: TDOMElement(mn).SetAttribute('type','container');
+  end;
+  XDoc.AppendChild(mn);
+
+  if (aType=lptContainer) then
+  begin
+    hn := xdoc.CreateElement('application');
+    mn.Appendchild(hn);
+
+    hn:=xdoc.CreateElement('package');
+    cnt:=xdoc.CreateTextNode(FileNameEdit4.FileName);
+    hn.Appendchild(cnt);
+    mn.ChildNodes.Item[0].AppendChild(hn);
+
+    hn:=xdoc.CreateElement('InTerminal');
+    if chkShowInTerminal.Checked then
+      cnt:=xdoc.CreateTextNode(strBool[1])
+    else
+      cnt:=xdoc.CreateTextNode(strBool[0]);
+    hn.Appendchild(cnt);
+    mn.ChildNodes.Item[0].AppendChild(hn);
+
+    exit;
+  end;
+
+  hn:=xdoc.CreateElement('architecture');
+  cnt:=xdoc.CreateTextNode(Edit3.Text);
+  hn.Appendchild(cnt);
+  mn.AppendChild(hn);
+
+  hn:=xdoc.CreateElement('application');
+  TDOMElement(hn).SetAttribute('name', Edit1.Text);
+  mn.AppendChild(hn);
+
+  hn:=xdoc.CreateElement('version');
+  cnt:=xdoc.CreateTextNode(Edit2.Text);
+  hn.Appendchild(cnt);
+  mn.ChildNodes.Item[1].AppendChild(hn);
+
+  if aType=lptLinstall then                     // not used in dlink-packages
+  begin
+    hn:=xdoc.CreateElement('license');
+    cnt:=xdoc.CreateTextNode(FileNameEdit1.FileName);
+    hn.Appendchild(cnt);
+    mn.ChildNodes.Item[1].AppendChild(hn);
+  end;
+
+  hn:=xdoc.CreateElement('description');
+  cnt:=xdoc.CreateTextNode(FileNameEdit2.FileName);
+  hn.Appendchild(cnt);
+  mn.ChildNodes.Item[1].AppendChild(hn);
+
+  s:='';
+  for i:=0 to ListBox1.Items.Count-1 do
+  begin
+    if s='' then
+      s:=ListBox1.Items[i]
+    else
+      s:=s+','+ListBox1.Items[i];
+  end;
+
+  hn:=xdoc.CreateElement('dsupport');
+  cnt:=xdoc.CreateTextNode(s);
+  hn.Appendchild(cnt);
+  mn.ChildNodes.Item[1].AppendChild(hn);
+
+  hn:=xdoc.CreateElement('author');
+  cnt:=xdoc.CreateTextNode(Edit10.Text);
+  hn.Appendchild(cnt);
+  mn.ChildNodes.Item[1].AppendChild(hn);
+
+  if FileExists(FileNameEdit5.FileName) then
+  begin
+    hn:=xdoc.CreateElement('icon');
+    cnt:=xdoc.CreateTextNode(FileNameEdit5.FileName);
+    hn.Appendchild(cnt);
+    mn.ChildNodes.Item[1].AppendChild(hn);
+  end;
+
+  hn:=xdoc.CreateElement('sdesc');
+  TDOMElement(hn).SetAttribute('std', tvShortDescriptions.Items[0].GetFirstChild.Text);
+  mn.ChildNodes.Item[1].AppendChild(hn);
+  for i:=1 to tvShortDescriptions.Items.Count-1 do
+    if i mod 2 = 0 then
+    begin
+      xn:=xdoc.CreateElement(tvShortDescriptions.Items[i].Text);
+      cnt:=xdoc.CreateTextNode(tvShortDescriptions.Items[i].GetFirstChild.Text);
+      xn.Appendchild(cnt);
+      hn.AppendChild(xn);
+    end;
+
+  hn:=xdoc.CreateElement('group');
+  if ComboBox1.ItemIndex=9 then
+    cnt:=xdoc.CreateTextNode('Other')
+  else
+    cnt:=xdoc.CreateTextNode(ComboBox1.Items[ComboBox1.ItemIndex]);
+  hn.Appendchild(cnt);
+  mn.ChildNodes.Item[1].AppendChild(hn);
+
+  if (aType=lptDLink) then
+  begin
+    hn:=xdoc.CreateElement('desktopfiles');
+    cnt:=xdoc.CreateTextNode(Edit12.Text);
+    hn.Appendchild(cnt);
+    mn.ChildNodes.Item[1].AppendChild(hn);
+  end;
+
+  hn:=xdoc.CreateElement('idName');
+  cnt:=xdoc.CreateTextNode(Edit11.Text);
+  hn.Appendchild(cnt);
+  mn.AppendChild(hn);
+
+  if aType=lptLinstall then                // not used in dlink-packages
+  begin
+    hn:=xdoc.CreateElement('profile1');
+    TDOMElement(hn).SetAttribute('id', '0');
+    cnt:=xdoc.CreateTextNode('Standard');
+    hn.Appendchild(cnt);
+    mn.AppendChild(hn);
+  end;
+
+  //Dependencies
+  for i:=0 to tvDependencies.Items.Count-1 do
+  begin
+    if tvDependencies.Items[i].HasChildren then
+    begin
+      if tvDependencies.Items[i].Text='DEB-System' then
+        hn:=xdoc.CreateElement('DepDEB')
+      else if tvDependencies.Items[i].Text='RPM-System' then
+         hn:=xdoc.CreateElement('DepRPM')
+      else
+        hn:=xdoc.CreateElement('Dep'+tvDependencies.Items[i].Text);;
+      for j:=0 to tvDependencies.Items[i].Count-1 do
+      begin
+        xn:=xdoc.CreateElement('d'+IntToStr(j+1));
+        cnt:=xdoc.CreateTextNode(tvDependencies.Items[i].Items[j].Text);
+        xn.Appendchild(cnt);
+        hn.AppendChild(xn);
+      end;
+      mn.AppendChild(hn);
+    end;
+  end;
+end;
+
+procedure TfrmProjectWizard.BitBtn3Click(Sender: TObject);
+var
+  i,j: Integer;s: String;
+  aTreeNode: TTreeNode;
+//XML
+  xdoc: TXMLDocument;
+begin
+  if CreaType=lptLinstall then
+  begin
+  if NoteBook1.PageIndex=4 then
+  begin
+    //Create Scripts
+    with frmEditor do
+    begin
+      //Files
+      if Assigned(FileInfo) then
+        FileInfo.Clear
+      else
+        FileInfo:=TStringList.Create;
+      for i:=0 to lvPackageFiles.Items.Count-1 do
+      begin
+        FilesEdit.Lines.Add(lvPackageFiles.Items[i].SubItems[1]);  // install-path
+        if lvPackageFiles.Items[i].SubItems[2]<>'' then
+          FilesEdit.Lines.Add(lvPackageFiles.Items[i].SubItems[0]+' '+lvPackageFiles.Items[i].SubItems[2])
+        else
+          FilesEdit.Lines.Add(lvPackageFiles.Items[i].SubItems[0]);
+
+        FileInfo.Add(lvPackageFiles.Items[i].SubItems[3]);
+      end;
+
+      //Script
+      xdoc := CreateScript(lptLinstall);
+   
+      writeXMLFile(xDoc,'/tmp/litmp.xml');
+      XDoc.Free;
+      frmEditor.MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.xml');
+      DeleteFile('/tmp/litmp.xml');
+      frmEditor.TabSheet2.TabVisible:=true;
+    end;
+    Close;
+    exit;
+  end;
+
+  case NoteBook1.PageIndex of
+  0: begin
+       NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
+       exit;
+     end;
+  1: begin
+       aTreeNode := tvShortDescriptions.Items.GetFirstNode;
+       repeat
+         if not aTreeNode.HasChildren then
+         begin
+           ShowMessage('Please define a short description of your application ('
+                       +aTreeNode.Text+')!');
+           exit;
+         end;
+         aTreeNode := aTreeNode.GetNextSibling;
+       until aTreeNode=nil;
+       if not FileExists(FileNameEdit2.FileName) then
+       begin
+         ShowMessage('Set the path to an long description file of your application to continue!');
+         exit;
+       end;
+       NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
+       for i:=0 to ListBox1.Count-1 do
+         tvDependencies.Items.Add(nil,ListBox1.Items[i]);
+       exit;
+     end;
+  2: begin
+       NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
+       Edit6.Caption:='$INST/'+Edit1.Text;
+       Edit7.Caption:=Edit6.Caption;
+     end;
+  3: begin
+       if lvPackageFiles.Items.Count<1 then
+       begin
+         ShowMessage('Select some files that will be installed.'#13'- a package without files is useless. ;-)');
+         exit;
+       end;
+       NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
+       //
+       BitBtn3.Caption:='Generate script file';
+       with Memo1.Lines do
+       begin
+         Add('Information about the new setup:');
+         Add('#');
+         Add('Application:');
+         Add('------------');
+         Add('Name:         '+Edit1.Text);
+         Add('Version:      '+Edit2.Text);
+         Add('Class:        '+ComboBox1.Items[ComboBox1.ItemIndex]);
+         if FileExists(FileNameEdit1.FileName) then
+           Add('License-file: '+FileNameEdit1.FileName)
+         else
+           Add('License-file: <none>');
+         if FileExists(FileNameEdit2.FileName) then
+           Add('LDesc-file:   '+FileNameEdit2.FileName)
+         else
+           Add('LDesc-file:   <none>');
+         Add('Short-desc.:  ');
+         if tvShortDescriptions.Items<>nil then
+         begin
+           for i:=0 to tvShortDescriptions.Items.Count-1 do
+             if i mod 2 = 0 then
+               Add('              '+tvShortDescriptions.Items[i].Text+': '+tvShortDescriptions.Items[i].GetFirstChild.Text);
+
+         end
+         else
+           Add('              <none>');
+         Add('Package:');
+         Add('--------');
+         Add('Architecture:     '+Edit3.Text);
+         Add('Supported Distros:');
+         for i:=0 to ListBox1.Count-1 do
+           Add('                  '+ListBox1.Items[i]);
+
+         Add('Dependencies:');
+         Add('-------------');
+         for i:=0 to tvDependencies.Items.Count-1 do
+         begin
+           if tvDependencies.Items[i].HasChildren then
+           begin
+             Add('             '+tvDependencies.Items[i].Text);
+             for j:=0 to tvDependencies.Items[i].Count-1 do
+               Add('                 '+tvDependencies.Items[i].Items[j].Text);
+           end;
+         end;
+         Add('Files:');
+         Add('------');
+         for i:=0 to lvPackageFiles.Items.Count-1 do
+           Add('      '+lvPackageFiles.Items[i].Caption+' || '+lvPackageFiles.Items[i].SubItems[0]+' || '+lvPackageFiles.Items[i].SubItems[1]+
+               ' || '+lvPackageFiles.Items[i].SubItems[2]+' || '+lvPackageFiles.Items[i].SubItems[3]);
+
+         SelectFirst;
+       end;
+     end;
+  end;
+end; //End of Normal
+
+ if CreaType=lptDLink then begin
+   case NoteBook1.PageIndex of
+   1: begin
+      if tvShortDescriptions.Items.Count<=1 then begin ShowMessage('Please define a short description for your application!');exit;end;
+      if not FileExists(FileNameEdit2.FileName) then begin ShowMessage('Set the path to an long description file of your application to continue!');exit;end;
+        NoteBook1.PageIndex:=2;
+        for i:=0 to ListBox1.Count-1 do
+         tvDependencies.Items.Add(nil,ListBox1.Items[i]);
+      end;
+   2: begin
+        if tvDependencies.Items.Count<=(2+ListBox1.Count) then
+        begin
+          ShowMessage('The dlink-package should have at least one dependency!');
+          exit;
+        end;
+        NoteBook1.PageIndex:=4;
+        BitBtn3.Caption:='Generate script file';
+
+        with Memo1.Lines do
+        begin
+          Add('Information about the new setup:');
+          Add('#');
+          Add('Application:');
+          Add('------------');
+          Add('Name:         '+Edit1.Text);
+          Add('Version:      '+Edit2.Text);
+          Add('Class:        '+ComboBox1.Items[ComboBox1.ItemIndex]);
+          if FileExists(FileNameEdit1.FileName) then
+            Add('License-file: '+FileNameEdit1.FileName)
+          else
+            Add('License-file: <none>');
+          if FileExists(FileNameEdit2.FileName) then
+            Add('LDesc-file:   '+FileNameEdit2.FileName)
+          else
+            Add('LDesc-file:   <none>');
+          Add('Short-desc.:  ');
+          if tvShortDescriptions.Items<>nil then
+          begin
+            for i:=0 to tvShortDescriptions.Items.Count-1 do
+              if i mod 2 = 0 then
+                Add('              '+tvShortDescriptions.Items[i].Text+': '+tvShortDescriptions.Items[i].GetFirstChild.Text);
+          end
+          else
+            Add('              <none>');
+          Add('Package:');
+          Add('--------');
+          Add('Architecture:     '+Edit3.Text);
+          Add('Supported Distros:');
+          for i:=0 to ListBox1.Count-1 do
+            Add('                  '+ListBox1.Items[i]);
+
+          Add('Dependencies:');
+          Add('-------------');
+          for i:=0 to tvDependencies.Items.Count-1 do
+          begin
+            if tvDependencies.Items[i].HasChildren then
+            begin
+              Add('             '+tvDependencies.Items[i].Text);
+              for j:=0 to tvDependencies.Items[i].Count-1 do
+                Add('                 '+tvDependencies.Items[i].Items[j].Text);
+            end;
+          end;
+        end;
+      end;
+   4: begin
+        //Create Scripts
+        with frmEditor do
+          begin
+          //Script
+          xdoc := CreateScript(lptDLink);
+          writeXMLFile(xDoc,'/tmp/litmp.xml');
+          XDoc.Free;
+          MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.xml');
+          DeleteFile('/tmp/litmp.xml');
+          TabSheet2.TabVisible:=false;
+        end;
+        Close;
+        exit;
+      end;
+    end;
+  end; //End of DGet
+
+  if CreaType=lptContainer then
+  begin
+    xdoc := CreateScript(lptContainer);
+    writeXMLFile(xDoc,'/tmp/litmp.xml');
+    XDoc.Free;
+    frmEditor.MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.xml');
+    DeleteFile('/tmp/litmp.xml');
+    frmEditor.TabSheet2.TabVisible:=false;
+    Close;
+  end; //End of LOKI
+end;
+
+procedure TfrmProjectWizard.btnAssignShortDescriptionClick(Sender: TObject);
+begin
+  with tvShortDescriptions do
+  begin
+    if Selected<>nil then
+    begin
+      if (Selected.HasChildren)and(Selected<>Items.GetFirstNode) then
+       Selected.DeleteChildren;
+      Items.AddChild(Selected,edtShortDescription.Text);
+    end;
+  end;
+end;
+
+procedure TfrmProjectWizard.Button2Click(Sender: TObject);
+begin
+  if StringReplace(Edit5.Text,' ','',[rfReplaceAll])<>'' then
+    ListBox1.Items.Add(Edit5.Text);
+end;
+
+procedure TfrmProjectWizard.Button3Click(Sender: TObject);
+begin
+  if ListBox1.ItemIndex>0 then
+    ListBox1.Items.Delete(ListBox1.ItemIndex);
+end;
+
+procedure TfrmProjectWizard.Button4Click(Sender: TObject);
+var
+  aNode: TTreeNode;
+begin
+  aNode := tvDependencies.Selected;
+  if not (aNode=nil) then
+  begin
+    if not (aNode.Parent=nil) then aNode := aNode.Parent;
+    if (StringReplace(Edit8.Text,' ','',[rfReplaceAll])<>'') and
+         ((pos('<',Edit8.Text)>0) or
+         ((pos('http://',Edit8.Text)<=0)and(pos('ftp://',Edit8.Text)<=0))) then
+      tvDependencies.Items.AddChild(aNode,Edit8.Text)
+    else
+      ShowMessage('Please add the package-name!');
+  end;
+end;
+
+procedure TfrmProjectWizard.btnAddLangCodeClick(Sender: TObject);
+begin
+  if (Length(edtLangCode.Text)>1)and(edtLangCode.Text<>'') then
+    tvShortDescriptions.Items.Add(nil,LowerCase(edtLangCode.Text));
+end;
+
+procedure TfrmProjectWizard.Button6Click(Sender: TObject);
+var
+  tmp: TStringList;
+  i: Integer;
+  w: String;
+begin
+  if not RadioButton2.Checked then
+  begin
+    tmp:=TStringList.Create;
+    tmp.Assign(FileUtil.FindAllFiles(DirectoryEdit1.Directory,'*',true));
+    for i:=lvPackageFiles.Items.Count to tmp.Count+lvPackageFiles.Items.Count-2 do
+    begin
+      if FileExists(tmp[i]) then
+      begin
+        lvPackageFiles.Items.Add;
+        lvPackageFiles.Items[i].Caption:=ExtractFileName(tmp[i]);
+        lvPackageFiles.Items[i].SubItems.Add(tmp[i]);
+
+        w:=StringReplace(tmp[i],DirectoryEdit1.Directory,'',[rfReplaceAll]);
+        w:=StringReplace(w,ExtractFileName(tmp[i]),'',[rfReplaceAll]);
+        w:=ExcludeTrailingBackslash(w);
+        lvPackageFiles.Items[i].SubItems.Add(Edit6.Text+w);
+        lvPackageFiles.Items[i].SubItems.Add('');
+        lvPackageFiles.Items[i].SubItems.Add(MD5.MDPrint(MD5.MD5File(tmp[i],1024)));
+      end;
+    end;
+    tmp.Free;
+  end
+  else
+  begin
+    lvPackageFiles.Items.Add;
+    i:=lvPackageFiles.Items.Count-1;
+    lvPackageFiles.Items[i].Caption:=ExtractFileName(FileNameEdit3.FileName);
+    lvPackageFiles.Items[i].SubItems.Add(FileNameEdit3.FileName);
+    lvPackageFiles.Items[i].SubItems.Add(Edit7.Text);
+    lvPackageFiles.Items[i].SubItems.Add('');
+    lvPackageFiles.Items[i].SubItems.Add(MD5.MDPrint(MD5.MD5File(FileNameEdit3.FileName,1024)));
+  end;
+end;
+
+procedure TfrmProjectWizard.Edit1Change(Sender: TObject);
+begin
+  Edit11.Caption:=LowerCase(Edit1.Text)+StringReplace(Edit2.Text,'.','',[rfReplaceAll]);
+end;
+
+procedure TfrmProjectWizard.Edit2Change(Sender: TObject);
+begin
+  Edit11.Caption:=LowerCase(Edit1.Text)+StringReplace(Edit2.Text,'.','',[rfReplaceAll]);
+end;
+
+procedure TfrmProjectWizard.FormCreate(Sender: TObject);
+begin
+  SpeedButton4.Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_OPEN,6);
+end;
+
+procedure TfrmProjectWizard.FormShow(Sender: TObject);
+begin
+  NoteBook1.PageIndex:=0;
+  BitBtn1.Enabled:=false;
+  BitBtn3.Caption:='  Next  ';
+end;
+
+procedure TfrmProjectWizard.Label28Click(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmProjectWizard.lvPackageFilesDblClick(Sender: TObject);
+var s: String;
+begin
+  s:=InputBox('Add modifier','Please type in the modifier, that you want to use!','');
+  if (s<>'') then
+    lvPackageFiles.Selected.SubItems[2]:=s
+end;
+
+procedure TfrmProjectWizard.lvPackageFilesKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if Key=46 then                     // Key "DEL"
+  begin
+    if lvPackageFiles.Selected<>nil then
+    lvPackageFiles.Selected.Delete;
+  end;
+end;
+
+procedure TfrmProjectWizard.MenuItem1Click(Sender: TObject);
+begin
+  if lvPackageFiles.Selected<>nil then
+    lvPackageFiles.Selected.Delete;
+end;
+
+procedure TfrmProjectWizard.RadioButton1Change(Sender: TObject);
+begin
+  if (Sender as TRadioButton).Checked then
+  begin
+    GroupBox4.Enabled:=true;
+    GroupBox7.Enabled:=false;
+  end
+  else
+  begin
+    GroupBox4.Enabled:=false;
+    GroupBox7.Enabled:=true;
+  end;
+end;
+
+procedure TfrmProjectWizard.SpeedButton1Click(Sender: TObject);
+begin
+  Notebook1.PageIndex:=1;
+  FileNameEdit2.Enabled:=true;
+  CreaType:=lptLinstall;
+  Label30.Visible:=false;
+  Edit12.Visible:=false;
+  Label29.Visible:=false;
+  BitBtn3.Enabled:=true;
+  BitBtn1.Enabled:=true;
+end;
+
+procedure TfrmProjectWizard.SpeedButton2Click(Sender: TObject);
+begin
+  CreaType:=lptDLink;
+  BitBtn3.Enabled:=true;
+  Label30.Visible:=true;
+  Edit12.Visible:=true;
+  Label29.Visible:=true;
+  FileNameEdit1.Enabled:=false;
+  Notebook1.PageIndex:=1;
+  BitBtn1.Enabled:=true;
+end;
+
+procedure TfrmProjectWizard.SpeedButton3Click(Sender: TObject);
+begin
+  CreaType:=lptContainer;
+  BitBtn3.Caption:='Generate script';
+  BitBtn3.Enabled:=true;
+  NoteBook1.PageIndex:=5;
+  BitBtn1.Enabled:=true;
+end;
+
+procedure TfrmProjectWizard.SpeedButton4Click(Sender: TObject);
+begin
+  frmEditor.mnuFileLoadIPSClick(nil);
+  Close;
+end;
+
+procedure TfrmProjectWizard.tvDependenciesClick(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmProjectWizard.tvDependenciesKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if Key=46 then  // 'DEL'-key
+  begin
+    if tvDependencies.Selected =nil then exit;
+    if not (tvDependencies.Selected.Parent = nil) then
+      tvDependencies.Items.Delete(tvDependencies.Selected);
+  end;
+end;
+
+procedure TfrmProjectWizard.tvShortDescriptionsClick(Sender: TObject);
+begin
+  if (tvShortDescriptions.Selected<>nil) then
+  begin
+    if not (tvShortDescriptions.Selected.Parent = nil) then
+      tvShortDescriptions.Selected := tvShortDescriptions.Selected.Parent;
+    Label12.Caption:='Description for ~'+tvShortDescriptions.Selected.Text+'~:';
+    if tvShortDescriptions.Selected.HasChildren then
+      edtShortDescription.Text := tvShortDescriptions.Selected.GetFirstChild.Text;
+  end;
+end;
+
+procedure TfrmProjectWizard.tvShortDescriptionsKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key=46 then
+  begin
+    if tvShortDescriptions.Selected = nil then exit;           // exit, when nothing selected
+    if tvShortDescriptions.Selected.AbsoluteIndex=0 then exit; // exit, when 1st node selected
+    tvShortDescriptions.Items.Delete(tvShortDescriptions.Selected);
+  end;
+end;
+
+initialization
+  {$I prjwizard.lrs}
+
+end.
+

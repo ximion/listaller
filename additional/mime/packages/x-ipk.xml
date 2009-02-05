@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+ <mime-type type="application/x-ipk">
+  <sub-class-of type="application/x-zip-compressed"/>
+  <glob pattern="*.ipk"/>
+  <alias type="application/x-ipk"/>
+  <comment>Software installation package</comment>
+  <comment xml:lang="de">Software Installationspaket</comment>
+ </mime-type>
+</mime-info> 
+
+

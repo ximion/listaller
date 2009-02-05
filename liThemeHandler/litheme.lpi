@@ -1,0 +1,281 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="7"/>
+    <General>
+      <Flags>
+        <LRSInOutputDirectory Value="False"/>
+      </Flags>
+      <MainUnit Value="0"/>
+      <TargetFileExt Value=""/>
+      <Title Value="Theme Handler"/>
+      <Icon Value="0"/>
+      <ActiveEditorIndexAtStart Value="0"/>
+    </General>
+    <VersionInfo>
+      <ProjectVersion Value=""/>
+    </VersionInfo>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|ppw|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+        <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+    </RequiredPackages>
+    <Units Count="11">
+      <Unit0>
+        <Filename Value="litheme.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="litheme"/>
+        <CursorPos X="38" Y="16"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="26"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="thinstall.pas"/>
+        <ComponentName Value="isFrm"/>
+        <IsPartOfProject Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="thinstall"/>
+        <CursorPos X="1" Y="116"/>
+        <TopLine Value="95"/>
+        <EditorIndex Value="0"/>
+        <UsageCount Value="26"/>
+        <Loaded Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="../swcatalog.pas"/>
+        <ComponentName Value="SCForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="swcatalog"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../utilities.pas"/>
+        <UnitName Value="utilities"/>
+        <CursorPos X="13" Y="41"/>
+        <TopLine Value="27"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="13"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="../manager.pas"/>
+        <ComponentName Value="mnFrm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="manager"/>
+        <CursorPos X="15" Y="67"/>
+        <TopLine Value="56"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="../../../../../../usr/lib/lazarus/lcl/fileutil.pas"/>
+        <UnitName Value="FileUtil"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="66"/>
+        <UsageCount Value="11"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="../../../../../../usr/lib/lazarus/lcl/include/picture.inc"/>
+        <CursorPos X="76" Y="9"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="../../../../../../usr/lib/lazarus/lcl/include/fpimagebitmap.inc"/>
+        <CursorPos X="1" Y="123"/>
+        <TopLine Value="100"/>
+        <UsageCount Value="10"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="../distri.pas"/>
+        <UnitName Value="distri"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="186"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="../xtypefm.pas"/>
+        <ComponentName Value="imdFrm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="xtypefm"/>
+        <CursorPos X="16" Y="93"/>
+        <TopLine Value="66"/>
+        <UsageCount Value="10"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="../trstrings.pas"/>
+        <UnitName Value="trstrings"/>
+        <CursorPos X="1" Y="141"/>
+        <TopLine Value="120"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit10>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="278" Column="89" TopLine="250"/>
+      </Position1>
+      <Position2>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="235" Column="28" TopLine="231"/>
+      </Position2>
+      <Position3>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="271" Column="10" TopLine="222"/>
+      </Position3>
+      <Position4>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="52" Column="31" TopLine="52"/>
+      </Position4>
+      <Position5>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="262" Column="33" TopLine="234"/>
+      </Position5>
+      <Position6>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="164" Column="29" TopLine="158"/>
+      </Position6>
+      <Position7>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="250" Column="19" TopLine="227"/>
+      </Position7>
+      <Position8>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="51" Column="43" TopLine="50"/>
+      </Position8>
+      <Position9>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="176" Column="5" TopLine="155"/>
+      </Position9>
+      <Position10>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="38" Column="26" TopLine="37"/>
+      </Position10>
+      <Position11>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="39" Column="26" TopLine="37"/>
+      </Position11>
+      <Position12>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="177" Column="3" TopLine="154"/>
+      </Position12>
+      <Position13>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="55" Column="51" TopLine="54"/>
+      </Position13>
+      <Position14>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="272" Column="5" TopLine="66"/>
+      </Position14>
+      <Position15>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="37" Column="20" TopLine="28"/>
+      </Position15>
+      <Position16>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="38" Column="20" TopLine="28"/>
+      </Position16>
+      <Position17>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="39" Column="20" TopLine="28"/>
+      </Position17>
+      <Position18>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="40" Column="20" TopLine="28"/>
+      </Position18>
+      <Position19>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="27" Column="71" TopLine="9"/>
+      </Position19>
+      <Position20>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="84" Column="148" TopLine="61"/>
+      </Position20>
+      <Position21>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="86" Column="7" TopLine="63"/>
+      </Position21>
+      <Position22>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="26" Column="23" TopLine="1"/>
+      </Position22>
+      <Position23>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="86" Column="57" TopLine="66"/>
+      </Position23>
+      <Position24>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="94" Column="129" TopLine="71"/>
+      </Position24>
+      <Position25>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="96" Column="57" TopLine="73"/>
+      </Position25>
+      <Position26>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="101" Column="22" TopLine="78"/>
+      </Position26>
+      <Position27>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="390" Column="52" TopLine="30"/>
+      </Position27>
+      <Position28>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="52" Column="27" TopLine="30"/>
+      </Position28>
+      <Position29>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="34" Column="21" TopLine="30"/>
+      </Position29>
+      <Position30>
+        <Filename Value="thinstall.pas"/>
+        <Caret Line="363" Column="26" TopLine="341"/>
+      </Position30>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="8"/>
+    <Target>
+      <Filename Value="../bin/litheme"/>
+    </Target>
+    <SearchPaths>
+      <OtherUnitFiles Value="../"/>
+      <LCLWidgetType Value="gtk2"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <CStyleOperator Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
+    <Linking>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+    <Other>
+      <CompilerPath Value="$(CompPath)"/>
+    </Other>
+  </CompilerOptions>
+</CONFIG>

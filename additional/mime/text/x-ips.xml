@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+ <mime-type type="text/x-ips">
+  <sub-class-of type="text/plain"/>
+  <comment>IPS script</comment>
+  <comment xml:lang="de">IPS skript</comment>
+  <acronym>IPS</acronym>
+  <expanded-acronym>Installation Package Source file</expanded-acronym>
+  <glob pattern="*.ips"/>
+  <alias type="text/x-ips"/>
+ </mime-type>
+</mime-type>

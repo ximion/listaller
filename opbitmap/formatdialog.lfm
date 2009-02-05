@@ -1,0 +1,163 @@
+object FormatDialog: TFormatDialog
+  Left = 513
+  Height = 280
+  Top = 235
+  Width = 294
+  HorzScrollBar.Page = 293
+  VertScrollBar.Page = 279
+  ActiveControl = Button1
+  Caption = 'Save Options'
+  OnClose = FormClose
+  OnShow = FormShow
+  Position = poMainFormCenter
+  object PageControl1: TPageControl
+    Height = 232
+    Width = 294
+    ActivePage = TabJPEG
+    Align = alTop
+    TabIndex = 0
+    TabOrder = 0
+    object TabJPEG: TTabSheet
+      Caption = 'JPEG'
+      object Label1: TLabel
+        Left = 14
+        Height = 13
+        Top = 28
+        Width = 41
+        Caption = 'Quality'
+        Color = clNone
+        ParentColor = False
+      end
+      object Label2: TLabel
+        Left = 14
+        Height = 13
+        Top = 52
+        Width = 67
+        Caption = 'Progressive'
+        Color = clNone
+        ParentColor = False
+      end
+      object Label3: TLabel
+        Left = 14
+        Height = 13
+        Top = 83
+        Width = 58
+        Caption = 'Grayscale'
+        Color = clNone
+        ParentColor = False
+      end
+      object Label4: TLabel
+        Left = 14
+        Height = 13
+        Top = 116
+        Width = 52
+        Caption = 'Comment'
+        Color = clNone
+        ParentColor = False
+      end
+      object SpinEdit1: TSpinEdit
+        Left = 94
+        Height = 23
+        Top = 18
+        Width = 50
+        TabOrder = 0
+        Value = 70
+      end
+      object CheckBox1: TCheckBox
+        Left = 94
+        Height = 20
+        Top = 45
+        Width = 24
+        TabOrder = 1
+      end
+      object CheckBox2: TCheckBox
+        Left = 94
+        Height = 20
+        Top = 76
+        Width = 24
+        TabOrder = 2
+      end
+      object Edit1: TEdit
+        Left = 94
+        Height = 23
+        Top = 106
+        Width = 184
+        TabOrder = 3
+        Text = 'Created with OPBitmap'
+      end
+    end
+    object TabBMP: TTabSheet
+      Caption = 'BMP / TGA'
+      object CheckBox3: TCheckBox
+        Left = 78
+        Height = 20
+        Top = 84
+        Width = 101
+        Caption = 'RLE Encoded'
+        TabOrder = 0
+      end
+    end
+    object TabGIF: TTabSheet
+      Caption = 'GIF'
+      object CheckBox4: TCheckBox
+        Left = 86
+        Height = 20
+        Top = 84
+        Width = 79
+        Caption = 'Interlaced'
+        TabOrder = 0
+      end
+    end
+    object TabPNG: TTabSheet
+      Caption = 'PNG'
+      object Label5: TLabel
+        Left = 46
+        Height = 13
+        Top = 81
+        Width = 29
+        Caption = 'Filter'
+        Color = clNone
+        ParentColor = False
+      end
+      object ComboBox1: TComboBox
+        Left = 110
+        Height = 25
+        Top = 69
+        Width = 100
+        AutoCompleteText = [cbactEndOfLineComplete, cbactSearchAscending]
+        ItemIndex = 0
+        Items.Strings = (
+          'fiNone'
+          'fiDiffH'
+          'fiDiffV'
+          'fiAverage'
+          'fiPaeth'
+          'fiBest'
+        )
+        MaxLength = 0
+        TabOrder = 0
+        Text = 'fiNone'
+      end
+    end
+  end
+  object Button1: TButton
+    Left = 48
+    Height = 25
+    Top = 240
+    Width = 75
+    BorderSpacing.InnerBorder = 4
+    Caption = 'OK'
+    ModalResult = 1
+    TabOrder = 1
+  end
+  object Button2: TButton
+    Left = 168
+    Height = 25
+    Top = 240
+    Width = 75
+    BorderSpacing.InnerBorder = 4
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 2
+  end
+end

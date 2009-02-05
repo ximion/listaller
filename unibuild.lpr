@@ -175,8 +175,8 @@ var control: TStringList;n: String;i: Integer;
    p: TProcess;
    s: String;
 begin
-  CreateDir(pk.out+'/debuild');
-  CreateDir(pk.out+'/debuild/DEBIAN');
+  CreateDir(pk.out+'/pkbuild');
+  CreateDir(pk.out+'/pkbuild/DEBIAN');
   control:=TStringList.Create;
   with control do begin
     Add('Package: '+pk.pkName);
@@ -199,7 +199,7 @@ begin
     for i:=1 to pk.desc.Count-1 do
     Add('  '+pk.desc[i]);
 
-    SaveToFile(pk.out+'/debuild/DEBIAN/control');
+    SaveToFile(pk.out+'/pkbuild/DEBIAN/control');
     Free;
   end;
 
@@ -208,9 +208,9 @@ p.Options:=[poUsePipes];
 p.CurrentDirectory:=pk.path;
 
 for i:=0 to pk.build.count-1 do begin
- p.CommandLine:='dpkg -b '+pk.out+'/debuild/';
+ p.CommandLine:='dpkg -b '+pk.out+'/pkbuild/';
 
- writeLn('[Exec]: dpkg -b');
+ writeLn('[Exec]: dpkg');
  p.Execute;
 
 
@@ -256,38 +256,36 @@ end;
 end;
 
 procedure TUniBuilder.CreateRPM(pk: TPackInfo);
-var control: TStringList;n: String;i: Integer;
+var spec: TStringList;n: String;i: Integer;
    M: TMemoryStream;
    nm: LongInt;
    BytesRead: LongInt;
    p: TProcess;
    s: String;
 begin
-  CreateDir(pk.out+'/debuild');
-  CreateDir(pk.out+'/debuild/DEBIAN');
-  control:=TStringList.Create;
-  with control do begin
-    Add('Package: '+pk.pkName);
-    n:=CmdResult('uname -m');
-    if (n='i686')
-    or (n='i586')
-    or (n='i486')
-    then n:='i386';
-    Add('Architecture: '+n);
+  spec:=TStringList.Create;
+  with spec do begin
+    Add('Name: '+pk.pkName);
     Add('Version: '+pk.Version);
     Add('Maintainer: '+pk.Maintainer);
-    Add('Priority: extra');
-    if pk.depDEB.Count>0 then begin
-    n:=pk.depDEB[0];
-     for i:=1 to pk.depDEB.Count-1 do
-       n:=n+', '+pk.depDEB[i]
+    Add('Group: Applications/Other');
+    Add('Summary: '+pk.desc[0]);
+    if pk.Author <> '' then
+    Add('Vendor: '+pk.Author);
+  //  Add('Priority: extra');
+    if pk.depRPM.Count>0 then begin
+    n:=pk.depRPM[0];
+     for i:=1 to pk.depRPM.Count-1 do
+       n:=n+', '+pk.depRPM[i]
     end;
-    Add('Depends: '+n);
-    Add('Description: '+pk.desc[0]);
+    Add('Requires: '+n);
+    Add('%description');
     for i:=1 to pk.desc.Count-1 do
     Add('  '+pk.desc[i]);
 
-    SaveToFile(pk.out+'/debuild/DEBIAN/control');
+    Add('%files');
+    Add('/');
+    SaveToFile(pk.out+'/'+pk.pkName+'.spec');
     Free;
   end;
 
@@ -296,9 +294,9 @@ p.Options:=[poUsePipes];
 p.CurrentDirectory:=pk.path;
 
 for i:=0 to pk.build.count-1 do begin
- p.CommandLine:='dpkg -b '+pk.out+'/debuild/';
+ p.CommandLine:='rpmbuild -bb --rmspec --root="'+pk.out+'/pkbuild/"'+' --buildroot="'+pk.out+'/pkbuild/"'+' '+pk.out+'/'+pk.pkName+'.spec';
 
- writeLn('[Exec]: dpkg -b');
+ writeLn('[Exec]: rpmbuild');
  p.Execute;
 
 

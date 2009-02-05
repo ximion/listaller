@@ -1,0 +1,536 @@
+# Turkish translation for listaller
+# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
+# This file is distributed under the same license as the listaller package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: listaller\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2008-09-08 20:08-0400\n"
+"PO-Revision-Date: 2008-10-05 12:50+0000\n"
+"Last-Translator: hub <Unknown>\n"
+"Language-Team: Turkish <tr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2008-11-24 18:12+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: trstrings:instaborted
+msgid "Installation aborted."
+msgstr "Yüklenme durduruldu."
+
+#: trstrings:strappninstall
+msgid "The application %a was not installed."
+msgstr ""
+
+#: trstrings:strwasinstalled
+msgid "The application %a was installed successfully!"
+msgstr ""
+
+#: trstrings:strinstallnow
+msgid "Install now"
+msgstr "Şimdi kur"
+
+#: trstrings:runparam
+msgid "Please run listallgo with path to install-package as first parameter!"
+msgstr ""
+
+#: trstrings:strwelcome
+msgid "Welcome!"
+msgstr "Hoş geldiniz!"
+
+#: trstrings:ntostart
+msgid "Press \"Next\" to start the installation!"
+msgstr "Kurmak icin \"Devam\" basiniz !"
+
+#: trstrings:progdesc
+msgid "Program description:"
+msgstr ""
+
+#: trstrings:license
+msgid "Software license"
+msgstr ""
+
+#: trstrings:pleaseread
+msgid "Please read the following information carefully:"
+msgstr ""
+
+#: trstrings:running
+msgid "Running installation..."
+msgstr ""
+
+#: trstrings:plwait
+msgid "Please wait."
+msgstr ""
+
+#: trstrings:strswarning
+msgid "Make sure that you can trust the package publisher!"
+msgstr ""
+
+#: trstrings:complete
+msgid "Installation completed!"
+msgstr ""
+
+#: trstrings:prfinish
+msgid "Press \"Finish\" to close."
+msgstr ""
+
+#: trstrings:finish
+msgid "Finish"
+msgstr ""
+
+#: trstrings:strabort
+msgid "Abort"
+msgstr ""
+
+#: trstrings:strback
+msgid "Back"
+msgstr ""
+
+#: trstrings:strnext
+msgid "Next"
+msgstr ""
+
+#: trstrings:strdisplog
+msgid "Display installation log"
+msgstr ""
+
+#: trstrings:striagree
+msgid "I agree with the above terms and conditions"
+msgstr ""
+
+#: trstrings:strinagree
+msgid "I don't agree"
+msgstr ""
+
+#: trstrings:strldnsupported
+msgid "Your Linux distribution is not supported by Listaller yet!"
+msgstr ""
+
+#: trstrings:strnsupported
+msgid "Your Linux distribution is not supported by this package!"
+msgstr ""
+
+#: trstrings:strinclose
+msgid "The installer will close now"
+msgstr ""
+
+#: trstrings:notifydevs
+msgid "Please notify the developers on http://launchpad.net/listaller"
+msgstr ""
+
+#: trstrings:strextracterror
+msgid "Error while extracting files!"
+msgstr ""
+
+#: trstrings:strpkgdm
+msgid ""
+"The Listaller-package could be damaged or you haven't enough rights for "
+"access some files"
+msgstr ""
+
+#: trstrings:strabload
+msgid "Loading aborted."
+msgstr ""
+
+#: trstrings:stralreadyinst
+msgid "This application is already installed"
+msgstr ""
+
+#: trstrings:strinstallagain
+msgid "Do you want to install it again?"
+msgstr ""
+
+#: trstrings:strwelcometo
+msgid "Welcome to the installation of %a"
+msgstr ""
+
+#: trstrings:strinstof
+msgid "Installation of %a"
+msgstr ""
+
+#: trstrings:strpkginval
+msgid "The package was invalid!"
+msgstr ""
+
+#: trstrings:strcouldntsolve
+msgid "Dependencies couldn't be solved!"
+msgstr ""
+
+#: trstrings:strviewlog
+msgid "Please view the logfile at %p"
+msgstr ""
+
+#: trstrings:strpkgerror
+msgid "Installation package is corrupt"
+msgstr ""
+
+#: trstrings:strappclose
+msgid "The application will close now "
+msgstr ""
+
+#: trstrings:strstep1
+msgid "Phase 1/4: Resolving dependencies..."
+msgstr ""
+
+#: trstrings:strwdldep
+msgid "This application wants to download & install a dependency from %l"
+msgstr ""
+
+#: trstrings:strwallow
+msgid "Do you want to allow it?"
+msgstr ""
+
+#: trstrings:strlicloseani
+msgid "Listaller will close now. Application couldn't be installed."
+msgstr ""
+
+#: trstrings:strstep2
+msgid "Phase 2/4: Installing files..."
+msgstr ""
+
+#: trstrings:strstep3
+msgid "Phase 3/4: Chmod new files..."
+msgstr ""
+
+#: trstrings:strstep4
+msgid "Phase 4/4: Registering application..."
+msgstr ""
+
+#: trstrings:straddupdsrc
+msgid "This package tries to add the following update source: "
+msgstr ""
+
+#: trstrings:strqaddupdsrc
+msgid "Should this source be added to the update-list?"
+msgstr ""
+
+#: trstrings:strfinished
+msgid "Finished"
+msgstr ""
+
+#: trstrings:strinstanyway
+msgid "Do you want to install it anyway? (This could be problematical)"
+msgstr ""
+
+#: trstrings:strinvarchitecture
+msgid "This package was not build for this system-architecture"
+msgstr ""
+
+#: trstrings:strwilldlfiles
+msgid "(This program will download the needed files from the internet)"
+msgstr ""
+
+#: trstrings:strinvaliddversion
+msgid "Package was not build for this release."
+msgstr ""
+
+#: trstrings:strcngetdep
+msgid "Problem while downloading the dep-file."
+msgstr ""
+
+#: trstrings:strftpfailed
+msgid ""
+"Problem while downloading the packages. Maybe the login on the FTP-Server "
+"failed."
+msgstr ""
+
+#: trstrings:strsuccess
+msgid "Success!"
+msgstr ""
+
+#: trstrings:strmain
+msgid "Main"
+msgstr ""
+
+#: trstrings:strdetails
+msgid "Details"
+msgstr ""
+
+#: trstrings:strinstallation
+msgid "Installation"
+msgstr ""
+
+#: trstrings:strnoldsources
+msgid ""
+"There are no sources available for your Linux-distributionTry to install "
+"common packages?"
+msgstr ""
+
+#: trstrings:strusecomppq
+msgid "Use compatible packages?"
+msgstr ""
+
+#: trstrings:strnocomp
+msgid "No compatible packages found!"
+msgstr ""
+
+#: trstrings:strupdsources
+msgid "Update sources"
+msgstr ""
+
+#: trstrings:strclose
+msgid "Close"
+msgstr ""
+
+#: trstrings:strdelsrc
+msgid "Delete source"
+msgstr ""
+
+#: trstrings:strlistofsrc
+msgid "Here's a list of all update-sources:"
+msgstr ""
+
+#: trstrings:struninstall
+msgid "Uninstall"
+msgstr ""
+
+#: trstrings:strinstnew
+msgid "Install new application"
+msgstr ""
+
+#: trstrings:strshowsettings
+msgid "Listaller settings"
+msgstr ""
+
+#: trstrings:strswcatalogue
+msgid "Software catalogue"
+msgstr ""
+
+#: trstrings:strshow
+msgid "Show:"
+msgstr ""
+
+#: trstrings:strall
+msgid "All"
+msgstr ""
+
+#: trstrings:streducation
+msgid "Education"
+msgstr ""
+
+#: trstrings:stroffice
+msgid "Office"
+msgstr ""
+
+#: trstrings:strdevelopment
+msgid "Development"
+msgstr ""
+
+#: trstrings:strgraphic
+msgid "Graphic"
+msgstr ""
+
+#: trstrings:strnetwork
+msgid "Network"
+msgstr ""
+
+#: trstrings:strgames
+msgid "Games"
+msgstr ""
+
+#: trstrings:strsystem
+msgid "System"
+msgstr ""
+
+#: trstrings:strmultimedia
+msgid "Multimedia"
+msgstr ""
+
+#: trstrings:straddidional
+msgid "Additional"
+msgstr ""
+
+#: trstrings:strother
+msgid "Other"
+msgstr ""
+
+#: trstrings:strversion
+msgid "Version"
+msgstr ""
+
+#: trstrings:strauthor
+msgid "Autor"
+msgstr ""
+
+#: trstrings:strusername
+msgid "Username"
+msgstr ""
+
+#: trstrings:strpassword
+msgid "Password"
+msgstr ""
+
+#: trstrings:strproxysettings
+msgid "Proxy-Settings"
+msgstr ""
+
+#: trstrings:strenableproxy
+msgid "Enable Proxy-Server"
+msgstr ""
+
+#: trstrings:strlokierror
+msgid "Can't load LOKI-Setup information."
+msgstr ""
+
+#: trstrings:strcannotloadicon
+msgid ""
+"Unable to load the icon of %a. Please notify the developers of Listaller or "
+"this application!"
+msgstr ""
+
+#: trstrings:strautoloaddep
+msgid "Load dependencies from included webserver-urls automatically"
+msgstr ""
+
+#: trstrings:strready
+msgid "Ready."
+msgstr ""
+
+#: trstrings:strconvertpkg
+msgid ""
+"You want to install an %x-Package, but your Linux-Distribution's package "
+"system is %y.This package can be converted using \"alien\", but this will "
+"take some time and eventually the application won't workDo you want to "
+"convert the package now?"
+msgstr ""
+
+#: trstrings:strconvertpkgq
+msgid "Convert package?"
+msgstr ""
+
+#: trstrings:strconvtitle
+msgid "Converting %p package..."
+msgstr ""
+
+#: trstrings:strfiltering
+msgid "Filtering..."
+msgstr ""
+
+#: trstrings:strfilter
+msgid "Filter:"
+msgstr ""
+
+#: trstrings:strloading
+msgid "Loading..."
+msgstr ""
+
+#: trstrings:strcategory
+msgid "Category:"
+msgstr ""
+
+#: trstrings:strwinstalldl
+msgid "Select software you want to download and to install:"
+msgstr ""
+
+#: trstrings:strnoinfo
+msgid "No information available!"
+msgstr ""
+
+#: trstrings:strdlsetup
+msgid "Downloading set-up..."
+msgstr ""
+
+#: trstrings:strerrcontactman
+msgid ""
+"Cannot download this package. Please contact the catalogue managers on %h"
+msgstr ""
+
+#: trstrings:strinstalling
+msgid "Running application installation..."
+msgstr ""
+
+#: trstrings:strdownloadctbase
+msgid "Downloading catalogue base information..."
+msgstr ""
+
+#: trstrings:stropenpage
+msgid "Loading catalogue page..."
+msgstr ""
+
+#: trstrings:strctdlabort
+msgid "Do you really want to abort this download?"
+msgstr ""
+
+#: trstrings:strrealuninstq
+msgid "Do you really want to uninstall %a?"
+msgstr ""
+
+#: trstrings:strunistsuccess
+msgid "Application uninstalled successfully!"
+msgstr ""
+
+#: trstrings:strrmerror
+msgid "Error while uninstalling!"
+msgstr ""
+
+#: trstrings:strcannothandlerm
+msgid ""
+"This application is not a MoJo-Installation and no other package-type "
+"Listaller can handle."
+msgstr ""
+
+#: trstrings:strrmunsddeps
+msgid "Uninstalling unused deps..."
+msgstr ""
+
+#: trstrings:struninstalling
+msgid "Uninstalling..."
+msgstr ""
+
+#: trstrings:strrmpkg
+msgid ""
+"Do you really want to remove \"%p\", containing %a?The following package(s) "
+"will be removed also: %plIf you aren't sure that you won't need those "
+"packages, press \"No\"!"
+msgstr ""
+
+#: trstrings:strrmpkgq
+msgid "Really remove?"
+msgstr ""
+
+#: trstrings:strwaiting
+msgid "Waiting..."
+msgstr ""
+
+#: trstrings:strrmappc
+msgid "Uninstalling %a"
+msgstr ""
+
+#: trstrings:strnoupdates
+msgid "There are no updates available!"
+msgstr ""
+
+#: trstrings:strlogupdinfo
+msgid "Update info:"
+msgstr ""
+
+#: trstrings:strfileschanged
+msgid "%f files will be changed."
+msgstr ""
+
+#: trstrings:strupdto
+msgid "The application will be updated to version %v"
+msgstr ""
+
+#: trstrings:strcheckforupd
+msgid "Check for updates"
+msgstr ""
+
+#: trstrings:strinstupd
+msgid "Install updates"
+msgstr ""
+
+#: trstrings:strshowupdater
+msgid "Show"
+msgstr ""
+
+#: trstrings:strquitupdater
+msgid "Quit"
+msgstr ""
+
+#: trstrings:strupdinstalling
+msgid "Installing updates..."
+msgstr ""

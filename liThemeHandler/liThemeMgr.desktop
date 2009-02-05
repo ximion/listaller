@@ -1,0 +1,17 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Theme Manager
+GenericName=Manager for system themes
+Icon=/usr/appfiles/liThemeMgr/listaller_themer.png
+Exec=/usr/appfiles/liThemeMgr/litheme
+Categories=Application;Settings;DesktopSettings;
+Path=
+StartupNotify=true
+Type=Application
+X-DCOP-ServiceType=none
+X-KDE-SubstituteUID=false
+X-KDE-Username=
+GenericName[de]=Designs & Wallpapers installieren/entfernen
+Comment[de]=Programm, um Desktop Themes und Wallpaper zu deinstallieren/installieren
+Name[de]=Theme Manager
