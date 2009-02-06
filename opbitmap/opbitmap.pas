@@ -475,7 +475,7 @@ type
     procedure Resample(NewWidth, NewHeight: integer);
     {$ENDIF}
     procedure CopyRect(const Dest: TRect; Canvas: TOPBitmapCanvas; const Source: TRect);
-    procedure CopyRectPlain32SwapRGB(const Dest: TRect; Canvas: TOPBitmapCanvas; const Source: TRect);
+{$ifndef OpbCompat} procedure CopyRectPlain32SwapRGB(const Dest: TRect; Canvas: TOPBitmapCanvas; const Source: TRect); {$endif}
     property Pixels[X, Y: Integer]: TColor read GetPixel write SetPixel;
     property Brush: TBrush read fBrush;
     property Pen: TPen read fPen;
@@ -2409,7 +2409,7 @@ begin
           fBitmap.Pixels[D.Left + x, y + D.Top] := Canvas.fBitmap.Pixels[S.Left + x, y + S.Top];
 end;
 
-
+{$ifndef OpbCompat}
 procedure TOPBitmapCanvas.CopyRectPlain32SwapRGB(const Dest: TRect; Canvas: TOPBitmapCanvas;
   const Source: TRect);
 var Wid, Hei, x, y, swid, dwid: integer;
@@ -2469,7 +2469,7 @@ begin
      //  dparr^[(y + D.Top) * dwid + (D.Left + x)]:=Pixel32(ByteSwapColor(Cardinal(sparr^[(y + S.Top) * swid + (S.Left + x)])));
       end;
 end;
-
+{$endif}
 
 {$IFNDEF VER_MINIMAL}
 procedure TOPBitmapCanvas.Resample(NewWidth, NewHeight: integer);

@@ -2,9 +2,9 @@ Name:             listaller-gtk
 Version:          0.1.87a
 Release:          1
 License:          GPLv3 and LGPLv3
-BuildRequires:    fpc, lazarus, wget, glib2-devel, gtk2-devel, glib-devel, glib2, glib, fpc-src, gtk2, xorg-x11-devel, gdk-pixbuf, gdk-pixbuf-devel
-Source0:          listaller-gtk2_0.1.87.tar.gz
-Requires:         gtk2, cairo, glib2, gdk-pixbuf, xdg-utils, libgnomesu, lsb, glib
+BuildRequires:    fpc, lazarus, wget, glib2-devel, gtk2-devel, glib-devel, glib2, glib, fpc-src, gtk2
+Source0:          listaller-gtk2_0.1.87-1.tar.gz
+Requires:         gtk2, cairo, glib2, xdg-utils, libgnomesu, lsb, glib
 Provides:         listaller
 Group:            Applications/System
 Summary:          Listaller main package (GTK)
@@ -52,21 +52,23 @@ case "$ARCH" in
 
 esac
 
-cd ./listaller-base.gtk2
+cd ./listaller-devel
 make all
 make licreator
 
 %install
-cd ./listaller-base.gtk2
-./install.sh DESTDIR=%{_tmppath}/build-%{name}-%{version}
-make DESTDIR=%{_tmppath}/build-%{name}-%{version}-%{rel} licreator-inst
-make DESTDIR=./debian/listaller-tools litools-inst
+cd ./listaller-devel
+mkdir -p %{_tmppath}/build-%{name}-%{version}/usr/bin
+make DESTDIR=%{_tmppath}/build-%{name}-%{version} install
+make DESTDIR=%{_tmppath}/build-%{name}-%{version} licreator-inst
+make DESTDIR=%{_tmppath}/build-%{name}-%{version} litools-inst
 
 %clean
-cd ./listaller-base.gtk2
+cd ./listaller-devel
 make clean
 
 %files
+%defattr(-,root,root)
 %dir "/usr/bin"
 /etc/lipa/blacklist
 /usr/share/listaller/listallgo

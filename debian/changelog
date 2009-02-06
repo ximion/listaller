@@ -1,4 +1,4 @@
-listaller-gtk2 (0.1.87ppa1) jaunty; urgency=low
+listaller-gtk2 (0.1.87-1) jaunty; urgency=low
 
   * New upstream release
   * Added "listaller-tools" package
