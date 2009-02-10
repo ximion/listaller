@@ -19,7 +19,7 @@ unit XPMime;
 
 interface
 
-uses Classes, janxmlTree, Sysutils, Contnrs {, Dialogs};
+uses Classes, xmlread, dom, Sysutils, Contnrs {, Dialogs};
 
 const
   MIME_JPG = 'image/jpeg';
@@ -73,10 +73,10 @@ type
   private
     fLang: string;
   protected
-    fXML: TjanXMLTree;
+    fXML: TXMLDocument;
     fMimeList: TList;
     procedure ReadMimeInfos;
-    procedure ReadMimeInfo(Node: TjanXMLNode);
+    procedure ReadMimeInfo(Node: TDomNode);
     procedure DebugList;
   public
     constructor Create(MimeFilePath: WideString; Lang: string);
@@ -123,15 +123,28 @@ begin
   inherited;
 end;
 
+procedure StringToMemStream(AString: AnsiString; Strm: TMemoryStream);
+var Len: integer;
+begin
+  if Strm <> nil then
+  begin
+    Len := Length(AString);
+    Strm.Size := Len;
+    Strm.Position := 0;
+    Strm.Write(PChar(AString)^, Len);
+    Strm.Position := 0;
+  end;
+end;
+
 
 constructor TXPMime.Create(MimeFilePath: WideString; Lang: string);
 var Strm: TMemoryStream;
 begin
   fLang := Lang;
-  fXML := TjanXMLTree.create('', '', nil);
-  if MimeFilePath = '' then
-    fXML.LoadFromString(MimeXMLDat) else
-    fXML.LoadFromFile(MimeFilePath);
+  Strm:=TMemoryStream.create;
+  StringToMemStream(MimeXMLDat, Strm);
+  ReadXMLFile(fXML,Strm);
+  Strm.free;
   fMimeList := TList.create;
   ReadMimeInfos;
   MimeMagic := Self;
@@ -153,8 +166,8 @@ begin
   inherited;
 end;
 
-procedure TXPMime.ReadMimeInfo(Node: TjanXMLNode);
-var MagicNode: TjanXMLNode;
+procedure TXPMime.ReadMimeInfo(Node: TDomNode);
+var MagicNode: TDomNode;
   TypeValue, TempStr: string;
   i, nodenumber, CurrentNodeCount: integer;
   Obj: TMimeObject;
@@ -162,24 +175,24 @@ var MagicNode: TjanXMLNode;
 
   mlevel: integer;
   //inner
-  procedure GetMagic(Node: TJanXMLNode; ParentList: TList);
+  procedure GetMagic(Node: TDomNode; ParentList: TList);
   var mi, MagicCount: integer;
     Mo: TMagicObject;
-    CurrentAttr: TjanXMLAttribute;
-    SubNode: TJanXMLNode;
+    CurrentAttr: TDOMAttr;
+    SubNode: TDomNode;
   begin
-    MagicCount := Node.Nodes.Count;
+    MagicCount := Node.ChildNodes.Count;
     for mi := 0 to MagicCount - 1 do
     begin
-      Subnode := TJanXMLNode(Node.Nodes[mi]);
+      Subnode := TDomNode(Node.ChildNodes[mi]);
       Mo := TMagicObject.create;
-      CurrentAttr := Subnode.getNamedAttribute('type');
+      CurrentAttr := TDomAttr(Subnode.Attributes.GetNamedItem('type'));
       if CurrentAttr <> nil then Mo.MagicType := ConvertMagicType(CurrentAttr.Value);
-      CurrentAttr := Subnode.getNamedAttribute('value');
+      CurrentAttr := TDomAttr(Subnode.Attributes.GetNamedItem('value'));
       if CurrentAttr <> nil then Mo.Value := CurrentAttr.Value;
-      CurrentAttr := Subnode.getNamedAttribute('offset');
+      CurrentAttr := TDomAttr(Subnode.Attributes.GetNamedItem('offset'));
       if CurrentAttr <> nil then Mo.Offset := CurrentAttr.Value;
-      CurrentAttr := Subnode.getNamedAttribute('mask');
+      CurrentAttr := TDomAttr(Subnode.Attributes.GetNamedItem('mask'));
       if CurrentAttr <> nil then Mo.Mask := CurrentAttr.Value;
       ParentList.add(Mo);
       if Subnode.hasChildNodes then
@@ -196,26 +209,27 @@ begin
   Obj.PatternList := TStringList.Create;
   Obj.MagicList := TList.Create;
 
-  Obj.MimeType := Node.getNamedAttribute('type').Value;
-  CurrentNodeCount := Node.Nodes.count;
+  Obj.MimeType := Node.Attributes.GetNamedItem('type').NodeValue;
+  CurrentNodeCount := Node.ChildNodes.count;
   nodenumber := 0;
 
   if CurrentNodeCount > 0 then
   begin
-    Obj.StandardName := TjanXMLNode(Node.Nodes[nodenumber]).Value;
+    Obj.StandardName := TDomNode(Node.ChildNodes[nodenumber]).TextContent;
     Obj.UserLangName := Obj.StandardName;
   end;
   nodenumber := 1;
 
   found := false;
-  while (CurrentNodeCount > nodenumber) and (TjanXMLNode(Node.Nodes[nodenumber]).Name = 'comment') do
+  while (CurrentNodeCount > nodenumber) and (TDomNode(Node.ChildNodes[nodenumber]).NodeName = 'comment') do
   begin
     if not found then
     begin
-      TempStr := TjanXMLNode(Node.Nodes[nodenumber]).getNamedAttribute('xml:lang').Value;
+      TempStr := TDomNode(Node.ChildNodes[nodenumber]).Attributes.GetNamedItem('xml:lang').NodeValue;
       if TempStr = fLang then
       begin
-        Obj.UserLangName := TjanXMLNode(Node.Nodes[nodenumber]).value;
+       // Obj.UserLangName := TDomNode(Node.ChildNodes[nodenumber]).Nodevalue;
+        Obj.UserLangName := TDomNode(Node.ChildNodes[nodenumber]).TextContent;
         //Obj.UserLangName := UTF8Decode(Obj.UserLangName);
         found := true;
       end;
@@ -223,17 +237,17 @@ begin
     inc(nodenumber);
   end;
 
-  if (CurrentNodeCount > nodenumber) and (TjanXMLNode(Node.Nodes[nodenumber]).Name = 'magic') then
+  if (CurrentNodeCount > nodenumber) and (TDomNode(Node.ChildNodes[nodenumber]).NodeName = 'magic') then
   begin
-    MagicNode := TJanXMLNode(Node.Nodes[nodenumber]);
+    MagicNode := TDomNode(Node.ChildNodes[nodenumber]);
     mlevel := 0;
     GetMagic(MagicNode, Obj.MagicList);
 
     inc(nodenumber);
   end;
-  while (CurrentNodeCount > nodenumber) and (TjanXMLNode(Node.Nodes[nodenumber]).Name = 'glob') do
+  while (CurrentNodeCount > nodenumber) and (TDomNode(Node.ChildNodes[nodenumber]).NodeName = 'glob') do
   begin
-    TempStr := TjanXMLNode(Node.Nodes[nodenumber]).getNamedAttribute('pattern').Value;
+    TempStr := TDomNode(Node.ChildNodes[nodenumber]).Attributes.GetNamedItem('pattern').NodeValue;
     Obj.PatternList.Add(TempStr);
     inc(nodenumber);
   end;
@@ -242,13 +256,13 @@ begin
 end;
 
 procedure TXPMime.ReadMimeInfos;
-var MimeNode: TjanXMLNode;
+var MimeNode: TDomNode;
   i: integer;
 begin
   fMimeList.Clear;
-  MimeNode := fXML.getNamedNode('mime-info');
-  for i := 0 to MimeNode.Nodes.count - 1 do  //theo debug
-    ReadMimeInfo(TjanXMLNode(MimeNode.Nodes[i]));
+  MimeNode := fXML.FindNode('mime-info');
+  for i := 0 to MimeNode.ChildNodes.count - 1 do  //theo debug
+    ReadMimeInfo(TDomNode(MimeNode.ChildNodes[i]));
 //  DebugList;
 end;
 
@@ -445,7 +459,7 @@ begin
   begin
     MimeTp := TMimeObject(fMimeList[i]).MimeType;
     if (MimeTp = MIME_JPG) or (MimeTp = MIME_BMP) or (MimeTp = MIME_PNG) or (MimeTp = MIME_GIF) or
-      (MimeTp = MIME_OPB) or (MimeTp = MIME_TGA) or (MimeTp = MIME_TIF) then
+      (MimeTp = MIME_OPB) {$ifndef OpbCompat}or (MimeTp = MIME_TGA) or (MimeTp = MIME_TIF) {$endif} then
     begin
       if first then
         Result := TMimeObject(fMimeList[i]).UserLangName + '|' else

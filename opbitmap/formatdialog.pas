@@ -5,7 +5,8 @@ unit formatdialog;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, Buttons, opbitmap, GraphicEx, opbitmapformats,
+  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, Buttons, opbitmap,
+  {$ifndef OpbCompat}GraphicEx,{$endif} opbitmapformats,
   Spin, StdCtrls, ComCtrls, ExtCtrls;
 
 type
@@ -77,7 +78,7 @@ begin
           UseRLE := CheckBox3.Checked;
         end;
       end else
-      
+      {$ifndef OpbCompat}
       if fImage is TTargaGraphic then
       begin
         with fImage as TTargaGraphic do
@@ -85,6 +86,7 @@ begin
           UseRLE := CheckBox3.Checked;
         end;
       end else
+      {$endif}
 
         if fImage is TGIFImage then
         begin
@@ -114,7 +116,7 @@ begin
       TabBMP.TabVisible := False;
       PageControl1.ActivePage:=TabPNG;
     end else
-      if (fImage is TBMPImage) or (fImage is TTargaGraphic) then
+      if (fImage is TBMPImage) {$ifndef OpbCompat}or (fImage is TTargaGraphic){$endif} then
       begin
         TabBMP.TabVisible:=true;
         TabJPEG.TabVisible := False;

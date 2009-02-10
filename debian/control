@@ -1,4 +1,4 @@
-Source: listaller-gtk2
+Source: listaller
 Standards-Version: 3.8.0
 Section: utils
 Maintainer: Matthias Klumpp <matthias@nlinux.org>

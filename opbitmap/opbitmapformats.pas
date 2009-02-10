@@ -20,7 +20,7 @@ interface
 
 uses Classes, Types, SysUtils, opbitmap, bmp, bitmapimage, jpegdecoder, jpegencoder, Bmp2Tiff,
   jpeginputstream, jpegoutputstream, gifdecoder, gif, pngdecoder, gifwrite, CommonPng, pngallstream,
-  GraphicEx, XPMime;
+  {$ifndef OpbCompat}GraphicEx,{$endif} XPMime;
 
 
 type
@@ -114,11 +114,12 @@ type
   end;
 
   { TTIFFImage }
-
+ {$ifndef OpbCompat}
   TTIFFImage = class(TTIFFGraphic)
   public
     procedure SaveToStream(Stream: TStream); override;
   end;
+  {$endif}
 
 { TOPGraphic }
 
@@ -208,6 +209,7 @@ begin
     if MimeType = MIME_PNG then Result := TPNGImage else
       if MimeType = MIME_GIF then Result := TGIFImage else
         if MimeType = MIME_BMP then Result := TBMPImage else
+         if MimeType = MIME_OPB then Result := TCanvasOPBitmap {$ifndef OpbCompat} else
           if MimeType = MIME_TIF then Result := TTIFFImage else
             if MimeType = MIME_PCX then Result := TPCXGraphic else
               if MimeType = MIME_PCD then Result := TPCDGraphic else
@@ -219,8 +221,7 @@ begin
                           if MimeType = MIME_CUT then Result := TCUTGraphic else
                             if MimeType = MIME_RGB then Result := TSGIGraphic else
                               if MimeType = MIME_SGI then Result := TSGIGraphic else
-                                if MimeType = MIME_OPB then Result := TCanvasOPBitmap else
-                                  if MimeType = MIME_TGA then Result := TTargaGraphic;
+                                  if MimeType = MIME_TGA then Result := TTargaGraphic {$endif};
 end;
 
 { TOPPicture }
@@ -293,8 +294,9 @@ begin
   cls := GetClassFromMimeFile(FileName);
   if cls <> nil then
   begin
-    if not ((cls = TJPEGImage) or (cls = TBMPImage) or (cls = TTargaGraphic) or
-      (cls = TGIFImage) or (cls = TCanvasOPBitmap) or (cls = TPNGImage) or (cls = TTIFFImage)) then
+    if not ((cls = TJPEGImage) or (cls = TBMPImage) or (cls = TGIFImage) or
+    (cls = TCanvasOPBitmap) or (cls = TPNGImage) {$ifndef OpbCompat} or
+    (cls = TTargaGraphic) or (cls = TTIFFImage){$endif}) then
       raise EPasBitMapError.Create('File Format not supported for saving') else
     begin
       if fCurrentSaveFormat <> nil then FreeAndNil(fCurrentSaveFormat);
@@ -304,7 +306,8 @@ begin
 
       Continue := True;
 
-      if (cls = TJPEGImage) or (cls = TPNGImage) or (cls = TBMPImage) or (cls = TTargaGraphic) or (cls = TGIFImage) then
+      if (cls = TJPEGImage) or (cls = TPNGImage) or (cls = TBMPImage) {$ifndef OpbCompat}or (cls = TTargaGraphic){$endif}
+      or (cls = TGIFImage) then
       begin
         if Assigned(fOnSaveDetails) then OnSaveDetails(Self, fCurrentSaveFormat as cls, Continue);
       end;
@@ -345,8 +348,9 @@ begin
   cls := GetClassFromMime(Mime);
   if cls <> nil then
   begin
-    if not ((cls = TJPEGImage) or (cls = TBMPImage) or (cls = TTargaGraphic) or
-      (cls = TGIFImage) or (cls = TPNGImage) or (cls = TCanvasOPBitmap) or (cls = TTIFFImage)) then
+    if not ((cls = TJPEGImage) or (cls = TBMPImage) or
+      (cls = TGIFImage) or (cls = TPNGImage) or (cls = TCanvasOPBitmap)
+      {$ifndef OpbCompat}or (cls = TTIFFImage) or (cls = TTargaGraphic){$endif}) then
       raise EPasBitMapError.Create('Format not supported for saving to stream') else
     begin
 
@@ -357,7 +361,7 @@ begin
 
       Continue := True;
 
-      if (cls = TJPEGImage) or (cls = TBMPImage) or (cls = TTargaGraphic) or (cls = TGIFImage) then
+      if (cls = TJPEGImage) or (cls = TBMPImage) {$ifndef OpbCompat}or (cls = TTargaGraphic){$endif} or (cls = TGIFImage) then
       begin
         if Assigned(fOnSaveDetails) then OnSaveDetails(Self, fCurrentSaveFormat as cls, Continue);
       end;
@@ -536,7 +540,7 @@ begin
 end;
 
 { TTIFFImage }
-
+{$ifndef OpbCompat}
 procedure TTIFFImage.SaveToStream(Stream: TStream);
 begin
   if Empty then raise EPasBitMapError.Create('OPBitmap empty');
@@ -546,6 +550,7 @@ begin
   Stream.Position := 0;
   WriteTiffToStream(Stream, Self);
 end;
+{$endif}
 
 initialization
   OPGLoadFilters := MimeMagic.MakeLoadFilter;

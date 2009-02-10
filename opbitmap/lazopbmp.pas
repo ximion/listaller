@@ -5,7 +5,7 @@ unit LazOpBMP;
 interface
 
 uses
-  SysUtils, Classes, FPImage, IntfGraphics, opbitmap, opbitmapformats, GraphicEx, XPMime, Graphics, ClipBrd;
+  SysUtils, Classes, FPImage, IntfGraphics, opbitmap, opbitmapformats, XPMime, Graphics, ClipBrd;
 
 type
 
@@ -77,6 +77,8 @@ procedure Register;
 var mime:TMimeObject;
 var cls:TGraphicClass;
 begin
+  cls:=GetGraphicClassForFileExtension('.bmp');
+  if cls<>nil then TPicture.UnregisterGraphicClass(cls);
   mime:=MimeMagic.GetMimeInfoFromPattern('*.bmp');
   if Assigned(mime) then
   begin

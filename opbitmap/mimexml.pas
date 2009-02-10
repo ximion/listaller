@@ -14,47 +14,47 @@ implementation
 begin
 
 MimeXMLDat:='<?xml version="1.0" encoding="UTF-8"?>'+#13#10+
-'<!DOCTYPE mime-info ['+#13#10+
-'  <!ELEMENT mime-info (mime-type)+>'+#13#10+
-'  <!ATTLIST mime-info xmlns CDATA #FIXED "http://www.freedesktop.org/standards/shared-mime-info">'+#13#10+
-''+#13#10+
-'  <!ELEMENT mime-type (comment|glob|magic)*>'+#13#10+
-'  <!ATTLIST mime-type type CDATA #REQUIRED>'+#13#10+
-''+#13#10+
-'  <!ELEMENT comment (#PCDATA)>'+#13#10+
-'  <!ATTLIST comment xml:lang CDATA #IMPLIED>'+#13#10+
-''+#13#10+
-'  <!ELEMENT glob EMPTY>'+#13#10+
-'  <!ATTLIST glob pattern CDATA #REQUIRED>'+#13#10+
-''+#13#10+
-'  <!ELEMENT magic (match)+>'+#13#10+
-'  <!ATTLIST magic priority CDATA #IMPLIED>'+#13#10+
-''+#13#10+
-'  <!ELEMENT match (match)*>'+#13#10+
-'  <!ATTLIST match offset CDATA #REQUIRED>'+#13#10+
-'  <!ATTLIST match type (string|big16|big32|little16|little32|host16|host32|byte) #REQUIRED>'+#13#10+
-'  <!ATTLIST match value CDATA #REQUIRED>'+#13#10+
-'  <!ATTLIST match mask CDATA #IMPLIED>'+#13#10+
-']>'+#13#10+
-''+#13#10+
-'<!-- '+#13#10+
-'The freedesktop.org shared MIME database (this file) was created by merging'+#13#10+
-'several existing MIME databases (all released under the GPL).'+#13#10+
-''+#13#10+
-'It comes with ABSOLUTELY NO WARRANTY, to the extent permitted by law. You may'+#13#10+
-'redistribute copies of update-mime-database under the terms of the GNU General'+#13#10+
-'Public License. For more information about these matters, see the file named'+#13#10+
-'COPYING.'+#13#10+
-''+#13#10+
-'The latest version is available from:'+#13#10+
-''+#13#10+
-'	http://www.freedesktop.org/standards/shared-mime-info.html'+#13#10+
-''+#13#10+
-'To extend this database, users and applications should create additional'+#13#10+
-'XML files in the ''packages'' directory and run the update-mime-database'+#13#10+
-'command to generate the output files.'+#13#10+
-'-->'+#13#10+
-''+#13#10+
+//'<!DOCTYPE mime-info ['+#13#10+
+//'  <!ELEMENT mime-info (mime-type)+>'+#13#10+
+//'  <!ATTLIST mime-info xmlns CDATA #FIXED "http://www.freedesktop.org/standards/shared-mime-info">'+#13#10+
+//''+#13#10+
+//'  <!ELEMENT mime-type (comment|glob|magic)*>'+#13#10+
+//'  <!ATTLIST mime-type type CDATA #REQUIRED>'+#13#10+
+//''+#13#10+
+//'  <!ELEMENT comment (#PCDATA)>'+#13#10+
+//'  <!ATTLIST comment xml:lang CDATA #IMPLIED>'+#13#10+
+//''+#13#10+
+//'  <!ELEMENT glob EMPTY>'+#13#10+
+//'  <!ATTLIST glob pattern CDATA #REQUIRED>'+#13#10+
+//''+#13#10+
+//'  <!ELEMENT magic (match)+>'+#13#10+
+//'  <!ATTLIST magic priority CDATA #IMPLIED>'+#13#10+
+//''+#13#10+
+//'  <!ELEMENT match (match)*>'+#13#10+
+//'  <!ATTLIST match offset CDATA #REQUIRED>'+#13#10+
+//'  <!ATTLIST match type (string|big16|big32|little16|little32|host16|host32|byte) #REQUIRED>'+#13#10+
+//'  <!ATTLIST match value CDATA #REQUIRED>'+#13#10+
+//'  <!ATTLIST match mask CDATA #IMPLIED>'+#13#10+
+//']>'+#13#10+
+//''+#13#10+
+//'<!-- '+#13#10+
+//'The freedesktop.org shared MIME database (this file) was created by merging'+#13#10+
+//'several existing MIME databases (all released under the GPL).'+#13#10+
+//''+#13#10+
+//'It comes with ABSOLUTELY NO WARRANTY, to the extent permitted by law. You may'+#13#10+
+//'redistribute copies of update-mime-database under the terms of the GNU General'+#13#10+
+//'Public License. For more information about these matters, see the file named'+#13#10+
+//'COPYING.'+#13#10+
+//''+#13#10+
+//'The latest version is available from:'+#13#10+
+//''+#13#10+
+//'	http://www.freedesktop.org/standards/shared-mime-info.html'+#13#10+
+//''+#13#10+
+//'To extend this database, users and applications should create additional'+#13#10+
+//'XML files in the ''packages'' directory and run the update-mime-database'+#13#10+
+//'command to generate the output files.'+#13#10+
+//'-->'+#13#10+
+//''+#13#10+
 '<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">'+#13#10+
 '  <mime-type type="image/bmp">'+#13#10+
 '    <comment>Windows BMP image</comment>'+#13#10+

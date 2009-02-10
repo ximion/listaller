@@ -160,7 +160,6 @@ writeln('Usage: ',ExeName,' [options] file [...]');
 
 writeLn('Listaller main tool to handle ipk-packages');
 writeLn('Usage:');
-writeLn('------------------------------------------------------------------------------------');
 writeln('-?, --help                                 Show this help');
 writeLn('-b, --build [IPS-File] [Output-IPK]       Build ipk-package');
 writeLn('-u, --gen-update [IPS-File] [Repo-Path]    Create/Update update-repository');
@@ -178,7 +177,6 @@ writeLn('--generate-button                          Generates the "Linux-compati
 {writeLn('-st-local [IPK-File] [IPK-Output]         Creates an package that can be installed offline.');
 writeLn('                                           Attention: This fetaure is NOT IMPLEMENTED in this version.');
 writeLn('                                           If it is used later, the new packages will be very big.');}
-writeLn('------------------------------------------------------------------------------------');
 end;
 
 procedure TLipa.OnExeception(Sender : TObject;E : Exception);

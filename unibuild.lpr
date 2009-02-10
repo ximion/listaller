@@ -41,7 +41,7 @@ type
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;
     procedure WriteHelp; virtual;
-    procedure ReadInformation(fips: String; info: TPackInfo);
+    function ReadInformation(fips: String): TPackInfo;
     procedure CreateDEB(pk: TPackInfo);
     procedure CreateRPM(pk: TPackInfo);
   end;
@@ -72,17 +72,15 @@ begin
   end;
 
   if HasOption('b','build') then begin
+    pki:=ReadInformation(paramstr(2));
     pki.out:=ExtractFilePath(paramstr(2));
     pki.path:=ExtractFilePath(paramstr(2));
-    pki.build:=TStringList.Create;
-    pki.desc:=TStringList.Create;
-    pki.depDEB:=TStringList.Create;
-    pki.depRPM:=TStringList.Create;
-    ReadInformation(paramstr(2),pki);
     writeLn('== Creating application ==');
     BuildApplication(pki);
     writeLn('== Creating DEB package ==');
-    CreateDeb(pki);
+    CreateDEB(pki);
+    writeLn('== Creating RPM package ==');
+    CreateRPM(pki);
     Halt;
   end;
 
@@ -115,7 +113,7 @@ begin
 if not FileExists(fname) then begin writeLn('File "'+fname+'" does not exists!');writeLn('Action aborted.');halt(6);end;
 end;
 
-procedure TUniBuilder.ReadInformation(fips: String;info: TPackInfo);
+function TUniBuilder.ReadInformation(fips: String): TPackinfo;
 var tmp,script: TStringList;dc: TXMLDocument;xn: TDOMNode;h: String;i,at: Integer;
 begin
   CheckFileA(fips);
@@ -132,37 +130,46 @@ begin
     tmp.Free;
    script.SaveToFile('/tmp/build-pk.xml');
    script.Free;
+
+    result.build:=TStringList.Create;
+    result.desc:=TStringList.Create;
+    result.depDEB:=TStringList.Create;
+    result.depRPM:=TStringList.Create;
+
    ReadXMLFile(dc,'/tmp/build-pk.xml');
 
    xn:=dc.FindNode('package');
-   info.PkName:=FindChildNode(xn,'pkname').NodeValue;
-   info.Maintainer:=FindChildNode(xn,'maintainer').NodeValue;
+   Result.PkName:=FindChildNode(xn,'pkname').NodeValue;
+   writeLn('Package name: '+result.pkName);
+   result.Maintainer:=FindChildNode(xn,'maintainer').NodeValue;
+   writeLn('Package maintainer: '+result.Maintainer);
     h:=FindChildNode(xn,'build').NodeValue;
     at:=1;
     while length(h)>0 do begin
        at:=pos(';',h);
       if at = 0 then begin
-       info.build.Add(h);
+       result.build.Add(h);
        h:='';
       end else begin
-       info.build.Add(copy(h,1,at-1));
+       result.build.Add(copy(h,1,at-1));
        delete(h,1,at);
       end;
     end;
 
-    xn:=xn.FindNode('DepDEB');
-     for i:=0 to xn.ChildNodes.Count-1 do
-        info.depDEB.Add(xn.ChildNodes.Item[i].FirstChild.NodeValue);
     xn:=dc.FindNode('package');
-    xn:=xn.FindNode('DepRPM');
+    xn:=FindChildNodeX(xn,'DepDEB');
+     for i:=0 to xn.ChildNodes.Count-1 do
+        result.depDEB.Add(xn.ChildNodes.Item[i].FirstChild.NodeValue);
+    xn:=dc.FindNode('package');
+    xn:=FindChildNodeX(xn,'DepRPM');
     for i:=0 to xn.ChildNodes.Count-1 do
-        info.depRPM.Add(xn.ChildNodes.Item[i].FirstChild.NodeValue);
+        result.depRPM.Add(xn.ChildNodes.Item[i].FirstChild.NodeValue);
 
    xn:=dc.DocumentElement.FindNode('application');
 
    CheckFileA(FindChildNode(xn,'description').NodeValue);
-   info.Desc.LoadFromFile(FindChildNode(xn,'description').NodeValue);
-   info.version:=FindChildNode(xn,'version').NodeValue;
+   result.Desc.LoadFromFile(FindChildNode(xn,'description').NodeValue);
+   result.version:=FindChildNode(xn,'version').NodeValue;
 
    DeleteFile('/tmp/build-pk.xml');
 end;
@@ -272,7 +279,8 @@ begin
     Add('Summary: '+pk.desc[0]);
     if pk.Author <> '' then
     Add('Vendor: '+pk.Author);
-  //  Add('Priority: extra');
+    Add('Release: 1');
+    Add('License: XPL');
     if pk.depRPM.Count>0 then begin
     n:=pk.depRPM[0];
      for i:=1 to pk.depRPM.Count-1 do
@@ -284,6 +292,7 @@ begin
     Add('  '+pk.desc[i]);
 
     Add('%files');
+    Add('%defattr(-,root,root)');
     Add('/');
     SaveToFile(pk.out+'/'+pk.pkName+'.spec');
     Free;
@@ -294,7 +303,7 @@ p.Options:=[poUsePipes];
 p.CurrentDirectory:=pk.path;
 
 for i:=0 to pk.build.count-1 do begin
- p.CommandLine:='rpmbuild -bb --rmspec --root="'+pk.out+'/pkbuild/"'+' --buildroot="'+pk.out+'/pkbuild/"'+' '+pk.out+'/'+pk.pkName+'.spec';
+ p.CommandLine:='rpmbuild -bb --rmspec --buildroot="'+pk.out+'/pkbuild/"'+' '+pk.out+'/'+pk.pkName+'.spec';
 
  writeLn('[Exec]: rpmbuild');
  p.Execute;

@@ -840,6 +840,9 @@ z.ExtractOptions:=[eoCreateDirs]+[eoRestorePath];
 z.BaseDirectory:=lp;
 xnode:=Doc.DocumentElement.FindNode('application');
 z.ExtractFiles(ExtractFileName(FindChildNode(xnode,'package').NodeValue));
+for i:=0 to FindChildNode(xnode,'package').ChildNodes.Count-1 do
+z.ExtractFiles(ExtractFileName(FindChildNode(xnode,'package').ChildNodes[i].NodeValue));
+
 z.Free;
  t:=tprocess.create(nil);
  t.CommandLine:='chmod 755 ''/tmp/'+FindChildNode(xnode,'package').NodeValue+'''';
@@ -1422,7 +1425,7 @@ end;
 if USource<>'#' then begin
 fi:=TStringList.Create;
 if not FileExists(RegDir+'updates.list') then begin
-fi.Add('Listaller UpdateSources-pk0.6');
+fi.Add('Listaller UpdateSources-V0.8');
 fi.SaveToFile(RegDir+'updates.list');
 end;
 fi.LoadFromFile(RegDir+'updates.list');

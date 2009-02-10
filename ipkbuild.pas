@@ -41,8 +41,10 @@ type
     @param azipfilename Name of the ZIP file
     @param afiles List of files the archive should contain}
 procedure BuildZIP(azipfilename : string; afiles : TStringList);
-//** Helper method: Finds a child-node in a XML tree structure @returns Found node as TDOMNode
+//** Helper method: Finds a child-node in a XML tree structure @returns First child of the found node as TDOMNode
 function FindChildNode(dn: TDOMNode; n: String): TDOMNode;
+//** Helper method: Finds a child-node in a XML tree structure @returns Found node as TDOMNode
+function FindChildNodeX(dn: TDOMNode; n: String): TDOMNode;
 //** Set a node's value (Deprecated)
 procedure SetNode(dn: TDOMNode; val: String);
 {** Creates an IPK-Update-Source (IPKUS)
@@ -106,6 +108,16 @@ Result:=dn.ChildNodes.Item[i].FirstChild;break;exit;end;
 end;
 end;
 
+function FindChildNodeX(dn: TDOMNode; n: String): TDOMNode;
+var i: Integer;
+begin
+Result:=nil;
+for i:=0 to dn.ChildNodes.Count-1 do begin
+if LowerCase(dn.ChildNodes.Item[i].NodeName)=LowerCase(n) then begin
+Result:=dn.ChildNodes.Item[i];break;exit;end;
+end;
+end;
+
 procedure SetNode(dn: TDOMNode; val: String);
 begin
 dn.NodeValue:=val;
@@ -119,19 +131,22 @@ var i: Integer;
    p: TProcess;
    s: String;
 begin
+CreateDir(pk.out+'/pkbuild');
 p:=TProcess.Create(nil);
 p.Options:=[poUsePipes];
-p.CurrentDirectory:=pk.path;
 
 for i:=0 to pk.build.count-1 do begin
- if pk.build[i][1]='.' then
- p.CommandLine:=pk.path+pk.build[i]
- else
+ if pk.build[i][1]='.' then begin
+ p.CommandLine:=pk.path+pk.build[i];
+ p.CurrentDirectory:=ExtractFilePath(copy(pk.path+pk.build[i],0,pos(' ',pk.path+pk.build[i])));
+ end else begin
  p.CommandLine:=pk.build[i];
+ p.CurrentDirectory:=ExtractFilePath(copy(pk.build[i],0,pos(' ',pk.build[i])));
+ end;
 
  writeLn('[Exec]: '+pk.build[i]);
  p.Execute;
-
+ n:=0;
 
  M := TMemoryStream.Create;
  m.Clear;
@@ -174,7 +189,7 @@ for i:=0 to pk.build.count-1 do begin
 end;
 
 p.Free;
-FreeAndNil(pk.build);
+pk.build.Free;
 end;
 
 ////////////////////////////////////////////////////////////////////////////////

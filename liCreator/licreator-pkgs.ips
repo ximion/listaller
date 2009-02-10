@@ -4,19 +4,20 @@ IPK-Source.Version: 0.8
   <architecture>i386</architecture>
   <application name="Listaller Creator">
     <version>0.2b</version>
-    <license>/home/matthias/Development/listaller/listaller-base.gtk2/COPYING</license>
-    <description>/home/matthias/Development/listaller/listaller-base.gtk2/liCreator/desc.txt</description>
+    <license>../COPYING</license>
+    <description>./desc.txt</description>
     <dsupport>Ubuntu,openSuSE</dsupport>
     <author>Listaller Project</author>
-    <maintainer>Matthias Klumpp [matthias@nlinux.org]</maintainer>
-    <icon>/home/matthias/Development/listaller/listaller-base.gtk2/graphics/listaller_creator.png</icon>
+    <icon>../graphics/listaller_creator.png</icon>
     <sdesc std="Application that helps creating IPK packages">
       <de>Anwendung, die das Erstellen von IPK Paketen vereinfacht</de>
     </sdesc>
     <group>Development</group>
     <appcmd>$INST/liCreator/licreator</appcmd>
   </application>
- <build>./make.sh;../install-creator.sh DESTDIR=./pkbuild</build>
+ <maintainer>Matthias Klumpp [matthias@nlinux.org]</maintainer>
+ <pkname>listaller-creator</pkname>
+ <build>./make.sh;../install-creator.sh DESTDIR=./liCreator/pkbuild</build>
  <disallow>ioNothing</disallow>
  <profile1 id="0">Standard</profile1>
 

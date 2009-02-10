@@ -3,15 +3,18 @@ object FormatDialog: TFormatDialog
   Height = 280
   Top = 235
   Width = 294
-  HorzScrollBar.Page = 293
-  VertScrollBar.Page = 279
   ActiveControl = Button1
   Caption = 'Save Options'
+  ClientHeight = 280
+  ClientWidth = 294
   OnClose = FormClose
   OnShow = FormShow
   Position = poMainFormCenter
+  LCLVersion = '0.9.27'
   object PageControl1: TPageControl
+    Left = 0
     Height = 232
+    Top = 0
     Width = 294
     ActivePage = TabJPEG
     Align = alTop
@@ -19,40 +22,38 @@ object FormatDialog: TFormatDialog
     TabOrder = 0
     object TabJPEG: TTabSheet
       Caption = 'JPEG'
+      ClientHeight = 202
+      ClientWidth = 290
       object Label1: TLabel
         Left = 14
-        Height = 13
+        Height = 17
         Top = 28
-        Width = 41
+        Width = 45
         Caption = 'Quality'
-        Color = clNone
         ParentColor = False
       end
       object Label2: TLabel
         Left = 14
-        Height = 13
+        Height = 17
         Top = 52
-        Width = 67
+        Width = 76
         Caption = 'Progressive'
-        Color = clNone
         ParentColor = False
       end
       object Label3: TLabel
         Left = 14
-        Height = 13
+        Height = 17
         Top = 83
-        Width = 58
+        Width = 65
         Caption = 'Grayscale'
-        Color = clNone
         ParentColor = False
       end
       object Label4: TLabel
         Left = 14
-        Height = 13
+        Height = 17
         Top = 116
-        Width = 52
+        Width = 61
         Caption = 'Comment'
-        Color = clNone
         ParentColor = False
       end
       object SpinEdit1: TSpinEdit
@@ -65,16 +66,16 @@ object FormatDialog: TFormatDialog
       end
       object CheckBox1: TCheckBox
         Left = 94
-        Height = 20
+        Height = 21
         Top = 45
-        Width = 24
+        Width = 23
         TabOrder = 1
       end
       object CheckBox2: TCheckBox
         Left = 94
-        Height = 20
+        Height = 21
         Top = 76
-        Width = 24
+        Width = 23
         TabOrder = 2
       end
       object Edit1: TEdit
@@ -88,6 +89,8 @@ object FormatDialog: TFormatDialog
     end
     object TabBMP: TTabSheet
       Caption = 'BMP / TGA'
+      ClientHeight = 202
+      ClientWidth = 290
       object CheckBox3: TCheckBox
         Left = 78
         Height = 20
@@ -99,6 +102,8 @@ object FormatDialog: TFormatDialog
     end
     object TabGIF: TTabSheet
       Caption = 'GIF'
+      ClientHeight = 202
+      ClientWidth = 290
       object CheckBox4: TCheckBox
         Left = 86
         Height = 20
@@ -110,13 +115,14 @@ object FormatDialog: TFormatDialog
     end
     object TabPNG: TTabSheet
       Caption = 'PNG'
+      ClientHeight = 202
+      ClientWidth = 290
       object Label5: TLabel
         Left = 46
         Height = 13
         Top = 81
         Width = 29
         Caption = 'Filter'
-        Color = clNone
         ParentColor = False
       end
       object ComboBox1: TComboBox
@@ -124,7 +130,8 @@ object FormatDialog: TFormatDialog
         Height = 25
         Top = 69
         Width = 100
-        AutoCompleteText = [cbactEndOfLineComplete, cbactSearchAscending]
+        AutoComplete = False
+        ItemHeight = 0
         ItemIndex = 0
         Items.Strings = (
           'fiNone'
@@ -134,7 +141,7 @@ object FormatDialog: TFormatDialog
           'fiPaeth'
           'fiBest'
         )
-        MaxLength = 0
+        ItemWidth = 0
         TabOrder = 0
         Text = 'fiNone'
       end

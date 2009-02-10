@@ -15,7 +15,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="147"/>
+      <CurrentBuildNr Value="201"/>
       <ProjectVersion Value="0.2.0.1"/>
     </VersionInfo>
     <PublishOptions>
@@ -30,24 +30,24 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="7">
+    <Units Count="8">
       <Unit0>
         <Filename Value="unibuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="unibuild"/>
-        <CursorPos X="139" Y="297"/>
-        <TopLine Value="274"/>
+        <CursorPos X="34" Y="295"/>
+        <TopLine Value="264"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="30"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="ipkbuild.pas"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="30" Y="33"/>
-        <TopLine Value="3"/>
+        <CursorPos X="38" Y="138"/>
+        <TopLine Value="116"/>
         <EditorIndex Value="1"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
@@ -84,127 +84,134 @@
         <TopLine Value="7"/>
         <UsageCount Value="10"/>
       </Unit6>
+      <Unit7>
+        <Filename Value="opbitmap/opbitmapformats.pas"/>
+        <UnitName Value="opbitmapformats"/>
+        <CursorPos X="18" Y="22"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit7>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="187" Column="31" TopLine="164"/>
+        <Caret Line="202" Column="50" TopLine="179"/>
       </Position1>
       <Position2>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="198" Column="33" TopLine="180"/>
+        <Caret Line="224" Column="11" TopLine="200"/>
       </Position2>
       <Position3>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="247" Column="3" TopLine="229"/>
+        <Caret Line="226" Column="50" TopLine="203"/>
       </Position3>
       <Position4>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="127" Column="52" TopLine="114"/>
+        <Caret Line="228" Column="25" TopLine="205"/>
       </Position4>
       <Position5>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="163" Column="27" TopLine="140"/>
+        <Caret Line="244" Column="25" TopLine="216"/>
       </Position5>
       <Position6>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="165" Column="11" TopLine="142"/>
+        <Caret Line="246" Column="12" TopLine="223"/>
       </Position6>
       <Position7>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="166" Column="19" TopLine="143"/>
+        <Caret Line="273" Column="11" TopLine="198"/>
       </Position7>
       <Position8>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="30" Column="34" TopLine="1"/>
+        <Caret Line="274" Column="20" TopLine="251"/>
       </Position8>
       <Position9>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="108" Column="1" TopLine="98"/>
+        <Caret Line="44" Column="102" TopLine="29"/>
       </Position9>
       <Position10>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="25" Column="107" TopLine="14"/>
+        <Caret Line="56" Column="27" TopLine="29"/>
       </Position10>
       <Position11>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="50" Column="1" TopLine="27"/>
+        <Caret Line="87" Column="20" TopLine="63"/>
       </Position11>
       <Position12>
-        <Filename Value="unibuild.lpr"/>
-        <Caret Line="172" Column="6" TopLine="149"/>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="147" Column="41" TopLine="129"/>
       </Position12>
       <Position13>
-        <Filename Value="unibuild.lpr"/>
-        <Caret Line="178" Column="21" TopLine="154"/>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="149" Column="6" TopLine="126"/>
       </Position13>
       <Position14>
-        <Filename Value="unibuild.lpr"/>
-        <Caret Line="31" Column="12" TopLine="1"/>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="141" Column="32" TopLine="126"/>
       </Position14>
       <Position15>
-        <Filename Value="unibuild.lpr"/>
-        <Caret Line="193" Column="11" TopLine="170"/>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="140" Column="94" TopLine="117"/>
       </Position15>
       <Position16>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="195" Column="21" TopLine="185"/>
+        <Caret Line="143" Column="52" TopLine="107"/>
       </Position16>
       <Position17>
-        <Filename Value="unibuild.lpr"/>
-        <Caret Line="207" Column="149" TopLine="175"/>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="25" Column="46" TopLine="16"/>
       </Position17>
       <Position18>
-        <Filename Value="unibuild.lpr"/>
-        <Caret Line="198" Column="28" TopLine="175"/>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="56" Column="27" TopLine="16"/>
       </Position18>
       <Position19>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="199" Column="20" TopLine="176"/>
+        <Caret Line="120" Column="62" TopLine="97"/>
       </Position19>
       <Position20>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="200" Column="17" TopLine="177"/>
+        <Caret Line="140" Column="10" TopLine="117"/>
       </Position20>
       <Position21>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="202" Column="50" TopLine="179"/>
+        <Caret Line="141" Column="35" TopLine="118"/>
       </Position21>
       <Position22>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="224" Column="11" TopLine="200"/>
+        <Caret Line="142" Column="10" TopLine="119"/>
       </Position22>
       <Position23>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="226" Column="50" TopLine="203"/>
+        <Caret Line="143" Column="41" TopLine="120"/>
       </Position23>
       <Position24>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="228" Column="25" TopLine="205"/>
+        <Caret Line="149" Column="14" TopLine="126"/>
       </Position24>
       <Position25>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="244" Column="25" TopLine="216"/>
+        <Caret Line="152" Column="14" TopLine="129"/>
       </Position25>
       <Position26>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="246" Column="12" TopLine="223"/>
+        <Caret Line="160" Column="15" TopLine="137"/>
       </Position26>
       <Position27>
-        <Filename Value="ipkbuild.pas"/>
-        <Caret Line="65" Column="2" TopLine="117"/>
+        <Filename Value="unibuild.lpr"/>
+        <Caret Line="164" Column="15" TopLine="141"/>
       </Position27>
       <Position28>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="213" Column="24" TopLine="299"/>
+        <Caret Line="169" Column="10" TopLine="146"/>
       </Position28>
       <Position29>
-        <Filename Value="unibuild.lpr"/>
-        <Caret Line="273" Column="11" TopLine="198"/>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="148" Column="33" TopLine="116"/>
       </Position29>
       <Position30>
-        <Filename Value="unibuild.lpr"/>
-        <Caret Line="274" Column="20" TopLine="251"/>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="139" Column="27" TopLine="125"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>

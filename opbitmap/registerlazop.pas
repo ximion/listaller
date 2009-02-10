@@ -5,7 +5,8 @@ unit RegisterLazOP;
 interface
 
 uses
-  LazOpBMP, LazOpPCX, LazOpCUT, LazOpSGI, LazOpPCD, LazOpPSD, LazOpPSP, LazOpTGA, LazOpTIFF, LazOpGif, LazOpJPEG, LazOpPNG;
+  LazOpBMP, {$ifndef OpbCompat} LazOpPCX, LazOpCUT, LazOpSGI, LazOpPCD, LazOpPSD, LazOpPSP, LazOpTGA, LazOpTIFF, {$endif}
+  LazOpGif, LazOpJPEG, LazOpPNG;
 
 implementation
 

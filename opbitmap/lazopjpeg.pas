@@ -78,7 +78,10 @@ end;
 
 procedure Register;
 var mime:TMimeObject;
+var cls:TGraphicClass;
 begin
+  cls:=GetGraphicClassForFileExtension('.jpg');
+  if cls<>nil then TPicture.UnregisterGraphicClass(cls);
   mime:=MimeMagic.GetMimeInfoFromPattern('*.jpg');
   if Assigned(mime) then
   begin

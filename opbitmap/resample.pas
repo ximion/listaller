@@ -529,7 +529,7 @@ begin
         with ContributorList[I] do
         begin
           DestPixel^ := ApplyContributors(N, ContributorList[I].Contributors);
-          DestDelta:=DestDelta+Integer(DestPixel);
+          Inc(PtrInt(DestPixel), DestDelta);
         end;
       Inc(SourceLine);
       Inc(DestLine);

@@ -279,7 +279,7 @@ object IWizFrm: TIWizFrm
     object IPage: TPage
       Caption = 'Install'
       ClientWidth = 647
-      ClientHeight = 349
+      ClientHeight = 350
       object Label6: TLabel
         Left = 4
         Height = 26
@@ -333,7 +333,7 @@ object IWizFrm: TIWizFrm
       object InfoMemo: TMemo
         Left = 6
         Height = 144
-        Top = 149
+        Top = 150
         Width = 635
         Anchors = [akLeft, akRight, akBottom]
         Color = clAppWorkspace
@@ -346,7 +346,7 @@ object IWizFrm: TIWizFrm
       object Edit1: TEdit
         Left = 6
         Height = 23
-        Top = 304
+        Top = 305
         Width = 535
         Anchors = [akLeft, akRight, akBottom]
         Enabled = False
@@ -357,7 +357,7 @@ object IWizFrm: TIWizFrm
       object btn_sendinput: TButton
         Left = 551
         Height = 25
-        Top = 301
+        Top = 302
         Width = 75
         Anchors = [akRight, akBottom]
         Caption = 'Send'

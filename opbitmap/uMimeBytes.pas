@@ -256,7 +256,7 @@ begin
   if (SubLen + Offset) < High(TByteArr) then
   begin
     a := @Arr;
-    if Offset > 0 then inc(cardinal(a), offset);
+    if Offset > 0 then inc(ptruint(a), offset);
     Result := CompareMem(a, @SubArr, SubLen);
   end else Result := false;
 end;
@@ -268,7 +268,7 @@ var
 begin
   result := false;
   a := @Arr;
-  inc(cardinal(a), Start);
+  inc(ptruint(a), Start);
   for i := Start to Ende do
   begin
     if CompareMem(a, @SubArr, SubLen) then
@@ -276,7 +276,7 @@ begin
       result := true;
       break;
     end;
-    inc(cardinal(a));
+    inc(ptruint(a));
   end;
 end;
 
