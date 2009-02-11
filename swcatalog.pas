@@ -12,8 +12,7 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License v3
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** This unit contains code that is used by the catalogue-GUI
 unit swcatalog;
 

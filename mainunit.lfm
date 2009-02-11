@@ -1,7 +1,7 @@
 object IWizFrm: TIWizFrm
-  Left = 337
+  Left = 333
   Height = 429
-  Top = 237
+  Top = 305
   Width = 651
   ActiveControl = Notebook1
   Caption = 'Installation of <unknown>'
@@ -135,7 +135,7 @@ object IWizFrm: TIWizFrm
     object DPage: TPage
       Caption = 'Description'
       ClientWidth = 647
-      ClientHeight = 350
+      ClientHeight = 349
       object Label4: TLabel
         Left = 12
         Height = 24
@@ -149,18 +149,18 @@ object IWizFrm: TIWizFrm
       end
       object GroupBox1: TGroupBox
         Left = 12
-        Height = 304
+        Height = 303
         Top = 38
         Width = 623
         Anchors = [akTop, akLeft, akRight, akBottom]
         Caption = 'Description'
-        ClientHeight = 290
+        ClientHeight = 289
         ClientWidth = 619
         Ctl3D = False
         TabOrder = 0
         object Memo1: TMemo
           Left = 6
-          Height = 281
+          Height = 280
           Top = 3
           Width = 604
           Anchors = [akTop, akLeft, akRight, akBottom]
@@ -175,7 +175,7 @@ object IWizFrm: TIWizFrm
     object LPage: TPage
       Caption = 'License'
       ClientWidth = 647
-      ClientHeight = 350
+      ClientHeight = 349
       object Label5: TLabel
         Left = 12
         Height = 24
@@ -198,7 +198,7 @@ object IWizFrm: TIWizFrm
       object RadioButton1: TRadioButton
         Left = 12
         Height = 33
-        Top = 290
+        Top = 289
         Width = 249
         Anchors = [akLeft, akBottom]
         Caption = 'I agree with the above terms and conditions'
@@ -208,7 +208,7 @@ object IWizFrm: TIWizFrm
       object RadioButton2: TRadioButton
         Left = 12
         Height = 33
-        Top = 314
+        Top = 313
         Width = 96
         Anchors = [akLeft, akBottom]
         Caption = 'I don''t agree'
@@ -219,7 +219,7 @@ object IWizFrm: TIWizFrm
       end
       object LicMemo: TMemo
         Left = 12
-        Height = 227
+        Height = 226
         Top = 61
         Width = 622
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -234,7 +234,7 @@ object IWizFrm: TIWizFrm
     object IMPage: TPage
       Caption = 'Mode'
       ClientWidth = 647
-      ClientHeight = 350
+      ClientHeight = 349
       object Label13: TLabel
         Left = 12
         Height = 24

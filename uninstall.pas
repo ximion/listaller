@@ -12,8 +12,7 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** Window that shows the progress while uninstalling applications
 unit uninstall;
 
@@ -33,7 +32,6 @@ type
     BitBtn1: TBitBtn;
     GetOutPutTimer: TIdleTimer;
     Label1: TLabel;
-    Label2: TLabel;
     Memo1: TMemo;
     Process1: TProcess;
     UProgress: TProgressBar;
@@ -167,12 +165,12 @@ if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'
  UProgress.Position:=100;
  mnFrm.LoadEntries;
 end else begin
- writeLn('Listaller cannot handle this installation!');
+ writeLn('Listaller cannot handle this installation type!');
  ShowMessage(strCannotHandleRM);inf.Free;end;
 end;
 
 procedure TRMForm.FormActivate(Sender: TObject);
-var f,g: String; t:TProcess;i: Integer;
+var f,g: String; t:TProcess;cf: TIniFile;
 begin
 if FActiv then begin
 FActiv:=false;
@@ -225,36 +223,28 @@ if (IdList[uID][1]='/')
 then begin
 // /!\
 ///////////////////////////////////////////////////////
+
+cf:=TIniFile.Create(ConfigDir+'config.cnf');
+if cf.ReadBool('MainConf','ShowPkMon',false) then begin
+t:=TProcess.Create(nil);
+t.CommandLine:='pkmon';
+t.Options:=[poNewConsole];
+t.Execute;
+t.free;
+end;
+cf.free;
+
 Application.ProcessMessages;
 writeLn('Detecting package...');
 f:=CmdResult(pkit+'--s-file '+IdList[uID]);
 if f='Failed!' then begin UninstallMojo(IdList[uID]);exit;end;
-
+if f='err' then begin ShowMessage('Problem while connecting PackageKit. Run "pkmon" to get further information');exit;end;
 g:='';
-//Invert sring
-for i:=length(f) downto 1 do
-g:=g+f[i];
 
-g:=copy(g,pos('-',g)+1,length(g));
-g:=copy(g,pos('-',g)+1,length(g));
-
-f:='';
- //Revert sring
-for i:=length(g) downto 1 do
-f:=f+g[i];
-
-{f:=copy(f,pos(' ',f)+4,length(f)-(pos(' ',f)+4));
-tmp:=TstringList.mnFrm;
-
-CmdResultList('pkcon get-requires '+f,tmp);
-g:='';
-for i:=0 to tmp.Count-1 do
-//if CmdResultCode('dpkg-query -l '''+copy(tmp[i],3,length(tmp[i]))+'''')<=0 then
-g:=g+#13+tmp[i];
-tmp.Free; }
-
-g:=CmdFinResult(pkit+'--get-requires '+f);
+Application.ProcessMessages;
 writeLn('Looking for reverse-dependencies...');
+g:=CmdResult(pkit+'--get-requires '+f);
+g:=copy(g,pos(f,g)+length(f),length(g));
 
 LogAdd('Package detected: '+f);
 if (StringReplace(g,' ','',[rfReplaceAll])='')or

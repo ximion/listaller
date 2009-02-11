@@ -1,7 +1,7 @@
 object RMForm: TRMForm
-  Left = 460
+  Left = 778
   Height = 291
-  Top = 406
+  Top = 586
   Width = 451
   ActiveControl = Memo1
   Caption = 'Uninstalling [...]'
@@ -66,13 +66,6 @@ object RMForm: TRMForm
     Top = 8
     Width = 41
     Caption = '<label>'
-    ParentColor = False
-  end
-  object Label2: TLabel
-    Left = 8
-    Height = 54
-    Top = 235
-    Width = 71
     ParentColor = False
   end
   object UProgress: TProgressBar

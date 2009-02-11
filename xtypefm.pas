@@ -71,8 +71,8 @@ if Image1.Visible then begin
 //Check PackageKit version
   s:=CmdResult('pkcon --version');
   try
-  if StrToInt(StringReplace(s,'.','',[rfReplaceAll]))<42 then begin
-        Label2.Caption:=StringReplace(StringReplace(strPackageKitWarning,'%cp',s,[rfReplaceAll]),'%np','0.4.2',[rfReplaceAll]);
+  if StrToInt(StringReplace(s,'.','',[rfReplaceAll]))<44 then begin
+        Label2.Caption:=StringReplace(StringReplace(strPackageKitWarning,'%cp',s,[rfReplaceAll]),'%np','0.4.4',[rfReplaceAll]);
         Label2.Visible:=true;
         Image2.Visible:=true;
         Image2.Picture.Bitmap.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_DIALOG_WARNING,GTK_ICON_SIZE_BUTTON);;

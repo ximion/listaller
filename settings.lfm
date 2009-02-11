@@ -1,7 +1,7 @@
-object Form2: TForm2
-  Left = 277
+object FmConfig: TFmConfig
+  Left = 372
   Height = 485
-  Top = 255
+  Top = 237
   Width = 663
   ActiveControl = PageControl1
   Caption = 'Listaller settings'
@@ -107,7 +107,7 @@ object Form2: TForm2
       object GroupBox1: TGroupBox
         Left = 6
         Height = 184
-        Top = 108
+        Top = 149
         Width = 637
         Anchors = [akTop, akLeft, akRight]
         Caption = 'Proxy-Settings'
@@ -243,6 +243,15 @@ object Form2: TForm2
         Caption = 'About Listaller'
         OnClick = Button1Click
         TabOrder = 3
+      end
+      object CbShowPkMon: TCheckBox
+        Left = 6
+        Height = 33
+        Top = 101
+        Width = 250
+        Caption = 'Start PackageKit monitor while transactions'
+        OnChange = CbShowPkMonChange
+        TabOrder = 4
       end
     end
     object UpdPage: TTabSheet

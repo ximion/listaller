@@ -1012,6 +1012,17 @@ begin
  Process1.Execute;
 end;
 
+//Check if PackageKit trackmode is enabled:
+cnf:=TIniFile.Create(ConfigDir+'config.cnf');
+if cnf.ReadBool('MainConf','ShowPkMon',false) then begin
+t:=TProcess.Create(nil);
+t.CommandLine:='pkmon';
+t.Options:=[poNewConsole];
+t.Execute;
+t.free;
+end;
+cnf.free;
+
 //Execute programs/scripts
 if ExecA<>'<disabled>' then begin
     Process1.CommandLine := 'chmod 777 '+ExecA;

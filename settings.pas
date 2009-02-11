@@ -12,8 +12,7 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** Change Listaller's settings
 unit settings;
 
@@ -28,15 +27,16 @@ uses
 
 type
 
-  { TForm2 }
+  { TFmConfig }
 
-  TForm2 = class(TForm)
+  TFmConfig = class(TForm)
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
     BitBtn3: TBitBtn;
     Button1: TButton;
     CheckBox1: TCheckBox;
     CheckBox2: TCheckBox;
+    CbShowPkMon: TCheckBox;
     CheckBox4: TCheckBox;
     Edit1: TEdit;
     GroupBox1: TGroupBox;
@@ -62,7 +62,7 @@ type
     procedure cbLoadUnspAppsChange(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
     procedure CheckBox2Change(Sender: TObject);
-    procedure CheckBox3Change(Sender: TObject);
+    procedure CbShowPkMonChange(Sender: TObject);
     procedure CheckBox4Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -76,13 +76,13 @@ type
   end; 
 
 var
-  Form2: TForm2; 
+  FmConfig: TFmConfig;
 
 implementation
 
-{ TForm2 }
+{ TFmConfig }
 
-procedure TForm2.FormCreate(Sender: TObject);
+procedure TFmConfig.FormCreate(Sender: TObject);
 var i: Integer;tmp: TStringList;
 begin
   PageControl1.ActivePageIndex:=0;
@@ -111,19 +111,20 @@ begin
   CheckBox2.Caption:=strAutoLoadDep;
 end;
 
-procedure TForm2.FormShow(Sender: TObject);
+procedure TFmConfig.FormShow(Sender: TObject);
 begin
  BitBtn2.Left:=6;
  BitBtn3.Left:=640-BitBtn3.Width;
 end;
 
-procedure TForm2.MainPageShow(Sender: TObject);
+procedure TFmConfig.MainPageShow(Sender: TObject);
 var cnf:TIniFile;
 begin
   cnf:=TIniFile.Create(ConfigDir+'config.cnf');
   CheckBox4.Checked:=cnf.ReadBool('Proxy','UseProxy',false);
   Edit1.Text:=cnf.ReadString('Proxy','Server','');
   SpinEdit1.Value:=cnf.ReadInteger('Proxy','Port',0);
+  CbShowPkMon.=ini.ReadBool('MainConf','ShowPkMon',false);
   cnf.free;
 if Edit1.Text='' then begin
 if mnFrm.DInfo.Desktop='GNOME' then begin
@@ -135,12 +136,12 @@ end;
 end;
 end;
 
-procedure TForm2.PageControl1Change(Sender: TObject);
+procedure TFmConfig.PageControl1Change(Sender: TObject);
 begin
 
 end;
 
-procedure TForm2.UListBox1Click(Sender: TObject);
+procedure TFmConfig.UListBox1Click(Sender: TObject);
 var uconf: TStringList;h: String;
 begin
 uconf:=TStringList.Create;
@@ -155,7 +156,7 @@ end;
 
 
   
-procedure TForm2.BitBtn3Click(Sender: TObject);
+procedure TFmConfig.BitBtn3Click(Sender: TObject);
 var p: String;cnf: TIniFile;
 begin
   p:=ConfigDir;
@@ -172,7 +173,7 @@ begin
   Close;
 end;
 
-procedure TForm2.Button1Click(Sender: TObject);
+procedure TFmConfig.Button1Click(Sender: TObject);
 var abbox: TFmAbout;
 begin
  abbox:=TFmAbout.Create(self);
@@ -180,12 +181,12 @@ begin
  abbox.free;
 end;
 
-procedure TForm2.cbLoadUnspAppsChange(Sender: TObject);
+procedure TFmConfig.cbLoadUnspAppsChange(Sender: TObject);
 begin
 
 end;
 
-procedure TForm2.CheckBox1Change(Sender: TObject);
+procedure TFmConfig.CheckBox1Change(Sender: TObject);
 var h: String;ini: TIniFile;
 begin
   h:=ConfigDir;
@@ -194,7 +195,7 @@ begin
   ini.Free;
 end;
 
-procedure TForm2.CheckBox2Change(Sender: TObject);
+procedure TFmConfig.CheckBox2Change(Sender: TObject);
 var h: String;ini: TIniFile;
 begin
   h:=ConfigDir;
@@ -203,12 +204,16 @@ begin
   ini.Free;
 end;
 
-procedure TForm2.CheckBox3Change(Sender: TObject);
+procedure TFmConfig.CbShowPkMonChange(Sender: TObject);
+var h: String;ini: TIniFile;
 begin
-
+  h:=ConfigDir;
+  ini:=TIniFile.Create(h+'config.cnf');
+  ini.WriteBool('MainConf','ShowPkMon',(Sender as TCheckBox).Checked);
+  ini.Free;
 end;
 
-procedure TForm2.CheckBox4Change(Sender: TObject);
+procedure TFmConfig.CheckBox4Change(Sender: TObject);
 var p: String;cnf: TIniFile;
 begin
   if (Sender as TCheckBox).Checked then begin
@@ -238,7 +243,7 @@ begin
   cnf.Free;
 end;
 
-procedure TForm2.BitBtn2Click(Sender: TObject);
+procedure TFmConfig.BitBtn2Click(Sender: TObject);
 var uconf: TStringList;
 begin
 if Application.MessageBox('Are you really sure that you want to delete this source?','Delete source',MB_YESNO)=IDYES then begin
@@ -252,7 +257,7 @@ ShowMessage('Source deleted!');
 end;
 end;
 
-procedure TForm2.BitBtn1Click(Sender: TObject);
+procedure TFmConfig.BitBtn1Click(Sender: TObject);
 begin
   mnFrm.Process1.CommandLine:=ExtractFilePath(Application.ExeName)+'liupdate -show';
   mnFrm.Process1.Execute;

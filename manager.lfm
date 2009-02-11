@@ -1,7 +1,7 @@
 object mnFrm: TmnFrm
-  Left = 253
+  Left = 216
   Height = 558
-  Top = 255
+  Top = 144
   Width = 816
   ActiveControl = btnInstall
   Caption = 'Software Manager'
@@ -251,7 +251,7 @@ object mnFrm: TmnFrm
     Height = 27
     Top = 112
     Width = 123
-    OnChange = edtFilterChange
+    OnKeyDown = edtFilterKeyDown
     TabOrder = 5
     Text = '*'
   end

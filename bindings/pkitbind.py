@@ -23,15 +23,19 @@
 from packagekit.client import *
 from packagekit.enums import *
 from packagekit.misc import *
-import getopt
 import sys
 import os.path
+
+if len(sys.argv)<=1:
+  print "Helper script for Listaller 0.2"
+  print "Provides the PackageKit bindings for Listaller"
+  sys.exit(0)
 
 pk = PackageKitClient()
 
 if sys.argv[1]=='--cache-refresh':
   print 'RefreshCache...'
-  print pk.refresh_cache()
+  pk.refresh_cache()
 
 if sys.argv[1]=='--is-installed':
   print 'Resolve: '+sys.argv[2]+' (check if installed)'
@@ -93,14 +97,19 @@ if sys.argv[1]=='--get-requires':
 if sys.argv[1]=='--s-file':
   try:
    pkg = pk.search_file(sys.argv[2],FILTER_INSTALLED)
-   print pkg[0]
   except:
-   print "Failed!"
-   sys.exit(2)
+   print "PackageKit problem."
+   sys.exit(6)
+  try:
+   print pkg[0].name
+  except:
+    print "Failed!"
+    sys.exit(2)
+ 
 
 if sys.argv[1]=='--s-dfile':
   try:
-    pkg = pk.search_file(sys.argv[2],FILTER_NONE)
+    pkg = pk.search_file(sys.argv[2],FILTER_INSTALLED)
     print pkg
   except:
     print "Failed!"
@@ -108,6 +117,9 @@ if sys.argv[1]=='--s-dfile':
   
 if sys.argv[1]=='--remove':
   print 'Removing: '+sys.argv[2]
-  pkg = pk.remove_packages([sys.argv[2]+';;;'])
+  try:
+    pkg = pk.remove_packages([sys.argv[2]+';;;'])
+  except:
+    sys.exit(2)
 
 sys.exit(0)

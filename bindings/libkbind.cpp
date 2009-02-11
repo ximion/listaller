@@ -4,19 +4,16 @@
 #include <kiconloader.h>
 #include <iostream>
  
-//extern "C" {
+extern "C" {
  
 QBitmap Get_KDE_Icon(QString inm) 
-{ 
+{
+ KComponentData ad;
+ ad = KComponentData::KComponentData();
  KIconLoader *icl = KIconLoader::global();
  
  QPixmap icon = icl->loadIcon(QString(inm), KIconLoader::Desktop);
- icon.save("./test.png","PNG",0);
-}
-
-int main()
-{
- Get_KDE_Icon("akonadi");
+ return QBitmap(QPixmap);
 }
  
-//}
+}

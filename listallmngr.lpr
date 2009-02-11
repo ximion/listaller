@@ -37,9 +37,8 @@ begin
   Application.Initialize;
   pkit := ExtractFilePath(Application.ExeName)+'pkitbind/pkitbind.py ';
   writeLn('Application initialized.');
-  Application.CreateForm(TRMForm, RMForm);
   Application.CreateForm(TmnFrm, mnFrm);
-  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TFmConfig, FmConfig);
   Application.CreateForm(TConvDisp, ConvDisp);
   Application.CreateForm(TSCForm, SCForm);
   Application.Run;

@@ -1,7 +1,7 @@
 object SCForm: TSCForm
-  Left = 278
+  Left = 411
   Height = 537
-  Top = 217
+  Top = 280
   Width = 753
   ActiveControl = CView
   Caption = 'Software Catalogue'

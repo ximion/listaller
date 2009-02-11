@@ -12,8 +12,7 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License v3
-  along with this program.  If not, see <http://www.gnu.org/licenses/>
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>}
 //** This unit contains the code to manage installed packages
 unit manager;
 
@@ -51,7 +50,8 @@ type
     procedure btnSettingsClick(Sender: TObject);
     procedure btnCatClick(Sender: TObject);
     procedure CBoxChange(Sender: TObject);
-    procedure edtFilterChange(Sender: TObject);
+    procedure edtFilterKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -441,10 +441,7 @@ begin
    p:=TProcess.Create(nil);
    p.Options:=[poWaitOnExit,poNewConsole];
    Application.ProcessMessages;
-   if DInfo.Desktop='KDE' then
-   p.CommandLine:='kfmclient openURL '+''''+OpenDialog1.FileName+''''
-   else
-   p.CommandLine:='gnome-open '+''''+OpenDialog1.FileName+'''';
+   p.CommandLine:='xdg-open '+''''+OpenDialog1.FileName+'''';
    p.Execute;
    p.Free;
    exit;
@@ -532,25 +529,28 @@ begin
   CBox.Enabled:=true;
 end;
 
-procedure TmnFrm.edtFilterChange(Sender: TObject);
+procedure TmnFrm.edtFilterKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 var i: Integer;
 begin
-if ((edtFilter.Text=' ') or (edtFilter.Text='*')or (edtFilter.Text='')) then begin
-for i:=0 to ListLength-1 do
- AList[i].Visible:=true;
-end else begin
-//Application.ProcessMessages;
-StatusBar1.Panels[0].Text:=strFiltering;
-for i:=0 to ListLength-1 do begin
- AList[i].Visible:=true;
-// Application.ProcessMessages;
- if ((pos(LowerCase(edtFilter.Text),LowerCase(AList[i].AppLabel.Caption))<=0)
- or (pos(LowerCase(edtFilter.Text),LowerCase(AList[i].DescLabel.Caption))<=0))
- and (LowerCase(edtFilter.Text)<>LowerCase(AList[i].AppLabel.Caption)) then
- AList[i].Visible:=false;
- end;
-end;
+  if Key = VK_RETURN then begin
+     if ((edtFilter.Text=' ') or (edtFilter.Text='*')or (edtFilter.Text='')) then begin
+     for i:=0 to ListLength-1 do
+     AList[i].Visible:=true;
+     end else begin
+     Application.ProcessMessages;
+     StatusBar1.Panels[0].Text:=strFiltering;
+     for i:=0 to ListLength-1 do begin
+      AList[i].Visible:=true;
+       Application.ProcessMessages;
+        if ((pos(LowerCase(edtFilter.Text),LowerCase(AList[i].AppLabel.Caption))<=0)
+        or (pos(LowerCase(edtFilter.Text),LowerCase(AList[i].DescLabel.Caption))<=0))
+         and (LowerCase(edtFilter.Text)<>LowerCase(AList[i].AppLabel.Caption)) then
+         AList[i].Visible:=false;
+         end;
+       end;
 StatusBar1.Panels[0].Text:=strReady;
+end;
 end;
 
 procedure TmnFrm.FormActivate(Sender: TObject);
@@ -629,6 +629,8 @@ end;
  instLst:=TStringList.Create;
  blst:=TStringList.Create; //Create Blacklist
 
+ //Create uninstall panel
+Application.CreateForm(TRMForm, RMForm);
 //Option check
 if (Application.HasOption('u','uninstall'))and(IsRoot) then
 begin
