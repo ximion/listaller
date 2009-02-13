@@ -37,10 +37,12 @@ type
     BitBtn2: TBitBtn;
     BitBtn3: TBitBtn;
     btnAssignShortDescription: TButton;
-    Button2: TButton;
-    Button3: TButton;
+    btnProfileRemove: TButton;
+    btnDistributionAdd: TButton;
+    btnDistributionRemove: TButton;
     Button4: TButton;
     btnAddLangCode: TButton;
+    btnProfileAdd: TButton;
     Button6: TButton;
     chkShowInTerminal: TCheckBox;
     ComboBox1: TComboBox;
@@ -66,6 +68,7 @@ type
     GroupBox10: TGroupBox;
     GroupBox11: TGroupBox;
     GroupBox12: TGroupBox;
+    grbProfiles: TGroupBox;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
@@ -98,13 +101,16 @@ type
     Label29: TLabel;
     Label3: TLabel;
     Label30: TLabel;
+    Label31: TLabel;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
-    ListBox1: TListBox;
+    edtProfileName: TLabeledEdit;
+    lbDistributions: TListBox;
+    lbProfiles: TListBox;
     lvPackageFiles: TListView;
     Memo1: TMemo;
     MenuItem1: TMenuItem;
@@ -129,16 +135,23 @@ type
     procedure BitBtn2Click(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);
     procedure btnAssignShortDescriptionClick(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
+    procedure btnProfileAddClick(Sender: TObject);
+    procedure btnProfileRemoveClick(Sender: TObject);
+    procedure btnDistributionAddClick(Sender: TObject);
+    procedure btnDistributionRemoveClick(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure btnAddLangCodeClick(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
     procedure Edit2Change(Sender: TObject);
+    procedure edtShortDescriptionChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Label28Click(Sender: TObject);
+    procedure lbDistributionsKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState
+      );
+    procedure lbProfilesKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
     procedure lvPackageFilesDblClick(Sender: TObject);
     procedure lvPackageFilesKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -262,12 +275,12 @@ begin
   mn.ChildNodes.Item[1].AppendChild(hn);
 
   s:='';
-  for i:=0 to ListBox1.Items.Count-1 do
+  for i:=0 to lbDistributions.Items.Count-1 do
   begin
     if s='' then
-      s:=ListBox1.Items[i]
+      s:=lbDistributions.Items[i]
     else
-      s:=s+','+ListBox1.Items[i];
+      s:=s+','+lbDistributions.Items[i];
   end;
 
   hn:=xdoc.CreateElement('dsupport');
@@ -418,8 +431,8 @@ begin
          exit;
        end;
        NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
-       for i:=0 to ListBox1.Count-1 do
-         tvDependencies.Items.Add(nil,ListBox1.Items[i]);
+       for i:=0 to lbDistributions.Count-1 do
+         tvDependencies.Items.Add(nil,lbDistributions.Items[i]);
        exit;
      end;
   2: begin
@@ -467,8 +480,8 @@ begin
          Add('--------');
          Add('Architecture:     '+Edit3.Text);
          Add('Supported Distros:');
-         for i:=0 to ListBox1.Count-1 do
-           Add('                  '+ListBox1.Items[i]);
+         for i:=0 to lbDistributions.Count-1 do
+           Add('                  '+lbDistributions.Items[i]);
 
          Add('Dependencies:');
          Add('-------------');
@@ -499,11 +512,11 @@ end; //End of Normal
       if tvShortDescriptions.Items.Count<=1 then begin ShowMessage('Please define a short description for your application!');exit;end;
       if not FileExists(FileNameEdit2.FileName) then begin ShowMessage('Set the path to an long description file of your application to continue!');exit;end;
         NoteBook1.PageIndex:=2;
-        for i:=0 to ListBox1.Count-1 do
-         tvDependencies.Items.Add(nil,ListBox1.Items[i]);
+        for i:=0 to lbDistributions.Count-1 do
+         tvDependencies.Items.Add(nil,lbDistributions.Items[i]);
       end;
    2: begin
-        if tvDependencies.Items.Count<=(2+ListBox1.Count) then
+        if tvDependencies.Items.Count<=(2+lbDistributions.Count) then
         begin
           ShowMessage('The dlink-package should have at least one dependency!');
           exit;
@@ -541,8 +554,8 @@ end; //End of Normal
           Add('--------');
           Add('Architecture:     '+Edit3.Text);
           Add('Supported Distros:');
-          for i:=0 to ListBox1.Count-1 do
-            Add('                  '+ListBox1.Items[i]);
+          for i:=0 to lbDistributions.Count-1 do
+            Add('                  '+lbDistributions.Items[i]);
 
           Add('Dependencies:');
           Add('-------------');
@@ -593,23 +606,42 @@ begin
   begin
     if Selected<>nil then
     begin
-      if (Selected.HasChildren)and(Selected<>Items.GetFirstNode) then
+      if (Selected.HasChildren) then
        Selected.DeleteChildren;
       Items.AddChild(Selected,edtShortDescription.Text);
     end;
   end;
 end;
 
-procedure TfrmProjectWizard.Button2Click(Sender: TObject);
+procedure TfrmProjectWizard.btnProfileAddClick(Sender: TObject);
 begin
-  if StringReplace(Edit5.Text,' ','',[rfReplaceAll])<>'' then
-    ListBox1.Items.Add(Edit5.Text);
+  if not (Trim(edtProfileName.Text)='') then
+    lbProfiles.Items.Add(edtProfileName.Text);
 end;
 
-procedure TfrmProjectWizard.Button3Click(Sender: TObject);
+procedure TfrmProjectWizard.btnProfileRemoveClick(Sender: TObject);
 begin
-  if ListBox1.ItemIndex>0 then
-    ListBox1.Items.Delete(ListBox1.ItemIndex);
+  if (lbProfiles.Items.Count<=1) then
+  begin
+    ShowMessage('There must be at least 1 profile! Create another one before deleting.');
+    exit;
+  end;
+  if (lbProfiles.ItemIndex>-1) then
+  begin
+    lbProfiles.Items.Delete(lbProfiles.ItemIndex);
+  end;
+end;
+
+procedure TfrmProjectWizard.btnDistributionAddClick(Sender: TObject);
+begin
+  if StringReplace(Edit5.Text,' ','',[rfReplaceAll])<>'' then
+    lbDistributions.Items.Add(Edit5.Text);
+end;
+
+procedure TfrmProjectWizard.btnDistributionRemoveClick(Sender: TObject);
+begin
+  if lbDistributions.ItemIndex>-1 then
+    lbDistributions.Items.Delete(lbDistributions.ItemIndex);
 end;
 
 procedure TfrmProjectWizard.Button4Click(Sender: TObject);
@@ -685,6 +717,20 @@ begin
   Edit11.Caption:=LowerCase(Edit1.Text)+StringReplace(Edit2.Text,'.','',[rfReplaceAll]);
 end;
 
+procedure TfrmProjectWizard.edtShortDescriptionChange(Sender: TObject);
+begin
+ (* with tvShortDescriptions do
+  begin
+    if Selected<>nil then
+    begin
+      if (Selected.HasChildren) then
+        Selected.GetFirstChild.Text := edtShortDescription.Text
+      else
+        Items.AddChild(Selected, edtShortDescription.Text);
+    end;
+  end;*)
+end;
+
 procedure TfrmProjectWizard.FormCreate(Sender: TObject);
 begin
   SpeedButton4.Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_OPEN,6);
@@ -700,6 +746,26 @@ end;
 procedure TfrmProjectWizard.Label28Click(Sender: TObject);
 begin
 
+end;
+
+procedure TfrmProjectWizard.lbDistributionsKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key=46 then
+  begin
+    btnDistributionRemoveClick(Sender);
+  end;
+  Key := 0;
+end;
+
+procedure TfrmProjectWizard.lbProfilesKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key=46 then
+  begin
+    btnProfileRemoveClick(Sender);
+  end;
+  Key := 0;
 end;
 
 procedure TfrmProjectWizard.lvPackageFilesDblClick(Sender: TObject);
