@@ -1,7 +1,7 @@
 object isFrm: TisFrm
-  Left = 292
+  Left = 283
   Height = 563
-  Top = 221
+  Top = 236
   Width = 812
   ActiveControl = PageControl1
   Caption = 'Theme manager'
@@ -26,21 +26,21 @@ object isFrm: TisFrm
   end
   object PageControl1: TPageControl
     Left = 0
-    Height = 461
+    Height = 483
     Top = 80
     Width = 812
-    ActivePage = Screensavers
+    ActivePage = Designs
     Align = alBottom
     Anchors = [akTop, akLeft, akRight, akBottom]
     Images = ImageList1
-    TabIndex = 3
+    TabIndex = 0
     TabOrder = 0
     TabPosition = tpLeft
     OnChange = PageControl1Change
     OnPageChanged = PageControl1Change
     object Designs: TTabSheet
       Caption = 'Designs'
-      ClientHeight = 455
+      ClientHeight = 477
       ClientWidth = 732
       object Label1: TLabel
         Left = 2
@@ -55,7 +55,7 @@ object isFrm: TisFrm
       end
       object ScrollBox1: TScrollBox
         Left = 0
-        Height = 426
+        Height = 448
         Top = 29
         Width = 732
         Align = alBottom
@@ -122,7 +122,7 @@ object isFrm: TisFrm
     end
     object Screensavers: TTabSheet
       Caption = 'Screensavers'
-      ClientHeight = 455
+      ClientHeight = 477
       ClientWidth = 732
       OnShow = ScreensaversShow
       object Label4: TLabel
@@ -138,7 +138,7 @@ object isFrm: TisFrm
       end
       object ScrollBox4: TScrollBox
         Left = 0
-        Height = 426
+        Height = 448
         Top = 29
         Width = 732
         Align = alBottom

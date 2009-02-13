@@ -47,8 +47,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="thinstall"/>
-        <CursorPos X="1" Y="116"/>
-        <TopLine Value="95"/>
+        <CursorPos X="26" Y="280"/>
+        <TopLine Value="277"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="26"/>
         <Loaded Value="True"/>

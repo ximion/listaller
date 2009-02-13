@@ -124,7 +124,7 @@ begin
   CheckBox4.Checked:=cnf.ReadBool('Proxy','UseProxy',false);
   Edit1.Text:=cnf.ReadString('Proxy','Server','');
   SpinEdit1.Value:=cnf.ReadInteger('Proxy','Port',0);
-  CbShowPkMon.=ini.ReadBool('MainConf','ShowPkMon',false);
+  CbShowPkMon.Checked:=cnf.ReadBool('MainConf','ShowPkMon',false);
   cnf.free;
 if Edit1.Text='' then begin
 if mnFrm.DInfo.Desktop='GNOME' then begin

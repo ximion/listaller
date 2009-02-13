@@ -8,7 +8,7 @@ Build-Depends: libgtk2.0-dev, libgdk-pixbuf-dev, lazarus-ide, fpc (>= 2.2.2-3), 
 
 Package: listaller-gtk
 Architecture: any
-Depends: libatk1.0-0 (>= 1.13.2), libc6 (>= 2.6-1), libglib2.0-0 (>= 2.14.0), libgtk2.0-0 (>= 2.12.0), libpango1.0-0 (>= 1.18.3), libx11-6, gksu, xdg-utils, lsb-release, libgdk-pixbuf2, packagekit, python-packagekit
+Depends: ${shlibs:Depends}, gksu, xdg-utils, lsb-release, packagekit, python-packagekit
 Provides: listaller, listaller-compact-gtk
 Description: Listaller main package (GTK)
   Listaller is a distribution-independ software install system.
@@ -18,14 +18,14 @@ Description: Listaller main package (GTK)
 
 Package: listaller-tools
 Architecture: any
-Depends: listaller
+Depends: ${shlibs:Depends}, listaller
 Description: Command-line tools for Listaller and IPK packages
   This package contains everything you need to build own IPK packages.
   It also contains the needed tools to build RPM and DEB packages from IPS sources and to create an "Linux distribution compatible" button.
 
 Package: listaller-creation-gtk
 Architecture: any
-Depends: libatk1.0-0 (>= 1.13.2), libc6 (>= 2.6-1), libglib2.0-0 (>= 2.14.0), libgtk2.0-0 (>= 2.12.0), libpango1.0-0 (>= 1.18.3), libx11-6, gksu, xdg-utils, lsb-release, libgdk-pixbuf2, listaller, listaller-tools
+Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller, listaller-tools
 Description: Listaller Creator
   Listaller is a distribution-independ software install system.
   This is an alpha-release of Listaller's package creation tool.
@@ -34,13 +34,8 @@ Description: Listaller Creator
 
 Package: lithememgr-gtk
 Architecture: any
-Depends: libatk1.0-0 (>= 1.13.2), libc6 (>= 2.6-1), libglib2.0-0 (>= 2.14.0), libgtk2.0-0 (>= 2.12.0), libpango1.0-0 (>= 1.18.3), libx11-6, listaller
+Depends: ${shlibs:Depends}, listaller
 Description: liTheme Manager
   Tool that lets you easily install/uninstall system themes, wallpapers, iconsets and screensavers.
   liThemeMgr is part of the Listaller project and uses it's technology.
   liThemeMgr is still under development! This is an daily-build!
-
-Package: listaller-doc
-Architecture: all
-Description: Documentation for listaller
- <at time, there's no description available>

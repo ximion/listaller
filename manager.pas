@@ -22,9 +22,9 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
-  Inifiles, StdCtrls, process, LCLType, Buttons, FileCtrl, EditBtn,
-  ExtCtrls, distri, utilities, uninstall, translations, trstrings, gettext,
-  FileUtil, XMLRead, DOM, xtypefm, ipkhandle;
+  Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, utilities,
+  uninstall, translations, trstrings, gettext, FileUtil, xtypefm, ipkhandle,
+  gifanimator;
 
 type
 
@@ -41,8 +41,8 @@ type
     Label2: TLabel;
     Label3: TLabel;
     OpenDialog1: TOpenDialog;
+    ThrobberBox: TPaintBox;
     Process1: TProcess;
-    ProgressBar1: TProgressBar;
     StatusBar1: TStatusBar;
     SWBox: TScrollBox;
     procedure btnInstallClick(Sender: TObject);
@@ -57,13 +57,10 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure ProgressBar1ContextPopup(Sender: TObject; MousePos: TPoint;
-      var Handled: Boolean);
   private
     { private declarations }
     FLang: String;
     blst: TStringList;
-    procedure wtTimer(Sender: TObject);
     procedure UninstallClick(Sender: TObject);
   public
     { public declarations }
@@ -83,7 +80,9 @@ type
   end;
 
 var
+ //** Main formular instance
   mnFrm:   TmnFrm;
+ //** List of installed application names
   instLst: TStringList;
 
 var
@@ -112,12 +111,6 @@ begin
     for iHigh := Pred(s.Count) downto Succ(iLow) do
       if s[iLow] = s[iHigh] then
         s.Delete(iHigh);
-end;
-
-procedure TmnFrm.wtTimer(Sender: TObject);
-begin
-if ProgressBar1.Position=100 then ProgressBar1.Position:=0;
-ProgressBar1.Position:=ProgressBar1.Position+2;
 end;
 
 procedure TmnFrm.ProcessDesktopFile(fname: String; tp: String);
@@ -235,7 +228,7 @@ end;
 
 procedure TmnFrm.LoadEntries;
 var ireg,ini: TIniFile;tmp,xtmp: TStringList;i,j,k: Integer;p,n: String;tp: String;
-    wt: TTimer;
+    gif: TGifThread;
 begin
 j:=0;
 while ListLength>0 do begin
@@ -246,13 +239,15 @@ btnCat.Enabled:=false;
 btnInstall.Enabled:=false;
 edtFilter.Enabled:=false;
 StatusBar1.Panels[0].Text:=strLoading;
-edtFilter.Text:='';
-wt:=TTimer.Create(nil);
-wt.Interval:=50;
-wt.OnTimer:=@wtTimer;
-wt.Enabled:=true;
-ProgressBar1.Visible:=true;
 
+//Create GIFThread for Throbber animation
+gif:=TGifThread.Create(true);
+gif.FileName:=ExtractFilePath(Application.ExeName)+'graphics/throbber.gif';
+gif.Initialize(ThrobberBox.Canvas);
+
+edtFilter.Text:='';
+
+SwBox.Visible:=false;
 if blst.Count<4 then begin
 blst.Clear;
 blst.LoadFromFile('/etc/lipa/blacklist');
@@ -324,7 +319,6 @@ if AList[k].DescLabel.Caption='#' then AList[k].DescLabel.Caption:='No descripti
 if FileExists(p+'icon.png') then
 AList[k].SetImage(p+'icon.png');
 
-AList[k].SetPositions;
 Inc(k);
 Application.ProcessMessages;
 end;
@@ -395,17 +389,17 @@ ini.Free;
 if j>100 then
 StatusBar1.Panels[0].Text:=strLOKIError;
 
-StatusBar1.Panels[0].Text:=strReady;
-//Loading list finished!
-
-ProgressBar1.Visible:=false;
-wt.Enabled:=false;
-wt.Free;
+StatusBar1.Panels[0].Text:=strReady; //Loading list finished!
 
 btnCat.Enabled:=true;
 
 btnInstall.Enabled:=true;
 edtFilter.Enabled:=true;
+SwBox.Visible:=true;
+If Assigned(gif) Then gif.Terminate;
+gif := Nil;
+
+for i:=0 to ListLength-1 do AList[i].SetPositions;
 end;
 
 var fAct: Boolean;
@@ -413,12 +407,6 @@ procedure TmnFrm.FormShow(Sender: TObject);
 begin
 fAct:=true;
 btnCat.Left:=btnInstall.Left+btnInstall.Width+14;
-end;
-
-procedure TmnFrm.ProgressBar1ContextPopup(Sender: TObject; MousePos: TPoint;
-  var Handled: Boolean);
-begin
-
 end;
 
 procedure TmnFrm.btnInstallClick(Sender: TObject);
@@ -472,10 +460,7 @@ begin
    p:=TProcess.Create(nil);
    p.Options:=[poWaitOnExit,poNewConsole];
    Application.ProcessMessages;
-   if DInfo.Desktop='KDE' then
-   p.CommandLine:='kfmclient openURL '+''''+OpenDialog1.FileName+''''
-   else
-   p.CommandLine:='gnome-open '+''''+OpenDialog1.FileName+'''' ;
+   p.CommandLine:='xdg-open '+''''+OpenDialog1.FileName+'''';
    p.Execute;
    p.Free;
    exit;
@@ -514,7 +499,7 @@ end;
 
 procedure TmnFrm.btnSettingsClick(Sender: TObject);
 begin
-  Form2.ShowModal;
+  FmConfig.ShowModal;
 end;
 
 procedure TmnFrm.btnCatClick(Sender: TObject);

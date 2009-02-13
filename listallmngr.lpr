@@ -12,17 +12,16 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License v3
-  along with this program.  If not, see <http://www.gnu.org/licenses/>
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>}
 //** Application that manages all installed applications
 program listallmngr;
 
 {$mode objfpc}{$H+}
 
 uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
+  {$IFDEF UNIX}
   cthreads,
-  {$ENDIF}{$ENDIF}
+  {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
   SysUtils,

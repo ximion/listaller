@@ -1,7 +1,7 @@
 object mnFrm: TmnFrm
-  Left = 216
+  Left = 246
   Height = 558
-  Top = 144
+  Top = 228
   Width = 816
   ActiveControl = btnInstall
   Caption = 'Software Manager'
@@ -84,6 +84,17 @@ object mnFrm: TmnFrm
     Width = 29
     Caption = 'Filter:'
     ParentColor = False
+  end
+  object ThrobberBox: TPaintBox
+    Left = 344
+    Height = 128
+    Top = 215
+    Width = 128
+    Anchors = []
+    Constraints.MaxHeight = 128
+    Constraints.MaxWidth = 128
+    Constraints.MinHeight = 128
+    Constraints.MinWidth = 128
   end
   object StatusBar1: TStatusBar
     Left = 0
@@ -220,9 +231,8 @@ object mnFrm: TmnFrm
     Top = 144
     Width = 795
     Anchors = [akTop, akLeft, akRight, akBottom]
-    Color = clForm
-    Ctl3D = False
-    ParentColor = False
+    Ctl3D = True
+    ParentCtl3D = False
     TabOrder = 2
     object Label3: TLabel
       Left = 6
@@ -236,23 +246,13 @@ object mnFrm: TmnFrm
       ParentFont = False
     end
   end
-  object ProgressBar1: TProgressBar
-    Left = 610
-    Height = 9
-    Top = 544
-    Width = 184
-    Anchors = [akRight, akBottom]
-    OnContextPopup = ProgressBar1ContextPopup
-    Smooth = True
-    TabOrder = 3
-  end
   object edtFilter: TEdit
     Left = 680
     Height = 27
     Top = 112
     Width = 123
     OnKeyDown = edtFilterKeyDown
-    TabOrder = 5
+    TabOrder = 4
     Text = '*'
   end
   object btnCat: TBitBtn
@@ -260,7 +260,6 @@ object mnFrm: TmnFrm
     Height = 34
     Top = 64
     Width = 132
-    Anchors = [akTop, akRight]
     AutoSize = True
     Caption = 'Software catalogue'
     Glyph.Data = {
@@ -341,7 +340,7 @@ object mnFrm: TmnFrm
     }
     NumGlyphs = 0
     OnClick = btnCatClick
-    TabOrder = 6
+    TabOrder = 5
   end
   object btnInstall: TBitBtn
     Left = 8
@@ -428,7 +427,7 @@ object mnFrm: TmnFrm
     }
     NumGlyphs = 0
     OnClick = btnInstallClick
-    TabOrder = 7
+    TabOrder = 6
   end
   object Process1: TProcess
     Active = False

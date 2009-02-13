@@ -36,6 +36,7 @@ cp ./graphics/mime-ips.png $DESTDIR/usr/share/listaller/graphics/
 cp ./graphics/listaller.png $DESTDIR/usr/share/pixmaps
 cp ./graphics/wizardimage.png $DESTDIR/usr/share/listaller/graphics/
 cp ./graphics/spackage.png $DESTDIR/usr/share/listaller/graphics/
+cp ./graphics/throbber.gif $DESTDIR/usr/share/listaller/graphics/
 cp ./graphics/categories/accessories.png $DESTDIR/usr/share/listaller/graphics/categories/
 cp ./graphics/categories/all.png $DESTDIR/usr/share/listaller/graphics/categories/
 cp ./graphics/categories/development.png $DESTDIR/usr/share/listaller/graphics/categories/

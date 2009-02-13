@@ -1,7 +1,7 @@
 object FmConfig: TFmConfig
-  Left = 372
+  Left = 276
   Height = 485
-  Top = 237
+  Top = 239
   Width = 663
   ActiveControl = PageControl1
   Caption = 'Listaller settings'
@@ -256,19 +256,19 @@ object FmConfig: TFmConfig
     end
     object UpdPage: TTabSheet
       Caption = 'Update sources'
-      ClientHeight = 411
+      ClientHeight = 410
       ClientWidth = 659
       object Label1: TLabel
         Left = 6
-        Height = 20
+        Height = 13
         Top = 8
-        Width = 216
+        Width = 166
         Caption = 'Here''s a list of all update-sources:'
         ParentColor = False
       end
       object UListBox1: TCheckListBox
         Left = 6
-        Height = 333
+        Height = 332
         Top = 32
         Width = 644
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -278,10 +278,10 @@ object FmConfig: TFmConfig
         TopIndex = -1
       end
       object BitBtn1: TBitBtn
-        Left = 522
-        Height = 27
-        Top = 376
-        Width = 130
+        Left = 551
+        Height = 22
+        Top = 380
+        Width = 101
         Anchors = [akRight, akBottom]
         AutoSize = True
         Caption = 'Check for updates'
@@ -291,9 +291,9 @@ object FmConfig: TFmConfig
       end
       object BitBtn2: TBitBtn
         Left = 6
-        Height = 27
-        Top = 376
-        Width = 103
+        Height = 22
+        Top = 380
+        Width = 81
         Anchors = [akLeft, akBottom]
         AutoSize = True
         Caption = 'Delete source'

@@ -1,3 +1,11 @@
+listaller (0.1.89-1) jaunty; urgency=low
+
+  * Improved speed of 'listallmgr'
+  * New bugfixes from SVN
+  * PackageKit version bump: PackageKit 0.4.4 or higher is needed.
+
+ -- Matthias Klumpp <matthias@nlinux.org>  Thu, 12 Feb 2009 18:55:49 +0100
+
 listaller (0.1.87-3) jaunty; urgency=low
 
   * New upstream release
