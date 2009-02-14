@@ -16,7 +16,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="49"/>
+      <CurrentBuildNr Value="50"/>
       <ProjectVersion Value="0.2.0.1"/>
     </VersionInfo>
     <PublishOptions>
@@ -36,8 +36,8 @@
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
-        <CursorPos X="112" Y="179"/>
-        <TopLine Value="151"/>
+        <CursorPos X="73" Y="94"/>
+        <TopLine Value="73"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="40"/>
         <Loaded Value="True"/>
@@ -112,7 +112,7 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkbuild"/>
         <CursorPos X="17" Y="416"/>
-        <TopLine Value="364"/>
+        <TopLine Value="273"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="28"/>
         <Loaded Value="True"/>
@@ -120,124 +120,124 @@
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="utilities.pas"/>
-        <Caret Line="92" Column="3" TopLine="59"/>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="44" Column="26" TopLine="28"/>
       </Position1>
       <Position2>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="44" Column="26" TopLine="28"/>
+        <Caret Line="145" Column="75" TopLine="122"/>
       </Position2>
       <Position3>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="145" Column="75" TopLine="122"/>
+        <Caret Line="224" Column="68" TopLine="201"/>
       </Position3>
       <Position4>
-        <Filename Value="ipkbuild.pas"/>
-        <Caret Line="224" Column="68" TopLine="201"/>
+        <Filename Value="utilities.pas"/>
+        <Caret Line="56" Column="85" TopLine="53"/>
       </Position4>
       <Position5>
         <Filename Value="utilities.pas"/>
-        <Caret Line="56" Column="85" TopLine="53"/>
+        <Caret Line="201" Column="41" TopLine="178"/>
       </Position5>
       <Position6>
-        <Filename Value="utilities.pas"/>
-        <Caret Line="201" Column="41" TopLine="178"/>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="236" Column="62" TopLine="214"/>
       </Position6>
       <Position7>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="236" Column="62" TopLine="214"/>
+        <Caret Line="246" Column="45" TopLine="223"/>
       </Position7>
       <Position8>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="246" Column="45" TopLine="223"/>
+        <Caret Line="248" Column="27" TopLine="225"/>
       </Position8>
       <Position9>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="248" Column="27" TopLine="225"/>
+        <Caret Line="251" Column="54" TopLine="228"/>
       </Position9>
       <Position10>
-        <Filename Value="ipkbuild.pas"/>
-        <Caret Line="251" Column="54" TopLine="228"/>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="157" Column="57" TopLine="130"/>
       </Position10>
       <Position11>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="157" Column="57" TopLine="130"/>
+        <Caret Line="154" Column="51" TopLine="131"/>
       </Position11>
       <Position12>
-        <Filename Value="lipa.lpr"/>
-        <Caret Line="154" Column="51" TopLine="131"/>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="259" Column="31" TopLine="235"/>
       </Position12>
       <Position13>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="259" Column="31" TopLine="235"/>
+        <Caret Line="151" Column="67" TopLine="116"/>
       </Position13>
       <Position14>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="151" Column="67" TopLine="116"/>
+        <Caret Line="116" Column="52" TopLine="93"/>
       </Position14>
       <Position15>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="116" Column="52" TopLine="93"/>
+        <Caret Line="149" Column="61" TopLine="126"/>
       </Position15>
       <Position16>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="149" Column="61" TopLine="126"/>
+        <Caret Line="154" Column="85" TopLine="114"/>
       </Position16>
       <Position17>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="154" Column="85" TopLine="114"/>
+        <Caret Line="149" Column="6" TopLine="126"/>
       </Position17>
       <Position18>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="149" Column="6" TopLine="126"/>
+        <Caret Line="137" Column="85" TopLine="129"/>
       </Position18>
       <Position19>
-        <Filename Value="ipkbuild.pas"/>
-        <Caret Line="137" Column="85" TopLine="129"/>
-      </Position19>
-      <Position20>
         <Filename Value="distri.pas"/>
         <Caret Line="161" Column="26" TopLine="140"/>
+      </Position19>
+      <Position20>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="58" Column="49" TopLine="32"/>
       </Position20>
       <Position21>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="58" Column="49" TopLine="32"/>
+        <Caret Line="533" Column="49" TopLine="510"/>
       </Position21>
       <Position22>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="533" Column="49" TopLine="510"/>
+        <Caret Line="582" Column="18" TopLine="543"/>
       </Position22>
       <Position23>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="582" Column="18" TopLine="543"/>
+        <Caret Line="63" Column="59" TopLine="28"/>
       </Position23>
       <Position24>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="63" Column="59" TopLine="28"/>
+        <Caret Line="547" Column="48" TopLine="543"/>
       </Position24>
       <Position25>
-        <Filename Value="ipkbuild.pas"/>
-        <Caret Line="547" Column="48" TopLine="543"/>
-      </Position25>
-      <Position26>
         <Filename Value="lipa.lpr"/>
         <Caret Line="126" Column="11" TopLine="76"/>
+      </Position25>
+      <Position26>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="552" Column="85" TopLine="528"/>
       </Position26>
       <Position27>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="552" Column="85" TopLine="528"/>
+        <Caret Line="548" Column="35" TopLine="525"/>
       </Position27>
       <Position28>
         <Filename Value="ipkbuild.pas"/>
-        <Caret Line="548" Column="35" TopLine="525"/>
+        <Caret Line="549" Column="6" TopLine="532"/>
       </Position28>
       <Position29>
-        <Filename Value="ipkbuild.pas"/>
-        <Caret Line="549" Column="6" TopLine="532"/>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="127" Column="44" TopLine="91"/>
       </Position29>
       <Position30>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="127" Column="44" TopLine="91"/>
+        <Caret Line="100" Column="14" TopLine="72"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>

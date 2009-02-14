@@ -132,16 +132,17 @@ var i: Integer;
    s: String;
 begin
 CreateDir(pk.out+'/pkbuild');
+
 p:=TProcess.Create(nil);
 p.Options:=[poUsePipes];
 
 for i:=0 to pk.build.count-1 do begin
  if pk.build[i][1]='.' then begin
- p.CommandLine:=pk.path+pk.build[i];
  p.CurrentDirectory:=ExtractFilePath(copy(pk.path+pk.build[i],0,pos(' ',pk.path+pk.build[i])));
+ p.CommandLine:=StringReplace(pk.path+pk.build[i],'%IDIR',pk.out+'/pkbuild',[rfReplaceAll]);
  end else begin
- p.CommandLine:=pk.build[i];
  p.CurrentDirectory:=ExtractFilePath(copy(pk.build[i],0,pos(' ',pk.build[i])));
+ p.CommandLine:=StringReplace(pk.build[i],'%IDIR',pk.out+'/pkbuild',[rfReplaceAll]);
  end;
 
  writeLn('[Exec]: '+pk.build[i]);

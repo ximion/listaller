@@ -91,17 +91,16 @@ begin
   end;
 
   if HasOption('b','build') then begin
-  if LowerCase(paramstr(2)) = '-br' then begin
+  if HasOption('deb')or HasOption('rpm')or HasOption('dpack') then begin
     if FileExists(ExtractFilePath(ExeName)+'unibuild') then begin
       t:=tprocess.create(nil);
       t.Options:=[poUsePipes];
       t.CommandLine:=ExtractFilePath(ExeName)+'unibuild '+paramstr(3);
       sleep(10);
       t.Free;
-       exit;
      end else begin
       writeLn('Cannot execute this action.');
-      writeLn('You need to install ''listaller creator'' first');
+      writeLn('You need to install ''listaller-tools'' first');
       halt(1);
      end;
   end;
@@ -171,7 +170,6 @@ writeLn('   Enables these options: (! "unibuild" needed)');
 writeLn('    --dpack                                Generates DEB/RPM package from IPS file');
 writeLn('    --deb                                  Create DEB package');
 writeLn('    --rpm                                  Create RPM package');
-writeLn('    --ips                                  Create IPS package');
 writeLn('Options:');
 writeLn('--generate-button                          Generates the "Linux-compatible" PNG button for this package');
 {writeLn('-st-local [IPK-File] [IPK-Output]         Creates an package that can be installed offline.');

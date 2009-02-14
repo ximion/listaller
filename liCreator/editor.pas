@@ -12,8 +12,7 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** IPS source graphical editor
 unit editor;
 
@@ -31,9 +30,9 @@ type
   { TfrmEditor }
 
   TfrmEditor = class(TForm)
-    mmMain: TMainMenu;
-    MainScriptEdit: TSynEdit;
     FilesEdit: TSynEdit;
+    MainScriptEdit: TSynEdit;
+    mmMain: TMainMenu;
     memLog: TMemo;
     mnuFile: TMenuItem;
     mnuEditPaste: TMenuItem;
@@ -53,9 +52,11 @@ type
     mnuEditCut: TMenuItem;
     mnuEditCopy: TMenuItem;
     mnuEditFind: TMenuItem;
+    IPSNotebook: TNotebook;
     OpenDialog1: TOpenDialog;
     OpenDialog2: TOpenDialog;
-    PageControl1: TPageControl;
+    ScriptPage: TPage;
+    Page2: TPage;
     Process1: TProcess;
     SaveDialog1: TSaveDialog;
     SaveDialog2: TSaveDialog;
@@ -63,8 +64,6 @@ type
     SynEdit1: TSynEdit;
     SynTeXSyn1: TSynTeXSyn;
     SynXMLSyn1: TSynXMLSyn;
-    TabSheet1: TTabSheet;
-    TabSheet2: TTabSheet;
     procedure Button1Click(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -87,10 +86,13 @@ type
   private
     { private declarations }
  //   procedure CreateMD5Sums;
+  //** Saves the IPS file
     procedure SaveIPSFile(IFn: String);
+  //** Reads the Output of Process1
     procedure ReadOutput;
   public
     { public declarations }
+  //** Information about files that should be installed [deprecated]
     FileInfo: TStringList;
   end; 
 
@@ -111,7 +113,7 @@ uses prjwizard;
 
 procedure TfrmEditor.FormCreate(Sender: TObject);
 begin
-  PageControl1.ActivePageIndex:=0;
+  IPSNotebook.PageIndex:=0;
   if Assigned(FileInfo) then FileInfo.Free;
 end;
 
@@ -157,7 +159,7 @@ begin
     DoStuffForProcess(Process1, memLog);
   until noMoreOutput;
   sleep(800);
-  PageControl1.Enabled:=true;
+  IPSNotebook.Enabled:=true;
 end;
 
 
@@ -209,7 +211,7 @@ begin
 
     Process1.CommandLine:='lipa -b '+''''+FName+''' '''+SaveDialog1.FileName+'''';
     memLog.Lines.Add('Execute '+Process1.CommandLine+' ...');
-    PageControl1.Enabled:=false;
+    IPSNotebook.Enabled:=false;
     Process1.Execute;
     ReadOutput();
     if Process1.ExitStatus>0 then ShowMessage('Build failed!');
@@ -220,18 +222,18 @@ procedure TfrmEditor.mnuEditAddFilePathClick(Sender: TObject);
 begin
   if OpenDialog2.Execute then
   begin
-    if TabSheet1.Visible then
+    if ScriptPage.Visible then
       MainScriptEdit.Lines.Add(OpenDialog2.FileName);
-    if TabSheet2.Visible then
+    if Page2.Visible then
       FilesEdit.Lines.Add(OpenDialog2.FileName);
   end;
 end;
 
 procedure TfrmEditor.mnuEditUndoClick(Sender: TObject);
 begin
-  if TabSheet1.Visible then
+  if ScriptPage.Visible then
     MainScriptEdit.Undo;
-  if TabSheet2.Visible then
+  if Page2.Visible then
     FilesEdit.Undo;
 end;
 
@@ -348,7 +350,7 @@ begin
 
   Process1.CommandLine:='lipa -b '+''''+FName+'''';
   memLog.Lines.Add('Execute '+Process1.CommandLine+' ...');
-  PageControl1.Enabled:=false;
+  IPSNotebook.Enabled:=false;
   Process1.Execute;
    ReadOutput();
   if Process1.ExitStatus>0 then ShowMessage('Build failed!');

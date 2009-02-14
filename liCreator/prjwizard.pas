@@ -1,5 +1,5 @@
 { prjwizard.pas
-  Copyright (C) Listaller Project 2008
+  Copyright (C) Listaller Project 2008-2009
 
   prjwizard.pas is free software: you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -12,8 +12,7 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** Graphical wizard for IPS creation
 unit prjwizard;
 
@@ -44,6 +43,7 @@ type
     btnAddLangCode: TButton;
     btnProfileAdd: TButton;
     Button6: TButton;
+    CheckGroup1: TCheckGroup;
     chkShowInTerminal: TCheckBox;
     ComboBox1: TComboBox;
     DirectoryEdit1: TDirectoryEdit;
@@ -403,7 +403,7 @@ begin
       XDoc.Free;
       frmEditor.MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.xml');
       DeleteFile('/tmp/litmp.xml');
-      frmEditor.TabSheet2.TabVisible:=true;
+      frmEditor.Page2.TabVisible:=true;
     end;
     Close;
     exit;
@@ -457,7 +457,7 @@ begin
          Add('------------');
          Add('Name:         '+Edit1.Text);
          Add('Version:      '+Edit2.Text);
-         Add('Class:        '+ComboBox1.Items[ComboBox1.ItemIndex]);
+         Add('Group:        '+ComboBox1.Items[ComboBox1.ItemIndex]);
          if FileExists(FileNameEdit1.FileName) then
            Add('License-file: '+FileNameEdit1.FileName)
          else
@@ -532,7 +532,7 @@ end; //End of Normal
           Add('------------');
           Add('Name:         '+Edit1.Text);
           Add('Version:      '+Edit2.Text);
-          Add('Class:        '+ComboBox1.Items[ComboBox1.ItemIndex]);
+          Add('Group:        '+ComboBox1.Items[ComboBox1.ItemIndex]);
           if FileExists(FileNameEdit1.FileName) then
             Add('License-file: '+FileNameEdit1.FileName)
           else
@@ -580,7 +580,7 @@ end; //End of Normal
           XDoc.Free;
           MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.xml');
           DeleteFile('/tmp/litmp.xml');
-          TabSheet2.TabVisible:=false;
+          Page2.TabVisible:=false;
         end;
         Close;
         exit;
@@ -595,7 +595,7 @@ end; //End of Normal
     XDoc.Free;
     frmEditor.MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.xml');
     DeleteFile('/tmp/litmp.xml');
-    frmEditor.TabSheet2.TabVisible:=false;
+    frmEditor.Page2.TabVisible:=false;
     Close;
   end; //End of LOKI
 end;

@@ -231,7 +231,9 @@ object mnFrm: TmnFrm
     Top = 144
     Width = 795
     Anchors = [akTop, akLeft, akRight, akBottom]
+    Color = clForm
     Ctl3D = True
+    ParentColor = False
     ParentCtl3D = False
     TabOrder = 2
     object Label3: TLabel

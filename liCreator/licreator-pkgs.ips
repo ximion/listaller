@@ -17,15 +17,15 @@ IPK-Source.Version: 0.8
   </application>
  <maintainer>Matthias Klumpp [matthias@nlinux.org]</maintainer>
  <pkname>listaller-creator</pkname>
- <build>./make.sh;../install-creator.sh DESTDIR=./liCreator/pkbuild</build>
+ <build>./make.sh;../install-creator.sh DESTDIR=%IDIR</build>
  <disallow>ioNothing</disallow>
  <profile1 id="0">Standard</profile1>
 
   <DepDEB>
-    <d1>http://dfn.dl.sourceforge.net/sourceforge/listaller/listaller_0.1.16a_i386.deb &lt;listaller&gt;</d1>
+    <d1>listaller</d1>
   </DepDEB>
   <DepRPM>
-    <d1>http://dfn.dl.sourceforge.net/sourceforge/listaller/listaller_0.1.16a_i386.rpm &lt;listaller&gt;</d1>
+    <d1>listaller</d1>
   </DepRPM>
   <DepUbuntu>
     <d1>http://dfn.dl.sourceforge.net/sourceforge/listaller/listaller_0.1.16a_i386.deb &lt;listaller&gt;</d1>

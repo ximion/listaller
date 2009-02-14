@@ -3,8 +3,8 @@ Version:          0.1.87a
 Release:          1
 License:          GPLv3 and LGPLv3
 BuildRequires:    fpc, lazarus, wget, glib2-devel, gtk2-devel, glib-devel, glib2, glib, fpc-src, gtk2
-Source0:          listaller-gtk2_0.1.87-1.tar.gz
-Requires:         gtk2, cairo, glib2, xdg-utils, libgnomesu, lsb, glib
+Source0:          listaller_0.1.87-2.tar.gz
+Requires:         gtk2, glib2, xdg-utils, lsb, packagekit
 Provides:         listaller
 Group:            Applications/System
 Summary:          Listaller main package (GTK)

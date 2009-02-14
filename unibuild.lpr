@@ -212,14 +212,13 @@ begin
 
 p:=TProcess.Create(nil);
 p.Options:=[poUsePipes];
-p.CurrentDirectory:=pk.path;
+p.CurrentDirectory:=pk.out;
 
-for i:=0 to pk.build.count-1 do begin
- p.CommandLine:='dpkg -b '+pk.out+'/pkbuild/';
+ p.CommandLine:='dpkg -b '+pk.out+'pkbuild';
 
  writeLn('[Exec]: dpkg');
  p.Execute;
-
+ nm:=0;
 
  M := TMemoryStream.Create;
  m.Clear;
@@ -258,8 +257,8 @@ for i:=0 to pk.build.count-1 do begin
    writeLn('Please fix all errors to continue');
    writeLn('[Aborted]');
    halt(p.ExitStatus);
-   end;
-end;
+ end;
+ SysUtils.RenameFile(pk.out+'pkbuild.deb',pk.out+pk.pkName+'.deb');
 end;
 
 procedure TUniBuilder.CreateRPM(pk: TPackInfo);
@@ -274,7 +273,7 @@ begin
   with spec do begin
     Add('Name: '+pk.pkName);
     Add('Version: '+pk.Version);
-    Add('Maintainer: '+pk.Maintainer);
+   // Add('Maintainer: '+pk.Maintainer);
     Add('Group: Applications/Other');
     Add('Summary: '+pk.desc[0]);
     if pk.Author <> '' then
@@ -300,10 +299,10 @@ begin
 
 p:=TProcess.Create(nil);
 p.Options:=[poUsePipes];
-p.CurrentDirectory:=pk.path;
+p.CurrentDirectory:=pk.out;
+writeLn('rpmbuild -bb --rmspec --buildroot="'+pk.out+'pkbuild/"'+' --dbpath="'+pk.out+'" '+pk.out+pk.pkName+'.spec');
 
-for i:=0 to pk.build.count-1 do begin
- p.CommandLine:='rpmbuild -bb --rmspec --buildroot="'+pk.out+'/pkbuild/"'+' '+pk.out+'/'+pk.pkName+'.spec';
+p.CommandLine:='sudo rpmbuild -ba --rmspec --buildroot="'+pk.out+'pkbuild/"'+' --dbpath="'+pk.out+'" '+pk.out+pk.pkName+'.spec';
 
  writeLn('[Exec]: rpmbuild');
  p.Execute;
@@ -346,8 +345,7 @@ for i:=0 to pk.build.count-1 do begin
    writeLn('Please fix all errors to continue');
    writeLn('[Aborted]');
    halt(p.ExitStatus);
-   end;
-end;
+ end;
 end;
 
 constructor TUniBuilder.Create(TheOwner: TComponent);

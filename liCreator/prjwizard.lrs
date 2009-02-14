@@ -54,57 +54,57 @@ LazarusResources.Add('TfrmProjectWizard','FORMDATA',[
   +#0#255#255#255#0#255#255#255#0#207#255#0#0#143#255#0#0#135#255#0#0#195#255#0
   +#0#227#255#0#0#225#255#0#0#241#255#0#0#248#255#0#0#252#255#0#0#254''#0#0#255
   +'='#0#0#255'8'#0#0#255#129#0#0#255#131#0#0#248#7#0#0#252#31#0#0#8'OnCreate'#7
-  +#10'FormCreate'#6'OnShow'#7#8'FormShow'#10'ParentFont'#8#8'Position'#7#16'po'
-  +'MainFormCenter'#10'LCLVersion'#6#6'0.9.26'#0#9'TNotebook'#9'Notebook1'#6'He'
-  +'ight'#3'\'#2#5'Width'#3'>'#3#5'Align'#7#8'alClient'#9'PageIndex'#2#1#8'Show'
-  +'Tabs'#8#8'TabOrder'#2#0#0#5'TPage'#5'Page1'#7'Caption'#6#5'Page1'#11'Client'
-  +'Width'#3'8'#3#12'ClientHeight'#3';'#2#0#12'TSpeedButton'#12'SpeedButton1'#4
-  +'Left'#2'U'#6'Height'#2'h'#3'Top'#2'W'#5'Width'#2'r'#5'Color'#7#9'clBtnFace'
-  +#10'Glyph.Data'#10':@'#0#0'6@'#0#0'BM6@'#0#0#0#0#0#0'6'#0#0#0'('#0#0#0'@'#0#0
-  +#0'@'#0#0#0#1#0' '#0#0#0#0#0#0'@'#0#0'd'#0#0#0'd'#0#0#0#0#0#0#0#0#0#0#0#231
-  +#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0#199
-  +#207#216#0'8:='#0#228#233#238#0#1'Sn'#255#0'\z'#255#0'^y'#255#0';L'#255#159
-  +#161#164#0#164#167#170#0#170#173#176#0#151#157#164#0',.0'#0#187#190#193#0#192
-  ,#195#199#0#200#204#207#0#179#187#195#0'469'#0#224#228#232#0#230#234#238#0#231
-  +#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0#199
-  +#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:'
-  +'='#0#231#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:='#0#231#235
-  +#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235
-  +#239#0#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231#235
-  +#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0#199#207
-  +#216#0'8:='#0#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0
-  +#231#235#239#0#199#207#216#0'8:='#0#190#214#223#0#1'p'#146#255#1'h'#136#255#0
-  +'v'#155#255#0#133#173#255#0#129#169#255#0'CX'#255#152#155#157#0#133#138#144#0
-  +'&'')'#0#157#159#162#0#159#161#164#0#159#162#165#0#139#144#151#0''')+'#0#163
-  +#166#169#0#165#168#171#0#167#170#172#0#150#156#163#0',.0'#0#188#192#195#0#196
-  +#199#202#0#203#206#210#0#181#188#197#0'469'#0#221#225#229#0#223#227#231#0#223
-  +#227#231#0#192#200#208#0'68;'#0#223#227#231#0#224#228#232#0#225#229#232#0#196
-  +#204#213#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:'
-  +'='#0#231#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:='#0#231#235
-  +#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235
-  +#239#0#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0'8:='#0
-  +#231#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:='#0#128#183#202#0
-  +#11'v'#152#255#6'z'#158#255#0#146#192#255#0#160#210#255#0#147#193#255#0#133
-  +#175#255#0'x'#159#255#0#24#31#255'!"$'#0#137#139#142#0#138#140#142#0#139#141
-  +#143#0'x}'#130#0'"#%'#0#143#146#148#0#143#146#148#0#145#147#150#0'~'#132#137
-  +#0'$%'''#0#149#151#154#0#150#153#156#0#151#154#157#0#132#137#143#0'%&('#0#155
-  +#158#160#0#157#159#162#0#160#163#166#0#143#149#155#0'*+-'#0#177#180#183#0#181
-  +#184#187#0#186#189#192#0#168#175#182#0'347'#0#222#226#230#0#228#232#236#0#231
-  +#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0#199
-  +#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:'
-  +'='#0#231#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:='#0#231#235
-  +#239#0#231#235#239#0#231#235#239#0#231#235#239#0#231#235#239#0#231#235#239#0
-  +#199#207#216#0'5CJ'#0#26''#159#255#21'|'#157#255#18#144#183#255#13#169#218
-  +#255#5#177#230#255#0#169#221#255#2#148#194#255#2'b'#255#0#133#175#255#0'\w'
-  +#255#0#1#1#255#0#0#0#255#0#0#0#255#0#0#0#255#0#0#0#255#0#0#0#255#0#0#0#255#0
-  +#0#0#255#0#0#0#255#0#0#0#255#0#0#0#255'tvx'#0'uwy'#0'ejn'#0#29#30#31#0'xz|'#0
-  +'x{}'#0'y{~'#0'inr'#0#30#31'!'#0'|~'#128#0'~'#128#130#0#128#130#132#0'pty'#0
-  +'!"$'#0#152#155#157#0#174#177#180#0#193#196#200#0#177#184#192#0'468'#0#218
-  +#222#226#0#222#226#230#0#226#229#233#0#197#205#214#0'8:='#0#231#235#239#0#231
+  +#10'FormCreate'#6'OnShow'#7#8'FormShow'#8'Position'#7#16'poMainFormCenter'#10
+  +'LCLVersion'#6#6'0.9.27'#0#9'TNotebook'#9'Notebook1'#4'Left'#2#0#6'Height'#3
+  +'\'#2#3'Top'#2#0#5'Width'#3'>'#3#5'Align'#7#8'alClient'#9'PageIndex'#2#1#8'S'
+  +'howTabs'#8#8'TabOrder'#2#0#0#5'TPage'#5'Page1'#7'Caption'#6#5'Page1'#11'Cli'
+  +'entWidth'#3':'#3#12'ClientHeight'#3'?'#2#0#12'TSpeedButton'#12'SpeedButton1'
+  +#4'Left'#2'U'#6'Height'#2'h'#3'Top'#2'W'#5'Width'#2'r'#5'Color'#7#9'clBtnFac'
+  +'e'#10'Glyph.Data'#10':@'#0#0'6@'#0#0'BM6@'#0#0#0#0#0#0'6'#0#0#0'('#0#0#0'@'
+  +#0#0#0'@'#0#0#0#1#0' '#0#0#0#0#0#0'@'#0#0'd'#0#0#0'd'#0#0#0#0#0#0#0#0#0#0#0
+  +#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0
+  +#199#207#216#0'8:='#0#228#233#238#0#1'Sn'#255#0'\z'#255#0'^y'#255#0';L'#255
+  +#159#161#164#0#164#167#170#0#170#173#176#0#151#157#164#0',.0'#0#187#190#193#0
+  ,#192#195#199#0#200#204#207#0#179#187#195#0'469'#0#224#228#232#0#230#234#238#0
+  +#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0
+  +#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0
+  +'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:='#0#231
+  +#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231
   +#235#239#0#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231
   +#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0#199
-  +#207#216#0#231#235#239#0#231#235#239#0#199#207#216#0'1EM'#0#19'}'#158#255#26
-  +#134#167#255' '#167#209#255#29#194#246#255#20#188#240#255#12#181#234#255#3
+  +#207#216#0'8:='#0#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235
+  +#239#0#231#235#239#0#199#207#216#0'8:='#0#190#214#223#0#1'p'#146#255#1'h'#136
+  +#255#0'v'#155#255#0#133#173#255#0#129#169#255#0'CX'#255#152#155#157#0#133#138
+  +#144#0'&'')'#0#157#159#162#0#159#161#164#0#159#162#165#0#139#144#151#0''')+'
+  +#0#163#166#169#0#165#168#171#0#167#170#172#0#150#156#163#0',.0'#0#188#192#195
+  +#0#196#199#202#0#203#206#210#0#181#188#197#0'469'#0#221#225#229#0#223#227#231
+  +#0#223#227#231#0#192#200#208#0'68;'#0#223#227#231#0#224#228#232#0#225#229#232
+  +#0#196#204#213#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0#199#207#216
+  +#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:='#0#231
+  +#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231
+  +#235#239#0#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0'8:'
+  +'='#0#231#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:='#0#128#183
+  +#202#0#11'v'#152#255#6'z'#158#255#0#146#192#255#0#160#210#255#0#147#193#255#0
+  +#133#175#255#0'x'#159#255#0#24#31#255'!"$'#0#137#139#142#0#138#140#142#0#139
+  +#141#143#0'x}'#130#0'"#%'#0#143#146#148#0#143#146#148#0#145#147#150#0'~'#132
+  +#137#0'$%'''#0#149#151#154#0#150#153#156#0#151#154#157#0#132#137#143#0'%&('#0
+  +#155#158#160#0#157#159#162#0#160#163#166#0#143#149#155#0'*+-'#0#177#180#183#0
+  +#181#184#187#0#186#189#192#0#168#175#182#0'347'#0#222#226#230#0#228#232#236#0
+  +#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0
+  +#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0
+  +'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0#199#207#216#0'8:='#0#231
+  +#235#239#0#231#235#239#0#231#235#239#0#231#235#239#0#231#235#239#0#231#235
+  +#239#0#199#207#216#0'5CJ'#0#26''#159#255#21'|'#157#255#18#144#183#255#13#169
+  +#218#255#5#177#230#255#0#169#221#255#2#148#194#255#2'b'#255#0#133#175#255#0
+  +'\w'#255#0#1#1#255#0#0#0#255#0#0#0#255#0#0#0#255#0#0#0#255#0#0#0#255#0#0#0
+  +#255#0#0#0#255#0#0#0#255#0#0#0#255#0#0#0#255'tvx'#0'uwy'#0'ejn'#0#29#30#31#0
+  +'xz|'#0'x{}'#0'y{~'#0'inr'#0#30#31'!'#0'|~'#128#0'~'#128#130#0#128#130#132#0
+  +'pty'#0'!"$'#0#152#155#157#0#174#177#180#0#193#196#200#0#177#184#192#0'468'#0
+  +#218#222#226#0#222#226#230#0#226#229#233#0#197#205#214#0'8:='#0#231#235#239#0
+  +#231#235#239#0#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0
+  +#231#235#239#0#199#207#216#0'8:='#0#231#235#239#0#231#235#239#0#231#235#239#0
+  +#199#207#216#0#231#235#239#0#231#235#239#0#199#207#216#0'1EM'#0#19'}'#158#255
+  +#26#134#167#255' '#167#209#255#29#194#246#255#20#188#240#255#12#181#234#255#3
   +#175#228#255#0#163#212#255#2#147#193#255#0#142#186#255#0#129#169#255'X'#135
   +#150#255#184#184#184#255#178#178#178#255#179#179#179#255#181#181#181#255#182
   +#182#182#255#185#185#185#255#186#186#186#255#188#188#188#255#190#190#190#255
@@ -2452,67 +2452,80 @@ LazarusResources.Add('TfrmProjectWizard','FORMDATA',[
   +'Load an existing IPS file,'#10'which contains all needed information'#10'to'
   +' build an Listaller package.'#10'Font.Pitch'#7#10'fpVariable'#11'ParentColo'
   +'r'#8#10'ParentFont'#8#0#0#0#5'TPage'#5'Page2'#7'Caption'#6#5'Page2'#11'Clie'
-  +'ntWidth'#3'8'#3#12'ClientHeight'#3'V'#2#0#6'TLabel'#6'Label8'#4'Left'#2#7#6
-  +'Height'#2#20#3'Top'#2#7#5'Width'#3#172#0#7'Caption'#6#24'Set application de'
+  +'ntWidth'#3':'#3#12'ClientHeight'#3'V'#2#0#6'TLabel'#6'Label8'#4'Left'#2#7#6
+  +'Height'#2#19#3'Top'#2#7#5'Width'#3#165#0#7'Caption'#6#24'Set application de'
   +'tails:'#11'Font.Height'#2#241#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'P'
-  +'arentFont'#8#0#0#9'TGroupBox'#9'GroupBox1'#4'Left'#2#7#6'Height'#3#176#0#3
-  +'Top'#2'/'#5'Width'#3'('#3#7'Caption'#6#11'Application'#12'ClientHeight'#3
-  +#159#0#11'ClientWidth'#3'$'#3#8'TabOrder'#2#0#0#6'TLabel'#6'Label9'#4'Left'#2
-  +#9#6'Height'#2#20#3'Top'#2#13#5'Width'#3#140#0#8'AutoSize'#8#7'Caption'#6#5
-  +'Name:'#11'ParentColor'#8#0#0#6'TLabel'#7'Label10'#4'Left'#2#9#6'Height'#2#20
-  +#3'Top'#2'('#5'Width'#3#140#0#8'AutoSize'#8#7'Caption'#6#8'Version:'#11'Pare'
-  +'ntColor'#8#0#0#6'TLabel'#7'Label13'#4'Left'#2#6#6'Height'#2#20#3'Top'#2'I'#5
-  +'Width'#3#140#0#8'AutoSize'#8#7'Caption'#6#15'Classification:'#11'ParentColo'
-  +'r'#8#0#0#6'TLabel'#7'Label14'#4'Left'#2#9#6'Height'#2#20#3'Top'#2'c'#5'Widt'
-  +'h'#3#140#0#8'AutoSize'#8#7'Caption'#6#13'License-file:'#11'ParentColor'#8#0
-  +#0#6'TLabel'#7'Label15'#4'Left'#2#9#6'Height'#2#20#3'Top'#3#129#0#5'Width'#3
-  +#140#0#8'AutoSize'#8#7'Caption'#6#22'Long description file:'#11'ParentColor'
-  +#8#0#0#6'TLabel'#7'Label22'#4'Left'#3#236#1#6'Height'#2#20#3'Top'#2#15#5'Wid'
-  +'th'#2'F'#8'AutoSize'#8#7'Caption'#6#7'Author:'#11'ParentColor'#8#0#0#6'TLab'
-  +'el'#7'Label23'#4'Left'#3#236#1#6'Height'#2#20#3'Top'#2'e'#5'Width'#2'F'#8'A'
-  +'utoSize'#8#7'Caption'#6#5'Icon:'#11'ParentColor'#8#0#0#6'TLabel'#7'Label26'
-  +#4'Left'#3'6'#2#6'Height'#2#21#3'Top'#2'y'#5'Width'#3#143#0#7'Caption'#6'D(T'
-  +'he icons-size should be 64x64px, please'#10' use the PNG-image format)'#11
-  +'Font.Height'#2#249#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'ParentFont'#8
-  +#0#0#5'TEdit'#5'Edit1'#4'Left'#3#150#0#6'Height'#2#23#3'Top'#2#10#5'Width'#3
-  +#248#0#8'OnChange'#7#11'Edit1Change'#8'TabOrder'#2#0#4'Text'#6#5'MyApp'#0#0#5
-  +'TEdit'#5'Edit2'#4'Left'#3#150#0#6'Height'#2#23#3'Top'#2'%'#5'Width'#2'P'#8
-  +'OnChange'#7#11'Edit2Change'#8'TabOrder'#2#1#4'Text'#6#4'1.0b'#0#0#9'TComboB'
-  +'ox'#9'ComboBox1'#4'Left'#3#150#0#6'Height'#2#27#3'Top'#2'C'#5'Width'#3#168#0
-  +#9'ItemIndex'#2#9#13'Items.Strings'#1#6#9'Education'#6#6'Office'#6#11'Develo'
-  +'pment'#6#7'Graphic'#6#7'Network'#6#5'Games'#6#6'System'#6#10'Multimedia'#6
-  +#10'Additional'#6#21'Unclassificable/Other'#0#8'TabOrder'#2#2#4'Text'#6#21'U'
-  +'nclassificable/Other'#0#0#13'TFileNameEdit'#13'FileNameEdit1'#4'Left'#3#150
-  +#0#6'Height'#2#23#3'Top'#2'c'#5'Width'#3' '#1#11'ButtonWidth'#2#23#11'Parent'
-  +'Color'#8#8'TabOrder'#2#3#0#0#13'TFileNameEdit'#13'FileNameEdit2'#4'Left'#3
-  +#150#0#6'Height'#2#23#3'Top'#2'~'#5'Width'#3' '#1#11'ButtonWidth'#2#23#11'Pa'
-  +'rentColor'#8#8'TabOrder'#2#4#0#0#5'TEdit'#6'Edit10'#4'Left'#3'6'#2#6'Height'
-  +#2#23#3'Top'#2#10#5'Width'#3#200#0#8'TabOrder'#2#5#4'Text'#6#19'Team/Person/'
-  +'Company'#0#0#13'TFileNameEdit'#13'FileNameEdit5'#4'Left'#3'6'#2#6'Height'#2
-  +#23#3'Top'#2'`'#5'Width'#3#200#0#11'DialogTitle'#6#14'Select icon...'#6'Filt'
-  +'er'#6#15'PNG-Files|*.png'#11'ButtonWidth'#2#23#11'ParentColor'#8#8'TabOrder'
-  +#2#6#0#0#0#9'TGroupBox'#9'GroupBox2'#4'Left'#2#6#6'Height'#3#176#0#3'Top'#3
-  +#223#0#5'Width'#3')'#3#7'Caption'#6#7'Package'#12'ClientHeight'#3#159#0#11'C'
-  +'lientWidth'#3'%'#3#8'TabOrder'#2#1#0#6'TLabel'#7'Label11'#4'Left'#2#6#6'Hei'
-  +'ght'#2#16#3'Top'#2#9#5'Width'#2'R'#7'Caption'#6#13'Architecture:'#11'Parent'
-  +'Color'#8#0#0#6'TLabel'#7'Label16'#4'Left'#2#6#6'Height'#2#16#3'Top'#2')'#5
-  +'Width'#3#153#0#7'Caption'#6#24'Supported distributions:'#11'ParentColor'#8#0
-  ,#0#6'TLabel'#7'Label27'#4'Left'#3#135#1#6'Height'#2#16#3'Top'#2#9#5'Width'#2
-  +'4'#7'Caption'#6#7'idName:'#11'ParentColor'#8#0#0#6'TLabel'#7'Label28'#4'Lef'
-  +'t'#3'7'#2#6'Height'#2#28#3'Top'#2#6#5'Width'#3#235#0#8'AutoSize'#8#7'Captio'
-  +'n'#6'?e.g "appname-07" '#10'if the application is "AppName" version "0.7"'
-  +#11'Font.Height'#2#246#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'ParentFon'
-  +'t'#8#7'OnClick'#7#12'Label28Click'#0#0#6'TLabel'#7'Label29'#4'Left'#3#135#1
-  +#6'Height'#2#16#3'Top'#2'9'#5'Width'#2'X'#7'Caption'#6#14'Desktop Files:'#11
-  +'ParentColor'#8#0#0#6'TLabel'#7'Label30'#4'Left'#3#165#1#6'Height'#2'F'#3'To'
-  +'p'#2'O'#5'Width'#3'|'#1#8'AutoSize'#8#7'Caption'#6#203'Add all *.desktop-fi'
-  +'les of your application, that'#10'will be installed in "/usr/share/applicat'
-  +'ions/" here.'#10'If you add more than one, separate them with a ";"'#10'e.g'
-  +': listaller_creator.desktop;listaller.desktop'#11'ParentColor'#8#0#0#5'TEdi'
-  +'t'#5'Edit3'#4'Left'#3#151#0#6'Height'#2#23#3'Top'#2#6#5'Width'#3#137#0#8'Ta'
-  +'bOrder'#2#0#4'Text'#6#11'i386;x86_64'#0#0#8'TListBox'#15'lbDistributions'#4
-  +'Left'#3#189#0#6'Height'#2'`'#3'Top'#2'9'#5'Width'#3#192#0#9'OnKeyDown'#7#22
-  +'lbDistributionsKeyDown'#8'TabOrder'#2#1#8'TopIndex'#2#255#0#0#7'TButton'#18
+  +'arentFont'#8#0#0#9'TGroupBox'#9'GroupBox1'#4'Left'#2#5#6'Height'#3#200#0#3
+  +'Top'#2#29#5'Width'#3'('#3#7'Caption'#6#11'Application'#12'ClientHeight'#3
+  +#186#0#11'ClientWidth'#3'$'#3#5'Ctl3D'#8#8'TabOrder'#2#0#0#6'TLabel'#6'Label'
+  +'9'#4'Left'#2#9#6'Height'#2#20#3'Top'#2#13#5'Width'#3#140#0#8'AutoSize'#8#7
+  +'Caption'#6#5'Name:'#11'ParentColor'#8#0#0#6'TLabel'#7'Label10'#4'Left'#2#9#6
+  +'Height'#2#20#3'Top'#2'('#5'Width'#3#140#0#8'AutoSize'#8#7'Caption'#6#8'Vers'
+  +'ion:'#11'ParentColor'#8#0#0#6'TLabel'#7'Label13'#4'Left'#2#6#6'Height'#2#20
+  +#3'Top'#2'I'#5'Width'#3#140#0#8'AutoSize'#8#7'Caption'#6#15'Classification:'
+  +#11'ParentColor'#8#0#0#6'TLabel'#7'Label14'#4'Left'#2#9#6'Height'#2#20#3'Top'
+  +#2'c'#5'Width'#3#140#0#8'AutoSize'#8#7'Caption'#6#13'License-file:'#11'Paren'
+  +'tColor'#8#0#0#6'TLabel'#7'Label15'#4'Left'#2#9#6'Height'#2#20#3'Top'#3#129#0
+  +#5'Width'#3#140#0#8'AutoSize'#8#7'Caption'#6#22'Long description file:'#11'P'
+  +'arentColor'#8#0#0#6'TLabel'#7'Label22'#4'Left'#3#236#1#6'Height'#2#20#3'Top'
+  +#2#15#5'Width'#2'F'#8'AutoSize'#8#7'Caption'#6#7'Author:'#11'ParentColor'#8#0
+  +#0#6'TLabel'#7'Label23'#4'Left'#3#236#1#6'Height'#2#20#3'Top'#2'('#5'Width'#2
+  +'F'#8'AutoSize'#8#7'Caption'#6#5'Icon:'#11'ParentColor'#8#0#0#6'TLabel'#7'La'
+  +'bel26'#4'Left'#3'6'#2#6'Height'#2#21#3'Top'#2'B'#5'Width'#3#143#0#7'Caption'
+  +#6'D(The icons-size should be 64x64px, please'#10' use the PNG-image format)'
+  +#11'Font.Height'#2#249#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'ParentFon'
+  +'t'#8#0#0#5'TEdit'#5'Edit1'#4'Left'#3#150#0#6'Height'#2#23#3'Top'#2#10#5'Wid'
+  +'th'#3#248#0#8'OnChange'#7#11'Edit1Change'#8'TabOrder'#2#0#4'Text'#6#5'MyApp'
+  +#0#0#5'TEdit'#5'Edit2'#4'Left'#3#150#0#6'Height'#2#23#3'Top'#2'%'#5'Width'#2
+  +'P'#8'OnChange'#7#11'Edit2Change'#8'TabOrder'#2#1#4'Text'#6#4'1.0b'#0#0#9'TC'
+  +'omboBox'#9'ComboBox1'#4'Left'#3#150#0#6'Height'#2#26#3'Top'#2'C'#5'Width'#3
+  +#168#0#12'AutoComplete'#8#5'Ctl3D'#8#10'ItemHeight'#2#0#9'ItemIndex'#2#9#13
+  +'Items.Strings'#1#6#9'Education'#6#6'Office'#6#11'Development'#6#7'Graphic'#6
+  +#7'Network'#6#5'Games'#6#6'System'#6#10'Multimedia'#6#10'Additional'#6#21'Un'
+  +'classificable/Other'#0#9'ItemWidth'#2#0#8'TabOrder'#2#2#4'Text'#6#21'Unclas'
+  +'sificable/Other'#0#0#13'TFileNameEdit'#13'FileNameEdit1'#4'Left'#3#150#0#6
+  +'Height'#2#23#3'Top'#2'c'#5'Width'#3' '#1#13'DialogOptions'#11#0#11'FilterIn'
+  +'dex'#2#0#11'ButtonWidth'#2#23#9'NumGlyphs'#2#0#5'Ctl3D'#8#8'TabOrder'#2#3#0
+  +#0#13'TFileNameEdit'#13'FileNameEdit2'#4'Left'#3#150#0#6'Height'#2#23#3'Top'
+  +#2'~'#5'Width'#3' '#1#13'DialogOptions'#11#0#11'FilterIndex'#2#0#11'ButtonWi'
+  +'dth'#2#23#9'NumGlyphs'#2#0#5'Ctl3D'#8#8'TabOrder'#2#4#0#0#5'TEdit'#6'Edit10'
+  +#4'Left'#3'6'#2#6'Height'#2#23#3'Top'#2#10#5'Width'#3#200#0#8'TabOrder'#2#5#4
+  +'Text'#6#19'Team/Person/Company'#0#0#13'TFileNameEdit'#13'FileNameEdit5'#4'L'
+  +'eft'#3'6'#2#6'Height'#2#23#3'Top'#2'%'#5'Width'#3#200#0#11'DialogTitle'#6#14
+  +'Select icon...'#13'DialogOptions'#11#0#6'Filter'#6#15'PNG-Files|*.png'#11'F'
+  +'ilterIndex'#2#0#11'ButtonWidth'#2#23#9'NumGlyphs'#2#0#5'Ctl3D'#8#8'TabOrder'
+  +#2#6#0#0#11'TCheckGroup'#11'CheckGroup1'#4'Left'#3#230#1#6'Height'#2'S'#3'To'
+  +'p'#2'c'#5'Width'#3'1'#1#8'AutoFill'#9#7'Caption'#6#31'Available installatio'
+  +'n methods:'#28'ChildSizing.LeftRightSpacing'#2#6#28'ChildSizing.TopBottomSp'
+  ,'acing'#2#6#29'ChildSizing.EnlargeHorizontal'#7#24'crsHomogenousChildResize'
+  +#27'ChildSizing.EnlargeVertical'#7#24'crsHomogenousChildResize'#28'ChildSizi'
+  +'ng.ShrinkHorizontal'#7#14'crsScaleChilds'#26'ChildSizing.ShrinkVertical'#7
+  +#14'crsScaleChilds'#18'ChildSizing.Layout'#7#29'cclLeftToRightThenTopToBotto'
+  +'m'#27'ChildSizing.ControlsPerLine'#2#2#7'Columns'#2#2#5'Ctl3D'#8#13'Items.S'
+  +'trings'#1#6#17'ROOT-installation'#6#23'Installation into $HOME'#6#17'Test-i'
+  +'nstallation'#0#8'TabOrder'#2#7#4'Data'#10#7#0#0#0#3#0#0#0#3#3#3#0#0#0#9'TGr'
+  +'oupBox'#9'GroupBox2'#4'Left'#2#6#6'Height'#3#168#0#3'Top'#3#231#0#5'Width'#3
+  +')'#3#7'Caption'#6#7'Package'#12'ClientHeight'#3#154#0#11'ClientWidth'#3'%'#3
+  +#5'Ctl3D'#8#8'TabOrder'#2#1#0#6'TLabel'#7'Label11'#4'Left'#2#6#6'Height'#2#13
+  +#3'Top'#2#9#5'Width'#2'A'#7'Caption'#6#13'Architecture:'#11'ParentColor'#8#0
+  +#0#6'TLabel'#7'Label16'#4'Left'#2#6#6'Height'#2#13#3'Top'#2')'#5'Width'#2'w'
+  +#7'Caption'#6#24'Supported distributions:'#11'ParentColor'#8#0#0#6'TLabel'#7
+  +'Label27'#4'Left'#3#135#1#6'Height'#2#13#3'Top'#2#9#5'Width'#2')'#7'Caption'
+  +#6#7'idName:'#11'ParentColor'#8#0#0#6'TLabel'#7'Label28'#4'Left'#3'7'#2#6'He'
+  +'ight'#2#28#3'Top'#2#6#5'Width'#3#235#0#8'AutoSize'#8#7'Caption'#6'?e.g "app'
+  +'name-07" '#10'if the application is "AppName" version "0.7"'#11'Font.Height'
+  +#2#246#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'ParentFont'#8#7'OnClick'#7
+  +#12'Label28Click'#0#0#6'TLabel'#7'Label29'#4'Left'#3#135#1#6'Height'#2#13#3
+  +'Top'#2'9'#5'Width'#2'D'#7'Caption'#6#14'Desktop Files:'#11'ParentColor'#8#0
+  +#0#6'TLabel'#7'Label30'#4'Left'#3#165#1#6'Height'#2'F'#3'Top'#2'O'#5'Width'#3
+  +'|'#1#8'AutoSize'#8#7'Caption'#6#203'Add all *.desktop-files of your applica'
+  +'tion, that'#10'will be installed in "/usr/share/applications/" here.'#10'If'
+  +' you add more than one, separate them with a ";"'#10'e.g: listaller_creator'
+  +'.desktop;listaller.desktop'#11'ParentColor'#8#0#0#5'TEdit'#5'Edit3'#4'Left'
+  +#3#151#0#6'Height'#2#23#3'Top'#2#6#5'Width'#3#137#0#8'TabOrder'#2#0#4'Text'#6
+  +#11'i386;x86_64'#0#0#8'TListBox'#15'lbDistributions'#4'Left'#3#190#0#6'Heigh'
+  +'t'#2'`'#3'Top'#2'5'#5'Width'#3#192#0#10'ItemHeight'#2#0#9'OnKeyDown'#7#22'l'
+  +'bDistributionsKeyDown'#8'TabOrder'#2#1#8'TopIndex'#2#255#0#0#7'TButton'#18
   +'btnDistributionAdd'#4'Left'#2'w'#6'Height'#2#25#3'Top'#2'9'#5'Width'#2'@'#7
   +'Caption'#6#3'Add'#7'OnClick'#7#23'btnDistributionAddClick'#8'TabOrder'#2#2#0
   +#0#5'TEdit'#5'Edit5'#4'Left'#2#8#6'Height'#2#23#3'Top'#2';'#5'Width'#2'h'#8
@@ -2523,138 +2536,143 @@ LazarusResources.Add('TfrmProjectWizard','FORMDATA',[
   +#5#4'Text'#6#1'#'#0#0#5'TEdit'#6'Edit12'#4'Left'#3#229#1#6'Height'#2#23#3'To'
   +'p'#2'2'#5'Width'#3','#1#8'TabOrder'#2#6#0#0#0#9'TGroupBox'#9'GroupBox3'#4'L'
   +'eft'#2#5#6'Height'#3#184#0#3'Top'#3#149#1#5'Width'#3#224#1#7'Caption'#6#18
-  +'Short Description:'#12'ClientHeight'#3#167#0#11'ClientWidth'#3#220#1#8'TabO'
-  +'rder'#2#2#0#6'TLabel'#7'Label12'#4'Left'#2#6#6'Height'#2#20#3'Top'#2#9#5'Wi'
-  +'dth'#3' '#1#8'AutoSize'#8#7'Caption'#6#25'Description for <master>:'#11'Par'
-  +'entColor'#8#0#0#6'TLabel'#7'Label31'#4'Left'#3#134#1#6'Height'#2#16#3'Top'#2
-  +'I'#5'Width'#2'G'#7'Caption'#6#10'Lang-Code:'#11'ParentColor'#8#0#0#9'TTreeV'
-  +'iew'#19'tvShortDescriptions'#4'Left'#2#5#6'Height'#2'\'#3'Top'#2'?'#5'Width'
-  +#3't'#1#10'AutoExpand'#9#17'DefaultItemHeight'#2#17#13'HideSelection'#8#8'Ta'
-  +'bOrder'#2#0#7'OnClick'#7#24'tvShortDescriptionsClick'#9'OnKeyDown'#7#26'tvS'
-  +'hortDescriptionsKeyDown'#7'Options'#11#13'tvoAutoExpand'#17'tvoAutoItemHeig'
-  +'ht'#21'tvoKeepCollapsedNodes'#14'tvoShowButtons'#12'tvoShowLines'#11'tvoSho'
-  +'wRoot'#11'tvoToolTips'#0#10'Items.Data'#10'-'#0#0#0#249#255#255#255#2#0#1#0
-  +#0#0#255#255#255#255#255#255#255#255#255#255#255#255#255#255#255#255#0#0#0#0
-  +#0#0#0#0#0#6#0#0#0'Master'#0#0#5'TEdit'#19'edtShortDescription'#4'Left'#2#6#6
-  +'Height'#2#23#3'Top'#2'!'#5'Width'#3'x'#1#8'OnChange'#7#25'edtShortDescripti'
-  +'onChange'#8'TabOrder'#2#1#4'Text'#6#23'This is my application!'#0#0#7'TButt'
-  +'on'#25'btnAssignShortDescription'#4'Left'#3#134#1#6'Height'#2#27#3'Top'#2'!'
-  +#5'Width'#2'K'#7'Caption'#6#9'Assign ->'#7'OnClick'#7#30'btnAssignShortDescr'
-  +'iptionClick'#8'TabOrder'#2#2#0#0#5'TEdit'#11'edtLangCode'#4'Left'#3#134#1#6
-  +'Height'#2#23#3'Top'#2'a'#5'Width'#2'/'#8'TabOrder'#2#3#4'Text'#6#2'de'#0#0#7
-  +'TButton'#14'btnAddLangCode'#4'Left'#3#134#1#6'Height'#2#27#3'Top'#3#128#0#5
-  +'Width'#2'<'#7'Caption'#6#3'Add'#7'OnClick'#7#19'btnAddLangCodeClick'#8'TabO'
-  +'rder'#2#4#0#0#0#9'TGroupBox'#11'grbProfiles'#4'Left'#3#237#1#6'Height'#3#184
-  +#0#3'Top'#3#149#1#5'Width'#3'B'#1#7'Caption'#6#8'Profiles'#12'ClientHeight'#3
-  +#167#0#11'ClientWidth'#3'>'#1#8'TabOrder'#2#3#0#8'TListBox'#10'lbProfiles'#4
-  +'Left'#2'r'#6'Height'#3#136#0#3'Top'#2#9#5'Width'#3#201#0#13'Items.Strings'#1
-  +#6#8'Standard'#0#9'OnKeyDown'#7#17'lbProfilesKeyDown'#8'TabOrder'#2#0#0#0#7
-  +'TButton'#16'btnProfileRemove'#4'Left'#2#8#6'Height'#2#25#3'Top'#2'j'#5'Widt'
-  +'h'#2'K'#7'Caption'#6#6'Remove'#7'OnClick'#7#21'btnProfileRemoveClick'#8'Tab'
-  +'Order'#2#1#0#0#7'TButton'#13'btnProfileAdd'#4'Left'#2#8#6'Height'#2#25#3'To'
-  +'p'#2'J'#5'Width'#2'K'#7'Caption'#6#3'Add'#7'OnClick'#7#18'btnProfileAddClic'
-  +'k'#8'TabOrder'#2#2#0#0#12'TLabeledEdit'#14'edtProfileName'#4'Left'#2#8#6'He'
-  +'ight'#2#23#3'Top'#2'*'#5'Width'#2'` EditLabel.AnchorSideLeft.Control'#7#14
-  +'edtProfileName"EditLabel.AnchorSideBottom.Control'#7#14'edtProfileName'#14
-  +'EditLabel.Left'#2#8#16'EditLabel.Height'#2#16#13'EditLabel.Top'#2#23#15'Edi'
-  +'tLabel.Width'#2'S'#17'EditLabel.Caption'#6#13'Profile name:'#21'EditLabel.P'
-  +'arentColor'#8#11'ParentColor'#8#8'TabOrder'#2#3#0#0#0#0#5'TPage'#5'Page3'#7
-  +'Caption'#6#5'Page3'#11'ClientWidth'#3'8'#3#12'ClientHeight'#3';'#2#0#6'TLab'
-  +'el'#7'Label19'#4'Left'#2#7#6'Height'#2#20#3'Top'#2#7#5'Width'#3#144#0#7'Cap'
-  ,'tion'#6#16'Add dependencies'#11'Font.Height'#2#241#9'Font.Name'#6#4'Sans'#11
-  +'ParentColor'#8#10'ParentFont'#8#0#0#6'TLabel'#7'Label20'#4'Left'#2#7#6'Heig'
-  +'ht'#2'j'#3'Top'#2'?'#5'Width'#3#30#1#7'Caption'#6#197'You can add ftp:// or'
-  +' http:// weblinks.'#10'On DEB-based systems you can use '#10'the package na'
-  +'me instead.'#10'You can add the real package name after the'#10'link, eg.'
-  +#10'http://example.com/test-1.0-i386.deb <test>'#11'ParentColor'#8#0#0#9'TTr'
-  +'eeView'#14'tvDependencies'#4'Left'#3'?'#1#6'Height'#3#241#1#3'Top'#2'?'#5'W'
-  +'idth'#3#245#1#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#8'akBottom'#0#10
-  +'AutoExpand'#9#17'DefaultItemHeight'#2#17#8'TabOrder'#2#0#7'OnClick'#7#19'tv'
-  +'DependenciesClick'#9'OnKeyDown'#7#21'tvDependenciesKeyDown'#7'Options'#11#13
-  +'tvoAutoExpand'#17'tvoAutoItemHeight'#16'tvoHideSelection'#21'tvoKeepCollaps'
-  +'edNodes'#14'tvoShowButtons'#12'tvoShowLines'#11'tvoShowRoot'#11'tvoToolTips'
-  +#0#10'Items.Data'#10'X'#0#0#0#249#255#255#255#2#0#2#0#0#0#255#255#255#255#255
-  +#255#255#255#255#255#255#255#255#255#255#255#0#0#0#0#0#0#0#0#0#10#0#0#0'DEB-'
-  +'System'#255#255#255#255#255#255#255#255#255#255#255#255#255#255#255#255#0#0
-  +#0#0#0#0#0#0#0#10#0#0#0'RPM-System'#0#0#9'TGroupBox'#10'GroupBox10'#4'Left'#2
-  +#7#6'Height'#2'i'#3'Top'#3#199#0#5'Width'#3')'#1#7'Caption'#6#9'Add entry'#12
-  +'ClientHeight'#2'X'#11'ClientWidth'#3'%'#1#8'TabOrder'#2#1#0#5'TEdit'#5'Edit'
-  +'8'#4'Left'#2#6#6'Height'#2#23#3'Top'#2#9#5'Width'#3#24#1#8'TabOrder'#2#0#4
-  +'Text'#6#7'http://'#0#0#7'TButton'#7'Button4'#4'Left'#2'6'#6'Height'#2#25#3
-  +'Top'#2')'#5'Width'#3#163#0#7'Caption'#6#22'Add to selected system'#7'OnClic'
-  +'k'#7#12'Button4Click'#8'TabOrder'#2#1#0#0#0#0#5'TPage'#5'Page4'#7'Caption'#6
-  +#5'Page4'#11'ClientWidth'#3'8'#3#12'ClientHeight'#3';'#2#0#6'TLabel'#7'Label'
-  +'17'#4'Left'#2#7#6'Height'#2#20#3'Top'#2#7#5'Width'#3#163#0#7'Caption'#6#21
-  +'Add files to package:'#11'Font.Height'#2#241#9'Font.Name'#6#4'Sans'#11'Pare'
-  +'ntColor'#8#10'ParentFont'#8#0#0#9'TListView'#14'lvPackageFiles'#6'Height'#3
-  +#136#1#3'Top'#3#179#0#5'Width'#3'8'#3#5'Align'#7#8'alBottom'#7'Columns'#14#1
-  +#7'Caption'#6#8'Filename'#5'Width'#3#200#0#0#1#7'Caption'#6#9'Long Path'#0#1
-  +#7'Caption'#6#6'CopyTo'#5'Width'#3#210#0#0#1#7'Caption'#6#8'Modifier'#5'Widt'
-  +'h'#2'x'#0#1#7'Caption'#6#8'Checksum'#5'Width'#3#24#1#0#0#9'PopupMenu'#7#10
-  +'PopupMenu1'#8'TabOrder'#2#0#9'ViewStyle'#7#8'vsReport'#10'OnDblClick'#7#22
-  +'lvPackageFilesDblClick'#9'OnKeyDown'#7#21'lvPackageFilesKeyDown'#0#0#9'TGro'
-  +'upBox'#9'GroupBox4'#4'Left'#2#7#6'Height'#2'x'#3'Top'#2'7'#5'Width'#3#168#1
-  +#12'ClientHeight'#2'g'#11'ClientWidth'#3#164#1#8'TabOrder'#2#1#0#9'TGroupBox'
-  +#9'GroupBox5'#4'Left'#2#3#6'Height'#2'1'#3'Top'#2#1#5'Width'#3#147#1#7'Capti'
-  +'on'#6#14'Select folder:'#12'ClientHeight'#2' '#11'ClientWidth'#3#143#1#8'Ta'
-  +'bOrder'#2#0#0#14'TDirectoryEdit'#14'DirectoryEdit1'#4'Left'#2#6#6'Height'#2
-  +#23#3'Top'#2#1#5'Width'#3'k'#1#11'ButtonWidth'#2#23#9'NumGlyphs'#2#1#11'Pare'
-  +'ntColor'#8#8'TabOrder'#2#0#0#0#0#9'TGroupBox'#9'GroupBox6'#4'Left'#2#3#6'He'
-  +'ight'#2'-'#3'Top'#2'1'#5'Width'#3#147#1#7'Caption'#6#11'CopyToPath:'#12'Cli'
-  +'entHeight'#2#28#11'ClientWidth'#3#143#1#8'TabOrder'#2#1#0#5'TEdit'#5'Edit6'
-  +#4'Left'#2#6#6'Height'#2#23#3'Top'#2#1#5'Width'#3#128#1#8'TabOrder'#2#0#4'Te'
-  +'xt'#6#13'$INST/appname'#0#0#0#0#9'TGroupBox'#9'GroupBox7'#4'Left'#3#175#1#6
-  +'Height'#2'x'#3'Top'#2'7'#5'Width'#3#137#1#12'ClientHeight'#2'g'#11'ClientWi'
-  +'dth'#3#133#1#7'Enabled'#8#8'TabOrder'#2#2#0#9'TGroupBox'#9'GroupBox8'#4'Lef'
-  +'t'#2#6#6'Height'#2'0'#3'Top'#2#1#5'Width'#3'x'#1#7'Caption'#6#12'Select fil'
-  +'e:'#12'ClientHeight'#2#31#11'ClientWidth'#3't'#1#8'TabOrder'#2#0#0#13'TFile'
-  +'NameEdit'#13'FileNameEdit3'#4'Left'#2#3#6'Height'#2#23#3'Top'#2#3#5'Width'#3
-  +'S'#1#11'ButtonWidth'#2#23#9'NumGlyphs'#2#1#11'ParentColor'#8#8'TabOrder'#2#0
-  +#0#0#0#9'TGroupBox'#9'GroupBox9'#4'Left'#2#6#6'Height'#2'-'#3'Top'#2'1'#5'Wi'
-  +'dth'#3'x'#1#7'Caption'#6#11'CopyToPath:'#12'ClientHeight'#2#28#11'ClientWid'
-  +'th'#3't'#1#8'TabOrder'#2#1#0#5'TEdit'#5'Edit7'#4'Left'#2#6#6'Height'#2#23#3
-  +'Top'#2#1#5'Width'#3#245#0#8'TabOrder'#2#0#4'Text'#6#13'$INST/appname'#0#0#0
-  +#0#12'TRadioButton'#12'RadioButton1'#4'Left'#2#7#6'Height'#2#22#3'Top'#2''''
-  +#5'Width'#3#247#0#7'Caption'#6'$Add files from folder and subfolders'#7'Chec'
-  +'ked'#9#8'OnChange'#7#18'RadioButton1Change'#5'State'#7#9'cbChecked'#8'TabOr'
-  +'der'#2#3#0#0#12'TRadioButton'#12'RadioButton2'#4'Left'#3#175#1#6'Height'#2
-  +#22#3'Top'#2''''#5'Width'#2'o'#7'Caption'#6#15'Add single file'#8'TabOrder'#2
-  +#4#0#0#7'TButton'#7'Button6'#4'Left'#3'_'#1#6'Height'#2#25#3'Top'#3#180#0#5
-  +'Width'#2'p'#7'Caption'#6#17'Add files to list'#7'OnClick'#7#12'Button6Click'
-  +#8'TabOrder'#2#5#0#0#0#5'TPage'#5'Page5'#7'Caption'#6#5'Page5'#11'ClientWidt'
-  +'h'#3'8'#3#12'ClientHeight'#3';'#2#0#6'TLabel'#7'Label18'#4'Left'#2#7#6'Heig'
-  +'ht'#2#20#3'Top'#2#15#5'Width'#3#173#0#7'Caption'#6#21'Check the information'
-  +#11'Font.Height'#2#241#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'ParentFon'
-  ,'t'#8#0#0#5'TMemo'#5'Memo1'#4'Left'#2#7#6'Height'#3#235#1#3'Top'#2'/'#5'Widt'
-  +'h'#3#28#3#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#8'akBottom'#0#11'Font'
-  +'.Height'#2#245#9'Font.Name'#6#16'Courier 10 Pitch'#10'ParentFont'#8#8'ReadO'
-  +'nly'#9#10'ScrollBars'#7#6'ssBoth'#8'TabOrder'#2#0#8'WordWrap'#8#0#0#0#5'TPa'
-  +'ge'#5'Page6'#7'Caption'#6#5'Page6'#11'ClientWidth'#3'8'#3#12'ClientHeight'#3
-  +';'#2#0#6'TLabel'#7'Label21'#4'Left'#2#7#6'Height'#2#20#3'Top'#2#15#5'Width'
-  +#3'['#1#7'Caption'#6',Select executable LOKI/Autopackage.org file:'#11'Font.'
-  +'Height'#2#241#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'ParentFont'#8#0#0
-  +#9'TGroupBox'#10'GroupBox11'#4'Left'#3#167#0#6'Height'#2'A'#3'Top'#3#221#0#5
-  +'Width'#3#1#2#7'Caption'#6#23'LOKI/Autopackage- file:'#12'ClientHeight'#2'0'
-  +#11'ClientWidth'#3#253#1#8'TabOrder'#2#0#0#13'TFileNameEdit'#13'FileNameEdit'
-  +'4'#4'Left'#2#6#6'Height'#2#23#3'Top'#2#9#5'Width'#3#216#1#11'DialogTitle'#6
-  +#20'Select executable...'#13'DialogOptions'#11#15'ofFileMustExist'#0#11'Butt'
-  +'onWidth'#2#23#11'ParentColor'#8#8'TabOrder'#2#0#0#0#0#9'TGroupBox'#10'Group'
-  +'Box12'#4'Left'#3#167#0#6'Height'#2'8'#3'Top'#3'+'#1#5'Width'#3#1#2#7'Captio'
-  +'n'#6'''If the application uses terminal output'#12'ClientHeight'#2''''#11'C'
-  +'lientWidth'#3#253#1#8'TabOrder'#2#1#0#9'TCheckBox'#17'chkShowInTerminal'#4
-  +'Left'#2#14#6'Height'#2#22#3'Top'#2#9#5'Width'#3#159#0#7'Caption'#6#20'Show '
-  +'Terminal Output'#8'TabOrder'#2#0#0#0#0#0#0#6'TPanel'#6'Panel1'#6'Height'#2
-  +'2'#3'Top'#3'\'#2#5'Width'#3'>'#3#5'Align'#7#8'alBottom'#12'ClientHeight'#2
-  +'2'#11'ClientWidth'#3'>'#3#8'TabOrder'#2#1#0#7'TBitBtn'#7'BitBtn1'#4'Left'#2
-  +#8#6'Height'#2#30#3'Top'#2#12#5'Width'#2'='#7'Anchors'#11#5'akTop'#6'akLeft'
-  +#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6#8'  Back  '#7'Enabled'#8#9'NumGlyp'
-  +'hs'#2#0#7'OnClick'#7#12'BitBtn1Click'#8'TabOrder'#2#0#0#0#7'TBitBtn'#7'BitB'
-  +'tn2'#4'Left'#3'u'#1#6'Height'#2#30#3'Top'#2#12#5'Width'#2'A'#7'Anchors'#11#5
-  +'akTop'#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6#9'  Close  '#9'NumGlyphs'#2
-  +#0#7'OnClick'#7#12'BitBtn2Click'#8'TabOrder'#2#1#0#0#7'TBitBtn'#7'BitBtn3'#4
-  +'Left'#3#248#2#6'Height'#2#30#3'Top'#2#12#5'Width'#2';'#7'Anchors'#11#5'akTo'
-  +'p'#7'akRight'#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6#8'  Next  '#7'Enable'
-  +'d'#8#9'NumGlyphs'#2#0#7'OnClick'#7#12'BitBtn3Click'#8'TabOrder'#2#2#0#0#0#10
-  +'TPopupMenu'#10'PopupMenu1'#4'left'#3#24#3#3'top'#2#8#0#9'TMenuItem'#9'MenuI'
-  +'tem1'#7'Caption'#6#6'Delete'#7'OnClick'#7#14'MenuItem1Click'#0#0#0#0
+  +'Short Description:'#12'ClientHeight'#3#170#0#11'ClientWidth'#3#220#1#5'Ctl3'
+  +'D'#8#8'TabOrder'#2#2#0#6'TLabel'#7'Label12'#4'Left'#2#6#6'Height'#2#20#3'To'
+  +'p'#2#9#5'Width'#3' '#1#8'AutoSize'#8#7'Caption'#6#25'Description for <maste'
+  +'r>:'#11'ParentColor'#8#0#0#6'TLabel'#7'Label31'#4'Left'#3#134#1#6'Height'#2
+  +#16#3'Top'#2'I'#5'Width'#2'G'#7'Caption'#6#10'Lang-Code:'#11'ParentColor'#8#0
+  +#0#9'TTreeView'#19'tvShortDescriptions'#4'Left'#2#5#6'Height'#2'\'#3'Top'#2
+  +'?'#5'Width'#3't'#1#10'AutoExpand'#9#5'Ctl3D'#8#17'DefaultItemHeight'#2#14#13
+  +'HideSelection'#8#8'TabOrder'#2#0#7'OnClick'#7#24'tvShortDescriptionsClick'#9
+  +'OnKeyDown'#7#26'tvShortDescriptionsKeyDown'#7'Options'#11#13'tvoAutoExpand'
+  +#17'tvoAutoItemHeight'#21'tvoKeepCollapsedNodes'#14'tvoShowButtons'#12'tvoSh'
+  +'owLines'#11'tvoShowRoot'#11'tvoToolTips'#0#10'Items.Data'#10'-'#0#0#0#249
+  +#255#255#255#2#0#1#0#0#0#255#255#255#255#255#255#255#255#255#255#255#255#255
+  +#255#255#255#0#0#0#0#0#0#0#0#0#6#0#0#0'Master'#0#0#5'TEdit'#19'edtShortDescr'
+  +'iption'#4'Left'#2#6#6'Height'#2#23#3'Top'#2'!'#5'Width'#3'x'#1#8'OnChange'#7
+  +#25'edtShortDescriptionChange'#8'TabOrder'#2#1#4'Text'#6#23'This is my appli'
+  +'cation!'#0#0#7'TButton'#25'btnAssignShortDescription'#4'Left'#3#134#1#6'Hei'
+  +'ght'#2#27#3'Top'#2'!'#5'Width'#2'K'#7'Caption'#6#9'Assign ->'#7'OnClick'#7
+  +#30'btnAssignShortDescriptionClick'#8'TabOrder'#2#2#0#0#5'TEdit'#11'edtLangC'
+  +'ode'#4'Left'#3#134#1#6'Height'#2#23#3'Top'#2'a'#5'Width'#2'/'#8'TabOrder'#2
+  +#3#4'Text'#6#2'de'#0#0#7'TButton'#14'btnAddLangCode'#4'Left'#3#134#1#6'Heigh'
+  +'t'#2#27#3'Top'#3#128#0#5'Width'#2'<'#7'Caption'#6#3'Add'#7'OnClick'#7#19'bt'
+  +'nAddLangCodeClick'#8'TabOrder'#2#4#0#0#0#9'TGroupBox'#11'grbProfiles'#4'Lef'
+  +'t'#3#237#1#6'Height'#3#184#0#3'Top'#3#149#1#5'Width'#3'B'#1#7'Caption'#6#8
+  +'Profiles'#12'ClientHeight'#3#170#0#11'ClientWidth'#3'>'#1#5'Ctl3D'#8#8'TabO'
+  +'rder'#2#3#0#8'TListBox'#10'lbProfiles'#4'Left'#2'r'#6'Height'#3#136#0#3'Top'
+  ,#2#9#5'Width'#3#201#0#13'Items.Strings'#1#6#8'Standard'#0#10'ItemHeight'#2#18
+  +#9'OnKeyDown'#7#17'lbProfilesKeyDown'#8'TabOrder'#2#0#0#0#7'TButton'#16'btnP'
+  +'rofileRemove'#4'Left'#2#8#6'Height'#2#25#3'Top'#2'j'#5'Width'#2'K'#7'Captio'
+  +'n'#6#6'Remove'#7'OnClick'#7#21'btnProfileRemoveClick'#8'TabOrder'#2#1#0#0#7
+  +'TButton'#13'btnProfileAdd'#4'Left'#2#8#6'Height'#2#25#3'Top'#2'J'#5'Width'#2
+  +'K'#7'Caption'#6#3'Add'#7'OnClick'#7#18'btnProfileAddClick'#8'TabOrder'#2#2#0
+  +#0#12'TLabeledEdit'#14'edtProfileName'#4'Left'#2#8#6'Height'#2#23#3'Top'#2'*'
+  +#5'Width'#2'` EditLabel.AnchorSideLeft.Control'#7#14'edtProfileName"EditLabe'
+  +'l.AnchorSideBottom.Control'#7#14'edtProfileName'#14'EditLabel.Left'#2#8#16
+  +'EditLabel.Height'#2#16#13'EditLabel.Top'#2#23#15'EditLabel.Width'#2'S'#17'E'
+  +'ditLabel.Caption'#6#13'Profile name:'#21'EditLabel.ParentColor'#8#8'TabOrde'
+  +'r'#2#3#0#0#0#0#5'TPage'#5'Page3'#7'Caption'#6#5'Page3'#11'ClientWidth'#3':'
+  +#3#12'ClientHeight'#3'?'#2#0#6'TLabel'#7'Label19'#4'Left'#2#7#6'Height'#2#20
+  +#3'Top'#2#7#5'Width'#3#144#0#7'Caption'#6#16'Add dependencies'#11'Font.Heigh'
+  +'t'#2#241#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'ParentFont'#8#0#0#6'TL'
+  +'abel'#7'Label20'#4'Left'#2#7#6'Height'#2'j'#3'Top'#2'?'#5'Width'#3#30#1#7'C'
+  +'aption'#6#197'You can add ftp:// or http:// weblinks.'#10'On DEB-based syst'
+  +'ems you can use '#10'the package name instead.'#10'You can add the real pac'
+  +'kage name after the'#10'link, eg.'#10'http://example.com/test-1.0-i386.deb '
+  +'<test>'#11'ParentColor'#8#0#0#9'TTreeView'#14'tvDependencies'#4'Left'#3'?'#1
+  +#6'Height'#3#245#1#3'Top'#2'?'#5'Width'#3#247#1#7'Anchors'#11#5'akTop'#6'akL'
+  +'eft'#7'akRight'#8'akBottom'#0#10'AutoExpand'#9#5'Ctl3D'#8#17'DefaultItemHei'
+  +'ght'#2#17#8'TabOrder'#2#0#7'OnClick'#7#19'tvDependenciesClick'#9'OnKeyDown'
+  +#7#21'tvDependenciesKeyDown'#7'Options'#11#13'tvoAutoExpand'#17'tvoAutoItemH'
+  +'eight'#16'tvoHideSelection'#21'tvoKeepCollapsedNodes'#14'tvoShowButtons'#12
+  +'tvoShowLines'#11'tvoShowRoot'#11'tvoToolTips'#0#10'Items.Data'#10'X'#0#0#0
+  +#249#255#255#255#2#0#2#0#0#0#255#255#255#255#255#255#255#255#255#255#255#255
+  +#255#255#255#255#0#0#0#0#0#0#0#0#0#10#0#0#0'DEB-System'#255#255#255#255#255
+  +#255#255#255#255#255#255#255#255#255#255#255#0#0#0#0#0#0#0#0#0#10#0#0#0'RPM-'
+  +'System'#0#0#9'TGroupBox'#10'GroupBox10'#4'Left'#2#7#6'Height'#2'i'#3'Top'#3
+  +#199#0#5'Width'#3')'#1#7'Caption'#6#9'Add entry'#12'ClientHeight'#2'['#11'Cl'
+  +'ientWidth'#3'%'#1#5'Ctl3D'#8#8'TabOrder'#2#1#0#5'TEdit'#5'Edit8'#4'Left'#2#6
+  +#6'Height'#2#23#3'Top'#2#9#5'Width'#3#24#1#8'TabOrder'#2#0#4'Text'#6#7'http:'
+  +'//'#0#0#7'TButton'#7'Button4'#4'Left'#2'6'#6'Height'#2#25#3'Top'#2')'#5'Wid'
+  +'th'#3#163#0#7'Caption'#6#22'Add to selected system'#7'OnClick'#7#12'Button4'
+  +'Click'#8'TabOrder'#2#1#0#0#0#0#5'TPage'#5'Page4'#7'Caption'#6#5'Page4'#11'C'
+  +'lientWidth'#3':'#3#12'ClientHeight'#3'?'#2#0#6'TLabel'#7'Label17'#4'Left'#2
+  +#7#6'Height'#2#20#3'Top'#2#7#5'Width'#3#163#0#7'Caption'#6#21'Add files to p'
+  +'ackage:'#11'Font.Height'#2#241#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10
+  +'ParentFont'#8#0#0#9'TListView'#14'lvPackageFiles'#4'Left'#2#0#6'Height'#3
+  +#136#1#3'Top'#3#183#0#5'Width'#3':'#3#5'Align'#7#8'alBottom'#7'Columns'#14#1
+  +#8'AutoSize'#8#7'Caption'#6#8'Filename'#5'Width'#3#200#0#0#1#8'AutoSize'#8#7
+  +'Caption'#6#9'Long Path'#0#1#8'AutoSize'#8#7'Caption'#6#6'CopyTo'#5'Width'#3
+  +#210#0#0#1#8'AutoSize'#8#7'Caption'#6#8'Modifier'#5'Width'#2'x'#0#1#8'AutoSi'
+  +'ze'#8#7'Caption'#6#8'Checksum'#5'Width'#3#24#1#0#0#9'PopupMenu'#7#10'PopupM'
+  +'enu1'#10'SortColumn'#2#0#8'SortType'#7#6'stNone'#8'TabOrder'#2#0#9'ViewStyl'
+  +'e'#7#8'vsReport'#10'OnDblClick'#7#22'lvPackageFilesDblClick'#9'OnKeyDown'#7
+  +#21'lvPackageFilesKeyDown'#0#0#9'TGroupBox'#9'GroupBox4'#4'Left'#2#7#6'Heigh'
+  +'t'#2'x'#3'Top'#2'7'#5'Width'#3#168#1#12'ClientHeight'#2'j'#11'ClientWidth'#3
+  +#164#1#5'Ctl3D'#8#8'TabOrder'#2#1#0#9'TGroupBox'#9'GroupBox5'#4'Left'#2#3#6
+  +'Height'#2'1'#3'Top'#2#1#5'Width'#3#147#1#7'Caption'#6#14'Select folder:'#12
+  +'ClientHeight'#2'#'#11'ClientWidth'#3#143#1#5'Ctl3D'#8#8'TabOrder'#2#0#0#14
+  +'TDirectoryEdit'#14'DirectoryEdit1'#4'Left'#2#6#6'Height'#2#23#3'Top'#2#1#5
+  +'Width'#3'k'#1#10'ShowHidden'#8#11'ButtonWidth'#2#23#9'NumGlyphs'#2#1#5'Ctl3'
+  +'D'#8#8'TabOrder'#2#0#0#0#0#9'TGroupBox'#9'GroupBox6'#4'Left'#2#3#6'Height'#2
+  +'-'#3'Top'#2'1'#5'Width'#3#147#1#7'Caption'#6#11'CopyToPath:'#12'ClientHeigh'
+  +'t'#2#31#11'ClientWidth'#3#143#1#5'Ctl3D'#8#8'TabOrder'#2#1#0#5'TEdit'#5'Edi'
+  +'t6'#4'Left'#2#6#6'Height'#2#23#3'Top'#2#1#5'Width'#3#128#1#8'TabOrder'#2#0#4
+  +'Text'#6#13'$INST/appname'#0#0#0#0#9'TGroupBox'#9'GroupBox7'#4'Left'#3#175#1
+  +#6'Height'#2'x'#3'Top'#2'7'#5'Width'#3#137#1#12'ClientHeight'#2'j'#11'Client'
+  +'Width'#3#133#1#5'Ctl3D'#8#7'Enabled'#8#8'TabOrder'#2#2#0#9'TGroupBox'#9'Gro'
+  +'upBox8'#4'Left'#2#6#6'Height'#2'0'#3'Top'#2#1#5'Width'#3'x'#1#7'Caption'#6
+  +#12'Select file:'#12'ClientHeight'#2'"'#11'ClientWidth'#3't'#1#5'Ctl3D'#8#8
+  +'TabOrder'#2#0#0#13'TFileNameEdit'#13'FileNameEdit3'#4'Left'#2#3#6'Height'#2
+  ,#23#3'Top'#2#3#5'Width'#3'S'#1#13'DialogOptions'#11#0#11'FilterIndex'#2#0#11
+  +'ButtonWidth'#2#23#9'NumGlyphs'#2#1#5'Ctl3D'#8#8'TabOrder'#2#0#0#0#0#9'TGrou'
+  +'pBox'#9'GroupBox9'#4'Left'#2#6#6'Height'#2'-'#3'Top'#2'1'#5'Width'#3'x'#1#7
+  +'Caption'#6#11'CopyToPath:'#12'ClientHeight'#2#31#11'ClientWidth'#3't'#1#5'C'
+  +'tl3D'#8#8'TabOrder'#2#1#0#5'TEdit'#5'Edit7'#4'Left'#2#6#6'Height'#2#23#3'To'
+  +'p'#2#1#5'Width'#3#245#0#8'TabOrder'#2#0#4'Text'#6#13'$INST/appname'#0#0#0#0
+  +#12'TRadioButton'#12'RadioButton1'#4'Left'#2#7#6'Height'#2#22#3'Top'#2''''#5
+  +'Width'#3#247#0#7'Caption'#6'$Add files from folder and subfolders'#7'Checke'
+  +'d'#9#8'OnChange'#7#18'RadioButton1Change'#5'State'#7#9'cbChecked'#8'TabOrde'
+  +'r'#2#3#0#0#12'TRadioButton'#12'RadioButton2'#4'Left'#3#175#1#6'Height'#2#22
+  +#3'Top'#2''''#5'Width'#2'o'#7'Caption'#6#15'Add single file'#8'TabOrder'#2#4
+  +#0#0#7'TButton'#7'Button6'#4'Left'#3'_'#1#6'Height'#2#25#3'Top'#3#180#0#5'Wi'
+  +'dth'#2'p'#7'Caption'#6#17'Add files to list'#7'OnClick'#7#12'Button6Click'#8
+  +'TabOrder'#2#5#0#0#0#5'TPage'#5'Page5'#7'Caption'#6#5'Page5'#11'ClientWidth'
+  +#3':'#3#12'ClientHeight'#3'?'#2#0#6'TLabel'#7'Label18'#4'Left'#2#7#6'Height'
+  +#2#20#3'Top'#2#15#5'Width'#3#173#0#7'Caption'#6#21'Check the information'#11
+  +'Font.Height'#2#241#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'ParentFont'#8
+  +#0#0#5'TMemo'#5'Memo1'#4'Left'#2#7#6'Height'#3#239#1#3'Top'#2'/'#5'Width'#3
+  +#30#3#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#8'akBottom'#0#11'Font.Heig'
+  +'ht'#2#245#9'Font.Name'#6#16'Courier 10 Pitch'#10'ParentFont'#8#8'ReadOnly'#9
+  +#10'ScrollBars'#7#6'ssBoth'#8'TabOrder'#2#0#8'WordWrap'#8#0#0#0#5'TPage'#5'P'
+  +'age6'#7'Caption'#6#5'Page6'#11'ClientWidth'#3':'#3#12'ClientHeight'#3'?'#2#0
+  +#6'TLabel'#7'Label21'#4'Left'#2#7#6'Height'#2#20#3'Top'#2#15#5'Width'#3'['#1
+  +#7'Caption'#6',Select executable LOKI/Autopackage.org file:'#11'Font.Height'
+  +#2#241#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'ParentFont'#8#0#0#9'TGrou'
+  +'pBox'#10'GroupBox11'#4'Left'#3#167#0#6'Height'#2'A'#3'Top'#3#221#0#5'Width'
+  +#3#1#2#7'Caption'#6#23'LOKI/Autopackage- file:'#12'ClientHeight'#2'3'#11'Cli'
+  +'entWidth'#3#253#1#5'Ctl3D'#8#8'TabOrder'#2#0#0#13'TFileNameEdit'#13'FileNam'
+  +'eEdit4'#4'Left'#2#6#6'Height'#2#23#3'Top'#2#9#5'Width'#3#216#1#11'DialogTit'
+  +'le'#6#20'Select executable...'#13'DialogOptions'#11#15'ofFileMustExist'#0#11
+  +'FilterIndex'#2#0#11'ButtonWidth'#2#23#9'NumGlyphs'#2#0#5'Ctl3D'#8#8'TabOrde'
+  +'r'#2#0#0#0#0#9'TGroupBox'#10'GroupBox12'#4'Left'#3#167#0#6'Height'#2'8'#3'T'
+  +'op'#3'+'#1#5'Width'#3#1#2#7'Caption'#6'''If the application uses terminal o'
+  +'utput'#12'ClientHeight'#2'*'#11'ClientWidth'#3#253#1#5'Ctl3D'#8#8'TabOrder'
+  +#2#1#0#9'TCheckBox'#17'chkShowInTerminal'#4'Left'#2#14#6'Height'#2#22#3'Top'
+  +#2#9#5'Width'#3#159#0#7'Caption'#6#20'Show Terminal Output'#8'TabOrder'#2#0#0
+  +#0#0#0#0#6'TPanel'#6'Panel1'#4'Left'#2#0#6'Height'#2'2'#3'Top'#3'\'#2#5'Widt'
+  +'h'#3'>'#3#5'Align'#7#8'alBottom'#12'ClientHeight'#2'2'#11'ClientWidth'#3'>'
+  +#3#8'TabOrder'#2#1#0#7'TBitBtn'#7'BitBtn1'#4'Left'#2#8#6'Height'#2#30#3'Top'
+  +#2#12#5'Width'#2'1'#7'Anchors'#11#5'akTop'#6'akLeft'#8'akBottom'#0#8'AutoSiz'
+  +'e'#9#7'Caption'#6#8'  Back  '#7'Enabled'#8#9'NumGlyphs'#2#0#7'OnClick'#7#12
+  +'BitBtn1Click'#8'TabOrder'#2#0#0#0#7'TBitBtn'#7'BitBtn2'#4'Left'#3'{'#1#6'He'
+  +'ight'#2#30#3'Top'#2#12#5'Width'#2'4'#7'Anchors'#11#5'akTop'#8'akBottom'#0#8
+  +'AutoSize'#9#7'Caption'#6#9'  Close  '#9'NumGlyphs'#2#0#7'OnClick'#7#12'BitB'
+  +'tn2Click'#8'TabOrder'#2#1#0#0#7'TBitBtn'#7'BitBtn3'#4'Left'#3#4#3#6'Height'
+  +#2#30#3'Top'#2#12#5'Width'#2'/'#7'Anchors'#11#5'akTop'#7'akRight'#8'akBottom'
+  +#0#8'AutoSize'#9#7'Caption'#6#8'  Next  '#7'Enabled'#8#9'NumGlyphs'#2#0#7'On'
+  +'Click'#7#12'BitBtn3Click'#8'TabOrder'#2#2#0#0#0#10'TPopupMenu'#10'PopupMenu'
+  +'1'#4'left'#3#24#3#3'top'#2#8#0#9'TMenuItem'#9'MenuItem1'#7'Caption'#6#6'Del'
+  +'ete'#7'OnClick'#7#14'MenuItem1Click'#0#0#0#0
 ]);

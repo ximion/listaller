@@ -3,46 +3,63 @@ object frmEditor: TfrmEditor
   Height = 654
   Top = 200
   Width = 922
-  ActiveControl = PageControl1
+  ActiveControl = IPSNotebook
   Caption = 'Listaller package creator'
-  ClientHeight = 631
+  ClientHeight = 632
   ClientWidth = 922
   Menu = mmMain
   OnActivate = FormActivate
   OnCreate = FormCreate
   OnShow = FormShow
-  ParentFont = False
-  LCLVersion = '0.9.26'
-  object PageControl1: TPageControl
-    Height = 558
-    Top = 8
+  LCLVersion = '0.9.27'
+  object memLog: TMemo
+    Left = 0
+    Height = 86
+    Top = 546
     Width = 922
-    ActivePage = TabSheet1
-    Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 0
+    Align = alBottom
+    Lines.Strings = (
+      'Log:'
+    )
     TabOrder = 0
-    object TabSheet1: TTabSheet
-      Caption = 'Main'
-      ClientHeight = 525
-      ClientWidth = 916
-      OnShow = TabSheet1Show
+  end
+  object IPSNotebook: TNotebook
+    Left = 0
+    Height = 544
+    Top = 2
+    Width = 922
+    Align = alBottom
+    Options = [nboShowCloseButtons]
+    PageIndex = 0
+    TabOrder = 1
+    object ScriptPage: TPage
+      Caption = 'Script'
+      ClientWidth = 918
+      ClientHeight = 514
       object MainScriptEdit: TSynEdit
-        Height = 525
-        Width = 916
+        Left = 0
+        Height = 514
+        Top = 0
+        Width = 918
         Align = alClient
+        CFDividerDrawLevel = 0
+        Ctl3D = False
         Font.Height = -10
         Font.Name = '-adobe-courier-medium-r-normal-*-*-*-*-*-*-*-iso10646-1'
         Font.Pitch = fpFixed
+        Font.Quality = fqNonAntialiased
         ParentColor = False
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 18
         BookMarkOptions.OnChange = nil
-        Gutter.LeftOffset = 0
         Gutter.RightOffset = 0
-        Gutter.ShowLineNumbers = True
+        Gutter.LeftOffset = 0
         Gutter.ShowCodeFolding = True
         Gutter.CodeFoldingWidth = 10
+        Gutter.ShowChanges = True
+        Gutter.ShowLineNumbers = True
+        Gutter.ZeroStart = False
         Highlighter = SynXMLSyn1
         Keystrokes = <        
           item
@@ -385,30 +402,39 @@ object frmEditor: TfrmEditor
         )
         Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
         ScrollBars = ssAutoBoth
+        SelectedColor.StartX = 0
+        SelectedColor.EndX = 0
         SelectedColor.OnChange = nil
+        BracketHighlightStyle = sbhsBoth
       end
     end
-    object TabSheet2: TTabSheet
-      Caption = 'Files'
-      ClientHeight = 526
-      ClientWidth = 916
-      OnShow = TabSheet2Show
+    object Page2: TPage
+      Caption = 'File-Profile #0'
+      ClientWidth = 918
+      ClientHeight = 514
       object FilesEdit: TSynEdit
-        Height = 526
-        Width = 916
+        Left = 0
+        Height = 514
+        Top = 0
+        Width = 918
         Align = alClient
+        CFDividerDrawLevel = 0
+        Ctl3D = False
         Font.Height = -12
         Font.Name = 'courier'
         Font.Pitch = fpFixed
+        Font.Quality = fqNonAntialiased
         ParentColor = False
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 22
-        Gutter.LeftOffset = 0
         Gutter.RightOffset = 0
-        Gutter.ShowLineNumbers = True
+        Gutter.LeftOffset = 0
         Gutter.ShowCodeFolding = True
         Gutter.CodeFoldingWidth = 10
+        Gutter.ShowChanges = True
+        Gutter.ShowLineNumbers = True
+        Gutter.ZeroStart = False
         Highlighter = SynAnySyn1
         Keystrokes = <        
           item
@@ -732,18 +758,11 @@ object frmEditor: TfrmEditor
             ShortCut = 24642
           end>
         Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
+        SelectedColor.StartX = 0
+        SelectedColor.EndX = 0
+        BracketHighlightStyle = sbhsBoth
       end
     end
-  end
-  object memLog: TMemo
-    Height = 86
-    Top = 545
-    Width = 922
-    Align = alBottom
-    Lines.Strings = (
-      'Log:'
-    )
-    TabOrder = 1
   end
   object mmMain: TMainMenu
     left = 744
@@ -853,25 +872,65 @@ object frmEditor: TfrmEditor
   object SynXMLSyn1: TSynXMLSyn
     DefaultFilter = 'XML-Dokumente (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
+    ElementAttri.FrameColor = clNone
+    AttributeAttri.FrameColor = clNone
+    NamespaceAttributeAttri.FrameColor = clNone
+    AttributeValueAttri.FrameColor = clNone
+    NamespaceAttributeValueAttri.FrameColor = clNone
+    TextAttri.FrameColor = clNone
+    CDATAAttri.FrameColor = clNone
+    EntityRefAttri.FrameColor = clNone
+    ProcessingInstructionAttri.FrameColor = clNone
+    CommentAttri.FrameColor = clNone
+    DocTypeAttri.FrameColor = clNone
+    SpaceAttri.FrameColor = clNone
+    SymbolAttri.FrameColor = clNone
     WantBracesParsed = False
     left = 800
     top = 8
   end
   object Process1: TProcess
+    Active = False
     Options = [poUsePipes]
     Priority = ppNormal
+    StartupOptions = []
+    ShowWindow = swoNone
+    WindowColumns = 0
+    WindowHeight = 0
+    WindowLeft = 0
+    WindowRows = 0
+    WindowTop = 0
+    WindowWidth = 0
+    FillAttribute = 0
     left = 816
     top = 288
   end
   object SynTeXSyn1: TSynTeXSyn
     DefaultFilter = 'TeX-Dateien (*.tex)|*.tex'
     Enabled = False
+    CommentAttri.FrameColor = clNone
+    TextAttri.FrameColor = clNone
+    ControlSequenceAttri.FrameColor = clNone
+    MathmodeAttri.FrameColor = clNone
+    SpaceAttri.FrameColor = clNone
+    BraceAttri.FrameColor = clNone
+    BracketAttri.FrameColor = clNone
     left = 832
     top = 8
   end
   object SynAnySyn1: TSynAnySyn
     Enabled = False
-    IdentifierChars = '!"#$%&''()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~½¿ï'
+    CommentAttri.FrameColor = clNone
+    Comments = []
+    DetectPreprocessor = False
+    IdentifierAttri.FrameColor = clNone
+    IdentifierChars = '!"#$%&''()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¯½¿ÂÃ'
+    KeyAttri.FrameColor = clNone
+    ConstantAttri.FrameColor = clNone
+    ObjectAttri.FrameColor = clNone
+    EntityAttri.FrameColor = clNone
+    VariableAttri.FrameColor = clNone
+    DotAttri.FrameColor = clNone
     KeyWords.Strings = (
       '<chmod:'
       '$INST'
@@ -884,8 +943,15 @@ object frmEditor: TfrmEditor
       '<chmod:'
       '<s>'
     )
+    NumberAttri.FrameColor = clNone
+    PreprocessorAttri.FrameColor = clNone
+    SpaceAttri.FrameColor = clNone
+    StringAttri.FrameColor = clNone
+    SymbolAttri.FrameColor = clNone
     Markup = True
+    Entity = False
     DollarVariables = True
+    ActiveDot = False
     left = 832
     top = 40
   end

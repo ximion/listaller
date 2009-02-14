@@ -1,3 +1,9 @@
+listaller (0.1.89-2) jaunty; urgency=low
+
+  * New development snapshot
+
+ -- Matthias Klumpp <matthias@nlinux.org>  Sat, 14 Feb 2009 22:02:33 +0100
+
 listaller (0.1.89-1) jaunty; urgency=low
 
   * Improved speed of 'listallmgr'
