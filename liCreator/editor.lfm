@@ -47,7 +47,6 @@ object frmEditor: TfrmEditor
         Font.Height = -10
         Font.Name = '-adobe-courier-medium-r-normal-*-*-*-*-*-*-*-iso10646-1'
         Font.Pitch = fpFixed
-        Font.Quality = fqNonAntialiased
         ParentColor = False
         ParentFont = False
         TabOrder = 0
@@ -57,7 +56,6 @@ object frmEditor: TfrmEditor
         Gutter.LeftOffset = 0
         Gutter.ShowCodeFolding = True
         Gutter.CodeFoldingWidth = 10
-        Gutter.ShowChanges = True
         Gutter.ShowLineNumbers = True
         Gutter.ZeroStart = False
         Highlighter = SynXMLSyn1
@@ -402,10 +400,7 @@ object frmEditor: TfrmEditor
         )
         Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
         ScrollBars = ssAutoBoth
-        SelectedColor.StartX = 0
-        SelectedColor.EndX = 0
         SelectedColor.OnChange = nil
-        BracketHighlightStyle = sbhsBoth
       end
     end
     object Page2: TPage
@@ -423,7 +418,6 @@ object frmEditor: TfrmEditor
         Font.Height = -12
         Font.Name = 'courier'
         Font.Pitch = fpFixed
-        Font.Quality = fqNonAntialiased
         ParentColor = False
         ParentFont = False
         TabOrder = 0
@@ -432,7 +426,6 @@ object frmEditor: TfrmEditor
         Gutter.LeftOffset = 0
         Gutter.ShowCodeFolding = True
         Gutter.CodeFoldingWidth = 10
-        Gutter.ShowChanges = True
         Gutter.ShowLineNumbers = True
         Gutter.ZeroStart = False
         Highlighter = SynAnySyn1
@@ -758,9 +751,6 @@ object frmEditor: TfrmEditor
             ShortCut = 24642
           end>
         Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
-        SelectedColor.StartX = 0
-        SelectedColor.EndX = 0
-        BracketHighlightStyle = sbhsBoth
       end
     end
   end
@@ -872,19 +862,6 @@ object frmEditor: TfrmEditor
   object SynXMLSyn1: TSynXMLSyn
     DefaultFilter = 'XML-Dokumente (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
-    ElementAttri.FrameColor = clNone
-    AttributeAttri.FrameColor = clNone
-    NamespaceAttributeAttri.FrameColor = clNone
-    AttributeValueAttri.FrameColor = clNone
-    NamespaceAttributeValueAttri.FrameColor = clNone
-    TextAttri.FrameColor = clNone
-    CDATAAttri.FrameColor = clNone
-    EntityRefAttri.FrameColor = clNone
-    ProcessingInstructionAttri.FrameColor = clNone
-    CommentAttri.FrameColor = clNone
-    DocTypeAttri.FrameColor = clNone
-    SpaceAttri.FrameColor = clNone
-    SymbolAttri.FrameColor = clNone
     WantBracesParsed = False
     left = 800
     top = 8
@@ -908,29 +885,14 @@ object frmEditor: TfrmEditor
   object SynTeXSyn1: TSynTeXSyn
     DefaultFilter = 'TeX-Dateien (*.tex)|*.tex'
     Enabled = False
-    CommentAttri.FrameColor = clNone
-    TextAttri.FrameColor = clNone
-    ControlSequenceAttri.FrameColor = clNone
-    MathmodeAttri.FrameColor = clNone
-    SpaceAttri.FrameColor = clNone
-    BraceAttri.FrameColor = clNone
-    BracketAttri.FrameColor = clNone
     left = 832
     top = 8
   end
   object SynAnySyn1: TSynAnySyn
     Enabled = False
-    CommentAttri.FrameColor = clNone
     Comments = []
     DetectPreprocessor = False
-    IdentifierAttri.FrameColor = clNone
-    IdentifierChars = '!"#$%&''()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¯½¿ÂÃ'
-    KeyAttri.FrameColor = clNone
-    ConstantAttri.FrameColor = clNone
-    ObjectAttri.FrameColor = clNone
-    EntityAttri.FrameColor = clNone
-    VariableAttri.FrameColor = clNone
-    DotAttri.FrameColor = clNone
+    IdentifierChars = '!"#$%&''()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
     KeyWords.Strings = (
       '<chmod:'
       '$INST'
@@ -943,11 +905,6 @@ object frmEditor: TfrmEditor
       '<chmod:'
       '<s>'
     )
-    NumberAttri.FrameColor = clNone
-    PreprocessorAttri.FrameColor = clNone
-    SpaceAttri.FrameColor = clNone
-    StringAttri.FrameColor = clNone
-    SymbolAttri.FrameColor = clNone
     Markup = True
     Entity = False
     DollarVariables = True

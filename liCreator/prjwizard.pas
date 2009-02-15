@@ -31,6 +31,16 @@ type
 
   TListallerPackageType = (lptLinstall, lptDLink, lptContainer);
 
+  TPackageFile = record
+    FileName : String;
+    FullName : String;
+    CopyTo: String;
+    Checksum: String;
+    Modifier: String;
+  end;
+
+  PPackageFile = ^TPackageFile;
+
   TfrmProjectWizard = class(TForm)
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
@@ -46,6 +56,7 @@ type
     CheckGroup1: TCheckGroup;
     chkShowInTerminal: TCheckBox;
     ComboBox1: TComboBox;
+    cmbProfiles: TComboBox;
     DirectoryEdit1: TDirectoryEdit;
     Edit1: TEdit;
     Edit10: TEdit;
@@ -142,9 +153,12 @@ type
     procedure Button4Click(Sender: TObject);
     procedure btnAddLangCodeClick(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure cmbProfilesChange(Sender: TObject);
+    procedure cmbProfilesCloseUp(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
     procedure Edit2Change(Sender: TObject);
     procedure edtShortDescriptionChange(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Label28Click(Sender: TObject);
@@ -169,6 +183,12 @@ type
       Shift: TShiftState);
   private
     function CreateScript(aType: TListallerPackageType): TXMLDocument;
+    procedure LoadFilesFromProfile(Profile: TList);
+    procedure SaveFilesToProfile(Profile: TList);
+    procedure ClearProfile(Profile: TList);
+    procedure DeleteProfile(iIndex: Integer);
+    procedure AddProfile(strName: String);
+    function GetProfile(iIndex: integer): TList;
     { private declarations }
   public
     { public declarations }
@@ -196,6 +216,8 @@ begin
     BitBtn3.Enabled:=false;
   end;
   BitBtn3.Caption:='  Next  ';
+  if NoteBook1.PageIndex=3 then
+     cmbProfilesChange(Sender);  // SaveFilesToProfile
   if (CreaType=lptDLink) and (NoteBook1.PageIndex=4) then
     NoteBook1.PageIndex:=NoteBook1.PageIndex-1;
   NoteBook1.PageIndex:=NoteBook1.PageIndex-1;
@@ -370,6 +392,7 @@ procedure TfrmProjectWizard.BitBtn3Click(Sender: TObject);
 var
   i,j: Integer;s: String;
   aTreeNode: TTreeNode;
+  Profile: TList;
 //XML
   xdoc: TXMLDocument;
 begin
@@ -385,7 +408,7 @@ begin
         FileInfo.Clear
       else
         FileInfo:=TStringList.Create;
-      for i:=0 to lvPackageFiles.Items.Count-1 do
+      (*for i:=0 to lvPackageFiles.Items.Count-1 do
       begin
         FilesEdit.Lines.Add(lvPackageFiles.Items[i].SubItems[1]);  // install-path
         if lvPackageFiles.Items[i].SubItems[2]<>'' then
@@ -394,7 +417,17 @@ begin
           FilesEdit.Lines.Add(lvPackageFiles.Items[i].SubItems[0]);
 
         FileInfo.Add(lvPackageFiles.Items[i].SubItems[3]);
-      end;
+      end; *)
+        Profile := GetProfile(0);
+        for i:=0 to Profile.Count-1 do
+        begin
+          FilesEdit.Lines.Add(PPackageFile(Profile[i])^.CopyTo);
+          if PPackageFile(Profile[i])^.Modifier<>'' then
+            FilesEdit.Lines.Add(PPackageFile(Profile[i])^.FullName +' '+PPackageFile(Profile[i])^.Modifier)
+          else
+            FilesEdit.Lines.Add(PPackageFile(Profile[i])^.FullName);
+          FileInfo.Add(PPackageFile(Profile[i])^.Checksum);
+        end;
 
       //Script
       xdoc := CreateScript(lptLinstall);
@@ -437,10 +470,16 @@ begin
      end;
   2: begin
        NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
+       // set settings for package files:
        Edit6.Caption:='$INST/'+Edit1.Text;
        Edit7.Caption:=Edit6.Caption;
+       cmbProfiles.Tag:=-1;
+       cmbProfiles.Items.Assign(lbProfiles.Items);
+       if cmbProfiles.Items.Count>0 then cmbProfiles.ItemIndex:=0;
+       cmbProfilesChange(Sender);
      end;
   3: begin
+       cmbProfilesChange(Sender); //SaveFilesToProfile
        if lvPackageFiles.Items.Count<1 then
        begin
          ShowMessage('Select some files that will be installed.'#13'- a package without files is useless. ;-)');
@@ -613,10 +652,34 @@ begin
   end;
 end;
 
+procedure TfrmProjectWizard.DeleteProfile(iIndex: Integer);
+var
+  Profile: TList;
+begin
+  Profile := lbProfiles.Items.Objects[iIndex] as  TList;
+  ClearProfile(Profile);
+  Profile.Free;
+  lbProfiles.Items.Delete(iIndex);
+end;
+
+procedure TfrmProjectWizard.AddProfile(strName: String);
+begin
+  lbProfiles.Items.AddObject(strName, TList.Create);
+end;
+
+function TfrmProjectWizard.GetProfile(iIndex: integer): TList;
+begin
+  Result := nil;
+  if (iIndex>-1) and (iIndex<lbProfiles.Count) then
+  begin
+    Result := lbProfiles.Items.Objects[iIndex] as TList;
+  end;
+end;
+
 procedure TfrmProjectWizard.btnProfileAddClick(Sender: TObject);
 begin
   if not (Trim(edtProfileName.Text)='') then
-    lbProfiles.Items.Add(edtProfileName.Text);
+    AddProfile(edtProfileName.Text);
 end;
 
 procedure TfrmProjectWizard.btnProfileRemoveClick(Sender: TObject);
@@ -628,7 +691,7 @@ begin
   end;
   if (lbProfiles.ItemIndex>-1) then
   begin
-    lbProfiles.Items.Delete(lbProfiles.ItemIndex);
+    DeleteProfile(lbProfiles.ItemIndex);
   end;
 end;
 
@@ -665,6 +728,54 @@ procedure TfrmProjectWizard.btnAddLangCodeClick(Sender: TObject);
 begin
   if (Length(edtLangCode.Text)>1)and(edtLangCode.Text<>'') then
     tvShortDescriptions.Items.Add(nil,LowerCase(edtLangCode.Text));
+end;
+
+procedure TfrmProjectWizard.ClearProfile(Profile: TList);
+var
+  i: Integer;
+begin
+  for i:=Profile.Count-1 downto 0 do
+  begin
+    Dispose(PPackageFile(Profile[i]));
+    Profile.Delete(i);
+  end;
+end;
+
+procedure TfrmProjectWizard.LoadFilesFromProfile(Profile: TList);
+var
+  i: Integer;
+  PackageFile: PPackageFile;
+  aItem : TListItem;
+begin
+  lvPackageFiles.Items.Clear;
+  for i:=0 to Profile.Count-1 do
+  begin
+    aItem := lvPackageFiles.Items.Add;
+    PackageFile := Profile[i];
+    aItem.Caption:=PackageFile^.FileName;
+    aItem.SubItems.Add(PackageFile^.FullName);
+    aItem.SubItems.Add(PackageFile^.CopyTo);
+    aItem.SubItems.Add(PackageFile^.Modifier);
+    aItem.SubItems.Add(PackageFile^.Checksum);
+  end;
+end;
+
+procedure TfrmProjectWizard.SaveFilesToProfile(Profile: TList);
+var
+  i: Integer;
+  PackageFile: PPackageFile;
+begin
+  ClearProfile(Profile);
+  for i:=0 to lvPackageFiles.Items.Count-1 do
+  begin
+    PackageFile := New(PPackageFile);
+    PackageFile^.FileName:=lvPackageFiles.Items[i].Caption;
+    PackageFile^.FullName:=lvPackageFiles.Items[i].SubItems[0];
+    PackageFile^.CopyTo:=lvPackageFiles.Items[i].SubItems[1];
+    PackageFile^.Modifier:=lvPackageFiles.Items[i].SubItems[2];
+    PackageFile^.Checksum:=lvPackageFiles.Items[i].SubItems[3];
+    Profile.Add(PackageFile);
+  end;
 end;
 
 procedure TfrmProjectWizard.Button6Click(Sender: TObject);
@@ -707,6 +818,19 @@ begin
   end;
 end;
 
+procedure TfrmProjectWizard.cmbProfilesChange(Sender: TObject);
+begin
+  if cmbProfiles.Tag>-1 then
+    SaveFilesToProfile(TList(cmbProfiles.Items.Objects[cmbProfiles.Tag]));
+  LoadFilesFromProfile(TList(cmbProfiles.Items.Objects[cmbProfiles.ItemIndex]));
+  cmbProfiles.Tag:=cmbProfiles.ItemIndex;   // copy current itemindex to tag
+end;
+
+procedure TfrmProjectWizard.cmbProfilesCloseUp(Sender: TObject);
+begin
+
+end;
+
 procedure TfrmProjectWizard.Edit1Change(Sender: TObject);
 begin
   Edit11.Caption:=LowerCase(Edit1.Text)+StringReplace(Edit2.Text,'.','',[rfReplaceAll]);
@@ -731,6 +855,17 @@ begin
   end;*)
 end;
 
+procedure TfrmProjectWizard.FormClose(Sender: TObject;
+  var CloseAction: TCloseAction);
+var
+  i: Integer;
+begin
+  for i:=lbProfiles.Count-1 downto 0 do
+  begin
+    DeleteProfile(i);
+  end;
+end;
+
 procedure TfrmProjectWizard.FormCreate(Sender: TObject);
 begin
   SpeedButton4.Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_OPEN,6);
@@ -741,6 +876,7 @@ begin
   NoteBook1.PageIndex:=0;
   BitBtn1.Enabled:=false;
   BitBtn3.Caption:='  Next  ';
+  AddProfile('Standard');
 end;
 
 procedure TfrmProjectWizard.Label28Click(Sender: TObject);
@@ -778,11 +914,17 @@ end;
 
 procedure TfrmProjectWizard.lvPackageFilesKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
+var
+  i: Integer;
 begin
   if Key=46 then                     // Key "DEL"
   begin
-    if lvPackageFiles.Selected<>nil then
-    lvPackageFiles.Selected.Delete;
+    for i:=lvPackageFiles.Items.Count-1 downto 0 do
+    begin
+      if lvPackageFiles.Items[i].Selected then
+        lvPackageFiles.Items.Delete(i);
+    end;
+    Key := 0;
   end;
 end;
 

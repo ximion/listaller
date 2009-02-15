@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="7"/>
+    <PathDelim Value="/"/>
+    <Version Value="6"/>
     <General>
-      <Flags>
-        <LRSInOutputDirectory Value="False"/>
-      </Flags>
       <MainUnit Value="0"/>
+      <IconPath Value="./"/>
       <TargetFileExt Value=""/>
       <ActiveEditorIndexAtStart Value="0"/>
     </General>
@@ -45,36 +44,36 @@
         <UnitName Value="LiPkgCreator"/>
         <CursorPos X="18" Y="7"/>
         <TopLine Value="1"/>
-        <UsageCount Value="79"/>
+        <UsageCount Value="85"/>
       </Unit0>
       <Unit1>
         <Filename Value="editor.pas"/>
         <ComponentName Value="frmEditor"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="editor.lrs"/>
         <UnitName Value="editor"/>
         <CursorPos X="14" Y="353"/>
-        <TopLine Value="330"/>
-        <EditorIndex Value="1"/>
-        <UsageCount Value="79"/>
-        <Loaded Value="True"/>
+        <TopLine Value="422"/>
+        <UsageCount Value="85"/>
       </Unit1>
       <Unit2>
         <Filename Value="../../../../../../usr/share/lazarus/components/synedit/synhighlighterunixshellscript.pas"/>
         <UnitName Value="synhighlighterunixshellscript"/>
         <CursorPos X="41" Y="9"/>
         <TopLine Value="1"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit2>
       <Unit3>
         <Filename Value="fwiz.pas"/>
         <ComponentName Value="frmFileWizard"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="fwiz.lrs"/>
         <UnitName Value="fwiz"/>
         <CursorPos X="20" Y="9"/>
         <TopLine Value="9"/>
-        <UsageCount Value="79"/>
+        <UsageCount Value="85"/>
       </Unit3>
       <Unit4>
         <Filename Value="../abzipper.pas"/>
@@ -82,7 +81,7 @@
         <UnitName Value="AbZipper"/>
         <CursorPos X="52" Y="371"/>
         <TopLine Value="355"/>
-        <UsageCount Value="78"/>
+        <UsageCount Value="84"/>
       </Unit4>
       <Unit5>
         <Filename Value="../abbase.pas"/>
@@ -90,7 +89,7 @@
         <UnitName Value="AbBase"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="74"/>
+        <UsageCount Value="80"/>
       </Unit5>
       <Unit6>
         <Filename Value="../abarctyp.pas"/>
@@ -98,7 +97,7 @@
         <UnitName Value="AbArcTyp"/>
         <CursorPos X="34" Y="1478"/>
         <TopLine Value="1442"/>
-        <UsageCount Value="74"/>
+        <UsageCount Value="80"/>
       </Unit6>
       <Unit7>
         <Filename Value="../abzipkit.pas"/>
@@ -106,41 +105,41 @@
         <UnitName Value="AbZipKit"/>
         <CursorPos X="33" Y="12"/>
         <TopLine Value="1"/>
-        <UsageCount Value="74"/>
+        <UsageCount Value="80"/>
       </Unit7>
       <Unit8>
         <Filename Value="../../../../../../usr/share/lazarus/lcl/interfaces/gtk/gtkwidgetset.inc"/>
         <CursorPos X="1" Y="1372"/>
         <TopLine Value="1356"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit8>
       <Unit9>
         <Filename Value="../../../../../../usr/share/lazarus/components/synedit/synedittextbuffer.pp"/>
         <UnitName Value="SynEditTextBuffer"/>
         <CursorPos X="1" Y="455"/>
         <TopLine Value="439"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit9>
       <Unit10>
         <Filename Value="uFileMisc.pas"/>
         <UnitName Value="uFileMisc"/>
         <CursorPos X="12" Y="107"/>
         <TopLine Value="101"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit10>
       <Unit11>
         <Filename Value="../../../../../../usr/lib/lazarus/components/synedit/synedittextbuffer.pp"/>
         <UnitName Value="SynEditTextBuffer"/>
         <CursorPos X="20" Y="464"/>
         <TopLine Value="428"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit11>
       <Unit12>
         <Filename Value="../../../../../../usr/lib/lazarus/lcl/fileutil.pas"/>
         <UnitName Value="FileUtil"/>
         <CursorPos X="36" Y="75"/>
         <TopLine Value="1"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit12>
       <Unit13>
         <Filename Value="../variables.pas"/>
@@ -148,20 +147,20 @@
         <UnitName Value="variables"/>
         <CursorPos X="4" Y="56"/>
         <TopLine Value="15"/>
-        <UsageCount Value="66"/>
+        <UsageCount Value="72"/>
       </Unit13>
       <Unit14>
         <Filename Value="../lipa.lpr"/>
         <UnitName Value="lipa"/>
         <CursorPos X="3" Y="94"/>
         <TopLine Value="58"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit14>
       <Unit15>
         <Filename Value="../abbase.o"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
         <SyntaxHighlighter Value="None"/>
       </Unit15>
       <Unit16>
@@ -169,21 +168,23 @@
         <ComponentName Value="BForm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="pkgbuild.lrs"/>
         <UnitName Value="pkgbuild"/>
         <CursorPos X="2" Y="48"/>
         <TopLine Value="30"/>
-        <UsageCount Value="66"/>
+        <UsageCount Value="72"/>
       </Unit16>
       <Unit17>
         <Filename Value="prjwizard.pas"/>
         <ComponentName Value="frmProjectWizard"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="prjwizard.lrs"/>
         <UnitName Value="prjwizard"/>
-        <CursorPos X="21" Y="535"/>
-        <TopLine Value="512"/>
+        <CursorPos X="1" Y="922"/>
+        <TopLine Value="915"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="62"/>
+        <UsageCount Value="68"/>
         <Loaded Value="True"/>
       </Unit17>
       <Unit18>
@@ -191,255 +192,251 @@
         <UnitName Value="utilities"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit18>
       <Unit19>
         <Filename Value="../../../../../../usr/lib/lazarus/lcl/dialogs.pp"/>
         <UnitName Value="Dialogs"/>
         <CursorPos X="12" Y="12"/>
         <TopLine Value="1"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="11"/>
       </Unit19>
       <Unit20>
         <Filename Value="../../../../../../usr/share/fpcsrc/packages/fcl-xml/src/xmlwrite.pp"/>
         <UnitName Value="XMLWrite"/>
         <CursorPos X="11" Y="33"/>
         <TopLine Value="1"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit20>
       <Unit21>
         <Filename Value="../../../../../../usr/share/fpcsrc/packages/extra/gtk2/gtk+/gtk/gtkstock.inc"/>
         <CursorPos X="4" Y="76"/>
         <TopLine Value="51"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit21>
       <Unit22>
         <Filename Value="../../../../../../usr/share/fpcsrc/packages/extra/gtk2/gtk+/gtk/gtkenums.inc"/>
         <CursorPos X="33" Y="286"/>
         <TopLine Value="265"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit22>
       <Unit23>
         <Filename Value="../distri.pas"/>
         <UnitName Value="distri"/>
         <CursorPos X="22" Y="136"/>
         <TopLine Value="128"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit23>
       <Unit24>
         <Filename Value="editor.lfm"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="14"/>
+        <CursorPos X="27" Y="898"/>
+        <TopLine Value="882"/>
+        <UsageCount Value="13"/>
         <SyntaxHighlighter Value="LFM"/>
       </Unit24>
       <Unit25>
         <Filename Value="prjwizard.lfm"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
         <SyntaxHighlighter Value="LFM"/>
       </Unit25>
       <Unit26>
         <Filename Value="../../../../../../usr/lib/lazarus/lcl/include/control.inc"/>
         <CursorPos X="1" Y="2095"/>
-        <TopLine Value="2077"/>
-        <EditorIndex Value="4"/>
-        <UsageCount Value="11"/>
+        <TopLine Value="2078"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit26>
       <Unit27>
         <Filename Value="../../../../../../usr/lib/lazarus/lcl/include/customform.inc"/>
         <CursorPos X="1" Y="436"/>
         <TopLine Value="416"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit27>
       <Unit28>
         <Filename Value="../../../../../../usr/lib/lazarus/lcl/include/customlabel.inc"/>
         <CursorPos X="1" Y="112"/>
         <TopLine Value="92"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit28>
       <Unit29>
         <Filename Value="../../../../../../usr/lib/lazarus/lcl/include/buttoncontrol.inc"/>
         <CursorPos X="1" Y="58"/>
         <TopLine Value="37"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit29>
       <Unit30>
         <Filename Value="../../../../../../usr/lib/lazarus/lcl/include/buttons.inc"/>
         <CursorPos X="1" Y="241"/>
         <TopLine Value="221"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit30>
       <Unit31>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.2.2/packages/fcl-xml/src/dom.pp"/>
         <UnitName Value="DOM"/>
         <CursorPos X="3" Y="458"/>
         <TopLine Value="440"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit31>
       <Unit32>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.2.2/packages/fcl-xml/src/xmlwrite.pp"/>
         <UnitName Value="XMLWrite"/>
         <CursorPos X="11" Y="27"/>
         <TopLine Value="9"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit32>
       <Unit33>
         <Filename Value="../../../../../../usr/lib/lazarus/lcl/include/customnotebook.inc"/>
         <CursorPos X="1" Y="706"/>
         <TopLine Value="687"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit33>
       <Unit34>
         <Filename Value="editor.lrs"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="216"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit34>
       <Unit35>
         <Filename Value="../../../../../../usr/lib/lazarus/lcl/lclproc.pas"/>
         <UnitName Value="LCLProc"/>
         <CursorPos X="1" Y="1493"/>
         <TopLine Value="1475"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit35>
       <Unit36>
         <Filename Value="../abunzprc.pas"/>
         <UnitName Value="AbUnzPrc"/>
-        <CursorPos X="3" Y="1392"/>
-        <TopLine Value="1368"/>
-        <EditorIndex Value="2"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
+        <CursorPos X="29" Y="49"/>
+        <TopLine Value="49"/>
+        <UsageCount Value="9"/>
       </Unit36>
       <Unit37>
         <Filename Value="../abzbrows.pas"/>
         <UnitName Value="AbZBrows"/>
-        <CursorPos X="22" Y="41"/>
-        <TopLine Value="17"/>
-        <EditorIndex Value="3"/>
+        <CursorPos X="3" Y="41"/>
+        <TopLine Value="34"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit37>
     </Units>
     <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="prjwizard.pas"/>
-        <Caret Line="623" Column="3" TopLine="621"/>
+        <Caret Line="636" Column="16" TopLine="622"/>
       </Position1>
       <Position2>
-        <Filename Value="editor.pas"/>
-        <Caret Line="406" Column="102" TopLine="117"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="123" Column="26" TopLine="111"/>
       </Position2>
       <Position3>
-        <Filename Value="editor.pas"/>
-        <Caret Line="56" Column="26" TopLine="55"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="127" Column="50" TopLine="111"/>
       </Position3>
       <Position4>
-        <Filename Value="editor.pas"/>
-        <Caret Line="59" Column="18" TopLine="55"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="634" Column="63" TopLine="618"/>
       </Position4>
       <Position5>
-        <Filename Value="editor.pas"/>
-        <Caret Line="60" Column="18" TopLine="55"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="187" Column="15" TopLine="177"/>
       </Position5>
       <Position6>
-        <Filename Value="editor.pas"/>
-        <Caret Line="34" Column="30" TopLine="33"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="788" Column="12" TopLine="770"/>
       </Position6>
       <Position7>
-        <Filename Value="editor.pas"/>
-        <Caret Line="35" Column="23" TopLine="33"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="664" Column="41" TopLine="634"/>
       </Position7>
       <Position8>
-        <Filename Value="editor.pas"/>
-        <Caret Line="34" Column="25" TopLine="33"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="638" Column="37" TopLine="621"/>
       </Position8>
       <Position9>
-        <Filename Value="editor.pas"/>
-        <Caret Line="69" Column="26" TopLine="33"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="460" Column="27" TopLine="445"/>
       </Position9>
       <Position10>
-        <Filename Value="editor.pas"/>
-        <Caret Line="68" Column="28" TopLine="33"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="795" Column="3" TopLine="772"/>
       </Position10>
       <Position11>
         <Filename Value="prjwizard.pas"/>
-        <Caret Line="609" Column="7" TopLine="605"/>
+        <Caret Line="156" Column="51" TopLine="155"/>
       </Position11>
       <Position12>
         <Filename Value="prjwizard.pas"/>
-        <Caret Line="406" Column="22" TopLine="383"/>
+        <Caret Line="792" Column="15" TopLine="751"/>
       </Position12>
       <Position13>
         <Filename Value="prjwizard.pas"/>
-        <Caret Line="583" Column="16" TopLine="560"/>
+        <Caret Line="393" Column="3" TopLine="376"/>
       </Position13>
       <Position14>
-        <Filename Value="editor.pas"/>
-        <Caret Line="59" Column="15" TopLine="33"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="835" Column="92" TopLine="830"/>
       </Position14>
       <Position15>
-        <Filename Value="editor.pas"/>
-        <Caret Line="92" Column="36" TopLine="78"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="460" Column="27" TopLine="436"/>
       </Position15>
       <Position16>
-        <Filename Value="editor.pas"/>
-        <Caret Line="96" Column="69" TopLine="67"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="799" Column="5" TopLine="793"/>
       </Position16>
       <Position17>
-        <Filename Value="editor.pas"/>
-        <Caret Line="15" Column="72" TopLine="1"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="463" Column="32" TopLine="446"/>
       </Position17>
       <Position18>
-        <Filename Value="editor.pas"/>
-        <Caret Line="116" Column="15" TopLine="93"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="95" Column="78" TopLine="93"/>
       </Position18>
       <Position19>
-        <Filename Value="editor.pas"/>
-        <Caret Line="162" Column="14" TopLine="139"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="188" Column="25" TopLine="171"/>
       </Position19>
       <Position20>
-        <Filename Value="editor.pas"/>
-        <Caret Line="214" Column="16" TopLine="191"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="641" Column="96" TopLine="631"/>
       </Position20>
       <Position21>
-        <Filename Value="editor.pas"/>
-        <Caret Line="227" Column="13" TopLine="202"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="466" Column="1" TopLine="456"/>
       </Position21>
       <Position22>
-        <Filename Value="editor.pas"/>
-        <Caret Line="236" Column="10" TopLine="211"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="219" Column="26" TopLine="208"/>
       </Position22>
       <Position23>
-        <Filename Value="../abunzprc.pas"/>
-        <Caret Line="1" Column="1" TopLine="1"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="470" Column="94" TopLine="448"/>
       </Position23>
       <Position24>
-        <Filename Value="../abzbrows.pas"/>
-        <Caret Line="1" Column="1" TopLine="1"/>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="160" Column="73" TopLine="159"/>
       </Position24>
       <Position25>
         <Filename Value="prjwizard.pas"/>
-        <Caret Line="8" Column="8" TopLine="1"/>
+        <Caret Line="805" Column="77" TopLine="579"/>
       </Position25>
       <Position26>
         <Filename Value="prjwizard.pas"/>
-        <Caret Line="18" Column="8" TopLine="1"/>
+        <Caret Line="89" Column="82" TopLine="83"/>
       </Position26>
       <Position27>
         <Filename Value="prjwizard.pas"/>
-        <Caret Line="24" Column="8" TopLine="1"/>
+        <Caret Line="190" Column="25" TopLine="173"/>
       </Position27>
       <Position28>
         <Filename Value="prjwizard.pas"/>
-        <Caret Line="34" Column="28" TopLine="1"/>
+        <Caret Line="424" Column="63" TopLine="401"/>
       </Position28>
       <Position29>
         <Filename Value="prjwizard.pas"/>
-        <Caret Line="460" Column="20" TopLine="437"/>
+        <Caret Line="422" Column="36" TopLine="401"/>
       </Position29>
     </JumpHistory>
   </ProjectOptions>
