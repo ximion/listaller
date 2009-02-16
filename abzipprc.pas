@@ -36,9 +36,7 @@ unit AbZipPrc;
 interface
 
 uses
-  typesarchive, //!! MVC for max_path.
   Classes,
-  AbArcTyp,
   AbZipTyp,
   AbDfBase,
   AbDfEnc,
@@ -68,7 +66,6 @@ uses
   AbExcept,
   AbUtils,
   AbDfCryS,
-  AbZipCry,                                                              {!!.01}
   AbVMStrm,                                                              {!!.01}
   SysUtils;
 

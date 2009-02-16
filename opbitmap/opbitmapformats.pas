@@ -19,7 +19,7 @@ interface
 
 
 uses Classes, Types, SysUtils, opbitmap, bmp, bitmapimage, jpegdecoder, jpegencoder, Bmp2Tiff,
-  jpeginputstream, jpegoutputstream, gifdecoder, gif, pngdecoder, gifwrite, CommonPng, pngallstream,
+     gifdecoder, gif, pngdecoder, gifwrite, CommonPng, pngallstream,
   {$ifndef OpbCompat}GraphicEx,{$endif} XPMime;
 
 

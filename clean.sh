@@ -5,6 +5,8 @@ rm -rf *.pas~
 rm -rf *.sh~
 rm -rf *.bak
 
+rm -rf *.compiled
+
 rm -rf *~
 cd "./bin"
 rm -rf *.o

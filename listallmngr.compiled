@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<CONFIG>
-  <Compiler Value="/usr/lib/fpc/2.2.2/ppc386" Date="1227911054"/>
-  <Params Value=" -MObjFPC -Sgi -O1 -gl -WG -vewnhi -l -Fusynapse/ -Fu../../../../../usr/lib/lazarus/components/synedit/units/i386-linux/ -Fu../../../../../usr/lib/lazarus/lcl/units/i386-linux/ -Fu../../../../../usr/lib/lazarus/lcl/units/i386-linux/gtk2/ -Fu../../../../../usr/lib/lazarus/packager/units/i386-linux/ -Fu. -obin/listallmgr -dLCL -dLCLgtk2 listallmngr.lpr"/>
-</CONFIG>
