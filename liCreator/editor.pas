@@ -27,11 +27,43 @@ uses
 
 type
 
+  { TFileProfile }
+
+  TFileProfile=class
+    FPage: TPage;
+    FSynEdit: TSynEdit;
+    FProfileIndex: Integer;
+  public
+    constructor Create(AOwner: TObject; ParentNotebook: TNotebook; ProfileIndex: Integer);
+    destructor Destroy; override;
+  published
+    property ProfileIndex: Integer read FProfileIndex write FProfileIndex;
+    property Page: TPage read FPage;
+  end;
+
+  { TFileProfiles }
+
+  TFileProfiles=class
+    FFileProfiles: TList;
+    FParentNotebook: TNotebook;
+  private
+    function GetNewIndex: Integer;
+  public
+    constructor Create(AOwner: TObject; ParentNotebook: TNotebook);
+    destructor Destroy; override;
+    procedure AddProfile();
+    procedure RemoveProfile(APage: TPage); overload;
+    procedure RemoveProfile(ProfileIndex: Integer); overload;
+  end;
+
   { TfrmEditor }
 
   TfrmEditor = class(TForm)
     FilesEdit: TSynEdit;
     MainScriptEdit: TSynEdit;
+    MenuItem1: TMenuItem;
+    mnuEditRemoveFileProfile: TMenuItem;
+    mnuEditAddFileProfile: TMenuItem;
     mmMain: TMainMenu;
     memLog: TMemo;
     mnuFile: TMenuItem;
@@ -61,16 +93,20 @@ type
     SaveDialog1: TSaveDialog;
     SaveDialog2: TSaveDialog;
     SynAnySyn1: TSynAnySyn;
-    SynEdit1: TSynEdit;
     SynTeXSyn1: TSynTeXSyn;
     SynXMLSyn1: TSynXMLSyn;
     procedure Button1Click(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure IdleTimer1Timer(Sender: TObject);
+    procedure IPSNotebookCloseTabClicked(Sender: TObject);
     procedure mnuBuildCreatePackageClick(Sender: TObject);
     procedure mnuEditAddFilePathClick(Sender: TObject);
+    procedure mnuEditAddFileProfileClick(Sender: TObject);
+    procedure mnuEditCopyClick(Sender: TObject);
+    procedure mnuEditRemoveFileProfileClick(Sender: TObject);
     procedure mnuEditUndoClick(Sender: TObject);
     procedure mnuFileSaveClick(Sender: TObject);
     procedure mnuFileNewWizardClick(Sender: TObject);
@@ -104,10 +140,111 @@ var
   frmEditor: TfrmEditor;
   //** Name of the current file
   FName: String;
+  FileProfiles: TFileProfiles;
 
 implementation
 
 uses prjwizard;
+
+{TFileProfile}
+
+constructor TFileProfile.Create(AOwner: TObject; ParentNotebook: TNotebook; ProfileIndex: Integer);
+var
+  temp: Integer;
+begin
+  inherited Create;
+  FProfileIndex := ProfileIndex;
+  temp := ParentNotebook.Pages.Add('File-Profile #' + IntToStr(FProfileIndex));
+  FPage := ParentNotebook.Page[temp];
+  FSynEdit := TSynEdit.Create(FPage);
+  FSynEdit.Parent := FPage;
+  FSynEdit.Align := alClient;
+  FSynEdit.Gutter.Assign(frmEditor.FilesEdit.Gutter);
+  //FSynEdit.Highlighter.Assign(frmEditor.FilesEdit.Highlighter);
+end;
+
+destructor TFileProfile.Destroy();
+begin
+  FreeAndNil(FSynEdit);
+  FreeAndNil(FPage);
+  inherited Destroy;
+end;
+
+{TFileProfiles}
+
+constructor TFileProfiles.Create(AOwner: TObject; ParentNotebook: TNotebook);
+begin
+  inherited Create;
+  FParentNotebook := ParentNotebook;
+  FFileProfiles := TList.Create;
+end;
+
+destructor TFileProfiles.Destroy();
+var
+  k: Integer;
+begin
+  for k:=FFileProfiles.Count-1 downto 0 do
+  begin
+    TFileProfile(FFileProfiles[k]).Free;
+  end;
+  FFileProfiles.Free;
+  inherited Destroy;
+end;
+
+function TFileProfiles.GetNewIndex: Integer;
+var
+  k,ind: Integer;
+  used: Boolean;
+begin
+  ind := -1;
+  repeat
+    inc(ind);
+    used := false;
+    for k:=0 to FFileProfiles.Count-1 do
+      if TFileProfile(FFileProfiles[k]).ProfileIndex=ind then
+        used := true;
+  until not used;
+  Result := ind;
+end;
+
+procedure TFileProfiles.AddProfile;
+var
+  temp: Integer;
+begin
+  temp := GetNewIndex;
+  FFileProfiles.Add(TFileProfile.Create(Self, FParentNotebook, temp));
+  TFileProfile(FFileProfiles[temp]).ProfileIndex:=temp;
+end;
+
+procedure TFileProfiles.RemoveProfile(APage: TPage);
+var
+  k: Integer;
+begin
+  for k:=FFileProfiles.Count-1 downto 0 do
+  begin
+    if TFileProfile(FFileProfiles[k]).Page =APage then
+    begin
+      TFileProfile(FFileProfiles[k]).Free;
+      FFileProfiles.Delete(k);
+      break;
+    end;
+  end;
+end;
+
+procedure TFileProfiles.RemoveProfile(ProfileIndex: Integer);
+var
+  k: Integer;
+begin
+  for k:=FFileProfiles.Count-1 downto 0 do
+  begin
+    if TFileProfile(FFileProfiles[k]).ProfileIndex=ProfileIndex then
+    begin
+      TFileProfile(FFileProfiles[k]).Free;
+      FFileProfiles.Delete(k);
+      break;
+    end;
+  end;
+end;
 
 { TfrmEditor }
 
@@ -115,6 +252,7 @@ procedure TfrmEditor.FormCreate(Sender: TObject);
 begin
   IPSNotebook.PageIndex:=0;
   if Assigned(FileInfo) then FileInfo.Free;
+  FileProfiles := TFileProfiles.Create(Self, IPSNotebook);
 end;
 
 procedure TfrmEditor.FormShow(Sender: TObject);
@@ -160,6 +298,11 @@ begin
   until noMoreOutput;
   sleep(800);
   IPSNotebook.Enabled:=true;
+end;
+
+procedure TfrmEditor.IPSNotebookCloseTabClicked(Sender: TObject);
+begin
+  FileProfiles.RemoveProfile(IPSNotebook.Page[IPSNotebook.PageIndex]);
 end;
 
 
@@ -227,6 +370,20 @@ begin
     if Page2.Visible then
       FilesEdit.Lines.Add(OpenDialog2.FileName);
   end;
+end;
+
+procedure TfrmEditor.mnuEditAddFileProfileClick(Sender: TObject);
+begin
+  FileProfiles.AddProfile();
+end;
+
+procedure TfrmEditor.mnuEditCopyClick(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmEditor.mnuEditRemoveFileProfileClick(Sender: TObject);
+begin
 end;
 
 procedure TfrmEditor.mnuEditUndoClick(Sender: TObject);
@@ -370,6 +527,11 @@ begin
     frmProjectWizard.ShowModal;
     frmProjectWizard.Free;
   end;
+end;
+
+procedure TfrmEditor.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  FreeAndNil(FileProfiles);
 end;
 
 {

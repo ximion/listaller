@@ -5,17 +5,18 @@ object frmEditor: TfrmEditor
   Width = 922
   ActiveControl = IPSNotebook
   Caption = 'Listaller package creator'
-  ClientHeight = 632
+  ClientHeight = 631
   ClientWidth = 922
   Menu = mmMain
   OnActivate = FormActivate
+  OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '0.9.27'
+  ParentFont = False
+  LCLVersion = '0.9.26'
   object memLog: TMemo
-    Left = 0
     Height = 86
-    Top = 546
+    Top = 545
     Width = 922
     Align = alBottom
     Lines.Strings = (
@@ -24,26 +25,22 @@ object frmEditor: TfrmEditor
     TabOrder = 0
   end
   object IPSNotebook: TNotebook
-    Left = 0
     Height = 544
-    Top = 2
+    Top = 1
     Width = 922
     Align = alBottom
+    OnCloseTabClicked = IPSNotebookCloseTabClicked
     Options = [nboShowCloseButtons]
-    PageIndex = 0
+    PageIndex = 1
     TabOrder = 1
     object ScriptPage: TPage
       Caption = 'Script'
-      ClientWidth = 918
-      ClientHeight = 514
+      ClientWidth = 916
+      ClientHeight = 511
       object MainScriptEdit: TSynEdit
-        Left = 0
-        Height = 514
-        Top = 0
-        Width = 918
+        Height = 511
+        Width = 916
         Align = alClient
-        CFDividerDrawLevel = 0
-        Ctl3D = False
         Font.Height = -10
         Font.Name = '-adobe-courier-medium-r-normal-*-*-*-*-*-*-*-iso10646-1'
         Font.Pitch = fpFixed
@@ -52,12 +49,11 @@ object frmEditor: TfrmEditor
         TabOrder = 0
         BookMarkOptions.Xoffset = 18
         BookMarkOptions.OnChange = nil
-        Gutter.RightOffset = 0
         Gutter.LeftOffset = 0
+        Gutter.RightOffset = 0
+        Gutter.ShowLineNumbers = True
         Gutter.ShowCodeFolding = True
         Gutter.CodeFoldingWidth = 10
-        Gutter.ShowLineNumbers = True
-        Gutter.ZeroStart = False
         Highlighter = SynXMLSyn1
         Keystrokes = <        
           item
@@ -405,16 +401,12 @@ object frmEditor: TfrmEditor
     end
     object Page2: TPage
       Caption = 'File-Profile #0'
-      ClientWidth = 918
-      ClientHeight = 514
+      ClientWidth = 916
+      ClientHeight = 511
       object FilesEdit: TSynEdit
-        Left = 0
-        Height = 514
-        Top = 0
-        Width = 918
+        Height = 511
+        Width = 916
         Align = alClient
-        CFDividerDrawLevel = 0
-        Ctl3D = False
         Font.Height = -12
         Font.Name = 'courier'
         Font.Pitch = fpFixed
@@ -422,12 +414,11 @@ object frmEditor: TfrmEditor
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 22
-        Gutter.RightOffset = 0
         Gutter.LeftOffset = 0
+        Gutter.RightOffset = 0
+        Gutter.ShowLineNumbers = True
         Gutter.ShowCodeFolding = True
         Gutter.CodeFoldingWidth = 10
-        Gutter.ShowLineNumbers = True
-        Gutter.ZeroStart = False
         Highlighter = SynAnySyn1
         Keystrokes = <        
           item
@@ -803,6 +794,7 @@ object frmEditor: TfrmEditor
       object mnuEditCopy: TMenuItem
         Caption = 'Copy'
         ShortCut = 16451
+        OnClick = mnuEditCopyClick
       end
       object mnuEditPaste: TMenuItem
         Caption = 'Paste'
@@ -819,6 +811,17 @@ object frmEditor: TfrmEditor
       object mnuEditFileWizard: TMenuItem
         Caption = 'File wizard'
         OnClick = mnuEditFileWizardClick
+      end
+      object MenuItem1: TMenuItem
+        Caption = '-'
+      end
+      object mnuEditAddFileProfile: TMenuItem
+        Caption = 'Add File-Profile'
+        OnClick = mnuEditAddFileProfileClick
+      end
+      object mnuEditRemoveFileProfile: TMenuItem
+        Caption = 'Remove File-Profile'
+        OnClick = mnuEditRemoveFileProfileClick
       end
     end
     object mnuBuild: TMenuItem
@@ -867,18 +870,8 @@ object frmEditor: TfrmEditor
     top = 8
   end
   object Process1: TProcess
-    Active = False
     Options = [poUsePipes]
     Priority = ppNormal
-    StartupOptions = []
-    ShowWindow = swoNone
-    WindowColumns = 0
-    WindowHeight = 0
-    WindowLeft = 0
-    WindowRows = 0
-    WindowTop = 0
-    WindowWidth = 0
-    FillAttribute = 0
     left = 816
     top = 288
   end
@@ -890,8 +883,6 @@ object frmEditor: TfrmEditor
   end
   object SynAnySyn1: TSynAnySyn
     Enabled = False
-    Comments = []
-    DetectPreprocessor = False
     IdentifierChars = '!"#$%&''()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
     KeyWords.Strings = (
       '<chmod:'
@@ -906,9 +897,7 @@ object frmEditor: TfrmEditor
       '<s>'
     )
     Markup = True
-    Entity = False
     DollarVariables = True
-    ActiveDot = False
     left = 832
     top = 40
   end
