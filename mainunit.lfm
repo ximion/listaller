@@ -135,7 +135,7 @@ object IWizFrm: TIWizFrm
     object DPage: TPage
       Caption = 'Description'
       ClientWidth = 647
-      ClientHeight = 349
+      ClientHeight = 350
       object Label4: TLabel
         Left = 12
         Height = 24
@@ -149,18 +149,17 @@ object IWizFrm: TIWizFrm
       end
       object GroupBox1: TGroupBox
         Left = 12
-        Height = 303
+        Height = 304
         Top = 38
         Width = 623
         Anchors = [akTop, akLeft, akRight, akBottom]
         Caption = 'Description'
-        ClientHeight = 289
+        ClientHeight = 290
         ClientWidth = 619
-        Ctl3D = False
         TabOrder = 0
         object Memo1: TMemo
           Left = 6
-          Height = 280
+          Height = 291
           Top = 3
           Width = 604
           Anchors = [akTop, akLeft, akRight, akBottom]
@@ -175,7 +174,7 @@ object IWizFrm: TIWizFrm
     object LPage: TPage
       Caption = 'License'
       ClientWidth = 647
-      ClientHeight = 349
+      ClientHeight = 350
       object Label5: TLabel
         Left = 12
         Height = 24
@@ -198,17 +197,18 @@ object IWizFrm: TIWizFrm
       object RadioButton1: TRadioButton
         Left = 12
         Height = 33
-        Top = 289
+        Top = 290
         Width = 249
         Anchors = [akLeft, akBottom]
         Caption = 'I agree with the above terms and conditions'
         OnChange = RadioButton1Change
         TabOrder = 0
+        TabStop = False
       end
       object RadioButton2: TRadioButton
         Left = 12
         Height = 33
-        Top = 313
+        Top = 314
         Width = 96
         Anchors = [akLeft, akBottom]
         Caption = 'I don''t agree'
@@ -219,7 +219,7 @@ object IWizFrm: TIWizFrm
       end
       object LicMemo: TMemo
         Left = 12
-        Height = 226
+        Height = 227
         Top = 61
         Width = 622
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -234,7 +234,7 @@ object IWizFrm: TIWizFrm
     object IMPage: TPage
       Caption = 'Mode'
       ClientWidth = 647
-      ClientHeight = 349
+      ClientHeight = 350
       object Label13: TLabel
         Left = 12
         Height = 24
@@ -272,7 +272,6 @@ object IWizFrm: TIWizFrm
         ChildSizing.ControlsPerLine = 1
         Constraints.MinHeight = 80
         Constraints.MinWidth = 300
-        Ctl3D = False
         TabOrder = 0
       end
     end

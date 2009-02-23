@@ -49,6 +49,6 @@ $LCLDir/lazbuild -B --ws=gtk2 listallmngr.lpr
 echo "Creating updater..."
 $LCLDir/lazbuild -B --ws=gtk2 liupdate.lpr
 echo "Creating command-line tool..."
-fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -dOpbCompat -Fuopbitmap/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/gtk2/ -Fu$LCLDir/packager/units/$ARCH-$OS/ -Fu. -obin/lipa lipa.lpr
+fpc -MObjFPC -Sgi -CX -b -O1 -gl -XX -vewnhi -l -dOpbCompat -Fuopbitmap/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/gtk2/ -Fu$LCLDir/packager/units/$ARCH-$OS/ -Fu. -obin/lipa lipa.lpr
 echo "Creating unified build tool..."
-fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -dOpbCompat -Fuopbitmap/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/gtk2/ -Fu$LCLDir/packager/units/$ARCH-$OS/ -Fu. -obin/unibuild unibuild.lpr
+fpc -MObjFPC -Sgi -CX -b -O1 -gl -XX -vewnhi -l -dOpbCompat -Fuopbitmap/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/gtk2/ -Fu$LCLDir/packager/units/$ARCH-$OS/ -Fu. -obin/unibuild unibuild.lpr

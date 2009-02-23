@@ -439,7 +439,7 @@ begin
    with ConvDisp do begin
    if not FileExists('/usr/bin/alien') then
     if Application.MessageBox(PChar(strListallerAlien),PChar(strInstPkgQ),MB_YESNO)=IDYES then begin
-      ShowMessage(plWait);
+      ShowMessage(strplWait);
       if CmdResultCode(pkit+'--install alien')>0 then begin
        ShowMessage(StringReplace(strPkgInstFail,'%p','alien',[rfreplaceAll]));
        exit;
@@ -471,7 +471,7 @@ begin
 
    if not FileExists('/usr/bin/alien') then
     if Application.MessageBox(PChar(strListallerAlien),PChar(strInstPkgQ),MB_YESNO)=IDYES then begin
-      ShowMessage(plWait);
+      ShowMessage(strplWait);
       if CmdResultCode(pkit+'--install alien')>0 then begin
        ShowMessage(StringReplace(strPkgInstFail,'%p','alien',[rfreplaceAll]));
        exit;
@@ -579,6 +579,7 @@ DInfo:=GetDistro;
  //Set reg-dir
  RegDir:=SyblToPath('$INST/app-reg/');
 
+
  with mmFrm do begin
   Caption:=strSelMgrMode;
   btnTest.Visible:=false;
@@ -589,7 +590,10 @@ DInfo:=GetDistro;
   ShowModal;
  end;
 mmFrm.Free;
-end else RegDir:='/etc/lipa/app-reg/';
+end else
+RegDir:='/etc/lipa/app-reg/';
+
+if not DirectoryExists(RegDir) then CreateDir(RegDir);
 
  btnInstall.Caption:=strInstNew;
  btnSettings.Caption:=strShowSettings;

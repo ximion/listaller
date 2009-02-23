@@ -12,8 +12,7 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** This unit contains the default strings for translation
 unit trstrings;
 
@@ -24,22 +23,22 @@ interface
 resourcestring
 //Installer application (listallgo)
 {----------------------------------}
-InstAborted='Installation aborted.';
+strInstAborted='Installation aborted.';
 strAppNInstall='The application %a was not installed.';
 strWasInstalled='The application %a was installed successfully!';
 strInstallNow='Install now';
-RunParam='Please run listallgo with path to install-package as first parameter!';
+strRunParam='Please run listallgo with path to install-package as first parameter!';
 strWelcome='Welcome!';
-nToStart='Press "Next" to start the installation!';
-progDesc='Program description:';
-License='Software license';
-pleaseRead='Please read the following information carefully:';
-running='Running installation...';
-plWait='Please wait.';
+strnToStart='Press "Next" to start the installation!';
+strprogDesc='Program description:';
+strLicense='Software license';
+strpleaseRead='Please read the following information carefully:';
+strRunning='Running installation...';
+strplWait='Please wait.';
 strSWarning='Make sure that you can trust this package publisher!';
-complete='Installation completed!';
-prFinish='Press "Finish" to close.';
-Finish='Finish';
+strComplete='Installation completed!';
+strPrFinish='Press "Finish" to close.';
+strFinish='Finish';
 strAbort='Abort';
 strBack='Back';
 strNext='Next';
@@ -87,6 +86,15 @@ strInstallation='Installation';
 strNoLDSources='There are no sources available for your Linux-distribution'#13'Try to install common packages?';
 strUseCompPQ='Use compatible packages?';
 strNoComp='No compatible packages found!';
+strActionNotPossiblePkg='The selected action is not possible with this package.'#13'Please contact the package creator for more information!';
+strIDInvalid='This package has no valid ID'#13'The installer will close.';
+strReInstall='Reinstall';
+strPkgDownload='The following packages will be downloaded:';
+strGetDependencyFrom='Get dependency from';
+strPlWait2='Please wait...';
+strDepDLProblem='Problem while downloading the dep-file.';
+strHashError='Hash doesn''t match!'#13'The package has been modified.'#13'Please obtain a new copy';
+
 //Software manager
 {-----------------}
 strUpdSources='Update sources';

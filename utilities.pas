@@ -12,8 +12,7 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** Here are some global functions which are used everywhere
 unit utilities;
 
@@ -29,8 +28,8 @@ uses
   {$ENDIF} trstrings, distri;
 
 const
-  //** Version of the Listaller toolset
-  LiVersion='0.1.93a';
+  //** Version of the Listaller applicationset
+  LiVersion='0.1.95a';
 var
   //** True if Listaller is in testmode
   Testmode: Boolean=false;
@@ -173,6 +172,7 @@ begin
 s:=StringReplace(s,'$HOME',GetEnvironmentVariable('HOME'),[rfReplaceAll]);
 if IsRoot then begin
 s:=StringReplace(s,'$INST','/usr/appfiles',[rfReplaceAll]);
+s:=StringReplace(s,'$INST-X','/usr/share',[rfReplaceAll]);
 s:=StringReplace(s,'$APP','/usr/share/applications',[rfReplaceAll]);
 s:=StringReplace(s,'$ICON-16','/usr/share/icons/hicolor/16x16/apps',[rfReplaceAll]);
 s:=StringReplace(s,'$ICON-24','/usr/share/icons/hicolor/24x24/apps',[rfReplaceAll]);
@@ -197,6 +197,7 @@ if not DirectoryExists(GetXHome+'/applications/files/icons/256x256')then CreateD
 if not DirectoryExists(GetXHome+'/applications/files/icons/common')then CreateDir(GetXHome+'/applications/files/icons/common');
 //
 s:=StringReplace(s,'$INST',GetXHome+'/applications/files',[rfReplaceAll]);
+s:=StringReplace(s,'$INST-X',GetXHome+'/applications/files',[rfReplaceAll]);
 s:=StringReplace(s,'$APP',GetXHome+'/applications',[rfReplaceAll]);
 s:=StringReplace(s,'$ICON-16',GetXHome+'/applications/files/icons/16x16',[rfReplaceAll]);
 s:=StringReplace(s,'$ICON-24',GetXHome+'/applications/files/icons/24x24',[rfReplaceAll]);
@@ -213,6 +214,7 @@ end;
 function SyblToX(s: String): String;
 begin
 s:=StringReplace(s,'$INST','',[rfReplaceAll]);
+s:=StringReplace(s,'$INST-X','',[rfReplaceAll]);
 s:=StringReplace(s,'$APP','/app',[rfReplaceAll]);
 s:=StringReplace(s,'$HOME','/hdir',[rfReplaceAll]);
 s:=StringReplace(s,'$ICON-16','/icon16',[rfReplaceAll]);

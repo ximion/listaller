@@ -32,11 +32,6 @@ DName: String;
 Release: String;
 //** Package management system
 PackageSystem: String;
-//
-InstallCom:   String;
-InstallDBCom: String;
-DoRecheck:    Boolean;
-//
 //** The desktop environment (KDE/GNOME)
 Desktop: String;
 end;
@@ -91,9 +86,15 @@ begin
 //Check which Distribution is used
 Result.DName:='';
 uv:=TStringList.Create;
+if FileExists('/etc/lipa/distribution') then begin
+uv.LoadFromFile('/etc/lipa/distribution');
+Result.DName:=copy(uv[0],pos(' ',uv[0])+1,length(uv[0]));
+Result.Release:=copy(uv[1],pos(' ',uv[1])+1,length(uv[1]));
+Result.PackageSystem:=copy(uv[2],pos(' ',uv[2])+1,length(uv[2]));
+uv.Clear;
+end else begin
 if FileExists('/etc/lsb-release') then
 uv.LoadFromFile('/etc/lsb-release');
-Result.InstallCom:='%';
 
 for i:=0 to uv.Count-1 do begin
 if pos('UBUNTU',UpperCase(uv[i]))>0 then
@@ -171,54 +172,26 @@ Result.DName:='Fedora';
 end;
  
 end;
-if Result.DName='Ubuntu' then begin
+if Result.DName='Ubuntu' then
 Result.PackageSystem:='DEB';
-Result.InstallCom:='gdebi -n -q';
-Result.InstallDBCom:='apt-get --assume-yes install';
-Result.DoRecheck:=false;
-end;
 
-if Result.DName='openSUSE' then begin
+if Result.DName='openSUSE' then
 Result.PackageSystem:='RPM';
-Result.InstallCom:='/sbin/yast2 --install';
-Result.InstallDBCom:='zypper install';
-Result.DoRecheck:=true;
-end;
 
-if Result.DName='Debian' then begin
+if Result.DName='Debian' then
 Result.PackageSystem:='DEB';
-Result.InstallCom:='gdebi -n -q';
-Result.InstallDBCom:='apt-get --assume-yes install';
-Result.DoRecheck:=false;
-end;
 
-if Result.DName='Mandriva' then begin
+if Result.DName='Mandriva' then
 Result.PackageSystem:='RPM';
-Result.InstallCom:='urpmi';
-Result.InstallDBCom:='urpmi';
-Result.DoRecheck:=false;
-end;
 
-if Result.DName='PCLinuxOS' then begin
+if Result.DName='PCLinuxOS' then
 Result.PackageSystem:='RPM';
-Result.InstallCom:='apt-get -yes install';
-Result.InstallDBCom:='apt-get -yes install';
-Result.DoRecheck:=false;
-end;
 
-if Result.DName='Xandros' then begin
+if Result.DName='Xandros' then
 Result.PackageSystem:='DEB';
-Result.InstallCom:='gdebi -n -q';
-Result.InstallDBCom:='apt-get --assume-yes install';
-Result.DoRecheck:=false;
-end;
 
-if Result.DName='Fedora' then begin
+if Result.DName='Fedora' then
 Result.PackageSystem:='DEB';
-Result.InstallCom:='yum localinstall';
-Result.InstallDBCom:='yum -y install';
-Result.DoRecheck:=false;
-end;
 
 if FileExists('/etc/lsb-release') then begin
 uv.LoadFromFile('/etc/lsb-release');
@@ -226,7 +199,14 @@ for i:=0 to uv.Count-1 do
 if pos('DISTRIB_RELEASE=',uv[i])>0 then break;
 Result.Release:=copy(uv[i],pos('=',uv[i])+1,length(uv[i]));
 end;
-
+uv.Clear;
+uv.Add('Name: '+Result.DName);
+uv.Add('Release: '+Result.Release);
+uv.Add('PackageFormat: '+Result.PackageSystem);
+try
+uv.SaveToFile('/etc/lipa/distribution');
+except end;
+end;
 if (pos('kde',LowerCase(GetEnvironmentVariable('GDMSESSION')))>0)or (pos('kde',LowerCase(GetEnvironmentVariable('DESKTOP_SESSION')))>0)
 or (GetEnvironmentVariable('KDE_FULL_SESSION')='true') then
 Result.Desktop:='KDE' else

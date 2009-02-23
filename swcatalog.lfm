@@ -137,6 +137,7 @@ object SCForm: TSCForm
       FFFFFFFFFFFFFFFF00000000050000004F74686572
     }
     LargeImages = ImageList1
+    ParentColor = False
     ScrollBars = ssAutoVertical
     SmallImages = ImageList1
     SortColumn = 1
@@ -176,7 +177,6 @@ object SCForm: TSCForm
     Top = 344
     Width = 120
     AutoComplete = False
-    Ctl3D = False
     ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
@@ -203,7 +203,6 @@ object SCForm: TSCForm
       Top = 0
       Width = 605
       Align = alClient
-      Ctl3D = False
       TabOrder = 0
     end
     object Memo1: TMemo

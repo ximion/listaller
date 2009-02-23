@@ -101,7 +101,10 @@ if not IsRoot then begin
             t.CommandLine := 'kdesudo '+Application.ExeName+' '+paramstr(1)
          else
          if DInfo.DName='Ubuntu' then
+          if FileExists('/usr/bin/gksudo') then
             t.CommandLine := 'gksudo '+Application.ExeName+' '+paramstr(1)
+          else
+            t.CommandLine := 'gksu '+Application.ExeName+' '+paramstr(1)
          else
           t.CommandLine := 'gnomesu '+Application.ExeName+' '+paramstr(1);
         t.Options:=[];

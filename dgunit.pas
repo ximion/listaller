@@ -12,8 +12,7 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program. If not, see <http://www.gnu.org/licenses/>.
-}
+  along with this program. If not, see <http://www.gnu.org/licenses/>.}
 //** This unit contains the stuff neded for installing AutoGET-IPK-types
 
 unit dgunit;
@@ -283,7 +282,7 @@ begin
   TabSheet2.Caption:=strDetails;
   TabSheet3.Caption:=strInstallation;
   
-  FinBtn1.Caption:=Finish;
+  FinBtn1.Caption:=strFinish;
   if Gtk2LoadStockPixmap(GTK_STOCK_QUIT,GTK_ICON_SIZE_BUTTON)<>0 then
   FinBtn1.Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_QUIT,GTK_ICON_SIZE_BUTTON);
 end;

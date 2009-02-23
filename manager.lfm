@@ -203,7 +203,6 @@ object mnFrm: TmnFrm
     Top = 112
     Width = 144
     AutoComplete = False
-    Ctl3D = False
     ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
@@ -231,10 +230,10 @@ object mnFrm: TmnFrm
     Top = 144
     Width = 795
     Anchors = [akTop, akLeft, akRight, akBottom]
+    ClientHeight = 377
+    ClientWidth = 791
     Color = clForm
-    Ctl3D = True
     ParentColor = False
-    ParentCtl3D = False
     TabOrder = 2
     object Label3: TLabel
       Left = 6

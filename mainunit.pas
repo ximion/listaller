@@ -12,8 +12,7 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** This unit contains the code for the graphical installation of standard IPK-packages
 unit mainunit;
 
@@ -216,7 +215,7 @@ end;
 procedure TIWizFrm.AbortBtn1Click(Sender: TObject);
 begin
 if NoteBook1.PageIndex=5 then begin
-  Label10.Caption:=InstAborted;
+  Label10.Caption:=strInstAborted;
   Label11.Caption:=StringReplace(strAppNInstall,'%a',IAppName,[rfReplaceAll]);
   AbortIns:=true;
 end else
@@ -345,7 +344,7 @@ translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-
 writeLn('Language pack loaded.');
 
 if not FileExists(Paramstr(1)) then begin
-  ShowMessage(RunParam);
+  ShowMessage(strRunParam);
   halt(1);
   exit;
 end;
@@ -379,15 +378,15 @@ end;
 
 //Set translation strings (1)
   Label1.Caption:=strWelcome;
-  Label3.Caption:=nToStart;
-  Label4.Caption:=progDesc;
-  Label5.Caption:=License;
-  Label8.Caption:=pleaseRead;
-  Label6.Caption:=running;
-  Label7.Caption:=plWait;
-  Label10.Caption:=complete;
-  Label12.Caption:=prFinish;
-  FinBtn1.Caption:=Finish;
+  Label3.Caption:=strnToStart;
+  Label4.Caption:=strprogDesc;
+  Label5.Caption:=strLicense;
+  Label8.Caption:=strPleaseRead;
+  Label6.Caption:=strRunning;
+  Label7.Caption:=strplWait;
+  Label10.Caption:=strComplete;
+  Label12.Caption:=strprFinish;
+  FinBtn1.Caption:=strFinish;
   AbortBtn1.Caption:=strAbort;
   Button5.Caption:=strBack;
   Button1.Caption:=strNext;
@@ -585,7 +584,7 @@ writeLn('Application command is '+IAppCMD);
 
 if (IAppCMD='#')and (Testmode) then
 begin
-ShowMessage('The selected action is not possible with this package.'#13'Please contact the package creator for more information!');
+ShowMessage(strActionNotPossiblePkg);
  z.Free;
  Application.Terminate;
  exit;
@@ -594,7 +593,7 @@ end;
 IAppCMD:=SyblToPath(IAppCMD);
 
 if length(pID)<>17 then begin
-ShowMessage('This package has no valid ID'#13'The installer will close.');
+ShowMessage(strIDInvalid);
  z.Free;
  Application.Terminate;
  exit;
@@ -654,7 +653,7 @@ for i:=0 to x.Count-1 do begin
 if (copy(x[i],1,pos('<',x[i])-1)=IAppName) and (ar.ReadString(x[i],'Version*','0.0')=IAppVersion)
 and (idName=ar.ReadString(x[i],'idName','???')) then
 
-if Application.MessageBox(PChar(PAnsiChar(strAlreadyInst)+#13+PAnsiChar(strInstallAgain)),'Reinstall',MB_YESNO)= IDNO then
+if Application.MessageBox(PChar(PAnsiChar(strAlreadyInst)+#13+PAnsiChar(strInstallAgain)),PChar(strReInstall),MB_YESNO)= IDNO then
 begin
 x.Free;
 ar.Free;
@@ -687,7 +686,6 @@ Dependencies:=TStringList.Create;
 ListBox1.Items.Add('Distribution: '+DInfo.DName);
 ListBox1.Items.Add('Version: '+DInfo.Release);
 ListBox1.Items.Add('PackageSystem: '+DInfo.PackageSystem);
-ListBox1.Items.Add('InsCommand: '+DInfo.InstallCom);
 
 xnode:=Doc.FindNode('package'); //Set xnode to the package tree
 
@@ -799,7 +797,7 @@ Label2.Caption:=strWillDLFiles;
 Caption:=Label1.Caption;
 Memo1.Lines.LoadFromFile(lp+ExtractFileName(paramstr(1))+'/'+DescFile);
 LicMemo.Clear;
-LicMemo.Lines.Add('The following packages will be downloaded:');
+LicMemo.Lines.Add(strPkgDownload);
 
 //Load dependencies
 xnode:=Doc.FindNode('package');
@@ -1075,14 +1073,14 @@ GetOutPutTimer.Enabled:=false;
 try
     ExProgress.Visible:=true;
     ExProgress.Position:=0;
-    InfoMemo.Lines.Add('Get dependency from '+Dependencies[i]+'.');
-    InfoMemo.Lines.Add('Please wait...');
+    InfoMemo.Lines.Add(strGetDependencyFrom+' '+Dependencies[i]+'.');
+    InfoMemo.Lines.Add(strPlWait2);
  if pos('http://',LowerCase(Dependencies[i]))>0 then begin
   try
     HTTP.HTTPMethod('GET', copy(Dependencies[i],1,pos(' <',Dependencies[i])-1));
     HTTP.Document.SaveToFile('/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)));
   except
-  ShowMessage('Problem while downloading the dep-file.');
+  ShowMessage(strDepDLProblem);
   Application.Terminate;
   exit;
   end;
@@ -1102,7 +1100,7 @@ with FTP do begin
     RetrieveFile(ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)), false);
     Logout;
   except
-   ShowMessage('Problem while downloading the dependency-file.');
+   ShowMessage(strDepDLProblem);
    Application.Terminate;
    exit;
   end;
@@ -1300,7 +1298,7 @@ z.BaseDirectory:=lp+ExtractFileName(paramstr(1));
 z.ExtractFiles(ExtractFileName(h));
 Application.ProcessMessages;
 except
-ShowMessage('Error while extracting files!');
+ShowMessage(strExtractError);
 z.Free;
 halt;
 end;
@@ -1309,7 +1307,7 @@ InfoMemo.Lines.Add('Copy file '+ExtractFileName(h)+' to '+dest+' ...');
 Application.ProcessMessages;
 
 if fi[i+1] <> MDPrint((MD5.MD5File(DeleteModifiers(lp+PkgName+h),1024))) then begin
-ShowMessage('Hash doesn''t match!'#13'The package has been modified.'#13'Please obtain a new copy');
+ShowMessage(strHashError);
 InfoMemo.Lines.SaveTofile('/tmp/install-'+IAppName+'.log');
 Application.Terminate;
 exit;

@@ -3,7 +3,7 @@ object DGForm: TDGForm
   Height = 324
   Top = 364
   Width = 626
-  ActiveControl = PageControl1
+  ActiveControl = BitBtn1
   Caption = 'Simple depGet'
   ClientHeight = 324
   ClientWidth = 626
