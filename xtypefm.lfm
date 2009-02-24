@@ -1,7 +1,7 @@
 object imdFrm: TimdFrm
-  Left = 297
+  Left = 398
   Height = 145
-  Top = 453
+  Top = 551
   Width = 634
   ActiveControl = btnInstallAll
   BorderIcons = [biSystemMenu, biMinimize]

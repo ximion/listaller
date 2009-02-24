@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   StdCtrls, FileUtil, ExtCtrls, process, Buttons, LCLType, LCLIntf, RegExpr,
-  {$ifdef LCLGTK2}
+  {$IFDEF LCLGTK2}
   gtk2, gtkint, gtkdef, gdkpixbuf, gtkproc, gdk2,
   {$ENDIF} trstrings, distri;
 

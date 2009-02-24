@@ -1,7 +1,7 @@
 object mnFrm: TmnFrm
-  Left = 246
+  Left = 328
   Height = 558
-  Top = 228
+  Top = 257
   Width = 816
   ActiveControl = btnInstall
   Caption = 'Software Manager'
@@ -86,15 +86,15 @@ object mnFrm: TmnFrm
     ParentColor = False
   end
   object ThrobberBox: TPaintBox
-    Left = 344
+    Left = 280
     Height = 128
-    Top = 215
-    Width = 128
+    Top = 248
+    Width = 220
     Anchors = []
     Constraints.MaxHeight = 128
-    Constraints.MaxWidth = 128
+    Constraints.MaxWidth = 220
     Constraints.MinHeight = 128
-    Constraints.MinWidth = 128
+    Constraints.MinWidth = 220
   end
   object StatusBar1: TStatusBar
     Left = 0
@@ -226,11 +226,11 @@ object mnFrm: TmnFrm
   end
   object SWBox: TScrollBox
     Left = 8
-    Height = 381
-    Top = 144
+    Height = 373
+    Top = 152
     Width = 795
     Anchors = [akTop, akLeft, akRight, akBottom]
-    ClientHeight = 377
+    ClientHeight = 369
     ClientWidth = 791
     Color = clForm
     ParentColor = False

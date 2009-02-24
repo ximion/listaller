@@ -21,8 +21,8 @@ unit trstrings;
 interface
 
 resourcestring
-//Installer application (listallgo)
-{----------------------------------}
+{Installer application (listallgo)
+----------------------------------}
 strInstAborted='Installation aborted.';
 strAppNInstall='The application %a was not installed.';
 strWasInstalled='The application %a was installed successfully!';
@@ -35,7 +35,6 @@ strLicense='Software license';
 strpleaseRead='Please read the following information carefully:';
 strRunning='Running installation...';
 strplWait='Please wait.';
-strSWarning='Make sure that you can trust this package publisher!';
 strComplete='Installation completed!';
 strPrFinish='Press "Finish" to close.';
 strFinish='Finish';
@@ -94,9 +93,18 @@ strGetDependencyFrom='Get dependency from';
 strPlWait2='Please wait...';
 strDepDLProblem='Problem while downloading the dep-file.';
 strHashError='Hash doesn''t match!'#13'The package has been modified.'#13'Please obtain a new copy';
-
-//Software manager
-{-----------------}
+{ExecMode Form
+-----------------}
+strWantToDoQ='What do you want to do?';
+strPackageKitWarning='Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to work correctly.'#13'Please update PackageKit!';
+strSpkWarning='Make sure that you can trust this package publisher!';
+strInstallEveryone='Install application for everyone';
+strTestApp='Test application';
+strInstallHome='Install into my Home directory';
+strSelInstMode='Select installation mode';
+{Software manager
+-----------------}
+strSoftwareManager='Software Manager';
 strUpdSources='Update sources';
 strClose='Close';
 strDelSrc='Delete source';
@@ -136,10 +144,15 @@ strLoading='Loading...';
 strDispRootApps='Display system applications';
 strDispOnlyMyApps='Display my applications';
 strSelMgrMode='Select software-manager mode:';
-strPackageKitWarning='Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to work correctly.'#13'Please update PackageKit!';
 strListallerAlien='Listaller uses "alien" to convert foreign packages, bit the tool is not installed'#13'Do you want to install "alien" now to continue?';
 strInstPkgQ='Install package?';
 strPkgInstFail='Package %p could not be installed.';
+strShowPkMon='Start PackageKit monitor before running transactions';
+strAboutListaller='About Listaller';
+strRmSrcQ='Are you really sure that you want to delete this source?';
+strRmSrcQC='Delete source';
+strPkitProbPkMon='Problem while connecting PackageKit. Run "pkmon" to get further information.';
+strNoAppsFound='No applications found!';
 //Catalogue
 strCategory='Category:';
 strWInstallDl='Select software you want to download and to install:';
@@ -161,8 +174,8 @@ strRMPkg='Do you really want to remove "%p", containing %a?'#13'The following pa
 strRmPkgQ='Really remove?';
 strWaiting='Waiting...';
 strRMAppC='Uninstalling %a';
-//Updater
-{---------}
+{Updater
+---------}
 strNoUpdates='There are no updates available!';
 strLogUpdInfo='Update info:';
 strFilesChanged='%f files will be changed.';

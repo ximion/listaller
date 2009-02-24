@@ -113,7 +113,6 @@ object FmConfig: TFmConfig
         Caption = 'Proxy-Settings'
         ClientHeight = 170
         ClientWidth = 633
-        Ctl3D = False
         TabOrder = 2
         object Label3: TLabel
           Left = 9
@@ -256,7 +255,7 @@ object FmConfig: TFmConfig
     end
     object UpdPage: TTabSheet
       Caption = 'Update sources'
-      ClientHeight = 410
+      ClientHeight = 411
       ClientWidth = 659
       object Label1: TLabel
         Left = 6
@@ -268,7 +267,7 @@ object FmConfig: TFmConfig
       end
       object UListBox1: TCheckListBox
         Left = 6
-        Height = 332
+        Height = 333
         Top = 32
         Width = 644
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -280,7 +279,7 @@ object FmConfig: TFmConfig
       object BitBtn1: TBitBtn
         Left = 551
         Height = 22
-        Top = 380
+        Top = 381
         Width = 101
         Anchors = [akRight, akBottom]
         AutoSize = True
@@ -292,7 +291,7 @@ object FmConfig: TFmConfig
       object BitBtn2: TBitBtn
         Left = 6
         Height = 22
-        Top = 380
+        Top = 381
         Width = 81
         Anchors = [akLeft, akBottom]
         AutoSize = True

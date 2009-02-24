@@ -89,7 +89,7 @@ begin
   
   tmp:=TStringList.Create;
   if not FileExists(RegDir+'updates.list') then begin
-   tmp.Add('Listaller UpdateSources-pk0.6');
+   tmp.Add('Listaller UpdateSources-pk0.8');
    tmp.SaveToFile(RegDir+'updates.list');
   end;
   tmp.LoadFromFile(RegDir+'updates.list');
@@ -109,6 +109,8 @@ begin
   CheckBox4.Caption:=strEnableProxy;
   GroupBox1.Caption:=strProxySettings;
   CheckBox2.Caption:=strAutoLoadDep;
+  CbShowPkMon.Caption:=strShowPkMon;
+  Button1.Caption:=strAboutListaller;
 end;
 
 procedure TFmConfig.FormShow(Sender: TObject);
@@ -246,7 +248,7 @@ end;
 procedure TFmConfig.BitBtn2Click(Sender: TObject);
 var uconf: TStringList;
 begin
-if Application.MessageBox('Are you really sure that you want to delete this source?','Delete source',MB_YESNO)=IDYES then begin
+if Application.MessageBox(PChar(strRmSrcQ),PChar(strRmSrcQC),MB_YESNO)=IDYES then begin
 uconf:=tStringList.Create;
 uconf.LoadFromFile(RegDir+'updates.list');
 uconf.Delete(UListBox1.ItemIndex+1);

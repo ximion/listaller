@@ -245,6 +245,7 @@ gif:=TGifThread.Create(true);
 gif.FileName:=ExtractFilePath(Application.ExeName)+'graphics/throbber.gif';
 gif.Initialize(ThrobberBox.Canvas);
 
+
 edtFilter.Text:='';
 
 SwBox.Visible:=false;
@@ -564,7 +565,7 @@ DInfo:=GetDistro;
  
  FLang:=Copy(GetEnvironmentVariable('LANG'), 1, 2);
  PODirectory := ExtractFilePath(Application.ExeName)+'lang/';
- GetLanguageIDs(Lang, FallbackLang); // in unit gettext
+ GetLanguageIDs(Lang, FallbackLang);
  translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts-%s.po', Lang, FallbackLang);
  translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-%s.po', Lang, FallbackLang);
   
@@ -572,6 +573,13 @@ DInfo:=GetDistro;
  ListLength:=0;
 
  IdList:=TStringList.Create;
+
+ Caption:=strSoftwareManager;
+ btnInstall.Caption:=strInstNew;
+ btnSettings.Caption:=strShowSettings;
+ Label1.Caption:=strShow;
+ Label2.Caption:=strFilter;
+ Label3.Caption:=strNoAppsFound;
 
  if not IsRoot then begin
  mmFrm:=TimdFrm.Create(nil);
@@ -585,6 +593,7 @@ DInfo:=GetDistro;
   btnTest.Visible:=false;
   Image1.Visible:=false;
   Label13.Visible:=false;
+  btnCat.Caption:=strSWCatalogue;
   btnInstallAll.Caption:=strDispRootApps;
   btnHome.Caption:=strDispOnlyMyApps;
   ShowModal;
@@ -595,11 +604,6 @@ RegDir:='/etc/lipa/app-reg/';
 
 if not DirectoryExists(RegDir) then CreateDir(RegDir);
 
- btnInstall.Caption:=strInstNew;
- btnSettings.Caption:=strShowSettings;
- Label1.Caption:=strShow;
- Label2.Caption:=strFilter;
- btnCat.Caption:=strSWCatalogue;
 with CBox do begin
  Items[0]:=strAll;
  Items[1]:=strEducation;

@@ -238,7 +238,7 @@ Application.ProcessMessages;
 writeLn('Detecting package...');
 f:=CmdResult(pkit+'--s-file '+IdList[uID]);
 if f='Failed!' then begin UninstallMojo(IdList[uID]);exit;end;
-if f='err' then begin ShowMessage('Problem while connecting PackageKit. Run "pkmon" to get further information');exit;end;
+if f='err' then begin ShowMessage(strPKitProbPkMon);exit;end;
 g:='';
 
 Application.ProcessMessages;

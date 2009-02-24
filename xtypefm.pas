@@ -23,7 +23,8 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  process, ExtCtrls, utilities, LCLType, Buttons, distri, gtk2, trstrings;
+  process, ExtCtrls, utilities, LCLType, Buttons, distri, {$IFDEF LCLGTK2}gtk2,{$ENDIF} trstrings,
+  gettext, translations;
 
 type
 
@@ -58,8 +59,22 @@ implementation
 { TimdFrm }
 
 procedure TimdFrm.FormCreate(Sender: TObject);
-var BH: HBitmap;s: String;
+var BH: HBitmap;s: String;FLang,PODirectory, Lang, FallbackLang: String;
 begin
+ FLang:=Copy(GetEnvironmentVariable('LANG'), 1, 2);
+ PODirectory := ExtractFilePath(Application.ExeName)+'lang/';
+ GetLanguageIDs(Lang, FallbackLang);
+ translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts-%s.po', Lang, FallbackLang);
+ translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-%s.po', Lang, FallbackLang);
+
+ //Set translation strings
+ Caption:=strSelInstMode;
+ Label1.Caption:=strWantToDoQ;
+ Label13.Caption:=strSpkWarning;
+ btnInstallAll.Caption:=strInstallEveryone;
+ btnTest.Caption:=strTestApp;
+ btnHome.Caption:=strInstallHome;
+
 if Image1.Visible then begin
   BH:=Gtk2LoadStockPixmap(GTK_STOCK_DIALOG_WARNING,GTK_ICON_SIZE_SMALL_TOOLBAR);
    if BH <> 0 then
