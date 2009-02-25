@@ -39,6 +39,7 @@ type
   published
     property ProfileIndex: Integer read FProfileIndex write FProfileIndex;
     property Page: TPage read FPage;
+    property SynEdit: TSynEdit read FSynEdit;
   end;
 
   { TFileProfiles }
@@ -51,9 +52,10 @@ type
   public
     constructor Create(AOwner: TObject; ParentNotebook: TNotebook);
     destructor Destroy; override;
-    procedure AddProfile();
+    function AddProfile: TFileProfile;
     procedure RemoveProfile(APage: TPage); overload;
     procedure RemoveProfile(ProfileIndex: Integer); overload;
+    function Profiles(ProfileIndex: Integer): TFileProfile;
   end;
 
   { TfrmEditor }
@@ -88,7 +90,6 @@ type
     OpenDialog1: TOpenDialog;
     OpenDialog2: TOpenDialog;
     ScriptPage: TPage;
-    Page2: TPage;
     Process1: TProcess;
     SaveDialog1: TSaveDialog;
     SaveDialog2: TSaveDialog;
@@ -207,13 +208,14 @@ begin
   Result := ind;
 end;
 
-procedure TFileProfiles.AddProfile;
+function TFileProfiles.AddProfile: TFileProfile;
 var
   temp: Integer;
 begin
   temp := GetNewIndex;
   FFileProfiles.Add(TFileProfile.Create(Self, FParentNotebook, temp));
   TFileProfile(FFileProfiles[temp]).ProfileIndex:=temp;
+  Result := TFileProfile(FFileProfiles[temp]);
 end;
 
 procedure TFileProfiles.RemoveProfile(APage: TPage);
@@ -244,6 +246,21 @@ begin
       break;
     end;
   end;
+end;
+
+function TFileProfiles.Profiles(ProfileIndex: Integer): TFileProfile;
+var
+  k: Integer;
+begin
+  for k:=FFileProfiles.Count-1 downto 0 do
+  begin
+    if TFileProfile(FFileProfiles[k]).ProfileIndex=ProfileIndex then
+    begin
+      Result := TFileProfile(FFileProfiles[k]);
+      exit;
+    end;
+  end;
+
 end;
 
 { TfrmEditor }
@@ -367,8 +384,8 @@ begin
   begin
     if ScriptPage.Visible then
       MainScriptEdit.Lines.Add(OpenDialog2.FileName);
-    if Page2.Visible then
-      FilesEdit.Lines.Add(OpenDialog2.FileName);
+    // if Page2.Visible then
+    //   FilesEdit.Lines.Add(OpenDialog2.FileName);
   end;
 end;
 
@@ -390,8 +407,8 @@ procedure TfrmEditor.mnuEditUndoClick(Sender: TObject);
 begin
   if ScriptPage.Visible then
     MainScriptEdit.Undo;
-  if Page2.Visible then
-    FilesEdit.Undo;
+  //if Page2.Visible then
+  //  FilesEdit.Undo;
 end;
 
 procedure TfrmEditor.SaveIPSFile(IFn: String);
@@ -573,7 +590,9 @@ procedure TfrmEditor.mnuFileLoadIPSClick(Sender: TObject);
     end;
   end;
 
-var ips: TStringList;i,j: integer;
+var
+  ips: TStringList;i,j: integer;
+  AFileEdit: TSynEdit;
 begin
   if OpenDialog1.Execute then
   if FileExists(OpenDialog1.FileName) then
@@ -587,12 +606,13 @@ begin
       if BeginsFilesPart(ips[i]) then break
       else MainScriptEdit.Lines.Add(ips[i]);
     end;
+    AFileEdit := FileProfiles.AddProfile.SynEdit;
     if i<>ips.Count-1 then FileInfo:=TStringList.Create;
     for j:=i+1 to ips.Count-1 do            // change counting method
       if ((j-(i+1)) mod 3 = 0) then         // counting method needs imrovement !!!
       begin
-        FilesEdit.Lines.Add(ips[j]);
-        FilesEdit.Lines.Add(ips[j+1]);
+        AFileEdit.Lines.Add(ips[j]);
+        AFileEdit.Lines.Add(ips[j+1]);
         FileInfo.Add(ips[j+2]);
       end;
 

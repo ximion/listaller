@@ -2447,6 +2447,7 @@ object frmProjectWizard: TfrmProjectWizard
         Height = 29
         Top = 5
         Width = 168
+        MaxLength = -1
         OnChange = cmbProfilesChange
         OnCloseUp = cmbProfilesCloseUp
         Style = csDropDownList

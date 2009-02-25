@@ -436,7 +436,7 @@ begin
       XDoc.Free;
       frmEditor.MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.xml');
       DeleteFile('/tmp/litmp.xml');
-      frmEditor.Page2.TabVisible:=true;
+      // frmEditor.Page2.TabVisible:=true;
     end;
     Close;
     exit;
@@ -634,7 +634,7 @@ end; //End of Normal
     XDoc.Free;
     frmEditor.MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.xml');
     DeleteFile('/tmp/litmp.xml');
-    frmEditor.Page2.TabVisible:=false;
+    // frmEditor.Page2.TabVisible:=false;
     Close;
   end; //End of LOKI
 end;
