@@ -1,44 +1,44 @@
+# translation of lclstrconsts.po to
+# Valdas Jankūnas <zmuogs@gmail.com>, 2008.
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Project-Id-Version: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-01-23 17:46+0100\n"
-"Last-Translator: Joerg Braun <jb@toolbox-mag.de>\n"
-"Language-Team: Deutsch <lazarus@miraclec.com>\n"
+"PO-Revision-Date: 2008-12-23 01:08+0200\n"
+"Project-Id-Version: lclstrconsts\n"
+"Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
+"X-Generator: Lokalize 0.2\n"
 "MIME-Version: 1.0\n"
-"X-Poedit-Language: German\n"
-"X-Poedit-Country: GERMANY\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"Last-Translator: Valdas Jankūnas <zmuogs@gmail.com>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: lclstrconsts.hhshelpbrowsernotexecutable
 msgid "Browser %s%s%s not executable."
-msgstr "Browser %s%s%s nicht ausführbar."
+msgstr "Naršyklė %s%s%s nėra vykdomasis failas."
 
 #: lclstrconsts.hhshelpbrowsernotfound
 msgid "Browser %s%s%s not found."
-msgstr "Browser %s%s%s nicht gefunden."
+msgstr "Naršyklė %s%s%s nerasta."
 
 #: lclstrconsts.hhshelperrorwhileexecuting
 msgid "Error while executing %s%s%s:%s%s"
-msgstr "Fehler beim Ausführen von %s%s%s:%s%s"
+msgstr "Įvyko klaida startuojant %s%s%s:%s%s"
 
 #: lclstrconsts.hhshelpnohtmlbrowserfound
 msgid "Unable to find a HTML browser."
-msgstr "Kann den HTML-Browser nicht finden."
+msgstr "Nepavyko rasti HTML naršyklės."
 
 #: lclstrconsts.hhshelpnohtmlbrowserfoundpleasedefineoneinhelpconfigurehe
 msgid "No HTML Browser found.%sPlease define one in Help -> Configure Help -> Viewers"
-msgstr "Kein HTML-Browser gefunden.%sBitte definieren Sie ihn in Hilfe -> Hilfe konfigurieren -> Betrachter"
+msgstr "Nerasta HTML naršyklė.%sNurodykite kokią nors meniu „Žinynas -> Derinti žinyną -> Žiūriklės“."
 
 #: lclstrconsts.hhshelpthehelpdatabasewasunabletofindfile
 msgid "The help database %s%s%s was unable to find file %s%s%s."
-msgstr "Die Hilfedatenbank %s%s%s konnte die Datei %s%s%s nicht finden."
+msgstr "Žinyno duomenų bazė %s%s%s neranda failo %s%s%s."
 
 #: lclstrconsts.hhshelpthemacrosinbrowserparamswillbereplacedbytheurl
 msgid "The macro %s in BrowserParams will be replaced by the URL."
-msgstr "Das Makro %s in BrowserParams wird durch den URL ersetzt."
+msgstr "Makrokomanda %s naršyklės parametruose bus pakeista URL reikšme."
 
 #: lclstrconsts.ifsalt
 msgid "Alt"
@@ -46,65 +46,65 @@ msgstr "Alt"
 
 #: lclstrconsts.ifsctrl
 msgid "Ctrl"
-msgstr "Strg"
+msgstr "Ctrl"
 
 #: lclstrconsts.ifsvk_accept
 msgid "Accept"
-msgstr "Übernehmen"
+msgstr "Accept"
 
 #: lclstrconsts.ifsvk_apps
 msgid "application key"
-msgstr "Programmtaste"
+msgstr "Programos klavišas"
 
 #: lclstrconsts.ifsvk_back
 msgid "Backspace"
-msgstr "Rückschritt"
+msgstr "Backspace"
 
 #: lclstrconsts.ifsvk_cancel
 msgctxt "lclstrconsts.ifsvk_cancel"
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Cancel"
 
 #: lclstrconsts.ifsvk_capital
 msgid "Capital"
-msgstr "Großbuchstabe"
+msgstr "Caps Lock"
 
 #: lclstrconsts.ifsvk_clear
 msgid "Clear"
-msgstr "Löschen"
+msgstr "Clear"
 
 #: lclstrconsts.ifsvk_control
 msgid "Control"
-msgstr "Steuerelement"
+msgstr "Ctrl"
 
 #: lclstrconsts.ifsvk_convert
 msgid "Convert"
-msgstr "Konvertiert"
+msgstr "Convert"
 
 #: lclstrconsts.ifsvk_delete
 msgctxt "lclstrconsts.ifsvk_delete"
 msgid "Delete"
-msgstr "Löschen"
+msgstr "Delete"
 
 #: lclstrconsts.ifsvk_down
 msgid "Down"
-msgstr "Runter"
+msgstr "Down"
 
 #: lclstrconsts.ifsvk_end
 msgid "End"
-msgstr "Ende"
+msgstr "End"
 
 #: lclstrconsts.ifsvk_escape
 msgid "Escape"
-msgstr "Escape"
+msgstr "Esc"
 
 #: lclstrconsts.ifsvk_execute
 msgid "Execute"
-msgstr "Ausführen"
+msgstr "Execute"
 
 #: lclstrconsts.ifsvk_final
 msgid "Final"
-msgstr "Schluß"
+msgstr "Final"
 
 #: lclstrconsts.ifsvk_hanja
 msgid "Hanja"
@@ -112,16 +112,16 @@ msgstr "Hanja"
 
 #: lclstrconsts.ifsvk_help
 msgid "Help"
-msgstr "Hilfe"
+msgstr "Help"
 
 #: lclstrconsts.ifsvk_home
 msgid "Home"
-msgstr "Pos1"
+msgstr "Home"
 
 #: lclstrconsts.ifsvk_insert
 msgctxt "lclstrconsts.ifsvk_insert"
 msgid "Insert"
-msgstr "Einfügen"
+msgstr "Insert"
 
 #: lclstrconsts.ifsvk_junja
 msgid "Junja"
@@ -133,745 +133,745 @@ msgstr "Kana"
 
 #: lclstrconsts.ifsvk_lbutton
 msgid "Mouse Button Left"
-msgstr "Linke Maustaste"
+msgstr "Kairys peles klavišas"
 
 #: lclstrconsts.ifsvk_left
 msgid "Left"
-msgstr "Links"
+msgstr "Left"
 
 #: lclstrconsts.ifsvk_lwin
 msgid "left windows key"
-msgstr "Linke Windows-Taste"
+msgstr "Kairysis windows klavišas"
 
 #: lclstrconsts.ifsvk_mbutton
 msgid "Mouse Button Middle"
-msgstr "Mittlere Maustaste"
+msgstr "Vidurinis pelės klavišas"
 
 #: lclstrconsts.ifsvk_menu
 msgctxt "lclstrconsts.ifsvk_menu"
 msgid "Menu"
-msgstr "Menü"
+msgstr "Menu"
 
 #: lclstrconsts.ifsvk_modechange
 msgid "Mode Change"
-msgstr "Modusänderung"
+msgstr "Mode Change"
 
 #: lclstrconsts.ifsvk_next
 msgctxt "lclstrconsts.ifsvk_next"
 msgid "Next"
-msgstr "Weiter"
+msgstr "Next"
 
 #: lclstrconsts.ifsvk_nonconvert
 msgid "Nonconvert"
-msgstr "Nichtkonvertiert"
+msgstr "Nonconvert"
 
 #: lclstrconsts.ifsvk_numlock
 msgid "Numlock"
-msgstr "NumLock"
+msgstr "Numlock"
 
 #: lclstrconsts.ifsvk_numpad
 msgid "Numpad %d"
-msgstr "Zahlenblock %s"
+msgstr "Numpad %d"
 
 #: lclstrconsts.ifsvk_pause
 msgid "Pause key"
-msgstr "Pause-Taste"
+msgstr "Pause"
 
 #: lclstrconsts.ifsvk_print
 msgid "Print"
-msgstr "Druck"
+msgstr "Print"
 
 #: lclstrconsts.ifsvk_prior
 msgctxt "lclstrconsts.ifsvk_prior"
 msgid "Prior"
-msgstr "Zurück"
+msgstr "Prior"
 
 #: lclstrconsts.ifsvk_rbutton
 msgid "Mouse Button Right"
-msgstr "Rechte Maustaste"
+msgstr "Dešinys pelės klavišas"
 
 #: lclstrconsts.ifsvk_return
 msgid "Return"
-msgstr "Eingabe"
+msgstr "Return"
 
 #: lclstrconsts.ifsvk_right
 msgid "Right"
-msgstr "Rechts"
+msgstr "Right"
 
 #: lclstrconsts.ifsvk_rwin
 msgid "right windows key"
-msgstr "Rechte Windows-Taste"
+msgstr "Dešinysis windows klavišas"
 
 #: lclstrconsts.ifsvk_scroll
 msgid "Scroll"
-msgstr "Rollen"
+msgstr "Scroll"
 
 #: lclstrconsts.ifsvk_select
 msgid "Select"
-msgstr "Auswählen"
+msgstr "Select"
 
 #: lclstrconsts.ifsvk_shift
 msgid "Shift"
-msgstr "Umsch"
+msgstr "Shift"
 
 #: lclstrconsts.ifsvk_snapshot
 msgid "Snapshot"
-msgstr "Auszug"
+msgstr "Snapshot"
 
 #: lclstrconsts.ifsvk_space
 msgid "Space key"
-msgstr "Leertaste"
+msgstr "Space"
 
 #: lclstrconsts.ifsvk_tab
 msgid "Tab"
-msgstr "Tabulator"
+msgstr "Tab"
 
 #: lclstrconsts.ifsvk_unknown
 msgid "Unknown"
-msgstr "Unbekannt"
+msgstr "Nežinomas"
 
 #: lclstrconsts.ifsvk_up
 msgid "Up"
-msgstr "Hoch"
+msgstr "Up"
 
 #: lclstrconsts.lislclresourcesnotfound
 msgctxt "lclstrconsts.lislclresourcesnotfound"
 msgid "Resource %s not found"
-msgstr "Ressource %s nicht gefunden"
+msgstr "Resursas %s nerastas"
 
 #: lclstrconsts.rs3ddkshadowcolorcaption
 msgid "3D Dark Shadow"
-msgstr "Dunkl. 3D-Schatten"
+msgstr "3D tamsumos šešėlis"
 
 #: lclstrconsts.rs3dlightcolorcaption
 msgid "3D Light"
-msgstr "3D-Licht"
+msgstr "3D šviesuma"
 
 #: lclstrconsts.rsacontrolcannothaveitselfasparent
 msgid "A control can't have itself as parent"
-msgstr "Ein Control kann nicht sein eigener Vorfahr sein"
+msgstr "Valdiklio tėvas negali būti pats valdiklis"
 
 #: lclstrconsts.rsactivebordercolorcaption
 msgid "Active Border"
-msgstr "Aktiver Rand"
+msgstr "Aktyvus rėmelis"
 
 #: lclstrconsts.rsactivecaptioncolorcaption
 msgid "Active Caption"
-msgstr "Aktive Titelleiste"
+msgstr "Veikiamoji antraštė"
 
 #: lclstrconsts.rsallfiles
 msgid "All files (%s)|%s|%s"
-msgstr "Alle Dateien (%s)|%s|%s"
+msgstr "Visi failai (%s)|%s|%s"
 
 #: lclstrconsts.rsappworkspacecolorcaption
 msgid "Application Workspace"
-msgstr "Arbeitsbereich"
+msgstr "Programos darbo laukas"
 
 #: lclstrconsts.rsbackgroundcolorcaption
 msgid "Desktop"
-msgstr "Desktop"
+msgstr "Darbalaukis"
 
 #: lclstrconsts.rsbackward
 msgid "Backward"
-msgstr "Rückwärts"
+msgstr "Atgal"
 
 #: lclstrconsts.rsbitmaps
 msgid "Bitmaps"
-msgstr "Bitmaps"
+msgstr "Bitmap"
 
 #: lclstrconsts.rsblank
 msgid "Blank"
-msgstr "Leer"
+msgstr "Tuščias"
 
 #: lclstrconsts.rsbtnfacecolorcaption
 msgid "Button Face"
-msgstr "Schalterfläche"
+msgstr "Mygtuko paviršius"
 
 #: lclstrconsts.rsbtnhighlightcolorcaption
 msgid "Button Highlight"
-msgstr "Schalter-Hervorheb."
+msgstr "Mygtuko paryškinimas"
 
 #: lclstrconsts.rsbtnshadowcolorcaption
 msgid "Button Shadow"
-msgstr "Schalter-Schatten"
+msgstr "Mygtuko šešėlis"
 
 #: lclstrconsts.rsbtntextcolorcaption
 msgid "Button Text"
-msgstr "Schalter-Text"
+msgstr "Mygtuko tekstas"
 
 #: lclstrconsts.rscalculator
 msgid "Calculator"
-msgstr "Rechner"
+msgstr "Skaičiuotuvas"
 
 #: lclstrconsts.rscancelrecordhint
 msgctxt "lclstrconsts.rscancelrecordhint"
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Atsisakyti"
 
 #: lclstrconsts.rscannotfocus
 msgid "Can not focus"
-msgstr "Kann nicht fokussieren"
+msgstr "Suaktyvinti negalima"
 
 #: lclstrconsts.rscanvasdoesnotallowdrawing
 msgid "Canvas does not allow drawing"
-msgstr "Canvas erlaubt kein Zeichnen"
+msgstr "Į „Canvas“ negalima piešti"
 
 #: lclstrconsts.rscaptiontextcolorcaption
 msgid "Caption Text"
-msgstr "Titelleistentext"
+msgstr "Antraštės tekstas"
 
 #: lclstrconsts.rscasesensitive
 msgid "Case sensitive"
-msgstr "Schreibweisenabhängig"
+msgstr "Paisyti raidžių lygio"
 
 #: lclstrconsts.rscreatinggdbcatchableerror
 msgid "Creating gdb catchable error:"
-msgstr "Erzeuge GDB-fangbaren Fehler:"
+msgstr "Kuriama GDB aptinkama klaida:"
 
 #: lclstrconsts.rscursor
 msgid "Cursor"
-msgstr "Zeiger"
+msgstr "Žymeklis"
 
 #: lclstrconsts.rscustomcolorcaption
 msgid "Custom ..."
-msgstr "Eigene ..."
+msgstr "Naudotojo…"
 
 #: lclstrconsts.rsdefaultfileinfovalue
 msgid "permissions user group size date time"
-msgstr "Genehmigung User GruppeGröße DatumZeit"
+msgstr "leidimai naudotojas grupė dydis data laikas"
 
 #: lclstrconsts.rsdeleterecord
 msgid "Delete record?"
-msgstr "Datensatz löschen?"
+msgstr "Ištrinti įrašą?"
 
 #: lclstrconsts.rsdeleterecordhint
 msgctxt "lclstrconsts.rsdeleterecordhint"
 msgid "Delete"
-msgstr "Löschen"
+msgstr "Delete"
 
 #: lclstrconsts.rsdirection
 msgid "Direction"
-msgstr "Richtung"
+msgstr "Kryptis"
 
 #: lclstrconsts.rsdirectory
 msgid "&Directory"
-msgstr "&Verzeichnis"
+msgstr "&Aplankas"
 
 #: lclstrconsts.rsdocking
 msgid "Docking"
-msgstr "Andocken"
+msgstr "Pritvirtinimas"
 
 #: lclstrconsts.rsduplicateiconformat
 msgid "Duplicate icon format."
-msgstr "Doppeltes Icon-Format"
+msgstr "Piktogramos formatai dubliuojasi."
 
 #: lclstrconsts.rseditrecordhint
 msgid "Edit"
-msgstr "Bearbeiten"
+msgstr "Keisti"
 
 #: lclstrconsts.rserror
 msgctxt "lclstrconsts.rserror"
 msgid "Error"
-msgstr "Fehler"
+msgstr "Klaida"
 
 #: lclstrconsts.rserrorcreatingdevicecontext
 msgid "Error creating device context for %s.%s"
-msgstr "Fehler beim Erzeugen des Gerätekontexts für %s.%s"
+msgstr "Įvyko klaida kuriant įrenginio turinį, skirtą %s.%s"
 
 #: lclstrconsts.rserrorinlcl
 msgid "ERROR in LCL: "
-msgstr "FEHLER in der LCL:"
+msgstr "LCL klaida:"
 
 #: lclstrconsts.rserroroccurredinataddressframe
 msgid "Error occurred in %s at %sAddress %s%s Frame %s"
-msgstr "Fehler aufgetreten in %s bei %sAdresse %s%s Frame %s"
+msgstr "%s įvyko klaida:%sadresas %s%s, kadras %s"
 
 #: lclstrconsts.rserrorreadingproperty
 msgid "Error reading %s%s%s: %s"
-msgstr "Fehler beim Lesen %s%s%s: %s"
+msgstr "Įvyko klaida skaitant %s%s%s: %s"
 
 #: lclstrconsts.rserrorwhilesavingbitmap
 msgid "Error while saving bitmap."
-msgstr "Fehler beim Speichern der Bitmap."
+msgstr "Įrašant rastrinį paveikslą įvyko klaida."
 
 #: lclstrconsts.rsexception
 msgid "Exception"
-msgstr "Exception"
+msgstr "Išimtinė situacija"
 
 #: lclstrconsts.rsfddirectorymustexist
 msgid "Directory must exist"
-msgstr "Verzeichnis muß vorhanden sein"
+msgstr "Aplankas turi egzistuoti"
 
 #: lclstrconsts.rsfddirectorynotexist
 msgid "The directory \"%s\" does not exist."
-msgstr "Das Verzeichnis \"%s\" ist nicht vorhanden."
+msgstr "Aplankas „%s“ neegzistuoja."
 
 #: lclstrconsts.rsfdfilealreadyexists
 msgid "The file \"%s\" already exists. Overwrite ?"
-msgstr "Die Datei \"%s\" ist bereits vorhanden. Überschreiben?"
+msgstr "Toks failas „%s“ jayu yra. Rašyti ant viršaus?"
 
 #: lclstrconsts.rsfdfilemustexist
 msgid "File must exist"
-msgstr "Datei muß vorhanden sein"
+msgstr "Failas turi egzistuoti"
 
 #: lclstrconsts.rsfdfilenotexist
 msgid "The file \"%s\" does not exist."
-msgstr "Die Datei \"%s\" ist nicht vorhanden."
+msgstr "Failas „%s“ neegzistuoja."
 
 #: lclstrconsts.rsfdfilereadonly
 msgid "The file \"%s\" is not writable."
-msgstr "Die Datei \"%s\" ist schreibgeschützt."
+msgstr "Failas „%s“ nėra skirtas rašymui."
 
 #: lclstrconsts.rsfdfilereadonlytitle
 msgid "File is not writable"
-msgstr "Datei ist nicht beschreibbar"
+msgstr "Failas ne rašymui"
 
 #: lclstrconsts.rsfdfilesaveas
 msgid "Save file as"
-msgstr "Datei sichern als"
+msgstr "Įrašyti failą kaip"
 
 #: lclstrconsts.rsfdopenfile
 msgid "Open existing file"
-msgstr "Vorhandene Datei öffnen"
+msgstr "Atverti egzistuojanti failą"
 
 #: lclstrconsts.rsfdoverwritefile
 msgid "Overwrite file ?"
-msgstr "Datei überschreiben?"
+msgstr "Perrašyti failą?"
 
 #: lclstrconsts.rsfdpathmustexist
 msgid "Path must exist"
-msgstr "Pfad muß angelegt sein"
+msgstr "Kelias turi egzistuoti"
 
 #: lclstrconsts.rsfdpathnoexist
 msgid "The path \"%s\" does not exist."
-msgstr "Der Pfad \"%s\" ist nicht vorhanden."
+msgstr "Kelias „%s“ neegzistuoja."
 
 #: lclstrconsts.rsfdselectdirectory
 msgid "Select Directory"
-msgstr "Verzeichnis auswählen"
+msgstr "Nurodykit aplanką"
 
 #: lclstrconsts.rsfileinfofilenotfound
 msgid "(file not found: \"%s\")"
-msgstr "(Datei nicht gefunden: \"%s\")"
+msgstr "(failas nerastas: „%s“)"
 
 #: lclstrconsts.rsfileinformation
 msgid "File information"
-msgstr "Dateiinformation"
+msgstr "Informacija apie failą"
 
 #: lclstrconsts.rsfind
 msgid "Find"
-msgstr "Suchen"
+msgstr "Ieškoti"
 
 #: lclstrconsts.rsfindmore
 msgid "Find more"
-msgstr "Weitersuchen"
+msgstr "Ieškoti toliau"
 
 #: lclstrconsts.rsfirstrecordhint
 msgid "First"
-msgstr "Erster"
+msgstr "Pirmasis"
 
 #: lclstrconsts.rsfixedcolstoobig
 msgid "FixedCols can't be >= ColCount"
-msgstr "FixedCols kann nicht größer/gleich ColCount sein"
+msgstr "„FixedCols“ reikšmė negali būti lygi ar didesnė nei „ColCount“"
 
 #: lclstrconsts.rsfixedrowstoobig
 msgid "FixedRows can't be >= RowCount"
-msgstr "FixedRows kann nicht größer/gleich RowCount sein"
+msgstr "„FixedRows“ reikšmė negali būti lygi ar didesnė nei „RowCount“"
 
 #: lclstrconsts.rsformcolorcaption
 msgid "Form"
-msgstr "Form"
+msgstr "Nuo"
 
 #: lclstrconsts.rsformstreamingerror
 msgid "Form streaming \"%s\" error: %s"
-msgstr "Form-Streaming \"%s\" Fehler: %s"
+msgstr "Formą siunčiant srautu „%s“ įvyko klaida: %s"
 
 #: lclstrconsts.rsforward
 msgid "Forward"
-msgstr "Vorwärts"
+msgstr "Pirmyn"
 
 #: lclstrconsts.rsgdkoptiondebug
 msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
-msgstr "--gdk-debug flags     Besondere GDK-Trace/Debug-Meldungen anschalten."
+msgstr "--gdk-debug žymės     Įjungiami nurodyti GDK sekimo/derinimo pranešimai."
 
 #: lclstrconsts.rsgdkoptionnodebug
 msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
-msgstr "--gdk-no-debug flags  Besondere GDK-Trace/Debug-Meldungen abschalten."
+msgstr "--gdk-no-debug žymės     Išjungiami nurodyti GDK sekimo/derinimo pranešimai."
 
 #: lclstrconsts.rsgoptionfatalwarnings
 msgid "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt the application."
-msgstr "--g-fatal-warnings    Von Gtk+/GDK generierte Warnungen und Fehler halten das Programm an."
+msgstr "--g-fatal-warnings     GTK+ ar GDK sugeneravus perspėjimą arba klaidą, programa bus sustabdyta."
 
 #: lclstrconsts.rsgradientactivecaptioncolorcaption
 msgid "Gradient Active Caption"
-msgstr "Gradient der aktiven Titelleiste"
+msgstr "Veikiamosios antraštės gradientas"
 
 #: lclstrconsts.rsgradientinactivecaptioncolorcaption
 msgid "Gradient Inactive Caption"
-msgstr "Gradient der inaktiven Titelleiste"
+msgstr "Įprastos antraštės gradientas"
 
 #: lclstrconsts.rsgraytextcolorcaption
 msgid "Gray Text"
-msgstr "Ausgegrauter Text"
+msgstr "Neveiksnus tekstas"
 
 #: lclstrconsts.rsgridfiledoesnotexists
 msgid "Grid file doesn't exists"
-msgstr "Grid-Datei fehlt"
+msgstr "Tinklelio failas neegzistuoja"
 
 #: lclstrconsts.rsgridindexoutofrange
 msgid "Grid index out of range."
-msgstr "Gitterindex außerhalb des Bereichs."
+msgstr "Tinklelio indeksas peržengia ribas"
 
 #: lclstrconsts.rsgroupindexcannotbelessthanprevious
 msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
-msgstr "GroupIndex darf nicht kleiner als der GroupIndex eines vorherigen Menüeintrags sein"
+msgstr "„GroupIndex“ negali būti mažesnis už ankstesnių menių punktų „GroupIndex“"
 
 #: lclstrconsts.rsgtkfilter
 msgid "Filter:"
-msgstr "Filter:"
+msgstr "Filtras:"
 
 #: lclstrconsts.rsgtkhistory
 msgid "History:"
-msgstr "Verlauf:"
+msgstr "Istorija:"
 
 #: lclstrconsts.rsgtkoptionclass
 msgid "--class classname     Following Xt conventions, the class of a program is the program name with the initial character capitalized. For example, the classname for gimp is \"Gimp\". If --class is specified, the class of the program will be set to \"classname\"."
-msgstr "--class classname     Den Xt-Konventionen folgend, entspricht der Klassenname dem Programmnamen mit dem ersten Buchstaben in Großschreibung. Beispielsweise ist der Klassenname von gimp \"Gimp\". Wenn --class angegeben ist, wird die Klasse des Programme auf \"classname\" gesetzt."
+msgstr "--class klasės_pavadinimas     Pagal Xt susitarimą, programos klasė yra programos pavadinimas, kuriame pirmoji raidė yra didžioji. Pavyzdžiui: GIMP programos klasė yra „Gimp“. Jei --class nurodytas, tai klasės pavadinimas bus priskirtas „classname“."
 
 #: lclstrconsts.rsgtkoptiondebug
 msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
-msgstr "--gtk-debug flags     Anschalten spezifischer Trace-/Debug-Meldungen des Gtk+."
+msgstr "--gtk-debug žymės     Įjungiami nurodyti GTK+ sekimo/derinimo pranešimai."
 
 #: lclstrconsts.rsgtkoptiondisplay
 msgid "--display h:s:d       Connect to the specified X server, where \"h\" is the hostname, \"s\" is the server number (usually 0), and \"d\" is the display number (typically omitted). If --display is not specified, the DISPLAY environment variable is used."
-msgstr "--display h:s:d       Anbinden an den angegebenen X-Server wobei \"h\" für den Hostnamen steht, \"s\" die Nummer des Server ist (normalerweise 0) und \"d\" die Nummer des Displays (typischerweise weggelassen). Ist --display nicht angegeben, gilt der Wert der Umgebungsvariable DISPLAY."
+msgstr "--display h:s:d     Prisijunti prie nurodyto X serverio, čia „h“ yra hostname, „s“ - serverio numeris (paprastai 0), ir „d“ - ekrano numeris (dažniausia praleidžiamas). Jei --display nenurodytas, tada naudojamas DISPLAY aplinkos kintamasis."
 
 #: lclstrconsts.rsgtkoptionmodule
 msgid "--gtk-module module   Load the specified module at startup."
-msgstr "--gtk-module module   Das abgegebene Modul beim Starten laden."
+msgstr "--gtk-module modulis     Starto metu įkelti nurodytą modulį."
 
 #: lclstrconsts.rsgtkoptionname
 msgid "--name programe       Set program name to \"progname\". If not specified, program name will be set to ParamStrUTF8(0)."
-msgstr "--name programe       Setzen des Programmnamens auf \"progname\". Ist nichts angegeben, wird der Name auf ParamStrUTF8(0) gesetzt."
+msgstr "--name programa       Programos pavadinimą nustatyti į „programa“. Jei nenurodyta, tai programos pavadinimas bus nustatytas į ParamStrUTF8(0)."
 
 #: lclstrconsts.rsgtkoptionnodebug
 msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
-msgstr "--gtk-no-debug flags  Besondere Gtk+-Trace-/Debug-Meldungen abschalten."
+msgstr "--gtk-no-debug žymės     Išungiami nurodyti GTK+ sekimo/derinimo pranešimai."
 
 #: lclstrconsts.rsgtkoptionnotransient
 msgid "--lcl-no-transient    Do not set transient order for modal forms"
-msgstr "--lcl-no-transient    Transiente Reihenfolge für modale Formulare nicht setzen."
+msgstr "--lcl-no-transient     Modalinių formų eilę nedaryti trumpalaikę."
 
 #: lclstrconsts.rsgtkoptionnoxshm
 msgid "--no-xshm             Disable use of the X Shared Memory Extension."
-msgstr "--no-xshm             Abschalten der Verwendung der Shared-Memory-Erweiterung von X"
+msgstr "--no-xshm     Nenaudoti „X Shared Memory“ plėtinio."
 
 #: lclstrconsts.rsgtkoptionsync
 msgid "--sync                Call XSynchronize (display, True) after the Xserver connection has been established. This makes debugging X protocol errors easier, because X request buffering will be disabled and X errors will be received immediatey after the protocol request that generated the error has been processed by the X server."
-msgstr "--sync                Aufruf von XSynchronize (Display, True) nachdem die XServer-Verbindung zustandegekommen ist. Dies erleichtert das Debugging des X-Protokolls, weil die X-Anfragepufferung abgeschaltet ist und X-Fehler sofort ankommen, nachdem die Anfrage, die den Fehler erzeugt hat, beim X-Server angekommen ist."
+msgstr "--sync     Kai XServer ryšys sukurtas, vykdyti „XSynchronize (display, True)“. Tai padarys lengvesnį X protokolo klaidų derinimą, nes bus išjungtas X kreipinių buferis ir X serveriui protokolo kreipinio apdorojimo metu įvykusi klaida bus gauta iškart."
 
 #: lclstrconsts.rshelpalreadyregistered
 msgid "%s: Already registered"
-msgstr "%s: Bereits registriert"
+msgstr "%s: jau yra registruotas"
 
 #: lclstrconsts.rshelpcontextnotfound
 msgid "Help Context not found"
-msgstr "Hilfekontext nicht gefunden"
+msgstr "Žinyno turinys nerastas"
 
 #: lclstrconsts.rshelpdatabasenotfound
 msgid "Help Database not found"
-msgstr "Hilfedatenbank nicht gefunden"
+msgstr "Žinyno duomenų bazė nerasta"
 
 #: lclstrconsts.rshelperror
 msgid "Help Error"
-msgstr "Hilfefehler"
+msgstr "Žinyno klaida"
 
 #: lclstrconsts.rshelphelpcontextnotfound
 msgid "Help context %s not found."
-msgstr "Hilfekontext %s nicht gefunden."
+msgstr "Žinyno turinys %s nerastas."
 
 #: lclstrconsts.rshelphelpcontextnotfoundindatabase
 msgid "Help context %s not found in Database %s%s%s."
-msgstr "Hilfekontext %s nicht in der Datenbank %s%s%s gefunden."
+msgstr "Žinyno turinys %s duomenų bazėje %s%s%s nerastas."
 
 #: lclstrconsts.rshelphelpdatabasedidnotfoundaviewerforahelppageoftype
 msgid "Help Database %s%s%s did not found a viewer for a help page of type %s"
-msgstr "Die Hilfedatenbank %s%s%s fand keinen Betrachter für eine Hilfeseite des Typs %s"
+msgstr "Žinyno duomenų bazė %s%s%s nerado žiūriklės %s tipo žinyno lapui."
 
 #: lclstrconsts.rshelphelpdatabasenotfound
 msgid "Help Database %s%s%s not found"
-msgstr "Hilfedatenbank %s%s%s nicht gefunden"
+msgstr "Žinyno duomenų bazė %s%s%s nerasta."
 
 #: lclstrconsts.rshelphelpkeywordnotfound
 msgid "Help keyword %s%s%s not found."
-msgstr "Hilfeschlüsselwort %s%s%s nciht gefunden."
+msgstr "Žinyno raktažodis %s%s%s nerastas."
 
 #: lclstrconsts.rshelphelpkeywordnotfoundindatabase
 msgid "Help keyword %s%s%s not found in Database %s%s%s."
-msgstr "Hilfeschlüsselwort %s nicht in der Datenbank %s%s%s gefunden."
+msgstr "Žinyno raktažodis %s%s%s duomenų bazėje %s%s%s nerastas."
 
 #: lclstrconsts.rshelphelpnodehasnohelpdatabase
 msgid "Help node %s%s%s has no Help Database"
-msgstr "Hilfeknoten %s%s%s besitzt keine Hilfedatenbank"
+msgstr "Žynyno mazgas %s%s%s neturi žinyno duomenų bazės."
 
 #: lclstrconsts.rshelpnohelpfoundforsource
 msgid "No help found for line %d, column %d of %s."
-msgstr "Keine Hilfe für Zeile %d, Spalte %d von %s gefunden."
+msgstr "Žinyne nėra duomenų eilutei %d, stulpeliui %d šio %s."
 
 #: lclstrconsts.rshelpnohelpnodesavailable
 msgid "No help nodes available"
-msgstr "Keine Hilfeknoten verfügbar"
+msgstr "Žinyno nėra"
 
 #: lclstrconsts.rshelpnotfound
 msgid "Help not found"
-msgstr "Hilfe nicht gefunden"
+msgstr "Žinynas nerastas"
 
 #: lclstrconsts.rshelpnotregistered
 msgid "%s: Not registered"
-msgstr "%s: Nicht registriert"
+msgstr "%s: neregistruotas"
 
 #: lclstrconsts.rshelpselectorerror
 msgid "Help Selector Error"
-msgstr "Hilfeauswahlfehler"
+msgstr "Žinyno išrinkėjo klaida"
 
 #: lclstrconsts.rshelpthereisnoviewerforhelptype
 msgid "There is no viewer for help type %s%s%s"
-msgstr "Es gibt keinen Viewer für den Hilfetyp %s%s%s"
+msgstr "Nerasta žiūriklė %s%s%s žinyno tipui."
 
 #: lclstrconsts.rshelpviewererror
 msgid "Help Viewer Error"
-msgstr "Hilfebetrachterfehler"
+msgstr "Žinyno žiūriklės klaida"
 
 #: lclstrconsts.rshelpviewernotfound
 msgid "Help Viewer not found"
-msgstr "Hilfebetrachter nicht gefunden"
+msgstr "Žinyno žiūriklė nerasta"
 
 #: lclstrconsts.rshighlightcolorcaption
 msgid "Highlight"
-msgstr "Hervorhebung"
+msgstr "Paryškinimas"
 
 #: lclstrconsts.rshighlighttextcolorcaption
 msgid "Highlight Text"
-msgstr "Hervorgehob. Text"
+msgstr "Paryškintas tekstas"
 
 #: lclstrconsts.rshotlightcolorcaption
 msgid "Hot Light"
-msgstr ""
+msgstr "Indikatorius"
 
 #: lclstrconsts.rsicns
 msgid "OSX Icon Resource"
-msgstr "OSX-Icon-Ressource"
+msgstr "OSX piktogramos resursas"
 
 #: lclstrconsts.rsicon
 msgid "Icon"
-msgstr "Symbol"
+msgstr "Piktograma"
 
 #: lclstrconsts.rsiconimageempty
 msgid "Icon image cannot be empty"
-msgstr "Icon-Bild darf nicht leer sein"
+msgstr "Piktogramos paveikslėlis neturi būti tuščias"
 
 #: lclstrconsts.rsiconimageformat
 msgid "Icon image must have the same format"
-msgstr "Icon-Bild muß das gleiche Format haben"
+msgstr "Piktogramos ir naujasis paveikslėliai turi būti to paties formato"
 
 #: lclstrconsts.rsiconimageformatchange
 msgid "Cannot change format of icon image"
-msgstr "Kann Format des Icon-Bilds nicht ändern"
+msgstr "Neina pakeisti piktogramos paveikslo formato"
 
 #: lclstrconsts.rsiconimagesize
 msgid "Icon image must have the same size"
-msgstr "Icon-Bild muß die gleiche Größe haben"
+msgstr "Piktogramos ir naujasis paveikslėliai turi būti to paties dydžio"
 
 #: lclstrconsts.rsiconimagesizechange
 msgid "Cannot change size of icon image"
-msgstr "Kann Größe des Icon-Bilds nicht ädnern"
+msgstr "Neina pakeisti piktogramos paveikslo dydžio"
 
 #: lclstrconsts.rsiconnocurrent
 msgid "Icon has no current image"
-msgstr "Icon besitzt kein gültiges Bild"
+msgstr "Veikiamoji piktograma neturi paveikslėlio"
 
 #: lclstrconsts.rsinactivebordercolorcaption
 msgid "Inactive Border"
-msgstr "Inaktiver Rand"
+msgstr "Neaktuvus rėmelis"
 
 #: lclstrconsts.rsinactivecaptioncolorcaption
 msgctxt "lclstrconsts.rsinactivecaptioncolorcaption"
 msgid "Inactive Caption"
-msgstr "Inaktive Titelleiste"
+msgstr "Neaktyvi antraštė"
 
 #: lclstrconsts.rsinactivecaptiontext
 msgctxt "lclstrconsts.rsinactivecaptiontext"
 msgid "Inactive Caption"
-msgstr "Inaktive Titelleiste"
+msgstr "Neaktyvi antraštė"
 
 #: lclstrconsts.rsindexoutofbounds
 msgid "%s Index %d out of bounds 0 .. %d"
-msgstr "%s Index %s außerhalb des Bereichs 0 .. %d"
+msgstr "%s indeksas %d peržengia ribas 0 .. %d"
 
 #: lclstrconsts.rsindexoutofrange
 msgid "Index Out of range Cell[Col=%d Row=%d]"
-msgstr "Index außerhalb des Bereichs Zelle[Spalte=%s Reihe=%d]"
+msgstr "Langelio [stulpelis = %d, eilutė = %d] indeksas peržengia ribas"
 
 #: lclstrconsts.rsinfobkcolorcaption
 msgid "Info Background"
-msgstr "Info-Hintergrund"
+msgstr "Fonas informacijai"
 
 #: lclstrconsts.rsinfotextcolorcaption
 msgid "Info Text"
-msgstr "Infotext"
+msgstr "Informacijos tekstas"
 
 #: lclstrconsts.rsinsertrecordhint
 msgctxt "lclstrconsts.rsinsertrecordhint"
 msgid "Insert"
-msgstr "Einfg"
+msgstr "Insert"
 
 #: lclstrconsts.rsinvaliddate
 msgid "Invalid Date : %s"
-msgstr "Ungültiges Datum: %s"
+msgstr "Klaidinga data: %s"
 
 #: lclstrconsts.rsinvaliddaterangehint
 msgid "Invalid Date: %s. Must be between %s and %s"
-msgstr "Ungültiges Datum: %s. Es muß zwischen %s und %s sein"
+msgstr "Klaidinga data: %s. Ji turi būti tarp %s ir %s"
 
 #: lclstrconsts.rsinvalidformobjectstream
 msgid "invalid Form object stream"
-msgstr "ungültiger Formularobjekt-Stream"
+msgstr "klaidingas formos objekto srautas"
 
 #: lclstrconsts.rsinvalidpropertyvalue
 msgid "Invalid property value"
-msgstr "Ungültiger Eigenschaftenwert"
+msgstr "Klaidinga savybės reikšmė"
 
 #: lclstrconsts.rsinvalidstreamformat
 msgid "Invalid stream format"
-msgstr "Ungültiges Streamformat"
+msgstr "Klaidingas srauto formatas"
 
 #: lclstrconsts.rsisalreadyassociatedwith
 msgid "%s is already associated with %s"
-msgstr "%s ist bereits mit %s verbunden"
+msgstr "%s jau yra asocijuotas su %s"
 
 #: lclstrconsts.rsjpeg
 msgid "Joint Picture Expert Group"
-msgstr "Jpint Picture Expert Group"
+msgstr "Joint Picture Expert Group"
 
 #: lclstrconsts.rslastrecordhint
 msgid "Last"
-msgstr "Letzter"
+msgstr "Paskutinysis"
 
 #: lclstrconsts.rslistindexexceedsbounds
 msgid "List index exceeds bounds (%d)"
-msgstr "Listenindex überschreitet Grenzen (%d)"
+msgstr "Sąrašo indeksas peržengė ribas (%d)"
 
 #: lclstrconsts.rslistmustbeempty
 msgid "List must be empty"
-msgstr "Zeile muß leer sein"
+msgstr "Sąrašas turi būti tuščias"
 
 #: lclstrconsts.rsmbabort
 msgid "Abort"
-msgstr "Abbruch"
+msgstr "Nutraukti"
 
 #: lclstrconsts.rsmball
 msgid "&All"
-msgstr "&Alle"
+msgstr "&Visi"
 
 #: lclstrconsts.rsmbcancel
 msgctxt "lclstrconsts.rsmbcancel"
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Atsisakyti"
 
 #: lclstrconsts.rsmbclose
 msgid "&Close"
-msgstr "&Schließen"
+msgstr "&Užverti"
 
 #: lclstrconsts.rsmbhelp
 msgid "&Help"
-msgstr "&Hilfe"
+msgstr "Žin&ynas"
 
 #: lclstrconsts.rsmbignore
 msgid "&Ignore"
-msgstr "&Übergehen"
+msgstr "&Ignoruoti"
 
 #: lclstrconsts.rsmbno
 msgid "&No"
-msgstr "&Nein"
+msgstr "&Ne"
 
 #: lclstrconsts.rsmbnotoall
 msgid "No to all"
-msgstr "Immer Nein"
+msgstr "Visiada ne"
 
 #: lclstrconsts.rsmbok
 msgid "&OK"
-msgstr "&Ok"
+msgstr "&Tinka"
 
 #: lclstrconsts.rsmbretry
 msgid "&Retry"
-msgstr "&Wiederholen"
+msgstr "Ka&rtoti"
 
 #: lclstrconsts.rsmbyes
 msgid "&Yes"
-msgstr "&Ja"
+msgstr "&Taip"
 
 #: lclstrconsts.rsmbyestoall
 msgid "Yes to &All"
-msgstr "&Alles bestätigen"
+msgstr "Vis&ada taip"
 
 #: lclstrconsts.rsmenubarcolorcaption
 msgid "Menu Bar"
-msgstr "Menübalken"
+msgstr "Meniu juosta"
 
 #: lclstrconsts.rsmenucolorcaption
 msgctxt "lclstrconsts.rsmenucolorcaption"
 msgid "Menu"
-msgstr "Menü"
+msgstr "Menu"
 
 #: lclstrconsts.rsmenuhighlightcolorcaption
 msgid "Menu Highlight"
-msgstr "Menühervorhebung"
+msgstr "Paryškintas meniu"
 
 #: lclstrconsts.rsmenutextcolorcaption
 msgid "Menu Text"
-msgstr "Menütext"
+msgstr "Menu tekstas"
 
 #: lclstrconsts.rsmodified
 msgid "  modified "
-msgstr " geändert "
+msgstr "  pakeista "
 
 #: lclstrconsts.rsmtconfirmation
 msgid "Confirmation"
-msgstr "Bestätigung"
+msgstr "Patvirtinimas"
 
 #: lclstrconsts.rsmtcustom
 msgid "Custom"
-msgstr "Spezial"
+msgstr "Naudotojo"
 
 #: lclstrconsts.rsmterror
 msgctxt "lclstrconsts.rsmterror"
 msgid "Error"
-msgstr "Fehler"
+msgstr "Klaida"
 
 #: lclstrconsts.rsmtinformation
 msgid "Information"
-msgstr "Information"
+msgstr "Informacija"
 
 #: lclstrconsts.rsmtwarning
 msgid "Warning"
-msgstr "Warnung"
+msgstr "Perspėjimas"
 
 #: lclstrconsts.rsnextrecordhint
 msgctxt "lclstrconsts.rsnextrecordhint"
 msgid "Next"
-msgstr "Nächster"
+msgstr "Kitas"
 
 #: lclstrconsts.rsnotavalidgridfile
 msgid "Not a valid grid file"
-msgstr "Keine gültige Grid-Datei"
+msgstr "Klaidingas tinklelio failas"
 
 #: lclstrconsts.rsnowidgetset
 msgid "No widgetset object. Please check if the unit \"interfaces\" was added to the programs uses clause."
-msgstr "Kein Widgetset-Objekt. Bitte überprüfen Sie, ob die Unit \"Interfaces\" in der Uses-Anweisung des Programms enthalten ist."
+msgstr "Nevaldiklio objektas. Patikrinkite ar modulis „interfaces“ yra paminėtas programos naudojamų modulių sąraše."
 
 #: lclstrconsts.rspickdate
 msgid "Select a date"
-msgstr "Datum auswählen"
+msgstr "Nurodykite datą"
 
 #: lclstrconsts.rspixmap
 msgid "Pixmap"
@@ -879,239 +879,239 @@ msgstr "Pixmap"
 
 #: lclstrconsts.rsportablebitmap
 msgid "Portable BitMap"
-msgstr "Portable Bitmap"
+msgstr "Portatyvus BitMap"
 
 #: lclstrconsts.rsportablegraymap
 msgid "Portable GrayMap"
-msgstr "Portable Graymap"
+msgstr "Portatyvus GreyMap"
 
 #: lclstrconsts.rsportablenetworkgraphic
 msgid "Portable Network Graphic"
-msgstr "PNG-Grafik"
+msgstr "Portable Network Graphic"
 
 #: lclstrconsts.rsportablepixmap
 msgid "Portable PixMap"
-msgstr "Portable Pixmap"
+msgstr "Portatyvus PixMap"
 
 #: lclstrconsts.rspostrecordhint
 msgid "Post"
-msgstr "Übertragen"
+msgstr "Tolesnis"
 
 #: lclstrconsts.rspressoktoignoreandriskdatacorruptionpresscanceltok
 msgid "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill the program."
-msgstr "%s%sMit Ok wird ignoriert und Dateninkonsistenz riskiert.%sMit Abbrechen wird das Programm abgebrochen."
+msgstr "%s%sPaspaude „Tinka“ ignoruosite, tačiau rizikuosite duomenimis.%sPaspaude „Atsisakyti“ sustabdysite programą."
 
 #: lclstrconsts.rspriorrecordhint
 msgctxt "lclstrconsts.rspriorrecordhint"
 msgid "Prior"
-msgstr "Vorher"
+msgstr "Ankstesnis"
 
 #: lclstrconsts.rspropertydoesnotexist
 msgid "Property %s does not exist"
-msgstr "Eigenschaft %s fehlt"
+msgstr "Savybė %s neegzistuoja"
 
 #: lclstrconsts.rsrasterimageendupdate
 msgid "Endupdate while no update in progress"
-msgstr "Endupdate wenn kein Update läuft"
+msgstr "„Endupdate“, tačiau niekas neatnaujinama"
 
 #: lclstrconsts.rsrasterimagesaveinupdate
 msgid "Cannot save image while update in progress"
-msgstr "Kann Bild während des Updates nicht sichern"
+msgstr "Neina įrašyti paveikslo, nes jis atnaujinamas"
 
 #: lclstrconsts.rsrasterimageupdateall
 msgid "Cannot begin update all when canvas only update in progress"
-msgstr "Kann nicht mit dem kompletten Aktualisieren beginnen wenn ein Canvas-Update durchgeführt wird"
+msgstr "Visko atnaujinti negalima kai atnaujinamas tik „Canvas“"
 
 #: lclstrconsts.rsrefreshrecordshint
 msgid "Refresh"
-msgstr "Auffrischen"
+msgstr "Atnaujinti"
 
 #: lclstrconsts.rsreplace
 msgid "Replace"
-msgstr "Ersetzen"
+msgstr "Pakeisti"
 
 #: lclstrconsts.rsreplaceall
 msgid "Replace all"
-msgstr "Alle ersetzen"
+msgstr "Pakeisti visus"
 
 #: lclstrconsts.rsresourcenotfound
 msgctxt "lclstrconsts.rsresourcenotfound"
 msgid "Resource %s not found"
-msgstr "Ressource %s nicht gefunden"
+msgstr "Resursas %s nerastas"
 
 #: lclstrconsts.rsscrollbarcolorcaption
 msgid "ScrollBar"
-msgstr "Scrollbalken"
+msgstr "Slinkies juosta"
 
 #: lclstrconsts.rsscrollbaroutofrange
 msgid "ScrollBar property out of range"
-msgstr "Scrollbar-Eigenschaft außerhalb des Bereichs"
+msgstr "Savybės „ScrollBar“ vertė peržengia ribas"
 
 #: lclstrconsts.rsselectcolortitle
 msgid "Select color"
-msgstr "Farbe auswählen"
+msgstr "Nurodykit spalvą"
 
 #: lclstrconsts.rsselectfonttitle
 msgid "Select a font"
-msgstr "Schriftart auswählen"
+msgstr "Nurodykit šriftą"
 
 #: lclstrconsts.rssize
 msgid "  size "
-msgstr "  Größe "
+msgstr "  dydis "
 
 #: lclstrconsts.rstext
 msgid "Text"
-msgstr "Text"
+msgstr "Tekstas"
 
 #: lclstrconsts.rsunabletoloaddefaultfont
 msgid "Unable to load default font"
-msgstr "Kann Default-Schriftart nicht laden"
+msgstr "Nepavyko įkelti numatytą šriftą"
 
 #: lclstrconsts.rsunknownerrorpleasereportthisbug
 msgid "Unknown Error, please report this bug"
-msgstr "Unbekannter Fehler, bitte melden Sie diesen Bug."
+msgstr "Nežinoma klaida, prašau praneškite kūrėjams apie šią klaidą."
 
 #: lclstrconsts.rsunknownpictureextension
 msgid "Unknown picture extension"
-msgstr "Unbekannte Bilddateiendung"
+msgstr "Nežinomas paveikslo plėtinys"
 
 #: lclstrconsts.rsunsupportedbitmapformat
 msgid "Unsupported bitmap format."
-msgstr "Nicht unterstütztes Bitmap-Format"
+msgstr "Nepalaikomas rastrinio paveikslo formatas."
 
 #: lclstrconsts.rsunsupportedclipboardformat
 msgid "Unsupported clipboard format: %s"
-msgstr "Nicht unterstütztes Clipboard-Format: %s"
+msgstr "Nepalaikomas iškarpinės formatas: %s"
 
 #: lclstrconsts.rswarningunreleaseddcsdump
 msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
-msgstr "WARNUNG: Es gibt %d nicht freigegebene DCs. Es folgt ein detaillierter Dump:"
+msgstr " Perspėjimas: liko %d neatlaisvinti „DC“, išsamiau:"
 
 #: lclstrconsts.rswarningunreleasedgdiobjectsdump
 msgid " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
-msgstr "WARNUNG: Es gibt %d nicht freigegebene GDI-Objekte. Es folgt ein detaillierter Dump:"
+msgstr " Perspėjimas: liko %d neatlaisvinti „GDIObject“, išsamiau:"
 
 #: lclstrconsts.rswarningunreleasedmessagesinqueue
 msgid " WARNING: There are %d messages left in the queue! I'll free them"
-msgstr "WARNUNG: Es sind %d Meldungen in der Queue übrig. Sie werden freigegeben"
+msgstr " Perspėjimas: eilėje dar yra %d pranešimų, jie bus pašalinti."
 
 #: lclstrconsts.rswarningunreleasedtimerinfos
 msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
-msgstr "WARNUNG: Es sind %d Timerinfo-Strukturen übrig, sie werden freigegeben"
+msgstr " Perspėjimas: dar liko %d „TimerInfo“ struktūrų, jos bus sunaikintos."
 
 #: lclstrconsts.rswarningunremovedpaintmessages
 msgid " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
-msgstr "WARNUNG: Es sind %s nicht entfernte LM_PAINT/LM_GtkPAINT-Meldungs-Links übrig."
+msgstr " Perspėjimas: liko %s nepašalintos nuorodos į LM_PAINT/LM_GtkPAINT pranešimus."
 
 #: lclstrconsts.rswholewordsonly
 msgid "Whole words only"
-msgstr "Nur ganze Worte"
+msgstr "Tik visų žodžių"
 
 #: lclstrconsts.rswin32error
 msgid "Error:"
-msgstr "Fehler:"
+msgstr "Klaida:"
 
 #: lclstrconsts.rswin32warning
 msgid "Warning:"
-msgstr "Warnung:"
+msgstr "Perspėjimas:"
 
 #: lclstrconsts.rswindowcolorcaption
 msgid "Window"
-msgstr "Fenster"
+msgstr "Langas"
 
 #: lclstrconsts.rswindowframecolorcaption
 msgid "Window Frame"
-msgstr "Fensterrahmen"
+msgstr "Lango rėmelis"
 
 #: lclstrconsts.rswindowtextcolorcaption
 msgid "Window Text"
-msgstr "Fenstertext"
+msgstr "Lango tekstas"
 
 #: lclstrconsts.scannotfocus
 msgid "Cannot focus a disabled or invisible window"
-msgstr "Kann abgeschaltetes oder unsichtbares Fenster nicht fokussieren"
+msgstr "Neįgalintą arba nematomą langą suaktyvinti negalima"
 
 #: lclstrconsts.sduplicatemenus
 msgid "Duplicate menus"
-msgstr "Doppelte Menüs"
+msgstr "Meniu dubliuojasi"
 
 #: lclstrconsts.sinvalidactioncreation
 msgid "Invalid action creation"
-msgstr "Ungültige Action-Erzeugung"
+msgstr "Klaidingas veiksmo kūrimas"
 
 #: lclstrconsts.sinvalidactionenumeration
 msgid "Invalid action enumeration"
-msgstr "Ungültige Action-Numerierung"
+msgstr "Klaidinga veiksmo enumeracija"
 
 #: lclstrconsts.sinvalidactionregistration
 msgid "Invalid action registration"
-msgstr "Ungültige Action-Registrierung"
+msgstr "Klaidingas veiksmo registravimas"
 
 #: lclstrconsts.sinvalidactionunregistration
 msgid "Invalid action unregistration"
-msgstr "Ungültige Action-Registierungsaufhebung"
+msgstr "Klaidingas veiksmo išregravimas"
 
 #: lclstrconsts.sinvalidcharset
 msgid "The char set in mask \"%s\" is not valid!"
-msgstr "Der Zeichensatz in der Maske \"%s\" ist ungültig!"
+msgstr "Klaidinga kaukės „%s“ koduotė!"
 
 #: lclstrconsts.sinvalidimagesize
 msgid "Invalid image size"
-msgstr "Ungültige Bildgröße"
+msgstr "Klaidingas paveikslo dydis"
 
 #: lclstrconsts.sinvalidindex
 msgid "Invalid ImageList Index"
-msgstr "Ungültiger Bildlistenindex"
+msgstr "Klaidingas„ImageList“ indeksas"
 
 #: lclstrconsts.smenuindexerror
 msgid "Menu index out of range"
-msgstr "Menüindex außerhalb des Bereichs"
+msgstr "Meniu indeksas peržengia ribas"
 
 #: lclstrconsts.smenuitemisnil
 msgid "MenuItem is nil"
-msgstr "Menüeintrag ist NIL"
+msgstr "„MenuItem“ reikšmė yra nil"
 
 #: lclstrconsts.smenunotfound
 msgid "Sub-menu is not in menu"
-msgstr "Untermenü ist nicht im Menü"
+msgstr "Pomeniu nėra įdėtas į menių"
 
 #: lclstrconsts.snomdiform
 msgid "No MDI form present."
-msgstr "Kein MDI-Formular vorhanden"
+msgstr "MDI formos nėra."
 
 #: lclstrconsts.snotimers
 msgid "No timers available"
-msgstr "Keine Timer verfügbar"
+msgstr "Nėra laikmačių"
 
 #: lclstrconsts.sparexpected
 msgid "Wrong token type: %s expected"
-msgstr "Falscher Token-Typ: %s erwartet"
+msgstr "Klaidingas leksemos tipas: tikėtasi %s"
 
 #: lclstrconsts.sparinvalidfloat
 msgid "Invalid floating point number: %s"
-msgstr "Ungültige Gleitkommazahl: %s"
+msgstr "Klaidingas slankaus kablelio skaičius: %s"
 
 #: lclstrconsts.sparinvalidinteger
 msgid "Invalid integer number: %s"
-msgstr "Ungültiger Integerzahl: %s"
+msgstr "Klaidingas sveikasis skaičius: %s"
 
 #: lclstrconsts.sparlocinfo
 msgid " (at %d,%d, stream offset %.8x)"
-msgstr " (bei %d,%d, Stream-Offset %.8x)"
+msgstr " (ties %d,%d, srauto poslinkis %.8x)"
 
 #: lclstrconsts.sparunterminatedbinvalue
 msgid "Unterminated byte value"
-msgstr "Nicht abgeschlossener Byte-Wert"
+msgstr "Neužbaigta bitų vertė"
 
 #: lclstrconsts.sparunterminatedstring
 msgid "Unterminated string"
-msgstr "Nicht abgeschlossene Zeichenkette "
+msgstr "Neužbaigta eilutė"
 
 #: lclstrconsts.sparwrongtokensymbol
 msgid "Wrong token symbol: %s expected but %s found"
-msgstr "Falscher Token: %s erwartet, %s gefunden"
+msgstr "Klaidingas leksemos simbolis: tikėtasi %s, tačiau rasta %s"
 
 #: lclstrconsts.sparwrongtokentype
 msgid "Wrong token type: %s expected but %s found"
-msgstr "Falscher Token-Typ: %s erwartet, %s gefunden"
+msgstr "Klaidingas leksemos tipas: tikėtasi %s, tačiau rasta %s"
 

@@ -2204,17 +2204,16 @@ LazarusResources.Add('TUExecFm','FORMDATA',[
   +#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0
   +#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#10'OnActivate'#7#12'FormActivate'#7'OnClo'
   +'se'#7#9'FormClose'#8'OnCreate'#7#10'FormCreate'#6'OnShow'#7#8'FormShow'#10
-  +'ParentFont'#8#10'LCLVersion'#6#6'0.9.27'#0#6'TLabel'#6'ILabel'#4'Left'#2#8#6
-  +'Height'#2#13#3'Top'#2#8#5'Width'#2','#7'Caption'#6#10'Waiting...'#11'Parent'
-  +'Color'#8#0#0#12'TProgressBar'#12'ProgressBar1'#4'Left'#2#8#6'Height'#2' '#3
-  +'Top'#2'@'#5'Width'#3#238#1#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#0#3
-  +'Max'#2'd'#6'Smooth'#9#8'TabOrder'#2#0#0#0#5'TMemo'#5'Memo1'#4'Left'#2#8#6'H'
-  +'eight'#3#220#0#3'Top'#2'h'#5'Width'#3#238#1#7'Anchors'#11#5'akTop'#6'akLeft'
-  +#7'akRight'#8'akBottom'#0#5'Color'#7#7'clBlack'#13'Lines.Strings'#1#6#0#0#8
-  +'TabOrder'#2#1#0#0#12'TProgressBar'#12'ProgressBar2'#4'Left'#2#8#6'Height'#2
-  +#20#3'Top'#2' '#5'Width'#3#238#1#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'
-  +#0#3'Max'#2'd'#6'Smooth'#9#8'TabOrder'#2#2#0#0#7'TButton'#7'Button1'#4'Left'
-  +#3#171#1#6'Height'#2#25#3'Top'#3'N'#1#5'Width'#2'K'#7'Anchors'#11#7'akRight'
-  +#8'akBottom'#0#7'Caption'#6#5'Close'#7'Enabled'#8#7'OnClick'#7#12'Button1Cli'
-  +'ck'#8'TabOrder'#2#3#0#0#0
+  +'LCLVersion'#6#6'0.9.27'#0#6'TLabel'#6'ILabel'#4'Left'#2#8#6'Height'#2#13#3
+  +'Top'#2#8#5'Width'#2','#7'Caption'#6#10'Waiting...'#11'ParentColor'#8#0#0#12
+  +'TProgressBar'#12'ProgressBar1'#4'Left'#2#8#6'Height'#2' '#3'Top'#2'@'#5'Wid'
+  +'th'#3#238#1#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#0#6'Smooth'#9#8'Tab'
+  +'Order'#2#0#0#0#5'TMemo'#5'Memo1'#4'Left'#2#8#6'Height'#3#220#0#3'Top'#2'h'#5
+  +'Width'#3#238#1#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#8'akBottom'#0#5
+  +'Color'#7#7'clBlack'#13'Lines.Strings'#1#6#0#0#8'TabOrder'#2#1#0#0#12'TProgr'
+  +'essBar'#12'ProgressBar2'#4'Left'#2#8#6'Height'#2#20#3'Top'#2' '#5'Width'#3
+  +#238#1#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#0#6'Smooth'#9#8'TabOrder'
+  +#2#2#0#0#7'TButton'#7'Button1'#4'Left'#3#171#1#6'Height'#2#25#3'Top'#3'N'#1#5
+  +'Width'#2'K'#7'Anchors'#11#7'akRight'#8'akBottom'#0#7'Caption'#6#5'Close'#7
+  +'Enabled'#8#7'OnClick'#7#12'Button1Click'#8'TabOrder'#2#3#0#0#0
 ]);

@@ -93,6 +93,9 @@ strGetDependencyFrom='Get dependency from';
 strPlWait2='Please wait...';
 strDepDLProblem='Problem while downloading the dep-file.';
 strHashError='Hash doesn''t match!'#13'The package has been modified.'#13'Please obtain a new copy';
+strInstallationMode='Installation mode:';
+strIModeInstruction='Select which parts of the application should be installed.';
+strMode='Mode';
 {ExecMode Form
 -----------------}
 strWantToDoQ='What do you want to do?';
@@ -185,6 +188,7 @@ strInstUpd='Install updates';
 strShowUpdater='Show';
 strQuitUpdater='Quit';
 strUpdInstalling='Installing updates...';
+strUpdConfError='Error while unpacking and configuring files.';
 implementation
 end.
 

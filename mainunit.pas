@@ -393,7 +393,10 @@ end;
   RadioButton1.Caption:=strIagree;
   RadioButton2.Caption:=strInagree;
   CheckBox1.Caption:=strDispLog;
-  
+  Label13.Caption:=strInstallationMode;
+  Label14.Caption:=strIModeInstruction;
+  ModeGroup.Caption:=strMode;
+
   NoteBook1.PageIndex:=0;
   NoteBook1.ShowTabs:=false;
   
@@ -452,7 +455,7 @@ if not IsRoot then begin
   if (pos('iobase',LowerCase(FindChildNode(xnode,'disallow').NodeValue))>0) then
     btnInstallAll.Enabled:=false;
     end;
-  Label13.Caption:=strSWarning;
+  Label13.Caption:=strSpkWarning;
   //
   ShowModal;
   end;
@@ -466,7 +469,7 @@ if not IsRoot then begin
   begin
   btnTest.Enabled:=false;
   btnHome.Enabled:=false;
-  Label13.Caption:=strSWarning;
+  Label13.Caption:=strSpkWarning;
   //
   ShowModal;
   end;
@@ -485,7 +488,7 @@ if not IsRoot then begin
   if (pos('iobase',LowerCase(FindChildNode(xnode,'disallow').NodeValue))<=0) then
     btnInstallAll.Enabled:=false;
     end;
-  Label13.Caption:=strSWarning;
+  Label13.Caption:=strSpkWarning;
   //
   ShowModal;
   end;

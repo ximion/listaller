@@ -12,8 +12,7 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** Executes software updates (GUI based)
 unit updexec;
 
@@ -172,8 +171,8 @@ Memo1.Lines.Add('Log:');
        end;
 
     except
-   ShowMessage('Error while extracting files!');
-   WriteLog('Error while unpacking and configuring files.');
+   ShowMessage(strExtractError);
+   WriteLog(strUpdConfError);
     z.Free;
     exit;
     end;
@@ -209,7 +208,7 @@ end;
   FileUtil.DeleteDirectory('/tmp/liupd/',false);
   Button1.Enabled:=true;
   WriteLog('Update finished!');
-  ILabel.Caption:='Sucess!';
+  ILabel.Caption:=strSuccess;
 end;
 end;
 

@@ -2129,7 +2129,6 @@ object UExecFm: TUExecFm
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  ParentFont = False
   LCLVersion = '0.9.27'
   object ILabel: TLabel
     Left = 8
@@ -2145,7 +2144,6 @@ object UExecFm: TUExecFm
     Top = 64
     Width = 494
     Anchors = [akTop, akLeft, akRight]
-    Max = 100
     Smooth = True
     TabOrder = 0
   end
@@ -2167,7 +2165,6 @@ object UExecFm: TUExecFm
     Top = 32
     Width = 494
     Anchors = [akTop, akLeft, akRight]
-    Max = 100
     Smooth = True
     TabOrder = 2
   end
