@@ -48,7 +48,6 @@ object frmEditor: TfrmEditor
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 18
-        BookMarkOptions.OnChange = nil
         Gutter.LeftOffset = 0
         Gutter.RightOffset = 0
         Gutter.ShowLineNumbers = True
@@ -396,7 +395,6 @@ object frmEditor: TfrmEditor
         )
         Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
         ScrollBars = ssAutoBoth
-        SelectedColor.OnChange = nil
       end
     end
   end
@@ -413,6 +411,7 @@ object frmEditor: TfrmEditor
     TabOrder = 2
     Visible = False
     BookMarkOptions.Xoffset = 22
+    BookMarkOptions.OnChange = nil
     Gutter.LeftOffset = 0
     Gutter.RightOffset = 0
     Gutter.ShowLineNumbers = True
@@ -741,6 +740,7 @@ object frmEditor: TfrmEditor
         ShortCut = 24642
       end>
     Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
+    SelectedColor.OnChange = nil
   end
   object mmMain: TMainMenu
     left = 744

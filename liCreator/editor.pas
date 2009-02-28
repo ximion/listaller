@@ -48,14 +48,19 @@ type
     FFileProfiles: TList;
     FParentNotebook: TNotebook;
   private
-    function GetNewIndex: Integer;
+    function GetNewProfileIndex: Integer;
+    function GetCount: Integer;
   public
     constructor Create(AOwner: TObject; ParentNotebook: TNotebook);
     destructor Destroy; override;
     function AddProfile: TFileProfile;
     procedure RemoveProfile(APage: TPage); overload;
     procedure RemoveProfile(ProfileIndex: Integer); overload;
-    function Profiles(ProfileIndex: Integer): TFileProfile;
+    function Profiles_By_Page(APage: TPage): TFileProfile;
+    function Profiles_By_ProfileIndex(ProfileIndex: Integer): TFileProfile;
+    function Profiles_By_Index(Index: Integer): TFileProfile;
+  published
+    property Count: Integer read GetCount;
   end;
 
   { TfrmEditor }
@@ -192,7 +197,7 @@ begin
   inherited Destroy;
 end;
 
-function TFileProfiles.GetNewIndex: Integer;
+function TFileProfiles.GetNewProfileIndex: Integer;
 var
   k,ind: Integer;
   used: Boolean;
@@ -208,11 +213,16 @@ begin
   Result := ind;
 end;
 
+function TFileProfiles.GetCount : Integer;
+begin
+  Result := FFileProfiles.Count;
+end;
+
 function TFileProfiles.AddProfile: TFileProfile;
 var
   temp: Integer;
 begin
-  temp := GetNewIndex;
+  temp := GetNewProfileIndex;
   FFileProfiles.Add(TFileProfile.Create(Self, FParentNotebook, temp));
   TFileProfile(FFileProfiles[temp]).ProfileIndex:=temp;
   Result := TFileProfile(FFileProfiles[temp]);
@@ -248,10 +258,28 @@ begin
   end;
 end;
 
-function TFileProfiles.Profiles(ProfileIndex: Integer): TFileProfile;
+// ---------- Returns FileProfile by active Notebook-Page  -------------
+function TFileProfiles.Profiles_By_Page(APage: TPage): TFileProfile;
 var
   k: Integer;
 begin
+  Result := nil;
+  for k:=FFileProfiles.Count-1 downto 0 do
+  begin
+    if TFileProfile(FFileProfiles[k]).Page =APage then
+    begin
+      Result := TFileProfile(FFileProfiles[k]);
+      exit;
+    end;
+  end;
+end;
+
+// ---------- Returns FileProfile by ProfileIndex "!-Files #X" ----------
+function TFileProfiles.Profiles_By_ProfileIndex(ProfileIndex: Integer): TFileProfile;
+var
+  k: Integer;
+begin
+  Result := nil;
   for k:=FFileProfiles.Count-1 downto 0 do
   begin
     if TFileProfile(FFileProfiles[k]).ProfileIndex=ProfileIndex then
@@ -260,7 +288,14 @@ begin
       exit;
     end;
   end;
+end;
 
+// ---------- Returns FileProfile by Index in TList(FileProfiles) ----------
+function TFileProfiles.Profiles_By_Index(Index: Integer): TFileProfile;
+begin
+  Result := nil;
+  if not (Index>FFileProfiles.Count-1) then
+    Result := TFileProfile(FFileProfiles[Index]);
 end;
 
 { TfrmEditor }
@@ -382,10 +417,10 @@ procedure TfrmEditor.mnuEditAddFilePathClick(Sender: TObject);
 begin
   if OpenDialog2.Execute then
   begin
-    if ScriptPage.Visible then
-      MainScriptEdit.Lines.Add(OpenDialog2.FileName);
-    // if Page2.Visible then
-    //   FilesEdit.Lines.Add(OpenDialog2.FileName);
+    if (ScriptPage.Visible) and (IPSNotebook.ActivePageComponent=ScriptPage) then
+      MainScriptEdit.Lines.Add(OpenDialog2.FileName)
+    else if FileProfiles.Profiles_By_Page(IPSNotebook.ActivePageComponent)<>nil then
+       FileProfiles.Profiles_By_Page(IPSNotebook.ActivePageComponent).SynEdit.Lines.Add(OpenDialog2.FileName);
   end;
 end;
 
@@ -412,7 +447,7 @@ begin
 end;
 
 procedure TfrmEditor.SaveIPSFile(IFn: String);
-var ips,ipsx: TStringList;i: Integer;
+var ips,ipsx: TStringList;i,k: Integer;
 begin
   ips:=TStringList.Create;
   ipsx:=TStringList.Create;
@@ -425,7 +460,7 @@ begin
     ips.Add(MainScriptEdit.Lines[i]);
 
   //Preprocess files
-  if Assigned(FileInfo) then
+  (*if Assigned(FileInfo) then
   begin
     ips.Add('!-Files #0');           // id=0 -> Standard-Installation
     //NEEDS IMPROVEMENTS!!
@@ -436,7 +471,22 @@ begin
       ips.add(FilesEdit.Lines[i+1]);
       ips.Add(MD5.MDPrint(MD5.MD5File(FilesEdit.Lines[i+1],1024)));
     end;
+  end;*)
+
+  //Preprocess files
+  for k:=0 to FileProfiles.Count-1 do
+  begin
+    ips.Add('!-Files #'+IntToStr(FileProfiles.Profiles_By_Index(k).ProfileIndex));
+    //NEEDS IMPROVEMENTS!!
+    for i:=0 to FileProfiles.Profiles_By_Index(k).SynEdit.Lines.Count-1 do
+      if i mod 2 = 0 then
+      begin
+        ips.Add('>'+FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i]);
+        ips.Add(FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i+1]);
+        ips.Add(MD5.MDPrint(MD5.MD5File(FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i+1],1024)));
+      end;
   end;
+
   for i:=0 to ipsx.Count-1 do
     ips.Add(ipsx[i]);
   ipsx.free;

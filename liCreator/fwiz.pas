@@ -23,7 +23,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, EditBtn,
-  StdCtrls, Buttons, Fileutil;
+  StdCtrls, Buttons, Fileutil, SynEdit;
 
 type
 
@@ -73,13 +73,20 @@ var
   tmp: TStringList;
   i: Integer;
   w: String;
+  TargetEdit: TSynEdit;
 begin
+  if FileProfiles.Profiles_By_Page(frmEditor.IPSNotebook.ActivePageComponent)= nil then
+  begin
+    ShowMessage('No File-Profile Page active. Select a File-Profile-Page!');
+    exit;
+  end else
+    TargetEdit := FileProfiles.Profiles_By_Page(frmEditor.IPSNotebook.ActivePageComponent).SynEdit;
   btnAddFiles.Enabled:=false;
   if not rbAddSingleFile.Checked then
   begin
     tmp:=TStringList.Create;
     tmp.Assign(FileUtil.FindAllFiles(edtFolder.Directory,'*',true));
-    frmEditor.FilesEdit.Lines.BeginUpdate;
+    TargetEdit.Lines.BeginUpdate;
     for i:=0 to tmp.Count-1 do
     begin
       if FileExists(tmp[i]) then
@@ -87,18 +94,18 @@ begin
         w:=StringReplace(tmp[i],edtFolder.Directory,'',[rfReplaceAll]);
         w:=StringReplace(w,ExtractFileName(tmp[i]),'',[rfReplaceAll]);
         w:=ExcludeTrailingBackslash(w);
-        frmEditor.FilesEdit.Lines.Add(edtFolderCopyToPath.Text+w);  // istall path
-        frmEditor.FilesEdit.Lines.Add(tmp[i]);                      // file
+        TargetEdit.Lines.Add(edtFolderCopyToPath.Text+w);  // istall path
+        TargetEdit.Lines.Add(tmp[i]);                      // file
       end;
     end;
 
     tmp.Free;
-    frmEditor.FilesEdit.Lines.EndUpdate;
+    TargetEdit.Lines.EndUpdate;
   end
   else
   begin
-    frmEditor.FilesEdit.Lines.Add(edtFileCopyToPath.Text);       // istall path
-    frmEditor.FilesEdit.Lines.Add(edtFIle.FileName);             // file
+    TargetEdit.Lines.Add(edtFileCopyToPath.Text);       // istall path
+    TargetEdit.Lines.Add(edtFIle.FileName);             // file
   end;
   btnAddFiles.Enabled:=true;
 end;
