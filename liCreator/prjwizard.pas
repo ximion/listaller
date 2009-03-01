@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Buttons, ExtCtrls, ComCtrls, EditBtn, Grids, popupnotifier, FileCtrl, FileUtil,
-  MD5, Menus, XMLRead, XMLWrite, DOM, editor, LCLType, GTK2, utilities;
+  MD5, Menus, XMLRead, XMLWrite, DOM, editor, LCLType, GTK2, utilities, SynEdit;
 
 type
 
@@ -189,6 +189,8 @@ type
     procedure DeleteProfile(iIndex: Integer);
     procedure AddProfile(strName: String);
     function GetProfile(iIndex: integer): TList;
+    function GetProfileCount: Integer;
+    function GetProfileName(iIndex: integer): String;
     { private declarations }
   public
     { public declarations }
@@ -358,11 +360,14 @@ begin
 
   if aType=lptLinstall then                // not used in dlink-packages
   begin
-    hn:=xdoc.CreateElement('profile1');
-    TDOMElement(hn).SetAttribute('id', '0');
-    cnt:=xdoc.CreateTextNode('Standard');
-    hn.Appendchild(cnt);
-    mn.AppendChild(hn);
+    for i:=0 to GetProfileCount-1 do
+    begin
+      hn:=xdoc.CreateElement('profile' + IntToStr(i+1));
+      TDOMElement(hn).SetAttribute('id', IntToStr(i));
+      cnt:=xdoc.CreateTextNode(GetProfileName(i));
+      hn.Appendchild(cnt);
+      mn.AppendChild(hn);
+    end;
   end;
 
   //Dependencies
@@ -393,6 +398,7 @@ var
   i,j: Integer;s: String;
   aTreeNode: TTreeNode;
   Profile: TList;
+  TargetEdit: TSynEdit;
 //XML
   xdoc: TXMLDocument;
 begin
@@ -404,10 +410,10 @@ begin
     with frmEditor do
     begin
       //Files
-      if Assigned(FileInfo) then
+      (*if Assigned(FileInfo) then
         FileInfo.Clear
       else
-        FileInfo:=TStringList.Create;
+        FileInfo:=TStringList.Create;*)
       (*for i:=0 to lvPackageFiles.Items.Count-1 do
       begin
         FilesEdit.Lines.Add(lvPackageFiles.Items[i].SubItems[1]);  // install-path
@@ -418,16 +424,20 @@ begin
 
         FileInfo.Add(lvPackageFiles.Items[i].SubItems[3]);
       end; *)
-        Profile := GetProfile(0);
+      for j:=0 to GetProfileCount-1 do
+      begin
+        Profile := GetProfile(j);
+        TargetEdit := editor.FileProfiles.AddProfile(j).SynEdit;
         for i:=0 to Profile.Count-1 do
         begin
-          FilesEdit.Lines.Add(PPackageFile(Profile[i])^.CopyTo);
+          TargetEdit.Lines.Add('>' + PPackageFile(Profile[i])^.CopyTo);
           if PPackageFile(Profile[i])^.Modifier<>'' then
-            FilesEdit.Lines.Add(PPackageFile(Profile[i])^.FullName +' '+PPackageFile(Profile[i])^.Modifier)
+            TargetEdit.Lines.Add(PPackageFile(Profile[i])^.FullName +' '+PPackageFile(Profile[i])^.Modifier)
           else
-            FilesEdit.Lines.Add(PPackageFile(Profile[i])^.FullName);
-          FileInfo.Add(PPackageFile(Profile[i])^.Checksum);
+            TargetEdit.Lines.Add(PPackageFile(Profile[i])^.FullName);
+          //FileInfo.Add(PPackageFile(Profile[i])^.Checksum);
         end;
+      end;
 
       //Script
       xdoc := CreateScript(lptLinstall);
@@ -490,6 +500,7 @@ begin
        BitBtn3.Caption:='Generate script file';
        with Memo1.Lines do
        begin
+         Clear;
          Add('Information about the new setup:');
          Add('#');
          Add('Application:');
@@ -534,11 +545,19 @@ begin
            end;
          end;
          Add('Files:');
-         Add('------');
-         for i:=0 to lvPackageFiles.Items.Count-1 do
-           Add('      '+lvPackageFiles.Items[i].Caption+' || '+lvPackageFiles.Items[i].SubItems[0]+' || '+lvPackageFiles.Items[i].SubItems[1]+
-               ' || '+lvPackageFiles.Items[i].SubItems[2]+' || '+lvPackageFiles.Items[i].SubItems[3]);
-
+         for j:=0 to GetProfileCount-1 do
+         begin
+           Add('--- #' + IntToStr(j) + ' '+ GetProfileName(j));
+           Profile := GetProfile(j);
+           for i:=0 to Profile.Count-1 do
+           begin
+             Add('      ' + PPackageFile(Profile[i])^.FileName + '||' +
+                 PPackageFile(Profile[i])^.FullName + '||' +
+                 PPackageFile(Profile[i])^.CopyTo + '||' +
+                 PPackageFile(Profile[i])^.Modifier + '||' +
+                 PPackageFile(Profile[i])^.Checksum);
+          end;
+         end;
          SelectFirst;
        end;
      end;
@@ -660,6 +679,19 @@ begin
   ClearProfile(Profile);
   Profile.Free;
   lbProfiles.Items.Delete(iIndex);
+end;
+
+function TfrmProjectWizard.GetProfileName(iIndex: integer): String;
+begin
+  if iIndex<lbProfiles.Count then
+    Result := lbProfiles.Items[iIndex]
+  else
+    Result := '';
+end;
+
+function TfrmProjectWizard.GetProfileCount: Integer;
+begin
+  Result := lbProfiles.Count;
 end;
 
 procedure TfrmProjectWizard.AddProfile(strName: String);

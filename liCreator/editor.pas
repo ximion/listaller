@@ -53,12 +53,15 @@ type
   public
     constructor Create(AOwner: TObject; ParentNotebook: TNotebook);
     destructor Destroy; override;
-    function AddProfile: TFileProfile;
+    function AddProfile: TFileProfile; overload;
+    function AddProfile(ProfileIndex: Integer): TFileProfile; overload;
     procedure RemoveProfile(APage: TPage); overload;
     procedure RemoveProfile(ProfileIndex: Integer); overload;
+    procedure Remove(Index: Integer);
     function Profiles_By_Page(APage: TPage): TFileProfile;
     function Profiles_By_ProfileIndex(ProfileIndex: Integer): TFileProfile;
     function Profiles_By_Index(Index: Integer): TFileProfile;
+    procedure Clear;
   published
     property Count: Integer read GetCount;
   end;
@@ -66,7 +69,6 @@ type
   { TfrmEditor }
 
   TfrmEditor = class(TForm)
-    FilesEdit: TSynEdit;
     MainScriptEdit: TSynEdit;
     MenuItem1: TMenuItem;
     mnuEditRemoveFileProfile: TMenuItem;
@@ -134,8 +136,6 @@ type
     procedure ReadOutput;
   public
     { public declarations }
-  //** Information about files that should be installed [deprecated]
-    FileInfo: TStringList;
   end; 
 
 const
@@ -165,8 +165,14 @@ begin
   FSynEdit := TSynEdit.Create(FPage);
   FSynEdit.Parent := FPage;
   FSynEdit.Align := alClient;
-  FSynEdit.Gutter.Assign(frmEditor.FilesEdit.Gutter);
-  //FSynEdit.Highlighter.Assign(frmEditor.FilesEdit.Highlighter);
+  FSynEdit.Gutter.CodeFoldingWidth:=10;
+  FSynEdit.Gutter.ShowCodeFolding:=True;
+  FSynEdit.Gutter.ShowLineNumbers:=True;
+  FSynEdit.Gutter.LeftOffset:=0;
+  FSynEdit.Gutter.RightOffset:=0;
+  FSynEdit.Font.Size := 10;
+   //Assign(frmEditor.FilesEdit.Gutter);
+  FSynEdit.Highlighter := frmEditor.SynAnySyn1;
 end;
 
 destructor TFileProfile.Destroy();
@@ -220,12 +226,31 @@ end;
 
 function TFileProfiles.AddProfile: TFileProfile;
 var
-  temp: Integer;
+  temp, iIndex: Integer;
 begin
   temp := GetNewProfileIndex;
-  FFileProfiles.Add(TFileProfile.Create(Self, FParentNotebook, temp));
-  TFileProfile(FFileProfiles[temp]).ProfileIndex:=temp;
-  Result := TFileProfile(FFileProfiles[temp]);
+  iIndex := FFileProfiles.Add(TFileProfile.Create(Self, FParentNotebook, temp));
+  TFileProfile(FFileProfiles[iIndex]).ProfileIndex:=temp;
+  Result := TFileProfile(FFileProfiles[iIndex]);
+end;
+
+function TFileProfiles.AddProfile(ProfileIndex: Integer): TFileProfile;
+var
+  iIndex: Integer;
+begin
+  iIndex := FFileProfiles.Add(TFileProfile.Create(Self, FParentNotebook, ProfileIndex));
+  TFileProfile(FFileProfiles[iIndex]).ProfileIndex:=ProfileIndex;
+  Result := TFileProfile(FFileProfiles[iIndex]);
+end;
+
+procedure TFileProfiles.Clear;
+var
+  i: Integer;
+begin
+  for i:=FFileProfiles.Count-1 downto 0 do
+  begin
+    Remove(i);
+  end;
 end;
 
 procedure TFileProfiles.RemoveProfile(APage: TPage);
@@ -236,8 +261,7 @@ begin
   begin
     if TFileProfile(FFileProfiles[k]).Page =APage then
     begin
-      TFileProfile(FFileProfiles[k]).Free;
-      FFileProfiles.Delete(k);
+      Remove(k);
       break;
     end;
   end;
@@ -251,11 +275,16 @@ begin
   begin
     if TFileProfile(FFileProfiles[k]).ProfileIndex=ProfileIndex then
     begin
-      TFileProfile(FFileProfiles[k]).Free;
-      FFileProfiles.Delete(k);
+      Remove(k);
       break;
     end;
   end;
+end;
+
+procedure TFileProfiles.Remove(Index: Integer);
+begin
+  TFileProfile(FFileProfiles[Index]).Free;
+  FFileProfiles.Delete(Index);
 end;
 
 // ---------- Returns FileProfile by active Notebook-Page  -------------
@@ -303,7 +332,6 @@ end;
 procedure TfrmEditor.FormCreate(Sender: TObject);
 begin
   IPSNotebook.PageIndex:=0;
-  if Assigned(FileInfo) then FileInfo.Free;
   FileProfiles := TFileProfiles.Create(Self, IPSNotebook);
 end;
 
@@ -460,20 +488,6 @@ begin
     ips.Add(MainScriptEdit.Lines[i]);
 
   //Preprocess files
-  (*if Assigned(FileInfo) then
-  begin
-    ips.Add('!-Files #0');           // id=0 -> Standard-Installation
-    //NEEDS IMPROVEMENTS!!
-    for i:=0 to FilesEdit.Lines.Count-1 do
-    if i mod 2 = 0 then
-    begin
-      ips.Add('>'+FilesEdit.Lines[i]);
-      ips.add(FilesEdit.Lines[i+1]);
-      ips.Add(MD5.MDPrint(MD5.MD5File(FilesEdit.Lines[i+1],1024)));
-    end;
-  end;*)
-
-  //Preprocess files
   for k:=0 to FileProfiles.Count-1 do
   begin
     ips.Add('!-Files #'+IntToStr(FileProfiles.Profiles_By_Index(k).ProfileIndex));
@@ -481,7 +495,7 @@ begin
     for i:=0 to FileProfiles.Profiles_By_Index(k).SynEdit.Lines.Count-1 do
       if i mod 2 = 0 then
       begin
-        ips.Add('>'+FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i]);
+        ips.Add(FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i]);
         ips.Add(FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i+1]);
         ips.Add(MD5.MDPrint(MD5.MD5File(FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i+1],1024)));
       end;
@@ -517,7 +531,7 @@ procedure TfrmEditor.mnuFileNewBlankClick(Sender: TObject);
 begin
   FName:='';
   MainScriptEdit.Lines.Clear;
-  FilesEdit.Lines.Clear;
+  FileProfiles.Clear; //FilesEdit.Lines.Clear;
 end;
 
 procedure TfrmEditor.ReadOutput;
@@ -628,21 +642,43 @@ end;
 
 procedure TfrmEditor.mnuFileLoadIPSClick(Sender: TObject);
 
-  function BeginsFilesPart(str: String):Boolean;
+  function BeginsFilesPart(str: String;var iProfileIndex:Integer):Boolean;
+  var
+    k: Integer;
   begin
     Result := False;
     if (Length(str)>=7) then
     begin
-     if (Copy(str,1,7)='!-Files') then
+     if LowerCase(Copy(str,1,7))='!-files' then
      begin
        Result := True;
+       try
+         k:=Pos('#',str);
+         iProfileIndex := StrToInt(Copy(str,k+1,Length(str)-k));
+       except
+         iProfileIndex := -1;
+       end;
      end;
     end;
   end;
 
+  function IsInstallationPath(str: String):Boolean;
+  begin
+    Result := False;
+    if length(str)>0 then Result := str[1]='>';
+  end;
+
+  function IsFilePath(str: String):Boolean;
+  begin
+    Result := False;
+    if length(str)>0 then Result := str[1]='/';
+  end;
+
 var
-  ips: TStringList;i,j: integer;
+  ips: TStringList;
+  i,j,iProfileIndex: integer;
   AFileEdit: TSynEdit;
+  strInstallPath: String;
 begin
   if OpenDialog1.Execute then
   if FileExists(OpenDialog1.FileName) then
@@ -650,21 +686,33 @@ begin
     ips:=TStringList.Create;
     ips.LoadFromFile(OpenDialog1.FileName);
     MainScriptEdit.Lines.Clear;
-    FilesEdit.Lines.Clear;
+    FileProfiles.Clear;
     for i:=1 to ips.Count-1 do
     begin
-      if BeginsFilesPart(ips[i]) then break
+      if BeginsFilesPart(ips[i],iProfileIndex) then break
       else MainScriptEdit.Lines.Add(ips[i]);
     end;
-    AFileEdit := FileProfiles.AddProfile.SynEdit;
-    if i<>ips.Count-1 then FileInfo:=TStringList.Create;
-    for j:=i+1 to ips.Count-1 do            // change counting method
-      if ((j-(i+1)) mod 3 = 0) then         // counting method needs imrovement !!!
+
+    j:=i;
+    AFileEdit := nil;
+    while (j<=ips.count-2) do
+    begin
+      if BeginsFilesPart(ips[j],iProfileIndex) then
       begin
-        AFileEdit.Lines.Add(ips[j]);
-        AFileEdit.Lines.Add(ips[j+1]);
-        FileInfo.Add(ips[j+2]);
+        AFileEdit := FileProfiles.AddProfile(iProfileIndex).SynEdit;
+      end else if IsInstallationPath(ips[j]) then
+      begin
+        strInstallPath := ips[j];
+      end else if IsFilePath(ips[j]) then
+      begin
+       if not (AFileEdit=nil) then
+       begin
+         AFileEdit.Lines.Add(strInstallPath);
+         AFileEdit.Lines.Add(ips[j]);
+        end;
       end;
+      inc(j);
+    end;
 
     FName:=OpenDialog1.FileName;
     Caption:='Listaller package creator - "'+ExtractFileName(FName)+'"';

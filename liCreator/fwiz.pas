@@ -94,7 +94,7 @@ begin
         w:=StringReplace(tmp[i],edtFolder.Directory,'',[rfReplaceAll]);
         w:=StringReplace(w,ExtractFileName(tmp[i]),'',[rfReplaceAll]);
         w:=ExcludeTrailingBackslash(w);
-        TargetEdit.Lines.Add(edtFolderCopyToPath.Text+w);  // istall path
+        TargetEdit.Lines.Add('>' + edtFolderCopyToPath.Text+w);  // istall path
         TargetEdit.Lines.Add(tmp[i]);                      // file
       end;
     end;
@@ -104,7 +104,7 @@ begin
   end
   else
   begin
-    TargetEdit.Lines.Add(edtFileCopyToPath.Text);       // istall path
+    TargetEdit.Lines.Add('>' + edtFileCopyToPath.Text);       // istall path
     TargetEdit.Lines.Add(edtFIle.FileName);             // file
   end;
   btnAddFiles.Enabled:=true;

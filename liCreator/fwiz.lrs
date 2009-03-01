@@ -1,5 +1,3 @@
-{ Das ist eine automatisch erzeugte Lazarus-Ressourcendatei }
-
 LazarusResources.Add('TfrmFileWizard','FORMDATA',[
   'TPF0'#14'TfrmFileWizard'#13'frmFileWizard'#4'Left'#3'W'#2#6'Height'#3#137#1#3
   +'Top'#3'Z'#1#5'Width'#3#240#1#13'ActiveControl'#7#21'rbAddFilesFromFolders'
