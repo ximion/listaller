@@ -1,16 +1,14 @@
 <?xml version="1.0"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="7"/>
+    <PathDelim Value="/"/>
+    <Version Value="6"/>
     <General>
-      <Flags>
-        <LRSInOutputDirectory Value="False"/>
-      </Flags>
       <MainUnit Value="0"/>
+      <IconPath Value="./"/>
       <TargetFileExt Value=""/>
       <Title Value="Installer"/>
       <UseAppBundle Value="False"/>
-      <Icon Value="0"/>
       <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <i18n>
@@ -64,8 +62,9 @@
         <ComponentName Value="IWizFrm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="mainunit.lrs"/>
         <UnitName Value="mainunit"/>
-        <CursorPos X="51" Y="91"/>
+        <CursorPos X="12" Y="89"/>
         <TopLine Value="71"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
@@ -387,6 +386,7 @@
         <ComponentName Value="DGForm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="dgunit.lrs"/>
         <UnitName Value="dgunit"/>
         <CursorPos X="23" Y="285"/>
         <TopLine Value="264"/>

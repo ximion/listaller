@@ -1,17 +1,15 @@
 <?xml version="1.0"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="7"/>
+    <PathDelim Value="/"/>
+    <Version Value="6"/>
     <General>
-      <Flags>
-        <LRSInOutputDirectory Value="False"/>
-      </Flags>
       <MainUnit Value="0"/>
+      <IconPath Value="./"/>
       <TargetFileExt Value=""/>
       <Title Value="Listaller Manager"/>
       <UseAppBundle Value="False"/>
-      <Icon Value="0"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="6"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
@@ -60,6 +58,7 @@
         <ComponentName Value="mnFrm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="manager.lrs"/>
         <UnitName Value="manager"/>
         <CursorPos X="3" Y="598"/>
         <TopLine Value="574"/>
@@ -262,9 +261,10 @@
         <ComponentName Value="FmConfig"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="settings.lrs"/>
         <UnitName Value="settings"/>
         <CursorPos X="61" Y="251"/>
-        <TopLine Value="230"/>
+        <TopLine Value="203"/>
         <EditorIndex Value="5"/>
         <UsageCount Value="133"/>
         <Loaded Value="True"/>
@@ -294,6 +294,7 @@
         <ComponentName Value="RMForm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="uninstall.lrs"/>
         <UnitName Value="uninstall"/>
         <CursorPos X="46" Y="245"/>
         <TopLine Value="185"/>
@@ -375,6 +376,7 @@
         <ComponentName Value="ConvDisp"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="pkgconvertdisp.lrs"/>
         <UnitName Value="pkgconvertdisp"/>
         <CursorPos X="8" Y="103"/>
         <TopLine Value="67"/>
@@ -385,9 +387,10 @@
         <ComponentName Value="SCForm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="swcatalog.lrs"/>
         <UnitName Value="swcatalog"/>
         <CursorPos X="5" Y="696"/>
-        <TopLine Value="683"/>
+        <TopLine Value="656"/>
         <EditorIndex Value="6"/>
         <UsageCount Value="84"/>
         <Loaded Value="True"/>
@@ -526,7 +529,7 @@
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
         <CursorPos X="72" Y="15"/>
-        <TopLine Value="185"/>
+        <TopLine Value="161"/>
         <EditorIndex Value="8"/>
         <UsageCount Value="15"/>
         <Loaded Value="True"/>
@@ -549,6 +552,7 @@
         <ComponentName Value="FmAbout"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="aboutbox.lrs"/>
         <UnitName Value="aboutbox"/>
         <CursorPos X="9" Y="50"/>
         <TopLine Value="9"/>
