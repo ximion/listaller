@@ -170,10 +170,10 @@ d:=TIniFile.Create(fname);
         else
         DescLabel.Caption:=d.ReadString('Desktop Entry','Comment','');
 
-        MnLabel.Caption:=strAuthor+': '+d.ReadString('Desktop Entry','Maintainer','<error>');
+        MnLabel.Caption:=strAuthor+': '+d.ReadString('Desktop Entry','X-Publisher','<error>');
         if MnLabel.Caption=strAuthor+': '+'<error>' then
         MnLabel.Visible:=false;
-        VLabel.Caption:=strVersion+': '+d.ReadString('Desktop Entry','AppVersion','<error>');
+        VLabel.Caption:=strVersion+': '+d.ReadString('Desktop Entry','X-AppVersion','<error>');
         if VLabel.Caption=strVersion+': '+'<error>' then
         VLabel.Visible:=false;
 

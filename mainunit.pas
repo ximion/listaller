@@ -1322,9 +1322,9 @@ FileCopy(DeleteModifiers(lp+PkgName+h),dest+'/'+ExtractFileName(DeleteModifiers(
 if(pos('.desktop',LowerCase(ExtractFileName(h)))>0) then
 begin
 dsk:=TIniFile.Create(dest+'/'+ExtractFileName(h));
-dsk.WriteString('Desktop Entry','AppVersion',IAppVersion);
-dsk.WriteString('Desktop Entry','ExternalInst','true');
-dsk.WriteString('Desktop Entry','Maintainer',IAuthor);
+dsk.WriteString('Desktop Entry','X-AppVersion',IAppVersion);
+dsk.WriteString('Desktop Entry','X-ExternalInst','true');
+dsk.WriteString('Desktop Entry','X-Publisher',IAuthor);
 if dsk.ValueExists('Desktop Entry','Icon') then
 dsk.WriteString('Desktop Entry','Icon',SyblToPath(dsk.ReadString('Desktop Entry','Icon','*')));
 if dsk.ValueExists('Desktop Entry','Exec') then

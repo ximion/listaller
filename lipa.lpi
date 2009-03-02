@@ -36,8 +36,8 @@
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
-        <CursorPos X="3" Y="54"/>
-        <TopLine Value="31"/>
+        <CursorPos X="75" Y="169"/>
+        <TopLine Value="151"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="40"/>
         <Loaded Value="True"/>
@@ -86,7 +86,7 @@
         <Filename Value="utilities.pas"/>
         <UnitName Value="utilities"/>
         <CursorPos X="43" Y="206"/>
-        <TopLine Value="183"/>
+        <TopLine Value="15"/>
         <EditorIndex Value="3"/>
         <UsageCount Value="15"/>
         <Loaded Value="True"/>

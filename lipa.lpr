@@ -63,6 +63,7 @@ begin
   //
   ErrorMsg:=CheckOptions('b','build');
   ErrorMsg:=CheckOptions('u','gen-update');
+  ErrorMsg:=CheckOptions('v','version');
  { if ErrorMsg<>'' then begin
     ShowException(Exception.Create(ErrorMsg));
     Halt;
@@ -80,6 +81,11 @@ begin
   
   if HasOption('?','help') then begin
     WriteHelp;
+    Halt(0);
+  end;
+
+  if HasOption('v','version') then begin
+    writeLn('Version: '+LiVersion);
     Halt(0);
   end;
 
@@ -160,7 +166,8 @@ writeln('Usage: ',ExeName,' [options] file [...]');
 writeLn('Listaller main tool to handle ipk-packages');
 writeLn('Usage:');
 writeln('-?, --help                                 Show this help');
-writeLn('-b, --build [IPS-File] [Output-IPK]       Build ipk-package');
+writeln('-v, --version                              Show Listaller version');
+writeLn('-b, --build [IPS-File] [Output-IPK]        Build ipk-package');
 writeLn('-u, --gen-update [IPS-File] [Repo-Path]    Create/Update update-repository');
 writeLn('-b, --build [IPS-File]                     Create DEB and RPM file from IPS');
 if FileExists(ExtractFilePath(ExeName)+'unibuild') then

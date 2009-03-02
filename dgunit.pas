@@ -219,8 +219,8 @@ if pos(';',IDesktopFiles)>0 then
 ar:=TInifile.Create('/usr/share/applications/'+copy(IDesktopFiles,0,pos(';',IDesktopFiles)-1))
 else ar:=TInifile.Create('/usr/share/applications/'+IDesktopFiles);
 ShowMessage(copy(IDesktopFiles,0,pos(';',IDesktopFiles)-1)+' # '+IDesktopFiles);
-ar.WriteString('Desktop Entry','AppVersion',IAppVersion);
-ar.WriteString('Desktop Entry','Maintainer',IAuthor);
+ar.WriteString('Desktop Entry','X-AppVersion',IAppVersion);
+ar.WriteString('Desktop Entry','X-Publisher',IAuthor);
 if pos(';',IDesktopFiles)>0 then
 IDesktopFiles:=copy(IDesktopFiles,pos(';',IDesktopFiles)+1,length(IDesktopFiles))
 else IDesktopFiles:='';

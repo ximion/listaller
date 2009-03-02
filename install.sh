@@ -25,6 +25,7 @@ strip --strip-all "./bin/listallmgr" "./bin/listallgo" "./bin/lipa" "./bin/liupd
 mkdir -p $DESTDIR/usr/bin
 mkdir -p $DESTDIR/usr/share/pixmaps
 mkdir -p $DESTDIR/usr/share/listaller
+mkdir -p $DESTDIR/usr/share/listaller/mime
 mkdir -p $DESTDIR/usr/share/listaller/graphics
 mkdir -p $DESTDIR/usr/share/listaller/graphics/categories
 #mkdir -p $DESTDIR/usr/share/listaller/lang
@@ -68,8 +69,8 @@ mkdir -p $DESTDIR/etc/lipa/app-reg
 cp ./additional/blacklist $DESTDIR/etc/lipa/
 
 cp "./additional/applications/listaller-manager.desktop" $DESTDIR/usr/share/applications
-cp ./additional/mime/packages/x-ipk.xml $DESTDIR/usr/share/mime/packages
-cp ./additional/mime/text/x-ips.xml $DESTDIR/usr/share/mime/text
+cp ./additional/mime/packages/x-ipk.xml $DESTDIR/usr/share/listaller/mime
+cp ./additional/mime/text/x-ips.xml $DESTDIR/usr/share/listaller/mime
 cp ./additional/mime-info/listaller-pack.mime $DESTDIR/usr/share/mime-info
 
 #mkdir -p $DESTDIR/usr/bin

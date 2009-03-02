@@ -1,5 +1,3 @@
-{ Das ist eine automatisch erzeugte Lazarus-Ressourcendatei }
-
 LazarusResources.Add('TSCForm','FORMDATA',[
   'TPF0'#7'TSCForm'#6'SCForm'#4'Left'#3#155#1#6'Height'#3#25#2#3'Top'#3#24#1#5
   +'Width'#3#241#2#13'ActiveControl'#7#5'CView'#7'Caption'#6#18'Software Catalo'
