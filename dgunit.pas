@@ -106,7 +106,7 @@ begin
 end;
 
 procedure TDGForm.BitBtn1Click(Sender: TObject);
-var i,j: Integer;t: TProcess;h: TStringList;cnf,ar: TIniFile;
+var i: Integer;t: TProcess;h: TStringList;cnf,ar: TIniFile;
 begin
 BitBtn1.Enabled:=false;
 TabSheet3.TabVisible:=true;
@@ -173,7 +173,7 @@ if pos('http://',LowerCase(Memo2.Lines[i]))>0 then begin
   HTTP.HTTPMethod('GET', copy(Memo2.Lines[i],pos(' -',Memo2.Lines[i])+2,length(Memo2.Lines[i])-pos(' -',Memo2.Lines[i])+2));
   HTTP.Document.SaveToFile('/tmp/'+ExtractFileName(Memo2.Lines[i]));
  except
-   ShowMessage(strcnGetDep);
+   ShowMessage(strDepDlProblem);
    Application.Terminate;
    exit;
   end;
@@ -192,7 +192,7 @@ if pos('http://',LowerCase(Memo2.Lines[i]))>0 then begin
     RetrieveFile(ExtractFileName(Memo2.Lines[i]), false);
     Logout;
   except
-   ShowMessage(strcnGetDep);
+   ShowMessage(strDepDlProblem);
    Application.Terminate;
    exit;
   end;

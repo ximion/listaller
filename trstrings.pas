@@ -76,7 +76,6 @@ strinstAnyway='Do you want to install it anyway? (This could be problematical)';
 strInvarchitecture='This package was not build for this system-architecture';
 strWillDLFiles='(This program will download the needed files from the internet)';
 strInvalidDVersion='Package was not build for this release.';
-strcnGetDep='Problem while downloading the dep-file.';
 strFTPfailed='Problem while downloading the packages. Maybe the login on the FTP-Server failed.';
 strSuccess='Success!';
 strMain='Main';
@@ -153,7 +152,7 @@ strPkgInstFail='Package %p could not be installed.';
 strShowPkMon='Start PackageKit monitor before running transactions';
 strAboutListaller='About Listaller';
 strRmSrcQ='Are you really sure that you want to delete this source?';
-strRmSrcQC='Delete source';
+strRmSrcQC='Delete source?';
 strPkitProbPkMon='Problem while connecting PackageKit. Run "pkmon" to get further information.';
 strNoAppsFound='No applications found!';
 //Catalogue

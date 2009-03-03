@@ -10,13 +10,13 @@
       <TargetFileExt Value=""/>
       <Title Value="Listaller Manager"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="2"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="640"/>
+      <CurrentBuildNr Value="654"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -61,7 +61,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
         <CursorPos X="83" Y="176"/>
-        <TopLine Value="191"/>
+        <TopLine Value="176"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="141"/>
         <Loaded Value="True"/>
@@ -262,8 +262,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="settings"/>
-        <CursorPos X="61" Y="251"/>
-        <TopLine Value="206"/>
+        <CursorPos X="29" Y="104"/>
+        <TopLine Value="83"/>
         <EditorIndex Value="5"/>
         <UsageCount Value="133"/>
         <Loaded Value="True"/>
@@ -303,8 +303,8 @@
       <Unit34>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="39" Y="107"/>
-        <TopLine Value="86"/>
+        <CursorPos X="16" Y="111"/>
+        <TopLine Value="91"/>
         <EditorIndex Value="2"/>
         <UsageCount Value="32"/>
         <Loaded Value="True"/>
@@ -516,7 +516,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="xtypefm"/>
         <CursorPos X="72" Y="15"/>
-        <TopLine Value="49"/>
+        <TopLine Value="15"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="13"/>
         <Loaded Value="True"/>
@@ -592,123 +592,127 @@
         <UsageCount Value="11"/>
       </Unit73>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="swcatalog.pas"/>
-        <Caret Line="203" Column="22" TopLine="185"/>
+        <Filename Value="uninstall.pas"/>
+        <Caret Line="126" Column="54" TopLine="89"/>
       </Position1>
       <Position2>
-        <Filename Value="swcatalog.pas"/>
-        <Caret Line="206" Column="16" TopLine="185"/>
+        <Filename Value="uninstall.pas"/>
+        <Caret Line="128" Column="79" TopLine="101"/>
       </Position2>
       <Position3>
-        <Filename Value="swcatalog.pas"/>
-        <Caret Line="406" Column="62" TopLine="389"/>
+        <Filename Value="uninstall.pas"/>
+        <Caret Line="191" Column="52" TopLine="161"/>
       </Position3>
       <Position4>
-        <Filename Value="swcatalog.pas"/>
-        <Caret Line="417" Column="34" TopLine="389"/>
+        <Filename Value="uninstall.pas"/>
+        <Caret Line="192" Column="60" TopLine="161"/>
       </Position4>
       <Position5>
-        <Filename Value="swcatalog.pas"/>
-        <Caret Line="419" Column="46" TopLine="389"/>
+        <Filename Value="uninstall.pas"/>
+        <Caret Line="195" Column="20" TopLine="161"/>
       </Position5>
       <Position6>
-        <Filename Value="swcatalog.pas"/>
-        <Caret Line="420" Column="39" TopLine="389"/>
+        <Filename Value="uninstall.pas"/>
+        <Caret Line="241" Column="51" TopLine="221"/>
       </Position6>
       <Position7>
-        <Filename Value="trstrings.pas"/>
-        <Caret Line="153" Column="1" TopLine="117"/>
+        <Filename Value="uninstall.pas"/>
+        <Caret Line="242" Column="6" TopLine="221"/>
       </Position7>
       <Position8>
         <Filename Value="uninstall.pas"/>
-        <Caret Line="6" Column="28" TopLine="1"/>
+        <Caret Line="245" Column="10" TopLine="245"/>
       </Position8>
       <Position9>
-        <Filename Value="uninstall.pas"/>
-        <Caret Line="69" Column="28" TopLine="45"/>
+        <Filename Value="manager.pas"/>
+        <Caret Line="548" Column="1" TopLine="547"/>
       </Position9>
       <Position10>
-        <Filename Value="uninstall.pas"/>
-        <Caret Line="110" Column="53" TopLine="89"/>
+        <Filename Value="manager.pas"/>
+        <Caret Line="550" Column="1" TopLine="365"/>
       </Position10>
       <Position11>
-        <Filename Value="uninstall.pas"/>
-        <Caret Line="126" Column="54" TopLine="89"/>
+        <Filename Value="manager.pas"/>
+        <Caret Line="544" Column="3" TopLine="542"/>
       </Position11>
       <Position12>
-        <Filename Value="uninstall.pas"/>
-        <Caret Line="128" Column="79" TopLine="101"/>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="107" Column="39" TopLine="93"/>
       </Position12>
       <Position13>
-        <Filename Value="uninstall.pas"/>
-        <Caret Line="191" Column="52" TopLine="161"/>
+        <Filename Value="xtypefm.pas"/>
+        <Caret Line="73" Column="20" TopLine="62"/>
       </Position13>
       <Position14>
-        <Filename Value="uninstall.pas"/>
-        <Caret Line="192" Column="60" TopLine="161"/>
+        <Filename Value="xtypefm.pas"/>
+        <Caret Line="61" Column="33" TopLine="42"/>
       </Position14>
       <Position15>
-        <Filename Value="uninstall.pas"/>
-        <Caret Line="195" Column="20" TopLine="161"/>
+        <Filename Value="xtypefm.pas"/>
+        <Caret Line="27" Column="10" TopLine="1"/>
       </Position15>
       <Position16>
-        <Filename Value="uninstall.pas"/>
-        <Caret Line="241" Column="51" TopLine="221"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="251" Column="54" TopLine="1"/>
       </Position16>
       <Position17>
-        <Filename Value="uninstall.pas"/>
-        <Caret Line="242" Column="6" TopLine="221"/>
+        <Filename Value="manager.pas"/>
+        <Caret Line="573" Column="23" TopLine="571"/>
       </Position17>
       <Position18>
-        <Filename Value="uninstall.pas"/>
-        <Caret Line="245" Column="10" TopLine="245"/>
+        <Filename Value="manager.pas"/>
+        <Caret Line="5" Column="71" TopLine="1"/>
       </Position18>
       <Position19>
         <Filename Value="manager.pas"/>
-        <Caret Line="548" Column="1" TopLine="547"/>
+        <Caret Line="173" Column="82" TopLine="155"/>
       </Position19>
       <Position20>
-        <Filename Value="manager.pas"/>
-        <Caret Line="550" Column="1" TopLine="365"/>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="88" Column="19" TopLine="134"/>
       </Position20>
       <Position21>
-        <Filename Value="manager.pas"/>
-        <Caret Line="544" Column="3" TopLine="542"/>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="3" Column="20" TopLine="1"/>
       </Position21>
       <Position22>
         <Filename Value="trstrings.pas"/>
-        <Caret Line="107" Column="39" TopLine="93"/>
+        <Caret Line="78" Column="62" TopLine="58"/>
       </Position22>
       <Position23>
-        <Filename Value="xtypefm.pas"/>
-        <Caret Line="73" Column="20" TopLine="62"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="251" Column="61" TopLine="206"/>
       </Position23>
       <Position24>
-        <Filename Value="xtypefm.pas"/>
-        <Caret Line="61" Column="33" TopLine="42"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="104" Column="30" TopLine="83"/>
       </Position24>
       <Position25>
-        <Filename Value="xtypefm.pas"/>
-        <Caret Line="27" Column="10" TopLine="1"/>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="111" Column="18" TopLine="91"/>
       </Position25>
       <Position26>
         <Filename Value="settings.pas"/>
-        <Caret Line="251" Column="54" TopLine="1"/>
+        <Caret Line="104" Column="30" TopLine="83"/>
       </Position26>
       <Position27>
-        <Filename Value="manager.pas"/>
-        <Caret Line="573" Column="23" TopLine="571"/>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="78" Column="62" TopLine="55"/>
       </Position27>
       <Position28>
-        <Filename Value="manager.pas"/>
-        <Caret Line="5" Column="71" TopLine="1"/>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="24" Column="37" TopLine="1"/>
       </Position28>
       <Position29>
-        <Filename Value="manager.pas"/>
-        <Caret Line="173" Column="82" TopLine="155"/>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="154" Column="9" TopLine="133"/>
       </Position29>
+      <Position30>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="14" Column="33" TopLine="1"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -730,9 +734,6 @@
       <SmartLinkUnit Value="True"/>
     </CodeGeneration>
     <Linking>
-      <Debugging>
-        <GenerateDebugInfo Value="True"/>
-      </Debugging>
       <LinkSmart Value="True"/>
       <Options>
         <Win32>
@@ -742,6 +743,7 @@
     </Linking>
     <Other>
       <CustomOptions Value="-dOpbCompat
+-s
 "/>
       <CompilerPath Value="$(CompPath)"/>
       <CreateMakefileOnBuild Value="True"/>
