@@ -58,9 +58,8 @@ implementation
 { TimdFrm }
 
 procedure TimdFrm.FormCreate(Sender: TObject);
-var BH: HBitmap;s: String;FLang,PODirectory, Lang, FallbackLang: String;
+var BH: HBitmap;s: String;PODirectory, Lang, FallbackLang: String;
 begin
- FLang:=Copy(GetEnvironmentVariable('LANG'), 1, 2);
  PODirectory := ExtractFilePath(Application.ExeName)+'lang/';
  GetLanguageIDs(Lang, FallbackLang);
  translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts-%s.po', Lang, FallbackLang);

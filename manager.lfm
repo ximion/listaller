@@ -78,10 +78,11 @@ object mnFrm: TmnFrm
     ParentColor = False
   end
   object Label2: TLabel
-    Left = 632
+    Left = 648
     Height = 13
     Top = 120
     Width = 29
+    Anchors = [akTop, akRight]
     Caption = 'Filter:'
     ParentColor = False
   end
@@ -251,6 +252,7 @@ object mnFrm: TmnFrm
     Height = 27
     Top = 112
     Width = 123
+    Anchors = [akTop, akRight]
     OnKeyDown = edtFilterKeyDown
     TabOrder = 4
     Text = '*'

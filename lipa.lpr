@@ -96,6 +96,9 @@ begin
     Inc(i);
   end;
 
+  a:=ExpandFileName(a);
+  b:=ExpandFileName(b);
+
   if HasOption('b','build') then begin
   if HasOption('deb')or HasOption('rpm')or HasOption('dpack') then begin
     if FileExists(ExtractFilePath(ExeName)+'unibuild') then begin

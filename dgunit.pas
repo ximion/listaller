@@ -106,7 +106,7 @@ begin
 end;
 
 procedure TDGForm.BitBtn1Click(Sender: TObject);
-var i: Integer;t: TProcess;h: TStringList;cnf,ar: TIniFile;
+var i: Integer;t: TProcess;cnf,ar: TIniFile;
 begin
 BitBtn1.Enabled:=false;
 TabSheet3.TabVisible:=true;
@@ -143,7 +143,6 @@ BitBtn1.Enabled:=false;
 
   for i:=1 to Memo2.Lines.Count-1 do begin
   if pos('://',Memo2.Lines[i])<=0 then begin
-  h:=TStringList.Create;
   t:=tprocess.create(nil);
   Memo3.Lines.Add('Looking for '+Memo2.Lines[i]);
   t.CommandLine:=pkit+'--is-installed '+Memo2.Lines[i];
@@ -158,7 +157,6 @@ BitBtn1.Enabled:=false;
   End;
   t.Free;
 end else begin
-  h:=TStringList.Create;
   t:=tprocess.create(nil);
   Memo3.Lines.Add('Looking for '+copy(Memo2.Lines[i],1,pos(' -',Memo2.Lines[i])-1));
   t.CommandLine:=pkit+'--is-installed '+copy(Memo2.Lines[i],1,pos(' -',Memo2.Lines[i])-1);
