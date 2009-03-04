@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   CheckLst, StdCtrls, Buttons, ExtCtrls, LCLType, manager, IniFiles, Spin,
-  Process, utilities, trstrings, translations, gettext, Menus, aboutbox;
+  Process, utilities, trstrings, gettext, Menus, aboutbox;
 
 type
 

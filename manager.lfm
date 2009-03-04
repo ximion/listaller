@@ -237,9 +237,9 @@ object mnFrm: TmnFrm
     TabOrder = 2
     object Label3: TLabel
       Left = 6
-      Height = 15
+      Height = 18
       Top = 22
-      Width = 142
+      Width = 155
       Caption = 'No applications found!'
       Font.Height = -14
       Font.Name = 'Sans'

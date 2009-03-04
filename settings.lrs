@@ -1,5 +1,3 @@
-{ Das ist eine automatisch erzeugte Lazarus-Ressourcendatei }
-
 LazarusResources.Add('TFmConfig','FORMDATA',[
   'TPF0'#9'TFmConfig'#8'FmConfig'#4'Left'#3#20#1#6'Height'#3#229#1#3'Top'#3#239
   +#0#5'Width'#3#151#2#13'ActiveControl'#7#12'PageControl1'#7'Caption'#6#18'Lis'
