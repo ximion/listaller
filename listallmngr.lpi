@@ -10,13 +10,13 @@
       <TargetFileExt Value=""/>
       <Title Value="Listaller Manager"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="5"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="664"/>
+      <CurrentBuildNr Value="687"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -45,14 +45,14 @@
         <MinVersion Major="1" Valid="True"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="74">
+    <Units Count="75">
       <Unit0>
         <Filename Value="listallmngr.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallmngr"/>
         <CursorPos X="3" Y="24"/>
         <TopLine Value="1"/>
-        <UsageCount Value="141"/>
+        <UsageCount Value="142"/>
       </Unit0>
       <Unit1>
         <Filename Value="manager.pas"/>
@@ -60,10 +60,10 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="14" Y="548"/>
+        <CursorPos X="24" Y="536"/>
         <TopLine Value="527"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="141"/>
+        <UsageCount Value="142"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
@@ -264,7 +264,7 @@
         <UnitName Value="settings"/>
         <CursorPos X="33" Y="26"/>
         <TopLine Value="5"/>
-        <UsageCount Value="133"/>
+        <UsageCount Value="134"/>
       </Unit29>
       <Unit30>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkproc.inc"/>
@@ -295,7 +295,7 @@
         <CursorPos X="46" Y="245"/>
         <TopLine Value="200"/>
         <EditorIndex Value="6"/>
-        <UsageCount Value="126"/>
+        <UsageCount Value="127"/>
         <Loaded Value="True"/>
       </Unit33>
       <Unit34>
@@ -375,7 +375,7 @@
         <UnitName Value="pkgconvertdisp"/>
         <CursorPos X="8" Y="103"/>
         <TopLine Value="67"/>
-        <UsageCount Value="91"/>
+        <UsageCount Value="92"/>
       </Unit44>
       <Unit45>
         <Filename Value="swcatalog.pas"/>
@@ -383,10 +383,10 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="swcatalog"/>
-        <CursorPos X="5" Y="696"/>
-        <TopLine Value="656"/>
+        <CursorPos X="1" Y="154"/>
+        <TopLine Value="150"/>
         <EditorIndex Value="5"/>
-        <UsageCount Value="84"/>
+        <UsageCount Value="85"/>
         <Loaded Value="True"/>
       </Unit45>
       <Unit46>
@@ -549,7 +549,7 @@
         <UnitName Value="aboutbox"/>
         <CursorPos X="71" Y="46"/>
         <TopLine Value="17"/>
-        <UsageCount Value="34"/>
+        <UsageCount Value="35"/>
       </Unit68>
       <Unit69>
         <Filename Value="../../../../../usr/lib/lazarus/components/turbopower_ipro/iphtmlpv.pas"/>
@@ -589,104 +589,134 @@
         <TopLine Value="1"/>
         <UsageCount Value="11"/>
       </Unit73>
+      <Unit74>
+        <Filename Value="../../../../../usr/share/fpcsrc/2.2.2/packages/gtk2/src/gtk+/gtk/gtkstock.inc"/>
+        <CursorPos X="4" Y="31"/>
+        <TopLine Value="13"/>
+        <UsageCount Value="10"/>
+      </Unit74>
     </Units>
-    <JumpHistory Count="24" HistoryIndex="23">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="trstrings.pas"/>
-        <Caret Line="107" Column="39" TopLine="93"/>
-      </Position1>
-      <Position2>
-        <Filename Value="xtypefm.pas"/>
-        <Caret Line="73" Column="20" TopLine="62"/>
-      </Position2>
-      <Position3>
-        <Filename Value="xtypefm.pas"/>
-        <Caret Line="61" Column="33" TopLine="42"/>
-      </Position3>
-      <Position4>
         <Filename Value="xtypefm.pas"/>
         <Caret Line="27" Column="10" TopLine="1"/>
-      </Position4>
-      <Position5>
+      </Position1>
+      <Position2>
         <Filename Value="manager.pas"/>
         <Caret Line="573" Column="23" TopLine="571"/>
-      </Position5>
-      <Position6>
+      </Position2>
+      <Position3>
         <Filename Value="manager.pas"/>
         <Caret Line="5" Column="71" TopLine="1"/>
-      </Position6>
-      <Position7>
+      </Position3>
+      <Position4>
         <Filename Value="manager.pas"/>
         <Caret Line="173" Column="82" TopLine="155"/>
+      </Position4>
+      <Position5>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="3" Column="20" TopLine="1"/>
+      </Position5>
+      <Position6>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="78" Column="62" TopLine="58"/>
+      </Position6>
+      <Position7>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="111" Column="18" TopLine="91"/>
       </Position7>
       <Position8>
         <Filename Value="trstrings.pas"/>
-        <Caret Line="3" Column="20" TopLine="1"/>
+        <Caret Line="78" Column="62" TopLine="55"/>
       </Position8>
       <Position9>
         <Filename Value="trstrings.pas"/>
-        <Caret Line="78" Column="62" TopLine="58"/>
+        <Caret Line="24" Column="37" TopLine="1"/>
       </Position9>
       <Position10>
         <Filename Value="trstrings.pas"/>
-        <Caret Line="111" Column="18" TopLine="91"/>
+        <Caret Line="154" Column="9" TopLine="133"/>
       </Position10>
       <Position11>
         <Filename Value="trstrings.pas"/>
-        <Caret Line="78" Column="62" TopLine="55"/>
+        <Caret Line="14" Column="33" TopLine="1"/>
       </Position11>
       <Position12>
         <Filename Value="trstrings.pas"/>
-        <Caret Line="24" Column="37" TopLine="1"/>
+        <Caret Line="111" Column="16" TopLine="91"/>
       </Position12>
       <Position13>
         <Filename Value="trstrings.pas"/>
-        <Caret Line="154" Column="9" TopLine="133"/>
+        <Caret Line="18" Column="32" TopLine="1"/>
       </Position13>
       <Position14>
         <Filename Value="trstrings.pas"/>
-        <Caret Line="14" Column="33" TopLine="1"/>
+        <Caret Line="39" Column="37" TopLine="1"/>
       </Position14>
       <Position15>
         <Filename Value="trstrings.pas"/>
-        <Caret Line="111" Column="16" TopLine="91"/>
+        <Caret Line="49" Column="37" TopLine="28"/>
       </Position15>
       <Position16>
         <Filename Value="trstrings.pas"/>
-        <Caret Line="18" Column="32" TopLine="1"/>
+        <Caret Line="64" Column="40" TopLine="28"/>
       </Position16>
       <Position17>
         <Filename Value="trstrings.pas"/>
-        <Caret Line="39" Column="37" TopLine="1"/>
+        <Caret Line="68" Column="36" TopLine="28"/>
       </Position17>
       <Position18>
         <Filename Value="trstrings.pas"/>
-        <Caret Line="49" Column="37" TopLine="28"/>
+        <Caret Line="88" Column="72" TopLine="67"/>
       </Position18>
       <Position19>
-        <Filename Value="trstrings.pas"/>
-        <Caret Line="64" Column="40" TopLine="28"/>
-      </Position19>
-      <Position20>
-        <Filename Value="trstrings.pas"/>
-        <Caret Line="68" Column="36" TopLine="28"/>
-      </Position20>
-      <Position21>
-        <Filename Value="trstrings.pas"/>
-        <Caret Line="88" Column="72" TopLine="67"/>
-      </Position21>
-      <Position22>
         <Filename Value="manager.pas"/>
         <Caret Line="176" Column="83" TopLine="1"/>
-      </Position22>
-      <Position23>
+      </Position19>
+      <Position20>
         <Filename Value="manager.pas"/>
         <Caret Line="568" Column="20" TopLine="547"/>
-      </Position23>
-      <Position24>
+      </Position20>
+      <Position21>
         <Filename Value="manager.pas"/>
         <Caret Line="548" Column="19" TopLine="527"/>
+      </Position21>
+      <Position22>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="637" Column="6" TopLine="1"/>
+      </Position22>
+      <Position23>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="187" Column="5" TopLine="166"/>
+      </Position23>
+      <Position24>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="409" Column="1" TopLine="214"/>
       </Position24>
+      <Position25>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="382" Column="1" TopLine="296"/>
+      </Position25>
+      <Position26>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="383" Column="14" TopLine="361"/>
+      </Position26>
+      <Position27>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="391" Column="14" TopLine="361"/>
+      </Position27>
+      <Position28>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="403" Column="16" TopLine="361"/>
+      </Position28>
+      <Position29>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="568" Column="29" TopLine="546"/>
+      </Position29>
+      <Position30>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="166" Column="36" TopLine="150"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -720,7 +750,6 @@
         <ShowHintsForSenderNotUsed Value="True"/>
       </Verbosity>
       <CustomOptions Value="-dOpbCompat
--s
 "/>
       <CompilerPath Value="$(CompPath)"/>
       <CreateMakefileOnBuild Value="True"/>

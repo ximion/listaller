@@ -151,8 +151,9 @@ OnClick:=@InstallClick;
 Anchors:=[akBottom,akRight];
 Top:=16;
 Left:=self.Width-90;
-if Gtk2LoadStockPixmap(GTK_STOCK_OK,GTK_ICON_SIZE_BUTTON)<>0 then
-Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_OK,GTK_ICON_SIZE_MENU);
+
+if Gtk2LoadStockPixmap(GTK_STOCK_APPLY,GTK_ICON_SIZE_MENU)<>0 then
+Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_APPLY,GTK_ICON_SIZE_MENU);
 end;
 
 InfoBtn:=TBitBtn.Create(self);
@@ -160,8 +161,10 @@ InfoBtn.Parent:=self;
 with InfoBtn do begin
 InfoBtn.Caption:='Info';
 InfoBtn.AutoSize:=true;
+ShowMessage('1');
 if Gtk2LoadStockPixmap(GTK_STOCK_DIALOG_INFO,GTK_ICON_SIZE_MENU)<>0 then
 Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_DIALOG_INFO,GTK_ICON_SIZE_MENU);
+ShowMessage('2');
 InfoBtn.OnClick:=@InfoClick;
 Height:=26;
 end;
@@ -413,7 +416,9 @@ if fActiv then begin
   SWLLength:=0;
   CView.Items[0].Selected:=true;
   HTTP := THTTPSend.Create;
-  HTTP.KeepAlive:=true;
+  // HTTP.KeepAlive:=true;
+  //Add Hook
+  HTTP.Sock.OnStatus:=@HookSock;
   HTTP.UserAgent:='Listaller-GET';
   //Set HTTP settings
   cnf:=TInifile.Create(ConfigDir+'config.cnf');
@@ -439,10 +444,8 @@ if fActiv then begin
   ls.Free;
   except end;
   HTTP.Clear;
-  //Add Hook
-  HTTP.Sock.OnStatus:=@HookSock;
 
-   GetCatalog();
+  GetCatalog();
   end;
 end;
 
@@ -466,7 +469,7 @@ begin
 //Read catalogue info
    ReadXMLFile(doc,'/tmp/listaller/catalogue/contents.xml');
 //Clear List
-CView.Enabled:=false;
+CView.Visible:=false;
 for i:=0 to SWLLength-1 do
    SWList[i].Free;
    SWLLength:=0;
@@ -542,6 +545,7 @@ end;
    end else begin
 //Load all packages
    k:=0;
+
 while cdir<>'other' do begin
 if cdir='multimedia' then begin cdir:='other';cid:=9;end;
 if cdir='system' then begin cdir:='multimedia';cid:=8;end;
@@ -560,11 +564,12 @@ if cdir='all' then begin cdir:='education';cid:=1;end;
         SetLength(SWList,k);
         SWLLength:=k;
         Dec(k);
-        SWList[k]:=TCTLEntry.Create(SCForm);
+        ShowMessage('OK');
+        SWList[k]:=TCTLEntry.Create(nil);
+        ShowMessage('OK2');
         SWList[k].Parent:=ScrollBox1;
         SWList[k].id:=cid;
         SWList[k].enr:=k;
-
         if xn.ChildNodes[i].Attributes.GetNamedItem('lname')<> nil then
         SWList[k].AppLabel.Caption:=xn.ChildNodes[i].Attributes.GetNamedItem('lname').NodeValue
         else
