@@ -4,4 +4,5 @@ xdg-mime install '/usr/share/listaller/mime/x-ipk.xml'
 xdg-mime install '/usr/share/listaller/mime/x-ips.xml'
 xdg-icon-resource install --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ipk.png' 'application-x-ipk'
 xdg-icon-resource install --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ips.png' 'text-x-ips'
+update-desktop-database
 echo "Done."

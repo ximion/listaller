@@ -15,6 +15,5 @@ X-Publisher=Listaller Project
 X-AppVersion=0.2.00a
 StartupNotify=false
 Terminal=false
-ExternalInst=true
+X-ExternalInst=true
 MimeType=application/x-ipk;
-Patterns=*.ipk;

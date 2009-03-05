@@ -8,7 +8,6 @@ Icon=/usr/appfiles/liCreator/listaller_creator.png
 Exec=/usr/appfiles/liCreator/licreator
 Categories=Application;Development;Programming;
 MimeType=text/installer-source;
-Patterns=*.ips;
 Path=
 StartupNotify=true
 Type=Application
