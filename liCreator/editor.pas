@@ -382,7 +382,8 @@ end;
 
 procedure TfrmEditor.IPSNotebookCloseTabClicked(Sender: TObject);
 begin
-  FileProfiles.RemoveProfile(IPSNotebook.Page[IPSNotebook.PageIndex]);
+  if Sender is TPage then
+    FileProfiles.RemoveProfile(TPage(Sender));
 end;
 
 
@@ -464,6 +465,7 @@ end;
 
 procedure TfrmEditor.mnuEditRemoveFileProfileClick(Sender: TObject);
 begin
+  FileProfiles.RemoveProfile(IPSNotebook.Page[IPSNotebook.PageIndex]);
 end;
 
 procedure TfrmEditor.mnuEditUndoClick(Sender: TObject);
