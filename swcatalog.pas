@@ -74,22 +74,24 @@ const Value: string);
   end; 
 
   TCTLEntry = class(TListEntry)
-   public
-    //** Number of the exemplar
-    enr: Integer;
-    constructor Create(AOwner: TComponent); override;
-    destructor  Destroy; override;
-    //** Re-set control positions
-    procedure   SetPositions;
-   private
+  private
     InfoBtn: TBitBtn;
     //** Real name
     rnm:     String;
     //** HTTP-get object
     xHTTP: THTTPSend;
+    //** ID number
+    xNR: Integer;
     procedure DLHookSock(Sender: TObject; Reason: THookSocketReason;const Value: string);
     procedure InstallClick(Sender: TObject);
     procedure InfoClick(Sender: TObject);
+   public
+    //** Number of the exemplar
+    property eNR: Integer read xNR write xNR;
+    constructor Create(AOwner: TComponent); override;
+    destructor  Destroy; override;
+    //** Re-set control positions
+    procedure   SetPositions;
   end;
 
 var
@@ -132,15 +134,6 @@ Anchors:=[];
 Top:=34;
 Left:=10;
 end;
-{
-with DescLabel do begin
-Parent:=Self;
-AutoSize:=true;
-Anchors:=[];
-Top:=30;
-Left:=10;
-Caption:='<description>';
-end;              }
 
 with UnButton do begin
 Parent:=self;
@@ -161,10 +154,8 @@ InfoBtn.Parent:=self;
 with InfoBtn do begin
 InfoBtn.Caption:='Info';
 InfoBtn.AutoSize:=true;
-ShowMessage('1');
 if Gtk2LoadStockPixmap(GTK_STOCK_DIALOG_INFO,GTK_ICON_SIZE_MENU)<>0 then
 Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_DIALOG_INFO,GTK_ICON_SIZE_MENU);
-ShowMessage('2');
 InfoBtn.OnClick:=@InfoClick;
 Height:=26;
 end;
@@ -469,7 +460,7 @@ begin
 //Read catalogue info
    ReadXMLFile(doc,'/tmp/listaller/catalogue/contents.xml');
 //Clear List
-CView.Visible:=false;
+CView.Enabled:=false;
 for i:=0 to SWLLength-1 do
    SWList[i].Free;
    SWLLength:=0;
@@ -487,7 +478,6 @@ for i:=0 to SWLLength-1 do
      9: cdir:='other';
     end;
  Label2.Caption:=strOpenPage;
-// ScrollBox1.Visible:=false;
    if cdir<>'all' then begin
    xn:=doc.DocumentElement.FindNode(cdir);
    k:=0;
@@ -564,9 +554,7 @@ if cdir='all' then begin cdir:='education';cid:=1;end;
         SetLength(SWList,k);
         SWLLength:=k;
         Dec(k);
-        ShowMessage('OK');
         SWList[k]:=TCTLEntry.Create(nil);
-        ShowMessage('OK2');
         SWList[k].Parent:=ScrollBox1;
         SWList[k].id:=cid;
         SWList[k].enr:=k;
@@ -635,7 +623,7 @@ var tm: TPicture;bmp: TBitmap;a: String;
 begin
   //Add images to list
   tm:=TPicture.Create;
-  a:=ExtractFilePath(Application.ExeName);
+  a:=GetDataFile('graphics/categories/');
 
   bmp := TBitmap.Create;
   bmp.width := 24;
@@ -644,34 +632,34 @@ begin
   bmp.Transparent:=true;
 
   with ImageList1 do begin
-  tm.LoadFromFile(a+'graphics/categories/all.png');
+  tm.LoadFromFile(a+'all.png');
   bmp.canvas.draw(0,0,tm.Graphic);
   Add(bmp,nil);
-  tm.LoadFromFile(a+'graphics/categories/science.png');
+  tm.LoadFromFile(a+'science.png');
   bmp.canvas.draw(0,0,tm.Graphic);
   Add(bmp,nil);
-  tm.LoadFromFile(a+'graphics/categories/office.png');
+  tm.LoadFromFile(a+'office.png');
   bmp.canvas.draw(0,0,tm.Graphic);
   Add(bmp,nil);
-  tm.LoadFromFile(a+'graphics/categories/development.png');
+  tm.LoadFromFile(a+'development.png');
   bmp.canvas.draw(0,0,tm.Graphic);
   Add(bmp,nil);
-  tm.LoadFromFile(a+'graphics/categories/graphics.png');
+  tm.LoadFromFile(a+'graphics.png');
   bmp.canvas.draw(0,0,tm.Graphic);
   Add(bmp,nil);
-  tm.LoadFromFile(a+'graphics/categories/internet.png');
+  tm.LoadFromFile(a+'internet.png');
   bmp.canvas.draw(0,0,tm.Graphic);
   Add(bmp,nil);
-  tm.LoadFromFile(a+'graphics/categories/games.png');
+  tm.LoadFromFile(a+'games.png');
   bmp.canvas.draw(0,0,tm.Graphic);
   Add(bmp,nil);
-  tm.LoadFromFile(a+'graphics/categories/system.png');
+  tm.LoadFromFile(a+'system.png');
   bmp.canvas.draw(0,0,tm.Graphic);
   Add(bmp,nil);
-  tm.LoadFromFile(a+'graphics/categories/multimedia.png');
+  tm.LoadFromFile(a+'multimedia.png');
   bmp.canvas.draw(0,0,tm.Graphic);
   Add(bmp,nil);
-  tm.LoadFromFile(a+'graphics/categories/other.png');
+  tm.LoadFromFile(a+'other.png');
   bmp.canvas.draw(0,0,tm.Graphic);
   Add(bmp,nil);
   end;
@@ -695,6 +683,10 @@ begin
   Memo1.Lines.Add(strNoInfo);
   BitBtn1.Caption:=strClose;
   BitBtn2.Caption:=strAbort;
+  {$ifdef LCLGTK2}
+   if Gtk2LoadStockPixmap(GTK_STOCK_CLOSE,GTK_ICON_SIZE_BUTTON)<>0 then
+   BitBtn1.Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_CLOSE,GTK_ICON_SIZE_MENU);
+  {$ENDIF}
 end;
 
 procedure TSCForm.FormDestroy(Sender: TObject);

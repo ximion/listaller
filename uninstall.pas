@@ -186,16 +186,16 @@ end;
 Memo1.Lines.Add('Connecting to PackageKit... (run "pkmon" to see the actions)');
 GetOutPutTimer.Enabled:=false;
 UProgress.Position:=0;
-RMForm.Caption:=StringReplace(strRMAppC,'%a',AList[uID].AppLabel.Caption,[rfReplaceAll]);
-if Application.MessageBox(PAnsiChar(StringReplace(strRealUninstQ,'%a',AList[uID].AppLabel.Caption,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then begin
+RMForm.Caption:=StringReplace(strRMAppC,'%a',AList[uID].AppName,[rfReplaceAll]);
+if Application.MessageBox(PAnsiChar(StringReplace(strRealUninstQ,'%a',AList[uID].AppName,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then begin
 LogAdd('Reading application information...');
 RMForm.Label1.Caption:='Reading application information...';
 GetOutPutTimer.Enabled:=true;
 
 if IdList[uID][1]='~' then begin
-UProgress.Position:=UninstallIPKApp(AList[uID].AppLabel.Caption,copy(IdList[uID],2,length(IdList[uID])),Memo1.Lines);
+UProgress.Position:=UninstallIPKApp(AList[uID].AppName,copy(IdList[uID],2,length(IdList[uID])),Memo1.Lines);
 LogAdd('Finished!');
-Memo1.Lines.SaveToFile('/usr/share/listaller/uninstall.log');
+Memo1.Lines.SaveToFile(ConfigDir+'uninstall.log');
 ShowMessage(strUnistSuccess);
 //Controls wieder aktivieren
 BitBtn1.Enabled:=true;
@@ -249,7 +249,7 @@ g:=copy(g,pos(f,g)+length(f),length(g));
 LogAdd('Package detected: '+f);
 if (StringReplace(g,' ','',[rfReplaceAll])='')or
 (Application.MessageBox(PAnsiChar(
-StringReplace(StringReplace(StringReplace(strRMPkg,'%p',f,[rfReplaceAll]),'%a',AList[uID].AppLabel.Caption,[rfReplaceAll]),'%pl',PAnsiChar(g),[rfReplaceAll])
+StringReplace(StringReplace(StringReplace(strRMPkg,'%p',f,[rfReplaceAll]),'%a',AList[uID].AppName,[rfReplaceAll]),'%pl',PAnsiChar(g),[rfReplaceAll])
 ),PChar(strRMPkgQ),MB_YESNO)=IDYES)
 then begin
 

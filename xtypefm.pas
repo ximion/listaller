@@ -58,9 +58,9 @@ implementation
 { TimdFrm }
 
 procedure TimdFrm.FormCreate(Sender: TObject);
-var BH: HBitmap;s: String;PODirectory, Lang, FallbackLang: String;
+var BH: HBitmap;s: String;PODirectory, Lang, FallbackLang: String;i: Integer;
 begin
- PODirectory := ExtractFilePath(Application.ExeName)+'lang/';
+ PODirectory := GetDataFile('lang/');
  GetLanguageIDs(Lang, FallbackLang);
  translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts-%s.po', Lang, FallbackLang);
  translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-%s.po', Lang, FallbackLang);
@@ -84,6 +84,7 @@ if Image1.Visible then begin
 //Check PackageKit version
 try
   s:=CmdResult('pkcon --version');
+  s:=copy(s,1,5);
   if StrToInt(StringReplace(s,'.','',[rfReplaceAll]))<44 then begin
         Label2.Caption:=StringReplace(StringReplace(strPackageKitWarning,'%cp',s,[rfReplaceAll]),'%np','0.4.4',[rfReplaceAll]);
         Label2.Visible:=true;

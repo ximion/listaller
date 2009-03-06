@@ -337,7 +337,7 @@ CreateDir(RegDir);
 end;
 
 //Load language pack
-PODirectory:=ExtractFilePath(Application.ExeName)+'lang/';
+PODirectory:=GetDataFile('lang/');
 GetLanguageIDs(Lang, FallbackLang);
 translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts-%s.po', Lang, FallbackLang);
 translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-%s.po', Lang, FallbackLang);
@@ -631,7 +631,7 @@ if Application.MessageBox(PChar(PAnsiChar(strnSupported)+#13+PAnsiChar(strInstAn
 end;
 
 //Load Wizard-Image
-Image2.Picture.LoadFromFile(ExtractFilePath(Application.Exename)+'graphics/wizardimage.png');
+Image2.Picture.LoadFromFile(GetDataFile('graphics/wizardimage.png'));
 if (xnode.FindNode('wizimage')<>nil) and (PAnsiChar(xnode.FindNode('wizimage').NodeValue)[0] = '/') then begin
 z.ExtractFiles(ExtractFileName(xnode.FindNode('wizimage').NodeValue));
 if fileexists(lp+PkgName+xnode.FindNode('wizimage').NodeValue) then
@@ -938,7 +938,7 @@ if (Process1.ExitStatus>0) then begin
     GetOutputTimer.Enabled:=false;
     writeLn('Connection to backend broken.');
     writeLn('Cannot resolve dependencies');
-    ShowMessage(strCouldntSolve+#13+StringReplace(strViewLog,'%p',ExtractFilePath(Application.ExeName),[rfReplaceAll])+#13+'Code: '+IntToStr(Process1.ExitStatus));
+    ShowMessage(strCouldntSolve+#13+StringReplace(strViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll])+#13+'Code: '+IntToStr(Process1.ExitStatus));
     InfoMemo.Lines.SaveTofile('/tmp/install-'+IAppName+'.log');
     halt;
     exit;
@@ -1193,7 +1193,7 @@ if (Dependencies[i][1]='/')or(pos('http://',Dependencies[i])>0)or(pos('ftp://',D
     //Check if the package was really installed
     if Process1.ExitStatus>0 then
     begin
-    ShowMessage(strCouldntSolve+#13+StringReplace(strViewLog,'%p',ExtractFilePath(Application.ExeName),[rfReplaceAll]));
+    ShowMessage(strCouldntSolve+#13+StringReplace(strViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]));
     t.Free;
     InfoMemo.Lines.SaveTofile('/tmp/install-'+IAppName+'.log');
     Application.Terminate;
@@ -1226,7 +1226,7 @@ end else begin
   if Process1.ExitStatus>0 then
     begin
      writeLn('Package '+Dependencies[i]+' can not be installed.');
-     ShowMessage(strCouldntSolve+#13+StringReplace(strViewLog,'%p',ExtractFilePath(Application.ExeName),[rfReplaceAll]));
+     ShowMessage(strCouldntSolve+#13+StringReplace(strViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]));
      t.Free;
      InfoMemo.Lines.SaveTofile('/tmp/install-'+IAppName+'.log');
      Application.Terminate;

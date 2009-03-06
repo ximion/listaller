@@ -35,7 +35,7 @@ begin
   Application.Title:='Installer';
   Application.Initialize;
   writeLn('Application initialized.');
-  pkit := ExtractFilePath(Application.ExeName)+'pkitbind/pkitbind.py ';
+  pkit := GetDataFile('pkitbind/pkitbind.py ');
   if not IsRoot then RegDir:=SyblToPath('$INST')+'/app-reg/';
   Application.CreateForm(TIWizFrm, IWizFrm);
   Application.ShowMainForm:=false;

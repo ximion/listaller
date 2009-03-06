@@ -82,33 +82,33 @@ implementation
 
 procedure TisFrm.UninstallTheme(Sender: TObject);
 begin
-if Application.MessageBox(PChar(StringReplace(strRealUninstQ,'%a',DList[(Sender as TBitBtn).Tag].AppLabel.Caption,[rfReplaceAll])),PChar(strRmPkgQ),MB_YESNO) = IDYES then
-if ExtractFileExt(DList[(Sender as TBitBtn).Tag].sid)='' then
-DeleteDirectory(DList[(Sender as TBitBtn).Tag].sid,false)
+if Application.MessageBox(PChar(StringReplace(strRealUninstQ,'%a',DList[(Sender as TBitBtn).Tag].AppName,[rfReplaceAll])),PChar(strRmPkgQ),MB_YESNO) = IDYES then
+if ExtractFileExt(DList[(Sender as TBitBtn).Tag].srmId)='' then
+DeleteDirectory(DList[(Sender as TBitBtn).Tag].srmId,false)
 else
-DeleteFile(DList[(Sender as TBitBtn).Tag].sid);
+DeleteFile(DList[(Sender as TBitBtn).Tag].srmId);
 end;
 
 procedure TisFrm.UninstallWallpaper(Sender: TObject);
 var t: TProcess;
 begin
-if Application.MessageBox(PChar(StringReplace(strRealUninstQ,'%a',DList[(Sender as TBitBtn).Tag].AppLabel.Caption,[rfReplaceAll])),PChar(strRmPkgQ),MB_YESNO) = IDYES then
-if ExtractFileExt(DList[(Sender as TBitBtn).Tag].sid)='' then
-DeleteDirectory(DList[(Sender as TBitBtn).Tag].sid,false)
+if Application.MessageBox(PChar(StringReplace(strRealUninstQ,'%a',DList[(Sender as TBitBtn).Tag].AppName,[rfReplaceAll])),PChar(strRmPkgQ),MB_YESNO) = IDYES then
+if ExtractFileExt(DList[(Sender as TBitBtn).Tag].srmId)='' then
+DeleteDirectory(DList[(Sender as TBitBtn).Tag].srmId,false)
 else
 if GetDistro.Desktop='GNOME' then begin
 if not IsRoot then begin
        t:=TProcess.Create(nil);
          if GetDistro.DName='Ubuntu' then
-            t.CommandLine := 'gksudo rm '+DList[(Sender as TBitBtn).Tag].sid
+            t.CommandLine := 'gksudo rm '+DList[(Sender as TBitBtn).Tag].srmId
          else
-          t.CommandLine := 'gnomesu rm '+DList[(Sender as TBitBtn).Tag].sid;
+          t.CommandLine := 'gnomesu rm '+DList[(Sender as TBitBtn).Tag].srmId;
         t.Options:=[];
         t.Execute;
         t.Free;
    end;
  end else
-DeleteFile(DList[(Sender as TBitBtn).Tag].sid);
+DeleteFile(DList[(Sender as TBitBtn).Tag].srmId);
 end;
 
 procedure TisFrm.UninstallScreensaver(Sender: TObject);
@@ -160,18 +160,18 @@ if DLLength<1 then begin
      DList[k].Parent:=ScrollBox1;
      DList[k].UnButton.Tag:=k;
      DList[k].UnButton.OnClick:=@UninstallTheme;
-     DList[k].sid:=dir+lst[i];
+     DList[k].srmId:=dir+lst[i];
 
      cnf:=TIniFile.Create(dir+lst[i]+'/index.theme');
-     DList[k].AppLabel.Caption:=cnf.ReadString('Desktop Entry','Name',lst[i]);
-     DList[k].DescLabel.Caption:=cnf.ReadString('Desktop Entry','Comment['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','');
-     if DList[k].DescLabel.Caption='' then
-     DList[k].DescLabel.Caption:=cnf.ReadString('Desktop Entry','Comment','');
+     DList[k].AppName:=cnf.ReadString('Desktop Entry','Name',lst[i]);
+     DList[k].AppDesc:=cnf.ReadString('Desktop Entry','Comment['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','');
+     if DList[k].AppDesc='' then
+     DList[k].AppDesc:=cnf.ReadString('Desktop Entry','Comment','');
 
-     DList[k].VLabel.Visible:=false;
-     if DList[k].DescLabel.Caption='' then
-     DList[k].DescLabel.Visible:=false;
-     DList[k].mnLabel.Visible:=false;
+     DList[k].AppVersion:='';
+     if DList[k].AppDesc='' then
+     DList[k].AppDesc:='';
+     DList[k].AppMn:='';
 
      DList[k].SetPositions;
     Inc(k);
@@ -197,7 +197,7 @@ begin
    end;
    mdf.Free;
  end;
-  headImage.Picture.LoadFromFile(ExtractFilePath(Application.ExeName)+'graphics/ligraphic-header.png');
+  headImage.Picture.LoadFromFile(GetDataFile('graphics/ligraphic-header.png'));
 end;
 
 procedure TisFrm.FormDestroy(Sender: TObject);
@@ -267,13 +267,13 @@ if ILLength<1 then begin
      IList[k].Parent:=ScrollBox2;
      IList[k].UnButton.Tag:=k;
      IList[k].UnButton.OnClick:=@UninstallTheme;
-     IList[k].sid:=lst[i];
+     IList[k].srmId:=lst[i];
 
-     IList[k].AppLabel.Caption:=lst[i];
+     IList[k].AppName:=lst[i];
 
-     IList[k].VLabel.Visible:=false;
-     IList[k].DescLabel.Visible:=false;
-     IList[k].mnLabel.Visible:=false;
+     IList[k].AppVersion:='';;
+     IList[k].AppDesc:='';
+     IList[k].AppMN:='';
 
      try
      if FileExists(dir+lst[i]+'/64x64/places/folder.png') then
@@ -332,22 +332,22 @@ if SLLength<1 then begin
      SList[k].Parent:=ScrollBox4;
      SList[k].UnButton.Tag:=k;
      SList[k].UnButton.OnClick:=@UninstallScreensaver;
-     SList[k].sid:=lst[i];
+     SList[k].srmId:=lst[i];
 
      cnf:=TIniFile.Create(lst[i]);
-     SList[k].AppLabel.Caption:=cnf.ReadString('Desktop Entry','Name['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','');
-     if SList[k].AppLabel.Caption='' then
-     SList[k].AppLabel.Caption:=cnf.ReadString('Desktop Entry','Name','');
+     SList[k].AppName:=cnf.ReadString('Desktop Entry','Name['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','');
+     if SList[k].AppName='' then
+     SList[k].AppName:=cnf.ReadString('Desktop Entry','Name','');
 
-     SList[k].DescLabel.Caption:=cnf.ReadString('Desktop Entry','Comment['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','');
-     if SList[k].DescLabel.Caption='' then
-     SList[k].DescLabel.Caption:=cnf.ReadString('Desktop Entry','Comment','');
+     SList[k].AppDesc:=cnf.ReadString('Desktop Entry','Comment['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','');
+     if SList[k].AppDesc='' then
+     SList[k].AppDesc:=cnf.ReadString('Desktop Entry','Comment','');
 
-     SList[k].VLabel.Visible:=false;
-     if SList[k].DescLabel.Caption='' then
-     SList[k].DescLabel.Visible:=false;
-     SList[k].mnLabel.Visible:=false;
-     SList[k].SetImage(ExtractFilePath(Application.Exename)+'graphics/screensaver.png');
+     SList[k].AppVersion:='';
+     if SList[k].AppDesc='' then
+     SList[k].AppDesc:='';
+     SList[k].AppMn:='';
+     SList[k].SetImage(GetDataFile('graphics/screensaver.png'));
      SList[k].SetPositions;
     Inc(k);
     Application.ProcessMessages;
@@ -391,29 +391,26 @@ lst.Assign(FindAllFiles(GetEnvironmentVariable('HOME')+'/.kde/share/wallpapers/'
      if IsRoot then begin
      //If application is in -su mode
      cnf:=TIniFile.Create('/usr/share/wallpapers/'+lst[i]+'/metadata.desktop');
-     WList[k].sid:='/usr/share/wallpapers/'+lst[i];
-     WList[k].AppLabel.Caption:=cnf.ReadString('Desktop Entry','Name['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','');
-     if WList[k].AppLabel.Caption='' then
-     WList[k].AppLabel.Caption:=cnf.ReadString('Desktop Entry','Name',lst[i]);
+     WList[k].srmId:='/usr/share/wallpapers/'+lst[i];
+     WList[k].AppName:=cnf.ReadString('Desktop Entry','Name['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','');
+     if WList[k].AppName='' then
+     WList[k].AppName:=cnf.ReadString('Desktop Entry','Name',lst[i]);
 
-     WList[k].mnLabel.Caption:=cnf.ReadString('Desktop Entry','X-KDE-PluginInfo-Author','');
+     WList[k].AppMn:=cnf.ReadString('Desktop Entry','X-KDE-PluginInfo-Author','');
      cnf.Free;
-     WList[k].VLabel.Visible:=false;
-     WList[k].DescLabel.Visible:=false;
-     if WList[k].mnLabel.Caption='' then
-     WList[k].mnLabel.Visible:=false;
+     WList[k].AppVersion:='';
+     WList[k].AppDesc:='';
 
      try
      WList[k].SetImage('/usr/share/wallpapers/'+lst[i]+'/contents/screenshot.png');
      except end;
      end else begin
      //If not
-     WList[k].sid:=lst[i];
-     WList[k].AppLabel.Caption:=ExtractFileName(lst[i]);
+     WList[k].srmId:=lst[i];
+     WList[k].AppName:=ExtractFileName(lst[i]);
 
-     WList[k].VLabel.Visible:=false;
-     WList[k].DescLabel.Visible:=false;
-     WList[k].mnLabel.Visible:=false;
+     WList[k].AppDesc:='';
+     WList[k].AppMn:='';
 
      try
      WList[k].SetImage(lst[i]);
@@ -436,13 +433,12 @@ end else begin
      WList[k]:=TListEntry.Create(isFrm);
      WList[k].Parent:=ScrollBox3;
      WList[k].UnButton.Tag:=k;
-     WList[k].sid:=lst[i];
+     WList[k].srmId:=lst[i];
 
-     WList[k].AppLabel.Caption:=ExtractFileName(lst[i]);
+     WList[k].AppName:=ExtractFileName(lst[i]);
 
-     WList[k].VLabel.Visible:=false;
-     WList[k].DescLabel.Visible:=false;
-     WList[k].mnLabel.Visible:=false;
+     WList[k].AppDesc:='';
+     WList[k].AppMn:='';
 
      try
      WList[k].SetImage(lst[i]);

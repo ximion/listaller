@@ -249,7 +249,7 @@ end;
 if LowerCase(paramstr(1))='-show' then Application.ShowMainForm:=true;
 
 //Load translation resource
-PODirectory:=ExtractFilePath(Application.ExeName)+'lang/';
+PODirectory:=GetDataFile('lang/');
 GetLanguageIDs(Lang, FallbackLang); // in unit gettext
 translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts.%s.po', Lang, FallbackLang);
 translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller.%s.po', Lang, FallbackLang);

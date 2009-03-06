@@ -266,7 +266,7 @@ if BH <> 0 then
 begin
  BitBtn1.Glyph.Handle:=BH;
 end;
-Image1.Picture.LoadFromFile(ExtractFilePath(Application.ExeName)+'graphics/spackage.png');
+Image1.Picture.LoadFromFile(GetDataFile('graphics/spackage.png'));
 
 PageControl1.ActivePageIndex:=0;
 BitBtn1.Caption:=strInstallNow;
@@ -326,8 +326,8 @@ begin
   until noMoreOutput;
 if Process1.ExitStatus>0 then begin
     GetOutputTimer.Enabled:=false;
-    ShowMessage(strCouldntSolve+#13+StringReplace(strViewLog,'%p',ExtractFilePath(Application.ExeName),[rfReplaceAll]));
-    Memo3.Lines.SaveTofile(ExtractFilePath(Application.ExeName)+'install.log');
+    ShowMessage(strCouldntSolve+#13+StringReplace(strViewLog,'%p',ConfigDir,[rfReplaceAll]));
+    Memo3.Lines.SaveTofile(ConfigDir+'/install.log');
     Application.Terminate;
     exit;
   end;

@@ -25,7 +25,8 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms,
   SysUtils,
-  manager, settings, uninstall, pkgconvertdisp, swcatalog, LResources, ipkhandle;
+  manager, settings, uninstall, pkgconvertdisp, swcatalog, LResources, ipkhandle,
+  utilities;
 
 {$IFDEF WINDOWS}{$R listallmngr.rc}{$ENDIF}
 
@@ -34,7 +35,7 @@ begin
   Application.Title:='Listaller Manager';
   Application.ShowMainForm:=false;
   Application.Initialize;
-  pkit := ExtractFilePath(Application.ExeName)+'pkitbind/pkitbind.py ';
+  pkit := GetDataFile('pkitbind/pkitbind.py ');
   writeLn('Application initialized.');
   Application.CreateForm(TmnFrm, mnFrm);
   Application.CreateForm(TFmConfig, FmConfig);

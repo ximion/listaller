@@ -26,7 +26,7 @@ object isFrm: TisFrm
   end
   object PageControl1: TPageControl
     Left = 0
-    Height = 483
+    Height = 461
     Top = 80
     Width = 812
     ActivePage = Designs
@@ -40,7 +40,7 @@ object isFrm: TisFrm
     OnPageChanged = PageControl1Change
     object Designs: TTabSheet
       Caption = 'Designs'
-      ClientHeight = 477
+      ClientHeight = 455
       ClientWidth = 732
       object Label1: TLabel
         Left = 2
@@ -55,18 +55,17 @@ object isFrm: TisFrm
       end
       object ScrollBox1: TScrollBox
         Left = 0
-        Height = 448
+        Height = 426
         Top = 29
         Width = 732
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
-        Ctl3D = False
         TabOrder = 0
       end
     end
     object Iconthemes: TTabSheet
       Caption = 'Iconthemes'
-      ClientHeight = 432
+      ClientHeight = 454
       ClientWidth = 808
       ImageIndex = 1
       OnShow = IconthemesShow
@@ -83,18 +82,17 @@ object isFrm: TisFrm
       end
       object ScrollBox2: TScrollBox
         Left = 0
-        Height = 403
+        Height = 425
         Top = 29
         Width = 808
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
-        Ctl3D = False
         TabOrder = 0
       end
     end
     object Wallpapers: TTabSheet
       Caption = 'Wallpapers'
-      ClientHeight = 432
+      ClientHeight = 454
       ClientWidth = 808
       ImageIndex = 2
       OnShow = WallpapersShow
@@ -111,19 +109,18 @@ object isFrm: TisFrm
       end
       object ScrollBox3: TScrollBox
         Left = 0
-        Height = 403
+        Height = 425
         Top = 29
         Width = 808
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
-        Ctl3D = False
         TabOrder = 0
       end
     end
     object Screensavers: TTabSheet
       Caption = 'Screensavers'
-      ClientHeight = 477
-      ClientWidth = 732
+      ClientHeight = 454
+      ClientWidth = 808
       OnShow = ScreensaversShow
       object Label4: TLabel
         Left = 2
@@ -138,12 +135,11 @@ object isFrm: TisFrm
       end
       object ScrollBox4: TScrollBox
         Left = 0
-        Height = 448
+        Height = 425
         Top = 29
-        Width = 732
+        Width = 808
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
-        Ctl3D = False
         TabOrder = 0
       end
     end

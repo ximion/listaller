@@ -154,28 +154,28 @@ d:=TIniFile.Create(fname);
        IdList.Add(fname);
 
        with AList[ListLength-1] do begin
-       ID:=IDList.Count-1;
+       aID:=IDList.Count-1;
 
        if d.ReadString('Desktop Entry','Name['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','<error>') <> '<error>' then
-        AppLabel.Caption:=d.ReadString('Desktop Entry','Name['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','<error>')
+        AppName:=d.ReadString('Desktop Entry','Name['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','<error>')
         else
-         AppLabel.Caption:=d.ReadString('Desktop Entry','Name','<error>');
+         AppName:=d.ReadString('Desktop Entry','Name','<error>');
 
-         AppLabel.Caption:=StringReplace(AppLabel.Caption,'&','&&',[rfReplaceAll]);
+         AppName:=StringReplace(AppName,'&','&&',[rfReplaceAll]);
 
          instLst.Add(Lowercase(d.ReadString('Desktop Entry','Name','<error>')));
 
         if d.ReadString('Desktop Entry','Comment['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','')<>'' then
-        DescLabel.Caption:=d.ReadString('Desktop Entry','Comment['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','')
+        AppDesc:=d.ReadString('Desktop Entry','Comment['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','')
         else
-        DescLabel.Caption:=d.ReadString('Desktop Entry','Comment','');
+        AppDesc:=d.ReadString('Desktop Entry','Comment','');
 
-        MnLabel.Caption:=strAuthor+': '+d.ReadString('Desktop Entry','X-Publisher','<error>');
-        if MnLabel.Caption=strAuthor+': '+'<error>' then
-        MnLabel.Visible:=false;
-        VLabel.Caption:=strVersion+': '+d.ReadString('Desktop Entry','X-AppVersion','<error>');
-        if VLabel.Caption=strVersion+': '+'<error>' then
-        VLabel.Visible:=false;
+        AppMn:=strAuthor+': '+d.ReadString('Desktop Entry','X-Publisher','<error>');
+        if AppMn=strAuthor+': '+'<error>' then
+        AppMn:='';
+        AppVersion:=strVersion+': '+d.ReadString('Desktop Entry','X-AppVersion','<error>');
+        if AppVersion=strVersion+': '+'<error>' then
+        AppVersion:='';
 
         //Load the icons
         if (LowerCase(ExtractFileExt(d.ReadString('Desktop Entry','Icon','')))<>'.tiff') then begin
@@ -201,7 +201,7 @@ d:=TIniFile.Create(fname);
             SetImage('/usr/share/pixmaps/'+ChangeFileExt(d.ReadString('Desktop Entry','Icon',''),'')+'.png')
         else if FileExists('/usr/share/pixmaps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
                 SetImage('/usr/share/pixmaps/'+d.ReadString('Desktop Entry','Icon','')+'.png');
-        except writeLn('ERROR: Unable to load icon!');ShowMessage(StringReplace(strCannotLoadIcon,'%a',AppLabel.Caption,[rfReplaceAll]));end;
+        except writeLn('ERROR: Unable to load icon!');ShowMessage(StringReplace(strCannotLoadIcon,'%a',AppName,[rfReplaceAll]));end;
         { This code is EXPERIMENTAL!}
         //Load KDE4 Icons
           //GetEnvironmentVariable('KDEDIRS')
@@ -242,7 +242,7 @@ StatusBar1.Panels[0].Text:=strLoading;
 
 //Create GIFThread for Throbber animation
 gif:=TGifThread.Create(true);
-gif.FileName:=ExtractFilePath(Application.ExeName)+'graphics/throbber.gif';
+gif.FileName:=GetDataFile('graphics/throbber.gif');
 gif.Initialize(ThrobberBox.Canvas);
 
 
@@ -301,21 +301,21 @@ Dec(k);
 AList[k]:=TListEntry.Create(mnFrm);
 AList[k].UnButton.OnClick:=@UnInstallClick;
 AList[k].Parent:=SWBox;
-AList[k].id:=k;
+AList[k].aId:=k;
 AList[k].UnButton.Tag:=k;
 
-AList[k].AppLabel.Caption:=(copy(tmp[i],0,pos('~',tmp[i])-1));
-blst.Add(AList[k].AppLabel.Caption);
+AList[k].AppName:=(copy(tmp[i],0,pos('~',tmp[i])-1));
+blst.Add(AList[k].AppName);
 IdList.Add(copy(tmp[i],pos('~',tmp[i]),length(tmp[i])));
 
-AList[k].VLabel.Caption:=strVersion+': '+(ireg.ReadString(tmp[i],'Version','0.0'));
-AList[k].mnLabel.Caption:=strAuthor+': '+(ireg.ReadString(tmp[i],'Author','#'));
-if ireg.ReadString(tmp[i],'Author','#')='#' then AList[k].mnLabel.Visible:=false;
-p:=RegDir+AList[k].AppLabel.Caption+' '+ireg.ReadString(tmp[i],'Version*','0.0')+'-'+copy(tmp[i],pos('~',tmp[i]),length(tmp[i]))+'/';
+AList[k].AppVersion:=strVersion+': '+(ireg.ReadString(tmp[i],'Version','0.0'));
+AList[k].AppMn:=strAuthor+': '+(ireg.ReadString(tmp[i],'Author','#'));
+if ireg.ReadString(tmp[i],'Author','#')='#' then AList[k].AppMn:='';
+p:=RegDir+AList[k].AppName+' '+ireg.ReadString(tmp[i],'Version*','0.0')+'-'+copy(tmp[i],pos('~',tmp[i]),length(tmp[i]))+'/';
 
-InstLst.Add(LowerCase(ireg.ReadString(tmp[i],'idName',AList[k].AppLabel.Caption)));
-aList[k].DescLabel.Caption:=(ireg.ReadString(tmp[i],'SDesc','No description given'));
-if AList[k].DescLabel.Caption='#' then AList[k].DescLabel.Caption:='No description given';
+InstLst.Add(LowerCase(ireg.ReadString(tmp[i],'idName',AList[k].AppName)));
+aList[k].AppDesc:=(ireg.ReadString(tmp[i],'SDesc','No description given'));
+if AList[k].AppDesc='#' then AList[k].AppDesc:='No description given';
 
 if FileExists(p+'icon.png') then
 AList[k].SetImage(p+'icon.png');
@@ -529,9 +529,9 @@ begin
      for i:=0 to ListLength-1 do begin
       AList[i].Visible:=true;
        Application.ProcessMessages;
-        if ((pos(LowerCase(edtFilter.Text),LowerCase(AList[i].AppLabel.Caption))<=0)
-        or (pos(LowerCase(edtFilter.Text),LowerCase(AList[i].DescLabel.Caption))<=0))
-         and (LowerCase(edtFilter.Text)<>LowerCase(AList[i].AppLabel.Caption)) then
+        if ((pos(LowerCase(edtFilter.Text),LowerCase(AList[i].AppName))<=0)
+        or (pos(LowerCase(edtFilter.Text),LowerCase(AList[i].AppDesc))<=0))
+         and (LowerCase(edtFilter.Text)<>LowerCase(AList[i].AppName)) then
          AList[i].Visible:=false;
          end;
        end;
@@ -564,7 +564,7 @@ DInfo:=GetDistro;
  if not DirectoryExists(RegDir) then SysUtils.CreateDir(RegDir);
  
  FLang:=Copy(GetEnvironmentVariable('LANG'), 1, 2);
- PODirectory := ExtractFilePath(Application.ExeName)+'lang/';
+ PODirectory := GetDataFile('lang/');
  GetLanguageIDs(Lang, FallbackLang);
  translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts-%s.po', Lang, FallbackLang);
  translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-%s.po', Lang, FallbackLang);
@@ -617,7 +617,7 @@ with CBox do begin
  Items[9]:=strAddidional;
  Items[10]:=strOther;
 end;
- Image1.Picture.LoadFromFile(ExtractFilePath(Application.ExeName)+'graphics/header.png');
+ Image1.Picture.LoadFromFile(GetDataFile('graphics/header.png'));
  Application.ShowMainForm:=true;
  instLst:=TStringList.Create;
  blst:=TStringList.Create; //Create Blacklist

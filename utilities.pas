@@ -29,7 +29,7 @@ uses
 
 const
   //** Version of the Listaller applicationset
-  LiVersion='0.1.95a';
+  LiVersion='0.1.97a';
 var
   //** True if Listaller is in testmode
   Testmode: Boolean=false;
@@ -37,15 +37,37 @@ type
 
 //** One entry of Listaller's visual software lists
 TListEntry = class(TPanel) //Helper class / a software entry
-public
+protected
 AppLabel: TLabel;
 DescLabel: TLabel;
 Vlabel: TLabel;
 MnLabel: TLabel;
 Graphic: TImage;
-UnButton: TBitBtn;
 id: Integer;
 sid: String;
+private
+ procedure SetAppName(s: String);
+ function GetAppName: String;
+ procedure SetAppDesc(s: String);
+ function GetAppDesc: String;
+ procedure SetAppMaintainer(s: String);
+ function GetAppMaintainer: String;
+ procedure SetAppVersion(s: String);
+ function GetAppVersion: String;
+public
+UnButton: TBitBtn;
+//** The application's ID
+property aID: Integer read ID write ID;
+//** Name of the application
+property AppName: String read GetAppName write SetAppName;
+//** Description of the application
+property AppDesc: String read GetAppDesc write SetAppDesc;
+//** Name of the maintainer(s)
+property AppMn: String read GetAppMaintainer write SetAppMaintainer;
+//** Version of the application
+property AppVersion: String read GetAppVersion write SetAppVersion;
+//** Software rm ID (sometimes needed, required by liTheme)
+property srmID: String read sID write sID;
 //** Set an image for the entry
 procedure SetImage(AImage: String);
 //** Correct positions
@@ -64,6 +86,8 @@ function  SyblToX(s: String): String;
 function  IsSharedFile(s: String): Boolean;
 //** Creates Listaller's config dir @returns Current config dir
 function  ConfigDir: String;
+//** Get current data file (check /usr/share and current dir)
+function  GetDataFile(s: String): String;
 //** Executes a command-line application @returns The application's last output string
 function  CmdResult(cmd:String):String;
 //** Executes a command-line application @returns The application's exit code
@@ -152,6 +176,15 @@ h:=ReplaceRegExpr(' <([a-zA-Z_]{4,})-only>', h, '', false);
 h:=SysUtils.StringReplace(h,' <mime>','',[rfReplaceAll]);
 h:=SysUtils.StringReplace(h,'>','',[rfReplaceAll]);
 Result:=h;
+end;
+
+function GetDataFile(s: String): String;
+begin
+if (FileExists(ExtractFilePath(Application.ExeName)+s))
+or (DirectoryExists(ExtractFilePath(Application.ExeName)+s)) then
+Result:=ExtractFilePath(Application.ExeName)+s
+else
+Result:='/usr/share/listaller/'+s;
 end;
 
 function IsSharedFile(s: String): Boolean;
@@ -417,7 +450,7 @@ AutoSize:=true;
 Anchors:=[akBottom,akRight];
 Top:=self.Height-54;
 Left:=self.Width-140;
-Caption:='Version: ???';
+Caption:='';
 end;
 
 Graphic:=TImage.Create(nil);
@@ -431,7 +464,7 @@ Center:=true;
 Stretch:=true;
 Proportional:=true;
 Anchors:=[akLeft];
-Picture.LoadFromFile(ExtractFilePath(Application.ExeName)+'graphics/spackage.png');
+Picture.LoadFromFile(GetDataFile('graphics/spackage.png'));
 end;
 
 UnButton:=TBitBtn.Create(nil);
@@ -459,6 +492,46 @@ mnLabel.Free;
 DescLabel.Free;
 vLabel.Free;
 inherited Destroy;
+end;
+
+procedure TListEntry.SetAppName(s: String);
+begin
+ AppLabel.Caption:=s;
+end;
+
+function TListEntry.GetAppName: String;
+begin
+ Result:=AppLabel.Caption;
+end;
+
+procedure TListEntry.SetAppDesc(s: String);
+begin
+ DescLabel.Caption:=s;
+end;
+
+function TListEntry.GetAppDesc: String;
+begin
+ Result:=DescLabel.Caption;
+end;
+
+procedure TListEntry.SetAppMaintainer(s: String);
+begin
+ MNLabel.Caption:=s;
+end;
+
+function TListEntry.GetAppMaintainer: String;
+begin
+ Result:=MNLabel.Caption;
+end;
+
+procedure TListEntry.SetAppVersion(s: String);
+begin
+ MNLabel.Caption:=s;
+end;
+
+function TListEntry.GetAppVersion: String;
+begin
+ Result:=MNLabel.Caption;
 end;
 
 procedure TListEntry.SetImage(AImage: String);

@@ -44,7 +44,7 @@ var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;reg: TIniFile;k: Bool
     proc: TProcess;dlink: Boolean;t: TProcess;
 begin
 Result:=0;
-pkit:=ExtractFilePath(Application.ExeName)+'pkitbind/pkitbind.py ';
+pkit:=GetDataFile('pkitbind/pkitbind.py ');
 p:=RegDir+AppName+'~'+AppID+'/';
 //InfoMemo.Lines.Add('Begin uninstallation...');
 
