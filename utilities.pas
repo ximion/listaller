@@ -201,11 +201,29 @@ begin
 end;
 
 function SyblToPath(s: String): String;
+var t: TProcess;n: String;x: TStringList;
 begin
 s:=StringReplace(s,'$HOME',GetEnvironmentVariable('HOME'),[rfReplaceAll]);
+
+t:=TProcess.Create(nil);
+ t.Options:=[poUsePipes, poWaitOnExit];
+ t.CommandLine:='uname -m';
+ t.Execute;
+ x:=TStringList.Create;
+ x.LoadFromStream(t.OutPut);
+ n:=x[0];
+ x.Free;
+ t.Free;
+
 if IsRoot then begin
 s:=StringReplace(s,'$INST','/usr/appfiles',[rfReplaceAll]);
 s:=StringReplace(s,'$INST-X','/usr/share',[rfReplaceAll]);
+s:=StringReplace(s,'$BIN','/usr/bin',[rfReplaceAll]);
+
+ if LowerCase(n)='x86_64' then
+  s:=StringReplace(s,'$LIB','/usr/lib64',[rfReplaceAll])
+ else
+  s:=StringReplace(s,'$LIB','/usr/lib',[rfReplaceAll]);
 s:=StringReplace(s,'$APP','/usr/share/applications',[rfReplaceAll]);
 s:=StringReplace(s,'$ICON-16','/usr/share/icons/hicolor/16x16/apps',[rfReplaceAll]);
 s:=StringReplace(s,'$ICON-24','/usr/share/icons/hicolor/24x24/apps',[rfReplaceAll]);
@@ -228,7 +246,17 @@ if not DirectoryExists(GetXHome+'/applications/files/icons/64x64')  then CreateD
 if not DirectoryExists(GetXHome+'/applications/files/icons/128x128')then CreateDir(GetXHome+'/applications/files/icons/128x128');
 if not DirectoryExists(GetXHome+'/applications/files/icons/256x256')then CreateDir(GetXHome+'/applications/files/icons/256x256');
 if not DirectoryExists(GetXHome+'/applications/files/icons/common')then CreateDir(GetXHome+'/applications/files/icons/common');
+if LowerCase(n)='x86_64' then begin
+ if not DirectoryExists(GetXHome+'/applications/files/lib64')then CreateDir(GetXHome+'/applications/files/lib64');
+end else
+ if not DirectoryExists(GetXHome+'/applications/files/lib')then CreateDir(GetXHome+'/applications/files/lib');
 //
+s:=StringReplace(s,'$BIN',GetXHome+'/applications/files/binary',[rfReplaceAll]);
+if LowerCase(n)='x86_64' then
+  s:=StringReplace(s,'$LIB',GetXHome+'/applications/files/lib64',[rfReplaceAll])
+ else
+  s:=StringReplace(s,'$LIB',GetXHome+'/applications/files/lib',[rfReplaceAll]);
+
 s:=StringReplace(s,'$INST',GetXHome+'/applications/files',[rfReplaceAll]);
 s:=StringReplace(s,'$INST-X',GetXHome+'/applications/files',[rfReplaceAll]);
 s:=StringReplace(s,'$APP',GetXHome+'/applications',[rfReplaceAll]);
@@ -258,6 +286,8 @@ s:=StringReplace(s,'$ICON-64','/icon64',[rfReplaceAll]);
 s:=StringReplace(s,'$ICON-128','/icon128',[rfReplaceAll]);
 s:=StringReplace(s,'$ICON-256','/icon265',[rfReplaceAll]);
 s:=StringReplace(s,'$PIX','/icon',[rfReplaceAll]);
+s:=StringReplace(s,'$LIB','/lib',[rfReplaceAll]);
+s:=StringReplace(s,'$LIB','/binary',[rfReplaceAll]);
 Result:=s;
 end;
 

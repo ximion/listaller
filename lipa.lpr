@@ -89,6 +89,12 @@ begin
     Halt(0);
   end;
 
+  if HasOption('s','solve') then begin
+    writeLn(SyblToPath('$'+paramstr(2)));
+    halt(0);
+  end;
+
+
  while paramstr(i)<>'' do begin
    if paramstr(i)[1]='/' then
     if a = '' then a := paramstr(i)

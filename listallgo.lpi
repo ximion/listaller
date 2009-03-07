@@ -10,7 +10,7 @@
       <TargetFileExt Value=""/>
       <Title Value="Installer"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="5"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <i18n>
       <OutDir Value="bin/lang"/>
@@ -64,8 +64,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="mainunit"/>
-        <CursorPos X="57" Y="1413"/>
-        <TopLine Value="1391"/>
+        <CursorPos X="58" Y="14"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -388,7 +388,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="dgunit"/>
         <CursorPos X="15" Y="159"/>
-        <TopLine Value="160"/>
+        <TopLine Value="159"/>
         <EditorIndex Value="5"/>
         <UsageCount Value="118"/>
         <Loaded Value="True"/>
@@ -440,7 +440,7 @@
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
         <CursorPos X="27" Y="189"/>
-        <TopLine Value="151"/>
+        <TopLine Value="150"/>
         <EditorIndex Value="2"/>
         <UsageCount Value="27"/>
         <Loaded Value="True"/>

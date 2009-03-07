@@ -10,13 +10,13 @@
       <TargetFileExt Value=""/>
       <Title Value="Listaller Manager"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="2"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="749"/>
+      <CurrentBuildNr Value="751"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -306,8 +306,8 @@
       <Unit35>
         <Filename Value="utilities.pas"/>
         <UnitName Value="utilities"/>
-        <CursorPos X="39" Y="479"/>
-        <TopLine Value="467"/>
+        <CursorPos X="35" Y="289"/>
+        <TopLine Value="246"/>
         <EditorIndex Value="2"/>
         <UsageCount Value="42"/>
         <Loaded Value="True"/>
@@ -380,7 +380,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="swcatalog"/>
         <CursorPos X="3" Y="687"/>
-        <TopLine Value="657"/>
+        <TopLine Value="653"/>
         <EditorIndex Value="3"/>
         <UsageCount Value="86"/>
         <Loaded Value="True"/>
@@ -592,124 +592,124 @@
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="manager.pas"/>
-        <Caret Line="318" Column="46" TopLine="297"/>
+        <Filename Value="uninstall.pas"/>
+        <Caret Line="189" Column="64" TopLine="168"/>
       </Position1>
       <Position2>
         <Filename Value="uninstall.pas"/>
-        <Caret Line="245" Column="46" TopLine="8"/>
+        <Caret Line="190" Column="89" TopLine="169"/>
       </Position2>
       <Position3>
-        <Filename Value="uninstall.pas"/>
-        <Caret Line="189" Column="64" TopLine="168"/>
+        <Filename Value="manager.pas"/>
+        <Caret Line="9" Column="35" TopLine="1"/>
       </Position3>
       <Position4>
-        <Filename Value="uninstall.pas"/>
-        <Caret Line="190" Column="89" TopLine="169"/>
+        <Filename Value="manager.pas"/>
+        <Caret Line="176" Column="79" TopLine="143"/>
       </Position4>
       <Position5>
         <Filename Value="manager.pas"/>
-        <Caret Line="9" Column="35" TopLine="1"/>
+        <Caret Line="177" Column="33" TopLine="143"/>
       </Position5>
       <Position6>
         <Filename Value="manager.pas"/>
-        <Caret Line="176" Column="79" TopLine="143"/>
+        <Caret Line="178" Column="19" TopLine="143"/>
       </Position6>
       <Position7>
         <Filename Value="manager.pas"/>
-        <Caret Line="177" Column="33" TopLine="143"/>
+        <Caret Line="311" Column="70" TopLine="290"/>
       </Position7>
       <Position8>
         <Filename Value="manager.pas"/>
-        <Caret Line="178" Column="19" TopLine="143"/>
+        <Caret Line="314" Column="63" TopLine="290"/>
       </Position8>
       <Position9>
         <Filename Value="manager.pas"/>
-        <Caret Line="311" Column="70" TopLine="290"/>
+        <Caret Line="8" Column="84" TopLine="1"/>
       </Position9>
       <Position10>
-        <Filename Value="manager.pas"/>
-        <Caret Line="314" Column="63" TopLine="290"/>
-      </Position10>
-      <Position11>
-        <Filename Value="manager.pas"/>
-        <Caret Line="8" Column="84" TopLine="1"/>
-      </Position11>
-      <Position12>
         <Filename Value="swcatalog.pas"/>
         <Caret Line="146" Column="1" TopLine="119"/>
-      </Position12>
-      <Position13>
+      </Position10>
+      <Position11>
         <Filename Value="swcatalog.pas"/>
         <Caret Line="90" Column="26" TopLine="69"/>
+      </Position11>
+      <Position12>
+        <Filename Value="utilities.pas"/>
+        <Caret Line="7" Column="96" TopLine="1"/>
+      </Position12>
+      <Position13>
+        <Filename Value="utilities.pas"/>
+        <Caret Line="31" Column="15" TopLine="1"/>
       </Position13>
       <Position14>
         <Filename Value="utilities.pas"/>
-        <Caret Line="7" Column="96" TopLine="1"/>
+        <Caret Line="32" Column="20" TopLine="22"/>
       </Position14>
       <Position15>
         <Filename Value="utilities.pas"/>
-        <Caret Line="31" Column="15" TopLine="1"/>
+        <Caret Line="55" Column="25" TopLine="22"/>
       </Position15>
       <Position16>
         <Filename Value="utilities.pas"/>
-        <Caret Line="32" Column="20" TopLine="22"/>
+        <Caret Line="56" Column="24" TopLine="22"/>
       </Position16>
       <Position17>
         <Filename Value="utilities.pas"/>
-        <Caret Line="55" Column="25" TopLine="22"/>
+        <Caret Line="67" Column="13" TopLine="46"/>
       </Position17>
       <Position18>
         <Filename Value="utilities.pas"/>
-        <Caret Line="56" Column="24" TopLine="22"/>
+        <Caret Line="68" Column="67" TopLine="46"/>
       </Position18>
       <Position19>
-        <Filename Value="utilities.pas"/>
-        <Caret Line="67" Column="13" TopLine="46"/>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="115" Column="26" TopLine="90"/>
       </Position19>
       <Position20>
-        <Filename Value="utilities.pas"/>
-        <Caret Line="68" Column="67" TopLine="46"/>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="156" Column="24" TopLine="136"/>
       </Position20>
       <Position21>
         <Filename Value="swcatalog.pas"/>
-        <Caret Line="115" Column="26" TopLine="90"/>
+        <Caret Line="158" Column="77" TopLine="136"/>
       </Position21>
       <Position22>
         <Filename Value="swcatalog.pas"/>
-        <Caret Line="156" Column="24" TopLine="136"/>
+        <Caret Line="256" Column="18" TopLine="235"/>
       </Position22>
       <Position23>
         <Filename Value="swcatalog.pas"/>
-        <Caret Line="158" Column="77" TopLine="136"/>
+        <Caret Line="265" Column="95" TopLine="235"/>
       </Position23>
       <Position24>
         <Filename Value="swcatalog.pas"/>
-        <Caret Line="256" Column="18" TopLine="235"/>
+        <Caret Line="358" Column="53" TopLine="337"/>
       </Position24>
       <Position25>
         <Filename Value="swcatalog.pas"/>
-        <Caret Line="265" Column="95" TopLine="235"/>
+        <Caret Line="523" Column="19" TopLine="502"/>
       </Position25>
       <Position26>
         <Filename Value="swcatalog.pas"/>
-        <Caret Line="358" Column="53" TopLine="337"/>
+        <Caret Line="6" Column="81" TopLine="1"/>
       </Position26>
       <Position27>
-        <Filename Value="swcatalog.pas"/>
-        <Caret Line="523" Column="19" TopLine="502"/>
+        <Filename Value="utilities.pas"/>
+        <Caret Line="479" Column="39" TopLine="467"/>
       </Position27>
       <Position28>
         <Filename Value="swcatalog.pas"/>
-        <Caret Line="6" Column="81" TopLine="1"/>
+        <Caret Line="445" Column="3" TopLine="439"/>
       </Position28>
       <Position29>
         <Filename Value="utilities.pas"/>
-        <Caret Line="479" Column="39" TopLine="467"/>
+        <Caret Line="11" Column="93" TopLine="1"/>
       </Position29>
       <Position30>
-        <Filename Value="swcatalog.pas"/>
-        <Caret Line="445" Column="3" TopLine="439"/>
+        <Filename Value="utilities.pas"/>
+        <Caret Line="81" Column="39" TopLine="60"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
