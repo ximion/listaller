@@ -159,7 +159,7 @@ object IWizFrm: TIWizFrm
         TabOrder = 0
         object Memo1: TMemo
           Left = 6
-          Height = 331
+          Height = 341
           Top = 3
           Width = 604
           Anchors = [akTop, akLeft, akRight, akBottom]

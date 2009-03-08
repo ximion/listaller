@@ -117,6 +117,10 @@ type
     IconPath: String;
     //** Execute external applications that are linked in the IPK-file
     ExecA, ExecB, ExecX: String;
+    //** Overwrite all files?
+    FOverwrite: Boolean;
+    //** True if IPK package is a patch
+    FPatch: Boolean;
   end; 
 
 var
@@ -440,6 +444,14 @@ ReadXMLFile(Doc,lp+PkgName+'/arcinfo.pin'); //Read XML configuration
 xnode:=Doc.FindNode('package');
 pkgtype:=xnode.Attributes.GetNamedItem('type').NodeValue;
 
+if (xnode.Attributes.GetNamedItem('patch')<>nil)
+and(xnode.Attributes.GetNamedItem('patch').NodeValue='true')
+then begin
+FPatch:=true;
+writeLn('WARNING: This package patches another application on your machine!');
+end else FPatch:=false;
+
+
 if pkgtype='linstall' then
 if not IsRoot then begin
   imForm:=TimdFrm.Create(self);
@@ -516,6 +528,11 @@ if (n='i686')
 or (n='i586')
 or (n='i486')
 then n:='i386';
+
+if (pos('iofilecheck',LowerCase(FindChildNode(xnode,'disallow').NodeValue))>0) then begin
+FOverwrite:=true;
+writeLn('WARNING: This package will overwrite every file that is in the package and on your disk!');
+end else FOverwrite:=false;
 
 if (pos(n,LowerCase(FindChildNode(xnode,'architecture').NodeValue))<=0)
 and (pos('all',LowerCase(FindChildNode(xnode,'architecture').NodeValue))<=0) then begin
@@ -1318,7 +1335,16 @@ end;
 
 Inc(j);
 
-FileCopy(DeleteModifiers(lp+PkgName+h),dest+'/'+ExtractFileName(DeleteModifiers(h)));
+if FOverwrite then
+FileCopy(DeleteModifiers(lp+PkgName+h),dest+'/'+ExtractFileName(DeleteModifiers(h)))
+else
+if (not FileExists(dest+'/'+ExtractFileName(DeleteModifiers(h)))) then
+ FileCopy(DeleteModifiers(lp+PkgName+h),dest+'/'+ExtractFileName(DeleteModifiers(h)))
+else begin
+  ShowMessage(StringReplace(strCnOverwrite,'%f',dest+'/'+ExtractFileName(DeleteModifiers(h)),[rfReplaceAll])+#13+strInClose);
+  halt(5);
+end;
+
 if(pos('.desktop',LowerCase(ExtractFileName(h)))>0) then
 begin
 dsk:=TIniFile.Create(dest+'/'+ExtractFileName(h));
@@ -1392,6 +1418,7 @@ InsProgress.Position:=InsProgress.Position+6;
 fi.Free;
 Label9.Caption:=strStep4;
 
+if not FPatch then begin
 if not DirectoryExists(RegDir+IAppName+'-'+idName) then SysUtils.CreateDir(RegDir+IAppName+'-'+idName);
 FileCopy(lp+PkgName+'/arcinfo.pin',RegDir+IAppName+'-'+idName+'/proginfo.pin');
 
@@ -1422,6 +1449,8 @@ ar:=TInifile.Create(RegDir+IAppName+'-'+idName+'/proginfo.pin');
 for i:=0 to Dependencies.Count-1 do
 ar.WriteString('DepOS','ID'+IntToStr(i+1),Dependencies[i]);
 ar.Free;
+
+end; //End of Patch check
 
 InsProgress.Position:=InsProgress.Position+5;
 //Execute Program/Script

@@ -71,19 +71,13 @@ make clean
 %defattr(-,root,root)
 %dir "/usr/bin"
 /etc/lipa/blacklist
-/usr/share/listaller/listallgo
-/usr/share/listaller/listallmgr
-/usr/share/listaller/liupdate
-/usr/share/listaller/graphics
-/usr/share/listaller/pkitbind
-/usr/share/listaller/lang
+/usr/lib/listaller/
+/usr/share/listaller
 
 %dir "/usr/share/applications"
 /usr/share/applications/listaller-manager.desktop
-/usr/share/mime/packages/x-ipk.xml
-/usr/share/mime/text/x-ips.xml
 /usr/share/mime-info/listaller-pack.mime
-/usr/share/listaller/listallmgr
+/usr/share/listaller
 /usr/bin/lipa
 /usr/bin/listallmgr
 /usr/share/pixmaps/listaller.png

@@ -42,8 +42,8 @@ implementation
 procedure TFmAbout.FormShow(Sender: TObject);
 begin
    Image1.Picture.LoadFromFile('/usr/share/pixmaps/listaller.png');
-   Label2.Caption:='Version '+LiVersion;
-   Label3.Caption:='Running under '+GetDistro.Desktop+' (or similar)';
+   Label2.Caption:=strVersion+': '+LiVersion;
+   Label3.Caption:=StringReplace(strLinDesk,'%de',GetDistro.Desktop,[rfReplaceAll]);
    AboutSheet.Caption:=strAbout;
    AuthorSheet.Caption:=strAuthors;
    BitBtn1.Caption:=strClose;

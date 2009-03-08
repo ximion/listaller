@@ -1,7 +1,7 @@
 object FmAbout: TFmAbout
-  Left = 374
+  Left = 750
   Height = 421
-  Top = 269
+  Top = 346
   Width = 343
   ActiveControl = PageControl1
   Caption = 'About Listaller'
@@ -61,7 +61,7 @@ object FmAbout: TFmAbout
     TabOrder = 0
     object AboutSheet: TTabSheet
       Caption = 'About'
-      ClientHeight = 239
+      ClientHeight = 238
       ClientWidth = 320
       object Label4: TLabel
         Left = 6
@@ -75,7 +75,7 @@ object FmAbout: TFmAbout
     end
     object AuthorSheet: TTabSheet
       Caption = 'Authors'
-      ClientHeight = 239
+      ClientHeight = 238
       ClientWidth = 320
       object Label5: TLabel
         Left = 0
@@ -88,7 +88,7 @@ object FmAbout: TFmAbout
       end
       object Label6: TLabel
         Left = 0
-        Height = 226
+        Height = 225
         Top = 13
         Width = 320
         Align = alClient

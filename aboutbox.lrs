@@ -1,14 +1,14 @@
 { Das ist eine automatisch erzeugte Lazarus-Ressourcendatei }
 
 LazarusResources.Add('TFmAbout','FORMDATA',[
-  'TPF0'#8'TFmAbout'#7'FmAbout'#4'Left'#3'v'#1#6'Height'#3#165#1#3'Top'#3#13#1#5
-  +'Width'#3'W'#1#13'ActiveControl'#7#12'PageControl1'#7'Caption'#6#15'About Li'
-  +'staller'#12'ClientHeight'#3#165#1#11'ClientWidth'#3'W'#1#6'OnShow'#7#8'Form'
-  +'Show'#8'Position'#7#17'poOwnerFormCenter'#13'ShowInTaskBar'#7#7'stNever'#10
-  +'LCLVersion'#6#6'0.9.27'#0#6'TImage'#6'Image1'#4'Left'#2#8#6'Height'#2'Z'#3
-  +'Top'#2#8#5'Width'#2'Z'#12'Proportional'#9#7'Stretch'#9#0#0#6'TLabel'#6'Labe'
-  +'l1'#4'Left'#2'u'#6'Height'#2#19#3'Top'#2#15#5'Width'#2'8'#7'Caption'#6#9'Li'
-  +'staller'#11'Font.Height'#2#241#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10
+  'TPF0'#8'TFmAbout'#7'FmAbout'#4'Left'#3#238#2#6'Height'#3#165#1#3'Top'#3'Z'#1
+  +#5'Width'#3'W'#1#13'ActiveControl'#7#12'PageControl1'#7'Caption'#6#15'About '
+  +'Listaller'#12'ClientHeight'#3#165#1#11'ClientWidth'#3'W'#1#6'OnShow'#7#8'Fo'
+  +'rmShow'#8'Position'#7#17'poOwnerFormCenter'#13'ShowInTaskBar'#7#7'stNever'
+  +#10'LCLVersion'#6#6'0.9.27'#0#6'TImage'#6'Image1'#4'Left'#2#8#6'Height'#2'Z'
+  +#3'Top'#2#8#5'Width'#2'Z'#12'Proportional'#9#7'Stretch'#9#0#0#6'TLabel'#6'La'
+  +'bel1'#4'Left'#2'u'#6'Height'#2#19#3'Top'#2#15#5'Width'#2'8'#7'Caption'#6#9
+  +'Listaller'#11'Font.Height'#2#241#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10
   +'ParentFont'#8#0#0#6'TLabel'#6'Label2'#4'Left'#2'u'#6'Height'#2#13#3'Top'#2
   +'('#5'Width'#2'?'#7'Caption'#6#15'Version ...-...'#11'Font.Height'#2#247#9'F'
   +'ont.Name'#6#4'Sans'#10'Font.Style'#11#6'fsBold'#0#11'ParentColor'#8#10'Pare'
@@ -17,16 +17,16 @@ LazarusResources.Add('TFmAbout','FORMDATA',[
   +'lor'#8#0#0#12'TPageControl'#12'PageControl1'#4'Left'#2#8#6'Height'#3#12#1#3
   +'Top'#2'h'#5'Width'#3'D'#1#10'ActivePage'#7#10'AboutSheet'#7'Anchors'#11#5'a'
   +'kTop'#6'akLeft'#7'akRight'#8'akBottom'#0#8'TabIndex'#2#0#8'TabOrder'#2#0#0#9
-  +'TTabSheet'#10'AboutSheet'#7'Caption'#6#5'About'#12'ClientHeight'#3#239#0#11
+  +'TTabSheet'#10'AboutSheet'#7'Caption'#6#5'About'#12'ClientHeight'#3#238#0#11
   +'ClientWidth'#3'@'#1#0#6'TLabel'#6'Label4'#4'Left'#2#6#6'Height'#2'X'#3'Top'
   +#2'@'#5'Width'#3#226#0#7'Anchors'#11#6'akLeft'#0#7'Caption'#6#134'Software i'
   +'nstaller && manager'#10#10#194#169' 2008-2009 Matthias Klumpp'#10#10'http:/'
   +'/listaller.nlinux.org'#10'License: GNU General Public License Version 3'#11
   +'ParentColor'#8#0#0#0#9'TTabSheet'#11'AuthorSheet'#7'Caption'#6#7'Authors'#12
-  +'ClientHeight'#3#239#0#11'ClientWidth'#3'@'#1#0#6'TLabel'#6'Label5'#4'Left'#2
+  +'ClientHeight'#3#238#0#11'ClientWidth'#3'@'#1#0#6'TLabel'#6'Label5'#4'Left'#2
   +#0#6'Height'#2#13#3'Top'#2#0#5'Width'#3'@'#1#5'Align'#7#5'alTop'#7'Caption'#6
   +'@Please use https://bugs.launchpad.net/listaller for bug reports.'#11'Paren'
-  +'tColor'#8#0#0#6'TLabel'#6'Label6'#4'Left'#2#0#6'Height'#3#226#0#3'Top'#2#13
+  +'tColor'#8#0#0#6'TLabel'#6'Label6'#4'Left'#2#0#6'Height'#3#225#0#3'Top'#2#13
   +#5'Width'#3'@'#1#5'Align'#7#8'alClient'#7'Caption'#6#229#10'Matthias Klumpp'
   +#10'    matthias@nlinux.org'#10'    Maintainer and developer'#10#10'Thomas D'
   +'ieffenbach'#10'    giantics@gmx.net'#10'    Developer'#10#10'Dennis Seid'#10

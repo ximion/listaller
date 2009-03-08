@@ -47,11 +47,12 @@ strInagree='I don''t agree';
 strLDnSupported='Your Linux distribution is not supported by Listaller yet!';
 strnSupported='This package does not support your Linux distribution.';
 strInClose='The installer will close now';
+strCnOverwrite='Unable to overwrite the file %f.';
 notifyDevs='Please notify the developers on http://launchpad.net/listaller';
 strExtractError='Error while extracting files!';
 strPkgDM='The IPK package could be damaged or you haven''t enough rights to acces required files/folders.';
 strAbLoad='Loading aborted.';
-strAlreadyinst='This application is already installed';
+strAlreadyInst='This application is already installed';
 strInstallAgain='Do you want to install it again?';
 strWelcomeTo='Welcome to the installation of %a';
 strInstOf='Installation of %a';
@@ -178,6 +179,7 @@ strRMPkg='Do you really want to remove "%p", containing %a?'#13'The following pa
 strRmPkgQ='Really remove?';
 strWaiting='Waiting...';
 strRMAppC='Uninstalling %a';
+strLinDesk='Running under %de (or similar)';
 {Updater
 ---------}
 strNoUpdates='There are no updates available!';
