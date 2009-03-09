@@ -48,7 +48,6 @@ object frmEditor: TfrmEditor
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 18
-        BookMarkOptions.OnChange = nil
         Gutter.LeftOffset = 0
         Gutter.RightOffset = 0
         Gutter.ShowLineNumbers = True
@@ -396,7 +395,6 @@ object frmEditor: TfrmEditor
         )
         Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
         ScrollBars = ssAutoBoth
-        SelectedColor.OnChange = nil
       end
     end
   end
@@ -445,6 +443,7 @@ object frmEditor: TfrmEditor
       object mnuEditCut: TMenuItem
         Caption = 'Cut'
         ShortCut = 16472
+        OnClick = mnuEditCutClick
       end
       object mnuEditCopy: TMenuItem
         Caption = 'Copy'
@@ -454,10 +453,22 @@ object frmEditor: TfrmEditor
       object mnuEditPaste: TMenuItem
         Caption = 'Paste'
         ShortCut = 16470
+        OnClick = mnuEditPasteClick
+      end
+      object MenuItem2: TMenuItem
+        Caption = '-'
       end
       object mnuEditFind: TMenuItem
         Caption = 'Find'
         ShortCut = 16454
+        OnClick = mnuEditFindClick
+      end
+      object mnuEditReplace: TMenuItem
+        Caption = 'Replace'
+        OnClick = mnuEditReplaceClick
+      end
+      object MenuItem3: TMenuItem
+        Caption = '-'
       end
       object mnuEditAddFilePath: TMenuItem
         Caption = 'Add File-path'
@@ -555,5 +566,17 @@ object frmEditor: TfrmEditor
     DollarVariables = True
     left = 832
     top = 40
+  end
+  object FindDialog: TFindDialog
+    OnFind = FindDialogFind
+    left = 584
+    top = 8
+  end
+  object ReplaceDialog: TReplaceDialog
+    Options = [frDown, frReplace, frReplaceAll]
+    OnFind = ReplaceDialogFind
+    OnReplace = ReplaceDialogReplace
+    left = 552
+    top = 8
   end
 end

@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, SynEdit,
   ComCtrls, Menus, StdCtrls, fwiz, FileUtil, SynHighlighterXML, ExtCtrls,
-  process, SynHighlighterTeX, SynHighlighterAny, MD5;
+  process, SynHighlighterTeX, SynHighlighterAny, SynEditTypes, MD5;
 
 type
 
@@ -69,8 +69,12 @@ type
   { TfrmEditor }
 
   TfrmEditor = class(TForm)
+    FindDialog: TFindDialog;
     MainScriptEdit: TSynEdit;
     MenuItem1: TMenuItem;
+    MenuItem2: TMenuItem;
+    MenuItem3: TMenuItem;
+    mnuEditReplace: TMenuItem;
     mnuEditRemoveFileProfile: TMenuItem;
     mnuEditAddFileProfile: TMenuItem;
     mmMain: TMainMenu;
@@ -96,6 +100,7 @@ type
     IPSNotebook: TNotebook;
     OpenDialog1: TOpenDialog;
     OpenDialog2: TOpenDialog;
+    ReplaceDialog: TReplaceDialog;
     ScriptPage: TPage;
     Process1: TProcess;
     SaveDialog1: TSaveDialog;
@@ -104,6 +109,7 @@ type
     SynTeXSyn1: TSynTeXSyn;
     SynXMLSyn1: TSynXMLSyn;
     procedure Button1Click(Sender: TObject);
+    procedure FindDialogFind(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -114,7 +120,11 @@ type
     procedure mnuEditAddFilePathClick(Sender: TObject);
     procedure mnuEditAddFileProfileClick(Sender: TObject);
     procedure mnuEditCopyClick(Sender: TObject);
+    procedure mnuEditCutClick(Sender: TObject);
+    procedure mnuEditFindClick(Sender: TObject);
+    procedure mnuEditPasteClick(Sender: TObject);
     procedure mnuEditRemoveFileProfileClick(Sender: TObject);
+    procedure mnuEditReplaceClick(Sender: TObject);
     procedure mnuEditUndoClick(Sender: TObject);
     procedure mnuFileSaveClick(Sender: TObject);
     procedure mnuFileNewWizardClick(Sender: TObject);
@@ -124,6 +134,8 @@ type
     procedure mnuFileLoadIPSClick(Sender: TObject);
     procedure mnuFileCloseClick(Sender: TObject);
     procedure mnuEditFileWizardClick(Sender: TObject);
+    procedure ReplaceDialogFind(Sender: TObject);
+    procedure ReplaceDialogReplace(Sender: TObject);
     procedure TabSheet1Show(Sender: TObject);
     procedure TabSheet2Show(Sender: TObject);
     procedure TabSheet3Show(Sender: TObject);
@@ -134,6 +146,7 @@ type
     procedure SaveIPSFile(IFn: String);
   //** Reads the Output of Process1
     procedure ReadOutput;
+    function GetActiveSynEdit: TSynEdit;
   public
     { public declarations }
   end; 
@@ -151,6 +164,35 @@ var
 implementation
 
 uses prjwizard;
+
+//-----------------------------------------------------------------------------
+// modified Pos - function
+// begins at position StartPos
+//-----------------------------------------------------------------------------
+function pos2(const substr : shortstring;const s : shortstring;StartPos:Integer):SizeInt;
+var
+  i,MaxLen : SizeInt;
+  pc : pchar;
+begin
+  Pos2:=StartPos;
+  if Length(SubStr)>0 then
+   begin
+     MaxLen:=sizeint(Length(s))-Length(SubStr);
+     i:=0;
+     pc:=@s[1];
+     while (i<=MaxLen) do
+      begin
+        inc(i);
+        if (SubStr[1]=pc^) and
+           (CompareChar(Substr[1],pc^,Length(SubStr))=0) then
+         begin
+           Pos2:=i;
+           exit;
+         end;
+        inc(pc);
+      end;
+   end;
+end;
 
 {TFileProfile}
 
@@ -460,7 +502,25 @@ end;
 
 procedure TfrmEditor.mnuEditCopyClick(Sender: TObject);
 begin
+  if frmEditor.ActiveControl is TSynEdit then
+    TSynEdit(frmEditor.ActiveControl).CopyToClipboard;
+end;
 
+procedure TfrmEditor.mnuEditCutClick(Sender: TObject);
+begin
+  if frmEditor.ActiveControl is TSynEdit then
+    TSynEdit(frmEditor.ActiveControl).CutToClipboard;
+end;
+
+procedure TfrmEditor.mnuEditFindClick(Sender: TObject);
+begin
+  FindDialog.Execute;
+end;
+
+procedure TfrmEditor.mnuEditPasteClick(Sender: TObject);
+begin
+  if frmEditor.ActiveControl is TSynEdit then
+    TSynEdit(frmEditor.ActiveControl).PasteFromClipboard;
 end;
 
 procedure TfrmEditor.mnuEditRemoveFileProfileClick(Sender: TObject);
@@ -468,12 +528,19 @@ begin
   FileProfiles.RemoveProfile(IPSNotebook.Page[IPSNotebook.PageIndex]);
 end;
 
+procedure TfrmEditor.mnuEditReplaceClick(Sender: TObject);
+begin
+  ReplaceDialog.Execute;
+end;
+
 procedure TfrmEditor.mnuEditUndoClick(Sender: TObject);
 begin
-  if ScriptPage.Visible then
-    MainScriptEdit.Undo;
+  //if ScriptPage.Visible then
+  //  MainScriptEdit.Undo;
   //if Page2.Visible then
   //  FilesEdit.Undo;
+  if frmEditor.ActiveControl is TSynEdit then
+    TSynEdit(frmEditor.ActiveControl).Undo;
 end;
 
 procedure TfrmEditor.SaveIPSFile(IFn: String);
@@ -599,6 +666,36 @@ end;
 procedure TfrmEditor.Button1Click(Sender: TObject);
 begin
 
+end;
+
+function TfrmEditor.GetActiveSynEdit: TSynEdit;
+begin
+  try
+    if IPSNotebook.ActivePageComponent=ScriptPage then
+      Result := MainScriptEdit
+    else
+      Result := FileProfiles.Profiles_By_Page(IPSNotebook.ActivePageComponent).SynEdit;
+  except
+    Result := nil;
+  end;
+end;
+
+procedure TfrmEditor.FindDialogFind(Sender: TObject);
+var
+  AEdit: TSynEdit;
+  srOptions: TSynSearchOptions;
+begin
+  AEdit := GetActiveSynEdit;
+  if AEdit= nil then
+    exit;
+  srOptions := [];
+  if not (frDown in FindDialog.Options) then Include(srOptions,ssoBackwards);
+  if (frMatchCase in FindDialog.Options) then Include(srOptions, ssoMatchCase);
+  if (frWholeWord in FindDialog.Options) then Include(srOptions, ssoWholeWord);
+  if AEdit.SearchReplace(FindDialog.FindText,'',srOptions)=0 then
+  begin
+    ShowMessage('Not found.');
+  end;
 end;
 
 var fActiv: Boolean=true;
@@ -729,6 +826,50 @@ end;
 procedure TfrmEditor.mnuEditFileWizardClick(Sender: TObject);
 begin
   frmFileWizard.ShowModal;
+end;
+
+procedure TfrmEditor.ReplaceDialogFind(Sender: TObject);
+var
+  AEdit: TSynEdit;
+  srOptions: TSynSearchOptions;
+begin
+  AEdit := GetActiveSynEdit;
+  if AEdit= nil then
+    exit;
+  srOptions := [];
+  if not (frDown in ReplaceDialog.Options) then Include(srOptions,ssoBackwards);
+  if (frMatchCase in ReplaceDialog.Options) then Include(srOptions, ssoMatchCase);
+  if (frWholeWord in ReplaceDialog.Options) then Include(srOptions, ssoWholeWord);
+  if AEdit.SearchReplace(ReplaceDialog.FindText,ReplaceDialog.ReplaceText,srOptions)=0 then
+  begin
+    ShowMessage('Not found.');
+  end;
+end;
+
+procedure TfrmEditor.ReplaceDialogReplace(Sender: TObject);
+var
+  AEdit: TSynEdit;
+  srOptions: TSynSearchOptions;
+begin
+  AEdit := GetActiveSynEdit;
+  if AEdit= nil then
+    exit;
+  srOptions := [ssoReplace];
+  if not (frDown in ReplaceDialog.Options) then Include(srOptions,ssoBackwards);
+  if (frMatchCase in ReplaceDialog.Options) then Include(srOptions, ssoMatchCase);
+  if (frWholeWord in ReplaceDialog.Options) then Include(srOptions, ssoWholeWord);
+  if (frReplaceAll in ReplaceDialog.Options) then Include(srOptions, ssoReplaceAll);
+
+  if (AEdit.SelAvail) and (AEdit.SelStart>0) and (not(ssoBackwards in srOptions)) then
+    // Set SelStart one position back, otherwise the next element will be replaced
+    AEdit.SelStart := AEdit.SelStart-1;
+  if (AEdit.SelAvail) and (AEdit.SelStart>0) and (ssoBackwards in srOptions) then
+    // Set SelStart to SelEnd, otherwise the previous element will be replaced
+    AEdit.SelStart := AEdit.SelEnd;
+  if AEdit.SearchReplace(ReplaceDialog.FindText,ReplaceDialog.ReplaceText,srOptions)=0 then
+  begin
+    ShowMessage('Not found.');
+  end;
 end;
 
 procedure TfrmEditor.TabSheet1Show(Sender: TObject);
