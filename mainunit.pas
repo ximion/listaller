@@ -639,7 +639,7 @@ if AType='' then AType:='other';
 
 if (pos(LowerCase(DInfo.DName),LowerCase(FindChildNode(xnode,'dsupport').NodeValue))<=0)
 and (LowerCase(FindChildNode(xnode,'dsupport').NodeValue)<>'all') then begin
-if Application.MessageBox(PChar(PAnsiChar(strnSupported)+#13+PAnsiChar(strInstAnyway)),'Distro-Error',MB_YESNO)= IDNO then
+if Application.MessageBox(PAnsiChar(PAnsiChar(strnSupported)+#13+PAnsiChar(strInstAnyway)),'Distro-Error',MB_YESNO)= IDNO then
  begin
  z.Free;
  Application.Terminate;
@@ -673,7 +673,7 @@ for i:=0 to x.Count-1 do begin
 if (copy(x[i],1,pos('<',x[i])-1)=IAppName) and (ar.ReadString(x[i],'Version*','0.0')=IAppVersion)
 and (idName=ar.ReadString(x[i],'idName','???')) then
 
-if Application.MessageBox(PChar(PAnsiChar(strAlreadyInst)+#13+PAnsiChar(strInstallAgain)),PChar(strReInstall),MB_YESNO)= IDNO then
+if Application.MessageBox(PAnsiChar(PAnsiChar(strAlreadyInst)+#13+PAnsiChar(strInstallAgain)),PAnsiChar(strReInstall),MB_YESNO)= IDNO then
 begin
 x.Free;
 ar.Free;
@@ -714,9 +714,9 @@ if xnode.FindNode('Dep'+DInfo.DName)<>nil then begin  //Check if there are speci
 if (xnode.FindNode('Dep'+DInfo.DName).Attributes.GetNamedItem('releases')<>nil)
 and (pos(DInfo.Release,xnode.FindNode('Dep'+DInfo.DName).Attributes.GetNamedItem('releases').NodeValue)<= 0)
 then begin
-if Application.MessageBox(PChar(PAnsiChar(strInvalidDVersion)+#13+PAnsiChar(strInstAnyway)),'Distro-Error',MB_YESNO)= IDNO then begin
+if Application.MessageBox(PAnsiChar(PAnsiChar(strInvalidDVersion)+#13+PAnsiChar(strInstAnyway)),'Distro-Error',MB_YESNO)= IDNO then begin
 Application.Terminate;
-exit;
+halt(1);
  end;
 end;
 xnode:=xnode.FindNode('Dep'+DInfo.DName);
@@ -768,9 +768,7 @@ writeLn('Package type is "dlink"');
 IWizFrm.Hide;
 IWizFrm.Visible:=false;
 DGForm:=TDGForm.Create(nil);
-z:=TAbUnZipper.Create(nil);
-z.FileName:=paramstr(1);
-z.ExtractOptions:=[eoCreateDirs]+[eoRestorePath];
+
 z.BaseDirectory:=lp+ExtractFileName(paramstr(1));
 
 xnode:=Doc.DocumentElement.FindNode('application');
@@ -833,7 +831,7 @@ Memo2.Lines.Add(copy(n,pos(' <',n)+2,length(n)-pos(' <',n)-2)+' - '+copy(n,1,pos
 else Memo2.Lines.Add(n);
 end;
 end else
-if Application.MessageBox(PChar(strNoLDSources),PChar(strUseCompPQ),MB_YESNO)=IDYES then begin
+if Application.MessageBox(PAnsiChar(strNoLDSources),PAnsiChar(strUseCompPQ),MB_YESNO)=IDYES then begin
 
 if xnode.FindNode('Dep'+DInfo.PackageSystem)=nil then begin ShowMessage(strNoComp+#13+strInClose);Application.Terminate;exit;end;
 xnode:=xnode.FindNode('Dep'+DInfo.PackageSystem);
@@ -843,6 +841,9 @@ if pos(' <',n)>0 then
 Memo2.Lines.Add(copy(n,pos(' <',n)+2,length(n)-pos(' <',n)-2)+' - '+copy(n,1,pos(' <',n)-1))
 else Memo2.Lines.Add(n);
 end;
+ end else begin
+  ShowMessage(strINClose);
+  halt(2);
  end;
 end;
 DGForm.Show;
@@ -1473,7 +1474,7 @@ fi.LoadFromFile(RegDir+'updates.list');
 for i:=1 to fi.Count-1 do
 if pos(USource,fi[i])>0 then break;
 if i=fi.Count then begin
-if Application.MessageBox(PChar(strAddUpdSrc+#13+
+if Application.MessageBox(PAnsiChar(strAddUpdSrc+#13+
 copy(USource,pos(' <',USource)+2,length(USource)-pos(' <',USource)-2)+' ('+copy(uSource,3,pos(' <',USource)-3)+')'+#13+
 PAnsiChar(strQAddUpdSrc)),'Add update-source',MB_YESNO)= IDYES then begin
 

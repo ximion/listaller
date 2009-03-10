@@ -41,8 +41,9 @@ if sys.argv[1]=='--is-installed':
   print 'Resolve: '+sys.argv[2]+' (check if installed)'
   try:
       pkg = pk.resolve(sys.argv[2],FILTER_INSTALLED)
-  except: 
-   sys.exit(2)
+  except:
+   print('Not found!')
+   sys.exit(0)
   try:
    s = str(pkg[0])
   except:
@@ -50,6 +51,7 @@ if sys.argv[1]=='--is-installed':
    sys.exit(0);
   print(s)
   if s.find(sys.argv[2]) < 0:
+   print('Found.')
    sys.exit(0)
   else:
    sys.exit(1)

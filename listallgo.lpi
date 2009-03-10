@@ -10,7 +10,7 @@
       <TargetFileExt Value=""/>
       <Title Value="Installer"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="4"/>
     </General>
     <i18n>
       <OutDir Value="bin/lang"/>
@@ -19,7 +19,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="366"/>
+      <CurrentBuildNr Value="380"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -54,8 +54,8 @@
         <Filename Value="listallgo.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallgo"/>
-        <CursorPos X="60" Y="39"/>
-        <TopLine Value="1"/>
+        <CursorPos X="50" Y="38"/>
+        <TopLine Value="2"/>
         <UsageCount Value="200"/>
       </Unit0>
       <Unit1>
@@ -64,8 +64,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="mainunit"/>
-        <CursorPos X="57" Y="676"/>
-        <TopLine Value="655"/>
+        <CursorPos X="10" Y="846"/>
+        <TopLine Value="827"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -284,7 +284,7 @@
         <UnitName Value="distri"/>
         <CursorPos X="37" Y="97"/>
         <TopLine Value="77"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="5"/>
         <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit32>
@@ -387,9 +387,9 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="dgunit"/>
-        <CursorPos X="15" Y="159"/>
-        <TopLine Value="159"/>
-        <EditorIndex Value="5"/>
+        <CursorPos X="13" Y="154"/>
+        <TopLine Value="132"/>
+        <EditorIndex Value="4"/>
         <UsageCount Value="118"/>
         <Loaded Value="True"/>
       </Unit46>
@@ -411,8 +411,8 @@
         <Filename Value="utilities.pas"/>
         <UnitName Value="utilities"/>
         <CursorPos X="33" Y="225"/>
-        <TopLine Value="180"/>
-        <EditorIndex Value="4"/>
+        <TopLine Value="156"/>
+        <EditorIndex Value="3"/>
         <UsageCount Value="28"/>
         <Loaded Value="True"/>
       </Unit49>
@@ -439,9 +439,9 @@
       <Unit53>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="12" Y="55"/>
-        <TopLine Value="30"/>
-        <EditorIndex Value="2"/>
+        <CursorPos X="26" Y="49"/>
+        <TopLine Value="28"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit53>
@@ -691,7 +691,7 @@
         <UnitName Value="ipkhandle"/>
         <CursorPos X="44" Y="2"/>
         <TopLine Value="2"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="2"/>
         <UsageCount Value="37"/>
         <Loaded Value="True"/>
       </Unit89>
@@ -710,9 +710,7 @@
         <UnitName Value="xtypefm"/>
         <CursorPos X="6" Y="62"/>
         <TopLine Value="39"/>
-        <EditorIndex Value="1"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit91>
       <Unit92>
         <Filename Value="aboutbox.pas"/>
@@ -731,127 +729,123 @@
         <UsageCount Value="10"/>
       </Unit93>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="154" Column="17" TopLine="133"/>
+        <Caret Line="513" Column="32" TopLine="480"/>
       </Position1>
       <Position2>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="162" Column="24" TopLine="133"/>
+        <Caret Line="515" Column="35" TopLine="480"/>
       </Position2>
       <Position3>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="165" Column="36" TopLine="133"/>
+        <Caret Line="557" Column="23" TopLine="536"/>
       </Position3>
       <Position4>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="173" Column="15" TopLine="133"/>
+        <Caret Line="676" Column="109" TopLine="655"/>
       </Position4>
       <Position5>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="178" Column="36" TopLine="157"/>
+        <Caret Line="698" Column="30" TopLine="677"/>
       </Position5>
       <Position6>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="187" Column="32" TopLine="157"/>
+        <Caret Line="958" Column="80" TopLine="937"/>
       </Position6>
       <Position7>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="196" Column="15" TopLine="157"/>
+        <Caret Line="959" Column="44" TopLine="937"/>
       </Position7>
       <Position8>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="200" Column="30" TopLine="179"/>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="13" Column="26" TopLine="1"/>
       </Position8>
       <Position9>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="210" Column="30" TopLine="179"/>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="39" Column="37" TopLine="1"/>
       </Position9>
       <Position10>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="223" Column="48" TopLine="202"/>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="50" Column="6" TopLine="40"/>
       </Position10>
       <Position11>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="400" Column="30" TopLine="379"/>
+        <Caret Line="1344" Column="108" TopLine="1309"/>
       </Position11>
       <Position12>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="455" Column="21" TopLine="434"/>
+        <Caret Line="1341" Column="66" TopLine="1320"/>
       </Position12>
       <Position13>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="468" Column="15" TopLine="434"/>
+        <Caret Line="1344" Column="93" TopLine="1323"/>
       </Position13>
       <Position14>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="501" Column="15" TopLine="480"/>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="50" Column="5" TopLine="30"/>
       </Position14>
       <Position15>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="512" Column="38" TopLine="480"/>
+        <Caret Line="10" Column="57" TopLine="1"/>
       </Position15>
       <Position16>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="513" Column="32" TopLine="480"/>
+        <Caret Line="676" Column="57" TopLine="655"/>
       </Position16>
       <Position17>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="515" Column="35" TopLine="480"/>
+        <Caret Line="7" Column="111" TopLine="1"/>
       </Position17>
       <Position18>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="557" Column="23" TopLine="536"/>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="55" Column="12" TopLine="30"/>
       </Position18>
       <Position19>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="676" Column="109" TopLine="655"/>
+        <Caret Line="788" Column="43" TopLine="757"/>
       </Position19>
       <Position20>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="698" Column="30" TopLine="677"/>
+        <Caret Line="835" Column="58" TopLine="814"/>
       </Position20>
       <Position21>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="958" Column="80" TopLine="937"/>
+        <Caret Line="5" Column="73" TopLine="1"/>
       </Position21>
       <Position22>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="959" Column="44" TopLine="937"/>
+        <Caret Line="642" Column="36" TopLine="621"/>
       </Position22>
       <Position23>
-        <Filename Value="trstrings.pas"/>
-        <Caret Line="13" Column="26" TopLine="1"/>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="676" Column="104" TopLine="655"/>
       </Position23>
       <Position24>
-        <Filename Value="trstrings.pas"/>
-        <Caret Line="39" Column="37" TopLine="1"/>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="719" Column="8" TopLine="564"/>
       </Position24>
       <Position25>
-        <Filename Value="trstrings.pas"/>
-        <Caret Line="50" Column="6" TopLine="40"/>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="778" Column="52" TopLine="766"/>
       </Position25>
       <Position26>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="1344" Column="108" TopLine="1309"/>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="10" Column="79" TopLine="1"/>
       </Position26>
       <Position27>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="1341" Column="66" TopLine="1320"/>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="24" Column="11" TopLine="1"/>
       </Position27>
       <Position28>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="1344" Column="93" TopLine="1323"/>
+        <Caret Line="848" Column="6" TopLine="813"/>
       </Position28>
       <Position29>
-        <Filename Value="trstrings.pas"/>
-        <Caret Line="50" Column="5" TopLine="30"/>
+        <Filename Value="dgunit.pas"/>
+        <Caret Line="159" Column="15" TopLine="159"/>
       </Position29>
-      <Position30>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="10" Column="57" TopLine="1"/>
-      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -870,7 +864,6 @@
     </Parsing>
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>
-      <VerifyObjMethodCallValidity Value="True"/>
     </CodeGeneration>
     <Linking>
       <LinkSmart Value="True"/>

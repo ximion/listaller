@@ -174,7 +174,7 @@ object DGForm: TDGForm
   object BitBtn1: TBitBtn
     Left = 509
     Height = 32
-    Top = 4
+    Top = 5
     Width = 107
     Anchors = [akTop, akRight]
     Caption = 'Install'

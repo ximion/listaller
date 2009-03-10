@@ -35,7 +35,7 @@ begin
   Application.Title:='Listaller Manager';
   Application.ShowMainForm:=false;
   Application.Initialize;
-  pkit := GetDataFile('pkitbind/pkitbind.py ');
+  pkit := GetDataFile('pkitbind/pkitbind.py')+' ';
   writeLn('Application initialized.');
   Application.CreateForm(TmnFrm, mnFrm);
   Application.CreateForm(TFmConfig, FmConfig);

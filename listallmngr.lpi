@@ -16,7 +16,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="755"/>
+      <CurrentBuildNr Value="756"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -50,8 +50,8 @@
         <Filename Value="listallmngr.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallmngr"/>
-        <CursorPos X="12" Y="29"/>
-        <TopLine Value="1"/>
+        <CursorPos X="50" Y="38"/>
+        <TopLine Value="4"/>
         <UsageCount Value="143"/>
       </Unit0>
       <Unit1>
@@ -300,7 +300,7 @@
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
         <CursorPos X="11" Y="131"/>
-        <TopLine Value="1"/>
+        <TopLine Value="86"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="32"/>
         <Loaded Value="True"/>
