@@ -137,13 +137,24 @@ HTTP.ProxyPass:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_user
 HTTP.ProxyUser:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_password');
  end;}
 end;
+
+//Check if PackageKit checkmode is enabled:
+cnf:=TIniFile.Create(ConfigDir+'config.cnf');
+  if cnf.ReadBool('MainConf','ShowPkMon',false) then begin
+   t:=TProcess.Create(nil);
+   t.CommandLine:='pkmon';
+   t.Options:=[poNewConsole];
+   t.Execute;
+  end;
 cnf.Free;
+
 Application.ProcessMessages;
 BitBtn1.Enabled:=false;
 
   for i:=1 to Memo2.Lines.Count-1 do begin
   if pos('://',Memo2.Lines[i])<=0 then begin
-  t:=tprocess.create(nil);
+  t:=TProcess.create(nil);
+
   Memo3.Lines.Add('Looking for '+Memo2.Lines[i]);
   t.CommandLine:=pkit+'--is-installed '+Memo2.Lines[i];
   t.Options:=[poUsePipes,poWaitonexit];

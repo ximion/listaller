@@ -28,7 +28,7 @@ uses
   XMLRead, DOM, SynEdit, xtypefm, ipkhandle;
 
 type
-    
+
   { TIWizFrm }
 
   //** The installer wizard window

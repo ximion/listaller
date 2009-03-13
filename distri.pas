@@ -12,8 +12,7 @@
   See the GNU Lesser General Public License for more details.
 
   You should have received a copy of the GNU Lesser General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** Unit to research information about the current distribution (LSB-conform)
 unit distri;
 
@@ -41,6 +40,8 @@ function GetDistro: TDistroInfo;
 {** Check if user is root
  @returns If user is root (Bool)}
 function IsRoot: Boolean;
+//** Check if program is running @param cmd Command name
+function IsCommandRunning(cmd:String):Boolean;
 
 implementation
 

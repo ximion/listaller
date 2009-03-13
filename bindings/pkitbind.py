@@ -75,7 +75,7 @@ if sys.argv[1]=='--details':
 if sys.argv[1]=='--install-local':
    print 'Installation of local package: '+os.path.basename(sys.argv[2])
    try:
-      pkg = pk.install_files(False,[sys.argv[2]])
+    pk.install_files(False,[sys.argv[2]])
    except:
       print 'Failed.'
       sys.exit(2)

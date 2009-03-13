@@ -22,8 +22,8 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  process, ExtCtrls, utilities, LCLType, Buttons, distri, {$IFDEF LCLGTK2}gtk2,{$ENDIF} trstrings,
-  gettext, translations;
+  process, ExtCtrls, utilities, LCLType, Buttons, distri, {$IFDEF LCLGTK2}gtk2,{$ENDIF}
+  trstrings;
 
 type
 
@@ -58,12 +58,8 @@ implementation
 { TimdFrm }
 
 procedure TimdFrm.FormCreate(Sender: TObject);
-var BH: HBitmap;s: String;PODirectory, Lang, FallbackLang: String;i: Integer;
+var BH: HBitmap;s: String;
 begin
- PODirectory := GetDataFile('lang/');
- GetLanguageIDs(Lang, FallbackLang);
- translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts-%s.po', Lang, FallbackLang);
- translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-%s.po', Lang, FallbackLang);
 
  //Set translation strings
  Caption:=strSelInstMode;
