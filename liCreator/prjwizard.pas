@@ -410,10 +410,10 @@ begin
     with frmEditor do
     begin
       //Files
+      NewBlank;
       for j:=0 to GetProfileCount-1 do
       begin
         Profile := GetProfile(j);
-        editor.FileProfiles.Clear;
         TargetEdit := editor.FileProfiles.AddProfile(j).SynEdit;
         for i:=0 to Profile.Count-1 do
         begin

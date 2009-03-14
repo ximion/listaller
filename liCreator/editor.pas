@@ -69,6 +69,8 @@ type
   { TfrmEditor }
 
   TfrmEditor = class(TForm)
+    Button1: TButton;
+    Button2: TButton;
     FindDialog: TFindDialog;
     MainScriptEdit: TSynEdit;
     MenuItem1: TMenuItem;
@@ -105,6 +107,7 @@ type
     Process1: TProcess;
     SaveDialog1: TSaveDialog;
     SaveDialog2: TSaveDialog;
+    Splitter1: TSplitter;
     SynAnySyn1: TSynAnySyn;
     SynTeXSyn1: TSynTeXSyn;
     SynXMLSyn1: TSynXMLSyn;
@@ -148,12 +151,14 @@ type
     procedure ReadOutput;
     function GetActiveSynEdit: TSynEdit;
   public
+    procedure NewBlank;
     { public declarations }
   end; 
 
 const
    //** Size of the Linux output pipe
    READ_BYTES = 2048;
+   FORM_CAPTION = 'Listaller package creator';
 
 var
   frmEditor: TfrmEditor;
@@ -354,7 +359,7 @@ begin
 end;
 
 procedure TfrmEditor.IdleTimer1Timer(Sender: TObject);
-  var
+(*  var
   NoMoreOutput: boolean;
 
   procedure DoStuffForProcess(Process: TProcess;
@@ -367,30 +372,33 @@ procedure TfrmEditor.IdleTimer1Timer(Sender: TObject);
 
     if Process.Running then
     begin
-
       BytesAvailable := Process.Output.NumBytesAvailable;
       BytesRead := 0;
+      ShowMessage(Inttostr(bytesavailable));
       while BytesAvailable>0 do
        begin
+        ShowMEssage(Inttostr(bytesavailable));
         SetLength(Buffer, BytesAvailable);
         BytesRead := Process.OutPut.Read(Buffer[1], BytesAvailable);
         OutputMemo.Text := OutputMemo.Text + copy(Buffer,1, BytesRead);
+        //OutputMemo.Lines.Add(copy(Buffer,1, BytesRead));
         Application.ProcessMessages;
         BytesAvailable := Process.OutPut.NumBytesAvailable;
         NoMoreOutput := false;
       end;
+      NoMoreOutput := true;
       if BytesRead>0 then
         OutputMemo.SelStart := Length(OutputMemo.Text);
     end;
-  end;
+  end;  *)
 begin
-  repeat
+ (* repeat
     NoMoreOutput := true;
     Application.ProcessMessages;
     DoStuffForProcess(Process1, memLog);
   until noMoreOutput;
   sleep(800);
-  IPSNotebook.Enabled:=true;
+  IPSNotebook.Enabled:=true;*)
 end;
 
 procedure TfrmEditor.IPSNotebookCloseTabClicked(Sender: TObject);
@@ -440,8 +448,10 @@ begin
   begin
     if FileExists(SaveDialog1.FileName) then
     begin
-      ShowMessage('This file already exists.'#13'Please choose another one!');
+      if not (MessageDlg('This file already exists.'#13'Overwrite it?',mtCOnfirmation,
+        [mbYes,mbNo],0)=mrYes) then
       exit;
+      DeleteFile(SaveDialog1.FileName);
     end;
     Application.ProcessMessages;
     SetFocus;
@@ -452,6 +462,7 @@ begin
     Process1.Execute;
     ReadOutput();
     if Process1.ExitStatus>0 then ShowMessage('Build failed!');
+    IPSNotebook.Enabled:=true;
   end;
 end;
 
@@ -562,6 +573,7 @@ end;
 
 procedure TfrmEditor.mnuFileNewWizardClick(Sender: TObject);
 begin
+  NewBlank;
   frmProjectWizard:=TfrmProjectWizard.Create(nil);
   frmProjectWizard.ShowModal;
   frmProjectWizard.Free;
@@ -569,7 +581,13 @@ end;
 
 procedure TfrmEditor.mnuFileNewBlankClick(Sender: TObject);
 begin
+  NewBlank;
+end;
+
+procedure TfrmEditor.NewBlank;
+begin
   FName:='';
+  Caption:= FORM_CAPTION;
   MainScriptEdit.Lines.Clear;
   FileProfiles.Clear;
 end;
@@ -589,11 +607,13 @@ begin
      n := Process1.Output.Read((M.Memory + BytesRead)^, READ_BYTES);
      if n > 0
      then begin
-      //Convert to string and write
+       //Convert to string and write
        SetString(s, PChar(M.Memory + BytesRead), n);
        memLog.Lines.Add(s);
        Inc(BytesRead, n);
        Application.ProcessMessages;
+       // the following line is necessary for the Memo to scroll down, bug in LCL?
+       memLog.Lines.Delete(memLog.Lines.Add(''));
      end
      else begin
        // no data, wait 100 ms
@@ -607,10 +627,12 @@ begin
      n := Process1.Output.Read((M.Memory + BytesRead)^, READ_BYTES);
      if n > 0
      then begin
-     SetString(s, PChar(M.Memory + BytesRead), n);
+       SetString(s, PChar(M.Memory + BytesRead), n);
        memLog.Lines.Add(s);
        Inc(BytesRead, n);
        Application.ProcessMessages;
+       // the following line is necessary for the Memo to scroll down, bug in LCL?
+       memLog.Lines.Delete(memLog.Lines.Add(''));
      end;
    until n <= 0;
    M.Free;
@@ -620,18 +642,21 @@ procedure TfrmEditor.mnuBuildFastClick(Sender: TObject);
 var M: TMemoryStream;
    n: LongInt;
    BytesRead: LongInt;
-   s: String;
+   s, strTargetName: String;
 begin
   mnuFileSaveClick(nil);
+  if not FileExists(FName) then exit;
   Application.ProcessMessages;
   SetFocus;
-
-  Process1.CommandLine:='lipa -b '+''''+FName+'''';
+  strTargetName := ChangeFileExt(FName,'.ipk');
+  if FileExists(strTargetName) then DeleteFile(strTargetName);
+  Process1.CommandLine:='lipa -b '+''''+FName+''' '''+strTargetName+'''';
   memLog.Lines.Add('Execute '+Process1.CommandLine+' ...');
   IPSNotebook.Enabled:=false;
   Process1.Execute;
-   ReadOutput();
+  ReadOutput();
   if Process1.ExitStatus>0 then ShowMessage('Build failed!');
+  IPSNotebook.Enabled:=true;
 end;
 
 procedure TfrmEditor.Button1Click(Sender: TObject);
@@ -701,6 +726,8 @@ end;
 end;
 }
 
+
+
 procedure TfrmEditor.mnuFileSaveAsClick(Sender: TObject);
 begin
   if SaveDialog2.Execute then
@@ -753,10 +780,9 @@ begin
   if OpenDialog1.Execute then
   if FileExists(OpenDialog1.FileName) then
   begin
+    NewBlank;
     ips:=TStringList.Create;
     ips.LoadFromFile(OpenDialog1.FileName);
-    MainScriptEdit.Lines.Clear;
-    FileProfiles.Clear;
     for i:=1 to ips.Count-1 do
     begin
       if BeginsFilesPart(ips[i],iProfileIndex) then break
@@ -785,7 +811,7 @@ begin
     end;
 
     FName:=OpenDialog1.FileName;
-    Caption:='Listaller package creator - "'+ExtractFileName(FName)+'"';
+    Caption:= FORM_CAPTION+ ' - "'+ExtractFileName(FName)+'"';
  end;
 end;
 

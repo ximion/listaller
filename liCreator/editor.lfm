@@ -22,13 +22,13 @@ object frmEditor: TfrmEditor
     Lines.Strings = (
       'Log:'
     )
+    ScrollBars = ssAutoBoth
     TabOrder = 0
   end
   object IPSNotebook: TNotebook
-    Height = 544
-    Top = 1
+    Height = 539
     Width = 922
-    Align = alBottom
+    Align = alClient
     OnCloseTabClicked = IPSNotebookCloseTabClicked
     Options = [nboShowCloseButtons]
     PageIndex = 0
@@ -36,9 +36,9 @@ object frmEditor: TfrmEditor
     object ScriptPage: TPage
       Caption = 'Script'
       ClientWidth = 916
-      ClientHeight = 511
+      ClientHeight = 506
       object MainScriptEdit: TSynEdit
-        Height = 511
+        Height = 506
         Width = 916
         Align = alClient
         Font.Height = -10
@@ -398,6 +398,30 @@ object frmEditor: TfrmEditor
       end
     end
   end
+  object Splitter1: TSplitter
+    Cursor = crVSplit
+    Height = 6
+    Top = 539
+    Width = 922
+    Align = alBottom
+    ResizeAnchor = akBottom
+  end
+  object Button1: TButton
+    Left = 136
+    Height = 25
+    Top = 259
+    Width = 75
+    Caption = 'Button1'
+    TabOrder = 3
+  end
+  object Button2: TButton
+    Left = 457
+    Height = 25
+    Top = 259
+    Width = 75
+    Caption = 'Button2'
+    TabOrder = 4
+  end
   object mmMain: TMainMenu
     left = 744
     top = 8
@@ -538,8 +562,8 @@ object frmEditor: TfrmEditor
   object Process1: TProcess
     Options = [poUsePipes]
     Priority = ppNormal
-    left = 816
-    top = 288
+    left = 520
+    top = 8
   end
   object SynTeXSyn1: TSynTeXSyn
     DefaultFilter = 'TeX-Dateien (*.tex)|*.tex'
