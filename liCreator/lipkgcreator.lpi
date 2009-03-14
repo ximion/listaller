@@ -53,12 +53,12 @@
         <ResourceBaseClass Value="Form"/>
         <ResourceFilename Value="editor.lrs"/>
         <UnitName Value="editor"/>
-        <CursorPos X="31" Y="649"/>
-        <TopLine Value="633"/>
+        <CursorPos X="28" Y="191"/>
+        <TopLine Value="164"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="134"/>
         <Bookmarks Count="1">
-          <Item0 X="4" Y="542" ID="0"/>
+          <Item0 X="4" Y="541" ID="0"/>
         </Bookmarks>
         <Loaded Value="True"/>
       </Unit1>

@@ -183,13 +183,12 @@ begin
   FSynEdit := TSynEdit.Create(FPage);
   FSynEdit.Parent := FPage;
   FSynEdit.Align := alClient;
-  FSynEdit.Gutter.CodeFoldingWidth:=10;
-  FSynEdit.Gutter.ShowCodeFolding:=True;
-  FSynEdit.Gutter.ShowLineNumbers:=True;
+  //FSynEdit.Gutter.CodeFoldingWidth:=10;
+  //FSynEdit.Gutter.ShowCodeFolding:=True;
+  //FSynEdit.Gutter.ShowLineNumbers:=True;
   FSynEdit.Gutter.LeftOffset:=0;
   FSynEdit.Gutter.RightOffset:=0;
   FSynEdit.Font.Size := 10;
-   //Assign(frmEditor.FilesEdit.Gutter);
   FSynEdit.Highlighter := frmEditor.SynAnySyn1;
 end;
 
