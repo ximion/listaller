@@ -410,23 +410,10 @@ begin
     with frmEditor do
     begin
       //Files
-      (*if Assigned(FileInfo) then
-        FileInfo.Clear
-      else
-        FileInfo:=TStringList.Create;*)
-      (*for i:=0 to lvPackageFiles.Items.Count-1 do
-      begin
-        FilesEdit.Lines.Add(lvPackageFiles.Items[i].SubItems[1]);  // install-path
-        if lvPackageFiles.Items[i].SubItems[2]<>'' then
-          FilesEdit.Lines.Add(lvPackageFiles.Items[i].SubItems[0]+' '+lvPackageFiles.Items[i].SubItems[2])
-        else
-          FilesEdit.Lines.Add(lvPackageFiles.Items[i].SubItems[0]);
-
-        FileInfo.Add(lvPackageFiles.Items[i].SubItems[3]);
-      end; *)
       for j:=0 to GetProfileCount-1 do
       begin
         Profile := GetProfile(j);
+        editor.FileProfiles.Clear;
         TargetEdit := editor.FileProfiles.AddProfile(j).SynEdit;
         for i:=0 to Profile.Count-1 do
         begin

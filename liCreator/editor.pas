@@ -165,35 +165,6 @@ implementation
 
 uses prjwizard;
 
-//-----------------------------------------------------------------------------
-// modified Pos - function
-// begins at position StartPos
-//-----------------------------------------------------------------------------
-function pos2(const substr : shortstring;const s : shortstring;StartPos:Integer):SizeInt;
-var
-  i,MaxLen : SizeInt;
-  pc : pchar;
-begin
-  Pos2:=StartPos;
-  if Length(SubStr)>0 then
-   begin
-     MaxLen:=sizeint(Length(s))-Length(SubStr);
-     i:=0;
-     pc:=@s[1];
-     while (i<=MaxLen) do
-      begin
-        inc(i);
-        if (SubStr[1]=pc^) and
-           (CompareChar(Substr[1],pc^,Length(SubStr))=0) then
-         begin
-           Pos2:=i;
-           exit;
-         end;
-        inc(pc);
-      end;
-   end;
-end;
-
 {TFileProfile}
 
 constructor TFileProfile.Create(AOwner: TObject; ParentNotebook: TNotebook; ProfileIndex: Integer);
@@ -600,7 +571,7 @@ procedure TfrmEditor.mnuFileNewBlankClick(Sender: TObject);
 begin
   FName:='';
   MainScriptEdit.Lines.Clear;
-  FileProfiles.Clear; //FilesEdit.Lines.Clear;
+  FileProfiles.Clear;
 end;
 
 procedure TfrmEditor.ReadOutput;
