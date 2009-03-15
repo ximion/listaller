@@ -26,10 +26,6 @@ case "$ARCH" in
  "i486") ARCH="i386";;
 esac
 
-if [ $ARCH = "x86_64" ]; then TDir="/usr/lib64/"
-else TDir="/usr/lib/"
-fi
-
 #
 # Does the install
 #
@@ -38,11 +34,11 @@ fi
 
 mkdir -p $DESTDIR/usr/bin
 mkdir -p $DESTDIR/usr/share/pixmaps
-mkdir -p $DESTDIR/$TDir/listaller
+mkdir -p $DESTDIR/usr/lib/listaller
 mkdir -p $DESTDIR/usr/share/listaller/mime
 mkdir -p $DESTDIR/usr/share/listaller/graphics
 mkdir -p $DESTDIR/usr/share/listaller/graphics/categories
-#mkdir -p $DESTDIR/$TDir/listaller/lang
+#mkdir -p $DESTDIR/usr/lib/listaller/lang
 mkdir -p $DESTDIR/usr/share/listaller/pkitbind
 #Copy graphics
 cp ./graphics/header.png $DESTDIR/usr/share/listaller/graphics/
@@ -64,9 +60,9 @@ cp ./graphics/categories/other.png $DESTDIR/usr/share/listaller/graphics/categor
 cp ./graphics/categories/science.png $DESTDIR/usr/share/listaller/graphics/categories/
 cp ./graphics/categories/system.png $DESTDIR/usr/share/listaller/graphics/categories/
 #Copy other files
-cp ./bin/listallgo $DESTDIR/$TDir/listaller/
-cp ./bin/listallmgr $DESTDIR/$TDir/listaller/
-cp ./bin/liupdate $DESTDIR/$TDir/listaller/
+cp ./bin/listallgo $DESTDIR/usr/lib/listaller/
+cp ./bin/listallmgr $DESTDIR/usr/lib/listaller/
+cp ./bin/liupdate $DESTDIR/usr/lib/listaller/
 cp ./bindings/pkitbind.py $DESTDIR/usr/share/listaller/pkitbind/
 cp -dpr ./lang/ $DESTDIR/usr/share/listaller/
 rm -rf $DESTDIR/usr/share/listaller/lang/.svn
@@ -95,6 +91,6 @@ sh ./additional/scripts/postinst
 
 #Create symlink
 cd $DESTDIR/usr/bin
-ln -s /$TDir/listaller/listallmgr listallmgr
+ln -s /usr/lib/listaller/listallmgr listallmgr
 
 echo "Installation done."

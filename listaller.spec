@@ -1,16 +1,16 @@
 Name:             listaller-gtk
-Version:          0.1.87a
-Release:          1
+Version:          0.1.93a
+Release:          2
 License:          GPLv3 and LGPLv3
 BuildRequires:    fpc, lazarus, wget, glib2-devel, gtk2-devel, glib-devel, glib2, glib, fpc-src, gtk2
-Source0:          listaller_0.1.87-2.tar.gz
+Source0:          listaller_0.1.93b-2.tar.gz
 Requires:         gtk2, glib2, xdg-utils, lsb, packagekit
 Provides:         listaller
 Group:            Applications/System
 Summary:          Listaller main package (GTK)
 Vendor:           Listaller-Project
-URL: http://listaller.nlinux.org
-BuildRoot: %{_tmppath}/build-%{name}-%{version}
+URL:		  http://listaller.nlinux.org
+BuildRoot: 	  %{_tmppath}/build-%{name}-%{version}
 
 %description
 Listaller is a distribution-independ software install system.
@@ -43,41 +43,52 @@ echo "Done."
 %build
 ARCH=$(uname -m)
 case "$ARCH" in
-
  "i686") ARCH="i386";;
-
  "i586") ARCH="i386";;
-
  "i486") ARCH="i386";;
-
 esac
 
-cd ./listaller-devel
+cd ./trunk
 make all
 make licreator
 
 %install
-cd ./listaller-devel
+cd ./trunk
+%if 0%{?fedora_version} >= 10
+ARCH=$(uname -m)
+case "$ARCH" in
+ "i686") ARCH="i386";;
+ "i586") ARCH="i386";;
+ "i486") ARCH="i386";;
+esac
+
+mkdir -p /home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH/usr/bin
+make DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH install
+make DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH licreator-inst
+make DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH litools-inst
+%else
 mkdir -p %{_tmppath}/build-%{name}-%{version}/usr/bin
 make DESTDIR=%{_tmppath}/build-%{name}-%{version} install
 make DESTDIR=%{_tmppath}/build-%{name}-%{version} licreator-inst
 make DESTDIR=%{_tmppath}/build-%{name}-%{version} litools-inst
+%endif
 
 %clean
-cd ./listaller-devel
+cd ./trunk
 make clean
 
 %files
 %defattr(-,root,root)
 %dir "/usr/bin"
 /etc/lipa/blacklist
-/usr/lib/listaller/
-/usr/share/listaller
+/usr/lib/listaller/listallmgr
+/usr/lib/listaller/listallgo
+/usr/lib/listaller/liupdate
+/usr/share/listaller/
 
 %dir "/usr/share/applications"
 /usr/share/applications/listaller-manager.desktop
 /usr/share/mime-info/listaller-pack.mime
-/usr/share/listaller
 /usr/bin/lipa
 /usr/bin/listallmgr
 /usr/share/pixmaps/listaller.png
@@ -118,4 +129,4 @@ It also contains the needed tools to build RPM and DEB packages from IPS sources
 %defattr(-,root,root)
 /usr/share/listaller/graphics/libutton/
 /usr/bin/lipa
-/usr/share/listaller/unibuild
+/usr/lib/listaller/unibuild

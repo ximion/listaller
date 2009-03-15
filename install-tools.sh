@@ -25,22 +25,19 @@ case "$ARCH" in
  "i486") ARCH="i386";;
 
 esac
-if [ $ARCH = "x86_64" ]; then TDir="/usr/lib64/"
-else TDir="/usr/lib/"
-fi
 
 # Does the install
 #
 # "mkdir -p" is equivalent to ForceDirectories pascal function
 
-mkdir -p $DESTDIR/$TDir/listaller
+mkdir -p $DESTDIR/usr/lib/listaller
 mkdir -p $DESTDIR/usr/share/listaller
 mkdir -p $DESTDIR/usr/share/listaller/graphics
 mkdir -p $DESTDIR/usr/share/listaller/graphics/libutton
 mkdir -p $DESTDIR/usr/bin
 
 cp ./bin/lipa $DESTDIR/usr/bin/
-cp ./bin/unibuild $DESTDIR/$TDir/listaller
+cp ./bin/unibuild $DESTDIR/usr/lib/listaller
 #Copy graphics
 cp ./graphics/libutton/left.png $DESTDIR/usr/share/listaller/graphics/libutton/
 cp ./graphics/libutton/firstblock.png $DESTDIR/usr/share/listaller/graphics/libutton/

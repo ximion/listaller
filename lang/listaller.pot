@@ -251,7 +251,8 @@ msgid "Installation"
 msgstr ""
 
 #: trstrings:strnoldsources
-msgid "There are no sources available for your Linux distribution\015Try to install common packages?"
+msgid "There are no sources available for your Linux distribution\015"
+"Try to install common packages?"
 msgstr ""
 
 #: trstrings:strusecomppq
@@ -263,11 +264,13 @@ msgid "No compatible packages found!"
 msgstr ""
 
 #: trstrings:stractionnotpossiblepkg
-msgid "The selected action is not possible with this package.\015Please contact the package maintainer to get more information."
+msgid "The selected action is not possible with this package.\015"
+"Please contact the package maintainer to get more information."
 msgstr ""
 
 #: trstrings:stridinvalid
-msgid "This package has no valid ID\015The installer will close."
+msgid "This package has no valid ID\015"
+"The installer will close."
 msgstr ""
 
 #: trstrings:strreinstall
@@ -291,7 +294,9 @@ msgid "Problem while downloading the dep-file."
 msgstr ""
 
 #: trstrings:strhasherror
-msgid "Hash doesn't match!\015The package may be modified after creation.\015Please obtain a new copy"
+msgid "Hash doesn't match!\015"
+"The package may be modified after creation.\015"
+"Please obtain a new copy"
 msgstr ""
 
 #: trstrings:strinstallationmode
@@ -311,7 +316,8 @@ msgid "What do you want to do?"
 msgstr ""
 
 #: trstrings:strpackagekitwarning
-msgid "Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to work correctly.\015Please update PackageKit!"
+msgid "Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to work correctly.\015"
+"Please update PackageKit!"
 msgstr ""
 
 #: trstrings:strspkwarning
@@ -459,7 +465,9 @@ msgid "Ready."
 msgstr ""
 
 #: trstrings:strconvertpkg
-msgid "You want to install an %x-Package, but your Linux-Distribution's package system is %y.\015This package can be converted using \"alien\", but this will take some time and eventually the application won't work\015Do you want to convert the package now?"
+msgid "You want to install an %x-Package, but your Linux-Distribution's package system is %y.\015"
+"This package can be converted using \"alien\", but this will take some time and eventually the application won't work.\015"
+"Do you want to convert the package now?"
 msgstr ""
 
 #: trstrings:strconvertpkgq
@@ -495,7 +503,8 @@ msgid "Select software-manager mode:"
 msgstr ""
 
 #: trstrings:strlistalleralien
-msgid "Listaller uses \"alien\" to convert foreign packages, but the tool is not installed\015Do you want to install \"alien\" now to continue?"
+msgid "Listaller uses \"alien\" to convert foreign packages, but the tool is not installed.\015"
+"Do you want to install \"alien\" now to continue?"
 msgstr ""
 
 #: trstrings:strinstpkgq
@@ -587,7 +596,8 @@ msgid "Error while uninstalling!"
 msgstr ""
 
 #: trstrings:strcannothandlerm
-msgid "This application is not a MoJo-Installation and no other package-type Listaller can handle.\015You have to remove it manually."
+msgid "This application is not a MoJo-Installation and no other package-type Listaller can handle.\015"
+"You have to remove it manually."
 msgstr ""
 
 #: trstrings:strrmunsddeps
@@ -599,7 +609,9 @@ msgid "Uninstalling..."
 msgstr ""
 
 #: trstrings:strrmpkg
-msgid "Do you really want to remove \"%p\", containing %a?\015The following package(s) will be removed also: %pl\015If you aren't sure that you won't need those packages, press \"No\"!"
+msgid "Do you really want to remove \"%p\", containing %a?\015"
+"The following package(s) will be removed also: %pl\015"
+"If you aren't sure that you won't need those packages, press \"No\"!"
 msgstr ""
 
 #: trstrings:strrmpkgq
