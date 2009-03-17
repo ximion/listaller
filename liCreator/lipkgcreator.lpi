@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <CONFIG>
   <ProjectOptions>
-    <PathDelim Value="/"/>
-    <Version Value="6"/>
+    <Version Value="7"/>
     <General>
+      <Flags>
+        <LRSInOutputDirectory Value="False"/>
+      </Flags>
       <MainUnit Value="0"/>
-      <IconPath Value="./"/>
       <TargetFileExt Value=""/>
       <ActiveEditorIndexAtStart Value="0"/>
     </General>
@@ -51,7 +52,6 @@
         <ComponentName Value="frmEditor"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="editor.lrs"/>
         <UnitName Value="editor"/>
         <CursorPos X="28" Y="191"/>
         <TopLine Value="164"/>
@@ -74,7 +74,6 @@
         <ComponentName Value="frmFileWizard"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="fwiz.lrs"/>
         <UnitName Value="fwiz"/>
         <CursorPos X="32" Y="107"/>
         <TopLine Value="81"/>
@@ -173,7 +172,6 @@
         <ComponentName Value="BForm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="pkgbuild.lrs"/>
         <UnitName Value="pkgbuild"/>
         <CursorPos X="2" Y="48"/>
         <TopLine Value="30"/>
@@ -184,7 +182,6 @@
         <ComponentName Value="frmProjectWizard"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="prjwizard.lrs"/>
         <UnitName Value="prjwizard"/>
         <CursorPos X="97" Y="417"/>
         <TopLine Value="406"/>
@@ -506,6 +503,10 @@
       </Options>
     </Linking>
     <Other>
+      <Verbosity>
+        <ShowHints Value="False"/>
+        <ShowSummary Value="True"/>
+      </Verbosity>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>

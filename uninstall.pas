@@ -258,7 +258,11 @@ UProgress.Position:=60;
 GetOutPutTimer.Enabled:=true;
 Process1.CommandLine:=pkit+'--remove '+f;
 Process1.Execute;
+UProgress.Position:=78;
 while Process1.Running do Application.ProcessMessages;
+if Process1.ExitStatus>0 then begin
+ShowMessage(strRmError);exit;RMForm.Close;end;
+
 UProgress.Position:=100;
 LogAdd('Done.');
 RMForm.Close;

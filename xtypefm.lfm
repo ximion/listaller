@@ -2,7 +2,7 @@ object imdFrm: TimdFrm
   Left = 326
   Height = 144
   Top = 514
-  Width = 722
+  Width = 634
   ActiveControl = btnInstallAll
   AutoSize = True
   BorderIcons = [biSystemMenu, biMinimize]
@@ -14,19 +14,19 @@ object imdFrm: TimdFrm
   ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
   ChildSizing.ShrinkVertical = crsHomogenousChildResize
   ClientHeight = 144
-  ClientWidth = 722
+  ClientWidth = 634
   Constraints.MinHeight = 144
   Constraints.MinWidth = 634
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  ParentFont = False
   Position = poScreenCenter
-  LCLVersion = '0.9.26'
+  LCLVersion = '0.9.27'
   object Label1: TLabel
-    Height = 15
+    Left = 0
+    Height = 19
     Top = 10
-    Width = 162
+    Width = 187
     BorderSpacing.Top = 10
     Caption = 'What do you want to do?'
     Font.Height = -15
@@ -36,9 +36,9 @@ object imdFrm: TimdFrm
   end
   object Label13: TLabel
     Left = 34
-    Height = 14
-    Top = 72
-    Width = 286
+    Height = 13
+    Top = 73
+    Width = 241
     Anchors = [akLeft, akBottom]
     Caption = 'Make sure that you can trust the package author!'
     ParentColor = False
@@ -53,14 +53,15 @@ object imdFrm: TimdFrm
   end
   object Label2: TLabel
     Left = 34
-    Height = 14
+    Height = 13
     Top = 50
-    Width = 688
+    Width = 566
     Caption = 'Your PackageKit version is %p. Listaller needs PackageKit 0.4.2 or higher to work correctly. Plase update PackageKit!'
     ParentColor = False
     Visible = False
   end
   object Image2: TImage
+    Left = 0
     Height = 26
     Top = 40
     Width = 24
@@ -70,9 +71,10 @@ object imdFrm: TimdFrm
     Visible = False
   end
   object btnInstallAll: TBitBtn
+    Left = 0
     Height = 38
     Top = 97
-    Width = 182
+    Width = 164
     Anchors = [akLeft, akBottom]
     AutoSize = True
     Caption = 'Install application for everyone'
@@ -82,10 +84,10 @@ object imdFrm: TimdFrm
     TabOrder = 0
   end
   object btnTest: TBitBtn
-    Left = 329
+    Left = 289
     Height = 38
     Top = 97
-    Width = 100
+    Width = 89
     Anchors = [akBottom]
     AutoSize = True
     Caption = 'Test application'
@@ -95,10 +97,10 @@ object imdFrm: TimdFrm
     TabOrder = 1
   end
   object btnHome: TBitBtn
-    Left = 534
+    Left = 468
     Height = 38
     Top = 97
-    Width = 182
+    Width = 160
     Anchors = [akRight, akBottom]
     AutoSize = True
     Caption = 'Install into my Home-directory'

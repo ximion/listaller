@@ -80,6 +80,7 @@ if Image1.Visible then begin
 //Check PackageKit version
 try
   s:=CmdResult('pkcon --version');
+  writeLn('Detected PackageKit: '+s);
   s:=copy(s,1,5);
   if StrToInt(StringReplace(s,'.','',[rfReplaceAll]))<44 then begin
         Label2.Caption:=StringReplace(StringReplace(strPackageKitWarning,'%cp',s,[rfReplaceAll]),'%np','0.4.4',[rfReplaceAll]);

@@ -1,15 +1,16 @@
 <?xml version="1.0"?>
 <CONFIG>
   <ProjectOptions>
-    <PathDelim Value="/"/>
-    <Version Value="6"/>
+    <Version Value="7"/>
     <General>
+      <Flags>
+        <LRSInOutputDirectory Value="False"/>
+      </Flags>
       <MainUnit Value="0"/>
-      <IconPath Value="./"/>
       <TargetFileExt Value=""/>
       <Title Value="Listaller Manager"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="5"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
@@ -58,10 +59,9 @@
         <ComponentName Value="mnFrm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="manager.lrs"/>
         <UnitName Value="manager"/>
         <CursorPos X="35" Y="26"/>
-        <TopLine Value="69"/>
+        <TopLine Value="26"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="143"/>
         <Loaded Value="True"/>
@@ -259,7 +259,6 @@
         <ComponentName Value="FmConfig"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="settings.lrs"/>
         <UnitName Value="settings"/>
         <CursorPos X="55" Y="26"/>
         <TopLine Value="5"/>
@@ -290,10 +289,9 @@
         <ComponentName Value="RMForm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="uninstall.lrs"/>
         <UnitName Value="uninstall"/>
-        <CursorPos X="78" Y="8"/>
-        <TopLine Value="1"/>
+        <CursorPos X="23" Y="264"/>
+        <TopLine Value="226"/>
         <EditorIndex Value="5"/>
         <UsageCount Value="128"/>
         <Loaded Value="True"/>
@@ -301,8 +299,8 @@
       <Unit34>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="11" Y="131"/>
-        <TopLine Value="86"/>
+        <CursorPos X="12" Y="171"/>
+        <TopLine Value="139"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="32"/>
         <Loaded Value="True"/>
@@ -372,7 +370,6 @@
         <ComponentName Value="ConvDisp"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="pkgconvertdisp.lrs"/>
         <UnitName Value="pkgconvertdisp"/>
         <CursorPos X="8" Y="103"/>
         <TopLine Value="67"/>
@@ -383,7 +380,6 @@
         <ComponentName Value="SCForm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="swcatalog.lrs"/>
         <UnitName Value="swcatalog"/>
         <CursorPos X="3" Y="687"/>
         <TopLine Value="653"/>
@@ -515,7 +511,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="xtypefm"/>
-        <CursorPos X="18" Y="87"/>
+        <CursorPos X="38" Y="83"/>
         <TopLine Value="51"/>
         <EditorIndex Value="2"/>
         <UsageCount Value="14"/>
@@ -546,7 +542,6 @@
         <ComponentName Value="FmAbout"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="aboutbox.lrs"/>
         <UnitName Value="aboutbox"/>
         <CursorPos X="35" Y="45"/>
         <TopLine Value="19"/>
@@ -604,7 +599,7 @@
         <UsageCount Value="10"/>
       </Unit75>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="manager.pas"/>
         <Caret Line="8" Column="84" TopLine="1"/>
@@ -721,6 +716,10 @@
         <Filename Value="trstrings.pas"/>
         <Caret Line="102" Column="46" TopLine="81"/>
       </Position29>
+      <Position30>
+        <Filename Value="trstrings.pas"/>
+        <Caret Line="131" Column="11" TopLine="86"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
