@@ -23,8 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, utilities,
-  uninstall, translations, trstrings, gettext, FileUtil, xtypefm, ipkhandle,
-  gifanimator;
+  uninstall, trstrings, gettext, FileUtil, xtypefm, ipkhandle, gifanimator;
 
 type
 
@@ -59,7 +58,6 @@ type
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
-    FLang: String;
     blst: TStringList;
     procedure UninstallClick(Sender: TObject);
   public
@@ -545,7 +543,7 @@ begin
 end;
 
 procedure TmnFrm.FormCreate(Sender: TObject);
-var PODirectory, Lang, FallbackLang: String;mmFrm: TimdFrm;
+var xFrm: TimdFrm;
 begin
 if FileExists(paramstr(1)) then begin
   Process1.Options:=[];
@@ -559,15 +557,7 @@ SWBox.DoubleBuffered:=true;
 DoubleBuffered:=true;
 DInfo:=GetDistro;
 
-
-
  if not DirectoryExists(RegDir) then SysUtils.CreateDir(RegDir);
- 
- FLang:=Copy(GetEnvironmentVariable('LANG'), 1, 2);
- PODirectory := GetDataFile('lang/');
- GetLanguageIDs(Lang, FallbackLang);
- translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts-%s.po', Lang, FallbackLang);
- translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-%s.po', Lang, FallbackLang);
   
  uID:=-1;
  ListLength:=0;
@@ -577,18 +567,19 @@ DInfo:=GetDistro;
  Caption:=strSoftwareManager;
  btnInstall.Caption:=strInstNew;
  btnSettings.Caption:=strShowSettings;
+ btnCat.Caption:=strSWCatalogue;
  Label1.Caption:=strShow;
  Label2.Caption:=strFilter;
  Label3.Caption:=strNoAppsFound;
 
  if not IsRoot then begin
- mmFrm:=TimdFrm.Create(nil);
+ xFrm:=TimdFrm.Create(nil);
 
  //Set reg-dir
  RegDir:=SyblToPath('$INST/app-reg/');
 
 
- with mmFrm do begin
+ with xFrm do begin
   Caption:=strSelMgrMode;
   btnTest.Visible:=false;
   Image1.Visible:=false;
@@ -596,9 +587,10 @@ DInfo:=GetDistro;
   btnCat.Caption:=strSWCatalogue;
   btnInstallAll.Caption:=strDispRootApps;
   btnHome.Caption:=strDispOnlyMyApps;
+  Refresh;
   ShowModal;
  end;
-mmFrm.Free;
+xFrm.Free;
 end else
 RegDir:='/etc/lipa/app-reg/';
 

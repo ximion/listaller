@@ -120,8 +120,8 @@ if sys.argv[1]=='--s-dfile':
 if sys.argv[1]=='--remove':
   print 'Removing: '+sys.argv[2]
   try:
-    pkg = pk.remove_packages([sys.argv[2]+';;;'])
+   pkg = pk.remove_packages([sys.argv[2]+';;;'])
   except:
-    sys.exit(2)
+   sys.exit(2)
 
 sys.exit(0)

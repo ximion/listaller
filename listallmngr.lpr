@@ -26,12 +26,25 @@ uses
   Forms,
   SysUtils,
   manager, settings, uninstall, pkgconvertdisp, swcatalog, LResources, ipkhandle,
-  utilities;
+  utilities, translations, gettext;
 
 {$IFDEF WINDOWS}{$R listallmngr.rc}{$ENDIF}
 
+procedure TranslateInterface;
+var PODirectory, Lang, FallbackLang: String;
+begin
+Lang:=Copy(GetEnvironmentVariable('LANG'), 1, 2);
+PODirectory := GetDataFile('lang/');
+GetLanguageIDs(Lang, FallbackLang);
+translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts-%s.po', Lang, FallbackLang);
+translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-%s.po', Lang, FallbackLang);
+translations.SystemCharSetIsUTF8:=true;
+end;
+
 begin
   {$I listallmngr.lrs}
+  //Load Translation
+  TranslateInterface();
   Application.Title:='Listaller Manager';
   Application.ShowMainForm:=false;
   Application.Initialize;

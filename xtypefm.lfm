@@ -1,7 +1,7 @@
 object imdFrm: TimdFrm
-  Left = 326
+  Left = 330
   Height = 144
-  Top = 514
+  Top = 464
   Width = 634
   ActiveControl = btnInstallAll
   AutoSize = True
@@ -17,6 +17,7 @@ object imdFrm: TimdFrm
   ClientWidth = 634
   Constraints.MinHeight = 144
   Constraints.MinWidth = 634
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
@@ -53,10 +54,10 @@ object imdFrm: TimdFrm
   end
   object Label2: TLabel
     Left = 34
-    Height = 13
-    Top = 50
-    Width = 566
-    Caption = 'Your PackageKit version is %p. Listaller needs PackageKit 0.4.2 or higher to work correctly. Plase update PackageKit!'
+    Height = 28
+    Top = 40
+    Width = 443
+    Caption = 'Your PackageKit version is %p. Listaller needs PackageKit 0.4.2 or higher to work correctly. '#10'Please update PackageKit!'
     ParentColor = False
     Visible = False
   end
@@ -97,7 +98,7 @@ object imdFrm: TimdFrm
     TabOrder = 1
   end
   object btnHome: TBitBtn
-    Left = 468
+    Left = 472
     Height = 38
     Top = 97
     Width = 160

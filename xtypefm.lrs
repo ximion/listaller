@@ -1,39 +1,39 @@
 { Das ist eine automatisch erzeugte Lazarus-Ressourcendatei }
 
 LazarusResources.Add('TimdFrm','FORMDATA',[
-  'TPF0'#7'TimdFrm'#6'imdFrm'#4'Left'#3'F'#1#6'Height'#3#144#0#3'Top'#3#2#2#5'W'
-  +'idth'#3'z'#2#13'ActiveControl'#7#13'btnInstallAll'#8'AutoSize'#9#11'BorderI'
-  +'cons'#11#12'biSystemMenu'#10'biMinimize'#0#11'BorderStyle'#7#12'bsToolWindo'
-  +'w'#7'Caption'#6#24'Select Installation mode'#27'ChildSizing.VerticalSpacing'
-  +#2#4#29'ChildSizing.EnlargeHorizontal'#7#14'crsScaleChilds'#27'ChildSizing.E'
-  +'nlargeVertical'#7#14'crsScaleChilds'#28'ChildSizing.ShrinkHorizontal'#7#24
-  +'crsHomogenousChildResize'#26'ChildSizing.ShrinkVertical'#7#24'crsHomogenous'
-  +'ChildResize'#12'ClientHeight'#3#144#0#11'ClientWidth'#3'z'#2#21'Constraints'
-  +'.MinHeight'#3#144#0#20'Constraints.MinWidth'#3'z'#2#7'OnClose'#7#9'FormClos'
-  +'e'#8'OnCreate'#7#10'FormCreate'#6'OnShow'#7#8'FormShow'#8'Position'#7#14'po'
-  +'ScreenCenter'#10'LCLVersion'#6#6'0.9.27'#0#6'TLabel'#6'Label1'#4'Left'#2#0#6
-  +'Height'#2#19#3'Top'#2#10#5'Width'#3#187#0#17'BorderSpacing.Top'#2#10#7'Capt'
-  +'ion'#6#23'What do you want to do?'#11'Font.Height'#2#241#9'Font.Name'#6#4'S'
-  +'ans'#11'ParentColor'#8#10'ParentFont'#8#0#0#6'TLabel'#7'Label13'#4'Left'#2
-  +'"'#6'Height'#2#13#3'Top'#2'I'#5'Width'#3#241#0#7'Anchors'#11#6'akLeft'#8'ak'
-  +'Bottom'#0#7'Caption'#6'0Make sure that you can trust the package author!'#11
-  +'ParentColor'#8#0#0#6'TImage'#6'Image1'#4'Left'#2#6#6'Height'#2#18#3'Top'#2
-  +'D'#5'Width'#2#18#7'Anchors'#11#6'akLeft'#8'akBottom'#0#12'Proportional'#9#0
-  +#0#6'TLabel'#6'Label2'#4'Left'#2'"'#6'Height'#2#13#3'Top'#2'2'#5'Width'#3'6'
-  +#2#7'Caption'#6'uYour PackageKit version is %p. Listaller needs PackageKit 0'
-  +'.4.2 or higher to work correctly. Plase update PackageKit!'#11'ParentColor'
-  +#8#7'Visible'#8#0#0#6'TImage'#6'Image2'#4'Left'#2#0#6'Height'#2#26#3'Top'#2
-  +'('#5'Width'#2#24#7'Anchors'#11#6'akLeft'#8'akBottom'#0#12'Proportional'#9#7
-  +'Stretch'#9#7'Visible'#8#0#0#7'TBitBtn'#13'btnInstallAll'#4'Left'#2#0#6'Heig'
-  +'ht'#2'&'#3'Top'#2'a'#5'Width'#3#164#0#7'Anchors'#11#6'akLeft'#8'akBottom'#0
-  +#8'AutoSize'#9#7'Caption'#6' Install application for everyone'#21'Constraint'
-  +'s.MinHeight'#2'&'#9'NumGlyphs'#2#0#7'OnClick'#7#18'btnInstallAllClick'#8'Ta'
-  +'bOrder'#2#0#0#0#7'TBitBtn'#7'btnTest'#4'Left'#3'!'#1#6'Height'#2'&'#3'Top'#2
-  +'a'#5'Width'#2'Y'#7'Anchors'#11#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6#16
-  +'Test application'#21'Constraints.MinHeight'#2'&'#9'NumGlyphs'#2#0#7'OnClick'
-  +#7#12'btnTestClick'#8'TabOrder'#2#1#0#0#7'TBitBtn'#7'btnHome'#4'Left'#3#212#1
-  +#6'Height'#2'&'#3'Top'#2'a'#5'Width'#3#160#0#7'Anchors'#11#7'akRight'#8'akBo'
-  +'ttom'#0#8'AutoSize'#9#7'Caption'#6#30'Install into my Home-directory'#21'Co'
-  +'nstraints.MinHeight'#2'&'#9'NumGlyphs'#2#0#7'OnClick'#7#12'btnHomeClick'#8
-  +'TabOrder'#2#2#0#0#0
+  'TPF0'#7'TimdFrm'#6'imdFrm'#4'Left'#3'J'#1#6'Height'#3#144#0#3'Top'#3#208#1#5
+  +'Width'#3'z'#2#13'ActiveControl'#7#13'btnInstallAll'#8'AutoSize'#9#11'Border'
+  +'Icons'#11#12'biSystemMenu'#10'biMinimize'#0#11'BorderStyle'#7#12'bsToolWind'
+  +'ow'#7'Caption'#6#24'Select Installation mode'#27'ChildSizing.VerticalSpacin'
+  +'g'#2#4#29'ChildSizing.EnlargeHorizontal'#7#14'crsScaleChilds'#27'ChildSizin'
+  +'g.EnlargeVertical'#7#14'crsScaleChilds'#28'ChildSizing.ShrinkHorizontal'#7
+  +#24'crsHomogenousChildResize'#26'ChildSizing.ShrinkVertical'#7#24'crsHomogen'
+  +'ousChildResize'#12'ClientHeight'#3#144#0#11'ClientWidth'#3'z'#2#21'Constrai'
+  +'nts.MinHeight'#3#144#0#20'Constraints.MinWidth'#3'z'#2#10'OnActivate'#7#12
+  +'FormActivate'#7'OnClose'#7#9'FormClose'#8'OnCreate'#7#10'FormCreate'#6'OnSh'
+  +'ow'#7#8'FormShow'#8'Position'#7#14'poScreenCenter'#10'LCLVersion'#6#6'0.9.2'
+  +'7'#0#6'TLabel'#6'Label1'#4'Left'#2#0#6'Height'#2#19#3'Top'#2#10#5'Width'#3
+  +#187#0#17'BorderSpacing.Top'#2#10#7'Caption'#6#23'What do you want to do?'#11
+  +'Font.Height'#2#241#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'ParentFont'#8
+  +#0#0#6'TLabel'#7'Label13'#4'Left'#2'"'#6'Height'#2#13#3'Top'#2'I'#5'Width'#3
+  +#241#0#7'Anchors'#11#6'akLeft'#8'akBottom'#0#7'Caption'#6'0Make sure that yo'
+  +'u can trust the package author!'#11'ParentColor'#8#0#0#6'TImage'#6'Image1'#4
+  +'Left'#2#6#6'Height'#2#18#3'Top'#2'D'#5'Width'#2#18#7'Anchors'#11#6'akLeft'#8
+  +'akBottom'#0#12'Proportional'#9#0#0#6'TLabel'#6'Label2'#4'Left'#2'"'#6'Heigh'
+  +'t'#2#28#3'Top'#2'('#5'Width'#3#187#1#7'Caption'#6'wYour PackageKit version '
+  +'is %p. Listaller needs PackageKit 0.4.2 or higher to work correctly. '#10'P'
+  +'lease update PackageKit!'#11'ParentColor'#8#7'Visible'#8#0#0#6'TImage'#6'Im'
+  +'age2'#4'Left'#2#0#6'Height'#2#26#3'Top'#2'('#5'Width'#2#24#7'Anchors'#11#6
+  +'akLeft'#8'akBottom'#0#12'Proportional'#9#7'Stretch'#9#7'Visible'#8#0#0#7'TB'
+  +'itBtn'#13'btnInstallAll'#4'Left'#2#0#6'Height'#2'&'#3'Top'#2'a'#5'Width'#3
+  +#164#0#7'Anchors'#11#6'akLeft'#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6' Ins'
+  +'tall application for everyone'#21'Constraints.MinHeight'#2'&'#9'NumGlyphs'#2
+  +#0#7'OnClick'#7#18'btnInstallAllClick'#8'TabOrder'#2#0#0#0#7'TBitBtn'#7'btnT'
+  +'est'#4'Left'#3'!'#1#6'Height'#2'&'#3'Top'#2'a'#5'Width'#2'Y'#7'Anchors'#11#8
+  +'akBottom'#0#8'AutoSize'#9#7'Caption'#6#16'Test application'#21'Constraints.'
+  +'MinHeight'#2'&'#9'NumGlyphs'#2#0#7'OnClick'#7#12'btnTestClick'#8'TabOrder'#2
+  +#1#0#0#7'TBitBtn'#7'btnHome'#4'Left'#3#216#1#6'Height'#2'&'#3'Top'#2'a'#5'Wi'
+  +'dth'#3#160#0#7'Anchors'#11#7'akRight'#8'akBottom'#0#8'AutoSize'#9#7'Caption'
+  +#6#30'Install into my Home-directory'#21'Constraints.MinHeight'#2'&'#9'NumGl'
+  +'yphs'#2#0#7'OnClick'#7#12'btnHomeClick'#8'TabOrder'#2#2#0#0#0
 ]);

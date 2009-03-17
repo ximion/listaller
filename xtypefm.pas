@@ -41,6 +41,7 @@ type
     procedure btnHomeClick(Sender: TObject);
     procedure btnInstallAllClick(Sender: TObject);
     procedure btnTestClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -60,7 +61,6 @@ implementation
 procedure TimdFrm.FormCreate(Sender: TObject);
 var BH: HBitmap;s: String;
 begin
-
  //Set translation strings
  Caption:=strSelInstMode;
  Label1.Caption:=strWantToDoQ;
@@ -132,6 +132,11 @@ begin
   Testmode:=true;
   btnHome.Tag:=2;
   close;
+end;
+
+procedure TimdFrm.FormActivate(Sender: TObject);
+begin
+  Refresh;
 end;
 
 procedure TimdFrm.btnHomeClick(Sender: TObject);
