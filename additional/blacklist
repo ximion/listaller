@@ -14,6 +14,7 @@ Krfb
 Konsole
 Terminal
 System Monitor
+System Log
 KwikDisk
 KDiskFree
 Adept Manager
@@ -77,3 +78,8 @@ ksimond
 KWrite
 Screens and Graphics
 Text Editor
+About This Computer
+SELinux Troubleshooter
+Take Screenshot
+Disk Management
+SELinux Management

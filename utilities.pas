@@ -218,6 +218,7 @@ t:=TProcess.Create(nil);
 if IsRoot then begin
 s:=StringReplace(s,'$INST','/usr/appfiles',[rfReplaceAll]);
 s:=StringReplace(s,'$INST-X','/usr/share',[rfReplaceAll]);
+s:=StringReplace(s,'$OPT','/opt',[rfReplaceAll]);
 s:=StringReplace(s,'$BIN','/usr/bin',[rfReplaceAll]);
 
  if LowerCase(n)='x86_64' then
@@ -259,6 +260,7 @@ if LowerCase(n)='x86_64' then
 
 s:=StringReplace(s,'$INST',GetXHome+'/applications/files',[rfReplaceAll]);
 s:=StringReplace(s,'$INST-X',GetXHome+'/applications/files',[rfReplaceAll]);
+s:=StringReplace(s,'$OPT',GetXHome+'/applications/files',[rfReplaceAll]);
 s:=StringReplace(s,'$APP',GetXHome+'/applications',[rfReplaceAll]);
 s:=StringReplace(s,'$ICON-16',GetXHome+'/applications/files/icons/16x16',[rfReplaceAll]);
 s:=StringReplace(s,'$ICON-24',GetXHome+'/applications/files/icons/24x24',[rfReplaceAll]);
@@ -276,6 +278,7 @@ function SyblToX(s: String): String;
 begin
 s:=StringReplace(s,'$INST','',[rfReplaceAll]);
 s:=StringReplace(s,'$INST-X','',[rfReplaceAll]);
+s:=StringReplace(s,'$OPT','/opt',[rfReplaceAll]);
 s:=StringReplace(s,'$APP','/app',[rfReplaceAll]);
 s:=StringReplace(s,'$HOME','/hdir',[rfReplaceAll]);
 s:=StringReplace(s,'$ICON-16','/icon16',[rfReplaceAll]);
