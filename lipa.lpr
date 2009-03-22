@@ -22,9 +22,9 @@ program lipa;
 {$mode objfpc}{$H+}
 
 uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
+  {$IFDEF UNIX}
   cthreads,
-  {$ENDIF}{$ENDIF}
+  {$ENDIF}
   Classes, SysUtils, CustApp,
   Process, ipkbuild, utilities;
 
@@ -36,7 +36,7 @@ type
   protected
     procedure DoRun; override;
   public
-    //Handle Exceptions
+    //** Exception handler
     procedure OnExeception(Sender : TObject;E : Exception);
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;

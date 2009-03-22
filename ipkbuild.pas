@@ -12,8 +12,7 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** Functions to build IPK packages an sources
 unit ipkbuild;
 
@@ -69,13 +68,13 @@ implementation
 const
  //** Working directory of Listaller's build tool
  WDir='/tmp/listaller/pkgbuild/';
- //** Size of the Linux output pipe
+ //** Size of Linux output pipe
  READ_BYTES = 2048;
 
 ////////////////////////////////////////////////////////////////////////////////
-///////////////////Those functions are used by the others//////////////////////
+///////////////////Functions that are used by the others////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-procedure BuildZIP(azipfilename : string; afiles : TStringList);
+procedure BuildZIP(aZipFileName: string; afiles : TStringList);
   var
     zip : TAbZipper; j:integer;
   begin
@@ -88,7 +87,7 @@ procedure BuildZIP(azipfilename : string; afiles : TStringList);
         zip.StoreOptions := [soStripDrive];
         for j:=0 to afiles.Count-1 do
         begin
-          zip.addfiles(StringReplace(afiles[j],'/tmp/listaller/pkgbuild/','',[rfReplaceAll]), 0);
+          zip.addfiles(StringReplace(afiles[j],WDir,'',[rfReplaceAll]), 0);
         end;
         zip.Save;
         zip.CloseArchive;
@@ -442,7 +441,9 @@ end;
 
 writeLn('Creating install-script...');
 SysUtils.CreateDir(WDir+'stuff/');
-if (FindChildNode(xn,'icon')<>nil)and(not FileExists(FindChildNode(xn,'icon').NodeValue)) then begin
+
+if FindChildNode(xn,'icon')<>nil then
+if not FileExists(FindChildNode(xn,'icon').NodeValue) then begin
 writeLn('error: ');
 writeLn('Icon-path is invalid!');
 writeLn('Building canceled');
@@ -453,9 +454,8 @@ SetNode(FindChildNode(xn,'icon'),'/stuff/'+'packicon.png');
 tmp.Add(WDir+'stuff/'+'packicon.png');
 end;
 
-if FindChildNode(xn,'license')<>nil then
+if FindChildNode(xn,'license')<>nil then begin
 lh:=FindChildNode(xn,'license').NodeValue;
-
 if (not FileExists(lh)) and (lh<>'<none>') then
 begin
 writeLn('error: ');
@@ -467,8 +467,9 @@ FileCopy(lh,WDir+'stuff/'+'license'+ExtractFileExt(lh));
 SetNode(FindChildNode(xn,'license'),'/stuff/'+'license'+ExtractFileExt(lh));
 tmp.Add(WDir+'stuff/'+'license'+ExtractFileExt(lh));
 end;
+end else writeLn(' - No license file found!');
 
-if FindChildNode(xn,'description')<>nil then
+if FindChildNode(xn,'description')<>nil then begin
 lh:=FindChildNode(xn,'description').NodeValue;
 if (not FileExists(lh))and(lh<>'<none>') then
 begin
@@ -482,6 +483,8 @@ tmp.Add(WDir+'stuff/'+'description'+ExtractFileExt(lh));
 
 SetNode(FindChildNode(xn,'description'),'/stuff/'+'description'+ExtractFileExt(lh));
 end;
+end else writeLn(' - No long description found!');
+
 //
 xn:=pc.FindNode('package');
 if FileExists(ExtractFilePath(fi)+'/preinst') then begin
