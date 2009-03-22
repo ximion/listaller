@@ -37,9 +37,9 @@ object imdFrm: TimdFrm
   end
   object Label13: TLabel
     Left = 34
-    Height = 13
-    Top = 73
-    Width = 241
+    Height = 14
+    Top = 72
+    Width = 242
     Anchors = [akLeft, akBottom]
     Caption = 'Make sure that you can trust the package author!'
     ParentColor = False
@@ -54,9 +54,9 @@ object imdFrm: TimdFrm
   end
   object Label2: TLabel
     Left = 34
-    Height = 28
+    Height = 30
     Top = 40
-    Width = 443
+    Width = 441
     Caption = 'Your PackageKit version is %p. Listaller needs PackageKit 0.4.2 or higher to work correctly. '#10'Please update PackageKit!'
     ParentColor = False
     Visible = False
@@ -66,7 +66,6 @@ object imdFrm: TimdFrm
     Height = 26
     Top = 40
     Width = 24
-    Anchors = [akLeft, akBottom]
     Proportional = True
     Stretch = True
     Visible = False
@@ -75,7 +74,7 @@ object imdFrm: TimdFrm
     Left = 0
     Height = 38
     Top = 97
-    Width = 164
+    Width = 165
     Anchors = [akLeft, akBottom]
     AutoSize = True
     Caption = 'Install application for everyone'
@@ -98,10 +97,10 @@ object imdFrm: TimdFrm
     TabOrder = 1
   end
   object btnHome: TBitBtn
-    Left = 472
+    Left = 467
     Height = 38
     Top = 97
-    Width = 160
+    Width = 165
     Anchors = [akRight, akBottom]
     AutoSize = True
     Caption = 'Install into my Home-directory'

@@ -60,10 +60,11 @@ object mnFrm: TmnFrm
   OnDestroy = FormDestroy
   OnResize = FormResize
   OnShow = FormShow
-  ParentFont = False
-  LCLVersion = '0.9.26'
+  LCLVersion = '0.9.27'
   object Image1: TImage
+    Left = 0
     Height = 56
+    Top = 0
     Width = 816
     Align = alTop
     Stretch = True
@@ -72,15 +73,15 @@ object mnFrm: TmnFrm
     Left = 8
     Height = 14
     Top = 120
-    Width = 37
+    Width = 30
     Caption = 'Show:'
     ParentColor = False
   end
   object Label2: TLabel
-    Left = 643
+    Left = 650
     Height = 14
     Top = 120
-    Width = 34
+    Width = 27
     Anchors = [akTop, akRight]
     Caption = 'Filter:'
     ParentColor = False
@@ -96,6 +97,7 @@ object mnFrm: TmnFrm
     Constraints.MinWidth = 220
   end
   object StatusBar1: TStatusBar
+    Left = 0
     Height = 20
     Top = 538
     Width = 816
@@ -108,10 +110,10 @@ object mnFrm: TmnFrm
     SimplePanel = False
   end
   object btnSettings: TBitBtn
-    Left = 675
-    Height = 34
+    Left = 684
+    Height = 38
     Top = 64
-    Width = 128
+    Width = 119
     Anchors = [akTop, akRight]
     AutoSize = True
     Caption = 'Listaller settings'
@@ -197,9 +199,11 @@ object mnFrm: TmnFrm
   end
   object CBox: TComboBox
     Left = 48
-    Height = 26
+    Height = 23
     Top = 112
     Width = 144
+    AutoComplete = False
+    ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
       'All'
@@ -214,6 +218,7 @@ object mnFrm: TmnFrm
       'Additional'
       'Other'
     )
+    ItemWidth = 0
     MaxLength = 65535
     OnChange = CBoxChange
     TabOrder = 1
@@ -225,6 +230,8 @@ object mnFrm: TmnFrm
     Top = 152
     Width = 795
     Anchors = [akTop, akLeft, akRight, akBottom]
+    ClientHeight = 377
+    ClientWidth = 791
     Color = clForm
     ParentColor = False
     TabOrder = 2
@@ -252,9 +259,9 @@ object mnFrm: TmnFrm
   end
   object btnCat: TBitBtn
     Left = 160
-    Height = 34
+    Height = 38
     Top = 64
-    Width = 143
+    Width = 136
     AutoSize = True
     Caption = 'Software catalogue'
     Glyph.Data = {
@@ -339,9 +346,9 @@ object mnFrm: TmnFrm
   end
   object btnInstall: TBitBtn
     Left = 8
-    Height = 34
+    Height = 38
     Top = 64
-    Width = 160
+    Width = 146
     AutoSize = True
     Caption = 'Install new application'
     Glyph.Data = {
@@ -425,8 +432,18 @@ object mnFrm: TmnFrm
     TabOrder = 6
   end
   object Process1: TProcess
+    Active = False
     Options = [poNoConsole]
     Priority = ppNormal
+    StartupOptions = []
+    ShowWindow = swoNone
+    WindowColumns = 0
+    WindowHeight = 0
+    WindowLeft = 0
+    WindowRows = 0
+    WindowTop = 0
+    WindowWidth = 0
+    FillAttribute = 0
     left = 768
     top = 8
   end

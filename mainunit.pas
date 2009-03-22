@@ -1350,7 +1350,7 @@ if(pos('.desktop',LowerCase(ExtractFileName(h)))>0) then
 begin
 dsk:=TIniFile.Create(dest+'/'+ExtractFileName(h));
 dsk.WriteString('Desktop Entry','X-AppVersion',IAppVersion);
-dsk.WriteString('Desktop Entry','X-ExternalInst','true');
+dsk.WriteString('Desktop Entry','X-AllowRemove','true');
 dsk.WriteString('Desktop Entry','X-Publisher',IAuthor);
 if dsk.ValueExists('Desktop Entry','Icon') then
 dsk.WriteString('Desktop Entry','Icon',SyblToPath(dsk.ReadString('Desktop Entry','Icon','*')));

@@ -104,6 +104,10 @@ var t: TProcess;DInfo: TDistroInfo;
 begin
 DInfo:=GetDistro;
 if not IsRoot then begin
+if (DInfo.DName='Fedora')and(DInfo.Desktop='GNOME') then begin
+ ShowMessage('Fedora has not "gksu"-like tool Listaller can use to get root-permissions.'#13'You can execute "listallmgr" in an Terminal root-environment to get this function working.'#13'This function will be fixed in newer Listaller releases.');
+ exit;
+end;
        t:=TProcess.Create(nil);
          if DInfo.Desktop='KDE' then
           if FileExists('/usr/bin/kdesu') then

@@ -137,7 +137,7 @@ d:=TIniFile.Create(fname);
        and(pos('setting',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
       // and(pos('utility',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
        and(d.ReadString('Desktop Entry','OnlyShowIn','')='')
-       and(d.ReadString('Desktop Entry','ExternalInst','false')='false')
+       and(d.ReadString('Desktop Entry','X-AllowRemove','true')='true')
        then begin
        SetLength(AList,ListLength+1);
        Inc(ListLength);
