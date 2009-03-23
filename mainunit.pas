@@ -529,19 +529,21 @@ or (n='i586')
 or (n='i486')
 then n:='i386';
 
+if FindChildNode(xnode,'disallow')<>nil then
 if (pos('iofilecheck',LowerCase(FindChildNode(xnode,'disallow').NodeValue))>0) then begin
 FOverwrite:=true;
 writeLn('WARNING: This package will overwrite every file that is in the package and on your disk!');
 end else FOverwrite:=false;
 
+writeLn('Architecture: '+n);
 if (pos(n,LowerCase(FindChildNode(xnode,'architecture').NodeValue))<=0)
-and (pos('all',LowerCase(FindChildNode(xnode,'architecture').NodeValue))<=0) then begin
+and (LowerCase(FindChildNode(xnode,'architecture').NodeValue)<>'all') then begin
 ShowMessage(strInvArchitecture);
 z.Free;
-Application.Terminate;
+halt(0);
 exit;
 end;
-writeLn('Architecture: '+n);
+
 pID:=xnode.FindNode('id').FirstChild.NodeValue;
 idName:='';
 if xnode.FindNode('idName')<> nil then

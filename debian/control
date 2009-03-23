@@ -10,30 +10,31 @@ Package: listaller-gtk
 Architecture: any
 Depends: ${shlibs:Depends}, gksu, xdg-utils, lsb-release, packagekit, python-packagekit, python
 Provides: listaller, listaller-compact-gtk
-Description:Listaller main package (GTK)
+Description: Listaller main package (GTK)
   Listaller is a distribution-independ software install system.
-  This is an alpha-release of Listaller. With this package you can uninstall 
-  every application on your system and install ipk-packages, LOKI/Mojo and Autopackages easily. 
+  The application can be used to uninstall every application on your
+  system you want to be removed, including LOKI/Mojo and Autopackages.
+  This package also includes the IPK installer tool.
   Listaller tries to be compatible to all available Linux distributions
-  and install- and package-systems.
-  Please note that this alpha-version should be used for testing purposes.
+  and uses PackageKit as backend.
+  Please note that this alpha-version should only be used for testing purposes.
 
 Package: listaller-tools
 Architecture: any
 Depends: ${shlibs:Depends}, listaller
-Description:Command-line tools for Listaller and IPK packages
+Description: Command-line tools for Listaller and IPK packages
   This package contains everything you need to build own IPK packages.
   It also contains the needed tools to build RPM and DEB packages from IPS sources and to 
-  create an "Linux distribution compatible" button.
+  create an "Linux distribution compatible" button for your software.
 
 Package: listaller-creation-gtk
 Architecture: any
 Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller, listaller-tools
-Description:Listaller Creator
-  Listaller is a distribution-independ software install system.
-  This is an alpha-release of Listaller's package creation tool.
+Description: Listaller Creator
+  Listaller is a cross-distribution software install system.
+  This is an alpha-release of Listaller's graphical package creation tool.
   With liCreator you can easily build your own IPK-packages for the Listaller system.
-  Please note that this alpha-version should be used for testing purposes.
+  Please note that this is an alpha-release!.
 
 Package: lithememgr-gtk
 Architecture: any
@@ -41,4 +42,4 @@ Depends: ${shlibs:Depends}, listaller
 Description:liTheme Manager
   Tool that lets you easily install/uninstall system themes, wallpapers, iconsets and screensavers.
   liThemeMgr is part of the Listaller project and uses it's technology.
-  liThemeMgr is still under development! This is an daily-build!
+  liThemeMgr is still under development. This is an daily-build and should not be used!

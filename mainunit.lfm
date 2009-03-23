@@ -61,10 +61,10 @@ object IWizFrm: TIWizFrm
     object WPage: TPage
       Caption = 'Welcome'
       ClientWidth = 647
-      ClientHeight = 349
+      ClientHeight = 352
       object Image2: TImage
         Left = 0
-        Height = 349
+        Height = 352
         Top = 0
         Width = 146
         Align = alLeft
@@ -84,17 +84,17 @@ object IWizFrm: TIWizFrm
       end
       object Label2: TLabel
         Left = 158
-        Height = 13
+        Height = 14
         Top = 40
-        Width = 209
+        Width = 208
         Caption = 'Welcome to the installation of <unknown>.'
         ParentColor = False
       end
       object Label3: TLabel
         Left = 158
-        Height = 13
+        Height = 14
         Top = 72
-        Width = 179
+        Width = 181
         Caption = 'Press "Next" to start the installation!'
         ParentColor = False
       end
@@ -112,9 +112,9 @@ object IWizFrm: TIWizFrm
       end
       object CheckBox1: TCheckBox
         Left = 158
-        Height = 33
+        Height = 21
         Top = 106
-        Width = 146
+        Width = 129
         Caption = 'Display installation log'
         OnChange = CheckBox1Change
         TabOrder = 0
@@ -127,7 +127,7 @@ object IWizFrm: TIWizFrm
         Items.Strings = (
           'Logfile:'
         )
-        ItemHeight = 18
+        ItemHeight = 19
         TabOrder = 1
         Visible = False
       end
@@ -135,7 +135,7 @@ object IWizFrm: TIWizFrm
     object DPage: TPage
       Caption = 'Description'
       ClientWidth = 647
-      ClientHeight = 350
+      ClientHeight = 352
       object Label4: TLabel
         Left = 12
         Height = 24
@@ -149,17 +149,17 @@ object IWizFrm: TIWizFrm
       end
       object GroupBox1: TGroupBox
         Left = 12
-        Height = 304
+        Height = 306
         Top = 38
         Width = 623
         Anchors = [akTop, akLeft, akRight, akBottom]
         Caption = 'Description'
-        ClientHeight = 290
+        ClientHeight = 302
         ClientWidth = 619
         TabOrder = 0
         object Memo1: TMemo
           Left = 6
-          Height = 381
+          Height = 404
           Top = 3
           Width = 604
           Anchors = [akTop, akLeft, akRight, akBottom]
@@ -174,7 +174,7 @@ object IWizFrm: TIWizFrm
     object LPage: TPage
       Caption = 'License'
       ClientWidth = 647
-      ClientHeight = 350
+      ClientHeight = 352
       object Label5: TLabel
         Left = 12
         Height = 24
@@ -197,7 +197,7 @@ object IWizFrm: TIWizFrm
       object RadioButton1: TRadioButton
         Left = 12
         Height = 33
-        Top = 290
+        Top = 292
         Width = 249
         Anchors = [akLeft, akBottom]
         Caption = 'I agree with the above terms and conditions'
@@ -208,7 +208,7 @@ object IWizFrm: TIWizFrm
       object RadioButton2: TRadioButton
         Left = 12
         Height = 33
-        Top = 314
+        Top = 316
         Width = 96
         Anchors = [akLeft, akBottom]
         Caption = 'I don''t agree'
@@ -219,7 +219,7 @@ object IWizFrm: TIWizFrm
       end
       object LicMemo: TMemo
         Left = 12
-        Height = 227
+        Height = 229
         Top = 61
         Width = 622
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -234,7 +234,7 @@ object IWizFrm: TIWizFrm
     object IMPage: TPage
       Caption = 'Mode'
       ClientWidth = 647
-      ClientHeight = 350
+      ClientHeight = 352
       object Label13: TLabel
         Left = 12
         Height = 19
@@ -278,7 +278,7 @@ object IWizFrm: TIWizFrm
     object IPage: TPage
       Caption = 'Install'
       ClientWidth = 647
-      ClientHeight = 350
+      ClientHeight = 352
       object Label6: TLabel
         Left = 4
         Height = 26
@@ -332,7 +332,7 @@ object IWizFrm: TIWizFrm
       object InfoMemo: TMemo
         Left = 6
         Height = 144
-        Top = 150
+        Top = 152
         Width = 635
         Anchors = [akLeft, akRight, akBottom]
         Color = clAppWorkspace
@@ -345,7 +345,7 @@ object IWizFrm: TIWizFrm
       object Edit1: TEdit
         Left = 6
         Height = 23
-        Top = 305
+        Top = 307
         Width = 535
         Anchors = [akLeft, akRight, akBottom]
         Enabled = False
@@ -356,7 +356,7 @@ object IWizFrm: TIWizFrm
       object btn_sendinput: TButton
         Left = 551
         Height = 25
-        Top = 302
+        Top = 304
         Width = 75
         Anchors = [akRight, akBottom]
         Caption = 'Send'
@@ -369,7 +369,7 @@ object IWizFrm: TIWizFrm
     object FinPage: TPage
       Caption = 'Finish'
       ClientWidth = 647
-      ClientHeight = 350
+      ClientHeight = 352
       object Label10: TLabel
         Left = 12
         Height = 26
@@ -428,10 +428,10 @@ object IWizFrm: TIWizFrm
     ClientWidth = 651
     TabOrder = 1
     object FinBtn1: TBitBtn
-      Left = 603
-      Height = 22
-      Top = 17
-      Width = 41
+      Left = 601
+      Height = 27
+      Top = 12
+      Width = 43
       Anchors = [akRight, akBottom]
       AutoSize = True
       Caption = 'Finish'
@@ -441,10 +441,10 @@ object IWizFrm: TIWizFrm
       Visible = False
     end
     object AbortBtn1: TBitBtn
-      Left = 307
-      Height = 22
-      Top = 16
-      Width = 39
+      Left = 304
+      Height = 27
+      Top = 11
+      Width = 44
       Anchors = [akBottom]
       AutoSize = True
       Caption = 'Abort'
@@ -454,9 +454,9 @@ object IWizFrm: TIWizFrm
     end
     object Button5: TBitBtn
       Left = 8
-      Height = 22
-      Top = 16
-      Width = 37
+      Height = 27
+      Top = 11
+      Width = 40
       Anchors = [akLeft, akBottom]
       AutoSize = True
       Caption = 'Back'
@@ -466,10 +466,10 @@ object IWizFrm: TIWizFrm
       Visible = False
     end
     object Button1: TBitBtn
-      Left = 608
-      Height = 22
-      Top = 17
-      Width = 35
+      Left = 602
+      Height = 27
+      Top = 12
+      Width = 41
       Anchors = [akRight, akBottom]
       AutoSize = True
       Caption = 'Next'

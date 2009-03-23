@@ -84,7 +84,7 @@ object imdFrm: TimdFrm
     TabOrder = 0
   end
   object btnTest: TBitBtn
-    Left = 289
+    Left = 272
     Height = 38
     Top = 97
     Width = 89

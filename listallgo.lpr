@@ -12,8 +12,7 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** GUI wizard application for IPK package installations
 program listallgo;
 
@@ -24,8 +23,8 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms
-  { you can add units after this }, mainunit, dgunit, trstrings, LResources,
+  Forms,
+  mainunit, dgunit, trstrings, LResources,
   ipkhandle, SysUtils, distri, utilities;
 
 {$IFDEF WINDOWS}{$R listallgo.rc}{$ENDIF}

@@ -42,7 +42,6 @@ uses
 {$IFDEF LINUX}
   Unix,
   BaseUnix,
-  Unixutil,
   UnixType,
   SysConst,
   DateUtils,

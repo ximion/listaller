@@ -614,8 +614,8 @@ res.Canvas.Draw(buf.Width,0,bt);
 j:=0;
 for i:=0 to dlist.Count-1 do
 begin
- if FileExists('/usr/share/listaller/graphics/libutton/distro/'+dlist[i]+'.png') then begin
-bt.LoadFromFile('/usr/share/listaller/graphics/libutton/distro/'+dlist[i]+'.png');
+ if FileExists('/usr/share/listaller/graphics/libutton/distro/'+LowerCase(dlist[i])+'.png') then begin
+bt.LoadFromFile('/usr/share/listaller/graphics/libutton/distro/'+LowerCase(dlist[i])+'.png');
 if i mod 2 = 0 then begin
 j:=i;
 res.Canvas.Draw(100+30*i,14,bt)
