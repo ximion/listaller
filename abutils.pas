@@ -651,13 +651,13 @@ end;
 {$IFDEF LINUX}
 function LinuxVolumeFree(const Path : string): Int64;
 var
-  FStats : UnixType.TStatFS;
+  FStats : TStatFS;
   Rslt : Integer;
 begin
   Result := -1;
   Rslt := UNIX.statfs(PAnsiChar(ExtractFilePath(Path)), FStats);
   if Rslt = 0 then
-    Result := Int64(FStats.bAvail) * Int64(FStats.bsize);
+    Result := Int64(FStats.bAvail);
 end;
 
 function LinuxVolumeSize(const Path : string): Int64;
