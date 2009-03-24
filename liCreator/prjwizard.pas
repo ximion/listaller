@@ -129,8 +129,14 @@ type
     lbDistributions: TListBox;
     lbProfiles: TListBox;
     lvPackageFiles: TListView;
+    MainMenu1: TMainMenu;
     Memo1: TMemo;
     MenuItem1: TMenuItem;
+    MenuItem2: TMenuItem;
+    MenuItem3: TMenuItem;
+    MenuItem4: TMenuItem;
+    MenuItem5: TMenuItem;
+    MenuItem6: TMenuItem;
     Notebook1: TNotebook;
     Page1: TPage;
     Page2: TPage;
@@ -178,6 +184,10 @@ type
     procedure lvPackageFilesKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure MenuItem1Click(Sender: TObject);
+    procedure MenuItem2Click(Sender: TObject);
+    procedure MenuItem4Click(Sender: TObject);
+    procedure MenuItem5Click(Sender: TObject);
+    procedure MenuItem6Click(Sender: TObject);
     procedure RadioButton1Change(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
@@ -1001,6 +1011,37 @@ procedure TfrmProjectWizard.MenuItem1Click(Sender: TObject);
 begin
   if lvPackageFiles.Selected<>nil then
     lvPackageFiles.Selected.Delete;
+end;
+
+procedure TfrmProjectWizard.MenuItem2Click(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmProjectWizard.MenuItem4Click(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TfrmProjectWizard.MenuItem5Click(Sender: TObject);
+var s: String;
+begin
+  s:='List of available placeholders:';
+  s:=s+#13'§INST : Points to "/usr/appfiles" in ROOT installation, otherwise to "$HOME/applications/files"';
+  s:=s+#13'$INST-X : Replaced by "/usr/share" on ROOT installation, "$HOME/applications/files" on installation in Home-directory.';
+  s:=s+#13'$OPT : Points to "/opt" if user is ROOT, otherwise it does the same as $INST';
+  s:=s+#13'$BIN : Pointer to "/usr/bin" if ROOT, else "$HOME/applications/binary"';
+  s:=s+#13'$LIB : Pointer to "/usr/lib64" (on 64bit machines) or to "/usr/lib" (all others) if ROOT, else "$HOME/applications/files/lib64" or "$HOME/applications/files/lib"';
+  s:=s+#13'$APP : Pointer to "/usr/share/applications", if ROOT, else "$HOME/applications"';
+  s:=s+#13'$ICON-# : Points to "/usr/share/icons/hicolor/#x#/apps" if user is ROOT, else to "$HOME/applications/files/icons/#x#". The "#" symbol has to be replaced with the icon size: 16, 24, 32, 48, 64, 128, 265 pixels.';
+  s:=s+#13'$PIX : Symbol for general pixmaps. Points to "/usr/share/pixmaps" if ROOT, else "$HOME/applications/files/icons/common"';
+  s:=s+#13'($HOME stands for the home directory of the current user. It is NO Listaller placeholder!)';
+  ShowMessage(s);
+end;
+
+procedure TfrmProjectWizard.MenuItem6Click(Sender: TObject);
+begin
+  ShowMessage('List of modifiers:'#13'<chmod:xxx> : Assign the rights xxx to the file.'#13'<s> : Mark file as shared file'#13'If possible you should not use any modifier!');
 end;
 
 procedure TfrmProjectWizard.RadioButton1Change(Sender: TObject);

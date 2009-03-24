@@ -1,12 +1,16 @@
 object frmProjectWizard: TfrmProjectWizard
-  Left = 271
-  Height = 654
-  Top = 200
-  Width = 830
+  Left = 285
+  Height = 666
+  Top = 188
+  Width = 836
   ActiveControl = Edit1
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
   Caption = 'Project Wizard'
-  ClientHeight = 654
-  ClientWidth = 830
+  ClientHeight = 641
+  ClientWidth = 836
+  Constraints.MinHeight = 666
+  Constraints.MinWidth = 836
   Icon.Data = {
     7E04000000000100010010100000010020006804000016000000280000001000
     0000200000000100200000000000000000000000000000000000000000000000
@@ -46,6 +50,7 @@ object frmProjectWizard: TfrmProjectWizard
     0000FCFF0000FE7F0000FF3D0000FF380000FF810000FF830000F8070000FC1F
     0000
   }
+  Menu = MainMenu1
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
@@ -53,9 +58,9 @@ object frmProjectWizard: TfrmProjectWizard
   LCLVersion = '0.9.27'
   object Notebook1: TNotebook
     Left = 0
-    Height = 604
+    Height = 600
     Top = 0
-    Width = 830
+    Width = 836
     Align = alClient
     PageIndex = 1
     ShowTabs = False
@@ -63,7 +68,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page1: TPage
       Caption = 'Page1'
       ClientWidth = 826
-      ClientHeight = 600
+      ClientHeight = 571
       object SpeedButton1: TSpeedButton
         Left = 85
         Height = 104
@@ -1750,8 +1755,8 @@ object frmProjectWizard: TfrmProjectWizard
     end
     object Page2: TPage
       Caption = 'Page2'
-      ClientWidth = 826
-      ClientHeight = 600
+      ClientWidth = 832
+      ClientHeight = 596
       object Label8: TLabel
         Left = 7
         Height = 19
@@ -2247,7 +2252,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page3: TPage
       Caption = 'Page3'
       ClientWidth = 826
-      ClientHeight = 600
+      ClientHeight = 571
       object Label19: TLabel
         Left = 7
         Height = 19
@@ -2269,7 +2274,7 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object tvDependencies: TTreeView
         Left = 319
-        Height = 526
+        Height = 497
         Top = 63
         Width = 503
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -2316,7 +2321,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page4: TPage
       Caption = 'Page4'
       ClientWidth = 826
-      ClientHeight = 600
+      ClientHeight = 571
       object Label17: TLabel
         Left = 7
         Height = 19
@@ -2331,7 +2336,7 @@ object frmProjectWizard: TfrmProjectWizard
       object lvPackageFiles: TListView
         Left = 0
         Height = 392
-        Top = 208
+        Top = 179
         Width = 826
         Align = alBottom
         Columns = <        
@@ -2503,7 +2508,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page5: TPage
       Caption = 'Page5'
       ClientWidth = 826
-      ClientHeight = 600
+      ClientHeight = 571
       object Label18: TLabel
         Left = 7
         Height = 19
@@ -2517,7 +2522,7 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Memo1: TMemo
         Left = 6
-        Height = 520
+        Height = 491
         Top = 38
         Width = 798
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -2533,7 +2538,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page6: TPage
       Caption = 'Page6'
       ClientWidth = 826
-      ClientHeight = 577
+      ClientHeight = 571
       object Label21: TLabel
         Left = 7
         Height = 20
@@ -2589,17 +2594,17 @@ object frmProjectWizard: TfrmProjectWizard
   end
   object Panel1: TPanel
     Left = 0
-    Height = 50
-    Top = 604
-    Width = 830
+    Height = 41
+    Top = 600
+    Width = 836
     Align = alBottom
-    ClientHeight = 50
-    ClientWidth = 830
+    ClientHeight = 41
+    ClientWidth = 836
     TabOrder = 1
     object BitBtn1: TBitBtn
       Left = 8
-      Height = 30
-      Top = 12
+      Height = 28
+      Top = 8
       Width = 52
       Anchors = [akTop, akLeft, akBottom]
       AutoSize = True
@@ -2610,9 +2615,9 @@ object frmProjectWizard: TfrmProjectWizard
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
-      Left = 377
-      Height = 30
-      Top = 12
+      Left = 384
+      Height = 28
+      Top = 8
       Width = 56
       Anchors = [akTop, akBottom]
       AutoSize = True
@@ -2622,9 +2627,9 @@ object frmProjectWizard: TfrmProjectWizard
       TabOrder = 1
     end
     object BitBtn3: TBitBtn
-      Left = 766
-      Height = 30
-      Top = 12
+      Left = 772
+      Height = 28
+      Top = 8
       Width = 53
       Anchors = [akTop, akRight, akBottom]
       AutoSize = True
@@ -2637,10 +2642,33 @@ object frmProjectWizard: TfrmProjectWizard
   end
   object PopupMenu1: TPopupMenu
     left = 792
-    top = 8
+    top = 16
     object MenuItem1: TMenuItem
       Caption = 'Delete'
       OnClick = MenuItem1Click
+    end
+  end
+  object MainMenu1: TMainMenu
+    left = 450
+    top = 19
+    object MenuItem2: TMenuItem
+      Caption = 'Wizard'
+      OnClick = MenuItem2Click
+      object MenuItem4: TMenuItem
+        Caption = 'Close'
+        OnClick = MenuItem4Click
+      end
+    end
+    object MenuItem3: TMenuItem
+      Caption = 'Help'
+      object MenuItem5: TMenuItem
+        Caption = 'Display placeholder list'
+        OnClick = MenuItem5Click
+      end
+      object MenuItem6: TMenuItem
+        Caption = 'Display modifier list'
+        OnClick = MenuItem6Click
+      end
     end
   end
 end
