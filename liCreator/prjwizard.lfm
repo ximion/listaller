@@ -1,8 +1,9 @@
 object frmProjectWizard: TfrmProjectWizard
-  Left = 294
+  Left = 271
   Height = 654
-  Top = 159
+  Top = 200
   Width = 830
+  ActiveControl = Edit1
   Caption = 'Project Wizard'
   ClientHeight = 654
   ClientWidth = 830
@@ -48,20 +49,21 @@ object frmProjectWizard: TfrmProjectWizard
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  ParentFont = False
   Position = poMainFormCenter
-  LCLVersion = '0.9.26'
+  LCLVersion = '0.9.27'
   object Notebook1: TNotebook
+    Left = 0
     Height = 604
+    Top = 0
     Width = 830
     Align = alClient
-    PageIndex = 3
+    PageIndex = 1
     ShowTabs = False
     TabOrder = 0
     object Page1: TPage
       Caption = 'Page1'
-      ClientWidth = 824
-      ClientHeight = 571
+      ClientWidth = 826
+      ClientHeight = 600
       object SpeedButton1: TSpeedButton
         Left = 85
         Height = 104
@@ -1639,9 +1641,9 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label1: TLabel
         Left = 7
-        Height = 20
+        Height = 19
         Top = 15
-        Width = 200
+        Width = 187
         Caption = 'What do you want to do?'
         Font.Height = -15
         Font.Name = 'Sans'
@@ -1650,7 +1652,7 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label2: TLabel
         Left = 207
-        Height = 18
+        Height = 16
         Top = 87
         Width = 203
         Caption = 'Create normal IPK-package'
@@ -1662,9 +1664,9 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label3: TLabel
         Left = 207
-        Height = 52
+        Height = 46
         Top = 119
-        Width = 358
+        Width = 275
         Caption = 'Create an IPK-Package that has all needed files included.'#10'It can point on DEB/RPM packages and can use'#10'Listaller''s build-in update service.'
         Font.Pitch = fpVariable
         ParentColor = False
@@ -1672,9 +1674,9 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label4: TLabel
         Left = 207
-        Height = 70
+        Height = 62
         Top = 239
-        Width = 328
+        Width = 255
         Caption = 'Create an IPK-Package that contains the links where'#10'the DEB/RPM files for a specific distribution are.'#10'Listaller will download and install the files. This type'#10'is similar to openSuSE''s 1-Click Install.'
         Font.Pitch = fpVariable
         ParentColor = False
@@ -1682,7 +1684,7 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label5: TLabel
         Left = 207
-        Height = 18
+        Height = 16
         Top = 207
         Width = 212
         Caption = 'Create DEPLink IPK-package'
@@ -1694,9 +1696,9 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label6: TLabel
         Left = 207
-        Height = 52
+        Height = 46
         Top = 367
-        Width = 250
+        Width = 195
         Caption = 'Create an IPK-Package that contains an'#10'Autopackage.org or LOKI script. Listaller'#10'will manage all this package systems.'
         Font.Pitch = fpVariable
         ParentColor = False
@@ -1704,7 +1706,7 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label7: TLabel
         Left = 207
-        Height = 18
+        Height = 16
         Top = 343
         Width = 317
         Caption = 'Build IPK using Autopackage/LOKI installer'
@@ -1725,7 +1727,7 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label24: TLabel
         Left = 207
-        Height = 18
+        Height = 16
         Top = 463
         Width = 173
         Caption = 'Open an existing script'
@@ -1737,9 +1739,9 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label25: TLabel
         Left = 207
-        Height = 52
+        Height = 46
         Top = 487
-        Width = 239
+        Width = 182
         Caption = 'Load an existing IPS file,'#10'which contains all needed information'#10'to build an Listaller package.'
         Font.Pitch = fpVariable
         ParentColor = False
@@ -1748,13 +1750,13 @@ object frmProjectWizard: TfrmProjectWizard
     end
     object Page2: TPage
       Caption = 'Page2'
-      ClientWidth = 824
-      ClientHeight = 571
+      ClientWidth = 826
+      ClientHeight = 600
       object Label8: TLabel
         Left = 7
-        Height = 20
+        Height = 19
         Top = 7
-        Width = 172
+        Width = 165
         Caption = 'Set application details:'
         Font.Height = -15
         Font.Name = 'Sans'
@@ -1767,7 +1769,7 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 29
         Width = 808
         Caption = 'Application'
-        ClientHeight = 183
+        ClientHeight = 185
         ClientWidth = 804
         TabOrder = 0
         object Label9: TLabel
@@ -1844,6 +1846,14 @@ object frmProjectWizard: TfrmProjectWizard
           ParentColor = False
           ParentFont = False
         end
+        object Label32: TLabel
+          Left = 10
+          Height = 14
+          Top = 160
+          Width = 83
+          Caption = 'Main executable:'
+          ParentColor = False
+        end
         object Edit1: TEdit
           Left = 150
           Height = 23
@@ -1864,9 +1874,11 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object ComboBox1: TComboBox
           Left = 150
-          Height = 27
+          Height = 23
           Top = 67
           Width = 168
+          AutoComplete = False
+          ItemHeight = 0
           ItemIndex = 9
           Items.Strings = (
             'Education'
@@ -1880,6 +1892,7 @@ object frmProjectWizard: TfrmProjectWizard
             'Additional'
             'Unclassificable/Other'
           )
+          ItemWidth = 0
           TabOrder = 2
           Text = 'Unclassificable/Other'
         end
@@ -1888,8 +1901,10 @@ object frmProjectWizard: TfrmProjectWizard
           Height = 23
           Top = 99
           Width = 288
+          DialogOptions = []
+          FilterIndex = 0
           ButtonWidth = 23
-          ParentColor = False
+          NumGlyphs = 0
           TabOrder = 3
         end
         object FileNameEdit2: TFileNameEdit
@@ -1897,8 +1912,10 @@ object frmProjectWizard: TfrmProjectWizard
           Height = 23
           Top = 126
           Width = 288
+          DialogOptions = []
+          FilterIndex = 0
           ButtonWidth = 23
-          ParentColor = False
+          NumGlyphs = 0
           TabOrder = 4
         end
         object Edit10: TEdit
@@ -1915,13 +1932,15 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 37
           Width = 200
           DialogTitle = 'Select icon...'
+          DialogOptions = []
           Filter = 'PNG-Files|*.png'
+          FilterIndex = 0
           ButtonWidth = 23
-          ParentColor = False
+          NumGlyphs = 0
           TabOrder = 6
         end
-        object CheckGroup1: TCheckGroup
-          Left = 486
+        object cgrIMethods: TCheckGroup
+          Left = 492
           Height = 83
           Top = 99
           Width = 305
@@ -1941,10 +1960,32 @@ object frmProjectWizard: TfrmProjectWizard
             'Installation into $HOME'
             'Test-installation'
           )
+          OnItemClick = cgrIMethodsItemClick
           TabOrder = 7
           Data = {
             03000000030303
           }
+        end
+        object edtExec: TEdit
+          Left = 150
+          Height = 23
+          Top = 156
+          Width = 287
+          TabOrder = 8
+          Text = '$INST/name'
+        end
+        object cbUseAppCMD: TCheckBox
+          Left = 439
+          Height = 21
+          Hint = 'Use executable'
+          Top = 156
+          Width = 23
+          Checked = True
+          OnChange = cbUseAppCMDChange
+          ParentShowHint = False
+          ShowHint = True
+          State = cbChecked
+          TabOrder = 9
         end
       end
       object GroupBox2: TGroupBox
@@ -1953,30 +1994,30 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 231
         Width = 809
         Caption = 'Package'
-        ClientHeight = 151
+        ClientHeight = 153
         ClientWidth = 805
         TabOrder = 1
         object Label11: TLabel
           Left = 6
-          Height = 16
+          Height = 14
           Top = 9
-          Width = 82
+          Width = 63
           Caption = 'Architecture:'
           ParentColor = False
         end
         object Label16: TLabel
           Left = 6
-          Height = 16
+          Height = 14
           Top = 41
-          Width = 153
+          Width = 116
           Caption = 'Supported distributions:'
           ParentColor = False
         end
         object Label27: TLabel
           Left = 391
-          Height = 16
+          Height = 14
           Top = 9
-          Width = 52
+          Width = 42
           Caption = 'idName:'
           ParentColor = False
         end
@@ -1995,9 +2036,9 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object Label29: TLabel
           Left = 391
-          Height = 16
+          Height = 14
           Top = 57
-          Width = 88
+          Width = 67
           Caption = 'Desktop Files:'
           ParentColor = False
         end
@@ -2023,6 +2064,7 @@ object frmProjectWizard: TfrmProjectWizard
           Height = 96
           Top = 53
           Width = 192
+          ItemHeight = 0
           OnKeyDown = lbDistributionsKeyDown
           TabOrder = 1
           TopIndex = -1
@@ -2075,7 +2117,7 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 405
         Width = 480
         Caption = 'Short Description:'
-        ClientHeight = 167
+        ClientHeight = 169
         ClientWidth = 476
         TabOrder = 2
         object Label12: TLabel
@@ -2089,9 +2131,9 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object Label31: TLabel
           Left = 390
-          Height = 16
+          Height = 14
           Top = 73
-          Width = 71
+          Width = 58
           Caption = 'Lang-Code:'
           ParentColor = False
         end
@@ -2101,7 +2143,7 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 63
           Width = 372
           AutoExpand = True
-          DefaultItemHeight = 17
+          DefaultItemHeight = 15
           HideSelection = False
           TabOrder = 0
           OnClick = tvShortDescriptionsClick
@@ -2154,7 +2196,7 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 405
         Width = 322
         Caption = 'Profiles'
-        ClientHeight = 167
+        ClientHeight = 169
         ClientWidth = 318
         TabOrder = 3
         object lbProfiles: TListBox
@@ -2162,7 +2204,7 @@ object frmProjectWizard: TfrmProjectWizard
           Height = 136
           Top = 9
           Width = 201
-          ItemHeight = 18
+          ItemHeight = 0
           OnKeyDown = lbProfilesKeyDown
           TabOrder = 0
           TopIndex = -1
@@ -2193,25 +2235,24 @@ object frmProjectWizard: TfrmProjectWizard
           EditLabel.AnchorSideLeft.Control = edtProfileName
           EditLabel.AnchorSideBottom.Control = edtProfileName
           EditLabel.Left = 8
-          EditLabel.Height = 16
-          EditLabel.Top = 23
-          EditLabel.Width = 83
+          EditLabel.Height = 14
+          EditLabel.Top = 25
+          EditLabel.Width = 65
           EditLabel.Caption = 'Profile name:'
           EditLabel.ParentColor = False
-          ParentColor = False
           TabOrder = 3
         end
       end
     end
     object Page3: TPage
       Caption = 'Page3'
-      ClientWidth = 824
-      ClientHeight = 571
+      ClientWidth = 826
+      ClientHeight = 600
       object Label19: TLabel
         Left = 7
-        Height = 20
+        Height = 19
         Top = 7
-        Width = 144
+        Width = 134
         Caption = 'Add dependencies'
         Font.Height = -15
         Font.Name = 'Sans'
@@ -2220,20 +2261,20 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label20: TLabel
         Left = 7
-        Height = 106
+        Height = 94
         Top = 63
-        Width = 286
+        Width = 220
         Caption = 'You can add ftp:// or http:// weblinks.'#10'On DEB-based systems you can use '#10'the package name instead.'#10'You can add the real package name after the'#10'link, eg.'#10'http://example.com/test-1.0-i386.deb <test>'
         ParentColor = False
       end
       object tvDependencies: TTreeView
         Left = 319
-        Height = 497
+        Height = 526
         Top = 63
-        Width = 501
+        Width = 503
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoExpand = True
-        DefaultItemHeight = 17
+        DefaultItemHeight = 15
         TabOrder = 0
         OnClick = tvDependenciesClick
         OnKeyDown = tvDependenciesKeyDown
@@ -2250,7 +2291,7 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 199
         Width = 297
         Caption = 'Add entry'
-        ClientHeight = 88
+        ClientHeight = 90
         ClientWidth = 293
         TabOrder = 1
         object Edit8: TEdit
@@ -2274,13 +2315,13 @@ object frmProjectWizard: TfrmProjectWizard
     end
     object Page4: TPage
       Caption = 'Page4'
-      ClientWidth = 824
-      ClientHeight = 598
+      ClientWidth = 826
+      ClientHeight = 600
       object Label17: TLabel
         Left = 7
-        Height = 20
+        Height = 19
         Top = 7
-        Width = 163
+        Width = 154
         Caption = 'Add files to package:'
         Font.Height = -15
         Font.Name = 'Sans'
@@ -2288,9 +2329,10 @@ object frmProjectWizard: TfrmProjectWizard
         ParentFont = False
       end
       object lvPackageFiles: TListView
+        Left = 0
         Height = 392
-        Top = 206
-        Width = 824
+        Top = 208
+        Width = 826
         Align = alBottom
         Columns = <        
           item
@@ -2324,7 +2366,7 @@ object frmProjectWizard: TfrmProjectWizard
         Height = 120
         Top = 55
         Width = 424
-        ClientHeight = 103
+        ClientHeight = 105
         ClientWidth = 420
         TabOrder = 1
         object GroupBox5: TGroupBox
@@ -2333,7 +2375,7 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 1
           Width = 403
           Caption = 'Select folder:'
-          ClientHeight = 32
+          ClientHeight = 34
           ClientWidth = 399
           TabOrder = 0
           object DirectoryEdit1: TDirectoryEdit
@@ -2341,9 +2383,9 @@ object frmProjectWizard: TfrmProjectWizard
             Height = 23
             Top = 1
             Width = 363
+            ShowHidden = False
             ButtonWidth = 23
             NumGlyphs = 1
-            ParentColor = False
             TabOrder = 0
           end
         end
@@ -2353,7 +2395,7 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 49
           Width = 403
           Caption = 'CopyToPath:'
-          ClientHeight = 28
+          ClientHeight = 30
           ClientWidth = 399
           TabOrder = 1
           object Edit6: TEdit
@@ -2371,7 +2413,7 @@ object frmProjectWizard: TfrmProjectWizard
         Height = 120
         Top = 55
         Width = 393
-        ClientHeight = 103
+        ClientHeight = 105
         ClientWidth = 389
         Enabled = False
         TabOrder = 2
@@ -2381,7 +2423,7 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 1
           Width = 376
           Caption = 'Select file:'
-          ClientHeight = 31
+          ClientHeight = 33
           ClientWidth = 372
           TabOrder = 0
           object FileNameEdit3: TFileNameEdit
@@ -2389,9 +2431,10 @@ object frmProjectWizard: TfrmProjectWizard
             Height = 23
             Top = 3
             Width = 339
+            DialogOptions = []
+            FilterIndex = 0
             ButtonWidth = 23
             NumGlyphs = 1
-            ParentColor = False
             TabOrder = 0
           end
         end
@@ -2401,7 +2444,7 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 49
           Width = 376
           Caption = 'CopyToPath:'
-          ClientHeight = 28
+          ClientHeight = 30
           ClientWidth = 372
           TabOrder = 1
           object Edit7: TEdit
@@ -2416,9 +2459,9 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object RadioButton1: TRadioButton
         Left = 7
-        Height = 22
+        Height = 21
         Top = 39
-        Width = 247
+        Width = 195
         Caption = 'Add files from folder and subfolders'
         Checked = True
         OnChange = RadioButton1Change
@@ -2427,11 +2470,12 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object RadioButton2: TRadioButton
         Left = 431
-        Height = 22
+        Height = 21
         Top = 39
-        Width = 111
+        Width = 88
         Caption = 'Add single file'
         TabOrder = 4
+        TabStop = False
       end
       object Button6: TButton
         Left = 351
@@ -2444,9 +2488,12 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object cmbProfiles: TComboBox
         Left = 181
-        Height = 29
+        Height = 27
         Top = 5
         Width = 168
+        AutoComplete = False
+        ItemHeight = 0
+        ItemWidth = 0
         OnChange = cmbProfilesChange
         OnCloseUp = cmbProfilesCloseUp
         Style = csDropDownList
@@ -2455,13 +2502,13 @@ object frmProjectWizard: TfrmProjectWizard
     end
     object Page5: TPage
       Caption = 'Page5'
-      ClientWidth = 824
-      ClientHeight = 571
+      ClientWidth = 826
+      ClientHeight = 600
       object Label18: TLabel
         Left = 7
-        Height = 20
+        Height = 19
         Top = 15
-        Width = 173
+        Width = 162
         Caption = 'Check the information'
         Font.Height = -15
         Font.Name = 'Sans'
@@ -2469,10 +2516,10 @@ object frmProjectWizard: TfrmProjectWizard
         ParentFont = False
       end
       object Memo1: TMemo
-        Left = 7
-        Height = 491
-        Top = 47
-        Width = 796
+        Left = 6
+        Height = 520
+        Top = 38
+        Width = 798
         Anchors = [akTop, akLeft, akRight, akBottom]
         Font.Height = -11
         Font.Name = 'Courier 10 Pitch'
@@ -2485,8 +2532,8 @@ object frmProjectWizard: TfrmProjectWizard
     end
     object Page6: TPage
       Caption = 'Page6'
-      ClientWidth = 824
-      ClientHeight = 571
+      ClientWidth = 826
+      ClientHeight = 577
       object Label21: TLabel
         Left = 7
         Height = 20
@@ -2504,7 +2551,7 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 221
         Width = 513
         Caption = 'LOKI/Autopackage- file:'
-        ClientHeight = 48
+        ClientHeight = 50
         ClientWidth = 509
         TabOrder = 0
         object FileNameEdit4: TFileNameEdit
@@ -2514,8 +2561,9 @@ object frmProjectWizard: TfrmProjectWizard
           Width = 472
           DialogTitle = 'Select executable...'
           DialogOptions = [ofFileMustExist]
+          FilterIndex = 0
           ButtonWidth = 23
-          ParentColor = False
+          NumGlyphs = 0
           TabOrder = 0
         end
       end
@@ -2525,7 +2573,7 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 299
         Width = 513
         Caption = 'If the application uses terminal output'
-        ClientHeight = 39
+        ClientHeight = 41
         ClientWidth = 509
         TabOrder = 1
         object chkShowInTerminal: TCheckBox
@@ -2540,6 +2588,7 @@ object frmProjectWizard: TfrmProjectWizard
     end
   end
   object Panel1: TPanel
+    Left = 0
     Height = 50
     Top = 604
     Width = 830
@@ -2551,7 +2600,7 @@ object frmProjectWizard: TfrmProjectWizard
       Left = 8
       Height = 30
       Top = 12
-      Width = 61
+      Width = 52
       Anchors = [akTop, akLeft, akBottom]
       AutoSize = True
       Caption = '  Back  '
@@ -2561,10 +2610,10 @@ object frmProjectWizard: TfrmProjectWizard
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
-      Left = 373
+      Left = 377
       Height = 30
       Top = 12
-      Width = 65
+      Width = 56
       Anchors = [akTop, akBottom]
       AutoSize = True
       Caption = '  Close  '
@@ -2573,10 +2622,10 @@ object frmProjectWizard: TfrmProjectWizard
       TabOrder = 1
     end
     object BitBtn3: TBitBtn
-      Left = 760
+      Left = 766
       Height = 30
       Top = 12
-      Width = 59
+      Width = 53
       Anchors = [akTop, akRight, akBottom]
       AutoSize = True
       Caption = '  Next  '

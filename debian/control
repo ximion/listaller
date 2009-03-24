@@ -22,7 +22,7 @@ Description: Listaller main package (GTK)
 Package: listaller-tools
 Architecture: any
 Depends: ${shlibs:Depends}, listaller
-Description: Command-line tools for Listaller and IPK packages
+Description: Command-line tools for Listaller package handling
   This package contains everything you need to build own IPK packages.
   It also contains the needed tools to build RPM and DEB packages from IPS sources and to 
   create an "Linux distribution compatible" button for your software.
@@ -30,11 +30,11 @@ Description: Command-line tools for Listaller and IPK packages
 Package: listaller-creation-gtk
 Architecture: any
 Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller, listaller-tools
-Description: Listaller Creator
+Description: Listaller Creator (GTK)
   Listaller is a cross-distribution software install system.
   This is an alpha-release of Listaller's graphical package creation tool.
   With liCreator you can easily build your own IPK-packages for the Listaller system.
-  Please note that this is an alpha-release!.
+  Please note that this is an alpha-release!
 
 Package: lithememgr-gtk
 Architecture: any

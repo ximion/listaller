@@ -237,8 +237,18 @@ begin
  end;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TranslateInterface;
 var PODirectory, Lang, FallbackLang: String;
+begin
+Lang:=Copy(GetEnvironmentVariable('LANG'), 1, 2);
+PODirectory := GetDataFile('lang/');
+GetLanguageIDs(Lang, FallbackLang);
+translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts-%s.po', Lang, FallbackLang);
+translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-%s.po', Lang, FallbackLang);
+translations.SystemCharSetIsUTF8:=true;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
 begin
 
 if not DirectoryExists(RegDir) then begin
@@ -249,10 +259,7 @@ end;
 if LowerCase(paramstr(1))='-show' then Application.ShowMainForm:=true;
 
 //Load translation resource
-PODirectory:=GetDataFile('lang/');
-GetLanguageIDs(Lang, FallbackLang); // in unit gettext
-translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts.%s.po', Lang, FallbackLang);
-translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller.%s.po', Lang, FallbackLang);
+TranslateInterface();
 //Set icons
 //TrayIcon1.Icon.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_GOTO_BOTTOM,GTK_ICON_SIZE_SMALL_TOOLBAR);
 TrayIcon1.Visible:=true;

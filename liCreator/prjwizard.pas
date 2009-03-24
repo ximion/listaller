@@ -29,8 +29,10 @@ type
 
   { TfrmProjectWizard }
 
+  //** Listaller package types
   TListallerPackageType = (lptLinstall, lptDLink, lptContainer);
 
+  //** Record for IPK package information
   TPackageFile = record
     FileName : String;
     FullName : String;
@@ -39,6 +41,7 @@ type
     Modifier: String;
   end;
 
+  //** Pointer to PackageFile
   PPackageFile = ^TPackageFile;
 
   TfrmProjectWizard = class(TForm)
@@ -53,7 +56,8 @@ type
     btnAddLangCode: TButton;
     btnProfileAdd: TButton;
     Button6: TButton;
-    CheckGroup1: TCheckGroup;
+    cgrIMethods: TCheckGroup;
+    cbUseAppCMD: TCheckBox;
     chkShowInTerminal: TCheckBox;
     ComboBox1: TComboBox;
     cmbProfiles: TComboBox;
@@ -64,6 +68,7 @@ type
     Edit12: TEdit;
     Edit2: TEdit;
     Edit3: TEdit;
+    edtExec: TEdit;
     edtShortDescription: TEdit;
     Edit5: TEdit;
     Edit6: TEdit;
@@ -113,6 +118,7 @@ type
     Label3: TLabel;
     Label30: TLabel;
     Label31: TLabel;
+    Label32: TLabel;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
@@ -153,6 +159,8 @@ type
     procedure Button4Click(Sender: TObject);
     procedure btnAddLangCodeClick(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure cbUseAppCMDChange(Sender: TObject);
+    procedure cgrIMethodsItemClick(Sender: TObject; Index: integer);
     procedure cmbProfilesChange(Sender: TObject);
     procedure cmbProfilesCloseUp(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
@@ -197,6 +205,7 @@ type
   end; 
 
 var
+  //** Project wizard main formular
   frmProjectWizard: TfrmProjectWizard;
   //** IPK/IPS type that should be created
   CreaType: TListallerPackageType;
@@ -285,7 +294,7 @@ begin
   hn.Appendchild(cnt);
   mn.ChildNodes.Item[1].AppendChild(hn);
 
-  if aType=lptLinstall then                     // not used in dlink-packages
+  if (aType=lptLinstall)and(FileNameEdit1.FileName<>'') then // not used in dlink- and container-packages
   begin
     hn:=xdoc.CreateElement('license');
     cnt:=xdoc.CreateTextNode(FileNameEdit1.FileName);
@@ -325,6 +334,15 @@ begin
     mn.ChildNodes.Item[1].AppendChild(hn);
   end;
 
+ //Needed for testmode
+  if cbUseAppCMD.Checked then
+  begin
+    hn:=xdoc.CreateElement('appcmd');
+    cnt:=xdoc.CreateTextNode(edtExec.Text);
+    hn.Appendchild(cnt);
+    mn.ChildNodes.Item[1].AppendChild(hn);
+  end;
+
   hn:=xdoc.CreateElement('sdesc');
   TDOMElement(hn).SetAttribute('std', tvShortDescriptions.Items[0].GetFirstChild.Text);
   mn.ChildNodes.Item[1].AppendChild(hn);
@@ -358,7 +376,17 @@ begin
   hn.Appendchild(cnt);
   mn.AppendChild(hn);
 
-  if aType=lptLinstall then                // not used in dlink-packages
+  hn:=xdoc.CreateElement('disallow');
+  if not cgrIMethods.Checked[0] then s:=s+';ioBase';
+  if not cgrIMethods.Checked[1] then s:=s+';ioLocal';
+  if not cgrIMethods.Checked[2] then s:=s+';ioTest';
+  s:=copy(s,2,length(s));
+  cnt:=xdoc.CreateTextNode(s);
+  hn.Appendchild(cnt);
+  mn.AppendChild(hn);
+  s:='';
+
+  if aType=lptLinstall then      // not used in dlink-packages
   begin
     for i:=0 to GetProfileCount-1 do
     begin
@@ -395,7 +423,7 @@ end;
 
 procedure TfrmProjectWizard.BitBtn3Click(Sender: TObject);
 var
-  i,j: Integer;s: String;
+  i,j: Integer;
   aTreeNode: TTreeNode;
   Profile: TList;
   TargetEdit: TSynEdit;
@@ -460,6 +488,14 @@ begin
          ShowMessage('Set the path to an long description file of your application to continue!');
          exit;
        end;
+
+       if (cgrIMethods.Checked[2])
+       and(not cbUseAppCMD.Checked) then
+       begin
+        ShowMessage('Listaller''s tesmode requires an start command for your application!');
+        exit;
+       end;
+
        NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
        for i:=0 to lbDistributions.Count-1 do
          tvDependencies.Items.Add(nil,lbDistributions.Items[i]);
@@ -835,6 +871,20 @@ begin
     lvPackageFiles.Items[i].SubItems.Add('');
     lvPackageFiles.Items[i].SubItems.Add(MD5.MDPrint(MD5.MD5File(FileNameEdit3.FileName,1024)));
   end;
+end;
+
+procedure TfrmProjectWizard.cbUseAppCMDChange(Sender: TObject);
+begin
+  if (Sender as TCheckBox).Checked then
+     edtExec.Enabled:=true
+  else
+     edtExec.Enabled:=false;
+end;
+
+procedure TfrmProjectWizard.cgrIMethodsItemClick(Sender: TObject; Index: integer
+  );
+begin
+
 end;
 
 procedure TfrmProjectWizard.cmbProfilesChange(Sender: TObject);

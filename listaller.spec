@@ -1,22 +1,28 @@
 Name:             listaller-gtk
-Version:          0.1.93a
-Release:          2
-License:          GPLv3 and LGPLv3
+Version:          0.1.95a
+Release:          1
+License:          GPLv3
 BuildRequires:    fpc, lazarus, wget, glib2-devel, gtk2-devel, glib-devel, glib2, glib, fpc-src, gtk2
-Source0:          listaller_0.1.93b-2.tar.gz
-Requires:         gtk2, glib2, xdg-utils, lsb, packagekit
+Source0:          listaller_0.1.95a.tar.gz
+%if 0%{?fedora_version} >= 10
+Requires:         gtk2, glib2, xdg-utils, PackageKit
+%else
+Requires:         gtk2, glib2, xdg-utils, PackageKit, libgnomesu
+%endif
+
 Provides:         listaller
 Group:            Applications/System
-Summary:          Listaller main package (GTK)
+Summary:          Listaller (GTK)
 Vendor:           Listaller-Project
-URL:		  http://listaller.nlinux.org
-BuildRoot: 	  %{_tmppath}/build-%{name}-%{version}
+URL: http://listaller.nlinux.org
+BuildRoot: %{_tmppath}/build-%{name}-%{version}
 
 %description
-Listaller is a distribution-independ software install system.
-This is an alpha-release of Listaller. With this package you can uninstall every application on your system and install ipk-packages, LOKI/Mojo and Autopackages easily. 
-Listaller tries to be compatible to all available Linux distributions and install- and package-systems.
-  Please note that this alpha-version should be used for testing purposes.
+Listaller is a distribution-independ software install system. The application can be used to uninstall every 
+application on your system you want to be removed, including LOKI/Mojo and Autopackages.
+This package also includes the IPK installer tool. Listaller tries to be compatible to 
+all available Linux distributions and uses PackageKit as backend.
+ Please note that this alpha-version should only be used for testing purposes.
 
 %post
 echo "Installing mime extensions..."
@@ -97,15 +103,15 @@ make clean
 Release:          1
 Requires:         gtk2, cairo, glib2, gdk-pixbuf, listaller
 Group:            Applications/System
-Summary:          Listaller creator (GTK)
+Summary:          Listaller Creator (GTK)
 Vendor:           Listaller-Project
 URL: http://listaller.nlinux.org
 
 %description -n listaller-creation-gtk
-Listaller is a distribution-independ software install system.
-This is an alpha-release of Listaller's package creation tool.
+Listaller is a cross-distribution software install system.
+This is an alpha-release of Listaller's graphical package creation tool.
 With liCreator you can easily build your own IPK-packages for the Listaller system.
- Please note that this alpha-version should be used for testing purposes.
+ Please note that this is an alpha-release!
 
 %files -n listaller-creation-gtk
 %defattr(-,root,root)
@@ -117,13 +123,14 @@ With liCreator you can easily build your own IPK-packages for the Listaller syst
 Release:          1
 Requires:         gtk2, cairo, glib2, gdk-pixbuf, listaller
 Group:            Applications/System
-Summary:          Command-line tools for Listaller and IPK packages
+Summary:          Command-line tools for Listaller package handling
 Vendor:           Listaller-Project
 URL: http://listaller.nlinux.org
 
 %description -n listaller-tools
 This package contains everything you need to build own IPK packages.
-It also contains the needed tools to build RPM and DEB packages from IPS sources and to create an "Linux distribution compatible" button.
+It also contains the needed tools to build RPM and DEB packages from IPS sources and to 
+create an "Linux distribution compatible" button for your software.
 
 %files -n listaller-tools
 %defattr(-,root,root)

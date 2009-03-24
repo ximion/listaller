@@ -183,9 +183,11 @@ begin
   FSynEdit := TSynEdit.Create(FPage);
   FSynEdit.Parent := FPage;
   FSynEdit.Align := alClient;
-  //FSynEdit.Gutter.CodeFoldingWidth:=10;
-  //FSynEdit.Gutter.ShowCodeFolding:=True;
-  //FSynEdit.Gutter.ShowLineNumbers:=True;
+  {
+  FSynEdit.Gutter.CodeFoldingWidth:=10;
+  FSynEdit.Gutter.ShowCodeFolding:=True;
+  FSynEdit.Gutter.ShowLineNumbers:=True;
+  }
   FSynEdit.Gutter.LeftOffset:=0;
   FSynEdit.Gutter.RightOffset:=0;
   FSynEdit.Font.Size := 10;
@@ -638,10 +640,7 @@ begin
 end;
 
 procedure TfrmEditor.mnuBuildFastClick(Sender: TObject);
-var M: TMemoryStream;
-   n: LongInt;
-   BytesRead: LongInt;
-   s, strTargetName: String;
+var strTargetName: String;
 begin
   mnuFileSaveClick(nil);
   if not FileExists(FName) then exit;
