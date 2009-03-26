@@ -381,7 +381,7 @@ end;
 procedure TSCForm.CViewKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-CView.Enabled:=false;
+ CView.Enabled:=false;
   OpenCatalog;
  CView.Enabled:=true;
 end;
@@ -519,14 +519,15 @@ for i:=0 to SWLLength-1 do
         HTTP.Document.SaveToFile('/tmp/listaller/catalogue/'+cdir+'/icons/'+nid+'.png');
        end;
        if not FileExists('/tmp/listaller/catalogue/'+cdir+'/texts/'+nid+'.txt') then begin
-       ShowMessage(catalogpath+cdir+'/texts/'+nid+'.txt');
        HTTP.HTTPMethod('GET', catalogpath+cdir+'/texts/'+nid+'.txt');
        HTTP.Document.SaveToFile('/tmp/listaller/catalogue/'+cdir+'/texts/'+nid+'.txt');
        end;
        except end;
 
+       try
         if FileExists('/tmp/listaller/catalogue/'+cdir+'/icons/'+nid+'.png') then
           SWList[k].SetImage('/tmp/listaller/catalogue/'+cdir+'/icons/'+nid+'.png');
+       except end;
 
           Inc(k);
           MnProgress.Position:=k+1;

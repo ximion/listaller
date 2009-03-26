@@ -437,6 +437,7 @@ var
   aTreeNode: TTreeNode;
   Profile: TList;
   TargetEdit: TSynEdit;
+  s: String;
 //XML
   xdoc: TXMLDocument;
 begin
@@ -453,9 +454,14 @@ begin
       begin
         Profile := GetProfile(j);
         TargetEdit := editor.FileProfiles.AddProfile(j).SynEdit;
+        s:=''; //S is used for current file path
         for i:=0 to Profile.Count-1 do
         begin
-          TargetEdit.Lines.Add('>' + PPackageFile(Profile[i])^.CopyTo);
+         if PPackageFile(Profile[i])^.CopyTo <> s then
+         begin
+          s:=PPackageFile(Profile[i])^.CopyTo;
+          TargetEdit.Lines.Add('>' + s);
+         end;
           if PPackageFile(Profile[i])^.Modifier<>'' then
             TargetEdit.Lines.Add(PPackageFile(Profile[i])^.FullName +' '+PPackageFile(Profile[i])^.Modifier)
           else
@@ -846,32 +852,36 @@ end;
 procedure TfrmProjectWizard.Button6Click(Sender: TObject);
 var
   tmp: TStringList;
-  i: Integer;
+  i,j: Integer;
   w: String;
 begin
   if not RadioButton2.Checked then
   begin
     tmp:=TStringList.Create;
     tmp.Assign(FileUtil.FindAllFiles(DirectoryEdit1.Directory,'*',true));
-    for i:=lvPackageFiles.Items.Count to tmp.Count+lvPackageFiles.Items.Count-2 do
+    j:=0;
+    for j:=lvPackageFiles.Items.Count to tmp.Count+lvPackageFiles.Items.Count-2 do
     begin
       if FileExists(tmp[i]) then
       begin
         lvPackageFiles.Items.Add;
-        lvPackageFiles.Items[i].Caption:=ExtractFileName(tmp[i]);
-        lvPackageFiles.Items[i].SubItems.Add(tmp[i]);
+        lvPackageFiles.Items[j].Caption:=ExtractFileName(tmp[i]);
+        lvPackageFiles.Items[j].SubItems.Add(tmp[i]);
 
         w:=StringReplace(tmp[i],DirectoryEdit1.Directory,'',[rfReplaceAll]);
         w:=StringReplace(w,ExtractFileName(tmp[i]),'',[rfReplaceAll]);
         w:=ExcludeTrailingBackslash(w);
-        lvPackageFiles.Items[i].SubItems.Add(Edit6.Text+w);
-        lvPackageFiles.Items[i].SubItems.Add('');
-        lvPackageFiles.Items[i].SubItems.Add(MD5.MDPrint(MD5.MD5File(tmp[i],1024)));
+        lvPackageFiles.Items[j].SubItems.Add(Edit6.Text+w);
+        lvPackageFiles.Items[j].SubItems.Add('');
+        lvPackageFiles.Items[j].SubItems.Add(MD5.MDPrint(MD5.MD5File(tmp[i],1024)));
       end;
+      Inc(i);
     end;
     tmp.Free;
+
   end
   else
+
   begin
     lvPackageFiles.Items.Add;
     i:=lvPackageFiles.Items.Count-1;

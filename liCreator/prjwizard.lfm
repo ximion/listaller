@@ -1,9 +1,9 @@
 object frmProjectWizard: TfrmProjectWizard
-  Left = 285
+  Left = 307
   Height = 666
-  Top = 188
+  Top = 177
   Width = 836
-  ActiveControl = Edit1
+  ActiveControl = RadioButton1
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Project Wizard'
@@ -62,13 +62,13 @@ object frmProjectWizard: TfrmProjectWizard
     Top = 0
     Width = 836
     Align = alClient
-    PageIndex = 1
+    PageIndex = 3
     ShowTabs = False
     TabOrder = 0
     object Page1: TPage
       Caption = 'Page1'
-      ClientWidth = 826
-      ClientHeight = 571
+      ClientWidth = 832
+      ClientHeight = 573
       object SpeedButton1: TSpeedButton
         Left = 85
         Height = 104
@@ -2251,8 +2251,8 @@ object frmProjectWizard: TfrmProjectWizard
     end
     object Page3: TPage
       Caption = 'Page3'
-      ClientWidth = 826
-      ClientHeight = 571
+      ClientWidth = 832
+      ClientHeight = 596
       object Label19: TLabel
         Left = 7
         Height = 19
@@ -2274,9 +2274,9 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object tvDependencies: TTreeView
         Left = 319
-        Height = 497
+        Height = 522
         Top = 63
-        Width = 503
+        Width = 509
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoExpand = True
         DefaultItemHeight = 15
@@ -2320,8 +2320,8 @@ object frmProjectWizard: TfrmProjectWizard
     end
     object Page4: TPage
       Caption = 'Page4'
-      ClientWidth = 826
-      ClientHeight = 571
+      ClientWidth = 832
+      ClientHeight = 596
       object Label17: TLabel
         Left = 7
         Height = 19
@@ -2336,8 +2336,8 @@ object frmProjectWizard: TfrmProjectWizard
       object lvPackageFiles: TListView
         Left = 0
         Height = 392
-        Top = 179
-        Width = 826
+        Top = 204
+        Width = 832
         Align = alBottom
         Columns = <        
           item
@@ -2485,7 +2485,7 @@ object frmProjectWizard: TfrmProjectWizard
       object Button6: TButton
         Left = 351
         Height = 25
-        Top = 180
+        Top = 174
         Width = 112
         Caption = 'Add files to list'
         OnClick = Button6Click
@@ -2507,8 +2507,8 @@ object frmProjectWizard: TfrmProjectWizard
     end
     object Page5: TPage
       Caption = 'Page5'
-      ClientWidth = 826
-      ClientHeight = 571
+      ClientWidth = 832
+      ClientHeight = 573
       object Label18: TLabel
         Left = 7
         Height = 19
@@ -2522,9 +2522,9 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Memo1: TMemo
         Left = 6
-        Height = 491
+        Height = 493
         Top = 38
-        Width = 798
+        Width = 804
         Anchors = [akTop, akLeft, akRight, akBottom]
         Font.Height = -11
         Font.Name = 'Courier 10 Pitch'
@@ -2537,8 +2537,8 @@ object frmProjectWizard: TfrmProjectWizard
     end
     object Page6: TPage
       Caption = 'Page6'
-      ClientWidth = 826
-      ClientHeight = 571
+      ClientWidth = 832
+      ClientHeight = 573
       object Label21: TLabel
         Left = 7
         Height = 20

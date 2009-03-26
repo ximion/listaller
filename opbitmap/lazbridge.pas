@@ -56,7 +56,6 @@ implementation
 
 procedure AssignBitmapToOpBitmap(Bitmap: TBitmap; OpBitmap: TOpBitmap);
 var int: TLazIntfImage;
-  i: integer;
   x, y, mx, my: integer;
   haveMaskPix: boolean;
 begin
