@@ -549,7 +549,7 @@ begin
       begin
         ips.Add(FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i]);
         ips.Add(FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i+1]);
-        ips.Add(MD5.MDPrint(MD5.MD5File(FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i+1],1024)));
+       // ips.Add(MD5.MDPrint(MD5.MD5File(FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i+1],1024)));
       end;
   end;
 

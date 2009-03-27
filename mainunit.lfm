@@ -147,28 +147,17 @@ object IWizFrm: TIWizFrm
         ParentColor = False
         ParentFont = False
       end
-      object GroupBox1: TGroupBox
+      object Memo1: TMemo
         Left = 12
-        Height = 306
-        Top = 38
-        Width = 623
+        Height = 318
+        Top = 31
+        Width = 626
         Anchors = [akTop, akLeft, akRight, akBottom]
-        Caption = 'Description'
-        ClientHeight = 302
-        ClientWidth = 619
+        Lines.Strings = (
+          'No description found!'
+        )
+        ReadOnly = True
         TabOrder = 0
-        object Memo1: TMemo
-          Left = 6
-          Height = 404
-          Top = 3
-          Width = 604
-          Anchors = [akTop, akLeft, akRight, akBottom]
-          Lines.Strings = (
-            'No description found!'
-          )
-          ReadOnly = True
-          TabOrder = 0
-        end
       end
     end
     object LPage: TPage
@@ -188,17 +177,17 @@ object IWizFrm: TIWizFrm
       end
       object Label8: TLabel
         Left = 12
-        Height = 13
+        Height = 14
         Top = 38
-        Width = 229
+        Width = 227
         Caption = 'Please read the following information carefully:'
         ParentColor = False
       end
       object RadioButton1: TRadioButton
         Left = 12
-        Height = 33
-        Top = 292
-        Width = 249
+        Height = 21
+        Top = 304
+        Width = 236
         Anchors = [akLeft, akBottom]
         Caption = 'I agree with the above terms and conditions'
         OnChange = RadioButton1Change
@@ -207,9 +196,9 @@ object IWizFrm: TIWizFrm
       end
       object RadioButton2: TRadioButton
         Left = 12
-        Height = 33
-        Top = 316
-        Width = 96
+        Height = 21
+        Top = 328
+        Width = 85
         Anchors = [akLeft, akBottom]
         Caption = 'I don''t agree'
         Checked = True
@@ -237,9 +226,9 @@ object IWizFrm: TIWizFrm
       ClientHeight = 352
       object Label13: TLabel
         Left = 12
-        Height = 19
+        Height = 24
         Top = 6
-        Width = 144
+        Width = 160
         Caption = 'Installation mode'
         Font.Height = -19
         Font.Name = 'Sans'
@@ -250,7 +239,7 @@ object IWizFrm: TIWizFrm
         Left = 12
         Height = 14
         Top = 38
-        Width = 326
+        Width = 269
         Caption = 'Select which parts of the application should be installed.'
         ParentColor = False
       end
@@ -303,9 +292,9 @@ object IWizFrm: TIWizFrm
       end
       object Label9: TLabel
         Left = 6
-        Height = 13
+        Height = 14
         Top = 72
-        Width = 174
+        Width = 172
         Caption = 'Step 1/4: Resolving dependencies...'
         ParentColor = False
       end
@@ -383,23 +372,23 @@ object IWizFrm: TIWizFrm
       end
       object Label11: TLabel
         Left = 12
-        Height = 13
+        Height = 14
         Top = 56
-        Width = 268
+        Width = 262
         Caption = 'The application <unknown> was installed successfully!'
         ParentColor = False
       end
       object Label12: TLabel
         Left = 12
-        Height = 13
+        Height = 14
         Top = 88
-        Width = 111
+        Width = 110
         Caption = 'Press "Finish" to close.'
         ParentColor = False
       end
       object Label16: TLabel
         Left = 12
-        Height = 13
+        Height = 14
         Top = 336
         Width = 39
         Caption = 'Label16'
@@ -408,9 +397,9 @@ object IWizFrm: TIWizFrm
       end
       object CbExecApp: TCheckBox
         Left = 12
-        Height = 23
+        Height = 21
         Top = 109
-        Width = 122
+        Width = 159
         Caption = 'Execute the new application'
         Checked = True
         State = cbChecked

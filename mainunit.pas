@@ -43,7 +43,6 @@ type
     ExProgress: TProgressBar;
     FinBtn1: TBitBtn;
     GetOutPutTimer: TIdleTimer;
-    GroupBox1: TGroupBox;
     Image2: TImage;
     InfoMemo: TMemo;
     InsProgress: TProgressBar;
@@ -536,6 +535,7 @@ writeLn('WARNING: This package will overwrite every file that is in the package 
 end else FOverwrite:=false;
 
 writeLn('Architecture: '+n);
+writeLn('Package-Arch: '+FindChildNode(xnode,'architecture').NodeValue);
 if (pos(n,LowerCase(FindChildNode(xnode,'architecture').NodeValue))<=0)
 and (LowerCase(FindChildNode(xnode,'architecture').NodeValue)<>'all') then begin
 ShowMessage(strInvArchitecture);

@@ -1,6 +1,5 @@
 #! /bin/sh
-echo "Uninstalling mime extension..."
-
+echo "Uninstalling mime extensions..."
 xdg-mime uninstall '/usr/share/listaller/mime/x-ipk.xml'
 xdg-mime uninstall '/usr/share/listaller/mime/x-ips.xml'
 xdg-icon-resource uninstall --context mimetypes --size 64 'mime-ipk' 'application-x-ipk'

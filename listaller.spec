@@ -1,9 +1,9 @@
 Name:             listaller-gtk
-Version:          0.1.95a
+Version:          0.1.97a
 Release:          1
 License:          GPLv3
 BuildRequires:    fpc, lazarus, wget, glib2-devel, gtk2-devel, glib-devel, glib2, glib, fpc-src, gtk2
-Source0:          listaller_0.1.95a.tar.gz
+Source0:          listaller_0.1.97a.tar.gz
 %if 0%{?fedora_version} >= 10
 Requires:         gtk2, glib2, xdg-utils, PackageKit
 %else
@@ -26,19 +26,20 @@ all available Linux distributions and uses PackageKit as backend.
 
 %post
 echo "Installing mime extensions..."
-xdg-mime install '/usr/share/mime/packages/x-ipk.xml'
-xdg-mime install '/usr/share/mime/text/x-ips.xml'
+xdg-mime install '/usr/share/listaller/mime/x-ipk.xml'
+xdg-mime install '/usr/share/listaller/mime/x-ips.xml'
 xdg-icon-resource install --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ipk.png' 'application-x-ipk'
-xdg-icon-resource install --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ips.png' 'text-x-ips'
+xdg-icon-resource install --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ips.png' 'text-ips-script'
+update-desktop-database
 echo "Done."
 
 
 %preun
-echo "Uninstalling mime extension..."
-xdg-mime uninstall '/usr/share/mime/packages/x-ipk.xml'
-xdg-mime uninstall '/usr/share/mime/text/x-ips.xml'
-xdg-icon-resource uninstall --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ipk.png' 'application-x-ipk'
-xdg-icon-resource uninstall --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ips.png' 'text-x-ips'
+echo "Uninstalling mime extensions..."
+xdg-mime uninstall '/usr/share/listaller/mime/x-ipk.xml'
+xdg-mime uninstall '/usr/share/listaller/mime/x-ips.xml'
+xdg-icon-resource uninstall --context mimetypes --size 64 'mime-ipk' 'application-x-ipk'
+xdg-icon-resource uninstall --context mimetypes --size 64 'mime-ips' 'text-ips-script'
 update-mime-database '/usr/share/mime'
 echo "Done."
 

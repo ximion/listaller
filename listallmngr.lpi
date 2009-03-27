@@ -16,7 +16,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="809"/>
+      <CurrentBuildNr Value="810"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -60,8 +60,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="19" Y="522"/>
-        <TopLine Value="516"/>
+        <CursorPos X="48" Y="26"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="144"/>
         <Loaded Value="True"/>
@@ -513,8 +513,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="xtypefm"/>
-        <CursorPos X="2" Y="97"/>
-        <TopLine Value="93"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
         <UsageCount Value="14"/>
       </Unit64>
       <Unit65>
@@ -613,7 +613,7 @@
         <UsageCount Value="10"/>
       </Unit77>
     </Units>
-    <JumpHistory Count="21" HistoryIndex="20">
+    <JumpHistory Count="22" HistoryIndex="21">
       <Position1>
         <Filename Value="trstrings.pas"/>
         <Caret Line="102" Column="46" TopLine="81"/>
@@ -698,6 +698,10 @@
         <Filename Value="swcatalog.pas"/>
         <Caret Line="397" Column="16" TopLine="355"/>
       </Position21>
+      <Position22>
+        <Filename Value="manager.pas"/>
+        <Caret Line="26" Column="48" TopLine="1"/>
+      </Position22>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

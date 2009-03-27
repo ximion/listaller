@@ -5,7 +5,7 @@ object frmEditor: TfrmEditor
   Width = 922
   ActiveControl = IPSNotebook
   Caption = 'Listaller package creator'
-  ClientHeight = 629
+  ClientHeight = 633
   ClientWidth = 922
   Menu = mmMain
   OnActivate = FormActivate
@@ -16,7 +16,7 @@ object frmEditor: TfrmEditor
   object memLog: TMemo
     Left = 0
     Height = 86
-    Top = 543
+    Top = 547
     Width = 922
     Align = alBottom
     Lines.Strings = (
@@ -27,7 +27,7 @@ object frmEditor: TfrmEditor
   end
   object IPSNotebook: TNotebook
     Left = 0
-    Height = 537
+    Height = 541
     Top = 0
     Width = 922
     Align = alClient
@@ -38,10 +38,10 @@ object frmEditor: TfrmEditor
     object ScriptPage: TPage
       Caption = 'Script'
       ClientWidth = 918
-      ClientHeight = 510
+      ClientHeight = 514
       object MainScriptEdit: TSynEdit
         Left = 0
-        Height = 510
+        Height = 514
         Top = 0
         Width = 918
         Align = alClient
@@ -54,6 +54,7 @@ object frmEditor: TfrmEditor
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 18
+        BookMarkOptions.OnChange = nil
         Gutter.Width = 53
         Highlighter = SynXMLSyn1
         Keystrokes = <        
@@ -431,7 +432,7 @@ object frmEditor: TfrmEditor
     Cursor = crVSplit
     Left = 0
     Height = 6
-    Top = 537
+    Top = 541
     Width = 922
     Align = alBottom
     ResizeAnchor = akBottom

@@ -54,8 +54,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="editor"/>
-        <CursorPos X="4" Y="643"/>
-        <TopLine Value="670"/>
+        <CursorPos X="10" Y="552"/>
+        <TopLine Value="535"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="136"/>
         <Bookmarks Count="1">

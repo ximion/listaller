@@ -10,7 +10,7 @@
       <TargetFileExt Value=""/>
       <Title Value="Installer"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="4"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <i18n>
       <OutDir Value="bin/lang"/>
@@ -19,7 +19,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="403"/>
+      <CurrentBuildNr Value="404"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -66,8 +66,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="mainunit"/>
-        <CursorPos X="29" Y="538"/>
-        <TopLine Value="523"/>
+        <CursorPos X="32" Y="45"/>
+        <TopLine Value="45"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -731,7 +731,7 @@
         <UsageCount Value="10"/>
       </Unit93>
     </Units>
-    <JumpHistory Count="28" HistoryIndex="27">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="trstrings.pas"/>
         <Caret Line="39" Column="37" TopLine="1"/>
@@ -844,6 +844,10 @@
         <Filename Value="mainunit.pas"/>
         <Caret Line="467" Column="59" TopLine="440"/>
       </Position28>
+      <Position29>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="539" Column="73" TopLine="523"/>
+      </Position29>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
