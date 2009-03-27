@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-03-15 21:44+0000\n"
+"X-Launchpad-Export-Date: 2009-03-27 11:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: trstrings:strinstaborted
@@ -269,11 +269,9 @@ msgstr "Instalace"
 
 #: trstrings:strnoldsources
 msgid ""
-"There are no sources available for your Linux distribution\nTry to install "
-"common packages?"
+"There are no sources available for your Linux distribution\n"
+"Try to install common packages?"
 msgstr ""
-"Pro vaši distribuci nejsou dostupné žádné zdroje\nZkusit nainstalovat běžné "
-"balíky?"
 
 #: trstrings:strusecomppq
 msgid "Use compatible packages?"
@@ -285,15 +283,15 @@ msgstr "Žádné kompatibilní balíky nebyly nalezeny!"
 
 #: trstrings:stractionnotpossiblepkg
 msgid ""
-"The selected action is not possible with this package.\nPlease contact the "
-"package maintainer to get more information."
+"The selected action is not possible with this package.\n"
+"Please contact the package maintainer to get more information."
 msgstr ""
-"Vybranou akci není s tímto balíkem možno provést.\nPro více informací "
-"kontaktujte správce balíku."
 
 #: trstrings:stridinvalid
-msgid "This package has no valid ID\nThe installer will close."
-msgstr "Tento balík nemá platné ID\nInstalátor bude ukončen."
+msgid ""
+"This package has no valid ID\n"
+"The installer will close."
+msgstr ""
 
 #: trstrings:strreinstall
 msgid "Re-install"
@@ -317,11 +315,10 @@ msgstr "Chyba při stahování dep-souboru."
 
 #: trstrings:strhasherror
 msgid ""
-"Hash doesn't match!\nThe package may be modified after creation.\nPlease "
-"obtain a new copy"
+"Hash doesn't match!\n"
+"The package may be modified after creation.\n"
+"Please obtain a new copy"
 msgstr ""
-"Kontrolní součet nesouhlasí!\nBalík mohl být po vytvoření změněn.\nProsím "
-"získejte novou kopii."
 
 #: trstrings:strinstallationmode
 msgid "Installation mode:"
@@ -342,10 +339,9 @@ msgstr "Co si přejete udělat?"
 #: trstrings:strpackagekitwarning
 msgid ""
 "Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to "
-"work correctly.\nPlease update PackageKit!"
+"work correctly.\n"
+"Please update PackageKit!"
 msgstr ""
-"Vaše verze PackageKit je %cp. Aby Listaller mohl správně pracovat, vyžaduje "
-"verzi %np nebo novější.\nProsím aktualizujte PackageKit!"
 
 #: trstrings:strspkwarning
 msgid ""
@@ -502,9 +498,10 @@ msgstr "Připraven."
 #: trstrings:strconvertpkg
 msgid ""
 "You want to install an %x-Package, but your Linux-Distribution's package "
-"system is %y.\nThis package can be converted using \"alien\", but this will "
-"take some time and eventually the application won't work.\nDo you want to "
-"convert the package now?"
+"system is %y.\n"
+"This package can be converted using \"alien\", but this will take some time "
+"and eventually the application won't work.\n"
+"Do you want to convert the package now?"
 msgstr ""
 
 #: trstrings:strconvertpkgq
@@ -542,7 +539,8 @@ msgstr "Vyberte režim správce softwaru:"
 #: trstrings:strlistalleralien
 msgid ""
 "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
-"installed.\nDo you want to install \"alien\" now to continue?"
+"installed.\n"
+"Do you want to install \"alien\" now to continue?"
 msgstr ""
 
 #: trstrings:strinstpkgq
@@ -641,10 +639,9 @@ msgstr "Chyba při odinstalaci!"
 #: trstrings:strcannothandlerm
 msgid ""
 "This application is not a MoJo-Installation and no other package-type "
-"Listaller can handle.\nYou have to remove it manually."
+"Listaller can handle.\n"
+"You have to remove it manually."
 msgstr ""
-"Tato aplikace není typu MoJo. Listaller žádné jiné typy balíků "
-"nepodporuje.\nMusíte jej odebrat ručně."
 
 #: trstrings:strrmunsddeps
 msgid "Uninstalling unused deps..."
@@ -656,13 +653,10 @@ msgstr "Odinstalace..."
 
 #: trstrings:strrmpkg
 msgid ""
-"Do you really want to remove \"%p\", containing %a?\nThe following "
-"package(s) will be removed also: %pl\nIf you aren't sure that you won't need "
-"those packages, press \"No\"!"
+"Do you really want to remove \"%p\", containing %a?\n"
+"The following package(s) will be removed also: %pl\n"
+"If you aren't sure that you won't need those packages, press \"No\"!"
 msgstr ""
-"Opravdu si přejete odstranit \"%p\", které obsahuje %a?\nNásledující balíky "
-"budou také odstraněny: %pl\nPokud si nejste jisti, jestli potřebujete "
-"následující balíky, zvolte \"Ne\"!"
 
 #: trstrings:strrmpkgq
 msgid "Really remove?"

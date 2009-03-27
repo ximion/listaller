@@ -10,7 +10,7 @@
       <TargetFileExt Value=""/>
       <Title Value="Installer"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="4"/>
     </General>
     <i18n>
       <OutDir Value="bin/lang"/>
@@ -410,8 +410,8 @@
       <Unit49>
         <Filename Value="utilities.pas"/>
         <UnitName Value="utilities"/>
-        <CursorPos X="33" Y="225"/>
-        <TopLine Value="180"/>
+        <CursorPos X="20" Y="32"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="4"/>
         <UsageCount Value="28"/>
         <Loaded Value="True"/>

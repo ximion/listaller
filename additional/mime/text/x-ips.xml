@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
- <mime-type type="text/x-ips">
-<!--  <sub-class-of type="text/plain"/> -->
-  <comment>IPS script</comment>
-  <comment xml:lang="de">IPS skript</comment>
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="text/ips-script">
+  <sub-class-of type="text/plain"/>
+  <alias type="text/ips-script"/>
+  <comment>Listaller package script</comment>
   <acronym>IPS</acronym>
-  <expanded-acronym>Installation Package Source file</expanded-acronym>
+  <expanded-acronym>Installation package source</expanded-acronym>
+  <comment xml:lang="de">IPS Skript</comment>
   <glob pattern="*.ips"/>
-  <alias type="text/x-ips"/>
- </mime-type>
 </mime-type>
