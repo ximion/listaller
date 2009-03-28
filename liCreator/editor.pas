@@ -69,8 +69,6 @@ type
   { TfrmEditor }
 
   TfrmEditor = class(TForm)
-    Button1: TButton;
-    Button2: TButton;
     FindDialog: TFindDialog;
     MainScriptEdit: TSynEdit;
     MenuItem1: TMenuItem;

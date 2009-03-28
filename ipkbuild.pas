@@ -389,7 +389,7 @@ writeLn('Please wait!');
 //writeLn('Add: '+fc[fc.Count-1]);
  tmp.Add(WDir+'data'+SyblToX(s)+'/'+ExtractFileName(DeleteModifiers(Files[i])));
  fc.Add(MD5.MDPrint(MD5.MD5File(DeleteModifiers(Files[i]),1024)));//ExcludeTrailingBackslash(Files[i+1]));
- fc.Add(ExcludeTrailingBackslash(SyblToX(s)));
+ fc.Add(ExcludeTrailingBackslash(s));
  write('.');
 
   end;

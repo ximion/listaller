@@ -5,18 +5,18 @@ object frmEditor: TfrmEditor
   Width = 922
   ActiveControl = IPSNotebook
   Caption = 'Listaller package creator'
-  ClientHeight = 633
+  ClientHeight = 627
   ClientWidth = 922
   Menu = mmMain
   OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '0.9.27'
+  ParentFont = False
+  LCLVersion = '0.9.26'
   object memLog: TMemo
-    Left = 0
     Height = 86
-    Top = 547
+    Top = 541
     Width = 922
     Align = alBottom
     Lines.Strings = (
@@ -26,9 +26,7 @@ object frmEditor: TfrmEditor
     TabOrder = 0
   end
   object IPSNotebook: TNotebook
-    Left = 0
-    Height = 541
-    Top = 0
+    Height = 535
     Width = 922
     Align = alClient
     OnCloseTabClicked = IPSNotebookCloseTabClicked
@@ -38,23 +36,18 @@ object frmEditor: TfrmEditor
     object ScriptPage: TPage
       Caption = 'Script'
       ClientWidth = 918
-      ClientHeight = 514
+      ClientHeight = 502
       object MainScriptEdit: TSynEdit
-        Left = 0
-        Height = 514
-        Top = 0
+        Height = 502
         Width = 918
         Align = alClient
-        CFDividerDrawLevel = 0
         Font.Height = -10
         Font.Name = '-adobe-courier-medium-r-normal-*-*-*-*-*-*-*-iso10646-1'
         Font.Pitch = fpFixed
-        Font.Quality = fqNonAntialiased
         ParentColor = False
         ParentFont = False
         TabOrder = 0
-        BookMarkOptions.Xoffset = 18
-        BookMarkOptions.OnChange = nil
+        BookMarkOptions.Xoffset = 35
         Gutter.Width = 53
         Highlighter = SynXMLSyn1
         Keystrokes = <        
@@ -398,60 +391,17 @@ object frmEditor: TfrmEditor
         )
         Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
         ScrollBars = ssAutoBoth
-        BracketHighlightStyle = sbhsBoth
-        object TSynGutterPartList
-          object TSynGutterMarks
-            Width = 23
-          end
-          object TSynGutterLineNumber
-            Width = 13
-            MarkupInfo.Background = clBtnFace
-            MarkupInfo.Foreground = clNone
-            DigitCount = 2
-            ShowOnlyLineNumbersMultiplesOf = 1
-            ZeroStart = False
-            LeadingZeros = False
-          end
-          object TSynGutterChanges
-            Width = 4
-            ModifiedColor = 59900
-            SavedColor = clGreen
-          end
-          object TSynGutterSeparator
-            Width = 2
-          end
-          object TSynGutterCodeFolding
-            MarkupInfo.Background = clNone
-            MarkupInfo.Foreground = clGray
-          end
-        end
+        SelectedColor.OnChange = nil
       end
     end
   end
   object Splitter1: TSplitter
     Cursor = crVSplit
-    Left = 0
     Height = 6
-    Top = 541
+    Top = 535
     Width = 922
     Align = alBottom
     ResizeAnchor = akBottom
-  end
-  object Button1: TButton
-    Left = 136
-    Height = 25
-    Top = 259
-    Width = 75
-    Caption = 'Button1'
-    TabOrder = 3
-  end
-  object Button2: TButton
-    Left = 457
-    Height = 25
-    Top = 259
-    Width = 75
-    Caption = 'Button2'
-    TabOrder = 4
   end
   object mmMain: TMainMenu
     left = 744
@@ -591,18 +541,8 @@ object frmEditor: TfrmEditor
     top = 8
   end
   object Process1: TProcess
-    Active = False
     Options = [poUsePipes]
     Priority = ppNormal
-    StartupOptions = []
-    ShowWindow = swoNone
-    WindowColumns = 0
-    WindowHeight = 0
-    WindowLeft = 0
-    WindowRows = 0
-    WindowTop = 0
-    WindowWidth = 0
-    FillAttribute = 0
     left = 520
     top = 8
   end
@@ -614,8 +554,6 @@ object frmEditor: TfrmEditor
   end
   object SynAnySyn1: TSynAnySyn
     Enabled = False
-    Comments = []
-    DetectPreprocessor = False
     IdentifierChars = '!"#$%&''()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
     KeyWords.Strings = (
       '<chmod:'
@@ -630,9 +568,7 @@ object frmEditor: TfrmEditor
       '<s>'
     )
     Markup = True
-    Entity = False
     DollarVariables = True
-    ActiveDot = False
     left = 832
     top = 40
   end

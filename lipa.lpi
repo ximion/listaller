@@ -16,7 +16,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="102"/>
+      <CurrentBuildNr Value="104"/>
       <ProjectVersion Value="0.2.0.1"/>
     </VersionInfo>
     <PublishOptions>
@@ -37,7 +37,7 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
         <CursorPos X="2" Y="211"/>
-        <TopLine Value="97"/>
+        <TopLine Value="166"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="41"/>
         <Loaded Value="True"/>
@@ -86,7 +86,7 @@
         <Filename Value="utilities.pas"/>
         <UnitName Value="utilities"/>
         <CursorPos X="3" Y="259"/>
-        <TopLine Value="262"/>
+        <TopLine Value="259"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="16"/>
         <Loaded Value="True"/>
@@ -111,7 +111,7 @@
         <Filename Value="ipkbuild.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="1" Y="391"/>
+        <CursorPos X="35" Y="392"/>
         <TopLine Value="363"/>
         <EditorIndex Value="2"/>
         <UsageCount Value="29"/>
