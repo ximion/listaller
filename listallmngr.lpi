@@ -16,7 +16,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="810"/>
+      <CurrentBuildNr Value="814"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -50,18 +50,18 @@
         <Filename Value="listallmngr.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallmngr"/>
-        <CursorPos X="20" Y="29"/>
-        <TopLine Value="1"/>
+        <CursorPos X="41" Y="53"/>
+        <TopLine Value="10"/>
         <UsageCount Value="144"/>
       </Unit0>
       <Unit1>
         <Filename Value="manager.pas"/>
-        <ComponentName Value="mnFrm"/>
+        <ComponentName Value="MnFrm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="48" Y="26"/>
-        <TopLine Value="1"/>
+        <CursorPos X="61" Y="247"/>
+        <TopLine Value="222"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="144"/>
         <Loaded Value="True"/>
@@ -613,7 +613,7 @@
         <UsageCount Value="10"/>
       </Unit77>
     </Units>
-    <JumpHistory Count="22" HistoryIndex="21">
+    <JumpHistory Count="24" HistoryIndex="23">
       <Position1>
         <Filename Value="trstrings.pas"/>
         <Caret Line="102" Column="46" TopLine="81"/>
@@ -702,6 +702,14 @@
         <Filename Value="manager.pas"/>
         <Caret Line="26" Column="48" TopLine="1"/>
       </Position22>
+      <Position23>
+        <Filename Value="manager.pas"/>
+        <Caret Line="194" Column="17" TopLine="193"/>
+      </Position23>
+      <Position24>
+        <Filename Value="manager.pas"/>
+        <Caret Line="247" Column="50" TopLine="222"/>
+      </Position24>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -723,9 +731,6 @@
       <SmartLinkUnit Value="True"/>
     </CodeGeneration>
     <Linking>
-      <Debugging>
-        <UseExternalDbgSyms Value="True"/>
-      </Debugging>
       <LinkSmart Value="True"/>
     </Linking>
     <Other>

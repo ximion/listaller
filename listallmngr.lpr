@@ -50,7 +50,7 @@ begin
   Application.Initialize;
   pkit := GetDataFile('pkitbind/pkitbind.py')+' ';
   writeLn('Application initialized.');
-  Application.CreateForm(TmnFrm, mnFrm);
+  Application.CreateForm(TMnFrm, MnFrm);
   Application.CreateForm(TFmConfig, FmConfig);
   Application.CreateForm(TConvDisp, ConvDisp);
   Application.CreateForm(TSCForm, SCForm);

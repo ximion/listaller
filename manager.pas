@@ -27,9 +27,9 @@ uses
 
 type
 
-  { TmnFrm }
+  { TMnFrm }
 
-  TmnFrm = class(TForm)
+  TMnFrm = class(TForm)
     btnInstall: TBitBtn;
     btnSettings: TBitBtn;
     btnCat: TBitBtn;
@@ -79,7 +79,7 @@ type
 
 var
  //** Main formular instance
-  mnFrm:   TmnFrm;
+  MnFrm:   TMnFrm;
  //** List of installed application names
   instLst: TStringList;
 
@@ -93,13 +93,13 @@ uses settings, pkgconvertdisp, swcatalog;
 
 { TListEntry }
 
-procedure TmnFrm.UninstallClick(Sender: TObject);
+procedure TMnFrm.UninstallClick(Sender: TObject);
 begin
 uID:=(Sender as TBitBtn).Tag;
 RMForm.ShowModal;
 end;
 
-{ TmnFrm }
+{ TMnFrm }
 
 procedure RemoveDuplicates(s: TStrings);
 var
@@ -111,7 +111,7 @@ begin
         s.Delete(iHigh);
 end;
 
-procedure TmnFrm.ProcessDesktopFile(fname: String; tp: String);
+procedure TMnFrm.ProcessDesktopFile(fname: String; tp: String);
 var d: TIniFile;
 begin
 d:=TIniFile.Create(fname);
@@ -141,7 +141,7 @@ d:=TIniFile.Create(fname);
        then begin
        SetLength(AList,ListLength+1);
        Inc(ListLength);
-       AList[ListLength-1]:=TListEntry.Create(mnFrm);
+       AList[ListLength-1]:=TListEntry.Create(MnFrm);
        AList[ListLength-1].UnButton.OnClick:=@UnInstallClick;
        AList[ListLength-1].Parent:=SWBox;
        AList[ListLength-1].UnButton.Tag:=ListLength-1;
@@ -224,7 +224,7 @@ d:=TIniFile.Create(fname);
        d.Free;
 end;
 
-procedure TmnFrm.LoadEntries;
+procedure TMnFrm.LoadEntries;
 var ireg,ini: TIniFile;tmp,xtmp: TStringList;i,j,k: Integer;p,n: String;tp: String;
     gif: TGifThread;
 begin
@@ -241,6 +241,10 @@ StatusBar1.Panels[0].Text:=strLoading;
 //Create GIFThread for Throbber animation
 gif:=TGifThread.Create(true);
 gif.FileName:=GetDataFile('graphics/throbber.gif');
+ThrobberBox.Width:=gif.Width;
+ThrobberBox.Height:=gif.Height;
+ThrobberBox.Top:=(Height div 2)-(ThrobberBox.Height div 2)+16;
+ThrobberBox.Left:=(Width div 2)-(ThrobberBox.Width div 2)+20;
 gif.Initialize(ThrobberBox.Canvas);
 
 
@@ -296,7 +300,7 @@ k:=ListLength+1;
 SetLength(AList,k);
 ListLength:=k;
 Dec(k);
-AList[k]:=TListEntry.Create(mnFrm);
+AList[k]:=TListEntry.Create(MnFrm);
 AList[k].UnButton.OnClick:=@UnInstallClick;
 AList[k].Parent:=SWBox;
 AList[k].aId:=k;
@@ -336,7 +340,7 @@ ReadXMLFile(Doc, xtmp[i]);
 xnode:=Doc.FindNode('product');
  SetLength(AList,ListLength+1);
  Inc(ListLength);
- AList[ListLength-1]:=TListEntry.Create(mnFrm);
+ AList[ListLength-1]:=TListEntry.Create(MnFrm);
  AList[ListLength-1].Parent:=SWBox;
  AList[ListLength-1].AppLabel.Caption:=xnode.Attributes.GetNamedItem('desc').NodeValue;
  instLst.Add(LowerCase(xnode.Attributes.GetNamedItem('desc').NodeValue));
@@ -402,13 +406,13 @@ for i:=0 to ListLength-1 do AList[i].SetPositions;
 end;
 
 var fAct: Boolean;
-procedure TmnFrm.FormShow(Sender: TObject);
+procedure TMnFrm.FormShow(Sender: TObject);
 begin
 fAct:=true;
 btnCat.Left:=btnInstall.Left+btnInstall.Width+14;
 end;
 
-procedure TmnFrm.btnInstallClick(Sender: TObject);
+procedure TMnFrm.btnInstallClick(Sender: TObject);
 var p: TProcess;
 begin
   if OpenDialog1.Execute then
@@ -418,9 +422,9 @@ begin
   begin
   Process1.CommandLine := ExtractFilePath(Application.ExeName)+'listallgo '+OpenDialog1.Filename;
   Process1.Execute;
-  mnFrm.Hide;
+  MnFrm.Hide;
   while Process1.Running do Application.ProcessMessages;
-  mnFrm.Show;
+  MnFrm.Show;
   end else begin
   if (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.deb') then
   if DInfo.PackageSystem='DEB' then begin
@@ -491,29 +495,29 @@ begin
   end;
 end;
 
-procedure TmnFrm.BitBtn2Click(Sender: TObject);
+procedure TMnFrm.BitBtn2Click(Sender: TObject);
 begin
 RMForm.ShowModal;
 end;
 
-procedure TmnFrm.btnSettingsClick(Sender: TObject);
+procedure TMnFrm.btnSettingsClick(Sender: TObject);
 begin
   FmConfig.ShowModal;
 end;
 
-procedure TmnFrm.btnCatClick(Sender: TObject);
+procedure TMnFrm.btnCatClick(Sender: TObject);
 begin
   SCForm.ShowModal;
 end;
 
-procedure TmnFrm.CBoxChange(Sender: TObject);
+procedure TMnFrm.CBoxChange(Sender: TObject);
 begin
   CBox.Enabled:=false;
   LoadEntries;
   CBox.Enabled:=true;
 end;
 
-procedure TmnFrm.edtFilterKeyDown(Sender: TObject; var Key: Word;
+procedure TMnFrm.edtFilterKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var i: Integer;
 begin
@@ -537,12 +541,12 @@ StatusBar1.Panels[0].Text:=strReady;
 end;
 end;
 
-procedure TmnFrm.FormActivate(Sender: TObject);
+procedure TMnFrm.FormActivate(Sender: TObject);
 begin
   if fAct then begin fAct:=false;btnCat.Left:=btnInstall.Left+btnInstall.Width+12;LoadEntries;end;
 end;
 
-procedure TmnFrm.FormCreate(Sender: TObject);
+procedure TMnFrm.FormCreate(Sender: TObject);
 var xFrm: TimdFrm;
 begin
 if FileExists(paramstr(1)) then begin
@@ -631,7 +635,7 @@ end;
  WriteLn('GUI loaded.');
 end;
 
-procedure TmnFrm.FormDestroy(Sender: TObject);
+procedure TMnFrm.FormDestroy(Sender: TObject);
 var i: Integer;
 begin
   if Assigned(blst) then blst.Free; //Free blacklist
@@ -640,7 +644,7 @@ begin
   for i:=0 to ListLength-1 do AList[i].Free;
 end;
 
-procedure TmnFrm.FormResize(Sender: TObject);
+procedure TMnFrm.FormResize(Sender: TObject);
 var i: Integer;
 begin
   for i:=0 to ListLength-1 do
