@@ -42,19 +42,19 @@
         <Filename Value="lipkgcreator.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LiPkgCreator"/>
-        <CursorPos X="1" Y="15"/>
+        <CursorPos X="49" Y="18"/>
         <TopLine Value="1"/>
         <UsageCount Value="136"/>
       </Unit0>
       <Unit1>
         <Filename Value="editor.pas"/>
-        <ComponentName Value="frmEditor"/>
+        <ComponentName Value="FrmEditor"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <ResourceFilename Value="editor.lrs"/>
         <UnitName Value="editor"/>
-        <CursorPos X="28" Y="71"/>
-        <TopLine Value="118"/>
+        <CursorPos X="15" Y="69"/>
+        <TopLine Value="13"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="136"/>
         <Bookmarks Count="1">
@@ -184,8 +184,8 @@
         <ResourceBaseClass Value="Form"/>
         <ResourceFilename Value="prjwizard.lrs"/>
         <UnitName Value="prjwizard"/>
-        <CursorPos X="24" Y="874"/>
-        <TopLine Value="852"/>
+        <CursorPos X="27" Y="834"/>
+        <TopLine Value="815"/>
         <UsageCount Value="119"/>
       </Unit17>
       <Unit18>
@@ -359,63 +359,59 @@
         <UsageCount Value="10"/>
       </Unit43>
     </Units>
-    <JumpHistory Count="14" HistoryIndex="13">
+    <JumpHistory Count="13" HistoryIndex="12">
       <Position1>
         <Filename Value="editor.pas"/>
-        <Caret Line="638" Column="50" TopLine="613"/>
+        <Caret Line="632" Column="83" TopLine="606"/>
       </Position1>
       <Position2>
         <Filename Value="editor.pas"/>
-        <Caret Line="632" Column="83" TopLine="606"/>
+        <Caret Line="453" Column="9" TopLine="428"/>
       </Position2>
       <Position3>
         <Filename Value="editor.pas"/>
-        <Caret Line="453" Column="9" TopLine="428"/>
+        <Caret Line="454" Column="86" TopLine="437"/>
       </Position3>
       <Position4>
         <Filename Value="editor.pas"/>
-        <Caret Line="454" Column="86" TopLine="437"/>
+        <Caret Line="457" Column="36" TopLine="438"/>
       </Position4>
       <Position5>
         <Filename Value="editor.pas"/>
-        <Caret Line="457" Column="36" TopLine="438"/>
+        <Caret Line="462" Column="25" TopLine="450"/>
       </Position5>
       <Position6>
         <Filename Value="editor.pas"/>
-        <Caret Line="462" Column="25" TopLine="450"/>
+        <Caret Line="647" Column="3" TopLine="641"/>
       </Position6>
       <Position7>
         <Filename Value="editor.pas"/>
-        <Caret Line="647" Column="3" TopLine="641"/>
+        <Caret Line="465" Column="5" TopLine="444"/>
       </Position7>
       <Position8>
         <Filename Value="editor.pas"/>
-        <Caret Line="465" Column="5" TopLine="444"/>
+        <Caret Line="5" Column="81" TopLine="1"/>
       </Position8>
       <Position9>
         <Filename Value="editor.pas"/>
-        <Caret Line="5" Column="81" TopLine="1"/>
+        <Caret Line="186" Column="4" TopLine="164"/>
       </Position9>
       <Position10>
         <Filename Value="editor.pas"/>
-        <Caret Line="186" Column="4" TopLine="164"/>
+        <Caret Line="646" Column="4" TopLine="624"/>
       </Position10>
       <Position11>
         <Filename Value="editor.pas"/>
-        <Caret Line="646" Column="4" TopLine="624"/>
+        <Caret Line="644" Column="15" TopLine="623"/>
       </Position11>
       <Position12>
         <Filename Value="editor.pas"/>
-        <Caret Line="644" Column="15" TopLine="623"/>
+        <Caret Line="552" Column="10" TopLine="535"/>
       </Position12>
       <Position13>
         <Filename Value="editor.pas"/>
-        <Caret Line="552" Column="10" TopLine="535"/>
-      </Position13>
-      <Position14>
-        <Filename Value="editor.pas"/>
         <Caret Line="71" Column="28" TopLine="71"/>
-      </Position14>
+      </Position13>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

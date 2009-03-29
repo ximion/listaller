@@ -1,7 +1,5 @@
 unit RegExpr;
-
-{
-     TRegExpr class library
+{    TRegExpr class library
      Delphi Regular Expressions
 
  Copyright (c) 1999-2004 Andrey V. Sorokin, St.Petersburg, Russia
@@ -34,8 +32,8 @@ unit RegExpr;
 
                                     mailto:anso@mail.ru
                                     http://RegExpStudio.com
-                                    http://anso.da.ru/
-}
+                                    http://anso.da.ru/}
+//** Unit to process RegEx commands
 
 interface
 

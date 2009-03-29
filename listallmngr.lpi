@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="7"/>
+    <PathDelim Value="/"/>
+    <Version Value="6"/>
     <General>
-      <Flags>
-        <LRSInOutputDirectory Value="False"/>
-      </Flags>
       <MainUnit Value="0"/>
+      <IconPath Value="./"/>
       <TargetFileExt Value=""/>
       <Title Value="Listaller Manager"/>
       <UseAppBundle Value="False"/>
@@ -59,6 +58,7 @@
         <ComponentName Value="MnFrm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="manager.lrs"/>
         <UnitName Value="manager"/>
         <CursorPos X="61" Y="247"/>
         <TopLine Value="222"/>
@@ -259,6 +259,7 @@
         <ComponentName Value="FmConfig"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="settings.lrs"/>
         <UnitName Value="settings"/>
         <CursorPos X="55" Y="26"/>
         <TopLine Value="5"/>
@@ -291,6 +292,7 @@
         <ComponentName Value="RMForm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="uninstall.lrs"/>
         <UnitName Value="uninstall"/>
         <CursorPos X="23" Y="264"/>
         <TopLine Value="228"/>
@@ -372,6 +374,7 @@
         <ComponentName Value="ConvDisp"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="pkgconvertdisp.lrs"/>
         <UnitName Value="pkgconvertdisp"/>
         <CursorPos X="8" Y="103"/>
         <TopLine Value="67"/>
@@ -382,6 +385,7 @@
         <ComponentName Value="SCForm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="swcatalog.lrs"/>
         <UnitName Value="swcatalog"/>
         <CursorPos X="8" Y="530"/>
         <TopLine Value="504"/>
@@ -542,6 +546,7 @@
         <ComponentName Value="FmAbout"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="aboutbox.lrs"/>
         <UnitName Value="aboutbox"/>
         <CursorPos X="35" Y="45"/>
         <TopLine Value="19"/>

@@ -15,7 +15,7 @@ uses
 begin
   {$I lipkgcreator.lrs}
   Application.Initialize;
-  Application.CreateForm(TfrmEditor, frmEditor);
+  Application.CreateForm(TFrmEditor, FrmEditor);
   Application.CreateForm(TfrmFileWizard, frmFileWizard);
   Application.CreateForm(TfrmProjectWizard, frmProjectWizard);
   Application.Run;

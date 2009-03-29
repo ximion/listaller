@@ -10,6 +10,7 @@
 { This unit is part of the Listaller project and                              }
 { released under LGPLv3-license                                               }
 { *************************************************************************** }
+//** Provides GifThread class which displays an gif-animation using opbitmap
 unit gifanimator;
 
 {$mode objfpc}{$H+}

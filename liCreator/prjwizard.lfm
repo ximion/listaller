@@ -1,13 +1,13 @@
 object frmProjectWizard: TfrmProjectWizard
-  Left = 307
+  Left = 350
   Height = 666
-  Top = 177
+  Top = 188
   Width = 836
   ActiveControl = RadioButton1
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Project Wizard'
-  ClientHeight = 641
+  ClientHeight = 645
   ClientWidth = 836
   Constraints.MinHeight = 666
   Constraints.MinWidth = 836
@@ -58,7 +58,7 @@ object frmProjectWizard: TfrmProjectWizard
   LCLVersion = '0.9.27'
   object Notebook1: TNotebook
     Left = 0
-    Height = 600
+    Height = 604
     Top = 0
     Width = 836
     Align = alClient
@@ -1756,7 +1756,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page2: TPage
       Caption = 'Page2'
       ClientWidth = 832
-      ClientHeight = 596
+      ClientHeight = 573
       object Label8: TLabel
         Left = 7
         Height = 19
@@ -2252,7 +2252,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page3: TPage
       Caption = 'Page3'
       ClientWidth = 832
-      ClientHeight = 596
+      ClientHeight = 573
       object Label19: TLabel
         Left = 7
         Height = 19
@@ -2274,7 +2274,7 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object tvDependencies: TTreeView
         Left = 319
-        Height = 522
+        Height = 499
         Top = 63
         Width = 509
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -2321,7 +2321,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page4: TPage
       Caption = 'Page4'
       ClientWidth = 832
-      ClientHeight = 596
+      ClientHeight = 600
       object Label17: TLabel
         Left = 7
         Height = 19
@@ -2336,7 +2336,7 @@ object frmProjectWizard: TfrmProjectWizard
       object lvPackageFiles: TListView
         Left = 0
         Height = 392
-        Top = 204
+        Top = 208
         Width = 832
         Align = alBottom
         Columns = <        
@@ -2483,7 +2483,7 @@ object frmProjectWizard: TfrmProjectWizard
         TabStop = False
       end
       object Button6: TButton
-        Left = 351
+        Left = 358
         Height = 25
         Top = 174
         Width = 112
@@ -2595,7 +2595,7 @@ object frmProjectWizard: TfrmProjectWizard
   object Panel1: TPanel
     Left = 0
     Height = 41
-    Top = 600
+    Top = 604
     Width = 836
     Align = alBottom
     ClientHeight = 41

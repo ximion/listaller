@@ -66,9 +66,9 @@ type
     property Count: Integer read GetCount;
   end;
 
-  { TfrmEditor }
+  { TFrmEditor }
 
-  TfrmEditor = class(TForm)
+  TFrmEditor = class(TForm)
     FindDialog: TFindDialog;
     MainScriptEdit: TSynEdit;
     MenuItem1: TMenuItem;
@@ -159,7 +159,7 @@ const
    FORM_CAPTION = 'Listaller package creator';
 
 var
-  frmEditor: TfrmEditor;
+  FrmEditor: TFrmEditor;
   //** Name of the current file
   FName: String;
   FileProfiles: TFileProfiles;
@@ -189,7 +189,7 @@ begin
   FSynEdit.Gutter.LeftOffset:=0;
   FSynEdit.Gutter.RightOffset:=0;
   FSynEdit.Font.Size := 10;
-  FSynEdit.Highlighter := frmEditor.SynAnySyn1;
+  FSynEdit.Highlighter := FrmEditor.SynAnySyn1;
 end;
 
 destructor TFileProfile.Destroy();
@@ -344,20 +344,20 @@ begin
     Result := TFileProfile(FFileProfiles[Index]);
 end;
 
-{ TfrmEditor }
+{ TFrmEditor }
 
-procedure TfrmEditor.FormCreate(Sender: TObject);
+procedure TFrmEditor.FormCreate(Sender: TObject);
 begin
   IPSNotebook.PageIndex:=0;
   FileProfiles := TFileProfiles.Create(Self, IPSNotebook);
 end;
 
-procedure TfrmEditor.FormShow(Sender: TObject);
+procedure TFrmEditor.FormShow(Sender: TObject);
 begin
 
 end;
 
-procedure TfrmEditor.IdleTimer1Timer(Sender: TObject);
+procedure TFrmEditor.IdleTimer1Timer(Sender: TObject);
 (*  var
   NoMoreOutput: boolean;
 
@@ -400,7 +400,7 @@ begin
   IPSNotebook.Enabled:=true;*)
 end;
 
-procedure TfrmEditor.IPSNotebookCloseTabClicked(Sender: TObject);
+procedure TFrmEditor.IPSNotebookCloseTabClicked(Sender: TObject);
 begin
   if Sender is TPage then
     FileProfiles.RemoveProfile(TPage(Sender));
@@ -440,7 +440,7 @@ begin
  end;
 end;
   
-procedure TfrmEditor.mnuBuildCreatePackageClick(Sender: TObject);
+procedure TFrmEditor.mnuBuildCreatePackageClick(Sender: TObject);
 begin
   mnuFileSaveClick(nil);
   if SaveDialog1.Execute then
@@ -465,7 +465,7 @@ begin
   end;
 end;
 
-procedure TfrmEditor.mnuEditAddFilePathClick(Sender: TObject);
+procedure TFrmEditor.mnuEditAddFilePathClick(Sender: TObject);
 begin
   if OpenDialog2.Execute then
   begin
@@ -476,55 +476,55 @@ begin
   end;
 end;
 
-procedure TfrmEditor.mnuEditAddFileProfileClick(Sender: TObject);
+procedure TFrmEditor.mnuEditAddFileProfileClick(Sender: TObject);
 begin
   FileProfiles.AddProfile();
 end;
 
-procedure TfrmEditor.mnuEditCopyClick(Sender: TObject);
+procedure TFrmEditor.mnuEditCopyClick(Sender: TObject);
 begin
-  if frmEditor.ActiveControl is TSynEdit then
-    TSynEdit(frmEditor.ActiveControl).CopyToClipboard;
+  if FrmEditor.ActiveControl is TSynEdit then
+    TSynEdit(FrmEditor.ActiveControl).CopyToClipboard;
 end;
 
-procedure TfrmEditor.mnuEditCutClick(Sender: TObject);
+procedure TFrmEditor.mnuEditCutClick(Sender: TObject);
 begin
-  if frmEditor.ActiveControl is TSynEdit then
-    TSynEdit(frmEditor.ActiveControl).CutToClipboard;
+  if FrmEditor.ActiveControl is TSynEdit then
+    TSynEdit(FrmEditor.ActiveControl).CutToClipboard;
 end;
 
-procedure TfrmEditor.mnuEditFindClick(Sender: TObject);
+procedure TFrmEditor.mnuEditFindClick(Sender: TObject);
 begin
   FindDialog.Execute;
 end;
 
-procedure TfrmEditor.mnuEditPasteClick(Sender: TObject);
+procedure TFrmEditor.mnuEditPasteClick(Sender: TObject);
 begin
-  if frmEditor.ActiveControl is TSynEdit then
-    TSynEdit(frmEditor.ActiveControl).PasteFromClipboard;
+  if FrmEditor.ActiveControl is TSynEdit then
+    TSynEdit(FrmEditor.ActiveControl).PasteFromClipboard;
 end;
 
-procedure TfrmEditor.mnuEditRemoveFileProfileClick(Sender: TObject);
+procedure TFrmEditor.mnuEditRemoveFileProfileClick(Sender: TObject);
 begin
   FileProfiles.RemoveProfile(IPSNotebook.Page[IPSNotebook.PageIndex]);
 end;
 
-procedure TfrmEditor.mnuEditReplaceClick(Sender: TObject);
+procedure TFrmEditor.mnuEditReplaceClick(Sender: TObject);
 begin
   ReplaceDialog.Execute;
 end;
 
-procedure TfrmEditor.mnuEditUndoClick(Sender: TObject);
+procedure TFrmEditor.mnuEditUndoClick(Sender: TObject);
 begin
   //if ScriptPage.Visible then
   //  MainScriptEdit.Undo;
   //if Page2.Visible then
   //  FilesEdit.Undo;
-  if frmEditor.ActiveControl is TSynEdit then
-    TSynEdit(frmEditor.ActiveControl).Undo;
+  if FrmEditor.ActiveControl is TSynEdit then
+    TSynEdit(FrmEditor.ActiveControl).Undo;
 end;
 
-procedure TfrmEditor.SaveIPSFile(IFn: String);
+procedure TFrmEditor.SaveIPSFile(IFn: String);
 var ips,ipsx: TStringList;i,k: Integer;
 begin
   ips:=TStringList.Create;
@@ -559,7 +559,7 @@ begin
   FName:=Ifn;
 end;
 
-procedure TfrmEditor.mnuFileSaveClick(Sender: TObject);
+procedure TFrmEditor.mnuFileSaveClick(Sender: TObject);
 begin
   if FName<>'' then
   begin
@@ -570,7 +570,7 @@ begin
   end;
 end;
 
-procedure TfrmEditor.mnuFileNewWizardClick(Sender: TObject);
+procedure TFrmEditor.mnuFileNewWizardClick(Sender: TObject);
 begin
   NewBlank;
   frmProjectWizard:=TfrmProjectWizard.Create(nil);
@@ -578,12 +578,12 @@ begin
   frmProjectWizard.Free;
 end;
 
-procedure TfrmEditor.mnuFileNewBlankClick(Sender: TObject);
+procedure TFrmEditor.mnuFileNewBlankClick(Sender: TObject);
 begin
   NewBlank;
 end;
 
-procedure TfrmEditor.NewBlank;
+procedure TFrmEditor.NewBlank;
 begin
   FName:='';
   Caption:= FORM_CAPTION;
@@ -591,7 +591,7 @@ begin
   FileProfiles.Clear;
 end;
 
-procedure TfrmEditor.ReadOutput;
+procedure TFrmEditor.ReadOutput;
 var M: TMemoryStream;
    n: LongInt;
    BytesRead: LongInt;
@@ -637,7 +637,7 @@ begin
    M.Free;
 end;
 
-procedure TfrmEditor.mnuBuildFastClick(Sender: TObject);
+procedure TFrmEditor.mnuBuildFastClick(Sender: TObject);
 var strTargetName: String;
 begin
   mnuFileSaveClick(nil);
@@ -655,12 +655,12 @@ begin
   IPSNotebook.Enabled:=true;
 end;
 
-procedure TfrmEditor.Button1Click(Sender: TObject);
+procedure TFrmEditor.Button1Click(Sender: TObject);
 begin
 
 end;
 
-function TfrmEditor.GetActiveSynEdit: TSynEdit;
+function TFrmEditor.GetActiveSynEdit: TSynEdit;
 begin
   try
     if IPSNotebook.ActivePageComponent=ScriptPage then
@@ -672,7 +672,7 @@ begin
   end;
 end;
 
-procedure TfrmEditor.FindDialogFind(Sender: TObject);
+procedure TFrmEditor.FindDialogFind(Sender: TObject);
 var
   AEdit: TSynEdit;
   srOptions: TSynSearchOptions;
@@ -691,7 +691,7 @@ begin
 end;
 
 var fActiv: Boolean=true;
-procedure TfrmEditor.FormActivate(Sender: TObject);
+procedure TFrmEditor.FormActivate(Sender: TObject);
 begin
   if fActiv then
   begin
@@ -701,14 +701,14 @@ begin
   end;
 end;
 
-procedure TfrmEditor.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+procedure TFrmEditor.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   FreeAndNil(FileProfiles);
 end;
 
 {
 OutOfDate:
-procedure TfrmEditor.CreateMD5Sums;
+procedure TFrmEditor.CreateMD5Sums;
 var i: Integer;
 begin
 if FilesEdit.Lines.Count mod 2 = 0 then begin
@@ -724,7 +724,7 @@ end;
 
 
 
-procedure TfrmEditor.mnuFileSaveAsClick(Sender: TObject);
+procedure TFrmEditor.mnuFileSaveAsClick(Sender: TObject);
 begin
   if SaveDialog2.Execute then
   begin
@@ -733,7 +733,7 @@ begin
   end;
 end;
 
-procedure TfrmEditor.mnuFileLoadIPSClick(Sender: TObject);
+procedure TFrmEditor.mnuFileLoadIPSClick(Sender: TObject);
 
   function BeginsFilesPart(str: String;var iProfileIndex:Integer):Boolean;
   var
@@ -811,17 +811,17 @@ begin
  end;
 end;
 
-procedure TfrmEditor.mnuFileCloseClick(Sender: TObject);
+procedure TFrmEditor.mnuFileCloseClick(Sender: TObject);
 begin
   Application.Terminate;
 end;
 
-procedure TfrmEditor.mnuEditFileWizardClick(Sender: TObject);
+procedure TFrmEditor.mnuEditFileWizardClick(Sender: TObject);
 begin
   frmFileWizard.ShowModal;
 end;
 
-procedure TfrmEditor.ReplaceDialogFind(Sender: TObject);
+procedure TFrmEditor.ReplaceDialogFind(Sender: TObject);
 var
   AEdit: TSynEdit;
   srOptions: TSynSearchOptions;
@@ -839,7 +839,7 @@ begin
   end;
 end;
 
-procedure TfrmEditor.ReplaceDialogReplace(Sender: TObject);
+procedure TFrmEditor.ReplaceDialogReplace(Sender: TObject);
 var
   AEdit: TSynEdit;
   srOptions: TSynSearchOptions;
@@ -865,17 +865,17 @@ begin
   end;
 end;
 
-procedure TfrmEditor.TabSheet1Show(Sender: TObject);
+procedure TFrmEditor.TabSheet1Show(Sender: TObject);
 begin
   mnuEditFileWizard.Visible:=false;
 end;
 
-procedure TfrmEditor.TabSheet2Show(Sender: TObject);
+procedure TFrmEditor.TabSheet2Show(Sender: TObject);
 begin
   mnuEditFileWizard.Visible:=true;
 end;
 
-procedure TfrmEditor.TabSheet3Show(Sender: TObject);
+procedure TFrmEditor.TabSheet3Show(Sender: TObject);
 begin
   // StatusBar1.Panels[0].Text:='Loading MD5-sums...';
   Application.ProcessMessages;

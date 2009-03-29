@@ -26,7 +26,7 @@
 {*********************************************************}
 {* ABBREVIA: AbArcTyp.pas 3.05                           *}
 {*********************************************************}
-{* ABBREVIA: TABArchive, TABArchiveItem classes          *}
+{** ABBREVIA: TABArchive, TABArchiveItem classes          }
 {*********************************************************}
 
 {$I AbDefine.inc}

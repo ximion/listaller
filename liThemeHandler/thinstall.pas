@@ -12,10 +12,8 @@
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
- -> Main unit of Listaller's desktop-theme manager/installer
-}
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
+//** Main unit of Listaller's desktop-theme manager/(un)installer
 unit thinstall;
 
 {$mode objfpc}{$H+}

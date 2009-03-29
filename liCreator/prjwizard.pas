@@ -860,7 +860,7 @@ begin
     tmp:=TStringList.Create;
     tmp.Assign(FileUtil.FindAllFiles(DirectoryEdit1.Directory,'*',true));
     j:=0;
-    for j:=lvPackageFiles.Items.Count to tmp.Count+lvPackageFiles.Items.Count-2 do
+    for j:=lvPackageFiles.Items.Count to tmp.Count+lvPackageFiles.Items.Count-1 do
     begin
       if FileExists(tmp[i]) then
       begin
@@ -879,9 +879,7 @@ begin
     end;
     tmp.Free;
 
-  end
-  else
-
+  end else
   begin
     lvPackageFiles.Items.Add;
     i:=lvPackageFiles.Items.Count-1;

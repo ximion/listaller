@@ -13,10 +13,8 @@
  * See the GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- -> This unit only provides a form that shows the output of 'alien'
-}
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.}
+//** This unit provides a form that shows the output of 'alien'
 unit pkgconvertdisp;
 
 {$mode objfpc}{$H+}

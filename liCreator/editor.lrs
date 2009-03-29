@@ -1,7 +1,7 @@
 { Das ist eine automatisch erzeugte Lazarus-Ressourcendatei }
 
-LazarusResources.Add('TfrmEditor','FORMDATA',[
-  'TPF0'#10'TfrmEditor'#9'frmEditor'#4'Left'#3'$'#1#6'Height'#3#142#2#3'Top'#3
+LazarusResources.Add('TFrmEditor','FORMDATA',[
+  'TPF0'#10'TFrmEditor'#9'FrmEditor'#4'Left'#3'$'#1#6'Height'#3#142#2#3'Top'#3
   +#200#0#5'Width'#3#154#3#13'ActiveControl'#7#11'IPSNotebook'#7'Caption'#6#25
   +'Listaller package creator'#12'ClientHeight'#3's'#2#11'ClientWidth'#3#154#3#4
   +'Menu'#7#6'mmMain'#10'OnActivate'#7#12'FormActivate'#7'OnClose'#7#9'FormClos'

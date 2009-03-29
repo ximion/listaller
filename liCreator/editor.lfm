@@ -1,4 +1,4 @@
-object frmEditor: TfrmEditor
+object FrmEditor: TFrmEditor
   Left = 292
   Height = 654
   Top = 200
