@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   CheckLst, StdCtrls, Buttons, ExtCtrls, LCLType, manager, IniFiles, Spin,
-  Process, utilities, trstrings, gettext, Menus, aboutbox;
+  Process, utilities, trstrings, gettext, Menus, aboutbox, gtk2;
 
 type
 
@@ -97,7 +97,10 @@ begin
   UListBox1.items.Add(copy(tmp[i],pos(' <',tmp[i])+2,length(tmp[i])-pos(' <',tmp[i])-2)+' ('+copy(tmp[i],3,pos(' <',tmp[i])-3)+')');
   UListBox1.Checked[UListBox1.Items.Count-1]:=tmp[i][1]='-';
   end;
-      
+
+  if Gtk2LoadStockPixmap(GTK_STOCK_CLOSE,GTK_ICON_SIZE_BUTTON)<>0 then
+   BitBtn3.Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_CLOSE,GTK_ICON_SIZE_MENU);
+
   //Translate...
   UpdPage.Caption:=strUpdSources;
   BitBtn3.Caption:=strClose;

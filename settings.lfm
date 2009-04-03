@@ -70,22 +70,22 @@ object FmConfig: TFmConfig
     OnPageChanged = PageControl1Change
     object MainPage: TTabSheet
       Caption = 'Main'
-      ClientHeight = 405
-      ClientWidth = 655
+      ClientHeight = 413
+      ClientWidth = 659
       OnShow = MainPageShow
       object Label2: TLabel
         Left = 6
-        Height = 18
+        Height = 14
         Top = 8
-        Width = 137
+        Width = 104
         Caption = 'Language: automatic'
         ParentColor = False
       end
       object CheckBox1: TCheckBox
         Left = 6
-        Height = 20
+        Height = 21
         Top = 32
-        Width = 294
+        Width = 230
         Caption = 'Show warning if distribution is unsupported'
         Checked = True
         Enabled = False
@@ -95,9 +95,9 @@ object FmConfig: TFmConfig
       end
       object CheckBox2: TCheckBox
         Left = 6
-        Height = 20
+        Height = 21
         Top = 64
-        Width = 423
+        Width = 327
         Caption = 'Load dependencies from included webserver-urls automatically'
         Checked = True
         OnChange = CheckBox2Change
@@ -108,35 +108,35 @@ object FmConfig: TFmConfig
         Left = 6
         Height = 184
         Top = 149
-        Width = 633
+        Width = 637
         Anchors = [akTop, akLeft, akRight]
         Caption = 'Proxy-Settings'
-        ClientHeight = 165
-        ClientWidth = 629
+        ClientHeight = 169
+        ClientWidth = 633
         TabOrder = 2
         object Label3: TLabel
           Left = 9
-          Height = 18
+          Height = 14
           Top = 33
-          Width = 87
+          Width = 70
           Caption = 'H&TTP-Proxy:'
           Enabled = False
           ParentColor = False
         end
         object Label4: TLabel
           Left = 191
-          Height = 18
+          Height = 14
           Top = 33
-          Width = 31
+          Width = 25
           Caption = 'Port:'
           Enabled = False
           ParentColor = False
         end
         object Label5: TLabel
           Left = 190
-          Height = 18
+          Height = 14
           Top = 104
-          Width = 31
+          Width = 25
           Caption = 'Port:'
           Enabled = False
           ParentColor = False
@@ -144,9 +144,9 @@ object FmConfig: TFmConfig
         end
         object CheckBox4: TCheckBox
           Left = 6
-          Height = 20
+          Height = 21
           Top = 5
-          Width = 151
+          Width = 125
           Caption = 'Enable Proxy-Server'
           OnChange = CheckBox4Change
           TabOrder = 0
@@ -176,9 +176,9 @@ object FmConfig: TFmConfig
           EditLabel.AnchorSideLeft.Control = edtUsername
           EditLabel.AnchorSideBottom.Control = edtUsername
           EditLabel.Left = 295
-          EditLabel.Height = 18
-          EditLabel.Top = 34
-          EditLabel.Width = 72
+          EditLabel.Height = 14
+          EditLabel.Top = 38
+          EditLabel.Width = 55
           EditLabel.Caption = 'Username:'
           EditLabel.ParentColor = False
           Enabled = False
@@ -194,9 +194,9 @@ object FmConfig: TFmConfig
           EditLabel.AnchorSideLeft.Control = edtPasswd
           EditLabel.AnchorSideBottom.Control = edtPasswd
           EditLabel.Left = 295
-          EditLabel.Height = 18
-          EditLabel.Top = 79
-          EditLabel.Width = 64
+          EditLabel.Height = 14
+          EditLabel.Top = 83
+          EditLabel.Width = 51
           EditLabel.Caption = 'Password:'
           EditLabel.ParentColor = False
           Enabled = False
@@ -212,9 +212,9 @@ object FmConfig: TFmConfig
           EditLabel.AnchorSideLeft.Control = edtFTPProxy
           EditLabel.AnchorSideBottom.Control = edtFTPProxy
           EditLabel.Left = 9
-          EditLabel.Height = 18
-          EditLabel.Top = 105
-          EditLabel.Width = 77
+          EditLabel.Height = 14
+          EditLabel.Top = 109
+          EditLabel.Width = 63
           EditLabel.Caption = '&FTP-Proxy:'
           EditLabel.ParentColor = False
           Enabled = False
@@ -235,9 +235,9 @@ object FmConfig: TFmConfig
       end
       object Button1: TButton
         Left = 6
-        Height = 29
+        Height = 27
         Top = 368
-        Width = 103
+        Width = 83
         AutoSize = True
         Caption = 'About Listaller'
         OnClick = Button1Click
@@ -245,9 +245,9 @@ object FmConfig: TFmConfig
       end
       object CbShowPkMon: TCheckBox
         Left = 6
-        Height = 20
+        Height = 21
         Top = 101
-        Width = 299
+        Width = 235
         Caption = 'Start PackageKit monitor while transactions'
         OnChange = CbShowPkMonChange
         TabOrder = 4
@@ -255,8 +255,8 @@ object FmConfig: TFmConfig
     end
     object UpdPage: TTabSheet
       Caption = 'Update sources'
-      ClientHeight = 404
-      ClientWidth = 655
+      ClientHeight = 413
+      ClientWidth = 659
       object Label1: TLabel
         Left = 6
         Height = 13
@@ -267,9 +267,9 @@ object FmConfig: TFmConfig
       end
       object UListBox1: TCheckListBox
         Left = 6
-        Height = 326
+        Height = 335
         Top = 32
-        Width = 640
+        Width = 644
         Anchors = [akTop, akLeft, akRight, akBottom]
         ItemHeight = 0
         OnClick = UListBox1Click
@@ -277,9 +277,9 @@ object FmConfig: TFmConfig
         TopIndex = -1
       end
       object BitBtn1: TBitBtn
-        Left = 547
+        Left = 551
         Height = 22
-        Top = 374
+        Top = 383
         Width = 101
         Anchors = [akRight, akBottom]
         AutoSize = True
@@ -291,7 +291,7 @@ object FmConfig: TFmConfig
       object BitBtn2: TBitBtn
         Left = 6
         Height = 22
-        Top = 374
+        Top = 383
         Width = 81
         Anchors = [akLeft, akBottom]
         AutoSize = True
@@ -312,10 +312,10 @@ object FmConfig: TFmConfig
     ClientWidth = 663
     TabOrder = 1
     object BitBtn3: TBitBtn
-      Left = 596
-      Height = 29
-      Top = 6
-      Width = 58
+      Left = 604
+      Height = 27
+      Top = 8
+      Width = 50
       Anchors = [akRight, akBottom]
       AutoSize = True
       Caption = ' Close '

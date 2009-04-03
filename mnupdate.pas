@@ -122,7 +122,7 @@ begin
   SetLength(anotes,0);
   if not FileExists(RegDir+'updates.list') then exit;
   h.LoadFromFile(RegDir+'updates.list');
-  if h.Count=0 then begin
+  if h.Count=1 then begin
   ShowMessage(strNoUpdates);
   exit;
   end;

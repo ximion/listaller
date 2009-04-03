@@ -44,7 +44,7 @@ var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;reg: TIniFile;k: Bool
     proc: TProcess;dlink: Boolean;t: TProcess;
 begin
 Result:=0;
-pkit:=GetDataFile('pkitbind/pkitbind.py ');
+pkit:=GetDataFile('pkitbind/pkitbind.py')+' ';
 p:=RegDir+AppName+'~'+AppID+'/';
 //InfoMemo.Lines.Add('Begin uninstallation...');
 
@@ -57,6 +57,8 @@ reg:=TIniFile.Create(RegDir+'appreg.lst');
 
 if LowerCase(reg.ReadString(AppName+'~'+AppID,'pType','')) = 'dlink' then dlink:=true;
 
+writeLn('- IPK uninstallation -');
+
 if not dlink then begin
 tmp:=TStringList.Create;
 tmp.LoadFromfile(p+'appfiles.list');
@@ -66,19 +68,23 @@ end;
 if not fast then begin
 if FileExists(p+'prerm') then begin
 Log.Add('PreRM-Script found.');
+writeLn('PreRM-Script found.');
 t:=TProcess.Create(nil);
 t.Options:=[poUsePipes,poWaitonexit];
 t.CommandLine:='chmod 775 '''+p+'prerm''';
 t.Execute;
 Log.Add('Executing prerm...');
+writeLn('Executing prerm...');
 t.CommandLine:=''''+p+'prerm''';
 t.Execute;
 t.Free;
 Log.Add('Done.');
+writeLn('Done.');
 end;
 
 ///////////////////////////////////////
 Log.Add(strRMUnsdDeps);
+writeLn(strRMUnsdDeps);
 if reg.SectionExists('DepOS') then begin
 i:=1;
 while reg.ValueExists('DepOS','ID'+IntToStr(i)) do Inc(i);
@@ -92,6 +98,7 @@ t:=TProcess.Create(nil);
 if pos('>',f)>0 then
 Log.Add(f+' # '+copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
 else Log.Add(f);
+writeLn(Log[Log.Count-1]);
 if pos('>',f)>0 then
  t.CommandLine:=pKit+'--get-requires '+copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2)
 else t.CommandLine:=pKit+'--get-requires '+f;
@@ -110,6 +117,7 @@ t.Options:=[poUsePipes,poWaitonexit];
    //GetOutPutTimer.Enabled:=true;
    t.Execute;
    Log.Add('Removing '+f+'...');
+   writeLn('Removing '+f+'...');
   end;
   finally
   s.free;
@@ -121,7 +129,7 @@ end;
   end;
  end; //End of downto-loop
 
-end else Log.Add('No installed deps found!');
+end else begin Log.Add('No installed deps found!');writeLn('No installed deps found!');end;
 
 end; //End of "fast"-request
 //////////////////////////////////////////////////////
@@ -148,6 +156,7 @@ end; //End of shared-test
 //Undo Mime-registration (if necessary)
 if pos( '<mime>',tmp[i])>0 then begin
 Log.Add('Uninstalling MIME-Type...');
+writeLn('Uninstalling MIME-Type...');
 t:=TProcess.Create(nil);
 if (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.png')
 or (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.xpm') then begin
@@ -162,6 +171,7 @@ end;
 end;
 
 Log.Add('Removing files...');
+writeLn('Removing files...');
 //Uninstall application
 for i:=0 to tmp.Count-1 do begin
 
@@ -181,6 +191,7 @@ Application.ProcessMessages;
 end;
 
 //InfoMemo.Lines.Add('Direcory remove...');
+writeLn('Removinf empty dirs...');
 tmp.LoadFromFile(p+'AppDirs.list');
 proc:=TProcess.Create(nil);
 for i:=0 to tmp.Count-1 do begin
@@ -200,6 +211,7 @@ tmp.Free;
 end;
 
 Result:=Result+2;
+writeLn('Unregistering...');
 tmp:=TStringList.Create;
 reg.ReadSections(tmp);
 for i:=0 to tmp.Count-1 do
@@ -218,9 +230,9 @@ proc.Execute;
 proc.Free;
 
 Result:=Result+2;
-{InfoMemo.Lines.Add('Application removed.');
-InfoMemo.Lines.Add('-----------');
-ExProgress.Visible:=false; }
+Log.Add('Application removed.');
+Log.Add('-----------');
+writeLn('- Finished -');
 end;
 
 end.

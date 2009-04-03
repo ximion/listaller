@@ -170,7 +170,7 @@ end else begin
 end;
 
 procedure TRMForm.FormActivate(Sender: TObject);
-var f,g: String; t:TProcess;cf: TIniFile;
+var f,g: String; t:TProcess;cf: TIniFile;tmp: TStringList;
 begin
 if FActiv then begin
 FActiv:=false;
@@ -193,6 +193,13 @@ RMForm.Label1.Caption:='Reading application information...';
 GetOutPutTimer.Enabled:=true;
 
 if IdList[uID][1]='~' then begin
+if FileExists(RegDir+AList[uID].AppName+'~'+copy(IdList[uID],2,length(IdList[uID]))+'/appfiles.list') then
+begin
+tmp:=TStringList.Create;
+tmp.LoadFromFile(RegDir+AList[uID].AppName+'~'+copy(IdList[uID],2,length(IdList[uID]))+'/appfiles.list');
+UProgress.Max:=((tmp.Count)*10)+4;
+tmp.Free;
+end;
 UProgress.Position:=UninstallIPKApp(AList[uID].AppName,copy(IdList[uID],2,length(IdList[uID])),Memo1.Lines);
 LogAdd('Finished!');
 Memo1.Lines.SaveToFile(ConfigDir+'uninstall.log');

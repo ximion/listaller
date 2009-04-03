@@ -25,7 +25,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms,
   SysUtils,
-  manager, settings, uninstall, pkgconvertdisp, swcatalog, LResources, ipkhandle,
+  manager, settings, uninstall, pkgconvertdisp, swcatalog, ipkhandle,
   utilities, translations, gettext;
 
 {$IFDEF WINDOWS}{$R listallmngr.rc}{$ENDIF}
@@ -42,7 +42,6 @@ translations.SystemCharSetIsUTF8:=true;
 end;
 
 begin
-  {$I listallmngr.lrs}
   //Load Translation
   TranslateInterface();
   Application.Title:='Listaller Manager';

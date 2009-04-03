@@ -70,70 +70,70 @@ LazarusResources.Add('TFmConfig','FORMDATA',[
   +'Top'#2#0#5'Width'#3#151#2#10'ActivePage'#7#8'MainPage'#5'Align'#7#8'alClien'
   +'t'#8'TabIndex'#2#0#8'TabOrder'#2#0#8'OnChange'#7#18'PageControl1Change'#13
   +'OnPageChanged'#7#18'PageControl1Change'#0#9'TTabSheet'#8'MainPage'#7'Captio'
-  +'n'#6#4'Main'#12'ClientHeight'#3#149#1#11'ClientWidth'#3#143#2#6'OnShow'#7#12
-  +'MainPageShow'#0#6'TLabel'#6'Label2'#4'Left'#2#6#6'Height'#2#18#3'Top'#2#8#5
-  +'Width'#3#137#0#7'Caption'#6#19'Language: automatic'#11'ParentColor'#8#0#0#9
-  +'TCheckBox'#9'CheckBox1'#4'Left'#2#6#6'Height'#2#20#3'Top'#2' '#5'Width'#3'&'
-  +#1#7'Caption'#6'+Show warning if distribution is unsupported'#7'Checked'#9#7
+  +'n'#6#4'Main'#12'ClientHeight'#3#157#1#11'ClientWidth'#3#147#2#6'OnShow'#7#12
+  +'MainPageShow'#0#6'TLabel'#6'Label2'#4'Left'#2#6#6'Height'#2#14#3'Top'#2#8#5
+  +'Width'#2'h'#7'Caption'#6#19'Language: automatic'#11'ParentColor'#8#0#0#9'TC'
+  +'heckBox'#9'CheckBox1'#4'Left'#2#6#6'Height'#2#21#3'Top'#2' '#5'Width'#3#230
+  +#0#7'Caption'#6'+Show warning if distribution is unsupported'#7'Checked'#9#7
   +'Enabled'#8#8'OnChange'#7#15'CheckBox1Change'#5'State'#7#9'cbChecked'#8'TabO'
-  +'rder'#2#0#0#0#9'TCheckBox'#9'CheckBox2'#4'Left'#2#6#6'Height'#2#20#3'Top'#2
-  +'@'#5'Width'#3#167#1#7'Caption'#6'<Load dependencies from included webserver'
-  +'-urls automatically'#7'Checked'#9#8'OnChange'#7#15'CheckBox2Change'#5'State'
+  +'rder'#2#0#0#0#9'TCheckBox'#9'CheckBox2'#4'Left'#2#6#6'Height'#2#21#3'Top'#2
+  +'@'#5'Width'#3'G'#1#7'Caption'#6'<Load dependencies from included webserver-'
+  +'urls automatically'#7'Checked'#9#8'OnChange'#7#15'CheckBox2Change'#5'State'
   +#7#9'cbChecked'#8'TabOrder'#2#1#0#0#9'TGroupBox'#9'GroupBox1'#4'Left'#2#6#6
-  +'Height'#3#184#0#3'Top'#3#149#0#5'Width'#3'y'#2#7'Anchors'#11#5'akTop'#6'akL'
-  +'eft'#7'akRight'#0#7'Caption'#6#14'Proxy-Settings'#12'ClientHeight'#3#165#0
-  +#11'ClientWidth'#3'u'#2#8'TabOrder'#2#2#0#6'TLabel'#6'Label3'#4'Left'#2#9#6
-  +'Height'#2#18#3'Top'#2'!'#5'Width'#2'W'#7'Caption'#6#12'H&TTP-Proxy:'#7'Enab'
+  +'Height'#3#184#0#3'Top'#3#149#0#5'Width'#3'}'#2#7'Anchors'#11#5'akTop'#6'akL'
+  +'eft'#7'akRight'#0#7'Caption'#6#14'Proxy-Settings'#12'ClientHeight'#3#169#0
+  +#11'ClientWidth'#3'y'#2#8'TabOrder'#2#2#0#6'TLabel'#6'Label3'#4'Left'#2#9#6
+  +'Height'#2#14#3'Top'#2'!'#5'Width'#2'F'#7'Caption'#6#12'H&TTP-Proxy:'#7'Enab'
   +'led'#8#11'ParentColor'#8#0#0#6'TLabel'#6'Label4'#4'Left'#3#191#0#6'Height'#2
-  +#18#3'Top'#2'!'#5'Width'#2#31#7'Caption'#6#5'Port:'#7'Enabled'#8#11'ParentCo'
-  +'lor'#8#0#0#6'TLabel'#6'Label5'#4'Left'#3#190#0#6'Height'#2#18#3'Top'#2'h'#5
-  +'Width'#2#31#7'Caption'#6#5'Port:'#7'Enabled'#8#11'ParentColor'#8#7'Visible'
-  +#8#0#0#9'TCheckBox'#9'CheckBox4'#4'Left'#2#6#6'Height'#2#20#3'Top'#2#5#5'Wid'
-  +'th'#3#151#0#7'Caption'#6#19'Enable Proxy-Server'#8'OnChange'#7#15'CheckBox4'
-  +'Change'#8'TabOrder'#2#0#0#0#5'TEdit'#5'Edit1'#4'Left'#2#6#6'Height'#2#23#3
-  +'Top'#2'5'#5'Width'#3#172#0#7'Enabled'#8#8'TabOrder'#2#1#0#0#9'TSpinEdit'#9
-  +'SpinEdit1'#4'Left'#3#191#0#6'Height'#2#23#3'Top'#2'5'#5'Width'#2'Z'#7'Enabl'
-  +'ed'#8#8'MaxValue'#4#160#134#1#0#8'TabOrder'#2#2#0#0#12'TLabeledEdit'#11'edt'
-  +'Username'#4'Left'#3''''#1#6'Height'#2#23#3'Top'#2'5'#5'Width'#2'p EditLabel'
-  +'.AnchorSideLeft.Control'#7#11'edtUsername"EditLabel.AnchorSideBottom.Contro'
-  +'l'#7#11'edtUsername'#14'EditLabel.Left'#3''''#1#16'EditLabel.Height'#2#18#13
-  +'EditLabel.Top'#2'"'#15'EditLabel.Width'#2'H'#17'EditLabel.Caption'#6#9'User'
-  +'name:'#21'EditLabel.ParentColor'#8#7'Enabled'#8#12'LabelSpacing'#2#1#8'TabO'
-  +'rder'#2#3#0#0#12'TLabeledEdit'#9'edtPasswd'#4'Left'#3''''#1#6'Height'#2#23#3
-  +'Top'#2'a'#5'Width'#2'p'#8'EchoMode'#7#10'emPassword EditLabel.AnchorSideLef'
-  +'t.Control'#7#9'edtPasswd"EditLabel.AnchorSideBottom.Control'#7#9'edtPasswd'
-  +#14'EditLabel.Left'#3''''#1#16'EditLabel.Height'#2#18#13'EditLabel.Top'#2'O'
-  +#15'EditLabel.Width'#2'@'#17'EditLabel.Caption'#6#9'Password:'#21'EditLabel.'
-  +'ParentColor'#8#7'Enabled'#8#12'LabelSpacing'#2#0#12'PasswordChar'#6#1'*'#8
-  +'TabOrder'#2#4#0#0#12'TLabeledEdit'#11'edtFTPProxy'#4'Left'#2#9#6'Height'#2
-  +#23#3'Top'#2'{'#5'Width'#3#166#0' EditLabel.AnchorSideLeft.Control'#7#11'edt'
-  +'FTPProxy"EditLabel.AnchorSideBottom.Control'#7#11'edtFTPProxy'#14'EditLabel'
-  +'.Left'#2#9#16'EditLabel.Height'#2#18#13'EditLabel.Top'#2'i'#15'EditLabel.Wi'
-  +'dth'#2'M'#17'EditLabel.Caption'#6#11'&FTP-Proxy:'#21'EditLabel.ParentColor'
-  +#8#7'Enabled'#8#12'LabelSpacing'#2#0#8'TabOrder'#2#5#7'Visible'#8#0#0#9'TSpi'
-  +'nEdit'#9'SpinEdit2'#4'Left'#3#191#0#6'Height'#2#23#3'Top'#2'{'#5'Width'#2'Z'
-  +#7'Enabled'#8#8'MaxValue'#4#160#134#1#0#8'TabOrder'#2#6#7'Visible'#8#0#0#0#7
-  +'TButton'#7'Button1'#4'Left'#2#6#6'Height'#2#29#3'Top'#3'p'#1#5'Width'#2'g'#8
-  +'AutoSize'#9#7'Caption'#6#15'About Listaller'#7'OnClick'#7#12'Button1Click'#8
-  +'TabOrder'#2#3#0#0#9'TCheckBox'#11'CbShowPkMon'#4'Left'#2#6#6'Height'#2#20#3
-  +'Top'#2'e'#5'Width'#3'+'#1#7'Caption'#6'+Start PackageKit monitor while tran'
-  +'sactions'#8'OnChange'#7#17'CbShowPkMonChange'#8'TabOrder'#2#4#0#0#0#9'TTabS'
-  +'heet'#7'UpdPage'#7'Caption'#6#14'Update sources'#12'ClientHeight'#3#148#1#11
-  +'ClientWidth'#3#143#2#0#6'TLabel'#6'Label1'#4'Left'#2#6#6'Height'#2#13#3'Top'
-  +#2#8#5'Width'#3#166#0#7'Caption'#6'$Here''s a list of all update-sources:'#11
-  +'ParentColor'#8#0#0#13'TCheckListBox'#9'UListBox1'#4'Left'#2#6#6'Height'#3'F'
-  +#1#3'Top'#2' '#5'Width'#3#128#2#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#8
-  +'akBottom'#0#10'ItemHeight'#2#0#7'OnClick'#7#14'UListBox1Click'#8'TabOrder'#2
-  +#0#8'TopIndex'#2#255#0#0#7'TBitBtn'#7'BitBtn1'#4'Left'#3'#'#2#6'Height'#2#22
-  +#3'Top'#3'v'#1#5'Width'#2'e'#7'Anchors'#11#7'akRight'#8'akBottom'#0#8'AutoSi'
-  +'ze'#9#7'Caption'#6#17'Check for updates'#9'NumGlyphs'#2#0#7'OnClick'#7#12'B'
-  +'itBtn1Click'#8'TabOrder'#2#1#0#0#7'TBitBtn'#7'BitBtn2'#4'Left'#2#6#6'Height'
-  +#2#22#3'Top'#3'v'#1#5'Width'#2'Q'#7'Anchors'#11#6'akLeft'#8'akBottom'#0#8'Au'
-  ,'toSize'#9#7'Caption'#6#13'Delete source'#9'NumGlyphs'#2#0#7'OnClick'#7#12'B'
-  +'itBtn2Click'#8'TabOrder'#2#2#0#0#0#0#6'TPanel'#6'Panel1'#4'Left'#2#0#6'Heig'
-  +'ht'#2'-'#3'Top'#3#184#1#5'Width'#3#151#2#5'Align'#7#8'alBottom'#12'ClientHe'
-  +'ight'#2'-'#11'ClientWidth'#3#151#2#8'TabOrder'#2#1#0#7'TBitBtn'#7'BitBtn3'#4
-  +'Left'#3'T'#2#6'Height'#2#29#3'Top'#2#6#5'Width'#2':'#7'Anchors'#11#7'akRigh'
-  +'t'#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6#7' Close '#9'NumGlyphs'#2#0#7'O'
-  +'nClick'#7#12'BitBtn3Click'#8'TabOrder'#2#0#0#0#0#0
+  +#14#3'Top'#2'!'#5'Width'#2#25#7'Caption'#6#5'Port:'#7'Enabled'#8#11'ParentCo'
+  +'lor'#8#0#0#6'TLabel'#6'Label5'#4'Left'#3#190#0#6'Height'#2#14#3'Top'#2'h'#5
+  +'Width'#2#25#7'Caption'#6#5'Port:'#7'Enabled'#8#11'ParentColor'#8#7'Visible'
+  +#8#0#0#9'TCheckBox'#9'CheckBox4'#4'Left'#2#6#6'Height'#2#21#3'Top'#2#5#5'Wid'
+  +'th'#2'}'#7'Caption'#6#19'Enable Proxy-Server'#8'OnChange'#7#15'CheckBox4Cha'
+  +'nge'#8'TabOrder'#2#0#0#0#5'TEdit'#5'Edit1'#4'Left'#2#6#6'Height'#2#23#3'Top'
+  +#2'5'#5'Width'#3#172#0#7'Enabled'#8#8'TabOrder'#2#1#0#0#9'TSpinEdit'#9'SpinE'
+  +'dit1'#4'Left'#3#191#0#6'Height'#2#23#3'Top'#2'5'#5'Width'#2'Z'#7'Enabled'#8
+  +#8'MaxValue'#4#160#134#1#0#8'TabOrder'#2#2#0#0#12'TLabeledEdit'#11'edtUserna'
+  +'me'#4'Left'#3''''#1#6'Height'#2#23#3'Top'#2'5'#5'Width'#2'p EditLabel.Ancho'
+  +'rSideLeft.Control'#7#11'edtUsername"EditLabel.AnchorSideBottom.Control'#7#11
+  +'edtUsername'#14'EditLabel.Left'#3''''#1#16'EditLabel.Height'#2#14#13'EditLa'
+  +'bel.Top'#2'&'#15'EditLabel.Width'#2'7'#17'EditLabel.Caption'#6#9'Username:'
+  +#21'EditLabel.ParentColor'#8#7'Enabled'#8#12'LabelSpacing'#2#1#8'TabOrder'#2
+  +#3#0#0#12'TLabeledEdit'#9'edtPasswd'#4'Left'#3''''#1#6'Height'#2#23#3'Top'#2
+  +'a'#5'Width'#2'p'#8'EchoMode'#7#10'emPassword EditLabel.AnchorSideLeft.Contr'
+  +'ol'#7#9'edtPasswd"EditLabel.AnchorSideBottom.Control'#7#9'edtPasswd'#14'Edi'
+  +'tLabel.Left'#3''''#1#16'EditLabel.Height'#2#14#13'EditLabel.Top'#2'S'#15'Ed'
+  +'itLabel.Width'#2'3'#17'EditLabel.Caption'#6#9'Password:'#21'EditLabel.Paren'
+  +'tColor'#8#7'Enabled'#8#12'LabelSpacing'#2#0#12'PasswordChar'#6#1'*'#8'TabOr'
+  +'der'#2#4#0#0#12'TLabeledEdit'#11'edtFTPProxy'#4'Left'#2#9#6'Height'#2#23#3
+  +'Top'#2'{'#5'Width'#3#166#0' EditLabel.AnchorSideLeft.Control'#7#11'edtFTPPr'
+  +'oxy"EditLabel.AnchorSideBottom.Control'#7#11'edtFTPProxy'#14'EditLabel.Left'
+  +#2#9#16'EditLabel.Height'#2#14#13'EditLabel.Top'#2'm'#15'EditLabel.Width'#2
+  +'?'#17'EditLabel.Caption'#6#11'&FTP-Proxy:'#21'EditLabel.ParentColor'#8#7'En'
+  +'abled'#8#12'LabelSpacing'#2#0#8'TabOrder'#2#5#7'Visible'#8#0#0#9'TSpinEdit'
+  +#9'SpinEdit2'#4'Left'#3#191#0#6'Height'#2#23#3'Top'#2'{'#5'Width'#2'Z'#7'Ena'
+  +'bled'#8#8'MaxValue'#4#160#134#1#0#8'TabOrder'#2#6#7'Visible'#8#0#0#0#7'TBut'
+  +'ton'#7'Button1'#4'Left'#2#6#6'Height'#2#27#3'Top'#3'p'#1#5'Width'#2'S'#8'Au'
+  +'toSize'#9#7'Caption'#6#15'About Listaller'#7'OnClick'#7#12'Button1Click'#8
+  +'TabOrder'#2#3#0#0#9'TCheckBox'#11'CbShowPkMon'#4'Left'#2#6#6'Height'#2#21#3
+  +'Top'#2'e'#5'Width'#3#235#0#7'Caption'#6'+Start PackageKit monitor while tra'
+  +'nsactions'#8'OnChange'#7#17'CbShowPkMonChange'#8'TabOrder'#2#4#0#0#0#9'TTab'
+  +'Sheet'#7'UpdPage'#7'Caption'#6#14'Update sources'#12'ClientHeight'#3#157#1
+  +#11'ClientWidth'#3#147#2#0#6'TLabel'#6'Label1'#4'Left'#2#6#6'Height'#2#13#3
+  +'Top'#2#8#5'Width'#3#166#0#7'Caption'#6'$Here''s a list of all update-source'
+  +'s:'#11'ParentColor'#8#0#0#13'TCheckListBox'#9'UListBox1'#4'Left'#2#6#6'Heig'
+  +'ht'#3'O'#1#3'Top'#2' '#5'Width'#3#132#2#7'Anchors'#11#5'akTop'#6'akLeft'#7
+  +'akRight'#8'akBottom'#0#10'ItemHeight'#2#0#7'OnClick'#7#14'UListBox1Click'#8
+  +'TabOrder'#2#0#8'TopIndex'#2#255#0#0#7'TBitBtn'#7'BitBtn1'#4'Left'#3''''#2#6
+  +'Height'#2#22#3'Top'#3''#1#5'Width'#2'e'#7'Anchors'#11#7'akRight'#8'akBotto'
+  +'m'#0#8'AutoSize'#9#7'Caption'#6#17'Check for updates'#9'NumGlyphs'#2#0#7'On'
+  +'Click'#7#12'BitBtn1Click'#8'TabOrder'#2#1#0#0#7'TBitBtn'#7'BitBtn2'#4'Left'
+  +#2#6#6'Height'#2#22#3'Top'#3''#1#5'Width'#2'Q'#7'Anchors'#11#6'akLeft'#8'ak'
+  ,'Bottom'#0#8'AutoSize'#9#7'Caption'#6#13'Delete source'#9'NumGlyphs'#2#0#7'O'
+  +'nClick'#7#12'BitBtn2Click'#8'TabOrder'#2#2#0#0#0#0#6'TPanel'#6'Panel1'#4'Le'
+  +'ft'#2#0#6'Height'#2'-'#3'Top'#3#184#1#5'Width'#3#151#2#5'Align'#7#8'alBotto'
+  +'m'#12'ClientHeight'#2'-'#11'ClientWidth'#3#151#2#8'TabOrder'#2#1#0#7'TBitBt'
+  +'n'#7'BitBtn3'#4'Left'#3'\'#2#6'Height'#2#27#3'Top'#2#8#5'Width'#2'2'#7'Anch'
+  +'ors'#11#7'akRight'#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6#7' Close '#9'Nu'
+  +'mGlyphs'#2#0#7'OnClick'#7#12'BitBtn3Click'#8'TabOrder'#2#0#0#0#0#0
 ]);
