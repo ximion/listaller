@@ -559,7 +559,7 @@ end;
 
 procedure TListEntry.SetAppVersion(s: String);
 begin
- MNLabel.Caption:=s;
+ VLabel.Caption:=s;
 end;
 
 function TListEntry.GetAppVersion: String;

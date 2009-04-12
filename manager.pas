@@ -171,9 +171,9 @@ d:=TIniFile.Create(fname);
         AppMn:=strAuthor+': '+d.ReadString('Desktop Entry','X-Publisher','<error>');
         if AppMn=strAuthor+': '+'<error>' then
         AppMn:='';
-        AppVersion:=strVersion+': '+d.ReadString('Desktop Entry','X-AppVersion','<error>');
-        if AppVersion=strVersion+': '+'<error>' then
         AppVersion:='';
+        if d.ReadString('Desktop Entry','X-AppVersion','')<>'' then
+        AppVersion:=strVersion+': '+d.ReadString('Desktop Entry','X-AppVersion','');
 
         //Load the icons
         if (LowerCase(ExtractFileExt(d.ReadString('Desktop Entry','Icon','')))<>'.tiff') then begin
@@ -307,13 +307,14 @@ AList[k].aId:=k;
 AList[k].UnButton.Tag:=k;
 
 AList[k].AppName:=(copy(tmp[i],0,pos('~',tmp[i])-1));
+
 blst.Add(AList[k].AppName);
 IdList.Add(copy(tmp[i],pos('~',tmp[i]),length(tmp[i])));
 
 AList[k].AppVersion:=strVersion+': '+(ireg.ReadString(tmp[i],'Version','0.0'));
 AList[k].AppMn:=strAuthor+': '+(ireg.ReadString(tmp[i],'Author','#'));
 if ireg.ReadString(tmp[i],'Author','#')='#' then AList[k].AppMn:='';
-p:=RegDir+AList[k].AppName+' '+ireg.ReadString(tmp[i],'Version*','0.0')+'-'+copy(tmp[i],pos('~',tmp[i]),length(tmp[i]))+'/';
+p:=RegDir+AList[k].AppName+'-'+copy(tmp[i],pos('~',tmp[i])+1,length(tmp[i]))+'/';
 
 InstLst.Add(LowerCase(ireg.ReadString(tmp[i],'idName',AList[k].AppName)));
 aList[k].AppDesc:=(ireg.ReadString(tmp[i],'SDesc','No description given'));
