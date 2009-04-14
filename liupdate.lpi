@@ -49,7 +49,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="mnupdate"/>
         <CursorPos X="15" Y="125"/>
-        <TopLine Value="168"/>
+        <TopLine Value="125"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="43"/>
         <Loaded Value="True"/>

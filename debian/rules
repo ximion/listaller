@@ -67,7 +67,7 @@ binary-arch: build install
 #	dh_installinfo
 	dh_installman
 	dh_link
-	dh_strip
+	dh_strip --dbg-package=listaller-gtk-dbg --dbg-package=listaller-tools-dbg --dbg-package=listaller-creation-gtk-dbg --dbg-package=lithememgr-gtk-dbg
 	dh_compress
 	dh_fixperms
 #	dh_perl

@@ -1,11 +1,11 @@
 Name:             listaller-gtk
-Version:          0.1.97a
+Version:          0.2.00a
 Release:          1
 License:          GPLv3
 BuildRequires:    fpc, lazarus, wget, glib2-devel, gtk2-devel, glib-devel, glib2, glib, fpc-src, gtk2
-Source0:          listaller_0.1.97a.tar.gz
+Source0:          listaller_0.2.00a.tar.gz
 %if 0%{?fedora_version} >= 10
-Requires:         gtk2, glib2, xdg-utils, PackageKit
+Requires:         gtk2, glib2, xdg-utils, PackageKit, redhat-config-rpm
 %else
 Requires:         gtk2, glib2, xdg-utils, PackageKit, libgnomesu
 %endif

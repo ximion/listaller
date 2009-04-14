@@ -1,4 +1,10 @@
-listaller (0.1.97a-2) jaunty; urgency=low
+listaller (0.2.00-0) jaunty; urgency=low
+
+  * Listaller 0.2 release
+
+ -- Matthias Klumpp <matthias@nlinux.org>  Tue, 14 Apr 2009 14:35:06 +0200
+
+listaller (0.1.99a) jaunty; urgency=low
 
   * New development snapshot
 

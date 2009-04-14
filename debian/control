@@ -39,7 +39,35 @@ Description: Listaller Creator (GTK)
 Package: lithememgr-gtk
 Architecture: any
 Depends: ${shlibs:Depends}, listaller
-Description:liTheme Manager
-  Tool that lets you easily install/uninstall system themes, wallpapers, iconsets and screensavers.
-  liThemeMgr is part of the Listaller project and uses it's technology.
+Description: liTheme Manager
+  Tool that lets you easily install/uninstall system themes, wallpapers, 
+  iconsets and screensavers.  liThemeMgr is part of the Listaller project
+  and uses it's technology.
   liThemeMgr is still under development. This is an daily-build and should not be used!
+
+Package: listaller-gtk-dbg
+Architecture: any
+Depends: listaller-gtk (= ${binary:Version})
+Description: Debug symbols for Listaller GTK tools
+  This package contains the debuginfos for the Listaller base tools (GTK+ version)
+
+Package: listaller-tools-dbg
+Architecture: any
+Depends: listaller-tools (= ${binary:Version})
+Description: Debug symbols for Listaller command-line tools
+  This package contains the debug symbols for the Listaller command-line tools
+  ('lipa' and 'unibuild')
+
+Package: listaller-creation-gtk-dbg
+Architecture: any
+Depends: listaller-creation-gtk (= ${binary:Version})
+Description: Debug symbols for Listaller Creator (GTK+)
+  This package contains the debuginfos for the IPS script
+  wizard GUI (liCreator) in GTK version.
+
+Package: lithememgr-gtk-dbg
+Architecture: any
+Depends: lithememgr-gtk (= ${binary:Version})
+Description: Debug symbols for liTheme Manager
+  This package contains the debuginfos for the Listaller theme installer
+  and manager. (Symbols for GTK+ version)

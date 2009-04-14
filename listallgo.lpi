@@ -386,7 +386,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="dgunit"/>
         <CursorPos X="28" Y="144"/>
-        <TopLine Value="1"/>
+        <TopLine Value="99"/>
         <EditorIndex Value="3"/>
         <UsageCount Value="118"/>
         <Loaded Value="True"/>
