@@ -23,7 +23,8 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, utilities,
-  uninstall, trstrings, gettext, FileUtil, xtypefm, ipkhandle, gifanimator;
+  uninstall, trstrings, gettext, FileUtil, xtypefm, ipkhandle, gifanimator,
+  Arrow;
 
 type
 
@@ -36,6 +37,7 @@ type
     CBox: TComboBox;
     edtFilter: TEdit;
     Image1: TImage;
+    ImageList1: TImageList;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -76,6 +78,9 @@ type
     //** Load software list entries
     procedure LoadEntries;
   end;
+
+  //** Fill ImageList with category icons
+  procedure FillImageList(IList: TImageList);
 
 var
  //** Main formular instance
@@ -411,6 +416,55 @@ procedure TMnFrm.FormShow(Sender: TObject);
 begin
 fAct:=true;
 btnCat.Left:=btnInstall.Left+btnInstall.Width+14;
+end;
+
+procedure FillImageList(IList: TImageList);
+var tm: TPicture;bmp: TBitmap;a: String;
+begin
+  //Add images to list
+  tm:=TPicture.Create;
+  a:=GetDataFile('graphics/categories/');
+
+  bmp := TBitmap.Create;
+  bmp.width := 24;
+  bmp.height := 24;
+  bmp.TransparentColor:=clWhite;
+  bmp.Transparent:=true;
+
+  with IList do begin
+  tm.LoadFromFile(a+'all.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'science.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'office.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'development.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'graphics.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'internet.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'games.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'system.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'multimedia.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  tm.LoadFromFile(a+'other.png');
+  bmp.canvas.draw(0,0,tm.Graphic);
+  Add(bmp,nil);
+  end;
+  tm.Free;
+  bmp.Free;
 end;
 
 procedure TMnFrm.btnInstallClick(Sender: TObject);

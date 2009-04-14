@@ -1,7 +1,7 @@
 { Das ist eine automatisch erzeugte Lazarus-Ressourcendatei }
 
 LazarusResources.Add('TMnFrm','FORMDATA',[
-  'TPF0'#6'TMnFrm'#5'MnFrm'#4'Left'#3'R'#1#6'Height'#3'.'#2#3'Top'#3#240#0#5'Wi'
+  'TPF0'#6'TMnFrm'#5'MnFrm'#4'Left'#3'<'#1#6'Height'#3'.'#2#3'Top'#3#224#0#5'Wi'
   +'dth'#3'0'#3#13'ActiveControl'#7#10'btnInstall'#7'Caption'#6#16'Software Man'
   +'ager'#12'ClientHeight'#3'.'#2#11'ClientWidth'#3'0'#3#5'Color'#7#12'clBackgr'
   +'ound'#9'Icon.Data'#10#154#5#0#0#150#5#0#0#0#0#1#0#1#0#18#18#0#0#1#0' '#0#128
@@ -407,5 +407,5 @@ LazarusResources.Add('TMnFrm','FORMDATA',[
   +#0#0#11'TOpenDialog'#11'OpenDialog1'#10'DefaultExt'#6#6'.*.ipk'#6'Filter'#6
   +#128'All supported packages|*.ipk;*.zip;*.rpm;*.deb|Listaller Installation p'
   +'ackages|*.ipk;*.zip|RPM-Packages|*.rpm|DEB-Packages|*.deb'#4'left'#3#208#2#3
-  +'top'#2#8#0#0#0
+  +'top'#2#8#0#0#10'TImageList'#10'ImageList1'#4'left'#3#144#2#3'top'#2#8#0#0#0
 ]);

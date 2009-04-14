@@ -1,7 +1,7 @@
 object MnFrm: TMnFrm
-  Left = 338
+  Left = 316
   Height = 558
-  Top = 240
+  Top = 224
   Width = 816
   ActiveControl = btnInstall
   Caption = 'Software Manager'
@@ -451,6 +451,10 @@ object MnFrm: TMnFrm
     DefaultExt = '.*.ipk'
     Filter = 'All supported packages|*.ipk;*.zip;*.rpm;*.deb|Listaller Installation packages|*.ipk;*.zip|RPM-Packages|*.rpm|DEB-Packages|*.deb'
     left = 720
+    top = 8
+  end
+  object ImageList1: TImageList
+    left = 656
     top = 8
   end
 end

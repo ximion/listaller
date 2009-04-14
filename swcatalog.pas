@@ -620,53 +620,8 @@ begin
 end;
 
 procedure TSCForm.FormCreate(Sender: TObject);
-var tm: TPicture;bmp: TBitmap;a: String;
 begin
-  //Add images to list
-  tm:=TPicture.Create;
-  a:=GetDataFile('graphics/categories/');
-
-  bmp := TBitmap.Create;
-  bmp.width := 24;
-  bmp.height := 24;
-  bmp.TransparentColor:=clWhite;
-  bmp.Transparent:=true;
-
-  with ImageList1 do begin
-  tm.LoadFromFile(a+'all.png');
-  bmp.canvas.draw(0,0,tm.Graphic);
-  Add(bmp,nil);
-  tm.LoadFromFile(a+'science.png');
-  bmp.canvas.draw(0,0,tm.Graphic);
-  Add(bmp,nil);
-  tm.LoadFromFile(a+'office.png');
-  bmp.canvas.draw(0,0,tm.Graphic);
-  Add(bmp,nil);
-  tm.LoadFromFile(a+'development.png');
-  bmp.canvas.draw(0,0,tm.Graphic);
-  Add(bmp,nil);
-  tm.LoadFromFile(a+'graphics.png');
-  bmp.canvas.draw(0,0,tm.Graphic);
-  Add(bmp,nil);
-  tm.LoadFromFile(a+'internet.png');
-  bmp.canvas.draw(0,0,tm.Graphic);
-  Add(bmp,nil);
-  tm.LoadFromFile(a+'games.png');
-  bmp.canvas.draw(0,0,tm.Graphic);
-  Add(bmp,nil);
-  tm.LoadFromFile(a+'system.png');
-  bmp.canvas.draw(0,0,tm.Graphic);
-  Add(bmp,nil);
-  tm.LoadFromFile(a+'multimedia.png');
-  bmp.canvas.draw(0,0,tm.Graphic);
-  Add(bmp,nil);
-  tm.LoadFromFile(a+'other.png');
-  bmp.canvas.draw(0,0,tm.Graphic);
-  Add(bmp,nil);
-  end;
-  tm.Free;
-  bmp.Free;
-
+ FillImageList(ImageList1);
   //Translation
   Label3.Caption:=strCategory;
   Label1.Caption:=strWInstallDl;
