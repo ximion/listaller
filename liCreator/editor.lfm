@@ -1,5 +1,5 @@
 object FrmEditor: TFrmEditor
-  Left = 292
+  Left = 276
   Height = 654
   Top = 200
   Width = 922
@@ -48,6 +48,7 @@ object FrmEditor: TFrmEditor
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 35
+        BookMarkOptions.OnChange = nil
         Gutter.Width = 53
         Highlighter = SynXMLSyn1
         Keystrokes = <        
@@ -391,7 +392,6 @@ object FrmEditor: TFrmEditor
         )
         Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
         ScrollBars = ssAutoBoth
-        SelectedColor.OnChange = nil
       end
     end
   end

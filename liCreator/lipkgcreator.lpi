@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="7"/>
+    <PathDelim Value="/"/>
+    <Version Value="6"/>
     <General>
-      <Flags>
-        <LRSInOutputDirectory Value="False"/>
-      </Flags>
       <MainUnit Value="0"/>
+      <IconPath Value="./"/>
       <TargetFileExt Value=""/>
       <ActiveEditorIndexAtStart Value="0"/>
     </General>
@@ -52,6 +51,7 @@
         <ComponentName Value="FrmEditor"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="editor.lrs"/>
         <UnitName Value="editor"/>
         <CursorPos X="15" Y="69"/>
         <TopLine Value="24"/>
@@ -74,6 +74,7 @@
         <ComponentName Value="frmFileWizard"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="fwiz.lrs"/>
         <UnitName Value="fwiz"/>
         <CursorPos X="32" Y="107"/>
         <TopLine Value="81"/>
@@ -181,6 +182,7 @@
         <ComponentName Value="frmProjectWizard"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <ResourceFilename Value="prjwizard.lrs"/>
         <UnitName Value="prjwizard"/>
         <CursorPos X="27" Y="834"/>
         <TopLine Value="815"/>

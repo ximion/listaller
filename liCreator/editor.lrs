@@ -1,7 +1,7 @@
 { Das ist eine automatisch erzeugte Lazarus-Ressourcendatei }
 
 LazarusResources.Add('TFrmEditor','FORMDATA',[
-  'TPF0'#10'TFrmEditor'#9'FrmEditor'#4'Left'#3'$'#1#6'Height'#3#142#2#3'Top'#3
+  'TPF0'#10'TFrmEditor'#9'FrmEditor'#4'Left'#3#20#1#6'Height'#3#142#2#3'Top'#3
   +#200#0#5'Width'#3#154#3#13'ActiveControl'#7#11'IPSNotebook'#7'Caption'#6#25
   +'Listaller package creator'#12'ClientHeight'#3's'#2#11'ClientWidth'#3#154#3#4
   +'Menu'#7#6'mmMain'#10'OnActivate'#7#12'FormActivate'#7'OnClose'#7#9'FormClos'
@@ -16,72 +16,72 @@ LazarusResources.Add('TFrmEditor','FORMDATA',[
   +'inScriptEdit'#6'Height'#3#246#1#5'Width'#3#150#3#5'Align'#7#8'alClient'#11
   +'Font.Height'#2#246#9'Font.Name'#6'7-adobe-courier-medium-r-normal-*-*-*-*-*'
   +'-*-*-iso10646-1'#10'Font.Pitch'#7#7'fpFixed'#11'ParentColor'#8#10'ParentFon'
-  +'t'#8#8'TabOrder'#2#0#23'BookMarkOptions.Xoffset'#2'#'#12'Gutter.Width'#2'5'
-  +#11'Highlighter'#7#10'SynXMLSyn1'#10'Keystrokes'#14#1#7'Command'#2#3#8'Short'
-  +'Cut'#2'&'#0#1#7'Command'#2'g'#8'ShortCut'#3'& '#0#1#7'Command'#3#211#0#8'Sh'
-  +'ortCut'#3'&@'#0#1#7'Command'#2#4#8'ShortCut'#2'('#0#1#7'Command'#2'h'#8'Sho'
-  +'rtCut'#3'( '#0#1#7'Command'#3#212#0#8'ShortCut'#3'(@'#0#1#7'Command'#2#1#8
-  +'ShortCut'#2'%'#0#1#7'Command'#2'e'#8'ShortCut'#3'% '#0#1#7'Command'#2#5#8'S'
-  +'hortCut'#3'%@'#0#1#7'Command'#2'i'#8'ShortCut'#3'%`'#0#1#7'Command'#2#2#8'S'
-  +'hortCut'#2''''#0#1#7'Command'#2'f'#8'ShortCut'#3''' '#0#1#7'Command'#2#6#8
-  +'ShortCut'#3'''@'#0#1#7'Command'#2'j'#8'ShortCut'#3'''`'#0#1#7'Command'#2#10
-  +#8'ShortCut'#2'"'#0#1#7'Command'#2'n'#8'ShortCut'#3'" '#0#1#7'Command'#2#14#8
-  +'ShortCut'#3'"@'#0#1#7'Command'#2'r'#8'ShortCut'#3'"`'#0#1#7'Command'#2#9#8
-  +'ShortCut'#2'!'#0#1#7'Command'#2'm'#8'ShortCut'#3'! '#0#1#7'Command'#2#13#8
-  +'ShortCut'#3'!@'#0#1#7'Command'#2'q'#8'ShortCut'#3'!`'#0#1#7'Command'#2#7#8
-  +'ShortCut'#2'$'#0#1#7'Command'#2'k'#8'ShortCut'#3'$ '#0#1#7'Command'#2#15#8
-  +'ShortCut'#3'$@'#0#1#7'Command'#2's'#8'ShortCut'#3'$`'#0#1#7'Command'#2#8#8
-  +'ShortCut'#2'#'#0#1#7'Command'#2'l'#8'ShortCut'#3'# '#0#1#7'Command'#2#16#8
-  +'ShortCut'#3'#@'#0#1#7'Command'#2't'#8'ShortCut'#3'#`'#0#1#7'Command'#3#223#0
-  +#8'ShortCut'#2'-'#0#1#7'Command'#3#201#0#8'ShortCut'#3'-@'#0#1#7'Command'#3
-  +'\'#2#8'ShortCut'#3'- '#0#1#7'Command'#3#246#1#8'ShortCut'#2'.'#0#1#7'Comman'
-  +'d'#3'['#2#8'ShortCut'#3'. '#0#1#7'Command'#3#245#1#8'ShortCut'#2#8#0#1#7'Co'
-  +'mmand'#3#245#1#8'ShortCut'#3#8' '#0#1#7'Command'#3#248#1#8'ShortCut'#3#8'@'
-  +#0#1#7'Command'#3'Y'#2#8'ShortCut'#4#8#128#0#0#0#1#7'Command'#3'Z'#2#8'Short'
-  +'Cut'#4#8#160#0#0#0#1#7'Command'#3#253#1#8'ShortCut'#2#13#0#1#7'Command'#3
-  +#199#0#8'ShortCut'#3'A@'#0#1#7'Command'#3#201#0#8'ShortCut'#3'C@'#0#1#7'Comm'
-  +'and'#3'b'#2#8'ShortCut'#3'I`'#0#1#7'Command'#3#253#1#8'ShortCut'#3'M@'#0#1#7
-  +'Command'#3#254#1#8'ShortCut'#3'N@'#0#1#7'Command'#3#247#1#8'ShortCut'#3'T@'
-  +#0#1#7'Command'#3'c'#2#8'ShortCut'#3'U`'#0#1#7'Command'#3'\'#2#8'ShortCut'#3
-  +'V@'#0#1#7'Command'#3'['#2#8'ShortCut'#3'X@'#0#1#7'Command'#3#251#1#8'ShortC'
-  +'ut'#3'Y@'#0#1#7'Command'#3#250#1#8'ShortCut'#3'Y`'#0#1#7'Command'#3'Y'#2#8
-  +'ShortCut'#3'Z@'#0#1#7'Command'#3'Z'#2#8'ShortCut'#3'Z`'#0#1#7'Command'#3'-'
-  +#1#8'ShortCut'#3'0@'#0#1#7'Command'#3'.'#1#8'ShortCut'#3'1@'#0#1#7'Command'#3
-  +'/'#1#8'ShortCut'#3'2@'#0#1#7'Command'#3'0'#1#8'ShortCut'#3'3@'#0#1#7'Comman'
-  +'d'#3'1'#1#8'ShortCut'#3'4@'#0#1#7'Command'#3'2'#1#8'ShortCut'#3'5@'#0#1#7'C'
-  +'ommand'#3'3'#1#8'ShortCut'#3'6@'#0#1#7'Command'#3'4'#1#8'ShortCut'#3'7@'#0#1
-  +#7'Command'#3'5'#1#8'ShortCut'#3'8@'#0#1#7'Command'#3'6'#1#8'ShortCut'#3'9@'
-  +#0#1#7'Command'#3'_'#1#8'ShortCut'#3'0`'#0#1#7'Command'#3'`'#1#8'ShortCut'#3
-  +'1`'#0#1#7'Command'#3'a'#1#8'ShortCut'#3'2`'#0#1#7'Command'#3'b'#1#8'ShortCu'
-  +'t'#3'3`'#0#1#7'Command'#3'c'#1#8'ShortCut'#3'4`'#0#1#7'Command'#3'd'#1#8'Sh'
-  +'ortCut'#3'5`'#0#1#7'Command'#3'e'#1#8'ShortCut'#3'6`'#0#1#7'Command'#3'f'#1
-  +#8'ShortCut'#3'7`'#0#1#7'Command'#3'g'#1#8'ShortCut'#3'8`'#0#1#7'Command'#3
-  +'h'#1#8'ShortCut'#3'9`'#0#1#7'Command'#3#231#0#8'ShortCut'#3'N`'#0#1#7'Comma'
-  +'nd'#3#232#0#8'ShortCut'#3'C`'#0#1#7'Command'#3#233#0#8'ShortCut'#3'L`'#0#1#7
-  +'Command'#3'd'#2#8'ShortCut'#2#9#0#1#7'Command'#3'e'#2#8'ShortCut'#3#9' '#0#1
-  +#7'Command'#3#250#0#8'ShortCut'#3'B`'#0#0#13'Lines.Strings'#1#6'+<?xml versi'
-  +'on="1.0" encoding="ISO-8859-1"?>'#6'( <package version="0.8" type="linstall'
-  +'">'#6'"  <architecture>all</architecture>'#6'   <application name="SampleAp'
-  +'p">'#6#26'    <version>1.0</version>'#6'+    <license>/path/to/license.txt<'
-  +'/license>'#6'4    <description>/path/to/descfile.txt</description>'#6'3    '
-  +'<dsupport>Ubuntu,SuSE,Debian, Fedora</dsupport>'#6'*    <icon>/path/to/pack'
-  ,'age/icon.png</icon>'#6'/    <author>Creator of the application</author>'#6
-  +'.    <sdesc std="A simple sample application.">'#6'*      <de>Eine einfache'
-  +' Demoanwendung</de>'#6#12'    </sdesc>'#6#24'    <group>Other</group>'#6#16
-  +'  </application>'#6#11' </package>'#0#7'Options'#11#12'eoAutoIndent'#17'eoD'
-  +'ragDropEditing'#11'eoGroupUndo'#15'eoScrollPastEol'#16'eoShowScrollHint'#16
-  +'eoSmartTabDelete'#11'eoSmartTabs'#11'eoTabIndent'#14'eoTabsToSpaces'#20'eoT'
-  +'rimTrailingSpaces'#18'eoBracketHighlight'#0#10'ScrollBars'#7#10'ssAutoBoth'
-  +#22'SelectedColor.OnChange'#13#0#0#0#0#9'TSplitter'#9'Splitter1'#6'Cursor'#7
-  +#8'crVSplit'#6'Height'#2#6#3'Top'#3#23#2#5'Width'#3#154#3#5'Align'#7#8'alBot'
-  +'tom'#12'ResizeAnchor'#7#8'akBottom'#0#0#9'TMainMenu'#6'mmMain'#4'left'#3#232
-  +#2#3'top'#2#8#0#9'TMenuItem'#7'mnuFile'#7'Caption'#6#4'File'#0#9'TMenuItem'
-  +#16'mnuFileNewWizard'#7'Caption'#6#20'New package (Wizard)'#8'ShortCut'#4'W'
-  +#192#0#0#7'OnClick'#7#21'mnuFileNewWizardClick'#0#0#9'TMenuItem'#15'mnuFileN'
-  +'ewBlank'#7'Caption'#6#19'New package (Blank)'#8'ShortCut'#3'N@'#7'OnClick'#7
-  +#20'mnuFileNewBlankClick'#0#0#9'TMenuItem'#14'mnuFileLoadIPS'#7'Caption'#6#13
-  +'Load ips-file'#8'ShortCut'#3'L@'#7'OnClick'#7#19'mnuFileLoadIPSClick'#0#0#9
-  +'TMenuItem'#11'mnuFileSave'#7'Caption'#6#4'Save'#8'ShortCut'#3'S@'#7'OnClick'
+  +'t'#8#8'TabOrder'#2#0#23'BookMarkOptions.Xoffset'#2'#'#24'BookMarkOptions.On'
+  +'Change'#13#12'Gutter.Width'#2'5'#11'Highlighter'#7#10'SynXMLSyn1'#10'Keystr'
+  +'okes'#14#1#7'Command'#2#3#8'ShortCut'#2'&'#0#1#7'Command'#2'g'#8'ShortCut'#3
+  +'& '#0#1#7'Command'#3#211#0#8'ShortCut'#3'&@'#0#1#7'Command'#2#4#8'ShortCut'
+  +#2'('#0#1#7'Command'#2'h'#8'ShortCut'#3'( '#0#1#7'Command'#3#212#0#8'ShortCu'
+  +'t'#3'(@'#0#1#7'Command'#2#1#8'ShortCut'#2'%'#0#1#7'Command'#2'e'#8'ShortCut'
+  +#3'% '#0#1#7'Command'#2#5#8'ShortCut'#3'%@'#0#1#7'Command'#2'i'#8'ShortCut'#3
+  +'%`'#0#1#7'Command'#2#2#8'ShortCut'#2''''#0#1#7'Command'#2'f'#8'ShortCut'#3
+  +''' '#0#1#7'Command'#2#6#8'ShortCut'#3'''@'#0#1#7'Command'#2'j'#8'ShortCut'#3
+  +'''`'#0#1#7'Command'#2#10#8'ShortCut'#2'"'#0#1#7'Command'#2'n'#8'ShortCut'#3
+  +'" '#0#1#7'Command'#2#14#8'ShortCut'#3'"@'#0#1#7'Command'#2'r'#8'ShortCut'#3
+  +'"`'#0#1#7'Command'#2#9#8'ShortCut'#2'!'#0#1#7'Command'#2'm'#8'ShortCut'#3'!'
+  +' '#0#1#7'Command'#2#13#8'ShortCut'#3'!@'#0#1#7'Command'#2'q'#8'ShortCut'#3
+  +'!`'#0#1#7'Command'#2#7#8'ShortCut'#2'$'#0#1#7'Command'#2'k'#8'ShortCut'#3'$'
+  +' '#0#1#7'Command'#2#15#8'ShortCut'#3'$@'#0#1#7'Command'#2's'#8'ShortCut'#3
+  +'$`'#0#1#7'Command'#2#8#8'ShortCut'#2'#'#0#1#7'Command'#2'l'#8'ShortCut'#3'#'
+  +' '#0#1#7'Command'#2#16#8'ShortCut'#3'#@'#0#1#7'Command'#2't'#8'ShortCut'#3
+  +'#`'#0#1#7'Command'#3#223#0#8'ShortCut'#2'-'#0#1#7'Command'#3#201#0#8'ShortC'
+  +'ut'#3'-@'#0#1#7'Command'#3'\'#2#8'ShortCut'#3'- '#0#1#7'Command'#3#246#1#8
+  +'ShortCut'#2'.'#0#1#7'Command'#3'['#2#8'ShortCut'#3'. '#0#1#7'Command'#3#245
+  +#1#8'ShortCut'#2#8#0#1#7'Command'#3#245#1#8'ShortCut'#3#8' '#0#1#7'Command'#3
+  +#248#1#8'ShortCut'#3#8'@'#0#1#7'Command'#3'Y'#2#8'ShortCut'#4#8#128#0#0#0#1#7
+  +'Command'#3'Z'#2#8'ShortCut'#4#8#160#0#0#0#1#7'Command'#3#253#1#8'ShortCut'#2
+  +#13#0#1#7'Command'#3#199#0#8'ShortCut'#3'A@'#0#1#7'Command'#3#201#0#8'ShortC'
+  +'ut'#3'C@'#0#1#7'Command'#3'b'#2#8'ShortCut'#3'I`'#0#1#7'Command'#3#253#1#8
+  +'ShortCut'#3'M@'#0#1#7'Command'#3#254#1#8'ShortCut'#3'N@'#0#1#7'Command'#3
+  +#247#1#8'ShortCut'#3'T@'#0#1#7'Command'#3'c'#2#8'ShortCut'#3'U`'#0#1#7'Comma'
+  +'nd'#3'\'#2#8'ShortCut'#3'V@'#0#1#7'Command'#3'['#2#8'ShortCut'#3'X@'#0#1#7
+  +'Command'#3#251#1#8'ShortCut'#3'Y@'#0#1#7'Command'#3#250#1#8'ShortCut'#3'Y`'
+  +#0#1#7'Command'#3'Y'#2#8'ShortCut'#3'Z@'#0#1#7'Command'#3'Z'#2#8'ShortCut'#3
+  +'Z`'#0#1#7'Command'#3'-'#1#8'ShortCut'#3'0@'#0#1#7'Command'#3'.'#1#8'ShortCu'
+  +'t'#3'1@'#0#1#7'Command'#3'/'#1#8'ShortCut'#3'2@'#0#1#7'Command'#3'0'#1#8'Sh'
+  +'ortCut'#3'3@'#0#1#7'Command'#3'1'#1#8'ShortCut'#3'4@'#0#1#7'Command'#3'2'#1
+  +#8'ShortCut'#3'5@'#0#1#7'Command'#3'3'#1#8'ShortCut'#3'6@'#0#1#7'Command'#3
+  +'4'#1#8'ShortCut'#3'7@'#0#1#7'Command'#3'5'#1#8'ShortCut'#3'8@'#0#1#7'Comman'
+  +'d'#3'6'#1#8'ShortCut'#3'9@'#0#1#7'Command'#3'_'#1#8'ShortCut'#3'0`'#0#1#7'C'
+  +'ommand'#3'`'#1#8'ShortCut'#3'1`'#0#1#7'Command'#3'a'#1#8'ShortCut'#3'2`'#0#1
+  +#7'Command'#3'b'#1#8'ShortCut'#3'3`'#0#1#7'Command'#3'c'#1#8'ShortCut'#3'4`'
+  +#0#1#7'Command'#3'd'#1#8'ShortCut'#3'5`'#0#1#7'Command'#3'e'#1#8'ShortCut'#3
+  +'6`'#0#1#7'Command'#3'f'#1#8'ShortCut'#3'7`'#0#1#7'Command'#3'g'#1#8'ShortCu'
+  +'t'#3'8`'#0#1#7'Command'#3'h'#1#8'ShortCut'#3'9`'#0#1#7'Command'#3#231#0#8'S'
+  +'hortCut'#3'N`'#0#1#7'Command'#3#232#0#8'ShortCut'#3'C`'#0#1#7'Command'#3#233
+  +#0#8'ShortCut'#3'L`'#0#1#7'Command'#3'd'#2#8'ShortCut'#2#9#0#1#7'Command'#3
+  +'e'#2#8'ShortCut'#3#9' '#0#1#7'Command'#3#250#0#8'ShortCut'#3'B`'#0#0#13'Lin'
+  +'es.Strings'#1#6'+<?xml version="1.0" encoding="ISO-8859-1"?>'#6'( <package '
+  +'version="0.8" type="linstall">'#6'"  <architecture>all</architecture>'#6'  '
+  +' <application name="SampleApp">'#6#26'    <version>1.0</version>'#6'+    <l'
+  +'icense>/path/to/license.txt</license>'#6'4    <description>/path/to/descfil'
+  +'e.txt</description>'#6'3    <dsupport>Ubuntu,SuSE,Debian, Fedora</dsupport>'
+  ,#6'*    <icon>/path/to/package/icon.png</icon>'#6'/    <author>Creator of th'
+  +'e application</author>'#6'.    <sdesc std="A simple sample application.">'#6
+  +'*      <de>Eine einfache Demoanwendung</de>'#6#12'    </sdesc>'#6#24'    <g'
+  +'roup>Other</group>'#6#16'  </application>'#6#11' </package>'#0#7'Options'#11
+  +#12'eoAutoIndent'#17'eoDragDropEditing'#11'eoGroupUndo'#15'eoScrollPastEol'
+  +#16'eoShowScrollHint'#16'eoSmartTabDelete'#11'eoSmartTabs'#11'eoTabIndent'#14
+  +'eoTabsToSpaces'#20'eoTrimTrailingSpaces'#18'eoBracketHighlight'#0#10'Scroll'
+  +'Bars'#7#10'ssAutoBoth'#0#0#0#0#9'TSplitter'#9'Splitter1'#6'Cursor'#7#8'crVS'
+  +'plit'#6'Height'#2#6#3'Top'#3#23#2#5'Width'#3#154#3#5'Align'#7#8'alBottom'#12
+  +'ResizeAnchor'#7#8'akBottom'#0#0#9'TMainMenu'#6'mmMain'#4'left'#3#232#2#3'to'
+  +'p'#2#8#0#9'TMenuItem'#7'mnuFile'#7'Caption'#6#4'File'#0#9'TMenuItem'#16'mnu'
+  +'FileNewWizard'#7'Caption'#6#20'New package (Wizard)'#8'ShortCut'#4'W'#192#0
+  +#0#7'OnClick'#7#21'mnuFileNewWizardClick'#0#0#9'TMenuItem'#15'mnuFileNewBlan'
+  +'k'#7'Caption'#6#19'New package (Blank)'#8'ShortCut'#3'N@'#7'OnClick'#7#20'm'
+  +'nuFileNewBlankClick'#0#0#9'TMenuItem'#14'mnuFileLoadIPS'#7'Caption'#6#13'Lo'
+  +'ad ips-file'#8'ShortCut'#3'L@'#7'OnClick'#7#19'mnuFileLoadIPSClick'#0#0#9'T'
+  +'MenuItem'#11'mnuFileSave'#7'Caption'#6#4'Save'#8'ShortCut'#3'S@'#7'OnClick'
   +#7#16'mnuFileSaveClick'#0#0#9'TMenuItem'#13'mnuFileSaveAs'#7'Caption'#6#10'S'
   +'ave as...'#8'ShortCut'#3'S@'#7'OnClick'#7#18'mnuFileSaveAsClick'#0#0#9'TMen'
   +'uItem'#12'mnuFileClose'#7'Caption'#6#5'Close'#7'OnClick'#7#17'mnuFileCloseC'
