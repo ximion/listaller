@@ -1,21 +1,22 @@
 <?xml version="1.0"?>
 <CONFIG>
   <ProjectOptions>
-    <PathDelim Value="/"/>
-    <Version Value="6"/>
+    <Version Value="7"/>
     <General>
+      <Flags>
+        <LRSInOutputDirectory Value="False"/>
+      </Flags>
       <MainUnit Value="0"/>
-      <IconPath Value="./"/>
       <TargetFileExt Value=""/>
       <Title Value="Listaller Manager"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="844"/>
+      <CurrentBuildNr Value="848"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -58,10 +59,9 @@
         <ComponentName Value="MnFrm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="manager.lrs"/>
         <UnitName Value="manager"/>
-        <CursorPos X="24" Y="421"/>
-        <TopLine Value="435"/>
+        <CursorPos X="8" Y="26"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="145"/>
         <Loaded Value="True"/>
@@ -259,7 +259,6 @@
         <ComponentName Value="FmConfig"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="settings.lrs"/>
         <UnitName Value="settings"/>
         <CursorPos X="64" Y="26"/>
         <TopLine Value="1"/>
@@ -290,27 +289,30 @@
         <ComponentName Value="RMForm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="uninstall.lrs"/>
         <UnitName Value="uninstall"/>
-        <CursorPos X="6" Y="201"/>
-        <TopLine Value="162"/>
+        <CursorPos X="33" Y="245"/>
+        <TopLine Value="229"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="130"/>
+        <Loaded Value="True"/>
       </Unit33>
       <Unit34>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
         <CursorPos X="15" Y="118"/>
         <TopLine Value="89"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="4"/>
         <UsageCount Value="32"/>
         <Loaded Value="True"/>
       </Unit34>
       <Unit35>
         <Filename Value="utilities.pas"/>
         <UnitName Value="utilities"/>
-        <CursorPos X="24" Y="28"/>
-        <TopLine Value="1"/>
+        <CursorPos X="11" Y="92"/>
+        <TopLine Value="166"/>
+        <EditorIndex Value="2"/>
         <UsageCount Value="42"/>
+        <Loaded Value="True"/>
       </Unit35>
       <Unit36>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkdef.pp"/>
@@ -368,7 +370,6 @@
         <ComponentName Value="ConvDisp"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="pkgconvertdisp.lrs"/>
         <UnitName Value="pkgconvertdisp"/>
         <CursorPos X="8" Y="103"/>
         <TopLine Value="67"/>
@@ -379,11 +380,10 @@
         <ComponentName Value="SCForm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="swcatalog.lrs"/>
         <UnitName Value="swcatalog"/>
         <CursorPos X="28" Y="624"/>
-        <TopLine Value="539"/>
-        <EditorIndex Value="1"/>
+        <TopLine Value="579"/>
+        <EditorIndex Value="3"/>
         <UsageCount Value="88"/>
         <Loaded Value="True"/>
       </Unit45>
@@ -540,7 +540,6 @@
         <ComponentName Value="FmAbout"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="aboutbox.lrs"/>
         <UnitName Value="aboutbox"/>
         <CursorPos X="35" Y="45"/>
         <TopLine Value="19"/>
@@ -612,7 +611,7 @@
         <UsageCount Value="10"/>
       </Unit77>
     </Units>
-    <JumpHistory Count="25" HistoryIndex="24">
+    <JumpHistory Count="28" HistoryIndex="27">
       <Position1>
         <Filename Value="manager.pas"/>
         <Caret Line="59" Column="8" TopLine="47"/>
@@ -713,6 +712,18 @@
         <Filename Value="manager.pas"/>
         <Caret Line="83" Column="26" TopLine="61"/>
       </Position25>
+      <Position26>
+        <Filename Value="manager.pas"/>
+        <Caret Line="26" Column="8" TopLine="1"/>
+      </Position26>
+      <Position27>
+        <Filename Value="uninstall.pas"/>
+        <Caret Line="247" Column="8" TopLine="229"/>
+      </Position27>
+      <Position28>
+        <Filename Value="utilities.pas"/>
+        <Caret Line="92" Column="16" TopLine="70"/>
+      </Position28>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -735,6 +746,11 @@
     </CodeGeneration>
     <Linking>
       <LinkSmart Value="True"/>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
     </Linking>
     <Other>
       <Verbosity>

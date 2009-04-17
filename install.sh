@@ -40,6 +40,7 @@ mkdir -p $DESTDIR/usr/share/listaller/graphics
 mkdir -p $DESTDIR/usr/share/listaller/graphics/categories
 #mkdir -p $DESTDIR/usr/lib/listaller/lang
 mkdir -p $DESTDIR/usr/share/listaller/pkitbind
+chmod +x ./bindings/pkitbind.py
 #Copy graphics
 cp ./graphics/header.png $DESTDIR/usr/share/listaller/graphics/
 cp ./graphics/mime-ipk.png $DESTDIR/usr/share/listaller/graphics/
