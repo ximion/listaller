@@ -25,7 +25,7 @@ uses
   StdCtrls, FileUtil, ExtCtrls, process, Buttons, LCLType, LCLIntf, RegExpr,
   {$IFDEF LCLGTK2}
   gtk2, gtkint, gtkdef, gdkpixbuf, gtkproc, gdk2,
-  {$ENDIF} trstrings, distri;
+  {$ENDIF} trstrings, distri, IniFiles;
 
 const
   //** Version of the Listaller applicationset
@@ -34,6 +34,9 @@ var
   //** True if Listaller is in testmode
   Testmode: Boolean=false;
 type
+
+//** Listaller package types
+TListallerPackageType = (lptLinstall, lptDLink, lptContainer);
 
 //** One entry of Listaller's visual software lists
 TListEntry = class(TPanel) //Helper class / a software entry
@@ -110,6 +113,8 @@ function  GetServerPath(url:string):string;
     @param nm Name of the entry that has to be checked
     @param list The string list that has to be searched}
 function  IsInList(nm: String;list: TStringList): Boolean;
+//** Shows pkMon if option is set in preferences
+procedure ShowPKMon();
 
 implementation
 
@@ -326,6 +331,20 @@ begin
  finally
  t.Free;
  end;
+end;
+
+procedure ShowPKMon();
+var cnf: TIniFile;t: TProcess;
+begin
+//Check if PackageKit checkmode is enabled:
+cnf:=TIniFile.Create(ConfigDir+'config.cnf');
+  if cnf.ReadBool('MainConf','ShowPkMon',false) then begin
+   t:=TProcess.Create(nil);
+   t.CommandLine:='pkmon';
+   t.Options:=[poNewConsole];
+   t.Execute;
+  end;
+cnf.Free;
 end;
 
 function CmdFinResult(cmd:String):String;

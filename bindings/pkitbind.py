@@ -16,7 +16,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #
-# (c) 2008 
+# (c) 2009
 #     Listaller Project
 #     Matthias Klumpp <matthias@nlinux.org>
 
@@ -107,15 +107,19 @@ if sys.argv[1]=='--s-file':
   except:
     print "Failed!"
     sys.exit(2)
- 
 
 if sys.argv[1]=='--s-dfile':
   try:
-    pkg = pk.search_file(sys.argv[2],FILTER_INSTALLED)
-    print pkg
+   pkg = pk.search_file(sys.argv[2],FILTER_NONE)
+  except:
+   print "PackageKit problem."
+   sys.exit(6)
+  try:
+   print pkg[0].name
   except:
     print "Failed!"
     sys.exit(2)
+ 
   
 if sys.argv[1]=='--remove':
   print 'Removing: '+sys.argv[2]

@@ -290,7 +290,7 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uninstall"/>
-        <CursorPos X="33" Y="245"/>
+        <CursorPos X="1" Y="238"/>
         <TopLine Value="229"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="130"/>
@@ -309,7 +309,7 @@
         <Filename Value="utilities.pas"/>
         <UnitName Value="utilities"/>
         <CursorPos X="11" Y="92"/>
-        <TopLine Value="166"/>
+        <TopLine Value="92"/>
         <EditorIndex Value="2"/>
         <UsageCount Value="42"/>
         <Loaded Value="True"/>

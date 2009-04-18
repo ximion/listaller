@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <CONFIG>
   <ProjectOptions>
-    <PathDelim Value="/"/>
-    <Version Value="6"/>
+    <Version Value="7"/>
     <General>
+      <Flags>
+        <LRSInOutputDirectory Value="False"/>
+      </Flags>
       <MainUnit Value="0"/>
-      <IconPath Value="./"/>
       <TargetFileExt Value=""/>
       <ActiveEditorIndexAtStart Value="0"/>
     </General>
@@ -51,10 +52,9 @@
         <ComponentName Value="FrmEditor"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="editor.lrs"/>
         <UnitName Value="editor"/>
         <CursorPos X="15" Y="69"/>
-        <TopLine Value="24"/>
+        <TopLine Value="133"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="136"/>
         <Bookmarks Count="1">
@@ -74,7 +74,6 @@
         <ComponentName Value="frmFileWizard"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="fwiz.lrs"/>
         <UnitName Value="fwiz"/>
         <CursorPos X="32" Y="107"/>
         <TopLine Value="81"/>
@@ -182,18 +181,17 @@
         <ComponentName Value="frmProjectWizard"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <ResourceFilename Value="prjwizard.lrs"/>
         <UnitName Value="prjwizard"/>
-        <CursorPos X="27" Y="834"/>
-        <TopLine Value="815"/>
+        <CursorPos X="66" Y="26"/>
+        <TopLine Value="1"/>
         <UsageCount Value="119"/>
       </Unit17>
       <Unit18>
         <Filename Value="../utilities.pas"/>
         <UnitName Value="utilities"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="3"/>
+        <CursorPos X="1" Y="37"/>
+        <TopLine Value="13"/>
+        <UsageCount Value="10"/>
       </Unit18>
       <Unit19>
         <Filename Value="../../../../../../usr/lib/lazarus/lcl/dialogs.pp"/>

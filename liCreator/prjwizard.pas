@@ -29,9 +29,6 @@ type
 
   { TfrmProjectWizard }
 
-  //** Listaller package types
-  TListallerPackageType = (lptLinstall, lptDLink, lptContainer);
-
   //** Record for IPK package information
   TPackageFile = record
     FileName : String;

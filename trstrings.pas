@@ -46,6 +46,7 @@ strIagree='I agree with the above terms and conditions';
 strInagree='I don''t agree';
 strLDnSupported='Your Linux distribution is not supported by Listaller yet!';
 strnSupported='This package does not support your Linux distribution.';
+strDepNotFound='Found no package with the necessary library "%l" for your distribution.';
 strInClose='The installer will close now';
 strCnOverwrite='Unable to overwrite the file %f.';
 notifyDevs='Please notify the developers on http://launchpad.net/listaller';

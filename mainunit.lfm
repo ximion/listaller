@@ -1,7 +1,7 @@
 object IWizFrm: TIWizFrm
-  Left = 431
+  Left = 365
   Height = 429
-  Top = 316
+  Top = 266
   Width = 651
   ActiveControl = Notebook1
   Caption = 'Installation of <unknown>'
@@ -46,14 +46,13 @@ object IWizFrm: TIWizFrm
     0000F01F0000F81F0000FC1F0000FF1F0000FF9F0000FFFF0000FFFF0000FFFF
     0000
   }
+  OnActivate = FormActivate
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   LCLVersion = '0.9.27'
   object Notebook1: TNotebook
-    Left = 0
     Height = 379
-    Top = 0
     Width = 651
     Align = alClient
     PageIndex = 0
@@ -63,9 +62,7 @@ object IWizFrm: TIWizFrm
       ClientWidth = 647
       ClientHeight = 352
       object Image2: TImage
-        Left = 0
         Height = 352
-        Top = 0
         Width = 146
         Align = alLeft
         Proportional = True
@@ -110,6 +107,15 @@ object IWizFrm: TIWizFrm
         ParentFont = False
         Visible = False
       end
+      object Label15: TLabel
+        Left = 158
+        Height = 14
+        Top = 311
+        Width = 190
+        Caption = 'Checking for distribution compatibility...'
+        ParentColor = False
+        Visible = False
+      end
       object CheckBox1: TCheckBox
         Left = 158
         Height = 21
@@ -122,7 +128,7 @@ object IWizFrm: TIWizFrm
       object ListBox1: TListBox
         Left = 158
         Height = 80
-        Top = 242
+        Top = 207
         Width = 473
         Items.Strings = (
           'Logfile:'
@@ -130,6 +136,18 @@ object IWizFrm: TIWizFrm
         ItemHeight = 19
         TabOrder = 1
         Visible = False
+      end
+      object ProgressBar1: TProgressBar
+        Left = 158
+        Height = 20
+        Top = 327
+        Width = 256
+        Anchors = [akLeft, akRight, akBottom]
+        Smooth = True
+        Step = 1
+        TabOrder = 2
+        Visible = False
+        BarShowText = True
       end
     end
     object DPage: TPage
@@ -202,7 +220,6 @@ object IWizFrm: TIWizFrm
         Anchors = [akLeft, akBottom]
         Caption = 'I don''t agree'
         Checked = True
-        OnChange = RadioButton2Change
         State = cbChecked
         TabOrder = 1
       end
@@ -408,7 +425,6 @@ object IWizFrm: TIWizFrm
     end
   end
   object Panel1: TPanel
-    Left = 0
     Height = 50
     Top = 379
     Width = 651
@@ -474,18 +490,8 @@ object IWizFrm: TIWizFrm
     top = 32
   end
   object Process1: TProcess
-    Active = False
     Options = [poUsePipes, poStderrToOutPut, poNoConsole]
     Priority = ppNormal
-    StartupOptions = []
-    ShowWindow = swoNone
-    WindowColumns = 0
-    WindowHeight = 0
-    WindowLeft = 0
-    WindowRows = 0
-    WindowTop = 0
-    WindowWidth = 0
-    FillAttribute = 0
     left = 616
     top = 32
   end

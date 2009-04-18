@@ -138,15 +138,7 @@ HTTP.ProxyUser:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_pass
  end;}
 end;
 
-//Check if PackageKit checkmode is enabled:
-cnf:=TIniFile.Create(ConfigDir+'config.cnf');
-  if cnf.ReadBool('MainConf','ShowPkMon',false) then begin
-   t:=TProcess.Create(nil);
-   t.CommandLine:='pkmon';
-   t.Options:=[poNewConsole];
-   t.Execute;
-  end;
-cnf.Free;
+ShowPKMon();
 
 Application.ProcessMessages;
 BitBtn1.Enabled:=false;

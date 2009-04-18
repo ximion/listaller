@@ -52,6 +52,7 @@ type
     Label12: TLabel;
     Label13: TLabel;
     Label14: TLabel;
+    Label15: TLabel;
     LblTestMode: TLabel;
     Label16: TLabel;
     Label2: TLabel;
@@ -69,6 +70,7 @@ type
     OpenDialog1: TOpenDialog;
     IMPage: TPage;
     ModeGroup: TRadioGroup;
+    ProgressBar1: TProgressBar;
     WPage: TPage;
     DPage: TPage;
     LPage: TPage;
@@ -83,13 +85,13 @@ type
     procedure Button5Click(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
     procedure FinBtn1Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure GetOutputTimerTimer(Sender: TObject);
     procedure btn_sendinputClick(Sender: TObject);
     procedure RadioButton1Change(Sender: TObject);
-    procedure RadioButton2Change(Sender: TObject);
   private
     { private declarations }
     RmApp: Boolean;
@@ -120,6 +122,7 @@ type
     FOverwrite: Boolean;
     //** True if IPK package is a patch
     FPatch: Boolean;
+    pkType: TListallerPackageType;
   end; 
 
 var
@@ -283,6 +286,40 @@ begin
   Application.Terminate;
 end;
 
+procedure TIWizFrm.FormActivate(Sender: TObject);
+var i: Integer;p: TProcess;h: String;tmp: TStringList;
+begin
+  if (Dependencies.Count>0) and (Dependencies[0]='*getlibs*') then
+  begin
+    Dependencies.Delete(0);
+    Button1.Enabled:=false;
+    ProgressBar1.Visible:=true;
+    ProgressBar1.Max:=Dependencies.Count*2;
+    Label15.Visible:=true;
+    p:=TProcess.Create(nil);
+    ShowPKMon();
+    p.Options:=[poUsePipes,poWaitOnExit];
+    tmp:=TStringList.Create;
+    for i:=0 to Dependencies.Count-1 do begin
+     ProgressBar1.Position:=ProgressBar1.Position+1;
+     Application.ProcessMessages;
+     h:=CmdResult(pkit+'--s-dfile '+Dependencies[i]);
+     if h='Failed!' then begin ShowMessage(StringReplace(strDepNotFound,'%l',Dependencies[i],[rfReplaceAll])+#13+strInClose);tmp.Free;exit;end;
+     if h='PackageKit problem.' then begin ShowMessage(strPKitProbPkMon);tmp.Free;exit;end;
+     Application.ProcessMessages;
+     ShowMessage(h);
+     tmp.Add(h);
+     h:='';
+     ProgressBar1.Position:=ProgressBar1.Position+1;
+     Application.ProcessMessages;
+    end;
+    Dependencies.Assign(tmp);
+    tmp.Free;
+    Label15.Caption:=strFinished;
+    Button1.Enabled:=true;
+  end;
+end;
+
 function IsCommandRunning(cmd:String):Boolean;
 var t:TProcess;
 s:TStringList;
@@ -329,9 +366,9 @@ end;
 
 procedure TIWizFrm.FormCreate(Sender: TObject);
 var z: TAbUnZipper;ar: TIniFile;i: Integer;x: TStringList;t:TProcess;
-    BH: Array[0..4] of HBitmap;MH: Array[0..1] of HBitmap;n,pkgtype: String;
+    BH: Array[0..4] of HBitmap;MH: Array[0..1] of HBitmap;
     Doc: TXMLDocument;xnode: TDOMNode;
-    PODirectory, Lang, FallbackLang: String;
+    n,PODirectory, Lang, FallbackLang: String;
     imForm: TimdFrm;
 begin
 if not DirectoryExists(RegDir) then begin
@@ -441,7 +478,12 @@ PkgName:=ExtractFileName(paramstr(1));
 
 ReadXMLFile(Doc,lp+PkgName+'/arcinfo.pin'); //Read XML configuration
 xnode:=Doc.FindNode('package');
-pkgtype:=xnode.Attributes.GetNamedItem('type').NodeValue;
+n:=xnode.Attributes.GetNamedItem('type').NodeValue;
+n:=LowerCase(n);
+if n='linstall' then pkType:=lptLinstall;
+if n='' then pkType:=lptLinstall;
+if n='dlink' then pkType:=lptDLink;
+if n='container' then pkType:=lptContainer;
 
 if (xnode.Attributes.GetNamedItem('patch')<>nil)
 and(xnode.Attributes.GetNamedItem('patch').NodeValue='true')
@@ -451,7 +493,7 @@ writeLn('WARNING: This package patches another application on your machine!');
 end else FPatch:=false;
 
 
-if pkgtype='linstall' then
+if pkType=lptLinstall then
 if not IsRoot then begin
   imForm:=TimdFrm.Create(self);
   with imForm do
@@ -473,7 +515,7 @@ if not IsRoot then begin
   imForm.Free;
 end;
 
-if pkgtype='dlink' then
+if pkType=lptDLink then
 if not IsRoot then begin
   imForm:=TimdFrm.Create(self);
   with imForm do
@@ -487,7 +529,7 @@ if not IsRoot then begin
   imForm.Free;
 end;
 
-if pkgtype='container' then
+if pkType=lptContainer then
 if not IsRoot then begin
   imForm:=TimdFrm.Create(self);
   with imForm do
@@ -508,8 +550,7 @@ end;
 
 Application.ProcessMessages;
 
-if pkgtype='' then pkgtype:='linstall';
-if LowerCase(pkgtype)='linstall' then begin
+if pkType=lptLinstall then begin
 
 writeLn('Package type is "linstall"');
 
@@ -711,6 +752,13 @@ ListBox1.Items.Add('PackageSystem: '+DInfo.PackageSystem);
 
 xnode:=Doc.FindNode('package'); //Set xnode to the package tree
 
+if xnode.FindNode('dependencies')<>nil then
+begin
+ xnode:=xnode.FindNode('dependencies');
+ Dependencies.Add('*getlibs*');
+ for i:=0 to xnode.ChildNodes.Count-1 do
+  Dependencies.Add(xnode.ChildNodes.Item[i].FirstChild.NodeValue);
+end else begin
 if xnode.FindNode('Dep'+DInfo.DName)<>nil then begin  //Check if there are specific packages available
 
 if (xnode.FindNode('Dep'+DInfo.DName).Attributes.GetNamedItem('releases')<>nil)
@@ -730,6 +778,8 @@ xnode:=xnode.FindNode('Dep'+DInfo.PackageSystem);
 for i:=0 to xnode.ChildNodes.Count-1 do
 Dependencies.Add(xnode.ChildNodes.Item[i].FirstChild.NodeValue);
  end;
+end;
+
 end;
 
 for i:=0 to Dependencies.Count-1 do
@@ -765,7 +815,7 @@ else FFileInfo:='*';
 
 IWizFrm.Show;
 end else //Handle other IPK types
-if LowerCase(pkgtype)='dlink' then begin
+if pkType=lptDLink then begin
 writeLn('Package type is "dlink"');
 IWizFrm.Hide;
 IWizFrm.Visible:=false;
@@ -851,7 +901,7 @@ end;
 DGForm.Show;
 
 end else
-if LowerCase(pkgtype)='container' then begin
+if pkType=lptContainer then begin
 writeLn('Package type is "container"');
 IWizFrm.Hide;
 IWizFrm.Visible:=false;
@@ -1529,11 +1579,6 @@ begin
   if Checked then Button1.Enabled:=true
   else Button1.Enabled:=false;
   end;
-end;
-
-procedure TIWizFrm.RadioButton2Change(Sender: TObject);
-begin
-
 end;
 
 initialization

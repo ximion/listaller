@@ -231,21 +231,13 @@ then begin
 // /!\
 ///////////////////////////////////////////////////////
 
-cf:=TIniFile.Create(ConfigDir+'config.cnf');
-if cf.ReadBool('MainConf','ShowPkMon',false) then begin
-t:=TProcess.Create(nil);
-t.CommandLine:='pkmon';
-t.Options:=[poNewConsole];
-t.Execute;
-t.free;
-end;
-cf.free;
+ShowPKMon();
 
 Application.ProcessMessages;
 writeLn('Detecting package...');
 f:=CmdResult(pkit+'--s-file '+IdList[uID]);
 if f='Failed!' then begin UninstallMojo(IdList[uID]);exit;end;
-if f='err' then begin ShowMessage(strPKitProbPkMon);exit;end;
+if f='PackageKit problem.' then begin ShowMessage(strPKitProbPkMon);exit;end;
 g:='';
 
 Application.ProcessMessages;

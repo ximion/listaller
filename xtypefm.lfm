@@ -1,7 +1,7 @@
 object imdFrm: TimdFrm
-  Left = 357
+  Left = 361
   Height = 144
-  Top = 453
+  Top = 403
   Width = 634
   ActiveControl = btnInstallAll
   AutoSize = True
@@ -24,7 +24,6 @@ object imdFrm: TimdFrm
   Position = poScreenCenter
   LCLVersion = '0.9.27'
   object Label1: TLabel
-    Left = 0
     Height = 19
     Top = 10
     Width = 187
@@ -45,7 +44,6 @@ object imdFrm: TimdFrm
     ParentColor = False
   end
   object Image1: TImage
-    Left = 0
     Height = 18
     Top = 72
     Width = 18
@@ -62,7 +60,6 @@ object imdFrm: TimdFrm
     Visible = False
   end
   object Image2: TImage
-    Left = 0
     Height = 26
     Top = 40
     Width = 24
@@ -71,7 +68,6 @@ object imdFrm: TimdFrm
     Visible = False
   end
   object btnInstallAll: TBitBtn
-    Left = 0
     Height = 38
     Top = 97
     Width = 165
