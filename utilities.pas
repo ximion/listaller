@@ -29,7 +29,7 @@ uses
 
 const
   //** Version of the Listaller applicationset
-  LiVersion='0.2.00a';
+  LiVersion='0.2.01a-dev';
 var
   //** True if Listaller is in testmode
   Testmode: Boolean=false;
