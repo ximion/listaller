@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   process, ExtCtrls, common, LCLType, Buttons, distri, {$IFDEF LCLGTK2}gtk2,{$ENDIF}
-  trstrings, ComCtrls;
+  trstrings, ComCtrls, packagekit;
 
 type
 
@@ -59,7 +59,7 @@ implementation
 { TimdFrm }
 
 procedure TimdFrm.FormCreate(Sender: TObject);
-var BH: HBitmap;s: String;
+var BH: HBitmap;s: String;pkit: TPackageKit;
 begin
  //Set translation strings
  Caption:=strSelInstMode;
@@ -79,7 +79,9 @@ if Image1.Visible then begin
 
 //Check PackageKit version
 try
-  s:=CmdResult('pkcon --version');
+  pkit:=TPackageKit.Create;
+  s:=pkit.Version;
+  pkit.Free;
   writeLn('Detected PackageKit: '+s);
   s:=copy(s,1,5);
   if StrToInt(StringReplace(s,'.','',[rfReplaceAll]))<44 then begin

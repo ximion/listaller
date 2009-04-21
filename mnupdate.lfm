@@ -44,7 +44,6 @@ object Form1: TForm1
     Top = 8
     Width = 669
     Anchors = [akTop, akLeft, akRight, akBottom]
-    ItemHeight = 0
     OnClick = CheckListBox1Click
     TabOrder = 2
     TopIndex = -1

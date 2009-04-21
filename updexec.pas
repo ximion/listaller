@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ComCtrls, HTTPSend, FileUtil, AbUnZper, AbArcTyp, Process, utilities, IniFiles,
+  ComCtrls, HTTPSend, FileUtil, AbUnZper, AbArcTyp, Process, common, IniFiles,
   blcksock, trStrings, ipkhandle;
 
 type

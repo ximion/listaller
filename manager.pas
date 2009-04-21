@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, common,
   uninstall, trstrings, gettext, FileUtil, xtypefm, ipkhandle, gifanimator,
-  Arrow;
+  packagekit;
 
 type
 
@@ -468,7 +468,7 @@ begin
 end;
 
 procedure TMnFrm.btnInstallClick(Sender: TObject);
-var p: TProcess;
+var p: TProcess;pkit: TPackageKit;
 begin
   if OpenDialog1.Execute then
   if FileExists(OpenDialog1.Filename) then begin
@@ -498,10 +498,13 @@ begin
    if not FileExists('/usr/bin/alien') then
     if Application.MessageBox(PChar(strListallerAlien),PChar(strInstPkgQ),MB_YESNO)=IDYES then begin
       ShowMessage(strplWait);
-      if CmdResultCode(pkit+'--install alien')>0 then begin
+      pkit:=TPackageKit.Create;
+      if not pkit.InstallPkg('alien') then begin
        ShowMessage(StringReplace(strPkgInstFail,'%p','alien',[rfreplaceAll]));
+       pkit.Free;
        exit;
        end;
+      pkit.Free;
      end else exit;
    Application.ProcessMessages;
    Caption:=StringReplace(strConvTitle,'%p','DEB',[rfReplaceAll]);
@@ -530,10 +533,13 @@ begin
    if not FileExists('/usr/bin/alien') then
     if Application.MessageBox(PChar(strListallerAlien),PChar(strInstPkgQ),MB_YESNO)=IDYES then begin
       ShowMessage(strplWait);
-      if CmdResultCode(pkit+'--install alien')>0 then begin
+      pkit:=TPackageKit.Create;
+      if not pkit.InstallPkg('alien') then begin
        ShowMessage(StringReplace(strPkgInstFail,'%p','alien',[rfreplaceAll]));
+       pkit.Free;
        exit;
        end;
+      pkit.Free;
      end else exit;
 
    Application.ProcessMessages;

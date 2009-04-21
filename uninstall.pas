@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   StdCtrls, IniFiles, LCLType, common, Buttons, ExtCtrls, process,
-  trstrings, FileUtil, distri, ipkhandle;
+  trstrings, FileUtil, distri, ipkhandle, packagekit;
 
 type
 
@@ -170,7 +170,7 @@ end else begin
 end;
 
 procedure TRMForm.FormActivate(Sender: TObject);
-var f,g: String; t:TProcess;cf: TIniFile;tmp: TStringList;
+var f,g: String; t:TProcess;tmp: TStringList;pkit: TPackageKit;i: Integer;
 begin
 if FActiv then begin
 FActiv:=false;
@@ -235,15 +235,22 @@ ShowPKMon();
 
 Application.ProcessMessages;
 writeLn('Detecting package...');
-f:=CmdResult(pkit+'--s-file '+IdList[uID]);
+pkit:=TPackageKit.Create;
+f:=pkit.PkgNameFromFile(IdList[uID]);
 if f='Failed!' then begin UninstallMojo(IdList[uID]);exit;end;
 if f='PackageKit problem.' then begin ShowMessage(strPKitProbPkMon);exit;end;
 g:='';
 
 Application.ProcessMessages;
 writeLn('Looking for reverse-dependencies...');
-g:=CmdResult(pkit+'--get-requires '+f);
-g:=copy(g,pos(f,g)+length(f),length(g));
+tmp:=TStringList.Create;
+pkit.GetRequires(f,tmp);
+g:='';
+for i:=0 to tmp.Count-1 do
+g:=g+#13+tmp[i];
+tmp.Free;
+// Ehm... Dont't know what the function of this code was - needs testing!
+//g:=copy(g,pos(f,g)+length(f),length(g));
 
 LogAdd('Package detected: '+f);
 if (StringReplace(g,' ','',[rfReplaceAll])='')or
@@ -255,11 +262,10 @@ then begin
 LogAdd('Uninstalling '+f+' ...');
 UProgress.Position:=60;
 GetOutPutTimer.Enabled:=true;
-Process1.CommandLine:=pkit+'--remove '+f;
-Process1.Execute;
+pkit.RemovePkg(f);
 UProgress.Position:=78;
-while Process1.Running do Application.ProcessMessages;
-if Process1.ExitStatus>0 then begin
+
+if not pkit.OperationSucessfull then begin
 ShowMessage(strRmError);exit;RMForm.Close;end;
 
 UProgress.Position:=100;

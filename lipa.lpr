@@ -26,7 +26,7 @@ uses
   cthreads,
   {$ENDIF}
   Classes, SysUtils, CustApp,
-  Process, ipkbuild, utilities;
+  Process, ipkbuild, common;
 
 type
 

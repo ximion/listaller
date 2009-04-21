@@ -21,7 +21,7 @@ unit ipkhandle;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, common, Forms, Process, trstrings;
+  Classes, SysUtils, IniFiles, common, Forms, Process, trstrings, packagekit;
 
  {** Removes an IPK application
      @param AppName Name of the application, that should be uninstalled
@@ -40,6 +40,7 @@ implementation
 function UninstallIPKApp(AppName,AppID: String; var Log: TStrings; fast:Boolean=false): Integer;
 var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;reg: TIniFile;k: Boolean;upd: String;
     proc: TProcess;dlink: Boolean;t: TProcess;
+    pkit: TPackageKit;
 begin
 Result:=0;
 p:=RegDir+AppName+'~'+AppID+'/';
@@ -96,32 +97,27 @@ if pos('>',f)>0 then
 Log.Add(f+' # '+copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
 else Log.Add(f);
 writeLn(Log[Log.Count-1]);
+
+pkit:=TPackageKit.Create;
+s:=tstringlist.Create;
 if pos('>',f)>0 then
- t.CommandLine:=pKit+'--get-requires '+copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2)
-else t.CommandLine:=pKit+'--get-requires '+f;
-t.Options:=[poUsePipes,poWaitonexit];
- try
-  t.Execute;
-  s:=tstringlist.Create;
-  try
-  while t.Running do Application.ProcessMessages;
-   s.LoadFromStream(t.Output);
+ pkit.GetRequires(copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2),s)
+else pkit.GetRequires(f,s);
+
    if s.Count <=1 then begin
    if pos('>',f)>0 then
-   t.CommandLine:=pKit+'--remove '+copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2)
-   else t.CommandLine:=pKit+'--remove '+f;
+   pkit.RemovePkg(copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
+   else pkit.RemovePkg(f);
    Application.ProcessMessages;
    //GetOutPutTimer.Enabled:=true;
-   t.Execute;
+
    Log.Add('Removing '+f+'...');
    writeLn('Removing '+f+'...');
   end;
-  finally
-  s.free;
-  end;
- finally
- t.Free;
-end;
+
+ s.free;
+ pkit.Free;
+
  Application.ProcessMessages;
   end;
  end; //End of downto-loop

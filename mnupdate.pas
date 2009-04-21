@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, Buttons, CheckLst, HTTPSend, IniFiles, MD5, utilities, updexec, LCLType,
+  StdCtrls, Buttons, CheckLst, HTTPSend, IniFiles, MD5, common, updexec, LCLType,
   Process, Menus, trstrings, GetText, Translations, gtk2,
   gtkint, gtkdef, XMLRead, DOM, ldunit, ipkhandle;
 

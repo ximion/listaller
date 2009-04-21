@@ -8,7 +8,7 @@
       </Flags>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <ProjectVersion Value=""/>
@@ -53,7 +53,7 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="editor"/>
-        <CursorPos X="15" Y="69"/>
+        <CursorPos X="9" Y="169"/>
         <TopLine Value="133"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="136"/>
@@ -182,9 +182,11 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="prjwizard"/>
-        <CursorPos X="66" Y="26"/>
+        <CursorPos X="68" Y="26"/>
         <TopLine Value="1"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="119"/>
+        <Loaded Value="True"/>
       </Unit17>
       <Unit18>
         <Filename Value="../utilities.pas"/>
@@ -357,7 +359,7 @@
         <UsageCount Value="10"/>
       </Unit43>
     </Units>
-    <JumpHistory Count="13" HistoryIndex="12">
+    <JumpHistory Count="14" HistoryIndex="13">
       <Position1>
         <Filename Value="editor.pas"/>
         <Caret Line="632" Column="83" TopLine="606"/>
@@ -410,6 +412,10 @@
         <Filename Value="editor.pas"/>
         <Caret Line="71" Column="28" TopLine="71"/>
       </Position13>
+      <Position14>
+        <Filename Value="editor.pas"/>
+        <Caret Line="169" Column="9" TopLine="133"/>
+      </Position14>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -442,6 +448,7 @@
         <ShowHints Value="False"/>
         <ShowSummary Value="True"/>
       </Verbosity>
+      <CustomOptions Value="-dUSE_QT_45"/>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>

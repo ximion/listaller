@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Buttons, ExtCtrls, ComCtrls, EditBtn, Grids, popupnotifier, FileCtrl, FileUtil,
-  MD5, Menus, XMLRead, XMLWrite, DOM, editor, LCLType, GTK2, utilities, SynEdit;
+  MD5, Menus, XMLRead, XMLWrite, DOM, editor, LCLType, GTK2, common, SynEdit;
 
 type
 

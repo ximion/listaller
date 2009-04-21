@@ -1,5 +1,3 @@
-{ Das ist eine automatisch erzeugte Lazarus-Ressourcendatei }
-
 LazarusResources.Add('TfrmProjectWizard','FORMDATA',[
   'TPF0'#17'TfrmProjectWizard'#16'frmProjectWizard'#4'Left'#3'^'#1#6'Height'#3
   +#154#2#3'Top'#3#188#0#5'Width'#3'D'#3#13'ActiveControl'#7#12'RadioButton1'#11

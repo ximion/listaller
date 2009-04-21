@@ -16,7 +16,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="104"/>
+      <CurrentBuildNr Value="108"/>
       <ProjectVersion Value="0.2.0.1"/>
     </VersionInfo>
     <PublishOptions>
@@ -36,8 +36,8 @@
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
-        <CursorPos X="2" Y="211"/>
-        <TopLine Value="166"/>
+        <CursorPos X="1" Y="214"/>
+        <TopLine Value="171"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="41"/>
         <Loaded Value="True"/>
@@ -107,9 +107,11 @@
         <Filename Value="ipkbuild.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="35" Y="392"/>
-        <TopLine Value="363"/>
+        <CursorPos X="87" Y="24"/>
+        <TopLine Value="1"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="29"/>
+        <Loaded Value="True"/>
       </Unit10>
       <Unit11>
         <Filename Value="abzbrows.pas"/>
@@ -154,7 +156,7 @@
         <UsageCount Value="10"/>
       </Unit16>
     </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
+    <JumpHistory Count="3" HistoryIndex="2">
       <Position1>
         <Filename Value="lipa.lpr"/>
         <Caret Line="40" Column="5" TopLine="15"/>
@@ -163,6 +165,10 @@
         <Filename Value="lipa.lpr"/>
         <Caret Line="202" Column="8" TopLine="171"/>
       </Position2>
+      <Position3>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="29" Column="17" TopLine="1"/>
+      </Position3>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

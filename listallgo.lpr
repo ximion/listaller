@@ -25,7 +25,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms,
   mainunit, dgunit, trstrings, LResources,
-  ipkhandle, SysUtils, distri, utilities;
+  ipkhandle, SysUtils, distri, common;
 
 {$IFDEF WINDOWS}{$R listallgo.rc}{$ENDIF}
 
@@ -34,7 +34,6 @@ begin
   Application.Title:='Installer';
   Application.Initialize;
   writeLn('Application initialized.');
-  pkit := GetDataFile('pkitbind/pkitbind.py')+' ';
   if not IsRoot then RegDir:=SyblToPath('$INST')+'/app-reg/';
   Application.CreateForm(TIWizFrm, IWizFrm);
   Application.ShowMainForm:=false;

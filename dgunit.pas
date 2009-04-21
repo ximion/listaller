@@ -24,8 +24,8 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Buttons, ComCtrls, LCLType, LCLIntf, mainunit, ExtCtrls, process, HTTPSend,
-  blcksock, FTPSend, IniFiles, utilities, trstrings, gtk2, gtkint, gtkdef,
-  gtkproc, ipkhandle;
+  blcksock, FTPSend, IniFiles, common, trstrings, gtk2, gtkint, gtkdef,
+  gtkproc, ipkhandle, packagekit;
 
 type
 
@@ -106,7 +106,7 @@ begin
 end;
 
 procedure TDGForm.BitBtn1Click(Sender: TObject);
-var i: Integer;t: TProcess;cnf,ar: TIniFile;
+var i: Integer;t: TProcess;cnf,ar: TIniFile;pkit: TPackageKit;
 begin
 BitBtn1.Enabled:=false;
 TabSheet3.TabVisible:=true;
@@ -142,30 +142,19 @@ ShowPKMon();
 
 Application.ProcessMessages;
 BitBtn1.Enabled:=false;
+pkit:=TPackageKit.Create;
 
   for i:=1 to Memo2.Lines.Count-1 do begin
   if pos('://',Memo2.Lines[i])<=0 then begin
-  t:=TProcess.create(nil);
-
   Memo3.Lines.Add('Looking for '+Memo2.Lines[i]);
-  t.CommandLine:=pkit+'--is-installed '+Memo2.Lines[i];
-  t.Options:=[poUsePipes,poWaitonexit];
-  t.Execute;
-  if t.ExitStatus = 0 then begin
+  if not pkit.IsInstalled(Memo2.Lines[i]) then begin
   Memo3.Lines.Add('Installing '+Memo2.Lines[i]+'...');
   GetOutPutTimer.Enabled:=true;
-  Process1.CommandLine:=pkit+'--install '+Memo2.Lines[i];
-  Process1.Execute;
-  while Process1.Running do Application.ProcessMessages;
-  End;
-  t.Free;
+  pkit.InstallPkg(Memo2.Lines[i]);
+  end;
 end else begin
-  t:=tprocess.create(nil);
   Memo3.Lines.Add('Looking for '+copy(Memo2.Lines[i],1,pos(' -',Memo2.Lines[i])-1));
-  t.CommandLine:=pkit+'--is-installed '+copy(Memo2.Lines[i],1,pos(' -',Memo2.Lines[i])-1);
-  t.Options:=[poUsePipes,poWaitonexit];
-  t.Execute;
-  if t.ExitStatus = 0 then begin
+  if not pkit.IsInstalled(copy(Memo2.Lines[i],1,pos(' -',Memo2.Lines[i])-1)) then begin
   Memo3.Lines.Add('Downloading package...');
   
 if pos('http://',LowerCase(Memo2.Lines[i]))>0 then begin
@@ -202,9 +191,7 @@ end;
 
   Memo3.Lines.Add('Installing '+copy(Memo2.Lines[i],1,pos(' -',Memo2.Lines[i])-1)+'...');
   GetOutPutTimer.Enabled:=true;
-  Process1.CommandLine:=pkit+'--install-local /tmp/'+ExtractFileName(Memo2.Lines[i]);
-  Process1.Execute;
-  while Process1.Running do Application.ProcessMessages;
+  pkit.InstallLocalPkg('/tmp/'+ExtractFileName(Memo2.Lines[i]));
 end;
 
   
@@ -212,6 +199,9 @@ end;
 end;
 
 end;
+
+pkit.Free;
+
 with IWizFrm do begin
 pID:='{101-101-101-101}';
 

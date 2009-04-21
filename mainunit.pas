@@ -23,9 +23,9 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
   ComCtrls, AbUnZper, AbArcTyp, StdCtrls, IniFiles, FileUtil, ExtCtrls,
-  process, Buttons, LCLType, MD5, LCLIntf, distri, utilities, HTTPSend,
+  process, Buttons, LCLType, MD5, LCLIntf, distri, common, HTTPSend,
   blcksock, ftpsend, trstrings, translations, gettext, gtk2, gtkint, gtkdef, gtkproc,
-  XMLRead, DOM, SynEdit, xtypefm, ipkhandle;
+  XMLRead, DOM, SynEdit, xtypefm, ipkhandle, packagekit;
 
 type
 
@@ -287,7 +287,7 @@ begin
 end;
 
 procedure TIWizFrm.FormActivate(Sender: TObject);
-var i: Integer;p: TProcess;h: String;tmp: TStringList;
+var i: Integer;p: TProcess;h: String;tmp: TStringList;pkit: TPackageKit;
 begin
   if (Dependencies.Count>0) and (Dependencies[0]='*getlibs*') then
   begin
@@ -303,7 +303,9 @@ begin
     for i:=0 to Dependencies.Count-1 do begin
      ProgressBar1.Position:=ProgressBar1.Position+1;
      Application.ProcessMessages;
-     h:=CmdResult(pkit+'--s-dfile '+Dependencies[i]);
+     pkit:=TPackageKit.Create;
+     h:=pkit.PkgNameFromNIFile(Dependencies[i]);
+     pkit.Free;
      if h='Failed!' then begin ShowMessage(StringReplace(strDepNotFound,'%l',Dependencies[i],[rfReplaceAll])+#13+strInClose);tmp.Free;exit;end;
      if h='PackageKit problem.' then begin ShowMessage(strPKitProbPkMon);tmp.Free;exit;end;
      Application.ProcessMessages;
@@ -1041,6 +1043,7 @@ ar,dsk, cnf: TIniFile; // Archive setting, configuration
 z: TAbUnZipper; // Zipper
 setcm: Boolean;
 t:TProcess; // Helper process with pipes
+pkit: TPackageKit; //PackageKit object
 begin
 while IPage.Visible=false do Application.ProcessMessages;
 
@@ -1103,6 +1106,8 @@ while Process1.Running do Application.ProcessMessages;
     Process1.Execute;
 while Process1.Running do Application.ProcessMessages;
 end;
+
+pkit:=TPackageKit.Create;
 
 if Dependencies.Count>0 then begin
 for I:=0 to Dependencies.Count-1 do begin  //Download & install dependencies
@@ -1235,33 +1240,24 @@ end;
 
 ExProgress.Visible:=false;
 sleep(18); //Wait...
+
 if (Dependencies[i][1]='/')or(pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then begin
 
     InfoMemo.Lines.Add('--');
     Infomemo.Lines.Add('DepInstall: '+Dependencies[i]+' (using PackageKit +x)');
     InfoMemo.Lines.Add('-');
 
-    t:=TProcess.Create(nil);
-    t.Options:=[poUsePipes,poWaitonexit];
-
   if (pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then  begin
-    t.CommandLine := pkit+'--is-installed '+copy(Dependencies[i],pos(' <',Dependencies[i])+2,length(Dependencies[i])-1);
-    t.Execute;
-
-    if t.ExitStatus = 0 then
-    Process1.CommandLine := pkit+'--install-local /tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])));
+    if not pkit.IsInstalled(copy(Dependencies[i],pos(' <',Dependencies[i])+2,length(Dependencies[i])-1)) then
+     pkit.InstallLocalPkg('/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i]))));
   end else
-    Process1.CommandLine := pkit+'--install-local '+lp+PkgName+Dependencies[i];
-    if t.ExitStatus = 0 then
-    Process1.Execute;
+    pkit.InstallLocalPkg(lp+PkgName+Dependencies[i]);
 
-    t.Free;
-    Application.ProcessMessages;
-    while Process1.Running do Application.ProcessMessages;
     InsProgress.Position:=InsProgress.Position+5;
+    Application.ProcessMessages;
 
     //Check if the package was really installed
-    if Process1.ExitStatus>0 then
+    if not pkit.OperationSucessfull then
     begin
     ShowMessage(strCouldntSolve+#13+StringReplace(strViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]));
     t.Free;
@@ -1282,22 +1278,14 @@ end else begin
 
      GetOutPutTimer.Enabled:=true;
 
-     t:=TProcess.Create(nil);
-     t.Options:=[poUsePipes,poWaitonexit];
-
-     t.CommandLine := pkit+'--is-installed '+Dependencies[i];
-     t.Execute;
-
-     if t.ExitStatus = 0 then begin
-     Process1.CommandLine := pkit+'--install '+Dependencies[i];
-     Process1.Execute;
+     if not pkit.IsInstalled(Dependencies[i]) then begin
+      pkit.InstallPkg(Dependencies[i]);
 
     //Check if the package was really installed
-  if Process1.ExitStatus>0 then
+  if not pkit.OperationSucessfull then
     begin
      writeLn('Package '+Dependencies[i]+' can not be installed.');
      ShowMessage(strCouldntSolve+#13+StringReplace(strViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]));
-     t.Free;
      InfoMemo.Lines.SaveTofile('/tmp/install-'+IAppName+'.log');
      Application.Terminate;
      exit;
@@ -1305,13 +1293,12 @@ end else begin
 
     end; //Eof <> 1
 
-    t.Free;
-
-    while Process1.Running do Application.ProcessMessages;
     InsProgress.Position:=InsProgress.Position+10;
   end;
   end; //End of Dependecies.Count term
 end; //End of dependency-check
+
+pkit.Free;
 
 GetOutPutTimer.Enabled:=false;
 

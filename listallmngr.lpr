@@ -26,7 +26,7 @@ uses
   Forms,
   SysUtils,
   manager, settings, uninstall, pkgconvertdisp, swcatalog, ipkhandle,
-  common, translations, gettext, packagekit;
+  common, translations, gettext, packagekit, LResources;
 
 {$IFDEF WINDOWS}{$R listallmngr.rc}{$ENDIF}
 
@@ -42,6 +42,7 @@ translations.SystemCharSetIsUTF8:=true;
 end;
 
 begin
+  {$I listallmngr.lrs}
   //Load Translation
   TranslateInterface();
   Application.Title:='Listaller Manager';

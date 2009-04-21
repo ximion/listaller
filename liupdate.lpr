@@ -23,9 +23,8 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms
-  { you can add units after this }, mnupdate, httpsend, updexec,
-  utilities, ipkhandle, ldunit, LResources;
+  Forms, mnupdate, httpsend, updexec,
+  common, ipkhandle, ldunit, LResources;
 
 {$IFDEF WINDOWS}{$R liupdate.rc}{$ENDIF}
 
