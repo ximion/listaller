@@ -24,8 +24,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Buttons, ComCtrls, LCLType, LCLIntf, mainunit, ExtCtrls, process, HTTPSend,
-  blcksock, FTPSend, IniFiles, common, trstrings, gtk2, gtkint, gtkdef,
-  gtkproc, ipkhandle, packagekit;
+  blcksock, FTPSend, IniFiles, common, trstrings, ipkhandle, packagekit;
 
 type
 
@@ -106,7 +105,7 @@ begin
 end;
 
 procedure TDGForm.BitBtn1Click(Sender: TObject);
-var i: Integer;t: TProcess;cnf,ar: TIniFile;pkit: TPackageKit;
+var i: Integer;cnf,ar: TIniFile;pkit: TPackageKit;
 begin
 BitBtn1.Enabled:=false;
 TabSheet3.TabVisible:=true;
@@ -252,15 +251,9 @@ begin
 end;
 
 procedure TDGForm.FormCreate(Sender: TObject);
-var BH: HBitmap;
 begin
-BH:=Gtk2LoadStockPixmap(GTK_STOCK_EXECUTE,GTK_ICON_SIZE_BUTTON);
-if BH <> 0 then
-begin
- BitBtn1.Glyph.Handle:=BH;
-end;
+LoadStockPixmap(STOCK_EXECUTE,ICON_SIZE_BUTTON,BitBtn1.Glyph);
 Image1.Picture.LoadFromFile(GetDataFile('graphics/spackage.png'));
-
 PageControl1.ActivePageIndex:=0;
 BitBtn1.Caption:=strInstallNow;
 end;
@@ -274,8 +267,7 @@ begin
   TabSheet3.Caption:=strInstallation;
   
   FinBtn1.Caption:=strFinish;
-  if Gtk2LoadStockPixmap(GTK_STOCK_QUIT,GTK_ICON_SIZE_BUTTON)<>0 then
-  FinBtn1.Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_QUIT,GTK_ICON_SIZE_BUTTON);
+  LoadStockPixmap(STOCK_QUIT,ICON_SIZE_BUTTON,FinBtn1.Glyph);
 end;
 
 procedure TDGForm.GetOutPutTimerTimer(Sender: TObject);

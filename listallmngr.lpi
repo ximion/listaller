@@ -11,13 +11,13 @@
       <Title Value="Listaller Manager"/>
       <UseAppBundle Value="False"/>
       <Icon Value="0"/>
-      <ActiveEditorIndexAtStart Value="4"/>
+      <ActiveEditorIndexAtStart Value="2"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="885"/>
+      <CurrentBuildNr Value="887"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -261,9 +261,11 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="settings"/>
-        <CursorPos X="50" Y="26"/>
-        <TopLine Value="1"/>
+        <CursorPos X="3" Y="101"/>
+        <TopLine Value="79"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="139"/>
+        <Loaded Value="True"/>
       </Unit29>
       <Unit30>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkproc.inc"/>
@@ -292,8 +294,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uninstall"/>
         <CursorPos X="29" Y="173"/>
-        <TopLine Value="1"/>
-        <EditorIndex Value="2"/>
+        <TopLine Value="128"/>
+        <EditorIndex Value="4"/>
         <UsageCount Value="132"/>
         <Loaded Value="True"/>
       </Unit33>
@@ -302,7 +304,7 @@
         <UnitName Value="trstrings"/>
         <CursorPos X="15" Y="118"/>
         <TopLine Value="89"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="6"/>
         <UsageCount Value="32"/>
         <Loaded Value="True"/>
       </Unit34>
@@ -310,8 +312,8 @@
         <Filename Value="common.pas"/>
         <UnitName Value="common"/>
         <CursorPos X="11" Y="95"/>
-        <TopLine Value="301"/>
-        <EditorIndex Value="3"/>
+        <TopLine Value="95"/>
+        <EditorIndex Value="5"/>
         <UsageCount Value="42"/>
         <Loaded Value="True"/>
       </Unit35>
@@ -382,9 +384,11 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="swcatalog"/>
-        <CursorPos X="71" Y="25"/>
-        <TopLine Value="1"/>
+        <CursorPos X="23" Y="148"/>
+        <TopLine Value="126"/>
+        <EditorIndex Value="2"/>
         <UsageCount Value="90"/>
+        <Loaded Value="True"/>
       </Unit45>
       <Unit46>
         <Filename Value="../../../../../usr/share/fpcsrc/packages/fcl-xml/src/dom.pp"/>
@@ -512,7 +516,7 @@
         <UnitName Value="xtypefm"/>
         <CursorPos X="13" Y="84"/>
         <TopLine Value="49"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="3"/>
         <UsageCount Value="14"/>
         <Loaded Value="True"/>
       </Unit64>
@@ -620,7 +624,7 @@
         <UsageCount Value="22"/>
       </Unit78>
     </Units>
-    <JumpHistory Count="13" HistoryIndex="12">
+    <JumpHistory Count="15" HistoryIndex="14">
       <Position1>
         <Filename Value="manager.pas"/>
         <Caret Line="26" Column="8" TopLine="13"/>
@@ -673,6 +677,14 @@
         <Filename Value="manager.pas"/>
         <Caret Line="26" Column="50" TopLine="1"/>
       </Position13>
+      <Position14>
+        <Filename Value="settings.pas"/>
+        <Caret Line="26" Column="50" TopLine="1"/>
+      </Position14>
+      <Position15>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="25" Column="71" TopLine="1"/>
+      </Position15>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

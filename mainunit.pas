@@ -24,8 +24,8 @@ uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
   ComCtrls, AbUnZper, AbArcTyp, StdCtrls, IniFiles, FileUtil, ExtCtrls,
   process, Buttons, LCLType, MD5, LCLIntf, distri, common, HTTPSend,
-  blcksock, ftpsend, trstrings, translations, gettext, gtk2, gtkint, gtkdef, gtkproc,
-  XMLRead, DOM, SynEdit, xtypefm, ipkhandle, packagekit;
+  blcksock, ftpsend, trstrings, translations, gettext, XMLRead, DOM,
+  SynEdit, xtypefm, ipkhandle, packagekit;
 
 type
 
@@ -368,7 +368,6 @@ end;
 
 procedure TIWizFrm.FormCreate(Sender: TObject);
 var z: TAbUnZipper;ar: TIniFile;i: Integer;x: TStringList;t:TProcess;
-    BH: Array[0..4] of HBitmap;MH: Array[0..1] of HBitmap;
     Doc: TXMLDocument;xnode: TDOMNode;
     n,PODirectory, Lang, FallbackLang: String;
     imForm: TimdFrm;
@@ -395,28 +394,13 @@ end;
   Dinfo:=GetDistro;
 
 //Load GTK2 icons
-BH[0]:=Gtk2LoadStockPixmap(GTK_STOCK_QUIT,GTK_ICON_SIZE_BUTTON);
-if BH[0] <> 0 then
-begin
- FinBtn1.Glyph.Handle:=BH[0];
-end;
+LoadStockPixmap(STOCK_QUIT,ICON_SIZE_BUTTON,FinBtn1.Glyph);
 
-BH[1]:=LoadStockPixmap(idButtonAbort,MH[1]);
-if BH[1] <> 0 then
-begin
- AbortBtn1.Glyph.Handle:=BH[1];
- AbortBtn1.Glyph.MaskHandle:=MH[1];
-end;
+LoadStockPixmap(STOCK_CLOSE,ICON_SIZE_BUTTON,AbortBtn1.Glyph);
 
-BH[3]:=Gtk2LoadStockPixmap(GTK_STOCK_GO_FORWARD,GTK_ICON_SIZE_BUTTON);
-if BH[3]<>0 then begin
-Button1.Glyph.Handle:=BH[3];
-end;
+LoadStockPixmap(STOCK_GO_FORWARD,ICON_SIZE_BUTTON,Button1.Glyph);
 
-BH[4]:=Gtk2LoadStockPixmap(GTK_STOCK_GO_BACK,GTK_ICON_SIZE_BUTTON);
-if BH[4]<>0 then begin
-Button5.Glyph.Handle:=BH[4];
-end;
+LoadStockPixmap(STOCK_GO_BACK,ICON_SIZE_BUTTON,Button5.Glyph);
 
 //Set translation strings (1)
   Label1.Caption:=strWelcome;

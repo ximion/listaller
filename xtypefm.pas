@@ -22,8 +22,8 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  process, ExtCtrls, common, LCLType, Buttons, distri, {$IFDEF LCLGTK2}gtk2,{$ENDIF}
-  trstrings, ComCtrls, packagekit;
+  process, ExtCtrls, common, LCLType, Buttons, distri, trstrings, ComCtrls,
+  packagekit;
 
 type
 
@@ -59,7 +59,7 @@ implementation
 { TimdFrm }
 
 procedure TimdFrm.FormCreate(Sender: TObject);
-var BH: HBitmap;s: String;pkit: TPackageKit;
+var s: String;pkit: TPackageKit;
 begin
  //Set translation strings
  Caption:=strSelInstMode;
@@ -70,12 +70,8 @@ begin
  btnHome.Caption:=strInstallHome;
 
 if Image1.Visible then begin
-  BH:=Gtk2LoadStockPixmap(GTK_STOCK_DIALOG_WARNING,GTK_ICON_SIZE_SMALL_TOOLBAR);
-   if BH <> 0 then
-     begin
-       Image1.Picture.Bitmap.Handle:=BH;
-     end;
-     end;
+  LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_SMALL_TOOLBAR,Image1.Picture.Bitmap);
+end;
 
 //Check PackageKit version
 try
@@ -88,11 +84,11 @@ try
         Label2.Caption:=StringReplace(StringReplace(strPackageKitWarning,'%cp',s,[rfReplaceAll]),'%np','0.4.4',[rfReplaceAll]);
         Label2.Visible:=true;
         Image2.Visible:=true;
-        Image2.Picture.Bitmap.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_DIALOG_WARNING,GTK_ICON_SIZE_BUTTON);
+        LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_BUTTON,Image2.Picture.Bitmap);
      end;
 
   except
-    Image2.Picture.Bitmap.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_DIALOG_WARNING,GTK_ICON_SIZE_BUTTON);
+    LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_BUTTON,Image2.Picture.Bitmap);
   end;
 
 end;

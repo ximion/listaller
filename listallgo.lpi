@@ -11,7 +11,7 @@
       <Title Value="Installer"/>
       <UseAppBundle Value="False"/>
       <Icon Value="0"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <i18n>
       <OutDir Value="bin/lang"/>
@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="443"/>
+      <CurrentBuildNr Value="484"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -50,7 +50,7 @@
         <MinVersion Major="1" Valid="True"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="96">
+    <Units Count="99">
       <Unit0>
         <Filename Value="listallgo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -65,8 +65,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="mainunit"/>
-        <CursorPos X="55" Y="26"/>
-        <TopLine Value="1"/>
+        <CursorPos X="70" Y="370"/>
+        <TopLine Value="349"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -360,8 +360,8 @@
       <Unit43>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/lcltype.pp"/>
         <UnitName Value="LCLType"/>
-        <CursorPos X="3" Y="1543"/>
-        <TopLine Value="1672"/>
+        <CursorPos X="3" Y="1598"/>
+        <TopLine Value="1516"/>
         <UsageCount Value="24"/>
       </Unit43>
       <Unit44>
@@ -386,10 +386,10 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="dgunit"/>
-        <CursorPos X="65" Y="194"/>
-        <TopLine Value="172"/>
+        <CursorPos X="51" Y="27"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="2"/>
-        <UsageCount Value="121"/>
+        <UsageCount Value="124"/>
         <Loaded Value="True"/>
       </Unit46>
       <Unit47>
@@ -438,8 +438,8 @@
         <UnitName Value="trstrings"/>
         <CursorPos X="26" Y="50"/>
         <TopLine Value="17"/>
-        <EditorIndex Value="1"/>
-        <UsageCount Value="27"/>
+        <EditorIndex Value="4"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
       </Unit53>
       <Unit54>
@@ -476,8 +476,8 @@
         <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkdef.pp"/>
         <UnitName Value="GtkDef"/>
         <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="9"/>
+        <TopLine Value="469"/>
+        <UsageCount Value="10"/>
       </Unit58>
       <Unit59>
         <Filename Value="../../../../../usr/share/fpcsrc/packages/extra/gtk2/pango/pango.pas"/>
@@ -532,8 +532,8 @@
         <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkint.pp"/>
         <UnitName Value="GtkInt"/>
         <CursorPos X="1" Y="1"/>
-        <TopLine Value="387"/>
-        <UsageCount Value="9"/>
+        <TopLine Value="378"/>
+        <UsageCount Value="10"/>
       </Unit66>
       <Unit67>
         <Filename Value="abswstm.pas"/>
@@ -688,7 +688,7 @@
         <UnitName Value="ipkhandle"/>
         <CursorPos X="44" Y="2"/>
         <TopLine Value="2"/>
-        <UsageCount Value="40"/>
+        <UsageCount Value="43"/>
       </Unit89>
       <Unit90>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/forms.pp"/>
@@ -703,9 +703,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="xtypefm"/>
-        <CursorPos X="20" Y="40"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="11"/>
+        <CursorPos X="5" Y="62"/>
+        <TopLine Value="40"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
       </Unit91>
       <Unit92>
         <Filename Value="aboutbox.pas"/>
@@ -719,147 +721,167 @@
       </Unit92>
       <Unit93>
         <Filename Value="../../../../../usr/share/fpcsrc/2.2.2/packages/gtk2/src/gtk+/gtk/gtkenums.inc"/>
-        <CursorPos X="6" Y="285"/>
-        <TopLine Value="262"/>
-        <UsageCount Value="10"/>
+        <CursorPos X="6" Y="287"/>
+        <TopLine Value="265"/>
+        <UsageCount Value="11"/>
       </Unit93>
       <Unit94>
         <Filename Value="packagekit.pas"/>
         <UnitName Value="packagekit"/>
-        <CursorPos X="51" Y="35"/>
-        <TopLine Value="13"/>
-        <EditorIndex Value="3"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
+        <CursorPos X="3" Y="64"/>
+        <TopLine Value="37"/>
+        <UsageCount Value="11"/>
       </Unit94>
       <Unit95>
         <Filename Value="common.pas"/>
         <UnitName Value="common"/>
-        <CursorPos X="9" Y="9"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="10"/>
+        <CursorPos X="25" Y="186"/>
+        <TopLine Value="156"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
       </Unit95>
+      <Unit96>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkproc.pp"/>
+        <UnitName Value="GTKProc"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="781"/>
+        <UsageCount Value="10"/>
+      </Unit96>
+      <Unit97>
+        <Filename Value="../../../../../usr/share/fpcsrc/2.2.2/packages/gtk2/src/gtk+/gtk/gtkstock.inc"/>
+        <CursorPos X="4" Y="43"/>
+        <TopLine Value="21"/>
+        <UsageCount Value="11"/>
+      </Unit97>
+      <Unit98>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/buttons.pp"/>
+        <UnitName Value="Buttons"/>
+        <CursorPos X="14" Y="168"/>
+        <TopLine Value="146"/>
+        <UsageCount Value="10"/>
+      </Unit98>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="294" Column="17" TopLine="253"/>
+        <Caret Line="144" Column="2" TopLine="122"/>
       </Position1>
       <Position2>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="297" Column="35" TopLine="275"/>
+        <Caret Line="242" Column="3" TopLine="220"/>
       </Position2>
       <Position3>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="303" Column="29" TopLine="275"/>
+        <Caret Line="942" Column="2" TopLine="920"/>
       </Position3>
       <Position4>
         <Filename Value="mainunit.pas"/>
-        <Caret Line="305" Column="48" TopLine="275"/>
+        <Caret Line="1123" Column="2" TopLine="1101"/>
       </Position4>
       <Position5>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="306" Column="90" TopLine="275"/>
+        <Filename Value="xtypefm.pas"/>
+        <Caret Line="10" Column="81" TopLine="1"/>
       </Position5>
       <Position6>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="312" Column="17" TopLine="275"/>
+        <Filename Value="xtypefm.pas"/>
+        <Caret Line="19" Column="16" TopLine="1"/>
       </Position6>
       <Position7>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="741" Column="20" TopLine="719"/>
+        <Filename Value="xtypefm.pas"/>
+        <Caret Line="30" Column="4" TopLine="1"/>
       </Position7>
       <Position8>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="754" Column="29" TopLine="743"/>
+        <Filename Value="xtypefm.pas"/>
+        <Caret Line="49" Column="6" TopLine="27"/>
       </Position8>
       <Position9>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="27" Column="38" TopLine="1"/>
+        <Filename Value="xtypefm.pas"/>
+        <Caret Line="51" Column="6" TopLine="27"/>
       </Position9>
       <Position10>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="28" Column="33" TopLine="300"/>
+        <Filename Value="xtypefm.pas"/>
+        <Caret Line="59" Column="2" TopLine="27"/>
       </Position10>
       <Position11>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="109" Column="63" TopLine="141"/>
+        <Filename Value="common.pas"/>
+        <Caret Line="127" Column="28" TopLine="109"/>
       </Position11>
       <Position12>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="152" Column="42" TopLine="129"/>
+        <Filename Value="common.pas"/>
+        <Caret Line="546" Column="24" TopLine="529"/>
       </Position12>
       <Position13>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="155" Column="35" TopLine="133"/>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="1557" Column="4" TopLine="1517"/>
       </Position13>
       <Position14>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="154" Column="4" TopLine="139"/>
+        <Filename Value="xtypefm.pas"/>
+        <Caret Line="156" Column="4" TopLine="116"/>
       </Position14>
       <Position15>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="157" Column="77" TopLine="136"/>
+        <Filename Value="common.pas"/>
+        <Caret Line="183" Column="28" TopLine="157"/>
       </Position15>
       <Position16>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="194" Column="27" TopLine="172"/>
+        <Filename Value="common.pas"/>
+        <Caret Line="172" Column="19" TopLine="158"/>
       </Position16>
       <Position17>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="109" Column="54" TopLine="87"/>
+        <Filename Value="common.pas"/>
+        <Caret Line="179" Column="32" TopLine="152"/>
       </Position17>
       <Position18>
-        <Filename Value="packagekit.pas"/>
-        <Caret Line="155" Column="1" TopLine="115"/>
+        <Filename Value="common.pas"/>
+        <Caret Line="180" Column="2" TopLine="159"/>
       </Position18>
       <Position19>
-        <Filename Value="packagekit.pas"/>
-        <Caret Line="19" Column="31" TopLine="8"/>
+        <Filename Value="dgunit.pas"/>
+        <Caret Line="257" Column="67" TopLine="233"/>
       </Position19>
       <Position20>
         <Filename Value="dgunit.pas"/>
-        <Caret Line="109" Column="54" TopLine="87"/>
+        <Caret Line="27" Column="73" TopLine="63"/>
       </Position20>
       <Position21>
         <Filename Value="dgunit.pas"/>
-        <Caret Line="194" Column="31" TopLine="172"/>
+        <Caret Line="256" Column="26" TopLine="234"/>
       </Position21>
       <Position22>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="26" Column="58" TopLine="1"/>
+        <Filename Value="dgunit.pas"/>
+        <Caret Line="28" Column="3" TopLine="6"/>
       </Position22>
       <Position23>
-        <Filename Value="packagekit.pas"/>
-        <Caret Line="176" Column="23" TopLine="143"/>
+        <Filename Value="dgunit.pas"/>
+        <Caret Line="256" Column="27" TopLine="234"/>
       </Position23>
       <Position24>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="306" Column="32" TopLine="284"/>
+        <Filename Value="dgunit.pas"/>
+        <Caret Line="28" Column="8" TopLine="283"/>
       </Position24>
       <Position25>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="308" Column="16" TopLine="284"/>
+        <Filename Value="dgunit.pas"/>
+        <Caret Line="27" Column="68" TopLine="5"/>
       </Position25>
       <Position26>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="28" Column="56" TopLine="1"/>
+        <Filename Value="dgunit.pas"/>
+        <Caret Line="28" Column="6" TopLine="5"/>
       </Position26>
       <Position27>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="1254" Column="105" TopLine="1228"/>
+        <Filename Value="dgunit.pas"/>
+        <Caret Line="256" Column="27" TopLine="234"/>
       </Position27>
       <Position28>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="1265" Column="23" TopLine="1233"/>
+        <Filename Value="dgunit.pas"/>
+        <Caret Line="40" Column="38" TopLine="150"/>
       </Position28>
       <Position29>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="1296" Column="1" TopLine="1262"/>
+        <Filename Value="dgunit.pas"/>
+        <Caret Line="256" Column="26" TopLine="234"/>
       </Position29>
       <Position30>
-        <Filename Value="mainunit.pas"/>
-        <Caret Line="26" Column="55" TopLine="1"/>
+        <Filename Value="common.pas"/>
+        <Caret Line="189" Column="67" TopLine="153"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -870,7 +892,7 @@
     </Target>
     <SearchPaths>
       <OtherUnitFiles Value="synapse/;$(LazarusDir)/components/synedit/"/>
-      <LCLWidgetType Value="gtk2"/>
+      <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

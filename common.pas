@@ -103,8 +103,8 @@ procedure CmdResultList(cmd:String;Result: TStringList);
 function  CmdFinResult(cmd: String): String;
 //** Advanced file copy method @returns Success of the command
 function  FileCopy(source,dest: String): Boolean;
-//** Loads an GTK2 stock icon @returns Handle to th bitmap
-function  Gtk2LoadStockPixmap(StockId: PChar; IconSize: integer): HBitmap;
+//** Loads a stock icon (native on GTK2, if Qt4 is used aditional images are needed) @returns Handle to th bitmap
+procedure  LoadStockPixmap(StockId: PChar; IconSize: integer;bmp: TBitmap);
 //** Get server name from an url @returns The server name
 function  GetServerName(url:string):string;
 //** Path on an server (from an url) @returns The path on the server
@@ -116,18 +116,31 @@ function  IsInList(nm: String;list: TStringList): Boolean;
 //** Shows pkMon if option is set in preferences
 procedure ShowPKMon();
 
+const
+//Stock constants
+ STOCK_QUIT='stock-quit';
+ STOCK_GO_FORWARD='stock-go-forward';
+ STOCK_GO_BACK='stock-go-back';
+ STOCK_DIALOG_WARNING='stock-dialog-warning';
+ STOCK_CLOSE='stock-close';
+ STOCK_DELETE='stock-delete';
+ STOCK_EXECUTE='stock-execute';
+ ICON_SIZE_BUTTON=4;
+ ICON_SIZE_SMALL_TOOLBAR=2;
+ //
+ //** Directory with KDE4 icons
+ KDE_ICON_DIR='/usr/share/icons/default.kde4/';
 implementation
 
+procedure LoadStockPixmap(StockId: PChar; IconSize: integer; bmp: TBitmap);
+{$IFDEF LCLGTK2}
 function Gtk2LoadStockPixmap(StockId: PChar; IconSize: integer): HBitmap;
-{$ifdef LCLGTK2}
 var
   StockWindow: PGtkWidget;
   Pixmap: PGDIObject;
   Pixbuf: PGDKPixbuf;
-{$ENDIF}
 begin
   Result := 0;
-  {$ifdef LCLGTK2}
   // If not a default icon then stop
   if gtk_icon_factory_lookup_default(StockId) = nil then Exit;
   StockWindow := gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -147,8 +160,39 @@ begin
   end;
   gdk_pixbuf_unref(Pixbuf);
   Result := HBitmap(PtrUInt(Pixmap));
-  {$ENDIF}
 end;
+var cicon: String;BH: HBitmap;
+begin
+{$ENDIF}
+{$IFDEF LCLGTK2}
+ cicon:=StringReplace(StockId,'stock','gtk',[rfReplaceAll]);
+ BH:=Gtk2LoadStockPixmap(PChar(cicon),IconSize);
+ if BH <> 0 then
+    bmp.Handle:=BH;
+{$ELSE}
+var cicon: String;pic: TPicture;s: String;
+begin
+ if StockId = STOCK_QUIT then cicon:='process-stop.png';
+ if StockId = STOCK_GO_FORWARD then cicon:='arrow-right.png';
+ if StockId = STOCK_GO_BACK then cicon:='arrow-left.png';
+ if StockId = STOCK_DIALOG_WARNING then cicon:='../status/dialog-warning.png';
+ if StockId = STOCK_CLOSE then cicon:='window-close.png';
+ if StockId = STOCK_DELETE then cicon:='edit-delete.png';
+ if StockId = STOCK_EXECUTE then cicon:='fork.png';
+
+ if IconSize=4 then
+  s:=KDE_ICON_DIR+'16x16/actions/';
+ if IconSize=2 then
+  s:=KDE_ICON_DIR+'22x22/actions/';
+ if not FileExists(s) then exit;
+ pic:=TPicture.Create;
+ pic.LoadFromFile(s+cicon);
+ bmp.Clear;
+ bmp.LoadFromBitmapHandles(pic.Bitmap.Handle,pic.Bitmap.MaskHandle);
+ pic.Free;
+{$ENDIF}
+end;
+
 
 function GetServerName(url:string):string;
 var p1,p2 : integer;
@@ -528,10 +572,7 @@ Caption:=strUninstall;
 Anchors:=[akBottom,akRight];
 Top:=self.Height-46;
 Left:=self.Width-140;
-{$ifdef LCLGTK2}
-if Gtk2LoadStockPixmap(GTK_STOCK_DELETE,GTK_ICON_SIZE_BUTTON)<>0 then
-Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_DELETE,GTK_ICON_SIZE_MENU);
-{$ENDIF}
+LoadStockPixmap(STOCK_DELETE,ICON_SIZE_BUTTON,Glyph);
 end;
 end;
 

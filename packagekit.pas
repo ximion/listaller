@@ -57,10 +57,11 @@ procedure TPackageKit.CmdResult(cmd:String;s: TStringList);
 var t:TProcess;
 begin
  t:=tprocess.create(nil);
- t.Options:=[poUsePipes, poWaitOnExit];
+ t.Options:=[poUsePipes];
  t.CommandLine:=cmd;
  try
   t.Execute;
+  while t.Running do Application.ProcessMessages;
   s.LoadFromStream(t.Output);
  finally
  t.Free;
@@ -82,10 +83,11 @@ var t:TProcess;
 begin
  Result:=false;
  t:=tprocess.create(nil);
- t.Options:=[poUsePipes, poWaitOnExit];
+ t.Options:=[poUsePipes];
  t.CommandLine:=pkit+'--is-installed '+pkg;
  try
   t.Execute;
+   while t.Running do Application.ProcessMessages;
   if t.ExitStatus=1 then Result:=true;
  finally
  t.Free;

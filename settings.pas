@@ -98,8 +98,7 @@ begin
   UListBox1.Checked[UListBox1.Items.Count-1]:=tmp[i][1]='-';
   end;
 
-  if Gtk2LoadStockPixmap(GTK_STOCK_CLOSE,GTK_ICON_SIZE_BUTTON)<>0 then
-   BitBtn3.Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_CLOSE,GTK_ICON_SIZE_MENU);
+  LoadStockPixmap(STOCK_CLOSE,ICON_SIZE_BUTTON,BitBtn3.Glyph);
 
   //Translate...
   UpdPage.Caption:=strUpdSources;
