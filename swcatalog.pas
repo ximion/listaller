@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ComCtrls, Buttons, manager, HTTPSend, XMLRead, DOM, IniFiles, utilities,
+  ComCtrls, Buttons, manager, HTTPSend, XMLRead, DOM, IniFiles, common,
   gtk2, trstrings, blcksock, Process, ExtCtrls, LCLType;
 
 type

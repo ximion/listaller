@@ -44,9 +44,9 @@ object FmAbout: TFmAbout
   end
   object Label3: TLabel
     Left = 117
-    Height = 13
+    Height = 14
     Top = 58
-    Width = 163
+    Width = 166
     Caption = 'Under Linux desktop environment'
     ParentColor = False
   end
@@ -61,12 +61,12 @@ object FmAbout: TFmAbout
     TabOrder = 0
     object AboutSheet: TTabSheet
       Caption = 'About'
-      ClientHeight = 238
+      ClientHeight = 241
       ClientWidth = 320
       object Label4: TLabel
         Left = 6
         Height = 88
-        Top = 64
+        Top = 65
         Width = 226
         Anchors = [akLeft]
         Caption = 'Software installer && manager'#10#10'© 2008-2009 Matthias Klumpp'#10#10'http://listaller.nlinux.org'#10'License: GNU General Public License Version 3'
@@ -75,20 +75,17 @@ object FmAbout: TFmAbout
     end
     object AuthorSheet: TTabSheet
       Caption = 'Authors'
-      ClientHeight = 238
+      ClientHeight = 241
       ClientWidth = 320
       object Label5: TLabel
-        Left = 0
         Height = 13
-        Top = 0
         Width = 320
         Align = alTop
         Caption = 'Please use https://bugs.launchpad.net/listaller for bug reports.'
         ParentColor = False
       end
       object Label6: TLabel
-        Left = 0
-        Height = 225
+        Height = 228
         Top = 13
         Width = 320
         Align = alClient
@@ -98,10 +95,10 @@ object FmAbout: TFmAbout
     end
   end
   object BitBtn1: TBitBtn
-    Left = 292
-    Height = 22
-    Top = 388
-    Width = 40
+    Left = 288
+    Height = 27
+    Top = 383
+    Width = 44
     Anchors = [akRight, akBottom]
     AutoSize = True
     Caption = 'Close'

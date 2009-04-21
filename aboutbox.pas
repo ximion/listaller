@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
-  ExtCtrls, StdCtrls, ComCtrls, Buttons, utilities, trstrings, distri;
+  ExtCtrls, StdCtrls, ComCtrls, Buttons, common, trstrings, distri;
 
 type
 

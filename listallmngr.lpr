@@ -26,7 +26,7 @@ uses
   Forms,
   SysUtils,
   manager, settings, uninstall, pkgconvertdisp, swcatalog, ipkhandle,
-  utilities, translations, gettext;
+  common, translations, gettext, packagekit;
 
 {$IFDEF WINDOWS}{$R listallmngr.rc}{$ENDIF}
 
@@ -47,7 +47,6 @@ begin
   Application.Title:='Listaller Manager';
   Application.ShowMainForm:=false;
   Application.Initialize;
-  pkit := GetDataFile('pkitbind/pkitbind.py')+' ';
   writeLn('Application initialized.');
   Application.CreateForm(TMnFrm, MnFrm);
   Application.CreateForm(TFmConfig, FmConfig);

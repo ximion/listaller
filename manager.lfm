@@ -62,9 +62,7 @@ object MnFrm: TMnFrm
   OnShow = FormShow
   LCLVersion = '0.9.27'
   object Image1: TImage
-    Left = 0
     Height = 56
-    Top = 0
     Width = 816
     Align = alTop
     Stretch = True
@@ -97,7 +95,6 @@ object MnFrm: TMnFrm
     Constraints.MinWidth = 220
   end
   object StatusBar1: TStatusBar
-    Left = 0
     Height = 20
     Top = 538
     Width = 816
@@ -202,8 +199,6 @@ object MnFrm: TMnFrm
     Height = 23
     Top = 112
     Width = 144
-    AutoComplete = False
-    ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
       'All'
@@ -218,7 +213,6 @@ object MnFrm: TMnFrm
       'Additional'
       'Other'
     )
-    ItemWidth = 0
     MaxLength = 65535
     OnChange = CBoxChange
     TabOrder = 1
@@ -432,18 +426,8 @@ object MnFrm: TMnFrm
     TabOrder = 6
   end
   object Process1: TProcess
-    Active = False
     Options = [poNoConsole]
     Priority = ppNormal
-    StartupOptions = []
-    ShowWindow = swoNone
-    WindowColumns = 0
-    WindowHeight = 0
-    WindowLeft = 0
-    WindowRows = 0
-    WindowTop = 0
-    WindowWidth = 0
-    FillAttribute = 0
     left = 768
     top = 8
   end

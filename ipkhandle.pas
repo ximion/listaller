@@ -21,7 +21,7 @@ unit ipkhandle;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, utilities, Forms, Process, trstrings;
+  Classes, SysUtils, IniFiles, common, Forms, Process, trstrings;
 
  {** Removes an IPK application
      @param AppName Name of the application, that should be uninstalled
@@ -32,8 +32,6 @@ uses
  function UninstallIPKApp(AppName, AppID: String; var Log: TStrings; fast: Boolean=false):Integer;
 
  var
-   //** Path to the Python PackageKit wrapper
-   pkit: String;
    //** Path to package registration
    RegDir: String='/etc/lipa/app-reg/';
 
@@ -44,7 +42,6 @@ var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;reg: TIniFile;k: Bool
     proc: TProcess;dlink: Boolean;t: TProcess;
 begin
 Result:=0;
-pkit:=GetDataFile('pkitbind/pkitbind.py')+' ';
 p:=RegDir+AppName+'~'+AppID+'/';
 //InfoMemo.Lines.Add('Begin uninstallation...');
 

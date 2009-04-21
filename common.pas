@@ -14,7 +14,7 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** Here are some global functions which are used everywhere
-unit utilities;
+unit common;
 
 {$mode objfpc}{$H+}
 
@@ -583,7 +583,7 @@ end;
 
 function TListEntry.GetAppVersion: String;
 begin
- Result:=MNLabel.Caption;
+ Result:=VLabel.Caption;
 end;
 
 procedure TListEntry.SetImage(AImage: String);

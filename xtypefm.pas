@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  process, ExtCtrls, utilities, LCLType, Buttons, distri, {$IFDEF LCLGTK2}gtk2,{$ENDIF}
+  process, ExtCtrls, common, LCLType, Buttons, distri, {$IFDEF LCLGTK2}gtk2,{$ENDIF}
   trstrings, ComCtrls;
 
 type
