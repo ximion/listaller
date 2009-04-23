@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ComCtrls, Buttons, manager, HTTPSend, XMLRead, DOM, IniFiles, common,
-  gtk2, trstrings, blcksock, Process, ExtCtrls, LCLType;
+  trstrings, blcksock, Process, ExtCtrls, LCLType;
 
 type
 
@@ -144,9 +144,7 @@ OnClick:=@InstallClick;
 Anchors:=[akBottom,akRight];
 Top:=16;
 Left:=self.Width-90;
-
-if Gtk2LoadStockPixmap(GTK_STOCK_APPLY,GTK_ICON_SIZE_MENU)<>0 then
-Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_APPLY,GTK_ICON_SIZE_MENU);
+LoadStockPixmap(STOCK_APPLY,ICON_SIZE_MENU,Glyph);
 end;
 
 InfoBtn:=TBitBtn.Create(self);
@@ -154,8 +152,7 @@ InfoBtn.Parent:=self;
 with InfoBtn do begin
 InfoBtn.Caption:='Info';
 InfoBtn.AutoSize:=true;
-if Gtk2LoadStockPixmap(GTK_STOCK_DIALOG_INFO,GTK_ICON_SIZE_MENU)<>0 then
-Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_DIALOG_INFO,GTK_ICON_SIZE_MENU);
+LoadStockPixmap(STOCK_DIALOG_INFO,ICON_SIZE_MENU, Glyph);
 InfoBtn.OnClick:=@InfoClick;
 Height:=26;
 end;
@@ -639,10 +636,7 @@ begin
   Memo1.Lines.Add(strNoInfo);
   BitBtn1.Caption:=strClose;
   BitBtn2.Caption:=strAbort;
-  {$ifdef LCLGTK2}
-   if Gtk2LoadStockPixmap(GTK_STOCK_CLOSE,GTK_ICON_SIZE_BUTTON)<>0 then
-   BitBtn1.Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_CLOSE,GTK_ICON_SIZE_MENU);
-  {$ENDIF}
+  LoadStockPixmap(STOCK_CLOSE,ICON_SIZE_BUTTON,BitBtn1.Glyph);
 end;
 
 procedure TSCForm.FormDestroy(Sender: TObject);

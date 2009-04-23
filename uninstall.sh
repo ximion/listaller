@@ -10,6 +10,7 @@ esac
 rmdir /usr/lib/listaller
 rmdir /usr/share/listaller
 rm -f /usr/bin/lipa
-rm -f /usr/bin/listallmgr
+rm -f /usr/bin/listallmgr-qt4
+rm -f /usr/bin/listallmgr-gtk2
 
 echo "Uninstalled."

@@ -1,4 +1,4 @@
-object Form1: TForm1
+object UMnForm: TUMnForm
   Left = 282
   Height = 614
   Top = 180

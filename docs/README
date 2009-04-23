@@ -1,0 +1,21 @@
+Listaller 0.3-dev
+
+=== Compiling instructions ===
+To compile Listaller, cd to the source directory and execute
+make all
+make licreator
+If you wand the Qt4 version, compile Listaller with WIDGET=qt4:
+make WIDGET=gtk2 all
+make WIDGET=gtk2 licreator
+
+=== Installation ===
+To install Listaller from scratch, execute
+make litools-inst
+make litdata-inst
+make WIDGET=gtk2 install
+make WIDGET=gtk2 licreator-inst
+if you have the Gtk2 version. If you have the Qt4 version, execute the following commands:
+make litools-inst
+make litdata-inst
+make WIDGET=qt4 install
+make WIDGET=qt4 licreator-inst

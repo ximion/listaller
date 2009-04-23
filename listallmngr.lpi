@@ -11,13 +11,13 @@
       <Title Value="Listaller Manager"/>
       <UseAppBundle Value="False"/>
       <Icon Value="0"/>
-      <ActiveEditorIndexAtStart Value="2"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="887"/>
+      <CurrentBuildNr Value="892"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -46,14 +46,14 @@
         <MinVersion Major="1" Valid="True"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="79">
+    <Units Count="80">
       <Unit0>
         <Filename Value="listallmngr.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallmngr"/>
         <CursorPos X="6" Y="29"/>
         <TopLine Value="2"/>
-        <UsageCount Value="147"/>
+        <UsageCount Value="148"/>
       </Unit0>
       <Unit1>
         <Filename Value="manager.pas"/>
@@ -64,7 +64,7 @@
         <CursorPos X="50" Y="26"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="147"/>
+        <UsageCount Value="148"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
@@ -264,7 +264,7 @@
         <CursorPos X="3" Y="101"/>
         <TopLine Value="79"/>
         <EditorIndex Value="1"/>
-        <UsageCount Value="139"/>
+        <UsageCount Value="140"/>
         <Loaded Value="True"/>
       </Unit29>
       <Unit30>
@@ -294,9 +294,9 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uninstall"/>
         <CursorPos X="29" Y="173"/>
-        <TopLine Value="128"/>
-        <EditorIndex Value="4"/>
-        <UsageCount Value="132"/>
+        <TopLine Value="56"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="133"/>
         <Loaded Value="True"/>
       </Unit33>
       <Unit34>
@@ -304,18 +304,16 @@
         <UnitName Value="trstrings"/>
         <CursorPos X="15" Y="118"/>
         <TopLine Value="89"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="4"/>
         <UsageCount Value="32"/>
         <Loaded Value="True"/>
       </Unit34>
       <Unit35>
         <Filename Value="common.pas"/>
         <UnitName Value="common"/>
-        <CursorPos X="11" Y="95"/>
-        <TopLine Value="95"/>
-        <EditorIndex Value="5"/>
+        <CursorPos X="71" Y="181"/>
+        <TopLine Value="143"/>
         <UsageCount Value="42"/>
-        <Loaded Value="True"/>
       </Unit35>
       <Unit36>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkdef.pp"/>
@@ -376,7 +374,7 @@
         <UnitName Value="pkgconvertdisp"/>
         <CursorPos X="28" Y="26"/>
         <TopLine Value="1"/>
-        <UsageCount Value="97"/>
+        <UsageCount Value="98"/>
       </Unit44>
       <Unit45>
         <Filename Value="swcatalog.pas"/>
@@ -384,10 +382,10 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="swcatalog"/>
-        <CursorPos X="23" Y="148"/>
-        <TopLine Value="126"/>
+        <CursorPos X="31" Y="639"/>
+        <TopLine Value="618"/>
         <EditorIndex Value="2"/>
-        <UsageCount Value="90"/>
+        <UsageCount Value="91"/>
         <Loaded Value="True"/>
       </Unit45>
       <Unit46>
@@ -516,9 +514,7 @@
         <UnitName Value="xtypefm"/>
         <CursorPos X="13" Y="84"/>
         <TopLine Value="49"/>
-        <EditorIndex Value="3"/>
         <UsageCount Value="14"/>
-        <Loaded Value="True"/>
       </Unit64>
       <Unit65>
         <Filename Value="ipkhandle.pas"/>
@@ -548,7 +544,7 @@
         <UnitName Value="aboutbox"/>
         <CursorPos X="48" Y="9"/>
         <TopLine Value="1"/>
-        <UsageCount Value="40"/>
+        <UsageCount Value="41"/>
       </Unit68>
       <Unit69>
         <Filename Value="../../../../../usr/lib/lazarus/components/turbopower_ipro/iphtmlpv.pas"/>
@@ -590,8 +586,8 @@
       </Unit73>
       <Unit74>
         <Filename Value="../../../../../usr/share/fpcsrc/2.2.2/packages/gtk2/src/gtk+/gtk/gtkstock.inc"/>
-        <CursorPos X="4" Y="42"/>
-        <TopLine Value="21"/>
+        <CursorPos X="4" Y="23"/>
+        <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit74>
       <Unit75>
@@ -621,10 +617,16 @@
         <UnitName Value="packagekit"/>
         <CursorPos X="20" Y="67"/>
         <TopLine Value="45"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit78>
+      <Unit79>
+        <Filename Value="../../../../../usr/share/fpcsrc/2.2.2/packages/gtk2/src/gtk+/gtk/gtkenums.inc"/>
+        <CursorPos X="24" Y="284"/>
+        <TopLine Value="262"/>
+        <UsageCount Value="10"/>
+      </Unit79>
     </Units>
-    <JumpHistory Count="15" HistoryIndex="14">
+    <JumpHistory Count="18" HistoryIndex="17">
       <Position1>
         <Filename Value="manager.pas"/>
         <Caret Line="26" Column="8" TopLine="13"/>
@@ -662,29 +664,41 @@
         <Caret Line="247" Column="10" TopLine="223"/>
       </Position9>
       <Position10>
-        <Filename Value="common.pas"/>
-        <Caret Line="95" Column="17" TopLine="73"/>
+        <Filename Value="uninstall.pas"/>
+        <Caret Line="268" Column="8" TopLine="247"/>
       </Position10>
       <Position11>
         <Filename Value="uninstall.pas"/>
-        <Caret Line="268" Column="8" TopLine="247"/>
+        <Caret Line="246" Column="24" TopLine="224"/>
       </Position11>
       <Position12>
-        <Filename Value="uninstall.pas"/>
-        <Caret Line="246" Column="24" TopLine="224"/>
+        <Filename Value="manager.pas"/>
+        <Caret Line="26" Column="50" TopLine="1"/>
       </Position12>
       <Position13>
-        <Filename Value="manager.pas"/>
+        <Filename Value="settings.pas"/>
         <Caret Line="26" Column="50" TopLine="1"/>
       </Position13>
       <Position14>
-        <Filename Value="settings.pas"/>
-        <Caret Line="26" Column="50" TopLine="1"/>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="25" Column="71" TopLine="1"/>
       </Position14>
       <Position15>
         <Filename Value="swcatalog.pas"/>
-        <Caret Line="25" Column="71" TopLine="1"/>
+        <Caret Line="149" Column="61" TopLine="126"/>
       </Position15>
+      <Position16>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="26" Column="3" TopLine="1"/>
+      </Position16>
+      <Position17>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="155" Column="34" TopLine="133"/>
+      </Position17>
+      <Position18>
+        <Filename Value="swcatalog.pas"/>
+        <Caret Line="146" Column="21" TopLine="128"/>
+      </Position18>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -695,7 +709,7 @@
     <SearchPaths>
       <OtherUnitFiles Value="synapse/;opbitmap/"/>
       <UnitOutputDirectory Value="bin"/>
-      <LCLWidgetType Value="gtk2"/>
+      <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

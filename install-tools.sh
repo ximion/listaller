@@ -2,28 +2,16 @@
 # Parses command line options. Currently supported options are:
 # DESTDIR		Destination root directory
 for arg; do
-
   case $arg in
-
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;
-
   esac;
-
 done
 
-#DESTDIR=""
-
-#Strips the debug-infos
-#strip --strip-all "./bin/lipa" "./bin/unibuild"
 ARCH=$(uname -m)
 case "$ARCH" in
-
  "i686") ARCH="i386";;
-
  "i586") ARCH="i386";;
-
  "i486") ARCH="i386";;
-
 esac
 
 # Does the install

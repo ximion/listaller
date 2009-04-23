@@ -15,9 +15,14 @@ build-stamp:
 	dh_testdir
 
 	# Add here commands to compile the package.
-	make all
-	make licreator
-	make litheme
+	#Build Gtk2-release
+	make WIDGET=gtk2 all
+	make WIDGET=gtk2 licreator
+	make WIDGET=gtk2 litheme
+	#Build Qt4 release
+	make WIDGET=qt4 all
+	make WIDGET=qt4 licreator
+	make WIDGET=qt4 litheme
 	#docbook-to-man debian/listaller.sgml > listaller.1
 
 	touch $@
@@ -39,10 +44,18 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/listaller.
-	make DESTDIR=./debian/listaller-gtk install
-	make DESTDIR=./debian/listaller-tools litools-inst
-	make DESTDIR=./debian/listaller-creation-gtk licreator-inst
-	make DESTDIR=./debian/lithememgr-gtk litheme-inst
+	#Install common
+        make DESTDIR=./debian/listaller-tools litools-inst
+	make DESTDIR=./debian/listaller-data install-data
+	#Install Gtk release
+	make WIDGET=gtk2 DESTDIR=./debian/listaller-gtk install
+	make WIDGET=gtk2 DESTDIR=./debian/listaller-creation-gtk licreator-inst
+	make WIDGET=gtk2 DESTDIR=./debian/lithememgr-gtk litheme-inst
+	#Install Qt4 release
+	make WIDGET=qt4 DESTDIR=./debian/listaller-gtk install
+	make WIDGET=qt4 DESTDIR=./debian/listaller-creation-gtk licreator-inst
+	make WIDGET=qt4 DESTDIR=./debian/lithememgr-gtk litheme-inst
+
 # Build architecture-independent files here.
 binary-indep: build install
 # We have nothing to do by default.

@@ -19,13 +19,12 @@ program unibuild;
 {$mode objfpc}{$H+}
 
 uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
+  {$IFDEF UNIX}
   cthreads,
-  {$ENDIF}{$ENDIF}
+  {$ENDIF}
   Classes, SysUtils, CustApp,
-  Process, XMLRead, DOM, ExtCtrls,
-  StrUtils, Forms, LCLType, ipkbuild,
-  common;
+  Process, ipkbuild, common,
+  DOM, XMLRead;
 
 type
 
@@ -80,16 +79,6 @@ begin
     CreateRPM(pki);
     Halt;
   end;
-
-  {
-  Mini Brainstorm:
-   - Unibuild gets all information from the IPK-package
-   - Builds DEB-structure using dh_make or build its own structure
-   - Creates a .spec-File using the data
-   - Runs debuild and rpmbuild
-   - Deletes the debian-dir and the spec-file
-   - Finished
-  }
 
   // stop program loop
   Terminate;

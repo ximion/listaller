@@ -125,8 +125,12 @@ const
  STOCK_CLOSE='stock-close';
  STOCK_DELETE='stock-delete';
  STOCK_EXECUTE='stock-execute';
+ STOCK_APPLY='stock-apply';
+ STOCK_DIALOG_INFO='stock-dialog-info';
+ STOCK_REFRESH='stock-refresh';
  ICON_SIZE_BUTTON=4;
  ICON_SIZE_SMALL_TOOLBAR=2;
+ ICON_SIZE_MENU=1;
  //
  //** Directory with KDE4 icons
  KDE_ICON_DIR='/usr/share/icons/default.kde4/';
@@ -172,6 +176,10 @@ begin
 {$ELSE}
 var cicon: String;pic: TPicture;s: String;
 begin
+if not DirectoryExists(KDE_ICON_DIR+'22x22/') then
+ if not DirectoryExists('/usr/share/icons/default.kde/22x22') then
+  if not DirectoryExists('/usr/share/icons/oxygen/22x22') then
+   if not DirectoryExists('/usr/share/icons/hicolor/22x22') then exit;
  if StockId = STOCK_QUIT then cicon:='process-stop.png';
  if StockId = STOCK_GO_FORWARD then cicon:='arrow-right.png';
  if StockId = STOCK_GO_BACK then cicon:='arrow-left.png';
@@ -179,10 +187,15 @@ begin
  if StockId = STOCK_CLOSE then cicon:='window-close.png';
  if StockId = STOCK_DELETE then cicon:='edit-delete.png';
  if StockId = STOCK_EXECUTE then cicon:='fork.png';
+ if StockId = STOCK_APPLY then cicon:='dialog-ok-apply.png';
+ if StockId = STOCK_DIALOG_INFO then cicon:='help-hint.png';
+ if StockId = STOCK_REFRESH then cicon:='view-refresh.png';
 
  if IconSize=4 then
   s:=KDE_ICON_DIR+'16x16/actions/';
  if IconSize=2 then
+  s:=KDE_ICON_DIR+'22x22/actions/';
+ if IconSize=1 then
   s:=KDE_ICON_DIR+'22x22/actions/';
  if not FileExists(s) then exit;
  pic:=TPicture.Create;

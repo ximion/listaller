@@ -63,7 +63,7 @@ end;
 procedure TUExecFm.Button1Click(Sender: TObject);
 begin
   Close;
-  Form1.BitBtn2Click(nil);
+  UMnForm.BitBtn2Click(nil);
 end;
 
 var fstact: Boolean=true;
@@ -100,7 +100,7 @@ Memo1.Lines.Add('Log:');
     c:=tprocess.create(nil);
     c.Options:=[poUsePipes,poWaitonexit];
     reg:=TIniFile.Create(RegDir+'appreg.lst');
-    with Form1 do begin
+    with UMnForm do begin
   for j:=0 to length(ulist)-1 do begin
   if CheckListBox1.Checked[j] then begin
     ProgressBar1.Max:=(ulist[j].Count div 2);

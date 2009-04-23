@@ -9,13 +9,17 @@ all:
 	chmod +x ./make.sh
 	./make.sh
 
+install-data:
+	chmod +x ./install-data.sh
+	./install-data.sh
+
 litools-inst:
 	chmod +x ./install-tools.sh
 	./install-tools.sh
 
 licreator:
-	chmod +x ./install-tools.sh
-	./install-tools.sh
+	chmod +x ./make-creator.sh
+	./make-creator.sh
 
 licreator-inst:
 	chmod +x ./install-creator.sh

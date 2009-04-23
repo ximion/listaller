@@ -14,7 +14,7 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** This unit contains the code for the graphical installation of standard IPK-packages
-unit mainunit;
+unit imainunit;
 
 {$mode delphi}{$H+}
 
@@ -309,7 +309,6 @@ begin
      if h='Failed!' then begin ShowMessage(StringReplace(strDepNotFound,'%l',Dependencies[i],[rfReplaceAll])+#13+strInClose);tmp.Free;exit;end;
      if h='PackageKit problem.' then begin ShowMessage(strPKitProbPkMon);tmp.Free;exit;end;
      Application.ProcessMessages;
-     ShowMessage(h);
      tmp.Add(h);
      h:='';
      ProgressBar1.Position:=ProgressBar1.Position+1;
@@ -1553,7 +1552,7 @@ begin
 end;
 
 initialization
-  {$I mainunit.lrs}
+  {$I imainunit.lrs}
 
 end.
 

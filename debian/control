@@ -6,11 +6,23 @@ Priority: extra
 Homepage: http://listaller.nlinux.org
 Build-Depends: libgtk2.0-dev, libgdk-pixbuf-dev, lazarus-ide, fpc (>= 2.2.2-3), debhelper (>= 5), libgdk-pixbuf2
 
+Package: listaller-data
+Architecture: all
+Depends: packagekit, python-packagekit, python
+Description: Listaller data
+  Listaller is a distribution-independ software install system.
+  The application is able to uninstall every application on your
+  system you want to be removed, including LOKI/Mojo and Autopackages.
+  This package also includes the IPK installer tool.
+  Listaller tries to be compatible to all available Linux distributions
+  and uses PackageKit as backend.
+  This package contains platform and widgetset independent data of Listaller.
+
 Package: listaller-gtk
 Architecture: any
 Depends: ${shlibs:Depends}, gksu, xdg-utils, lsb-release, packagekit, python-packagekit, python
 Provides: listaller, listaller-compact-gtk
-Description: Listaller main package (GTK)
+Description: Listaller main package (GTK2)
   Listaller is a distribution-independ software install system.
   The application can be used to uninstall every application on your
   system you want to be removed, including LOKI/Mojo and Autopackages.
@@ -30,7 +42,7 @@ Description: Command-line tools for Listaller package handling
 Package: listaller-creation-gtk
 Architecture: any
 Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller, listaller-tools
-Description: Listaller Creator (GTK)
+Description: Listaller Creator (GTK2)
   Listaller is a cross-distribution software install system.
   This is an alpha-release of Listaller's graphical package creation tool.
   With liCreator you can easily build your own IPK-packages for the Listaller system.
@@ -39,7 +51,40 @@ Description: Listaller Creator (GTK)
 Package: lithememgr-gtk
 Architecture: any
 Depends: ${shlibs:Depends}, listaller
-Description: liTheme Manager
+Description: liTheme Manager (GTK2)
+  Tool that lets you easily install/uninstall system themes, wallpapers, 
+  iconsets and screensavers.  liThemeMgr is part of the Listaller project
+  and uses it's technology.
+  liThemeMgr is still under development. This is an daily-build and should not be used!
+
+Package: listaller-qt
+Architecture: any
+Depends: ${shlibs:Depends}, kdesudo, packagekit, python-packagekit, python, libqtintf4, kde-icons-oxygen
+Provides: listaller, listaller-compact-qt
+Description: Listaller main package (Qt4)
+  Listaller is a distribution-independ software install system.
+  The application can be used to uninstall every application on your
+  system you want to be removed, including LOKI/Mojo and Autopackages.
+  This package also includes the IPK installer tool.
+  Listaller tries to be compatible to all available Linux distributions
+  and uses PackageKit as backend.
+  Please note that this alpha-version should only be used for testing purposes.
+
+Package: listaller-creation-qt
+Architecture: any
+Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller, listaller-tools
+Replaces: listaller-creation-gtk
+Description: Listaller Creator (Qt4)
+  Listaller is a cross-distribution software install system.
+  This is an alpha-release of Listaller's graphical package creation tool.
+  With liCreator you can easily build your own IPK-packages for the Listaller system.
+  Please note that this is an alpha-release!
+
+Package: lithememgr-qt
+Architecture: any
+Depends: ${shlibs:Depends}, listaller
+Replaces: lithememgr-gtk
+Description: liTheme Manager (Qt4)
   Tool that lets you easily install/uninstall system themes, wallpapers, 
   iconsets and screensavers.  liThemeMgr is part of the Listaller project
   and uses it's technology.

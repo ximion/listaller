@@ -2,22 +2,14 @@
 # Parses command line options. Currently supported options are:
 #
 # DESTDIR		Destination root directory
+# WIDGET                Widgetset the binary should be installed for
 for arg; do
-
   case $arg in
-
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;
-
+    WIDGET=*) WIDGET=${arg#WIDGET=};;
   esac;
-
 done
 
-#DESTDIR=""
-
-#Strips the debug-infos
-strip "./bin/litheme"
-
-#
 # Does the install
 #
 # "mkdir -p" is equivalent to ForceDirectories pascal function
@@ -32,8 +24,12 @@ mkdir -p $DESTDIR/usr/share/applications
 
 cp './graphics/ligraphic-header.png' $DESTDIR/usr/appfiles/liThemeMgr/graphics
 cp './graphics/spackage.png' $DESTDIR/usr/appfiles/liThemeMgr/graphics
-cp './bin/litheme' $DESTDIR/usr/appfiles/liThemeMgr/
 
+if [ "$WIDGET" == "qt4" ]; then
+cp './bin/qt4/litheme' $DESTDIR/usr/appfiles/liThemeMgr/
+else
+cp './bin/gtk2/litheme' $DESTDIR/usr/appfiles/liCreator/
+fi
 cp "./liThemeHandler/liThemeMgr.desktop" $DESTDIR"/usr/share/applications/"
 
 #Create symlink

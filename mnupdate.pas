@@ -23,12 +23,11 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   StdCtrls, Buttons, CheckLst, HTTPSend, IniFiles, MD5, common, updexec, LCLType,
-  Process, Menus, trstrings, GetText, Translations, gtk2,
-  gtkint, gtkdef, XMLRead, DOM, ldunit, ipkhandle;
+  Process, Menus, trstrings, GetText, Translations, XMLRead, DOM, ldunit, ipkhandle;
 
 type
 
-  { TForm1 }
+  { TUMnForm }
   
   TAppNotes = record
   AppName: String;
@@ -36,7 +35,7 @@ type
   ID: String;
   end;
 
-  TForm1 = class(TForm)
+  TUMnForm = class(TForm)
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
     CheckListBox1: TCheckListBox;
@@ -67,16 +66,16 @@ type
   end; 
 
 var
-  Form1: TForm1;
+  UMnForm: TUMnForm;
   
 const
   lp='/tmp/'; //Working directory of Listaller
 
 implementation
 
-{ TForm1 }
+{ TUMnForm }
 
-procedure TForm1.BitBtn1Click(Sender: TObject);
+procedure TUMnForm.BitBtn1Click(Sender: TObject);
 begin
 UExecFm.ShowModal;
 end;
@@ -91,7 +90,7 @@ Result:=dn.ChildNodes.Item[i].FirstChild;break;exit;end;
 end;
 end;
 
-procedure TForm1.CheckForUpdates;
+procedure TUMnForm.CheckForUpdates;
 var
   HTTP: THTTPSend;
   tmp,h,sinfo,sources: TStringList;
@@ -193,12 +192,12 @@ end;
 LoadForm.Close;
 end;
 
-procedure TForm1.BitBtn2Click(Sender: TObject);
+procedure TUMnForm.BitBtn2Click(Sender: TObject);
 begin
 CheckForUpdates;
 end;
 
-procedure TForm1.CheckListBox1Click(Sender: TObject);
+procedure TUMnForm.CheckListBox1Click(Sender: TObject);
 begin
 if CheckListBox1.ItemIndex>-1 then begin
 InfoMemo.Enabled:=true;
@@ -209,7 +208,7 @@ InfoMemo.Lines.Add(StringReplace(strUpdTo,'%v','"'+anotes[CheckListBox1.ItemInde
 end;
 end;
 
-procedure TForm1.FormCloseQuery(Sender: TObject; var CanClose: boolean);
+procedure TUMnForm.FormCloseQuery(Sender: TObject; var CanClose: boolean);
 begin
   Hide;
   CanClose:=false;
@@ -248,7 +247,7 @@ translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-
 translations.SystemCharSetIsUTF8:=true;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TUMnForm.FormCreate(Sender: TObject);
 begin
 
 if not DirectoryExists(RegDir) then begin
@@ -263,8 +262,8 @@ TranslateInterface();
 //Set icons
 //TrayIcon1.Icon.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_GOTO_BOTTOM,GTK_ICON_SIZE_SMALL_TOOLBAR);
 TrayIcon1.Visible:=true;
-BitBtn2.Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_REFRESH,3);
-BitBtn1.Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_APPLY,3);
+LoadStockPixmap(STOCK_REFRESH,ICON_SIZE_BUTTON,BitBtn2.Glyph);
+LoadStockPixmap(STOCK_APPLY,ICON_SIZE_BUTTON,BitBtn1.Glyph);
 //Translation
 BitBtn2.Caption:=strCheckForUpd;
 BitBtn1.Caption:=strInstUpd;
@@ -272,39 +271,39 @@ MenuItem1.Caption:=strQuitUpdater;
 MenuItem2.Caption:=strShowUpdater;
 end;
 
-procedure TForm1.FormDestroy(Sender: TObject);
+procedure TUMnForm.FormDestroy(Sender: TObject);
 begin
   TrayIcon1.Visible:=false;
 end;
 
-procedure TForm1.FormHide(Sender: TObject);
+procedure TUMnForm.FormHide(Sender: TObject);
 begin
   TrayIcon1.Visible:=true;
 end;
 
-procedure TForm1.FormShow(Sender: TObject);
+procedure TUMnForm.FormShow(Sender: TObject);
 begin
   TrayIcon1.Visible:=false;
 end;
 
-procedure TForm1.MenuItem1Click(Sender: TObject);
+procedure TUMnForm.MenuItem1Click(Sender: TObject);
 begin
   Application.Terminate;
 end;
 
-procedure TForm1.MenuItem2Click(Sender: TObject);
+procedure TUMnForm.MenuItem2Click(Sender: TObject);
 begin
-  Form1.Show;
+  UMnForm.Show;
 end;
 
-procedure TForm1.TrayIcon1Click(Sender: TObject);
+procedure TUMnForm.TrayIcon1Click(Sender: TObject);
 begin
 
 end;
 
-procedure TForm1.TrayIcon1DblClick(Sender: TObject);
+procedure TUMnForm.TrayIcon1DblClick(Sender: TObject);
 begin
-  Form1.Show;
+  UMnForm.Show;
 end;
 
 initialization

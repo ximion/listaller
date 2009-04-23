@@ -1,9 +1,9 @@
 { Das ist eine automatisch erzeugte Lazarus-Ressourcendatei }
 
-LazarusResources.Add('TForm1','FORMDATA',[
-  'TPF0'#6'TForm1'#5'Form1'#4'Left'#3#26#1#6'Height'#3'f'#2#3'Top'#3#180#0#5'Wi'
-  +'dth'#3#176#2#13'ActiveControl'#7#13'CheckListBox1'#7'Caption'#6#14'Update M'
-  +'anager'#12'ClientHeight'#3'f'#2#11'ClientWidth'#3#176#2#12'OnCloseQuery'#7
+LazarusResources.Add('TUMnForm','FORMDATA',[
+  'TPF0'#8'TUMnForm'#7'UMnForm'#4'Left'#3#26#1#6'Height'#3'f'#2#3'Top'#3#180#0#5
+  +'Width'#3#176#2#13'ActiveControl'#7#13'CheckListBox1'#7'Caption'#6#14'Update'
+  +' Manager'#12'ClientHeight'#3'f'#2#11'ClientWidth'#3#176#2#12'OnCloseQuery'#7
   +#14'FormCloseQuery'#8'OnCreate'#7#10'FormCreate'#9'OnDestroy'#7#11'FormDestr'
   +'oy'#6'OnHide'#7#8'FormHide'#6'OnShow'#7#8'FormShow'#10'LCLVersion'#6#6'0.9.'
   +'27'#0#5'TMemo'#8'InfoMemo'#4'Left'#2#8#6'Height'#2'Z'#3'Top'#3#254#1#5'Widt'

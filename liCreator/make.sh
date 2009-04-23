@@ -1,5 +1,10 @@
-#! /bin/sh
-
+#!/bin/bash
+# WIDGET                Widgetset the binary should be installed for
+for arg; do
+  case $arg in
+    WIDGET=*) WIDGET=${arg#WIDGET=};;
+  esac;
+done
 # Detects and parses the architecture
 ARCH=$(uname -m)
 
@@ -19,4 +24,10 @@ echo "LAZTarget: $LCLDir"
 
 # Command line to build the sofware
 echo "Creating liCreator..."
+if [ "$WIDGET" == "qt4" ]; then
+$LCLDir/lazbuild -B --ws=qt4 lipkgcreator.lpr
+cp ../bin/licreator ../bin/qt4/
+else
 $LCLDir/lazbuild -B --ws=gtk2 lipkgcreator.lpr
+cp ../bin/licreator ../bin/gtk2/
+fi

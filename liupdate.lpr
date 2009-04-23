@@ -35,7 +35,7 @@ begin
   writeLn('Updater initialized.');
   Application.ShowMainForm:=false;
   RegDir:=SyblToPath('$INST/app-reg/');
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TUMnForm, UMnForm);
   Application.CreateForm(TUExecFm, UExecFm);
   writeLn('GUI created.');
   Application.CreateForm(TLoadForm, LoadForm);

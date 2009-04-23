@@ -15,7 +15,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="224"/>
+      <CurrentBuildNr Value="236"/>
       <ProjectVersion Value="0.2.0.1"/>
     </VersionInfo>
     <PublishOptions>
@@ -35,8 +35,8 @@
         <Filename Value="unibuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="unibuild"/>
-        <CursorPos X="9" Y="28"/>
-        <TopLine Value="1"/>
+        <CursorPos X="1" Y="363"/>
+        <TopLine Value="319"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="31"/>
         <Loaded Value="True"/>
@@ -97,7 +97,7 @@
         <UsageCount Value="10"/>
       </Unit8>
     </Units>
-    <JumpHistory Count="19" HistoryIndex="18">
+    <JumpHistory Count="28" HistoryIndex="27">
       <Position1>
         <Filename Value="unibuild.lpr"/>
         <Caret Line="226" Column="50" TopLine="203"/>
@@ -174,6 +174,42 @@
         <Filename Value="unibuild.lpr"/>
         <Caret Line="220" Column="18" TopLine="173"/>
       </Position19>
+      <Position20>
+        <Filename Value="unibuild.lpr"/>
+        <Caret Line="28" Column="9" TopLine="1"/>
+      </Position20>
+      <Position21>
+        <Filename Value="unibuild.lpr"/>
+        <Caret Line="27" Column="28" TopLine="1"/>
+      </Position21>
+      <Position22>
+        <Filename Value="unibuild.lpr"/>
+        <Caret Line="373" Column="1" TopLine="61"/>
+      </Position22>
+      <Position23>
+        <Filename Value="unibuild.lpr"/>
+        <Caret Line="24" Column="11" TopLine="1"/>
+      </Position23>
+      <Position24>
+        <Filename Value="unibuild.lpr"/>
+        <Caret Line="27" Column="5" TopLine="1"/>
+      </Position24>
+      <Position25>
+        <Filename Value="unibuild.lpr"/>
+        <Caret Line="26" Column="29" TopLine="1"/>
+      </Position25>
+      <Position26>
+        <Filename Value="unibuild.lpr"/>
+        <Caret Line="27" Column="15" TopLine="1"/>
+      </Position26>
+      <Position27>
+        <Filename Value="unibuild.lpr"/>
+        <Caret Line="373" Column="1" TopLine="55"/>
+      </Position27>
+      <Position28>
+        <Filename Value="unibuild.lpr"/>
+        <Caret Line="81" Column="7" TopLine="1"/>
+      </Position28>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -182,8 +218,7 @@
       <Filename Value="./bin/unibuild"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(LazarusDir)/lcl/include/"/>
-      <OtherUnitFiles Value="$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/;$(LazarusDir)/packager/units/$(TargetCPU)-$(TargetOS)/;opbitmap/"/>
+      <OtherUnitFiles Value="$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/;$(LazarusDir)/packager/units/$(TargetCPU)-$(TargetOS)/;opbitmap/;$(LazarusDir)/lcl/widgetset/"/>
       <UnitOutputDirectory Value="bin"/>
       <LCLWidgetType Value="gtk2"/>
     </SearchPaths>
@@ -192,6 +227,12 @@
         <CStyleOperator Value="False"/>
       </SyntaxOptions>
     </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <LinkSmart Value="True"/>
+    </Linking>
     <Other>
       <CustomOptions Value="-dOpbCompat"/>
       <CompilerPath Value="$(CompPath)"/>

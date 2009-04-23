@@ -1,97 +1,56 @@
 #!/usr/bin/env bash
 # Parses command line options. Currently supported options are:
 # DESTDIR		Destination root directory
+# WIDGET                Widgetset the binary should be installed for
 for arg; do
-
   case $arg in
-
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;
-
+    WIDGET=*) WIDGET=${arg#WIDGET=};;
   esac;
-
 done
-
-#DESTDIR=""
-
-#Strips the debug-infos
-#strip --strip-all "./bin/listallmgr" "./bin/listallgo" "./bin/lipa" "./bin/liupdate"
 
 ARCH=$(uname -m)
 
 case "$ARCH" in
  "i686") ARCH="i386";;
-
  "i586") ARCH="i386";;
-
  "i486") ARCH="i386";;
 esac
 
-#
 # Does the install
 #
 # "mkdir -p" is equivalent to ForceDirectories pascal function
-#
 
 mkdir -p $DESTDIR/usr/bin
-mkdir -p $DESTDIR/usr/share/pixmaps
 mkdir -p $DESTDIR/usr/lib/listaller
-mkdir -p $DESTDIR/usr/share/listaller/mime
-mkdir -p $DESTDIR/usr/share/listaller/graphics
-mkdir -p $DESTDIR/usr/share/listaller/graphics/categories
-#mkdir -p $DESTDIR/usr/lib/listaller/lang
-mkdir -p $DESTDIR/usr/share/listaller/pkitbind
-chmod +x ./bindings/pkitbind.py
-#Copy graphics
-cp ./graphics/header.png $DESTDIR/usr/share/listaller/graphics/
-cp ./graphics/mime-ipk.png $DESTDIR/usr/share/listaller/graphics/
-cp ./graphics/mime-ips.png $DESTDIR/usr/share/listaller/graphics/
-cp ./graphics/listaller.png $DESTDIR/usr/share/pixmaps
-cp ./graphics/wizardimage.png $DESTDIR/usr/share/listaller/graphics/
-cp ./graphics/spackage.png $DESTDIR/usr/share/listaller/graphics/
-cp ./graphics/throbber.gif $DESTDIR/usr/share/listaller/graphics/
-cp ./graphics/categories/accessories.png $DESTDIR/usr/share/listaller/graphics/categories/
-cp ./graphics/categories/all.png $DESTDIR/usr/share/listaller/graphics/categories/
-cp ./graphics/categories/development.png $DESTDIR/usr/share/listaller/graphics/categories/
-cp ./graphics/categories/games.png $DESTDIR/usr/share/listaller/graphics/categories/
-cp ./graphics/categories/graphics.png $DESTDIR/usr/share/listaller/graphics/categories/
-cp ./graphics/categories/internet.png $DESTDIR/usr/share/listaller/graphics/categories/
-cp ./graphics/categories/multimedia.png $DESTDIR/usr/share/listaller/graphics/categories/
-cp ./graphics/categories/office.png $DESTDIR/usr/share/listaller/graphics/categories/
-cp ./graphics/categories/other.png $DESTDIR/usr/share/listaller/graphics/categories/
-cp ./graphics/categories/science.png $DESTDIR/usr/share/listaller/graphics/categories/
-cp ./graphics/categories/system.png $DESTDIR/usr/share/listaller/graphics/categories/
+if [ "$WIDGET" == "qt4" ]; then
+mkdir -p $DESTDIR/usr/lib/listaller/qt4
+else
+mkdir -p $DESTDIR/usr/lib/listaller/gtk2
+fi
 #Copy other files
-cp ./bin/listallgo $DESTDIR/usr/lib/listaller/
-cp ./bin/listallmgr $DESTDIR/usr/lib/listaller/
-cp ./bin/liupdate $DESTDIR/usr/lib/listaller/
-cp ./bindings/pkitbind.py $DESTDIR/usr/share/listaller/pkitbind/
-cp -dpr ./lang/ $DESTDIR/usr/share/listaller/
-rm -rf $DESTDIR/usr/share/listaller/lang/.svn
-rm -rf $DESTDIR/usr/share/listaller/lang/.directory
+if [ "$WIDGET" == "qt4" ]; then
+cp ./bin/qt4/listallgo $DESTDIR/usr/lib/listaller/qt4/
+cp ./bin/qt4/listallmgr $DESTDIR/usr/lib/listaller/qt4/
+cp ./bin/qt4/liupdate $DESTDIR/usr/lib/listaller/qt4/
+else
+cp ./bin/gtk2/listallgo $DESTDIR/usr/lib/listaller/gtk2/
+cp ./bin/gtk2/listallmgr $DESTDIR/usr/lib/listaller/gtk2/
+cp ./bin/gtk2/liupdate $DESTDIR/usr/lib/listaller/gtk2/
+fi
 
-mkdir -p $DESTDIR/usr/share/applications
-mkdir -p $DESTDIR/usr/share/mime
-mkdir -p $DESTDIR/usr/share/mime/packages
-mkdir -p $DESTDIR/usr/share/mime/text
-mkdir -p $DESTDIR/usr/share/mime-info
-mkdir -p $DESTDIR/etc/lipa
-mkdir -p $DESTDIR/etc/lipa/app-reg
-
-cp ./additional/blacklist $DESTDIR/etc/lipa/
-
-cp "./additional/applications/listaller-manager.desktop" $DESTDIR/usr/share/applications
-cp ./additional/mime/packages/x-ipk.xml $DESTDIR/usr/share/listaller/mime
-cp ./additional/mime/text/x-ips.xml $DESTDIR/usr/share/listaller/mime
-cp ./additional/mime-info/listaller-pack.mime $DESTDIR/usr/share/mime-info
-
-#mkdir -p $DESTDIR/usr/bin
-#cp ./bin/lipa $DESTDIR/usr/bin/
-
-#Execute installscript
-sh ./additional/scripts/postinst
+if [ "$WIDGET" == "qt4" ]; then
+cp "./additional/applications/listaller-manager-kde.desktop" $DESTDIR/usr/share/applications
+else
+cp "./additional/applications/listaller-manager-gnome.desktop" $DESTDIR/usr/share/applications
+fi
 
 #Create symlink
 cd $DESTDIR/usr/bin
-ln -s /usr/lib/listaller/listallmgr listallmgr
+if [ "$WIDGET" == "qt4" ]; then
+ln -s /usr/lib/listaller/qt4/listallmgr listallmgr-qt4
+else
+ln -s /usr/lib/listaller/gtk2/listallmgr listallmgr-gtk2
+fi
 
 echo "Installation done."
