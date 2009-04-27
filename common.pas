@@ -73,9 +73,9 @@ property AppVersion: String read GetAppVersion write SetAppVersion;
 property srmID: String read sID write sID;
 //** Set an image for the entry
 procedure SetImage(AImage: String);
-//** Correct positions
-procedure SetPositions;
+//** Constructor
 constructor Create(AOwner: TComponent); override;
+//** Destructor
 destructor Destroy; override;
 end;
 
@@ -128,6 +128,7 @@ const
  STOCK_APPLY='stock-apply';
  STOCK_DIALOG_INFO='stock-dialog-info';
  STOCK_REFRESH='stock-refresh';
+ STOCK_OPEN='stock-open';
  ICON_SIZE_BUTTON=4;
  ICON_SIZE_SMALL_TOOLBAR=2;
  ICON_SIZE_MENU=1;
@@ -196,7 +197,7 @@ if not DirectoryExists(KDE_ICON_DIR+'22x22/') then
  if IconSize=2 then
   s:=KDE_ICON_DIR+'22x22/actions/';
  if IconSize=1 then
-  s:=KDE_ICON_DIR+'22x22/actions/';
+  s:=KDE_ICON_DIR+'32x32/actions/';
  if not FileExists(s) then exit;
  pic:=TPicture.Create;
  pic.LoadFromFile(s+cicon);
@@ -527,18 +528,18 @@ Parent:=Self;
 AutoSize:=true;
 Caption:='<appname>';
 Font.Size:=16;
-Anchors:=[];
+Anchors:=[akLeft,akTop];
 Top:=10;
-Left:=10;
+Left:=84;
 end;
 
 mnLabel:=TLabel.Create(nil);
 with mnLabel do begin
 Parent:=Self;
 AutoSize:=true;
-Anchors:=[];
-Top:=40;
-Left:=10;
+Anchors:=[akLeft,akTop];
+Top:=42;
+Left:=96;
 Caption:='<creator>';
 end;
 
@@ -546,9 +547,9 @@ DescLabel:=TLabel.Create(nil);
 with DescLabel do begin
 Parent:=Self;
 AutoSize:=true;
-Anchors:=[];
+Anchors:=[akLeft,akTop];
 Top:=30;
-Left:=10;
+Left:=90;
 Caption:='<description>';
 end;
 
@@ -557,7 +558,7 @@ with vLabel do begin
 Parent:=Self;
 AutoSize:=true;
 Anchors:=[akBottom,akRight];
-Top:=self.Height-54;
+Top:=self.Height-60;
 Left:=self.Width-140;
 Caption:='';
 end;
@@ -570,9 +571,9 @@ Height:=64;
 Top:=8;
 Left:=8;
 Center:=true;
+Anchors:=[akLeft];
 Stretch:=true;
 Proportional:=true;
-Anchors:=[akLeft];
 Picture.LoadFromFile(GetDataFile('graphics/spackage.png'));
 end;
 
@@ -585,6 +586,7 @@ Caption:=strUninstall;
 Anchors:=[akBottom,akRight];
 Top:=self.Height-46;
 Left:=self.Width-140;
+
 LoadStockPixmap(STOCK_DELETE,ICON_SIZE_BUTTON,Glyph);
 end;
 end;
@@ -643,40 +645,6 @@ end;
 procedure TListEntry.SetImage(AImage: String);
 begin
 Graphic.Picture.LoadFromFile(AImage);
-end;
-
-procedure TListEntry.SetPositions;
-begin
-with AppLabel do begin
-Top:=10;
-Left:=84;
-end;
-with mnLabel do begin
-Top:=42;
-Left:=96;
-end;
-with DescLabel do begin
-Top:=30;
-Left:=90;
-end;
-with vLabel do begin
-Anchors:=[akBottom,akRight];
-Top:=self.Height-60;
-Left:=self.Width-140;
-end;
-with Graphic do begin
-Top:=8;
-Left:=8;
-Center:=true;
-Anchors:=[akLeft];
-end;
-with UnButton do begin
-Parent:=self;
-Height:=30;
-Width:=128;
-Top:=self.Height-46;
-Left:=self.Width-140;
-end;
 end;
 
 end.

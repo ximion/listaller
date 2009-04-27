@@ -57,7 +57,9 @@ object frmProjectWizard: TfrmProjectWizard
   Position = poMainFormCenter
   LCLVersion = '0.9.27'
   object Notebook1: TNotebook
+    Left = 0
     Height = 604
+    Top = 0
     Width = 836
     Align = alClient
     PageIndex = 3
@@ -1880,6 +1882,8 @@ object frmProjectWizard: TfrmProjectWizard
           Height = 23
           Top = 67
           Width = 168
+          AutoComplete = False
+          ItemHeight = 0
           ItemIndex = 9
           Items.Strings = (
             'Education'
@@ -1893,6 +1897,7 @@ object frmProjectWizard: TfrmProjectWizard
             'Additional'
             'Unclassificable/Other'
           )
+          ItemWidth = 0
           TabOrder = 2
           Text = 'Unclassificable/Other'
         end
@@ -1901,7 +1906,11 @@ object frmProjectWizard: TfrmProjectWizard
           Height = 23
           Top = 99
           Width = 288
+          DialogOptions = []
+          FilterIndex = 0
+          HideDirectories = False
           ButtonWidth = 23
+          NumGlyphs = 0
           TabOrder = 3
         end
         object FileNameEdit2: TFileNameEdit
@@ -1909,7 +1918,11 @@ object frmProjectWizard: TfrmProjectWizard
           Height = 23
           Top = 126
           Width = 288
+          DialogOptions = []
+          FilterIndex = 0
+          HideDirectories = False
           ButtonWidth = 23
+          NumGlyphs = 0
           TabOrder = 4
         end
         object Edit10: TEdit
@@ -1926,8 +1939,12 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 37
           Width = 200
           DialogTitle = 'Select icon...'
+          DialogOptions = []
           Filter = 'PNG-Files|*.png'
+          FilterIndex = 0
+          HideDirectories = False
           ButtonWidth = 23
+          NumGlyphs = 0
           TabOrder = 6
         end
         object cgrIMethods: TCheckGroup
@@ -2055,6 +2072,7 @@ object frmProjectWizard: TfrmProjectWizard
           Height = 96
           Top = 53
           Width = 192
+          ItemHeight = 0
           OnKeyDown = lbDistributionsKeyDown
           TabOrder = 1
           TopIndex = -1
@@ -2194,6 +2212,7 @@ object frmProjectWizard: TfrmProjectWizard
           Height = 136
           Top = 9
           Width = 201
+          ItemHeight = 0
           OnKeyDown = lbProfilesKeyDown
           TabOrder = 0
           TopIndex = -1
@@ -2318,6 +2337,7 @@ object frmProjectWizard: TfrmProjectWizard
         ParentFont = False
       end
       object lvPackageFiles: TListView
+        Left = 0
         Height = 392
         Top = 208
         Width = 832
@@ -2371,6 +2391,7 @@ object frmProjectWizard: TfrmProjectWizard
             Height = 23
             Top = 1
             Width = 363
+            ShowHidden = False
             ButtonWidth = 23
             NumGlyphs = 1
             TabOrder = 0
@@ -2418,6 +2439,9 @@ object frmProjectWizard: TfrmProjectWizard
             Height = 23
             Top = 3
             Width = 339
+            DialogOptions = []
+            FilterIndex = 0
+            HideDirectories = False
             ButtonWidth = 23
             NumGlyphs = 1
             TabOrder = 0
@@ -2476,6 +2500,9 @@ object frmProjectWizard: TfrmProjectWizard
         Height = 27
         Top = 5
         Width = 168
+        AutoComplete = False
+        ItemHeight = 0
+        ItemWidth = 0
         OnChange = cmbProfilesChange
         OnCloseUp = cmbProfilesCloseUp
         Style = csDropDownList
@@ -2543,7 +2570,10 @@ object frmProjectWizard: TfrmProjectWizard
           Width = 472
           DialogTitle = 'Select executable...'
           DialogOptions = [ofFileMustExist]
+          FilterIndex = 0
+          HideDirectories = False
           ButtonWidth = 23
+          NumGlyphs = 0
           TabOrder = 0
         end
       end
@@ -2568,6 +2598,7 @@ object frmProjectWizard: TfrmProjectWizard
     end
   end
   object Panel1: TPanel
+    Left = 0
     Height = 41
     Top = 604
     Width = 836

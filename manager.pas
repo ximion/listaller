@@ -56,7 +56,6 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
@@ -182,9 +181,9 @@ d:=TIniFile.Create(fname);
 
         //Load the icons
         if (LowerCase(ExtractFileExt(d.ReadString('Desktop Entry','Icon','')))<>'.tiff') then begin
+        try
         if (d.ReadString('Desktop Entry','Icon','')<>'')
         and(d.ReadString('Desktop Entry','Icon','')[1]<>'/') then begin
-        try
         if FileExists('/usr/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
             SetImage('/usr/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') else
         if FileExists('/usr/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')) then
@@ -204,7 +203,7 @@ d:=TIniFile.Create(fname);
             SetImage('/usr/share/pixmaps/'+ChangeFileExt(d.ReadString('Desktop Entry','Icon',''),'')+'.png')
         else if FileExists('/usr/share/pixmaps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
                 SetImage('/usr/share/pixmaps/'+d.ReadString('Desktop Entry','Icon','')+'.png');
-        except writeLn('ERROR: Unable to load icon!');ShowMessage(StringReplace(strCannotLoadIcon,'%a',AppName,[rfReplaceAll]));end;
+
         { This code is EXPERIMENTAL!}
         //Load KDE4 Icons
           //GetEnvironmentVariable('KDEDIRS')
@@ -219,9 +218,10 @@ d:=TIniFile.Create(fname);
          and(LowerCase(ExtractFileExt(d.ReadString('Desktop Entry','Icon','')))<>'.svg') then
             SetImage(d.ReadString('Desktop Entry','Icon',''));
         end;
+        //If icon loading failed
+        except writeLn('ERROR: Unable to load icon!');ShowMessage(StringReplace(strCannotLoadIcon,'%a',AppName,[rfReplaceAll]));
+        end;
        end;
-        //Reset control's positions
-        SetPositions;
         Application.ProcessMessages;
         end;
 
@@ -407,8 +407,6 @@ edtFilter.Enabled:=true;
 SwBox.Visible:=true;
 If Assigned(gif) Then gif.Terminate;
 gif := Nil;
-
-for i:=0 to ListLength-1 do AList[i].SetPositions;
 end;
 
 var fAct: Boolean;
@@ -703,13 +701,6 @@ begin
   if Assigned(IdList) then IdList.Free;
   if Assigned(InstLst) then InstLst.Free;
   for i:=0 to ListLength-1 do AList[i].Free;
-end;
-
-procedure TMnFrm.FormResize(Sender: TObject);
-var i: Integer;
-begin
-  for i:=0 to ListLength-1 do
-  AList[i].SetPositions;
 end;
 
 initialization

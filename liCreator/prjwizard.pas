@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Buttons, ExtCtrls, ComCtrls, EditBtn, Grids, popupnotifier, FileCtrl, FileUtil,
-  MD5, Menus, XMLRead, XMLWrite, DOM, editor, LCLType, GTK2, common, SynEdit;
+  MD5, Menus, XMLRead, XMLWrite, DOM, editor, LCLType, common, SynEdit;
 
 type
 
@@ -952,7 +952,7 @@ end;
 
 procedure TfrmProjectWizard.FormCreate(Sender: TObject);
 begin
-  SpeedButton4.Glyph.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_OPEN,6);
+  SpeedButton4.Glyph.Handle:=LoadStockPixmap(STOCK_OPEN,1);
 end;
 
 procedure TfrmProjectWizard.FormShow(Sender: TObject);

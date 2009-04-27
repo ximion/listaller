@@ -58,7 +58,6 @@ object SCForm: TSCForm
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  OnResize = FormResize
   Position = poMainFormCenter
   ShowInTaskBar = stNever
   LCLVersion = '0.9.27'
@@ -175,10 +174,13 @@ object SCForm: TSCForm
     Height = 23
     Top = 344
     Width = 120
+    AutoComplete = False
+    ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
       'Listaller Server (listaller.nlinux.org)'
     )
+    ItemWidth = 0
     MaxLength = 65535
     OnChange = ComboBox1Change
     TabOrder = 5
@@ -195,12 +197,15 @@ object SCForm: TSCForm
     ClientWidth = 605
     TabOrder = 6
     object ScrollBox1: TScrollBox
+      Left = 0
       Height = 269
+      Top = 0
       Width = 605
       Align = alClient
       TabOrder = 0
     end
     object Memo1: TMemo
+      Left = 0
       Height = 115
       Top = 277
       Width = 605
@@ -215,6 +220,7 @@ object SCForm: TSCForm
     end
     object Splitter1: TSplitter
       Cursor = crVSplit
+      Left = 0
       Height = 8
       Top = 269
       Width = 605

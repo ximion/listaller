@@ -10,13 +10,13 @@
       <TargetFileExt Value=""/>
       <Title Value="lipa"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="109"/>
+      <CurrentBuildNr Value="118"/>
       <ProjectVersion Value="0.2.0.1"/>
     </VersionInfo>
     <PublishOptions>
@@ -36,8 +36,8 @@
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
-        <CursorPos X="1" Y="214"/>
-        <TopLine Value="169"/>
+        <CursorPos X="16" Y="29"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="41"/>
         <Loaded Value="True"/>
@@ -107,8 +107,8 @@
         <Filename Value="ipkbuild.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="87" Y="24"/>
-        <TopLine Value="1"/>
+        <CursorPos X="96" Y="24"/>
+        <TopLine Value="3"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="29"/>
         <Loaded Value="True"/>
@@ -123,8 +123,8 @@
       <Unit12>
         <Filename Value="opbitmap/opbitmapformats.pas"/>
         <UnitName Value="opbitmapformats"/>
-        <CursorPos X="20" Y="117"/>
-        <TopLine Value="110"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit12>
       <Unit13>
@@ -156,7 +156,7 @@
         <UsageCount Value="10"/>
       </Unit16>
     </Units>
-    <JumpHistory Count="3" HistoryIndex="2">
+    <JumpHistory Count="4" HistoryIndex="3">
       <Position1>
         <Filename Value="lipa.lpr"/>
         <Caret Line="40" Column="5" TopLine="15"/>
@@ -167,8 +167,12 @@
       </Position2>
       <Position3>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="29" Column="17" TopLine="1"/>
+        <Caret Line="29" Column="16" TopLine="1"/>
       </Position3>
+      <Position4>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="25" Column="20" TopLine="1"/>
+      </Position4>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -177,7 +181,7 @@
       <Filename Value="./bin/lipa"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="opbitmap/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/;$(LazarusDir)/packager/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/widgetset/"/>
+      <OtherUnitFiles Value="opbitmap/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/;$(LazarusDir)/components/codetools/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/components/custom/;$(LazarusDir)/packager/units/$(TargetCPU)-$(TargetOS)/"/>
       <UnitOutputDirectory Value="bin"/>
       <LCLWidgetType Value="gtk2"/>
     </SearchPaths>

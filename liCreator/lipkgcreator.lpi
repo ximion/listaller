@@ -8,7 +8,7 @@
       </Flags>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <ProjectVersion Value=""/>
@@ -38,7 +38,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="44">
+    <Units Count="45">
       <Unit0>
         <Filename Value="lipkgcreator.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -182,11 +182,9 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="prjwizard"/>
-        <CursorPos X="68" Y="26"/>
-        <TopLine Value="1"/>
-        <EditorIndex Value="1"/>
+        <CursorPos X="58" Y="955"/>
+        <TopLine Value="933"/>
         <UsageCount Value="119"/>
-        <Loaded Value="True"/>
       </Unit17>
       <Unit18>
         <Filename Value="../utilities.pas"/>
@@ -358,6 +356,13 @@
         <TopLine Value="98"/>
         <UsageCount Value="10"/>
       </Unit43>
+      <Unit44>
+        <Filename Value="../common.pas"/>
+        <UnitName Value="common"/>
+        <CursorPos X="25" Y="200"/>
+        <TopLine Value="181"/>
+        <UsageCount Value="10"/>
+      </Unit44>
     </Units>
     <JumpHistory Count="14" HistoryIndex="13">
       <Position1>

@@ -55,7 +55,6 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure FormResize(Sender: TObject);
     procedure HQBoxChange(Sender: TObject);
   private
     { private declarations }
@@ -88,10 +87,10 @@ const Value: string);
    public
     //** Number of the exemplar
     property eNR: Integer read xNR write xNR;
+    //** Constructor
     constructor Create(AOwner: TComponent); override;
+    //** Destructor
     destructor  Destroy; override;
-    //** Re-set control positions
-    procedure   SetPositions;
   end;
 
 var
@@ -124,15 +123,15 @@ end;
 with AppLabel do begin
 Font.Size:=14;
 Top:=4;
-Left:=10;
+Left:=54;
 end;
 
 with mnLabel do begin
 Parent:=Self;
 AutoSize:=true;
 Anchors:=[];
-Top:=34;
-Left:=10;
+Top:=36;
+Left:=66;
 end;
 
 with UnButton do begin
@@ -144,8 +143,10 @@ OnClick:=@InstallClick;
 Anchors:=[akBottom,akRight];
 Top:=16;
 Left:=self.Width-90;
+AutoSize:=true;
 LoadStockPixmap(STOCK_APPLY,ICON_SIZE_MENU,Glyph);
 end;
+UnButton.Left:=Width-UnButton.Width-8;
 
 InfoBtn:=TBitBtn.Create(self);
 InfoBtn.Parent:=self;
@@ -154,9 +155,11 @@ InfoBtn.Caption:='Info';
 InfoBtn.AutoSize:=true;
 LoadStockPixmap(STOCK_DIALOG_INFO,ICON_SIZE_MENU, Glyph);
 InfoBtn.OnClick:=@InfoClick;
-Height:=26;
+Height:=28;
+Top:=16;
+Anchors:=[akBottom,akRight];
 end;
-
+InfoBtn.Left:=self.Width-InfoBtn.Width-UnButton.Width-16;
 end;
 
 destructor TCTLEntry.Destroy;
@@ -282,45 +285,6 @@ begin
       SCForm.CView.Enabled:=true;
    SCForm.pb1:=false;
   SCForm.Label2.Caption:=strReady;
-end;
-
-procedure TCTLEntry.SetPositions;
-begin
-inherited SetPositions;
-
-with Graphic do begin
-Top:=8;
-end;
-
-with UnButton do begin
-Height:=26;
-AutoSize:=true;
-//Width:=80;
-Anchors:=[akBottom,akRight];
-Top:=16;
-end;
-UnButton.Left:=Width-UnButton.Width-8;
-
-with InfoBtn do begin
-Height:=28;
-Top:=16;
-Anchors:=[akBottom,akRight];
-end;
-InfoBtn.Left:=self.Width-InfoBtn.Width-UnButton.Width-16;
-
-with AppLabel do begin
-Top:=4;
-Left:=54;
-end;
-with mnLabel do begin
-Top:=36;
-Left:=66;
-end;
-with DescLabel do begin
-Top:=24;
-Left:=60;
-end;
-
 end;
 
 function FindChildNode(dn: TDOMNode; n: String): TDOMNode;
@@ -509,7 +473,6 @@ for i:=0 to SWLLength-1 do
         SWList[k].rnm:=nid;
 
         if IsInList(LowerCase(nid),instLst) then SWList[k].UnButton.Enabled:=false;
-        SWList[k].SetPositions;
       try
        if not FileExists('/tmp/listaller/catalogue/'+cdir+'/icons/'+nid+'.png') then begin
         HTTP.HTTPMethod('GET', catalogpath+cdir+'/icons/'+nid+'.png');
@@ -576,7 +539,6 @@ if cdir='all' then begin cdir:='education';cid:=1;end;
         SWList[k].rnm:=nid;
 
         if IsInList(LowerCase(nid),instLst) then SWList[k].UnButton.Enabled:=false;
-        SWList[k].SetPositions;
       try
        if not FileExists('/tmp/listaller/catalogue/'+cdir+'/icons/'+nid+'.png') then begin
         HTTP.Clear;
@@ -647,13 +609,6 @@ begin
  p.CommandLine:='chmod 777 -R '+'/tmp/listaller/catalogue/';
  p.Execute;
  p.Free;
-end;
-
-procedure TSCForm.FormResize(Sender: TObject);
-var i: Integer;
-begin
-  for i:=0 to SWLLength-1 do
-  SWList[i].SetPositions;
 end;
 
 procedure TSCForm.HQBoxChange(Sender: TObject);
