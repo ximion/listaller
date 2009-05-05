@@ -141,8 +141,8 @@ d:=TIniFile.Create(fname);
        and(pos('setting',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
       // and(pos('utility',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
        and(d.ReadString('Desktop Entry','OnlyShowIn','')='')
-       and(d.ReadString('Desktop Entry','X-AllowRemove','true')='true')
-       then begin
+       and(d.ReadString('Desktop Entry','X-AllowRemove','true')='true')then
+       begin
        SetLength(AList,ListLength+1);
        Inc(ListLength);
        AList[ListLength-1]:=TListEntry.Create(MnFrm);
@@ -180,10 +180,12 @@ d:=TIniFile.Create(fname);
         AppVersion:=strVersion+': '+d.ReadString('Desktop Entry','X-AppVersion','');
 
         //Load the icons
-        if (LowerCase(ExtractFileExt(d.ReadString('Desktop Entry','Icon','')))<>'.tiff') then begin
+        if (LowerCase(ExtractFileExt(d.ReadString('Desktop Entry','Icon','')))<>'.tiff') then
+        begin
         try
         if (d.ReadString('Desktop Entry','Icon','')<>'')
-        and(d.ReadString('Desktop Entry','Icon','')[1]<>'/') then begin
+        and(d.ReadString('Desktop Entry','Icon','')[1]<>'/') then
+        begin
         if FileExists('/usr/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
             SetImage('/usr/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') else
         if FileExists('/usr/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')) then
@@ -213,7 +215,8 @@ d:=TIniFile.Create(fname);
         else
         if FileExists('/usr/lib/kde4/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
                 SetImage('/usr/lib/kde4/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png');
-        end else begin
+        end else
+        begin
          if (FileExists(d.ReadString('Desktop Entry','Icon','')))
          and(LowerCase(ExtractFileExt(d.ReadString('Desktop Entry','Icon','')))<>'.svg') then
             SetImage(d.ReadString('Desktop Entry','Icon',''));
@@ -256,7 +259,8 @@ gif.Initialize(ThrobberBox.Canvas);
 edtFilter.Text:='';
 
 SwBox.Visible:=false;
-if blst.Count<4 then begin
+if blst.Count<4 then
+begin
 blst.Clear;
 blst.LoadFromFile('/etc/lipa/blacklist');
 blst.Delete(0);
@@ -277,7 +281,8 @@ case CBox.Itemindex of
 10: tp:='other';
 end;
 
-if not DirectoryExists(RegDir) then begin
+if not DirectoryExists(RegDir) then
+begin
 CreateDir(ExtractFilePath(RegDir));
 CreateDir(RegDir);
 end;
@@ -335,7 +340,8 @@ ireg.Free;
 tmp.Free;
 
 
-{if (CBox.ItemIndex=0) or (CBox.ItemIndex=10) then begin
+{if (CBox.ItemIndex=0) or (CBox.ItemIndex=10) then
+begin
 tmp:=TStringList.Create;
 xtmp:=TStringList.Create;
 
@@ -469,7 +475,8 @@ procedure TMnFrm.btnInstallClick(Sender: TObject);
 var p: TProcess;pkit: TPackageKit;
 begin
   if OpenDialog1.Execute then
-  if FileExists(OpenDialog1.Filename) then begin
+  if FileExists(OpenDialog1.Filename) then
+  begin
   if (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.ipk')
   or (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.zip') then
   begin
@@ -478,9 +485,11 @@ begin
   MnFrm.Hide;
   while Process1.Running do Application.ProcessMessages;
   MnFrm.Show;
-  end else begin
+  end else
+  begin
   if (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.deb') then
-  if DInfo.PackageSystem='DEB' then begin
+  if DInfo.PackageSystem='DEB' then
+  begin
   //Open DEB-File
    p:=TProcess.Create(nil);
    p.Options:=[poWaitOnExit,poNewConsole];
@@ -491,13 +500,17 @@ begin
    exit;
   end else
    if Application.MessageBox(PAnsiChar(StringReplace(StringReplace(strConvertPkg,'%x','DEB',[rfReplaceAll]),'%y','RPM',[rfReplaceAll])),
-                              PAnsiChar(strConvertPkgQ),MB_YESNO)=IDYES then begin
-   with ConvDisp do begin
+                              PAnsiChar(strConvertPkgQ),MB_YESNO)=IDYES then
+   begin
+   with ConvDisp do
+   begin
    if not FileExists('/usr/bin/alien') then
-    if Application.MessageBox(PChar(strListallerAlien),PChar(strInstPkgQ),MB_YESNO)=IDYES then begin
+    if Application.MessageBox(PChar(strListallerAlien),PChar(strInstPkgQ),MB_YESNO)=IDYES then
+    begin
       ShowMessage(strplWait);
       pkit:=TPackageKit.Create;
-      if not pkit.InstallPkg('alien') then begin
+      if not pkit.InstallPkg('alien') then
+      begin
        ShowMessage(StringReplace(strPkgInstFail,'%p','alien',[rfreplaceAll]));
        pkit.Free;
        exit;
@@ -514,7 +527,8 @@ begin
    exit;
    end;
   if (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.rpm') then
-  if DInfo.PackageSystem='RPM' then begin
+  if DInfo.PackageSystem='RPM' then
+  begin
    //Open RPM-File
    p:=TProcess.Create(nil);
    p.Options:=[poWaitOnExit,poNewConsole];
@@ -525,14 +539,18 @@ begin
    exit;
   end else
    if Application.MessageBox(PAnsiChar(StringReplace(StringReplace(strConvertPkg,'%x','RPM',[rfReplaceAll]),'%y','DEB',[rfReplaceAll])),
-                              PAnsiChar(strConvertPkgQ),MB_YESNO)=IDYES then begin
-   with ConvDisp do begin
+                              PAnsiChar(strConvertPkgQ),MB_YESNO)=IDYES then
+   begin
+   with ConvDisp do
+   begin
 
    if not FileExists('/usr/bin/alien') then
-    if Application.MessageBox(PChar(strListallerAlien),PChar(strInstPkgQ),MB_YESNO)=IDYES then begin
+    if Application.MessageBox(PChar(strListallerAlien),PChar(strInstPkgQ),MB_YESNO)=IDYES then
+    begin
       ShowMessage(strplWait);
       pkit:=TPackageKit.Create;
-      if not pkit.InstallPkg('alien') then begin
+      if not pkit.InstallPkg('alien') then
+      begin
        ShowMessage(StringReplace(strPkgInstFail,'%p','alien',[rfreplaceAll]));
        pkit.Free;
        exit;
@@ -580,14 +598,18 @@ procedure TMnFrm.edtFilterKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var i: Integer;
 begin
-  if Key = VK_RETURN then begin
-     if ((edtFilter.Text=' ') or (edtFilter.Text='*')or (edtFilter.Text='')) then begin
+  if Key = VK_RETURN then
+  begin
+     if ((edtFilter.Text=' ') or (edtFilter.Text='*')or (edtFilter.Text='')) then
+     begin
      for i:=0 to ListLength-1 do
      AList[i].Visible:=true;
-     end else begin
+     end else
+     begin
      Application.ProcessMessages;
      StatusBar1.Panels[0].Text:=strFiltering;
-     for i:=0 to ListLength-1 do begin
+     for i:=0 to ListLength-1 do
+     begin
       AList[i].Visible:=true;
        Application.ProcessMessages;
         if ((pos(LowerCase(edtFilter.Text),LowerCase(AList[i].AppName))<=0)
@@ -602,13 +624,16 @@ end;
 
 procedure TMnFrm.FormActivate(Sender: TObject);
 begin
-  if fAct then begin fAct:=false;btnCat.Left:=btnInstall.Left+btnInstall.Width+12;LoadEntries;end;
+  if fAct then
+  begin fAct:=false;btnCat.Left:=btnInstall.Left+btnInstall.Width+12;LoadEntries;
+  end;
 end;
 
 procedure TMnFrm.FormCreate(Sender: TObject);
 var xFrm: TimdFrm;
 begin
-if FileExists(paramstr(1)) then begin
+if FileExists(paramstr(1)) then
+begin
   Process1.Options:=[];
   Process1.CommandLine := ExtractFilePath(Application.ExeName)+'listallgo '+paramstr(1);
   Process1.Execute;
@@ -635,14 +660,16 @@ DInfo:=GetDistro;
  Label2.Caption:=strFilter;
  Label3.Caption:=strNoAppsFound;
 
- if not IsRoot then begin
+ if not IsRoot then
+ begin
  xFrm:=TimdFrm.Create(nil);
 
  //Set reg-dir
  RegDir:=SyblToPath('$INST/app-reg/');
 
 
- with xFrm do begin
+ with xFrm do
+ begin
   Caption:=strSelMgrMode;
   btnTest.Visible:=false;
   Image1.Visible:=false;
@@ -659,7 +686,8 @@ RegDir:='/etc/lipa/app-reg/';
 
 if not DirectoryExists(RegDir) then CreateDir(RegDir);
 
-with CBox do begin
+with CBox do
+begin
  Items[0]:=strAll;
  Items[1]:=strEducation;
  Items[2]:=strOffice;

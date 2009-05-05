@@ -154,7 +154,8 @@ begin
   // Check if icon was assigned
   if PtrUInt(Pixbuf) = 0 then Exit;
   Pixmap := GtkWidgetSet.NewGDIObject(gdiBitmap);
-  with Pixmap^ do begin
+  with Pixmap^ do
+  begin
     GDIBitmapType := gbPixmap;
     visual := gdk_visual_get_system();
     gdk_visual_ref(visual);
@@ -257,7 +258,8 @@ end;
 
 function GetXHome: String;
 begin
- if TestMode then begin
+ if TestMode then
+ begin
   Result:='/tmp/litest';
   CreateDir(Result);
   end else Result:=GetEnvironmentVariable('HOME');
@@ -278,7 +280,8 @@ t:=TProcess.Create(nil);
  x.Free;
  t.Free;
 
-if IsRoot then begin
+if IsRoot then
+begin
 s:=StringReplace(s,'$INST','/usr/appfiles',[rfReplaceAll]);
 s:=StringReplace(s,'$INST-X','/usr/share',[rfReplaceAll]);
 s:=StringReplace(s,'$OPT','/opt',[rfReplaceAll]);
@@ -297,7 +300,8 @@ s:=StringReplace(s,'$ICON-64','/usr/share/icons/hicolor/64x64/apps',[rfReplaceAl
 s:=StringReplace(s,'$ICON-128','/usr/share/icons/hicolor/128x128/apps',[rfReplaceAll]);
 s:=StringReplace(s,'$ICON-256','/usr/share/icons/hicolor/256x256/apps',[rfReplaceAll]);
 s:=StringReplace(s,'$PIX','/usr/share/pixmaps',[rfReplaceAll]);
-end else begin
+end else
+begin
 if not DirectoryExists(GetXHome+'/applications/') then CreateDir(GetXHome+'/applications/');
 if not DirectoryExists(GetXHome+'/applications/files') then CreateDir(GetXHome+'/applications/files');
 if not DirectoryExists(GetXHome+'/applications/files/icons') then CreateDir(GetXHome+'/applications/files/icons');
@@ -310,7 +314,8 @@ if not DirectoryExists(GetXHome+'/applications/files/icons/64x64')  then CreateD
 if not DirectoryExists(GetXHome+'/applications/files/icons/128x128')then CreateDir(GetXHome+'/applications/files/icons/128x128');
 if not DirectoryExists(GetXHome+'/applications/files/icons/256x256')then CreateDir(GetXHome+'/applications/files/icons/256x256');
 if not DirectoryExists(GetXHome+'/applications/files/icons/common')then CreateDir(GetXHome+'/applications/files/icons/common');
-if LowerCase(n)='x86_64' then begin
+if LowerCase(n)='x86_64' then
+begin
  if not DirectoryExists(GetXHome+'/applications/files/lib64')then CreateDir(GetXHome+'/applications/files/lib64');
 end else
  if not DirectoryExists(GetXHome+'/applications/files/lib')then CreateDir(GetXHome+'/applications/files/lib');
@@ -396,7 +401,8 @@ var cnf: TIniFile;t: TProcess;
 begin
 //Check if PackageKit checkmode is enabled:
 cnf:=TIniFile.Create(ConfigDir+'config.cnf');
-  if cnf.ReadBool('MainConf','ShowPkMon',false) then begin
+  if cnf.ReadBool('MainConf','ShowPkMon',false) then
+  begin
    t:=TProcess.Create(nil);
    t.CommandLine:='pkmon';
    t.Options:=[poNewConsole];
@@ -418,7 +424,8 @@ begin
  t.CommandLine:=cmd;
  try
   t.Execute;
-  while t.Running do begin
+  while t.Running do
+  begin
       BytesAvailable := t.Output.NumBytesAvailable;
       BytesRead := 0;
       while BytesAvailable>0 do
@@ -487,15 +494,19 @@ var
 begin
  ct:=0;
  Result := False; { Assume that it WONT work }
- if source <> dest then begin
+ if source <> dest then
+ begin
    fSrc := FileOpen(source,fmOpenRead);
-   if fSrc >= 0 then begin
+   if fSrc >= 0 then
+   begin
      size := FileSeek(fSrc,0,2);
      units:=size div 2048;
      FileSeek(fSrc,0,0);
      fDst := FileCreate(dest);
-     if fDst >= 0 then begin
-       while size > 0 do begin
+     if fDst >= 0 then
+     begin
+       while size > 0 do
+       begin
          len := FileRead(fSrc,buffer,sizeof(buffer));
          FileWrite(fDst,buffer,len);
          size := size - len;
@@ -523,7 +534,8 @@ self.BevelOuter:=BVNone;
 self.BevelInner:=bvLowered;
 
 AppLabel:=TLabel.Create(nil);
-with AppLabel do begin
+with AppLabel do
+begin
 Parent:=Self;
 AutoSize:=true;
 Caption:='<appname>';
@@ -534,7 +546,8 @@ Left:=84;
 end;
 
 mnLabel:=TLabel.Create(nil);
-with mnLabel do begin
+with mnLabel do
+begin
 Parent:=Self;
 AutoSize:=true;
 Anchors:=[akLeft,akTop];
@@ -544,7 +557,8 @@ Caption:='<creator>';
 end;
 
 DescLabel:=TLabel.Create(nil);
-with DescLabel do begin
+with DescLabel do
+begin
 Parent:=Self;
 AutoSize:=true;
 Anchors:=[akLeft,akTop];
@@ -554,7 +568,8 @@ Caption:='<description>';
 end;
 
 vLabel:=TLabel.Create(nil);
-with vLabel do begin
+with vLabel do
+begin
 Parent:=Self;
 AutoSize:=true;
 Anchors:=[akBottom,akRight];
@@ -564,7 +579,8 @@ Caption:='';
 end;
 
 Graphic:=TImage.Create(nil);
-with Graphic do begin
+with Graphic do
+begin
 Parent:=self;
 Width:=64;
 Height:=64;
@@ -578,7 +594,8 @@ Picture.LoadFromFile(GetDataFile('graphics/spackage.png'));
 end;
 
 UnButton:=TBitBtn.Create(nil);
-with UnButton do begin
+with UnButton do
+begin
 Parent:=self;
 Height:=30;
 Width:=128;
