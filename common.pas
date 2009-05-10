@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
-  StdCtrls, FileUtil, ExtCtrls, process, Buttons, LCLType, LCLIntf, RegExpr,
+  StdCtrls, FileUtil, ExtCtrls, process, Buttons, LCLType, RegExpr,
   {$IFDEF LCLGTK2}
   gtk2, gtkint, gtkdef, gdkpixbuf, gtkproc, gdk2,
   {$ENDIF} trstrings, distri, IniFiles;
@@ -46,8 +46,8 @@ DescLabel: TLabel;
 Vlabel: TLabel;
 MnLabel: TLabel;
 Graphic: TImage;
-id: Integer;
-sid: String;
+ID: Integer;
+sID: String;
 private
  procedure SetAppName(s: String);
  function GetAppName: String;
@@ -59,8 +59,8 @@ private
  function GetAppVersion: String;
 public
 UnButton: TBitBtn;
-//** The application's ID
-property aID: Integer read ID write ID;
+//** The application's ID string
+property aID:Integer read ID write ID;
 //** Name of the application
 property AppName: String read GetAppName write SetAppName;
 //** Description of the application
@@ -69,8 +69,8 @@ property AppDesc: String read GetAppDesc write SetAppDesc;
 property AppMn: String read GetAppMaintainer write SetAppMaintainer;
 //** Version of the application
 property AppVersion: String read GetAppVersion write SetAppVersion;
-//** Software rm ID (sometimes needed, required by liTheme)
-property srmID: String read sID write sID;
+//** Software removal ID
+property srID: String read sID write sID;
 //** Set an image for the entry
 procedure SetImage(AImage: String);
 //** Constructor

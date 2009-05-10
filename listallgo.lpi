@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="486"/>
+      <CurrentBuildNr Value="488"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -50,7 +50,7 @@
         <MinVersion Major="1" Valid="True"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="99">
+    <Units Count="98">
       <Unit0>
         <Filename Value="listallgo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -60,13 +60,13 @@
         <UsageCount Value="200"/>
       </Unit0>
       <Unit1>
-        <Filename Value="imainunit.pas"/>
+        <Filename Value="igobase.pas"/>
         <ComponentName Value="IWizFrm"/>
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="imainunit"/>
-        <CursorPos X="34" Y="311"/>
-        <TopLine Value="289"/>
+        <UnitName Value="igobase"/>
+        <CursorPos X="18" Y="1555"/>
+        <TopLine Value="1516"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -365,11 +365,9 @@
         <UsageCount Value="24"/>
       </Unit43>
       <Unit44>
-        <Filename Value="../../../../../usr/lib/lazarus/lcl/lclproc.pas"/>
-        <UnitName Value="LCLProc"/>
-        <CursorPos X="1" Y="791"/>
-        <TopLine Value="728"/>
-        <UsageCount Value="7"/>
+        <Filename Value=""/>
+        <UsageCount Value="10"/>
+        <SyntaxHighlighter Value="None"/>
       </Unit44>
       <Unit45>
         <Filename Value="uninstall.pas"/>
@@ -386,7 +384,7 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="dgunit"/>
-        <CursorPos X="49" Y="26"/>
+        <CursorPos X="47" Y="26"/>
         <TopLine Value="1"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="124"/>
@@ -678,26 +676,21 @@
         <UsageCount Value="9"/>
       </Unit87>
       <Unit88>
-        <Filename Value=""/>
-        <UsageCount Value="9"/>
-        <SyntaxHighlighter Value="None"/>
-      </Unit88>
-      <Unit89>
         <Filename Value="ipkhandle.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkhandle"/>
         <CursorPos X="44" Y="2"/>
         <TopLine Value="2"/>
         <UsageCount Value="43"/>
-      </Unit89>
-      <Unit90>
+      </Unit88>
+      <Unit89>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/forms.pp"/>
         <UnitName Value="Forms"/>
         <CursorPos X="3" Y="963"/>
         <TopLine Value="940"/>
         <UsageCount Value="9"/>
-      </Unit90>
-      <Unit91>
+      </Unit89>
+      <Unit90>
         <Filename Value="xtypefm.pas"/>
         <ComponentName Value="imdFrm"/>
         <HasResources Value="True"/>
@@ -708,8 +701,8 @@
         <EditorIndex Value="2"/>
         <UsageCount Value="12"/>
         <Loaded Value="True"/>
-      </Unit91>
-      <Unit92>
+      </Unit90>
+      <Unit91>
         <Filename Value="aboutbox.pas"/>
         <ComponentName Value="FmAbout"/>
         <HasResources Value="True"/>
@@ -718,49 +711,49 @@
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
-      </Unit92>
-      <Unit93>
+      </Unit91>
+      <Unit92>
         <Filename Value="../../../../../usr/share/fpcsrc/2.2.2/packages/gtk2/src/gtk+/gtk/gtkenums.inc"/>
         <CursorPos X="6" Y="287"/>
         <TopLine Value="265"/>
         <UsageCount Value="11"/>
-      </Unit93>
-      <Unit94>
+      </Unit92>
+      <Unit93>
         <Filename Value="packagekit.pas"/>
         <UnitName Value="packagekit"/>
         <CursorPos X="11" Y="35"/>
         <TopLine Value="147"/>
         <UsageCount Value="11"/>
-      </Unit94>
-      <Unit95>
+      </Unit93>
+      <Unit94>
         <Filename Value="common.pas"/>
         <UnitName Value="common"/>
         <CursorPos X="25" Y="186"/>
         <TopLine Value="156"/>
         <UsageCount Value="12"/>
-      </Unit95>
-      <Unit96>
+      </Unit94>
+      <Unit95>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkproc.pp"/>
         <UnitName Value="GTKProc"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="781"/>
         <UsageCount Value="10"/>
-      </Unit96>
-      <Unit97>
+      </Unit95>
+      <Unit96>
         <Filename Value="../../../../../usr/share/fpcsrc/2.2.2/packages/gtk2/src/gtk+/gtk/gtkstock.inc"/>
         <CursorPos X="4" Y="43"/>
         <TopLine Value="21"/>
         <UsageCount Value="11"/>
-      </Unit97>
-      <Unit98>
+      </Unit96>
+      <Unit97>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/buttons.pp"/>
         <UnitName Value="Buttons"/>
         <CursorPos X="14" Y="168"/>
         <TopLine Value="146"/>
         <UsageCount Value="10"/>
-      </Unit98>
+      </Unit97>
     </Units>
-    <JumpHistory Count="17" HistoryIndex="16">
+    <JumpHistory Count="15" HistoryIndex="14">
       <Position1>
         <Filename Value="xtypefm.pas"/>
         <Caret Line="10" Column="81" TopLine="1"/>
@@ -821,14 +814,6 @@
         <Filename Value="dgunit.pas"/>
         <Caret Line="256" Column="26" TopLine="234"/>
       </Position15>
-      <Position16>
-        <Filename Value="imainunit.pas"/>
-        <Caret Line="1556" Column="20" TopLine="1477"/>
-      </Position16>
-      <Position17>
-        <Filename Value="imainunit.pas"/>
-        <Caret Line="307" Column="22" TopLine="289"/>
-      </Position17>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -838,7 +823,7 @@
     </Target>
     <SearchPaths>
       <OtherUnitFiles Value="synapse/;$(LazarusDir)/components/synedit/"/>
-      <LCLWidgetType Value="qt"/>
+      <LCLWidgetType Value="gtk2"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

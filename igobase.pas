@@ -14,7 +14,7 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** This unit contains the code for the graphical installation of standard IPK-packages
-unit imainunit;
+unit igobase;
 
 {$mode delphi}{$H+}
 
@@ -1552,7 +1552,7 @@ begin
 end;
 
 initialization
-  {$I imainunit.lrs}
+  {$I igobase.lrs}
 
 end.
 

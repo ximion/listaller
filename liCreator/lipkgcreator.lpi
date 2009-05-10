@@ -296,13 +296,6 @@
         <TopLine Value="216"/>
         <UsageCount Value="4"/>
       </Unit34>
-      <Unit35>
-        <Filename Value="../../../../../../usr/lib/lazarus/lcl/lclproc.pas"/>
-        <UnitName Value="LCLProc"/>
-        <CursorPos X="1" Y="1493"/>
-        <TopLine Value="1475"/>
-        <UsageCount Value="5"/>
-      </Unit35>
       <Unit36>
         <Filename Value="../abunzprc.pas"/>
         <UnitName Value="AbUnzPrc"/>

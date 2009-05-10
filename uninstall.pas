@@ -150,7 +150,8 @@ LogAdd('Uninstalling application...');
  mnFrm.LoadEntries;
 end else
 //LOKI
-if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'.manifest') then begin
+if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'.manifest') then
+begin
  UProgress.Position:=50;
  LogAdd('LOKI setup detected.');
  LogAdd('Uninstalling application...');
@@ -164,20 +165,25 @@ if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'
  t.Free;
  UProgress.Position:=100;
  mnFrm.LoadEntries;
-end else begin
+end else
+begin
  writeLn('Listaller cannot handle this installation type!');
  ShowMessage(strCannotHandleRM);inf.Free;end;
 end;
 
 procedure TRMForm.FormActivate(Sender: TObject);
 var f,g: String; t:TProcess;tmp: TStringList;pkit: TPackageKit;i: Integer;
+entry: TListEntry;
 begin
-if FActiv then begin
+if FActiv then
+begin
 FActiv:=false;
 Memo1.Lines.Clear;
 BitBtn1.Enabled:=false;
-with mnFrm do begin
-if (uID<0) then begin
+with mnFrm do
+begin
+if (uID<0) then
+begin
 ShowMessage('Wrong selection!');
 uID:=-1;
 close;
@@ -186,21 +192,23 @@ end;
 Memo1.Lines.Add('Connecting to PackageKit... (run "pkmon" to see the actions)');
 GetOutPutTimer.Enabled:=false;
 UProgress.Position:=0;
-RMForm.Caption:=StringReplace(strRMAppC,'%a',AList[uID].AppName,[rfReplaceAll]);
-if Application.MessageBox(PAnsiChar(StringReplace(strRealUninstQ,'%a',AList[uID].AppName,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then begin
+entry:=TListEntry(AList[uID]);
+RMForm.Caption:=StringReplace(strRMAppC,'%a',entry.AppName,[rfReplaceAll]);
+if Application.MessageBox(PAnsiChar(StringReplace(strRealUninstQ,'%a',entry.AppName,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then begin
 LogAdd('Reading application information...');
 RMForm.Label1.Caption:='Reading application information...';
 GetOutPutTimer.Enabled:=true;
 
-if IdList[uID][1]='~' then begin
-if FileExists(RegDir+AList[uID].AppName+'~'+copy(IdList[uID],2,length(IdList[uID]))+'/appfiles.list') then
+if entry.srID[1]='~' then
+begin
+if FileExists(RegDir+entry.AppName+'~'+copy(entry.srID,2,length(entry.srID))+'/appfiles.list') then
 begin
 tmp:=TStringList.Create;
-tmp.LoadFromFile(RegDir+AList[uID].AppName+'~'+copy(IdList[uID],2,length(IdList[uID]))+'/appfiles.list');
+tmp.LoadFromFile(RegDir+entry.AppName+'~'+copy(entry.srID,2,length(entry.srID))+'/appfiles.list');
 UProgress.Max:=((tmp.Count)*10)+4;
 tmp.Free;
 end;
-UProgress.Position:=UninstallIPKApp(AList[uID].AppName,copy(IdList[uID],2,length(IdList[uID])),Memo1.Lines);
+UProgress.Position:=UninstallIPKApp(entry.AppName,copy(entry.srID,2,length(entry.srID)),Memo1.Lines);
 LogAdd('Finished!');
 Memo1.Lines.SaveToFile(ConfigDir+'uninstall.log');
 ShowMessage(strUnistSuccess);
@@ -210,10 +218,12 @@ SWBox.Enabled:=true;
 LoadEntries;
 RMForm.Close;
 exit;
- end else begin //Autopackage
- if IdList[uID][1]='!' then begin
+ end else
+ begin //Autopackage
+ if entry.srID[1]='!' then
+ begin
  t:=TProcess.Create(nil);
- t.CommandLine:=copy(IdList[uID],2,length(IdList[uID]));
+ t.CommandLine:=copy(entry.srID,2,length(entry.srID));
  t.Options:=[poUsePipes,poWaitonexit];
  t.Execute;
  t.Free;
@@ -224,10 +234,12 @@ exit;
 end;
 
 //Uninstall external application(s) (only possible if user is root)
-if not IsRoot then begin UninstallMojo(IdList[uID]);exit;end;
+if not IsRoot then
+begin UninstallMojo(entry.srID);exit;end;
 
-if (IdList[uID][1]='/')
-then begin
+if (entry.srID[1]='/')
+then
+begin
 // /!\
 ///////////////////////////////////////////////////////
 
@@ -236,9 +248,11 @@ ShowPKMon();
 Application.ProcessMessages;
 writeLn('Detecting package...');
 pkit:=TPackageKit.Create;
-f:=pkit.PkgNameFromFile(IdList[uID]);
-if f='Failed!' then begin UninstallMojo(IdList[uID]);exit;end;
-if f='PackageKit problem.' then begin ShowMessage(strPKitProbPkMon);exit;end;
+f:=pkit.PkgNameFromFile(entry.srID);
+if f='Failed!' then
+begin UninstallMojo(entry.srID);exit;end;
+if f='PackageKit problem.' then
+begin ShowMessage(strPKitProbPkMon);exit;end;
 g:='';
 
 Application.ProcessMessages;
@@ -255,7 +269,7 @@ tmp.Free;
 LogAdd('Package detected: '+f);
 if (StringReplace(g,' ','',[rfReplaceAll])='')or
 (Application.MessageBox(PAnsiChar(
-StringReplace(StringReplace(StringReplace(strRMPkg,'%p',f,[rfReplaceAll]),'%a',AList[uID].AppName,[rfReplaceAll]),'%pl',PAnsiChar(g),[rfReplaceAll])
+StringReplace(StringReplace(StringReplace(strRMPkg,'%p',f,[rfReplaceAll]),'%a',entry.AppName,[rfReplaceAll]),'%pl',PAnsiChar(g),[rfReplaceAll])
 ),PChar(strRMPkgQ),MB_YESNO)=IDYES)
 then begin
 

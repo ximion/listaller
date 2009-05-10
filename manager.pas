@@ -21,10 +21,10 @@ unit manager;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
+  Classes, SysUtils,LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, common,
   uninstall, trstrings, gettext, FileUtil, xtypefm, ipkhandle, gifanimator,
-  packagekit;
+  packagekit, Contnrs;
 
 type
 
@@ -64,12 +64,8 @@ type
   public
     { public declarations }
     DInfo: TDistroInfo;
-    //** List of package id's
-    IdList: TStringList;
     //** Visual package list
-    AList: Array of TListEntry;
-    //** Length of AList
-    ListLength: Integer;
+    AList: TObjectList;
     //** Current id of package that should be uninstalled
     uID: Integer;
     //** Process .desktop-file and add info to list @param fname Name of the .desktop file  @param tp Category name
@@ -116,7 +112,7 @@ begin
 end;
 
 procedure TMnFrm.ProcessDesktopFile(fname: String; tp: String);
-var d: TIniFile;
+var d: TIniFile;entry: TListEntry;
 begin
 d:=TIniFile.Create(fname);
        Application.ProcessMessages;
@@ -143,21 +139,20 @@ d:=TIniFile.Create(fname);
        and(d.ReadString('Desktop Entry','OnlyShowIn','')='')
        and(d.ReadString('Desktop Entry','X-AllowRemove','true')='true')then
        begin
-       SetLength(AList,ListLength+1);
-       Inc(ListLength);
-       AList[ListLength-1]:=TListEntry.Create(MnFrm);
-       AList[ListLength-1].UnButton.OnClick:=@UnInstallClick;
-       AList[ListLength-1].Parent:=SWBox;
-       AList[ListLength-1].UnButton.Tag:=ListLength-1;
+       AList.Add(TListEntry.Create(MnFrm));
+       entry:=TListEntry(AList.Items[AList.Count-1]);
+       entry.UnButton.OnClick:=@UnInstallClick;
+       entry.Parent:=SWBox;
+       entry.UnButton.Tag:=AList.Count-1;
 
+       //Check for Autopackage.org installation
        if pos('apkg-remove',LowerCase(d.ReadString('Desktop Entry','Actions','')))>0 then
-       IdList.Add('!'+d.ReadString('Desktop Action Apkg-Remove','Exec',''))
+       entry.srID:='!'+d.ReadString('Desktop Action Apkg-Remove','Exec','')
        else
-       IdList.Add(fname);
+       entry.srID:=fname;
 
-       with AList[ListLength-1] do begin
-       aID:=IDList.Count-1;
-
+       with entry do
+       begin
        if d.ReadString('Desktop Entry','Name['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','<error>') <> '<error>' then
         AppName:=d.ReadString('Desktop Entry','Name['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','<error>')
         else
@@ -234,13 +229,12 @@ end;
 
 procedure TMnFrm.LoadEntries;
 var ireg,ini: TIniFile;tmp,xtmp: TStringList;i,j,k: Integer;p,n: String;tp: String;
-    gif: TGifThread;
+    gif: TGifThread;entry: TListEntry;
 begin
 j:=0;
-while ListLength>0 do begin
-AList[ListLength-1].Free;
-Dec(ListLength);
-end;
+
+AList.Free;
+
 btnCat.Enabled:=false;
 btnInstall.Enabled:=false;
 edtFilter.Enabled:=false;
@@ -291,7 +285,6 @@ ireg:=TInifile.Create(RegDir+'appreg.lst');
 tmp:=TStringList.Create;
 xtmp:=TStringList.Create;
 ireg.ReadSections(xtmp);
-IdList.Clear;
 
 if tp='all' then tmp.Assign(xtmp)
 else begin
@@ -306,39 +299,35 @@ xtmp.free;
 k:=0;
 
 for i:=0 to tmp.Count-1 do begin
-k:=ListLength+1;
-SetLength(AList,k);
-ListLength:=k;
-Dec(k);
-AList[k]:=TListEntry.Create(MnFrm);
-AList[k].UnButton.OnClick:=@UnInstallClick;
-AList[k].Parent:=SWBox;
-AList[k].aId:=k;
-AList[k].UnButton.Tag:=k;
+AList.Add(TListEntry.Create(MnFrm));
 
-AList[k].AppName:=(copy(tmp[i],0,pos('~',tmp[i])-1));
+entry:=TListEntry(AList.Items[AList.Count-1]);
+entry.UnButton.OnClick:=@UnInstallClick;
+entry.Parent:=SWBox;
+entry.aId:=k;
+entry.UnButton.Tag:=k;
 
-blst.Add(AList[k].AppName);
-IdList.Add(copy(tmp[i],pos('~',tmp[i]),length(tmp[i])));
+entry.AppName:=(copy(tmp[i],0,pos('~',tmp[i])-1));
 
-AList[k].AppVersion:=strVersion+': '+(ireg.ReadString(tmp[i],'Version','0.0'));
-AList[k].AppMn:=strAuthor+': '+(ireg.ReadString(tmp[i],'Author','#'));
-if ireg.ReadString(tmp[i],'Author','#')='#' then AList[k].AppMn:='';
-p:=RegDir+AList[k].AppName+'-'+copy(tmp[i],pos('~',tmp[i])+1,length(tmp[i]))+'/';
+blst.Add(entry.AppName);
+entry.srID:=copy(tmp[i],pos('~',tmp[i]),length(tmp[i]));
 
-InstLst.Add(LowerCase(ireg.ReadString(tmp[i],'idName',AList[k].AppName)));
-aList[k].AppDesc:=(ireg.ReadString(tmp[i],'SDesc','No description given'));
-if AList[k].AppDesc='#' then AList[k].AppDesc:='No description given';
+entry.AppVersion:=strVersion+': '+(ireg.ReadString(tmp[i],'Version','0.0'));
+entry.AppMn:=strAuthor+': '+(ireg.ReadString(tmp[i],'Author','#'));
+if ireg.ReadString(tmp[i],'Author','#')='#' then entry.AppMn:='';
+p:=RegDir+entry.AppName+'-'+copy(tmp[i],pos('~',tmp[i])+1,length(tmp[i]))+'/';
+
+InstLst.Add(LowerCase(ireg.ReadString(tmp[i],'idName',entry.AppName)));
+entry.AppDesc:=(ireg.ReadString(tmp[i],'SDesc','No description given'));
+if entry.AppDesc='#' then entry.AppDesc:='No description given';
 
 if FileExists(p+'icon.png') then
-AList[k].SetImage(p+'icon.png');
+entry.SetImage(p+'icon.png');
 
-Inc(k);
 Application.ProcessMessages;
 end;
 ireg.Free;
 tmp.Free;
-
 
 {if (CBox.ItemIndex=0) or (CBox.ItemIndex=10) then
 begin
@@ -376,7 +365,6 @@ xtmp.Free;
 
 end; //End Autopackage  }
 
-
 n:=ConfigDir;
 ini:=TIniFile.Create(n+'config.cnf');
 
@@ -388,10 +376,13 @@ if IsRoot then //Only if user is root
 begin
 tmp.Assign(FindAllFiles('/usr/share/applications/','*.desktop',true));
 xtmp.Assign(FindAllFiles('/usr/local/share/applications/','*.desktop',true));
-end else tmp.Assign(FindAllFiles(GetEnvironmentVariable('HOME')+'/.local/share/applications','*.desktop',false));
+end else
+tmp.Assign(FindAllFiles(GetEnvironmentVariable('HOME')+'/.local/share/applications','*.desktop',false));
 
 for i:=0 to xtmp.Count-1 do tmp.Add(xtmp[i]);
+
 xtmp.Free;
+
 if tp='games' then tp:='game';
 if tp='multimedia' then tp:='audiovideo';
 for i:=0 to tmp.Count-1 do begin
@@ -412,7 +403,7 @@ btnInstall.Enabled:=true;
 edtFilter.Enabled:=true;
 SwBox.Visible:=true;
 If Assigned(gif) Then gif.Terminate;
-gif := Nil;
+gif := nil;
 end;
 
 var fAct: Boolean;
@@ -602,20 +593,20 @@ begin
   begin
      if ((edtFilter.Text=' ') or (edtFilter.Text='*')or (edtFilter.Text='')) then
      begin
-     for i:=0 to ListLength-1 do
-     AList[i].Visible:=true;
+     for i:=0 to AList.Count-1 do
+     TListEntry(AList[i]).Visible:=true;
      end else
      begin
      Application.ProcessMessages;
      StatusBar1.Panels[0].Text:=strFiltering;
-     for i:=0 to ListLength-1 do
+     for i:=0 to AList.Count-1 do
      begin
-      AList[i].Visible:=true;
+      TListEntry(AList[i]).Visible:=true;
        Application.ProcessMessages;
-        if ((pos(LowerCase(edtFilter.Text),LowerCase(AList[i].AppName))<=0)
-        or (pos(LowerCase(edtFilter.Text),LowerCase(AList[i].AppDesc))<=0))
-         and (LowerCase(edtFilter.Text)<>LowerCase(AList[i].AppName)) then
-         AList[i].Visible:=false;
+        if ((pos(LowerCase(edtFilter.Text),LowerCase(TListEntry(AList[i]).AppName))<=0)
+        or (pos(LowerCase(edtFilter.Text),LowerCase(TListEntry(AList[i]).AppDesc))<=0))
+         and (LowerCase(edtFilter.Text)<>LowerCase(TListEntry(AList[i]).AppName)) then
+         TListEntry(AList[i]).Visible:=false;
          end;
        end;
 StatusBar1.Panels[0].Text:=strReady;
@@ -648,9 +639,8 @@ DInfo:=GetDistro;
  if not DirectoryExists(RegDir) then SysUtils.CreateDir(RegDir);
   
  uID:=-1;
- ListLength:=0;
 
- IdList:=TStringList.Create;
+ AList:=TObjectList.Create(true); //Create object-list to store AppInfo-Panels
 
  Caption:=strSoftwareManager;
  btnInstall.Caption:=strInstNew;
@@ -707,7 +697,8 @@ end;
 
  //Create uninstall panel
 Application.CreateForm(TRMForm, RMForm);
-//Option check
+
+{//Option check
 if (Application.HasOption('u','uninstall'))and(IsRoot) then
 begin
  if paramstr(2)[1]='/' then ProcessDesktopFile(paramstr(2),'all')
@@ -717,7 +708,7 @@ begin
  RMForm.ShowModal;
  Application.Terminate;
  halt(0);
-end;
+end;     }
 
  WriteLn('GUI loaded.');
 end;
@@ -726,9 +717,8 @@ procedure TMnFrm.FormDestroy(Sender: TObject);
 var i: Integer;
 begin
   if Assigned(blst) then blst.Free; //Free blacklist
-  if Assigned(IdList) then IdList.Free;
-  if Assigned(InstLst) then InstLst.Free;
-  for i:=0 to ListLength-1 do AList[i].Free;
+  if Assigned(InstLst) then InstLst.Free; //Free list of installed apps
+  if Assigned(AList) then AList.Free; //Free AppPanel store
 end;
 
 initialization

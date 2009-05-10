@@ -52,7 +52,9 @@ object IWizFrm: TIWizFrm
   OnShow = FormShow
   LCLVersion = '0.9.27'
   object Notebook1: TNotebook
+    Left = 0
     Height = 379
+    Top = 0
     Width = 651
     Align = alClient
     PageIndex = 0
@@ -62,7 +64,9 @@ object IWizFrm: TIWizFrm
       ClientWidth = 647
       ClientHeight = 352
       object Image2: TImage
+        Left = 0
         Height = 352
+        Top = 0
         Width = 146
         Align = alLeft
         Proportional = True
@@ -425,6 +429,7 @@ object IWizFrm: TIWizFrm
     end
   end
   object Panel1: TPanel
+    Left = 0
     Height = 50
     Top = 379
     Width = 651
@@ -490,8 +495,18 @@ object IWizFrm: TIWizFrm
     top = 32
   end
   object Process1: TProcess
+    Active = False
     Options = [poUsePipes, poStderrToOutPut, poNoConsole]
     Priority = ppNormal
+    StartupOptions = []
+    ShowWindow = swoNone
+    WindowColumns = 0
+    WindowHeight = 0
+    WindowLeft = 0
+    WindowRows = 0
+    WindowTop = 0
+    WindowWidth = 0
+    FillAttribute = 0
     left = 616
     top = 32
   end
