@@ -239,8 +239,6 @@ var
   CodeIncr    : integer;
   Decodes     : PAbDfLongintList;
   Encodes     : PAbDfLongintList;
-  DecodesEnd  : pointer;
-  TablePtr    : pointer;
 begin
   {count the number of instances of each code length and calculate the
    maximum code length at the same time}
@@ -261,7 +259,6 @@ begin
   if (FUsage <> huEncoding) then begin
     DecoderLen := PowerOfTwo[FMaxCodeLen];
     GetMem(FDecodes, DecoderLen * sizeof(longint));
-    DecodesEnd := PAnsiChar(FDecodes) + (DecoderLen * sizeof(longint));
     {$IFOPT C+}
     FillChar(FDecodes^, DecoderLen * sizeof(longint), $FF);
     FMask := not (DecoderLen - 1);
@@ -279,7 +276,6 @@ begin
   {for speed and convenience}
   Decodes := FDecodes;
   Encodes := FEncodes;
-  TablePtr := @ByteRevTable;
 
   {for each symbol...}
   for Symbol := 0 to pred(aCount) do begin

@@ -29,7 +29,7 @@ uses
 
 const
   //** Version of the Listaller applicationset
-  LiVersion='0.2.01a-dev';
+  LiVersion='0.2.30a-dev';
 var
   //** True if Listaller is in testmode
   Testmode: Boolean=false;
@@ -104,7 +104,7 @@ function  CmdFinResult(cmd: String): String;
 //** Advanced file copy method @returns Success of the command
 function  FileCopy(source,dest: String): Boolean;
 //** Loads a stock icon (native on GTK2, if Qt4 is used aditional images are needed) @returns Handle to th bitmap
-procedure  LoadStockPixmap(StockId: PChar; IconSize: integer;bmp: TBitmap);
+procedure LoadStockPixmap(StockId: PChar; IconSize: integer;bmp: TBitmap);
 //** Get server name from an url @returns The server name
 function  GetServerName(url:string):string;
 //** Path on an server (from an url) @returns The path on the server
@@ -115,6 +115,14 @@ function  GetServerPath(url:string):string;
 function  IsInList(nm: String;list: TStringList): Boolean;
 //** Shows pkMon if option is set in preferences
 procedure ShowPKMon();
+//** Reads the current system architecture @returns Detected architecture as string
+function GetSystemArchitecture: String;
+{** Executes an application as root using an graphical input prompt
+    @param cmd Command line string to execute
+    @param comment Description of the action the user is doing (why are root-rights needed?
+    @param icon Path to an icon for the operation
+    @param optn Set of TProcessOption to apply on the process object}
+function  ExecuteAsRoot(cmd: String;comment: String; icon: String;optn: TProcessOptions=[]): Boolean;
 
 const
 //Stock constants
@@ -131,6 +139,7 @@ const
  STOCK_OPEN='stock-open';
  ICON_SIZE_BUTTON=4;
  ICON_SIZE_SMALL_TOOLBAR=2;
+ ICON_SIZE_LARGE_TOOLBAR=3;
  ICON_SIZE_MENU=1;
  //
  //** Directory with KDE4 icons
@@ -195,6 +204,8 @@ if not DirectoryExists(KDE_ICON_DIR+'22x22/') then
 
  if IconSize=4 then
   s:=KDE_ICON_DIR+'16x16/actions/';
+ if IconSize=3 then
+  s:=KDE_ICON_DIR+'64x64/actions/';
  if IconSize=2 then
   s:=KDE_ICON_DIR+'22x22/actions/';
  if IconSize=1 then
@@ -249,6 +260,26 @@ or (DirectoryExists(ExtractFilePath(Application.ExeName)+s)) then
 Result:=ExtractFilePath(Application.ExeName)+s
 else
 Result:='/usr/share/listaller/'+s;
+end;
+
+function GetSystemArchitecture: String;
+var p: TProcess;x: TStringList;s: String;
+begin
+ p:=TProcess.Create(nil);
+ p.Options:=[poUsePipes, poWaitOnExit];
+ p.CommandLine:='uname -m';
+ p.Execute;
+ x:=TStringList.Create;
+ x.LoadFromStream(p.OutPut);
+ s:=x[0];
+ x.Free;
+ p.Free;
+
+if (s='i686')
+or (s='i586')
+or (s='i486')
+then s:='i386';
+Result:=s;
 end;
 
 function IsSharedFile(s: String): Boolean;
@@ -457,6 +488,40 @@ begin
  end;
 end;
 
+function ExecuteAsRoot(cmd: String;comment: String; icon: String;optn: TProcessOptions=[]): Boolean;
+var p: TProcess; DInfo: TDistroInfo;
+begin
+DInfo:=GetDistro;
+p:=TProcess.Create(nil);
+if DInfo.Desktop='KDE' then
+ if FileExists('/usr/bin/kdesu') then
+  p.CommandLine := 'kdesu -d --comment "'+comment+'" -i '+icon+' '+cmd
+ else
+ if FileExists('/usr/bin/kdesudo') then
+  p.CommandLine := 'kdesudo -d --comment "'+comment+'" -i '+icon+' '+cmd
+  else
+   if FileExists('/usr/bin/gksudo') then
+    p.CommandLine := 'gksudo --message "'+comment+'" '+cmd
+    else
+   if FileExists('/usr/bin/gksu') then
+    p.CommandLine := 'gksu --message "'+comment+'" '+cmd
+    else
+   if FileExists('/usr/bin/gnomesu') then
+    p.CommandLine := 'gnomesu '+cmd
+   else
+   begin
+    ShowMessage('Unable to execute the application as root.'#13'Please do this manually!');
+    p.Free;
+    Result:=false;
+    exit;
+   end;
+    p.Options:=optn;
+    p.Execute;
+    Result:=true;
+    if p.ExitStatus>0 then Result:=false;
+    p.Free;
+end;
+
 procedure CmdResultList(cmd:String;Result: TStringList);
 var t:TProcess;
 s:TStringList;
@@ -603,7 +668,6 @@ Caption:=strUninstall;
 Anchors:=[akBottom,akRight];
 Top:=self.Height-46;
 Left:=self.Width-140;
-
 LoadStockPixmap(STOCK_DELETE,ICON_SIZE_BUTTON,Glyph);
 end;
 end;

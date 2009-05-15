@@ -248,7 +248,7 @@ object MnFrm: TMnFrm
   end
   object edtFilter: TEdit
     Left = 680
-    Height = 27
+    Height = 23
     Top = 112
     Width = 123
     Anchors = [akTop, akRight]

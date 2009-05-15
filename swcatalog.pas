@@ -129,8 +129,7 @@ end;
 with mnLabel do begin
 Parent:=Self;
 AutoSize:=true;
-Anchors:=[];
-Top:=36;
+Top:=20;
 Left:=66;
 end;
 
@@ -140,11 +139,10 @@ Height:=26;
 Width:=80;
 Caption:=strInstallNow;
 OnClick:=@InstallClick;
-Anchors:=[akBottom,akRight];
 Top:=16;
 Left:=self.Width-90;
 AutoSize:=true;
-LoadStockPixmap(STOCK_APPLY,ICON_SIZE_MENU,Glyph);
+LoadStockPixmap(STOCK_APPLY,ICON_SIZE_BUTTON,Glyph);
 end;
 UnButton.Left:=Width-UnButton.Width-8;
 
@@ -153,7 +151,7 @@ InfoBtn.Parent:=self;
 with InfoBtn do begin
 InfoBtn.Caption:='Info';
 InfoBtn.AutoSize:=true;
-LoadStockPixmap(STOCK_DIALOG_INFO,ICON_SIZE_MENU, Glyph);
+LoadStockPixmap(STOCK_DIALOG_INFO,ICON_SIZE_BUTTON, Glyph);
 InfoBtn.OnClick:=@InfoClick;
 Height:=28;
 Top:=16;

@@ -1,6 +1,6 @@
 {
  * lipa.lpr
- * Copyright (C) Listaller Project 2008
+ * Copyright (C) Listaller Project 2008-2009
  *
  * lipa.lpr is free software: you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
 }
-//** Command-line application that handles IPK-packages
+//** Command-line application to handle IPK-packages
 program lipa;
 
 {$mode objfpc}{$H+}
@@ -188,9 +188,6 @@ writeLn('    --deb                                  Create DEB package');
 writeLn('    --rpm                                  Create RPM package');
 writeLn('Options:');
 writeLn('--generate-button                          Generates the "Linux-compatible" PNG button for this package');
-{writeLn('-st-local [IPK-File] [IPK-Output]         Creates an package that can be installed offline.');
-writeLn('                                           Attention: This fetaure is NOT IMPLEMENTED in this version.');
-writeLn('                                           If it is used later, the new packages will be very big.');}
 end;
 
 procedure TLipa.OnExeception(Sender : TObject;E : Exception);

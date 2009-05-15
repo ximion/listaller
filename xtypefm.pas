@@ -98,7 +98,7 @@ begin
 end;
 
 procedure TimdFrm.btnInstallAllClick(Sender: TObject);
-var t: TProcess;DInfo: TDistroInfo;
+var DInfo: TDistroInfo;
 begin
 DInfo:=GetDistro;
 if not IsRoot then begin
@@ -106,26 +106,14 @@ if (DInfo.DName='Fedora')and(DInfo.Desktop='GNOME') then begin
  ShowMessage('Fedora has not "gksu"-like tool Listaller can use to get root-permissions.'#13'You can execute "listallmgr" in an Terminal root-environment to get this function working.'#13'This function will be fixed in newer Listaller releases.');
  exit;
 end;
-       t:=TProcess.Create(nil);
-         if DInfo.Desktop='KDE' then
-          if FileExists('/usr/bin/kdesu') then
-            t.CommandLine := 'kdesu '+Application.ExeName+' '+paramstr(1)
-           else
-            t.CommandLine := 'kdesudo '+Application.ExeName+' '+paramstr(1)
-         else
-         if DInfo.DName='Ubuntu' then
-          if FileExists('/usr/bin/gksudo') then
-            t.CommandLine := 'gksudo '+Application.ExeName+' '+paramstr(1)
-          else
-            t.CommandLine := 'gksu '+Application.ExeName+' '+paramstr(1)
-         else
-          t.CommandLine := 'gnomesu '+Application.ExeName+' '+paramstr(1);
-        t.Options:=[];
-        t.Execute;
-        t.Free;
-        self.Free;
-        halt(0); //Terminate program
-        exit;
+if FileExists(paramstr(1)) then
+ ExecuteAsRoot(Application.ExeName+' '+paramstr(1),'Enter your password to install the application for everyone.',GetDataFile('graphics/mime-ipk.png'))
+ else
+ ExecuteAsRoot(Application.ExeName,'Enter your password to get extended options for this application.','/usr/share/pixmaps/listaller.png');
+
+ self.Free;
+ halt(0); //Terminate program
+ exit;
   end;
 end;
 

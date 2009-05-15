@@ -162,6 +162,7 @@ var
   FrmEditor: TFrmEditor;
   //** Name of the current file
   FName: String;
+  //** Container for file profiles
   FileProfiles: TFileProfiles;
 
 implementation

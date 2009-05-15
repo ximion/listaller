@@ -233,7 +233,7 @@ var ireg,ini: TIniFile;tmp,xtmp: TStringList;i,j,k: Integer;p,n: String;tp: Stri
 begin
 j:=0;
 
-AList.Free;
+AList.Clear;
 
 btnCat.Enabled:=false;
 btnInstall.Enabled:=false;
@@ -248,7 +248,6 @@ ThrobberBox.Height:=gif.Height;
 ThrobberBox.Top:=(Height div 2)-(ThrobberBox.Height div 2)+16;
 ThrobberBox.Left:=(Width div 2)-(ThrobberBox.Width div 2)+20;
 gif.Initialize(ThrobberBox.Canvas);
-
 
 edtFilter.Text:='';
 
@@ -298,7 +297,8 @@ xtmp.free;
 
 k:=0;
 
-for i:=0 to tmp.Count-1 do begin
+for i:=0 to tmp.Count-1 do
+begin
 AList.Add(TListEntry.Create(MnFrm));
 
 entry:=TListEntry(AList.Items[AList.Count-1]);
@@ -385,7 +385,8 @@ xtmp.Free;
 
 if tp='games' then tp:='game';
 if tp='multimedia' then tp:='audiovideo';
-for i:=0 to tmp.Count-1 do begin
+for i:=0 to tmp.Count-1 do
+       begin
        ProcessDesktopFile(tmp[i],tp);
        end;
        tmp.Free;
@@ -402,7 +403,7 @@ btnCat.Enabled:=true;
 btnInstall.Enabled:=true;
 edtFilter.Enabled:=true;
 SwBox.Visible:=true;
-If Assigned(gif) Then gif.Terminate;
+if Assigned(gif) then gif.Terminate;
 gif := nil;
 end;
 

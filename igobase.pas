@@ -539,20 +539,7 @@ if pkType=lptLinstall then begin
 
 writeLn('Package type is "linstall"');
 
- t:=TProcess.Create(nil);
- t.Options:=[poUsePipes, poWaitOnExit];
- t.CommandLine:='uname -m';
- t.Execute;
- x:=TStringList.Create;
- x.LoadFromStream(t.OutPut);
- n:=x[0];
- x.Free;
- t.Free;
-
-if (n='i686')
-or (n='i586')
-or (n='i486')
-then n:='i386';
+n:=GetSystemArchitecture;
 
 if FindChildNode(xnode,'disallow')<>nil then
 if (pos('iofilecheck',LowerCase(FindChildNode(xnode,'disallow').NodeValue))>0) then begin

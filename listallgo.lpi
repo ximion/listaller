@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="488"/>
+      <CurrentBuildNr Value="491"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -50,7 +50,7 @@
         <MinVersion Major="1" Valid="True"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="98">
+    <Units Count="99">
       <Unit0>
         <Filename Value="listallgo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -65,8 +65,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="18" Y="1555"/>
-        <TopLine Value="1516"/>
+        <CursorPos X="55" Y="26"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -386,9 +386,7 @@
         <UnitName Value="dgunit"/>
         <CursorPos X="47" Y="26"/>
         <TopLine Value="1"/>
-        <EditorIndex Value="1"/>
         <UsageCount Value="124"/>
-        <Loaded Value="True"/>
       </Unit46>
       <Unit47>
         <Filename Value="abdfoutw.pas"/>
@@ -436,9 +434,7 @@
         <UnitName Value="trstrings"/>
         <CursorPos X="26" Y="50"/>
         <TopLine Value="17"/>
-        <EditorIndex Value="3"/>
         <UsageCount Value="29"/>
-        <Loaded Value="True"/>
       </Unit53>
       <Unit54>
         <Filename Value="../../../../../usr/lib/lazarus/ide/tododlg.pas"/>
@@ -696,11 +692,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="xtypefm"/>
-        <CursorPos X="5" Y="62"/>
-        <TopLine Value="40"/>
-        <EditorIndex Value="2"/>
+        <CursorPos X="5" Y="101"/>
+        <TopLine Value="81"/>
         <UsageCount Value="12"/>
-        <Loaded Value="True"/>
       </Unit90>
       <Unit91>
         <Filename Value="aboutbox.pas"/>
@@ -728,8 +722,8 @@
       <Unit94>
         <Filename Value="common.pas"/>
         <UnitName Value="common"/>
-        <CursorPos X="25" Y="186"/>
-        <TopLine Value="156"/>
+        <CursorPos X="69" Y="124"/>
+        <TopLine Value="90"/>
         <UsageCount Value="12"/>
       </Unit94>
       <Unit95>
@@ -752,68 +746,23 @@
         <TopLine Value="146"/>
         <UsageCount Value="10"/>
       </Unit97>
+      <Unit98>
+        <Filename Value="abdfhufd.pas"/>
+        <UnitName Value="AbDfHufD"/>
+        <CursorPos X="23" Y="278"/>
+        <TopLine Value="259"/>
+        <UsageCount Value="10"/>
+      </Unit98>
     </Units>
-    <JumpHistory Count="15" HistoryIndex="14">
+    <JumpHistory Count="2" HistoryIndex="1">
       <Position1>
-        <Filename Value="xtypefm.pas"/>
-        <Caret Line="10" Column="81" TopLine="1"/>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="10" Column="91" TopLine="1"/>
       </Position1>
       <Position2>
-        <Filename Value="xtypefm.pas"/>
-        <Caret Line="19" Column="16" TopLine="1"/>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="26" Column="55" TopLine="1"/>
       </Position2>
-      <Position3>
-        <Filename Value="xtypefm.pas"/>
-        <Caret Line="30" Column="4" TopLine="1"/>
-      </Position3>
-      <Position4>
-        <Filename Value="xtypefm.pas"/>
-        <Caret Line="49" Column="6" TopLine="27"/>
-      </Position4>
-      <Position5>
-        <Filename Value="xtypefm.pas"/>
-        <Caret Line="51" Column="6" TopLine="27"/>
-      </Position5>
-      <Position6>
-        <Filename Value="xtypefm.pas"/>
-        <Caret Line="59" Column="2" TopLine="27"/>
-      </Position6>
-      <Position7>
-        <Filename Value="xtypefm.pas"/>
-        <Caret Line="156" Column="4" TopLine="116"/>
-      </Position7>
-      <Position8>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="257" Column="67" TopLine="233"/>
-      </Position8>
-      <Position9>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="256" Column="26" TopLine="234"/>
-      </Position9>
-      <Position10>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="28" Column="3" TopLine="6"/>
-      </Position10>
-      <Position11>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="256" Column="27" TopLine="234"/>
-      </Position11>
-      <Position12>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="27" Column="68" TopLine="5"/>
-      </Position12>
-      <Position13>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="28" Column="6" TopLine="5"/>
-      </Position13>
-      <Position14>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="256" Column="27" TopLine="234"/>
-      </Position14>
-      <Position15>
-        <Filename Value="dgunit.pas"/>
-        <Caret Line="256" Column="26" TopLine="234"/>
-      </Position15>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -843,10 +792,12 @@
     </Linking>
     <Other>
       <Verbosity>
-        <ShowHints Value="False"/>
         <ShowSummary Value="True"/>
         <ShowHintsForUnusedUnitsInMainSrc Value="True"/>
       </Verbosity>
+      <CompilerMessages>
+        <IgnoredMessages idx4056="True"/>
+      </CompilerMessages>
       <CustomOptions Value="-dUSE_QT_45"/>
       <CompilerPath Value="$(CompPath)"/>
       <ExecuteBefore>

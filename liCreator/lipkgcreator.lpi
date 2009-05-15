@@ -8,7 +8,7 @@
       </Flags>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <ProjectVersion Value=""/>
@@ -38,7 +38,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="45">
+    <Units Count="50">
       <Unit0>
         <Filename Value="lipkgcreator.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -53,12 +53,12 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="editor"/>
-        <CursorPos X="9" Y="169"/>
-        <TopLine Value="133"/>
+        <CursorPos X="9" Y="170"/>
+        <TopLine Value="145"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="136"/>
         <Bookmarks Count="1">
-          <Item0 X="4" Y="541" ID="0"/>
+          <Item0 X="4" Y="542" ID="0"/>
         </Bookmarks>
         <Loaded Value="True"/>
       </Unit1>
@@ -182,9 +182,11 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="prjwizard"/>
-        <CursorPos X="58" Y="955"/>
-        <TopLine Value="933"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="119"/>
+        <Loaded Value="True"/>
       </Unit17>
       <Unit18>
         <Filename Value="../utilities.pas"/>
@@ -296,6 +298,10 @@
         <TopLine Value="216"/>
         <UsageCount Value="4"/>
       </Unit34>
+      <Unit35>
+        <Filename Value=""/>
+        <UsageCount Value="10"/>
+      </Unit35>
       <Unit36>
         <Filename Value="../abunzprc.pas"/>
         <UnitName Value="AbUnzPrc"/>
@@ -352,12 +358,45 @@
       <Unit44>
         <Filename Value="../common.pas"/>
         <UnitName Value="common"/>
-        <CursorPos X="25" Y="200"/>
-        <TopLine Value="181"/>
+        <CursorPos X="22" Y="208"/>
+        <TopLine Value="195"/>
         <UsageCount Value="10"/>
       </Unit44>
+      <Unit45>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.2.2/packages/gtk2/src/gtk+/gtk/gtk2.pas"/>
+        <UnitName Value="gtk2"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit45>
+      <Unit46>
+        <Filename Value="../../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkint.pp"/>
+        <UnitName Value="GtkInt"/>
+        <CursorPos X="23" Y="132"/>
+        <TopLine Value="49"/>
+        <UsageCount Value="10"/>
+      </Unit46>
+      <Unit47>
+        <Filename Value="../../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkdef.pp"/>
+        <UnitName Value="GtkDef"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="776"/>
+        <UsageCount Value="10"/>
+      </Unit47>
+      <Unit48>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.2.2/packages/gtk2/src/gtk+/gtk/gtkstock.inc"/>
+        <CursorPos X="4" Y="82"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit48>
+      <Unit49>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.2.2/packages/gtk2/src/gtk+/gtk/gtkenums.inc"/>
+        <CursorPos X="10" Y="286"/>
+        <TopLine Value="267"/>
+        <UsageCount Value="10"/>
+      </Unit49>
     </Units>
-    <JumpHistory Count="14" HistoryIndex="13">
+    <JumpHistory Count="15" HistoryIndex="14">
       <Position1>
         <Filename Value="editor.pas"/>
         <Caret Line="632" Column="83" TopLine="606"/>
@@ -414,6 +453,10 @@
         <Filename Value="editor.pas"/>
         <Caret Line="169" Column="9" TopLine="133"/>
       </Position14>
+      <Position15>
+        <Filename Value="editor.pas"/>
+        <Caret Line="170" Column="9" TopLine="145"/>
+      </Position15>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

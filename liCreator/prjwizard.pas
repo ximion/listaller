@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
-//** Graphical wizard for IPS creation
+//** Graphical wizard to generate IPS scripts
 unit prjwizard;
 
 {$mode objfpc}{$H+}
@@ -857,6 +857,7 @@ begin
     tmp:=TStringList.Create;
     tmp.Assign(FileUtil.FindAllFiles(DirectoryEdit1.Directory,'*',true));
     j:=0;
+    i:=0;
     for j:=lvPackageFiles.Items.Count to tmp.Count+lvPackageFiles.Items.Count-1 do
     begin
       if FileExists(tmp[i]) then
@@ -952,7 +953,7 @@ end;
 
 procedure TfrmProjectWizard.FormCreate(Sender: TObject);
 begin
-  SpeedButton4.Glyph.Handle:=LoadStockPixmap(STOCK_OPEN,1);
+  LoadStockPixmap(STOCK_OPEN,ICON_SIZE_LARGE_TOOLBAR,SpeedButton4.Glyph);
 end;
 
 procedure TfrmProjectWizard.FormShow(Sender: TObject);
@@ -961,6 +962,7 @@ begin
   BitBtn1.Enabled:=false;
   BitBtn3.Caption:='  Next  ';
   AddProfile('Standard');
+  Edit3.Text:=GetSystemArchitecture;
 end;
 
 procedure TfrmProjectWizard.Label28Click(Sender: TObject);

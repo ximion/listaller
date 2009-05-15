@@ -1,5 +1,5 @@
 { ipkbuild.pas
-  Copyright (C) Listaller Project 2008
+  Copyright (C) Listaller Project 2008-2009
 
   ipkbuild.pas is free software: you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
-//** Functions to build IPK packages an sources
+//** Functions to build IPK packages from source files
 unit ipkbuild;
 
 {$mode objfpc}{$H+}
