@@ -53,6 +53,7 @@ object FrmEditor: TFrmEditor
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 35
+        BookMarkOptions.OnChange = nil
         Gutter.Width = 53
         Highlighter = SynXMLSyn1
         Keystrokes = <        

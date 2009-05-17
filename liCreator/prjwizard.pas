@@ -22,8 +22,9 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Buttons, ExtCtrls, ComCtrls, EditBtn, Grids, popupnotifier, FileCtrl, FileUtil,
-  MD5, Menus, XMLRead, XMLWrite, DOM, editor, LCLType, common, SynEdit;
+  Buttons, ExtCtrls, ComCtrls, EditBtn, Grids, popupnotifier, FileCtrl,
+  FileUtil, MD5, Menus, XMLRead, XMLWrite, DOM, editor, LCLType, CheckLst,
+  common, SynEdit;
 
 type
 
@@ -55,6 +56,8 @@ type
     Button6: TButton;
     cgrIMethods: TCheckGroup;
     cbUseAppCMD: TCheckBox;
+    ChkAddUDeps: TCheckBox;
+    DependencyBox: TCheckListBox;
     chkShowInTerminal: TCheckBox;
     ComboBox1: TComboBox;
     cmbProfiles: TComboBox;
@@ -65,12 +68,12 @@ type
     Edit12: TEdit;
     Edit2: TEdit;
     Edit3: TEdit;
+    Edit8: TEdit;
     edtExec: TEdit;
     edtShortDescription: TEdit;
     Edit5: TEdit;
     Edit6: TEdit;
     Edit7: TEdit;
-    Edit8: TEdit;
     edtLangCode: TEdit;
     FileNameEdit1: TFileNameEdit;
     FileNameEdit2: TFileNameEdit;
@@ -116,6 +119,7 @@ type
     Label30: TLabel;
     Label31: TLabel;
     Label32: TLabel;
+    Label33: TLabel;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
@@ -164,6 +168,7 @@ type
     procedure Button6Click(Sender: TObject);
     procedure cbUseAppCMDChange(Sender: TObject);
     procedure cgrIMethodsItemClick(Sender: TObject; Index: integer);
+    procedure ChkAddUDepsChange(Sender: TObject);
     procedure cmbProfilesChange(Sender: TObject);
     procedure cmbProfilesCloseUp(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
@@ -234,7 +239,7 @@ begin
     BitBtn3.Enabled:=false;
   end;
   BitBtn3.Caption:='  Next  ';
-  if NoteBook1.PageIndex=3 then
+  if NoteBook1.PageIndex=2 then
      cmbProfilesChange(Sender);  // SaveFilesToProfile
   if (CreaType=lptDLink) and (NoteBook1.PageIndex=4) then
     NoteBook1.PageIndex:=NoteBook1.PageIndex-1;
@@ -406,6 +411,22 @@ begin
   end;
 
   //Dependencies
+  hn:=xdoc.CreateElement('dependencies');
+  j:=1;
+  for i:=0 to DependencyBox.Items.Count-1 do
+   if DependencyBox.Checked[i] then
+  begin
+   xn:=xdoc.CreateElement('d'+IntToStr(j));
+   cnt:=xdoc.CreateTextNode(DependencyBox.Items[i]);
+   xn.Appendchild(cnt);
+   hn.AppendChild(xn);
+   mn.AppendChild(hn);
+   Inc(j);
+  end;
+
+  if ChkAddUDeps.Checked then
+  begin
+
   for i:=0 to tvDependencies.Items.Count-1 do
   begin
     if tvDependencies.Items[i].HasChildren then
@@ -426,6 +447,9 @@ begin
       mn.AppendChild(hn);
     end;
   end;
+
+  end; //END CB
+
 end;
 
 procedure TfrmProjectWizard.BitBtn3Click(Sender: TObject);
@@ -435,6 +459,7 @@ var
   Profile: TList;
   TargetEdit: TSynEdit;
   s: String;
+  sl: TStringList;
 //XML
   xdoc: TXMLDocument;
 begin
@@ -509,13 +534,6 @@ begin
         exit;
        end;
 
-       NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
-       for i:=0 to lbDistributions.Count-1 do
-         tvDependencies.Items.Add(nil,lbDistributions.Items[i]);
-       exit;
-     end;
-  2: begin
-       NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
        // set settings for package files:
        Edit6.Caption:='$INST/'+Edit1.Text;
        Edit7.Caption:=Edit6.Caption;
@@ -523,9 +541,38 @@ begin
        cmbProfiles.Items.Assign(lbProfiles.Items);
        if cmbProfiles.Items.Count>0 then cmbProfiles.ItemIndex:=0;
        cmbProfilesChange(Sender);
+
+       NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
+
+       exit;
+     end;
+  2: begin
+      for i:=0 to lbDistributions.Count-1 do
+         tvDependencies.Items.Add(nil,lbDistributions.Items[i]);
+
+         cmbProfilesChange(Sender);
+       //Load dependency list
+       sl:=TStringList.Create;
+       for j:=0 to GetProfileCount-1 do
+      begin
+        Profile := GetProfile(j);
+        for i:=0 to Profile.Count-1 do
+        begin
+         if FileIsExecutable(PPackageFile(Profile[i])^.FullName) then
+          begin
+           GetLibDepends(PPackageFile(Profile[i])^.FullName,sl);
+          end;
+        end;
+      end;
+       DependencyBox.Items.Assign(sl);
+       sl.Free;
+       for i:=0 to DependencyBox.Items.Count-1 do
+       DependencyBox.Checked[i]:=true;
+
+       NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
      end;
   3: begin
-       cmbProfilesChange(Sender); //SaveFilesToProfile
+      cmbProfilesChange(Sender); //SaveFilesToProfile
        if lvPackageFiles.Items.Count<1 then
        begin
          ShowMessage('Select some files that will be installed.'#13'- a package without files is useless. ;-)');
@@ -903,6 +950,21 @@ begin
 
 end;
 
+procedure TfrmProjectWizard.ChkAddUDepsChange(Sender: TObject);
+begin
+  if (Sender as TCheckBox).Enabled then
+  begin
+   Label20.Enabled:=true;
+   GroupBox10.Enabled:=true;
+   tvDependencies.Enabled:=true;
+  end else
+  begin
+   Label20.Enabled:=false;
+   GroupBox10.Enabled:=false;
+   tvDependencies.Enabled:=false;
+  end;
+end;
+
 procedure TfrmProjectWizard.cmbProfilesChange(Sender: TObject);
 begin
   if cmbProfiles.Tag>-1 then
@@ -953,7 +1015,7 @@ end;
 
 procedure TfrmProjectWizard.FormCreate(Sender: TObject);
 begin
-  LoadStockPixmap(STOCK_OPEN,ICON_SIZE_LARGE_TOOLBAR,SpeedButton4.Glyph);
+  LoadStockPixmap(STOCK_PROJECT_OPEN,ICON_SIZE_MENU,SpeedButton4.Glyph);
 end;
 
 procedure TfrmProjectWizard.FormShow(Sender: TObject);

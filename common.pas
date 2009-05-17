@@ -123,7 +123,11 @@ function GetSystemArchitecture: String;
     @param icon Path to an icon for the operation
     @param optn Set of TProcessOption to apply on the process object}
 function  ExecuteAsRoot(cmd: String;comment: String; icon: String;optn: TProcessOptions=[]): Boolean;
-
+{** Get dependencies of an executable
+    @param f Name of the binary file
+    @param lst StringList to recieve the output
+    @returns Success of operation}
+function GetLibDepends(f: String; lst: TStringList): Boolean;
 const
 //Stock constants
  STOCK_QUIT='stock-quit';
@@ -137,6 +141,7 @@ const
  STOCK_DIALOG_INFO='stock-dialog-info';
  STOCK_REFRESH='stock-refresh';
  STOCK_OPEN='stock-open';
+ STOCK_PROJECT_OPEN='stock-project-open';
  ICON_SIZE_BUTTON=4;
  ICON_SIZE_SMALL_TOOLBAR=2;
  ICON_SIZE_LARGE_TOOLBAR=3;
@@ -180,6 +185,7 @@ var cicon: String;BH: HBitmap;
 begin
 {$ENDIF}
 {$IFDEF LCLGTK2}
+ if StockId = STOCK_PROJECT_OPEN then StockId:=STOCK_OPEN
  cicon:=StringReplace(StockId,'stock','gtk',[rfReplaceAll]);
  BH:=Gtk2LoadStockPixmap(PChar(cicon),IconSize);
  if BH <> 0 then
@@ -201,6 +207,8 @@ if not DirectoryExists(KDE_ICON_DIR+'22x22/') then
  if StockId = STOCK_APPLY then cicon:='dialog-ok-apply.png';
  if StockId = STOCK_DIALOG_INFO then cicon:='help-hint.png';
  if StockId = STOCK_REFRESH then cicon:='view-refresh.png';
+ if StockId = STOCK_PROJECT_OPEN then cicon:='project-open.png';
+ if StockId = STOCK_OPEN then cicon:='../places/folder.png';
 
  if IconSize=4 then
   s:=KDE_ICON_DIR+'16x16/actions/';
@@ -280,6 +288,32 @@ or (s='i586')
 or (s='i486')
 then s:='i386';
 Result:=s;
+end;
+
+function GetLibDepends(f: String; lst: TStringList): Boolean;
+var p: TProcess;s: TStringList;i: Integer;
+begin
+  p:=TProcess.Create(nil);
+  p.Options:=[poUsePipes,poWaitOnExit];
+  p.CommandLine:='ldd '+f;
+  p.Execute;
+  Result:=true;
+  if p.ExitStatus>0 then
+  begin
+   Result:=false;
+   p.Free;
+   exit;
+  end;
+  s:=TStringList.Create;
+  s.LoadFromStream(p.Output);
+  p.Free;
+  for i:=0 to s.Count-1 do
+   if pos('=>',s[i])>0 then
+   begin
+    lst.Add(copy(s[i],0,pos('=',s[i])-1));
+   end else
+    lst.Add(copy(s[i],0,pos('(',s[i])-1));
+  s.Free;
 end;
 
 function IsSharedFile(s: String): Boolean;

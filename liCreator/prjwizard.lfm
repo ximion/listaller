@@ -3,7 +3,7 @@ object frmProjectWizard: TfrmProjectWizard
   Height = 666
   Top = 188
   Width = 836
-  ActiveControl = Edit1
+  ActiveControl = Panel1
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Project Wizard'
@@ -62,13 +62,13 @@ object frmProjectWizard: TfrmProjectWizard
     Top = 0
     Width = 836
     Align = alClient
-    PageIndex = 1
+    PageIndex = 3
     ShowTabs = False
     TabOrder = 0
     object Page1: TPage
       Caption = 'Page1'
       ClientWidth = 832
-      ClientHeight = 577
+      ClientHeight = 600
       object SpeedButton1: TSpeedButton
         Left = 85
         Height = 104
@@ -1756,7 +1756,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page2: TPage
       Caption = 'Page2'
       ClientWidth = 832
-      ClientHeight = 600
+      ClientHeight = 577
       object Label8: TLabel
         Left = 7
         Height = 19
@@ -2256,75 +2256,6 @@ object frmProjectWizard: TfrmProjectWizard
       Caption = 'Page3'
       ClientWidth = 832
       ClientHeight = 577
-      object Label19: TLabel
-        Left = 7
-        Height = 19
-        Top = 7
-        Width = 134
-        Caption = 'Add dependencies'
-        Font.Height = -15
-        Font.Name = 'Sans'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label20: TLabel
-        Left = 7
-        Height = 94
-        Top = 63
-        Width = 220
-        Caption = 'You can add ftp:// or http:// weblinks.'#10'On DEB-based systems you can use '#10'the package name instead.'#10'You can add the real package name after the'#10'link, eg.'#10'http://example.com/test-1.0-i386.deb <test>'
-        ParentColor = False
-      end
-      object tvDependencies: TTreeView
-        Left = 319
-        Height = 503
-        Top = 63
-        Width = 509
-        Anchors = [akTop, akLeft, akRight, akBottom]
-        AutoExpand = True
-        DefaultItemHeight = 15
-        TabOrder = 0
-        OnClick = tvDependenciesClick
-        OnKeyDown = tvDependenciesKeyDown
-        Options = [tvoAutoExpand, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips]
-        Items.Data = {
-          F9FFFFFF020002000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000
-          0000000A0000004445422D53797374656DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-          FF0000000000000000000A00000052504D2D53797374656D
-        }
-      end
-      object GroupBox10: TGroupBox
-        Left = 7
-        Height = 105
-        Top = 199
-        Width = 297
-        Caption = 'Add entry'
-        ClientHeight = 90
-        ClientWidth = 293
-        TabOrder = 1
-        object Edit8: TEdit
-          Left = 6
-          Height = 23
-          Top = 9
-          Width = 280
-          TabOrder = 0
-          Text = 'http://'
-        end
-        object Button4: TButton
-          Left = 54
-          Height = 25
-          Top = 41
-          Width = 163
-          Caption = 'Add to selected system'
-          OnClick = Button4Click
-          TabOrder = 1
-        end
-      end
-    end
-    object Page4: TPage
-      Caption = 'Page4'
-      ClientWidth = 832
-      ClientHeight = 577
       object Label17: TLabel
         Left = 7
         Height = 19
@@ -2509,6 +2440,104 @@ object frmProjectWizard: TfrmProjectWizard
         TabOrder = 6
       end
     end
+    object Page4: TPage
+      Caption = 'Page4'
+      ClientWidth = 832
+      ClientHeight = 600
+      object Label19: TLabel
+        Left = 7
+        Height = 19
+        Top = 7
+        Width = 134
+        Caption = 'Add dependencies'
+        Font.Height = -15
+        Font.Name = 'Sans'
+        ParentColor = False
+        ParentFont = False
+      end
+      object Label20: TLabel
+        Left = 7
+        Height = 94
+        Top = 326
+        Width = 220
+        Caption = 'You can add ftp:// or http:// weblinks.'#10'On DEB-based systems you can use '#10'the package name instead.'#10'You can add the real package name after the'#10'link, eg.'#10'http://example.com/test-1.0-i386.deb <test>'
+        Enabled = False
+        ParentColor = False
+      end
+      object Label33: TLabel
+        Left = 7
+        Height = 14
+        Top = 38
+        Width = 235
+        Caption = 'The following dependencies have been detected:'
+        ParentColor = False
+      end
+      object tvDependencies: TTreeView
+        Left = 310
+        Height = 264
+        Top = 326
+        Width = 509
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        AutoExpand = True
+        DefaultItemHeight = 15
+        Enabled = False
+        TabOrder = 0
+        OnClick = tvDependenciesClick
+        OnKeyDown = tvDependenciesKeyDown
+        Options = [tvoAutoExpand, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips]
+        Items.Data = {
+          F9FFFFFF020002000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000
+          0000000A0000004445422D53797374656DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FF0000000000000000000A00000052504D2D53797374656D
+        }
+      end
+      object GroupBox10: TGroupBox
+        Left = 7
+        Height = 105
+        Top = 438
+        Width = 297
+        Caption = 'Add entry'
+        ClientHeight = 90
+        ClientWidth = 293
+        Enabled = False
+        TabOrder = 1
+        object Button4: TButton
+          Left = 54
+          Height = 25
+          Top = 41
+          Width = 163
+          Caption = 'Add to selected system'
+          OnClick = Button4Click
+          TabOrder = 0
+        end
+        object Edit8: TEdit
+          Left = 5
+          Height = 23
+          Top = 11
+          Width = 280
+          TabOrder = 1
+          Text = 'http://'
+        end
+      end
+      object ChkAddUDeps: TCheckBox
+        Left = 7
+        Height = 21
+        Top = 294
+        Width = 169
+        Caption = 'Add addintional dependencies:'
+        OnChange = ChkAddUDepsChange
+        TabOrder = 2
+      end
+      object DependencyBox: TCheckListBox
+        Left = 7
+        Height = 200
+        Top = 62
+        Width = 812
+        ItemHeight = 0
+        TabOrder = 3
+        TopIndex = -1
+      end
+    end
     object Page5: TPage
       Caption = 'Page5'
       ClientWidth = 832
@@ -2545,9 +2574,9 @@ object frmProjectWizard: TfrmProjectWizard
       ClientHeight = 577
       object Label21: TLabel
         Left = 7
-        Height = 20
+        Height = 19
         Top = 15
-        Width = 347
+        Width = 329
         Caption = 'Select executable LOKI/Autopackage.org file:'
         Font.Height = -15
         Font.Name = 'Sans'
@@ -2588,9 +2617,9 @@ object frmProjectWizard: TfrmProjectWizard
         TabOrder = 1
         object chkShowInTerminal: TCheckBox
           Left = 14
-          Height = 22
+          Height = 21
           Top = 9
-          Width = 159
+          Width = 129
           Caption = 'Show Terminal Output'
           TabOrder = 0
         end
@@ -2632,7 +2661,7 @@ object frmProjectWizard: TfrmProjectWizard
       TabOrder = 1
     end
     object BitBtn3: TBitBtn
-      Left = 772
+      Left = 776
       Height = 28
       Top = 8
       Width = 53
