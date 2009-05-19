@@ -78,13 +78,16 @@ object FmAbout: TFmAbout
       ClientHeight = 241
       ClientWidth = 320
       object Label5: TLabel
+        Left = 0
         Height = 13
+        Top = 0
         Width = 320
         Align = alTop
         Caption = 'Please use https://bugs.launchpad.net/listaller for bug reports.'
         ParentColor = False
       end
       object Label6: TLabel
+        Left = 0
         Height = 228
         Top = 13
         Width = 320

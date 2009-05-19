@@ -25,7 +25,7 @@ uses
   ComCtrls, AbUnZper, AbArcTyp, StdCtrls, IniFiles, FileUtil, ExtCtrls,
   process, Buttons, LCLType, MD5, LCLIntf, distri, common, HTTPSend,
   blcksock, ftpsend, trstrings, translations, gettext, XMLRead, DOM,
-  SynEdit, xtypefm, ipkhandle, packagekit;
+  SynEdit, xtypefm, ipkhandle, packagekit, sqlite3ds, DB;
 
 type
 
@@ -94,8 +94,12 @@ type
     procedure RadioButton1Change(Sender: TObject);
   private
     { private declarations }
+    //** True if old app should be removed
     RmApp: Boolean;
+    //** True if installation is beeing aborted
     AbortIns: Boolean;
+    dsApp: TSQLite3Dataset;
+    dbSrc: TDatasource;
     procedure HookSock(Sender: TObject; Reason:THookSocketReason; const Value: string);
     procedure StartInstallation;
   public
@@ -366,10 +370,11 @@ end;
 end;
 
 procedure TIWizFrm.FormCreate(Sender: TObject);
-var z: TAbUnZipper;ar: TIniFile;i: Integer;x: TStringList;t:TProcess;
+var z: TAbUnZipper;i: Integer;p: TProcess;
     Doc: TXMLDocument;xnode: TDOMNode;
     n,PODirectory, Lang, FallbackLang: String;
     imForm: TimdFrm;
+    fld: TField;
 begin
 if not DirectoryExists(RegDir) then begin
 CreateDir(ExtractFilePath(RegDir));
@@ -435,6 +440,36 @@ LoadStockPixmap(STOCK_GO_BACK,ICON_SIZE_BUTTON,Button5.Glyph);
   end;
 
 writeLn('Initialized.');
+writeLn('Opening database...');
+dsApp:= TSQLite3Dataset.Create(nil);
+with dsApp do
+ begin
+   FileName:=RegDir+'applications.db';
+   TableName:='AppInfo';
+   if not FileExists(FileName) then
+   begin
+   with FieldDefs do
+     begin
+       Clear;
+       Add('Name',ftString,0,true);
+       Add('ID',ftString,0,true);
+       Add('Description',ftString,0,False);
+       Add('Version',ftFloat,0,true);
+       Add('Publisher',ftString,0,False);
+       Add('Icon',ftString,0,False);
+       Add('Profile',ftString,0,False);
+       Add('AGroup',ftString,0,true);
+       Add('InstallDate',ftDateTime,0,False);
+       Add('Dependencies',ftMemo,0,False);
+     end;
+   CreateTable;
+ end;
+end;
+dsApp.Active:=true;
+writeLn('SQLite version: '+dsApp.SqliteVersion);
+
+
+
 writeLn('Loading IPK package...');
 //Begin loading package
 Application.ShowMainForm:=true;
@@ -680,25 +715,24 @@ if FileExists(z.BaseDirectory+'/preinst') then ExecA:=z.BaseDirectory+'/preinst'
 if FileExists(z.BaseDirectory+'/postinst') then ExecB:=z.BaseDirectory+'/postinst';
 if FileExists(z.BaseDirectory+'/prerm') then ExecX:=z.BaseDirectory+'/prerm';
 
-ar:=TIniFile.Create(RegDir+'appreg.lst');
-x:=TStringList.Create;
-ar.ReadSections(x);
-for i:=0 to x.Count-1 do begin
-
-if (copy(x[i],1,pos('<',x[i])-1)=IAppName) and (ar.ReadString(x[i],'Version*','0.0')=IAppVersion)
-and (idName=ar.ReadString(x[i],'idName','???')) then
-
-if Application.MessageBox(PAnsiChar(PAnsiChar(strAlreadyInst)+#13+PAnsiChar(strInstallAgain)),PAnsiChar(strReInstall),MB_YESNO)= IDNO then
+dsApp.SQL:='SELECT * FROM AppInfo';
+dsApp.Open;
+dsApp.Filtered := true;
+dsApp.First;
+while not dsApp.EOF do
 begin
-x.Free;
-ar.Free;
-Application.Terminate;
-exit;
-end else RmApp:=true;
+ if (dsApp.FieldByName('Name').AsString=IAppName) and (dsApp.FieldByName('Version').AsString=IAppVersion)
+and (dsApp.FieldByName('ID').AsString=idName) then
+ if Application.MessageBox(PAnsiChar(PAnsiChar(strAlreadyInst)+#13+PAnsiChar(strInstallAgain)),PAnsiChar(strReInstall),MB_YESNO)= IDNO then
+ begin
+  Application.Terminate;
+  exit;
+ end else RmApp:=true;
 
+ dsApp.Next;
 end;
-x.Free;
-ar.Free;
+
+dsApp.Close;
 
 //Load Description
 if LowerCase(DescFile)<>'' then
@@ -887,25 +921,25 @@ for i:=0 to FindChildNode(xnode,'package').ChildNodes.Count-1 do
 z.ExtractFiles(ExtractFileName(FindChildNode(xnode,'package').ChildNodes[i].NodeValue));
 
 z.Free;
- t:=tprocess.create(nil);
- t.CommandLine:='chmod 755 ''/tmp/'+FindChildNode(xnode,'package').NodeValue+'''';
- t.Options:=[poUsePipes,poWaitonexit];
- t.Execute;
- t.Options:=[poUsePipes,poWaitonexit,poNewConsole];
+ p:=tprocess.create(nil);
+ p.CommandLine:='chmod 755 ''/tmp/'+FindChildNode(xnode,'package').NodeValue+'''';
+ p.Options:=[poUsePipes,poWaitonexit];
+ p.Execute;
+ p.Options:=[poUsePipes,poWaitonexit,poNewConsole];
  if LowerCase(ExtractFileExt(FindChildNode(xnode,'package').NodeValue))='.package' then begin
  if FileExists('/usr/bin/package') then
- t.Options:=[poUsePipes,poWaitonexit];
+ p.Options:=[poUsePipes,poWaitonexit];
  
- t.CommandLine:='/tmp/'+FindChildNode(xnode,'package').NodeValue;
- t.Execute;
- t.Free;
+ p.CommandLine:='/tmp/'+FindChildNode(xnode,'package').NodeValue;
+ p.Execute;
+ p.Free;
  end else begin
  if (FindChildNode(xnode,'InTerminal')<>nil)and(LowerCase(FindChildNode(xnode,'InTerminal').NodeValue)='true') then
- t.Options:=[poUsePipes, poWaitOnExit, poNewConsole]
- else t.Options:=[poUsePipes, poWaitOnExit];
- t.CommandLine:='/tmp/'+FindChildNode(xnode,'package').NodeValue;
- t.Execute;
- t.Free;
+ p.Options:=[poUsePipes, poWaitOnExit, poNewConsole]
+ else p.Options:=[poUsePipes, poWaitOnExit];
+ p.CommandLine:='/tmp/'+FindChildNode(xnode,'package').NodeValue;
+ p.Execute;
+ p.Free;
  end;
  
 DeleteFile('/tmp/'+FindChildNode(xnode,'package').NodeValue);
@@ -920,6 +954,10 @@ begin
   //Free instances
   if Assigned(Dependencies) then Dependencies.Free;
   if Assigned(Profiles) then Profiles.Free;
+  writeLn('Removing database link.');
+  dbSrc.Free;
+  dsApp.Free;
+  writeLn('Listaller unloaded.');
 end;
 
 procedure TIWizFrm.FormShow(Sender: TObject);
@@ -1009,7 +1047,7 @@ var
 i,j: Integer;
 fi,ndirs, s, appfiles: TStringList;
 dest,h: String; // h is an helper variable - used for various actions
-ar,dsk, cnf: TIniFile; // Archive setting, configuration
+dsk, cnf: TIniFile; // Configuration files etc.
 z: TAbUnZipper; // Zipper
 setcm: Boolean;
 t:TProcess; // Helper process with pipes
@@ -1104,6 +1142,7 @@ HTTP.ProxyPort:=cnf.ReadString('Proxy','hPort','');
 HTTP.ProxyHost:=cnf.ReadString('Proxy','hServer','');
 HTTP.ProxyUser:=cnf.ReadString('Proxy','Username','');
 HTTP.ProxyPass:=cnf.ReadString('Proxy','Password',''); //The PW is visible in the file! It should be crypted
+
 //Not needed
 {if DInfo.Desktop='GNOME' then begin
 HTTP.ProxyPass:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_user');
@@ -1114,6 +1153,7 @@ FTP.:=cnf.ReadString('Proxy','fPort','');
 HTTP.ProxyHost:=cnf.ReadString('Proxy','fServer','');
 HTTP.ProxyUser:=cnf.ReadString('Proxy','Username','');
 HTTP.ProxyPass:=cnf.ReadString('Proxy','Password','');  }
+
 end;
 cnf.Free;
 
@@ -1428,37 +1468,41 @@ InsProgress.Position:=InsProgress.Position+6;
 fi.Free;
 Label9.Caption:=strStep4;
 
-if not FPatch then begin
-if not DirectoryExists(RegDir+IAppName+'-'+idName) then SysUtils.CreateDir(RegDir+IAppName+'-'+idName);
+if not FPatch then
+begin
+
+if not DirectoryExists(RegDir+LowerCase(IAppName+'-'+idName)) then SysUtils.CreateDir(RegDir+LowerCase(IAppName+'-'+idName));
 FileCopy(lp+PkgName+'/arcinfo.pin',RegDir+IAppName+'-'+idName+'/proginfo.pin');
 
+//Save list of installed files
 appfiles.SaveToFile(RegDir+IAppName+'-'+idName+'/appfiles.list');
 appfiles.Free;
 
-if IconPath[1]='/' then
-FileCopy(lp+PkgName+IconPath,RegDir+IAppName+'-'+idName+'/icon'+ExtractFileExt(IconPath));
+for i:=0 to Dependencies.Count-1 do
+h:=#13+Dependencies[i];
 
-ndirs.SaveToFile(RegDir+IAppName+'-'+idName+'/AppDirs.list');
+//Open database connection
+dsApp.Open;
+dsApp.Edit;
+
+dsApp.Insert;
+dsApp.ExecuteDirect('INSERT INTO "AppInfo" VALUES ('''+IAppName+''', '''+
+        idName+''', '''+ShDesc+''','''+IAppVersion+''','''+IAuthor+''','''+'icon'+ExtractFileExt(IconPath)+''',''no-profile'','''+
+        AType+''','''+'12.04.1992'', '''+h+''');');
+
+//Write changes
+dsApp.ApplyUpdates;
+dsApp.Close;
+
+if IconPath[1]='/' then
+FileCopy(lp+PkgName+IconPath,RegDir+LowerCase(IAppName+'-'+idName)+'/icon'+ExtractFileExt(IconPath));
+
+ndirs.SaveToFile(RegDir+LowerCase(IAppName+'-'+idName)+'/appdirs.list');
 
 if ExecX<>'<disabled>' then
-FileCopy(ExecX,RegDir+IAppName+'-'+idName+'/prerm');
+FileCopy(ExecX,RegDir+LowerCase(IAppName+'-'+idName)+'/prerm');
 
 ndirs.Free;
-
-ar:=TInifile.Create(RegDir+'appreg.lst');
-ar.WriteString(IAppName+'~'+idName,'Version*',IAppVersion);
-ar.WriteString(IAppName+'~'+idName,'Version',IAppVersion);
-ar.WriteString(IAppName+'~'+idName,'Author',IAuthor);
-ar.WriteString(IAppName+'~'+idName,'Package',pID);
-ar.WriteString(IAppName+'~'+idName,'C-Dir',RegDir+IAppName+' '+IAppVersion);
-ar.WriteBool(IAppName+'~'+idName,'ContSFiles',ContSFiles);
-ar.WriteString(IAppName+'~'+idName,'SDesc',ShDesc);
-ar.WriteString(IAppName+'~'+idName,'Group',AType);
-ar.Free;
-ar:=TInifile.Create(RegDir+IAppName+'-'+idName+'/proginfo.pin');
-for i:=0 to Dependencies.Count-1 do
-ar.WriteString('DepOS','ID'+IntToStr(i+1),Dependencies[i]);
-ar.Free;
 
 end; //End of Patch check
 

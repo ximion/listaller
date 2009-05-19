@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="1060"/>
+      <CurrentBuildNr Value="1064"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -261,8 +261,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="settings"/>
-        <CursorPos X="52" Y="26"/>
-        <TopLine Value="13"/>
+        <CursorPos X="70" Y="134"/>
+        <TopLine Value="114"/>
         <UsageCount Value="146"/>
       </Unit29>
       <Unit30>
@@ -534,8 +534,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="aboutbox"/>
-        <CursorPos X="33" Y="44"/>
-        <TopLine Value="22"/>
+        <CursorPos X="3" Y="46"/>
+        <TopLine Value="21"/>
         <UsageCount Value="47"/>
       </Unit68>
       <Unit69>

@@ -31,8 +31,10 @@ DName: String;
 Release: String;
 //** Package management system
 PackageSystem: String;
-//** The desktop environment (KDE/GNOME)
+//** The detected desktop environment
 Desktop: String;
+//** The desktop-base (KDE/GNOME), used to choose the right applications for various actions
+DBase: String;
 end;
 
 //** Get the distro-infos
@@ -210,8 +212,14 @@ except end;
 end;
 if (pos('kde',LowerCase(GetEnvironmentVariable('GDMSESSION')))>0)or (pos('kde',LowerCase(GetEnvironmentVariable('DESKTOP_SESSION')))>0)
 or (GetEnvironmentVariable('KDE_FULL_SESSION')='true') then
-Result.Desktop:='KDE' else
-Result.Desktop:='GNOME'; //Gnome/Xfce/E17 ...
+Result.DBase:='KDE' else
+Result.DBase:='GNOME'; //Gnome/Xfce/E17 ...
+
+//Read the "real" DE
+Result.Desktop:=GetEnvironmentVariable('DESKTOP_SESSION');
+if Result.Desktop='' then
+Result.Desktop:=GetEnvironmentVariable('GDMSESSION');
+Result.Desktop:=UpperCase(Result.Desktop);
 
 uv.Free;
 end;

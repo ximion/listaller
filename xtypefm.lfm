@@ -84,10 +84,10 @@ object imdFrm: TimdFrm
     TabOrder = 0
   end
   object btnTest: TBitBtn
-    Left = 272
+    Left = 271
     Height = 38
     Top = 97
-    Width = 89
+    Width = 90
     Anchors = [akBottom]
     AutoSize = True
     Caption = 'Test application'

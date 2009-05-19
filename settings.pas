@@ -131,7 +131,8 @@ begin
   CbShowPkMon.Checked:=cnf.ReadBool('MainConf','ShowPkMon',false);
   cnf.free;
 if Edit1.Text='' then begin
-if mnFrm.DInfo.Desktop='GNOME' then begin
+if (mnFrm.DInfo.DBase='GNOME')and(FileExists('/usr/bin/gconftool-2')) then
+begin
 if CmdResult('gconftool-2 -g /system/http_proxy/use_http_proxy')='true' then CheckBox4.Checked:=true
 else CheckBox4.Checked:=false;
 Edit1.Text:=CmdResult('gconftool-2 -g /system/http_proxy/host');

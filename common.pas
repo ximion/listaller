@@ -185,7 +185,7 @@ var cicon: String;BH: HBitmap;
 begin
 {$ENDIF}
 {$IFDEF LCLGTK2}
- if StockId = STOCK_PROJECT_OPEN then StockId:=STOCK_OPEN
+ if StockId = STOCK_PROJECT_OPEN then StockId:=STOCK_OPEN;
  cicon:=StringReplace(StockId,'stock','gtk',[rfReplaceAll]);
  BH:=Gtk2LoadStockPixmap(PChar(cicon),IconSize);
  if BH <> 0 then
@@ -527,7 +527,7 @@ var p: TProcess; DInfo: TDistroInfo;
 begin
 DInfo:=GetDistro;
 p:=TProcess.Create(nil);
-if DInfo.Desktop='KDE' then
+if DInfo.DBase='KDE' then
  if FileExists('/usr/bin/kdesu') then
   p.CommandLine := 'kdesu -d --comment "'+comment+'" -i '+icon+' '+cmd
  else

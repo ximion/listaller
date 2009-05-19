@@ -97,7 +97,7 @@ object FmConfig: TFmConfig
         Left = 6
         Height = 21
         Top = 64
-        Width = 327
+        Width = 328
         Caption = 'Load dependencies from included webserver-urls automatically'
         Checked = True
         OnChange = CheckBox2Change
@@ -118,7 +118,7 @@ object FmConfig: TFmConfig
           Left = 9
           Height = 14
           Top = 33
-          Width = 70
+          Width = 71
           Caption = 'H&TTP-Proxy:'
           Enabled = False
           ParentColor = False
@@ -214,7 +214,7 @@ object FmConfig: TFmConfig
           EditLabel.Left = 9
           EditLabel.Height = 14
           EditLabel.Top = 109
-          EditLabel.Width = 63
+          EditLabel.Width = 64
           EditLabel.Caption = '&FTP-Proxy:'
           EditLabel.ParentColor = False
           Enabled = False
