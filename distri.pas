@@ -121,6 +121,9 @@ Result.DName:='Xandros';
 if pos('FEDORA',UpperCase(uv[i]))>0 then
 Result.DName:='Fedora';
 
+if pos('MOBLIN',UpperCase(uv[i]))>0 then
+Result.DName:='Moblin';
+
 end;
 if Result.DName='' then begin
 uv.LoadFromFile('/proc/version');
@@ -172,6 +175,9 @@ Result.DName:='Xandros';
 if pos('FEDORA',UpperCase(uv[i]))>0 then
 Result.DName:='Fedora';
 
+if pos('MOBLIN',UpperCase(uv[i]))>0 then
+Result.DName:='Moblin';
+
 end;
  
 end;
@@ -194,7 +200,10 @@ if Result.DName='Xandros' then
 Result.PackageSystem:='DEB';
 
 if Result.DName='Fedora' then
-Result.PackageSystem:='DEB';
+Result.PackageSystem:='RPM';
+
+if Result.DName='Moblin' then
+Result.PackageSystem:='RPM';
 
 if FileExists('/etc/lsb-release') then begin
 uv.LoadFromFile('/etc/lsb-release');
@@ -220,6 +229,12 @@ Result.Desktop:=GetEnvironmentVariable('DESKTOP_SESSION');
 if Result.Desktop='' then
 Result.Desktop:=GetEnvironmentVariable('GDMSESSION');
 Result.Desktop:=UpperCase(Result.Desktop);
+
+if Result.DName='Moblin' then
+begin
+ Result.DBase:='GNOME';
+ Result.Desktop:='Linux Mobile (Clutter)';
+end;
 
 uv.Free;
 end;

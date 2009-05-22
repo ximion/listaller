@@ -98,9 +98,11 @@ type
     RmApp: Boolean;
     //** True if installation is beeing aborted
     AbortIns: Boolean;
+    //** SQLite connection
     dsApp: TSQLite3Dataset;
-    dbSrc: TDatasource;
+    //** HTTP/FTP socket hook
     procedure HookSock(Sender: TObject; Reason:THookSocketReason; const Value: string);
+    //** Installs the application
     procedure StartInstallation;
   public
     { public declarations }
@@ -453,6 +455,7 @@ with dsApp do
        Clear;
        Add('Name',ftString,0,true);
        Add('ID',ftString,0,true);
+       Add('Type',ftString,0,true);
        Add('Description',ftString,0,False);
        Add('Version',ftFloat,0,true);
        Add('Publisher',ftString,0,False);
@@ -596,7 +599,7 @@ pID:=xnode.FindNode('id').FirstChild.NodeValue;
 idName:='';
 if xnode.FindNode('idName')<> nil then
 idName:=xnode.FindNode('idName').FirstChild.NodeValue;
-writeLn('Package idname: '+idName);
+writeLn('Package idName: '+idName);
 
 //Find profiles
 i:=1;
@@ -955,7 +958,6 @@ begin
   if Assigned(Dependencies) then Dependencies.Free;
   if Assigned(Profiles) then Profiles.Free;
   writeLn('Removing database link.');
-  dbSrc.Free;
   dsApp.Free;
   writeLn('Listaller unloaded.');
 end;
@@ -1321,12 +1323,14 @@ ExProgress.Enabled:=false;
 AbortBtn1.Enabled:=false;
 Application.ProcessMessages;
 
-//Eventually delete old application
-if RmApp then begin
+//Delete old application installation if necessary
+if RmApp then
+begin
 ExProgress.Visible:=true;
 ExProgress.Position:=UnInstallIPKApp(IAppName,idName,InfoMemo.Lines,true);
 ExProgress.Visible:=false;
 end;
+
 appfiles:=TStringList.Create;
 Label9.Caption:=strStep2;
 z:=TAbUnZipper.Create(nil);
@@ -1334,21 +1338,26 @@ z.FileName:=paramstr(1);
 ndirs:=TStringList.Create;
 j:=0;
 if not DirectoryExists(SyblToPath('$INST')) then SysUtils.CreateDir(SyblToPath('$INST'));
-for i:=0 to fi.Count-1 do begin
+for i:=0 to fi.Count-1 do
+begin
 Application.ProcessMessages;
-if i mod 3 = 0 then begin
+if i mod 3 = 0 then
+begin
 
 if (pos(' <'+LowerCase(DInfo.DName)+'-only>',LowerCase(fi[i]))>0)
-or (pos('-only',LowerCase(fi[i]))<=0) then begin
+or (pos('-only',LowerCase(fi[i]))<=0) then
+begin
 
 dest:=SyblToPath(fi[i+2]);
 
-if not DirectoryExists(dest) then begin
+if not DirectoryExists(dest) then
+begin
 SysUtils.CreateDir(dest);
 ndirs.Add(dest);
 end;
 h:=dest;
-while not DirectoryExists(dest) do begin
+while not DirectoryExists(dest) do
+begin
 CreateDir(h);
 if DirectoryExists(h) then h:=Dest
 else h:=ExtractFilePath(ExcludeTrailingBackslash(h));
@@ -1472,23 +1481,24 @@ if not FPatch then
 begin
 
 if not DirectoryExists(RegDir+LowerCase(IAppName+'-'+idName)) then SysUtils.CreateDir(RegDir+LowerCase(IAppName+'-'+idName));
-FileCopy(lp+PkgName+'/arcinfo.pin',RegDir+IAppName+'-'+idName+'/proginfo.pin');
+FileCopy(lp+PkgName+'/arcinfo.pin',RegDir+LowerCase(IAppName+'-'+idName)+'/proginfo.pin');
 
 //Save list of installed files
-appfiles.SaveToFile(RegDir+IAppName+'-'+idName+'/appfiles.list');
+appfiles.SaveToFile(RegDir+LowerCase(IAppName+'-'+idName)+'/appfiles.list');
 appfiles.Free;
-
-for i:=0 to Dependencies.Count-1 do
-h:=#13+Dependencies[i];
 
 //Open database connection
 dsApp.Open;
 dsApp.Edit;
 
+if pkType=lptLinstall then h:='linstall';
+if pkType=lptDLink then h:='dlink';
+if pkType=lptContainer then h:='containerF';
+
 dsApp.Insert;
 dsApp.ExecuteDirect('INSERT INTO "AppInfo" VALUES ('''+IAppName+''', '''+
-        idName+''', '''+ShDesc+''','''+IAppVersion+''','''+IAuthor+''','''+'icon'+ExtractFileExt(IconPath)+''',''no-profile'','''+
-        AType+''','''+'12.04.1992'', '''+h+''');');
+        idName+''', '''+h+''', '''+ShDesc+''','''+IAppVersion+''','''+IAuthor+''','''+'icon'+ExtractFileExt(IconPath)+''','''+Profiles[ModeGroup.ItemIndex]+''','''+
+        AType+''','''+GetDateAsString+''', '''+Dependencies.Text+''');');
 
 //Write changes
 dsApp.ApplyUpdates;

@@ -45,7 +45,7 @@
         <UnitName Value="LiPkgCreator"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="145"/>
+        <UsageCount Value="146"/>
       </Unit0>
       <Unit1>
         <Filename Value="editor.pas"/>
@@ -53,10 +53,10 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="editor"/>
-        <CursorPos X="30" Y="184"/>
-        <TopLine Value="165"/>
+        <CursorPos X="13" Y="170"/>
+        <TopLine Value="141"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="145"/>
+        <UsageCount Value="146"/>
         <Bookmarks Count="1">
           <Item0 X="4" Y="538" ID="0"/>
         </Bookmarks>
@@ -77,7 +77,7 @@
         <UnitName Value="fwiz"/>
         <CursorPos X="32" Y="107"/>
         <TopLine Value="81"/>
-        <UsageCount Value="145"/>
+        <UsageCount Value="146"/>
       </Unit3>
       <Unit4>
         <Filename Value="../abzipper.pas"/>
@@ -85,7 +85,7 @@
         <UnitName Value="AbZipper"/>
         <CursorPos X="52" Y="371"/>
         <TopLine Value="355"/>
-        <UsageCount Value="144"/>
+        <UsageCount Value="145"/>
       </Unit4>
       <Unit5>
         <Filename Value="../abbase.pas"/>
@@ -93,7 +93,7 @@
         <UnitName Value="AbBase"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="140"/>
+        <UsageCount Value="141"/>
       </Unit5>
       <Unit6>
         <Filename Value="../abarctyp.pas"/>
@@ -101,7 +101,7 @@
         <UnitName Value="AbArcTyp"/>
         <CursorPos X="34" Y="1478"/>
         <TopLine Value="1442"/>
-        <UsageCount Value="140"/>
+        <UsageCount Value="141"/>
       </Unit6>
       <Unit7>
         <Filename Value="../abzipkit.pas"/>
@@ -109,7 +109,7 @@
         <UnitName Value="AbZipKit"/>
         <CursorPos X="33" Y="12"/>
         <TopLine Value="1"/>
-        <UsageCount Value="140"/>
+        <UsageCount Value="141"/>
       </Unit7>
       <Unit8>
         <Filename Value="../../../../../../usr/share/lazarus/lcl/interfaces/gtk/gtkwidgetset.inc"/>
@@ -151,7 +151,7 @@
         <UnitName Value="variables"/>
         <CursorPos X="4" Y="56"/>
         <TopLine Value="15"/>
-        <UsageCount Value="132"/>
+        <UsageCount Value="133"/>
       </Unit13>
       <Unit14>
         <Filename Value="../lipa.lpr"/>
@@ -182,9 +182,9 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="prjwizard"/>
-        <CursorPos X="3" Y="404"/>
-        <TopLine Value="397"/>
-        <UsageCount Value="128"/>
+        <CursorPos X="21" Y="579"/>
+        <TopLine Value="553"/>
+        <UsageCount Value="129"/>
       </Unit17>
       <Unit18>
         <Filename Value="../utilities.pas"/>
@@ -357,8 +357,8 @@
       <Unit44>
         <Filename Value="../common.pas"/>
         <UnitName Value="common"/>
-        <CursorPos X="6" Y="295"/>
-        <TopLine Value="295"/>
+        <CursorPos X="40" Y="319"/>
+        <TopLine Value="290"/>
         <UsageCount Value="11"/>
       </Unit44>
       <Unit45>
@@ -433,7 +433,7 @@
         <UsageCount Value="10"/>
       </Unit55>
     </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
+    <JumpHistory Count="3" HistoryIndex="2">
       <Position1>
         <Filename Value="editor.pas"/>
         <Caret Line="184" Column="30" TopLine="170"/>
@@ -442,6 +442,10 @@
         <Filename Value="editor.pas"/>
         <Caret Line="186" Column="14" TopLine="165"/>
       </Position2>
+      <Position3>
+        <Filename Value="editor.pas"/>
+        <Caret Line="170" Column="13" TopLine="141"/>
+      </Position3>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

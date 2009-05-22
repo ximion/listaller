@@ -2,55 +2,55 @@
 
 LazarusResources.Add('TfrmProjectWizard','FORMDATA',[
   'TPF0'#17'TfrmProjectWizard'#16'frmProjectWizard'#4'Left'#3'^'#1#6'Height'#3
-  +#154#2#3'Top'#3#188#0#5'Width'#3'D'#3#13'ActiveControl'#7#6'Panel1'#11'Borde'
-  +'rIcons'#11#12'biSystemMenu'#0#11'BorderStyle'#7#8'bsDialog'#7'Caption'#6#14
-  +'Project Wizard'#12'ClientHeight'#3#133#2#11'ClientWidth'#3'D'#3#21'Constrai'
-  +'nts.MinHeight'#3#154#2#20'Constraints.MinWidth'#3'D'#3#9'Icon.Data'#10#130#4
-  +#0#0'~'#4#0#0#0#0#1#0#1#0#16#16#0#0#1#0' '#0'h'#4#0#0#22#0#0#0'('#0#0#0#16#0
-  +#0#0' '#0#0#0#1#0' '#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#255
-  +#255#255#0#19#137#174'O'#0#140#184#207#0'Oh'#140#0#0#0'B'#0#0#0'7'#0#0#0')'#0
-  +#0#0#28#0#0#0#17#0#0#0#9#0#0#0#2#255#255#255#0#255#255#255#0#255#255#255#0
-  +#255#255#255#0#255#255#255#0#0'n'#145#15' '#194#245#252#16#183#235#255#0#147
-  +#192#246#0'EZ>'#0#0#0#23#0#0#0#23#0#0#0#23#0#0#0#22#0#0#0#21#0#0#0#19#0#0#0
-  +#14#0#0#0#9#0#0#0#5#0#0#0#2#0#0#0#0#0#141#185#1#0#167#220#186')'#202#252#255
-  +#5#176#229#255#0#128#168#201#0'Vp'#4#255#255#255#0#255#255#255#0#255#255#255
+  +#154#2#3'Top'#3#188#0#5'Width'#3'D'#3#13'ActiveControl'#7#13'DependencyBox'
+  +#11'BorderIcons'#11#12'biSystemMenu'#0#11'BorderStyle'#7#8'bsDialog'#7'Capti'
+  +'on'#6#14'Project Wizard'#12'ClientHeight'#3#133#2#11'ClientWidth'#3'D'#3#21
+  +'Constraints.MinHeight'#3#154#2#20'Constraints.MinWidth'#3'D'#3#9'Icon.Data'
+  +#10#130#4#0#0'~'#4#0#0#0#0#1#0#1#0#16#16#0#0#1#0' '#0'h'#4#0#0#22#0#0#0'('#0
+  +#0#0#16#0#0#0' '#0#0#0#1#0' '#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0
+  +#0#255#255#255#0#19#137#174'O'#0#140#184#207#0'Oh'#140#0#0#0'B'#0#0#0'7'#0#0
+  +#0')'#0#0#0#28#0#0#0#17#0#0#0#9#0#0#0#2#255#255#255#0#255#255#255#0#255#255
+  +#255#0#255#255#255#0#255#255#255#0#0'n'#145#15' '#194#245#252#16#183#235#255
+  +#0#147#192#246#0'EZ>'#0#0#0#23#0#0#0#23#0#0#0#23#0#0#0#22#0#0#0#21#0#0#0#19#0
+  +#0#0#14#0#0#0#9#0#0#0#5#0#0#0#2#0#0#0#0#0#141#185#1#0#167#220#186')'#202#252
+  +#255#5#176#229#255#0#128#168#201#0'Vp'#4#255#255#255#0#255#255#255#0#255#255
+  +#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0
+  +#255#255#255#0#255#255#255#0#255#255#255#0#0'x'#157#31#13#181#234#238#30#193
+  +#244#255#0#164#215#255#0'Uo'#142#255#255#255#0#255#255#255#0#255#255#255#0
+  +#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255
+  +#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#0'u'#154'd'#28#191#242
+  +#255#19#186#237#255#0#151#198#249#0'Un9'#255#255#255#0#255#255#255#0#255#255
+  +#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0
+  +#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#0#133#175#177'+'#203
+  +#253#255#8#178#230#255#0'o'#146#203#255#255#255#0#255#255#255#0#255#255#255#0
+  +#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255
+  +#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#0'o'#146#20#9#176#229
+  +#221'!'#196#247#255#0#168#221#255#0'Yuo'#255#255#255#0#255#255#255#0#255#255
+  +#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0
+  +#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#0'p'#147'8'#24#188
+  +#240#246#22#187#238#255#0#154#202#231#0'[w'#18#255#255#255#0#255#255#255#0
+  +#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255
+  +#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#0'|'#163
+  +'h'''#200#251#255#12#180#233#245'0v'#138'Y'#255#255#255#0#255#255#255#0#255
+  +#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255
+  +#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0
+  +#11#154#199'r'#216#241#250#236#187#187#191#210#128#128#128#8#255#255#255#0
+  +#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255
+  +#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255
+  +#255#0#255#255#255#0#136#136#136'i'#228#228#230#255#130#130#130#148#255#255
+  +#255#0#255#255#255#0#255#255#255#0'yyy'#26'XWW'#143#255#255#255#0#255#255#255
   +#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255
-  +#255#255#0#255#255#255#0#255#255#255#0#0'x'#157#31#13#181#234#238#30#193#244
-  +#255#0#164#215#255#0'Uo'#142#255#255#255#0#255#255#255#0#255#255#255#0#255
-  +#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255
-  +#255#0#255#255#255#0#255#255#255#0#255#255#255#0#0'u'#154'd'#28#191#242#255
-  +#19#186#237#255#0#151#198#249#0'Un9'#255#255#255#0#255#255#255#0#255#255#255
+  +#255#255#0#255#255#255#0#176#172#176#186#200#200#205#237#158#158#159'yVUU'#4
+  +'OOO'#3'ZYY'#223'uss'#254#146#145#145#130#255#255#255#0#255#255#255#0#255#255
+  +#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0
+  +'www'#30#220#220#220#228#227#227#228#241#135#135#135#240'ihh'#239#158#157#157
+  +#255#177#176#176#246#131#130#130'h'#255#255#255#0#255#255#255#0#255#255#255#0
+  +#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255
+  +#255#255#0#173#172#173#243#249#249#250#255#234#234#235#254#207#207#208#255'\'
+  +'\\'#180'XXX'#3#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255
+  +#255#255#0#255#255#255#0'VUV'#199'`_`'#182'mmm'#184#132#131#132#235#154#154
+  +#154#255#252#252#253#255#235#235#237#254#202#202#205#190'vvx'#13#255#255#255
   +#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255
-  +#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#0#133#175#177'+'#203#253
-  +#255#8#178#230#255#0'o'#146#203#255#255#255#0#255#255#255#0#255#255#255#0#255
-  +#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255
-  +#255#0#255#255#255#0#255#255#255#0#255#255#255#0#0'o'#146#20#9#176#229#221'!'
-  +#196#247#255#0#168#221#255#0'Yuo'#255#255#255#0#255#255#255#0#255#255#255#0
-  +#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255
-  +#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#0'p'#147'8'#24#188#240
-  +#246#22#187#238#255#0#154#202#231#0'[w'#18#255#255#255#0#255#255#255#0#255
-  +#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255
-  +#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#0'|'#163'h'''
-  +#200#251#255#12#180#233#245'0v'#138'Y'#255#255#255#0#255#255#255#0#255#255
-  +#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0
-  +#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#11#154
-  +#199'r'#216#241#250#236#187#187#191#210#128#128#128#8#255#255#255#0#255#255
-  +#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0
-  +#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255
-  +#255#255#0#136#136#136'i'#228#228#230#255#130#130#130#148#255#255#255#0#255
-  +#255#255#0#255#255#255#0'yyy'#26'XWW'#143#255#255#255#0#255#255#255#0#255#255
-  +#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0
-  +#255#255#255#0#176#172#176#186#200#200#205#237#158#158#159'yVUU'#4'OOO'#3'ZY'
-  +'Y'#223'uss'#254#146#145#145#130#255#255#255#0#255#255#255#0#255#255#255#0
-  +#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0'www'
-  +#30#220#220#220#228#227#227#228#241#135#135#135#240'ihh'#239#158#157#157#255
-  +#177#176#176#246#131#130#130'h'#255#255#255#0#255#255#255#0#255#255#255#0#255
-  +#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255
-  +#255#0#173#172#173#243#249#249#250#255#234#234#235#254#207#207#208#255'\\\'
-  +#180'XXX'#3#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255
-  +#255#0#255#255#255#0'VUV'#199'`_`'#182'mmm'#184#132#131#132#235#154#154#154
-  +#255#252#252#253#255#235#235#237#254#202#202#205#190'vvx'#13#255#255#255#0
-  +#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255#255#255#0#255
   +#255#255#0'qqqLsps'#190#129''#129#233#173#170#173#240#228#226#228#213#229
   +#229#229#159#232#232#233'6'#255#255#255#0#255#255#255#0#255#255#255#0#255#255
   +#255#0#207#255#0#0#143#255#0#0#135#255#0#0#195#255#0#0#227#255#0#0#225#255#0
@@ -60,7 +60,7 @@ LazarusResources.Add('TfrmProjectWizard','FORMDATA',[
   +'n'#7#16'poMainFormCenter'#10'LCLVersion'#6#6'0.9.27'#0#9'TNotebook'#9'Noteb'
   +'ook1'#4'Left'#2#0#6'Height'#3'\'#2#3'Top'#2#0#5'Width'#3'D'#3#5'Align'#7#8
   +'alClient'#9'PageIndex'#2#3#8'ShowTabs'#8#8'TabOrder'#2#0#0#5'TPage'#5'Page1'
-  +#7'Caption'#6#5'Page1'#11'ClientWidth'#3'@'#3#12'ClientHeight'#3'X'#2#0#12'T'
+  +#7'Caption'#6#5'Page1'#11'ClientWidth'#3'@'#3#12'ClientHeight'#3'A'#2#0#12'T'
   +'SpeedButton'#12'SpeedButton1'#4'Left'#2'U'#6'Height'#2'h'#3'Top'#2'W'#5'Wid'
   +'th'#2'r'#5'Color'#7#9'clBtnFace'#10'Glyph.Data'#10':@'#0#0'6@'#0#0'BM6@'#0#0
   +#0#0#0#0'6'#0#0#0'('#0#0#0'@'#0#0#0'@'#0#0#0#1#0' '#0#0#0#0#0#0'@'#0#0'd'#0#0
@@ -2628,74 +2628,84 @@ LazarusResources.Add('TfrmProjectWizard','FORMDATA',[
   ,#2#0#6'TLabel'#7'Label19'#4'Left'#2#7#6'Height'#2#19#3'Top'#2#7#5'Width'#3
   +#134#0#7'Caption'#6#16'Add dependencies'#11'Font.Height'#2#241#9'Font.Name'#6
   +#4'Sans'#11'ParentColor'#8#10'ParentFont'#8#0#0#6'TLabel'#7'Label20'#4'Left'
-  +#2#7#6'Height'#2'^'#3'Top'#3'F'#1#5'Width'#3#220#0#7'Caption'#6#197'You can '
-  +'add ftp:// or http:// weblinks.'#10'On DEB-based systems you can use '#10't'
-  +'he package name instead.'#10'You can add the real package name after the'#10
-  +'link, eg.'#10'http://example.com/test-1.0-i386.deb <test>'#7'Enabled'#8#11
-  +'ParentColor'#8#0#0#6'TLabel'#7'Label33'#4'Left'#2#7#6'Height'#2#14#3'Top'#2
-  +'&'#5'Width'#3#235#0#7'Caption'#6'.The following dependencies have been dete'
-  +'cted:'#11'ParentColor'#8#0#0#9'TTreeView'#14'tvDependencies'#4'Left'#3'6'#1
-  +#6'Height'#3#8#1#3'Top'#3'F'#1#5'Width'#3#253#1#7'Anchors'#11#5'akTop'#6'akL'
-  +'eft'#7'akRight'#8'akBottom'#0#10'AutoExpand'#9#17'DefaultItemHeight'#2#15#7
-  +'Enabled'#8#8'TabOrder'#2#0#7'OnClick'#7#19'tvDependenciesClick'#9'OnKeyDown'
-  +#7#21'tvDependenciesKeyDown'#7'Options'#11#13'tvoAutoExpand'#17'tvoAutoItemH'
-  +'eight'#16'tvoHideSelection'#21'tvoKeepCollapsedNodes'#14'tvoShowButtons'#12
-  +'tvoShowLines'#11'tvoShowRoot'#11'tvoToolTips'#0#10'Items.Data'#10'X'#0#0#0
-  +#249#255#255#255#2#0#2#0#0#0#255#255#255#255#255#255#255#255#255#255#255#255
-  +#255#255#255#255#0#0#0#0#0#0#0#0#0#10#0#0#0'DEB-System'#255#255#255#255#255
-  +#255#255#255#255#255#255#255#255#255#255#255#0#0#0#0#0#0#0#0#0#10#0#0#0'RPM-'
-  +'System'#0#0#9'TGroupBox'#10'GroupBox10'#4'Left'#2#7#6'Height'#2'i'#3'Top'#3
-  +#182#1#5'Width'#3')'#1#7'Caption'#6#9'Add entry'#12'ClientHeight'#2'Z'#11'Cl'
-  +'ientWidth'#3'%'#1#7'Enabled'#8#8'TabOrder'#2#1#0#7'TButton'#7'Button4'#4'Le'
-  +'ft'#2'6'#6'Height'#2#25#3'Top'#2')'#5'Width'#3#163#0#7'Caption'#6#22'Add to'
-  +' selected system'#7'OnClick'#7#12'Button4Click'#8'TabOrder'#2#0#0#0#5'TEdit'
-  +#5'Edit8'#4'Left'#2#5#6'Height'#2#23#3'Top'#2#11#5'Width'#3#24#1#8'TabOrder'
-  +#2#1#4'Text'#6#7'http://'#0#0#0#9'TCheckBox'#11'ChkAddUDeps'#4'Left'#2#7#6'H'
-  +'eight'#2#21#3'Top'#3'&'#1#5'Width'#3#169#0#7'Caption'#6#29'Add addintional '
-  +'dependencies:'#8'OnChange'#7#17'ChkAddUDepsChange'#8'TabOrder'#2#2#0#0#13'T'
-  +'CheckListBox'#13'DependencyBox'#4'Left'#2#7#6'Height'#3#200#0#3'Top'#2'>'#5
-  +'Width'#3','#3#10'ItemHeight'#2#0#8'TabOrder'#2#3#8'TopIndex'#2#255#0#0#0#5
-  +'TPage'#5'Page5'#7'Caption'#6#5'Page5'#11'ClientWidth'#3'@'#3#12'ClientHeigh'
-  +'t'#3'A'#2#0#6'TLabel'#7'Label18'#4'Left'#2#7#6'Height'#2#19#3'Top'#2#15#5'W'
-  +'idth'#3#162#0#7'Caption'#6#21'Check the information'#11'Font.Height'#2#241#9
-  +'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'ParentFont'#8#0#0#5'TMemo'#5'Memo'
-  +'1'#4'Left'#2#6#6'Height'#3#241#1#3'Top'#2'&'#5'Width'#3'$'#3#7'Anchors'#11#5
-  +'akTop'#6'akLeft'#7'akRight'#8'akBottom'#0#11'Font.Height'#2#245#9'Font.Name'
-  +#6#16'Courier 10 Pitch'#10'ParentFont'#8#8'ReadOnly'#9#10'ScrollBars'#7#6'ss'
-  +'Both'#8'TabOrder'#2#0#8'WordWrap'#8#0#0#0#5'TPage'#5'Page6'#7'Caption'#6#5
-  +'Page6'#11'ClientWidth'#3'@'#3#12'ClientHeight'#3'A'#2#0#6'TLabel'#7'Label21'
-  +#4'Left'#2#7#6'Height'#2#19#3'Top'#2#15#5'Width'#3'I'#1#7'Caption'#6',Select'
-  +' executable LOKI/Autopackage.org file:'#11'Font.Height'#2#241#9'Font.Name'#6
-  +#4'Sans'#11'ParentColor'#8#10'ParentFont'#8#0#0#9'TGroupBox'#10'GroupBox11'#4
-  +'Left'#3#167#0#6'Height'#2'A'#3'Top'#3#221#0#5'Width'#3#1#2#7'Caption'#6#23
-  +'LOKI/Autopackage- file:'#12'ClientHeight'#2'2'#11'ClientWidth'#3#253#1#8'Ta'
-  +'bOrder'#2#0#0#13'TFileNameEdit'#13'FileNameEdit4'#4'Left'#2#6#6'Height'#2#23
-  +#3'Top'#2#9#5'Width'#3#216#1#11'DialogTitle'#6#20'Select executable...'#13'D'
-  +'ialogOptions'#11#15'ofFileMustExist'#0#11'FilterIndex'#2#0#15'HideDirectori'
-  +'es'#8#11'ButtonWidth'#2#23#9'NumGlyphs'#2#0#8'TabOrder'#2#0#0#0#0#9'TGroupB'
-  +'ox'#10'GroupBox12'#4'Left'#3#167#0#6'Height'#2'8'#3'Top'#3'+'#1#5'Width'#3#1
-  +#2#7'Caption'#6'''If the application uses terminal output'#12'ClientHeight'#2
-  +')'#11'ClientWidth'#3#253#1#8'TabOrder'#2#1#0#9'TCheckBox'#17'chkShowInTermi'
-  +'nal'#4'Left'#2#14#6'Height'#2#21#3'Top'#2#9#5'Width'#3#129#0#7'Caption'#6#20
-  +'Show Terminal Output'#8'TabOrder'#2#0#0#0#0#0#0#6'TPanel'#6'Panel1'#4'Left'
-  +#2#0#6'Height'#2')'#3'Top'#3'\'#2#5'Width'#3'D'#3#5'Align'#7#8'alBottom'#12
-  +'ClientHeight'#2')'#11'ClientWidth'#3'D'#3#8'TabOrder'#2#1#0#7'TBitBtn'#7'Bi'
-  +'tBtn1'#4'Left'#2#8#6'Height'#2#28#3'Top'#2#8#5'Width'#2'4'#7'Anchors'#11#5
-  +'akTop'#6'akLeft'#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6#8'  Back  '#7'Ena'
-  +'bled'#8#9'NumGlyphs'#2#0#7'OnClick'#7#12'BitBtn1Click'#8'TabOrder'#2#0#0#0#7
-  +'TBitBtn'#7'BitBtn2'#4'Left'#3#128#1#6'Height'#2#28#3'Top'#2#8#5'Width'#2'8'
-  +#7'Anchors'#11#5'akTop'#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6#9'  Close  '
-  +#9'NumGlyphs'#2#0#7'OnClick'#7#12'BitBtn2Click'#8'TabOrder'#2#1#0#0#7'TBitBt'
-  +'n'#7'BitBtn3'#4'Left'#3#8#3#6'Height'#2#28#3'Top'#2#8#5'Width'#2'5'#7'Ancho'
-  +'rs'#11#5'akTop'#7'akRight'#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6#8'  Nex'
-  +'t  '#7'Enabled'#8#9'NumGlyphs'#2#0#7'OnClick'#7#12'BitBtn3Click'#8'TabOrder'
-  ,#2#2#0#0#0#10'TPopupMenu'#10'PopupMenu1'#4'left'#3#24#3#3'top'#2#16#0#9'TMen'
-  +'uItem'#9'MenuItem1'#7'Caption'#6#6'Delete'#7'OnClick'#7#14'MenuItem1Click'#0
-  +#0#0#9'TMainMenu'#9'MainMenu1'#4'left'#3#194#1#3'top'#2#19#0#9'TMenuItem'#9
-  +'MenuItem2'#7'Caption'#6#6'Wizard'#7'OnClick'#7#14'MenuItem2Click'#0#9'TMenu'
-  +'Item'#9'MenuItem4'#7'Caption'#6#5'Close'#7'OnClick'#7#14'MenuItem4Click'#0#0
-  +#0#9'TMenuItem'#9'MenuItem3'#7'Caption'#6#4'Help'#0#9'TMenuItem'#9'MenuItem5'
-  +#7'Caption'#6#24'Display placeholder list'#7'OnClick'#7#14'MenuItem5Click'#0
-  +#0#9'TMenuItem'#9'MenuItem6'#7'Caption'#6#21'Display modifier list'#7'OnClic'
-  +'k'#7#14'MenuItem6Click'#0#0#0#0#0
+  +#2#14#6'Height'#2'^'#3'Top'#3'v'#1#5'Width'#3#220#0#7'Caption'#6#197'You can'
+  +' add ftp:// or http:// weblinks.'#10'On DEB-based systems you can use '#10
+  +'the package name instead.'#10'You can add the real package name after the'
+  +#10'link, eg.'#10'http://example.com/test-1.0-i386.deb <test>'#7'Enabled'#8
+  +#11'ParentColor'#8#0#0#6'TLabel'#7'Label33'#4'Left'#2#7#6'Height'#2#14#3'Top'
+  +#2'&'#5'Width'#3#235#0#7'Caption'#6'.The following dependencies have been de'
+  +'tected:'#11'ParentColor'#8#0#0#9'TTreeView'#14'tvDependencies'#4'Left'#3'6'
+  +#1#6'Height'#3#248#0#3'Top'#3'V'#1#5'Width'#3#253#1#7'Anchors'#11#5'akTop'#6
+  +'akLeft'#7'akRight'#8'akBottom'#0#10'AutoExpand'#9#17'DefaultItemHeight'#2#15
+  +#7'Enabled'#8#8'TabOrder'#2#0#7'OnClick'#7#19'tvDependenciesClick'#9'OnKeyDo'
+  +'wn'#7#21'tvDependenciesKeyDown'#7'Options'#11#13'tvoAutoExpand'#17'tvoAutoI'
+  +'temHeight'#16'tvoHideSelection'#21'tvoKeepCollapsedNodes'#14'tvoShowButtons'
+  +#12'tvoShowLines'#11'tvoShowRoot'#11'tvoToolTips'#0#10'Items.Data'#10'X'#0#0
+  +#0#249#255#255#255#2#0#2#0#0#0#255#255#255#255#255#255#255#255#255#255#255
+  +#255#255#255#255#255#0#0#0#0#0#0#0#0#0#10#0#0#0'DEB-System'#255#255#255#255
+  +#255#255#255#255#255#255#255#255#255#255#255#255#0#0#0#0#0#0#0#0#0#10#0#0#0
+  +'RPM-System'#0#0#9'TGroupBox'#10'GroupBox10'#4'Left'#2#7#6'Height'#2'i'#3'To'
+  +'p'#3#222#1#5'Width'#3')'#1#7'Caption'#6#9'Add entry'#12'ClientHeight'#2'Z'
+  +#11'ClientWidth'#3'%'#1#7'Enabled'#8#8'TabOrder'#2#1#0#7'TButton'#7'Button4'
+  +#4'Left'#2'6'#6'Height'#2#25#3'Top'#2')'#5'Width'#3#163#0#7'Caption'#6#22'Ad'
+  +'d to selected system'#7'OnClick'#7#12'Button4Click'#8'TabOrder'#2#0#0#0#5'T'
+  +'Edit'#5'Edit8'#4'Left'#2#5#6'Height'#2#23#3'Top'#2#11#5'Width'#3#24#1#8'Tab'
+  +'Order'#2#1#4'Text'#6#7'http://'#0#0#0#9'TCheckBox'#11'ChkAddUDeps'#4'Left'#2
+  +#7#6'Height'#2#21#3'Top'#3'V'#1#5'Width'#3#169#0#7'Caption'#6#29'Add addinti'
+  +'onal dependencies:'#8'OnChange'#7#17'ChkAddUDepsChange'#8'TabOrder'#2#2#0#0
+  +#13'TCheckListBox'#13'DependencyBox'#4'Left'#2#7#6'Height'#3#200#0#3'Top'#2
+  +'>'#5'Width'#3','#3#10'ItemHeight'#2#0#8'TabOrder'#2#3#8'TopIndex'#2#255#0#0
+  +#12'TLabeledEdit'#9'EdtNewDep'#4'Left'#2#7#6'Height'#2#23#3'Top'#3#30#1#5'Wi'
+  +'dth'#3#224#0' EditLabel.AnchorSideLeft.Control'#7#9'EdtNewDep"EditLabel.Anc'
+  +'horSideBottom.Control'#7#9'EdtNewDep'#14'EditLabel.Left'#2#7#16'EditLabel.H'
+  +'eight'#2#14#13'EditLabel.Top'#3#13#1#15'EditLabel.Width'#3#133#0#17'EditLab'
+  +'el.Caption'#6#25'Add dependency file name:'#21'EditLabel.ParentColor'#8#8'T'
+  +'abOrder'#2#4#0#0#7'TButton'#9'AddDepBtn'#4'Left'#3#238#0#6'Height'#2#25#3'T'
+  +'op'#3#30#1#5'Width'#2'`'#7'Caption'#6#14'Add dependency'#7'OnClick'#7#14'Ad'
+  +'dDepBtnClick'#8'TabOrder'#2#5#0#0#7'TButton'#8'RmDepBtn'#4'Left'#3#22#3#6'H'
+  +'eight'#2#25#3'Top'#3#8#1#5'Width'#2#29#7'Caption'#6#1'-'#7'OnClick'#7#13'Rm'
+  +'DepBtnClick'#8'TabOrder'#2#6#0#0#0#5'TPage'#5'Page5'#7'Caption'#6#5'Page5'
+  +#11'ClientWidth'#3'@'#3#12'ClientHeight'#3'A'#2#0#6'TLabel'#7'Label18'#4'Lef'
+  +'t'#2#7#6'Height'#2#19#3'Top'#2#15#5'Width'#3#162#0#7'Caption'#6#21'Check th'
+  +'e information'#11'Font.Height'#2#241#9'Font.Name'#6#4'Sans'#11'ParentColor'
+  +#8#10'ParentFont'#8#0#0#5'TMemo'#5'Memo1'#4'Left'#2#6#6'Height'#3#241#1#3'To'
+  +'p'#2'&'#5'Width'#3'$'#3#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#8'akBot'
+  +'tom'#0#11'Font.Height'#2#245#9'Font.Name'#6#16'Courier 10 Pitch'#10'ParentF'
+  +'ont'#8#8'ReadOnly'#9#10'ScrollBars'#7#6'ssBoth'#8'TabOrder'#2#0#8'WordWrap'
+  +#8#0#0#0#5'TPage'#5'Page6'#7'Caption'#6#5'Page6'#11'ClientWidth'#3'@'#3#12'C'
+  +'lientHeight'#3'A'#2#0#6'TLabel'#7'Label21'#4'Left'#2#7#6'Height'#2#19#3'Top'
+  +#2#15#5'Width'#3'I'#1#7'Caption'#6',Select executable LOKI/Autopackage.org f'
+  +'ile:'#11'Font.Height'#2#241#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'Par'
+  +'entFont'#8#0#0#9'TGroupBox'#10'GroupBox11'#4'Left'#3#167#0#6'Height'#2'A'#3
+  +'Top'#3#221#0#5'Width'#3#1#2#7'Caption'#6#23'LOKI/Autopackage- file:'#12'Cli'
+  +'entHeight'#2'2'#11'ClientWidth'#3#253#1#8'TabOrder'#2#0#0#13'TFileNameEdit'
+  +#13'FileNameEdit4'#4'Left'#2#6#6'Height'#2#23#3'Top'#2#9#5'Width'#3#216#1#11
+  +'DialogTitle'#6#20'Select executable...'#13'DialogOptions'#11#15'ofFileMustE'
+  +'xist'#0#11'FilterIndex'#2#0#15'HideDirectories'#8#11'ButtonWidth'#2#23#9'Nu'
+  +'mGlyphs'#2#0#8'TabOrder'#2#0#0#0#0#9'TGroupBox'#10'GroupBox12'#4'Left'#3#167
+  +#0#6'Height'#2'8'#3'Top'#3'+'#1#5'Width'#3#1#2#7'Caption'#6'''If the applica'
+  +'tion uses terminal output'#12'ClientHeight'#2')'#11'ClientWidth'#3#253#1#8
+  +'TabOrder'#2#1#0#9'TCheckBox'#17'chkShowInTerminal'#4'Left'#2#14#6'Height'#2
+  +#21#3'Top'#2#9#5'Width'#3#129#0#7'Caption'#6#20'Show Terminal Output'#8'TabO'
+  +'rder'#2#0#0#0#0#0#0#6'TPanel'#6'Panel1'#4'Left'#2#0#6'Height'#2')'#3'Top'#3
+  +'\'#2#5'Width'#3'D'#3#5'Align'#7#8'alBottom'#12'ClientHeight'#2')'#11'Client'
+  ,'Width'#3'D'#3#8'TabOrder'#2#1#0#7'TBitBtn'#7'BitBtn1'#4'Left'#2#8#6'Height'
+  +#2#28#3'Top'#2#8#5'Width'#2'4'#7'Anchors'#11#5'akTop'#6'akLeft'#8'akBottom'#0
+  +#8'AutoSize'#9#7'Caption'#6#8'  Back  '#7'Enabled'#8#9'NumGlyphs'#2#0#7'OnCl'
+  +'ick'#7#12'BitBtn1Click'#8'TabOrder'#2#0#0#0#7'TBitBtn'#7'BitBtn2'#4'Left'#3
+  +#128#1#6'Height'#2#28#3'Top'#2#8#5'Width'#2'8'#7'Anchors'#11#5'akTop'#8'akBo'
+  +'ttom'#0#8'AutoSize'#9#7'Caption'#6#9'  Close  '#9'NumGlyphs'#2#0#7'OnClick'
+  +#7#12'BitBtn2Click'#8'TabOrder'#2#1#0#0#7'TBitBtn'#7'BitBtn3'#4'Left'#3#8#3#6
+  +'Height'#2#28#3'Top'#2#8#5'Width'#2'5'#7'Anchors'#11#5'akTop'#7'akRight'#8'a'
+  +'kBottom'#0#8'AutoSize'#9#7'Caption'#6#8'  Next  '#7'Enabled'#8#9'NumGlyphs'
+  +#2#0#7'OnClick'#7#12'BitBtn3Click'#8'TabOrder'#2#2#0#0#0#10'TPopupMenu'#10'P'
+  +'opupMenu1'#4'left'#3#24#3#3'top'#2#16#0#9'TMenuItem'#9'MenuItem1'#7'Caption'
+  +#6#6'Delete'#7'OnClick'#7#14'MenuItem1Click'#0#0#0#9'TMainMenu'#9'MainMenu1'
+  +#4'left'#3#194#1#3'top'#2#19#0#9'TMenuItem'#9'MenuItem2'#7'Caption'#6#6'Wiza'
+  +'rd'#7'OnClick'#7#14'MenuItem2Click'#0#9'TMenuItem'#9'MenuItem4'#7'Caption'#6
+  +#5'Close'#7'OnClick'#7#14'MenuItem4Click'#0#0#0#9'TMenuItem'#9'MenuItem3'#7
+  +'Caption'#6#4'Help'#0#9'TMenuItem'#9'MenuItem5'#7'Caption'#6#24'Display plac'
+  +'eholder list'#7'OnClick'#7#14'MenuItem5Click'#0#0#9'TMenuItem'#9'MenuItem6'
+  +#7'Caption'#6#21'Display modifier list'#7'OnClick'#7#14'MenuItem6Click'#0#0#0
+  +#0#0
 ]);

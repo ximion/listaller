@@ -3,7 +3,7 @@ object frmProjectWizard: TfrmProjectWizard
   Height = 666
   Top = 188
   Width = 836
-  ActiveControl = Panel1
+  ActiveControl = DependencyBox
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Project Wizard'
@@ -68,7 +68,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page1: TPage
       Caption = 'Page1'
       ClientWidth = 832
-      ClientHeight = 600
+      ClientHeight = 577
       object SpeedButton1: TSpeedButton
         Left = 85
         Height = 104
@@ -2456,9 +2456,9 @@ object frmProjectWizard: TfrmProjectWizard
         ParentFont = False
       end
       object Label20: TLabel
-        Left = 7
+        Left = 14
         Height = 94
-        Top = 326
+        Top = 374
         Width = 220
         Caption = 'You can add ftp:// or http:// weblinks.'#10'On DEB-based systems you can use '#10'the package name instead.'#10'You can add the real package name after the'#10'link, eg.'#10'http://example.com/test-1.0-i386.deb <test>'
         Enabled = False
@@ -2474,8 +2474,8 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object tvDependencies: TTreeView
         Left = 310
-        Height = 264
-        Top = 326
+        Height = 248
+        Top = 342
         Width = 509
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoExpand = True
@@ -2494,7 +2494,7 @@ object frmProjectWizard: TfrmProjectWizard
       object GroupBox10: TGroupBox
         Left = 7
         Height = 105
-        Top = 438
+        Top = 478
         Width = 297
         Caption = 'Add entry'
         ClientHeight = 90
@@ -2522,7 +2522,7 @@ object frmProjectWizard: TfrmProjectWizard
       object ChkAddUDeps: TCheckBox
         Left = 7
         Height = 21
-        Top = 294
+        Top = 342
         Width = 169
         Caption = 'Add addintional dependencies:'
         OnChange = ChkAddUDepsChange
@@ -2536,6 +2536,39 @@ object frmProjectWizard: TfrmProjectWizard
         ItemHeight = 0
         TabOrder = 3
         TopIndex = -1
+      end
+      object EdtNewDep: TLabeledEdit
+        Left = 7
+        Height = 23
+        Top = 286
+        Width = 224
+        EditLabel.AnchorSideLeft.Control = EdtNewDep
+        EditLabel.AnchorSideBottom.Control = EdtNewDep
+        EditLabel.Left = 7
+        EditLabel.Height = 14
+        EditLabel.Top = 269
+        EditLabel.Width = 133
+        EditLabel.Caption = 'Add dependency file name:'
+        EditLabel.ParentColor = False
+        TabOrder = 4
+      end
+      object AddDepBtn: TButton
+        Left = 238
+        Height = 25
+        Top = 286
+        Width = 96
+        Caption = 'Add dependency'
+        OnClick = AddDepBtnClick
+        TabOrder = 5
+      end
+      object RmDepBtn: TButton
+        Left = 790
+        Height = 25
+        Top = 264
+        Width = 29
+        Caption = '-'
+        OnClick = RmDepBtnClick
+        TabOrder = 6
       end
     end
     object Page5: TPage

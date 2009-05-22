@@ -50,6 +50,8 @@ type
     btnProfileRemove: TButton;
     btnDistributionAdd: TButton;
     btnDistributionRemove: TButton;
+    AddDepBtn: TButton;
+    RmDepBtn: TButton;
     Button4: TButton;
     btnAddLangCode: TButton;
     btnProfileAdd: TButton;
@@ -127,6 +129,7 @@ type
     Label8: TLabel;
     Label9: TLabel;
     edtProfileName: TLabeledEdit;
+    EdtNewDep: TLabeledEdit;
     lbDistributions: TListBox;
     lbProfiles: TListBox;
     lvPackageFiles: TListView;
@@ -155,6 +158,7 @@ type
     SpeedButton4: TSpeedButton;
     tvShortDescriptions: TTreeView;
     tvDependencies: TTreeView;
+    procedure AddDepBtnClick(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);
@@ -191,6 +195,7 @@ type
     procedure MenuItem5Click(Sender: TObject);
     procedure MenuItem6Click(Sender: TObject);
     procedure RadioButton1Change(Sender: TObject);
+    procedure RmDepBtnClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
@@ -249,6 +254,15 @@ begin
     BitBtn3.Enabled:=false;
     BitBtn1.Enabled:=false;
   end;
+end;
+
+procedure TfrmProjectWizard.AddDepBtnClick(Sender: TObject);
+begin
+if EdtNewDep.Text<>'' then
+begin
+  DependencyBox.Items.Add(EdtNewDep.Text);
+  DependencyBox.Checked[DependencyBox.items.Count-1]:=true;
+end;
 end;
 
 function TfrmProjectWizard.CreateScript(aType: TListallerPackageType): TXMLDocument;
@@ -454,7 +468,7 @@ end;
 
 procedure TfrmProjectWizard.BitBtn3Click(Sender: TObject);
 var
-  i,j: Integer;
+  i,j,k: Integer;
   aTreeNode: TTreeNode;
   Profile: TList;
   TargetEdit: TSynEdit;
@@ -552,6 +566,8 @@ begin
 
          cmbProfilesChange(Sender);
        //Load dependency list
+       if DependencyBox.Count<=0 then
+       begin
        sl:=TStringList.Create;
        for j:=0 to GetProfileCount-1 do
       begin
@@ -564,10 +580,23 @@ begin
           end;
         end;
       end;
+
+      for j:=0 to GetProfileCount-1 do
+      begin
+        Profile := GetProfile(j);
+        for i:=0 to Profile.Count-1 do
+        begin
+          for k:=0 to sl.Count-1 do
+           if ExtractFileName(PPackageFile(Profile[i])^.FullName)=ExtractFileName(sl[k]) then
+           sl.Delete(k);
+        end;
+      end;
+
        DependencyBox.Items.Assign(sl);
        sl.Free;
        for i:=0 to DependencyBox.Items.Count-1 do
        DependencyBox.Checked[i]:=true;
+      end;
 
        NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
      end;
@@ -1125,6 +1154,14 @@ begin
     GroupBox4.Enabled:=false;
     GroupBox7.Enabled:=true;
   end;
+end;
+
+procedure TfrmProjectWizard.RmDepBtnClick(Sender: TObject);
+begin
+if DependencyBox.ItemIndex>-1 then
+begin
+  DependencyBox.Items.Delete(DependencyBox.ItemIndex);
+end;
 end;
 
 procedure TfrmProjectWizard.SpeedButton1Click(Sender: TObject);

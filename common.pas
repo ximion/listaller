@@ -25,7 +25,7 @@ uses
   StdCtrls, FileUtil, ExtCtrls, process, Buttons, LCLType, RegExpr,
   {$IFDEF LCLGTK2}
   gtk2, gtkint, gtkdef, gdkpixbuf, gtkproc, gdk2,
-  {$ENDIF} trstrings, distri, IniFiles;
+  {$ENDIF} trstrings, distri, IniFiles, DOS;
 
 const
   //** Version of the Listaller applicationset
@@ -128,6 +128,10 @@ function  ExecuteAsRoot(cmd: String;comment: String; icon: String;optn: TProcess
     @param lst StringList to recieve the output
     @returns Success of operation}
 function GetLibDepends(f: String; lst: TStringList): Boolean;
+//** Get current date as string
+function GetDateAsString: String;
+
+
 const
 //Stock constants
  STOCK_QUIT='stock-quit';
@@ -310,9 +314,9 @@ begin
   for i:=0 to s.Count-1 do
    if pos('=>',s[i])>0 then
    begin
-    lst.Add(copy(s[i],0,pos('=',s[i])-1));
+    lst.Add(copy(s[i],2,pos('=',s[i])-2));
    end else
-    lst.Add(copy(s[i],0,pos('(',s[i])-1));
+    lst.Add(copy(s[i],2,pos('(',s[i])-2));
   s.Free;
 end;
 
@@ -520,6 +524,14 @@ begin
  finally
  t.Free;
  end;
+end;
+
+function GetDateAsString: String;
+var
+  Year,Month,Day,WDay : word;
+begin
+  GetDate(Year,Month,Day,WDay);
+  Result:=IntToStr(Day)+'.'+IntToStr(Month)+'.'+IntToStr(Year) ;
 end;
 
 function ExecuteAsRoot(cmd: String;comment: String; icon: String;optn: TProcessOptions=[]): Boolean;
