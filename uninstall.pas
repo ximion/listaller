@@ -199,16 +199,17 @@ LogAdd('Reading application information...');
 RMForm.Label1.Caption:='Reading application information...';
 GetOutPutTimer.Enabled:=true;
 
-if entry.srID[1]='~' then
+if not FileExists(entry.srID) then
 begin
-if FileExists(RegDir+entry.AppName+'~'+copy(entry.srID,2,length(entry.srID))+'/appfiles.list') then
+if FileExists(RegDir+LowerCase(entry.AppName+'-'+entry.srID)+'/appfiles.list') then
 begin
 tmp:=TStringList.Create;
-tmp.LoadFromFile(RegDir+entry.AppName+'~'+copy(entry.srID,2,length(entry.srID))+'/appfiles.list');
+tmp.LoadFromFile(RegDir+LowerCase(entry.AppName+'-'+entry.srID)+'/appfiles.list');
 UProgress.Max:=((tmp.Count)*10)+4;
 tmp.Free;
 end;
-UProgress.Position:=UninstallIPKApp(entry.AppName,copy(entry.srID,2,length(entry.srID)),Memo1.Lines);
+// Removing of dependencies is disabled because of security reasons
+UProgress.Position:=UninstallIPKApp(entry.AppName,entry.srID,Memo1.Lines,false,true);
 LogAdd('Finished!');
 Memo1.Lines.SaveToFile(ConfigDir+'uninstall.log');
 ShowMessage(strUnistSuccess);

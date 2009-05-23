@@ -44,6 +44,7 @@ object UMnForm: TUMnForm
     Top = 8
     Width = 669
     Anchors = [akTop, akLeft, akRight, akBottom]
+    ItemHeight = 0
     OnClick = CheckListBox1Click
     TabOrder = 2
     TopIndex = -1

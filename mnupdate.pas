@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   StdCtrls, Buttons, CheckLst, HTTPSend, IniFiles, MD5, common, updexec, LCLType,
-  Process, Menus, trstrings, GetText, Translations, XMLRead, DOM, ldunit, ipkhandle;
+  Process, Menus, trstrings, XMLRead, DOM, ldunit, ipkhandle, sqlite3ds, db;
 
 type
 
@@ -94,12 +94,12 @@ procedure TUMnForm.CheckForUpdates;
 var
   HTTP: THTTPSend;
   tmp,h,sinfo,sources: TStringList;
-  reg: TIniFile;
   i,j,k: Integer;
   ok: Boolean;
   cnf: TIniFile;
   XNode: TDOMNode;
   Doc:      TXMLDocument;
+  dsApp: TSQLite3Dataset; //AppDB connection
 begin
   HTTP := THTTPSend.Create;
   tmp:= TStringList.Create;
@@ -130,10 +130,43 @@ begin
   if h[k][1]='-' then sources.Add(copy(h[k],2,pos(' <',h[k])-2));
   LoadForm.pBar1.Max:=sources.Count;
   Application.ProcessMessages;
-  reg:=TIniFile.Create(RegDir+'/appreg.lst');
-  reg.ReadSections(h);
-  reg.Free;
-  for k:=0 to sources.Count-1 do begin
+  h.Free;
+
+   writeLn('Opening database...');
+    dsApp:= TSQLite3Dataset.Create(nil);
+   with dsApp do
+   begin
+    FileName:=RegDir+'applications.db';
+    TableName:='AppInfo';
+    if not FileExists(FileName) then
+    begin
+     with FieldDefs do
+      begin
+        Clear;
+        Add('Name',ftString,0,true);
+        Add('ID',ftString,0,true);
+        Add('Type',ftString,0,true);
+        Add('Description',ftString,0,False);
+        Add('Version',ftFloat,0,true);
+        Add('Publisher',ftString,0,False);
+        Add('Icon',ftString,0,False);
+        Add('Profile',ftString,0,False);
+        Add('AGroup',ftString,0,true);
+        Add('InstallDate',ftDateTime,0,False);
+        Add('Dependencies',ftMemo,0,False);
+      end;
+    CreateTable;
+   end;
+  end;
+  dsApp.Active:=true;
+
+  dsApp.SQL:='SELECT * FROM AppInfo';
+  dsApp.Open;
+  dsApp.Filtered:=true;
+  dsApp.Edit;
+
+  for k:=0 to sources.Count-1 do
+  begin
   try
   SetLength(ulist,length(ulist)+1);
   ulist[length(ulist)-1]:= TStringlist.Create;
@@ -146,8 +179,13 @@ begin
     
     ok:=false;
     xnode:=Doc.DocumentElement.FindNode('application');
-    for i:=0 to h.Count-1 do
-    if xnode.Attributes.GetNamedItem('name').NodeValue=copy(h[i],0,pos('~',h[i])-1) then begin ok:=true;break; end;
+
+    dsApp.First;
+    while not dsApp.EOF do
+    begin
+     if (xnode.Attributes.GetNamedItem('name').NodeValue=dsApp.FieldByName('Name').AsString) then begin ok:=true;break;end;
+     dsApp.Next;
+    end;
 
     if ok then begin
     HTTP.Clear;
@@ -172,7 +210,8 @@ begin
     CheckListBox1.Checked[CheckListBox1.Items.Count-1]:=true;
     SetLength(anotes,length(anotes)+1);
     anotes[length(anotes)-1].NVersion:=FindChildNode(xnode,'version').NodeValue;
-    anotes[length(anotes)-1].ID:=copy(h[i],pos('{',h[i]),length(h[i]));
+    anotes[length(anotes)-1].ID:=dsApp.FieldByName('ID').AsString;
+
     end else
     ulist[length(ulist)-1].Free;
   end;
@@ -183,6 +222,8 @@ begin
   end;
   end;
 
+  dsApp.Free;
+  writeLn('Database connection closed.');
 if CheckListBox1.Items.Count<=0 then begin
 //TrayIcon1.Icon.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_PROPERTIES,GTK_ICON_SIZE_SMALL_TOOLBAR);
 ShowMessage(strNoUpdates);
@@ -236,29 +277,14 @@ begin
  end;
 end;
 
-procedure TranslateInterface;
-var PODirectory, Lang, FallbackLang: String;
-begin
-Lang:=Copy(GetEnvironmentVariable('LANG'), 1, 2);
-PODirectory := GetDataFile('lang/');
-GetLanguageIDs(Lang, FallbackLang);
-translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts-%s.po', Lang, FallbackLang);
-translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-%s.po', Lang, FallbackLang);
-translations.SystemCharSetIsUTF8:=true;
-end;
-
 procedure TUMnForm.FormCreate(Sender: TObject);
 begin
-
 if not DirectoryExists(RegDir) then begin
 CreateDir(ExtractFilePath(RegDir));
 CreateDir(RegDir);
 end;
 
 if LowerCase(paramstr(1))='-show' then Application.ShowMainForm:=true;
-
-//Load translation resource
-TranslateInterface();
 //Set icons
 //TrayIcon1.Icon.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_GOTO_BOTTOM,GTK_ICON_SIZE_SMALL_TOOLBAR);
 TrayIcon1.Visible:=true;

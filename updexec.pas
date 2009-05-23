@@ -1,5 +1,5 @@
 { updexec.pas
-  Copyright (C) Listaller Project 2008
+  Copyright (C) Listaller Project 2008-2009
 
   updexec.pas is free software: you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ComCtrls, HTTPSend, FileUtil, AbUnZper, AbArcTyp, Process, common, IniFiles,
-  blcksock, trStrings, ipkhandle;
+  blcksock, trStrings, ipkhandle, sqlite3ds, db;
 
 type
 
@@ -42,6 +42,7 @@ type
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
+    //** Hook on HTTP/FTP socket
     procedure HookSock(Sender: TObject; Reason:THookSocketReason; const Value: string);
   public
     { public declarations }
@@ -89,8 +90,9 @@ procedure TUExecFm.FormActivate(Sender: TObject);
 var
   i,j,k: Integer;z: TAbUnZipper;
   c: TProcess;
-  reg,cnf,dsk: TIniFile;
+  cnf,dsk: TIniFile;
   s: TStringList;
+  dsApp: TSQLite3Dataset; //AppDB connection
 begin
 if fstact then begin
 fstact:=false;
@@ -99,7 +101,35 @@ Memo1.Lines.Add('Log:');
     CreateDir('/tmp/liupd/');
     c:=tprocess.create(nil);
     c.Options:=[poUsePipes,poWaitonexit];
-    reg:=TIniFile.Create(RegDir+'appreg.lst');
+
+    writeLn('Opening database...');
+    dsApp:= TSQLite3Dataset.Create(nil);
+   with dsApp do
+   begin
+    FileName:=RegDir+'applications.db';
+    TableName:='AppInfo';
+    if not FileExists(FileName) then
+    begin
+     with FieldDefs do
+      begin
+        Clear;
+        Add('Name',ftString,0,true);
+        Add('ID',ftString,0,true);
+        Add('Type',ftString,0,true);
+        Add('Description',ftString,0,False);
+        Add('Version',ftFloat,0,true);
+        Add('Publisher',ftString,0,False);
+        Add('Icon',ftString,0,False);
+        Add('Profile',ftString,0,False);
+        Add('AGroup',ftString,0,true);
+        Add('InstallDate',ftDateTime,0,False);
+        Add('Dependencies',ftMemo,0,False);
+      end;
+    CreateTable;
+   end;
+  end;
+  dsApp.Active:=true;
+
     with UMnForm do begin
   for j:=0 to length(ulist)-1 do begin
   if CheckListBox1.Checked[j] then begin
@@ -195,7 +225,22 @@ Memo1.Lines.Add('Finishing...');
   end;
     end;
     if anotes[j].NVersion<>'' then
-   reg.WriteString(CheckListBox1.Items[j]+anotes[j].ID,'Version',anotes[j].NVersion);
+    begin
+     dsApp.SQL:='SELECT * FROM AppInfo';
+     dsApp.Open;
+     dsApp.Filtered:=true;
+     dsApp.Edit;
+     dsApp.First;
+    while not dsApp.EOF do
+    begin
+     if (dsApp.FieldByName('Name').AsString=CheckListBox1.Items[j]) and (dsApp.FieldByName('ID').AsString=anotes[j].ID) then
+      dsApp.FieldByName('Version').AsString:=anotes[j].NVersion;
+    dsApp.Next;
+    end;
+    dsApp.ApplyUpdates;
+   dsApp.Close;
+   end;
+
   end; //End of Check-Test
  end; //End Loop j
 
@@ -204,7 +249,9 @@ end;
 
   WriteLog('Cleaning up...');
   c.Free;
-  reg.Free;
+  writeLn('DB connection closed.');
+  dsApp.Free;
+
   FileUtil.DeleteDirectory('/tmp/liupd/',false);
   Button1.Enabled:=true;
   WriteLog('Update finished!');

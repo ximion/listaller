@@ -17,7 +17,7 @@ object UExecFm: TUExecFm
     Left = 8
     Height = 14
     Top = 8
-    Width = 44
+    Width = 45
     Caption = 'Waiting...'
     ParentColor = False
   end

@@ -22,15 +22,16 @@ interface
 
 uses
   Classes, SysUtils, IniFiles, common, Forms, Process, trstrings, packagekit,
-  sqlite3ds, db;
+  sqlite3ds, db, Dialogs;
 
  {** Removes an IPK application
      @param AppName Name of the application, that should be uninstalled
      @param AppID ID of the application
      @param Log TStrings to get the log output
-     @param fast Does a quick uninstallation if is true
+     @param fast Does a quick uninstallation if is true (Set to "False" by default)
+     @param RmDeps Remove dependencies if true (Set to "True" by default)
      @returns Current progress of the operation}
- function UninstallIPKApp(AppName, AppID: String; var Log: TStrings; fast: Boolean=false):Integer;
+ function UninstallIPKApp(AppName, AppID: String; var Log: TStrings; fast: Boolean=false; RmDeps:Boolean=true):Integer;
 
  var
    //** Path to package registration
@@ -38,7 +39,7 @@ uses
 
 implementation
 
-function UninstallIPKApp(AppName,AppID: String; var Log: TStrings; fast:Boolean=false): Integer;
+function UninstallIPKApp(AppName,AppID: String; var Log: TStrings; fast:Boolean=false; RmDeps:Boolean=true): Integer;
 var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;k: Boolean;upd: String;
     proc: TProcess;dlink: Boolean;t: TProcess;
     pkit: TPackageKit;
@@ -85,9 +86,9 @@ end;
 dsApp.Active:=true;;
 
 dsApp.SQL:='SELECT * FROM AppInfo';
+dsApp.Edit;
 dsApp.Open;
-dsApp.Filtered := true;
-dsApp.First;
+dsApp.Filtered:=true;
 while not dsApp.EOF do
 begin
  if (dsApp.FieldByName('Name').AsString=AppName) and (dsApp.FieldByName('ID').AsString=AppID) then
@@ -124,6 +125,8 @@ writeLn('Done.');
 end;
 
 ///////////////////////////////////////
+if RmDeps then
+begin
 Log.Add(strRMUnsdDeps);
 writeLn(strRMUnsdDeps);
 tmp2:=TStringList.Create;
@@ -172,7 +175,7 @@ else pkit.GetRequires(f,s);
 end else begin Log.Add('No installed deps found!');writeLn('No installed deps found!');end;
 
 tmp2.Free;
-
+ end; //End of remove-deps request
 end; //End of "fast"-request
 //////////////////////////////////////////////////////
 

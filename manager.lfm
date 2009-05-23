@@ -1,7 +1,7 @@
 object MnFrm: TMnFrm
-  Left = 316
+  Left = 304
   Height = 558
-  Top = 224
+  Top = 216
   Width = 816
   ActiveControl = btnInstall
   Caption = 'Software Manager'
@@ -72,15 +72,15 @@ object MnFrm: TMnFrm
     Left = 8
     Height = 14
     Top = 120
-    Width = 30
+    Width = 31
     Caption = 'Show:'
     ParentColor = False
   end
   object Label2: TLabel
-    Left = 650
+    Left = 649
     Height = 14
     Top = 120
-    Width = 27
+    Width = 28
     Anchors = [akTop, akRight]
     Caption = 'Filter:'
     ParentColor = False

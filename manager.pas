@@ -24,7 +24,7 @@ uses
   Classes, SysUtils,LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, common,
   uninstall, trstrings, gettext, FileUtil, xtypefm, ipkhandle, gifanimator,
-  packagekit, Contnrs;
+  packagekit, Contnrs, sqlite3ds, db;
 
 type
 
@@ -68,6 +68,8 @@ type
     AList: TObjectList;
     //** Current id of package that should be uninstalled
     uID: Integer;
+    //**
+    dsApp: TSQLite3Dataset;
     //** Process .desktop-file and add info to list @param fname Name of the .desktop file  @param tp Category name
     procedure ProcessDesktopFile(fname: String; tp: String);
     //** Load software list entries
@@ -83,10 +85,6 @@ var
  //** List of installed application names
   instLst: TStringList;
 
-var
-//** In this directory package information will be stored
- RegDir: String;
-
 implementation
 
 uses settings, pkgconvertdisp, swcatalog;
@@ -97,6 +95,7 @@ procedure TMnFrm.UninstallClick(Sender: TObject);
 begin
 uID:=(Sender as TBitBtn).Tag;
 RMForm.ShowModal;
+dsApp.Active:=true;
 end;
 
 { TMnFrm }
@@ -228,7 +227,7 @@ d:=TIniFile.Create(fname);
 end;
 
 procedure TMnFrm.LoadEntries;
-var ireg,ini: TIniFile;tmp,xtmp: TStringList;i,j,k: Integer;p,n: String;tp: String;
+var ini: TIniFile;tmp,xtmp: TStringList;i,j,k: Integer;p,n: String;tp: String;
     gif: TGifThread;entry: TListEntry;
 begin
 j:=0;
@@ -280,54 +279,41 @@ CreateDir(ExtractFilePath(RegDir));
 CreateDir(RegDir);
 end;
 
-ireg:=TInifile.Create(RegDir+'appreg.lst');
-tmp:=TStringList.Create;
-xtmp:=TStringList.Create;
-ireg.ReadSections(xtmp);
-
-if tp='all' then tmp.Assign(xtmp)
-else begin
-for i:=0 to xtmp.Count-1 do begin
-
-if pos(LowerCase(ireg.ReadString(xtmp[i],'Group','other')),tp)>0 then
-tmp.Add(xtmp[i]);
-end;
-end;
-xtmp.free;
-
-k:=0;
-
-for i:=0 to tmp.Count-1 do
+dsApp.SQL:='SELECT * FROM AppInfo';
+dsApp.Open;
+dsApp.Filtered:=true;
+dsApp.First;
+while not dsApp.EOF do
 begin
-AList.Add(TListEntry.Create(MnFrm));
+ AList.Add(TListEntry.Create(MnFrm));
 
-entry:=TListEntry(AList.Items[AList.Count-1]);
-entry.UnButton.OnClick:=@UnInstallClick;
-entry.Parent:=SWBox;
-entry.aId:=k;
-entry.UnButton.Tag:=k;
+ entry:=TListEntry(AList.Items[AList.Count-1]);
+ entry.UnButton.OnClick:=@UnInstallClick;
+ entry.Parent:=SWBox;
+ entry.aId:=dsApp.RecNo;
+ entry.UnButton.Tag:=AList.Count-1;
 
-entry.AppName:=(copy(tmp[i],0,pos('~',tmp[i])-1));
+ entry.AppName:=dsApp.FieldByName('Name').AsString;
 
-blst.Add(entry.AppName);
-entry.srID:=copy(tmp[i],pos('~',tmp[i]),length(tmp[i]));
+ blst.Add(entry.AppName);
+ entry.srID:=dsApp.FieldByName('ID').AsString;
 
-entry.AppVersion:=strVersion+': '+(ireg.ReadString(tmp[i],'Version','0.0'));
-entry.AppMn:=strAuthor+': '+(ireg.ReadString(tmp[i],'Author','#'));
-if ireg.ReadString(tmp[i],'Author','#')='#' then entry.AppMn:='';
-p:=RegDir+entry.AppName+'-'+copy(tmp[i],pos('~',tmp[i])+1,length(tmp[i]))+'/';
+ entry.AppVersion:=strVersion+': '+dsApp.FieldByName('Version').AsString;
+ entry.AppMn:=strAuthor+': '+dsApp.FieldByName('Publisher').AsString;
+ if dsApp.FieldByName('Publisher').AsString='' then entry.AppMn:='';
+ p:=RegDir+LowerCase(entry.AppName+'-'+entry.srID)+'/';
 
-InstLst.Add(LowerCase(ireg.ReadString(tmp[i],'idName',entry.AppName)));
-entry.AppDesc:=(ireg.ReadString(tmp[i],'SDesc','No description given'));
-if entry.AppDesc='#' then entry.AppDesc:='No description given';
+ InstLst.Add(LowerCase(dsApp.FieldByName('ID').AsString));
+ entry.AppDesc:=dsApp.FieldByName('Description').AsString;
+ if entry.AppDesc='#' then entry.AppDesc:='No description given';
 
-if FileExists(p+'icon.png') then
-entry.SetImage(p+'icon.png');
+ if FileExists(p+'icon.png') then
+ entry.SetImage(p+'icon.png');
 
-Application.ProcessMessages;
+ Application.ProcessMessages;
+ dsApp.Next;
 end;
-ireg.Free;
-tmp.Free;
+dsApp.Close;
 
 {if (CBox.ItemIndex=0) or (CBox.ItemIndex=10) then
 begin
@@ -711,15 +697,50 @@ begin
  halt(0);
 end;     }
 
+writeLn('Opening database...');
+dsApp:= TSQLite3Dataset.Create(nil);
+with dsApp do
+ begin
+   FileName:=RegDir+'applications.db';
+   TableName:='AppInfo';
+   if not FileExists(FileName) then
+   begin
+   with FieldDefs do
+     begin
+       Clear;
+       Add('Name',ftString,0,true);
+       Add('ID',ftString,0,true);
+       Add('Type',ftString,0,true);
+       Add('Description',ftString,0,False);
+       Add('Version',ftFloat,0,true);
+       Add('Publisher',ftString,0,False);
+       Add('Icon',ftString,0,False);
+       Add('Profile',ftString,0,False);
+       Add('AGroup',ftString,0,true);
+       Add('InstallDate',ftDateTime,0,False);
+       Add('Dependencies',ftMemo,0,False);
+     end;
+   CreateTable;
+ end;
+end;
+dsApp.Active:=true;
+
  WriteLn('GUI loaded.');
 end;
 
 procedure TMnFrm.FormDestroy(Sender: TObject);
 var i: Integer;
 begin
-  if Assigned(blst) then blst.Free; //Free blacklist
+  if Assigned(blst) then blst.Free;       //Free blacklist
   if Assigned(InstLst) then InstLst.Free; //Free list of installed apps
-  if Assigned(AList) then AList.Free; //Free AppPanel store
+  if Assigned(AList) then AList.Free;     //Free AppPanel store
+  if Assigned(dsApp) then                 //Free databse connection
+  begin
+ { dsApp.ApplyUpdates;
+  dsApp.Close; }
+  writeLn('Databse closed.');
+  dsApp.Free;
+  end;
 end;
 
 initialization

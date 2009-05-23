@@ -1,7 +1,7 @@
 object RMForm: TRMForm
   Left = 778
   Height = 291
-  Top = 700
+  Top = 662
   Width = 451
   ActiveControl = Memo1
   Caption = 'Uninstalling [...]'

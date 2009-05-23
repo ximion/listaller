@@ -24,9 +24,21 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, mnupdate, httpsend, updexec,
-  common, ipkhandle, ldunit, LResources;
+  common, ipkhandle, ldunit, LResources,
+  GetText, Translations, SysUtils;
 
 {$IFDEF WINDOWS}{$R liupdate.rc}{$ENDIF}
+
+procedure TranslateInterface;
+var PODirectory, Lang, FallbackLang: String;
+begin
+ Lang:=Copy(GetEnvironmentVariable('LANG'), 1, 2);
+ PODirectory := GetDataFile('lang/');
+ GetLanguageIDs(Lang, FallbackLang);
+ translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts-%s.po', Lang, FallbackLang);
+ translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-%s.po', Lang, FallbackLang);
+ translations.SystemCharSetIsUTF8:=true;
+end;
 
 begin
   {$I liupdate.lrs}
@@ -39,6 +51,9 @@ begin
   Application.CreateForm(TUExecFm, UExecFm);
   writeLn('GUI created.');
   Application.CreateForm(TLoadForm, LoadForm);
+  //Load translation resources
+  TranslateInterface;
+  writeLn('Translation loaded.');
   writeLn('Completed.');
   Application.Run;
   writeLn('Updater closed.');

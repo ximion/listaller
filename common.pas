@@ -546,6 +546,10 @@ if DInfo.DBase='KDE' then
  if FileExists('/usr/bin/kdesudo') then
   p.CommandLine := 'kdesudo -d --comment "'+comment+'" -i '+icon+' '+cmd
   else
+ if DInfo.DName='Fedora' then
+  //Fedora uses Consolehelper to run apps as root. So we use "beesu" to make CH work for Listaller
+  p.CommandLine := 'beesu -l '+cmd
+ else
    if FileExists('/usr/bin/gksudo') then
     p.CommandLine := 'gksudo --message "'+comment+'" '+cmd
     else
