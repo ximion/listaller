@@ -40,7 +40,6 @@ cp -dpr ./lang/ $DESTDIR/usr/share/listaller/
 rm -rf $DESTDIR/usr/share/listaller/lang/.svn
 rm -rf $DESTDIR/usr/share/listaller/lang/.directory
 
-mkdir -p $DESTDIR/usr/share/applications
 mkdir -p $DESTDIR/usr/share/mime
 mkdir -p $DESTDIR/usr/share/mime/packages
 mkdir -p $DESTDIR/usr/share/mime/text

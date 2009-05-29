@@ -1,0 +1,8 @@
+Package: lithememgr-gtk
+Architecture: any
+Depends: ${shlibs:Depends}, listaller
+Description: liTheme Manager (GTK2)
+  Tool that lets you easily install/uninstall system themes, wallpapers, 
+  iconsets and screensavers.  liThemeMgr is part of the Listaller project
+  and uses it's technology.
+  liThemeMgr is still under development. This is an daily-build and should not be used!

@@ -20,7 +20,7 @@ unit distri;
 
 interface
 
-uses SysUtils, Classes, Process, BaseUnix, pwd, Dialogs;
+uses SysUtils, Classes, Process, BaseUnix, pwd;
 
 type
 //** Contains information about the current Linux distribution
@@ -80,7 +80,7 @@ Result:=false;
          Result:=false
         else  Result:=true;
      end else
-   ShowMessage('Internal error');
+   writeLn('Internal error');
 end;
 
 function GetDistro: TDistroInfo;

@@ -105,6 +105,10 @@ object MnFrm: TMnFrm
       item
         Text = 'Loading...'
         Width = 50
+      end    
+      item
+        Style = psOwnerDraw
+        Width = 50
       end>
     SimplePanel = False
   end
@@ -201,7 +205,6 @@ object MnFrm: TMnFrm
     Height = 23
     Top = 112
     Width = 144
-    AutoComplete = False
     ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
@@ -217,7 +220,6 @@ object MnFrm: TMnFrm
       'Additional'
       'Other'
     )
-    ItemWidth = 0
     MaxLength = 65535
     OnChange = CBoxChange
     TabOrder = 1
@@ -429,6 +431,16 @@ object MnFrm: TMnFrm
     NumGlyphs = 0
     OnClick = btnInstallClick
     TabOrder = 6
+  end
+  object MBar: TProgressBar
+    Left = 680
+    Height = 14
+    Top = 544
+    Width = 104
+    Anchors = [akRight, akBottom]
+    Smooth = True
+    Style = pbstMarquee
+    TabOrder = 7
   end
   object Process1: TProcess
     Active = False

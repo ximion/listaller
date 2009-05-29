@@ -1,5 +1,4 @@
-{
- * lipa.lpr
+{* lipa.lpr
  * Copyright (C) Listaller Project 2008-2009
  *
  * lipa.lpr is free software: you can redistribute it and/or modify it
@@ -14,9 +13,8 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
-}
-//** Command-line application to handle IPK-packages
+ *}
+//** Command-line application for IPK-package handling
 program lipa;
 
 {$mode objfpc}{$H+}
@@ -25,6 +23,7 @@ uses
   {$IFDEF UNIX}
   cthreads,
   {$ENDIF}
+  Interfaces, //Needed as workaround
   Classes, SysUtils, CustApp,
   Process, ipkbuild, common;
 

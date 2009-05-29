@@ -82,7 +82,7 @@ object SCForm: TSCForm
     Left = 8
     Height = 14
     Top = 16
-    Width = 49
+    Width = 50
     Caption = 'Category:'
     ParentColor = False
   end
@@ -174,13 +174,11 @@ object SCForm: TSCForm
     Height = 23
     Top = 344
     Width = 120
-    AutoComplete = False
     ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
       'Listaller Server (listaller.nlinux.org)'
     )
-    ItemWidth = 0
     MaxLength = 65535
     OnChange = ComboBox1Change
     TabOrder = 5

@@ -22,8 +22,8 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ComCtrls, Buttons, manager, HTTPSend, XMLRead, DOM, IniFiles, common,
-  trstrings, blcksock, Process, ExtCtrls, LCLType;
+  ComCtrls, Buttons, manager, HTTPSend, XMLRead, DOM, IniFiles, LEntries,
+  Common, trstrings, blcksock, Process, ExtCtrls, LCLType;
 
 type
 

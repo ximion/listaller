@@ -22,8 +22,9 @@ uses
   {$IFDEF UNIX}
   cthreads,
   {$ENDIF}
+  Interfaces, //Unfortunately necessary...
   Classes, SysUtils, CustApp,
-  Process, ipkbuild, common,
+  Process, ipkbuild,
   DOM, XMLRead;
 
 type
@@ -92,6 +93,30 @@ for i:=0 to dn.ChildNodes.Count-1 do begin
 if LowerCase(dn.ChildNodes.Item[i].NodeName)=LowerCase(n) then begin
 Result:=dn.ChildNodes.Item[i].FirstChild;break;exit;end;
 end;
+end;
+
+//We do not use the function of common.pas to keep this tool small
+function CmdResult(cmd:String):String;
+var t:TProcess;
+s:TStringList;
+begin
+ Result:='';
+ t:=tprocess.create(nil);
+ t.Options:=[poUsePipes, poWaitOnExit];
+ t.CommandLine:=cmd;
+ try
+  t.Execute;
+  s:=tstringlist.Create;
+  try
+   s.LoadFromStream(t.Output);
+   if s.Count<= 0 then Result:='err' else
+   Result:=s[0];
+  finally
+  s.free;
+  end;
+ finally
+ t.Free;
+ end;
 end;
 
 procedure CheckFileA(fname: String);

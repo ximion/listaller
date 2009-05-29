@@ -102,10 +102,6 @@ var DInfo: TDistroInfo;
 begin
 DInfo:=GetDistro;
 if not IsRoot then begin
-if (DInfo.DName='Fedora')and(DInfo.DBase='GNOME') then begin
- ShowMessage('Fedora has not "gksu"-like tool Listaller can use to get root-permissions.'#13'You can execute "listallmgr" in an Terminal root-environment to get this function working.'#13'This function will be fixed in newer Listaller releases.');
- exit;
-end;
 if FileExists(paramstr(1)) then
  ExecuteAsRoot(Application.ExeName+' '+paramstr(1),'Enter your password to install the application for everyone.',GetDataFile('graphics/mime-ipk.png'))
  else

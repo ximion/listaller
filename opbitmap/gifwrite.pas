@@ -283,8 +283,7 @@ end;
 
 procedure TGif.FreeImage;
 var
-    i,n:    integer;
-    ex:     PGifExtension;
+    i:    integer;
     id:     PGifImageDescriptor;
     ct:     PGifColorTable;
 begin

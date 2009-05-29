@@ -23,6 +23,12 @@ echo "Target architecture: $ARCH"
 if [ $ARCH = "x86_64" ]; then LCLDir="/usr/lib64/lazarus/"
 else LCLDir="/usr/lib/lazarus"
 fi
+
+LCLDir="/usr/lib/lazarus"
+#Libuild needed because lazbuild does not work
+chmod +x ./libuild
+#
+
 echo "LAZTarget: $LCLDir"
 
 OS="linux"
@@ -39,33 +45,46 @@ mkdir -p ./bin/gtk2
 
 VER=$(fpc -iW)
 echo "Compiler version: $VER"
-echo "LAZBuild version: $($LCLDir/lazbuild -v)"
+
+#Workaround for Lazarus-Alpha-packaging bug
+#echo "LAZBuild version: $($LCLDir/lazbuild -v)"
 
 echo "Creating installer..."
 if [ "$WIDGET" == "qt4" ]; then
-$LCLDir/lazbuild -B --ws=qt4 listallgo.lpr
-cp ./bin/listallgo ./bin/qt4/
+#./libuild PR=listallgo.lpr O=listallgo WIDGET=qt4
+$LCLDir/lazbuild -r --ws=qt4 listallgo.lpr
+mv ./bin/listallgo ./bin/qt4/
 else
-$LCLDir/lazbuild -B --ws=gtk2 listallgo.lpr
-cp ./bin/listallgo ./bin/gtk2/
+#./libuild PR=listallgo.lpr O=listallgo WIDGET=gtk2
+$LCLDir/lazbuild -r --ws=gtk2 listallgo.lpr
+mv ./bin/listallgo ./bin/gtk2/
 fi
 echo "Creating software-manager..."
 if [ "$WIDGET" == "qt4" ]; then
-$LCLDir/lazbuild -B --ws=qt4 listallmngr.lpr
-cp ./bin/listallmgr ./bin/qt4/
+#./libuild PR=listallmngr.lpr O=listallmgr WIDGET=qt4
+$LCLDir/lazbuild -r --ws=qt4 listallmngr.lpr
+mv ./bin/listallmgr ./bin/qt4/
 else
-$LCLDir/lazbuild -B --ws=gtk2 listallmngr.lpr
-cp ./bin/listallmgr ./bin/gtk2/
+#./libuild PR=listallmngr.lpr O=listallmgr WIDGET=gtk2
+$LCLDir/lazbuild -r --ws=gtk2 listallmngr.lpr
+mv ./bin/listallmgr ./bin/gtk2/
 fi
 echo "Creating updater..."
 if [ "$WIDGET" == "qt4" ]; then
+#./libuild PR=liupdate.lpr O=liupdate WIDGET=qt4
 $LCLDir/lazbuild -B --ws=qt4 liupdate.lpr
-cp ./usr/liupdate ./usr/qt4/
+mv ./bin/liupdate ./bin/qt4/
 else
+#./libuild PR=liupdate.lpr O=liupdate WIDGET=gtk2
 $LCLDir/lazbuild -B --ws=gtk2 liupdate.lpr
-cp ./usr/liupdate ./usr/gtk2/
+mv ./bin/liupdate ./bin/gtk2/
 fi
+
+#Also workarount for lazbuild bug in Lazarus-Alpha
+WIDGET="gtk2"
+
 echo "Creating command-line tool..."
-fpc -MObjFPC -Sgi -CX -b -O1 -gl -XX -vewnhi -l -dOpbCompat -Fuopbitmap/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/gtk2/ -Fu$LCLDir/packager/units/$ARCH-$OS/ -Fu. -obin/lipa lipa.lpr
+fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewhi -l -Fuopbitmap/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/gtk2/ -Fu. -FUbin/ -FEbin/ -olipa -dOpbCompat lipa.lpr
 echo "Creating unified build tool..."
-fpc -MObjFPC -Sgi -CX -b -O1 -gl -XX -vewnhi -l -dOpbCompat -Fuopbitmap/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/gtk2/ -Fu$LCLDir/packager/units/$ARCH-$OS/ -Fu. -obin/unibuild unibuild.lpr
+fpc  -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -Fuopbitmap/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/gtk2/ -Fu. -FUbin/ -FEbin/ -ounibuild -dOpbCompat unibuild.lpr
+#-Fi$LCLDir/lcl/include/

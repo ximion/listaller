@@ -22,9 +22,9 @@ interface
 
 uses
   Classes, SysUtils,LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
-  Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, common,
+  Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, LEntries,
   uninstall, trstrings, gettext, FileUtil, xtypefm, ipkhandle, gifanimator,
-  packagekit, Contnrs, sqlite3ds, db;
+  Common, PackageKit, Contnrs, sqlite3ds, db;
 
 type
 
@@ -42,6 +42,7 @@ type
     Label2: TLabel;
     Label3: TLabel;
     OpenDialog1: TOpenDialog;
+    MBar: TProgressBar;
     ThrobberBox: TPaintBox;
     Process1: TProcess;
     StatusBar1: TStatusBar;
@@ -232,6 +233,8 @@ var ini: TIniFile;tmp,xtmp: TStringList;i,j,k: Integer;p,n: String;tp: String;
 begin
 j:=0;
 
+MBar.Visible:=true;
+
 AList.Clear;
 
 btnCat.Enabled:=false;
@@ -391,6 +394,7 @@ edtFilter.Enabled:=true;
 SwBox.Visible:=true;
 if Assigned(gif) then gif.Terminate;
 gif := nil;
+MBar.Visible:=false;
 end;
 
 var fAct: Boolean;

@@ -1,11 +1,5 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
-# Sample debian/rules that uses debhelper.
-# This file was originally written by Joey Hess and Craig Small.
-# As a special exception, when this file is copied by dh-make into a
-# dh-make output file, you may use that output file without restriction.
-# This special exception was added by Craig Small in version 0.37 of dh-make.
-
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
@@ -16,13 +10,13 @@ build-stamp:
 
 	# Add here commands to compile the package.
 	#Build Gtk2-release
-	make WIDGET=gtk2 all
-	make WIDGET=gtk2 licreator
-	make WIDGET=gtk2 litheme
+	$(MAKE) WIDGET=gtk2 all
+	$(MAKE) WIDGET=gtk2 licreator
+	#make WIDGET=gtk2 litheme
 	#Build Qt4 release
-	make WIDGET=qt4 all
-	make WIDGET=qt4 licreator
-	make WIDGET=qt4 litheme
+	$(MAKE) WIDGET=qt4 all
+	$(MAKE) WIDGET=qt4 licreator
+	#make WIDGET=qt4 litheme
 	#docbook-to-man debian/listaller.sgml > listaller.1
 
 	touch $@
@@ -40,25 +34,25 @@ clean:
 install: build
 	dh_testdir
 	dh_testroot
-	dh_clean -k 
 	dh_installdirs
+	#dh_clean -k
 
 	# Add here commands to install the package into debian/listaller.
-	#Install common
-        make DESTDIR=./debian/listaller-tools litools-inst
-	make DESTDIR=./debian/listaller-data install-data
+	echo "Installing binaries..."
+        $(MAKE) DESTDIR=./debian/listaller-tools litools-inst
 	#Install Gtk release
-	make WIDGET=gtk2 DESTDIR=./debian/listaller-gtk install
-	make WIDGET=gtk2 DESTDIR=./debian/listaller-creation-gtk licreator-inst
-	make WIDGET=gtk2 DESTDIR=./debian/lithememgr-gtk litheme-inst
+	./install.sh WIDGET=gtk2 DESTDIR=./debian/listaller-gtk
+	./install-creator.sh WIDGET=gtk2 DESTDIR=./debian/listaller-creation-gtk
+	#make WIDGET=gtk2 DESTDIR=./debian/lithememgr-gtk litheme-inst
 	#Install Qt4 release
-	make WIDGET=qt4 DESTDIR=./debian/listaller-gtk install
-	make WIDGET=qt4 DESTDIR=./debian/listaller-creation-gtk licreator-inst
-	make WIDGET=qt4 DESTDIR=./debian/lithememgr-gtk litheme-inst
+	./install.sh WIDGET=qt4 DESTDIR=./debian/listaller-gtk
+	./install-creator.sh WIDGET=qt4 DESTDIR=./debian/listaller-creation-gtk
+	#make WIDGET=qt4 DESTDIR=./debian/lithememgr-gtk litheme-inst
 
 # Build architecture-independent files here.
-binary-indep: build install
-# We have nothing to do by default.
+binary-indep: install
+	echo "Installing architecture independent files..."
+	$(MAKE) DESTDIR=./debian/listaller-data install-data
 
 # Build architecture-dependent files here.
 binary-arch: build install

@@ -4,7 +4,7 @@ Section: utils
 Maintainer: Matthias Klumpp <matthias@nlinux.org>
 Priority: extra
 Homepage: http://listaller.nlinux.org
-Build-Depends: libgtk2.0-dev, libgdk-pixbuf-dev, lazarus-ide, fpc (>= 2.2.2-3), debhelper (>= 5), libgdk-pixbuf2, libqtintf4
+Build-Depends: libgtk2.0-dev, lazarus (>=0.9.27), fpc (>= 2.2.4), debhelper (>= 5), libqt4intf, libqt4-core, sqlite3, libsqlite3-0, libsqlite3-dev
 
 Package: listaller-data
 Architecture: all
@@ -20,7 +20,7 @@ Description: Listaller data
 
 Package: listaller-gtk
 Architecture: any
-Depends: ${shlibs:Depends}, gksu, xdg-utils, lsb-release, packagekit, python-packagekit, python
+Depends: ${shlibs:Depends}, listaller-data, gksu, xdg-utils, lsb-release, packagekit, python-packagekit, python
 Provides: listaller, listaller-compact-gtk
 Description: Listaller main package (GTK2)
   Listaller is a distribution-independ software install system.
@@ -42,24 +42,17 @@ Description: Command-line tools for Listaller package handling
 Package: listaller-creation-gtk
 Architecture: any
 Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller, listaller-tools
+Replaces: listaller-creation-qt
+Breaks: listaller-creation-qt
 Description: Listaller Creator (GTK2)
   Listaller is a cross-distribution software install system.
   This is an alpha-release of Listaller's graphical package creation tool.
   With liCreator you can easily build your own IPK-packages for the Listaller system.
   Please note that this is an alpha-release!
 
-Package: lithememgr-gtk
-Architecture: any
-Depends: ${shlibs:Depends}, listaller
-Description: liTheme Manager (GTK2)
-  Tool that lets you easily install/uninstall system themes, wallpapers, 
-  iconsets and screensavers.  liThemeMgr is part of the Listaller project
-  and uses it's technology.
-  liThemeMgr is still under development. This is an daily-build and should not be used!
-
 Package: listaller-qt
 Architecture: any
-Depends: ${shlibs:Depends}, kdesudo, packagekit, python-packagekit, python, libqtintf4, kde-icons-oxygen
+Depends: ${shlibs:Depends}, listaller-data, kdesudo, packagekit, python-packagekit, python, libqt4intf, kde-icons-oxygen
 Provides: listaller, listaller-compact-qt
 Description: Listaller main package (Qt4)
   Listaller is a distribution-independ software install system.
@@ -74,6 +67,7 @@ Package: listaller-creation-qt
 Architecture: any
 Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller, listaller-tools
 Replaces: listaller-creation-gtk
+Breaks: listaller-creation-gtk
 Description: Listaller Creator (Qt4)
   Listaller is a cross-distribution software install system.
   This is an alpha-release of Listaller's graphical package creation tool.

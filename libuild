@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Parses command line options. Currently supported options are:
+# PR		Project file name
+# O		Output file name
+# WG	       Target widgetset
+for arg; do
+  case $arg in
+    PR=*) PR=${arg#PR=};;
+    O=*) O=${arg#O=};;
+    WG=*) WG=${arg#WG=};;
+  esac;
+done
+
+ARCH=$(uname -m)
+
+case "$ARCH" in
+ "i686") ARCH="i386";;
+ "i586") ARCH="i386";;
+ "i486") ARCH="i386";;
+esac
+
+OS="linux"
+LCLDir="/usr/lib/lazarus"
+
+if [ "$WG" == "qt4" ]; then
+fpc -MObjFPC -Sgi -CX -O1 -gl -XX -WG -vewnhi -l -Fusynapse/ -Fuopbitmap/ -Fu$LCLDir/components/synedit/ -Fu/usr/share/fpcsrc/packages/gtk1/src/gdk/ -Fu$LCLDir/ideintf/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/qt/ -Fu$LCLDir/packager/units/$ARCH-$OS/ -Fu. -FUbin/ -vm5026 -FEbin/ -o$O -dOpbCompat -dUSE_QT_45 -dLCL -dLCLqt $PR
+else
+fpc -MObjFPC -Sgi -CX -O1 -gl -XX -WG -vewnhi -l -Fusynapse/ -Fuopbitmap/ -Fu$LCLDir/components/synedit/ -Fu$LCLDir/components/synedit/units/$ARCH-$OS/ -Fu$LCLDir/ideintf/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/gtk2/ -Fu$LCLDir/packager/units/$ARCH-$OS/ -Fu. -vm4056 -FEbin/ -o$O -dOpbCompat -dLCL -dLCLgtk2 $PR
+fi
