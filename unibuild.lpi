@@ -15,7 +15,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="263"/>
+      <CurrentBuildNr Value="266"/>
       <ProjectVersion Value="0.2.0.1"/>
     </VersionInfo>
     <PublishOptions>
@@ -30,12 +30,12 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="18">
+    <Units Count="19">
       <Unit0>
         <Filename Value="unibuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="unibuild"/>
-        <CursorPos X="43" Y="25"/>
+        <CursorPos X="15" Y="27"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="32"/>
@@ -44,8 +44,8 @@
       <Unit1>
         <Filename Value="ipkbuild.pas"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
+        <CursorPos X="84" Y="24"/>
+        <TopLine Value="4"/>
         <UsageCount Value="12"/>
       </Unit1>
       <Unit2>
@@ -159,8 +159,15 @@
         <TopLine Value="13"/>
         <UsageCount Value="10"/>
       </Unit17>
+      <Unit18>
+        <Filename Value="abbrevia/abzipper.pas"/>
+        <UnitName Value="AbZipper"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit18>
     </Units>
-    <JumpHistory Count="23" HistoryIndex="22">
+    <JumpHistory Count="24" HistoryIndex="23">
       <Position1>
         <Filename Value="unibuild.lpr"/>
         <Caret Line="28" Column="9" TopLine="1"/>
@@ -251,8 +258,12 @@
       </Position22>
       <Position23>
         <Filename Value="unibuild.lpr"/>
-        <Caret Line="25" Column="14" TopLine="1"/>
+        <Caret Line="25" Column="43" TopLine="1"/>
       </Position23>
+      <Position24>
+        <Filename Value="unibuild.lpr"/>
+        <Caret Line="27" Column="15" TopLine="1"/>
+      </Position24>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -262,8 +273,9 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(LazarusDir)/lcl/include/"/>
-      <OtherUnitFiles Value="opbitmap/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/"/>
+      <OtherUnitFiles Value="opbitmap/;abbrevia/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/"/>
       <UnitOutputDirectory Value="bin"/>
+      <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

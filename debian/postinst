@@ -1,4 +1,5 @@
 #! /bin/sh
+set -e
 echo "Installing mime extensions..."
 xdg-mime install '/usr/share/listaller/mime/x-ipk.xml'
 xdg-mime install '/usr/share/listaller/mime/x-ips.xml'

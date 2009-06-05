@@ -24,7 +24,7 @@ uses
   Classes, SysUtils,LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, LEntries,
   uninstall, trstrings, gettext, FileUtil, xtypefm, ipkhandle, gifanimator,
-  Common, PackageKit, Contnrs, sqlite3ds, db;
+  LiCommon, PackageKit, Contnrs, sqlite3ds, db;
 
 type
 
@@ -71,7 +71,8 @@ type
     uID: Integer;
     //**
     dsApp: TSQLite3Dataset;
-    //** Process .desktop-file and add info to list @param fname Name of the .desktop file  @param tp Category name
+    {** Process .desktop-file and add info to list @param fname Name of the .desktop file
+      @param tp Category name}
     procedure ProcessDesktopFile(fname: String; tp: String);
     //** Load software list entries
     procedure LoadEntries;

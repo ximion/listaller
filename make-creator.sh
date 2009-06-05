@@ -23,8 +23,6 @@ fi
 #Workaround for LazPackaging bug
 LCLDir="/usr/lib/lazarus"
 
-echo "LAZTarget: $LCLDir"
-
 OS="linux"
 
 #Create necessary directories

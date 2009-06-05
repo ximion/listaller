@@ -16,7 +16,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="137"/>
+      <CurrentBuildNr Value="139"/>
       <ProjectVersion Value="0.2.0.1"/>
     </VersionInfo>
     <PublishOptions>
@@ -36,7 +36,7 @@
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
-        <CursorPos X="37" Y="26"/>
+        <CursorPos X="72" Y="15"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="41"/>
@@ -204,8 +204,9 @@
       <Filename Value="./bin/lipa"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="opbitmap/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/"/>
+      <OtherUnitFiles Value="opbitmap/;abbrevia/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/"/>
       <UnitOutputDirectory Value="bin"/>
+      <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

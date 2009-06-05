@@ -21,7 +21,7 @@ unit ipkbuild;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, XMLRead, XMLWrite, DOM, AbZipper, AbArcTyp, MD5, common, Process,
+  Classes, SysUtils, FileUtil, XMLRead, XMLWrite, DOM, AbZipper, AbArcTyp, MD5, LiCommon, Process,
   OPBitmapFormats;
 
 type

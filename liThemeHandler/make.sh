@@ -37,7 +37,7 @@ OS="linux"
 
 echo "Building liThemeMgr... ($WIDGET)"
 if [ "$WIDGET" == "qt4" ]; then
-$LCLDir/lazbuild -B --ws=qt4 litheme.lpr
+$LCLDir/lazbuild -B --ws=qt litheme.lpr
 cp ../bin/lithememgr ../bin/qt4/
 else
 $LCLDir/lazbuild -B --ws=gtk2 litheme.lpr

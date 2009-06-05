@@ -6,8 +6,8 @@ LazarusResources.Add('TUExecFm','FORMDATA',[
   +#10'biMaximize'#0#7'Caption'#6#21'Installing updates...'#12'ClientHeight'#3
   +'n'#1#11'ClientWidth'#3#0#2#10'OnActivate'#7#12'FormActivate'#7'OnClose'#7#9
   +'FormClose'#8'OnCreate'#7#10'FormCreate'#6'OnShow'#7#8'FormShow'#10'LCLVersi'
-  +'on'#6#6'0.9.27'#0#6'TLabel'#6'ILabel'#4'Left'#2#8#6'Height'#2#14#3'Top'#2#8
-  +#5'Width'#2'-'#7'Caption'#6#10'Waiting...'#11'ParentColor'#8#0#0#12'TProgres'
+  +'on'#6#6'0.9.27'#0#6'TLabel'#6'ILabel'#4'Left'#2#8#6'Height'#2#13#3'Top'#2#8
+  +#5'Width'#2','#7'Caption'#6#10'Waiting...'#11'ParentColor'#8#0#0#12'TProgres'
   +'sBar'#12'ProgressBar1'#4'Left'#2#8#6'Height'#2' '#3'Top'#2'@'#5'Width'#3#238
   +#1#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#0#6'Smooth'#9#8'TabOrder'#2#0
   +#0#0#5'TMemo'#5'Memo1'#4'Left'#2#8#6'Height'#3#220#0#3'Top'#2'h'#5'Width'#3

@@ -23,7 +23,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  process, ExtCtrls, common, LCLType, manager;
+  process, ExtCtrls, LiCommon, LCLType, manager;
 
 type
 

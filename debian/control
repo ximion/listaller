@@ -74,16 +74,6 @@ Description: Listaller Creator (Qt4)
   With liCreator you can easily build your own IPK-packages for the Listaller system.
   Please note that this is an alpha-release!
 
-Package: lithememgr-qt
-Architecture: any
-Depends: ${shlibs:Depends}, listaller
-Replaces: lithememgr-gtk
-Description: liTheme Manager (Qt4)
-  Tool that lets you easily install/uninstall system themes, wallpapers, 
-  iconsets and screensavers.  liThemeMgr is part of the Listaller project
-  and uses it's technology.
-  liThemeMgr is still under development. This is an daily-build and should not be used!
-
 Package: listaller-gtk-dbg
 Architecture: any
 Depends: listaller-gtk (= ${binary:Version})
@@ -103,10 +93,3 @@ Depends: listaller-creation-gtk (= ${binary:Version})
 Description: Debug symbols for Listaller Creator (GTK+)
   This package contains the debuginfos for the IPS script
   wizard GUI (liCreator) in GTK version.
-
-Package: lithememgr-gtk-dbg
-Architecture: any
-Depends: lithememgr-gtk (= ${binary:Version})
-Description: Debug symbols for liTheme Manager
-  This package contains the debuginfos for the Listaller theme installer
-  and manager. (Symbols for GTK+ version)

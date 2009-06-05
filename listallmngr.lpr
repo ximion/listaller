@@ -26,7 +26,7 @@ uses
   Forms,
   SysUtils,
   manager, settings, uninstall, pkgconvertdisp, swcatalog, ipkhandle,
-  common, translations, gettext, packagekit, LResources;
+  LiCommon, translations, gettext, packagekit, LResources;
 
 {$IFDEF WINDOWS}{$R listallmngr.rc}{$ENDIF}
 

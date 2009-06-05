@@ -16,13 +16,13 @@
 //** Main unit of the updater application
 unit mnupdate;
 
-{$mode delphi}{$H+}
+{$mode objfpc}{$H+}
 
 interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, Buttons, CheckLst, HTTPSend, IniFiles, MD5, common, updexec, LCLType,
+  StdCtrls, Buttons, CheckLst, HTTPSend, IniFiles, MD5, LiCommon, updexec, LCLType,
   Process, Menus, trstrings, XMLRead, DOM, ldunit, ipkhandle, sqlite3ds, db;
 
 type

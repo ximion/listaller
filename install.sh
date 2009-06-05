@@ -17,6 +17,8 @@ case "$ARCH" in
  "i486") ARCH="i386";;
 esac
 
+echo "Active widgetset: $WIDGET"
+
 # Does the install
 #
 # "mkdir -p" is equivalent to ForceDirectories pascal function

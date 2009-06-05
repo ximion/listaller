@@ -21,7 +21,7 @@ unit ipkhandle;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, common, Forms, Process, trstrings, packagekit,
+  Classes, SysUtils, IniFiles, LiCommon, Forms, Process, trstrings, packagekit,
   sqlite3ds, db, Dialogs;
 
  {** Removes an IPK application

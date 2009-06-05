@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
-  StdCtrls, IniFiles, LCLType, Common, Buttons, ExtCtrls, process,
+  StdCtrls, IniFiles, LCLType, LiCommon, Buttons, ExtCtrls, process,
   trstrings, FileUtil, distri, IPKHandle, PackageKit, LEntries;
 
 type

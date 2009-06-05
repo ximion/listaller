@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
   ComCtrls, AbUnZper, AbArcTyp, StdCtrls, IniFiles, FileUtil, ExtCtrls,
-  process, Buttons, LCLType, MD5, LCLIntf, distri, common, HTTPSend,
+  process, Buttons, LCLType, MD5, LCLIntf, distri, LiCommon, HTTPSend,
   blcksock, ftpsend, trstrings, translations, gettext, XMLRead, DOM,
   SynEdit, xtypefm, ipkhandle, packagekit, sqlite3ds, DB;
 

@@ -24,7 +24,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Buttons, ComCtrls, LCLType, LCLIntf, igobase, ExtCtrls, process, HTTPSend,
-  blcksock, FTPSend, IniFiles, common, trstrings, ipkhandle, packagekit;
+  blcksock, FTPSend, IniFiles, LiCommon, trstrings, ipkhandle, packagekit;
 
 type
 

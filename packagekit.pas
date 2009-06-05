@@ -21,7 +21,7 @@ unit packagekit;
 interface
 
 uses
-  Classes, SysUtils, common, Process, Forms;
+  Classes, SysUtils, LiCommon, Process, Forms;
 
 //** PackageKit wrapper
 type TPackageKit = class
@@ -33,21 +33,27 @@ private
 public
  constructor Create;
  destructor Destroy; override;
- //** Check if package is installed @param pkg Name of the package @returns TRUE if package is installed, FALSE if not
+ {** Check if package is installed @param pkg Name of the package
+     @returns TRUE if package is installed, FALSE if not}
  function IsInstalled(pkg: String): Boolean;
  {Returns the reverse dependencies of a package
  @param pkg Name of the package
  @param lst TStringList to recieve the output}
  procedure GetRequires(pkg: String;lst: TStringList);
- //** Removes a package @param pkg Name of the package @returns Success of operation
+ {** Removes a package @param pkg Name of the package
+    @returns Success of operation}
  function RemovePkg(pkg: String): Boolean;
- //** Installs a package from repo @param pkg Name of the package @returns Success of operation
+ {** Installs a package from repo @param pkg Name of the package
+    @returns Success of operation}
  function InstallPkg(pkg: String): Boolean;
- //** Get the name of the package, the file belongs to (!for installed pkgs only!) @param fname Name of the file @returns Name of the package or error, if package was not found
+ {** Get the name of the package, the file belongs to (!for installed pkgs only!) @param fname Name of the file
+    @returns Name of the package or error, if package was not found}
  function PkgNameFromFile(fname: String): String;
- //** Installs a package from file @param fname Name of the package file @returns Success of operation
+ {** Installs a package from file @param fname Name of the package file
+      @returns Success of operation}
  function InstallLocalPkg(fname: String): Boolean;
- //** Get the name of the package, the file belongs to (!for not installed pkgs too!) @param fname Name of the file @returns Name of the package or error, if no package was found
+ {** Get the name of the package, the file belongs to (!for not installed pkgs too!) @param fname Name of the file
+      @returns Name of the package or error, if no package was found}
  function PkgNameFromNIFile(fname: String): String;
  //** Reads if the last performed operation was successfull
  property OperationSucessfull: Boolean read OPSuccess;

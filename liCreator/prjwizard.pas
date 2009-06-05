@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Buttons, ExtCtrls, ComCtrls, EditBtn, Grids, popupnotifier, FileCtrl,
   FileUtil, MD5, Menus, XMLRead, XMLWrite, DOM, editor, LCLType, CheckLst,
-  common, SynEdit;
+  LiCommon, SynEdit;
 
 type
 

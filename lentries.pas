@@ -21,7 +21,7 @@ unit lentries;
 interface
 
 uses
- Classes, SysUtils, StdCtrls, ExtCtrls, Buttons, Controls, Common,
+ Classes, SysUtils, StdCtrls, ExtCtrls, Buttons, Controls, LiCommon,
  trstrings;
 
 type

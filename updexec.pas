@@ -16,13 +16,13 @@
 //** Executes software updates (GUI based)
 unit updexec;
 
-{$mode delphi}{$H+}
+{$mode objfpc}{$H+}
 
 interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ComCtrls, HTTPSend, FileUtil, AbUnZper, AbArcTyp, Process, common, IniFiles,
+  ComCtrls, HTTPSend, FileUtil, AbUnZper, AbArcTyp, Process, LiCommon, IniFiles,
   blcksock, trStrings, ipkhandle, sqlite3ds, db;
 
 type
@@ -144,7 +144,7 @@ Memo1.Lines.Add('Log:');
     Application.ProcessMessages;
 
     HTTP := THTTPSend.Create;
-    HTTP.Sock.OnStatus:=HookSock;
+    HTTP.Sock.OnStatus:=@HookSock;
     HTTP.UserAgent:='Listaller-Update';
     cnf:=TInifile.Create(ConfigDir+'config.cnf');
     if cnf.ReadBool('Proxy','UseProxy',false) then begin
