@@ -63,7 +63,7 @@ object IWizFrm: TIWizFrm
       Caption = 'Welcome'
       ClientWidth = 647
       ClientHeight = 353
-      object Image2: TImage
+      object LeftImg: TImage
         Left = 0
         Height = 353
         Top = 0
@@ -141,7 +141,7 @@ object IWizFrm: TIWizFrm
         TabOrder = 1
         Visible = False
       end
-      object ProgressBar1: TProgressBar
+      object DSolveProgress: TProgressBar
         Left = 158
         Height = 20
         Top = 328
@@ -258,9 +258,9 @@ object IWizFrm: TIWizFrm
       end
       object Label14: TLabel
         Left = 12
-        Height = 14
+        Height = 13
         Top = 38
-        Width = 269
+        Width = 279
         Caption = 'Select which parts of the application should be installed.'
         ParentColor = False
       end
@@ -313,9 +313,9 @@ object IWizFrm: TIWizFrm
       end
       object Label9: TLabel
         Left = 6
-        Height = 14
+        Height = 13
         Top = 72
-        Width = 172
+        Width = 174
         Caption = 'Step 1/4: Resolving dependencies...'
         ParentColor = False
       end
@@ -354,8 +354,8 @@ object IWizFrm: TIWizFrm
       end
       object Edit1: TEdit
         Left = 6
-        Height = 23
-        Top = 308
+        Height = 22
+        Top = 309
         Width = 535
         Anchors = [akLeft, akRight, akBottom]
         Enabled = False

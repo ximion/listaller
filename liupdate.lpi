@@ -367,7 +367,7 @@
       <Filename Value="./bin/liupdate"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="synapse/;abbrevia/"/>
+      <OtherUnitFiles Value="synapse/;abbrevia/;/usr/lib/fpc/$(FPCVer)/units/$(TargetCPU)-$(TargetOS)/gtk1/"/>
       <LCLWidgetType Value="gtk2"/>
     </SearchPaths>
     <Parsing>

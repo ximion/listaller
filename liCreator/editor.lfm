@@ -5,7 +5,7 @@ object FrmEditor: TFrmEditor
   Width = 922
   ActiveControl = IPSNotebook
   Caption = 'Listaller package creator'
-  ClientHeight = 633
+  ClientHeight = 634
   ClientWidth = 922
   Menu = mmMain
   OnActivate = FormActivate
@@ -16,7 +16,7 @@ object FrmEditor: TFrmEditor
   object memLog: TMemo
     Left = 0
     Height = 86
-    Top = 547
+    Top = 568
     Width = 922
     Align = alBottom
     Lines.Strings = (
@@ -27,7 +27,7 @@ object FrmEditor: TFrmEditor
   end
   object IPSNotebook: TNotebook
     Left = 0
-    Height = 541
+    Height = 562
     Top = 0
     Width = 922
     Align = alClient
@@ -38,10 +38,10 @@ object FrmEditor: TFrmEditor
     object ScriptPage: TPage
       Caption = 'Script'
       ClientWidth = 918
-      ClientHeight = 503
+      ClientHeight = 524
       object MainScriptEdit: TSynEdit
         Left = 0
-        Height = 503
+        Height = 524
         Top = 0
         Width = 918
         Align = alClient
@@ -53,7 +53,6 @@ object FrmEditor: TFrmEditor
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 35
-        BookMarkOptions.OnChange = nil
         Gutter.Width = 53
         Highlighter = SynXMLSyn1
         Keystrokes = <        
@@ -377,6 +376,118 @@ object FrmEditor: TFrmEditor
             Command = 250
             ShortCut = 24642
           end>
+        MouseActions = <        
+          item
+            Shift = []
+            ShiftMask = [ssShift, ssAlt]
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 1
+            MoveCaret = True
+            Option = 0
+          end        
+          item
+            Shift = [ssShift]
+            ShiftMask = [ssShift, ssAlt]
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 2
+            MoveCaret = True
+            Option = 0
+          end        
+          item
+            Shift = [ssAlt]
+            ShiftMask = [ssShift, ssAlt]
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 3
+            MoveCaret = True
+            Option = 0
+          end        
+          item
+            Shift = [ssShift, ssAlt]
+            ShiftMask = [ssShift, ssAlt]
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 4
+            MoveCaret = True
+            Option = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbRight
+            ClickCount = ccSingle
+            ClickDir = cdUp
+            Command = 12
+            MoveCaret = False
+            Option = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccDouble
+            ClickDir = cdDown
+            Command = 6
+            MoveCaret = True
+            Option = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccTriple
+            ClickDir = cdDown
+            Command = 7
+            MoveCaret = True
+            Option = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccQuad
+            ClickDir = cdDown
+            Command = 8
+            MoveCaret = True
+            Option = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbMiddle
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 10
+            MoveCaret = True
+            Option = 0
+          end        
+          item
+            Shift = [ssCtrl]
+            ShiftMask = [ssShift, ssAlt, ssCtrl]
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdUp
+            Command = 11
+            MoveCaret = False
+            Option = 0
+          end>
+        MouseSelActions = <        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+          end>
         Lines.Strings = (
           '<?xml version="1.0" encoding="ISO-8859-1"?>'
           ' <package version="0.8" type="linstall">'
@@ -431,7 +542,7 @@ object FrmEditor: TFrmEditor
     Cursor = crVSplit
     Left = 0
     Height = 6
-    Top = 541
+    Top = 562
     Width = 922
     Align = alBottom
     ResizeAnchor = akBottom

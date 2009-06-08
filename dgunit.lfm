@@ -63,9 +63,9 @@ object DGForm: TDGForm
   end
   object Label2: TLabel
     Left = 8
-    Height = 14
+    Height = 13
     Top = 24
-    Width = 304
+    Width = 307
     Caption = '(This program will download the needed files from the internet)'
     ParentColor = False
   end
@@ -90,21 +90,21 @@ object DGForm: TDGForm
   end
   object PageControl1: TPageControl
     Left = 0
-    Height = 268
-    Top = 56
+    Height = 276
+    Top = 48
     Width = 626
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alBottom
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Main'
-      ClientHeight = 241
+      ClientHeight = 250
       ClientWidth = 622
       object Memo1: TMemo
         Left = 6
-        Height = 222
+        Height = 231
         Top = 11
         Width = 613
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -116,11 +116,11 @@ object DGForm: TDGForm
     end
     object TabSheet2: TTabSheet
       Caption = 'Details'
-      ClientHeight = 241
+      ClientHeight = 250
       ClientWidth = 622
       object Memo2: TMemo
         Left = 0
-        Height = 241
+        Height = 250
         Top = 0
         Width = 622
         Align = alClient
@@ -134,12 +134,11 @@ object DGForm: TDGForm
     end
     object TabSheet3: TTabSheet
       Caption = 'Installation'
-      ClientHeight = 241
+      ClientHeight = 250
       ClientWidth = 622
-      TabVisible = False
       object Memo3: TMemo
         Left = 6
-        Height = 164
+        Height = 173
         Top = 69
         Width = 603
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -183,10 +182,10 @@ object DGForm: TDGForm
     TabOrder = 1
   end
   object FinBtn1: TBitBtn
-    Left = 573
-    Height = 27
-    Top = 289
-    Width = 43
+    Left = 571
+    Height = 26
+    Top = 290
+    Width = 45
     Anchors = [akRight, akBottom]
     AutoSize = True
     Caption = 'Finish'

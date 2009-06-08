@@ -2,7 +2,7 @@ Name:             listaller-gtk
 Version:          0.2.00a
 Release:          1
 License:          GPLv3
-BuildRequires:    fpc, lazarus, wget, glib2-devel, gtk2-devel, glib-devel, glib2, glib, fpc-src, gtk2
+BuildRequires:    fpc, lazarus, wget, glib2-devel, gtk2-devel, glib-devel, glib2, glib, fpc-src, gtk2, libqt4intf, qt4-devel
 Source0:          listaller_0.2.00a.tar.gz
 %if 0%{?fedora_version} >= 10
 Requires:         gtk2, glib2, xdg-utils, PackageKit, redhat-config-rpm
@@ -56,11 +56,16 @@ case "$ARCH" in
 esac
 
 cd ./trunk
-make all
-make licreator
+# Create GTK+ applications
+make WIDGET=gtk2 all
+make WIDGET=gtk2 licreator
+# Now build Qt4 applications
+make WIDGET=qt4 all
+make WIDGET=qt4 licreator
 
 %install
 cd ./trunk
+# Necessary to get the right directories
 %if 0%{?fedora_version} >= 10
 ARCH=$(uname -m)
 case "$ARCH" in
@@ -70,14 +75,31 @@ case "$ARCH" in
 esac
 
 mkdir -p /home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH/usr/bin
-make DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH install
-make DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH licreator-inst
+# Install architecture independend files
+make DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH install-data
+
+# Install cmd utilities
 make DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH litools-inst
+# Install GTK+ binaries
+make WIDGET=gtk2 DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH install
+make WIDGET=gtk2 DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH licreator-inst
+# Install Qt4 binaries
+make WIDGET=qt4 DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH install
+make WIDGET=qt4 DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH licreator-inst
 %else
 mkdir -p %{_tmppath}/build-%{name}-%{version}/usr/bin
-make DESTDIR=%{_tmppath}/build-%{name}-%{version} install
-make DESTDIR=%{_tmppath}/build-%{name}-%{version} licreator-inst
+
+# Install architecture independend files
+make DESTDIR=%{_tmppath}/build-%{name}-%{version} install-data
+
+# Install cmd utilities
 make DESTDIR=%{_tmppath}/build-%{name}-%{version} litools-inst
+# Install GTK+ binaries
+make WIDGET=gtk2 DESTDIR=%{_tmppath}/build-%{name}-%{version} install
+make WIDGET=gtk2 DESTDIR=%{_tmppath}/build-%{name}-%{version} licreator-inst
+# Install Qt4 binaries
+make WIDGET=qt4 DESTDIR=%{_tmppath}/build-%{name}-%{version} install
+make WIDGET=qt4 DESTDIR=%{_tmppath}/build-%{name}-%{version} licreator-inst
 %endif
 
 %clean
@@ -88,9 +110,9 @@ make clean
 %defattr(-,root,root)
 %dir "/usr/bin"
 /etc/lipa/blacklist
-/usr/lib/listaller/listallmgr
-/usr/lib/listaller/listallgo
-/usr/lib/listaller/liupdate
+/usr/lib/listaller/gtk2/listallmgr
+/usr/lib/listaller/gtk2/listallgo
+/usr/lib/listaller/gtk2/liupdate
 /usr/share/listaller/
 
 %dir "/usr/share/applications"

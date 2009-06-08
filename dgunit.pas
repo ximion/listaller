@@ -105,144 +105,42 @@ begin
 end;
 
 procedure TDGForm.BitBtn1Click(Sender: TObject);
-var i: Integer;cnf,ar: TIniFile;pkit: TPackageKit;
 begin
-BitBtn1.Enabled:=false;
-TabSheet3.TabVisible:=true;
-TabSheet2.TabVisible:=false;
-TabSheet1.TabVisible:=false;
-PageControl1.ActivePageIndex:=3;
-MainProgress.Max:=(Memo2.Lines.Count-1)*6000;
+ BitBtn1.Enabled:=false;
+ TabSheet3.TabVisible:=true;
+ TabSheet2.TabVisible:=false;
+ TabSheet1.TabVisible:=false;
+ PageControl1.ActivePageIndex:=3;
+ HTTP := THTTPSend.Create;
+ HTTP.Sock.OnStatus:=HookSock;
+ HTTP.KeepAlive:=true;
+ FTP := TFTPSend.Create;
+ FTP.DSock.OnStatus:=HookSock;
+ setup.HTTPSend:=HTTP;
+ setup.FTPSend:=FTP;
+ GetOutPutTimer.Enabled:=true;
+ setup.DoInstallation(Process1,Memo3.Lines);
+ GetOutPutTimer.Enabled:=false;
 
-HTTP := THTTPSend.Create;
-HTTP.Sock.OnStatus:=HookSock;
-HTTP.KeepAlive:=true;
-HTTP.UserAgent:='Listaller-GET';
-
-FTP := TFTPSend.Create;
-FTP.DSock.OnStatus:=HookSock;
-
-//Set Proxy-Settings
-cnf:=TInifile.Create(ConfigDir+'config.cnf');
-if cnf.ReadBool('Proxy','UseProxy',false) then begin
-//Set HTTP
-HTTP.ProxyPort:=cnf.ReadString('Proxy','hPort','');
-HTTP.ProxyHost:=cnf.ReadString('Proxy','hServer','');
-HTTP.ProxyUser:=cnf.ReadString('Proxy','Username','');
-HTTP.ProxyPass:=cnf.ReadString('Proxy','Password',''); //The PW is visible in the file! It should be crypted
-//Not needed
-{if DInfo.Desktop='GNOME' then begin
-HTTP.ProxyPass:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_user');
-HTTP.ProxyUser:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_password');
- end;}
-end;
-
-ShowPKMon();
-
-Application.ProcessMessages;
-BitBtn1.Enabled:=false;
-pkit:=TPackageKit.Create;
-
-  for i:=1 to Memo2.Lines.Count-1 do begin
-  if pos('://',Memo2.Lines[i])<=0 then begin
-  Memo3.Lines.Add('Looking for '+Memo2.Lines[i]);
-  if not pkit.IsInstalled(Memo2.Lines[i]) then begin
-  Memo3.Lines.Add('Installing '+Memo2.Lines[i]+'...');
-  GetOutPutTimer.Enabled:=true;
-  pkit.InstallPkg(Memo2.Lines[i]);
-  end;
-end else begin
-  Memo3.Lines.Add('Looking for '+copy(Memo2.Lines[i],1,pos(' -',Memo2.Lines[i])-1));
-  if not pkit.IsInstalled(copy(Memo2.Lines[i],1,pos(' -',Memo2.Lines[i])-1)) then begin
-  Memo3.Lines.Add('Downloading package...');
-  
-if pos('http://',LowerCase(Memo2.Lines[i]))>0 then begin
- op:=-1;
- try
-  HTTP.HTTPMethod('GET', copy(Memo2.Lines[i],pos(' -',Memo2.Lines[i])+2,length(Memo2.Lines[i])-pos(' -',Memo2.Lines[i])+2));
-  HTTP.Document.SaveToFile('/tmp/'+ExtractFileName(Memo2.Lines[i]));
- except
-   ShowMessage(strDepDlProblem);
-   Application.Terminate;
-   exit;
-  end;
-
-  end else begin
-  with FTP do begin
-    TargetHost := GetServerName(Memo2.Lines[i]);
-  try
-    DirectFileName := '/tmp/'+ExtractFileName(Memo2.Lines[i]);
-    DirectFile:=True;
-    if not Login then ShowMessage(strFTPfailed);
-    ChangeWorkingDir(GetServerPath(Memo2.Lines[i]));
-
-    IWizFrm.ExProgress.Max:=FileSize(ExtractFileName(Memo2.Lines[i]));
-
-    RetrieveFile(ExtractFileName(Memo2.Lines[i]), false);
-    Logout;
-  except
-   ShowMessage(strDepDlProblem);
-   Application.Terminate;
-   exit;
-  end;
-  end;
-end;
-
-  Memo3.Lines.Add('Installing '+copy(Memo2.Lines[i],1,pos(' -',Memo2.Lines[i])-1)+'...');
-  GetOutPutTimer.Enabled:=true;
-  pkit.InstallLocalPkg('/tmp/'+ExtractFileName(Memo2.Lines[i]));
-end;
-
-  
-  MainProgress.Position:=MainProgress.Position+6000;
-end;
-
-end;
-
-pkit.Free;
-
-with IWizFrm do begin
-pID:='{101-101-101-101}';
-
-while Length(IDesktopFiles)>1 do begin
-if pos(';',IDesktopFiles)>0 then
-ar:=TInifile.Create('/usr/share/applications/'+copy(IDesktopFiles,0,pos(';',IDesktopFiles)-1))
-else ar:=TInifile.Create('/usr/share/applications/'+IDesktopFiles);
-ShowMessage(copy(IDesktopFiles,0,pos(';',IDesktopFiles)-1)+' # '+IDesktopFiles);
-ar.WriteString('Desktop Entry','X-AppVersion',IAppVersion);
-ar.WriteString('Desktop Entry','X-Publisher',IAuthor);
-if pos(';',IDesktopFiles)>0 then
-IDesktopFiles:=copy(IDesktopFiles,pos(';',IDesktopFiles)+1,length(IDesktopFiles))
-else IDesktopFiles:='';
-ar.Free;
-end;
-end;
-{for i:=1 to Memo2.Lines.Count-1 do begin
-if pos('://',Memo2.Lines[i])<=0 then
-ar.WriteString('DepOS','ID'+IntToStr(i),Memo2.Lines[i])
-else
-ar.WriteString('DepOS','ID'+IntToStr(i),copy(Memo2.Lines[i],1,pos(' -',Memo2.Lines[i])-1));
-end; }
-
-HTTP.Free;
+ HTTP.Free;
 FTP:=nil;
 FTP.Free;
 
 PageControl1.Visible:=false;
 
-if (FileExists(lp+IWizFrm.PkgName+IIconPath))and(
-(LowerCase(ExtractFileExt(IIconPath))='.png')or
-(LowerCase(ExtractFileExt(IIconPath))='.bmp')or
-(LowerCase(ExtractFileExt(IIconPath))='.jpg')) then begin
+if (FileExists(setup.AppIcon))and(
+(LowerCase(ExtractFileExt(setup.AppIcon))='.png')or
+(LowerCase(ExtractFileExt(setup.AppIcon))='.bmp')or
+(LowerCase(ExtractFileExt(setup.AppIcon))='.jpg')) then
+begin
 Image1.Picture.Clear;
-ShowMessage(lp+IWizFrm.PkgName+IIconPath);
-Image1.Picture.LoadFromFile(lp+IWizFrm.PkgName+IIconPath);
+Image1.Picture.LoadFromFile(setup.AppIcon);
 Image1.Repaint;
 end;
 
 Label2.Visible:=false;
 BitBtn1.Visible:=false;
-ShowMessage(strSuccess);
+
 end;
 
 procedure TDGForm.FinBtn1Click(Sender: TObject);

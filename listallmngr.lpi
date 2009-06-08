@@ -754,7 +754,7 @@
       <Filename Value="./bin/listallmgr"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="synapse/;opbitmap/"/>
+      <OtherUnitFiles Value="synapse/;opbitmap/;/usr/lib/fpc/$(FPCVer)/units/$(TargetCPU)-$(TargetOS)/gtk1/"/>
       <UnitOutputDirectory Value="bin"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>

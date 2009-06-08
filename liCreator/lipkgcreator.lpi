@@ -53,12 +53,12 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="editor"/>
-        <CursorPos X="13" Y="170"/>
-        <TopLine Value="141"/>
+        <CursorPos X="13" Y="174"/>
+        <TopLine Value="145"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="146"/>
         <Bookmarks Count="1">
-          <Item0 X="4" Y="538" ID="0"/>
+          <Item0 X="4" Y="542" ID="0"/>
         </Bookmarks>
         <Loaded Value="True"/>
       </Unit1>
@@ -182,8 +182,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="prjwizard"/>
-        <CursorPos X="21" Y="579"/>
-        <TopLine Value="553"/>
+        <CursorPos X="2" Y="19"/>
+        <TopLine Value="1"/>
         <UsageCount Value="129"/>
       </Unit17>
       <Unit18>
@@ -433,7 +433,7 @@
         <UsageCount Value="10"/>
       </Unit55>
     </Units>
-    <JumpHistory Count="3" HistoryIndex="2">
+    <JumpHistory Count="4" HistoryIndex="3">
       <Position1>
         <Filename Value="editor.pas"/>
         <Caret Line="184" Column="30" TopLine="170"/>
@@ -446,6 +446,10 @@
         <Filename Value="editor.pas"/>
         <Caret Line="170" Column="13" TopLine="141"/>
       </Position3>
+      <Position4>
+        <Filename Value="editor.pas"/>
+        <Caret Line="174" Column="13" TopLine="145"/>
+      </Position4>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

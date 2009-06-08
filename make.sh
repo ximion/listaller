@@ -43,6 +43,11 @@ mkdir -p ./bin/lang
 mkdir -p ./bin/qt4
 mkdir -p ./bin/gtk2
 
+#Create symlinks for GTK+ libraries
+ln -s -f /usr/lib/libgdk_pixbuf-2.0.so libgdk_pixbuf.so
+ln -s -f /usr/lib/libgtk-x11-2.0.so libgtk.so
+ln -s -f /usr/lib/libglib-2.0.so libglib.so
+
 VER=$(fpc -iW)
 echo "Compiler version: $VER"
 

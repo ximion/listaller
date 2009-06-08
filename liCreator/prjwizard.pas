@@ -13,6 +13,10 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
+{Authors:
+         Matthias Klumpp <matthias@nlinux.org>
+         Thomas Dieffenbach <giantics@gmx.net>
+}
 //** Graphical wizard to generate IPS scripts
 unit prjwizard;
 

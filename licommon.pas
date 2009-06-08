@@ -13,6 +13,9 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
+{Authors:
+         Matthias Klumpp <matthias@nlinux.org>
+}
 //** This unit contains some various non-visual-lcl functions which are used everywhere
 unit licommon;
 
@@ -23,12 +26,12 @@ interface
 uses
   Classes, SysUtils, FileUtil, process, LCLType, RegExpr,
   {$IFDEF LCLGTK2}
-  gtk2, gtkint, gtkdef, gdkpixbuf, gtkproc, gdk2,
+  gtk2, gtkint, gtkdef, gdkpixbuf, gdk2,
   {$ENDIF} trstrings, distri, IniFiles, DOS, Graphics;
 
 const
   //** Version of the Listaller applicationset
-  LiVersion='0.2.30a-dev';
+  LiVersion='0.2.41a-dev';
 var
   //** True if Listaller is in testmode
   Testmode: Boolean=false;
@@ -297,7 +300,7 @@ var t: TProcess;n: String;x: TStringList;
 begin
 s:=StringReplace(s,'$HOME',GetEnvironmentVariable('HOME'),[rfReplaceAll]);
 
-t:=TProcess.Create(nil);
+ t:=TProcess.Create(nil);
  t.Options:=[poUsePipes, poWaitOnExit];
  t.CommandLine:='uname -m';
  t.Execute;

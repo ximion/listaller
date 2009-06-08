@@ -36,7 +36,7 @@ begin
   writeLn('Application initialized.');
   if not IsRoot then RegDir:=SyblToPath('$INST')+'/app-reg/';
   Application.CreateForm(TIWizFrm, IWizFrm);
-  Application.ShowMainForm:=false;
+  Application.ShowMainForm:=true;
   writeLn('GUI created.');
   Application.Run;
   writeLn('Installer closed.');

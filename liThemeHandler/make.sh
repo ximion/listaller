@@ -23,17 +23,11 @@ fi
 
 echo "LAZTarget: $LCLDir"
 
-# Building the IDE and LCL
-#
-# Detects and parses the OS
-#
-
 OS="linux"
 
-#
-# Command line to build the sofware
-#
-# Create the binary dir
+#Create symlinks for GTK+ libraries
+ln -s /usr/lib/libgdk_pixbuf-2.0.so libgdk_pixbuf.so
+ln -s /usr/lib/libgtk-x11-2.0.so libgtk.so
 
 echo "Building liThemeMgr... ($WIDGET)"
 if [ "$WIDGET" == "qt4" ]; then
