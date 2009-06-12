@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   CheckLst, StdCtrls, Buttons, ExtCtrls, LCLType, manager, IniFiles, Spin,
-  Process, LiCommon, trstrings, gettext, Menus, aboutbox, ipkhandle;
+  Process, LiCommon, trstrings, gettext, Menus, ipkhandle;
 
 type
 
@@ -33,7 +33,6 @@ type
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
     BitBtn3: TBitBtn;
-    Button1: TButton;
     CheckBox1: TCheckBox;
     CheckBox2: TCheckBox;
     CbShowPkMon: TCheckBox;
@@ -58,8 +57,6 @@ type
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-    procedure cbLoadUnspAppsChange(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
     procedure CheckBox2Change(Sender: TObject);
     procedure CbShowPkMonChange(Sender: TObject);
@@ -112,7 +109,6 @@ begin
   GroupBox1.Caption:=strProxySettings;
   CheckBox2.Caption:=strAutoLoadDep;
   CbShowPkMon.Caption:=strShowPkMon;
-  Button1.Caption:=strAboutListaller;
 end;
 
 procedure TFmConfig.FormShow(Sender: TObject);
@@ -176,19 +172,6 @@ begin
   cnf.WriteInteger('Proxy','fPort',SpinEdit2.Value);
   cnf.Free;
   Close;
-end;
-
-procedure TFmConfig.Button1Click(Sender: TObject);
-var abbox: TFmAbout;
-begin
- abbox:=TFmAbout.Create(self);
- abbox.ShowModal;
- abbox.free;
-end;
-
-procedure TFmConfig.cbLoadUnspAppsChange(Sender: TObject);
-begin
-
 end;
 
 procedure TFmConfig.CheckBox1Change(Sender: TObject);

@@ -29,7 +29,8 @@ echo "LAZTarget: $LCLDir"
 #Create symlinks for GTK+ libraries
 ln -s -f /usr/lib/libgdk_pixbuf-2.0.so libgdk_pixbuf.so
 ln -s -f /usr/lib/libgtk-x11-2.0.so libgtk.so
-ln -s -f /usr/lib/libglib-1.2.so.0 libglib.so
+ln -s -f /usr/lib/libglib-2.0.so libglib.so
+ln -s -f /usr/lib/libgdk-x11-2.0.so libgdk.so
 
 # Command line to build the sofware
 echo "Creating liCreator..."

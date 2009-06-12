@@ -35,28 +35,20 @@ object imdFrm: TimdFrm
     ParentColor = False
     ParentFont = False
   end
-  object Label13: TLabel
-    Left = 28
-    Height = 14
-    Top = 76
-    Width = 242
-    Anchors = [akLeft, akBottom]
-    Caption = 'Make sure that you can trust the package author!'
-    ParentColor = False
-  end
-  object Image1: TImage
+  object PkWarnImg: TImage
     Left = 0
     Height = 18
     Top = 72
     Width = 18
     Anchors = [akLeft, akBottom]
     Proportional = True
+    Visible = False
   end
   object Label2: TLabel
-    Left = 34
-    Height = 30
+    Left = 32
+    Height = 28
     Top = 40
-    Width = 441
+    Width = 443
     Caption = 'Your PackageKit version is %p. Listaller needs PackageKit 0.4.2 or higher to work correctly. '#10'Please update PackageKit!'
     ParentColor = False
     Visible = False
@@ -70,11 +62,20 @@ object imdFrm: TimdFrm
     Stretch = True
     Visible = False
   end
+  object PkILabel: TLabel
+    Left = 32
+    Height = 13
+    Top = 77
+    Width = 417
+    Anchors = [akLeft, akBottom]
+    Caption = 'Make sure that you have got this package from a save source and a serious publisher!'
+    ParentColor = False
+  end
   object btnInstallAll: TBitBtn
     Left = 0
     Height = 38
     Top = 97
-    Width = 165
+    Width = 168
     Anchors = [akLeft, akBottom]
     AutoSize = True
     Caption = 'Install application for everyone'
@@ -84,10 +85,10 @@ object imdFrm: TimdFrm
     TabOrder = 0
   end
   object btnTest: TBitBtn
-    Left = 271
+    Left = 272
     Height = 38
     Top = 97
-    Width = 90
+    Width = 93
     Anchors = [akBottom]
     AutoSize = True
     Caption = 'Test application'
@@ -97,10 +98,10 @@ object imdFrm: TimdFrm
     TabOrder = 1
   end
   object btnHome: TBitBtn
-    Left = 467
+    Left = 464
     Height = 38
     Top = 97
-    Width = 165
+    Width = 164
     Anchors = [akRight, akBottom]
     AutoSize = True
     Caption = 'Install into my Home-directory'

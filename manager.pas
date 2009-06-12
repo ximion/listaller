@@ -21,36 +21,53 @@ unit manager;
 interface
 
 uses
-  Classes, SysUtils,LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
+  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, LEntries,
   uninstall, trstrings, gettext, FileUtil, xtypefm, ipkhandle, gifanimator,
-  LiCommon, PackageKit, Contnrs, sqlite3ds, db;
+  LiCommon, PackageKit, Contnrs, sqlite3ds, db, aboutbox;
 
 type
 
   { TMnFrm }
 
   TMnFrm = class(TForm)
-    btnInstall: TBitBtn;
-    btnSettings: TBitBtn;
-    btnCat: TBitBtn;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    AboutBtn: TButton;
+    BitBtn4: TBitBtn;
+    BitBtn5: TBitBtn;
+    CatButton: TSpeedButton;
     CBox: TComboBox;
     edtFilter: TEdit;
     Image1: TImage;
     ImageList1: TImageList;
+    InstallButton: TSpeedButton;
+    InstAppButton: TSpeedButton;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
+    Notebook1: TNotebook;
     OpenDialog1: TOpenDialog;
     MBar: TProgressBar;
-    ThrobberBox: TPaintBox;
+    LeftBar: TPanel;
+    InstalledAppsPage: TPage;
+    CatalogPage: TPage;
+    RepoPage: TPage;
+    ConfigPage: TPage;
+    SettingsButton: TSpeedButton;
+    RepoButton: TSpeedButton;
+    SWBox: TScrollBox;
     Process1: TProcess;
     StatusBar1: TStatusBar;
-    SWBox: TScrollBox;
+    ThrobberBox: TPaintBox;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
     procedure btnInstallClick(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure btnSettingsClick(Sender: TObject);
     procedure btnCatClick(Sender: TObject);
+    procedure AboutBtnClick(Sender: TObject);
     procedure CBoxChange(Sender: TObject);
     procedure edtFilterKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -58,6 +75,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure InstAppButtonClick(Sender: TObject);
+    procedure RepoButtonClick(Sender: TObject);
   private
     { private declarations }
     blst: TStringList;
@@ -238,8 +257,8 @@ MBar.Visible:=true;
 
 AList.Clear;
 
-btnCat.Enabled:=false;
-btnInstall.Enabled:=false;
+CatButton.Enabled:=false;
+InstallButton.Enabled:=false;
 edtFilter.Enabled:=false;
 StatusBar1.Panels[0].Text:=strLoading;
 
@@ -248,8 +267,8 @@ gif:=TGifThread.Create(true);
 gif.FileName:=GetDataFile('graphics/throbber.gif');
 ThrobberBox.Width:=gif.Width;
 ThrobberBox.Height:=gif.Height;
-ThrobberBox.Top:=(Height div 2)-(ThrobberBox.Height div 2)+16;
-ThrobberBox.Left:=(Width div 2)-(ThrobberBox.Width div 2)+20;
+ThrobberBox.Top:=(InstalledAppsPage.Height div 2)-(ThrobberBox.Height div 2);
+ThrobberBox.Left:=(InstalledAppsPage.Width div 2)-(ThrobberBox.Width div 2);
 gif.Initialize(ThrobberBox.Canvas);
 
 edtFilter.Text:='';
@@ -388,9 +407,9 @@ StatusBar1.Panels[0].Text:=strLOKIError;
 
 StatusBar1.Panels[0].Text:=strReady; //Loading list finished!
 
-btnCat.Enabled:=true;
+CatButton.Enabled:=true;
 
-btnInstall.Enabled:=true;
+InstallButton.Enabled:=true;
 edtFilter.Enabled:=true;
 SwBox.Visible:=true;
 if Assigned(gif) then gif.Terminate;
@@ -402,7 +421,24 @@ var fAct: Boolean;
 procedure TMnFrm.FormShow(Sender: TObject);
 begin
 fAct:=true;
-btnCat.Left:=btnInstall.Left+btnInstall.Width+14;
+end;
+
+procedure TMnFrm.InstAppButtonClick(Sender: TObject);
+begin
+  Notebook1.ActivePageComponent:=InstalledAppsPage;
+  CatButton.Down:=false;
+  SettingsButton.Down:=false;
+  RepoButton.Down:=false;
+  InstAppButton.Down:=true;
+end;
+
+procedure TMnFrm.RepoButtonClick(Sender: TObject);
+begin
+  Notebook1.ActivePageComponent:=RepoPage;
+  CatButton.Down:=false;
+  SettingsButton.Down:=false;
+  RepoButton.Down:=true;
+  InstAppButton.Down:=false;
 end;
 
 procedure FillImageList(IList: TImageList);
@@ -555,19 +591,87 @@ begin
   end;
 end;
 
-procedure TMnFrm.BitBtn2Click(Sender: TObject);
+procedure TMnFrm.BitBtn1Click(Sender: TObject);
 begin
-RMForm.ShowModal;
+  SCForm.ShowModal;
+end;
+
+procedure TMnFrm.BitBtn3Click(Sender: TObject);
+begin
+     FmConfig.ShowModal;
+end;
+
+procedure TMnFrm.BitBtn2Click(Sender: TObject);
+var p: TProcess;
+begin
+  p:=TProcess.Create(nil);
+  p.Options:=[poUsePipes];
+  if DInfo.DBase='KDE' then
+  begin
+   if (DInfo.DName='Ubuntu') then
+    if FileExists('/usr/bin/qappinstall') then
+     p.CommandLine:='/usr/bin/qappinstall'
+    else
+     p.CommandLine:='/usr/bin/kpackagekit'
+   else
+     if FileExists('/usr/bin/kpackagekit') then
+      p.CommandLine:='/usr/bin/kpackagekit'
+     else
+      p.CommandLine:='/usr/bin/gpg-application';
+  end else
+  begin
+    if (DInfo.DName='Ubuntu') then
+    if FileExists('/usr/bin/gnome-app-install') then
+     p.CommandLine:='/usr/bin/gnome-app-install'
+    else
+     p.CommandLine:='/usr/bin/gpg-application'
+   else
+     if FileExists('/usr/bin/gpg-application') then
+      p.CommandLine:='/usr/bin/gpg-application'
+     else
+      p.CommandLine:='/usr/bin/kpackagekit';
+  end;
+  if not FileExists(p.CommandLine) then
+  begin
+   ShowMessage(strNoGUIPkgManFound);
+   p.Free;
+   exit;
+  end;
+  Notebook1.Enabled:=false;
+  LeftBar.Enabled:=false;
+  MBar.Visible:=true;
+  p.Execute;
+  while p.Running do Application.ProcessMessages;
+  p.Free;
+  Notebook1.Enabled:=true;
+  LeftBar.Enabled:=true;
+  MBar.Visible:=false;
 end;
 
 procedure TMnFrm.btnSettingsClick(Sender: TObject);
 begin
-  FmConfig.ShowModal;
+  Notebook1.ActivePageComponent:=ConfigPage;
+  CatButton.Down:=false;
+  SettingsButton.Down:=true;
+  RepoButton.Down:=false;
+  InstAppButton.Down:=false;
 end;
 
 procedure TMnFrm.btnCatClick(Sender: TObject);
 begin
-  SCForm.ShowModal;
+  Notebook1.ActivePageComponent:=CatalogPage;
+  CatButton.Down:=true;
+  SettingsButton.Down:=false;
+  RepoButton.Down:=false;
+  InstAppButton.Down:=false;
+end;
+
+procedure TMnFrm.AboutBtnClick(Sender: TObject);
+var abbox: TFmAbout;
+begin
+ abbox:=TFmAbout.Create(self);
+ abbox.ShowModal;
+ abbox.free;
 end;
 
 procedure TMnFrm.CBoxChange(Sender: TObject);
@@ -608,7 +712,7 @@ end;
 procedure TMnFrm.FormActivate(Sender: TObject);
 begin
   if fAct then
-  begin fAct:=false;btnCat.Left:=btnInstall.Left+btnInstall.Width+12;LoadEntries;
+  begin fAct:=false;LoadEntries;
   end;
 end;
 
@@ -634,14 +738,6 @@ DInfo:=GetDistro;
 
  AList:=TObjectList.Create(true); //Create object-list to store AppInfo-Panels
 
- Caption:=strSoftwareManager;
- btnInstall.Caption:=strInstNew;
- btnSettings.Caption:=strShowSettings;
- btnCat.Caption:=strSWCatalogue;
- Label1.Caption:=strShow;
- Label2.Caption:=strFilter;
- Label3.Caption:=strNoAppsFound;
-
  if not IsRoot then
  begin
  xFrm:=TimdFrm.Create(nil);
@@ -654,9 +750,7 @@ DInfo:=GetDistro;
  begin
   Caption:=strSelMgrMode;
   btnTest.Visible:=false;
-  Image1.Visible:=false;
-  Label13.Visible:=false;
-  btnCat.Caption:=strSWCatalogue;
+  CatButton.Caption:=strSWCatalogue;
   btnInstallAll.Caption:=strDispRootApps;
   btnHome.Caption:=strDispOnlyMyApps;
   Refresh;
@@ -667,6 +761,24 @@ end else
 RegDir:='/etc/lipa/app-reg/';
 
 if not DirectoryExists(RegDir) then CreateDir(RegDir);
+
+ //Translate
+ Caption:=strSoftwareManager;
+ InstallButton.Caption:=strInstNew;
+ SettingsButton.Caption:=strShowSettings;
+ CatButton.Caption:=strSWCatalogue;
+ Label1.Caption:=strShow;
+ Label2.Caption:=strFilter;
+ Label3.Caption:=strNoAppsFound;
+ AboutBtn.Caption:=strAboutListaller;
+ BitBtn3.Caption:=strConfigureListaller;
+ BitBtn1.Caption:=strBrowseLiCatalog;
+ BitBtn2.Caption:=strOpenDistriCatalog;
+ InstAppButton.Caption:=strInstalledApps;
+ InstallButton.Caption:=strInstallPkg;
+ CatButton.Caption:=strBrowseCatalog;
+ RepoButton.Caption:=strRepositories;
+ SettingsButton.Caption:=strSettings;
 
 with CBox do
 begin
@@ -702,6 +814,8 @@ begin
  halt(0);
 end;     }
 
+InstAppButton.Down:=true;
+
 writeLn('Opening database...');
 dsApp:= TSQLite3Dataset.Create(nil);
 with dsApp do
@@ -729,7 +843,7 @@ with dsApp do
  end;
 end;
 dsApp.Active:=true;
-
+Notebook1.ActivePageComponent:=InstalledAppsPage;
  WriteLn('GUI loaded.');
 end;
 
@@ -752,4 +866,3 @@ initialization
   {$I manager.lrs}
 
 end.
-

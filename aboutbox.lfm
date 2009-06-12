@@ -44,9 +44,9 @@ object FmAbout: TFmAbout
   end
   object Label3: TLabel
     Left = 117
-    Height = 14
+    Height = 13
     Top = 58
-    Width = 166
+    Width = 163
     Caption = 'Under Linux desktop environment'
     ParentColor = False
   end
@@ -61,7 +61,7 @@ object FmAbout: TFmAbout
     TabOrder = 0
     object AboutSheet: TTabSheet
       Caption = 'About'
-      ClientHeight = 241
+      ClientHeight = 242
       ClientWidth = 320
       object Label4: TLabel
         Left = 6
@@ -75,7 +75,7 @@ object FmAbout: TFmAbout
     end
     object AuthorSheet: TTabSheet
       Caption = 'Authors'
-      ClientHeight = 241
+      ClientHeight = 242
       ClientWidth = 320
       object Label5: TLabel
         Left = 0
@@ -88,7 +88,7 @@ object FmAbout: TFmAbout
       end
       object Label6: TLabel
         Left = 0
-        Height = 228
+        Height = 229
         Top = 13
         Width = 320
         Align = alClient
@@ -99,8 +99,8 @@ object FmAbout: TFmAbout
   end
   object BitBtn1: TBitBtn
     Left = 288
-    Height = 27
-    Top = 383
+    Height = 26
+    Top = 384
     Width = 44
     Anchors = [akRight, akBottom]
     AutoSize = True

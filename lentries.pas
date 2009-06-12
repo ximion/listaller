@@ -142,12 +142,12 @@ UnButton:=TBitBtn.Create(nil);
 with UnButton do
 begin
 Parent:=self;
-Height:=30;
-Width:=128;
+Height:=24;
+Width:=120;
 Caption:=strUninstall;
 Anchors:=[akBottom,akRight];
-Top:=self.Height-46;
-Left:=self.Width-140;
+Top:=self.Height-40;
+Left:=self.Width-132;
 LoadStockPixmap(STOCK_DELETE,ICON_SIZE_BUTTON,Glyph);
 end;
 end;

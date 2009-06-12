@@ -24,6 +24,8 @@ echo "Active widgetset: $WIDGET"
 # "mkdir -p" is equivalent to ForceDirectories pascal function
 
 mkdir -p $DESTDIR/usr/bin
+mkdir -p $DESTDIR/usr/share/
+mkdir -p $DESTDIR/usr/share/applications/
 mkdir -p $DESTDIR/usr/lib/listaller
 if [ "$WIDGET" == "qt4" ]; then
 mkdir -p $DESTDIR/usr/lib/listaller/qt4
@@ -42,9 +44,9 @@ cp ./bin/gtk2/liupdate $DESTDIR/usr/lib/listaller/gtk2/
 fi
 
 if [ "$WIDGET" == "qt4" ]; then
-cp "./additional/applications/listaller-manager-kde.desktop" $DESTDIR/usr/share/applications
+cp "./data/applications/listaller-manager-kde.desktop" $DESTDIR/usr/share/applications/
 else
-cp "./additional/applications/listaller-manager-gnome.desktop" $DESTDIR/usr/share/applications
+cp "./data/applications/listaller-manager-gnome.desktop" $DESTDIR/usr/share/applications/
 fi
 
 #Create symlink

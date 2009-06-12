@@ -47,6 +47,7 @@ mkdir -p ./bin/gtk2
 ln -s -f /usr/lib/libgdk_pixbuf-2.0.so libgdk_pixbuf.so
 ln -s -f /usr/lib/libgtk-x11-2.0.so libgtk.so
 ln -s -f /usr/lib/libglib-2.0.so libglib.so
+ln -s -f /usr/lib/libgdk-x11-2.0.so libgdk.so
 
 VER=$(fpc -iW)
 echo "Compiler version: $VER"
@@ -88,8 +89,10 @@ fi
 #Also workarount for lazbuild bug in Lazarus-Alpha
 WIDGET="gtk2"
 
+# We have to use GTK2 widgeset instead of the "nogui" widget untill all bugs in LazSVn are fixed.
 echo "Creating command-line tool..."
+#$LCLDir/lazbuild -B --ws=nogui lipa.lpr
 fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/gtk2/ -Fu. -FUbin/ -FEbin/ -olipa -dOpbCompat lipa.lpr
 echo "Creating unified build tool..."
+#$LCLDir/lazbuild -B --ws=nogui unibuild.lpr
 fpc  -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/gtk2/ -Fu. -FUbin/ -FEbin/ -ounibuild -dOpbCompat unibuild.lpr
-#-Fi$LCLDir/lcl/include/

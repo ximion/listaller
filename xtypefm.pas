@@ -33,11 +33,11 @@ type
     btnTest: TBitBtn;
     btnHome: TBitBtn;
     btnInstallAll: TBitBtn;
-    Image1: TImage;
+    PkWarnImg: TImage;
     Image2: TImage;
     Label1: TLabel;
-    Label13: TLabel;
     Label2: TLabel;
+    PkILabel: TLabel;
     procedure btnHomeClick(Sender: TObject);
     procedure btnInstallAllClick(Sender: TObject);
     procedure btnTestClick(Sender: TObject);
@@ -64,14 +64,10 @@ begin
  //Set translation strings
  Caption:=strSelInstMode;
  Label1.Caption:=strWantToDoQ;
- Label13.Caption:=strSpkWarning;
+ PkILabel.Caption:=strSpkWarning;
  btnInstallAll.Caption:=strInstallEveryone;
  btnTest.Caption:=strTestApp;
  btnHome.Caption:=strInstallHome;
-
-if Image1.Visible then begin
-  LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_SMALL_TOOLBAR,Image1.Picture.Bitmap);
-end;
 
 //Check PackageKit version
 try
@@ -90,11 +86,18 @@ try
   except
     LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_BUTTON,Image2.Picture.Bitmap);
   end;
-
 end;
 
 procedure TimdFrm.FormShow(Sender: TObject);
 begin
+//Workaround for really strange LCL bug:
+//If PkILabel is invisible, the whole layout of the Form is destroyed
+PkiLabel.Caption:='';
+if PkWarnImg.Visible then
+begin
+  LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_SMALL_TOOLBAR,PkWarnImg.Picture.Bitmap);
+  PkILabel.Caption:=strSpkWarning;
+end;
 end;
 
 procedure TimdFrm.btnInstallAllClick(Sender: TObject);
@@ -105,7 +108,7 @@ if not IsRoot then begin
 if FileExists(paramstr(1)) then
  ExecuteAsRoot(Application.ExeName+' '+paramstr(1),'Enter your password to install the application for everyone.',GetDataFile('graphics/mime-ipk.png'))
  else
- ExecuteAsRoot(Application.ExeName,'Enter your password to get extended options for this application.','/usr/share/pixmaps/listaller.png');
+ ExecuteAsRoot(Application.ExeName,'Enter your password to run the application with advanced privileges.','/usr/share/pixmaps/listaller.png');
 
  self.Free;
  halt(0); //Terminate program

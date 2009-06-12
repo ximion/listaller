@@ -41,8 +41,10 @@ implementation
 
 procedure TFmAbout.FormShow(Sender: TObject);
 begin
+   Caption:=strAboutListaller;
    Image1.Picture.LoadFromFile('/usr/share/pixmaps/listaller.png');
    Label2.Caption:=strVersion+': '+LiVersion;
+   Label5.Caption:=strUseLaunchpadForBugs;
    Label3.Caption:=StringReplace(strLinDesk,'%de',GetDistro.Desktop,[rfReplaceAll]);
    AboutSheet.Caption:=strAbout;
    AuthorSheet.Caption:=strAuthors;

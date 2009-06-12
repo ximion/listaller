@@ -70,12 +70,12 @@ object FmConfig: TFmConfig
     OnPageChanged = PageControl1Change
     object MainPage: TTabSheet
       Caption = 'Main'
-      ClientHeight = 413
+      ClientHeight = 414
       ClientWidth = 659
       OnShow = MainPageShow
       object Label2: TLabel
         Left = 6
-        Height = 14
+        Height = 13
         Top = 8
         Width = 104
         Caption = 'Language: automatic'
@@ -85,7 +85,7 @@ object FmConfig: TFmConfig
         Left = 6
         Height = 21
         Top = 32
-        Width = 230
+        Width = 233
         Caption = 'Show warning if distribution is unsupported'
         Checked = True
         Enabled = False
@@ -97,7 +97,7 @@ object FmConfig: TFmConfig
         Left = 6
         Height = 21
         Top = 64
-        Width = 328
+        Width = 329
         Caption = 'Load dependencies from included webserver-urls automatically'
         Checked = True
         OnChange = CheckBox2Change
@@ -111,32 +111,32 @@ object FmConfig: TFmConfig
         Width = 637
         Anchors = [akTop, akLeft, akRight]
         Caption = 'Proxy-Settings'
-        ClientHeight = 169
+        ClientHeight = 170
         ClientWidth = 633
         TabOrder = 2
         object Label3: TLabel
           Left = 9
-          Height = 14
+          Height = 13
           Top = 33
-          Width = 71
+          Width = 63
           Caption = 'H&TTP-Proxy:'
           Enabled = False
           ParentColor = False
         end
         object Label4: TLabel
           Left = 191
-          Height = 14
+          Height = 13
           Top = 33
-          Width = 25
+          Width = 24
           Caption = 'Port:'
           Enabled = False
           ParentColor = False
         end
         object Label5: TLabel
           Left = 190
-          Height = 14
+          Height = 13
           Top = 104
-          Width = 25
+          Width = 24
           Caption = 'Port:'
           Enabled = False
           ParentColor = False
@@ -146,14 +146,14 @@ object FmConfig: TFmConfig
           Left = 6
           Height = 21
           Top = 5
-          Width = 125
+          Width = 120
           Caption = 'Enable Proxy-Server'
           OnChange = CheckBox4Change
           TabOrder = 0
         end
         object Edit1: TEdit
           Left = 6
-          Height = 23
+          Height = 22
           Top = 53
           Width = 172
           Enabled = False
@@ -161,7 +161,7 @@ object FmConfig: TFmConfig
         end
         object SpinEdit1: TSpinEdit
           Left = 191
-          Height = 23
+          Height = 22
           Top = 53
           Width = 90
           Enabled = False
@@ -170,15 +170,15 @@ object FmConfig: TFmConfig
         end
         object edtUsername: TLabeledEdit
           Left = 295
-          Height = 23
+          Height = 22
           Top = 53
           Width = 112
           EditLabel.AnchorSideLeft.Control = edtUsername
           EditLabel.AnchorSideBottom.Control = edtUsername
           EditLabel.Left = 295
-          EditLabel.Height = 14
-          EditLabel.Top = 38
-          EditLabel.Width = 55
+          EditLabel.Height = 13
+          EditLabel.Top = 39
+          EditLabel.Width = 53
           EditLabel.Caption = 'Username:'
           EditLabel.ParentColor = False
           Enabled = False
@@ -187,16 +187,16 @@ object FmConfig: TFmConfig
         end
         object edtPasswd: TLabeledEdit
           Left = 295
-          Height = 23
+          Height = 22
           Top = 97
           Width = 112
           EchoMode = emPassword
           EditLabel.AnchorSideLeft.Control = edtPasswd
           EditLabel.AnchorSideBottom.Control = edtPasswd
           EditLabel.Left = 295
-          EditLabel.Height = 14
-          EditLabel.Top = 83
-          EditLabel.Width = 51
+          EditLabel.Height = 13
+          EditLabel.Top = 84
+          EditLabel.Width = 49
           EditLabel.Caption = 'Password:'
           EditLabel.ParentColor = False
           Enabled = False
@@ -206,15 +206,15 @@ object FmConfig: TFmConfig
         end
         object edtFTPProxy: TLabeledEdit
           Left = 9
-          Height = 23
+          Height = 22
           Top = 123
           Width = 166
           EditLabel.AnchorSideLeft.Control = edtFTPProxy
           EditLabel.AnchorSideBottom.Control = edtFTPProxy
           EditLabel.Left = 9
-          EditLabel.Height = 14
-          EditLabel.Top = 109
-          EditLabel.Width = 64
+          EditLabel.Height = 13
+          EditLabel.Top = 110
+          EditLabel.Width = 57
           EditLabel.Caption = '&FTP-Proxy:'
           EditLabel.ParentColor = False
           Enabled = False
@@ -224,7 +224,7 @@ object FmConfig: TFmConfig
         end
         object SpinEdit2: TSpinEdit
           Left = 191
-          Height = 23
+          Height = 22
           Top = 123
           Width = 90
           Enabled = False
@@ -233,29 +233,19 @@ object FmConfig: TFmConfig
           Visible = False
         end
       end
-      object Button1: TButton
-        Left = 6
-        Height = 27
-        Top = 368
-        Width = 83
-        AutoSize = True
-        Caption = 'About Listaller'
-        OnClick = Button1Click
-        TabOrder = 3
-      end
       object CbShowPkMon: TCheckBox
         Left = 6
         Height = 21
         Top = 101
-        Width = 235
+        Width = 238
         Caption = 'Start PackageKit monitor while transactions'
         OnChange = CbShowPkMonChange
-        TabOrder = 4
+        TabOrder = 3
       end
     end
     object UpdPage: TTabSheet
       Caption = 'Update sources'
-      ClientHeight = 413
+      ClientHeight = 414
       ClientWidth = 659
       object Label1: TLabel
         Left = 6
@@ -267,7 +257,7 @@ object FmConfig: TFmConfig
       end
       object UListBox1: TCheckListBox
         Left = 6
-        Height = 335
+        Height = 336
         Top = 32
         Width = 644
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -279,7 +269,7 @@ object FmConfig: TFmConfig
       object BitBtn1: TBitBtn
         Left = 551
         Height = 22
-        Top = 383
+        Top = 384
         Width = 101
         Anchors = [akRight, akBottom]
         AutoSize = True
@@ -291,7 +281,7 @@ object FmConfig: TFmConfig
       object BitBtn2: TBitBtn
         Left = 6
         Height = 22
-        Top = 383
+        Top = 384
         Width = 81
         Anchors = [akLeft, akBottom]
         AutoSize = True
@@ -313,8 +303,8 @@ object FmConfig: TFmConfig
     TabOrder = 1
     object BitBtn3: TBitBtn
       Left = 604
-      Height = 27
-      Top = 8
+      Height = 26
+      Top = 9
       Width = 50
       Anchors = [akRight, akBottom]
       AutoSize = True

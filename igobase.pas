@@ -13,9 +13,6 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
-{Authors:
-         Matthias Klumpp <matthias@nlinux.org>
-}
 //** This unit contains the code for the graphical installation of standard IPK-packages
 unit igobase;
 
@@ -439,6 +436,7 @@ begin
   begin
     btnTest.Enabled:=true;
     btnHome.Enabled:=true;
+    PkWarnImg.Visible:=true;
   if (pos('iotest',setup.Disallows)>0) then
     btnTest.Enabled:=false;
   if (pos('iolocal',setup.Disallows)>0) then
@@ -459,6 +457,7 @@ begin
   begin
   btnTest.Enabled:=false;
   btnHome.Enabled:=false;
+  PkWarnImg.Visible:=true;
   Label13.Caption:=strSpkWarning;
   //
   ShowModal;
@@ -472,6 +471,7 @@ begin
   with imForm do
   begin
   btnTest.Enabled:=false;
+  pkWarnImg.Visible:=true;
   if (pos('iolocal',setup.Disallows)<=0) then
     btnHome.Enabled:=false;
   if (pos('iobase',setup.Disallows)<=0) then
@@ -497,6 +497,8 @@ end;
 if setup.pType=lptLinstall then
 begin
 //Check if already installed
+if not Testmode then
+begin
 if setup.IsPackageInstalled(setup.AppName,setup.AppID) then
 if Application.MessageBox(PAnsiChar(PAnsiChar(strAlreadyInst)+#13+PAnsiChar(strInstallAgain)),PAnsiChar(strReInstall),MB_YESNO)= IDNO then
  begin
@@ -504,6 +506,7 @@ if Application.MessageBox(PAnsiChar(PAnsiChar(strAlreadyInst)+#13+PAnsiChar(strI
   Application.Terminate;
   exit;
  end;
+end;
 
 //Load all data
 if setup.DescFile <> '' then

@@ -4,7 +4,7 @@ Section: utils
 Maintainer: Matthias Klumpp <matthias@nlinux.org>
 Priority: extra
 Homepage: http://listaller.nlinux.org
-Build-Depends: libgtk2.0-dev, lazarus (>=0.9.27), fpc (>= 2.2.4), fp-units-gtk, debhelper (>= 5), libqt4intf, libqt4-core, sqlite3, libsqlite3-0, libsqlite3-dev, findutils
+Build-Depends: libgtk2.0-dev, lazarus (>=0.9.27), fpc (>= 2.2.4), fp-units-gtk, debhelper (>= 5), libqt4intf, libqt4-core, sqlite3, libsqlite3-0, libsqlite3-dev, libglib2.0-0, libglib2.0-dev
 
 Package: listaller-data
 Architecture: all
