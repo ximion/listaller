@@ -13,9 +13,6 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
-{Authors:
-         Matthias Klumpp <matthias@nlinux.org>
-}
 //** This unit contains some various non-visual-lcl functions which are used everywhere
 unit licommon;
 

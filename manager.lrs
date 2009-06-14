@@ -1839,19 +1839,19 @@ LazarusResources.Add('TMnFrm','FORMDATA',[
   +#18#3'Top'#2#14#5'Width'#3#155#0#7'Caption'#6#22'No applications found!'#11
   +'Font.Height'#2#242#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'ParentFont'#8
   +#0#0#0#0#5'TPage'#11'CatalogPage'#7'Caption'#6#11'CatalogPage'#11'ClientWidt'
-  +'h'#3#180#2#12'ClientHeight'#3#188#1#0#7'TBitBtn'#7'BitBtn1'#4'Left'#3#190#0
-  +#6'Height'#2'('#3'Top'#2'V'#5'Width'#3#27#1#7'Anchors'#11#0#7'Caption'#6#26
+  +'h'#3#180#2#12'ClientHeight'#3#166#1#0#7'TBitBtn'#7'BitBtn1'#4'Left'#3#190#0
+  +#6'Height'#2'('#3'Top'#2'Q'#5'Width'#3#27#1#7'Anchors'#11#0#7'Caption'#6#26
   +'Browse Listaller''s catalog'#7'OnClick'#7#12'BitBtn1Click'#8'TabOrder'#2#0#0
-  +#0#7'TBitBtn'#7'BitBtn2'#4'Left'#3#190#0#6'Height'#2'('#3'Top'#3#206#0#5'Wid'
+  +#0#7'TBitBtn'#7'BitBtn2'#4'Left'#3#190#0#6'Height'#2'('#3'Top'#3#195#0#5'Wid'
   +'th'#3#27#1#7'Anchors'#11#0#7'Caption'#6'(Open your distribution''s package '
   +'catalog'#7'OnClick'#7#12'BitBtn2Click'#8'TabOrder'#2#1#0#0#0#5'TPage'#8'Rep'
   +'oPage'#7'Caption'#6#8'RepoPage'#11'ClientWidth'#3#180#2#12'ClientHeight'#3
-  +#188#1#0#7'TBitBtn'#7'BitBtn4'#4'Left'#3#166#0#6'Height'#2#30#3'Top'#3#134#0
+  +#166#1#0#7'TBitBtn'#7'BitBtn4'#4'Left'#3#166#0#6'Height'#2#30#3'Top'#3#134#0
   +#5'Width'#3#11#1#7'Caption'#6#19'Manage repositories'#8'TabOrder'#2#0#0#0#7
   +'TBitBtn'#7'BitBtn5'#4'Left'#3#166#0#6'Height'#2#30#3'Top'#3#206#0#5'Width'#3
   +#11#1#7'Caption'#6#13'Update system'#8'TabOrder'#2#1#0#0#0#5'TPage'#10'Confi'
   +'gPage'#7'Caption'#6#10'ConfigPage'#11'ClientWidth'#3#180#2#12'ClientHeight'
-  +#3#188#1#0#7'TBitBtn'#7'BitBtn3'#4'Left'#3#230#0#6'Height'#2#30#3'Top'#3#174
+  +#3#166#1#0#7'TBitBtn'#7'BitBtn3'#4'Left'#3#230#0#6'Height'#2#30#3'Top'#3#174
   +#0#5'Width'#3#243#0#7'Caption'#6#19'Configure Listaller'#7'OnClick'#7#12'Bit'
   +'Btn3Click'#8'TabOrder'#2#0#0#0#7'TButton'#8'AboutBtn'#4'Left'#3'N'#2#6'Heig'
   +'ht'#2#26#3'Top'#3#142#1#5'Width'#2'T'#8'AutoSize'#9#7'Caption'#6#15'About L'

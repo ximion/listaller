@@ -44,17 +44,17 @@ cp ./bin/gtk2/liupdate $DESTDIR/usr/lib/listaller/gtk2/
 fi
 
 if [ "$WIDGET" == "qt4" ]; then
-cp "./data/applications/listaller-manager-kde.desktop" $DESTDIR/usr/share/applications/
+cp ./data/applications/listaller-manager-kde.desktop $DESTDIR/usr/share/applications/
 else
-cp "./data/applications/listaller-manager-gnome.desktop" $DESTDIR/usr/share/applications/
+cp ./data/applications/listaller-manager-gnome.desktop $DESTDIR/usr/share/applications/
 fi
 
 #Create symlink
 cd $DESTDIR/usr/bin
 if [ "$WIDGET" == "qt4" ]; then
-ln -s /usr/lib/listaller/qt4/listallmgr listallmgr-qt4
+ln -s /usr/lib/listaller/qt4/listallmgr listallmgr-qt
 else
-ln -s /usr/lib/listaller/gtk2/listallmgr listallmgr-gtk2
+ln -s /usr/lib/listaller/gtk2/listallmgr listallmgr-gtk
 fi
 
 echo "Installation done."

@@ -16,7 +16,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="139"/>
+      <CurrentBuildNr Value="163"/>
       <ProjectVersion Value="0.2.0.1"/>
     </VersionInfo>
     <PublishOptions>
@@ -31,15 +31,15 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="19">
+    <Units Count="21">
       <Unit0>
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
-        <CursorPos X="72" Y="15"/>
-        <TopLine Value="1"/>
+        <CursorPos X="27" Y="75"/>
+        <TopLine Value="49"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="41"/>
+        <UsageCount Value="44"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -109,7 +109,7 @@
         <UnitName Value="ipkbuild"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="29"/>
+        <UsageCount Value="32"/>
       </Unit10>
       <Unit11>
         <Filename Value="abzbrows.pas"/>
@@ -166,36 +166,66 @@
         <TopLine Value="204"/>
         <UsageCount Value="10"/>
       </Unit18>
+      <Unit19>
+        <Filename Value="ipkhandle.pas"/>
+        <UnitName Value="ipkhandle"/>
+        <CursorPos X="43" Y="246"/>
+        <TopLine Value="580"/>
+        <UsageCount Value="11"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="licommon.pas"/>
+        <UnitName Value="licommon"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="332"/>
+        <UsageCount Value="10"/>
+      </Unit20>
     </Units>
-    <JumpHistory Count="7" HistoryIndex="6">
+    <JumpHistory Count="11" HistoryIndex="10">
       <Position1>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="40" Column="5" TopLine="15"/>
+        <Caret Line="28" Column="33" TopLine="1"/>
       </Position1>
       <Position2>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="202" Column="8" TopLine="171"/>
+        <Caret Line="100" Column="36" TopLine="73"/>
       </Position2>
       <Position3>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="29" Column="16" TopLine="1"/>
+        <Caret Line="29" Column="20" TopLine="1"/>
       </Position3>
       <Position4>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="19" Column="40" TopLine="1"/>
+        <Caret Line="316" Column="6" TopLine="292"/>
       </Position4>
       <Position5>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="38" Column="20" TopLine="4"/>
+        <Caret Line="343" Column="12" TopLine="316"/>
       </Position5>
       <Position6>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="28" Column="14" TopLine="1"/>
+        <Caret Line="345" Column="11" TopLine="319"/>
       </Position6>
       <Position7>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="30" Column="15" TopLine="1"/>
+        <Caret Line="359" Column="7" TopLine="336"/>
       </Position7>
+      <Position8>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="356" Column="32" TopLine="337"/>
+      </Position8>
+      <Position9>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="239" Column="5" TopLine="217"/>
+      </Position9>
+      <Position10>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="294" Column="23" TopLine="268"/>
+      </Position10>
+      <Position11>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="234" Column="21" TopLine="215"/>
+      </Position11>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -204,7 +234,7 @@
       <Filename Value="./bin/lipa"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="opbitmap/;abbrevia/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/"/>
+      <OtherUnitFiles Value="opbitmap/;abbrevia/;synapse/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/"/>
       <UnitOutputDirectory Value="bin"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>

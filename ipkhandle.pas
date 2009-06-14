@@ -49,7 +49,7 @@ type
   //Basic information about the package and the new application
   IAppName,IAppVersion, IAppCMD, IAuthor, FDescFile,ShDesc, FLicenseFile: String;
   IIconPath, IDesktopFiles: String;
-  PkgName, pID, idName, AType: String;
+  PkgName, PkgPath, pID, idName, AType: String;
   FWizImage: String;
   //Package database connection
   dsApp: TSQLite3Dataset;
@@ -131,6 +131,8 @@ type
   function IsPackageInstalled(aName: String;aID: String): Boolean;
   //** Name of the application
   property AppName: String read IAppName;
+  //** Version of the to-be-installed application
+  property AppVersion: String read IAppVersion;
   //** ID of the application
   property AppID: String read idName;
   //** Listaller package type
@@ -238,6 +240,10 @@ begin
  inherited Create;
  writeLn('Opening database...');
  dsApp:= TSQLite3Dataset.Create(nil);
+ if IsRoot then
+  RegDir:='/etc/lipa/app-reg/'
+ else
+  RegDir:=SyblToPath('$INST')+'/app-reg/';
 end;
 
 destructor TInstallation.Destroy;
@@ -301,6 +307,7 @@ begin
   begin
     Dependencies.Delete(0);
     mnpos:=0;
+    SetMainPosVisibility(true);
     SetMainMaxVal(Dependencies.Count*2);
     p:=TProcess.Create(nil);
     ShowPKMon();
@@ -390,6 +397,7 @@ exit;
 end;
 
 PkgName:=ExtractFileName(fname);
+PkgPath:=fname;
 
 ReadXMLFile(Doc,lp+PkgName+'/arcinfo.pin'); //Read XML configuration
 xnode:=Doc.FindNode('package');
@@ -700,7 +708,7 @@ if pkType=lptContainer then
 begin
 writeLn('Package type is "container"');
 z:=TAbUnZipper.Create(nil);
-z.FileName:=paramstr(1);
+z.FileName:=PkgPath;
 z.ExtractOptions:=[eoCreateDirs]+[eoRestorePath];
 z.BaseDirectory:=lp;
 xnode:=Doc.DocumentElement.FindNode('application');
@@ -993,7 +1001,7 @@ end;
 appfiles:=TStringList.Create;
 SendStateMsg(strStep2);
 z:=TAbUnZipper.Create(nil);
-z.FileName:=paramstr(1);
+z.FileName:=PkgPath;
 ndirs:=TStringList.Create;
 j:=0;
 if not DirectoryExists(SyblToPath('$INST')) then SysUtils.CreateDir(SyblToPath('$INST'));
@@ -1025,13 +1033,13 @@ end;
 h:=DeleteModifiers(fi[i]);
 
 
-FDir:=lp+ExtractFileName(paramstr(1))+'/';
+FDir:=lp+ExtractFileName(PkgPath)+'/';
 if not DirectoryExists(FDir) then
 CreateDir(FDIR);
 
 try
 z.ExtractOptions:=[eoCreateDirs]+[eoRestorePath];
-z.BaseDirectory:=lp+ExtractFileName(paramstr(1));
+z.BaseDirectory:=lp+ExtractFileName(PkgPath);
 
 z.ExtractFiles(ExtractFileName(h));
 Application.ProcessMessages;

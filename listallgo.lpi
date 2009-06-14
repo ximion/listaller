@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="788"/>
+      <CurrentBuildNr Value="793"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -65,8 +65,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="5" Y="509"/>
-        <TopLine Value="482"/>
+        <CursorPos X="55" Y="413"/>
+        <TopLine Value="393"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -802,7 +802,7 @@
         <UsageCount Value="10"/>
       </Unit105>
     </Units>
-    <JumpHistory Count="24" HistoryIndex="23">
+    <JumpHistory Count="25" HistoryIndex="24">
       <Position1>
         <Filename Value="igobase.pas"/>
         <Caret Line="337" Column="53" TopLine="262"/>
@@ -899,6 +899,10 @@
         <Filename Value="igobase.pas"/>
         <Caret Line="27" Column="62" TopLine="1"/>
       </Position24>
+      <Position25>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="509" Column="5" TopLine="482"/>
+      </Position25>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -935,8 +939,12 @@
         <IgnoredMessages idx4056="True"/>
       </CompilerMessages>
       <CustomOptions Value="-dUSE_QT_45
--XLAgdk_pixbuf-2.0=
--XLAgtk-2.0="/>
+-XLAXi=
+-XLAgmodule-2.0=
+-XLAgthread-2.0=
+-XLAm=
+-XLAatk-1.0=
+-XLAXext="/>
       <CompilerPath Value="$(CompPath)"/>
       <ExecuteBefore>
         <ScanForMakeMsgs Value="True"/>

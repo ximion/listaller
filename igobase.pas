@@ -410,7 +410,7 @@ LoadStockPixmap(STOCK_GO_BACK,ICON_SIZE_BUTTON,Button5.Glyph);
   
   //Check distribution
   if DInfo.DName='' then begin
-   ShowMessage(strLDnSupported+#13+strInClose+#13+notifyDevs);
+   ShowMessage(strLDnSupported+#13+strInClose+#13+strNotifyDevs);
    halt;
    exit;
   end;

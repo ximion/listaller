@@ -1,6 +1,6 @@
-# Main translation template for Listaller alpha version 0.2.00a
+# Main translation template for Listaller alpha version 0.2.40a
 # Copyright (C) 2009
-# This file is distributed under the same license as the Listaller package.
+# This file is distributed under the same licence as the Listaller package.
 #
 # Matthias Klumpp, 2009.
 msgid ""
@@ -118,7 +118,7 @@ msgstr ""
 msgid "Unable to overwrite the file %f."
 msgstr ""
 
-#: trstrings:notifydevs
+#: trstrings:strnotifydevs
 msgid "Please notify the developers on http://launchpad.net/listaller"
 msgstr ""
 
@@ -360,10 +360,6 @@ msgstr ""
 
 #: trstrings:struninstall
 msgid "Uninstall"
-msgstr ""
-
-#: trstrings:strinstnew
-msgid "Install package"
 msgstr ""
 
 #: trstrings:strshowsettings
@@ -701,4 +697,3 @@ msgstr ""
 #: trstrings:strupdconferror
 msgid "Error while unpacking and configuring files."
 msgstr ""
-

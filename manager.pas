@@ -764,7 +764,6 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
 
  //Translate
  Caption:=strSoftwareManager;
- InstallButton.Caption:=strInstNew;
  SettingsButton.Caption:=strShowSettings;
  CatButton.Caption:=strSWCatalogue;
  Label1.Caption:=strShow;

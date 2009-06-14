@@ -1734,11 +1734,11 @@ object MnFrm: TMnFrm
     object CatalogPage: TPage
       Caption = 'CatalogPage'
       ClientWidth = 692
-      ClientHeight = 444
+      ClientHeight = 422
       object BitBtn1: TBitBtn
         Left = 190
         Height = 40
-        Top = 86
+        Top = 81
         Width = 283
         Anchors = []
         Caption = 'Browse Listaller''s catalog'
@@ -1748,7 +1748,7 @@ object MnFrm: TMnFrm
       object BitBtn2: TBitBtn
         Left = 190
         Height = 40
-        Top = 206
+        Top = 195
         Width = 283
         Anchors = []
         Caption = 'Open your distribution''s package catalog'
@@ -1759,7 +1759,7 @@ object MnFrm: TMnFrm
     object RepoPage: TPage
       Caption = 'RepoPage'
       ClientWidth = 692
-      ClientHeight = 444
+      ClientHeight = 422
       object BitBtn4: TBitBtn
         Left = 166
         Height = 30
@@ -1780,7 +1780,7 @@ object MnFrm: TMnFrm
     object ConfigPage: TPage
       Caption = 'ConfigPage'
       ClientWidth = 692
-      ClientHeight = 444
+      ClientHeight = 422
       object BitBtn3: TBitBtn
         Left = 230
         Height = 30

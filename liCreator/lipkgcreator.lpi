@@ -482,7 +482,14 @@
         <ShowHints Value="False"/>
         <ShowSummary Value="True"/>
       </Verbosity>
-      <CustomOptions Value="-dUSE_QT_45"/>
+      <CustomOptions Value="-dUSE_QT_45
+-dQT_NATIVE_DIALOGS
+-XLAXi=
+-XLAgmodule-2.0=
+-XLAgthread-2.0=
+-XLAm=
+-XLAatk-1.0=
+-XLAXext="/>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>
