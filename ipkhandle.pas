@@ -13,9 +13,6 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
-{Authors:
-         Matthias Klumpp <matthias@nlinux.org>
-}
 //** Functions to handle IPK packages
 unit ipkhandle;
 
@@ -27,15 +24,6 @@ uses
   Classes, SysUtils, IniFiles, LiCommon, Forms, Process, trstrings, packagekit,
   sqlite3ds, db, AbUnZper, AbArcTyp, XMLRead, DOM, distri, HTTPSend, FTPSend,
   MD5;
-
- {** Removes an IPK application
-     @param AppName Name of the application, that should be uninstalled
-     @param AppID ID of the application
-     @param Log TStrings to get the log output
-     @param fast Does a quick uninstallation if is true (Set to "False" by default)
-     @param RmDeps Remove dependencies if true (Set to "True" by default)
-     @returns Current progress of the operation}
- function UninstallIPKApp(AppName, AppID: String; var Log: TStrings; fast: Boolean=false; RmDeps:Boolean=true):Integer;
 
 type
  TMaxPosEvent = procedure(Sender: TObject;max: Integer) of object;
@@ -177,6 +165,15 @@ type
   property OnTermQuestion: TMessageEvent read FTermRequest write FTermRequest;
   property OnStateMessage: TMessageEvent read FSMessage write FSMessage;
 end;
+
+{** Removes an IPK application
+     @param AppName Name of the application, that should be uninstalled
+     @param AppID ID of the application
+     @param Log TStrings to get the log output
+     @param progress Event handler for operation progress (set nil if not needed)
+     @param fast Does a quick uninstallation if is true (Set to "False" by default)
+     @param RmDeps Remove dependencies if true (Set to "True" by default)}
+ procedure UninstallIPKApp(AppName, AppID: String; var Log: TStrings;progress: TPosEvent; fast: Boolean=false; RmDeps:Boolean=true);
 
 const
   //** Working directory of Listaller
@@ -580,9 +577,17 @@ DInfo:=GetDistro;
 if xnode.FindNode('dependencies')<>nil then
 begin
  xnode:=xnode.FindNode('dependencies');
+ if xnode.FindNode('pkcatalog')<>nil then
+ begin
+  z.ExtractFiles(ExtractFileName(xnode.FindNode('pkcatalog').NodeValue);
+  Dependencies.Add('cat:'+lp+PkgName+xnode.FindNode('pkcatalog').NodeValue)
+ end else
+ begin
  Dependencies.Add('*getlibs*');
  for i:=0 to xnode.ChildNodes.Count-1 do
   Dependencies.Add(xnode.ChildNodes.Item[i].FirstChild.NodeValue);
+ end;
+ end;
 end else begin
 if xnode.FindNode('Dep'+DInfo.DName)<>nil then begin  //Check if there are specific packages available
 
@@ -809,7 +814,8 @@ cnf.free;
 
 SetExtraPosVisibility(false);
 //Execute programs/scripts
-if ExecA<>'<disabled>' then begin
+if ExecA<>'<disabled>' then
+begin
     Proc.CommandLine := 'chmod 777 '+ExecA;
     Proc.Execute;
 while Proc.Running do Application.ProcessMessages;
@@ -820,9 +826,31 @@ end;
 
 pkit:=TPackageKit.Create;
 
-if Dependencies.Count>0 then begin
-for I:=0 to Dependencies.Count-1 do begin  //Download & install dependencies
-if (pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then begin
+if Dependencies.Count>0 then
+begin
+//Check if we should install a software catalog
+if pos('cat:',Dependencies[0])>0 then
+begin
+ ln.Add('Installing package catalog...');
+ pkit.InstallLocalPkg(copy(Dependencies[0],5,length(Dependencies[0]));
+
+ if not pkit.OperationSucessfull then
+ begin
+  SendErrorMsg(strCouldntSolve+#13+StringReplace(strViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]));
+  p.Free;
+  pkit.Free;
+  Result:=false;
+  ln.SaveTofile('/tmp/install-'+IAppName+'.log');
+  exit;
+ end;
+ Dependencies[0]:='cat:'+ExtractFileName(copy(Dependencies[0],5,length(Dependencies[0])));
+
+end else
+begin
+for I:=0 to Dependencies.Count-1 do
+begin  //Download & install dependencies
+if (pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then
+begin
 
 cnf:=TInifile.Create(ConfigDir+'config.cnf');
 if cnf.ReadBool('MainConf','AutoDepLoad',true)=false then
@@ -832,7 +860,8 @@ cnf.Free;
 
     ln.Add(strGetDependencyFrom+' '+Dependencies[i]+'.');
     ln.Add(strPlWait2);
- if pos('http://',LowerCase(Dependencies[i]))>0 then begin
+ if pos('http://',LowerCase(Dependencies[i]))>0 then
+ begin
   try
     HTTP.HTTPMethod('GET', copy(Dependencies[i],1,pos(' <',Dependencies[i])-1));
     HTTP.Document.SaveToFile('/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)));
@@ -918,13 +947,15 @@ end;
 SetExtraPosVisibility(false);
 sleep(18); //Wait...
 
-if (Dependencies[i][1]='/')or(pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then begin
+if (Dependencies[i][1]='/')or(pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then
+begin
 
     ln.Add('--');
     ln.Add('DepInstall: '+Dependencies[i]+' (using PackageKit +x)');
     ln.Add('-');
 
-  if (pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then  begin
+  if (pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then
+  begin
     if not pkit.IsInstalled(copy(Dependencies[i],pos(' <',Dependencies[i])+2,length(Dependencies[i])-1)) then
      pkit.InstallLocalPkg('/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i]))));
   end else
@@ -973,6 +1004,7 @@ end else begin
     mnpos:=mnpos+10;
     SetMainPosVal(mnpos);
   end;
+   end; //End of PKCatalog end-else
   end; //End of Dependecies.Count term
 end; //End of dependency-check
 
@@ -994,7 +1026,7 @@ Application.ProcessMessages;
 if RmApp then
 begin
 SetExtraPosVisibility(true);
-SetExtraPosVal(UnInstallIPKApp(IAppName,idName,ln,true));
+UnInstallIPKApp(IAppName,idName,ln,FPos2,true);
 SetExtraPosVisibility(false);
 end;
 
@@ -1086,12 +1118,12 @@ end;
 
 if(pos('<setvars>',LowerCase(ExtractFileName(h)))>0) then
 begin
-s:=TStringList.Create;
-s.LoadFromFile(dest+'/'+ExtractFileName(h));
-for j:=0 to s.Count-1 do
-s[j]:=SyblToPath(s[j]);
-s.SaveToFile(dest+'/'+ExtractFileName(h));
-s.Free;
+ s:=TStringList.Create;
+ s.LoadFromFile(dest+'/'+ExtractFileName(h));
+ for j:=0 to s.Count-1 do
+  s[j]:=SyblToPath(s[j]);
+ s.SaveToFile(dest+'/'+ExtractFileName(h));
+ s.Free;
 end;
 
 
@@ -1365,14 +1397,22 @@ end;
 /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ///////////////////////////////////////////////////
-function UninstallIPKApp(AppName,AppID: String; var Log: TStrings; fast:Boolean=false; RmDeps:Boolean=true): Integer;
+procedure UninstallIPKApp(AppName,AppID: String; var Log: TStrings;progress: TPosEvent; fast:Boolean=false; RmDeps:Boolean=true);
 var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;k: Boolean;upd: String;
     proc: TProcess;dlink: Boolean;t: TProcess;
     pkit: TPackageKit;
     dsApp: TSQLite3Dataset;
+    FPos: TPosEvent;
+    mnprog: Integer;
+procedure SetPosition(val: Integer);
 begin
-Result:=0;
+if Assigned(FPos) then FPos(nil,val);
+end;
+begin
 p:=RegDir+LowerCase(AppName+'-'+AppID)+'/';
+FPos:=progress;
+mnprog:=0;
+SetPosition(0);
 //InfoMemo.Lines.Add('Begin uninstallation...');
 
 {
@@ -1435,19 +1475,19 @@ if not fast then
 begin
 if FileExists(p+'prerm') then
 begin
-Log.Add('PreRM-Script found.');
-writeLn('PreRM-Script found.');
-t:=TProcess.Create(nil);
-t.Options:=[poUsePipes,poWaitonexit];
-t.CommandLine:='chmod 775 '''+p+'prerm''';
-t.Execute;
-Log.Add('Executing prerm...');
-writeLn('Executing prerm...');
-t.CommandLine:=''''+p+'prerm''';
-t.Execute;
-t.Free;
-Log.Add('Done.');
-writeLn('Done.');
+ Log.Add('PreRM-Script found.');
+ writeLn('PreRM-Script found.');
+ t:=TProcess.Create(nil);
+ t.Options:=[poUsePipes,poWaitonexit];
+ t.CommandLine:='chmod 775 '''+p+'prerm''';
+ t.Execute;
+ Log.Add('Executing prerm...');
+ writeLn('Executing prerm...');
+ t.CommandLine:=''''+p+'prerm''';
+ t.Execute;
+ t.Free;
+ Log.Add('Done.');
+ writeLn('Done.');
 end;
 
 ///////////////////////////////////////
@@ -1464,6 +1504,9 @@ Application.ProcessMessages;
 for i:=0 to tmp2.Count-1 do
 begin
 f:=tmp2[i];
+//Skip catalog based packages - impossible to detect unneeded dependencies
+if pos('cat:',f) then break;
+
 if (LowerCase(f)<>'libc6') then
 begin
 Application.ProcessMessages;
@@ -1565,7 +1608,8 @@ if f = slist[j] then k:=true;
 if not k then
 DeleteFile(f);
 
-Result:=Result+10;
+mnprog:=mnprog+10;
+SetPosition(mnprog);
 Application.ProcessMessages;
 end;
 
@@ -1595,9 +1639,10 @@ end;
 dsApp.Next;
 end;
 
-if Result>0 then
+if mnprog>0 then
 begin
-Result:=Result+2;
+mnprog:=mnprog+2;
+SetPosition(mnprog);
 writeLn('Unregistering...');
 
 dsApp.ExecuteDirect('DELETE FROM AppInfo WHERE rowid='+IntToStr(dsApp.RecNo));
@@ -1612,7 +1657,9 @@ proc.CommandLine :='rm -rf '+''''+ExcludeTrailingBackslash(p)+'''';
 proc.Execute;
 proc.Free;
 
-Result:=Result+2;
+mnprog:=mnprog+2;
+SetPosition(mnprog);
+
 Log.Add('Application removed.');
 Log.Add('-----------');
 writeLn('- Finished -');

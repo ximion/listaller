@@ -16,7 +16,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="163"/>
+      <CurrentBuildNr Value="164"/>
       <ProjectVersion Value="0.2.0.1"/>
     </VersionInfo>
     <PublishOptions>
@@ -31,13 +31,13 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="21">
+    <Units Count="22">
       <Unit0>
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
-        <CursorPos X="27" Y="75"/>
-        <TopLine Value="49"/>
+        <CursorPos X="5" Y="79"/>
+        <TopLine Value="27"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="44"/>
         <Loaded Value="True"/>
@@ -180,8 +180,15 @@
         <TopLine Value="332"/>
         <UsageCount Value="10"/>
       </Unit20>
+      <Unit21>
+        <Filename Value="trstrings.pas"/>
+        <UnitName Value="trstrings"/>
+        <CursorPos X="26" Y="116"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit21>
     </Units>
-    <JumpHistory Count="11" HistoryIndex="10">
+    <JumpHistory Count="12" HistoryIndex="11">
       <Position1>
         <Filename Value="lipa.lpr"/>
         <Caret Line="28" Column="33" TopLine="1"/>
@@ -226,6 +233,10 @@
         <Filename Value="lipa.lpr"/>
         <Caret Line="234" Column="21" TopLine="215"/>
       </Position11>
+      <Position12>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="28" Column="17" TopLine="1"/>
+      </Position12>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

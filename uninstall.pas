@@ -46,6 +46,8 @@ type
     FActiv: Boolean;
     //** Method that removes MOJO/LOKI installed applications @param dsk Path to the .desktop file of the application
     procedure UninstallMojo(dsk: String);
+    //** Handle progress of uninstall-operation
+    procedure UProgressChange(Sender: TObject;pos: Integer);
   public
     { public declarations }
   end; 
@@ -111,6 +113,11 @@ if Process1.ExitStatus>0 then begin
     halt;
     exit;
   end;
+end;
+
+procedure TRmForm.UProgressChange(Sender: TObject;pos: Integer);
+begin
+ UProgress.Position:=pos;
 end;
 
 procedure LogAdd(s: String);
@@ -209,7 +216,7 @@ UProgress.Max:=((tmp.Count)*10)+4;
 tmp.Free;
 end;
 // Removing of dependencies is disabled because of security reasons
-UProgress.Position:=UninstallIPKApp(entry.AppName,entry.srID,Memo1.Lines,false,true);
+UninstallIPKApp(entry.AppName,entry.srID,Memo1.Lines,@UProgressChange,false,true);
 LogAdd('Finished!');
 Memo1.Lines.SaveToFile(ConfigDir+'uninstall.log');
 ShowMessage(strUnistSuccess);

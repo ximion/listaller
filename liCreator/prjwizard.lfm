@@ -68,7 +68,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page1: TPage
       Caption = 'Page1'
       ClientWidth = 832
-      ClientHeight = 578
+      ClientHeight = 579
       object SpeedButton1: TSpeedButton
         Left = 85
         Height = 104
@@ -1756,7 +1756,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page2: TPage
       Caption = 'Page2'
       ClientWidth = 832
-      ClientHeight = 578
+      ClientHeight = 579
       object Label8: TLabel
         Left = 7
         Height = 19
@@ -2253,7 +2253,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page3: TPage
       Caption = 'Page3'
       ClientWidth = 832
-      ClientHeight = 578
+      ClientHeight = 579
       object Label17: TLabel
         Left = 7
         Height = 19
@@ -2268,7 +2268,7 @@ object frmProjectWizard: TfrmProjectWizard
       object lvPackageFiles: TListView
         Left = 0
         Height = 392
-        Top = 186
+        Top = 187
         Width = 832
         Align = alBottom
         Columns = <        
@@ -2570,7 +2570,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page5: TPage
       Caption = 'Page5'
       ClientWidth = 832
-      ClientHeight = 578
+      ClientHeight = 579
       object Label18: TLabel
         Left = 7
         Height = 19
@@ -2584,7 +2584,7 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Memo1: TMemo
         Left = 6
-        Height = 498
+        Height = 499
         Top = 38
         Width = 804
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -2600,7 +2600,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page6: TPage
       Caption = 'Page6'
       ClientWidth = 832
-      ClientHeight = 578
+      ClientHeight = 579
       object Label21: TLabel
         Left = 7
         Height = 19

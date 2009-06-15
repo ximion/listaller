@@ -13,10 +13,6 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
-{Authors:
-         Matthias Klumpp <matthias@nlinux.org>
-         Thomas Dieffenbach <giantics@gmx.net>
-}
 //** Graphical wizard to generate IPS scripts
 unit prjwizard;
 
@@ -1143,7 +1139,7 @@ end;
 
 procedure TfrmProjectWizard.MenuItem6Click(Sender: TObject);
 begin
-  ShowMessage('List of modifiers:'#13'<chmod:xxx> : Assign the rights xxx to the file.'#13'<s> : Mark file as shared file'#13'If possible you should not use any modifier!');
+  ShowMessage('List of modifiers:'#13'<chmod:xxx> : Assign the rights xxx to the file.'#13'<s> : Mark file as shared file'#13'<setvars> : Go inside the file and replace all placeholders with their current values'#13#13'If possible you should not use any modifier!');
 end;
 
 procedure TfrmProjectWizard.RadioButton1Change(Sender: TObject);

@@ -53,7 +53,31 @@ object FrmEditor: TFrmEditor
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 35
+        BookMarkOptions.OnChange = nil
         Gutter.Width = 53
+        Gutter.MouseActions = <        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccAny
+            ClickDir = cdDown
+            Command = 13
+            MoveCaret = False
+            Option = 0
+            Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbRight
+            ClickCount = ccSingle
+            ClickDir = cdUp
+            Command = 12
+            MoveCaret = False
+            Option = 0
+            Priority = 0
+          end>
         Highlighter = SynXMLSyn1
         Keystrokes = <        
           item
@@ -386,6 +410,7 @@ object FrmEditor: TFrmEditor
             Command = 1
             MoveCaret = True
             Option = 0
+            Priority = 0
           end        
           item
             Shift = [ssShift]
@@ -396,6 +421,7 @@ object FrmEditor: TFrmEditor
             Command = 2
             MoveCaret = True
             Option = 0
+            Priority = 0
           end        
           item
             Shift = [ssAlt]
@@ -406,6 +432,7 @@ object FrmEditor: TFrmEditor
             Command = 3
             MoveCaret = True
             Option = 0
+            Priority = 0
           end        
           item
             Shift = [ssShift, ssAlt]
@@ -416,6 +443,7 @@ object FrmEditor: TFrmEditor
             Command = 4
             MoveCaret = True
             Option = 0
+            Priority = 0
           end        
           item
             Shift = []
@@ -426,6 +454,7 @@ object FrmEditor: TFrmEditor
             Command = 12
             MoveCaret = False
             Option = 0
+            Priority = 0
           end        
           item
             Shift = []
@@ -436,6 +465,7 @@ object FrmEditor: TFrmEditor
             Command = 6
             MoveCaret = True
             Option = 0
+            Priority = 0
           end        
           item
             Shift = []
@@ -446,6 +476,7 @@ object FrmEditor: TFrmEditor
             Command = 7
             MoveCaret = True
             Option = 0
+            Priority = 0
           end        
           item
             Shift = []
@@ -456,6 +487,7 @@ object FrmEditor: TFrmEditor
             Command = 8
             MoveCaret = True
             Option = 0
+            Priority = 0
           end        
           item
             Shift = []
@@ -466,6 +498,7 @@ object FrmEditor: TFrmEditor
             Command = 10
             MoveCaret = True
             Option = 0
+            Priority = 0
           end        
           item
             Shift = [ssCtrl]
@@ -476,6 +509,7 @@ object FrmEditor: TFrmEditor
             Command = 11
             MoveCaret = False
             Option = 0
+            Priority = 0
           end>
         MouseSelActions = <        
           item
@@ -487,6 +521,18 @@ object FrmEditor: TFrmEditor
             Command = 9
             MoveCaret = False
             Option = 0
+            Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
           end>
         Lines.Strings = (
           '<?xml version="1.0" encoding="ISO-8859-1"?>'
@@ -515,6 +561,7 @@ object FrmEditor: TFrmEditor
           end
           object TSynGutterLineNumber
             Width = 13
+            MouseActions = <>
             MarkupInfo.Background = clBtnFace
             MarkupInfo.Foreground = clNone
             DigitCount = 2
@@ -531,8 +578,88 @@ object FrmEditor: TFrmEditor
             Width = 2
           end
           object TSynGutterCodeFolding
+            MouseActions = <            
+              item
+                Shift = []
+                ShiftMask = []
+                Button = mbRight
+                ClickCount = ccSingle
+                ClickDir = cdUp
+                Command = 16
+                MoveCaret = False
+                Option = 0
+                Priority = 0
+              end            
+              item
+                Shift = []
+                ShiftMask = [ssShift]
+                Button = mbMiddle
+                ClickCount = ccAny
+                ClickDir = cdDown
+                Command = 14
+                MoveCaret = False
+                Option = 0
+                Priority = 0
+              end            
+              item
+                Shift = [ssShift]
+                ShiftMask = [ssShift]
+                Button = mbMiddle
+                ClickCount = ccAny
+                ClickDir = cdDown
+                Command = 14
+                MoveCaret = False
+                Option = 1
+                Priority = 0
+              end            
+              item
+                Shift = []
+                ShiftMask = []
+                Button = mbLeft
+                ClickCount = ccAny
+                ClickDir = cdDown
+                Command = 0
+                MoveCaret = False
+                Option = 0
+                Priority = 0
+              end>
             MarkupInfo.Background = clNone
             MarkupInfo.Foreground = clGray
+            MouseActionsExpanded = <            
+              item
+                Shift = []
+                ShiftMask = []
+                Button = mbLeft
+                ClickCount = ccAny
+                ClickDir = cdDown
+                Command = 14
+                MoveCaret = False
+                Option = 0
+                Priority = 0
+              end>
+            MouseActionsCollapsed = <            
+              item
+                Shift = [ssCtrl]
+                ShiftMask = [ssCtrl]
+                Button = mbLeft
+                ClickCount = ccAny
+                ClickDir = cdDown
+                Command = 15
+                MoveCaret = False
+                Option = 0
+                Priority = 0
+              end            
+              item
+                Shift = []
+                ShiftMask = [ssCtrl]
+                Button = mbLeft
+                ClickCount = ccAny
+                ClickDir = cdDown
+                Command = 15
+                MoveCaret = False
+                Option = 1
+                Priority = 0
+              end>
           end
         end
       end

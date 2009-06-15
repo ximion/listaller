@@ -65,6 +65,8 @@ end;
 
 procedure TLipa.setupMainPosChange(Sender: TObject; pos: Integer);
 begin
+if HasOption('verbose') then
+begin
  //Simple, stupid progress animation
   if xs=0 then begin xs:=1; write(#13' #       ');end else
   if xs=1 then begin xs:=2; write(#13' ##      ');end else
@@ -74,6 +76,7 @@ begin
   if xs=5 then begin xs:=6; write(#13' ####### ');end else
   if xs=6 then begin xs:=7; write(#13' ########');end else
   if xs=7 then begin xs:=0; write(#13'         ');end;
+end;
 end;
 
 procedure TLipa.setupMainVisibleChange(Sender: TObject; vis: Boolean);
@@ -91,6 +94,7 @@ end;
 
 procedure TLipa.setupStateMessage(Sender: TObject; msg: String);
 begin
+if not HasOption('verbose') then
   writeLn('State: '+msg);
 end;
 
@@ -99,7 +103,8 @@ var s: String;
 begin
   writeLn('Question:');
   writeLn(' '+msg);
-  writeLn('Yes/No ?:');
+  writeLn('');
+  write('Yes/No?:');
   readln(s);
   s:=LowerCase(s);
   if (s='yes')or(s='y') then
@@ -278,7 +283,8 @@ begin
      lst.Free;
      c:='';
      repeat
-      writeLn('Do you accept this license? (y/n):');
+      writeLn('');
+      write('Do you accept this license? (y/n):');
       readLn(c);
       if (c='n') or (c='no') then
       begin
@@ -303,7 +309,7 @@ begin
       writeLn('Mode number:');
       readLn(c);
       try
-       if StrToInt(c)-1<=lst.Count then
+       if StrToInt(c)-1>=lst.Count then
         writeLn('Please select a number shown in the list!');
       except
        writeLn('You have to enter a sigle number!');
@@ -350,6 +356,7 @@ begin
  setup.OnStateMessage:=@setupStateMessage;
 
  writeLn('-> Running installation...');
+ if not HasOption('verbose') then
  writeLn(' Step: '+strStep1);
 
  proc:=TProcess.Create(nil);
@@ -363,6 +370,9 @@ begin
  lst.Free;
  HTTP.Free;
  FTP.Free;
+
+ if HasOption('verbose') then
+  for i:=0 to lst.Count-1 do writeLn(lst[i]);
 
  if not Testmode then
  begin
@@ -427,6 +437,7 @@ writeLn('-s, --solve [variable]                     Resolve Listaller path varia
 writeLn('-i, --install [IPK-Package]                Installs an IPK package');
 writeLn('  Options:');
 writeLn('    --testmode                             Runs installation in testmode');
+writeLn('    --verbose                              Print all available log messages');
 end;
 
 procedure TLipa.OnExeception(Sender : TObject;E : Exception);

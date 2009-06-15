@@ -62,9 +62,9 @@ object RMForm: TRMForm
   LCLVersion = '0.9.27'
   object Label1: TLabel
     Left = 8
-    Height = 14
+    Height = 13
     Top = 8
-    Width = 39
+    Width = 41
     Caption = '<label>'
     ParentColor = False
   end

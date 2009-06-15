@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
   ComCtrls, StdCtrls, IniFiles, FileUtil, ExtCtrls, process, Buttons,
   LCLType, LCLIntf, distri, LiCommon, HTTPSend, blcksock, FTPSend,
-  trstrings, translations, gettext, SynEdit, xtypefm, ipkhandle;
+  TRStrings, translations, gettext, SynEdit, xtypefm, ipkhandle;
 
 type
 

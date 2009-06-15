@@ -114,7 +114,6 @@ strClose='Close';
 strDelSrc='Delete source';
 strListofSrc='The following update sources are installed:';
 strUninstall='Uninstall';
-strShowSettings='Settings';
 strSWCatalogue='Browse catalogue';
 strShow='Show:';
 strAll='All';

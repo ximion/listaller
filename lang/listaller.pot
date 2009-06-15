@@ -362,10 +362,6 @@ msgstr ""
 msgid "Uninstall"
 msgstr ""
 
-#: trstrings:strshowsettings
-msgid "Settings"
-msgstr ""
-
 #: trstrings:strswcatalogue
 msgid "Browse catalogue"
 msgstr ""
