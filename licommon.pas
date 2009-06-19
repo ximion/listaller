@@ -431,7 +431,7 @@ cnf:=TIniFile.Create(ConfigDir+'config.cnf');
   if cnf.ReadBool('MainConf','ShowPkMon',false) then
   begin
    t:=TProcess.Create(nil);
-   t.CommandLine:='pkmon';
+   t.CommandLine:='pkmon -v';
    t.Options:=[poNewConsole];
    t.Execute;
   end;

@@ -21,7 +21,7 @@ unit ipkhandle;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, LiCommon, Forms, Process, trstrings, packagekit,
+  Classes, SysUtils, IniFiles, LiCommon, Process, trstrings, packagekit,
   sqlite3ds, db, AbUnZper, AbArcTyp, XMLRead, DOM, distri, HTTPSend, FTPSend,
   MD5;
 
@@ -314,18 +314,15 @@ begin
     begin
      mnpos:=mnpos+1;
      SetMainPosVal(mnpos);
-     Application.ProcessMessages;
      pkit:=TPackageKit.Create;
      h:=pkit.PkgNameFromNIFile(Dependencies[i]);
      pkit.Free;
      if h='Failed!' then begin SendErrorMsg(StringReplace(strDepNotFound,'%l',Dependencies[i],[rfReplaceAll])+#13+strInClose);tmp.Free;Result:=false;exit;end;
      if h='PackageKit problem.' then begin SendErrorMsg(strPKitProbPkMon);tmp.Free;Result:=false;exit;end;
-     Application.ProcessMessages;
      tmp.Add(h);
      h:='';
      mnpos:=mnpos+1;
      SetMainPosVal(mnpos);
-     Application.ProcessMessages;
     end;
     Dependencies.Assign(tmp);
     tmp.Free;
@@ -417,8 +414,6 @@ FDisallow:=LowerCase(FindChildNode(xnode,'disallow').NodeValue)
 else
 FDisallow:='';
 
-Application.ProcessMessages;
-
 if pkType=lptLinstall then
 begin
 
@@ -459,7 +454,6 @@ Inc(i);
 end;
 until FindChildNode(xnode,'profile'+IntToStr(i))=nil;
 
-Application.ShowMainForm:=true;
 xnode:=Doc.DocumentElement.FindNode('application');
 
 IAppName:=xnode.Attributes.GetNamedItem('name').NodeValue;
@@ -579,7 +573,7 @@ begin
  xnode:=xnode.FindNode('dependencies');
  if xnode.FindNode('pkcatalog')<>nil then
  begin
-  z.ExtractFiles(ExtractFileName(xnode.FindNode('pkcatalog').NodeValue);
+  z.ExtractFiles(ExtractFileName(xnode.FindNode('pkcatalog').NodeValue));
   Dependencies.Add('cat:'+lp+PkgName+xnode.FindNode('pkcatalog').NodeValue)
  end else
  begin
@@ -587,9 +581,10 @@ begin
  for i:=0 to xnode.ChildNodes.Count-1 do
   Dependencies.Add(xnode.ChildNodes.Item[i].FirstChild.NodeValue);
  end;
- end;
-end else begin
-if xnode.FindNode('Dep'+DInfo.DName)<>nil then begin  //Check if there are specific packages available
+end else
+begin
+if xnode.FindNode('Dep'+DInfo.DName)<>nil then
+begin  //Check if there are specific packages available
 
 if (xnode.FindNode('Dep'+DInfo.DName).Attributes.GetNamedItem('releases')<>nil)
 and (pos(DInfo.Release,xnode.FindNode('Dep'+DInfo.DName).Attributes.GetNamedItem('releases').NodeValue)<= 0)
@@ -793,8 +788,6 @@ end;
 
 SetMainMaxVal(GetMaxInstSteps);
 
-Application.ProcessMessages;
-
 if Testmode then
 begin
  proc.CommandLine := 'rm -rf /tmp/litest';
@@ -818,10 +811,10 @@ if ExecA<>'<disabled>' then
 begin
     Proc.CommandLine := 'chmod 777 '+ExecA;
     Proc.Execute;
-while Proc.Running do Application.ProcessMessages;
+ //while proc.Running do Application.ProcessMessages;
     Proc.CommandLine := ExecA;
     Proc.Execute;
-while Proc.Running do Application.ProcessMessages;
+ //while proc.Running do Application.ProcessMessages;
 end;
 
 pkit:=TPackageKit.Create;
@@ -832,7 +825,7 @@ begin
 if pos('cat:',Dependencies[0])>0 then
 begin
  ln.Add('Installing package catalog...');
- pkit.InstallLocalPkg(copy(Dependencies[0],5,length(Dependencies[0]));
+ pkit.InstallLocalPkg(copy(Dependencies[0],5,length(Dependencies[0])));
 
  if not pkit.OperationSucessfull then
  begin
@@ -963,7 +956,6 @@ begin
 
     mnpos:=mnpos+5;
     SetMainPosVal(mnpos);
-    Application.ProcessMessages;
 
     //Check if the package was really installed
     if not pkit.OperationSucessfull then
@@ -978,7 +970,7 @@ begin
     mnpos:=mnpos+5;
     SetMainPosVal(mnpos);
 
-while proc.Running do Application.ProcessMessages;
+  //while proc.Running do Application.ProcessMessages;
 
  //If only a file name given install them with distri-tool
 end else begin
@@ -1010,17 +1002,7 @@ end; //End of dependency-check
 
 pkit.Free;
 
-//??? Needs re-implementation
-{
-Edit1.Visible:=false;
-btn_sendinput.Visible:=false;
-sleep(10);
-
-ExProgress.Enabled:=false;
-AbortBtn1.Enabled:=false;    }
-
 SetExtraPosVisibility(false);
-Application.ProcessMessages;
 
 //Delete old application installation if necessary
 if RmApp then
@@ -1039,7 +1021,6 @@ j:=0;
 if not DirectoryExists(SyblToPath('$INST')) then SysUtils.CreateDir(SyblToPath('$INST'));
 for i:=0 to fi.Count-1 do
 begin
-Application.ProcessMessages;
 if i mod 3 = 0 then
 begin
 
@@ -1074,7 +1055,6 @@ z.ExtractOptions:=[eoCreateDirs]+[eoRestorePath];
 z.BaseDirectory:=lp+ExtractFileName(PkgPath);
 
 z.ExtractFiles(ExtractFileName(h));
-Application.ProcessMessages;
 except
 SendErrorMsg(strExtractError);
 z.Free;
@@ -1082,11 +1062,9 @@ halt;
 end;
 
 ln.Add('Copy file '+ExtractFileName(h)+' to '+dest+' ...');
-Application.ProcessMessages;
 
 if fi[i+1] <> MDPrint((MD5.MD5File(DeleteModifiers(lp+PkgName+h),1024))) then begin
 SendErrorMsg(strHashError);
-Application.Terminate;
 exit;
 end;
 
@@ -1162,17 +1140,16 @@ proc.CommandLine := 'chmod 755 '+SyblToPath(fi[i+1])+'/'+ExtractFileName(DeleteM
 proc.Execute;
 end;
 
-while proc.Running do Application.ProcessMessages;
+ //while proc.Running do Application.ProcessMessages;
 ln.Add('Rights assigned to '+DeleteModifiers(ExtractFileName(SyblToPath(fi[i]))));
  end;
 end;
 end else
 begin //Rechte ordnerweise setzen
-for i:=0 to ndirs.Count-1 do begin
-Application.ProcessMessages;
+for i:=0 to ndirs.Count-1 do
+begin
 proc.CommandLine := 'chmod 755 -R '+SyblToPath(ndirs[i]);
 proc.Execute;
-Application.ProcessMessages;
 ln.Add('Rights assigned to folder '+ExtractFileName(SyblToPath(ndirs[i])));
  end;
 end; //Ende setcm
@@ -1228,14 +1205,12 @@ SetMainPosVal(mnpos);
 if ExecB<>'<disabled>' then begin
     proc.CommandLine := 'chmod 777 '+ExecB;
     Proc.Execute;
-while Proc.Running do Application.ProcessMessages;
+ //while Proc.Running do Application.ProcessMessages;
     Proc.CommandLine := ExecB;
     Proc.Execute;
-while Proc.Running do Application.ProcessMessages;
+ //while Proc.Running do Application.ProcessMessages;
 end;
 
-//???: Update source handling needs updates...
-{
 if USource<>'#' then
 begin
 fi:=TStringList.Create;
@@ -1247,19 +1222,19 @@ end;
 fi.LoadFromFile(RegDir+'updates.list');
 for i:=1 to fi.Count-1 do
 if pos(USource,fi[i])>0 then break;
-if i=fi.Count then begin
-if Application.MessageBox(PAnsiChar(strAddUpdSrc+#13+
+if i=fi.Count then
+begin
+// ??? Needs a proper solution: Command-line tools shouldn't display visual dialogs (and need X11)
+{if Application.MessageBox(PAnsiChar(strAddUpdSrc+#13+
 copy(USource,pos(' <',USource)+2,length(USource)-pos(' <',USource)-2)+' ('+copy(uSource,3,pos(' <',USource)-3)+')'+#13+
 PAnsiChar(strQAddUpdSrc)),'Add update-source',MB_YESNO)= IDYES then
-begin
-
+begin   }
 fi.Add('- '+USource);
 fi.SaveToFile(RegDir+'updates.list');
- end;
+ //end;
  end;
  fi.Free;
 end;
-}
 
 mnpos:=mnpos+5;
 SetMainPosVal(mnpos);;
@@ -1293,7 +1268,6 @@ end;
 
 ShowPKMon();
 
-Application.ProcessMessages;
 pkit:=TPackageKit.Create;
 
   for i:=1 to Dependencies.Count-1 do
@@ -1500,16 +1474,14 @@ tmp2.Text:=dsApp.FieldByName('Dependencies').AsString;
 
 if tmp2.Count>-1 then
 begin
-Application.ProcessMessages;
 for i:=0 to tmp2.Count-1 do
 begin
 f:=tmp2[i];
 //Skip catalog based packages - impossible to detect unneeded dependencies
-if pos('cat:',f) then break;
+if pos('cat:',f)>0 then break;
 
 if (LowerCase(f)<>'libc6') then
 begin
-Application.ProcessMessages;
 //Check if another package requires this package
 t:=TProcess.Create(nil);
 if pos('>',f)>0 then
@@ -1523,11 +1495,11 @@ if pos('>',f)>0 then
  pkit.GetRequires(copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2),s)
 else pkit.GetRequires(f,s);
 
-   if s.Count <=1 then begin
+   if s.Count <=1 then
+   begin
    if pos('>',f)>0 then
    pkit.RemovePkg(copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
    else pkit.RemovePkg(f);
-   Application.ProcessMessages;
    //GetOutPutTimer.Enabled:=true;
 
    Log.Add('Removing '+f+'...');
@@ -1536,8 +1508,6 @@ else pkit.GetRequires(f,s);
 
  s.free;
  pkit.Free;
-
- Application.ProcessMessages;
   end;
  end; //End of tmp2-find loop
 
@@ -1579,7 +1549,8 @@ Log.Add('Uninstalling MIME-Type...');
 writeLn('Uninstalling MIME-Type...');
 t:=TProcess.Create(nil);
 if (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.png')
-or (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.xpm') then begin
+or (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.xpm') then
+begin
 t.CommandLine:='xdg-icon-resource uninstall '+SysUtils.ChangeFileExt(ExtractFileName(DeleteModifiers(tmp[i])),'');
 t.Execute
 end else
@@ -1610,17 +1581,17 @@ DeleteFile(f);
 
 mnprog:=mnprog+10;
 SetPosition(mnprog);
-Application.ProcessMessages;
 end;
 
 //InfoMemo.Lines.Add('Direcory remove...');
 writeLn('Removing empty dirs...');
 tmp.LoadFromFile(p+'appdirs.list');
 proc:=TProcess.Create(nil);
-for i:=0 to tmp.Count-1 do begin
+for i:=0 to tmp.Count-1 do
+begin
   proc.CommandLine :='rm -rf '+tmp[i];
   proc.Execute;
-while proc.Running do Application.ProcessMessages;
+ //while proc.Running do Application.ProcessMessages;
 end;
 proc.Free;
 

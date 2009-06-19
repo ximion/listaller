@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="793"/>
+      <CurrentBuildNr Value="814"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -65,7 +65,7 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="59" Y="27"/>
+        <CursorPos X="58" Y="27"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
@@ -675,8 +675,8 @@
         <Filename Value="ipkhandle.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="17" Y="1119"/>
-        <TopLine Value="1099"/>
+        <CursorPos X="99" Y="1227"/>
+        <TopLine Value="1206"/>
         <UsageCount Value="73"/>
       </Unit88>
       <Unit89>
@@ -790,8 +790,8 @@
       <Unit104>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="2" Y="18"/>
-        <TopLine Value="1"/>
+        <CursorPos X="28" Y="434"/>
+        <TopLine Value="409"/>
         <UsageCount Value="10"/>
       </Unit104>
       <Unit105>
@@ -805,7 +805,7 @@
     <JumpHistory Count="1" HistoryIndex="0">
       <Position1>
         <Filename Value="igobase.pas"/>
-        <Caret Line="27" Column="59" TopLine="1"/>
+        <Caret Line="27" Column="58" TopLine="1"/>
       </Position1>
     </JumpHistory>
   </ProjectOptions>

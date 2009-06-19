@@ -669,11 +669,13 @@ end;
 procedure TIWizFrm.MainMaxPosChange(Sender: TObject;max: Integer);
 begin
  InsProgress.Max:=max;
+ Application.ProcessMessages;
 end;
 
 procedure TIWizFrm.ExtraMaxPosChange(Sender: TObject;max: Integer);
 begin
  ExProgress.Max:=max;
+ Application.ProcessMessages;
 end;
 
 procedure TIWizFrm.MainPosChange(Sender: TObject;pos: Integer);
@@ -691,11 +693,13 @@ end;
 procedure TIWizFrm.MainVisibleChange(Sender: TObject;vis: Boolean);
 begin
  InsProgress.Visible:=visible;
+ Application.ProcessMessages;
 end;
 
 procedure TIWizFrm.ExtraVisibleChange(Sender: TObject;vis: Boolean);
 begin
  ExProgress.Visible:=visible;
+ Application.ProcessMessages;
 end;
 
 procedure TIWizFrm.StartInstallation;

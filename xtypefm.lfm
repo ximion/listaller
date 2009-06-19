@@ -5,8 +5,8 @@ object imdFrm: TimdFrm
   Width = 634
   ActiveControl = btnInstallAll
   AutoSize = True
-  BorderIcons = [biSystemMenu, biMinimize]
-  BorderStyle = bsToolWindow
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
   Caption = 'Select Installation mode'
   ChildSizing.VerticalSpacing = 4
   ChildSizing.EnlargeHorizontal = crsScaleChilds
@@ -51,7 +51,6 @@ object imdFrm: TimdFrm
     Width = 443
     Caption = 'Your PackageKit version is %p. Listaller needs PackageKit 0.4.2 or higher to work correctly. '#10'Please update PackageKit!'
     ParentColor = False
-    Visible = False
   end
   object Image2: TImage
     Left = 0

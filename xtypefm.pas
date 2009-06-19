@@ -63,12 +63,12 @@ var s: String;pkit: TPackageKit;
 begin
  //Set translation strings
  Caption:=strSelInstMode;
- Label1.Caption:=strWantToDoQ;
  PkILabel.Caption:=strSpkWarning;
  btnInstallAll.Caption:=strInstallEveryone;
  btnTest.Caption:=strTestApp;
  btnHome.Caption:=strInstallHome;
 
+ Label1.Visible:=true;
 //Check PackageKit version
 try
   pkit:=TPackageKit.Create;
@@ -76,12 +76,13 @@ try
   pkit.Free;
   writeLn('Detected PackageKit: '+s);
   s:=copy(s,1,5);
-  if StrToInt(StringReplace(s,'.','',[rfReplaceAll]))<44 then begin
-        Label2.Caption:=StringReplace(StringReplace(strPackageKitWarning,'%cp',s,[rfReplaceAll]),'%np','0.4.4',[rfReplaceAll]);
-        Label2.Visible:=true;
+  if StrToInt(StringReplace(s,'.','',[rfReplaceAll]))<46 then
+  begin
+        Label2.Caption:=StringReplace(StringReplace(strPackageKitWarning,'%cp',s,[rfReplaceAll]),'%np','0.4.6',[rfReplaceAll]);
+        //Label2.Visible:=true;
         Image2.Visible:=true;
         LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_BUTTON,Image2.Picture.Bitmap);
-     end;
+  end;
 
   except
     LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_BUTTON,Image2.Picture.Bitmap);
@@ -91,8 +92,10 @@ end;
 procedure TimdFrm.FormShow(Sender: TObject);
 begin
 //Workaround for really strange LCL bug:
-//If PkILabel is invisible, the whole layout of the Form is destroyed
+//If Labels are invisible, the whole layout of the Form is destroyed
 PkiLabel.Caption:='';
+Label1.Caption:=strWantToDoQ;
+
 if PkWarnImg.Visible then
 begin
   LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_SMALL_TOOLBAR,PkWarnImg.Picture.Bitmap);

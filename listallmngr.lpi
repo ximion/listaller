@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="1210"/>
+      <CurrentBuildNr Value="1224"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -51,9 +51,9 @@
         <Filename Value="listallmngr.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallmngr"/>
-        <CursorPos X="1" Y="58"/>
-        <TopLine Value="18"/>
-        <UsageCount Value="162"/>
+        <CursorPos X="1" Y="33"/>
+        <TopLine Value="13"/>
+        <UsageCount Value="163"/>
       </Unit0>
       <Unit1>
         <Filename Value="manager.pas"/>
@@ -61,10 +61,10 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="59" Y="26"/>
-        <TopLine Value="373"/>
+        <CursorPos X="49" Y="26"/>
+        <TopLine Value="14"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="162"/>
+        <UsageCount Value="163"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
@@ -263,7 +263,7 @@
         <UnitName Value="settings"/>
         <CursorPos X="45" Y="59"/>
         <TopLine Value="40"/>
-        <UsageCount Value="154"/>
+        <UsageCount Value="155"/>
       </Unit29>
       <Unit30>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtkproc.inc"/>
@@ -293,7 +293,7 @@
         <UnitName Value="uninstall"/>
         <CursorPos X="2" Y="219"/>
         <TopLine Value="199"/>
-        <UsageCount Value="147"/>
+        <UsageCount Value="148"/>
       </Unit33>
       <Unit34>
         <Filename Value="trstrings.pas"/>
@@ -368,7 +368,7 @@
         <UnitName Value="pkgconvertdisp"/>
         <CursorPos X="28" Y="26"/>
         <TopLine Value="1"/>
-        <UsageCount Value="112"/>
+        <UsageCount Value="113"/>
       </Unit44>
       <Unit45>
         <Filename Value="swcatalog.pas"/>
@@ -378,7 +378,7 @@
         <UnitName Value="swcatalog"/>
         <CursorPos X="11" Y="26"/>
         <TopLine Value="1"/>
-        <UsageCount Value="105"/>
+        <UsageCount Value="106"/>
       </Unit45>
       <Unit46>
         <Filename Value="../../../../../usr/share/fpcsrc/packages/fcl-xml/src/dom.pp"/>
@@ -504,8 +504,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="xtypefm"/>
-        <CursorPos X="104" Y="111"/>
-        <TopLine Value="89"/>
+        <CursorPos X="7" Y="89"/>
+        <TopLine Value="62"/>
         <UsageCount Value="14"/>
       </Unit64>
       <Unit65>
@@ -536,7 +536,7 @@
         <UnitName Value="aboutbox"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="55"/>
+        <UsageCount Value="56"/>
       </Unit68>
       <Unit69>
         <Filename Value="../../../../../usr/lib/lazarus/components/turbopower_ipro/iphtmlpv.pas"/>
@@ -609,7 +609,7 @@
         <UnitName Value="packagekit"/>
         <CursorPos X="17" Y="16"/>
         <TopLine Value="1"/>
-        <UsageCount Value="37"/>
+        <UsageCount Value="38"/>
       </Unit78>
       <Unit79>
         <Filename Value="../../../../../usr/share/fpcsrc/2.2.2/packages/gtk2/src/gtk+/gtk/gtkenums.inc"/>
@@ -730,7 +730,7 @@
       </Position17>
       <Position18>
         <Filename Value="manager.pas"/>
-        <Caret Line="26" Column="59" TopLine="1"/>
+        <Caret Line="26" Column="49" TopLine="14"/>
       </Position18>
     </JumpHistory>
   </ProjectOptions>
