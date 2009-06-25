@@ -1,9 +1,9 @@
 { Das ist eine automatisch erzeugte Lazarus-Ressourcendatei }
 
 LazarusResources.Add('TRMForm','FORMDATA',[
-  'TPF0'#7'TRMForm'#6'RMForm'#4'Left'#3#10#3#6'Height'#3'#'#1#3'Top'#3#150#2#5
-  +'Width'#3#195#1#13'ActiveControl'#7#5'Memo1'#7'Caption'#6#18'Uninstalling [.'
-  +'..]'#12'ClientHeight'#3'#'#1#11'ClientWidth'#3#195#1#9'Icon.Data'#10#154#5#0
+  'TPF0'#7'TRMForm'#6'RMForm'#4'Left'#3#150#1#6'Height'#3#13#1#3'Top'#3'i'#1#5
+  +'Width'#3#212#1#13'ActiveControl'#7#5'Memo1'#7'Caption'#6#18'Uninstalling [.'
+  +'..]'#12'ClientHeight'#3#13#1#11'ClientWidth'#3#212#1#9'Icon.Data'#10#154#5#0
   +#0#150#5#0#0#0#0#1#0#1#0#18#18#0#0#1#0' '#0#128#5#0#0#22#0#0#0'('#0#0#0#18#0
   +#0#0'$'#0#0#0#1#0' '#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0
   +#1'000X[[['#189'...E'#0#0#0#2#255#255#255#0#255#255#255#0#255#255#255#0#255
@@ -66,21 +66,23 @@ LazarusResources.Add('TRMForm','FORMDATA',[
   +#254#15#192#0#254#15#192#0#252#1#192#0#249#192#192#0#243#192'@'#0#231#224'@'
   +#0#207#227#192#0#159#225#192#0#159#240#192#0#255#255#192#0#10'OnActivate'#7
   ,#12'FormActivate'#7'OnClose'#7#9'FormClose'#8'OnCreate'#7#10'FormCreate'#6'O'
-  +'nShow'#7#8'FormShow'#8'Position'#7#16'poMainFormCenter'#10'LCLVersion'#6#6
-  +'0.9.27'#0#6'TLabel'#6'Label1'#4'Left'#2#8#6'Height'#2#13#3'Top'#2#8#5'Width'
-  +#2')'#7'Caption'#6#7'<label>'#11'ParentColor'#8#0#0#12'TProgressBar'#9'UProg'
-  +'ress'#4'Left'#2#8#6'Height'#2' '#3'Top'#2' '#5'Width'#3#178#1#7'Anchors'#11
-  +#5'akTop'#6'akLeft'#7'akRight'#0#6'Smooth'#9#8'TabOrder'#2#0#0#0#5'TMemo'#5
-  +'Memo1'#4'Left'#2#8#6'Height'#3#173#0#3'Top'#2'H'#5'Width'#3#176#1#7'Anchors'
-  +#11#5'akTop'#6'akLeft'#7'akRight'#8'akBottom'#0#13'Lines.Strings'#1#6#4'Log:'
-  +#0#8'TabOrder'#2#1#0#0#7'TBitBtn'#7'BitBtn1'#4'Left'#3'm'#1#6'Height'#2#30#3
-  +'Top'#3#253#0#5'Width'#2'K'#7'Anchors'#11#7'akRight'#8'akBottom'#0#7'Caption'
-  +#6#5'Close'#9'NumGlyphs'#2#0#7'OnClick'#7#12'BitBtn1Click'#8'TabOrder'#2#2#0
-  +#0#10'TIdleTimer'#14'GetOutPutTimer'#7'Enabled'#8#8'Interval'#2#8#7'OnTimer'
-  +#7#19'GetOutPutTimerTimer'#4'left'#3#144#1#3'top'#2#8#0#0#8'TProcess'#8'Proc'
-  +'ess1'#6'Active'#8#7'Options'#11#10'poUsePipes'#16'poStderrToOutPut'#11'poNo'
-  +'Console'#0#8'Priority'#7#8'ppNormal'#14'StartupOptions'#11#0#10'ShowWindow'
-  +#7#7'swoNone'#13'WindowColumns'#2#0#12'WindowHeight'#2#0#10'WindowLeft'#2#0
-  +#10'WindowRows'#2#0#9'WindowTop'#2#0#11'WindowWidth'#2#0#13'FillAttribute'#2
-  +#0#4'left'#3#144#1#3'top'#2'('#0#0#0
+  +'nShow'#7#15'DetailsBtnClick'#8'Position'#7#16'poMainFormCenter'#10'LCLVersi'
+  +'on'#6#6'0.9.27'#0#6'TLabel'#6'Label1'#4'Left'#2#8#6'Height'#2#13#3'Top'#2#8
+  +#5'Width'#2')'#7'Caption'#6#7'<label>'#11'ParentColor'#8#0#0#12'TProgressBar'
+  +#9'UProgress'#4'Left'#2#8#6'Height'#2' '#3'Top'#2' '#5'Width'#3#200#1#7'Anch'
+  +'ors'#11#5'akTop'#6'akLeft'#7'akRight'#0#6'Smooth'#9#8'TabOrder'#2#0#0#0#5'T'
+  +'Memo'#5'Memo1'#4'Left'#2#8#6'Height'#2'w'#3'Top'#2'h'#5'Width'#3#200#1#7'An'
+  +'chors'#11#5'akTop'#6'akLeft'#7'akRight'#8'akBottom'#0#13'Lines.Strings'#1#6
+  +#4'Log:'#0#8'TabOrder'#2#1#0#0#7'TBitBtn'#7'BitBtn1'#4'Left'#3#133#1#6'Heigh'
+  +'t'#2#30#3'Top'#3#231#0#5'Width'#2'K'#7'Anchors'#11#7'akRight'#8'akBottom'#0
+  +#7'Caption'#6#5'Close'#9'NumGlyphs'#2#0#7'OnClick'#7#12'BitBtn1Click'#8'TabO'
+  +'rder'#2#2#0#0#7'TBitBtn'#10'DetailsBtn'#4'Left'#2#8#6'Height'#2#26#3'Top'#2
+  +'H'#5'Width'#2'A'#8'AutoSize'#9#7'Caption'#6#10'Details ->'#7'OnClick'#7#15
+  +'DetailsBtnClick'#8'TabOrder'#2#3#0#0#10'TIdleTimer'#14'GetOutPutTimer'#7'En'
+  +'abled'#8#8'Interval'#2#8#7'OnTimer'#7#19'GetOutPutTimerTimer'#4'left'#3#144
+  +#1#3'top'#2#8#0#0#8'TProcess'#8'Process1'#6'Active'#8#7'Options'#11#10'poUse'
+  +'Pipes'#16'poStderrToOutPut'#11'poNoConsole'#0#8'Priority'#7#8'ppNormal'#14
+  +'StartupOptions'#11#0#10'ShowWindow'#7#7'swoNone'#13'WindowColumns'#2#0#12'W'
+  +'indowHeight'#2#0#10'WindowLeft'#2#0#10'WindowRows'#2#0#9'WindowTop'#2#0#11
+  +'WindowWidth'#2#0#13'FillAttribute'#2#0#4'left'#2#8#3'top'#3#0#1#0#0#0
 ]);

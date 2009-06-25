@@ -1,536 +1,1431 @@
-# Turkish translation for listaller
-# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
-# This file is distributed under the same license as the listaller package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: listaller\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2008-09-08 20:08-0400\n"
-"PO-Revision-Date: 2008-10-05 12:50+0000\n"
-"Last-Translator: hub <Unknown>\n"
-"Language-Team: Turkish <tr@li.org>\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-02-28 20:08-0100\n"
+"PO-Revision-Date: 2009-05-18 15:25+0000\n"
+"Last-Translator: Bora Akbay <boraakbay@boraakbay.info>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-11-24 18:12+0000\n"
+"X-Launchpad-Export-Date: 2009-06-19 18:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: trstrings:instaborted
+#: trstrings:strinstaborted
 msgid "Installation aborted."
-msgstr "Yüklenme durduruldu."
+msgstr "Yükleme İptal Edildi."
 
 #: trstrings:strappninstall
 msgid "The application %a was not installed."
-msgstr ""
+msgstr "%a Programı Yüklenmedi."
 
 #: trstrings:strwasinstalled
 msgid "The application %a was installed successfully!"
-msgstr ""
+msgstr "%a Programı Başarıyla Yüklendi!"
 
 #: trstrings:strinstallnow
 msgid "Install now"
-msgstr "Şimdi kur"
+msgstr "Şimdi Yükle!"
 
-#: trstrings:runparam
-msgid "Please run listallgo with path to install-package as first parameter!"
+#: trstrings:strrunparam
+msgid ""
+"Please run \"listallgo\" with path to install-package as first parameter!"
 msgstr ""
+"Lütfen yükleme için ilk değişken olarak \"listallgo\" dosya dizinini "
+"çalıştırın!"
 
 #: trstrings:strwelcome
 msgid "Welcome!"
-msgstr "Hoş geldiniz!"
+msgstr "Hoşgeldiniz!"
 
-#: trstrings:ntostart
+#: trstrings:strntostart
 msgid "Press \"Next\" to start the installation!"
-msgstr "Kurmak icin \"Devam\" basiniz !"
+msgstr "Yüklemeye başlamak için \"İleri\" butonuna basınız!"
 
-#: trstrings:progdesc
+#: trstrings:strprogdesc
 msgid "Program description:"
-msgstr ""
+msgstr "Program Açıklaması."
 
-#: trstrings:license
+#: trstrings:strlicense
 msgid "Software license"
-msgstr ""
+msgstr "Uygulama Lisansı"
 
-#: trstrings:pleaseread
+#: trstrings:strpleaseread
 msgid "Please read the following information carefully:"
-msgstr ""
+msgstr "Lütfen aşağıdaki bilgiyi dikkatle okuyun:"
 
-#: trstrings:running
+#: trstrings:strrunning
 msgid "Running installation..."
-msgstr ""
+msgstr "Yükleme çalışıyor..."
 
-#: trstrings:plwait
+#: trstrings:strplwait
 msgid "Please wait."
-msgstr ""
+msgstr "Lütfen Bekleyin."
 
-#: trstrings:strswarning
-msgid "Make sure that you can trust the package publisher!"
-msgstr ""
-
-#: trstrings:complete
+#: trstrings:strcomplete
 msgid "Installation completed!"
-msgstr ""
+msgstr "Yükleme Tamamlandı!"
 
-#: trstrings:prfinish
+#: trstrings:strprfinish
 msgid "Press \"Finish\" to close."
-msgstr ""
+msgstr "Yüklemeyi bitirmek için \"Bitir\" butonuna basınız."
 
-#: trstrings:finish
+#: trstrings:strfinish
 msgid "Finish"
-msgstr ""
+msgstr "Bitir"
 
 #: trstrings:strabort
 msgid "Abort"
-msgstr ""
+msgstr "Vazgeç"
 
 #: trstrings:strback
 msgid "Back"
-msgstr ""
+msgstr "Geri"
 
 #: trstrings:strnext
 msgid "Next"
-msgstr ""
+msgstr "İleri"
 
 #: trstrings:strdisplog
 msgid "Display installation log"
-msgstr ""
+msgstr "Yükleme kayıtlarını göster"
 
 #: trstrings:striagree
 msgid "I agree with the above terms and conditions"
-msgstr ""
+msgstr "Yukarıdaki şartları kabul ediyorum."
 
 #: trstrings:strinagree
 msgid "I don't agree"
-msgstr ""
+msgstr "Katılmıyorum"
 
 #: trstrings:strldnsupported
 msgid "Your Linux distribution is not supported by Listaller yet!"
-msgstr ""
+msgstr "Linux sürümünüz Linstaller tarafından henüz desteklenmiyor."
 
 #: trstrings:strnsupported
-msgid "Your Linux distribution is not supported by this package!"
+msgid "This package does not support your Linux distribution."
+msgstr "Bu paket, Linux sürümünüzü desteklemiyor."
+
+#: trstrings:strdepnotfound
+msgid ""
+"Found no package with the necessary library \"%l\" for your distribution."
 msgstr ""
 
 #: trstrings:strinclose
 msgid "The installer will close now"
-msgstr ""
+msgstr "Yükleyici şimdi kapanacak."
 
-#: trstrings:notifydevs
+#: trstrings:strcnoverwrite
+msgid "Unable to overwrite the file %f."
+msgstr "%f dosyasının üzerine yazılamadı."
+
+#: trstrings:strnotifydevs
 msgid "Please notify the developers on http://launchpad.net/listaller"
 msgstr ""
+"Lütfen http://launchpad.net/linstaller adresi üzerinden yazılım "
+"geliştiricilerimizi haberdar ediniz."
 
 #: trstrings:strextracterror
 msgid "Error while extracting files!"
-msgstr ""
+msgstr "Dosyalar çıkartırken hata yaşandı!"
 
 #: trstrings:strpkgdm
 msgid ""
-"The Listaller-package could be damaged or you haven't enough rights for "
-"access some files"
+"The IPK package could be damaged or you haven't enough rights to acces "
+"required files/folders."
 msgstr ""
+"IPH paketi zarar görmüş olabilir ya da gereken dosyalara erişmek için "
+"yetkileriniz yeterli olmayabilir."
 
 #: trstrings:strabload
 msgid "Loading aborted."
-msgstr ""
+msgstr "Yükleme iptal edildi."
 
 #: trstrings:stralreadyinst
 msgid "This application is already installed"
-msgstr ""
+msgstr "Bu program zaten yüklenmiş."
 
 #: trstrings:strinstallagain
 msgid "Do you want to install it again?"
-msgstr ""
+msgstr "Tekrar yüklemek ister misiniz?"
 
 #: trstrings:strwelcometo
 msgid "Welcome to the installation of %a"
-msgstr ""
+msgstr "%a programının yüklemesine hoşgeldiniz."
 
 #: trstrings:strinstof
 msgid "Installation of %a"
-msgstr ""
+msgstr "%a Programının Yüklemesi"
+
+#: trstrings:strtestmode
+msgid "Testmode"
+msgstr "Test Modu"
+
+#: trstrings:strtestfinished
+msgid "Test of the application finished."
+msgstr "Uygulamanın testi bitti."
 
 #: trstrings:strpkginval
 msgid "The package was invalid!"
-msgstr ""
+msgstr "Paket geçersiz!"
 
 #: trstrings:strcouldntsolve
 msgid "Dependencies couldn't be solved!"
-msgstr ""
+msgstr "Bağımlılıklar çözülemedi."
 
 #: trstrings:strviewlog
 msgid "Please view the logfile at %p"
-msgstr ""
+msgstr "Lütfen kayıtlara göz atınız. ( %p )"
 
 #: trstrings:strpkgerror
 msgid "Installation package is corrupt"
-msgstr ""
+msgstr "Yükleme paketi hasar görmüş."
 
 #: trstrings:strappclose
 msgid "The application will close now "
-msgstr ""
+msgstr "Uygulama şimdi kapanacak. "
 
 #: trstrings:strstep1
 msgid "Phase 1/4: Resolving dependencies..."
-msgstr ""
+msgstr "Adım 1/4: Bağımlılıklar çözümleniyor..."
 
 #: trstrings:strwdldep
 msgid "This application wants to download & install a dependency from %l"
 msgstr ""
+"Uygulama %l adresinden yeni bir bağımlılık indirip, yüklemek istiyor."
 
 #: trstrings:strwallow
-msgid "Do you want to allow it?"
-msgstr ""
+msgid "Do you want confirm this action?"
+msgstr "Bu hareketi onaylamak istiyor musunuz?"
 
 #: trstrings:strlicloseani
-msgid "Listaller will close now. Application couldn't be installed."
-msgstr ""
+msgid "Listaller will close now. The package couldn't be installed."
+msgstr "Linstaller şimdi kapanacak. Paket yüklenemedi."
 
 #: trstrings:strstep2
 msgid "Phase 2/4: Installing files..."
-msgstr ""
+msgstr "Adım 2/4: Dosyalar yükleniyor..."
 
 #: trstrings:strstep3
 msgid "Phase 3/4: Chmod new files..."
-msgstr ""
+msgstr "Adım 3/4: Yeni dosyaların izinleri atanıyor..."
 
 #: trstrings:strstep4
 msgid "Phase 4/4: Registering application..."
-msgstr ""
+msgstr "Adım 4/4: Program kaydı yapılıyor..."
 
 #: trstrings:straddupdsrc
-msgid "This package tries to add the following update source: "
-msgstr ""
+msgid "The installation tries to add the following update source: "
+msgstr "Uygulama aşağıdaki güncelleme kaynaklarını eklemek istiyor: "
 
 #: trstrings:strqaddupdsrc
-msgid "Should this source be added to the update-list?"
-msgstr ""
+msgid "Should this source be added to the update sources list?"
+msgstr "Bu kaynak güncelleme kaynaklarının arasına eklenmeli mi?"
 
 #: trstrings:strfinished
 msgid "Finished"
-msgstr ""
+msgstr "Bitti"
 
 #: trstrings:strinstanyway
-msgid "Do you want to install it anyway? (This could be problematical)"
+msgid "Do you want to install it anyway? (This could raise problems)"
 msgstr ""
+"Herşeye rağmen yüklemek istediğinize emin misiniz? (Bu sorunlara yol "
+"açabilir!)"
 
 #: trstrings:strinvarchitecture
-msgid "This package was not build for this system-architecture"
+msgid ""
+"The application which this package contains was not built for the current "
+"system architecture."
 msgstr ""
+"Bu paketin içerdiği uygulama, şu anki sistem mimarisine uygun tasarlanmamış."
 
 #: trstrings:strwilldlfiles
 msgid "(This program will download the needed files from the internet)"
-msgstr ""
+msgstr "(Bu program, gereken dosyaları internetten yükleyecek.)"
 
 #: trstrings:strinvaliddversion
-msgid "Package was not build for this release."
-msgstr ""
-
-#: trstrings:strcngetdep
-msgid "Problem while downloading the dep-file."
-msgstr ""
+msgid "Package was not build for your Linux distribution release."
+msgstr "Bu paket sisteminizde yüklü olan Linux dağıtımı için tasarlanmamış."
 
 #: trstrings:strftpfailed
 msgid ""
 "Problem while downloading the packages. Maybe the login on the FTP-Server "
 "failed."
 msgstr ""
+"Paketler internetten indirilirken sorun yaşandı. Belki FTP Sunucusuna "
+"yapılan oturum açma denemesi başarısız olmuş olabilir."
 
 #: trstrings:strsuccess
 msgid "Success!"
-msgstr ""
+msgstr "Zafer!"
 
 #: trstrings:strmain
 msgid "Main"
-msgstr ""
+msgstr "Temel"
 
 #: trstrings:strdetails
 msgid "Details"
-msgstr ""
+msgstr "Detaylar"
 
 #: trstrings:strinstallation
 msgid "Installation"
-msgstr ""
+msgstr "Yükleme"
 
 #: trstrings:strnoldsources
 msgid ""
-"There are no sources available for your Linux-distributionTry to install "
+"There are no sources available for your Linux distribution\rTry to install "
 "common packages?"
 msgstr ""
 
 #: trstrings:strusecomppq
 msgid "Use compatible packages?"
-msgstr ""
+msgstr "Uyumlu paketler kullanılsın mı?"
 
 #: trstrings:strnocomp
 msgid "No compatible packages found!"
+msgstr "Uyumlu paket(ler) bulunamadı!"
+
+#: trstrings:stractionnotpossiblepkg
+msgid ""
+"The selected action is not possible with this package.\rPlease contact the "
+"package maintainer to get more information."
 msgstr ""
+
+#: trstrings:stridinvalid
+msgid "This package has no valid ID\rThe installer will close."
+msgstr ""
+
+#: trstrings:strreinstall
+msgid "Re-install"
+msgstr "Tekrar yükle."
+
+#: trstrings:strpkgdownload
+msgid "The following packages will be downloaded:"
+msgstr "Aşağıdaki paketler yüklenecek:"
+
+#: trstrings:strgetdependencyfrom
+msgid "Get dependency from"
+msgstr "Bağımlılıkları şuradan al"
+
+#: trstrings:strplwait2
+msgid "Please wait..."
+msgstr "Lütfen Bekleyiniz..."
+
+#: trstrings:strdepdlproblem
+msgid "Problem while downloading the dep-file."
+msgstr "Bağımlılık dosyası indirilirken sorun yaşandı."
+
+#: trstrings:strhasherror
+msgid ""
+"Hash doesn't match!\rThe package may be modified after creation.\rPlease "
+"obtain a new copy"
+msgstr ""
+
+#: trstrings:strinstallationmode
+msgid "Installation mode:"
+msgstr "Yükleme modu:"
+
+#: trstrings:strimodeinstruction
+msgid "Select which parts of the application should be installed."
+msgstr "Bu uygulamanın hangi kısmının yüklenmedini istediğinizi seçiniz."
+
+#: trstrings:strmode
+msgid "Mode"
+msgstr "Mod:"
+
+#: trstrings:strwanttodoq
+msgid "What do you want to do?"
+msgstr "Ne yapmak istiyorsunuz?"
+
+#: trstrings:strpackagekitwarning
+msgid ""
+"Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to "
+"work correctly.\rPlease update PackageKit!"
+msgstr ""
+
+#: trstrings:strspkwarning
+msgid ""
+"Make sure that you have got this package from a save source and a serious "
+"publisher!"
+msgstr ""
+"Bu programı güvenli bir kaynaktan ve/veya ciddi bir yayımcıdan aldığınıza "
+"emin olun!"
+
+#: trstrings:strinstalleveryone
+msgid "Install application for everyone"
+msgstr "Uygulamayı herkes için yükle."
+
+#: trstrings:strtestapp
+msgid "Test application"
+msgstr "Uygulamayı test et"
+
+#: trstrings:strinstallhome
+msgid "Install into my Home directory"
+msgstr "Ev dizinime yükle."
+
+#: trstrings:strselinstmode
+msgid "Select installation mode"
+msgstr "Yükleme modunu seç"
+
+#: trstrings:strsoftwaremanager
+msgid "Software Manager"
+msgstr "Yazılım Yöneticisi"
 
 #: trstrings:strupdsources
 msgid "Update sources"
-msgstr ""
+msgstr "Güncelleme kaynakları"
 
 #: trstrings:strclose
 msgid "Close"
-msgstr ""
+msgstr "Kapat"
 
 #: trstrings:strdelsrc
 msgid "Delete source"
-msgstr ""
+msgstr "Kaynağı sil"
 
 #: trstrings:strlistofsrc
-msgid "Here's a list of all update-sources:"
-msgstr ""
+msgid "The following update sources are installed:"
+msgstr "Aşağıdaki güncelleme kaynakları yüklendi:"
 
 #: trstrings:struninstall
 msgid "Uninstall"
-msgstr ""
-
-#: trstrings:strinstnew
-msgid "Install new application"
-msgstr ""
-
-#: trstrings:strshowsettings
-msgid "Listaller settings"
-msgstr ""
+msgstr "Kaldır"
 
 #: trstrings:strswcatalogue
-msgid "Software catalogue"
+msgid "Browse catalogue"
 msgstr ""
 
 #: trstrings:strshow
 msgid "Show:"
-msgstr ""
+msgstr "Göster:"
 
 #: trstrings:strall
 msgid "All"
-msgstr ""
+msgstr "Tümü"
 
 #: trstrings:streducation
 msgid "Education"
-msgstr ""
+msgstr "Eğitim"
 
 #: trstrings:stroffice
 msgid "Office"
-msgstr ""
+msgstr "Ofis"
 
 #: trstrings:strdevelopment
 msgid "Development"
-msgstr ""
+msgstr "Yazılım Geliştirme"
 
 #: trstrings:strgraphic
 msgid "Graphic"
-msgstr ""
+msgstr "Grafik"
 
 #: trstrings:strnetwork
 msgid "Network"
-msgstr ""
+msgstr "Ağ"
 
 #: trstrings:strgames
 msgid "Games"
-msgstr ""
+msgstr "Oyunlar"
 
 #: trstrings:strsystem
 msgid "System"
-msgstr ""
+msgstr "Sistem"
 
 #: trstrings:strmultimedia
 msgid "Multimedia"
-msgstr ""
+msgstr "Çoklu Ortam"
 
 #: trstrings:straddidional
-msgid "Additional"
-msgstr ""
+msgid "Utilities"
+msgstr "Araçlar"
 
 #: trstrings:strother
 msgid "Other"
-msgstr ""
+msgstr "Diğer"
 
 #: trstrings:strversion
 msgid "Version"
-msgstr ""
+msgstr "Versiyon / Sürüm"
 
 #: trstrings:strauthor
 msgid "Autor"
-msgstr ""
+msgstr "Yazar"
 
 #: trstrings:strusername
 msgid "Username"
-msgstr ""
+msgstr "Kullanıcı Adı"
 
 #: trstrings:strpassword
 msgid "Password"
-msgstr ""
+msgstr "Şifre"
 
 #: trstrings:strproxysettings
 msgid "Proxy-Settings"
-msgstr ""
+msgstr "Vekil Sunucu (Proxy) Ayarları"
 
 #: trstrings:strenableproxy
 msgid "Enable Proxy-Server"
-msgstr ""
+msgstr "Vekil Sunucuları (Proxy) Akrtive Et"
 
 #: trstrings:strlokierror
 msgid "Can't load LOKI-Setup information."
-msgstr ""
+msgstr "LOKI-Ayar bilgileri yüklenemiyor."
 
 #: trstrings:strcannotloadicon
 msgid ""
 "Unable to load the icon of %a. Please notify the developers of Listaller or "
 "this application!"
 msgstr ""
+"%a 'nın simgesi yüklenemedi. Lütfen Linstaller'ın yazılım geliştiricilerini "
+"haberdar edin."
 
 #: trstrings:strautoloaddep
 msgid "Load dependencies from included webserver-urls automatically"
-msgstr ""
+msgstr "İçerilen URL'lerden bağımlılıkları otomatik olarak yükle."
 
 #: trstrings:strready
 msgid "Ready."
-msgstr ""
+msgstr "Hazır."
 
 #: trstrings:strconvertpkg
 msgid ""
 "You want to install an %x-Package, but your Linux-Distribution's package "
-"system is %y.This package can be converted using \"alien\", but this will "
-"take some time and eventually the application won't workDo you want to "
+"system is %y.\rThis package can be converted using \"alien\", but this will "
+"take some time and eventually the application won't work\rDo you want to "
 "convert the package now?"
 msgstr ""
 
 #: trstrings:strconvertpkgq
 msgid "Convert package?"
-msgstr ""
+msgstr "Paket çevrilsin mi?"
 
 #: trstrings:strconvtitle
 msgid "Converting %p package..."
-msgstr ""
+msgstr "%p Paketi çevriliyor."
 
 #: trstrings:strfiltering
 msgid "Filtering..."
-msgstr ""
+msgstr "Süzülüyor..."
 
 #: trstrings:strfilter
 msgid "Filter:"
-msgstr ""
+msgstr "Süzgeç:"
 
 #: trstrings:strloading
 msgid "Loading..."
+msgstr "Yükleniyor..."
+
+#: trstrings:strinstalledapps
+msgid "Installed applications"
 msgstr ""
+
+#: trstrings:strinstallpkg
+msgid "Install package"
+msgstr ""
+
+#: trstrings:strbrowsecatalog
+msgid "Browse catalog"
+msgstr ""
+
+#: trstrings:strrepositories
+msgid "Repositories"
+msgstr ""
+
+#: trstrings:strsettings
+msgid "Settings"
+msgstr ""
+
+#: trstrings:strnoguipkgmanfound
+msgid ""
+"Could not find usable GUI package manager.\rPlease install a PackageKit-GUI!"
+msgstr ""
+
+#: trstrings:struselaunchpadforbugs
+msgid "Please use https://bugs.launchpad.net/listaller for bug reports."
+msgstr ""
+
+#: trstrings:strdisprootapps
+msgid "Display system applications"
+msgstr "Sistem uygulamalarını göster"
+
+#: trstrings:strdisponlymyapps
+msgid "Display my applications"
+msgstr "Benim uygulamalarımı göster"
+
+#: trstrings:strselmgrmode
+msgid "Select software-manager mode:"
+msgstr "Uygulama yöneticisi modunu seçin:"
+
+#: trstrings:strlistalleralien
+msgid ""
+"Listaller uses \"alien\" to convert foreign packages, but the tool is not "
+"installed\rDo you want to install \"alien\" now to continue?"
+msgstr ""
+
+#: trstrings:strinstpkgq
+msgid "Install package?"
+msgstr "Paket yüklensin mi?"
+
+#: trstrings:strpkginstfail
+msgid "Package %p could not be installed."
+msgstr "%p paketi yüklenemedi."
+
+#: trstrings:strshowpkmon
+msgid "Start PackageKit monitor before running transactions"
+msgstr "İşlemden önce PackageKit monitörünü başlat."
+
+#: trstrings:straboutlistaller
+msgid "About Listaller"
+msgstr "Linstaller Hakkında"
+
+#: trstrings:strconfigurelistaller
+msgid "Configure Listaller"
+msgstr ""
+
+#: trstrings:strbrowselicatalog
+msgid "Browse Listaller's software catalog"
+msgstr ""
+
+#: trstrings:stropendistricatalog
+msgid "Open your distribution's package catalog"
+msgstr ""
+
+#: trstrings:strabout
+msgid "About"
+msgstr "Hakkında"
+
+#: trstrings:strauthors
+msgid "Authors"
+msgstr "Yazarlar"
+
+#: trstrings:strrmsrcq
+msgid "Are you really sure that you want to delete this source?"
+msgstr "Bu kaynağı silmek istediğinizden kesinlikle emin misiniz?"
+
+#: trstrings:strrmsrcqc
+msgid "Delete source?"
+msgstr "Kaynak silinsin mi?"
+
+#: trstrings:strpkitprobpkmon
+msgid ""
+"Problem while connecting PackageKit. Run \"pkmon\" to get further "
+"information."
+msgstr ""
+"PackageKit bağlanırken sorun oluştu. Daha fazla bilgi için \"pkmon\" "
+"sistemini çalıştırın."
+
+#: trstrings:strnoappsfound
+msgid "No applications found!"
+msgstr "Uygulama bulunmadı!"
 
 #: trstrings:strcategory
 msgid "Category:"
-msgstr ""
+msgstr "Kategori:"
 
 #: trstrings:strwinstalldl
 msgid "Select software you want to download and to install:"
-msgstr ""
+msgstr "İndirip, yüklemek istediğiniz uygulamayı seçiniz:"
 
 #: trstrings:strnoinfo
 msgid "No information available!"
-msgstr ""
+msgstr "Hakkında bilgi mümkün değil."
 
 #: trstrings:strdlsetup
-msgid "Downloading set-up..."
-msgstr ""
+msgid "Downloading setup package..."
+msgstr "Yükleme paketi indiriliyor."
 
 #: trstrings:strerrcontactman
 msgid ""
 "Cannot download this package. Please contact the catalogue managers on %h"
 msgstr ""
+"Bu paket indirilemiyor. Lütfen %h adresindeki katalog ve menejerlerle "
+"görüşün."
 
 #: trstrings:strinstalling
 msgid "Running application installation..."
-msgstr ""
+msgstr "Uygulama yüklemesi çalıştırılıyor..."
 
 #: trstrings:strdownloadctbase
 msgid "Downloading catalogue base information..."
-msgstr ""
+msgstr "Katalog baz bilgisi indiriliyor..."
 
 #: trstrings:stropenpage
 msgid "Loading catalogue page..."
-msgstr ""
+msgstr "Katalog sayfası yükleniyor..."
 
 #: trstrings:strctdlabort
 msgid "Do you really want to abort this download?"
-msgstr ""
+msgstr "Bu yüklemeyi gerçekten iptal etmek istiyor musunuz?"
 
 #: trstrings:strrealuninstq
 msgid "Do you really want to uninstall %a?"
-msgstr ""
+msgstr "%a uygulamasını gerçekten kaldırmak istiyor musunuz?"
 
 #: trstrings:strunistsuccess
 msgid "Application uninstalled successfully!"
-msgstr ""
+msgstr "Uygulama başarıyla kaldırıldı!"
 
 #: trstrings:strrmerror
 msgid "Error while uninstalling!"
-msgstr ""
+msgstr "Uygulama kaldırılırken bir hata yaşandı!"
 
 #: trstrings:strcannothandlerm
 msgid ""
 "This application is not a MoJo-Installation and no other package-type "
-"Listaller can handle."
+"Listaller can handle.\rYou have to remove it manually."
 msgstr ""
 
 #: trstrings:strrmunsddeps
 msgid "Uninstalling unused deps..."
-msgstr ""
+msgstr "Kullanılmayan bağımlılıklar kaldırılıyor..."
 
 #: trstrings:struninstalling
 msgid "Uninstalling..."
-msgstr ""
+msgstr "Kaldırılıyor..."
 
 #: trstrings:strrmpkg
 msgid ""
-"Do you really want to remove \"%p\", containing %a?The following package(s) "
-"will be removed also: %plIf you aren't sure that you won't need those "
-"packages, press \"No\"!"
+"Do you really want to remove \"%p\", containing %a?\rThe following "
+"package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+"those packages, press \"No\"!"
 msgstr ""
 
 #: trstrings:strrmpkgq
 msgid "Really remove?"
-msgstr ""
+msgstr "Gerçekten kaldırılsın?"
 
 #: trstrings:strwaiting
 msgid "Waiting..."
-msgstr ""
+msgstr "Bekleniyor..."
 
 #: trstrings:strrmappc
 msgid "Uninstalling %a"
+msgstr "%a Kaldırılıyor"
+
+#: trstrings:strlindesk
+msgid "Running under %de."
 msgstr ""
 
 #: trstrings:strnoupdates
 msgid "There are no updates available!"
-msgstr ""
+msgstr "Mümkün bir güncelleştirme bulunmuyor!"
 
 #: trstrings:strlogupdinfo
 msgid "Update info:"
-msgstr ""
+msgstr "Güncelleştirme bilgisi:"
 
 #: trstrings:strfileschanged
 msgid "%f files will be changed."
-msgstr ""
+msgstr "%f dosyaları değiştirilecek."
 
 #: trstrings:strupdto
 msgid "The application will be updated to version %v"
-msgstr ""
+msgstr "Uygulama %v versiyonuna yükseltilecek."
 
 #: trstrings:strcheckforupd
 msgid "Check for updates"
-msgstr ""
+msgstr "Güncelleştirmeler için kontrol et"
 
 #: trstrings:strinstupd
 msgid "Install updates"
-msgstr ""
+msgstr "Güncelleştirmeleri yükle"
 
 #: trstrings:strshowupdater
 msgid "Show"
-msgstr ""
+msgstr "Göster"
 
 #: trstrings:strquitupdater
 msgid "Quit"
-msgstr ""
+msgstr "Çık"
 
 #: trstrings:strupdinstalling
-msgid "Installing updates..."
-msgstr ""
+msgid "Applying updates..."
+msgstr "Güncelleştirmeler uygulanıyor..."
+
+#: trstrings:strupdconferror
+msgid "Error while unpacking and configuring files."
+msgstr "Dosyakar açılırken ve/veya konfigüre edilirken hata yaşandı."
+
+#~ msgid "Browser %s%s%s not executable."
+#~ msgstr "%s%s%s tarayıcısı çalıştırılabilir değil."
+
+#~ msgid "Browser %s%s%s not found."
+#~ msgstr "%s%s%s tarayıcısı bulunamadı."
+
+#~ msgid "Error while executing %s%s%s:%s%s"
+#~ msgstr "%s%s%s:%s%s çalıştırılırken hata"
+
+#~ msgid "Unable to find a HTML browser."
+#~ msgstr "HTML tarayıcı bulunamıyor."
+
+#~ msgid ""
+#~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
+#~ "Viewers"
+#~ msgstr ""
+#~ "HTML tarayıcı bulunamadı. %s Yardım -> Yardımı Yapılandır -> "
+#~ "Görüntüleyiciler'den bir tane tanımlayın"
+
+#~ msgid "The help database %s%s%s was unable to find file %s%s%s."
+#~ msgstr "%s%s%s yardım veritabanı, %s%s%s dosyasını bulamadı."
+
+#~ msgid "The macro %s in BrowserParams will be replaced by the URL."
+#~ msgstr "BrowserParams içindeki %s betiği(makro) URL ile değiştirilecek."
+
+#~ msgid "Alt"
+#~ msgstr "Alt"
+
+#~ msgid "Ctrl"
+#~ msgstr "Ctrl"
+
+#~ msgid "Accept"
+#~ msgstr "Kabul"
+
+#~ msgid "application key"
+#~ msgstr "uygulama tuşu"
+
+#~ msgid "Backspace"
+#~ msgstr "Silme"
+
+#~ msgid "Capital"
+#~ msgstr "Büyük harf"
+
+#~ msgid "Clear"
+#~ msgstr "Temizle"
+
+#~ msgid "Control"
+#~ msgstr "Kontrol"
+
+#~ msgid "Convert"
+#~ msgstr "Dönüştür"
+
+#~ msgid "Down"
+#~ msgstr "Aşağı"
+
+#~ msgid "End"
+#~ msgstr "Sona git"
+
+#~ msgid "Escape"
+#~ msgstr "Çıkış karakteri"
+
+#~ msgid "Execute"
+#~ msgstr "Çalıştır"
+
+#~ msgid "Final"
+#~ msgstr "Final"
+
+#~ msgid "Hanja"
+#~ msgstr "Hanja"
+
+#~ msgid "Help"
+#~ msgstr "Yardım"
+
+#~ msgid "Home"
+#~ msgstr "Başa git"
+
+#~ msgid "Junja"
+#~ msgstr "Junja"
+
+#~ msgid "Kana"
+#~ msgstr "Kana"
+
+#~ msgid "Mouse Button Left"
+#~ msgstr "Sol fare düğmesi"
+
+#~ msgid "Left"
+#~ msgstr "Sol"
+
+#~ msgid "left windows key"
+#~ msgstr "sol windows tuşu"
+
+#~ msgid "Mouse Button Middle"
+#~ msgstr "Orta fare düğmesi"
+
+#~ msgctxt "lclstrconsts.ifsvk_menu"
+#~ msgid "Menu"
+#~ msgstr "Menü"
+
+#~ msgid "Mode Change"
+#~ msgstr "Kip değişimi"
+
+#~ msgid "Nonconvert"
+#~ msgstr "Dönüştürme"
+
+#~ msgid "Numlock"
+#~ msgstr "Numlock"
+
+#~ msgid "Numpad %d"
+#~ msgstr "Nümerik %d"
+
+#~ msgid "Pause key"
+#~ msgstr "Durdurma tuşu"
+
+#~ msgid "Print"
+#~ msgstr "Yazdır"
+
+#~ msgid "Mouse Button Right"
+#~ msgstr "Sağ fare düğmesi"
+
+#~ msgid "Return"
+#~ msgstr "Giriş"
+
+#~ msgid "Right"
+#~ msgstr "Sağ"
+
+#~ msgid "right windows key"
+#~ msgstr "sağ windows tuşu"
+
+#~ msgid "Scroll"
+#~ msgstr "Kaydırma"
+
+#~ msgid "Select"
+#~ msgstr "Seçim"
+
+#~ msgid "Shift"
+#~ msgstr "Üstkarakter"
+
+#~ msgid "Snapshot"
+#~ msgstr "Kare yakala"
+
+#~ msgid "Space key"
+#~ msgstr "Boşluk tuşu"
+
+#~ msgid "Tab"
+#~ msgstr "Sekme"
+
+#~ msgid "Unknown"
+#~ msgstr "Bilinmeyen"
+
+#~ msgid "Up"
+#~ msgstr "Yukarı"
+
+#~ msgctxt "lclstrconsts.lislclresourcesnotfound"
+#~ msgid "Resource %s not found"
+#~ msgstr "%s adlı kaynak bulunamadı"
+
+#~ msgid "A control can't have itself as parent"
+#~ msgstr "Bir denetim, kendikendini üstdenetim(parent) olarak gösteremez"
+
+#~ msgid "All files (%s)|%s|%s"
+#~ msgstr "Tüm dosyalar (%s)|%s|%s"
+
+#~ msgid "Backward"
+#~ msgstr "Geriye doğru"
+
+#~ msgid "Bitmaps"
+#~ msgstr "Bitmap resimleri"
+
+#~ msgid "Blank"
+#~ msgstr "Boş"
+
+#~ msgid "Calculator"
+#~ msgstr "Hesap makinesi"
+
+#~ msgid "Can not focus"
+#~ msgstr "Odaklanamıyor"
+
+#~ msgid "Canvas does not allow drawing"
+#~ msgstr "Tuval(canvas) çizmeye izin vermiyor"
+
+#~ msgid "Case sensitive"
+#~ msgstr "Büyük/küçük harfe duyarlı"
+
+#~ msgid "Creating gdb catchable error:"
+#~ msgstr "gdb catchable yaratma hatası:"
+
+#~ msgid "permissions user group size date time"
+#~ msgstr "kullanıcı grup boyut tarih zaman izinleri"
+
+#~ msgid "Delete record?"
+#~ msgstr "Kayıt silinsin mi?"
+
+#~ msgctxt "lclstrconsts.rsdeleterecordhint"
+#~ msgid "Delete"
+#~ msgstr "Sil"
+
+#~ msgid "Direction"
+#~ msgstr "Yön"
+
+#~ msgid "&Directory"
+#~ msgstr "&Dizin"
+
+#~ msgid "Docking"
+#~ msgstr "Gömme"
+
+#~ msgid "Error creating device context for %s.%s"
+#~ msgstr "%s için aygıt bağlamı oluşturulurken hata.%s"
+
+#~ msgid "ERROR in LCL: "
+#~ msgstr "LCL'de HATA: "
+
+#~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
+#~ msgstr "%s @ %s içinde hata oluştu. Adres %s%s Çerçeve %s"
+
+#~ msgid "Error reading %s%s%s: %s"
+#~ msgstr "%s%s%s okunurken hata: %s"
+
+#~ msgid "Error while saving bitmap."
+#~ msgstr "Bitmap verisini kaydederken hata."
+
+#~ msgid "Exception"
+#~ msgstr "İstisna"
+
+#~ msgid "Directory must exist"
+#~ msgstr "Dizin var olmak zorunda"
+
+#~ msgid "The directory \"%s\" does not exist."
+#~ msgstr "\"%s\" dizini mevcut değil."
+
+#~ msgid "The file \"%s\" already exists. Overwrite ?"
+#~ msgstr "\"%s\" adlı dosya zaten var. Üzerine yazılsın mı?"
+
+#~ msgid "File must exist"
+#~ msgstr "Dosya var olmak zorunda"
+
+#~ msgid "The file \"%s\" does not exist."
+#~ msgstr "\"%s\" dosyası mevcut değil."
+
+#~ msgid "The file \"%s\" is not writable."
+#~ msgstr "\"%s\" dosyası yazılabilir değil."
+
+#~ msgid "File is not writable"
+#~ msgstr "Dosya yazılabilir değil"
+
+#~ msgid "Save file as"
+#~ msgstr "Dosyayı farklı kaydet"
+
+#~ msgid "Open existing file"
+#~ msgstr "Var olan bir dosyayı aç"
+
+#~ msgid "Overwrite file ?"
+#~ msgstr "Dosyanın üzerine yazılsın mı?"
+
+#~ msgid "Path must exist"
+#~ msgstr "Yol var olmak zorunda"
+
+#~ msgid "The path \"%s\" does not exist."
+#~ msgstr "\"%s\" yolu mevcut değil."
+
+#~ msgid "Select Directory"
+#~ msgstr "Dizin seç"
+
+#~ msgid "(file not found: \"%s\")"
+#~ msgstr "(dosya bulunamadı: \"%s\")"
+
+#~ msgid "File information"
+#~ msgstr "Dosya bilgisi"
+
+#~ msgid "Find"
+#~ msgstr "Ara"
+
+#~ msgid "Find more"
+#~ msgstr "Daha fazla ara"
+
+#~ msgid "FixedCols can't be >= ColCount"
+#~ msgstr "FixedCols >= ColCount olamaz"
+
+#~ msgid "FixedRows can't be >= RowCount"
+#~ msgstr "FixedRows >= RowCount olamaz"
+
+#~ msgid "Form streaming \"%s\" error: %s"
+#~ msgstr "Form akışı \"%s\" hatası: %s"
+
+#~ msgid "Forward"
+#~ msgstr "İleriye doğru"
+
+#~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
+#~ msgstr ""
+#~ "--gdk-debug flags     GDK'ya özgü izleme/hata ayıklama iletilerini açar."
+
+#~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
+#~ msgstr ""
+#~ "-gdk-no-debug flags  GDK'ya özgü izleme/hata ayıklama iletilerini kapatır."
+
+#~ msgid ""
+#~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
+#~ "the application."
+#~ msgstr ""
+#~ "--g-fatal-warnings    Gtk+/GDK tarafından üretilen hatalar ve uyarılar "
+#~ "uygulamayı sonlandıracak."
+
+#~ msgid "Grid file doesn't exists"
+#~ msgstr "Izgara dosyası mevcut değil"
+
+#~ msgid "Grid index out of range."
+#~ msgstr "Izgara tanımlayıcısı sınırın dışında."
+
+#~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
+#~ msgstr ""
+#~ "GroupIndex değeri, önceki menü bileşeninin GroupIndex değerinden az olamaz"
+
+#~ msgid "History:"
+#~ msgstr "Geçmiş:"
+
+#~ msgid ""
+#~ "--class classname     Following Xt conventions, the class of a program is "
+#~ "the program name with the initial character capitalized. For example, the "
+#~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
+#~ "program will be set to \"classname\"."
+#~ msgstr ""
+#~ "--class classname     Bir programın sınıfı büyük harfle başlayan program "
+#~ "adıyla aynı ise, Xt geleneklerini izler. Örneğin, gimp için sınıf adı "
+#~ "\"Gimp\". Eğer --class belirtilmişse, program sınıfı \"classname\" olacak "
+#~ "şekilde ayarlanacaktır."
+
+#~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
+#~ msgstr ""
+#~ "--gtk-debug flags     Gtk+'a özgü izleme/hata ayıklama iletilerini açar."
+
+#~ msgid ""
+#~ "--display h:s:d       Connect to the specified X server, where \"h\" is the "
+#~ "hostname, \"s\" is the server number (usually 0), and \"d\" is the display "
+#~ "number (typically omitted). If --display is not specified, the DISPLAY "
+#~ "environment variable is used."
+#~ msgstr ""
+#~ "--display h:s:d       Belirtilen X sunucusuna bağlanır, \"h\" bilgisayar "
+#~ "adı, \"s\" sunucu numarası (genellikle 0), ve \"d\" ekran numarasıdır "
+#~ "(genellikle yazılmaz). Eğer --display belirtilmezse, DISPLAY ortam değişkeni "
+#~ "kullanılır."
+
+#~ msgid "--gtk-module module   Load the specified module at startup."
+#~ msgstr "--gtk-module module   Belirtilen modülü başlangıçta yükler."
+
+#~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
+#~ msgstr ""
+#~ "--gtk-no-debug flags  Gtk+'a özgü izleme/hata ayıklama iletilerini kapatır."
+
+#~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
+#~ msgstr ""
+#~ "--lcl-no-transient    modal pencereler için transient sıralama seçeneğini "
+#~ "ayarlama"
+
+#~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
+#~ msgstr ""
+#~ "--no-xshm             X paylaşımlı bellek genişletmesini kullanmayı kapatır."
+
+#~ msgid ""
+#~ "--sync                Call XSynchronize (display, True) after the Xserver "
+#~ "connection has been established. This makes debugging X protocol errors "
+#~ "easier, because X request buffering will be disabled and X errors will be "
+#~ "received immediatey after the protocol request that generated the error has "
+#~ "been processed by the X server."
+#~ msgstr ""
+#~ "--sync                Xserver bağlantısı sağlandıktan sonra XSynchronize "
+#~ "(display, True) işlevini çağırır. Bu X protokol hatalarını ayıklamayı "
+#~ "kolaylaştırır, çünkü X istek tamponlama kapalı olacaktır ve X hataları hata "
+#~ "oluşturan protokol isteği X sunucu tarafından işlendikten hemen sonra "
+#~ "alınacaktır."
+
+#~ msgid "%s: Already registered"
+#~ msgstr "%s: Zaten kaydedilmiş"
+
+#~ msgid "Help Context not found"
+#~ msgstr "Yardım bağlamı bulunamadı"
+
+#~ msgid "Help Database not found"
+#~ msgstr "Yardım veritabanı bulunamadı"
+
+#~ msgid "Help Error"
+#~ msgstr "Yardım hatası"
+
+#~ msgid "Help context %s not found."
+#~ msgstr "%s yardım bağlamı bulunamadı."
+
+#~ msgid "Help context %s not found in Database %s%s%s."
+#~ msgstr "%s yardım bağlamı, %s%s%s veritabanı içinde bulunamadı."
+
+#~ msgid ""
+#~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
+#~ msgstr ""
+#~ "%s%s%s yardım veritabanı %s türündeki yardım sayfası için bir görüntüleyici "
+#~ "bulamadı"
+
+#~ msgid "Help Database %s%s%s not found"
+#~ msgstr "%s%s%s Yardım veritabanı bulunamadı"
+
+#~ msgid "Help keyword %s%s%s not found."
+#~ msgstr "%s%s%s yardım anahtar sözcüğü bulunamadı."
+
+#~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
+#~ msgstr "%s%s%s Yardım anahtar sözcüğü %s%s%s veritabanı içinde bulunamadı."
+
+#~ msgid "Help node %s%s%s has no Help Database"
+#~ msgstr "%s%s%s yardım düğümü yardım veritabanına sahip değil"
+
+#~ msgid "No help found for line %d, column %d of %s."
+#~ msgstr "%s'nin satır %d, sütun %d için yardım bulunamadı."
+
+#~ msgid "No help nodes available"
+#~ msgstr "Kullanılabilir yardım düğümü yok"
+
+#~ msgid "Help not found"
+#~ msgstr "Yardım bulunamadı"
+
+#~ msgid "%s: Not registered"
+#~ msgstr "%s: kaydedilmemiş"
+
+#~ msgid "Help Selector Error"
+#~ msgstr "Yardım seçici hatası"
+
+#~ msgid "There is no viewer for help type %s%s%s"
+#~ msgstr "%s%s%s yardım türü için bir görüntüleyici yok"
+
+#~ msgid "Help Viewer Error"
+#~ msgstr "Yardım görüntüleyici hatası"
+
+#~ msgid "Help Viewer not found"
+#~ msgstr "Yardım görüntüleyici bulunamadı"
+
+#~ msgid "Icon"
+#~ msgstr "Simge"
+
+#~ msgid "%s Index %d out of bounds 0 .. %d"
+#~ msgstr "%s Dizin %d sınırların dışında 0.. %d"
+
+#~ msgid "Index Out of range Cell[Col=%d Row=%d]"
+#~ msgstr "Tanımlayıcı sınırın dışında Cell[Col=%d Row=%d]"
+
+#~ msgctxt "lclstrconsts.rsinsertrecordhint"
+#~ msgid "Insert"
+#~ msgstr "Ekle"
+
+#~ msgid "Invalid Date : %s"
+#~ msgstr "Geçersiz tarih : %s"
+
+#~ msgid "Invalid Date: %s. Must be between %s and %s"
+#~ msgstr "Geçersiz tarih : %s. %s ve %s arasında olmalı"
+
+#~ msgid "invalid Form object stream"
+#~ msgstr "Geçersiz Form nesnesi akışı"
+
+#~ msgid "Invalid property value"
+#~ msgstr "Geçersiz özellik değeri"
+
+#~ msgid "Invalid stream format"
+#~ msgstr "Geçersiz akış biçimi"
+
+#~ msgid "%s is already associated with %s"
+#~ msgstr "%s, zaten %s ile birleştirilmiş durumda"
+
+#~ msgid "Joint Picture Expert Group"
+#~ msgstr "Joint Picture Expert Group"
+
+#~ msgid "List index exceeds bounds (%d)"
+#~ msgstr "Liste tanımlayıcısı sınırları aşıyor (%d)"
+
+#~ msgid "List must be empty"
+#~ msgstr "Liste boş olmak zorunda"
+
+#~ msgid "&All"
+#~ msgstr "Tümü"
+
+#~ msgctxt "lclstrconsts.rsmbcancel"
+#~ msgid "Cancel"
+#~ msgstr "İptal"
+
+#~ msgid "&Close"
+#~ msgstr "Kapa&t"
+
+#~ msgid "&Help"
+#~ msgstr "&Yardım"
+
+#~ msgid "&Ignore"
+#~ msgstr "&Yoksay"
+
+#~ msgid "&No"
+#~ msgstr "&Hayır"
+
+#~ msgid "No to all"
+#~ msgstr "Tümüne hayır"
+
+#~ msgid "&OK"
+#~ msgstr "&Tamam"
+
+#~ msgid "&Retry"
+#~ msgstr "Tek&rar dene"
+
+#~ msgid "&Yes"
+#~ msgstr "&Evet"
+
+#~ msgid "Yes to &All"
+#~ msgstr "Tümüne evet"
+
+#~ msgctxt "lclstrconsts.rsmenucolorcaption"
+#~ msgid "Menu"
+#~ msgstr "Menü"
+
+#~ msgid "  modified "
+#~ msgstr "  değiştirilmiş "
+
+#~ msgid "Confirmation"
+#~ msgstr "Onaylama"
+
+#~ msgid "Custom"
+#~ msgstr "Özel"
+
+#~ msgctxt "lclstrconsts.rsmterror"
+#~ msgid "Error"
+#~ msgstr "Hata"
+
+#~ msgid "Information"
+#~ msgstr "Bilgi"
+
+#~ msgid "Warning"
+#~ msgstr "Dikkat"
+
+#~ msgctxt "lclstrconsts.rsnextrecordhint"
+#~ msgid "Next"
+#~ msgstr "Sonraki"
+
+#~ msgid "Not a valid grid file"
+#~ msgstr "Geçerli bir ızgara dosyası değil"
+
+#~ msgid ""
+#~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
+#~ "the programs uses clause."
+#~ msgstr ""
+#~ "Parçacık nesnesi yok. Lütfen  \"interfaces\" biriminin programın uses "
+#~ "bölümüne eklenip eklenmediğini denetleyin."
+
+#~ msgid "Select a date"
+#~ msgstr "Bir tarih seç"
+
+#~ msgid "Pixmap"
+#~ msgstr "Pixmap"
+
+#~ msgid "Portable BitMap"
+#~ msgstr "Taşınabilir BitMap"
+
+#~ msgid "Portable GrayMap"
+#~ msgstr "Taşınabilir GrayMap"
+
+#~ msgid "Portable Network Graphic"
+#~ msgstr "Taşınabilir ağ grafiği"
+
+#~ msgid "Portable PixMap"
+#~ msgstr "Taşınabilir PixMap"
+
+#~ msgid ""
+#~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill the "
+#~ "program."
+#~ msgstr ""
+#~ "%s%s Yoksaymak ve verinin bozulması riskiyle devam etmek için Tamam'a basın. "
+#~ "%s Programı sonlandırmak için İptal'e basın."
+
+#~ msgctxt "lclstrconsts.rspriorrecordhint"
+#~ msgid "Prior"
+#~ msgstr "Önceki"
+
+#~ msgid "Property %s does not exist"
+#~ msgstr "%s özelliği mevcut değil"
+
+#~ msgid "Replace"
+#~ msgstr "Değiştir"
+
+#~ msgid "Replace all"
+#~ msgstr "Tümünü değiştir"
+
+#~ msgctxt "lclstrconsts.rsresourcenotfound"
+#~ msgid "Resource %s not found"
+#~ msgstr "%s adlı kaynak bulunamadı"
+
+#~ msgid "ScrollBar property out of range"
+#~ msgstr "ScrollBar özelliği sınırın dışında"
+
+#~ msgid "Select color"
+#~ msgstr "Renk seç"
+
+#~ msgid "Select a font"
+#~ msgstr "Yazıtipi seç"
+
+#~ msgid "  size "
+#~ msgstr "  boyut "
+
+#~ msgid "Text"
+#~ msgstr "Metin"
+
+#~ msgid "Unable to load default font"
+#~ msgstr "Varsayılan yazıtipi yüklenemiyor"
+
+#~ msgid "Unknown Error, please report this bug"
+#~ msgstr "Bilinmeyen hata, lütfen bu hatayı bildirin"
+
+#~ msgid "Unknown picture extension"
+#~ msgstr "Bilinmeyen resim genişletmesi"
+
+#~ msgid "Unsupported bitmap format."
+#~ msgstr "Desteklenmeyen bitmap biçimi."
+
+#~ msgid "Unsupported clipboard format: %s"
+#~ msgstr "Desteklenmeyen pano biçimi: %s"
+
+#~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
+#~ msgstr ""
+#~ " DİKKAT: %d adet serbest bırakılmamış DC var, ayrıntılı döküm aşağıda:"
+
+#~ msgid ""
+#~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
+#~ msgstr ""
+#~ " DİKKAT: %d adet serbest bırakılmamış GDIObject var, ayrıntılı döküm aşağıda:"
+
+#~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
+#~ msgstr " DİKKAT: Kuyrukta %d adet mesaj kaldı! Onları serbest bırakacağım"
+
+#~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
+#~ msgstr " DİKKAT: %d adet TimerInfo yapısı kaldı, onları serbest bırakacağım"
+
+#~ msgid ""
+#~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
+#~ msgstr ""
+#~ " DİKKAT: %s adet kaldırılmamış LM_PAINT/LM_GtkPAINT mesaj bağlantısı kaldı."
+
+#~ msgid "Whole words only"
+#~ msgstr "Yalnızca tam sözcükler"
+
+#~ msgid "Error:"
+#~ msgstr "Hata:"
+
+#~ msgid "Warning:"
+#~ msgstr "Dikkat:"
+
+#~ msgid "Cannot focus a disabled or invisible window"
+#~ msgstr "Etkisizleştirilmiş ya da görünmez pencerelere odaklanılamaz"
+
+#~ msgid "Duplicate menus"
+#~ msgstr "Birbirinin aynı menüler"
+
+#~ msgid "Invalid action creation"
+#~ msgstr "Geçersiz eylem yaratma"
+
+#~ msgid "Invalid action enumeration"
+#~ msgstr "Geçersiz eylem sayımı"
+
+#~ msgid "Invalid action registration"
+#~ msgstr "Geçersiz eylem kaydetme"
+
+#~ msgid "Invalid action unregistration"
+#~ msgstr "Geçersiz eylem kaydı silme"
+
+#~ msgid "The char set in mask \"%s\" is not valid!"
+#~ msgstr "maskede \"%s\" ile gösterilen karakter geçerli değil!"
+
+#~ msgid "Invalid image size"
+#~ msgstr "Geçersiz görüntü boyutu"
+
+#~ msgid "Invalid ImageList Index"
+#~ msgstr "Geçersiz ImageList tanımlayıcısı"
+
+#~ msgid "Menu index out of range"
+#~ msgstr "Menü tanımlayıcısı sınırın dışında"
+
+#~ msgid "MenuItem is nil"
+#~ msgstr "MenuItem nil"
+
+#~ msgid "Sub-menu is not in menu"
+#~ msgstr "Alt-menü, menü içinde değil"
+
+#~ msgid "No MDI form present."
+#~ msgstr "MDI Pencere mevcut değil."
+
+#~ msgid "No timers available"
+#~ msgstr "Kullanılabilir zamanlayıcı yok"

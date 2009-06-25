@@ -1,50 +1,28 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2009-05-06 13:37+0000\n"
-"Last-Translator: Marc Fokker <Unknown>\n"
+"PO-Revision-Date: 2009-06-03 17:53+0000\n"
+"Last-Translator: Sergei Sedov <sedov@webmail.perm.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-06-19 18:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: trstrings:strconvertpkg
-msgid ""
-"You want to install an %x-Package, but your Linux-Distribution's package "
-"system is %y.\rThis package can be converted using \"alien\", but this will "
-"take some time and eventually the application won't work\rDo you want to "
-"convert the package now?"
-msgstr ""
-"U wilt een %x-Pakket installeren, maar je Linux-Distributie's pakketsysteem "
-"is %y.\rDit pakket kan geconverteerd worden door gebruik te maken van "
-"\"alien\", maar dit kan lang duren en uiteindelijk zal de applicatie niet "
-"werken.\rWilt u het pakket nu converteren?"
-
-#: trstrings:strrmpkg
-msgid ""
-"Do you really want to remove \"%p\", containing %a?\rThe following "
-"package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
-"those packages, press \"No\"!"
-msgstr ""
-"Weet u zeker dat u \"%p\" wilt verwijderen, het bevat %a?\rDe volgende "
-"pakketten zullen ook verwijderd worden: %pl\rAls u niet zeker bent of u de "
-"pakketten niet nodig heeft klik \"Nee\"!"
-
 #: trstrings:strinstaborted
 msgid "Installation aborted."
-msgstr ""
+msgstr "Установка прервана."
 
 #: trstrings:strappninstall
 msgid "The application %a was not installed."
-msgstr ""
+msgstr "Приложение %a не установлено."
 
 #: trstrings:strwasinstalled
 msgid "The application %a was installed successfully!"
-msgstr ""
+msgstr "Приложение %a успешно установлено!"
 
 #: trstrings:strinstallnow
 msgid "Install now"
@@ -97,7 +75,7 @@ msgstr ""
 
 #: trstrings:strabort
 msgid "Abort"
-msgstr "Afbreken"
+msgstr "Прервать"
 
 #: trstrings:strback
 msgid "Back"
@@ -494,6 +472,14 @@ msgstr ""
 msgid "Ready."
 msgstr ""
 
+#: trstrings:strconvertpkg
+msgid ""
+"You want to install an %x-Package, but your Linux-Distribution's package "
+"system is %y.\rThis package can be converted using \"alien\", but this will "
+"take some time and eventually the application won't work\rDo you want to "
+"convert the package now?"
+msgstr ""
+
 #: trstrings:strconvertpkgq
 msgid "Convert package?"
 msgstr ""
@@ -508,7 +494,7 @@ msgstr ""
 
 #: trstrings:strfilter
 msgid "Filter:"
-msgstr "Filter:"
+msgstr "Фильтр:"
 
 #: trstrings:strloading
 msgid "Loading..."
@@ -678,6 +664,13 @@ msgstr ""
 msgid "Uninstalling..."
 msgstr ""
 
+#: trstrings:strrmpkg
+msgid ""
+"Do you really want to remove \"%p\", containing %a?\rThe following "
+"package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+"those packages, press \"No\"!"
+msgstr ""
+
 #: trstrings:strrmpkgq
 msgid "Really remove?"
 msgstr ""
@@ -735,29 +728,29 @@ msgid "Error while unpacking and configuring files."
 msgstr ""
 
 #~ msgid "Browser %s%s%s not executable."
-#~ msgstr "Browser %s%s%s niet uitvoerbaar"
+#~ msgstr "Браузер %s%s%s не является исполнимым файлом."
 
 #~ msgid "Browser %s%s%s not found."
-#~ msgstr "Browser %s%s%s niet gevonden"
+#~ msgstr "Браузер %s%s%s не найден."
 
 #~ msgid "Error while executing %s%s%s:%s%s"
-#~ msgstr "Fout tijdens uitvoeren van %s%s%s:%s%s"
+#~ msgstr "Ошибка при выполнении %s%s%s:%s%s"
 
 #~ msgid "Unable to find a HTML browser."
-#~ msgstr "Geen HTML browser kunnen vinden."
+#~ msgstr "Невозможно найти браузер HTML."
 
 #~ msgid ""
 #~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
 #~ "Viewers"
 #~ msgstr ""
-#~ "Geen HTML browser gevonden. %sDefini�er deze alstublieft via Help -> "
-#~ "Configureer Help -> Viewers"
+#~ "Не найдена программа просмотра справки.%sЗадайте её в меню Справка -> "
+#~ "Параметры справки -> Программы просмотра"
 
 #~ msgid "The help database %s%s%s was unable to find file %s%s%s."
-#~ msgstr "De help database %s%s%s heeft bestand %s%s%s niet kunnen vinden."
+#~ msgstr "База данных справки %s%s%s не смогла найти файл %s%s%s."
 
 #~ msgid "The macro %s in BrowserParams will be replaced by the URL."
-#~ msgstr "De macro %s in BrowserParams zal worden vervangen door de URL."
+#~ msgstr "Макрос %s в BrowserParams будет заменён на URL."
 
 #~ msgid "Alt"
 #~ msgstr "Alt"
@@ -766,107 +759,127 @@ msgstr ""
 #~ msgstr "Ctrl"
 
 #~ msgid "Accept"
-#~ msgstr "Accepteer"
+#~ msgstr "Accept"
 
 #~ msgid "application key"
-#~ msgstr "toepassing sleutel"
+#~ msgstr "клавиша application"
 
 #~ msgid "Backspace"
-#~ msgstr "Backspace"
+#~ msgstr "Забой"
+
+#~ msgctxt "lclstrconsts.ifsvk_cancel"
+#~ msgid "Cancel"
+#~ msgstr "Cancel"
 
 #~ msgid "Capital"
-#~ msgstr "Hoofdletter"
+#~ msgstr "CapsLock"
 
 #~ msgid "Clear"
-#~ msgstr "Wissen"
+#~ msgstr "Clear"
 
 #~ msgid "Control"
-#~ msgstr "Controleer"
+#~ msgstr "Элемент управления"
 
 #~ msgid "Convert"
-#~ msgstr "Converteer"
+#~ msgstr "Преобразовать"
+
+#~ msgctxt "lclstrconsts.ifsvk_delete"
+#~ msgid "Delete"
+#~ msgstr "Delete"
 
 #~ msgid "Down"
-#~ msgstr "Neer"
+#~ msgstr "Стрелка вниз"
 
 #~ msgid "End"
-#~ msgstr "Eind"
+#~ msgstr "Конец"
 
 #~ msgid "Escape"
 #~ msgstr "Escape"
 
 #~ msgid "Execute"
-#~ msgstr "Uitvoeren"
+#~ msgstr "Выполнить"
 
 #~ msgid "Final"
-#~ msgstr "Laatste"
+#~ msgstr "Итоговый"
 
 #~ msgid "Hanja"
-#~ msgstr "Hanja"
+#~ msgstr "Ханчча"
 
 #~ msgid "Help"
-#~ msgstr "Help"
+#~ msgstr "Справка"
 
 #~ msgid "Home"
 #~ msgstr "Home"
 
+#~ msgctxt "lclstrconsts.ifsvk_insert"
+#~ msgid "Insert"
+#~ msgstr "Insert"
+
 #~ msgid "Junja"
-#~ msgstr "Junja"
+#~ msgstr "Джанджа"
 
 #~ msgid "Kana"
-#~ msgstr "Kana"
+#~ msgstr "Кана"
 
 #~ msgid "Mouse Button Left"
-#~ msgstr "Muisknop Links"
+#~ msgstr "Левая клавиша мыши"
 
 #~ msgid "Left"
-#~ msgstr "Links"
+#~ msgstr "Стрелка влево"
 
 #~ msgid "left windows key"
-#~ msgstr "linker windows toets"
+#~ msgstr "левая клавиша windows"
 
 #~ msgid "Mouse Button Middle"
-#~ msgstr "Muisknop Midden"
+#~ msgstr "Средняя клавиша мыши"
 
 #~ msgctxt "lclstrconsts.ifsvk_menu"
 #~ msgid "Menu"
 #~ msgstr "Menu"
 
 #~ msgid "Mode Change"
-#~ msgstr "Mode wijziging"
+#~ msgstr "Изменение режима"
+
+#~ msgctxt "lclstrconsts.ifsvk_next"
+#~ msgid "Next"
+#~ msgstr "Next"
 
 #~ msgid "Nonconvert"
-#~ msgstr "Niet converteren"
+#~ msgstr "Не преобразовывать"
 
 #~ msgid "Numlock"
 #~ msgstr "Numlock"
 
 #~ msgid "Numpad %d"
-#~ msgstr "Nummeriek deel %d"
+#~ msgstr "Numpad %d"
 
 #~ msgid "Pause key"
-#~ msgstr "Pause toets"
+#~ msgstr "Клавиша Pause"
 
 #~ msgid "Print"
-#~ msgstr "Druk af"
+#~ msgstr "Печать"
+
+#~ msgctxt "lclstrconsts.ifsvk_prior"
+#~ msgid "Prior"
+#~ msgstr "Prior"
 
 #~ msgid "Mouse Button Right"
-#~ msgstr "Muisknop Rechts"
+#~ msgstr "Правая клавиша мыши"
 
 #~ msgid "Return"
-#~ msgstr "Return"
+#~ msgstr "Ввод"
 
 #~ msgid "Right"
-#~ msgstr "Rechts"
+#~ msgstr "Стрелка вправо"
 
 #~ msgid "right windows key"
-#~ msgstr "rechter windows toets"
+#~ msgstr "правая клавиша windows"
 
 #~ msgid "Scroll"
-#~ msgstr "Schuif"
+#~ msgstr "Scroll"
 
 #~ msgid "Select"
-#~ msgstr "Selecteer"
+#~ msgstr "Выбрать"
 
 #~ msgid "Shift"
 #~ msgstr "Shift"
@@ -875,173 +888,244 @@ msgstr ""
 #~ msgstr "Snapshot"
 
 #~ msgid "Space key"
-#~ msgstr "Spatiebar"
+#~ msgstr "Пробел"
 
 #~ msgid "Tab"
 #~ msgstr "Tab"
 
 #~ msgid "Unknown"
-#~ msgstr "Onbekend"
+#~ msgstr "Неизвестная"
 
 #~ msgid "Up"
-#~ msgstr "Omhoog"
+#~ msgstr "Стрелка вверх"
 
 #~ msgctxt "lclstrconsts.lislclresourcesnotfound"
 #~ msgid "Resource %s not found"
-#~ msgstr "Resource %s is niet gevonden"
+#~ msgstr "Ресурс %s не найден"
+
+#~ msgid "3D Dark Shadow"
+#~ msgstr "Затенённая часть объекта 3D"
+
+#~ msgid "3D Light"
+#~ msgstr "Освещённая часть объекта 3D"
 
 #~ msgid "A control can't have itself as parent"
-#~ msgstr "Een control kan niet zijn eigen ouder zijn"
+#~ msgstr "Элемент управления не может быть сам себе потомком"
+
+#~ msgid "Active Border"
+#~ msgstr "Граница активного окна"
+
+#~ msgid "Active Caption"
+#~ msgstr "Заголовок активного окна"
 
 #~ msgid "All files (%s)|%s|%s"
-#~ msgstr "Alle bestanden (%s)|%s|%s"
+#~ msgstr "Все файлы (%s)|%s|%s"
+
+#~ msgid "Application Workspace"
+#~ msgstr "Рабочая область приложения"
+
+#~ msgid "Desktop"
+#~ msgstr "Рабочий стол"
 
 #~ msgid "Backward"
-#~ msgstr "Achteruit"
+#~ msgstr "Назад"
 
 #~ msgid "Bitmaps"
-#~ msgstr "Bitmaps"
+#~ msgstr "Точечные рисунки"
 
 #~ msgid "Blank"
-#~ msgstr "Spatie"
+#~ msgstr "Пустой"
+
+#~ msgid "Button Face"
+#~ msgstr "Лицевая часть кнопки"
+
+#~ msgid "Button Highlight"
+#~ msgstr "Освещаемая сторона кнопки"
+
+#~ msgid "Button Shadow"
+#~ msgstr "Затенённая сторона кнопки"
+
+#~ msgid "Button Text"
+#~ msgstr "Текст кнопки"
 
 #~ msgid "Calculator"
-#~ msgstr "Rekenmachine"
+#~ msgstr "Калькулятор"
+
+#~ msgctxt "lclstrconsts.rscancelrecordhint"
+#~ msgid "Cancel"
+#~ msgstr "Отмена"
 
 #~ msgid "Can not focus"
-#~ msgstr "Kan geen focus geven"
+#~ msgstr "Не могу принять фокус"
 
 #~ msgid "Canvas does not allow drawing"
-#~ msgstr "Er kan op het canvas niet getekend worden"
+#~ msgstr "Канва не поддерживает рисования"
+
+#~ msgid "Caption Text"
+#~ msgstr "Текст заголовка"
 
 #~ msgid "Case sensitive"
-#~ msgstr "Hoofdletter gevoelig"
+#~ msgstr "С учётом регистра"
 
 #~ msgid "Creating gdb catchable error:"
-#~ msgstr "Maak een fout die door gdb opgevangen kan worden"
+#~ msgstr "Создание ошибки, захватываемой GDB:"
+
+#~ msgid "Cursor"
+#~ msgstr "Курсор"
+
+#~ msgid "Custom ..."
+#~ msgstr "Пользовательский ..."
 
 #~ msgid "permissions user group size date time"
-#~ msgstr "permissies gebruiker groep grootte datum tijd"
+#~ msgstr "права пользователь группа размер дата время"
+
+#~ msgid "Delete record?"
+#~ msgstr "Удалить запись?"
 
 #~ msgctxt "lclstrconsts.rsdeleterecordhint"
 #~ msgid "Delete"
-#~ msgstr "Verwijder"
+#~ msgstr "Удалить"
 
 #~ msgid "Direction"
-#~ msgstr "Richting"
+#~ msgstr "Направление"
 
 #~ msgid "&Directory"
-#~ msgstr "&Map"
+#~ msgstr "&Каталог"
 
 #~ msgid "Docking"
-#~ msgstr "Docking"
+#~ msgstr "Стыковка"
+
+#~ msgid "Duplicate icon format."
+#~ msgstr "Формат значков дублируется."
+
+#~ msgid "Edit"
+#~ msgstr "Редактировать"
+
+#~ msgctxt "lclstrconsts.rserror"
+#~ msgid "Error"
+#~ msgstr "Ошибка"
 
 #~ msgid "Error creating device context for %s.%s"
-#~ msgstr "Fout tijdens het maken van een DC voor %s.%s"
+#~ msgstr "Ошибка создания контекста устройства для %s.%s"
 
 #~ msgid "ERROR in LCL: "
-#~ msgstr "FOUT in LCL "
+#~ msgstr "ОШИБКА в LCL: "
 
 #~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
-#~ msgstr "Er is een fout opgetreden in %s op %sAdres %s%s Frame %s"
+#~ msgstr "Произошла ошибка в %s по %s адресу %s%s фрейм %s"
 
 #~ msgid "Error reading %s%s%s: %s"
-#~ msgstr "Fout tijdens het lezen %s%s%s: %s"
+#~ msgstr "Ошибка чтения %s%s%s: %s"
 
 #~ msgid "Error while saving bitmap."
-#~ msgstr "Fout tijdens opslaan van bitmap."
+#~ msgstr "Ошибка при сохранении точечного рисунка (bitmap)."
 
 #~ msgid "Exception"
-#~ msgstr "Fout"
+#~ msgstr "Исключение"
 
 #~ msgid "Directory must exist"
-#~ msgstr "Directory moet bestaan"
+#~ msgstr "Каталог должен существовать"
 
 #~ msgid "The directory \"%s\" does not exist."
-#~ msgstr "De map \"%s\" bestaat niet."
+#~ msgstr "Каталог \"%s\" не существует."
 
 #~ msgid "The file \"%s\" already exists. Overwrite ?"
-#~ msgstr "Het bestand \"%s\" bestaat al. Overschrijven?"
+#~ msgstr "Файл \"%s\" уже существует. Перезаписать?"
 
 #~ msgid "File must exist"
-#~ msgstr "Bestand moet bestaan"
+#~ msgstr "Файл должен существовать"
 
 #~ msgid "The file \"%s\" does not exist."
-#~ msgstr "Het bestand  \"%s\" bestaat niet."
+#~ msgstr "Файл \"%s\" не существует"
 
 #~ msgid "The file \"%s\" is not writable."
-#~ msgstr "Het bestand \"%s\" kan niet geschreven worden."
+#~ msgstr "Файл \"%s\" не доступен для записи."
 
 #~ msgid "File is not writable"
-#~ msgstr "Kan bestand niet schrijven"
+#~ msgstr "Файл не доступен для записи"
 
 #~ msgid "Save file as"
-#~ msgstr "Bestand opslaan als"
+#~ msgstr "Сохранить файл как"
 
 #~ msgid "Open existing file"
-#~ msgstr "Open een bestaand bestand"
+#~ msgstr "Открыть существующий файл"
 
 #~ msgid "Overwrite file ?"
-#~ msgstr "Bestand overschrijven?"
+#~ msgstr "Перезаписать файл?"
 
 #~ msgid "Path must exist"
-#~ msgstr "Het pad moet bestaan"
+#~ msgstr "Путь должен существовать"
 
 #~ msgid "The path \"%s\" does not exist."
-#~ msgstr "Het pad \"%s\" bestaat niet."
+#~ msgstr "Путь \"%s\" не существует."
 
 #~ msgid "Select Directory"
-#~ msgstr "Kies map"
+#~ msgstr "Выберите каталог"
 
 #~ msgid "(file not found: \"%s\")"
-#~ msgstr "(bestand niet gevonden: \"%s\")"
+#~ msgstr "(файл не найден: \"%s\")"
 
 #~ msgid "File information"
-#~ msgstr "Bestandsinformatie"
+#~ msgstr "Информация о файле"
 
 #~ msgid "Find"
-#~ msgstr "Zoek"
+#~ msgstr "Найти"
 
 #~ msgid "Find more"
-#~ msgstr "Zoek meer"
+#~ msgstr "Найти далее"
+
+#~ msgid "First"
+#~ msgstr "Первая"
 
 #~ msgid "FixedCols can't be >= ColCount"
-#~ msgstr "FixedCols kan niet >= ColCount"
+#~ msgstr "FixedCols не может быть >= ColCount"
 
 #~ msgid "FixedRows can't be >= RowCount"
-#~ msgstr "FixedRows kan niet >= RowCount"
+#~ msgstr "FixedRows не может быть >= RowCount"
+
+#~ msgid "Form"
+#~ msgstr "Форма"
 
 #~ msgid "Form streaming \"%s\" error: %s"
-#~ msgstr "\"%s\" fout: %s bij het streamen van form."
+#~ msgstr "Ошибка потоков \"%s\" форм: %s"
 
 #~ msgid "Forward"
-#~ msgstr "Vooruit"
+#~ msgstr "Вперёд"
 
 #~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
-#~ msgstr "--gdk-debug flags     Zet bepaalde GDK trace/debug berichten aan."
+#~ msgstr "--gdk-debug flags     Включить указанные отладочные сообщения GDK."
 
 #~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
-#~ msgstr "--gdk-no-debug flags     Zet bepaalde GDK trace/debug berichten uit."
+#~ msgstr "--gdk-no-debug flags  Выключить указанные отладочные сообщения GDK."
 
 #~ msgid ""
 #~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
 #~ "the application."
 #~ msgstr ""
-#~ "--g-fatal-warnings    De applicatie stop bij waarschuwingen en fouten "
-#~ "gegenereerd door GtK+/GDK."
+#~ "--g-fatal-warnings    Замечания и ошибки, выдаваемые Gtk+/GDK, остановят "
+#~ "приложение."
+
+#~ msgid "Gradient Active Caption"
+#~ msgstr "Градиент активного заголовка"
+
+#~ msgid "Gradient Inactive Caption"
+#~ msgstr "Градиент неактивного заголовка"
+
+#~ msgid "Gray Text"
+#~ msgstr "Серый текст"
 
 #~ msgid "Grid file doesn't exists"
-#~ msgstr "Grid bestand bestaat niet"
+#~ msgstr "Файл сетки не существует"
 
 #~ msgid "Grid index out of range."
-#~ msgstr "Rooster index buiten bereik"
+#~ msgstr "Индекс Grid'а вне диапазона допустимых значений."
 
 #~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
 #~ msgstr ""
-#~ "De GroupIndex kan niet minder zijn dan de GroupIndex van een vorig item."
+#~ "GroupIndex не может быть меньше GroupIndex для предыдущего элемента меню"
 
 #~ msgid "History:"
-#~ msgstr "Historie:"
+#~ msgstr "История:"
 
 #~ msgid ""
 #~ "--class classname     Following Xt conventions, the class of a program is "
@@ -1049,13 +1133,13 @@ msgstr ""
 #~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
 #~ "program will be set to \"classname\"."
 #~ msgstr ""
-#~ "--class klassenaam    Volgens de Xt conventies, is de klasse van een "
-#~ "prograam de naam van dat programma met de eerste letter als kapitaal. Bijv. "
-#~ "the klassenaam voor gimp is \"Gimp\". Als de --class optie is meegegeven, "
-#~ "wordt de klasse van het programma gezet op \"klassenaam\"."
+#~ "--class classname      Следуя соглашениям Xt, класс программы - это имя "
+#~ "программы с прописным первым символом. Например, имя класса для gimp - "
+#~ "\"Gimp\". Если задан --class, класс программы будет установлен в "
+#~ "\"classname\"."
 
 #~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
-#~ msgstr "--gtk-debug flags     Zet bepaalde GtK+ trace/debug berichten aan."
+#~ msgstr "--gtk-debug flags     Включить указанные отладочные сообщения Gtk+."
 
 #~ msgid ""
 #~ "--display h:s:d       Connect to the specified X server, where \"h\" is the "
@@ -1063,26 +1147,32 @@ msgstr ""
 #~ "number (typically omitted). If --display is not specified, the DISPLAY "
 #~ "environment variable is used."
 #~ msgstr ""
-#~ "--display h:s:d       Start het programma op de genoemde X server, waarbij "
-#~ "\"h\" de hostnaam is, \"s\" het nummer van de server (meestal 0), en \"d\" "
-#~ "is het display nummer (vaak weggelaten). Als --display niet is meegegeven, "
-#~ "wordt de DISPLAY omgevings variabele gebruikt."
+#~ "--display h:s:d       Связаться с указанным X-сервером, где \"h\" - имя хост-"
+#~ "машины, \"s\" - номер сервера (обычно 0), и \"d\" - номер дисплея (обычно "
+#~ "опускают). Если не задан --display, используется переменная окружения "
+#~ "DISPLAY."
 
 #~ msgid "--gtk-module module   Load the specified module at startup."
+#~ msgstr "--gtk-module модуль   Загрузить указанный модуль при запуске."
+
+#~ msgid ""
+#~ "--name programe       Set program name to \"progname\". If not specified, "
+#~ "program name will be set to ParamStrUTF8(0)."
 #~ msgstr ""
-#~ "--gtk-module module   Laad de betreffende module tijdens het starten."
+#~ "--name имяпрог       Установить имя программы в \"имяпрог\". Если не "
+#~ "указано, имя программы будет установлено в ParamStrUTF8(0)."
 
 #~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
-#~ msgstr ""
-#~ "--gtk-no-debug flags     Zet bepaalde GtK+ trace/debug berichten uit."
+#~ msgstr "--gtk-no-debug flags  Выключить указанные отладочные сообщения Gtk+."
 
 #~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
 #~ msgstr ""
-#~ "--lcl-no-transient    Zet geen overdraagbare volgorde voor modale schermen"
+#~ "--lcl-no-transient    Не устанавливать временный порядок модальных форм"
 
 #~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
 #~ msgstr ""
-#~ "--no-xshm             Maak geen gebruik van de X Shared Memory Extensie."
+#~ "--no-xshm             Запрет использования расширений X по разделяемой "
+#~ "памяти."
 
 #~ msgid ""
 #~ "--sync                Call XSynchronize (display, True) after the Xserver "
@@ -1091,314 +1181,496 @@ msgstr ""
 #~ "received immediatey after the protocol request that generated the error has "
 #~ "been processed by the X server."
 #~ msgstr ""
-#~ "--sync                Roep XSynchronize (display, True) aan na verbinding "
-#~ "met de Xserver. Dit maakt het debuggen van X protocol fouten eenvoudiger, "
-#~ "doordat X aanvragen buffering uitstaat en X fouten direct ontvangen worden "
-#~ "nadat de aanvraag door de Xserver is behandeld."
+#~ "--sync                Вызов XSynchronize (display, True) после установлени "
+#~ "соединения с Xserver'ом. Это облегчает отладку ошибок протокола X, т.к. "
+#~ "запросы буферизации X будут отключены, и ошибки X будут получены сразу после "
+#~ "запроса протокола, который вызвал эту ошибку, обработанную сервером X."
 
 #~ msgid "%s: Already registered"
-#~ msgstr "%s: Al vastgelegd"
+#~ msgstr "%s: Уже зарегистрирован"
 
 #~ msgid "Help Context not found"
-#~ msgstr "Help Context niet gevonden"
+#~ msgstr "Контекст справки не найден"
 
 #~ msgid "Help Database not found"
-#~ msgstr "Help Database niet gevonden"
+#~ msgstr "База данных справки не найдена"
 
 #~ msgid "Help Error"
-#~ msgstr "Help Fout"
+#~ msgstr "Ошибка справки"
 
 #~ msgid "Help context %s not found."
-#~ msgstr "Help context %s niet gevonden."
+#~ msgstr "Контекст справки %s не найден."
 
 #~ msgid "Help context %s not found in Database %s%s%s."
-#~ msgstr "Help context %s niet gevonden in Database %s%s%s."
+#~ msgstr "Контекст справки %s не найден в базе данных %s%s%s."
 
 #~ msgid ""
 #~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
 #~ msgstr ""
-#~ "Help Database %s%s%s heeft geen viewer gevonden voor help pagina van type %s"
+#~ "База данных справки %s%s%s не нашла программу просмотра для страницы справки "
+#~ "типа %s"
 
 #~ msgid "Help Database %s%s%s not found"
-#~ msgstr "Help Database %s%s%s niet gevonden"
+#~ msgstr "База данных справки %s%s%s не найдена"
 
 #~ msgid "Help keyword %s%s%s not found."
-#~ msgstr "Help sleutelwoord %s%s%s niet gevonden."
+#~ msgstr "Ключевое слово справки %s%s%s не найдено."
 
 #~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
-#~ msgstr "Help sleutelwoord %s%s%s niet gevonden in Database %s%s%s."
+#~ msgstr "Ключевое слово справки %s%s%s не найдено в базе данных %s%s%s."
 
 #~ msgid "Help node %s%s%s has no Help Database"
-#~ msgstr "Help node %s%s%s heeft geen Help Database"
+#~ msgstr "Узел справки %s%s%s не имеет соответствующей базы данных"
 
 #~ msgid "No help found for line %d, column %d of %s."
-#~ msgstr "Geen help gevonden voor regel %d, kolom %d van %s."
+#~ msgstr "Не найдено справки для строки %d, столбца %d из %s."
 
 #~ msgid "No help nodes available"
-#~ msgstr "Geen help nodes beschikbaar"
+#~ msgstr "Доступные узлы справки отсутствуют"
 
 #~ msgid "Help not found"
-#~ msgstr "Help niet gevonden"
+#~ msgstr "Справка не найдена"
 
 #~ msgid "%s: Not registered"
-#~ msgstr "%s: Niet vastgelegd"
+#~ msgstr "%s: Не зарегистрирован"
 
 #~ msgid "Help Selector Error"
-#~ msgstr "Help Selectie fout"
+#~ msgstr "Ошибка переключателя справки"
 
 #~ msgid "There is no viewer for help type %s%s%s"
-#~ msgstr "Er is geen viewer voor help type %s%s%s"
+#~ msgstr "Отсутствует программа просмотра для типа справки %s%s%s"
 
 #~ msgid "Help Viewer Error"
-#~ msgstr "Help Viewer Fout"
+#~ msgstr "Ошибка программы просмотра справки"
 
 #~ msgid "Help Viewer not found"
-#~ msgstr "Help Viewer niet gevonden"
+#~ msgstr "Программа просмотра справки не найдена"
+
+#~ msgid "Highlight"
+#~ msgstr "Выделенное"
+
+#~ msgid "Highlight Text"
+#~ msgstr "Текст выделенного"
+
+#~ msgid "Hot Light"
+#~ msgstr "Выделение"
+
+#~ msgid "OSX Icon Resource"
+#~ msgstr "Ресурс значков OSX"
 
 #~ msgid "Icon"
-#~ msgstr "Icon"
+#~ msgstr "Значок"
+
+#~ msgid "Icon image cannot be empty"
+#~ msgstr "Изображение значка не может быть пустым"
+
+#~ msgid "Icon image must have the same format"
+#~ msgstr "Изображение значка должно иметь тот же формат"
+
+#~ msgid "Cannot change format of icon image"
+#~ msgstr "Невозможно изменить формат изображения значка"
+
+#~ msgid "Icon image must have the same size"
+#~ msgstr "Изображение значка должно иметь тот же размер"
+
+#~ msgid "Cannot change size of icon image"
+#~ msgstr "Невозможно изменить размер изображения значка"
+
+#~ msgid "Icon has no current image"
+#~ msgstr "Значок не имеет текущего изображения"
+
+#~ msgid "Inactive Border"
+#~ msgstr "Граница неактивного окна"
+
+#~ msgctxt "lclstrconsts.rsinactivecaptioncolorcaption"
+#~ msgid "Inactive Caption"
+#~ msgstr "Заголовок неактивного окна"
+
+#~ msgctxt "lclstrconsts.rsinactivecaptiontext"
+#~ msgid "Inactive Caption"
+#~ msgstr "Заголовок неактивного окна"
 
 #~ msgid "%s Index %d out of bounds 0 .. %d"
-#~ msgstr "%s Index %d valt buiten de grenzen 0 .. %d"
+#~ msgstr "%s Индекс %d вне диапазона 0 .. %d"
 
 #~ msgid "Index Out of range Cell[Col=%d Row=%d]"
-#~ msgstr "Index buiten de grenzen Cell[Col=%d Ro=%d]"
+#~ msgstr "Индекс вне диапазона Cell[Col=%d Row=%d]"
+
+#~ msgid "Info Background"
+#~ msgstr "Фон сообщения"
+
+#~ msgid "Info Text"
+#~ msgstr "Текст сообщения"
 
 #~ msgctxt "lclstrconsts.rsinsertrecordhint"
 #~ msgid "Insert"
-#~ msgstr "Invoegen"
+#~ msgstr "Вставить"
 
 #~ msgid "Invalid Date : %s"
-#~ msgstr "Ongeldige datum: %s"
+#~ msgstr "Неверная дата: %s"
 
 #~ msgid "Invalid Date: %s. Must be between %s and %s"
-#~ msgstr "Ongeldige datum: %s. Het moet liggen tussen %s en %s"
+#~ msgstr "Неверная дата: %s. Должна быть между %s and %s"
 
 #~ msgid "invalid Form object stream"
-#~ msgstr "Ongeldige form objectstream"
+#~ msgstr "неправильный поток объекта формы"
 
 #~ msgid "Invalid property value"
-#~ msgstr "Ongeldige eigenschap waarde"
+#~ msgstr "Неправильное значение свойства"
 
 #~ msgid "Invalid stream format"
-#~ msgstr "Omgeldig stream format"
+#~ msgstr "Неправильный формат потока"
 
 #~ msgid "%s is already associated with %s"
-#~ msgstr "%s is al verbonden met %s"
+#~ msgstr "%s уже сопоставлено с %s"
+
+#~ msgid "Joint Picture Expert Group"
+#~ msgstr "Joint Picture Expert Group"
+
+#~ msgid "Last"
+#~ msgstr "Последняя"
 
 #~ msgid "List index exceeds bounds (%d)"
-#~ msgstr "Lijst index overschreidt grenzen (%d)"
+#~ msgstr "Индекс списка вне диапазона (%d)"
 
 #~ msgid "List must be empty"
-#~ msgstr "Lijst moet leeg zijn"
+#~ msgstr "Список должен быть пуст"
 
 #~ msgid "&All"
-#~ msgstr "&Alles"
+#~ msgstr "&Все"
 
 #~ msgctxt "lclstrconsts.rsmbcancel"
 #~ msgid "Cancel"
-#~ msgstr "Annuleer"
+#~ msgstr "Отмена"
 
 #~ msgid "&Close"
-#~ msgstr "&Sluiten"
+#~ msgstr "&Закрыть"
 
 #~ msgid "&Help"
-#~ msgstr "&Help"
+#~ msgstr "&Справка"
 
 #~ msgid "&Ignore"
-#~ msgstr "&Negeer"
+#~ msgstr "&Пропуск"
 
 #~ msgid "&No"
-#~ msgstr "&Nee"
+#~ msgstr "&Нет"
 
 #~ msgid "No to all"
-#~ msgstr "Nee op alles"
+#~ msgstr "Нет для всех"
 
 #~ msgid "&OK"
-#~ msgstr "&OK"
+#~ msgstr "&ОК"
 
 #~ msgid "&Retry"
-#~ msgstr "&Opnieuw"
+#~ msgstr "&Повтор"
 
 #~ msgid "&Yes"
-#~ msgstr "&Ja"
+#~ msgstr "&Да"
 
 #~ msgid "Yes to &All"
-#~ msgstr "Ja op &Alles"
+#~ msgstr "Да для &всех"
+
+#~ msgid "Menu Bar"
+#~ msgstr "Панель меню"
 
 #~ msgctxt "lclstrconsts.rsmenucolorcaption"
 #~ msgid "Menu"
-#~ msgstr "Menu"
+#~ msgstr "Меню"
+
+#~ msgid "Menu Highlight"
+#~ msgstr "Выделенный пункт меню"
+
+#~ msgid "Menu Text"
+#~ msgstr "Текст меню"
 
 #~ msgid "  modified "
-#~ msgstr "  gewijzigd "
+#~ msgstr "  изменён "
 
 #~ msgid "Confirmation"
-#~ msgstr "Bevestiging"
+#~ msgstr "Подтверждение"
 
 #~ msgid "Custom"
-#~ msgstr "Eigen"
+#~ msgstr "Пользовательский"
 
 #~ msgctxt "lclstrconsts.rsmterror"
 #~ msgid "Error"
-#~ msgstr "Fout"
+#~ msgstr "Ошибка"
 
 #~ msgid "Information"
-#~ msgstr "Informatie"
+#~ msgstr "Сведения"
 
 #~ msgid "Warning"
-#~ msgstr "Waarschuwing"
+#~ msgstr "Предупреждение"
 
 #~ msgctxt "lclstrconsts.rsnextrecordhint"
 #~ msgid "Next"
-#~ msgstr "Volgende"
+#~ msgstr "Следующая"
 
 #~ msgid "Not a valid grid file"
-#~ msgstr "Geen geldig grid bestand"
+#~ msgstr "Неверный файл сетки"
 
 #~ msgid ""
 #~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
 #~ "the programs uses clause."
 #~ msgstr ""
-#~ "Geen widgetset object. Controleer of the unit \"interface\" is toegevoegd "
-#~ "aan de \"uses\" van het programma."
+#~ "Отсутствует объект библиотеки виджетов. Проверьте, что модуль \"interfaces\" "
+#~ "был добавлен в выражение uses программы."
 
 #~ msgid "Select a date"
-#~ msgstr "Kies een datum"
+#~ msgstr "Выберите дату"
 
 #~ msgid "Pixmap"
 #~ msgstr "Pixmap"
 
+#~ msgid "Portable BitMap"
+#~ msgstr "Portable BitMap"
+
+#~ msgid "Portable GrayMap"
+#~ msgstr "Portable GrayMap"
+
 #~ msgid "Portable Network Graphic"
 #~ msgstr "Portable Network Graphic"
+
+#~ msgid "Portable PixMap"
+#~ msgstr "Portable PixMap"
+
+#~ msgid "Post"
+#~ msgstr "Отправить"
 
 #~ msgid ""
 #~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill the "
 #~ "program."
 #~ msgstr ""
-#~ "%s%sDruk op Ok om te negeren, hierbij kunnen gegevens verloren gaan.%sDruk "
-#~ "op Cancel om het programma te annuleren."
+#~ "%s%sНажмите 'Ok' чтобы игнорировать и подвергнуться риску повреждения "
+#~ "данных.%sНажмите 'Отмена' для закрытия программы."
 
 #~ msgctxt "lclstrconsts.rspriorrecordhint"
 #~ msgid "Prior"
-#~ msgstr "Vorige"
+#~ msgstr "Предыдущая"
 
 #~ msgid "Property %s does not exist"
-#~ msgstr "Eigenschap %s bestaat niet"
+#~ msgstr "Свойство %s не существует"
+
+#~ msgid "Endupdate while no update in progress"
+#~ msgstr "Команда Endupdate, хотя обновления не производилось"
+
+#~ msgid "Cannot save image while update in progress"
+#~ msgstr "Невозможно сохранить изображение во время обновления"
+
+#~ msgid "Cannot begin update all when canvas only update in progress"
+#~ msgstr "Невозможно начать обновление всех во время обновления канвы"
+
+#~ msgid "Refresh"
+#~ msgstr "Обновить"
 
 #~ msgid "Replace"
-#~ msgstr "Vervang"
+#~ msgstr "Заменить"
 
 #~ msgid "Replace all"
-#~ msgstr "Vervang alles"
+#~ msgstr "Заменить всё"
 
 #~ msgctxt "lclstrconsts.rsresourcenotfound"
 #~ msgid "Resource %s not found"
-#~ msgstr "Resource %s is niet gevonden"
+#~ msgstr "Ресурс %s не найден"
+
+#~ msgid "ScrollBar"
+#~ msgstr "Полоса прокрутки"
 
 #~ msgid "ScrollBar property out of range"
-#~ msgstr "Schuifbalk eigenschap buiten bereik"
+#~ msgstr "свойство ScrollBar вне диапазона"
 
 #~ msgid "Select color"
-#~ msgstr "Kies een kleur"
+#~ msgstr "Выбрать цвет"
 
 #~ msgid "Select a font"
-#~ msgstr "Kies een font"
+#~ msgstr "Выбрать шрифт"
 
 #~ msgid "  size "
-#~ msgstr "  afmeting "
+#~ msgstr "  размер "
 
 #~ msgid "Text"
-#~ msgstr "Tekst"
+#~ msgstr "Текст"
 
 #~ msgid "Unable to load default font"
-#~ msgstr "Kan het standaard font niet laden"
+#~ msgstr "Не могу загрузить шрифт по умолчанию"
 
 #~ msgid "Unknown Error, please report this bug"
-#~ msgstr "Onbekende Fout, rapporteer alstublieft deze fout"
+#~ msgstr "Неизвестная ошибка, сообщите о ней разработчикам"
 
 #~ msgid "Unknown picture extension"
-#~ msgstr "Onbekende extensie voor plaatje"
+#~ msgstr "Неизвестное расширение файла изображения"
 
 #~ msgid "Unsupported bitmap format."
-#~ msgstr "Niet ondersteund bitmap formaat."
+#~ msgstr "Неподдерживаемый тип точечного рисунка."
 
 #~ msgid "Unsupported clipboard format: %s"
-#~ msgstr "Niet ondersteund klembord formaat: %s"
+#~ msgstr "Неподдерживаемый формат буфера обмена: %s"
 
 #~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
 #~ msgstr ""
-#~ " WAARSCHUWING: Er zijn nog %d DCs niet vrijgegeven, een gedetailleerde dump "
-#~ "volgt:"
+#~ " ВНИМАНИЕ: Найдено %d неосвобождённых контекстов устройств, список см. ниже:"
 
 #~ msgid ""
 #~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
-#~ msgstr ""
-#~ " WAARSCHUWING: Er zijn nog %d GDIObject niet vrijgegeven, een gedetailleerde "
-#~ "dump volgt:"
+#~ msgstr " ВНИМАНИЕ: Найдено %d неосвобождённых GDIObject, список см. ниже:"
 
 #~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
-#~ msgstr ""
-#~ " WAARSCHUWING: Er staan nog %d berichten in de queue! Deze worden nu "
-#~ "vrijgegeven"
+#~ msgstr " ВНИМАНИЕ: В очереди осталось %d сообщений! Они будут удалены"
 
 #~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
-#~ msgstr ""
-#~ " WAARSCHUWING: Er zijn %d TimerInfo structuren overgebleven. Deze worden nu "
-#~ "vrijgegeven"
+#~ msgstr " ВНИМАНИЕ: Осталось %d структур TimerInfo, они будут освобождены"
 
 #~ msgid ""
 #~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
 #~ msgstr ""
-#~ " WAARSCHUWING: Er zijn %s LM_PAINT/LM_GtkPAINT berichten niet verwijderd."
+#~ " ВНИМАНИЕ: Найдено %s неудалённых ссылок на сообщение LM_PAINT/LM_GtkPAINT."
 
 #~ msgid "Whole words only"
-#~ msgstr "Alleen hele woorden"
+#~ msgstr "Только целые слова"
 
 #~ msgid "Error:"
-#~ msgstr "Fout:"
+#~ msgstr "Ошибка:"
 
 #~ msgid "Warning:"
-#~ msgstr "Waarschuwing:"
+#~ msgstr "Предупреждение:"
+
+#~ msgid "Window"
+#~ msgstr "Окно"
+
+#~ msgid "Window Frame"
+#~ msgstr "Граница окна"
+
+#~ msgid "Window Text"
+#~ msgstr "Текст окна"
 
 #~ msgid "Cannot focus a disabled or invisible window"
-#~ msgstr "Kan geen focus geven aan een onzichtbaar of disabled scherm"
+#~ msgstr "Нельзя дать фокус отключённому или невидимому окну"
 
 #~ msgid "Duplicate menus"
-#~ msgstr "Dubbele menus"
+#~ msgstr "Повторяющиеся меню"
 
 #~ msgid "Invalid action creation"
-#~ msgstr "Ongeldige aktie aangemaakt"
+#~ msgstr "Неправильное создание действия"
 
 #~ msgid "Invalid action enumeration"
-#~ msgstr "Ongeldige aktie opsomming"
+#~ msgstr "Неправильное перечисление действий"
 
 #~ msgid "Invalid action registration"
-#~ msgstr "Ongeldige aktie registratie"
+#~ msgstr "Неправильная регистрация действия"
 
 #~ msgid "Invalid action unregistration"
-#~ msgstr "Ongeldige aktie de-registratie"
+#~ msgstr "Неправильная разрегистрация действия"
 
 #~ msgid "The char set in mask \"%s\" is not valid!"
-#~ msgstr "De characterset in mask \"%s\" is niet geldig!"
+#~ msgstr "Набор символов в маске \"%s\" неверен!"
 
 #~ msgid "Invalid image size"
-#~ msgstr "Ongeldig formaat voor afbeelding"
+#~ msgstr "Неправильный размер рисунка"
 
 #~ msgid "Invalid ImageList Index"
-#~ msgstr "Ongeldige index van ImageList"
+#~ msgstr "Неправильный индекс ImageList"
 
 #~ msgid "Menu index out of range"
-#~ msgstr "Index van menu buiten de grenzen"
+#~ msgstr "Индекс меню вне диапазона"
 
 #~ msgid "MenuItem is nil"
-#~ msgstr "MenuItem is nil"
+#~ msgstr "MenuItem указывает на нуль"
 
 #~ msgid "Sub-menu is not in menu"
-#~ msgstr "Submenu niet in menu"
+#~ msgstr "Подменю не в меню"
 
 #~ msgid "No MDI form present."
-#~ msgstr "Geen MDI formulier aanwezig"
+#~ msgstr "Отсутствует форма MDI."
 
 #~ msgid "No timers available"
-#~ msgstr "Geen timers beschikbaar"
+#~ msgstr "Таймеры недоступны"
+
+#~ msgid "Wrong token type: %s expected"
+#~ msgstr "Неверный тип лексемы: ожидался %s"
+
+#~ msgid "Invalid floating point number: %s"
+#~ msgstr "Неверное число с плавающей точкой: %s"
+
+#~ msgid "Invalid integer number: %s"
+#~ msgstr "Неверное целое число: %s"
+
+#~ msgid " (at %d,%d, stream offset %.8x)"
+#~ msgstr " (на %d,%d, смещение потока %.8x)"
+
+#~ msgid "Unterminated byte value"
+#~ msgstr "Незавершённое значение байта"
+
+#~ msgid "Unterminated string"
+#~ msgstr "Незавершённая строка"
+
+#~ msgid "Wrong token symbol: %s expected but %s found"
+#~ msgstr "Неверный символ лексемы: ожидался %s, но найден %s"
+
+#~ msgid "Wrong token type: %s expected but %s found"
+#~ msgstr "Неверный тип лексемы: ожидался %s, но найден %s"
+
+#~ msgid "Aqua"
+#~ msgstr "Морской волны"
+
+#~ msgid "Black"
+#~ msgstr "Чёрный"
+
+#~ msgid "Blue"
+#~ msgstr "Синий"
+
+#~ msgid "Cream"
+#~ msgstr "Кремовый"
+
+#~ msgid "Default"
+#~ msgstr "По умолчанию"
+
+#~ msgid "Fuchsia"
+#~ msgstr "Розовый"
+
+#~ msgid "Gray"
+#~ msgstr "Тёмно-серый"
+
+#~ msgid "Green"
+#~ msgstr "Тёмно-зелёный"
+
+#~ msgid "Lime"
+#~ msgstr "Зелёный"
+
+#~ msgid "Maroon"
+#~ msgstr "Малиновый"
+
+#~ msgid "Medium Gray"
+#~ msgstr "Серый"
+
+#~ msgid "Money Green"
+#~ msgstr "Светло-зелёный"
+
+#~ msgid "Navy"
+#~ msgstr "Тёмно-синий"
+
+#~ msgid "None"
+#~ msgstr "Нет"
+
+#~ msgid "Olive"
+#~ msgstr "Оливковый"
+
+#~ msgid "Purple"
+#~ msgstr "Лиловый"
+
+#~ msgid "Red"
+#~ msgstr "Красный"
+
+#~ msgid "Silver"
+#~ msgstr "Серебристый"
+
+#~ msgid "Sky Blue"
+#~ msgstr "Голубой"
+
+#~ msgid "Teal"
+#~ msgstr "Бирюзовый"
+
+#~ msgid "White"
+#~ msgstr "Белый"
+
+#~ msgid "Yellow"
+#~ msgstr "Жёлтый"

@@ -3,36 +3,14 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2009-05-06 13:37+0000\n"
-"Last-Translator: Marc Fokker <Unknown>\n"
+"PO-Revision-Date: 2009-05-06 13:36+0000\n"
+"Last-Translator: Antoni Clavell <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-06-19 18:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-
-#: trstrings:strconvertpkg
-msgid ""
-"You want to install an %x-Package, but your Linux-Distribution's package "
-"system is %y.\rThis package can be converted using \"alien\", but this will "
-"take some time and eventually the application won't work\rDo you want to "
-"convert the package now?"
-msgstr ""
-"U wilt een %x-Pakket installeren, maar je Linux-Distributie's pakketsysteem "
-"is %y.\rDit pakket kan geconverteerd worden door gebruik te maken van "
-"\"alien\", maar dit kan lang duren en uiteindelijk zal de applicatie niet "
-"werken.\rWilt u het pakket nu converteren?"
-
-#: trstrings:strrmpkg
-msgid ""
-"Do you really want to remove \"%p\", containing %a?\rThe following "
-"package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
-"those packages, press \"No\"!"
-msgstr ""
-"Weet u zeker dat u \"%p\" wilt verwijderen, het bevat %a?\rDe volgende "
-"pakketten zullen ook verwijderd worden: %pl\rAls u niet zeker bent of u de "
-"pakketten niet nodig heeft klik \"Nee\"!"
 
 #: trstrings:strinstaborted
 msgid "Installation aborted."
@@ -97,7 +75,7 @@ msgstr ""
 
 #: trstrings:strabort
 msgid "Abort"
-msgstr "Afbreken"
+msgstr "Cancel·la"
 
 #: trstrings:strback
 msgid "Back"
@@ -494,6 +472,14 @@ msgstr ""
 msgid "Ready."
 msgstr ""
 
+#: trstrings:strconvertpkg
+msgid ""
+"You want to install an %x-Package, but your Linux-Distribution's package "
+"system is %y.\rThis package can be converted using \"alien\", but this will "
+"take some time and eventually the application won't work\rDo you want to "
+"convert the package now?"
+msgstr ""
+
 #: trstrings:strconvertpkgq
 msgid "Convert package?"
 msgstr ""
@@ -508,7 +494,7 @@ msgstr ""
 
 #: trstrings:strfilter
 msgid "Filter:"
-msgstr "Filter:"
+msgstr "Filtre:"
 
 #: trstrings:strloading
 msgid "Loading..."
@@ -678,6 +664,13 @@ msgstr ""
 msgid "Uninstalling..."
 msgstr ""
 
+#: trstrings:strrmpkg
+msgid ""
+"Do you really want to remove \"%p\", containing %a?\rThe following "
+"package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+"those packages, press \"No\"!"
+msgstr ""
+
 #: trstrings:strrmpkgq
 msgid "Really remove?"
 msgstr ""
@@ -735,29 +728,32 @@ msgid "Error while unpacking and configuring files."
 msgstr ""
 
 #~ msgid "Browser %s%s%s not executable."
-#~ msgstr "Browser %s%s%s niet uitvoerbaar"
+#~ msgstr "Navegador %s%s%s no executable."
 
 #~ msgid "Browser %s%s%s not found."
-#~ msgstr "Browser %s%s%s niet gevonden"
+#~ msgstr "Navegador  %s%s%s no trobat."
 
 #~ msgid "Error while executing %s%s%s:%s%s"
-#~ msgstr "Fout tijdens uitvoeren van %s%s%s:%s%s"
+#~ msgstr "Error en executar  %s%s%s:%s%s"
 
 #~ msgid "Unable to find a HTML browser."
-#~ msgstr "Geen HTML browser kunnen vinden."
+#~ msgstr "No puc trobar un navegador HTML"
 
 #~ msgid ""
 #~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
 #~ "Viewers"
 #~ msgstr ""
-#~ "Geen HTML browser gevonden. %sDefini�er deze alstublieft via Help -> "
-#~ "Configureer Help -> Viewers"
+#~ "No s'ha trobat navegador HTML .%sSisplau definiu-ne un en  Ajuda -> "
+#~ "Configura ajuda -> Visors"
 
 #~ msgid "The help database %s%s%s was unable to find file %s%s%s."
-#~ msgstr "De help database %s%s%s heeft bestand %s%s%s niet kunnen vinden."
+#~ msgstr ""
+#~ "La base de dades de l'ajuda %s%s%s no ha pogut trobar el fitxer %s%s%s."
 
 #~ msgid "The macro %s in BrowserParams will be replaced by the URL."
-#~ msgstr "De macro %s in BrowserParams zal worden vervangen door de URL."
+#~ msgstr ""
+#~ "La macro %s en BrowserParams (paràmetres navegador) serà substituïda per la "
+#~ "URL."
 
 #~ msgid "Alt"
 #~ msgstr "Alt"
@@ -766,49 +762,57 @@ msgstr ""
 #~ msgstr "Ctrl"
 
 #~ msgid "Accept"
-#~ msgstr "Accepteer"
+#~ msgstr "Accepta"
 
 #~ msgid "application key"
-#~ msgstr "toepassing sleutel"
+#~ msgstr "tecla d'aplicació"
 
 #~ msgid "Backspace"
-#~ msgstr "Backspace"
+#~ msgstr "Espai enrere"
 
 #~ msgid "Capital"
-#~ msgstr "Hoofdletter"
+#~ msgstr "Majúscula"
 
 #~ msgid "Clear"
-#~ msgstr "Wissen"
+#~ msgstr "Neteja"
 
 #~ msgid "Control"
-#~ msgstr "Controleer"
+#~ msgstr "Control"
 
 #~ msgid "Convert"
-#~ msgstr "Converteer"
+#~ msgstr "Converteix"
+
+#~ msgctxt "lclstrconsts.ifsvk_delete"
+#~ msgid "Delete"
+#~ msgstr "Esborra"
 
 #~ msgid "Down"
-#~ msgstr "Neer"
+#~ msgstr "Avall"
 
 #~ msgid "End"
-#~ msgstr "Eind"
+#~ msgstr "Fi"
 
 #~ msgid "Escape"
-#~ msgstr "Escape"
+#~ msgstr "Escapa"
 
 #~ msgid "Execute"
-#~ msgstr "Uitvoeren"
+#~ msgstr "Executa"
 
 #~ msgid "Final"
-#~ msgstr "Laatste"
+#~ msgstr "Final"
 
 #~ msgid "Hanja"
 #~ msgstr "Hanja"
 
 #~ msgid "Help"
-#~ msgstr "Help"
+#~ msgstr "Ajuda"
 
 #~ msgid "Home"
-#~ msgstr "Home"
+#~ msgstr "Inici"
+
+#~ msgctxt "lclstrconsts.ifsvk_insert"
+#~ msgid "Insert"
+#~ msgstr "Insereix"
 
 #~ msgid "Junja"
 #~ msgstr "Junja"
@@ -817,231 +821,242 @@ msgstr ""
 #~ msgstr "Kana"
 
 #~ msgid "Mouse Button Left"
-#~ msgstr "Muisknop Links"
+#~ msgstr "Botó esquerre del ratolí"
 
 #~ msgid "Left"
-#~ msgstr "Links"
+#~ msgstr "Esquerra"
 
 #~ msgid "left windows key"
-#~ msgstr "linker windows toets"
+#~ msgstr "tecla windows esquerra"
 
 #~ msgid "Mouse Button Middle"
-#~ msgstr "Muisknop Midden"
+#~ msgstr "Butó del mig del ratolí"
 
 #~ msgctxt "lclstrconsts.ifsvk_menu"
 #~ msgid "Menu"
-#~ msgstr "Menu"
+#~ msgstr "Menú"
 
 #~ msgid "Mode Change"
-#~ msgstr "Mode wijziging"
+#~ msgstr "Canvi de mode"
+
+#~ msgctxt "lclstrconsts.ifsvk_next"
+#~ msgid "Next"
+#~ msgstr "Pròxim"
 
 #~ msgid "Nonconvert"
-#~ msgstr "Niet converteren"
+#~ msgstr "No convertible"
 
 #~ msgid "Numlock"
-#~ msgstr "Numlock"
+#~ msgstr "Teclat numèric"
 
 #~ msgid "Numpad %d"
-#~ msgstr "Nummeriek deel %d"
+#~ msgstr "Teclat numèric %d"
 
 #~ msgid "Pause key"
-#~ msgstr "Pause toets"
+#~ msgstr "Tecla de pausa"
 
 #~ msgid "Print"
-#~ msgstr "Druk af"
+#~ msgstr "Imprimeix"
+
+#~ msgctxt "lclstrconsts.ifsvk_prior"
+#~ msgid "Prior"
+#~ msgstr "Previ"
 
 #~ msgid "Mouse Button Right"
-#~ msgstr "Muisknop Rechts"
+#~ msgstr "Botó dret del ratolí"
 
 #~ msgid "Return"
-#~ msgstr "Return"
+#~ msgstr "Retorn"
 
 #~ msgid "Right"
-#~ msgstr "Rechts"
+#~ msgstr "Dreta"
 
 #~ msgid "right windows key"
-#~ msgstr "rechter windows toets"
+#~ msgstr "tecla windows dreta"
 
 #~ msgid "Scroll"
-#~ msgstr "Schuif"
+#~ msgstr "Explora"
 
 #~ msgid "Select"
-#~ msgstr "Selecteer"
+#~ msgstr "Selecciona"
 
 #~ msgid "Shift"
-#~ msgstr "Shift"
+#~ msgstr "Majúsc."
 
 #~ msgid "Snapshot"
-#~ msgstr "Snapshot"
+#~ msgstr "Captura"
 
 #~ msgid "Space key"
-#~ msgstr "Spatiebar"
+#~ msgstr "Espaiador"
 
 #~ msgid "Tab"
 #~ msgstr "Tab"
 
 #~ msgid "Unknown"
-#~ msgstr "Onbekend"
+#~ msgstr "Desconegut"
 
 #~ msgid "Up"
-#~ msgstr "Omhoog"
+#~ msgstr "Amunt"
 
 #~ msgctxt "lclstrconsts.lislclresourcesnotfound"
 #~ msgid "Resource %s not found"
-#~ msgstr "Resource %s is niet gevonden"
+#~ msgstr "Recurs %s no trobat"
 
 #~ msgid "A control can't have itself as parent"
-#~ msgstr "Een control kan niet zijn eigen ouder zijn"
+#~ msgstr "Un control no pot cridar-se a ell mateix"
 
 #~ msgid "All files (%s)|%s|%s"
-#~ msgstr "Alle bestanden (%s)|%s|%s"
+#~ msgstr "Tots els fitxers (%s)|%s|%s"
 
 #~ msgid "Backward"
-#~ msgstr "Achteruit"
+#~ msgstr "Enrere"
 
 #~ msgid "Bitmaps"
-#~ msgstr "Bitmaps"
+#~ msgstr "Mapes de bits"
 
 #~ msgid "Blank"
-#~ msgstr "Spatie"
+#~ msgstr "En blanc"
 
 #~ msgid "Calculator"
-#~ msgstr "Rekenmachine"
+#~ msgstr "Calculadora"
 
 #~ msgid "Can not focus"
-#~ msgstr "Kan geen focus geven"
+#~ msgstr "No es pot focalitzar"
 
 #~ msgid "Canvas does not allow drawing"
-#~ msgstr "Er kan op het canvas niet getekend worden"
+#~ msgstr "El marc no permet el dibuix"
 
 #~ msgid "Case sensitive"
-#~ msgstr "Hoofdletter gevoelig"
+#~ msgstr "Sensible a majúsc-minúsc."
 
 #~ msgid "Creating gdb catchable error:"
-#~ msgstr "Maak een fout die door gdb opgevangen kan worden"
+#~ msgstr "Creant un error gdb capturable:"
 
 #~ msgid "permissions user group size date time"
-#~ msgstr "permissies gebruiker groep grootte datum tijd"
+#~ msgstr "permisos usuari grup mida dia hora"
 
 #~ msgctxt "lclstrconsts.rsdeleterecordhint"
 #~ msgid "Delete"
-#~ msgstr "Verwijder"
+#~ msgstr "Esborra"
 
 #~ msgid "Direction"
-#~ msgstr "Richting"
+#~ msgstr "Direcció"
 
 #~ msgid "&Directory"
-#~ msgstr "&Map"
+#~ msgstr "&Directori"
 
 #~ msgid "Docking"
-#~ msgstr "Docking"
+#~ msgstr "Fixa"
 
 #~ msgid "Error creating device context for %s.%s"
-#~ msgstr "Fout tijdens het maken van een DC voor %s.%s"
+#~ msgstr "Error en crear dispositiu  de context per a %s.%s"
 
 #~ msgid "ERROR in LCL: "
-#~ msgstr "FOUT in LCL "
+#~ msgstr "ERROR en LCL "
 
 #~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
-#~ msgstr "Er is een fout opgetreden in %s op %sAdres %s%s Frame %s"
+#~ msgstr "Error ocorregut en %s a l'%sAdreça %s%s Estructura %s"
 
 #~ msgid "Error reading %s%s%s: %s"
-#~ msgstr "Fout tijdens het lezen %s%s%s: %s"
+#~ msgstr "Error en llegir %s%s%s: %s"
 
 #~ msgid "Error while saving bitmap."
-#~ msgstr "Fout tijdens opslaan van bitmap."
+#~ msgstr "Error en desar el mapa de bits"
 
 #~ msgid "Exception"
-#~ msgstr "Fout"
+#~ msgstr "Excepció"
 
 #~ msgid "Directory must exist"
-#~ msgstr "Directory moet bestaan"
+#~ msgstr "Cal que el directori existeixi"
 
 #~ msgid "The directory \"%s\" does not exist."
-#~ msgstr "De map \"%s\" bestaat niet."
+#~ msgstr "El directori \"%s\"  no existeix."
 
 #~ msgid "The file \"%s\" already exists. Overwrite ?"
-#~ msgstr "Het bestand \"%s\" bestaat al. Overschrijven?"
+#~ msgstr "El fitxer \"%s\" ja existeix. El sobrescric ?"
 
 #~ msgid "File must exist"
-#~ msgstr "Bestand moet bestaan"
+#~ msgstr "El fitxer ha d'existir"
 
 #~ msgid "The file \"%s\" does not exist."
-#~ msgstr "Het bestand  \"%s\" bestaat niet."
+#~ msgstr "El fitxer \"%s\"  no existeix."
 
 #~ msgid "The file \"%s\" is not writable."
-#~ msgstr "Het bestand \"%s\" kan niet geschreven worden."
+#~ msgstr "El fitxer \"%s\" no és d'escriptura."
 
 #~ msgid "File is not writable"
-#~ msgstr "Kan bestand niet schrijven"
+#~ msgstr "No es pot escriure aquest fitxer"
 
 #~ msgid "Save file as"
-#~ msgstr "Bestand opslaan als"
+#~ msgstr "Anomena i desa el fitxer"
 
 #~ msgid "Open existing file"
-#~ msgstr "Open een bestaand bestand"
+#~ msgstr "Obre fitxer existent"
 
 #~ msgid "Overwrite file ?"
-#~ msgstr "Bestand overschrijven?"
+#~ msgstr "Sobrescric el fitxer?"
 
 #~ msgid "Path must exist"
-#~ msgstr "Het pad moet bestaan"
+#~ msgstr "El camí ha d'existir"
 
 #~ msgid "The path \"%s\" does not exist."
-#~ msgstr "Het pad \"%s\" bestaat niet."
+#~ msgstr "El camí \"%s\"  no existeix."
 
 #~ msgid "Select Directory"
-#~ msgstr "Kies map"
+#~ msgstr "Selecciona directori"
 
 #~ msgid "(file not found: \"%s\")"
-#~ msgstr "(bestand niet gevonden: \"%s\")"
+#~ msgstr "(fitxer no trobat: \"%s\")"
 
 #~ msgid "File information"
-#~ msgstr "Bestandsinformatie"
+#~ msgstr "Informació del fitxer"
 
 #~ msgid "Find"
-#~ msgstr "Zoek"
+#~ msgstr "Busca"
 
 #~ msgid "Find more"
-#~ msgstr "Zoek meer"
+#~ msgstr "Busca més"
 
 #~ msgid "FixedCols can't be >= ColCount"
-#~ msgstr "FixedCols kan niet >= ColCount"
+#~ msgstr ""
+#~ "FixedCols (columnes fixades) no poden ser>= ColCount (recompte de columnes)"
 
 #~ msgid "FixedRows can't be >= RowCount"
-#~ msgstr "FixedRows kan niet >= RowCount"
+#~ msgstr ""
+#~ "FixedRows (files fixades) no poden ser >= RowCount (recompte de files)"
 
 #~ msgid "Form streaming \"%s\" error: %s"
-#~ msgstr "\"%s\" fout: %s bij het streamen van form."
+#~ msgstr "Formació del corrent \"%s\" amb  error: %s"
 
 #~ msgid "Forward"
-#~ msgstr "Vooruit"
+#~ msgstr "Endavant"
 
 #~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
-#~ msgstr "--gdk-debug flags     Zet bepaalde GDK trace/debug berichten aan."
+#~ msgstr ""
+#~ "--gdk-debug flags     Engega missatges específics de GDK de traça/depuració."
 
 #~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
-#~ msgstr "--gdk-no-debug flags     Zet bepaalde GDK trace/debug berichten uit."
+#~ msgstr ""
+#~ "--gdk-no-debug flags  Tanca els missatges específics GDK de traça/depuració."
 
 #~ msgid ""
 #~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
 #~ "the application."
 #~ msgstr ""
-#~ "--g-fatal-warnings    De applicatie stop bij waarschuwingen en fouten "
-#~ "gegenereerd door GtK+/GDK."
+#~ "--g-fatal-warnings    Els errors i advertències generats per Gtk+/GDK "
+#~ "aturaran l'aplicació."
 
 #~ msgid "Grid file doesn't exists"
-#~ msgstr "Grid bestand bestaat niet"
+#~ msgstr "No existeix fitxer de la graella"
 
 #~ msgid "Grid index out of range."
-#~ msgstr "Rooster index buiten bereik"
+#~ msgstr "Índex de la graella fora de rang"
 
 #~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
-#~ msgstr ""
-#~ "De GroupIndex kan niet minder zijn dan de GroupIndex van een vorig item."
+#~ msgstr "GroupIndex no pot ser menor que un ítem de menú GroupIndex anterior."
 
 #~ msgid "History:"
-#~ msgstr "Historie:"
+#~ msgstr "Historial:"
 
 #~ msgid ""
 #~ "--class classname     Following Xt conventions, the class of a program is "
@@ -1049,13 +1064,14 @@ msgstr ""
 #~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
 #~ "program will be set to \"classname\"."
 #~ msgstr ""
-#~ "--class klassenaam    Volgens de Xt conventies, is de klasse van een "
-#~ "prograam de naam van dat programma met de eerste letter als kapitaal. Bijv. "
-#~ "the klassenaam voor gimp is \"Gimp\". Als de --class optie is meegegeven, "
-#~ "wordt de klasse van het programma gezet op \"klassenaam\"."
+#~ "--class classname     Seguint les convencions Xt, la classe d'un programa és "
+#~ "el nom del programa amb el caràcter inicial en majúscula. Per exemple, el "
+#~ "nom de classe (classname) per al gimp és \"Gimp\". Si --class s'especifica, "
+#~ "la classe del programa serà posada com \"classname\"."
 
 #~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
-#~ msgstr "--gtk-debug flags     Zet bepaalde GtK+ trace/debug berichten aan."
+#~ msgstr ""
+#~ "--gtk-debug flags     Mostra missatges Gtk+ específics de traça/depuració."
 
 #~ msgid ""
 #~ "--display h:s:d       Connect to the specified X server, where \"h\" is the "
@@ -1063,26 +1079,31 @@ msgstr ""
 #~ "number (typically omitted). If --display is not specified, the DISPLAY "
 #~ "environment variable is used."
 #~ msgstr ""
-#~ "--display h:s:d       Start het programma op de genoemde X server, waarbij "
-#~ "\"h\" de hostnaam is, \"s\" het nummer van de server (meestal 0), en \"d\" "
-#~ "is het display nummer (vaak weggelaten). Als --display niet is meegegeven, "
-#~ "wordt de DISPLAY omgevings variabele gebruikt."
+#~ "--display h:s:d       Connecta al servidor X especificat, on \"h\" és el nom "
+#~ "del host, \"s\" és el número del servidor (usualment 0), i \"d\" és el "
+#~ "número a mostrar (típicament omès). Si --display no s'ha especificat,s'usarà "
+#~ "l'entorn variable DISPLAY."
 
 #~ msgid "--gtk-module module   Load the specified module at startup."
+#~ msgstr "--gtk-module module   Carrega el mòdul especificat a l'engegar."
+
+#~ msgid ""
+#~ "--name programe       Set program name to \"progname\". If not specified, "
+#~ "program name will be set to ParamStrUTF8(0)."
 #~ msgstr ""
-#~ "--gtk-module module   Laad de betreffende module tijdens het starten."
+#~ "--name programe       Posa el nom del programa a \"progname\". Si no s'ha "
+#~ "especificat, el nom serà posat a ParamStr(0)."
 
 #~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
 #~ msgstr ""
-#~ "--gtk-no-debug flags     Zet bepaalde GtK+ trace/debug berichten uit."
+#~ "--gtk-no-debug flags  Tanca els missatges Gtk+ específics de traça/depuració."
 
 #~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
-#~ msgstr ""
-#~ "--lcl-no-transient    Zet geen overdraagbare volgorde voor modale schermen"
+#~ msgstr "--lcl-no-transient   No posis ordre transient per a formes modals."
 
 #~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
 #~ msgstr ""
-#~ "--no-xshm             Maak geen gebruik van de X Shared Memory Extensie."
+#~ "--no-xshm             Desactiva l'ús de l'extensió X de memòria compartida."
 
 #~ msgid ""
 #~ "--sync                Call XSynchronize (display, True) after the Xserver "
@@ -1091,314 +1112,312 @@ msgstr ""
 #~ "received immediatey after the protocol request that generated the error has "
 #~ "been processed by the X server."
 #~ msgstr ""
-#~ "--sync                Roep XSynchronize (display, True) aan na verbinding "
-#~ "met de Xserver. Dit maakt het debuggen van X protocol fouten eenvoudiger, "
-#~ "doordat X aanvragen buffering uitstaat en X fouten direct ontvangen worden "
-#~ "nadat de aanvraag door de Xserver is behandeld."
+#~ "--sync                Crida XSynchronize (display, True) un cop la connexió "
+#~ "al Xserver ha estat establerta. Això facilita que la depuració d'errors del "
+#~ "protocol X sigui més senzilla, perquè la demanda de memòria cau X serà "
+#~ "desactivad i els errors X seran rebuts immediatament després que la demanda "
+#~ "del protocol que ha generat l'error ha estat processat pel servidor X."
 
 #~ msgid "%s: Already registered"
-#~ msgstr "%s: Al vastgelegd"
+#~ msgstr "Ja enregistrat"
 
 #~ msgid "Help Context not found"
-#~ msgstr "Help Context niet gevonden"
+#~ msgstr "No trobo ajuda contextual"
 
 #~ msgid "Help Database not found"
-#~ msgstr "Help Database niet gevonden"
+#~ msgstr "Base de dades de l'ajuda no trobada"
 
 #~ msgid "Help Error"
-#~ msgstr "Help Fout"
+#~ msgstr "Error d'ajuda"
 
 #~ msgid "Help context %s not found."
-#~ msgstr "Help context %s niet gevonden."
+#~ msgstr "Context d'ajuda %s no trobat."
 
 #~ msgid "Help context %s not found in Database %s%s%s."
-#~ msgstr "Help context %s niet gevonden in Database %s%s%s."
+#~ msgstr "Context d'ajuda %s no trobat en la base de dades %s%s%s."
 
 #~ msgid ""
 #~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
 #~ msgstr ""
-#~ "Help Database %s%s%s heeft geen viewer gevonden voor help pagina van type %s"
+#~ "La base de dades de l'ajuda %s%s%s no ha trobat un visor per una pàgina "
+#~ "d'ajuda del tipus %s"
 
 #~ msgid "Help Database %s%s%s not found"
-#~ msgstr "Help Database %s%s%s niet gevonden"
+#~ msgstr "Base de dades de l'ajuda %s%s%s no trobada"
 
 #~ msgid "Help keyword %s%s%s not found."
-#~ msgstr "Help sleutelwoord %s%s%s niet gevonden."
+#~ msgstr "Paraula clau d'ajuda %s%s%s no trobada"
 
 #~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
-#~ msgstr "Help sleutelwoord %s%s%s niet gevonden in Database %s%s%s."
+#~ msgstr "Paraula clau d'ajuda %s%s%s no trobada en la base de dades %s%s%s."
 
 #~ msgid "Help node %s%s%s has no Help Database"
-#~ msgstr "Help node %s%s%s heeft geen Help Database"
+#~ msgstr "El node d'ajuda  %s%s%s no té base de dades d'ajuda"
 
 #~ msgid "No help found for line %d, column %d of %s."
-#~ msgstr "Geen help gevonden voor regel %d, kolom %d van %s."
+#~ msgstr "No s'ha trobat cap ajuda per a la línia %d, columna %d de %s."
 
 #~ msgid "No help nodes available"
-#~ msgstr "Geen help nodes beschikbaar"
+#~ msgstr "No hi ha nodes d'ajuda disponibles"
 
 #~ msgid "Help not found"
-#~ msgstr "Help niet gevonden"
+#~ msgstr "Ajuda no trobada"
 
 #~ msgid "%s: Not registered"
-#~ msgstr "%s: Niet vastgelegd"
+#~ msgstr "No enregistrat"
 
 #~ msgid "Help Selector Error"
-#~ msgstr "Help Selectie fout"
+#~ msgstr "Error del selector d'ajuda"
 
 #~ msgid "There is no viewer for help type %s%s%s"
-#~ msgstr "Er is geen viewer voor help type %s%s%s"
+#~ msgstr "No hi ha cap visor per al tipus d'ajuda %s%s%s"
 
 #~ msgid "Help Viewer Error"
-#~ msgstr "Help Viewer Fout"
+#~ msgstr "Error del visor d'ajuda"
 
 #~ msgid "Help Viewer not found"
-#~ msgstr "Help Viewer niet gevonden"
+#~ msgstr "Visor d'ajuda no trobat"
 
 #~ msgid "Icon"
-#~ msgstr "Icon"
+#~ msgstr "Icona"
 
 #~ msgid "%s Index %d out of bounds 0 .. %d"
-#~ msgstr "%s Index %d valt buiten de grenzen 0 .. %d"
+#~ msgstr "%s índex %d fora de límits 0-%d"
 
 #~ msgid "Index Out of range Cell[Col=%d Row=%d]"
-#~ msgstr "Index buiten de grenzen Cell[Col=%d Ro=%d]"
+#~ msgstr "Índex fora de rang Cel·lal[Col=%d Fila=%d]"
 
 #~ msgctxt "lclstrconsts.rsinsertrecordhint"
 #~ msgid "Insert"
-#~ msgstr "Invoegen"
+#~ msgstr "Insereix"
 
 #~ msgid "Invalid Date : %s"
-#~ msgstr "Ongeldige datum: %s"
+#~ msgstr "Data no vàlida: %s"
 
 #~ msgid "Invalid Date: %s. Must be between %s and %s"
-#~ msgstr "Ongeldige datum: %s. Het moet liggen tussen %s en %s"
+#~ msgstr "Data no vàlida: %s. Cal que estigui entre %s i %s"
 
 #~ msgid "invalid Form object stream"
-#~ msgstr "Ongeldige form objectstream"
+#~ msgstr "Corrent d'objecte de forma no vàlid"
 
 #~ msgid "Invalid property value"
-#~ msgstr "Ongeldige eigenschap waarde"
+#~ msgstr "Valor de la propietat no vàlid"
 
 #~ msgid "Invalid stream format"
-#~ msgstr "Omgeldig stream format"
+#~ msgstr "Corrent amb format invàlid"
 
 #~ msgid "%s is already associated with %s"
-#~ msgstr "%s is al verbonden met %s"
+#~ msgstr "%s ja està associat amb %s"
 
 #~ msgid "List index exceeds bounds (%d)"
-#~ msgstr "Lijst index overschreidt grenzen (%d)"
+#~ msgstr "L'índex de la llista excedeix els límits (%d)"
 
 #~ msgid "List must be empty"
-#~ msgstr "Lijst moet leeg zijn"
+#~ msgstr "Cal que la llista sigui buida"
 
 #~ msgid "&All"
-#~ msgstr "&Alles"
+#~ msgstr "&Tot"
 
 #~ msgctxt "lclstrconsts.rsmbcancel"
 #~ msgid "Cancel"
-#~ msgstr "Annuleer"
+#~ msgstr "Cancel·la"
 
 #~ msgid "&Close"
-#~ msgstr "&Sluiten"
+#~ msgstr "Tan&ca"
 
 #~ msgid "&Help"
-#~ msgstr "&Help"
+#~ msgstr "&Ajuda"
 
 #~ msgid "&Ignore"
-#~ msgstr "&Negeer"
+#~ msgstr "&Ignora"
 
 #~ msgid "&No"
-#~ msgstr "&Nee"
+#~ msgstr "&No"
 
 #~ msgid "No to all"
-#~ msgstr "Nee op alles"
+#~ msgstr "No a tot"
 
 #~ msgid "&OK"
-#~ msgstr "&OK"
+#~ msgstr "D'&acord"
 
 #~ msgid "&Retry"
-#~ msgstr "&Opnieuw"
+#~ msgstr "&Torna-ho a provar"
 
 #~ msgid "&Yes"
-#~ msgstr "&Ja"
+#~ msgstr "&Sí"
 
 #~ msgid "Yes to &All"
-#~ msgstr "Ja op &Alles"
+#~ msgstr "Sí a &tot"
 
 #~ msgctxt "lclstrconsts.rsmenucolorcaption"
 #~ msgid "Menu"
-#~ msgstr "Menu"
+#~ msgstr "Menú"
 
 #~ msgid "  modified "
-#~ msgstr "  gewijzigd "
+#~ msgstr "  modificat "
 
 #~ msgid "Confirmation"
-#~ msgstr "Bevestiging"
+#~ msgstr "Confirmació"
 
 #~ msgid "Custom"
-#~ msgstr "Eigen"
+#~ msgstr "Personalitza"
 
 #~ msgctxt "lclstrconsts.rsmterror"
 #~ msgid "Error"
-#~ msgstr "Fout"
+#~ msgstr "Error"
 
 #~ msgid "Information"
-#~ msgstr "Informatie"
+#~ msgstr "Informació"
 
 #~ msgid "Warning"
-#~ msgstr "Waarschuwing"
+#~ msgstr "Avís"
 
 #~ msgctxt "lclstrconsts.rsnextrecordhint"
 #~ msgid "Next"
-#~ msgstr "Volgende"
+#~ msgstr "Pròxim"
 
 #~ msgid "Not a valid grid file"
-#~ msgstr "Geen geldig grid bestand"
+#~ msgstr "Fitxer de graella no vàlid"
 
 #~ msgid ""
 #~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
 #~ "the programs uses clause."
 #~ msgstr ""
-#~ "Geen widgetset object. Controleer of the unit \"interface\" is toegevoegd "
-#~ "aan de \"uses\" van het programma."
+#~ "No hi és com a objecte o dispositiu. Sisplau, comproveu si la unitat "
+#~ "\"interfaces\" (interfícies) fou afegida a la clàusula d'usos del programa."
 
 #~ msgid "Select a date"
-#~ msgstr "Kies een datum"
+#~ msgstr "Selecciona una data"
 
 #~ msgid "Pixmap"
-#~ msgstr "Pixmap"
+#~ msgstr "Mapa de píxels"
 
 #~ msgid "Portable Network Graphic"
-#~ msgstr "Portable Network Graphic"
+#~ msgstr "PNG (Portable Network Graphic)"
 
 #~ msgid ""
 #~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill the "
 #~ "program."
 #~ msgstr ""
-#~ "%s%sDruk op Ok om te negeren, hierbij kunnen gegevens verloren gaan.%sDruk "
-#~ "op Cancel om het programma te annuleren."
+#~ "%s%s%sPolseu Ok per ignorar, tot arriscant de corrompre les dades.%sPolseu "
+#~ "Cancel per interrompre el programa"
 
 #~ msgctxt "lclstrconsts.rspriorrecordhint"
 #~ msgid "Prior"
-#~ msgstr "Vorige"
+#~ msgstr "Previ"
 
 #~ msgid "Property %s does not exist"
-#~ msgstr "Eigenschap %s bestaat niet"
+#~ msgstr "La propietat %s  no existeix"
 
 #~ msgid "Replace"
-#~ msgstr "Vervang"
+#~ msgstr "Substitueix"
 
 #~ msgid "Replace all"
-#~ msgstr "Vervang alles"
+#~ msgstr "Substitueix-ho tot"
 
 #~ msgctxt "lclstrconsts.rsresourcenotfound"
 #~ msgid "Resource %s not found"
-#~ msgstr "Resource %s is niet gevonden"
+#~ msgstr "Recurs %s no trobat"
 
 #~ msgid "ScrollBar property out of range"
-#~ msgstr "Schuifbalk eigenschap buiten bereik"
+#~ msgstr "Propietat de la barra de desplaçament fora de mida"
 
 #~ msgid "Select color"
-#~ msgstr "Kies een kleur"
+#~ msgstr "Tria color"
 
 #~ msgid "Select a font"
-#~ msgstr "Kies een font"
+#~ msgstr "Selecciona tipus de lletra"
 
 #~ msgid "  size "
-#~ msgstr "  afmeting "
+#~ msgstr "  mida "
 
 #~ msgid "Text"
-#~ msgstr "Tekst"
+#~ msgstr "Text"
 
 #~ msgid "Unable to load default font"
-#~ msgstr "Kan het standaard font niet laden"
+#~ msgstr "No puc carregar la font per defecte"
 
 #~ msgid "Unknown Error, please report this bug"
-#~ msgstr "Onbekende Fout, rapporteer alstublieft deze fout"
+#~ msgstr "Error desconegut. Sisplau reporteu-lo"
 
 #~ msgid "Unknown picture extension"
-#~ msgstr "Onbekende extensie voor plaatje"
+#~ msgstr "Extensió d'imatge desconeguda"
 
 #~ msgid "Unsupported bitmap format."
-#~ msgstr "Niet ondersteund bitmap formaat."
+#~ msgstr "Format de mapa de bits no suportat"
 
 #~ msgid "Unsupported clipboard format: %s"
-#~ msgstr "Niet ondersteund klembord formaat: %s"
+#~ msgstr "Format del portaretalls no suportat: %s"
 
 #~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
 #~ msgstr ""
-#~ " WAARSCHUWING: Er zijn nog %d DCs niet vrijgegeven, een gedetailleerde dump "
-#~ "volgt:"
+#~ " Avís: hi ha %d DCs no llançats, tot seguit es mostra informació detallada:"
 
 #~ msgid ""
 #~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
 #~ msgstr ""
-#~ " WAARSCHUWING: Er zijn nog %d GDIObject niet vrijgegeven, een gedetailleerde "
-#~ "dump volgt:"
+#~ " Avís: Hi ha %d Objectes-GDI no llançats, tot seguit es mostra informació "
+#~ "detallada:"
 
 #~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
-#~ msgstr ""
-#~ " WAARSCHUWING: Er staan nog %d berichten in de queue! Deze worden nu "
-#~ "vrijgegeven"
+#~ msgstr " Avís: Hi ha %d missatges perduts a la cua!, els allibero"
 
 #~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
-#~ msgstr ""
-#~ " WAARSCHUWING: Er zijn %d TimerInfo structuren overgebleven. Deze worden nu "
-#~ "vrijgegeven"
+#~ msgstr " Avís: s'han perdut %d estructures TimerInfo, les allibero"
 
 #~ msgid ""
 #~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
 #~ msgstr ""
-#~ " WAARSCHUWING: Er zijn %s LM_PAINT/LM_GtkPAINT berichten niet verwijderd."
+#~ " Avís: S'han deixat %s enllaços a missatge LM_PAINT/LM_GtkPAINT, sense "
+#~ "eliminar"
 
 #~ msgid "Whole words only"
-#~ msgstr "Alleen hele woorden"
+#~ msgstr "Només mots sencers"
 
 #~ msgid "Error:"
-#~ msgstr "Fout:"
+#~ msgstr "Error:"
 
 #~ msgid "Warning:"
-#~ msgstr "Waarschuwing:"
+#~ msgstr "Avís:"
 
 #~ msgid "Cannot focus a disabled or invisible window"
-#~ msgstr "Kan geen focus geven aan een onzichtbaar of disabled scherm"
+#~ msgstr "No puc accedir a una finestra invisible o tancada"
 
 #~ msgid "Duplicate menus"
-#~ msgstr "Dubbele menus"
+#~ msgstr "Menús duplicats"
 
 #~ msgid "Invalid action creation"
-#~ msgstr "Ongeldige aktie aangemaakt"
+#~ msgstr "Creació d'acció no vàlida"
 
 #~ msgid "Invalid action enumeration"
-#~ msgstr "Ongeldige aktie opsomming"
+#~ msgstr "Enumeració d'acció no vàlida"
 
 #~ msgid "Invalid action registration"
-#~ msgstr "Ongeldige aktie registratie"
+#~ msgstr "Enregistrament d'acció no vàlid"
 
 #~ msgid "Invalid action unregistration"
-#~ msgstr "Ongeldige aktie de-registratie"
+#~ msgstr "Acció de desenregistrar invàlida"
 
 #~ msgid "The char set in mask \"%s\" is not valid!"
-#~ msgstr "De characterset in mask \"%s\" is niet geldig!"
+#~ msgstr "El caràcter de la màscara \"%s\" no és vàlid!"
 
 #~ msgid "Invalid image size"
-#~ msgstr "Ongeldig formaat voor afbeelding"
+#~ msgstr "Mida de la imatge no vàlida"
 
 #~ msgid "Invalid ImageList Index"
-#~ msgstr "Ongeldige index van ImageList"
+#~ msgstr "Índex de llista d'imatges no vàlid"
 
 #~ msgid "Menu index out of range"
-#~ msgstr "Index van menu buiten de grenzen"
+#~ msgstr "Índex de menú fora de rang"
 
 #~ msgid "MenuItem is nil"
-#~ msgstr "MenuItem is nil"
+#~ msgstr "L'opció  no hi és al menú"
 
 #~ msgid "Sub-menu is not in menu"
-#~ msgstr "Submenu niet in menu"
+#~ msgstr "El submenú no és al menú"
 
 #~ msgid "No MDI form present."
-#~ msgstr "Geen MDI formulier aanwezig"
+#~ msgstr "No hi ha cap forma MDI present"
 
 #~ msgid "No timers available"
-#~ msgstr "Geen timers beschikbaar"
+#~ msgstr "No hi ha rellotges disponibles"

@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="814"/>
+      <CurrentBuildNr Value="818"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -50,7 +50,7 @@
         <MinVersion Major="1" Valid="True"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="106">
+    <Units Count="107">
       <Unit0>
         <Filename Value="listallgo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -65,8 +65,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="58" Y="27"/>
-        <TopLine Value="1"/>
+        <CursorPos X="39" Y="514"/>
+        <TopLine Value="494"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -675,8 +675,8 @@
         <Filename Value="ipkhandle.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="99" Y="1227"/>
-        <TopLine Value="1206"/>
+        <CursorPos X="18" Y="539"/>
+        <TopLine Value="519"/>
         <UsageCount Value="73"/>
       </Unit88>
       <Unit89>
@@ -790,8 +790,8 @@
       <Unit104>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="28" Y="434"/>
-        <TopLine Value="409"/>
+        <CursorPos X="5" Y="239"/>
+        <TopLine Value="211"/>
         <UsageCount Value="10"/>
       </Unit104>
       <Unit105>
@@ -801,12 +801,31 @@
         <TopLine Value="106"/>
         <UsageCount Value="10"/>
       </Unit105>
+      <Unit106>
+        <Filename Value="../../dsfsource/spUtils.pas"/>
+        <UnitName Value="SPUtils"/>
+        <CursorPos X="9" Y="82"/>
+        <TopLine Value="62"/>
+        <UsageCount Value="10"/>
+      </Unit106>
     </Units>
-    <JumpHistory Count="1" HistoryIndex="0">
+    <JumpHistory Count="4" HistoryIndex="3">
       <Position1>
         <Filename Value="igobase.pas"/>
-        <Caret Line="27" Column="58" TopLine="1"/>
+        <Caret Line="55" Column="6" TopLine="37"/>
       </Position1>
+      <Position2>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="10" Column="89" TopLine="1"/>
+      </Position2>
+      <Position3>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="45" Column="12" TopLine="25"/>
+      </Position3>
+      <Position4>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="514" Column="39" TopLine="494"/>
+      </Position4>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

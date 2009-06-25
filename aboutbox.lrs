@@ -31,7 +31,7 @@ LazarusResources.Add('TFmAbout','FORMDATA',[
   +#10'    matthias@nlinux.org'#10'    Maintainer and developer'#10#10'Thomas D'
   +'ieffenbach'#10'    giantics@gmx.net'#10'    Developer'#10#10'Dennis Seid'#10
   +'   jumcore@yahoo.de'#10'   Designer'#10#10'Listaller uses the Components:'
-  +#10'OPBitmap, Abrrevia, Synapse'#11'ParentColor'#8#0#0#0#0#7'TBitBtn'#7'BitB'
+  +#10'OPBitmap, Abbrevia, Synapse'#11'ParentColor'#8#0#0#0#0#7'TBitBtn'#7'BitB'
   +'tn1'#4'Left'#3' '#1#6'Height'#2#26#3'Top'#3#128#1#5'Width'#2','#7'Anchors'
   +#11#7'akRight'#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6#5'Close'#7'OnClick'#7
   +#12'BitBtn1Click'#8'TabOrder'#2#1#0#0#0

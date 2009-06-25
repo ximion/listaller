@@ -23,8 +23,8 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, LEntries,
-  uninstall, trstrings, gettext, FileUtil, xtypefm, ipkhandle, gifanimator,
-  LiCommon, PackageKit, Contnrs, sqlite3ds, db, aboutbox;
+  uninstall, trstrings, FileUtil, xtypefm, ipkhandle, gifanimator, LiCommon,
+  PackageKit, Contnrs, sqlite3ds, db, aboutbox;
 
 type
 
@@ -39,13 +39,12 @@ type
     BitBtn5: TBitBtn;
     CatButton: TSpeedButton;
     CBox: TComboBox;
-    edtFilter: TEdit;
+    FilterEdt: TEdit;
     Image1: TImage;
     ImageList1: TImageList;
     InstallButton: TSpeedButton;
     InstAppButton: TSpeedButton;
     Label1: TLabel;
-    Label2: TLabel;
     Label3: TLabel;
     Notebook1: TNotebook;
     OpenDialog1: TOpenDialog;
@@ -53,6 +52,7 @@ type
     LeftBar: TPanel;
     InstalledAppsPage: TPage;
     CatalogPage: TPage;
+    ThrobberBox: TPanel;
     RepoPage: TPage;
     ConfigPage: TPage;
     SettingsButton: TSpeedButton;
@@ -60,7 +60,6 @@ type
     SWBox: TScrollBox;
     Process1: TProcess;
     StatusBar1: TStatusBar;
-    ThrobberBox: TPaintBox;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);
     procedure btnInstallClick(Sender: TObject);
@@ -69,7 +68,9 @@ type
     procedure btnCatClick(Sender: TObject);
     procedure AboutBtnClick(Sender: TObject);
     procedure CBoxChange(Sender: TObject);
-    procedure edtFilterKeyDown(Sender: TObject; var Key: Word;
+    procedure FilterEdtEnter(Sender: TObject);
+    procedure FilterEdtExit(Sender: TObject);
+    procedure FilterEdtKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -257,9 +258,8 @@ MBar.Visible:=true;
 
 AList.Clear;
 
-CatButton.Enabled:=false;
-InstallButton.Enabled:=false;
-edtFilter.Enabled:=false;
+LeftBar.Enabled:=false;
+
 StatusBar1.Panels[0].Text:=strLoading;
 
 //Create GIFThread for Throbber animation
@@ -270,8 +270,6 @@ ThrobberBox.Height:=gif.Height;
 ThrobberBox.Top:=(InstalledAppsPage.Height div 2)-(ThrobberBox.Height div 2);
 ThrobberBox.Left:=(InstalledAppsPage.Width div 2)-(ThrobberBox.Width div 2);
 gif.Initialize(ThrobberBox.Canvas);
-
-edtFilter.Text:='';
 
 SwBox.Visible:=false;
 if blst.Count<4 then
@@ -308,6 +306,9 @@ dsApp.Filtered:=true;
 dsApp.First;
 while not dsApp.EOF do
 begin
+ if (LowerCase(dsApp.FieldByName('AGroup').AsString)=tp)
+ or (tp='all') then
+ begin
  AList.Add(TListEntry.Create(MnFrm));
 
  entry:=TListEntry(AList.Items[AList.Count-1]);
@@ -334,6 +335,7 @@ begin
  entry.SetImage(p+'icon.png');
 
  Application.ProcessMessages;
+ end;
  dsApp.Next;
 end;
 dsApp.Close;
@@ -407,10 +409,7 @@ StatusBar1.Panels[0].Text:=strLOKIError;
 
 StatusBar1.Panels[0].Text:=strReady; //Loading list finished!
 
-CatButton.Enabled:=true;
-
-InstallButton.Enabled:=true;
-edtFilter.Enabled:=true;
+LeftBar.Enabled:=true;
 SwBox.Visible:=true;
 if Assigned(gif) then gif.Terminate;
 gif := nil;
@@ -681,13 +680,25 @@ begin
   CBox.Enabled:=true;
 end;
 
-procedure TMnFrm.edtFilterKeyDown(Sender: TObject; var Key: Word;
+procedure TMnFrm.FilterEdtEnter(Sender: TObject);
+begin
+  if FilterEdt.Text=strFilter then
+   FilterEdt.Text:='';
+end;
+
+procedure TMnFrm.FilterEdtExit(Sender: TObject);
+begin
+  if (StringReplace(FilterEdt.Text,' ','',[rfReplaceAll])='') then
+   FilterEdt.Text:=strFilter;
+end;
+
+procedure TMnFrm.FilterEdtKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var i: Integer;
 begin
   if Key = VK_RETURN then
   begin
-     if ((edtFilter.Text=' ') or (edtFilter.Text='*')or (edtFilter.Text='')) then
+     if ((FilterEdt.Text=' ') or (FilterEdt.Text='*')or (FilterEdt.Text='')) then
      begin
      for i:=0 to AList.Count-1 do
      TListEntry(AList[i]).Visible:=true;
@@ -699,9 +710,9 @@ begin
      begin
       TListEntry(AList[i]).Visible:=true;
        Application.ProcessMessages;
-        if ((pos(LowerCase(edtFilter.Text),LowerCase(TListEntry(AList[i]).AppName))<=0)
-        or (pos(LowerCase(edtFilter.Text),LowerCase(TListEntry(AList[i]).AppDesc))<=0))
-         and (LowerCase(edtFilter.Text)<>LowerCase(TListEntry(AList[i]).AppName)) then
+        if ((pos(LowerCase(FilterEdt.Text),LowerCase(TListEntry(AList[i]).AppName))<=0)
+        or (pos(LowerCase(FilterEdt.Text),LowerCase(TListEntry(AList[i]).AppDesc))<=0))
+         and (LowerCase(FilterEdt.Text)<>LowerCase(TListEntry(AList[i]).AppName)) then
          TListEntry(AList[i]).Visible:=false;
          end;
        end;
@@ -766,7 +777,6 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
  Caption:=strSoftwareManager;
  CatButton.Caption:=strSWCatalogue;
  Label1.Caption:=strShow;
- Label2.Caption:=strFilter;
  Label3.Caption:=strNoAppsFound;
  AboutBtn.Caption:=strAboutListaller;
  BitBtn3.Caption:=strConfigureListaller;
@@ -777,6 +787,7 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
  CatButton.Caption:=strBrowseCatalog;
  RepoButton.Caption:=strRepositories;
  SettingsButton.Caption:=strSettings;
+ FilterEdt.Text:=strFilter;
 
 with CBox do
 begin

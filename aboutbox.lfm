@@ -92,7 +92,7 @@ object FmAbout: TFmAbout
         Top = 13
         Width = 320
         Align = alClient
-        Caption = #10'Matthias Klumpp'#10'    matthias@nlinux.org'#10'    Maintainer and developer'#10#10'Thomas Dieffenbach'#10'    giantics@gmx.net'#10'    Developer'#10#10'Dennis Seid'#10'   jumcore@yahoo.de'#10'   Designer'#10#10'Listaller uses the Components:'#10'OPBitmap, Abrrevia, Synapse'
+        Caption = #10'Matthias Klumpp'#10'    matthias@nlinux.org'#10'    Maintainer and developer'#10#10'Thomas Dieffenbach'#10'    giantics@gmx.net'#10'    Developer'#10#10'Dennis Seid'#10'   jumcore@yahoo.de'#10'   Designer'#10#10'Listaller uses the Components:'#10'OPBitmap, Abbrevia, Synapse'
         ParentColor = False
       end
     end

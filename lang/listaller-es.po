@@ -8,14 +8,36 @@ msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2009-05-03 21:52+0000\n"
+"PO-Revision-Date: 2009-05-05 23:09+0000\n"
 "Last-Translator: DiegoJ <diegojromerolopez@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-05-05 16:04+0000\n"
+"X-Launchpad-Export-Date: 2009-06-19 18:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#: trstrings:strconvertpkg
+msgid ""
+"You want to install an %x-Package, but your Linux-Distribution's package "
+"system is %y.\rThis package can be converted using \"alien\", but this will "
+"take some time and eventually the application won't work\rDo you want to "
+"convert the package now?"
+msgstr ""
+"Desea instalar un %x-Paquete, pero el paquete para su distribución Linux es "
+"%y.\rEste paquete puede ser convertido usando \"alien\", pero esto tomará "
+"algún tiempo y eventualmente la aplicación no podría trabajar.\r¿Desea "
+"convertir el paquete ahora?"
+
+#: trstrings:strrmpkg
+msgid ""
+"Do you really want to remove \"%p\", containing %a?\rThe following "
+"package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+"those packages, press \"No\"!"
+msgstr ""
+"¿Realmente desea borrar \"%p\", conteniendo %a?\rLos siguientes paquetes "
+"también serán borrados: %pl\r¡Si no está seguro de necesitar estos paquetes "
+"en el futuro, presione \"No\"!"
 
 #: trstrings:strinstaborted
 msgid "Installation aborted."
@@ -112,6 +134,11 @@ msgstr "¡Su distribución de Linux no está soportada por Listaller todavía!"
 msgid "This package does not support your Linux distribution."
 msgstr "Este paquete no soporta su distribución de Linux."
 
+#: trstrings:strdepnotfound
+msgid ""
+"Found no package with the necessary library \"%l\" for your distribution."
+msgstr ""
+
 #: trstrings:strinclose
 msgid "The installer will close now"
 msgstr "El instalador se cerrará ahora"
@@ -120,7 +147,7 @@ msgstr "El instalador se cerrará ahora"
 msgid "Unable to overwrite the file %f."
 msgstr "No se puede sobrescribir el archivo %f."
 
-#: trstrings:notifydevs
+#: trstrings:strnotifydevs
 msgid "Please notify the developers on http://launchpad.net/listaller"
 msgstr ""
 "Por favor, avise a los desarrolladores en http://launchpad.net/listaller"
@@ -273,11 +300,9 @@ msgstr "Instalación"
 
 #: trstrings:strnoldsources
 msgid ""
-"There are no sources available for your Linux distribution\n"
-"Try to install common packages?"
+"There are no sources available for your Linux distribution\rTry to install "
+"common packages?"
 msgstr ""
-"No hay orígenes disponibles para su distribución de Linux\n"
-"¿Quiere intentar instalar paquetes comunes?"
 
 #: trstrings:strusecomppq
 msgid "Use compatible packages?"
@@ -289,20 +314,13 @@ msgstr "¡No se han encontrado paquetes compatibles!"
 
 #: trstrings:stractionnotpossiblepkg
 msgid ""
-"The selected action is not possible with this package.\n"
-"Please contact the package maintainer to get more information."
+"The selected action is not possible with this package.\rPlease contact the "
+"package maintainer to get more information."
 msgstr ""
-"La acción seleccionada no es posible con este paquete.\n"
-"Por favor, contacte con el mantenedor del paquete para obtener más "
-"información."
 
 #: trstrings:stridinvalid
-msgid ""
-"This package has no valid ID\n"
-"The installer will close."
+msgid "This package has no valid ID\rThe installer will close."
 msgstr ""
-"Este paquete no tiene un ID válido\n"
-"El instalador se cerrará."
 
 #: trstrings:strreinstall
 msgid "Re-install"
@@ -326,13 +344,9 @@ msgstr "Hubo un problema al descargar el archivo dep."
 
 #: trstrings:strhasherror
 msgid ""
-"Hash doesn't match!\n"
-"The package may be modified after creation.\n"
-"Please obtain a new copy"
+"Hash doesn't match!\rThe package may be modified after creation.\rPlease "
+"obtain a new copy"
 msgstr ""
-"¡Los hashes no coinciden!\n"
-"Este paquete puede haber sido modificado después de su creación.\n"
-"Por favor, obtenga una nueva copia"
 
 #: trstrings:strinstallationmode
 msgid "Installation mode:"
@@ -353,12 +367,8 @@ msgstr "¿Qué quiere hacer?"
 #: trstrings:strpackagekitwarning
 msgid ""
 "Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to "
-"work correctly.\n"
-"Please update PackageKit!"
+"work correctly.\rPlease update PackageKit!"
 msgstr ""
-"Su versión de PackageKit es %cp. Listaller necesita PackageKit %np o "
-"superior para funcionar correctamente.\n"
-"¡Por favor, actualice su versión de PackageKit!"
 
 #: trstrings:strspkwarning
 msgid ""
@@ -408,17 +418,9 @@ msgstr "Los siguientes orígenes de actualizaciones están instalados."
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: trstrings:strinstnew
-msgid "Install new application"
-msgstr "Instalar nueva aplicación"
-
-#: trstrings:strshowsettings
-msgid "Listaller settings"
-msgstr "Preferencias de Listaller"
-
 #: trstrings:strswcatalogue
-msgid "Software catalogue"
-msgstr "Catálogo de software"
+msgid "Browse catalogue"
+msgstr ""
 
 #: trstrings:strshow
 msgid "Show:"
@@ -514,20 +516,6 @@ msgstr ""
 msgid "Ready."
 msgstr "Preparado."
 
-#: trstrings:strconvertpkg
-msgid ""
-"You want to install an %x-Package, but your Linux-Distribution's package "
-"system is %y.\n"
-"This package can be converted using \"alien\", but this will take some time "
-"and eventually the application won't work.\n"
-"Do you want to convert the package now?"
-msgstr ""
-"Quiere instalar un paquete %s, pero el sistema de paquetes de su "
-"distribución de Linux es %y-\n"
-"Este paquete puede convertirse usando \"alien\", pero esto tardará un rato y "
-"puede que su aplicación no funcione.\n"
-"¿Quiere convertir el paquete ahora?"
-
 #: trstrings:strconvertpkgq
 msgid "Convert package?"
 msgstr "¿Convertir paquete?"
@@ -548,6 +536,35 @@ msgstr "Filtro:"
 msgid "Loading..."
 msgstr "Cargando..."
 
+#: trstrings:strinstalledapps
+msgid "Installed applications"
+msgstr ""
+
+#: trstrings:strinstallpkg
+msgid "Install package"
+msgstr ""
+
+#: trstrings:strbrowsecatalog
+msgid "Browse catalog"
+msgstr ""
+
+#: trstrings:strrepositories
+msgid "Repositories"
+msgstr ""
+
+#: trstrings:strsettings
+msgid "Settings"
+msgstr ""
+
+#: trstrings:strnoguipkgmanfound
+msgid ""
+"Could not find usable GUI package manager.\rPlease install a PackageKit-GUI!"
+msgstr ""
+
+#: trstrings:struselaunchpadforbugs
+msgid "Please use https://bugs.launchpad.net/listaller for bug reports."
+msgstr ""
+
 #: trstrings:strdisprootapps
 msgid "Display system applications"
 msgstr "Mostrar aplicaciones de sistema"
@@ -563,12 +580,8 @@ msgstr "Seleccionar modo del gestor de software:"
 #: trstrings:strlistalleralien
 msgid ""
 "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
-"installed.\n"
-"Do you want to install \"alien\" now to continue?"
+"installed\rDo you want to install \"alien\" now to continue?"
 msgstr ""
-"Listaller usa \"alien\" para convertir paquetes foráneos, pero la "
-"herramienta no está instalada.\n"
-"¿Desea instalar \"alien\" ahora para continuar?"
 
 #: trstrings:strinstpkgq
 msgid "Install package?"
@@ -585,6 +598,18 @@ msgstr "Iniciar monitor de PackageKit antes de ejecutar transacciones"
 #: trstrings:straboutlistaller
 msgid "About Listaller"
 msgstr "Acerca de Listaller"
+
+#: trstrings:strconfigurelistaller
+msgid "Configure Listaller"
+msgstr ""
+
+#: trstrings:strbrowselicatalog
+msgid "Browse Listaller's software catalog"
+msgstr ""
+
+#: trstrings:stropendistricatalog
+msgid "Open your distribution's package catalog"
+msgstr ""
 
 #: trstrings:strabout
 msgid "About"
@@ -668,12 +693,8 @@ msgstr "¡Error al desinstalar!"
 #: trstrings:strcannothandlerm
 msgid ""
 "This application is not a MoJo-Installation and no other package-type "
-"Listaller can handle.\n"
-"You have to remove it manually."
+"Listaller can handle.\rYou have to remove it manually."
 msgstr ""
-"Esta aplicación no es una instalación Mojo y no de un tipo de paquete que "
-"Listaller pueda manejar.\n"
-"Tiene que eliminarlo manualmente."
 
 #: trstrings:strrmunsddeps
 msgid "Uninstalling unused deps..."
@@ -682,16 +703,6 @@ msgstr "Desinstalando dependencias no usadas..."
 #: trstrings:struninstalling
 msgid "Uninstalling..."
 msgstr "Desinstalando..."
-
-#: trstrings:strrmpkg
-msgid ""
-"Do you really want to remove \"%p\", containing %a?\n"
-"The following package(s) will be removed also: %pl\n"
-"If you aren't sure that you won't need those packages, press \"No\"!"
-msgstr ""
-"¿De verdad quiere eliminar \"%p\" que contiene %a?\n"
-"El/Los siguiente(s) paquete(s) se eliminará(n) también: %pl\n"
-"¡Si no está seguro de que no necesite estos paquetes, pulse \"No\"!"
 
 #: trstrings:strrmpkgq
 msgid "Really remove?"
@@ -706,8 +717,8 @@ msgid "Uninstalling %a"
 msgstr "Desinstalando %a"
 
 #: trstrings:strlindesk
-msgid "Running under %de (or similar)"
-msgstr "Ejecutando bajo %de (o similar)"
+msgid "Running under %de."
+msgstr ""
 
 #: trstrings:strnoupdates
 msgid "There are no updates available!"
@@ -748,3 +759,95 @@ msgstr "Aplicando actualizaciones..."
 #: trstrings:strupdconferror
 msgid "Error while unpacking and configuring files."
 msgstr "Error al desempaquetar y configurar archivos."
+
+#~ msgid ""
+#~ "There are no sources available for your Linux distribution\n"
+#~ "Try to install common packages?"
+#~ msgstr ""
+#~ "No hay orígenes disponibles para su distribución de Linux\n"
+#~ "¿Quiere intentar instalar paquetes comunes?"
+
+#~ msgid ""
+#~ "The selected action is not possible with this package.\n"
+#~ "Please contact the package maintainer to get more information."
+#~ msgstr ""
+#~ "La acción seleccionada no es posible con este paquete.\n"
+#~ "Por favor, contacte con el mantenedor del paquete para obtener más "
+#~ "información."
+
+#~ msgid ""
+#~ "This package has no valid ID\n"
+#~ "The installer will close."
+#~ msgstr ""
+#~ "Este paquete no tiene un ID válido\n"
+#~ "El instalador se cerrará."
+
+#~ msgid ""
+#~ "Hash doesn't match!\n"
+#~ "The package may be modified after creation.\n"
+#~ "Please obtain a new copy"
+#~ msgstr ""
+#~ "¡Los hashes no coinciden!\n"
+#~ "Este paquete puede haber sido modificado después de su creación.\n"
+#~ "Por favor, obtenga una nueva copia"
+
+#~ msgid ""
+#~ "Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to "
+#~ "work correctly.\n"
+#~ "Please update PackageKit!"
+#~ msgstr ""
+#~ "Su versión de PackageKit es %cp. Listaller necesita PackageKit %np o "
+#~ "superior para funcionar correctamente.\n"
+#~ "¡Por favor, actualice su versión de PackageKit!"
+
+#~ msgid "Install new application"
+#~ msgstr "Instalar nueva aplicación"
+
+#~ msgid "Listaller settings"
+#~ msgstr "Preferencias de Listaller"
+
+#~ msgid "Software catalogue"
+#~ msgstr "Catálogo de software"
+
+#~ msgid ""
+#~ "You want to install an %x-Package, but your Linux-Distribution's package "
+#~ "system is %y.\n"
+#~ "This package can be converted using \"alien\", but this will take some time "
+#~ "and eventually the application won't work.\n"
+#~ "Do you want to convert the package now?"
+#~ msgstr ""
+#~ "Quiere instalar un paquete %s, pero el sistema de paquetes de su "
+#~ "distribución de Linux es %y-\n"
+#~ "Este paquete puede convertirse usando \"alien\", pero esto tardará un rato y "
+#~ "puede que su aplicación no funcione.\n"
+#~ "¿Quiere convertir el paquete ahora?"
+
+#~ msgid ""
+#~ "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
+#~ "installed.\n"
+#~ "Do you want to install \"alien\" now to continue?"
+#~ msgstr ""
+#~ "Listaller usa \"alien\" para convertir paquetes foráneos, pero la "
+#~ "herramienta no está instalada.\n"
+#~ "¿Desea instalar \"alien\" ahora para continuar?"
+
+#~ msgid ""
+#~ "This application is not a MoJo-Installation and no other package-type "
+#~ "Listaller can handle.\n"
+#~ "You have to remove it manually."
+#~ msgstr ""
+#~ "Esta aplicación no es una instalación Mojo y no de un tipo de paquete que "
+#~ "Listaller pueda manejar.\n"
+#~ "Tiene que eliminarlo manualmente."
+
+#~ msgid ""
+#~ "Do you really want to remove \"%p\", containing %a?\n"
+#~ "The following package(s) will be removed also: %pl\n"
+#~ "If you aren't sure that you won't need those packages, press \"No\"!"
+#~ msgstr ""
+#~ "¿De verdad quiere eliminar \"%p\" que contiene %a?\n"
+#~ "El/Los siguiente(s) paquete(s) se eliminará(n) también: %pl\n"
+#~ "¡Si no está seguro de que no necesite estos paquetes, pulse \"No\"!"
+
+#~ msgid "Running under %de (or similar)"
+#~ msgstr "Ejecutando bajo %de (o similar)"

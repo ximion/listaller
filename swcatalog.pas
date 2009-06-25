@@ -74,7 +74,7 @@ const Value: string);
 
   TCTLEntry = class(TListEntry)
   private
-    InfoBtn: TBitBtn;
+    InfoBtn: TSpeedButton;
     //** Real name
     rnm:     String;
     //** HTTP-get object
@@ -114,46 +114,48 @@ begin
 inherited Create(AOwner);
 self.Height:=54;
 
-with Graphic do begin
+with Graphic do
+begin
 Top:=8;
 Width:=32;
 Height:=32;
 end;
 
-with AppLabel do begin
+with AppLabel do
+begin
 Font.Size:=14;
 Top:=4;
 Left:=54;
 end;
 
-with mnLabel do begin
+with mnLabel do
+begin
 Parent:=Self;
 AutoSize:=true;
 Top:=20;
 Left:=66;
 end;
 
-with UnButton do begin
+with UnButton do
+begin
 Parent:=self;
-Height:=26;
-Width:=80;
+Height:=24;
+Width:=82;
 Caption:=strInstallNow;
 OnClick:=@InstallClick;
 Top:=16;
 Left:=self.Width-90;
-AutoSize:=true;
-LoadStockPixmap(STOCK_APPLY,ICON_SIZE_BUTTON,Glyph);
+LoadStockPixmap(STOCK_APPLY,ICON_SIZE_SMALL_TOOLBAR,Glyph);
 end;
 UnButton.Left:=Width-UnButton.Width-8;
 
-InfoBtn:=TBitBtn.Create(self);
+InfoBtn:=TSpeedButton.Create(self);
 InfoBtn.Parent:=self;
-with InfoBtn do begin
-InfoBtn.Caption:='Info';
-InfoBtn.AutoSize:=true;
-LoadStockPixmap(STOCK_DIALOG_INFO,ICON_SIZE_BUTTON, Glyph);
+with InfoBtn do
+begin
+LoadStockPixmap(STOCK_DIALOG_INFO,ICON_SIZE_SMALL_TOOLBAR, Glyph);
 InfoBtn.OnClick:=@InfoClick;
-Height:=28;
+Height:=26;
 Top:=16;
 Anchors:=[akBottom,akRight];
 end;

@@ -1,12 +1,12 @@
 object RMForm: TRMForm
-  Left = 778
-  Height = 291
-  Top = 662
-  Width = 451
+  Left = 406
+  Height = 269
+  Top = 361
+  Width = 468
   ActiveControl = Memo1
   Caption = 'Uninstalling [...]'
-  ClientHeight = 291
-  ClientWidth = 451
+  ClientHeight = 269
+  ClientWidth = 468
   Icon.Data = {
     9605000000000100010012120000010020008005000016000000280000001200
     0000240000000100200000000000000000000000000000000000000000000000
@@ -57,7 +57,7 @@ object RMForm: TRMForm
   OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
-  OnShow = FormShow
+  OnShow = DetailsBtnClick
   Position = poMainFormCenter
   LCLVersion = '0.9.27'
   object Label1: TLabel
@@ -72,16 +72,16 @@ object RMForm: TRMForm
     Left = 8
     Height = 32
     Top = 32
-    Width = 434
+    Width = 456
     Anchors = [akTop, akLeft, akRight]
     Smooth = True
     TabOrder = 0
   end
   object Memo1: TMemo
     Left = 8
-    Height = 173
-    Top = 72
-    Width = 432
+    Height = 119
+    Top = 104
+    Width = 456
     Anchors = [akTop, akLeft, akRight, akBottom]
     Lines.Strings = (
       'Log:'
@@ -89,15 +89,25 @@ object RMForm: TRMForm
     TabOrder = 1
   end
   object BitBtn1: TBitBtn
-    Left = 365
+    Left = 389
     Height = 30
-    Top = 253
+    Top = 231
     Width = 75
     Anchors = [akRight, akBottom]
     Caption = 'Close'
     NumGlyphs = 0
     OnClick = BitBtn1Click
     TabOrder = 2
+  end
+  object DetailsBtn: TBitBtn
+    Left = 8
+    Height = 26
+    Top = 72
+    Width = 65
+    AutoSize = True
+    Caption = 'Details ->'
+    OnClick = DetailsBtnClick
+    TabOrder = 3
   end
   object GetOutPutTimer: TIdleTimer
     Enabled = False
@@ -119,7 +129,7 @@ object RMForm: TRMForm
     WindowTop = 0
     WindowWidth = 0
     FillAttribute = 0
-    left = 400
-    top = 40
+    left = 8
+    top = 256
   end
 end

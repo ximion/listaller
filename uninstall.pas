@@ -30,12 +30,14 @@ type
   { TRMForm }
   TRMForm = class(TForm)
     BitBtn1: TBitBtn;
+    DetailsBtn: TBitBtn;
     GetOutPutTimer: TIdleTimer;
     Label1: TLabel;
     Memo1: TMemo;
     Process1: TProcess;
     UProgress: TProgressBar;
     procedure BitBtn1Click(Sender: TObject);
+    procedure DetailsBtnClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -313,6 +315,23 @@ begin
   Close;
 end;
 
+procedure TRMForm.DetailsBtnClick(Sender: TObject);
+begin
+  if Memo1.Visible then
+  begin
+   Memo1.Visible:=false;
+   Width:=456;
+   Height:=134;
+   DetailsBtn.Caption:=strDetails+' -> ';
+  end else
+  begin
+   Memo1.Visible:=true;
+   Width:=456;
+   Height:=294;
+   DetailsBtn.Caption:=strDetails+' <- ';
+  end;
+end;
+
 procedure TRMForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   FActiv:=true;
@@ -321,6 +340,7 @@ end;
 procedure TRMForm.FormCreate(Sender: TObject);
 begin
   FActiv:=true;
+  DetailsBtnClick(Sender);
 end;
 
 initialization

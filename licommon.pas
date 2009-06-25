@@ -224,12 +224,22 @@ Result:=h;
 end;
 
 function GetDataFile(s: String): String;
+var D: TDistroInfo;
 begin
 if (FileExists(ExtractFilePath(paramstr(0))+s))
 or (DirectoryExists(ExtractFilePath(paramstr(0))+s)) then
 Result:=ExtractFilePath(paramstr(0))+s
 else
-Result:='/usr/share/listaller/'+s;
+if pos('graphics/',s)>0 then
+begin
+D:=GetDistro;
+//Apply graphics branding
+if FileExists('/usr/share/listaller/branding/'+LowerCase(D.DName)+'/'+s) then
+ Result:='/usr/share/listaller/branding/'+LowerCase(D.DName)+'/'+s
+else
+ Result:='/usr/share/listaller/'+s;
+end else
+ Result:='/usr/share/listaller/'+s;
 end;
 
 function GetSystemArchitecture: String;

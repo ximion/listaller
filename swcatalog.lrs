@@ -57,18 +57,18 @@ LazarusResources.Add('TSCForm','FORMDATA',[
   +#3#0#0#240#15#0#0#252'?'#0#0#10'OnActivate'#7#12'FormActivate'#7'OnClose'#7#9
   +'FormClose'#8'OnCreate'#7#10'FormCreate'#9'OnDestroy'#7#11'FormDestroy'#8'Po'
   +'sition'#7#16'poMainFormCenter'#13'ShowInTaskBar'#7#7'stNever'#10'LCLVersion'
-  +#6#6'0.9.27'#0#6'TLabel'#6'Label1'#4'Left'#3#136#0#6'Height'#2#14#3'Top'#2#16
-  +#5'Width'#3#254#0#7'Caption'#6'4Select software you want to download and to '
+  +#6#6'0.9.27'#0#6'TLabel'#6'Label1'#4'Left'#3#136#0#6'Height'#2#13#3'Top'#2#16
+  +#5'Width'#3#255#0#7'Caption'#6'4Select software you want to download and to '
   +'install:'#11'ParentColor'#8#0#0#6'TLabel'#6'Label2'#4'Left'#2#8#6'Height'#2
-  +#14#3'Top'#3#175#1#5'Width'#3#185#0#7'Anchors'#11#6'akLeft'#8'akBottom'#0#7
+  +#13#3'Top'#3#176#1#5'Width'#3#189#0#7'Anchors'#11#6'akLeft'#8'akBottom'#0#7
   +'Caption'#6'&Downloading application information...'#11'ParentColor'#8#0#0#6
-  +'TLabel'#6'Label3'#4'Left'#2#8#6'Height'#2#14#3'Top'#2#16#5'Width'#2'2'#7'Ca'
+  +'TLabel'#6'Label3'#4'Left'#2#8#6'Height'#2#13#3'Top'#2#16#5'Width'#2'/'#7'Ca'
   +'ption'#6#9'Category:'#11'ParentColor'#8#0#0#6'TLabel'#6'Label4'#4'Left'#2#8
-  +#6'Height'#2#14#3'Top'#3'H'#1#5'Width'#2'%'#7'Caption'#6#7'Server:'#11'Paren'
+  +#6'Height'#2#13#3'Top'#3'H'#1#5'Width'#2'$'#7'Caption'#6#7'Server:'#11'Paren'
   ,'tColor'#8#0#0#12'TProgressBar'#10'MnProgress'#4'Left'#2#8#6'Height'#2#16#3
   +'Top'#3#200#1#5'Width'#3#221#2#8'HelpType'#7#9'htKeyword'#7'Anchors'#11#6'ak'
   +'Left'#7'akRight'#8'akBottom'#0#6'Smooth'#9#4'Step'#2#1#8'TabOrder'#2#0#0#0#7
-  +'TBitBtn'#7'BitBtn1'#4'Left'#3#177#2#6'Height'#2'#'#3'Top'#3#239#1#5'Width'#2
+  +'TBitBtn'#7'BitBtn1'#4'Left'#3#177#2#6'Height'#2'"'#3'Top'#3#240#1#5'Width'#2
   +'4'#7'Anchors'#11#7'akRight'#8'akBottom'#0#8'AutoSize'#9#25'BorderSpacing.In'
   +'nerBorder'#2#4#7'Caption'#6#5'Close'#9'NumGlyphs'#2#0#7'OnClick'#7#12'BitBt'
   +'n1Click'#8'TabOrder'#2#1#0#0#9'TListView'#5'CView'#4'Left'#2#8#6'Height'#3
@@ -88,7 +88,7 @@ LazarusResources.Add('TSCForm','FORMDATA',[
   +'OnKeyDown'#7#12'CViewKeyDown'#0#0#12'TProgressBar'#10'DLProgress'#4'Left'#2
   +#8#6'Height'#2#12#3'Top'#3#224#1#5'Width'#3#221#2#7'Anchors'#11#6'akLeft'#7
   +'akRight'#8'akBottom'#0#6'Smooth'#9#4'Step'#2#1#8'TabOrder'#2#3#0#0#7'TBitBt'
-  +'n'#7'BitBtn2'#4'Left'#2#8#6'Height'#2'#'#3'Top'#3#239#1#5'Width'#2':'#7'Anc'
+  +'n'#7'BitBtn2'#4'Left'#2#8#6'Height'#2'"'#3'Top'#3#240#1#5'Width'#2'9'#7'Anc'
   +'hors'#11#6'akLeft'#8'akBottom'#0#8'AutoSize'#9#25'BorderSpacing.InnerBorder'
   +#2#4#7'Caption'#6#7' Abort '#7'Enabled'#8#9'NumGlyphs'#2#0#7'OnClick'#7#12'B'
   +'itBtn2Click'#8'TabOrder'#2#4#0#0#9'TComboBox'#9'ComboBox1'#4'Left'#2#8#6'He'

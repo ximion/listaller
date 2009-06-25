@@ -68,7 +68,6 @@ begin
  btnTest.Caption:=strTestApp;
  btnHome.Caption:=strInstallHome;
 
- Label1.Visible:=true;
 //Check PackageKit version
 try
   pkit:=TPackageKit.Create;
