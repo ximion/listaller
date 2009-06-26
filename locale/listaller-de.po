@@ -1,0 +1,754 @@
+# German translation for listaller
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the listaller package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: listaller\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-02-28 20:08-0100\n"
+"PO-Revision-Date: 2009-03-26 18:21+0000\n"
+"Last-Translator: Matthias Klumpp <Unknown>\n"
+"Language-Team: German <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-04-14 11:08+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: trstrings:strinstaborted
+msgid "Installation aborted."
+msgstr "Installation abgebrochen."
+
+#: trstrings:strappninstall
+msgid "The application %a was not installed."
+msgstr "Die Anwendung %a wurde nicht installiert."
+
+#: trstrings:strwasinstalled
+msgid "The application %a was installed successfully!"
+msgstr "Die Anwendung %a wurde erfolgreich installiert!"
+
+#: trstrings:strinstallnow
+msgid "Install now"
+msgstr "Installieren"
+
+#: trstrings:strrunparam
+msgid ""
+"Please run \"listallgo\" with path to install-package as first parameter!"
+msgstr ""
+"Starten Sie \"listallgo\" mit dem Pfad zum Installationspaket als erstem "
+"Parameter!"
+
+#: trstrings:strwelcome
+msgid "Welcome!"
+msgstr "Willkommen!"
+
+#: trstrings:strntostart
+msgid "Press \"Next\" to start the installation!"
+msgstr "Klicken Sie \"Weiter\" um die Installation zu beginnen"
+
+#: trstrings:strprogdesc
+msgid "Program description:"
+msgstr "Programmbeschreibung:"
+
+#: trstrings:strlicense
+msgid "Software license"
+msgstr "Softwarelizenz:"
+
+#: trstrings:strpleaseread
+msgid "Please read the following information carefully:"
+msgstr "Bitte lesen Sie die folgenden Informationen aufmerksam durch:"
+
+#: trstrings:strrunning
+msgid "Running installation..."
+msgstr "Installation läuft..."
+
+#: trstrings:strplwait
+msgid "Please wait."
+msgstr "Bitte warten..."
+
+#: trstrings:strcomplete
+msgid "Installation completed!"
+msgstr "Installation abgeschlossen!"
+
+#: trstrings:strprfinish
+msgid "Press \"Finish\" to close."
+msgstr "Klicken Sie \"Ende\" zum beenden."
+
+#: trstrings:strfinish
+msgid "Finish"
+msgstr "Ende"
+
+#: trstrings:strabort
+msgid "Abort"
+msgstr "Abbrechen"
+
+#: trstrings:strback
+msgid "Back"
+msgstr "Zurück"
+
+#: trstrings:strnext
+msgid "Next"
+msgstr "Weiter"
+
+#: trstrings:strdisplog
+msgid "Display installation log"
+msgstr "Installationslog anzeigen"
+
+#: trstrings:striagree
+msgid "I agree with the above terms and conditions"
+msgstr "Ich stimme den Bedingungen und Abmachungen zu"
+
+#: trstrings:strinagree
+msgid "I don't agree"
+msgstr "Ich stimme nicht zu"
+
+#: trstrings:strldnsupported
+msgid "Your Linux distribution is not supported by Listaller yet!"
+msgstr ""
+"Ihre Linux-Distribution wird vom Listaller zur Zeit nicht unterstützt!"
+
+#: trstrings:strnsupported
+msgid "This package does not support your Linux distribution."
+msgstr "Dieses Paket unterstützt Ihre Linux Distribution nicht."
+
+#: trstrings:strinclose
+msgid "The installer will close now"
+msgstr "Der Listaller wird beendet."
+
+#: trstrings:strcnoverwrite
+msgid "Unable to overwrite the file %f."
+msgstr "Konnte Datei %f nicht überschreiben."
+
+#: trstrings:notifydevs
+msgid "Please notify the developers on http://launchpad.net/listaller"
+msgstr ""
+"Bitte benachrichtigen Sie die Entwickler über http://launchpad.net/listaller"
+
+#: trstrings:strextracterror
+msgid "Error while extracting files!"
+msgstr "Fehler beim Entpacken der Dateien!"
+
+#: trstrings:strpkgdm
+msgid ""
+"The IPK package could be damaged or you haven't enough rights to acces "
+"required files/folders."
+msgstr ""
+"Das IPK Paket könnte beschädigt sein oder Sie haben nicht genug Rechte um "
+"auf einige benötigte Dateien/Ordner zuzugreifen."
+
+#: trstrings:strabload
+msgid "Loading aborted."
+msgstr "Laden abgebrochen."
+
+#: trstrings:stralreadyinst
+msgid "This application is already installed"
+msgstr "Diese Anwendung ist schon installiert"
+
+#: trstrings:strinstallagain
+msgid "Do you want to install it again?"
+msgstr "Möchten Sie sie erneut installieren?"
+
+#: trstrings:strwelcometo
+msgid "Welcome to the installation of %a"
+msgstr "Willkommen zur Installation von %a"
+
+#: trstrings:strinstof
+msgid "Installation of %a"
+msgstr "Installation von %a"
+
+#: trstrings:strtestmode
+msgid "Testmode"
+msgstr "Testmodus"
+
+#: trstrings:strtestfinished
+msgid "Test of the application finished."
+msgstr "Test der Anwendung abgeschlossen."
+
+#: trstrings:strpkginval
+msgid "The package was invalid!"
+msgstr "Das Paket ist ungültig!"
+
+#: trstrings:strcouldntsolve
+msgid "Dependencies couldn't be solved!"
+msgstr "Abhängigkeiten konnten nicht aufgelöst werden"
+
+#: trstrings:strviewlog
+msgid "Please view the logfile at %p"
+msgstr "Mehr Informationen enthält der Logfile in %p"
+
+#: trstrings:strpkgerror
+msgid "Installation package is corrupt"
+msgstr "Installationspaket ist zerstört"
+
+#: trstrings:strappclose
+msgid "The application will close now "
+msgstr "Anwendung wird jetzt beendet "
+
+#: trstrings:strstep1
+msgid "Phase 1/4: Resolving dependencies..."
+msgstr "Phase 1/4: Abhängigkeiten auflösen..."
+
+#: trstrings:strwdldep
+msgid "This application wants to download & install a dependency from %l"
+msgstr ""
+"Diese Anwendung möchte eine Abhängigkeit von %a herunterladen und "
+"installieren."
+
+#: trstrings:strwallow
+msgid "Do you want confirm this action?"
+msgstr "Möchten Sie diese Aktion bestätigen?"
+
+#: trstrings:strlicloseani
+msgid "Listaller will close now. The package couldn't be installed."
+msgstr ""
+"Der Listaller wird geschlossen. Das Paket konnte nicht installiert werden."
+
+#: trstrings:strstep2
+msgid "Phase 2/4: Installing files..."
+msgstr "Phase 2/4: Dateien installieren..."
+
+#: trstrings:strstep3
+msgid "Phase 3/4: Chmod new files..."
+msgstr "Phase 3/4: Rechte setzen..."
+
+#: trstrings:strstep4
+msgid "Phase 4/4: Registering application..."
+msgstr "Phase 4/4: Anwendung registrieren..."
+
+#: trstrings:straddupdsrc
+msgid "The installation tries to add the following update source: "
+msgstr ""
+"Die Installation versuchte, die folgende Update-Quelle hinzuzufügen: "
+
+#: trstrings:strqaddupdsrc
+msgid "Should this source be added to the update sources list?"
+msgstr "Soll diese Quelle zur Liste hinzugefügt werden?"
+
+#: trstrings:strfinished
+msgid "Finished"
+msgstr "Abgeschlossen"
+
+#: trstrings:strinstanyway
+msgid "Do you want to install it anyway? (This could raise problems)"
+msgstr ""
+"Möchten Sie es trotzdem installieren? (Das könnte Probleme verursachen)"
+
+#: trstrings:strinvarchitecture
+msgid ""
+"The application which this package contains was not built for the current "
+"system architecture."
+msgstr ""
+"Die Anwendung, die in diesem Paket enthalten ist, wurde nicht für ihre "
+"aktuelle Systemarchitektur gebaut."
+
+#: trstrings:strwilldlfiles
+msgid "(This program will download the needed files from the internet)"
+msgstr "(Dieses Programm wird die nötigen Dateien aus dem Internet laden)"
+
+#: trstrings:strinvaliddversion
+msgid "Package was not build for your Linux distribution release."
+msgstr ""
+"Das Paket ist nicht für das aktuelle Release ihrer Linux Distribution gebaut."
+
+#: trstrings:strftpfailed
+msgid ""
+"Problem while downloading the packages. Maybe the login on the FTP-Server "
+"failed."
+msgstr ""
+"Problem beim herunterladen der Pakete. Vielleicht ist der Login am FTP-"
+"Server fehlgeschlagen?"
+
+#: trstrings:strsuccess
+msgid "Success!"
+msgstr "Erfolg!"
+
+#: trstrings:strmain
+msgid "Main"
+msgstr "Main"
+
+#: trstrings:strdetails
+msgid "Details"
+msgstr "Details"
+
+#: trstrings:strinstallation
+msgid "Installation"
+msgstr "Installation"
+
+#: trstrings:strnoldsources
+msgid ""
+"There are no sources available for your Linux distribution\n"
+"Try to install common packages?"
+msgstr ""
+"Es sind keine Quellen für Ihre Linux-Distribution verfügbar.\n"
+"Soll versucht werden, allgemeine Pakete zu installieren?"
+
+#: trstrings:strusecomppq
+msgid "Use compatible packages?"
+msgstr "Kompatible Pakete nutzen?"
+
+#: trstrings:strnocomp
+msgid "No compatible packages found!"
+msgstr "Keine kompatiblen Pakete gefunden!"
+
+#: trstrings:stractionnotpossiblepkg
+msgid ""
+"The selected action is not possible with this package.\n"
+"Please contact the package maintainer to get more information."
+msgstr ""
+"Die gewählte Aktion ist mit diesem Paket nicht möglich.\n"
+"Bitte kontaktieren Sie den Paketersteller für mehr Informationen."
+
+#: trstrings:stridinvalid
+msgid ""
+"This package has no valid ID\n"
+"The installer will close."
+msgstr ""
+"Dieses Paket hat keine gültige ID.\n"
+"Der Installer wird geschlossen."
+
+#: trstrings:strreinstall
+msgid "Re-install"
+msgstr "Reinstallieren"
+
+#: trstrings:strpkgdownload
+msgid "The following packages will be downloaded:"
+msgstr "Die folgenden Pakete werden heruntergeladen:"
+
+#: trstrings:strgetdependencyfrom
+msgid "Get dependency from"
+msgstr "Hole Abhängigkeit von"
+
+#: trstrings:strplwait2
+msgid "Please wait..."
+msgstr "Bitte warten..."
+
+#: trstrings:strdepdlproblem
+msgid "Problem while downloading the dep-file."
+msgstr "Problem beim laden der Abhängigkeit."
+
+#: trstrings:strhasherror
+msgid ""
+"Hash doesn't match!\n"
+"The package may be modified after creation.\n"
+"Please obtain a new copy"
+msgstr ""
+"Die Hashwerte passen nicht!\n"
+"Das Paket könnte nach der erstellung verändert worden sein.\n"
+"Bitte holen Sie sich eine neue Kopie."
+
+#: trstrings:strinstallationmode
+msgid "Installation mode:"
+msgstr "Installationsmodus:"
+
+#: trstrings:strimodeinstruction
+msgid "Select which parts of the application should be installed."
+msgstr "Wählen Sie, welche Teile der Anwendung installiert werden sollen."
+
+#: trstrings:strmode
+msgid "Mode"
+msgstr "Modus"
+
+#: trstrings:strwanttodoq
+msgid "What do you want to do?"
+msgstr "Was möchten Sie tun?"
+
+#: trstrings:strpackagekitwarning
+msgid ""
+"Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to "
+"work correctly.\n"
+"Please update PackageKit!"
+msgstr ""
+"Ihre PackageKit version ist %cp. Der Listaller benötigt PackageKit %np oder "
+"größer um korrekt zu funktionieren.\n"
+"Bitte aktualisieren Sie PackageKit!"
+
+#: trstrings:strspkwarning
+msgid ""
+"Make sure that you have got this package from a save source and a serious "
+"publisher!"
+msgstr ""
+"Stellen Sie sicher, dass dieses Paket aus einer sicheren Quelle und von "
+"einem seriösen Autor stammt!"
+
+#: trstrings:strinstalleveryone
+msgid "Install application for everyone"
+msgstr "Anwendung für jeden installieren"
+
+#: trstrings:strtestapp
+msgid "Test application"
+msgstr "Anwendung testen"
+
+#: trstrings:strinstallhome
+msgid "Install into my Home directory"
+msgstr "In den Home-Ordner installieren"
+
+#: trstrings:strselinstmode
+msgid "Select installation mode"
+msgstr "Installationsmodus wählen"
+
+#: trstrings:strsoftwaremanager
+msgid "Software Manager"
+msgstr "Software Manager"
+
+#: trstrings:strupdsources
+msgid "Update sources"
+msgstr "Updatequellen"
+
+#: trstrings:strclose
+msgid "Close"
+msgstr "Schließen"
+
+#: trstrings:strdelsrc
+msgid "Delete source"
+msgstr "Quelle löschen"
+
+#: trstrings:strlistofsrc
+msgid "The following update sources are installed:"
+msgstr "Die folgenden Updatequellen sind installiert:"
+
+#: trstrings:struninstall
+msgid "Uninstall"
+msgstr "Deinstallieren"
+
+#: trstrings:strinstnew
+msgid "Install new application"
+msgstr "Neue Anwendung installieren"
+
+#: trstrings:strshowsettings
+msgid "Listaller settings"
+msgstr "Listaller Einstellungen"
+
+#: trstrings:strswcatalogue
+msgid "Software catalogue"
+msgstr "Softwarekatalog"
+
+#: trstrings:strshow
+msgid "Show:"
+msgstr "Zeige:"
+
+#: trstrings:strall
+msgid "All"
+msgstr "Alles"
+
+#: trstrings:streducation
+msgid "Education"
+msgstr "Lernen"
+
+#: trstrings:stroffice
+msgid "Office"
+msgstr "Büro"
+
+#: trstrings:strdevelopment
+msgid "Development"
+msgstr "Entwicklung"
+
+#: trstrings:strgraphic
+msgid "Graphic"
+msgstr "Grafik"
+
+#: trstrings:strnetwork
+msgid "Network"
+msgstr "Netzwerk"
+
+#: trstrings:strgames
+msgid "Games"
+msgstr "Spiele"
+
+#: trstrings:strsystem
+msgid "System"
+msgstr "System"
+
+#: trstrings:strmultimedia
+msgid "Multimedia"
+msgstr "Multimedia"
+
+#: trstrings:straddidional
+msgid "Utilities"
+msgstr "Werkzeuge"
+
+#: trstrings:strother
+msgid "Other"
+msgstr "Andere"
+
+#: trstrings:strversion
+msgid "Version"
+msgstr "Version"
+
+#: trstrings:strauthor
+msgid "Autor"
+msgstr "Autor"
+
+#: trstrings:strusername
+msgid "Username"
+msgstr "Nutzername"
+
+#: trstrings:strpassword
+msgid "Password"
+msgstr "Passwort"
+
+#: trstrings:strproxysettings
+msgid "Proxy-Settings"
+msgstr "Proxy-Einstellungen"
+
+#: trstrings:strenableproxy
+msgid "Enable Proxy-Server"
+msgstr "Proxy-Server aktivieren"
+
+#: trstrings:strlokierror
+msgid "Can't load LOKI-Setup information."
+msgstr "Konnte LOKI-Setup informationen nicht laden."
+
+#: trstrings:strcannotloadicon
+msgid ""
+"Unable to load the icon of %a. Please notify the developers of Listaller or "
+"this application!"
+msgstr ""
+"Konnte das Symbol von %a nicht laden. Bitte benachrichtigen Sie die "
+"Entwickler von Listaller oder von dieser Anwendung."
+
+#: trstrings:strautoloaddep
+msgid "Load dependencies from included webserver-urls automatically"
+msgstr "Abhängigkeiten von eingefügten Webserver-URLs automatisch laden"
+
+#: trstrings:strready
+msgid "Ready."
+msgstr "Bereit."
+
+#: trstrings:strconvertpkg
+msgid ""
+"You want to install an %x-Package, but your Linux-Distribution's package "
+"system is %y.\n"
+"This package can be converted using \"alien\", but this will take some time "
+"and eventually the application won't work.\n"
+"Do you want to convert the package now?"
+msgstr ""
+"Sie versuchen ein %x-Paket zu installieren, das Paketsystem ihrer Linux-"
+"Distribution basiert jedoch auf %y.\n"
+"Dieses Paket kann mit \"alien\" konvertiert werden, dies wird jedoch einige "
+"Zeit dauern und die Anwendung später eventuell nicht funktionieren.\n"
+"Möchten Sie das paket jetzt umwandeln?"
+
+#: trstrings:strconvertpkgq
+msgid "Convert package?"
+msgstr "Paket konvertieren?"
+
+#: trstrings:strconvtitle
+msgid "Converting %p package..."
+msgstr "Konvertiere %p Paket..."
+
+#: trstrings:strfiltering
+msgid "Filtering..."
+msgstr "Filtere..."
+
+#: trstrings:strfilter
+msgid "Filter:"
+msgstr "Filter:"
+
+#: trstrings:strloading
+msgid "Loading..."
+msgstr "Laden..."
+
+#: trstrings:strdisprootapps
+msgid "Display system applications"
+msgstr "System Anwendungen anzeigen"
+
+#: trstrings:strdisponlymyapps
+msgid "Display my applications"
+msgstr "Meine Anwendungen anzeigen"
+
+#: trstrings:strselmgrmode
+msgid "Select software-manager mode:"
+msgstr "Wählen Sie den Software-Manager modus:"
+
+#: trstrings:strlistalleralien
+msgid ""
+"Listaller uses \"alien\" to convert foreign packages, but the tool is not "
+"installed.\n"
+"Do you want to install \"alien\" now to continue?"
+msgstr ""
+"Listaller benutzt \"alien\" um fremde Pakete umzuwandeln, das Tool ist "
+"jedoch nicht installiert.\n"
+"Möchten Sie \"alien\" jetzt installieren, um fortzufahren?"
+
+#: trstrings:strinstpkgq
+msgid "Install package?"
+msgstr "Paket installieren?"
+
+#: trstrings:strpkginstfail
+msgid "Package %p could not be installed."
+msgstr "Paket %p konnte nicht installiert werden."
+
+#: trstrings:strshowpkmon
+msgid "Start PackageKit monitor before running transactions"
+msgstr "PackageKit Monitor starten bevor Transaktionen ausgeführt werden."
+
+#: trstrings:straboutlistaller
+msgid "About Listaller"
+msgstr "Über Listaller"
+
+#: trstrings:strabout
+msgid "About"
+msgstr "Über"
+
+#: trstrings:strauthors
+msgid "Authors"
+msgstr "Autoren"
+
+#: trstrings:strrmsrcq
+msgid "Are you really sure that you want to delete this source?"
+msgstr "Sind Sie sicher, dass Sie diese Quelle löschen wollen?"
+
+#: trstrings:strrmsrcqc
+msgid "Delete source?"
+msgstr "Quelle löschen?"
+
+#: trstrings:strpkitprobpkmon
+msgid ""
+"Problem while connecting PackageKit. Run \"pkmon\" to get further "
+"information."
+msgstr ""
+"Problem beim Verbinden mit PackageKit. Starten Sie \"pkmon\" um weitere "
+"Informationen zu bekommen."
+
+#: trstrings:strnoappsfound
+msgid "No applications found!"
+msgstr "Keine Anwendungen gefunden!"
+
+#: trstrings:strcategory
+msgid "Category:"
+msgstr "Kategorie:"
+
+#: trstrings:strwinstalldl
+msgid "Select software you want to download and to install:"
+msgstr ""
+"Wählen Sie Software aus, die heruntergeladen und installiert werden soll:"
+
+#: trstrings:strnoinfo
+msgid "No information available!"
+msgstr "Keine Information verfügbar!"
+
+#: trstrings:strdlsetup
+msgid "Downloading setup package..."
+msgstr "Lade Setup-Paket herunter..."
+
+#: trstrings:strerrcontactman
+msgid ""
+"Cannot download this package. Please contact the catalogue managers on %h"
+msgstr ""
+"Konnte dieses Paket nicht herunter laden. Kontaktieren Sie die Katalog-"
+"Manager auf %h"
+
+#: trstrings:strinstalling
+msgid "Running application installation..."
+msgstr "Installation der Anwendung läuft..."
+
+#: trstrings:strdownloadctbase
+msgid "Downloading catalogue base information..."
+msgstr "Lade Katalog-Basisinformation herunter..."
+
+#: trstrings:stropenpage
+msgid "Loading catalogue page..."
+msgstr "Lade Katalogseite..."
+
+#: trstrings:strctdlabort
+msgid "Do you really want to abort this download?"
+msgstr "Möchten Sie diesen Download wirklich abbrechen?"
+
+#: trstrings:strrealuninstq
+msgid "Do you really want to uninstall %a?"
+msgstr "Möchten Sie %a wirklich deinstallieren?"
+
+#: trstrings:strunistsuccess
+msgid "Application uninstalled successfully!"
+msgstr "Anwendung erfolgreich deinstalliert!"
+
+#: trstrings:strrmerror
+msgid "Error while uninstalling!"
+msgstr "Fehler bei der Deinstallation!"
+
+#: trstrings:strcannothandlerm
+msgid ""
+"This application is not a MoJo-Installation and no other package-type "
+"Listaller can handle.\n"
+"You have to remove it manually."
+msgstr ""
+"Diese Anwendung ist keine MoJo-Installation und kein anderer Pakettyp, mit "
+"dem Listaller umgehen kann.\n"
+"Sie müssen sie manuell entfernen."
+
+#: trstrings:strrmunsddeps
+msgid "Uninstalling unused deps..."
+msgstr "Deinstallieren unbenutzte Abhängigkeiten..."
+
+#: trstrings:struninstalling
+msgid "Uninstalling..."
+msgstr "Deinstalliere..."
+
+#: trstrings:strrmpkg
+msgid ""
+"Do you really want to remove \"%p\", containing %a?\n"
+"The following package(s) will be removed also: %pl\n"
+"If you aren't sure that you won't need those packages, press \"No\"!"
+msgstr ""
+"Möchten Sie \"%p\", welches %a enthält wirklich entfernen?\n"
+"Die folgenden Pakete werden auch entfernt: %pl\n"
+"Wenn Sie nicht sicher sind, ob sie diese Pakete noch benötigen, klicken Sie "
+"\"Nein\"!"
+
+#: trstrings:strrmpkgq
+msgid "Really remove?"
+msgstr "Wirklich entfernen?"
+
+#: trstrings:strwaiting
+msgid "Waiting..."
+msgstr "Warte..."
+
+#: trstrings:strrmappc
+msgid "Uninstalling %a"
+msgstr "Deinstalliere %a"
+
+#: trstrings:strlindesk
+msgid "Running under %de (or similar)"
+msgstr "Läuft unter %de (oder ähnlich)"
+
+#: trstrings:strnoupdates
+msgid "There are no updates available!"
+msgstr "Es sind keine Updates verfügbar!"
+
+#: trstrings:strlogupdinfo
+msgid "Update info:"
+msgstr "Updateinformation:"
+
+#: trstrings:strfileschanged
+msgid "%f files will be changed."
+msgstr "%f Dateien werden geändert."
+
+#: trstrings:strupdto
+msgid "The application will be updated to version %v"
+msgstr "Die Anwendung wird auf Version %v aktualisiert."
+
+#: trstrings:strcheckforupd
+msgid "Check for updates"
+msgstr "Auf Updates prüfen"
+
+#: trstrings:strinstupd
+msgid "Install updates"
+msgstr "Updates installieren"
+
+#: trstrings:strshowupdater
+msgid "Show"
+msgstr "Zeige"
+
+#: trstrings:strquitupdater
+msgid "Quit"
+msgstr "Beenden"
+
+#: trstrings:strupdinstalling
+msgid "Applying updates..."
+msgstr "Wende updates an..."
+
+#: trstrings:strupdconferror
+msgid "Error while unpacking and configuring files."
+msgstr "Fehler beim Entpacken und konfigruieren der Dateien."

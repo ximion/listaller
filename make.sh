@@ -39,7 +39,7 @@ echo "Active widgetset: $WIDGET"
 # Create the binary dir
 # Create necessary dirs
 mkdir -p ./bin
-mkdir -p ./bin/lang
+mkdir -p ./bin/locale
 mkdir -p ./bin/qt4
 mkdir -p ./bin/gtk2
 
@@ -68,11 +68,11 @@ fi
 echo "Creating software-manager..."
 if [ "$WIDGET" == "qt4" ]; then
 #./libuild PR=listallmngr.lpr O=listallmgr WIDGET=qt4
-$LCLDir/lazbuild -B --ws=qt listallmngr.lpr
+$LCLDir/lazbuild -B --ws=qt listallmgr.lpr
 mv ./bin/listallmgr ./bin/qt4/
 else
 #./libuild PR=listallmngr.lpr O=listallmgr WIDGET=gtk2
-$LCLDir/lazbuild -B --ws=gtk2 listallmngr.lpr
+$LCLDir/lazbuild -B --ws=gtk2 listallmgr.lpr
 mv ./bin/listallmgr ./bin/gtk2/
 fi
 echo "Creating updater..."
@@ -96,3 +96,14 @@ fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir
 echo "Creating unified build tool..."
 #$LCLDir/lazbuild -B --ws=nogui unibuild.lpr
 fpc  -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/gtk2/ -Fu. -FUbin/ -FEbin/ -ounibuild -dOpbCompat unibuild.lpr
+
+#Compiling lanuage files
+echo "Compiling language files..."
+for i in `find ./locale -name "*.po"`
+do
+echo "Compiling $i"
+msgfmt -o `expr substr $i 1 $(( ${#i} - 3 ))`.mo $i
+mv `expr substr $i 1 $(( ${#i} - 3 ))`.mo ./bin/locale/
+done
+
+echo "Listaller build completed."

@@ -1910,13 +1910,13 @@ object MnFrm: TMnFrm
     Top = 64
     Width = 696
     Anchors = [akTop, akLeft, akRight, akBottom]
-    PageIndex = 2
+    PageIndex = 0
     ShowTabs = False
     TabOrder = 3
     object InstalledAppsPage: TPage
       Caption = 'InstalledAppsPage'
       ClientWidth = 692
-      ClientHeight = 446
+      ClientHeight = 468
       object Label1: TLabel
         Left = 0
         Height = 13
@@ -1925,15 +1925,26 @@ object MnFrm: TMnFrm
         Caption = 'Show:'
         ParentColor = False
       end
+      object ThrobberBox: TPaintBox
+        Left = 270
+        Height = 100
+        Top = 166
+        Width = 100
+        Anchors = []
+        Constraints.MaxHeight = 100
+        Constraints.MaxWidth = 100
+        Constraints.MinHeight = 100
+        Constraints.MinWidth = 100
+      end
       object SWBox: TScrollBox
         Left = 0
-        Height = 416
-        Top = 30
+        Height = 430
+        Top = 38
         Width = 692
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderStyle = bsNone
-        ClientHeight = 416
+        ClientHeight = 430
         ClientWidth = 692
         Color = clForm
         ParentColor = False
@@ -1987,19 +1998,6 @@ object MnFrm: TMnFrm
         TabOrder = 2
         Text = '*'
       end
-      object ThrobberBox: TPanel
-        Left = 270
-        Height = 100
-        Top = 156
-        Width = 100
-        Anchors = []
-        BevelOuter = bvNone
-        Constraints.MaxHeight = 100
-        Constraints.MaxWidth = 100
-        Constraints.MinHeight = 100
-        Constraints.MinWidth = 100
-        TabOrder = 3
-      end
     end
     object CatalogPage: TPage
       Caption = 'CatalogPage'
@@ -2029,11 +2027,11 @@ object MnFrm: TMnFrm
     object RepoPage: TPage
       Caption = 'RepoPage'
       ClientWidth = 692
-      ClientHeight = 468
+      ClientHeight = 446
       object BitBtn5: TBitBtn
         Left = 198
         Height = 30
-        Top = 286
+        Top = 272
         Width = 267
         Anchors = []
         Caption = 'Update system'
@@ -2041,7 +2039,7 @@ object MnFrm: TMnFrm
       end
       object PageControl1: TPageControl
         Left = 0
-        Height = 468
+        Height = 446
         Top = 0
         Width = 692
         ActivePage = SysRepoSheet

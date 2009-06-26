@@ -1,0 +1,558 @@
+# Dutch translation for listaller
+# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
+# This file is distributed under the same license as the listaller package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: listaller\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2008-09-08 20:08-0400\n"
+"PO-Revision-Date: 2008-11-12 16:26+0000\n"
+"Last-Translator: Robert Wubs <wubsieonline@gmail.com>\n"
+"Language-Team: Dutch <nl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2008-11-24 18:12+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: trstrings:instaborted
+msgid "Installation aborted."
+msgstr "Installatie afgebroken."
+
+#: trstrings:strappninstall
+msgid "The application %a was not installed."
+msgstr "De applicatie %a is niet geïnstalleerd."
+
+#: trstrings:strwasinstalled
+msgid "The application %a was installed successfully!"
+msgstr "De applicatie %a is succesvol geïnstalleerd!"
+
+#: trstrings:strinstallnow
+msgid "Install now"
+msgstr "Nu installeren"
+
+#: trstrings:runparam
+msgid "Please run listallgo with path to install-package as first parameter!"
+msgstr ""
+"Voer alstublief listallgo uit met het pad naar install-package als eerste "
+"parameter!"
+
+#: trstrings:strwelcome
+msgid "Welcome!"
+msgstr "Welkom!"
+
+#: trstrings:ntostart
+msgid "Press \"Next\" to start the installation!"
+msgstr "Druk op 'Volgende' om de installatie te starten!"
+
+#: trstrings:progdesc
+msgid "Program description:"
+msgstr "Programma omschrijving:"
+
+#: trstrings:license
+msgid "Software license"
+msgstr "Softwarelicentie"
+
+#: trstrings:pleaseread
+msgid "Please read the following information carefully:"
+msgstr "Lees alstublieft de volgende informatie zorgvuldig door:"
+
+#: trstrings:running
+msgid "Running installation..."
+msgstr "Installatie bezig..."
+
+#: trstrings:plwait
+msgid "Please wait."
+msgstr "Een ogenblik geduld."
+
+#: trstrings:strswarning
+msgid "Make sure that you can trust the package publisher!"
+msgstr "Weet er zeker van dat u de uitgever van dit pakket kan vertrouwen."
+
+#: trstrings:complete
+msgid "Installation completed!"
+msgstr "Installtie compleet!"
+
+#: trstrings:prfinish
+msgid "Press \"Finish\" to close."
+msgstr "Druk op 'Beëindigen' om te sluiten."
+
+#: trstrings:finish
+msgid "Finish"
+msgstr "Beëindigen"
+
+#: trstrings:strabort
+msgid "Abort"
+msgstr "Afbreken"
+
+#: trstrings:strback
+msgid "Back"
+msgstr "Terug"
+
+#: trstrings:strnext
+msgid "Next"
+msgstr "Volgende"
+
+#: trstrings:strdisplog
+msgid "Display installation log"
+msgstr "Laat installeerlog zien"
+
+#: trstrings:striagree
+msgid "I agree with the above terms and conditions"
+msgstr "Ik ga akkoord met de bovenstaande termen en condities"
+
+#: trstrings:strinagree
+msgid "I don't agree"
+msgstr "Ik ga niet akkoord"
+
+#: trstrings:strldnsupported
+msgid "Your Linux distribution is not supported by Listaller yet!"
+msgstr "Uw Linux distributie is nog niet ondersteund door Linstaller!"
+
+#: trstrings:strnsupported
+msgid "Your Linux distribution is not supported by this package!"
+msgstr "Uw Linux distributie is niet ondersteund door dit pakket!"
+
+#: trstrings:strinclose
+msgid "The installer will close now"
+msgstr "De installer zal nu sluiten"
+
+#: trstrings:notifydevs
+msgid "Please notify the developers on http://launchpad.net/listaller"
+msgstr ""
+"Merk alstublieft de ontwikkelaars op, via http://launchpad.net/listaller"
+
+#: trstrings:strextracterror
+msgid "Error while extracting files!"
+msgstr "Error tijdens het uitpakken van bestanden!"
+
+#: trstrings:strpkgdm
+msgid ""
+"The Listaller-package could be damaged or you haven't enough rights for "
+"access some files"
+msgstr ""
+"Het Listaller-pakket kan beschadigd zijn of je hebt niet genoeg rechten om "
+"toegang te krijgen tot bepaalde bestanden"
+
+#: trstrings:strabload
+msgid "Loading aborted."
+msgstr "Laden geannuleerd"
+
+#: trstrings:stralreadyinst
+msgid "This application is already installed"
+msgstr "Deze applicatie is al geïnstalleerd"
+
+#: trstrings:strinstallagain
+msgid "Do you want to install it again?"
+msgstr "Wilt u het opnieuw installeren?"
+
+#: trstrings:strwelcometo
+msgid "Welcome to the installation of %a"
+msgstr "Welkom bij de installatie van %a"
+
+#: trstrings:strinstof
+msgid "Installation of %a"
+msgstr "Installeren van %a"
+
+#: trstrings:strpkginval
+msgid "The package was invalid!"
+msgstr "Het pakket is ongeldig!"
+
+#: trstrings:strcouldntsolve
+msgid "Dependencies couldn't be solved!"
+msgstr "Gebiedsdelen konden niet opgelost worden!"
+
+#: trstrings:strviewlog
+msgid "Please view the logfile at %p"
+msgstr "Bekijk alstublieft het logbestand op %p"
+
+#: trstrings:strpkgerror
+msgid "Installation package is corrupt"
+msgstr "Installatiepakket is corrupt"
+
+#: trstrings:strappclose
+msgid "The application will close now "
+msgstr "De applicatie zal nu sluiten "
+
+#: trstrings:strstep1
+msgid "Phase 1/4: Resolving dependencies..."
+msgstr "Stap 1/4: Oplossen van gebiedsdelen"
+
+#: trstrings:strwdldep
+msgid "This application wants to download & install a dependency from %l"
+msgstr "Deze applicatie wil een gebiedsdeel downloaden & installeren van %l"
+
+#: trstrings:strwallow
+msgid "Do you want to allow it?"
+msgstr "Wilt u het toestaan?"
+
+#: trstrings:strlicloseani
+msgid "Listaller will close now. Application couldn't be installed."
+msgstr "Listaller zal nu sluiten. Applicatie kon niet worden geïnstalleerd."
+
+#: trstrings:strstep2
+msgid "Phase 2/4: Installing files..."
+msgstr "Stap 2/4: Installeren van bestanden..."
+
+#: trstrings:strstep3
+msgid "Phase 3/4: Chmod new files..."
+msgstr "Stap 3/4: Chmod nieuwe bestanden..."
+
+#: trstrings:strstep4
+msgid "Phase 4/4: Registering application..."
+msgstr "Stap 4/4: Registreren van applicatie..."
+
+#: trstrings:straddupdsrc
+msgid "This package tries to add the following update source: "
+msgstr "Het pakket probeert de volgende updatebron toe te voegen: "
+
+#: trstrings:strqaddupdsrc
+msgid "Should this source be added to the update-list?"
+msgstr "Zou deze bron toegevoegd moeten worden aan de updatelijst?"
+
+#: trstrings:strfinished
+msgid "Finished"
+msgstr "Voltooid"
+
+#: trstrings:strinstanyway
+msgid "Do you want to install it anyway? (This could be problematical)"
+msgstr "Wilt u het toch installeren? (Dit kan problematisch zijn)"
+
+#: trstrings:strinvarchitecture
+msgid "This package was not build for this system-architecture"
+msgstr "Dit pakket was niet gebouwd voor deze systeemarchitectuur"
+
+#: trstrings:strwilldlfiles
+msgid "(This program will download the needed files from the internet)"
+msgstr "(Dit programma zal de nodige bestanden downloaden van het internet)"
+
+#: trstrings:strinvaliddversion
+msgid "Package was not build for this release."
+msgstr "Pakket was niet gebouwd voor deze uitgave."
+
+#: trstrings:strcngetdep
+msgid "Problem while downloading the dep-file."
+msgstr "Probleem tijdens het downloaden van het dep-bestand."
+
+#: trstrings:strftpfailed
+msgid ""
+"Problem while downloading the packages. Maybe the login on the FTP-Server "
+"failed."
+msgstr ""
+"Probleem tijdens het downloaden van de pakketten. Misschien een loginfout op "
+"de FTP-Server."
+
+#: trstrings:strsuccess
+msgid "Success!"
+msgstr "Gelukt!"
+
+#: trstrings:strmain
+msgid "Main"
+msgstr "Algemeen"
+
+#: trstrings:strdetails
+msgid "Details"
+msgstr "Details"
+
+#: trstrings:strinstallation
+msgid "Installation"
+msgstr "Installatie"
+
+#: trstrings:strnoldsources
+msgid ""
+"There are no sources available for your Linux-distributionTry to install "
+"common packages?"
+msgstr ""
+"Er zijn geen bronnen beschikbaar voor uw Linux-distributieProberen om "
+"gewone pakketten te downloaden?"
+
+#: trstrings:strusecomppq
+msgid "Use compatible packages?"
+msgstr "Gebruik maken van compatibele pakketten?"
+
+#: trstrings:strnocomp
+msgid "No compatible packages found!"
+msgstr "Geen compatibele pakketten gevonden!"
+
+#: trstrings:strupdsources
+msgid "Update sources"
+msgstr "Updaten van bronnen"
+
+#: trstrings:strclose
+msgid "Close"
+msgstr "Sluiten"
+
+#: trstrings:strdelsrc
+msgid "Delete source"
+msgstr "Verwijder bron"
+
+#: trstrings:strlistofsrc
+msgid "Here's a list of all update-sources:"
+msgstr "Hier is een lijst van alle updatebronnen:"
+
+#: trstrings:struninstall
+msgid "Uninstall"
+msgstr "Deïnstalleren"
+
+#: trstrings:strinstnew
+msgid "Install new application"
+msgstr "Installeer nieuwe applicatie"
+
+#: trstrings:strshowsettings
+msgid "Listaller settings"
+msgstr "Listaller instellingen"
+
+#: trstrings:strswcatalogue
+msgid "Software catalogue"
+msgstr "Softwarecatalogus"
+
+#: trstrings:strshow
+msgid "Show:"
+msgstr "Toon:"
+
+#: trstrings:strall
+msgid "All"
+msgstr "Alles"
+
+#: trstrings:streducation
+msgid "Education"
+msgstr "Educatie"
+
+#: trstrings:stroffice
+msgid "Office"
+msgstr "Kantoor"
+
+#: trstrings:strdevelopment
+msgid "Development"
+msgstr "Ontwikkeling"
+
+#: trstrings:strgraphic
+msgid "Graphic"
+msgstr "Afbeelding"
+
+#: trstrings:strnetwork
+msgid "Network"
+msgstr "Netwerk"
+
+#: trstrings:strgames
+msgid "Games"
+msgstr "Spellen"
+
+#: trstrings:strsystem
+msgid "System"
+msgstr ""
+
+#: trstrings:strmultimedia
+msgid "Multimedia"
+msgstr "Multimedia"
+
+#: trstrings:straddidional
+msgid "Additional"
+msgstr "Additionele"
+
+#: trstrings:strother
+msgid "Other"
+msgstr "Overige"
+
+#: trstrings:strversion
+msgid "Version"
+msgstr "Versie"
+
+#: trstrings:strauthor
+msgid "Autor"
+msgstr "Auteur"
+
+#: trstrings:strusername
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+#: trstrings:strpassword
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: trstrings:strproxysettings
+msgid "Proxy-Settings"
+msgstr "Proxyinstellingen"
+
+#: trstrings:strenableproxy
+msgid "Enable Proxy-Server"
+msgstr "Schakel Proxyserver in"
+
+#: trstrings:strlokierror
+msgid "Can't load LOKI-Setup information."
+msgstr "Kan LOKI-Setupinformatie niet laden"
+
+#: trstrings:strcannotloadicon
+msgid ""
+"Unable to load the icon of %a. Please notify the developers of Listaller or "
+"this application!"
+msgstr ""
+"Niet in staat om het icoon van %a te laden. Kijk alstublieft na wie de "
+"ontwikkelaars zijn van Listaller van deze applicatie!"
+
+#: trstrings:strautoloaddep
+msgid "Load dependencies from included webserver-urls automatically"
+msgstr "Laad gebiedsdelen van ingeneste webserver-urls automatisch"
+
+#: trstrings:strready
+msgid "Ready."
+msgstr "Gereed."
+
+#: trstrings:strconvertpkg
+msgid ""
+"You want to install an %x-Package, but your Linux-Distribution's package "
+"system is %y.This package can be converted using \"alien\", but this will "
+"take some time and eventually the application won't workDo you want to "
+"convert the package now?"
+msgstr ""
+"U wilt een %x-Pakket installeren, maar je Linux-Distributie's pakketsysteem "
+"is %y.Dit pakket kan geconverteerd worden door gebruik te maken van "
+"\"alien\", maar dit kan lang duren en uiteindelijk zal de applicatie niet "
+"werken.Wilt u het pakket nu converteren?"
+
+#: trstrings:strconvertpkgq
+msgid "Convert package?"
+msgstr "Converteer het pakket?"
+
+#: trstrings:strconvtitle
+msgid "Converting %p package..."
+msgstr "Converteren van %p pakket..."
+
+#: trstrings:strfiltering
+msgid "Filtering..."
+msgstr "Filteren..."
+
+#: trstrings:strfilter
+msgid "Filter:"
+msgstr "Filter:"
+
+#: trstrings:strloading
+msgid "Loading..."
+msgstr "Bezig met laden..."
+
+#: trstrings:strcategory
+msgid "Category:"
+msgstr "Categorie:"
+
+#: trstrings:strwinstalldl
+msgid "Select software you want to download and to install:"
+msgstr "Selecteer de software die je wil downloaden en installeren:"
+
+#: trstrings:strnoinfo
+msgid "No information available!"
+msgstr "Geen informatie beschikbaar!"
+
+#: trstrings:strdlsetup
+msgid "Downloading set-up..."
+msgstr "Downloaden van set-up..."
+
+#: trstrings:strerrcontactman
+msgid ""
+"Cannot download this package. Please contact the catalogue managers on %h"
+msgstr ""
+"Kan dit pakket niet downloaden. Neem alstublieft contact op met de "
+"catalogusmanagers op %h"
+
+#: trstrings:strinstalling
+msgid "Running application installation..."
+msgstr "Uitvoeren van applicatie installatie..."
+
+#: trstrings:strdownloadctbase
+msgid "Downloading catalogue base information..."
+msgstr "Downloaden van catalogusbasis informatie..."
+
+#: trstrings:stropenpage
+msgid "Loading catalogue page..."
+msgstr "Laden van cataloguspagina..."
+
+#: trstrings:strctdlabort
+msgid "Do you really want to abort this download?"
+msgstr "Wil je deze download echt afbreken?"
+
+#: trstrings:strrealuninstq
+msgid "Do you really want to uninstall %a?"
+msgstr "Weet je zeker dat je %a wilt deïnstalleren?"
+
+#: trstrings:strunistsuccess
+msgid "Application uninstalled successfully!"
+msgstr "Applicatie succesvol gedeïnstalleerd."
+
+#: trstrings:strrmerror
+msgid "Error while uninstalling!"
+msgstr "Fout tijdens deïnstalleren!"
+
+#: trstrings:strcannothandlerm
+msgid ""
+"This application is not a MoJo-Installation and no other package-type "
+"Listaller can handle."
+msgstr ""
+"Deze applicatie is geen MoJo-installatie, en geen ander pakkettype die "
+"Listaller aan kan."
+
+#: trstrings:strrmunsddeps
+msgid "Uninstalling unused deps..."
+msgstr "Deïnstalleren van ongebruikte deps..."
+
+#: trstrings:struninstalling
+msgid "Uninstalling..."
+msgstr "Deïnstalleren...."
+
+#: trstrings:strrmpkg
+msgid ""
+"Do you really want to remove \"%p\", containing %a?The following package(s) "
+"will be removed also: %plIf you aren't sure that you won't need those "
+"packages, press \"No\"!"
+msgstr ""
+"Weet u zeker dat u \"%p\" wilt verwijderen, het bevat %a?De volgende "
+"pakketten zullen ook verwijderd worden: %plAls u niet zeker bent of u de "
+"pakketten niet nodig heeft klik \"Nee\"!"
+
+#: trstrings:strrmpkgq
+msgid "Really remove?"
+msgstr "Werkelijk verwijderen?"
+
+#: trstrings:strwaiting
+msgid "Waiting..."
+msgstr "Wachten..."
+
+#: trstrings:strrmappc
+msgid "Uninstalling %a"
+msgstr "Deïnstalleren van %a"
+
+#: trstrings:strnoupdates
+msgid "There are no updates available!"
+msgstr "Er zijn geen updates beschikbaar!"
+
+#: trstrings:strlogupdinfo
+msgid "Update info:"
+msgstr "Update info:"
+
+#: trstrings:strfileschanged
+msgid "%f files will be changed."
+msgstr "%f bestanden zullen gewijzigd worden."
+
+#: trstrings:strupdto
+msgid "The application will be updated to version %v"
+msgstr "De applicatie zal worden geüpdate naar versie %v"
+
+#: trstrings:strcheckforupd
+msgid "Check for updates"
+msgstr "Updates zoeken"
+
+#: trstrings:strinstupd
+msgid "Install updates"
+msgstr "Installeren van updates"
+
+#: trstrings:strshowupdater
+msgid "Show"
+msgstr "Weergeven"
+
+#: trstrings:strquitupdater
+msgid "Quit"
+msgstr "Afsluiten"
+
+#: trstrings:strupdinstalling
+msgid "Installing updates..."
+msgstr "Installeren van updates..."

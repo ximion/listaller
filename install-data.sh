@@ -36,9 +36,9 @@ cp ./graphics/categories/science.png $DESTDIR/usr/share/listaller/graphics/categ
 cp ./graphics/categories/system.png $DESTDIR/usr/share/listaller/graphics/categories/
 #Copy other files
 cp ./bindings/pkitbind.py $DESTDIR/usr/share/listaller/pkitbind/
-cp -dpr ./lang/ $DESTDIR/usr/share/listaller/
-rm -rf $DESTDIR/usr/share/listaller/lang/.svn
-rm -rf $DESTDIR/usr/share/listaller/lang/.directory
+cp -dpr ./bin/locale/ $DESTDIR/usr/share/listaller/
+rm -f $DESTDIR/usr/share/listaller/lang/.svn
+rm -f $DESTDIR/usr/share/listaller/lang/.directory
 
 mkdir -p $DESTDIR/usr/share/mime
 mkdir -p $DESTDIR/usr/share/mime/packages

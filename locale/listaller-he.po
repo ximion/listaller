@@ -1,0 +1,544 @@
+# Hebrew translation for listaller
+# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
+# This file is distributed under the same license as the listaller package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: listaller\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2008-09-08 20:08-0400\n"
+"PO-Revision-Date: 2008-10-26 07:53+0000\n"
+"Last-Translator: Yaron <sh.yaron@gmail.com>\n"
+"Language-Team: Hebrew <he@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2008-11-24 18:12+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: trstrings:instaborted
+msgid "Installation aborted."
+msgstr "ההתקנה בוטלה."
+
+#: trstrings:strappninstall
+msgid "The application %a was not installed."
+msgstr "היישום %a לא הותקן."
+
+#: trstrings:strwasinstalled
+msgid "The application %a was installed successfully!"
+msgstr "היישום %a הותקן בהצלחה!"
+
+#: trstrings:strinstallnow
+msgid "Install now"
+msgstr "התקן כעת"
+
+#: trstrings:runparam
+msgid "Please run listallgo with path to install-package as first parameter!"
+msgstr ""
+"אנא הפעל את listallgo עם נתיב התקנת החבילה (install-package) כמשתנה ראשון!"
+
+#: trstrings:strwelcome
+msgid "Welcome!"
+msgstr "ברוכים הבאים!"
+
+#: trstrings:ntostart
+msgid "Press \"Next\" to start the installation!"
+msgstr "לחץ על \"הבא\" כדי להתחיל בהתקנה!"
+
+#: trstrings:progdesc
+msgid "Program description:"
+msgstr "תיאור התוכנה:"
+
+#: trstrings:license
+msgid "Software license"
+msgstr "רשיון התוכנה"
+
+#: trstrings:pleaseread
+msgid "Please read the following information carefully:"
+msgstr "אנא קרא את הנתונים הבאים בקפידה:"
+
+#: trstrings:running
+msgid "Running installation..."
+msgstr "מריץ את ההתקנה..."
+
+#: trstrings:plwait
+msgid "Please wait."
+msgstr "אנא המתן."
+
+#: trstrings:strswarning
+msgid "Make sure that you can trust the package publisher!"
+msgstr "וודא כי אתה יכול לסמוך על מפיץ החבילה!"
+
+#: trstrings:complete
+msgid "Installation completed!"
+msgstr "ההתקנה הושלמה!"
+
+#: trstrings:prfinish
+msgid "Press \"Finish\" to close."
+msgstr "לחץ על \"סיום\" לסגירה."
+
+#: trstrings:finish
+msgid "Finish"
+msgstr "סיום"
+
+#: trstrings:strabort
+msgid "Abort"
+msgstr "בטל"
+
+#: trstrings:strback
+msgid "Back"
+msgstr "הקודם"
+
+#: trstrings:strnext
+msgid "Next"
+msgstr "הבא"
+
+#: trstrings:strdisplog
+msgid "Display installation log"
+msgstr "הצג את רישום ההתקנה"
+
+#: trstrings:striagree
+msgid "I agree with the above terms and conditions"
+msgstr "אני מסכים לתנאים הבאים"
+
+#: trstrings:strinagree
+msgid "I don't agree"
+msgstr "אינני מסכים"
+
+#: trstrings:strldnsupported
+msgid "Your Linux distribution is not supported by Listaller yet!"
+msgstr "הפצת הלינוקס שלך אינה נתמכת על ידי Listaller עדיין!"
+
+#: trstrings:strnsupported
+msgid "Your Linux distribution is not supported by this package!"
+msgstr "הפצת הלינוקס שלך אינה נתמכת על ידי חבילה זו!"
+
+#: trstrings:strinclose
+msgid "The installer will close now"
+msgstr "תוכנית ההתקנה תסגר כעת"
+
+#: trstrings:notifydevs
+msgid "Please notify the developers on http://launchpad.net/listaller"
+msgstr "אנא דווח למפתחים בכתובת http://launchpad.net/listaller"
+
+#: trstrings:strextracterror
+msgid "Error while extracting files!"
+msgstr "שגיאה בעת חילוץ הקבצים!"
+
+#: trstrings:strpkgdm
+msgid ""
+"The Listaller-package could be damaged or you haven't enough rights for "
+"access some files"
+msgstr "ייתכן וחבילת ה־Listaller פגומה או שאין לך די הרשאות גישה לכמה קבצים"
+
+#: trstrings:strabload
+msgid "Loading aborted."
+msgstr "הטעינה בוטלה."
+
+#: trstrings:stralreadyinst
+msgid "This application is already installed"
+msgstr "יישום זה כבר מותקן"
+
+#: trstrings:strinstallagain
+msgid "Do you want to install it again?"
+msgstr "האם ברצונך להתקין זאת שוב?"
+
+#: trstrings:strwelcometo
+msgid "Welcome to the installation of %a"
+msgstr "ברוכים הבאים להתקנת %a"
+
+#: trstrings:strinstof
+msgid "Installation of %a"
+msgstr "התקנת %a"
+
+#: trstrings:strpkginval
+msgid "The package was invalid!"
+msgstr "החבילה הינה פגומה!"
+
+#: trstrings:strcouldntsolve
+msgid "Dependencies couldn't be solved!"
+msgstr "לא ניתן לפתור את התלויות!"
+
+#: trstrings:strviewlog
+msgid "Please view the logfile at %p"
+msgstr "אנא עיין בקובץ הרישום %p"
+
+#: trstrings:strpkgerror
+msgid "Installation package is corrupt"
+msgstr "התקנת החבילה פגומה"
+
+#: trstrings:strappclose
+msgid "The application will close now "
+msgstr "היישום יסגר כעת "
+
+#: trstrings:strstep1
+msgid "Phase 1/4: Resolving dependencies..."
+msgstr "שלב 1/4: פותר תלויות..."
+
+#: trstrings:strwdldep
+msgid "This application wants to download & install a dependency from %l"
+msgstr "יישום זה מעוניין להוריד ולהתקין תלות מהכתובת %l"
+
+#: trstrings:strwallow
+msgid "Do you want to allow it?"
+msgstr "האם ברצונך לאפשר זאת?"
+
+#: trstrings:strlicloseani
+msgid "Listaller will close now. Application couldn't be installed."
+msgstr "Listaller ייסגר כעת. לא ניתן להתקין את היישום."
+
+#: trstrings:strstep2
+msgid "Phase 2/4: Installing files..."
+msgstr "שלב 2/4: מתקין קבצים..."
+
+#: trstrings:strstep3
+msgid "Phase 3/4: Chmod new files..."
+msgstr "שלב 3/4: משנה את הרשאות הקבצים החדשים..."
+
+#: trstrings:strstep4
+msgid "Phase 4/4: Registering application..."
+msgstr "שלב 4/4: רושם את התוכנה..."
+
+#: trstrings:straddupdsrc
+msgid "This package tries to add the following update source: "
+msgstr "חבילה זו מנסה להוסיף את מקור העדכון הבא: "
+
+#: trstrings:strqaddupdsrc
+msgid "Should this source be added to the update-list?"
+msgstr "האם להוסיף מקור זה לרשימת העדכון?"
+
+#: trstrings:strfinished
+msgid "Finished"
+msgstr "הסתיים"
+
+#: trstrings:strinstanyway
+msgid "Do you want to install it anyway? (This could be problematical)"
+msgstr "האם ברצונך להתקין זאת בכל זאת? (עלול ליצור בעיה)"
+
+#: trstrings:strinvarchitecture
+msgid "This package was not build for this system-architecture"
+msgstr "חבילה זו לא נבנתה עבור ארכיטקטורת מערכת זו"
+
+#: trstrings:strwilldlfiles
+msgid "(This program will download the needed files from the internet)"
+msgstr "(תוכנית זו תוריד את הקבצים הנחוצים מהאינטרנט)"
+
+#: trstrings:strinvaliddversion
+msgid "Package was not build for this release."
+msgstr "החבילה לא נבנתה עבור הפצה זו."
+
+#: trstrings:strcngetdep
+msgid "Problem while downloading the dep-file."
+msgstr "שגיאה בעת הורדת קובץ ה־dep."
+
+#: trstrings:strftpfailed
+msgid ""
+"Problem while downloading the packages. Maybe the login on the FTP-Server "
+"failed."
+msgstr "נתגלתה בעיה בעת הורדת החבילות. ייתכן והחיבור לשרת ה־FTP נכשל."
+
+#: trstrings:strsuccess
+msgid "Success!"
+msgstr "הצלחה!"
+
+#: trstrings:strmain
+msgid "Main"
+msgstr "ראשי"
+
+#: trstrings:strdetails
+msgid "Details"
+msgstr "פרטים"
+
+#: trstrings:strinstallation
+msgid "Installation"
+msgstr "התקנה"
+
+#: trstrings:strnoldsources
+msgid ""
+"There are no sources available for your Linux-distributionTry to install "
+"common packages?"
+msgstr "אין מקורות זמינים עבור הפצת הלינוקס שלךלנסות להתקין חבילות נפוצות?"
+
+#: trstrings:strusecomppq
+msgid "Use compatible packages?"
+msgstr "להשתמש בחבילות תואמות?"
+
+#: trstrings:strnocomp
+msgid "No compatible packages found!"
+msgstr "לא נמצאו חבילות תואמות!"
+
+#: trstrings:strupdsources
+msgid "Update sources"
+msgstr "עדכן מקורות"
+
+#: trstrings:strclose
+msgid "Close"
+msgstr "סגור"
+
+#: trstrings:strdelsrc
+msgid "Delete source"
+msgstr "מחק מקור"
+
+#: trstrings:strlistofsrc
+msgid "Here's a list of all update-sources:"
+msgstr "להלן רשימת מקורות העדכון:"
+
+#: trstrings:struninstall
+msgid "Uninstall"
+msgstr "הסרה"
+
+#: trstrings:strinstnew
+msgid "Install new application"
+msgstr "התקן יישום חדש"
+
+#: trstrings:strshowsettings
+msgid "Listaller settings"
+msgstr "הגדרות Listaller"
+
+#: trstrings:strswcatalogue
+msgid "Software catalogue"
+msgstr "קטלוג התוכנה"
+
+#: trstrings:strshow
+msgid "Show:"
+msgstr "הצג:"
+
+#: trstrings:strall
+msgid "All"
+msgstr "הכול"
+
+#: trstrings:streducation
+msgid "Education"
+msgstr "לימוד"
+
+#: trstrings:stroffice
+msgid "Office"
+msgstr "משרד"
+
+#: trstrings:strdevelopment
+msgid "Development"
+msgstr "פיתוח"
+
+#: trstrings:strgraphic
+msgid "Graphic"
+msgstr "גרפיקה"
+
+#: trstrings:strnetwork
+msgid "Network"
+msgstr "רשת"
+
+#: trstrings:strgames
+msgid "Games"
+msgstr "משחקים"
+
+#: trstrings:strsystem
+msgid "System"
+msgstr "מערכת"
+
+#: trstrings:strmultimedia
+msgid "Multimedia"
+msgstr "מולטימדיה"
+
+#: trstrings:straddidional
+msgid "Additional"
+msgstr "נוסף"
+
+#: trstrings:strother
+msgid "Other"
+msgstr "אחר"
+
+#: trstrings:strversion
+msgid "Version"
+msgstr "גירסה"
+
+#: trstrings:strauthor
+msgid "Autor"
+msgstr "יוצר"
+
+#: trstrings:strusername
+msgid "Username"
+msgstr "שם המשתמש"
+
+#: trstrings:strpassword
+msgid "Password"
+msgstr "סיסמה"
+
+#: trstrings:strproxysettings
+msgid "Proxy-Settings"
+msgstr "הגדרות המתווך"
+
+#: trstrings:strenableproxy
+msgid "Enable Proxy-Server"
+msgstr "אפשר שרת מתווך"
+
+#: trstrings:strlokierror
+msgid "Can't load LOKI-Setup information."
+msgstr "לא ניתן לטעון את נתוני ה־LOKI של ההתקנה."
+
+#: trstrings:strcannotloadicon
+msgid ""
+"Unable to load the icon of %a. Please notify the developers of Listaller or "
+"this application!"
+msgstr ""
+"לא ניתן לטעון את הסמל %a. אנא דווח על כך למפתחי Listaller או למפתחי היישום!"
+
+#: trstrings:strautoloaddep
+msgid "Load dependencies from included webserver-urls automatically"
+msgstr "טען תלויות מכתובות השרת אוטומטית"
+
+#: trstrings:strready
+msgid "Ready."
+msgstr "מוכן."
+
+#: trstrings:strconvertpkg
+msgid ""
+"You want to install an %x-Package, but your Linux-Distribution's package "
+"system is %y.This package can be converted using \"alien\", but this will "
+"take some time and eventually the application won't workDo you want to "
+"convert the package now?"
+msgstr ""
+"האם ברצונך להתקין חבילת %x, אך מערכת החבילות של הפצת הלינוקס שלך הינה "
+"%y.ניתן להמיר חבילה זו באמצעות \"alien\", אך פעולה זו עלולה לארוך זמן מה "
+"ולבסוף היישום עלול לא לעבודהאם ברצונך להמיר את החבילה כעת?"
+
+#: trstrings:strconvertpkgq
+msgid "Convert package?"
+msgstr "להמיר חבילה?"
+
+#: trstrings:strconvtitle
+msgid "Converting %p package..."
+msgstr "ממיר את החבילה %p..."
+
+#: trstrings:strfiltering
+msgid "Filtering..."
+msgstr "מסנן..."
+
+#: trstrings:strfilter
+msgid "Filter:"
+msgstr "מסנן:"
+
+#: trstrings:strloading
+msgid "Loading..."
+msgstr "טוען..."
+
+#: trstrings:strcategory
+msgid "Category:"
+msgstr "קטגוריה:"
+
+#: trstrings:strwinstalldl
+msgid "Select software you want to download and to install:"
+msgstr "בחר תוכנה שברצונך להוריד ולהתקין:"
+
+#: trstrings:strnoinfo
+msgid "No information available!"
+msgstr "אין מידע זמין!"
+
+#: trstrings:strdlsetup
+msgid "Downloading set-up..."
+msgstr "מוריד התקנה..."
+
+#: trstrings:strerrcontactman
+msgid ""
+"Cannot download this package. Please contact the catalogue managers on %h"
+msgstr "לא ניתן להוריד חבילה זו. אנא צור קשר עם מנהלי הקטלוג דרך %h"
+
+#: trstrings:strinstalling
+msgid "Running application installation..."
+msgstr "מריץ התקנת יישום..."
+
+#: trstrings:strdownloadctbase
+msgid "Downloading catalogue base information..."
+msgstr "מוריד את נתוני הבסיס של הקטלוג..."
+
+#: trstrings:stropenpage
+msgid "Loading catalogue page..."
+msgstr "טוען את עמוד הקטלוג..."
+
+#: trstrings:strctdlabort
+msgid "Do you really want to abort this download?"
+msgstr "האם אתה בטוח שברצונך לבטל הורדה זו?"
+
+#: trstrings:strrealuninstq
+msgid "Do you really want to uninstall %a?"
+msgstr "אם אתה בטוח שברצונך להסיר את %a?"
+
+#: trstrings:strunistsuccess
+msgid "Application uninstalled successfully!"
+msgstr "היישום הוסר בהצלחה!"
+
+#: trstrings:strrmerror
+msgid "Error while uninstalling!"
+msgstr "שגיאה בעת ההסרה!"
+
+#: trstrings:strcannothandlerm
+msgid ""
+"This application is not a MoJo-Installation and no other package-type "
+"Listaller can handle."
+msgstr ""
+"יישום זה איננו התקנת MoJo ואיננו במבנה חבילה אחר בו Listaller יכולה לטפל."
+
+#: trstrings:strrmunsddeps
+msgid "Uninstalling unused deps..."
+msgstr "מתקין קבצי dep שאינם בשימוש..."
+
+#: trstrings:struninstalling
+msgid "Uninstalling..."
+msgstr "מסיר..."
+
+#: trstrings:strrmpkg
+msgid ""
+"Do you really want to remove \"%p\", containing %a?The following package(s) "
+"will be removed also: %plIf you aren't sure that you won't need those "
+"packages, press \"No\"!"
+msgstr ""
+"האם אתה בטוח שברצונך להסיר את \"%p\", המכילה את %a?החבילה/ות הבאה/ות יוסרו "
+"גם כן: %plאם אינך בטוח שלא תזדקק לחבילות אלו, לחץ על \"לא\"!"
+
+#: trstrings:strrmpkgq
+msgid "Really remove?"
+msgstr "באמת להסיר?"
+
+#: trstrings:strwaiting
+msgid "Waiting..."
+msgstr "ממתין..."
+
+#: trstrings:strrmappc
+msgid "Uninstalling %a"
+msgstr "מסיר את %a"
+
+#: trstrings:strnoupdates
+msgid "There are no updates available!"
+msgstr "אין עדכונים זמינים!"
+
+#: trstrings:strlogupdinfo
+msgid "Update info:"
+msgstr "נתוני העדכון:"
+
+#: trstrings:strfileschanged
+msgid "%f files will be changed."
+msgstr "%f קבצים ישונו."
+
+#: trstrings:strupdto
+msgid "The application will be updated to version %v"
+msgstr "היישום יעודכן לגירסה %v"
+
+#: trstrings:strcheckforupd
+msgid "Check for updates"
+msgstr "בדוק אחר עדכונים"
+
+#: trstrings:strinstupd
+msgid "Install updates"
+msgstr "התקן עדכונים"
+
+#: trstrings:strshowupdater
+msgid "Show"
+msgstr "הצג"
+
+#: trstrings:strquitupdater
+msgid "Quit"
+msgstr "יציאה"
+
+#: trstrings:strupdinstalling
+msgid "Installing updates..."
+msgstr "מתקין עדכונים..."

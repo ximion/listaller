@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
   ComCtrls, StdCtrls, IniFiles, FileUtil, ExtCtrls, process, Buttons,
   LCLType, LCLIntf, distri, LiCommon, HTTPSend, blcksock, FTPSend,
-  TRStrings, translations, gettext, SynEdit, xtypefm, ipkhandle;
+  TRStrings, SynEdit, xtypefm, ipkhandle;
 
 type
 
@@ -348,21 +348,13 @@ begin
 end;
 
 procedure TIWizFrm.FormCreate(Sender: TObject);
-var PODirectory, Lang, FallbackLang: String;
-    imForm: TimdFrm;
+var imForm: TimdFrm;
     i: Integer;
 begin
 if not DirectoryExists(RegDir) then begin
 CreateDir(ExtractFilePath(RegDir));
 CreateDir(RegDir);
 end;
-
-//Load language pack
-PODirectory:=GetDataFile('lang/');
-GetLanguageIDs(Lang, FallbackLang);
-translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts-%s.po', Lang, FallbackLang);
-translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-%s.po', Lang, FallbackLang);
-writeLn('Language pack loaded.');
 
 if not FileExists(Paramstr(1)) then begin
   ShowMessage(strRunParam);

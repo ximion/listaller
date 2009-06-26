@@ -23,8 +23,8 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, LEntries,
-  uninstall, trstrings, FileUtil, Spin, CheckLst, xtypefm, ipkhandle,
-  gifanimator, LiCommon, PackageKit, Contnrs, sqlite3ds, db, aboutbox;
+  uninstall, trstrings, FileUtil, CheckLst, xtypefm, ipkhandle, gifanimator,
+  LiCommon, PackageKit, Contnrs, sqlite3ds, db, aboutbox, GetText, Spin;
 
 type
 
@@ -36,6 +36,7 @@ type
     AboutBtn: TButton;
     BitBtn5: TBitBtn;
     BitBtn6: TBitBtn;
+    ThrobberBox: TPaintBox;
     RmUpdSrcBtn: TBitBtn;
     UpdCheckBtn: TBitBtn;
     CatButton: TSpeedButton;
@@ -73,7 +74,6 @@ type
     CatalogPage: TPage;
     SpinEdit1: TSpinEdit;
     SpinEdit2: TSpinEdit;
-    ThrobberBox: TPanel;
     RepoPage: TPage;
     ConfigPage: TPage;
     SettingsButton: TSpeedButton;
@@ -163,11 +163,29 @@ begin
 end;
 
 procedure TMnFrm.ProcessDesktopFile(fname: String; tp: String);
-var d: TIniFile;entry: TListEntry;
+var d: TIniFile;entry: TListEntry;dt: TMOFile;lp: String;
+
+//Translate string if possible/necessary
+function ldt(s: String): String;
+var h: String;
 begin
-d:=TIniFile.Create(fname);
-       Application.ProcessMessages;
+ h:=s;
+ try
+ if dt<>nil then
+ begin
+  h:=dt.Translate(s);
+  if h='' then h:=s;
+ end;
+ finally
+  Result:=h;
+ end;
+ Result:=s;
+end;
+
+begin
+       d:=TIniFile.Create(fname);
        StatusBar1.Panels[0].Text:=strLoading+'  '+ExtractFileName(fname);
+       Application.ProcessMessages;
 
        if (not IsRoot)and(d.ReadString('Desktop Entry','Exec','')[1]<>'/')
        then
@@ -202,21 +220,36 @@ d:=TIniFile.Create(fname);
        else
        entry.srID:=fname;
 
+       if d.ReadString('Desktop Entry','X-Ubuntu-Gettext-Domain','')<>'' then
+       begin
+       try
+       lp:='/usr/share/locale-langpack/'+GetLangID+'/LC_MESSAGES/'+
+                         d.ReadString('Desktop Entry','X-Ubuntu-Gettext-Domain','app-install-data')+'.mo';
+       if not FileExists(lp) then
+        lp:='/usr/share/locale/de/'+GetLangID+'/LC_MESSAGES/'
+            +d.ReadString('Desktop Entry','X-Ubuntu-Gettext-Domain','app-install-data')+'.mo';
+       if FileExists(lp) then
+        dt:=TMOFile.Create(lp);
+       finally
+       end;
+
+       end;
+
        with entry do
        begin
-       if d.ReadString('Desktop Entry','Name['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','<error>') <> '<error>' then
-        AppName:=d.ReadString('Desktop Entry','Name['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','<error>')
-        else
-         AppName:=d.ReadString('Desktop Entry','Name','<error>');
+       if d.ReadString('Desktop Entry','Name['+GetLangID+']','') <> '' then
+        AppName:=d.ReadString('Desktop Entry','Name['+GetLangID+']','<error>')
+       else
+        AppName:=ldt(d.ReadString('Desktop Entry','Name','<error>'));
 
          AppName:=StringReplace(AppName,'&','&&',[rfReplaceAll]);
 
          instLst.Add(Lowercase(d.ReadString('Desktop Entry','Name','<error>')));
 
-        if d.ReadString('Desktop Entry','Comment['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','')<>'' then
-        AppDesc:=d.ReadString('Desktop Entry','Comment['+Copy(GetEnvironmentVariable('LANG'), 1, 2)+']','')
+        if d.ReadString('Desktop Entry','Comment['+GetLangID+']','')<>'' then
+         AppDesc:=d.ReadString('Desktop Entry','Comment['+GetLangID+']','')
         else
-        AppDesc:=d.ReadString('Desktop Entry','Comment','');
+         AppDesc:=ldt(d.ReadString('Desktop Entry','Comment',''));
 
         AppMn:=strAuthor+': '+d.ReadString('Desktop Entry','X-Publisher','<error>');
         if AppMn=strAuthor+': '+'<error>' then
@@ -273,6 +306,8 @@ d:=TIniFile.Create(fname);
        end;
         Application.ProcessMessages;
         end;
+
+        if Assigned(dt) then dt.Free;
 
         end;
        d.Free;

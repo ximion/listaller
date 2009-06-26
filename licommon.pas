@@ -73,6 +73,8 @@ function  GetServerPath(url:string):string;
 function  IsInList(nm: String;list: TStringList): Boolean;
 //** Shows pkMon if option is set in preferences
 procedure ShowPKMon();
+//** Get the current, usable language variable
+function GetLangID: String;
 //** Reads the current system architecture @returns Detected architecture as string
 function GetSystemArchitecture: String;
 {** Executes an application as root using an graphical input prompt
@@ -260,6 +262,23 @@ or (s='i586')
 or (s='i486')
 then s:='i386';
 Result:=s;
+end;
+
+function GetLangID: String;
+var LANG: String;i: Integer;
+begin
+ LANG:=GetEnvironmentVariableUTF8('LANG');
+ if LANG='' then
+ begin
+   for i:=1 to Paramcount-1 do
+    if (ParamStrUTF8(i)='--LANG') or
+     (ParamStrUTF8(i)='-l') or
+     (ParamStrUTF8(i)='--lang') then LANG:=ParamStrUTF8(i+1);
+ end;
+ if not DirectoryExists('/usr/share/locale-langpack/'+LANG) then
+  Result:=copy(LANG,1,2)
+ else
+  Result:=LANG;
 end;
 
 function GetLibDepends(f: String; lst: TStringList): Boolean;

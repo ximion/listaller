@@ -13,6 +13,7 @@ rm -rf libgtk.so
 rm -rf libgdk_pixbuf.so
 rm -rf libglib.so
 rm -rf libgdk.so
+rm -rf *.lrt
 
 rm -rf *~
 rm -rf "./bin"

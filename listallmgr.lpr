@@ -14,7 +14,7 @@
   You should have received a copy of the GNU General Public License v3
   along with this program.  If not, see <http://www.gnu.org/licenses/>}
 //** Application that manages all installed applications
-program listallmngr;
+program listallmgr;
 
 {$mode objfpc}{$H+}
 
@@ -26,25 +26,12 @@ uses
   Forms,
   SysUtils,
   manager, uninstall, pkgconvertdisp, swcatalog, ipkhandle,
-  LiCommon, translations, gettext, packagekit, LResources;
+  LiCommon, LiTranslator, packagekit, LResources;
 
-{$IFDEF WINDOWS}{$R listallmngr.rc}{$ENDIF}
-
-procedure TranslateInterface;
-var PODirectory, Lang, FallbackLang: String;
-begin
-Lang:=Copy(GetEnvironmentVariable('LANG'), 1, 2);
-PODirectory := GetDataFile('lang/');
-GetLanguageIDs(Lang, FallbackLang);
-translations.TranslateUnitResourceStrings('LCLStrConsts', PODirectory + 'lclstrconsts-%s.po', Lang, FallbackLang);
-translations.TranslateUnitResourceStrings('trstrings', PODirectory + 'listaller-%s.po', Lang, FallbackLang);
-translations.SystemCharSetIsUTF8:=true;
-end;
+{$IFDEF WINDOWS}{$R listallmgr.rc}{$ENDIF}
 
 begin
-  {$I listallmngr.lrs}
-  //Load Translation
-  TranslateInterface();
+  {$I listallmgr.lrs}
   Application.Title:='Listaller Manager';
   Application.ShowMainForm:=false;
   Application.Initialize;

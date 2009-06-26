@@ -517,8 +517,8 @@ xnode:=xnode.ChildNodes.Item[i];break;end;
 end;
 ShDesc:='#';
 if xnode <> nil then begin
-if FindChildNode(xnode,Copy(GetEnvironmentVariable('LANG'), 1, 2))<>nil then
-ShDesc:=FindChildNode(xnode,Copy(GetEnvironmentVariable('LANG'), 1, 2)).NodeValue
+if FindChildNode(xnode,GetLangID)<>nil then
+ShDesc:=FindChildNode(xnode,GetLangID).NodeValue
 else
 ShDesc:=xnode.Attributes.GetNamedItem('std').NodeValue;
 end;
@@ -662,8 +662,8 @@ end;
 end;
 ShDesc:='#';
 if xnode <> nil then begin
-if FindChildNode(xnode,Copy(GetEnvironmentVariable('LANG'), 1, 2))<>nil then
-ShDesc:=FindChildNode(xnode,Copy(GetEnvironmentVariable('LANG'), 1, 2)).NodeValue
+if FindChildNode(xnode,GetLangID)<>nil then
+ShDesc:=FindChildNode(xnode,GetLangID).NodeValue
 else
 ShDesc:=xnode.Attributes.GetNamedItem('std').NodeValue;
 end;

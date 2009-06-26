@@ -201,7 +201,7 @@ if FileExists('/tmp/listaller/catalogue/'+cdir+'/texts/'+rnm+'.txt') then begin
 tmp:=TStringList.Create;
 tmp.LoadFromFile('/tmp/listaller/catalogue/'+cdir+'/texts/'+rnm+'.txt');
 for i:=0 to tmp.Count-1 do
-if (LowerCase(tmp[i])=copy(GetEnvironmentVariable('LANG'), 1, 2))
+if (LowerCase(tmp[i])=GetLangID)
 and (tmp[i+1]='------') then break;
 
 SCForm.Memo1.Lines.Clear;
@@ -461,8 +461,8 @@ for i:=0 to SWLLength-1 do
         SWList[k].VLabel.Visible:=false;
 
         SWList[k].DescLabel.Caption:=FindChildNode2(xn.ChildNodes[i],'sdesc').Attributes.GetNamedItem('std').NodeValue;
-        if FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),copy(GetEnvironmentVariable('LANG'), 1, 2))<>nil then
-           SWList[k].DescLabel.Caption:=FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),copy(GetEnvironmentVariable('LANG'), 1, 2)).NodeValue;
+        if FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),GetLangID)<>nil then
+           SWList[k].DescLabel.Caption:=FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),GetLangID).NodeValue;
         if FindChildNode(xn.ChildNodes[i],'author')<>nil then
            SWList[k].MnLabel.Caption:=strAuthor+': '+FindChildNode(xn.ChildNodes[i],'author').NodeValue
         else SWList[k].MnLabel.Visible:=false;
@@ -527,8 +527,8 @@ if cdir='all' then begin cdir:='education';cid:=1;end;
         SWList[k].VLabel.Visible:=false;
 
         SWList[k].DescLabel.Caption:=FindChildNode2(xn.ChildNodes[i],'sdesc').Attributes.GetNamedItem('std').NodeValue;
-       if FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),copy(GetEnvironmentVariable('LANG'), 1, 2))<>nil then
-           SWList[k].DescLabel.Caption:=FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),copy(GetEnvironmentVariable('LANG'), 1, 2)).NodeValue;
+       if FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),GetLangID)<>nil then
+           SWList[k].DescLabel.Caption:=FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),GetLangID).NodeValue;
         if FindChildNode(xn.ChildNodes[i],'author')<>nil then
            SWList[k].MnLabel.Caption:=strAuthor+': '+FindChildNode(xn.ChildNodes[i],'author').NodeValue
         else SWList[k].MnLabel.Visible:=false;

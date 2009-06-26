@@ -2159,13 +2159,16 @@ LazarusResources.Add('TMnFrm','FORMDATA',[
   +'out'#7#10'blGlyphTop'#9'NumGlyphs'#2#0#7'OnClick'#7#18'InstAppButtonClick'
   +#10'ParentFont'#8#0#0#0#9'TNotebook'#9'Notebook1'#4'Left'#2'p'#6'Height'#3
   +#216#1#3'Top'#2'@'#5'Width'#3#184#2#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRig'
-  +'ht'#8'akBottom'#0#9'PageIndex'#2#2#8'ShowTabs'#8#8'TabOrder'#2#3#0#5'TPage'
+  +'ht'#8'akBottom'#0#9'PageIndex'#2#0#8'ShowTabs'#8#8'TabOrder'#2#3#0#5'TPage'
   +#17'InstalledAppsPage'#7'Caption'#6#17'InstalledAppsPage'#11'ClientWidth'#3
-  +#180#2#12'ClientHeight'#3#190#1#0#6'TLabel'#6'Label1'#4'Left'#2#0#6'Height'#2
-  +#13#3'Top'#2#14#5'Width'#2#30#7'Caption'#6#5'Show:'#11'ParentColor'#8#0#0#10
-  +'TScrollBox'#5'SWBox'#4'Left'#2#0#6'Height'#3#160#1#3'Top'#2#30#5'Width'#3
-  +#180#2#5'Align'#7#8'alBottom'#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#8
-  +'akBottom'#0#11'BorderStyle'#7#6'bsNone'#12'ClientHeight'#3#160#1#11'ClientW'
+  +#180#2#12'ClientHeight'#3#212#1#0#6'TLabel'#6'Label1'#4'Left'#2#0#6'Height'#2
+  +#13#3'Top'#2#14#5'Width'#2#30#7'Caption'#6#5'Show:'#11'ParentColor'#8#0#0#9
+  +'TPaintBox'#11'ThrobberBox'#4'Left'#3#14#1#6'Height'#2'd'#3'Top'#3#166#0#5'W'
+  +'idth'#2'd'#7'Anchors'#11#0#21'Constraints.MaxHeight'#2'd'#20'Constraints.Ma'
+  +'xWidth'#2'd'#21'Constraints.MinHeight'#2'd'#20'Constraints.MinWidth'#2'd'#0
+  +#0#10'TScrollBox'#5'SWBox'#4'Left'#2#0#6'Height'#3#174#1#3'Top'#2'&'#5'Width'
+  +#3#180#2#5'Align'#7#8'alBottom'#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#8
+  +'akBottom'#0#11'BorderStyle'#7#6'bsNone'#12'ClientHeight'#3#174#1#11'ClientW'
   +'idth'#3#180#2#5'Color'#7#6'clForm'#11'ParentColor'#8#8'TabOrder'#2#0#0#6'TL'
   +'abel'#6'Label3'#4'Left'#2#6#6'Height'#2#18#3'Top'#2#14#5'Width'#3#155#0#7'C'
   +'aption'#6#22'No applications found!'#11'Font.Height'#2#242#9'Font.Name'#6#4
@@ -2174,99 +2177,96 @@ LazarusResources.Add('TMnFrm','FORMDATA',[
   +'dex'#2#0#13'Items.Strings'#1#6#3'All'#6#9'Education'#6#6'Office'#6#11'Devel'
   +'opment'#6#7'Graphic'#6#7'Network'#6#5'Games'#6#6'System'#6#10'Multimedia'#6
   +#10'Additional'#6#5'Other'#0#9'MaxLength'#4#255#255#0#0#8'OnChange'#7#10'CBo'
-  +'xChange'#8'TabOrder'#2#1#4'Text'#6#3'All'#0#0#5'TEdit'#9'FilterEdt'#4'Left'
+  ,'xChange'#8'TabOrder'#2#1#4'Text'#6#3'All'#0#0#5'TEdit'#9'FilterEdt'#4'Left'
   +#3'&'#2#6'Height'#2#22#3'Top'#2#5#5'Width'#3#139#0#7'Anchors'#11#5'akTop'#7
   +'akRight'#0#7'OnEnter'#7#14'FilterEdtEnter'#6'OnExit'#7#13'FilterEdtExit'#9
-  ,'OnKeyDown'#7#16'FilterEdtKeyDown'#8'TabOrder'#2#2#4'Text'#6#1'*'#0#0#6'TPan'
-  +'el'#11'ThrobberBox'#4'Left'#3#14#1#6'Height'#2'd'#3'Top'#3#156#0#5'Width'#2
-  +'d'#7'Anchors'#11#0#10'BevelOuter'#7#6'bvNone'#21'Constraints.MaxHeight'#2'd'
-  +#20'Constraints.MaxWidth'#2'd'#21'Constraints.MinHeight'#2'd'#20'Constraints'
-  +'.MinWidth'#2'd'#8'TabOrder'#2#3#0#0#0#5'TPage'#11'CatalogPage'#7'Caption'#6
-  +#11'CatalogPage'#11'ClientWidth'#3#180#2#12'ClientHeight'#3#190#1#0#7'TBitBt'
-  +'n'#7'BitBtn1'#4'Left'#3#190#0#6'Height'#2'('#3'Top'#3#134#0#5'Width'#3#27#1
-  +#7'Anchors'#11#0#7'Caption'#6#26'Browse Listaller''s catalog'#7'OnClick'#7#12
-  +'BitBtn1Click'#8'TabOrder'#2#0#0#0#7'TBitBtn'#7'BitBtn2'#4'Left'#3#190#0#6'H'
-  +'eight'#2'('#3'Top'#3#233#0#5'Width'#3#27#1#7'Anchors'#11#0#7'Caption'#6'(Op'
-  +'en your distribution''s package catalog'#7'OnClick'#7#12'BitBtn2Click'#8'Ta'
-  +'bOrder'#2#1#0#0#0#5'TPage'#8'RepoPage'#7'Caption'#6#8'RepoPage'#11'ClientWi'
-  +'dth'#3#180#2#12'ClientHeight'#3#212#1#0#7'TBitBtn'#7'BitBtn5'#4'Left'#3#198
-  +#0#6'Height'#2#30#3'Top'#3#30#1#5'Width'#3#11#1#7'Anchors'#11#0#7'Caption'#6
-  +#13'Update system'#8'TabOrder'#2#0#0#0#12'TPageControl'#12'PageControl1'#4'L'
-  +'eft'#2#0#6'Height'#3#212#1#3'Top'#2#0#5'Width'#3#180#2#10'ActivePage'#7#12
-  +'SysRepoSheet'#5'Align'#7#8'alClient'#8'TabIndex'#2#0#8'TabOrder'#2#1#0#9'TT'
-  +'abSheet'#12'SysRepoSheet'#7'Caption'#6#19'System repositories'#12'ClientHei'
-  +'ght'#3#186#1#11'ClientWidth'#3#176#2#0#7'TBitBtn'#7'BitBtn6'#4'Left'#3#180#0
-  +#6'Height'#2#30#3'Top'#3#190#0#5'Width'#3#11#1#7'Anchors'#11#0#7'Caption'#6
-  +#31'Change package manager settings'#7'OnClick'#7#12'BitBtn6Click'#8'TabOrde'
-  +'r'#2#0#0#0#0#9'TTabSheet'#12'UpdRepoSheet'#7'Caption'#6#19'Update repositor'
-  +'ies'#12'ClientHeight'#3#186#1#11'ClientWidth'#3#176#2#0#6'TLabel'#8'UsILabe'
-  +'l'#4'Left'#2#6#6'Height'#2#13#3'Top'#2#8#5'Width'#3#166#0#7'Caption'#6'$Her'
-  +'e''s a list of all update-sources:'#11'ParentColor'#8#0#0#13'TCheckListBox'
-  +#8'UListBox'#4'Left'#2#6#6'Height'#3'n'#1#3'Top'#2' '#5'Width'#3#158#2#7'Anc'
-  +'hors'#11#5'akTop'#6'akLeft'#7'akRight'#8'akBottom'#0#10'ItemHeight'#2#0#7'O'
-  +'nClick'#7#13'UListBoxClick'#8'TabOrder'#2#0#8'TopIndex'#2#255#0#0#7'TBitBtn'
-  +#11'RmUpdSrcBtn'#4'Left'#2#6#6'Height'#2#26#3'Top'#3#150#1#5'Width'#2'U'#7'A'
-  +'nchors'#11#6'akLeft'#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6#13'Delete sou'
-  +'rce'#9'NumGlyphs'#2#0#7'OnClick'#7#16'RmUpdSrcBtnClick'#8'TabOrder'#2#1#0#0
-  +#7'TBitBtn'#11'UpdCheckBtn'#4'Left'#3'4'#2#6'Height'#2#26#3'Top'#3#150#1#5'W'
-  +'idth'#2'i'#7'Anchors'#11#7'akRight'#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6
-  +#17'Check for updates'#9'NumGlyphs'#2#0#7'OnClick'#7#16'UpdCheckBtnClick'#8
-  +'TabOrder'#2#2#0#0#0#0#0#5'TPage'#10'ConfigPage'#7'Caption'#6#10'ConfigPage'
-  +#11'ClientWidth'#3#180#2#12'ClientHeight'#3#190#1#0#6'TLabel'#6'Label2'#4'Le'
-  +'ft'#2#6#6'Height'#2#13#3'Top'#2#8#5'Width'#2'h'#7'Caption'#6#19'Language: a'
-  +'utomatic'#11'ParentColor'#8#0#0#7'TButton'#8'AboutBtn'#4'Left'#3'V'#2#6'Hei'
-  +'ght'#2#26#3'Top'#3#160#1#5'Width'#2'T'#7'Anchors'#11#7'akRight'#8'akBottom'
-  +#0#8'AutoSize'#9#7'Caption'#6#15'About Listaller'#7'OnClick'#7#13'AboutBtnCl'
-  +'ick'#8'TabOrder'#2#0#0#0#9'TCheckBox'#10'WarnDistCb'#4'Left'#2#6#6'Height'#2
-  +#21#3'Top'#2' '#5'Width'#3#233#0#7'Caption'#6'+Show warning if distribution '
-  +'is unsupported'#7'Checked'#9#7'Enabled'#8#8'OnChange'#7#16'WarnDistCbChange'
-  +#5'State'#7#9'cbChecked'#8'TabOrder'#2#1#0#0#9'TCheckBox'#11'AutoDepLdCb'#4
-  +'Left'#2#6#6'Height'#2#21#3'Top'#2'@'#5'Width'#3'I'#1#7'Caption'#6'<Load dep'
-  +'endencies from included webserver-urls automatically'#7'Checked'#9#8'OnChan'
-  +'ge'#7#17'AutoDepLdCbChange'#5'State'#7#9'cbChecked'#8'TabOrder'#2#2#0#0#9'T'
-  +'CheckBox'#11'CbShowPkMon'#4'Left'#2#6#6'Height'#2#21#3'Top'#2'e'#5'Width'#3
-  +#238#0#7'Caption'#6'+Start PackageKit monitor while transactions'#8'OnChange'
-  +#7#17'CbShowPkMonChange'#8'TabOrder'#2#3#0#0#9'TGroupBox'#9'GroupBox1'#4'Lef'
-  +'t'#2#6#6'Height'#3#184#0#3'Top'#3#142#0#5'Width'#3'}'#2#7'Anchors'#11#5'akT'
-  +'op'#6'akLeft'#7'akRight'#0#7'Caption'#6#14'Proxy-Settings'#12'ClientHeight'
-  +#3#170#0#11'ClientWidth'#3'y'#2#8'TabOrder'#2#4#0#6'TLabel'#6'Label4'#4'Left'
-  +#2#9#6'Height'#2#13#3'Top'#2'!'#5'Width'#2'?'#7'Caption'#6#12'H&TTP-Proxy:'#7
-  +'Enabled'#8#11'ParentColor'#8#0#0#6'TLabel'#6'Label5'#4'Left'#3#191#0#6'Heig'
-  +'ht'#2#13#3'Top'#2'!'#5'Width'#2#24#7'Caption'#6#5'Port:'#7'Enabled'#8#11'Pa'
-  +'rentColor'#8#0#0#6'TLabel'#6'Label6'#4'Left'#3#190#0#6'Height'#2#13#3'Top'#2
-  +'h'#5'Width'#2#24#7'Caption'#6#5'Port:'#7'Enabled'#8#11'ParentColor'#8#7'Vis'
-  +'ible'#8#0#0#9'TCheckBox'#13'EnableProxyCb'#4'Left'#2#6#6'Height'#2#21#3'Top'
-  +#2#5#5'Width'#2'x'#7'Caption'#6#19'Enable Proxy-Server'#8'OnChange'#7#19'Ena'
-  +'bleProxyCbChange'#8'TabOrder'#2#0#0#0#5'TEdit'#5'Edit1'#4'Left'#2#6#6'Heigh'
-  +'t'#2#22#3'Top'#2'5'#5'Width'#3#172#0#7'Enabled'#8#8'TabOrder'#2#1#0#0#9'TSp'
-  +'inEdit'#9'SpinEdit1'#4'Left'#3#191#0#6'Height'#2#22#3'Top'#2'5'#5'Width'#2
-  +'Z'#7'Enabled'#8#8'MaxValue'#4#160#134#1#0#8'TabOrder'#2#2#5'Value'#2#1#0#0
-  ,#12'TLabeledEdit'#11'edtUsername'#4'Left'#3''''#1#6'Height'#2#22#3'Top'#2'5'
-  +#5'Width'#2'p EditLabel.AnchorSideLeft.Control'#7#11'edtUsername"EditLabel.A'
-  +'nchorSideBottom.Control'#7#11'edtUsername'#14'EditLabel.Left'#3''''#1#16'Ed'
-  +'itLabel.Height'#2#13#13'EditLabel.Top'#2''''#15'EditLabel.Width'#2'5'#17'Ed'
-  +'itLabel.Caption'#6#9'Username:'#21'EditLabel.ParentColor'#8#7'Enabled'#8#12
-  +'LabelSpacing'#2#1#8'TabOrder'#2#3#0#0#12'TLabeledEdit'#9'edtPasswd'#4'Left'
-  +#3''''#1#6'Height'#2#22#3'Top'#2'a'#5'Width'#2'p'#8'EchoMode'#7#10'emPasswor'
-  +'d EditLabel.AnchorSideLeft.Control'#7#9'edtPasswd"EditLabel.AnchorSideBotto'
-  +'m.Control'#7#9'edtPasswd'#14'EditLabel.Left'#3''''#1#16'EditLabel.Height'#2
-  +#13#13'EditLabel.Top'#2'T'#15'EditLabel.Width'#2'1'#17'EditLabel.Caption'#6#9
-  +'Password:'#21'EditLabel.ParentColor'#8#7'Enabled'#8#12'LabelSpacing'#2#0#12
-  +'PasswordChar'#6#1'*'#8'TabOrder'#2#4#0#0#12'TLabeledEdit'#11'edtFTPProxy'#4
-  +'Left'#2#9#6'Height'#2#22#3'Top'#2'{'#5'Width'#3#166#0' EditLabel.AnchorSide'
-  +'Left.Control'#7#11'edtFTPProxy"EditLabel.AnchorSideBottom.Control'#7#11'edt'
-  +'FTPProxy'#14'EditLabel.Left'#2#9#16'EditLabel.Height'#2#13#13'EditLabel.Top'
-  +#2'n'#15'EditLabel.Width'#2'9'#17'EditLabel.Caption'#6#11'&FTP-Proxy:'#21'Ed'
-  +'itLabel.ParentColor'#8#7'Enabled'#8#12'LabelSpacing'#2#0#8'TabOrder'#2#5#7
-  +'Visible'#8#0#0#9'TSpinEdit'#9'SpinEdit2'#4'Left'#3#191#0#6'Height'#2#22#3'T'
-  +'op'#2'{'#5'Width'#2'Z'#7'Enabled'#8#8'MaxValue'#4#160#134#1#0#8'TabOrder'#2
-  +#6#5'Value'#2#1#7'Visible'#8#0#0#0#0#0#8'TProcess'#8'Process1'#6'Active'#8#7
-  +'Options'#11#11'poNoConsole'#0#8'Priority'#7#8'ppNormal'#14'StartupOptions'
-  +#11#0#10'ShowWindow'#7#7'swoNone'#13'WindowColumns'#2#0#12'WindowHeight'#2#0
-  +#10'WindowLeft'#2#0#10'WindowRows'#2#0#9'WindowTop'#2#0#11'WindowWidth'#2#0
-  +#13'FillAttribute'#2#0#4'left'#3#0#3#3'top'#2#8#0#0#11'TOpenDialog'#11'OpenD'
-  +'ialog1'#10'DefaultExt'#6#6'.*.ipk'#6'Filter'#6#128'All supported packages|*'
-  +'.ipk;*.zip;*.rpm;*.deb|Listaller Installation packages|*.ipk;*.zip|RPM-Pack'
-  +'ages|*.rpm|DEB-Packages|*.deb'#4'left'#3#208#2#3'top'#2#8#0#0#10'TImageList'
-  +#10'ImageList1'#4'left'#3#144#2#3'top'#2#8#0#0#0
+  +'OnKeyDown'#7#16'FilterEdtKeyDown'#8'TabOrder'#2#2#4'Text'#6#1'*'#0#0#0#5'TP'
+  +'age'#11'CatalogPage'#7'Caption'#6#11'CatalogPage'#11'ClientWidth'#3#180#2#12
+  +'ClientHeight'#3#190#1#0#7'TBitBtn'#7'BitBtn1'#4'Left'#3#190#0#6'Height'#2'('
+  +#3'Top'#3#134#0#5'Width'#3#27#1#7'Anchors'#11#0#7'Caption'#6#26'Browse Lista'
+  +'ller''s catalog'#7'OnClick'#7#12'BitBtn1Click'#8'TabOrder'#2#0#0#0#7'TBitBt'
+  +'n'#7'BitBtn2'#4'Left'#3#190#0#6'Height'#2'('#3'Top'#3#233#0#5'Width'#3#27#1
+  +#7'Anchors'#11#0#7'Caption'#6'(Open your distribution''s package catalog'#7
+  +'OnClick'#7#12'BitBtn2Click'#8'TabOrder'#2#1#0#0#0#5'TPage'#8'RepoPage'#7'Ca'
+  +'ption'#6#8'RepoPage'#11'ClientWidth'#3#180#2#12'ClientHeight'#3#190#1#0#7'T'
+  +'BitBtn'#7'BitBtn5'#4'Left'#3#198#0#6'Height'#2#30#3'Top'#3#16#1#5'Width'#3
+  +#11#1#7'Anchors'#11#0#7'Caption'#6#13'Update system'#8'TabOrder'#2#0#0#0#12
+  +'TPageControl'#12'PageControl1'#4'Left'#2#0#6'Height'#3#190#1#3'Top'#2#0#5'W'
+  +'idth'#3#180#2#10'ActivePage'#7#12'SysRepoSheet'#5'Align'#7#8'alClient'#8'Ta'
+  +'bIndex'#2#0#8'TabOrder'#2#1#0#9'TTabSheet'#12'SysRepoSheet'#7'Caption'#6#19
+  +'System repositories'#12'ClientHeight'#3#186#1#11'ClientWidth'#3#176#2#0#7'T'
+  +'BitBtn'#7'BitBtn6'#4'Left'#3#180#0#6'Height'#2#30#3'Top'#3#190#0#5'Width'#3
+  +#11#1#7'Anchors'#11#0#7'Caption'#6#31'Change package manager settings'#7'OnC'
+  +'lick'#7#12'BitBtn6Click'#8'TabOrder'#2#0#0#0#0#9'TTabSheet'#12'UpdRepoSheet'
+  +#7'Caption'#6#19'Update repositories'#12'ClientHeight'#3#186#1#11'ClientWidt'
+  +'h'#3#176#2#0#6'TLabel'#8'UsILabel'#4'Left'#2#6#6'Height'#2#13#3'Top'#2#8#5
+  +'Width'#3#166#0#7'Caption'#6'$Here''s a list of all update-sources:'#11'Pare'
+  +'ntColor'#8#0#0#13'TCheckListBox'#8'UListBox'#4'Left'#2#6#6'Height'#3'n'#1#3
+  +'Top'#2' '#5'Width'#3#158#2#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#8'ak'
+  +'Bottom'#0#10'ItemHeight'#2#0#7'OnClick'#7#13'UListBoxClick'#8'TabOrder'#2#0
+  +#8'TopIndex'#2#255#0#0#7'TBitBtn'#11'RmUpdSrcBtn'#4'Left'#2#6#6'Height'#2#26
+  +#3'Top'#3#150#1#5'Width'#2'U'#7'Anchors'#11#6'akLeft'#8'akBottom'#0#8'AutoSi'
+  +'ze'#9#7'Caption'#6#13'Delete source'#9'NumGlyphs'#2#0#7'OnClick'#7#16'RmUpd'
+  +'SrcBtnClick'#8'TabOrder'#2#1#0#0#7'TBitBtn'#11'UpdCheckBtn'#4'Left'#3'4'#2#6
+  +'Height'#2#26#3'Top'#3#150#1#5'Width'#2'i'#7'Anchors'#11#7'akRight'#8'akBott'
+  +'om'#0#8'AutoSize'#9#7'Caption'#6#17'Check for updates'#9'NumGlyphs'#2#0#7'O'
+  +'nClick'#7#16'UpdCheckBtnClick'#8'TabOrder'#2#2#0#0#0#0#0#5'TPage'#10'Config'
+  +'Page'#7'Caption'#6#10'ConfigPage'#11'ClientWidth'#3#180#2#12'ClientHeight'#3
+  +#190#1#0#6'TLabel'#6'Label2'#4'Left'#2#6#6'Height'#2#13#3'Top'#2#8#5'Width'#2
+  +'h'#7'Caption'#6#19'Language: automatic'#11'ParentColor'#8#0#0#7'TButton'#8
+  +'AboutBtn'#4'Left'#3'V'#2#6'Height'#2#26#3'Top'#3#160#1#5'Width'#2'T'#7'Anch'
+  +'ors'#11#7'akRight'#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6#15'About Listal'
+  +'ler'#7'OnClick'#7#13'AboutBtnClick'#8'TabOrder'#2#0#0#0#9'TCheckBox'#10'War'
+  +'nDistCb'#4'Left'#2#6#6'Height'#2#21#3'Top'#2' '#5'Width'#3#233#0#7'Caption'
+  +#6'+Show warning if distribution is unsupported'#7'Checked'#9#7'Enabled'#8#8
+  +'OnChange'#7#16'WarnDistCbChange'#5'State'#7#9'cbChecked'#8'TabOrder'#2#1#0#0
+  +#9'TCheckBox'#11'AutoDepLdCb'#4'Left'#2#6#6'Height'#2#21#3'Top'#2'@'#5'Width'
+  +#3'I'#1#7'Caption'#6'<Load dependencies from included webserver-urls automat'
+  +'ically'#7'Checked'#9#8'OnChange'#7#17'AutoDepLdCbChange'#5'State'#7#9'cbChe'
+  +'cked'#8'TabOrder'#2#2#0#0#9'TCheckBox'#11'CbShowPkMon'#4'Left'#2#6#6'Height'
+  +#2#21#3'Top'#2'e'#5'Width'#3#238#0#7'Caption'#6'+Start PackageKit monitor wh'
+  +'ile transactions'#8'OnChange'#7#17'CbShowPkMonChange'#8'TabOrder'#2#3#0#0#9
+  +'TGroupBox'#9'GroupBox1'#4'Left'#2#6#6'Height'#3#184#0#3'Top'#3#142#0#5'Widt'
+  +'h'#3'}'#2#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#0#7'Caption'#6#14'Pro'
+  +'xy-Settings'#12'ClientHeight'#3#170#0#11'ClientWidth'#3'y'#2#8'TabOrder'#2#4
+  +#0#6'TLabel'#6'Label4'#4'Left'#2#9#6'Height'#2#13#3'Top'#2'!'#5'Width'#2'?'#7
+  +'Caption'#6#12'H&TTP-Proxy:'#7'Enabled'#8#11'ParentColor'#8#0#0#6'TLabel'#6
+  +'Label5'#4'Left'#3#191#0#6'Height'#2#13#3'Top'#2'!'#5'Width'#2#24#7'Caption'
+  +#6#5'Port:'#7'Enabled'#8#11'ParentColor'#8#0#0#6'TLabel'#6'Label6'#4'Left'#3
+  +#190#0#6'Height'#2#13#3'Top'#2'h'#5'Width'#2#24#7'Caption'#6#5'Port:'#7'Enab'
+  +'led'#8#11'ParentColor'#8#7'Visible'#8#0#0#9'TCheckBox'#13'EnableProxyCb'#4
+  +'Left'#2#6#6'Height'#2#21#3'Top'#2#5#5'Width'#2'x'#7'Caption'#6#19'Enable Pr'
+  +'oxy-Server'#8'OnChange'#7#19'EnableProxyCbChange'#8'TabOrder'#2#0#0#0#5'TEd'
+  +'it'#5'Edit1'#4'Left'#2#6#6'Height'#2#22#3'Top'#2'5'#5'Width'#3#172#0#7'Enab'
+  +'led'#8#8'TabOrder'#2#1#0#0#9'TSpinEdit'#9'SpinEdit1'#4'Left'#3#191#0#6'Heig'
+  +'ht'#2#22#3'Top'#2'5'#5'Width'#2'Z'#7'Enabled'#8#8'MaxValue'#4#160#134#1#0#8
+  +'TabOrder'#2#2#5'Value'#2#1#0#0#12'TLabeledEdit'#11'edtUsername'#4'Left'#3
+  ,''''#1#6'Height'#2#22#3'Top'#2'5'#5'Width'#2'p EditLabel.AnchorSideLeft.Cont'
+  +'rol'#7#11'edtUsername"EditLabel.AnchorSideBottom.Control'#7#11'edtUsername'
+  +#14'EditLabel.Left'#3''''#1#16'EditLabel.Height'#2#13#13'EditLabel.Top'#2''''
+  +#15'EditLabel.Width'#2'5'#17'EditLabel.Caption'#6#9'Username:'#21'EditLabel.'
+  +'ParentColor'#8#7'Enabled'#8#12'LabelSpacing'#2#1#8'TabOrder'#2#3#0#0#12'TLa'
+  +'beledEdit'#9'edtPasswd'#4'Left'#3''''#1#6'Height'#2#22#3'Top'#2'a'#5'Width'
+  +#2'p'#8'EchoMode'#7#10'emPassword EditLabel.AnchorSideLeft.Control'#7#9'edtP'
+  +'asswd"EditLabel.AnchorSideBottom.Control'#7#9'edtPasswd'#14'EditLabel.Left'
+  +#3''''#1#16'EditLabel.Height'#2#13#13'EditLabel.Top'#2'T'#15'EditLabel.Width'
+  +#2'1'#17'EditLabel.Caption'#6#9'Password:'#21'EditLabel.ParentColor'#8#7'Ena'
+  +'bled'#8#12'LabelSpacing'#2#0#12'PasswordChar'#6#1'*'#8'TabOrder'#2#4#0#0#12
+  +'TLabeledEdit'#11'edtFTPProxy'#4'Left'#2#9#6'Height'#2#22#3'Top'#2'{'#5'Widt'
+  +'h'#3#166#0' EditLabel.AnchorSideLeft.Control'#7#11'edtFTPProxy"EditLabel.An'
+  +'chorSideBottom.Control'#7#11'edtFTPProxy'#14'EditLabel.Left'#2#9#16'EditLab'
+  +'el.Height'#2#13#13'EditLabel.Top'#2'n'#15'EditLabel.Width'#2'9'#17'EditLabe'
+  +'l.Caption'#6#11'&FTP-Proxy:'#21'EditLabel.ParentColor'#8#7'Enabled'#8#12'La'
+  +'belSpacing'#2#0#8'TabOrder'#2#5#7'Visible'#8#0#0#9'TSpinEdit'#9'SpinEdit2'#4
+  +'Left'#3#191#0#6'Height'#2#22#3'Top'#2'{'#5'Width'#2'Z'#7'Enabled'#8#8'MaxVa'
+  +'lue'#4#160#134#1#0#8'TabOrder'#2#6#5'Value'#2#1#7'Visible'#8#0#0#0#0#0#8'TP'
+  +'rocess'#8'Process1'#6'Active'#8#7'Options'#11#11'poNoConsole'#0#8'Priority'
+  +#7#8'ppNormal'#14'StartupOptions'#11#0#10'ShowWindow'#7#7'swoNone'#13'Window'
+  +'Columns'#2#0#12'WindowHeight'#2#0#10'WindowLeft'#2#0#10'WindowRows'#2#0#9'W'
+  +'indowTop'#2#0#11'WindowWidth'#2#0#13'FillAttribute'#2#0#4'left'#3#0#3#3'top'
+  +#2#8#0#0#11'TOpenDialog'#11'OpenDialog1'#10'DefaultExt'#6#6'.*.ipk'#6'Filter'
+  +#6#128'All supported packages|*.ipk;*.zip;*.rpm;*.deb|Listaller Installation'
+  +' packages|*.ipk;*.zip|RPM-Packages|*.rpm|DEB-Packages|*.deb'#4'left'#3#208#2
+  +#3'top'#2#8#0#0#10'TImageList'#10'ImageList1'#4'left'#3#144#2#3'top'#2#8#0#0
+  +#0
 ]);

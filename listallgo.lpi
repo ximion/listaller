@@ -14,13 +14,13 @@
       <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <i18n>
-      <OutDir Value="bin/lang"/>
+      <OutDir Value="locale"/>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="818"/>
+      <CurrentMajorRevNr Value="3"/>
+      <CurrentBuildNr Value="833"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -50,13 +50,13 @@
         <MinVersion Major="1" Valid="True"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="107">
+    <Units Count="110">
       <Unit0>
         <Filename Value="listallgo.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallgo"/>
-        <CursorPos X="33" Y="39"/>
-        <TopLine Value="4"/>
+        <CursorPos X="10" Y="29"/>
+        <TopLine Value="6"/>
         <UsageCount Value="200"/>
       </Unit0>
       <Unit1>
@@ -65,7 +65,7 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="56" Y="27"/>
+        <CursorPos X="13" Y="27"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
@@ -386,7 +386,7 @@
         <UnitName Value="dgunit"/>
         <CursorPos X="42" Y="137"/>
         <TopLine Value="94"/>
-        <UsageCount Value="154"/>
+        <UsageCount Value="155"/>
       </Unit46>
       <Unit47>
         <Filename Value="abdfoutw.pas"/>
@@ -677,7 +677,7 @@
         <UnitName Value="ipkhandle"/>
         <CursorPos X="38" Y="630"/>
         <TopLine Value="1495"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="74"/>
       </Unit88>
       <Unit89>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/forms.pp"/>
@@ -790,8 +790,8 @@
       <Unit104>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="5" Y="239"/>
-        <TopLine Value="211"/>
+        <CursorPos X="29" Y="18"/>
+        <TopLine Value="14"/>
         <UsageCount Value="10"/>
       </Unit104>
       <Unit105>
@@ -808,8 +808,37 @@
         <TopLine Value="62"/>
         <UsageCount Value="10"/>
       </Unit106>
+      <Unit107>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/defaulttranslator.pas"/>
+        <UnitName Value="DefaultTranslator"/>
+        <CursorPos X="1" Y="229"/>
+        <TopLine Value="190"/>
+        <UsageCount Value="10"/>
+      </Unit107>
+      <Unit108>
+        <Filename Value="../../../../../usr/share/fpcsrc/2.2.4/rtl/inc/objpash.inc"/>
+        <CursorPos X="23" Y="151"/>
+        <TopLine Value="131"/>
+        <UsageCount Value="10"/>
+      </Unit108>
+      <Unit109>
+        <Filename Value="litranslator.pas"/>
+        <UnitName Value="litranslator"/>
+        <CursorPos X="58" Y="120"/>
+        <TopLine Value="100"/>
+        <UsageCount Value="10"/>
+      </Unit109>
     </Units>
-    <JumpHistory Count="0" HistoryIndex="-1"/>
+    <JumpHistory Count="2" HistoryIndex="1">
+      <Position1>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="26" Column="33" TopLine="1"/>
+      </Position1>
+      <Position2>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="27" Column="28" TopLine="1"/>
+      </Position2>
+    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>
@@ -838,6 +867,9 @@
     </Linking>
     <Other>
       <Verbosity>
+        <ShowNotes Value="False"/>
+        <ShowGenInfo Value="False"/>
+        <ShoLineNum Value="True"/>
         <ShowSummary Value="True"/>
         <ShowHintsForUnusedUnitsInMainSrc Value="True"/>
       </Verbosity>

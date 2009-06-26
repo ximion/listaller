@@ -25,7 +25,8 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms,
   igobase, dgunit, trstrings, LResources,
-  ipkhandle, SysUtils, distri, LiCommon;
+  ipkhandle, SysUtils, distri, LiCommon,
+  liTranslator;
 
 {$IFDEF WINDOWS}{$R listallgo.rc}{$ENDIF}
 
