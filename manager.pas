@@ -23,8 +23,8 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, LEntries,
-  uninstall, trstrings, FileUtil, xtypefm, ipkhandle, gifanimator, LiCommon,
-  PackageKit, Contnrs, sqlite3ds, db, aboutbox;
+  uninstall, trstrings, FileUtil, Spin, CheckLst, xtypefm, ipkhandle,
+  gifanimator, LiCommon, PackageKit, Contnrs, sqlite3ds, db, aboutbox;
 
 type
 
@@ -33,25 +33,46 @@ type
   TMnFrm = class(TForm)
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
-    BitBtn3: TBitBtn;
     AboutBtn: TButton;
-    BitBtn4: TBitBtn;
     BitBtn5: TBitBtn;
+    BitBtn6: TBitBtn;
+    RmUpdSrcBtn: TBitBtn;
+    UpdCheckBtn: TBitBtn;
     CatButton: TSpeedButton;
     CBox: TComboBox;
+    CbShowPkMon: TCheckBox;
+    UListBox: TCheckListBox;
+    UsILabel: TLabel;
+    PageControl1: TPageControl;
+    SysRepoSheet: TTabSheet;
+    UpdRepoSheet: TTabSheet;
+    WarnDistCb: TCheckBox;
+    AutoDepLdCb: TCheckBox;
+    EnableProxyCb: TCheckBox;
+    Edit1: TEdit;
+    edtFTPProxy: TLabeledEdit;
+    edtPasswd: TLabeledEdit;
+    edtUsername: TLabeledEdit;
     FilterEdt: TEdit;
+    GroupBox1: TGroupBox;
     Image1: TImage;
     ImageList1: TImageList;
     InstallButton: TSpeedButton;
     InstAppButton: TSpeedButton;
     Label1: TLabel;
+    Label2: TLabel;
     Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
     Notebook1: TNotebook;
     OpenDialog1: TOpenDialog;
     MBar: TProgressBar;
     LeftBar: TPanel;
     InstalledAppsPage: TPage;
     CatalogPage: TPage;
+    SpinEdit1: TSpinEdit;
+    SpinEdit2: TSpinEdit;
     ThrobberBox: TPanel;
     RepoPage: TPage;
     ConfigPage: TPage;
@@ -62,12 +83,21 @@ type
     StatusBar1: TStatusBar;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure BitBtn6Click(Sender: TObject);
     procedure btnInstallClick(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure btnSettingsClick(Sender: TObject);
     procedure btnCatClick(Sender: TObject);
     procedure AboutBtnClick(Sender: TObject);
     procedure CBoxChange(Sender: TObject);
+    procedure AutoDepLdCbChange(Sender: TObject);
+    procedure CbShowPkMonChange(Sender: TObject);
+    procedure EnableProxyCbChange(Sender: TObject);
+    procedure RmUpdSrcBtnClick(Sender: TObject);
+    procedure UListBoxClick(Sender: TObject);
+    procedure UpdCheckBtnClick(Sender: TObject);
+    procedure WarnDistCbChange(Sender: TObject);
     procedure FilterEdtEnter(Sender: TObject);
     procedure FilterEdtExit(Sender: TObject);
     procedure FilterEdtKeyDown(Sender: TObject; var Key: Word;
@@ -109,7 +139,7 @@ var
 
 implementation
 
-uses settings, pkgconvertdisp, swcatalog;
+uses pkgconvertdisp, swcatalog;
 
 { TListEntry }
 
@@ -597,7 +627,48 @@ end;
 
 procedure TMnFrm.BitBtn3Click(Sender: TObject);
 begin
-     FmConfig.ShowModal;
+
+end;
+
+procedure TMnFrm.BitBtn4Click(Sender: TObject);
+begin
+
+end;
+
+procedure TMnFrm.BitBtn6Click(Sender: TObject);
+var p: TProcess;
+begin
+  p:=TProcess.Create(nil);
+  p.Options:=[poUsePipes];
+  if DInfo.DBase='KDE' then
+  begin
+     if FileExists('/usr/bin/kpackagekit') then
+      p.CommandLine:='/usr/bin/kpackagekit --settings'
+     else
+      p.CommandLine:='/usr/bin/gpk-repo';
+  end else
+  begin
+     if FileExists('/usr/bin/gpk-repo') then
+      p.CommandLine:='/usr/bin/gpk-repo'
+     else
+      p.CommandLine:='/usr/bin/kpackagekit';
+  end;
+  Notebook1.Enabled:=false;
+  LeftBar.Enabled:=false;
+  MBar.Visible:=true;
+  try
+   p.Execute;
+  except
+   ShowMessage(strNoGUIPkgManFound);
+   p.Free;
+   exit;
+  end;
+
+  while p.Running do Application.ProcessMessages;
+  p.Free;
+  Notebook1.Enabled:=true;
+  LeftBar.Enabled:=true;
+  MBar.Visible:=false;
 end;
 
 procedure TMnFrm.BitBtn2Click(Sender: TObject);
@@ -616,17 +687,17 @@ begin
      if FileExists('/usr/bin/kpackagekit') then
       p.CommandLine:='/usr/bin/kpackagekit'
      else
-      p.CommandLine:='/usr/bin/gpg-application';
+      p.CommandLine:='/usr/bin/gpk-application';
   end else
   begin
     if (DInfo.DName='Ubuntu') then
     if FileExists('/usr/bin/gnome-app-install') then
      p.CommandLine:='/usr/bin/gnome-app-install'
     else
-     p.CommandLine:='/usr/bin/gpg-application'
+     p.CommandLine:='/usr/bin/gpk-application'
    else
-     if FileExists('/usr/bin/gpg-application') then
-      p.CommandLine:='/usr/bin/gpg-application'
+     if FileExists('/usr/bin/gpk-application') then
+      p.CommandLine:='/usr/bin/gpk-application'
      else
       p.CommandLine:='/usr/bin/kpackagekit';
   end;
@@ -648,12 +719,31 @@ begin
 end;
 
 procedure TMnFrm.btnSettingsClick(Sender: TObject);
+var cnf:TIniFile;
 begin
   Notebook1.ActivePageComponent:=ConfigPage;
   CatButton.Down:=false;
   SettingsButton.Down:=true;
   RepoButton.Down:=false;
   InstAppButton.Down:=false;
+  //Now load the configuration
+
+  cnf:=TIniFile.Create(ConfigDir+'config.cnf');
+  EnableProxyCb.Checked:=cnf.ReadBool('Proxy','UseProxy',false);
+  Edit1.Text:=cnf.ReadString('Proxy','Server','');
+  SpinEdit1.Value:=cnf.ReadInteger('Proxy','Port',0);
+  CbShowPkMon.Checked:=cnf.ReadBool('MainConf','ShowPkMon',false);
+  cnf.free;
+   if Edit1.Text='' then
+   begin
+   if (mnFrm.DInfo.DBase='GNOME')and(FileExists('/usr/bin/gconftool-2')) then
+   begin
+    if CmdResult('gconftool-2 -g /system/http_proxy/use_http_proxy')='true' then EnableProxyCb.Checked:=true
+    else EnableProxyCb.Checked:=false;
+    Edit1.Text:=CmdResult('gconftool-2 -g /system/http_proxy/host');
+    SpinEdit1.Value:=StrToInt(CmdResult('gconftool-2 -g /system/http_proxy/port'));
+   end;
+   end;
 end;
 
 procedure TMnFrm.btnCatClick(Sender: TObject);
@@ -678,6 +768,104 @@ begin
   CBox.Enabled:=false;
   LoadEntries;
   CBox.Enabled:=true;
+end;
+
+procedure TMnFrm.AutoDepLdCbChange(Sender: TObject);
+var h: String;ini: TIniFile;
+begin
+  h:=ConfigDir;
+  ini:=TIniFile.Create(h+'config.cnf');
+  ini.WriteBool('MainConf','AutoDepLoad',(Sender as TCheckBox).Checked);
+  ini.Free;
+end;
+
+procedure TMnFrm.CbShowPkMonChange(Sender: TObject);
+var h: String;ini: TIniFile;
+begin
+  h:=ConfigDir;
+  ini:=TIniFile.Create(h+'config.cnf');
+  ini.WriteBool('MainConf','ShowPkMon',(Sender as TCheckBox).Checked);
+  ini.Free;
+end;
+
+procedure TMnFrm.EnableProxyCbChange(Sender: TObject);
+var p: String;cnf: TIniFile;
+begin
+  if (Sender as TCheckBox).Checked then begin
+  Label3.Enabled:=true;
+  Edit1.Enabled:=true;
+  SpinEdit1.Enabled:=true;
+  edtUsername.Enabled:=true;
+  edtPasswd.Enabled:=true;
+  edtFTPProxy.Enabled:=true;
+  spinEdit2.Enabled:=true;
+  Label4.Enabled:=true;
+  Label5.Enabled:=true;
+  end else begin
+  Label3.Enabled:=false;
+  Edit1.Enabled:=false;
+  SpinEdit1.Enabled:=false;
+  Label4.Enabled:=false;
+  edtUsername.Enabled:=false;
+  edtPasswd.Enabled:=false;
+  edtFTPProxy.Enabled:=false;
+  spinEdit2.Enabled:=false;
+  Label5.Enabled:=false;
+  end;
+  p:=ConfigDir;
+  cnf:=TIniFile.Create(p+'config.cnf');
+  cnf.WriteBool('Proxy','UseProxy',(Sender as TCheckBox).Checked);
+  cnf.Free;
+end;
+
+procedure TMnFrm.RmUpdSrcBtnClick(Sender: TObject);
+var uconf: TStringList;
+begin
+if UListBox.ItemIndex>-1 then
+begin
+ if Application.MessageBox(PChar(strRmSrcQ),PChar(strRmSrcQC),MB_YESNO)=IDYES then
+ begin
+  uconf:=tStringList.Create;
+  uconf.LoadFromFile(RegDir+'updates.list');
+  uconf.Delete(UListBox.ItemIndex+1);
+  uconf.SaveToFile(RegDir+'updates.list');
+  uconf.Free;
+  UListBox.Items.Delete(UListBox.ItemIndex);
+  ShowMessage(strSourceDeleted);
+ end;
+end else ShowMessage(strPleaseSelectListItem);
+end;
+
+procedure TMnFrm.UListBoxClick(Sender: TObject);
+var uconf: TStringList;
+    h: String;
+begin
+ uconf:=TStringList.Create;
+ uconf.LoadFromFile(RegDir+'updates.list');
+ h:=uconf[UListBox.ItemIndex+1];
+ if UListBox.Checked[UListBox.ItemIndex] then
+  h[1]:='-' else h[1]:='#';
+ uconf[UListBox.ItemIndex+1]:=h;
+ uconf.SaveToFile(RegDir+'updates.list');
+ uconf.Free;
+end;
+
+procedure TMnFrm.UpdCheckBtnClick(Sender: TObject);
+begin
+if FileExists(ExtractFilePath(Application.ExeName)+'liupdate') then
+begin
+  Process1.CommandLine:=ExtractFilePath(Application.ExeName)+'liupdate -show';
+  Process1.Execute;
+end else ShowMessage(strLiUpdateAccessFailed);
+end;
+
+procedure TMnFrm.WarnDistCbChange(Sender: TObject);
+var h: String;ini: TIniFile;
+begin
+  h:=ConfigDir;
+  ini:=TIniFile.Create(h+'config.cnf');
+  ini.WriteBool('MainConf','DistroWarning',(Sender as TCheckBox).Checked);
+  ini.Free;
 end;
 
 procedure TMnFrm.FilterEdtEnter(Sender: TObject);
@@ -728,7 +916,7 @@ begin
 end;
 
 procedure TMnFrm.FormCreate(Sender: TObject);
-var xFrm: TimdFrm;
+var xFrm: TimdFrm;i: Integer;tmp: TStringList;
 begin
 if FileExists(paramstr(1)) then
 begin
@@ -773,13 +961,27 @@ RegDir:='/etc/lipa/app-reg/';
 
 if not DirectoryExists(RegDir) then CreateDir(RegDir);
 
+//Load update source settings
+  PageControl1.ActivePageIndex:=0;
+
+  tmp:=TStringList.Create;
+  if not FileExists(RegDir+'updates.list') then
+  begin
+   tmp.Add('Listaller UpdateSources-pk0.8');
+   tmp.SaveToFile(RegDir+'updates.list');
+  end;
+  tmp.LoadFromFile(RegDir+'updates.list');
+  for i:=1 to tmp.Count-1 do begin
+  UListBox.items.Add(copy(tmp[i],pos(' <',tmp[i])+2,length(tmp[i])-pos(' <',tmp[i])-2)+' ('+copy(tmp[i],3,pos(' <',tmp[i])-3)+')');
+  UListBox.Checked[UListBox.Items.Count-1]:=tmp[i][1]='-';
+  end;
+
  //Translate
  Caption:=strSoftwareManager;
  CatButton.Caption:=strSWCatalogue;
  Label1.Caption:=strShow;
  Label3.Caption:=strNoAppsFound;
  AboutBtn.Caption:=strAboutListaller;
- BitBtn3.Caption:=strConfigureListaller;
  BitBtn1.Caption:=strBrowseLiCatalog;
  BitBtn2.Caption:=strOpenDistriCatalog;
  InstAppButton.Caption:=strInstalledApps;
@@ -788,6 +990,19 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
  RepoButton.Caption:=strRepositories;
  SettingsButton.Caption:=strSettings;
  FilterEdt.Text:=strFilter;
+ //Translate config page
+ edtUsername.Caption:=strUsername+':';
+ edtPasswd.Caption:=strPassword+':';
+ EnableProxyCb.Caption:=strEnableProxy;
+ GroupBox1.Caption:=strProxySettings;
+ AutoDepLdCb.Caption:=strAutoLoadDep;
+ CbShowPkMon.Caption:=strShowPkMon;
+ //Translate repo page(s)
+ UpdRepoSheet.Caption:=strUpdSources;
+ RmUpdSrcBtn.Caption:=strDelSrc;
+ UpdCheckBtn.Caption:=strCheckForUpd;
+ UsILabel.Caption:=strListofSrc;
+ BitBtn6.Caption:=strChangePkgManSettings;
 
 with CBox do
 begin
@@ -858,7 +1073,24 @@ end;
 
 procedure TMnFrm.FormDestroy(Sender: TObject);
 var i: Integer;
+procedure WriteConfig;
+ var p: String;cnf: TIniFile;
 begin
+  p:=ConfigDir;
+  cnf:=TIniFile.Create(p+'config.cnf');
+  cnf.WriteString('Proxy','hServer',Edit1.Text);
+  cnf.WriteInteger('Proxy','hPort',SpinEdit1.Value);
+  //
+  cnf.WriteString('Proxy','Username',edtUsername.Caption);
+  cnf.WriteString('Proxy','Password',edtPasswd.Caption);
+
+  cnf.WriteString('Proxy','fServer',edtFTPProxy.Caption);
+  cnf.WriteInteger('Proxy','fPort',SpinEdit2.Value);
+  cnf.Free;
+end;
+begin
+  //Write configuration which was not applied yet
+  WriteConfig();
   if Assigned(blst) then blst.Free;       //Free blacklist
   if Assigned(InstLst) then InstLst.Free; //Free list of installed apps
   if Assigned(AList) then AList.Free;     //Free AppPanel store
@@ -866,7 +1098,7 @@ begin
   begin
  { dsApp.ApplyUpdates;
   dsApp.Close; }
-  writeLn('Databse closed.');
+  writeLn('Database connection closed.');
   dsApp.Free;
   end;
 end;

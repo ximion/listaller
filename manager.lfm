@@ -1,7 +1,7 @@
 object MnFrm: TMnFrm
-  Left = 304
+  Left = 253
   Height = 558
-  Top = 216
+  Top = 245
   Width = 816
   ActiveControl = LeftBar
   Caption = 'Software Manager'
@@ -374,6 +374,8 @@ object MnFrm: TMnFrm
       Caption = 'Install package'
       Color = clBtnFace
       Flat = True
+      Font.Height = -9
+      Font.Name = 'Sans'
       Glyph.Data = {
         36240000424D3624000000000000360000002800000030000000300000000100
         2000000000000024000064000000640000000000000000000000000000000000
@@ -669,6 +671,7 @@ object MnFrm: TMnFrm
       Layout = blGlyphTop
       NumGlyphs = 0
       OnClick = btnInstallClick
+      ParentFont = False
     end
     object CatButton: TSpeedButton
       Left = 8
@@ -678,6 +681,8 @@ object MnFrm: TMnFrm
       Caption = 'Browse catalogue'
       Color = clBtnFace
       Flat = True
+      Font.Height = -9
+      Font.Name = 'Sans'
       Glyph.Data = {
         36240000424D3624000000000000360000002800000030000000300000000100
         2000000000000024000064000000640000000000000000000000000000000000
@@ -973,6 +978,7 @@ object MnFrm: TMnFrm
       Layout = blGlyphTop
       NumGlyphs = 0
       OnClick = btnCatClick
+      ParentFont = False
     end
     object SettingsButton: TSpeedButton
       Left = 8
@@ -982,6 +988,8 @@ object MnFrm: TMnFrm
       Caption = 'Settings'
       Color = clBtnFace
       Flat = True
+      Font.Height = -9
+      Font.Name = 'Sans'
       Glyph.Data = {
         36240000424D3624000000000000360000002800000030000000300000000100
         2000000000000024000064000000640000000000000000000000000000000000
@@ -1277,6 +1285,7 @@ object MnFrm: TMnFrm
       Layout = blGlyphTop
       NumGlyphs = 0
       OnClick = btnSettingsClick
+      ParentFont = False
     end
     object RepoButton: TSpeedButton
       Left = 8
@@ -1286,6 +1295,8 @@ object MnFrm: TMnFrm
       Caption = 'Repositories'
       Color = clBtnFace
       Flat = True
+      Font.Height = -9
+      Font.Name = 'Sans'
       Glyph.Data = {
         36240000424D3624000000000000360000002800000030000000300000000100
         2000000000000024000064000000640000000000000000000000000000000000
@@ -1582,6 +1593,7 @@ object MnFrm: TMnFrm
       NumGlyphs = 0
       OnClick = RepoButtonClick
       ShowHint = True
+      ParentFont = False
       ParentShowHint = False
     end
     object InstAppButton: TSpeedButton
@@ -1592,6 +1604,8 @@ object MnFrm: TMnFrm
       Caption = 'Installed applications'
       Color = clBtnFace
       Flat = True
+      Font.Height = -9
+      Font.Name = 'Sans'
       Glyph.Data = {
         36240000424D3624000000000000360000002800000030000000300000000100
         2000000000000024000064000000640000000000000000000000000000000000
@@ -1887,6 +1901,7 @@ object MnFrm: TMnFrm
       Layout = blGlyphTop
       NumGlyphs = 0
       OnClick = InstAppButtonClick
+      ParentFont = False
     end
   end
   object Notebook1: TNotebook
@@ -1895,13 +1910,13 @@ object MnFrm: TMnFrm
     Top = 64
     Width = 696
     Anchors = [akTop, akLeft, akRight, akBottom]
-    PageIndex = 0
+    PageIndex = 2
     ShowTabs = False
     TabOrder = 3
     object InstalledAppsPage: TPage
       Caption = 'InstalledAppsPage'
       ClientWidth = 692
-      ClientHeight = 468
+      ClientHeight = 446
       object Label1: TLabel
         Left = 0
         Height = 13
@@ -1912,13 +1927,13 @@ object MnFrm: TMnFrm
       end
       object SWBox: TScrollBox
         Left = 0
-        Height = 438
+        Height = 416
         Top = 30
         Width = 692
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderStyle = bsNone
-        ClientHeight = 438
+        ClientHeight = 416
         ClientWidth = 692
         Color = clForm
         ParentColor = False
@@ -1975,7 +1990,7 @@ object MnFrm: TMnFrm
       object ThrobberBox: TPanel
         Left = 270
         Height = 100
-        Top = 166
+        Top = 156
         Width = 100
         Anchors = []
         BevelOuter = bvNone
@@ -2014,39 +2029,101 @@ object MnFrm: TMnFrm
     object RepoPage: TPage
       Caption = 'RepoPage'
       ClientWidth = 692
-      ClientHeight = 446
-      object BitBtn4: TBitBtn
-        Left = 206
-        Height = 30
-        Top = 127
-        Width = 267
-        Anchors = []
-        Caption = 'Manage repositories'
-        TabOrder = 0
-      end
+      ClientHeight = 468
       object BitBtn5: TBitBtn
-        Left = 206
+        Left = 198
         Height = 30
-        Top = 203
+        Top = 286
         Width = 267
         Anchors = []
         Caption = 'Update system'
+        TabOrder = 0
+      end
+      object PageControl1: TPageControl
+        Left = 0
+        Height = 468
+        Top = 0
+        Width = 692
+        ActivePage = SysRepoSheet
+        Align = alClient
+        TabIndex = 0
         TabOrder = 1
+        object SysRepoSheet: TTabSheet
+          Caption = 'System repositories'
+          ClientHeight = 442
+          ClientWidth = 688
+          object BitBtn6: TBitBtn
+            Left = 180
+            Height = 30
+            Top = 190
+            Width = 267
+            Anchors = []
+            Caption = 'Change package manager settings'
+            OnClick = BitBtn6Click
+            TabOrder = 0
+          end
+        end
+        object UpdRepoSheet: TTabSheet
+          Caption = 'Update repositories'
+          ClientHeight = 442
+          ClientWidth = 688
+          object UsILabel: TLabel
+            Left = 6
+            Height = 13
+            Top = 8
+            Width = 166
+            Caption = 'Here''s a list of all update-sources:'
+            ParentColor = False
+          end
+          object UListBox: TCheckListBox
+            Left = 6
+            Height = 366
+            Top = 32
+            Width = 670
+            Anchors = [akTop, akLeft, akRight, akBottom]
+            ItemHeight = 0
+            OnClick = UListBoxClick
+            TabOrder = 0
+            TopIndex = -1
+          end
+          object RmUpdSrcBtn: TBitBtn
+            Left = 6
+            Height = 26
+            Top = 406
+            Width = 85
+            Anchors = [akLeft, akBottom]
+            AutoSize = True
+            Caption = 'Delete source'
+            NumGlyphs = 0
+            OnClick = RmUpdSrcBtnClick
+            TabOrder = 1
+          end
+          object UpdCheckBtn: TBitBtn
+            Left = 564
+            Height = 26
+            Top = 406
+            Width = 105
+            Anchors = [akRight, akBottom]
+            AutoSize = True
+            Caption = 'Check for updates'
+            NumGlyphs = 0
+            OnClick = UpdCheckBtnClick
+            TabOrder = 2
+          end
+        end
       end
     end
     object ConfigPage: TPage
       Caption = 'ConfigPage'
       ClientWidth = 692
       ClientHeight = 446
-      object BitBtn3: TBitBtn
-        Left = 230
-        Height = 30
-        Top = 196
-        Width = 243
-        Anchors = []
-        Caption = 'Configure Listaller'
-        OnClick = BitBtn3Click
-        TabOrder = 0
+      object Label2: TLabel
+        Left = 6
+        Height = 13
+        Top = 8
+        Width = 104
+        Caption = 'Language: automatic'
+        ParentColor = False
       end
       object AboutBtn: TButton
         Left = 598
@@ -2057,7 +2134,170 @@ object MnFrm: TMnFrm
         AutoSize = True
         Caption = 'About Listaller'
         OnClick = AboutBtnClick
+        TabOrder = 0
+      end
+      object WarnDistCb: TCheckBox
+        Left = 6
+        Height = 21
+        Top = 32
+        Width = 233
+        Caption = 'Show warning if distribution is unsupported'
+        Checked = True
+        Enabled = False
+        OnChange = WarnDistCbChange
+        State = cbChecked
         TabOrder = 1
+      end
+      object AutoDepLdCb: TCheckBox
+        Left = 6
+        Height = 21
+        Top = 64
+        Width = 329
+        Caption = 'Load dependencies from included webserver-urls automatically'
+        Checked = True
+        OnChange = AutoDepLdCbChange
+        State = cbChecked
+        TabOrder = 2
+      end
+      object CbShowPkMon: TCheckBox
+        Left = 6
+        Height = 21
+        Top = 101
+        Width = 238
+        Caption = 'Start PackageKit monitor while transactions'
+        OnChange = CbShowPkMonChange
+        TabOrder = 3
+      end
+      object GroupBox1: TGroupBox
+        Left = 6
+        Height = 184
+        Top = 142
+        Width = 637
+        Anchors = [akTop, akLeft, akRight]
+        Caption = 'Proxy-Settings'
+        ClientHeight = 170
+        ClientWidth = 633
+        TabOrder = 4
+        object Label4: TLabel
+          Left = 9
+          Height = 13
+          Top = 33
+          Width = 63
+          Caption = 'H&TTP-Proxy:'
+          Enabled = False
+          ParentColor = False
+        end
+        object Label5: TLabel
+          Left = 191
+          Height = 13
+          Top = 33
+          Width = 24
+          Caption = 'Port:'
+          Enabled = False
+          ParentColor = False
+        end
+        object Label6: TLabel
+          Left = 190
+          Height = 13
+          Top = 104
+          Width = 24
+          Caption = 'Port:'
+          Enabled = False
+          ParentColor = False
+          Visible = False
+        end
+        object EnableProxyCb: TCheckBox
+          Left = 6
+          Height = 21
+          Top = 5
+          Width = 120
+          Caption = 'Enable Proxy-Server'
+          OnChange = EnableProxyCbChange
+          TabOrder = 0
+        end
+        object Edit1: TEdit
+          Left = 6
+          Height = 22
+          Top = 53
+          Width = 172
+          Enabled = False
+          TabOrder = 1
+        end
+        object SpinEdit1: TSpinEdit
+          Left = 191
+          Height = 22
+          Top = 53
+          Width = 90
+          Enabled = False
+          MaxValue = 100000
+          TabOrder = 2
+          Value = 1
+        end
+        object edtUsername: TLabeledEdit
+          Left = 295
+          Height = 22
+          Top = 53
+          Width = 112
+          EditLabel.AnchorSideLeft.Control = edtUsername
+          EditLabel.AnchorSideBottom.Control = edtUsername
+          EditLabel.Left = 295
+          EditLabel.Height = 13
+          EditLabel.Top = 39
+          EditLabel.Width = 53
+          EditLabel.Caption = 'Username:'
+          EditLabel.ParentColor = False
+          Enabled = False
+          LabelSpacing = 1
+          TabOrder = 3
+        end
+        object edtPasswd: TLabeledEdit
+          Left = 295
+          Height = 22
+          Top = 97
+          Width = 112
+          EchoMode = emPassword
+          EditLabel.AnchorSideLeft.Control = edtPasswd
+          EditLabel.AnchorSideBottom.Control = edtPasswd
+          EditLabel.Left = 295
+          EditLabel.Height = 13
+          EditLabel.Top = 84
+          EditLabel.Width = 49
+          EditLabel.Caption = 'Password:'
+          EditLabel.ParentColor = False
+          Enabled = False
+          LabelSpacing = 0
+          PasswordChar = '*'
+          TabOrder = 4
+        end
+        object edtFTPProxy: TLabeledEdit
+          Left = 9
+          Height = 22
+          Top = 123
+          Width = 166
+          EditLabel.AnchorSideLeft.Control = edtFTPProxy
+          EditLabel.AnchorSideBottom.Control = edtFTPProxy
+          EditLabel.Left = 9
+          EditLabel.Height = 13
+          EditLabel.Top = 110
+          EditLabel.Width = 57
+          EditLabel.Caption = '&FTP-Proxy:'
+          EditLabel.ParentColor = False
+          Enabled = False
+          LabelSpacing = 0
+          TabOrder = 5
+          Visible = False
+        end
+        object SpinEdit2: TSpinEdit
+          Left = 191
+          Height = 22
+          Top = 123
+          Width = 90
+          Enabled = False
+          MaxValue = 100000
+          TabOrder = 6
+          Value = 1
+          Visible = False
+        end
       end
     end
   end

@@ -65,8 +65,8 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="39" Y="514"/>
-        <TopLine Value="494"/>
+        <CursorPos X="56" Y="27"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -432,8 +432,8 @@
       <Unit53>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="26" Y="50"/>
-        <TopLine Value="17"/>
+        <CursorPos X="38" Y="39"/>
+        <TopLine Value="36"/>
         <UsageCount Value="28"/>
       </Unit53>
       <Unit54>
@@ -675,8 +675,8 @@
         <Filename Value="ipkhandle.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="18" Y="539"/>
-        <TopLine Value="519"/>
+        <CursorPos X="38" Y="630"/>
+        <TopLine Value="1495"/>
         <UsageCount Value="73"/>
       </Unit88>
       <Unit89>
@@ -809,24 +809,7 @@
         <UsageCount Value="10"/>
       </Unit106>
     </Units>
-    <JumpHistory Count="4" HistoryIndex="3">
-      <Position1>
-        <Filename Value="igobase.pas"/>
-        <Caret Line="55" Column="6" TopLine="37"/>
-      </Position1>
-      <Position2>
-        <Filename Value="igobase.pas"/>
-        <Caret Line="10" Column="89" TopLine="1"/>
-      </Position2>
-      <Position3>
-        <Filename Value="igobase.pas"/>
-        <Caret Line="45" Column="12" TopLine="25"/>
-      </Position3>
-      <Position4>
-        <Filename Value="igobase.pas"/>
-        <Caret Line="514" Column="39" TopLine="494"/>
-      </Position4>
-    </JumpHistory>
+    <JumpHistory Count="0" HistoryIndex="-1"/>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>

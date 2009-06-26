@@ -49,6 +49,12 @@ begin
    AboutSheet.Caption:=strAbout;
    AuthorSheet.Caption:=strAuthors;
    BitBtn1.Caption:=strClose;
+   {$IFDEF LCLgtk2}
+    Label1.Caption:='Listaller (GTK+)';
+   {$ENDIF}
+   {$IFDEF LCLQt}
+    Label1.Caption:='Listaller (Qt)';
+   {$ENDIF}
 end;
 
 procedure TFmAbout.BitBtn1Click(Sender: TObject);

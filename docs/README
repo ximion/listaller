@@ -1,6 +1,8 @@
 Listaller 0.3-dev
 
 === Compiling instructions ===
+To compile Listaller, please read the file "DEPENDENCIES" first and make sure that you have all
+needed libraries installed. The continue.
 To compile Listaller, cd to the source directory and execute
 make all
 make licreator

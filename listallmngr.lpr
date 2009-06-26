@@ -25,7 +25,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms,
   SysUtils,
-  manager, settings, uninstall, pkgconvertdisp, swcatalog, ipkhandle,
+  manager, uninstall, pkgconvertdisp, swcatalog, ipkhandle,
   LiCommon, translations, gettext, packagekit, LResources;
 
 {$IFDEF WINDOWS}{$R listallmngr.rc}{$ENDIF}
@@ -50,7 +50,6 @@ begin
   Application.Initialize;
   writeLn('Application initialized.');
   Application.CreateForm(TMnFrm, MnFrm);
-  Application.CreateForm(TFmConfig, FmConfig);
   Application.CreateForm(TConvDisp, ConvDisp);
   Application.CreateForm(TSCForm, SCForm);
   Application.Run;

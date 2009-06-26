@@ -259,7 +259,7 @@ end;
 procedure TIWizFrm.FinBtn1Click(Sender: TObject);
 begin
   FinBtn1.Enabled:=false;
-  Label16.Caption:='Clean workdir...';
+  Label16.Caption:=strCleanup;
   Label16.Visible:=true;
   FinPage.Refresh;
   DeleteDirectory(lp+ExtractFileName(paramstr(1)),false);
@@ -326,7 +326,7 @@ end;
 procedure TIWizFrm.InstallationError(Sender: TObject; msg: String);
 begin
  ShowMessage(msg);
- InfoMemo.Lines.Add('Installation failed.');
+ InfoMemo.Lines.Add(strInstFailed);
  InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.AppName+'.log');
  setup.Free;
  FreeAndNil(IWizFrm);
@@ -336,7 +336,7 @@ end;
 
 procedure TIWizFrm.ITerminateQuestion(Sender: TObject; msg: String);
 begin
- if Application.MessageBox(PAnsiChar(msg),PAnsiChar('Listaller question'),MB_YESNO)<>IDYES then
+ if Application.MessageBox(PAnsiChar(msg),PAnsiChar(strInstOf),MB_YESNO)<>IDYES then
  begin
   ShowMessage(strINClose);
   InfoMemo.Lines.Add('Installation aborted by user.');
@@ -714,7 +714,7 @@ while IPage.Visible=false do Application.ProcessMessages;
  AbortIns:=false;
  if setup.IFileInfo='' then
  begin
-  ShowMessage(strPKGError+#13'Message: No file information that is assigned to this profile was not found!'+#13+strAppClose);
+  ShowMessage(strPKGError+#13'Message: No file information was found for this profile!'+#13+strAppClose);
   Application.Terminate;
   exit;
  end;
