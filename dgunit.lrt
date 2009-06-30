@@ -1,9 +1,0 @@
-TDGFORM.CAPTION=Simple depGet
-TDGFORM.LABEL1.CAPTION=Installation of <appname>
-TDGFORM.LABEL2.CAPTION=(This program will download the needed files from the internet)
-TDGFORM.LABEL3.CAPTION=Packages were installed.
-TDGFORM.TABSHEET1.CAPTION=Main
-TDGFORM.TABSHEET2.CAPTION=Details
-TDGFORM.TABSHEET3.CAPTION=Installation
-TDGFORM.BITBTN1.CAPTION=Install
-TDGFORM.FINBTN1.CAPTION=Finish

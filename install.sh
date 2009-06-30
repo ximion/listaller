@@ -58,3 +58,5 @@ ln -s /usr/lib/listaller/gtk2/listallmgr listallmgr-gtk
 fi
 
 echo "Installation done."
+
+# ./install-cmds.sh

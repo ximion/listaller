@@ -16,7 +16,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="165"/>
+      <CurrentBuildNr Value="169"/>
       <ProjectVersion Value="0.2.0.1"/>
     </VersionInfo>
     <PublishOptions>
@@ -31,15 +31,15 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="22">
+    <Units Count="23">
       <Unit0>
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
-        <CursorPos X="17" Y="28"/>
-        <TopLine Value="6"/>
+        <CursorPos X="25" Y="27"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="45"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -109,7 +109,7 @@
         <UnitName Value="ipkbuild"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="33"/>
       </Unit10>
       <Unit11>
         <Filename Value="abzbrows.pas"/>
@@ -187,8 +187,15 @@
         <TopLine Value="164"/>
         <UsageCount Value="10"/>
       </Unit21>
+      <Unit22>
+        <Filename Value="../../../../../usr/share/fpcsrc/2.2.4/packages/fcl-base/src/custapp.pp"/>
+        <UnitName Value="CustApp"/>
+        <CursorPos X="14" Y="76"/>
+        <TopLine Value="56"/>
+        <UsageCount Value="10"/>
+      </Unit22>
     </Units>
-    <JumpHistory Count="12" HistoryIndex="11">
+    <JumpHistory Count="17" HistoryIndex="16">
       <Position1>
         <Filename Value="lipa.lpr"/>
         <Caret Line="28" Column="33" TopLine="1"/>
@@ -237,6 +244,26 @@
         <Filename Value="lipa.lpr"/>
         <Caret Line="28" Column="17" TopLine="6"/>
       </Position12>
+      <Position13>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="135" Column="5" TopLine="1"/>
+      </Position13>
+      <Position14>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="172" Column="11" TopLine="154"/>
+      </Position14>
+      <Position15>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="27" Column="26" TopLine="15"/>
+      </Position15>
+      <Position16>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="338" Column="2" TopLine="299"/>
+      </Position16>
+      <Position17>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="27" Column="25" TopLine="1"/>
+      </Position17>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -245,7 +272,7 @@
       <Filename Value="./bin/lipa"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="opbitmap/;abbrevia/;synapse/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/"/>
+      <OtherUnitFiles Value="abbrevia/;synapse/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/"/>
       <UnitOutputDirectory Value="bin"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>

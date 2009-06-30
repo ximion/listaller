@@ -28,7 +28,7 @@ uses
 
 const
   //** Version of the Listaller applicationset
-  LiVersion='0.2.41a-dev';
+  LiVersion='0.2.46a-dev';
 var
   //** True if Listaller is in testmode
   Testmode: Boolean=false;
@@ -36,6 +36,8 @@ var
 type
 //** Listaller package types
 TListallerPackageType = (lptLinstall, lptDLink, lptContainer);
+//** Urgency levels
+TUrgencyLevel = (ulLow, ulNormal, ulCritical);
 
 //** Remove modifiers from a string @returns Cleaned string
 function  DeleteModifiers(s: String): String;
@@ -90,6 +92,8 @@ function  ExecuteAsRoot(cmd: String;comment: String; icon: String;optn: TProcess
 function GetLibDepends(f: String; lst: TStringList): Boolean;
 //** Get current date as string
 function GetDateAsString: String;
+//** Shows system notification box
+procedure ShowPopupNotify(msg: String;urgency: TUrgencyLevel;time:Integer);
 
 
 const
@@ -583,6 +587,33 @@ begin
   end;
  finally
  t.Free;
+ end;
+end;
+
+procedure ShowPopupNotify(msg: String;urgency: TUrgencyLevel;time:Integer);
+var p: TProcess;DInfo: TDistroInfo;s: String;
+begin
+ DInfo:=GetDistro;
+ p:=TProcess.Create(nil);
+ p.Options:=[poUsePipes];
+ if DInfo.DBase='KDE' then
+ begin
+  p.CommandLine:='kdialog --passivepopup "'+msg+'" --title "Listaller Message" '+IntToStr(time);
+  p.Execute;
+  p.Free;
+  exit;
+ end else
+ if FileExists('/usr/bin/notify-send') then
+ begin
+  case urgency of
+  ulNormal: s:='normal';
+  ulLow: s:='low';
+  ulCritical: s:='critical';
+  end;
+  p.CommandLine:='notify-send '+'--urgency='+s+' --expire-time='+IntToStr(time*1000)+' "'+msg+'"';
+  p.Execute;
+  p.Free;
+  exit;
  end;
 end;
 

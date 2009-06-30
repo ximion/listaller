@@ -13,9 +13,13 @@ install-data:
 	chmod +x ./install-data.sh
 	./install-data.sh
 
-litools-inst:
-	chmod +x ./install-tools.sh
-	./install-tools.sh
+libuildtools-inst:
+	chmod +x ./install-build-tools.sh
+	./install-build-tools.sh
+
+install-lipa:
+	chmod +x ./install-cmds.sh
+	./install-cmds.sh
 
 licreator:
 	chmod +x ./make-creator.sh

@@ -2,16 +2,16 @@
   Copyright (C) Listaller Project 2008-2009
 
   lipa.lpr is free software: you can redistribute it and/or modify it
-  under the terms of the GNU Lesser General Public License as published
+  under the terms of the GNU General Public License as published
   by the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
   lipa.lpr is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Lesser General Public License for more details.
+  See the GNU General Public License for more details.
 
-  You should have received a copy of the GNU Lesser General Public License
+  You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** Command-line application for IPK-package handling
 program lipa;
@@ -22,11 +22,11 @@ uses
   {$IFDEF UNIX}
   cthreads,
   {$ENDIF}
-  Interfaces, //Needed as workaround
+  Interfaces, //We use NoGUI widgetset
   Classes, SysUtils, CustApp,
-  Process, ipkbuild, LiCommon,
-  ipkhandle, TRStrings, IniFiles,
-  HTTPSend, FTPSend;
+  Process, LiCommon, ipkhandle,
+  TRStrings, IniFiles, HTTPSend,
+  FTPSend;
 
 type
 
@@ -120,7 +120,7 @@ end;
 var HTTP: THttpSend; FTP: TFTPSend;
 procedure TLipa.DoRun;
 var
-  ErrorMsg,a,b,c: String;
+  ErrorMsg,a,c: String;
   t: TProcess;
   i: Integer;
   x: Boolean;
@@ -134,18 +134,17 @@ begin
   ErrorMsg:=CheckOptions('h','help');
   ErrorMsg:=CheckOptions('?','help');
   //
-  ErrorMsg:=CheckOptions('b','build');
-  ErrorMsg:=CheckOptions('u','gen-update');
   ErrorMsg:=CheckOptions('v','version');
  { if ErrorMsg<>'' then begin
     ShowException(Exception.Create(ErrorMsg));
     Halt;
   end;  }
 
-  // parse parameters
-  i:=1;
-  a:='';
-  b:='';
+  if paramstr(1)='' then
+  begin
+   writeln('Usage: ',ExeName,' <command> [file} (options)');
+   Terminate;
+  end;
 
   if HasOption('h','help') then
   begin
@@ -171,72 +170,8 @@ begin
     halt(0);
   end;
 
-
- while paramstr(i)<>'' do
- begin
-   if paramstr(i)[1]='/' then
-    if a = '' then a := paramstr(i)
-    else b:=paramstr(i);
-    Inc(i);
-  end;
-
-  a:=ExpandFileName(a);
-  b:=ExpandFileName(b);
-
-  if HasOption('b','build') then
-  begin
-  if HasOption('deb')or HasOption('rpm')or HasOption('dpack') then
-  begin
-    if FileExists(ExtractFilePath(ExeName)+'unibuild') then
-    begin
-      t:=tprocess.create(nil);
-      t.Options:=[poUsePipes];
-      t.CommandLine:=ExtractFilePath(ExeName)+'unibuild '+paramstr(3);
-      sleep(10);
-      t.Free;
-     end else
-     begin
-      writeLn('Cannot execute this action.');
-      writeLn('You need to install ''listaller-tools'' first');
-      halt(1);
-     end;
-  end;
-
-  if HasOption('generate-button') then x:=true else x:=false;
-   if (FileExists(a))
-   then
-   begin
-   if b<>'' then
-   begin
-   if (not FileExists(b))
-   and (LowerCase(ExtractFileExt(b))='.ipk')
-   and (DirectoryExists(ExtractFilePath(b))) then
-   begin
-   BuildPackage(a,b,x);
-   end else
-   begin
-   writeln('Can''t build file.');
-   writeLn('- Does the input-file exist?');
-   writeLn('- Has the output-file parameter the extension .IPK?');
-   writeLn('- Is the path to the ouput-file available?');
-   writeln('- Does the IPK-File already exists?');
-   halt(10);
-   end;
-   end else
-   begin
-   if not FileExists(ChangeFileExt(a,'.ipk')) then
-   BuildPackage(a,ChangeFileExt(a,'.ipk'),x)else
-   begin
-   writeLn('The package "'+ChangeFileExt(a,'.ipk')+'" already exists!');
-   halt(10);
-   end;
-   end;
-   end;
-   halt;
-  end;
-   
-  if HasOption('u','gen-update') and(FileExists(paramstr(2)))and(DirectoryExists(paramstr(3)))
-  then CreateUpdateSource(paramstr(2),paramstr(3)+'/');
+  for i:=1 to paramcount-1 do
+   if FileExists(paramstr(i)) then a:=paramstr(i);
 
   if HasOption('i','install') then
   begin
@@ -393,6 +328,14 @@ begin
   halt(0);
  end;
 
+ if HasOption('checkapps') then
+ begin
+  lst:=TStringList.Create;
+  CheckApps(lst);
+  for i:=0 to lst.Count-1 do
+   writeLn(lst[i]);
+ end;
+
   // stop program loop
   Terminate;
 end;
@@ -413,31 +356,16 @@ end;
 
 procedure TLipa.WriteHelp;
 begin
-writeln('Usage: ',ExeName,' [options] file [...]');
+writeln('Usage: ',ExeName,' <command> [file} (options)');
 
 writeLn('Listaller main tool to handle ipk-packages');
-writeLn('Usage lipa <command> [params] <options>:');
 writeLn('Commands:');
-writeln('-?, --help                                 Show this help');
-writeln('-v, --version                              Show Listaller version');
-writeLn('-b, --build [IPS-File] [Output-IPK]        Build ipk-package');
-writeLn('-u, --gen-update [IPS-File] [Repo-Path]    Create/Update update-repository');
-writeLn('-b, --build [IPS-File]                     Create DEB and RPM file from IPS');
-writeLn('  Options:');
-writeLn('    --generate-button                      Generates the "Linux-compatible" PNG button for this package');
-if FileExists(ExtractFilePath(ExeName)+'unibuild') then
-writeLn('  Enables these options:')
-else
-writeLn('  Enables these options: (! "unibuild" needed)');
-writeLn('    --dpack                                Generates DEB/RPM package from IPS file');
-writeLn('    --deb                                  Create DEB package');
-writeLn('    --rpm                                  Create RPM package');
-writeLn('');
 writeLn('-s, --solve [variable]                     Resolve Listaller path variable');
 writeLn('-i, --install [IPK-Package]                Installs an IPK package');
 writeLn('  Options:');
 writeLn('    --testmode                             Runs installation in testmode');
 writeLn('    --verbose                              Print all available log messages');
+writeLn('--checkapps                                Check if all installed applications have proper dependencies');
 end;
 
 procedure TLipa.OnExeception(Sender : TObject;E : Exception);

@@ -175,6 +175,9 @@ end;
      @param RmDeps Remove dependencies if true (Set to "True" by default)}
  procedure UninstallIPKApp(AppName, AppID: String; var Log: TStrings;progress: TPosEvent; fast: Boolean=false; RmDeps:Boolean=true);
 
+ //** Checks dependencies of all installed apps
+ procedure CheckApps(report: TStringList;const forceroot: Boolean=false);
+
 const
   //** Working directory of Listaller
   lp='/tmp/';
@@ -1636,6 +1639,11 @@ Log.Add('-----------');
 writeLn('- Finished -');
 end;
 
+end;
+
+procedure CheckApps(report: TStringList;const forceroot: Boolean=false);
+begin
+ writeLn('Not implemented yet!');
 end;
 
 end.
