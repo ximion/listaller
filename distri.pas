@@ -89,13 +89,15 @@ begin
 //Check which Distribution is used
 Result.DName:='';
 uv:=TStringList.Create;
-if FileExists('/etc/lipa/distribution') then begin
+if FileExists('/etc/lipa/distribution') then
+begin
 uv.LoadFromFile('/etc/lipa/distribution');
 Result.DName:=copy(uv[0],pos(' ',uv[0])+1,length(uv[0]));
 Result.Release:=copy(uv[1],pos(' ',uv[1])+1,length(uv[1]));
 Result.PackageSystem:=copy(uv[2],pos(' ',uv[2])+1,length(uv[2]));
 uv.Clear;
-end else begin
+end else
+begin
 if FileExists('/etc/lsb-release') then
 uv.LoadFromFile('/etc/lsb-release');
 
@@ -151,9 +153,11 @@ Result.DName:='Fedora';
 
  end;
 end;
-if Result.DName='' then begin
+if (Result.DName='')and(FileExists('/etc/issue')) then
+begin
 uv.LoadFromFile('/etc/issure');
-for i:=0 to uv.Count-1 do begin
+for i:=0 to uv.Count-1 do
+begin
 if pos('UBUNTU',UpperCase(uv[i]))>0 then
 Result.DName:='Ubuntu';
 

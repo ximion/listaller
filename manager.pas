@@ -112,6 +112,7 @@ type
     { private declarations }
     blst: TStringList;
     procedure UninstallClick(Sender: TObject);
+    lang: String;
   public
     { public declarations }
     DInfo: TDistroInfo;
@@ -164,6 +165,7 @@ end;
 
 procedure TMnFrm.ProcessDesktopFile(fname: String; tp: String);
 var d: TIniFile;entry: TListEntry;dt: TMOFile;lp: String;
+    translate: Boolean; //Used, because Assigned(dt) throws an AV
 
 //Translate string if possible/necessary
 function ldt(s: String): String;
@@ -171,12 +173,12 @@ var h: String;
 begin
  h:=s;
  try
- if dt<>nil then
+ if translate then
  begin
   h:=dt.Translate(s);
   if h='' then h:=s;
  end;
- finally
+ except
   Result:=h;
  end;
  Result:=s;
@@ -186,6 +188,7 @@ begin
        d:=TIniFile.Create(fname);
        StatusBar1.Panels[0].Text:=strLoading+'  '+ExtractFileName(fname);
        Application.ProcessMessages;
+       translate:=false;
 
        if (not IsRoot)and(d.ReadString('Desktop Entry','Exec','')[1]<>'/')
        then
@@ -208,6 +211,7 @@ begin
        and(d.ReadString('Desktop Entry','OnlyShowIn','')='')
        and(d.ReadString('Desktop Entry','X-AllowRemove','true')='true')then
        begin
+
        AList.Add(TListEntry.Create(MnFrm));
        entry:=TListEntry(AList.Items[AList.Count-1]);
        entry.UnButton.OnClick:=@UnInstallClick;
@@ -223,13 +227,16 @@ begin
        if d.ReadString('Desktop Entry','X-Ubuntu-Gettext-Domain','')<>'' then
        begin
        try
-       lp:='/usr/share/locale-langpack/'+GetLangID+'/LC_MESSAGES/'+
+       lp:='/usr/share/locale-langpack/'+lang+'/LC_MESSAGES/'+
                          d.ReadString('Desktop Entry','X-Ubuntu-Gettext-Domain','app-install-data')+'.mo';
        if not FileExists(lp) then
-        lp:='/usr/share/locale/de/'+GetLangID+'/LC_MESSAGES/'
+        lp:='/usr/share/locale/de/'+lang+'/LC_MESSAGES/'
             +d.ReadString('Desktop Entry','X-Ubuntu-Gettext-Domain','app-install-data')+'.mo';
        if FileExists(lp) then
+       begin
         dt:=TMOFile.Create(lp);
+        translate:=true;
+       end;
        finally
        end;
 
@@ -237,8 +244,8 @@ begin
 
        with entry do
        begin
-       if d.ReadString('Desktop Entry','Name['+GetLangID+']','') <> '' then
-        AppName:=d.ReadString('Desktop Entry','Name['+GetLangID+']','<error>')
+       if d.ValueExists('Desktop Entry','Name['+lang+']') then
+        AppName:=d.ReadString('Desktop Entry','Name['+lang+']','<error>')
        else
         AppName:=ldt(d.ReadString('Desktop Entry','Name','<error>'));
 
@@ -246,8 +253,8 @@ begin
 
          instLst.Add(Lowercase(d.ReadString('Desktop Entry','Name','<error>')));
 
-        if d.ReadString('Desktop Entry','Comment['+GetLangID+']','')<>'' then
-         AppDesc:=d.ReadString('Desktop Entry','Comment['+GetLangID+']','')
+        if d.ValueExists('Desktop Entry','Comment['+lang+']') then
+         AppDesc:=d.ReadString('Desktop Entry','Comment['+lang+']','')
         else
          AppDesc:=ldt(d.ReadString('Desktop Entry','Comment',''));
 
@@ -307,7 +314,8 @@ begin
         Application.ProcessMessages;
         end;
 
-        if Assigned(dt) then dt.Free;
+      //  if Assigned(dt) then dt.Free;
+         if translate then dt.Free;
 
         end;
        d.Free;
@@ -965,6 +973,8 @@ end;
 SWBox.DoubleBuffered:=true;
 DoubleBuffered:=true;
 DInfo:=GetDistro;
+
+lang:=GetLangID;
 
  if not DirectoryExists(RegDir) then SysUtils.CreateDir(RegDir);
   

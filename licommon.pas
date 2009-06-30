@@ -267,13 +267,13 @@ end;
 function GetLangID: String;
 var LANG: String;i: Integer;
 begin
- LANG:=GetEnvironmentVariableUTF8('LANG');
+ LANG:=GetEnvironmentVariable('LANG');
  if LANG='' then
  begin
    for i:=1 to Paramcount-1 do
-    if (ParamStrUTF8(i)='--LANG') or
-     (ParamStrUTF8(i)='-l') or
-     (ParamStrUTF8(i)='--lang') then LANG:=ParamStrUTF8(i+1);
+    if (ParamStr(i)='--LANG') or
+     (ParamStr(i)='-l') or
+     (ParamStr(i)='--lang') then LANG:=ParamStr(i+1);
  end;
  if not DirectoryExists('/usr/share/locale-langpack/'+LANG) then
   Result:=copy(LANG,1,2)
@@ -527,12 +527,14 @@ begin
 DInfo:=GetDistro;
 p:=TProcess.Create(nil);
 if DInfo.DBase='KDE' then
+begin
  if FileExists('/usr/bin/kdesu') then
   p.CommandLine := 'kdesu -d --comment "'+comment+'" -i '+icon+' '+cmd
  else
  if FileExists('/usr/bin/kdesudo') then
   p.CommandLine := 'kdesudo -d --comment "'+comment+'" -i '+icon+' '+cmd
-  else
+end else
+begin
  if DInfo.DName='Fedora' then
   //Fedora uses Consolehelper to run apps as root. So we use "beesu" to make CH work for Listaller
   p.CommandLine := 'beesu -l '+cmd
@@ -547,11 +549,12 @@ if DInfo.DBase='KDE' then
     p.CommandLine := 'gnomesu '+cmd
    else
    begin
-  //  ShowMessage('Unable to execute the application as root.'#13'Please do this manually!');
+    writeLn('Unable to execute the application as root.'#13'Please do this manually!');
     p.Free;
     Result:=false;
     exit;
    end;
+ end;
     p.Options:=optn;
     p.Execute;
     Result:=true;
