@@ -174,9 +174,8 @@ end;
      @param fast Does a quick uninstallation if is true (Set to "False" by default)
      @param RmDeps Remove dependencies if true (Set to "True" by default)}
  procedure UninstallIPKApp(AppName, AppID: String; var Log: TStrings;progress: TPosEvent; fast: Boolean=false; RmDeps:Boolean=true);
-
  //** Checks dependencies of all installed apps
- procedure CheckApps(report: TStringList;const forceroot: Boolean=false);
+ function CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
 
 const
   //** Working directory of Listaller
@@ -1426,7 +1425,7 @@ with dsApp do
    CreateTable;
  end;
 end;
-dsApp.Active:=true;;
+dsApp.Active:=true;
 
 dsApp.SQL:='SELECT * FROM AppInfo';
 dsApp.Edit;
@@ -1641,9 +1640,80 @@ end;
 
 end;
 
-procedure CheckApps(report: TStringList;const forceroot: Boolean=false);
+function CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
+var dsApp: TSQLite3Dataset;deps: TStringList;i: Integer;pkit: TPackageKit;
 begin
- writeLn('Not implemented yet!');
+writeLn('Checking dependencies of all registered applications...');
+if IsRoot then
+writeLn('You are scanning only the ROOT installed applications.')
+else
+writeLn('You are scanning your local installed applications.');
+
+writeLn('-> Opening database...');
+dsApp:= TSQLite3Dataset.Create(nil);
+with dsApp do
+ begin
+   FileName:=RegDir+'applications.db';
+   TableName:='AppInfo';
+   if not FileExists(FileName) then
+   begin
+   with FieldDefs do
+     begin
+       Clear;
+       Add('Name',ftString,0,true);
+       Add('ID',ftString,0,true);
+       Add('Type',ftString,0,true);
+       Add('Description',ftString,0,False);
+       Add('Version',ftFloat,0,true);
+       Add('Publisher',ftString,0,False);
+       Add('Icon',ftString,0,False);
+       Add('Profile',ftString,0,False);
+       Add('AGroup',ftString,0,true);
+       Add('InstallDate',ftDateTime,0,False);
+       Add('Dependencies',ftMemo,0,False);
+     end;
+   CreateTable;
+ end;
+end;
+dsApp.Active:=true;
+
+Result:=true;
+
+dsApp.SQL:='SELECT * FROM AppInfo';
+dsApp.Open;
+dsApp.Filtered:=true;
+deps:=TStringList.Create;
+pkit:=TPackageKit.Create;
+dsApp.First;
+while not dsApp.EOF do
+begin
+ writeLn(' Checking '+dsApp.FieldByName('Name').AsString);
+ deps.Text:=dsApp.FieldByName('Dependencies').AsString;
+ for i:=0 to deps.Count-1 do
+ begin
+  if pkit.IsInstalled(deps[i]) then
+   report.Add(deps[i]+' found.')
+  else
+  begin
+   report.Add(deps[i]+' is not installed!');
+   Result:=false;
+   if fix then
+   begin
+    write('  Repairing dependency '+deps[i]+'  ');
+    pkit.InstallPkg(deps[i]);
+    writeLn(' [OK]');
+    report.Add('Installed dependency '+deps[i]);
+   end;
+  end;
+ end;
+ dsApp.Next;
+end;
+deps.Free;
+pkit.Free;
+dsApp.Close;
+writeLn('Check finished.');
+if not Result then writeLn('You have broken dependencies.');
+
 end;
 
 end.

@@ -30,14 +30,14 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="litray.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="litray"/>
-        <CursorPos X="1" Y="21"/>
+        <CursorPos X="105" Y="16"/>
         <TopLine Value="1"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="22"/>
       </Unit0>
       <Unit1>
         <Filename Value="linotify.pas"/>
@@ -45,21 +45,28 @@
         <IsPartOfProject Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="linotify"/>
-        <CursorPos X="24" Y="31"/>
-        <TopLine Value="10"/>
+        <CursorPos X="17" Y="120"/>
+        <TopLine Value="97"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="1" Y="599"/>
-        <TopLine Value="592"/>
+        <CursorPos X="21" Y="232"/>
+        <TopLine Value="212"/>
         <UsageCount Value="10"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="ipkhandle.pas"/>
+        <UnitName Value="ipkhandle"/>
+        <CursorPos X="2" Y="242"/>
+        <TopLine Value="230"/>
+        <UsageCount Value="10"/>
+      </Unit3>
     </Units>
-    <JumpHistory Count="3" HistoryIndex="2">
+    <JumpHistory Count="24" HistoryIndex="23">
       <Position1>
         <Filename Value="linotify.pas"/>
         <Caret Line="25" Column="6" TopLine="1"/>
@@ -72,6 +79,90 @@
         <Filename Value="linotify.pas"/>
         <Caret Line="49" Column="1" TopLine="17"/>
       </Position3>
+      <Position4>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="33" Column="18" TopLine="6"/>
+      </Position4>
+      <Position5>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="32" Column="32" TopLine="6"/>
+      </Position5>
+      <Position6>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="33" Column="37" TopLine="6"/>
+      </Position6>
+      <Position7>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="32" Column="32" TopLine="6"/>
+      </Position7>
+      <Position8>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="31" Column="24" TopLine="6"/>
+      </Position8>
+      <Position9>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="32" Column="26" TopLine="6"/>
+      </Position9>
+      <Position10>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="33" Column="26" TopLine="6"/>
+      </Position10>
+      <Position11>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="34" Column="26" TopLine="6"/>
+      </Position11>
+      <Position12>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="32" Column="26" TopLine="6"/>
+      </Position12>
+      <Position13>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="33" Column="26" TopLine="6"/>
+      </Position13>
+      <Position14>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="38" Column="48" TopLine="17"/>
+      </Position14>
+      <Position15>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="39" Column="47" TopLine="27"/>
+      </Position15>
+      <Position16>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="25" Column="32" TopLine="1"/>
+      </Position16>
+      <Position17>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="68" Column="23" TopLine="34"/>
+      </Position17>
+      <Position18>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="77" Column="44" TopLine="44"/>
+      </Position18>
+      <Position19>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="41" Column="48" TopLine="41"/>
+      </Position19>
+      <Position20>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="39" Column="47" TopLine="39"/>
+      </Position20>
+      <Position21>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="25" Column="71" TopLine="10"/>
+      </Position21>
+      <Position22>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="85" Column="10" TopLine="70"/>
+      </Position22>
+      <Position23>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="96" Column="16" TopLine="70"/>
+      </Position23>
+      <Position24>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="115" Column="2" TopLine="82"/>
+      </Position24>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -92,6 +183,14 @@
       </Options>
     </Linking>
     <Other>
+      <CustomOptions Value="-dUSE_QT_45
+-dQT_NATIVE_DIALOGS
+-XLAXi=
+-XLAgmodule-2.0=
+-XLAgthread-2.0=
+-XLAm=
+-XLAatk-1.0=
+-XLAXext="/>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>

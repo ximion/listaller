@@ -26,7 +26,7 @@ uses
   Classes, SysUtils, CustApp,
   Process, LiCommon, ipkhandle,
   TRStrings, IniFiles, HTTPSend,
-  FTPSend;
+  FTPSend, Distri;
 
 type
 
@@ -162,6 +162,22 @@ begin
   begin
     writeLn('Version: '+LiVersion);
     Halt(0);
+  end;
+
+  if (HasOption('b','build'))or(HasOption('u','gen-update')) then
+  begin
+   if FileExists('/bin/libuild') then
+   begin
+    proc:=TProcess.Create(nil);
+    proc.Options:=[];
+    c:='';
+    for i:=1 to paramcount-1 do
+     c:=c+' '+paramstr(i);
+    proc.CommandLine:='libuild'+c;
+    proc.Execute;
+    proc.Free;
+    Terminate;
+   end else writeLn('You have to install the liBuild package before you can execute build actions!');
   end;
 
   if HasOption('s','solve') then
@@ -331,9 +347,27 @@ begin
  if HasOption('checkapps') then
  begin
   lst:=TStringList.Create;
-  CheckApps(lst);
-  for i:=0 to lst.Count-1 do
-   writeLn(lst[i]);
+  if not CheckApps(lst) then
+  begin
+   write('Do you want to see detailed information [y/n]? ');
+   readLn(c);
+   if (c='y')or(c='yes') then
+    for i:=0 to lst.Count-1 do
+     writeLn(lst[i]);
+   write('Should lipa fix these problems automatically? [y/n]? ');
+   readln(c);
+   if (c='y')or(c='yes') then
+    CheckApps(lst,true)
+   else
+    writeLn('Aborted.');
+  end else
+  begin
+   write('Do you want to see detailed information? [y/n]? ');
+   readLn(c);
+   if (c='y')or(c='yes') then
+    for i:=0 to lst.Count-1 do
+     writeLn(lst[i]);
+  end;
  end;
 
   // stop program loop
@@ -347,6 +381,11 @@ constructor TLipa.Create(TheOwner: TComponent);
 begin
   inherited Create(TheOwner);
   StopOnException:=True;
+  //Needed for e.g. the checkapps-parameter
+  if IsRoot then
+  RegDir:='/etc/lipa/app-reg/'
+  else
+  RegDir:=SyblToPath('$INST')+'/app-reg/';
 end;
 
 destructor TLipa.Destroy;
@@ -366,6 +405,13 @@ writeLn('  Options:');
 writeLn('    --testmode                             Runs installation in testmode');
 writeLn('    --verbose                              Print all available log messages');
 writeLn('--checkapps                                Check if all installed applications have proper dependencies');
+if FileExists('/bin/libuild') then
+begin
+writeLn('Package build commands:');
+writeLn('-b, --build [IPS-File] [Output-IPK]        Build ipk-package');
+writeLn('-u, --gen-update [IPS-File] [Repo-Path]    Create/Update update-repository');
+writeLn('-b, --build [IPS-File]                     Create DEB and RPM file from IPS');
+end;
 end;
 
 procedure TLipa.OnExeception(Sender : TObject;E : Exception);

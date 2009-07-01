@@ -16,7 +16,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="169"/>
+      <CurrentBuildNr Value="178"/>
       <ProjectVersion Value="0.2.0.1"/>
     </VersionInfo>
     <PublishOptions>
@@ -36,10 +36,10 @@
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
-        <CursorPos X="25" Y="27"/>
-        <TopLine Value="1"/>
+        <CursorPos X="58" Y="365"/>
+        <TopLine Value="337"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="45"/>
+        <UsageCount Value="46"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -109,7 +109,7 @@
         <UnitName Value="ipkbuild"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="33"/>
+        <UsageCount Value="34"/>
       </Unit10>
       <Unit11>
         <Filename Value="abzbrows.pas"/>
@@ -169,15 +169,15 @@
       <Unit19>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
+        <CursorPos X="50" Y="1702"/>
+        <TopLine Value="1681"/>
         <UsageCount Value="11"/>
       </Unit19>
       <Unit20>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
         <CursorPos X="1" Y="1"/>
-        <TopLine Value="332"/>
+        <TopLine Value="490"/>
         <UsageCount Value="10"/>
       </Unit20>
       <Unit21>
@@ -195,7 +195,7 @@
         <UsageCount Value="10"/>
       </Unit22>
     </Units>
-    <JumpHistory Count="17" HistoryIndex="16">
+    <JumpHistory Count="21" HistoryIndex="20">
       <Position1>
         <Filename Value="lipa.lpr"/>
         <Caret Line="28" Column="33" TopLine="1"/>
@@ -262,8 +262,24 @@
       </Position16>
       <Position17>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="27" Column="25" TopLine="1"/>
+        <Caret Line="27" Column="30" TopLine="10"/>
       </Position17>
+      <Position18>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="362" Column="25" TopLine="334"/>
+      </Position18>
+      <Position19>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="357" Column="71" TopLine="338"/>
+      </Position19>
+      <Position20>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="384" Column="44" TopLine="361"/>
+      </Position20>
+      <Position21>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="385" Column="13" TopLine="365"/>
+      </Position21>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -291,6 +307,9 @@
       <Verbosity>
         <ShowNotes Value="False"/>
       </Verbosity>
+      <CompilerMessages>
+        <IgnoredMessages idx5024="True"/>
+      </CompilerMessages>
       <CustomOptions Value="-dOpbCompat"/>
       <CompilerPath Value="$(CompPath)"/>
       <ExecuteBefore>

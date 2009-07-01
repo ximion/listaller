@@ -1,5 +1,5 @@
 Source: listaller
-Standards-Version: 3.8.0
+Standards-Version: 3.8.1
 Section: utils
 Maintainer: Matthias Klumpp <matthias@nlinux.org>
 Priority: extra
@@ -20,7 +20,7 @@ Description: Listaller data
 
 Package: listaller-gtk
 Architecture: any
-Depends: ${shlibs:Depends}, listaller-data (= ${binary:Version}), gksu, xdg-utils, lsb-release, packagekit, python-packagekit, python
+Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), gksu, xdg-utils, lsb-release, packagekit, python-packagekit, python
 Provides: listaller, listaller-compact-gtk
 Description: Listaller main package (GTK2)
   Listaller is a distribution-independ software install system.
@@ -39,20 +39,28 @@ Description: Command-line tools for Listaller package handling
   It also contains the needed tools to build RPM and DEB packages from IPS sources and to 
   create an "Linux distribution compatible" button for your software.
 
+Package: listaller-cmd
+Architecture: any
+Depends: ${shlibs:Depends}, listaller
+Description: Command-line interface for Listaller
+  This package contains the 'lipa' command line tool.
+  It allows installing/uninstalling/building IPK packages without GUI.
+
 Package: listaller-creation-gtk
 Architecture: any
 Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller, listaller-tools
 Replaces: listaller-creation-qt
-Breaks: listaller-creation-qt
+Breaks: listaller-creation-qt (<= ${source:Version})
 Description: Listaller Creator (GTK2)
   Listaller is a cross-distribution software install system.
   This is an alpha-release of Listaller's graphical package creation tool.
-  With liCreator you can easily build your own IPK-packages for the Listaller system.
+  With liCreator you can easily build your own IPK-packages for the
+  Listaller system.
   Please note that this is an alpha-release!
 
 Package: listaller-qt
 Architecture: any
-Depends: ${shlibs:Depends}, listaller-data (= ${binary:Version}), kdesudo, packagekit, python-packagekit, python, libqt4intf, kde-icons-oxygen
+Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), kdesudo, packagekit, python-packagekit, python, libqt4intf, kde-icons-oxygen
 Provides: listaller, listaller-compact-qt
 Description: Listaller main package (Qt4)
   Listaller is a distribution-independ software install system.
@@ -67,7 +75,7 @@ Package: listaller-creation-qt
 Architecture: any
 Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller, listaller-tools
 Replaces: listaller-creation-gtk
-Breaks: listaller-creation-gtk
+Breaks: listaller-creation-gtk (<= ${source:Version})
 Description: Listaller Creator (Qt4)
   Listaller is a cross-distribution software install system.
   This is an alpha-release of Listaller's graphical package creation tool.
@@ -77,19 +85,45 @@ Description: Listaller Creator (Qt4)
 Package: listaller-gtk-dbg
 Architecture: any
 Depends: listaller-gtk (= ${binary:Version})
+Section: debug
 Description: Debug symbols for Listaller GTK tools
   This package contains the debuginfos for the Listaller base tools (GTK+ version)
 
 Package: listaller-tools-dbg
 Architecture: any
 Depends: listaller-tools (= ${binary:Version})
+Section: debug
 Description: Debug symbols for Listaller command-line tools
   This package contains the debug symbols for the Listaller command-line tools
-  ('lipa' and 'unibuild')
+  ('libuild' and 'unibuild')
+
+Package: listaller-cmd-dbg
+Architecture: any
+Depends: listaller-cmd (= ${binary:Version})
+Section: debug
+Description: Debug symbols for Listaller command-line tool 'lipa'
+  This package contains the debug symbols for the Listaller command-line tool
+  ('lipa')
 
 Package: listaller-creation-gtk-dbg
 Architecture: any
+Section: debug
 Depends: listaller-creation-gtk (= ${binary:Version})
 Description: Debug symbols for Listaller Creator (GTK+)
   This package contains the debuginfos for the IPS script
   wizard GUI (liCreator) in GTK version.
+
+Package: listaller-qt-dbg
+Architecture: any
+Section: debug
+Depends: listaller-qt (= ${binary:Version})
+Description: Debug symbols for Listaller Qt tools
+  This package contains the debuginfos for the Listaller base tools (Qt versions)
+
+Package: listaller-creation-qt-dbg
+Architecture: any
+Section: debug
+Depends: listaller-creation-qt (= ${binary:Version})
+Description: Debug symbols for Listaller Creator (Qt)
+  This package contains the debuginfos for the IPS script
+  wizard GUI (liCreator) in Qt version.

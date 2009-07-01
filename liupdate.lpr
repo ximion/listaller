@@ -34,7 +34,6 @@ begin
   Application.Title:='Updater';
   Application.Initialize;
   writeLn('Updater initialized.');
-  Application.ShowMainForm:=false;
   RegDir:=SyblToPath('$INST/app-reg/');
   Application.CreateForm(TUMnForm, UMnForm);
   Application.CreateForm(TUExecFm, UExecFm);

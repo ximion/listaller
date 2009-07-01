@@ -85,6 +85,16 @@ else
 $LCLDir/lazbuild -B --ws=gtk2 liupdate.lpr
 mv ./bin/liupdate ./bin/gtk2/
 fi
+echo "Creating tray notifier..."
+if [ "$WIDGET" == "qt4" ]; then
+#./libuild PR=liupdate.lpr O=liupdate WIDGET=qt4
+$LCLDir/lazbuild -B --ws=qt litray.lpr
+mv ./bin/litray ./bin/qt4/
+else
+#./libuild PR=liupdate.lpr O=liupdate WIDGET=gtk2
+$LCLDir/lazbuild -B --ws=gtk2 litray.lpr
+mv ./bin/litray ./bin/gtk2/
+fi
 
 #Also workarount for lazbuild bug in Lazarus-Alpha
 WIDGET="gtk2"

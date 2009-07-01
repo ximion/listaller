@@ -39,7 +39,8 @@ install: build
 	
 	# Add here commands to install the package into debian/listaller.
 	echo "Installing binaries..."
-	$(MAKE) DESTDIR=./debian/listaller-tools litools-inst
+	$(MAKE) DESTDIR=./debian/listaller-tools libuildtools-inst
+	$(MAKE) DESTDIR=./debian/listaller-cmd install-lipa
 	# Install Gtk release
 	$(MAKE) WIDGET=gtk2 DESTDIR=./debian/listaller-gtk install
 	$(MAKE) WIDGET=gtk2 DESTDIR=./debian/listaller-creation-gtk licreator-inst
@@ -59,7 +60,7 @@ binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs 
-#	dh_installdocs
+	dh_installdocs
 	dh_installexamples
 	dh_install
 #	dh_installmenu
@@ -74,7 +75,7 @@ binary-arch: build install
 #	dh_installinfo
 	dh_installman
 	dh_link
-	dh_strip --dbg-package=listaller-gtk-dbg --dbg-package=listaller-tools-dbg --dbg-package=listaller-creation-gtk-dbg --dbg-package=lithememgr-gtk-dbg
+	dh_strip --dbg-package=listaller-gtk-dbg --dbg-package=listaller-tools-dbg --dbg-package=listaller-cmd-dbg --dbg-package=listaller-creation-gtk-dbg --dbg-package=lithememgr-gtk-dbg --dbg-package=listaller-qt-dbg --dbg-package=listaller-creation-qt-dbg
 	dh_compress
 	dh_fixperms
 #	dh_perl

@@ -43,19 +43,13 @@ type
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
     PopupMenu1: TPopupMenu;
-    TrayIcon1: TTrayIcon;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure CheckListBox1Click(Sender: TObject);
-    procedure FormCloseQuery(Sender: TObject; var CanClose: boolean);
     procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
-    procedure FormHide(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
-    procedure TrayIcon1Click(Sender: TObject);
-    procedure TrayIcon1DblClick(Sender: TObject);
   private
     { private declarations }
   public
@@ -249,12 +243,6 @@ InfoMemo.Lines.Add(StringReplace(strUpdTo,'%v','"'+anotes[CheckListBox1.ItemInde
 end;
 end;
 
-procedure TUMnForm.FormCloseQuery(Sender: TObject; var CanClose: boolean);
-begin
-  Hide;
-  CanClose:=false;
-end;
-
 function IsCommandRunning(cmd:String):Boolean;
 var t:TProcess;
 s:TStringList;
@@ -286,8 +274,6 @@ end;
 
 if LowerCase(paramstr(1))='-show' then Application.ShowMainForm:=true;
 //Set icons
-//TrayIcon1.Icon.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_GOTO_BOTTOM,GTK_ICON_SIZE_SMALL_TOOLBAR);
-TrayIcon1.Visible:=true;
 LoadStockPixmap(STOCK_REFRESH,ICON_SIZE_BUTTON,BitBtn2.Glyph);
 LoadStockPixmap(STOCK_APPLY,ICON_SIZE_BUTTON,BitBtn1.Glyph);
 //Translation
@@ -297,19 +283,9 @@ MenuItem1.Caption:=strQuitUpdater;
 MenuItem2.Caption:=strShowUpdater;
 end;
 
-procedure TUMnForm.FormDestroy(Sender: TObject);
-begin
-  TrayIcon1.Visible:=false;
-end;
-
-procedure TUMnForm.FormHide(Sender: TObject);
-begin
-  TrayIcon1.Visible:=true;
-end;
-
 procedure TUMnForm.FormShow(Sender: TObject);
 begin
-  TrayIcon1.Visible:=false;
+  CheckForUpdates;
 end;
 
 procedure TUMnForm.MenuItem1Click(Sender: TObject);
@@ -318,16 +294,6 @@ begin
 end;
 
 procedure TUMnForm.MenuItem2Click(Sender: TObject);
-begin
-  UMnForm.Show;
-end;
-
-procedure TUMnForm.TrayIcon1Click(Sender: TObject);
-begin
-
-end;
-
-procedure TUMnForm.TrayIcon1DblClick(Sender: TObject);
 begin
   UMnForm.Show;
 end;
