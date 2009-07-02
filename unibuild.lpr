@@ -22,10 +22,10 @@ uses
   {$IFDEF UNIX}
   cthreads,
   {$ENDIF}
-  Interfaces, //Unfortunately necessary...
+  Interfaces, //NoGUI widgetset is used
   Classes, SysUtils, CustApp,
   Process, ipkbuild,
-  DOM, XMLRead;
+  DOM, XMLRead, TRStrings, LiTranslator;
 
 type
 

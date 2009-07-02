@@ -400,18 +400,18 @@ writeln('Usage: ',ExeName,' <command> [file} (options)');
 
 writeLn(rsLipaInfo1);
 writeLn(rsCommands);
-writeLn(rsLipaInfo2);
-writeLn(rsLipaInfo3);
+writeLn('-s, --solve [variable]                     '+rsLipaInfo2);
+writeLn('-i, --install [IPK-Package]                '+rsLipaInfo3);
 writeLn('  '+rsOptions);
-writeLn('    '+rsLipaInfo4);
-writeLn('    '+rsLipaInfo5);
-writeLn(rsLipaInfo6);
+writeLn('    --testmode                             '+rsLipaInfo4);
+writeLn('    --verbose                              '+rsLipaInfo5);
+writeLn('--checkapps                                '+rsLipaInfo6);
 if FileExists('/bin/libuild') then
 begin
 writeLn(rsCMDInfoPkgBuild);
-writeLn(rsLiBuildInfoA);
-writeLn(rsLiBuildInfoB);
-writeLn(rsLiBuildInfoC);
+writeLn('-b, --build [IPS-File] [Output-IPK]        '+rsLiBuildInfoA);
+writeLn('-u, --gen-update [IPS-File] [Repo-Path]    '+rsLiBuildInfoB);
+writeLn('-b, --build [IPS-File]                     '+rsLiBuildInfoC);
 end;
 end;
 

@@ -21,39 +21,32 @@ unit trstrings;
 interface
 
 resourcestring
-rsBrokenDepsFixQ = 'You have broken dependencies. Should they be fised now?';
+rsBrokenDepsFixQ = 'You have missing dependencies. Should they be fixed now?';
 rsCannotResolv = 'Cannot resolve dependencies';
 rsCheckAppDepsQ = 'Do you want to check the applications''s dependencies?';
-rsCheckRootAppsQ = 'Do you want to check ROOT-installed applications too?';
+rsCheckRootAppsQ = 'Do you want to check global-installed applications too?';
 rsCommands = 'Commands:';
 rsCouldntFindUpdater = 'Couldn''t find updater applications!';
 rsInternalError = 'An internal error occured';
-rsLipaInfo2 = '-s, --solve [variable]                     Resolve Listaller '
-  +'path variable';
-rsLipaInfo3 = '-i, --install [IPK-Package]                Installs an IPK '
-  +'package';
+rsLipaInfo2 = 'Resolve Listaller path variable';
+rsLipaInfo3 = 'Installs an IPK package';
 rsListallerMgrNotFound = 'Couldn''t find Listaller Manager!';
 rsLiUpdaterNotFound = 'Unable to find liUpdater!';
 rsOptions = 'Options:';
-rsLipaInfo4 = '--testmode                             Runs installation in '
-  +'testmode';
-rsLipaInfo5 = '--verbose                              Print all available log '
-  +'messages';
-rsLipaInfo6 = '--checkapps                                Check if all '
-  +'installed applications have proper dependencies';
+rsLipaInfo4 = 'Runs installation in testmode';
+rsLipaInfo5 = 'Print all available log messages';
+rsLipaInfo6 = 'Check if all installed applications have proper dependencies';
 rsCMDInfoPkgBuild = 'Package build commands:';
-rsLiBuildInfoA = '-b, --build [IPS-File] [Output-IPK]        Build ipk-package';
-rsLiBuildInfoB = '-u, --gen-update [IPS-File] [Repo-Path]    Create/Update '
-  +'update-repository';
-rsLiBuildInfoC = '-b, --build [IPS-File]                     Create DEB and '
-  +'RPM file from IPS';
+rsLiBuildInfoA = 'Build ipk-package';
+rsLiBuildInfoB = 'Create/Update update-repository';
+rsLiBuildInfoC = 'Create DEB and RPM file from IPS';
 rsDone = 'Done.';
 rsDoYouAcceptLicenseCMD = 'Do you accept this license? (y/n):';
 rsEnterNumber = 'You have to enter a number!';
 rsInstAborted='Installation aborted.';
 rsAppNInstall='The application %a was not installed.';
 rsLipaAutoFixQ = 'Should lipa fix these problems automatically? [y/n]?';
-rsLipaInfo1 = 'Listaller main tool to handle ipk-packages';
+rsLipaInfo1 = 'Listaller command-line tool to handle ipk-packages';
 rsModeNumber = 'Mode number:';
 rsN = 'n';
 rsNo = 'no';
@@ -87,9 +80,9 @@ rsNext='Next';
 rsDispLog='Display installation log';
 rsIagree='I agree with the above terms and conditions';
 rsInagree='I don''t agree';
-rsLDnSupported='Your Linux dirsibution is not supported by Listaller yet!';
-rsnSupported='This package does not support your Linux dirsibution.';
-rsDepNotFound='Found no package with the necessary library "%l" for your dirsibution.';
+rsLDnSupported='Your Linux distribution is not supported by Listaller yet!';
+rsnSupported='This package does not support your Linux distribution.';
+rsDepNotFound='Found no package with the necessary library "%l" for your distribution.';
 rsInClose='The installer will close now';
 rsCnOverwrite='Unable to overwrite the file %f.';
 rsNotifyDevs='Please notify the developers on http://launchpad.net/listaller';
@@ -120,13 +113,13 @@ rsFinished='Finished';
 rsinstAnyway='Do you want to install it anyway? (This could raise problems)';
 rsInvarchitecture='The application which this package contains was not built for the current system architecture.';
 rsWillDLFiles='(This program will download the needed files from the internet)';
-rsInvalidDVersion='Package was not build for your Linux dirsibution release.';
+rsInvalidDVersion='Package was not build for your Linux distribution release.';
 rsFTPfailed='Problem while downloading the packages. Maybe the login on the FTP-Server failed.';
 rsSuccess='Success!';
 rsMain='Main';
 rsDetails='Details';
 rsInstallation='Installation';
-rsNoLDSources='There are no sources available for your Linux dirsibution'#10'Try to install common packages?';
+rsNoLDSources='There are no sources available for your Linux distribution'#10'Try to install common packages?';
 rsUseCompPQ='Use compatible packages?';
 rsNoComp='No compatible packages found!';
 rsActionNotPossiblePkg='The selected action is not possible with this package.'#10'Please contact the package maintainer to get more information.';
@@ -183,7 +176,7 @@ rsLOKIError='Can''t load LOKI-Setup information.';
 rsCannotLoadIcon='Unable to load the icon of %a. Please notify the developers of Listaller or this application!';
 rsAutoLoadDep='Load dependencies from included webserver-urls automatically';
 rsReady='Ready.';
-rsConvertPkg='You want to install an %x-Package, but your Linux-Dirsibution''s package system is %y.'#10'This package can be converted using "alien", but this will take some time and eventually the application won''t work'#10'Do you want to convert the package now?';
+rsConvertPkg='You want to install an %x-Package, but your Linux-distribution''s package system is %y.'#10'This package can be converted using "alien", but this will take some time and eventually the application won''t work'#10'Do you want to convert the package now?';
 rsConvertPkgQ='Convert package?';
 rsConvTitle='Converting %p package...';
 rsFiltering='Filtering...';
@@ -205,7 +198,7 @@ rsPkgInstFail='Package %p could not be installed.';
 rsShowPkMon='Start PackageKit monitor before running transactions';
 rsAboutListaller='About Listaller';
 rsBrowseLiCatalog='Browse Listaller''s software catalog';
-rsOpenDirsiCatalog='Open your dirsibution''s package catalog';
+rsOpenDirsiCatalog='Open your distribution''s package catalog';
 rsAbout='About';
 rsAuthors='Authors';
 rsRmSrcQ='Are you really sure that you want to delete this source?';
