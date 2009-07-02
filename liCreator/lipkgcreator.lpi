@@ -49,11 +49,11 @@
       </Unit0>
       <Unit1>
         <Filename Value="editor.pas"/>
-        <ComponentName Value="FrmEditor"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="FrmEditor"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="editor"/>
-        <CursorPos X="73" Y="15"/>
+        <CursorPos X="39" Y="16"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="146"/>
@@ -71,8 +71,8 @@
       </Unit2>
       <Unit3>
         <Filename Value="fwiz.pas"/>
-        <ComponentName Value="frmFileWizard"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmFileWizard"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fwiz"/>
         <CursorPos X="32" Y="107"/>
@@ -178,8 +178,8 @@
       </Unit16>
       <Unit17>
         <Filename Value="prjwizard.pas"/>
-        <ComponentName Value="frmProjectWizard"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmProjectWizard"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="prjwizard"/>
         <CursorPos X="220" Y="1142"/>

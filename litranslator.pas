@@ -23,7 +23,8 @@ unit litranslator;
 interface
 
 uses
-  Classes, SysUtils, LResources, GetText, Controls, typinfo, FileUtil;
+  Classes, SysUtils, LResources, GetText, Controls, typinfo, FileUtil,
+  liCommon;
 
 type
  TDefaultTranslator=class(TAbstractTranslator)
@@ -43,7 +44,6 @@ var LANG,lng:string;
   i: Integer;
   liname: String;
 begin
- //Win32 user may decide to override locale with LANG variable.
  LANG:=GetEnvironmentVariableUTF8('LANG');
  if LANG='' then begin
    for i:=1 to Paramcount-1 do
@@ -125,6 +125,9 @@ begin
   if FileExistsUTF8(Result) then exit;
 
   Result:=ExtractFilePath(ParamStrUTF8(0))+'locale'+DirectorySeparator+liname+'-'+lng+'.mo';
+  if FileExistsUTF8(Result) then exit;
+
+  Result:=GetDataFile('/locale/'+liname+'-'+lng+'.mo');
   if FileExistsUTF8(Result) then exit;
 
   Result:=ExtractFilePath(ParamStrUTF8(0))+'languages'+DirectorySeparator+liname+'.'+lng+'.mo';

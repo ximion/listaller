@@ -79,6 +79,9 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   TrayIcon.Visible:=true;
+  MenuItem1.Caption:=rsCheckApps;
+  MenuItem2.Caption:=rsCheckForUpd;
+  MenuItem4.Caption:=rsLaunchLiMgr;
 end;
 
 procedure TForm1.MenuItem1Click(Sender: TObject);

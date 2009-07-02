@@ -120,7 +120,7 @@ type
     AList: TObjectList;
     //** Current id of package that should be uninstalled
     uID: Integer;
-    //**
+    //** SQLite connection to AppDB
     dsApp: TSQLite3Dataset;
     {** Process .desktop-file and add info to list @param fname Name of the .desktop file
       @param tp Category name}
@@ -897,7 +897,7 @@ procedure TMnFrm.UpdCheckBtnClick(Sender: TObject);
 begin
 if FileExists(ExtractFilePath(Application.ExeName)+'liupdate') then
 begin
-  Process1.CommandLine:=ExtractFilePath(Application.ExeName)+'liupdate -show';
+  Process1.CommandLine:=ExtractFilePath(Application.ExeName)+'liupdate';
   Process1.Execute;
 end else ShowMessage(rsLiUpdateAccessFailed);
 end;

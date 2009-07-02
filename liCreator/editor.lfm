@@ -53,7 +53,6 @@ object FrmEditor: TFrmEditor
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 35
-        BookMarkOptions.OnChange = nil
         Gutter.Width = 53
         Gutter.MouseActions = <        
           item
@@ -533,6 +532,17 @@ object FrmEditor: TFrmEditor
             MoveCaret = False
             Option = 0
             Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
           end>
         Lines.Strings = (
           '<?xml version="1.0" encoding="ISO-8859-1"?>'
@@ -552,7 +562,7 @@ object FrmEditor: TFrmEditor
           '  </application>'
           ' </package>'
         )
-        Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
+        Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
         ScrollBars = ssAutoBoth
         BracketHighlightStyle = sbhsBoth
         object TSynGutterPartList

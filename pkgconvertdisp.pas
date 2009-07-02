@@ -1,19 +1,18 @@
-{
- * pkgconvertdisp.pas
- * Copyright (C) Listaller Project 2008
- *
- * pkgconvertdisp.pas is free software: you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published
- * by the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * pkgconvertdisp.pas is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.}
+{ pkgconvertdisp.pas
+  Copyright (C) Listaller Project 2008-2009
+
+  pkgconvertdisp.pas is free software: you can redistribute it and/or modify it
+  under the terms of the GNU General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  pkgconvertdisp.pas is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License v3
+  along with this program.  If not, see <http://www.gnu.org/licenses/>}
 //** This unit provides a form that shows the output of 'alien'
 unit pkgconvertdisp;
 
@@ -23,12 +22,13 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  process, ExtCtrls, LiCommon, LCLType, manager;
+  process, ExtCtrls, LiCommon, LCLType, manager, TRStrings;
 
 type
 
   { TConvDisp }
 
+  //** Form that shows TProcess output
   TConvDisp = class(TForm)
     GetOutPutTimer: TIdleTimer;
     Label1: TLabel;
@@ -95,7 +95,7 @@ if Process1.ExitStatus>0 then begin
   end;
   if not Process1.Running then begin
   GetOutPutTimer.Enabled:=false;
-  if Application.MessageBox('Converting done. Do you want to close this window now?'#13'Press "No" if you want to check the output.','Close?',MB_YESNO)=IDYES then begin
+  if Application.MessageBox(PAnsiChar(rsConvDone),PChar(rsClose+'?'),MB_YESNO)=IDYES then begin
   close;
   Application.ProcessMessages;
   mnFrm.LoadEntries;

@@ -272,7 +272,6 @@ CreateDir(ExtractFilePath(RegDir));
 CreateDir(RegDir);
 end;
 
-if LowerCase(paramstr(1))='-show' then Application.ShowMainForm:=true;
 //Set icons
 LoadStockPixmap(STOCK_REFRESH,ICON_SIZE_BUTTON,BitBtn2.Glyph);
 LoadStockPixmap(STOCK_APPLY,ICON_SIZE_BUTTON,BitBtn1.Glyph);

@@ -360,7 +360,7 @@ begin
    if (c=LowerCase(rsY))or(c=LowerCase(rsYes)) then
     CheckApps(lst,true)
    else
-    writeLn('Aborted.');
+    writeLn(rsAborted);
   end else
   begin
    write(rsShowDetailedInfoCMD+' ');
@@ -419,7 +419,7 @@ procedure TLipa.OnExeception(Sender : TObject;E : Exception);
 begin
 writeLn(rsInternalError);
 writeLn('[Message]: '+E.Message);
-writeLn('(Aborted)');
+writeLn('('+rsAborted+')');
 halt(8);
 end;
 

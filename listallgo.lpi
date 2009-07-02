@@ -11,7 +11,7 @@
       <Title Value="Installer"/>
       <UseAppBundle Value="False"/>
       <Icon Value="0"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <i18n>
       <OutDir Value="locale"/>
@@ -65,8 +65,8 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="9" Y="27"/>
-        <TopLine Value="1"/>
+        <CursorPos X="8" Y="128"/>
+        <TopLine Value="109"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -384,8 +384,8 @@
         <ComponentName Value="DGForm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="dgunit"/>
-        <CursorPos X="52" Y="212"/>
-        <TopLine Value="184"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
         <UsageCount Value="155"/>
       </Unit46>
       <Unit47>
@@ -434,9 +434,7 @@
         <UnitName Value="trstrings"/>
         <CursorPos X="48" Y="27"/>
         <TopLine Value="1"/>
-        <EditorIndex Value="1"/>
         <UsageCount Value="28"/>
-        <Loaded Value="True"/>
       </Unit53>
       <Unit54>
         <Filename Value="../../../../../usr/lib/lazarus/ide/tododlg.pas"/>
@@ -831,7 +829,7 @@
         <UsageCount Value="10"/>
       </Unit109>
     </Units>
-    <JumpHistory Count="8" HistoryIndex="7">
+    <JumpHistory Count="9" HistoryIndex="8">
       <Position1>
         <Filename Value="igobase.pas"/>
         <Caret Line="7" Column="67" TopLine="1"/>
@@ -864,6 +862,10 @@
         <Filename Value="igobase.pas"/>
         <Caret Line="27" Column="9" TopLine="1"/>
       </Position8>
+      <Position9>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="128" Column="8" TopLine="109"/>
+      </Position9>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: trstrings:rsbrokendepsfixq
-msgid "You have missing dependencies. Should they be fixed now?"
+msgid "You have missing dependencies. Should they be installed now?"
 msgstr ""
 
 #: trstrings:rscannotresolv
@@ -24,6 +24,10 @@ msgstr ""
 
 #: trstrings:rscheckappdepsq
 msgid "Do you want to check the applications's dependencies?"
+msgstr ""
+
+#: trstrings:rscheckapps
+msgid "Check applications"
 msgstr ""
 
 #: trstrings:rscheckrootappsq
@@ -35,11 +39,15 @@ msgid "Commands:"
 msgstr ""
 
 #: trstrings:rscouldntfindupdater
-msgid "Couldn't find updater applications!"
+msgid "Can't find updater applications!"
 msgstr ""
 
 #: trstrings:rsinternalerror
 msgid "An internal error occured"
+msgstr ""
+
+#: trstrings:rslaunchlimgr
+msgid "Launch Listaller Manager"
 msgstr ""
 
 #: trstrings:rslipainfo2
@@ -51,7 +59,7 @@ msgid "Installs an IPK package"
 msgstr ""
 
 #: trstrings:rslistallermgrnotfound
-msgid "Couldn't find Listaller Manager!"
+msgid "Can't find Listaller Manager!"
 msgstr ""
 
 #: trstrings:rsliupdaternotfound
@@ -71,7 +79,7 @@ msgid "Print all available log messages"
 msgstr ""
 
 #: trstrings:rslipainfo6
-msgid "Check if all installed applications have proper dependencies"
+msgid "Check if dependencies of all installed applications are available and working"
 msgstr ""
 
 #: trstrings:rscmdinfopkgbuild
@@ -79,7 +87,7 @@ msgid "Package build commands:"
 msgstr ""
 
 #: trstrings:rslibuildinfoa
-msgid "Build ipk-package"
+msgid "Build IPK-package"
 msgstr ""
 
 #: trstrings:rslibuildinfob
@@ -95,7 +103,7 @@ msgid "Done."
 msgstr ""
 
 #: trstrings:rsdoyouacceptlicensecmd
-msgid "Do you accept this license? (y/n):"
+msgid "Do you accept this license [y/n]?"
 msgstr ""
 
 #: trstrings:rsenternumber
@@ -111,11 +119,11 @@ msgid "The application %a was not installed."
 msgstr ""
 
 #: trstrings:rslipaautofixq
-msgid "Should lipa fix these problems automatically? [y/n]?"
+msgid "Should lipa fix these problems automatically [y/n]?"
 msgstr ""
 
 #: trstrings:rslipainfo1
-msgid "Listaller command-line tool to handle ipk-packages"
+msgid "Listaller command-line tool to handle IPK-packages"
 msgstr ""
 
 #: trstrings:rsmodenumber
@@ -144,6 +152,10 @@ msgstr ""
 
 #: trstrings:rsrootpassqappeveryone
 msgid "Enter your password to install the application for everyone."
+msgstr ""
+
+#: trstrings:rsconvdone
+msgid "Converting done. Do you want to close this window now?\nPress \"No\" if you want to check the output."
 msgstr ""
 
 #: trstrings:rsselectlistnumber
@@ -619,7 +631,7 @@ msgid "Ready."
 msgstr ""
 
 #: trstrings:rsconvertpkg
-msgid "You want to install an %x-Package, but your Linux-distribution's package system is %y.\nThis package can be converted using \"alien\", but this will take some time and eventually the application won't work\nDo you want to convert the package now?"
+msgid "You want to install an %x-Package, but your Linux-distribution's package system is %y.\nThis package can be converted using \"alien\", but this will take some time and eventually the installed application won't work\nDo you want to convert the package now?"
 msgstr ""
 
 #: trstrings:rsconvertpkgq

@@ -370,7 +370,7 @@ object MnFrm: TMnFrm
       Left = 8
       Height = 80
       Top = 112
-      Width = 88
+      Width = 96
       Caption = 'Install package'
       Color = clBtnFace
       Flat = True
@@ -677,7 +677,7 @@ object MnFrm: TMnFrm
       Left = 8
       Height = 80
       Top = 208
-      Width = 88
+      Width = 96
       Caption = 'Browse catalogue'
       Color = clBtnFace
       Flat = True
@@ -984,7 +984,7 @@ object MnFrm: TMnFrm
       Left = 8
       Height = 80
       Top = 398
-      Width = 88
+      Width = 96
       Caption = 'Settings'
       Color = clBtnFace
       Flat = True
@@ -1291,7 +1291,7 @@ object MnFrm: TMnFrm
       Left = 8
       Height = 80
       Top = 304
-      Width = 88
+      Width = 96
       Caption = 'Repositories'
       Color = clBtnFace
       Flat = True
@@ -1600,7 +1600,7 @@ object MnFrm: TMnFrm
       Left = 8
       Height = 80
       Top = 10
-      Width = 88
+      Width = 96
       Caption = 'Installed applications'
       Color = clBtnFace
       Flat = True

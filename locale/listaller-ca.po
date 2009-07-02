@@ -1,18 +1,16 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.9.16\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2009-05-06 13:39+0000\n"
-"Last-Translator: Liu Sizhuang <Unknown>\n"
-"Language-Team: newsfree <freefcw@gmail.com>\n"
+"PO-Revision-Date: 2009-05-06 13:36+0000\n"
+"Last-Translator: Antoni Clavell <Unknown>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-07-02 11:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-"X-Poedit-Country: china\n"
-"X-Poedit-Language: chinese\n"
 
 #: trstrings:rsbrokendepsfixq
 msgid "You have missing dependencies. Should they be fixed now?"
@@ -221,7 +219,7 @@ msgstr ""
 
 #: trstrings:rsabort
 msgid "Abort"
-msgstr "中止"
+msgstr "Cancel·la"
 
 #: trstrings:rsback
 msgid "Back"
@@ -931,278 +929,338 @@ msgid "Resolving dependencies..."
 msgstr ""
 
 #~ msgid "Filter:"
-#~ msgstr "过滤器:"
+#~ msgstr "Filtre:"
 
 #~ msgid "Browser %s%s%s not executable."
-#~ msgstr "浏览 %s%s%s 不是可执行程序."
+#~ msgstr "Navegador %s%s%s no executable."
 
 #~ msgid "Browser %s%s%s not found."
-#~ msgstr "浏览 %s%s%s 未找到."
+#~ msgstr "Navegador  %s%s%s no trobat."
 
 #~ msgid "Error while executing %s%s%s:%s%s"
-#~ msgstr "当执行 %s%s%s 时错误:%s%s"
+#~ msgstr "Error en executar  %s%s%s:%s%s"
 
 #~ msgid "Unable to find a HTML browser."
-#~ msgstr "无法找到 HTML 浏览器"
+#~ msgstr "No puc trobar un navegador HTML"
 
 #~ msgid ""
 #~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
 #~ "Viewers"
-#~ msgstr "没有找到 HTML 浏览器。%s请在 帮助-> 配置帮助 -> 查看器 中定义一个"
+#~ msgstr ""
+#~ "No s'ha trobat navegador HTML .%sSisplau definiu-ne un en  Ajuda -> "
+#~ "Configura ajuda -> Visors"
 
 #~ msgid "The help database %s%s%s was unable to find file %s%s%s."
-#~ msgstr "帮助数据库 %s%s%s 无法找到文件 %s%s%s."
+#~ msgstr ""
+#~ "La base de dades de l'ajuda %s%s%s no ha pogut trobar el fitxer %s%s%s."
 
 #~ msgid "The macro %s in BrowserParams will be replaced by the URL."
-#~ msgstr "浏览框里的宏 %s 将被 URL 所替代."
+#~ msgstr ""
+#~ "La macro %s en BrowserParams (paràmetres navegador) serà substituïda per la "
+#~ "URL."
+
+#~ msgid "Alt"
+#~ msgstr "Alt"
+
+#~ msgid "Ctrl"
+#~ msgstr "Ctrl"
 
 #~ msgid "Accept"
-#~ msgstr "接受"
+#~ msgstr "Accepta"
 
 #~ msgid "application key"
-#~ msgstr "应用程序快捷键"
+#~ msgstr "tecla d'aplicació"
 
 #~ msgid "Backspace"
-#~ msgstr "退格"
+#~ msgstr "Espai enrere"
 
 #~ msgid "Capital"
-#~ msgstr "大写字母"
+#~ msgstr "Majúscula"
 
 #~ msgid "Clear"
-#~ msgstr "清除"
+#~ msgstr "Neteja"
 
 #~ msgid "Control"
-#~ msgstr "控件"
+#~ msgstr "Control"
 
 #~ msgid "Convert"
-#~ msgstr "转换"
+#~ msgstr "Converteix"
+
+#~ msgctxt "lclstrconsts.ifsvk_delete"
+#~ msgid "Delete"
+#~ msgstr "Esborra"
 
 #~ msgid "Down"
-#~ msgstr "下"
+#~ msgstr "Avall"
+
+#~ msgid "End"
+#~ msgstr "Fi"
 
 #~ msgid "Escape"
-#~ msgstr "溢出"
+#~ msgstr "Escapa"
 
 #~ msgid "Execute"
-#~ msgstr "执行"
+#~ msgstr "Executa"
+
+#~ msgid "Final"
+#~ msgstr "Final"
+
+#~ msgid "Hanja"
+#~ msgstr "Hanja"
 
 #~ msgid "Help"
-#~ msgstr "帮助"
+#~ msgstr "Ajuda"
+
+#~ msgid "Home"
+#~ msgstr "Inici"
+
+#~ msgctxt "lclstrconsts.ifsvk_insert"
+#~ msgid "Insert"
+#~ msgstr "Insereix"
+
+#~ msgid "Junja"
+#~ msgstr "Junja"
+
+#~ msgid "Kana"
+#~ msgstr "Kana"
 
 #~ msgid "Mouse Button Left"
-#~ msgstr "鼠标左键"
+#~ msgstr "Botó esquerre del ratolí"
 
 #~ msgid "Left"
-#~ msgstr "左"
+#~ msgstr "Esquerra"
 
 #~ msgid "left windows key"
-#~ msgstr "左 Win 键"
+#~ msgstr "tecla windows esquerra"
 
 #~ msgid "Mouse Button Middle"
-#~ msgstr "鼠标中键"
+#~ msgstr "Butó del mig del ratolí"
 
 #~ msgctxt "lclstrconsts.ifsvk_menu"
 #~ msgid "Menu"
-#~ msgstr "菜单"
+#~ msgstr "Menú"
 
 #~ msgid "Mode Change"
-#~ msgstr "模式更改"
+#~ msgstr "Canvi de mode"
+
+#~ msgctxt "lclstrconsts.ifsvk_next"
+#~ msgid "Next"
+#~ msgstr "Pròxim"
 
 #~ msgid "Nonconvert"
-#~ msgstr "不转换"
+#~ msgstr "No convertible"
 
 #~ msgid "Numlock"
-#~ msgstr "数字锁定"
+#~ msgstr "Teclat numèric"
 
 #~ msgid "Numpad %d"
-#~ msgstr "数字键盘 %d"
+#~ msgstr "Teclat numèric %d"
 
 #~ msgid "Pause key"
-#~ msgstr "暂停键"
+#~ msgstr "Tecla de pausa"
 
 #~ msgid "Print"
-#~ msgstr "打印"
+#~ msgstr "Imprimeix"
+
+#~ msgctxt "lclstrconsts.ifsvk_prior"
+#~ msgid "Prior"
+#~ msgstr "Previ"
 
 #~ msgid "Mouse Button Right"
-#~ msgstr "鼠标右键"
+#~ msgstr "Botó dret del ratolí"
 
 #~ msgid "Return"
-#~ msgstr "返回"
+#~ msgstr "Retorn"
 
 #~ msgid "Right"
-#~ msgstr "右"
+#~ msgstr "Dreta"
 
 #~ msgid "right windows key"
-#~ msgstr "右 Win 键"
+#~ msgstr "tecla windows dreta"
 
 #~ msgid "Scroll"
-#~ msgstr "滚动"
+#~ msgstr "Explora"
 
 #~ msgid "Select"
-#~ msgstr "选择"
+#~ msgstr "Selecciona"
+
+#~ msgid "Shift"
+#~ msgstr "Majúsc."
 
 #~ msgid "Snapshot"
-#~ msgstr "快照"
+#~ msgstr "Captura"
 
 #~ msgid "Space key"
-#~ msgstr "空格键"
+#~ msgstr "Espaiador"
+
+#~ msgid "Tab"
+#~ msgstr "Tab"
 
 #~ msgid "Unknown"
-#~ msgstr "未知"
+#~ msgstr "Desconegut"
 
 #~ msgid "Up"
-#~ msgstr "上"
+#~ msgstr "Amunt"
 
 #~ msgctxt "lclstrconsts.lislclresourcesnotfound"
 #~ msgid "Resource %s not found"
-#~ msgstr "未找到资源 %s"
+#~ msgstr "Recurs %s no trobat"
 
 #~ msgid "A control can't have itself as parent"
-#~ msgstr "控件无法把自己设为父节点"
+#~ msgstr "Un control no pot cridar-se a ell mateix"
 
 #~ msgid "All files (%s)|%s|%s"
-#~ msgstr "所有文件 (%s)|%s|%s"
+#~ msgstr "Tots els fitxers (%s)|%s|%s"
 
 #~ msgid "Backward"
-#~ msgstr "后退"
+#~ msgstr "Enrere"
 
 #~ msgid "Bitmaps"
-#~ msgstr "黑白位图"
+#~ msgstr "Mapes de bits"
 
 #~ msgid "Blank"
-#~ msgstr "空白"
+#~ msgstr "En blanc"
 
 #~ msgid "Calculator"
-#~ msgstr "计算器"
+#~ msgstr "Calculadora"
 
 #~ msgid "Can not focus"
-#~ msgstr "无法聚焦"
+#~ msgstr "No es pot focalitzar"
 
 #~ msgid "Canvas does not allow drawing"
-#~ msgstr "Canvas 不允许画图"
+#~ msgstr "El marc no permet el dibuix"
 
 #~ msgid "Case sensitive"
-#~ msgstr "大小写敏感"
+#~ msgstr "Sensible a majúsc-minúsc."
 
 #~ msgid "Creating gdb catchable error:"
-#~ msgstr "创建 GDB 可以捕捉的错误"
+#~ msgstr "Creant un error gdb capturable:"
 
 #~ msgid "permissions user group size date time"
-#~ msgstr "权限 用户 组 大小 日期 时间"
-
-#~ msgid "Delete record?"
-#~ msgstr "删除记录？"
+#~ msgstr "permisos usuari grup mida dia hora"
 
 #~ msgctxt "lclstrconsts.rsdeleterecordhint"
 #~ msgid "Delete"
-#~ msgstr "删除"
+#~ msgstr "Esborra"
 
 #~ msgid "Direction"
-#~ msgstr "方向"
+#~ msgstr "Direcció"
 
 #~ msgid "&Directory"
-#~ msgstr "目录(&D)"
+#~ msgstr "&Directori"
 
 #~ msgid "Docking"
-#~ msgstr "融合"
+#~ msgstr "Fixa"
+
+#~ msgid "Error creating device context for %s.%s"
+#~ msgstr "Error en crear dispositiu  de context per a %s.%s"
+
+#~ msgid "ERROR in LCL: "
+#~ msgstr "ERROR en LCL "
 
 #~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
-#~ msgstr "在 %s %s地址 %s%s 框架 %s"
+#~ msgstr "Error ocorregut en %s a l'%sAdreça %s%s Estructura %s"
 
 #~ msgid "Error reading %s%s%s: %s"
-#~ msgstr "读取 %s%s%s 错误: %s"
+#~ msgstr "Error en llegir %s%s%s: %s"
 
 #~ msgid "Error while saving bitmap."
-#~ msgstr "保存位图时出错。"
+#~ msgstr "Error en desar el mapa de bits"
 
 #~ msgid "Exception"
-#~ msgstr "异常"
+#~ msgstr "Excepció"
 
 #~ msgid "Directory must exist"
-#~ msgstr "目录必须存在"
+#~ msgstr "Cal que el directori existeixi"
 
 #~ msgid "The directory \"%s\" does not exist."
-#~ msgstr "目录 \"%s\" 不存在."
+#~ msgstr "El directori \"%s\"  no existeix."
 
 #~ msgid "The file \"%s\" already exists. Overwrite ?"
-#~ msgstr "文件 \"%s\" 已经存在.%s替换吗?"
+#~ msgstr "El fitxer \"%s\" ja existeix. El sobrescric ?"
 
 #~ msgid "File must exist"
-#~ msgstr "文件必须存在"
+#~ msgstr "El fitxer ha d'existir"
 
 #~ msgid "The file \"%s\" does not exist."
-#~ msgstr "文件 \"%s\" 不存在."
+#~ msgstr "El fitxer \"%s\"  no existeix."
 
 #~ msgid "The file \"%s\" is not writable."
-#~ msgstr "文件 \"%s\" 为只读."
+#~ msgstr "El fitxer \"%s\" no és d'escriptura."
 
 #~ msgid "File is not writable"
-#~ msgstr "文件为只读"
+#~ msgstr "No es pot escriure aquest fitxer"
 
 #~ msgid "Save file as"
-#~ msgstr "另存为"
+#~ msgstr "Anomena i desa el fitxer"
 
 #~ msgid "Open existing file"
-#~ msgstr "打开文件"
+#~ msgstr "Obre fitxer existent"
 
 #~ msgid "Overwrite file ?"
-#~ msgstr "覆盖文件？"
+#~ msgstr "Sobrescric el fitxer?"
 
 #~ msgid "Path must exist"
-#~ msgstr "路径不存在"
+#~ msgstr "El camí ha d'existir"
 
 #~ msgid "The path \"%s\" does not exist."
-#~ msgstr "路径 \"%s\" 不存在."
+#~ msgstr "El camí \"%s\"  no existeix."
 
 #~ msgid "Select Directory"
-#~ msgstr "选择目录"
+#~ msgstr "Selecciona directori"
 
 #~ msgid "(file not found: \"%s\")"
-#~ msgstr "(未找到文件: \"%s\")"
+#~ msgstr "(fitxer no trobat: \"%s\")"
 
 #~ msgid "File information"
-#~ msgstr "文件信息"
+#~ msgstr "Informació del fitxer"
 
 #~ msgid "Find"
-#~ msgstr "查找"
+#~ msgstr "Busca"
 
 #~ msgid "Find more"
-#~ msgstr "查找更多"
+#~ msgstr "Busca més"
 
 #~ msgid "FixedCols can't be >= ColCount"
-#~ msgstr "FixedCols 不能 >= ColCount"
+#~ msgstr ""
+#~ "FixedCols (columnes fixades) no poden ser>= ColCount (recompte de columnes)"
 
 #~ msgid "FixedRows can't be >= RowCount"
-#~ msgstr "FixedRows 不能 >= RowCount"
+#~ msgstr ""
+#~ "FixedRows (files fixades) no poden ser >= RowCount (recompte de files)"
 
 #~ msgid "Form streaming \"%s\" error: %s"
-#~ msgstr "窗体流 \"%s\" 错误: %s"
+#~ msgstr "Formació del corrent \"%s\" amb  error: %s"
 
 #~ msgid "Forward"
-#~ msgstr "向前"
+#~ msgstr "Endavant"
 
 #~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
-#~ msgstr "--gdk-debug flags     打开 GDK 跟踪/调试信息."
+#~ msgstr ""
+#~ "--gdk-debug flags     Engega missatges específics de GDK de traça/depuració."
 
 #~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
-#~ msgstr "--gdk-no-debug flags  关闭 GDK 跟踪/调试信息."
+#~ msgstr ""
+#~ "--gdk-no-debug flags  Tanca els missatges específics GDK de traça/depuració."
 
 #~ msgid ""
 #~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
 #~ "the application."
-#~ msgstr "--g-fatal-warnings   使 Gtk+/GDK 产生的警告和错误终止应用程序。"
+#~ msgstr ""
+#~ "--g-fatal-warnings    Els errors i advertències generats per Gtk+/GDK "
+#~ "aturaran l'aplicació."
 
 #~ msgid "Grid file doesn't exists"
-#~ msgstr "网格文件不存在"
+#~ msgstr "No existeix fitxer de la graella"
 
 #~ msgid "Grid index out of range."
-#~ msgstr "网格索引越界。"
+#~ msgstr "Índex de la graella fora de rang"
 
 #~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
-#~ msgstr "GroupIndex 不能比之前的菜单项目的 GroupIndex 少"
+#~ msgstr "GroupIndex no pot ser menor que un ítem de menú GroupIndex anterior."
 
 #~ msgid "History:"
-#~ msgstr "历史:"
+#~ msgstr "Historial:"
 
 #~ msgid ""
 #~ "--class classname     Following Xt conventions, the class of a program is "
@@ -1210,11 +1268,14 @@ msgstr ""
 #~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
 #~ "program will be set to \"classname\"."
 #~ msgstr ""
-#~ "--class classname     按照 Xt 转换规则， 一个程序的类别是第一个字母大写的程序名称。比如，gimp 的类别是 "
-#~ "\"Gimp\"。如果指定了 --class，程序的类别会被设为 \"classname\"。"
+#~ "--class classname     Seguint les convencions Xt, la classe d'un programa és "
+#~ "el nom del programa amb el caràcter inicial en majúscula. Per exemple, el "
+#~ "nom de classe (classname) per al gimp és \"Gimp\". Si --class s'especifica, "
+#~ "la classe del programa serà posada com \"classname\"."
 
 #~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
-#~ msgstr "--gtk-debug flags     打开 Gtk+ 跟踪/调试信息."
+#~ msgstr ""
+#~ "--gtk-debug flags     Mostra missatges Gtk+ específics de traça/depuració."
 
 #~ msgid ""
 #~ "--display h:s:d       Connect to the specified X server, where \"h\" is the "
@@ -1222,326 +1283,345 @@ msgstr ""
 #~ "number (typically omitted). If --display is not specified, the DISPLAY "
 #~ "environment variable is used."
 #~ msgstr ""
-#~ "--display h:s:d       连接到指定的 X 服务器，其中 \"h\"是主机名，\"s\"是服务器编号(通常是0)，\"d\" "
-#~ "是显示编号(一般省略)。如果没有指定 --display ，将会使用 DISPLAY 环境变量。"
+#~ "--display h:s:d       Connecta al servidor X especificat, on \"h\" és el nom "
+#~ "del host, \"s\" és el número del servidor (usualment 0), i \"d\" és el "
+#~ "número a mostrar (típicament omès). Si --display no s'ha especificat,s'usarà "
+#~ "l'entorn variable DISPLAY."
 
 #~ msgid "--gtk-module module   Load the specified module at startup."
-#~ msgstr "--gtk-module module   启动时载入指定模块"
+#~ msgstr "--gtk-module module   Carrega el mòdul especificat a l'engegar."
+
+#~ msgid ""
+#~ "--name programe       Set program name to \"progname\". If not specified, "
+#~ "program name will be set to ParamStrUTF8(0)."
+#~ msgstr ""
+#~ "--name programe       Posa el nom del programa a \"progname\". Si no s'ha "
+#~ "especificat, el nom serà posat a ParamStr(0)."
 
 #~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
-#~ msgstr "--gtk-no-debug flags  关闭 Gtk+ 跟踪/调试信息."
+#~ msgstr ""
+#~ "--gtk-no-debug flags  Tanca els missatges Gtk+ específics de traça/depuració."
 
 #~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
-#~ msgstr "--lcl-no-transient    不要为形式上的窗体设定临时顺序"
+#~ msgstr "--lcl-no-transient   No posis ordre transient per a formes modals."
 
 #~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
-#~ msgstr "--no-xshm             禁止使用 X 共享内存扩展。"
+#~ msgstr ""
+#~ "--no-xshm             Desactiva l'ús de l'extensió X de memòria compartida."
+
+#~ msgid ""
+#~ "--sync                Call XSynchronize (display, True) after the Xserver "
+#~ "connection has been established. This makes debugging X protocol errors "
+#~ "easier, because X request buffering will be disabled and X errors will be "
+#~ "received immediatey after the protocol request that generated the error has "
+#~ "been processed by the X server."
+#~ msgstr ""
+#~ "--sync                Crida XSynchronize (display, True) un cop la connexió "
+#~ "al Xserver ha estat establerta. Això facilita que la depuració d'errors del "
+#~ "protocol X sigui més senzilla, perquè la demanda de memòria cau X serà "
+#~ "desactivad i els errors X seran rebuts immediatament després que la demanda "
+#~ "del protocol que ha generat l'error ha estat processat pel servidor X."
 
 #~ msgid "%s: Already registered"
-#~ msgstr "%s: 已经注册"
+#~ msgstr "Ja enregistrat"
 
 #~ msgid "Help Context not found"
-#~ msgstr "未找到帮助内容"
+#~ msgstr "No trobo ajuda contextual"
 
 #~ msgid "Help Database not found"
-#~ msgstr "未找到帮助数据库"
+#~ msgstr "Base de dades de l'ajuda no trobada"
 
 #~ msgid "Help Error"
-#~ msgstr "帮助错误"
+#~ msgstr "Error d'ajuda"
 
 #~ msgid "Help context %s not found."
-#~ msgstr "未找到帮助上下文 %s."
+#~ msgstr "Context d'ajuda %s no trobat."
 
 #~ msgid "Help context %s not found in Database %s%s%s."
-#~ msgstr "没有找到 %s 的帮助内容在数据库 %s%s%s 中."
+#~ msgstr "Context d'ajuda %s no trobat en la base de dades %s%s%s."
 
 #~ msgid ""
 #~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
-#~ msgstr "帮助数据库 %s%s%s 未找到浏览器可以阅读帮助页 %s 的类型"
+#~ msgstr ""
+#~ "La base de dades de l'ajuda %s%s%s no ha trobat un visor per una pàgina "
+#~ "d'ajuda del tipus %s"
 
 #~ msgid "Help Database %s%s%s not found"
-#~ msgstr "未找到帮助数据库 %s%s%s"
+#~ msgstr "Base de dades de l'ajuda %s%s%s no trobada"
 
 #~ msgid "Help keyword %s%s%s not found."
-#~ msgstr "关键字 %s%s%s 未找到帮助."
+#~ msgstr "Paraula clau d'ajuda %s%s%s no trobada"
 
 #~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
-#~ msgstr "关键字 %s 的帮助在数据库 %s%s%s 中没有找到."
+#~ msgstr "Paraula clau d'ajuda %s%s%s no trobada en la base de dades %s%s%s."
 
 #~ msgid "Help node %s%s%s has no Help Database"
-#~ msgstr "帮助节点 %s%s%s 没有帮助数据库"
+#~ msgstr "El node d'ajuda  %s%s%s no té base de dades d'ajuda"
 
 #~ msgid "No help found for line %d, column %d of %s."
-#~ msgstr "没有找到 %s 的行 %d, 列 %d 的 %s 的相关帮助."
+#~ msgstr "No s'ha trobat cap ajuda per a la línia %d, columna %d de %s."
 
 #~ msgid "No help nodes available"
-#~ msgstr "没有有效的帮助节点"
+#~ msgstr "No hi ha nodes d'ajuda disponibles"
 
 #~ msgid "Help not found"
-#~ msgstr "未找到帮助"
+#~ msgstr "Ajuda no trobada"
 
 #~ msgid "%s: Not registered"
-#~ msgstr "%s: 没有注册"
+#~ msgstr "No enregistrat"
 
 #~ msgid "Help Selector Error"
-#~ msgstr "帮助选择器错误"
+#~ msgstr "Error del selector d'ajuda"
 
 #~ msgid "There is no viewer for help type %s%s%s"
-#~ msgstr "帮助类型 %s%s%s 没有查看器"
+#~ msgstr "No hi ha cap visor per al tipus d'ajuda %s%s%s"
 
 #~ msgid "Help Viewer Error"
-#~ msgstr "帮助查看器错误"
+#~ msgstr "Error del visor d'ajuda"
 
 #~ msgid "Help Viewer not found"
-#~ msgstr "未找到帮助查看器"
+#~ msgstr "Visor d'ajuda no trobat"
 
 #~ msgid "Icon"
-#~ msgstr "图标"
+#~ msgstr "Icona"
 
 #~ msgid "%s Index %d out of bounds 0 .. %d"
-#~ msgstr "%s 索引 %d 超出范围 0 .. %d"
+#~ msgstr "%s índex %d fora de límits 0-%d"
 
 #~ msgid "Index Out of range Cell[Col=%d Row=%d]"
-#~ msgstr "单元格索引超过范围[列=%d 行=%d]"
+#~ msgstr "Índex fora de rang Cel·lal[Col=%d Fila=%d]"
 
 #~ msgctxt "lclstrconsts.rsinsertrecordhint"
 #~ msgid "Insert"
-#~ msgstr "插入"
+#~ msgstr "Insereix"
 
 #~ msgid "Invalid Date : %s"
-#~ msgstr "无效日期: %s"
+#~ msgstr "Data no vàlida: %s"
 
 #~ msgid "Invalid Date: %s. Must be between %s and %s"
-#~ msgstr "无效日期: %s。 必须在 %s 和 %s 之间"
+#~ msgstr "Data no vàlida: %s. Cal que estigui entre %s i %s"
 
 #~ msgid "invalid Form object stream"
-#~ msgstr "无效窗体流对象"
+#~ msgstr "Corrent d'objecte de forma no vàlid"
 
 #~ msgid "Invalid property value"
-#~ msgstr "无效属性值"
+#~ msgstr "Valor de la propietat no vàlid"
 
 #~ msgid "Invalid stream format"
-#~ msgstr "无效流格式"
+#~ msgstr "Corrent amb format invàlid"
 
 #~ msgid "%s is already associated with %s"
-#~ msgstr "%s 已经与 %s 相关联"
+#~ msgstr "%s ja està associat amb %s"
 
 #~ msgid "List index exceeds bounds (%d)"
-#~ msgstr "list 索引超过限制 (%d)"
+#~ msgstr "L'índex de la llista excedeix els límits (%d)"
 
 #~ msgid "List must be empty"
-#~ msgstr "列表必须为空"
+#~ msgstr "Cal que la llista sigui buida"
 
 #~ msgid "&All"
-#~ msgstr "所有(&A)"
+#~ msgstr "&Tot"
 
 #~ msgctxt "lclstrconsts.rsmbcancel"
 #~ msgid "Cancel"
-#~ msgstr "取消"
+#~ msgstr "Cancel·la"
 
 #~ msgid "&Close"
-#~ msgstr "关闭(&C)"
+#~ msgstr "Tan&ca"
 
 #~ msgid "&Help"
-#~ msgstr "帮助(&H)"
+#~ msgstr "&Ajuda"
 
 #~ msgid "&Ignore"
-#~ msgstr "忽略(&I)"
+#~ msgstr "&Ignora"
 
 #~ msgid "&No"
-#~ msgstr "否(&N)"
+#~ msgstr "&No"
 
 #~ msgid "No to all"
-#~ msgstr "全部选否"
+#~ msgstr "No a tot"
 
 #~ msgid "&OK"
-#~ msgstr "确定(&O)"
+#~ msgstr "D'&acord"
 
 #~ msgid "&Retry"
-#~ msgstr "重试(&R)"
+#~ msgstr "&Torna-ho a provar"
 
 #~ msgid "&Yes"
-#~ msgstr "是(&Y)"
+#~ msgstr "&Sí"
 
 #~ msgid "Yes to &All"
-#~ msgstr "全部选是(&A)"
+#~ msgstr "Sí a &tot"
 
 #~ msgctxt "lclstrconsts.rsmenucolorcaption"
 #~ msgid "Menu"
-#~ msgstr "菜单"
+#~ msgstr "Menú"
 
 #~ msgid "  modified "
-#~ msgstr "  已更改 "
+#~ msgstr "  modificat "
 
 #~ msgid "Confirmation"
-#~ msgstr "确认"
+#~ msgstr "Confirmació"
 
 #~ msgid "Custom"
-#~ msgstr "自定义"
+#~ msgstr "Personalitza"
 
 #~ msgctxt "lclstrconsts.rsmterror"
 #~ msgid "Error"
-#~ msgstr "错误"
+#~ msgstr "Error"
 
 #~ msgid "Information"
-#~ msgstr "信息"
+#~ msgstr "Informació"
 
 #~ msgid "Warning"
-#~ msgstr "警告"
+#~ msgstr "Avís"
 
 #~ msgctxt "lclstrconsts.rsnextrecordhint"
 #~ msgid "Next"
-#~ msgstr "下一个"
+#~ msgstr "Pròxim"
 
 #~ msgid "Not a valid grid file"
-#~ msgstr "不是有效的网格文件"
+#~ msgstr "Fitxer de graella no vàlid"
 
 #~ msgid ""
 #~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
 #~ "the programs uses clause."
-#~ msgstr "没有窗口部件集合对象，请检查单元 \"interfaces\" 是否已添加到程序的uses语句中。"
+#~ msgstr ""
+#~ "No hi és com a objecte o dispositiu. Sisplau, comproveu si la unitat "
+#~ "\"interfaces\" (interfícies) fou afegida a la clàusula d'usos del programa."
 
 #~ msgid "Select a date"
-#~ msgstr "选择日期"
+#~ msgstr "Selecciona una data"
 
 #~ msgid "Pixmap"
-#~ msgstr "位图"
-
-#~ msgid "Portable BitMap"
-#~ msgstr "便携黑白位图"
-
-#~ msgid "Portable GrayMap"
-#~ msgstr "便携灰度位图"
+#~ msgstr "Mapa de píxels"
 
 #~ msgid "Portable Network Graphic"
-#~ msgstr "便携网络图片(PNG)"
-
-#~ msgid "Portable PixMap"
-#~ msgstr "便携位图"
+#~ msgstr "PNG (Portable Network Graphic)"
 
 #~ msgid ""
 #~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill the "
 #~ "program."
-#~ msgstr "%s%s确定忽略但数据有遗失的风险。%s取消则终止程序."
+#~ msgstr ""
+#~ "%s%s%sPolseu Ok per ignorar, tot arriscant de corrompre les dades.%sPolseu "
+#~ "Cancel per interrompre el programa"
 
 #~ msgctxt "lclstrconsts.rspriorrecordhint"
 #~ msgid "Prior"
-#~ msgstr "优先"
+#~ msgstr "Previ"
 
 #~ msgid "Property %s does not exist"
-#~ msgstr "属性 %s 不存在"
+#~ msgstr "La propietat %s  no existeix"
 
 #~ msgid "Replace"
-#~ msgstr "替换"
+#~ msgstr "Substitueix"
 
 #~ msgid "Replace all"
-#~ msgstr "替换所有"
+#~ msgstr "Substitueix-ho tot"
 
 #~ msgctxt "lclstrconsts.rsresourcenotfound"
 #~ msgid "Resource %s not found"
-#~ msgstr "未找到资源 %s"
+#~ msgstr "Recurs %s no trobat"
 
 #~ msgid "ScrollBar property out of range"
-#~ msgstr "滚动条属性超出范围"
+#~ msgstr "Propietat de la barra de desplaçament fora de mida"
 
 #~ msgid "Select color"
-#~ msgstr "选择颜色"
+#~ msgstr "Tria color"
 
 #~ msgid "Select a font"
-#~ msgstr "选择字体"
+#~ msgstr "Selecciona tipus de lletra"
 
 #~ msgid "  size "
-#~ msgstr "  大小 "
+#~ msgstr "  mida "
 
 #~ msgid "Text"
-#~ msgstr "文本"
+#~ msgstr "Text"
 
 #~ msgid "Unable to load default font"
-#~ msgstr "无法装载默认字体"
+#~ msgstr "No puc carregar la font per defecte"
 
 #~ msgid "Unknown Error, please report this bug"
-#~ msgstr "未知错误, 请报告这个错误"
+#~ msgstr "Error desconegut. Sisplau reporteu-lo"
 
 #~ msgid "Unknown picture extension"
-#~ msgstr "未知图形文件后缀"
+#~ msgstr "Extensió d'imatge desconeguda"
 
 #~ msgid "Unsupported bitmap format."
-#~ msgstr "未支持的位图格式"
+#~ msgstr "Format de mapa de bits no suportat"
 
 #~ msgid "Unsupported clipboard format: %s"
-#~ msgstr "未支持的剪贴板格式: %s"
+#~ msgstr "Format del portaretalls no suportat: %s"
+
+#~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
+#~ msgstr ""
+#~ " Avís: hi ha %d DCs no llançats, tot seguit es mostra informació detallada:"
+
+#~ msgid ""
+#~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
+#~ msgstr ""
+#~ " Avís: Hi ha %d Objectes-GDI no llançats, tot seguit es mostra informació "
+#~ "detallada:"
+
+#~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
+#~ msgstr " Avís: Hi ha %d missatges perduts a la cua!, els allibero"
+
+#~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
+#~ msgstr " Avís: s'han perdut %d estructures TimerInfo, les allibero"
+
+#~ msgid ""
+#~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
+#~ msgstr ""
+#~ " Avís: S'han deixat %s enllaços a missatge LM_PAINT/LM_GtkPAINT, sense "
+#~ "eliminar"
 
 #~ msgid "Whole words only"
-#~ msgstr "仅整个单词"
+#~ msgstr "Només mots sencers"
 
 #~ msgid "Error:"
-#~ msgstr "错误:"
+#~ msgstr "Error:"
 
 #~ msgid "Warning:"
-#~ msgstr "警告:"
+#~ msgstr "Avís:"
 
 #~ msgid "Cannot focus a disabled or invisible window"
-#~ msgstr "不能聚焦于无法聚焦或者不可见的窗口"
+#~ msgstr "No puc accedir a una finestra invisible o tancada"
 
 #~ msgid "Duplicate menus"
-#~ msgstr "重复的菜单"
+#~ msgstr "Menús duplicats"
 
 #~ msgid "Invalid action creation"
-#~ msgstr "无效创建行为"
+#~ msgstr "Creació d'acció no vàlida"
 
 #~ msgid "Invalid action enumeration"
-#~ msgstr "无效列举行为"
+#~ msgstr "Enumeració d'acció no vàlida"
 
 #~ msgid "Invalid action registration"
-#~ msgstr "无效的注册行为"
+#~ msgstr "Enregistrament d'acció no vàlid"
 
 #~ msgid "Invalid action unregistration"
-#~ msgstr "无效的取消注册行为"
+#~ msgstr "Acció de desenregistrar invàlida"
 
 #~ msgid "The char set in mask \"%s\" is not valid!"
-#~ msgstr "\"%s\" 指定的字符集无效！"
+#~ msgstr "El caràcter de la màscara \"%s\" no és vàlid!"
 
 #~ msgid "Invalid image size"
-#~ msgstr "无效图像大小"
+#~ msgstr "Mida de la imatge no vàlida"
 
 #~ msgid "Invalid ImageList Index"
-#~ msgstr "无效 ImageList 索引"
+#~ msgstr "Índex de llista d'imatges no vàlid"
 
 #~ msgid "Menu index out of range"
-#~ msgstr "菜单索引超过范围"
+#~ msgstr "Índex de menú fora de rang"
 
 #~ msgid "MenuItem is nil"
-#~ msgstr "MenuItem 为 nil"
+#~ msgstr "L'opció  no hi és al menú"
 
 #~ msgid "Sub-menu is not in menu"
-#~ msgstr "子菜单不在菜单中"
+#~ msgstr "El submenú no és al menú"
 
 #~ msgid "No MDI form present."
-#~ msgstr "没有 MDI 窗体出现"
+#~ msgstr "No hi ha cap forma MDI present"
 
 #~ msgid "No timers available"
-#~ msgstr "无有效计时器"
-
-#~ msgid "Wrong token type: %s expected"
-#~ msgstr "错误的标识符类型：期望 %s"
-
-#~ msgid "Invalid floating point number: %s"
-#~ msgstr "无效的浮点数：%s"
-
-#~ msgid "Invalid integer number: %s"
-#~ msgstr "无效的整数：%s"
-
-#~ msgid " (at %d,%d, stream offset %.8x)"
-#~ msgstr " (在 %d,%d, 流偏移 %.8x)"
-
-#~ msgid "Unterminated byte value"
-#~ msgstr "未结束的字节值"
-
-#~ msgid "Unterminated string"
-#~ msgstr "未结束的字符串"
-
-#~ msgid "Wrong token symbol: %s expected but %s found"
-#~ msgstr "错误的标识符：期望 %s 但是找到了 %s"
-
-#~ msgid "Wrong token type: %s expected but %s found"
-#~ msgstr "错误的标识符类型：期望 %s 但是找到了 %s"
+#~ msgstr "No hi ha rellotges disponibles"

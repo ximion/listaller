@@ -198,7 +198,7 @@ object DGForm: TDGForm
     Interval = 8
     OnTimer = GetOutPutTimerTimer
     left = 576
-    top = 136
+    top = 280
   end
   object Process1: TProcess
     Active = False
@@ -213,7 +213,7 @@ object DGForm: TDGForm
     WindowTop = 0
     WindowWidth = 0
     FillAttribute = 0
-    left = 576
-    top = 96
+    left = 544
+    top = 280
   end
 end

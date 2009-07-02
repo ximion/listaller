@@ -36,8 +36,8 @@
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
-        <CursorPos X="10" Y="28"/>
-        <TopLine Value="9"/>
+        <CursorPos X="24" Y="422"/>
+        <TopLine Value="397"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="47"/>
         <Loaded Value="True"/>
@@ -183,8 +183,8 @@
       <Unit21>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="37" Y="24"/>
-        <TopLine Value="1"/>
+        <CursorPos X="210" Y="179"/>
+        <TopLine Value="159"/>
         <UsageCount Value="10"/>
       </Unit21>
       <Unit22>
@@ -293,7 +293,7 @@
       </Position22>
       <Position23>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="28" Column="10" TopLine="9"/>
+        <Caret Line="28" Column="6" TopLine="9"/>
       </Position23>
     </JumpHistory>
   </ProjectOptions>
