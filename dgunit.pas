@@ -153,18 +153,18 @@ begin
 LoadStockPixmap(STOCK_EXECUTE,ICON_SIZE_BUTTON,BitBtn1.Glyph);
 Image1.Picture.LoadFromFile(GetDataFile('graphics/spackage.png'));
 PageControl1.ActivePageIndex:=0;
-BitBtn1.Caption:=strInstallNow;
+BitBtn1.Caption:=rsInstallNow;
 end;
 
 procedure TDGForm.FormShow(Sender: TObject);
 begin
   IWizFrm.Hide;
   PageControl1.Visible:=true;
-  TabSheet1.Caption:=strMain;
-  TabSheet2.Caption:=strDetails;
-  TabSheet3.Caption:=strInstallation;
+  TabSheet1.Caption:=rsMain;
+  TabSheet2.Caption:=rsDetails;
+  TabSheet3.Caption:=rsInstallation;
   
-  FinBtn1.Caption:=strFinish;
+  FinBtn1.Caption:=rsFinish;
   LoadStockPixmap(STOCK_QUIT,ICON_SIZE_BUTTON,FinBtn1.Glyph);
 end;
 
@@ -209,7 +209,7 @@ begin
   until noMoreOutput;
 if Process1.ExitStatus>0 then begin
     GetOutputTimer.Enabled:=false;
-    ShowMessage(strCouldntSolve+#13+StringReplace(strViewLog,'%p',ConfigDir,[rfReplaceAll]));
+    ShowMessage(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p',ConfigDir,[rfReplaceAll]));
     Memo3.Lines.SaveTofile(ConfigDir+'/install.log');
     Application.Terminate;
     exit;

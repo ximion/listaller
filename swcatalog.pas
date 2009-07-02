@@ -141,7 +141,7 @@ begin
 Parent:=self;
 Height:=24;
 Width:=82;
-Caption:=strInstallNow;
+Caption:=rsInstallNow;
 OnClick:=@InstallClick;
 Top:=16;
 Left:=self.Width-90;
@@ -219,7 +219,7 @@ tmp.Free;
 SCForm.Memo1.SelStart:=0;
 SCForm.Memo1.Visible:=true;
 SCForm.HQBox.Checked:=true;
-end else begin SCForm.Memo1.Lines.Clear;SCForm.Memo1.Lines.Add(strNoInfo);SCForm.Memo1.Visible:=true;SCForm.HQBox.Checked:=true;end;
+end else begin SCForm.Memo1.Lines.Clear;SCForm.Memo1.Lines.Add(rsNoInfo);SCForm.Memo1.Visible:=true;SCForm.HQBox.Checked:=true;end;
 end;
 
 procedure TCTLEntry.InstallClick(Sender: TObject);
@@ -238,7 +238,7 @@ begin
      9: cdir:='other';
     end;
 
-    SCForm.Label2.Caption:=strDLSetUp;
+    SCForm.Label2.Caption:=rsDLSetUp;
     //Workaround for LazProblem
     xHTTP:=THTTPSend.Create;
     xHTTP.Sock.OnStatus:=@DLHookSock;
@@ -262,14 +262,14 @@ begin
 
      SCForm.current:=enr;
      SCForm.BitBtn2.Enabled:=true;
-   if not xHTTP.HTTPMethod('GET',tmp[0]) then begin if SCForm.BitBtn2.Enabled then ShowMessage(StringReplace(strErrContactMan,'%h','http://listaller.nlinux.org',[rfReplaceAll]));
+   if not xHTTP.HTTPMethod('GET',tmp[0]) then begin if SCForm.BitBtn2.Enabled then ShowMessage(StringReplace(rsErrContactMan,'%h','http://listaller.nlinux.org',[rfReplaceAll]));
    SCForm.Label2.Caption:='Ready.';xHTTP.Free;tmp.Free;exit;end;
 
     if FileExists('/tmp/listaller/catalogue/cache/'+ExtractFileName(tmp[0])) then DeleteFile('/tmp/listaller/catalogue/cache/'+ExtractFileName(tmp[0]));
     xHTTP.Document.SaveToFile('/tmp/listaller/catalogue/cache/'+ExtractFileName(tmp[0]));
     xHTTP.Free;
 
-   SCForm.Label2.Caption:=strInstalling;
+   SCForm.Label2.Caption:=rsInstalling;
    SCForm.BitBtn2.Enabled:=false;
    SCForm.current:=-1;
    Application.ProcessMessages;
@@ -284,7 +284,7 @@ begin
       SWList[i].UnButton.Enabled:=true;
       SCForm.CView.Enabled:=true;
    SCForm.pb1:=false;
-  SCForm.Label2.Caption:=strReady;
+  SCForm.Label2.Caption:=rsReady;
 end;
 
 function FindChildNode(dn: TDOMNode; n: String): TDOMNode;
@@ -315,7 +315,7 @@ end;
 procedure TSCForm.BitBtn2Click(Sender: TObject);
 begin
   if current>-1 then
-   if Application.MessageBox(PChar(strctDLAbort),PChar(strAbort+'?'),MB_YESNO)=IDYES then begin
+   if Application.MessageBox(PChar(rsctDLAbort),PChar(rsAbort+'?'),MB_YESNO)=IDYES then begin
    if not Assigned(SWList[current]) then ShowMessage('Oops!');
    BitBtn2.Enabled:=false;
    //SWList[current].xHTTP.Sock.StopFlag:=true;
@@ -354,7 +354,7 @@ begin
     if not DirectoryExists('/tmp/listaller') then CreateDir('/tmp/listaller/');
     if not DirectoryExists('/tmp/listaller/catalogue') then CreateDir('/tmp/listaller/catalogue/');
     HTTP.Document.SaveToFile('/tmp/listaller/catalogue/contents.xml');
-    Label2.Caption:=strReady;
+    Label2.Caption:=rsReady;
     OpenCatalog;
 end;
 
@@ -364,7 +364,7 @@ begin
 if fActiv then begin
   fActiv:=false;
 
-  Label2.Caption:=strDownloadCTBase;
+  Label2.Caption:=rsDownloadCTBase;
   SWLLength:=0;
   CView.Items[0].Selected:=true;
   HTTP := THTTPSend.Create;
@@ -438,7 +438,7 @@ for i:=0 to SWLLength-1 do
      8: cdir:='multimedia';
      9: cdir:='other';
     end;
- Label2.Caption:=strOpenPage;
+ Label2.Caption:=rsOpenPage;
    if cdir<>'all' then begin
    xn:=doc.DocumentElement.FindNode(cdir);
    k:=0;
@@ -464,7 +464,7 @@ for i:=0 to SWLLength-1 do
         if FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),GetLangID)<>nil then
            SWList[k].DescLabel.Caption:=FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),GetLangID).NodeValue;
         if FindChildNode(xn.ChildNodes[i],'author')<>nil then
-           SWList[k].MnLabel.Caption:=strAuthor+': '+FindChildNode(xn.ChildNodes[i],'author').NodeValue
+           SWList[k].MnLabel.Caption:=rsAuthor+': '+FindChildNode(xn.ChildNodes[i],'author').NodeValue
         else SWList[k].MnLabel.Visible:=false;
            nid:=xn.ChildNodes[i].Attributes.GetNamedItem('idname').NodeValue;
         if not DirectoryExists('/tmp/listaller/catalogue/'+cdir) then CreateDir('/tmp/listaller/catalogue/'+cdir);
@@ -530,7 +530,7 @@ if cdir='all' then begin cdir:='education';cid:=1;end;
        if FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),GetLangID)<>nil then
            SWList[k].DescLabel.Caption:=FindChildNode(FindChildNode2(xn.ChildNodes[i],'sdesc'),GetLangID).NodeValue;
         if FindChildNode(xn.ChildNodes[i],'author')<>nil then
-           SWList[k].MnLabel.Caption:=strAuthor+': '+FindChildNode(xn.ChildNodes[i],'author').NodeValue
+           SWList[k].MnLabel.Caption:=rsAuthor+': '+FindChildNode(xn.ChildNodes[i],'author').NodeValue
         else SWList[k].MnLabel.Visible:=false;
            nid:=xn.ChildNodes[i].Attributes.GetNamedItem('idname').NodeValue;
         if not DirectoryExists('/tmp/listaller/catalogue/'+cdir) then CreateDir('/tmp/listaller/catalogue/'+cdir);
@@ -564,7 +564,7 @@ end;
    end;
    ScrollBox1.Visible:=true;
    CView.Enabled:=true;
-  Label2.Caption:=strReady;
+  Label2.Caption:=rsReady;
 end;
 
 procedure TSCForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -582,22 +582,22 @@ procedure TSCForm.FormCreate(Sender: TObject);
 begin
  FillImageList(ImageList1);
   //Translation
-  Label3.Caption:=strCategory;
-  Label1.Caption:=strWInstallDl;
-  CView.Items[0].Caption:=strAll;
-  CView.Items[1].Caption:=strEducation;
-  CView.Items[2].Caption:=strOffice;
-  CView.Items[3].Caption:=strDevelopment;
-  CView.Items[4].Caption:=strGraphic;
-  CView.Items[5].Caption:=strNetwork;
-  CView.Items[6].Caption:=strGames;
-  CView.Items[7].Caption:=strSystem;
-  CView.Items[8].Caption:=strMultimedia;
-  CView.Items[9].Caption:=strOther;
+  Label3.Caption:=rsCategory;
+  Label1.Caption:=rsWInstallDl;
+  CView.Items[0].Caption:=rsAll;
+  CView.Items[1].Caption:=rsEducation;
+  CView.Items[2].Caption:=rsOffice;
+  CView.Items[3].Caption:=rsDevelopment;
+  CView.Items[4].Caption:=rsGraphic;
+  CView.Items[5].Caption:=rsNetwork;
+  CView.Items[6].Caption:=rsGames;
+  CView.Items[7].Caption:=rsSystem;
+  CView.Items[8].Caption:=rsMultimedia;
+  CView.Items[9].Caption:=rsOther;
   Memo1.Lines.Clear;
-  Memo1.Lines.Add(strNoInfo);
-  BitBtn1.Caption:=strClose;
-  BitBtn2.Caption:=strAbort;
+  Memo1.Lines.Add(rsNoInfo);
+  BitBtn1.Caption:=rsClose;
+  BitBtn2.Caption:=rsAbort;
   LoadStockPixmap(STOCK_CLOSE,ICON_SIZE_BUTTON,BitBtn1.Glyph);
 end;
 

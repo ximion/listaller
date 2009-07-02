@@ -110,7 +110,7 @@ type
     { private declarations }
     //** True if installation is beeing aborted
     AbortIns: Boolean;
-    //** Starte the GUI inatallation
+    //** Start the GUI inatallation
     procedure StartInstallation;
   public
     { public declarations }
@@ -150,7 +150,7 @@ case Notebook1.PageIndex of
            StartInstallation;
            exit;
         end;
-        Button1.Caption:=strInstallNow;
+        Button1.Caption:=rsInstallNow;
         NoteBook1.PageIndex:=3;
    end;
 1: begin
@@ -163,7 +163,7 @@ case Notebook1.PageIndex of
  end;
 
      if setup.IFileInfo<>'*' then begin
-        Button1.Caption:=strInstallNow;
+        Button1.Caption:=rsInstallNow;
      end;
 
   if RadioButton2.Checked then
@@ -172,7 +172,7 @@ case Notebook1.PageIndex of
   Button1.Enabled:=true;
 
    if (setup.LicenseFile='') then begin
-    Button1.Caption:=strInstallNow;
+    Button1.Caption:=rsInstallNow;
     Notebook1.PageIndex:=3 end else
     Notebook1.PageIndex:=2;
   end;
@@ -185,7 +185,7 @@ case Notebook1.PageIndex of
   exit;
  end;
  if (setup.DescFile='') then begin
-  Button1.Caption:=strInstallNow;
+  Button1.Caption:=rsInstallNow;
  if RadioButton2.Enabled then
   Button1.Enabled:=false;
   NoteBook1.PageIndex:=2;
@@ -195,7 +195,7 @@ case Notebook1.PageIndex of
  if (setup.DescFile<>'')and(setup.LicenseFile='') then begin
   NoteBook1.PageIndex:=1;
   Button5.Visible:=true;
-  Button1.Caption:=strInstallNow;
+  Button1.Caption:=rsInstallNow;
   exit;
  end;
   NoteBook1.PageIndex:=1;
@@ -207,8 +207,8 @@ end;
 procedure TIWizFrm.AbortBtn1Click(Sender: TObject);
 begin
 if NoteBook1.PageIndex=5 then begin
-  Label10.Caption:=strInstAborted;
-  Label11.Caption:=StringReplace(strAppNInstall,'%a',setup.AppName,[rfReplaceAll]);
+  Label10.Caption:=rsInstAborted;
+  Label11.Caption:=StringReplace(rsAppNInstall,'%a',setup.AppName,[rfReplaceAll]);
   AbortIns:=true;
 end else
   Application.Terminate;
@@ -218,13 +218,13 @@ procedure TIWizFrm.Button5Click(Sender: TObject);
 begin
 case NoteBook1.PageIndex of
 1: begin
-  Button1.Caption:=strNext;
+  Button1.Caption:=rsNext;
   Notebook1.PageIndex:=0;
   Button5.Visible:=false;
   Button1.Enabled:=true;
   end;
 2: begin
-  Button1.Caption:=strNext;
+  Button1.Caption:=rsNext;
  { Button1.Width:=83;
   Button1.Left:=566; }
   if setup.DescFile='' then
@@ -234,7 +234,7 @@ case NoteBook1.PageIndex of
   Button1.Enabled:=true;
   end;
 3: begin
-        Button1.Caption:=strNext;
+        Button1.Caption:=rsNext;
         if setup.LicenseFile='' then
         Notebook1.PageIndex:=1
         else
@@ -259,7 +259,7 @@ end;
 procedure TIWizFrm.FinBtn1Click(Sender: TObject);
 begin
   FinBtn1.Enabled:=false;
-  Label16.Caption:=strCleanup;
+  Label16.Caption:=rsCleanup;
   Label16.Visible:=true;
   FinPage.Refresh;
   DeleteDirectory(lp+ExtractFileName(paramstr(1)),false);
@@ -296,7 +296,7 @@ begin
    setup.ResolveDependencies;
    setup.OnMainPosChange:=@MainPosChange;
    setup.OnMaxPosMainChange:=@MainMaxPosChange;
-   Label15.Caption:=strFinished;
+   Label15.Caption:=rsFinished;
    Button1.Enabled:=true;
   end;
 end;
@@ -326,7 +326,7 @@ end;
 procedure TIWizFrm.InstallationError(Sender: TObject; msg: String);
 begin
  ShowMessage(msg);
- InfoMemo.Lines.Add(strInstFailed);
+ InfoMemo.Lines.Add(rsInstFailed);
  InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.AppName+'.log');
  setup.Free;
  FreeAndNil(IWizFrm);
@@ -336,9 +336,9 @@ end;
 
 procedure TIWizFrm.ITerminateQuestion(Sender: TObject; msg: String);
 begin
- if Application.MessageBox(PAnsiChar(msg),PAnsiChar(strInstOf),MB_YESNO)<>IDYES then
+ if Application.MessageBox(PAnsiChar(msg),PAnsiChar(rsInstOf),MB_YESNO)<>IDYES then
  begin
-  ShowMessage(strINClose);
+  ShowMessage(rsINClose);
   InfoMemo.Lines.Add('Installation aborted by user.');
   InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.AppName+'.log');
   setup.Free;
@@ -357,7 +357,7 @@ CreateDir(RegDir);
 end;
 
 if not FileExists(Paramstr(1)) then begin
-  ShowMessage(strRunParam);
+  ShowMessage(rsRunParam);
   halt(1);
   exit;
 end;
@@ -375,25 +375,25 @@ LoadStockPixmap(STOCK_GO_FORWARD,ICON_SIZE_BUTTON,Button1.Glyph);
 LoadStockPixmap(STOCK_GO_BACK,ICON_SIZE_BUTTON,Button5.Glyph);
 
 //Set translation strings (1)
-  Label1.Caption:=strWelcome;
-  Label3.Caption:=strnToStart;
-  Label4.Caption:=strprogDesc;
-  Label5.Caption:=strLicense;
-  Label8.Caption:=strPleaseRead;
-  Label6.Caption:=strRunning;
-  Label7.Caption:=strplWait;
-  Label10.Caption:=strComplete;
-  Label12.Caption:=strprFinish;
-  FinBtn1.Caption:=strFinish;
-  AbortBtn1.Caption:=strAbort;
-  Button5.Caption:=strBack;
-  Button1.Caption:=strNext;
-  RadioButton1.Caption:=strIagree;
-  RadioButton2.Caption:=strInagree;
-  CheckBox1.Caption:=strDispLog;
-  Label13.Caption:=strInstallationMode;
-  Label14.Caption:=strIModeInstruction;
-  ModeGroup.Caption:=strMode;
+  Label1.Caption:=rsWelcome;
+  Label3.Caption:=rsnToStart;
+  Label4.Caption:=rsprogDesc;
+  Label5.Caption:=rsLicense;
+  Label8.Caption:=rsPleaseRead;
+  Label6.Caption:=rsRunning;
+  Label7.Caption:=rsplWait;
+  Label10.Caption:=rsComplete;
+  Label12.Caption:=rsprFinish;
+  FinBtn1.Caption:=rsFinish;
+  AbortBtn1.Caption:=rsAbort;
+  Button5.Caption:=rsBack;
+  Button1.Caption:=rsNext;
+  RadioButton1.Caption:=rsIagree;
+  RadioButton2.Caption:=rsInagree;
+  CheckBox1.Caption:=rsDispLog;
+  Label13.Caption:=rsInstallationMode;
+  Label14.Caption:=rsIModeInstruction;
+  ModeGroup.Caption:=rsMode;
 
   NoteBook1.PageIndex:=0;
   NoteBook1.ShowTabs:=false;
@@ -402,12 +402,12 @@ LoadStockPixmap(STOCK_GO_BACK,ICON_SIZE_BUTTON,Button5.Glyph);
   
   //Check distribution
   if DInfo.DName='' then begin
-   ShowMessage(strLDnSupported+#13+strInClose+#13+strNotifyDevs);
+   ShowMessage(rsLDnSupported+#13+rsInClose+#13+rsNotifyDevs);
    halt;
    exit;
   end;
 
-writeLn('Initialized.');
+writeLn('Begin loading IPK');
 
 IWizFrm.Hide;
 IWizFrm.Visible:=false;
@@ -435,7 +435,7 @@ begin
     btnHome.Enabled:=false;
   if (pos('iobase',setup.Disallows)>0) then
     btnInstallAll.Enabled:=false;
-  Label13.Caption:=strSpkWarning;
+  Label13.Caption:=rsSpkWarning;
   //
   ShowModal;
   end;
@@ -450,7 +450,7 @@ begin
   btnTest.Enabled:=false;
   btnHome.Enabled:=false;
   PkWarnImg.Visible:=true;
-  Label13.Caption:=strSpkWarning;
+  Label13.Caption:=rsSpkWarning;
   //
   ShowModal;
   end;
@@ -468,7 +468,7 @@ begin
     btnHome.Enabled:=false;
   if (pos('iobase',setup.Disallows)<=0) then
     btnInstallAll.Enabled:=false;
-  Label13.Caption:=strSpkWarning;
+  Label13.Caption:=rsSpkWarning;
   //
   ShowModal;
   end;
@@ -478,7 +478,7 @@ end;
 //Check distribution
 if (pos(LowerCase(DInfo.DName),setup.Distris)<=0)
 and (setup.Distris<>'all') then begin
-if Application.MessageBox(PAnsiChar(PAnsiChar(strnSupported)+#13+PAnsiChar(strInstAnyway)),'Distro-Error',MB_YESNO)= IDNO then
+if Application.MessageBox(PAnsiChar(PAnsiChar(rsnSupported)+#13+PAnsiChar(rsInstAnyway)),'Distro-Error',MB_YESNO)= IDNO then
  begin
  Application.Terminate;
  exit;
@@ -492,7 +492,7 @@ begin
 if not Testmode then
 begin
 if setup.IsPackageInstalled(setup.AppName,setup.AppID) then
-if Application.MessageBox(PAnsiChar(PAnsiChar(strAlreadyInst)+#13+PAnsiChar(strInstallAgain)),PAnsiChar(strReInstall),MB_YESNO)= IDNO then
+if Application.MessageBox(PAnsiChar(PAnsiChar(rsAlreadyInst)+#13+PAnsiChar(rsInstallAgain)),PAnsiChar(rsReInstall),MB_YESNO)= IDNO then
  begin
   setup.Free;
   Application.Terminate;
@@ -506,14 +506,14 @@ Memo1.Lines.LoadFromFile(setup.DescFile);
 LeftImg.Picture.LoadFromFile(setup.WizImage);
 LicMemo.Lines.LoadFromFile(setup.LicenseFile);
 
-Label2.Caption:=StringReplace(strWelcomeTo,'%a',setup.AppName,[rfReplaceAll]);
+Label2.Caption:=StringReplace(rsWelcomeTo,'%a',setup.AppName,[rfReplaceAll]);
 if Testmode then
 begin
-IWizFrm.Caption:=StringReplace(strInstOf,'%a',setup.AppName,[rfReplaceAll])+' ['+strTestMode+']';
-LblTestMode.Caption:=strTestMode+'!';
+IWizFrm.Caption:=StringReplace(rsInstOf,'%a',setup.AppName,[rfReplaceAll])+' ['+rsTestMode+']';
+LblTestMode.Caption:=rsTestMode+'!';
 LblTestMode.Visible:=true;
 end else
-IWizFrm.Caption:=StringReplace(strInstOf,'%a',setup.AppName,[rfReplaceAll]);
+IWizFrm.Caption:=StringReplace(rsInstOf,'%a',setup.AppName,[rfReplaceAll]);
 
 ListBox1.Items.Add('Distribution: '+DInfo.DName);
 ListBox1.Items.Add('Version: '+DInfo.Release);
@@ -531,9 +531,19 @@ ModeGroup.ItemIndex:=0;
 
 if (setup.LicenseFile='')and(setup.DescFile='')then
 begin
-  Button1.Caption:=strInstallNow;
+  Button1.Caption:=rsInstallNow;
   Button1.Left:=648-Button1.Width;
 end;
+
+try
+if FileExists(setup.AppIcon) then
+begin
+ IWizFrm.Icon.LoadFromFile(setup.AppIcon);
+ Application.Icon.LoadFromFile(setup.AppIcon);
+end;
+except
+end;
+
 IWizFrm.Show;
 end else
 { --- DLink --- }
@@ -547,12 +557,12 @@ DGForm.IIconPath:=setup.AppIcon;
 DGForm.IDesktopFiles:=setup.desktopFiles;
 with DGForm do
 begin
-Label1.Caption:=StringReplace(strInstOf,'%a',setup.AppName,[rfReplaceAll]);
-Label2.Caption:=strWillDLFiles;
+Label1.Caption:=StringReplace(rsInstOf,'%a',setup.AppName,[rfReplaceAll]);
+Label2.Caption:=rsWillDLFiles;
 Caption:=Label1.Caption;
 Memo1.Lines.LoadFromFile(lp+ExtractFileName(paramstr(1))+'/'+setup.DescFile);
 LicMemo.Clear;
-LicMemo.Lines.Add(strPkgDownload);
+LicMemo.Lines.Add(rsPkgDownload);
 
 for i:=0 to setup.ADeps.Count-1 do Memo2.Lines.Add(setup.ADeps[i]);
 end;
@@ -633,8 +643,8 @@ if Process1.CommandLine<>'' then begin
 if (Process1.ExitStatus>0) then begin
     GetOutputTimer.Enabled:=false;
     writeLn('Connection to backend broken.');
-    writeLn('Cannot resolve dependencies');
-    ShowMessage(strCouldntSolve+#13+StringReplace(strViewLog,'%p','/tmp/install-'+setup.AppName+'.log',[rfReplaceAll])+#13+'Code: '+IntToStr(Process1.ExitStatus));
+    writeLn(rsCannotResolv);
+    ShowMessage(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+setup.AppName+'.log',[rfReplaceAll])+#13+'Code: '+IntToStr(Process1.ExitStatus));
     InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.AppName+'.log');
     halt;
     exit;
@@ -706,13 +716,13 @@ while IPage.Visible=false do Application.ProcessMessages;
  AbortIns:=false;
  if setup.IFileInfo='' then
  begin
-  ShowMessage(strPKGError+#13'Message: No file information was found for this profile!'+#13+strAppClose);
+  ShowMessage(rsPKGError+#13'Message: No file information was found for this profile!'+#13+rsAppClose);
   Application.Terminate;
   exit;
  end;
  AbortBtn1.Enabled:=true;
  ExProgress.Visible:=false;
- Label9.Caption:=strStep1;
+ Label9.Caption:=rsStep1;
 
  cnf:=TInifile.Create(ConfigDir+'config.cnf');
  //Create HTTP object
@@ -770,7 +780,7 @@ while IPage.Visible=false do Application.ProcessMessages;
 begin
 NoteBook1.PageIndex:=5;
 
-Label11.Caption:=StringReplace(strWasInstalled,'%a',setup.AppName,[rfReplaceAll]);
+Label11.Caption:=StringReplace(rsWasInstalled,'%a',setup.AppName,[rfReplaceAll]);
 FinBtn1.Visible:=true;
 AbortBtn1.Visible:=false;
 FinPage.Refresh;
@@ -781,7 +791,7 @@ begin
   Hide;
   Application.ProcessMessages;
   Process1.Execute;
-  ShowMessage(strTestFinished);
+  ShowMessage(rsTestFinished);
    Process1.CommandLine := 'rm -rf /tmp/litest';
    Process1.Execute;
   Application.Terminate;

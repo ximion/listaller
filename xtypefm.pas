@@ -27,9 +27,9 @@ uses
 
 type
 
-  { TimdFrm }
+  { TIMdFrm }
 
-  TimdFrm = class(TForm)
+  TIMdFrm = class(TForm)
     btnTest: TBitBtn;
     btnHome: TBitBtn;
     btnInstallAll: TBitBtn;
@@ -52,21 +52,23 @@ type
   end; 
 
 var
-  imdFrm: TimdFrm;
+  IMdFrm: TIMdFrm;
 
 implementation
 
-{ TimdFrm }
+{ TIMdFrm }
 
-procedure TimdFrm.FormCreate(Sender: TObject);
+procedure TIMdFrm.FormCreate(Sender: TObject);
 var s: String;pkit: TPackageKit;
 begin
  //Set translation strings
- Caption:=strSelInstMode;
- PkILabel.Caption:=strSpkWarning;
- btnInstallAll.Caption:=strInstallEveryone;
- btnTest.Caption:=strTestApp;
- btnHome.Caption:=strInstallHome;
+ Caption:=rsSelInstMode;
+ PkILabel.Caption:=rsSpkWarning;
+ btnInstallAll.Caption:=rsInstallEveryone;
+ btnTest.Caption:=rsTestApp;
+ btnHome.Caption:=rsInstallHome;
+ Label1.Caption:=rsWantToDoQ;
+ PkILabel.Caption:=rsSpkWarning;
 
 //Check PackageKit version
 try
@@ -77,8 +79,8 @@ try
   s:=copy(s,1,5);
   if StrToInt(StringReplace(s,'.','',[rfReplaceAll]))<46 then
   begin
-        Label2.Caption:=StringReplace(StringReplace(strPackageKitWarning,'%cp',s,[rfReplaceAll]),'%np','0.4.6',[rfReplaceAll]);
-        //Label2.Visible:=true;
+        Label2.Caption:=StringReplace(StringReplace(rsPackageKitWarning,'%cp',s,[rfReplaceAll]),'%np','0.4.6',[rfReplaceAll]);
+        Label2.Visible:=true;
         Image2.Visible:=true;
         LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_BUTTON,Image2.Picture.Bitmap);
   end;
@@ -88,29 +90,26 @@ try
   end;
 end;
 
-procedure TimdFrm.FormShow(Sender: TObject);
+procedure TIMdFrm.FormShow(Sender: TObject);
 begin
-//Workaround for really strange LCL bug:
-//If Labels are invisible, the whole layout of the Form is destroyed
-PkiLabel.Caption:='';
-Label1.Caption:=strWantToDoQ;
-
 if PkWarnImg.Visible then
 begin
   LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_SMALL_TOOLBAR,PkWarnImg.Picture.Bitmap);
-  PkILabel.Caption:=strSpkWarning;
+  PkiLabel.Visible:=true;
 end;
 end;
 
-procedure TimdFrm.btnInstallAllClick(Sender: TObject);
+procedure TIMdFrm.btnInstallAllClick(Sender: TObject);
 var DInfo: TDistroInfo;
 begin
 DInfo:=GetDistro;
 if not IsRoot then begin
 if FileExists(paramstr(1)) then
- ExecuteAsRoot(Application.ExeName+' '+paramstr(1),'Enter your password to install the application for everyone.',GetDataFile('graphics/mime-ipk.png'))
+ ExecuteAsRoot(Application.ExeName+' '+paramstr(1), rsRootPassQAppEveryone,
+   GetDataFile('graphics/mime-ipk.png'))
  else
- ExecuteAsRoot(Application.ExeName,'Enter your password to run the application with advanced privileges.','/usr/share/pixmaps/listaller.png');
+ ExecuteAsRoot(Application.ExeName, rsRootPassAdvancedPriv, '/usr/share/'
+   +'pixmaps/listaller.png');
 
  self.Free;
  halt(0); //Terminate program
@@ -118,25 +117,25 @@ if FileExists(paramstr(1)) then
   end;
 end;
 
-procedure TimdFrm.btnTestClick(Sender: TObject);
+procedure TIMdFrm.btnTestClick(Sender: TObject);
 begin
   Testmode:=true;
   btnHome.Tag:=2;
   close;
 end;
 
-procedure TimdFrm.FormActivate(Sender: TObject);
+procedure TIMdFrm.FormActivate(Sender: TObject);
 begin
   Refresh;
 end;
 
-procedure TimdFrm.btnHomeClick(Sender: TObject);
+procedure TIMdFrm.btnHomeClick(Sender: TObject);
 begin
   btnHome.Tag:=2;
   close;
 end;
 
-procedure TimdFrm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+procedure TIMdFrm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
 if btnHome.Tag <= 0 then begin Application.Terminate;halt(0);end;
 end;

@@ -3,7 +3,7 @@ object RMForm: TRMForm
   Height = 269
   Top = 361
   Width = 468
-  ActiveControl = Memo1
+  ActiveControl = DetailsBtn
   Caption = 'Uninstalling [...]'
   ClientHeight = 269
   ClientWidth = 468

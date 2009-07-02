@@ -1,5 +1,3 @@
-{ Das ist eine automatisch erzeugte Lazarus-Ressourcendatei }
-
 LazarusResources.Add('TDGForm','FORMDATA',[
   'TPF0'#7'TDGForm'#6'DGForm'#4'Left'#3''#1#6'Height'#3'D'#1#3'Top'#3'l'#1#5'W'
   +'idth'#3'r'#2#13'ActiveControl'#7#7'BitBtn1'#7'Caption'#6#13'Simple depGet'

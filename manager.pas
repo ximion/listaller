@@ -186,7 +186,7 @@ end;
 
 begin
        d:=TIniFile.Create(fname);
-       StatusBar1.Panels[0].Text:=strLoading+'  '+ExtractFileName(fname);
+       StatusBar1.Panels[0].Text:=rsLoading+'  '+ExtractFileName(fname);
        Application.ProcessMessages;
        translate:=false;
 
@@ -258,12 +258,12 @@ begin
         else
          AppDesc:=ldt(d.ReadString('Desktop Entry','Comment',''));
 
-        AppMn:=strAuthor+': '+d.ReadString('Desktop Entry','X-Publisher','<error>');
-        if AppMn=strAuthor+': '+'<error>' then
+        AppMn:=rsAuthor+': '+d.ReadString('Desktop Entry','X-Publisher','<error>');
+        if AppMn=rsAuthor+': '+'<error>' then
         AppMn:='';
         AppVersion:='';
         if d.ReadString('Desktop Entry','X-AppVersion','')<>'' then
-        AppVersion:=strVersion+': '+d.ReadString('Desktop Entry','X-AppVersion','');
+        AppVersion:=rsVersion+': '+d.ReadString('Desktop Entry','X-AppVersion','');
 
         //Load the icons
         if (LowerCase(ExtractFileExt(d.ReadString('Desktop Entry','Icon','')))<>'.tiff') then
@@ -308,7 +308,7 @@ begin
             SetImage(d.ReadString('Desktop Entry','Icon',''));
         end;
         //If icon loading failed
-        except writeLn('ERROR: Unable to load icon!');ShowMessage(StringReplace(strCannotLoadIcon,'%a',AppName,[rfReplaceAll]));
+        except writeLn('ERROR: Unable to load icon!');ShowMessage(StringReplace(rsCannotLoadIcon,'%a',AppName,[rfReplaceAll]));
         end;
        end;
         Application.ProcessMessages;
@@ -333,7 +333,7 @@ AList.Clear;
 
 LeftBar.Enabled:=false;
 
-StatusBar1.Panels[0].Text:=strLoading;
+StatusBar1.Panels[0].Text:=rsLoading;
 
 //Create GIFThread for Throbber animation
 gif:=TGifThread.Create(true);
@@ -395,8 +395,8 @@ begin
  blst.Add(entry.AppName);
  entry.srID:=dsApp.FieldByName('ID').AsString;
 
- entry.AppVersion:=strVersion+': '+dsApp.FieldByName('Version').AsString;
- entry.AppMn:=strAuthor+': '+dsApp.FieldByName('Publisher').AsString;
+ entry.AppVersion:=rsVersion+': '+dsApp.FieldByName('Version').AsString;
+ entry.AppMn:=rsAuthor+': '+dsApp.FieldByName('Publisher').AsString;
  if dsApp.FieldByName('Publisher').AsString='' then entry.AppMn:='';
  p:=RegDir+LowerCase(entry.AppName+'-'+entry.srID)+'/';
 
@@ -478,9 +478,9 @@ ini.Free;
 
 //Check LOKI-success:
 if j>100 then
-StatusBar1.Panels[0].Text:=strLOKIError;
+StatusBar1.Panels[0].Text:=rsLOKIError;
 
-StatusBar1.Panels[0].Text:=strReady; //Loading list finished!
+StatusBar1.Panels[0].Text:=rsReady; //Loading list finished!
 
 LeftBar.Enabled:=true;
 SwBox.Visible:=true;
@@ -590,26 +590,26 @@ begin
    p.Free;
    exit;
   end else
-   if Application.MessageBox(PAnsiChar(StringReplace(StringReplace(strConvertPkg,'%x','DEB',[rfReplaceAll]),'%y','RPM',[rfReplaceAll])),
-                              PAnsiChar(strConvertPkgQ),MB_YESNO)=IDYES then
+   if Application.MessageBox(PAnsiChar(StringReplace(StringReplace(rsConvertPkg,'%x','DEB',[rfReplaceAll]),'%y','RPM',[rfReplaceAll])),
+                              PAnsiChar(rsConvertPkgQ),MB_YESNO)=IDYES then
    begin
    with ConvDisp do
    begin
    if not FileExists('/usr/bin/alien') then
-    if Application.MessageBox(PChar(strListallerAlien),PChar(strInstPkgQ),MB_YESNO)=IDYES then
+    if Application.MessageBox(PChar(rsListallerAlien),PChar(rsInstPkgQ),MB_YESNO)=IDYES then
     begin
-      ShowMessage(strplWait);
+      ShowMessage(rsplWait);
       pkit:=TPackageKit.Create;
       if not pkit.InstallPkg('alien') then
       begin
-       ShowMessage(StringReplace(strPkgInstFail,'%p','alien',[rfreplaceAll]));
+       ShowMessage(StringReplace(rsPkgInstFail,'%p','alien',[rfreplaceAll]));
        pkit.Free;
        exit;
        end;
       pkit.Free;
      end else exit;
    Application.ProcessMessages;
-   Caption:=StringReplace(strConvTitle,'%p','DEB',[rfReplaceAll]);
+   Caption:=StringReplace(rsConvTitle,'%p','DEB',[rfReplaceAll]);
    Process1.CommandLine:='alien --to-rpm -v -i --scripts '+''''+OpenDialog1.FileName+'''';
    GetOutPutTimer.Enabled:=true;
    Process1.Execute;
@@ -629,20 +629,20 @@ begin
    p.Free;
    exit;
   end else
-   if Application.MessageBox(PAnsiChar(StringReplace(StringReplace(strConvertPkg,'%x','RPM',[rfReplaceAll]),'%y','DEB',[rfReplaceAll])),
-                              PAnsiChar(strConvertPkgQ),MB_YESNO)=IDYES then
+   if Application.MessageBox(PAnsiChar(StringReplace(StringReplace(rsConvertPkg,'%x','RPM',[rfReplaceAll]),'%y','DEB',[rfReplaceAll])),
+                              PAnsiChar(rsConvertPkgQ),MB_YESNO)=IDYES then
    begin
    with ConvDisp do
    begin
 
    if not FileExists('/usr/bin/alien') then
-    if Application.MessageBox(PChar(strListallerAlien),PChar(strInstPkgQ),MB_YESNO)=IDYES then
+    if Application.MessageBox(PChar(rsListallerAlien),PChar(rsInstPkgQ),MB_YESNO)=IDYES then
     begin
-      ShowMessage(strplWait);
+      ShowMessage(rsplWait);
       pkit:=TPackageKit.Create;
       if not pkit.InstallPkg('alien') then
       begin
-       ShowMessage(StringReplace(strPkgInstFail,'%p','alien',[rfreplaceAll]));
+       ShowMessage(StringReplace(rsPkgInstFail,'%p','alien',[rfreplaceAll]));
        pkit.Free;
        exit;
        end;
@@ -650,7 +650,7 @@ begin
      end else exit;
 
    Application.ProcessMessages;
-   Caption:=StringReplace(strConvTitle,'%p','RPM',[rfReplaceAll]);
+   Caption:=StringReplace(rsConvTitle,'%p','RPM',[rfReplaceAll]);
    Process1.CommandLine:='alien --to-deb -v -i --scripts '+''''+OpenDialog1.FileName+'''';
    GetOutPutTimer.Enabled:=true;
    Process1.Execute;
@@ -702,7 +702,7 @@ begin
   try
    p.Execute;
   except
-   ShowMessage(strNoGUIPkgManFound);
+   ShowMessage(rsNoGUIPkgManFound);
    p.Free;
    exit;
   end;
@@ -746,7 +746,7 @@ begin
   end;
   if not FileExists(p.CommandLine) then
   begin
-   ShowMessage(strNoGUIPkgManFound);
+   ShowMessage(rsNoGUIPkgManFound);
    p.Free;
    exit;
   end;
@@ -866,7 +866,7 @@ var uconf: TStringList;
 begin
 if UListBox.ItemIndex>-1 then
 begin
- if Application.MessageBox(PChar(strRmSrcQ),PChar(strRmSrcQC),MB_YESNO)=IDYES then
+ if Application.MessageBox(PChar(rsRmSrcQ),PChar(rsRmSrcQC),MB_YESNO)=IDYES then
  begin
   uconf:=tStringList.Create;
   uconf.LoadFromFile(RegDir+'updates.list');
@@ -874,9 +874,9 @@ begin
   uconf.SaveToFile(RegDir+'updates.list');
   uconf.Free;
   UListBox.Items.Delete(UListBox.ItemIndex);
-  ShowMessage(strSourceDeleted);
+  ShowMessage(rsSourceDeleted);
  end;
-end else ShowMessage(strPleaseSelectListItem);
+end else ShowMessage(rsPleaseSelectListItem);
 end;
 
 procedure TMnFrm.UListBoxClick(Sender: TObject);
@@ -899,7 +899,7 @@ if FileExists(ExtractFilePath(Application.ExeName)+'liupdate') then
 begin
   Process1.CommandLine:=ExtractFilePath(Application.ExeName)+'liupdate -show';
   Process1.Execute;
-end else ShowMessage(strLiUpdateAccessFailed);
+end else ShowMessage(rsLiUpdateAccessFailed);
 end;
 
 procedure TMnFrm.WarnDistCbChange(Sender: TObject);
@@ -913,14 +913,14 @@ end;
 
 procedure TMnFrm.FilterEdtEnter(Sender: TObject);
 begin
-  if FilterEdt.Text=strFilter then
+  if FilterEdt.Text=rsFilter then
    FilterEdt.Text:='';
 end;
 
 procedure TMnFrm.FilterEdtExit(Sender: TObject);
 begin
   if (StringReplace(FilterEdt.Text,' ','',[rfReplaceAll])='') then
-   FilterEdt.Text:=strFilter;
+   FilterEdt.Text:=rsFilter;
 end;
 
 procedure TMnFrm.FilterEdtKeyDown(Sender: TObject; var Key: Word;
@@ -936,7 +936,7 @@ begin
      end else
      begin
      Application.ProcessMessages;
-     StatusBar1.Panels[0].Text:=strFiltering;
+     StatusBar1.Panels[0].Text:=rsFiltering;
      for i:=0 to AList.Count-1 do
      begin
       TListEntry(AList[i]).Visible:=true;
@@ -947,7 +947,7 @@ begin
          TListEntry(AList[i]).Visible:=false;
          end;
        end;
-StatusBar1.Panels[0].Text:=strReady;
+StatusBar1.Panels[0].Text:=rsReady;
 end;
 end;
 
@@ -992,11 +992,11 @@ lang:=GetLangID;
 
  with xFrm do
  begin
-  Caption:=strSelMgrMode;
+  Caption:=rsSelMgrMode;
   btnTest.Visible:=false;
-  CatButton.Caption:=strSWCatalogue;
-  btnInstallAll.Caption:=strDispRootApps;
-  btnHome.Caption:=strDispOnlyMyApps;
+  CatButton.Caption:=rsSWCatalogue;
+  btnInstallAll.Caption:=rsDispRootApps;
+  btnHome.Caption:=rsDispOnlyMyApps;
   Refresh;
   ShowModal;
  end;
@@ -1022,46 +1022,46 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
   end;
 
  //Translate
- Caption:=strSoftwareManager;
- CatButton.Caption:=strSWCatalogue;
- Label1.Caption:=strShow;
- Label3.Caption:=strNoAppsFound;
- AboutBtn.Caption:=strAboutListaller;
- BitBtn1.Caption:=strBrowseLiCatalog;
- BitBtn2.Caption:=strOpenDistriCatalog;
- InstAppButton.Caption:=strInstalledApps;
- InstallButton.Caption:=strInstallPkg;
- CatButton.Caption:=strBrowseCatalog;
- RepoButton.Caption:=strRepositories;
- SettingsButton.Caption:=strSettings;
- FilterEdt.Text:=strFilter;
+ Caption:=rsSoftwareManager;
+ CatButton.Caption:=rsSWCatalogue;
+ Label1.Caption:=rsShow;
+ Label3.Caption:=rsNoAppsFound;
+ AboutBtn.Caption:=rsAboutListaller;
+ BitBtn1.Caption:=rsBrowseLiCatalog;
+ BitBtn2.Caption:=rsOpenDirsiCatalog;
+ InstAppButton.Caption:=rsInstalledApps;
+ InstallButton.Caption:=rsInstallPkg;
+ CatButton.Caption:=rsBrowseCatalog;
+ RepoButton.Caption:=rsRepositories;
+ SettingsButton.Caption:=rsSettings;
+ FilterEdt.Text:=rsFilter;
  //Translate config page
- edtUsername.Caption:=strUsername+':';
- edtPasswd.Caption:=strPassword+':';
- EnableProxyCb.Caption:=strEnableProxy;
- GroupBox1.Caption:=strProxySettings;
- AutoDepLdCb.Caption:=strAutoLoadDep;
- CbShowPkMon.Caption:=strShowPkMon;
+ edtUsername.Caption:=rsUsername+':';
+ edtPasswd.Caption:=rsPassword+':';
+ EnableProxyCb.Caption:=rsEnableProxy;
+ GroupBox1.Caption:=rsProxySettings;
+ AutoDepLdCb.Caption:=rsAutoLoadDep;
+ CbShowPkMon.Caption:=rsShowPkMon;
  //Translate repo page(s)
- UpdRepoSheet.Caption:=strUpdSources;
- RmUpdSrcBtn.Caption:=strDelSrc;
- UpdCheckBtn.Caption:=strCheckForUpd;
- UsILabel.Caption:=strListofSrc;
- BitBtn6.Caption:=strChangePkgManSettings;
+ UpdRepoSheet.Caption:=rsUpdSources;
+ RmUpdSrcBtn.Caption:=rsDelSrc;
+ UpdCheckBtn.Caption:=rsCheckForUpd;
+ UsILabel.Caption:=rsListofSrc;
+ BitBtn6.Caption:=rsChangePkgManSettings;
 
 with CBox do
 begin
- Items[0]:=strAll;
- Items[1]:=strEducation;
- Items[2]:=strOffice;
- Items[3]:=strDevelopment;
- Items[4]:=strGraphic;
- Items[5]:=strNetwork;
- Items[6]:=strGames;
- Items[7]:=strSystem;
- Items[8]:=strMultimedia;
- Items[9]:=strAddidional;
- Items[10]:=strOther;
+ Items[0]:=rsAll;
+ Items[1]:=rsEducation;
+ Items[2]:=rsOffice;
+ Items[3]:=rsDevelopment;
+ Items[4]:=rsGraphic;
+ Items[5]:=rsNetwork;
+ Items[6]:=rsGames;
+ Items[7]:=rsSystem;
+ Items[8]:=rsMultimedia;
+ Items[9]:=rsAddidional;
+ Items[10]:=rsOther;
 end;
  Image1.Picture.LoadFromFile(GetDataFile('graphics/header.png'));
  Application.ShowMainForm:=true;

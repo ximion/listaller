@@ -66,8 +66,8 @@ uses manager;
 
 procedure TRMForm.FormShow(Sender: TObject);
 begin
-Label1.Caption:=strWaiting;
-Caption:=StringReplace(strRMAppC,'%a','...',[rfReplaceAll])
+Label1.Caption:=rsWaiting;
+Caption:=StringReplace(rsRMAppC,'%a','...',[rfReplaceAll])
 end;
 
 procedure TRMForm.GetOutPutTimerTimer(Sender: TObject);
@@ -110,7 +110,7 @@ begin
   until noMoreOutput;
 if Process1.ExitStatus>0 then begin
     GetOutputTimer.Enabled:=false;
-    ShowMessage(strRMError);
+    ShowMessage(rsRMError);
     Memo1.Lines.SaveTofile(ConfigDir+'uninstall.log');
     halt;
     exit;
@@ -136,7 +136,7 @@ LogAdd('Package could be installed with MoJo/LOKI...');
 inf:=TIniFile.Create(dsk);
 if not DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))) then begin
 writeLn('Listaller cannot handle this installation!');
-ShowMessage(strCannotHandleRM);inf.Free;end else
+ShowMessage(rsCannotHandleRM);inf.Free;end else
 if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'.mojosetup') then begin
 //MOJO
 mandir:=ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'.mojosetup';
@@ -177,7 +177,7 @@ begin
 end else
 begin
  writeLn('Listaller cannot handle this installation type!');
- ShowMessage(strCannotHandleRM);inf.Free;end;
+ ShowMessage(rsCannotHandleRM);inf.Free;end;
 end;
 
 procedure TRMForm.FormActivate(Sender: TObject);
@@ -202,8 +202,8 @@ Memo1.Lines.Add('Connecting to PackageKit... (run "pkmon" to see the actions)');
 GetOutPutTimer.Enabled:=false;
 UProgress.Position:=0;
 entry:=TListEntry(AList[uID]);
-RMForm.Caption:=StringReplace(strRMAppC,'%a',entry.AppName,[rfReplaceAll]);
-if Application.MessageBox(PAnsiChar(StringReplace(strRealUninstQ,'%a',entry.AppName,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then begin
+RMForm.Caption:=StringReplace(rsRMAppC,'%a',entry.AppName,[rfReplaceAll]);
+if Application.MessageBox(PAnsiChar(StringReplace(rsRealUninstQ,'%a',entry.AppName,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then begin
 LogAdd('Reading application information...');
 RMForm.Label1.Caption:='Reading application information...';
 GetOutPutTimer.Enabled:=true;
@@ -221,7 +221,7 @@ end;
 UninstallIPKApp(entry.AppName,entry.srID,Memo1.Lines,@UProgressChange,false,true);
 LogAdd('Finished!');
 Memo1.Lines.SaveToFile(ConfigDir+'uninstall.log');
-ShowMessage(strUnistSuccess);
+ShowMessage(rsUnistSuccess);
 //Controls wieder aktivieren
 BitBtn1.Enabled:=true;
 SWBox.Enabled:=true;
@@ -262,7 +262,7 @@ f:=pkit.PkgNameFromFile(entry.srID);
 if f='Failed!' then
 begin UninstallMojo(entry.srID);exit;end;
 if f='PackageKit problem.' then
-begin ShowMessage(strPKitProbPkMon);exit;end;
+begin ShowMessage(rsPKitProbPkMon);exit;end;
 g:='';
 
 Application.ProcessMessages;
@@ -279,8 +279,8 @@ tmp.Free;
 LogAdd('Package detected: '+f);
 if (StringReplace(g,' ','',[rfReplaceAll])='')or
 (Application.MessageBox(PAnsiChar(
-StringReplace(StringReplace(StringReplace(strRMPkg,'%p',f,[rfReplaceAll]),'%a',entry.AppName,[rfReplaceAll]),'%pl',PAnsiChar(g),[rfReplaceAll])
-),PChar(strRMPkgQ),MB_YESNO)=IDYES)
+StringReplace(StringReplace(StringReplace(rsRMPkg,'%p',f,[rfReplaceAll]),'%a',entry.AppName,[rfReplaceAll]),'%pl',PAnsiChar(g),[rfReplaceAll])
+),PChar(rsRMPkgQ),MB_YESNO)=IDYES)
 then begin
 
 LogAdd('Uninstalling '+f+' ...');
@@ -290,7 +290,7 @@ pkit.RemovePkg(f);
 UProgress.Position:=78;
 
 if not pkit.OperationSucessfull then begin
-ShowMessage(strRmError);exit;RMForm.Close;end;
+ShowMessage(rsRmError);exit;RMForm.Close;end;
 
 UProgress.Position:=100;
 LogAdd('Done.');
@@ -322,13 +322,13 @@ begin
    Memo1.Visible:=false;
    Width:=456;
    Height:=134;
-   DetailsBtn.Caption:=strDetails+' -> ';
+   DetailsBtn.Caption:=rsDetails+' -> ';
   end else
   begin
    Memo1.Visible:=true;
    Width:=456;
    Height:=294;
-   DetailsBtn.Caption:=strDetails+' <- ';
+   DetailsBtn.Caption:=rsDetails+' <- ';
   end;
 end;
 

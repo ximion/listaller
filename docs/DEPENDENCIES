@@ -1,3 +1,46 @@
 This file contains information about all libraries Listaller needs to run and to compile:
 
 === Build dependencies ===
+Listaller needs the following modules to compile:
+ (Debian dependencies)
+
+ * libgtk2.0-dev
+ * lazarus (>=0.9.28)
+ * fpc (>= 2.2.4)
+ * fp-units-gtk
+ * libqt4intf
+ * libqt4-core
+ * sqlite3
+ * libsqlite3-0
+ * libsqlite3-dev
+ * libglib2.0-0
+ * libglib2.0-dev
+
+The dependencies are needed to compile the Qt4 and the GTK2 version of Listaller
+
+=== Dependencies ===
+Listaller needs the following packages to run:
+
+GTK2 version:
+ * libc6
+ * libglib2.0-0
+ * libgtk2.0-0
+ * libpango1.0-0
+ * libsqlite3-0
+ * libx11-6
+ * gksu
+ * xdg-utils
+ * lsb-release
+ * packagekit
+ * python-packagekit
+ * python
+
+Qt4 version:
+ * libc6
+ * libsqlite3-0
+ * kdesudo
+ * packagekit
+ * python-packagekit
+ * python
+ * libqt4intf
+ * kde-icons-oxygen

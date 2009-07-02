@@ -1,4 +1,4 @@
-# Czech translation for listaller
+# Danish translation for listaller
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the listaller package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
@@ -8,131 +8,109 @@ msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2009-05-06 13:39+0000\n"
-"Last-Translator: Vojtěch Trefný <vojtech.trefny@gmail.com>\n"
-"Language-Team: Czech <cs@li.org>\n"
+"PO-Revision-Date: 2009-05-02 21:58+0000\n"
+"Last-Translator: Jimmy Frydkær Jensen <thewolf40@mailme.dk>\n"
+"Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-06-19 18:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: trstrings:strconvertpkg
-msgid ""
-"You want to install an %x-Package, but your Linux-Distribution's package "
-"system is %y.\rThis package can be converted using \"alien\", but this will "
-"take some time and eventually the application won't work\rDo you want to "
-"convert the package now?"
-msgstr ""
-"Snažíte se nainstalovat balík typu %x, ale balíkovací systém vaší distribuce "
-"je %y.\rTento balík může být upraven pomocí nástroje \"alien\", ale může to "
-"zabrat více času a je zde možnost, že daná aplikace nebude vůbec "
-"fungovat\rPřejete si balík upravit?"
-
-#: trstrings:strrmpkg
-msgid ""
-"Do you really want to remove \"%p\", containing %a?\rThe following "
-"package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
-"those packages, press \"No\"!"
-msgstr ""
-"Opravdu chcete odstranit \"%p\", obsahující %a?\rNásledující balíky budou "
-"automaticky odstraněny: %pl\rPokud si nejste jistě, jestli tyto balíky "
-"potřebujete, stiskněte \"Ne\"!"
-
 #: trstrings:strinstaborted
 msgid "Installation aborted."
-msgstr "Instalace přerušena"
+msgstr "Installation afbrudt."
 
 #: trstrings:strappninstall
 msgid "The application %a was not installed."
-msgstr "Aplikace %a nebyla nainstalována."
+msgstr "Programmet %a blev ikke installeret."
 
 #: trstrings:strwasinstalled
 msgid "The application %a was installed successfully!"
-msgstr "Aplikace %a byla úspěšně nainstalována!"
+msgstr "Programmet %a blev installeret succesfuldt!"
 
 #: trstrings:strinstallnow
 msgid "Install now"
-msgstr "Nainstalovat nyní"
+msgstr "Installér nu"
 
 #: trstrings:strrunparam
 msgid ""
 "Please run \"listallgo\" with path to install-package as first parameter!"
 msgstr ""
-"Prosím spusťte \"listallgo\" a jako první parametr uveďte cestu k "
-"instalačnímu balíku!"
+"Kør venligst \"listallgo\" med sti til installations-pakke som første "
+"parameter!"
 
 #: trstrings:strwelcome
 msgid "Welcome!"
-msgstr "Vítejte!"
+msgstr "Velkommen!"
 
 #: trstrings:strntostart
 msgid "Press \"Next\" to start the installation!"
-msgstr "Prostart aplikace klikněte na \"Další\"!"
+msgstr "Tryk \"Næste\" for at starte installationen!"
 
 #: trstrings:strprogdesc
 msgid "Program description:"
-msgstr "Popis programu:"
+msgstr "Programbeskrivelse:"
 
 #: trstrings:strlicense
 msgid "Software license"
-msgstr "Licence:"
+msgstr "Software licens"
 
 #: trstrings:strpleaseread
 msgid "Please read the following information carefully:"
-msgstr "Následující informace si pozorně přečtěte:"
+msgstr "Læs venligst følgende information omhyggeligt:"
 
 #: trstrings:strrunning
 msgid "Running installation..."
-msgstr "Spouštím instalaci..."
+msgstr "Kører installation..."
 
 #: trstrings:strplwait
 msgid "Please wait."
-msgstr "Prosím čekejte."
+msgstr "Vent venligst."
 
 #: trstrings:strcomplete
 msgid "Installation completed!"
-msgstr "Instalace dokončena!"
+msgstr "Installation færdig!"
 
 #: trstrings:strprfinish
 msgid "Press \"Finish\" to close."
-msgstr "Pro uzavření kliněte na \"Dokončit\"."
+msgstr "Tryk \"Færdig\" for at lukke."
 
 #: trstrings:strfinish
 msgid "Finish"
-msgstr "Dokončit"
+msgstr "Færdig"
 
 #: trstrings:strabort
 msgid "Abort"
-msgstr "Přerušit"
+msgstr "Afbryd"
 
 #: trstrings:strback
 msgid "Back"
-msgstr "Zpět"
+msgstr "Tilbage"
 
 #: trstrings:strnext
 msgid "Next"
-msgstr "Další"
+msgstr "Næste"
 
 #: trstrings:strdisplog
 msgid "Display installation log"
-msgstr "Zobrazit instalační log"
+msgstr "Vis installations-log"
 
 #: trstrings:striagree
 msgid "I agree with the above terms and conditions"
-msgstr "Souhlasím s výše uvedenými podmínkami"
+msgstr "Jeg er enig i ovenstående betingelser"
 
 #: trstrings:strinagree
 msgid "I don't agree"
-msgstr "Nesouhlasím"
+msgstr "Jeg er ikke enig"
 
 #: trstrings:strldnsupported
 msgid "Your Linux distribution is not supported by Listaller yet!"
-msgstr "Listaller bohužel nepodporuje vaši distribuci."
+msgstr "Din Linux Distribution er endnu ikke understøttet af Listaller!"
 
 #: trstrings:strnsupported
 msgid "This package does not support your Linux distribution."
-msgstr "Tento balík nepodporuje vaši distribuci."
+msgstr "Denne pakke understøtter ikke din Linux distribution."
 
 #: trstrings:strdepnotfound
 msgid ""
@@ -141,158 +119,157 @@ msgstr ""
 
 #: trstrings:strinclose
 msgid "The installer will close now"
-msgstr "Instalátor se nyní ukončí"
+msgstr "Installeren vil nu lukke"
 
 #: trstrings:strcnoverwrite
 msgid "Unable to overwrite the file %f."
-msgstr "Nemohu přepsat soubor %f."
+msgstr "Kan ikke overskrive filen %f."
 
 #: trstrings:strnotifydevs
 msgid "Please notify the developers on http://launchpad.net/listaller"
-msgstr "Prosím informujte vývojáře na http://launchpad.net/listaller"
+msgstr "Giv venligst udviklerne besked på http://launchpad.net/listaller"
 
 #: trstrings:strextracterror
 msgid "Error while extracting files!"
-msgstr "Chyba při rozbalování souborů!"
+msgstr "Fejl ved udpakning af filer!"
 
 #: trstrings:strpkgdm
 msgid ""
 "The IPK package could be damaged or you haven't enough rights to acces "
 "required files/folders."
 msgstr ""
-"Balík IPK je nejspíš poškozen nebo nemáte dostatečná oprávnění pro přístup k "
-"potřebný souborům a složkám."
+"IPK pakken kan være beskadiget eller du har ikke tilstrækkelige rettigheder "
+"for at tilgå de krævede filer/mapper."
 
 #: trstrings:strabload
 msgid "Loading aborted."
-msgstr "Načítání bylo přerušeno."
+msgstr "Indlæsning afbrudt."
 
 #: trstrings:stralreadyinst
 msgid "This application is already installed"
-msgstr "Tato aplikace je již nainstalována"
+msgstr "Dette program er allerede installeret"
 
 #: trstrings:strinstallagain
 msgid "Do you want to install it again?"
-msgstr "Přejete si ji přeinstalovat?"
+msgstr "Ønsker du at installere det  igen?"
 
 #: trstrings:strwelcometo
 msgid "Welcome to the installation of %a"
-msgstr "Vítejte u instalace aplikace %a"
+msgstr "Velkommen til installation af %a"
 
 #: trstrings:strinstof
 msgid "Installation of %a"
-msgstr "Instalace aplikace %a"
+msgstr "Installation af %a"
 
 #: trstrings:strtestmode
 msgid "Testmode"
-msgstr "Testovací režim"
+msgstr "Test-tilstand"
 
 #: trstrings:strtestfinished
 msgid "Test of the application finished."
-msgstr "Test aplikace byl ukončen"
+msgstr "Test af programmet afsluttet."
 
 #: trstrings:strpkginval
 msgid "The package was invalid!"
-msgstr "Balík byl neplatný!"
+msgstr "Pakken var ugyldig!"
 
 #: trstrings:strcouldntsolve
 msgid "Dependencies couldn't be solved!"
-msgstr "Nelze vyřešit závislosti!"
+msgstr "Afhængigheder kunne ikke løses!"
 
 #: trstrings:strviewlog
 msgid "Please view the logfile at %p"
-msgstr "Prosím podívejte se do souboru %p"
+msgstr "Se venligst logfilen i %p"
 
 #: trstrings:strpkgerror
 msgid "Installation package is corrupt"
-msgstr "Instalační balík je poškozen"
+msgstr "Installations-pakke er korrupt"
 
 #: trstrings:strappclose
 msgid "The application will close now "
-msgstr "Aplikace se nyní ukončí "
+msgstr "Programmet vil nu lukke "
 
 #: trstrings:strstep1
 msgid "Phase 1/4: Resolving dependencies..."
-msgstr "Fáze 1/4: Řešení závislostí"
+msgstr "Fase 1/4: Løser afhængigheder..."
 
 #: trstrings:strwdldep
 msgid "This application wants to download & install a dependency from %l"
-msgstr "Tato aplikace chce stáhnout a nainstalovat závislosti z %l"
+msgstr "Dette program vil hente og installere afhængigheder fra %l"
 
 #: trstrings:strwallow
 msgid "Do you want confirm this action?"
-msgstr "Přejete si tuto akci potvrdit?"
+msgstr "Ønsker du at godkende denne handling?"
 
 #: trstrings:strlicloseani
 msgid "Listaller will close now. The package couldn't be installed."
-msgstr "Listaller se nyní ukončí. Tento balík není možné nainstalovat."
+msgstr "Listaller vil lukke nu. Pakken kunne ikke installeres."
 
 #: trstrings:strstep2
 msgid "Phase 2/4: Installing files..."
-msgstr "Fáze 2/4: Instalace souborů..."
+msgstr "Fase 2/4: Installerer filer..."
 
 #: trstrings:strstep3
 msgid "Phase 3/4: Chmod new files..."
-msgstr "Fáze 3/4: Nastavení oprávnění souborů..."
+msgstr "Fase 3/4: Chmod nye filer..."
 
 #: trstrings:strstep4
 msgid "Phase 4/4: Registering application..."
-msgstr "Fáze 4/4: Zanesení aplikace do databáze..."
+msgstr "Fase 4/4: Registrerer programmet..."
 
 #: trstrings:straddupdsrc
 msgid "The installation tries to add the following update source: "
-msgstr "Instalátor by chtěl přidat následující zdroj pro aktualizace: "
+msgstr "Installationen prøver at tilføje følgende opdateringskilde: "
 
 #: trstrings:strqaddupdsrc
 msgid "Should this source be added to the update sources list?"
-msgstr "Mám tento zdroj aktualizací přidat?"
+msgstr "Skal denne kilde tilføjes til opdaterings-kilde listen?"
 
 #: trstrings:strfinished
 msgid "Finished"
-msgstr "Hotovo"
+msgstr "Faædig"
 
 #: trstrings:strinstanyway
 msgid "Do you want to install it anyway? (This could raise problems)"
-msgstr "Přejete si balík i přesto nainstalovat? (Může to způsobit problémy.)"
+msgstr "Ønsker du at installere alligevel? (Dette kan skabe problemer)"
 
 #: trstrings:strinvarchitecture
 msgid ""
 "The application which this package contains was not built for the current "
 "system architecture."
 msgstr ""
-"Balík obsahující tuto aplikaci nebyl vytvořen pro stávající systémovou "
-"architekturu."
+"Programmet som denne pakke indeholder var ikke bygget til den nuværende "
+"system-arkitektur."
 
 #: trstrings:strwilldlfiles
 msgid "(This program will download the needed files from the internet)"
-msgstr "(Program si stáhne potřebné soubory z Internetu)"
+msgstr "Dette program vil hente nødvendige filer fra Internettet)"
 
 #: trstrings:strinvaliddversion
 msgid "Package was not build for your Linux distribution release."
-msgstr "Balík nebyl vytvořen pro toto vydání vaší distribuce."
+msgstr "Pakke var ikke bygget til denne udgivelse af din Linux distribution."
 
 #: trstrings:strftpfailed
 msgid ""
 "Problem while downloading the packages. Maybe the login on the FTP-Server "
 "failed."
-msgstr ""
-"Chyba při stahování balíků. Nejspíš selhalo přihlášení na FTP server."
+msgstr "Problem ved hentning af pakken. Login på FTP-server fejlede måske."
 
 #: trstrings:strsuccess
 msgid "Success!"
-msgstr "Úspěch!"
+msgstr "Succes!"
 
 #: trstrings:strmain
 msgid "Main"
-msgstr "Hlavní"
+msgstr "Vigtigst"
 
 #: trstrings:strdetails
 msgid "Details"
-msgstr "Detaily"
+msgstr "Detaljer"
 
 #: trstrings:strinstallation
 msgid "Installation"
-msgstr "Instalace"
+msgstr "Installation"
 
 #: trstrings:strnoldsources
 msgid ""
@@ -302,11 +279,11 @@ msgstr ""
 
 #: trstrings:strusecomppq
 msgid "Use compatible packages?"
-msgstr "Použít kompatibilní balíky?"
+msgstr "Brug kompatible pakker?"
 
 #: trstrings:strnocomp
 msgid "No compatible packages found!"
-msgstr "Žádné kompatibilní balíky nebyly nalezeny!"
+msgstr "Ingen kompatible pakker fundet!"
 
 #: trstrings:stractionnotpossiblepkg
 msgid ""
@@ -320,23 +297,23 @@ msgstr ""
 
 #: trstrings:strreinstall
 msgid "Re-install"
-msgstr "Přeinstalovat"
+msgstr "Gen-installer"
 
 #: trstrings:strpkgdownload
 msgid "The following packages will be downloaded:"
-msgstr "Následující balíky budou staženy:"
+msgstr "Folgende pakker vil blive hentet:"
 
 #: trstrings:strgetdependencyfrom
 msgid "Get dependency from"
-msgstr "Získat závislosti z"
+msgstr "Få afhængigheder fra"
 
 #: trstrings:strplwait2
 msgid "Please wait..."
-msgstr "Prosím čekejte..."
+msgstr "Vent venligst..."
 
 #: trstrings:strdepdlproblem
 msgid "Problem while downloading the dep-file."
-msgstr "Chyba při stahování dep-souboru."
+msgstr "Problem med hentning af .dep-fil."
 
 #: trstrings:strhasherror
 msgid ""
@@ -346,19 +323,19 @@ msgstr ""
 
 #: trstrings:strinstallationmode
 msgid "Installation mode:"
-msgstr "Režim instalace:"
+msgstr "Installations-tilstand:"
 
 #: trstrings:strimodeinstruction
 msgid "Select which parts of the application should be installed."
-msgstr "Zvolte, které části aplikace se budou instalovat."
+msgstr "Vælg hvilke dele af programmet som skal installeres."
 
 #: trstrings:strmode
 msgid "Mode"
-msgstr "Režim"
+msgstr "Tilstand"
 
 #: trstrings:strwanttodoq
 msgid "What do you want to do?"
-msgstr "Co si přejete udělat?"
+msgstr "Hvad ønsker du at gøre?"
 
 #: trstrings:strpackagekitwarning
 msgid ""
@@ -371,48 +348,47 @@ msgid ""
 "Make sure that you have got this package from a save source and a serious "
 "publisher!"
 msgstr ""
-"Ujistěte se, že jste tento balík získali z bezpečného zdroje a od "
-"důvěryhodného tvůrce!"
+"Du bør sikre dig at du har pakken fra en sikker kilde og en seriøs udgiver!"
 
 #: trstrings:strinstalleveryone
 msgid "Install application for everyone"
-msgstr "Nainstalovat aplikaci pro všechny uživatele"
+msgstr "Installer program for alle"
 
 #: trstrings:strtestapp
 msgid "Test application"
-msgstr "Otestovat aplikaci"
+msgstr "Testprogram"
 
 #: trstrings:strinstallhome
 msgid "Install into my Home directory"
-msgstr "Nainstalovat do domovského adresáře"
+msgstr "Installér til min hjemmemappe"
 
 #: trstrings:strselinstmode
 msgid "Select installation mode"
-msgstr "Zvolte instalační režim"
+msgstr "Vælg installations-tilstand"
 
 #: trstrings:strsoftwaremanager
 msgid "Software Manager"
-msgstr "Správce softwaru"
+msgstr "Software håndterer"
 
 #: trstrings:strupdsources
 msgid "Update sources"
-msgstr "Aktualizovat zdroje"
+msgstr "Opdatér kilder"
 
 #: trstrings:strclose
 msgid "Close"
-msgstr "Zavřít"
+msgstr "Luk"
 
 #: trstrings:strdelsrc
 msgid "Delete source"
-msgstr "Smazat zdroj"
+msgstr "Slet kilde"
 
 #: trstrings:strlistofsrc
 msgid "The following update sources are installed:"
-msgstr "Budou přidány následujcí zdroje pro aktualizace."
+msgstr "Følgende opdaterings-kilder er installeret:"
 
 #: trstrings:struninstall
 msgid "Uninstall"
-msgstr "Odinstalovat"
+msgstr "Afinstallér"
 
 #: trstrings:strswcatalogue
 msgid "Browse catalogue"
@@ -420,115 +396,123 @@ msgstr ""
 
 #: trstrings:strshow
 msgid "Show:"
-msgstr "Zobrazit:"
+msgstr "Vis:"
 
 #: trstrings:strall
 msgid "All"
-msgstr "Vše"
+msgstr "Alle"
 
 #: trstrings:streducation
 msgid "Education"
-msgstr "Vzdělání"
+msgstr "Uddannelse"
 
 #: trstrings:stroffice
 msgid "Office"
-msgstr "Kancelář"
+msgstr "Kontor"
 
 #: trstrings:strdevelopment
 msgid "Development"
-msgstr "Vývoj"
+msgstr "Udvikling"
 
 #: trstrings:strgraphic
 msgid "Graphic"
-msgstr "Grafika"
+msgstr "Grafik"
 
 #: trstrings:strnetwork
 msgid "Network"
-msgstr "Síť"
+msgstr "Netværk"
 
 #: trstrings:strgames
 msgid "Games"
-msgstr "Hry"
+msgstr "Spil"
 
 #: trstrings:strsystem
 msgid "System"
-msgstr "Systém"
+msgstr "System"
 
 #: trstrings:strmultimedia
 msgid "Multimedia"
-msgstr "Multimédia"
+msgstr "Multimedie"
 
 #: trstrings:straddidional
 msgid "Utilities"
-msgstr "Nástroje"
+msgstr "Værktøjer"
 
 #: trstrings:strother
 msgid "Other"
-msgstr "Ostatní"
+msgstr "Andre"
 
 #: trstrings:strversion
 msgid "Version"
-msgstr "Verze"
+msgstr "Version"
 
 #: trstrings:strauthor
 msgid "Autor"
-msgstr "Autor"
+msgstr "Forfatter"
 
 #: trstrings:strusername
 msgid "Username"
-msgstr "Uživatelské jméno"
+msgstr "Brugernavn"
 
 #: trstrings:strpassword
 msgid "Password"
-msgstr "Heslo"
+msgstr "Adgangskode"
 
 #: trstrings:strproxysettings
 msgid "Proxy-Settings"
-msgstr "Nastavení proxy"
+msgstr "Proxy indstillinger"
 
 #: trstrings:strenableproxy
 msgid "Enable Proxy-Server"
-msgstr "Povolit proxy server"
+msgstr "Aktivér åroxy-server"
 
 #: trstrings:strlokierror
 msgid "Can't load LOKI-Setup information."
-msgstr "Nemohu načíst informace LOKI-Setup"
+msgstr "Kan ikke indlæse LOKI-Setup information."
 
 #: trstrings:strcannotloadicon
 msgid ""
 "Unable to load the icon of %a. Please notify the developers of Listaller or "
 "this application!"
 msgstr ""
-"Nemohu načíst ikonu aplikace %a.. Informujte vývojáře Listaller nebo této "
-"aplikace!"
+"Kan ikke indlæse ikonet til %a. Venligst underret udviklerne af Listaller "
+"eller dette program!"
 
 #: trstrings:strautoloaddep
 msgid "Load dependencies from included webserver-urls automatically"
-msgstr "Načíst závislosti ze specifikovaného serveru automaticky."
+msgstr "Indlæs afhængigheder fra inkluderede web-server-urls automatisk"
 
 #: trstrings:strready
 msgid "Ready."
-msgstr "Připraven."
+msgstr "Klar."
+
+#: trstrings:strconvertpkg
+msgid ""
+"You want to install an %x-Package, but your Linux-Distribution's package "
+"system is %y.\rThis package can be converted using \"alien\", but this will "
+"take some time and eventually the application won't work\rDo you want to "
+"convert the package now?"
+msgstr ""
 
 #: trstrings:strconvertpkgq
 msgid "Convert package?"
-msgstr "Konvertovat balík?"
+msgstr "Konverter pakke?"
 
 #: trstrings:strconvtitle
 msgid "Converting %p package..."
-msgstr "Konvertuji balík %p..."
+msgstr "Konverterer %p pakke..."
 
 #: trstrings:strfiltering
 msgid "Filtering..."
-msgstr "Filtrování..."
+msgstr "Filtrerer..."
 
 #: trstrings:strfilter
 msgid "Filter:"
-msgstr "Filtr:"
+msgstr "Filter:"
 
 #: trstrings:strloading
 msgid "Loading..."
-msgstr "Načítání..."
+msgstr "Indlæser..."
 
 #: trstrings:strinstalledapps
 msgid "Installed applications"
@@ -561,15 +545,15 @@ msgstr ""
 
 #: trstrings:strdisprootapps
 msgid "Display system applications"
-msgstr "Zobrazit systémové aplikace"
+msgstr "Vis system-programmer"
 
 #: trstrings:strdisponlymyapps
 msgid "Display my applications"
-msgstr "Zobrazit mé aplikace"
+msgstr "Vis mine programmer"
 
 #: trstrings:strselmgrmode
 msgid "Select software-manager mode:"
-msgstr "Vyberte režim správce softwaru:"
+msgstr "Vælg software-håndterings tilstand:"
 
 #: trstrings:strlistalleralien
 msgid ""
@@ -579,19 +563,19 @@ msgstr ""
 
 #: trstrings:strinstpkgq
 msgid "Install package?"
-msgstr "Nainstalovat balík?"
+msgstr "Installér pakke?"
 
 #: trstrings:strpkginstfail
 msgid "Package %p could not be installed."
-msgstr "Balík %p nelze nainstalovat."
+msgstr "Pakke %p kunne ikke installeres."
 
 #: trstrings:strshowpkmon
 msgid "Start PackageKit monitor before running transactions"
-msgstr "Před provedením změn spusťte PackaKit"
+msgstr "Start pakke-kit overvåger før kørsel af transaktioner"
 
 #: trstrings:straboutlistaller
 msgid "About Listaller"
-msgstr "O aplikaci Listaller"
+msgstr "Om Listaller"
 
 #: trstrings:strconfigurelistaller
 msgid "Configure Listaller"
@@ -607,80 +591,81 @@ msgstr ""
 
 #: trstrings:strabout
 msgid "About"
-msgstr "O aplikaci"
+msgstr "Om"
 
 #: trstrings:strauthors
 msgid "Authors"
-msgstr "Autoři"
+msgstr "Forfattere"
 
 #: trstrings:strrmsrcq
 msgid "Are you really sure that you want to delete this source?"
-msgstr "Jste si jist, že chcete smazat tento zdroj?"
+msgstr "Er du helt sikker på du ønsker at slette denne kilde?"
 
 #: trstrings:strrmsrcqc
 msgid "Delete source?"
-msgstr "Smazat zdroj?"
+msgstr "Slet kilde?"
 
 #: trstrings:strpkitprobpkmon
 msgid ""
 "Problem while connecting PackageKit. Run \"pkmon\" to get further "
 "information."
 msgstr ""
-"Chyba při spojení s PackageKit. Spusťte \"pkmon\" pro více informací."
+"Problem med forbindelse af pakke-kit. Kør \"pkmon\" for yderligere "
+"information."
 
 #: trstrings:strnoappsfound
 msgid "No applications found!"
-msgstr "Žádné aplikace nebyly nalezeny!"
+msgstr "Ingen programmer fundet!"
 
 #: trstrings:strcategory
 msgid "Category:"
-msgstr "Kategorie:"
+msgstr "Kategori:"
 
 #: trstrings:strwinstalldl
 msgid "Select software you want to download and to install:"
-msgstr "Vyberte software, který chcete stáhnout a nainstalovat:"
+msgstr "Vælg software du ønsker at hente til installation:"
 
 #: trstrings:strnoinfo
 msgid "No information available!"
-msgstr "Žádné informace nejsou dostupné!"
+msgstr "Ingen information tilgængelig!"
 
 #: trstrings:strdlsetup
 msgid "Downloading setup package..."
-msgstr "Stahování konfiguračního balíku..."
+msgstr "Henter setup-pakke..."
 
 #: trstrings:strerrcontactman
 msgid ""
 "Cannot download this package. Please contact the catalogue managers on %h"
 msgstr ""
-"Nemohu stáhnout tento balík. Prosím kontaktujte správce katalogu - %h"
+"Kan ikke hente denne pakke. Kontakt venligst katalog-håndtererne på %h"
 
 #: trstrings:strinstalling
 msgid "Running application installation..."
-msgstr "Spouštění instalace aplikace..."
+msgstr "Kører program-installation..."
 
 #: trstrings:strdownloadctbase
 msgid "Downloading catalogue base information..."
-msgstr "Stahování katalogu informací..."
+msgstr "Henter katalog basis-information..."
 
 #: trstrings:stropenpage
 msgid "Loading catalogue page..."
-msgstr "Načítání strany katalogu..."
+msgstr "Indlæser katalog side..."
 
 #: trstrings:strctdlabort
 msgid "Do you really want to abort this download?"
-msgstr "Opravdu si přejete přerušit stahování?"
+msgstr "Ønsker du virkelig at afbryde denne hentning?"
 
 #: trstrings:strrealuninstq
 msgid "Do you really want to uninstall %a?"
-msgstr "Opravdu si přejete odinstalovat %a?"
+msgstr "Ønsker du virkelig at afinstallere %a?"
 
 #: trstrings:strunistsuccess
 msgid "Application uninstalled successfully!"
-msgstr "Aplikace byla úspěšně odinstalována!"
+msgstr "Program afinstalleret sussecfuldt!"
 
 #: trstrings:strrmerror
 msgid "Error while uninstalling!"
-msgstr "Chyba při odinstalaci!"
+msgstr "Fejl under afinstallation!"
 
 #: trstrings:strcannothandlerm
 msgid ""
@@ -690,23 +675,30 @@ msgstr ""
 
 #: trstrings:strrmunsddeps
 msgid "Uninstalling unused deps..."
-msgstr "Odstraňování nepotřebných závislostí..."
+msgstr "Afinstallerer ubrugte deps..."
 
 #: trstrings:struninstalling
 msgid "Uninstalling..."
-msgstr "Odinstalace..."
+msgstr "Afinstallerer..."
+
+#: trstrings:strrmpkg
+msgid ""
+"Do you really want to remove \"%p\", containing %a?\rThe following "
+"package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+"those packages, press \"No\"!"
+msgstr ""
 
 #: trstrings:strrmpkgq
 msgid "Really remove?"
-msgstr "Opravdu odstranit?"
+msgstr "Fjern?"
 
 #: trstrings:strwaiting
 msgid "Waiting..."
-msgstr "Čekání..."
+msgstr "Venter..."
 
 #: trstrings:strrmappc
 msgid "Uninstalling %a"
-msgstr "Odinstalace %a"
+msgstr "Afinstallerer %a"
 
 #: trstrings:strlindesk
 msgid "Running under %de."
@@ -714,91 +706,91 @@ msgstr ""
 
 #: trstrings:strnoupdates
 msgid "There are no updates available!"
-msgstr "Nejsou k dispozici žádné aktualizace!"
+msgstr "Der er ingen opdateringer tilgængelige!"
 
 #: trstrings:strlogupdinfo
 msgid "Update info:"
-msgstr "Popis aktualizace:"
+msgstr "Opdaterings info:"
 
 #: trstrings:strfileschanged
 msgid "%f files will be changed."
-msgstr "%f soubory budou změněny."
+msgstr "%f filer vil blive ændret."
 
 #: trstrings:strupdto
 msgid "The application will be updated to version %v"
-msgstr "Aplikace bude aktualizována na verzi %v"
+msgstr "Programmet vil blive opdateret til version %v"
 
 #: trstrings:strcheckforupd
 msgid "Check for updates"
-msgstr "Zkontrolovat dostupnost aktualizací"
+msgstr "Kontroller for opdateringer"
 
 #: trstrings:strinstupd
 msgid "Install updates"
-msgstr "Nainstalovat aktualizace"
+msgstr "Installér opdateringer"
 
 #: trstrings:strshowupdater
 msgid "Show"
-msgstr "Zobrazit"
+msgstr "Vil"
 
 #: trstrings:strquitupdater
 msgid "Quit"
-msgstr "Ukončit"
+msgstr "Afslut"
 
 #: trstrings:strupdinstalling
 msgid "Applying updates..."
-msgstr "Uplatňování aktualizací..."
+msgstr "Udfører opdateringer..."
 
 #: trstrings:strupdconferror
 msgid "Error while unpacking and configuring files."
-msgstr "Chyba ři rozbalování a konfiguraci souborů."
+msgstr "Fejl ved udpakning og konfiguration af filer."
 
 #~ msgid ""
 #~ "There are no sources available for your Linux distribution\n"
 #~ "Try to install common packages?"
 #~ msgstr ""
-#~ "Pro vaši Linuxovou distribuci nejsou k dispozici žádné zdroje\n"
-#~ "Mám se pokusit nainstalovat \"obecný\" balík?"
+#~ "Der er ingen kilder tilgængelig for din Linux Distributuin\n"
+#~ "Prøv at installere almindelige pakker?"
 
 #~ msgid ""
 #~ "The selected action is not possible with this package.\n"
 #~ "Please contact the package maintainer to get more information."
 #~ msgstr ""
-#~ "Vybranou akci nelze s tímto balík provést.\n"
-#~ "Pro více informací kontaktujte správce tohoto balíku."
+#~ "Den valgte handling er ikke mulig med denne pakke.\n"
+#~ "Venligst kontakt pakke-vedligeholderen for at få mere information."
 
 #~ msgid ""
 #~ "This package has no valid ID\n"
 #~ "The installer will close."
 #~ msgstr ""
-#~ "Balík nemá platný identifikátor\n"
-#~ "Instalátor se nyní ukončí."
+#~ "Denne pakke har ingen gyldig ID\n"
+#~ "Installeren vil nu lukke."
 
 #~ msgid ""
 #~ "Hash doesn't match!\n"
 #~ "The package may be modified after creation.\n"
 #~ "Please obtain a new copy"
 #~ msgstr ""
-#~ "Kontrolní součet nesouhlasí!\n"
-#~ "Balík byl po vytvoření nejspíš upraven.\n"
-#~ "Obstarejte si prosím novou kopii"
+#~ "Hash matcher ikke!\n"
+#~ "Pakken kan være modificeret efter oprettelse.\n"
+#~ "Venligst hent en ny kopi"
 
 #~ msgid ""
 #~ "Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to "
 #~ "work correctly.\n"
 #~ "Please update PackageKit!"
 #~ msgstr ""
-#~ "Vaše verze PackageKit je %cp. Pro správné fungování Listaller potřebuje "
-#~ "PackageKit %np nebo vyšší.\n"
-#~ "Prosím aktualizujte PackageKit!"
+#~ "Dit pakke-kit version er %cp. Listaller behøver pakke-kit %np eller højere "
+#~ "for at arbejde korrekt.\n"
+#~ "Venligst opdatér Pakke-kit!"
 
 #~ msgid "Install new application"
-#~ msgstr "Nainstalovat novou aplikaci"
+#~ msgstr "Installér nyt program"
 
 #~ msgid "Listaller settings"
-#~ msgstr "Nastavení"
+#~ msgstr "Listaller indstilllinger"
 
 #~ msgid "Software catalogue"
-#~ msgstr "Katalog softwaru"
+#~ msgstr "Software katalog"
 
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "
@@ -807,38 +799,38 @@ msgstr "Chyba ři rozbalování a konfiguraci souborů."
 #~ "and eventually the application won't work.\n"
 #~ "Do you want to convert the package now?"
 #~ msgstr ""
-#~ "Snažíte se nainstalovat balík %x, ale vaše distribuce používá balíkovací "
-#~ "systém %y.\n"
-#~ "Balík je možné překonvertovat pomocí nástroje \"alien\", ale zabere to "
-#~ "nějaký čas a je možné, že ani poté nepůjde aplikace nainstalovat.\n"
-#~ "Přejete si balík překonvertovat nyní?"
+#~ "Du ønsker at installere en %x-pakke, men din Linux-distributions pakkesysten "
+#~ "er %y.\n"
+#~ "Denne pakke kan konverteres ved at bruge \"alien\", men dette vil tage noget "
+#~ "tid og programmet virker måske ikke.\n"
+#~ "Vil du konvertere pakken nu?"
 
 #~ msgid ""
 #~ "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
 #~ "installed.\n"
 #~ "Do you want to install \"alien\" now to continue?"
 #~ msgstr ""
-#~ "K překonvertování cizích balíků používá Listaller nástroj \"alien\", který "
-#~ "ovšem není nainstalován.\n"
-#~ "Přejete si \"alien\" nainstalovat a pokračovat?"
+#~ "Listaller bruger \"alien\" til at konvertere fremmede pakker, men værktøjet "
+#~ "er ikke installeret.\n"
+#~ "Ønsker du at installere \"alien\" nu for at fortsætte?"
 
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
 #~ "Listaller can handle.\n"
 #~ "You have to remove it manually."
 #~ msgstr ""
-#~ "Tato aplikace není typu MoJo-Installation - Listaller bohužel neumí pracovat "
-#~ "s jinými typy balíků.\n"
-#~ "Musíte jej odstranit ručně."
+#~ "Dette program er ikke en Mojo-installation og ingen anden pakketype "
+#~ "Listaller kan håndtere.\n"
+#~ "Du skal fjerne den manuelt."
 
 #~ msgid ""
 #~ "Do you really want to remove \"%p\", containing %a?\n"
 #~ "The following package(s) will be removed also: %pl\n"
 #~ "If you aren't sure that you won't need those packages, press \"No\"!"
 #~ msgstr ""
-#~ "Opravdu si přejete odstranit \"%p\", které obsahuje %a?\n"
-#~ "Následující balíky budou odstraněny: %pl\n"
-#~ "Pokud si nejste jist, že tyto balíky potřebujete, stiskněte \"Ne\"!"
+#~ "Ønsker du virkelig at fjerne \"%p\", indeholdende %a?\n"
+#~ "Følgende pakke(r) vil også blive fjernet: %pl\n"
+#~ "Hvis du ikke er sikker på at du ikke skal bruge disse pakker, tryk \"Nej\""
 
 #~ msgid "Running under %de (or similar)"
-#~ msgstr "Spouštím pod %de (nebo podobné)"
+#~ msgstr "Kører under %de (eller lignende)"

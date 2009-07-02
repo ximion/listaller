@@ -26,7 +26,7 @@ uses
   Classes, SysUtils, CustApp,
   Process, LiCommon, ipkhandle,
   TRStrings, IniFiles, HTTPSend,
-  FTPSend, Distri;
+  FTPSend, Distri, LiTranslator;
 
 type
 
@@ -58,7 +58,7 @@ type
 
 procedure TLipa.setupError(Sender: TObject; msg: String);
 begin
-  writeLn('Error while performing installation:');
+  writeLn(rsInstPerformError);
   writeLn(' '+msg);
   halt(2);
 end;
@@ -101,16 +101,16 @@ end;
 procedure TLipa.setupTermQuestion(Sender: TObject; msg: String);
 var s: String;
 begin
-  writeLn('Question:');
+  writeLn(rsQuestion);
   writeLn(' '+msg);
   writeLn('');
-  write('Yes/No?:');
+  write(rsYesNo1);
   readln(s);
   s:=LowerCase(s);
-  if (s='yes')or(s='y') then
+  if (s=LowerCase(rsYes))or(s=LowerCase(rsY)) then
   else
   begin
-  writeLn('Installation aborted.');
+  writeLn(rsInstAborted);
   halt(6);
   end;
 end;
@@ -177,7 +177,7 @@ begin
     proc.Execute;
     proc.Free;
     Terminate;
-   end else writeLn('You have to install the liBuild package before you can execute build actions!');
+   end else writeLn(rsInstallLiBuild);
   end;
 
   if HasOption('s','solve') then
@@ -193,7 +193,7 @@ begin
   begin
     if not FileExists(a) then
     begin
-     writeLn('The file "'+a+'" does not exists!');
+     writeLn(StringReplace(rsFileNotExists,'%f',a,[rfReplaceAll]));
      halt(1);
      exit;
     end;
@@ -207,14 +207,14 @@ begin
     setup.OnMainVisibleChange:=@setupMainVisibleChange;
     setup.OnTermQuestion:=@setupTermQuestion;
     setup.Initialize(a);
-    writeLn('== Installation of '+setup.AppName+' '+setup.AppVersion+' ==');
-    writeLn('-> Resolving dependencies...');
+    writeLn('== '+StringReplace(rsInstOf,'%a',setup.AppName+' '+setup.AppVersion,[rfReplaceAll])+' ==');
+    writeLn('-> '+rsResolvingDep);
     setup.ResolveDependencies;
 
-    writeLn(' - Done.');
+    writeLn(' - '+rsDone);
     if setup.DescFile <> '' then
     begin
-     writeLn('Package description:');
+     writeLn(rsProgDesc);
      lst:=TStringList.Create;
      lst.LoadFromFile(setup.DescFile);
      for i:=0 to lst.Count-1 do
@@ -223,7 +223,7 @@ begin
     end;
     if setup.LicenseFile <> '' then
     begin
-      writeLn('Software license:');
+      writeLn(rsLicense);
      lst:=TStringList.Create;
      lst.LoadFromFile(setup.LicenseFile);
      for i:=0 to lst.Count-1 do
@@ -235,16 +235,17 @@ begin
      c:='';
      repeat
       writeLn('');
-      write('Do you accept this license? (y/n):');
+      write(rsDoYouAcceptLicenseCMD);
       readLn(c);
-      if (c='n') or (c='no') then
+      c:=LowerCase(c);
+      if (c=LowerCase(rsN)) or (c=LowerCase(rsNo)) then
       begin
        setup.Free;
-       writeLn('Installation aborted.');
+       writeLn(rsInstAborted);
        halt(6);
        exit;
       end;
-     until (c='y')or(c='yes');
+     until (c=LowerCase(rsY))or(c=LowerCase(rsYes));
     end;
     // Check for active profiles
     lst:=TStringList.Create;
@@ -253,17 +254,17 @@ begin
     if lst.Count=0 then writeLn('Using profile: '+lst[0])
     else
     begin
-     writeLn('Select the installation mode of this application:');
+     writeLn(rsSelectIModeA);
      for i:=0 to lst.Count-1 do
       writeLn(' '+IntToStr(i+1)+') '+lst[i]);
      repeat
-      writeLn('Mode number:');
+      writeLn(rsModeNumber);
       readLn(c);
       try
        if StrToInt(c)-1>=lst.Count then
-        writeLn('Please select a number shown in the list!');
+        writeLn(rsSelectListNumber);
       except
-       writeLn('You have to enter a sigle number!');
+       writeLn(rsEnterNumber);
        c:=IntToStr(lst.Count+2);
       end;
      until (StrToInt(c)-1<=lst.Count);
@@ -272,12 +273,12 @@ begin
       setup.IFileInfo:='/stuff/fileinfo-'+copy(setup.Profiles[i],pos(' #',setup.Profiles[i])+2,length(setup.Profiles[i]))+'.id';
     end;
     lst.Free;
-    writeLn(' - Okay');
-    writeLn('-> Preparing installation (please wait)');
+    writeLn(' - '+rsOkay);
+    writeLn('-> '+rsPreparingInstall);
 
      if setup.IFileInfo='' then
      begin
-      writeLn(strPKGError+#13'Message: No file information that is assigned to this profile was not found!'+#13+strAppClose);
+      writeLn(rsPKGError+#13'Message: No file information that is assigned to this profile was not found!'+#13+rsAppClose);
       halt(1);
       exit;
      end;
@@ -308,7 +309,7 @@ begin
 
  writeLn('-> Running installation...');
  if not HasOption('verbose') then
- writeLn(' Step: '+strStep1);
+ writeLn(' Step: '+rsStep1);
 
  proc:=TProcess.Create(nil);
  proc.Options:=[poUsePipes];
@@ -327,7 +328,7 @@ begin
 
  if not Testmode then
  begin
-  writeLn(StringReplace(strWasInstalled,'%a',setup.AppName,[rfReplaceAll]));
+  writeLn(StringReplace(rsWasInstalled,'%a',setup.AppName,[rfReplaceAll]));
   writeLn('Finished.');
  end else
  begin
@@ -335,7 +336,7 @@ begin
   proc.CommandLine:=setup.CMDLn;
   Proc.Options:=[poWaitOnExit];
   Proc.Execute;
-  writeLn(strTestFinished);
+  writeLn(rsTestFinished);
    Proc.CommandLine := 'rm -rf /tmp/litest';
    Proc.Execute;
  end;
@@ -349,22 +350,22 @@ begin
   lst:=TStringList.Create;
   if not CheckApps(lst) then
   begin
-   write('Do you want to see detailed information [y/n]? ');
+   write(rsShowDetailedInfoCMD+' ');
    readLn(c);
-   if (c='y')or(c='yes') then
+   if (c=LowerCase(rsY))or(c=LowerCase(rsYes)) then
     for i:=0 to lst.Count-1 do
      writeLn(lst[i]);
-   write('Should lipa fix these problems automatically? [y/n]? ');
+   write(rsLipaAutoFixQ+' ');
    readln(c);
-   if (c='y')or(c='yes') then
+   if (c=LowerCase(rsY))or(c=LowerCase(rsYes)) then
     CheckApps(lst,true)
    else
     writeLn('Aborted.');
   end else
   begin
-   write('Do you want to see detailed information? [y/n]? ');
+   write(rsShowDetailedInfoCMD+' ');
    readLn(c);
-   if (c='y')or(c='yes') then
+   if (c=LowerCase(rsY))or(c=LowerCase(rsYes)) then
     for i:=0 to lst.Count-1 do
      writeLn(lst[i]);
   end;
@@ -397,26 +398,26 @@ procedure TLipa.WriteHelp;
 begin
 writeln('Usage: ',ExeName,' <command> [file} (options)');
 
-writeLn('Listaller main tool to handle ipk-packages');
-writeLn('Commands:');
-writeLn('-s, --solve [variable]                     Resolve Listaller path variable');
-writeLn('-i, --install [IPK-Package]                Installs an IPK package');
-writeLn('  Options:');
-writeLn('    --testmode                             Runs installation in testmode');
-writeLn('    --verbose                              Print all available log messages');
-writeLn('--checkapps                                Check if all installed applications have proper dependencies');
+writeLn(rsLipaInfo1);
+writeLn(rsCommands);
+writeLn(rsLipaInfo2);
+writeLn(rsLipaInfo3);
+writeLn('  '+rsOptions);
+writeLn('    '+rsLipaInfo4);
+writeLn('    '+rsLipaInfo5);
+writeLn(rsLipaInfo6);
 if FileExists('/bin/libuild') then
 begin
-writeLn('Package build commands:');
-writeLn('-b, --build [IPS-File] [Output-IPK]        Build ipk-package');
-writeLn('-u, --gen-update [IPS-File] [Repo-Path]    Create/Update update-repository');
-writeLn('-b, --build [IPS-File]                     Create DEB and RPM file from IPS');
+writeLn(rsCMDInfoPkgBuild);
+writeLn(rsLiBuildInfoA);
+writeLn(rsLiBuildInfoB);
+writeLn(rsLiBuildInfoC);
 end;
 end;
 
 procedure TLipa.OnExeception(Sender : TObject;E : Exception);
 begin
-writeLn('An internal error occured');
+writeLn(rsInternalError);
 writeLn('[Message]: '+E.Message);
 writeLn('(Aborted)');
 halt(8);

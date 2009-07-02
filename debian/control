@@ -20,7 +20,8 @@ Description: Listaller data
 
 Package: listaller-gtk
 Architecture: any
-Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), gksu, xdg-utils, lsb-release, packagekit, python-packagekit, python
+Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), listaller-cmd (= ${source:Version}), gksu, xdg-utils, 
+  lsb-release, packagekit, python-packagekit, python
 Provides: listaller, listaller-compact-gtk
 Description: Listaller main package (GTK2)
   Listaller is a distribution-independ software install system.
@@ -60,7 +61,8 @@ Description: Listaller Creator (GTK2)
 
 Package: listaller-qt
 Architecture: any
-Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), kdesudo, packagekit, python-packagekit, python, libqt4intf, kde-icons-oxygen
+Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), listaller-cmd (= ${source:Version}), kdesudo, packagekit, python-packagekit,
+  python, libqt4intf, kde-icons-oxygen
 Provides: listaller, listaller-compact-qt
 Description: Listaller main package (Qt4)
   Listaller is a distribution-independ software install system.

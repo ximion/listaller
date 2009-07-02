@@ -144,7 +144,7 @@ begin
 Parent:=self;
 Height:=24;
 Width:=120;
-Caption:=strUninstall;
+Caption:=rsUninstall;
 Anchors:=[akBottom,akRight];
 Top:=self.Height-40;
 Left:=self.Width-132;

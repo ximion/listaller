@@ -64,8 +64,7 @@ leak on Windows systems too.
 {When you enable this define, then is Raiseexcept property is on by default
 }
 
-{:@abstract(Synapse's library core)
-
+{** @abstract(Synapse's library core)
 Core with implementation basic socket classes.
 }
 

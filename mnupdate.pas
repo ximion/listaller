@@ -116,7 +116,7 @@ begin
   if not FileExists(RegDir+'updates.list') then exit;
   h.LoadFromFile(RegDir+'updates.list');
   if h.Count=1 then begin
-  ShowMessage(strNoUpdates);
+  ShowMessage(rsNoUpdates);
   exit;
   end;
 
@@ -220,7 +220,7 @@ begin
   writeLn('Database connection closed.');
 if CheckListBox1.Items.Count<=0 then begin
 //TrayIcon1.Icon.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_PROPERTIES,GTK_ICON_SIZE_SMALL_TOOLBAR);
-ShowMessage(strNoUpdates);
+ShowMessage(rsNoUpdates);
 end else begin BitBtn1.Enabled:=true;
 //TrayIcon1.Icon.Handle:=Gtk2LoadStockPixmap(GTK_STOCK_DIALOG_WARNING,GTK_ICON_SIZE_SMALL_TOOLBAR);
 end;
@@ -237,9 +237,9 @@ begin
 if CheckListBox1.ItemIndex>-1 then begin
 InfoMemo.Enabled:=true;
 InfoMemo.Lines.Clear;
-InfoMemo.Lines.Add(strLogUpdInfo);
-InfoMemo.Lines.Add(StringReplace(strFilesChanged,'%f',IntToStr((ulist[CheckListBox1.ItemIndex].Count div 2)),[rfReplaceAll]));
-InfoMemo.Lines.Add(StringReplace(strUpdTo,'%v','"'+anotes[CheckListBox1.ItemIndex].NVersion+'"',[rfReplaceAll]));
+InfoMemo.Lines.Add(rsLogUpdInfo);
+InfoMemo.Lines.Add(StringReplace(rsFilesChanged,'%f',IntToStr((ulist[CheckListBox1.ItemIndex].Count div 2)),[rfReplaceAll]));
+InfoMemo.Lines.Add(StringReplace(rsUpdTo,'%v','"'+anotes[CheckListBox1.ItemIndex].NVersion+'"',[rfReplaceAll]));
 end;
 end;
 
@@ -277,10 +277,10 @@ if LowerCase(paramstr(1))='-show' then Application.ShowMainForm:=true;
 LoadStockPixmap(STOCK_REFRESH,ICON_SIZE_BUTTON,BitBtn2.Glyph);
 LoadStockPixmap(STOCK_APPLY,ICON_SIZE_BUTTON,BitBtn1.Glyph);
 //Translation
-BitBtn2.Caption:=strCheckForUpd;
-BitBtn1.Caption:=strInstUpd;
-MenuItem1.Caption:=strQuitUpdater;
-MenuItem2.Caption:=strShowUpdater;
+BitBtn2.Caption:=rsCheckForUpd;
+BitBtn1.Caption:=rsInstUpd;
+MenuItem1.Caption:=rsQuitUpdater;
+MenuItem2.Caption:=rsShowUpdater;
 end;
 
 procedure TUMnForm.FormShow(Sender: TObject);

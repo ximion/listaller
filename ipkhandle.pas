@@ -174,7 +174,10 @@ end;
      @param fast Does a quick uninstallation if is true (Set to "False" by default)
      @param RmDeps Remove dependencies if true (Set to "True" by default)}
  procedure UninstallIPKApp(AppName, AppID: String; var Log: TStrings;progress: TPosEvent; fast: Boolean=false; RmDeps:Boolean=true);
- //** Checks dependencies of all installed apps
+ {** Checks dependencies of all installed apps
+     @param report Report of the executed actions
+     @param fix True if all found issues should be fixed right now
+     @returns True if everything is okay, False if dependencies are missing}
  function CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
 
 const
@@ -187,6 +190,7 @@ const
   ContSFiles: Boolean=false;
 
   //Notice: The "Testmode" variable is declared in LiCommon.pas
+
 implementation
 
 procedure TInstallation.SetMainMaxVal(val: integer);
@@ -298,6 +302,26 @@ end;
 dsApp.Close;
 end;
 
+procedure RemoveDuplicates(sl: TStringList);
+var
+i,j:Integer;
+begin
+i := 0;
+  while i <= sl.Count-1 do
+  begin
+    for j := i+1 to sl.Count-1 do
+    begin
+      if sl.Strings[i] = sl.Strings[j] then
+      begin
+         dec(i);
+         sl.Delete(j);
+        break;
+      end;
+    end;
+    inc(i);
+  end;
+end;
+
 function TInstallation.ResolveDependencies: Boolean;
 var i: Integer;p: TProcess;h: String;tmp: TStringList;pkit: TPackageKit;mnpos: Integer;
 begin
@@ -319,13 +343,14 @@ begin
      pkit:=TPackageKit.Create;
      h:=pkit.PkgNameFromNIFile(Dependencies[i]);
      pkit.Free;
-     if h='Failed!' then begin SendErrorMsg(StringReplace(strDepNotFound,'%l',Dependencies[i],[rfReplaceAll])+#13+strInClose);tmp.Free;Result:=false;exit;end;
-     if h='PackageKit problem.' then begin SendErrorMsg(strPKitProbPkMon);tmp.Free;Result:=false;exit;end;
+     if h='Failed!' then begin SendErrorMsg(StringReplace(rsDepNotFound,'%l',Dependencies[i],[rfReplaceAll])+#13+rsInClose);tmp.Free;Result:=false;exit;end;
+     if h='PackageKit problem.' then begin SendErrorMsg(rsPKitProbPkMon);tmp.Free;Result:=false;exit;end;
      tmp.Add(h);
      h:='';
      mnpos:=mnpos+1;
      SetMainPosVal(mnpos);
     end;
+    RemoveDuplicates(tmp);
     Dependencies.Assign(tmp);
     tmp.Free;
   end;
@@ -387,7 +412,7 @@ z.BaseDirectory:=lp+ExtractFileName(fname);
 z.ExtractFiles('arcinfo.pin');
 except
 z.Free;
-SendErrorMsg(strExtractError+#13+strPkgDM+#13+strABLoad);
+SendErrorMsg(rsExtractError+#13+rsPkgDM+#13+rsABLoad);
 Result:=false;
 exit;
 end;
@@ -432,7 +457,7 @@ writeLn('Architecture: '+n);
 writeLn('Package-Arch: '+FindChildNode(xnode,'architecture').NodeValue);
 if (pos(n,LowerCase(FindChildNode(xnode,'architecture').NodeValue))<=0)
 and (LowerCase(FindChildNode(xnode,'architecture').NodeValue)<>'all') then begin
-SendErrorMsg(strInvArchitecture);
+SendErrorMsg(rsInvArchitecture);
 z.Free;
 Result:=false;
 exit;
@@ -497,7 +522,7 @@ writeLn('Application main exec command is '+IAppCMD);
 
 if (IAppCMD='#')and (Testmode) then
 begin
- SendErrorMsg(strActionNotPossiblePkg);
+ SendErrorMsg(rsActionNotPossiblePkg);
  z.Free;
  Result:=false;
  exit;
@@ -506,7 +531,7 @@ end;
 IAppCMD:=SyblToPath(IAppCMD);
 
 if length(pID)<>17 then begin
- SendErrorMsg(strIDInvalid);
+ SendErrorMsg(rsIDInvalid);
  z.Free;
  Result:=false;
  exit;
@@ -529,6 +554,13 @@ xnode:=Doc.DocumentElement.FindNode('application');
 
 AType:=FindChildNode(xnode,'group').NodeValue;
 if AType='' then AType:='other';
+
+if FindChildNode(xnode,'icon')<>nil then
+begin
+IIconPath:=FindChildNode(xnode,'icon').NodeValue;
+z.ExtractFiles(ExtractFileName(IIconPath));
+IIconPath:=lp+PkgName+IIconPath;
+end;
 
 //Only executed to make sure that "RmApp" property is set
 if not Testmode then
@@ -592,7 +624,7 @@ if (xnode.FindNode('Dep'+DInfo.DName).Attributes.GetNamedItem('releases')<>nil)
 and (pos(DInfo.Release,xnode.FindNode('Dep'+DInfo.DName).Attributes.GetNamedItem('releases').NodeValue)<= 0)
 then
 begin
- SendTermQuestion(strInvalidDVersion);
+ SendTermQuestion(rsInvalidDVersion);
 end;
 xnode:=xnode.FindNode('Dep'+DInfo.DName);
 for i:=0 to xnode.ChildNodes.Count-1 do
@@ -614,7 +646,7 @@ z.Free;
 
 writeLn('Profiles count is '+IntToStr(PkProfiles.Count));
 if PkProfiles.Count<0 then begin
-SendErrorMsg(strPkgInval+#13'Message: No profiles and no file list found!');
+SendErrorMsg(rsPkgInval+#13'Message: No profiles and no file list found!');
 Profiles.Free;
 Result:=false;
 exit;
@@ -636,6 +668,13 @@ FDescFile:=FindChildNode(xnode,'description').NodeValue;
 IAppName:=xnode.Attributes.GetNamedItem('name').NodeValue;
 IAppVersion:=FindChildNode(xnode,'version').NodeValue;
 
+if FindChildNode(xnode,'icon')<>nil then
+begin
+IIconPath:=FindChildNode(xnode,'icon').NodeValue;
+z.ExtractFiles(ExtractFileName(IIconPath));
+IIconPath:=lp+PkgName+IIconPath;
+end;
+
 if FindChildNode(xnode,'author')<>nil then
 IAuthor:=FindChildNode(xnode,'author').NodeValue
 else
@@ -643,11 +682,6 @@ IAuthor:='#';
 
 AType:=FindChildNode(xnode,'group').NodeValue;
 z.ExtractFiles(ExtractFileName(FDescFile));
-
-if FindChildNode(xnode,'icon')<>nil then begin
-IIconPath:=FindChildNode(xnode,'icon').NodeValue;
-z.ExtractFiles(ExtractFileName(IIconPath));
-end;
 
 if FindChildNode(xnode,'desktopfiles')<>nil then
 IDesktopFiles:=FindChildNode(xnode,'desktopfiles').NodeValue;
@@ -686,11 +720,11 @@ else Dependencies.Add(n);
 end;
 end else
 begin
-SendTermQuestion(strNoLDSources);
+SendTermQuestion(rsNoLDSources);
 
 if xnode.FindNode('Dep'+DInfo.PackageSystem)=nil then
 begin
- SendErrorMsg(strNoComp+#13+strInClose);
+ SendErrorMsg(rsNoComp+#13+rsInClose);
  Result:=false;
  exit;
 end;
@@ -773,7 +807,7 @@ fi.LoadFromFile(lp+PkgName+FFileInfo);
 DInfo:=GetDistro; //Load DistroInfo
 
 if (fi.Count mod 3)<>0 then begin
-SendErrorMsg(strPKGError+#13'Message: File list is unlogical!'+#13+strAppClose);
+SendErrorMsg(rsPKGError+#13'Message: File list is unlogical!'+#13+rsAppClose);
 fi.Free;
 Result:=false;
 exit;
@@ -831,7 +865,7 @@ begin
 
  if not pkit.OperationSucessfull then
  begin
-  SendErrorMsg(strCouldntSolve+#13+StringReplace(strViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]));
+  SendErrorMsg(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]));
   p.Free;
   pkit.Free;
   Result:=false;
@@ -849,19 +883,19 @@ begin
 
 cnf:=TInifile.Create(ConfigDir+'config.cnf');
 if cnf.ReadBool('MainConf','AutoDepLoad',true)=false then
-SendTermQuestion(StringReplace(strWDLDep,'%l',Dependencies[i],[rfReplaceAll])+#13+strWAllow);
+SendTermQuestion(StringReplace(rsWDLDep,'%l',Dependencies[i],[rfReplaceAll])+#13+rsWAllow);
 
 cnf.Free;
 
-    ln.Add(strGetDependencyFrom+' '+Dependencies[i]+'.');
-    ln.Add(strPlWait2);
+    ln.Add(rsGetDependencyFrom+' '+Dependencies[i]+'.');
+    ln.Add(rsPlWait2);
  if pos('http://',LowerCase(Dependencies[i]))>0 then
  begin
   try
     HTTP.HTTPMethod('GET', copy(Dependencies[i],1,pos(' <',Dependencies[i])-1));
     HTTP.Document.SaveToFile('/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)));
   except
-  SendErrorMsg(strDepDLProblem);
+  SendErrorMsg(rsDepDLProblem);
   Result:=false;
   exit;
   end;
@@ -886,7 +920,7 @@ with FTP do begin
     RetrieveFile(ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)), false);
     Logout;
   except
-   SendErrorMsg(strDepDLProblem);
+   SendErrorMsg(rsDepDLProblem);
    Result:=false;
    exit;
   end;
@@ -962,7 +996,7 @@ begin
     //Check if the package was really installed
     if not pkit.OperationSucessfull then
     begin
-    SendErrorMsg(strCouldntSolve+#13+StringReplace(strViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]));
+    SendErrorMsg(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]));
     p.Free;
     Result:=false;
     ln.SaveTofile('/tmp/install-'+IAppName+'.log');
@@ -987,7 +1021,7 @@ end else begin
   if not pkit.OperationSucessfull then
     begin
      writeLn('Package '+Dependencies[i]+' can not be installed.');
-     SendErrorMsg(strCouldntSolve+#13+StringReplace(strViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]));
+     SendErrorMsg(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]));
      ln.SaveTofile('/tmp/install-'+IAppName+'.log');
      Result:=false;
      exit;
@@ -1015,7 +1049,7 @@ SetExtraPosVisibility(false);
 end;
 
 appfiles:=TStringList.Create;
-SendStateMsg(strStep2);
+SendStateMsg(rsStep2);
 z:=TAbUnZipper.Create(nil);
 z.FileName:=PkgPath;
 ndirs:=TStringList.Create;
@@ -1058,7 +1092,7 @@ z.BaseDirectory:=lp+ExtractFileName(PkgPath);
 
 z.ExtractFiles(ExtractFileName(h));
 except
-SendErrorMsg(strExtractError);
+SendErrorMsg(rsExtractError);
 z.Free;
 halt;
 end;
@@ -1066,7 +1100,7 @@ end;
 ln.Add('Copy file '+ExtractFileName(h)+' to '+dest+' ...');
 
 if fi[i+1] <> MDPrint((MD5.MD5File(DeleteModifiers(lp+PkgName+h),1024))) then begin
-SendErrorMsg(strHashError);
+SendErrorMsg(rsHashError);
 exit;
 end;
 
@@ -1079,7 +1113,7 @@ if (not FileExists(dest+'/'+ExtractFileName(DeleteModifiers(h)))) then
  FileCopy(DeleteModifiers(lp+PkgName+h),dest+'/'+ExtractFileName(DeleteModifiers(h)))
 else
 begin
-  SendErrorMsg(StringReplace(strCnOverwrite,'%f',dest+'/'+ExtractFileName(DeleteModifiers(h)),[rfReplaceAll])+#13+strInClose);
+  SendErrorMsg(StringReplace(rsCnOverwrite,'%f',dest+'/'+ExtractFileName(DeleteModifiers(h)),[rfReplaceAll])+#13+rsInClose);
   exit;
 end;
 
@@ -1118,7 +1152,7 @@ SetMainPosVal(mnpos);
  end;
 end;
 
-SendStateMsg(strStep3);
+SendStateMsg(rsStep3);
 //Check if every single file needs its own command to get the required rights (It's faster if only every folder recieves the rights)
 setcm:=false;
 for i:=0 to (fi.Count div 3)-1 do
@@ -1160,7 +1194,7 @@ mnpos:=mnpos+6;
 SetMainPosVal(mnpos);;
 
 fi.Free;
-SendStateMsg(strStep4);
+SendStateMsg(rsStep4);
 
 if not FPatch then
 begin
@@ -1241,7 +1275,7 @@ end;
 mnpos:=mnpos+5;
 SetMainPosVal(mnpos);;
 
-SendStateMsg(strFinished);
+SendStateMsg(rsFinished);
 sleep(600);
 ln.SaveTofile('/tmp/install-'+IAppName+'.log');
 end;
@@ -1295,7 +1329,7 @@ begin
   HTTP.HTTPMethod('GET', copy(Dependencies[i],pos(' -',Dependencies[i])+2,length(Dependencies[i])-pos(' -',Dependencies[i])+2));
   HTTP.Document.SaveToFile('/tmp/'+ExtractFileName(Dependencies[i]));
  except
-   SendErrorMsg(strDepDlProblem);;
+   SendErrorMsg(rsDepDlProblem);;
    exit;
   end;
 
@@ -1307,7 +1341,7 @@ begin
   try
     DirectFileName := '/tmp/'+ExtractFileName(Dependencies[i]);
     DirectFile:=True;
-    if not Login then SendErrorMsg(strFTPfailed);
+    if not Login then SendErrorMsg(rsFTPfailed);
     ChangeWorkingDir(GetServerPath(Dependencies[i]));
 
     SetExtraMaxVal(FileSize(ExtractFileName(Dependencies[i])));
@@ -1315,7 +1349,7 @@ begin
     RetrieveFile(ExtractFileName(Dependencies[i]), false);
     Logout;
   except
-   SendErrorMsg(strDepDlProblem);
+   SendErrorMsg(rsDepDlProblem);
    Result:=false;
    exit;
   end;
@@ -1354,7 +1388,7 @@ else
 ar.WriteString('DepOS','ID'+IntToStr(i),copy(Dependencies[i],1,pos(' -',Dependencies[i])-1));
 end; }
 
-SendStateMsg(strSuccess);
+SendStateMsg(rsSuccess);
 end;
 
 function TInstallation.DoInstallation(proc: TProcess;ln: TStrings): Boolean;
@@ -1469,8 +1503,8 @@ end;
 ///////////////////////////////////////
 if RmDeps then
 begin
-Log.Add(strRMUnsdDeps);
-writeLn(strRMUnsdDeps);
+Log.Add(rsRMUnsdDeps);
+writeLn(rsRMUnsdDeps);
 tmp2:=TStringList.Create;
 tmp2.Text:=dsApp.FieldByName('Dependencies').AsString;
 

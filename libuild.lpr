@@ -22,9 +22,10 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  Interfaces, //We need an widgetset (NoGUI) for graphic handling
+  //Interfaces, //We need an widgetset (NoGUI) for graphic handling
   Classes, SysUtils, CustApp,
-  LiCommon, Process, ipkbuild;
+  LiCommon, Process, ipkbuild,
+  TrStrings, LiTranslator;
 
 type
 
@@ -175,7 +176,7 @@ end;
 
 procedure TLiBuild.OnExeception(Sender : TObject;E : Exception);
 begin
-writeLn('An internal error occured');
+writeLn(rsInternalError);
 writeLn('[Message]: '+E.Message);
 writeLn('(Aborted)');
 halt(8);
@@ -183,13 +184,12 @@ end;
 
 procedure TLiBuild.WriteHelp;
 begin
-writeln('Usage: ',ExeName,' <option> [file] ...');
 writeLn('Listaller main tool to handle ipk-packages');
-writeLn('Usage lipa <command> [params] <options>:');
+writeln('Usage: ',ExeName,' <option> [file] ...');
 writeLn('Commands:');
 writeln('-?, --help                                 Show this help');
 writeln('-v, --version                              Show Listaller version');
-writeLn('-b, --build [IPS-File] [Output-IPK]        Build ipk-package');
+writeLn(rsLiBuildInfoA);
 writeLn('-u, --gen-update [IPS-File] [Repo-Path]    Create/Update update-repository');
 writeLn('-b, --build [IPS-File]                     Create DEB and RPM file from IPS');
 writeLn('  Options:');

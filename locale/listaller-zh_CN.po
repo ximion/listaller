@@ -1,38 +1,18 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: 0.9.16\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2009-05-06 13:37+0000\n"
-"Last-Translator: Marc Fokker <Unknown>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2009-05-06 13:39+0000\n"
+"Last-Translator: Liu Sizhuang <Unknown>\n"
+"Language-Team: newsfree <freefcw@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-06-19 18:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-
-#: trstrings:strconvertpkg
-msgid ""
-"You want to install an %x-Package, but your Linux-Distribution's package "
-"system is %y.\rThis package can be converted using \"alien\", but this will "
-"take some time and eventually the application won't work\rDo you want to "
-"convert the package now?"
-msgstr ""
-"U wilt een %x-Pakket installeren, maar je Linux-Distributie's pakketsysteem "
-"is %y.\rDit pakket kan geconverteerd worden door gebruik te maken van "
-"\"alien\", maar dit kan lang duren en uiteindelijk zal de applicatie niet "
-"werken.\rWilt u het pakket nu converteren?"
-
-#: trstrings:strrmpkg
-msgid ""
-"Do you really want to remove \"%p\", containing %a?\rThe following "
-"package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
-"those packages, press \"No\"!"
-msgstr ""
-"Weet u zeker dat u \"%p\" wilt verwijderen, het bevat %a?\rDe volgende "
-"pakketten zullen ook verwijderd worden: %pl\rAls u niet zeker bent of u de "
-"pakketten niet nodig heeft klik \"Nee\"!"
+"X-Poedit-Country: china\n"
+"X-Poedit-Language: chinese\n"
 
 #: trstrings:strinstaborted
 msgid "Installation aborted."
@@ -97,7 +77,7 @@ msgstr ""
 
 #: trstrings:strabort
 msgid "Abort"
-msgstr "Afbreken"
+msgstr "中止"
 
 #: trstrings:strback
 msgid "Back"
@@ -494,6 +474,14 @@ msgstr ""
 msgid "Ready."
 msgstr ""
 
+#: trstrings:strconvertpkg
+msgid ""
+"You want to install an %x-Package, but your Linux-Distribution's package "
+"system is %y.\rThis package can be converted using \"alien\", but this will "
+"take some time and eventually the application won't work\rDo you want to "
+"convert the package now?"
+msgstr ""
+
 #: trstrings:strconvertpkgq
 msgid "Convert package?"
 msgstr ""
@@ -508,7 +496,7 @@ msgstr ""
 
 #: trstrings:strfilter
 msgid "Filter:"
-msgstr "Filter:"
+msgstr "过滤器:"
 
 #: trstrings:strloading
 msgid "Loading..."
@@ -678,6 +666,13 @@ msgstr ""
 msgid "Uninstalling..."
 msgstr ""
 
+#: trstrings:strrmpkg
+msgid ""
+"Do you really want to remove \"%p\", containing %a?\rThe following "
+"package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+"those packages, press \"No\"!"
+msgstr ""
+
 #: trstrings:strrmpkgq
 msgid "Really remove?"
 msgstr ""
@@ -735,313 +730,275 @@ msgid "Error while unpacking and configuring files."
 msgstr ""
 
 #~ msgid "Browser %s%s%s not executable."
-#~ msgstr "Browser %s%s%s niet uitvoerbaar"
+#~ msgstr "浏览 %s%s%s 不是可执行程序."
 
 #~ msgid "Browser %s%s%s not found."
-#~ msgstr "Browser %s%s%s niet gevonden"
+#~ msgstr "浏览 %s%s%s 未找到."
 
 #~ msgid "Error while executing %s%s%s:%s%s"
-#~ msgstr "Fout tijdens uitvoeren van %s%s%s:%s%s"
+#~ msgstr "当执行 %s%s%s 时错误:%s%s"
 
 #~ msgid "Unable to find a HTML browser."
-#~ msgstr "Geen HTML browser kunnen vinden."
+#~ msgstr "无法找到 HTML 浏览器"
 
 #~ msgid ""
 #~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
 #~ "Viewers"
-#~ msgstr ""
-#~ "Geen HTML browser gevonden. %sDefini�er deze alstublieft via Help -> "
-#~ "Configureer Help -> Viewers"
+#~ msgstr "没有找到 HTML 浏览器。%s请在 帮助-> 配置帮助 -> 查看器 中定义一个"
 
 #~ msgid "The help database %s%s%s was unable to find file %s%s%s."
-#~ msgstr "De help database %s%s%s heeft bestand %s%s%s niet kunnen vinden."
+#~ msgstr "帮助数据库 %s%s%s 无法找到文件 %s%s%s."
 
 #~ msgid "The macro %s in BrowserParams will be replaced by the URL."
-#~ msgstr "De macro %s in BrowserParams zal worden vervangen door de URL."
-
-#~ msgid "Alt"
-#~ msgstr "Alt"
-
-#~ msgid "Ctrl"
-#~ msgstr "Ctrl"
+#~ msgstr "浏览框里的宏 %s 将被 URL 所替代."
 
 #~ msgid "Accept"
-#~ msgstr "Accepteer"
+#~ msgstr "接受"
 
 #~ msgid "application key"
-#~ msgstr "toepassing sleutel"
+#~ msgstr "应用程序快捷键"
 
 #~ msgid "Backspace"
-#~ msgstr "Backspace"
+#~ msgstr "退格"
 
 #~ msgid "Capital"
-#~ msgstr "Hoofdletter"
+#~ msgstr "大写字母"
 
 #~ msgid "Clear"
-#~ msgstr "Wissen"
+#~ msgstr "清除"
 
 #~ msgid "Control"
-#~ msgstr "Controleer"
+#~ msgstr "控件"
 
 #~ msgid "Convert"
-#~ msgstr "Converteer"
+#~ msgstr "转换"
 
 #~ msgid "Down"
-#~ msgstr "Neer"
-
-#~ msgid "End"
-#~ msgstr "Eind"
+#~ msgstr "下"
 
 #~ msgid "Escape"
-#~ msgstr "Escape"
+#~ msgstr "溢出"
 
 #~ msgid "Execute"
-#~ msgstr "Uitvoeren"
-
-#~ msgid "Final"
-#~ msgstr "Laatste"
-
-#~ msgid "Hanja"
-#~ msgstr "Hanja"
+#~ msgstr "执行"
 
 #~ msgid "Help"
-#~ msgstr "Help"
-
-#~ msgid "Home"
-#~ msgstr "Home"
-
-#~ msgid "Junja"
-#~ msgstr "Junja"
-
-#~ msgid "Kana"
-#~ msgstr "Kana"
+#~ msgstr "帮助"
 
 #~ msgid "Mouse Button Left"
-#~ msgstr "Muisknop Links"
+#~ msgstr "鼠标左键"
 
 #~ msgid "Left"
-#~ msgstr "Links"
+#~ msgstr "左"
 
 #~ msgid "left windows key"
-#~ msgstr "linker windows toets"
+#~ msgstr "左 Win 键"
 
 #~ msgid "Mouse Button Middle"
-#~ msgstr "Muisknop Midden"
+#~ msgstr "鼠标中键"
 
 #~ msgctxt "lclstrconsts.ifsvk_menu"
 #~ msgid "Menu"
-#~ msgstr "Menu"
+#~ msgstr "菜单"
 
 #~ msgid "Mode Change"
-#~ msgstr "Mode wijziging"
+#~ msgstr "模式更改"
 
 #~ msgid "Nonconvert"
-#~ msgstr "Niet converteren"
+#~ msgstr "不转换"
 
 #~ msgid "Numlock"
-#~ msgstr "Numlock"
+#~ msgstr "数字锁定"
 
 #~ msgid "Numpad %d"
-#~ msgstr "Nummeriek deel %d"
+#~ msgstr "数字键盘 %d"
 
 #~ msgid "Pause key"
-#~ msgstr "Pause toets"
+#~ msgstr "暂停键"
 
 #~ msgid "Print"
-#~ msgstr "Druk af"
+#~ msgstr "打印"
 
 #~ msgid "Mouse Button Right"
-#~ msgstr "Muisknop Rechts"
+#~ msgstr "鼠标右键"
 
 #~ msgid "Return"
-#~ msgstr "Return"
+#~ msgstr "返回"
 
 #~ msgid "Right"
-#~ msgstr "Rechts"
+#~ msgstr "右"
 
 #~ msgid "right windows key"
-#~ msgstr "rechter windows toets"
+#~ msgstr "右 Win 键"
 
 #~ msgid "Scroll"
-#~ msgstr "Schuif"
+#~ msgstr "滚动"
 
 #~ msgid "Select"
-#~ msgstr "Selecteer"
-
-#~ msgid "Shift"
-#~ msgstr "Shift"
+#~ msgstr "选择"
 
 #~ msgid "Snapshot"
-#~ msgstr "Snapshot"
+#~ msgstr "快照"
 
 #~ msgid "Space key"
-#~ msgstr "Spatiebar"
-
-#~ msgid "Tab"
-#~ msgstr "Tab"
+#~ msgstr "空格键"
 
 #~ msgid "Unknown"
-#~ msgstr "Onbekend"
+#~ msgstr "未知"
 
 #~ msgid "Up"
-#~ msgstr "Omhoog"
+#~ msgstr "上"
 
 #~ msgctxt "lclstrconsts.lislclresourcesnotfound"
 #~ msgid "Resource %s not found"
-#~ msgstr "Resource %s is niet gevonden"
+#~ msgstr "未找到资源 %s"
 
 #~ msgid "A control can't have itself as parent"
-#~ msgstr "Een control kan niet zijn eigen ouder zijn"
+#~ msgstr "控件无法把自己设为父节点"
 
 #~ msgid "All files (%s)|%s|%s"
-#~ msgstr "Alle bestanden (%s)|%s|%s"
+#~ msgstr "所有文件 (%s)|%s|%s"
 
 #~ msgid "Backward"
-#~ msgstr "Achteruit"
+#~ msgstr "后退"
 
 #~ msgid "Bitmaps"
-#~ msgstr "Bitmaps"
+#~ msgstr "黑白位图"
 
 #~ msgid "Blank"
-#~ msgstr "Spatie"
+#~ msgstr "空白"
 
 #~ msgid "Calculator"
-#~ msgstr "Rekenmachine"
+#~ msgstr "计算器"
 
 #~ msgid "Can not focus"
-#~ msgstr "Kan geen focus geven"
+#~ msgstr "无法聚焦"
 
 #~ msgid "Canvas does not allow drawing"
-#~ msgstr "Er kan op het canvas niet getekend worden"
+#~ msgstr "Canvas 不允许画图"
 
 #~ msgid "Case sensitive"
-#~ msgstr "Hoofdletter gevoelig"
+#~ msgstr "大小写敏感"
 
 #~ msgid "Creating gdb catchable error:"
-#~ msgstr "Maak een fout die door gdb opgevangen kan worden"
+#~ msgstr "创建 GDB 可以捕捉的错误"
 
 #~ msgid "permissions user group size date time"
-#~ msgstr "permissies gebruiker groep grootte datum tijd"
+#~ msgstr "权限 用户 组 大小 日期 时间"
+
+#~ msgid "Delete record?"
+#~ msgstr "删除记录？"
 
 #~ msgctxt "lclstrconsts.rsdeleterecordhint"
 #~ msgid "Delete"
-#~ msgstr "Verwijder"
+#~ msgstr "删除"
 
 #~ msgid "Direction"
-#~ msgstr "Richting"
+#~ msgstr "方向"
 
 #~ msgid "&Directory"
-#~ msgstr "&Map"
+#~ msgstr "目录(&D)"
 
 #~ msgid "Docking"
-#~ msgstr "Docking"
-
-#~ msgid "Error creating device context for %s.%s"
-#~ msgstr "Fout tijdens het maken van een DC voor %s.%s"
-
-#~ msgid "ERROR in LCL: "
-#~ msgstr "FOUT in LCL "
+#~ msgstr "融合"
 
 #~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
-#~ msgstr "Er is een fout opgetreden in %s op %sAdres %s%s Frame %s"
+#~ msgstr "在 %s %s地址 %s%s 框架 %s"
 
 #~ msgid "Error reading %s%s%s: %s"
-#~ msgstr "Fout tijdens het lezen %s%s%s: %s"
+#~ msgstr "读取 %s%s%s 错误: %s"
 
 #~ msgid "Error while saving bitmap."
-#~ msgstr "Fout tijdens opslaan van bitmap."
+#~ msgstr "保存位图时出错。"
 
 #~ msgid "Exception"
-#~ msgstr "Fout"
+#~ msgstr "异常"
 
 #~ msgid "Directory must exist"
-#~ msgstr "Directory moet bestaan"
+#~ msgstr "目录必须存在"
 
 #~ msgid "The directory \"%s\" does not exist."
-#~ msgstr "De map \"%s\" bestaat niet."
+#~ msgstr "目录 \"%s\" 不存在."
 
 #~ msgid "The file \"%s\" already exists. Overwrite ?"
-#~ msgstr "Het bestand \"%s\" bestaat al. Overschrijven?"
+#~ msgstr "文件 \"%s\" 已经存在.%s替换吗?"
 
 #~ msgid "File must exist"
-#~ msgstr "Bestand moet bestaan"
+#~ msgstr "文件必须存在"
 
 #~ msgid "The file \"%s\" does not exist."
-#~ msgstr "Het bestand  \"%s\" bestaat niet."
+#~ msgstr "文件 \"%s\" 不存在."
 
 #~ msgid "The file \"%s\" is not writable."
-#~ msgstr "Het bestand \"%s\" kan niet geschreven worden."
+#~ msgstr "文件 \"%s\" 为只读."
 
 #~ msgid "File is not writable"
-#~ msgstr "Kan bestand niet schrijven"
+#~ msgstr "文件为只读"
 
 #~ msgid "Save file as"
-#~ msgstr "Bestand opslaan als"
+#~ msgstr "另存为"
 
 #~ msgid "Open existing file"
-#~ msgstr "Open een bestaand bestand"
+#~ msgstr "打开文件"
 
 #~ msgid "Overwrite file ?"
-#~ msgstr "Bestand overschrijven?"
+#~ msgstr "覆盖文件？"
 
 #~ msgid "Path must exist"
-#~ msgstr "Het pad moet bestaan"
+#~ msgstr "路径不存在"
 
 #~ msgid "The path \"%s\" does not exist."
-#~ msgstr "Het pad \"%s\" bestaat niet."
+#~ msgstr "路径 \"%s\" 不存在."
 
 #~ msgid "Select Directory"
-#~ msgstr "Kies map"
+#~ msgstr "选择目录"
 
 #~ msgid "(file not found: \"%s\")"
-#~ msgstr "(bestand niet gevonden: \"%s\")"
+#~ msgstr "(未找到文件: \"%s\")"
 
 #~ msgid "File information"
-#~ msgstr "Bestandsinformatie"
+#~ msgstr "文件信息"
 
 #~ msgid "Find"
-#~ msgstr "Zoek"
+#~ msgstr "查找"
 
 #~ msgid "Find more"
-#~ msgstr "Zoek meer"
+#~ msgstr "查找更多"
 
 #~ msgid "FixedCols can't be >= ColCount"
-#~ msgstr "FixedCols kan niet >= ColCount"
+#~ msgstr "FixedCols 不能 >= ColCount"
 
 #~ msgid "FixedRows can't be >= RowCount"
-#~ msgstr "FixedRows kan niet >= RowCount"
+#~ msgstr "FixedRows 不能 >= RowCount"
 
 #~ msgid "Form streaming \"%s\" error: %s"
-#~ msgstr "\"%s\" fout: %s bij het streamen van form."
+#~ msgstr "窗体流 \"%s\" 错误: %s"
 
 #~ msgid "Forward"
-#~ msgstr "Vooruit"
+#~ msgstr "向前"
 
 #~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
-#~ msgstr "--gdk-debug flags     Zet bepaalde GDK trace/debug berichten aan."
+#~ msgstr "--gdk-debug flags     打开 GDK 跟踪/调试信息."
 
 #~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
-#~ msgstr "--gdk-no-debug flags     Zet bepaalde GDK trace/debug berichten uit."
+#~ msgstr "--gdk-no-debug flags  关闭 GDK 跟踪/调试信息."
 
 #~ msgid ""
 #~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
 #~ "the application."
-#~ msgstr ""
-#~ "--g-fatal-warnings    De applicatie stop bij waarschuwingen en fouten "
-#~ "gegenereerd door GtK+/GDK."
+#~ msgstr "--g-fatal-warnings   使 Gtk+/GDK 产生的警告和错误终止应用程序。"
 
 #~ msgid "Grid file doesn't exists"
-#~ msgstr "Grid bestand bestaat niet"
+#~ msgstr "网格文件不存在"
 
 #~ msgid "Grid index out of range."
-#~ msgstr "Rooster index buiten bereik"
+#~ msgstr "网格索引越界。"
 
 #~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
-#~ msgstr ""
-#~ "De GroupIndex kan niet minder zijn dan de GroupIndex van een vorig item."
+#~ msgstr "GroupIndex 不能比之前的菜单项目的 GroupIndex 少"
 
 #~ msgid "History:"
-#~ msgstr "Historie:"
+#~ msgstr "历史:"
 
 #~ msgid ""
 #~ "--class classname     Following Xt conventions, the class of a program is "
@@ -1049,13 +1006,11 @@ msgstr ""
 #~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
 #~ "program will be set to \"classname\"."
 #~ msgstr ""
-#~ "--class klassenaam    Volgens de Xt conventies, is de klasse van een "
-#~ "prograam de naam van dat programma met de eerste letter als kapitaal. Bijv. "
-#~ "the klassenaam voor gimp is \"Gimp\". Als de --class optie is meegegeven, "
-#~ "wordt de klasse van het programma gezet op \"klassenaam\"."
+#~ "--class classname     按照 Xt 转换规则， 一个程序的类别是第一个字母大写的程序名称。比如，gimp 的类别是 "
+#~ "\"Gimp\"。如果指定了 --class，程序的类别会被设为 \"classname\"。"
 
 #~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
-#~ msgstr "--gtk-debug flags     Zet bepaalde GtK+ trace/debug berichten aan."
+#~ msgstr "--gtk-debug flags     打开 Gtk+ 跟踪/调试信息."
 
 #~ msgid ""
 #~ "--display h:s:d       Connect to the specified X server, where \"h\" is the "
@@ -1063,342 +1018,326 @@ msgstr ""
 #~ "number (typically omitted). If --display is not specified, the DISPLAY "
 #~ "environment variable is used."
 #~ msgstr ""
-#~ "--display h:s:d       Start het programma op de genoemde X server, waarbij "
-#~ "\"h\" de hostnaam is, \"s\" het nummer van de server (meestal 0), en \"d\" "
-#~ "is het display nummer (vaak weggelaten). Als --display niet is meegegeven, "
-#~ "wordt de DISPLAY omgevings variabele gebruikt."
+#~ "--display h:s:d       连接到指定的 X 服务器，其中 \"h\"是主机名，\"s\"是服务器编号(通常是0)，\"d\" "
+#~ "是显示编号(一般省略)。如果没有指定 --display ，将会使用 DISPLAY 环境变量。"
 
 #~ msgid "--gtk-module module   Load the specified module at startup."
-#~ msgstr ""
-#~ "--gtk-module module   Laad de betreffende module tijdens het starten."
+#~ msgstr "--gtk-module module   启动时载入指定模块"
 
 #~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
-#~ msgstr ""
-#~ "--gtk-no-debug flags     Zet bepaalde GtK+ trace/debug berichten uit."
+#~ msgstr "--gtk-no-debug flags  关闭 Gtk+ 跟踪/调试信息."
 
 #~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
-#~ msgstr ""
-#~ "--lcl-no-transient    Zet geen overdraagbare volgorde voor modale schermen"
+#~ msgstr "--lcl-no-transient    不要为形式上的窗体设定临时顺序"
 
 #~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
-#~ msgstr ""
-#~ "--no-xshm             Maak geen gebruik van de X Shared Memory Extensie."
-
-#~ msgid ""
-#~ "--sync                Call XSynchronize (display, True) after the Xserver "
-#~ "connection has been established. This makes debugging X protocol errors "
-#~ "easier, because X request buffering will be disabled and X errors will be "
-#~ "received immediatey after the protocol request that generated the error has "
-#~ "been processed by the X server."
-#~ msgstr ""
-#~ "--sync                Roep XSynchronize (display, True) aan na verbinding "
-#~ "met de Xserver. Dit maakt het debuggen van X protocol fouten eenvoudiger, "
-#~ "doordat X aanvragen buffering uitstaat en X fouten direct ontvangen worden "
-#~ "nadat de aanvraag door de Xserver is behandeld."
+#~ msgstr "--no-xshm             禁止使用 X 共享内存扩展。"
 
 #~ msgid "%s: Already registered"
-#~ msgstr "%s: Al vastgelegd"
+#~ msgstr "%s: 已经注册"
 
 #~ msgid "Help Context not found"
-#~ msgstr "Help Context niet gevonden"
+#~ msgstr "未找到帮助内容"
 
 #~ msgid "Help Database not found"
-#~ msgstr "Help Database niet gevonden"
+#~ msgstr "未找到帮助数据库"
 
 #~ msgid "Help Error"
-#~ msgstr "Help Fout"
+#~ msgstr "帮助错误"
 
 #~ msgid "Help context %s not found."
-#~ msgstr "Help context %s niet gevonden."
+#~ msgstr "未找到帮助上下文 %s."
 
 #~ msgid "Help context %s not found in Database %s%s%s."
-#~ msgstr "Help context %s niet gevonden in Database %s%s%s."
+#~ msgstr "没有找到 %s 的帮助内容在数据库 %s%s%s 中."
 
 #~ msgid ""
 #~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
-#~ msgstr ""
-#~ "Help Database %s%s%s heeft geen viewer gevonden voor help pagina van type %s"
+#~ msgstr "帮助数据库 %s%s%s 未找到浏览器可以阅读帮助页 %s 的类型"
 
 #~ msgid "Help Database %s%s%s not found"
-#~ msgstr "Help Database %s%s%s niet gevonden"
+#~ msgstr "未找到帮助数据库 %s%s%s"
 
 #~ msgid "Help keyword %s%s%s not found."
-#~ msgstr "Help sleutelwoord %s%s%s niet gevonden."
+#~ msgstr "关键字 %s%s%s 未找到帮助."
 
 #~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
-#~ msgstr "Help sleutelwoord %s%s%s niet gevonden in Database %s%s%s."
+#~ msgstr "关键字 %s 的帮助在数据库 %s%s%s 中没有找到."
 
 #~ msgid "Help node %s%s%s has no Help Database"
-#~ msgstr "Help node %s%s%s heeft geen Help Database"
+#~ msgstr "帮助节点 %s%s%s 没有帮助数据库"
 
 #~ msgid "No help found for line %d, column %d of %s."
-#~ msgstr "Geen help gevonden voor regel %d, kolom %d van %s."
+#~ msgstr "没有找到 %s 的行 %d, 列 %d 的 %s 的相关帮助."
 
 #~ msgid "No help nodes available"
-#~ msgstr "Geen help nodes beschikbaar"
+#~ msgstr "没有有效的帮助节点"
 
 #~ msgid "Help not found"
-#~ msgstr "Help niet gevonden"
+#~ msgstr "未找到帮助"
 
 #~ msgid "%s: Not registered"
-#~ msgstr "%s: Niet vastgelegd"
+#~ msgstr "%s: 没有注册"
 
 #~ msgid "Help Selector Error"
-#~ msgstr "Help Selectie fout"
+#~ msgstr "帮助选择器错误"
 
 #~ msgid "There is no viewer for help type %s%s%s"
-#~ msgstr "Er is geen viewer voor help type %s%s%s"
+#~ msgstr "帮助类型 %s%s%s 没有查看器"
 
 #~ msgid "Help Viewer Error"
-#~ msgstr "Help Viewer Fout"
+#~ msgstr "帮助查看器错误"
 
 #~ msgid "Help Viewer not found"
-#~ msgstr "Help Viewer niet gevonden"
+#~ msgstr "未找到帮助查看器"
 
 #~ msgid "Icon"
-#~ msgstr "Icon"
+#~ msgstr "图标"
 
 #~ msgid "%s Index %d out of bounds 0 .. %d"
-#~ msgstr "%s Index %d valt buiten de grenzen 0 .. %d"
+#~ msgstr "%s 索引 %d 超出范围 0 .. %d"
 
 #~ msgid "Index Out of range Cell[Col=%d Row=%d]"
-#~ msgstr "Index buiten de grenzen Cell[Col=%d Ro=%d]"
+#~ msgstr "单元格索引超过范围[列=%d 行=%d]"
 
 #~ msgctxt "lclstrconsts.rsinsertrecordhint"
 #~ msgid "Insert"
-#~ msgstr "Invoegen"
+#~ msgstr "插入"
 
 #~ msgid "Invalid Date : %s"
-#~ msgstr "Ongeldige datum: %s"
+#~ msgstr "无效日期: %s"
 
 #~ msgid "Invalid Date: %s. Must be between %s and %s"
-#~ msgstr "Ongeldige datum: %s. Het moet liggen tussen %s en %s"
+#~ msgstr "无效日期: %s。 必须在 %s 和 %s 之间"
 
 #~ msgid "invalid Form object stream"
-#~ msgstr "Ongeldige form objectstream"
+#~ msgstr "无效窗体流对象"
 
 #~ msgid "Invalid property value"
-#~ msgstr "Ongeldige eigenschap waarde"
+#~ msgstr "无效属性值"
 
 #~ msgid "Invalid stream format"
-#~ msgstr "Omgeldig stream format"
+#~ msgstr "无效流格式"
 
 #~ msgid "%s is already associated with %s"
-#~ msgstr "%s is al verbonden met %s"
+#~ msgstr "%s 已经与 %s 相关联"
 
 #~ msgid "List index exceeds bounds (%d)"
-#~ msgstr "Lijst index overschreidt grenzen (%d)"
+#~ msgstr "list 索引超过限制 (%d)"
 
 #~ msgid "List must be empty"
-#~ msgstr "Lijst moet leeg zijn"
+#~ msgstr "列表必须为空"
 
 #~ msgid "&All"
-#~ msgstr "&Alles"
+#~ msgstr "所有(&A)"
 
 #~ msgctxt "lclstrconsts.rsmbcancel"
 #~ msgid "Cancel"
-#~ msgstr "Annuleer"
+#~ msgstr "取消"
 
 #~ msgid "&Close"
-#~ msgstr "&Sluiten"
+#~ msgstr "关闭(&C)"
 
 #~ msgid "&Help"
-#~ msgstr "&Help"
+#~ msgstr "帮助(&H)"
 
 #~ msgid "&Ignore"
-#~ msgstr "&Negeer"
+#~ msgstr "忽略(&I)"
 
 #~ msgid "&No"
-#~ msgstr "&Nee"
+#~ msgstr "否(&N)"
 
 #~ msgid "No to all"
-#~ msgstr "Nee op alles"
+#~ msgstr "全部选否"
 
 #~ msgid "&OK"
-#~ msgstr "&OK"
+#~ msgstr "确定(&O)"
 
 #~ msgid "&Retry"
-#~ msgstr "&Opnieuw"
+#~ msgstr "重试(&R)"
 
 #~ msgid "&Yes"
-#~ msgstr "&Ja"
+#~ msgstr "是(&Y)"
 
 #~ msgid "Yes to &All"
-#~ msgstr "Ja op &Alles"
+#~ msgstr "全部选是(&A)"
 
 #~ msgctxt "lclstrconsts.rsmenucolorcaption"
 #~ msgid "Menu"
-#~ msgstr "Menu"
+#~ msgstr "菜单"
 
 #~ msgid "  modified "
-#~ msgstr "  gewijzigd "
+#~ msgstr "  已更改 "
 
 #~ msgid "Confirmation"
-#~ msgstr "Bevestiging"
+#~ msgstr "确认"
 
 #~ msgid "Custom"
-#~ msgstr "Eigen"
+#~ msgstr "自定义"
 
 #~ msgctxt "lclstrconsts.rsmterror"
 #~ msgid "Error"
-#~ msgstr "Fout"
+#~ msgstr "错误"
 
 #~ msgid "Information"
-#~ msgstr "Informatie"
+#~ msgstr "信息"
 
 #~ msgid "Warning"
-#~ msgstr "Waarschuwing"
+#~ msgstr "警告"
 
 #~ msgctxt "lclstrconsts.rsnextrecordhint"
 #~ msgid "Next"
-#~ msgstr "Volgende"
+#~ msgstr "下一个"
 
 #~ msgid "Not a valid grid file"
-#~ msgstr "Geen geldig grid bestand"
+#~ msgstr "不是有效的网格文件"
 
 #~ msgid ""
 #~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
 #~ "the programs uses clause."
-#~ msgstr ""
-#~ "Geen widgetset object. Controleer of the unit \"interface\" is toegevoegd "
-#~ "aan de \"uses\" van het programma."
+#~ msgstr "没有窗口部件集合对象，请检查单元 \"interfaces\" 是否已添加到程序的uses语句中。"
 
 #~ msgid "Select a date"
-#~ msgstr "Kies een datum"
+#~ msgstr "选择日期"
 
 #~ msgid "Pixmap"
-#~ msgstr "Pixmap"
+#~ msgstr "位图"
+
+#~ msgid "Portable BitMap"
+#~ msgstr "便携黑白位图"
+
+#~ msgid "Portable GrayMap"
+#~ msgstr "便携灰度位图"
 
 #~ msgid "Portable Network Graphic"
-#~ msgstr "Portable Network Graphic"
+#~ msgstr "便携网络图片(PNG)"
+
+#~ msgid "Portable PixMap"
+#~ msgstr "便携位图"
 
 #~ msgid ""
 #~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill the "
 #~ "program."
-#~ msgstr ""
-#~ "%s%sDruk op Ok om te negeren, hierbij kunnen gegevens verloren gaan.%sDruk "
-#~ "op Cancel om het programma te annuleren."
+#~ msgstr "%s%s确定忽略但数据有遗失的风险。%s取消则终止程序."
 
 #~ msgctxt "lclstrconsts.rspriorrecordhint"
 #~ msgid "Prior"
-#~ msgstr "Vorige"
+#~ msgstr "优先"
 
 #~ msgid "Property %s does not exist"
-#~ msgstr "Eigenschap %s bestaat niet"
+#~ msgstr "属性 %s 不存在"
 
 #~ msgid "Replace"
-#~ msgstr "Vervang"
+#~ msgstr "替换"
 
 #~ msgid "Replace all"
-#~ msgstr "Vervang alles"
+#~ msgstr "替换所有"
 
 #~ msgctxt "lclstrconsts.rsresourcenotfound"
 #~ msgid "Resource %s not found"
-#~ msgstr "Resource %s is niet gevonden"
+#~ msgstr "未找到资源 %s"
 
 #~ msgid "ScrollBar property out of range"
-#~ msgstr "Schuifbalk eigenschap buiten bereik"
+#~ msgstr "滚动条属性超出范围"
 
 #~ msgid "Select color"
-#~ msgstr "Kies een kleur"
+#~ msgstr "选择颜色"
 
 #~ msgid "Select a font"
-#~ msgstr "Kies een font"
+#~ msgstr "选择字体"
 
 #~ msgid "  size "
-#~ msgstr "  afmeting "
+#~ msgstr "  大小 "
 
 #~ msgid "Text"
-#~ msgstr "Tekst"
+#~ msgstr "文本"
 
 #~ msgid "Unable to load default font"
-#~ msgstr "Kan het standaard font niet laden"
+#~ msgstr "无法装载默认字体"
 
 #~ msgid "Unknown Error, please report this bug"
-#~ msgstr "Onbekende Fout, rapporteer alstublieft deze fout"
+#~ msgstr "未知错误, 请报告这个错误"
 
 #~ msgid "Unknown picture extension"
-#~ msgstr "Onbekende extensie voor plaatje"
+#~ msgstr "未知图形文件后缀"
 
 #~ msgid "Unsupported bitmap format."
-#~ msgstr "Niet ondersteund bitmap formaat."
+#~ msgstr "未支持的位图格式"
 
 #~ msgid "Unsupported clipboard format: %s"
-#~ msgstr "Niet ondersteund klembord formaat: %s"
-
-#~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
-#~ msgstr ""
-#~ " WAARSCHUWING: Er zijn nog %d DCs niet vrijgegeven, een gedetailleerde dump "
-#~ "volgt:"
-
-#~ msgid ""
-#~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
-#~ msgstr ""
-#~ " WAARSCHUWING: Er zijn nog %d GDIObject niet vrijgegeven, een gedetailleerde "
-#~ "dump volgt:"
-
-#~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
-#~ msgstr ""
-#~ " WAARSCHUWING: Er staan nog %d berichten in de queue! Deze worden nu "
-#~ "vrijgegeven"
-
-#~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
-#~ msgstr ""
-#~ " WAARSCHUWING: Er zijn %d TimerInfo structuren overgebleven. Deze worden nu "
-#~ "vrijgegeven"
-
-#~ msgid ""
-#~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
-#~ msgstr ""
-#~ " WAARSCHUWING: Er zijn %s LM_PAINT/LM_GtkPAINT berichten niet verwijderd."
+#~ msgstr "未支持的剪贴板格式: %s"
 
 #~ msgid "Whole words only"
-#~ msgstr "Alleen hele woorden"
+#~ msgstr "仅整个单词"
 
 #~ msgid "Error:"
-#~ msgstr "Fout:"
+#~ msgstr "错误:"
 
 #~ msgid "Warning:"
-#~ msgstr "Waarschuwing:"
+#~ msgstr "警告:"
 
 #~ msgid "Cannot focus a disabled or invisible window"
-#~ msgstr "Kan geen focus geven aan een onzichtbaar of disabled scherm"
+#~ msgstr "不能聚焦于无法聚焦或者不可见的窗口"
 
 #~ msgid "Duplicate menus"
-#~ msgstr "Dubbele menus"
+#~ msgstr "重复的菜单"
 
 #~ msgid "Invalid action creation"
-#~ msgstr "Ongeldige aktie aangemaakt"
+#~ msgstr "无效创建行为"
 
 #~ msgid "Invalid action enumeration"
-#~ msgstr "Ongeldige aktie opsomming"
+#~ msgstr "无效列举行为"
 
 #~ msgid "Invalid action registration"
-#~ msgstr "Ongeldige aktie registratie"
+#~ msgstr "无效的注册行为"
 
 #~ msgid "Invalid action unregistration"
-#~ msgstr "Ongeldige aktie de-registratie"
+#~ msgstr "无效的取消注册行为"
 
 #~ msgid "The char set in mask \"%s\" is not valid!"
-#~ msgstr "De characterset in mask \"%s\" is niet geldig!"
+#~ msgstr "\"%s\" 指定的字符集无效！"
 
 #~ msgid "Invalid image size"
-#~ msgstr "Ongeldig formaat voor afbeelding"
+#~ msgstr "无效图像大小"
 
 #~ msgid "Invalid ImageList Index"
-#~ msgstr "Ongeldige index van ImageList"
+#~ msgstr "无效 ImageList 索引"
 
 #~ msgid "Menu index out of range"
-#~ msgstr "Index van menu buiten de grenzen"
+#~ msgstr "菜单索引超过范围"
 
 #~ msgid "MenuItem is nil"
-#~ msgstr "MenuItem is nil"
+#~ msgstr "MenuItem 为 nil"
 
 #~ msgid "Sub-menu is not in menu"
-#~ msgstr "Submenu niet in menu"
+#~ msgstr "子菜单不在菜单中"
 
 #~ msgid "No MDI form present."
-#~ msgstr "Geen MDI formulier aanwezig"
+#~ msgstr "没有 MDI 窗体出现"
 
 #~ msgid "No timers available"
-#~ msgstr "Geen timers beschikbaar"
+#~ msgstr "无有效计时器"
+
+#~ msgid "Wrong token type: %s expected"
+#~ msgstr "错误的标识符类型：期望 %s"
+
+#~ msgid "Invalid floating point number: %s"
+#~ msgstr "无效的浮点数：%s"
+
+#~ msgid "Invalid integer number: %s"
+#~ msgstr "无效的整数：%s"
+
+#~ msgid " (at %d,%d, stream offset %.8x)"
+#~ msgstr " (在 %d,%d, 流偏移 %.8x)"
+
+#~ msgid "Unterminated byte value"
+#~ msgstr "未结束的字节值"
+
+#~ msgid "Unterminated string"
+#~ msgstr "未结束的字符串"
+
+#~ msgid "Wrong token symbol: %s expected but %s found"
+#~ msgstr "错误的标识符：期望 %s 但是找到了 %s"
+
+#~ msgid "Wrong token type: %s expected but %s found"
+#~ msgstr "错误的标识符类型：期望 %s 但是找到了 %s"

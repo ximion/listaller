@@ -14,10 +14,11 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
 //** Applies localisation to all Listaller modules
-{ This file is a DefaultTranslater unit with some special Listaller modifications }
 unit litranslator;
 
 {$mode objfpc}{$H+}
+
+{ This file is a DefaultTranslater unit with some special Listaller modifications }
 
 interface
 
@@ -197,7 +198,12 @@ initialization
     LRSTranslator:=TDefaultTranslator.Create(lcfn);
 
   end;
-writeLn('Translation loaded.');
+{$IFDEF LCLGTK2}
+ writeLn('Translation loaded.');
+{$ENDIF}
+{$IFDEF LCLQt}
+ writeLn('Translation loaded.');
+{$ENDIF}
 
 finalization
   LRSTranslator.Free;

@@ -201,8 +201,8 @@ Memo1.Lines.Add('Log:');
        end;
 
     except
-   ShowMessage(strExtractError);
-   WriteLog(strUpdConfError);
+   ShowMessage(rsExtractError);
+   WriteLog(rsUpdConfError);
     z.Free;
     exit;
     end;
@@ -255,7 +255,7 @@ end;
   FileUtil.DeleteDirectory('/tmp/liupd/',false);
   Button1.Enabled:=true;
   WriteLog('Update finished!');
-  ILabel.Caption:=strSuccess;
+  ILabel.Caption:=rsSuccess;
 end;
 end;
 
@@ -267,8 +267,8 @@ end;
 procedure TUExecFm.FormCreate(Sender: TObject);
 begin
   Memo1.Font.Color:=clWhite;
-  Caption:=strUpdInstalling;
-  Button1.Caption:=strClose;
+  Caption:=rsUpdInstalling;
+  Button1.Caption:=rsClose;
 end;
 
 initialization

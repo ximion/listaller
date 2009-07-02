@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
   StdCtrls, ExtCtrls, Menus, LiCommon, Process, Distri, TRStrings, ipkhandle,
-  LCLType;
+  LCLType, LiTranslator;
 
 type
 
@@ -72,7 +72,7 @@ begin
  end else
  begin
   writeLn('Unable to find listallMgr!');
-  ShowMessage('Couldn''t find Listaller Manager!');
+  ShowMessage(rsListallerMgrNotFound);
  end;
 end;
 
@@ -86,7 +86,7 @@ var rep: TStringList;
 
 procedure LogQ;
 begin
-if Application.MessageBox('Do you want to view the logfile?','ViewLog',MB_YESNO)=IDYES then
+if Application.MessageBox(PAnsiChar(rsViewLogQ), 'ViewLog', MB_YESNO)=IDYES then
   ShowMessage(rep.Text);
 end;
 
@@ -95,7 +95,7 @@ begin
 rep:=TStringList.Create;
  if not CheckApps(rep) then
  begin
- if Application.MessageBox('You have broken dependencies. Should thy be fised now?','FixDeps',MB_YESNO)=IDYES then
+ if Application.MessageBox(PAnsiChar(rsBrokenDepsFixQ), 'FixDeps', MB_YESNO)=IDYES then
    CheckApps(rep,true);
  LogQ;
  end else LogQ;
@@ -103,10 +103,10 @@ end;
 
 begin
 
-if Application.MessageBox('Do you want to check the applications''s dependencies?','CheckDeps',MB_YESNO)=IDYES then
+if Application.MessageBox(PAnsiChar(rsCheckAppDepsQ), 'CheckDeps', MB_YESNO)=IDYES then
 begin
  RegDir:=SyblToPath('$INST')+'/app-reg/';
- if Application.MessageBox('Do you want to check ROOT-installed applications too?','CheckToo',MB_YESNO)=IDYES then
+ if Application.MessageBox(PAnsiChar(rsCheckRootAppsQ), 'CheckToo', MB_YESNO)=IDYES then
  begin
   PerformCheck;
   RegDir:='/etc/lipa/app-reg/';
@@ -128,8 +128,8 @@ begin
   p.Free;
  end else
  begin
-  writeLn('Unable to find liUpdater!');
-  ShowMessage('Couldn''t find updater applications!');
+  writeLn(rsLiUpdaterNotFound);
+  ShowMessage(rsCouldntFindUpdater);
  end;
 end;
 

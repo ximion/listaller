@@ -41,14 +41,14 @@ implementation
 
 procedure TFmAbout.FormShow(Sender: TObject);
 begin
-   Caption:=strAboutListaller;
+   Caption:=rsAboutListaller;
    Image1.Picture.LoadFromFile('/usr/share/pixmaps/listaller.png');
-   Label2.Caption:=strVersion+': '+LiVersion;
-   Label5.Caption:=strUseLaunchpadForBugs;
-   Label3.Caption:=StringReplace(strLinDesk,'%de',GetDistro.Desktop,[rfReplaceAll]);
-   AboutSheet.Caption:=strAbout;
-   AuthorSheet.Caption:=strAuthors;
-   BitBtn1.Caption:=strClose;
+   Label2.Caption:=rsVersion+': '+LiVersion;
+   Label5.Caption:=rsUseLaunchpadForBugs;
+   Label3.Caption:=StringReplace(rsLinDesk,'%de',GetDistro.Desktop,[rfReplaceAll]);
+   AboutSheet.Caption:=rsAbout;
+   AuthorSheet.Caption:=rsAuthors;
+   BitBtn1.Caption:=rsClose;
    {$IFDEF LCLgtk2}
     Label1.Caption:='Listaller (GTK+)';
    {$ENDIF}
