@@ -1918,9 +1918,9 @@ object MnFrm: TMnFrm
       ClientWidth = 692
       ClientHeight = 468
       object Label1: TLabel
-        Left = 0
+        Left = 6
         Height = 13
-        Top = 14
+        Top = 12
         Width = 30
         Caption = 'Show:'
         ParentColor = False
@@ -1988,7 +1988,7 @@ object MnFrm: TMnFrm
       end
       object FilterEdt: TEdit
         Left = 550
-        Height = 22
+        Height = 20
         Top = 5
         Width = 139
         Anchors = [akTop, akRight]

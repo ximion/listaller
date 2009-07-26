@@ -51,8 +51,8 @@
         <Filename Value="listallmgr.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallmgr"/>
-        <CursorPos X="6" Y="29"/>
-        <TopLine Value="4"/>
+        <CursorPos X="44" Y="2"/>
+        <TopLine Value="1"/>
         <UsageCount Value="171"/>
       </Unit0>
       <Unit1>
@@ -61,8 +61,8 @@
         <ComponentName Value="MnFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="17" Y="26"/>
-        <TopLine Value="14"/>
+        <CursorPos X="21" Y="26"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="171"/>
         <Loaded Value="True"/>
@@ -297,8 +297,8 @@
       <Unit34>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="63" Y="50"/>
-        <TopLine Value="215"/>
+        <CursorPos X="25" Y="61"/>
+        <TopLine Value="41"/>
         <UsageCount Value="33"/>
       </Unit34>
       <Unit35>
@@ -666,8 +666,8 @@
       <Unit87>
         <Filename Value="litranslator.pas"/>
         <UnitName Value="litranslator"/>
-        <CursorPos X="11" Y="27"/>
-        <TopLine Value="109"/>
+        <CursorPos X="73" Y="113"/>
+        <TopLine Value="85"/>
         <UsageCount Value="10"/>
       </Unit87>
       <Unit88>
@@ -772,7 +772,7 @@
       </Position21>
       <Position22>
         <Filename Value="manager.pas"/>
-        <Caret Line="26" Column="17" TopLine="14"/>
+        <Caret Line="26" Column="21" TopLine="1"/>
       </Position22>
     </JumpHistory>
   </ProjectOptions>

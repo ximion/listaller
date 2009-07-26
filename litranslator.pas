@@ -110,6 +110,9 @@ begin
     Result:=ExtractFilePath(ParamStrUTF8(0))+'locale'+DirectorySeparator+liname+'-'+LANG+'.mo';
     if FileExistsUTF8(Result) then exit;
 
+    Result:=ExtractFilePath(ParamStrUTF8(0))+'locale'+DirectorySeparator+LANG+'.mo';
+    if FileExistsUTF8(Result) then exit;
+
     Result:=ExtractFilePath(ParamStrUTF8(0))+'languages'+DirectorySeparator+liname+'.'+LANG+'.mo';
     if FileExistsUTF8(Result) then exit;
   except

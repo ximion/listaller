@@ -21,13 +21,13 @@ unit trstrings;
 interface
 
 resourcestring
-rsBrokenDepsFixQ = 'You have missing dependencies. Should they be installed now?';
+rsBrokenDepsFixQ = 'Some dependencies are missing. Should they be installed now?';
 rsCannotResolv = 'Cannot resolve dependencies';
 rsCheckAppDepsQ = 'Do you want to check the applications''s dependencies?';
 rsCheckApps = 'Check applications';
 rsCheckRootAppsQ = 'Do you want to check global-installed applications too?';
 rsCommands = 'Commands:';
-rsCouldntFindUpdater = 'Can''t find updater applications!';
+rsCouldntFindUpdater = 'Can''t find updater application!';
 rsInternalError = 'An internal error occured';
 rsLaunchLiMgr = 'Launch Listaller Manager';
 rsLipaInfo2 = 'Resolve Listaller path variable';
@@ -58,7 +58,7 @@ rsRootPassAdvancedPriv = 'Enter your password to run the application with '
   +'advanced privileges.';
 rsRootPassQAppEveryone = 'Enter your password to install the application for '
   +'everyone.';
-rsConvDone = 'Converting done. Do you want to close this window now?'#10'Press "No" if you want to check the output.';
+rsConvDone = 'Conversion done. Do you want to close this window now?'#10'Press "No" if you want to check the output.';
 rsSelectListNumber = 'Please select a number shown in the list!';
 rsSelectIModeA = 'Select the installation mode of this application:';
 rsShowDetailedInfoCMD = 'Do you want to see detailed information [y/n]?';

@@ -20,7 +20,7 @@ Description: Listaller data
 
 Package: listaller-gtk
 Architecture: any
-Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), listaller-cmd (= ${source:Version}), gksu, xdg-utils, 
+Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), listaller-core (= ${source:Version}), gksu, xdg-utils, 
   lsb-release, packagekit, python-packagekit, python
 Provides: listaller, listaller-compact-gtk
 Description: Listaller main package (GTK2)
@@ -40,10 +40,10 @@ Description: Command-line tools for Listaller package handling
   It also contains the needed tools to build RPM and DEB packages from IPS sources and to 
   create an "Linux distribution compatible" button for your software.
 
-Package: listaller-cmd
+Package: listaller-core
 Architecture: any
-Depends: ${shlibs:Depends}, listaller
-Description: Command-line interface for Listaller
+Depends: ${shlibs:Depends}
+Description: Listaller basic tools and libraries
   This package contains the 'lipa' command line tool.
   It allows installing/uninstalling/building IPK packages without GUI.
 

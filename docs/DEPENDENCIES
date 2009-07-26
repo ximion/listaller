@@ -5,8 +5,8 @@ Listaller needs the following modules to compile:
  (Debian dependencies)
 
  * libgtk2.0-dev
- * lazarus (>=0.9.28)
- * fpc (>= 2.2.4)
+ * lazarus >=0.9.28
+ * fpc >= 2.2.4
  * fp-units-gtk
  * libqt4intf
  * libqt4-core
@@ -31,16 +31,18 @@ GTK2 version:
  * gksu
  * xdg-utils
  * lsb-release
- * packagekit
+ * packagekit >= 0.4.6
  * python-packagekit
  * python
+ * gnome-packagekit [optional]
 
 Qt4 version:
  * libc6
  * libsqlite3-0
  * kdesudo
- * packagekit
+ * packagekit >=0.4.6
  * python-packagekit
  * python
  * libqt4intf
  * kde-icons-oxygen
+ * kpackagekit [optional]

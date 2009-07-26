@@ -9,10 +9,6 @@ rm -rf *.sh~
 rm -rf *.bak
 
 rm -rf *.compiled
-rm -rf libgtk.so
-rm -rf libgdk_pixbuf.so
-rm -rf libglib.so
-rm -rf libgdk.so
 rm -rf *.lrt
 
 rm -rf *~
@@ -28,10 +24,6 @@ rm -rf *.sh~
 rm -rf *.bak
 
 rm -rf *.compiled
-rm -rf libgtk.so
-rm -rf libgdk_pixbuf.so
-rm -rf libglib.so
-rm -rf libgdk.so
 
 rm -rf *~
 
@@ -46,9 +38,5 @@ rm -rf *.sh~
 rm -rf *.bak
 
 rm -rf *.compiled
-rm -rf libgtk.so
-rm -rf libgdk_pixbuf.so
-rm -rf libglib.so
-rm -rf libgdk.so
 
 rm -rf *~

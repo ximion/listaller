@@ -40,7 +40,7 @@ install: build
 	# Add here commands to install the package into debian/listaller.
 	echo "Installing binaries..."
 	$(MAKE) DESTDIR=./debian/listaller-tools libuildtools-inst
-	$(MAKE) DESTDIR=./debian/listaller-cmd install-lipa
+	$(MAKE) DESTDIR=./debian/listaller-core install-lipa
 	# Install Gtk release
 	$(MAKE) WIDGET=gtk2 DESTDIR=./debian/listaller-gtk install
 	$(MAKE) WIDGET=gtk2 DESTDIR=./debian/listaller-creation-gtk licreator-inst
