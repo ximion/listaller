@@ -36,6 +36,9 @@ type
     AboutBtn: TButton;
     BitBtn5: TBitBtn;
     BitBtn6: TBitBtn;
+    Button1: TButton;
+    MBar: TProgressBar;
+    StatusLabel: TLabel;
     ThrobberBox: TPaintBox;
     RmUpdSrcBtn: TBitBtn;
     UpdCheckBtn: TBitBtn;
@@ -68,7 +71,6 @@ type
     Label6: TLabel;
     Notebook1: TNotebook;
     OpenDialog1: TOpenDialog;
-    MBar: TProgressBar;
     LeftBar: TPanel;
     InstalledAppsPage: TPage;
     CatalogPage: TPage;
@@ -80,7 +82,6 @@ type
     RepoButton: TSpeedButton;
     SWBox: TScrollBox;
     Process1: TProcess;
-    StatusBar1: TStatusBar;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);
     procedure BitBtn4Click(Sender: TObject);
@@ -90,6 +91,7 @@ type
     procedure btnSettingsClick(Sender: TObject);
     procedure btnCatClick(Sender: TObject);
     procedure AboutBtnClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
     procedure CBoxChange(Sender: TObject);
     procedure AutoDepLdCbChange(Sender: TObject);
     procedure CbShowPkMonChange(Sender: TObject);
@@ -186,7 +188,7 @@ end;
 
 begin
        d:=TIniFile.Create(fname);
-       StatusBar1.Panels[0].Text:=rsLoading+'  '+ExtractFileName(fname);
+       StatusLabel.Caption:=rsLoading+'  '+ExtractFileName(fname);
        Application.ProcessMessages;
        translate:=false;
 
@@ -333,7 +335,7 @@ AList.Clear;
 
 LeftBar.Enabled:=false;
 
-StatusBar1.Panels[0].Text:=rsLoading;
+StatusLabel.Caption:=rsLoading;
 
 //Create GIFThread for Throbber animation
 gif:=TGifThread.Create(true);
@@ -478,9 +480,9 @@ ini.Free;
 
 //Check LOKI-success:
 if j>100 then
-StatusBar1.Panels[0].Text:=rsLOKIError;
+StatusLabel.Caption:=rsLOKIError;
 
-StatusBar1.Panels[0].Text:=rsReady; //Loading list finished!
+StatusLabel.Caption:=rsReady; //Loading list finished!
 
 LeftBar.Enabled:=true;
 SwBox.Visible:=true;
@@ -806,6 +808,21 @@ begin
  abbox.free;
 end;
 
+procedure TMnFrm.Button1Click(Sender: TObject);
+var p: TProcess;
+begin
+if not FileExists(ExtractFileName(paramstr(0))+'litray') then
+begin
+ShowMessage(rsNotFoundliTray);
+exit;
+end;
+  p:=TProcess.Create(nil);
+  p.Options:=[];
+  p.CommandLine:=ExtractFileName(paramstr(0))+'litray';
+  p.Execute;
+  p.Free;
+end;
+
 procedure TMnFrm.CBoxChange(Sender: TObject);
 begin
   CBox.Enabled:=false;
@@ -936,7 +953,7 @@ begin
      end else
      begin
      Application.ProcessMessages;
-     StatusBar1.Panels[0].Text:=rsFiltering;
+     StatusLabel.Caption:=rsFiltering;
      for i:=0 to AList.Count-1 do
      begin
       TListEntry(AList[i]).Visible:=true;
@@ -947,7 +964,7 @@ begin
          TListEntry(AList[i]).Visible:=false;
          end;
        end;
-StatusBar1.Panels[0].Text:=rsReady;
+StatusLabel.Caption:=rsReady;
 end;
 end;
 

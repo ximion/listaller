@@ -45,7 +45,7 @@ begin
    Image1.Picture.LoadFromFile('/usr/share/pixmaps/listaller.png');
    Label2.Caption:=rsVersion+': '+LiVersion;
    Label5.Caption:=rsUseLaunchpadForBugs;
-   Label3.Caption:=StringReplace(rsLinDesk,'%de',GetDistro.Desktop,[rfReplaceAll]);
+   Label3.Caption:=Format(rsLinDesk,[GetDistro.Desktop]);
    AboutSheet.Caption:=rsAbout;
    AuthorSheet.Caption:=rsAuthors;
    BitBtn1.Caption:=rsClose;

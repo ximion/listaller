@@ -3,7 +3,7 @@ object MnFrm: TMnFrm
   Height = 558
   Top = 245
   Width = 816
-  ActiveControl = LeftBar
+  ActiveControl = WarnDistCb
   Caption = 'Software Manager'
   ClientHeight = 558
   ClientWidth = 816
@@ -320,52 +320,31 @@ object MnFrm: TMnFrm
   LCLVersion = '0.9.27'
   object Image1: TImage
     Left = 0
-    Height = 56
+    Height = 48
     Top = 0
     Width = 816
     Align = alTop
     Stretch = True
   end
-  object StatusBar1: TStatusBar
-    Left = 0
-    Height = 20
-    Top = 538
-    Width = 816
-    AutoSize = False
-    Panels = <    
-      item
-        Bevel = pbNone
-        Text = 'Loading...'
-        Width = 200
-      end    
-      item
-        Alignment = taRightJustify
-        Style = psOwnerDraw
-        Width = 200
-      end>
-    SimplePanel = False
-  end
-  object MBar: TProgressBar
-    Left = 664
-    Height = 6
-    Top = 548
-    Width = 128
-    Anchors = [akRight, akBottom]
-    Smooth = True
-    Step = 1
-    Style = pbstMarquee
-    TabOrder = 1
+  object StatusLabel: TLabel
+    Left = 112
+    Height = 14
+    Top = 544
+    Width = 57
+    Anchors = [akLeft, akBottom]
+    Caption = 'Loading...'
+    ParentColor = False
   end
   object LeftBar: TPanel
     Left = 0
-    Height = 482
-    Top = 56
+    Height = 510
+    Top = 48
     Width = 104
     Align = alLeft
     BevelOuter = bvNone
-    ClientHeight = 482
+    ClientHeight = 510
     ClientWidth = 104
-    TabOrder = 2
+    TabOrder = 0
     object InstallButton: TSpeedButton
       Left = 8
       Height = 80
@@ -676,7 +655,7 @@ object MnFrm: TMnFrm
     object CatButton: TSpeedButton
       Left = 8
       Height = 80
-      Top = 208
+      Top = 210
       Width = 96
       Caption = 'Browse catalogue'
       Color = clBtnFace
@@ -983,7 +962,7 @@ object MnFrm: TMnFrm
     object SettingsButton: TSpeedButton
       Left = 8
       Height = 80
-      Top = 398
+      Top = 406
       Width = 96
       Caption = 'Settings'
       Color = clBtnFace
@@ -1290,7 +1269,7 @@ object MnFrm: TMnFrm
     object RepoButton: TSpeedButton
       Left = 8
       Height = 80
-      Top = 304
+      Top = 312
       Width = 96
       Caption = 'Repositories'
       Color = clBtnFace
@@ -1906,29 +1885,29 @@ object MnFrm: TMnFrm
   end
   object Notebook1: TNotebook
     Left = 112
-    Height = 472
-    Top = 64
+    Height = 480
+    Top = 56
     Width = 696
     Anchors = [akTop, akLeft, akRight, akBottom]
-    PageIndex = 0
+    PageIndex = 3
     ShowTabs = False
-    TabOrder = 3
+    TabOrder = 1
     object InstalledAppsPage: TPage
       Caption = 'InstalledAppsPage'
       ClientWidth = 692
-      ClientHeight = 468
+      ClientHeight = 476
       object Label1: TLabel
         Left = 6
-        Height = 13
+        Height = 14
         Top = 12
-        Width = 30
+        Width = 35
         Caption = 'Show:'
         ParentColor = False
       end
       object ThrobberBox: TPaintBox
         Left = 270
         Height = 100
-        Top = 166
+        Top = 170
         Width = 100
         Anchors = []
         Constraints.MaxHeight = 100
@@ -1938,20 +1917,20 @@ object MnFrm: TMnFrm
       end
       object SWBox: TScrollBox
         Left = 0
-        Height = 430
-        Top = 38
+        Height = 446
+        Top = 30
         Width = 692
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderStyle = bsNone
-        ClientHeight = 430
+        ClientHeight = 446
         ClientWidth = 692
         Color = clForm
         ParentColor = False
         TabOrder = 0
         object Label3: TLabel
           Left = 6
-          Height = 18
+          Height = 19
           Top = 14
           Width = 155
           Caption = 'No applications found!'
@@ -1962,7 +1941,7 @@ object MnFrm: TMnFrm
         end
       end
       object CBox: TComboBox
-        Left = 38
+        Left = 46
         Height = 23
         Top = 6
         Width = 144
@@ -1988,7 +1967,7 @@ object MnFrm: TMnFrm
       end
       object FilterEdt: TEdit
         Left = 550
-        Height = 20
+        Height = 21
         Top = 5
         Width = 139
         Anchors = [akTop, akRight]
@@ -2002,11 +1981,11 @@ object MnFrm: TMnFrm
     object CatalogPage: TPage
       Caption = 'CatalogPage'
       ClientWidth = 692
-      ClientHeight = 446
+      ClientHeight = 453
       object BitBtn1: TBitBtn
         Left = 190
         Height = 40
-        Top = 134
+        Top = 137
         Width = 283
         Anchors = []
         Caption = 'Browse Listaller''s catalog'
@@ -2016,7 +1995,7 @@ object MnFrm: TMnFrm
       object BitBtn2: TBitBtn
         Left = 190
         Height = 40
-        Top = 233
+        Top = 237
         Width = 283
         Anchors = []
         Caption = 'Open your distribution''s package catalog'
@@ -2027,11 +2006,11 @@ object MnFrm: TMnFrm
     object RepoPage: TPage
       Caption = 'RepoPage'
       ClientWidth = 692
-      ClientHeight = 446
+      ClientHeight = 476
       object BitBtn5: TBitBtn
         Left = 198
         Height = 30
-        Top = 272
+        Top = 291
         Width = 267
         Anchors = []
         Caption = 'Update system'
@@ -2039,7 +2018,7 @@ object MnFrm: TMnFrm
       end
       object PageControl1: TPageControl
         Left = 0
-        Height = 446
+        Height = 476
         Top = 0
         Width = 692
         ActivePage = SysRepoSheet
@@ -2048,12 +2027,12 @@ object MnFrm: TMnFrm
         TabOrder = 1
         object SysRepoSheet: TTabSheet
           Caption = 'System repositories'
-          ClientHeight = 420
+          ClientHeight = 449
           ClientWidth = 688
           object BitBtn6: TBitBtn
             Left = 180
             Height = 30
-            Top = 180
+            Top = 194
             Width = 267
             Anchors = []
             Caption = 'Change package manager settings'
@@ -2063,7 +2042,7 @@ object MnFrm: TMnFrm
         end
         object UpdRepoSheet: TTabSheet
           Caption = 'Update repositories'
-          ClientHeight = 420
+          ClientHeight = 426
           ClientWidth = 688
           object UsILabel: TLabel
             Left = 6
@@ -2075,7 +2054,7 @@ object MnFrm: TMnFrm
           end
           object UListBox: TCheckListBox
             Left = 6
-            Height = 344
+            Height = 350
             Top = 32
             Width = 670
             Anchors = [akTop, akLeft, akRight, akBottom]
@@ -2087,7 +2066,7 @@ object MnFrm: TMnFrm
           object RmUpdSrcBtn: TBitBtn
             Left = 6
             Height = 26
-            Top = 384
+            Top = 390
             Width = 85
             Anchors = [akLeft, akBottom]
             AutoSize = True
@@ -2099,7 +2078,7 @@ object MnFrm: TMnFrm
           object UpdCheckBtn: TBitBtn
             Left = 564
             Height = 26
-            Top = 384
+            Top = 390
             Width = 105
             Anchors = [akRight, akBottom]
             AutoSize = True
@@ -2114,20 +2093,20 @@ object MnFrm: TMnFrm
     object ConfigPage: TPage
       Caption = 'ConfigPage'
       ClientWidth = 692
-      ClientHeight = 446
+      ClientHeight = 476
       object Label2: TLabel
         Left = 6
-        Height = 13
+        Height = 14
         Top = 8
-        Width = 104
+        Width = 120
         Caption = 'Language: automatic'
         ParentColor = False
       end
       object AboutBtn: TButton
-        Left = 598
-        Height = 26
-        Top = 416
-        Width = 84
+        Left = 587
+        Height = 23
+        Top = 449
+        Width = 95
         Anchors = [akRight, akBottom]
         AutoSize = True
         Caption = 'About Listaller'
@@ -2138,7 +2117,7 @@ object MnFrm: TMnFrm
         Left = 6
         Height = 21
         Top = 32
-        Width = 233
+        Width = 272
         Caption = 'Show warning if distribution is unsupported'
         Checked = True
         Enabled = False
@@ -2150,7 +2129,7 @@ object MnFrm: TMnFrm
         Left = 6
         Height = 21
         Top = 64
-        Width = 329
+        Width = 383
         Caption = 'Load dependencies from included webserver-urls automatically'
         Checked = True
         OnChange = AutoDepLdCbChange
@@ -2161,7 +2140,7 @@ object MnFrm: TMnFrm
         Left = 6
         Height = 21
         Top = 101
-        Width = 238
+        Width = 272
         Caption = 'Start PackageKit monitor while transactions'
         OnChange = CbShowPkMonChange
         TabOrder = 3
@@ -2173,32 +2152,32 @@ object MnFrm: TMnFrm
         Width = 637
         Anchors = [akTop, akLeft, akRight]
         Caption = 'Proxy-Settings'
-        ClientHeight = 170
+        ClientHeight = 169
         ClientWidth = 633
         TabOrder = 4
         object Label4: TLabel
           Left = 9
-          Height = 13
+          Height = 14
           Top = 33
-          Width = 63
+          Width = 78
           Caption = 'H&TTP-Proxy:'
           Enabled = False
           ParentColor = False
         end
         object Label5: TLabel
           Left = 191
-          Height = 13
+          Height = 14
           Top = 33
-          Width = 24
+          Width = 28
           Caption = 'Port:'
           Enabled = False
           ParentColor = False
         end
         object Label6: TLabel
           Left = 190
-          Height = 13
+          Height = 14
           Top = 104
-          Width = 24
+          Width = 28
           Caption = 'Port:'
           Enabled = False
           ParentColor = False
@@ -2208,14 +2187,14 @@ object MnFrm: TMnFrm
           Left = 6
           Height = 21
           Top = 5
-          Width = 120
+          Width = 138
           Caption = 'Enable Proxy-Server'
           OnChange = EnableProxyCbChange
           TabOrder = 0
         end
         object Edit1: TEdit
           Left = 6
-          Height = 22
+          Height = 21
           Top = 53
           Width = 172
           Enabled = False
@@ -2223,7 +2202,7 @@ object MnFrm: TMnFrm
         end
         object SpinEdit1: TSpinEdit
           Left = 191
-          Height = 22
+          Height = 21
           Top = 53
           Width = 90
           Enabled = False
@@ -2233,15 +2212,15 @@ object MnFrm: TMnFrm
         end
         object edtUsername: TLabeledEdit
           Left = 295
-          Height = 22
+          Height = 21
           Top = 53
           Width = 112
           EditLabel.AnchorSideLeft.Control = edtUsername
           EditLabel.AnchorSideBottom.Control = edtUsername
           EditLabel.Left = 295
-          EditLabel.Height = 13
-          EditLabel.Top = 39
-          EditLabel.Width = 53
+          EditLabel.Height = 14
+          EditLabel.Top = 38
+          EditLabel.Width = 64
           EditLabel.Caption = 'Username:'
           EditLabel.ParentColor = False
           Enabled = False
@@ -2250,16 +2229,16 @@ object MnFrm: TMnFrm
         end
         object edtPasswd: TLabeledEdit
           Left = 295
-          Height = 22
+          Height = 21
           Top = 97
           Width = 112
           EchoMode = emPassword
           EditLabel.AnchorSideLeft.Control = edtPasswd
           EditLabel.AnchorSideBottom.Control = edtPasswd
           EditLabel.Left = 295
-          EditLabel.Height = 13
-          EditLabel.Top = 84
-          EditLabel.Width = 49
+          EditLabel.Height = 14
+          EditLabel.Top = 83
+          EditLabel.Width = 61
           EditLabel.Caption = 'Password:'
           EditLabel.ParentColor = False
           Enabled = False
@@ -2269,15 +2248,15 @@ object MnFrm: TMnFrm
         end
         object edtFTPProxy: TLabeledEdit
           Left = 9
-          Height = 22
+          Height = 21
           Top = 123
           Width = 166
           EditLabel.AnchorSideLeft.Control = edtFTPProxy
           EditLabel.AnchorSideBottom.Control = edtFTPProxy
           EditLabel.Left = 9
-          EditLabel.Height = 13
-          EditLabel.Top = 110
-          EditLabel.Width = 57
+          EditLabel.Height = 14
+          EditLabel.Top = 109
+          EditLabel.Width = 69
           EditLabel.Caption = '&FTP-Proxy:'
           EditLabel.ParentColor = False
           Enabled = False
@@ -2287,7 +2266,7 @@ object MnFrm: TMnFrm
         end
         object SpinEdit2: TSpinEdit
           Left = 191
-          Height = 22
+          Height = 21
           Top = 123
           Width = 90
           Enabled = False
@@ -2297,7 +2276,28 @@ object MnFrm: TMnFrm
           Visible = False
         end
       end
+      object Button1: TButton
+        Left = 6
+        Height = 23
+        Top = 342
+        Width = 351
+        AutoSize = True
+        Caption = 'Start Listaller tray icon application (to check dependencies)'
+        OnClick = Button1Click
+        TabOrder = 5
+      end
     end
+  end
+  object MBar: TProgressBar
+    Left = 680
+    Height = 6
+    Top = 544
+    Width = 128
+    Anchors = [akRight, akBottom]
+    Smooth = True
+    Step = 1
+    Style = pbstMarquee
+    TabOrder = 2
   end
   object Process1: TProcess
     Active = False
