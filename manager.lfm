@@ -2027,12 +2027,12 @@ object MnFrm: TMnFrm
         TabOrder = 1
         object SysRepoSheet: TTabSheet
           Caption = 'System repositories'
-          ClientHeight = 449
+          ClientHeight = 426
           ClientWidth = 688
           object BitBtn6: TBitBtn
             Left = 180
             Height = 30
-            Top = 194
+            Top = 183
             Width = 267
             Anchors = []
             Caption = 'Change package manager settings'
@@ -2042,7 +2042,7 @@ object MnFrm: TMnFrm
         end
         object UpdRepoSheet: TTabSheet
           Caption = 'Update repositories'
-          ClientHeight = 449
+          ClientHeight = 426
           ClientWidth = 688
           object UsILabel: TLabel
             Left = 6
@@ -2054,7 +2054,7 @@ object MnFrm: TMnFrm
           end
           object UListBox: TCheckListBox
             Left = 6
-            Height = 373
+            Height = 350
             Top = 32
             Width = 670
             Anchors = [akTop, akLeft, akRight, akBottom]
@@ -2066,7 +2066,7 @@ object MnFrm: TMnFrm
           object RmUpdSrcBtn: TBitBtn
             Left = 6
             Height = 26
-            Top = 413
+            Top = 390
             Width = 85
             Anchors = [akLeft, akBottom]
             AutoSize = True
@@ -2078,7 +2078,7 @@ object MnFrm: TMnFrm
           object UpdCheckBtn: TBitBtn
             Left = 564
             Height = 26
-            Top = 413
+            Top = 390
             Width = 105
             Anchors = [akRight, akBottom]
             AutoSize = True

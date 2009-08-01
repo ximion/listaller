@@ -3,25 +3,29 @@ msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2009-07-01 07:56+0000\n"
-"Last-Translator: Alexsandr N. <Strack@ya.ru>\n"
+"PO-Revision-Date: 2009-07-27 17:07+0000\n"
+"Last-Translator: Sergei Sedov <sedov@webmail.perm.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-07-02 11:52+0000\n"
+"X-Launchpad-Export-Date: 2009-08-01 21:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: trstrings:rsbrokendepsfixq
-msgid "You have missing dependencies. Should they be fixed now?"
+msgid "You have missing dependencies. Should they be installed now?"
 msgstr ""
 
 #: trstrings:rscannotresolv
 msgid "Cannot resolve dependencies"
-msgstr ""
+msgstr "Не могу разрешить зависимости"
 
 #: trstrings:rscheckappdepsq
 msgid "Do you want to check the applications's dependencies?"
+msgstr ""
+
+#: trstrings:rscheckapps
+msgid "Check applications"
 msgstr ""
 
 #: trstrings:rscheckrootappsq
@@ -30,14 +34,18 @@ msgstr ""
 
 #: trstrings:rscommands
 msgid "Commands:"
-msgstr ""
+msgstr "Команды:"
 
 #: trstrings:rscouldntfindupdater
-msgid "Couldn't find updater applications!"
+msgid "Can't find updater applications!"
 msgstr ""
 
 #: trstrings:rsinternalerror
 msgid "An internal error occured"
+msgstr "Произошла ошибка"
+
+#: trstrings:rslaunchlimgr
+msgid "Launch Listaller Manager"
 msgstr ""
 
 #: trstrings:rslipainfo2
@@ -49,7 +57,7 @@ msgid "Installs an IPK package"
 msgstr ""
 
 #: trstrings:rslistallermgrnotfound
-msgid "Couldn't find Listaller Manager!"
+msgid "Can't find Listaller Manager!"
 msgstr ""
 
 #: trstrings:rsliupdaternotfound
@@ -69,7 +77,8 @@ msgid "Print all available log messages"
 msgstr ""
 
 #: trstrings:rslipainfo6
-msgid "Check if all installed applications have proper dependencies"
+msgid ""
+"Check if dependencies of all installed applications are available and working"
 msgstr ""
 
 #: trstrings:rscmdinfopkgbuild
@@ -77,7 +86,7 @@ msgid "Package build commands:"
 msgstr ""
 
 #: trstrings:rslibuildinfoa
-msgid "Build ipk-package"
+msgid "Build IPK-package"
 msgstr ""
 
 #: trstrings:rslibuildinfob
@@ -93,7 +102,7 @@ msgid "Done."
 msgstr ""
 
 #: trstrings:rsdoyouacceptlicensecmd
-msgid "Do you accept this license? (y/n):"
+msgid "Do you accept this license [y/n]?"
 msgstr ""
 
 #: trstrings:rsenternumber
@@ -109,11 +118,11 @@ msgid "The application %a was not installed."
 msgstr "Приложение %a не установлено."
 
 #: trstrings:rslipaautofixq
-msgid "Should lipa fix these problems automatically? [y/n]?"
+msgid "Should lipa fix these problems automatically [y/n]?"
 msgstr ""
 
 #: trstrings:rslipainfo1
-msgid "Listaller command-line tool to handle ipk-packages"
+msgid "Listaller command-line tool to handle IPK-packages"
 msgstr ""
 
 #: trstrings:rsmodenumber
@@ -134,7 +143,7 @@ msgstr ""
 
 #: trstrings:rspreparinginstall
 msgid "Preparing installation (please wait)"
-msgstr ""
+msgstr "Подготовка к установке (пожалуйста, ждите)"
 
 #: trstrings:rsrootpassadvancedpriv
 msgid "Enter your password to run the application with advanced privileges."
@@ -142,6 +151,12 @@ msgstr ""
 
 #: trstrings:rsrootpassqappeveryone
 msgid "Enter your password to install the application for everyone."
+msgstr ""
+
+#: trstrings:rsconvdone
+msgid ""
+"Converting done. Do you want to close this window now?\n"
+"Press \"No\" if you want to check the output."
 msgstr ""
 
 #: trstrings:rsselectlistnumber
@@ -195,7 +210,7 @@ msgstr ""
 
 #: trstrings:rsrunning
 msgid "Running installation..."
-msgstr ""
+msgstr "Идёт установка..."
 
 #: trstrings:rsplwait
 msgid "Please wait."
@@ -207,7 +222,7 @@ msgstr "Установка завершена!"
 
 #: trstrings:rsinstfailed
 msgid "Installation failed."
-msgstr ""
+msgstr "Установка не удалась."
 
 #: trstrings:rsprfinish
 msgid "Press \"Finish\" to close."
@@ -282,11 +297,11 @@ msgstr "Загрузка прервана."
 
 #: trstrings:rsalreadyinst
 msgid "This application is already installed"
-msgstr ""
+msgstr "Программа уже установлена"
 
 #: trstrings:rsinstallagain
 msgid "Do you want to install it again?"
-msgstr ""
+msgstr "Хотите установить снова?"
 
 #: trstrings:rswelcometo
 msgid "Welcome to the installation of %a"
@@ -318,7 +333,7 @@ msgstr ""
 
 #: trstrings:rspkgerror
 msgid "Installation package is corrupt"
-msgstr ""
+msgstr "Установочный пакет повреждён"
 
 #: trstrings:rsappclose
 msgid "The application will close now "
@@ -402,7 +417,7 @@ msgstr ""
 
 #: trstrings:rsinstallation
 msgid "Installation"
-msgstr ""
+msgstr "Установка"
 
 #: trstrings:rsnoldsources
 msgid ""
@@ -432,7 +447,7 @@ msgstr ""
 
 #: trstrings:rsreinstall
 msgid "Re-install"
-msgstr ""
+msgstr "Переустановить"
 
 #: trstrings:rspkgdownload
 msgid "The following packages will be downloaded:"
@@ -475,7 +490,7 @@ msgstr ""
 
 #: trstrings:rsinstperformerror
 msgid "Error while performing installation:"
-msgstr ""
+msgstr "Произошла ошибка во время установки:"
 
 #: trstrings:rsyesno1
 msgid "Yes/No?:"
@@ -492,7 +507,7 @@ msgstr ""
 
 #: trstrings:rswanttodoq
 msgid "What do you want to do?"
-msgstr ""
+msgstr "Что вы хотите сделать?"
 
 #: trstrings:rspackagekitwarning
 msgid ""
@@ -517,11 +532,11 @@ msgstr ""
 
 #: trstrings:rsinstallhome
 msgid "Install into my Home directory"
-msgstr ""
+msgstr "Установить в мой домашний каталог"
 
 #: trstrings:rsselinstmode
 msgid "Select installation mode"
-msgstr ""
+msgstr "Выберите режим установки"
 
 #: trstrings:rssoftwaremanager
 msgid "Software Manager"
@@ -545,7 +560,7 @@ msgstr ""
 
 #: trstrings:rsuninstall
 msgid "Uninstall"
-msgstr ""
+msgstr "Удалить"
 
 #: trstrings:rsswcatalogue
 msgid "Browse catalogue"
@@ -646,7 +661,7 @@ msgid ""
 "You want to install an %x-Package, but your Linux-distribution's package "
 "system is %y.\n"
 "This package can be converted using \"alien\", but this will take some time "
-"and eventually the application won't work\n"
+"and eventually the installed application won't work\n"
 "Do you want to convert the package now?"
 msgstr ""
 
@@ -672,11 +687,11 @@ msgstr ""
 
 #: trstrings:rsinstalledapps
 msgid "Installed applications"
-msgstr ""
+msgstr "Установленные приложения"
 
 #: trstrings:rsinstallpkg
 msgid "Install package"
-msgstr ""
+msgstr "Установить пакет"
 
 #: trstrings:rsbrowsecatalog
 msgid "Browse catalog"
@@ -702,11 +717,11 @@ msgstr ""
 
 #: trstrings:rsdisprootapps
 msgid "Display system applications"
-msgstr ""
+msgstr "Показать системные приложения"
 
 #: trstrings:rsdisponlymyapps
 msgid "Display my applications"
-msgstr ""
+msgstr "Показать мои приложения"
 
 #: trstrings:rsselmgrmode
 msgid "Select software-manager mode:"
@@ -721,7 +736,7 @@ msgstr ""
 
 #: trstrings:rsinstpkgq
 msgid "Install package?"
-msgstr ""
+msgstr "Установить пакет?"
 
 #: trstrings:rspkginstfail
 msgid "Package %p could not be installed."
@@ -791,7 +806,7 @@ msgstr ""
 
 #: trstrings:rswinstalldl
 msgid "Select software you want to download and to install:"
-msgstr ""
+msgstr "Выберите приложение для скачивания и установки"
 
 #: trstrings:rsnoinfo
 msgid "No information available!"
@@ -824,15 +839,15 @@ msgstr ""
 
 #: trstrings:rsrealuninstq
 msgid "Do you really want to uninstall %a?"
-msgstr ""
+msgstr "Вы действительно хотите удалить %a?"
 
 #: trstrings:rsunistsuccess
 msgid "Application uninstalled successfully!"
-msgstr ""
+msgstr "Удаление приложения успешно завершено!"
 
 #: trstrings:rsrmerror
 msgid "Error while uninstalling!"
-msgstr ""
+msgstr "Произошла ошибка во время удаления!"
 
 #: trstrings:rscannothandlerm
 msgid ""
@@ -847,7 +862,7 @@ msgstr ""
 
 #: trstrings:rsuninstalling
 msgid "Uninstalling..."
-msgstr ""
+msgstr "Удаление..."
 
 #: trstrings:rsrmpkg
 msgid ""
@@ -866,7 +881,7 @@ msgstr ""
 
 #: trstrings:rsrmappc
 msgid "Uninstalling %a"
-msgstr ""
+msgstr "Удаление %a"
 
 #: trstrings:rslindesk
 msgid "Running under %de."
@@ -894,7 +909,7 @@ msgstr ""
 
 #: trstrings:rsinstupd
 msgid "Install updates"
-msgstr ""
+msgstr "Установить обновления"
 
 #: trstrings:rsshowupdater
 msgid "Show"
@@ -927,9 +942,6 @@ msgstr ""
 #: trstrings:rsresolvingdep
 msgid "Resolving dependencies..."
 msgstr ""
-
-#~ msgid "Filter:"
-#~ msgstr "Фильтр:"
 
 #~ msgid "Browser %s%s%s not executable."
 #~ msgstr "Браузер %s%s%s не является исполнимым файлом."
@@ -1128,6 +1140,9 @@ msgstr ""
 #~ msgid "Application Workspace"
 #~ msgstr "Рабочая область приложения"
 
+#~ msgid "Aqua"
+#~ msgstr "Морской волны"
+
 #~ msgid "Desktop"
 #~ msgstr "Рабочий стол"
 
@@ -1137,8 +1152,14 @@ msgstr ""
 #~ msgid "Bitmaps"
 #~ msgstr "Точечные рисунки"
 
+#~ msgid "Black"
+#~ msgstr "Чёрный"
+
 #~ msgid "Blank"
 #~ msgstr "Пустой"
+
+#~ msgid "Blue"
+#~ msgstr "Синий"
 
 #~ msgid "Button Face"
 #~ msgstr "Лицевая часть кнопки"
@@ -1171,6 +1192,9 @@ msgstr ""
 #~ msgid "Case sensitive"
 #~ msgstr "С учётом регистра"
 
+#~ msgid "Cream"
+#~ msgstr "Кремовый"
+
 #~ msgid "Creating gdb catchable error:"
 #~ msgstr "Создание ошибки, захватываемой GDB:"
 
@@ -1179,6 +1203,9 @@ msgstr ""
 
 #~ msgid "Custom ..."
 #~ msgstr "Пользовательский ..."
+
+#~ msgid "Default"
+#~ msgstr "По умолчанию"
 
 #~ msgid "permissions user group size date time"
 #~ msgstr "права пользователь группа размер дата время"
@@ -1296,6 +1323,9 @@ msgstr ""
 #~ msgid "Forward"
 #~ msgstr "Вперёд"
 
+#~ msgid "Fuchsia"
+#~ msgstr "Розовый"
+
 #~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
 #~ msgstr "--gdk-debug flags     Включить указанные отладочные сообщения GDK."
 
@@ -1315,8 +1345,14 @@ msgstr ""
 #~ msgid "Gradient Inactive Caption"
 #~ msgstr "Градиент неактивного заголовка"
 
+#~ msgid "Gray"
+#~ msgstr "Тёмно-серый"
+
 #~ msgid "Gray Text"
 #~ msgstr "Серый текст"
+
+#~ msgid "Green"
+#~ msgstr "Тёмно-зелёный"
 
 #~ msgid "Grid file doesn't exists"
 #~ msgstr "Файл сетки не существует"
@@ -1327,6 +1363,9 @@ msgstr ""
 #~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
 #~ msgstr ""
 #~ "GroupIndex не может быть меньше GroupIndex для предыдущего элемента меню"
+
+#~ msgid "Filter:"
+#~ msgstr "Фильтр:"
 
 #~ msgid "History:"
 #~ msgstr "История:"
@@ -1534,11 +1573,17 @@ msgstr ""
 #~ msgid "Last"
 #~ msgstr "Последняя"
 
+#~ msgid "Lime"
+#~ msgstr "Зелёный"
+
 #~ msgid "List index exceeds bounds (%d)"
 #~ msgstr "Индекс списка вне диапазона (%d)"
 
 #~ msgid "List must be empty"
 #~ msgstr "Список должен быть пуст"
+
+#~ msgid "Maroon"
+#~ msgstr "Малиновый"
 
 #~ msgid "&All"
 #~ msgstr "&Все"
@@ -1574,6 +1619,9 @@ msgstr ""
 #~ msgid "Yes to &All"
 #~ msgstr "Да для &всех"
 
+#~ msgid "Medium Gray"
+#~ msgstr "Серый"
+
 #~ msgid "Menu Bar"
 #~ msgstr "Панель меню"
 
@@ -1589,6 +1637,9 @@ msgstr ""
 
 #~ msgid "  modified "
 #~ msgstr "  изменён "
+
+#~ msgid "Money Green"
+#~ msgstr "Светло-зелёный"
 
 #~ msgid "Confirmation"
 #~ msgstr "Подтверждение"
@@ -1606,9 +1657,15 @@ msgstr ""
 #~ msgid "Warning"
 #~ msgstr "Предупреждение"
 
+#~ msgid "Navy"
+#~ msgstr "Тёмно-синий"
+
 #~ msgctxt "lclstrconsts.rsnextrecordhint"
 #~ msgid "Next"
 #~ msgstr "Следующая"
+
+#~ msgid "None"
+#~ msgstr "Нет"
 
 #~ msgid "Not a valid grid file"
 #~ msgstr "Неверный файл сетки"
@@ -1619,6 +1676,9 @@ msgstr ""
 #~ msgstr ""
 #~ "Отсутствует объект библиотеки виджетов. Проверьте, что модуль \"interfaces\" "
 #~ "был добавлен в выражение uses программы."
+
+#~ msgid "Olive"
+#~ msgstr "Оливковый"
 
 #~ msgid "Select a date"
 #~ msgstr "Выберите дату"
@@ -1655,6 +1715,9 @@ msgstr ""
 #~ msgid "Property %s does not exist"
 #~ msgstr "Свойство %s не существует"
 
+#~ msgid "Purple"
+#~ msgstr "Лиловый"
+
 #~ msgid "Endupdate while no update in progress"
 #~ msgstr "Команда Endupdate, хотя обновления не производилось"
 
@@ -1663,6 +1726,9 @@ msgstr ""
 
 #~ msgid "Cannot begin update all when canvas only update in progress"
 #~ msgstr "Невозможно начать обновление всех во время обновления канвы"
+
+#~ msgid "Red"
+#~ msgstr "Красный"
 
 #~ msgid "Refresh"
 #~ msgstr "Обновить"
@@ -1689,8 +1755,17 @@ msgstr ""
 #~ msgid "Select a font"
 #~ msgstr "Выбрать шрифт"
 
+#~ msgid "Silver"
+#~ msgstr "Серебристый"
+
 #~ msgid "  size "
 #~ msgstr "  размер "
+
+#~ msgid "Sky Blue"
+#~ msgstr "Голубой"
+
+#~ msgid "Teal"
+#~ msgstr "Бирюзовый"
 
 #~ msgid "Text"
 #~ msgstr "Текст"
@@ -1729,6 +1804,9 @@ msgstr ""
 #~ msgstr ""
 #~ " ВНИМАНИЕ: Найдено %s неудалённых ссылок на сообщение LM_PAINT/LM_GtkPAINT."
 
+#~ msgid "White"
+#~ msgstr "Белый"
+
 #~ msgid "Whole words only"
 #~ msgstr "Только целые слова"
 
@@ -1746,6 +1824,9 @@ msgstr ""
 
 #~ msgid "Window Text"
 #~ msgstr "Текст окна"
+
+#~ msgid "Yellow"
+#~ msgstr "Жёлтый"
 
 #~ msgid "Cannot focus a disabled or invisible window"
 #~ msgstr "Нельзя дать фокус отключённому или невидимому окну"
@@ -1812,69 +1893,3 @@ msgstr ""
 
 #~ msgid "Wrong token type: %s expected but %s found"
 #~ msgstr "Неверный тип лексемы: ожидался %s, но найден %s"
-
-#~ msgid "Aqua"
-#~ msgstr "Морской волны"
-
-#~ msgid "Black"
-#~ msgstr "Чёрный"
-
-#~ msgid "Blue"
-#~ msgstr "Синий"
-
-#~ msgid "Cream"
-#~ msgstr "Кремовый"
-
-#~ msgid "Default"
-#~ msgstr "По умолчанию"
-
-#~ msgid "Fuchsia"
-#~ msgstr "Розовый"
-
-#~ msgid "Gray"
-#~ msgstr "Тёмно-серый"
-
-#~ msgid "Green"
-#~ msgstr "Тёмно-зелёный"
-
-#~ msgid "Lime"
-#~ msgstr "Зелёный"
-
-#~ msgid "Maroon"
-#~ msgstr "Малиновый"
-
-#~ msgid "Medium Gray"
-#~ msgstr "Серый"
-
-#~ msgid "Money Green"
-#~ msgstr "Светло-зелёный"
-
-#~ msgid "Navy"
-#~ msgstr "Тёмно-синий"
-
-#~ msgid "None"
-#~ msgstr "Нет"
-
-#~ msgid "Olive"
-#~ msgstr "Оливковый"
-
-#~ msgid "Purple"
-#~ msgstr "Лиловый"
-
-#~ msgid "Red"
-#~ msgstr "Красный"
-
-#~ msgid "Silver"
-#~ msgstr "Серебристый"
-
-#~ msgid "Sky Blue"
-#~ msgstr "Голубой"
-
-#~ msgid "Teal"
-#~ msgstr "Бирюзовый"
-
-#~ msgid "White"
-#~ msgstr "Белый"
-
-#~ msgid "Yellow"
-#~ msgstr "Жёлтый"

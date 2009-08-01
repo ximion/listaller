@@ -71,7 +71,7 @@ begin
   p.Free;
  end else
  begin
-  writeLn('Unable to find listallMgr!');
+  writeLn(Format(rsUnableFind, ['listallMgr!']));
   ShowMessage(rsListallerMgrNotFound);
  end;
 end;
@@ -106,10 +106,11 @@ end;
 
 begin
 
-if Application.MessageBox(PAnsiChar(rsCheckAppDepsQ), 'CheckDeps', MB_YESNO)=IDYES then
+if Application.MessageBox(PAnsiChar(rsCheckAppDepsQ), PChar(rsCheckDepsQ), MB_YESNO)=
+  IDYES then
 begin
  RegDir:=SyblToPath('$INST')+'/app-reg/';
- if Application.MessageBox(PAnsiChar(rsCheckRootAppsQ), 'CheckToo', MB_YESNO)=IDYES then
+ if Application.MessageBox(PAnsiChar(rsCheckRootAppsQ), PChar(rsCheckDepsQ), MB_YESNO)=IDYES then
  begin
   PerformCheck;
   RegDir:='/etc/lipa/app-reg/';
@@ -131,7 +132,7 @@ begin
   p.Free;
  end else
  begin
-  writeLn(rsLiUpdaterNotFound);
+  writeLn(Format(rsUnableFind,['Listaller Updater!']));
   ShowMessage(rsCouldntFindUpdater);
  end;
 end;

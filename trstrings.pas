@@ -24,6 +24,7 @@ resourcestring
 rsBrokenDepsFixQ = 'Some dependencies are missing. Should they be installed now?';
 rsCannotResolv = 'Cannot resolve dependencies';
 rsCheckAppDepsQ = 'Do you want to check the applications''s dependencies?';
+rsCheckDepsQ = 'Check dependencies?';
 rsCheckApps = 'Check applications';
 rsCheckRootAppsQ = 'Do you want to check global-installed applications too?';
 rsCommands = 'Commands:';
@@ -33,7 +34,7 @@ rsLaunchLiMgr = 'Launch Listaller Manager';
 rsLipaInfo2 = 'Resolve Listaller path variable';
 rsLipaInfo3 = 'Installs an IPK package';
 rsListallerMgrNotFound = 'Can''t find Listaller Manager!';
-rsLiUpdaterNotFound = 'Unable to find liUpdater!';
+rsUnableFind = 'Unable to find %s';
 rsNotFoundliTray = 'Could not find Listaller TrayIcon Application';
 rsOptions = 'Options:';
 rsLipaInfo4 = 'Runs installation in testmode';

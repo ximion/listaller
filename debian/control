@@ -37,8 +37,9 @@ Architecture: i386 powerpc sparc amd64 arm
 Depends: ${shlibs:Depends}, listaller
 Description: Command-line tools for Listaller package handling
   This package contains everything you need to build own IPK packages.
-  It also contains the needed tools to build RPM and DEB packages from IPS sources and to 
-  create an "Linux distribution compatible" button for your software.
+  It also contains the needed tools to build RPM and DEB packages from
+  IPS sources and to  create an "Linux distribution compatible"
+  button for your software.
 
 Package: listaller-core
 Architecture: i386 powerpc sparc amd64 arm
@@ -81,7 +82,8 @@ Breaks: listaller-creation-gtk (<= ${source:Version})
 Description: Listaller Creator (Qt4)
   Listaller is a cross-distribution software install system.
   This is an alpha-release of Listaller's graphical package creation tool.
-  With liCreator you can easily build your own IPK-packages for the Listaller system.
+  With liCreator you can easily build your own IPK-packages for
+  the Listaller system.
   Please note that this is an alpha-release!
 
 Package: listaller-gtk-dbg
@@ -120,7 +122,8 @@ Architecture: any
 Section: debug
 Depends: listaller-qt (= ${binary:Version})
 Description: Debug symbols for Listaller Qt tools
-  This package contains the debuginfos for the Listaller base tools (Qt versions)
+  This package contains the debuginfos for the Listaller base tools 
+  (Qt versions)
 
 Package: listaller-creation-qt-dbg
 Architecture: any

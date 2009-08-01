@@ -9,11 +9,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-07-02 11:52+0000\n"
+"X-Launchpad-Export-Date: 2009-08-01 21:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: trstrings:rsbrokendepsfixq
-msgid "You have missing dependencies. Should they be fixed now?"
+msgid "You have missing dependencies. Should they be installed now?"
 msgstr ""
 
 #: trstrings:rscannotresolv
@@ -22,6 +22,10 @@ msgstr ""
 
 #: trstrings:rscheckappdepsq
 msgid "Do you want to check the applications's dependencies?"
+msgstr ""
+
+#: trstrings:rscheckapps
+msgid "Check applications"
 msgstr ""
 
 #: trstrings:rscheckrootappsq
@@ -33,11 +37,15 @@ msgid "Commands:"
 msgstr ""
 
 #: trstrings:rscouldntfindupdater
-msgid "Couldn't find updater applications!"
+msgid "Can't find updater applications!"
 msgstr ""
 
 #: trstrings:rsinternalerror
 msgid "An internal error occured"
+msgstr ""
+
+#: trstrings:rslaunchlimgr
+msgid "Launch Listaller Manager"
 msgstr ""
 
 #: trstrings:rslipainfo2
@@ -49,7 +57,7 @@ msgid "Installs an IPK package"
 msgstr ""
 
 #: trstrings:rslistallermgrnotfound
-msgid "Couldn't find Listaller Manager!"
+msgid "Can't find Listaller Manager!"
 msgstr ""
 
 #: trstrings:rsliupdaternotfound
@@ -69,7 +77,8 @@ msgid "Print all available log messages"
 msgstr ""
 
 #: trstrings:rslipainfo6
-msgid "Check if all installed applications have proper dependencies"
+msgid ""
+"Check if dependencies of all installed applications are available and working"
 msgstr ""
 
 #: trstrings:rscmdinfopkgbuild
@@ -77,7 +86,7 @@ msgid "Package build commands:"
 msgstr ""
 
 #: trstrings:rslibuildinfoa
-msgid "Build ipk-package"
+msgid "Build IPK-package"
 msgstr ""
 
 #: trstrings:rslibuildinfob
@@ -93,7 +102,7 @@ msgid "Done."
 msgstr ""
 
 #: trstrings:rsdoyouacceptlicensecmd
-msgid "Do you accept this license? (y/n):"
+msgid "Do you accept this license [y/n]?"
 msgstr ""
 
 #: trstrings:rsenternumber
@@ -109,11 +118,11 @@ msgid "The application %a was not installed."
 msgstr ""
 
 #: trstrings:rslipaautofixq
-msgid "Should lipa fix these problems automatically? [y/n]?"
+msgid "Should lipa fix these problems automatically [y/n]?"
 msgstr ""
 
 #: trstrings:rslipainfo1
-msgid "Listaller command-line tool to handle ipk-packages"
+msgid "Listaller command-line tool to handle IPK-packages"
 msgstr ""
 
 #: trstrings:rsmodenumber
@@ -142,6 +151,12 @@ msgstr ""
 
 #: trstrings:rsrootpassqappeveryone
 msgid "Enter your password to install the application for everyone."
+msgstr ""
+
+#: trstrings:rsconvdone
+msgid ""
+"Converting done. Do you want to close this window now?\n"
+"Press \"No\" if you want to check the output."
 msgstr ""
 
 #: trstrings:rsselectlistnumber
@@ -646,7 +661,7 @@ msgid ""
 "You want to install an %x-Package, but your Linux-distribution's package "
 "system is %y.\n"
 "This package can be converted using \"alien\", but this will take some time "
-"and eventually the application won't work\n"
+"and eventually the installed application won't work\n"
 "Do you want to convert the package now?"
 msgstr ""
 
@@ -947,9 +962,6 @@ msgstr ""
 #~ "Weet u zeker dat u \"%p\" wilt verwijderen, het bevat %a?\rDe volgende "
 #~ "pakketten zullen ook verwijderd worden: %pl\rAls u niet zeker bent of u de "
 #~ "pakketten niet nodig heeft klik \"Nee\"!"
-
-#~ msgid "Filter:"
-#~ msgstr "Filter:"
 
 #~ msgid "Browser %s%s%s not executable."
 #~ msgstr "Browser %s%s%s niet uitvoerbaar"
@@ -1256,6 +1268,9 @@ msgstr ""
 #~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
 #~ msgstr ""
 #~ "De GroupIndex kan niet minder zijn dan de GroupIndex van een vorig item."
+
+#~ msgid "Filter:"
+#~ msgstr "Filter:"
 
 #~ msgid "History:"
 #~ msgstr "Historie:"

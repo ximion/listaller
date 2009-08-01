@@ -1,4 +1,4 @@
-# Main translation template for Listaller alpha version 0.2.40a
+# Main translation template for Listaller beta version 0.3.00b
 # Copyright (C) 2009
 # This file is distributed under the same licence as the Listaller package.
 #
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: trstrings:rsbrokendepsfixq
-msgid "You have missing dependencies. Should they be installed now?"
+msgid "Some dependencies are missing. Should they be installed now?"
 msgstr ""
 
 #: trstrings:rscannotresolv
@@ -24,6 +24,10 @@ msgstr ""
 
 #: trstrings:rscheckappdepsq
 msgid "Do you want to check the applications's dependencies?"
+msgstr ""
+
+#: trstrings:rscheckdepsq
+msgid "Check dependencies?"
 msgstr ""
 
 #: trstrings:rscheckapps
@@ -39,7 +43,7 @@ msgid "Commands:"
 msgstr ""
 
 #: trstrings:rscouldntfindupdater
-msgid "Can't find updater applications!"
+msgid "Can't find updater application!"
 msgstr ""
 
 #: trstrings:rsinternalerror
@@ -62,8 +66,12 @@ msgstr ""
 msgid "Can't find Listaller Manager!"
 msgstr ""
 
-#: trstrings:rsliupdaternotfound
-msgid "Unable to find liUpdater!"
+#: trstrings:rsunablefind
+msgid "Unable to find %s"
+msgstr ""
+
+#: trstrings:rsnotfoundlitray
+msgid "Could not find Listaller TrayIcon Application"
 msgstr ""
 
 #: trstrings:rsoptions
@@ -155,7 +163,7 @@ msgid "Enter your password to install the application for everyone."
 msgstr ""
 
 #: trstrings:rsconvdone
-msgid "Converting done. Do you want to close this window now?\nPress \"No\" if you want to check the output."
+msgid "Conversion done. Do you want to close this window now?\nPress \"No\" if you want to check the output."
 msgstr ""
 
 #: trstrings:rsselectlistnumber
@@ -170,12 +178,20 @@ msgstr ""
 msgid "Do you want to see detailed information [y/n]?"
 msgstr ""
 
+#: trstrings:rsaborted
+msgid "Aborted."
+msgstr ""
+
 #: trstrings:rsviewlogq
 msgid "Do you want to view the logfile?"
 msgstr ""
 
 #: trstrings:rswasinstalled
 msgid "The application %a was installed successfully!"
+msgstr ""
+
+#: trstrings:rsexecapptesting
+msgid "Executing application for testing..."
 msgstr ""
 
 #: trstrings:rsinstallnow
@@ -266,12 +282,16 @@ msgstr ""
 msgid "Found no package with the necessary library \"%l\" for your distribution."
 msgstr ""
 
+#: trstrings:rsopeningdb
+msgid "Opening database..."
+msgstr ""
+
 #: trstrings:rsinclose
 msgid "The installer will close now"
 msgstr ""
 
-#: trstrings:rscnoverwrite
-msgid "Unable to overwrite the file %f."
+#: trstrings:rscnoverride
+msgid "Unable to override the file %f."
 msgstr ""
 
 #: trstrings:rsnotifydevs
@@ -314,6 +334,10 @@ msgstr ""
 msgid "Test of the application finished."
 msgstr ""
 
+#: trstrings:rscleaningup
+msgid "Cleaning up..."
+msgstr ""
+
 #: trstrings:rspkginval
 msgid "The package was invalid!"
 msgstr ""
@@ -336,6 +360,10 @@ msgstr ""
 
 #: trstrings:rsstep1
 msgid "Phase 1/4: Resolving dependencies..."
+msgstr ""
+
+#: trstrings:rsstate
+msgid "State"
 msgstr ""
 
 #: trstrings:rswdldep
@@ -655,7 +683,7 @@ msgid "Loading..."
 msgstr ""
 
 #: trstrings:rsinstalledapps
-msgid "Installed applications"
+msgid "Installed\napplications"
 msgstr ""
 
 #: trstrings:rsinstallpkg
@@ -663,7 +691,7 @@ msgid "Install package"
 msgstr ""
 
 #: trstrings:rsbrowsecatalog
-msgid "Browse catalog"
+msgid "Browse\ncatalog"
 msgstr ""
 
 #: trstrings:rsrepositories
@@ -679,7 +707,7 @@ msgid "Could not find usable GUI package manager.\nPlease install a PackageKit-G
 msgstr ""
 
 #: trstrings:rsuselaunchpadforbugs
-msgid "Please use https://bugs.launchpad.net/listaller for bug reports."
+msgid "Please use https://bugs.launchpad.net/listaller\nfor bug reports."
 msgstr ""
 
 #: trstrings:rsdisprootapps
@@ -708,6 +736,10 @@ msgstr ""
 
 #: trstrings:rsshowpkmon
 msgid "Start PackageKit monitor before running transactions"
+msgstr ""
+
+#: trstrings:rsstartlitray
+msgid "Start Listaller tray icon application (to check dependencies)"
 msgstr ""
 
 #: trstrings:rsaboutlistaller
@@ -839,7 +871,7 @@ msgid "Uninstalling %a"
 msgstr ""
 
 #: trstrings:rslindesk
-msgid "Running under %de."
+msgid "Running under %s."
 msgstr ""
 
 #: trstrings:rsnoupdates

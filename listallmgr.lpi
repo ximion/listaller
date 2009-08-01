@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="1400"/>
+      <CurrentBuildNr Value="1404"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -61,7 +61,7 @@
         <ComponentName Value="MnFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="53" Y="27"/>
+        <CursorPos X="68" Y="27"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="173"/>
@@ -788,7 +788,7 @@
       </Position25>
       <Position26>
         <Filename Value="manager.pas"/>
-        <Caret Line="27" Column="53" TopLine="1"/>
+        <Caret Line="27" Column="58" TopLine="1"/>
       </Position26>
     </JumpHistory>
   </ProjectOptions>
