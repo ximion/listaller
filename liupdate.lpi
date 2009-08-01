@@ -371,7 +371,8 @@
       <Filename Value="./bin/liupdate"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="synapse/;abbrevia/;/usr/lib/fpc/$(FPCVer)/units/$(TargetCPU)-$(TargetOS)/gtk1/"/>
+      <IncludeFiles Value="$(ProjOutDir)/"/>
+      <OtherUnitFiles Value="synapse/;abbrevia/"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Parsing>

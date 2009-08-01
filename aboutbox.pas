@@ -20,10 +20,11 @@ type
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
-    Label6: TLabel;
+    Memo1: TMemo;
     PageControl1: TPageControl;
     AboutSheet: TTabSheet;
     AuthorSheet: TTabSheet;
+    Panel1: TPanel;
     procedure BitBtn1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

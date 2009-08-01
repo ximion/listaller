@@ -22,7 +22,7 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  //Interfaces, //We need an widgetset (NoGUI) for graphic handling
+  Interfaces, //We need an widgetset (NoGUI) for graphic handling
   Classes, SysUtils, CustApp,
   LiCommon, Process, ipkbuild,
   TrStrings, LiTranslator;

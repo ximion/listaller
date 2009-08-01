@@ -1,4 +1,7 @@
 #!/bin/bash
+# Removes all files which are installed by listaller-install
+set -e
+
 echo "Uninstallation started."
 ARCH=$(uname -m)
 case "$ARCH" in

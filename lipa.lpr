@@ -68,14 +68,14 @@ begin
 if HasOption('verbose') then
 begin
  //Simple, stupid progress animation
-  if xs=0 then begin xs:=1; write(#13' #       ');end else
-  if xs=1 then begin xs:=2; write(#13' ##      ');end else
-  if xs=2 then begin xs:=3; write(#13' ###     ');end else
-  if xs=3 then begin xs:=4; write(#13' #####   ');end else
-  if xs=4 then begin xs:=5; write(#13' ######  ');end else
-  if xs=5 then begin xs:=6; write(#13' ####### ');end else
-  if xs=6 then begin xs:=7; write(#13' ########');end else
-  if xs=7 then begin xs:=0; write(#13'         ');end;
+  if xs=0 then begin xs:=1; write(#13' #         '+IntToStr(pos));end else
+  if xs=1 then begin xs:=2; write(#13' ##        '+IntToStr(pos));end else
+  if xs=2 then begin xs:=3; write(#13' ###       '+IntToStr(pos));end else
+  if xs=3 then begin xs:=4; write(#13' #####     '+IntToStr(pos));end else
+  if xs=4 then begin xs:=5; write(#13' ######    '+IntToStr(pos));end else
+  if xs=5 then begin xs:=6; write(#13' #######   '+IntToStr(pos));end else
+  if xs=6 then begin xs:=7; write(#13' ########  '+IntToStr(pos));end else
+  if xs=7 then begin xs:=0; write(#13'                             ');end;
 end;
 end;
 
@@ -95,7 +95,7 @@ end;
 procedure TLipa.setupStateMessage(Sender: TObject; msg: String);
 begin
 if not HasOption('verbose') then
-  writeLn('State: '+msg);
+  writeLn(' '+rsState+': '+msg);
 end;
 
 procedure TLipa.setupTermQuestion(Sender: TObject; msg: String);
@@ -186,7 +186,7 @@ begin
     halt(0);
   end;
 
-  for i:=1 to paramcount-1 do
+  for i:=1 to paramcount do
    if FileExists(paramstr(i)) then a:=paramstr(i);
 
   if HasOption('i','install') then
@@ -211,7 +211,7 @@ begin
     writeLn('-> '+rsResolvingDep);
     setup.ResolveDependencies;
 
-    writeLn(' - '+rsDone);
+    writeLn('- '+rsDone);
     if setup.DescFile <> '' then
     begin
      writeLn(rsProgDesc);
@@ -235,7 +235,7 @@ begin
      c:='';
      repeat
       writeLn('');
-      write(rsDoYouAcceptLicenseCMD);
+      write(rsDoYouAcceptLicenseCMD+' ');
       readLn(c);
       c:=LowerCase(c);
       if (c=LowerCase(rsN)) or (c=LowerCase(rsNo)) then
@@ -258,22 +258,22 @@ begin
      for i:=0 to lst.Count-1 do
       writeLn(' '+IntToStr(i+1)+') '+lst[i]);
      repeat
-      writeLn(rsModeNumber);
+      write(rsModeNumber+' ');
       readLn(c);
       try
-       if StrToInt(c)-1>=lst.Count then
+       if (StrToInt(c)-1>=lst.Count)or(StrToInt(c)-1<0) then
         writeLn(rsSelectListNumber);
       except
        writeLn(rsEnterNumber);
        c:=IntToStr(lst.Count+2);
       end;
-     until (StrToInt(c)-1<=lst.Count);
+     until (StrToInt(c)-1<=lst.Count)and(StrToInt(c)-1>-1);
       i:=StrToInt(c)-1;
       setup.CurrentProfile:=lst[i];
       setup.IFileInfo:='/stuff/fileinfo-'+copy(setup.Profiles[i],pos(' #',setup.Profiles[i])+2,length(setup.Profiles[i]))+'.id';
     end;
     lst.Free;
-    writeLn(' - '+rsOkay);
+    writeLn('- '+rsOkay);
     writeLn('-> '+rsPreparingInstall);
 
      if setup.IFileInfo='' then
@@ -307,9 +307,9 @@ begin
  //Assign event handler
  setup.OnStateMessage:=@setupStateMessage;
 
- writeLn('-> Running installation...');
+ writeLn('-> '+rsRunning);
  if not HasOption('verbose') then
- writeLn(' Step: '+rsStep1);
+ writeLn(' '+rsState+': '+rsStep1);
 
  proc:=TProcess.Create(nil);
  proc.Options:=[poUsePipes];
@@ -332,11 +332,12 @@ begin
   writeLn('Finished.');
  end else
  begin
-  writeLn('Executing application for testing...');
+  writeLn(rsExecAppTesting);
   proc.CommandLine:=setup.CMDLn;
   Proc.Options:=[poWaitOnExit];
   Proc.Execute;
   writeLn(rsTestFinished);
+  writeLn(rsCleaningUp);
    Proc.CommandLine := 'rm -rf /tmp/litest';
    Proc.Execute;
  end;

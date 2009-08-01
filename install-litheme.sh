@@ -3,6 +3,8 @@
 #
 # DESTDIR		Destination root directory
 # WIDGET                Widgetset the binary should be installed for
+set -e
+
 for arg; do
   case $arg in
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;
@@ -11,9 +13,6 @@ for arg; do
 done
 
 # Does the install
-#
-# "mkdir -p" is equivalent to ForceDirectories pascal function
-#
 echo "Installation of 'liThemeMgr'"
 
 mkdir -p $DESTDIR/usr/bin/

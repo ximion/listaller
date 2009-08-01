@@ -34,11 +34,9 @@ type
   TIWizFrm = class(TForm)
     AbortBtn1: TBitBtn;
     Button1: TBitBtn;
-    btn_sendinput: TButton;
     Button5: TBitBtn;
     CheckBox1: TCheckBox;
     CbExecApp: TCheckBox;
-    Edit1: TEdit;
     ExProgress: TProgressBar;
     FinBtn1: TBitBtn;
     GetOutPutTimer: TIdleTimer;
@@ -89,7 +87,6 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure GetOutputTimerTimer(Sender: TObject);
-    procedure btn_sendinputClick(Sender: TObject);
     procedure RadioButton1Change(Sender: TObject);
     //** HTTP/FTP socket hook
     procedure HookSock(Sender: TObject; Reason:THookSocketReason; const Value: string);
@@ -708,8 +705,6 @@ procedure TIWizFrm.StartInstallation;
 var cnf: TIniFile;
 begin
 while IPage.Visible=false do Application.ProcessMessages;
- Edit1.Visible:=true;
- btn_sendinput.Visible:=true;
  AbortBtn1.Enabled:=false;
  Button1.Enabled:=false;
  Button5.Enabled:=false;
@@ -797,16 +792,6 @@ begin
   Application.Terminate;
  end;
 
-end;
-
-procedure TIWizFrm.btn_sendinputClick(Sender: TObject);
-var InputString: String;
-begin
-if Process1.Running then begin
-  InputString:=Edit1.text;
-  Edit1.SelectAll;
-  Process1.Input.Write(InputString[1], length(InputString));
-  end else ShowMessage('Error - Process not running!');
 end;
 
 procedure TIWizFrm.RadioButton1Change(Sender: TObject);

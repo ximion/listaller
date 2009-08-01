@@ -1895,7 +1895,7 @@ object MnFrm: TMnFrm
     object InstalledAppsPage: TPage
       Caption = 'InstalledAppsPage'
       ClientWidth = 692
-      ClientHeight = 476
+      ClientHeight = 453
       object Label1: TLabel
         Left = 6
         Height = 14
@@ -1907,7 +1907,7 @@ object MnFrm: TMnFrm
       object ThrobberBox: TPaintBox
         Left = 270
         Height = 100
-        Top = 170
+        Top = 159
         Width = 100
         Anchors = []
         Constraints.MaxHeight = 100
@@ -1917,13 +1917,13 @@ object MnFrm: TMnFrm
       end
       object SWBox: TScrollBox
         Left = 0
-        Height = 446
+        Height = 423
         Top = 30
         Width = 692
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderStyle = bsNone
-        ClientHeight = 446
+        ClientHeight = 423
         ClientWidth = 692
         Color = clForm
         ParentColor = False
@@ -2006,11 +2006,11 @@ object MnFrm: TMnFrm
     object RepoPage: TPage
       Caption = 'RepoPage'
       ClientWidth = 692
-      ClientHeight = 476
+      ClientHeight = 453
       object BitBtn5: TBitBtn
         Left = 198
         Height = 30
-        Top = 291
+        Top = 276
         Width = 267
         Anchors = []
         Caption = 'Update system'
@@ -2018,7 +2018,7 @@ object MnFrm: TMnFrm
       end
       object PageControl1: TPageControl
         Left = 0
-        Height = 476
+        Height = 453
         Top = 0
         Width = 692
         ActivePage = SysRepoSheet
@@ -2042,7 +2042,7 @@ object MnFrm: TMnFrm
         end
         object UpdRepoSheet: TTabSheet
           Caption = 'Update repositories'
-          ClientHeight = 426
+          ClientHeight = 449
           ClientWidth = 688
           object UsILabel: TLabel
             Left = 6
@@ -2054,7 +2054,7 @@ object MnFrm: TMnFrm
           end
           object UListBox: TCheckListBox
             Left = 6
-            Height = 350
+            Height = 373
             Top = 32
             Width = 670
             Anchors = [akTop, akLeft, akRight, akBottom]
@@ -2066,7 +2066,7 @@ object MnFrm: TMnFrm
           object RmUpdSrcBtn: TBitBtn
             Left = 6
             Height = 26
-            Top = 390
+            Top = 413
             Width = 85
             Anchors = [akLeft, akBottom]
             AutoSize = True
@@ -2078,7 +2078,7 @@ object MnFrm: TMnFrm
           object UpdCheckBtn: TBitBtn
             Left = 564
             Height = 26
-            Top = 390
+            Top = 413
             Width = 105
             Anchors = [akRight, akBottom]
             AutoSize = True

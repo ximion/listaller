@@ -241,7 +241,7 @@ end;
 constructor TInstallation.Create;
 begin
  inherited Create;
- writeLn('Opening database...');
+ writeLn(rsOpeningDB);
  dsApp:= TSQLite3Dataset.Create(nil);
  if IsRoot then
   RegDir:='/etc/lipa/app-reg/'
@@ -353,6 +353,7 @@ begin
     RemoveDuplicates(tmp);
     Dependencies.Assign(tmp);
     tmp.Free;
+    SetMainPosVisibility(false);
   end;
 end;
 
@@ -1113,7 +1114,7 @@ if (not FileExists(dest+'/'+ExtractFileName(DeleteModifiers(h)))) then
  FileCopy(DeleteModifiers(lp+PkgName+h),dest+'/'+ExtractFileName(DeleteModifiers(h)))
 else
 begin
-  SendErrorMsg(StringReplace(rsCnOverwrite,'%f',dest+'/'+ExtractFileName(DeleteModifiers(h)),[rfReplaceAll])+#13+rsInClose);
+  SendErrorMsg(StringReplace(rsCnOverride,'%f',dest+'/'+ExtractFileName(DeleteModifiers(h)),[rfReplaceAll])+#10+rsInClose);
   exit;
 end;
 

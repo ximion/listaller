@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Parses command line options. Currently supported options are:
 # DESTDIR		Destination root directory
+set -e
+
 for arg; do
   case $arg in
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;

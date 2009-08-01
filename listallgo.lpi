@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="3"/>
-      <CurrentBuildNr Value="859"/>
+      <CurrentBuildNr Value="862"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -65,8 +65,8 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="8" Y="128"/>
-        <TopLine Value="109"/>
+        <CursorPos X="52" Y="89"/>
+        <TopLine Value="70"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -829,7 +829,7 @@
         <UsageCount Value="10"/>
       </Unit109>
     </Units>
-    <JumpHistory Count="9" HistoryIndex="8">
+    <JumpHistory Count="14" HistoryIndex="13">
       <Position1>
         <Filename Value="igobase.pas"/>
         <Caret Line="7" Column="67" TopLine="1"/>
@@ -866,6 +866,26 @@
         <Filename Value="igobase.pas"/>
         <Caret Line="128" Column="8" TopLine="109"/>
       </Position9>
+      <Position10>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="111" Column="19" TopLine="109"/>
+      </Position10>
+      <Position11>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="800" Column="5" TopLine="780"/>
+      </Position11>
+      <Position12>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="36" Column="22" TopLine="36"/>
+      </Position12>
+      <Position13>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="8" Column="63" TopLine="1"/>
+      </Position13>
+      <Position14>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="708" Column="58" TopLine="689"/>
+      </Position14>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -874,7 +894,8 @@
       <Filename Value="./bin/listallgo"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="synapse/;abbrevia/;/usr/lib/fpc/$(FPCVer)/units/$(TargetCPU)-$(TargetOS)/gtk1/"/>
+      <IncludeFiles Value="$(ProjOutDir)/"/>
+      <OtherUnitFiles Value="synapse/;abbrevia/"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Parsing>

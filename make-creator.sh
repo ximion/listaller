@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 #
 # WIDGET                Widgetset the binary should be installed for
+set -e
+
 for arg; do
   case $arg in
     WIDGET=*) WIDGET=${arg#WIDGET=};;

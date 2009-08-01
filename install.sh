@@ -2,6 +2,8 @@
 # Parses command line options. Currently supported options are:
 # DESTDIR		Destination root directory
 # WIDGET                Widgetset the binary should be installed for
+set -e
+
 for arg; do
   case $arg in
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;
@@ -20,8 +22,6 @@ esac
 echo "Active widgetset: $WIDGET"
 
 # Does the install
-#
-# "mkdir -p" is equivalent to ForceDirectories pascal function
 
 mkdir -p $DESTDIR/usr/bin
 mkdir -p $DESTDIR/usr/share/

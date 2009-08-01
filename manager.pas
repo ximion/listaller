@@ -1059,6 +1059,7 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
  GroupBox1.Caption:=rsProxySettings;
  AutoDepLdCb.Caption:=rsAutoLoadDep;
  CbShowPkMon.Caption:=rsShowPkMon;
+ Button1.Caption:=rsStartLiTray;
  //Translate repo page(s)
  UpdRepoSheet.Caption:=rsUpdSources;
  RmUpdSrcBtn.Caption:=rsDelSrc;

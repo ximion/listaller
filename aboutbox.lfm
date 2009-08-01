@@ -1,7 +1,7 @@
 object FmAbout: TFmAbout
-  Left = 750
+  Left = 356
   Height = 421
-  Top = 346
+  Top = 261
   Width = 343
   ActiveControl = PageControl1
   Caption = 'About Listaller'
@@ -65,9 +65,9 @@ object FmAbout: TFmAbout
       ClientWidth = 320
       object Label4: TLabel
         Left = 6
-        Height = 88
-        Top = 65
-        Width = 226
+        Height = 94
+        Top = 62
+        Width = 267
         Anchors = [akLeft]
         Caption = 'Software installer && manager'#10#10'© 2008-2009 Matthias Klumpp'#10#10'http://listaller.nlinux.org'#10'License: GNU General Public License Version 3'
         ParentColor = False
@@ -79,21 +79,49 @@ object FmAbout: TFmAbout
       ClientWidth = 320
       object Label5: TLabel
         Left = 0
-        Height = 13
+        Height = 30
         Top = 0
         Width = 320
         Align = alTop
-        Caption = 'Please use https://bugs.launchpad.net/listaller for bug reports.'
+        Caption = 'Please use https://bugs.launchpad.net/listaller'#10'for bug reports.'
         ParentColor = False
       end
-      object Label6: TLabel
+      object Memo1: TMemo
         Left = 0
-        Height = 228
-        Top = 13
+        Height = 204
+        Top = 37
         Width = 320
         Align = alClient
-        Caption = #10'Matthias Klumpp'#10'    matthias@nlinux.org'#10'    Maintainer and developer'#10#10'Thomas Dieffenbach'#10'    giantics@gmx.net'#10'    Developer'#10#10'Dennis Seid'#10'   jumcore@yahoo.de'#10'   Designer'#10#10'Listaller uses the Components:'#10'OPBitmap, Abbrevia, Synapse'
-        ParentColor = False
+        BorderStyle = bsNone
+        Lines.Strings = (
+          'Matthias Klumpp'
+          '    matthias@nlinux.org'
+          '    Maintainer and developer'
+          ''
+          'Thomas Dieffenbach'
+          '    giantics@gmx.net'
+          '    Developer'
+          ''
+          'Dennis Seid'
+          '   jumcore@yahoo.de'
+          '   Designer'
+          ''
+          'Listaller uses the Components:'
+          'OPBitmap, Abbrevia, Synapse'
+        )
+        ParentColor = True
+        ReadOnly = True
+        ScrollBars = ssAutoVertical
+        TabOrder = 0
+      end
+      object Panel1: TPanel
+        Left = 0
+        Height = 7
+        Top = 30
+        Width = 320
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 1
       end
     end
   end
