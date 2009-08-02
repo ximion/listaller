@@ -256,7 +256,7 @@ end;
 procedure TIWizFrm.FinBtn1Click(Sender: TObject);
 begin
   FinBtn1.Enabled:=false;
-  Label16.Caption:=rsCleanup;
+  Label16.Caption:=rsCleaningUp;
   Label16.Visible:=true;
   FinPage.Refresh;
   DeleteDirectory(lp+ExtractFileName(paramstr(1)),false);

@@ -143,7 +143,6 @@ rsHashError='Hash doesn''t match!'#10'The package may be modified after creation
 rsInstallationMode='Installation mode:';
 rsIModeInstruction='Select which parts of the application should be installed.';
 rsMode='Mode';
-rsCleanUp='Cleaning up...';
 rsInstPerformError='Error while performing installation:';
 rsYesNo1='Yes/No?:';
 rsInstallLiBuild='You have to install the liBuild package before you can build packages!';

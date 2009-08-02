@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="3"/>
-      <CurrentBuildNr Value="862"/>
+      <CurrentBuildNr Value="864"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -65,8 +65,8 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="52" Y="89"/>
-        <TopLine Value="70"/>
+        <CursorPos X="31" Y="259"/>
+        <TopLine Value="239"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -829,7 +829,7 @@
         <UsageCount Value="10"/>
       </Unit109>
     </Units>
-    <JumpHistory Count="14" HistoryIndex="13">
+    <JumpHistory Count="15" HistoryIndex="14">
       <Position1>
         <Filename Value="igobase.pas"/>
         <Caret Line="7" Column="67" TopLine="1"/>
@@ -886,6 +886,10 @@
         <Filename Value="igobase.pas"/>
         <Caret Line="708" Column="58" TopLine="689"/>
       </Position14>
+      <Position15>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="89" Column="52" TopLine="70"/>
+      </Position15>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

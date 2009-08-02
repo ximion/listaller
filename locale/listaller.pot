@@ -494,10 +494,6 @@ msgstr ""
 msgid "Mode"
 msgstr ""
 
-#: trstrings:rscleanup
-msgid "Cleaning up..."
-msgstr ""
-
 #: trstrings:rsinstperformerror
 msgid "Error while performing installation:"
 msgstr ""
