@@ -22,8 +22,8 @@ Package: listaller-gtk
 Architecture: i386 powerpc sparc amd64 arm
 Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), listaller-core (= ${binary:Version}), gksu, xdg-utils, 
   lsb-release, packagekit, python-packagekit, python
-Provides: listaller, listaller-compact-gtk
-Description: Listaller main package (GTK2)
+Provides: listaller-frontend
+Description: Listaller frontends (GTK2)
   Listaller is a distribution-independ software install system.
   The application can be used to uninstall every application on your
   system you want to be removed, including LOKI/Mojo and Autopackages.
@@ -48,11 +48,11 @@ Description: Listaller basic tools and libraries
   This package contains the 'lipa' command line tool.
   It allows installing/uninstalling/building IPK packages without GUI.
 
-Package: listaller-creation-gtk
+Package: listaller-creator-gtk
 Architecture: i386 powerpc sparc amd64 arm
 Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller, listaller-tools
-Replaces: listaller-creation-qt
-Breaks: listaller-creation-qt (<= ${source:Version})
+Replaces: listaller-creator-qt
+Breaks: listaller-creator-qt (<= ${source:Version})
 Description: Listaller Creator (GTK2)
   Listaller is a cross-distribution software install system.
   This is an alpha-release of Listaller's graphical package creation tool.
@@ -64,8 +64,8 @@ Package: listaller-qt
 Architecture: i386 powerpc sparc amd64 arm
 Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), listaller-core (= ${binary:Version}), kdesudo, packagekit, python-packagekit,
   python, libqt4intf, kde-icons-oxygen
-Provides: listaller, listaller-compact-qt
-Description: Listaller main package (Qt4)
+Provides: listaller-frontend
+Description: Listaller frontends (Qt4)
   Listaller is a distribution-independ software install system.
   The application can be used to uninstall every application on your
   system you want to be removed, including LOKI/Mojo and Autopackages.
@@ -74,11 +74,11 @@ Description: Listaller main package (Qt4)
   and uses PackageKit as backend.
   Please note that this alpha-version should only be used for testing purposes.
 
-Package: listaller-creation-qt
+Package: listaller-creator-qt
 Architecture: i386 powerpc sparc amd64 arm
 Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller, listaller-tools
-Replaces: listaller-creation-gtk
-Breaks: listaller-creation-gtk (<= ${source:Version})
+Replaces: listaller-creator-gtk
+Breaks: listaller-creator-gtk (<= ${source:Version})
 Description: Listaller Creator (Qt4)
   Listaller is a cross-distribution software install system.
   This is an alpha-release of Listaller's graphical package creation tool.
@@ -87,14 +87,14 @@ Description: Listaller Creator (Qt4)
   Please note that this is an alpha-release!
 
 Package: listaller-gtk-dbg
-Architecture: any
+Architecture: i386 powerpc sparc amd64 arm
 Depends: listaller-gtk (= ${binary:Version})
 Section: debug
 Description: Debug symbols for Listaller GTK tools
   This package contains the debuginfos for the Listaller base tools (GTK+ version)
 
 Package: listaller-tools-dbg
-Architecture: any
+Architecture: i386 powerpc sparc amd64 arm
 Depends: listaller-tools (= ${binary:Version})
 Section: debug
 Description: Debug symbols for Listaller command-line tools
@@ -102,15 +102,15 @@ Description: Debug symbols for Listaller command-line tools
   ('libuild' and 'unibuild')
 
 Package: listaller-core-dbg
-Architecture: any
+Architecture: i386 powerpc sparc amd64 arm
 Depends: listaller-core (= ${binary:Version})
 Section: debug
 Description: Debug symbols for Listaller command-line tool 'lipa'
   This package contains the debug symbols for the Listaller command-line tool
   ('lipa')
 
-Package: listaller-creation-gtk-dbg
-Architecture: any
+Package: listaller-creator-gtk-dbg
+Architecture: i386 powerpc sparc amd64 arm
 Section: debug
 Depends: listaller-creation-gtk (= ${binary:Version})
 Description: Debug symbols for Listaller Creator (GTK+)
@@ -118,15 +118,15 @@ Description: Debug symbols for Listaller Creator (GTK+)
   wizard GUI (liCreator) in GTK version.
 
 Package: listaller-qt-dbg
-Architecture: any
+Architecture: i386 powerpc sparc amd64 arm
 Section: debug
 Depends: listaller-qt (= ${binary:Version})
 Description: Debug symbols for Listaller Qt tools
   This package contains the debuginfos for the Listaller base tools 
   (Qt versions)
 
-Package: listaller-creation-qt-dbg
-Architecture: any
+Package: listaller-creator-qt-dbg
+Architecture: i386 powerpc sparc amd64 arm
 Section: debug
 Depends: listaller-creation-qt (= ${binary:Version})
 Description: Debug symbols for Listaller Creator (Qt)

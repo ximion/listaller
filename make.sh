@@ -22,10 +22,6 @@ esac
 
 echo "Target architecture: $ARCH"
 
-if [ $ARCH = "x86_64" ]; then LCLDir="/usr/lib64/lazarus/"
-else LCLDir="/usr/lib/lazarus"
-fi
-
 LCLDir="/usr/lib/lazarus"
 
 echo "LAZTarget: $LCLDir"
@@ -36,24 +32,14 @@ echo "Target operating system: $OS"
 echo "Active widgetset: $WIDGET"
 
 # Command line to build the sofware
-# Create the binary dir
 # Create necessary dirs
 mkdir -p ./bin
 mkdir -p ./bin/locale
 mkdir -p ./bin/qt4
 mkdir -p ./bin/gtk2
 
-#Create symlinks for GTK+ libraries
- #ln -s -f /usr/lib/libgdk_pixbuf-2.0.so libgdk_pixbuf.so
- #ln -s -f /usr/lib/libgtk-x11-2.0.so libgtk.so
- #ln -s -f /usr/lib/libglib-2.0.so libglib.so
- #ln -s -f /usr/lib/libgdk-x11-2.0.so libgdk.so
-
 VER=$(fpc -iW)
 echo "Compiler version: $VER"
-
-#Workaround for Lazarus-Alpha-packaging bug
-#echo "LAZBuild version: $($LCLDir/lazbuild -v)"
 
 echo "Creating installer..."
 if [ "$WIDGET" == "qt4" ]; then

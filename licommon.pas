@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, process, LCLType, RegExpr,
   {$IFDEF LCLGTK2}
-  gtk2, gtkint, gtkdef, gdkpixbuf, gdk2,
+  gtkdef, gtk2, gdk2pixbuf, gtk2int, gdk2,
   {$ENDIF} trstrings, distri, IniFiles, DOS, Graphics;
 
 const
@@ -135,7 +135,7 @@ begin
   gtk_widget_destroy(StockWindow);
   // Check if icon was assigned
   if PtrUInt(Pixbuf) = 0 then Exit;
-  Pixmap := GtkWidgetSet.NewGDIObject(gdiBitmap);
+  Pixmap := Gtk2WidgetSet.NewGDIObject(gdiBitmap);
   with Pixmap^ do
   begin
     GDIBitmapType := gbPixmap;
