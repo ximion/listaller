@@ -10,7 +10,6 @@ for arg; do
 done
 # Read system architecture
 ARCH=$(uname -m)
-
 case "$ARCH" in
  "i686") ARCH="i386";;
  "i586") ARCH="i386";;
@@ -19,8 +18,10 @@ esac
 
 echo "Target architecture: $ARCH"
 
-if [ $ARCH = "x86_64" ]; then LCLDir="/usr/lib64/lazarus/"
-else LCLDir="/usr/lib/lazarus"
+if [ "$ARCH" == "x86_64" ]; then
+LCLDir="/usr/lib/lazarus"
+else
+LCLDir="/usr/lib64/lazarus"
 fi
 
 #Workaround for LazPackaging bug

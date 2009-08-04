@@ -36,7 +36,7 @@
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
-        <CursorPos X="9" Y="28"/>
+        <CursorPos X="14" Y="27"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="47"/>
@@ -176,7 +176,7 @@
       <Unit20>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="3" Y="25"/>
+        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit20>
@@ -202,7 +202,7 @@
         <UsageCount Value="10"/>
       </Unit23>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="lipa.lpr"/>
         <Caret Line="366" Column="26" TopLine="343"/>
@@ -319,6 +319,10 @@
         <Filename Value="lipa.lpr"/>
         <Caret Line="28" Column="9" TopLine="1"/>
       </Position29>
+      <Position30>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="27" Column="14" TopLine="1"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

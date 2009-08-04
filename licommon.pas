@@ -28,7 +28,7 @@ uses
 
 const
   //** Version of the Listaller applicationset
-  LiVersion='0.3b-k';
+  LiVersion='0.3b-test';
 var
   //** True if Listaller is in testmode
   Testmode: Boolean=false;

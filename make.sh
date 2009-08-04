@@ -22,7 +22,11 @@ esac
 
 echo "Target architecture: $ARCH"
 
+if [ "$ARCH" == "x86_64" ]; then
 LCLDir="/usr/lib/lazarus"
+else
+LCLDir="/usr/lib64/lazarus"
+fi
 
 echo "LAZTarget: $LCLDir"
 
@@ -87,14 +91,14 @@ WIDGET="gtk2"
 
 # We have to use GTK2 widgeset instead of the "nogui" widget untill all bugs in LazSVn are fixed.
 echo "Creating command-line tool..."
-#$LCLDir/lazbuild -B --ws=nogui lipa.lpr
-fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewhi -l -Fuabbrevia/ -Fusynapse/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -vm5024 -FEbin/ -olipa -dOpbCompat lipa.lpr
+$LCLDir/lazbuild -B --ws=nogui lipa.lpr
+#fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewhi -l -Fuabbrevia/ -Fusynapse/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -vm5024 -FEbin/ -olipa -dOpbCompat lipa.lpr
 echo "Creating package build tool..."
-#$LCLDir/lazbuild -B --ws=nogui libuild.lpr
-fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -FEbin/ -olibuild -dOpbCompat libuild.lpr
+$LCLDir/lazbuild -B --ws=nogui libuild.lpr
+#fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -FEbin/ -olibuild -dOpbCompat libuild.lpr
 echo "Creating unified build tool..."
-#$LCLDir/lazbuild -B --ws=nogui unibuild.lpr
-fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -FEbin/ -ounibuild -dOpbCompat unibuild.lpr
+$LCLDir/lazbuild -B --ws=nogui unibuild.lpr
+#fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -FEbin/ -ounibuild -dOpbCompat unibuild.lpr
 
 #Compiling lanuage files
 echo "Compiling language files..."

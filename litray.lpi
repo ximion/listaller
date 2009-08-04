@@ -222,7 +222,6 @@
 -dQT_NATIVE_DIALOGS
 -XLAXi=
 -XLAgmodule-2.0=
--XLAgthread-2.0=
 -XLAm=
 -XLAatk-1.0=
 -XLAXext="/>
