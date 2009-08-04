@@ -2,7 +2,7 @@ Source: listaller
 Standards-Version: 3.8.2
 Section: utils
 Maintainer: Matthias Klumpp <matthias@nlinux.org>
-Priority: optional
+Priority: extra
 Homepage: http://listaller.nlinux.org
 Build-Depends: libgtk2.0-dev, lazarus (>=0.9.27), fpc (>= 2.2.4), fp-units-gtk, debhelper (>= 5), libqt4intf, libqt4-core, sqlite3, libsqlite3-0, libsqlite3-dev, libglib2.0-0, libglib2.0-dev
 
@@ -10,13 +10,13 @@ Package: listaller-data
 Architecture: all
 Depends: packagekit, python-packagekit, python
 Description: Listaller data
-  Listaller is a distribution-independ software install system.
-  The application is able to uninstall every application on your
-  system you want to be removed, including LOKI/Mojo and Autopackages.
-  This package also includes the IPK installer tool.
-  Listaller tries to be compatible to all available Linux distributions
-  and uses PackageKit as backend.
-  This package contains platform and widgetset independent data of Listaller.
+ Listaller is a distribution-independ software install system.
+ The application is able to uninstall every application on your
+ system you want to be removed, including LOKI/Mojo and Autopackages.
+ This package also includes the IPK installer tool.
+ Listaller tries to be compatible to all available Linux distributions
+ and uses PackageKit as backend.
+ This package contains platform and widgetset independent data of Listaller.
 
 Package: listaller-gtk
 Architecture: i386 powerpc sparc amd64 arm
@@ -24,29 +24,30 @@ Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), listaller-core
   lsb-release, packagekit, python-packagekit, python
 Provides: listaller-frontend
 Description: Listaller frontends (GTK2)
-  Listaller is a distribution-independ software install system.
-  The application can be used to uninstall every application on your
-  system you want to be removed, including LOKI/Mojo and Autopackages.
-  This package also includes the IPK installer tool.
-  Listaller tries to be compatible to all available Linux distributions
-  and uses PackageKit as backend.
-  Please note that this alpha-version should only be used for testing purposes.
+ Listaller is a distribution-independ software install system.
+ The application can be used to uninstall every application on your
+ system you want to be removed, including LOKI/Mojo and Autopackages.
+ This package also includes the IPK installer tool.
+ Listaller tries to be compatible to all available Linux distributions
+ and uses PackageKit as backend.
+ Please note that this alpha-version should only be used for testing purposes.
 
 Package: listaller-tools
 Architecture: i386 powerpc sparc amd64 arm
 Depends: ${shlibs:Depends}, listaller
 Description: Command-line tools for Listaller package handling
-  This package contains everything you need to build own IPK packages.
-  It also contains the needed tools to build RPM and DEB packages from
-  IPS sources and to  create an "Linux distribution compatible"
-  button for your software.
+ This package contains everything you need to build own IPK packages.
+ It also contains the needed tools to build RPM and DEB packages from
+ IPS sources and to  create an "Linux distribution compatible"
+ button for your software.
 
 Package: listaller-core
+Priority: optional
 Architecture: i386 powerpc sparc amd64 arm
 Depends: ${shlibs:Depends}
 Description: Listaller basic tools and libraries
-  This package contains the 'lipa' command line tool.
-  It allows installing/uninstalling/building IPK packages without GUI.
+ This package contains the 'lipa' command line tool.
+ It allows installing/uninstalling/building IPK packages without GUI.
 
 Package: listaller-creator-gtk
 Architecture: i386 powerpc sparc amd64 arm
@@ -54,11 +55,11 @@ Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller, listaller-tools
 Replaces: listaller-creator-qt
 Breaks: listaller-creator-qt (<= ${source:Version})
 Description: Listaller Creator (GTK2)
-  Listaller is a cross-distribution software install system.
-  This is an alpha-release of Listaller's graphical package creation tool.
-  With liCreator you can easily build your own IPK-packages for the
-  Listaller system.
-  Please note that this is an alpha-release!
+ Listaller is a cross-distribution software install system.
+ This is an alpha-release of Listaller's graphical package creation tool.
+ With liCreator you can easily build your own IPK-packages for the
+ Listaller system.
+ Please note that this is an alpha-release!
 
 Package: listaller-qt
 Architecture: i386 powerpc sparc amd64 arm
@@ -66,13 +67,13 @@ Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), listaller-core
   python, libqt4intf, kde-icons-oxygen
 Provides: listaller-frontend
 Description: Listaller frontends (Qt4)
-  Listaller is a distribution-independ software install system.
-  The application can be used to uninstall every application on your
-  system you want to be removed, including LOKI/Mojo and Autopackages.
-  This package also includes the IPK installer tool.
-  Listaller tries to be compatible to all available Linux distributions
-  and uses PackageKit as backend.
-  Please note that this alpha-version should only be used for testing purposes.
+ Listaller is a distribution-independ software install system.
+ The application can be used to uninstall every application on your
+ system you want to be removed, including LOKI/Mojo and Autopackages.
+ This package also includes the IPK installer tool.
+ Listaller tries to be compatible to all available Linux distributions
+ and uses PackageKit as backend.
+ Please note that this alpha-version should only be used for testing purposes.
 
 Package: listaller-creator-qt
 Architecture: i386 powerpc sparc amd64 arm
@@ -80,55 +81,55 @@ Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller, listaller-tools
 Replaces: listaller-creator-gtk
 Breaks: listaller-creator-gtk (<= ${source:Version})
 Description: Listaller Creator (Qt4)
-  Listaller is a cross-distribution software install system.
-  This is an alpha-release of Listaller's graphical package creation tool.
-  With liCreator you can easily build your own IPK-packages for
-  the Listaller system.
-  Please note that this is an alpha-release!
+ Listaller is a cross-distribution software install system.
+ This is an alpha-release of Listaller's graphical package creation tool.
+ With liCreator you can easily build your own IPK-packages for
+ the Listaller system.
+ Please note that this is an alpha-release!
 
 Package: listaller-gtk-dbg
 Architecture: i386 powerpc sparc amd64 arm
 Depends: listaller-gtk (= ${binary:Version})
 Section: debug
-Description: Debug symbols for Listaller GTK tools
-  This package contains the debuginfos for the Listaller base tools (GTK+ version)
+Description: Debug symbols for Listaller GTK+ tools
+ This package contains debuginfos for the Listaller base tools (GTK+ version)
 
 Package: listaller-tools-dbg
 Architecture: i386 powerpc sparc amd64 arm
 Depends: listaller-tools (= ${binary:Version})
 Section: debug
 Description: Debug symbols for Listaller command-line tools
-  This package contains the debug symbols for the Listaller command-line tools
-  ('libuild' and 'unibuild')
+ This package contains debug symbols for the Listaller command-line tools
+ ('libuild' and 'unibuild')
 
 Package: listaller-core-dbg
 Architecture: i386 powerpc sparc amd64 arm
 Depends: listaller-core (= ${binary:Version})
 Section: debug
 Description: Debug symbols for Listaller command-line tool 'lipa'
-  This package contains the debug symbols for the Listaller command-line tool
-  ('lipa')
+ This package contains the debug symbols for the Listaller command-line tool
+ ('lipa')
 
 Package: listaller-creator-gtk-dbg
 Architecture: i386 powerpc sparc amd64 arm
 Section: debug
-Depends: listaller-creation-gtk (= ${binary:Version})
+Depends: listaller-creator-gtk (= ${binary:Version})
 Description: Debug symbols for Listaller Creator (GTK+)
-  This package contains the debuginfos for the IPS script
-  wizard GUI (liCreator) in GTK version.
+ This package contains the debuginfos for the IPS script
+ wizard GUI (liCreator) in GTK+ version.
 
 Package: listaller-qt-dbg
 Architecture: i386 powerpc sparc amd64 arm
 Section: debug
 Depends: listaller-qt (= ${binary:Version})
 Description: Debug symbols for Listaller Qt tools
-  This package contains the debuginfos for the Listaller base tools 
-  (Qt versions)
+ This package contains the debuginfos for the Listaller base tools 
+ (Qt versions)
 
 Package: listaller-creator-qt-dbg
 Architecture: i386 powerpc sparc amd64 arm
 Section: debug
-Depends: listaller-creation-qt (= ${binary:Version})
+Depends: listaller-creator-qt (= ${binary:Version})
 Description: Debug symbols for Listaller Creator (Qt)
-  This package contains the debuginfos for the IPS script
-  wizard GUI (liCreator) in Qt version.
+ This package contains the debuginfos for the IPS script
+ wizard GUI (liCreator) in Qt version.

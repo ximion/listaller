@@ -35,4 +35,5 @@ mkdir -p ./bin/gtk2
 mkdir -p ./bin/qt4
 echo "Target operating system: $OS"
 cd ./liCreator
+chmod +x ./make.sh
 ./make.sh "WIDGET=$WIDGET"

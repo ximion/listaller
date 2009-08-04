@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2009-07-26 19:36+0000\n"
+"PO-Revision-Date: 2009-08-02 14:53+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-08-01 21:04+0000\n"
+"X-Launchpad-Export-Date: 2009-08-04 20:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: trstrings:rsbrokendepsfixq
-msgid "You have missing dependencies. Should they be installed now?"
+msgid "Some dependencies are missing. Should they be installed now?"
 msgstr "Einige Abhängigkeiten fehlen. Sollen diese jetzt installiert werden?"
 
 #: trstrings:rscannotresolv
@@ -28,6 +28,10 @@ msgstr "Konnte Abhängigkeiten nicht auflösen"
 #: trstrings:rscheckappdepsq
 msgid "Do you want to check the applications's dependencies?"
 msgstr "Möchten Sie die Abhängigkeiten der Anwendungen jetzt überprüfen?"
+
+#: trstrings:rscheckdepsq
+msgid "Check dependencies?"
+msgstr "Abhängigkeiten prüfen?"
 
 #: trstrings:rscheckapps
 msgid "Check applications"
@@ -42,8 +46,8 @@ msgid "Commands:"
 msgstr "Kommandos:"
 
 #: trstrings:rscouldntfindupdater
-msgid "Can't find updater applications!"
-msgstr "Konnte Updater-Anwendung nicht finden!"
+msgid "Can't find updater application!"
+msgstr "Konnte Updater nicht finden!"
 
 #: trstrings:rsinternalerror
 msgid "An internal error occured"
@@ -65,9 +69,13 @@ msgstr "Installiert ein IPK Paket"
 msgid "Can't find Listaller Manager!"
 msgstr "Konnte Listaller Manager nicht finden!"
 
-#: trstrings:rsliupdaternotfound
-msgid "Unable to find liUpdater!"
-msgstr "Konnte liUpdater nicht finden!"
+#: trstrings:rsunablefind
+msgid "Unable to find %s"
+msgstr "Konnte %s nicht finden"
+
+#: trstrings:rsnotfoundlitray
+msgid "Could not find Listaller TrayIcon Application"
+msgstr "Konnte Listaller TrayIcon-Werkzeug nicht finden."
 
 #: trstrings:rsoptions
 msgid "Options:"
@@ -165,11 +173,11 @@ msgstr ""
 
 #: trstrings:rsconvdone
 msgid ""
-"Converting done. Do you want to close this window now?\n"
+"Conversion done. Do you want to close this window now?\n"
 "Press \"No\" if you want to check the output."
 msgstr ""
-"Konvertierung abgeschlossen. Soll dieses Fenster geschlossen werden?\n"
-"Klicken Sie \"Nein\", wenn sie die Ausgabe überprüfen wollen."
+"Konvertierung abgeschlossen. Möchten Sie das Fenster jetzt schließen?\n"
+"Klicken Sie \"Nein\", wenn sie die Ausgabe prüfen wollen."
 
 #: trstrings:rsselectlistnumber
 msgid "Please select a number shown in the list!"
@@ -183,6 +191,10 @@ msgstr "Wählen Sie den Installationsmodus dieser Anwendung:"
 msgid "Do you want to see detailed information [y/n]?"
 msgstr "Möchten Sie detailierte Informationen sehen [J/n]?"
 
+#: trstrings:rsaborted
+msgid "Aborted."
+msgstr "Abgebrochen."
+
 #: trstrings:rsviewlogq
 msgid "Do you want to view the logfile?"
 msgstr "Möchten Sie die Logdatei sehen?"
@@ -190,6 +202,10 @@ msgstr "Möchten Sie die Logdatei sehen?"
 #: trstrings:rswasinstalled
 msgid "The application %a was installed successfully!"
 msgstr "Die Anwendung %a wurde erfolgreich installiert!"
+
+#: trstrings:rsexecapptesting
+msgid "Executing application for testing..."
+msgstr "Führe Anwendung zum testen aus..."
 
 #: trstrings:rsinstallnow
 msgid "Install now"
@@ -286,13 +302,17 @@ msgstr ""
 "Es wurden keine Pakete, welche die notwendige Bibliothek \"%l\" enthalten "
 "für ihre Distribution gefunden."
 
+#: trstrings:rsopeningdb
+msgid "Opening database..."
+msgstr "Datenbank wird geöffnet..."
+
 #: trstrings:rsinclose
 msgid "The installer will close now"
 msgstr "Der Listaller wird beendet."
 
-#: trstrings:rscnoverwrite
-msgid "Unable to overwrite the file %f."
-msgstr "Konnte Datei %f nicht überschreiben."
+#: trstrings:rscnoverride
+msgid "Unable to override the file %f."
+msgstr "Konnte die Datei %f nicht überschreiben."
 
 #: trstrings:rsnotifydevs
 msgid "Please notify the developers on http://launchpad.net/listaller"
@@ -339,6 +359,10 @@ msgstr "Testmodus"
 msgid "Test of the application finished."
 msgstr "Test der Anwendung abgeschlossen."
 
+#: trstrings:rscleaningup
+msgid "Cleaning up..."
+msgstr "Räume auf ..."
+
 #: trstrings:rspkginval
 msgid "The package was invalid!"
 msgstr "Das Paket ist ungültig!"
@@ -362,6 +386,10 @@ msgstr "Anwendung wird jetzt beendet "
 #: trstrings:rsstep1
 msgid "Phase 1/4: Resolving dependencies..."
 msgstr "Phase 1/4: Abhängigkeiten auflösen..."
+
+#: trstrings:rsstate
+msgid "State"
+msgstr "Satus"
 
 #: trstrings:rswdldep
 msgid "This application wants to download & install a dependency from %l"
@@ -522,10 +550,6 @@ msgstr "Wählen Sie, welche Teile der Anwendung installiert werden sollen."
 #: trstrings:rsmode
 msgid "Mode"
 msgstr "Modus"
-
-#: trstrings:rscleanup
-msgid "Cleaning up..."
-msgstr "Räume auf ..."
 
 #: trstrings:rsinstperformerror
 msgid "Error while performing installation:"
@@ -739,16 +763,24 @@ msgid "Loading..."
 msgstr "Laden..."
 
 #: trstrings:rsinstalledapps
-msgid "Installed applications"
-msgstr "Installierte Anwendungen"
+msgid ""
+"Installed\n"
+"applications"
+msgstr ""
+"Installierte\n"
+"Anwendungn"
 
 #: trstrings:rsinstallpkg
 msgid "Install package"
 msgstr "Paket installieren"
 
 #: trstrings:rsbrowsecatalog
-msgid "Browse catalog"
-msgstr "Katalog durchsuchen"
+msgid ""
+"Browse\n"
+"catalog"
+msgstr ""
+"Katalog\n"
+"durchsuchen"
 
 #: trstrings:rsrepositories
 msgid "Repositories"
@@ -767,9 +799,12 @@ msgstr ""
 "Installieren sie eine PackageKit-GUI!"
 
 #: trstrings:rsuselaunchpadforbugs
-msgid "Please use https://bugs.launchpad.net/listaller for bug reports."
+msgid ""
+"Please use https://bugs.launchpad.net/listaller\n"
+"for bug reports."
 msgstr ""
-"Bitte benutzen Sie http://bugs.launchpad.net/listaller für Bugreports."
+"Bitte nutzen Sie http://bugs.launchpad.net/listaller\n"
+"für Fehlerberichte."
 
 #: trstrings:rsdisprootapps
 msgid "Display system applications"
@@ -804,6 +839,10 @@ msgstr "Paket %p konnte nicht installiert werden."
 #: trstrings:rsshowpkmon
 msgid "Start PackageKit monitor before running transactions"
 msgstr "PackageKit Monitor starten bevor Transaktionen ausgeführt werden."
+
+#: trstrings:rsstartlitray
+msgid "Start Listaller tray icon application (to check dependencies)"
+msgstr "Listaller TrayIcon starten (z.B. um Abhängigkeiten zu prüfen)"
 
 #: trstrings:rsaboutlistaller
 msgid "About Listaller"
@@ -956,8 +995,8 @@ msgid "Uninstalling %a"
 msgstr "Deinstalliere %a"
 
 #: trstrings:rslindesk
-msgid "Running under %de."
-msgstr "Läuft unter %de."
+msgid "Running under %s."
+msgstr "Läuft unter %s."
 
 #: trstrings:rsnoupdates
 msgid "There are no updates available!"
@@ -1018,6 +1057,9 @@ msgstr "Löse Abhängigkeiten auf ..."
 #~ msgid "Filter:"
 #~ msgstr "Filter:"
 
+#~ msgid "Unable to overwrite the file %f."
+#~ msgstr "Konnte Datei %f nicht überschreiben."
+
 #~ msgid "Install new application"
 #~ msgstr "Neue Anwendung installieren"
 
@@ -1052,11 +1094,27 @@ msgstr "Löse Abhängigkeiten auf ..."
 #~ msgid "Running under %de (or similar)"
 #~ msgstr "Läuft unter %de (oder ähnlich)"
 
+#~ msgid "Browse catalog"
+#~ msgstr "Katalog durchsuchen"
+
+#~ msgid "Please use https://bugs.launchpad.net/listaller for bug reports."
+#~ msgstr ""
+#~ "Bitte benutzen Sie http://bugs.launchpad.net/listaller für Bugreports."
+
+#~ msgid "Running under %de."
+#~ msgstr "Läuft unter %de."
+
+#~ msgid "Installed applications"
+#~ msgstr "Installierte Anwendungen"
+
 #~ msgid "Couldn't find updater applications!"
 #~ msgstr "Konnte Update-Anwendung nicht finden!"
 
 #~ msgid "Couldn't find Listaller Manager!"
 #~ msgstr "Konnte Listaller Manager nicht finden!"
+
+#~ msgid "Unable to find liUpdater!"
+#~ msgstr "Konnte liUpdater nicht finden!"
 
 #~ msgid "Should lipa fix these problems automatically? [y/n]?"
 #~ msgstr "Soll lipa diese Probleme automatisch beheben? [J/n]?"
@@ -1090,3 +1148,16 @@ msgstr "Löse Abhängigkeiten auf ..."
 
 #~ msgid "Listaller command-line tool to handle ipk-packages"
 #~ msgstr "Listaller Kommandozeilenwerkzeug zum Umgang mit IPK Paketen"
+
+#~ msgid "You have missing dependencies. Should they be installed now?"
+#~ msgstr "Einige Abhängigkeiten fehlen. Sollen diese jetzt installiert werden?"
+
+#~ msgid ""
+#~ "Converting done. Do you want to close this window now?\n"
+#~ "Press \"No\" if you want to check the output."
+#~ msgstr ""
+#~ "Konvertierung abgeschlossen. Soll dieses Fenster geschlossen werden?\n"
+#~ "Klicken Sie \"Nein\", wenn sie die Ausgabe überprüfen wollen."
+
+#~ msgid "Can't find updater applications!"
+#~ msgstr "Konnte Updater-Anwendung nicht finden!"

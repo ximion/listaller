@@ -1,5 +1,7 @@
 #! /bin/sh
+#DEBHELPER#
 set -e
+
 echo "Uninstalling mime extensions..."
 xdg-mime uninstall '/usr/share/listaller/mime/x-ipk.xml'
 xdg-mime uninstall '/usr/share/listaller/mime/x-ips.xml'
