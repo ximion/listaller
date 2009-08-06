@@ -1042,7 +1042,7 @@ pkit.Free;
 SetExtraPosVisibility(false);
 
 //Delete old application installation if necessary
-if RmApp then
+if (RmApp)and(not Testmode) then
 begin
 SetExtraPosVisibility(true);
 UnInstallIPKApp(IAppName,idName,ln,FPos2,true);

@@ -12,4 +12,5 @@ mkdir -p ./bin
 mkdir -p ./bin/gtk2
 mkdir -p ./bin/qt4
 cd ./liThemeHandler
+chmod +x ./make.sh
 ./make.sh "DESTDIR=$DESTDIR"

@@ -11,7 +11,7 @@
       <Title Value="Installer"/>
       <UseAppBundle Value="False"/>
       <Icon Value="0"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <i18n>
       <OutDir Value="locale"/>
@@ -65,7 +65,7 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="34" Y="26"/>
+        <CursorPos X="27" Y="27"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
@@ -675,8 +675,8 @@
         <Filename Value="ipkhandle.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="1" Y="564"/>
-        <TopLine Value="654"/>
+        <CursorPos X="73" Y="1058"/>
+        <TopLine Value="1028"/>
         <UsageCount Value="75"/>
       </Unit88>
       <Unit89>
@@ -692,8 +692,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="xtypefm"/>
-        <CursorPos X="33" Y="71"/>
-        <TopLine Value="61"/>
+        <CursorPos X="11" Y="122"/>
+        <TopLine Value="102"/>
         <UsageCount Value="11"/>
       </Unit90>
       <Unit91>
@@ -790,11 +790,9 @@
       <Unit104>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="34" Y="22"/>
-        <TopLine Value="1"/>
-        <EditorIndex Value="1"/>
+        <CursorPos X="11" Y="45"/>
+        <TopLine Value="25"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit104>
       <Unit105>
         <Filename Value="../../../../../usr/share/fpcsrc/2.2.4/packages/gtk1/src/gdk/gdkpixbuf.pp"/>
@@ -852,91 +850,95 @@
         <UsageCount Value="10"/>
       </Unit112>
     </Units>
-    <JumpHistory Count="21" HistoryIndex="20">
+    <JumpHistory Count="22" HistoryIndex="21">
       <Position1>
         <Filename Value="igobase.pas"/>
-        <Caret Line="7" Column="67" TopLine="1"/>
+        <Caret Line="128" Column="8" TopLine="109"/>
       </Position1>
       <Position2>
         <Filename Value="igobase.pas"/>
-        <Caret Line="27" Column="35" TopLine="1"/>
+        <Caret Line="111" Column="19" TopLine="109"/>
       </Position2>
       <Position3>
         <Filename Value="igobase.pas"/>
-        <Caret Line="27" Column="10" TopLine="1"/>
+        <Caret Line="800" Column="5" TopLine="780"/>
       </Position3>
       <Position4>
         <Filename Value="igobase.pas"/>
-        <Caret Line="27" Column="10" TopLine="1"/>
+        <Caret Line="36" Column="22" TopLine="36"/>
       </Position4>
       <Position5>
         <Filename Value="igobase.pas"/>
-        <Caret Line="821" Column="63" TopLine="791"/>
+        <Caret Line="8" Column="63" TopLine="1"/>
       </Position5>
       <Position6>
         <Filename Value="igobase.pas"/>
-        <Caret Line="394" Column="25" TopLine="375"/>
+        <Caret Line="708" Column="58" TopLine="689"/>
       </Position6>
       <Position7>
         <Filename Value="igobase.pas"/>
-        <Caret Line="539" Column="23" TopLine="519"/>
+        <Caret Line="89" Column="52" TopLine="70"/>
       </Position7>
       <Position8>
         <Filename Value="igobase.pas"/>
-        <Caret Line="27" Column="9" TopLine="1"/>
+        <Caret Line="26" Column="32" TopLine="1"/>
       </Position8>
       <Position9>
         <Filename Value="igobase.pas"/>
-        <Caret Line="128" Column="8" TopLine="109"/>
+        <Caret Line="25" Column="33" TopLine="1"/>
       </Position9>
       <Position10>
         <Filename Value="igobase.pas"/>
-        <Caret Line="111" Column="19" TopLine="109"/>
+        <Caret Line="26" Column="34" TopLine="1"/>
       </Position10>
       <Position11>
         <Filename Value="igobase.pas"/>
-        <Caret Line="800" Column="5" TopLine="780"/>
+        <Caret Line="11" Column="7" TopLine="1"/>
       </Position11>
       <Position12>
         <Filename Value="igobase.pas"/>
-        <Caret Line="36" Column="22" TopLine="36"/>
+        <Caret Line="53" Column="16" TopLine="33"/>
       </Position12>
       <Position13>
         <Filename Value="igobase.pas"/>
-        <Caret Line="8" Column="63" TopLine="1"/>
+        <Caret Line="489" Column="16" TopLine="469"/>
       </Position13>
       <Position14>
         <Filename Value="igobase.pas"/>
-        <Caret Line="708" Column="58" TopLine="689"/>
+        <Caret Line="27" Column="38" TopLine="5"/>
       </Position14>
       <Position15>
         <Filename Value="igobase.pas"/>
-        <Caret Line="89" Column="52" TopLine="70"/>
+        <Caret Line="9" Column="19" TopLine="5"/>
       </Position15>
       <Position16>
         <Filename Value="igobase.pas"/>
-        <Caret Line="26" Column="32" TopLine="1"/>
+        <Caret Line="53" Column="16" TopLine="33"/>
       </Position16>
       <Position17>
         <Filename Value="igobase.pas"/>
-        <Caret Line="25" Column="33" TopLine="1"/>
+        <Caret Line="489" Column="16" TopLine="469"/>
       </Position17>
       <Position18>
         <Filename Value="igobase.pas"/>
-        <Caret Line="26" Column="34" TopLine="1"/>
+        <Caret Line="507" Column="12" TopLine="469"/>
       </Position18>
       <Position19>
-        <Filename Value="licommon.pas"/>
-        <Caret Line="26" Column="33" TopLine="1"/>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="509" Column="91" TopLine="489"/>
       </Position19>
       <Position20>
-        <Filename Value="licommon.pas"/>
-        <Caret Line="26" Column="8" TopLine="10"/>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="510" Column="32" TopLine="489"/>
       </Position20>
       <Position21>
-        <Filename Value="licommon.pas"/>
-        <Caret Line="127" Column="17" TopLine="118"/>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="511" Column="12" TopLine="489"/>
       </Position21>
+      <Position22>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="27" Column="27" TopLine="1"/>
+      </Position22>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

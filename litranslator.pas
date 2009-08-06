@@ -78,6 +78,9 @@ begin
    +liname+'.mo';
   if FileExistsUTF8(Result) then exit;
 
+  Result:='/usr/share/listaller/locale/'+LANG+'.mo';
+  if FileExistsUTF8(Result) then exit;
+
   //Let us search for reducted files
   lng:=copy(LANG,1,2);
   //At first, check all was checked

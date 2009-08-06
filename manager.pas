@@ -811,14 +811,14 @@ end;
 procedure TMnFrm.Button1Click(Sender: TObject);
 var p: TProcess;
 begin
-if not FileExists(ExtractFileName(paramstr(0))+'litray') then
+if not FileExists(ExtractFilePath(paramstr(0))+'litray') then
 begin
 ShowMessage(rsNotFoundliTray);
 exit;
 end;
   p:=TProcess.Create(nil);
   p.Options:=[];
-  p.CommandLine:=ExtractFileName(paramstr(0))+'litray';
+  p.CommandLine:=ExtractFilePath(paramstr(0))+'litray';
   p.Execute;
   p.Free;
 end;

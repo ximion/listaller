@@ -61,8 +61,8 @@
         <ComponentName Value="MnFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="18" Y="26"/>
-        <TopLine Value="1"/>
+        <CursorPos X="33" Y="821"/>
+        <TopLine Value="811"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="173"/>
         <Loaded Value="True"/>

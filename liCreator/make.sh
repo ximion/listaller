@@ -19,9 +19,9 @@ esac
 OS="linux"
 
 if [ "$ARCH" == "x86_64" ]; then
-LCLDir="/usr/lib/lazarus"
-else
 LCLDir="/usr/lib64/lazarus"
+else
+LCLDir="/usr/lib/lazarus"
 fi
 
 echo "LAZTarget: $LCLDir"

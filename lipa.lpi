@@ -16,7 +16,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="199"/>
+      <CurrentBuildNr Value="200"/>
       <ProjectVersion Value="0.2.0.1"/>
     </VersionInfo>
     <PublishOptions>
