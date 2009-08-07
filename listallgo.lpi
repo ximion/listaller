@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="3"/>
-      <CurrentBuildNr Value="903"/>
+      <CurrentBuildNr Value="906"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -55,7 +55,7 @@
         <Filename Value="listallgo.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallgo"/>
-        <CursorPos X="1" Y="44"/>
+        <CursorPos X="10" Y="29"/>
         <TopLine Value="5"/>
         <UsageCount Value="200"/>
       </Unit0>
@@ -824,8 +824,8 @@
       <Unit109>
         <Filename Value="litranslator.pas"/>
         <UnitName Value="litranslator"/>
-        <CursorPos X="58" Y="120"/>
-        <TopLine Value="100"/>
+        <CursorPos X="45" Y="81"/>
+        <TopLine Value="57"/>
         <UsageCount Value="10"/>
       </Unit109>
       <Unit110>
@@ -949,7 +949,7 @@
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
       <OtherUnitFiles Value="synapse/;abbrevia/"/>
-      <LCLWidgetType Value="gtk2"/>
+      <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

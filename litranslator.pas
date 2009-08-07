@@ -1,19 +1,19 @@
 { litranslator.pas
   Copyright (C) Listaller Project 2008-2009
 
-  litranslator.pa is free software: you can redistribute it and/or modify it
+  litranslator.pas is free software: you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
   by the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
 
-  litranslator.pa is distributed in the hope that it will be useful, but
+  litranslator.pas is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
   See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
-//** Applies localisation to all Listaller modules
+//** Enables localisation in all Listaller modules
 unit litranslator;
 
 {$mode objfpc}{$H+}
@@ -78,11 +78,15 @@ begin
    +liname+'.mo';
   if FileExistsUTF8(Result) then exit;
 
+  //Let us search for reducted files
+  lng:=copy(LANG,1,2);
+
+  Result:='/usr/share/listaller/locale/'+lng+'.mo';
+  if FileExistsUTF8(Result) then exit;
+
   Result:='/usr/share/listaller/locale/'+LANG+'.mo';
   if FileExistsUTF8(Result) then exit;
 
-  //Let us search for reducted files
-  lng:=copy(LANG,1,2);
   //At first, check all was checked
   Result:=ExtractFilePath(ParamStrUTF8(0))+lng+
     DirectorySeparator+liname+'.mo';
@@ -149,9 +153,14 @@ var lcfn:string;
 { TDefaultTranslator }
 
 constructor TDefaultTranslator.Create(MOFileName: string);
+var lng: String;
 begin
   inherited Create;
   FMOFile:=TMOFile.Create(UTF8ToSys(MOFileName));
+
+  lng:=copy(GetEnvironmentVariableUTF8('LANG'),1,2);
+  if FileExistsUTF8('/usr/share/listaller/locale/lclstrconsts-'+lng+'.mo') then
+   TranslateResourceStrings('/usr/share/listaller/locale/lclstrconsts-'+lng+'.mo');
 end;
 
 destructor TDefaultTranslator.Destroy;
@@ -196,6 +205,7 @@ initialization
     TranslateResourceStrings(UTF8ToSys(lcfn));
     LCLPath:=ExtractFileName(lcfn);
     Dot1:=pos('.',LCLPath);
+    writeLn(LCLPath);
     if Dot1>1 then
     begin
       Delete(LCLPath,1,Dot1-1);

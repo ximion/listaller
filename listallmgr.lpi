@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="1404"/>
+      <CurrentBuildNr Value="1407"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -51,7 +51,7 @@
         <Filename Value="listallmgr.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallmgr"/>
-        <CursorPos X="1" Y="44"/>
+        <CursorPos X="16" Y="29"/>
         <TopLine Value="4"/>
         <UsageCount Value="173"/>
       </Unit0>
@@ -62,7 +62,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
         <CursorPos X="33" Y="821"/>
-        <TopLine Value="811"/>
+        <TopLine Value="779"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="173"/>
         <Loaded Value="True"/>
@@ -666,8 +666,8 @@
       <Unit87>
         <Filename Value="litranslator.pas"/>
         <UnitName Value="litranslator"/>
-        <CursorPos X="73" Y="113"/>
-        <TopLine Value="85"/>
+        <CursorPos X="3" Y="89"/>
+        <TopLine Value="61"/>
         <UsageCount Value="10"/>
       </Unit87>
       <Unit88>
@@ -680,8 +680,8 @@
       <Unit89>
         <Filename Value="../../../../../usr/share/fpcsrc/2.2.4/packages/fcl-base/src/gettext.pp"/>
         <UnitName Value="gettext"/>
-        <CursorPos X="3" Y="55"/>
-        <TopLine Value="47"/>
+        <CursorPos X="13" Y="76"/>
+        <TopLine Value="56"/>
         <UsageCount Value="10"/>
       </Unit89>
     </Units>
