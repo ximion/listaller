@@ -30,6 +30,8 @@ type
  TPosEvent = procedure(Sender: TObject;pos: Integer) of object;
  TVisSwitchEvent = procedure(Sender: TObject;vis: Boolean) of object;
  TMessageEvent = procedure(Sender: TObject;msg: String) of object;
+type
+  TPosChangeCall = function(pos: longint): longint; cdecl;
 
  //** Everything which is needed for an installation
  TInstallation = class
@@ -173,7 +175,7 @@ end;
      @param progress Event handler for operation progress (set nil if not needed)
      @param fast Does a quick uninstallation if is true (Set to "False" by default)
      @param RmDeps Remove dependencies if true (Set to "True" by default)}
- procedure UninstallIPKApp(AppName, AppID: String; var Log: TStrings;progress: TPosEvent; fast: Boolean=false; RmDeps:Boolean=true);
+ procedure UninstallIPKApp(AppName, AppID: String; var Log: TStrings;progress: TPosChangeCall; fast: Boolean=false; RmDeps:Boolean=true);
  {** Checks dependencies of all installed apps
      @param report Report of the executed actions
      @param fix True if all found issues should be fixed right now
@@ -1045,7 +1047,7 @@ SetExtraPosVisibility(false);
 if (RmApp)and(not Testmode) then
 begin
 SetExtraPosVisibility(true);
-//??? Important: Enable this after testing!
+//??? Important: Enable this after testing
 //UnInstallIPKApp(IAppName,idName,ln,FPos2,true);
 SetExtraPosVisibility(false);
 end;
@@ -1409,16 +1411,16 @@ end;
 /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ///////////////////////////////////////////////////
-procedure UninstallIPKApp(AppName,AppID: String; var Log: TStrings;progress: TPosEvent; fast:Boolean=false; RmDeps:Boolean=true);
+procedure UninstallIPKApp(AppName,AppID: String; var Log: TStrings;progress: TPosChangeCall; fast:Boolean=false; RmDeps:Boolean=true);
 var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;k: Boolean;upd: String;
     proc: TProcess;dlink: Boolean;t: TProcess;
     pkit: TPackageKit;
     dsApp: TSQLite3Dataset;
-    FPos: TPosEvent;
+    FPos: TPosChangeCall;
     mnprog: Integer;
 procedure SetPosition(val: Integer);
 begin
-if Assigned(FPos) then FPos(nil,val);
+if Assigned(FPos) then FPos(val);
 end;
 begin
 p:=RegDir+LowerCase(AppName+'-'+AppID)+'/';

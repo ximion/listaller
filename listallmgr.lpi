@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="1407"/>
+      <CurrentBuildNr Value="1409"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -51,7 +51,7 @@
         <Filename Value="listallmgr.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallmgr"/>
-        <CursorPos X="16" Y="29"/>
+        <CursorPos X="1" Y="44"/>
         <TopLine Value="4"/>
         <UsageCount Value="173"/>
       </Unit0>
@@ -61,8 +61,8 @@
         <ComponentName Value="MnFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="33" Y="821"/>
-        <TopLine Value="779"/>
+        <CursorPos X="22" Y="26"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="173"/>
         <Loaded Value="True"/>
@@ -251,8 +251,8 @@
       <Unit28>
         <Filename Value="distri.pas"/>
         <UnitName Value="distri"/>
-        <CursorPos X="4" Y="224"/>
-        <TopLine Value="85"/>
+        <CursorPos X="30" Y="83"/>
+        <TopLine Value="61"/>
         <UsageCount Value="35"/>
       </Unit28>
       <Unit29>
@@ -297,8 +297,8 @@
       <Unit34>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="15" Y="145"/>
-        <TopLine Value="126"/>
+        <CursorPos X="33" Y="153"/>
+        <TopLine Value="133"/>
         <UsageCount Value="33"/>
       </Unit34>
       <Unit35>
@@ -646,7 +646,7 @@
       <Unit84>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="1" Y="1"/>
+        <CursorPos X="22" Y="16"/>
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit84>
@@ -685,7 +685,7 @@
         <UsageCount Value="10"/>
       </Unit89>
     </Units>
-    <JumpHistory Count="25" HistoryIndex="24">
+    <JumpHistory Count="28" HistoryIndex="27">
       <Position1>
         <Filename Value="manager.pas"/>
         <Caret Line="94" Column="45" TopLine="55"/>
@@ -786,6 +786,18 @@
         <Filename Value="manager.pas"/>
         <Caret Line="26" Column="18" TopLine="1"/>
       </Position25>
+      <Position26>
+        <Filename Value="manager.pas"/>
+        <Caret Line="25" Column="63" TopLine="1"/>
+      </Position26>
+      <Position27>
+        <Filename Value="manager.pas"/>
+        <Caret Line="27" Column="10" TopLine="1"/>
+      </Position27>
+      <Position28>
+        <Filename Value="manager.pas"/>
+        <Caret Line="26" Column="22" TopLine="1"/>
+      </Position28>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

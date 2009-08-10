@@ -1,13 +1,13 @@
 Name:             listaller-core
-Version:          0.2.50b
+Version:          0.3.00b
 Release:          1
 License:          GPLv3
-BuildRequires:    fpc, lazarus, wget, glib2-devel, gtk2-devel, glib-devel, glib2, glib, fpc-src, gtk2, libqt4intf, qt4-devel
-Source0:          listaller_0.2.00a.tar.gz
+BuildRequires:    fpc >= 2.2.4, lazarus >= 0.9.27, glib2-devel, gtk2-devel, glib-devel, glib2, glib, fpc-src, gtk2, libqt4intf, sqlite-devel
+Source0:          listaller-0.3.00b.tar.gz
 %if 0%{?fedora_version} >= 10
-Requires:         gtk2, glib2, xdg-utils, PackageKit, redhat-config-rpm
+Requires:         xdg-utils, PackageKit, beesu
 %else
-Requires:         gtk2, glib2, xdg-utils, PackageKit, libgnomesu
+Requires:         xdg-utils, PackageKit
 %endif
 
 Provides:         listaller
@@ -33,7 +33,8 @@ case "$ARCH" in
  "i486") ARCH="i386";;
 esac
 
-cd ./trunk
+cd ./listaller-0.3.00b
+
 # Create GTK+ applications
 make WIDGET=gtk2 all
 make WIDGET=gtk2 licreator
@@ -42,7 +43,7 @@ make WIDGET=qt4 all
 make WIDGET=qt4 licreator
 
 %install
-cd ./trunk
+cd ./listaller-0.3.00b
 # Necessary to get the right directories
 %if 0%{?fedora_version} >= 10
 ARCH=$(uname -m)
@@ -58,6 +59,8 @@ make DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH
 
 # Install cmd utilities
 make DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH libuildtools-inst
+make DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH install-lipa
+
 # Install GTK+ binaries
 make WIDGET=gtk2 DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH install
 make WIDGET=gtk2 DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH licreator-inst
@@ -72,6 +75,7 @@ make DESTDIR=%{_tmppath}/build-%{name}-%{version} install-data
 
 # Install cmd utilities
 make DESTDIR=%{_tmppath}/build-%{name}-%{version} libuildtools-inst
+make DESTDIR=%{_tmppath}/build-%{name}-%{version} install-lipa
 # Install GTK+ binaries
 make WIDGET=gtk2 DESTDIR=%{_tmppath}/build-%{name}-%{version} install
 make WIDGET=gtk2 DESTDIR=%{_tmppath}/build-%{name}-%{version} licreator-inst
@@ -81,7 +85,7 @@ make WIDGET=qt4 DESTDIR=%{_tmppath}/build-%{name}-%{version} licreator-inst
 %endif
 
 %clean
-cd ./trunk
+cd ./listaller-0.3.00b
 make clean
 
 %files
@@ -130,6 +134,7 @@ echo "Done."
 /usr/share/listaller/mime
 /usr/share/listaller/pkitbind
 /usr/share/pixmaps/listaller.png
+/usr/share/listaller/locale
 /usr/share/mime-info/listaller-pack.mime
 /etc/lipa
 

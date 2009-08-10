@@ -150,7 +150,7 @@ rsFileNotExists='The file "%f" does not exists!';
 
 rsWantToDoQ='What do you want to do?';
 rsPackageKitWarning='Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to work correctly.'#10'Please update PackageKit!';
-rsSpkWarning='Make sure that you have got this package from a save source and a serious publisher!';
+rsSpkWarning='Make sure that you got this package from a save source and a serious publisher!';
 rsInstallEveryone='Install application for everyone';
 rsTestApp='Test application';
 rsInstallHome='Install into my Home directory';

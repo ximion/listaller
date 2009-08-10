@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="7"/>
+    <General>
+      <MainUnit Value="0"/>
+      <TargetFileExt Value=""/>
+      <Icon Value="0"/>
+      <UseXPManifest Value="True"/>
+      <ActiveEditorIndexAtStart Value="0"/>
+    </General>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <CurrentMajorRevNr Value="4"/>
+      <CurrentBuildNr Value="34"/>
+      <ProjectVersion Value="0.4.0.0"/>
+    </VersionInfo>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|ppw|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+        <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+      </local>
+    </RunParams>
+    <Units Count="4">
+      <Unit0>
+        <Filename Value="libinstaller.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="libinstaller"/>
+        <CursorPos X="22" Y="45"/>
+        <TopLine Value="26"/>
+        <EditorIndex Value="0"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="ipkhandle.pas"/>
+        <UnitName Value="ipkhandle"/>
+        <CursorPos X="25" Y="1419"/>
+        <TopLine Value="1403"/>
+        <UsageCount Value="10"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="../licommon.pas"/>
+        <UnitName Value="licommon"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../ipkhandle.pas"/>
+        <UnitName Value="ipkhandle"/>
+        <CursorPos X="44" Y="1048"/>
+        <TopLine Value="1030"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit3>
+    </Units>
+    <JumpHistory Count="20" HistoryIndex="19">
+      <Position1>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="18" TopLine="1"/>
+      </Position1>
+      <Position2>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="18" TopLine="18"/>
+      </Position2>
+      <Position3>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="46" Column="71" TopLine="19"/>
+      </Position3>
+      <Position4>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="44" Column="89" TopLine="19"/>
+      </Position4>
+      <Position5>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="46" Column="11" TopLine="19"/>
+      </Position5>
+      <Position6>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="47" Column="88" TopLine="15"/>
+      </Position6>
+      <Position7>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="49" Column="68" TopLine="22"/>
+      </Position7>
+      <Position8>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="47" Column="91" TopLine="22"/>
+      </Position8>
+      <Position9>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="49" Column="60" TopLine="22"/>
+      </Position9>
+      <Position10>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="15" TopLine="17"/>
+      </Position10>
+      <Position11>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="45" Column="60" TopLine="17"/>
+      </Position11>
+      <Position12>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="49" Column="65" TopLine="17"/>
+      </Position12>
+      <Position13>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="47" Column="1" TopLine="18"/>
+      </Position13>
+      <Position14>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="63" Column="105" TopLine="38"/>
+      </Position14>
+      <Position15>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="45" Column="24" TopLine="19"/>
+      </Position15>
+      <Position16>
+        <Filename Value="../ipkhandle.pas"/>
+        <Caret Line="20" Column="50" TopLine="1"/>
+      </Position16>
+      <Position17>
+        <Filename Value="../ipkhandle.pas"/>
+        <Caret Line="1051" Column="26" TopLine="765"/>
+      </Position17>
+      <Position18>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="51" Column="68" TopLine="24"/>
+      </Position18>
+      <Position19>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="55" Column="16" TopLine="24"/>
+      </Position19>
+      <Position20>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="53" Column="2" TopLine="29"/>
+      </Position20>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="8"/>
+    <Target>
+      <Filename Value="../bin/libinstaller.so.0.4"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)/"/>
+      <OtherUnitFiles Value="../;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
+      <LCLWidgetType Value="nogui"/>
+    </SearchPaths>
+    <Linking>
+      <Options>
+        <ExecutableType Value="Library"/>
+      </Options>
+    </Linking>
+    <Other>
+      <CompilerPath Value="$(CompPath)"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

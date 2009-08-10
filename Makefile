@@ -7,17 +7,26 @@
 #
 all:
 	chmod +x ./make.sh
-	./make.sh
+	./make.sh WIDGET=gtk2
+	./make.sh WIDGET=qt4
+
+all-qt:
+	chmod +x ./make.sh
+	./make.sh WIDGET=qt4
+
+all-gtk:
+	chmod +x ./make.sh
+	./make.sh WIDGET=gtk2
 
 install-data:
 	chmod +x ./install-data.sh
 	./install-data.sh
 
-libuildtools-inst:
+install-build-tools:
 	chmod +x ./install-build-tools.sh
 	./install-build-tools.sh
 
-install-lipa:
+install-core:
 	chmod +x ./install-cmds.sh
 	./install-cmds.sh
 
@@ -25,15 +34,19 @@ licreator:
 	chmod +x ./make-creator.sh
 	./make-creator.sh
 
-licreator-inst:
+install-licreator-gtk:
 	chmod +x ./install-creator.sh
-	./install-creator.sh
+	./install-creator.sh WIDGET=gtk2
+
+install-licreator-qt:
+	chmod +x ./install-creator.sh
+	./install-creator.sh WIDGET=qt4
 
 litheme:
 	chmod +x ./make-litheme.sh
 	./make-litheme.sh
 
-litheme-inst:
+install-litheme:
 	chmod +x ./install-litheme.sh
 	./install-litheme.sh
 
@@ -41,18 +54,30 @@ clean:
 	chmod +x ./clean.sh
 	./clean.sh
 
-install:
+install-front-gtk:
 	chmod +x ./install.sh
-	./install.sh
+	./install.sh WIDGET=gtk2 
 
-lcl:
-	chmod +x ./makelcl.sh
-	./makelcl.sh
+install-front-qt:
+	chmod +x ./install.sh
+	./install.sh WIDGET=qt4
+
+install-all-gtk:
+	chmod +x ./install.sh
+	./install.sh WIDGET=gtk2
+	chmod +x ./install-data.sh
+	./install-data.sh
+	chmod +x ./install-cmds.sh
+	./install-cmds.sh
+
+install-all-qt:
+	chmod +x ./install.sh
+	./install.sh WIDGET=qt4
+	chmod +x ./install-data.sh
+	./install-data.sh
+	chmod +x ./install-cmds.sh
+	./install-cmds.sh
 
 uninstall:
 	chmod +x ./uninstall.sh
 	./uninstall.sh
-
-packages:
-	chmod +x ./createpkg.sh
-	./createpkg.sh
