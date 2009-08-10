@@ -26,12 +26,11 @@ uses
   MD5;
 
 type
- TMaxPosEvent = procedure(Sender: TObject;max: Integer) of object;
- TPosEvent = procedure(Sender: TObject;pos: Integer) of object;
- TVisSwitchEvent = procedure(Sender: TObject;vis: Boolean) of object;
- TMessageEvent = procedure(Sender: TObject;msg: String) of object;
-type
-  TPosChangeCall = function(pos: longint): longint; cdecl;
+ TProgressChange = function(max: Longint;pos: Longint): Boolean; cdecl;
+ TVisSwitchEvent = function(vis: Boolean): Boolean; cdecl;
+ TMessageEvent = function(msg: String): Boolean; cdecl;
+
+ PInstallation = ^TInstallation;
 
  //** Everything which is needed for an installation
  TInstallation = class
@@ -74,10 +73,8 @@ type
   //Reference to an existing FTPSend object
   FTP: TFTPSend;
   //Progress message relais
-  FMaxPos1: TMaxPosEvent;
-  FMaxPos2: TMaxPosEvent;
-  FPos1: TPosEvent;
-  FPos2: TPosEvent;
+  FProgChange1: TProgressChange;
+  FProgChange2: TProgressChange;
   FVisible1: TVisSwitchEvent;
   FVisible2: TVisSwitchEvent;
   FErrorMsg: TMessageEvent;
@@ -92,10 +89,8 @@ type
   function FindChildNode(dn: TDOMNode; n: String): TDOMNode;
   function FindChildNodeX(dn: TDOMNode; n: String): TDOMNode;
   //Set/Get methods for progress indication
-  procedure SetMainMaxVal(val: Integer);
-  procedure SetExtraMaxVal(val: Integer);
-  procedure SetMainPosVal(val: Integer);
-  procedure SetExtraPosVal(val: Integer);
+  procedure SetMainProg(pos: integer;max: Integer);
+  procedure SetExtraProg(pos: integer;max: Integer);
   procedure SetMainPosVisibility(vis: Boolean);
   procedure SetExtraPosVisibility(vis: Boolean);
   procedure SendErrorMsg(msg: String);
@@ -156,10 +151,8 @@ type
   //** Name of the current profile
   property CurrentProfile: String read CurProfile write CurProfile;
   //Progress events
-  property OnMaxPosMainChange: TMaxPosEvent read FMaxPos1 write FMaxPos1;
-  property OnMaxPosExtraChange: TMaxPosEvent read FMaxPos2 write FMaxPos2;
-  property OnMainPosChange: TPosEvent read FPos1 write FPos1;
-  property OnExtraPosChange: TPosEvent read FPos2 write FPos2;
+  property OnProgressMainChange: TProgressChange read FProgChange1 write FProgChange1;
+  property OnProgressExtraChange: TProgressChange read FProgChange2 write FProgChange2;
   property OnMainVisibleChange: TVisSwitchEvent read FVisible1 write FVisible1;
   property OnExtraVisibleChange: TVisSwitchEvent read FVisible2 write FVisible2;
   //Message events
@@ -175,7 +168,7 @@ end;
      @param progress Event handler for operation progress (set nil if not needed)
      @param fast Does a quick uninstallation if is true (Set to "False" by default)
      @param RmDeps Remove dependencies if true (Set to "True" by default)}
- procedure UninstallIPKApp(AppName, AppID: String; var Log: TStrings;progress: TPosChangeCall; fast: Boolean=false; RmDeps:Boolean=true);
+ procedure UninstallIPKApp(AppName, AppID: String; var Log: TStrings;progress: TProgressChange; fast: Boolean=false; RmDeps:Boolean=true);
  {** Checks dependencies of all installed apps
      @param report Report of the executed actions
      @param fix True if all found issues should be fixed right now
@@ -187,7 +180,7 @@ const
   lp='/tmp/';
  var
   //** Path to package registration
-  RegDir: String='/etc/lipa/app-reg/';
+  RegDir: String;
   //** @deprecated Set if application installs shared files
   ContSFiles: Boolean=false;
 
@@ -195,49 +188,39 @@ const
 
 implementation
 
-procedure TInstallation.SetMainMaxVal(val: integer);
+procedure TInstallation.SetMainProg(pos: integer;max: Integer);
 begin
- if Assigned(FMaxPos1) then FMaxPos1(Self,val);
+ if Assigned(FProgChange1) then FProgChange1(max,pos);
 end;
 
-procedure TInstallation.SetExtraMaxVal(val: integer);
+procedure TInstallation.SetExtraProg(pos: integer;max: Integer);
 begin
- if Assigned(FMaxPos2) then FMaxPos2(Self,val);
-end;
-
-procedure TInstallation.SetMainPosVal(val: integer);
-begin
- if Assigned(FPos1) then FPos1(Self,val);
-end;
-
-procedure TInstallation.SetExtraPosVal(val: integer);
-begin
- if Assigned(FPos2) then FPos2(Self,val);
+ if Assigned(FProgChange2) then FProgChange2(max,pos);
 end;
 
 procedure TInstallation.SetMainPosVisibility(vis: Boolean);
 begin
- if Assigned(FVisible1) then FVisible1(Self,vis);
+ if Assigned(FVisible1) then FVisible1(vis);
 end;
 
 procedure TInstallation.SetExtraPosVisibility(vis: Boolean);
 begin
- if Assigned(FVisible2) then FVisible2(Self,vis);
+ if Assigned(FVisible2) then FVisible2(vis);
 end;
 
 procedure TInstallation.SendErrorMsg(msg: String);
 begin
- if Assigned(FErrorMsg) then FErrorMsg(self,msg);
+ if Assigned(FErrorMsg) then FErrorMsg(msg);
 end;
 
 procedure TInstallation.SendTermQuestion(qs: String);
 begin
- if Assigned(FTermRequest) then FTermRequest(self,qs);
+ if Assigned(FTermRequest) then FTermRequest(qs);
 end;
 
 procedure TInstallation.SendStateMsg(msg: String);
 begin
- if Assigned(FSMessage) then FSMessage(self,msg);
+ if Assigned(FSMessage) then FSMessage(msg);
 end;
 
 constructor TInstallation.Create;
@@ -325,7 +308,7 @@ i := 0;
 end;
 
 function TInstallation.ResolveDependencies: Boolean;
-var i: Integer;p: TProcess;h: String;tmp: TStringList;pkit: TPackageKit;mnpos: Integer;
+var i: Integer;p: TProcess;h: String;tmp: TStringList;pkit: TPackageKit;mnpos,max: Integer;
 begin
  Result:=true;
   if (Dependencies.Count>0) and (Dependencies[0]='*getlibs*') then
@@ -333,7 +316,8 @@ begin
     Dependencies.Delete(0);
     mnpos:=0;
     SetMainPosVisibility(true);
-    SetMainMaxVal(Dependencies.Count*2);
+    max:=Dependencies.Count*2;
+    SetMainProg(mnpos,max);
     p:=TProcess.Create(nil);
     ShowPKMon();
     p.Options:=[poUsePipes,poWaitOnExit];
@@ -341,7 +325,7 @@ begin
     for i:=0 to Dependencies.Count-1 do
     begin
      mnpos:=mnpos+1;
-     SetMainPosVal(mnpos);
+     SetMainProg(mnpos,max);
      pkit:=TPackageKit.Create;
      h:=pkit.PkgNameFromNIFile(Dependencies[i]);
      pkit.Free;
@@ -350,7 +334,7 @@ begin
      tmp.Add(h);
      h:='';
      mnpos:=mnpos+1;
-     SetMainPosVal(mnpos);
+     SetMainProg(mnpos,max);
     end;
     RemoveDuplicates(tmp);
     Dependencies.Assign(tmp);
@@ -802,7 +786,7 @@ setcm: Boolean;
 p:TProcess; // Helper process with pipes
 pkit: TPackageKit; //PackageKit object
 DInfo: TDistroInfo; //Distribution information
-mnpos,expos: Integer; //Current positions of operation
+mnpos,expos,max,emax: Integer; //Current positions of operation
 begin
 fi:=TStringList.Create;
 fi.LoadFromFile(lp+PkgName+FFileInfo);
@@ -825,7 +809,8 @@ for i:=0 to (fi.Count div 3)-1 do begin
 if IsSharedFile(lp+PkgName+fi[i*3]) then ContSFiles:=true;
 end;
 
-SetMainMaxVal(GetMaxInstSteps);
+max:=GetMaxInstSteps;
+SetMainProg(mnpos,max);
 
 if Testmode then
 begin
@@ -918,7 +903,8 @@ with FTP do begin
     end;
     ChangeWorkingDir(GetServerPath(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)));
 
-    SetExtraMaxVal(FileSize(ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1))));
+    emax:=FileSize(ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)));
+    SetExtraProg(0,emax);
 
     RetrieveFile(ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)), false);
     Logout;
@@ -994,7 +980,7 @@ begin
     pkit.InstallLocalPkg(lp+PkgName+Dependencies[i]);
 
     mnpos:=mnpos+5;
-    SetMainPosVal(mnpos);
+    SetMainProg(mnpos,max);
 
     //Check if the package was really installed
     if not pkit.OperationSucessfull then
@@ -1007,7 +993,7 @@ begin
     end;
 
     mnpos:=mnpos+5;
-    SetMainPosVal(mnpos);
+    SetMainProg(mnpos,max);
 
   //while proc.Running do Application.ProcessMessages;
 
@@ -1033,7 +1019,7 @@ end else begin
     end; //Eof <> 1
 
     mnpos:=mnpos+10;
-    SetMainPosVal(mnpos);
+    SetMainProg(mnpos,max);
   end;
    end; //End of PKCatalog end-else
   end; //End of Dependecies.Count term
@@ -1149,7 +1135,7 @@ appfiles.Add(dest+'/'+ExtractFileName(fi[i]));
 ln.Add('Okay.');
 
 mnpos:=mnpos+10;
-SetMainPosVal(mnpos);
+SetMainProg(mnpos,max);
 
   end;
 
@@ -1195,7 +1181,7 @@ ln.Add('Rights assigned to folder '+ExtractFileName(SyblToPath(ndirs[i])));
 end; //Ende setcm
 
 mnpos:=mnpos+6;
-SetMainPosVal(mnpos);;
+SetMainProg(mnpos,max);;
 
 fi.Free;
 SendStateMsg(rsStep4);
@@ -1240,7 +1226,7 @@ ndirs.Free;
 end; //End of Patch check
 
 mnpos:=mnpos+5;
-SetMainPosVal(mnpos);
+SetMainProg(mnpos,max);
 //Execute Program/Script
 if ExecB<>'<disabled>' then begin
     proc.CommandLine := 'chmod 777 '+ExecB;
@@ -1277,7 +1263,7 @@ fi.SaveToFile(RegDir+'updates.list');
 end;
 
 mnpos:=mnpos+5;
-SetMainPosVal(mnpos);;
+SetMainProg(mnpos,max);;
 
 SendStateMsg(rsFinished);
 sleep(600);
@@ -1285,9 +1271,11 @@ ln.SaveTofile('/tmp/install-'+IAppName+'.log');
 end;
 
 function TInstallation.RunDLinkInstallation(proc: TProcess;ln: TStrings): Boolean;
-var i: Integer;cnf,ar: TIniFile;pkit: TPackageKit;mnpos: Integer;
+var i: Integer;cnf,ar: TIniFile;pkit: TPackageKit;mnpos,max,emax: Integer;
 begin
-SetMainMaxVal(Dependencies.Count*6000);
+max:=Dependencies.Count*6000;
+mnpos:=0;
+SetMainProg(mnpos,max);
 HTTP.UserAgent:='Listaller-GET';
 
 
@@ -1348,7 +1336,8 @@ begin
     if not Login then SendErrorMsg(rsFTPfailed);
     ChangeWorkingDir(GetServerPath(Dependencies[i]));
 
-    SetExtraMaxVal(FileSize(ExtractFileName(Dependencies[i])));
+    emax:=FileSize(ExtractFileName(Dependencies[i]));
+    SetExtraProg(0,emax);
 
     RetrieveFile(ExtractFileName(Dependencies[i]), false);
     Logout;
@@ -1365,7 +1354,7 @@ end;
 end;
 
   mnpos:=mnpos+6000;
-  SetMainPosVal(mnpos);
+  SetMainProg(mnpos,max);
 end;
 
 end;
@@ -1411,22 +1400,22 @@ end;
 /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ///////////////////////////////////////////////////
-procedure UninstallIPKApp(AppName,AppID: String; var Log: TStrings;progress: TPosChangeCall; fast:Boolean=false; RmDeps:Boolean=true);
+procedure UninstallIPKApp(AppName,AppID: String; var Log: TStrings;progress: TProgressChange; fast:Boolean=false; RmDeps:Boolean=true);
 var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;k: Boolean;upd: String;
     proc: TProcess;dlink: Boolean;t: TProcess;
     pkit: TPackageKit;
     dsApp: TSQLite3Dataset;
-    FPos: TPosChangeCall;
+    FPos: TProgressChange;
     mnprog: Integer;
-procedure SetPosition(val: Integer);
+procedure SetPosition(prog: Integer;max: Integer);
 begin
-if Assigned(FPos) then FPos(val);
+if Assigned(FPos) then FPos(max,prog);
 end;
 begin
 p:=RegDir+LowerCase(AppName+'-'+AppID)+'/';
 FPos:=progress;
 mnprog:=0;
-SetPosition(0);
+SetPosition(0,100);
 //InfoMemo.Lines.Add('Begin uninstallation...');
 
 {
@@ -1620,7 +1609,7 @@ if not k then
 DeleteFile(f);
 
 mnprog:=mnprog+10;
-SetPosition(mnprog);
+SetPosition(mnprog,100);
 end;
 
 //InfoMemo.Lines.Add('Direcory remove...');
@@ -1653,7 +1642,7 @@ end;
 if mnprog>0 then
 begin
 mnprog:=mnprog+2;
-SetPosition(mnprog);
+SetPosition(mnprog,100);
 writeLn('Unregistering...');
 
 dsApp.ExecuteDirect('DELETE FROM AppInfo WHERE rowid='+IntToStr(dsApp.RecNo));
@@ -1669,12 +1658,12 @@ proc.Execute;
 proc.Free;
 
 mnprog:=mnprog+2;
-SetPosition(mnprog);
+SetPosition(mnprog,100);
 
 Log.Add('Application removed.');
 Log.Add('-----------');
 writeLn('- Finished -');
-end;
+end else writeLn('Application not found!');
 
 end;
 
@@ -1754,5 +1743,10 @@ if not Result then writeLn('You have broken dependencies.');
 
 end;
 
+initialization
+ if IsRoot then
+  RegDir:='/etc/lipa/app-reg/'
+  else
+  RegDir:=SyblToPath('$INST')+'/app-reg/';
 end.
 

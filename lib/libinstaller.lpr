@@ -19,10 +19,10 @@ library libinstaller;
 {$mode objfpc}{$H+}
 
 uses
-  Classes, ipkhandle, SysUtils, Controls;
+  Classes, ipkhandle, SysUtils, Controls, licommon;
 
-//Events
-
+type
+ PStringList = ^TStringList;
 
 //////////////////////////////////////////////////////////////////////////////////////
 //Exported helper functions
@@ -32,11 +32,11 @@ begin
  Result:=TStringList.Create;
 end;
 
-function free_stringlist(lst: Pointer): Boolean;
+function free_stringlist(lst: Pointer): Boolean; cdecl;
 begin
 Result:=true;
 try
- TStringList(lst).Free;
+ PStringList(lst)^.Free;
 except
  Result:=false;
 end;
@@ -45,8 +45,7 @@ end;
 /////////////////////////////////////////////////////////////////////////////////////
 //Exported functions
 
-
-function remove_ipk_installed_app(appname, appid: PChar;log: Pointer;poschange: TPosChangeCall;fastmode: Boolean): Boolean; cdecl;
+function remove_ipk_installed_app(appname, appid: PChar;log: Pointer;poschange: TProgressChange;fastmode: Boolean): Boolean; cdecl;
 begin
 Result:=true;
 try
@@ -56,13 +55,101 @@ except
 end;
 end;
 
+function new_installation: Pointer; cdecl;
+begin
+ Result:=TInstallation.Create;
+end;
+
+function init_installation(setup: Pointer;pkname: PChar): PChar; cdecl;
+begin
+ Result:='';
+ try
+  PInstallation(setup)^.Initialize(pkname);
+ except
+  Result:=PChar('Failed to initialize setup package '+ExtractFileName(pkname)+' !');
+ end;
+end;
+
+function register_inst_main_prog_change_call(setup: Pointer;call: TProgressChange): Boolean; cdecl;
+begin
+ Result:=true;
+ if setup = nil then
+ begin
+  Result:=false;
+  exit;
+ end;
+ try
+ PInstallation(setup)^.OnProgressMainChange:=call;
+ except
+  Result:=false;
+ end;
+end;
+
+function register_inst_extra_prog_change_call(setup: Pointer;call: TProgressChange): Boolean; cdecl;
+begin
+ Result:=true;
+ if setup = nil then
+ begin
+  Result:=false;
+  exit;
+ end;
+ try
+ PInstallation(setup)^.OnProgressExtraChange:=call;
+ except
+  Result:=false;
+ end;
+end;
+
+function inst_type(setup: Pointer): TListallerPackageType; cdecl;
+begin
+  Result:=PInstallation(setup)^.pType;
+end;
+
+function set_testmode(st: Boolean): Boolean; cdecl;
+begin
+  Testmode:=st;
+end;
+
+function inst_disallows(setup: Pointer): PChar; cdecl;
+begin
+  Result:=PChar(PInstallation(setup)^.Disallows);
+end;
+
+function inst_supported_distributions(setup: Pointer): PChar; cdecl;
+begin
+  Result:=PChar(PInstallation(setup)^.Distris);
+end;
+
+function is_ipk_app_installed(setup: Pointer;appname: PChar;appid: PChar): Boolean; cdecl;
+begin
+  Result:=PInstallation(setup)^.IsPackageInstalled(appname,appid);
+end;
+
 exports
  //Stringlist functions
- create_stringlist;
- free_stringlist;
+ create_stringlist,
+ free_stringlist,
 
  //** Removes an application that was installed with an IPK package
- remove_ipk_installed_app;
+ remove_ipk_installed_app,
+ //** Creates a new installation object
+ new_installation,
+ //** Initializes the setup
+ init_installation,
+ //** Register progress changes (main)
+ register_inst_main_prog_change_call,
+ //** Register progress changes (extra)
+ register_inst_extra_prog_change_call,
+ //** Installation type
+ inst_type,
+ //** Set installation testmode
+ set_testmode,
+ //** Read disallows property
+ inst_disallows,
+ //** Read supported Linux distributions
+ inst_supported_distributions,
+ //** Check if application is installed
+ is_ipk_app_installed;
 
 begin
 end.
