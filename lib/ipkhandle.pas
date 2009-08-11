@@ -26,8 +26,12 @@ uses
   MD5;
 
 type
+
+ TRqType   = (rqError,rqWarning,rqQuestion,rqInfo);
+ TRqResult = (rsYes,rsNo,rsOK);
+
  TProgressChange = function(max: Longint;pos: Longint): Boolean; cdecl;
- TVisSwitchEvent = function(vis: Boolean): Boolean; cdecl;
+ TRequestEvent = function(mtype: TRqType;msg: PChar): TRqResult; cdecl;
  TMessageEvent = function(msg: String): Boolean; cdecl;
 
  PInstallation = ^TInstallation;
@@ -75,27 +79,22 @@ type
   //Progress message relais
   FProgChange1: TProgressChange;
   FProgChange2: TProgressChange;
-  FVisible1: TVisSwitchEvent;
-  FVisible2: TVisSwitchEvent;
-  FErrorMsg: TMessageEvent;
-  FWarnMsg:  TMessageEvent;
-  FTermRequest:  TMessageEvent;
+  FRequest: TRequestEvent;
   FSMessage:  TMessageEvent;
+  FMessage:  TMessageEvent;
   //Executed if Linstallation should be done
-  function RunNormalInstallation(proc: TProcess;ln: TStrings): Boolean;
+  function RunNormalInstallation: Boolean;
   //Runs a DLink installation
-  function RunDLinkInstallation(proc: TProcess;ln: TStrings): Boolean;
+  function RunDLinkInstallation: Boolean;
  protected
   function FindChildNode(dn: TDOMNode; n: String): TDOMNode;
   function FindChildNodeX(dn: TDOMNode; n: String): TDOMNode;
-  //Set/Get methods for progress indication
+  //Set/Get methods for callbacks indication
   procedure SetMainProg(pos: integer;max: Integer);
   procedure SetExtraProg(pos: integer;max: Integer);
-  procedure SetMainPosVisibility(vis: Boolean);
-  procedure SetExtraPosVisibility(vis: Boolean);
-  procedure SendErrorMsg(msg: String);
-  procedure SendTermQuestion(qs: String);
+  function  MakeUsrRequest(msg: String;qtype: TRqType): TRqResult;
   procedure SendStateMsg(msg: String);
+  procedure msg(str: String);
  public
   //** Constructor
   constructor Create;
@@ -104,10 +103,8 @@ type
   //** Loads an IPK package @param fname Path to IPK file
   function Initialize(fname: String): Boolean;
   {** Executes the installation
-      @param proc TProcess to catch the output of external tools
-      @ ln TStrings to recieve a logfile
       @returns Sucess of operation}
-  function DoInstallation(proc: TProcess;ln: TStrings): Boolean;
+  function DoInstallation: Boolean;
   //** Gets the maximal steps the installation needs
   function GetMaxInstSteps: Integer;
   //** Function to solve all dependencies on libraries the package has
@@ -151,22 +148,20 @@ type
   //Progress events
   property OnProgressMainChange: TProgressChange read FProgChange1 write FProgChange1;
   property OnProgressExtraChange: TProgressChange read FProgChange2 write FProgChange2;
-  property OnMainVisibleChange: TVisSwitchEvent read FVisible1 write FVisible1;
-  property OnExtraVisibleChange: TVisSwitchEvent read FVisible2 write FVisible2;
   //Message events
-  property OnError: TMessageEvent read FErrorMsg write FErrorMsg;
-  property OnTermQuestion: TMessageEvent read FTermRequest write FTermRequest;
-  property OnStateMessage: TMessageEvent read FSMessage write FSMessage;
+  property OnUserRequest: TRequestEvent read FRequest write FRequest;
+  property OnStepMessage: TMessageEvent read FSMessage write FSMessage;
+  property OnMessage: TMessageEvent read FMessage write FMessage;
 end;
 
 {** Removes an IPK application
      @param AppName Name of the application, that should be uninstalled
      @param AppID ID of the application
-     @param Log TStrings to get the log output
-     @param progress Event handler for operation progress (set nil if not needed)
+     @param FMsg Message event to catch the info messages (set to nil if not needed)
+     @param progress Function call for operation progress (set nil if not needed)
      @param fast Does a quick uninstallation if is true (Set to "False" by default)
      @param RmDeps Remove dependencies if true (Set to "True" by default)}
- procedure UninstallIPKApp(AppName, AppID: String; var Log: TStrings;progress: TProgressChange; fast: Boolean=false; RmDeps:Boolean=true);
+ procedure UninstallIPKApp(AppName, AppID: String; FMsg: TMessageEvent;progress: TProgressChange; fast: Boolean=false; RmDeps:Boolean=true);
 
  {** Checks dependencies of all installed apps
      @param report Report of the executed actions
@@ -199,24 +194,11 @@ begin
  if Assigned(FProgChange2) then FProgChange2(max,pos);
 end;
 
-procedure TInstallation.SetMainPosVisibility(vis: Boolean);
+function TInstallation.MakeUsrRequest(msg: String;qtype: TRqType): TRqResult;
 begin
- if Assigned(FVisible1) then FVisible1(vis);
-end;
-
-procedure TInstallation.SetExtraPosVisibility(vis: Boolean);
-begin
- if Assigned(FVisible2) then FVisible2(vis);
-end;
-
-procedure TInstallation.SendErrorMsg(msg: String);
-begin
- if Assigned(FErrorMsg) then FErrorMsg(msg);
-end;
-
-procedure TInstallation.SendTermQuestion(qs: String);
-begin
- if Assigned(FTermRequest) then FTermRequest(qs);
+ if Assigned(FRequest) then
+  Result:=FRequest(qtype,PChar(msg))
+ else writeLn('WARNING: No user request handler assigned!');
 end;
 
 procedure TInstallation.SendStateMsg(msg: String);
@@ -224,10 +206,16 @@ begin
  if Assigned(FSMessage) then FSMessage(msg);
 end;
 
+procedure TInstallation.msg(str: String);
+begin
+ if Assigned(FMessage) then FMessage(str)
+ else writeLn(str);
+end;
+
 constructor TInstallation.Create;
 begin
  inherited Create;
- writeLn(rsOpeningDB);
+ msg(rsOpeningDB);
  dsApp:= TSQLite3Dataset.Create(nil);
  if IsRoot then
   RegDir:='/etc/lipa/app-reg/'
@@ -239,7 +227,7 @@ destructor TInstallation.Destroy;
 begin
  inherited Destroy;
  dsApp.Free;
- writeLn('Database connection closed.');
+ msg('Database connection closed.');
  if Assigned(Dependencies) then Dependencies.Free;
 end;
 
@@ -343,7 +331,6 @@ begin
   begin
     Dependencies.Delete(0);
     mnpos:=0;
-    SetMainPosVisibility(true);
     max:=Dependencies.Count*2;
     SetMainProg(mnpos,max);
     p:=TProcess.Create(nil);
@@ -357,8 +344,8 @@ begin
      pkit:=TPackageKit.Create;
      h:=pkit.PkgNameFromNIFile(Dependencies[i]);
      pkit.Free;
-     if h='Failed!' then begin SendErrorMsg(StringReplace(rsDepNotFound,'%l',Dependencies[i],[rfReplaceAll])+#13+rsInClose);tmp.Free;Result:=false;exit;end;
-     if h='PackageKit problem.' then begin SendErrorMsg(rsPKitProbPkMon);tmp.Free;Result:=false;exit;end;
+     if h='Failed!' then begin MakeUsrRequest(StringReplace(rsDepNotFound,'%l',Dependencies[i],[rfReplaceAll])+#13+rsInClose,rqError);tmp.Free;Result:=false;exit;end;
+     if h='PackageKit problem.' then begin MakeUsrRequest(rsPKitProbPkMon,rqError);tmp.Free;Result:=false;exit;end;
      tmp.Add(h);
      h:='';
      mnpos:=mnpos+1;
@@ -367,7 +354,7 @@ begin
     RemoveDuplicates(tmp);
     Dependencies.Assign(tmp);
     tmp.Free;
-    SetMainPosVisibility(false);
+    SetMainProg(0,0);
   end;
 end;
 
@@ -405,11 +392,11 @@ with dsApp do
  end;
 end;
 dsApp.Active:=true;
-writeLn('SQLite version: '+dsApp.SqliteVersion);
+msg('SQLite version: '+dsApp.SqliteVersion);
 
 
 
-writeLn('Loading IPK package...');
+msg('Loading IPK package...');
 //Begin loading package
 RmApp:=false;
 z:=TAbUnZipper.Create(nil);
@@ -427,7 +414,7 @@ z.BaseDirectory:=lp+ExtractFileName(fname);
 z.ExtractFiles('arcinfo.pin');
 except
 z.Free;
-SendErrorMsg(rsExtractError+#13+rsPkgDM+#13+rsABLoad);
+MakeUsrRequest(rsExtractError+#13+rsPkgDM+#13+rsABLoad,rqError);
 Result:=false;
 exit;
 end;
@@ -448,7 +435,7 @@ if (xnode.Attributes.GetNamedItem('patch')<>nil)
 and(xnode.Attributes.GetNamedItem('patch').NodeValue='true')
 then begin
 FPatch:=true;
-writeLn('WARNING: This package patches another application on your machine!');
+msg('WARNING: This package patches another application on your machine!');
 end else FPatch:=false;
 
 if FindChildNode(xnode,'disallow')<>nil then
@@ -459,20 +446,20 @@ FDisallow:='';
 if pkType=lptLinstall then
 begin
 
-writeLn('Package type is "linstall"');
+msg('Package type is "linstall"');
 
 n:=GetSystemArchitecture;
 
 if (pos('iofilecheck',FDisallow)>0) then begin
 FOverwrite:=true;
-writeLn('WARNING: This package will overwrite existing files without request!');
+msg('WARNING: This package will overwrite existing files without request!');
 end else FOverwrite:=false;
 
-writeLn('Architecture: '+n);
-writeLn('Package-Arch: '+FindChildNode(xnode,'architecture').NodeValue);
+msg('Architecture: '+n);
+msg('Package-Arch: '+FindChildNode(xnode,'architecture').NodeValue);
 if (pos(n,LowerCase(FindChildNode(xnode,'architecture').NodeValue))<=0)
 and (LowerCase(FindChildNode(xnode,'architecture').NodeValue)<>'all') then begin
-SendErrorMsg(rsInvArchitecture);
+MakeUsrRequest(rsInvArchitecture,rqError);
 z.Free;
 Result:=false;
 exit;
@@ -482,7 +469,7 @@ pID:=xnode.FindNode('id').FirstChild.NodeValue;
 idName:='';
 if xnode.FindNode('idName')<> nil then
 idName:=xnode.FindNode('idName').FirstChild.NodeValue;
-writeLn('Package idName: '+idName);
+msg('Package idName: '+idName);
 
 //Find profiles
 i:=1;
@@ -490,7 +477,7 @@ PkProfiles:=TStringList.Create;
 repeat
 if FindChildNode(xnode,'profile'+IntToStr(i))<>nil then begin
 PkProfiles.Add(FindChildNode(xnode,'profile'+IntToStr(i)).NodeValue+' #'+FindChildNodeX(xnode,'profile'+IntToStr(i)).Attributes.GetNamedItem('id').NodeValue);
-writeLn('Found installation profile '+PkProfiles[PkProfiles.Count-1]);
+msg('Found installation profile '+PkProfiles[PkProfiles.Count-1]);
 z.ExtractFiles('fileinfo-'+FindChildNodeX(xnode,'profile'+IntToStr(i)).Attributes.GetNamedItem('id').NodeValue+'.id');
 Inc(i);
 end;
@@ -533,11 +520,11 @@ else
 IAppCMD:='#';
 
 if IAppCMD <> '#' then
-writeLn('Application main exec command is '+IAppCMD);
+msg('Application main exec command is '+IAppCMD);
 
 if (IAppCMD='#')and (Testmode) then
 begin
- SendErrorMsg(rsActionNotPossiblePkg);
+ MakeUsrRequest(rsActionNotPossiblePkg, rqError);
  z.Free;
  Result:=false;
  exit;
@@ -546,7 +533,7 @@ end;
 IAppCMD:=SyblToPath(IAppCMD);
 
 if length(pID)<>17 then begin
- SendErrorMsg(rsIDInvalid);
+ MakeUsrRequest(rsIDInvalid,rqError);
  z.Free;
  Result:=false;
  exit;
@@ -640,7 +627,14 @@ if (xnode.FindNode('Dep'+DInfo.DName).Attributes.GetNamedItem('releases')<>nil)
 and (pos(DInfo.Release,xnode.FindNode('Dep'+DInfo.DName).Attributes.GetNamedItem('releases').NodeValue)<= 0)
 then
 begin
- SendTermQuestion(rsInvalidDVersion);
+ if MakeUsrrequest(rsInvalidDVersion,rqWarning) = rsNo then
+ begin
+  msg('Aborted by user!');
+  Dependencies.Free;
+  z.Free;
+  PkProfiles.Free;
+  exit;
+ end;
 end;
 xnode:=xnode.FindNode('Dep'+DInfo.DName);
 for i:=0 to xnode.ChildNodes.Count-1 do
@@ -660,9 +654,9 @@ if Dependencies[i][1]='.' then z.ExtractFiles(ExtractFileName(Dependencies[i]));
 
 z.Free;
 
-writeLn('Profiles count is '+IntToStr(PkProfiles.Count));
+msg('Profiles count is '+IntToStr(PkProfiles.Count));
 if PkProfiles.Count<0 then begin
-SendErrorMsg(rsPkgInval+#13'Message: No profiles and no file list found!');
+ MakeUsrRequest(rsPkgInval+#13'Message: No profiles and no file list found!',rqError);
 Profiles.Free;
 Result:=false;
 exit;
@@ -675,7 +669,7 @@ if IsPackageInstalled(AppName,AppID) then RmApp:=true;
 
 end else //Handle other IPK types
 if pkType=lptDLink then begin
-writeLn('Package type is "dlink"');
+msg('Package type is "dlink"');
 
 z.BaseDirectory:=lp+ExtractFileName(paramstr(1));
 
@@ -738,11 +732,17 @@ else Dependencies.Add(n);
 end;
 end else
 begin
-SendTermQuestion(rsNoLDSources);
+ if MakeUsrRequest(rsNoLDSources,rqWarning) = rsNo then
+ begin
+   Dependencies.Free;
+   Result:=false;
+   msg('Aborted by user!');
+   exit;
+ end;
 
 if xnode.FindNode('Dep'+DInfo.PackageSystem)=nil then
 begin
- SendErrorMsg(rsNoComp+#13+rsInClose);
+ MakeUsrRequest(rsNoComp+#13+rsInClose,rqError);
  Result:=false;
  exit;
 end;
@@ -760,7 +760,7 @@ end;
 end else
 if pkType=lptContainer then
 begin
-writeLn('Package type is "container"');
+msg('Package type is "container"');
 z:=TAbUnZipper.Create(nil);
 z.FileName:=PkgPath;
 z.ExtractOptions:=[eoCreateDirs]+[eoRestorePath];
@@ -806,7 +806,7 @@ Result:=((Dependencies.Count+(fi.Count div 3))*10)+16;
 fi.Free;
 end;
 
-function TInstallation.RunNormalInstallation(proc: TProcess;ln: TStrings): Boolean;
+function TInstallation.RunNormalInstallation: Boolean;
 var
 i,j: Integer;
 fi,ndirs, s, appfiles: TStringList;
@@ -814,7 +814,7 @@ dest,h, FDir: String; // h is an helper variable - used for various actions
 dsk, cnf: TIniFile; // Configuration files etc.
 z: TAbUnZipper; // Zipper
 setcm: Boolean;
-p:TProcess; // Helper process with pipes
+p,proc:TProcess; // Helper process with pipes
 pkit: TPackageKit; //PackageKit object
 DInfo: TDistroInfo; //Distribution information
 mnpos,expos,max,emax: Integer; //Current positions of operation
@@ -822,13 +822,16 @@ begin
 fi:=TStringList.Create;
 fi.LoadFromFile(lp+PkgName+FFileInfo);
 
+proc:=TProcess.Create(nil);
+proc.Options:=[poUsePipes,poStdErrToOutPut];
+
 DInfo:=GetDistro; //Load DistroInfo
 
 if (fi.Count mod 3)<>0 then begin
-SendErrorMsg(rsPKGError+#13'Message: File list is unlogical!'+#13+rsAppClose);
-fi.Free;
-Result:=false;
-exit;
+ MakeUsrRequest(rsPKGError+#13'Message: File list is unlogical!'+#13+rsAppClose,rqError);
+ fi.Free;
+ Result:=false;
+ exit;
 end;
 
 Result:=true;
@@ -860,7 +863,7 @@ p.free;
 end;
 cnf.free;
 
-SetExtraPosVisibility(false);
+SetExtraProg(0,0);
 //Execute programs/scripts
 if ExecA<>'<disabled>' then
 begin
@@ -879,16 +882,15 @@ begin
 //Check if we should install a software catalog
 if pos('cat:',Dependencies[0])>0 then
 begin
- ln.Add('Installing package catalog...');
+ msg('Installing package catalog...');
  pkit.InstallLocalPkg(copy(Dependencies[0],5,length(Dependencies[0])));
 
  if not pkit.OperationSucessfull then
  begin
-  SendErrorMsg(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]));
+  MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
   p.Free;
   pkit.Free;
   Result:=false;
-  ln.SaveTofile('/tmp/install-'+IAppName+'.log');
   exit;
  end;
  Dependencies[0]:='cat:'+ExtractFileName(copy(Dependencies[0],5,length(Dependencies[0])));
@@ -902,21 +904,26 @@ begin
 
 cnf:=TInifile.Create(ConfigDir+'config.cnf');
 if cnf.ReadBool('MainConf','AutoDepLoad',true)=false then
-SendTermQuestion(StringReplace(rsWDLDep,'%l',Dependencies[i],[rfReplaceAll])+#13+rsWAllow);
-
+ if MakeUsrRequest(StringReplace(rsWDLDep,'%l',Dependencies[i],[rfReplaceAll])+#13+rsWAllow,rqWarning)=rsNo then
+ begin
+  HTTP.Free;
+  Dependencies.Free;
+  cnf.Free;
+  exit;
+ end;
 cnf.Free;
 
-    ln.Add(rsGetDependencyFrom+' '+Dependencies[i]+'.');
-    ln.Add(rsPlWait2);
+    msg(rsGetDependencyFrom+' '+Dependencies[i]+'.');
+    msg(rsPlWait2);
  if pos('http://',LowerCase(Dependencies[i]))>0 then
  begin
   try
     HTTP.HTTPMethod('GET', copy(Dependencies[i],1,pos(' <',Dependencies[i])-1));
     HTTP.Document.SaveToFile('/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)));
   except
-  SendErrorMsg(rsDepDLProblem);
-  Result:=false;
-  exit;
+   MakeUsrRequest(rsDepDLProblem,rqError);
+   Result:=false;
+   exit;
   end;
  end else begin
 
@@ -928,7 +935,7 @@ with FTP do begin
     DirectFile:=True;
     if not Login then
     begin
-      SendErrorMsg('Couldn''t login on the FTP-Server!');
+      MakeUsrRequest('Couldn''t login on the FTP-Server!',rqError);
       Result:=false;
       exit;
     end;
@@ -940,7 +947,7 @@ with FTP do begin
     RetrieveFile(ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)), false);
     Logout;
   except
-   SendErrorMsg(rsDepDLProblem);
+   MakeUsrRequest(rsDepDLProblem,rqError);
    Result:=false;
    exit;
   end;
@@ -990,18 +997,18 @@ if (pos(' <',Dependencies[i])<=0) then begin
     end;
 end;
 
-ln.Add('Done.');
+msg('Done.');
 end;
 
-SetExtraPosVisibility(false);
+SetExtraProg(0,0);
 sleep(18); //Wait...
 
 if (Dependencies[i][1]='/')or(pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then
 begin
 
-    ln.Add('--');
-    ln.Add('DepInstall: '+Dependencies[i]+' (using PackageKit +x)');
-    ln.Add('-');
+    msg('--');
+    msg('DepInstall: '+Dependencies[i]+' (using PackageKit +x)');
+    msg('-');
 
   if (pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then
   begin
@@ -1016,11 +1023,10 @@ begin
     //Check if the package was really installed
     if not pkit.OperationSucessfull then
     begin
-    SendErrorMsg(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]));
-    p.Free;
-    Result:=false;
-    ln.SaveTofile('/tmp/install-'+IAppName+'.log');
-    exit;
+     MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
+     p.Free;
+     Result:=false;
+     exit;
     end;
 
     mnpos:=mnpos+5;
@@ -1030,9 +1036,9 @@ begin
 
  //If only a file name given install them with distri-tool
 end else begin
-     ln.Add('--');
-     ln.Add('DepInstall: '+Dependencies[i]+' (using PackageKit)');
-     ln.Add('-');
+     msg('--');
+     msg('DepInstall: '+Dependencies[i]+' (using PackageKit)');
+     msg('-');
 
      if not pkit.IsInstalled(Dependencies[i]) then begin
       pkit.InstallPkg(Dependencies[i]);
@@ -1040,9 +1046,8 @@ end else begin
     //Check if the package was really installed
   if not pkit.OperationSucessfull then
     begin
-     writeLn('Package '+Dependencies[i]+' can not be installed.');
-     SendErrorMsg(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]));
-     ln.SaveTofile('/tmp/install-'+IAppName+'.log');
+     msg('Package '+Dependencies[i]+' can not be installed.');
+     MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
      Result:=false;
      exit;
     end;
@@ -1058,15 +1063,14 @@ end; //End of dependency-check
 
 pkit.Free;
 
-SetExtraPosVisibility(false);
+SetExtraProg(0,0);
 
 //Delete old application installation if necessary
 if (RmApp)and(not Testmode) then
 begin
-SetExtraPosVisibility(true);
-//??? Important: Enable this after testing
-//UnInstallIPKApp(IAppName,idName,ln,FPos2,true);
-SetExtraPosVisibility(false);
+//Uninstall old application
+ UnInstallIPKApp(IAppName,idName,FMessage,FProgChange2,true);
+ SetExtraProg(0,0);
 end;
 
 appfiles:=TStringList.Create;
@@ -1113,16 +1117,17 @@ z.BaseDirectory:=lp+ExtractFileName(PkgPath);
 
 z.ExtractFiles(ExtractFileName(h));
 except
-SendErrorMsg(rsExtractError);
-z.Free;
-halt;
+ MakeUsrRequest(rsExtractError,rqError);
+ z.Free;
+ exit;
 end;
 
-ln.Add('Copy file '+ExtractFileName(h)+' to '+dest+' ...');
+msg('Copy file '+ExtractFileName(h)+' to '+dest+' ...');
 
 if fi[i+1] <> MDPrint((MD5.MD5File(DeleteModifiers(lp+PkgName+h),1024))) then begin
-SendErrorMsg(rsHashError);
-exit;
+ MakeUsrRequest(rsHashError,rqError);
+ z.Free;
+ exit;
 end;
 
 Inc(j);
@@ -1134,7 +1139,9 @@ if (not FileExists(dest+'/'+ExtractFileName(DeleteModifiers(h)))) then
  FileCopy(DeleteModifiers(lp+PkgName+h),dest+'/'+ExtractFileName(DeleteModifiers(h)))
 else
 begin
-  SendErrorMsg(StringReplace(rsCnOverride,'%f',dest+'/'+ExtractFileName(DeleteModifiers(h)),[rfReplaceAll])+#10+rsInClose);
+  MakeUsrRequest(StringReplace(rsCnOverride,'%f',dest+'/'+ExtractFileName(DeleteModifiers(h)),[rfReplaceAll])+#10+rsInClose,rqError);
+  z.Free;
+  Result:=false;
   exit;
 end;
 
@@ -1163,7 +1170,7 @@ end;
 
 
 appfiles.Add(dest+'/'+ExtractFileName(fi[i]));
-ln.Add('Okay.');
+msg('Okay.');
 
 mnpos:=mnpos+10;
 SetMainProg(mnpos,max);
@@ -1198,7 +1205,7 @@ proc.Execute;
 end;
 
  //while proc.Running do Application.ProcessMessages;
-ln.Add('Rights assigned to '+DeleteModifiers(ExtractFileName(SyblToPath(fi[i]))));
+msg('Rights assigned to '+DeleteModifiers(ExtractFileName(SyblToPath(fi[i]))));
  end;
 end;
 end else
@@ -1207,7 +1214,7 @@ for i:=0 to ndirs.Count-1 do
 begin
 proc.CommandLine := 'chmod 755 -R '+SyblToPath(ndirs[i]);
 proc.Execute;
-ln.Add('Rights assigned to folder '+ExtractFileName(SyblToPath(ndirs[i])));
+msg('Rights assigned to folder '+ExtractFileName(SyblToPath(ndirs[i])));
  end;
 end; //Ende setcm
 
@@ -1281,27 +1288,28 @@ for i:=1 to fi.Count-1 do
 if pos(USource,fi[i])>0 then break;
 if i=fi.Count then
 begin
-// ??? Needs a proper solution: Command-line tools shouldn't display visual dialogs (and need X11)
-{if Application.MessageBox(PAnsiChar(strAddUpdSrc+#13+
-copy(USource,pos(' <',USource)+2,length(USource)-pos(' <',USource)-2)+' ('+copy(uSource,3,pos(' <',USource)-3)+')'+#13+
-PAnsiChar(strQAddUpdSrc)),'Add update-source',MB_YESNO)= IDYES then
-begin   }
-fi.Add('- '+USource);
-fi.SaveToFile(RegDir+'updates.list');
- //end;
+
+ if MakeUsrRequest(PAnsiChar(rsAddUpdSrc+#13+
+   copy(USource,pos(' <',USource)+2,length(USource)-pos(' <',USource)-2)+' ('+copy(uSource,3,pos(' <',USource)-3)+')'+#13+
+   PAnsiChar(rsQAddUpdSrc)),rqWarning)=rsYes then
+ begin
+  fi.Add('- '+USource);
+  fi.SaveToFile(RegDir+'updates.list');
+ end;
+
  end;
  fi.Free;
 end;
 
+proc.Free;
 mnpos:=mnpos+5;
 SetMainProg(mnpos,max);;
 
 SendStateMsg(rsFinished);
 sleep(600);
-ln.SaveTofile('/tmp/install-'+IAppName+'.log');
 end;
 
-function TInstallation.RunDLinkInstallation(proc: TProcess;ln: TStrings): Boolean;
+function TInstallation.RunDLinkInstallation: Boolean;
 var i: Integer;cnf,ar: TIniFile;pkit: TPackageKit;mnpos,max,emax: Integer;
 begin
 max:=Dependencies.Count*6000;
@@ -1333,18 +1341,18 @@ pkit:=TPackageKit.Create;
   begin
   if pos('://',Dependencies[i])<=0 then
   begin
-   ln.Add('Looking for '+Dependencies[i]);
+   msg('Looking for '+Dependencies[i]);
   if not pkit.IsInstalled(Dependencies[i]) then
   begin
-   ln.Add('Installing '+Dependencies[i]+'...');
+   msg('Installing '+Dependencies[i]+'...');
 
    pkit.InstallPkg(Dependencies[i]);
   end;
   end else begin
-   ln.Add('Looking for '+copy(Dependencies[i],1,pos(' -',Dependencies[i])-1));
+   msg('Looking for '+copy(Dependencies[i],1,pos(' -',Dependencies[i])-1));
   if not pkit.IsInstalled(copy(Dependencies[i],1,pos(' -',Dependencies[i])-1)) then
   begin
-   ln.Add('Downloading package...');
+   msg('Downloading package...');
 
 if pos('http://',LowerCase(Dependencies[i]))>0 then
 begin
@@ -1352,7 +1360,7 @@ begin
   HTTP.HTTPMethod('GET', copy(Dependencies[i],pos(' -',Dependencies[i])+2,length(Dependencies[i])-pos(' -',Dependencies[i])+2));
   HTTP.Document.SaveToFile('/tmp/'+ExtractFileName(Dependencies[i]));
  except
-   SendErrorMsg(rsDepDlProblem);;
+   MakeUsrRequest(rsDepDlProblem,rqError);
    exit;
   end;
 
@@ -1364,7 +1372,7 @@ begin
   try
     DirectFileName := '/tmp/'+ExtractFileName(Dependencies[i]);
     DirectFile:=True;
-    if not Login then SendErrorMsg(rsFTPfailed);
+    if not Login then MakeUsrRequest(rsFTPfailed,rqError);
     ChangeWorkingDir(GetServerPath(Dependencies[i]));
 
     emax:=FileSize(ExtractFileName(Dependencies[i]));
@@ -1373,14 +1381,14 @@ begin
     RetrieveFile(ExtractFileName(Dependencies[i]), false);
     Logout;
   except
-   SendErrorMsg(rsDepDlProblem);
+   MakeUsrRequest(rsDepDlProblem,rqError);
    Result:=false;
    exit;
   end;
   end;
 end;
 
-  ln.Add('Installing '+copy(Dependencies[i],1,pos(' -',Dependencies[i])-1)+'...');
+  msg('Installing '+copy(Dependencies[i],1,pos(' -',Dependencies[i])-1)+'...');
   pkit.InstallLocalPkg('/tmp/'+ExtractFileName(Dependencies[i]));
 end;
 
@@ -1390,8 +1398,7 @@ end;
 
 end;
 
-pkit.Free;
-
+pkit.Free; //Free PackageKit
 
 while Length(IDesktopFiles)>1 do begin
 if pos(';',IDesktopFiles)>0 then
@@ -1415,15 +1422,15 @@ end; }
 SendStateMsg(rsSuccess);
 end;
 
-function TInstallation.DoInstallation(proc: TProcess;ln: TStrings): Boolean;
+function TInstallation.DoInstallation: Boolean;
 begin
- if pkType=lptLinstall then Result:=RunNormalInstallation(proc,ln)
+ if pkType=lptLinstall then Result:=RunNormalInstallation
  else
-  if pkType=lptDLink then Result:=RunDLinkInstallation(proc,ln)
+  if pkType=lptDLink then Result:=RunDLinkInstallation
   else
   begin
-   ln.Add('Could not detect package type!');
-   ln.Add('TInstallation failure.');
+   msg('Could not detect package type!');
+   msg('TInstallation failure.');
    Result:=false;
   end;
 end;
@@ -1431,7 +1438,7 @@ end;
 /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ///////////////////////////////////////////////////
-procedure UninstallIPKApp(AppName,AppID: String; var Log: TStrings;progress: TProgressChange; fast:Boolean=false; RmDeps:Boolean=true);
+procedure UninstallIPKApp(AppName,AppID: String; FMsg: TMessageEvent;progress: TProgressChange; fast:Boolean=false; RmDeps:Boolean=true);
 var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;k: Boolean;upd: String;
     proc: TProcess;dlink: Boolean;t: TProcess;
     pkit: TPackageKit;
@@ -1442,6 +1449,13 @@ procedure SetPosition(prog: Integer;max: Integer);
 begin
 if Assigned(FPos) then FPos(max,prog);
 end;
+
+procedure msg(s: String);
+begin
+if Assigned(FMsg) then FMsg(s)
+else writeLn(s);
+end;
+
 begin
 p:=RegDir+LowerCase(AppName+'-'+AppID)+'/';
 FPos:=progress;
@@ -1455,9 +1469,9 @@ reg:=TIniFile.Create(p+'proginfo.pin');
 upd:=reg.ReadString('Application','UpdSource','#');
 reg.Free;    }
 
-writeLn('- IPK uninstallation -');
+ writeLn('- IPK uninstallation -');
 
-writeLn('Opening database...');
+ writeLn('Opening database...');
 dsApp:= TSQLite3Dataset.Create(nil);
 with dsApp do
  begin
@@ -1509,26 +1523,22 @@ if not fast then
 begin
 if FileExists(p+'prerm') then
 begin
- Log.Add('PreRM-Script found.');
- writeLn('PreRM-Script found.');
+ msg('PreRM-Script found.');
  t:=TProcess.Create(nil);
  t.Options:=[poUsePipes,poWaitonexit];
  t.CommandLine:='chmod 775 '''+p+'prerm''';
  t.Execute;
- Log.Add('Executing prerm...');
- writeLn('Executing prerm...');
+ msg('Executing prerm...');
  t.CommandLine:=''''+p+'prerm''';
  t.Execute;
  t.Free;
- Log.Add('Done.');
- writeLn('Done.');
+ msg('Done.');
 end;
 
 ///////////////////////////////////////
 if RmDeps then
 begin
-Log.Add(rsRMUnsdDeps);
-writeLn(rsRMUnsdDeps);
+msg(rsRMUnsdDeps);
 tmp2:=TStringList.Create;
 tmp2.Text:=dsApp.FieldByName('Dependencies').AsString;
 
@@ -1545,9 +1555,8 @@ begin
 //Check if another package requires this package
 t:=TProcess.Create(nil);
 if pos('>',f)>0 then
-Log.Add(f+' # '+copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
-else Log.Add(f);
-writeLn(Log[Log.Count-1]);
+msg(f+' # '+copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
+else msg(f);
 
 pkit:=TPackageKit.Create;
 s:=tstringlist.Create;
@@ -1562,8 +1571,7 @@ else pkit.GetRequires(f,s);
    else pkit.RemovePkg(f);
    //GetOutPutTimer.Enabled:=true;
 
-   Log.Add('Removing '+f+'...');
-   writeLn('Removing '+f+'...');
+   msg('Removing '+f+'...');
   end;
 
  s.free;
@@ -1571,7 +1579,7 @@ else pkit.GetRequires(f,s);
   end;
  end; //End of tmp2-find loop
 
-end else begin Log.Add('No installed deps found!');writeLn('No installed deps found!');end;
+end else msg('No installed deps found!');
 
 tmp2.Free;
  end; //End of remove-deps request
@@ -1605,8 +1613,7 @@ for i:=0 to tmp.Count-1 do
 begin
 if pos( '<mime>',tmp[i])>0 then
 begin
-Log.Add('Uninstalling MIME-Type...');
-writeLn('Uninstalling MIME-Type...');
+msg('Uninstalling MIME-Type...');
 t:=TProcess.Create(nil);
 if (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.png')
 or (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.xpm') then
@@ -1622,8 +1629,7 @@ t.Free;
 end;
 end;
 
-Log.Add('Removing files...');
-writeLn('Removing files...');
+msg('Removing files...');
 //Uninstall application
 for i:=0 to tmp.Count-1 do
 begin
@@ -1680,7 +1686,7 @@ dsApp.ExecuteDirect('DELETE FROM AppInfo WHERE rowid='+IntToStr(dsApp.RecNo));
 dsApp.ApplyUpdates;
 dsApp.Close;
 dsApp.Free;
-writeLN('Database connection closed.');
+writeLn('Database connection closed.');
 
 proc:=TProcess.Create(nil);
 proc.Options:=[poWaitOnExit];
@@ -1691,9 +1697,8 @@ proc.Free;
 mnprog:=mnprog+2;
 SetPosition(mnprog,100);
 
-Log.Add('Application removed.');
-Log.Add('-----------');
-writeLn('- Finished -');
+msg('Application removed.');
+msg('- Finished -');
 end else writeLn('Application not found!');
 
 end;

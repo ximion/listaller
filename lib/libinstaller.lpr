@@ -1,5 +1,5 @@
 { libinstaller.lpr
-  Copyright (C) Listaller Project 2008-2009
+  Copyright (C) Listaller Project 2009
 
   libinstaller.lpr is free software: you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -29,7 +29,7 @@ type
 
 function create_stringlist: Pointer; cdecl;
 begin
- Result:=@TStringList.Create;
+ Result:=TStringList.Create;
 end;
 
 function free_stringlist(lst: PStringList): Boolean; cdecl;
@@ -54,11 +54,11 @@ end;
 //Exported functions
 
 //** Removes an application that was installed with an IPK package
-function remove_ipk_installed_app(appname, appid: PChar;log: Pointer;poschange: TProgressChange;fastmode: Boolean): Boolean; cdecl;
+function remove_ipk_installed_app(appname, appid: PChar;msgcall: TMessageEvent;poschange: TProgressChange;fastmode: Boolean): Boolean; cdecl;
 begin
 Result:=true;
 try
- UninstallIPKApp(appname, appid,TStringList(log),poschange, fastmode, true)
+ UninstallIPKApp(appname, appid,msgcall,poschange, fastmode, true)
 except
  Result:=false;
 end;
@@ -91,11 +91,6 @@ end;
 function ins_register_main_prog_change_call(setup: PInstallation;call: TProgressChange): Boolean; cdecl;
 begin
  Result:=true;
- if setup = nil then
- begin
-  Result:=false;
-  exit;
- end;
  try
    setup^.OnProgressMainChange:=call;
  except
@@ -107,13 +102,41 @@ end;
 function ins_register_extra_prog_change_call(setup: PInstallation;call: TProgressChange): Boolean; cdecl;
 begin
  Result:=true;
- if setup = nil then
- begin
-  Result:=false;
-  exit;
- end;
  try
   setup^.OnProgressExtraChange:=call;
+ except
+  Result:=false;
+ end;
+end;
+
+//** Message call
+function ins_register_message_call(setup: PInstallation;call: TMessageEvent): Boolean; cdecl;
+begin
+ Result:=true;
+ try
+  setup^.OnMessage:=call;
+ except
+  Result:=false;
+ end;
+end;
+
+//** Step message call
+function ins_register_step_message_call(setup: PInstallation;call: TMessageEvent): Boolean; cdecl;
+begin
+ Result:=true;
+ try
+  setup^.OnStepMessage:=call;
+ except
+  Result:=false;
+ end;
+end;
+
+//** User request message call
+function ins_register_user_request_call(setup: PInstallation;call: TRequestEvent): Boolean; cdecl;
+begin
+ Result:=true;
+ try
+  setup^.OnUserRequest:=call;
  except
   Result:=false;
  end;
@@ -201,6 +224,64 @@ except
 end;
 end;
 
+//** Get profiles list
+function ins_profiles_list(setup: PInstallation; list: PStringList): Boolean; cdecl;
+begin
+try
+ Result:=true;
+ list^.Assign(setup^.Profiles);
+except
+ Result:=false;
+end;
+end;
+
+//** Read appversion
+function ins_appicon(setup: PInstallation): PChar; cdecl;
+begin
+  Result:=PChar(setup^.AppIcon);
+end;
+
+//** Read desktopfiles
+function ins_desktopfiles(setup: PInstallation): PChar; cdecl;
+begin
+  Result:=PChar(setup^.DesktopFiles);
+end;
+
+//** Read appcmd
+function ins_app_exec_command(setup: PInstallation): PChar; cdecl;
+begin
+  Result:=PChar(setup^.CMDLn);
+end;
+
+//** Read path to file list
+function ins_profile_current_filelist(setup: PInstallation): PChar; cdecl;
+begin
+  Result:=PChar(setup^.IFileInfo);
+end;
+
+//** Read current profile name
+function ins_profile_current_name(setup: PInstallation): PChar; cdecl;
+begin
+  Result:=PChar(setup^.CurrentProfile);
+end;
+
+//** Starts the installation
+function ins_start_installation(setup: PInstallation): Boolean; cdecl;
+begin
+  Result:=setup^.DoInstallation;
+end;
+
+//** Get dependencies
+function ins_dependencies(setup: PInstallation; list: PStringList): Boolean; cdecl;
+begin
+try
+ Result:=true;
+ list^.Assign(setup^.ADeps);
+except
+ Result:=false;
+end;
+end;
+
 exports
  //Stringlist functions
  create_stringlist,
@@ -223,6 +304,17 @@ exports
  ins_long_description,
  ins_wizard_image_path,
  ins_license,
+ ins_profiles_list,
+ ins_appicon,
+ ins_desktopfiles,
+ ins_app_exec_command,
+ ins_profile_current_filelist,
+ ins_profile_current_name,
+ ins_register_message_call,
+ ins_register_step_message_call,
+ ins_register_user_request_call,
+ ins_start_installation,
+ ins_dependencies,
 
  //Other functions
  remove_ipk_installed_app,

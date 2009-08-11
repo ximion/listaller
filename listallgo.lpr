@@ -19,9 +19,9 @@ program listallgo;
 {$mode objfpc}{$H+}
 
 uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
+  {$IFDEF UNIX}
   cthreads,
-  {$ENDIF}{$ENDIF}
+  {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
   igobase, dgunit, trstrings, LResources, SysUtils, distri, LiCommon,
@@ -34,7 +34,6 @@ begin
   Application.Title:='Installer';
   Application.Initialize;
   writeLn('Application initialized.');
-  if not IsRoot then RegDir:=SyblToPath('$INST')+'/app-reg/';
   Application.CreateForm(TIWizFrm, IWizFrm);
   Application.ShowMainForm:=true;
   writeLn('GUI created.');
