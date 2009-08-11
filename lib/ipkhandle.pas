@@ -112,8 +112,6 @@ type
   function GetMaxInstSteps: Integer;
   //** Function to solve all dependencies on libraries the package has
   function ResolveDependencies: Boolean;
-  //** Checks if package is installed
-  function IsPackageInstalled(aName: String;aID: String): Boolean;
   //** Name of the application
   property AppName: String read IAppName;
   //** Version of the to-be-installed application
@@ -169,20 +167,23 @@ end;
      @param fast Does a quick uninstallation if is true (Set to "False" by default)
      @param RmDeps Remove dependencies if true (Set to "True" by default)}
  procedure UninstallIPKApp(AppName, AppID: String; var Log: TStrings;progress: TProgressChange; fast: Boolean=false; RmDeps:Boolean=true);
+
  {** Checks dependencies of all installed apps
      @param report Report of the executed actions
      @param fix True if all found issues should be fixed right now
      @returns True if everything is okay, False if dependencies are missing}
  function CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
 
-const
-  //** Working directory of Listaller
-  lp='/tmp/';
+ //** Checks if package is installed
+ function IsPackageInstalled(aName: String;aID: String): Boolean;
+
  var
   //** Path to package registration
   RegDir: String;
   //** @deprecated Set if application installs shared files
   ContSFiles: Boolean=false;
+
+  Testmode: Boolean;
 
   //Notice: The "Testmode" variable is declared in LiCommon.pas
 
@@ -264,9 +265,37 @@ Result:=nil;
 end;
 end;
 
-function TInstallation.IsPackageInstalled(aname: String;aid: String): Boolean;
+function IsPackageInstalled(aname: String;aid: String): Boolean;
+var dsApp: TSQLite3Dataset;
 begin
- dsApp.SQL:='SELECT * FROM AppInfo';
+dsApp:=TSQLite3Dataset.Create(nil);
+
+with dsApp do
+ begin
+   FileName:=RegDir+'applications.db';
+   TableName:='AppInfo';
+   if not FileExists(FileName) then
+   begin
+   with FieldDefs do
+     begin
+       Clear;
+       Add('Name',ftString,0,true);
+       Add('ID',ftString,0,true);
+       Add('Type',ftString,0,true);
+       Add('Description',ftString,0,False);
+       Add('Version',ftFloat,0,true);
+       Add('Publisher',ftString,0,False);
+       Add('Icon',ftString,0,False);
+       Add('Profile',ftString,0,False);
+       Add('AGroup',ftString,0,true);
+       Add('InstallDate',ftDateTime,0,False);
+       Add('Dependencies',ftMemo,0,False);
+     end;
+   CreateTable;
+ end;
+end;
+
+dsApp.SQL:='SELECT * FROM AppInfo';
 dsApp.Open;
 dsApp.Filtered := true;
 dsApp.First;
@@ -274,10 +303,8 @@ dsApp.First;
 Result:=false;
 while not dsApp.EOF do
 begin
- if (dsApp.FieldByName('Name').AsString=aName) and (dsApp.FieldByName('Version').AsString=IAppVersion)
-and (dsApp.FieldByName('ID').AsString=aID) then
+ if (dsApp.FieldByName('Name').AsString=aName) and (dsApp.FieldByName('ID').AsString=aID) then
 begin
-RmApp:=true;
 Result:=true;
 break;
 end else Result:=false;
@@ -285,6 +312,7 @@ end else Result:=false;
 end;
 
 dsApp.Close;
+dsApp.Free;
 end;
 
 procedure RemoveDuplicates(sl: TStringList);
@@ -539,6 +567,7 @@ end;
 
 xnode:=Doc.DocumentElement.FindNode('application');
 
+
 AType:=FindChildNode(xnode,'group').NodeValue;
 if AType='' then AType:='other';
 
@@ -555,6 +584,7 @@ IsPackageInstalled(IAppName,idName);
 
 if FindChildNode(xnode,'dsupport')<> nil then
 FSupportedDistris:=LowerCase(FindChildNode(xnode,'dsupport').NodeValue);
+
 
 //Load Wizard-Image
 FWizImage:=GetDataFile('graphics/wizardimage.png');
@@ -573,7 +603,6 @@ ExecX:='<disabled>';
 if FileExists(z.BaseDirectory+'/preinst') then ExecA:=z.BaseDirectory+'/preinst';
 if FileExists(z.BaseDirectory+'/postinst') then ExecB:=z.BaseDirectory+'/postinst';
 if FileExists(z.BaseDirectory+'/prerm') then ExecX:=z.BaseDirectory+'/prerm';
-
 
 //Load Description
 if LowerCase(DescFile)<>'' then
@@ -641,6 +670,8 @@ end;
 
 if PkProfiles.Count=1 then FFileInfo:='/stuff/fileinfo-'+copy(PkProfiles[0],pos(' #',PkProfiles[0])+2,length(PkProfiles[0]))+'.id'
 else FFileInfo:='*';
+
+if IsPackageInstalled(AppName,AppID) then RmApp:=true;
 
 end else //Handle other IPK types
 if pkType=lptDLink then begin

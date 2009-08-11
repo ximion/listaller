@@ -7,13 +7,13 @@
       <TargetFileExt Value=""/>
       <Icon Value="0"/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="98"/>
+      <CurrentBuildNr Value="133"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -28,31 +28,31 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="5">
+    <Units Count="7">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="47" Y="120"/>
-        <TopLine Value="100"/>
+        <CursorPos X="1" Y="234"/>
+        <TopLine Value="194"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="38" Y="24"/>
-        <TopLine Value="1"/>
+        <CursorPos X="1" Y="297"/>
+        <TopLine Value="281"/>
         <EditorIndex Value="1"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="14"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="63" Y="38"/>
-        <TopLine Value="25"/>
+        <CursorPos X="1" Y="38"/>
+        <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit2>
       <Unit3>
@@ -60,137 +60,123 @@
         <UnitName Value="ipkhandle"/>
         <CursorPos X="44" Y="1048"/>
         <TopLine Value="1030"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit3>
       <Unit4>
         <Filename Value="../distri.pas"/>
         <UnitName Value="distri"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="../packagekit.pas"/>
+        <UnitName Value="packagekit"/>
+        <CursorPos X="4" Y="203"/>
+        <TopLine Value="175"/>
+        <UsageCount Value="9"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="../header/installer.pas"/>
+        <UnitName Value="installer"/>
+        <CursorPos X="42" Y="34"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="13"/>
+      </Unit6>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="23" HistoryIndex="22">
       <Position1>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="112" Column="27" TopLine="92"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="19" TopLine="1"/>
       </Position1>
       <Position2>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="768" Column="39" TopLine="748"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="152" Column="22" TopLine="114"/>
       </Position2>
       <Position3>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="813" Column="22" TopLine="787"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="76" Column="16" TopLine="56"/>
       </Position3>
       <Position4>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="781" Column="35" TopLine="754"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="91" Column="16" TopLine="71"/>
       </Position4>
       <Position5>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="907" Column="17" TopLine="886"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="51" TopLine="1"/>
       </Position5>
       <Position6>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="996" Column="26" TopLine="963"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="115" Column="49" TopLine="95"/>
       </Position6>
       <Position7>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1022" Column="26" TopLine="1002"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="32" Column="11" TopLine="12"/>
       </Position7>
       <Position8>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1138" Column="22" TopLine="1118"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="60" Column="11" TopLine="40"/>
       </Position8>
       <Position9>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1184" Column="22" TopLine="1164"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="49" TopLine="3"/>
       </Position9>
       <Position10>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1229" Column="22" TopLine="1209"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="194" Column="1" TopLine="181"/>
       </Position10>
       <Position11>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1266" Column="22" TopLine="1246"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="49" Column="26" TopLine="29"/>
       </Position11>
       <Position12>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1276" Column="40" TopLine="1256"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="155" Column="36" TopLine="135"/>
       </Position12>
       <Position13>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1278" Column="22" TopLine="1256"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="167" Column="35" TopLine="147"/>
       </Position13>
       <Position14>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="990" Column="42" TopLine="980"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="123" Column="17" TopLine="110"/>
       </Position14>
       <Position15>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1274" Column="65" TopLine="1259"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="218" Column="5" TopLine="194"/>
       </Position15>
       <Position16>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1339" Column="54" TopLine="1271"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="135" Column="13" TopLine="122"/>
       </Position16>
       <Position17>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1340" Column="24" TopLine="1320"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="17" TopLine="1"/>
       </Position17>
       <Position18>
         <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1357" Column="24" TopLine="1337"/>
+        <Caret Line="83" Column="42" TopLine="73"/>
       </Position18>
       <Position19>
         <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1403" Column="93" TopLine="1383"/>
+        <Caret Line="105" Column="22" TopLine="73"/>
       </Position19>
       <Position20>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1412" Column="37" TopLine="1388"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="17" TopLine="1"/>
       </Position20>
       <Position21>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1418" Column="18" TopLine="1398"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="128" Column="49" TopLine="103"/>
       </Position21>
       <Position22>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1612" Column="23" TopLine="1592"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="51" TopLine="1"/>
       </Position22>
       <Position23>
         <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1645" Column="23" TopLine="1625"/>
+        <Caret Line="556" Column="13" TopLine="531"/>
       </Position23>
-      <Position24>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="19" TopLine="1"/>
-      </Position24>
-      <Position25>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="24" Column="38" TopLine="1"/>
-      </Position25>
-      <Position26>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="152" Column="22" TopLine="114"/>
-      </Position26>
-      <Position27>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="76" Column="16" TopLine="56"/>
-      </Position27>
-      <Position28>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="91" Column="16" TopLine="71"/>
-      </Position28>
-      <Position29>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="51" TopLine="1"/>
-      </Position29>
-      <Position30>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="115" Column="49" TopLine="95"/>
-      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

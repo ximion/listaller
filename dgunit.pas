@@ -24,7 +24,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Buttons, ComCtrls, LCLType, LCLIntf, igobase, ExtCtrls, process, HTTPSend,
-  blcksock, FTPSend, IniFiles, LiCommon, trstrings, ipkhandle, packagekit;
+  blcksock, FTPSend, IniFiles, LiCommon, trstrings, packagekit;
 
 type
 
@@ -116,10 +116,11 @@ begin
  HTTP.KeepAlive:=true;
  FTP := TFTPSend.Create;
  FTP.DSock.OnStatus:=HookSock;
- setup.HTTPSend:=HTTP;
- setup.FTPSend:=FTP;
+ //???
+ //setup.HTTPSend:=HTTP;
+ //setup.FTPSend:=FTP;
  GetOutPutTimer.Enabled:=true;
- setup.DoInstallation(Process1,Memo3.Lines);
+ //setup.DoInstallation(Process1,Memo3.Lines);
  GetOutPutTimer.Enabled:=false;
 
  HTTP.Free;
@@ -128,7 +129,8 @@ FTP.Free;
 
 PageControl1.Visible:=false;
 
-if (FileExists(setup.AppIcon))and(
+//???
+{if (FileExists(setup.AppIcon))and(
 (LowerCase(ExtractFileExt(setup.AppIcon))='.png')or
 (LowerCase(ExtractFileExt(setup.AppIcon))='.bmp')or
 (LowerCase(ExtractFileExt(setup.AppIcon))='.jpg')) then
@@ -136,7 +138,7 @@ begin
 Image1.Picture.Clear;
 Image1.Picture.LoadFromFile(setup.AppIcon);
 Image1.Repaint;
-end;
+end; }
 
 Label2.Visible:=false;
 BitBtn1.Visible:=false;

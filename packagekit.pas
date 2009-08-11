@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
-//** Contains Listaller's PackageKit wrapper
+//** Contains Listaller's PackageKit-DBus implementation
 unit packagekit;
 
 {$mode objfpc}{$H+}
@@ -21,12 +21,12 @@ unit packagekit;
 interface
 
 uses
-  Classes, SysUtils, LiCommon, Process, Forms;
+  Classes, SysUtils, LiCommon, Process, Forms, glib2;
 
 //** PackageKit wrapper
 type TPackageKit = class
 private
- pkit: String;
+ pkit: Pointer;
  OPSuccess: Boolean;
  procedure CmdResult(cmd: String;s: TStringList);
  function GetPkVersion: String;
@@ -63,11 +63,14 @@ end;
 
 implementation
 
+//function pk_client_install_packages(client: Pointer;package_ids: PPChar;error: PPGError): GBoolean; cdecl; external External_library name 'pk_client_install_packages';
+//function pk_client_new:Pointer;cdecl;external External_library name 'pk_client_new';
+
 { TPackageKit }
  constructor TPackageKit.Create;
  begin
   inherited Create;
-  pkit := GetDataFile('pkitbind/pkitbind.py')+' ';
+ // pkit := GetDataFile('pkitbind/pkitbind.py')+' ';
  end;
 
  destructor TPackageKit.Destroy;
@@ -106,7 +109,7 @@ begin
  Result:=false;
  t:=tprocess.create(nil);
  t.Options:=[poUsePipes];
- t.CommandLine:=pkit+'--is-installed '+pkg;
+ //t.CommandLine:=pkit+'--is-installed '+pkg;
  try
   t.Execute;
    while t.Running do Application.ProcessMessages;
@@ -122,7 +125,7 @@ var s: TStringList;i: Integer;
 begin
  if not Assigned(lst) then exit;
  s:=TStringList.Create;
- CmdResult(pkit+'--get-requires '+pkg,s);
+ //CmdResult(pkit+'--get-requires '+pkg,s);
  for i:=1 to s.Count-1 do
  lst.Add(s[i]);
 end;
@@ -133,7 +136,7 @@ begin
  Result:=false;
  t:=tprocess.create(nil);
  t.Options:=[poUsePipes];
- t.CommandLine:=pkit+'--remove '+pkg;
+ //t.CommandLine:=pkit+'--remove '+pkg;
  try
   t.Execute;
   while t.Running do Application.ProcessMessages;
@@ -150,7 +153,7 @@ begin
  Result:=false;
  t:=tprocess.create(nil);
  t.Options:=[poUsePipes];
- t.CommandLine:=pkit+'--install '+pkg;
+// t.CommandLine:=pkit+'--install '+pkg;
  try
   t.Execute;
   while t.Running do Application.ProcessMessages;
@@ -165,7 +168,7 @@ function TPackageKit.PkgNameFromFile(fname: String): String;
 var s: TStringList;
 begin
  s:=TStringList.Create;
- CmdResult(pkit+'--s-file '+fname,s);
+// CmdResult(pkit+'--s-file '+fname,s);
  if s.Count>=0 then
  Result:=s[0]
  else
@@ -182,7 +185,7 @@ begin
  Result:=false;
  t:=tprocess.create(nil);
  t.Options:=[poUsePipes];
- t.CommandLine:=pkit+'--install-local '+fname;
+ //t.CommandLine:=pkit+'--install-local '+fname;
  try
   t.Execute;
   while t.Running do Application.ProcessMessages;
@@ -197,7 +200,7 @@ function TPackageKit.PkgNameFromNIFile(fname: String): String;
 var s: TStringList;
 begin
  s:=TStringList.Create;
- CmdResult(pkit+'--s-dfile '+fname,s);
+ //CmdResult(pkit+'--s-dfile '+fname,s);
  if s.Count>=0 then
  Result:=s[0]
  else

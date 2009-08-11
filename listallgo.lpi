@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="3"/>
-      <CurrentBuildNr Value="906"/>
+      <CurrentBuildNr Value="998"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -50,14 +50,16 @@
         <MinVersion Major="1" Valid="True"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="113">
+    <Units Count="114">
       <Unit0>
         <Filename Value="listallgo.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallgo"/>
-        <CursorPos X="10" Y="29"/>
-        <TopLine Value="5"/>
+        <CursorPos X="1" Y="43"/>
+        <TopLine Value="1"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="igobase.pas"/>
@@ -65,8 +67,8 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="27" Y="27"/>
-        <TopLine Value="1"/>
+        <CursorPos X="25" Y="426"/>
+        <TopLine Value="404"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -384,9 +386,9 @@
         <ComponentName Value="DGForm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="dgunit"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="156"/>
+        <CursorPos X="6" Y="132"/>
+        <TopLine Value="112"/>
+        <UsageCount Value="157"/>
       </Unit46>
       <Unit47>
         <Filename Value="abdfoutw.pas"/>
@@ -673,7 +675,6 @@
       </Unit87>
       <Unit88>
         <Filename Value="ipkhandle.pas"/>
-        <IsPartOfProject Value="True"/>
         <UnitName Value="ipkhandle"/>
         <CursorPos X="73" Y="1058"/>
         <TopLine Value="1028"/>
@@ -790,8 +791,8 @@
       <Unit104>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="11" Y="45"/>
-        <TopLine Value="25"/>
+        <CursorPos X="21" Y="39"/>
+        <TopLine Value="8"/>
         <UsageCount Value="10"/>
       </Unit104>
       <Unit105>
@@ -849,96 +850,133 @@
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit112>
+      <Unit113>
+        <Filename Value="header/installer.pas"/>
+        <UnitName Value="installer"/>
+        <CursorPos X="13" Y="123"/>
+        <TopLine Value="98"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit113>
     </Units>
-    <JumpHistory Count="22" HistoryIndex="21">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="igobase.pas"/>
-        <Caret Line="128" Column="8" TopLine="109"/>
+        <Caret Line="773" Column="27" TopLine="753"/>
       </Position1>
       <Position2>
         <Filename Value="igobase.pas"/>
-        <Caret Line="111" Column="19" TopLine="109"/>
+        <Caret Line="11" Column="90" TopLine="1"/>
       </Position2>
       <Position3>
         <Filename Value="igobase.pas"/>
-        <Caret Line="800" Column="5" TopLine="780"/>
+        <Caret Line="96" Column="59" TopLine="76"/>
       </Position3>
       <Position4>
         <Filename Value="igobase.pas"/>
-        <Caret Line="36" Column="22" TopLine="36"/>
+        <Caret Line="302" Column="25" TopLine="282"/>
       </Position4>
       <Position5>
         <Filename Value="igobase.pas"/>
-        <Caret Line="8" Column="63" TopLine="1"/>
+        <Caret Line="305" Column="41" TopLine="282"/>
       </Position5>
       <Position6>
         <Filename Value="igobase.pas"/>
-        <Caret Line="708" Column="58" TopLine="689"/>
+        <Caret Line="694" Column="68" TopLine="674"/>
       </Position6>
       <Position7>
         <Filename Value="igobase.pas"/>
-        <Caret Line="89" Column="52" TopLine="70"/>
+        <Caret Line="55" Column="80" TopLine="54"/>
       </Position7>
       <Position8>
         <Filename Value="igobase.pas"/>
-        <Caret Line="26" Column="32" TopLine="1"/>
+        <Caret Line="96" Column="65" TopLine="76"/>
       </Position8>
       <Position9>
         <Filename Value="igobase.pas"/>
-        <Caret Line="25" Column="33" TopLine="1"/>
+        <Caret Line="694" Column="69" TopLine="674"/>
       </Position9>
       <Position10>
         <Filename Value="igobase.pas"/>
-        <Caret Line="26" Column="34" TopLine="1"/>
+        <Caret Line="773" Column="35" TopLine="753"/>
       </Position10>
       <Position11>
         <Filename Value="igobase.pas"/>
-        <Caret Line="11" Column="7" TopLine="1"/>
+        <Caret Line="301" Column="25" TopLine="281"/>
       </Position11>
       <Position12>
         <Filename Value="igobase.pas"/>
-        <Caret Line="53" Column="16" TopLine="33"/>
+        <Caret Line="304" Column="41" TopLine="281"/>
       </Position12>
       <Position13>
         <Filename Value="igobase.pas"/>
-        <Caret Line="489" Column="16" TopLine="469"/>
+        <Caret Line="693" Column="32" TopLine="673"/>
       </Position13>
       <Position14>
         <Filename Value="igobase.pas"/>
-        <Caret Line="27" Column="38" TopLine="5"/>
+        <Caret Line="12" Column="67" TopLine="1"/>
       </Position14>
       <Position15>
         <Filename Value="igobase.pas"/>
-        <Caret Line="9" Column="19" TopLine="5"/>
+        <Caret Line="301" Column="25" TopLine="281"/>
       </Position15>
       <Position16>
         <Filename Value="igobase.pas"/>
-        <Caret Line="53" Column="16" TopLine="33"/>
+        <Caret Line="304" Column="41" TopLine="281"/>
       </Position16>
       <Position17>
         <Filename Value="igobase.pas"/>
-        <Caret Line="489" Column="16" TopLine="469"/>
+        <Caret Line="696" Column="10" TopLine="673"/>
       </Position17>
       <Position18>
         <Filename Value="igobase.pas"/>
-        <Caret Line="507" Column="12" TopLine="469"/>
+        <Caret Line="12" Column="55" TopLine="1"/>
       </Position18>
       <Position19>
         <Filename Value="igobase.pas"/>
-        <Caret Line="509" Column="91" TopLine="489"/>
+        <Caret Line="8" Column="82" TopLine="1"/>
       </Position19>
       <Position20>
         <Filename Value="igobase.pas"/>
-        <Caret Line="510" Column="32" TopLine="489"/>
+        <Caret Line="96" Column="29" TopLine="76"/>
       </Position20>
       <Position21>
         <Filename Value="igobase.pas"/>
-        <Caret Line="511" Column="12" TopLine="489"/>
+        <Caret Line="11" Column="41" TopLine="1"/>
       </Position21>
       <Position22>
         <Filename Value="igobase.pas"/>
-        <Caret Line="27" Column="27" TopLine="1"/>
+        <Caret Line="774" Column="4" TopLine="754"/>
       </Position22>
+      <Position23>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="779" Column="4" TopLine="757"/>
+      </Position23>
+      <Position24>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="782" Column="23" TopLine="761"/>
+      </Position24>
+      <Position25>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="790" Column="61" TopLine="770"/>
+      </Position25>
+      <Position26>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="796" Column="8" TopLine="776"/>
+      </Position26>
+      <Position27>
+        <Filename Value="listallgo.lpr"/>
+        <Caret Line="29" Column="10" TopLine="3"/>
+      </Position27>
+      <Position28>
+        <Filename Value="header/installer.pas"/>
+        <Caret Line="61" Column="13" TopLine="49"/>
+      </Position28>
+      <Position29>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="85" Column="30" TopLine="75"/>
+      </Position29>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -948,7 +986,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="synapse/;abbrevia/"/>
+      <OtherUnitFiles Value="synapse/;abbrevia/;header/"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Parsing>

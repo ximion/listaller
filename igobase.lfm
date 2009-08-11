@@ -169,7 +169,7 @@ object IWizFrm: TIWizFrm
         ParentColor = False
         ParentFont = False
       end
-      object Memo1: TMemo
+      object DescMemo: TMemo
         Left = 12
         Height = 318
         Top = 31

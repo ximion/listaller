@@ -24,8 +24,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
-  igobase, dgunit, trstrings, LResources,
-  ipkhandle, SysUtils, distri, LiCommon,
+  igobase, dgunit, trstrings, LResources, SysUtils, distri, LiCommon,
   liTranslator;
 
 {$IFDEF WINDOWS}{$R listallgo.rc}{$ENDIF}

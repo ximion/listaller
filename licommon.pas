@@ -29,9 +29,14 @@ uses
 const
   //** Version of the Listaller applicationset
   LiVersion='0.3b-test';
+  //** Working directory of Listaller
+  lp='/tmp/';
+
 var
   //** True if Listaller is in testmode
   Testmode: Boolean=false;
+  //** The Listaller package lib directory
+  RegDir: String='';
 
 type
 //** Listaller package types
@@ -658,6 +663,12 @@ begin
    end;
  end;
 end;
+
+initialization
+ if IsRoot then
+  RegDir:='/etc/lipa/app-reg/'
+  else
+  RegDir:=SyblToPath('$INST')+'/app-reg/';
 
 end.
 

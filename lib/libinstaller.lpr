@@ -29,22 +29,31 @@ type
 
 function create_stringlist: Pointer; cdecl;
 begin
- Result:=TStringList.Create;
+ Result:=@TStringList.Create;
 end;
 
-function free_stringlist(lst: Pointer): Boolean; cdecl;
+function free_stringlist(lst: PStringList): Boolean; cdecl;
 begin
 Result:=true;
 try
- PStringList(lst)^.Free;
+ lst^.Free;
 except
  Result:=false;
 end;
 end;
 
+function stringlist_read_line(lst: PStringList;ln: Integer): PChar; cdecl;
+begin
+ if (ln < lst^.Count)and(ln > -1) then
+ begin
+  Result:=PChar(lst^[ln]);
+ end else Result:='List index out of bounds.';
+end;
+
 /////////////////////////////////////////////////////////////////////////////////////
 //Exported functions
 
+//** Removes an application that was installed with an IPK package
 function remove_ipk_installed_app(appname, appid: PChar;log: Pointer;poschange: TProgressChange;fastmode: Boolean): Boolean; cdecl;
 begin
 Result:=true;
@@ -55,22 +64,31 @@ except
 end;
 end;
 
+//** Creates a new installation object
 function new_installation: Pointer; cdecl;
 begin
  Result:=TInstallation.Create;
 end;
 
-function init_installation(setup: Pointer;pkname: PChar): PChar; cdecl;
+//** Removes an TInstallation object
+function free_installation(setup: PInstallation): Boolean;
+begin
+ setup^.Free;
+end;
+
+//** Initializes the setup
+function init_installation(setup: PInstallation;pkname: PChar): PChar; cdecl;
 begin
  Result:='';
  try
-  PInstallation(setup)^.Initialize(pkname);
+  setup^.Initialize(pkname);
  except
   Result:=PChar('Failed to initialize setup package '+ExtractFileName(pkname)+' !');
  end;
 end;
 
-function register_inst_main_prog_change_call(setup: Pointer;call: TProgressChange): Boolean; cdecl;
+//** Register progress changes (main)
+function ins_register_main_prog_change_call(setup: PInstallation;call: TProgressChange): Boolean; cdecl;
 begin
  Result:=true;
  if setup = nil then
@@ -79,13 +97,14 @@ begin
   exit;
  end;
  try
- PInstallation(setup)^.OnProgressMainChange:=call;
+   setup^.OnProgressMainChange:=call;
  except
   Result:=false;
  end;
 end;
 
-function register_inst_extra_prog_change_call(setup: Pointer;call: TProgressChange): Boolean; cdecl;
+//** Register progress changes (extra)
+function ins_register_extra_prog_change_call(setup: PInstallation;call: TProgressChange): Boolean; cdecl;
 begin
  Result:=true;
  if setup = nil then
@@ -94,61 +113,120 @@ begin
   exit;
  end;
  try
- PInstallation(setup)^.OnProgressExtraChange:=call;
+  setup^.OnProgressExtraChange:=call;
  except
   Result:=false;
  end;
 end;
 
-function inst_type(setup: Pointer): TListallerPackageType; cdecl;
+//** Installation type
+function ins_pkgtype(setup: PInstallation): TListallerPackageType; cdecl;
 begin
-  Result:=PInstallation(setup)^.pType;
+  Result:=setup^.pType;
 end;
 
+//** Set installation testmode
 function set_testmode(st: Boolean): Boolean; cdecl;
 begin
   Testmode:=st;
 end;
 
-function inst_disallows(setup: Pointer): PChar; cdecl;
+//** Read disallows property
+function ins_disallows(setup: PInstallation): PChar; cdecl;
 begin
-  Result:=PChar(PInstallation(setup)^.Disallows);
+  Result:=PChar(setup^.Disallows);
 end;
 
-function inst_supported_distributions(setup: Pointer): PChar; cdecl;
+//** Read supported Linux distributions
+function ins_supported_distributions(setup: PInstallation): PChar; cdecl;
 begin
-  Result:=PChar(PInstallation(setup)^.Distris);
+  Result:=PChar(setup^.Distris);
 end;
 
-function is_ipk_app_installed(setup: Pointer;appname: PChar;appid: PChar): Boolean; cdecl;
+//** Check if application is installed
+function is_ipk_app_installed(appname: PChar;appid: PChar): Boolean; cdecl;
 begin
-  Result:=PInstallation(setup)^.IsPackageInstalled(appname,appid);
+  Result:=IsPackageInstalled(appname,appid);
+end;
+
+//** Resolve all dependencies
+function ins_resolve_dependencies(setup: PInstallation): Boolean; cdecl;
+begin
+ Result:=setup^.ResolveDependencies;
+end;
+
+//** Readout applocation name
+function ins_appname(setup: PInstallation): PChar; cdecl;
+begin
+  Result:=PChar(setup^.AppName);
+end;
+
+//** Read appversion
+function ins_appversion(setup: PInstallation): PChar; cdecl;
+begin
+  Result:=PChar(setup^.AppVersion);
+end;
+
+//** Get package ID
+function ins_appid(setup: PInstallation): PChar; cdecl;
+begin
+  Result:=PChar(setup^.AppID);
+end;
+
+//** Get description
+function ins_long_description(setup: PInstallation; list: PStringList): Boolean; cdecl;
+begin
+try
+ Result:=true;
+ list^.LoadFromFile(setup^.DescFile);
+except
+ Result:=false;
+end;
+end;
+
+//** Get wizard image patch
+function ins_wizard_image_path(setup: PInstallation): PChar; cdecl;
+begin
+  Result:=PChar(setup^.WizImage);
+end;
+
+//** Get license
+function ins_license(setup: PInstallation; list: PStringList): Boolean; cdecl;
+begin
+try
+ Result:=true;
+ list^.LoadFromFile(setup^.LicenseFile);
+except
+ Result:=false;
+end;
 end;
 
 exports
  //Stringlist functions
  create_stringlist,
  free_stringlist,
+ stringlist_read_line,
 
- //** Removes an application that was installed with an IPK package
- remove_ipk_installed_app,
- //** Creates a new installation object
+ //TInstallation related functions
  new_installation,
- //** Initializes the setup
+ free_installation,
  init_installation,
- //** Register progress changes (main)
- register_inst_main_prog_change_call,
- //** Register progress changes (extra)
- register_inst_extra_prog_change_call,
- //** Installation type
- inst_type,
- //** Set installation testmode
+ ins_register_main_prog_change_call,
+ ins_register_extra_prog_change_call,
+ ins_pkgtype,
+ ins_disallows,
+ ins_supported_distributions,
+ ins_resolve_dependencies,
+ ins_appname,
+ ins_appversion,
+ ins_appid,
+ ins_long_description,
+ ins_wizard_image_path,
+ ins_license,
+
+ //Other functions
+ remove_ipk_installed_app,
  set_testmode,
- //** Read disallows property
- inst_disallows,
- //** Read supported Linux distributions
- inst_supported_distributions,
- //** Check if application is installed
  is_ipk_app_installed;
 
 begin
