@@ -53,12 +53,12 @@
         <ComponentName Value="FrmEditor"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="editor"/>
-        <CursorPos X="39" Y="16"/>
-        <TopLine Value="1"/>
+        <CursorPos X="28" Y="110"/>
+        <TopLine Value="70"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="146"/>
         <Bookmarks Count="1">
-          <Item0 X="4" Y="538" ID="0"/>
+          <Item0 X="4" Y="537" ID="0"/>
         </Bookmarks>
         <Loaded Value="True"/>
       </Unit1>
@@ -433,11 +433,15 @@
         <UsageCount Value="10"/>
       </Unit55>
     </Units>
-    <JumpHistory Count="1" HistoryIndex="0">
+    <JumpHistory Count="2" HistoryIndex="1">
       <Position1>
         <Filename Value="editor.pas"/>
         <Caret Line="174" Column="11" TopLine="145"/>
       </Position1>
+      <Position2>
+        <Filename Value="editor.pas"/>
+        <Caret Line="16" Column="39" TopLine="1"/>
+      </Position2>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

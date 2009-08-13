@@ -108,7 +108,6 @@ type
     Splitter1: TSplitter;
     SynAnySyn1: TSynAnySyn;
     SynTeXSyn1: TSynTeXSyn;
-    SynXMLSyn1: TSynXMLSyn;
     procedure Button1Click(Sender: TObject);
     procedure FindDialogFind(Sender: TObject);
     procedure FormActivate(Sender: TObject);

@@ -265,33 +265,30 @@ begin
   Application.Terminate;
 end;
 
-function MainPosChange(max: LongInt;pos: LongInt): Boolean; cdecl;
+function MainPosChange(pos: LongInt): Boolean; cdecl;
 begin
- IWizFrm.InsProgress.Max:=max;
  IWizFrm.InsProgress.Position:=pos;
  Application.ProcessMessages;
 end;
 
-function ExtraPosChange(max: LongInt;pos: LongInt): Boolean; cdecl;
+function ExtraPosChange(pos: LongInt): Boolean; cdecl;
 begin
 with IWizFrm do
 begin
- ExProgress.Max:=max;
  ExProgress.Position:=pos;
- if(max=0)and(pos=0)and(ExProgress.Visible=true)then ExProgress.Visible:=false
+ if(pos=0)and(ExProgress.Visible=true)then ExProgress.Visible:=false
  else ExProgress.Visible:=true;
 
  Application.ProcessMessages;
 end;
 end;
 
-function DSProgPosChange(max: LongInt;pos: LongInt): Boolean; cdecl;
+function DSProgPosChange(pos: LongInt): Boolean; cdecl;
 begin
 with IWizFrm do
 begin
- DSolveProgress.Max:=max;
  DSolveProgress.Position:=pos;
- if(max=0)and(pos=0)and(DSolveProgress.Visible=true)then DSolveProgress.Visible:=false
+ if(pos=0)and(DSolveProgress.Visible=true)then DSolveProgress.Visible:=false
  else DSolveProgress.Visible:=true;
  Application.ProcessMessages;
 end;

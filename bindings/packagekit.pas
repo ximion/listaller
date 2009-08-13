@@ -69,7 +69,7 @@ public
       @returns True if the daemon queued the transaction}
  function FindPkgForFile(fname: String): Boolean;
  //** Grab the resulting package list
- property PkList: TStringList read result write result;
+ property RsList: TStringList read result write result;
  //** Check if the last transaction was finished
  property PkFinished: Boolean read finaction;
  //** Read finish code
@@ -139,13 +139,13 @@ end;
 procedure OnPackage(client: Pointer;obj: GPointer;user_data: Pointer);cdecl;
 var s: String;pk: PPkPackageID;
 begin
-if Assigned(TPackageKit(user_data).PkList) then
+if Assigned(TPackageKit(user_data).RsList) then
 begin
  if (obj<>nil)and(TPackageKit(user_data).AssignToList) then
  begin
  pk:=pk_package_obj_get_id(obj);
  s:=pk^.name;
- TPackageKit(user_data).PkList.Add(s);
+ TPackageKit(user_data).RsList.Add(s);
  pk:=nil;
  end;
 end;

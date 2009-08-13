@@ -35,7 +35,7 @@ type
  TRequestEvent = function(mtype: TRqType;msg: PChar): TRqResult; cdecl;
  TMessageEvent = function(msg: String): Boolean; cdecl;
 
- TProgressChange = function(max: Longint;pos: Longint): Boolean; cdecl;
+ TProgressChange = function(pos: Longint): Boolean; cdecl;
 
  TInstallPack = class
  private
