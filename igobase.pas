@@ -90,10 +90,6 @@ type
     procedure RadioButton1Change(Sender: TObject);
     //** HTTP/FTP socket hook
     procedure HookSock(Sender: TObject; Reason:THookSocketReason; const Value: string);
-    //Setup messages
-    procedure DepLoadPosChange(Sender: TObject;pos: Integer);
-    procedure DepLoadMaxChange(Sender: TObject;max: Integer);
-    //
   private
     { private declarations }
     //** True if installation is beeing aborted
@@ -123,8 +119,7 @@ case Notebook1.PageIndex of
 5: exit;
 4: exit;
 3: begin
-    //???
-    //setup.IFileInfo:='/stuff/fileinfo-'+copy(setup.Profiles[ModeGroup.ItemIndex],pos(' #',setup.Profiles[ModeGroup.ItemIndex])+2,length(setup.Profiles[ModeGroup.ItemIndex]))+'.id';
+    setup.SetProfileID(ModeGroup.ItemIndex);
     Button5.Visible:=false;
     Button1.Visible:=false;
     NoteBook1.PageIndex:=4;
@@ -270,33 +265,49 @@ begin
   Application.Terminate;
 end;
 
-procedure TIWizFrm.DepLoadMaxChange(Sender: TObject;max: Integer);
+function MainPosChange(max: LongInt;pos: LongInt): Boolean; cdecl;
 begin
- DSolveProgress.Max:=max;
+ IWizFrm.InsProgress.Max:=max;
+ IWizFrm.InsProgress.Position:=pos;
+ Application.ProcessMessages;
 end;
 
-procedure TIWizFrm.DepLoadPosChange(Sender: TObject;pos: Integer);
+function ExtraPosChange(max: LongInt;pos: LongInt): Boolean; cdecl;
 begin
- DSolveProgress.Position:=pos;
+with IWizFrm do
+begin
+ ExProgress.Max:=max;
+ ExProgress.Position:=pos;
+ if(max=0)and(pos=0)and(ExProgress.Visible=true)then ExProgress.Visible:=false
+ else ExProgress.Visible:=true;
+
  Application.ProcessMessages;
+end;
+end;
+
+function DSProgPosChange(max: LongInt;pos: LongInt): Boolean; cdecl;
+begin
+with IWizFrm do
+begin
+ DSolveProgress.Max:=max;
+ DSolveProgress.Position:=pos;
+ if(max=0)and(pos=0)and(DSolveProgress.Visible=true)then DSolveProgress.Visible:=false
+ else DSolveProgress.Visible:=true;
+ Application.ProcessMessages;
+end;
 end;
 
 procedure TIWizFrm.FormActivate(Sender: TObject);
 begin
- { if (setup.ADeps.Count>0) and (setup.ADeps[0]='*getlibs*') then
-  begin
    Button1.Enabled:=false;
    DSolveProgress.Visible:=true;
    Label15.Visible:=true;
    Application.ProcessMessages;
-   setup.OnMainPosChange:=@DepLoadPosChange;
-   setup.OnMaxPosMainChange:=@DepLoadMaxChange;
+   setup.SetMainChangeCall(@DSProgPosChange);
    setup.ResolveDependencies;
-   setup.OnMainPosChange:=@MainPosChange;
-   setup.OnMaxPosMainChange:=@MainMaxPosChange;
+   setup.SetMainChangeCall(@MainPosChange);
    Label15.Caption:=rsFinished;
    Button1.Enabled:=true;
-  end;}
 end;
 
 function IsCommandRunning(cmd:String):Boolean;
@@ -512,6 +523,8 @@ if Application.MessageBox(PAnsiChar(PAnsiChar(rsnSupported)+#13+PAnsiChar(rsInst
  end;
 end;
 
+setup.SetTestmode(Testmode);
+
 { --- Linstallation --- }
 if setup.PkType=lptLinstall then
 begin
@@ -534,8 +547,6 @@ setup.ReadLongDescription(TStringList(DescMemo.Lines));
 LeftImg.Picture.LoadFromFile(setup.GetWizardImagePath);
 setup.ReadLicense(TStringList(LicMemo.Lines));
 
-writeLn('OKAY_1');
-
 Label2.Caption:=StringReplace(rsWelcomeTo,'%a',setup.GetAppName,[rfReplaceAll]);
 if Testmode then
 begin
@@ -555,15 +566,9 @@ if setup.GetAppCMD='#' then
 CbExecApp.Visible:=false
 else CbExecApp.Visible:=true;
 
-tmp:=TStringList.Create;
-setup.ReadProfiles(tmp);
-
 //Set profiles to RadioGroup:
-for i:=0 to tmp.Count-1 do
-ModeGroup.Items.Add(copy(tmp[i],0,pos(' #',tmp[i])));
+setup.ReadProfiles(TStringList(ModeGroup.Items));
 ModeGroup.ItemIndex:=0;
-
-tmp.Free;
 
 if (LicMemo.Lines.Count<=0)and(DescMemo.Lines.Count<=0)then
 begin
@@ -711,20 +716,6 @@ end;
 ExProgress.Position:=FTP.DSock.RecvCounter;
 end;
 
-function MainPosChange(max: LongInt;pos: LongInt): Boolean; cdecl;
-begin
- IWizFrm.InsProgress.Max:=max;
- IWizFrm.InsProgress.Position:=pos;
- Application.ProcessMessages;
-end;
-
-function ExtraPosChange(max: LongInt;pos: LongInt): Boolean; cdecl;
-begin
- IWizFrm.ExProgress.Max:=max;
- IWizFrm.ExProgress.Position:=pos;
- Application.ProcessMessages;
-end;
-
 procedure TIWizFrm.StartInstallation;
 var cnf: TIniFile;
 begin
@@ -785,12 +776,12 @@ while IPage.Visible=false do Application.ProcessMessages;
 
  setup.SetStepMessageCall(@StepMessage);
 
- //setup.CurrentProfile:=ModeGroup.Items[ModeGroup.ItemIndex];
+ setup.SetProfileID(ModeGroup.ItemIndex);
 
  GetOutPutTimer.Enabled:=true;
 
- //???
- //setup.DoInstallation(Process1,InfoMemo.Lines);
+ setup.StartInstallation;
+
  GetOutPutTimer.Enabled:=false;
 { setup.HTTPSend:=nil;
  setup.FTPSend:=nil; }

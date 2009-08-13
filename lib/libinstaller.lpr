@@ -178,7 +178,7 @@ begin
  Result:=setup^.ResolveDependencies;
 end;
 
-//** Readout applocation name
+//** Readout application name
 function ins_appname(setup: PInstallation): PChar; cdecl;
 begin
   Result:=PChar(setup^.AppName);
@@ -229,10 +229,16 @@ function ins_profiles_list(setup: PInstallation; list: PStringList): Boolean; cd
 begin
 try
  Result:=true;
- list^.Assign(setup^.Profiles);
+ setup^.ReadProfiles(list^);
 except
  Result:=false;
 end;
+end;
+
+//** Set current profile id
+function ins_set_profileid(setup: PInstallation;id: ShortInt): Boolean; cdecl;
+begin
+ setup^.SetCurProfile(id);
 end;
 
 //** Read appversion
@@ -257,12 +263,6 @@ end;
 function ins_profile_current_filelist(setup: PInstallation): PChar; cdecl;
 begin
   Result:=PChar(setup^.IFileInfo);
-end;
-
-//** Read current profile name
-function ins_profile_current_name(setup: PInstallation): PChar; cdecl;
-begin
-  Result:=PChar(setup^.CurrentProfile);
 end;
 
 //** Starts the installation
@@ -309,12 +309,12 @@ exports
  ins_desktopfiles,
  ins_app_exec_command,
  ins_profile_current_filelist,
- ins_profile_current_name,
  ins_register_message_call,
  ins_register_step_message_call,
  ins_register_user_request_call,
  ins_start_installation,
  ins_dependencies,
+ ins_set_profileid,
 
  //Other functions
  remove_ipk_installed_app,

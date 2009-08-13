@@ -128,7 +128,7 @@ type
   //** Path to an license file
   property LicenseFile: String read FLicenseFile;
   //** List of all profiles the package has
-  property Profiles: TStringList read PkProfiles;
+  procedure ReadProfiles(lst: TStringList);
   //** Path to an icon of the applications/setup
   property AppIcon: String read IIconPath;
   //** All registerd .desktop files
@@ -142,9 +142,9 @@ type
   //** Possibility to assign FTPSend object
   property FTPSend: TFTPSend read FTP write FTP;
   //** Path to the current file information (that fits the profile)
-  property IFileInfo: String read FFileInfo write FFileInfo;
-  //** Name of the current profile
-  property CurrentProfile: String read CurProfile write CurProfile;
+  property IFileInfo: String read FFileInfo;
+  //** Set current profile by ID
+  procedure SetCurProfile(i: Integer);
   //Progress events
   property OnProgressMainChange: TProgressChange read FProgChange1 write FProgChange1;
   property OnProgressExtraChange: TProgressChange read FProgChange2 write FProgChange2;
@@ -229,6 +229,20 @@ begin
  dsApp.Free;
  msg('Database connection closed.');
  if Assigned(Dependencies) then Dependencies.Free;
+end;
+
+procedure TInstallation.SetCurProfile(i: Integer);
+begin
+ FFileInfo:='/stuff/fileinfo-'+copy(PkProfiles[i],pos(' #',PkProfiles[i])+2,length(PkProfiles[i]))+'.id';
+ CurProfile:=copy(PkProfiles[i],0,pos(' #',PkProfiles[i]));
+end;
+
+procedure TInstallation.ReadProfiles(lst: TStringList);
+var i: Integer;
+begin
+ lst.Clear;
+ for i:=0 to PkProfiles.Count-1 do
+  lst.Add(copy(PkProfiles[i],0,pos(' #',PkProfiles[i])));
 end;
 
 function TInstallation.FindChildNode(dn: TDOMNode; n: String): TDOMNode;
@@ -327,6 +341,7 @@ function TInstallation.ResolveDependencies: Boolean;
 var i: Integer;p: TProcess;h: String;tmp: TStringList;pkit: TPackageKit;mnpos,max: Integer;
 begin
  Result:=true;
+ SetMainProg(0,0);
   if (Dependencies.Count>0) and (Dependencies[0]='*getlibs*') then
   begin
     Dependencies.Delete(0);
@@ -341,9 +356,10 @@ begin
     begin
      mnpos:=mnpos+1;
      SetMainProg(mnpos,max);
-     pkit:=TPackageKit.Create;
+     //???
+    { pkit:=TPackageKit.Create;
      h:=pkit.PkgNameFromNIFile(Dependencies[i]);
-     pkit.Free;
+     pkit.Free; }
      if h='Failed!' then begin MakeUsrRequest(StringReplace(rsDepNotFound,'%l',Dependencies[i],[rfReplaceAll])+#13+rsInClose,rqError);tmp.Free;Result:=false;exit;end;
      if h='PackageKit problem.' then begin MakeUsrRequest(rsPKitProbPkMon,rqError);tmp.Free;Result:=false;exit;end;
      tmp.Add(h);
@@ -354,7 +370,6 @@ begin
     RemoveDuplicates(tmp);
     Dependencies.Assign(tmp);
     tmp.Free;
-    SetMainProg(0,0);
   end;
 end;
 
@@ -657,13 +672,15 @@ z.Free;
 msg('Profiles count is '+IntToStr(PkProfiles.Count));
 if PkProfiles.Count<0 then begin
  MakeUsrRequest(rsPkgInval+#13'Message: No profiles and no file list found!',rqError);
-Profiles.Free;
+PkProfiles.Free;
 Result:=false;
 exit;
 end;
 
 if PkProfiles.Count=1 then FFileInfo:='/stuff/fileinfo-'+copy(PkProfiles[0],pos(' #',PkProfiles[0])+2,length(PkProfiles[0]))+'.id'
 else FFileInfo:='*';
+
+SetCurProfile(0);
 
 if IsPackageInstalled(AppName,AppID) then RmApp:=true;
 

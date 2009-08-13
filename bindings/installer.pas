@@ -65,8 +65,9 @@ type
   function  GetDesktopFiles: String;
   function  ResolveDependencies: Boolean;
   function  GetAppCMD: String;
-  function  GetCurProfileName: String;
   function  GetFileList: String;
+  function  StartInstallation: Boolean;
+  procedure SetProfileID(i: Integer);
  end;
 
  const libinst = 'libinstaller.so';
@@ -96,15 +97,15 @@ function ins_license(setup: Pointer; list: Pointer): Boolean; cdecl; external li
 function ins_profiles_list(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'ins_profiles_list';
 function ins_appicon(setup: Pointer): PChar; cdecl; external libinst name 'ins_appicon';
 function ins_desktopfiles(setup: Pointer): PChar; cdecl; external libinst name 'ins_desktopfiles';
-function ins_resolve_dependencies(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'ins_dependencies_list';
+function ins_resolve_dependencies(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'ins_resolve_dependencies';
 function ins_app_exec_command(setup: Pointer): PChar; cdecl; external libinst name 'ins_app_exec_command';
 function ins_profile_current_filelist(setup: Pointer): PChar; cdecl; external libinst name 'ins_profile_current_filelist';
-function ins_profile_current_name(setup: Pointer): PChar; cdecl; external libinst name 'ins_current_name';
 function ins_register_message_call(setup: Pointer;call: TMessageEvent): Boolean; cdecl; external libinst name 'ins_register_message_call';
 function ins_register_step_message_call(setup: Pointer;call: TMessageEvent): Boolean; cdecl; external libinst name 'ins_register_step_message_call';
 function ins_register_user_request_call(setup: Pointer;call: TRequestEvent): Boolean; cdecl; external libinst name 'ins_register_user_request_call';
 function ins_start_installation(setup: Pointer): Boolean; cdecl; external libinst name 'ins_start_installation';
 function ins_dependencies(setup: Pointer; list: PStringList): Boolean; cdecl; external libinst name 'ins_dependencies';
+function ins_set_profileid(setup: Pointer;id: ShortInt): Boolean; cdecl;  external libinst name 'ins_set_profileid';
 
 { TInstallPack }
 
@@ -214,11 +215,6 @@ begin
  Result:=ins_app_exec_command(@ins);
 end;
 
-function TInstallPack.GetCurProfileName: String;
-begin
- Result:=ins_profile_current_name(@ins);
-end;
-
 function TInstallPack.GetFileList: String;
 begin
  Result:=ins_profile_current_filelist(@ins);
@@ -242,6 +238,16 @@ end;
 procedure TInstallPack.ReadDeps(lst: TStringList);
 begin
  ins_dependencies(@ins,@lst);
+end;
+
+function TInstallPack.StartInstallation: Boolean;
+begin
+ Result:=ins_start_installation(@ins);
+end;
+
+procedure TInstallPAck.SetProfileID(i: Integer);
+begin
+ ins_set_profileid(@ins,i);
 end;
 
 function IsIPKAppInstalled(appname: String;appid: String): Boolean;

@@ -332,7 +332,7 @@ object IWizFrm: TIWizFrm
       object ExProgress: TProgressBar
         Left = 4
         Height = 20
-        Top = 128
+        Top = 127
         Width = 636
         Anchors = [akTop, akLeft, akRight]
         Smooth = True
@@ -340,8 +340,8 @@ object IWizFrm: TIWizFrm
         TabOrder = 1
       end
       object InfoMemo: TMemo
-        Left = 6
-        Height = 184
+        Left = 4
+        Height = 176
         Top = 159
         Width = 635
         Anchors = [akLeft, akRight, akBottom]
