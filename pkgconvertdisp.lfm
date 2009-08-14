@@ -14,9 +14,9 @@ object ConvDisp: TConvDisp
   LCLVersion = '0.9.27'
   object Label1: TLabel
     Left = 8
-    Height = 19
+    Height = 20
     Top = 8
-    Width = 356
+    Width = 374
     Caption = 'Please wait while ''alien'' converts your package...'
     Font.Height = -15
     Font.Name = 'Sans'

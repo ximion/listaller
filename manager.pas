@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, LEntries,
-  uninstall, trstrings, FileUtil, CheckLst, xtypefm, ipkhandle, gifanimator,
+  uninstall, trstrings, FileUtil, CheckLst, xtypefm, appman, gifanimator,
   LiCommon, PackageKit, Contnrs, sqlite3ds, db, aboutbox, GetText, Spin;
 
 type
@@ -122,13 +122,6 @@ type
     AList: TObjectList;
     //** Current id of package that should be uninstalled
     uID: Integer;
-    //** SQLite connection to AppDB
-    dsApp: TSQLite3Dataset;
-    {** Process .desktop-file and add info to list @param fname Name of the .desktop file
-      @param tp Category name}
-    procedure ProcessDesktopFile(fname: String; tp: String);
-    //** Load software list entries
-    procedure LoadEntries;
   end;
 
   //** Fill ImageList with category icons
@@ -150,7 +143,23 @@ procedure TMnFrm.UninstallClick(Sender: TObject);
 begin
 uID:=(Sender as TBitBtn).Tag;
 RMForm.ShowModal;
-dsApp.Active:=true;
+end;
+
+function OnNewAppFound(name: PChar;obj: TAppInfo): Boolean;cdecl;
+var entry: TListEntry;
+begin
+with MnFrm do begin
+ entry:=TListEntry.Create(MnFrm);
+ entry.Parent:=SWBox;
+ entry.AppName:=obj.Name;
+ entry.AppDesc:=obj.ShortDesc;
+ entry.AppVersion:=obj.Version;
+ entry.AppMn:=obj.Author;
+ if FileExists(obj.Icon) then
+ entry.SetImage(obj.Icon);
+ AList.Add(entry);
+end;
+Application.ProcessMessages;
 end;
 
 { TMnFrm }
@@ -163,332 +172,6 @@ begin
     for iHigh := Pred(s.Count) downto Succ(iLow) do
       if s[iLow] = s[iHigh] then
         s.Delete(iHigh);
-end;
-
-procedure TMnFrm.ProcessDesktopFile(fname: String; tp: String);
-var d: TIniFile;entry: TListEntry;dt: TMOFile;lp: String;
-    translate: Boolean; //Used, because Assigned(dt) throws an AV
-
-//Translate string if possible/necessary
-function ldt(s: String): String;
-var h: String;
-begin
- h:=s;
- try
- if translate then
- begin
-  h:=dt.Translate(s);
-  if h='' then h:=s;
- end;
- except
-  Result:=h;
- end;
- Result:=s;
-end;
-
-begin
-       d:=TIniFile.Create(fname);
-       StatusLabel.Caption:=rsLoading+'  '+ExtractFileName(fname);
-       Application.ProcessMessages;
-       translate:=false;
-
-       if (not IsRoot)and(d.ReadString('Desktop Entry','Exec','')[1]<>'/')
-       then
-       else
-       if (LowerCase(d.ReadString('Desktop Entry','NoDisplay','false'))<>'true')
-       and (pos('yast',LowerCase(fname))<=0)
-       and(LowerCase(d.ReadString('Desktop Entry','Hidden','false'))<>'true')
-       and(not IsInList(d.ReadString('Desktop Entry','Name',''),blst))
-       and((pos(tp,LowerCase(d.ReadString('Desktop Entry','Categories','')))>0)or(tp='all'))
-      // and(pos('system',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
-       and(pos('core',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
-       and(pos('.hidden',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
-      // and(pos('base',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
-       and(pos('wine',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
-       and(pos('wine',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
-       and(d.ReadString('Desktop Entry','X-KDE-ParentApp','#')='#')
-       and(pos('screensaver',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
-       and(pos('setting',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
-      // and(pos('utility',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
-       and(d.ReadString('Desktop Entry','OnlyShowIn','')='')
-       and(d.ReadString('Desktop Entry','X-AllowRemove','true')='true')then
-       begin
-
-       AList.Add(TListEntry.Create(MnFrm));
-       entry:=TListEntry(AList.Items[AList.Count-1]);
-       entry.UnButton.OnClick:=@UnInstallClick;
-       entry.Parent:=SWBox;
-       entry.UnButton.Tag:=AList.Count-1;
-
-       //Check for Autopackage.org installation
-       if pos('apkg-remove',LowerCase(d.ReadString('Desktop Entry','Actions','')))>0 then
-       entry.srID:='!'+d.ReadString('Desktop Action Apkg-Remove','Exec','')
-       else
-       entry.srID:=fname;
-
-       if d.ReadString('Desktop Entry','X-Ubuntu-Gettext-Domain','')<>'' then
-       begin
-       try
-       lp:='/usr/share/locale-langpack/'+lang+'/LC_MESSAGES/'+
-                         d.ReadString('Desktop Entry','X-Ubuntu-Gettext-Domain','app-install-data')+'.mo';
-       if not FileExists(lp) then
-        lp:='/usr/share/locale/de/'+lang+'/LC_MESSAGES/'
-            +d.ReadString('Desktop Entry','X-Ubuntu-Gettext-Domain','app-install-data')+'.mo';
-       if FileExists(lp) then
-       begin
-        dt:=TMOFile.Create(lp);
-        translate:=true;
-       end;
-       finally
-       end;
-
-       end;
-
-       with entry do
-       begin
-       if d.ValueExists('Desktop Entry','Name['+lang+']') then
-        AppName:=d.ReadString('Desktop Entry','Name['+lang+']','<error>')
-       else
-        AppName:=ldt(d.ReadString('Desktop Entry','Name','<error>'));
-
-         AppName:=StringReplace(AppName,'&','&&',[rfReplaceAll]);
-
-         instLst.Add(Lowercase(d.ReadString('Desktop Entry','Name','<error>')));
-
-        if d.ValueExists('Desktop Entry','Comment['+lang+']') then
-         AppDesc:=d.ReadString('Desktop Entry','Comment['+lang+']','')
-        else
-         AppDesc:=ldt(d.ReadString('Desktop Entry','Comment',''));
-
-        AppMn:=rsAuthor+': '+d.ReadString('Desktop Entry','X-Publisher','<error>');
-        if AppMn=rsAuthor+': '+'<error>' then
-        AppMn:='';
-        AppVersion:='';
-        if d.ReadString('Desktop Entry','X-AppVersion','')<>'' then
-        AppVersion:=rsVersion+': '+d.ReadString('Desktop Entry','X-AppVersion','');
-
-        //Load the icons
-        if (LowerCase(ExtractFileExt(d.ReadString('Desktop Entry','Icon','')))<>'.tiff') then
-        begin
-        try
-        if (d.ReadString('Desktop Entry','Icon','')<>'')
-        and(d.ReadString('Desktop Entry','Icon','')[1]<>'/') then
-        begin
-        if FileExists('/usr/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
-            SetImage('/usr/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') else
-        if FileExists('/usr/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')) then
-            SetImage('/usr/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')) else
-        if FileExists('/usr/share/icons/hicolor/48x48/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
-            SetImage('/usr/share/icons/hicolor/48x48/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') else
-        if FileExists('/usr/share/icons/hicolor/48x48/apps/'+d.ReadString('Desktop Entry','Icon','')) then
-            SetImage('/usr/share/icons/hicolor/48x48/apps/'+d.ReadString('Desktop Entry','Icon',''));
-        //
-        if FileExists('/usr/share/pixmaps/'+ChangeFileExt(d.ReadString('Desktop Entry','Icon',''),'')+'.xpm')
-        and (ExtractFileExt(d.ReadString('Desktop Entry','Icon',''))='.xpm')then
-            SetImage('/usr/share/pixmaps/'+ChangeFileExt(d.ReadString('Desktop Entry','Icon',''),'')+'.xpm')
-        else if FileExists('/usr/share/pixmaps/'+d.ReadString('Desktop Entry','Icon','')+'.xpm') then
-             SetImage('/usr/share/pixmaps/'+d.ReadString('Desktop Entry','Icon','')+'.xpm');
-        if (FileExists('/usr/share/pixmaps/'+ChangeFileExt(d.ReadString('Desktop Entry','Icon',''),'')+'.png'))
-        and (ExtractFileExt(d.ReadString('Desktop Entry','Icon',''))='.png')then
-            SetImage('/usr/share/pixmaps/'+ChangeFileExt(d.ReadString('Desktop Entry','Icon',''),'')+'.png')
-        else if FileExists('/usr/share/pixmaps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
-                SetImage('/usr/share/pixmaps/'+d.ReadString('Desktop Entry','Icon','')+'.png');
-
-        { This code is EXPERIMENTAL!}
-        //Load KDE4 Icons
-          //GetEnvironmentVariable('KDEDIRS')
-
-        if FileExists('/usr/share/icons/default.kde/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
-                SetImage('/usr/share/icons/default.kde/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png')
-        else
-        if FileExists('/usr/lib/kde4/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
-                SetImage('/usr/lib/kde4/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png');
-        end else
-        begin
-         if (FileExists(d.ReadString('Desktop Entry','Icon','')))
-         and(LowerCase(ExtractFileExt(d.ReadString('Desktop Entry','Icon','')))<>'.svg') then
-            SetImage(d.ReadString('Desktop Entry','Icon',''));
-        end;
-        //If icon loading failed
-        except writeLn('ERROR: Unable to load icon!');ShowMessage(StringReplace(rsCannotLoadIcon,'%a',AppName,[rfReplaceAll]));
-        end;
-       end;
-        Application.ProcessMessages;
-        end;
-
-      //  if Assigned(dt) then dt.Free;
-         if translate then dt.Free;
-
-        end;
-       d.Free;
-end;
-
-procedure TMnFrm.LoadEntries;
-var ini: TIniFile;tmp,xtmp: TStringList;i,j,k: Integer;p,n: String;tp: String;
-    gif: TGifThread;entry: TListEntry;
-begin
-j:=0;
-
-MBar.Visible:=true;
-
-AList.Clear;
-
-LeftBar.Enabled:=false;
-
-StatusLabel.Caption:=rsLoading;
-
-//Create GIFThread for Throbber animation
-gif:=TGifThread.Create(true);
-gif.FileName:=GetDataFile('graphics/throbber.gif');
-ThrobberBox.Width:=gif.Width;
-ThrobberBox.Height:=gif.Height;
-ThrobberBox.Top:=(InstalledAppsPage.Height div 2)-(ThrobberBox.Height div 2);
-ThrobberBox.Left:=(InstalledAppsPage.Width div 2)-(ThrobberBox.Width div 2);
-gif.Initialize(ThrobberBox.Canvas);
-
-SwBox.Visible:=false;
-if blst.Count<4 then
-begin
-blst.Clear;
-blst.LoadFromFile('/etc/lipa/blacklist');
-blst.Delete(0);
-end;
-
-//Set original names
-case CBox.Itemindex of
-0: tp:='all';
-1: tp:='education';
-2: tp:='office';
-3: tp:='development';
-4: tp:='graphic';
-5: tp:='network';
-6: tp:='games';
-7: tp:='system';
-8: tp:='multimedia';
-9: tp:='additional';
-10: tp:='other';
-end;
-
-if not DirectoryExists(RegDir) then
-begin
-CreateDir(ExtractFilePath(RegDir));
-CreateDir(RegDir);
-end;
-
-dsApp.SQL:='SELECT * FROM AppInfo';
-dsApp.Open;
-dsApp.Filtered:=true;
-dsApp.First;
-while not dsApp.EOF do
-begin
- if (LowerCase(dsApp.FieldByName('AGroup').AsString)=tp)
- or (tp='all') then
- begin
- AList.Add(TListEntry.Create(MnFrm));
-
- entry:=TListEntry(AList.Items[AList.Count-1]);
- entry.UnButton.OnClick:=@UnInstallClick;
- entry.Parent:=SWBox;
- entry.aId:=dsApp.RecNo;
- entry.UnButton.Tag:=AList.Count-1;
-
- entry.AppName:=dsApp.FieldByName('Name').AsString;
-
- blst.Add(entry.AppName);
- entry.srID:=dsApp.FieldByName('ID').AsString;
-
- entry.AppVersion:=rsVersion+': '+dsApp.FieldByName('Version').AsString;
- entry.AppMn:=rsAuthor+': '+dsApp.FieldByName('Publisher').AsString;
- if dsApp.FieldByName('Publisher').AsString='' then entry.AppMn:='';
- p:=RegDir+LowerCase(entry.AppName+'-'+entry.srID)+'/';
-
- InstLst.Add(LowerCase(dsApp.FieldByName('ID').AsString));
- entry.AppDesc:=dsApp.FieldByName('Description').AsString;
- if entry.AppDesc='#' then entry.AppDesc:='No description given';
-
- if FileExists(p+'icon.png') then
- entry.SetImage(p+'icon.png');
-
- Application.ProcessMessages;
- end;
- dsApp.Next;
-end;
-dsApp.Close;
-
-{if (CBox.ItemIndex=0) or (CBox.ItemIndex=10) then
-begin
-tmp:=TStringList.Create;
-xtmp:=TStringList.Create;
-
-j:=0;
-for i:=0 to xtmp.Count-1 do begin
-try
-ReadXMLFile(Doc, xtmp[i]);
-xnode:=Doc.FindNode('product');
- SetLength(AList,ListLength+1);
- Inc(ListLength);
- AList[ListLength-1]:=TListEntry.Create(MnFrm);
- AList[ListLength-1].Parent:=SWBox;
- AList[ListLength-1].AppLabel.Caption:=xnode.Attributes.GetNamedItem('desc').NodeValue;
- instLst.Add(LowerCase(xnode.Attributes.GetNamedItem('desc').NodeValue));
- blst.Add(AList[ListLength-1].AppLabel.Caption);
-xnode:=Doc.DocumentElement.FindNode('component');
- AList[ListLength-1].Vlabel.Caption:=strVersion+': '+xnode.Attributes.GetNamedItem('version').NodeValue;
-IdList.Add(xtmp[i]);
-//Unsupported
-AList[ListLength-1].MnLabel.Visible:=false;
-AList[ListLength-1].DescLabel.Visible:=false;
-AList[Listlength-1].id:=IDList.Count-1;
-AList[ListLength-1].SetPositions;
-Application.ProcessMessages;
-except
-j:=101;
-end;
-end;
-
-tmp.free;
-xtmp.Free;
-
-end; //End Autopackage  }
-
-n:=ConfigDir;
-ini:=TIniFile.Create(n+'config.cnf');
-
-//Search for other applications that are installed on this system...
-tmp:=TStringList.Create;
-xtmp:=TStringList.Create;
-
-if IsRoot then //Only if user is root
-begin
-tmp.Assign(FindAllFiles('/usr/share/applications/','*.desktop',true));
-xtmp.Assign(FindAllFiles('/usr/local/share/applications/','*.desktop',true));
-end else
-tmp.Assign(FindAllFiles(GetEnvironmentVariable('HOME')+'/.local/share/applications','*.desktop',false));
-
-for i:=0 to xtmp.Count-1 do tmp.Add(xtmp[i]);
-
-xtmp.Free;
-
-if tp='games' then tp:='game';
-if tp='multimedia' then tp:='audiovideo';
-for i:=0 to tmp.Count-1 do
-       begin
-       ProcessDesktopFile(tmp[i],tp);
-       end;
-       tmp.Free;
-ini.Free;
-
-//Check LOKI-success:
-if j>100 then
-StatusLabel.Caption:=rsLOKIError;
-
-StatusLabel.Caption:=rsReady; //Loading list finished!
-
-LeftBar.Enabled:=true;
-SwBox.Visible:=true;
-if Assigned(gif) then gif.Terminate;
-gif := nil;
-MBar.Visible:=false;
 end;
 
 var fAct: Boolean;
@@ -824,9 +507,23 @@ end;
 end;
 
 procedure TMnFrm.CBoxChange(Sender: TObject);
+var gt: GroupType;
 begin
   CBox.Enabled:=false;
-  LoadEntries;
+  case CBox.ItemIndex of
+  0: gt:=gtALL;
+  1: gt:=gtEDUCATION;
+  2: gt:=gtOFFICE;
+  3: gt:=gtDEVELOPMENT;
+  4: gt:=gtGRAPHIC;
+  5: gt:=gtNETWORK;
+  6: gt:=gtGAMES;
+  7: gt:=gtSYSTEM;
+  8: gt:=gtMULTIMEDIA;
+  9: gt:=gtADDITIONAL;
+  10: gt:=gtOTHER;
+  end;
+  load_app_list(gt);
   CBox.Enabled:=true;
 end;
 
@@ -971,7 +668,7 @@ end;
 procedure TMnFrm.FormActivate(Sender: TObject);
 begin
   if fAct then
-  begin fAct:=false;LoadEntries;
+  begin fAct:=false;load_app_list(gtALL);
   end;
 end;
 
@@ -1101,35 +798,13 @@ begin
  halt(0);
 end;     }
 
+//Register callback to be notified if new app was found
+register_application_call(@OnNewAppFound);
+
+set_su_mode(true);
+
 InstAppButton.Down:=true;
 
-writeLn('Opening database...');
-dsApp:= TSQLite3Dataset.Create(nil);
-with dsApp do
- begin
-   FileName:=RegDir+'applications.db';
-   TableName:='AppInfo';
-   if not FileExists(FileName) then
-   begin
-   with FieldDefs do
-     begin
-       Clear;
-       Add('Name',ftString,0,true);
-       Add('ID',ftString,0,true);
-       Add('Type',ftString,0,true);
-       Add('Description',ftString,0,False);
-       Add('Version',ftFloat,0,true);
-       Add('Publisher',ftString,0,False);
-       Add('Icon',ftString,0,False);
-       Add('Profile',ftString,0,False);
-       Add('AGroup',ftString,0,true);
-       Add('InstallDate',ftDateTime,0,False);
-       Add('Dependencies',ftMemo,0,False);
-     end;
-   CreateTable;
- end;
-end;
-dsApp.Active:=true;
 Notebook1.ActivePageComponent:=InstalledAppsPage;
  WriteLn('GUI loaded.');
 end;
@@ -1157,16 +832,18 @@ begin
   if Assigned(blst) then blst.Free;       //Free blacklist
   if Assigned(InstLst) then InstLst.Free; //Free list of installed apps
   if Assigned(AList) then AList.Free;     //Free AppPanel store
-  if Assigned(dsApp) then                 //Free databse connection
-  begin
- { dsApp.ApplyUpdates;
-  dsApp.Close; }
-  writeLn('Database connection closed.');
-  dsApp.Free;
-  end;
 end;
 
 initialization
   {$I manager.lrs}
 
 end.
+
+//Create GIFThread for Throbber animation
+gif:=TGifThread.Create(true);
+gif.FileName:=GetDataFile('graphics/throbber.gif');
+ThrobberBox.Width:=gif.Width;
+ThrobberBox.Height:=gif.Height;
+ThrobberBox.Top:=(InstalledAppsPage.Height div 2)-(ThrobberBox.Height div 2);
+ThrobberBox.Left:=(InstalledAppsPage.Width div 2)-(ThrobberBox.Width div 2);
+gif.Initialize(ThrobberBox.Canvas);

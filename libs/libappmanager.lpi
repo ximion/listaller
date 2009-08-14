@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="7"/>
+    <General>
+      <MainUnit Value="0"/>
+      <TargetFileExt Value=""/>
+      <Icon Value="0"/>
+      <UseXPManifest Value="True"/>
+      <ActiveEditorIndexAtStart Value="0"/>
+    </General>
+    <VersionInfo>
+      <ProjectVersion Value=""/>
+    </VersionInfo>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|ppw|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+        <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+      </local>
+    </RunParams>
+    <Units Count="5">
+      <Unit0>
+        <Filename Value="libappmanager.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="libappmanager"/>
+        <CursorPos X="27" Y="67"/>
+        <TopLine Value="51"/>
+        <EditorIndex Value="0"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="management.pas"/>
+        <UnitName Value="management"/>
+        <CursorPos X="1" Y="12"/>
+        <TopLine Value="10"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.2.4/packages/sqlite/src/sqlite3.pp"/>
+        <UnitName Value="sqlite3"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../licommon.pas"/>
+        <UnitName Value="licommon"/>
+        <CursorPos X="27" Y="24"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="../bindings/appman.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="appman"/>
+        <CursorPos X="28" Y="33"/>
+        <TopLine Value="1"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit4>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="management.pas"/>
+        <Caret Line="224" Column="30" TopLine="202"/>
+      </Position1>
+      <Position2>
+        <Filename Value="management.pas"/>
+        <Caret Line="233" Column="6" TopLine="215"/>
+      </Position2>
+      <Position3>
+        <Filename Value="management.pas"/>
+        <Caret Line="235" Column="18" TopLine="216"/>
+      </Position3>
+      <Position4>
+        <Filename Value="management.pas"/>
+        <Caret Line="9" Column="5" TopLine="1"/>
+      </Position4>
+      <Position5>
+        <Filename Value="management.pas"/>
+        <Caret Line="266" Column="1" TopLine="247"/>
+      </Position5>
+      <Position6>
+        <Filename Value="management.pas"/>
+        <Caret Line="306" Column="55" TopLine="284"/>
+      </Position6>
+      <Position7>
+        <Filename Value="management.pas"/>
+        <Caret Line="308" Column="17" TopLine="288"/>
+      </Position7>
+      <Position8>
+        <Filename Value="management.pas"/>
+        <Caret Line="309" Column="52" TopLine="289"/>
+      </Position8>
+      <Position9>
+        <Filename Value="management.pas"/>
+        <Caret Line="312" Column="76" TopLine="291"/>
+      </Position9>
+      <Position10>
+        <Filename Value="management.pas"/>
+        <Caret Line="313" Column="65" TopLine="293"/>
+      </Position10>
+      <Position11>
+        <Filename Value="management.pas"/>
+        <Caret Line="314" Column="46" TopLine="294"/>
+      </Position11>
+      <Position12>
+        <Filename Value="management.pas"/>
+        <Caret Line="318" Column="67" TopLine="298"/>
+      </Position12>
+      <Position13>
+        <Filename Value="management.pas"/>
+        <Caret Line="319" Column="41" TopLine="299"/>
+      </Position13>
+      <Position14>
+        <Filename Value="management.pas"/>
+        <Caret Line="323" Column="22" TopLine="292"/>
+      </Position14>
+      <Position15>
+        <Filename Value="management.pas"/>
+        <Caret Line="372" Column="4" TopLine="352"/>
+      </Position15>
+      <Position16>
+        <Filename Value="management.pas"/>
+        <Caret Line="9" Column="15" TopLine="1"/>
+      </Position16>
+      <Position17>
+        <Filename Value="management.pas"/>
+        <Caret Line="394" Column="27" TopLine="370"/>
+      </Position17>
+      <Position18>
+        <Filename Value="management.pas"/>
+        <Caret Line="396" Column="20" TopLine="370"/>
+      </Position18>
+      <Position19>
+        <Filename Value="management.pas"/>
+        <Caret Line="397" Column="1" TopLine="364"/>
+      </Position19>
+      <Position20>
+        <Filename Value="management.pas"/>
+        <Caret Line="304" Column="9" TopLine="56"/>
+      </Position20>
+      <Position21>
+        <Filename Value="management.pas"/>
+        <Caret Line="305" Column="18" TopLine="284"/>
+      </Position21>
+      <Position22>
+        <Filename Value="management.pas"/>
+        <Caret Line="304" Column="1" TopLine="285"/>
+      </Position22>
+      <Position23>
+        <Filename Value="management.pas"/>
+        <Caret Line="126" Column="13" TopLine="108"/>
+      </Position23>
+      <Position24>
+        <Filename Value="management.pas"/>
+        <Caret Line="36" Column="1" TopLine="15"/>
+      </Position24>
+      <Position25>
+        <Filename Value="libappmanager.lpr"/>
+        <Caret Line="98" Column="15" TopLine="66"/>
+      </Position25>
+      <Position26>
+        <Filename Value="libappmanager.lpr"/>
+        <Caret Line="69" Column="13" TopLine="49"/>
+      </Position26>
+      <Position27>
+        <Filename Value="libappmanager.lpr"/>
+        <Caret Line="88" Column="14" TopLine="68"/>
+      </Position27>
+      <Position28>
+        <Filename Value="libappmanager.lpr"/>
+        <Caret Line="95" Column="1" TopLine="1"/>
+      </Position28>
+      <Position29>
+        <Filename Value="libappmanager.lpr"/>
+        <Caret Line="23" Column="13" TopLine="3"/>
+      </Position29>
+      <Position30>
+        <Filename Value="libappmanager.lpr"/>
+        <Caret Line="115" Column="1" TopLine="75"/>
+      </Position30>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="8"/>
+    <Target>
+      <Filename Value="../bin/libappmanager.so.0.4"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)/"/>
+      <OtherUnitFiles Value="../;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
+      <LCLWidgetType Value="nogui"/>
+    </SearchPaths>
+    <Linking>
+      <Options>
+        <ExecutableType Value="Library"/>
+      </Options>
+    </Linking>
+    <Other>
+      <CustomOptions Value="-fPIC"/>
+      <CompilerPath Value="$(CompPath)"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

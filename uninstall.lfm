@@ -62,9 +62,9 @@ object RMForm: TRMForm
   LCLVersion = '0.9.27'
   object Label1: TLabel
     Left = 8
-    Height = 13
+    Height = 14
     Top = 8
-    Width = 41
+    Width = 46
     Caption = '<label>'
     ParentColor = False
   end
@@ -101,9 +101,9 @@ object RMForm: TRMForm
   end
   object DetailsBtn: TBitBtn
     Left = 8
-    Height = 26
+    Height = 23
     Top = 72
-    Width = 65
+    Width = 73
     AutoSize = True
     Caption = 'Details ->'
     OnClick = DetailsBtnClick

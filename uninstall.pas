@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   StdCtrls, IniFiles, LCLType, LiCommon, Buttons, ExtCtrls, process,
-  trstrings, FileUtil, distri, IPKHandle, PackageKit, LEntries;
+  trstrings, FileUtil, distri, appman, PackageKit, LEntries;
 
 type
 
@@ -156,7 +156,7 @@ LogAdd('Uninstalling application...');
  t.Execute;
  t.Free;
  UProgress.Position:=100;
- mnFrm.LoadEntries;
+ load_app_list(gtALL);
 end else
 //LOKI
 if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'.manifest') then
@@ -173,7 +173,7 @@ begin
  t.Execute;
  t.Free;
  UProgress.Position:=100;
- mnFrm.LoadEntries;
+ load_app_list(gtALL);
 end else
 begin
  writeLn('Listaller cannot handle this installation type!');
@@ -217,15 +217,16 @@ tmp.LoadFromFile(RegDir+LowerCase(entry.AppName+'-'+entry.srID)+'/appfiles.list'
 UProgress.Max:=((tmp.Count)*10)+4;
 tmp.Free;
 end;
+//???
 // Removing of dependencies is disabled because of security reasons
-UninstallIPKApp(entry.AppName,entry.srID,Memo1.Lines,@UProgressChange,false,true);
+ //UninstallIPKApp(entry.AppName,entry.srID,Memo1.Lines,@UProgressChange,false,true);
 LogAdd('Finished!');
 Memo1.Lines.SaveToFile(ConfigDir+'uninstall.log');
 ShowMessage(rsUnistSuccess);
 //Controls wieder aktivieren
 BitBtn1.Enabled:=true;
 SWBox.Enabled:=true;
-LoadEntries;
+load_app_list(gtALL);
 RMForm.Close;
 exit;
  end else
@@ -237,7 +238,7 @@ exit;
  t.Options:=[poUsePipes,poWaitonexit];
  t.Execute;
  t.Free;
- LoadEntries;
+ load_app_list(gtALL);
  RMForm.Close;
  exit;
  end;
@@ -257,7 +258,8 @@ ShowPKMon();
 
 Application.ProcessMessages;
 writeLn('Detecting package...');
-pkit:=TPackageKit.Create;
+//???
+{pkit:=TPackageKit.Create;
 f:=pkit.PkgNameFromFile(entry.srID);
 if f='Failed!' then
 begin UninstallMojo(entry.srID);exit;end;
@@ -291,11 +293,11 @@ UProgress.Position:=78;
 
 if not pkit.OperationSucessfull then begin
 ShowMessage(rsRmError);exit;RMForm.Close;end;
-
+ }
 UProgress.Position:=100;
 LogAdd('Done.');
 RMForm.Close;
-LoadEntries;
+load_app_list(gtALL);
 exit;
 end else RMForm.close;
 
@@ -307,8 +309,9 @@ end;
   mnFrm.uID:=-1;
 BitBtn1.Enabled:=true;
 GetOutPutTimer.Enabled:=false;
-end else Close;
-end;
+//???
+end;// else Close;
+//end;
 
 procedure TRMForm.BitBtn1Click(Sender: TObject);
 begin

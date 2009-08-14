@@ -25,7 +25,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms,
   SysUtils,
-  manager, uninstall, pkgconvertdisp, swcatalog, ipkhandle,
+  manager, uninstall, pkgconvertdisp, swcatalog,
   LiCommon, LiTranslator, packagekit, LResources;
 
 {$IFDEF WINDOWS}{$R listallmgr.rc}{$ENDIF}

@@ -1,9 +1,9 @@
 object MnFrm: TMnFrm
-  Left = 253
+  Left = 313
   Height = 558
-  Top = 245
+  Top = 247
   Width = 816
-  ActiveControl = WarnDistCb
+  ActiveControl = FilterEdt
   Caption = 'Software Manager'
   ClientHeight = 558
   ClientWidth = 816
@@ -1889,13 +1889,13 @@ object MnFrm: TMnFrm
     Top = 56
     Width = 696
     Anchors = [akTop, akLeft, akRight, akBottom]
-    PageIndex = 3
+    PageIndex = 0
     ShowTabs = False
     TabOrder = 1
     object InstalledAppsPage: TPage
       Caption = 'InstalledAppsPage'
       ClientWidth = 692
-      ClientHeight = 453
+      ClientHeight = 476
       object Label1: TLabel
         Left = 6
         Height = 14
@@ -1907,7 +1907,7 @@ object MnFrm: TMnFrm
       object ThrobberBox: TPaintBox
         Left = 270
         Height = 100
-        Top = 159
+        Top = 170
         Width = 100
         Anchors = []
         Constraints.MaxHeight = 100
@@ -1917,13 +1917,13 @@ object MnFrm: TMnFrm
       end
       object SWBox: TScrollBox
         Left = 0
-        Height = 423
+        Height = 446
         Top = 30
         Width = 692
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderStyle = bsNone
-        ClientHeight = 423
+        ClientHeight = 446
         ClientWidth = 692
         Color = clForm
         ParentColor = False
@@ -2093,7 +2093,7 @@ object MnFrm: TMnFrm
     object ConfigPage: TPage
       Caption = 'ConfigPage'
       ClientWidth = 692
-      ClientHeight = 476
+      ClientHeight = 453
       object Label2: TLabel
         Left = 6
         Height = 14
@@ -2105,7 +2105,7 @@ object MnFrm: TMnFrm
       object AboutBtn: TButton
         Left = 587
         Height = 23
-        Top = 449
+        Top = 426
         Width = 95
         Anchors = [akRight, akBottom]
         AutoSize = True
