@@ -19,10 +19,8 @@ library libinstaller;
 {$mode objfpc}{$H+}
 
 uses
-  Classes, ipkhandle, SysUtils, Controls, licommon;
+  Classes, ipkhandle, SysUtils, Controls, licommon, globdef;
 
-type
- PStringList = ^TStringList;
 
 //////////////////////////////////////////////////////////////////////////////////////
 //Exported helper functions
@@ -63,7 +61,7 @@ end;
 //Exported functions
 
 //** Removes an application that was installed with an IPK package
-function remove_ipk_installed_app(appname, appid: PChar;msgcall: TMessageEvent;poschange: TProgressChange;fastmode: Boolean): Boolean; cdecl;
+function remove_ipk_installed_app(appname, appid: PChar;msgcall: TMessageEvent;poschange: TProgressCall;fastmode: Boolean): Boolean; cdecl;
 begin
 Result:=true;
 try
@@ -97,7 +95,7 @@ begin
 end;
 
 //** Register progress changes (main)
-function ins_register_main_prog_change_call(setup: PInstallation;call: TProgressChange): Boolean; cdecl;
+function ins_register_main_prog_change_call(setup: PInstallation;call: TProgressCall): Boolean; cdecl;
 begin
  Result:=true;
  try
@@ -108,7 +106,7 @@ begin
 end;
 
 //** Register progress changes (extra)
-function ins_register_extra_prog_change_call(setup: PInstallation;call: TProgressChange): Boolean; cdecl;
+function ins_register_extra_prog_change_call(setup: PInstallation;call: TProgressCall): Boolean; cdecl;
 begin
  Result:=true;
  try

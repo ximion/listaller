@@ -6,11 +6,9 @@ interface
 
 uses
   Classes, SysUtils, SQLite3Ds, IniFiles, GetText, TRStrings, LiCommon,
-  DB, FileUtil;
+  DB, FileUtil, packagekit, Process, installer, globdef;
 
 type
-//** Different message types
-MessageType = (mtInfo,mtWarning,mtError);
 
 //** Container for information about apps
 TAppInfo = record
@@ -22,8 +20,6 @@ TAppInfo = record
  UId: PChar;
 end;
 
-//** Event to catch messages
-TYMessageEvent = function(msg: String;ty: MessageType): Boolean; cdecl;
 //** Event to catch thrown application records
 TAppEvent = function(name: PChar;obj: TAppInfo): Boolean;cdecl;
 
@@ -35,22 +31,29 @@ GroupType = (gtALL,gtEDUCATION,gtOFFICE,gtDEVELOPMENT,gtGRAPHIC,gtNETWORK,gtGAME
 //function ProcessDesktopFile(fname: String; tp: String): Boolean;
 
 //** Load software list entries
-function LoadEntries(group: GroupType): Boolean;
-//** Register message callback
-procedure RegisterMessage(me: TYMessageEvent);
-//** Register app callback (thrown if new app was found)
-procedure RegisterAppMessage(me: TAppEvent);
+procedure LoadEntries(group: GroupType);
+//** Method that removes MOJO/LOKI installed applications @param dsk Path to the .desktop file of the application
+function UninstallMojo(dsk: String): Boolean;
+//** Removes an application
+procedure UninstallApp(obj: TAppInfo);
 
 var Root: Boolean=false;
+    FMsg: TMessageEvent;
+    FReq: TRequestEvent;
+    FApp: TAppEvent;
+    FProg: TProgressCall;
 
 implementation
 
-var FMsg: TYMessageEvent;
-    FApp: TAppEvent;
 
-procedure msg(s: String;t: MessageType);
+procedure msg(s: String;t: TMType);
 begin
- if Assigned(FMsg) then FMsg(s,t);
+ if Assigned(FMsg) then FMsg(PChar(s),t);
+end;
+
+function request(s: String;ty: TRqType): TRqResult;
+begin
+ if Assigned(FReq) then Result:=FReq(ty,PChar(s));
 end;
 
 procedure newapp(s: String;oj: TAppInfo);
@@ -58,14 +61,9 @@ begin
  if Assigned(FApp) then FApp(PChar(s),oj);
 end;
 
-procedure RegisterMessage(me: TYMessageEvent);
+procedure setpos(i: Integer);
 begin
- FMsg:=me;
-end;
-
-procedure RegisterAppMessage(me: TAppEvent);
-begin
- FApp:=me;
+ if Assigned(FProg) then FProg(i);
 end;
 
 function IsInList(nm: String;list: TStringList): Boolean;
@@ -73,8 +71,8 @@ begin
 Result:=list.IndexOf(nm)>-1;
 end;
 
-function LoadEntries(group: GroupType): Boolean;
-var ini: TIniFile;tmp,xtmp: TStringList;i,j,k: Integer;p,n: String;tp: String;
+procedure LoadEntries(group: GroupType);
+var ini: TIniFile;tmp,xtmp: TStringList;i,j: Integer;p,n: String;tp: String;
     entry: TAppInfo;
     dsApp: TSQLite3Dataset;
     blst: TStringList;
@@ -395,8 +393,164 @@ msg(rsReady,mtInfo); //Loading list finished!
 
 dsApp.Free;
 blst.Free; //Free blacklist
+end;
 
+
+
+//Uninstall Mojo and LOKI Setups
+function UninstallMojo(dsk: String): Boolean;
+var inf: TIniFile;tmp: TStringList;t: TProcess;mandir: String;
+begin
+Result:=true;
+msg('Package could be installed with MoJo/LOKI...',mtInfo);
+inf:=TIniFile.Create(dsk);
+if not DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))) then
+begin
+writeLn('Listaller cannot handle this installation!');
+request(rsCannotHandleRM,rqError);inf.Free;end else
+if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'.mojosetup') then
+begin
+//MOJO
+mandir:=ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'.mojosetup';
+inf.Free;
+msg('Mojo manifest found.',mtInfo);
+setpos(40);
+tmp:=TStringList.Create;
+tmp.Assign(FindAllFiles(mandir+'/manifest','*.xml',false));
+if tmp.Count<=0 then exit;
+setpos(50);
+msg('Uninstalling application...',mtInfo);
+ t:=TProcess.Create(nil);
+ t.CommandLine:=mandir+'/mojosetup uninstall '+copy(ExtractFileName(tmp[0]),1,pos('.',ExtractFileName(tmp[0]))-1);
+ t.Options:=[poUsePipes,poWaitonexit];
+ tmp.Free;
+ setpos(60);
+ t.Execute;
+ t.Free;
+ setpos(100);
+end else
+//LOKI
+if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'.manifest') then
+begin
+ setpos(50);
+ msg('LOKI setup detected.',mtInfo);
+ msg('Uninstalling application...',mtInfo);
+
+ t:=TProcess.Create(nil);
+ t.CommandLine:=ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'/uninstall';
+ t.Options:=[poUsePipes,poWaitonexit];
+
+ setpos(60);
+ t.Execute;
+ t.Free;
+ setpos(100);
+end else
+begin
+ Result:=false;
+ writeLn('Listaller cannot handle this installation type!');
+ request(rsCannotHandleRM,rqError);inf.Free;
+end;
+end;
+
+procedure UninstallApp(obj: TAppInfo);
+var f,g: String; t:TProcess;tmp: TStringList;pkit: TPackageKit;i: Integer;
+begin
+
+msg('Connecting to PackageKit... (run "pkmon" to see the actions)',mtInfo);
+
+setpos(0);
+
+msg('Reading application information...',mtInfo);
+
+if not FileExists(obj.UId) then
+begin
+if FileExists(RegDir+LowerCase(obj.Name+'-'+obj.UId)+'/appfiles.list') then
+begin
+tmp:=TStringList.Create;
+tmp.LoadFromFile(RegDir+LowerCase(obj.Name+'-'+obj.UId)+'/appfiles.list');
+ //UProgress.Max:=((tmp.Count)*10)+4;
+tmp.Free;
+end;
+
+ remove_ipk_installed_app(obj.Name, obj.UId,FMsg,FProg,false);
+
+msg('Finished!',mtInfo);
+exit;
+
+end else
+ begin //Autopackage
+ if obj.UId[1]='!' then
+ begin
+ t:=TProcess.Create(nil);
+ t.CommandLine:=copy(obj.UId,2,length(obj.Uid));
+ t.Options:=[poUsePipes,poWaitonexit];
+ t.Execute;
+ t.Free;
+ exit;
+ end;
+end;
+
+if (obj.Uid[1]='/')
+then
+begin
+// /!\
+///////////////////////////////////////////////////////
+
+ShowPKMon();
+
+msg('Detecting package...',mtInfo);
+
+pkit:=TPackageKit.Create;
+tmp:=TStringList.Create;
+pkit.RsList:=tmp;
+pkit.PkgNameFromFile(obj.UId);
+while not pkit.PkFinished do setpos(0);
+
+if tmp.Count<=0 then
+begin UninstallMojo(obj.UId);tmp.Free;pkit.Free;exit;end;
+if pkit.PkFinishCode>0 then
+begin request(rsPKitProbPkMon,rqError);pkit.Free;tmp.Free;exit;end;
+f:=tmp[0];
+
+msg('Looking for reverse-dependencies...',mtInfo);
+
+tmp.Clear;
+
+pkit.GetRequires(f);
+while not pkit.PkFinished do setpos(0);
+g:='';
+for i:=0 to tmp.Count-1 do
+g:=g+#10+tmp[i];
+tmp.Free;
+
+// Ehm... Dont't know what the function of this code was - needs testing!
+//g:=copy(g,pos(f,g)+length(f),length(g));
+
+msg('Package detected: '+f,mtInfo);
+if (StringReplace(g,' ','',[rfReplaceAll])='')or
+(request(StringReplace(StringReplace(StringReplace(rsRMPkg,'%p',f,[rfReplaceAll]),'%a',obj.Name,[rfReplaceAll]),'%pl',PAnsiChar(g),[rfReplaceAll]),
+        rqWarning)=rsYes)
+then
+begin
+
+msg('Uninstalling '+f+' ...',mtInfo);
+pkit.RemovePkg(f);
+while not pkit.PkFinished do setpos(pkit.Progress);
+
+if pkit.PkFinishCode>0 then begin
+request(rsRmError,rqError);exit;pkit.Free;end;
+
+setpos(100);
+msg('Done.',mtInfo);
+exit;
+end else exit;
+
+////////////////////////////////////////////////////////////////////////////
+//
+  end;
 end;
 
 end.
+
+if Application.MessageBox(PAnsiChar(StringReplace(rsRealUninstQ,'%a',entry.AppName,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then begin
 

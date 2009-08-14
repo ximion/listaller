@@ -85,5 +85,5 @@ LazarusResources.Add('TRMForm','FORMDATA',[
   +'y'#7#8'ppNormal'#14'StartupOptions'#11#0#10'ShowWindow'#7#7'swoNone'#13'Win'
   +'dowColumns'#2#0#12'WindowHeight'#2#0#10'WindowLeft'#2#0#10'WindowRows'#2#0#9
   +'WindowTop'#2#0#11'WindowWidth'#2#0#13'FillAttribute'#2#0#4'left'#2#8#3'top'
-  +#3#0#1#0#0#0
+  +#3#232#0#0#0#0
 ]);

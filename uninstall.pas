@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   StdCtrls, IniFiles, LCLType, LiCommon, Buttons, ExtCtrls, process,
-  trstrings, FileUtil, distri, appman, PackageKit, LEntries;
+  trstrings, FileUtil, distri, appman, globdef, PackageKit, LEntries;
 
 type
 
@@ -46,8 +46,6 @@ type
   private
     { private declarations }
     FActiv: Boolean;
-    //** Method that removes MOJO/LOKI installed applications @param dsk Path to the .desktop file of the application
-    procedure UninstallMojo(dsk: String);
     //** Handle progress of uninstall-operation
     procedure UProgressChange(Sender: TObject;pos: Integer);
   public
@@ -128,190 +126,30 @@ writeLn(s);
 RMForm.Memo1.Lines.add(s);
 end;
 
-//Uninstall Mojo and LOKI Setups
-procedure TRMForm.UninstallMojo(dsk: String);
-var inf: TIniFile;tmp: TStringList;t: TProcess;mandir: String;
+function OnRmMessage(msg: String;imp: TMType): Boolean;cdecl;
 begin
-LogAdd('Package could be installed with MoJo/LOKI...');
-inf:=TIniFile.Create(dsk);
-if not DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))) then begin
-writeLn('Listaller cannot handle this installation!');
-ShowMessage(rsCannotHandleRM);inf.Free;end else
-if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'.mojosetup') then begin
-//MOJO
-mandir:=ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'.mojosetup';
-inf.Free;
-LogAdd('Mojo manifest found.');
-UProgress.Position:=40;
-tmp:=TStringList.Create;
-tmp.Assign(FindAllFiles(mandir+'/manifest','*.xml',false));
-if tmp.Count<=0 then exit;
-UProgress.Position:=50;
-LogAdd('Uninstalling application...');
- t:=TProcess.Create(nil);
- t.CommandLine:=mandir+'/mojosetup uninstall '+copy(ExtractFileName(tmp[0]),1,pos('.',ExtractFileName(tmp[0]))-1);
- t.Options:=[poUsePipes,poWaitonexit];
- tmp.Free;
- UProgress.Position:=60;
- t.Execute;
- t.Free;
- UProgress.Position:=100;
- load_app_list(gtALL);
-end else
-//LOKI
-if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'.manifest') then
-begin
- UProgress.Position:=50;
- LogAdd('LOKI setup detected.');
- LogAdd('Uninstalling application...');
- Application.ProcessMessages;
- t:=TProcess.Create(nil);
- t.CommandLine:=ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'/uninstall';
- t.Options:=[poUsePipes,poWaitonexit];
-
- UProgress.Position:=60;
- t.Execute;
- t.Free;
- UProgress.Position:=100;
- load_app_list(gtALL);
-end else
-begin
- writeLn('Listaller cannot handle this installation type!');
- ShowMessage(rsCannotHandleRM);inf.Free;end;
+ if imp=mtInfo then LogAdd(msg);
+ if imp=mtWarning then ShowMessage(msg);
 end;
 
 procedure TRMForm.FormActivate(Sender: TObject);
-var f,g: String; t:TProcess;tmp: TStringList;pkit: TPackageKit;i: Integer;
-entry: TListEntry;
 begin
 if FActiv then
 begin
 FActiv:=false;
-Memo1.Lines.Clear;
-BitBtn1.Enabled:=false;
-with mnFrm do
+if MnFrm.uApp.uID<>'' then
 begin
-if (uID<0) then
+
+ register_message_call(@OnRmMessage);
+  remove_application(MnFrm.uApp);
+ register_message_call(@manager.OnMessage);
+end else
 begin
-ShowMessage('Wrong selection!');
-uID:=-1;
-close;
-exit;
+ ShowMessage('Error in selection.');
+ close;
 end;
-Memo1.Lines.Add('Connecting to PackageKit... (run "pkmon" to see the actions)');
-GetOutPutTimer.Enabled:=false;
-UProgress.Position:=0;
-entry:=TListEntry(AList[uID]);
-RMForm.Caption:=StringReplace(rsRMAppC,'%a',entry.AppName,[rfReplaceAll]);
-if Application.MessageBox(PAnsiChar(StringReplace(rsRealUninstQ,'%a',entry.AppName,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then begin
-LogAdd('Reading application information...');
-RMForm.Label1.Caption:='Reading application information...';
-GetOutPutTimer.Enabled:=true;
-
-if not FileExists(entry.srID) then
-begin
-if FileExists(RegDir+LowerCase(entry.AppName+'-'+entry.srID)+'/appfiles.list') then
-begin
-tmp:=TStringList.Create;
-tmp.LoadFromFile(RegDir+LowerCase(entry.AppName+'-'+entry.srID)+'/appfiles.list');
-UProgress.Max:=((tmp.Count)*10)+4;
-tmp.Free;
 end;
-//???
-// Removing of dependencies is disabled because of security reasons
- //UninstallIPKApp(entry.AppName,entry.srID,Memo1.Lines,@UProgressChange,false,true);
-LogAdd('Finished!');
-Memo1.Lines.SaveToFile(ConfigDir+'uninstall.log');
-ShowMessage(rsUnistSuccess);
-//Controls wieder aktivieren
-BitBtn1.Enabled:=true;
-SWBox.Enabled:=true;
-load_app_list(gtALL);
-RMForm.Close;
-exit;
- end else
- begin //Autopackage
- if entry.srID[1]='!' then
- begin
- t:=TProcess.Create(nil);
- t.CommandLine:=copy(entry.srID,2,length(entry.srID));
- t.Options:=[poUsePipes,poWaitonexit];
- t.Execute;
- t.Free;
- load_app_list(gtALL);
- RMForm.Close;
- exit;
- end;
 end;
-
-//Uninstall external application(s) (only possible if user is root)
-if not IsRoot then
-begin UninstallMojo(entry.srID);exit;end;
-
-if (entry.srID[1]='/')
-then
-begin
-// /!\
-///////////////////////////////////////////////////////
-
-ShowPKMon();
-
-Application.ProcessMessages;
-writeLn('Detecting package...');
-//???
-{pkit:=TPackageKit.Create;
-f:=pkit.PkgNameFromFile(entry.srID);
-if f='Failed!' then
-begin UninstallMojo(entry.srID);exit;end;
-if f='PackageKit problem.' then
-begin ShowMessage(rsPKitProbPkMon);exit;end;
-g:='';
-
-Application.ProcessMessages;
-writeLn('Looking for reverse-dependencies...');
-tmp:=TStringList.Create;
-pkit.GetRequires(f,tmp);
-g:='';
-for i:=0 to tmp.Count-1 do
-g:=g+#13+tmp[i];
-tmp.Free;
-// Ehm... Dont't know what the function of this code was - needs testing!
-//g:=copy(g,pos(f,g)+length(f),length(g));
-
-LogAdd('Package detected: '+f);
-if (StringReplace(g,' ','',[rfReplaceAll])='')or
-(Application.MessageBox(PAnsiChar(
-StringReplace(StringReplace(StringReplace(rsRMPkg,'%p',f,[rfReplaceAll]),'%a',entry.AppName,[rfReplaceAll]),'%pl',PAnsiChar(g),[rfReplaceAll])
-),PChar(rsRMPkgQ),MB_YESNO)=IDYES)
-then begin
-
-LogAdd('Uninstalling '+f+' ...');
-UProgress.Position:=60;
-GetOutPutTimer.Enabled:=true;
-pkit.RemovePkg(f);
-UProgress.Position:=78;
-
-if not pkit.OperationSucessfull then begin
-ShowMessage(rsRmError);exit;RMForm.Close;end;
- }
-UProgress.Position:=100;
-LogAdd('Done.');
-RMForm.Close;
-load_app_list(gtALL);
-exit;
-end else RMForm.close;
-
-////////////////////////////////////////////////////////////////////////////
-//
- end;
-  end;
-end;
-  mnFrm.uID:=-1;
-BitBtn1.Enabled:=true;
-GetOutPutTimer.Enabled:=false;
-//???
-end;// else Close;
-//end;
 
 procedure TRMForm.BitBtn1Click(Sender: TObject);
 begin

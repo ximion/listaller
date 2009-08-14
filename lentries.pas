@@ -25,6 +25,16 @@ uses
  trstrings;
 
 type
+//** Container for information about apps
+TAppInfo = record
+ Name: PChar;
+ ShortDesc: PChar;
+ Version: PChar;
+ Author: PChar;
+ Icon: PChar;
+ UId: PChar;
+end;
+
 //** One entry of Listaller's visual software lists
 TListEntry = class(TPanel) //Helper class / a software entry
 protected
@@ -34,7 +44,7 @@ Vlabel: TLabel;
 MnLabel: TLabel;
 Graphic: TImage;
 ID: Integer;
-sID: String;
+sAI: TAppInfo;
 private
  procedure SetAppName(s: String);
  function GetAppName: String;
@@ -46,8 +56,6 @@ private
  function GetAppVersion: String;
 public
 UnButton: TBitBtn;
-//** The application's ID string
-property aID:Integer read ID write ID;
 //** Name of the application
 property AppName: String read GetAppName write SetAppName;
 //** Description of the application
@@ -57,7 +65,9 @@ property AppMn: String read GetAppMaintainer write SetAppMaintainer;
 //** Version of the application
 property AppVersion: String read GetAppVersion write SetAppVersion;
 //** Software removal ID
-property srID: String read sID write sID;
+property appInfo: TAppInfo read sAI write sAI;
+//** Load all data from AppInfo record
+procedure LoadFromAppInfo(ai: TAppInfo);
 //** Set an image for the entry
 procedure SetImage(AImage: String);
 //** Constructor
@@ -206,6 +216,17 @@ end;
 procedure TListEntry.SetImage(AImage: String);
 begin
 Graphic.Picture.LoadFromFile(AImage);
+end;
+
+procedure TListEntry.LoadFromAppInfo(ai: TAppInfo);
+begin
+ AppName:=ai.Name;
+ AppDesc:=ai.ShortDesc;
+ AppVersion:=ai.Version;
+ AppMn:=ai.Author;
+ sAI:=ai;
+ if FileExists(ai.Icon) then
+   SetImage(ai.Icon);
 end;
 
 end.

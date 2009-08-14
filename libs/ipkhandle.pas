@@ -23,19 +23,12 @@ interface
 uses
   Classes, SysUtils, IniFiles, LiCommon, Process, trstrings, packagekit,
   sqlite3ds, db, AbUnZper, AbArcTyp, XMLRead, DOM, distri, HTTPSend, FTPSend,
-  MD5;
+  MD5, globdef;
 
 type
 
- TRqType   = (rqError,rqWarning,rqQuestion,rqInfo);
- TRqResult = (rsYes,rsNo,rsOK);
-
- TProgressChange = function(pos: Longint): Boolean; cdecl;
- TRequestEvent = function(mtype: TRqType;msg: PChar): TRqResult; cdecl;
- TMessageEvent = function(msg: String): Boolean; cdecl;
-
+ //** Pointer to TInstallation
  PInstallation = ^TInstallation;
-
  //** Everything which is needed for an installation
  TInstallation = class
  private
@@ -77,8 +70,8 @@ type
   //Reference to an existing FTPSend object
   FTP: TFTPSend;
   //Progress message relais
-  FProgChange1: TProgressChange;
-  FProgChange2: TProgressChange;
+  FProgChange1: TProgressCall;
+  FProgChange2: TProgressCall;
   FRequest: TRequestEvent;
   FSMessage:  TMessageEvent;
   FMessage:  TMessageEvent;
@@ -146,8 +139,8 @@ type
   //** Set current profile by ID
   procedure SetCurProfile(i: Integer);
   //Progress events
-  property OnProgressMainChange: TProgressChange read FProgChange1 write FProgChange1;
-  property OnProgressExtraChange: TProgressChange read FProgChange2 write FProgChange2;
+  property OnProgressMainChange: TProgressCall read FProgChange1 write FProgChange1;
+  property OnProgressExtraChange: TProgressCall read FProgChange2 write FProgChange2;
   //Message events
   property OnUserRequest: TRequestEvent read FRequest write FRequest;
   property OnStepMessage: TMessageEvent read FSMessage write FSMessage;
@@ -161,7 +154,7 @@ end;
      @param progress Function call for operation progress (set nil if not needed)
      @param fast Does a quick uninstallation if is true (Set to "False" by default)
      @param RmDeps Remove dependencies if true (Set to "True" by default)}
- procedure UninstallIPKApp(AppName, AppID: String; FMsg: TMessageEvent;progress: TProgressChange; fast: Boolean=false; RmDeps:Boolean=true);
+ procedure UninstallIPKApp(AppName, AppID: String; FMsg: TMessageEvent;progress: TProgressCall; fast: Boolean=false; RmDeps:Boolean=true);
 
  {** Checks dependencies of all installed apps
      @param report Report of the executed actions
@@ -203,12 +196,12 @@ end;
 
 procedure TInstallation.SendStateMsg(msg: String);
 begin
- if Assigned(FSMessage) then FSMessage(msg);
+ if Assigned(FSMessage) then FSMessage(msg,mtInfo);
 end;
 
 procedure TInstallation.msg(str: String);
 begin
- if Assigned(FMessage) then FMessage(str)
+ if Assigned(FMessage) then FMessage(str,mtInfo)
  else writeLn(str);
 end;
 
@@ -1518,12 +1511,12 @@ end;
 /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ///////////////////////////////////////////////////
-procedure UninstallIPKApp(AppName,AppID: String; FMsg: TMessageEvent;progress: TProgressChange; fast:Boolean=false; RmDeps:Boolean=true);
+procedure UninstallIPKApp(AppName,AppID: String; FMsg: TMessageEvent;progress: TProgressCall; fast:Boolean=false; RmDeps:Boolean=true);
 var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;k: Boolean;upd: String;
     proc: TProcess;dlink: Boolean;t: TProcess;
     pkit: TPackageKit;
     dsApp: TSQLite3Dataset;
-    FPos: TProgressChange;
+    FPos: TProgressCall;
     mnprog: Integer;
 procedure SetPosition(prog: Integer);
 begin
@@ -1532,7 +1525,7 @@ end;
 
 procedure msg(s: String);
 begin
-if Assigned(FMsg) then FMsg(s)
+if Assigned(FMsg) then FMsg(s,mtInfo)
 else writeLn(s);
 end;
 

@@ -21,31 +21,19 @@ unit installer;
 interface
  
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, globdef;
 
 type
-
- PStringList = ^TStringList;
-
- TListallerPackageType = (lptLinstall, lptDLink, lptContainer);
-
- TRqType   = (rqError,rqWarning,rqQuestion,rqInfo);
- TRqResult = (rsYes,rsNo,rsOK);
-
- TRequestEvent = function(mtype: TRqType;msg: PChar): TRqResult; cdecl;
- TMessageEvent = function(msg: String): Boolean; cdecl;
-
- TProgressChange = function(pos: Longint): Boolean; cdecl;
 
  TInstallPack = class
  private
   ins: Pointer;
  public
   constructor Create;
-  destructor  Destroy;
+  destructor  Destroy;override;
   procedure Initialize(pkname: String);
-  procedure SetMainChangeCall(call: TProgressChange);
-  procedure SetExtraChangeCall(call: TProgressChange);
+  procedure SetMainChangeCall(call: TProgressCall);
+  procedure SetExtraChangeCall(call: TProgressCall);
   procedure SetUserRequestCall(call: TRequestEvent);
   procedure SetMessageCall(call: TMessageEvent);
   procedure SetStepMessageCall(call: TMessageEvent);
@@ -74,15 +62,17 @@ type
 
  function IsIPKAppInstalled(appname: String;appid: String): Boolean;
 
+ //Needs to be published for appmanager.so
+ function remove_ipk_installed_app(appname, appid: PChar;msgcall: TMessageEvent;poschange: TProgressCall;fastmode: Boolean): Boolean; cdecl; external libinst name 'remove_ipk_installed_app';
+
 implementation
 
 //Import library functions
-function remove_ipk_installed_app(appname, appid: PChar;msgcall: TMessageEvent;poschange: TProgressChange;fastmode: Boolean): Boolean; cdecl; external libinst name 'remove_ipk_installed_app';
 function new_installation: Pointer; cdecl; external libinst name 'new_installation';
 function free_installation(setup: Pointer): Boolean; external libinst name 'free_installation';
 function init_installation(setup: Pointer;pkname: PChar): PChar; cdecl; external libinst name 'init_installation';
-function ins_register_main_prog_change_call(setup: Pointer;call: TProgressChange): Boolean; cdecl; external libinst name 'ins_register_main_prog_change_call';
-function ins_register_extra_prog_change_call(setup: Pointer;call: TProgressChange): Boolean; cdecl; external libinst name 'ins_register_extra_prog_change_call';
+function ins_register_main_prog_change_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'ins_register_main_prog_change_call';
+function ins_register_extra_prog_change_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'ins_register_extra_prog_change_call';
 function ins_pkgtype(setup: Pointer): TListallerPackageType; cdecl; external libinst name 'ins_pkgtype';
 function set_testmode(st: Boolean): Boolean; cdecl; external libinst name 'set_testmode';
 function ins_disallows(setup: Pointer): PChar; cdecl; external libinst name 'ins_disallows';
@@ -126,12 +116,12 @@ begin
  init_installation(@ins,PChar(pkname))
 end;
 
-procedure TInstallPack.SetMainChangeCall(call: TprogressChange);
+procedure TInstallPack.SetMainChangeCall(call: TProgressCall);
 begin
  ins_register_main_prog_change_call(@ins,call)
 end;
 
-procedure TInstallPack.SetExtraChangeCall(call: TprogressChange);
+procedure TInstallPack.SetExtraChangeCall(call: TProgressCall);
 begin
  ins_register_extra_prog_change_call(@ins,call)
 end;

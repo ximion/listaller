@@ -23,8 +23,9 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, LEntries,
-  uninstall, trstrings, FileUtil, CheckLst, xtypefm, appman, gifanimator,
-  LiCommon, PackageKit, Contnrs, sqlite3ds, db, aboutbox, GetText, Spin;
+  uninstall, trstrings, FileUtil, CheckLst, xtypefm, appman,
+  LiCommon, globdef, Contnrs, sqlite3ds, db, aboutbox, GetText, PackageKit,
+  Spin;
 
 type
 
@@ -120,8 +121,8 @@ type
     DInfo: TDistroInfo;
     //** Visual package list
     AList: TObjectList;
-    //** Current id of package that should be uninstalled
-    uID: Integer;
+    //** Information about the application that should be uninstalled
+    uApp: TAppInfo;
   end;
 
   //** Fill ImageList with category icons
@@ -133,6 +134,9 @@ var
  //** List of installed application names
   instLst: TStringList;
 
+//Published for use in uninstall.pas
+function OnMessage(msg: String;imp: TMType): Boolean;cdecl;
+
 implementation
 
 uses pkgconvertdisp, swcatalog;
@@ -141,7 +145,7 @@ uses pkgconvertdisp, swcatalog;
 
 procedure TMnFrm.UninstallClick(Sender: TObject);
 begin
-uID:=(Sender as TBitBtn).Tag;
+uApp:=appman.TAppInfo(TListEntry((Sender as TBitBtn).Parent).appInfo);
 RMForm.ShowModal;
 end;
 
@@ -151,15 +155,17 @@ begin
 with MnFrm do begin
  entry:=TListEntry.Create(MnFrm);
  entry.Parent:=SWBox;
- entry.AppName:=obj.Name;
- entry.AppDesc:=obj.ShortDesc;
- entry.AppVersion:=obj.Version;
- entry.AppMn:=obj.Author;
- if FileExists(obj.Icon) then
- entry.SetImage(obj.Icon);
+ entry.LoadFromAppInfo(lentries.TAppInfo(obj));
+ entry.UnButton.OnClick:=@UninstallClick;
  AList.Add(entry);
 end;
 Application.ProcessMessages;
+end;
+
+function OnMessage(msg: String;imp: TMType): Boolean;cdecl;
+begin
+ if imp=mtInfo then MnFrm.StatusLabel.Caption:=msg;
+ if imp=mtWarning then ShowMessage(msg);
 end;
 
 { TMnFrm }
@@ -285,7 +291,10 @@ begin
     begin
       ShowMessage(rsplWait);
       pkit:=TPackageKit.Create;
-      if not pkit.InstallPkg('alien') then
+      pkit.InstallPkg('alien');
+      while not pkit.PkFinished do Application.ProcessMessages;
+
+      if pkit.PkFinishCode>0 then
       begin
        ShowMessage(StringReplace(rsPkgInstFail,'%p','alien',[rfreplaceAll]));
        pkit.Free;
@@ -324,8 +333,10 @@ begin
     if Application.MessageBox(PChar(rsListallerAlien),PChar(rsInstPkgQ),MB_YESNO)=IDYES then
     begin
       ShowMessage(rsplWait);
-      pkit:=TPackageKit.Create;
-      if not pkit.InstallPkg('alien') then
+      pkit.InstallPkg('alien');
+      while not pkit.PkFinished do Application.ProcessMessages;
+
+      if pkit.PkFinishCode>0 then
       begin
        ShowMessage(StringReplace(rsPkgInstFail,'%p','alien',[rfreplaceAll]));
        pkit.Free;
@@ -523,7 +534,7 @@ begin
   9: gt:=gtADDITIONAL;
   10: gt:=gtOTHER;
   end;
-  load_app_list(gt);
+  load_applications(gt);
   CBox.Enabled:=true;
 end;
 
@@ -668,7 +679,7 @@ end;
 procedure TMnFrm.FormActivate(Sender: TObject);
 begin
   if fAct then
-  begin fAct:=false;load_app_list(gtALL);
+  begin fAct:=false;load_applications(gtALL);
   end;
 end;
 
@@ -692,7 +703,7 @@ lang:=GetLangID;
 
  if not DirectoryExists(RegDir) then SysUtils.CreateDir(RegDir);
   
- uID:=-1;
+ uApp.UId:='';
 
  AList:=TObjectList.Create(true); //Create object-list to store AppInfo-Panels
 
@@ -800,6 +811,9 @@ end;     }
 
 //Register callback to be notified if new app was found
 register_application_call(@OnNewAppFound);
+
+//Register callback to be notified if a message was thrown
+register_message_call(@OnMessage);
 
 set_su_mode(true);
 

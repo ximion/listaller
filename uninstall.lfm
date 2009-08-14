@@ -130,6 +130,6 @@ object RMForm: TRMForm
     WindowWidth = 0
     FillAttribute = 0
     left = 8
-    top = 256
+    top = 232
   end
 end

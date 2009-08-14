@@ -20,10 +20,8 @@ library libappmanager;
 
 uses
   Classes,
-  management;
-
-type
- PStringList = ^TStringList;
+  management,
+  globdef;
 
 //////////////////////////////////////////////////////////////////////////////////////
 //Exported helper functions
@@ -66,15 +64,20 @@ end;
 //** Start loading list of applications
 function load_applications(ty: GroupType): Boolean;cdecl;
 begin
+try
+ Result:=true;
  LoadEntries(ty);
+except
+ Result:=false;
+end;
 end;
 
 //** Register message call
-function register_message_call(call: TYMessageEvent): Boolean; cdecl;
+function register_message_call(call: TMessageEvent): Boolean; cdecl;
 begin
  Result:=true;
  try
-  RegisterMessage(call);
+  management.FMsg:=call;
  except
   Result:=false;
  end;
@@ -85,7 +88,29 @@ function register_application_call(call: TAppEvent): Boolean;cdecl;
 begin
  Result:=true;
  try
-  RegisterAppMessage(call);
+  management.FApp:=call;
+ except
+  Result:=false;
+ end;
+end;
+
+//** Register event to recieve current progress
+function register_progress_call(call: TProgressCall): Boolean;cdecl;
+begin
+ Result:=true;
+ try
+  management.FProg:=call;;
+ except
+  Result:=false;
+ end;
+end;
+
+//** Register event to recieve user requests
+function register_request_call(call: TRequestEvent): Boolean;cdecl;
+begin
+ Result:=true;
+ try
+  management.FReq:=call;;
  except
   Result:=false;
  end;
@@ -98,6 +123,17 @@ begin
  Result:=true;
 end;
 
+//** Removes the application
+function remove_application(obj: TAppInfo): Boolean;cdecl;
+begin
+ Result:=true;
+ try
+  UninstallApp(obj);
+ except
+  Result:=false;
+ end;
+end;
+
 exports
  //Stringlist functions
  create_stringlist,
@@ -108,7 +144,10 @@ exports
  load_applications,
  register_message_call,
  register_application_call,
- set_su_mode;
+ register_progress_call,
+ register_request_call,
+ set_su_mode,
+ remove_application;
 
 begin
 end.

@@ -1,7 +1,7 @@
 object MnFrm: TMnFrm
-  Left = 313
+  Left = 271
   Height = 558
-  Top = 247
+  Top = 229
   Width = 816
   ActiveControl = FilterEdt
   Caption = 'Software Manager'
@@ -1917,13 +1917,13 @@ object MnFrm: TMnFrm
       end
       object SWBox: TScrollBox
         Left = 0
-        Height = 446
-        Top = 30
+        Height = 438
+        Top = 38
         Width = 692
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderStyle = bsNone
-        ClientHeight = 446
+        ClientHeight = 438
         ClientWidth = 692
         Color = clForm
         ParentColor = False
@@ -1943,7 +1943,7 @@ object MnFrm: TMnFrm
       object CBox: TComboBox
         Left = 46
         Height = 23
-        Top = 6
+        Top = 8
         Width = 144
         ItemHeight = 0
         ItemIndex = 0
@@ -1968,7 +1968,7 @@ object MnFrm: TMnFrm
       object FilterEdt: TEdit
         Left = 550
         Height = 21
-        Top = 5
+        Top = 8
         Width = 139
         Anchors = [akTop, akRight]
         OnEnter = FilterEdtEnter
