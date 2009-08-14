@@ -23,13 +23,13 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="9">
+    <Units Count="10">
       <Unit0>
         <Filename Value="libappmanager.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libappmanager"/>
-        <CursorPos X="53" Y="131"/>
-        <TopLine Value="114"/>
+        <CursorPos X="1" Y="160"/>
+        <TopLine Value="116"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="24"/>
         <Loaded Value="True"/>
@@ -37,8 +37,8 @@
       <Unit1>
         <Filename Value="management.pas"/>
         <UnitName Value="management"/>
-        <CursorPos X="45" Y="36"/>
-        <TopLine Value="16"/>
+        <CursorPos X="9" Y="464"/>
+        <TopLine Value="452"/>
         <UsageCount Value="11"/>
       </Unit1>
       <Unit2>
@@ -59,15 +59,15 @@
         <Filename Value="../bindings/appman.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="appman"/>
-        <CursorPos X="29" Y="24"/>
-        <TopLine Value="1"/>
+        <CursorPos X="22" Y="47"/>
+        <TopLine Value="15"/>
         <UsageCount Value="22"/>
       </Unit4>
       <Unit5>
         <Filename Value="../bindings/installer.pas"/>
         <UnitName Value="installer"/>
-        <CursorPos X="32" Y="33"/>
-        <TopLine Value="12"/>
+        <CursorPos X="11" Y="66"/>
+        <TopLine Value="45"/>
         <UsageCount Value="10"/>
       </Unit5>
       <Unit6>
@@ -90,8 +90,15 @@
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="../bindings/packagekit.pas"/>
+        <UnitName Value="packagekit"/>
+        <CursorPos X="2" Y="344"/>
+        <TopLine Value="303"/>
+        <UsageCount Value="10"/>
+      </Unit9>
     </Units>
-    <JumpHistory Count="16" HistoryIndex="15">
+    <JumpHistory Count="22" HistoryIndex="21">
       <Position1>
         <Filename Value="libappmanager.lpr"/>
         <Caret Line="134" Column="24" TopLine="96"/>
@@ -154,8 +161,32 @@
       </Position15>
       <Position16>
         <Filename Value="libappmanager.lpr"/>
-        <Caret Line="131" Column="12" TopLine="114"/>
+        <Caret Line="131" Column="11" TopLine="111"/>
       </Position16>
+      <Position17>
+        <Filename Value="libappmanager.lpr"/>
+        <Caret Line="23" Column="9" TopLine="1"/>
+      </Position17>
+      <Position18>
+        <Filename Value="libappmanager.lpr"/>
+        <Caret Line="68" Column="90" TopLine="61"/>
+      </Position18>
+      <Position19>
+        <Filename Value="libappmanager.lpr"/>
+        <Caret Line="23" Column="7" TopLine="1"/>
+      </Position19>
+      <Position20>
+        <Filename Value="libappmanager.lpr"/>
+        <Caret Line="23" Column="11" TopLine="1"/>
+      </Position20>
+      <Position21>
+        <Filename Value="libappmanager.lpr"/>
+        <Caret Line="137" Column="11" TopLine="119"/>
+      </Position21>
+      <Position22>
+        <Filename Value="libappmanager.lpr"/>
+        <Caret Line="137" Column="11" TopLine="119"/>
+      </Position22>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

@@ -46,8 +46,6 @@ type
   private
     { private declarations }
     FActiv: Boolean;
-    //** Handle progress of uninstall-operation
-    procedure UProgressChange(Sender: TObject;pos: Integer);
   public
     { public declarations }
   end; 
@@ -64,8 +62,8 @@ uses manager;
 
 procedure TRMForm.FormShow(Sender: TObject);
 begin
-Label1.Caption:=rsWaiting;
-Caption:=StringReplace(rsRMAppC,'%a','...',[rfReplaceAll])
+ Label1.Caption:=rsWaiting;
+ Caption:=StringReplace(rsRMAppC,'%a','...',[rfReplaceAll])
 end;
 
 procedure TRMForm.GetOutPutTimerTimer(Sender: TObject);
@@ -115,9 +113,10 @@ if Process1.ExitStatus>0 then begin
   end;
 end;
 
-procedure TRmForm.UProgressChange(Sender: TObject;pos: Integer);
+function UProgressChange(pos: LongInt): Boolean;cdecl;
 begin
- UProgress.Position:=pos;
+ RMForm.UProgress.Position:=pos;
+ Application.ProcessMessages;
 end;
 
 procedure LogAdd(s: String);
@@ -130,6 +129,7 @@ function OnRmMessage(msg: String;imp: TMType): Boolean;cdecl;
 begin
  if imp=mtInfo then LogAdd(msg);
  if imp=mtWarning then ShowMessage(msg);
+ Application.ProcessMessages;
 end;
 
 procedure TRMForm.FormActivate(Sender: TObject);
@@ -139,15 +139,20 @@ begin
 FActiv:=false;
 if MnFrm.uApp.uID<>'' then
 begin
-
+if Application.MessageBox(PChar(StringReplace(rsRealUninstQ,'%a',MnFrm.uApp.Name,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then
+begin
  register_message_call(@OnRmMessage);
+ register_progress_call(@UProgressChange);
   remove_application(MnFrm.uApp);
  register_message_call(@manager.OnMessage);
+end;
 end else
 begin
  ShowMessage('Error in selection.');
  close;
+ exit;
 end;
+ load_applications(gtALL);
 end;
 end;
 

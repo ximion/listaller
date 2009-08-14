@@ -6,13 +6,13 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="352"/>
+      <CurrentBuildNr Value="358"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -33,7 +33,7 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
         <CursorPos X="86" Y="109"/>
-        <TopLine Value="89"/>
+        <TopLine Value="65"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="33"/>
         <Loaded Value="True"/>
@@ -41,8 +41,8 @@
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="37" Y="1528"/>
-        <TopLine Value="1509"/>
+        <CursorPos X="1" Y="1582"/>
+        <TopLine Value="1557"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="16"/>
         <Loaded Value="True"/>

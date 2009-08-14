@@ -23,9 +23,8 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, LEntries,
-  uninstall, trstrings, FileUtil, CheckLst, xtypefm, appman,
-  LiCommon, globdef, Contnrs, sqlite3ds, db, aboutbox, GetText, PackageKit,
-  Spin;
+  uninstall, trstrings, FileUtil, CheckLst, xtypefm, appman, LiCommon, globdef,
+  Contnrs, sqlite3ds, db, aboutbox, GetText, PackageKit, Spin, iconloader;
 
 type
 
@@ -40,7 +39,6 @@ type
     Button1: TButton;
     MBar: TProgressBar;
     StatusLabel: TLabel;
-    ThrobberBox: TPaintBox;
     RmUpdSrcBtn: TBitBtn;
     UpdCheckBtn: TBitBtn;
     CatButton: TSpeedButton;
@@ -166,6 +164,11 @@ function OnMessage(msg: String;imp: TMType): Boolean;cdecl;
 begin
  if imp=mtInfo then MnFrm.StatusLabel.Caption:=msg;
  if imp=mtWarning then ShowMessage(msg);
+end;
+
+function OnUserRequest(mtype: TRqType;msg: PChar): TRqResult;cdecl;
+begin
+ ShowMessage(msg);
 end;
 
 { TMnFrm }
@@ -814,6 +817,9 @@ register_application_call(@OnNewAppFound);
 
 //Register callback to be notified if a message was thrown
 register_message_call(@OnMessage);
+
+//Register request call
+register_request_call(@OnUserRequest);
 
 set_su_mode(true);
 

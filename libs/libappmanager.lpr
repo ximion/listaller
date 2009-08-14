@@ -64,6 +64,8 @@ end;
 //** Start loading list of applications
 function load_applications(ty: GroupType): Boolean;cdecl;
 begin
+Result:=false;
+if not Assigned(FReq) then begin writeLn('[ERROR] No user request callback was registered');exit;end;
 try
  Result:=true;
  LoadEntries(ty);
@@ -126,6 +128,10 @@ end;
 //** Removes the application
 function remove_application(obj: TAppInfo): Boolean;cdecl;
 begin
+ Result:=false;
+if not Assigned(FProg) then begin writeLn('[ERROR] You need to register a progress callback!');exit;end;
+if not Assigned(FReq) then begin writeLn('[ERROR] You need to register a user request callback!');exit;end;
+
  Result:=true;
  try
   UninstallApp(obj);

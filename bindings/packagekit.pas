@@ -339,5 +339,8 @@ begin
   end;
 end;
 
+initialization
+ InitializeGType;
+
 end.
 

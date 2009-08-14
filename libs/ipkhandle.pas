@@ -1542,9 +1542,8 @@ reg:=TIniFile.Create(p+'proginfo.pin');
 upd:=reg.ReadString('Application','UpdSource','#');
 reg.Free;    }
 
- writeLn('- IPK uninstallation -');
+msg('- IPK uninstallation -');
 
- writeLn('Opening database...');
 dsApp:= TSQLite3Dataset.Create(nil);
 with dsApp do
  begin
@@ -1576,6 +1575,8 @@ dsApp.SQL:='SELECT * FROM AppInfo';
 dsApp.Edit;
 dsApp.Open;
 dsApp.Filtered:=true;
+msg('Database opened.');
+
 while not dsApp.EOF do
 begin
  if (dsApp.FieldByName('Name').AsString=AppName) and (dsApp.FieldByName('ID').AsString=AppID) then

@@ -21,8 +21,8 @@ unit lentries;
 interface
 
 uses
- Classes, SysUtils, StdCtrls, ExtCtrls, Buttons, Controls, LiCommon,
- trstrings;
+ Classes, SysUtils, StdCtrls, ExtCtrls, Buttons, Controls, iconloader,
+ trstrings, LiCommon;
 
 type
 //** Container for information about apps

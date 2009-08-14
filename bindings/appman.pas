@@ -46,6 +46,8 @@ TAppEvent = function(name: PChar;obj: TAppInfo): Boolean;cdecl;
 
  function load_applications(ty: GroupType): Boolean;cdecl;external amanlib name 'load_applications';
  function register_message_call(call: TMessageEvent): Boolean;cdecl;external amanlib name 'register_message_call';
+ function register_progress_call(call: TProgressCall): Boolean;cdecl;external amanlib name 'register_progress_call';
+ function register_request_call(call: TRequestEvent): TRqResult;cdecl;external amanlib name 'register_request_call';
  function register_application_call(call: TAppEvent): Boolean;cdecl;external amanlib name 'register_application_call';
  function set_su_mode(md: Boolean): Boolean;cdecl;external amanlib name 'set_su_mode';
  function remove_application(obj: TAppInfo): Boolean;cdecl;external amanlib name 'remove_application';

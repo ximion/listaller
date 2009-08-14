@@ -454,32 +454,35 @@ end;
 
 procedure UninstallApp(obj: TAppInfo);
 var f,g: String; t:TProcess;tmp: TStringList;pkit: TPackageKit;i: Integer;
+    name,id: String;
 begin
 
 msg('Connecting to PackageKit... (run "pkmon" to see the actions)',mtInfo);
 
 setpos(0);
 
+//Needed
+name:=obj.Name;
+id:=obj.UId;
+
 msg('Reading application information...',mtInfo);
 
 if not FileExists(obj.UId) then
 begin
-if FileExists(RegDir+LowerCase(obj.Name+'-'+obj.UId)+'/appfiles.list') then
+if DirectoryExists(RegDir+LowerCase(name+'-'+id)) then
 begin
-tmp:=TStringList.Create;
-tmp.LoadFromFile(RegDir+LowerCase(obj.Name+'-'+obj.UId)+'/appfiles.list');
- //UProgress.Max:=((tmp.Count)*10)+4;
-tmp.Free;
-end;
-
- remove_ipk_installed_app(obj.Name, obj.UId,FMsg,FProg,false);
-
+ //Remove IPK app
+remove_ipk_installed_app(PChar(name), PChar(id),FMsg,FProg,false);
 msg('Finished!',mtInfo);
 exit;
+end else
+begin
+ request('The registration of this package is broken!',rqError);exit;
+end;
 
 end else
- begin //Autopackage
- if obj.UId[1]='!' then
+begin //Autopackage
+ if id[1]='!' then
  begin
  t:=TProcess.Create(nil);
  t.CommandLine:=copy(obj.UId,2,length(obj.Uid));
@@ -490,9 +493,10 @@ end else
  end;
 end;
 
-if (obj.Uid[1]='/')
+if (id[1]='/')
 then
 begin
+
 // /!\
 ///////////////////////////////////////////////////////
 
@@ -503,11 +507,11 @@ msg('Detecting package...',mtInfo);
 pkit:=TPackageKit.Create;
 tmp:=TStringList.Create;
 pkit.RsList:=tmp;
-pkit.PkgNameFromFile(obj.UId);
+pkit.PkgNameFromFile(id);
 while not pkit.PkFinished do setpos(0);
 
 if tmp.Count<=0 then
-begin UninstallMojo(obj.UId);tmp.Free;pkit.Free;exit;end;
+begin UninstallMojo(id);tmp.Free;pkit.Free;exit;end;
 if pkit.PkFinishCode>0 then
 begin request(rsPKitProbPkMon,rqError);pkit.Free;tmp.Free;exit;end;
 f:=tmp[0];
@@ -551,6 +555,4 @@ end else exit;
 end;
 
 end.
-
-if Application.MessageBox(PAnsiChar(StringReplace(rsRealUninstQ,'%a',entry.AppName,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then begin
 
