@@ -80,7 +80,12 @@ end;
 //** Removes an TInstallation object
 function free_installation(setup: PInstallation): Boolean;
 begin
+try
+ Result:=true;
  setup^.Free;
+except
+ Result:=false;
+end;
 end;
 
 //** Initializes the setup
@@ -156,9 +161,17 @@ begin
 end;
 
 //** Set installation testmode
-function set_testmode(st: Boolean): Boolean; cdecl;
+function li_testmode(st: Boolean): Boolean; cdecl;
 begin
   Testmode:=st;
+  Result:=true;
+end;
+
+//** Set to superuser mode
+function li_set_su_mode(b: Boolean): Boolean; cdecl;
+begin
+  Root:=b;
+  Result:=true;
 end;
 
 //** Read disallows property
@@ -326,7 +339,8 @@ exports
 
  //Other functions
  remove_ipk_installed_app,
- set_testmode,
+ li_set_testmode,
+ li_set_su_mode,
  is_ipk_app_installed;
 
 begin

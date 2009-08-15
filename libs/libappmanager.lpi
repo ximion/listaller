@@ -28,8 +28,8 @@
         <Filename Value="libappmanager.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libappmanager"/>
-        <CursorPos X="1" Y="160"/>
-        <TopLine Value="116"/>
+        <CursorPos X="6" Y="156"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="24"/>
         <Loaded Value="True"/>
@@ -59,8 +59,8 @@
         <Filename Value="../bindings/appman.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="appman"/>
-        <CursorPos X="22" Y="47"/>
-        <TopLine Value="15"/>
+        <CursorPos X="87" Y="53"/>
+        <TopLine Value="17"/>
         <UsageCount Value="22"/>
       </Unit4>
       <Unit5>

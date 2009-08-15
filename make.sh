@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 #
 # DESTDIR		Destination root directory
-# WIDGET                Widgetset the binary should be installed for
 set -e
 
 for arg; do
   case $arg in
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;
-    WIDGET=*) WIDGET=${arg#WIDGET=};;
   esac;
 done
 
@@ -39,57 +37,14 @@ echo "Active widgetset: $WIDGET"
 # Create necessary dirs
 mkdir -p ./bin
 mkdir -p ./bin/locale
-mkdir -p ./bin/qt4
-mkdir -p ./bin/gtk2
 
-VER=$(fpc -iW)
-echo "Compiler version: $VER"
+echo "Building libraries..."
+$LCLDir/lazbuild -B --ws=nogui ./libs/libinstaller.lpr
+$LCLDir/lazbuild -B --ws=nogui ./libs/libappmanager.lpr
 
-echo "Creating installer..."
-if [ "$WIDGET" == "qt4" ]; then
-#./libuild PR=listallgo.lpr O=listallgo WIDGET=qt4
-$LCLDir/lazbuild -B --ws=qt listallgo.lpr
-mv ./bin/listallgo ./bin/qt4/
-else
-#./libuild PR=listallgo.lpr O=listallgo WIDGET=gtk2
-$LCLDir/lazbuild -B --ws=gtk2 listallgo.lpr
-mv ./bin/listallgo ./bin/gtk2/
-fi
-echo "Creating software-manager..."
-if [ "$WIDGET" == "qt4" ]; then
-#./libuild PR=listallmngr.lpr O=listallmgr WIDGET=qt4
-$LCLDir/lazbuild -B --ws=qt listallmgr.lpr
-mv ./bin/listallmgr ./bin/qt4/
-else
-#./libuild PR=listallmngr.lpr O=listallmgr WIDGET=gtk2
-$LCLDir/lazbuild -B --ws=gtk2 listallmgr.lpr
-mv ./bin/listallmgr ./bin/gtk2/
-fi
-echo "Creating updater..."
-if [ "$WIDGET" == "qt4" ]; then
-#./libuild PR=liupdate.lpr O=liupdate WIDGET=qt4
-$LCLDir/lazbuild -B --ws=qt liupdate.lpr
-mv ./bin/liupdate ./bin/qt4/
-else
-#./libuild PR=liupdate.lpr O=liupdate WIDGET=gtk2
-$LCLDir/lazbuild -B --ws=gtk2 liupdate.lpr
-mv ./bin/liupdate ./bin/gtk2/
-fi
-echo "Creating tray notifier..."
-if [ "$WIDGET" == "qt4" ]; then
-#./libuild PR=liupdate.lpr O=liupdate WIDGET=qt4
-$LCLDir/lazbuild -B --ws=qt litray.lpr
-mv ./bin/litray ./bin/qt4/
-else
-#./libuild PR=liupdate.lpr O=liupdate WIDGET=gtk2
-$LCLDir/lazbuild -B --ws=gtk2 litray.lpr
-mv ./bin/litray ./bin/gtk2/
-fi
+ln -s ./bin/libinstaller.so.0.4 libinstaller.so
+ln -s ./bin/libappmanager.so.0.4 libappmanager.so
 
-#Also workarount for lazbuild bug in Lazarus-Alpha
-WIDGET="gtk2"
-
-# We have to use GTK2 widgeset instead of the "nogui" widget untill all bugs in LazSVn are fixed.
 echo "Creating command-line tool..."
 $LCLDir/lazbuild -B --ws=nogui lipa.lpr
 #fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewhi -l -Fuabbrevia/ -Fusynapse/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -vm5024 -FEbin/ -olipa -dOpbCompat lipa.lpr

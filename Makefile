@@ -1,22 +1,29 @@
+# Makefile for Listaller 0.4
 #
-# Targets
-#
-
-#
+# Targets:
 # The First target is the one build when there is nothing on make command line
-#
 all:
 	chmod +x ./make.sh
-	./make.sh WIDGET=gtk2
-	./make.sh WIDGET=qt4
+	chmod +x ./make-gui.sh
+	./make.sh
+	./make-gui.sh WIDGET=gtk2
+	./make-gui.sh WIDGET=qt4
 
 all-qt:
+	chmod +x ./make-gui.sh
 	chmod +x ./make.sh
-	./make.sh WIDGET=qt4
+	./make.sh
+	./make-gui.sh WIDGET=qt4
 
 all-gtk:
+	chmod +x ./make-gui.sh
 	chmod +x ./make.sh
-	./make.sh WIDGET=gtk2
+	./make.sh
+	./make-gui.sh WIDGET=gtk2
+
+all-nogui:
+	chmod +x ./make.sh
+	./make.sh
 
 install-data:
 	chmod +x ./install-data.sh
@@ -27,8 +34,8 @@ install-build-tools:
 	./install-build-tools.sh
 
 install-core:
-	chmod +x ./install-cmds.sh
-	./install-cmds.sh
+	chmod +x ./install-core.sh
+	./install-core.sh
 
 licreator:
 	chmod +x ./make-creator.sh

@@ -26,12 +26,12 @@ uses
 //////////////////////////////////////////////////////////////////////////////////////
 //Exported helper functions
 
-function create_stringlist: Pointer; cdecl;
+function mgr_create_stringlist: Pointer; cdecl;
 begin
  Result:=TStringList.Create;
 end;
 
-function free_stringlist(lst: PStringList): Boolean; cdecl;
+function mgr_free_stringlist(lst: PStringList): Boolean; cdecl;
 begin
 Result:=true;
 try
@@ -41,7 +41,7 @@ except
 end;
 end;
 
-function stringlist_read_line(lst: PStringList;ln: Integer): PChar; cdecl;
+function mgr_stringlist_read_line(lst: PStringList;ln: Integer): PChar; cdecl;
 begin
  if (ln < lst^.Count)and(ln > -1) then
  begin
@@ -49,7 +49,7 @@ begin
  end else Result:='List index out of bounds.';
 end;
 
-function stringlist_write_line(lst: PStringList;ln: Integer;val: PChar): Boolean; cdecl;
+function mgr_stringlist_write_line(lst: PStringList;ln: Integer;val: PChar): Boolean; cdecl;
 begin
  if (ln < lst^.Count)and(ln > -1) then
  begin
@@ -62,7 +62,7 @@ end;
 //Exported functions
 
 //** Start loading list of applications
-function load_applications(ty: GroupType): Boolean;cdecl;
+function mgr_load_applications(ty: GroupType): Boolean;cdecl;
 begin
 Result:=false;
 if not Assigned(FReq) then begin writeLn('[ERROR] No user request callback was registered');exit;end;
@@ -75,7 +75,7 @@ end;
 end;
 
 //** Register message call
-function register_message_call(call: TMessageEvent): Boolean; cdecl;
+function mgr_register_message_call(call: TMessageEvent): Boolean; cdecl;
 begin
  Result:=true;
  try
@@ -86,7 +86,7 @@ begin
 end;
 
 //** Register application event to catch found apps
-function register_application_call(call: TAppEvent): Boolean;cdecl;
+function mgr_register_application_call(call: TAppEvent): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -97,7 +97,7 @@ begin
 end;
 
 //** Register event to recieve current progress
-function register_progress_call(call: TProgressCall): Boolean;cdecl;
+function mgr_register_progress_call(call: TProgressCall): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -108,7 +108,7 @@ begin
 end;
 
 //** Register event to recieve user requests
-function register_request_call(call: TRequestEvent): Boolean;cdecl;
+function mgr_register_request_call(call: TRequestEvent): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -119,14 +119,14 @@ begin
 end;
 
 //** Sets if aplications should work in root mode
-function set_su_mode(md: Boolean): Boolean;cdecl;
+function mgr_set_su_mode(md: Boolean): Boolean;cdecl;
 begin
  Root:=md;
  Result:=true;
 end;
 
 //** Removes the application
-function remove_application(obj: TAppInfo): Boolean;cdecl;
+function mgr_remove_application(obj: TAppInfo): Boolean;cdecl;
 begin
  Result:=false;
 if not Assigned(FProg) then begin writeLn('[ERROR] You need to register a progress callback!');exit;end;
@@ -142,18 +142,18 @@ end;
 
 exports
  //Stringlist functions
- create_stringlist,
- free_stringlist,
- stringlist_read_line,
- stringlist_write_line,
+ mgr_create_stringlist,
+ mgr_free_stringlist,
+ mgr_stringlist_read_line,
+ mgr_stringlist_write_line,
  //
- load_applications,
- register_message_call,
- register_application_call,
- register_progress_call,
- register_request_call,
- set_su_mode,
- remove_application;
+ mgr_load_applications,
+ mgr_register_message_call,
+ mgr_register_application_call,
+ mgr_register_progress_call,
+ mgr_register_request_call,
+ mgr_set_su_mode,
+ mgr_remove_application;
 
 begin
 end.

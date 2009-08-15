@@ -42,6 +42,8 @@ private
  exitcode: Integer;
  //Current progress
  prog: Integer;
+ //Last error message
+ ErrorMsg: String;
  //Function to get PackageKit version from pkcon
  function GetPkVersion: String;
 public
@@ -80,6 +82,8 @@ public
  property AssignToList: Boolean read asstolist;
  //** Current progress of the operation (in %)
  property Progress: Integer read prog;
+ //** Read the last error message
+ property LastErrorMessage: String read ErrorMsg;
 end;
 
 PPkDetailsObj = ^PkDetailsObj;
@@ -243,6 +247,7 @@ begin
   if error<>nil then
   begin
     g_warning('failed: %s', [error^.message]);
+    ErrorMsg:=error^.message;
     g_error_free(error);
   end;
 end;
@@ -263,6 +268,7 @@ begin
   begin
     Result:=false;
     g_warning('failed: %s', [error^.message]);
+    ErrorMsg:=error^.message;
     g_error_free(error);
   end;
 end;
@@ -283,6 +289,7 @@ begin
   begin
     Result:=false;
     g_warning('failed: %s', [error^.message]);
+    ErrorMsg:=error^.message;
     g_error_free(error);
   end;
 end;
@@ -300,6 +307,7 @@ begin
   if error<>nil then
   begin
     g_warning('failed: %s', [error^.message]);
+    ErrorMsg:=error^.message;
     g_error_free(error);
   end;
 end;
@@ -318,6 +326,7 @@ begin
   begin
     Result:=false;
     g_warning('failed: %s', [error^.message]);
+    ErrorMsg:=error^.message;
     g_error_free(error);
   end;
 end;
@@ -335,6 +344,7 @@ begin
   if error<>nil then
   begin
     g_warning('failed: %s', [error^.message]);
+    ErrorMsg:=error^.message;
     g_error_free(error);
   end;
 end;

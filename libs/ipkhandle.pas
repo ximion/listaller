@@ -21,9 +21,9 @@ unit ipkhandle;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, LiCommon, Process, trstrings, packagekit,
-  sqlite3ds, db, AbUnZper, AbArcTyp, XMLRead, DOM, distri, HTTPSend, FTPSend,
-  MD5, globdef;
+  Classes, SysUtils, IniFiles, Process, LiCommon, trstrings, packagekit,
+  sqlite3ds, db, AbUnZper, AbArcTyp, XMLRead, DOM, HTTPSend, FTPSend,
+  MD5, globdef, distri;
 
 type
 
@@ -166,14 +166,14 @@ end;
  function IsPackageInstalled(aName: String;aID: String): Boolean;
 
  var
+  //** True if application is in su mode
+  Root: Boolean=false;
   //** Path to package registration
   RegDir: String;
   //** @deprecated Set if application installs shared files
   ContSFiles: Boolean=false;
 
-  Testmode: Boolean;
-
-  //Notice: The "Testmode" variable is declared in LiCommon.pas
+  //Note: The "Testmode" variable is in LiCommon
 
 implementation
 
@@ -210,7 +210,7 @@ begin
  inherited Create;
  msg(rsOpeningDB);
  dsApp:= TSQLite3Dataset.Create(nil);
- if IsRoot then
+ if Root then
   RegDir:='/etc/lipa/app-reg/'
  else
   RegDir:=SyblToPath('$INST')+'/app-reg/';
@@ -1858,8 +1858,7 @@ if not Result then writeLn('You have broken dependencies.');
 end;
 
 initialization
- InitializeGType;
- if IsRoot then
+ if Root then
   RegDir:='/etc/lipa/app-reg/'
   else
   RegDir:=SyblToPath('$INST')+'/app-reg/';

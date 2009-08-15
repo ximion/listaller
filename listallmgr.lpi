@@ -11,13 +11,13 @@
       <Title Value="Listaller Manager"/>
       <UseAppBundle Value="False"/>
       <Icon Value="0"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="1518"/>
+      <CurrentBuildNr Value="1520"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -717,8 +717,8 @@
       <Unit94>
         <Filename Value="iconloader.pas"/>
         <UnitName Value="iconloader"/>
-        <CursorPos X="25" Y="122"/>
-        <TopLine Value="93"/>
+        <CursorPos X="4" Y="26"/>
+        <TopLine Value="6"/>
         <UsageCount Value="20"/>
       </Unit94>
       <Unit95>
@@ -859,7 +859,7 @@
       <IncludeFiles Value="$(ProjOutDir)/"/>
       <OtherUnitFiles Value="synapse/;abbrevia/;bindings/"/>
       <UnitOutputDirectory Value="bin"/>
-      <LCLWidgetType Value="gtk2"/>
+      <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

@@ -24,7 +24,7 @@ uses
   {$ENDIF}
   Interfaces, //We use NoGUI widgetset
   Classes, SysUtils, CustApp,
-  Process, LiCommon, ipkhandle,
+  Process, LiCommon, installer,
   TRStrings, IniFiles, HTTPSend,
   FTPSend, Distri, LiTranslator;
 

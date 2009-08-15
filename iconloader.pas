@@ -21,9 +21,9 @@ unit iconloader;
 interface
 
 uses
-  Classes, SysUtils, Graphics, LCLType,
+  Classes, SysUtils, Graphics, LCLType
   {$IFDEF LCLGTK2}
-  gtkdef, gtk2, gdk2pixbuf, gtk2int, gdk2
+  ,gtkdef, gtk2, gdk2pixbuf, gtk2int, gdk2
   {$ENDIF};
 
 //** Loads a stock icon (native on GTK2, if Qt4 is used aditional images are needed) @returns Handle to th bitmap

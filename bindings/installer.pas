@@ -74,7 +74,7 @@ function init_installation(setup: Pointer;pkname: PChar): PChar; cdecl; external
 function ins_register_main_prog_change_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'ins_register_main_prog_change_call';
 function ins_register_extra_prog_change_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'ins_register_extra_prog_change_call';
 function ins_pkgtype(setup: Pointer): TListallerPackageType; cdecl; external libinst name 'ins_pkgtype';
-function set_testmode(st: Boolean): Boolean; cdecl; external libinst name 'set_testmode';
+function li_set_testmode(st: Boolean): Boolean; cdecl; external libinst name 'set_testmode';
 function ins_disallows(setup: Pointer): PChar; cdecl; external libinst name 'ins_disallows';
 function ins_supported_distributions(setup: Pointer): PChar; cdecl; external libinst name 'ins_supported_distributions';
 function is_ipk_app_installed(appname: PChar;appid: PChar): Boolean; cdecl; external libinst name 'is_ipk_app_installed';
@@ -96,6 +96,7 @@ function ins_register_user_request_call(setup: Pointer;call: TRequestEvent): Boo
 function ins_start_installation(setup: Pointer): Boolean; cdecl; external libinst name 'ins_start_installation';
 function ins_dependencies(setup: Pointer; list: PStringList): Boolean; cdecl; external libinst name 'ins_dependencies';
 function ins_set_profileid(setup: Pointer;id: ShortInt): Boolean; cdecl;  external libinst name 'ins_set_profileid';
+function li_set_su_mode(b: Boolean): Boolean; cdecl; external libinst name 'li_set_su_mode';
 
 { TInstallPack }
 

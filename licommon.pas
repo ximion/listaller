@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
-//** This unit contains some various non-visual-lcl functions which are used everywhere
+//** This unit contains some various non-visual functions which are used nearly everywhere
 unit licommon;
 
 {$mode objfpc}{$H+}

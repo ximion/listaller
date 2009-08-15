@@ -21,5 +21,7 @@ esac
 mkdir -p $DESTDIR/usr/bin
 
 cp ./bin/lipa $DESTDIR/usr/bin/
+cp ./bin/libinstaller.so.0.4 $DESTDIR/usr/lib/
+cp ./bin/libappmanager.so.0.4 $DESTDIR/usr/lib/
 
 echo "Installation done."
