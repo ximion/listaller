@@ -44,8 +44,14 @@ private
  prog: Integer;
  //Last error message
  ErrorMsg: String;
+ gfinid: LongInt;
  //Function to get PackageKit version from pkcon
  function GetPkVersion: String;
+ //Signals
+ procedure OnMessage(client: Pointer;message: Guint;details: PChar;user_data: Pointer);cdecl;
+ procedure OnProgChange(client: Pointer;percentage: guint;subpercentage: guint;elapsed: guint;remaining: guint;user_data: gpointer);cdecl;
+ procedure OnPackage(client: Pointer;obj: GPointer;user_data: Pointer);cdecl;
+ procedure OnFinish(client: Pointer;exit: guint;runtime:guint;user_data: Pointer);cdecl;
 public
  constructor Create;
  destructor Destroy; override;
@@ -108,6 +114,7 @@ end;
 procedure InitializeGType;
 
 const pklib = 'libpackagekit-glib.so';
+var loop: PGMainLoop; //GLib main loop to catch signals on idle
 
 //Bitfield
 function pk_filter_bitfield_from_text(filters: PChar): guint64; cdecl; external pklib name 'pk_filter_bitfield_from_text';
@@ -132,7 +139,7 @@ begin
  g_type_init();
 end;
 
-procedure OnProgChange(client: Pointer;percentage: guint;subpercentage: guint;elapsed: guint;remaining: guint;user_data: gpointer);cdecl;
+procedure TPackageKit.OnProgChange(client: Pointer;percentage: guint;subpercentage: guint;elapsed: guint;remaining: guint;user_data: gpointer);cdecl;
 begin
  if percentage = 101 then
   TPackageKit(user_data).prog:=0
@@ -140,7 +147,7 @@ begin
   TPackageKit(user_data).prog:=percentage;
 end;
 
-procedure OnPackage(client: Pointer;obj: GPointer;user_data: Pointer);cdecl;
+procedure TPackageKit.OnPackage(client: Pointer;obj: GPointer;user_data: Pointer);cdecl;
 var s: String;pk: PPkPackageID;
 begin
 if Assigned(TPackageKit(user_data).RsList) then
@@ -155,7 +162,7 @@ begin
 end;
 end;
 
-procedure OnFinish(client: Pointer;exit: guint;runtime:guint;user_data: Pointer);cdecl;
+procedure TPackageKit.OnFinish(client: Pointer;exit: guint;runtime:guint;user_data: Pointer);cdecl;
 begin
 if user_data<>nil then
 begin
@@ -164,7 +171,7 @@ begin
 end;
 end;
 
-procedure OnMessage(client: Pointer;message: Guint;details: PChar;user_data: Pointer);cdecl;
+procedure TPackageKit.OnMessage(client: Pointer;message: Guint;details: PChar;user_data: Pointer);cdecl;
 begin
  writeLn(details);
 end;
@@ -177,16 +184,17 @@ begin
   pkclient := pk_client_new;
 
   //Assign signals
-  g_signal_connect(pkclient,'progress-changed',TGCallback(@OnProgChange),self);
-  g_signal_connect(pkclient,'package',TGCallback(@OnPackage),self);
-  g_signal_connect(pkclient,'finished',TGCallback(@OnFinish),self);
-  g_signal_connect(pkclient,'message',TGCallback(@OnMessage),self);
+  g_signal_connect(pkclient,'progress-changed',TGCallback(TMethod(@OnProgChange).Code),self);
+  g_signal_connect(pkclient,'package',TGCallback(TMethod(@OnPackage).Code),self);
+  gfinid:=g_signal_connect(pkclient,'finished',TGCallback(TMethod(@OnFinish).Code),self);
+  g_signal_connect(pkclient,'message',TGCallback(TMethod(@OnMessage).Code),self);
 
   asstolist:=false;
 end;
 
 destructor TPackageKit.Destroy;
 begin
+  Terminate;
   inherited Destroy;
   pkclient:=nil;
 end;
