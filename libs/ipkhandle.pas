@@ -23,7 +23,8 @@ interface
 uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trstrings, packagekit,
   sqlite3ds, db, AbUnZper, AbArcTyp, XMLRead, DOM, HTTPSend, FTPSend,
-  MD5, globdef, distri;
+  MD5, globdef, distri,
+  Forms; //Needed to ProcessMessages()
 
 type
 
@@ -175,15 +176,22 @@ end;
 
   //Note: The "Testmode" variable is in LiCommon
 
+  //IMPORTANT: Because the TPackageKit GLib-Connection freezes the application
+  //           (we cannot force reacting on signals), we need to use the NoGUI
+  //           widgetset to make Application.ProcessMessages() usable.
+  //           (Workaround)
+
 implementation
 
 procedure TInstallation.SetMainPos(pos: integer);
 begin
+ Application.ProcessMessages;
  if Assigned(FProgChange1) then FProgChange1(pos);
 end;
 
 procedure TInstallation.SetExtraPos(pos: integer);
 begin
+ Application.ProcessMessages;
  if Assigned(FProgChange2) then FProgChange2(pos);
 end;
 
@@ -363,7 +371,7 @@ begin
      pkit.FindPkgForFile(Dependencies[i]);
      while not pkit.PkFinished do begin
        //Do nothing...
-       SetMainPos(Round(mnpos*max));
+       Application.ProcessMessages;
      end;
 
      if (pkit.PkFinishCode>0)or(xtmp.Count<=0) then
@@ -1096,7 +1104,7 @@ begin
      while not pkit.PkFinished do
      begin
      //Do nothing...
-      SetMainPos(Round(mnpos*max));
+      Application.ProcessMessages;
      end;
 
      if pkit.PkFinishCode>0 then
@@ -1407,7 +1415,7 @@ pkit:=TPackageKit.Create;
    msg('Looking for '+Dependencies[i]);
 
    pkit.Resolve(Dependencies[i]);
-   while not pkit.PkFinished do begin SetMainPos(Round(mnpos*max));end;
+   while not pkit.PkFinished do begin SetMainPos(Round(mnpos*max)); Application.ProcessMessages;end;
 
   if pkit.PkFinishCode>0 then
   begin
@@ -1421,7 +1429,7 @@ pkit:=TPackageKit.Create;
   begin
    msg('Looking for '+copy(Dependencies[i],1,pos(' -',Dependencies[i])-1));
    pkit.Resolve(copy(Dependencies[i],1,pos(' -',Dependencies[i])-1));
-   while not pkit.PkFinished do begin SetMainPos(Round(mnpos*max));end;
+   while not pkit.PkFinished do begin SetMainPos(Round(mnpos*max));Application.ProcessMessages;end;
 
   if pkit.PkFinishCode>0 then
   begin

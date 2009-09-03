@@ -1,0 +1,72 @@
+Package: lithememgr-gtk
+Architecture: any
+Depends: ${shlibs:Depends}, listaller
+Description: liTheme Manager (GTK2)
+  Tool that lets you easily install/uninstall system themes, wallpapers, 
+  iconsets and screensavers.  liThemeMgr is part of the Listaller project
+  and uses it's technology.
+  liThemeMgr is still under development. This is an daily-build and should not be used!
+
+Package: lithememgr-qt
+Architecture: any
+Depends: ${shlibs:Depends}, listaller
+Replaces: lithememgr-gtk
+Description: liTheme Manager (Qt4)
+  Tool that lets you easily install/uninstall system themes, wallpapers, 
+  iconsets and screensavers.  liThemeMgr is part of the Listaller project
+  and uses it's technology.
+  liThemeMgr is still under development. This is an daily-build and should not be used!
+
+Package: lithememgr-gtk-dbg
+Architecture: any
+Depends: lithememgr-gtk (= ${binary:Version})
+Description: Debug symbols for liTheme Manager
+  This package contains the debuginfos for the Listaller theme installer
+  and manager. (Symbols for GTK+ version)
+
+Package: listaller-gtk-dbg
+Architecture: i386 powerpc sparc amd64 arm
+Depends: listaller-gtk (= ${binary:Version})
+Section: debug
+Description: Debug symbols for Listaller GTK+ tools
+ This package contains debuginfos for the Listaller base tools (GTK+ version)
+
+Package: listaller-tools-dbg
+Architecture: i386 powerpc sparc amd64 arm
+Depends: listaller-tools (= ${binary:Version})
+Section: debug
+Description: Debug symbols for Listaller command-line tools
+ This package contains debug symbols for the Listaller command-line tools
+ ('libuild' and 'unibuild')
+
+Package: listaller-core-dbg
+Architecture: i386 powerpc sparc amd64 arm
+Depends: listaller-core (= ${binary:Version})
+Section: debug
+Description: Debug symbols for Listaller command-line tool 'lipa'
+ This package contains the debug symbols for the Listaller command-line tool
+ ('lipa')
+
+Package: listaller-creator-gtk-dbg
+Architecture: i386 powerpc sparc amd64 arm
+Section: debug
+Depends: listaller-creator-gtk (= ${binary:Version})
+Description: Debug symbols for Listaller Creator (GTK+)
+ This package contains the debuginfos for the IPS script
+ wizard GUI (liCreator) in GTK+ version.
+
+Package: listaller-qt-dbg
+Architecture: i386 powerpc sparc amd64 arm
+Section: debug
+Depends: listaller-qt (= ${binary:Version})
+Description: Debug symbols for Listaller Qt tools
+ This package contains the debuginfos for the Listaller base tools 
+ (Qt versions)
+
+Package: listaller-creator-qt-dbg
+Architecture: i386 powerpc sparc amd64 arm
+Section: debug
+Depends: listaller-creator-qt (= ${binary:Version})
+Description: Debug symbols for Listaller Creator (Qt)
+ This package contains the debuginfos for the IPS script
+ wizard GUI (liCreator) in Qt version.

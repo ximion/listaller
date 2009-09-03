@@ -15,11 +15,19 @@ Listaller needs the following modules to compile:
  * libsqlite3-dev
  * libglib2.0-0
  * libglib2.0-dev
+ * packagekit
+ * packagekit-glib
 
 The dependencies are needed to compile the Qt4 and the GTK2 version of Listaller
 
 === Dependencies ===
 Listaller needs the following packages to run:
+
+General:
+ * xdg-utils
+ * lsb-release
+ * packagekit >= 0.4.6
+ * apt-file [only on APT based distributions]
 
 GTK2 version:
  * libc6
@@ -29,11 +37,6 @@ GTK2 version:
  * libsqlite3-0
  * libx11-6
  * gksu
- * xdg-utils
- * lsb-release
- * packagekit >= 0.4.6
- * python-packagekit
- * python
  * gnome-packagekit [optional]
 
 Qt4 version:
@@ -41,8 +44,6 @@ Qt4 version:
  * libsqlite3-0
  * kdesudo
  * packagekit >=0.4.6
- * python-packagekit
- * python
  * libqt4intf
  * kde-icons-oxygen
  * kpackagekit [optional]

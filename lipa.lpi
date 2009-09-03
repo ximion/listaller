@@ -31,15 +31,15 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="24">
+    <Units Count="25">
       <Unit0>
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
-        <CursorPos X="31" Y="27"/>
+        <CursorPos X="16" Y="27"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="47"/>
+        <UsageCount Value="48"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -109,7 +109,7 @@
         <UnitName Value="ipkbuild"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="36"/>
       </Unit10>
       <Unit11>
         <Filename Value="abzbrows.pas"/>
@@ -176,8 +176,8 @@
       <Unit20>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
+        <CursorPos X="5" Y="39"/>
+        <TopLine Value="25"/>
         <UsageCount Value="10"/>
       </Unit20>
       <Unit21>
@@ -201,6 +201,14 @@
         <TopLine Value="167"/>
         <UsageCount Value="10"/>
       </Unit23>
+      <Unit24>
+        <Filename Value="ipkscript.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ipkscript"/>
+        <CursorPos X="21" Y="67"/>
+        <TopLine Value="39"/>
+        <UsageCount Value="21"/>
+      </Unit24>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
@@ -321,7 +329,7 @@
       </Position29>
       <Position30>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="27" Column="14" TopLine="1"/>
+        <Caret Line="27" Column="16" TopLine="1"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>

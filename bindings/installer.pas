@@ -74,7 +74,7 @@ function init_installation(setup: Pointer;pkname: PChar): PChar; cdecl; external
 function ins_register_main_prog_change_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'ins_register_main_prog_change_call';
 function ins_register_extra_prog_change_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'ins_register_extra_prog_change_call';
 function ins_pkgtype(setup: Pointer): TListallerPackageType; cdecl; external libinst name 'ins_pkgtype';
-function li_set_testmode(st: Boolean): Boolean; cdecl; external libinst name 'set_testmode';
+function li_testmode(st: Boolean): Boolean; cdecl; external libinst name 'li_testmode';
 function ins_disallows(setup: Pointer): PChar; cdecl; external libinst name 'ins_disallows';
 function ins_supported_distributions(setup: Pointer): PChar; cdecl; external libinst name 'ins_supported_distributions';
 function is_ipk_app_installed(appname: PChar;appid: PChar): Boolean; cdecl; external libinst name 'is_ipk_app_installed';
@@ -134,7 +134,7 @@ end;
 
 procedure TInstallPack.SetTestmode(b: Boolean);
 begin
- set_testmode(b);
+ li_testmode(b);
 end;
 
 function TInstallPack.GetDisallows: String;

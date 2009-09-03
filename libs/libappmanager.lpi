@@ -23,12 +23,12 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="10">
+    <Units Count="11">
       <Unit0>
         <Filename Value="libappmanager.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libappmanager"/>
-        <CursorPos X="6" Y="156"/>
+        <CursorPos X="28" Y="11"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="24"/>
@@ -66,8 +66,8 @@
       <Unit5>
         <Filename Value="../bindings/installer.pas"/>
         <UnitName Value="installer"/>
-        <CursorPos X="11" Y="66"/>
-        <TopLine Value="45"/>
+        <CursorPos X="4" Y="137"/>
+        <TopLine Value="117"/>
         <UsageCount Value="10"/>
       </Unit5>
       <Unit6>
@@ -97,6 +97,13 @@
         <TopLine Value="303"/>
         <UsageCount Value="10"/>
       </Unit9>
+      <Unit10>
+        <Filename Value="libinstaller.lpr"/>
+        <UnitName Value="libinstaller"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="309"/>
+        <UsageCount Value="10"/>
+      </Unit10>
     </Units>
     <JumpHistory Count="22" HistoryIndex="21">
       <Position1>

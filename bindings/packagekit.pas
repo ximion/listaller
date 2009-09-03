@@ -21,7 +21,7 @@ unit packagekit;
 interface
 
 uses
-  Classes, SysUtils, Process, Forms, glib2;
+  Classes, SysUtils, Process, Forms, glib2, distri;
 
 
 //** PackageKit wrapper
@@ -194,9 +194,8 @@ end;
 
 destructor TPackageKit.Destroy;
 begin
-  Terminate;
-  inherited Destroy;
   pkclient:=nil;
+  inherited Destroy;
 end;
 
 function TPackageKit.GetPkVersion: String;
@@ -342,6 +341,11 @@ end;
 function TPackageKit.FindPkgForFile(fname: String): Boolean;
 var filter: guint64;
     error: PGError=nil;
+    DInfo: TDistroInfo;
+    p: TProcess;
+    s: TStringList;
+begin
+if DInfo.PackageSystem<>'DEB' then
 begin
   pk_client_reset(pkclient,nil);
   finaction:=false;
@@ -355,6 +359,28 @@ begin
     ErrorMsg:=error^.message;
     g_error_free(error);
   end;
+end else
+begin
+ // We need to use apt-file, because the PackageKit
+ // APT backend does not support searching for not-installed packages
+  s:=TStringList.Create;
+  p:=TProcess.create(nil);
+  p.Options:=[poUsePipes];
+  p.CommandLine:='apt-file -l -N search '+fname;
+ try
+  p.Execute;
+  while p.Running do Application.ProcessMessages;
+   s.LoadFromStream(p.Output);
+ finally
+ p.Free;
+ end;
+ RsList.Assign(s);
+ if s.Count>=0 then
+  Result:=true
+ else Result:=false;
+ s.Free;
+end;
+
 end;
 
 initialization

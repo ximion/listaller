@@ -339,7 +339,7 @@ exports
 
  //Other functions
  remove_ipk_installed_app,
- li_set_testmode,
+ li_testmode,
  li_set_su_mode,
  is_ipk_app_installed;
 

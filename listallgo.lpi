@@ -50,7 +50,7 @@
         <MinVersion Major="1" Valid="True"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="116">
+    <Units Count="117">
       <Unit0>
         <Filename Value="listallgo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -65,8 +65,8 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="1" Y="291"/>
-        <TopLine Value="264"/>
+        <CursorPos X="37" Y="27"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -283,8 +283,8 @@
       <Unit32>
         <Filename Value="distri.pas"/>
         <UnitName Value="distri"/>
-        <CursorPos X="1" Y="27"/>
-        <TopLine Value="7"/>
+        <CursorPos X="21" Y="97"/>
+        <TopLine Value="185"/>
         <UsageCount Value="58"/>
       </Unit32>
       <Unit33>
@@ -864,12 +864,19 @@
       <Unit115>
         <Filename Value="bindings/installer.pas"/>
         <UnitName Value="installer"/>
-        <CursorPos X="41" Y="129"/>
-        <TopLine Value="109"/>
+        <CursorPos X="29" Y="24"/>
+        <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit115>
+      <Unit116>
+        <Filename Value="bindings/packagekit.pas"/>
+        <UnitName Value="packagekit"/>
+        <CursorPos X="2" Y="381"/>
+        <TopLine Value="350"/>
+        <UsageCount Value="10"/>
+      </Unit116>
     </Units>
-    <JumpHistory Count="20" HistoryIndex="19">
+    <JumpHistory Count="21" HistoryIndex="20">
       <Position1>
         <Filename Value="igobase.pas"/>
         <Caret Line="53" Column="16" TopLine="33"/>
@@ -950,6 +957,10 @@
         <Filename Value="igobase.pas"/>
         <Caret Line="292" Column="21" TopLine="270"/>
       </Position20>
+      <Position21>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="27" Column="37" TopLine="1"/>
+      </Position21>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

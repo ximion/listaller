@@ -37,8 +37,6 @@ var
   RegDir: String='';
 
 type
-//** Listaller package types
-TListallerPackageType = (lptLinstall, lptDLink, lptContainer);
 //** Urgency levels
 TUrgencyLevel = (ulLow, ulNormal, ulCritical);
 

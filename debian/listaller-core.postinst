@@ -1,0 +1,6 @@
+#! /bin/sh
+#DEBHELPER#
+set -e
+
+echo "Doing update of apt-file database..."
+apt-file update
