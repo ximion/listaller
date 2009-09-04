@@ -21,26 +21,9 @@ unit appman;
 interface
 
 uses
-  Classes, SysUtils, globdef;
+  Classes, SysUtils, litypes;
 
 type
-//** Different message types
-TMType    = (mtInfo,mtWarning);
-//** Container for information about apps
-TAppInfo = record
- Name: PChar;
- ShortDesc: PChar;
- Version: PChar;
- Author: PChar;
- Icon: PChar;
- UId: PChar;
-end;
-
-//** Application groups
-GroupType = (gtALL,gtEDUCATION,gtOFFICE,gtDEVELOPMENT,gtGRAPHIC,gtNETWORK,gtGAMES,gtSYSTEM,gtMULTIMEDIA,gtADDITIONAL,gtOTHER);
-
-//** Event to catch thrown application records
-TAppEvent = function(name: PChar;obj: TAppInfo): Boolean;cdecl;
 
  const amanlib='libappmanager.so';
 
