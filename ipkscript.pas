@@ -25,13 +25,9 @@ uses
 
 type
 
-//** A IPK script file
-TIPKScript = class
+//** Basic IPK reader class
+TIPKBasic = class
  private
-  text: TStringList;
-  FBasePath: String;
-  clang: String;
-
   function GetValue(s: String): String;
   function SearchKeyIndex(s: String): Integer;
   function SolveInclude(s: String): String;
@@ -52,7 +48,12 @@ TIPKScript = class
   function  ReadAuthor: String;
   procedure WriteMaintainer(s: String);
   function  ReadMaintainer: String;
-
+  procedure WriteDisallows(s: String);
+  function  ReadDisallows: String;
+ protected
+  text: TStringList;
+  FBasePath: String;
+  clang: String;
  public
   constructor Create;
   destructor  Destroy;override;
@@ -75,13 +76,21 @@ TIPKScript = class
   property Group: GroupType read ReadGroup write WriteGroup;
   property Author: String read ReadAuthor write WriteAuthor;
   property Maintainer: String read ReadMaintainer write WriteMaintainer;
+  property Disallows: String read ReadDisallows write WriteDisallows;
  end;
+
+TIPKScript = class(TIPKBasic)
+ private
+ public
+  constructor Create;override;
+  destructor  Destroy;override;
+end;
 
 implementation
 
-{ TIPKScript }
+{ TIPKBasic }
 
-constructor TIPKScript.Create;
+constructor TIPKBasic.Create;
 begin
  inherited;
  text:=TStringList.Create;
@@ -91,13 +100,13 @@ begin
  clang:='';
 end;
 
-destructor TIPKScript.Destroy;
+destructor TIPKBasic.Destroy;
 begin
  text.Free;
  inherited;
 end;
 
-function TIPKScript.SaveToFile(s: String): Boolean;
+function TIPKBasic.SaveToFile(s: String): Boolean;
 begin
 result:=true;
 try
@@ -108,7 +117,7 @@ except
 end;
 end;
 
-function TIPKScript.LoadFromFile(s: String): Boolean;
+function TIPKBasic.LoadFromFile(s: String): Boolean;
 begin
  result:=true;
  if FileExists(s) then
@@ -126,14 +135,14 @@ begin
  end else Result:=false;
 end;
 
-function TIPKScript.GetValue(s: String): String;
+function TIPKBasic.GetValue(s: String): String;
 begin
  Result:=LowerCase(copy(s,pos(':',s)+1,length(s)));
  if Result[1]=' ' then
   Result:=copy(Result,2,length(Result));
 end;
 
-function TIPKScript.SearchKeyIndex(S: String): Integer;
+function TIPKBasic.SearchKeyIndex(S: String): Integer;
 var i: Integer;h: String;
 begin
  Result:=-1;
@@ -156,7 +165,7 @@ begin
  end;
 end;
 
-function TIPKScript.SolveInclude(s: String): String;
+function TIPKBasic.SolveInclude(s: String): String;
 var h: String;
 begin
  h:=copy(s,pos('"',s)+1,length(s));
@@ -167,7 +176,7 @@ begin
   Result:=h;
 end;
 
-procedure TIPKScript.WriteType(atype: TPkgType);
+procedure TIPKBasic.WriteType(atype: TPkgType);
 var h: String;
 begin
 case AType of
@@ -181,7 +190,7 @@ else
  text.Add(h);
 end;
 
-function TIPKScript.ReadType: TPkgType;
+function TIPKBasic.ReadType: TPkgType;
 var s: String;j: Integer;
 begin
  Result:=ptUnknown;
@@ -195,7 +204,7 @@ begin
  end;
 end;
 
-procedure TIPKScript.WriteName(s: String);
+procedure TIPKBasic.WriteName(s: String);
 begin
 s:='Name: '+s;
 if SearchKeyIndex('Name')>-1 then
@@ -204,7 +213,7 @@ else
  text.Add(s);
 end;
 
-function TIPKScript.ReadName: String;
+function TIPKBasic.ReadName: String;
 var j: Integer;
 begin
  Result:='';
@@ -213,7 +222,7 @@ begin
   Result:=GetValue(text[j]);
 end;
 
-procedure TIPKScript.WriteVersion(s: String);
+procedure TIPKBasic.WriteVersion(s: String);
 var k: String;
 begin
 if clang='' then
@@ -228,7 +237,7 @@ else
  text.Add(s);
 end;
 
-function TIPKScript.ReadVersion: String;
+function TIPKBasic.ReadVersion: String;
 var j: Integer;
 begin
  Result:='';
@@ -237,7 +246,7 @@ begin
   Result:=GetValue(text[j]);
 end;
 
-procedure TIPKScript.ReadAppLicense(info: TStringList);
+procedure TIPKBasic.ReadAppLicense(info: TStringList);
 var i: Integer;s: String;
 begin
  i:=SearchKeyIndex('License');
@@ -262,7 +271,7 @@ begin
  end;
 end;
 
-procedure TIPKScript.WriteAppLicense(path: String);
+procedure TIPKBasic.WriteAppLicense(path: String);
 var s: String;i: Integer;
 begin
  s:='License: include:"'+path+'"';
@@ -281,7 +290,7 @@ else
  text.Add(s);
 end;
 
-procedure TIPKScript.WriteAppLicense(info: TStringList);
+procedure TIPKBasic.WriteAppLicense(info: TStringList);
 var i: Integer;
 begin
  if info.Count>=0 then
@@ -302,7 +311,7 @@ begin
  end;
 end;
 
-procedure TIPKScript.ReadAppDescription(info: TStringList);
+procedure TIPKBasic.ReadAppDescription(info: TStringList);
 var i: Integer;s: String;
 begin
  i:=SearchKeyIndex('Description');
@@ -327,7 +336,7 @@ begin
  end;
 end;
 
-procedure TIPKScript.WriteAppDescription(path: String);
+procedure TIPKBasic.WriteAppDescription(path: String);
 var s: String;i: Integer;
 begin
  s:='Description: include:"'+path+'"';
@@ -346,7 +355,7 @@ else
  text.Add(s);
 end;
 
-procedure TIPKScript.WriteAppDescription(info: TStringList);
+procedure TIPKBasic.WriteAppDescription(info: TStringList);
 var i: Integer;
 begin
  if info.Count>=0 then
@@ -367,7 +376,7 @@ begin
  end;
 end;
 
-procedure TIPKScript.WriteIcon(s: String);
+procedure TIPKBasic.WriteIcon(s: String);
 begin
 s:='Icon: '+s;
 if SearchKeyIndex('Version')>-1 then
@@ -376,7 +385,7 @@ else
  text.Add(s);
 end;
 
-function TIPKScript.ReadIcon: String;
+function TIPKBasic.ReadIcon: String;
 var j: Integer;
 begin
  Result:='';
@@ -385,7 +394,7 @@ begin
   Result:=GetValue(text[j]);
 end;
 
-procedure TIPKScript.WriteSDesc(s: String);
+procedure TIPKBasic.WriteSDesc(s: String);
 var k: String;
 begin
 if clang='' then
@@ -400,7 +409,7 @@ else
  text.Add(s);
 end;
 
-function TIPKScript.ReadSDesc: String;
+function TIPKBasic.ReadSDesc: String;
 var j: Integer;
 begin
  Result:='';
@@ -409,7 +418,7 @@ begin
   Result:=GetValue(text[j]);
 end;
 
-procedure TIPKScript.WriteGroup(g: GroupType);
+procedure TIPKBasic.WriteGroup(g: GroupType);
 var s: String;
 begin
 case g of
@@ -433,7 +442,7 @@ else
  text.Add(s);
 end;
 
-function TIPKScript.ReadGroup: GroupType;
+function TIPKBasic.ReadGroup: GroupType;
 var j: Integer;s: String;
 begin
  Result:=gtUNKNOWN;
@@ -455,7 +464,7 @@ begin
  if s='other' then Result:=gtOTHER;
 end;
 
-procedure TIPKScript.WriteAuthor(s: String);
+procedure TIPKBasic.WriteAuthor(s: String);
 var k: String;
 begin
 if clang='' then
@@ -470,7 +479,7 @@ else
  text.Add(s);
 end;
 
-function TIPKScript.ReadAuthor: String;
+function TIPKBasic.ReadAuthor: String;
 var j: Integer;
 begin
  Result:='';
@@ -479,7 +488,7 @@ begin
   Result:=GetValue(text[j]);
 end;
 
-procedure TIPKScript.WriteMaintainer(s: String);
+procedure TIPKBasic.WriteMaintainer(s: String);
 var k: String;
 begin
 if clang='' then
@@ -494,13 +503,57 @@ else
  text.Add(s);
 end;
 
-function TIPKScript.ReadMaintainer: String;
+function TIPKBasic.ReadMaintainer: String;
 var j: Integer;
 begin
  Result:='';
  j:=SearchKeyIndex('Maintainer');
  if j>-1 then
   Result:=GetValue(text[j]);
+end;
+
+procedure TIPKBasic.WriteDisallows(s: String);
+var k: String;
+begin
+ k:='Disallow'
+s:=k+': '+s;
+if SearchKeyIndex(k)>-1 then
+ text[SearchKeyIndex(k)]:=s
+else
+ text.Add(s);
+end;
+
+function TIPKBasic.ReadDisallows: String;
+var j: Integer;
+begin
+ Result:='';
+ j:=SearchKeyIndex('Disallow');
+ if j>-1 then
+  Result:=GetValue(text[j]);
+end;
+
+procedure TIPKBasic.WriteProfiles(lst: TStrings);
+var k: String;
+begin
+
+end;
+
+procedure TIPKBasic.ReadProfiles(lst: TStrings);
+var j: Integer;
+begin
+
+end;
+
+{ TIPKScript }
+
+constructor TIPKScript.Create;
+begin
+ inherited;
+end;
+
+destructor TIPKScript.Destroy;
+begin
+ inherited;
 end;
 
 end.

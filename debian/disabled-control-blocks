@@ -1,29 +1,3 @@
-Package: lithememgr-gtk
-Architecture: any
-Depends: ${shlibs:Depends}, listaller
-Description: liTheme Manager (GTK2)
-  Tool that lets you easily install/uninstall system themes, wallpapers, 
-  iconsets and screensavers.  liThemeMgr is part of the Listaller project
-  and uses it's technology.
-  liThemeMgr is still under development. This is an daily-build and should not be used!
-
-Package: lithememgr-qt
-Architecture: any
-Depends: ${shlibs:Depends}, listaller
-Replaces: lithememgr-gtk
-Description: liTheme Manager (Qt4)
-  Tool that lets you easily install/uninstall system themes, wallpapers, 
-  iconsets and screensavers.  liThemeMgr is part of the Listaller project
-  and uses it's technology.
-  liThemeMgr is still under development. This is an daily-build and should not be used!
-
-Package: lithememgr-gtk-dbg
-Architecture: any
-Depends: lithememgr-gtk (= ${binary:Version})
-Description: Debug symbols for liTheme Manager
-  This package contains the debuginfos for the Listaller theme installer
-  and manager. (Symbols for GTK+ version)
-
 Package: listaller-gtk-dbg
 Architecture: i386 powerpc sparc amd64 arm
 Depends: listaller-gtk (= ${binary:Version})
