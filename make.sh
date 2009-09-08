@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #
 # DESTDIR		Destination root directory
-set -e
+
+#set -e
 
 for arg; do
   case $arg in

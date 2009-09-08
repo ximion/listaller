@@ -48,8 +48,8 @@
         <ComponentName Value="UMnForm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="mnupdate"/>
-        <CursorPos X="1" Y="274"/>
-        <TopLine Value="262"/>
+        <CursorPos X="66" Y="26"/>
+        <TopLine Value="13"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="45"/>
         <Loaded Value="True"/>

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Parses command line options. Currently supported options are:
 # DESTDIR		Destination root directory
-set -e
+
+#set -e
 
 for arg; do
   case $arg in
@@ -19,6 +20,7 @@ esac
 # Does the install
 
 mkdir -p $DESTDIR/usr/bin
+mkdir -p $DESTDIR/usr/lib
 
 cp ./bin/lipa $DESTDIR/usr/bin/
 cp ./bin/libinstaller.so.0.4 $DESTDIR/usr/lib/

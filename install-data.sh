@@ -15,8 +15,6 @@ mkdir -p $DESTDIR/usr/share/pixmaps
 mkdir -p $DESTDIR/usr/share/listaller/mime
 mkdir -p $DESTDIR/usr/share/listaller/graphics
 mkdir -p $DESTDIR/usr/share/listaller/graphics/categories
-mkdir -p $DESTDIR/usr/share/listaller/pkitbind
-chmod +x ./bindings/pkitbind.py
 #Copy graphics
 cp ./graphics/header.png $DESTDIR/usr/share/listaller/graphics/
 cp ./graphics/mime-ipk.png $DESTDIR/usr/share/listaller/graphics/
@@ -37,10 +35,11 @@ cp ./graphics/categories/other.png $DESTDIR/usr/share/listaller/graphics/categor
 cp ./graphics/categories/science.png $DESTDIR/usr/share/listaller/graphics/categories/
 cp ./graphics/categories/system.png $DESTDIR/usr/share/listaller/graphics/categories/
 #Copy other files
-cp ./bindings/pkitbind.py $DESTDIR/usr/share/listaller/pkitbind/
 cp -dpr ./bin/locale/ $DESTDIR/usr/share/listaller/
 rm -f $DESTDIR/usr/share/listaller/lang/.svn
 rm -f $DESTDIR/usr/share/listaller/lang/.directory
+
+chmod -R 0755 $DESTDIR/usr/share/listaller/graphics
 
 mkdir -p $DESTDIR/usr/share/mime
 mkdir -p $DESTDIR/usr/share/mime/packages

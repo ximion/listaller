@@ -1956,7 +1956,7 @@ object MnFrm: TMnFrm
       end
       object FilterEdt: TEdit
         Left = 550
-        Height = 21
+        Height = 19
         Top = 8
         Width = 139
         Anchors = [akTop, akRight]

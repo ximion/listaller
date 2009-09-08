@@ -26,7 +26,8 @@ uses
   Classes, SysUtils, CustApp,
   Process, LiCommon, installer,
   TRStrings, IniFiles, HTTPSend,
-  FTPSend, Distri, LiTranslator, ipkscript;
+  FTPSend, Distri, LiTranslator, ipkdef,
+  ipkbuild, ipkhandle;
 
 type
 

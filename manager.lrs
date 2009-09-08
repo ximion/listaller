@@ -2174,7 +2174,7 @@ LazarusResources.Add('TMnFrm','FORMDATA',[
   +'Graphic'#6#7'Network'#6#5'Games'#6#6'System'#6#10'Multimedia'#6#10'Addition'
   +'al'#6#5'Other'#0#9'MaxLength'#4#255#255#0#0#8'OnChange'#7#10'CBoxChange'#8
   +'TabOrder'#2#1#4'Text'#6#3'All'#0#0#5'TEdit'#9'FilterEdt'#4'Left'#3'&'#2#6'H'
-  +'eight'#2#21#3'Top'#2#8#5'Width'#3#139#0#7'Anchors'#11#5'akTop'#7'akRight'#0
+  +'eight'#2#19#3'Top'#2#8#5'Width'#3#139#0#7'Anchors'#11#5'akTop'#7'akRight'#0
   ,#7'OnEnter'#7#14'FilterEdtEnter'#6'OnExit'#7#13'FilterEdtExit'#9'OnKeyDown'#7
   +#16'FilterEdtKeyDown'#8'TabOrder'#2#2#4'Text'#6#1'*'#0#0#0#5'TPage'#11'Catal'
   +'ogPage'#7'Caption'#6#11'CatalogPage'#11'ClientWidth'#3#180#2#12'ClientHeigh'

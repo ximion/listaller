@@ -1,5 +1,3 @@
-{ Das ist eine automatisch erzeugte Lazarus-Ressourcendatei }
-
 LazarusResources.Add('TUMnForm','FORMDATA',[
   'TPF0'#8'TUMnForm'#7'UMnForm'#4'Left'#3#26#1#6'Height'#3'f'#2#3'Top'#3#180#0#5
   +'Width'#3#176#2#13'ActiveControl'#7#13'CheckListBox1'#7'Caption'#6#14'Update'

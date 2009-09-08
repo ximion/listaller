@@ -19,7 +19,7 @@ library libinstaller;
 {$mode objfpc}{$H+}
 
 uses
-  Classes, ipkhandle, SysUtils, Controls, licommon, globdef;
+  Classes, ipkhandle, SysUtils, Controls, licommon, liTypes;
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -155,7 +155,7 @@ begin
 end;
 
 //** Installation type
-function ins_pkgtype(setup: PInstallation): TListallerPackageType; cdecl;
+function ins_pkgtype(setup: PInstallation): TPkgType; cdecl;
 begin
   Result:=setup^.pType;
 end;

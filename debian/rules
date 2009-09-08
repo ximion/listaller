@@ -1,5 +1,6 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
+
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
@@ -8,7 +9,6 @@ build: build-stamp
 build-stamp:
 	dh_testdir
 
-	# Add here commands to compile the package.
 	$(MAKE) all
 	$(MAKE) WIDGET=gtk2 licreator
 	#make WIDGET=gtk2 litheme
@@ -23,7 +23,6 @@ clean:
 	dh_testroot
 	rm -f build-stamp configure-stamp
 
-	# Add here commands to clean up after the build process.
 	$(MAKE) clean
 
 	dh_clean 
@@ -34,7 +33,6 @@ install: build
 	dh_clean -k
 	dh_installdirs
 	
-	# Add here commands to install the package into debian/listaller.
 	echo "Installing binaries..."
 	$(MAKE) DESTDIR=./debian/listaller-tools install-build-tools
 	$(MAKE) DESTDIR=./debian/listaller-core install-core
@@ -47,31 +45,20 @@ install: build
 	$(MAKE) DESTDIR=./debian/listaller-creator-qt install-licreator-qt
 	 #make WIDGET=qt4 DESTDIR=./debian/lithememgr-gtk litheme-inst
 
-# Build architecture-independent files here.
 binary-indep: build install
 	echo "Installing architecture independent files..."
 	$(MAKE) DESTDIR=./debian/listaller-data install-data
 
-# Build architecture-dependent files here.
 binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs 
 	dh_installdocs
 	dh_install
-#	dh_installmenu
-#	dh_installdebconf	
-#	dh_installlogrotate
-#	dh_installemacsen
-#	dh_installpam
-#	dh_installmime
-#	dh_python
-#	dh_installinit
-#	dh_installcron
-#	dh_installinfo
+	dh_installmime
 	dh_installman
 	dh_link
-	dh_strip --dbg-package=listaller-gtk-dbg --dbg-package=listaller-tools-dbg --dbg-package=listaller-core-dbg --dbg-package=listaller-creation-gtk-dbg --dbg-package=lithememgr-gtk-dbg --dbg-package=listaller-qt-dbg --dbg-package=listaller-creation-qt-dbg
+	dh_strip # --dbg-package=listaller-gtk-dbg --dbg-package=listaller-tools-dbg --dbg-package=listaller-core-dbg --dbg-package=listaller-creation-gtk-dbg --dbg-package=lithememgr-gtk-dbg --dbg-package=listaller-qt-dbg --dbg-package=listaller-creation-qt-dbg
 	dh_compress
 	dh_fixperms
 	dh_makeshlibs

@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
   ComCtrls, StdCtrls, IniFiles, FileUtil, ExtCtrls, process, Buttons,
   LCLType, LCLIntf, distri, LiCommon, HTTPSend, blcksock, FTPSend,
-  TRStrings, SynEdit, xtypefm, installer;
+  TRStrings, SynEdit, xTypeFm, Installer, liTypes, IconLoader;
 
 type
 
@@ -370,13 +370,13 @@ end;
 
 end;
 
-function MessageCall(msg: String): Boolean; cdecl;
+function MessageCall(msg: String;imp: TMType): Boolean; cdecl;
 begin
  writeLn(msg);
  Application.ProcessMessages;
 end;
 
-function StepMessage(msg: String): Boolean; cdecl;
+function StepMessage(msg: String;imp: TMType): Boolean; cdecl;
 begin
  IWizFrm.Label9.Caption:=msg;
 end;
@@ -457,7 +457,7 @@ IWizFrm.Visible:=true;
 
 //Prepare exectype form
 
-if (setup.PkType=lptLinstall)and(not IsRoot) then
+if (setup.PkType=ptLinstall)and(not IsRoot) then
 begin
   imForm:=TimdFrm.Create(self);
   with imForm do
@@ -478,7 +478,7 @@ begin
   imForm.Free;
 end;
 
-if (setup.PkType=lptDLink)and(not IsRoot) then
+if (setup.PkType=ptDLink)and(not IsRoot) then
 begin
   imForm:=TimdFrm.Create(self);
   with imForm do
@@ -493,7 +493,7 @@ begin
   imForm.Free;
 end;
 
-if (setup.PkType=lptContainer)and(not IsRoot) then
+if (setup.PkType=ptContainer)and(not IsRoot) then
 begin
   imForm:=TimdFrm.Create(self);
   with imForm do
@@ -524,7 +524,7 @@ end;
 setup.SetTestmode(Testmode);
 
 { --- Linstallation --- }
-if setup.PkType=lptLinstall then
+if setup.PkType=ptLinstall then
 begin
 //Check if already installed
 if not Testmode then
@@ -586,7 +586,7 @@ end;
 IWizFrm.Show;
 end else
 { --- DLink --- }
-if setup.PkType=lptDLink then
+if setup.PkType=ptDLink then
 begin
 
 IWizFrm.Hide;
@@ -614,7 +614,7 @@ tmp.Free;
 end;
 DGForm.Show;
 end else
-if setup.PkType=lptContainer then
+if setup.PkType=ptContainer then
 begin
 IWizFrm.Hide;
 IWizFrm.Visible:=false;

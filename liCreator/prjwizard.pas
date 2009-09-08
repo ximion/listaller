@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Buttons, ExtCtrls, ComCtrls, EditBtn, Grids, popupnotifier, FileCtrl,
   FileUtil, MD5, Menus, XMLRead, XMLWrite, DOM, editor, LCLType, CheckLst,
-  LiCommon, SynEdit;
+  LiCommon, SynEdit, LiTypes, IconLoader;
 
 type
 
@@ -207,7 +207,7 @@ type
     procedure tvShortDescriptionsKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
   private
-    function CreateScript(aType: TListallerPackageType): TXMLDocument;
+    function CreateScript(aType: TPkgType): TXMLDocument;
     procedure LoadFilesFromProfile(Profile: TList);
     procedure SaveFilesToProfile(Profile: TList);
     procedure ClearProfile(Profile: TList);
@@ -225,7 +225,7 @@ var
   //** Project wizard main formular
   frmProjectWizard: TfrmProjectWizard;
   //** IPK/IPS type that should be created
-  CreaType: TListallerPackageType;
+  CreaType: TPkgType;
 
 implementation
 
@@ -238,7 +238,7 @@ end;
 
 procedure TfrmProjectWizard.BitBtn1Click(Sender: TObject);
 begin
-  if CreaType=lptContainer then
+  if CreaType=ptContainer then
   begin
     NoteBook1.PageIndex:=0;
     BitBtn3.Enabled:=false;
@@ -246,7 +246,7 @@ begin
   BitBtn3.Caption:='  Next  ';
   if NoteBook1.PageIndex=2 then
      cmbProfilesChange(Sender);  // SaveFilesToProfile
-  if (CreaType=lptDLink) and (NoteBook1.PageIndex=4) then
+  if (CreaType=ptDLink) and (NoteBook1.PageIndex=4) then
     NoteBook1.PageIndex:=NoteBook1.PageIndex-1;
   NoteBook1.PageIndex:=NoteBook1.PageIndex-1;
   if NoteBook1.PageIndex<=0 then
@@ -265,7 +265,7 @@ begin
 end;
 end;
 
-function TfrmProjectWizard.CreateScript(aType: TListallerPackageType): TXMLDocument;
+function TfrmProjectWizard.CreateScript(aType: TPkgType): TXMLDocument;
 var
   s: String;
   i,j: Integer;
@@ -279,13 +279,13 @@ begin
   mn:=xdoc.CreateElement('package');
   TDOMElement(mn).SetAttribute('version','0.8');
   case aType of
-    lptLinstall:  TDOMElement(mn).SetAttribute('type','linstall');
-    lptDLink:     TDOMElement(mn).SetAttribute('type','dlink');
-    lptContainer: TDOMElement(mn).SetAttribute('type','container');
+    ptLinstall:  TDOMElement(mn).SetAttribute('type','linstall');
+    ptDLink:     TDOMElement(mn).SetAttribute('type','dlink');
+    ptContainer: TDOMElement(mn).SetAttribute('type','container');
   end;
   XDoc.AppendChild(mn);
 
-  if (aType=lptContainer) then
+  if (aType=ptContainer) then
   begin
     hn := xdoc.CreateElement('application');
     mn.Appendchild(hn);
@@ -320,7 +320,7 @@ begin
   hn.Appendchild(cnt);
   mn.ChildNodes.Item[1].AppendChild(hn);
 
-  if (aType=lptLinstall)and(FileNameEdit1.FileName<>'') then // not used in dlink- and container-packages
+  if (aType=ptLinstall)and(FileNameEdit1.FileName<>'') then // not used in dlink- and container-packages
   begin
     hn:=xdoc.CreateElement('license');
     cnt:=xdoc.CreateTextNode(FileNameEdit1.FileName);
@@ -389,7 +389,7 @@ begin
   hn.Appendchild(cnt);
   mn.ChildNodes.Item[1].AppendChild(hn);
 
-  if (aType=lptDLink) then
+  if (aType=ptDLink) then
   begin
     hn:=xdoc.CreateElement('desktopfiles');
     cnt:=xdoc.CreateTextNode(Edit12.Text);
@@ -412,7 +412,7 @@ begin
   mn.AppendChild(hn);
   s:='';
 
-  if aType=lptLinstall then      // not used in dlink-packages
+  if aType=ptLinstall then      // not used in dlink-packages
   begin
     for i:=0 to GetProfileCount-1 do
     begin
@@ -477,7 +477,7 @@ var
 //XML
   xdoc: TXMLDocument;
 begin
-  if CreaType=lptLinstall then
+  if CreaType=ptLinstall then
   begin
   if NoteBook1.PageIndex=4 then
   begin
@@ -507,7 +507,7 @@ begin
       end;
 
       //Script
-      xdoc := CreateScript(lptLinstall);
+      xdoc := CreateScript(ptLinstall);
    
       writeXMLFile(xDoc,'/tmp/litmp.xml');
       XDoc.Free;
@@ -676,7 +676,7 @@ begin
   end;
 end; //End of Normal
 
- if CreaType=lptDLink then begin
+ if CreaType=ptDLink then begin
    case NoteBook1.PageIndex of
    1: begin
       if tvShortDescriptions.Items.Count<=1 then begin ShowMessage('Please define a short description for your application!');exit;end;
@@ -745,7 +745,7 @@ end; //End of Normal
         with frmEditor do
           begin
           //Script
-          xdoc := CreateScript(lptDLink);
+          xdoc := CreateScript(ptDLink);
           writeXMLFile(xDoc,'/tmp/litmp.xml');
           XDoc.Free;
           MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.xml');
@@ -758,9 +758,9 @@ end; //End of Normal
     end;
   end; //End of DGet
 
-  if CreaType=lptContainer then
+  if CreaType=ptContainer then
   begin
-    xdoc := CreateScript(lptContainer);
+    xdoc := CreateScript(ptContainer);
     writeXMLFile(xDoc,'/tmp/litmp.xml');
     XDoc.Free;
     frmEditor.MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.xml');
@@ -1168,7 +1168,7 @@ procedure TfrmProjectWizard.SpeedButton1Click(Sender: TObject);
 begin
   Notebook1.PageIndex:=1;
   FileNameEdit2.Enabled:=true;
-  CreaType:=lptLinstall;
+  CreaType:=ptLinstall;
   Label30.Visible:=false;
   Edit12.Visible:=false;
   Label29.Visible:=false;
@@ -1178,7 +1178,7 @@ end;
 
 procedure TfrmProjectWizard.SpeedButton2Click(Sender: TObject);
 begin
-  CreaType:=lptDLink;
+  CreaType:=ptDLink;
   BitBtn3.Enabled:=true;
   Label30.Visible:=true;
   Edit12.Visible:=true;
@@ -1190,7 +1190,7 @@ end;
 
 procedure TfrmProjectWizard.SpeedButton3Click(Sender: TObject);
 begin
-  CreaType:=lptContainer;
+  CreaType:=ptContainer;
   BitBtn3.Caption:='Generate script';
   BitBtn3.Enabled:=true;
   NoteBook1.PageIndex:=5;

@@ -8,7 +8,7 @@
       </Flags>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <ProjectVersion Value=""/>
@@ -54,7 +54,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="editor"/>
         <CursorPos X="28" Y="110"/>
-        <TopLine Value="70"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="146"/>
         <Bookmarks Count="1">
@@ -182,9 +182,11 @@
         <ComponentName Value="frmProjectWizard"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="prjwizard"/>
-        <CursorPos X="220" Y="1142"/>
-        <TopLine Value="1126"/>
+        <CursorPos X="13" Y="1193"/>
+        <TopLine Value="1173"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="129"/>
+        <Loaded Value="True"/>
       </Unit17>
       <Unit18>
         <Filename Value="../utilities.pas"/>
@@ -433,7 +435,7 @@
         <UsageCount Value="10"/>
       </Unit55>
     </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
+    <JumpHistory Count="22" HistoryIndex="21">
       <Position1>
         <Filename Value="editor.pas"/>
         <Caret Line="174" Column="11" TopLine="145"/>
@@ -442,6 +444,86 @@
         <Filename Value="editor.pas"/>
         <Caret Line="16" Column="39" TopLine="1"/>
       </Position2>
+      <Position3>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="1142" Column="220" TopLine="1126"/>
+      </Position3>
+      <Position4>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="27" Column="29" TopLine="1"/>
+      </Position4>
+      <Position5>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="228" Column="17" TopLine="208"/>
+      </Position5>
+      <Position6>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="241" Column="15" TopLine="221"/>
+      </Position6>
+      <Position7>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="249" Column="16" TopLine="229"/>
+      </Position7>
+      <Position8>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="268" Column="52" TopLine="248"/>
+      </Position8>
+      <Position9>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="284" Column="5" TopLine="262"/>
+      </Position9>
+      <Position10>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="288" Column="13" TopLine="268"/>
+      </Position10>
+      <Position11>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="323" Column="13" TopLine="303"/>
+      </Position11>
+      <Position12>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="392" Column="13" TopLine="372"/>
+      </Position12>
+      <Position13>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="415" Column="12" TopLine="395"/>
+      </Position13>
+      <Position14>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="480" Column="15" TopLine="460"/>
+      </Position14>
+      <Position15>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="510" Column="28" TopLine="490"/>
+      </Position15>
+      <Position16>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="679" Column="14" TopLine="659"/>
+      </Position16>
+      <Position17>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="748" Column="32" TopLine="728"/>
+      </Position17>
+      <Position18>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="761" Column="15" TopLine="741"/>
+      </Position18>
+      <Position19>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="763" Column="26" TopLine="743"/>
+      </Position19>
+      <Position20>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="27" Column="41" TopLine="1"/>
+      </Position20>
+      <Position21>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="1171" Column="13" TopLine="1151"/>
+      </Position21>
+      <Position22>
+        <Filename Value="prjwizard.pas"/>
+        <Caret Line="1181" Column="13" TopLine="1161"/>
+      </Position22>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

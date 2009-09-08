@@ -21,9 +21,7 @@ unit appman;
 interface
 
 uses
-  Classes, SysUtils, litypes;
-
-type
+  Classes, SysUtils, liTypes;
 
  const amanlib='libappmanager.so';
 

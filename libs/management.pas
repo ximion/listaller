@@ -6,25 +6,7 @@ interface
 
 uses
   Classes, SysUtils, SQLite3Ds, IniFiles, GetText, TRStrings, LiCommon,
-  DB, FileUtil, packagekit, Process, installer, globdef;
-
-type
-
-//** Container for information about apps
-TAppInfo = record
- Name: PChar;
- ShortDesc: PChar;
- Version: PChar;
- Author: PChar;
- Icon: PChar;
- UId: PChar;
-end;
-
-//** Event to catch thrown application records
-TAppEvent = function(name: PChar;obj: TAppInfo): Boolean;cdecl;
-
-//** Available groups
-GroupType = (gtALL,gtEDUCATION,gtOFFICE,gtDEVELOPMENT,gtGRAPHIC,gtNETWORK,gtGAMES,gtSYSTEM,gtMULTIMEDIA,gtADDITIONAL,gtOTHER);
+  DB, FileUtil, packagekit, Process, installer, liTypes;
 
 {** Process .desktop-file and add info to list @param fname Name of the .desktop file
       @param tp Category name}

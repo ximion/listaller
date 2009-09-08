@@ -13,8 +13,8 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
-//** Contains the TIPKScript class
-unit ipkscript;
+//** Contains classes to process IPK files
+unit ipkdef;
 
 {$mode objfpc}{$H+}
 
@@ -29,8 +29,9 @@ type
 TIPKBasic = class
  private
   function GetValue(s: String): String;
-  function SearchKeyIndex(s: String): Integer;
+  function SearchKeyIndex(s: String;localized: Boolean=true): Integer;
   function SolveInclude(s: String): String;
+  procedure WriteEntry(k,s: String);
 
   procedure WriteType(atype: TPkgType);
   function  ReadType: TPkgType;
@@ -50,6 +51,16 @@ TIPKBasic = class
   function  ReadMaintainer: String;
   procedure WriteDisallows(s: String);
   function  ReadDisallows: String;
+  procedure WriteAppCMD(s: String);
+  function  ReadAppCMD: String;
+  procedure WriteArchs(s: String);
+  function  ReadArchs: String;
+  procedure WritePkgName(s: String);
+  function  ReadPkgName: String;
+  procedure WriteDSupport(s: String);
+  function  ReadDSupport: String;
+  procedure WriteWizImage(s: String);
+  function  ReadWizImage: String;
  protected
   text: TStringList;
   FBasePath: String;
@@ -58,8 +69,6 @@ TIPKBasic = class
   constructor Create;
   destructor  Destroy;override;
 
-  function SaveToFile(s: String): Boolean;
-  function LoadFromFile(s: String): Boolean;
   property BasePath: String read FBasePath write FBasePath;
   property SType: TPkgType read ReadType write WriteType;
   property AppName: String read ReadName write WriteName;
@@ -77,14 +86,44 @@ TIPKBasic = class
   property Author: String read ReadAuthor write WriteAuthor;
   property Maintainer: String read ReadMaintainer write WriteMaintainer;
   property Disallows: String read ReadDisallows write WriteDisallows;
+  procedure ReadProfiles(lst: TStrings);
+  procedure WriteProfiles(lst: TStrings);
+  property AppCMD: String read ReadAppCMD write WriteAppCMD;
+  property Architectures: String read ReadArchs write WriteArchs;
+  property PkName: String read ReadPkgName write WritePkgName;
+  property DSupport: String read ReadDSupport write WriteDSupport;
+  property WizImage: String read ReadWizImage write WriteWizImage;
+  procedure ReadDependencies(dname: String;info: TStringList);
+  procedure WriteDependencies(dname: String;path: String);
+  procedure WriteDependencies(dname: String;info: TStringList);
  end;
 
 TIPKScript = class(TIPKBasic)
  private
+  fname: String;
  public
-  constructor Create;override;
+  constructor Create;
   destructor  Destroy;override;
+
+  function SaveToFile(s: String): Boolean;
+  function LoadFromFile(s: String): Boolean;
+  procedure GetDirectFileList(id: Integer;lst: TStrings);
+  procedure GetFileSection(id: Integer;lst: TStrings);
 end;
+
+{
+TIPKControl = class(TIPKBasic)
+ private
+ public
+  constructor Create;
+  destructor  Destroy;override;
+
+  function SaveToFile(s: String): Boolean;
+  function LoadFromFile(s: String): Boolean;
+  procedure GetDirectFileList(id: Integer;lst: TStrings);
+  procedure GetFileSection(id: Integer;lst: TStrings);
+end;
+}
 
 implementation
 
@@ -95,8 +134,6 @@ begin
  inherited;
  text:=TStringList.Create;
  FBasePath:=ExtractFilePath(paramstr(0));
- text.Add('IPK-Standard-Version: 1.0');
- text.Add('');
  clang:='';
 end;
 
@@ -106,33 +143,13 @@ begin
  inherited;
 end;
 
-function TIPKBasic.SaveToFile(s: String): Boolean;
+procedure TIPKBasic.WriteEntry(k,s: String);
 begin
-result:=true;
-try
- text.SaveTofile(s);
- FBasePath:=ExtractFilePath(s);
-except
- Result:=false;
-end;
-end;
-
-function TIPKBasic.LoadFromFile(s: String): Boolean;
-begin
- result:=true;
- if FileExists(s) then
- begin
- text.LoadFromFile(s);
- if text[0]<>'IPK-Standard-Version: 1.0' then
- begin
-  Result:=false;
-  text.Clear;
-  text.Add('IPK-Standard-Version: 1.0');
-  text.Add('');
-  exit;
- end;
- FBasePath:=ExtractFilePath(s);
- end else Result:=false;
+s:=k+': '+s;
+ if SearchKeyIndex(k)>-1 then
+  text[SearchKeyIndex(k)]:=s
+ else
+  text.Add(s);
 end;
 
 function TIPKBasic.GetValue(s: String): String;
@@ -142,13 +159,13 @@ begin
   Result:=copy(Result,2,length(Result));
 end;
 
-function TIPKBasic.SearchKeyIndex(S: String): Integer;
+function TIPKBasic.SearchKeyIndex(S: String;localized: Boolean=true): Integer;
 var i: Integer;h: String;
 begin
  Result:=-1;
  i:=text.Count;
  //First search for localized entry
- if clang<>'' then
+ if (clang<>'')and(localized) then
  begin
  for i:=0 to text.count-1 do
  begin
@@ -229,12 +246,8 @@ if clang='' then
  k:='Version'
 else
  k:='Version['+clang+']';
- s:=k+': '+s;
 
-if SearchKeyIndex(k)>-1 then
- text[SearchKeyIndex(k)]:=s
-else
- text.Add(s);
+ WriteEntry(k,s);
 end;
 
 function TIPKBasic.ReadVersion: String;
@@ -402,11 +415,7 @@ if clang='' then
 else
  k:='SDesc['+clang+']';
 
-s:=k+': '+s;
-if SearchKeyIndex(k)>-1 then
- text[SearchKeyIndex(k)]:=s
-else
- text.Add(s);
+ WriteEntry(k,s);
 end;
 
 function TIPKBasic.ReadSDesc: String;
@@ -472,11 +481,7 @@ if clang='' then
 else
  k:='Author['+clang+']';
 
-s:=k+': '+s;
-if SearchKeyIndex(k)>-1 then
- text[SearchKeyIndex(k)]:=s
-else
- text.Add(s);
+ WriteEntry(k,s);
 end;
 
 function TIPKBasic.ReadAuthor: String;
@@ -496,11 +501,7 @@ if clang='' then
 else
  k:='Maintainer['+clang+']';
 
-s:=k+': '+s;
-if SearchKeyIndex(k)>-1 then
- text[SearchKeyIndex(k)]:=s
-else
- text.Add(s);
+ WriteEntry(k,s);
 end;
 
 function TIPKBasic.ReadMaintainer: String;
@@ -515,12 +516,8 @@ end;
 procedure TIPKBasic.WriteDisallows(s: String);
 var k: String;
 begin
- k:='Disallow'
-s:=k+': '+s;
-if SearchKeyIndex(k)>-1 then
- text[SearchKeyIndex(k)]:=s
-else
- text.Add(s);
+ k:='Disallow';
+ WriteEntry(k,s);
 end;
 
 function TIPKBasic.ReadDisallows: String;
@@ -533,15 +530,191 @@ begin
 end;
 
 procedure TIPKBasic.WriteProfiles(lst: TStrings);
-var k: String;
+var k,s: String;i: Integer;
 begin
-
+ k:='Profile[';
+ for i:=0 to lst.Count-1 do
+ begin
+ s:=k+IntToStr(i)+']: '+lst[i];
+ if SearchKeyIndex(k)>-1 then
+  text[SearchKeyIndex(k)]:=s
+ else
+  text.Add(s);
+ end;
 end;
 
 procedure TIPKBasic.ReadProfiles(lst: TStrings);
 var j: Integer;
+ function GetProfileName(id: Integer): String;
+ var i: Integer;
+ begin
+  Result:='';
+  i:=SearchKeyIndex('Profiles['+IntToStr(id)+']');
+  if (id=0) and (i<0) then i:=SearchKeyIndex('Profiles');
+ if i>-1 then
+  Result:=GetValue(text[i]);
+ end;
 begin
+ j:=0;
+ repeat
+  lst.Add(GetProfileName(j));
+  Inc(j);
+ until GetProfileName(j)='';
+end;
 
+procedure TIPKBasic.WriteAppCMD(s: String);
+var k: String;
+begin
+ k:='AppCMD';
+
+ WriteEntry(k,s);
+end;
+
+function TIPKBasic.ReadAppCMD: String;
+var j: Integer;
+begin
+ Result:='';
+ j:=SearchKeyIndex('AppCMD');
+ if j>-1 then
+  Result:=GetValue(text[j]);
+end;
+
+procedure TIPKBasic.WriteArchs(s: String);
+var k: String;
+begin
+ k:='Architectures';
+ WriteEntry(k,s);
+end;
+
+function TIPKBasic.ReadArchs: String;
+var j: Integer;
+begin
+ Result:='';
+ j:=SearchKeyIndex('Architectures');
+ if j>-1 then
+  Result:=GetValue(text[j]);
+end;
+
+procedure TIPKBasic.WritePkgName(s: String);
+var k: String;
+begin
+ k:='PkName';
+ WriteEntry(k,s);
+end;
+
+function TIPKBasic.ReadPkgName: String;
+var j: Integer;
+begin
+ Result:='';
+ j:=SearchKeyIndex('PkName');
+ if j>-1 then
+  Result:=GetValue(text[j]);
+end;
+
+procedure TIPKBasic.WriteDSupport(s: String);
+var k: String;
+begin
+ k:='DSupport';
+ WriteEntry(k,s);
+end;
+
+function TIPKBasic.ReadDSupport: String;
+var j: Integer;
+begin
+ Result:='';
+ j:=SearchKeyIndex('DSupport');
+ if j>-1 then
+  Result:=GetValue(text[j]);
+end;
+
+procedure TIPKBasic.ReadDependencies(dname: String;info: TStringList);
+var i: Integer;s: String;
+begin
+if (dname='all') or (dname='') then
+ i:=SearchKeyIndex('Dependencies',false)
+else
+ i:=SearchKeyIndex('Dependencies['+dname+']',false);
+ s:='';
+ if i>-1 then
+  s:=text[i];
+ info.Clear;
+ if s='' then exit;
+ if pos('include:"',s)>0 then
+  info.LoadFromFile(SolveInclude(s))
+ else
+ begin
+ info.Add(GetValue(text[i]));
+ Inc(i);
+  repeat
+   s:=text[i];
+   if s[1]=' ' then
+    s:=copy(s,2,length(s));
+   info.Add(s);
+   Inc(i);
+  until (i>text.Count)or(text[i][1]<>' ');
+ end;
+end;
+
+procedure TIPKBasic.WriteDependencies(dname: String;path: String);
+var s: String;i: Integer;
+begin
+if (dname='all')or(dname='') then
+ s:='Dependencies: include:"'+path+'"'
+else
+ s:='Dependencies['+dname+']: include:"'+path+'"';
+
+ i:=SearchKeyIndex('Dependencies');
+  if i>0 then
+  begin
+   text.Delete(i);
+   while (i<text.Count)and(text[i][1]=' ') do
+    text.Delete(i);
+  end;
+
+if i>-1 then
+ text[i]:=s
+else
+ text.Add(s);
+end;
+
+procedure TIPKBasic.WriteDependencies(dname: String;info: TStringList);
+var i: Integer;
+begin
+ if info.Count>=0 then
+ begin
+  if (dname='all') or (dname='') then
+   i:=SearchKeyIndex('Dependencies',false)
+  else
+   i:=SearchKeyIndex('Dependencies['+dname+']',false);
+  if i>0 then
+  begin
+
+  text.Delete(i);
+  while (i<text.Count)and(text[i]<>'')and(text[i][1]=' ') do
+   text.Delete(i);
+  end;
+
+ text.Add('Dependencies: '+info[0]);
+ for i:=1 to info.Count-1 do
+  text.Add(' '+info[i]);
+
+ end;
+end;
+
+procedure TIPKBasic.WriteWizImage(s: String);
+var k: String;
+begin
+ k:='WizImage';
+ WriteEntry(k,s);
+end;
+
+function TIPKBasic.ReadWizImage: String;
+var j: Integer;
+begin
+ Result:='';
+ j:=SearchKeyIndex('WizImage');
+ if j>-1 then
+  Result:=GetValue(text[j]);
 end;
 
 { TIPKScript }
@@ -549,11 +722,89 @@ end;
 constructor TIPKScript.Create;
 begin
  inherited;
+ text.Add('IPK-Standard-Version: 1.0');
+ text.Add('');
+ fname:='';
 end;
 
 destructor TIPKScript.Destroy;
 begin
  inherited;
+end;
+
+function TIPKScript.SaveToFile(s: String): Boolean;
+begin
+result:=true;
+try
+ text.SaveTofile(s);
+ FBasePath:=ExtractFilePath(s);
+ fname:=s;
+except
+ Result:=false;
+end;
+end;
+
+function TIPKScript.LoadFromFile(s: String): Boolean;
+begin
+ result:=true;
+ if FileExists(s) then
+ begin
+ text.LoadFromFile(s);
+ if text[0]<>'IPK-Standard-Version: 1.0' then
+ begin
+  Result:=false;
+  text.Clear;
+  text.Add('IPK-Standard-Version: 1.0');
+  text.Add('');
+  exit;
+ end;
+ FBasePath:=ExtractFilePath(s);
+ fname:=s;
+ end else Result:=false;
+end;
+
+procedure TIPKScript.GetDirectFileList(id: Integer;lst: TStrings);
+var i,j: Integer;s: String;fsec: TStringList;
+begin
+ fsec:=TStringList.Create;
+  for j:=0 to text.Count-1 do
+   if pos('!-Files ~'+IntToStr(id),text[j])>0 then
+     break;
+
+    for i:=j+1 to text.count-1 do
+     if pos('!-Files ~',text[i])>0 then break
+       else fsec.Add(text[i]);
+
+  i:=0;
+ while i < fsec.Count-1 do
+ begin
+
+ if fsec[i][1]='>' then s:=copy(fsec[i],2,length(fsec[i]))
+ else
+ begin
+ if (fsec[i][1]='/')or(fsec[i][1]='.') then
+ begin
+   lst.Add(s);
+  if fsec[i][1]='.' then
+   lst.Add(FBasePath+fsec[i])
+  else
+   lst.Add(fsec[i]);
+ end;
+ end;
+ Inc(i);
+ end;
+end;
+
+procedure TIPKScript.GetFileSection(id: Integer;lst: TStrings);
+var i,j: Integer;
+begin
+  for j:=0 to text.Count-1 do
+   if pos('!-Files ~'+IntToStr(id),text[j])>0 then
+     break;
+
+    for i:=j+1 to text.count-1 do
+     if pos('!-Files ~',text[i])>0 then break
+       else lst.Add(text[i]);
 end;
 
 end.

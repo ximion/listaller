@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="1520"/>
+      <CurrentBuildNr Value="1526"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -61,8 +61,8 @@
         <ComponentName Value="MnFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="9" Y="26"/>
-        <TopLine Value="7"/>
+        <CursorPos X="7" Y="146"/>
+        <TopLine Value="126"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="176"/>
         <Loaded Value="True"/>
@@ -290,11 +290,9 @@
         <ComponentName Value="RMForm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uninstall"/>
-        <CursorPos X="27" Y="155"/>
-        <TopLine Value="121"/>
-        <EditorIndex Value="1"/>
+        <CursorPos X="47" Y="26"/>
+        <TopLine Value="1"/>
         <UsageCount Value="161"/>
-        <Loaded Value="True"/>
       </Unit33>
       <Unit34>
         <Filename Value="trstrings.pas"/>
@@ -367,8 +365,8 @@
         <ComponentName Value="ConvDisp"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="pkgconvertdisp"/>
-        <CursorPos X="20" Y="101"/>
-        <TopLine Value="71"/>
+        <CursorPos X="76" Y="25"/>
+        <TopLine Value="1"/>
         <UsageCount Value="126"/>
       </Unit44>
       <Unit45>
@@ -696,7 +694,7 @@
       <Unit91>
         <Filename Value="bindings/appman.pas"/>
         <UnitName Value="appman"/>
-        <CursorPos X="5" Y="37"/>
+        <CursorPos X="25" Y="24"/>
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit91>
@@ -735,7 +733,7 @@
         <UsageCount Value="10"/>
       </Unit96>
     </Units>
-    <JumpHistory Count="28" HistoryIndex="27">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="manager.pas"/>
         <Caret Line="155" Column="5" TopLine="130"/>
@@ -848,6 +846,10 @@
         <Filename Value="manager.pas"/>
         <Caret Line="26" Column="9" TopLine="7"/>
       </Position28>
+      <Position29>
+        <Filename Value="manager.pas"/>
+        <Caret Line="26" Column="79" TopLine="7"/>
+      </Position29>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, LEntries,
-  uninstall, trstrings, FileUtil, CheckLst, xtypefm, appman, LiCommon, globdef,
+  uninstall, trstrings, FileUtil, CheckLst, xtypefm, appman, LiCommon, liTypes,
   Contnrs, sqlite3ds, db, aboutbox, GetText, PackageKit, Spin, iconloader;
 
 type
@@ -143,7 +143,7 @@ uses pkgconvertdisp, swcatalog;
 
 procedure TMnFrm.UninstallClick(Sender: TObject);
 begin
-uApp:=appman.TAppInfo(TListEntry((Sender as TBitBtn).Parent).appInfo);
+uApp:=TAppInfo(TListEntry((Sender as TBitBtn).Parent).appInfo);
 RMForm.ShowModal;
 end;
 

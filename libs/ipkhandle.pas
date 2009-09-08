@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trstrings, packagekit,
   sqlite3ds, db, AbUnZper, AbArcTyp, XMLRead, DOM, HTTPSend, FTPSend,
-  MD5, globdef, distri,
+  MD5, liTypes, distri,
   Forms; //Needed to ProcessMessages()
 
 type
@@ -59,7 +59,7 @@ type
   // True if IPK package is a patch
   FPatch: Boolean;
   //Current setup type
-  pkType: TListallerPackageType;
+  pkType: TPkgType;
   //Disallow-line (every action the package disallows, unformated)
   FDisallow: String;
   //Only set if old package should be removed
@@ -110,7 +110,7 @@ type
   //** ID of the application
   property AppID: String read idName;
   //** Listaller package type
-  property pType: TListallerPackageType read pkType;
+  property pType: TPkgType read pkType;
   //** Unformatted disallows string
   property Disallows: String read FDisallow;
   //** All distributions the package supports
@@ -470,10 +470,10 @@ ReadXMLFile(Doc,lp+PkgName+'/arcinfo.pin'); //Read XML configuration
 xnode:=Doc.FindNode('package');
 n:=xnode.Attributes.GetNamedItem('type').NodeValue;
 n:=LowerCase(n);
-if n='linstall' then pkType:=lptLinstall;
-if n='' then pkType:=lptLinstall;
-if n='dlink' then pkType:=lptDLink;
-if n='container' then pkType:=lptContainer;
+if n='linstall' then pkType:=ptLinstall;
+if n='' then pkType:=ptLinstall;
+if n='dlink' then pkType:=ptDLink;
+if n='container' then pkType:=ptContainer;
 
 if (xnode.Attributes.GetNamedItem('patch')<>nil)
 and(xnode.Attributes.GetNamedItem('patch').NodeValue='true')
@@ -487,7 +487,7 @@ FDisallow:=LowerCase(FindChildNode(xnode,'disallow').NodeValue)
 else
 FDisallow:='';
 
-if pkType=lptLinstall then
+if pkType=ptLinstall then
 begin
 
 msg('Package type is "linstall"');
@@ -714,7 +714,7 @@ SetCurProfile(0);
 if IsPackageInstalled(AppName,AppID) then RmApp:=true;
 
 end else //Handle other IPK types
-if pkType=lptDLink then begin
+if pkType=ptDLink then begin
 msg('Package type is "dlink"');
 
 z.BaseDirectory:=lp+ExtractFileName(paramstr(1));
@@ -804,7 +804,7 @@ end;
 end;
 
 end else
-if pkType=lptContainer then
+if pkType=ptContainer then
 begin
 msg('Package type is "container"');
 z:=TAbUnZipper.Create(nil);
@@ -1309,9 +1309,9 @@ appfiles.Free;
 dsApp.Open;
 dsApp.Edit;
 
-if pkType=lptLinstall then h:='linstall';
-if pkType=lptDLink then h:='dlink';
-if pkType=lptContainer then h:='containerF';
+if pkType=ptLinstall then h:='linstall';
+if pkType=ptDLink then h:='dlink';
+if pkType=ptContainer then h:='containerF';
 
 dsApp.Insert;
 dsApp.ExecuteDirect('INSERT INTO "AppInfo" VALUES ('''+IAppName+''', '''+
@@ -1505,9 +1505,9 @@ end;
 
 function TInstallation.DoInstallation: Boolean;
 begin
- if pkType=lptLinstall then Result:=RunNormalInstallation
+ if pkType=ptLinstall then Result:=RunNormalInstallation
  else
-  if pkType=lptDLink then Result:=RunDLinkInstallation
+  if pkType=ptDLink then Result:=RunDLinkInstallation
   else
   begin
    msg('Could not detect package type!');
