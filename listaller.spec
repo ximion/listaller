@@ -229,7 +229,7 @@ Please note that this is an alpha-release!
 
 %files -n listaller-creator-qt
 %defattr(-,root,root)
-/usr/appfiles/liCreator/
+/opt/appfiles/liCreator/
 /usr/share/applications/licreator.desktop
 /usr/bin/licreator
 
@@ -249,6 +249,6 @@ Please note that this is an alpha-release!
 
 %files -n listaller-creator-gtk
 %defattr(-,root,root)
-/usr/appfiles/liCreator/
+/opt/appfiles/liCreator/
 /usr/share/applications/licreator.desktop
 /usr/bin/licreator

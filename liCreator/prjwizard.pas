@@ -1125,7 +1125,7 @@ procedure TfrmProjectWizard.MenuItem5Click(Sender: TObject);
 var s: String;
 begin
   s:='List of available placeholders:';
-  s:=s+#13'§INST : Points to "/usr/appfiles" in ROOT installation, otherwise to "$HOME/applications/files"';
+  s:=s+#13'§INST : Points to "/opt/appfiles" in ROOT installation, otherwise to "$HOME/applications/files"';
   s:=s+#13'$INST-X : Replaced by "/usr/share" on ROOT installation, "$HOME/applications/files" on installation in Home-directory.';
   s:=s+#13'$OPT : Points to "/opt" if user is ROOT, otherwise it does the same as $INST';
   s:=s+#13'$BIN : Pointer to "/usr/bin" if ROOT, else "$HOME/applications/binary"';

@@ -31,7 +31,7 @@ type
  //** Request types
  TRqType   = (rqError,rqWarning,rqQuestion,rqInfo);
  //** Request result types
- TRqResult = (rsYes,rsNo,rsOK);
+ TRqResult = (rqsYes,rqsNo,rqsOK);
  //** Message types
  TMType    = (mtInfo,mtWarning);
 

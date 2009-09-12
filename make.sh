@@ -41,9 +41,12 @@ mkdir -p ./bin/locale
 
 echo "Building libraries..."
 $LCLDir/lazbuild -B --ws=nogui ./libs/libinstaller.lpr
-$LCLDir/lazbuild -B --ws=nogui ./libs/libappmanager.lpr
-
 ln -s ./bin/libinstaller.so.0.4 libinstaller.so
+ln -s ./bin/libinstaller.so.0.4 libinstaller.so.0.4
+cd libs
+ln -s ../bin/libinstaller.so.0.4 libinstaller.so
+cd ..
+$LCLDir/lazbuild -B --ws=nogui ./libs/libappmanager.lpr
 ln -s ./bin/libappmanager.so.0.4 libappmanager.so
 
 echo "Creating command-line tool..."

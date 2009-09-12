@@ -14,6 +14,10 @@ rm -rf *.lrt
 rm -rf *~
 rm -rf "./bin"
 
+rm -f ./libinstaller.so
+rm -f ./libinstaller.so.0.4
+rm -f ./libappmanager.so
+
 #Clean liCreator directory
 cd ./liCreator/
 rm -rf *.o

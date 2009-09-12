@@ -21,7 +21,7 @@ unit packagekit;
 interface
 
 uses
-  Classes, SysUtils, Process, Forms, glib2, distri;
+  Classes, SysUtils, Process, glib2, distri;
 
 
 //** PackageKit wrapper
@@ -44,7 +44,6 @@ private
  prog: Integer;
  //Last error message
  ErrorMsg: String;
- gfinid: LongInt;
  //Function to get PackageKit version from pkcon
  function GetPkVersion: String;
  //Signals
@@ -139,24 +138,24 @@ begin
  g_type_init();
 end;
 
-procedure TPackageKit.OnProgChange(client: Pointer;percentage: guint;subpercentage: guint;elapsed: guint;remaining: guint;user_data: gpointer);cdecl;
+procedure TPackageKit.OnProgChange(client: Pointer;percentage: guint;subpercentage: guint;elapsed: guint;remaining: guint;user_data: Pointer);cdecl;
 begin
  if percentage = 101 then
-  TPackageKit(user_data).prog:=0
+  prog:=0
  else
-  TPackageKit(user_data).prog:=percentage;
+  prog:=percentage;
 end;
 
 procedure TPackageKit.OnPackage(client: Pointer;obj: GPointer;user_data: Pointer);cdecl;
 var s: String;pk: PPkPackageID;
 begin
-if Assigned(TPackageKit(user_data).RsList) then
+if Assigned(RsList) then
 begin
- if (obj<>nil)and(TPackageKit(user_data).AssignToList) then
+ if (obj<>nil)and(AssignToList) then
  begin
  pk:=pk_package_obj_get_id(obj);
  s:=pk^.name;
- TPackageKit(user_data).RsList.Add(s);
+ RsList.Add(s);
  pk:=nil;
  end;
 end;
@@ -164,15 +163,13 @@ end;
 
 procedure TPackageKit.OnFinish(client: Pointer;exit: guint;runtime:guint;user_data: Pointer);cdecl;
 begin
-if user_data<>nil then
-begin
- TPackageKit(user_data).finaction:=true;
- TPackageKit(user_data).exitcode:=exit;
-end;
+ finaction:=true;
+ exitcode:=exit;
 end;
 
 procedure TPackageKit.OnMessage(client: Pointer;message: Guint;details: PChar;user_data: Pointer);cdecl;
 begin
+ writeLn('Details: ');
  writeLn(details);
 end;
 
@@ -186,7 +183,7 @@ begin
   //Assign signals
   g_signal_connect(pkclient,'progress-changed',TGCallback(TMethod(@OnProgChange).Code),self);
   g_signal_connect(pkclient,'package',TGCallback(TMethod(@OnPackage).Code),self);
-  gfinid:=g_signal_connect(pkclient,'finished',TGCallback(TMethod(@OnFinish).Code),self);
+  g_signal_connect(pkclient,'finished',TGCallback(TMethod(@OnFinish).Code),self);
   g_signal_connect(pkclient,'message',TGCallback(TMethod(@OnMessage).Code),self);
 
   asstolist:=false;
@@ -207,7 +204,7 @@ begin
  t.CommandLine:='pkcon --version';
  try
   t.Execute;
-  while t.Running do Application.ProcessMessages;
+  while t.Running do begin end;
   s.LoadFromStream(t.Output);
  finally
  t.Free;
@@ -345,8 +342,10 @@ var filter: guint64;
     p: TProcess;
     s: TStringList;
 begin
+DInfo:=GetDistro;
 if DInfo.PackageSystem<>'DEB' then
 begin
+  writeLn('DEBUG: Using native pkit backend.');
   pk_client_reset(pkclient,nil);
   finaction:=false;
   asstolist:=true;
@@ -363,13 +362,14 @@ end else
 begin
  // We need to use apt-file, because the PackageKit
  // APT backend does not support searching for not-installed packages
+ finaction:=false;
   s:=TStringList.Create;
-  p:=TProcess.create(nil);
+  p:=TProcess.Create(nil);
   p.Options:=[poUsePipes];
   p.CommandLine:='apt-file -l -N search '+fname;
  try
   p.Execute;
-  while p.Running do Application.ProcessMessages;
+  while p.Running do begin end;
    s.LoadFromStream(p.Output);
  finally
  p.Free;
@@ -379,6 +379,7 @@ begin
   Result:=true
  else Result:=false;
  s.Free;
+ finaction:=true;
 end;
 
 end;

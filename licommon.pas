@@ -26,7 +26,7 @@ uses
 
 const
   //** Version of the Listaller applicationset
-  LiVersion='0.3b-test';
+  LiVersion='0.3.10a~dev';
   //** Working directory of Listaller
   lp='/tmp/';
 
@@ -242,7 +242,7 @@ s:=StringReplace(s,'$HOME',GetEnvironmentVariable('HOME'),[rfReplaceAll]);
 
 if IsRoot then
 begin
-s:=StringReplace(s,'$INST','/usr/appfiles',[rfReplaceAll]);
+s:=StringReplace(s,'$INST','/opt/appfiles',[rfReplaceAll]);
 s:=StringReplace(s,'$INST-X','/usr/share',[rfReplaceAll]);
 s:=StringReplace(s,'$OPT','/opt',[rfReplaceAll]);
 s:=StringReplace(s,'$BIN','/usr/bin',[rfReplaceAll]);

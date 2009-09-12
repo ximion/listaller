@@ -337,7 +337,7 @@ begin
 case mtype of
 rqError: begin
   ShowMessage(msg);
-  Result:=rsOK;
+  Result:=rqsOK;
   InfoMemo.Lines.Add(rsInstFailed);
   InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
   setup.Free;
@@ -349,7 +349,7 @@ rqWarning: begin
   if Application.MessageBox(PAnsiChar(msg),PAnsiChar(rsInstOf),MB_YESNO)<>IDYES then
   begin
    ShowMessage(rsINClose);
-   Result:=rsNo;
+   Result:=rqsNo;
    InfoMemo.Lines.Add('Installation aborted by user.');
    InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
    setup.Free;
@@ -359,11 +359,11 @@ rqWarning: begin
 end;
 rqQuestion: begin
   if Application.MessageBox(PAnsiChar(msg),PAnsiChar(rsInstOf),MB_YESNO)<>IDYES then
-   Result:=rsNo else Result:=rsYes;
+   Result:=rqsNo else Result:=rqsYes;
 end;
 rqInfo: begin
   ShowMessage(msg);
-  Result:=rsOK;
+  Result:=rqsOK;
 end;
  end;
 end;
@@ -776,11 +776,8 @@ while IPage.Visible=false do Application.ProcessMessages;
 
  setup.SetProfileID(ModeGroup.ItemIndex);
 
- GetOutPutTimer.Enabled:=true;
-
  setup.StartInstallation;
 
- GetOutPutTimer.Enabled:=false;
 { setup.HTTPSend:=nil;
  setup.FTPSend:=nil; }
  HTTP.Free;

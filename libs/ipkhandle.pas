@@ -23,8 +23,7 @@ interface
 uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trstrings, packagekit,
   sqlite3ds, db, AbUnZper, AbArcTyp, XMLRead, DOM, HTTPSend, FTPSend,
-  MD5, liTypes, distri,
-  Forms; //Needed to ProcessMessages()
+  MD5, liTypes, distri;
 
 type
 
@@ -185,13 +184,11 @@ implementation
 
 procedure TInstallation.SetMainPos(pos: integer);
 begin
- Application.ProcessMessages;
  if Assigned(FProgChange1) then FProgChange1(pos);
 end;
 
 procedure TInstallation.SetExtraPos(pos: integer);
 begin
- Application.ProcessMessages;
  if Assigned(FProgChange2) then FProgChange2(pos);
 end;
 
@@ -345,7 +342,7 @@ var i: Integer;
     tmp,xtmp: TStringList;
     pkit: TPackageKit;
     mnpos: Integer;
-    max: Double;
+    one: Double;
 begin
  Result:=true;
  SetMainPos(0);
@@ -353,8 +350,8 @@ begin
   begin
     Dependencies.Delete(0);
     mnpos:=0;
-    max:=100/Dependencies.Count*2;
-    SetMainPos(Round(mnpos*max));
+    one:=100/(Dependencies.Count*2);
+    SetMainPos(Round(mnpos*one));
     p:=TProcess.Create(nil);
     ShowPKMon();
     p.Options:=[poUsePipes,poWaitOnExit];
@@ -366,12 +363,12 @@ begin
     for i:=0 to Dependencies.Count-1 do
     begin
      mnpos:=mnpos+1;
-     SetMainPos(Round(mnpos*max));
+     SetMainPos(Round(mnpos*one));
 
      pkit.FindPkgForFile(Dependencies[i]);
      while not pkit.PkFinished do begin
        //Do nothing...
-       Application.ProcessMessages;
+       SetMainPos(Round(mnpos*one));
      end;
 
      if (pkit.PkFinishCode>0)or(xtmp.Count<=0) then
@@ -389,7 +386,7 @@ begin
      xtmp.Clear;
      mnpos:=mnpos+1;
 
-     SetMainPos(Round(mnpos*max));
+     SetMainPos(Round(mnpos*one));
     end;
     //Free PackageKit obj
     pkit.Free;
@@ -671,7 +668,7 @@ if (xnode.FindNode('Dep'+DInfo.DName).Attributes.GetNamedItem('releases')<>nil)
 and (pos(DInfo.Release,xnode.FindNode('Dep'+DInfo.DName).Attributes.GetNamedItem('releases').NodeValue)<= 0)
 then
 begin
- if MakeUsrrequest(rsInvalidDVersion,rqWarning) = rsNo then
+ if MakeUsrRequest(rsInvalidDVersion,rqWarning) = rqsNo then
  begin
   msg('Aborted by user!');
   Dependencies.Free;
@@ -778,7 +775,7 @@ else Dependencies.Add(n);
 end;
 end else
 begin
- if MakeUsrRequest(rsNoLDSources,rqWarning) = rsNo then
+ if MakeUsrRequest(rsNoLDSources,rqWarning) = rqsNo then
  begin
    Dependencies.Free;
    Result:=false;
@@ -956,7 +953,7 @@ begin
 
 cnf:=TInifile.Create(ConfigDir+'config.cnf');
 if cnf.ReadBool('MainConf','AutoDepLoad',true)=false then
- if MakeUsrRequest(StringReplace(rsWDLDep,'%l',Dependencies[i],[rfReplaceAll])+#13+rsWAllow,rqWarning)=rsNo then
+ if MakeUsrRequest(StringReplace(rsWDLDep,'%l',Dependencies[i],[rfReplaceAll])+#13+rsWAllow,rqWarning)=rqsNo then
  begin
   HTTP.Free;
   Dependencies.Free;
@@ -1100,19 +1097,22 @@ begin
      msg('DepInstall: '+Dependencies[i]+' (using PackageKit)');
      msg('');
 
+     writeLn('LIBINSTALLER-DBG: A (blatest)');
      pkit.Resolve(Dependencies[i]);
+     writeLn('LIBINSTALLER-DBG: B');
      while not pkit.PkFinished do
      begin
      //Do nothing...
-      Application.ProcessMessages;
+      SetMainPos(Round(mnpos*max));
      end;
-
+     writeLn('LIBINSTALLER-DBG: C');
      if pkit.PkFinishCode>0 then
      begin
+     writeLn('LIBINSTALLER-DBG: D');
       pkit.InstallPkg(Dependencies[i]);
 
       //Set progress to extra progress bar
-      while not pkit.PkFinished do SetExtraPos(pkit.Progress);
+      while not pkit.PkFinished do begin SetExtraPos(pkit.Progress);SetMainPos(Round(mnpos*max));end;
 
     //Check if the package was really installed
    if pkit.PkFinishCode>0 then
@@ -1123,7 +1123,9 @@ begin
      exit;
     end;
 
-    end; //E-of <> 1
+    end; //E-of > 0
+
+    writeLn('LIBINSTALLER-DBG: E');
 
     mnpos:=mnpos+10;
     SetMainPos(Round(mnpos*max));
@@ -1362,7 +1364,7 @@ begin
 
  if MakeUsrRequest(PAnsiChar(rsAddUpdSrc+#13+
    copy(USource,pos(' <',USource)+2,length(USource)-pos(' <',USource)-2)+' ('+copy(uSource,3,pos(' <',USource)-3)+')'+#13+
-   PAnsiChar(rsQAddUpdSrc)),rqWarning)=rsYes then
+   PAnsiChar(rsQAddUpdSrc)),rqWarning)=rqsYes then
  begin
   fi.Add('- '+USource);
   fi.SaveToFile(RegDir+'updates.list');
@@ -1415,7 +1417,7 @@ pkit:=TPackageKit.Create;
    msg('Looking for '+Dependencies[i]);
 
    pkit.Resolve(Dependencies[i]);
-   while not pkit.PkFinished do begin SetMainPos(Round(mnpos*max)); Application.ProcessMessages;end;
+   while not pkit.PkFinished do begin SetMainPos(Round(mnpos*max));end;
 
   if pkit.PkFinishCode>0 then
   begin
@@ -1429,7 +1431,7 @@ pkit:=TPackageKit.Create;
   begin
    msg('Looking for '+copy(Dependencies[i],1,pos(' -',Dependencies[i])-1));
    pkit.Resolve(copy(Dependencies[i],1,pos(' -',Dependencies[i])-1));
-   while not pkit.PkFinished do begin SetMainPos(Round(mnpos*max));Application.ProcessMessages;end;
+   while not pkit.PkFinished do begin SetMainPos(Round(mnpos*max));end;
 
   if pkit.PkFinishCode>0 then
   begin

@@ -27,79 +27,64 @@ uses
   Process, LiCommon, installer,
   TRStrings, IniFiles, HTTPSend,
   FTPSend, Distri, LiTranslator, ipkdef,
-  ipkbuild, ipkhandle;
+  appman, liTypes;
 
 type
 
   { TLipa }
 
   TLipa = class(TCustomApplication)
-    procedure setupError(Sender: TObject; msg: String);
-    procedure setupMainPosChange(Sender: TObject; pos: Integer);
-    procedure setupMainVisibleChange(Sender: TObject; vis: Boolean);
-    procedure setupStateMessage(Sender: TObject; msg: String);
-    procedure setupTermQuestion(Sender: TObject; msg: String);
   protected
     procedure DoRun; override;
   public
+    xs: Integer;
     //** Exception handler
     procedure OnExeception(Sender : TObject;E : Exception);
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;
     procedure WriteHelp; virtual;
   private
-   xs: Integer;
   end;
 
 { TLipa }
 
+var
+  Application: TLipa;
 
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////This will be done if "lipa" is started
 
-procedure TLipa.setupError(Sender: TObject; msg: String);
+function OnSetupMessage(msg: String;imp: TMType): Boolean;cdecl;
 begin
-  writeLn(rsInstPerformError);
   writeLn(' '+msg);
-  halt(2);
 end;
 
-procedure TLipa.setupMainPosChange(Sender: TObject; pos: Integer);
+function OnSetupProgress(pos: Longint): Boolean;cdecl;
 begin
-if HasOption('verbose') then
-begin
- //Simple, stupid progress animation
-  if xs=0 then begin xs:=1; write(#13' #         '+IntToStr(pos));end else
-  if xs=1 then begin xs:=2; write(#13' ##        '+IntToStr(pos));end else
-  if xs=2 then begin xs:=3; write(#13' ###       '+IntToStr(pos));end else
-  if xs=3 then begin xs:=4; write(#13' #####     '+IntToStr(pos));end else
-  if xs=4 then begin xs:=5; write(#13' ######    '+IntToStr(pos));end else
-  if xs=5 then begin xs:=6; write(#13' #######   '+IntToStr(pos));end else
-  if xs=6 then begin xs:=7; write(#13' ########  '+IntToStr(pos));end else
-  if xs=7 then begin xs:=0; write(#13'                             ');end;
-end;
-end;
-
-procedure TLipa.setupMainVisibleChange(Sender: TObject; vis: Boolean);
-begin
-  if vis then
-  begin
-  writeLn('');
-  write('[ ')
-  end else
-  begin
-   write(' ]');
-   writeLn('');
-  end;
-end;
-
-procedure TLipa.setupStateMessage(Sender: TObject; msg: String);
+with Application do
 begin
 if not HasOption('verbose') then
+begin
+ //Simple, stupid progress animation
+  if xs=0 then begin xs:=1; write(#13' '+IntToStr(pos)+'% -#         ');end else
+  if xs=1 then begin xs:=2; write(#13' '+IntToStr(pos)+'% -##        ');end else
+  if xs=2 then begin xs:=3; write(#13' '+IntToStr(pos)+'% -###       ');end else
+  if xs=3 then begin xs:=4; write(#13' '+IntToStr(pos)+'% -#####     ');end else
+  if xs=4 then begin xs:=5; write(#13' '+IntToStr(pos)+'% -######    ');end else
+  if xs=5 then begin xs:=6; write(#13' '+IntToStr(pos)+'% -#######   ');end else
+  if xs=6 then begin xs:=7; write(#13' '+IntToStr(pos)+'% -########  ');end else
+  if xs=7 then begin xs:=0; write(#13' '+IntToStr(pos)+'% -          ');end;
+end;
+end;
+end;
+
+function OnSetupStateChange(msg: String;imp: TMType): Boolean;cdecl;
+begin
+if not Application.HasOption('verbose') then
   writeLn(' '+rsState+': '+msg);
 end;
 
-procedure TLipa.setupTermQuestion(Sender: TObject; msg: String);
+function OnSetupUserRequest(mtype: TRqType;msg: PChar): TRqResult;cdecl;
 var s: String;
 begin
   writeLn(rsQuestion);
@@ -125,7 +110,7 @@ var
   t: TProcess;
   i: Integer;
   x: Boolean;
-  setup: TInstallation;
+  setup: TInstallPack;
   lst: TStringList;
   proc: TProcess;
   cnf: TIniFile;
@@ -198,41 +183,43 @@ begin
      halt(1);
      exit;
     end;
+
+    setup:=TInstallPack.Create;
+    //Assign callbacks
+    setup.SetMessageCall(@OnSetupMessage);
+    setup.SetMainChangeCall(@OnSetupProgress);
+    setup.SetUserRequestCall(@OnSetupUserRequest);
+    setup.SetStepMessageCall(@OnSetupStateChange);
+
     //Check Testmode
     if HasOption('testmode') then Testmode:=true
     else Testmode:=false;
+    setup.SetTestmode(Testmode);
 
-    setup:=TInstallation.Create;
-    setup.OnError:=@setupError;
-    setup.OnMainPosChange:=@setupMainPosChange;
-    setup.OnMainVisibleChange:=@setupMainVisibleChange;
-    setup.OnTermQuestion:=@setupTermQuestion;
     setup.Initialize(a);
-    writeLn('== '+StringReplace(rsInstOf,'%a',setup.AppName+' '+setup.AppVersion,[rfReplaceAll])+' ==');
+    writeLn('== '+StringReplace(rsInstOf,'%a',setup.GetAppName+' '+setup.GetAppVersion,[rfReplaceAll])+' ==');
     writeLn('-> '+rsResolvingDep);
     setup.ResolveDependencies;
 
     writeLn('- '+rsDone);
-    if setup.DescFile <> '' then
+    lst:=TStringList.Create;
+    setup.ReadLongDescription(lst);
+    if lst.Count>0 then
     begin
      writeLn(rsProgDesc);
-     lst:=TStringList.Create;
-     lst.LoadFromFile(setup.DescFile);
      for i:=0 to lst.Count-1 do
       writeLn(lst[i]);
-     lst.Free;
     end;
-    if setup.LicenseFile <> '' then
+
+    setup.ReadLicense(lst);
+    if lst.Count>0 then
     begin
       writeLn(rsLicense);
-     lst:=TStringList.Create;
-     lst.LoadFromFile(setup.LicenseFile);
      for i:=0 to lst.Count-1 do
      begin
       writeLn(lst[i]);
       readLn;
      end;
-     lst.Free;
      c:='';
      repeat
       writeLn('');
@@ -248,11 +235,14 @@ begin
       end;
      until (c=LowerCase(rsY))or(c=LowerCase(rsYes));
     end;
+
+    //Clear temporary list
+    lst.Clear;
+
     // Check for active profiles
-    lst:=TStringList.Create;
-    for i:=0 to setup.Profiles.Count-1 do
-      lst.Add(copy(setup.Profiles[i],0,pos(' #',setup.Profiles[i])));
-    if lst.Count=0 then writeLn('Using profile: '+lst[0])
+    setup.ReadProfiles(lst);
+
+    if lst.Count=1 then writeLn('Using profile: '+lst[0])
     else
     begin
      writeLn(rsSelectIModeA);
@@ -270,21 +260,15 @@ begin
       end;
      until (StrToInt(c)-1<=lst.Count)and(StrToInt(c)-1>-1);
       i:=StrToInt(c)-1;
-      setup.CurrentProfile:=lst[i];
-      setup.IFileInfo:='/stuff/fileinfo-'+copy(setup.Profiles[i],pos(' #',setup.Profiles[i])+2,length(setup.Profiles[i]))+'.id';
+      setup.SetProfileID(i);
     end;
+    //Free tmp list
     lst.Free;
+
     writeLn('- '+rsOkay);
     writeLn('-> '+rsPreparingInstall);
 
-     if setup.IFileInfo='' then
-     begin
-      writeLn(rsPKGError+#13'Message: No file information that is assigned to this profile was not found!'+#13+rsAppClose);
-      halt(1);
-      exit;
-     end;
-
-  cnf:=TInifile.Create(ConfigDir+'config.cnf');
+ { cnf:=TInifile.Create(ConfigDir+'config.cnf');
   //Create HTTP object
    HTTP := THTTPSend.Create;
    //HTTP.Sock.OnStatus:=@HookSock;
@@ -304,37 +288,26 @@ begin
  //Assign HTTP/FTP objects to Installation service object
   setup.HTTPSend:=HTTP;
   setup.FTPSend:=FTP;
-
- //Assign event handler
- setup.OnStateMessage:=@setupStateMessage;
+  }
 
  writeLn('-> '+rsRunning);
  if not HasOption('verbose') then
  writeLn(' '+rsState+': '+rsStep1);
 
- proc:=TProcess.Create(nil);
- proc.Options:=[poUsePipes];
- lst:=TStringList.Create;
- //GetOutPutTimer.Enabled:=true;
- setup.DoInstallation(Proc,lst);
- //GetOutPutTimer.Enabled:=false;
- setup.HTTPSend:=nil;
- setup.FTPSend:=nil;
- lst.Free;
- HTTP.Free;
- FTP.Free;
+ //Do the installation
+ setup.StartInstallation;
 
  if HasOption('verbose') then
   for i:=0 to lst.Count-1 do writeLn(lst[i]);
 
  if not Testmode then
  begin
-  writeLn(StringReplace(rsWasInstalled,'%a',setup.AppName,[rfReplaceAll]));
+  writeLn(StringReplace(rsWasInstalled,'%a',setup.GetAppName,[rfReplaceAll]));
   writeLn('Finished.');
  end else
  begin
   writeLn(rsExecAppTesting);
-  proc.CommandLine:=setup.CMDLn;
+  proc.CommandLine:=setup.GetAppCMD;
   Proc.Options:=[poWaitOnExit];
   Proc.Execute;
   writeLn(rsTestFinished);
@@ -347,6 +320,8 @@ begin
   halt(0);
  end;
 
+ //???
+{
  if HasOption('checkapps') then
  begin
   lst:=TStringList.Create;
@@ -371,7 +346,7 @@ begin
     for i:=0 to lst.Count-1 do
      writeLn(lst[i]);
   end;
- end;
+ end; }
 
   // stop program loop
   Terminate;
@@ -425,14 +400,12 @@ writeLn('('+rsAborted+')');
 halt(8);
 end;
 
-var
-  Application: TLipa;
-
 {$IFDEF WINDOWS}{$R lipa.rc}{$ENDIF}
 
 begin
   Application:=TLipa.Create(nil);
-  Application.OnException:=@Application.OnExeception;
+  //Debug
+ // Application.OnException:=@Application.OnExeception;
   Application.Run;
   Application.Free;
 end.
