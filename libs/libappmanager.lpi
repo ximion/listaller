@@ -29,7 +29,7 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="libappmanager"/>
         <CursorPos X="20" Y="93"/>
-        <TopLine Value="1"/>
+        <TopLine Value="50"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="24"/>
         <Loaded Value="True"/>
@@ -37,8 +37,8 @@
       <Unit1>
         <Filename Value="management.pas"/>
         <UnitName Value="management"/>
-        <CursorPos X="1" Y="10"/>
-        <TopLine Value="1"/>
+        <CursorPos X="22" Y="518"/>
+        <TopLine Value="497"/>
         <UsageCount Value="11"/>
       </Unit1>
       <Unit2>

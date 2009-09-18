@@ -1097,18 +1097,14 @@ begin
      msg('DepInstall: '+Dependencies[i]+' (using PackageKit)');
      msg('');
 
-     writeLn('LIBINSTALLER-DBG: A (blatest)');
      pkit.Resolve(Dependencies[i]);
-     writeLn('LIBINSTALLER-DBG: B');
      while not pkit.PkFinished do
      begin
      //Do nothing...
       SetMainPos(Round(mnpos*max));
      end;
-     writeLn('LIBINSTALLER-DBG: C');
      if pkit.PkFinishCode>0 then
      begin
-     writeLn('LIBINSTALLER-DBG: D');
       pkit.InstallPkg(Dependencies[i]);
 
       //Set progress to extra progress bar
@@ -1124,8 +1120,6 @@ begin
     end;
 
     end; //E-of > 0
-
-    writeLn('LIBINSTALLER-DBG: E');
 
     mnpos:=mnpos+10;
     SetMainPos(Round(mnpos*max));

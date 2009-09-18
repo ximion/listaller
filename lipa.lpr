@@ -27,7 +27,7 @@ uses
   Process, LiCommon, installer,
   TRStrings, IniFiles, HTTPSend,
   FTPSend, Distri, LiTranslator, ipkdef,
-  appman, liTypes;
+  appman, liTypes, Forms;
 
 type
 
@@ -66,14 +66,14 @@ begin
 if not HasOption('verbose') then
 begin
  //Simple, stupid progress animation
-  if xs=0 then begin xs:=1; write(#13' '+IntToStr(pos)+'% -#         ');end else
-  if xs=1 then begin xs:=2; write(#13' '+IntToStr(pos)+'% -##        ');end else
-  if xs=2 then begin xs:=3; write(#13' '+IntToStr(pos)+'% -###       ');end else
-  if xs=3 then begin xs:=4; write(#13' '+IntToStr(pos)+'% -#####     ');end else
-  if xs=4 then begin xs:=5; write(#13' '+IntToStr(pos)+'% -######    ');end else
-  if xs=5 then begin xs:=6; write(#13' '+IntToStr(pos)+'% -#######   ');end else
-  if xs=6 then begin xs:=7; write(#13' '+IntToStr(pos)+'% -########  ');end else
-  if xs=7 then begin xs:=0; write(#13' '+IntToStr(pos)+'% -          ');end;
+  if xs=0 then begin xs:=1; write(#13' '+IntToStr(pos)+'%    ');end else
+  if xs=1 then begin xs:=2; write(#13' '+IntToStr(pos)+'%    ');end else
+  if xs=2 then begin xs:=3; write(#13' '+IntToStr(pos)+'%    ');end else
+  if xs=3 then begin xs:=4; write(#13' '+IntToStr(pos)+'%    ');end else
+  if xs=4 then begin xs:=5; write(#13' '+IntToStr(pos)+'%    ');end else
+  if xs=5 then begin xs:=6; write(#13' '+IntToStr(pos)+'%    ');end else
+  if xs=6 then begin xs:=7; write(#13' '+IntToStr(pos)+'%    ');end else
+  if xs=7 then begin xs:=0; write(#13' '+IntToStr(pos)+'%    ');end;
 end;
 end;
 end;

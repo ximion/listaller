@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="3"/>
-      <CurrentBuildNr Value="1098"/>
+      <CurrentBuildNr Value="1100"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -57,9 +57,7 @@
         <UnitName Value="listallgo"/>
         <CursorPos X="1" Y="42"/>
         <TopLine Value="1"/>
-        <EditorIndex Value="2"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="igobase.pas"/>
@@ -867,7 +865,7 @@
         <Filename Value="bindings/installer.pas"/>
         <UnitName Value="installer"/>
         <CursorPos X="9" Y="138"/>
-        <TopLine Value="96"/>
+        <TopLine Value="97"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>

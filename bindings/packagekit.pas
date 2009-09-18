@@ -35,7 +35,7 @@ private
  //Resulting list
  result: TStringList;
  //True if transaction finished
- finaction: Boolean;
+ done: Boolean;
  //True if output should be assigned to list
  asstolist: Boolean;
  //Catch the exitcode
@@ -50,7 +50,7 @@ private
  procedure OnMessage(client: Pointer;message: Guint;details: PChar;user_data: Pointer);cdecl;
  procedure OnProgChange(client: Pointer;percentage: guint;subpercentage: guint;elapsed: guint;remaining: guint;user_data: gpointer);cdecl;
  procedure OnPackage(client: Pointer;obj: GPointer;user_data: Pointer);cdecl;
- procedure OnFinish(client: Pointer;exit: guint;runtime:guint;user_data: Pointer);cdecl;
+// procedure OnFinish(client: Pointer;exit: guint;runtime:guint;user_data: Pointer);cdecl;
 public
  constructor Create;
  destructor Destroy; override;
@@ -78,7 +78,7 @@ public
  //** Grab the resulting package list
  property RsList: TStringList read result write result;
  //** Check if the last transaction was finished
- property PkFinished: Boolean read finaction;
+ property PkFinished: Boolean read done;
  //** Read finish code
  property PkFinishCode: Integer read exitcode;
  //** Reads the current Packagekit version as string
@@ -135,7 +135,9 @@ implementation
 procedure InitializeGType;
 begin
  //Needed for use with Qt4
- g_type_init();
+ {$IFNDEF LCLGTK2}
+  g_type_init();
+ {$ENDIF}
 end;
 
 procedure TPackageKit.OnProgChange(client: Pointer;percentage: guint;subpercentage: guint;elapsed: guint;remaining: guint;user_data: Pointer);cdecl;
@@ -161,10 +163,11 @@ begin
 end;
 end;
 
-procedure TPackageKit.OnFinish(client: Pointer;exit: guint;runtime:guint;user_data: Pointer);cdecl;
+// This has to be global - PK throws an AV if it is assigned to TPackageKit
+procedure OnFinish(client: Pointer;exit: guint;runtime:guint;user_data: Pointer);cdecl;
 begin
- finaction:=true;
- exitcode:=exit;
+ TPackageKit(user_data).done:=true;
+ TPackageKit(user_data).exitcode:=exit;
 end;
 
 procedure TPackageKit.OnMessage(client: Pointer;message: Guint;details: PChar;user_data: Pointer);cdecl;
@@ -181,9 +184,9 @@ begin
   pkclient := pk_client_new;
 
   //Assign signals
-  g_signal_connect(pkclient,'progress-changed',TGCallback(TMethod(@OnProgChange).Code),self);
+  g_signal_connect(pkclient,'progress_changed',TGCallback(TMethod(@OnProgChange).Code),self);
   g_signal_connect(pkclient,'package',TGCallback(TMethod(@OnPackage).Code),self);
-  g_signal_connect(pkclient,'finished',TGCallback(TMethod(@OnFinish).Code),self);
+  g_signal_connect(pkclient,'finished',TGCallback(@OnFinish),self);
   g_signal_connect(pkclient,'message',TGCallback(TMethod(@OnMessage).Code),self);
 
   asstolist:=false;
@@ -222,7 +225,7 @@ var filter: guint64;
 begin
   pk_client_reset(pkclient,nil);
   Result:=true;
-  finaction:=false;
+  done:=false;
   filter:=pk_filter_bitfield_from_text('installed');
   arg := StringToPPchar(pkg, 0);
   Result:=pk_client_resolve(pkclient,filter,arg,@error);
@@ -241,7 +244,7 @@ var filter: guint64;
     error: PGError=nil;
 begin
   pk_client_reset(pkclient,nil);
-  finaction:=false;
+  done:=false;
   asstolist:=true;
   filter:=pk_filter_bitfield_from_text('installed');
   ast := pkg+';;;';
@@ -262,7 +265,7 @@ var ast: String;
     error: PGError=nil;
 begin
   pk_client_reset(pkclient,nil);
-  finaction:=false;
+  done:=false;
   asstolist:=false;
   ast := pkg+';;;';
   arg := StringToPPchar(ast, 0);
@@ -283,7 +286,7 @@ var ast: String;
     error: PGError=nil;
 begin
   pk_client_reset(pkclient,nil);
-  finaction:=false;
+  done:=false;
   asstolist:=false;
   ast := pkg+';;;';
   arg := StringToPPchar(ast, 0);
@@ -303,7 +306,7 @@ var filter: guint64;
     error: PGError=nil;
 begin
   pk_client_reset(pkclient,nil);
-  finaction:=false;
+  done:=false;
   asstolist:=true;
   filter:=pk_filter_bitfield_from_text('installed');
 
@@ -321,7 +324,7 @@ var arg: PPChar;
     error: PGError=nil;
 begin
   pk_client_reset(pkclient,nil);
-  finaction:=false;
+  done:=false;
   asstolist:=false;
   arg:=StringToPPchar(fname, 0);
 
@@ -347,7 +350,7 @@ if DInfo.PackageSystem<>'DEB' then
 begin
   writeLn('DEBUG: Using native pkit backend.');
   pk_client_reset(pkclient,nil);
-  finaction:=false;
+  done:=false;
   asstolist:=true;
   filter:=pk_filter_bitfield_from_text('none');
 
@@ -362,7 +365,7 @@ end else
 begin
  // We need to use apt-file, because the PackageKit
  // APT backend does not support searching for not-installed packages
- finaction:=false;
+  done:=false;
   s:=TStringList.Create;
   p:=TProcess.Create(nil);
   p.Options:=[poUsePipes];
@@ -379,7 +382,7 @@ begin
   Result:=true
  else Result:=false;
  s.Free;
- finaction:=true;
+ done:=true;
 end;
 
 end;

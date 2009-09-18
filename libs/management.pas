@@ -515,7 +515,7 @@ tmp.Free;
 msg('Package detected: '+f,mtInfo);
 if (StringReplace(g,' ','',[rfReplaceAll])='')or
 (request(StringReplace(StringReplace(StringReplace(rsRMPkg,'%p',f,[rfReplaceAll]),'%a',obj.Name,[rfReplaceAll]),'%pl',PAnsiChar(g),[rfReplaceAll]),
-        rqWarning)=rsYes)
+        rqWarning)=rqsYes)
 then
 begin
 
