@@ -8,6 +8,7 @@
       </Flags>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
+      <Title Value="licreator"/>
       <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
@@ -40,9 +41,9 @@
     </RequiredPackages>
     <Units Count="56">
       <Unit0>
-        <Filename Value="lipkgcreator.lpr"/>
+        <Filename Value="licreator.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="LiPkgCreator"/>
+        <UnitName Value="licreator"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
         <UsageCount Value="146"/>
@@ -53,7 +54,7 @@
         <ComponentName Value="FrmEditor"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="editor"/>
-        <CursorPos X="28" Y="110"/>
+        <CursorPos X="6" Y="75"/>
         <TopLine Value="67"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="146"/>

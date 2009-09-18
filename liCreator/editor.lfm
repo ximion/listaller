@@ -1,7 +1,7 @@
 object FrmEditor: TFrmEditor
-  Left = 276
+  Left = 207
   Height = 654
-  Top = 200
+  Top = 182
   Width = 922
   ActiveControl = IPSNotebook
   Caption = 'Listaller package creator'
@@ -53,7 +53,6 @@ object FrmEditor: TFrmEditor
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 35
-        BookMarkOptions.OnChange = nil
         Gutter.Width = 53
         Gutter.MouseActions = <        
           item
@@ -78,6 +77,7 @@ object FrmEditor: TFrmEditor
             Option = 0
             Priority = 0
           end>
+        Highlighter = SynAnySyn1
         Keystrokes = <        
           item
             Command = ecUp
@@ -554,24 +554,38 @@ object FrmEditor: TFrmEditor
             MoveCaret = False
             Option = 0
             Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
           end>
         Lines.Strings = (
-          '<?xml version="1.0" encoding="ISO-8859-1"?>'
-          ' <package version="0.8" type="linstall">'
-          '  <architecture>all</architecture>'
-          '  <application name="SampleApp">'
-          '    <version>1.0</version>'
-          '    <license>/path/to/license.txt</license>'
-          '    <description>/path/to/descfile.txt</description>'
-          '    <dsupport>Ubuntu,SuSE,Debian, Fedora</dsupport>'
-          '    <icon>/path/to/package/icon.png</icon>'
-          '    <author>Creator of the application</author>'
-          '    <sdesc std="A simple sample application.">'
-          '      <de>Eine einfache Demoanwendung</de>'
-          '    </sdesc>'
-          '    <group>Other</group>'
-          '  </application>'
-          ' </package>'
+          'IPK-Standard-Version: 1.0'
+          ''
+          'Type: linstall'
+          'Name: SampleApp'
+          'Version: 1.0'
+          'Architectures: x86_64'
+          'License: GPLv2'
+          ' Ad the license text here'
+          'Description: SampleApp - Do thinks better!'
+          ' With SampleApp you do things even better!'
+          'DSupport: Ubuntu,openSuSE,Fedora,Mandriva,Debian'
+          'Author: Me Foundation'
+          'Icon: /path/to/an/impressive/icon.png'
+          'AppCMD: $INST/sampleapp/sapp10'
+          'SDesc: SampleApp - The app you''ve ever needed!'
+          'Group: Additional'
+          'PkName: sampleapp-10'
+          'Disallow: ioNothing'
+          'Profile[0]: Standard'
         )
         Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
         ScrollBars = ssAutoBoth
@@ -848,21 +862,22 @@ object FrmEditor: TFrmEditor
     top = 8
   end
   object SynAnySyn1: TSynAnySyn
-    Enabled = False
     Comments = []
     DetectPreprocessor = False
-    IdentifierChars = '!"#$%&''()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
+    IdentifierChars = ',:[]'
     KeyWords.Strings = (
-      '<chmod:'
-      '$INST'
-      '<s>'
+      'ARCHITECTURES'
+      'LICENSE'
+      'NAME'
+      'TYPE'
+      'VERSION'
     )
     Constants.Strings = (
       '/<>#:'
     )
     Objects.Strings = (
-      '<chmod:'
-      '<s>'
+      'IONOTHING'
+      'IOTESTMODE'
     )
     Markup = True
     Entity = False

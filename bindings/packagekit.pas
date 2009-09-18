@@ -184,7 +184,7 @@ begin
   pkclient := pk_client_new;
 
   //Assign signals
-  g_signal_connect(pkclient,'progress_changed',TGCallback(TMethod(@OnProgChange).Code),self);
+  g_signal_connect(pkclient,'progress-changed',TGCallback(TMethod(@OnProgChange).Code),self);
   g_signal_connect(pkclient,'package',TGCallback(TMethod(@OnPackage).Code),self);
   g_signal_connect(pkclient,'finished',TGCallback(@OnFinish),self);
   g_signal_connect(pkclient,'message',TGCallback(TMethod(@OnMessage).Code),self);
@@ -285,13 +285,23 @@ var ast: String;
     arg: PPChar;
     error: PGError=nil;
 begin
-  pk_client_reset(pkclient,nil);
+  pk_client_reset(pkclient,@error);
+
+  if error<>nil then
+  begin
+    Result:=false;
+    g_warning('failed: %s', [error^.message]);
+    ErrorMsg:=error^.message;
+    g_error_free(error);
+  end;
+
   done:=false;
   asstolist:=false;
   ast := pkg+';;;';
   arg := StringToPPchar(ast, 0);
 
   Result:=pk_client_install_packages(pkclient,arg,@error);
+
   if error<>nil then
   begin
     Result:=false;

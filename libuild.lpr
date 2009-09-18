@@ -211,7 +211,7 @@ var
 
 begin
   Application:=TLiBuild.Create(nil);
-  Application.OnException:=@Application.OnExeception;
+//  Application.OnException:=@Application.OnExeception;
   Application.Run;
   Application.Free;
 end.

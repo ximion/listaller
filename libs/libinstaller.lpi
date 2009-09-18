@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="447"/>
+      <CurrentBuildNr Value="449"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -33,7 +33,7 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
         <CursorPos X="1" Y="348"/>
-        <TopLine Value="305"/>
+        <TopLine Value="309"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="34"/>
         <Loaded Value="True"/>
@@ -41,7 +41,7 @@
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="14" Y="1100"/>
+        <CursorPos X="15" Y="1100"/>
         <TopLine Value="1093"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="16"/>
@@ -92,9 +92,11 @@
       <Unit8>
         <Filename Value="../bindings/packagekit.pas"/>
         <UnitName Value="packagekit"/>
-        <CursorPos X="33" Y="226"/>
-        <TopLine Value="201"/>
+        <CursorPos X="39" Y="187"/>
+        <TopLine Value="159"/>
+        <EditorIndex Value="2"/>
         <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit8>
       <Unit9>
         <Filename Value="../bindings/pkitclient.pas"/>
@@ -118,7 +120,7 @@
         <UsageCount Value="10"/>
       </Unit11>
     </Units>
-    <JumpHistory Count="19" HistoryIndex="18">
+    <JumpHistory Count="20" HistoryIndex="19">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="22" Column="17" TopLine="1"/>
@@ -193,8 +195,12 @@
       </Position18>
       <Position19>
         <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1100" Column="14" TopLine="1093"/>
+        <Caret Line="1100" Column="15" TopLine="1093"/>
       </Position19>
+      <Position20>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="348" Column="1" TopLine="305"/>
+      </Position20>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

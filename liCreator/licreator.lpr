@@ -10,10 +10,10 @@ uses
   Forms,
   editor, fwiz, prjwizard, LResources;
 
-{$IFDEF WINDOWS}{$R lipkgcreator.rc}{$ENDIF}
+{$IFDEF WINDOWS}{$R licreator.rc}{$ENDIF}
 
 begin
-  {$I lipkgcreator.lrs}
+  {$I licreator.lrs}
   Application.Initialize;
   Application.CreateForm(TFrmEditor, FrmEditor);
   Application.CreateForm(TfrmFileWizard, frmFileWizard);

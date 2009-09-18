@@ -105,8 +105,9 @@ TIPKScript = class(TIPKBasic)
   constructor Create;
   destructor  Destroy;override;
 
-  function SaveToFile(s: String): Boolean;
-  function LoadFromFile(s: String): Boolean;
+  function  SaveToFile(s: String): Boolean;
+  function  LoadFromFile(s: String): Boolean;
+  function  LoadFromList(lst: TStrings): Boolean;
   procedure GetDirectFileList(id: Integer;lst: TStrings);
   procedure GetFileSection(id: Integer;lst: TStrings);
 end;
@@ -154,7 +155,7 @@ end;
 
 function TIPKBasic.GetValue(s: String): String;
 begin
- Result:=LowerCase(copy(s,pos(':',s)+1,length(s)));
+ Result:=copy(s,pos(':',s)+1,length(s));
  if Result[1]=' ' then
   Result:=copy(Result,2,length(Result));
 end;
@@ -186,7 +187,7 @@ function TIPKBasic.SolveInclude(s: String): String;
 var h: String;
 begin
  h:=copy(s,pos('"',s)+1,length(s));
- h:=copy(h,0,pos('"',s)-1);
+ h:=copy(h,0,pos('"',h)-1);
  if h[1]='.' then
   Result:=FBasePath+'/'+h
  else
@@ -201,8 +202,8 @@ case AType of
  ptDLink: h:='Type: dlink';
  ptContainer: h:='Type: container';
 end;
-if SearchKeyIndex('Type')>-1 then
- text[SearchKeyIndex('Type')]:=h
+if SearchKeyIndex('Type',false)>-1 then
+ text[SearchKeyIndex('Type',false)]:=h
 else
  text.Add(h);
 end;
@@ -211,10 +212,12 @@ function TIPKBasic.ReadType: TPkgType;
 var s: String;j: Integer;
 begin
  Result:=ptUnknown;
- j:=SearchKeyIndex('Type');
+ j:=SearchKeyIndex('Type',false);
+
  if j>-1 then
  begin
  s:=text[j];
+ writeLn(s);
  if GetValue(s)='linstall' then Result:=ptLinstall;
  if GetValue(s)='dlink' then Result:=ptDLink;
  if GetValue(s)='container' then Result:=ptContainer;
@@ -277,10 +280,12 @@ begin
   repeat
    s:=text[i];
    if s[1]=' ' then
+   begin
     s:=copy(s,2,length(s));
-   info.Add(s);
+    info.Add(s);
+   end;
    Inc(i);
-  until (i>text.Count)or(text[i][1]<>' ');
+  until (i>=text.Count)or(text[i][1]<>' ');
  end;
 end;
 
@@ -342,10 +347,12 @@ begin
   repeat
    s:=text[i];
    if s[1]=' ' then
+   begin
     s:=copy(s,2,length(s));
    info.Add(s);
+   end;
    Inc(i);
-  until (i>text.Count)or(text[i][1]<>' ');
+  until (i>=text.Count)or(text[i][1]<>' ');
  end;
 end;
 
@@ -391,11 +398,7 @@ end;
 
 procedure TIPKBasic.WriteIcon(s: String);
 begin
-s:='Icon: '+s;
-if SearchKeyIndex('Version')>-1 then
- text[SearchKeyIndex('Version')]:=s
-else
- text.Add(s);
+ WriteEntry('Icon',s);
 end;
 
 function TIPKBasic.ReadIcon: String;
@@ -761,6 +764,18 @@ begin
  FBasePath:=ExtractFilePath(s);
  fname:=s;
  end else Result:=false;
+end;
+
+function TIPKScript.LoadFromList(lst: TStrings): Boolean;
+begin
+ result:=true;
+ writeLn(lst[0]);
+ if lst[0]<>'IPK-Standard-Version: 1.0' then
+ begin
+  Result:=false;
+  exit;
+ end else
+  text.Assign(lst);
 end;
 
 procedure TIPKScript.GetDirectFileList(id: Integer;lst: TStrings);

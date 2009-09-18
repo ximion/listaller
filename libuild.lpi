@@ -21,18 +21,20 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
-        <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+        <HostApplicationFilename Value="/home/matthias/Development/listaller/trunk/bin/libuild"/>
+        <CommandLineParams Value="-b /home/matthias/Desktop/ListallerPacks/Songbird/sb-script.ips /home/matthias/Desktop/ListallerPacks/Songbird/testbuild.ipk"/>
+        <LaunchingApplication Use="True" PathPlusParams="/usr/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="5">
+    <Units Count="7">
       <Unit0>
         <Filename Value="libuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
-        <CursorPos X="49" Y="216"/>
-        <TopLine Value="1"/>
+        <CursorPos X="87" Y="186"/>
+        <TopLine Value="175"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -45,9 +47,11 @@
       <Unit2>
         <Filename Value="ipkbuild.pas"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="56" Y="24"/>
-        <TopLine Value="4"/>
-        <UsageCount Value="10"/>
+        <CursorPos X="16" Y="466"/>
+        <TopLine Value="440"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="abbrevia/abzipprc.pas"/>
@@ -63,52 +67,120 @@
         <TopLine Value="2444"/>
         <UsageCount Value="10"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="ipkdef.pas"/>
+        <UnitName Value="ipkdef"/>
+        <CursorPos X="17" Y="285"/>
+        <TopLine Value="263"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="litypes.pas"/>
+        <UnitName Value="litypes"/>
+        <CursorPos X="2" Y="73"/>
+        <TopLine Value="37"/>
+        <UsageCount Value="10"/>
+      </Unit6>
     </Units>
-    <JumpHistory Count="11" HistoryIndex="10">
+    <JumpHistory Count="24" HistoryIndex="23">
       <Position1>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="211" Column="37" TopLine="172"/>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="421" Column="19" TopLine="407"/>
       </Position1>
       <Position2>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="26" Column="20" TopLine="1"/>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="450" Column="14" TopLine="428"/>
       </Position2>
       <Position3>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="50" Column="14" TopLine="1"/>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="82" Column="38" TopLine="62"/>
       </Position3>
       <Position4>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="26" Column="30" TopLine="1"/>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="410" Column="16" TopLine="384"/>
       </Position4>
       <Position5>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="27" Column="11" TopLine="1"/>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="31" Column="12" TopLine="11"/>
       </Position5>
       <Position6>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="215" Column="1" TopLine="177"/>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="466" Column="16" TopLine="440"/>
       </Position6>
       <Position7>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="49" Column="15" TopLine="29"/>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="76" Column="13" TopLine="56"/>
       </Position7>
       <Position8>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="52" Column="14" TopLine="33"/>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="275" Column="30" TopLine="257"/>
       </Position8>
       <Position9>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="93" Column="26" TopLine="54"/>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="33" Column="12" TopLine="13"/>
       </Position9>
       <Position10>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="28" Column="36" TopLine="1"/>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="16" Column="38" TopLine="10"/>
       </Position10>
       <Position11>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="178" Column="9" TopLine="153"/>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="34" Column="23" TopLine="10"/>
       </Position11>
+      <Position12>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="147" Column="31" TopLine="127"/>
+      </Position12>
+      <Position13>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="253" Column="12" TopLine="233"/>
+      </Position13>
+      <Position14>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="421" Column="12" TopLine="401"/>
+      </Position14>
+      <Position15>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="487" Column="12" TopLine="467"/>
+      </Position15>
+      <Position16>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="507" Column="12" TopLine="487"/>
+      </Position16>
+      <Position17>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="523" Column="12" TopLine="487"/>
+      </Position17>
+      <Position18>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="573" Column="12" TopLine="553"/>
+      </Position18>
+      <Position19>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="589" Column="12" TopLine="553"/>
+      </Position19>
+      <Position20>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="605" Column="12" TopLine="585"/>
+      </Position20>
+      <Position21>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="621" Column="12" TopLine="585"/>
+      </Position21>
+      <Position22>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="82" Column="54" TopLine="62"/>
+      </Position22>
+      <Position23>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="80" Column="32" TopLine="63"/>
+      </Position23>
+      <Position24>
+        <Filename Value="ipkdef.pas"/>
+        <Caret Line="81" Column="32" TopLine="63"/>
+      </Position24>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

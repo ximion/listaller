@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, XMLRead, XMLWrite, DOM, AbZipper, AbArcTyp, MD5, LiCommon, Process,
-  OPBitmapFormats;
+  OPBitmapFormats, ipkdef, litypes;
 
 type
 
@@ -291,8 +291,9 @@ end;
 ///////////////////Function to build IPK-Packages///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 procedure BuildPackage(fi: String;o:String;genbutton:Boolean=false);
-var i,j,id: Integer;fc: TStringList;pc: TXMLDocument;xn,nn: TDOMNode;lh,h,s,pkgtype: String;tmp,ips,files,fsec,script: TStringList;
+var i,j,id: Integer;fc: TStringList;pc: TXMLDocument;xn,nn: TDOMNode;lh,h,s: String;pkgtype: TPkgType;tmp,sl,files,fsec,script: TStringList;
   dlist: TStringList;aname: String;
+  control: TIPKScript;
 begin
 if FileExists(o) then begin
 writeLn('error: ');
@@ -306,27 +307,28 @@ writeLn('Cleaning up...');
   end;
 
   writeLn('Reading file...');
-ips:=TStringList.Create;
-ips.LoadFromFile(fi);
+
+sl:=TStringList.Create; //ReadIn file
+sl.LoadFromFile(fi);
 script:=TStringList.Create;
 files:=TStringList.Create;
 fsec:=TStringList.Create;
 
-if LowerCase(ips[0])<>'ipk-source.version: 0.8' then begin
+if LowerCase(sl[0])<>'ipk-standard-version: 1.0' then begin
  writeLn('This is no valid IPS source file');
  writeLn('[Aborted]');
  halt(1);
 end;
 
-  for i:=1 to ips.Count-1 do begin
-  if pos('!-Files #',ips[i])>0 then break
-  else script.Add(ips[i]);
+  for i:=0 to sl.Count-1 do begin
+  if pos('!-Files ~',sl[i])>0 then break
+  else script.Add(sl[i]);
   end;
 
-  for j:=i to ips.Count-1 do
-  fsec.Add(ips[j]);
+  for j:=i to sl.Count-1 do
+  fsec.Add(sl[j]);
 
-ips.Free;
+sl.Free;
 writeLn('Building package...');
 writeLn('Please wait!');
   if not DirectoryExists('/tmp/listaller/') then SysUtils.CreateDir('/tmp/listaller/');
@@ -344,15 +346,16 @@ writeLn('Please wait!');
   writeLn('Preparing files.');
   write('[..');
 
-  for j:=0 to fsec.Count-1 do begin
+  for j:=0 to fsec.Count-1 do
+  begin
    files.Clear;
    fc.Clear;
    id:=-1;
-   if pos('!-Files #',fsec[j])>0 then
+   if pos('!-Files ~',fsec[j])>0 then
    begin
-    id:=StrToInt(copy(fsec[j],pos('#',fsec[j])+1,length(fsec[j])));
+    id:=StrToInt(copy(fsec[j],pos('~',fsec[j])+1,length(fsec[j])));
     for i:=j+1 to fsec.count-1 do
-     if pos('!-Files #',fsec[i])>0 then break
+     if pos('!-Files ~',fsec[i])>0 then break
        else files.Add(fsec[i]);
     end;
 
@@ -409,30 +412,32 @@ end;
  writeLn('');
  fsec.Free;
 
-script.SaveTofile(WDir+'arcinfo.pin');
-ReadXMLFile(pc,WDir+'arcinfo.pin');
 
-xn:=pc.FindNode('package');
-pkgtype:=xn.Attributes.GetNamedItem('type').NodeValue;
-tmp.Add(WDir+'arcinfo.pin');
-pkgtype:=LowerCase(pkgtype);
-if pkgtype='linstall' then begin
-writeLn('Creating normal ipk-package.');
+control:=TIPKScript.Create;
+control.LoadFromList(script);
 
-xn:=pc.DocumentElement.FindNode('application');
+script.Free; //Only temporary
 
-if genbutton then begin
+pkgtype:=control.SType;
+
+if pkgtype=ptLinstall then begin
+writeLn('Creating standard IPK-package.');
+
+if genbutton then
+begin
  dlist:=TStringList.Create;
- aname:=xn.Attributes.GetNamedItem('name').NodeValue;
-  if FindChildNode(xn,'dsupport')<>nil then
-    lh:=FindChildNode(xn,'dsupport').NodeValue;
+ aname:=control.AppName;
+ lh:=control.DSupport;
   i:=1;
-    while length(lh)>0 do begin
+    while length(lh)>0 do
+    begin
        i:=pos(',',lh);
-      if i = 0 then begin
+      if i = 0 then
+      begin
        dlist.Add(lh);
        lh:='';
-      end else begin
+      end else
+      begin
        dlist.Add(copy(lh,1,i-1));
        delete(lh,1,i);
       end;
@@ -442,72 +447,74 @@ end;
 writeLn('Creating install-script...');
 SysUtils.CreateDir(WDir+'stuff/');
 
-if FindChildNode(xn,'icon')<>nil then
-if not FileExists(FindChildNode(xn,'icon').NodeValue) then begin
-writeLn('error: ');
-writeLn('Icon-path is invalid!');
-writeLn('Building canceled');
-halt(104);
-end else begin
-FileCopy(FindChildNode(xn,'icon').NodeValue,WDir+'stuff/'+'packicon.png'); //ACHTUNG! Muss noch geaendert werden, um weitere Bildtypen zu unterstützen
-SetNode(FindChildNode(xn,'icon'),'/stuff/'+'packicon.png');
-tmp.Add(WDir+'stuff/'+'packicon.png');
+if control.Icon<>'' then
+if not FileExists(control.Icon) then
+begin
+ writeLn('error: ');
+ writeLn('Icon-path is invalid!');
+ writeLn('Building canceled');
+ halt(104);
+end else
+begin
+ FileCopy(control.Icon,WDir+'stuff/'+'packicon.png'); //!!! Changes needed to support more image types
+ control.Icon:='/stuff/'+'packicon.png';
+ tmp.Add(WDir+'stuff/'+'packicon.png');
 end;
 
-if FindChildNode(xn,'license')<>nil then begin
-lh:=FindChildNode(xn,'license').NodeValue;
-if (not FileExists(lh)) and (lh<>'<none>') then
+sl:=TStringList.Create;
+
+control.ReadAppLicense(sl);
+if sl.Count>0 then
 begin
-writeLn('error: ');
-writeLn('License file is invalid!');
-writeLn('Building canceled!');
-exit;
-end else begin
+control.WriteAppLicense(sl);
+{
 FileCopy(lh,WDir+'stuff/'+'license'+ExtractFileExt(lh));
 SetNode(FindChildNode(xn,'license'),'/stuff/'+'license'+ExtractFileExt(lh));
 tmp.Add(WDir+'stuff/'+'license'+ExtractFileExt(lh));
-end;
+}
 end else writeLn(' - No license file found!');
 
-if FindChildNode(xn,'description')<>nil then begin
-lh:=FindChildNode(xn,'description').NodeValue;
-if (not FileExists(lh))and(lh<>'<none>') then
+sl.Clear;
+control.ReadAppDescription(sl);
+if sl.Count>0 then
 begin
-writeLn('error: ');
-writeLn('Description file is invalid!');
-writeLn('Building canceled!');
-halt(6);
-end else begin
+control.WriteAppDescription(sl);
+{
 FileCopy(lh,WDir+'stuff/'+'description'+ExtractFileExt(lh));
 tmp.Add(WDir+'stuff/'+'description'+ExtractFileExt(lh));
 
-SetNode(FindChildNode(xn,'description'),'/stuff/'+'description'+ExtractFileExt(lh));
-end;
+SetNode(FindChildNode(xn,'description'),'/stuff/'+'description'+ExtractFileExt(lh));}
 end else writeLn(' - No long description found!');
 
+sl.Free;
+
 //
-xn:=pc.FindNode('package');
-if FileExists(ExtractFilePath(fi)+'/preinst') then begin
+if FileExists(ExtractFilePath(fi)+'/preinst') then
+begin
 FileCopy(ExtractFilePath(fi)+'/preinst',WDir+'preinst');
 tmp.Add(WDir+'preinst');
 end;
-if FileExists(ExtractFilePath(fi)+'/postinst') then begin
+if FileExists(ExtractFilePath(fi)+'/postinst') then
+begin
 FileCopy(ExtractFilePath(fi)+'/postinst',WDir+'postinst');
 tmp.Add(WDir+'postinst');
 end;
-if FileExists(ExtractFilePath(fi)+'/prerm') then begin
+if FileExists(ExtractFilePath(fi)+'/prerm') then
+begin
 FileCopy(ExtractFilePath(fi)+'/prerm',WDir+'prerm');
 tmp.Add(WDir+'prerm');
 end;
 
-end else begin //If pkgtype is another one
-if pkgtype='dlink' then begin
-writeLn('Building dlink ipk-package.');
+end else
+begin //If pkgtype is another one
+if pkgtype=ptDLink then
+begin
+writeLn('Building dlink Ipk-package.');
 
-xn:=pc.DocumentElement.FindNode('application');
+sl:=TStringList.Create;
+control.ReadAppDescription(sl);
 
-lh:=FindChildNode(xn,'description').NodeValue;
-if (not FileExists(lh))and(lh<>'<none>') then
+if sl.Count<=0 then
 begin
 writeLn('error: ');
 writeLn('Description file is invalid!');
@@ -515,19 +522,19 @@ writeLn('(Aborted)');
 halt(9);
 end;
 
-FileCopy(lh,WDir+'stuff/'+'description'+ExtractFileExt(lh));
-tmp.Add(WDir+'stuff/'+'description'+ExtractFileExt(lh));
+control.WriteAppDescription(sl);
 
-SetNode(FindChildNode(xn,'description'),'/stuff/'+'description'+ExtractFileExt(lh));
-
-if (FindChildNode(xn,'icon')<>nil) then begin
-if (not FileExists(FindChildNode(xn,'icon').NodeValue))and(FindChildNode(xn,'icon').NodeValue<>'') then begin
+if control.Icon<>'' then
+begin
+if (not FileExists(control.Icon))and(control.Icon<>'') then
+begin
 writeLn('error: ');
 writeLn('Icon-path is invalid!');
 writeLn('Building canceled');
-halt(104);
-end else begin
-FileCopy(FindChildNode(xn,'icon').NodeValue,WDir+'stuff/'+'packicon.png'); //Could be changed to support more picture-filetypes
+halt(9);
+end else
+begin
+FileCopy(FindChildNode(xn,'icon').NodeValue,WDir+'stuff/'+'packicon.png'); //!!! Should be changed to support more picture-filetypes
 SetNode(FindChildNode(xn,'icon'),'/stuff/'+'packicon.png');
 tmp.Add(WDir+'stuff/'+'packicon.png');
 end;
@@ -535,7 +542,9 @@ end; //END <>nil
 
 
 end;
-if pkgtype='container' then begin
+//??? Container builder needs more work!
+if pkgtype=ptContainer then
+begin
 writeLn('Building container package...');
 
 FileCopy(FindChildNode(xn,'package').NodeValue,WDir+'data/'+ExtractFileName(FindChildNode(xn,'package').NodeValue));
@@ -545,12 +554,10 @@ end;
 end;
 
 randomize;
-nn:=pc.CreateElement('id');
-nn.AppendChild(pc.CreateTextNode('{'+IntToStr(random(9))+IntToStr(random(9))+IntToStr(random(9))+'-'+IntToStr(random(9))+IntToStr(random(9))+IntToStr(random(9))
-+'-'+IntToStr(random(9))+IntToStr(random(9))+IntToStr(random(9))+'-'+IntToStr(random(9))+IntToStr(random(9))+IntToStr(random(9))+'}'));
-xn.AppendChild(nn);
 
-WriteXMLFile(pc,WDir+'arcinfo.pin');
+control.SaveToFile(WDir+'arcinfo.pin');
+
+tmp.Add(WDir+'arcinfo.pin');
 
 i:=random(9999)+1000;
 writeLn('Generate package...');
@@ -562,7 +569,7 @@ tmp.Free;
 sleep(20);
 RenameFile(ChangeFileExt(o,'')+IntToStr(i)+'.zip',o);
 Files.Free;
-Script.Free;
+
 writeLn('Done!');
 if (genbutton)and(Assigned(dlist)) then
 begin
