@@ -172,6 +172,10 @@ function li_set_su_mode(b: Boolean): Boolean; cdecl;
 begin
   Root:=b;
   Result:=true;
+  if Root then
+  RegDir:='/etc/lipa/app-reg/'
+  else
+  RegDir:=SyblToPath('$INST')+'/app-reg/';
 end;
 
 //** Read disallows property
@@ -211,9 +215,9 @@ begin
 end;
 
 //** Get package ID
-function ins_appid(setup: PInstallation): PChar; cdecl;
+function ins_pkgid(setup: PInstallation): PChar; cdecl;
 begin
-  Result:=PChar(setup^.AppID);
+  Result:=PChar(setup^.ID);
 end;
 
 //** Get description
@@ -221,7 +225,7 @@ function ins_long_description(setup: PInstallation; list: PStringList): Boolean;
 begin
 try
  Result:=true;
- list^.LoadFromFile(setup^.DescFile);
+ setup^.ReadDescription(list^);
 except
  Result:=false;
 end;
@@ -238,7 +242,7 @@ function ins_license(setup: PInstallation; list: PStringList): Boolean; cdecl;
 begin
 try
  Result:=true;
- list^.LoadFromFile(setup^.LicenseFile);
+ setup^.ReadLicense(list^);
 except
  Result:=false;
 end;
@@ -321,7 +325,7 @@ exports
  ins_resolve_dependencies,
  ins_appname,
  ins_appversion,
- ins_appid,
+ ins_pkgid,
  ins_long_description,
  ins_wizard_image_path,
  ins_license,

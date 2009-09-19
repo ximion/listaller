@@ -64,7 +64,7 @@ begin
     Halt;
   end;  }
 
-  // parse parameters
+  //Parse parameters
   i:=1;
   a:='';
   b:='';
@@ -118,7 +118,8 @@ begin
      end else
      begin
       writeLn('Cannot execute this action.');
-      writeLn('You need to install ''listaller-tools'' first');
+      writeLn('The unibuild function was not found.');
+      writeLn('Is Listaller UniBuild installed?');
       halt(1);
      end;
   end;
@@ -139,7 +140,6 @@ begin
    writeln('Can''t build file.');
    writeLn('- Does the input-file exist?');
    writeLn('- Has the output-file parameter the extension .IPK?');
-   writeLn('- Is the path to the ouput-file available?');
    writeln('- Does the IPK-File already exists?');
    halt(10);
    end;
@@ -159,7 +159,7 @@ begin
   if HasOption('u','gen-update') and(FileExists(paramstr(2)))and(DirectoryExists(paramstr(3)))
   then CreateUpdateSource(paramstr(2),paramstr(3)+'/');
 
-  // stop program loop
+  //Stop program loop
   Terminate;
 end;
 
@@ -184,7 +184,7 @@ end;
 
 procedure TLiBuild.WriteHelp;
 begin
-writeLn('Listaller main tool to handle ipk-packages');
+writeLn('Listaller''s package builder');
 writeln('Usage: ',ExeName,' <option> [file] ...');
 writeLn('Commands:');
 writeln('-?, --help                                 Show this help');
@@ -211,7 +211,7 @@ var
 
 begin
   Application:=TLiBuild.Create(nil);
-//  Application.OnException:=@Application.OnExeception;
+  Application.OnException:=@Application.OnExeception;
   Application.Run;
   Application.Free;
 end.

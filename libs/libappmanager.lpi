@@ -28,8 +28,8 @@
         <Filename Value="libappmanager.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libappmanager"/>
-        <CursorPos X="20" Y="93"/>
-        <TopLine Value="50"/>
+        <CursorPos X="68" Y="16"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="24"/>
         <Loaded Value="True"/>
@@ -37,9 +37,11 @@
       <Unit1>
         <Filename Value="management.pas"/>
         <UnitName Value="management"/>
-        <CursorPos X="22" Y="518"/>
-        <TopLine Value="497"/>
+        <CursorPos X="6" Y="549"/>
+        <TopLine Value="583"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="11"/>
+        <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.2.4/packages/sqlite/src/sqlite3.pp"/>
@@ -119,7 +121,7 @@
         <UsageCount Value="10"/>
       </Unit12>
     </Units>
-    <JumpHistory Count="21" HistoryIndex="20">
+    <JumpHistory Count="22" HistoryIndex="21">
       <Position1>
         <Filename Value="libappmanager.lpr"/>
         <Caret Line="29" Column="2" TopLine="1"/>
@@ -204,6 +206,10 @@
         <Filename Value="libappmanager.lpr"/>
         <Caret Line="71" Column="16" TopLine="1"/>
       </Position21>
+      <Position22>
+        <Filename Value="libappmanager.lpr"/>
+        <Caret Line="23" Column="8" TopLine="1"/>
+      </Position22>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

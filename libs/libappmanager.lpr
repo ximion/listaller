@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
-//** Listaller library for all application listing and uninstallation related processes
+//** Listaller library for all application listing and uninstalling related processes
 library libappmanager;
 
 {$mode objfpc}{$H+}

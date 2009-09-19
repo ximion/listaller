@@ -53,6 +53,7 @@ object FrmEditor: TFrmEditor
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 35
+        BookMarkOptions.OnChange = nil
         Gutter.Width = 53
         Gutter.MouseActions = <        
           item
@@ -565,6 +566,17 @@ object FrmEditor: TFrmEditor
             MoveCaret = False
             Option = 0
             Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
           end>
         Lines.Strings = (
           'IPK-Standard-Version: 1.0'
@@ -865,12 +877,14 @@ object FrmEditor: TFrmEditor
     Comments = []
     DetectPreprocessor = False
     IdentifierChars = ',:[]'
+    KeyAttri.FrameColor = clInfoBk
+    KeyAttri.StyleMask = [fsBold]
     KeyWords.Strings = (
-      'ARCHITECTURES'
-      'LICENSE'
-      'NAME'
-      'TYPE'
-      'VERSION'
+      'ARCHITECTURES:'
+      'LICENSE:'
+      'NAME:'
+      'TYPE:'
+      'VERSION:'
     )
     Constants.Strings = (
       '/<>#:'
@@ -880,7 +894,7 @@ object FrmEditor: TFrmEditor
       'IOTESTMODE'
     )
     Markup = True
-    Entity = False
+    Entity = True
     DollarVariables = True
     ActiveDot = False
     left = 832

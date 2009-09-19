@@ -61,10 +61,20 @@ TIPKBasic = class
   function  ReadDSupport: String;
   procedure WriteWizImage(s: String);
   function  ReadWizImage: String;
+  procedure WriteBinary(s: String);
+  function  ReadBinary: String;
+  procedure WriteUSource(s: String);
+  function  ReadUSource: String;
+  procedure WriteDesktopFiles(s: String);
+  function  ReadDesktopFiles: String;
+  procedure WriteInTerminal(b: Boolean);
+  function  ReadInTerminal: Boolean;
  protected
   text: TStringList;
   FBasePath: String;
   clang: String;
+  procedure WriteField(name: String;info: TStrings);
+  procedure ReadField(name: String;info: TStrings);
  public
   constructor Create;
   destructor  Destroy;override;
@@ -93,11 +103,16 @@ TIPKBasic = class
   property PkName: String read ReadPkgName write WritePkgName;
   property DSupport: String read ReadDSupport write WriteDSupport;
   property WizImage: String read ReadWizImage write WriteWizImage;
+  property Binary: String read ReadBinary write WriteBinary;
+  property USource: String read ReadUSource write WriteUSource;
+  property Desktopfiles: String read ReadDesktopFiles write WriteDesktopFiles;
+  property InTerminal: Boolean read ReadInTerminal write WriteInTerminal;
   procedure ReadDependencies(dname: String;info: TStringList);
   procedure WriteDependencies(dname: String;path: String);
   procedure WriteDependencies(dname: String;info: TStringList);
  end;
 
+//** Class to handle IPK scripts
 TIPKScript = class(TIPKBasic)
  private
   fname: String;
@@ -109,22 +124,18 @@ TIPKScript = class(TIPKBasic)
   function  LoadFromFile(s: String): Boolean;
   function  LoadFromList(lst: TStrings): Boolean;
   procedure GetDirectFileList(id: Integer;lst: TStrings);
-  procedure GetFileSection(id: Integer;lst: TStrings);
+  procedure GetFiles(id: Integer;lst: TStrings);virtual;
 end;
 
-{
-TIPKControl = class(TIPKBasic)
+//** Class to read IPK control files
+TIPKControl = class(TIPKScript)
  private
  public
-  constructor Create;
+  constructor Create(path: String);
   destructor  Destroy;override;
 
-  function SaveToFile(s: String): Boolean;
-  function LoadFromFile(s: String): Boolean;
-  procedure GetDirectFileList(id: Integer;lst: TStrings);
-  procedure GetFileSection(id: Integer;lst: TStrings);
+  procedure GetFiles(id: Integer;lst: TStrings);override;
 end;
-}
 
 implementation
 
@@ -174,7 +185,7 @@ begin
   if LowerCase(h)=LowerCase(s)+'['+clang+']' then begin Result:=i;break;end;
  end;
  end;
- if (i=text.Count)and(LowerCase(h)<>LowerCase(s)+'['+clang+']') then
+ if (LowerCase(h)<>LowerCase(s)+'['+clang+']') then
  //Then search the general key
  for i:=0 to text.count-1 do
  begin
@@ -192,6 +203,53 @@ begin
   Result:=FBasePath+'/'+h
  else
   Result:=h;
+end;
+
+procedure TIPKBasic.WriteField(name: String;info: TStrings);
+var i: Integer;
+begin
+  if info.Count>=0 then
+ begin
+  i:=SearchKeyIndex(name);
+  if i>0 then
+  begin
+
+  text.Delete(i);
+  while (i<text.Count)and(text[i]<>'')and(text[i][1]=' ') do
+   text.Delete(i);
+  end;
+
+ text.Add(name+': '+info[0]);
+ for i:=1 to info.Count-1 do
+  text.Add(' '+info[i]);
+ end;
+end;
+
+procedure TIPKBasic.ReadField(name: String;info: TStrings);
+var i: Integer;s: String;
+begin
+  i:=SearchKeyIndex(name);
+ s:='';
+ if i>-1 then
+  s:=text[i];
+ info.Clear;
+ if s='' then exit;
+ if pos('include:"',s)>0 then
+  info.LoadFromFile(SolveInclude(s))
+ else
+ begin
+ info.Add(GetValue(text[i]));
+ Inc(i);
+  repeat
+   s:=text[i];
+   if s[1]=' ' then
+   begin
+    s:=copy(s,2,length(s));
+   info.Add(s);
+   end;
+   Inc(i);
+  until (i>=text.Count)or(text[i][1]<>' ');
+ end;
 end;
 
 procedure TIPKBasic.WriteType(atype: TPkgType);
@@ -263,30 +321,8 @@ begin
 end;
 
 procedure TIPKBasic.ReadAppLicense(info: TStringList);
-var i: Integer;s: String;
 begin
- i:=SearchKeyIndex('License');
- s:='';
- if i>-1 then
-  s:=text[i];
- info.Clear;
- if s='' then exit;
- if pos('include:"',s)>0 then
-  info.LoadFromFile(SolveInclude(s))
- else
- begin
- info.Add(GetValue(text[i]));
- Inc(i);
-  repeat
-   s:=text[i];
-   if s[1]=' ' then
-   begin
-    s:=copy(s,2,length(s));
-    info.Add(s);
-   end;
-   Inc(i);
-  until (i>=text.Count)or(text[i][1]<>' ');
- end;
+ ReadField('License',info);
 end;
 
 procedure TIPKBasic.WriteAppLicense(path: String);
@@ -309,51 +345,13 @@ else
 end;
 
 procedure TIPKBasic.WriteAppLicense(info: TStringList);
-var i: Integer;
 begin
- if info.Count>=0 then
- begin
-  i:=SearchKeyIndex('License');
-  if i>0 then
-  begin
-
-  text.Delete(i);
-  while (i<text.Count)and(text[i]<>'')and(text[i][1]=' ') do
-   text.Delete(i);
-  end;
-
- text.Add('License: '+info[0]);
- for i:=1 to info.Count-1 do
-  text.Add(' '+info[i]);
-
- end;
+ WriteField('License',info);
 end;
 
 procedure TIPKBasic.ReadAppDescription(info: TStringList);
-var i: Integer;s: String;
 begin
- i:=SearchKeyIndex('Description');
- s:='';
- if i>-1 then
-  s:=text[i];
- info.Clear;
- if s='' then exit;
- if pos('include:"',s)>0 then
-  info.LoadFromFile(SolveInclude(s))
- else
- begin
- info.Add(GetValue(text[i]));
- Inc(i);
-  repeat
-   s:=text[i];
-   if s[1]=' ' then
-   begin
-    s:=copy(s,2,length(s));
-   info.Add(s);
-   end;
-   Inc(i);
-  until (i>=text.Count)or(text[i][1]<>' ');
- end;
+ ReadField('Description',info);
 end;
 
 procedure TIPKBasic.WriteAppDescription(path: String);
@@ -376,24 +374,8 @@ else
 end;
 
 procedure TIPKBasic.WriteAppDescription(info: TStringList);
-var i: Integer;
 begin
- if info.Count>=0 then
- begin
-  i:=SearchKeyIndex('Description');
-  if i>0 then
-  begin
-
-  text.Delete(i);
-  while (i<text.Count)and(text[i]<>'')and(text[i][1]=' ') do
-   text.Delete(i);
-  end;
-
- text.Add('Description: '+info[0]);
- for i:=1 to info.Count-1 do
-  text.Add(' '+info[i]);
-
- end;
+ WriteField('Description',info);
 end;
 
 procedure TIPKBasic.WriteIcon(s: String);
@@ -593,7 +575,7 @@ function TIPKBasic.ReadArchs: String;
 var j: Integer;
 begin
  Result:='';
- j:=SearchKeyIndex('Architectures');
+ j:=SearchKeyIndex('Architectures',false);
  if j>-1 then
   Result:=GetValue(text[j]);
 end;
@@ -720,6 +702,67 @@ begin
   Result:=GetValue(text[j]);
 end;
 
+procedure TIPKBasic.WriteBinary(s: String);
+begin
+ WriteEntry('Binary',s);
+end;
+
+function TIPKBasic.ReadBinary: String;
+var j: Integer;
+begin
+ Result:='';
+ j:=SearchKeyIndex('Binary');
+ if j>-1 then
+  Result:=GetValue(text[j]);
+end;
+
+procedure TIPKBasic.WriteUSource(s: String);
+begin
+ WriteEntry('USource',s);
+end;
+
+function TIPKBasic.ReadUSource: String;
+var j: Integer;
+begin
+ Result:='';
+ j:=SearchKeyIndex('USource');
+ if j>-1 then
+  Result:=GetValue(text[j]);
+end;
+
+procedure TIPKBasic.WriteDesktopFiles(s: String);
+begin
+ WriteEntry('Desktopfiles',s);
+end;
+
+function TIPKBasic.ReadDesktopFiles: String;
+var j: Integer;
+begin
+ Result:='';
+ j:=SearchKeyIndex('Desktopfiles');
+ if j>-1 then
+  Result:=GetValue(text[j]);
+end;
+
+procedure TIPKBasic.WriteInTerminal(b: Boolean);
+begin
+if b=true then
+ WriteEntry('Desktopfiles','true')
+else
+ WriteEntry('Desktopfiles','false');
+end;
+
+function TIPKBasic.ReadInTerminal: Boolean;
+var j: Integer;s: String;
+begin
+ j:=SearchKeyIndex('InTerminal');
+ if j>-1 then
+  s:=GetValue(text[j]);
+if LowerCase(s)='true' then
+ Result:=true
+else Result:=false;
+end;
+
 { TIPKScript }
 
 constructor TIPKScript.Create;
@@ -810,9 +853,17 @@ begin
  end;
 end;
 
-procedure TIPKScript.GetFileSection(id: Integer;lst: TStrings);
+procedure TIPKScript.GetFiles(id: Integer;lst: TStrings);
 var i,j: Integer;
 begin
+ //Search for container-IPK files section
+ j:=SearchKeyIndex('Files');
+ if j>-1 then
+ begin
+  ReadField('Files',lst);
+ end else
+ begin
+ //Read normal files section
   for j:=0 to text.Count-1 do
    if pos('!-Files ~'+IntToStr(id),text[j])>0 then
      break;
@@ -820,6 +871,26 @@ begin
     for i:=j+1 to text.count-1 do
      if pos('!-Files ~',text[i])>0 then break
        else lst.Add(text[i]);
+ end;
+end;
+
+{ TIPKControl }
+
+constructor TIPKControl.Create(path: String);
+begin
+ inherited Create;
+ LoadFromFile(path);
+ fname:=path;
+end;
+
+destructor TIPKControl.Destroy;
+begin
+ inherited;
+end;
+
+procedure TIPKControl.GetFiles(id: Integer;lst: TStrings);
+begin
+ //
 end;
 
 end.

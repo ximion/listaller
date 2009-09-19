@@ -21,7 +21,7 @@ unit ipkbuild;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, XMLRead, XMLWrite, DOM, AbZipper, AbArcTyp, MD5, LiCommon, Process,
+  Classes, SysUtils, FileUtil, AbZipper, AbArcTyp, MD5, LiCommon, Process,
   OPBitmapFormats, ipkdef, litypes;
 
 type
@@ -40,12 +40,6 @@ type
     @param azipfilename Name of the ZIP file
     @param afiles List of files the archive should contain}
 procedure BuildZIP(azipfilename : string; afiles : TStringList);
-//** Helper method: Finds a child-node in a XML tree structure @returns First child of the found node as TDOMNode
-function FindChildNode(dn: TDOMNode; n: String): TDOMNode;
-//** Helper method: Finds a child-node in a XML tree structure @returns Found node as TDOMNode
-function FindChildNodeX(dn: TDOMNode; n: String): TDOMNode;
-//** Set a node's value (Deprecated)
-procedure SetNode(dn: TDOMNode; val: String);
 {** Creates an IPK-Update-Source (IPKUS)
     @param FName Name of the IPS source file
     @param path Path to an folder where the source should be created}
@@ -95,31 +89,6 @@ procedure BuildZIP(aZipFileName: string; afiles : TStringList);
     finally
       zip.Free;
     end;
-end;
-
-function FindChildNode(dn: TDOMNode; n: String): TDOMNode;
-var i: Integer;
-begin
-Result:=nil;
-for i:=0 to dn.ChildNodes.Count-1 do begin
-if LowerCase(dn.ChildNodes.Item[i].NodeName)=LowerCase(n) then begin
-Result:=dn.ChildNodes.Item[i].FirstChild;break;exit;end;
-end;
-end;
-
-function FindChildNodeX(dn: TDOMNode; n: String): TDOMNode;
-var i: Integer;
-begin
-Result:=nil;
-for i:=0 to dn.ChildNodes.Count-1 do begin
-if LowerCase(dn.ChildNodes.Item[i].NodeName)=LowerCase(n) then begin
-Result:=dn.ChildNodes.Item[i];break;exit;end;
-end;
-end;
-
-procedure SetNode(dn: TDOMNode; val: String);
-begin
-dn.NodeValue:=val;
 end;
 
 procedure BuildApplication(pk: TPackInfo);
@@ -204,7 +173,7 @@ script:=TStringList.Create;
 fls:=TStringList.Create;
 
   for i:=1 to ips.Count-1 do begin
-  if pos('!-Files #',ips[i])>0 then break
+  if pos('!-Files ~',ips[i])>0 then break
   else script.Add(ips[i]);
   end;
 
@@ -225,7 +194,7 @@ if (fls[i][1]='/')or(fls[i][1]='.') then begin
  and (not FileExists(ExtractFilePath(FName)+fls[i])) then begin
  writeLn('error: ');
  writeln('The file '+DeleteModifiers(fls[i])+' does not exists!');
- writeLn('(Aborted)');
+ writeLn('[Action canceled]');
  halt(101);
  end;
 
@@ -291,7 +260,7 @@ end;
 ///////////////////Function to build IPK-Packages///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 procedure BuildPackage(fi: String;o:String;genbutton:Boolean=false);
-var i,j,id: Integer;fc: TStringList;pc: TXMLDocument;xn,nn: TDOMNode;lh,h,s: String;pkgtype: TPkgType;tmp,sl,files,fsec,script: TStringList;
+var i,j,id: Integer;fc: TStringList;lh,h,s: String;pkgtype: TPkgType;tmp,sl,files,fsec,script: TStringList;
   dlist: TStringList;aname: String;
   control: TIPKScript;
 begin
@@ -299,6 +268,7 @@ if FileExists(o) then begin
 writeLn('error: ');
 writeLn('This file already exists.');
 writeLn('Please choose another one!');
+writeLn('[Build canceled]');
 exit;
 end;
 if FileExists(WDir) then begin
@@ -316,7 +286,7 @@ fsec:=TStringList.Create;
 
 if LowerCase(sl[0])<>'ipk-standard-version: 1.0' then begin
  writeLn('This is no valid IPS source file');
- writeLn('[Aborted]');
+ writeLn('[Build canceled]');
  halt(1);
 end;
 
@@ -331,6 +301,7 @@ end;
 sl.Free;
 writeLn('Building package...');
 writeLn('Please wait!');
+writeLn('');
   if not DirectoryExists('/tmp/listaller/') then SysUtils.CreateDir('/tmp/listaller/');
   if not DirectoryExists(WDir) then SysUtils.CreateDir(WDir) else begin
   DeleteDirectory(WDir,true);SysUtils.CreateDir(WDir);
@@ -369,7 +340,7 @@ writeLn('Please wait!');
  and (not FileExists(ExtractFilePath(fi)+DeleteModifiers(Files[i]))) then begin
  writeLn('error: ');
  writeln('The file '+DeleteModifiers(Files[i])+' doesn''t exists!');
- writeLn('[Building abortet!]');
+ writeLn('[Build canceled]');
  halt(6);
  end;
 
@@ -416,12 +387,12 @@ end;
 control:=TIPKScript.Create;
 control.LoadFromList(script);
 
-script.Free; //Only temporary
+script.Free; //Was only temporary
 
 pkgtype:=control.SType;
 
 if pkgtype=ptLinstall then begin
-writeLn('Creating standard IPK-package.');
+writeLn('Mode: Build standard IPK');
 
 if genbutton then
 begin
@@ -442,9 +413,10 @@ begin
        delete(lh,1,i);
       end;
     end;
+ writeLn('A compatibility button will be generated.');
 end;
 
-writeLn('Creating install-script...');
+writeLn('Making control-script...');
 SysUtils.CreateDir(WDir+'stuff/');
 
 if control.Icon<>'' then
@@ -452,8 +424,8 @@ if not FileExists(control.Icon) then
 begin
  writeLn('error: ');
  writeLn('Icon-path is invalid!');
- writeLn('Building canceled');
- halt(104);
+ writeLn('[Build canceled]');
+ halt(9);
 end else
 begin
  FileCopy(control.Icon,WDir+'stuff/'+'packicon.png'); //!!! Changes needed to support more image types
@@ -472,7 +444,7 @@ FileCopy(lh,WDir+'stuff/'+'license'+ExtractFileExt(lh));
 SetNode(FindChildNode(xn,'license'),'/stuff/'+'license'+ExtractFileExt(lh));
 tmp.Add(WDir+'stuff/'+'license'+ExtractFileExt(lh));
 }
-end else writeLn(' - No license file found!');
+end else writeLn(' Warning: No license file found!');
 
 sl.Clear;
 control.ReadAppDescription(sl);
@@ -484,7 +456,7 @@ FileCopy(lh,WDir+'stuff/'+'description'+ExtractFileExt(lh));
 tmp.Add(WDir+'stuff/'+'description'+ExtractFileExt(lh));
 
 SetNode(FindChildNode(xn,'description'),'/stuff/'+'description'+ExtractFileExt(lh));}
-end else writeLn(' - No long description found!');
+end else writeLn(' Warning: No long description found!');
 
 sl.Free;
 
@@ -493,33 +465,36 @@ if FileExists(ExtractFilePath(fi)+'/preinst') then
 begin
 FileCopy(ExtractFilePath(fi)+'/preinst',WDir+'preinst');
 tmp.Add(WDir+'preinst');
+writeLn(' Info: Preinst script found.');
 end;
 if FileExists(ExtractFilePath(fi)+'/postinst') then
 begin
 FileCopy(ExtractFilePath(fi)+'/postinst',WDir+'postinst');
 tmp.Add(WDir+'postinst');
+writeLn(' Info: Postinst script found.');
 end;
 if FileExists(ExtractFilePath(fi)+'/prerm') then
 begin
 FileCopy(ExtractFilePath(fi)+'/prerm',WDir+'prerm');
 tmp.Add(WDir+'prerm');
+writeLn(' Info: Prerm script found.');
 end;
 
 end else
 begin //If pkgtype is another one
 if pkgtype=ptDLink then
 begin
-writeLn('Building dlink Ipk-package.');
+writeLn('Mode: Build DLink IPK package');
 
 sl:=TStringList.Create;
 control.ReadAppDescription(sl);
 
 if sl.Count<=0 then
 begin
-writeLn('error: ');
-writeLn('Description file is invalid!');
-writeLn('(Aborted)');
-halt(9);
+ writeLn('error: ');
+ writeLn('Description file is invalid!');
+ writeLn('[Build canceled]');
+ halt(10);
 end;
 
 control.WriteAppDescription(sl);
@@ -530,26 +505,28 @@ if (not FileExists(control.Icon))and(control.Icon<>'') then
 begin
 writeLn('error: ');
 writeLn('Icon-path is invalid!');
-writeLn('Building canceled');
+writeLn('[Build canceled]');
 halt(9);
 end else
 begin
-FileCopy(FindChildNode(xn,'icon').NodeValue,WDir+'stuff/'+'packicon.png'); //!!! Should be changed to support more picture-filetypes
-SetNode(FindChildNode(xn,'icon'),'/stuff/'+'packicon.png');
+FileCopy(control.Icon,WDir+'stuff/'+'packicon.png'); //!!! Should be changed to support more picture-filetypes
+control.Icon:='/stuff/'+'packicon.png';
 tmp.Add(WDir+'stuff/'+'packicon.png');
+writeLn(' Info: Icon added.');
 end;
 end; //END <>nil
 
 
 end;
 //??? Container builder needs more work!
+//    (Add additional file processor)
 if pkgtype=ptContainer then
 begin
-writeLn('Building container package...');
+writeLn('Mode: Build container IPK package');
 
-FileCopy(FindChildNode(xn,'package').NodeValue,WDir+'data/'+ExtractFileName(FindChildNode(xn,'package').NodeValue));
-tmp.Add(WDir+'data/'+ExtractFileName(FindChildNode(xn,'package').NodeValue));
-SetNode(FindChildNode(xn,'package'),'/data/'+ExtractFileName(FindChildNode(xn,'package').NodeValue));
+FileCopy(control.Binary,WDir+'data/'+ExtractFileName(control.Binary));
+tmp.Add(WDir+'data/'+ExtractFileName(control.Binary));
+control.Binary:='/data/'+ExtractFileName(control.Binary);
 end;
 end;
 

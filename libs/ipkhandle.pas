@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trstrings, packagekit,
-  sqlite3ds, db, AbUnZper, AbArcTyp, XMLRead, DOM, HTTPSend, FTPSend,
+  sqlite3ds, db, AbUnZper, AbArcTyp, ipkdef, HTTPSend, FTPSend,
   MD5, liTypes, distri;
 
 type
@@ -33,9 +33,10 @@ type
  TInstallation = class
  private
   //Basic information about the package and the new application
-  IAppName,IAppVersion, IAppCMD, IAuthor, FDescFile,ShDesc, FLicenseFile: String;
-  IIconPath, IDesktopFiles: String;
-  PkgName, PkgPath, pID, idName, AType: String;
+  IAppName,IAppVersion, IAppCMD, IAuthor, ShDesc, IGroup: String;
+  IDesktopFiles: String;
+  PkgName, PkgPath, PkgID: String;
+  //Path to a wizard image
   FWizImage: String;
   //Package database connection
   dsApp: TSQLite3Dataset;
@@ -50,7 +51,7 @@ type
   //Name of the update source which should be registered
   USource: String;
   //Path of the package icon
-  IconPath: String;
+  IIconPath: String;
   //Execute external applications that are linked in the IPK-file
   ExecA, ExecB, ExecX: String;
   //Overwrite all files? (needed for patches)
@@ -69,6 +70,10 @@ type
   HTTP: THTTPSend;
   //Reference to an existing FTPSend object
   FTP: TFTPSend;
+  //Container for description
+  longdesc: TStringList;
+  //Container for license
+  license: TStringList;
   //Progress message relais
   FProgChange1: TProgressCall;
   FProgChange2: TProgressCall;
@@ -80,8 +85,6 @@ type
   //Runs a DLink installation
   function RunDLinkInstallation: Boolean;
  protected
-  function FindChildNode(dn: TDOMNode; n: String): TDOMNode;
-  function FindChildNodeX(dn: TDOMNode; n: String): TDOMNode;
   //Set/Get methods for callbacks indication
   procedure SetMainPos(pos: integer);
   procedure SetExtraPos(pos: integer);
@@ -107,19 +110,15 @@ type
   //** Version of the to-be-installed application
   property AppVersion: String read IAppVersion;
   //** ID of the application
-  property AppID: String read idName;
+  property ID: String read PkgID;
   //** Listaller package type
   property pType: TPkgType read pkType;
   //** Unformatted disallows string
   property Disallows: String read FDisallow;
   //** All distributions the package supports
   property Distris: String read FSupportedDistris;
-  //** Absolute path to the description file
-  property DescFile: String read FDescFile;
   //** Path to an wizard image
   property WizImage: String read FWizImage;
-  //** Path to an license file
-  property LicenseFile: String read FLicenseFile;
   //** List of all profiles the package has
   procedure ReadProfiles(lst: TStringList);
   //** Path to an icon of the applications/setup
@@ -130,14 +129,14 @@ type
   property ADeps: TStringList read Dependencies write Dependencies;
   //** Commend line to execute the new application
   property CMDLn: String read IAppCMD;
-  //** Possibility to assign HTTPSend object
-  property HTTPSend: THTTPSend read HTTP write HTTP;
-  //** Possibility to assign FTPSend object
-  property FTPSend: TFTPSend read FTP write FTP;
   //** Path to the current file information (that fits the profile)
   property IFileInfo: String read FFileInfo;
   //** Set current profile by ID
   procedure SetCurProfile(i: Integer);
+  //** Read the package description
+  procedure ReadDescription(sl: TStringList);
+  //** Read the package license
+  procedure ReadLicense(sl: TStringList);
   //Progress events
   property OnProgressMainChange: TProgressCall read FProgChange1 write FProgChange1;
   property OnProgressExtraChange: TProgressCall read FProgChange2 write FProgChange2;
@@ -156,12 +155,6 @@ end;
      @param RmDeps Remove dependencies if true (Set to "True" by default)}
  procedure UninstallIPKApp(AppName, AppID: String; FMsg: TMessageEvent;progress: TProgressCall; fast: Boolean=false; RmDeps:Boolean=true);
 
- {** Checks dependencies of all installed apps
-     @param report Report of the executed actions
-     @param fix True if all found issues should be fixed right now
-     @returns True if everything is okay, False if dependencies are missing}
- function CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
-
  //** Checks if package is installed
  function IsPackageInstalled(aName: String;aID: String): Boolean;
 
@@ -170,15 +163,8 @@ end;
   Root: Boolean=false;
   //** Path to package registration
   RegDir: String;
-  //** @deprecated Set if application installs shared files
-  ContSFiles: Boolean=false;
 
   //Note: The "Testmode" variable is in LiCommon
-
-  //IMPORTANT: Because the TPackageKit GLib-Connection freezes the application
-  //           (we cannot force reacting on signals), we need to use the NoGUI
-  //           widgetset to make Application.ProcessMessages() usable.
-  //           (Workaround)
 
 implementation
 
@@ -219,6 +205,10 @@ begin
   RegDir:='/etc/lipa/app-reg/'
  else
   RegDir:=SyblToPath('$INST')+'/app-reg/';
+
+  //Create text containers
+  license:=TStringList.Create;
+  longdesc:=TStringList.Create;
 end;
 
 destructor TInstallation.Destroy;
@@ -227,6 +217,8 @@ begin
  dsApp.Free;
  msg('Database connection closed.');
  if Assigned(Dependencies) then Dependencies.Free;
+ license.Free;
+ longdesc.Free;
 end;
 
 procedure TInstallation.SetCurProfile(i: Integer);
@@ -241,28 +233,6 @@ begin
  lst.Clear;
  for i:=0 to PkProfiles.Count-1 do
   lst.Add(copy(PkProfiles[i],0,pos(' #',PkProfiles[i])));
-end;
-
-function TInstallation.FindChildNode(dn: TDOMNode; n: String): TDOMNode;
-var i: Integer;
-begin
-Result:=nil;
-for i:=0 to dn.ChildNodes.Count-1 do begin
-if LowerCase(dn.ChildNodes.Item[i].NodeName)=LowerCase(n) then begin
-Result:=dn.ChildNodes.Item[i].FirstChild;break;exit;end else
-Result:=nil;
-end;
-end;
-
-function TInstallation.FindChildNodeX(dn: TDOMNode; n: String): TDOMNode;
-var i: Integer;
-begin
-Result:=nil;
-for i:=0 to dn.ChildNodes.Count-1 do begin
-if LowerCase(dn.ChildNodes.Item[i].NodeName)=LowerCase(n) then begin
-Result:=dn.ChildNodes.Item[i];break;exit;end else
-Result:=nil;
-end;
 end;
 
 function IsPackageInstalled(aname: String;aid: String): Boolean;
@@ -335,6 +305,16 @@ i := 0;
   end;
 end;
 
+procedure TInstallation.ReadDescription(sl: TStringList);
+begin
+ sl.Assign(longdesc);
+end;
+
+procedure TInstallation.ReadLicense(sl: TStringList);
+begin
+ sl.Assign(license);
+end;
+
 function TInstallation.ResolveDependencies: Boolean;
 var i: Integer;
     p: TProcess;
@@ -401,11 +381,12 @@ end;
 
 function TInstallation.Initialize(fname: String): Boolean;
 var z: TAbUnZipper;
-    Doc: TXMLDocument;xnode: TDOMNode;
     FDir,n: String;
     i: Integer;
     DInfo: TDistroInfo;
     p: TProcess;
+    cont: TIPKControl;
+    tmp: TStringList;
 begin
  Result:=true;
 with dsApp do
@@ -463,101 +444,79 @@ end;
 PkgName:=ExtractFileName(fname);
 PkgPath:=fname;
 
-ReadXMLFile(Doc,lp+PkgName+'/arcinfo.pin'); //Read XML configuration
-xnode:=Doc.FindNode('package');
-n:=xnode.Attributes.GetNamedItem('type').NodeValue;
-n:=LowerCase(n);
-if n='linstall' then pkType:=ptLinstall;
-if n='' then pkType:=ptLinstall;
-if n='dlink' then pkType:=ptDLink;
-if n='container' then pkType:=ptContainer;
+cont:=TIPKControl.Create(lp+PkgName+'/arcinfo.pin'); //Read IPK configuration
 
+cont.LangCode:=GetLangID; //Set language code, so we get localized entries
+
+pkType:=cont.SType;
+
+//!!! Support for patches was dropped in IPK1.0
+{
 if (xnode.Attributes.GetNamedItem('patch')<>nil)
 and(xnode.Attributes.GetNamedItem('patch').NodeValue='true')
-then begin
+then
+begin
 FPatch:=true;
 msg('WARNING: This package patches another application on your machine!');
 end else FPatch:=false;
+}
 
-if FindChildNode(xnode,'disallow')<>nil then
-FDisallow:=LowerCase(FindChildNode(xnode,'disallow').NodeValue)
-else
-FDisallow:='';
-
-if pkType=ptLinstall then
-begin
-
-msg('Package type is "linstall"');
+FDisallow:=LowerCase(cont.Disallows);
 
 n:=GetSystemArchitecture;
 
-if (pos('iofilecheck',FDisallow)>0) then begin
-FOverwrite:=true;
-msg('WARNING: This package will overwrite existing files without request!');
-end else FOverwrite:=false;
-
-msg('Architecture: '+n);
-msg('Package-Arch: '+FindChildNode(xnode,'architecture').NodeValue);
-if (pos(n,LowerCase(FindChildNode(xnode,'architecture').NodeValue))<=0)
-and (LowerCase(FindChildNode(xnode,'architecture').NodeValue)<>'all') then begin
+msg('Architectures: '+n);
+msg('Package-Arch: '+cont.Architectures);
+if (pos(n,LowerCase(cont.Architectures))<=0)
+and (LowerCase(cont.Architectures)<>'all') then begin
 MakeUsrRequest(rsInvArchitecture,rqError);
 z.Free;
 Result:=false;
 exit;
 end;
 
-pID:=xnode.FindNode('id').FirstChild.NodeValue;
-idName:='';
-if xnode.FindNode('idName')<> nil then
-idName:=xnode.FindNode('idName').FirstChild.NodeValue;
-msg('Package idName: '+idName);
+if pkType=ptLinstall then
+begin
+
+msg('Package type is "linstall"');
+
+if (pos('iofilecheck',FDisallow)>0) then begin
+FOverwrite:=true;
+msg('WARNING: This package will overwrite existing files without request!');
+end else FOverwrite:=false;
+
+pkgID:='';
+pkgID:=cont.PkName;
+msg('Package idName: '+pkgID);
 
 //Find profiles
 i:=1;
 PkProfiles:=TStringList.Create;
-repeat
-if FindChildNode(xnode,'profile'+IntToStr(i))<>nil then begin
-PkProfiles.Add(FindChildNode(xnode,'profile'+IntToStr(i)).NodeValue+' #'+FindChildNodeX(xnode,'profile'+IntToStr(i)).Attributes.GetNamedItem('id').NodeValue);
+cont.ReadProfiles(PkProfiles);
+
+for i:=0 to PkProfiles.Count-1 do
+begin
 msg('Found installation profile '+PkProfiles[PkProfiles.Count-1]);
-z.ExtractFiles('fileinfo-'+FindChildNodeX(xnode,'profile'+IntToStr(i)).Attributes.GetNamedItem('id').NodeValue+'.id');
-Inc(i);
-end;
-until FindChildNode(xnode,'profile'+IntToStr(i))=nil;
-
-xnode:=Doc.DocumentElement.FindNode('application');
-
-IAppName:=xnode.Attributes.GetNamedItem('name').NodeValue;
-
-if idName='' then
-idName:=xnode.Attributes.GetNamedItem('name').NodeValue;
-
-if FindChildNode(xnode,'version')<>nil then
-IAppVersion:=FindChildNode(xnode,'version').NodeValue;
-
-if FindChildNode(xnode,'description')<>nil then begin
-FDescFile:=FindChildNode(xnode,'description').NodeValue;
-z.ExtractFiles(ExtractFileName(FDescFile));
-end;
-if FindChildNode(xnode,'license')<>nil then begin
-FLicenseFile:=FindChildNode(xnode,'license').NodeValue;
-z.ExtractFiles(ExtractFileName(FLicenseFile));
+z.ExtractFiles('fileinfo-'+IntToStr(i)+'.id');
 end;
 
-if FindChildNode(xnode,'icon')<>nil then begin
-IconPath:=FindChildNode(xnode,'icon').NodeValue;
-z.ExtractFiles(ExtractFileName(IconPath));
-end;
-if FindChildNode(xnode,'updsource')<>nil then
-USource:=FindChildNode(xnode,'updsource').NodeValue
-else
+IAppName:=cont.AppName;
+
+if pkgID='' then
+pkgID:=IAppName;
+
+IAppVersion:=cont.AppVersion;
+
+USource:=cont.USource;
+if USource='' then
 USource:='#';
-if FindChildNode(xnode,'author')<>nil then
-IAuthor:=FindChildNode(xnode,'author').NodeValue
-else
+
+IAuthor:=cont.Author;
+if IAuthor='' then
 IAuthor:='#';
-if FindChildNode(xnode,'appcmd')<>nil then
-IAppCMD:=FindChildNode(xnode,'appcmd').NodeValue
-else
+
+IAppCMD:=cont.AppCMD;
+if IAppCMD='' then
 IAppCMD:='#';
 
 if IAppCMD <> '#' then
@@ -573,53 +532,41 @@ end;
 
 IAppCMD:=SyblToPath(IAppCMD);
 
-if length(pID)<>17 then begin
- MakeUsrRequest(rsIDInvalid,rqError);
- z.Free;
- Result:=false;
- exit;
- end;
-
 //Load Description
-for i:=0 to xnode.ChildNodes.Count-1 do begin
-if LowerCase(xnode.ChildNodes.Item[i].NodeName)='sdesc' then begin
-xnode:=xnode.ChildNodes.Item[i];break;end;
+ShDesc:=cont.SDesc;
+
+case cont.Group of
+ gtALL: IGroup:='All';
+ gtEDUCATION: IGroup:='Education';
+ gtOFFICE: IGroup:='Office';
+ gtDEVELOPMENT: IGroup:='Development';
+ gtGRAPHIC: IGroup:='Graphic';
+ gtNETWORK: IGroup:='Network';
+ gtGAMES: IGroup:='Games';
+ gtSYSTEM: IGroup:='System';
+ gtMULTIMEDIA: IGroup:='Multimedia';
+ gtADDITIONAL: IGroup:='Additional';
+ gtOTHER: IGroup:='Other';
 end;
-ShDesc:='#';
-if xnode <> nil then begin
-if FindChildNode(xnode,GetLangID)<>nil then
-ShDesc:=FindChildNode(xnode,GetLangID).NodeValue
-else
-ShDesc:=xnode.Attributes.GetNamedItem('std').NodeValue;
-end;
 
-xnode:=Doc.DocumentElement.FindNode('application');
-
-
-AType:=FindChildNode(xnode,'group').NodeValue;
-if AType='' then AType:='other';
-
-if FindChildNode(xnode,'icon')<>nil then
+IIconPath:=cont.Icon;
+if IIconPath<>'' then
 begin
-IIconPath:=FindChildNode(xnode,'icon').NodeValue;
 z.ExtractFiles(ExtractFileName(IIconPath));
 IIconPath:=lp+PkgName+IIconPath;
 end;
 
-//Only executed to make sure that "RmApp" property is set
-if not Testmode then
-IsPackageInstalled(IAppName,idName);
-
-if FindChildNode(xnode,'dsupport')<> nil then
-FSupportedDistris:=LowerCase(FindChildNode(xnode,'dsupport').NodeValue);
+//Load info about supported distributions
+FSupportedDistris:=LowerCase(cont.DSupport);
 
 
 //Load Wizard-Image
 FWizImage:=GetDataFile('graphics/wizardimage.png');
-if (xnode.FindNode('wizimage')<>nil) and (PAnsiChar(xnode.FindNode('wizimage').NodeValue)[0] = '/') then begin
-z.ExtractFiles(ExtractFileName(xnode.FindNode('wizimage').NodeValue));
-if FileExists(lp+PkgName+xnode.FindNode('wizimage').NodeValue) then
-FWizImage:=lp+PkgName+xnode.FindNode('wizimage').NodeValue;
+if (FWizImage<>'') and (FWizImage[1] = '/') then
+begin
+ z.ExtractFiles(ExtractFileName(FWizImage));
+ if FileExists(lp+PkgName+FWizImage) then
+ FWizImage:=lp+PkgName+FWizImage;
 end;
 
 z.ExtractFiles('preinst');
@@ -633,62 +580,49 @@ if FileExists(z.BaseDirectory+'/postinst') then ExecB:=z.BaseDirectory+'/postins
 if FileExists(z.BaseDirectory+'/prerm') then ExecX:=z.BaseDirectory+'/prerm';
 
 //Load Description
-if LowerCase(DescFile)<>'' then
-FDescFile:=lp+PkgName+DescFile;
+cont.ReadAppDescription(longdesc);
 
 //Load License
-if LowerCase(LicenseFile)<>'' then
-FLicenseFile:=lp+PkgName+FLicenseFile;
+cont.ReadAppLicense(license);
 
 //Load Dependencies
 Dependencies:=TStringList.Create;
 
-xnode:=Doc.FindNode('package'); //Set xnode to the package tree
 DInfo:=GetDistro;
 
-if xnode.FindNode('dependencies')<>nil then
+cont.ReadDependencies('',dependencies);
+if dependencies.Count>0 then
+ dependencies.Insert(0,'[detectpkgs]') //Instruction to detect packages first
+else
 begin
- xnode:=xnode.FindNode('dependencies');
- if xnode.FindNode('pkcatalog')<>nil then
- begin
-  z.ExtractFiles(ExtractFileName(xnode.FindNode('pkcatalog').NodeValue));
-  Dependencies.Add('cat:'+lp+PkgName+xnode.FindNode('pkcatalog').NodeValue)
- end else
- begin
- Dependencies.Add('*getlibs*');
- for i:=0 to xnode.ChildNodes.Count-1 do
-  Dependencies.Add(xnode.ChildNodes.Item[i].FirstChild.NodeValue);
- end;
-end else
+ cont.ReadDependencies(DInfo.DName,dependencies);
+if dependencies.Count<=0 then
 begin
-if xnode.FindNode('Dep'+DInfo.DName)<>nil then
-begin  //Check if there are specific packages available
+ cont.ReadDependencies(DInfo.PackageSystem,dependencies);
 
-if (xnode.FindNode('Dep'+DInfo.DName).Attributes.GetNamedItem('releases')<>nil)
-and (pos(DInfo.Release,xnode.FindNode('Dep'+DInfo.DName).Attributes.GetNamedItem('releases').NodeValue)<= 0)
-then
-begin
  if MakeUsrRequest(rsInvalidDVersion,rqWarning) = rqsNo then
  begin
-  msg('Aborted by user!');
+  MakeUsrRequest(rsNoComp+#13+rsInClose,rqError);
   Dependencies.Free;
   z.Free;
   PkProfiles.Free;
+  Result:=false;
   exit;
  end;
-end;
-xnode:=xnode.FindNode('Dep'+DInfo.DName);
-for i:=0 to xnode.ChildNodes.Count-1 do
-Dependencies.Add(xnode.ChildNodes.Item[i].FirstChild.NodeValue);
-end else begin
-if xnode.FindNode('Dep'+DInfo.PackageSystem)<>nil then begin
-xnode:=xnode.FindNode('Dep'+DInfo.PackageSystem);
-for i:=0 to xnode.ChildNodes.Count-1 do
-Dependencies.Add(xnode.ChildNodes.Item[i].FirstChild.NodeValue);
  end;
+
+//Resolve names
+for i:=0 to dependencies.Count-1 do
+if pos(' <',n)>0 then
+Dependencies[i]:=copy(n,pos(' <',n)+2,length(n)-pos(' <',n)-2)+' - '+copy(n,1,pos(' <',n)-1);
 end;
 
-end;
+
+{ if xnode.FindNode('pkcatalog')<>nil then
+ begin
+  z.ExtractFiles(ExtractFileName(xnode.FindNode('pkcatalog').NodeValue));
+  Dependencies.Add('cat:'+lp+PkgName+xnode.FindNode('pkcatalog').NodeValue)
+ end;}
 
 for i:=0 to Dependencies.Count-1 do
 if Dependencies[i][1]='.' then z.ExtractFiles(ExtractFileName(Dependencies[i]));
@@ -708,7 +642,10 @@ else FFileInfo:='*';
 
 SetCurProfile(0);
 
-if IsPackageInstalled(AppName,AppID) then RmApp:=true;
+//Only executed to make sure that "RmApp" property is set
+
+if not Testmode then
+if IsPackageInstalled(AppName,pkgID) then RmApp:=true;
 
 end else //Handle other IPK types
 if pkType=ptDLink then begin
@@ -716,127 +653,122 @@ msg('Package type is "dlink"');
 
 z.BaseDirectory:=lp+ExtractFileName(paramstr(1));
 
-xnode:=Doc.DocumentElement.FindNode('application');
+cont.ReadAppDescription(longdesc);
 
-FDescFile:=FindChildNode(xnode,'description').NodeValue;
+IAppName:=cont.AppName;
+IAppVersion:=cont.AppVersion;
 
-IAppName:=xnode.Attributes.GetNamedItem('name').NodeValue;
-IAppVersion:=FindChildNode(xnode,'version').NodeValue;
-
-if FindChildNode(xnode,'icon')<>nil then
+IIconPath:=cont.Icon;
+if IIconPath<>'' then
 begin
-IIconPath:=FindChildNode(xnode,'icon').NodeValue;
 z.ExtractFiles(ExtractFileName(IIconPath));
 IIconPath:=lp+PkgName+IIconPath;
 end;
 
-if FindChildNode(xnode,'author')<>nil then
-IAuthor:=FindChildNode(xnode,'author').NodeValue
-else
+IAuthor:=cont.Author;
+if IAuthor='' then
 IAuthor:='#';
 
-AType:=FindChildNode(xnode,'group').NodeValue;
-z.ExtractFiles(ExtractFileName(FDescFile));
+//Set group as string
+case cont.Group of
+ gtALL: IGroup:='All';
+ gtEDUCATION: IGroup:='Education';
+ gtOFFICE: IGroup:='Office';
+ gtDEVELOPMENT: IGroup:='Development';
+ gtGRAPHIC: IGroup:='Graphic';
+ gtNETWORK: IGroup:='Network';
+ gtGAMES: IGroup:='Games';
+ gtSYSTEM: IGroup:='System';
+ gtMULTIMEDIA: IGroup:='Multimedia';
+ gtADDITIONAL: IGroup:='Additional';
+ gtOTHER: IGroup:='Other';
+end;
 
-if FindChildNode(xnode,'desktopfiles')<>nil then
-IDesktopFiles:=FindChildNode(xnode,'desktopfiles').NodeValue;
+IDesktopFiles:=cont.Desktopfiles;
 
 z.Free;
 
 //Load Description
-for i:=0 to xnode.ChildNodes.Count-1 do begin
-if LowerCase(xnode.ChildNodes.Item[i].NodeName)='sdesc' then
-begin
- xnode:=xnode.ChildNodes.Item[i];
- break;
-end;
-end;
-ShDesc:='#';
-if xnode <> nil then begin
-if FindChildNode(xnode,GetLangID)<>nil then
-ShDesc:=FindChildNode(xnode,GetLangID).NodeValue
-else
-ShDesc:=xnode.Attributes.GetNamedItem('std').NodeValue;
-end;
+ShDesc:=cont.SDesc;
 
 Dependencies:=TStringList.Create;
-xnode:=Doc.FindNode('package');
 
-if xnode.FindNode('Dep'+DInfo.DName)<>nil then //Check if there are specific packages available for the distribution
+cont.ReadDependencies('',dependencies);
+if dependencies.Count>0 then
+ dependencies.Insert(0,'[detectpkgs]') //Instruction to detect packages first
+else
 begin
-xnode:=xnode.FindNode('Dep'+DInfo.DName);
+ cont.ReadDependencies(DInfo.DName,dependencies);
+if dependencies.Count<=0 then
+begin
+ cont.ReadDependencies(DInfo.PackageSystem,dependencies);
 
-for i:=0 to xnode.ChildNodes.Count-1 do
-begin
-n:=xnode.ChildNodes.Item[i].FirstChild.NodeValue;
-if pos(' <',n)>0 then
-Dependencies.Add(copy(n,pos(' <',n)+2,length(n)-pos(' <',n)-2)+' - '+copy(n,1,pos(' <',n)-1))
-else Dependencies.Add(n);
-end;
-end else
-begin
- if MakeUsrRequest(rsNoLDSources,rqWarning) = rqsNo then
+ if MakeUsrRequest(rsInvalidDVersion,rqWarning) = rqsNo then
  begin
-   Dependencies.Free;
-   Result:=false;
-   msg('Aborted by user!');
-   exit;
+  MakeUsrRequest(rsNoComp+#13+rsInClose,rqError);
+  Dependencies.Free;
+  z.Free;
+  PkProfiles.Free;
+  Result:=false;
+  exit;
+ end;
  end;
 
-if xnode.FindNode('Dep'+DInfo.PackageSystem)=nil then
-begin
- MakeUsrRequest(rsNoComp+#13+rsInClose,rqError);
- Result:=false;
- exit;
+//Resolve names
+for i:=0 to dependencies.Count-1 do
+if pos(' <',n)>0 then
+Dependencies[i]:=copy(n,pos(' <',n)+2,length(n)-pos(' <',n)-2)+' - '+copy(n,1,pos(' <',n)-1);
 end;
 
-xnode:=xnode.FindNode('Dep'+DInfo.PackageSystem);
-for i:=0 to xnode.ChildNodes.Count-1 do
-begin
-n:=xnode.ChildNodes.Item[i].FirstChild.NodeValue;
-if pos(' <',n)>0 then
-Dependencies.Add(copy(n,pos(' <',n)+2,length(n)-pos(' <',n)-2)+' - '+copy(n,1,pos(' <',n)-1))
-else Dependencies.Add(n);
-end;
-end;
+z.Free;
 
 end else
 if pkType=ptContainer then
 begin
 msg('Package type is "container"');
+
+//!!! Important: Installation should start on "StartInstallation" and not while Initialization!
+
 z:=TAbUnZipper.Create(nil);
 z.FileName:=PkgPath;
 z.ExtractOptions:=[eoCreateDirs]+[eoRestorePath];
 z.BaseDirectory:=lp;
-xnode:=Doc.DocumentElement.FindNode('application');
-z.ExtractFiles(ExtractFileName(FindChildNode(xnode,'package').NodeValue));
-for i:=0 to FindChildNode(xnode,'package').ChildNodes.Count-1 do
-z.ExtractFiles(ExtractFileName(FindChildNode(xnode,'package').ChildNodes[i].NodeValue));
 
+z.ExtractFiles(ExtractFileName(cont.Binary));
+
+tmp:=TStringList.Create;
+cont.GetFiles(0,tmp);
+for i:=0 to tmp.Count-1 do
+z.ExtractFiles(ExtractFileName(tmp[i]));
+
+tmp.Free;
 z.Free;
+
  p:=TProcess.create(nil);
- p.CommandLine:='chmod 755 ''/tmp/'+FindChildNode(xnode,'package').NodeValue+'''';
+ p.CommandLine:='chmod 755 ''/tmp/'+cont.Binary+'''';
  p.Options:=[poUsePipes,poWaitonexit];
  p.Execute;
  p.Options:=[poUsePipes,poWaitonexit,poNewConsole];
- if LowerCase(ExtractFileExt(FindChildNode(xnode,'package').NodeValue))='.package' then begin
+ if LowerCase(ExtractFileExt(cont.Binary))='.package' then begin
  if FileExists('/usr/bin/package') then
  p.Options:=[poUsePipes,poWaitonexit];
 
- p.CommandLine:='/tmp/'+FindChildNode(xnode,'package').NodeValue;
+ p.CommandLine:='/tmp/'+cont.Binary;
  p.Execute;
  p.Free;
- end else begin
- if (FindChildNode(xnode,'InTerminal')<>nil)and(LowerCase(FindChildNode(xnode,'InTerminal').NodeValue)='true') then
+ end else
+ begin
+ if cont.InTerminal then
  p.Options:=[poUsePipes, poWaitOnExit, poNewConsole]
  else p.Options:=[poUsePipes, poWaitOnExit];
- p.CommandLine:='/tmp/'+FindChildNode(xnode,'package').NodeValue;
+ p.CommandLine:='/tmp/'+cont.Binary;
  p.Execute;
  p.Free;
  end;
 
-DeleteFile('/tmp/'+FindChildNode(xnode,'package').NodeValue);
+DeleteFile('/tmp/'+cont.Binary);
 end;
+cont.Free;
 end;
 
 function TInstallation.GetMaxInstSteps: Integer;
@@ -882,10 +814,12 @@ Result:=true;
 mnpos:=0;
 expos:=0;
 
+//!!! Deprecated
+{
 //Check if fileinfo contains shared files
 for i:=0 to (fi.Count div 3)-1 do begin
 if IsSharedFile(lp+PkgName+fi[i*3]) then ContSFiles:=true;
-end;
+end; }
 
 max:=100/GetMaxInstSteps;
 
@@ -1136,7 +1070,7 @@ SetExtraPos(0);
 if (RmApp)and(not Testmode) then
 begin
 //Uninstall old application
- UnInstallIPKApp(IAppName,idName,FMessage,FProgChange2,true);
+ UnInstallIPKApp(IAppName,pkgID,FMessage,FProgChange2,true);
  SetExtraPos(0);
 end;
 
@@ -1294,11 +1228,11 @@ SendStateMsg(rsStep4);
 if not FPatch then
 begin
 
-if not DirectoryExists(RegDir+LowerCase(IAppName+'-'+idName)) then SysUtils.CreateDir(RegDir+LowerCase(IAppName+'-'+idName));
-FileCopy(lp+PkgName+'/arcinfo.pin',RegDir+LowerCase(IAppName+'-'+idName)+'/proginfo.pin');
+if not DirectoryExists(RegDir+LowerCase(IAppName+'-'+pkgID)) then SysUtils.CreateDir(RegDir+LowerCase(IAppName+'-'+pkgID));
+FileCopy(lp+PkgName+'/arcinfo.pin',RegDir+LowerCase(IAppName+'-'+pkgID)+'/proginfo.pin');
 
 //Save list of installed files
-appfiles.SaveToFile(RegDir+LowerCase(IAppName+'-'+idName)+'/appfiles.list');
+appfiles.SaveToFile(RegDir+LowerCase(IAppName+'-'+pkgID)+'/appfiles.list');
 appfiles.Free;
 
 //Open database connection
@@ -1311,20 +1245,20 @@ if pkType=ptContainer then h:='containerF';
 
 dsApp.Insert;
 dsApp.ExecuteDirect('INSERT INTO "AppInfo" VALUES ('''+IAppName+''', '''+
-        idName+''', '''+h+''', '''+ShDesc+''','''+IAppVersion+''','''+IAuthor+''','''+'icon'+ExtractFileExt(IconPath)+''','''+CurProfile+''','''+
-        AType+''','''+GetDateAsString+''', '''+Dependencies.Text+''');');
+        pkgID+''', '''+h+''', '''+ShDesc+''','''+IAppVersion+''','''+IAuthor+''','''+'icon'+ExtractFileExt(IIconPath)+''','''+CurProfile+''','''+
+        IGroup+''','''+GetDateAsString+''', '''+Dependencies.Text+''');');
 
 //Write changes
 dsApp.ApplyUpdates;
 dsApp.Close;
 
-if IconPath[1]='/' then
-FileCopy(lp+PkgName+IconPath,RegDir+LowerCase(IAppName+'-'+idName)+'/icon'+ExtractFileExt(IconPath));
+if IIconPath[1]='/' then
+FileCopy(lp+PkgName+IIconPath,RegDir+LowerCase(IAppName+'-'+pkgID)+'/icon'+ExtractFileExt(IIconPath));
 
-ndirs.SaveToFile(RegDir+LowerCase(IAppName+'-'+idName)+'/appdirs.list');
+ndirs.SaveToFile(RegDir+LowerCase(IAppName+'-'+pkgID)+'/appdirs.list');
 
 if ExecX<>'<disabled>' then
-FileCopy(ExecX,RegDir+LowerCase(IAppName+'-'+idName)+'/prerm');
+FileCopy(ExecX,RegDir+LowerCase(IAppName+'-'+pkgID)+'/prerm');
 
 ndirs.Free;
 
@@ -1784,87 +1718,5 @@ end else writeLn('Application not found!');
 
 end;
 
-function CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
-var dsApp: TSQLite3Dataset;deps: TStringList;i: Integer;pkit: TPackageKit;
-begin
-writeLn('Checking dependencies of all registered applications...');
-if IsRoot then
-writeLn('You are scanning only the ROOT installed applications.')
-else
-writeLn('You are scanning your local installed applications.');
-
-writeLn('-> Opening database...');
-dsApp:= TSQLite3Dataset.Create(nil);
-with dsApp do
- begin
-   FileName:=RegDir+'applications.db';
-   TableName:='AppInfo';
-   if not FileExists(FileName) then
-   begin
-   with FieldDefs do
-     begin
-       Clear;
-       Add('Name',ftString,0,true);
-       Add('ID',ftString,0,true);
-       Add('Type',ftString,0,true);
-       Add('Description',ftString,0,False);
-       Add('Version',ftFloat,0,true);
-       Add('Publisher',ftString,0,False);
-       Add('Icon',ftString,0,False);
-       Add('Profile',ftString,0,False);
-       Add('AGroup',ftString,0,true);
-       Add('InstallDate',ftDateTime,0,False);
-       Add('Dependencies',ftMemo,0,False);
-     end;
-   CreateTable;
- end;
-end;
-dsApp.Active:=true;
-
-Result:=true;
-
-dsApp.SQL:='SELECT * FROM AppInfo';
-dsApp.Open;
-dsApp.Filtered:=true;
-deps:=TStringList.Create;
-pkit:=TPackageKit.Create;
-dsApp.First;
-while not dsApp.EOF do
-begin
- writeLn(' Checking '+dsApp.FieldByName('Name').AsString);
- deps.Text:=dsApp.FieldByName('Dependencies').AsString;
- for i:=0 to deps.Count-1 do
- begin
-  pkit.Resolve(deps[i]);
-  if pkit.PkFinishCode=0 then
-   report.Add(deps[i]+' found.')
-  else
-  begin
-   report.Add(deps[i]+' is not installed!');
-   Result:=false;
-   if fix then
-   begin
-    write('  Repairing dependency '+deps[i]+'  ');
-    pkit.InstallPkg(deps[i]);
-    writeLn(' [OK]');
-    report.Add('Installed dependency '+deps[i]);
-   end;
-  end;
- end;
- dsApp.Next;
-end;
-deps.Free;
-pkit.Free;
-dsApp.Close;
-writeLn('Check finished.');
-if not Result then writeLn('You have broken dependencies.');
-
-end;
-
-initialization
- if Root then
-  RegDir:='/etc/lipa/app-reg/'
-  else
-  RegDir:=SyblToPath('$INST')+'/app-reg/';
 end.
 

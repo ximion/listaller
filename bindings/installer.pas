@@ -80,7 +80,7 @@ function ins_supported_distributions(setup: Pointer): PChar; cdecl; external lib
 function is_ipk_app_installed(appname: PChar;appid: PChar): Boolean; cdecl; external libinst name 'is_ipk_app_installed';
 function ins_appname(setup: Pointer): PChar; cdecl; external libinst name 'ins_appname';
 function ins_appversion(setup: Pointer): PChar; cdecl; external libinst name 'ins_appversion';
-function ins_appid(setup: Pointer): PChar; cdecl; external libinst name 'ins_appid';
+function ins_pkgid(setup: Pointer): PChar; cdecl; external libinst name 'ins_pkgid';
 function ins_long_description(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'ins_long_description';
 function ins_wizard_image_path(setup: Pointer): PChar; cdecl; external libinst name 'ins_wizard_image_path';
 function ins_license(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'ins_license';
@@ -160,7 +160,7 @@ end;
 
 function TInstallPack.GetAppID: String;
 begin
- Result:=ins_appid(@ins);
+ Result:=ins_pkgid(@ins);
 end;
 
 procedure TInstallPack.ReadLongDescription(lst: TStringList);

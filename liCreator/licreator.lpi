@@ -54,7 +54,7 @@
         <ComponentName Value="FrmEditor"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="editor"/>
-        <CursorPos X="6" Y="75"/>
+        <CursorPos X="20" Y="82"/>
         <TopLine Value="67"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="146"/>

@@ -404,8 +404,7 @@ end;
 
 begin
   Application:=TLipa.Create(nil);
-  //Debug
- // Application.OnException:=@Application.OnExeception;
+  Application.OnException:=@Application.OnExeception;
   Application.Run;
   Application.Free;
 end.
