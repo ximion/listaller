@@ -223,8 +223,8 @@ end;
 
 procedure TInstallation.SetCurProfile(i: Integer);
 begin
- FFileInfo:='/stuff/fileinfo-'+copy(PkProfiles[i],pos(' #',PkProfiles[i])+2,length(PkProfiles[i]))+'.id';
- CurProfile:=copy(PkProfiles[i],0,pos(' #',PkProfiles[i]));
+ FFileInfo:='/stuff/fileinfo-'+IntToStr(i)+'.id';
+ CurProfile:=IntToStr(i);
 end;
 
 procedure TInstallation.ReadProfiles(lst: TStringList);
@@ -306,13 +306,19 @@ i := 0;
 end;
 
 procedure TInstallation.ReadDescription(sl: TStringList);
+var i: Integer;
 begin
- sl.Assign(longdesc);
+ //Asign does not work
+ for i:=0 to longdesc.Count-1 do
+  sl.Add(longdesc[i]);
 end;
 
 procedure TInstallation.ReadLicense(sl: TStringList);
+var i: Integer;
 begin
- sl.Assign(license);
+//Assign does not work
+ for i:=0 to license.Count-1 do
+  sl.Add(license[i]);
 end;
 
 function TInstallation.ResolveDependencies: Boolean;
@@ -326,7 +332,7 @@ var i: Integer;
 begin
  Result:=true;
  SetMainPos(0);
-  if (Dependencies.Count>0) and (Dependencies[0]='*getlibs*') then
+  if (Dependencies.Count>0) and (Dependencies[0]='[detectpkgs]') then
   begin
     Dependencies.Delete(0);
     mnpos:=0;
@@ -591,6 +597,14 @@ Dependencies:=TStringList.Create;
 DInfo:=GetDistro;
 
 cont.ReadDependencies('',dependencies);
+
+i:=0;
+while i<= Dependencies.Count-1 do
+begin
+ if StringReplace(Dependencies[i],' ','',[rfReplaceAll])='' then Dependencies.Delete(i);
+ Inc(i);
+end;
+
 if dependencies.Count>0 then
  dependencies.Insert(0,'[detectpkgs]') //Instruction to detect packages first
 else
@@ -645,7 +659,7 @@ SetCurProfile(0);
 //Only executed to make sure that "RmApp" property is set
 
 if not Testmode then
-if IsPackageInstalled(AppName,pkgID) then RmApp:=true;
+if IsPackageInstalled(IAppName,pkgID) then RmApp:=true;
 
 end else //Handle other IPK types
 if pkType=ptDLink then begin
@@ -792,8 +806,8 @@ setcm: Boolean;
 p,proc:TProcess; // Helper process with pipes
 pkit: TPackageKit; //PackageKit object
 DInfo: TDistroInfo; //Distribution information
-mnpos,expos: Integer; //Current positions of operation
-max,emax: Double;
+mnpos: Integer; //Current positions of operation
+max: Double;
 begin
 fi:=TStringList.Create;
 fi.LoadFromFile(lp+PkgName+FFileInfo);
@@ -812,7 +826,6 @@ end;
 
 Result:=true;
 mnpos:=0;
-expos:=0;
 
 //!!! Deprecated
 {
@@ -923,8 +936,6 @@ with FTP do begin
       exit;
     end;
     ChangeWorkingDir(GetServerPath(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)));
-
-    emax:=FileSize(ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)));
 
     RetrieveFile(ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)), false);
     Logout;

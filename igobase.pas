@@ -346,7 +346,7 @@ rqError: begin
   exit;
 end;
 rqWarning: begin
-  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(rsInstOf),MB_YESNO)<>IDYES then
+  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(Format(rsInstOf,[setup.GetAppName])),MB_YESNO)<>IDYES then
   begin
    ShowMessage(rsINClose);
    Result:=rqsNo;
@@ -358,7 +358,7 @@ rqWarning: begin
   end;
 end;
 rqQuestion: begin
-  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(rsInstOf),MB_YESNO)<>IDYES then
+  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(Format(rsInstOf,[setup.GetAppName])),MB_YESNO)<>IDYES then
    Result:=rqsNo else Result:=rqsYes;
 end;
 rqInfo: begin
@@ -539,10 +539,12 @@ if Application.MessageBox(PAnsiChar(PAnsiChar(rsAlreadyInst)+#13+PAnsiChar(rsIns
 end;
 
 //Load all data
+DescMemo.Lines.Clear;
 setup.ReadLongDescription(TStringList(DescMemo.Lines));
 
 
 LeftImg.Picture.LoadFromFile(setup.GetWizardImagePath);
+LicMemo.Lines.Clear;
 setup.ReadLicense(TStringList(LicMemo.Lines));
 
 Label2.Caption:=StringReplace(rsWelcomeTo,'%a',setup.GetAppName,[rfReplaceAll]);

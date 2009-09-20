@@ -166,8 +166,14 @@ end;
 
 function TIPKBasic.GetValue(s: String): String;
 begin
+if pos(':',s)=length(s) then
+begin
+ //There is an empty block (without value)
+ Result:='';
+ exit;
+end;
  Result:=copy(s,pos(':',s)+1,length(s));
- if Result[1]=' ' then
+ if (Result[1]=' ') then
   Result:=copy(Result,2,length(Result));
 end;
 
@@ -283,12 +289,14 @@ begin
 end;
 
 procedure TIPKBasic.WriteName(s: String);
+var k: String;
 begin
-s:='Name: '+s;
-if SearchKeyIndex('Name')>-1 then
- text[SearchKeyIndex('Name')]:=s
+if clang='' then
+ k:='Name'
 else
- text.Add(s);
+ k:='Name['+clang+']';
+
+ WriteEntry(k,s);
 end;
 
 function TIPKBasic.ReadName: String;
@@ -619,10 +627,12 @@ if (dname='all') or (dname='') then
  i:=SearchKeyIndex('Dependencies',false)
 else
  i:=SearchKeyIndex('Dependencies['+dname+']',false);
+
  s:='';
  if i>-1 then
   s:=text[i];
  info.Clear;
+
  if s='' then exit;
  if pos('include:"',s)>0 then
   info.LoadFromFile(SolveInclude(s))
@@ -633,10 +643,12 @@ else
   repeat
    s:=text[i];
    if s[1]=' ' then
+   begin
     s:=copy(s,2,length(s));
    info.Add(s);
+   end;
    Inc(i);
-  until (i>text.Count)or(text[i][1]<>' ');
+  until (length(text[i])=0)or(i>=text.Count)or(text[i][1]<>' ');
  end;
 end;
 
