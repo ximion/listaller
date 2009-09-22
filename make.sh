@@ -39,23 +39,18 @@ echo "Active widgetset: $WIDGET"
 mkdir -p ./bin
 mkdir -p ./bin/locale
 
-echo "Building libraries..."
+echo "Compiling library..."
 $LCLDir/lazbuild -B --ws=nogui ./libs/libinstaller.lpr
 ln -s ./bin/libinstaller.so.0.4 libinstaller.so
 ln -s ./bin/libinstaller.so.0.4 libinstaller.so.0.4
-cd libs
-ln -s ../bin/libinstaller.so.0.4 libinstaller.so
-cd ..
-$LCLDir/lazbuild -B --ws=nogui ./libs/libappmanager.lpr
-ln -s ./bin/libappmanager.so.0.4 libappmanager.so
 
-echo "Creating command-line tool..."
+echo "Compiling command-line tool..."
 $LCLDir/lazbuild -B --ws=nogui lipa.lpr
 #fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewhi -l -Fuabbrevia/ -Fusynapse/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -vm5024 -FEbin/ -olipa -dOpbCompat lipa.lpr
-echo "Creating package build tool..."
+echo "Compiling package build tool..."
 $LCLDir/lazbuild -B --ws=nogui libuild.lpr
 #fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -FEbin/ -olibuild -dOpbCompat libuild.lpr
-echo "Creating unified build tool..."
+echo "Compiling unified build tool..."
 $LCLDir/lazbuild -B --ws=nogui unibuild.lpr
 #fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -FEbin/ -ounibuild -dOpbCompat unibuild.lpr
 
@@ -63,7 +58,7 @@ $LCLDir/lazbuild -B --ws=nogui unibuild.lpr
 echo "Compiling language files..."
 for i in `find ./locale -name "*.po"`
 do
-echo "Compiling $i"
+echo "Convert $i"
 msgfmt -o `expr substr $i 1 $(( ${#i} - 3 ))`.mo $i
 mv `expr substr $i 1 $(( ${#i} - 3 ))`.mo ./bin/locale/
 done

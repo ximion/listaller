@@ -24,7 +24,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, mnupdate, httpsend, updexec,
-  LiCommon, ipkhandle, ldunit, LResources,
+  LiCommon, ldunit, LResources,
   liTranslator, SysUtils;
 
 {$IFDEF WINDOWS}{$R liupdate.rc}{$ENDIF}

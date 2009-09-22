@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
-//** This unit contains functions to access libappmanager.so
+//** This unit contains libInstaller functions to manage applications
 unit appman;
 
 {$mode objfpc}{$H+}
@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, liTypes;
 
- const amanlib='libappmanager.so';
+ const amanlib='libinstaller.so';
 
  function load_applications(ty: GroupType): Boolean;cdecl;external amanlib name 'mgr_load_applications';
  function register_message_call(call: TMessageEvent): Boolean;cdecl;external amanlib name 'mgr_register_message_call';

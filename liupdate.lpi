@@ -33,12 +33,12 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="30">
+    <Units Count="31">
       <Unit0>
         <Filename Value="liupdate.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="liupdate"/>
-        <CursorPos X="1" Y="45"/>
+        <CursorPos X="12" Y="27"/>
         <TopLine Value="6"/>
         <UsageCount Value="45"/>
       </Unit0>
@@ -48,8 +48,8 @@
         <ComponentName Value="UMnForm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="mnupdate"/>
-        <CursorPos X="66" Y="26"/>
-        <TopLine Value="13"/>
+        <CursorPos X="72" Y="26"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="45"/>
         <Loaded Value="True"/>
@@ -68,9 +68,11 @@
         <ComponentName Value="UExecFm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="updexec"/>
-        <CursorPos X="22" Y="271"/>
-        <TopLine Value="239"/>
+        <CursorPos X="23" Y="26"/>
+        <TopLine Value="1"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="42"/>
+        <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="abunzper.pas"/>
@@ -249,8 +251,15 @@
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit29>
+      <Unit30>
+        <Filename Value="iconloader.pas"/>
+        <UnitName Value="iconloader"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit30>
     </Units>
-    <JumpHistory Count="28" HistoryIndex="27">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="mnupdate.pas"/>
         <Caret Line="163" Column="77" TopLine="137"/>
@@ -363,6 +372,14 @@
         <Filename Value="mnupdate.pas"/>
         <Caret Line="44" Column="37" TopLine="37"/>
       </Position28>
+      <Position29>
+        <Filename Value="mnupdate.pas"/>
+        <Caret Line="25" Column="70" TopLine="1"/>
+      </Position29>
+      <Position30>
+        <Filename Value="mnupdate.pas"/>
+        <Caret Line="26" Column="72" TopLine="1"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -372,7 +389,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="synapse/;abbrevia/"/>
+      <OtherUnitFiles Value="synapse/;abbrevia/;bindings/"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Parsing>

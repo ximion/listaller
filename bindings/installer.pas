@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
-//** This unit contains functions to access libinstaller.so
+//** This unit contains functions to use the installer part of libInstaller
 unit installer;
  
 {$MODE objfpc}{$H+}

@@ -546,7 +546,7 @@ function CheckApps(report: TStringList;const fix: Boolean=false;const forceroot:
 var dsApp: TSQLite3Dataset;deps: TStringList;i: Integer;pkit: TPackageKit;
 begin
 writeLn('Checking dependencies of all registered applications...');
-if IsRoot then
+if Root then
 writeLn('You are scanning only the ROOT installed applications.')
 else
 writeLn('You are scanning your local installed applications.');

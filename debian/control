@@ -7,17 +7,6 @@ Homepage: http://listaller.nlinux.org
 Build-Depends: libgtk2.0-dev, lazarus (>=0.9.27), fpc (>= 2.2.4), fp-units-gtk, debhelper (>= 5), libqt4intf,
  libqt4-core, sqlite3, libsqlite3-0, libsqlite3-dev, libglib2.0-0, libglib2.0-dev, libpackagekit-glib-dev (>= 0.4.9)
 
-Package: listaller-data
-Architecture: all
-Description: Listaller data
- Listaller is a distribution-independ software install system.
- The application is able to uninstall every application on your
- system you want to be removed, including LOKI/Mojo and Autopackages.
- This package also includes the IPK installer tool.
- Listaller tries to be compatible to all available Linux distributions
- and uses PackageKit as backend.
- This package contains platform and widgetset independent data of Listaller.
-
 Package: listaller-gtk
 Architecture: i386 powerpc sparc amd64 arm
 Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), listaller-core (= ${binary:Version})
@@ -47,6 +36,17 @@ Depends: ${shlibs:Depends}, apt-file
 Description: Listaller basic tools and libraries
  This package contains the 'lipa' command line tool.
  It allows installing/uninstalling/building IPK packages without GUI.
+
+Package: listaller-data
+Architecture: all
+Description: Listaller data
+ Listaller is a distribution-independ software install system.
+ The application is able to uninstall every application on your
+ system you want to be removed, including LOKI/Mojo and Autopackages.
+ This package also includes the IPK installer tool.
+ Listaller tries to be compatible to all available Linux distributions
+ and uses PackageKit as backend.
+ This package contains platform and widgetset independent data of Listaller.
 
 Package: listaller-creator-gtk
 Architecture: i386 powerpc sparc amd64 arm

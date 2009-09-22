@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="535"/>
+      <CurrentBuildNr Value="542"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -32,8 +32,8 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="20" Y="22"/>
-        <TopLine Value="1"/>
+        <CursorPos X="2" Y="436"/>
+        <TopLine Value="397"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="38"/>
         <Loaded Value="True"/>
@@ -41,8 +41,8 @@
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="40" Y="25"/>
-        <TopLine Value="1"/>
+        <CursorPos X="11" Y="321"/>
+        <TopLine Value="288"/>
         <UsageCount Value="17"/>
       </Unit1>
       <Unit2>
@@ -130,11 +130,15 @@
         <UsageCount Value="11"/>
       </Unit13>
     </Units>
-    <JumpHistory Count="1" HistoryIndex="0">
+    <JumpHistory Count="2" HistoryIndex="1">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="22" Column="20" TopLine="1"/>
       </Position1>
+      <Position2>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="228" Column="16" TopLine="205"/>
+      </Position2>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -147,13 +151,18 @@
       <OtherUnitFiles Value="../;../abbrevia/;../synapse/;../bindings/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
     <Linking>
+      <LinkSmart Value="True"/>
       <Options>
         <ExecutableType Value="Library"/>
       </Options>
     </Linking>
     <Other>
-      <CustomOptions Value="-fPIC"/>
+      <CustomOptions Value="-fPIC
+-Cg"/>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>

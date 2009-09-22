@@ -25,7 +25,7 @@ uses
   Interfaces, //NoGUI widgetset is used
   Classes, SysUtils, CustApp,
   Process, ipkbuild,
-  DOM, XMLRead, TRStrings, LiTranslator;
+  ipkdef, TRStrings, LiTranslator;
 
 type
 
@@ -85,16 +85,6 @@ begin
   Terminate;
 end;
 
-function FindChildNode(dn: TDOMNode; n: String): TDOMNode;
-var i: Integer;
-begin
-Result:=nil;
-for i:=0 to dn.ChildNodes.Count-1 do begin
-if LowerCase(dn.ChildNodes.Item[i].NodeName)=LowerCase(n) then begin
-Result:=dn.ChildNodes.Item[i].FirstChild;break;exit;end;
-end;
-end;
-
 //We do not use the function of common.pas to keep this tool small
 function CmdResult(cmd:String):String;
 var t:TProcess;
@@ -125,36 +115,29 @@ if not FileExists(fname) then begin writeLn('File "'+fname+'" does not exists!')
 end;
 
 function TUniBuilder.ReadInformation(fips: String): TPackinfo;
-var tmp,script: TStringList;dc: TXMLDocument;xn: TDOMNode;h: String;i,at: Integer;
+var tmp,script: TIPKScript;h: String;i,at: Integer;
 begin
   CheckFileA(fips);
   writeLn('Reading ips script file...');
-  tmp:=TStringList.Create;
-  script:=TStringList.Create;
-  tmp.LoadFromFile(fips);
-  writeLn(tmp[0]);
-  for i:=1 to tmp.Count-1 do begin
-    if pos('!-Files #',tmp[i])>0 then break
-    else script.Add(tmp[i]);
-    end;
 
-    tmp.Free;
-   script.SaveToFile('/tmp/build-pk.xml');
-   script.Free;
+  script:=TIPKScript.Create;
+  script.LoadFromFile(fips);
 
     result.build:=TStringList.Create;
     result.desc:=TStringList.Create;
     result.depDEB:=TStringList.Create;
     result.depRPM:=TStringList.Create;
 
-   ReadXMLFile(dc,'/tmp/build-pk.xml');
 
-   xn:=dc.FindNode('package');
-   Result.PkName:=FindChildNode(xn,'pkname').NodeValue;
-   writeLn('Package name: '+result.pkName);
-   result.Maintainer:=FindChildNode(xn,'maintainer').NodeValue;
+   Result.PkName:=script.PkName;
+   writeLn('Package name: '+script.PkName);
+   result.Maintainer:=script.Maintainer;
    writeLn('Package maintainer: '+result.Maintainer);
-    h:=FindChildNode(xn,'build').NodeValue;
+
+
+    //??? Needs update of IPS1.0 standard!
+
+    {h:=FindChildNode(xn,'build').NodeValue;
     at:=1;
     while length(h)>0 do begin
        at:=pos(';',h);
@@ -183,6 +166,7 @@ begin
    result.version:=FindChildNode(xn,'version').NodeValue;
 
    DeleteFile('/tmp/build-pk.xml');
+   }
 end;
 
 procedure TUniBuilder.CreateDEB(pk: TPackInfo);

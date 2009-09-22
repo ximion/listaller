@@ -309,6 +309,7 @@ procedure TInstallation.ReadDescription(sl: TStringList);
 var i: Integer;
 begin
  //Asign does not work
+ sl.Clear;
  for i:=0 to longdesc.Count-1 do
   sl.Add(longdesc[i]);
 end;
@@ -317,6 +318,7 @@ procedure TInstallation.ReadLicense(sl: TStringList);
 var i: Integer;
 begin
 //Assign does not work
+ sl.Clear;
  for i:=0 to license.Count-1 do
   sl.Add(license[i]);
 end;

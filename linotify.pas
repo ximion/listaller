@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.}
-//** Listaller's notification GUI: Shows notifications about the PackageDB status
+//** Listaller's notify try icon: Shows notifications about the PackageDB status
 unit linotify;
 
 {$mode objfpc}{$H+}
@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, Menus, LiCommon, Process, Distri, TRStrings, ipkhandle,
+  StdCtrls, ExtCtrls, Menus, LiCommon, Process, Distri, TRStrings, appman,
   LCLType, LiTranslator;
 
 type
@@ -95,13 +95,16 @@ end;
 
 procedure PerformCheck;
 begin
-rep:=TStringList.Create;
+//??? Reimplement / base on libappmanager
+
+{rep:=TStringList.Create;
  if not CheckApps(rep) then
  begin
  if Application.MessageBox(PAnsiChar(rsBrokenDepsFixQ), 'FixDeps', MB_YESNO)=IDYES then
    CheckApps(rep,true);
  LogQ;
- end else LogQ;
+ end else LogQ;  }
+
 end;
 
 begin
@@ -118,16 +121,17 @@ begin
  end else PerformCheck;
 
 end;
+
 end;
 
 procedure TForm1.MenuItem2Click(Sender: TObject);
 var p: TProcess;
 begin
- if FileExists(ExtractFilePath(Application.ExeName)+'liupdate') then
+ if FileExists(ExtractFilePath(Application.ExeName)+'liupdate -q') then
  begin
   p:=TProcess.Create(nil);
   p.Options:=[];
-  p.CommandLine:=ExtractFilePath(Application.ExeName)+'liupdate';
+  p.CommandLine:=ExtractFilePath(Application.ExeName)+'liupdate -q';
   p.Execute;
   p.Free;
  end else
