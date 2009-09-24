@@ -6,7 +6,7 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="2"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
@@ -27,13 +27,13 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="14">
+    <Units Count="15">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="2" Y="436"/>
-        <TopLine Value="397"/>
+        <CursorPos X="13" Y="22"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="38"/>
         <Loaded Value="True"/>
@@ -41,14 +41,16 @@
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="11" Y="321"/>
-        <TopLine Value="288"/>
+        <CursorPos X="70" Y="24"/>
+        <TopLine Value="1"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="17"/>
+        <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="1" Y="38"/>
+        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit2>
@@ -129,8 +131,17 @@
         <TopLine Value="212"/>
         <UsageCount Value="11"/>
       </Unit13>
+      <Unit14>
+        <Filename Value="../bindings/packagekit2.pas"/>
+        <UnitName Value="packagekit"/>
+        <CursorPos X="17" Y="17"/>
+        <TopLine Value="1"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit14>
     </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
+    <JumpHistory Count="4" HistoryIndex="3">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="22" Column="20" TopLine="1"/>
@@ -139,6 +150,14 @@
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="228" Column="16" TopLine="205"/>
       </Position2>
+      <Position3>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="13" TopLine="1"/>
+      </Position3>
+      <Position4>
+        <Filename Value="ipkhandle.pas"/>
+        <Caret Line="24" Column="70" TopLine="1"/>
+      </Position4>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

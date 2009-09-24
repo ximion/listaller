@@ -21,7 +21,7 @@ unit ipkhandle;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, Process, LiCommon, trstrings, packagekit,
+  Classes, SysUtils, IniFiles, Process, LiCommon, trstrings, packagekit2,
   sqlite3ds, db, AbUnZper, AbArcTyp, ipkdef, HTTPSend, FTPSend,
   MD5, liTypes, distri;
 

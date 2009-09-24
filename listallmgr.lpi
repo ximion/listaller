@@ -11,13 +11,13 @@
       <Title Value="Listaller Manager"/>
       <UseAppBundle Value="False"/>
       <Icon Value="0"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="1526"/>
+      <CurrentBuildNr Value="1528"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -52,8 +52,10 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallmgr"/>
         <CursorPos X="1" Y="44"/>
-        <TopLine Value="4"/>
+        <TopLine Value="5"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="176"/>
+        <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="manager.pas"/>
@@ -733,7 +735,7 @@
         <UsageCount Value="10"/>
       </Unit96>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="manager.pas"/>
         <Caret Line="155" Column="5" TopLine="130"/>
@@ -850,6 +852,10 @@
         <Filename Value="manager.pas"/>
         <Caret Line="26" Column="79" TopLine="7"/>
       </Position29>
+      <Position30>
+        <Filename Value="listallmgr.lpr"/>
+        <Caret Line="44" Column="1" TopLine="4"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
