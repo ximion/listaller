@@ -1,3 +1,18 @@
+{ Copyright (C) 2008-2009 Matthias Klumpp
+
+  Authors:
+   Matthias Klumpp
+
+  This library is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation, version 3.
+
+  This library is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License v3
+  along with this library. If not, see <http://www.gnu.org/licenses/>.}
 unit management;
 
 {$mode objfpc}{$H+}
@@ -527,7 +542,9 @@ begin
 
 msg('Uninstalling '+f+' ...',mtInfo);
 pkit.RemovePkg(f);
-while not pkit.PkFinished do setpos(pkit.Progress);
+
+//??? Needs rethinking
+//while not pkit.PkFinished do setpos(pkit.Progress);
 
 if pkit.PkFinishCode>0 then begin
 request(rsRmError,rqError);exit;pkit.Free;end;

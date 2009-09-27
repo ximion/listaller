@@ -48,7 +48,7 @@
         <ComponentName Value="UMnForm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="mnupdate"/>
-        <CursorPos X="72" Y="26"/>
+        <CursorPos X="72" Y="15"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="45"/>
@@ -68,11 +68,9 @@
         <ComponentName Value="UExecFm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="updexec"/>
-        <CursorPos X="23" Y="26"/>
+        <CursorPos X="72" Y="15"/>
         <TopLine Value="1"/>
-        <EditorIndex Value="1"/>
         <UsageCount Value="42"/>
-        <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="abunzper.pas"/>

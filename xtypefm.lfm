@@ -8,7 +8,6 @@ object IMdFrm: TIMdFrm
   VertScrollBar.Page = 143
   VertScrollBar.Range = 66
   ActiveControl = btnInstallAll
-  AutoScroll = False
   BorderIcons = [biHelp]
   BorderStyle = bsToolWindow
   Caption = 'Select Installation mode'

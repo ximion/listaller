@@ -1,18 +1,18 @@
-{ xtypefm.pas
-  Copyright (C) Listaller Project 2008-2009
+{ Copyright (C) 2008-2009 Matthias Klumpp
 
-  pkgconvertdisp.pas is free software: you can redistribute it and/or modify it
-  under the terms of the GNU General Public License as published
-  by the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
+  Authors:
+   Matthias Klumpp
 
-  xtypefm.pas is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU General Public License for more details.
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation, version 3.
 
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
+  This program is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License v3
+  along with this program. If not, see <http://www.gnu.org/licenses/>.}
 //** This unit provides an formular that lets the user choose between program runlevels (root / not as root / in app-testmode)
 unit xtypefm;
 
@@ -76,7 +76,7 @@ try
   s:=pkit.Version;
   pkit.Free;
   writeLn('Detected PackageKit: '+s);
-  s:=copy(s,1,5);
+  // s:=copy(s,1,5);
   if StrToInt(StringReplace(s,'.','',[rfReplaceAll]))<46 then
   begin
         Label2.Caption:=StringReplace(StringReplace(rsPackageKitWarning,'%cp',s,[rfReplaceAll]),'%np','0.4.6',[rfReplaceAll]);

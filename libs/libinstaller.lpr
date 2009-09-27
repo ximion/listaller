@@ -1,18 +1,18 @@
-{ libinstaller.lpr
-  Copyright (C) Listaller Project 2009
+{ Copyright (C) 2008-2009 Matthias Klumpp
 
-  libinstaller.lpr is free software: you can redistribute it and/or modify it
-  under the terms of the GNU General Public License as published
-  by the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
+  Authors:
+   Matthias Klumpp
 
-  libinstaller.lpr is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU General Public License for more details.
+  This library is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation, version 3.
 
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
+  This library is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License v3
+  along with this library. If not, see <http://www.gnu.org/licenses/>.}
 //** Listaller library for all IPK installation related processes
 library libinstaller;
 
@@ -26,12 +26,12 @@ uses
 //////////////////////////////////////////////////////////////////////////////////////
 //Exported helper functions
 
-function create_stringlist: Pointer; cdecl;
+function li_new_stringlist: Pointer; cdecl;
 begin
  Result:=TStringList.Create;
 end;
 
-function free_stringlist(lst: PStringList): Boolean; cdecl;
+function li_free_stringlist(lst: PStringList): Boolean; cdecl;
 begin
 Result:=true;
 try
@@ -41,7 +41,7 @@ except
 end;
 end;
 
-function stringlist_read_line(lst: PStringList;ln: Integer): PChar; cdecl;
+function li_stringlist_read_line(lst: PStringList;ln: Integer): PChar; cdecl;
 begin
  if (ln < lst^.Count)and(ln > -1) then
  begin
@@ -49,7 +49,7 @@ begin
  end else Result:='List index out of bounds.';
 end;
 
-function stringlist_write_line(lst: PStringList;ln: Integer;val: PChar): Boolean; cdecl;
+function li_stringlist_write_line(lst: PStringList;ln: Integer;val: PChar): Boolean; cdecl;
 begin
  if (ln < lst^.Count)and(ln > -1) then
  begin
@@ -73,13 +73,13 @@ end;
 end;
 
 //** Creates a new installation object
-function new_installation: Pointer; cdecl;
+function ins_new_installation: Pointer; cdecl;
 begin
  Result:=TInstallation.Create;
 end;
 
 //** Removes an TInstallation object
-function free_installation(setup: PInstallation): Boolean;
+function ins_free_installation(setup: PInstallation): Boolean;
 begin
 try
  Result:=true;
@@ -90,9 +90,14 @@ end;
 end;
 
 //** Initializes the setup
-function init_installation(setup: PInstallation;pkname: PChar): PChar; cdecl;
+function ins_init_installation(setup: PInstallation;pkname: PChar): PChar; cdecl;
 begin
  Result:='';
+ if not Assigned(setup^.OnUserRequest) then
+ begin
+  writeLn('[WARNING] No user request callback is registered!');
+ end;
+
  try
   setup^.Initialize(pkname);
  except
@@ -192,7 +197,7 @@ begin
 end;
 
 //** Check if application is installed
-function is_ipk_app_installed(appname: PChar;appid: PChar): Boolean; cdecl;
+function li_is_ipk_app_installed(appname: PChar;appid: PChar): Boolean; cdecl;
 begin
   Result:=IsPackageInstalled(appname,appid);
 end;
@@ -392,15 +397,15 @@ end;
 ///////////////////////
 exports
  //Stringlist functions
- create_stringlist,
- free_stringlist,
- stringlist_read_line,
- stringlist_write_line,
+ li_new_stringlist,
+ li_free_stringlist,
+ li_stringlist_read_line,
+ li_stringlist_write_line,
 
  //TInstallation related functions
- new_installation,
- free_installation,
- init_installation,
+ ins_new_installation,
+ ins_free_installation,
+ ins_init_installation,
  ins_register_main_prog_change_call,
  ins_register_extra_prog_change_call,
  ins_pkgtype,
@@ -438,7 +443,7 @@ exports
  remove_ipk_installed_app,
  li_testmode,
  li_set_su_mode,
- is_ipk_app_installed;
+ li_is_ipk_app_installed;
 
 begin
 end.

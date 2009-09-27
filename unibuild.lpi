@@ -35,8 +35,8 @@
         <Filename Value="unibuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="unibuild"/>
-        <CursorPos X="5" Y="169"/>
-        <TopLine Value="140"/>
+        <CursorPos X="72" Y="15"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="32"/>
         <Loaded Value="True"/>

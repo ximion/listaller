@@ -53,7 +53,6 @@ object FrmEditor: TFrmEditor
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 35
-        BookMarkOptions.OnChange = nil
         Gutter.Width = 53
         Gutter.MouseActions = <        
           item
@@ -577,6 +576,17 @@ object FrmEditor: TFrmEditor
             MoveCaret = False
             Option = 0
             Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
           end>
         Lines.Strings = (
           'IPK-Standard-Version: 1.0'
@@ -874,6 +884,7 @@ object FrmEditor: TFrmEditor
     top = 8
   end
   object SynAnySyn1: TSynAnySyn
+    Enabled = False
     Comments = []
     DetectPreprocessor = False
     IdentifierChars = ',:[]'

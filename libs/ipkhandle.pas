@@ -1,18 +1,18 @@
-{ ipkhandle.pas
-  Copyright (C) Listaller Project 2008-2009
+{ Copyright (C) 2008-2009 Matthias Klumpp
 
-  ipkhandle.pas is free software: you can redistribute it and/or modify it
-  under the terms of the GNU General Public License as published
-  by the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
+  Authors:
+   Matthias Klumpp
 
-  ipkhandle.pas is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU General Public License for more details.
+  This library is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation, version 3.
 
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
+  This library is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License v3
+  along with this library. If not, see <http://www.gnu.org/licenses/>.}
 //** Functions to handle IPK packages
 unit ipkhandle;
 
@@ -21,8 +21,8 @@ unit ipkhandle;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, Process, LiCommon, trstrings, packagekit2,
-  sqlite3ds, db, AbUnZper, AbArcTyp, ipkdef, HTTPSend, FTPSend,
+  Classes, SysUtils, IniFiles, Process, LiCommon, trstrings, packagekit,
+  sqlite3ds, db, AbUnZper, AbArcTyp, ipkdef, HTTPSend, FTPSend, blcksock,
   MD5, liTypes, distri;
 
 type
@@ -30,6 +30,9 @@ type
  //** Pointer to TInstallation
  PInstallation = ^TInstallation;
  //** Everything which is needed for an installation
+
+ { TInstallation }
+
  TInstallation = class
  private
   //Basic information about the package and the new application
@@ -66,9 +69,9 @@ type
   RmApp: Boolean;
   //All supported distribution of this package
   FSupportedDistris: String;
-  //Reference to an existing HTTPSend object
+  //HTTP protocol connection
   HTTP: THTTPSend;
-  //Reference to an existing FTPSend object
+  //FTP protocol connection
   FTP: TFTPSend;
   //Container for description
   longdesc: TStringList;
@@ -84,7 +87,14 @@ type
   function RunNormalInstallation: Boolean;
   //Runs a DLink installation
   function RunDLinkInstallation: Boolean;
+  //Socket hook for FTPSend and HTTPSend to get progress
+  procedure NetSockHook(Sender: TObject; Reason: THookSocketReason;
+     const Value: string);
+  //Handler for PackageKit progress
+  procedure OnPKitProgress(pos: Integer);
  protected
+  //Check if FTP connection is working
+  function CheckFTPConnection(AFTPSend: TFTPSend): Boolean;
   //Set/Get methods for callbacks indication
   procedure SetMainPos(pos: integer);
   procedure SetExtraPos(pos: integer);
@@ -347,6 +357,7 @@ begin
     xtmp:=TStringList.Create;
     //Open PKit connection and assign xtmp stringlist
     pkit:=TPackageKit.Create;
+    pkit.OnProgress:=@OnPKitProgress;
     pkit.RsList:=xtmp;
     for i:=0 to Dependencies.Count-1 do
     begin
@@ -354,10 +365,6 @@ begin
      SetMainPos(Round(mnpos*one));
 
      pkit.FindPkgForFile(Dependencies[i]);
-     while not pkit.PkFinished do begin
-       //Do nothing...
-       SetMainPos(Round(mnpos*one));
-     end;
 
      if (pkit.PkFinishCode>0)or(xtmp.Count<=0) then
      begin
@@ -797,6 +804,35 @@ Result:=((Dependencies.Count+(fi.Count div 3))*10)+16;
 fi.Free;
 end;
 
+procedure TInstallation.NetSockHook(Sender: TObject; Reason: THookSocketReason;
+  const Value: string);
+begin
+//HTTP
+if Http.DownloadSize>100 then
+begin
+ SetExtraPos((HTTP.DownloadSize div 100)*HTTP.Document.Size);
+ exit;
+end;
+//FTP
+SetExtraPos(50); //??? Cannot detect file size at time
+end;
+
+function TInstallation.CheckFTPConnection(AFtpSend: TFtpSend): Boolean;
+begin
+  if AFtpSend.Sock.Socket = not(0) then
+    Result := AFtpSend.Login
+  else
+    if AFtpSend.NoOp then
+      Result := true
+    else
+      Result := AFtpSend.Login;
+end;
+
+procedure TInstallation.OnPKitProgress(pos: Integer);
+begin
+  SetextraPos(pos); //Set position of extra progress to PackageKit transaction progress
+end;
+
 function TInstallation.RunNormalInstallation: Boolean;
 var
 i,j: Integer;
@@ -870,6 +906,7 @@ begin
 end;
 
 pkit:=TPackageKit.Create;
+pkit.OnProgress:=@OnPKitProgress;
 
 if Dependencies.Count>0 then
 begin
@@ -878,8 +915,6 @@ if pos('cat:',Dependencies[0])>0 then
 begin
  msg('Installing package catalog...');
  pkit.InstallLocalPkg(copy(Dependencies[0],5,length(Dependencies[0])));
-
- while not pkit.PkFinished do SetExtraPos(pkit.Progress);
 
  if pkit.PkFinishCode>0 then
  begin
@@ -923,17 +958,19 @@ cnf.Free;
    Result:=false;
    exit;
   end;
- end else begin
+ end else
+ begin
 
-with FTP do begin
+with FTP do
+begin
     TargetHost := GetServerName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1));
 
   try
     DirectFileName := '/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1));
     DirectFile:=True;
-    if not Login then
+    if not CheckFTPConnection(FTP) then
     begin
-      MakeUsrRequest('Couldn''t login on the FTP-Server!',rqError);
+      MakeUsrRequest(rsFTPFailed,rqError);
       Result:=false;
       exit;
     end;
@@ -1013,14 +1050,12 @@ begin
     if pkit.PkFinishCode>0 then
     begin
      pkit.InstallLocalPkg('/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i]))));
-     while not pkit.PkFinished do SetExtraPos(pkit.Progress);
+
      SetExtraPos(0);
     end;
    s.Free;
   end else
     pkit.InstallLocalPkg(lp+PkgName+Dependencies[i]);
-
-    while not pkit.PkFinished do SetExtraPos(pkit.Progress);
 
     mnpos:=mnpos+5;
     SetMainPos(Round(mnpos*max));
@@ -1045,17 +1080,10 @@ begin
      msg('');
 
      pkit.Resolve(Dependencies[i]);
-     while not pkit.PkFinished do
-     begin
-     //Do nothing...
-      SetMainPos(Round(mnpos*max));
-     end;
+
      if pkit.PkFinishCode>0 then
      begin
       pkit.InstallPkg(Dependencies[i]);
-
-      //Set progress to extra progress bar
-      while not pkit.PkFinished do begin SetExtraPos(pkit.Progress);SetMainPos(Round(mnpos*max));end;
 
     //Check if the package was really installed
    if pkit.PkFinishCode>0 then
@@ -1350,6 +1378,7 @@ end;
 ShowPKMon();
 
 pkit:=TPackageKit.Create;
+pkit.OnProgress:=@OnPKitProgress;
 
   for i:=1 to Dependencies.Count-1 do
   begin
@@ -1358,21 +1387,17 @@ pkit:=TPackageKit.Create;
    msg('Looking for '+Dependencies[i]);
 
    pkit.Resolve(Dependencies[i]);
-   while not pkit.PkFinished do begin SetMainPos(Round(mnpos*max));end;
 
   if pkit.PkFinishCode>0 then
   begin
    msg('Installing '+Dependencies[i]+'...');
 
    pkit.InstallPkg(Dependencies[i]);
-   while not pkit.PkFinished do SetExtraPos(pkit.Progress);
-
   end;
   end else
   begin
    msg('Looking for '+copy(Dependencies[i],1,pos(' -',Dependencies[i])-1));
    pkit.Resolve(copy(Dependencies[i],1,pos(' -',Dependencies[i])-1));
-   while not pkit.PkFinished do begin SetMainPos(Round(mnpos*max));end;
 
   if pkit.PkFinishCode>0 then
   begin
@@ -1396,7 +1421,14 @@ pkit:=TPackageKit.Create;
   try
     DirectFileName := '/tmp/'+ExtractFileName(Dependencies[i]);
     DirectFile:=True;
-    if not Login then MakeUsrRequest(rsFTPfailed,rqError);
+
+    if not CheckFTPConnection(FTP) then
+    begin
+      MakeUsrRequest(rsFTPFailed,rqError);
+      Result:=false;
+      exit;
+    end;
+
     ChangeWorkingDir(GetServerPath(Dependencies[i]));
 
     emax:=FileSize(ExtractFileName(Dependencies[i]));
@@ -1447,7 +1479,42 @@ SendStateMsg(rsSuccess);
 end;
 
 function TInstallation.DoInstallation: Boolean;
+var cnf: TIniFile;
 begin
+//Load network connections
+ HTTP:=THTTPSend.Create;
+ FTP:=TFTPSend.Create;
+
+ HTTP.Sock.OnStatus:=@NetSockHook;
+ HTTP.UserAgent:='Listaller Downloader';
+
+ FTP.DSock.Onstatus:=@NetSockHook;
+
+ //??? This needs a better solution - take proxy settings from system settings?
+ cnf:=TInifile.Create(ConfigDir+'config.cnf');
+ if cnf.ReadBool('Proxy','UseProxy',false) then
+ begin
+  //Set HTTP
+  HTTP.ProxyPort:=cnf.ReadString('Proxy','hPort','');
+  HTTP.ProxyHost:=cnf.ReadString('Proxy','hServer','');
+  HTTP.ProxyUser:=cnf.ReadString('Proxy','Username','');
+  HTTP.ProxyPass:=cnf.ReadString('Proxy','Password',''); //The PW is visible in the file! It should be crypted
+
+ //??? Not needed
+ {if DInfo.Desktop='GNOME' then begin
+ HTTP.ProxyPass:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_user');
+ HTTP.ProxyUser:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_password');
+  end; }
+
+ //Set FTP
+ {FTP.ProxyPort:=cnf.ReadString('Proxy','fPort','');
+ FTP.ProxyHost:=cnf.ReadString('Proxy','fServer','');
+ FTP.ProxyUser:=cnf.ReadString('Proxy','Username','');
+ FTP.ProxyPass:=cnf.ReadString('Proxy','Password',''); }
+
+ end;
+  cnf.Free;
+
  if pkType=ptLinstall then Result:=RunNormalInstallation
  else
   if pkType=ptDLink then Result:=RunDLinkInstallation
@@ -1457,6 +1524,9 @@ begin
    msg('TInstallation failure.');
    Result:=false;
   end;
+//Free network objects
+ HTTP.Free;
+ FTP.Free;
 end;
 
 /////////////////////////////////////////////////////
@@ -1584,13 +1654,14 @@ msg(f+' # '+copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
 else msg(f);
 
 pkit:=TPackageKit.Create;
-s:=tstringlist.Create;
 
+s:=TStringlist.Create;
 
-{
+pkit.RsList:=s;
+
 if pos('>',f)>0 then
- pkit.GetRequires(copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2),s)
-else pkit.GetRequires(f,s);}
+ pkit.GetRequires(copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
+else pkit.GetRequires(f);
 
    if s.Count <=1 then
    begin

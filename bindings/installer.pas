@@ -1,18 +1,18 @@
-{ installer.pas
-  Copyright (C) Listaller Project 2009
+{ Copyright (C) 2008-2009 Matthias Klumpp
 
-  installer.pas is free software: you can redistribute it and/or modify it
-  under the terms of the GNU General Public License as published
-  by the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
+  Authors:
+   Matthias Klumpp
 
-  installer.pas is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU General Public License for more details.
+  This unit is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation, version 3.
 
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
+  This unit is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License v3
+  along with this unit. If not, see <http://www.gnu.org/licenses/>.}
 //** This unit contains functions to use the installer part of libInstaller
 unit installer;
  
@@ -69,15 +69,14 @@ type
 implementation
 
 //Import library functions
-function new_installation: Pointer; cdecl; external libinst name 'new_installation';
-function free_installation(setup: Pointer): Boolean; external libinst name 'free_installation';
-function init_installation(setup: Pointer;pkname: PChar): PChar; cdecl; external libinst name 'init_installation';
+function ins_new_installation: Pointer; cdecl; external libinst name 'ins_new_installation';
+function ins_free_installation(setup: Pointer): Boolean; external libinst name 'ins_free_installation';
+function ins_init_installation(setup: Pointer;pkname: PChar): PChar; cdecl; external libinst name 'ins_init_installation';
 function ins_register_main_prog_change_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'ins_register_main_prog_change_call';
 function ins_register_extra_prog_change_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'ins_register_extra_prog_change_call';
 function ins_pkgtype(setup: Pointer): TPkgType; cdecl; external libinst name 'ins_pkgtype';
 function ins_disallows(setup: Pointer): PChar; cdecl; external libinst name 'ins_disallows';
 function ins_supported_distributions(setup: Pointer): PChar; cdecl; external libinst name 'ins_supported_distributions';
-function is_ipk_app_installed(appname: PChar;appid: PChar): Boolean; cdecl; external libinst name 'is_ipk_app_installed';
 function ins_appname(setup: Pointer): PChar; cdecl; external libinst name 'ins_appname';
 function ins_appversion(setup: Pointer): PChar; cdecl; external libinst name 'ins_appversion';
 function ins_pkgid(setup: Pointer): PChar; cdecl; external libinst name 'ins_pkgid';
@@ -96,6 +95,7 @@ function ins_register_user_request_call(setup: Pointer;call: TRequestEvent): Boo
 function ins_start_installation(setup: Pointer): Boolean; cdecl; external libinst name 'ins_start_installation';
 function ins_dependencies(setup: Pointer; list: PStringList): Boolean; cdecl; external libinst name 'ins_dependencies';
 function ins_set_profileid(setup: Pointer;id: ShortInt): Boolean; cdecl;  external libinst name 'ins_set_profileid';
+function li_is_ipk_app_installed(appname: PChar;appid: PChar): Boolean; cdecl; external libinst name 'li_is_ipk_app_installed';
 function li_set_su_mode(b: Boolean): Boolean; cdecl; external libinst name 'li_set_su_mode';
 function li_testmode(st: Boolean): Boolean; cdecl; external libinst name 'li_testmode';
 
@@ -104,18 +104,18 @@ function li_testmode(st: Boolean): Boolean; cdecl; external libinst name 'li_tes
 constructor TInstallPack.Create;
 begin
  inherited Create;
- ins := new_installation;
+ ins := ins_new_installation;
 end;
 
 destructor TInstallPack.Destroy;
 begin
- free_installation(@ins);
+ ins_free_installation(@ins);
  inherited Destroy;
 end;
 
 procedure TInstallPack.Initialize(pkname: String);
 begin
- init_installation(@ins,PChar(pkname))
+ ins_init_installation(@ins,PChar(pkname))
 end;
 
 procedure TInstallPack.SetMainChangeCall(call: TProgressCall);
@@ -244,7 +244,7 @@ end;
 
 function IsIPKAppInstalled(appname: String;appid: String): Boolean;
 begin
- Result:=is_ipk_app_installed(PChar(appname), PChar(appid));
+ Result:=li_is_ipk_app_installed(PChar(appname), PChar(appid));
 end;
 
 end.

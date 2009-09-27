@@ -54,12 +54,12 @@
         <ComponentName Value="FrmEditor"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="editor"/>
-        <CursorPos X="20" Y="82"/>
-        <TopLine Value="67"/>
+        <CursorPos X="33" Y="26"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="146"/>
         <Bookmarks Count="1">
-          <Item0 X="4" Y="537" ID="0"/>
+          <Item0 X="4" Y="538" ID="0"/>
         </Bookmarks>
         <Loaded Value="True"/>
       </Unit1>
@@ -76,8 +76,8 @@
         <ComponentName Value="frmFileWizard"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fwiz"/>
-        <CursorPos X="32" Y="107"/>
-        <TopLine Value="81"/>
+        <CursorPos X="19" Y="4"/>
+        <TopLine Value="1"/>
         <UsageCount Value="146"/>
       </Unit3>
       <Unit4>
@@ -129,8 +129,8 @@
         <Filename Value="uFileMisc.pas"/>
         <UnitName Value="uFileMisc"/>
         <CursorPos X="12" Y="107"/>
-        <TopLine Value="101"/>
-        <UsageCount Value="2"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
       </Unit10>
       <Unit11>
         <Filename Value="../../../../../../usr/lib/lazarus/components/synedit/synedittextbuffer.pp"/>
@@ -183,8 +183,8 @@
         <ComponentName Value="frmProjectWizard"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="prjwizard"/>
-        <CursorPos X="13" Y="1193"/>
-        <TopLine Value="1173"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
         <UsageCount Value="129"/>
       </Unit17>
       <Unit18>
@@ -434,7 +434,7 @@
         <UsageCount Value="10"/>
       </Unit55>
     </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
+    <JumpHistory Count="4" HistoryIndex="3">
       <Position1>
         <Filename Value="editor.pas"/>
         <Caret Line="174" Column="11" TopLine="145"/>
@@ -443,6 +443,14 @@
         <Filename Value="editor.pas"/>
         <Caret Line="16" Column="39" TopLine="1"/>
       </Position2>
+      <Position3>
+        <Filename Value="editor.pas"/>
+        <Caret Line="170" Column="13" TopLine="133"/>
+      </Position3>
+      <Position4>
+        <Filename Value="editor.pas"/>
+        <Caret Line="26" Column="33" TopLine="1"/>
+      </Position4>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
