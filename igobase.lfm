@@ -103,7 +103,7 @@ object IWizFrm: TIWizFrm
         Left = 166
         Height = 21
         Top = 157
-        Width = 88
+        Width = 87
         Caption = 'Testmode!'
         Font.Height = -17
         Font.Name = 'Sans'
@@ -116,6 +116,7 @@ object IWizFrm: TIWizFrm
         Height = 14
         Top = 311
         Width = 225
+        Anchors = [akLeft, akBottom]
         Caption = 'Checking for distribution compatibility...'
         ParentColor = False
         Visible = False
@@ -132,7 +133,7 @@ object IWizFrm: TIWizFrm
       object ListBox1: TListBox
         Left = 158
         Height = 80
-        Top = 207
+        Top = 223
         Width = 473
         Items.Strings = (
           'Logfile:'
@@ -201,7 +202,7 @@ object IWizFrm: TIWizFrm
         Left = 12
         Height = 14
         Top = 38
-        Width = 227
+        Width = 269
         Caption = 'Please read the following information carefully:'
         ParentColor = False
       end
@@ -209,7 +210,7 @@ object IWizFrm: TIWizFrm
         Left = 12
         Height = 21
         Top = 304
-        Width = 236
+        Width = 275
         Anchors = [akLeft, akBottom]
         Caption = 'I agree with the above terms and conditions'
         OnChange = RadioButton1Change
@@ -220,7 +221,7 @@ object IWizFrm: TIWizFrm
         Left = 12
         Height = 21
         Top = 328
-        Width = 85
+        Width = 95
         Anchors = [akLeft, akBottom]
         Caption = 'I don''t agree'
         Checked = True
@@ -258,9 +259,9 @@ object IWizFrm: TIWizFrm
       end
       object Label14: TLabel
         Left = 12
-        Height = 13
+        Height = 14
         Top = 38
-        Width = 279
+        Width = 324
         Caption = 'Select which parts of the application should be installed.'
         ParentColor = False
       end
@@ -336,12 +337,12 @@ object IWizFrm: TIWizFrm
         Width = 636
         Anchors = [akTop, akLeft, akRight]
         Smooth = True
-        Step = 8
+        Step = 1
         TabOrder = 1
       end
       object InfoMemo: TMemo
         Left = 4
-        Height = 176
+        Height = 184
         Top = 159
         Width = 635
         Anchors = [akLeft, akRight, akBottom]
@@ -359,9 +360,9 @@ object IWizFrm: TIWizFrm
       ClientHeight = 352
       object Label10: TLabel
         Left = 12
-        Height = 26
+        Height = 27
         Top = 6
-        Width = 245
+        Width = 253
         Caption = 'Installation completed!'
         Font.Height = -21
         Font.Name = 'Sans'
@@ -372,7 +373,7 @@ object IWizFrm: TIWizFrm
         Left = 12
         Height = 14
         Top = 56
-        Width = 262
+        Width = 315
         Caption = 'The application <unknown> was installed successfully!'
         ParentColor = False
       end
@@ -380,7 +381,7 @@ object IWizFrm: TIWizFrm
         Left = 12
         Height = 14
         Top = 88
-        Width = 110
+        Width = 133
         Caption = 'Press "Finish" to close.'
         ParentColor = False
       end
@@ -388,7 +389,7 @@ object IWizFrm: TIWizFrm
         Left = 12
         Height = 14
         Top = 336
-        Width = 39
+        Width = 45
         Caption = 'Label16'
         ParentColor = False
         Visible = False
@@ -397,7 +398,7 @@ object IWizFrm: TIWizFrm
         Left = 12
         Height = 21
         Top = 109
-        Width = 159
+        Width = 181
         Caption = 'Execute the new application'
         Checked = True
         State = cbChecked

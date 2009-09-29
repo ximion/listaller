@@ -40,9 +40,9 @@ type
  //** Callback that submits a notification
  TMessageEvent = function(msg: String;imp: TMType): Boolean;cdecl;
  //** Called if a progress was changed
- TProgressCall = function(pos: Integer): Boolean;cdecl;
+ TProgressCall = procedure(pos: Integer);cdecl;
  //** Called if progress was changed; only for internal use
- TProgressEvent = procedure(pos: Integer) of Object;
+ TProgressEvent = procedure(pos: Integer) of object;
 
  //** Container for information about apps
  TAppInfo = record

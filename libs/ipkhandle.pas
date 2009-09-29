@@ -1081,6 +1081,8 @@ begin
 
      pkit.Resolve(Dependencies[i]);
 
+     writeLn('DEBUG: Resolved.');
+
      if pkit.PkFinishCode>0 then
      begin
       pkit.InstallPkg(Dependencies[i]);
@@ -1352,7 +1354,7 @@ sleep(600);
 end;
 
 function TInstallation.RunDLinkInstallation: Boolean;
-var i: Integer;cnf,ar: TIniFile;pkit: TPackageKit;mnpos,max,emax: Integer;
+var i: Integer;cnf,ar: TIniFile;pkit: TPackageKit;mnpos,max: Integer;
 begin
 max:=Dependencies.Count*6000;
 mnpos:=0;
@@ -1431,7 +1433,9 @@ pkit.OnProgress:=@OnPKitProgress;
 
     ChangeWorkingDir(GetServerPath(Dependencies[i]));
 
-    emax:=FileSize(ExtractFileName(Dependencies[i]));
+    //???
+    //emax:=FileSize(ExtractFileName(Dependencies[i]));
+
     SetExtraPos(0);
 
     RetrieveFile(ExtractFileName(Dependencies[i]), false);
@@ -1538,7 +1542,8 @@ var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;k: Boolean;upd: Strin
     pkit: TPackageKit;
     dsApp: TSQLite3Dataset;
     FPos: TProgressCall;
-    mnprog: Integer;
+    mnprog,bs: Integer;
+    ipkc: TIPKControl;
 procedure SetPosition(prog: Integer);
 begin
 if Assigned(FPos) then FPos(prog);
@@ -1554,16 +1559,15 @@ begin
 p:=RegDir+LowerCase(AppName+'-'+AppID)+'/';
 FPos:=progress;
 mnprog:=0;
+
 SetPosition(0);
-//InfoMemo.Lines.Add('Begin uninstallation...');
 
-{
-//ExProgress.Max:=((tmp.Count div 2)*10)+4;
-reg:=TIniFile.Create(p+'proginfo.pin');
-upd:=reg.ReadString('Application','UpdSource','#');
-reg.Free;    }
+//Check if an update source was set
+ipkc:=TIPKControl.Create(p+'proginfo.pin');
+upd:=ipkc.USource;
+ipkc.Free;
 
-msg('- IPK uninstallation -');
+msg('Begin uninstallation...');
 
 dsApp:= TSQLite3Dataset.Create(nil);
 with dsApp do
@@ -1607,11 +1611,15 @@ begin
  then dlink:=true
  else dlink:=false;
 
+bs:=6;
+SetPosition(4);
+mnprog:=4;
+
 if not dlink then
 begin
 tmp:=TStringList.Create;
 tmp.LoadFromfile(p+'appfiles.list');
-//UProgress.Max:=((tmp.Count)*10)+4;
+bs:=bs+tmp.Count;
 end;
 
 if not fast then
@@ -1639,6 +1647,7 @@ tmp2.Text:=dsApp.FieldByName('Dependencies').AsString;
 
 if tmp2.Count>-1 then
 begin
+bs:=bs+tmp2.Count;
 for i:=0 to tmp2.Count-1 do
 begin
 f:=tmp2[i];
@@ -1676,7 +1685,9 @@ else pkit.GetRequires(f);
  s.free;
  pkit.Free;
   end;
- end; //End of tmp2-find loop
+  Inc(mnprog);
+  SetPosition((100 div mnprog)*bs);
+end; //End of tmp2-find loop
 
 end else msg('No installed deps found!');
 
@@ -1689,6 +1700,7 @@ if not dlink then
 begin
 slist:=TStringList.Create;
 
+//@obsolete This code is obsolete
 {if reg.ReadBool(AppName,'ContSFiles',false) then
 begin
 tmp2:=TStringList.Create;
@@ -1707,12 +1719,13 @@ tmp2.Free;
  end;
 end; //End of shared-test  }
 
+
 //Undo Mime-registration (if necessary)
 for i:=0 to tmp.Count-1 do
 begin
 if pos( '<mime>',tmp[i])>0 then
 begin
-msg('Uninstalling MIME-Type...');
+msg('Uninstalling MIME-Type "'+ExtractFileName(tmp[i])+'" ...');
 t:=TProcess.Create(nil);
 if (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.png')
 or (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.xpm') then
@@ -1744,25 +1757,27 @@ if f = slist[j] then k:=true;
 if not k then
 DeleteFile(f);
 
-mnprog:=mnprog+10;
-SetPosition(mnprog);
+Inc(mnprog);
+SetPosition((100 div mnprog)*bs);
 end;
 
-//InfoMemo.Lines.Add('Direcory remove...');
-writeLn('Removing empty dirs...');
+Inc(mnprog);
+SetPosition((100 div mnprog)*bs);
+
+msg('Removing empty dirs...');
 tmp.LoadFromFile(p+'appdirs.list');
 proc:=TProcess.Create(nil);
+proc.Options:=[poWaitOnExit,poStdErrToOutPut,poUsePipes];
 for i:=0 to tmp.Count-1 do
 begin
   proc.CommandLine :='rm -rf '+tmp[i];
   proc.Execute;
- //while proc.Running do Application.ProcessMessages;
 end;
 proc.Free;
 
 if upd<>'#' then begin
 tmp.LoadFromFile(RegDir+'updates.list');
-//InfoMemo.Lines.Add('Removing update-source...');
+msg('Removing update-source...');
 for i:=1 to tmp.Count-1 do
 if pos(upd,tmp[i])>0 then begin tmp.Delete(i);break;end;
 tmp.SaveToFile(RegDir+'updates.list');
@@ -1777,15 +1792,13 @@ end;
 
 if mnprog>0 then
 begin
-mnprog:=mnprog+2;
-SetPosition(mnprog);
-writeLn('Unregistering...');
+msg('Unregistering...');
 
 dsApp.ExecuteDirect('DELETE FROM AppInfo WHERE rowid='+IntToStr(dsApp.RecNo));
 dsApp.ApplyUpdates;
 dsApp.Close;
 dsApp.Free;
-writeLn('Database connection closed.');
+msg('Database connection closed.');
 
 proc:=TProcess.Create(nil);
 proc.Options:=[poWaitOnExit];
@@ -1793,12 +1806,12 @@ proc.CommandLine :='rm -rf '+''''+ExcludeTrailingBackslash(p)+'''';
 proc.Execute;
 proc.Free;
 
-mnprog:=mnprog+2;
-SetPosition(mnprog);
+Inc(mnprog);
+SetPosition((100 div mnprog)*bs);
 
 msg('Application removed.');
 msg('- Finished -');
-end else writeLn('Application not found!');
+end else msg('Application not found!');
 
 end;
 

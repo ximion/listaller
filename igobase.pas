@@ -23,8 +23,8 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
   ComCtrls, StdCtrls, IniFiles, FileUtil, ExtCtrls, process, Buttons,
-  LCLType, LCLIntf, distri, LiCommon, HTTPSend, blcksock, FTPSend,
-  TRStrings, SynEdit, xTypeFm, Installer, liTypes, IconLoader;
+  LCLType, LCLIntf, distri, LiCommon, TRStrings, SynEdit, xTypeFm,
+  Installer, liTypes, IconLoader;
 
 type
 
@@ -88,8 +88,6 @@ type
     procedure FormShow(Sender: TObject);
     procedure GetOutputTimerTimer(Sender: TObject);
     procedure RadioButton1Change(Sender: TObject);
-    //** HTTP/FTP socket hook
-    procedure HookSock(Sender: TObject; Reason:THookSocketReason; const Value: string);
   private
     { private declarations }
     //** True if installation is beeing aborted
@@ -265,13 +263,13 @@ begin
   Application.Terminate;
 end;
 
-function MainPosChange(pos: LongInt): Boolean; cdecl;
+procedure MainPosChange(pos: LongInt);cdecl;
 begin
  IWizFrm.InsProgress.Position:=pos;
  Application.ProcessMessages;
 end;
 
-function ExtraPosChange(pos: LongInt): Boolean; cdecl;
+procedure ExtraPosChange(pos: LongInt); cdecl;
 begin
 with IWizFrm do
 begin
@@ -283,7 +281,7 @@ begin
 end;
 end;
 
-function DSProgPosChange(pos: LongInt): Boolean; cdecl;
+procedure DSProgPosChange(pos: LongInt); cdecl;
 begin
 with IWizFrm do
 begin
@@ -373,6 +371,7 @@ end;
 function MessageCall(msg: String;imp: TMType): Boolean; cdecl;
 begin
  writeLn(msg);
+ IWizFrm.InfoMemo.Lines.Add(msg); //Needed for Log-messages, even if the control is invisible
  Application.ProcessMessages;
 end;
 
@@ -402,11 +401,8 @@ end;
 
 //Load GTK2 icons
 LoadStockPixmap(STOCK_QUIT,ICON_SIZE_BUTTON,FinBtn1.Glyph);
-
 LoadStockPixmap(STOCK_CLOSE,ICON_SIZE_BUTTON,AbortBtn1.Glyph);
-
 LoadStockPixmap(STOCK_GO_FORWARD,ICON_SIZE_BUTTON,Button1.Glyph);
-
 LoadStockPixmap(STOCK_GO_BACK,ICON_SIZE_BUTTON,Button5.Glyph);
 
 //Set translation strings (1)
@@ -700,24 +696,7 @@ if (Process1.ExitStatus>0) then begin
   end;
 end;
 
-var HTTP: THTTPSend;FTP: TFTPSend; //<- Has to be global
-procedure TIWizFrm.HookSock(Sender: TObject; Reason: THookSocketReason;
-const Value: string);
-begin
-ExProgress.Visible:=true;
-Application.ProcessMessages;
-//HTTP
-if Http.DownloadSize>100 then begin
-ExProgress.Max:=HTTP.DownloadSize;
-ExProgress.Position:=HTTP.Document.Size;
-exit;
-end;
-//FTP
-ExProgress.Position:=FTP.DSock.RecvCounter;
-end;
-
 procedure TIWizFrm.StartInstallation;
-var cnf: TIniFile;
 begin
 while IPage.Visible=false do Application.ProcessMessages;
  AbortBtn1.Enabled:=false;
@@ -736,40 +715,6 @@ while IPage.Visible=false do Application.ProcessMessages;
  ExProgress.Visible:=false;
  Label9.Caption:=rsStep1;
 
- cnf:=TInifile.Create(ConfigDir+'config.cnf');
- //Create HTTP object
-  HTTP := THTTPSend.Create;
-  HTTP.Sock.OnStatus:=@HookSock;
-  HTTP.UserAgent:='Listaller-GET';
- //Create FTP object
-  FTP := TFTPSend.Create;
-  FTP.DSock.Onstatus:=@HookSock;
- if cnf.ReadBool('Proxy','UseProxy',false) then
- begin
-  //Set HTTP
-  HTTP.ProxyPort:=cnf.ReadString('Proxy','hPort','');
-  HTTP.ProxyHost:=cnf.ReadString('Proxy','hServer','');
-  HTTP.ProxyUser:=cnf.ReadString('Proxy','Username','');
-  HTTP.ProxyPass:=cnf.ReadString('Proxy','Password',''); //The PW is visible in the file! It should be crypted
-
- //Not needed
- {if DInfo.Desktop='GNOME' then begin
- HTTP.ProxyPass:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_user');
- HTTP.ProxyUser:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_password');
-  end;
- //Set FTP
- FTP.:=cnf.ReadString('Proxy','fPort','');
- HTTP.ProxyHost:=cnf.ReadString('Proxy','fServer','');
- HTTP.ProxyUser:=cnf.ReadString('Proxy','Username','');
- HTTP.ProxyPass:=cnf.ReadString('Proxy','Password','');  }
-
- end;
-  cnf.Free;
-  //???
- //Assign HTTP/FTP objects to Installation service object
- {setup.HTTPSend:=HTTP;
- setup.FTPSend:=FTP; }
-
  //Assign event handlers
  setup.SetMainChangeCall(@MainPosChange);
  setup.SetExtraChangeCall(@ExtraPosChange);
@@ -779,11 +724,6 @@ while IPage.Visible=false do Application.ProcessMessages;
  setup.SetProfileID(ModeGroup.ItemIndex);
 
  setup.StartInstallation;
-
-{ setup.HTTPSend:=nil;
- setup.FTPSend:=nil; }
- HTTP.Free;
- FTP.Free;
 
  if not Testmode then
 begin

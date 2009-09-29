@@ -110,6 +110,7 @@ TIPKBasic = class
   procedure ReadDependencies(dname: String;info: TStringList);
   procedure WriteDependencies(dname: String;path: String);
   procedure WriteDependencies(dname: String;info: TStringList);
+  function  LoadFromFile(s: String): Boolean;virtual;abstract;
  end;
 
 //** Class to handle IPK scripts
@@ -121,7 +122,7 @@ TIPKScript = class(TIPKBasic)
   destructor  Destroy;override;
 
   function  SaveToFile(s: String): Boolean;
-  function  LoadFromFile(s: String): Boolean;
+  function  LoadFromFile(s: String): Boolean;override;
   function  LoadFromList(lst: TStrings): Boolean;
   procedure GetDirectFileList(id: Integer;lst: TStrings);
   procedure GetFiles(id: Integer;lst: TStrings);virtual;

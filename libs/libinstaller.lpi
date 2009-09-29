@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="566"/>
+      <CurrentBuildNr Value="600"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -32,18 +32,18 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="10" Y="23"/>
-        <TopLine Value="1"/>
+        <CursorPos X="15" Y="22"/>
+        <TopLine Value="9"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="40"/>
+        <UsageCount Value="42"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="19" Y="26"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="18"/>
+        <CursorPos X="24" Y="1689"/>
+        <TopLine Value="1491"/>
+        <UsageCount Value="19"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
@@ -90,9 +90,9 @@
       <Unit8>
         <Filename Value="../bindings/packagekit.pas"/>
         <UnitName Value="packagekit"/>
-        <CursorPos X="52" Y="16"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="11"/>
+        <CursorPos X="3" Y="37"/>
+        <TopLine Value="229"/>
+        <UsageCount Value="12"/>
       </Unit8>
       <Unit9>
         <Filename Value="../bindings/pkitclient.pas"/>
@@ -111,15 +111,15 @@
       <Unit11>
         <Filename Value="../litypes.pas"/>
         <UnitName Value="litypes"/>
-        <CursorPos X="53" Y="44"/>
-        <TopLine Value="25"/>
+        <CursorPos X="47" Y="45"/>
+        <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit11>
       <Unit12>
         <Filename Value="../ipkdef.pas"/>
         <UnitName Value="ipkdef"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
+        <CursorPos X="55" Y="125"/>
+        <TopLine Value="105"/>
         <UsageCount Value="11"/>
       </Unit12>
       <Unit13>
@@ -158,35 +158,11 @@
         <UsageCount Value="10"/>
       </Unit17>
     </Units>
-    <JumpHistory Count="7" HistoryIndex="6">
+    <JumpHistory Count="1" HistoryIndex="0">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="14" Column="73" TopLine="1"/>
+        <Caret Line="22" Column="15" TopLine="9"/>
       </Position1>
-      <Position2>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="394" Column="19" TopLine="374"/>
-      </Position2>
-      <Position3>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="92" Column="14" TopLine="61"/>
-      </Position3>
-      <Position4>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="445" Column="5" TopLine="409"/>
-      </Position4>
-      <Position5>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="199" Column="13" TopLine="171"/>
-      </Position5>
-      <Position6>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="16" TopLine="1"/>
-      </Position6>
-      <Position7>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="23" Column="10" TopLine="1"/>
-      </Position7>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -209,8 +185,7 @@
       </Options>
     </Linking>
     <Other>
-      <CustomOptions Value="-fPIC
--Cg"/>
+      <CustomOptions Value="-fPIC"/>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>

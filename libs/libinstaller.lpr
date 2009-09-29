@@ -266,7 +266,7 @@ end;
 end;
 
 //** Set current profile id
-function ins_set_profileid(setup: PInstallation;id: ShortInt): Boolean; cdecl;
+procedure ins_set_profileid(setup: PInstallation;id: ShortInt);cdecl;
 begin
  setup^.SetCurProfile(id);
 end;

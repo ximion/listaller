@@ -27,14 +27,14 @@ type
 
 //** PackageKit progress type
 PK_PROGRESS_TYPE =
-(PK_PROGRESS_TYPE_PACKAGE_ID,
- PK_PROGRESS_TYPE_PERCENTAGE,
- PK_PROGRESS_TYPE_SUBPERCENTAGE,
- PK_PROGRESS_TYPE_ALLOW_CANCEL,
- PK_PROGRESS_TYPE_STATUS,
- PK_PROGRESS_TYPE_ROLE,
- PK_PROGRESS_TYPE_CALLER_ACTIVE,
- PK_PROGRESS_TYPE_INVALID);
+ (PK_PROGRESS_TYPE_PACKAGE_ID,
+  PK_PROGRESS_TYPE_PERCENTAGE,
+  PK_PROGRESS_TYPE_SUBPERCENTAGE,
+  PK_PROGRESS_TYPE_ALLOW_CANCEL,
+  PK_PROGRESS_TYPE_STATUS,
+  PK_PROGRESS_TYPE_ROLE,
+  PK_PROGRESS_TYPE_CALLER_ACTIVE,
+  PK_PROGRESS_TYPE_INVALID);
 
 TPkProgressCallback = procedure(progress: Pointer;ptype: PK_PROGRESS_TYPE;user_data: GPointer);
 TGAsyncReadyCallback = procedure(source_object: PGObject;res: Pointer;user_data: GPointer);
@@ -71,25 +71,26 @@ public
  constructor Create;
  destructor Destroy; override;
  {** Check if package is installed @param pkg Name of the package
-     @returns True if the daemon queued the transaction}
+     @returns True if action was not cancelled}
  function Resolve(pkg: String): Boolean;
- {Returns the reverse dependencies of a package
- @param pkg Name of the package}
+ {** Returns the reverse dependencies of a package
+     @param pkg Name of the package
+     @returns True if action was not cancelled}
  function GetRequires(pkg: String): Boolean;
  {** Removes a package @param pkg Name of the package
-    @returns True if the daemon queued the transaction}
+    @returns True if action was not cancelled}
  function RemovePkg(pkg: String): Boolean;
  {** Installs a package from repo @param pkg Name of the package
-    @returns True if the daemon queued the transaction}
+    @returns True if action was not cancelled}
  function InstallPkg(pkg: String): Boolean;
  {** Get the name of the package, the file belongs to (!for installed pkgs only!) @param fname Name of the file
-    @returns True if the daemon queued the transaction}
+    @returns True if action was not cancelled}
  function PkgNameFromFile(fname: String): Boolean;
  {** Installs a package from file @param fname Name of the package file
-      @returns True if the daemon queued the transaction}
+      @returns True if action was not cancelled}
  function InstallLocalPkg(fname: String): Boolean;
  {** Get the name of the package, the file belongs to (!for not installed pkgs too!) @param fname Name of the file
-      @returns True if the daemon queued the transaction}
+      @returns True if action was not cancelled}
  function FindPkgForFile(fname: String): Boolean;
  //** Grab the resulting package list
  property RsList: TStringList read result write result;
@@ -116,9 +117,7 @@ end;
 //** Needed for use with Qt4, initializes the GType
 procedure InitializeGType;
 
-const pklib = 'libpackagekit-glib.so';
 const pklib2 = 'libpackagekit-glib2.so';
-var loop: PGMainLoop; //GLib main loop to catch signals on idle
 
 //GLib-GCancellable
 function g_cancellable_new: Pointer;cdecl;external gliblib name 'g_cancellable_new';
@@ -126,7 +125,7 @@ function g_cancellable_is_cancelled(cancellable: Pointer): GBoolean;cdecl;extern
 function g_cancellable_set_error_if_cancelled(cancellable: Pointer;error: PPGError): GBoolean;cdecl;external gliblib name 'g_cancellable_set_error_if_cancelled';
 
 //Bitfield
-function pk_filter_bitfield_from_text(filters: PChar): guint64; cdecl; external pklib2 name 'pk_filter_bitfield_from_text';
+function pk_filter_bitfield_from_text(filters: PChar): GuInt64; cdecl; external pklib2 name 'pk_filter_bitfield_from_text';
 //Package obj conversion
 function pk_package_obj_to_string(obj: GPointer): PChar;cdecl; external pklib2 name 'pk_package_obj_to_string';
 function pk_package_obj_get_id(obj: GPointer): PPkPackageID;cdecl; external pklib2 name 'pk_package_obj_get_id';
@@ -148,11 +147,22 @@ procedure pk_client_get_requires_async(client: Pointer;filters: GuInt64;
                                                progress_callback: TPkProgressCallback;progress_user_data: GPointer;
                                                callback_ready: TGAsyncReadyCallback;user_data: GPointer);
                                                cdecl;external pklib2 name 'pk_client_get_requires_async';
-
-
-function pk_client_remove_packages(client: Pointer;package_ids: PPChar;allow_deps: GBoolean;autoremove: GBoolean;error: PPGerror): GBoolean;cdecl;external pklib name 'pk_client_remove_packages';
-function pk_client_search_file(client: Pointer;filters: Guint64;search: PChar;error: PPGError): GBoolean;cdecl;external pklib name 'pk_client_search_file';
-function pk_client_install_files(client: Pointer;trusted: GBoolean;files_rel:PPChar;error: PPGerror): GBoolean;cdecl;external pklib name 'pk_client_install_files';
+procedure pk_client_remove_packages_async(client: Pointer;package_ids: PPGChar;
+                                                  allow_deps: GBoolean;autoremove: GBoolean;
+                                                  cancellable: PGObject;
+                                                  progress_callback: TPkProgressCallback;progress_user_data: GPointer;
+                                                  callback_ready: TGAsyncReadyCallback;user_data: GPointer);
+                                                  cdecl;external pklib2 name 'pk_client_remove_packages_async';
+procedure pk_client_search_file_async(client: Pointer;filters: GuInt64;
+                                              search: PGChar;cancellable: PGObject;
+                                              progress_callback: TPkProgressCallback;progress_user_data: GPointer;
+                                              callback_ready: TGAsyncReadyCallback;user_data: GPointer);
+                                              cdecl;external pklib2 name 'pk_client_search_file_async';
+procedure pk_client_install_files_async(client: Pointer;only_trusted: GBoolean;
+                                                files: PPGChar;cancellable: PGObject;
+                                                progress_callback: TPkProgressCallback;progress_user_data: GPointer;
+                                                callback_ready: TGAsyncReadyCallback;user_data: GPointer);
+                                                cdecl;external pklib2 name 'pk_client_install_files_async';
 
 implementation
 
@@ -250,27 +260,26 @@ function TPackageKit.Resolve(pkg: String): Boolean;
 var filter: guint64;
     arg: PPChar;
     error: PGError=nil;
-    gcan: Pointer;
+    cancellable: Pointer;
 begin
-  Result:=true;
   done:=false;
   filter:=pk_filter_bitfield_from_text('installed');
   arg := StringToPPchar(pkg, 0);
 
-  gcan:=g_cancellable_new;
-
-  pk_client_resolve_async(pkclient,filter,arg,gcan,@OnPkProgress,self,@OnPkActionFinished,self);
-
+  cancellable:=g_cancellable_new;
+  pk_client_resolve_async(pkclient,filter,arg,cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
   g_main_loop_run(loop);
 
-  g_cancellable_set_error_if_cancelled(gcan,@error);
+  Result:=true;
+  g_cancellable_set_error_if_cancelled(cancellable,@error);
   if error<>nil then
   begin
     Result:=false;
     g_warning('failed: %s', [error^.message]);
     g_error_free(error);
+    Result:=false;
   end;
-  g_object_unref(gcan);
+  g_object_unref(cancellable);
 end;
 
 function TPackageKit.GetRequires(pkg: String): Boolean;
@@ -289,32 +298,43 @@ begin
   pk_client_get_requires_async(pkclient,filter,arg,true,cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
   g_main_loop_run(loop);
 
+  Result:=true;
   g_cancellable_set_error_if_cancelled(cancellable,@error);
   if error<>nil then
   begin
     g_warning('failed: %s', [error^.message]);
     ErrorMsg:=error^.message;
     g_error_free(error);
+    Result:=false;
   end;
+  g_object_unref(cancellable);
 end;
 
 function TPackageKit.RemovePkg(pkg: String): Boolean;
 var ast: String;
     arg: PPChar;
     error: PGError=nil;
+    cancellable: Pointer;
 begin
   done:=false;
   ast := pkg+';;;';
   arg := StringToPPchar(ast, 0);
 
-  Result:=pk_client_remove_packages(pkclient,arg,true,true,@error);
+  cancellable:=g_cancellable_new;
+  pk_client_remove_packages_async(pkclient,arg,true,false,cancellable,@OnPKProgress,self,@OnPkActionFinished,self);
+  g_main_loop_run(loop);
+
+  Result:=true;
+  g_cancellable_set_error_if_cancelled(cancellable,@error);
   if error<>nil then
   begin
     Result:=false;
     g_warning('failed: %s', [error^.message]);
     ErrorMsg:=error^.message;
     g_error_free(error);
+    Result:=false;
   end;
+  g_object_unref(cancellable);
 end;
 
 function TPackageKit.InstallPkg(pkg: String): Boolean;
@@ -332,6 +352,7 @@ begin
   pk_client_install_packages_async(pkclient,false,arg,gcan,@OnPkProgress,self,@OnPkActionFinished,self);
   g_main_loop_run(loop);
 
+  Result:=true;
   g_cancellable_set_error_if_cancelled(gcan,@error);
   if error<>nil then
   begin
@@ -339,6 +360,7 @@ begin
     g_warning('failed: %s', [error^.message]);
     ErrorMsg:=error^.message;
     g_error_free(error);
+    Result:=false;
   end;
   g_object_unref(gcan);
 end;
@@ -346,36 +368,50 @@ end;
 function TPackageKit.PkgNameFromFile(fname: String): Boolean;
 var filter: guint64;
     error: PGError=nil;
+    cancellable: Pointer;
 begin
-
   done:=false;
   filter:=pk_filter_bitfield_from_text('installed');
 
-  Result:=pk_client_search_file(pkclient,filter,PChar(fname),@error);
+  cancellable:=g_cancellable_new;
+  pk_client_search_file_async(pkclient,filter,PGChar(fname),cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
+  g_main_loop_run(loop);
+
+  Result:=true;
+  g_cancellable_set_error_if_cancelled(cancellable,@error);
   if error<>nil then
   begin
     g_warning('failed: %s', [error^.message]);
     ErrorMsg:=error^.message;
     g_error_free(error);
+    Result:=false;
   end;
+  g_object_unref(cancellable);
 end;
 
 function TPackageKit.InstallLocalPkg(fname: String): Boolean;
 var arg: PPChar;
     error: PGError=nil;
+    cancellable: Pointer;
 begin
-
   done:=false;
   arg:=StringToPPchar(fname, 0);
 
-  Result:=pk_client_install_files(pkclient,true,arg,@error);
+  cancellable:=g_cancellable_new;
+  pk_client_install_files_async(pkclient,false,arg,cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
+  g_main_loop_run(loop);
+
+  Result:=true;
+  g_cancellable_set_error_if_cancelled(cancellable,@error);
   if error<>nil then
   begin
     Result:=false;
     g_warning('failed: %s', [error^.message]);
     ErrorMsg:=error^.message;
     g_error_free(error);
+    Result:=false;
   end;
+  g_object_unref(cancellable);
 end;
 
 function TPackageKit.FindPkgForFile(fname: String): Boolean;
@@ -384,6 +420,7 @@ var filter: guint64;
     DInfo: TDistroInfo;
     p: TProcess;
     s: TStringList;
+    cancellable: Pointer;
 begin
 DInfo:=GetDistro;
 if DInfo.PackageSystem<>'DEB' then
@@ -392,13 +429,20 @@ begin
   done:=false;
   filter:=pk_filter_bitfield_from_text('none');
 
-  Result:=pk_client_search_file(pkclient,filter,PChar(fname),@error);
+  cancellable:=g_cancellable_new;
+  pk_client_search_file_async(pkclient,filter,PGChar(fname),cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
+  g_main_loop_run(loop);
+
+  Result:=true;
+  g_cancellable_set_error_if_cancelled(cancellable,@error);
   if error<>nil then
   begin
     g_warning('failed: %s', [error^.message]);
     ErrorMsg:=error^.message;
     g_error_free(error);
+    Result:=false;
   end;
+  g_object_unref(cancellable);
 end else
 begin
  // We need to use apt-file, because the PackageKit
