@@ -63,38 +63,35 @@ type
 
  function IsIPKAppInstalled(appname: String;appid: String): Boolean;
 
- //Needs to be published for appmanager.so
- function remove_ipk_installed_app(appname, appid: PChar;msgcall: TMessageEvent;poschange: TProgressCall;fastmode: Boolean): Boolean; cdecl; external libinst name 'remove_ipk_installed_app';
-
 implementation
 
 //Import library functions
-function ins_new_installation: Pointer; cdecl; external libinst name 'ins_new_installation';
-function ins_free_installation(setup: Pointer): Boolean; external libinst name 'ins_free_installation';
-function ins_init_installation(setup: Pointer;pkname: PChar): PChar; cdecl; external libinst name 'ins_init_installation';
-function ins_register_main_prog_change_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'ins_register_main_prog_change_call';
-function ins_register_extra_prog_change_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'ins_register_extra_prog_change_call';
-function ins_pkgtype(setup: Pointer): TPkgType; cdecl; external libinst name 'ins_pkgtype';
-function ins_disallows(setup: Pointer): PChar; cdecl; external libinst name 'ins_disallows';
-function ins_supported_distributions(setup: Pointer): PChar; cdecl; external libinst name 'ins_supported_distributions';
-function ins_appname(setup: Pointer): PChar; cdecl; external libinst name 'ins_appname';
-function ins_appversion(setup: Pointer): PChar; cdecl; external libinst name 'ins_appversion';
-function ins_pkgid(setup: Pointer): PChar; cdecl; external libinst name 'ins_pkgid';
-function ins_long_description(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'ins_long_description';
-function ins_wizard_image_path(setup: Pointer): PChar; cdecl; external libinst name 'ins_wizard_image_path';
-function ins_license(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'ins_license';
-function ins_profiles_list(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'ins_profiles_list';
-function ins_appicon(setup: Pointer): PChar; cdecl; external libinst name 'ins_appicon';
-function ins_desktopfiles(setup: Pointer): PChar; cdecl; external libinst name 'ins_desktopfiles';
-function ins_resolve_dependencies(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'ins_resolve_dependencies';
-function ins_app_exec_command(setup: Pointer): PChar; cdecl; external libinst name 'ins_app_exec_command';
-function ins_profile_current_filelist(setup: Pointer): PChar; cdecl; external libinst name 'ins_profile_current_filelist';
-function ins_register_message_call(setup: Pointer;call: TMessageEvent): Boolean; cdecl; external libinst name 'ins_register_message_call';
-function ins_register_step_message_call(setup: Pointer;call: TMessageEvent): Boolean; cdecl; external libinst name 'ins_register_step_message_call';
-function ins_register_user_request_call(setup: Pointer;call: TRequestEvent): Boolean; cdecl; external libinst name 'ins_register_user_request_call';
-function ins_start_installation(setup: Pointer): Boolean; cdecl; external libinst name 'ins_start_installation';
-function ins_dependencies(setup: Pointer; list: PStringList): Boolean; cdecl; external libinst name 'ins_dependencies';
-function ins_set_profileid(setup: Pointer;id: ShortInt): Boolean; cdecl;  external libinst name 'ins_set_profileid';
+function li_setup_new: Pointer; cdecl; external libinst name 'li_setup_new';
+function li_setup_free(setup: Pointer): Boolean; external libinst name 'li_setup_free';
+function li_setup_init(setup: Pointer;pkname: PChar): PChar; cdecl; external libinst name 'li_setup_init';
+function li_setup_register_main_progress_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'li_setup_register_main_progress_call';
+function li_setup_register_extra_progress_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'li_setup_register_extra_progress_call';
+function li_setup_pkgtype(setup: Pointer): TPkgType; cdecl; external libinst name 'li_setup_pkgtype';
+function li_setup_disallows(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_disallows';
+function li_setup_supported_distributions(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_supported_distributions';
+function li_setup_appname(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_appname';
+function li_setup_appversion(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_appversion';
+function li_setup_pkgid(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_pkgid';
+function li_setup_long_description(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'li_setup_long_description';
+function li_setup_wizard_image_path(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_wizard_image_path';
+function li_setup_license(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'li_setup_license';
+function li_setup_profiles_list(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'li_setup_profiles_list';
+function li_setup_appicon(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_appicon';
+function li_setup_desktopfiles(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_desktopfiles';
+function li_setup_resolve_dependencies(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'li_setup_resolve_dependencies';
+function li_setup_app_exec_command(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_app_exec_command';
+function li_setup_profile_current_filelist(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_profile_current_filelist';
+function li_setup_register_message_call(setup: Pointer;call: TMessageEvent): Boolean; cdecl; external libinst name 'li_setup_register_message_call';
+function li_setup_register_step_message_call(setup: Pointer;call: TMessageEvent): Boolean; cdecl; external libinst name 'li_setup_register_step_message_call';
+function li_setup_register_user_request_call(setup: Pointer;call: TRequestEvent): Boolean; cdecl; external libinst name 'li_setup_register_user_request_call';
+function li_setup_start(setup: Pointer): Boolean; cdecl; external libinst name 'li_setup_start';
+function li_setup_dependencies(setup: Pointer; list: PStringList): Boolean; cdecl; external libinst name 'li_setup_dependencies';
+function li_setup_set_profileid(setup: Pointer;id: ShortInt): Boolean; cdecl;  external libinst name 'li_setup_set_profileid';
 function li_is_ipk_app_installed(appname: PChar;appid: PChar): Boolean; cdecl; external libinst name 'li_is_ipk_app_installed';
 function li_set_su_mode(b: Boolean): Boolean; cdecl; external libinst name 'li_set_su_mode';
 function li_testmode(st: Boolean): Boolean; cdecl; external libinst name 'li_testmode';
@@ -104,33 +101,33 @@ function li_testmode(st: Boolean): Boolean; cdecl; external libinst name 'li_tes
 constructor TInstallPack.Create;
 begin
  inherited Create;
- ins := ins_new_installation;
+ ins := li_setup_new;
 end;
 
 destructor TInstallPack.Destroy;
 begin
- ins_free_installation(@ins);
+ li_setup_free(@ins);
  inherited Destroy;
 end;
 
 procedure TInstallPack.Initialize(pkname: String);
 begin
- ins_init_installation(@ins,PChar(pkname))
+ li_setup_init(@ins,PChar(pkname))
 end;
 
 procedure TInstallPack.SetMainChangeCall(call: TProgressCall);
 begin
- ins_register_main_prog_change_call(@ins,call)
+ li_setup_register_main_progress_call(@ins,call)
 end;
 
 procedure TInstallPack.SetExtraChangeCall(call: TProgressCall);
 begin
- ins_register_extra_prog_change_call(@ins,call)
+ li_setup_register_extra_progress_call(@ins,call)
 end;
 
 function TInstallPack.PkType: TPkgType;
 begin
- Result:=ins_pkgtype(@ins);
+ Result:=li_setup_pkgtype(@ins);
 end;
 
 procedure TInstallPack.SetTestmode(b: Boolean);
@@ -140,57 +137,57 @@ end;
 
 function TInstallPack.GetDisallows: String;
 begin
- Result:=ins_disallows(@ins);
+ Result:=li_setup_disallows(@ins);
 end;
 
 function TInstallPack.GetSupDistris: String;
 begin
- Result:=ins_supported_distributions(@ins);
+ Result:=li_setup_supported_distributions(@ins);
 end;
 
 function TInstallPack.GetAppName: String;
 begin
- Result:=ins_appname(@ins);
+ Result:=li_setup_appname(@ins);
 end;
 
 function TInstallPack.GetAppVersion: String;
 begin
- Result:=ins_appversion(@ins);
+ Result:=li_setup_appversion(@ins);
 end;
 
 function TInstallPack.GetAppID: String;
 begin
- Result:=ins_pkgid(@ins);
+ Result:=li_setup_pkgid(@ins);
 end;
 
 procedure TInstallPack.ReadLongDescription(lst: TStringList);
 begin
- ins_long_description(@ins,@lst)
+ li_setup_long_description(@ins,@lst)
 end;
 
 function TInstallPack.GetWizardImagePath: String;
 begin
- Result:=ins_wizard_image_path(@ins);
+ Result:=li_setup_wizard_image_path(@ins);
 end;
 
 procedure TInstallPack.ReadLicense(lst: TStringList);
 begin
- ins_license(@ins,@lst)
+ li_setup_license(@ins,@lst)
 end;
 
 procedure TInstallPack.ReadProfiles(lst: TStringList);
 begin
- ins_profiles_list(@ins,@lst);
+ li_setup_profiles_list(@ins,@lst);
 end;
 
 function TInstallPack.GetAppIcon: String;
 begin
- Result:=ins_appicon(@ins);
+ Result:=li_setup_appicon(@ins);
 end;
 
 function TInstallPack.GetDesktopFiles: String;
 begin
- Result:=ins_desktopfiles(@ins);
+ Result:=li_setup_desktopfiles(@ins);
 end;
 
 function TInstallPack.ResolveDependencies: Boolean;
@@ -198,48 +195,48 @@ var tmp: TStringList;
 begin
  tmp:=TstringList.Create;
  ReadDeps(tmp);
- Result:=ins_resolve_dependencies(@ins,@tmp);
+ Result:=li_setup_resolve_dependencies(@ins,@tmp);
  tmp.Free;
 end;
 
 function TInstallPack.GetAppCMD: String;
 begin
- Result:=ins_app_exec_command(@ins);
+ Result:=li_setup_app_exec_command(@ins);
 end;
 
 function TInstallPack.GetFileList: String;
 begin
- Result:=ins_profile_current_filelist(@ins);
+ Result:=li_setup_profile_current_filelist(@ins);
 end;
 
 procedure TInstallPack.SetUserRequestCall(call: TRequestEvent);
 begin
- ins_register_user_request_call(@ins,call)
+ li_setup_register_user_request_call(@ins,call)
 end;
 
 procedure TInstallPack.SetMessageCall(call: TMessageEvent);
 begin
- ins_register_message_call(@ins,call)
+ li_setup_register_message_call(@ins,call)
 end;
 
 procedure TInstallPack.SetStepMessageCall(call: TMessageEvent);
 begin
- ins_register_step_message_call(@ins,call)
+ li_setup_register_step_message_call(@ins,call)
 end;
 
 procedure TInstallPack.ReadDeps(lst: TStringList);
 begin
- ins_dependencies(@ins,@lst);
+ li_setup_dependencies(@ins,@lst);
 end;
 
 function TInstallPack.StartInstallation: Boolean;
 begin
- Result:=ins_start_installation(@ins);
+ Result:=li_setup_start(@ins);
 end;
 
 procedure TInstallPAck.SetProfileID(i: Integer);
 begin
- ins_set_profileid(@ins,i);
+ li_setup_set_profileid(@ins,i);
 end;
 
 function IsIPKAppInstalled(appname: String;appid: String): Boolean;

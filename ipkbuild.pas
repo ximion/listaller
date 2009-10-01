@@ -27,6 +27,7 @@ uses
 type
 
  { TPackInfo }
+ //** Information about the new package
   TPackInfo = record
    desc: TStringList;
    pkName, Maintainer, Author: String;

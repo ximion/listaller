@@ -25,7 +25,7 @@ uses
   Interfaces, //We need an widgetset (NoGUI) for graphic handling
   Classes, SysUtils, CustApp,
   LiCommon, Process, ipkbuild,
-  TrStrings, LiTranslator;
+  TrStrings, LiTranslator, unibuild;
 
 type
 
@@ -50,6 +50,7 @@ var
   t: TProcess;
   i: Integer;
   x: Boolean;
+  pki: TPackInfo;
 begin
   // quick check parameters
 
@@ -108,20 +109,35 @@ begin
   begin
   if HasOption('deb')or HasOption('rpm')or HasOption('dpack') then
   begin
-    if FileExists(ExtractFilePath(ExeName)+'unibuild') then
+    pki:=ReadInformation(paramstr(2));
+    pki.out:=ExtractFilePath(paramstr(2));
+    pki.path:=ExtractFilePath(paramstr(2));
+    writeLn('== Creating application ==');
+    BuildApplication(pki);
+    if HasOption('deb')or HasOption('dpack') then
     begin
-      t:=tprocess.create(nil);
-      t.Options:=[poUsePipes];
-      t.CommandLine:=ExtractFilePath(ExeName)+'unibuild '+paramstr(3);
-      sleep(10);
-      t.Free;
-     end else
-     begin
-      writeLn('Cannot execute this action.');
-      writeLn('The unibuild function was not found.');
-      writeLn('Is Listaller UniBuild installed?');
-      halt(1);
-     end;
+    if FileExists('/usr/bin/dpkg') then
+    begin
+    writeLn('== Creating DEB package ==');
+    CreateDEB(pki);
+    end else
+    begin
+     writeLn('ERROR:');
+     writeLn('Cannot build DEB package. You need to install "deb" and "dpkg" before.');
+    end;
+    end;
+    if HasOption('rpm')or HasOption('dpack') then
+    begin
+    if FileExists('/usr/bin/rpmbuild') then
+    begin
+    writeLn('== Creating RPM package ==');
+    CreateRPM(pki);
+    end else
+    begin
+     writeLn('ERROR:');
+     writeLn('Cannot build RPM package. You need to install "rpmbuild" before.');
+    end;
+    end;
   end;
 
   if HasOption('generate-button') then x:=true else x:=false;
@@ -194,10 +210,7 @@ writeLn('-u, --gen-update [IPS-File] [Repo-Path]    Create/Update update-reposit
 writeLn('-b, --build [IPS-File]                     Create DEB and RPM file from IPS');
 writeLn('  Options:');
 writeLn('    --generate-button                      Generates the "Linux-compatible" PNG button for this package');
-if FileExists(ExtractFilePath(ExeName)+'unibuild') then
-writeLn('  Enables these options:')
-else
-writeLn('  Enables these options: (! "unibuild" needed)');
+writeLn('  Enables these options:');
 writeLn('    --dpack                                Generates DEB/RPM package from IPS file');
 writeLn('    --deb                                  Create DEB package');
 writeLn('    --rpm                                  Create RPM package');

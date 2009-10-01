@@ -50,9 +50,6 @@ $LCLDir/lazbuild -B --ws=nogui lipa.lpr
 echo "Compiling package build tool..."
 $LCLDir/lazbuild -B --ws=nogui libuild.lpr
 #fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -FEbin/ -olibuild -dOpbCompat libuild.lpr
-echo "Compiling unified build tool..."
-$LCLDir/lazbuild -B --ws=nogui unibuild.lpr
-#fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -FEbin/ -ounibuild -dOpbCompat unibuild.lpr
 
 #Compiling lanuage files
 echo "Compiling language files..."

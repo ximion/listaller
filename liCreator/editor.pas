@@ -75,6 +75,7 @@ type
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
     MenuItem3: TMenuItem;
+    MenuItem4: TMenuItem;
     mnuEditReplace: TMenuItem;
     mnuEditRemoveFileProfile: TMenuItem;
     mnuEditAddFileProfile: TMenuItem;
@@ -107,8 +108,7 @@ type
     SaveDialog1: TSaveDialog;
     SaveDialog2: TSaveDialog;
     Splitter1: TSplitter;
-    SynAnySyn1: TSynAnySyn;
-    SynTeXSyn1: TSynTeXSyn;
+    IPSHighlight: TSynAnySyn;
     procedure Button1Click(Sender: TObject);
     procedure FindDialogFind(Sender: TObject);
     procedure FormActivate(Sender: TObject);

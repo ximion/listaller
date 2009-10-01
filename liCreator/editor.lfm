@@ -1,7 +1,7 @@
 object FrmEditor: TFrmEditor
-  Left = 207
+  Left = 247
   Height = 654
-  Top = 182
+  Top = 200
   Width = 922
   ActiveControl = IPSNotebook
   Caption = 'Listaller package creator'
@@ -77,7 +77,7 @@ object FrmEditor: TFrmEditor
             Option = 0
             Priority = 0
           end>
-        Highlighter = SynAnySyn1
+        Highlighter = IPSHighlight
         Keystrokes = <        
           item
             Command = ecUp
@@ -587,6 +587,28 @@ object FrmEditor: TFrmEditor
             MoveCaret = False
             Option = 0
             Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
           end>
         Lines.Strings = (
           'IPK-Standard-Version: 1.0'
@@ -608,6 +630,8 @@ object FrmEditor: TFrmEditor
           'PkName: sampleapp-10'
           'Disallow: ioNothing'
           'Profile[0]: Standard'
+          ''
+          '#comment'
         )
         Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
         ScrollBars = ssAutoBoth
@@ -835,6 +859,9 @@ object FrmEditor: TFrmEditor
         OnClick = mnuBuildCreatePackageClick
       end
     end
+    object MenuItem4: TMenuItem
+      Caption = 'Help'
+    end
   end
   object SaveDialog1: TSaveDialog
     DefaultExt = '.ipk'
@@ -877,40 +904,6 @@ object FrmEditor: TFrmEditor
     left = 520
     top = 8
   end
-  object SynTeXSyn1: TSynTeXSyn
-    DefaultFilter = 'TeX-Dateien (*.tex)|*.tex'
-    Enabled = False
-    left = 832
-    top = 8
-  end
-  object SynAnySyn1: TSynAnySyn
-    Enabled = False
-    Comments = []
-    DetectPreprocessor = False
-    IdentifierChars = ',:[]'
-    KeyAttri.FrameColor = clInfoBk
-    KeyAttri.StyleMask = [fsBold]
-    KeyWords.Strings = (
-      'ARCHITECTURES:'
-      'LICENSE:'
-      'NAME:'
-      'TYPE:'
-      'VERSION:'
-    )
-    Constants.Strings = (
-      '/<>#:'
-    )
-    Objects.Strings = (
-      'IONOTHING'
-      'IOTESTMODE'
-    )
-    Markup = True
-    Entity = True
-    DollarVariables = True
-    ActiveDot = False
-    left = 832
-    top = 40
-  end
   object FindDialog: TFindDialog
     OnFind = FindDialogFind
     left = 584
@@ -921,6 +914,58 @@ object FrmEditor: TFrmEditor
     OnFind = ReplaceDialogFind
     OnReplace = ReplaceDialogReplace
     left = 552
+    top = 8
+  end
+  object IPSHighlight: TSynAnySyn
+    Enabled = False
+    Comments = []
+    DetectPreprocessor = True
+    IdentifierChars = ':;>[]'
+    ConstantAttri.Foreground = clActiveCaption
+    KeyWords.Strings = (
+      'APPCMD'
+      'ARCHITECTURES'
+      'AUTHOR'
+      'BINARY'
+      'DEPENDENCIES'
+      'DESCRIPTION'
+      'DISALLOW'
+      'DSUPPORT'
+      'FILES'
+      '!-FILES'
+      'GROUP'
+      'ICON'
+      'INTERMINAL'
+      'LICENSE'
+      'MAINTAINER'
+      'NAME'
+      'PKNAME'
+      'PROFILE'
+      'SDESC'
+      'TYPE'
+      'VERSION'
+    )
+    Constants.Strings = (
+      'IPK-STANDARD-VERSION'
+    )
+    Objects.Strings = (
+      'CONTAINER'
+      'DLINK'
+      'INCLUDE'
+      'IOBASE'
+      'IOLOCAL'
+      'IONOTHING'
+      'IOTEST'
+      'LINSTALL'
+    )
+    NumberAttri.Foreground = clGreen
+    NumberAttri.Style = [fsBold]
+    StringDelim = sdDoubleQuote
+    Markup = False
+    Entity = False
+    DollarVariables = True
+    ActiveDot = False
+    left = 776
     top = 8
   end
 end

@@ -26,15 +26,15 @@
         <LaunchingApplication Use="True" PathPlusParams="/usr/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="9">
+    <Units Count="11">
       <Unit0>
         <Filename Value="libuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
-        <CursorPos X="22" Y="28"/>
-        <TopLine Value="178"/>
+        <CursorPos X="39" Y="131"/>
+        <TopLine Value="111"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="24"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -47,8 +47,8 @@
       <Unit2>
         <Filename Value="ipkbuild.pas"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="72" Y="15"/>
-        <TopLine Value="1"/>
+        <CursorPos X="40" Y="30"/>
+        <TopLine Value="481"/>
         <UsageCount Value="11"/>
       </Unit2>
       <Unit3>
@@ -93,8 +93,23 @@
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="unibuild.lpr"/>
+        <UnitName Value="unibuild"/>
+        <CursorPos X="20" Y="54"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="unibuild.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="unibuild"/>
+        <CursorPos X="20" Y="183"/>
+        <TopLine Value="231"/>
+        <UsageCount Value="21"/>
+      </Unit10>
     </Units>
-    <JumpHistory Count="3" HistoryIndex="2">
+    <JumpHistory Count="9" HistoryIndex="8">
       <Position1>
         <Filename Value="libuild.lpr"/>
         <Caret Line="26" Column="28" TopLine="1"/>
@@ -107,6 +122,30 @@
         <Filename Value="libuild.lpr"/>
         <Caret Line="28" Column="22" TopLine="1"/>
       </Position3>
+      <Position4>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="11" Column="33" TopLine="1"/>
+      </Position4>
+      <Position5>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="116" Column="15" TopLine="93"/>
+      </Position5>
+      <Position6>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="109" Column="4" TopLine="93"/>
+      </Position6>
+      <Position7>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="120" Column="12" TopLine="96"/>
+      </Position7>
+      <Position8>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="131" Column="11" TopLine="96"/>
+      </Position8>
+      <Position9>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="127" Column="9" TopLine="108"/>
+      </Position9>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

@@ -112,7 +112,7 @@ if Process1.ExitStatus>0 then begin
   end;
 end;
 
-function UProgressChange(pos: LongInt): Boolean;cdecl;
+procedure UProgressChange(pos: LongInt);cdecl;
 begin
  RMForm.UProgress.Position:=pos;
  Application.ProcessMessages;

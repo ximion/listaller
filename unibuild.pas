@@ -13,108 +13,32 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this program. If not, see <http://www.gnu.org/licenses/>.}
-//** Helper application that builds DEB/RPM files from one IPS source file
-program unibuild;
+//** Functions to build DEB/RPM files from one IPS source file
+unit unibuild;
 
 {$mode objfpc}{$H+}
 
+interface
+
 uses
-  {$IFDEF UNIX}
-  cthreads,
-  {$ENDIF}
-  Interfaces, //NoGUI widgetset is used
-  Classes, SysUtils, CustApp,
-  Process, ipkbuild,
-  ipkdef, TRStrings, LiTranslator;
+  Classes, SysUtils, liCommon, ipkdef, ipkbuild, Process;
 
-type
+function ReadInformation(fips: String): TPackInfo;
+procedure CreateDEB(pk: TPackInfo);
+procedure CreateRPM(pk: TPackInfo);
 
-  { TUniBuilder }
-
-  TUniBuilder = class(TCustomApplication)
-  protected
-    procedure DoRun; override;
-  public
-    constructor Create(TheOwner: TComponent); override;
-    destructor Destroy; override;
-    procedure WriteHelp; virtual;
-    function ReadInformation(fips: String): TPackInfo;
-    procedure CreateDEB(pk: TPackInfo);
-    procedure CreateRPM(pk: TPackInfo);
-  end;
-
-{ TUniBuilder }
+implementation
 
 const
    //** Size of the Linux output pipe
    READ_BYTES = 2048;
-
-procedure TUniBuilder.DoRun;
-var
-  ErrorMsg: String;
-  pki: TPackInfo;
-begin
-  // quick check parameters
-  ErrorMsg:=CheckOptions('h','help');
-  ErrorMsg:=CheckOptions('b','build');
-  if ErrorMsg<>'' then begin
-    ShowException(Exception.Create(ErrorMsg));
-    Halt;
-  end;
-
-  // parse parameters
-  if HasOption('h','help') then begin
-    WriteHelp;
-    Halt;
-  end;
-
-  if HasOption('b','build') then begin
-    pki:=ReadInformation(paramstr(2));
-    pki.out:=ExtractFilePath(paramstr(2));
-    pki.path:=ExtractFilePath(paramstr(2));
-    writeLn('== Creating application ==');
-    BuildApplication(pki);
-    writeLn('== Creating DEB package ==');
-    CreateDEB(pki);
-    writeLn('== Creating RPM package ==');
-    CreateRPM(pki);
-    Halt;
-  end;
-
-  // stop program loop
-  Terminate;
-end;
-
-//We do not use the function of common.pas to keep this tool small
-function CmdResult(cmd:String):String;
-var t:TProcess;
-s:TStringList;
-begin
- Result:='';
- t:=tprocess.create(nil);
- t.Options:=[poUsePipes, poWaitOnExit];
- t.CommandLine:=cmd;
- try
-  t.Execute;
-  s:=tstringlist.Create;
-  try
-   s.LoadFromStream(t.Output);
-   if s.Count<= 0 then Result:='err' else
-   Result:=s[0];
-  finally
-  s.free;
-  end;
- finally
- t.Free;
- end;
-end;
 
 procedure CheckFileA(fname: String);
 begin
 if not FileExists(fname) then begin writeLn('File "'+fname+'" does not exists!');writeLn('Action aborted.');halt(6);end;
 end;
 
-function TUniBuilder.ReadInformation(fips: String): TPackinfo;
+function ReadInformation(fips: String): TPackinfo;
 var tmp,script: TIPKScript;h: String;i,at: Integer;
 begin
   CheckFileA(fips);
@@ -169,7 +93,7 @@ begin
    }
 end;
 
-procedure TUniBuilder.CreateDEB(pk: TPackInfo);
+procedure CreateDEB(pk: TPackInfo);
 var control: TStringList;n: String;i: Integer;
    M: TMemoryStream;
    nm: LongInt;
@@ -256,7 +180,7 @@ p.CurrentDirectory:=pk.out;
  SysUtils.RenameFile(pk.out+'pkbuild.deb',pk.out+pk.pkName+'.deb');
 end;
 
-procedure TUniBuilder.CreateRPM(pk: TPackInfo);
+procedure CreateRPM(pk: TPackInfo);
 var spec: TStringList;n: String;i: Integer;
    M: TMemoryStream;
    nm: LongInt;
@@ -343,31 +267,5 @@ p.CommandLine:='sudo rpmbuild -ba --rmspec --buildroot="'+pk.out+'pkbuild/"'+' -
  end;
 end;
 
-constructor TUniBuilder.Create(TheOwner: TComponent);
-begin
-  inherited Create(TheOwner);
-  StopOnException:=True;
-end;
-
-destructor TUniBuilder.Destroy;
-begin
-  inherited Destroy;
-end;
-
-procedure TUniBuilder.WriteHelp;
-begin
-  writeLn('Unibuild builds RPM and DEB files from one IPK source file');
-  writeln('Usage:');
-  writeLn('-h                = Show this help');
-  writeLn('-b, --build       = Builds file');
-end;
-
-var
-  Application: TUniBuilder;
-
-begin
-  Application:=TUniBuilder.Create(nil);
-  Application.Run;
-  Application.Free;
 end.
 

@@ -95,7 +95,7 @@ end;
 
 procedure PerformCheck;
 begin
-//??? Reimplement / base on libappmanager
+//??? Reimplement / base on libInstaller
 
 {rep:=TStringList.Create;
  if not CheckApps(rep) then

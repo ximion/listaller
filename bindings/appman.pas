@@ -32,6 +32,7 @@ uses
  function register_application_call(call: TAppEvent): Boolean;cdecl;external amanlib name 'mgr_register_application_call';
  function set_su_mode(md: Boolean): Boolean;cdecl;external amanlib name 'mgr_set_su_mode';
  function remove_application(obj: TAppInfo): Boolean;cdecl;external amanlib name 'mgr_remove_application';
+ function li_remove_ipk_installed_app(appname, appid: PChar;msgcall: TMessageEvent;poschange: TProgressCall;fastmode: Boolean): Boolean; cdecl; external amanlib name 'li_remove_ipk_installed_app';
 
 implementation
 

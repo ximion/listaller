@@ -45,7 +45,7 @@
         <ComponentName Value="Form1"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="linotify"/>
-        <CursorPos X="71" Y="25"/>
+        <CursorPos X="33" Y="98"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="22"/>

@@ -21,7 +21,7 @@ interface
 
 uses
   Classes, SysUtils, SQLite3Ds, IniFiles, GetText, TRStrings, LiCommon,
-  DB, FileUtil, packagekit, Process, installer, liTypes;
+  DB, FileUtil, packagekit, Process, ipkhandle, liTypes;
 
 {** Process .desktop-file and add info to list @param fname Name of the .desktop file
       @param tp Category name}
@@ -185,10 +185,6 @@ begin
             Icon:=PChar('/usr/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') else
         if FileExists('/usr/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')) then
             Icon:=PChar('/usr/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')) else
-        if FileExists('/usr/share/icons/hicolor/48x48/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
-            Icon:=PChar('/usr/share/icons/hicolor/48x48/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') else
-        if FileExists('/usr/share/icons/hicolor/48x48/apps/'+d.ReadString('Desktop Entry','Icon','')) then
-            Icon:=PChar('/usr/share/icons/hicolor/48x48/apps/'+d.ReadString('Desktop Entry','Icon',''));
         //
         if FileExists('/usr/share/pixmaps/'+ChangeFileExt(d.ReadString('Desktop Entry','Icon',''),'')+'.xpm')
         and (ExtractFileExt(d.ReadString('Desktop Entry','Icon',''))='.xpm')then
@@ -200,16 +196,24 @@ begin
             Icon:=PChar('/usr/share/pixmaps/'+ChangeFileExt(d.ReadString('Desktop Entry','Icon',''),'')+'.png')
         else if FileExists('/usr/share/pixmaps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
                 Icon:=PChar('/usr/share/pixmaps/'+d.ReadString('Desktop Entry','Icon','')+'.png');
+        if FileExists('/usr/share/icons/hicolor/128x128/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
+            Icon:=PChar('/usr/share/icons/hicolor/128x128/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') else
+        if FileExists('/usr/share/icons/hicolor/128x128/apps/'+d.ReadString('Desktop Entry','Icon','')) then
+            Icon:=PChar('/usr/share/icons/hicolor/128x128/apps/'+d.ReadString('Desktop Entry','Icon',''));
 
         { This code is EXPERIMENTAL!}
         //Load KDE4 Icons
           //GetEnvironmentVariable('KDEDIRS')
 
-        if FileExists('/usr/share/icons/default.kde/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
-                Icon:=PChar('/usr/share/icons/default.kde/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png')
+        if FileExists('/usr/share/icons/default.kde4/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
+                Icon:=PChar('/usr/share/icons/default.kde4/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png')
         else
         if FileExists('/usr/lib/kde4/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
-                Icon:=PChar('/usr/lib/kde4/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png');
+                Icon:=PChar('/usr/lib/kde4/share/icons/hicolor/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png')
+        else
+        if FileExists('/usr/share/icons/default.kde/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png') then
+                Icon:=PChar('/usr/share/icons/default.kde/64x64/apps/'+d.ReadString('Desktop Entry','Icon','')+'.png');
+
         end else
         begin
          if (FileExists(d.ReadString('Desktop Entry','Icon','')))
@@ -475,7 +479,8 @@ begin
 if DirectoryExists(RegDir+LowerCase(name+'-'+id)) then
 begin
  //Remove IPK app
-remove_ipk_installed_app(PChar(name), PChar(id),FMsg,FProg,false);
+ UninstallIPKApp(name,id,FMsg,FProg,false);
+
 msg('Finished!',mtInfo);
 exit;
 end else
