@@ -43,8 +43,8 @@ TIPKBasic = class
   function  ReadIcon: String;
   procedure WriteSDesc(s: String);
   function  ReadSDesc: String;
-  procedure WriteGroup(g: GroupType);
-  function  ReadGroup: GroupType;
+  procedure WriteGroup(g: TGroupType);
+  function  ReadGroup: TGroupType;
   procedure WriteAuthor(s: String);
   function  ReadAuthor: String;
   procedure WriteMaintainer(s: String);
@@ -92,7 +92,7 @@ TIPKBasic = class
   property Icon: String read ReadIcon write WriteIcon;
   property LangCode: String read clang write clang;
   property SDesc: String read ReadSDesc write WriteSDesc;
-  property Group: GroupType read ReadGroup write WriteGroup;
+  property Group: TGroupType read ReadGroup write WriteGroup;
   property Author: String read ReadAuthor write WriteAuthor;
   property Maintainer: String read ReadMaintainer write WriteMaintainer;
   property Disallows: String read ReadDisallows write WriteDisallows;
@@ -421,7 +421,7 @@ begin
   Result:=GetValue(text[j]);
 end;
 
-procedure TIPKBasic.WriteGroup(g: GroupType);
+procedure TIPKBasic.WriteGroup(g: TGroupType);
 var s: String;
 begin
 case g of
@@ -445,7 +445,7 @@ else
  text.Add(s);
 end;
 
-function TIPKBasic.ReadGroup: GroupType;
+function TIPKBasic.ReadGroup: TGroupType;
 var j: Integer;s: String;
 begin
  Result:=gtUNKNOWN;
@@ -676,14 +676,20 @@ else
 end;
 
 procedure TIPKBasic.WriteDependencies(dname: String;info: TStringList);
-var i: Integer;
+var i: Integer;s: String;
 begin
  if info.Count>=0 then
  begin
   if (dname='all') or (dname='') then
-   i:=SearchKeyIndex('Dependencies',false)
-  else
-   i:=SearchKeyIndex('Dependencies['+dname+']',false);
+  begin
+   s:='Dependencies';
+   i:=SearchKeyIndex(s,false);
+  end else
+  begin
+   s:='Dependencies['+dname+']';
+   i:=SearchKeyIndex(s,false);
+  end;
+
   if i>0 then
   begin
 
@@ -692,7 +698,7 @@ begin
    text.Delete(i);
   end;
 
- text.Add('Dependencies: '+info[0]);
+ text.Add(s+': '+info[0]);
  for i:=1 to info.Count-1 do
   text.Add(' '+info[i]);
 

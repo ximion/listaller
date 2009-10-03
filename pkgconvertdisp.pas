@@ -98,7 +98,7 @@ if Process1.ExitStatus>0 then begin
   if Application.MessageBox(PAnsiChar(rsConvDone),PChar(rsClose+'?'),MB_YESNO)=IDYES then begin
   close;
   Application.ProcessMessages;
-  load_applications(gtALL);
+  li_mgr_load_apps();
   end;end;
 end;
 

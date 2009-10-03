@@ -124,7 +124,7 @@ writeLn(s);
 RMForm.Memo1.Lines.add(s);
 end;
 
-function OnRmMessage(msg: String;imp: TMType): Boolean;cdecl;
+procedure OnRmMessage(msg: String;imp: TMType);cdecl;
 begin
  if imp=mtInfo then LogAdd(msg);
  if imp=mtWarning then ShowMessage(msg);
@@ -140,10 +140,10 @@ if MnFrm.uApp.uID<>'' then
 begin
 if Application.MessageBox(PChar(StringReplace(rsRealUninstQ,'%a',MnFrm.uApp.Name,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then
 begin
- register_message_call(@OnRmMessage);
- register_progress_call(@UProgressChange);
-  remove_application(MnFrm.uApp);
- register_message_call(@manager.OnMessage);
+ li_mgr_register_msg_call(@OnRmMessage);
+ li_mgr_register_progress_call(@UProgressChange);
+  li_remove_app(MnFrm.uApp);
+ li_mgr_register_msg_call(@manager.OnMessage);
 end;
 end else
 begin
@@ -151,7 +151,7 @@ begin
  close;
  exit;
 end;
- load_applications(gtALL);
+ li_mgr_load_apps();
 end;
 end;
 

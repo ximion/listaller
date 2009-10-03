@@ -24,11 +24,11 @@
  * ***** END LICENSE BLOCK ***** *)
 
 { ******************************************************* }
-{* ABBREVIA: ABUnzper.pas 3.05                           *}
+{ * ABBREVIA: ABUnzper.pas 3.05                         * }
 { ******************************************************* }
-//** ABBREVIA: Non-visual Component with UnZip support
+{ * ABBREVIA: Non-visual Component with UnZip support   * }
 { ******************************************************* }
-
+//** Package unzipper
 unit AbUnzper;
 
 {$I AbDefine.inc}

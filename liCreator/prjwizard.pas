@@ -23,9 +23,9 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Buttons, ExtCtrls, ComCtrls, EditBtn, Grids, popupnotifier, FileCtrl,
-  FileUtil, MD5, Menus, XMLRead, XMLWrite, DOM, editor, LCLType, CheckLst,
-  LiCommon, SynEdit, LiTypes, IconLoader;
+  Buttons, ExtCtrls, ComCtrls, EditBtn, Grids, popupnotifier, FileCtrl, FileUtil,
+  MD5, Menus, editor, LCLType, CheckLst, LiCommon, SynEdit, LiTypes, IconLoader,
+  ipkdef;
 
 type
 
@@ -59,7 +59,7 @@ type
     Button6: TButton;
     cgrIMethods: TCheckGroup;
     cbUseAppCMD: TCheckBox;
-    ChkAddUDeps: TCheckBox;
+    ChkAddDDeps: TCheckBox;
     DependencyBox: TCheckListBox;
     chkShowInTerminal: TCheckBox;
     ComboBox1: TComboBox;
@@ -173,7 +173,7 @@ type
     procedure Button6Click(Sender: TObject);
     procedure cbUseAppCMDChange(Sender: TObject);
     procedure cgrIMethodsItemClick(Sender: TObject; Index: integer);
-    procedure ChkAddUDepsChange(Sender: TObject);
+    procedure ChkAddDDepsChange(Sender: TObject);
     procedure cmbProfilesChange(Sender: TObject);
     procedure cmbProfilesCloseUp(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
@@ -208,7 +208,7 @@ type
     procedure tvShortDescriptionsKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
   private
-    function CreateScript(aType: TPkgType): TXMLDocument;
+    function CreateScript(aType: TPkgType): TIPKScript;
     procedure LoadFilesFromProfile(Profile: TList);
     procedure SaveFilesToProfile(Profile: TList);
     procedure ClearProfile(Profile: TList);
@@ -266,73 +266,37 @@ begin
 end;
 end;
 
-function TfrmProjectWizard.CreateScript(aType: TPkgType): TXMLDocument;
+function TfrmProjectWizard.CreateScript(aType: TPkgType): TIPKScript;
 var
   s: String;
   i,j: Integer;
-  xdoc: TXMLDocument;
-  mn, hn, cnt, xn: TDOMNode;
-const
-  strBool: array[0..1] of String = ('false','true');
+  rs: TIPKScript;
+  tmp: TStringList;
 begin
-  xdoc := TXMLDocument.create;
-  Result := xdoc;
-  mn:=xdoc.CreateElement('package');
-  TDOMElement(mn).SetAttribute('version','0.8');
-  case aType of
-    ptLinstall:  TDOMElement(mn).SetAttribute('type','linstall');
-    ptDLink:     TDOMElement(mn).SetAttribute('type','dlink');
-    ptContainer: TDOMElement(mn).SetAttribute('type','container');
-  end;
-  XDoc.AppendChild(mn);
+  rs:=TIPKScript.Create;
+  Result := rs;
+
+  rs.SType:=aType;
 
   if (aType=ptContainer) then
   begin
-    hn := xdoc.CreateElement('application');
-    mn.Appendchild(hn);
-
-    hn:=xdoc.CreateElement('package');
-    cnt:=xdoc.CreateTextNode(FileNameEdit4.FileName);
-    hn.Appendchild(cnt);
-    mn.ChildNodes.Item[0].AppendChild(hn);
-
-    hn:=xdoc.CreateElement('InTerminal');
-    if chkShowInTerminal.Checked then
-      cnt:=xdoc.CreateTextNode(strBool[1])
-    else
-      cnt:=xdoc.CreateTextNode(strBool[0]);
-    hn.Appendchild(cnt);
-    mn.ChildNodes.Item[0].AppendChild(hn);
-
+    rs.Binary:=FileNameEdit4.FileName;
+    rs.InTerminal:=chkShowInTerminal.Checked;
     exit;
   end;
 
-  hn:=xdoc.CreateElement('architecture');
-  cnt:=xdoc.CreateTextNode(Edit3.Text);
-  hn.Appendchild(cnt);
-  mn.AppendChild(hn);
+  rs.Architectures:=Edit3.Text;
 
-  hn:=xdoc.CreateElement('application');
-  TDOMElement(hn).SetAttribute('name', Edit1.Text);
-  mn.AppendChild(hn);
+  rs.AppName:=Edit1.Text;
 
-  hn:=xdoc.CreateElement('version');
-  cnt:=xdoc.CreateTextNode(Edit2.Text);
-  hn.Appendchild(cnt);
-  mn.ChildNodes.Item[1].AppendChild(hn);
+  rs.AppVersion:=Edit2.Text;
 
-  if (aType=ptLinstall)and(FileNameEdit1.FileName<>'') then // not used in dlink- and container-packages
+  if (aType=ptLinstall)and(FileNameEdit1.FileName<>'') then //License not used in dlink- and container-packages
   begin
-    hn:=xdoc.CreateElement('license');
-    cnt:=xdoc.CreateTextNode(FileNameEdit1.FileName);
-    hn.Appendchild(cnt);
-    mn.ChildNodes.Item[1].AppendChild(hn);
+    rs.WriteAppLicense(FileNameEdit1.FileName);
   end;
 
-  hn:=xdoc.CreateElement('description');
-  cnt:=xdoc.CreateTextNode(FileNameEdit2.FileName);
-  hn.Appendchild(cnt);
-  mn.ChildNodes.Item[1].AppendChild(hn);
+  rs.WriteAppDescription(FileNameEdit2.FileName);
 
   s:='';
   for i:=0 to lbDistributions.Items.Count-1 do
@@ -340,129 +304,119 @@ begin
     if s='' then
       s:=lbDistributions.Items[i]
     else
-      s:=s+','+lbDistributions.Items[i];
+      s:=s+';'+lbDistributions.Items[i];
   end;
 
-  hn:=xdoc.CreateElement('dsupport');
-  cnt:=xdoc.CreateTextNode(s);
-  hn.Appendchild(cnt);
-  mn.ChildNodes.Item[1].AppendChild(hn);
+  rs.DSupport:=s;
 
-  hn:=xdoc.CreateElement('author');
-  cnt:=xdoc.CreateTextNode(Edit10.Text);
-  hn.Appendchild(cnt);
-  mn.ChildNodes.Item[1].AppendChild(hn);
+  rs.Author:=Edit10.Text;
 
   if FileExists(FileNameEdit5.FileName) then
   begin
-    hn:=xdoc.CreateElement('icon');
-    cnt:=xdoc.CreateTextNode(FileNameEdit5.FileName);
-    hn.Appendchild(cnt);
-    mn.ChildNodes.Item[1].AppendChild(hn);
+    rs.Icon:=FileNameEdit5.FileName;
   end;
 
- //Needed for testmode
+ //Essential for testmode
   if cbUseAppCMD.Checked then
   begin
-    hn:=xdoc.CreateElement('appcmd');
-    cnt:=xdoc.CreateTextNode(edtExec.Text);
-    hn.Appendchild(cnt);
-    mn.ChildNodes.Item[1].AppendChild(hn);
+    rs.AppCMD:=edtExec.Text;
   end;
 
-  hn:=xdoc.CreateElement('sdesc');
-  TDOMElement(hn).SetAttribute('std', tvShortDescriptions.Items[0].GetFirstChild.Text);
-  mn.ChildNodes.Item[1].AppendChild(hn);
+  //Set short descriptions
+  // LangCode contains the active language variable
+  rs.LangCode:='';
+  rs.SDesc:=tvShortDescriptions.Items[0].GetFirstChild.Text;
   for i:=1 to tvShortDescriptions.Items.Count-1 do
     if i mod 2 = 0 then
     begin
-      xn:=xdoc.CreateElement(tvShortDescriptions.Items[i].Text);
-      cnt:=xdoc.CreateTextNode(tvShortDescriptions.Items[i].GetFirstChild.Text);
-      xn.Appendchild(cnt);
-      hn.AppendChild(xn);
+      rs.LangCode:=tvShortDescriptions.Items[i].Text;
+      rs.SDesc:=tvShortDescriptions.Items[i].GetFirstChild.Text;
     end;
+  rs.LangCode:='';
 
-  hn:=xdoc.CreateElement('group');
-  if ComboBox1.ItemIndex=9 then
-    cnt:=xdoc.CreateTextNode('Other')
-  else
-    cnt:=xdoc.CreateTextNode(ComboBox1.Items[ComboBox1.ItemIndex]);
-  hn.Appendchild(cnt);
-  mn.ChildNodes.Item[1].AppendChild(hn);
 
+
+  //Add the application group type
+  s:=LowerCase(ComboBox1.Items[ComboBox1.ItemIndex]);
+   if s='all' then rs.Group:=gtALL;
+   if s='education' then rs.Group:=gtEDUCATION;
+   if s='office' then rs.Group:=gtOFFICE;
+   if s='development' then rs.Group:=gtDEVELOPMENT;
+   if s='graphic' then rs.Group:=gtGRAPHIC;
+   if s='network' then rs.Group:=gtNETWORK;
+   if s='games' then rs.Group:=gtGAMES;
+   if s='system' then rs.Group:=gtSYSTEM;
+   if s='multimedia' then rs.Group:=gtMULTIMEDIA;
+   if s='additional' then rs.Group:=gtADDITIONAL;
+   if s='other' then rs.Group:=gtOTHER;
+
+  //Set which desktopfiles are used
   if (aType=ptDLink) then
   begin
-    hn:=xdoc.CreateElement('desktopfiles');
-    cnt:=xdoc.CreateTextNode(Edit12.Text);
-    hn.Appendchild(cnt);
-    mn.ChildNodes.Item[1].AppendChild(hn);
+    rs.Desktopfiles:=Edit12.Text;
   end;
 
-  hn:=xdoc.CreateElement('idName');
-  cnt:=xdoc.CreateTextNode(Edit11.Text);
-  hn.Appendchild(cnt);
-  mn.AppendChild(hn);
+  //Set the package id name
+  rs.PkName:=Edit11.Text;
 
-  hn:=xdoc.CreateElement('disallow');
+  //Set disallowed actions
   if not cgrIMethods.Checked[0] then s:=s+';ioBase';
   if not cgrIMethods.Checked[1] then s:=s+';ioLocal';
   if not cgrIMethods.Checked[2] then s:=s+';ioTest';
   s:=copy(s,2,length(s));
-  cnt:=xdoc.CreateTextNode(s);
-  hn.Appendchild(cnt);
-  mn.AppendChild(hn);
+  rs.Disallows:=s;
   s:='';
 
-  if aType=ptLinstall then      // not used in dlink-packages
+  //Write all profiles the package uses
+  if aType=ptLinstall then      //Profiles are not used in dlink-packages
   begin
+   tmp:= TStringList.Create;
     for i:=0 to GetProfileCount-1 do
     begin
-      hn:=xdoc.CreateElement('profile' + IntToStr(i+1));
-      TDOMElement(hn).SetAttribute('id', IntToStr(i));
-      cnt:=xdoc.CreateTextNode(GetProfileName(i));
-      hn.Appendchild(cnt);
-      mn.AppendChild(hn);
+      tmp.Add(GetProfileName(i));
     end;
+    rs.WriteProfiles(tmp);
+   tmp.Free;
   end;
 
-  //Dependencies
-  hn:=xdoc.CreateElement('dependencies');
-  j:=1;
+  //Write dependency list
+
+   //First write universal dependencies
+  tmp:=TStringList.Create;
+  if DependencyBox.Items.Count>0 then
+  begin
   for i:=0 to DependencyBox.Items.Count-1 do
    if DependencyBox.Checked[i] then
   begin
-   xn:=xdoc.CreateElement('d'+IntToStr(j));
-   cnt:=xdoc.CreateTextNode(DependencyBox.Items[i]);
-   xn.Appendchild(cnt);
-   hn.AppendChild(xn);
-   mn.AppendChild(hn);
-   Inc(j);
+   tmp.Add(DependencyBox.Items[i]);
+  end;
+   rs.WriteDependencies('all',tmp);
+  tmp.Free;
   end;
 
-  if ChkAddUDeps.Checked then
-  begin
 
+  if ChkAddDDeps.Checked then
+  begin
+  tmp:=TstringList.Create;
   for i:=0 to tvDependencies.Items.Count-1 do
   begin
     if tvDependencies.Items[i].HasChildren then
     begin
-      if tvDependencies.Items[i].Text='DEB-System' then
-        hn:=xdoc.CreateElement('DepDEB')
-      else if tvDependencies.Items[i].Text='RPM-System' then
-         hn:=xdoc.CreateElement('DepRPM')
-      else
-        hn:=xdoc.CreateElement('Dep'+tvDependencies.Items[i].Text);;
       for j:=0 to tvDependencies.Items[i].Count-1 do
       begin
-        xn:=xdoc.CreateElement('d'+IntToStr(j+1));
-        cnt:=xdoc.CreateTextNode(tvDependencies.Items[i].Items[j].Text);
-        xn.Appendchild(cnt);
-        hn.AppendChild(xn);
+        tmp.Add(tvDependencies.Items[i].Items[j].Text);
       end;
-      mn.AppendChild(hn);
+
+    if tvDependencies.Items[i].Text='DEB-System' then
+        rs.WriteDependencies('DEB',tmp)
+      else if tvDependencies.Items[i].Text='RPM-System' then
+         rs.WriteDependencies('RPM',tmp)
+      else
+        rs.WriteDependencies(tvDependencies.Items[i].Text,tmp);
+
     end;
   end;
-
+   tmp.Free;
   end; //END CB
 
 end;
@@ -475,8 +429,7 @@ var
   TargetEdit: TSynEdit;
   s: String;
   sl: TStringList;
-//XML
-  xdoc: TXMLDocument;
+  ipks: TIPKScript;
 begin
   if CreaType=ptLinstall then
   begin
@@ -508,12 +461,13 @@ begin
       end;
 
       //Script
-      xdoc := CreateScript(ptLinstall);
-   
-      writeXMLFile(xDoc,'/tmp/litmp.xml');
-      XDoc.Free;
-      frmEditor.MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.xml');
-      DeleteFile('/tmp/litmp.xml');
+      ipks := CreateScript(ptLinstall);
+
+      ipks.SaveToFile('/tmp/litmp.ips');
+      frmEditor.MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.ips');
+      DeleteFile('/tmp/litmp.ips');
+
+      ipks.Free;
       // frmEditor.Page2.TabVisible:=true;
     end;
     Close;
@@ -746,11 +700,11 @@ end; //End of Normal
         with frmEditor do
           begin
           //Script
-          xdoc := CreateScript(ptDLink);
-          writeXMLFile(xDoc,'/tmp/litmp.xml');
-          XDoc.Free;
-          MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.xml');
-          DeleteFile('/tmp/litmp.xml');
+          ipks := CreateScript(ptDLink);
+          ipks.SaveToFile('/tmp/litmp.ips');
+          ipks.Free;
+          MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.ips');
+          DeleteFile('/tmp/litmp.ips');
           Page2.TabVisible:=false;
         end;
         Close;
@@ -761,9 +715,9 @@ end; //End of Normal
 
   if CreaType=ptContainer then
   begin
-    xdoc := CreateScript(ptContainer);
-    writeXMLFile(xDoc,'/tmp/litmp.xml');
-    XDoc.Free;
+    ipks := CreateScript(ptContainer);
+    ipks.SaveTofile('/tmp/litmp.xml');
+    ipks.Free;
     frmEditor.MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.xml');
     DeleteFile('/tmp/litmp.xml');
     // frmEditor.Page2.TabVisible:=false;
@@ -861,7 +815,7 @@ begin
   begin
     if not (aNode.Parent=nil) then aNode := aNode.Parent;
     if (StringReplace(Edit8.Text,' ','',[rfReplaceAll])<>'') and
-         ((pos('<',Edit8.Text)>0) or
+         ((pos('(',Edit8.Text)>0) or
          ((pos('http://',Edit8.Text)<=0)and(pos('ftp://',Edit8.Text)<=0))) then
       tvDependencies.Items.AddChild(aNode,Edit8.Text)
     else
@@ -980,7 +934,7 @@ begin
 
 end;
 
-procedure TfrmProjectWizard.ChkAddUDepsChange(Sender: TObject);
+procedure TfrmProjectWizard.ChkAddDDepsChange(Sender: TObject);
 begin
   if (Sender as TCheckBox).Enabled then
   begin
@@ -1045,7 +999,7 @@ end;
 
 procedure TfrmProjectWizard.FormCreate(Sender: TObject);
 begin
-  LoadStockPixmap(STOCK_PROJECT_OPEN,ICON_SIZE_MENU,SpeedButton4.Glyph);
+  LoadStockPixmap(STOCK_PROJECT_OPEN,ICON_SIZE_LARGE_TOOLBAR,SpeedButton4.Glyph);
 end;
 
 procedure TfrmProjectWizard.FormShow(Sender: TObject);

@@ -368,14 +368,14 @@ end;
 
 end;
 
-function MessageCall(msg: String;imp: TMType): Boolean; cdecl;
+procedure MessageCall(msg: String;imp: TMType);cdecl;
 begin
  writeLn(msg);
  IWizFrm.InfoMemo.Lines.Add(msg); //Needed for Log-messages, even if the control is invisible
  Application.ProcessMessages;
 end;
 
-function StepMessage(msg: String;imp: TMType): Boolean; cdecl;
+procedure StepMessage(msg: String;imp: TMType);cdecl;
 begin
  IWizFrm.Label9.Caption:=msg;
 end;

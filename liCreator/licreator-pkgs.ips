@@ -1,39 +1,30 @@
-IPK-Source.Version: 0.8
-<?xml version="1.0"?>
-<package type="linstall" version="0.8">
-  <architecture>i386</architecture>
-  <application name="Listaller Creator">
-    <version>0.2b</version>
-    <license>../COPYING</license>
-    <description>./desc.txt</description>
-    <dsupport>Ubuntu,openSuSE</dsupport>
-    <author>Listaller Project</author>
-    <icon>../graphics/listaller_creator.png</icon>
-    <sdesc std="Application that helps creating IPK packages">
-      <de>Anwendung, die das Erstellen von IPK Paketen vereinfacht</de>
-    </sdesc>
-    <group>Development</group>
-    <appcmd>$INST/liCreator/licreator</appcmd>
-  </application>
- <maintainer>Matthias Klumpp [matthias@nlinux.org]</maintainer>
- <pkname>listaller-creator</pkname>
- <build>./make.sh;../install-creator.sh DESTDIR=%IDIR</build>
- <disallow>ioNothing</disallow>
- <profile1 id="0">Standard</profile1>
+IPK-Standard-Version: 1.0
 
-  <DepDEB>
-    <d1>listaller</d1>
-  </DepDEB>
-  <DepRPM>
-    <d1>listaller</d1>
-  </DepRPM>
-  <DepUbuntu>
-    <d1>http://dfn.dl.sourceforge.net/sourceforge/listaller/listaller_0.1.16a_i386.deb &lt;listaller&gt;</d1>
-  </DepUbuntu>
-  <DepopenSuSE>
-    <d1>http://dfn.dl.sourceforge.net/sourceforge/listaller/listaller_0.1.16a_i386.rpm &lt;listaller&gt;</d1>
-  </DepopenSuSE>
-</package>
+Type: linstall
+Name: Listaller Creator
+Version: 0.3.40
+License: include:"../COPYING"
+Description: include:"./desc.txt"
+DSupport: Ubuntu,openSuSE
+Author: Listaller Project
+Icon: ../graphics/listaller_creator.png
+SDesc: Application that helps creating IPK packages
+SDesc[de]: Anwendung, die das Erstellen von IPK Paketen vereinfacht
+Group: Development
+AppCMD: $INST/liCreator/licreator
+Maintainer: Matthias Klumpp (matthias@nlinux.org)
+PkName: listaller-creator
+Build: ./make.sh
+ ../install-creator.sh DESTDIR=%IDIR
+Disallow: ioNothing
+Profile[0]: Standard
+Dependencies[DEB]:
+ listaller-core
+ listaller-tools
+Dependencies[RPM]:
+ listaller-core
+ listaller-tools
+
 !-Files #0
 >$INST/liCreator
 ../bin/licreator

@@ -24,11 +24,11 @@
  * ***** END LICENSE BLOCK ***** *)
 
 { ******************************************************* }
-{* ABBREVIA: AbZipper.pas 3.05                           *}
+{ * ABBREVIA: AbZipper.pas 3.05                         * }
 { ******************************************************* }
-{** ABBREVIA: Non-visual Component with Zip support       }
+{ * ABBREVIA: Non-visual Component with Zip support     * }
 { ******************************************************* }
-
+//** The package zipper
 unit AbZipper;
 
 {$I AbDefine.inc}

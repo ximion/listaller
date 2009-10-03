@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="3"/>
-      <CurrentBuildNr Value="1144"/>
+      <CurrentBuildNr Value="1156"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -65,8 +65,8 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="8" Y="27"/>
-        <TopLine Value="4"/>
+        <CursorPos X="48" Y="378"/>
+        <TopLine Value="358"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -864,8 +864,8 @@
       <Unit115>
         <Filename Value="bindings/installer.pas"/>
         <UnitName Value="installer"/>
-        <CursorPos X="1" Y="65"/>
-        <TopLine Value="1"/>
+        <CursorPos X="61" Y="220"/>
+        <TopLine Value="200"/>
         <UsageCount Value="10"/>
       </Unit115>
       <Unit116>
@@ -896,7 +896,7 @@
         <UsageCount Value="10"/>
       </Unit119>
     </Units>
-    <JumpHistory Count="13" HistoryIndex="12">
+    <JumpHistory Count="17" HistoryIndex="16">
       <Position1>
         <Filename Value="igobase.pas"/>
         <Caret Line="220" Column="14" TopLine="200"/>
@@ -949,6 +949,22 @@
         <Filename Value="igobase.pas"/>
         <Caret Line="27" Column="8" TopLine="4"/>
       </Position13>
+      <Position14>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="27" Column="8" TopLine="4"/>
+      </Position14>
+      <Position15>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="447" Column="29" TopLine="427"/>
+      </Position15>
+      <Position16>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="371" Column="48" TopLine="351"/>
+      </Position16>
+      <Position17>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="722" Column="34" TopLine="702"/>
+      </Position17>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

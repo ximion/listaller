@@ -2,7 +2,7 @@
 cd ./docs/
 ../tools/pasdoc --write-uses-list --staronly --format latex \
 ../listallgo.lpr ../lipa.lpr ../listallmgr.lpr  ../liupdate.lpr \
-../libuild.lpr ../buildall.pas ../unibuild.lpr ../litray.lpr \
+../libuild.lpr ../unibuild.pas ../litray.lpr \
 ../liCreator/licreator.lpr ../liCreator/editor.pas \
 ../liCreator/prjwizard.pas ../igobase.pas ../distri.pas ../dgunit.pas \
 ../litranslator.pas ../libs/ipkhandle.pas ../libs/management.pas \

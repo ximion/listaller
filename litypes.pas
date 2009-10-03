@@ -23,6 +23,9 @@ interface
 uses
   Classes, SysUtils;
 
+//** Name of the Listaller library
+ const libinst = 'libinstaller.so';
+
 type
 
  //** Pointer to TStringList
@@ -36,26 +39,16 @@ type
  TMType    = (mtInfo,mtWarning);
 
  //** Callback for user request
- TRequestEvent = function(mtype: TRqType;msg: PChar): TRqResult;cdecl;
+ TRequestCall = function(mtype: TRqType;msg: PChar): TRqResult;cdecl;
  //** Callback that submits a notification
- TMessageEvent = function(msg: String;imp: TMType): Boolean;cdecl;
+ TMessageCall = procedure(msg: String;imp: TMType);cdecl;
  //** Called if a progress was changed
  TProgressCall = procedure(pos: Integer);cdecl;
  //** Called if progress was changed; only for internal use
  TProgressEvent = procedure(pos: Integer) of object;
 
- //** Container for information about apps
- TAppInfo = record
-  Name: PChar;
-  ShortDesc: PChar;
-  Version: PChar;
-  Author: PChar;
-  Icon: PChar;
-  UId: PChar;
- end;
-
  //** Application groups
- GroupType = (gtALL,
+ TGroupType = (gtALL,
               gtEDUCATION,
               gtOFFICE,
               gtDEVELOPMENT,
@@ -67,6 +60,17 @@ type
               gtADDITIONAL,
               gtOTHER,
               gtUNKNOWN);
+
+ //** Container for information about apps
+ TAppInfo = record
+  Name: PChar;
+  ShortDesc: PChar;
+  Version: PChar;
+  Author: PChar;
+  Icon: PChar;
+  UId: PChar;
+  Group: TGroupType;
+ end;
 
  //** Event to catch thrown application records
  TAppEvent = function(name: PChar;obj: TAppInfo): Boolean;cdecl;

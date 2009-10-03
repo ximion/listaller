@@ -609,6 +609,50 @@ object FrmEditor: TFrmEditor
             MoveCaret = False
             Option = 0
             Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
           end>
         Lines.Strings = (
           'IPK-Standard-Version: 1.0'
@@ -630,8 +674,6 @@ object FrmEditor: TFrmEditor
           'PkName: sampleapp-10'
           'Disallow: ioNothing'
           'Profile[0]: Standard'
-          ''
-          '#comment'
         )
         Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
         ScrollBars = ssAutoBoth
@@ -920,7 +962,7 @@ object FrmEditor: TFrmEditor
     Enabled = False
     Comments = []
     DetectPreprocessor = True
-    IdentifierChars = ':;>[]'
+    IdentifierChars = '!"#$%&''()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹Œ‘’“”•–—˜™š›œŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÂÃ'
     ConstantAttri.Foreground = clActiveCaption
     KeyWords.Strings = (
       'APPCMD'
@@ -962,10 +1004,22 @@ object FrmEditor: TFrmEditor
     NumberAttri.Style = [fsBold]
     StringDelim = sdDoubleQuote
     Markup = False
-    Entity = False
+    Entity = True
     DollarVariables = True
     ActiveDot = False
     left = 776
+    top = 8
+  end
+  object FileHighlight: TSynAnySyn
+    Enabled = False
+    Comments = []
+    DetectPreprocessor = False
+    IdentifierChars = '!"#$%&''()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹Œ‘’“”•–—˜™š›œŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÂÃ'
+    Markup = False
+    Entity = False
+    DollarVariables = True
+    ActiveDot = False
+    left = 816
     top = 8
   end
 end

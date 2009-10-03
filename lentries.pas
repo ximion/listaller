@@ -22,19 +22,9 @@ interface
 
 uses
  Classes, SysUtils, StdCtrls, ExtCtrls, Buttons, Controls, iconloader,
- trstrings, LiCommon;
+ trstrings, LiCommon, liTypes;
 
 type
-//** Container for information about apps
-TAppInfo = record
- Name: PChar;
- ShortDesc: PChar;
- Version: PChar;
- Author: PChar;
- Icon: PChar;
- UId: PChar;
-end;
-
 //** One entry of Listaller's visual software lists
 TListEntry = class(TPanel) //Helper class / a software entry
 protected

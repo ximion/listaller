@@ -35,9 +35,9 @@ type
   procedure Initialize(pkname: String);
   procedure SetMainChangeCall(call: TProgressCall);
   procedure SetExtraChangeCall(call: TProgressCall);
-  procedure SetUserRequestCall(call: TRequestEvent);
-  procedure SetMessageCall(call: TMessageEvent);
-  procedure SetStepMessageCall(call: TMessageEvent);
+  procedure SetUserRequestCall(call: TRequestCall);
+  procedure SetMessageCall(call: TMessageCall);
+  procedure SetStepMessageCall(call: TMessageCall);
   function  PkType: TPkgType;
   procedure SetTestmode(b: Boolean);
   function  GetDisallows: String;
@@ -58,8 +58,6 @@ type
   function  StartInstallation: Boolean;
   procedure SetProfileID(i: Integer);
  end;
-
- const libinst = 'libinstaller.so';
 
  function IsIPKAppInstalled(appname: String;appid: String): Boolean;
 
@@ -86,9 +84,9 @@ function li_setup_desktopfiles(setup: Pointer): PChar; cdecl; external libinst n
 function li_setup_resolve_dependencies(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'li_setup_resolve_dependencies';
 function li_setup_app_exec_command(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_app_exec_command';
 function li_setup_profile_current_filelist(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_profile_current_filelist';
-function li_setup_register_message_call(setup: Pointer;call: TMessageEvent): Boolean; cdecl; external libinst name 'li_setup_register_message_call';
-function li_setup_register_step_message_call(setup: Pointer;call: TMessageEvent): Boolean; cdecl; external libinst name 'li_setup_register_step_message_call';
-function li_setup_register_user_request_call(setup: Pointer;call: TRequestEvent): Boolean; cdecl; external libinst name 'li_setup_register_user_request_call';
+function li_setup_register_message_call(setup: Pointer;call: TMessageCall): Boolean; cdecl; external libinst name 'li_setup_register_message_call';
+function li_setup_register_step_message_call(setup: Pointer;call: TMessageCall): Boolean; cdecl; external libinst name 'li_setup_register_step_message_call';
+function li_setup_register_user_request_call(setup: Pointer;call: TRequestCall): Boolean; cdecl; external libinst name 'li_setup_register_user_request_call';
 function li_setup_start(setup: Pointer): Boolean; cdecl; external libinst name 'li_setup_start';
 function li_setup_dependencies(setup: Pointer; list: PStringList): Boolean; cdecl; external libinst name 'li_setup_dependencies';
 function li_setup_set_profileid(setup: Pointer;id: ShortInt): Boolean; cdecl;  external libinst name 'li_setup_set_profileid';
@@ -209,17 +207,17 @@ begin
  Result:=li_setup_profile_current_filelist(@ins);
 end;
 
-procedure TInstallPack.SetUserRequestCall(call: TRequestEvent);
+procedure TInstallPack.SetUserRequestCall(call: TRequestCall);
 begin
  li_setup_register_user_request_call(@ins,call)
 end;
 
-procedure TInstallPack.SetMessageCall(call: TMessageEvent);
+procedure TInstallPack.SetMessageCall(call: TMessageCall);
 begin
  li_setup_register_message_call(@ins,call)
 end;
 
-procedure TInstallPack.SetStepMessageCall(call: TMessageEvent);
+procedure TInstallPack.SetStepMessageCall(call: TMessageCall);
 begin
  li_setup_register_step_message_call(@ins,call)
 end;

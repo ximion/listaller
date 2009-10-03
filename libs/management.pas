@@ -13,6 +13,7 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this library. If not, see <http://www.gnu.org/licenses/>.}
+//** Functions to manage applications (install/uninstall, dependency-check)
 unit management;
 
 {$mode objfpc}{$H+}
@@ -28,7 +29,7 @@ uses
 //function ProcessDesktopFile(fname: String; tp: String): Boolean;
 
 //** Load software list entries
-procedure LoadEntries(group: GroupType);
+procedure LoadEntries;
 //** Method that removes MOJO/LOKI installed applications @param dsk Path to the .desktop file of the application
 function UninstallMojo(dsk: String): Boolean;
 //** Removes an application
@@ -41,8 +42,8 @@ procedure UninstallApp(obj: TAppInfo);
 function CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
 
 var Root: Boolean=false;
-    FMsg: TMessageEvent;
-    FReq: TRequestEvent;
+    FMsg: TMessageCall;
+    FReq: TRequestCall;
     FApp: TAppEvent;
     FProg: TProgressCall;
 
@@ -74,16 +75,17 @@ begin
 Result:=list.IndexOf(nm)>-1;
 end;
 
-procedure LoadEntries(group: GroupType);
-var ini: TIniFile;tmp,xtmp: TStringList;i,j: Integer;p,n: String;tp: String;
+procedure LoadEntries;
+var ini: TIniFile;tmp,xtmp: TStringList;i,j: Integer;p,n: String;
     entry: TAppInfo;
     dsApp: TSQLite3Dataset;
     blst: TStringList;
 
 //Internal function to process desktop files
-procedure ProcessDesktopFile(fname: String; tp: String);
+procedure ProcessDesktopFile(fname: String);
 var d: TIniFile;entry: TAppInfo;dt: TMOFile;lp: String;
     translate: Boolean; //Used, because Assigned(dt) throws an AV
+    gr: TGroupType;
 //Translate string if possible/necessary
 function ldt(s: String): String;
 var h: String;
@@ -112,7 +114,6 @@ begin
        and (pos('yast',LowerCase(fname))<=0)
        and(LowerCase(d.ReadString('Desktop Entry','Hidden','false'))<>'true')
        and(not IsInList(d.ReadString('Desktop Entry','Name',''),blst))
-       and((pos(tp,LowerCase(d.ReadString('Desktop Entry','Categories','')))>0)or(tp='all'))
       // and(pos('system',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
        and(pos('core',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
        and(pos('.hidden',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
@@ -151,6 +152,29 @@ begin
 
        end;
 
+       if (pos('education',LowerCase(d.ReadString('Desktop Entry','Categories','')))>0) then
+        gr:=gtEDUCATION
+       else if (pos('office',LowerCase(d.ReadString('Desktop Entry','Categories','')))>0) then
+        gr:=gtOFFICE
+       else if (pos('development',LowerCase(d.ReadString('Desktop Entry','Categories','')))>0) then
+        gr:=gtDEVELOPMENT
+       else if (pos('graphic',LowerCase(d.ReadString('Desktop Entry','Categories','')))>0) then
+        gr:=gtGRAPHIC
+       else if (pos('network',LowerCase(d.ReadString('Desktop Entry','Categories','')))>0) then
+        gr:=gtNETWORK
+       else if (pos('game',LowerCase(d.ReadString('Desktop Entry','Categories','')))>0) then
+        gr:=gtGAMES
+       else if (pos('system',LowerCase(d.ReadString('Desktop Entry','Categories','')))>0) then
+        gr:=gtSYSTEM
+       else if (pos('audio',LowerCase(d.ReadString('Desktop Entry','Categories','')))>0) then
+        gr:=gtMULTIMEDIA
+       else if (pos('video',LowerCase(d.ReadString('Desktop Entry','Categories','')))>0) then
+        gr:=gtMULTIMEDIA
+       else if (pos('utils',LowerCase(d.ReadString('Desktop Entry','Categories','')))>0) then
+        gr:=gtADDITIONAL
+       else
+        gr:=gtOTHER;
+
        with entry do
        begin
        if d.ValueExists('Desktop Entry','Name['+GetLangID+']') then
@@ -158,7 +182,9 @@ begin
        else
         Name:=PChar(ldt(d.ReadString('Desktop Entry','Name','<error>')));
 
-         Name:=PChar(StringReplace(Name,'&','&&',[rfReplaceAll]));
+        Name:=PChar(StringReplace(Name,'&','&&',[rfReplaceAll]));
+
+        Group:=gr;
 
         // instLst.Add(Lowercase(d.ReadString('Desktop Entry','Name','<error>')));
 
@@ -275,20 +301,6 @@ blst.LoadFromFile('/etc/lipa/blacklist');
 blst.Delete(0);
 end;
 
-//Set original names
-case group of
-gtALL: tp:='all';
-gtEDUCATION: tp:='education';
-gtOFFICE: tp:='office';
-gtDEVELOPMENT: tp:='development';
-gtGRAPHIC: tp:='graphic';
-gtNETWORK: tp:='network';
-gtGAMES: tp:='games';
-gtSYSTEM: tp:='system';
-gtMULTIMEDIA: tp:='multimedia';
-gtADDITIONAL: tp:='additional';
-gtOTHER: tp:='other';
-end;
 
 if not DirectoryExists(RegDir) then
 begin
@@ -302,9 +314,6 @@ dsApp.Filtered:=true;
 dsApp.First;
 while not dsApp.EOF do
 begin
- if (LowerCase(dsApp.FieldByName('AGroup').AsString)=tp)
- or (tp='all') then
- begin
 
  entry.Name:=PChar(dsApp.FieldByName('Name').AsString);
 
@@ -316,6 +325,20 @@ begin
  if dsApp.FieldByName('Publisher').AsString='' then entry.Author:='';
  p:=RegDir+LowerCase(entry.Name+'-'+entry.UId)+'/';
 
+ n:=LowerCase(dsApp.FieldByName('AGroup').AsString);
+
+ if n='all' then entry.Group:=gtALL;
+ if n='education' then entry.Group:=gtEDUCATION;
+ if n='office' then entry.Group:=gtOFFICE;
+ if n='development' then entry.Group:=gtDEVELOPMENT;
+ if n='graphic' then entry.Group:=gtGRAPHIC;
+ if n='network' then entry.Group:=gtNETWORK;
+ if n='games' then entry.Group:=gtGAMES;
+ if n='system' then entry.Group:=gtSYSTEM;
+ if n='multimedia' then entry.Group:=gtMULTIMEDIA;
+ if n='additional' then entry.Group:=gtADDITIONAL;
+ if n='other' then entry.Group:=gtOTHER;
+
 // InstLst.Add(LowerCase(dsApp.FieldByName('ID').AsString));
 
  entry.ShortDesc:=PChar(dsApp.FieldByName('Description').AsString);
@@ -324,7 +347,7 @@ begin
  if FileExists(p+'icon.png') then
  entry.Icon:=PChar(p+'icon.png');
  newapp('ipk',entry);
- end;
+
  dsApp.Next;
 end;
 dsApp.Close;
@@ -383,11 +406,9 @@ for i:=0 to xtmp.Count-1 do tmp.Add(xtmp[i]);
 
 xtmp.Free;
 
-if tp='games' then tp:='game';
-if tp='multimedia' then tp:='audiovideo';
 for i:=0 to tmp.Count-1 do
        begin
-       ProcessDesktopFile(tmp[i],tp);
+       ProcessDesktopFile(tmp[i]);
        end;
        tmp.Free;
 ini.Free;
@@ -565,19 +586,24 @@ end else exit;
 end;
 
 function CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
-var dsApp: TSQLite3Dataset;deps: TStringList;i: Integer;pkit: TPackageKit;
+var dsApp: TSQLite3Dataset;deps: TStringList;i: Integer;pkit: TPackageKit;s: String;
 begin
 writeLn('Checking dependencies of all registered applications...');
-if Root then
+if forceroot then
 writeLn('You are scanning only the ROOT installed applications.')
 else
 writeLn('You are scanning your local installed applications.');
+
+if not forceroot then
+  s:=SyblToPath('$INST')+'/app-reg/'
+else
+  s:='/etc/lipa/app-reg/';
 
 writeLn('-> Opening database...');
 dsApp:= TSQLite3Dataset.Create(nil);
 with dsApp do
  begin
-   FileName:=RegDir+'applications.db';
+   FileName:=s+'applications.db';
    TableName:='AppInfo';
    if not FileExists(FileName) then
    begin

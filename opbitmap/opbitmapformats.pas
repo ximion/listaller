@@ -1,3 +1,4 @@
+//** Image formats OPBitmap can handle
 unit opbitmapformats;
 
 { *************************************************************************** }

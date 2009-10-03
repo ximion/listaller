@@ -60,7 +60,7 @@ begin
 end;
 
 procedure TForm1.MenuItem4Click(Sender: TObject);
-var p: TProcess;DInfo: TDistroInfo;
+var p: TProcess;
 begin
  if FileExists(ExtractFilePath(Application.ExeName)+'listallmgr') then
  begin
@@ -85,7 +85,7 @@ begin
 end;
 
 procedure TForm1.MenuItem1Click(Sender: TObject);
-var rep: TStringList;
+var rep: TStringList;root: Boolean;
 
 procedure LogQ;
 begin
@@ -95,31 +95,26 @@ end;
 
 procedure PerformCheck;
 begin
-//??? Reimplement / base on libInstaller
-
-{rep:=TStringList.Create;
- if not CheckApps(rep) then
- begin
+if not li_check_apps(@rep,root) then
+begin
  if Application.MessageBox(PAnsiChar(rsBrokenDepsFixQ), 'FixDeps', MB_YESNO)=IDYES then
-   CheckApps(rep,true);
- LogQ;
- end else LogQ;  }
-
+   li_fix_apps(@rep,root);
+end;
 end;
 
 begin
-
+root:=false;
 if Application.MessageBox(PAnsiChar(rsCheckAppDepsQ), PChar(rsCheckDepsQ), MB_YESNO)=
   IDYES then
 begin
- RegDir:=SyblToPath('$INST')+'/app-reg/';
  if Application.MessageBox(PAnsiChar(rsCheckRootAppsQ), PChar(rsCheckDepsQ), MB_YESNO)=IDYES then
  begin
+  rep:=TStringList.Create;
   PerformCheck;
-  RegDir:='/etc/lipa/app-reg/';
+  root:=true;
   PerformCheck;
  end else PerformCheck;
-
+ LogQ;
 end;
 
 end;

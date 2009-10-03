@@ -80,9 +80,9 @@ type
   //Progress message relais
   FProgChange1: TProgressCall;
   FProgChange2: TProgressCall;
-  FRequest: TRequestEvent;
-  FSMessage:  TMessageEvent;
-  FMessage:  TMessageEvent;
+  FRequest: TRequestCall;
+  FSMessage:  TMessageCall;
+  FMessage:  TMessageCall;
   //Executed if Linstallation should be done
   function RunNormalInstallation: Boolean;
   //Runs a DLink installation
@@ -151,9 +151,9 @@ type
   property OnProgressMainChange: TProgressCall read FProgChange1 write FProgChange1;
   property OnProgressExtraChange: TProgressCall read FProgChange2 write FProgChange2;
   //Message events
-  property OnUserRequest: TRequestEvent read FRequest write FRequest;
-  property OnStepMessage: TMessageEvent read FSMessage write FSMessage;
-  property OnMessage: TMessageEvent read FMessage write FMessage;
+  property OnUserRequest: TRequestCall read FRequest write FRequest;
+  property OnStepMessage: TMessageCall read FSMessage write FSMessage;
+  property OnMessage: TMessageCall read FMessage write FMessage;
 end;
 
 {** Removes an IPK application
@@ -163,7 +163,7 @@ end;
      @param progress Function call for operation progress (set nil if not needed)
      @param fast Does a quick uninstallation if is true (Set to "False" by default)
      @param RmDeps Remove dependencies if true (Set to "True" by default)}
- procedure UninstallIPKApp(AppName, AppID: String; FMsg: TMessageEvent;progress: TProgressCall; fast: Boolean=false; RmDeps:Boolean=true);
+ procedure UninstallIPKApp(AppName, AppID: String; FMsg: TMessageCall;progress: TProgressCall; fast: Boolean=false; RmDeps:Boolean=true);
 
  //** Checks if package is installed
  function IsPackageInstalled(aName: String;aID: String): Boolean;
@@ -1536,7 +1536,7 @@ end;
 /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ///////////////////////////////////////////////////
-procedure UninstallIPKApp(AppName,AppID: String; FMsg: TMessageEvent;progress: TProgressCall; fast:Boolean=false; RmDeps:Boolean=true);
+procedure UninstallIPKApp(AppName,AppID: String; FMsg: TMessageCall;progress: TProgressCall; fast:Boolean=false; RmDeps:Boolean=true);
 var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;k: Boolean;upd: String;
     proc: TProcess;dlink: Boolean;t: TProcess;
     pkit: TPackageKit;

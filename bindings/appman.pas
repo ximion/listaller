@@ -23,16 +23,16 @@ interface
 uses
   Classes, SysUtils, liTypes;
 
- const amanlib='libinstaller.so';
-
- function load_applications(ty: GroupType): Boolean;cdecl;external amanlib name 'mgr_load_applications';
- function register_message_call(call: TMessageEvent): Boolean;cdecl;external amanlib name 'mgr_register_message_call';
- function register_progress_call(call: TProgressCall): Boolean;cdecl;external amanlib name 'mgr_register_progress_call';
- function register_request_call(call: TRequestEvent): TRqResult;cdecl;external amanlib name 'mgr_register_request_call';
- function register_application_call(call: TAppEvent): Boolean;cdecl;external amanlib name 'mgr_register_application_call';
- function set_su_mode(md: Boolean): Boolean;cdecl;external amanlib name 'mgr_set_su_mode';
- function remove_application(obj: TAppInfo): Boolean;cdecl;external amanlib name 'mgr_remove_application';
- function li_remove_ipk_installed_app(appname, appid: PChar;msgcall: TMessageEvent;poschange: TProgressCall;fastmode: Boolean): Boolean; cdecl; external amanlib name 'li_remove_ipk_installed_app';
+ function li_mgr_load_apps: Boolean;cdecl;external libinst name 'li_mgr_load_apps';
+ function li_mgr_register_msg_call(call: TMessageCall): Boolean;cdecl;external libinst name 'li_mgr_register_msg_call';
+ function li_mgr_register_progress_call(call: TProgressCall): Boolean;cdecl;external libinst name 'li_mgr_register_progress_call';
+ function li_mgr_register_request_call(call: TRequestCall): TRqResult;cdecl;external libinst name 'li_mgr_register_request_call';
+ function li_mgr_register_app_call(call: TAppEvent): Boolean;cdecl;external libinst name 'li_mgr_register_app_call';
+ function li_mgr_set_su_mode(md: Boolean): Boolean;cdecl;external libinst name 'li_mgr_set_su_mode';
+ function li_remove_app(obj: TAppInfo): Boolean;cdecl;external libinst name 'li_mgr_remove_app';
+ function li_remove_ipk_installed_app(appname, appid: PChar;msgcall: TMessageCall;poschange: TProgressCall;fastmode: Boolean): Boolean; cdecl; external libinst name 'li_remove_ipk_installed_app';
+ function li_check_apps(log: PStringList;root: Boolean): Boolean;cdecl;external libinst name 'li_check_apps';
+ function li_fix_apps(log: PStringList;root: Boolean): Boolean;cdecl;external libinst name 'li_fix_apps';
 
 implementation
 

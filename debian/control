@@ -23,7 +23,7 @@ Description: Listaller frontends (GTK2)
 Package: listaller-tools
 Architecture: i386 powerpc sparc amd64 arm
 Depends: ${shlibs:Depends}, listaller-core (= ${binary:Version})
-Description: Command-line tools for Listaller package handling
+Description: Tools to build Listaller packages
  This package contains everything you need to build own IPK packages.
  It also contains the needed tools to build RPM and DEB packages from
  IPS sources and to  create an "Linux distribution compatible"
@@ -32,6 +32,7 @@ Description: Command-line tools for Listaller package handling
 Package: listaller-core
 Priority: optional
 Architecture: i386 powerpc sparc amd64 arm
+Provides: listaller-core
 Depends: ${shlibs:Depends}, apt-file
 Description: Listaller basic tools and libraries
  This package contains the 'lipa' command line tool.

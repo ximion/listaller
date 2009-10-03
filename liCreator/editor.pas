@@ -109,6 +109,7 @@ type
     SaveDialog2: TSaveDialog;
     Splitter1: TSplitter;
     IPSHighlight: TSynAnySyn;
+    FileHighlight: TSynAnySyn;
     procedure Button1Click(Sender: TObject);
     procedure FindDialogFind(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -186,7 +187,7 @@ begin
   FSynEdit.Gutter.LeftOffset:=0;
   FSynEdit.Gutter.RightOffset:=0;
   FSynEdit.Font.Size := 10;
-  FSynEdit.Highlighter := FrmEditor.SynAnySyn1;
+  FSynEdit.Highlighter := FrmEditor.FileHighlight;
 end;
 
 destructor TFileProfile.Destroy();
@@ -530,14 +531,14 @@ begin
   I:=0;
 
   ips.Clear;
-  ips.Add('IPK-Source.Version: 0.8');
   for i:=0 to MainScriptEdit.Lines.Count-1 do
     ips.Add(MainScriptEdit.Lines[i]);
 
   //Preprocess files
+  ips.Add('');
   for k:=0 to FileProfiles.Count-1 do
   begin
-    ips.Add('!-Files #'+IntToStr(FileProfiles.Profiles_By_Index(k).ProfileIndex));
+    ips.Add('!-Files ~'+IntToStr(FileProfiles.Profiles_By_Index(k).ProfileIndex));
     //NEEDS IMPROVEMENTS!!
     for i:=0 to FileProfiles.Profiles_By_Index(k).SynEdit.Lines.Count-1 do
       if i mod 2 = 0 then

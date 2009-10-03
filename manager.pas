@@ -82,8 +82,6 @@ type
     SWBox: TScrollBox;
     Process1: TProcess;
     procedure BitBtn1Click(Sender: TObject);
-    procedure BitBtn3Click(Sender: TObject);
-    procedure BitBtn4Click(Sender: TObject);
     procedure BitBtn6Click(Sender: TObject);
     procedure btnInstallClick(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
@@ -133,7 +131,7 @@ var
   instLst: TStringList;
 
 //Published for use in uninstall.pas
-function OnMessage(msg: String;imp: TMType): Boolean;cdecl;
+procedure OnMessage(msg: String;imp: TMType);cdecl;
 
 implementation
 
@@ -153,14 +151,14 @@ begin
 with MnFrm do begin
  entry:=TListEntry.Create(MnFrm);
  entry.Parent:=SWBox;
- entry.LoadFromAppInfo(lentries.TAppInfo(obj));
+ entry.LoadFromAppInfo(TAppInfo(obj));
  entry.UnButton.OnClick:=@UninstallClick;
  AList.Add(entry);
 end;
 Application.ProcessMessages;
 end;
 
-function OnMessage(msg: String;imp: TMType): Boolean;cdecl;
+procedure OnMessage(msg: String;imp: TMType);cdecl;
 begin
  if imp=mtInfo then MnFrm.StatusLabel.Caption:=msg;
  if imp=mtWarning then ShowMessage(msg);
@@ -367,16 +365,6 @@ begin
   SCForm.ShowModal;
 end;
 
-procedure TMnFrm.BitBtn3Click(Sender: TObject);
-begin
-
-end;
-
-procedure TMnFrm.BitBtn4Click(Sender: TObject);
-begin
-
-end;
-
 procedure TMnFrm.BitBtn6Click(Sender: TObject);
 var p: TProcess;
 begin
@@ -521,9 +509,11 @@ end;
 end;
 
 procedure TMnFrm.CBoxChange(Sender: TObject);
-var gt: GroupType;
+var gt: TGroupType;i: Integer;
 begin
   CBox.Enabled:=false;
+  SWBox.Enabled:=false;
+  Application.ProcessMessages;
   case CBox.ItemIndex of
   0: gt:=gtALL;
   1: gt:=gtEDUCATION;
@@ -537,7 +527,25 @@ begin
   9: gt:=gtADDITIONAL;
   10: gt:=gtOTHER;
   end;
-  load_applications(gt);
+  MBar.Visible:=true;
+  StatusLabel.Caption:=rsFiltering;
+
+  if gt=gtALL then
+  begin
+  for i:=0 to AList.Count-1 do
+   TListEntry(AList[i]).Visible:=true;
+  end else
+  for i:=0 to AList.Count-1 do
+  begin
+   TListEntry(AList[i]).Visible:=true;
+   Application.ProcessMessages;
+   if TListEntry(AList[i]).appInfo.Group<>gt then
+      TListEntry(AList[i]).Visible:=false;
+  end;
+
+  StatusLabel.Caption:=rsReady;
+  SWBox.Enabled:=true;
+  MBar.Visible:=false;
   CBox.Enabled:=true;
 end;
 
@@ -657,6 +665,12 @@ var i: Integer;
 begin
   if Key = VK_RETURN then
   begin
+     SWBox.HorzScrollbar.Position:=0;
+     SWBox.Enabled:=false;
+     FilterEdt.Enabled:=false;
+     CBox.Enabled:=false;
+     Application.ProcessMessages;
+
      if ((FilterEdt.Text=' ') or (FilterEdt.Text='*')or (FilterEdt.Text='')) then
      begin
      for i:=0 to AList.Count-1 do
@@ -676,13 +690,19 @@ begin
          end;
        end;
 StatusLabel.Caption:=rsReady;
+FilterEdt.Enabled:=true;
+SWBox.Enabled:=true;
+CBox.Enabled:=true;
 end;
 end;
 
 procedure TMnFrm.FormActivate(Sender: TObject);
 begin
   if fAct then
-  begin fAct:=false;load_applications(gtALL);
+  begin fAct:=false;
+  MBar.Visible:=true;
+  li_mgr_load_apps();
+  MBar.Visible:=false;
   end;
 end;
 
@@ -813,15 +833,15 @@ begin
 end;     }
 
 //Register callback to be notified if new app was found
-register_application_call(@OnNewAppFound);
+li_mgr_register_app_call(@OnNewAppFound);
 
 //Register callback to be notified if a message was thrown
-register_message_call(@OnMessage);
+li_mgr_register_msg_call(@OnMessage);
 
 //Register request call
-register_request_call(@OnUserRequest);
+li_mgr_register_request_call(@OnUserRequest);
 
-set_su_mode(true);
+li_mgr_set_su_mode(true);
 
 InstAppButton.Down:=true;
 
