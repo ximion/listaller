@@ -54,12 +54,12 @@ var
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////This will be done if "lipa" is started
 
-function OnSetupMessage(msg: String;imp: TMType): Boolean;cdecl;
+procedure OnSetupMessage(msg: String;imp: TMType);cdecl;
 begin
   writeLn(' '+msg);
 end;
 
-function OnSetupProgress(pos: Longint): Boolean;cdecl;
+procedure OnSetupProgress(pos: Longint);cdecl;
 begin
 with Application do
 begin
@@ -78,7 +78,7 @@ end;
 end;
 end;
 
-function OnSetupStateChange(msg: String;imp: TMType): Boolean;cdecl;
+procedure OnSetupStateChange(msg: String;imp: TMType);cdecl;
 begin
 if not Application.HasOption('verbose') then
   writeLn(' '+rsState+': '+msg);

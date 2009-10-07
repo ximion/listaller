@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="application/ips-script">
-    <comment>Listaller package script</comment>
-    <comment xml:lang="de">IPS Skript</comment>
-    <expanded-acronym>Installation package source</expanded-acronym>
-    <glob pattern="*.ips"/>
-  </mime-type>
-</mime-info>

@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="1565"/>
+      <CurrentBuildNr Value="1566"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -61,8 +61,8 @@
         <ComponentName Value="MnFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="41" Y="3"/>
-        <TopLine Value="1"/>
+        <CursorPos X="2" Y="891"/>
+        <TopLine Value="851"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="177"/>
         <Loaded Value="True"/>

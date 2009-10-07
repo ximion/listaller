@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-installation">
+    <sub-class-of type="application/zip"/>
+    <comment>Software installation package</comment>
+    <comment xml:lang="de">Software Installationspaket</comment>
+    <glob pattern="*.ipk"/>
+    <icon kde="ipk-package"/>
+    <supported-by>
+      <application name="listallgo"/>
+    </supported-by>
+  </mime-type>
+</mime-info> 

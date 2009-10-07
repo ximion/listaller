@@ -2,10 +2,10 @@
 #DEBHELPER#
 set -e
 
-echo "Uninstalling mime extensions..."
+echo "Uninstalling mime extension..."
 xdg-mime uninstall '/usr/share/listaller/mime/x-ipk.xml'
 xdg-mime uninstall '/usr/share/listaller/mime/x-ips.xml'
-xdg-icon-resource uninstall --context mimetypes --size 64 'mime-ipk' 'application-x-ipk'
-xdg-icon-resource uninstall --context mimetypes --size 64 'mime-ips' 'text-ips-script'
+xdg-icon-resource uninstall --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ipk.png' 'application-x-installation'
+xdg-icon-resource uninstall --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ips.png' 'application-ips-script'
 update-mime-database '/usr/share/mime'
 echo "Done."

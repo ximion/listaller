@@ -879,6 +879,7 @@ initialization
 
 end.
 
+{
 //Create GIFThread for Throbber animation
 gif:=TGifThread.Create(true);
 gif.FileName:=GetDataFile('graphics/throbber.gif');
@@ -887,3 +888,4 @@ ThrobberBox.Height:=gif.Height;
 ThrobberBox.Top:=(InstalledAppsPage.Height div 2)-(ThrobberBox.Height div 2);
 ThrobberBox.Left:=(InstalledAppsPage.Width div 2)-(ThrobberBox.Width div 2);
 gif.Initialize(ThrobberBox.Canvas);
+}

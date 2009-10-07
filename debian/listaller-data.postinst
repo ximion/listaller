@@ -5,7 +5,7 @@ set -e
 echo "Installing mime extensions..."
 xdg-mime install '/usr/share/listaller/mime/x-ipk.xml'
 xdg-mime install '/usr/share/listaller/mime/x-ips.xml'
-xdg-icon-resource install --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ipk.png' 'application-x-ipk'
-xdg-icon-resource install --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ips.png' 'text-ips-script'
+xdg-icon-resource install --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ipk.png' 'application-x-installation'
+xdg-icon-resource install --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ips.png' 'application-ips-script'
 update-desktop-database
 echo "Done."

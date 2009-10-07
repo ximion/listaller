@@ -45,7 +45,7 @@ mkdir -p ./bin/gtk2
 VER=$(fpc -iW)
 echo "Compiler version: $VER"
 
-echo "Creating installer..."
+echo "Compiling installer..."
 if [ "$WIDGET" == "qt4" ]; then
 #./libuild PR=listallgo.lpr O=listallgo WIDGET=qt4
 $LCLDir/lazbuild -B --ws=qt listallgo.lpr
@@ -55,7 +55,7 @@ else
 $LCLDir/lazbuild -B --ws=gtk2 listallgo.lpr
 mv ./bin/listallgo ./bin/gtk2/
 fi
-echo "Creating software-manager..."
+echo "Compiling software-manager..."
 if [ "$WIDGET" == "qt4" ]; then
 #./libuild PR=listallmngr.lpr O=listallmgr WIDGET=qt4
 $LCLDir/lazbuild -B --ws=qt listallmgr.lpr
@@ -65,7 +65,7 @@ else
 $LCLDir/lazbuild -B --ws=gtk2 listallmgr.lpr
 mv ./bin/listallmgr ./bin/gtk2/
 fi
-echo "Creating updater..."
+echo "Compiling updater..."
 if [ "$WIDGET" == "qt4" ]; then
 #./libuild PR=liupdate.lpr O=liupdate WIDGET=qt4
 $LCLDir/lazbuild -B --ws=qt liupdate.lpr
@@ -75,7 +75,7 @@ else
 $LCLDir/lazbuild -B --ws=gtk2 liupdate.lpr
 mv ./bin/liupdate ./bin/gtk2/
 fi
-echo "Creating tray notifier..."
+echo "Compiling tray notifier..."
 if [ "$WIDGET" == "qt4" ]; then
 #./libuild PR=liupdate.lpr O=liupdate WIDGET=qt4
 $LCLDir/lazbuild -B --ws=qt litray.lpr
@@ -86,4 +86,4 @@ $LCLDir/lazbuild -B --ws=gtk2 litray.lpr
 mv ./bin/litray ./bin/gtk2/
 fi
 
-echo "Listaller GUI build completed."
+echo "Listaller GUI build completed. (For $WIDGET)"

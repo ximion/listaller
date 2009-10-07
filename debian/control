@@ -1,11 +1,11 @@
 Source: listaller
 Standards-Version: 3.8.2
-Section: utils
+Section: admin
 Maintainer: Matthias Klumpp <matthias@nlinux.org>
 Priority: extra
 Homepage: http://listaller.nlinux.org
 Build-Depends: libgtk2.0-dev, lazarus (>=0.9.27), fpc (>= 2.2.4), fp-units-gtk, debhelper (>= 5), libqt4intf,
- libqt4-core, sqlite3, libsqlite3-0, libsqlite3-dev, libglib2.0-0, libglib2.0-dev, libpackagekit-glib-dev (>= 0.4.9)
+ libqt4-core, sqlite3, libsqlite3-0, libsqlite3-dev, libglib2.0-0, libglib2.0-dev, libpackagekit-glib2-dev (>= 0.5.3)
 
 Package: listaller-gtk
 Architecture: i386 powerpc sparc amd64 arm
@@ -32,7 +32,6 @@ Description: Tools to build Listaller packages
 Package: listaller-core
 Priority: optional
 Architecture: i386 powerpc sparc amd64 arm
-Provides: listaller-core
 Depends: ${shlibs:Depends}, apt-file
 Description: Listaller basic tools and libraries
  This package contains the 'lipa' command line tool.

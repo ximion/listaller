@@ -865,7 +865,7 @@ end;
 Result:=true;
 mnpos:=0;
 
-//!!! Deprecated
+//!!! @deprecated
 {
 //Check if fileinfo contains shared files
 for i:=0 to (fi.Count div 3)-1 do begin
@@ -1528,9 +1528,12 @@ begin
    msg('TInstallation failure.');
    Result:=false;
   end;
+
 //Free network objects
- HTTP.Free;
- FTP.Free;
+ HTTP.Sock.OnStatus:=nil;
+ FTP.DSock.Onstatus:=nil;
+ FreeAndNil(HTTP);
+ FreeAndNil(FTP);
 end;
 
 /////////////////////////////////////////////////////
@@ -1686,7 +1689,7 @@ else pkit.GetRequires(f);
  pkit.Free;
   end;
   Inc(mnprog);
-  SetPosition((100 div mnprog)*bs);
+  SetPosition((bs div 100)*mnprog);
 end; //End of tmp2-find loop
 
 end else msg('No installed deps found!');
@@ -1758,11 +1761,11 @@ if not k then
 DeleteFile(f);
 
 Inc(mnprog);
-SetPosition((100 div mnprog)*bs);
+SetPosition((bs div 100)*mnprog);
 end;
 
 Inc(mnprog);
-SetPosition((100 div mnprog)*bs);
+SetPosition((bs div 100)*mnprog);
 
 msg('Removing empty dirs...');
 tmp.LoadFromFile(p+'appdirs.list');
@@ -1807,7 +1810,7 @@ proc.Execute;
 proc.Free;
 
 Inc(mnprog);
-SetPosition((100 div mnprog)*bs);
+SetPosition((bs div 100)*mnprog);
 
 msg('Application removed.');
 msg('- Finished -');

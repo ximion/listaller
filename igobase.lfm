@@ -57,7 +57,7 @@ object IWizFrm: TIWizFrm
     Top = 0
     Width = 651
     Align = alClient
-    PageIndex = 0
+    PageIndex = 4
     TabOrder = 0
     object WPage: TPage
       Caption = 'Welcome'
@@ -138,8 +138,9 @@ object IWizFrm: TIWizFrm
         Items.Strings = (
           'Logfile:'
         )
-        ItemHeight = 19
+        ItemHeight = 0
         TabOrder = 1
+        TopIndex = -1
         Visible = False
       end
       object DSolveProgress: TProgressBar
@@ -350,6 +351,8 @@ object IWizFrm: TIWizFrm
         Lines.Strings = (
           'Actions:'
         )
+        ReadOnly = True
+        ScrollBars = ssAutoHorizontal
         TabOrder = 2
         Visible = False
       end

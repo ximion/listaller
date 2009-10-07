@@ -42,16 +42,13 @@ rm -f $DESTDIR/usr/share/listaller/lang/.directory
 chmod -R 0755 $DESTDIR/usr/share/listaller/graphics
 
 mkdir -p $DESTDIR/usr/share/mime
-mkdir -p $DESTDIR/usr/share/mime/packages
-mkdir -p $DESTDIR/usr/share/mime/text
 mkdir -p $DESTDIR/usr/share/mime-info
 mkdir -p $DESTDIR/etc/lipa
 mkdir -p $DESTDIR/etc/lipa/app-reg
 
 cp ./data/blacklist $DESTDIR/etc/lipa/
-cp ./data/mime/packages/x-ipk.xml $DESTDIR/usr/share/listaller/mime
-cp ./data/mime/text/x-ips.xml $DESTDIR/usr/share/listaller/mime
-cp ./data/mime-info/listaller-pack.mime $DESTDIR/usr/share/mime-info
+cp ./data/mime/x-ipk.xml $DESTDIR/usr/share/listaller/mime
+cp ./data/mime/x-ips.xml $DESTDIR/usr/share/listaller/mime
 
 #mkdir -p $DESTDIR/usr/bin
 #cp ./bin/lipa $DESTDIR/usr/bin/
