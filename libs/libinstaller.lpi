@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="650"/>
+      <CurrentBuildNr Value="651"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -32,8 +32,8 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="23" Y="301"/>
-        <TopLine Value="279"/>
+        <CursorPos X="1" Y="482"/>
+        <TopLine Value="442"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="45"/>
         <Loaded Value="True"/>
@@ -175,7 +175,12 @@
         <UsageCount Value="10"/>
       </Unit19>
     </Units>
-    <JumpHistory Count="0" HistoryIndex="-1"/>
+    <JumpHistory Count="1" HistoryIndex="0">
+      <Position1>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="301" Column="23" TopLine="279"/>
+      </Position1>
+    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>

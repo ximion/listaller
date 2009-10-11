@@ -40,15 +40,15 @@ mkdir -p ./bin
 mkdir -p ./bin/locale
 
 echo "Compiling library..."
-$LCLDir/lazbuild -B --ws=nogui ./libs/libinstaller.lpr
+lazbuild -B --ws=nogui ./libs/libinstaller.lpr
 ln -s ./bin/libinstaller.so.0.4 libinstaller.so
 ln -s ./bin/libinstaller.so.0.4 libinstaller.so.0.4
 
 echo "Compiling command-line tool..."
-$LCLDir/lazbuild -B --ws=nogui lipa.lpr
+lazbuild -B --ws=nogui lipa.lpr
 #fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewhi -l -Fuabbrevia/ -Fusynapse/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -vm5024 -FEbin/ -olipa -dOpbCompat lipa.lpr
 echo "Compiling package build tool..."
-$LCLDir/lazbuild -B --ws=nogui libuild.lpr
+lazbuild -B --ws=nogui libuild.lpr
 #fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -FEbin/ -olibuild -dOpbCompat libuild.lpr
 
 #Compiling lanuage files

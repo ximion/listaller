@@ -1,9 +1,9 @@
 {==============================================================================|
-| Project : Ararat Synapse                                       | 003.011.003 |
+| Project : Ararat Synapse                                       | 003.012.002 |
 |==============================================================================|
 | Content: HTTP client                                                         |
 |==============================================================================|
-| Copyright (c)1999-2007, Lukas Gebauer                                        |
+| Copyright (c)1999-2008, Lukas Gebauer                                        |
 | All rights reserved.                                                         |
 |                                                                              |
 | Redistribution and use in source and binary forms, with or without           |
@@ -33,7 +33,7 @@
 | DAMAGE.                                                                      |
 |==============================================================================|
 | The Initial Developer of the Original Code is Lukas Gebauer (Czech Republic).|
-| Portions created by Lukas Gebauer are Copyright (c) 1999-2007.               |
+| Portions created by Lukas Gebauer are Copyright (c) 1999-2008.               |
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
@@ -42,7 +42,7 @@
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
 |==============================================================================}
 
-{** @abstract(HTTP protocol client)
+{:@abstract(HTTP protocol client)
 
 Used RFC: RFC-1867, RFC-1947, RFC-2388, RFC-2616
 }
@@ -64,11 +64,11 @@ const
   cHttpProtocol = '80';
 
 type
-  {** These encoding types are used internally by the THTTPSend object to identify
+  {:These encoding types are used internally by the THTTPSend object to identify
    the transfer data types.}
   TTransferEncoding = (TE_UNKNOWN, TE_IDENTITY, TE_CHUNKED);
 
-  {** abstract(Implementation of HTTP protocol.)}
+  {:abstract(Implementation of HTTP protocol.)}
   THTTPSend = class(TSynaClient)
   protected
     FSock: TTCPBlockSocket;
@@ -80,6 +80,7 @@ type
     FMimeType: string;
     FProtocol: string;
     FKeepAlive: Boolean;
+    FKeepAliveTimeout: integer;
     FStatus100: Boolean;
     FProxyHost: string;
     FProxyPort: string;
@@ -105,13 +106,13 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    {** Reset headers and document and Mimetype.}
+    {:Reset headers and document and Mimetype.}
     procedure Clear;
 
-    {** Decode ResultCode and ResultString from Value.}
+    {:Decode ResultCode and ResultString from Value.}
     procedure DecodeStatus(const Value: string);
 
-    {** Connects to host define in URL and access to resource defined in URL by
+    {:Connects to host define in URL and access to resource defined in URL by
      method. If Document is not empty, send it to server as part of HTTP request.
      Server response is in Document and headers. Connection may be authorised
      by username and password in URL. If you define proxy properties, connection
@@ -123,114 +124,117 @@ type
      HTTP proxy, then HTTP-tunnel mode is automaticly used .}
     function HTTPMethod(const Method, URL: string): Boolean;
 
-    {** You can call this method from OnStatus event for break current data
+    {:You can call this method from OnStatus event for break current data
      transfer. (or from another thread.)}
     procedure Abort;
   published
-    {** Before HTTP operation you may define any non-standard headers for HTTP
+    {:Before HTTP operation you may define any non-standard headers for HTTP
      request, except of: 'Expect: 100-continue', 'Content-Length', 'Content-Type',
      'Connection', 'Authorization', 'Proxy-Authorization' and 'Host' headers.
      After HTTP operation contains full headers of returned document.}
     property Headers: TStringList read FHeaders;
 
-    {** This is stringlist with name-value stringlist pairs. Each this pair is one
+    {:This is stringlist with name-value stringlist pairs. Each this pair is one
      cookie. After HTTP request is returned cookies parsed to this stringlist.
      You can leave this cookies untouched for next HTTP request. You can also
      save this stringlist for later use.}
     property Cookies: TStringList read FCookies;
 
-    {** Stream with document to send (before request, or with document received
+    {:Stream with document to send (before request, or with document received
      from HTTP server (after request).}
     property Document: TMemoryStream read FDocument;
 
-    {** If you need download only part of requested document, here specify
+    {:If you need download only part of requested document, here specify
      possition of subpart begin. If here 0, then is requested full document.}
     property RangeStart: integer read FRangeStart Write FRangeStart;
 
-    {** If you need download only part of requested document, here specify
+    {:If you need download only part of requested document, here specify
      possition of subpart end. If here 0, then is requested document from
      rangeStart to end of document. (for broken download restoration,
      for example.)}
     property RangeEnd: integer read FRangeEnd Write FRangeEnd;
 
-    {** Mime type of sending data. Default is: 'text/html'.}
+    {:Mime type of sending data. Default is: 'text/html'.}
     property MimeType: string read FMimeType Write FMimeType;
 
-    {** Define protocol version. Possible values are: '1.1', '1.0' (default)
+    {:Define protocol version. Possible values are: '1.1', '1.0' (default)
      and '0.9'.}
     property Protocol: string read FProtocol Write FProtocol;
 
-    {** If @true (default value), keepalives in HTTP protocol 1.1 is enabled.}
+    {:If @true (default value), keepalives in HTTP protocol 1.1 is enabled.}
     property KeepAlive: Boolean read FKeepAlive Write FKeepAlive;
 
-    {** if @true, then server is requested for 100status capability when uploading
+    {:Define timeout for keepalives in seconds!}
+    property KeepAliveTimeout: integer read FKeepAliveTimeout Write FKeepAliveTimeout;
+
+    {:if @true, then server is requested for 100status capability when uploading
      data. Default is @false (off).}
     property Status100: Boolean read FStatus100 Write FStatus100;
 
-    {** Address of proxy server (IP address or domain name) where you want to
+    {:Address of proxy server (IP address or domain name) where you want to
      connect in @link(HTTPMethod) method.}
     property ProxyHost: string read FProxyHost Write FProxyHost;
 
-    {** Port number for proxy connection. Default value is 8080.}
+    {:Port number for proxy connection. Default value is 8080.}
     property ProxyPort: string read FProxyPort Write FProxyPort;
 
-    {** Username for connect to proxy server where you want to connect in
+    {:Username for connect to proxy server where you want to connect in
      HTTPMethod method.}
     property ProxyUser: string read FProxyUser Write FProxyUser;
 
-    {** Password for connect to proxy server where you want to connect in
+    {:Password for connect to proxy server where you want to connect in
      HTTPMethod method.}
     property ProxyPass: string read FProxyPass Write FProxyPass;
 
-    {** Here you can specify custom User-Agent indentification. By default is
+    {:Here you can specify custom User-Agent indentification. By default is
      used: 'Mozilla/4.0 (compatible; Synapse)'}
     property UserAgent: string read FUserAgent Write FUserAgent;
 
-    {** After successful @link(HTTPMethod) method contains result code of
+    {:After successful @link(HTTPMethod) method contains result code of
      operation.}
     property ResultCode: Integer read FResultCode;
 
-    {** After successful @link(HTTPMethod) method contains string after result code.}
+    {:After successful @link(HTTPMethod) method contains string after result code.}
     property ResultString: string read FResultString;
 
-    {** if this value is not 0, then data download pending. In this case you have
+    {:if this value is not 0, then data download pending. In this case you have
      here total sice of downloaded data. It is good for draw download
      progressbar from OnStatus event.}
     property DownloadSize: integer read FDownloadSize;
 
-    {** if this value is not 0, then data upload pending. In this case you have
+    {:if this value is not 0, then data upload pending. In this case you have
      here total sice of uploaded data. It is good for draw upload progressbar
      from OnStatus event.}
     property UploadSize: integer read FUploadSize;
-    {** Socket object used for TCP/IP operation. Good for seting OnStatus hook, etc.}
+    {:Socket object used for TCP/IP operation. Good for seting OnStatus hook, etc.}
     property Sock: TTCPBlockSocket read FSock;
 
-    {** To have possibility to switch off port number in 'Host:' HTTP header, by
+    {:To have possibility to switch off port number in 'Host:' HTTP header, by
     default @TRUE. Some buggy servers not like port informations in this header.}
     property AddPortNumberToHost: Boolean read FAddPortNumberToHost write FAddPortNumberToHost;
   end;
 
-{** A very usefull function, and example of use can be found in the THTTPSend
+{:A very usefull function, and example of use can be found in the THTTPSend
  object. It implements the GET method of the HTTP protocol. This function sends
  the GET method for URL document to an HTTP server. Returned document is in the
  "Response" stringlist (without any headers). Returns boolean TRUE if all went
  well.}
 function HttpGetText(const URL: string; const Response: TStrings): Boolean;
 
-{** A very usefull function, and example of use can be found in the THTTPSend
+{:A very usefull function, and example of use can be found in the THTTPSend
  object. It implements the GET method of the HTTP protocol. This function sends
  the GET method for URL document to an HTTP server. Returned document is in the
  "Response" stream. Returns boolean TRUE if all went well.}
 function HttpGetBinary(const URL: string; const Response: TStream): Boolean;
 
-{** A very useful function, and example of use can be found in the THTTPSend
+{:A very useful function, and example of use can be found in the THTTPSend
  object. It implements the POST method of the HTTP protocol. This function sends
  the SEND method for a URL document to an HTTP server. The document to be sent
  is located in "Data" stream. The returned document is in the "Data" stream.
  Returns boolean TRUE if all went well.}
 function HttpPostBinary(const URL: string; const Data: TStream): Boolean;
 
-{** A very useful function, and example of use can be found in the THTTPSend
+{:A very useful function, and example of use can be found in the THTTPSend
  object. It implements the POST method of the HTTP protocol. This function is
  good for POSTing form data. It sends the POST method for a URL document to
  an HTTP server. You must prepare the form data in the same manner as you would
@@ -241,7 +245,7 @@ function HttpPostBinary(const URL: string; const Data: TStream): Boolean;
  went well.}
 function HttpPostURL(const URL, URLData: string; const Data: TStream): Boolean;
 
-{** A very useful function, and example of use can be found in the THTTPSend
+{:A very useful function, and example of use can be found in the THTTPSend
  object. It implements the POST method of the HTTP protocol. This function sends
  the POST method for a URL document to an HTTP server. This function simulate
  posting of file by HTML form used method 'multipart/form-data'. Posting file
@@ -278,6 +282,7 @@ begin
   FDownloadSize := 0;
   FUploadSize := 0;
   FAddPortNumberToHost := true;
+  FKeepAliveTimeout := 300;
   Clear;
 end;
 
@@ -367,6 +372,10 @@ var
   s, su: string;
   HttpTunnel: Boolean;
   n: integer;
+  pp: string;
+  UsingProxy: boolean;
+  l: TStringList;
+  x: integer;
 begin
   {initial values}
   Result := False;
@@ -397,7 +406,7 @@ begin
     FSock.HTTPTunnelUser := '';
     FSock.HTTPTunnelPass := '';
   end;
-
+  UsingProxy := (FProxyHost <> '') and not(HttpTunnel);
   Sending := FDocument.Size > 0;
   {Headers for Sending data}
   status100 := FStatus100 and Sending and (FProtocol = '1.1');
@@ -431,12 +440,20 @@ begin
   if s <> '' then
     FHeaders.Insert(0, 'Cookie: ' + s);
   { setting KeepAlives }
-  if not FKeepAlive then
-    FHeaders.Insert(0, 'Connection: close');
+  pp := '';
+  if UsingProxy then
+    pp := 'Proxy-';
+  if FKeepAlive then
+  begin
+    FHeaders.Insert(0, pp + 'Connection: keep-alive');
+    FHeaders.Insert(0, 'Keep-Alive: ' + IntToStr(FKeepAliveTimeout));
+  end
+  else
+    FHeaders.Insert(0, pp + 'Connection: close');
   { set target servers/proxy, authorizations, etc... }
   if User <> '' then
     FHeaders.Insert(0, 'Authorization: Basic ' + EncodeBase64(User + ':' + Pass));
-  if (FProxyHost <> '') and (FProxyUser <> '') and not(HttpTunnel) then
+  if UsingProxy and (FProxyUser <> '') then
     FHeaders.Insert(0, 'Proxy-Authorization: Basic ' +
       EncodeBase64(FProxyUser + ':' + FProxyPass));
   if isIP6(Host) then
@@ -447,7 +464,7 @@ begin
      FHeaders.Insert(0, 'Host: ' + s + ':' + Port)
   else
      FHeaders.Insert(0, 'Host: ' + s);
-  if (FProxyHost <> '') and not(HttpTunnel)then
+  if UsingProxy then
     URI := Prot + '://' + s + ':' + Port + URI;
   if URI = '/*' then
     URI := '*';
@@ -455,7 +472,7 @@ begin
     FHeaders.Insert(0, UpperCase(Method) + ' ' + URI)
   else
     FHeaders.Insert(0, UpperCase(Method) + ' ' + URI + ' HTTP/' + FProtocol);
-  if (FProxyHost <> '') and not(HttpTunnel) then
+  if UsingProxy then
   begin
     FTargetHost := FProxyHost;
     FTargetPort := FProxyPort;
@@ -539,11 +556,11 @@ begin
   if Status100Error = '' then
   begin
     repeat
-      s := FSock.RecvString(FTimeout);
-      if s <> '' then
-        Break;
-    until FSock.LastError <> 0;
-    repeat
+      repeat
+        s := FSock.RecvString(FTimeout);
+        if s <> '' then
+          Break;
+      until FSock.LastError <> 0;
       if Pos('HTTP/', UpperCase(s)) = 1 then
       begin
         FHeaders.Add(s);
@@ -564,29 +581,53 @@ begin
   { if need receive headers, receive and parse it }
   ToClose := FProtocol <> '1.1';
   if FHeaders.Count > 0 then
-    repeat
-      s := FSock.RecvString(FTimeout);
-      FHeaders.Add(s);
-      if s = '' then
-        Break;
-      su := UpperCase(s);
-      if Pos('CONTENT-LENGTH:', su) = 1 then
+  begin
+    l := TStringList.Create;
+    try
+      repeat
+        s := FSock.RecvString(FTimeout);
+        l.Add(s);
+        if s = '' then
+          Break;
+      until FSock.LastError <> 0;
+      x := 0;
+      while l.Count > x do
       begin
-        Size := StrToIntDef(Trim(SeparateRight(s, ' ')), -1);
-        if (Size <> -1) and (FTransferEncoding = TE_UNKNOWN) then
-          FTransferEncoding := TE_IDENTITY;
+        s := NormalizeHeader(l, x);
+        FHeaders.Add(s);
+        su := UpperCase(s);
+        if Pos('CONTENT-LENGTH:', su) = 1 then
+        begin
+          Size := StrToIntDef(Trim(SeparateRight(s, ' ')), -1);
+          if (Size <> -1) and (FTransferEncoding = TE_UNKNOWN) then
+            FTransferEncoding := TE_IDENTITY;
+        end;
+        if Pos('CONTENT-TYPE:', su) = 1 then
+          FMimeType := Trim(SeparateRight(s, ' '));
+        if Pos('TRANSFER-ENCODING:', su) = 1 then
+        begin
+          s := Trim(SeparateRight(su, ' '));
+          if Pos('CHUNKED', s) > 0 then
+            FTransferEncoding := TE_CHUNKED;
+        end;
+        if UsingProxy then
+        begin
+          if Pos('PROXY-CONNECTION:', su) = 1 then
+            if Pos('CLOSE', su) > 0 then
+              ToClose := True;
+        end
+        else
+        begin
+          if Pos('CONNECTION:', su) = 1 then
+            if Pos('CLOSE', su) > 0 then
+              ToClose := True;
+        end;
       end;
-      if Pos('CONTENT-TYPE:', su) = 1 then
-        FMimeType := Trim(SeparateRight(s, ' '));
-      if Pos('TRANSFER-ENCODING:', su) = 1 then
-      begin
-        s := Trim(SeparateRight(su, ' '));
-        if Pos('CHUNKED', s) > 0 then
-          FTransferEncoding := TE_CHUNKED;
-      end;
-      if Pos('CONNECTION: CLOSE', su) = 1 then
-        ToClose := True;
-    until FSock.LastError <> 0;
+    finally
+      l.free;
+    end;
+  end;
+
   Result := FSock.LastError = 0;
   if not Result then
     Exit;
@@ -638,7 +679,7 @@ begin
   begin
     FDownloadSize := Size;
     FSock.RecvStreamSize(FDocument, FTimeout, Size);
-    FDocument.Seek(0, soFromEnd);
+    FDocument.Position := FDocument.Size;
     Result := FSock.LastError = 0;
   end
   else

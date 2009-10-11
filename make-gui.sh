@@ -48,41 +48,41 @@ echo "Compiler version: $VER"
 echo "Compiling installer..."
 if [ "$WIDGET" == "qt4" ]; then
 #./libuild PR=listallgo.lpr O=listallgo WIDGET=qt4
-$LCLDir/lazbuild -B --ws=qt listallgo.lpr
+lazbuild -B --ws=qt listallgo.lpr
 mv ./bin/listallgo ./bin/qt4/
 else
 #./libuild PR=listallgo.lpr O=listallgo WIDGET=gtk2
-$LCLDir/lazbuild -B --ws=gtk2 listallgo.lpr
+lazbuild -B --ws=gtk2 listallgo.lpr
 mv ./bin/listallgo ./bin/gtk2/
 fi
 echo "Compiling software-manager..."
 if [ "$WIDGET" == "qt4" ]; then
 #./libuild PR=listallmngr.lpr O=listallmgr WIDGET=qt4
-$LCLDir/lazbuild -B --ws=qt listallmgr.lpr
+lazbuild -B --ws=qt listallmgr.lpr
 mv ./bin/listallmgr ./bin/qt4/
 else
 #./libuild PR=listallmngr.lpr O=listallmgr WIDGET=gtk2
-$LCLDir/lazbuild -B --ws=gtk2 listallmgr.lpr
+lazbuild -B --ws=gtk2 listallmgr.lpr
 mv ./bin/listallmgr ./bin/gtk2/
 fi
 echo "Compiling updater..."
 if [ "$WIDGET" == "qt4" ]; then
 #./libuild PR=liupdate.lpr O=liupdate WIDGET=qt4
-$LCLDir/lazbuild -B --ws=qt liupdate.lpr
+lazbuild -B --ws=qt liupdate.lpr
 mv ./bin/liupdate ./bin/qt4/
 else
 #./libuild PR=liupdate.lpr O=liupdate WIDGET=gtk2
-$LCLDir/lazbuild -B --ws=gtk2 liupdate.lpr
+lazbuild -B --ws=gtk2 liupdate.lpr
 mv ./bin/liupdate ./bin/gtk2/
 fi
 echo "Compiling tray notifier..."
 if [ "$WIDGET" == "qt4" ]; then
 #./libuild PR=liupdate.lpr O=liupdate WIDGET=qt4
-$LCLDir/lazbuild -B --ws=qt litray.lpr
+lazbuild -B --ws=qt litray.lpr
 mv ./bin/litray ./bin/qt4/
 else
 #./libuild PR=liupdate.lpr O=liupdate WIDGET=gtk2
-$LCLDir/lazbuild -B --ws=gtk2 litray.lpr
+lazbuild -B --ws=gtk2 litray.lpr
 mv ./bin/litray ./bin/gtk2/
 fi
 

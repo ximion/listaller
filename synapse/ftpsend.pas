@@ -1,9 +1,9 @@
 {==============================================================================|
-| Project : Ararat Synapse                                       | 003.005.000 |
+| Project : Ararat Synapse                                       | 003.005.001 |
 |==============================================================================|
 | Content: FTP client                                                          |
 |==============================================================================|
-| Copyright (c)1999-2007, Lukas Gebauer                                        |
+| Copyright (c)1999-2008, Lukas Gebauer                                        |
 | All rights reserved.                                                         |
 |                                                                              |
 | Redistribution and use in source and binary forms, with or without           |
@@ -33,7 +33,7 @@
 | DAMAGE.                                                                      |
 |==============================================================================|
 | The Initial Developer of the Original Code is Lukas Gebauer (Czech Republic).|
-| Portions created by Lukas Gebauer are Copyright (c) 1999-2007.               |
+| Portions created by Lukas Gebauer are Copyright (c) 1999-2008.               |
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
@@ -43,7 +43,7 @@
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
 |==============================================================================}
 
-{**  @abstract(FTP client protocol)
+{: @abstract(FTP client protocol)
 
 Used RFC: RFC-959, RFC-2228, RFC-2428
 }
@@ -65,22 +65,22 @@ const
   cFtpProtocol = '21';
   cFtpDataProtocol = '20';
 
-  {** Terminating value for TLogonActions}
+  {:Terminating value for TLogonActions}
   FTP_OK = 255;
-  {** Terminating value for TLogonActions}
+  {:Terminating value for TLogonActions}
   FTP_ERR = 254;
 
 type
-  {** Array for holding definition of logon sequence.}
+  {:Array for holding definition of logon sequence.}
   TLogonActions = array [0..17] of byte;
 
-  {** Procedural type for OnStatus event. Sender is calling @link(TFTPSend) object.
+  {:Procedural type for OnStatus event. Sender is calling @link(TFTPSend) object.
    Value is FTP command or reply to this comand. (if it is reply, Response
    is @True).}
   TFTPStatus = procedure(Sender: TObject; Response: Boolean;
     const Value: string) of object;
 
-  {**  @abstract(Object for holding file information) parsed from directory
+  {: @abstract(Object for holding file information) parsed from directory
    listing of FTP server.}
   TFTPListRec = class(TObject)
   private
@@ -93,29 +93,29 @@ type
     FMask: string;
     FPermission: string;
   public
-    {**  You can assign another TFTPListRec to this object.}
+    {: You can assign another TFTPListRec to this object.}
     procedure Assign(Value: TFTPListRec); virtual;
   published
-    {** name of file}
+    {:name of file}
     property FileName: string read FFileName write FFileName;
-    {** if name is subdirectory not file.}
+    {:if name is subdirectory not file.}
     property Directory: Boolean read FDirectory write FDirectory;
-    {** if you have rights to read}
+    {:if you have rights to read}
     property Readable: Boolean read FReadable write FReadable;
-    {** size of file in bytes}
+    {:size of file in bytes}
     property FileSize: Longint read FFileSize write FFileSize;
-    {** date and time of file. Local server timezone is used. Any timezone
+    {:date and time of file. Local server timezone is used. Any timezone
      conversions was not done!}
     property FileTime: TDateTime read FFileTime write FFileTime;
-    {** original unparsed line}
+    {:original unparsed line}
     property OriginalLine: string read FOriginalLine write FOriginalLine;
-    {** mask what was used for parsing}
+    {:mask what was used for parsing}
     property Mask: string read FMask write FMask;
-    {** permission string (depending on used mask!)}
+    {:permission string (depending on used mask!)}
     property Permission: string read FPermission write FPermission;
   end;
 
-  {** @abstract(This is TList of TFTPListRec objects.)
+  {:@abstract(This is TList of TFTPListRec objects.)
    This object is used for holding lististing of all files information in listed
    directory on FTP server.}
   TFTPList = class(TObject)
@@ -148,44 +148,44 @@ type
     function CheckValues: Boolean; virtual;
     procedure FillRecord(const Value: TFTPListRec); virtual;
   public
-    {** Constructor. You not need create this object, it is created by TFTPSend
+    {:Constructor. You not need create this object, it is created by TFTPSend
      class as their property.}
     constructor Create;
     destructor Destroy; override;
 
-    {** Clear list.}
+    {:Clear list.}
     procedure Clear; virtual;
 
-    {** count of holded @link(TFTPListRec) objects}
+    {:count of holded @link(TFTPListRec) objects}
     function Count: integer; virtual;
 
-    {** Assigns one list to another}
+    {:Assigns one list to another}
     procedure Assign(Value: TFTPList); virtual;
 
-    {** try to parse raw directory listing in @link(lines) to list of
+    {:try to parse raw directory listing in @link(lines) to list of
      @link(TFTPListRec).}
     procedure ParseLines; virtual;
 
-    {** By this property you have access to list of @link(TFTPListRec).
+    {:By this property you have access to list of @link(TFTPListRec).
      This is for compatibility only. Please, use @link(Items) instead.}
     property List: TList read FList;
 
-    {** By this property you have access to list of @link(TFTPListRec).}
+    {:By this property you have access to list of @link(TFTPListRec).}
     property Items[Index: Integer]: TFTPListRec read GetListItem; default;
 
-    {** Set of lines with RAW directory listing for @link(parseLines)}
+    {:Set of lines with RAW directory listing for @link(parseLines)}
     property Lines: TStringList read FLines;
 
-    {** Set of masks for directory listing parser. It is predefined by default,
+    {:Set of masks for directory listing parser. It is predefined by default,
     however you can modify it as you need. (for example, you can add your own
     definition mask.) Mask is same as mask used in TotalCommander.}
     property Masks: TStringList read FMasks;
 
-    {** After @link(ParseLines) it holding lines what was not sucessfully parsed.}
+    {:After @link(ParseLines) it holding lines what was not sucessfully parsed.}
     property UnparsedLines: TStringList read FUnparsedLines;
   end;
 
-  {** @abstract(Implementation of FTP protocol.)
+  {:@abstract(Implementation of FTP protocol.)
    Note: Are you missing properties for setting Username and Password? Look to
    parent @link(TSynaClient) object! (Username and Password have default values
    for "anonymous" FTP login)
@@ -229,48 +229,48 @@ type
     function AcceptDataSocket: Boolean; virtual;
     procedure DoStatus(Response: Boolean; const Value: string); virtual;
   public
-    {** Custom definition of login sequence. You can use this when you set
+    {:Custom definition of login sequence. You can use this when you set
      @link(FWMode) to value -1.}
     CustomLogon: TLogonActions;
 
     constructor Create;
     destructor Destroy; override;
 
-    {** Waits and read FTP server response. You need this only in special cases!}
+    {:Waits and read FTP server response. You need this only in special cases!}
     function ReadResult: Integer; virtual;
 
-    {** Parse remote side information of data channel from value string (returned
+    {:Parse remote side information of data channel from value string (returned
      by PASV command). This function you need only in special cases!}
     procedure ParseRemote(Value: string); virtual;
 
-    {** Parse remote side information of data channel from value string (returned
+    {:Parse remote side information of data channel from value string (returned
      by EPSV command). This function you need only in special cases!}
     procedure ParseRemoteEPSV(Value: string); virtual;
 
-    {** Send Value as FTP command to FTP server. Returned result code is result of
+    {:Send Value as FTP command to FTP server. Returned result code is result of
      this function.
      This command is good for sending site specific command, or non-standard
      commands.}
     function FTPCommand(const Value: string): integer; virtual;
 
-    {** Connect and logon to FTP server. If you specify any FireWall, connect to
+    {:Connect and logon to FTP server. If you specify any FireWall, connect to
      firewall and throw them connect to FTP server. Login sequence depending on
      @link(FWMode).}
     function Login: Boolean; virtual;
 
-    {** Logoff and disconnect from FTP server.}
+    {:Logoff and disconnect from FTP server.}
     function Logout: Boolean; virtual;
 
-    {** Break current transmission of data. (You can call this method from
+    {:Break current transmission of data. (You can call this method from
      Sock.OnStatus event, or from another thread.)}
     procedure Abort; virtual;
 
-    {** Break current transmission of data. It is same as Abort, but it send abort
+    {:Break current transmission of data. It is same as Abort, but it send abort
      telnet commands prior ABOR FTP command. Some servers need it. (You can call
      this method from Sock.OnStatus event, or from another thread.)}
     procedure TelnetAbort; virtual;
 
-    {** Download directory listing of Directory on FTP server. If Directory is
+    {:Download directory listing of Directory on FTP server. If Directory is
      empty string, download listing of current working directory.
      If NameList is @true, download only names of files in directory.
      (internally use NLST command instead LIST command)
@@ -278,180 +278,180 @@ type
      property.}
     function List(Directory: string; NameList: Boolean): Boolean; virtual;
 
-    {** Read data from FileName on FTP server. If Restore is @true and server
+    {:Read data from FileName on FTP server. If Restore is @true and server
      supports resume dowloads, download is resumed. (received is only rest
      of file)}
     function RetrieveFile(const FileName: string; Restore: Boolean): Boolean; virtual;
 
-    {** Send data to FileName on FTP server. If Restore is @true and server
+    {:Send data to FileName on FTP server. If Restore is @true and server
      supports resume upload, upload is resumed. (send only rest of file)
      In this case if remote file is same length as local file, nothing will be
      done. If remote file is larger then local, resume is disabled and file is
      transfered from begin!}
     function StoreFile(const FileName: string; Restore: Boolean): Boolean; virtual;
 
-    {** Send data to FTP server and assing unique name for this file.}
+    {:Send data to FTP server and assing unique name for this file.}
     function StoreUniqueFile: Boolean; virtual;
 
-    {** Append data to FileName on FTP server.}
+    {:Append data to FileName on FTP server.}
     function AppendFile(const FileName: string): Boolean; virtual;
 
-    {** Rename on FTP server file with OldName to NewName.}
+    {:Rename on FTP server file with OldName to NewName.}
     function RenameFile(const OldName, NewName: string): Boolean; virtual;
 
-    {** Delete file FileName on FTP server.}
+    {:Delete file FileName on FTP server.}
     function DeleteFile(const FileName: string): Boolean; virtual;
 
-    {** Return size of Filename file on FTP server. If command failed (i.e. not
+    {:Return size of Filename file on FTP server. If command failed (i.e. not
      implemented), return -1.}
     function FileSize(const FileName: string): integer; virtual;
 
-    {** Send NOOP command to FTP server for preserve of disconnect by inactivity
+    {:Send NOOP command to FTP server for preserve of disconnect by inactivity
      timeout.}
     function NoOp: Boolean; virtual;
 
-    {** Change currect working directory to Directory on FTP server.}
+    {:Change currect working directory to Directory on FTP server.}
     function ChangeWorkingDir(const Directory: string): Boolean; virtual;
 
-    {** walk to upper directory on FTP server.}
+    {:walk to upper directory on FTP server.}
     function ChangeToParentDir: Boolean; virtual;
 
-    {** walk to root directory on FTP server. (May not work with all servers properly!)}
+    {:walk to root directory on FTP server. (May not work with all servers properly!)}
     function ChangeToRootDir: Boolean; virtual;
 
-    {** Delete Directory on FTP server.}
+    {:Delete Directory on FTP server.}
     function DeleteDir(const Directory: string): Boolean; virtual;
 
-    {** Create Directory on FTP server.}
+    {:Create Directory on FTP server.}
     function CreateDir(const Directory: string): Boolean; virtual;
 
-    {** Return current working directory on FTP server.}
+    {:Return current working directory on FTP server.}
     function GetCurrentDir: String; virtual;
 
-    {** Establish data channel to FTP server and retrieve data.
+    {:Establish data channel to FTP server and retrieve data.
      This function you need only in special cases, i.e. when you need to implement
      some special unsupported FTP command!}
     function DataRead(const DestStream: TStream): Boolean; virtual;
 
-    {** Establish data channel to FTP server and send data.
+    {:Establish data channel to FTP server and send data.
      This function you need only in special cases, i.e. when you need to implement
      some special unsupported FTP command.}
     function DataWrite(const SourceStream: TStream): Boolean; virtual;
   published
-    {** After FTP command contains result number of this operation.}
+    {:After FTP command contains result number of this operation.}
     property ResultCode: Integer read FResultCode;
 
-    {** After FTP command contains main line of result.}
+    {:After FTP command contains main line of result.}
     property ResultString: string read FResultString;
 
-    {** After any FTP command it contains all lines of FTP server reply.}
+    {:After any FTP command it contains all lines of FTP server reply.}
     property FullResult: TStringList read FFullResult;
 
-    {** Account information used in some cases inside login sequence.}
+    {:Account information used in some cases inside login sequence.}
     property Account: string read FAccount Write FAccount;
 
-    {** Address of firewall. If empty string (default), firewall not used.}
+    {:Address of firewall. If empty string (default), firewall not used.}
     property FWHost: string read FFWHost Write FFWHost;
 
-    {** port of firewall. standard value is same port as ftp server used. (21)}
+    {:port of firewall. standard value is same port as ftp server used. (21)}
     property FWPort: string read FFWPort Write FFWPort;
 
-    {** Username for login to firewall. (if needed)}
+    {:Username for login to firewall. (if needed)}
     property FWUsername: string read FFWUsername Write FFWUsername;
 
-    {** password for login to firewall. (if needed)}
+    {:password for login to firewall. (if needed)}
     property FWPassword: string read FFWPassword Write FFWPassword;
 
-    {** Type of Firewall. Used only if you set some firewall address. Supported
+    {:Type of Firewall. Used only if you set some firewall address. Supported
      predefined firewall login sequences are described by comments in source
      file where you can see pseudocode decribing each sequence.}
     property FWMode: integer read FFWMode Write FFWMode;
 
-    {** Socket object used for TCP/IP operation on control channel. Good for
+    {:Socket object used for TCP/IP operation on control channel. Good for
      seting OnStatus hook, etc.}
     property Sock: TTCPBlockSocket read FSock;
 
-    {** Socket object used for TCP/IP operation on data channel. Good for seting
+    {:Socket object used for TCP/IP operation on data channel. Good for seting
      OnStatus hook, etc.}
     property DSock: TTCPBlockSocket read FDSock;
 
-    {** If you not use @link(DirectFile) mode, all data transfers is made to or
+    {:If you not use @link(DirectFile) mode, all data transfers is made to or
      from this stream.}
     property DataStream: TMemoryStream read FDataStream;
 
-    {** After data connection is established, contains remote side IP of this
+    {:After data connection is established, contains remote side IP of this
      connection.}
     property DataIP: string read FDataIP;
 
-    {** After data connection is established, contains remote side port of this
+    {:After data connection is established, contains remote side port of this
      connection.}
     property DataPort: string read FDataPort;
 
-    {** Mode of data handling by data connection. If @False, all data operations
+    {:Mode of data handling by data connection. If @False, all data operations
      are made to or from @link(DataStream) TMemoryStream.
      If @true, data operations is made directly to file in your disk. (filename
      is specified by @link(DirectFileName) property.) Dafault is @False!}
     property DirectFile: Boolean read FDirectFile Write FDirectFile;
 
-    {** Filename for direct disk data operations.}
+    {:Filename for direct disk data operations.}
     property DirectFileName: string read FDirectFileName Write FDirectFileName;
 
-    {** Indicate after @link(Login) if remote server support resume downloads and
+    {:Indicate after @link(Login) if remote server support resume downloads and
      uploads.}
     property CanResume: Boolean read FCanResume;
 
-    {** If true (default value), all transfers is made by passive method.
+    {:If true (default value), all transfers is made by passive method.
      It is safer method for various firewalls.}
     property PassiveMode: Boolean read FPassiveMode Write FPassiveMode;
 
-    {** Force to listen for dataconnection on standard port (20). Default is @false,
+    {:Force to listen for dataconnection on standard port (20). Default is @false,
      dataconnections will be made to any non-standard port reported by PORT FTP
      command. This setting is not used, if you use passive mode.}
     property ForceDefaultPort: Boolean read FForceDefaultPort Write FForceDefaultPort;
 
-    {** When is @true, then is disabled EPSV and EPRT support. However without this
+    {:When is @true, then is disabled EPSV and EPRT support. However without this
      commands you cannot use IPv6! (Disabling of this commands is needed only
      when you are behind some crap firewall/NAT.}
     property ForceOldPort: Boolean read FForceOldPort Write FForceOldPort;
 
-    {** You may set this hook for monitoring FTP commands and replies.}
+    {:You may set this hook for monitoring FTP commands and replies.}
     property OnStatus: TFTPStatus read FOnStatus write FOnStatus;
 
-    {** After LIST command is here parsed list of files in given directory.}
+    {:After LIST command is here parsed list of files in given directory.}
     property FtpList: TFTPList read FFtpList;
 
-    {** if @true (default), then data transfers is in binary mode. If this is set
+    {:if @true (default), then data transfers is in binary mode. If this is set
      to @false, then ASCII mode is used.}
     property BinaryMode: Boolean read FBinaryMode Write FBinaryMode;
 
-    {** if is true, then if server support upgrade to SSL/TLS mode, then use them.}
+    {:if is true, then if server support upgrade to SSL/TLS mode, then use them.}
     property AutoTLS: Boolean read FAutoTLS Write FAutoTLS;
 
-    {** if server listen on SSL/TLS port, then you set this to true.}
+    {:if server listen on SSL/TLS port, then you set this to true.}
     property FullSSL: Boolean read FFullSSL Write FFullSSL;
 
-    {** Signalise, if control channel is in SSL/TLS mode.}
+    {:Signalise, if control channel is in SSL/TLS mode.}
     property IsTLS: Boolean read FIsTLS;
 
-    {** Signalise, if data transfers is in SSL/TLS mode.}
+    {:Signalise, if data transfers is in SSL/TLS mode.}
     property IsDataTLS: Boolean read FIsDataTLS;
 
-    {** If @true (default), then try to use SSL/TLS on data transfers too.
+    {:If @true (default), then try to use SSL/TLS on data transfers too.
      If @false, then SSL/TLS is used only for control connection.}
     property TLSonData: Boolean read FTLSonData write FTLSonData;
   end;
 
-{** A very useful function, and example of use can be found in the TFtpSend object.
+{:A very useful function, and example of use can be found in the TFtpSend object.
  Dowload specified file from FTP server to LocalFile.}
 function FtpGetFile(const IP, Port, FileName, LocalFile,
   User, Pass: string): Boolean;
 
-{** A very useful function, and example of use can be found in the TFtpSend object.
+{:A very useful function, and example of use can be found in the TFtpSend object.
  Upload specified LocalFile to FTP server.}
 function FtpPutFile(const IP, Port, FileName, LocalFile,
   User, Pass: string): Boolean;
 
-{** A very useful function, and example of use can be found in the TFtpSend object.
+{:A very useful function, and example of use can be found in the TFtpSend object.
  Initiate transfer of file between two FTP servers.}
 function FtpInterServerTransfer(
   const FromIP, FromPort, FromFile, FromUser, FromPass: string;
@@ -983,11 +983,11 @@ begin
   Result := DataRead(FDataStream);
   if (not NameList) and Result then
   begin
-    FDataStream.Seek(0, soFromBeginning);
+    FDataStream.Position := 0;
     FFTPList.Lines.LoadFromStream(FDataStream);
     FFTPList.ParseLines;
   end;
-  FDataStream.Seek(0, soFromBeginning);
+  FDataStream.Position := 0;
 end;
 
 function TFTPSend.RetrieveFile(const FileName: string; Restore: Boolean): Boolean;
@@ -1016,7 +1016,7 @@ begin
       FTPCommand('TYPE A');
     if Restore then
     begin
-      RetrStream.Seek(0, soFromEnd);
+      RetrStream.Position := RetrStream.Size;
       if (FTPCommand('REST ' + IntToStr(RetrStream.Size)) div 100) <> 3 then
         Exit;
     end
@@ -1027,7 +1027,7 @@ begin
       Exit;
     Result := DataRead(RetrStream);
     if not FDirectFile then
-      RetrStream.Seek(0, soFromBeginning);
+      RetrStream.Position := 0;
   finally
     if FDirectFile then
       RetrStream.Free;
@@ -1069,7 +1069,7 @@ begin
     if FCanResume then
       if (FTPCommand('REST ' + IntToStr(RestoreAt)) div 100) <> 3 then
         Exit;
-    SendStream.Seek(RestoreAt, soFromBeginning);
+    SendStream.Position := RestoreAt;
     if (FTPCommand(Command) div 100) <> 1 then
       Exit;
     Result := DataWrite(SendStream);
