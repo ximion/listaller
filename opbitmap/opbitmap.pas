@@ -1872,7 +1872,7 @@ end;
 
 function TOPBitmap.GetHandle: THandle;
 begin
-  Result := THandle(Self);
+  Result := THandle(@Self);
 end;
 
 procedure TOPBitmap.SetHandle(const Value: THandle);

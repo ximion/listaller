@@ -32,8 +32,8 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="3" Y="424"/>
-        <TopLine Value="404"/>
+        <CursorPos X="118" Y="388"/>
+        <TopLine Value="368"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="47"/>
         <Loaded Value="True"/>
@@ -244,7 +244,6 @@
       <SmartLinkUnit Value="True"/>
     </CodeGeneration>
     <Linking>
-      <LinkSmart Value="True"/>
       <Options>
         <ExecutableType Value="Library"/>
       </Options>

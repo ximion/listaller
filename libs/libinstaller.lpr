@@ -386,7 +386,6 @@ begin
  Result:=false;
 if not Assigned(mgr^.OnProgress) then begin writeLn('[ERROR] You need to register a progress callback!');exit;end;
 if not Assigned(mgr^.OnRequest) then begin writeLn('[ERROR] You need to register a user request callback!');exit;end;
-
  Result:=true;
  try
   mgr^.UninstallApp(obj);
