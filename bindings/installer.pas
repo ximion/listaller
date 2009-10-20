@@ -57,6 +57,7 @@ type
   function  GetFileList: String;
   function  StartInstallation: Boolean;
   procedure SetProfileID(i: Integer);
+  procedure SetRootMode(b: Boolean);
  end;
 
  function IsIPKAppInstalled(appname: String;appid: String): Boolean;
@@ -64,35 +65,35 @@ type
 implementation
 
 //Import library functions
-function li_setup_new: Pointer; cdecl; external libinst name 'li_setup_new';
-function li_setup_free(setup: Pointer): Boolean; external libinst name 'li_setup_free';
-function li_setup_init(setup: Pointer;pkname: PChar): PChar; cdecl; external libinst name 'li_setup_init';
-function li_setup_register_main_progress_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'li_setup_register_main_progress_call';
-function li_setup_register_extra_progress_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'li_setup_register_extra_progress_call';
-function li_setup_pkgtype(setup: Pointer): TPkgType; cdecl; external libinst name 'li_setup_pkgtype';
-function li_setup_disallows(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_disallows';
-function li_setup_supported_distributions(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_supported_distributions';
-function li_setup_appname(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_appname';
-function li_setup_appversion(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_appversion';
-function li_setup_pkgid(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_pkgid';
-function li_setup_long_description(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'li_setup_long_description';
-function li_setup_wizard_image_path(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_wizard_image_path';
-function li_setup_license(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'li_setup_license';
-function li_setup_profiles_list(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'li_setup_profiles_list';
-function li_setup_appicon(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_appicon';
-function li_setup_desktopfiles(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_desktopfiles';
-function li_setup_resolve_dependencies(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'li_setup_resolve_dependencies';
-function li_setup_app_exec_command(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_app_exec_command';
-function li_setup_profile_current_filelist(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_profile_current_filelist';
-function li_setup_register_message_call(setup: Pointer;call: TMessageCall): Boolean; cdecl; external libinst name 'li_setup_register_message_call';
-function li_setup_register_step_message_call(setup: Pointer;call: TMessageCall): Boolean; cdecl; external libinst name 'li_setup_register_step_message_call';
-function li_setup_register_user_request_call(setup: Pointer;call: TRequestCall): Boolean; cdecl; external libinst name 'li_setup_register_user_request_call';
-function li_setup_start(setup: Pointer): Boolean; cdecl; external libinst name 'li_setup_start';
-function li_setup_dependencies(setup: Pointer; list: PStringList): Boolean; cdecl; external libinst name 'li_setup_dependencies';
-function li_setup_set_profileid(setup: Pointer;id: ShortInt): Boolean; cdecl;  external libinst name 'li_setup_set_profileid';
-function li_is_ipk_app_installed(appname: PChar;appid: PChar): Boolean; cdecl; external libinst name 'li_is_ipk_app_installed';
-function li_set_su_mode(b: Boolean): Boolean; cdecl; external libinst name 'li_set_su_mode';
-function li_testmode(st: Boolean): Boolean; cdecl; external libinst name 'li_testmode';
+function  li_setup_new: Pointer; cdecl; external libinst name 'li_setup_new';
+procedure li_setup_free(setup: Pointer); external libinst name 'li_setup_free';
+procedure li_setup_set_su_mode(setup: Pointer;b: Boolean);cdecl; external libinst name 'li_mgr_set_su_mode';
+function  li_setup_init(setup: Pointer;pkname: PChar): PChar; cdecl; external libinst name 'li_setup_init';
+function  li_setup_register_main_progress_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'li_setup_register_main_progress_call';
+function  li_setup_register_extra_progress_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst name 'li_setup_register_extra_progress_call';
+function  li_setup_pkgtype(setup: Pointer): TPkgType; cdecl; external libinst name 'li_setup_pkgtype';
+function  li_setup_disallows(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_disallows';
+function  li_setup_supported_distributions(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_supported_distributions';
+function  li_setup_appname(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_appname';
+function  li_setup_appversion(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_appversion';
+function  li_setup_pkgid(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_pkgid';
+function  li_setup_long_description(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'li_setup_long_description';
+function  li_setup_wizard_image_path(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_wizard_image_path';
+function  li_setup_license(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'li_setup_license';
+function  li_setup_profiles_list(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'li_setup_profiles_list';
+function  li_setup_appicon(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_appicon';
+function  li_setup_desktopfiles(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_desktopfiles';
+function  li_setup_resolve_dependencies(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst name 'li_setup_resolve_dependencies';
+function  li_setup_app_exec_command(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_app_exec_command';
+function  li_setup_profile_current_filelist(setup: Pointer): PChar; cdecl; external libinst name 'li_setup_profile_current_filelist';
+function  li_setup_register_message_call(setup: Pointer;call: TMessageCall): Boolean; cdecl; external libinst name 'li_setup_register_message_call';
+function  li_setup_register_step_message_call(setup: Pointer;call: TMessageCall): Boolean; cdecl; external libinst name 'li_setup_register_step_message_call';
+function  li_setup_register_user_request_call(setup: Pointer;call: TRequestCall): Boolean; cdecl; external libinst name 'li_setup_register_user_request_call';
+function  li_setup_start(setup: Pointer): Boolean; cdecl; external libinst name 'li_setup_start';
+function  li_setup_dependencies(setup: Pointer; list: PStringList): Boolean; cdecl; external libinst name 'li_setup_dependencies';
+function  li_setup_set_profileid(setup: Pointer;id: ShortInt): Boolean; cdecl;  external libinst name 'li_setup_set_profileid';
+function  li_is_ipk_app_installed(appname: PChar;appid: PChar): Boolean; cdecl; external libinst name 'li_is_ipk_app_installed';
+function  li_testmode(st: Boolean): Boolean; cdecl; external libinst name 'li_testmode';
 
 { TInstallPack }
 
@@ -232,7 +233,12 @@ begin
  Result:=li_setup_start(@ins);
 end;
 
-procedure TInstallPAck.SetProfileID(i: Integer);
+procedure TInstallPack.SetRootMode(b: boolean);
+begin
+ li_setup_set_su_mode(@ins,b);
+end;
+
+procedure TInstallPack.SetProfileID(i: Integer);
 begin
  li_setup_set_profileid(@ins,i);
 end;

@@ -83,6 +83,13 @@ type
   FRequest: TRequestCall;
   FSMessage:  TMessageCall;
   FMessage:  TMessageCall;
+  // True if su mode enabled
+  Root: Boolean;
+  // Path to package registration
+  RegDir: String;
+
+  //Set superuser mode correctly
+  procedure SetRootMode(b: Boolean);
   //Executed if Linstallation should be done
   function RunNormalInstallation: Boolean;
   //Runs a DLink installation
@@ -147,6 +154,8 @@ type
   procedure ReadDescription(sl: TStringList);
   //** Read the package license
   procedure ReadLicense(sl: TStringList);
+  //** True on installation with superuser rights
+  property RootMode: Boolean read Root write SetRootMode;
   //Progress events
   property OnProgressMainChange: TProgressCall read FProgChange1 write FProgChange1;
   property OnProgressExtraChange: TProgressCall read FProgChange2 write FProgChange2;
@@ -168,13 +177,8 @@ end;
  //** Checks if package is installed
  function IsPackageInstalled(aName: String;aID: String): Boolean;
 
- var
-  //** True if application is in su mode
-  Root: Boolean=false;
-  //** Path to package registration
-  RegDir: String;
 
-  //Note: The "Testmode" variable is in LiCommon
+ //Note: The "Testmode" variable is in LiCommon
 
 implementation
 
@@ -229,6 +233,15 @@ begin
  if Assigned(Dependencies) then Dependencies.Free;
  license.Free;
  longdesc.Free;
+end;
+
+procedure TInstallation.SetRootMode(b: Boolean);
+begin
+ Root:=b;
+ if Root then
+  RegDir:='/etc/lipa/app-reg/'
+ else
+  RegDir:=SyblToPath('$INST')+'/app-reg/';
 end;
 
 procedure TInstallation.SetCurProfile(i: Integer);

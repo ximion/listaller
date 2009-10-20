@@ -4,7 +4,7 @@ LazarusResources.Add('TConvDisp','FORMDATA',[
   +'mMenu'#10'biMinimize'#0#11'BorderStyle'#7#12'bsToolWindow'#7'Caption'#6#23
   +'Convertig >< package...'#12'ClientHeight'#3'&'#1#11'ClientWidth'#3#206#1#8
   +'OnCreate'#7#10'FormCreate'#8'Position'#7#16'poMainFormCenter'#10'LCLVersion'
-  +#6#6'0.9.27'#0#6'TLabel'#6'Label1'#4'Left'#2#8#6'Height'#2#20#3'Top'#2#8#5'W'
+  +#6#6'0.9.28'#0#6'TLabel'#6'Label1'#4'Left'#2#8#6'Height'#2#20#3'Top'#2#8#5'W'
   +'idth'#3'v'#1#7'Caption'#6'2Please wait while ''alien'' converts your packag'
   +'e...'#11'Font.Height'#2#241#9'Font.Name'#6#4'Sans'#11'ParentColor'#8#10'Par'
   +'entFont'#8#0#0#5'TMemo'#5'Memo1'#4'Left'#2#0#6'Height'#3#254#0#3'Top'#2'('#5

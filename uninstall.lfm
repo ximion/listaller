@@ -59,7 +59,7 @@ object RMForm: TRMForm
   OnCreate = FormCreate
   OnShow = DetailsBtnClick
   Position = poMainFormCenter
-  LCLVersion = '0.9.27'
+  LCLVersion = '0.9.28'
   object Label1: TLabel
     Left = 8
     Height = 14

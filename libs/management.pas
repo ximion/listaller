@@ -24,58 +24,85 @@ uses
   Classes, SysUtils, SQLite3Ds, IniFiles, GetText, TRStrings, LiCommon,
   DB, FileUtil, packagekit, Process, ipkhandle, liTypes;
 
-{** Process .desktop-file and add info to list @param fname Name of the .desktop file
-      @param tp Category name}
-//function ProcessDesktopFile(fname: String; tp: String): Boolean;
-
-//** Load software list entries
-procedure LoadEntries;
-//** Method that removes MOJO/LOKI installed applications @param dsk Path to the .desktop file of the application
-function UninstallMojo(dsk: String): Boolean;
-//** Removes an application
-procedure UninstallApp(obj: TAppInfo);
-
-{** Checks dependencies of all installed apps
+type
+ PAppManager = ^TAppManager;
+ TAppManager = class
+ private
+  Root: Boolean;
+  FMsg: TMessageCall;
+  FReq: TRequestCall;
+  FApp: TAppEvent;
+  FProg: TProgressCall;
+  procedure msg(s: String;t: TMType);
+  function request(s: String;ty: TRqType): TRqResult;
+  procedure newapp(s: String;oj: TAppInfo);
+  procedure setpos(i: Integer);
+  function IsInList(nm: String;list: TStringList): Boolean;
+  //** Method that removes MOJO/LOKI installed applications @param dsk Path to the .desktop file of the application
+  function UninstallMojo(dsk: String): Boolean;
+ public
+  constructor Create;
+  destructor Destroy;override;
+  //** Load software list entries
+  procedure LoadEntries;
+  //** Removes an application
+  procedure UninstallApp(obj: TAppInfo);
+ {** Checks dependencies of all installed apps
     @param report Report of the executed actions
     @param fix True if all found issues should be fixed right now
     @returns True if everything is okay, False if dependencies are missing}
-function CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
+  function CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
+  property OnMessage: TMessageCall read FMsg write FMsg;
+  property OnRequest: TRequestCall read FReq write FReq;
+  property OnApplication: TAppEvent read FApp write FApp;
+  property OnProgress: TprogressCall read FProg write FProg;
+  property RootMode: Boolean read Root write Root;
+end;
 
-var Root: Boolean=false;
-    FMsg: TMessageCall;
-    FReq: TRequestCall;
-    FApp: TAppEvent;
-    FProg: TProgressCall;
+{ Process .desktop-file and add info to list @param fname Name of the .desktop file
+      @param tp Category name}
+//function ProcessDesktopFile(fname: String; tp: String): Boolean;
 
 implementation
 
+{ TAppManager }
 
-procedure msg(s: String;t: TMType);
+constructor TAppManager.Create;
+begin
+ inherited;
+end;
+
+destructor TAppManager.Destroy;
+begin
+ inherited;
+end;
+
+procedure TAppManager.Msg(s: String;t: TMType);
 begin
  if Assigned(FMsg) then FMsg(PChar(s),t);
 end;
 
-function request(s: String;ty: TRqType): TRqResult;
+function TAppManager.Request(s: String;ty: TRqType): TRqResult;
 begin
  if Assigned(FReq) then Result:=FReq(ty,PChar(s));
 end;
 
-procedure newapp(s: String;oj: TAppInfo);
+procedure TAppManager.NewApp(s: String;oj: TAppInfo);
 begin
  if Assigned(FApp) then FApp(PChar(s),oj);
 end;
 
-procedure setpos(i: Integer);
+procedure TAppManager.SetPos(i: Integer);
 begin
  if Assigned(FProg) then FProg(i);
 end;
 
-function IsInList(nm: String;list: TStringList): Boolean;
+function TAppManager.IsInList(nm: String;list: TStringList): Boolean;
 begin
 Result:=list.IndexOf(nm)>-1;
 end;
 
-procedure LoadEntries;
+procedure TAppManager.LoadEntries;
 var ini: TIniFile;tmp,xtmp: TStringList;i,j: Integer;p,n: String;
     entry: TAppInfo;
     dsApp: TSQLite3Dataset;
@@ -426,7 +453,7 @@ end;
 
 
 //Uninstall Mojo and LOKI Setups
-function UninstallMojo(dsk: String): Boolean;
+function TAppManager.UninstallMojo(dsk: String): Boolean;
 var inf: TIniFile;tmp: TStringList;t: TProcess;mandir: String;
 begin
 Result:=true;
@@ -480,7 +507,7 @@ begin
 end;
 end;
 
-procedure UninstallApp(obj: TAppInfo);
+procedure TAppManager.UninstallApp(obj: TAppInfo);
 var f,g: String; t:TProcess;tmp: TStringList;pkit: TPackageKit;i: Integer;
     name,id: String;
 begin
@@ -585,7 +612,7 @@ end else exit;
   end;
 end;
 
-function CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
+function TAppManager.CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
 var dsApp: TSQLite3Dataset;deps: TStringList;i: Integer;pkit: TPackageKit;s: String;
 begin
 writeLn('Checking dependencies of all registered applications...');

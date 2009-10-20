@@ -407,7 +407,7 @@ LazarusResources.Add('TMnFrm','FORMDATA',[
   +#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0
   +#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#10'OnActivate'
   +#7#12'FormActivate'#8'OnCreate'#7#10'FormCreate'#9'OnDestroy'#7#11'FormDestr'
-  +'oy'#6'OnShow'#7#8'FormShow'#10'LCLVersion'#6#6'0.9.27'#0#6'TImage'#6'Image1'
+  +'oy'#6'OnShow'#7#8'FormShow'#10'LCLVersion'#6#6'0.9.28'#0#6'TImage'#6'Image1'
   +#4'Left'#2#0#6'Height'#2'0'#3'Top'#2#0#5'Width'#3'0'#3#5'Align'#7#5'alTop'#7
   +'Stretch'#9#0#0#6'TLabel'#11'StatusLabel'#4'Left'#2'p'#6'Height'#2#14#3'Top'
   +#3' '#2#5'Width'#2'9'#7'Anchors'#11#6'akLeft'#8'akBottom'#0#7'Caption'#6#10

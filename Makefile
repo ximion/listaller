@@ -37,9 +37,13 @@ install-core:
 	chmod +x ./install-core.sh
 	./install-core.sh
 
-licreator:
+licreator-qt:
 	chmod +x ./make-creator.sh
-	./make-creator.sh
+	./make-creator.sh WIDGET=qt4
+	
+licreator-gtk:
+	chmod +x ./make-creator.sh
+	./make-creator.sh WIDGET=gtk2
 
 install-licreator-gtk:
 	chmod +x ./install-creator.sh

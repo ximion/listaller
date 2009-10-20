@@ -317,7 +317,7 @@ object MnFrm: TMnFrm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  LCLVersion = '0.9.27'
+  LCLVersion = '0.9.28'
   object Image1: TImage
     Left = 0
     Height = 48

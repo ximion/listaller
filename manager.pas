@@ -111,7 +111,6 @@ type
     { private declarations }
     blst: TStringList;
     procedure UninstallClick(Sender: TObject);
-    lang: String;
   public
     { public declarations }
     DInfo: TDistroInfo;
@@ -119,6 +118,8 @@ type
     AList: TObjectList;
     //** Information about the application that should be uninstalled
     uApp: TAppInfo;
+    //** Pointer to our AppManager object
+    amgr: Pointer;
   end;
 
   //** Fill ImageList with category icons
@@ -701,7 +702,7 @@ begin
   if fAct then
   begin fAct:=false;
   MBar.Visible:=true;
-  li_mgr_load_apps();
+  li_mgr_load_apps(@amgr);
   MBar.Visible:=false;
   end;
 end;
@@ -722,7 +723,7 @@ SWBox.DoubleBuffered:=true;
 DoubleBuffered:=true;
 DInfo:=GetDistro;
 
-lang:=GetLangID;
+amgr:=li_mgr_new; //Create new app manager
 
  if not DirectoryExists(RegDir) then SysUtils.CreateDir(RegDir);
   
@@ -833,15 +834,15 @@ begin
 end;     }
 
 //Register callback to be notified if new app was found
-li_mgr_register_app_call(@OnNewAppFound);
+li_mgr_register_app_call(@amgr,@OnNewAppFound);
 
 //Register callback to be notified if a message was thrown
-li_mgr_register_msg_call(@OnMessage);
+li_mgr_register_msg_call(@amgr,@OnMessage);
 
 //Register request call
-li_mgr_register_request_call(@OnUserRequest);
+li_mgr_register_request_call(@amgr,@OnUserRequest);
 
-li_mgr_set_su_mode(true);
+li_mgr_set_su_mode(@amgr,true);
 
 InstAppButton.Down:=true;
 
@@ -869,6 +870,7 @@ end;
 begin
   //Write configuration which was not applied yet
   WriteConfig();
+  li_mgr_free(@aMgr); //Free appmanager
   if Assigned(blst) then blst.Free;       //Free blacklist
   if Assigned(InstLst) then InstLst.Free; //Free list of installed apps
   if Assigned(AList) then AList.Free;     //Free AppPanel store

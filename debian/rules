@@ -10,9 +10,9 @@ build-stamp:
 	dh_testdir
 
 	$(MAKE) all
-	$(MAKE) WIDGET=gtk2 licreator
+	$(MAKE) licreator-gtk
 	#make WIDGET=gtk2 litheme
-	$(MAKE) WIDGET=qt4 licreator
+	$(MAKE) licreator-qt
 	#make WIDGET=qt4 litheme
 	#docbook-to-man debian/listaller.sgml > listaller.1
 

@@ -23,16 +23,18 @@ interface
 uses
   Classes, SysUtils, liTypes;
 
- function li_mgr_load_apps: Boolean;cdecl;external libinst name 'li_mgr_load_apps';
- function li_mgr_register_msg_call(call: TMessageCall): Boolean;cdecl;external libinst name 'li_mgr_register_msg_call';
- function li_mgr_register_progress_call(call: TProgressCall): Boolean;cdecl;external libinst name 'li_mgr_register_progress_call';
- function li_mgr_register_request_call(call: TRequestCall): TRqResult;cdecl;external libinst name 'li_mgr_register_request_call';
- function li_mgr_register_app_call(call: TAppEvent): Boolean;cdecl;external libinst name 'li_mgr_register_app_call';
- function li_mgr_set_su_mode(md: Boolean): Boolean;cdecl;external libinst name 'li_mgr_set_su_mode';
- function li_remove_app(obj: TAppInfo): Boolean;cdecl;external libinst name 'li_mgr_remove_app';
- function li_remove_ipk_installed_app(appname, appid: PChar;msgcall: TMessageCall;poschange: TProgressCall;fastmode: Boolean): Boolean; cdecl; external libinst name 'li_remove_ipk_installed_app';
- function li_check_apps(log: PStringList;root: Boolean): Boolean;cdecl;external libinst name 'li_check_apps';
- function li_fix_apps(log: PStringList;root: Boolean): Boolean;cdecl;external libinst name 'li_fix_apps';
+ function  li_mgr_new: Pointer;cdecl;external libinst name 'li_mgr_new';
+ procedure li_mgr_free(mgr: Pointer);cdecl;external libinst name 'li_mgr_free';
+ function  li_mgr_load_apps(mgr: Pointer): Boolean;cdecl;external libinst name 'li_mgr_load_apps';
+ function  li_mgr_register_msg_call(mgr: Pointer;call: TMessageCall): Boolean;cdecl;external libinst name 'li_mgr_register_msg_call';
+ function  li_mgr_register_progress_call(mgr: Pointer;call: TProgressCall): Boolean;cdecl;external libinst name 'li_mgr_register_progress_call';
+ function  li_mgr_register_request_call(mgr: Pointer;call: TRequestCall): TRqResult;cdecl;external libinst name 'li_mgr_register_request_call';
+ function  li_mgr_register_app_call(mgr: Pointer;call: TAppEvent): Boolean;cdecl;external libinst name 'li_mgr_register_app_call';
+ procedure li_mgr_set_su_mode(mgr: Pointer;md: Boolean);cdecl;external libinst name 'li_mgr_set_su_mode';
+ function  li_mgr_remove_app(mgr: Pointer;obj: TAppInfo): Boolean;cdecl;external libinst name 'li_mgr_remove_app';
+ function  li_remove_ipk_installed_app(appname, appid: PChar;msgcall: TMessageCall;poschange: TProgressCall;fastmode: Boolean): Boolean; cdecl; external libinst name 'li_remove_ipk_installed_app';
+ function  li_mgr_check_apps(mgr: Pointer;log: PStringList;root: Boolean): Boolean;cdecl;external libinst name 'li_mgr_check_apps';
+ function  li_mgr_fix_apps(mgr: Pointer;log: PStringList;root: Boolean): Boolean;cdecl;external libinst name 'li_mgr_fix_apps';
 
 implementation
 

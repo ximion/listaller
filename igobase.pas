@@ -445,6 +445,8 @@ IWizFrm.Visible:=false;
 setup:=TInstallPack.Create;
 setup.SetUserRequestCall(@RequestHandling);
 setup.SetMessageCall(@MessageCall);
+//Set if root installation
+setup.SetRootMode(IsRoot);
 //Load the IPK data
 setup.Initialize(paramstr(1));
 

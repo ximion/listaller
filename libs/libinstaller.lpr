@@ -79,14 +79,9 @@ begin
 end;
 
 //** Removes an TInstallation object
-function li_setup_free(setup: PInstallation): Boolean;
+procedure li_setup_free(setup: PInstallation);
 begin
-try
- Result:=true;
  setup^.Free;
-except
- Result:=false;
-end;
 end;
 
 //** Initializes the setup
@@ -173,15 +168,10 @@ begin
   Result:=true;
 end;
 
-//** Set to superuser mode
-function li_set_su_mode(b: Boolean): Boolean; cdecl;
+//** Set TInstallation to superuser mode
+procedure li_setup_set_su_mode(setup: PInstallation;b: Boolean);cdecl;
 begin
-  Root:=b;
-  Result:=true;
-  if Root then
-  RegDir:='/etc/lipa/app-reg/'
-  else
-  RegDir:=SyblToPath('$INST')+'/app-reg/';
+ setup^.RootMode:=b;
 end;
 
 //** Read disallows property
@@ -315,90 +305,101 @@ end;
 ////////////////////////////////////////////////////////////////////
 //Manager part
 
+//** Creates a new TAppManager object
+function li_mgr_new: Pointer; cdecl;
+begin
+ Result:=TAppManager.Create;
+end;
+
+//** Removes an TAppManager object
+procedure li_mgr_free(mgr: PAppManager);
+begin
+ mgr^.Free;
+end;
+
 //** Start loading list of applications
-function li_mgr_load_apps: Boolean;cdecl;
+function li_mgr_load_apps(mgr: PAppManager): Boolean;cdecl;
 begin
 Result:=false;
-if not Assigned(FReq) then begin writeLn('[ERROR] No user request callback was registered');exit;end;
 try
+if not Assigned(mgr^.OnRequest) then begin writeLn('[ERROR] No user request callback was registered');exit;end;
  Result:=true;
- LoadEntries;
+ mgr^.LoadEntries;
 except
  Result:=false;
 end;
 end;
 
 //** Register message call
-function li_mgr_register_msg_call(call: TMessageCall): Boolean; cdecl;
+function li_mgr_register_msg_call(mgr: PAppManager;call: TMessageCall): Boolean; cdecl;
 begin
  Result:=true;
  try
-  management.FMsg:=call;
+  mgr^.OnMessage:=call;
  except
   Result:=false;
  end;
 end;
 
 //** Register application event to catch found apps
-function li_mgr_register_app_call(call: TAppEvent): Boolean;cdecl;
+function li_mgr_register_app_call(mgr: PAppManager;call: TAppEvent): Boolean;cdecl;
 begin
  Result:=true;
  try
-  management.FApp:=call;
+  mgr^.OnApplication:=call;
  except
   Result:=false;
  end;
 end;
 
 //** Register event to recieve current progress
-function li_mgr_register_progress_call(call: TProgressCall): Boolean;cdecl;
+function li_mgr_register_progress_call(mgr: PAppManager;call: TProgressCall): Boolean;cdecl;
 begin
  Result:=true;
  try
-  management.FProg:=call;;
+  mgr^.OnProgress:=call;;
  except
   Result:=false;
  end;
 end;
 
 //** Register event to recieve user requests
-function li_mgr_register_request_call(call: TRequestCall): Boolean;cdecl;
+function li_mgr_register_request_call(mgr: PAppManager;call: TRequestCall): Boolean;cdecl;
 begin
  Result:=true;
  try
-  management.FReq:=call;;
+  mgr^.OnRequest:=call;;
  except
   Result:=false;
  end;
 end;
 
 //** Sets if aplications should work in root mode
-function li_mgr_set_su_mode(md: Boolean): Boolean;cdecl;
+procedure li_mgr_set_su_mode(mgr: PAppManager;md: Boolean);cdecl;
 begin
- Root:=md;
- Result:=true;
+ mgr^.RootMode:=md;
 end;
 
 //** Removes the application
-function li_mgr_remove_app(obj: TAppInfo): Boolean;cdecl;
+function li_mgr_remove_app(mgr: PAppManager;obj: TAppInfo): Boolean;cdecl;
 begin
  Result:=false;
-if not Assigned(FProg) then begin writeLn('[ERROR] You need to register a progress callback!');exit;end;
-if not Assigned(FReq) then begin writeLn('[ERROR] You need to register a user request callback!');exit;end;
+if not Assigned(mgr^.OnProgress) then begin writeLn('[ERROR] You need to register a progress callback!');exit;end;
+if not Assigned(mgr^.OnRequest) then begin writeLn('[ERROR] You need to register a user request callback!');exit;end;
 
  Result:=true;
  try
-  UninstallApp(obj);
+  mgr^.UninstallApp(obj);
  except
   Result:=false;
  end;
 end;
 
 //** Check application dependencies
-function li_check_apps(log: PStringList;root: Boolean): Boolean;cdecl;
+function li_mgr_check_apps(mgr: PAppManager;log: PStringList;root: Boolean): Boolean;cdecl;
 procedure PerformCheck;
 begin
- if not CheckApps(log^,false,root) then
+ if not mgr^.CheckApps(log^,false,root) then
  begin
   Result:=false;
  end else Result:=true;
@@ -410,10 +411,10 @@ else writeLn('[ERROR]: Check log != nil failed.');
 end;
 
 //** Fix application dependencies
-function li_fix_apps(log: PStringList;root: Boolean): Boolean;cdecl;
+function li_mgr_fix_apps(mgr: PAppManager;log: PStringList;root: Boolean): Boolean;cdecl;
 procedure PerformCheck;
 begin
- if not CheckApps(log^,true,root) then
+ if not mgr^.CheckApps(log^,true,root) then
  begin
   Result:=false;
  end else Result:=true;
@@ -436,6 +437,7 @@ exports
  li_setup_new,
  li_setup_free,
  li_setup_init,
+ li_setup_set_su_mode,
  li_setup_register_main_progress_call,
  li_setup_register_extra_progress_call,
  li_setup_pkgtype,
@@ -461,6 +463,8 @@ exports
  li_setup_set_profileid,
 
  //Management functions
+ li_mgr_new,
+ li_mgr_free,
  li_mgr_load_apps,
  li_mgr_register_msg_call,
  li_mgr_register_app_call,
@@ -468,13 +472,12 @@ exports
  li_mgr_register_request_call,
  li_mgr_set_su_mode,
  li_mgr_remove_app,
- li_check_apps,
- li_fix_apps,
+ li_mgr_check_apps,
+ li_mgr_fix_apps,
 
  //Other functions
  li_remove_ipk_installed_app,
  li_testmode,
- li_set_su_mode,
  li_is_ipk_app_installed;
 
 begin

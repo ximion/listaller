@@ -85,7 +85,7 @@ begin
 end;
 
 procedure TForm1.MenuItem1Click(Sender: TObject);
-var rep: TStringList;root: Boolean;
+var rep: TStringList;root: Boolean;aMgr: Pointer;
 
 procedure LogQ;
 begin
@@ -95,10 +95,10 @@ end;
 
 procedure PerformCheck;
 begin
-if not li_check_apps(@rep,root) then
+if not li_mgr_check_apps(@aMgr,@rep,root) then
 begin
  if Application.MessageBox(PAnsiChar(rsBrokenDepsFixQ), 'FixDeps', MB_YESNO)=IDYES then
-   li_fix_apps(@rep,root);
+   li_mgr_fix_apps(@aMgr,@rep,root);
 end;
 end;
 
@@ -107,6 +107,7 @@ root:=false;
 if Application.MessageBox(PAnsiChar(rsCheckAppDepsQ), PChar(rsCheckDepsQ), MB_YESNO)=
   IDYES then
 begin
+ aMgr:=li_mgr_new; //New appmanager
  if Application.MessageBox(PAnsiChar(rsCheckRootAppsQ), PChar(rsCheckDepsQ), MB_YESNO)=IDYES then
  begin
   rep:=TStringList.Create;
@@ -115,6 +116,7 @@ begin
   PerformCheck;
  end else PerformCheck;
  LogQ;
+ li_mgr_free(@aMgr);
 end;
 
 end;
