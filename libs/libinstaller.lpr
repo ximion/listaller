@@ -19,7 +19,7 @@ library libinstaller;
 {$mode objfpc}{$H+}
 
 uses
-  Classes, ipkhandle, SysUtils, Controls, licommon, liTypes,
+  Classes, ipkHandle, SysUtils, Controls, liCommon, liTypes,
   management;
 
 
@@ -162,10 +162,15 @@ begin
 end;
 
 //** Set installation testmode
-function li_testmode(st: Boolean): Boolean; cdecl;
+procedure li_testmode(st: Boolean); cdecl;
 begin
   Testmode:=st;
-  Result:=true;
+end;
+
+//** Set actions which should be forced
+procedure li_setup_set_forced(setup: PInstallation;str: PChar); cdecl;
+begin
+  setup^.ForceActions:=str;
 end;
 
 //** Set TInstallation to superuser mode
@@ -459,6 +464,7 @@ exports
  li_setup_register_user_request_call,
  li_setup_start,
  li_setup_dependencies,
+ li_setup_set_forced,
  li_setup_set_profileid,
 
  //Management functions

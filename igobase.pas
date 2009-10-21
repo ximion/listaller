@@ -22,9 +22,9 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
-  ComCtrls, StdCtrls, IniFiles, FileUtil, ExtCtrls, process, Buttons,
-  LCLType, LCLIntf, distri, LiCommon, TRStrings, SynEdit, xTypeFm,
-  Installer, liTypes, IconLoader;
+  ComCtrls, StdCtrls, FileUtil, ExtCtrls, process, Buttons, LCLType,
+  LCLIntf, distri, LiCommon, TRStrings, SynEdit, xTypeFm, Installer,
+  liTypes, IconLoader;
 
 type
 
@@ -339,8 +339,8 @@ rqError: begin
   InfoMemo.Lines.Add(rsInstFailed);
   InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
   setup.Free;
-  FreeAndNil(IWizFrm);
   Application.Terminate;
+  FreeAndNil(IWizFrm);
   exit;
 end;
 rqWarning: begin
@@ -351,8 +351,8 @@ rqWarning: begin
    InfoMemo.Lines.Add('Installation aborted by user.');
    InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
    setup.Free;
-   FreeAndNil(IWizFrm);
    Application.Terminate;
+   FreeAndNil(IWizFrm);
   end;
 end;
 rqQuestion: begin
@@ -447,6 +447,9 @@ setup.SetUserRequestCall(@RequestHandling);
 setup.SetMessageCall(@MessageCall);
 //Set if root installation
 setup.SetRootMode(IsRoot);
+//Set forced actions
+if Application.HasOption('force-architecture') then
+ setup.Forced:='architecture;';
 //Load the IPK data
 setup.Initialize(paramstr(1));
 

@@ -3,7 +3,7 @@ object frmProjectWizard: TfrmProjectWizard
   Height = 666
   Top = 188
   Width = 836
-  ActiveControl = Edit1
+  ActiveControl = Panel1
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Project Wizard'
@@ -55,7 +55,7 @@ object frmProjectWizard: TfrmProjectWizard
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
-  LCLVersion = '0.9.27'
+  LCLVersion = '0.9.28'
   object Notebook1: TNotebook
     Left = 0
     Height = 604
@@ -1756,7 +1756,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page2: TPage
       Caption = 'Page2'
       ClientWidth = 832
-      ClientHeight = 600
+      ClientHeight = 577
       object Label8: TLabel
         Left = 7
         Height = 20
@@ -2253,7 +2253,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page3: TPage
       Caption = 'Page3'
       ClientWidth = 832
-      ClientHeight = 600
+      ClientHeight = 577
       object Label17: TLabel
         Left = 7
         Height = 20
@@ -2268,7 +2268,7 @@ object frmProjectWizard: TfrmProjectWizard
       object lvPackageFiles: TListView
         Left = 0
         Height = 392
-        Top = 208
+        Top = 185
         Width = 832
         Align = alBottom
         Columns = <        
@@ -2439,7 +2439,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page4: TPage
       Caption = 'Page4'
       ClientWidth = 832
-      ClientHeight = 600
+      ClientHeight = 577
       object Label19: TLabel
         Left = 7
         Height = 20
@@ -2470,7 +2470,7 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object tvDependencies: TTreeView
         Left = 310
-        Height = 248
+        Height = 225
         Top = 342
         Width = 509
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -2570,7 +2570,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page5: TPage
       Caption = 'Page5'
       ClientWidth = 832
-      ClientHeight = 600
+      ClientHeight = 577
       object Label18: TLabel
         Left = 7
         Height = 20
@@ -2584,7 +2584,7 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Memo1: TMemo
         Left = 6
-        Height = 520
+        Height = 497
         Top = 38
         Width = 804
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -2600,7 +2600,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page6: TPage
       Caption = 'Page6'
       ClientWidth = 832
-      ClientHeight = 600
+      ClientHeight = 577
       object Label21: TLabel
         Left = 7
         Height = 20

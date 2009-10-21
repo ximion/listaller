@@ -192,7 +192,7 @@ begin
   if LowerCase(h)=LowerCase(s)+'['+clang+']' then begin Result:=i;break;end;
  end;
  end;
- if (LowerCase(h)<>LowerCase(s)+'['+clang+']') then
+ if (not localized)or(LowerCase(h)<>LowerCase(s)+'['+clang+']') then
  //Then search the general key
  for i:=0 to text.count-1 do
  begin

@@ -39,6 +39,7 @@ Description: Listaller basic tools and libraries
 
 Package: listaller-data
 Architecture: all
+Depends: ${misc:Depends}, desktop-file-utils
 Description: Listaller data
  Listaller is a distribution-independ software install system.
  The application is able to uninstall every application on your

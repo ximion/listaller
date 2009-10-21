@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="662"/>
+      <CurrentBuildNr Value="669"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -27,13 +27,13 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="20">
+    <Units Count="21">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="118" Y="388"/>
-        <TopLine Value="368"/>
+        <CursorPos X="1" Y="490"/>
+        <TopLine Value="450"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="47"/>
         <Loaded Value="True"/>
@@ -41,15 +41,15 @@
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="16" Y="87"/>
-        <TopLine Value="66"/>
+        <CursorPos X="1" Y="450"/>
+        <TopLine Value="443"/>
         <UsageCount Value="19"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
+        <CursorPos X="3" Y="35"/>
+        <TopLine Value="15"/>
         <UsageCount Value="10"/>
       </Unit2>
       <Unit3>
@@ -83,8 +83,8 @@
       <Unit7>
         <Filename Value="../bindings/installer.pas"/>
         <UnitName Value="installer"/>
-        <CursorPos X="24" Y="24"/>
-        <TopLine Value="1"/>
+        <CursorPos X="104" Y="93"/>
+        <TopLine Value="61"/>
         <UsageCount Value="11"/>
       </Unit7>
       <Unit8>
@@ -118,15 +118,15 @@
       <Unit12>
         <Filename Value="../ipkdef.pas"/>
         <UnitName Value="ipkdef"/>
-        <CursorPos X="1" Y="457"/>
-        <TopLine Value="445"/>
+        <CursorPos X="41" Y="199"/>
+        <TopLine Value="172"/>
         <UsageCount Value="11"/>
       </Unit12>
       <Unit13>
         <Filename Value="../trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="94" Y="126"/>
-        <TopLine Value="106"/>
+        <CursorPos X="1" Y="98"/>
+        <TopLine Value="77"/>
         <UsageCount Value="11"/>
       </Unit13>
       <Unit14>
@@ -174,60 +174,62 @@
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit19>
+      <Unit20>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/rtl/objpas/sysutils/diskh.inc"/>
+        <CursorPos X="10" Y="21"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit20>
     </Units>
-    <JumpHistory Count="13" HistoryIndex="12">
+    <JumpHistory Count="12" HistoryIndex="11">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="301" Column="23" TopLine="279"/>
+        <Caret Line="485" Column="10" TopLine="450"/>
       </Position1>
       <Position2>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="465" Column="17" TopLine="442"/>
+        <Caret Line="479" Column="24" TopLine="445"/>
       </Position2>
       <Position3>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="336" Column="12" TopLine="312"/>
+        <Caret Line="69" Column="13" TopLine="45"/>
       </Position3>
       <Position4>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="23" Column="11" TopLine="3"/>
+        <Caret Line="481" Column="10" TopLine="445"/>
       </Position4>
       <Position5>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="16" TopLine="1"/>
+        <Caret Line="192" Column="24" TopLine="170"/>
       </Position5>
       <Position6>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="485" Column="10" TopLine="450"/>
+        <Caret Line="192" Column="24" TopLine="1"/>
       </Position6>
       <Position7>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="479" Column="24" TopLine="445"/>
+        <Caret Line="325" Column="20" TopLine="305"/>
       </Position7>
       <Position8>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="69" Column="13" TopLine="45"/>
+        <Caret Line="409" Column="3" TopLine="389"/>
       </Position8>
       <Position9>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="481" Column="10" TopLine="445"/>
+        <Caret Line="141" Column="7" TopLine="128"/>
       </Position9>
       <Position10>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="192" Column="24" TopLine="170"/>
+        <Caret Line="126" Column="51" TopLine="117"/>
       </Position10>
       <Position11>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="192" Column="24" TopLine="1"/>
+        <Caret Line="167" Column="8" TopLine="141"/>
       </Position11>
       <Position12>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="325" Column="20" TopLine="305"/>
+        <Caret Line="22" Column="17" TopLine="1"/>
       </Position12>
-      <Position13>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="409" Column="3" TopLine="389"/>
-      </Position13>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

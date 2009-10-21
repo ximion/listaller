@@ -21,7 +21,7 @@ unit ipkhandle;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, Process, LiCommon, trstrings, packagekit,
+  Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, packagekit,
   sqlite3ds, db, AbUnZper, AbArcTyp, ipkdef, HTTPSend, FTPSend, blcksock,
   MD5, liTypes, distri;
 
@@ -87,6 +87,8 @@ type
   Root: Boolean;
   // Path to package registration
   RegDir: String;
+  //All the things the user forces
+  Forces: String;
 
   //Set superuser mode correctly
   procedure SetRootMode(b: Boolean);
@@ -156,6 +158,8 @@ type
   procedure ReadLicense(sl: TStringList);
   //** True on installation with superuser rights
   property RootMode: Boolean read Root write SetRootMode;
+  //** Set forces identifier string
+  property ForceActions: String read Forces write Forces;
   //Progress events
   property OnProgressMainChange: TProgressCall read FProgChange1 write FProgChange1;
   property OnProgressExtraChange: TProgressCall read FProgChange2 write FProgChange2;
@@ -444,11 +448,14 @@ end;
 dsApp.Active:=true;
 msg('SQLite version: '+dsApp.SqliteVersion);
 
-
-
 msg('Loading IPK package...');
 //Begin loading package
 RmApp:=false;
+
+//Clean up the mess of an old installation
+if DirectoryExists(lp+ExtractFileName(fname)) then
+ RemoveDir(lp+ExtractFileName(fname));
+
 z:=TAbUnZipper.Create(nil);
 FDir:=lp+ExtractFileName(fname)+'/';
 if not DirectoryExists(lp) then
@@ -496,11 +503,13 @@ n:=GetSystemArchitecture;
 msg('Architectures: '+n);
 msg('Package-Arch: '+cont.Architectures);
 if (pos(n,LowerCase(cont.Architectures))<=0)
-and (LowerCase(cont.Architectures)<>'all') then begin
-MakeUsrRequest(rsInvArchitecture,rqError);
-z.Free;
-Result:=false;
-exit;
+and (LowerCase(cont.Architectures)<>'all')
+and (pos('architecture',forces)<=0) then
+begin
+ MakeUsrRequest(rsInvArchitecture,rqError);
+ z.Free;
+ Result:=false;
+ exit;
 end;
 
 if pkType=ptLinstall then

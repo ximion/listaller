@@ -383,7 +383,7 @@ writeLn('  '+rsOptions);
 writeLn('    --testmode                             '+rsLipaInfo4);
 writeLn('    --verbose                              '+rsLipaInfo5);
 writeLn('--checkapps                                '+rsLipaInfo6);
-if FileExists('/bin/libuild') then
+if FileExists('/usr/bin/libuild') then
 begin
 writeLn(rsCMDInfoPkgBuild);
 writeLn('-b, --build [IPS-File] [Output-IPK]        '+rsLiBuildInfoA);

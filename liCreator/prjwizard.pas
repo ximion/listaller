@@ -421,6 +421,17 @@ begin
 
 end;
 
+//Needed to remove duplicate dependency entries
+procedure RemoveDuplicates(s: TStrings);
+var
+  iLow, iHigh: integer;
+begin
+  for iLow := 0 to s.Count - 2 do
+    for iHigh := Pred(s.Count) downto Succ(iLow) do
+      if s[iLow] = s[iHigh] then
+        s.Delete(iHigh);
+end;
+
 procedure TfrmProjectWizard.BitBtn3Click(Sender: TObject);
 var
   i,j,k: Integer;
@@ -431,6 +442,7 @@ var
   sl: TStringList;
   ipks: TIPKScript;
 begin
+ (Sender as TBitBtn).Enabled:=false;
   if CreaType=ptLinstall then
   begin
   if NoteBook1.PageIndex=4 then
@@ -477,6 +489,7 @@ begin
   case NoteBook1.PageIndex of
   0: begin
        NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
+       (Sender as TBitBtn).Enabled:=true;
        exit;
      end;
   1: begin
@@ -486,6 +499,7 @@ begin
          begin
            ShowMessage('Please define a short description of your application ('
                        +aTreeNode.Text+')!');
+           (Sender as TBitBtn).Enabled:=true;
            exit;
          end;
          aTreeNode := aTreeNode.GetNextSibling;
@@ -493,6 +507,7 @@ begin
        if not FileExists(FileNameEdit2.FileName) then
        begin
          ShowMessage('Set the path to an long description file of your application to continue!');
+         (Sender as TBitBtn).Enabled:=true;
          exit;
        end;
 
@@ -500,6 +515,7 @@ begin
        and(not cbUseAppCMD.Checked) then
        begin
         ShowMessage('Listaller''s tesmode requires an start command for your application!');
+        (Sender as TBitBtn).Enabled:=true;
         exit;
        end;
 
@@ -513,6 +529,7 @@ begin
 
        NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
 
+       (Sender as TBitBtn).Enabled:=true;
        exit;
      end;
   2: begin
@@ -549,6 +566,9 @@ begin
 
        DependencyBox.Items.Assign(sl);
        sl.Free;
+
+       RemoveDuplicates(DependencyBox.Items); //We do not need dependencies listed up twice
+
        for i:=0 to DependencyBox.Items.Count-1 do
        DependencyBox.Checked[i]:=true;
       end;
@@ -560,6 +580,7 @@ begin
        if lvPackageFiles.Items.Count<1 then
        begin
          ShowMessage('Select some files that will be installed.'#13'- a package without files is useless. ;-)');
+         (Sender as TBitBtn).Enabled:=true;
          exit;
        end;
        NoteBook1.PageIndex:=NoteBook1.PageIndex+1;
@@ -634,8 +655,8 @@ end; //End of Normal
  if CreaType=ptDLink then begin
    case NoteBook1.PageIndex of
    1: begin
-      if tvShortDescriptions.Items.Count<=1 then begin ShowMessage('Please define a short description for your application!');exit;end;
-      if not FileExists(FileNameEdit2.FileName) then begin ShowMessage('Set the path to an long description file of your application to continue!');exit;end;
+      if tvShortDescriptions.Items.Count<=1 then begin ShowMessage('Please define a short description for your application!');(Sender as TBitBtn).Enabled:=true;exit;end;
+      if not FileExists(FileNameEdit2.FileName) then begin ShowMessage('Set the path to an long description file of your application to continue!');(Sender as TBitBtn).Enabled:=true;exit;end;
         NoteBook1.PageIndex:=2;
         for i:=0 to lbDistributions.Count-1 do
          tvDependencies.Items.Add(nil,lbDistributions.Items[i]);
@@ -644,6 +665,7 @@ end; //End of Normal
         if tvDependencies.Items.Count<=(2+lbDistributions.Count) then
         begin
           ShowMessage('The dlink-package should have at least one dependency!');
+          (Sender as TBitBtn).Enabled:=true;
           exit;
         end;
         NoteBook1.PageIndex:=4;
@@ -723,6 +745,8 @@ end; //End of Normal
     // frmEditor.Page2.TabVisible:=false;
     Close;
   end; //End of LOKI
+
+ (Sender as TBitBtn).Enabled:=true;
 end;
 
 procedure TfrmProjectWizard.btnAssignShortDescriptionClick(Sender: TObject);

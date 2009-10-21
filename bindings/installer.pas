@@ -28,6 +28,8 @@ type
  TInstallPack = class
  private
   ins: Pointer;
+  ForcedActn: String;
+  procedure SetForced(s: String);
  public
   constructor Create;
   destructor  Destroy;override;
@@ -58,6 +60,7 @@ type
   function  StartInstallation: Boolean;
   procedure SetProfileID(i: Integer);
   procedure SetRootMode(b: Boolean);
+  property Forced: String read ForcedActn write SetForced;
  end;
 
  function IsIPKAppInstalled(appname: String;appid: String): Boolean;
@@ -90,10 +93,11 @@ function  li_setup_register_message_call(setup: Pointer;call: TMessageCall): Boo
 function  li_setup_register_step_message_call(setup: Pointer;call: TMessageCall): Boolean; cdecl; external libinst name 'li_setup_register_step_message_call';
 function  li_setup_register_user_request_call(setup: Pointer;call: TRequestCall): Boolean; cdecl; external libinst name 'li_setup_register_user_request_call';
 function  li_setup_start(setup: Pointer): Boolean; cdecl; external libinst name 'li_setup_start';
+procedure li_setup_set_forced(setup: Pointer;str: PChar);cdecl; external libinst name 'li_setup_set_forced';
 function  li_setup_dependencies(setup: Pointer; list: PStringList): Boolean; cdecl; external libinst name 'li_setup_dependencies';
 function  li_setup_set_profileid(setup: Pointer;id: ShortInt): Boolean; cdecl;  external libinst name 'li_setup_set_profileid';
 function  li_is_ipk_app_installed(appname: PChar;appid: PChar): Boolean; cdecl; external libinst name 'li_is_ipk_app_installed';
-function  li_testmode(st: Boolean): Boolean; cdecl; external libinst name 'li_testmode';
+procedure li_testmode(st: Boolean);cdecl; external libinst name 'li_testmode';
 
 { TInstallPack }
 
@@ -241,6 +245,12 @@ end;
 procedure TInstallPack.SetProfileID(i: Integer);
 begin
  li_setup_set_profileid(@ins,i);
+end;
+
+procedure TInstallPack.SetForced(s: String);
+begin
+ ForcedActn:=s;
+ li_setup_set_forced(@ins,PChar(s));
 end;
 
 function IsIPKAppInstalled(appname: String;appid: String): Boolean;
