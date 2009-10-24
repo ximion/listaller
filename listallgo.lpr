@@ -1,18 +1,18 @@
-{ listallgo.lpr
-  Copyright (C) Listaller Project 2008-2009
+{ Copyright (C) 2008-2009 Matthias Klumpp
 
-  listallgo.lpr is free software: you can redistribute it and/or modify it
-  under the terms of the GNU General Public License as published
-  by the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
+  Authors:
+   Matthias Klumpp
 
-  listallgo.lpr is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU General Public License for more details.
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation, version 3.
 
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.}
+  This program is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License v3
+  along with this program. If not, see <http://www.gnu.org/licenses/>.}
 //** GUI wizard application for IPK package installations
 program listallgo;
 
@@ -25,19 +25,67 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms,
   igobase, dgunit, trStrings, LResources, SysUtils, LiCommon,
-  liTranslator;
+  liTranslator, liTypes, Installer, LCLType;
 
 {$IFDEF WINDOWS}{$R listallgo.rc}{$ENDIF}
 
 begin
   {$I listallgo.lrs}
-  Application.Title:='Installer';
-  Application.Initialize;
-  writeLn('Application initialized.');
-  Application.CreateForm(TIWizFrm, IWizFrm);
-  Application.ShowMainForm:=true;
-  writeLn('GUI created.');
-  Application.Run;
-  writeLn('Installer closed.');
+
+   //Init application
+   Application.Title:='Installer';
+   Application.Initialize;
+   writeLn('Application initialized.');
+
+   //Load IPK-File, quit on failure
+  if LoadIPKFile() then
+  begin
+  { --- Do Container setup --- }
+  if setup.PkType=ptContainer then
+  begin
+   setup.Free;
+   // The setup has already done everything we needed
+   Application.Terminate;
+  end;
+
+  { --- Prepare Listallation --- }
+  if setup.PkType=ptLinstall then
+  begin
+   //Check if app is already installed
+   if not Testmode then
+   begin
+    if IsIPKAppInstalled(setup.GetAppName,setup.GetAppID) then
+    if Application.MessageBox(PAnsiChar(PAnsiChar(rsAlreadyInst)+#13+PAnsiChar(rsInstallAgain)),PAnsiChar(rsReInstall),MB_YESNO)= IDNO then
+    begin
+     setup.Free;
+     Application.Terminate;
+     exit;
+    end;
+   end;
+   Application.CreateForm(TIWizFrm, IWizFrm);
+  end else
+  { --- Prepare DLink Install --- }
+  if setup.PkType=ptDLink then
+  begin
+   Application.CreateForm(TDGForm, DGForm);
+
+   DGForm.IIconPath:=setup.GetAppIcon;
+   DGForm.IDesktopFiles:=setup.GetDesktopFiles;
+  with DGForm do
+  begin
+   Label1.Caption:=StringReplace(rsInstOf,'%a',setup.GetAppName,[rfReplaceAll]);
+   Label2.Caption:=rsWillDLFiles;
+   Caption:=Label1.Caption;
+   Memo2.Clear;
+   Memo2.Lines.Add(rsPkgDownload);
+   end;
+ end;
+
+
+   Application.ShowMainForm:=true;
+   writeLn('GUI created.');
+   Application.Run;
+   writeLn('Installer closed.');
+  end else Application.Terminate;
 end.
 

@@ -118,8 +118,9 @@ begin
 Parent:=Self;
 AutoSize:=true;
 Anchors:=[akBottom,akRight];
-Top:=self.Height-60;
-Left:=self.Width-140;
+Top:=self.Height-55;
+Left:=self.Width-125;
+
 Caption:='';
 end;
 

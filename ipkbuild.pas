@@ -188,11 +188,14 @@ i:=0;
 while i <= fls.Count-1 do begin
 
 if fls[i][1]='>' then dir:=copy(fls[i],2,length(fls[i]))
-else begin
-if (fls[i][1]='/')or(fls[i][1]='.') then begin
+else
+begin
+if (fls[i][1]='/')or(fls[i][1]='.') then
+begin
 
  if (not FileExists(DeleteModifiers(fls[i])))
- and (not FileExists(ExtractFilePath(FName)+fls[i])) then begin
+ and (not FileExists(ExtractFilePath(FName)+fls[i])) then
+ begin
  writeLn('error: ');
  writeln('The file '+DeleteModifiers(fls[i])+' does not exists!');
  writeLn('[Action canceled]');
@@ -202,13 +205,15 @@ if (fls[i][1]='/')or(fls[i][1]='.') then begin
  if not DirectoryExists(path+'/'+StringReplace(fls[i],'$','',[]))
  then CreateDir(path+'/'+StringReplace(dir,'$','',[]));
  h:=path+'/'+StringReplace(dir,'$','',[]);
- while not DirectoryExists(path+'/'+StringReplace(dir,'$','',[])) do begin
+ while not DirectoryExists(path+'/'+StringReplace(dir,'$','',[])) do
+ begin
  CreateDir(h);
  if DirectoryExists(h) then h:=path+'/'+StringReplace(dir,'$','',[])
  else h:=ExtractFilePath(ExcludeTrailingBackslash(h));
  end;
 
- if (i=fls.Count-1)or(MD5.MDPrint(MD5.MD5File(DeleteModifiers(fls[i]),1024))<>fls[i+1]) then begin
+ if (i=fls.Count-1)or(MD5.MDPrint(MD5.MD5File(DeleteModifiers(fls[i]),1024))<>fls[i+1]) then
+ begin
  zip := TAbZipper.Create(nil);
  zip.BaseDirectory :=h;
         writeln('Writing '+ExtractFileName(DeleteModifiers(fls[i]))+' ...');
@@ -334,11 +339,19 @@ writeLn('');
   i:=0;
  while i < files.Count-1 do begin
 
- if files[i][1]='>' then s:=copy(files[i],2,length(files[i]))
- else begin
- if (files[i][1]='/')or(files[i][1]='.') then begin
+ if files[i][1]='>' then
+ begin
+  //We have a new target folder. Set path
+  s:=copy(files[i],2,length(files[i]));
+  //Copy targed folder section
+  fc.Add(files[i]);
+ end else
+ begin
+ if (files[i][1]='/')or(files[i][1]='.') then
+ begin
  if (not FileExists(DeleteModifiers(Files[i])))
- and (not FileExists(ExtractFilePath(fi)+DeleteModifiers(Files[i]))) then begin
+ and (not FileExists(ExtractFilePath(fi)+DeleteModifiers(Files[i]))) then
+ begin
  writeLn('error: ');
  writeln('The file '+DeleteModifiers(Files[i])+' doesn''t exists!');
  writeLn('[Build canceled]');
@@ -364,7 +377,6 @@ writeLn('');
 //writeLn('Add: '+fc[fc.Count-1]);
  tmp.Add(WDir+'data'+SyblToX(s)+'/'+ExtractFileName(DeleteModifiers(Files[i])));
  fc.Add(MD5.MDPrint(MD5.MD5File(DeleteModifiers(Files[i]),1024)));//ExcludeTrailingBackslash(Files[i+1]));
- fc.Add(ExcludeTrailingBackslash(s));
  write('.');
 
   end;

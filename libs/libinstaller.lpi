@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="669"/>
+      <CurrentBuildNr Value="675"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -41,8 +41,8 @@
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="1" Y="450"/>
-        <TopLine Value="443"/>
+        <CursorPos X="32" Y="1157"/>
+        <TopLine Value="1141"/>
         <UsageCount Value="19"/>
       </Unit1>
       <Unit2>
@@ -228,7 +228,7 @@
       </Position11>
       <Position12>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="17" TopLine="1"/>
+        <Caret Line="22" Column="19" TopLine="1"/>
       </Position12>
     </JumpHistory>
   </ProjectOptions>

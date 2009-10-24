@@ -22,9 +22,9 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
-  Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, distri, LEntries,
-  uninstall, trstrings, FileUtil, CheckLst, xtypefm, appman, LiCommon, liTypes,
-  Contnrs, sqlite3ds, db, aboutbox, GetText, PackageKit, Spin, iconloader;
+  Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, Distri, LEntries,
+  Uninstall, trStrings, FileUtil, CheckLst, xTypeFm, AppMan, LiCommon, liTypes,
+  Contnrs, AboutBox, GetText, PackageKit, Spin, iconLoader;
 
 type
 
@@ -710,14 +710,6 @@ end;
 procedure TMnFrm.FormCreate(Sender: TObject);
 var xFrm: TimdFrm;i: Integer;tmp: TStringList;
 begin
-if FileExists(paramstr(1)) then
-begin
-  Process1.Options:=[];
-  Process1.CommandLine := ExtractFilePath(Application.ExeName)+'listallgo '+paramstr(1);
-  Process1.Execute;
-  Application.Terminate;
-  exit;
-end;
 
 SWBox.DoubleBuffered:=true;
 DoubleBuffered:=true;
@@ -842,7 +834,7 @@ li_mgr_register_msg_call(@amgr,@OnMessage);
 //Register request call
 li_mgr_register_request_call(@amgr,@OnUserRequest);
 
-li_mgr_set_su_mode(@amgr,true);
+li_mgr_set_su_mode(@amgr,IsRoot);
 
 InstAppButton.Down:=true;
 
@@ -851,7 +843,6 @@ Notebook1.ActivePageComponent:=InstalledAppsPage;
 end;
 
 procedure TMnFrm.FormDestroy(Sender: TObject);
-var i: Integer;
 procedure WriteConfig;
  var p: String;cnf: TIniFile;
 begin

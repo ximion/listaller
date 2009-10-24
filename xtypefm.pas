@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this program. If not, see <http://www.gnu.org/licenses/>.}
-//** This unit provides an formular that lets the user choose between program runlevels (root / not as root / in app-testmode)
+//** This unit provides an form to choose between program runlevels (root / not as root / in app-testmode)
 unit xtypefm;
 
 {$mode objfpc}{$H+}
@@ -22,8 +22,8 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  process, ExtCtrls, LiCommon, LCLType, Buttons, distri, trstrings, ComCtrls,
-  packagekit, iconloader;
+  Process, ExtCtrls, LiCommon, LCLType, Buttons, Distri, trStrings, ComCtrls,
+  iconLoader;
 
 type
 
@@ -59,7 +59,6 @@ implementation
 { TIMdFrm }
 
 procedure TIMdFrm.FormCreate(Sender: TObject);
-var s: String;pkit: TPackageKit;
 begin
  //Set translation strings
  Caption:=rsSelInstMode;
@@ -70,24 +69,14 @@ begin
  Label1.Caption:=rsWantToDoQ;
  PkILabel.Caption:=rsSpkWarning;
 
-//Check PackageKit version
-try
-  pkit:=TPackageKit.Create;
-  s:=pkit.Version;
-  pkit.Free;
-  writeLn('Detected PackageKit: '+s);
-  // s:=copy(s,1,5);
-  if StrToInt(StringReplace(s,'.','',[rfReplaceAll]))<46 then
-  begin
-        Label2.Caption:=StringReplace(StringReplace(rsPackageKitWarning,'%cp',s,[rfReplaceAll]),'%np','0.4.6',[rfReplaceAll]);
-        Label2.Visible:=true;
-        Image2.Visible:=true;
-        LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_BUTTON,Image2.Picture.Bitmap);
-  end;
-
-  except
-    LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_BUTTON,Image2.Picture.Bitmap);
-  end;
+ //Show development version warning
+ if (pos('exp',LiVersion)>0)or(pos('dev',LiVersion)>0) then
+ begin
+     Label2.Caption:=rsDevVersion;
+     Label2.Visible:=true;
+     Image2.Visible:=true;
+     LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_BUTTON,Image2.Picture.Bitmap);
+ end;
 end;
 
 procedure TIMdFrm.FormShow(Sender: TObject);

@@ -47,7 +47,6 @@ type
 procedure TLiBuild.DoRun;
 var
   ErrorMsg,a,b: String;
-  t: TProcess;
   i: Integer;
   x: Boolean;
   pki: TPackInfo;

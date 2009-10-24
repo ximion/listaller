@@ -105,6 +105,9 @@ var
   //** IPK installation object
   setup: TInstallPack;
 
+  //** Load the IPK file
+  function LoadIPKFile(): Boolean;
+
 implementation
 
 uses DGUnit;
@@ -287,7 +290,7 @@ with IWizFrm do
 begin
  DSolveProgress.Position:=pos;
 
- if(pos=0)and(DSolveProgress.Visible=true)then DSolveProgress.Visible:=false
+ if(pos=0)then DSolveProgress.Visible:=false
  else DSolveProgress.Visible:=true;
  Application.ProcessMessages;
 end;
@@ -301,6 +304,8 @@ begin
    Application.ProcessMessages;
    setup.SetMainChangeCall(@DSProgPosChange);
    setup.ResolveDependencies;
+  { while DSolveProgress.Position<100 do //Necessary because otherwise the proc continues... strange
+    Application.ProcessMessages;  }
    setup.SetMainChangeCall(@MainPosChange);
    Label15.Caption:=rsFinished;
    Button1.Enabled:=true;
@@ -371,6 +376,7 @@ end;
 procedure MessageCall(msg: String;imp: TMType);cdecl;
 begin
  writeLn(msg);
+ if Assigned(IWizFrm) then
  IWizFrm.InfoMemo.Lines.Add(msg); //Needed for Log-messages, even if the control is invisible
  Application.ProcessMessages;
 end;
@@ -380,24 +386,121 @@ begin
  IWizFrm.Label9.Caption:=msg;
 end;
 
-procedure TIWizFrm.FormCreate(Sender: TObject);
+function LoadIPKFile(): Boolean;
 var imForm: TimdFrm;
-    i: Integer;
-    tmp: TStringList;
 begin
-if not DirectoryExists(RegDir) then begin
+if not DirectoryExists(RegDir) then
+begin
 CreateDir(ExtractFilePath(RegDir));
 CreateDir(RegDir);
 end;
 
-if not FileExists(Paramstr(1)) then begin
+if not FileExists(Paramstr(1)) then
+begin
   ShowMessage(rsRunParam);
   halt(1);
-  exit;
+  Result:=false;
+  Application.Terminate;
 end;
 
   DInfo.DName:='';
   Dinfo:=GetDistro;
+
+ Result:=true;
+ //Check distribution
+  if DInfo.DName='' then begin
+   ShowMessage(rsLDnSupported+#13+rsInClose+#13+rsNotifyDevs);
+   Result:=false;
+   Application.Terminate;
+   exit;
+  end;
+
+writeLn('Begin loading IPK');
+
+setup:=TInstallPack.Create;
+setup.SetUserRequestCall(@RequestHandling);
+setup.SetMessageCall(@MessageCall);
+//Set if root installation
+setup.SetRootMode(IsRoot);
+//Set forced actions
+if Application.HasOption('force-architecture') then
+ setup.Forced:='architecture;';
+//Load the IPK data
+setup.Initialize(paramstr(1));
+
+//Prepare exectype form
+
+if (setup.PkType=ptLinstall)and(not IsRoot) then
+begin
+  imForm:=TimdFrm.Create(nil);
+  with imForm do
+  begin
+    btnTest.Enabled:=true;
+    btnHome.Enabled:=true;
+    PkWarnImg.Visible:=true;
+  if (pos('iotest',setup.GetDisallows)>0) then
+    btnTest.Enabled:=false;
+  if (pos('iolocal',setup.GetDisallows)>0) then
+    btnHome.Enabled:=false;
+  if (pos('iobase',setup.GetDisallows)>0) then
+    btnInstallAll.Enabled:=false;
+  PkILabel.Caption:=rsSpkWarning;
+  //
+  ShowModal;
+  end;
+  imForm.Free;
+end;
+
+if (setup.PkType=ptDLink)and(not IsRoot) then
+begin
+  imForm:=TimdFrm.Create(nil);
+  with imForm do
+  begin
+  btnTest.Enabled:=false;
+  btnHome.Enabled:=false;
+  PkWarnImg.Visible:=true;
+  PkILabel.Caption:=rsSpkWarning;
+  //
+  ShowModal;
+  end;
+  imForm.Free;
+end;
+
+if (setup.PkType=ptContainer)and(not IsRoot) then
+begin
+  imForm:=TimdFrm.Create(nil);
+  with imForm do
+  begin
+  btnTest.Enabled:=false;
+  pkWarnImg.Visible:=true;
+  if (pos('iolocal',setup.GetDisallows)<=0) then
+    btnHome.Enabled:=false;
+  if (pos('iobase',setup.GetDisallows)<=0) then
+    btnInstallAll.Enabled:=false;
+  PkILabel.Caption:=rsSpkWarning;
+  //
+  ShowModal;
+  end;
+  imForm.Free;
+end;
+
+//Check distribution
+if (pos(LowerCase(DInfo.DName),setup.GetSupDistris)<=0)
+and (setup.GetSupDistris<>'all') then begin
+if Application.MessageBox(PAnsiChar(PAnsiChar(rsnSupported)+#13+PAnsiChar(rsInstAnyway)),'Distro-Error',MB_YESNO)= IDNO then
+ begin
+ Result:=false;
+ Application.Terminate;
+ exit;
+ end;
+end;
+ setup.SetTestmode(Testmode);
+end;
+
+procedure TIWizFrm.FormCreate(Sender: TObject);
+var i: Integer;
+    tmp: TStringList;
+begin
 
 //Load GTK2 icons
 LoadStockPixmap(STOCK_QUIT,ICON_SIZE_BUTTON,FinBtn1.Glyph);
@@ -430,116 +533,11 @@ LoadStockPixmap(STOCK_GO_BACK,ICON_SIZE_BUTTON,Button5.Glyph);
   NoteBook1.ShowTabs:=false;
   
   if not DirectoryExists(RegDir) then SysUtils.CreateDir(RegDir);
-  
-  //Check distribution
-  if DInfo.DName='' then begin
-   ShowMessage(rsLDnSupported+#13+rsInClose+#13+rsNotifyDevs);
-   halt;
-   exit;
-  end;
 
-writeLn('Begin loading IPK');
-
-IWizFrm.Hide;
-IWizFrm.Visible:=false;
-setup:=TInstallPack.Create;
-setup.SetUserRequestCall(@RequestHandling);
-setup.SetMessageCall(@MessageCall);
-//Set if root installation
-setup.SetRootMode(IsRoot);
-//Set forced actions
-if Application.HasOption('force-architecture') then
- setup.Forced:='architecture;';
-//Load the IPK data
-setup.Initialize(paramstr(1));
-
-IWizFrm.Show;
-IWizFrm.Visible:=true;
-
-//Prepare exectype form
-
-if (setup.PkType=ptLinstall)and(not IsRoot) then
-begin
-  imForm:=TimdFrm.Create(self);
-  with imForm do
-  begin
-    btnTest.Enabled:=true;
-    btnHome.Enabled:=true;
-    PkWarnImg.Visible:=true;
-  if (pos('iotest',setup.GetDisallows)>0) then
-    btnTest.Enabled:=false;
-  if (pos('iolocal',setup.GetDisallows)>0) then
-    btnHome.Enabled:=false;
-  if (pos('iobase',setup.GetDisallows)>0) then
-    btnInstallAll.Enabled:=false;
-  Label13.Caption:=rsSpkWarning;
-  //
-  ShowModal;
-  end;
-  imForm.Free;
-end;
-
-if (setup.PkType=ptDLink)and(not IsRoot) then
-begin
-  imForm:=TimdFrm.Create(self);
-  with imForm do
-  begin
-  btnTest.Enabled:=false;
-  btnHome.Enabled:=false;
-  PkWarnImg.Visible:=true;
-  Label13.Caption:=rsSpkWarning;
-  //
-  ShowModal;
-  end;
-  imForm.Free;
-end;
-
-if (setup.PkType=ptContainer)and(not IsRoot) then
-begin
-  imForm:=TimdFrm.Create(self);
-  with imForm do
-  begin
-  btnTest.Enabled:=false;
-  pkWarnImg.Visible:=true;
-  if (pos('iolocal',setup.GetDisallows)<=0) then
-    btnHome.Enabled:=false;
-  if (pos('iobase',setup.GetDisallows)<=0) then
-    btnInstallAll.Enabled:=false;
-  Label13.Caption:=rsSpkWarning;
-  //
-  ShowModal;
-  end;
-  imForm.Free;
-end;
-
-//Check distribution
-if (pos(LowerCase(DInfo.DName),setup.GetSupDistris)<=0)
-and (setup.GetSupDistris<>'all') then begin
-if Application.MessageBox(PAnsiChar(PAnsiChar(rsnSupported)+#13+PAnsiChar(rsInstAnyway)),'Distro-Error',MB_YESNO)= IDNO then
- begin
- Application.Terminate;
- exit;
- end;
-end;
-
-setup.SetTestmode(Testmode);
+//Load all setup data
 
 { --- Linstallation --- }
-if setup.PkType=ptLinstall then
-begin
-//Check if already installed
-if not Testmode then
-begin
-if IsIPKAppInstalled(setup.GetAppName,setup.GetAppID) then
-if Application.MessageBox(PAnsiChar(PAnsiChar(rsAlreadyInst)+#13+PAnsiChar(rsInstallAgain)),PAnsiChar(rsReInstall),MB_YESNO)= IDNO then
- begin
-  setup.Free;
-  Application.Terminate;
-  exit;
- end;
-end;
 
-//Load all data
 DescMemo.Lines.Clear;
 setup.ReadLongDescription(TStringList(DescMemo.Lines));
 
@@ -587,45 +585,6 @@ except
 end;
 
 IWizFrm.Show;
-end else
-{ --- DLink --- }
-if setup.PkType=ptDLink then
-begin
-
-IWizFrm.Hide;
-IWizFrm.Visible:=false;
-DGForm:=TDGForm.Create(nil);
-
-DGForm.IIconPath:=setup.GetAppIcon;
-DGForm.IDesktopFiles:=setup.GetDesktopFiles;
-
-with DGForm do
-begin
-Label1.Caption:=StringReplace(rsInstOf,'%a',setup.GetAppName,[rfReplaceAll]);
-Label2.Caption:=rsWillDLFiles;
-Caption:=Label1.Caption;
-LicMemo.Clear;
-LicMemo.Lines.Add(rsPkgDownload);
-
-tmp:=TStringList.Create;
-setup.ReadDeps(tmp);
-
-for i:=0 to tmp.Count-1 do Memo2.Lines.Add(tmp[i]);
-
-tmp.Free;
-
-end;
-DGForm.Show;
-end else
-if setup.PkType=ptContainer then
-begin
-IWizFrm.Hide;
-IWizFrm.Visible:=false;
-setup.Free;
-// The setup has already done everything we needed
-Application.Terminate;
-end;
-Application.ShowMainForm:=true;
 end;
 
 procedure TIWizFrm.FormDestroy(Sender: TObject);

@@ -35,7 +35,9 @@ install: build
 	
 	echo "Installing binaries..."
 	$(MAKE) DESTDIR=./debian/listaller-tools install-build-tools
-	$(MAKE) DESTDIR=./debian/listaller-core install-core
+	$(MAKE) DESTDIR=./debian/libinstaller install-core
+	cp ./debian/libinstaller/usr/bin/lipa ./debian/listaller-tools/usr/bin
+	rm -f ./debian/libinstaller/usr/bin/lipa
 	# Install Gtk release
 	$(MAKE) DESTDIR=./debian/listaller-gtk install-front-gtk
 	$(MAKE) DESTDIR=./debian/listaller-creator-gtk install-licreator-gtk

@@ -4,12 +4,12 @@ Section: admin
 Maintainer: Matthias Klumpp <matthias@nlinux.org>
 Priority: extra
 Homepage: http://listaller.nlinux.org
-Build-Depends: libgtk2.0-dev, lazarus (>=0.9.28-0), fpc (>= 2.3.1), fp-units-gtk, debhelper (>= 5), libqt4intf-dev,
+Build-Depends: libgtk2.0-dev, lazarus (>=0.9.28-0), fpc (>= 2.3.1), debhelper (>= 5), libqt4intf-dev,
  sqlite3, libsqlite3-0, libsqlite3-dev, libglib2.0-0, libglib2.0-dev, libpackagekit-glib2-dev (>= 0.5.3)
 
 Package: listaller-gtk
 Architecture: i386 powerpc sparc amd64 arm
-Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), listaller-core (= ${binary:Version})
+Depends: ${shlibs:Depends}, listaller-data (= ${source:Version})
 Provides: listaller-frontend
 Description: Listaller frontends (GTK2)
  Listaller is a distribution-independ software install system.
@@ -22,20 +22,23 @@ Description: Listaller frontends (GTK2)
 
 Package: listaller-tools
 Architecture: i386 powerpc sparc amd64 arm
-Depends: ${shlibs:Depends}, listaller-core (= ${binary:Version})
-Description: Tools to build Listaller packages
+Depends: ${shlibs:Depends}, libinstaller (= ${binary:Version})
+Description: NoGUI Listaller tools
  This package contains everything you need to build own IPK packages.
  It also contains the needed tools to build RPM and DEB packages from
  IPS sources and to  create an "Linux distribution compatible"
  button for your software.
+ It also contains a program to install IPK packages without using GUI.
 
-Package: listaller-core
+Package: libinstaller
 Priority: optional
 Architecture: i386 powerpc sparc amd64 arm
 Depends: ${shlibs:Depends}, apt-file
-Description: Listaller basic tools and libraries
- This package contains the 'lipa' command line tool.
- It allows installing/uninstalling/building IPK packages without GUI.
+Replaces: listaller-core
+Breaks: listaller-core
+Description: Listaller library
+ Contains the libInstaller library, which allows applications to install/uninstall
+ applications on your computer.
 
 Package: listaller-data
 Architecture: all
@@ -51,7 +54,7 @@ Description: Listaller data
 
 Package: listaller-creator-gtk
 Architecture: i386 powerpc sparc amd64 arm
-Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller-core (= ${binary:Version}), listaller-tools
+Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller-tools (= ${binary:Version})
 Replaces: listaller-creator-qt
 Breaks: listaller-creator-qt (<= ${source:Version})
 Description: Listaller Creator (GTK2)
@@ -63,8 +66,8 @@ Description: Listaller Creator (GTK2)
 
 Package: listaller-qt
 Architecture: i386 powerpc sparc amd64 arm
-Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), listaller-core (= ${binary:Version}), kdesudo, packagekit, python-packagekit,
-  python, libqt4intf, kde-icons-oxygen
+Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), kdesudo, packagekit,
+  libqt4intf, kde-icons-oxygen
 Provides: listaller-frontend
 Description: Listaller frontends (Qt4)
  Listaller is a distribution-independ software install system.
@@ -77,7 +80,7 @@ Description: Listaller frontends (Qt4)
 
 Package: listaller-creator-qt
 Architecture: i386 powerpc sparc amd64 arm
-Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller-core (= ${binary:Version}), listaller-tools
+Depends: ${shlibs:Depends}, xdg-utils, lsb-release, listaller-tools (= ${binary:Version})
 Replaces: listaller-creator-gtk
 Breaks: listaller-creator-gtk (<= ${source:Version})
 Description: Listaller Creator (Qt4)

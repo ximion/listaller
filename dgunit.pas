@@ -151,11 +151,20 @@ begin
 end;
 
 procedure TDGForm.FormCreate(Sender: TObject);
+var tmp: tstringList;i: Integer;
 begin
 LoadStockPixmap(STOCK_EXECUTE,ICON_SIZE_BUTTON,BitBtn1.Glyph);
 Image1.Picture.LoadFromFile(GetDataFile('graphics/spackage.png'));
 PageControl1.ActivePageIndex:=0;
 BitBtn1.Caption:=rsInstallNow;
+
+//Load deps
+tmp:=TStringList.Create;
+setup.ReadDeps(tmp);
+for i:=0 to tmp.Count-1 do Memo2.Lines.Add(tmp[i]);
+tmp.Free;
+
+setup.ReadLongDescription(TStringList(Memo1.Lines));
 end;
 
 procedure TDGForm.FormShow(Sender: TObject);

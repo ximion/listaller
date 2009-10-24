@@ -37,7 +37,7 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
         <CursorPos X="4" Y="386"/>
-        <TopLine Value="370"/>
+        <TopLine Value="367"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="49"/>
         <Loaded Value="True"/>
@@ -396,9 +396,6 @@
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>
     </CodeGeneration>
-    <Linking>
-      <LinkSmart Value="True"/>
-    </Linking>
     <Other>
       <Verbosity>
         <ShowNotes Value="False"/>

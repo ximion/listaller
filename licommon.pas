@@ -125,6 +125,7 @@ h:=SysUtils.StringReplace(s,' <s>','',[rfReplaceAll]);
 h:=ReplaceRegExpr(' <chmod:([0-7]{3})>', h, '', false);
 h:=ReplaceRegExpr(' <([a-zA-Z_]{4,})-only>', h, '', false);
 h:=SysUtils.StringReplace(h,' <mime>','',[rfReplaceAll]);
+h:=SysUtils.StringReplace(h,' <setvars>','',[rfReplaceAll]);
 h:=SysUtils.StringReplace(h,'>','',[rfReplaceAll]);
 Result:=h;
 end;

@@ -1103,8 +1103,6 @@ begin
 
      pkit.Resolve(Dependencies[i]);
 
-     writeLn('DEBUG: Resolved.');
-
      if pkit.PkFinishCode>0 then
      begin
       pkit.InstallPkg(Dependencies[i]);
@@ -1146,32 +1144,39 @@ z.FileName:=PkgPath;
 ndirs:=TStringList.Create;
 j:=0;
 if not DirectoryExists(SyblToPath('$INST')) then SysUtils.CreateDir(SyblToPath('$INST'));
+
+
 for i:=0 to fi.Count-1 do
-begin
-if i mod 3 = 0 then
+if i mod 2 = 0 then
 begin
 
 if (pos(' <'+LowerCase(DInfo.DName)+'-only>',LowerCase(fi[i]))>0)
 or (pos('-only',LowerCase(fi[i]))<=0) then
 begin
 
-dest:=SyblToPath(fi[i+2]);
+//Set new target directory on >
+if fi[i][1]='>' then
+begin
+ dest:=copy(fi[i],2,length(fi[i]));
+ dest:=SyblToPath(dest);
+ if not DirectoryExists(dest) then
+ begin
+  SysUtils.CreateDir(dest);
+  ndirs.Add(dest);
+ end;
+ h:=dest;
+ while not DirectoryExists(dest) do
+ begin
+  CreateDir(h);
+  if DirectoryExists(h) then h:=Dest
+  else h:=ExtractFilePath(ExcludeTrailingBackslash(h));
+ end;
 
-if not DirectoryExists(dest) then
+end else
 begin
-SysUtils.CreateDir(dest);
-ndirs.Add(dest);
-end;
-h:=dest;
-while not DirectoryExists(dest) do
-begin
-CreateDir(h);
-if DirectoryExists(h) then h:=Dest
-else h:=ExtractFilePath(ExcludeTrailingBackslash(h));
-end;
+
 //h is now used for the file-path
 h:=DeleteModifiers(fi[i]);
-
 
 FDir:=lp+ExtractFileName(PkgPath)+'/';
 if not DirectoryExists(FDir) then
@@ -1242,31 +1247,37 @@ mnpos:=mnpos+10;
 SetMainPos(Round(mnpos*max));
 
   end;
-
- end;
+   end;
 end;
 
 SendStateMsg(rsStep3);
 //Check if every single file needs its own command to get the required rights (It's faster if only every folder recieves the rights)
 setcm:=false;
-for i:=0 to (fi.Count div 3)-1 do
+for i:=0 to (fi.Count div 2)-1 do
 if pos(' <chmod:',fi[i*3])>0 then setcm:=true;
 
 
 if setcm then
-begin //Rechte einzeln setzen
+begin
+
+//Set rights per file
 for i:=0 to fi.Count-1 do
 begin
-if i mod 3 = 0 then
+if i mod 2 = 0 then
+begin
+
+if fi[i][1]='>' then
+ dest:=SyblToPath(fi[i])
+else
 begin
 h:=fi[i];
 
 if pos(' <chmod:',h)>0 then begin
-proc.CommandLine := 'chmod '+copy(h,pos(' <chmod:',h)+8,3)+SyblToPath(fi[i+1])+'/'+ExtractFileName(DeleteModifiers(fi[i]));
+proc.CommandLine := 'chmod '+copy(h,pos(' <chmod:',h)+8,3)+dest+'/'+ExtractFileName(DeleteModifiers(fi[i]));
 proc.Execute;
 end else
 begin
-proc.CommandLine := 'chmod 755 '+SyblToPath(fi[i+1])+'/'+ExtractFileName(DeleteModifiers(fi[i]));
+proc.CommandLine := 'chmod 755 '+dest+'/'+ExtractFileName(DeleteModifiers(fi[i]));
 proc.Execute;
 end;
 
@@ -1274,15 +1285,18 @@ end;
 msg('Rights assigned to '+DeleteModifiers(ExtractFileName(SyblToPath(fi[i]))));
  end;
 end;
+end;
+
 end else
-begin //Rechte ordnerweise setzen
+begin
+//Set rights per folder
 for i:=0 to ndirs.Count-1 do
 begin
 proc.CommandLine := 'chmod 755 -R '+SyblToPath(ndirs[i]);
 proc.Execute;
 msg('Rights assigned to folder '+ExtractFileName(SyblToPath(ndirs[i])));
  end;
-end; //Ende setcm
+end; //End setcm
 
 mnpos:=mnpos+6;
 SetMainPos(Round(mnpos*max));

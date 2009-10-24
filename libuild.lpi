@@ -31,8 +31,8 @@
         <Filename Value="libuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
-        <CursorPos X="39" Y="131"/>
-        <TopLine Value="111"/>
+        <CursorPos X="26" Y="27"/>
+        <TopLine Value="6"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="24"/>
         <Loaded Value="True"/>
@@ -40,15 +40,15 @@
       <Unit1>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="72" Y="15"/>
+        <CursorPos X="39" Y="128"/>
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit1>
       <Unit2>
         <Filename Value="ipkbuild.pas"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="40" Y="30"/>
-        <TopLine Value="481"/>
+        <CursorPos X="16" Y="373"/>
+        <TopLine Value="356"/>
         <UsageCount Value="11"/>
       </Unit2>
       <Unit3>
@@ -68,8 +68,8 @@
       <Unit5>
         <Filename Value="ipkdef.pas"/>
         <UnitName Value="ipkdef"/>
-        <CursorPos X="10" Y="319"/>
-        <TopLine Value="299"/>
+        <CursorPos X="34" Y="138"/>
+        <TopLine Value="117"/>
         <UsageCount Value="11"/>
       </Unit5>
       <Unit6>
@@ -109,43 +109,31 @@
         <UsageCount Value="21"/>
       </Unit10>
     </Units>
-    <JumpHistory Count="9" HistoryIndex="8">
+    <JumpHistory Count="6" HistoryIndex="5">
       <Position1>
         <Filename Value="libuild.lpr"/>
-        <Caret Line="26" Column="28" TopLine="1"/>
+        <Caret Line="116" Column="15" TopLine="93"/>
       </Position1>
       <Position2>
         <Filename Value="libuild.lpr"/>
-        <Caret Line="27" Column="25" TopLine="1"/>
+        <Caret Line="109" Column="4" TopLine="93"/>
       </Position2>
       <Position3>
         <Filename Value="libuild.lpr"/>
-        <Caret Line="28" Column="22" TopLine="1"/>
+        <Caret Line="120" Column="12" TopLine="96"/>
       </Position3>
       <Position4>
         <Filename Value="libuild.lpr"/>
-        <Caret Line="11" Column="33" TopLine="1"/>
+        <Caret Line="131" Column="11" TopLine="96"/>
       </Position4>
       <Position5>
         <Filename Value="libuild.lpr"/>
-        <Caret Line="116" Column="15" TopLine="93"/>
+        <Caret Line="127" Column="9" TopLine="108"/>
       </Position5>
       <Position6>
         <Filename Value="libuild.lpr"/>
-        <Caret Line="109" Column="4" TopLine="93"/>
+        <Caret Line="27" Column="26" TopLine="6"/>
       </Position6>
-      <Position7>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="120" Column="12" TopLine="96"/>
-      </Position7>
-      <Position8>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="131" Column="11" TopLine="96"/>
-      </Position8>
-      <Position9>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="127" Column="9" TopLine="108"/>
-      </Position9>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

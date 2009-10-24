@@ -30,7 +30,7 @@ procedure g_ptr_array_foreach(ar: Pointer;func: TGFunc;user_data: GPointer);cdec
 function pk_desktop_new: Pointer;cdecl;external pklib2 name 'pk_desktop_new';
 function pk_desktop_open_database(desktop: Pointer;error: PPGError): GBoolean;cdecl;external pklib2 name 'pk_desktop_open_database';
 function pk_desktop_get_files_for_package(desktop: Pointer;pkg: PGChar;error: PPGError): Pointer;cdecl;external pklib2 name 'pk_desktop_get_files_for_package';
-function pk_desktop_get_package_for_file(desktop: Pointer;filename: GChar;error: PPGError): GChar;cdecl;external; pklib2 name 'pk_desktop_get_package_for_file';
+//function pk_desktop_get_package_for_file(desktop: Pointer;filename: GChar;error: PPGError): GChar;cdecl;external; pklib2 name 'pk_desktop_get_package_for_file';
 
 implementation
 

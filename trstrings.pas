@@ -148,7 +148,7 @@ rsInstallLiBuild='You have to install the liBuild package before you can build p
 rsFileNotExists='The file "%f" does not exists!';
 
 rsWantToDoQ='What do you want to do?';
-rsPackageKitWarning='Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to work correctly.'#10'Please update PackageKit!';
+rsDevVersion='You use a development version of Listaller!'#10'This version is untested, be careful about what you do!';
 rsSpkWarning='Make sure that you got this package from a save source and a serious publisher!';
 rsInstallEveryone='Install application for everyone';
 rsTestApp='Test application';
