@@ -93,6 +93,7 @@ rsDepNotFound='Found no package with the necessary library "%l" for your distrib
 rsOpeningDB = 'Opening database...';
 rsInClose='The installer will close now';
 rsCnOverride='Unable to override the file %f.';
+rsCnCopy='Unable to copy the file %s.';
 rsNotifyDevs='Please notify the developers on http://launchpad.net/listaller';
 rsExtractError='Error while extracting files!';
 rsPkgDM='The IPK package could be damaged or you haven''t enough rights to access required files/folders.';

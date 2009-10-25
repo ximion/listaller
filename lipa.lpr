@@ -152,14 +152,18 @@ begin
 
   if (HasOption('b','build'))or(HasOption('u','gen-update')) then
   begin
-   if FileExists('/bin/libuild') then
+   if (FileExists('/usr/bin/libuild'))
+   or (FileExists('/usr/lib/listaller/libuild')) then
    begin
     proc:=TProcess.Create(nil);
     proc.Options:=[];
     c:='';
     for i:=1 to paramcount-1 do
      c:=c+' '+paramstr(i);
-    proc.CommandLine:='libuild'+c;
+    if FileExists('/usr/bin/libuild') then
+     proc.CommandLine:='libuild'+c
+    else proc.CommandLine:='/usr/lib/listaller/libuild'+c;
+
     proc.Execute;
     proc.Free;
     Terminate;
@@ -373,7 +377,7 @@ end;
 
 procedure TLipa.WriteHelp;
 begin
-writeln('Usage: ',ExeName,' <command> [file} (options)');
+writeln('Usage: ',ExeName,' <command> [file] (options)');
 
 writeLn(rsLipaInfo1);
 writeLn(rsCommands);
@@ -383,7 +387,7 @@ writeLn('  '+rsOptions);
 writeLn('    --testmode                             '+rsLipaInfo4);
 writeLn('    --verbose                              '+rsLipaInfo5);
 writeLn('--checkapps                                '+rsLipaInfo6);
-if FileExists('/usr/bin/libuild') then
+if FileExists('/usr/bin/libuild')or(FileExists('/usr/lib/listaller/libuild') then
 begin
 writeLn(rsCMDInfoPkgBuild);
 writeLn('-b, --build [IPS-File] [Output-IPK]        '+rsLiBuildInfoA);

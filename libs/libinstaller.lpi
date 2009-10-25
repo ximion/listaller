@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="675"/>
+      <CurrentBuildNr Value="680"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -32,8 +32,8 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="1" Y="490"/>
-        <TopLine Value="450"/>
+        <CursorPos X="17" Y="22"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="47"/>
         <Loaded Value="True"/>
@@ -41,8 +41,8 @@
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="32" Y="1157"/>
-        <TopLine Value="1141"/>
+        <CursorPos X="43" Y="1248"/>
+        <TopLine Value="1217"/>
         <UsageCount Value="19"/>
       </Unit1>
       <Unit2>
@@ -125,8 +125,8 @@
       <Unit13>
         <Filename Value="../trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="1" Y="98"/>
-        <TopLine Value="77"/>
+        <CursorPos X="37" Y="96"/>
+        <TopLine Value="75"/>
         <UsageCount Value="11"/>
       </Unit13>
       <Unit14>
@@ -228,7 +228,7 @@
       </Position11>
       <Position12>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="19" TopLine="1"/>
+        <Caret Line="22" Column="17" TopLine="1"/>
       </Position12>
     </JumpHistory>
   </ProjectOptions>

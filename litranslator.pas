@@ -218,12 +218,6 @@ initialization
     LRSTranslator:=TDefaultTranslator.Create(lcfn);
 
   end;
-{$IFDEF LCLGTK2}
- writeLn('Translation loaded.');
-{$ENDIF}
-{$IFDEF LCLQt}
- writeLn('Translation loaded.');
-{$ENDIF}
 
 finalization
   LRSTranslator.Free;

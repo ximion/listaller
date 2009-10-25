@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
   ComCtrls, StdCtrls, FileUtil, ExtCtrls, process, Buttons, LCLType,
-  LCLIntf, distri, LiCommon, TRStrings, SynEdit, xTypeFm, Installer,
+  LCLIntf, distri, LiCommon, trStrings, SynEdit, xTypeFm, Installer,
   liTypes, IconLoader;
 
 type
@@ -345,7 +345,6 @@ rqError: begin
   InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
   setup.Free;
   Application.Terminate;
-  FreeAndNil(IWizFrm);
   exit;
 end;
 rqWarning: begin

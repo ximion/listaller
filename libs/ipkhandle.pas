@@ -817,12 +817,15 @@ cont.Free;
 end;
 
 function TInstallation.GetMaxInstSteps: Integer;
-var fi: TStringList;
+var fi: TStringList;i,j: Integer;
 begin
 Result:=0;
+j:=0;
 fi:=TStringList.Create;
 fi.LoadFromFile(lp+PkgName+FFileInfo);
-Result:=((Dependencies.Count+(fi.Count div 3))*10)+16;
+for i:=0 to fi.Count-1 do
+ if fi[i][1]<>'>' then Inc(j);
+Result:=((Dependencies.Count+(j div 2))*10)+16;
 fi.Free;
 end;
 
@@ -876,13 +879,6 @@ proc:=TProcess.Create(nil);
 proc.Options:=[poUsePipes,poStdErrToOutPut];
 
 DInfo:=GetDistro; //Load DistroInfo
-
-if (fi.Count mod 3)<>0 then begin
- MakeUsrRequest(rsPKGError+#13'Message: File list is unlogical!'+#13+rsAppClose,rqError);
- fi.Free;
- Result:=false;
- exit;
-end;
 
 Result:=true;
 mnpos:=0;
@@ -1060,7 +1056,6 @@ sleep(18); //Wait...
 if (Dependencies[i][1]='/')or(pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then
 begin
 
-    msg('----');
     msg('DepInstall: '+Dependencies[i]+' (using PackageKit +x)');
     msg('');
 
@@ -1097,7 +1092,6 @@ begin
  //If only a file name given install them with distri-tool
 end else
 begin
-     msg('----');
      msg('DepInstall: '+Dependencies[i]+' (using PackageKit)');
      msg('');
 
@@ -1147,7 +1141,6 @@ if not DirectoryExists(SyblToPath('$INST')) then SysUtils.CreateDir(SyblToPath('
 
 
 for i:=0 to fi.Count-1 do
-if i mod 2 = 0 then
 begin
 
 if (pos(' <'+LowerCase(DInfo.DName)+'-only>',LowerCase(fi[i]))>0)
@@ -1173,6 +1166,7 @@ begin
  end;
 
 end else
+if (fi[i][1]='.')or(fi[i][1]='/') then
 begin
 
 //h is now used for the file-path
@@ -1203,6 +1197,7 @@ end;
 
 Inc(j);
 
+try
 if FOverwrite then
 FileCopy(DeleteModifiers(lp+PkgName+h),dest+'/'+ExtractFileName(DeleteModifiers(h)))
 else
@@ -1214,6 +1209,13 @@ begin
   z.Free;
   Result:=false;
   exit;
+end;
+except
+ //Unable to copy the file
+ MakeUsrRequest(Format(rsCnCopy,[dest+'/'+ExtractFileName(DeleteModifiers(h))])+#10+rsInClose,rqError);
+ z.Free;
+ Result:=false;
+ exit;
 end;
 
 if(pos('.desktop',LowerCase(ExtractFileName(h)))>0) then
@@ -1241,6 +1243,10 @@ end;
 
 
 appfiles.Add(dest+'/'+ExtractFileName(fi[i]));
+
+//Delete temp file
+DeleteFile(DeleteModifiers(lp+PkgName+h));
+
 msg('Okay.');
 
 mnpos:=mnpos+10;

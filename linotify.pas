@@ -124,7 +124,7 @@ end;
 procedure TForm1.MenuItem2Click(Sender: TObject);
 var p: TProcess;
 begin
- if FileExists(ExtractFilePath(Application.ExeName)+'liupdate -q') then
+ if FileExists(ExtractFilePath(Application.ExeName)+'liupdate') then
  begin
   p:=TProcess.Create(nil);
   p.Options:=[];
@@ -133,7 +133,7 @@ begin
   p.Free;
  end else
  begin
-  writeLn(Format(rsUnableFind,['Listaller Updater!']));
+  writeLn(Format(rsUnableFind,['Listaller Updater']));
   ShowMessage(rsCouldntFindUpdater);
  end;
 end;
