@@ -2288,30 +2288,14 @@ object MnFrm: TMnFrm
     Style = pbstMarquee
     TabOrder = 2
   end
-  object Process1: TProcess
-    Active = False
-    Options = [poNoConsole]
-    Priority = ppNormal
-    StartupOptions = []
-    ShowWindow = swoNone
-    WindowColumns = 0
-    WindowHeight = 0
-    WindowLeft = 0
-    WindowRows = 0
-    WindowTop = 0
-    WindowWidth = 0
-    FillAttribute = 0
-    left = 768
-    top = 8
-  end
   object OpenDialog1: TOpenDialog
     DefaultExt = '.*.ipk'
     Filter = 'All supported packages|*.ipk;*.zip;*.rpm;*.deb|Listaller Installation packages|*.ipk;*.zip|RPM-Packages|*.rpm|DEB-Packages|*.deb'
-    left = 720
+    left = 776
     top = 8
   end
   object ImageList1: TImageList
-    left = 656
+    left = 736
     top = 8
   end
 end

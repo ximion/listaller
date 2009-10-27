@@ -290,7 +290,7 @@ with IWizFrm do
 begin
  DSolveProgress.Position:=pos;
 
- if(pos=0)then DSolveProgress.Visible:=false
+ if(pos=0)and(DSolveProgress.Visible=true)then DSolveProgress.Visible:=false
  else DSolveProgress.Visible:=true;
  Application.ProcessMessages;
 end;

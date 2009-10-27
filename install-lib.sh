@@ -19,10 +19,10 @@ esac
 
 # Does the install
 
-mkdir -p $DESTDIR/usr/bin
 mkdir -p $DESTDIR/usr/lib
 
-cp ./bin/lipa $DESTDIR/usr/bin/
-cp ./bin/libinstaller.so.0.4 $DESTDIR/usr/lib/
+cp ./bin/libinstaller.so.0.4.0 $DESTDIR/usr/lib/
+cd $DESTDIR/usr/lib/
+ln -s /usr/lib/libinstaller.so.0.4.0 libinstaller.so.0.4
 
-echo "Installation done."
+echo "Installation of libinstaller finished."

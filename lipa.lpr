@@ -387,7 +387,7 @@ writeLn('  '+rsOptions);
 writeLn('    --testmode                             '+rsLipaInfo4);
 writeLn('    --verbose                              '+rsLipaInfo5);
 writeLn('--checkapps                                '+rsLipaInfo6);
-if FileExists('/usr/bin/libuild')or(FileExists('/usr/lib/listaller/libuild') then
+if FileExists('/usr/bin/libuild')or(FileExists('/usr/lib/listaller/libuild')) then
 begin
 writeLn(rsCMDInfoPkgBuild);
 writeLn('-b, --build [IPS-File] [Output-IPK]        '+rsLiBuildInfoA);

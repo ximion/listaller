@@ -7,6 +7,27 @@ Homepage: http://listaller.nlinux.org
 Build-Depends: libgtk2.0-dev, lazarus (>=0.9.28-0), fpc (>= 2.3.1), debhelper (>= 5), libqt4intf-dev,
  sqlite3, libsqlite3-0, libsqlite3-dev, libglib2.0-0, libglib2.0-dev, libpackagekit-glib2-dev (>= 0.5.3)
 
+Package: libinstaller0.4
+Priority: optional
+Architecture: i386 powerpc sparc amd64 arm
+Depends: ${shlibs:Depends}, apt-file
+Replaces: libinstaller
+Breaks: libinstaller
+Description: Listaller library
+ Contains the libInstaller library, which allows
+ programs to access install/uninstall functions
+ of Listaller.
+
+Package: listaller-tools
+Architecture: i386 powerpc sparc amd64 arm
+Depends: ${shlibs:Depends}, libinstaller0.4 (= ${binary:Version})
+Description: NoGUI Listaller tools
+ This package contains everything you need to build own IPK packages.
+ It also contains the needed tools to build RPM and DEB packages from
+ IPS sources and to  create an "Linux distribution compatible"
+ button for your software.
+ It also contains a program to install IPK packages without using GUI.
+
 Package: listaller-gtk
 Architecture: i386 powerpc sparc amd64 arm
 Depends: ${shlibs:Depends}, listaller-data (= ${source:Version})
@@ -20,25 +41,19 @@ Description: Listaller frontends (GTK2)
  and uses PackageKit as backend.
  Please note that this alpha-version should only be used for testing purposes.
 
-Package: listaller-tools
+Package: listaller-qt
 Architecture: i386 powerpc sparc amd64 arm
-Depends: ${shlibs:Depends}, libinstaller (= ${binary:Version})
-Description: NoGUI Listaller tools
- This package contains everything you need to build own IPK packages.
- It also contains the needed tools to build RPM and DEB packages from
- IPS sources and to  create an "Linux distribution compatible"
- button for your software.
- It also contains a program to install IPK packages without using GUI.
-
-Package: libinstaller
-Priority: optional
-Architecture: i386 powerpc sparc amd64 arm
-Depends: ${shlibs:Depends}, apt-file
-Replaces: listaller-core
-Breaks: listaller-core
-Description: Listaller library
- Contains the libInstaller library, which allows applications to install/uninstall
- applications on your computer.
+Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), kdesudo, packagekit,
+  libqt4intf, kde-icons-oxygen
+Provides: listaller-frontend
+Description: Listaller frontends (Qt4)
+ Listaller is a distribution-independ software install system.
+ The application can be used to uninstall every application on your
+ system you want to be removed, including LOKI/Mojo and Autopackages.
+ This package also includes the IPK installer tool.
+ Listaller tries to be compatible to all available Linux distributions
+ and uses PackageKit as backend.
+ Please note that this alpha-version should only be used for testing purposes.
 
 Package: listaller-data
 Architecture: all
@@ -63,20 +78,6 @@ Description: Listaller Creator (GTK2)
  With liCreator you can easily build your own IPK-packages for the
  Listaller system.
  Please note that this is an alpha-release!
-
-Package: listaller-qt
-Architecture: i386 powerpc sparc amd64 arm
-Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), kdesudo, packagekit,
-  libqt4intf, kde-icons-oxygen
-Provides: listaller-frontend
-Description: Listaller frontends (Qt4)
- Listaller is a distribution-independ software install system.
- The application can be used to uninstall every application on your
- system you want to be removed, including LOKI/Mojo and Autopackages.
- This package also includes the IPK installer tool.
- Listaller tries to be compatible to all available Linux distributions
- and uses PackageKit as backend.
- Please note that this alpha-version should only be used for testing purposes.
 
 Package: listaller-creator-qt
 Architecture: i386 powerpc sparc amd64 arm

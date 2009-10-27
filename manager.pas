@@ -80,7 +80,6 @@ type
     SettingsButton: TSpeedButton;
     RepoButton: TSpeedButton;
     SWBox: TScrollBox;
-    Process1: TProcess;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn6Click(Sender: TObject);
     procedure btnInstallClick(Sender: TObject);
@@ -264,10 +263,13 @@ begin
   if (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.ipk')
   or (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.zip') then
   begin
-  Process1.CommandLine := ExtractFilePath(Application.ExeName)+'listallgo '+OpenDialog1.Filename;
-  Process1.Execute;
+  p:=TProcess.Create(nil);
+  p.Options:=[];
+  p.CommandLine := ExtractFilePath(Application.ExeName)+'listallgo '+OpenDialog1.Filename;
+  p.Execute;
   MnFrm.Hide;
-  while Process1.Running do Application.ProcessMessages;
+  while p.Running do Application.ProcessMessages;
+  p.Free;
   MnFrm.Show;
   end else
   begin
@@ -631,11 +633,15 @@ begin
 end;
 
 procedure TMnFrm.UpdCheckBtnClick(Sender: TObject);
+var p: TProcess;
 begin
 if FileExists(ExtractFilePath(Application.ExeName)+'liupdate') then
 begin
-  Process1.CommandLine:=ExtractFilePath(Application.ExeName)+'liupdate';
-  Process1.Execute;
+  p:=TProcess.Create(nil);
+  p.Options:=[];
+  p.CommandLine:=ExtractFilePath(Application.ExeName)+'liupdate';
+  p.Execute;
+  p.Free;
 end else ShowMessage(rsLiUpdateAccessFailed);
 end;
 
@@ -701,9 +707,9 @@ procedure TMnFrm.FormActivate(Sender: TObject);
 begin
   if fAct then
   begin fAct:=false;
-  MBar.Visible:=true;
-  li_mgr_load_apps(@amgr);
-  MBar.Visible:=false;
+   MBar.Visible:=true;
+   li_mgr_load_apps(@amgr);
+   MBar.Visible:=false;
   end;
 end;
 

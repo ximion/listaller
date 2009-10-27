@@ -55,7 +55,7 @@
         <Filename Value="listallgo.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallgo"/>
-        <CursorPos X="72" Y="15"/>
+        <CursorPos X="8" Y="24"/>
         <TopLine Value="1"/>
         <UsageCount Value="200"/>
       </Unit0>
@@ -65,8 +65,8 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="58" Y="5"/>
-        <TopLine Value="1"/>
+        <CursorPos X="29" Y="293"/>
+        <TopLine Value="275"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -903,7 +903,7 @@
         <UsageCount Value="10"/>
       </Unit120>
     </Units>
-    <JumpHistory Count="19" HistoryIndex="18">
+    <JumpHistory Count="20" HistoryIndex="19">
       <Position1>
         <Filename Value="igobase.pas"/>
         <Caret Line="5" Column="22" TopLine="1"/>
@@ -980,6 +980,10 @@
         <Filename Value="igobase.pas"/>
         <Caret Line="578" Column="8" TopLine="547"/>
       </Position19>
+      <Position20>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="5" Column="58" TopLine="1"/>
+      </Position20>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

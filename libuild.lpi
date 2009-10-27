@@ -31,7 +31,7 @@
         <Filename Value="libuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
-        <CursorPos X="26" Y="27"/>
+        <CursorPos X="10" Y="27"/>
         <TopLine Value="6"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="24"/>
@@ -40,7 +40,7 @@
       <Unit1>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="39" Y="128"/>
+        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit1>
@@ -132,7 +132,7 @@
       </Position5>
       <Position6>
         <Filename Value="libuild.lpr"/>
-        <Caret Line="27" Column="26" TopLine="6"/>
+        <Caret Line="27" Column="10" TopLine="6"/>
       </Position6>
     </JumpHistory>
   </ProjectOptions>

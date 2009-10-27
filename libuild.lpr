@@ -25,7 +25,7 @@ uses
   Interfaces, //We need an widgetset (NoGUI) for graphic handling
   Classes, SysUtils, CustApp,
   LiCommon, Process, ipkbuild,
-  TrStrings, LiTranslator, unibuild;
+  trStrings, LiTranslator, unibuild;
 
 type
 

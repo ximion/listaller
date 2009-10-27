@@ -26,6 +26,8 @@ mkdir -p $DESTDIR/usr/share/listaller/graphics/libutton
 mkdir -p $DESTDIR/usr/bin
 
 cp ./bin/libuild $DESTDIR/usr/bin/
+cp ./bin/lipa $DESTDIR/usr/bin/
+
 #Copy graphics
 cp ./graphics/libutton/left.png $DESTDIR/usr/share/listaller/graphics/libutton/
 cp ./graphics/libutton/firstblock.png $DESTDIR/usr/share/listaller/graphics/libutton/

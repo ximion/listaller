@@ -2261,13 +2261,9 @@ LazarusResources.Add('TMnFrm','FORMDATA',[
   +'Click'#7#12'Button1Click'#8'TabOrder'#2#5#0#0#0#0#12'TProgressBar'#4'MBar'#4
   +'Left'#3#168#2#6'Height'#2#6#3'Top'#3' '#2#5'Width'#3#128#0#7'Anchors'#11#7
   +'akRight'#8'akBottom'#0#6'Smooth'#9#4'Step'#2#1#5'Style'#7#11'pbstMarquee'#8
-  +'TabOrder'#2#2#0#0#8'TProcess'#8'Process1'#6'Active'#8#7'Options'#11#11'poNo'
-  +'Console'#0#8'Priority'#7#8'ppNormal'#14'StartupOptions'#11#0#10'ShowWindow'
-  +#7#7'swoNone'#13'WindowColumns'#2#0#12'WindowHeight'#2#0#10'WindowLeft'#2#0
-  +#10'WindowRows'#2#0#9'WindowTop'#2#0#11'WindowWidth'#2#0#13'FillAttribute'#2
-  +#0#4'left'#3#0#3#3'top'#2#8#0#0#11'TOpenDialog'#11'OpenDialog1'#10'DefaultEx'
-  +'t'#6#6'.*.ipk'#6'Filter'#6#128'All supported packages|*.ipk;*.zip;*.rpm;*.d'
-  +'eb|Listaller Installation packages|*.ipk;*.zip|RPM-Packages|*.rpm|DEB-Packa'
-  +'ges|*.deb'#4'left'#3#208#2#3'top'#2#8#0#0#10'TImageList'#10'ImageList1'#4'l'
-  +'eft'#3#144#2#3'top'#2#8#0#0#0
+  +'TabOrder'#2#2#0#0#11'TOpenDialog'#11'OpenDialog1'#10'DefaultExt'#6#6'.*.ipk'
+  +#6'Filter'#6#128'All supported packages|*.ipk;*.zip;*.rpm;*.deb|Listaller In'
+  +'stallation packages|*.ipk;*.zip|RPM-Packages|*.rpm|DEB-Packages|*.deb'#4'le'
+  +'ft'#3#8#3#3'top'#2#8#0#0#10'TImageList'#10'ImageList1'#4'left'#3#224#2#3'to'
+  +'p'#2#8#0#0#0
 ]);

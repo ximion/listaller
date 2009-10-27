@@ -2,6 +2,7 @@
 #
 # DESTDIR		Destination root directory
 # WIDGET                Widgetset the binary should be installed for
+
 set -e
 
 for arg; do
@@ -35,6 +36,7 @@ OS="linux"
 echo "Target operating system: $OS"
 echo "Active widgetset: $WIDGET"
 
+echo "Starting new Listaller-GUI build for $WIDGET"
 # Command line to build the sofware
 # Create necessary dirs
 mkdir -p ./bin
@@ -86,4 +88,4 @@ lazbuild -B --ws=gtk2 litray.lpr
 mv ./bin/litray ./bin/gtk2/
 fi
 
-echo "Listaller GUI build completed. (For $WIDGET)"
+echo "Listaller-GUI build completed. (For $WIDGET)"

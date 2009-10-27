@@ -19,7 +19,7 @@ library libinstaller;
 {$mode objfpc}{$H+}
 
 uses
-  Classes, ipkHandle, SysUtils, Controls, liCommon, liTypes,
+  cthreads, cmem, Classes, ipkHandle, SysUtils, Controls, liCommon, liTypes,
   management;
 
 
@@ -484,6 +484,8 @@ exports
  li_remove_ipk_installed_app,
  li_testmode,
  li_is_ipk_app_installed;
+
+{$IFDEF WINDOWS}{$R libinstaller.rc}{$ENDIF}
 
 begin
 end.

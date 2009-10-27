@@ -2,7 +2,7 @@
 #
 # DESTDIR		Destination root directory
 
-#set -e
+set -e
 
 for arg; do
   case $arg in
@@ -34,15 +34,16 @@ OS="linux"
 echo "Target operating system: $OS"
 echo "Active widgetset: $WIDGET"
 
+echo "Starting new Listaller build..."
 # Command line to build the sofware
 # Create necessary dirs
 mkdir -p ./bin
 mkdir -p ./bin/locale
 
-echo "Compiling library..."
+echo "Compiling libinstaller library..."
 lazbuild -B --ws=nogui ./libs/libinstaller.lpr
-ln -s ./bin/libinstaller.so.0.4 libinstaller.so
-ln -s ./bin/libinstaller.so.0.4 libinstaller.so.0.4
+ln -s ./bin/libinstaller.so.0.4.0 libinstaller.so.0.4
+ln -s libinstaller.so.0.4 libinstaller.so
 
 echo "Compiling command-line tool..."
 lazbuild -B --ws=nogui lipa.lpr
@@ -52,10 +53,10 @@ lazbuild -B --ws=nogui libuild.lpr
 #fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -FEbin/ -olibuild -dOpbCompat libuild.lpr
 
 #Compiling lanuage files
-echo "Compiling language files..."
+echo "Generating language files..."
 for i in `find ./locale -name "*.po"`
 do
-echo "Convert $i"
+echo "Format $i"
 msgfmt -o `expr substr $i 1 $(( ${#i} - 3 ))`.mo $i
 mv `expr substr $i 1 $(( ${#i} - 3 ))`.mo ./bin/locale/
 done

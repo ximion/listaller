@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, packagekit,
   sqlite3ds, db, AbUnZper, AbArcTyp, ipkdef, HTTPSend, FTPSend, blcksock,
-  MD5, liTypes, distri;
+  MD5, liTypes, distri, MTProcs;
 
 type
 
@@ -353,17 +353,70 @@ end;
 function TInstallation.ResolveDependencies: Boolean;
 var i: Integer;
     p: TProcess;
-    h: String;
-    tmp,xtmp: TStringList;
-    pkit: TPackageKit;
+    tmp: TStringList;
     mnpos: Integer;
+    DInfo: TDistroInfo;
+    EPkgNotFound: Exception;
     one: Double;
+    lInd: Integer;
+
+procedure SearchForPackage(Index: PtrInt; Data: Pointer; Item: TMultiThreadProcItem);
+var pkit: TPackageKit;xtmp: TStringList;h: String;
+begin
+if Index=-1 then
+begin
+while lInd<Dependencies.Count-1 do
+ SetMainPos(Round(mnpos*one));
+end else
+begin
+
+ //Open PKit connection and assign tmp stringlist
+  pkit:=TPackageKit.Create;
+  xtmp:=TStringList.Create;
+  pkit.RsList:=xtmp;
+
+  mnpos:=mnpos+1;
+
+  pkit.FindPkgForFile(Dependencies[Index]);
+
+  if (pkit.PkFinishCode>0)or(xtmp.Count<=0) then
+  begin
+   pkit.Free;
+   xtmp.Free;
+   MakeUsrRequest(StringReplace(rsDepNotFound,'%l',Dependencies[Index],[rfReplaceAll])+#13+rsInClose,rqError);
+   ProcThreadPool.StopThreads;
+    tmp.Free;
+    exit;
+  end;
+
+  h:=xtmp[0];
+  tmp.Add(h);
+  h:='';
+  xtmp.Clear;
+  mnpos:=mnpos+1;
+  lInd:=Index;
+
+  pkit.Free;
+  xtmp.free;
+ end;
+end;
+
 begin
  Result:=true;
  SetMainPos(0);
   if (Dependencies.Count>0) and (Dependencies[0]='[detectpkgs]') then
   begin
     Dependencies.Delete(0);
+
+    DInfo:=GetDistro;
+    //On yum, PackageKit needs the complete path to find
+    //packages. Add the lib dir to libraries
+    if DInfo.PackageSystem<>'DEB' then
+     for i:=0 to Dependencies.Count-1 do
+      if  (LowerCase(ExtractFileExt(Dependencies[i]))='.so')
+      and (Dependencies[i][1]<>'/') then
+       Dependencies[i]:='/usr/lib/'+Dependencies[i];
+
     mnpos:=0;
     one:=100/(Dependencies.Count*2);
     SetMainPos(Round(mnpos*one));
@@ -371,38 +424,9 @@ begin
     ShowPKMon();
     p.Options:=[poUsePipes,poWaitOnExit];
     tmp:=TStringList.Create;
-    xtmp:=TStringList.Create;
-    //Open PKit connection and assign xtmp stringlist
-    pkit:=TPackageKit.Create;
-    pkit.OnProgress:=@OnPKitProgress;
-    pkit.RsList:=xtmp;
-    for i:=0 to Dependencies.Count-1 do
-    begin
-     mnpos:=mnpos+1;
-     SetMainPos(Round(mnpos*one));
 
-     pkit.FindPkgForFile(Dependencies[i]);
-
-     if (pkit.PkFinishCode>0)or(xtmp.Count<=0) then
-     begin
-      MakeUsrRequest(StringReplace(rsDepNotFound,'%l',Dependencies[i],[rfReplaceAll])+#13+rsInClose,rqError);
-      tmp.Free;
-      xtmp.Free;
-      Result:=false;
-      exit;
-     end;
-
-     h:=xtmp[0];
-     tmp.Add(h);
-     h:='';
-     xtmp.Clear;
-     mnpos:=mnpos+1;
-
-     SetMainPos(Round(mnpos*one));
-    end;
-    //Free PackageKit obj
-    pkit.Free;
-    xtmp.Free;
+     ProcThreadPool.MaxThreadCount:=6;
+     ProcThreadPool.DoParallelLocalProc(@SearchForPackage,-1,Dependencies.Count-1,nil);
 
     RemoveDuplicates(tmp);
     Dependencies.Assign(tmp);

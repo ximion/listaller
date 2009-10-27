@@ -131,7 +131,6 @@ begin
 end;
 begin
        d:=TIniFile.Create(fname);
-       msg(rsLoading+'  '+ExtractFileName(fname),mtInfo);
        translate:=false;
 
        if (not Root)and(d.ReadString('Desktop Entry','Exec','')[1]<>'/')
@@ -154,6 +153,7 @@ begin
        and(d.ReadString('Desktop Entry','OnlyShowIn','')='')
        and(d.ReadString('Desktop Entry','X-AllowRemove','true')='true')then
        begin
+       msg(rsLoading+'  '+ExtractFileName(fname),mtInfo);
 
        //Check for Autopackage.org installation
        if pos('apkg-remove',LowerCase(d.ReadString('Desktop Entry','Actions','')))>0 then
@@ -283,7 +283,7 @@ begin
       //  if Assigned(dt) then dt.Free;
          if translate then dt.Free;
 
-        end;
+        end else msg('Skipped  '+ExtractFileName(fname),mtInfo);
        d.Free;
 end;
 
@@ -426,10 +426,12 @@ if Root then //Only if user is root
 begin
 tmp.Assign(FindAllFiles('/usr/share/applications/','*.desktop',true));
 xtmp.Assign(FindAllFiles('/usr/local/share/applications/','*.desktop',true));
+for i:=0 to xtmp.Count-1 do tmp.Add(xtmp[i]);
+
+{xtmp.Assign(FindAllFiles('/usr/share/games/applications/','*.desktop',true));
+for i:=0 to xtmp.Count-1 do tmp.Add(xtmp[i]); }
 end else
 tmp.Assign(FindAllFiles(GetEnvironmentVariable('HOME')+'/.local/share/applications','*.desktop',false));
-
-for i:=0 to xtmp.Count-1 do tmp.Add(xtmp[i]);
 
 xtmp.Free;
 

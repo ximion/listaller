@@ -11,9 +11,7 @@ build-stamp:
 
 	$(MAKE) all
 	$(MAKE) licreator-gtk
-	#make WIDGET=gtk2 litheme
 	$(MAKE) licreator-qt
-	#make WIDGET=qt4 litheme
 	#docbook-to-man debian/listaller.sgml > listaller.1
 
 	touch $@
@@ -22,7 +20,7 @@ clean:
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp configure-stamp
-
+	rm -rf debian/tmp
 	$(MAKE) clean
 
 	dh_clean 
@@ -32,23 +30,18 @@ install: build
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
+	mkdir debian/tmp
 	
-	echo "Installing binaries..."
-	$(MAKE) DESTDIR=./debian/listaller-tools install-build-tools
-	$(MAKE) DESTDIR=./debian/libinstaller install-core
-	cp ./debian/libinstaller/usr/bin/lipa ./debian/listaller-tools/usr/bin
-	rm -f ./debian/libinstaller/usr/bin/lipa
-	# Install Gtk release
-	$(MAKE) DESTDIR=./debian/listaller-gtk install-front-gtk
+	@echo "Installing binaries..."
+	#Install basics
+	$(MAKE) DESTDIR=./debian/tmp install-all-bin
+	#Install Listaller Creator (GTK2)
 	$(MAKE) DESTDIR=./debian/listaller-creator-gtk install-licreator-gtk
-	 #make WIDGET=gtk2 DESTDIR=./debian/lithememgr-gtk litheme-inst
-	# Install Qt4 release
-	$(MAKE) DESTDIR=./debian/listaller-qt install-front-qt
+	#Install Listaller Creator (Qt4)
 	$(MAKE) DESTDIR=./debian/listaller-creator-qt install-licreator-qt
-	 #make WIDGET=qt4 DESTDIR=./debian/lithememgr-gtk litheme-inst
 
 binary-indep: build install
-	echo "Installing architecture independent files..."
+	@echo "Installing architecture independent files..."
 	$(MAKE) DESTDIR=./debian/listaller-data install-data
 
 binary-arch: build install
@@ -56,7 +49,7 @@ binary-arch: build install
 	dh_testroot
 	dh_installchangelogs 
 	dh_installdocs
-	dh_install
+	dh_install --sourcedir=debian/tmp
 	dh_installmime
 	dh_installman
 	dh_link

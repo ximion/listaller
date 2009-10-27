@@ -21,6 +21,7 @@ program listallgo;
 uses
   {$IFDEF UNIX}
   cthreads,
+  cmem,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,

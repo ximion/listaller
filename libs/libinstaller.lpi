@@ -12,8 +12,9 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="680"/>
+      <CurrentBuildNr Value="696"/>
       <ProjectVersion Value="0.4.0.0"/>
+      <ProductName Value="Listaller"/>
     </VersionInfo>
     <PublishOptions>
       <Version Value="2"/>
@@ -27,23 +28,23 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="21">
+    <Units Count="25">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="17" Y="22"/>
+        <CursorPos X="8" Y="23"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="47"/>
+        <UsageCount Value="49"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="43" Y="1248"/>
-        <TopLine Value="1217"/>
-        <UsageCount Value="19"/>
+        <CursorPos X="50" Y="1532"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="20"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
@@ -62,8 +63,8 @@
       <Unit4>
         <Filename Value="../distri.pas"/>
         <UnitName Value="distri"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
+        <CursorPos X="10" Y="41"/>
+        <TopLine Value="201"/>
         <UsageCount Value="10"/>
       </Unit4>
       <Unit5>
@@ -90,9 +91,9 @@
       <Unit8>
         <Filename Value="../bindings/packagekit.pas"/>
         <UnitName Value="packagekit"/>
-        <CursorPos X="3" Y="37"/>
-        <TopLine Value="229"/>
-        <UsageCount Value="12"/>
+        <CursorPos X="1" Y="47"/>
+        <TopLine Value="25"/>
+        <UsageCount Value="13"/>
       </Unit8>
       <Unit9>
         <Filename Value="../bindings/pkitclient.pas"/>
@@ -153,8 +154,8 @@
       <Unit17>
         <Filename Value="management.pas"/>
         <UnitName Value="management"/>
-        <CursorPos X="22" Y="615"/>
-        <TopLine Value="598"/>
+        <CursorPos X="42" Y="82"/>
+        <TopLine Value="73"/>
         <UsageCount Value="10"/>
       </Unit17>
       <Unit18>
@@ -180,62 +181,47 @@
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit20>
+      <Unit21>
+        <Filename Value="mtprocs.pas"/>
+        <UnitName Value="MTProcs"/>
+        <CursorPos X="15" Y="686"/>
+        <TopLine Value="666"/>
+        <UsageCount Value="11"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/rtl/objpas/classes/classesh.inc"/>
+        <CursorPos X="25" Y="1398"/>
+        <TopLine Value="1378"/>
+        <UsageCount Value="10"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/rtl/inc/objpash.inc"/>
+        <CursorPos X="8" Y="170"/>
+        <TopLine Value="162"/>
+        <UsageCount Value="10"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/rtl/objpas/sysutils/sysutilh.inc"/>
+        <CursorPos X="4" Y="66"/>
+        <TopLine Value="58"/>
+        <UsageCount Value="10"/>
+      </Unit24>
     </Units>
-    <JumpHistory Count="12" HistoryIndex="11">
+    <JumpHistory Count="2" HistoryIndex="1">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="485" Column="10" TopLine="450"/>
+        <Caret Line="22" Column="35" TopLine="13"/>
       </Position1>
       <Position2>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="479" Column="24" TopLine="445"/>
+        <Caret Line="23" Column="8" TopLine="1"/>
       </Position2>
-      <Position3>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="69" Column="13" TopLine="45"/>
-      </Position3>
-      <Position4>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="481" Column="10" TopLine="445"/>
-      </Position4>
-      <Position5>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="192" Column="24" TopLine="170"/>
-      </Position5>
-      <Position6>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="192" Column="24" TopLine="1"/>
-      </Position6>
-      <Position7>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="325" Column="20" TopLine="305"/>
-      </Position7>
-      <Position8>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="409" Column="3" TopLine="389"/>
-      </Position8>
-      <Position9>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="141" Column="7" TopLine="128"/>
-      </Position9>
-      <Position10>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="126" Column="51" TopLine="117"/>
-      </Position10>
-      <Position11>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="167" Column="8" TopLine="141"/>
-      </Position11>
-      <Position12>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="17" TopLine="1"/>
-      </Position12>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="../bin/libinstaller.so.0.4"/>
+      <Filename Value="../bin/libinstaller.so.0.4.0"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
