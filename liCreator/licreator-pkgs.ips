@@ -27,7 +27,7 @@ Dependencies[RPM]:
 
 !-Files #0
 >$INST/liCreator
-../bin/licreator
+../build/licreator
 195f7bd6242782f35819a9600dbb74aa
 ../graphics/listaller_creator.png
 aa0b5d7a5dab287a422f06c121ed8cf0

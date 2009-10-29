@@ -51,7 +51,7 @@ cp ./data/mime/x-ipk.xml $DESTDIR/usr/share/listaller/mime
 cp ./data/mime/x-ips.xml $DESTDIR/usr/share/listaller/mime
 
 #mkdir -p $DESTDIR/usr/bin
-#cp ./bin/lipa $DESTDIR/usr/bin/
+#cp ./build/lipa $DESTDIR/usr/bin/
 
 #Execute installscript
 sh ./data/scripts/postinst
