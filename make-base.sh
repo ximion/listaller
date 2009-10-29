@@ -37,12 +37,12 @@ echo "Active widgetset: $WIDGET"
 echo "Starting new Listaller build..."
 # Command line to build the sofware
 # Create necessary dirs
-mkdir -p ./bin
-mkdir -p ./bin/locale
+mkdir -p ./build
+mkdir -p ./build/locale
 
 echo "Compiling libinstaller library..."
 lazbuild -B --ws=nogui ./libs/libinstaller.lpr
-ln -s ./bin/libinstaller.so.0.4.0 libinstaller.so.0.4
+ln -s ./build/libinstaller.so.0.4.0 libinstaller.so.0.4
 ln -s libinstaller.so.0.4 libinstaller.so
 
 echo "Compiling command-line tool..."
@@ -58,7 +58,7 @@ for i in `find ./locale -name "*.po"`
 do
 echo "Format $i"
 msgfmt -o `expr substr $i 1 $(( ${#i} - 3 ))`.mo $i
-mv `expr substr $i 1 $(( ${#i} - 3 ))`.mo ./bin/locale/
+mv `expr substr $i 1 $(( ${#i} - 3 ))`.mo ./build/locale/
 done
 
 echo "Listaller build completed."

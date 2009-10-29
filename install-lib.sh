@@ -2,7 +2,7 @@
 # Parses command line options. Currently supported options are:
 # DESTDIR		Destination root directory
 
-#set -e
+set -e
 
 for arg; do
   case $arg in
@@ -21,7 +21,7 @@ esac
 
 mkdir -p $DESTDIR/usr/lib
 
-cp ./bin/libinstaller.so.0.4.0 $DESTDIR/usr/lib/
+cp ./build/libinstaller.so.0.4.0 $DESTDIR/usr/lib/
 cd $DESTDIR/usr/lib/
 ln -s /usr/lib/libinstaller.so.0.4.0 libinstaller.so.0.4
 

@@ -12,7 +12,7 @@ rm -rf *.compiled
 rm -rf *.lrt
 
 rm -rf *~
-rm -rf "./bin"
+rm -rf "./build"
 
 rm -f ./libinstaller.so
 rm -f ./libinstaller.so.0.4

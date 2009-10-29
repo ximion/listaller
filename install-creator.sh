@@ -36,9 +36,9 @@ mkdir -p $DESTDIR/opt/appfiles/liCreator
 mkdir -p $DESTDIR/usr/share/applications
 
 if [ "$WIDGET" == "qt4" ]; then
-cp './bin/qt4/licreator' $DESTDIR/opt/appfiles/liCreator/
+cp './build/qt4/licreator' $DESTDIR/opt/appfiles/liCreator/
 else
-cp './bin/gtk2/licreator' $DESTDIR/opt/appfiles/liCreator/
+cp './build/gtk2/licreator' $DESTDIR/opt/appfiles/liCreator/
 fi
 
 cp './graphics/listaller_creator.png' $DESTDIR/opt/appfiles/liCreator/

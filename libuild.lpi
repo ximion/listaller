@@ -139,7 +139,7 @@
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="./bin/libuild"/>
+      <Filename Value="./build/libuild"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>

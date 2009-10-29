@@ -35,7 +35,7 @@ cp ./graphics/categories/other.png $DESTDIR/usr/share/listaller/graphics/categor
 cp ./graphics/categories/science.png $DESTDIR/usr/share/listaller/graphics/categories/
 cp ./graphics/categories/system.png $DESTDIR/usr/share/listaller/graphics/categories/
 #Copy other files
-cp -dpr ./bin/locale/ $DESTDIR/usr/share/listaller/
+cp -dpr ./build/locale/ $DESTDIR/usr/share/listaller/
 rm -f $DESTDIR/usr/share/listaller/lang/.svn
 rm -f $DESTDIR/usr/share/listaller/lang/.directory
 

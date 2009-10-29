@@ -477,7 +477,7 @@
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="../bin/licreator"/>
+      <Filename Value="../build/licreator"/>
     </Target>
     <SearchPaths>
       <OtherUnitFiles Value="../;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/components/synedit/"/>

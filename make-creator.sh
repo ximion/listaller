@@ -30,9 +30,9 @@ LCLDir="/usr/lib/lazarus"
 OS="linux"
 
 #Create necessary directories
-mkdir -p ./bin
-mkdir -p ./bin/gtk2
-mkdir -p ./bin/qt4
+mkdir -p ./build
+mkdir -p ./build/gtk2
+mkdir -p ./build/qt4
 echo "Target operating system: $OS"
 cd ./liCreator
 chmod +x ./make.sh

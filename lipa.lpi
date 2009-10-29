@@ -381,7 +381,7 @@
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="./bin/lipa"/>
+      <Filename Value="./build/lipa"/>
     </Target>
     <SearchPaths>
       <OtherUnitFiles Value="abbrevia/;synapse/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;bindings/"/>

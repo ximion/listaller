@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, packagekit,
   sqlite3ds, db, AbUnZper, AbArcTyp, ipkdef, HTTPSend, FTPSend, blcksock,
-  MD5, liTypes, distri, MTProcs;
+  MD5, liTypes, distri, MTProcs, FileUtil;
 
 type
 
@@ -361,12 +361,16 @@ var i: Integer;
     lInd: Integer;
 
 procedure SearchForPackage(Index: PtrInt; Data: Pointer; Item: TMultiThreadProcItem);
-var pkit: TPackageKit;xtmp: TStringList;h: String;
+var pkit: TPackageKit;xtmp: TStringList;h: String;lpos: Integer;
 begin
 if Index=-1 then
 begin
 while lInd<Dependencies.Count-1 do
+if lpos<>mnpos then
+begin
  SetMainPos(Round(mnpos*one));
+ lpos:=mnpos;
+end;
 end else
 begin
 
@@ -425,7 +429,7 @@ begin
     p.Options:=[poUsePipes,poWaitOnExit];
     tmp:=TStringList.Create;
 
-     ProcThreadPool.MaxThreadCount:=6;
+    // ProcThreadPool.MaxThreadCount:=4;
      ProcThreadPool.DoParallelLocalProc(@SearchForPackage,-1,Dependencies.Count-1,nil);
 
     RemoveDuplicates(tmp);
@@ -478,7 +482,7 @@ RmApp:=false;
 
 //Clean up the mess of an old installation
 if DirectoryExists(lp+ExtractFileName(fname)) then
- RemoveDir(lp+ExtractFileName(fname));
+ DeleteDirectory(lp+ExtractFileName(fname),false);
 
 z:=TAbUnZipper.Create(nil);
 FDir:=lp+ExtractFileName(fname)+'/';
@@ -895,6 +899,21 @@ pkit: TPackageKit; //PackageKit object
 DInfo: TDistroInfo; //Distribution information
 mnpos: Integer; //Current positions of operation
 max: Double;
+
+//Necessary if e.g. file copying fails
+procedure RollbackInstallation;
+var i: Integer;
+begin
+ for i:=0 to appfiles.Count-1 do
+ begin
+  msg('Removing '+DeleteModifiers(appfiles[i])+' ...');
+  DeleteFile(DeleteModifiers(appfiles[i]));
+  mnpos:=mnpos-10;
+  SetMainPos(Round(mnpos*max));
+ end;
+ appfiles.Free;
+end;
+
 begin
 fi:=TStringList.Create;
 fi.LoadFromFile(lp+PkgName+FFileInfo);
@@ -904,7 +923,7 @@ proc.Options:=[poUsePipes,poStdErrToOutPut];
 
 DInfo:=GetDistro; //Load DistroInfo
 
-Result:=true;
+Result:=false;
 mnpos:=0;
 
 //!!! @deprecated
@@ -963,7 +982,6 @@ begin
   MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
   p.Free;
   pkit.Free;
-  Result:=false;
   exit;
  end;
  SetExtraPos(0);
@@ -997,7 +1015,6 @@ cnf.Free;
     HTTP.Document.SaveToFile('/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)));
   except
    MakeUsrRequest(rsDepDLProblem,rqError);
-   Result:=false;
    exit;
   end;
  end else
@@ -1013,7 +1030,6 @@ begin
     if not CheckFTPConnection(FTP) then
     begin
       MakeUsrRequest(rsFTPFailed,rqError);
-      Result:=false;
       exit;
     end;
     ChangeWorkingDir(GetServerPath(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)));
@@ -1022,7 +1038,6 @@ begin
     Logout;
   except
    MakeUsrRequest(rsDepDLProblem,rqError);
-   Result:=false;
    exit;
   end;
   end;
@@ -1106,7 +1121,6 @@ begin
     begin
      MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
      p.Free;
-     Result:=false;
      exit;
     end;
 
@@ -1130,7 +1144,6 @@ begin
     begin
      msg('Package '+Dependencies[i]+' can not be installed.');
      MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
-     Result:=false;
      exit;
     end;
 
@@ -1208,6 +1221,7 @@ z.ExtractFiles(ExtractFileName(h));
 except
  MakeUsrRequest(rsExtractError,rqError);
  z.Free;
+ RollbackInstallation;
  exit;
 end;
 
@@ -1216,6 +1230,7 @@ msg('Copy file '+ExtractFileName(h)+' to '+dest+' ...');
 if fi[i+1] <> MDPrint((MD5.MD5File(DeleteModifiers(lp+PkgName+h),1024))) then begin
  MakeUsrRequest(rsHashError,rqError);
  z.Free;
+ RollbackInstallation;
  exit;
 end;
 
@@ -1231,14 +1246,14 @@ else
 begin
   MakeUsrRequest(StringReplace(rsCnOverride,'%f',dest+'/'+ExtractFileName(DeleteModifiers(h)),[rfReplaceAll])+#10+rsInClose,rqError);
   z.Free;
-  Result:=false;
+  RollbackInstallation;
   exit;
 end;
 except
  //Unable to copy the file
  MakeUsrRequest(Format(rsCnCopy,[dest+'/'+ExtractFileName(DeleteModifiers(h))])+#10+rsInClose,rqError);
  z.Free;
- Result:=false;
+ RollbackInstallation;
  exit;
 end;
 
@@ -1415,6 +1430,7 @@ proc.Free;
 mnpos:=mnpos+5;
 SetMainPos(Round(mnpos*max));
 
+Result:=true;
 SendStateMsg(rsFinished);
 sleep(600);
 end;

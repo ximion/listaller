@@ -383,7 +383,7 @@
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="./bin/liupdate"/>
+      <Filename Value="build/liupdate"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>

@@ -19,7 +19,7 @@ library libinstaller;
 {$mode objfpc}{$H+}
 
 uses
-  cthreads, cmem, Classes, ipkHandle, SysUtils, Controls, liCommon, liTypes,
+  cthreads, Classes, ipkHandle, SysUtils, Controls, liCommon, liTypes,
   management;
 
 

@@ -117,7 +117,7 @@ var d: TIniFile;entry: TAppInfo;dt: TMOFile;lp: String;
 function ldt(s: String): String;
 var h: String;
 begin
- h:=s;
+{ h:=s;
  try
  if translate then
  begin
@@ -126,7 +126,7 @@ begin
  end;
  except
   Result:=h;
- end;
+ end;  }
  Result:=s;
 end;
 begin

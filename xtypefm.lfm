@@ -2145,10 +2145,9 @@ object IMdFrm: TIMdFrm
   LCLVersion = '0.9.28'
   object Label1: TLabel
     Left = 8
-    Height = 19
+    Height = 20
     Top = 8
-    Width = 187
-    AutoSize = False
+    Width = 200
     BorderSpacing.Top = 10
     Caption = 'What do you want to do?'
     Font.Height = -15

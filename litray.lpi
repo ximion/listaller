@@ -227,7 +227,7 @@
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="bin/litray"/>
+      <Filename Value="build/litray"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>

@@ -61,8 +61,8 @@
         <ComponentName Value="MnFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="10" Y="644"/>
-        <TopLine Value="619"/>
+        <CursorPos X="50" Y="26"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="178"/>
         <Loaded Value="True"/>
@@ -503,8 +503,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="xtypefm"/>
-        <CursorPos X="14" Y="70"/>
-        <TopLine Value="48"/>
+        <CursorPos X="9" Y="30"/>
+        <TopLine Value="96"/>
         <UsageCount Value="14"/>
       </Unit64>
       <Unit65>
@@ -761,7 +761,7 @@
         <UsageCount Value="10"/>
       </Unit100>
     </Units>
-    <JumpHistory Count="28" HistoryIndex="27">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="manager.pas"/>
         <Caret Line="843" Column="36" TopLine="820"/>
@@ -874,12 +874,16 @@
         <Filename Value="manager.pas"/>
         <Caret Line="271" Column="10" TopLine="252"/>
       </Position28>
+      <Position29>
+        <Filename Value="manager.pas"/>
+        <Caret Line="26" Column="50" TopLine="1"/>
+      </Position29>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="./bin/listallmgr"/>
+      <Filename Value="build/listallmgr"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>

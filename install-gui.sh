@@ -34,15 +34,15 @@ mkdir -p $DESTDIR/usr/lib/listaller/gtk2
 fi
 #Copy other files
 if [ "$WIDGET" == "qt4" ]; then
-cp ./bin/qt4/listallgo $DESTDIR/usr/lib/listaller/qt4/
-cp ./bin/qt4/listallmgr $DESTDIR/usr/lib/listaller/qt4/
-cp ./bin/qt4/liupdate $DESTDIR/usr/lib/listaller/qt4/
-cp ./bin/qt4/litray $DESTDIR/usr/lib/listaller/qt4/
+cp ./build/qt4/listallgo $DESTDIR/usr/lib/listaller/qt4/
+cp ./build/qt4/listallmgr $DESTDIR/usr/lib/listaller/qt4/
+cp ./build/qt4/liupdate $DESTDIR/usr/lib/listaller/qt4/
+cp ./build/qt4/litray $DESTDIR/usr/lib/listaller/qt4/
 else
-cp ./bin/gtk2/listallgo $DESTDIR/usr/lib/listaller/gtk2/
-cp ./bin/gtk2/listallmgr $DESTDIR/usr/lib/listaller/gtk2/
-cp ./bin/gtk2/liupdate $DESTDIR/usr/lib/listaller/gtk2/
-cp ./bin/gtk2/litray $DESTDIR/usr/lib/listaller/gtk2/
+cp ./build/gtk2/listallgo $DESTDIR/usr/lib/listaller/gtk2/
+cp ./build/gtk2/listallmgr $DESTDIR/usr/lib/listaller/gtk2/
+cp ./build/gtk2/liupdate $DESTDIR/usr/lib/listaller/gtk2/
+cp ./build/gtk2/litray $DESTDIR/usr/lib/listaller/gtk2/
 fi
 
 if [ "$WIDGET" == "qt4" ]; then

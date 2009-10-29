@@ -259,8 +259,8 @@ begin
 
   if (setup.GetAppCMD<>'#')and(CbExecApp.Checked) then
   begin
-  Process1.CommandLine:=setup.GetAppCMD;
-  Process1.Execute;
+   Process1.CommandLine:=setup.GetAppCMD;
+   Process1.Execute;
   end;
 
   Application.Terminate;
@@ -289,9 +289,10 @@ begin
 with IWizFrm do
 begin
  DSolveProgress.Position:=pos;
+ writeLn(pos);
 
- if(pos=0)and(DSolveProgress.Visible=true)then DSolveProgress.Visible:=false
- else DSolveProgress.Visible:=true;
+ {if(pos=0)and(DSolveProgress.Visible=true)then DSolveProgress.Visible:=false
+ else DSolveProgress.Visible:=true; }
  Application.ProcessMessages;
 end;
 end;
@@ -304,7 +305,7 @@ begin
    Application.ProcessMessages;
    setup.SetMainChangeCall(@DSProgPosChange);
    setup.ResolveDependencies;
-  { while DSolveProgress.Position<100 do //Necessary because otherwise the proc continues... strange
+  { while DSolveProgress.Position<100 do //Necessary because otherwise the proc continues...
     Application.ProcessMessages;  }
    setup.SetMainChangeCall(@MainPosChange);
    Label15.Caption:=rsFinished;
@@ -693,6 +694,7 @@ begin
 NoteBook1.PageIndex:=5;
 
 Label11.Caption:=StringReplace(rsWasInstalled,'%a',setup.GetAppName,[rfReplaceAll]);
+
 FinBtn1.Visible:=true;
 AbortBtn1.Visible:=false;
 FinPage.Refresh;

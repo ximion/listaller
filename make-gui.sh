@@ -39,10 +39,10 @@ echo "Active widgetset: $WIDGET"
 echo "Starting new Listaller-GUI build for $WIDGET"
 # Command line to build the sofware
 # Create necessary dirs
-mkdir -p ./bin
-mkdir -p ./bin/locale
-mkdir -p ./bin/qt4
-mkdir -p ./bin/gtk2
+mkdir -p ./build
+mkdir -p ./build/locale
+mkdir -p ./build/qt4
+mkdir -p ./build/gtk2
 
 VER=$(fpc -iW)
 echo "Compiler version: $VER"
@@ -51,41 +51,41 @@ echo "Compiling installer..."
 if [ "$WIDGET" == "qt4" ]; then
 #./libuild PR=listallgo.lpr O=listallgo WIDGET=qt4
 lazbuild -B --ws=qt listallgo.lpr
-mv ./bin/listallgo ./bin/qt4/
+mv ./build/listallgo ./bin/qt4/
 else
 #./libuild PR=listallgo.lpr O=listallgo WIDGET=gtk2
 lazbuild -B --ws=gtk2 listallgo.lpr
-mv ./bin/listallgo ./bin/gtk2/
+mv ./build/listallgo ./bin/gtk2/
 fi
 echo "Compiling software-manager..."
 if [ "$WIDGET" == "qt4" ]; then
 #./libuild PR=listallmngr.lpr O=listallmgr WIDGET=qt4
 lazbuild -B --ws=qt listallmgr.lpr
-mv ./bin/listallmgr ./bin/qt4/
+mv ./build/listallmgr ./bin/qt4/
 else
 #./libuild PR=listallmngr.lpr O=listallmgr WIDGET=gtk2
 lazbuild -B --ws=gtk2 listallmgr.lpr
-mv ./bin/listallmgr ./bin/gtk2/
+mv ./build/listallmgr ./bin/gtk2/
 fi
 echo "Compiling updater..."
 if [ "$WIDGET" == "qt4" ]; then
 #./libuild PR=liupdate.lpr O=liupdate WIDGET=qt4
 lazbuild -B --ws=qt liupdate.lpr
-mv ./bin/liupdate ./bin/qt4/
+mv ./build/liupdate ./bin/qt4/
 else
 #./libuild PR=liupdate.lpr O=liupdate WIDGET=gtk2
 lazbuild -B --ws=gtk2 liupdate.lpr
-mv ./bin/liupdate ./bin/gtk2/
+mv ./build/liupdate ./bin/gtk2/
 fi
 echo "Compiling tray notifier..."
 if [ "$WIDGET" == "qt4" ]; then
 #./libuild PR=liupdate.lpr O=liupdate WIDGET=qt4
 lazbuild -B --ws=qt litray.lpr
-mv ./bin/litray ./bin/qt4/
+mv ./build/litray ./bin/qt4/
 else
 #./libuild PR=liupdate.lpr O=liupdate WIDGET=gtk2
 lazbuild -B --ws=gtk2 litray.lpr
-mv ./bin/litray ./bin/gtk2/
+mv ./build/litray ./bin/gtk2/
 fi
 
 echo "Listaller-GUI build completed. (For $WIDGET)"

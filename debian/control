@@ -2,17 +2,14 @@ Source: listaller
 Standards-Version: 3.8.2
 Section: admin
 Maintainer: Matthias Klumpp <matthias@nlinux.org>
-Priority: extra
+Priority: optional
 Homepage: http://listaller.nlinux.org
 Build-Depends: libgtk2.0-dev, lazarus (>=0.9.28-0), fpc (>= 2.3.1), debhelper (>= 5), libqt4intf-dev,
  sqlite3, libsqlite3-0, libsqlite3-dev, libglib2.0-0, libglib2.0-dev, libpackagekit-glib2-dev (>= 0.5.3)
 
-Package: libinstaller0.4
-Priority: optional
+Package: libinstaller-0.4.0
 Architecture: i386 powerpc sparc amd64 arm
 Depends: ${shlibs:Depends}, apt-file
-Replaces: libinstaller
-Breaks: libinstaller
 Description: Listaller library
  Contains the libInstaller library, which allows
  programs to access install/uninstall functions
@@ -20,7 +17,7 @@ Description: Listaller library
 
 Package: listaller-tools
 Architecture: i386 powerpc sparc amd64 arm
-Depends: ${shlibs:Depends}, libinstaller0.4 (= ${binary:Version})
+Depends: ${shlibs:Depends}, libinstaller-0.4.0 (= ${binary:Version})
 Description: NoGUI Listaller tools
  This package contains everything you need to build own IPK packages.
  It also contains the needed tools to build RPM and DEB packages from

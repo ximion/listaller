@@ -4,7 +4,7 @@ LazarusResources.Add('TUMnForm','FORMDATA',[
   'TPF0'#8'TUMnForm'#7'UMnForm'#4'Left'#3#26#1#6'Height'#3'f'#2#3'Top'#3#180#0#5
   +'Width'#3#176#2#13'ActiveControl'#7#13'CheckListBox1'#7'Caption'#6#14'Update'
   +' Manager'#12'ClientHeight'#3'f'#2#11'ClientWidth'#3#176#2#8'OnCreate'#7#10
-  +'FormCreate'#6'OnShow'#7#8'FormShow'#10'LCLVersion'#6#6'0.9.27'#0#5'TMemo'#8
+  +'FormCreate'#6'OnShow'#7#8'FormShow'#10'LCLVersion'#6#6'0.9.28'#0#5'TMemo'#8
   +'InfoMemo'#4'Left'#2#8#6'Height'#2'Z'#3'Top'#3#254#1#5'Width'#3#157#2#7'Anch'
   +'ors'#11#6'akLeft'#7'akRight'#8'akBottom'#0#7'Enabled'#8#13'Lines.Strings'#1
   +#6#19'Update description:'#0#8'TabOrder'#2#0#0#0#7'TBitBtn'#7'BitBtn1'#4'Lef'
