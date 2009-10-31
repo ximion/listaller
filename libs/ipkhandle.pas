@@ -96,6 +96,8 @@ type
   function RunNormalInstallation: Boolean;
   //Runs a DLink installation
   function RunDLinkInstallation: Boolean;
+  //Does the container installation
+  function RunContainerInstallation: Boolean;
   //Socket hook for FTPSend and HTTPSend to get progress
   procedure NetSockHook(Sender: TObject; Reason: THookSocketReason;
      const Value: string);
@@ -262,12 +264,9 @@ begin
   lst.Add(copy(PkProfiles[i],0,pos(' #',PkProfiles[i])));
 end;
 
-function IsPackageInstalled(aname: String;aid: String): Boolean;
-var dsApp: TSQLite3Dataset;
+procedure LoadDB(dsApp: TSQLite3Dataset);
 begin
-dsApp:=TSQLite3Dataset.Create(nil);
-
-with dsApp do
+ with dsApp do
  begin
    FileName:=RegDir+'applications.db';
    TableName:='AppInfo';
@@ -291,7 +290,13 @@ with dsApp do
    CreateTable;
  end;
 end;
+end;
 
+function IsPackageInstalled(aname: String;aid: String): Boolean;
+var dsApp: TSQLite3Dataset;
+begin
+dsApp:=TSQLite3Dataset.Create(nil);
+LoadDB(dsApp);
 dsApp.SQL:='SELECT * FROM AppInfo';
 dsApp.Open;
 dsApp.Filtered := true;
@@ -301,6 +306,33 @@ Result:=false;
 while not dsApp.EOF do
 begin
  if (dsApp.FieldByName('Name').AsString=aName) and (dsApp.FieldByName('ID').AsString=aID) then
+begin
+Result:=true;
+break;
+end else Result:=false;
+ dsApp.Next;
+end;
+
+dsApp.Close;
+dsApp.Free;
+end;
+
+function IsAppInstalled(aname: String): Boolean;
+var dsApp: TSQLite3Dataset;
+begin
+dsApp:=TSQLite3Dataset.Create(nil);
+
+LoadDB(dsApp);
+
+dsApp.SQL:='SELECT * FROM AppInfo';
+dsApp.Open;
+dsApp.Filtered := true;
+dsApp.First;
+
+Result:=false;
+while not dsApp.EOF do
+begin
+ if (dsApp.FieldByName('Name').AsString=aName) then
 begin
 Result:=true;
 break;
@@ -444,10 +476,15 @@ var z: TAbUnZipper;
     FDir,n: String;
     i: Integer;
     DInfo: TDistroInfo;
-    p: TProcess;
     cont: TIPKControl;
     tmp: TStringList;
 begin
+if IAppName <> '' then
+begin
+ Result:=false;
+ writeLn('[ERROR] This Setup was already initialized. You have to create a new setup object to load a second file!');
+ exit;
+end;
  Result:=true;
 with dsApp do
  begin
@@ -535,6 +572,7 @@ and (LowerCase(cont.Architectures)<>'all')
 and (pos('architecture',forces)<=0) then
 begin
  MakeUsrRequest(rsInvArchitecture,rqError);
+ cont.Free;
  z.Free;
  Result:=false;
  exit;
@@ -718,7 +756,7 @@ SetCurProfile(0);
 //Only executed to make sure that "RmApp" property is set
 
 if not Testmode then
-if IsPackageInstalled(IAppName,pkgID) then RmApp:=true;
+if IsAppInstalled(IAppName) then RmApp:=true;
 
 end else //Handle other IPK types
 if pkType=ptDLink then begin
@@ -800,46 +838,7 @@ if pkType=ptContainer then
 begin
 msg('Package type is "container"');
 
-//!!! Important: Installation should start on "StartInstallation" and not while Initialization!
-
-z:=TAbUnZipper.Create(nil);
-z.FileName:=PkgPath;
-z.ExtractOptions:=[eoCreateDirs]+[eoRestorePath];
-z.BaseDirectory:=lp;
-
-z.ExtractFiles(ExtractFileName(cont.Binary));
-
-tmp:=TStringList.Create;
-cont.GetFiles(0,tmp);
-for i:=0 to tmp.Count-1 do
-z.ExtractFiles(ExtractFileName(tmp[i]));
-
-tmp.Free;
-z.Free;
-
- p:=TProcess.create(nil);
- p.CommandLine:='chmod 755 ''/tmp/'+cont.Binary+'''';
- p.Options:=[poUsePipes,poWaitonexit];
- p.Execute;
- p.Options:=[poUsePipes,poWaitonexit,poNewConsole];
- if LowerCase(ExtractFileExt(cont.Binary))='.package' then begin
- if FileExists('/usr/bin/package') then
- p.Options:=[poUsePipes,poWaitonexit];
-
- p.CommandLine:='/tmp/'+cont.Binary;
- p.Execute;
- p.Free;
- end else
- begin
- if cont.InTerminal then
- p.Options:=[poUsePipes, poWaitOnExit, poNewConsole]
- else p.Options:=[poUsePipes, poWaitOnExit];
- p.CommandLine:='/tmp/'+cont.Binary;
- p.Execute;
- p.Free;
- end;
-
-DeleteFile('/tmp/'+cont.Binary);
+//Installation is done later
 end;
 cont.Free;
 end;
@@ -883,7 +882,62 @@ end;
 
 procedure TInstallation.OnPKitProgress(pos: Integer);
 begin
-  SetextraPos(pos); //Set position of extra progress to PackageKit transaction progress
+  SetExtraPos(pos); //Set position of extra progress to PackageKit transaction progress
+end;
+
+function TInstallation.RunContainerInstallation: Boolean;
+var z: TAbUnZipper;
+    cont: TIPKControl;
+    p: TProcess;
+    tmp: TStringList;
+    i: Integer;
+begin
+cont:=TIPKControl.Create(lp+PkgName+'/arcinfo.pin'); //Read IPK configuration
+cont.LangCode:=GetLangID; //Set language code, so we get localized entries
+
+Result:=true;
+try
+z:=TAbUnZipper.Create(nil);
+z.FileName:=PkgPath;
+z.ExtractOptions:=[eoCreateDirs]+[eoRestorePath];
+z.BaseDirectory:=lp;
+
+z.ExtractFiles(ExtractFileName(cont.Binary));
+
+tmp:=TStringList.Create;
+cont.GetFiles(0,tmp);
+for i:=0 to tmp.Count-1 do
+z.ExtractFiles(ExtractFileName(tmp[i]));
+
+tmp.Free;
+z.Free;
+
+ p:=TProcess.create(nil);
+ p.CommandLine:='chmod 755 ''/tmp/'+cont.Binary+'''';
+ p.Options:=[poUsePipes,poWaitonexit];
+ p.Execute;
+ p.Options:=[poUsePipes,poWaitonexit,poNewConsole];
+ if LowerCase(ExtractFileExt(cont.Binary))='.package' then begin
+ if FileExists('/usr/bin/package') then
+ p.Options:=[poUsePipes,poWaitonexit];
+
+ p.CommandLine:='/tmp/'+cont.Binary;
+ p.Execute;
+ p.Free;
+ end else
+ begin
+ if cont.InTerminal then
+ p.Options:=[poUsePipes, poWaitOnExit, poNewConsole]
+ else p.Options:=[poUsePipes, poWaitOnExit];
+ p.CommandLine:='/tmp/'+cont.Binary;
+ p.Execute;
+ p.Free;
+ end;
+
+DeleteFile('/tmp/'+cont.Binary);
+except
+ Result:=false;
+end;
 end;
 
 function TInstallation.RunNormalInstallation: Boolean;
@@ -894,7 +948,7 @@ dest,h, FDir: String; // h is an helper variable - used for various actions
 dsk, cnf: TIniFile; // Configuration files etc.
 z: TAbUnZipper; // Zipper
 setcm: Boolean;
-p,proc:TProcess; // Helper process with pipes
+p, proc: TProcess; // Helper process with pipes
 pkit: TPackageKit; //PackageKit object
 DInfo: TDistroInfo; //Distribution information
 mnpos: Integer; //Current positions of operation
@@ -912,6 +966,20 @@ begin
   SetMainPos(Round(mnpos*max));
  end;
  appfiles.Free;
+end;
+
+procedure Abort_FreeAll();
+begin
+ if Assigned(fi) then fi.Free;
+ if Assigned(ndirs) then ndirs.Free;
+ if Assigned(s) then s.Free;
+ if Assigned(appfiles) then appfiles.Free;
+ if Assigned(dsk) then dsk.Free;
+ if Assigned(cnf) then cnf.Free;
+ if Assigned(z) then z.Free;
+ if Assigned(p) then p.Free;
+ if Assigned(proc) then proc.Free;
+ if Assigned(pkit) then pkit.Free;
 end;
 
 begin
@@ -980,8 +1048,8 @@ begin
  if pkit.PkFinishCode>0 then
  begin
   MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
-  p.Free;
-  pkit.Free;
+  Result:=false;
+  Abort_FreeAll();
   exit;
  end;
  SetExtraPos(0);
@@ -999,9 +1067,8 @@ cnf:=TInifile.Create(ConfigDir+'config.cnf');
 if cnf.ReadBool('MainConf','AutoDepLoad',true)=false then
  if MakeUsrRequest(StringReplace(rsWDLDep,'%l',Dependencies[i],[rfReplaceAll])+#13+rsWAllow,rqWarning)=rqsNo then
  begin
-  HTTP.Free;
-  Dependencies.Free;
-  cnf.Free;
+  Result:=false;
+  Abort_FreeAll();
   exit;
  end;
 cnf.Free;
@@ -1015,6 +1082,8 @@ cnf.Free;
     HTTP.Document.SaveToFile('/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)));
   except
    MakeUsrRequest(rsDepDLProblem,rqError);
+   Result:=false;
+   Abort_FreeAll();
    exit;
   end;
  end else
@@ -1030,6 +1099,8 @@ begin
     if not CheckFTPConnection(FTP) then
     begin
       MakeUsrRequest(rsFTPFailed,rqError);
+      Result:=false;
+      Abort_FreeAll();
       exit;
     end;
     ChangeWorkingDir(GetServerPath(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)));
@@ -1038,6 +1109,8 @@ begin
     Logout;
   except
    MakeUsrRequest(rsDepDLProblem,rqError);
+   Result:=false;
+   Abort_FreeAll();
    exit;
   end;
   end;
@@ -1120,7 +1193,8 @@ begin
     if pkit.PkFinishCode>0 then
     begin
      MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
-     p.Free;
+     Result:=false;
+     Abort_FreeAll();
      exit;
     end;
 
@@ -1144,6 +1218,8 @@ begin
     begin
      msg('Package '+Dependencies[i]+' can not be installed.');
      MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
+     Result:=false;
+     Abort_FreeAll();
      exit;
     end;
 
@@ -1220,8 +1296,9 @@ z.BaseDirectory:=lp+ExtractFileName(PkgPath);
 z.ExtractFiles(ExtractFileName(h));
 except
  MakeUsrRequest(rsExtractError,rqError);
- z.Free;
  RollbackInstallation;
+ Result:=false;
+ Abort_FreeAll();
  exit;
 end;
 
@@ -1229,8 +1306,9 @@ msg('Copy file '+ExtractFileName(h)+' to '+dest+' ...');
 
 if fi[i+1] <> MDPrint((MD5.MD5File(DeleteModifiers(lp+PkgName+h),1024))) then begin
  MakeUsrRequest(rsHashError,rqError);
- z.Free;
  RollbackInstallation;
+ Result:=false;
+ Abort_FreeAll();
  exit;
 end;
 
@@ -1245,15 +1323,17 @@ if (not FileExists(dest+'/'+ExtractFileName(DeleteModifiers(h)))) then
 else
 begin
   MakeUsrRequest(StringReplace(rsCnOverride,'%f',dest+'/'+ExtractFileName(DeleteModifiers(h)),[rfReplaceAll])+#10+rsInClose,rqError);
-  z.Free;
   RollbackInstallation;
+  Result:=false;
+  Abort_FreeAll();
   exit;
 end;
 except
  //Unable to copy the file
  MakeUsrRequest(Format(rsCnCopy,[dest+'/'+ExtractFileName(DeleteModifiers(h))])+#10+rsInClose,rqError);
- z.Free;
  RollbackInstallation;
+ Result:=false;
+ Abort_FreeAll();
  exit;
 end;
 
@@ -1296,10 +1376,11 @@ SetMainPos(Round(mnpos*max));
 end;
 
 SendStateMsg(rsStep3);
-//Check if every single file needs its own command to get the required rights (It's faster if only every folder recieves the rights)
+//Check if every single file needs its own command to get the required rights
+//(It's faster if only every folder recieves the rights)
 setcm:=false;
-for i:=0 to (fi.Count div 2)-1 do
-if pos(' <chmod:',fi[i*3])>0 then setcm:=true;
+for i:=0 to fi.Count-1 do
+if pos(' <chmod:',fi[i])>0 then setcm:=true;
 
 
 if setcm then
@@ -1437,6 +1518,14 @@ end;
 
 function TInstallation.RunDLinkInstallation: Boolean;
 var i: Integer;cnf,ar: TIniFile;pkit: TPackageKit;mnpos,max: Integer;
+
+procedure Abort_FreeAll();
+begin
+ if Assigned(cnf) then cnf.Free;
+ if Assigned(ar) then ar.Free;
+ if Assigned(pkit) then pkit.Free;
+end;
+
 begin
 max:=Dependencies.Count*6000;
 mnpos:=0;
@@ -1494,6 +1583,8 @@ pkit.OnProgress:=@OnPKitProgress;
    HTTP.Document.SaveToFile('/tmp/'+ExtractFileName(Dependencies[i]));
   except
    MakeUsrRequest(rsDepDlProblem,rqError);
+   Result:=false;
+   Abort_FreeAll();
    exit;
   end;
 
@@ -1510,6 +1601,7 @@ pkit.OnProgress:=@OnPKitProgress;
     begin
       MakeUsrRequest(rsFTPFailed,rqError);
       Result:=false;
+      Abort_FreeAll();
       exit;
     end;
 
@@ -1525,6 +1617,7 @@ pkit.OnProgress:=@OnPKitProgress;
   except
    MakeUsrRequest(rsDepDlProblem,rqError);
    Result:=false;
+   Abort_FreeAll();
    exit;
   end;
   end;
@@ -1604,6 +1697,8 @@ begin
  if pkType=ptLinstall then Result:=RunNormalInstallation
  else
   if pkType=ptDLink then Result:=RunDLinkInstallation
+  else
+   if pkType=ptContainer then Result:=RunContainerInstallation
   else
   begin
    msg('Could not detect package type!');

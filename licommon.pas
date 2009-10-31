@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, process, LCLType, RegExpr,
-  trstrings, distri, IniFiles, DOS, Graphics;
+  distri, IniFiles, DOS, Graphics;
 
 const
   //** Version of the Listaller applicationset

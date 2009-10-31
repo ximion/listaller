@@ -71,9 +71,10 @@ type
   UId: PChar;
   Group: TGroupType;
  end;
+ PAppInfo = ^TAppInfo;
 
  //** Event to catch thrown application records
- TAppEvent = function(name: PChar;obj: TAppInfo): Boolean;cdecl;
+ TAppEvent = function(name: PChar;obj: PAppInfo): Boolean;cdecl;
 
  //** Listaller package types
  TPkgType = (ptLinstall, ptDLink, ptContainer, ptUnknown);

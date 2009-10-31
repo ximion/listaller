@@ -263,6 +263,7 @@ begin
    Process1.Execute;
   end;
 
+
   Application.Terminate;
 end;
 
@@ -471,11 +472,11 @@ begin
   imForm:=TimdFrm.Create(nil);
   with imForm do
   begin
-  btnTest.Enabled:=false;
+  btnTest.Visible:=false;
   pkWarnImg.Visible:=true;
-  if (pos('iolocal',setup.GetDisallows)<=0) then
+  if (pos('iolocal',setup.GetDisallows)>0) then
     btnHome.Enabled:=false;
-  if (pos('iobase',setup.GetDisallows)<=0) then
+  if (pos('iobase',setup.GetDisallows)>0) then
     btnInstallAll.Enabled:=false;
   PkILabel.Caption:=rsSpkWarning;
   //

@@ -21,12 +21,11 @@ program listallgo;
 uses
   {$IFDEF UNIX}
   cthreads,
-  cmem,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
   igobase, dgunit, trStrings, LResources, SysUtils, LiCommon,
-  liTranslator, liTypes, Installer, LCLType;
+  liTranslator, liTypes, Installer, LCLType, Dialogs;
 
 {$IFDEF WINDOWS}{$R listallgo.rc}{$ENDIF}
 
@@ -44,9 +43,11 @@ begin
   { --- Do Container setup --- }
   if setup.PkType=ptContainer then
   begin
+   if not setup.StartInstallation then
+    ShowMessage(rsInstFailed);
    setup.Free;
-   // The setup has already done everything we needed
    Application.Terminate;
+   exit;
   end;
 
   { --- Prepare Listallation --- }

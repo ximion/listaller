@@ -40,6 +40,7 @@ type
   function IsInList(nm: String;list: TStringList): Boolean;
   //** Method that removes MOJO/LOKI installed applications @param dsk Path to the .desktop file of the application
   function UninstallMojo(dsk: String): Boolean;
+  procedure PkitProgress(pos: Integer);
  public
   constructor Create;
   destructor Destroy;override;
@@ -89,7 +90,7 @@ end;
 
 procedure TAppManager.NewApp(s: String;oj: TAppInfo);
 begin
- if Assigned(FApp) then FApp(PChar(s),oj);
+ if Assigned(FApp) then FApp(PChar(s),@oj);
 end;
 
 procedure TAppManager.SetPos(i: Integer);
@@ -100,6 +101,11 @@ end;
 function TAppManager.IsInList(nm: String;list: TStringList): Boolean;
 begin
 Result:=list.IndexOf(nm)>-1;
+end;
+
+procedure TAppManager.PkitProgress(pos: Integer);
+begin
+ setpos(pos);
 end;
 
 procedure TAppManager.LoadEntries;
@@ -117,7 +123,7 @@ var d: TIniFile;entry: TAppInfo;dt: TMOFile;lp: String;
 function ldt(s: String): String;
 var h: String;
 begin
-{ h:=s;
+ h:=s;
  try
  if translate then
  begin
@@ -126,7 +132,7 @@ begin
  end;
  except
   Result:=h;
- end;  }
+ end;
  Result:=s;
 end;
 begin
@@ -514,8 +520,6 @@ var f,g: String; t:TProcess;tmp: TStringList;pkit: TPackageKit;i: Integer;
     name,id: String;
 begin
 
-msg('Connecting to PackageKit... (run "pkmon" to see the actions)',mtInfo);
-
 setpos(0);
 
 //Needed
@@ -560,13 +564,15 @@ begin
 
 ShowPKMon();
 
+msg('Connecting to PackageKit... (run "pkmon" to see the actions)',mtInfo);
 msg('Detecting package...',mtInfo);
 
 pkit:=TPackageKit.Create;
+pkit.OnProgress:=@PkitProgress;
+
 tmp:=TStringList.Create;
 pkit.RsList:=tmp;
 pkit.PkgNameFromFile(id);
-while not pkit.PkFinished do setpos(0);
 
 if tmp.Count<=0 then
 begin UninstallMojo(id);tmp.Free;pkit.Free;exit;end;
@@ -597,9 +603,6 @@ begin
 
 msg('Uninstalling '+f+' ...',mtInfo);
 pkit.RemovePkg(f);
-
-//??? Needs rethinking
-//while not pkit.PkFinished do setpos(pkit.Progress);
 
 if pkit.PkFinishCode>0 then begin
 request(rsRmError,rqError);exit;pkit.Free;end;

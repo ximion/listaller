@@ -119,6 +119,8 @@ type
     uApp: TAppInfo;
     //** Pointer to our AppManager object
     amgr: Pointer;
+    //** Reload the application list
+    procedure ReloadAppList;
   end;
 
   //** Fill ImageList with category icons
@@ -140,19 +142,22 @@ uses pkgconvertdisp, swcatalog;
 { TListEntry }
 
 procedure TMnFrm.UninstallClick(Sender: TObject);
+var i: Integer;
 begin
-uApp:=TAppInfo(TListEntry((Sender as TBitBtn).Parent).appInfo);
+//Set the AppInfo of the to-be-removed app
+uApp:=TListEntry((Sender as TBitBtn).Parent).appInfo;
+//Start removing by showing the uninstall form
 RMForm.ShowModal;
 end;
 
-function OnNewAppFound(name: PChar;obj: TAppInfo): Boolean;cdecl;
+function OnNewAppFound(name: PChar;obj: PAppInfo): Boolean;cdecl;
 var entry: TListEntry;
 begin
 with MnFrm do begin
  entry:=TListEntry.Create(MnFrm);
  entry.Parent:=SWBox;
- entry.LoadFromAppInfo(TAppInfo(obj));
  entry.UnButton.OnClick:=@UninstallClick;
+ entry.LoadFromAppInfo(TAppInfo(obj^));
  AList.Add(entry);
 end;
 Application.ProcessMessages;
@@ -252,6 +257,13 @@ begin
   end;
   tm.Free;
   bmp.Free;
+end;
+
+procedure TMnFrm.ReloadAppList();
+begin
+ if Assigned(AList) then AList.Free;
+ AList:=TObjectList.Create;
+ li_mgr_load_apps(@MnFrm.amgr);
 end;
 
 procedure TMnFrm.btnInstallClick(Sender: TObject);

@@ -140,9 +140,9 @@ Picture.LoadFromFile(GetDataFile('graphics/spackage.png'));
 end;
 
 UnButton:=TBitBtn.Create(nil);
+UnButton.Parent:=self;
 with UnButton do
 begin
-Parent:=self;
 Height:=24;
 Width:=120;
 Caption:=rsUninstall;
@@ -161,6 +161,13 @@ Graphic.free;
 mnLabel.Free;
 DescLabel.Free;
 vLabel.Free;
+
+StrDispose(sAI.Name);
+StrDispose(sAI.Author);
+StrDispose(sAI.UId);
+StrDispose(sAI.ShortDesc);
+StrDispose(sAI.Icon);
+StrDispose(sAI.Version);
 inherited Destroy;
 end;
 
@@ -215,7 +222,20 @@ begin
  AppDesc:=ai.ShortDesc;
  AppVersion:=ai.Version;
  AppMn:=ai.Author;
- sAI:=ai;
+ sAI.Name:=StrAlloc(StrLen(ai.Name)+1);
+ StrCopy(sAI.Name, ai.Name);
+ sAI.Author:=StrAlloc(StrLen(ai.Author)+1);
+ StrCopy(sAI.Author, ai.Author);
+ sAI.Icon:=StrAlloc(StrLen(ai.Icon)+1);
+ StrCopy(sAI.Icon, ai.Icon);
+ sAI.ShortDesc:=StrAlloc(StrLen(ai.ShortDesc)+1);
+ StrCopy(sAI.ShortDesc, ai.ShortDesc);
+ sAI.UId:=StrAlloc(StrLen(ai.UId)+1);
+ StrCopy(sAI.UId, ai.UId);
+ sAI.Version:=StrAlloc(StrLen(ai.Version)+1);
+ StrCopy(sAI.Version, ai.Version);
+ sAI.Group:=ai.Group;
+
  if FileExists(ai.Icon) then
    SetImage(ai.Icon);
 end;

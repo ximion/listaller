@@ -1,7 +1,7 @@
 object FmAbout: TFmAbout
-  Left = 356
+  Left = 528
   Height = 421
-  Top = 261
+  Top = 222
   Width = 343
   ActiveControl = PageControl1
   Caption = 'About Listaller'
@@ -10,7 +10,7 @@ object FmAbout: TFmAbout
   OnShow = FormShow
   Position = poOwnerFormCenter
   ShowInTaskBar = stNever
-  LCLVersion = '0.9.27'
+  LCLVersion = '0.9.28'
   object Image1: TImage
     Left = 8
     Height = 90
@@ -34,7 +34,7 @@ object FmAbout: TFmAbout
     Left = 117
     Height = 13
     Top = 40
-    Width = 76
+    Width = 75
     Caption = 'Version ...-...'
     Font.Height = -9
     Font.Name = 'Sans'
@@ -53,7 +53,7 @@ object FmAbout: TFmAbout
   object PageControl1: TPageControl
     Left = 8
     Height = 268
-    Top = 104
+    Top = 112
     Width = 324
     ActivePage = AboutSheet
     Anchors = [akTop, akLeft, akRight, akBottom]
@@ -122,6 +122,23 @@ object FmAbout: TFmAbout
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
+      end
+    end
+    object TabSheet1: TTabSheet
+      Caption = 'Translators'
+      ClientHeight = 241
+      ClientWidth = 320
+      object Memo2: TMemo
+        Left = 0
+        Height = 241
+        Top = 0
+        Width = 320
+        Align = alClient
+        BorderStyle = bsNone
+        ParentColor = True
+        ReadOnly = True
+        ScrollBars = ssAutoVertical
+        TabOrder = 0
       end
     end
   end

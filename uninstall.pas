@@ -138,20 +138,23 @@ begin
 FActiv:=false;
 if MnFrm.uApp.uID<>'' then
 begin
+Label1.Caption:=StringReplace(rsRMAppC,'%a',MnFrm.uApp.Name,[rfReplaceAll]);
+
 if Application.MessageBox(PChar(StringReplace(rsRealUninstQ,'%a',MnFrm.uApp.Name,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then
 begin
  li_mgr_register_msg_call(@MnFrm.amgr,@OnRmMessage);
  li_mgr_register_progress_call(@MnFrm.amgr,@UProgressChange);
   li_mgr_remove_app(@MnFrm.amgr,MnFrm.uApp);
  li_mgr_register_msg_call(@MnFrm.amgr,@manager.OnMessage);
-end;
+ MnFrm.ReloadAppList();
+end else close;
+
 end else
 begin
  ShowMessage('Error in selection.');
  close;
  exit;
 end;
- li_mgr_load_apps(@MnFrm.amgr);
 end;
 end;
 

@@ -25,9 +25,10 @@ uses
 
 type
 
+GQuark = Integer;
+
 //** PackageKit progress type
-PK_PROGRESS_TYPE =
- (PK_PROGRESS_TYPE_PACKAGE_ID,
+PK_PROGRESS_TYPE = (PK_PROGRESS_TYPE_PACKAGE_ID,
   PK_PROGRESS_TYPE_PERCENTAGE,
   PK_PROGRESS_TYPE_SUBPERCENTAGE,
   PK_PROGRESS_TYPE_ALLOW_CANCEL,
@@ -35,6 +36,18 @@ PK_PROGRESS_TYPE =
   PK_PROGRESS_TYPE_ROLE,
   PK_PROGRESS_TYPE_CALLER_ACTIVE,
   PK_PROGRESS_TYPE_INVALID);
+
+//** How the backend exits
+PkExitEnum = (PK_EXIT_ENUM_UNKNOWN,
+	PK_EXIT_ENUM_SUCCESS,
+	PK_EXIT_ENUM_FAILED,
+	PK_EXIT_ENUM_CANCELLED,
+	PK_EXIT_ENUM_KEY_REQUIRED,
+	PK_EXIT_ENUM_EULA_REQUIRED,
+	PK_EXIT_ENUM_KILLED,
+	PK_EXIT_ENUM_MEDIA_CHANGE_REQUIRED,
+	PK_EXIT_ENUM_NEED_UNTRUSTED,
+	PK_EXIT_ENUM_LAST);
 
 TPkProgressCallback = procedure(progress: Pointer;ptype: PK_PROGRESS_TYPE;user_data: GPointer);
 TGAsyncReadyCallback = procedure(source_object: PGObject;res: Pointer;user_data: GPointer);
@@ -46,8 +59,6 @@ PPackageKit = ^TPackageKit;
 //** PackageKit wrapper
 TPackageKit = class
 private
- //PkClient connection
- pkclient: Pointer;
  //Resulting list
  result: TStringList;
  //True if transaction finished
@@ -67,7 +78,10 @@ private
  //Quit a main loop
  procedure LoopQuit();
 public
+ //** GLib main loop
  loop: Pointer;
+ //** Pointer to a PkClient
+ pkclient: Pointer;
  constructor Create;
  destructor Destroy; override;
  {** Check if package is installed @param pkg Name of the package
@@ -154,7 +168,7 @@ procedure pk_client_remove_packages_async(client: Pointer;package_ids: PPGChar;
                                                   callback_ready: TGAsyncReadyCallback;user_data: GPointer);
                                                   cdecl;external pklib2 name 'pk_client_remove_packages_async';
 procedure pk_client_search_file_async(client: Pointer;filters: GuInt64;
-                                              search: PGChar;cancellable: PGObject;
+                                              values: PPGChar;cancellable: PGObject;
                                               progress_callback: TPkProgressCallback;progress_user_data: GPointer;
                                               callback_ready: TGAsyncReadyCallback;user_data: GPointer);
                                               cdecl;external pklib2 name 'pk_client_search_file_async';
@@ -164,6 +178,9 @@ procedure pk_client_install_files_async(client: Pointer;only_trusted: GBoolean;
                                                 callback_ready: TGAsyncReadyCallback;user_data: GPointer);
                                                 cdecl;external pklib2 name 'pk_client_install_files_async';
 
+function  pk_client_generic_finish(client: Pointer;res: Pointer;error: PPGError): Pointer;cdecl;external pklib2 name 'pk_client_generic_finish';
+function  pk_results_get_exit_code(results: Pointer): PkExitEnum;cdecl;external pklib2 name 'pk_client_generic_finish';
+function  pk_client_error_quark(): GQuark;cdecl;external name 'pk_client_error_quark';
 implementation
 
 procedure InitializeGType;
@@ -175,7 +192,27 @@ begin
 end;
 
 procedure OnPkActionFinished(source_object: PGObject;res: Pointer;user_data: GPointer);
+var result: Pointer;
+    rcode: PkExitEnum;
+    error: PGError=nil;
 begin
+ result:=pk_client_generic_finish(source_object,res,@error);
+
+ if error<>nil then
+  begin
+    g_warning('failed: %s', [error^.message]);
+    g_error_free(error);
+    TPackageKit(user_data).exitcode:=8;
+    exit;
+  end;
+
+ if result<>nil then
+ begin
+ rcode:=pk_results_get_exit_code(result);
+  writeLn(rcode);
+  TPackageKit(user_data).exitcode:=LongInt(rcode);
+ g_object_unref(result);
+ end else TPackageKit(user_data).exitcode:=8;
  TPackageKit(user_data).LoopQuit();
  TPackageKit(user_data).done:=true;
 end;
@@ -267,7 +304,7 @@ begin
   arg := StringToPPchar(pkg, 0);
 
   cancellable:=g_cancellable_new;
-  pk_client_resolve_async(pkclient,filter,arg,cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
+   pk_client_resolve_async(pkclient,filter,arg,cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
   g_main_loop_run(loop);
 
   Result:=true;
@@ -295,7 +332,7 @@ begin
   arg := StringToPPchar(ast, 0);
 
   cancellable:=g_cancellable_new;
-  pk_client_get_requires_async(pkclient,filter,arg,true,cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
+   pk_client_get_requires_async(pkclient,filter,arg,true,cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
   g_main_loop_run(loop);
 
   Result:=true;
@@ -316,12 +353,14 @@ var ast: String;
     error: PGError=nil;
     cancellable: Pointer;
 begin
+  writeLn('Remove package called!');
   done:=false;
   ast := pkg+';;;';
   arg := StringToPPchar(ast, 0);
 
   cancellable:=g_cancellable_new;
-  pk_client_remove_packages_async(pkclient,arg,true,false,cancellable,@OnPKProgress,self,@OnPkActionFinished,self);
+  writeLn(pkg);
+   pk_client_remove_packages_async(pkclient,arg,true,false,cancellable,@OnPKProgress,self,@OnPkActionFinished,self);
   g_main_loop_run(loop);
 
   Result:=true;
@@ -349,7 +388,7 @@ begin
   arg := StringToPPchar(ast, 0);
 
   gcan:=g_cancellable_new;
-  pk_client_install_packages_async(pkclient,false,arg,gcan,@OnPkProgress,self,@OnPkActionFinished,self);
+   pk_client_install_packages_async(pkclient,false,arg,gcan,@OnPkProgress,self,@OnPkActionFinished,self);
   g_main_loop_run(loop);
 
   Result:=true;
@@ -374,7 +413,7 @@ begin
   filter:=pk_filter_bitfield_from_text('installed');
 
   cancellable:=g_cancellable_new;
-  pk_client_search_file_async(pkclient,filter,PGChar(fname),cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
+   pk_client_search_file_async(pkclient,filter,StringToPPchar(fname, 0),cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
   g_main_loop_run(loop);
 
   Result:=true;
@@ -398,7 +437,7 @@ begin
   arg:=StringToPPchar(fname, 0);
 
   cancellable:=g_cancellable_new;
-  pk_client_install_files_async(pkclient,false,arg,cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
+   pk_client_install_files_async(pkclient,false,arg,cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
   g_main_loop_run(loop);
 
   Result:=true;
@@ -430,7 +469,7 @@ begin
   filter:=pk_filter_bitfield_from_text('none');
 
   cancellable:=g_cancellable_new;
-  pk_client_search_file_async(pkclient,filter,PGChar(fname),cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
+   pk_client_search_file_async(pkclient,filter,StringToPPchar(fname, 0),cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
   g_main_loop_run(loop);
 
   Result:=true;
