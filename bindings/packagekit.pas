@@ -21,7 +21,7 @@ unit packagekit;
 interface
 
 uses
-  Classes, SysUtils, Process, glib2, distri, Dialogs, liTypes;
+  Classes, SysUtils, Process, glib2, distri, Dialogs, liTypes, crt;
 
 type
 
@@ -181,6 +181,7 @@ procedure pk_client_install_files_async(client: Pointer;only_trusted: GBoolean;
 function  pk_client_generic_finish(client: Pointer;res: Pointer;error: PPGError): Pointer;cdecl;external pklib2 name 'pk_client_generic_finish';
 function  pk_results_get_exit_code(results: Pointer): PkExitEnum;cdecl;external pklib2 name 'pk_client_generic_finish';
 function  pk_client_error_quark(): GQuark;cdecl;external name 'pk_client_error_quark';
+function  pk_client_get_type(): GType;cdecl;external name 'pk_client_get_type';
 implementation
 
 procedure InitializeGType;
@@ -191,12 +192,17 @@ begin
  {$ENDIF}
 end;
 
+function PK_CLIENT(o: GPointer): PGTypeInstance;
+begin
+  G_TYPE_CHECK_INSTANCE_CAST(o,pk_client_get_type());
+end;
+
 procedure OnPkActionFinished(source_object: PGObject;res: Pointer;user_data: GPointer);
 var result: Pointer;
     rcode: PkExitEnum;
     error: PGError=nil;
 begin
- result:=pk_client_generic_finish(source_object,res,@error);
+ result:=pk_client_generic_finish(PK_CLIENT(source_object),res,@error);
 
  if error<>nil then
   begin

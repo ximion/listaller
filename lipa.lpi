@@ -385,7 +385,6 @@
     </Target>
     <SearchPaths>
       <OtherUnitFiles Value="abbrevia/;synapse/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;bindings/"/>
-      <UnitOutputDirectory Value="bin"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <Parsing>

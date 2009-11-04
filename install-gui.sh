@@ -54,9 +54,13 @@ fi
 #Create symlink
 cd $DESTDIR/usr/bin
 if [ "$WIDGET" == "qt4" ]; then
+if [ ! -f listallmgr-qt ]; then
 ln -s /usr/lib/listaller/qt4/listallmgr listallmgr-qt
+fi
 else
+if [ ! -f listallmgr-gtk ]; then
 ln -s /usr/lib/listaller/gtk2/listallmgr listallmgr-gtk
+fi
 fi
 
 echo "Installation done."

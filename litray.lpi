@@ -232,7 +232,6 @@
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
       <OtherUnitFiles Value="abbrevia/;synapse/;bindings/"/>
-      <UnitOutputDirectory Value="bin"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Linking>
