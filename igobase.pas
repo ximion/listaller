@@ -343,8 +343,11 @@ case mtype of
 rqError: begin
   ShowMessage(msg);
   Result:=rqsOK;
-  InfoMemo.Lines.Add(rsInstFailed);
-  InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
+  if Assigned(InfoMemo) then
+  begin
+   InfoMemo.Lines.Add(rsInstFailed);
+   InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
+  end;
   setup.Free;
   Application.Terminate;
   exit;
