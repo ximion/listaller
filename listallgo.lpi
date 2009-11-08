@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="3"/>
-      <CurrentBuildNr Value="1207"/>
+      <CurrentBuildNr Value="1208"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -68,7 +68,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
         <CursorPos X="71" Y="349"/>
-        <TopLine Value="1"/>
+        <TopLine Value="306"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>

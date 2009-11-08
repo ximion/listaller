@@ -21,11 +21,9 @@ unit packagekit;
 interface
 
 uses
-  Classes, SysUtils, Process, glib2, distri, Dialogs, liTypes, crt;
+  Classes, SysUtils, Process, glib2, distri, Dialogs, liTypes, gExt;
 
 type
-
-GQuark = Integer;
 
 //** PackageKit progress type
 PK_PROGRESS_TYPE = (PK_PROGRESS_TYPE_PACKAGE_ID,
@@ -50,8 +48,6 @@ PkExitEnum = (PK_EXIT_ENUM_UNKNOWN,
 	PK_EXIT_ENUM_LAST);
 
 TPkProgressCallback = procedure(progress: Pointer;ptype: PK_PROGRESS_TYPE;user_data: GPointer);
-TGAsyncReadyCallback = procedure(source_object: PGObject;res: Pointer;user_data: GPointer);
-PGAsyncReadyCallback = ^TGAsyncReadyCallback;
 
 //** Pointer to TPackageKit object
 PPackageKit = ^TPackageKit;
@@ -128,15 +124,7 @@ PkPackageId = record
  data: PChar;
 end;
 
-//** Needed for use with Qt4, initializes the GType
-procedure InitializeGType;
-
 const pklib2 = 'libpackagekit-glib2.so';
-
-//GLib-GCancellable
-function g_cancellable_new: Pointer;cdecl;external gliblib name 'g_cancellable_new';
-function g_cancellable_is_cancelled(cancellable: Pointer): GBoolean;cdecl;external gliblib name 'g_cancellable_is_cancelled';
-function g_cancellable_set_error_if_cancelled(cancellable: Pointer;error: PPGError): GBoolean;cdecl;external gliblib name 'g_cancellable_set_error_if_cancelled';
 
 //Bitfield
 function pk_filter_bitfield_from_text(filters: PChar): GuInt64; cdecl; external pklib2 name 'pk_filter_bitfield_from_text';
@@ -182,6 +170,7 @@ function  pk_client_generic_finish(client: Pointer;res: Pointer;error: PPGError)
 function  pk_results_get_exit_code(results: Pointer): PkExitEnum;cdecl;external pklib2 name 'pk_client_generic_finish';
 function  pk_client_error_quark(): GQuark;cdecl;external name 'pk_client_error_quark';
 function  pk_client_get_type(): GType;cdecl;external name 'pk_client_get_type';
+
 implementation
 
 procedure InitializeGType;

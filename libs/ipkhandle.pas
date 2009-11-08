@@ -1722,11 +1722,13 @@ var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;k: Boolean;upd: Strin
     pkit: TPackageKit;
     dsApp: TSQLite3Dataset;
     FPos: TProgressCall;
-    mnprog,bs: Integer;
+    mnprog: Integer;
+    bs: Double;
     ipkc: TIPKControl;
-procedure SetPosition(prog: Integer);
+procedure SetPosition(prog: Double);
 begin
-if Assigned(FPos) then FPos(prog);
+if Assigned(FPos) then FPos(Round(prog));
+writeLn('[DBG]: RMC--> '+IntToStr(Round(prog)));
 end;
 
 procedure msg(s: String);
@@ -1799,7 +1801,7 @@ if not dlink then
 begin
 tmp:=TStringList.Create;
 tmp.LoadFromfile(p+'appfiles.list');
-bs:=bs+tmp.Count;
+bs:=(bs+tmp.Count)/100;
 end;
 
 if not fast then
@@ -1827,7 +1829,7 @@ tmp2.Text:=dsApp.FieldByName('Dependencies').AsString;
 
 if tmp2.Count>-1 then
 begin
-bs:=bs+tmp2.Count;
+bs:=(bs+tmp2.Count)/100;
 for i:=0 to tmp2.Count-1 do
 begin
 f:=tmp2[i];
@@ -1866,7 +1868,7 @@ else pkit.GetRequires(f);
  pkit.Free;
   end;
   Inc(mnprog);
-  SetPosition((bs div 100)*mnprog);
+  SetPosition(bs*mnprog);
 end; //End of tmp2-find loop
 
 end else msg('No installed deps found!');
@@ -1938,11 +1940,11 @@ if not k then
 DeleteFile(f);
 
 Inc(mnprog);
-SetPosition((bs div 100)*mnprog);
+SetPosition(bs*mnprog);
 end;
 
 Inc(mnprog);
-SetPosition((bs div 100)*mnprog);
+SetPosition(bs*mnprog);
 
 msg('Removing empty dirs...');
 tmp.LoadFromFile(p+'appdirs.list');
@@ -1987,7 +1989,7 @@ proc.Execute;
 proc.Free;
 
 Inc(mnprog);
-SetPosition((bs div 100)*mnprog);
+SetPosition(bs*mnprog);
 
 msg('Application removed.');
 msg('- Finished -');

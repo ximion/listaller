@@ -54,7 +54,7 @@ lazbuild -B --ws=nogui libuild.lpr
 
 #Compiling lanuage files
 echo "Generating language files..."
-for i in `find ./locale -name "*.po"`
+for i in `find ./data/locale -name "*.po"`
 do
 echo "Format $i"
 msgfmt -o `expr substr $i 1 $(( ${#i} - 3 ))`.mo $i
