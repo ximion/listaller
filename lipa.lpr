@@ -24,10 +24,10 @@ uses
   {$ENDIF}
   Interfaces, //We use NoGUI widgetset
   Classes, SysUtils, CustApp,
-  Process, LiCommon, installer,
+  Process, liBasic, installer,
   TRStrings, IniFiles, HTTPSend,
   FTPSend, Distri, LiTranslator, ipkdef,
-  appman, liTypes, Forms;
+  appman, liTypes, Forms, liCommon;
 
 type
 

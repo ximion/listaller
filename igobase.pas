@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
   ComCtrls, StdCtrls, FileUtil, ExtCtrls, process, Buttons, LCLType,
-  LCLIntf, distri, LiCommon, trStrings, SynEdit, xTypeFm, Installer,
+  LCLIntf, distri, LiBasic, trStrings, SynEdit, xTypeFm, Installer,
   liTypes, IconLoader;
 
 type

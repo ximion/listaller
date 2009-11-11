@@ -21,7 +21,7 @@ unit unibuild;
 interface
 
 uses
-  Classes, SysUtils, liCommon, ipkdef, ipkbuild, Process;
+  Classes, SysUtils, liBasic, ipkdef, ipkbuild, Process;
 
 function ReadInformation(fips: String): TPackInfo;
 procedure CreateDEB(pk: TPackInfo);

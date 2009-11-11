@@ -21,7 +21,7 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
-        <HostApplicationFilename Value="/home/matthias/Development/listaller/trunk/bin/libuild"/>
+        <HostApplicationFilename Value="/home/matthias/Development/listaller/trunk/build/libuild"/>
         <CommandLineParams Value="-b /home/matthias/Desktop/ListallerPacks/Songbird/sb-script.ips /home/matthias/Desktop/ListallerPacks/Songbird/testbuild.ipk"/>
         <LaunchingApplication Use="True" PathPlusParams="/usr/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
@@ -32,7 +32,7 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
         <CursorPos X="10" Y="27"/>
-        <TopLine Value="6"/>
+        <TopLine Value="73"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="24"/>
         <Loaded Value="True"/>
@@ -40,7 +40,7 @@
       <Unit1>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="1" Y="1"/>
+        <CursorPos X="69" Y="16"/>
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit1>
@@ -104,12 +104,12 @@
         <Filename Value="unibuild.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="unibuild"/>
-        <CursorPos X="20" Y="183"/>
-        <TopLine Value="231"/>
+        <CursorPos X="56" Y="24"/>
+        <TopLine Value="1"/>
         <UsageCount Value="21"/>
       </Unit10>
     </Units>
-    <JumpHistory Count="6" HistoryIndex="5">
+    <JumpHistory Count="7" HistoryIndex="6">
       <Position1>
         <Filename Value="libuild.lpr"/>
         <Caret Line="116" Column="15" TopLine="93"/>
@@ -134,6 +134,10 @@
         <Filename Value="libuild.lpr"/>
         <Caret Line="27" Column="10" TopLine="6"/>
       </Position6>
+      <Position7>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="27" Column="10" TopLine="6"/>
+      </Position7>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

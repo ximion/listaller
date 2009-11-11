@@ -47,3 +47,20 @@ rm -rf *.compiled
 rm -rf *~
 
 cd ..
+
+#Clean helper daemon directory
+cd ./helper/
+rm -rf *.o
+rm -rf *.ppu
+
+rm -rf *.pas~
+rm -rf *.sh~
+rm -rf *.bak
+
+rm -rf *.compiled
+
+rm -rf *~
+
+cd ..
+
+echo "Source code directories cleaned up."

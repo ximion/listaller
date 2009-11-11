@@ -22,8 +22,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, Menus, LiCommon, Process, Distri, TRStrings, appman,
-  LCLType, LiTranslator;
+  ExtCtrls, Menus, LiCommon, Process, TRStrings, appman, LCLType, LiTranslator;
 
 type
 

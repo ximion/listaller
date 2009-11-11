@@ -23,8 +23,8 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, Distri, LEntries,
-  Uninstall, trStrings, FileUtil, CheckLst, xTypeFm, AppMan, LiCommon, liTypes,
-  Contnrs, AboutBox, GetText, PackageKit, Spin, iconLoader;
+  Uninstall, trStrings, FileUtil, CheckLst, xTypeFm, AppMan, LiBasic, liTypes,
+  Contnrs, AboutBox, GetText, PackageKit, Spin, iconLoader, LiCommon;
 
 type
 
@@ -142,7 +142,6 @@ uses pkgconvertdisp, swcatalog;
 { TListEntry }
 
 procedure TMnFrm.UninstallClick(Sender: TObject);
-var i: Integer;
 begin
 //Set the AppInfo of the to-be-removed app
 uApp:=TListEntry((Sender as TBitBtn).Parent).appInfo;
@@ -153,6 +152,7 @@ end;
 function OnNewAppFound(name: PChar;obj: PAppInfo): Boolean;cdecl;
 var entry: TListEntry;
 begin
+Result:=true;
 with MnFrm do begin
  entry:=TListEntry.Create(MnFrm);
  entry.Parent:=SWBox;
@@ -172,6 +172,7 @@ end;
 function OnUserRequest(mtype: TRqType;msg: PChar): TRqResult;cdecl;
 begin
  ShowMessage(msg);
+ Result:=rqsOK;
 end;
 
 { TMnFrm }

@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, SQLite3Ds, IniFiles, GetText, TRStrings, LiCommon,
-  DB, FileUtil, packagekit, Process, ipkhandle, liTypes;
+  DB, FileUtil, packagekit, Process, ipkhandle, liTypes, liBasic;
 
 type
  PAppManager = ^TAppManager;

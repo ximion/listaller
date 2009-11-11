@@ -50,7 +50,7 @@ object IWizFrm: TIWizFrm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  LCLVersion = '0.9.28'
+  LCLVersion = '0.9.28.2'
   object Notebook1: TNotebook
     Left = 0
     Height = 379

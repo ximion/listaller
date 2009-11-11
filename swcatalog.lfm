@@ -60,7 +60,7 @@ object SCForm: TSCForm
   OnDestroy = FormDestroy
   Position = poMainFormCenter
   ShowInTaskBar = stNever
-  LCLVersion = '0.9.27'
+  LCLVersion = '0.9.28.2'
   object Label1: TLabel
     Left = 136
     Height = 14

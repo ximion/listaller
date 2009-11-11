@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=org.freedesktop.Listaller
+Exec=/usr/sbin/listallerd
+User=root

@@ -9,14 +9,16 @@
       </Flags>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
-      <Icon Value="0"/>
-      <UseXPManifest Value="True"/>
+      <Title Value="Listaller Daemon"/>
+      <UseAppBundle Value="False"/>
       <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
-      <ProjectVersion Value=""/>
-      <Language Value=""/>
-      <CharSet Value=""/>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <CurrentMajorRevNr Value="4"/>
+      <CurrentBuildNr Value="122"/>
+      <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
       <Version Value="2"/>
@@ -30,22 +32,22 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="3">
+    <Units Count="17">
       <Unit0>
         <Filename Value="listallerd.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerd"/>
-        <CursorPos X="31" Y="74"/>
-        <TopLine Value="1"/>
+        <CursorPos X="9" Y="155"/>
+        <TopLine Value="112"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="28"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="../bindings/installer.pas"/>
         <UnitName Value="installer"/>
         <CursorPos X="1" Y="1"/>
-        <TopLine Value="133"/>
+        <TopLine Value="209"/>
         <UsageCount Value="10"/>
       </Unit1>
       <Unit2>
@@ -55,19 +57,167 @@
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="../distri.pas"/>
+        <UnitName Value="distri"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="djobs.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="djobs"/>
+        <CursorPos X="14" Y="74"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="28"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus-message.inc"/>
+        <CursorPos X="10" Y="96"/>
+        <TopLine Value="76"/>
+        <UsageCount Value="10"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus.pas"/>
+        <UnitName Value="dbus"/>
+        <CursorPos X="17" Y="68"/>
+        <TopLine Value="53"/>
+        <UsageCount Value="10"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus-threads.inc"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="55"/>
+        <UsageCount Value="10"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/rtl/objpas/classes/classesh.inc"/>
+        <CursorPos X="20" Y="1428"/>
+        <TopLine Value="1408"/>
+        <UsageCount Value="10"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="../licommon.pas"/>
+        <UnitName Value="licommon"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="25"/>
+        <UsageCount Value="10"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/rtl/inc/objpash.inc"/>
+        <CursorPos X="23" Y="175"/>
+        <TopLine Value="155"/>
+        <UsageCount Value="10"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus-connection.inc"/>
+        <CursorPos X="32" Y="90"/>
+        <TopLine Value="70"/>
+        <UsageCount Value="10"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="../libasic.pas"/>
+        <UnitName Value="libasic"/>
+        <CursorPos X="11" Y="88"/>
+        <TopLine Value="73"/>
+        <UsageCount Value="10"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="../litypes.pas"/>
+        <UnitName Value="litypes"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/inc/ctypes.pp"/>
+        <UnitName Value="ctypes"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="../../../../../../usr/lib/lazarus/0.9.28.2/lcl/interfaces/nogui/interfaces.pp"/>
+        <UnitName Value="Interfaces"/>
+        <CursorPos X="3" Y="27"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-message.inc"/>
+        <CursorPos X="3" Y="33"/>
+        <TopLine Value="13"/>
+        <UsageCount Value="10"/>
+      </Unit16>
     </Units>
-    <JumpHistory Count="1" HistoryIndex="0">
+    <JumpHistory Count="14" HistoryIndex="13">
       <Position1>
         <Filename Value="listallerd.lpr"/>
-        <Caret Line="9" Column="58" TopLine="1"/>
+        <Caret Line="26" Column="18" TopLine="1"/>
       </Position1>
+      <Position2>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="196" Column="1" TopLine="157"/>
+      </Position2>
+      <Position3>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="196" Column="1" TopLine="1"/>
+      </Position3>
+      <Position4>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="26" Column="23" TopLine="1"/>
+      </Position4>
+      <Position5>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="21" Column="5" TopLine="1"/>
+      </Position5>
+      <Position6>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="173" Column="1" TopLine="134"/>
+      </Position6>
+      <Position7>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="23" Column="15" TopLine="1"/>
+      </Position7>
+      <Position8>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="65" Column="1" TopLine="25"/>
+      </Position8>
+      <Position9>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="44" Column="14" TopLine="34"/>
+      </Position9>
+      <Position10>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="22" Column="24" TopLine="1"/>
+      </Position10>
+      <Position11>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="89" Column="4" TopLine="49"/>
+      </Position11>
+      <Position12>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="35" Column="26" TopLine="24"/>
+      </Position12>
+      <Position13>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="161" Column="19" TopLine="135"/>
+      </Position13>
+      <Position14>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="23" Column="31" TopLine="1"/>
+      </Position14>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>
+    <Target>
+      <Filename Value="../build/listallerd"/>
+    </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../bindings/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/"/>
+      <OtherUnitFiles Value="../bindings/;../;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
+      <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <Other>
       <CompilerPath Value="$(CompPath)"/>

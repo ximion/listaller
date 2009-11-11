@@ -405,15 +405,15 @@ LazarusResources.Add('TMnFrm','FORMDATA',[
   +#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0
   +#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#10'OnActivate'
   +#7#12'FormActivate'#8'OnCreate'#7#10'FormCreate'#9'OnDestroy'#7#11'FormDestr'
-  +'oy'#6'OnShow'#7#8'FormShow'#10'LCLVersion'#6#6'0.9.28'#0#6'TImage'#6'Image1'
-  +#4'Left'#2#0#6'Height'#2'0'#3'Top'#2#0#5'Width'#3'0'#3#5'Align'#7#5'alTop'#7
-  +'Stretch'#9#0#0#6'TLabel'#11'StatusLabel'#4'Left'#2'p'#6'Height'#2#14#3'Top'
-  +#3' '#2#5'Width'#2'9'#7'Anchors'#11#6'akLeft'#8'akBottom'#0#7'Caption'#6#10
-  +'Loading...'#11'ParentColor'#8#0#0#6'TPanel'#7'LeftBar'#4'Left'#2#0#6'Height'
-  +#3#254#1#3'Top'#2'0'#5'Width'#2'h'#5'Align'#7#6'alLeft'#10'BevelOuter'#7#6'b'
-  +'vNone'#12'ClientHeight'#3#254#1#11'ClientWidth'#2'h'#8'TabOrder'#2#0#0#12'T'
-  +'SpeedButton'#13'InstallButton'#4'Left'#2#8#6'Height'#2'P'#3'Top'#2'p'#5'Wid'
-  +'th'#2'`'#7'Caption'#6#15'Install package'#5'Color'#7#9'clBtnFace'#4'Flat'#9
+  +'oy'#6'OnShow'#7#8'FormShow'#10'LCLVersion'#6#8'0.9.28.2'#0#6'TImage'#6'Imag'
+  +'e1'#4'Left'#2#0#6'Height'#2'0'#3'Top'#2#0#5'Width'#3'0'#3#5'Align'#7#5'alTo'
+  +'p'#7'Stretch'#9#0#0#6'TLabel'#11'StatusLabel'#4'Left'#2'p'#6'Height'#2#14#3
+  +'Top'#3' '#2#5'Width'#2'9'#7'Anchors'#11#6'akLeft'#8'akBottom'#0#7'Caption'#6
+  +#10'Loading...'#11'ParentColor'#8#0#0#6'TPanel'#7'LeftBar'#4'Left'#2#0#6'Hei'
+  +'ght'#3#254#1#3'Top'#2'0'#5'Width'#2'h'#5'Align'#7#6'alLeft'#10'BevelOuter'#7
+  +#6'bvNone'#12'ClientHeight'#3#254#1#11'ClientWidth'#2'h'#8'TabOrder'#2#0#0#12
+  +'TSpeedButton'#13'InstallButton'#4'Left'#2#8#6'Height'#2'P'#3'Top'#2'p'#5'Wi'
+  +'dth'#2'`'#7'Caption'#6#15'Install package'#5'Color'#7#9'clBtnFace'#4'Flat'#9
   +#11'Font.Height'#2#247#9'Font.Name'#6#4'Sans'#10'Glyph.Data'#10':$'#0#0'6$'#0
   +#0'BM6$'#0#0#0#0#0#0'6'#0#0#0'('#0#0#0'0'#0#0#0'0'#0#0#0#1#0' '#0#0#0#0#0#0
   +'$'#0#0'd'#0#0#0'd'#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0

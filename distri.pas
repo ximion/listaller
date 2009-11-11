@@ -20,7 +20,7 @@ unit distri;
 
 interface
 
-uses SysUtils, Classes, Process, BaseUnix, pwd;
+uses SysUtils, Classes, Process, liBasic;
 
 type
 //** Contains information about the current Linux distribution
@@ -39,9 +39,6 @@ end;
 
 //** Get the distro-infos
 function GetDistro: TDistroInfo;
-{** Check if user is root
- @returns If user is root (Bool)}
-function IsRoot: Boolean;
 //** Check if program is running @param cmd Command name
 function IsCommandRunning(cmd:String):Boolean;
 
@@ -67,20 +64,6 @@ begin
  finally
  t.Free;
  end;
-end;
-
-function IsRoot: Boolean;
-var p : PPasswd;
-begin
-p:=fpgetpwuid(fpgetuid);
-Result:=false;
- if assigned(p) then
-    begin
-       if p.pw_name<>'root' then
-         Result:=false
-        else  Result:=true;
-     end else
-   writeLn('Internal error');
 end;
 
 function GetDistro: TDistroInfo;
@@ -218,7 +201,7 @@ end;
 uv.Clear;
 uv.Add('Name: '+Result.DName);
 uv.Add('Release: '+Result.Release);
-uv.Add('PackageFormat: '+Result.PackageSystem);
+uv.Add('Package: '+Result.PackageSystem);
 try
 uv.SaveToFile('/etc/lipa/distribution');
 except end;

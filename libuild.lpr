@@ -24,7 +24,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, //We need an widgetset (NoGUI) for graphic handling
   Classes, SysUtils, CustApp,
-  LiCommon, Process, ipkbuild,
+  liBasic, Process, ipkbuild,
   trStrings, LiTranslator, unibuild;
 
 type

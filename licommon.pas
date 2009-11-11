@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this unit. If not, see <http://www.gnu.org/licenses/>.}
-//** This unit contains some various non-visual functions which are used nearly everywhere
+//** This unit contains some common functions to work with IPK files
 unit licommon;
 
 {$mode objfpc}{$H+}
@@ -21,20 +21,8 @@ unit licommon;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, process, LCLType, RegExpr,
-  distri, IniFiles, DOS, Graphics;
-
-const
-  //** Version of the Listaller applicationset
-  LiVersion='0.3.10a~dev';
-  //** Working directory of Listaller
-  lp='/tmp/';
-
-var
-  //** True if Listaller is in testmode
-  Testmode: Boolean=false;
-  //** The Listaller package lib directory
-  RegDir: String='';
+  Classes, SysUtils, FileUtil, process, RegExpr,
+  distri, Graphics, liBasic;
 
 type
 //** Urgency levels
@@ -48,143 +36,22 @@ function  SyblToPath(s: String): String;
 function  SyblToX(s: String): String;
 //** Check if file is a shared one @returns States as bool
 function  IsSharedFile(s: String): Boolean;
-//** Creates Listaller's config dir @returns Current config dir
-function  ConfigDir: String;
-//** Get current data file (check /usr/share and current dir)
-function  GetDataFile(s: String): String;
-//** Executes a command-line application @returns The application's last output string
-function  CmdResult(cmd:String):String;
-//** Executes a command-line application @returns The application's exit code
-function  CmdResultCode(cmd:String):Integer;
-{** Executes a command-line application
-    @param cmd Command that should be executed
-    @param Result TStringList to recive the output}
-procedure CmdResultList(cmd:String;Result: TStringList);
-//** Executes a command-line application @returns The final application output string (without breaks in line and invisible codes)
-function  CmdFinResult(cmd: String): String;
-//** Advanced file copy method @returns Success of the command
-function  FileCopy(source,dest: String): Boolean;
-//** Get server name from an url @returns The server name
-function  GetServerName(url:string):string;
-//** Path on an server (from an url) @returns The path on the server
-function  GetServerPath(url:string):string;
 {** Fast check if entry is in a list
     @param nm Name of the entry that has to be checked
     @param list The string list that has to be searched}
 function  IsInList(nm: String;list: TStringList): Boolean;
-//** Shows pkMon if option is set in preferences
-procedure ShowPKMon();
-//** Get the current, usable language variable
-function GetLangID: String;
-//** Reads the current system architecture @returns Detected architecture as string
-function GetSystemArchitecture: String;
-{** Executes an application as root using an graphical input prompt
-    @param cmd Command line string to execute
-    @param comment Description of the action the user is doing (why are root-rights needed?
-    @param icon Path to an icon for the operation
-    @param optn Set of TProcessOption to apply on the process object}
-function  ExecuteAsRoot(cmd: String;comment: String; icon: String;optn: TProcessOptions=[]): Boolean;
 {** Get dependencies of an executable
     @param f Name of the binary file
     @param lst StringList to recieve the output
     @returns Success of operation}
 function GetLibDepends(f: String; lst: TStringList): Boolean;
-//** Get current date as string
-function GetDateAsString: String;
+//** Advanced file copy method @returns Success of the command
+function  FileCopy(source,dest: String): Boolean;
+
 //** Shows system notification box
 procedure ShowPopupNotify(msg: String;urgency: TUrgencyLevel;time:Integer);
 
 implementation
-
-function GetServerName(url:string):string;
-var p1,p2 : integer;
-begin
-url := StringReplace(url,'ftp://','',[rfReplaceAll]);
-url := StringReplace(url,'http://','',[rfReplaceAll]);
-p1 := 1;
-p2 := Pos('/',url);
-//
-Result := Copy(url,P1,(P2-1));
-end;
-
-function GetServerPath(url:string):string;
-var p1,p2 : integer;
-begin
-url := StringReplace(url,'http://','',[rfReplaceAll]);
-url := StringReplace(url,'ftp://','',[rfReplaceAll]);
-url := StringReplace(url,'www.','',[rfReplaceAll]);
-p1 := Pos('/',url);
-p2 := Length(url);
-Result := ExtractFilePath(Copy(url,P1,P2));
-end;
-
-function DeleteModifiers(s: String): String;
-var h: String;
-begin
-h:=SysUtils.StringReplace(s,' <s>','',[rfReplaceAll]);
-h:=ReplaceRegExpr(' <chmod:([0-7]{3})>', h, '', false);
-h:=ReplaceRegExpr(' <([a-zA-Z_]{4,})-only>', h, '', false);
-h:=SysUtils.StringReplace(h,' <mime>','',[rfReplaceAll]);
-h:=SysUtils.StringReplace(h,' <setvars>','',[rfReplaceAll]);
-h:=SysUtils.StringReplace(h,'>','',[rfReplaceAll]);
-Result:=h;
-end;
-
-function GetDataFile(s: String): String;
-var D: TDistroInfo;
-begin
-if (FileExists(ExtractFilePath(paramstr(0))+s))
-or (DirectoryExists(ExtractFilePath(paramstr(0))+s)) then
-Result:=ExtractFilePath(paramstr(0))+s
-else
-if pos('graphics/',s)>0 then
-begin
-D:=GetDistro;
-//Apply graphics branding
-if FileExists('/usr/share/listaller/branding/'+LowerCase(D.DName)+'/'+s) then
- Result:='/usr/share/listaller/branding/'+LowerCase(D.DName)+'/'+s
-else
- Result:='/usr/share/listaller/'+s;
-end else
- Result:='/usr/share/listaller/'+s;
-end;
-
-function GetSystemArchitecture: String;
-var p: TProcess;x: TStringList;s: String;
-begin
- p:=TProcess.Create(nil);
- p.Options:=[poUsePipes, poWaitOnExit];
- p.CommandLine:='uname -m';
- p.Execute;
- x:=TStringList.Create;
- x.LoadFromStream(p.OutPut);
- s:=x[0];
- x.Free;
- p.Free;
-
-if (s='i686')
-or (s='i586')
-or (s='i486')
-then s:='i386';
-Result:=s;
-end;
-
-function GetLangID: String;
-var LANG: String;i: Integer;
-begin
- LANG:=GetEnvironmentVariable('LANG');
- if LANG='' then
- begin
-   for i:=1 to Paramcount-1 do
-    if (ParamStr(i)='--LANG') or
-     (ParamStr(i)='-l') or
-     (ParamStr(i)='--lang') then LANG:=ParamStr(i+1);
- end;
- if not DirectoryExists('/usr/share/locale-langpack/'+LANG) then
-  Result:=copy(LANG,1,2)
- else
-  Result:=LANG;
-end;
 
 function GetLibDepends(f: String; lst: TStringList): Boolean;
 var p: TProcess;s: TStringList;i: Integer;
@@ -215,6 +82,11 @@ end;
 function IsSharedFile(s: String): Boolean;
 begin
 Result:=pos(' <s>',s)>0;
+end;
+
+function IsInList(nm: String;list: TStringList): Boolean;
+begin
+Result:=list.IndexOf(nm)>-1;
 end;
 
 function GetXHome: String;
@@ -323,204 +195,16 @@ s:=StringReplace(s,'$LIB','/binary',[rfReplaceAll]);
 Result:=s;
 end;
 
-function ConfigDir: String;
+function DeleteModifiers(s: String): String;
 var h: String;
 begin
-h:=getenvironmentvariable('HOME');
-h:=h+'/.config';
-if not DirectoryExists(h) then CreateDir(h);
-h:=h+'/Listaller';
-if not DirectoryExists(h) then CreateDir(h);
-Result:=h+'/';
-end;
-
-function CmdResult(cmd:String):String;
-var t:TProcess;
-s:TStringList;
-begin
- Result:='';
- t:=tprocess.create(nil);
- t.Options:=[poUsePipes, poWaitOnExit];
- t.CommandLine:=cmd;
- try
-  t.Execute;
-  s:=tstringlist.Create;
-  try
-   s.LoadFromStream(t.Output);
-   if s.Count<= 0 then Result:='err' else
-   Result:=s[0];
-  finally
-  s.free;
-  end;
- finally
- t.Free;
- end;
-end;
-
-procedure ShowPKMon();
-var cnf: TIniFile;t: TProcess;
-begin
-//Check if PackageKit checkmode is enabled:
-cnf:=TIniFile.Create(ConfigDir+'config.cnf');
-  if cnf.ReadBool('MainConf','ShowPkMon',false) then
-  begin
-   t:=TProcess.Create(nil);
-   t.CommandLine:='pkmon -v';
-   t.Options:=[poNewConsole];
-   t.Execute;
-  end;
-cnf.Free;
-end;
-
-function CmdFinResult(cmd:String):String;
-var t:TProcess;
-Buffer: string;
-BytesAvailable: DWord;
-BytesRead:LongInt;
-begin
- Result:='';
- buffer:='';
- t:=tprocess.create(nil);
- t.Options:=[poUsePipes];
- t.CommandLine:=cmd;
- try
-  t.Execute;
-  while t.Running do
-  begin
-      BytesAvailable := t.Output.NumBytesAvailable;
-      BytesRead := 0;
-      while BytesAvailable>0 do
-       begin
-        SetLength(Buffer, BytesAvailable);
-        BytesRead := t.OutPut.Read(Buffer[1], BytesAvailable);
-        if (pos(#13,Buffer)>0)or(pos(#26,Buffer)>0)or(Pos(#10,Buffer)>0)then Result:='';
-        Result := Result + copy(Buffer,1, BytesRead);
-        BytesAvailable := t.OutPut.NumBytesAvailable;
-      end;
-  end;
- finally
- t.Free;
- end;
-end;
-
-function CmdResultCode(cmd:String):Integer;
-var t:TProcess;
-begin
- Result:=0;
- t:=tprocess.create(nil);
- t.Options:=[poUsePipes,poWaitonexit];
- t.CommandLine:=cmd;
- try
-  t.Execute;
-   Result:=t.ExitStatus;
- finally
- t.Free;
- end;
-end;
-
-function GetDateAsString: String;
-var
-  Year,Month,Day,WDay : word;
-begin
-  GetDate(Year,Month,Day,WDay);
-  Result:=IntToStr(Day)+'.'+IntToStr(Month)+'.'+IntToStr(Year) ;
-end;
-
-function ExecuteAsRoot(cmd: String;comment: String; icon: String;optn: TProcessOptions=[]): Boolean;
-var p: TProcess; DInfo: TDistroInfo;
-begin
-DInfo:=GetDistro;
-p:=TProcess.Create(nil);
-if DInfo.DBase='KDE' then
-begin
- if FileExists('/usr/bin/kdesu') then
-  p.CommandLine := 'kdesu -d --comment "'+comment+'" -i '+icon+' '+cmd
- else
- if FileExists('/usr/bin/kdesudo') then
-  p.CommandLine := 'kdesudo -d --comment "'+comment+'" -i '+icon+' '+cmd
-end else
-begin
- if DInfo.DName='Fedora' then
-  //Fedora uses Consolehelper to run apps as root. So we use "beesu" to make CH work for Listaller
-  p.CommandLine := 'beesu -l '+cmd
- else
-   if FileExists('/usr/bin/gksudo') then
-    p.CommandLine := 'gksudo --message "'+comment+'" '+cmd
-    else
-   if FileExists('/usr/bin/gksu') then
-    p.CommandLine := 'gksu --message "'+comment+'" '+cmd
-    else
-   if FileExists('/usr/bin/gnomesu') then
-    p.CommandLine := 'gnomesu '+cmd
-   else
-   begin
-    writeLn('Unable to execute the application as root.'#13'Please do this manually!');
-    p.Free;
-    Result:=false;
-    exit;
-   end;
- end;
-    p.Options:=optn;
-    p.Execute;
-    Result:=true;
-    if p.ExitStatus>0 then Result:=false;
-    p.Free;
-end;
-
-procedure CmdResultList(cmd:String;Result: TStringList);
-var t:TProcess;
-s:TStringList;
-begin
- t:=tprocess.create(nil);
- t.CommandLine:=cmd;
- t.Options:=[poUsePipes,poWaitonexit];
- try
-  t.Execute;
-  s:=tstringlist.Create;
-  try
-   s.LoadFromStream(t.Output);
-   if t.ExitStatus<=0 then
-   Result.Assign(s)
-   else Result.Clear;
-
-  finally
-  s.free;
-  end;
- finally
- t.Free;
- end;
-end;
-
-procedure ShowPopupNotify(msg: String;urgency: TUrgencyLevel;time:Integer);
-var p: TProcess;DInfo: TDistroInfo;s: String;
-begin
- DInfo:=GetDistro;
- p:=TProcess.Create(nil);
- p.Options:=[poUsePipes];
- if DInfo.DBase='KDE' then
- begin
-  p.CommandLine:='kdialog --passivepopup "'+msg+'" --title "Listaller Message" '+IntToStr(time);
-  p.Execute;
-  p.Free;
-  exit;
- end else
- if FileExists('/usr/bin/notify-send') then
- begin
-  case urgency of
-  ulNormal: s:='normal';
-  ulLow: s:='low';
-  ulCritical: s:='critical';
-  end;
-  p.CommandLine:='notify-send '+'--urgency='+s+' --expire-time='+IntToStr(time*1000)+' "'+msg+'"';
-  p.Execute;
-  p.Free;
-  exit;
- end;
-end;
-
-function IsInList(nm: String;list: TStringList): Boolean;
-begin
-Result:=list.IndexOf(nm)>-1;
+h:=SysUtils.StringReplace(s,' <s>','',[rfReplaceAll]);
+h:=ReplaceRegExpr(' <chmod:([0-7]{3})>', h, '', false);
+h:=ReplaceRegExpr(' <([a-zA-Z_]{4,})-only>', h, '', false);
+h:=SysUtils.StringReplace(h,' <mime>','',[rfReplaceAll]);
+h:=SysUtils.StringReplace(h,' <setvars>','',[rfReplaceAll]);
+h:=SysUtils.StringReplace(h,'>','',[rfReplaceAll]);
+Result:=h;
 end;
 
 function FileCopy(source,dest: String): Boolean;
@@ -557,6 +241,33 @@ begin
      end;
      FileClose(fSrc);
    end;
+ end;
+end;
+
+procedure ShowPopupNotify(msg: String;urgency: TUrgencyLevel;time:Integer);
+var p: TProcess;DInfo: TDistroInfo;s: String;
+begin
+ DInfo:=GetDistro;
+ p:=TProcess.Create(nil);
+ p.Options:=[poUsePipes];
+ if DInfo.DBase='KDE' then
+ begin
+  p.CommandLine:='kdialog --passivepopup "'+msg+'" --title "Listaller Message" '+IntToStr(time);
+  p.Execute;
+  p.Free;
+  exit;
+ end else
+ if FileExists('/usr/bin/notify-send') then
+ begin
+  case urgency of
+  ulNormal: s:='normal';
+  ulLow: s:='low';
+  ulCritical: s:='critical';
+  end;
+  p.CommandLine:='notify-send '+'--urgency='+s+' --expire-time='+IntToStr(time*1000)+' "'+msg+'"';
+  p.Execute;
+  p.Free;
+  exit;
  end;
 end;
 

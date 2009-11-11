@@ -25,7 +25,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, GetText, Controls, typinfo, FileUtil,
-  liCommon;
+  liBasic;
 
 type
  TDefaultTranslator=class(TAbstractTranslator)

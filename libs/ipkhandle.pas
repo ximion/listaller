@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, packagekit,
   sqlite3ds, db, AbUnZper, AbArcTyp, ipkdef, HTTPSend, FTPSend, blcksock,
-  MD5, liTypes, distri, MTProcs, FileUtil;
+  MD5, liTypes, distri, MTProcs, FileUtil, liBasic;
 
 type
 

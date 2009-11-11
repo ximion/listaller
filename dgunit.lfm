@@ -3,7 +3,7 @@ object DGForm: TDGForm
   Height = 324
   Top = 364
   Width = 626
-  ActiveControl = Memo1
+  ActiveControl = BitBtn1
   Caption = 'Simple depGet'
   ClientHeight = 324
   ClientWidth = 626
@@ -49,7 +49,7 @@ object DGForm: TDGForm
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '0.9.28'
+  LCLVersion = '0.9.28.2'
   object Label1: TLabel
     Left = 8
     Height = 20

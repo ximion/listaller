@@ -1,7 +1,26 @@
-#define RT_MANIFEST  24
-#define CREATEPROCESS_MANIFEST_RESOURCE_ID 1
-#define ISOLATIONAWARE_MANIFEST_RESOURCE_ID 2
-#define ISOLATIONAWARE_NOSTATICIMPORT_MANIFEST_RESOURCE_ID 3
+1 VERSIONINFO
+FILEVERSION 0,4,0,122
+PRODUCTVERSION 0,4,0,0
+{
+ BLOCK "StringFileInfo"
+ {
+  BLOCK "040904E4"
+  {
+   VALUE "Comments", "\000"
+   VALUE "CompanyName", "\000"
+   VALUE "FileDescription", "\000"
+   VALUE "FileVersion", "0.4.0.122\000"
+   VALUE "InternalName", "\000"
+   VALUE "LegalCopyright", "\000"
+   VALUE "LegalTrademarks", "\000"
+   VALUE "OriginalFilename", "\000"
+   VALUE "ProductName", "\000"
+   VALUE "ProductVersion", "0.4.0.0\000"
+  }
+ }
+ BLOCK "VarFileInfo"
+ {
+  VALUE "Translation", 0x0409, 0x04E4
+ }
+}
 
-CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "listallerd.manifest"
-MAINICON ICON "listallerd.ico"

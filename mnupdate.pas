@@ -22,8 +22,9 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, Buttons, CheckLst, HTTPSend, IniFiles, MD5, LiCommon, updexec, LCLType,
-  Process, Menus, trstrings, XMLRead, DOM, ldunit, sqlite3ds, db, IconLoader;
+  StdCtrls, Buttons, CheckLst, HTTPSend, IniFiles, MD5, LiBasic, updexec, LCLType,
+  Process, Menus, trstrings, XMLRead, DOM, ldunit, sqlite3ds, db, IconLoader,
+  LiCommon;
 
 type
 

@@ -22,7 +22,7 @@ interface
 
 uses
  Classes, SysUtils, StdCtrls, ExtCtrls, Buttons, Controls, iconloader,
- trstrings, LiCommon, liTypes;
+ trstrings, LiBasic, liTypes;
 
 type
 //** One entry of Listaller's visual software lists

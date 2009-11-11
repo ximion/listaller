@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ComCtrls, HTTPSend, FileUtil, AbUnZper, AbArcTyp, Process, LiCommon, IniFiles,
-  blcksock, trStrings, sqlite3ds, db;
+  blcksock, trStrings, sqlite3ds, db, LiBasic;
 
 type
 

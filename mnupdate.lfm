@@ -9,7 +9,7 @@ object UMnForm: TUMnForm
   ClientWidth = 688
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '0.9.28'
+  LCLVersion = '0.9.28.2'
   object InfoMemo: TMemo
     Left = 8
     Height = 90

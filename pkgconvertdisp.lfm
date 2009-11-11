@@ -11,7 +11,7 @@ object ConvDisp: TConvDisp
   ClientWidth = 462
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '0.9.28'
+  LCLVersion = '0.9.28.2'
   object Label1: TLabel
     Left = 8
     Height = 20
