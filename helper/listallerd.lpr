@@ -54,8 +54,8 @@ begin
    // read the arguments
    if (dbus_message_iter_init(msg, @args) = 0) then
       p_error('Message has no arguments!')
-   else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
-      p_error('Argument is not string!')
+   else if (DBUS_TYPE_INT64 <> dbus_message_iter_get_arg_type(@args)) then
+      p_error('Argument is no INT64!')
    else
       dbus_message_iter_get_basic(@args, @param);
 
@@ -65,6 +65,7 @@ end;
 procedure TLiDaemon.ListenForCall;
 var
   msg: PDBusMessage;
+  smsg: PDBusMessage;
   ret: cint;
 begin
   WriteLn('Daemon started.');
@@ -97,11 +98,16 @@ begin
     // check this is a method call for the right interface & method
     if (dbus_message_is_method_call(msg, 'org.freedesktop.Listaller.Install', CALL_RUNSETUP) <> 0) then
     begin
+      if InstallWorkers = 0 then
+      begin
+       sMsg:=msg;
        if CheckRunSetupCall(msg) then
-        JobList.Add(TDoAppInstall.Create(msg,conn));
-    end;
-    // free the message
-    dbus_message_unref(msg);
+        JobList.Add(TDoAppInstall.Create(sMsg,conn));
+       Inc(InstallWorkers);
+      end;
+    end else
+     // free the message
+     dbus_message_unref(msg);
   end;
 end;
 

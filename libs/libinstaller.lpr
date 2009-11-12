@@ -26,12 +26,12 @@ uses
 //////////////////////////////////////////////////////////////////////////////////////
 //Exported helper functions
 
-function li_new_stringlist: Pointer; cdecl;
+function li_new_stringlist: Pointer;cdecl;
 begin
  Result:=TStringList.Create;
 end;
 
-function li_free_stringlist(lst: PStringList): Boolean; cdecl;
+function li_free_stringlist(lst: PStringList): Boolean;cdecl;
 begin
 Result:=true;
 try
@@ -41,7 +41,7 @@ except
 end;
 end;
 
-function li_stringlist_read_line(lst: PStringList;ln: Integer): PChar; cdecl;
+function li_stringlist_read_line(lst: PStringList;ln: Integer): PChar;cdecl;
 begin
  if (ln < lst^.Count)and(ln > -1) then
  begin
@@ -49,7 +49,7 @@ begin
  end else Result:='List index out of bounds.';
 end;
 
-function li_stringlist_write_line(lst: PStringList;ln: Integer;val: PChar): Boolean; cdecl;
+function li_stringlist_write_line(lst: PStringList;ln: Integer;val: PChar): Boolean;cdecl;
 begin
  if (ln < lst^.Count)and(ln > -1) then
  begin
@@ -62,7 +62,7 @@ end;
 //Installer part
 
 //** Removes an application that was installed with an IPK package
-function li_remove_ipk_installed_app(appname, appid: PChar;msgcall: TMessageCall;poschange: TProgressCall;fastmode: Boolean): Boolean; cdecl;
+function li_remove_ipk_installed_app(appname, appid: PChar;msgcall: TMessageCall;poschange: TProgressCall;fastmode: Boolean): Boolean;cdecl;
 begin
 Result:=true;
 try
@@ -73,24 +73,24 @@ end;
 end;
 
 //** Creates a new installation object
-function li_setup_new: Pointer; cdecl;
+function li_setup_new: Pointer;cdecl;
 begin
  Result:=TInstallation.Create;
 end;
 
 //** Removes an TInstallation object
-procedure li_setup_free(setup: PInstallation);
+procedure li_setup_free(setup: PInstallation);cdecl;
 begin
  setup^.Free;
 end;
 
 //** Initializes the setup
-function li_setup_init(setup: PInstallation;pkname: PChar): PChar; cdecl;
+function li_setup_init(setup: PInstallation;pkname: PChar): PChar;cdecl;
 begin
  Result:='';
  if not Assigned(setup^.OnUserRequest) then
  begin
-  writeLn('[WARNING] No user request callback is registered!');
+  p_warning('No user request callback is registered!');
  end;
 
  try
@@ -101,7 +101,7 @@ begin
 end;
 
 //** Register progress changes (main)
-function li_setup_register_main_progress_call(setup: PInstallation;call: TProgressCall): Boolean; cdecl;
+function li_setup_register_main_progress_call(setup: PInstallation;call: TProgressCall): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -112,7 +112,7 @@ begin
 end;
 
 //** Register progress changes (extra)
-function li_setup_register_extra_progress_call(setup: PInstallation;call: TProgressCall): Boolean; cdecl;
+function li_setup_register_extra_progress_call(setup: PInstallation;call: TProgressCall): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -123,7 +123,7 @@ begin
 end;
 
 //** Message call
-function li_setup_register_message_call(setup: PInstallation;call: TMessageCall): Boolean; cdecl;
+function li_setup_register_message_call(setup: PInstallation;call: TMessageCall): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -134,7 +134,7 @@ begin
 end;
 
 //** Step message call
-function li_setup_register_step_message_call(setup: PInstallation;call: TMessageCall): Boolean; cdecl;
+function li_setup_register_step_message_call(setup: PInstallation;call: TMessageCall): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -145,7 +145,7 @@ begin
 end;
 
 //** User request message call
-function li_setup_register_user_request_call(setup: PInstallation;call: TRequestCall): Boolean; cdecl;
+function li_setup_register_user_request_call(setup: PInstallation;call: TRequestCall): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -156,19 +156,19 @@ begin
 end;
 
 //** Installation type
-function li_setup_pkgtype(setup: PInstallation): TPkgType; cdecl;
+function li_setup_pkgtype(setup: PInstallation): TPkgType;cdecl;
 begin
   Result:=setup^.pType;
 end;
 
 //** Set installation testmode
-procedure li_testmode(st: Boolean); cdecl;
+procedure li_testmode(st: Boolean);cdecl;
 begin
   Testmode:=st;
 end;
 
 //** Set actions which should be forced
-procedure li_setup_set_forced(setup: PInstallation;str: PChar); cdecl;
+procedure li_setup_set_forced(setup: PInstallation;str: PChar);cdecl;
 begin
   setup^.ForceActions:=str;
 end;
@@ -180,49 +180,49 @@ begin
 end;
 
 //** Read disallows property
-function li_setup_disallows(setup: PInstallation): PChar; cdecl;
+function li_setup_disallows(setup: PInstallation): PChar;cdecl;
 begin
   Result:=PChar(setup^.Disallows);
 end;
 
 //** Read supported Linux distributions
-function li_setup_supported_distributions(setup: PInstallation): PChar; cdecl;
+function li_setup_supported_distributions(setup: PInstallation): PChar;cdecl;
 begin
   Result:=PChar(setup^.Distris);
 end;
 
 //** Check if application is installed
-function li_is_ipk_app_installed(appname: PChar;appid: PChar): Boolean; cdecl;
+function li_is_ipk_app_installed(appname: PChar;appid: PChar): Boolean;cdecl;
 begin
   Result:=IsPackageInstalled(appname,appid);
 end;
 
 //** Resolve all dependencies
-function li_setup_resolve_dependencies(setup: PInstallation): Boolean; cdecl;
+function li_setup_resolve_dependencies(setup: PInstallation): Boolean;cdecl;
 begin
  Result:=setup^.ResolveDependencies;
 end;
 
 //** Readout application name
-function li_setup_appname(setup: PInstallation): PChar; cdecl;
+function li_setup_appname(setup: PInstallation): PChar;cdecl;
 begin
   Result:=PChar(setup^.AppName);
 end;
 
 //** Read appversion
-function li_setup_appversion(setup: PInstallation): PChar; cdecl;
+function li_setup_appversion(setup: PInstallation): PChar;cdecl;
 begin
   Result:=PChar(setup^.AppVersion);
 end;
 
 //** Get package ID
-function li_setup_pkgid(setup: PInstallation): PChar; cdecl;
+function li_setup_pkgid(setup: PInstallation): PChar;cdecl;
 begin
   Result:=PChar(setup^.ID);
 end;
 
 //** Get description
-function li_setup_long_description(setup: PInstallation; list: PStringList): Boolean; cdecl;
+function li_setup_long_description(setup: PInstallation; list: PStringList): Boolean;cdecl;
 begin
 try
  Result:=true;
@@ -233,13 +233,13 @@ end;
 end;
 
 //** Get wizard image patch
-function li_setup_wizard_image_path(setup: PInstallation): PChar; cdecl;
+function li_setup_wizard_image_path(setup: PInstallation): PChar;cdecl;
 begin
   Result:=PChar(setup^.WizImage);
 end;
 
 //** Get license
-function li_setup_license(setup: PInstallation; list: PStringList): Boolean; cdecl;
+function li_setup_license(setup: PInstallation; list: PStringList): Boolean;cdecl;
 begin
 try
  Result:=true;
@@ -250,7 +250,7 @@ end;
 end;
 
 //** Get profiles list
-function li_setup_profiles_list(setup: PInstallation; list: PStringList): Boolean; cdecl;
+function li_setup_profiles_list(setup: PInstallation; list: PStringList): Boolean;cdecl;
 begin
 try
  Result:=true;
@@ -267,37 +267,37 @@ begin
 end;
 
 //** Read appversion
-function li_setup_appicon(setup: PInstallation): PChar; cdecl;
+function li_setup_appicon(setup: PInstallation): PChar;cdecl;
 begin
   Result:=PChar(setup^.AppIcon);
 end;
 
 //** Read desktopfiles
-function li_setup_desktopfiles(setup: PInstallation): PChar; cdecl;
+function li_setup_desktopfiles(setup: PInstallation): PChar;cdecl;
 begin
   Result:=PChar(setup^.DesktopFiles);
 end;
 
 //** Read appcmd
-function li_setup_app_exec_command(setup: PInstallation): PChar; cdecl;
+function li_setup_app_exec_command(setup: PInstallation): PChar;cdecl;
 begin
   Result:=PChar(setup^.CMDLn);
 end;
 
 //** Read path to file list
-function li_setup_profile_current_filelist(setup: PInstallation): PChar; cdecl;
+function li_setup_profile_current_filelist(setup: PInstallation): PChar;cdecl;
 begin
   Result:=PChar(setup^.IFileInfo);
 end;
 
 //** Starts the installation
-function li_setup_start(setup: PInstallation): Boolean; cdecl;
+function li_setup_start(setup: PInstallation): Boolean;cdecl;
 begin
   Result:=setup^.DoInstallation;
 end;
 
 //** Get dependencies
-function li_setup_dependencies(setup: PInstallation; list: PStringList): Boolean; cdecl;
+function li_setup_dependencies(setup: PInstallation; list: PStringList): Boolean;cdecl;
 begin
 try
  Result:=true;
@@ -311,13 +311,13 @@ end;
 //Manager part
 
 //** Creates a new TAppManager object
-function li_mgr_new: Pointer; cdecl;
+function li_mgr_new: Pointer;cdecl;
 begin
  Result:=TAppManager.Create;
 end;
 
 //** Removes an TAppManager object
-procedure li_mgr_free(mgr: PAppManager);
+procedure li_mgr_free(mgr: PAppManager);cdecl;
 begin
  mgr^.Free;
 end;
@@ -327,7 +327,7 @@ function li_mgr_load_apps(mgr: PAppManager): Boolean;cdecl;
 begin
 Result:=false;
 try
-if not Assigned(mgr^.OnRequest) then begin writeLn('[ERROR] No user request callback was registered');exit;end;
+if not Assigned(mgr^.OnRequest) then begin p_error('No user request callback was registered');exit;end;
  Result:=true;
  mgr^.LoadEntries;
 except
@@ -336,7 +336,7 @@ end;
 end;
 
 //** Register message call
-function li_mgr_register_msg_call(mgr: PAppManager;call: TMessageCall): Boolean; cdecl;
+function li_mgr_register_msg_call(mgr: PAppManager;call: TMessageCall): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -389,8 +389,8 @@ end;
 function li_mgr_remove_app(mgr: PAppManager;obj: TAppInfo): Boolean;cdecl;
 begin
  Result:=false;
-if not Assigned(mgr^.OnProgress) then begin writeLn('[ERROR] You need to register a progress callback!');exit;end;
-if not Assigned(mgr^.OnRequest) then begin writeLn('[ERROR] You need to register a user request callback!');exit;end;
+if not Assigned(mgr^.OnProgress) then begin p_error('You need to register a progress callback!');exit;end;
+if not Assigned(mgr^.OnRequest) then begin p_error('You need to register a user request callback!');exit;end;
  Result:=true;
  try
   mgr^.UninstallApp(obj);
@@ -411,7 +411,7 @@ end;
 begin
 if log<> nil then
   PerformCheck
-else writeLn('[ERROR]: Check log != nil failed.');
+else p_error('Check log != nil failed.');
 end;
 
 //** Fix application dependencies
@@ -426,7 +426,7 @@ end;
 begin
 if log<> nil then
   PerformCheck
-else writeLn('[ERROR]: Check log != nil failed.');
+else p_error('Check log != nil failed.');
 end;
 
 ///////////////////////

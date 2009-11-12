@@ -32,6 +32,8 @@ const
 var
   //** True if Listaller is in testmode
   Testmode: Boolean=false;
+  //** True if superuser mode is enabled
+  Superuser: Boolean=false;
   //** The Listaller package lib directory
   RegDir: String='';
 

@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, packagekit,
   sqlite3ds, db, AbUnZper, AbArcTyp, ipkdef, HTTPSend, FTPSend, blcksock,
-  MD5, liTypes, distri, MTProcs, FileUtil, liBasic;
+  MD5, liTypes, distri, MTProcs, FileUtil, liBasic, dbus;
 
 type
 
@@ -103,6 +103,8 @@ type
      const Value: string);
   //Handler for PackageKit progress
   procedure OnPKitProgress(pos: Integer);
+  //Execute installation as root using dbus daemon & PolicyKit
+  function  DoInstallationAsRoot(): Boolean;
  protected
   //Check if FTP connection is working
   function CheckFTPConnection(AFTPSend: TFTPSend): Boolean;
@@ -202,7 +204,7 @@ function TInstallation.MakeUsrRequest(msg: String;qtype: TRqType): TRqResult;
 begin
  if Assigned(FRequest) then
   Result:=FRequest(qtype,PChar(msg))
- else writeLn('WARNING: No user request handler assigned!');
+ else p_warning('No user request handler assigned!');
 end;
 
 procedure TInstallation.SendStateMsg(msg: String);
@@ -213,7 +215,7 @@ end;
 procedure TInstallation.msg(str: String);
 begin
  if Assigned(FMessage) then FMessage(str,mtInfo)
- else writeLn(str);
+ else p_info(str);
 end;
 
 constructor TInstallation.Create;
@@ -248,6 +250,8 @@ begin
   RegDir:='/etc/lipa/app-reg/'
  else
   RegDir:=SyblToPath('$INST')+'/app-reg/';
+
+  p_debug('Set RootMode called.');
 end;
 
 procedure TInstallation.SetCurProfile(i: Integer);
@@ -482,7 +486,7 @@ begin
 if IAppName <> '' then
 begin
  Result:=false;
- writeLn('[ERROR] This Setup was already initialized. You have to create a new setup object to load a second file!');
+ p_error('This Setup was already initialized. You have to create a new setup object to load a second file!');
  exit;
 end;
  Result:=true;
@@ -1657,9 +1661,122 @@ end; }
 SendStateMsg(rsSuccess);
 end;
 
+function TInstallation.DoInstallationAsRoot(): Boolean;
+var
+  dmsg: PDBusMessage;
+  args: DBusMessageIter;
+  pending: PDBusPendingCall;
+  stat: Boolean;
+  rec: PChar;
+  param: PChar;
+  err: DBusError;
+  conn: PDBusConnection;
+begin
+  Result:=false;
+
+  dbus_error_init(@err);
+
+  //New DBus connection
+  conn := dbus_bus_get_private(DBUS_BUS_SYSTEM, @err);
+
+  if dbus_error_is_set(@err) <> 0 then
+  begin
+    p_error('Connection Error: '#10+err.message);
+    dbus_error_free(@err);
+    MakeUsrRequest('An error occured during install request.',rqError);
+  end;
+
+  if conn = nil then exit;
+
+  p_info('Calling listaller-daemon...');
+  // create a new method call and check for errors
+  dmsg := dbus_message_new_method_call('org.freedesktop.Listaller', // target for the method call
+                                      '/org/freedesktop/Listaller/Installer1', // object to call on
+                                      'org.freedesktop.Listaller.Install', // interface to call on
+                                      'ExecuteSetup'); // method name
+  if (dmsg = nil) then
+  begin
+    p_error('Message Null');
+    exit;
+  end;
+
+  // append arguments
+  param:=PChar(PkgPath);
+  dbus_message_iter_init_append(dmsg, @args);
+  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @param) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+
+  // send message and get a handle for a reply
+  if (dbus_connection_send_with_reply(conn, dmsg, @pending, -1) = 0) then // -1 is default timeout
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+  if (pending = nil) then
+  begin
+    p_error('Pending Call Null');
+    exit;
+  end;
+  dbus_connection_flush(conn);
+
+  p_info('InstallPkg request sent');
+
+  // free message
+  dbus_message_unref(dmsg);
+
+  // block until we recieve a reply
+  dbus_pending_call_block(pending);
+
+  // get the reply message
+  dmsg := dbus_pending_call_steal_reply(pending);
+  if (dmsg = nil) then
+  begin
+    p_error('Reply Null');
+    exit;
+  end;
+  // free the pending message handle
+  dbus_pending_call_unref(pending);
+
+  // read the parameters
+  if (dbus_message_iter_init(dmsg, @args) = 0) then
+     p_error('Message has no arguments!')
+  else if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
+     p_error('Argument is not boolean!')
+  else
+     dbus_message_iter_get_basic(@args, @stat);
+
+  if (dbus_message_iter_next(@args) = 0) then
+     p_error('Message has too few arguments!')
+  else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+     p_error('Argument is no string!')
+  else
+     dbus_message_iter_get_basic(@args, @rec);
+
+  if (stat = false) then
+  begin
+   if rec = 'blocked' then
+    MakeUsrRequest('You are not authorized to do this action!',rqInfo)
+   else
+    MakeUsrRequest('An error occured during install request.',rqError);
+  end else Result:=true;
+  // free reply
+  dbus_message_unref(dmsg);
+end;
+
 function TInstallation.DoInstallation: Boolean;
 var cnf: TIniFile;
 begin
+ if Root then p_debug('User executes app as root!') else p_debug('Rootmode not set!');
+
+if Root then
+begin
+ Result:=DoInstallationAsRoot();
+ exit;
+end;
+
 //Load network connections
  HTTP:=THTTPSend.Create;
  FTP:=TFTPSend.Create;

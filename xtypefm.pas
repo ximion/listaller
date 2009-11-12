@@ -91,7 +91,11 @@ end;
 procedure TIMdFrm.btnInstallAllClick(Sender: TObject);
 var DInfo: TDistroInfo;
 begin
-DInfo:=GetDistro;
+ Superuser:=true;
+ btnHome.Tag:=2;
+ close;
+
+{DInfo:=GetDistro;
 if not IsRoot then begin
 if FileExists(paramstr(1)) then
  ExecuteAsRoot(Application.ExeName+' '+paramstr(1), rsRootPassQAppEveryone,
@@ -103,7 +107,7 @@ if FileExists(paramstr(1)) then
  self.Free;
  halt(0); //Terminate program
  exit;
-  end;
+  end; }
 end;
 
 procedure TIMdFrm.btnTestClick(Sender: TObject);

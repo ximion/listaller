@@ -128,7 +128,8 @@ case Notebook1.PageIndex of
     exit;
   end;
 2: begin
-        if setup.GetFileList<>'*' then begin
+        if setup.GetFileList<>'*' then
+        begin
            Button5.Visible:=false;
            Button1.Visible:=false;
            NoteBook1.PageIndex:=4;
@@ -424,8 +425,7 @@ writeLn('Begin loading IPK');
 setup:=TInstallPack.Create;
 setup.SetUserRequestCall(@RequestHandling);
 setup.SetMessageCall(@MessageCall);
-//Set if root installation
-setup.SetRootMode(IsRoot);
+
 //Set forced actions
 if Application.HasOption('force-architecture') then
  setup.Forced:='architecture;';
@@ -434,7 +434,7 @@ setup.Initialize(paramstr(1));
 
 //Prepare exectype form
 
-if (setup.PkType=ptLinstall)and(not IsRoot) then
+if (setup.PkType=ptLinstall)and(not Superuser) then
 begin
   imForm:=TimdFrm.Create(nil);
   with imForm do
@@ -455,7 +455,7 @@ begin
   imForm.Free;
 end;
 
-if (setup.PkType=ptDLink)and(not IsRoot) then
+if (setup.PkType=ptDLink)and(not Superuser) then
 begin
   imForm:=TimdFrm.Create(nil);
   with imForm do
@@ -470,7 +470,7 @@ begin
   imForm.Free;
 end;
 
-if (setup.PkType=ptContainer)and(not IsRoot) then
+if (setup.PkType=ptContainer)and(not Superuser) then
 begin
   imForm:=TimdFrm.Create(nil);
   with imForm do
@@ -498,7 +498,11 @@ if Application.MessageBox(PAnsiChar(PAnsiChar(rsnSupported)+#13+PAnsiChar(rsInst
  exit;
  end;
 end;
+
+ //Set if Testmode
  setup.SetTestmode(Testmode);
+ //Set if root installation
+ setup.SetRootMode(Superuser);
 end;
 
 procedure TIWizFrm.FormCreate(Sender: TObject);

@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, dbus, polkit, glib2, gExt, Installer, AppMan,
-  liBasic;
+  liBasic, liTypes;
 
 type
  TAccessType = (AC_UNKNOWN,AC_AUTHORIZED,AC_NOT_AUTHORIZED);
@@ -51,7 +51,13 @@ type
  //** Job which can install software packages
  TDoAppInstall = class(TJob)
  private
+  FileName: String;
   procedure SendReply;override;
+  procedure InstallMainChange(pos: LongInt);cdecl;
+  procedure InstallExtraChange(pos: LongInt);cdecl;
+  function  InstallUserRequest(mtype: TRqType;info: PChar): TRqResult;cdecl;
+  procedure InstallMessage(info: String;imp: TMType);cdecl;
+  procedure InstallStepMessage(info: String;imp: TMType);cdecl;
  public
   constructor Create(aMsg: PDBusMessage;aConn: PDBusConnection);
   destructor  Destroy;override;
@@ -61,6 +67,8 @@ type
 
 const
  CALL_RUNSETUP = 'ExecuteSetup';
+var
+ InstallWorkers: Integer;
 
 implementation
 
@@ -124,15 +132,23 @@ end;
 { TDoAppInstall }
 
 constructor TDoAppInstall.Create(aMsg: PDBusMessage;aConn: PDBusConnection);
+var args: DBusMessageIter;param: PChar = '';obj: Pointer;
 begin
  inherited Create(aMsg,aConn);
  ident:='DoAppInstall~'+dbus_message_get_sender(msg);
+
+ // read the arguments
+   if (dbus_message_iter_init(msg, @args) = 0) then
+      dbus_message_iter_get_basic(@args, @obj);
+   FileName:=param;
+
  //Start work
  Resume();
 end;
 
 destructor TDoAppInstall.Destroy;
 begin
+ Dec(InstallWorkers);
  inherited;
 end;
 
@@ -141,7 +157,7 @@ var
   reply: PDBusMessage;
   args: DBusMessageIter;
   stat: Boolean = true;
-  level: dbus_uint32_t = 21614;
+  auth: PChar = '';
   serial: dbus_uint32_t = 0;
 begin
  p_info('Send reply called');
@@ -156,7 +172,10 @@ begin
      p_error('Out Of Memory!');
      exit;
    end;
-   if (dbus_message_iter_append_basic(@args, DBUS_TYPE_UINT32, @level) = 0) then
+   auth:='';
+   if allowed = AC_AUTHORIZED then auth:='authorized'
+   else if allowed = AC_NOT_AUTHORIZED then auth:='blocked';
+   if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @auth) = 0) then
    begin
      p_error('Out Of Memory!');
      exit;
@@ -174,11 +193,74 @@ begin
    dbus_message_unref(reply);
 end;
 
+procedure TDoAppInstall.InstallMainChange(pos: LongInt);cdecl;
+begin
+ //IWizFrm.InsProgress.Position:=pos;
+end;
+
+procedure TDoAppInstall.InstallExtraChange(pos: LongInt);cdecl;
+begin
+// ExProgress.Position:=pos;
+end;
+
+function TDoAppInstall.InstallUserRequest(mtype: TRqType;info: PChar): TRqResult;cdecl;
+begin
+{with IWizFrm do
+begin
+case mtype of
+rqError: begin
+  ShowMessage(msg);
+  Result:=rqsOK;
+  if Assigned(InfoMemo) then
+  begin
+   InfoMemo.Lines.Add(rsInstFailed);
+   InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
+  end;
+  setup.Free;
+  Application.Terminate;
+  exit;
+end;
+rqWarning: begin
+  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(Format(rsInstOf,[setup.GetAppName])),MB_YESNO)<>IDYES then
+  begin
+   ShowMessage(rsINClose);
+   Result:=rqsNo;
+   InfoMemo.Lines.Add('Installation aborted by user.');
+   InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
+   setup.Free;
+   Application.Terminate;
+   FreeAndNil(IWizFrm);
+  end;
+end;
+rqQuestion: begin
+  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(Format(rsInstOf,[setup.GetAppName])),MB_YESNO)<>IDYES then
+   Result:=rqsNo else Result:=rqsYes;
+end;
+rqInfo: begin
+  ShowMessage(msg);
+  Result:=rqsOK;
+end;
+ end;
+end; }
+
+end;
+
+procedure TDoAppInstall.InstallMessage(info: String;imp: TMType);cdecl;
+begin
+ //writeLn(info);
+end;
+
+procedure TDoAppInstall.InstallStepMessage(info: String;imp: TMType);cdecl;
+begin
+// IWizFrm.Label9.Caption:=info;
+end;
+
 procedure TDoAppInstall.Execute;
 var
  action_id: PGChar;
  subject: PPolkitSubject;
  target: String;
+ setup: TInstallPack;
 begin
   action_id:='org.freedesktop.listaller.execute-installation';
   target:=dbus_message_get_sender(msg);
@@ -204,13 +286,23 @@ begin
    exit;
   end;
 
-  SendReply;
  p_info('New app install job for '+dbus_message_get_sender(msg)+' started.');
 
- { Do install stuff here }
+ //We got authorization!
+ SendReply;
+
+ { This is a fast install. Should never be called directly! }
+ setup:=TInstallPack.Create;
+ setup.Initialize(FileName);
+ setup.SetMainChangeCall(TProgressCall(TMethod(@InstallMainChange).Code));
+ setup.SetExtraChangeCall(TProgressCall(TMethod(@InstallExtraChange).Code));
+ setup.SetMessageCall(TMessageCall(TMethod(@InstallMessage).Code));
+ setup.SetStepMessageCall(TMessageCall(TMethod(@InstallStepMessage).Code));
+ setup.SetUserRequestCall(TRequestCall(TMethod(@InstallUserRequest).Code));
+ setup.StartInstallation;
+ setup.Free;
 
  p_info('AppInstall job '+dbus_message_get_sender(msg)+ ' completed.');
-
 
  Terminate;
 end;
