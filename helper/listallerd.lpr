@@ -34,7 +34,6 @@ type
     procedure DoRun; override;
   private
     JobList: TObjectList;
-    function CheckRunSetupCall(msg: PDBusMessage): Boolean;
   public
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;
@@ -43,24 +42,6 @@ type
   end;
 
 { TLiDaemon }
-
-//Check if the RunSetup request is correct
-function TLiDaemon.CheckRunSetupCall(msg: PDBusMessage): Boolean;
-var
-  args: DBusMessageIter;
-  param: PChar = '';
-begin
-   Result:=true;
-   // read the arguments
-   if (dbus_message_iter_init(msg, @args) = 0) then
-      p_error('Message has no arguments!')
-   else if (DBUS_TYPE_INT64 <> dbus_message_iter_get_arg_type(@args)) then
-      p_error('Argument is no INT64!')
-   else
-      dbus_message_iter_get_basic(@args, @param);
-
-   p_info('RunSetup called with '+param);
-end;
 
 procedure TLiDaemon.ListenForCall;
 var
@@ -101,7 +82,6 @@ begin
       if InstallWorkers = 0 then
       begin
        sMsg:=msg;
-       if CheckRunSetupCall(msg) then
         JobList.Add(TDoAppInstall.Create(sMsg,conn));
        Inc(InstallWorkers);
       end;

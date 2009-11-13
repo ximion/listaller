@@ -11,13 +11,13 @@
       <TargetFileExt Value=""/>
       <Title Value="Listaller Daemon"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="155"/>
+      <CurrentBuildNr Value="189"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -32,13 +32,13 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="19">
+    <Units Count="20">
       <Unit0>
         <Filename Value="listallerd.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerd"/>
-        <CursorPos X="7" Y="43"/>
-        <TopLine Value="25"/>
+        <CursorPos X="122" Y="41"/>
+        <TopLine Value="41"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="30"/>
         <Loaded Value="True"/>
@@ -46,8 +46,8 @@
       <Unit1>
         <Filename Value="../bindings/installer.pas"/>
         <UnitName Value="installer"/>
-        <CursorPos X="1" Y="99"/>
-        <TopLine Value="61"/>
+        <CursorPos X="89" Y="59"/>
+        <TopLine Value="51"/>
         <UsageCount Value="10"/>
       </Unit1>
       <Unit2>
@@ -68,9 +68,11 @@
         <Filename Value="djobs.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="djobs"/>
-        <CursorPos X="67" Y="301"/>
-        <TopLine Value="271"/>
+        <CursorPos X="76" Y="358"/>
+        <TopLine Value="325"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="30"/>
+        <Loaded Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus-message.inc"/>
@@ -158,12 +160,18 @@
       </Unit17>
       <Unit18>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-protocol.inc"/>
-        <CursorPos X="3" Y="61"/>
+        <CursorPos X="3" Y="57"/>
         <TopLine Value="47"/>
         <UsageCount Value="10"/>
       </Unit18>
+      <Unit19>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/objpas/classes/classesh.inc"/>
+        <CursorPos X="17" Y="1428"/>
+        <TopLine Value="1408"/>
+        <UsageCount Value="10"/>
+      </Unit19>
     </Units>
-    <JumpHistory Count="6" HistoryIndex="5">
+    <JumpHistory Count="17" HistoryIndex="16">
       <Position1>
         <Filename Value="listallerd.lpr"/>
         <Caret Line="161" Column="19" TopLine="135"/>
@@ -188,6 +196,50 @@
         <Filename Value="listallerd.lpr"/>
         <Caret Line="106" Column="28" TopLine="76"/>
       </Position6>
+      <Position7>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="22" Column="71" TopLine="1"/>
+      </Position7>
+      <Position8>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="176" Column="52" TopLine="155"/>
+      </Position8>
+      <Position9>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="163" Column="1" TopLine="142"/>
+      </Position9>
+      <Position10>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="345" Column="23" TopLine="314"/>
+      </Position10>
+      <Position11>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="341" Column="2" TopLine="310"/>
+      </Position11>
+      <Position12>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="85" Column="18" TopLine="70"/>
+      </Position12>
+      <Position13>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="359" Column="15" TopLine="326"/>
+      </Position13>
+      <Position14>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="352" Column="13" TopLine="330"/>
+      </Position14>
+      <Position15>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="80" Column="14" TopLine="66"/>
+      </Position15>
+      <Position16>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="157" Column="4" TopLine="127"/>
+      </Position16>
+      <Position17>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="24" Column="54" TopLine="1"/>
+      </Position17>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -196,9 +248,16 @@
       <Filename Value="../build/listallerd"/>
     </Target>
     <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)/"/>
       <OtherUnitFiles Value="../bindings/;../;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <LinkSmart Value="True"/>
+    </Linking>
     <Other>
       <CompilerPath Value="$(CompPath)"/>
     </Other>

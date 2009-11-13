@@ -176,7 +176,7 @@ end;
 //** Set TInstallation to superuser mode
 procedure li_setup_set_su_mode(setup: PInstallation;b: Boolean);cdecl;
 begin
- setup^.RootMode:=b;
+ setup^.SuperuserMode:=b;
 end;
 
 //** Read disallows property

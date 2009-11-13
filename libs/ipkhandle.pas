@@ -4,7 +4,7 @@
    Matthias Klumpp
 
   This library is free software: you can redistribute it and/or modify it under
-  the terms of the GNU General Public License as published by the Free Software
+  the terms of the GNU General Public License as publishedf by the Free Software
   Foundation, version 3.
 
   This library is distributed in the hope that it will be useful, but WITHOUT
@@ -84,7 +84,7 @@ type
   FSMessage:  TMessageCall;
   FMessage:  TMessageCall;
   // True if su mode enabled
-  Root: Boolean;
+  SUMode: Boolean;
   // Path to package registration
   RegDir: String;
   //All the things the user forces
@@ -161,7 +161,7 @@ type
   //** Read the package license
   procedure ReadLicense(sl: TStringList);
   //** True on installation with superuser rights
-  property RootMode: Boolean read Root write SetRootMode;
+  property SuperuserMode: Boolean read SUMode write SetRootMode;
   //** Set forces identifier string
   property ForceActions: String read Forces write Forces;
   //Progress events
@@ -223,7 +223,7 @@ begin
  inherited Create;
  msg(rsOpeningDB);
  dsApp:= TSQLite3Dataset.Create(nil);
- if Root then
+ if SUMode then
   RegDir:='/etc/lipa/app-reg/'
  else
   RegDir:=SyblToPath('$INST')+'/app-reg/';
@@ -245,13 +245,11 @@ end;
 
 procedure TInstallation.SetRootMode(b: Boolean);
 begin
- Root:=b;
- if Root then
+ SUMode:=b;
+ if SUMode then
   RegDir:='/etc/lipa/app-reg/'
  else
   RegDir:=SyblToPath('$INST')+'/app-reg/';
-
-  p_debug('Set RootMode called.');
 end;
 
 procedure TInstallation.SetCurProfile(i: Integer);
@@ -270,6 +268,11 @@ end;
 
 procedure LoadDB(dsApp: TSQLite3Dataset);
 begin
+if not DirectoryExists(ExtractFilePath(RegDir)) then
+ CreateDir(ExtractFilePath(RegDir));
+if not DirectoryExists(RegDir) then
+ CreateDir(RegDir);
+
  with dsApp do
  begin
    FileName:=RegDir+'applications.db';
@@ -483,6 +486,19 @@ var z: TAbUnZipper;
     cont: TIPKControl;
     tmp: TStringList;
 begin
+
+//The user _really_ is root. (This happens, if the daemon executes this action)
+//Set the right paths and execute install
+if IsRoot then
+begin
+SUMode:=true;
+
+if SUMode then
+  RegDir:='/etc/lipa/app-reg/'
+ else
+  RegDir:=SyblToPath('$INST')+'/app-reg/';
+end;
+
 if IAppName <> '' then
 begin
  Result:=false;
@@ -490,30 +506,9 @@ begin
  exit;
 end;
  Result:=true;
-with dsApp do
- begin
-   FileName:=RegDir+'applications.db';
-   TableName:='AppInfo';
-   if not FileExists(FileName) then
-   begin
-   with FieldDefs do
-     begin
-       Clear;
-       Add('Name',ftString,0,true);
-       Add('ID',ftString,0,true);
-       Add('Type',ftString,0,true);
-       Add('Description',ftString,0,False);
-       Add('Version',ftFloat,0,true);
-       Add('Publisher',ftString,0,False);
-       Add('Icon',ftString,0,False);
-       Add('Profile',ftString,0,False);
-       Add('AGroup',ftString,0,true);
-       Add('InstallDate',ftDateTime,0,False);
-       Add('Dependencies',ftMemo,0,False);
-     end;
-   CreateTable;
- end;
-end;
+
+ LoadDB(dsApp);
+
 dsApp.Active:=true;
 msg('SQLite version: '+dsApp.SqliteVersion);
 
@@ -1671,6 +1666,10 @@ var
   param: PChar;
   err: DBusError;
   conn: PDBusConnection;
+
+  install_finished: Boolean;
+  intvalue: Integer;
+  strvalue: PChar;
 begin
   Result:=false;
 
@@ -1761,17 +1760,69 @@ begin
     MakeUsrRequest('You are not authorized to do this action!',rqInfo)
    else
     MakeUsrRequest('An error occured during install request.',rqError);
-  end else Result:=true;
+   exit;
+  end;
   // free reply
   dbus_message_unref(dmsg);
+
+  //Now start listening to Listaller dbus signals and forward them to
+  //native funktions until the "InstallationFinished" signal is received
+
+  // add a rule for which messages we want to see
+  dbus_bus_add_match(conn, 'type=''signal'',interface=''org.freedesktop.Listaller.Install''', @err);
+  dbus_connection_flush(conn);
+  if (dbus_error_is_set(@err) <> 0) then
+  begin
+    p_error('Match Error ('+err.message+')');
+    exit;
+  end;
+  p_info('Match rule sent');
+
+  install_finished:=false;
+  // loop listening for signals being emmitted
+  while (not install_finished) do
+  begin
+
+    // non blocking read of the next available message
+    dbus_connection_read_write(conn, 0);
+    dmsg:=dbus_connection_pop_message(conn);
+
+    // loop again if we haven't read a message
+    if (dmsg = nil) then
+    begin
+      sleep(1);
+      Continue;
+    end;
+
+    // check if the message is a signal from the correct interface and with the correct name
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'MainProgressChange') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_INT32 <> dbus_message_iter_get_arg_type(@args)) then
+         WriteLn('Argument is no integer!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @intvalue);
+         SetMainPos(intvalue);
+      end;
+    end;
+
+    // free the message
+    dbus_message_unref(dmsg);
+  end;
+
+ //If we are here, the installation was successful
+ Result:=true;
+
 end;
 
 function TInstallation.DoInstallation: Boolean;
 var cnf: TIniFile;
 begin
- if Root then p_debug('User executes app as root!') else p_debug('Rootmode not set!');
 
-if Root then
+if (SUMode)and(not IsRoot) then
 begin
  Result:=DoInstallationAsRoot();
  exit;

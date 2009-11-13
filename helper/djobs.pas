@@ -38,7 +38,7 @@ type
   msg: PDBusMessage;
   conn: PDBusConnection;
  private
-  procedure SendReply;virtual;abstract;
+  procedure SendReply(stat: Boolean);virtual;abstract;
  public
   constructor Create(aMsg: PDBusMessage;aConn: PDBusConnection);
   destructor  Destroy;override;
@@ -52,7 +52,8 @@ type
  TDoAppInstall = class(TJob)
  private
   FileName: String;
-  procedure SendReply;override;
+  procedure SendReply(stat: Boolean);override;
+  procedure SendProgressSignal(xn: String;sigvalue: Integer);
   procedure InstallMainChange(pos: LongInt);cdecl;
   procedure InstallExtraChange(pos: LongInt);cdecl;
   function  InstallUserRequest(mtype: TRqType;info: PChar): TRqResult;cdecl;
@@ -132,15 +133,22 @@ end;
 { TDoAppInstall }
 
 constructor TDoAppInstall.Create(aMsg: PDBusMessage;aConn: PDBusConnection);
-var args: DBusMessageIter;param: PChar = '';obj: Pointer;
+var args: DBusMessageIter;param: PChar = '';
 begin
  inherited Create(aMsg,aConn);
  ident:='DoAppInstall~'+dbus_message_get_sender(msg);
 
  // read the arguments
    if (dbus_message_iter_init(msg, @args) = 0) then
-      dbus_message_iter_get_basic(@args, @obj);
+      p_error('Message has no arguments!')
+   else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+      p_error('Argument is no string!')
+   else
+      dbus_message_iter_get_basic(@args, @param);
+
    FileName:=param;
+
+   p_info('RunSetup called with '+FileName);
 
  //Start work
  Resume();
@@ -152,11 +160,50 @@ begin
  inherited;
 end;
 
-procedure TDoAppInstall.SendReply;
+procedure TDoAppInstall.SendProgressSignal(xn: String;sigvalue: Integer);
+var
+  args: DBusMessageIter;
+  serial: dbus_uint32_t = 0;
+  newmsg: PDBusMessage;
+begin
+
+  // create a signal & check for errors
+  newmsg := dbus_message_new_signal('/org/freedesktop/Listaller/Installer1', // object name of the signal
+                                 'org.freedesktop.Listaller.Install', // interface name of the signal
+                                 PChar(xn)); // name of the signal
+  if (newmsg = nil) then
+  begin
+    p_error('Message Null');
+    exit;
+  end;
+
+  // append arguments onto signal
+  dbus_message_iter_init_append(newmsg, @args);
+  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_INT32, @sigvalue) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+
+  // send the message and flush the connection
+  if (dbus_connection_send(conn, newmsg, @serial) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+
+  dbus_connection_flush(conn);
+
+  p_info('Progress signal sent');
+
+  // free the message and close the connection
+  dbus_message_unref(newmsg);
+end;
+
+procedure TDoAppInstall.SendReply(stat: Boolean);
 var
   reply: PDBusMessage;
   args: DBusMessageIter;
-  stat: Boolean = true;
   auth: PChar = '';
   serial: dbus_uint32_t = 0;
 begin
@@ -195,16 +242,17 @@ end;
 
 procedure TDoAppInstall.InstallMainChange(pos: LongInt);cdecl;
 begin
- //IWizFrm.InsProgress.Position:=pos;
+ //SendProgressSignal('MainProgressChange',pos);
 end;
 
 procedure TDoAppInstall.InstallExtraChange(pos: LongInt);cdecl;
 begin
-// ExProgress.Position:=pos;
+// SendProgressSignal('ExtraProgressChange',pos);
 end;
 
 function TDoAppInstall.InstallUserRequest(mtype: TRqType;info: PChar): TRqResult;cdecl;
 begin
+writeLn(info);
 {with IWizFrm do
 begin
 case mtype of
@@ -247,12 +295,12 @@ end;
 
 procedure TDoAppInstall.InstallMessage(info: String;imp: TMType);cdecl;
 begin
- //writeLn(info);
+ writeLn(info);
 end;
 
 procedure TDoAppInstall.InstallStepMessage(info: String;imp: TMType);cdecl;
 begin
-// IWizFrm.Label9.Caption:=info;
+ writeLn(info);
 end;
 
 procedure TDoAppInstall.Execute;
@@ -288,18 +336,30 @@ begin
 
  p_info('New app install job for '+dbus_message_get_sender(msg)+' started.');
 
+ if not FileExists(FileName) then
+ begin
+  p_error('Installation package not found!');
+  p_debug(FileName);
+  SendReply(false);
+  Terminate;
+  exit;
+ end;
+
  //We got authorization!
- SendReply;
+ SendReply(true);
 
  { This is a fast install. Should never be called directly! }
  setup:=TInstallPack.Create;
- setup.Initialize(FileName);
+
  setup.SetMainChangeCall(TProgressCall(TMethod(@InstallMainChange).Code));
  setup.SetExtraChangeCall(TProgressCall(TMethod(@InstallExtraChange).Code));
  setup.SetMessageCall(TMessageCall(TMethod(@InstallMessage).Code));
  setup.SetStepMessageCall(TMessageCall(TMethod(@InstallStepMessage).Code));
  setup.SetUserRequestCall(TRequestCall(TMethod(@InstallUserRequest).Code));
+
+ setup.Initialize(FileName);
  setup.StartInstallation;
+
  setup.Free;
 
  p_info('AppInstall job '+dbus_message_get_sender(msg)+ ' completed.');
