@@ -30,5 +30,16 @@
       <allow_active>auth_admin_keep</allow_active>
     </defaults>
   </action>
+
+  <action id="org.freedesktop.listaller.remove-application">
+    <description>Remove an application</description>
+    <message>System policy prevents removing this application.</message>
+
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+  </action>
   
 </policyconfig>

@@ -197,12 +197,6 @@ begin
   Result:=IsPackageInstalled(appname,appid);
 end;
 
-//** Resolve all dependencies
-function li_setup_resolve_dependencies(setup: PInstallation): Boolean;cdecl;
-begin
- Result:=setup^.ResolveDependencies;
-end;
-
 //** Readout application name
 function li_setup_appname(setup: PInstallation): PChar;cdecl;
 begin
@@ -382,7 +376,7 @@ end;
 //** Sets if aplications should work in root mode
 procedure li_mgr_set_su_mode(mgr: PAppManager;md: Boolean);cdecl;
 begin
- mgr^.RootMode:=md;
+ mgr^.SuperuserMode:=md;
 end;
 
 //** Removes the application
@@ -447,7 +441,6 @@ exports
  li_setup_pkgtype,
  li_setup_disallows,
  li_setup_supported_distributions,
- li_setup_resolve_dependencies,
  li_setup_appname,
  li_setup_appversion,
  li_setup_pkgid,

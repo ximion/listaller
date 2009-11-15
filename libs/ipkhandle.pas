@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, packagekit,
   sqlite3ds, db, AbUnZper, AbArcTyp, ipkdef, HTTPSend, FTPSend, blcksock,
-  MD5, liTypes, distri, MTProcs, FileUtil, liBasic, dbus;
+  MD5, liTypes, distri, MTProcs, FileUtil, liBasic, dbus, CTypes;
 
 type
 
@@ -407,7 +407,7 @@ begin
 while lInd<Dependencies.Count-1 do
 if lpos<>mnpos then
 begin
- SetMainPos(Round(mnpos*one));
+ SetExtraPos(Round(mnpos*one));
  lpos:=mnpos;
 end;
 end else
@@ -446,7 +446,7 @@ end;
 
 begin
  Result:=true;
- SetMainPos(0);
+ SetExtraPos(0);
   if (Dependencies.Count>0) and (Dependencies[0]='[detectpkgs]') then
   begin
     Dependencies.Delete(0);
@@ -462,7 +462,7 @@ begin
 
     mnpos:=0;
     one:=100/(Dependencies.Count*2);
-    SetMainPos(Round(mnpos*one));
+    SetExtraPos(Round(mnpos*one));
     p:=TProcess.Create(nil);
     ShowPKMon();
     p.Options:=[poUsePipes,poWaitOnExit];
@@ -982,6 +982,8 @@ begin
 end;
 
 begin
+//First resolve all dependencies and prepare installation
+ResolveDependencies();
 fi:=TStringList.Create;
 fi.LoadFromFile(lp+PkgName+FFileInfo);
 
@@ -1668,8 +1670,9 @@ var
   conn: PDBusConnection;
 
   install_finished: Boolean;
-  intvalue: Integer;
+  intvalue: cuint;
   strvalue: PChar;
+  boolvalue: Boolean;
 begin
   Result:=false;
 
@@ -1766,10 +1769,13 @@ begin
   dbus_message_unref(dmsg);
 
   //Now start listening to Listaller dbus signals and forward them to
-  //native funktions until the "InstallationFinished" signal is received
+  //native funktions until the "Finished" signal is received
 
   // add a rule for which messages we want to see
-  dbus_bus_add_match(conn, 'type=''signal'',interface=''org.freedesktop.Listaller.Install''', @err);
+  dbus_bus_add_match(conn,
+  'type=''signal'',sender=''org.freedesktop.Listaller'', interface=''org.freedesktop.Listaller.Install'', path=''/org/freedesktop/Listaller/Installer1'''
+  , @err);
+
   dbus_connection_flush(conn);
   if (dbus_error_is_set(@err) <> 0) then
   begin
@@ -1794,20 +1800,83 @@ begin
       Continue;
     end;
 
-    // check if the message is a signal from the correct interface and with the correct name
+    //Convert all DBus signals into standard callbacks
+
+    //Change of the main progress bar
     if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'MainProgressChange') <> 0) then
     begin
       // read the parameters
       if (dbus_message_iter_init(dmsg, @args) = 0) then
          p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_INT32 <> dbus_message_iter_get_arg_type(@args)) then
-         WriteLn('Argument is no integer!')
+      else if (DBUS_TYPE_UINT32 <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no integer!')
       else
       begin
          dbus_message_iter_get_basic(@args, @intvalue);
          SetMainPos(intvalue);
       end;
     end;
+
+    //Change of the extra progress bar
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'ExtraProgressChange') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_UINT32 <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no integer!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @intvalue);
+         SetExtraPos(intvalue);
+      end;
+    end;
+
+    //Receive new message
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'Message') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no string!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @strvalue);
+         msg(strvalue);
+      end;
+    end;
+
+    //Receive current state of installation progress
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'StateMessage') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no string!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @strvalue);
+         SendStateMsg(strvalue);
+      end;
+    end;
+
+    //Check if the installation has finished
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'Finished') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no string!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @boolvalue);
+         install_finished:=boolvalue;
+      end;
+    end;
+
 
     // free the message
     dbus_message_unref(dmsg);

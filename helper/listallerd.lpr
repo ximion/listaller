@@ -29,7 +29,6 @@ type
   //** The Listaller helper daemon for root actions
   TLiDaemon = class(TCustomApplication)
   protected
-    conn: PDBusConnection;
     err: DBusError;
     procedure DoRun; override;
   private
@@ -60,7 +59,7 @@ begin
     dbus_error_free(@err);
   end;
 
-  if ret<>DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER then Exit;
+  if ret<>DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER then exit;
 
   // loop, testing for new messages
   while (true) do
@@ -82,7 +81,16 @@ begin
       if InstallWorkers = 0 then
       begin
        sMsg:=msg;
-        JobList.Add(TDoAppInstall.Create(sMsg,conn));
+        JobList.Add(TDoAppInstall.Create(sMsg));
+       Inc(InstallWorkers);
+      end;
+    end else
+    if (dbus_message_is_method_call(msg, 'org.freedesktop.Listaller.Manage', CALL_APPREMOVE) <> 0) then
+    begin
+      if InstallWorkers = 0 then
+      begin
+       sMsg:=msg;
+        JobList.Add(TDoAppRemove.Create(sMsg));
        Inc(InstallWorkers);
       end;
     end else

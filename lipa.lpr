@@ -202,10 +202,7 @@ begin
 
     setup.Initialize(a);
     writeLn('== '+StringReplace(rsInstOf,'%a',setup.GetAppName+' '+setup.GetAppVersion,[rfReplaceAll])+' ==');
-    writeLn('-> '+rsResolvingDep);
-    setup.ResolveDependencies;
 
-    writeLn('- '+rsDone);
     lst:=TStringList.Create;
     setup.ReadLongDescription(lst);
     if lst.Count>0 then

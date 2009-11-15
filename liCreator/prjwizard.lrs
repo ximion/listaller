@@ -57,8 +57,8 @@ LazarusResources.Add('TfrmProjectWizard','FORMDATA',[
   +#0#241#255#0#0#248#255#0#0#252#255#0#0#254#127#0#0#255'='#0#0#255'8'#0#0#255
   +#129#0#0#255#131#0#0#248#7#0#0#252#31#0#0#4'Menu'#7#9'MainMenu1'#7'OnClose'#7
   +#9'FormClose'#8'OnCreate'#7#10'FormCreate'#6'OnShow'#7#8'FormShow'#8'Positio'
-  +'n'#7#16'poMainFormCenter'#10'LCLVersion'#6#6'0.9.28'#0#9'TNotebook'#9'Noteb'
-  +'ook1'#4'Left'#2#0#6'Height'#3'\'#2#3'Top'#2#0#5'Width'#3'D'#3#5'Align'#7#8
+  +'n'#7#16'poMainFormCenter'#10'LCLVersion'#6#8'0.9.28.2'#0#9'TNotebook'#9'Not'
+  +'ebook1'#4'Left'#2#0#6'Height'#3'\'#2#3'Top'#2#0#5'Width'#3'D'#3#5'Align'#7#8
   +'alClient'#9'PageIndex'#2#0#8'ShowTabs'#8#8'TabOrder'#2#0#0#5'TPage'#5'Page1'
   +#7'Caption'#6#5'Page1'#11'ClientWidth'#3'@'#3#12'ClientHeight'#3'X'#2#0#12'T'
   +'SpeedButton'#12'SpeedButton1'#4'Left'#2'U'#6'Height'#2'h'#3'Top'#2'W'#5'Wid'

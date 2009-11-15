@@ -5,25 +5,34 @@ Maintainer: Matthias Klumpp <matthias@nlinux.org>
 Priority: optional
 Homepage: http://listaller.nlinux.org
 Build-Depends: libgtk2.0-dev, lazarus (>=0.9.28-0), fpc (>= 2.3.1), debhelper (>= 5), libqt4intf-dev,
- sqlite3, libsqlite3-0, libsqlite3-dev, libglib2.0-0, libglib2.0-dev, libpackagekit-glib2-dev (>= 0.5.3)
+ sqlite3, libsqlite3-0, libsqlite3-dev, libglib2.0-0, libglib2.0-dev, libpackagekit-glib2-dev (>= 0.5.3),
+ libdbus-1-dev
 
 Package: libinstaller-0.4.0
 Architecture: i386 powerpc sparc amd64 arm
-Depends: ${shlibs:Depends}, apt-file
+Depends: ${shlibs:Depends}, apt-file, listaller-core
 Description: Listaller library
  Contains the libInstaller library, which allows
  programs to access install/uninstall functions
  of Listaller.
 
+Package: listaller-core
+Architecture: i386 powerpc sparc amd64 arm
+Depends: ${shlibs:Depends}
+Description: Listaller core files
+ Listaller is a cross-distribution install system.
+ This package contains all files used by every Listaller module.
+ It provides the Listaller daemon and the
+ non-gui software installation tool "lipa".
+
 Package: listaller-tools
 Architecture: i386 powerpc sparc amd64 arm
 Depends: ${shlibs:Depends}, libinstaller-0.4.0 (= ${binary:Version})
-Description: NoGUI Listaller tools
+Description: Listaller package tools
  This package contains everything you need to build own IPK packages.
  It also contains the needed tools to build RPM and DEB packages from
  IPS sources and to  create an "Linux distribution compatible"
  button for your software.
- It also contains a program to install IPK packages without using GUI.
 
 Package: listaller-gtk
 Architecture: i386 powerpc sparc amd64 arm

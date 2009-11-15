@@ -31,9 +31,9 @@ echo "Creating liCreator..."
 if [ "$WIDGET" == "qt4" ]; then
 #fpc  -MObjFPC -Sgi -CX -O1 -gl -XX -WG -vewni -l -Fu../ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/components/synedit/ -Fu$LCLDir/components/synedit/units/$ARCH-$OS/ -Fu$LCLDir/ideintf/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/qt/ -Fu$LCLDir/packager/units/$ARCH-$OS/ -Fu. -FE../bin/ -olicreator -dUSE_QT_45 -dLCL -dLCLqt lipkgcreator.lpr
 lazbuild -B --ws=qt licreator.lpr
-mv ../build/licreator ../bin/qt4/
+mv ../build/licreator ../build/qt4/
 else
 #fpc -MObjFPC -Sgi -CX -O1 -gl -XX -WG -vewni -l -Fu../ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/components/synedit/ -Fu$LCLDir/components/synedit/units/$ARCH-$OS/ -Fu$LCLDir/ideintf/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/gtk2/ -Fu$LCLDir/packager/units/$ARCH-$OS/ -Fu. -FE../bin/ -olicreator -dUSE_QT_45 -dLCL -dLCLgtk2 lipkgcreator.lpr
 lazbuild -B --ws=gtk2 licreator.lpr
-mv ../build/licreator ../bin/gtk2/
+mv ../build/licreator ../build/gtk2/
 fi

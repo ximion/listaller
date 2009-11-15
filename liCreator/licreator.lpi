@@ -184,8 +184,8 @@
         <ComponentName Value="frmProjectWizard"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="prjwizard"/>
-        <CursorPos X="10" Y="813"/>
-        <TopLine Value="793"/>
+        <CursorPos X="18" Y="28"/>
+        <TopLine Value="1"/>
         <UsageCount Value="132"/>
       </Unit17>
       <Unit18>

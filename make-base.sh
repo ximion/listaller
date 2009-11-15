@@ -45,6 +45,9 @@ lazbuild -B --ws=nogui ./libs/libinstaller.lpr
 ln -s ./build/libinstaller.so.0.4.0 libinstaller.so.0.4
 ln -s libinstaller.so.0.4 libinstaller.so
 
+echo "Compiling Listaller daemon..."
+lazbuild -B --ws=nogui ./helper/listallerd.lpr
+
 echo "Compiling command-line tool..."
 lazbuild -B --ws=nogui lipa.lpr
 #fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewhi -l -Fuabbrevia/ -Fusynapse/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -vm5024 -FEbin/ -olipa -dOpbCompat lipa.lpr

@@ -54,7 +54,6 @@ procedure ReadProfiles(lst:TStringList);
 procedure ReadDeps(lst:TStringList);
 function  GetAppIcon: String;
 function  GetDesktopFiles: String;
-function  ResolveDependencies: Boolean;
 function  GetAppCMD: String;
 function  GetFileList: String;
 function  StartInstallation: Boolean;
@@ -86,7 +85,6 @@ function  li_setup_license(setup: Pointer; list: Pointer): Boolean; cdecl; exter
 function  li_setup_profiles_list(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst;
 function  li_setup_appicon(setup: Pointer): PChar;cdecl; external libinst;
 function  li_setup_desktopfiles(setup: Pointer): PChar;cdecl; external libinst;
-function  li_setup_resolve_dependencies(setup: Pointer; list: Pointer): Boolean; cdecl; external libinst;
 function  li_setup_app_exec_command(setup: Pointer): PChar;cdecl; external libinst;
 function  li_setup_profile_current_filelist(setup: Pointer): PChar;cdecl; external libinst;
 function  li_setup_register_message_call(setup: Pointer;call: TMessageCall): Boolean; cdecl; external libinst name 'li_setup_register_message_call';
@@ -191,15 +189,6 @@ end;
 function TInstallPack.GetDesktopFiles: String;
 begin
 Result:=li_setup_desktopfiles(@ins);
-end;
-
-function TInstallPack.ResolveDependencies: Boolean;
-var tmp: TStringList;
-begin
-tmp:=TstringList.Create;
-ReadDeps(tmp);
-Result:=li_setup_resolve_dependencies(@ins,@tmp);
-tmp.Free;
 end;
 
 function TInstallPack.GetAppCMD: String;

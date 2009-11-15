@@ -25,7 +25,7 @@ uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Buttons, ExtCtrls, ComCtrls, EditBtn, Grids, popupnotifier, FileCtrl, FileUtil,
   MD5, Menus, editor, LCLType, CheckLst, LiCommon, SynEdit, LiTypes, IconLoader,
-  ipkdef;
+  ipkdef, liBasic;
 
 type
 

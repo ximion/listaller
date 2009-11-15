@@ -22,13 +22,13 @@ interface
 
 uses
   Classes, SysUtils, SQLite3Ds, IniFiles, GetText, TRStrings, LiCommon,
-  DB, FileUtil, packagekit, Process, ipkhandle, liTypes, liBasic;
+  DB, FileUtil, packagekit, Process, ipkhandle, liTypes, liBasic, dbus;
 
 type
  PAppManager = ^TAppManager;
  TAppManager = class
  private
-  Root: Boolean;
+  SUMode: Boolean;
   FMsg: TMessageCall;
   FReq: TRequestCall;
   FApp: TAppEvent;
@@ -40,7 +40,10 @@ type
   function IsInList(nm: String;list: TStringList): Boolean;
   //** Method that removes MOJO/LOKI installed applications @param dsk Path to the .desktop file of the application
   function UninstallMojo(dsk: String): Boolean;
+  //** Catch the PackageKit progress
   procedure PkitProgress(pos: Integer);
+  //** Remove app as root via remote DBus connection
+  procedure UninstallAppAsRoot(obj: TAppInfo);
  public
   constructor Create;
   destructor Destroy;override;
@@ -57,7 +60,7 @@ type
   property OnRequest: TRequestCall read FReq write FReq;
   property OnApplication: TAppEvent read FApp write FApp;
   property OnProgress: TprogressCall read FProg write FProg;
-  property RootMode: Boolean read Root write Root;
+  property SuperuserMode: Boolean read SUMode write SUMode;
 end;
 
 { Process .desktop-file and add info to list @param fname Name of the .desktop file
@@ -139,7 +142,7 @@ begin
        d:=TIniFile.Create(fname);
        translate:=false;
 
-       if (not Root)and(d.ReadString('Desktop Entry','Exec','')[1]<>'/')
+       if (not SUMode)and(d.ReadString('Desktop Entry','Exec','')[1]<>'/')
        then
        else
        if (LowerCase(d.ReadString('Desktop Entry','NoDisplay','false'))<>'true')
@@ -428,7 +431,7 @@ ini:=TIniFile.Create(n+'config.cnf');
 tmp:=TStringList.Create;
 xtmp:=TStringList.Create;
 
-if Root then //Only if user is root
+if SUMode then //Only if user is root
 begin
 tmp.Assign(FindAllFiles('/usr/share/applications/','*.desktop',true));
 xtmp.Assign(FindAllFiles('/usr/local/share/applications/','*.desktop',true));
@@ -515,12 +518,126 @@ begin
 end;
 end;
 
+procedure TAppManager.UninstallAppAsRoot(obj: TAppInfo);
+var
+  dmsg: PDBusMessage;
+  args: DBusMessageIter;
+  pending: PDBusPendingCall;
+  stat: Boolean;
+  rec: PChar;
+  err: DBusError;
+  conn: PDBusConnection;
+begin
+
+  dbus_error_init(@err);
+
+  //New DBus connection
+  conn := dbus_bus_get_private(DBUS_BUS_SYSTEM, @err);
+
+  if dbus_error_is_set(@err) <> 0 then
+  begin
+    p_error('Connection Error: '#10+err.message);
+    dbus_error_free(@err);
+    request('An error occured during remove request.',rqError);
+  end;
+
+  if conn = nil then exit;
+
+  p_info('Calling listaller-daemon...');
+  // create a new method call and check for errors
+  dmsg := dbus_message_new_method_call('org.freedesktop.Listaller', // target for the method call
+                                      '/org/freedesktop/Listaller/Manager1', // object to call on
+                                      'org.freedesktop.Listaller.Manage', // interface to call on
+                                      'RemoveApp'); // method name
+  if (dmsg = nil) then
+  begin
+    p_error('Message Null');
+    exit;
+  end;
+
+  //append arguments
+  dbus_message_iter_init_append(dmsg, @args);
+  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @obj.Name) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+
+  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @obj.UId) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+
+  // send message and get a handle for a reply
+  if (dbus_connection_send_with_reply(conn, dmsg, @pending, -1) = 0) then // -1 is default timeout
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+  if (pending = nil) then
+  begin
+    p_error('Pending Call Null');
+    exit;
+  end;
+  dbus_connection_flush(conn);
+
+  p_info('AppRemove request sent');
+
+  // free message
+  dbus_message_unref(dmsg);
+
+  // block until we recieve a reply
+  dbus_pending_call_block(pending);
+
+  // get the reply message
+  dmsg := dbus_pending_call_steal_reply(pending);
+  if (dmsg = nil) then
+  begin
+    p_error('Reply Null');
+    exit;
+  end;
+  // free the pending message handle
+  dbus_pending_call_unref(pending);
+
+  // read the parameters
+  if (dbus_message_iter_init(dmsg, @args) = 0) then
+     p_error('Message has no arguments!')
+  else if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
+     p_error('Argument is not boolean!')
+  else
+     dbus_message_iter_get_basic(@args, @stat);
+
+  if (dbus_message_iter_next(@args) = 0) then
+     p_error('Message has too few arguments!')
+  else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+     p_error('Argument is no string!')
+  else
+     dbus_message_iter_get_basic(@args, @rec);
+
+  if (stat = false) then
+  begin
+   if rec = 'blocked' then
+    request('You are not authorized to do this action!',rqInfo)
+   else
+    request('An error occured during install request.',rqError);
+   exit;
+  end;
+  // free reply
+  dbus_message_unref(dmsg);
+end;
+
 procedure TAppManager.UninstallApp(obj: TAppInfo);
 var f,g: String; t:TProcess;tmp: TStringList;pkit: TPackageKit;i: Integer;
     name,id: String;
 begin
 
 setpos(0);
+if (SUMode)and(not IsRoot) then
+begin
+ UninstallAppAsRoot(obj);
+ exit;
+end;
 
 //Needed
 name:=obj.Name;

@@ -49,7 +49,6 @@ type
     Label12: TLabel;
     Label13: TLabel;
     Label14: TLabel;
-    Label15: TLabel;
     LblTestMode: TLabel;
     Label16: TLabel;
     Label2: TLabel;
@@ -67,7 +66,6 @@ type
     OpenDialog1: TOpenDialog;
     IMPage: TPage;
     ModeGroup: TRadioGroup;
-    DSolveProgress: TProgressBar;
     WPage: TPage;
     DPage: TPage;
     LPage: TPage;
@@ -82,7 +80,6 @@ type
     procedure Button5Click(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
     procedure FinBtn1Click(Sender: TObject);
-    procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -264,7 +261,6 @@ begin
    Process1.Execute;
   end;
 
-
   Application.Terminate;
 end;
 
@@ -284,34 +280,6 @@ begin
 
  Application.ProcessMessages;
 end;
-end;
-
-procedure DSProgPosChange(pos: LongInt); cdecl;
-begin
-with IWizFrm do
-begin
- DSolveProgress.Position:=pos;
- writeLn(pos);
-
- {if(pos=0)and(DSolveProgress.Visible=true)then DSolveProgress.Visible:=false
- else DSolveProgress.Visible:=true; }
- Application.ProcessMessages;
-end;
-end;
-
-procedure TIWizFrm.FormActivate(Sender: TObject);
-begin
-   Button1.Enabled:=false;
-   DSolveProgress.Visible:=true;
-   Label15.Visible:=true;
-   Application.ProcessMessages;
-   setup.SetMainChangeCall(@DSProgPosChange);
-   setup.ResolveDependencies;
-  { while DSolveProgress.Position<100 do //Necessary because otherwise the proc continues...
-    Application.ProcessMessages;  }
-   setup.SetMainChangeCall(@MainPosChange);
-   Label15.Caption:=rsFinished;
-   Button1.Enabled:=true;
 end;
 
 function IsCommandRunning(cmd:String):Boolean;

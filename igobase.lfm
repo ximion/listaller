@@ -46,7 +46,6 @@ object IWizFrm: TIWizFrm
     0000F01F0000F81F0000FC1F0000FF1F0000FF9F0000FFFF0000FFFF0000FFFF
     0000
   }
-  OnActivate = FormActivate
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -111,16 +110,6 @@ object IWizFrm: TIWizFrm
         ParentFont = False
         Visible = False
       end
-      object Label15: TLabel
-        Left = 158
-        Height = 14
-        Top = 311
-        Width = 225
-        Anchors = [akLeft, akBottom]
-        Caption = 'Checking for distribution compatibility...'
-        ParentColor = False
-        Visible = False
-      end
       object CheckBox1: TCheckBox
         Left = 158
         Height = 21
@@ -141,18 +130,6 @@ object IWizFrm: TIWizFrm
         ItemHeight = 19
         TabOrder = 1
         Visible = False
-      end
-      object DSolveProgress: TProgressBar
-        Left = 158
-        Height = 20
-        Top = 327
-        Width = 256
-        Anchors = [akLeft, akRight, akBottom]
-        Smooth = True
-        Step = 1
-        TabOrder = 2
-        Visible = False
-        BarShowText = True
       end
     end
     object DPage: TPage

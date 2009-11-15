@@ -26,21 +26,21 @@ all-nogui:
 	./make-base.sh
 
 install-all:
-	chmod +x ./install-lib.sh
+	chmod +x ./install-core.sh
 	chmod +x ./install-tools.sh
 	chmod +x ./install-data.sh
 	chmod +x ./install-gui.sh
-	./install-lib.sh
+	./install-core.sh
 	./install-tools.sh
 	./install-data.sh
 	./install-gui.sh WIDGET=gtk2
 	./install-gui.sh WIDGET=qt4
 
 install-all-bin:
-	chmod +x ./install-lib.sh
+	chmod +x ./install-core.sh
 	chmod +x ./install-tools.sh
 	chmod +x ./install-gui.sh
-	./install-lib.sh
+	./install-core.sh
 	./install-tools.sh
 	./install-gui.sh WIDGET=gtk2
 	./install-gui.sh WIDGET=qt4
@@ -50,39 +50,39 @@ install-data:
 	./install-data.sh
 
 install-tools:
-	chmod +x ./install-lib.sh
+	chmod +x ./install-core.sh
 	chmod +x ./install-tools.sh
-	./install-lib.sh
+	./install-core.sh
 	./install-tools.sh
 
 install-front-gtk:
-	chmod +x ./install-lib.sh
+	chmod +x ./install-core.sh
 	chmod +x ./install-gui.sh
-	./install-lib.sh
+	./install-core.sh
 	./install-gui.sh WIDGET=gtk2 
 
 install-front-qt:
-	chmod +x ./install-lib.sh
+	chmod +x ./install-core.sh
 	chmod +x ./install-gui.sh
-	./install-lib.sh
+	./install-core.sh
 	./install-gui.sh WIDGET=qt4
 
 install-all-gtk:
-	chmod +x ./install-lib.sh
+	chmod +x ./install-core.sh
 	chmod +x ./install-gui.sh
 	chmod +x ./install-data.sh
 	chmod +x ./install-tools.sh
-	./install-lib.sh
+	./install-core.sh
 	./install-tools.sh
 	./install-data.sh
 	./install-gui.sh WIDGET=gtk2
 
 install-all-qt:
-	chmod +x ./install-lib.sh
+	chmod +x ./install-core.sh
 	chmod +x ./install-gui.sh
 	chmod +x ./install-data.sh
 	chmod +x ./install-tools.sh
-	./install-lib.sh
+	./install-core.sh
 	./install-tools.sh
 	./install-data.sh
 	./install-gui.sh WIDGET=qt4
