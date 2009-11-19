@@ -20,7 +20,7 @@ program listallerd;
 
 uses
   cthreads, Interfaces, Classes, SysUtils, CustApp, dbus, polkit, djobs,
-  Contnrs, cTypes, liBasic;
+  Contnrs, cTypes, liBasic, LCLIntf;
 
 type
 
@@ -40,6 +40,8 @@ type
     procedure ListenForCall;
   end;
 
+const
+ Timeout_Seconds = 18; //Quit daemon after 18 seconds of inactivity
 { TLiDaemon }
 
 procedure TLiDaemon.ListenForCall;
@@ -47,6 +49,7 @@ var
   msg: PDBusMessage;
   smsg: PDBusMessage;
   ret: cint;
+  startTick: Integer;
 begin
   WriteLn('Daemon started.');
 
@@ -61,9 +64,18 @@ begin
 
   if ret<>DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER then exit;
 
+  //Set tick count
+  startTick:=DateTimeToTimeStamp(Now).Time;
+
   // loop, testing for new messages
   while (true) do
   begin
+
+    //Check tick count
+     if (JobList.Count=0)and(((DateTimeToTimeStamp(Now).Time-startTick)/1000)=Timeout_Seconds) then
+      break; //Exit loop -> terminate daemon
+
+
     // non blocking read of the next available message
     dbus_connection_read_write(conn, 0);
     msg:=dbus_connection_pop_message(conn);
@@ -83,6 +95,7 @@ begin
        sMsg:=msg;
         JobList.Add(TDoAppInstall.Create(sMsg));
        Inc(InstallWorkers);
+       startTick:=DateTimeToTimeStamp(Now).Time;
       end;
     end else
     if (dbus_message_is_method_call(msg, 'org.freedesktop.Listaller.Manage', CALL_APPREMOVE) <> 0) then
@@ -91,6 +104,7 @@ begin
       begin
        sMsg:=msg;
         JobList.Add(TDoAppRemove.Create(sMsg));
+        startTick:=DateTimeToTimeStamp(Now).Time;
       end;
     end else
      // free the message

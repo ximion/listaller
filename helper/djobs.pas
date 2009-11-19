@@ -398,6 +398,7 @@ begin
   if allowed = AC_NOT_AUTHORIZED then
   begin
    p_error('Not authorized to call this action.');
+   SendReply(false);
    Terminate;
    exit;
   end;
