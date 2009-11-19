@@ -209,12 +209,12 @@ end;
 
 procedure TInstallation.SendStateMsg(msg: String);
 begin
- if Assigned(FSMessage) then FSMessage(msg,mtInfo);
+ if Assigned(FSMessage) then FSMessage(PChar(msg),mtInfo);
 end;
 
 procedure TInstallation.msg(str: String);
 begin
- if Assigned(FMessage) then FMessage(str,mtInfo)
+ if Assigned(FMessage) then FMessage(PChar(str),mtInfo)
  else p_info(str);
 end;
 
@@ -1658,6 +1658,7 @@ end; }
 SendStateMsg(rsSuccess);
 end;
 
+//This method submits all actions to the DBus daemon
 function TInstallation.DoInstallationAsRoot(): Boolean;
 var
   dmsg: PDBusMessage;
@@ -1785,6 +1786,7 @@ begin
   p_info('Match rule sent');
 
   install_finished:=false;
+  SetMainPos(0);
   // loop listening for signals being emmitted
   while (not install_finished) do
   begin
@@ -1965,12 +1967,12 @@ var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;k: Boolean;upd: Strin
 procedure SetPosition(prog: Double);
 begin
 if Assigned(FPos) then FPos(Round(prog));
-writeLn('[DBG]: RMC--> '+IntToStr(Round(prog)));
+ //writeLn('[DBG]: RMC--> '+IntToStr(Round(prog)));
 end;
 
 procedure msg(s: String);
 begin
-if Assigned(FMsg) then FMsg(s,mtInfo)
+if Assigned(FMsg) then FMsg(PChar(s),mtInfo)
 else writeLn(s);
 end;
 

@@ -54,7 +54,7 @@ var
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////This will be done if "lipa" is started
 
-procedure OnSetupMessage(msg: String;imp: TMType);cdecl;
+procedure OnSetupMessage(msg: PChar;imp: TMType);cdecl;
 begin
   writeLn(' '+msg);
 end;
@@ -78,7 +78,7 @@ end;
 end;
 end;
 
-procedure OnSetupStateChange(msg: String;imp: TMType);cdecl;
+procedure OnSetupStateChange(msg: PChar;imp: TMType);cdecl;
 begin
 if not Application.HasOption('verbose') then
   writeLn(' '+rsState+': '+msg);

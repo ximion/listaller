@@ -124,7 +124,7 @@ writeLn(s);
 RMForm.Memo1.Lines.add(s);
 end;
 
-procedure OnRmMessage(msg: String;imp: TMType);cdecl;
+procedure OnRmMessage(msg: PChar;imp: TMType);cdecl;
 begin
  if imp=mtInfo then LogAdd(msg);
  if imp=mtWarning then ShowMessage(msg);

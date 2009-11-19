@@ -133,7 +133,10 @@ var
   instLst: TStringList;
 
 //Published for use in uninstall.pas
-procedure OnMessage(msg: String;imp: TMType);cdecl;
+procedure OnMessage(msg: PChar;imp: TMType);cdecl;
+
+//NOTE:
+//IMPORTANT: RegDir should be moved to libInstaller!
 
 implementation
 
@@ -163,7 +166,7 @@ end;
 Application.ProcessMessages;
 end;
 
-procedure OnMessage(msg: String;imp: TMType);cdecl;
+procedure OnMessage(msg: PChar;imp: TMType);cdecl;
 begin
  if imp=mtInfo then MnFrm.StatusLabel.Caption:=msg;
  if imp=mtWarning then ShowMessage(msg);
@@ -742,6 +745,7 @@ amgr:=li_mgr_new; //Create new app manager
 
  AList:=TObjectList.Create(true); //Create object-list to store AppInfo-Panels
 
+ Superuser:=IsRoot;
  if not IsRoot then
  begin
  xFrm:=TimdFrm.Create(nil);
@@ -761,8 +765,9 @@ amgr:=li_mgr_new; //Create new app manager
   ShowModal;
  end;
 xFrm.Free;
-end else
-RegDir:='/etc/lipa/app-reg/';
+end;
+
+li_mgr_set_su_mode(@aMgr,Superuser);
 
 if not DirectoryExists(RegDir) then CreateDir(RegDir);
 
@@ -852,8 +857,6 @@ li_mgr_register_msg_call(@amgr,@OnMessage);
 
 //Register request call
 li_mgr_register_request_call(@amgr,@OnUserRequest);
-
-li_mgr_set_su_mode(@amgr,IsRoot);
 
 InstAppButton.Down:=true;
 

@@ -1,0 +1,9 @@
+*~
+*.patch
+build
+*.ppu
+*.compiled
+.directory
+*.bak
+bindings/packagekit-old.pas
+bindings/test

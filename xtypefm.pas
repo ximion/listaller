@@ -52,7 +52,10 @@ type
   end; 
 
 var
+  //** Form to choose runmode
   IMdFrm: TIMdFrm;
+  //** True if superuser mode is enabled
+  Superuser: Boolean=false;
 
 implementation
 

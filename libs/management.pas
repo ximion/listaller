@@ -22,7 +22,8 @@ interface
 
 uses
   Classes, SysUtils, SQLite3Ds, IniFiles, GetText, TRStrings, LiCommon,
-  DB, FileUtil, packagekit, Process, ipkhandle, liTypes, liBasic, dbus;
+  DB, FileUtil, packagekit, Process, ipkhandle, liTypes, liBasic, dbus,
+  cTypes;
 
 type
  PAppManager = ^TAppManager;
@@ -236,9 +237,10 @@ begin
         if d.ReadString('Desktop Entry','X-AppVersion','')<>'' then
         Version:=PChar(rsVersion+': '+d.ReadString('Desktop Entry','X-AppVersion',''));
 
-        //Load the icons
+        //Load the icon
         if (LowerCase(ExtractFileExt(d.ReadString('Desktop Entry','Icon','')))<>'.tiff') then
         begin
+         entry.Icon:='';
         try
         if (d.ReadString('Desktop Entry','Icon','')<>'')
         and(d.ReadString('Desktop Entry','Icon','')[1]<>'/') then
@@ -287,7 +289,6 @@ begin
         end;
        end;
       end;
-
          newapp(fname,entry);
       //  if Assigned(dt) then dt.Free;
          if translate then dt.Free;
@@ -527,6 +528,11 @@ var
   rec: PChar;
   err: DBusError;
   conn: PDBusConnection;
+  action_finished: Boolean;
+
+  intvalue: cuint32;
+  strvalue: PChar;
+  boolvalue: Boolean;
 begin
 
   dbus_error_init(@err);
@@ -625,6 +631,81 @@ begin
   end;
   // free reply
   dbus_message_unref(dmsg);
+
+  setpos(0);
+  action_finished:=false;
+  // loop listening for signals being emmitted
+  while (not action_finished) do
+  begin
+    // non blocking read of the next available message
+    dbus_connection_read_write(conn, 0);
+    dmsg:=dbus_connection_pop_message(conn);
+
+    // loop again if we haven't read a message
+    if (dmsg = nil) then
+    begin
+      sleep(1);
+      Continue;
+    end;
+
+    //Convert all DBus signals into standard callbacks
+
+    //Change of progress
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Manage', 'ProgressChange') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_UINT32 <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no integer!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @intvalue);
+         setpos(intvalue);
+      end;
+    end;
+
+    //Receive new message
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Manage', 'Message') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no string!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @strvalue);
+         msg(strvalue,mtInfo);
+      end;
+    end;
+
+    //Check if the installation has finished
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Manage', 'Finished') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no boolean!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @boolvalue);
+         action_finished:=boolvalue;
+         if (not boolvalue) then
+         begin
+          //The action failed. Leave the loop and display message
+          request('The action failed.',rqError);
+          action_finished:=true;
+         end;
+      end;
+    end;
+
+
+    // free the message
+    dbus_message_unref(dmsg);
+  end;
+
 end;
 
 procedure TAppManager.UninstallApp(obj: TAppInfo);

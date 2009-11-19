@@ -25,6 +25,7 @@ uses
   distri, Graphics, liBasic;
 
 type
+
 //** Urgency levels
 TUrgencyLevel = (ulLow, ulNormal, ulCritical);
 

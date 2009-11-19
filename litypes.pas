@@ -41,7 +41,7 @@ type
  //** Callback for user request
  TRequestCall = function(mtype: TRqType;msg: PChar): TRqResult;cdecl;
  //** Callback that submits a notification
- TMessageCall = procedure(msg: String;imp: TMType);cdecl;
+ TMessageCall = procedure(msg: PChar;imp: TMType);cdecl;
  //** Called if a progress was changed
  TProgressCall = procedure(pos: Integer);cdecl;
  //** Called if progress was changed; only for internal use

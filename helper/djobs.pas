@@ -61,8 +61,8 @@ type
   procedure InstallMainChange(pos: LongInt);cdecl;
   procedure InstallExtraChange(pos: LongInt);cdecl;
   function  InstallUserRequest(mtype: TRqType;info: PChar): TRqResult;cdecl;
-  procedure InstallMessage(info: String;imp: TMType);cdecl;
-  procedure InstallStepMessage(info: String;imp: TMType);cdecl;
+  procedure InstallMessage(info: PChar;imp: TMType);cdecl;
+  procedure InstallStepMessage(info: PChar;imp: TMType);cdecl;
  public
   constructor Create(aMsg: PDBusMessage);
   destructor  Destroy;override;
@@ -73,9 +73,12 @@ type
  //** Job which removes applications
  TDoAppRemove = class(TJob)
  private
-  FileName: String;
+  appinfo: TAppInfo;
   //** Send reply to client
   procedure SendReply(stat: Boolean);override;
+  function  OnMgrUserRequest(mtype: TRqType;msg: PChar): TRqResult;cdecl;
+  procedure OnMgrProgress(pos: Integer);cdecl;
+  procedure OnMgrMessage(msg: PChar;imp: TMType);cdecl;
  public
   constructor Create(aMsg: PDBusMessage);
   destructor  Destroy;override;
@@ -183,7 +186,6 @@ var
   args: DBusMessageIter;
   msg: PDBusMessage;
 begin
-
   // create a signal & check for errors
   msg := dbus_message_new_signal('/org/freedesktop/Listaller/Installer1', // object name of the signal
                                  'org.freedesktop.Listaller.Install', // interface name of the signal
@@ -350,14 +352,19 @@ end; }
 
 end;
 
-procedure TDoAppInstall.InstallMessage(info: String;imp: TMType);cdecl;
+procedure TDoAppInstall.InstallMessage(info: PChar;imp: TMType);cdecl;
+var s: String;
 begin
- SendMessageSignal('Message',PChar(info));
+ s:=info;
+ SendMessageSignal('Message',PChar(s));
+// writeLn(info);
 end;
 
-procedure TDoAppInstall.InstallStepMessage(info: String;imp: TMType);cdecl;
+procedure TDoAppInstall.InstallStepMessage(info: PChar;imp: TMType);cdecl;
+var s: String;
 begin
- SendMessageSignal('StepMessage',PChar(info));
+ s:=info;
+ SendMessageSignal('StepMessage',PChar(s));
 end;
 
 procedure TDoAppInstall.Execute;
@@ -369,7 +376,7 @@ var
 
  args: DBusMessageIter;
  msg: PDBusMessage;
- btrue: Boolean = true;
+ success: Boolean;
 begin
   action_id:='org.freedesktop.listaller.execute-installation';
   target:=dbus_message_get_sender(replyMsg);
@@ -409,6 +416,7 @@ begin
  //We got authorization!
  SendReply(true);
 
+ try
  { This is a fast install. Should never be called directly! }
  setup:=TInstallPack.Create;
 
@@ -424,7 +432,10 @@ begin
  setup.Free;
 
  p_info('AppInstall job '+'???'+ ' completed.');
-
+  success:=true; //Finished without problems
+ except
+  success:=false;
+ end;
  //Now emit action finished signal:
 
   // create a signal & check for errors
@@ -440,7 +451,7 @@ begin
 
   // append arguments onto signal
   dbus_message_iter_init_append(msg, @args);
-  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_BOOLEAN, @btrue) = 0) then
+  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_BOOLEAN, @success) = 0) then
   begin
     p_error('Out Of Memory!');
     exit;
@@ -452,9 +463,7 @@ begin
     p_error('Out Of Memory!');
     exit;
   end;
-
   dbus_connection_flush(conn);
-
   // free the message and close the connection
   dbus_message_unref(msg);
 
@@ -477,9 +486,16 @@ begin
    else
       dbus_message_iter_get_basic(@args, @param);
 
-   FileName:=param;
+   appinfo.Name:=param;
+   dbus_message_iter_next(@args);
 
-   p_info('Remove application called with '+FileName);
+   if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+      p_error('Argument is no string!')
+   else
+      dbus_message_iter_get_basic(@args, @param);
+   appinfo.UId:=param;
+
+   p_info('Remove application called with '+appinfo.name);
 
  //Start work
   Resume();
@@ -533,11 +549,94 @@ begin
    dbus_message_unref(replyMsg);
 end;
 
+procedure TDoAppRemove.OnMgrProgress(pos: Integer);cdecl;
+var
+  args: DBusMessageIter;
+  msg: PDBusMessage;
+  sigvalue: cuint32;
+begin
+  sigvalue:=pos;
+  // create a signal & check for errors
+  msg := dbus_message_new_signal('/org/freedesktop/Listaller/Manager1', // object name of the signal
+                                 'org.freedesktop.Listaller.Manage', // interface name of the signal
+                                 'ProgressChange'); // name of the signal
+
+  if (msg = nil) then
+  begin
+    p_error('Message Null');
+    exit;
+  end;
+  // append arguments onto signal
+  dbus_message_iter_init_append(msg, @args);
+  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_UINT32, @sigvalue) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+  // send the message and flush the connection
+  if (dbus_connection_send(conn, msg, nil) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+  dbus_connection_flush(conn);
+  // free the message and close the connection
+  dbus_message_unref(msg);
+end;
+
+function TDoAppRemove.OnMgrUserRequest(mtype: TRqType;msg: PChar): TRqResult;cdecl;
+begin
+ p_debug(msg);
+end;
+
+procedure TDoAppRemove.OnMgrMessage(msg: PChar;imp: TMType);cdecl;
+var
+  args: DBusMessageIter;
+  dmsg: PDBusMessage;
+  s: String;
+  param: PChar;
+begin
+  // create a signal & check for errors
+  dmsg := dbus_message_new_signal('/org/freedesktop/Listaller/Manager1', // object name of the signal
+                                 'org.freedesktop.Listaller.Manage', // interface name of the signal
+                                 'Message'); // name of the signal
+  if (dmsg = nil) then
+  begin
+    p_error('Message Null');
+    exit;
+  end;
+  s:=msg;
+  param:=PChar(s);
+  // append arguments onto signal
+  dbus_message_iter_init_append(dmsg, @args);
+  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @param) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+  // send the message and flush the connection
+  if (dbus_connection_send(conn, dmsg, nil) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+
+  dbus_connection_flush(conn);
+  // free the message and close the connection
+  dbus_message_unref(dmsg);
+  p_info(msg);
+end;
+
 procedure TDoAppRemove.Execute;
 var
  action_id: PGChar;
  subject: PPolkitSubject;
  target: String;
+ mgr: Pointer;
+ success: Boolean;
+
+ args: DBusMessageIter;
+ msg: PDBusMessage;
 begin
   action_id:='org.freedesktop.listaller.remove-application';
   target:=dbus_message_get_sender(replyMsg);
@@ -564,7 +663,57 @@ begin
   end;
 
  p_info('New app uninstallation job for '+dbus_message_get_sender(replyMsg)+' started.');
+ try
+  mgr:=li_mgr_new;
+  li_mgr_set_su_mode(@mgr,true);
+  li_mgr_register_progress_call(@mgr,TProgressCall(TMethod(@OnMgrProgress).Code));
+  li_mgr_register_request_call(@mgr,TRequestCall(TMethod(@OnMgrUserRequest).Code));
+  li_mgr_register_msg_call(@mgr,TMessageCall(TMethod(@OnMgrMessage).Code));
+ except
+  SendReply(false);
+  p_warning('Manage job failed.');
+  Terminate;
+  exit;
+ end;
+  SendReply(true);
+  try
+  li_mgr_remove_app(@mgr,appinfo);
+  li_mgr_free(@mgr);
+  success:=true;
+  except
+   success:=false;
+  end;
+ //Now emit action finished signal:
+  // create a signal & check for errors
+  msg := dbus_message_new_signal('/org/freedesktop/Listaller/Manager1', // object name of the signal
+                                 'org.freedesktop.Listaller.Manage', // interface name of the signal
+                                 'Finished'); // name of the signal
+  if (msg = nil) then
+  begin
+    p_error('Message Null');
+    exit;
+  end;
 
+  // append arguments onto signal
+  dbus_message_iter_init_append(msg, @args);
+  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_BOOLEAN, @success) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+
+  // send the message and flush the connection
+  if (dbus_connection_send(conn, msg, nil) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+  dbus_connection_flush(conn);
+  // free the message and close the connection
+  dbus_message_unref(msg);
+
+  p_info('App uninstallation job finished.');
+ Terminate;
 end;
 
 end.

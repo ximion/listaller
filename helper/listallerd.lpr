@@ -91,7 +91,6 @@ begin
       begin
        sMsg:=msg;
         JobList.Add(TDoAppRemove.Create(sMsg));
-       Inc(InstallWorkers);
       end;
     end else
      // free the message

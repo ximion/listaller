@@ -383,7 +383,6 @@ end;
 function li_mgr_remove_app(mgr: PAppManager;obj: TAppInfo): Boolean;cdecl;
 begin
  Result:=false;
-if not Assigned(mgr^.OnProgress) then begin p_error('You need to register a progress callback!');exit;end;
 if not Assigned(mgr^.OnRequest) then begin p_error('You need to register a user request callback!');exit;end;
  Result:=true;
  try

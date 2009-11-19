@@ -30,12 +30,10 @@ const
   lp='/tmp/';
 
 var
-  //** True if Listaller is in testmode
-  Testmode: Boolean=false;
-  //** True if superuser mode is enabled
-  Superuser: Boolean=false;
   //** The Listaller package lib directory
   RegDir: String='';
+  //** True if Listaller is in testmode
+  Testmode: Boolean=false;
 
 //** Creates Listaller's config dir @returns Current config dir
 function  ConfigDir: String;

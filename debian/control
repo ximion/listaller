@@ -4,9 +4,8 @@ Section: admin
 Maintainer: Matthias Klumpp <matthias@nlinux.org>
 Priority: optional
 Homepage: http://listaller.nlinux.org
-Build-Depends: libgtk2.0-dev, lazarus (>=0.9.28-0), fpc (>= 2.3.1), debhelper (>= 5), libqt4intf-dev,
- sqlite3, libsqlite3-0, libsqlite3-dev, libglib2.0-0, libglib2.0-dev, libpackagekit-glib2-dev (>= 0.5.3),
- libdbus-1-dev
+Build-Depends: libgtk2.0-dev, lazarus (>=0.9.28), fpc (>= 2.3.0), debhelper (>= 5), libqt4intf-dev,
+ libsqlite3-dev, libglib2.0-dev, libpackagekit-glib2-dev (>= 0.5.3), libdbus-1-dev, libpolkit-gobject-1-dev
 
 Package: libinstaller-0.4.0
 Architecture: i386 powerpc sparc amd64 arm
