@@ -346,7 +346,7 @@ end;
 
 end;
 
-procedure MessageCall(msg: String;imp: TMType);cdecl;
+procedure MessageCall(msg: PChar;imp: TMType);cdecl;
 begin
  writeLn(msg);
  if Assigned(IWizFrm) then
@@ -354,7 +354,7 @@ begin
  Application.ProcessMessages;
 end;
 
-procedure StepMessage(msg: String;imp: TMType);cdecl;
+procedure StepMessage(msg: PChar;imp: TMType);cdecl;
 begin
  IWizFrm.Label9.Caption:=msg;
 end;

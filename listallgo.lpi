@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="3"/>
-      <CurrentBuildNr Value="1248"/>
+      <CurrentBuildNr Value="1251"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -65,8 +65,8 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="45" Y="82"/>
-        <TopLine Value="63"/>
+        <CursorPos X="33" Y="357"/>
+        <TopLine Value="337"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -926,47 +926,47 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="igobase.pas"/>
-        <Caret Line="147" Column="20" TopLine="127"/>
+        <Caret Line="266" Column="3" TopLine="252"/>
       </Position1>
       <Position2>
         <Filename Value="igobase.pas"/>
-        <Caret Line="174" Column="20" TopLine="154"/>
+        <Caret Line="594" Column="6" TopLine="579"/>
       </Position2>
       <Position3>
         <Filename Value="igobase.pas"/>
-        <Caret Line="686" Column="17" TopLine="652"/>
+        <Caret Line="106" Column="15" TopLine="86"/>
       </Position3>
       <Position4>
         <Filename Value="igobase.pas"/>
-        <Caret Line="263" Column="6" TopLine="263"/>
+        <Caret Line="109" Column="12" TopLine="89"/>
       </Position4>
       <Position5>
         <Filename Value="igobase.pas"/>
-        <Caret Line="266" Column="3" TopLine="252"/>
+        <Caret Line="349" Column="71" TopLine="306"/>
       </Position5>
       <Position6>
         <Filename Value="igobase.pas"/>
-        <Caret Line="594" Column="6" TopLine="579"/>
+        <Caret Line="26" Column="25" TopLine="1"/>
       </Position6>
       <Position7>
         <Filename Value="igobase.pas"/>
-        <Caret Line="106" Column="15" TopLine="86"/>
+        <Caret Line="180" Column="34" TopLine="169"/>
       </Position7>
       <Position8>
         <Filename Value="igobase.pas"/>
-        <Caret Line="109" Column="12" TopLine="89"/>
+        <Caret Line="428" Column="28" TopLine="408"/>
       </Position8>
       <Position9>
         <Filename Value="igobase.pas"/>
-        <Caret Line="349" Column="71" TopLine="306"/>
+        <Caret Line="437" Column="46" TopLine="408"/>
       </Position9>
       <Position10>
         <Filename Value="igobase.pas"/>
-        <Caret Line="26" Column="25" TopLine="1"/>
+        <Caret Line="458" Column="43" TopLine="438"/>
       </Position10>
       <Position11>
         <Filename Value="igobase.pas"/>
-        <Caret Line="180" Column="34" TopLine="169"/>
+        <Caret Line="28" Column="41" TopLine="1"/>
       </Position11>
       <Position12>
         <Filename Value="igobase.pas"/>
@@ -982,67 +982,67 @@
       </Position14>
       <Position15>
         <Filename Value="igobase.pas"/>
-        <Caret Line="28" Column="41" TopLine="1"/>
+        <Caret Line="26" Column="50" TopLine="1"/>
       </Position15>
       <Position16>
         <Filename Value="igobase.pas"/>
-        <Caret Line="428" Column="28" TopLine="408"/>
+        <Caret Line="15" Column="7" TopLine="1"/>
       </Position16>
       <Position17>
         <Filename Value="igobase.pas"/>
-        <Caret Line="437" Column="46" TopLine="408"/>
+        <Caret Line="26" Column="61" TopLine="1"/>
       </Position17>
       <Position18>
         <Filename Value="igobase.pas"/>
-        <Caret Line="458" Column="43" TopLine="438"/>
+        <Caret Line="7" Column="38" TopLine="1"/>
       </Position18>
       <Position19>
         <Filename Value="igobase.pas"/>
-        <Caret Line="26" Column="50" TopLine="1"/>
+        <Caret Line="9" Column="35" TopLine="1"/>
       </Position19>
       <Position20>
         <Filename Value="igobase.pas"/>
-        <Caret Line="15" Column="7" TopLine="1"/>
+        <Caret Line="106" Column="14" TopLine="86"/>
       </Position20>
       <Position21>
         <Filename Value="igobase.pas"/>
-        <Caret Line="26" Column="61" TopLine="1"/>
+        <Caret Line="10" Column="16" TopLine="1"/>
       </Position21>
       <Position22>
         <Filename Value="igobase.pas"/>
-        <Caret Line="7" Column="38" TopLine="1"/>
+        <Caret Line="287" Column="5" TopLine="265"/>
       </Position22>
       <Position23>
         <Filename Value="igobase.pas"/>
-        <Caret Line="9" Column="35" TopLine="1"/>
+        <Caret Line="286" Column="5" TopLine="265"/>
       </Position23>
       <Position24>
         <Filename Value="igobase.pas"/>
-        <Caret Line="106" Column="14" TopLine="86"/>
+        <Caret Line="264" Column="1" TopLine="241"/>
       </Position24>
       <Position25>
         <Filename Value="igobase.pas"/>
-        <Caret Line="10" Column="16" TopLine="1"/>
+        <Caret Line="288" Column="27" TopLine="269"/>
       </Position25>
       <Position26>
         <Filename Value="igobase.pas"/>
-        <Caret Line="287" Column="5" TopLine="265"/>
+        <Caret Line="284" Column="5" TopLine="269"/>
       </Position26>
       <Position27>
         <Filename Value="igobase.pas"/>
-        <Caret Line="286" Column="5" TopLine="265"/>
+        <Caret Line="82" Column="45" TopLine="63"/>
       </Position27>
       <Position28>
         <Filename Value="igobase.pas"/>
-        <Caret Line="264" Column="1" TopLine="241"/>
+        <Caret Line="395" Column="27" TopLine="375"/>
       </Position28>
       <Position29>
         <Filename Value="igobase.pas"/>
-        <Caret Line="288" Column="27" TopLine="269"/>
+        <Caret Line="349" Column="33" TopLine="329"/>
       </Position29>
       <Position30>
         <Filename Value="igobase.pas"/>
-        <Caret Line="284" Column="5" TopLine="269"/>
+        <Caret Line="662" Column="34" TopLine="642"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
