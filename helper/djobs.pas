@@ -188,7 +188,6 @@ begin
     p_error('Message Null');
     exit;
   end;
-
   // append arguments onto signal
   dbus_message_iter_init_append(msg, @args);
   if (dbus_message_iter_append_basic(@args, DBUS_TYPE_UINT32, @sigvalue) = 0) then
@@ -196,7 +195,6 @@ begin
     p_error('Out Of Memory!');
     exit;
   end;
-
   // send the message and flush the connection
   if (dbus_connection_send(conn, msg, nil) = 0) then
   begin
@@ -205,7 +203,6 @@ begin
   end;
 
   dbus_connection_flush(conn);
-
   // free the message and close the connection
   dbus_message_unref(msg);
 end;
@@ -215,7 +212,6 @@ var
   args: DBusMessageIter;
   msg: PDBusMessage;
 begin
-
   // create a signal & check for errors
   msg := dbus_message_new_signal('/org/freedesktop/Listaller/Installer1', // object name of the signal
                                  'org.freedesktop.Listaller.Install', // interface name of the signal
@@ -226,7 +222,6 @@ begin
     p_error('Message Null');
     exit;
   end;
-
   // append arguments onto signal
   dbus_message_iter_init_append(msg, @args);
   if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @sigvalue) = 0) then
@@ -234,7 +229,6 @@ begin
     p_error('Out Of Memory!');
     exit;
   end;
-
   // send the message and flush the connection
   if (dbus_connection_send(conn, msg, nil) = 0) then
   begin
@@ -243,7 +237,6 @@ begin
   end;
 
   dbus_connection_flush(conn);
-
   // free the message and close the connection
   dbus_message_unref(msg);
 end;

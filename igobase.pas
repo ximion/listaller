@@ -264,13 +264,13 @@ begin
   Application.Terminate;
 end;
 
-procedure MainPosChange(pos: LongInt);cdecl;
+procedure MainPosChange(pos: LongInt;data: Pointer);cdecl;
 begin
  IWizFrm.InsProgress.Position:=pos;
  Application.ProcessMessages;
 end;
 
-procedure ExtraPosChange(pos: LongInt); cdecl;
+procedure ExtraPosChange(pos: LongInt;data: Pointer); cdecl;
 begin
 with IWizFrm do
 begin
@@ -304,7 +304,7 @@ begin
  end;
 end;
 
-function RequestHandling(mtype: TRqType;msg: PChar): TRqResult; cdecl;
+function RequestHandling(mtype: TRqType;msg: PChar;data: Pointer): TRqResult; cdecl;
 begin
 with IWizFrm do
 begin
@@ -346,7 +346,7 @@ end;
 
 end;
 
-procedure MessageCall(msg: PChar;imp: TMType);cdecl;
+procedure MessageCall(msg: PChar;imp: TMType;data: Pointer);cdecl;
 begin
  writeLn(msg);
  if Assigned(IWizFrm) then
@@ -354,7 +354,7 @@ begin
  Application.ProcessMessages;
 end;
 
-procedure StepMessage(msg: PChar;imp: TMType);cdecl;
+procedure StepMessage(msg: PChar;imp: TMType;data: Pointer);cdecl;
 begin
  IWizFrm.Label9.Caption:=msg;
 end;
@@ -391,8 +391,8 @@ end;
 writeLn('Begin loading IPK');
 
 setup:=TInstallPack.Create;
-setup.SetUserRequestCall(@RequestHandling);
-setup.SetMessageCall(@MessageCall);
+setup.SetUserRequestCall(@RequestHandling,nil);
+setup.SetMessageCall(@MessageCall,nil);
 
 //Set forced actions
 if Application.HasOption('force-architecture') then
@@ -656,10 +656,10 @@ while IPage.Visible=false do Application.ProcessMessages;
  Label9.Caption:=rsStep1;
 
  //Assign event handlers
- setup.SetMainChangeCall(@MainPosChange);
- setup.SetExtraChangeCall(@ExtraPosChange);
+ setup.SetMainChangeCall(@MainPosChange,nil);
+ setup.SetExtraChangeCall(@ExtraPosChange,nil);
 
- setup.SetStepMessageCall(@StepMessage);
+ setup.SetStepMessageCall(@StepMessage,nil);
 
  setup.SetProfileID(ModeGroup.ItemIndex);
 
