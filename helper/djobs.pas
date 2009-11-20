@@ -57,12 +57,6 @@ type
   procedure SendProgressSignal(xn: String;sigvalue: cuint);
   //** Emit a message signal with the current message
   procedure SendMessageSignal(xn: String;sigvalue: PChar);
-
-  procedure InstallMainChange(pos: LongInt);cdecl;
-  procedure InstallExtraChange(pos: LongInt);cdecl;
-  function  InstallUserRequest(mtype: TRqType;info: PChar): TRqResult;cdecl;
-  procedure InstallMessage(info: PChar;imp: TMType);cdecl;
-  procedure InstallStepMessage(info: PChar;imp: TMType);cdecl;
  public
   constructor Create(aMsg: PDBusMessage);
   destructor  Destroy;override;
@@ -76,9 +70,6 @@ type
   appinfo: TAppInfo;
   //** Send reply to client
   procedure SendReply(stat: Boolean);override;
-  function  OnMgrUserRequest(mtype: TRqType;msg: PChar): TRqResult;cdecl;
-  procedure OnMgrProgress(pos: Integer);cdecl;
-  procedure OnMgrMessage(msg: PChar;imp: TMType);cdecl;
  public
   constructor Create(aMsg: PDBusMessage);
   destructor  Destroy;override;
@@ -299,17 +290,17 @@ begin
    dbus_message_unref(replyMsg);
 end;
 
-procedure TDoAppInstall.InstallMainChange(pos: LongInt);cdecl;
+procedure InstallMainChange(pos: LongInt;job: Pointer);cdecl;
 begin
- SendProgressSignal('MainProgressChange',pos);
+ TDoAppInstall(job).SendProgressSignal('MainProgressChange',pos);
 end;
 
-procedure TDoAppInstall.InstallExtraChange(pos: LongInt);cdecl;
+procedure InstallExtraChange(pos: LongInt;job: Pointer);cdecl;
 begin
- SendProgressSignal('ExtraProgressChange',pos);
+ TDoAppInstall(job).SendProgressSignal('ExtraProgressChange',pos);
 end;
 
-function TDoAppInstall.InstallUserRequest(mtype: TRqType;info: PChar): TRqResult;cdecl;
+function InstallUserRequest(mtype: TRqType;info: PChar;job: Pointer): TRqResult;cdecl;
 begin
 writeLn(info);
 {with IWizFrm do
@@ -352,19 +343,14 @@ end; }
 
 end;
 
-procedure TDoAppInstall.InstallMessage(info: PChar;imp: TMType);cdecl;
-var s: String;
+procedure InstallMessage(info: PChar;imp: TMType;job: Pointer);cdecl;
 begin
- s:=info;
- SendMessageSignal('Message',PChar(s));
-// writeLn(info);
+ TDoAppInstall(job).SendMessageSignal('Message',info);
 end;
 
-procedure TDoAppInstall.InstallStepMessage(info: PChar;imp: TMType);cdecl;
-var s: String;
+procedure InstallStepMessage(info: PChar;imp: TMType;job: Pointer);cdecl;
 begin
- s:=info;
- SendMessageSignal('StepMessage',PChar(s));
+ TDoAppInstall(job).SendMessageSignal('StepMessage',info);
 end;
 
 procedure TDoAppInstall.Execute;
@@ -421,11 +407,11 @@ begin
  { This is a fast install. Should never be called directly! }
  setup:=TInstallPack.Create;
 
- setup.SetMainChangeCall(TProgressCall(TMethod(@InstallMainChange).Code));
- setup.SetExtraChangeCall(TProgressCall(TMethod(@InstallExtraChange).Code));
- setup.SetMessageCall(TMessageCall(TMethod(@InstallMessage).Code));
- setup.SetStepMessageCall(TMessageCall(TMethod(@InstallStepMessage).Code));
- setup.SetUserRequestCall(TRequestCall(TMethod(@InstallUserRequest).Code));
+ setup.SetMainChangeCall(@InstallMainChange,self);
+ setup.SetExtraChangeCall(@InstallExtraChange,self);
+ setup.SetMessageCall(@InstallMessage,self);
+ setup.SetStepMessageCall(@InstallStepMessage,self);
+ setup.SetUserRequestCall(@InstallUserRequest,self);
 
  setup.Initialize(FileName);
  setup.StartInstallation;
@@ -550,7 +536,7 @@ begin
    dbus_message_unref(replyMsg);
 end;
 
-procedure TDoAppRemove.OnMgrProgress(pos: Integer);cdecl;
+procedure OnMgrProgress(pos: Integer;job: Pointer);cdecl;
 var
   args: DBusMessageIter;
   msg: PDBusMessage;
@@ -585,12 +571,12 @@ begin
   dbus_message_unref(msg);
 end;
 
-function TDoAppRemove.OnMgrUserRequest(mtype: TRqType;msg: PChar): TRqResult;cdecl;
+function OnMgrUserRequest(mtype: TRqType;msg: PChar;job: Pointer): TRqResult;cdecl;
 begin
  p_debug(msg);
 end;
 
-procedure TDoAppRemove.OnMgrMessage(msg: PChar;imp: TMType);cdecl;
+procedure OnMgrMessage(msg: PChar;imp: TMType;job: Pointer);cdecl;
 var
   args: DBusMessageIter;
   dmsg: PDBusMessage;
@@ -667,9 +653,9 @@ begin
  try
   mgr:=li_mgr_new;
   li_mgr_set_su_mode(@mgr,true);
-  li_mgr_register_progress_call(@mgr,TProgressCall(TMethod(@OnMgrProgress).Code));
-  li_mgr_register_request_call(@mgr,TRequestCall(TMethod(@OnMgrUserRequest).Code));
-  li_mgr_register_msg_call(@mgr,TMessageCall(TMethod(@OnMgrMessage).Code));
+  li_mgr_register_progress_call(@mgr,@OnMgrProgress,self);
+  li_mgr_register_request_call(@mgr,@OnMgrUserRequest,self);
+  li_mgr_register_msg_call(@mgr,@OnMgrMessage,self);
  except
   SendReply(false);
   p_warning('Manage job failed.');

@@ -102,10 +102,16 @@ type
   procedure NetSockHook(Sender: TObject; Reason: THookSocketReason;
      const Value: string);
   //Handler for PackageKit progress
-  procedure OnPKitProgress(pos: Integer);
+  procedure OnPKitProgress(pos: Integer;dp: Pointer);
   //Execute installation as root using dbus daemon & PolicyKit
   function  DoInstallationAsRoot(): Boolean;
  protected
+  //UserData
+  mainposudata: Pointer;
+  extraposudata: Pointer;
+  requestudata: Pointer;
+  statemsgudata: Pointer;
+  messageudata: Pointer;
   //Check if FTP connection is working
   function CheckFTPConnection(AFTPSend: TFTPSend): Boolean;
   //Set/Get methods for callbacks indication
@@ -165,12 +171,13 @@ type
   //** Set forces identifier string
   property ForceActions: String read Forces write Forces;
   //Progress events
-  property OnProgressMainChange: TProgressCall read FProgChange1 write FProgChange1;
-  property OnProgressExtraChange: TProgressCall read FProgChange2 write FProgChange2;
+  procedure RegOnProgressMainChange(call: TProgressCall;data: Pointer);
+  procedure RegOnProgressExtraChange(call: TProgressCall;data: Pointer);
   //Message events
-  property OnUserRequest: TRequestCall read FRequest write FRequest;
-  property OnStepMessage: TMessageCall read FSMessage write FSMessage;
-  property OnMessage: TMessageCall read FMessage write FMessage;
+  procedure RegOnUsrRequest(call: TRequestCall;data: Pointer);
+  procedure RegOnStepMessage(call: TMessageCall;data: Pointer);
+  procedure RegOnMessage(call: TMessageCall;data: Pointer);
+  function  UserRequestRegistered: Boolean;
 end;
 
 {** Removes an IPK application
@@ -190,31 +197,66 @@ end;
 
 implementation
 
+procedure TInstallation.RegOnProgressMainChange(call: TProgressCall;data: Pointer);
+begin
+  FProgChange1:=call;
+  mainposudata:=data;
+end;
+
+procedure TInstallation.RegOnProgressExtraChange(call: TProgressCall;data: Pointer);
+begin
+  FProgChange2:=call;
+  extraposudata:=data;
+end;
+
+procedure TInstallation.RegOnUsrRequest(call: TRequestCall;data: Pointer);
+begin
+  FRequest:=call;
+  requestudata:=data;
+end;
+
+procedure TInstallation.RegOnStepMessage(call: TMessageCall;data: Pointer);
+begin
+  FSMessage:=call;
+  statemsgudata:=data;
+end;
+
+procedure TInstallation.RegOnMessage(call: TMessageCall;data: Pointer);
+begin
+  FMessage:=call;
+  messageudata:=data;
+end;
+
+function TInstallation.UserRequestRegistered: boolean;
+begin
+ if Assigned(FRequest) then Result:=true else Result:=false;
+end;
+
 procedure TInstallation.SetMainPos(pos: integer);
 begin
- if Assigned(FProgChange1) then FProgChange1(pos);
+ if Assigned(FProgChange1) then FProgChange1(pos,mainposudata);
 end;
 
 procedure TInstallation.SetExtraPos(pos: integer);
 begin
- if Assigned(FProgChange2) then FProgChange2(pos);
+ if Assigned(FProgChange2) then FProgChange2(pos,extraposudata);
 end;
 
 function TInstallation.MakeUsrRequest(msg: String;qtype: TRqType): TRqResult;
 begin
  if Assigned(FRequest) then
-  Result:=FRequest(qtype,PChar(msg))
+  Result:=FRequest(qtype,PChar(msg),requestudata)
  else p_warning('No user request handler assigned!');
 end;
 
 procedure TInstallation.SendStateMsg(msg: String);
 begin
- if Assigned(FSMessage) then FSMessage(PChar(msg),mtInfo);
+ if Assigned(FSMessage) then FSMessage(PChar(msg),mtInfo,statemsgudata);
 end;
 
 procedure TInstallation.msg(str: String);
 begin
- if Assigned(FMessage) then FMessage(PChar(str),mtInfo)
+ if Assigned(FMessage) then FMessage(PChar(str),mtInfo,messageudata)
  else p_info(str);
 end;
 
@@ -879,8 +921,9 @@ begin
       Result := AFtpSend.Login;
 end;
 
-procedure TInstallation.OnPKitProgress(pos: Integer);
+procedure TInstallation.OnPKitProgress(pos: Integer;dp: Pointer);
 begin
+  //user_data Pointer is always nil
   SetExtraPos(pos); //Set position of extra progress to PackageKit transaction progress
 end;
 
@@ -1966,13 +2009,13 @@ var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;k: Boolean;upd: Strin
     ipkc: TIPKControl;
 procedure SetPosition(prog: Double);
 begin
-if Assigned(FPos) then FPos(Round(prog));
+if Assigned(FPos) then FPos(Round(prog),nil);
  //writeLn('[DBG]: RMC--> '+IntToStr(Round(prog)));
 end;
 
 procedure msg(s: String);
 begin
-if Assigned(FMsg) then FMsg(PChar(s),mtInfo)
+if Assigned(FMsg) then FMsg(PChar(s),mtInfo,nil)
 else writeLn(s);
 end;
 

@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="283"/>
+      <CurrentBuildNr Value="318"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -32,29 +32,29 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="24">
+    <Units Count="25">
       <Unit0>
         <Filename Value="listallerd.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerd"/>
-        <CursorPos X="68" Y="44"/>
-        <TopLine Value="18"/>
+        <CursorPos X="29" Y="106"/>
+        <TopLine Value="78"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="36"/>
+        <UsageCount Value="37"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="../bindings/installer.pas"/>
         <UnitName Value="installer"/>
-        <CursorPos X="89" Y="59"/>
-        <TopLine Value="51"/>
+        <CursorPos X="55" Y="216"/>
+        <TopLine Value="194"/>
         <UsageCount Value="10"/>
       </Unit1>
       <Unit2>
         <Filename Value="../bindings/appman.pas"/>
         <UnitName Value="appman"/>
-        <CursorPos X="12" Y="29"/>
-        <TopLine Value="1"/>
+        <CursorPos X="88" Y="29"/>
+        <TopLine Value="2"/>
         <UsageCount Value="10"/>
       </Unit2>
       <Unit3>
@@ -68,9 +68,9 @@
         <Filename Value="djobs.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="djobs"/>
-        <CursorPos X="21" Y="401"/>
-        <TopLine Value="390"/>
-        <UsageCount Value="36"/>
+        <CursorPos X="3" Y="658"/>
+        <TopLine Value="638"/>
+        <UsageCount Value="37"/>
       </Unit4>
       <Unit5>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus-message.inc"/>
@@ -126,8 +126,8 @@
       <Unit13>
         <Filename Value="../litypes.pas"/>
         <UnitName Value="litypes"/>
-        <CursorPos X="17" Y="44"/>
-        <TopLine Value="32"/>
+        <CursorPos X="70" Y="42"/>
+        <TopLine Value="26"/>
         <UsageCount Value="10"/>
       </Unit13>
       <Unit14>
@@ -193,37 +193,15 @@
         <TopLine Value="60"/>
         <UsageCount Value="10"/>
       </Unit23>
+      <Unit24>
+        <Filename Value="../bindings/packagekit.pas"/>
+        <UnitName Value="packagekit"/>
+        <CursorPos X="48" Y="194"/>
+        <TopLine Value="181"/>
+        <UsageCount Value="10"/>
+      </Unit24>
     </Units>
-    <JumpHistory Count="7" HistoryIndex="6">
-      <Position1>
-        <Filename Value="listallerd.lpr"/>
-        <Caret Line="79" Column="83" TopLine="56"/>
-      </Position1>
-      <Position2>
-        <Filename Value="listallerd.lpr"/>
-        <Caret Line="100" Column="8" TopLine="62"/>
-      </Position2>
-      <Position3>
-        <Filename Value="listallerd.lpr"/>
-        <Caret Line="100" Column="14" TopLine="92"/>
-      </Position3>
-      <Position4>
-        <Filename Value="listallerd.lpr"/>
-        <Caret Line="108" Column="44" TopLine="73"/>
-      </Position4>
-      <Position5>
-        <Filename Value="listallerd.lpr"/>
-        <Caret Line="92" Column="31" TopLine="72"/>
-      </Position5>
-      <Position6>
-        <Filename Value="listallerd.lpr"/>
-        <Caret Line="92" Column="31" TopLine="72"/>
-      </Position6>
-      <Position7>
-        <Filename Value="listallerd.lpr"/>
-        <Caret Line="74" Column="4" TopLine="44"/>
-      </Position7>
-    </JumpHistory>
+    <JumpHistory Count="0" HistoryIndex="-1"/>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>

@@ -34,6 +34,12 @@ type
   FReq: TRequestCall;
   FApp: TAppEvent;
   FProg: TProgressCall;
+
+  //Some user data
+  msgudata: Pointer;
+  requestudata: Pointer;
+  progudata: Pointer;
+
   procedure msg(s: String;t: TMType);
   function request(s: String;ty: TRqType): TRqResult;
   procedure newapp(s: String;oj: TAppInfo);
@@ -42,7 +48,7 @@ type
   //** Method that removes MOJO/LOKI installed applications @param dsk Path to the .desktop file of the application
   function UninstallMojo(dsk: String): Boolean;
   //** Catch the PackageKit progress
-  procedure PkitProgress(pos: Integer);
+  procedure PkitProgress(pos: Integer;xd: Pointer);
   //** Remove app as root via remote DBus connection
   procedure UninstallAppAsRoot(obj: TAppInfo);
  public
@@ -57,11 +63,12 @@ type
     @param fix True if all found issues should be fixed right now
     @returns True if everything is okay, False if dependencies are missing}
   function CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
-  property OnMessage: TMessageCall read FMsg write FMsg;
-  property OnRequest: TRequestCall read FReq write FReq;
+  procedure RegOnMessage(call: TMessageCall;data: Pointer);
+  procedure RegOnRequest(call: TRequestCall;data: Pointer);
+  procedure RegOnProgress(call: TProgressCall;data: Pointer);
   property OnApplication: TAppEvent read FApp write FApp;
-  property OnProgress: TprogressCall read FProg write FProg;
   property SuperuserMode: Boolean read SUMode write SUMode;
+  function UserRequestRegistered: Boolean;
 end;
 
 { Process .desktop-file and add info to list @param fname Name of the .desktop file
@@ -82,14 +89,37 @@ begin
  inherited;
 end;
 
+function TAppManager.UserRequestRegistered: Boolean;
+begin
+ if Assigned(FReq) then Result:=true else Result:=false;
+end;
+
+procedure TAppManager.RegOnMessage(call: TMessageCall;data: Pointer);
+begin
+ FMsg:=call;
+ msgudata:=data;
+end;
+
+procedure TAppManager.RegOnRequest(call: TRequestCall;data: Pointer);
+begin
+ FReq:=call;
+ requestudata:=data;
+end;
+
+procedure TAppManager.RegOnProgress(call: TProgressCall;data: Pointer);
+begin
+ FProg:=call;
+ progudata:=data;
+end;
+
 procedure TAppManager.Msg(s: String;t: TMType);
 begin
- if Assigned(FMsg) then FMsg(PChar(s),t);
+ if Assigned(FMsg) then FMsg(PChar(s),t,msgudata);
 end;
 
 function TAppManager.Request(s: String;ty: TRqType): TRqResult;
 begin
- if Assigned(FReq) then Result:=FReq(ty,PChar(s));
+ if Assigned(FReq) then Result:=FReq(ty,PChar(s),requestudata);
 end;
 
 procedure TAppManager.NewApp(s: String;oj: TAppInfo);
@@ -99,7 +129,7 @@ end;
 
 procedure TAppManager.SetPos(i: Integer);
 begin
- if Assigned(FProg) then FProg(i);
+ if Assigned(FProg) then FProg(i,progudata);
 end;
 
 function TAppManager.IsInList(nm: String;list: TStringList): Boolean;
@@ -107,8 +137,9 @@ begin
 Result:=list.IndexOf(nm)>-1;
 end;
 
-procedure TAppManager.PkitProgress(pos: Integer);
+procedure TAppManager.PkitProgress(pos: Integer;xd: Pointer);
 begin
+ //User defindes pointer xd is always nil here
  setpos(pos);
 end;
 

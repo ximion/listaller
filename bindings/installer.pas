@@ -35,11 +35,11 @@ constructor Create;
 destructor  Destroy;override;
 
 procedure Initialize(pkname: String);
-procedure SetMainChangeCall(call: TProgressCall);
-procedure SetExtraChangeCall(call: TProgressCall);
-procedure SetUserRequestCall(call: TRequestCall);
-procedure SetMessageCall(call: TMessageCall);
-procedure SetStepMessageCall(call: TMessageCall);
+procedure SetMainChangeCall(call: TProgressCall;const userdata: Pointer=nil);
+procedure SetExtraChangeCall(call: TProgressCall;const userdata: Pointer=nil);
+procedure SetUserRequestCall(call: TRequestCall;const userdata: Pointer=nil);
+procedure SetMessageCall(call: TMessageCall;const userdata: Pointer=nil);
+procedure SetStepMessageCall(call: TMessageCall;const userdata: Pointer=nil);
 function  PkType: TPkgType;
 procedure SetTestmode(b: Boolean);
 function  GetDisallows: String;
@@ -71,8 +71,8 @@ function  li_setup_new: Pointer; cdecl;external libinst;
 procedure li_setup_free(setup: Pointer);external libinst;
 procedure li_setup_set_su_mode(setup: Pointer;b: Boolean);cdecl; external libinst;
 function  li_setup_init(setup: Pointer;pkname: PChar): PChar;cdecl; external libinst;
-function  li_setup_register_main_progress_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst;
-function  li_setup_register_extra_progress_call(setup: Pointer;call: TProgressCall): Boolean; cdecl; external libinst;
+function  li_setup_register_main_progress_call(setup: Pointer;call: TProgressCall;user_data: Pointer): Boolean; cdecl; external libinst;
+function  li_setup_register_extra_progress_call(setup: Pointer;call: TProgressCall;user_data: Pointer): Boolean; cdecl; external libinst;
 function  li_setup_pkgtype(setup: Pointer): TPkgType;cdecl; external libinst;
 function  li_setup_disallows(setup: Pointer): PChar;cdecl; external libinst;
 function  li_setup_supported_distributions(setup: Pointer): PChar; cdecl; external libinst;
@@ -87,9 +87,9 @@ function  li_setup_appicon(setup: Pointer): PChar;cdecl; external libinst;
 function  li_setup_desktopfiles(setup: Pointer): PChar;cdecl; external libinst;
 function  li_setup_app_exec_command(setup: Pointer): PChar;cdecl; external libinst;
 function  li_setup_profile_current_filelist(setup: Pointer): PChar;cdecl; external libinst;
-function  li_setup_register_message_call(setup: Pointer;call: TMessageCall): Boolean; cdecl; external libinst name 'li_setup_register_message_call';
-function  li_setup_register_step_message_call(setup: Pointer;call: TMessageCall): Boolean; cdecl; external libinst name 'li_setup_register_step_message_call';
-function  li_setup_register_user_request_call(setup: Pointer;call: TRequestCall): Boolean; cdecl; external libinst name 'li_setup_register_user_request_call';
+function  li_setup_register_message_call(setup: Pointer;call: TMessageCall;user_data: Pointer): Boolean; cdecl; external libinst name 'li_setup_register_message_call';
+function  li_setup_register_step_message_call(setup: Pointer;call: TMessageCall;user_data: Pointer): Boolean; cdecl; external libinst name 'li_setup_register_step_message_call';
+function  li_setup_register_user_request_call(setup: Pointer;call: TRequestCall;user_data: Pointer): Boolean; cdecl; external libinst name 'li_setup_register_user_request_call';
 function  li_setup_start(setup: Pointer): Boolean;cdecl; external libinst name 'li_setup_start';
 procedure li_setup_set_forced(setup: Pointer;str: PChar);cdecl; external libinst name 'li_setup_set_forced';
 function  li_setup_dependencies(setup: Pointer; list: PStringList): Boolean; cdecl; external libinst name 'li_setup_dependencies';
@@ -116,14 +116,14 @@ begin
 li_setup_init(@ins,PChar(pkname))
 end;
 
-procedure TInstallPack.SetMainChangeCall(call: TProgressCall);
+procedure TInstallPack.SetMainChangeCall(call: TProgressCall;const userdata: Pointer=nil);
 begin
-li_setup_register_main_progress_call(@ins,call)
+li_setup_register_main_progress_call(@ins,call,userdata)
 end;
 
-procedure TInstallPack.SetExtraChangeCall(call: TProgressCall);
+procedure TInstallPack.SetExtraChangeCall(call: TProgressCall;const userdata: Pointer=nil);
 begin
-li_setup_register_extra_progress_call(@ins,call)
+li_setup_register_extra_progress_call(@ins,call,userdata)
 end;
 
 function TInstallPack.PkType: TPkgType;
@@ -201,19 +201,19 @@ begin
 Result:=li_setup_profile_current_filelist(@ins);
 end;
 
-procedure TInstallPack.SetUserRequestCall(call: TRequestCall);
+procedure TInstallPack.SetUserRequestCall(call: TRequestCall;const userdata: Pointer=nil);
 begin
-li_setup_register_user_request_call(@ins,call)
+li_setup_register_user_request_call(@ins,call,userdata)
 end;
 
-procedure TInstallPack.SetMessageCall(call: TMessageCall);
+procedure TInstallPack.SetMessageCall(call: TMessageCall;const userdata: Pointer=nil);
 begin
-li_setup_register_message_call(@ins,call)
+li_setup_register_message_call(@ins,call,userdata)
 end;
 
-procedure TInstallPack.SetStepMessageCall(call: TMessageCall);
+procedure TInstallPack.SetStepMessageCall(call: TMessageCall;const userdata: Pointer=nil);
 begin
-li_setup_register_step_message_call(@ins,call)
+li_setup_register_step_message_call(@ins,call,userdata)
 end;
 
 procedure TInstallPack.ReadDeps(lst: TStringList);

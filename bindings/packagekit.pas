@@ -191,7 +191,7 @@ var result: Pointer;
     rcode: PkExitEnum;
     error: PGError=nil;
 begin
- result:=pk_client_generic_finish(PK_CLIENT(source_object),res,@error);
+ result:=pk_client_generic_finish(source_object,res,@error);
 
  if error<>nil then
   begin
@@ -265,7 +265,7 @@ end;
 procedure TPackageKit.SetProgress(i: Integer);
 begin
  prog:=i;
- if Assigned(FProg) then FProg(i);
+ if Assigned(FProg) then FProg(i,nil);
 end;
 
 function TPackageKit.GetPkVersion: String;

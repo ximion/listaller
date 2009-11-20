@@ -88,7 +88,7 @@ end;
 function li_setup_init(setup: PInstallation;pkname: PChar): PChar;cdecl;
 begin
  Result:='';
- if not Assigned(setup^.OnUserRequest) then
+ if not setup^.UserRequestRegistered then
  begin
   p_warning('No user request callback is registered!');
  end;
@@ -101,55 +101,55 @@ begin
 end;
 
 //** Register progress changes (main)
-function li_setup_register_main_progress_call(setup: PInstallation;call: TProgressCall): Boolean;cdecl;
+function li_setup_register_main_progress_call(setup: PInstallation;call: TProgressCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-   setup^.OnProgressMainChange:=call;
+   setup^.RegOnProgressMainChange(call,user_data);
  except
   Result:=false;
  end;
 end;
 
 //** Register progress changes (extra)
-function li_setup_register_extra_progress_call(setup: PInstallation;call: TProgressCall): Boolean;cdecl;
+function li_setup_register_extra_progress_call(setup: PInstallation;call: TProgressCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-  setup^.OnProgressExtraChange:=call;
+  setup^.RegOnProgressExtraChange(call,user_data);
  except
   Result:=false;
  end;
 end;
 
 //** Message call
-function li_setup_register_message_call(setup: PInstallation;call: TMessageCall): Boolean;cdecl;
+function li_setup_register_message_call(setup: PInstallation;call: TMessageCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-  setup^.OnMessage:=call;
+  setup^.RegOnMessage(call,user_data);
  except
   Result:=false;
  end;
 end;
 
 //** Step message call
-function li_setup_register_step_message_call(setup: PInstallation;call: TMessageCall): Boolean;cdecl;
+function li_setup_register_step_message_call(setup: PInstallation;call: TMessageCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-  setup^.OnStepMessage:=call;
+  setup^.RegOnStepMessage(call,user_data);
  except
   Result:=false;
  end;
 end;
 
 //** User request message call
-function li_setup_register_user_request_call(setup: PInstallation;call: TRequestCall): Boolean;cdecl;
+function li_setup_register_user_request_call(setup: PInstallation;call: TRequestCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-  setup^.OnUserRequest:=call;
+  setup^.RegOnUsrRequest(call,user_data);
  except
   Result:=false;
  end;
@@ -321,7 +321,7 @@ function li_mgr_load_apps(mgr: PAppManager): Boolean;cdecl;
 begin
 Result:=false;
 try
-if not Assigned(mgr^.OnRequest) then begin p_error('No user request callback was registered');exit;end;
+if not mgr^.UserRequestRegistered then begin p_error('No user request callback was registered');exit;end;
  Result:=true;
  mgr^.LoadEntries;
 except
@@ -330,11 +330,11 @@ end;
 end;
 
 //** Register message call
-function li_mgr_register_msg_call(mgr: PAppManager;call: TMessageCall): Boolean;cdecl;
+function li_mgr_register_msg_call(mgr: PAppManager;call: TMessageCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-  mgr^.OnMessage:=call;
+  mgr^.RegOnMessage(call,user_data);
  except
   Result:=false;
  end;
@@ -352,22 +352,22 @@ begin
 end;
 
 //** Register event to recieve current progress
-function li_mgr_register_progress_call(mgr: PAppManager;call: TProgressCall): Boolean;cdecl;
+function li_mgr_register_progress_call(mgr: PAppManager;call: TProgressCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-  mgr^.OnProgress:=call;;
+  mgr^.RegOnProgress(call,user_data);
  except
   Result:=false;
  end;
 end;
 
 //** Register event to recieve user requests
-function li_mgr_register_request_call(mgr: PAppManager;call: TRequestCall): Boolean;cdecl;
+function li_mgr_register_request_call(mgr: PAppManager;call: TRequestCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-  mgr^.OnRequest:=call;;
+  mgr^.RegOnRequest(call,user_data);
  except
   Result:=false;
  end;
@@ -383,7 +383,7 @@ end;
 function li_mgr_remove_app(mgr: PAppManager;obj: TAppInfo): Boolean;cdecl;
 begin
  Result:=false;
-if not Assigned(mgr^.OnRequest) then begin p_error('You need to register a user request callback!');exit;end;
+if not mgr^.UserRequestRegistered then begin p_error('You need to register a user request callback!');exit;end;
  Result:=true;
  try
   mgr^.UninstallApp(obj);

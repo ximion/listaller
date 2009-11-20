@@ -39,13 +39,13 @@ type
  TMType    = (mtInfo,mtWarning);
 
  //** Callback for user request
- TRequestCall = function(mtype: TRqType;msg: PChar): TRqResult;cdecl;
+ TRequestCall = function(mtype: TRqType;msg: PChar;user_data: Pointer): TRqResult;cdecl;
  //** Callback that submits a notification
- TMessageCall = procedure(msg: PChar;imp: TMType);cdecl;
+ TMessageCall = procedure(msg: PChar;imp: TMType;user_data: Pointer);cdecl;
  //** Called if a progress was changed
- TProgressCall = procedure(pos: Integer);cdecl;
+ TProgressCall = procedure(pos: Integer;user_data: Pointer);cdecl;
  //** Called if progress was changed; only for internal use
- TProgressEvent = procedure(pos: Integer) of object;
+ TProgressEvent = procedure(pos: Integer;user_data: Pointer) of object;
 
  //** Application groups
  TGroupType = (gtALL,
