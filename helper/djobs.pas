@@ -82,6 +82,7 @@ const
  CALL_APPREMOVE = 'RemoveApp';
 var
  InstallWorkers: Integer;
+ ManagerWorkers: Integer;
  conn: PDBusConnection;
 
 implementation
@@ -490,6 +491,7 @@ end;
 
 destructor TDoAppRemove.Destroy;
 begin
+ Dec(ManagerWorkers);
  inherited;
 end;
 

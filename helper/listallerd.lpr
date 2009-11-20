@@ -50,6 +50,7 @@ var
   smsg: PDBusMessage;
   ret: cint;
   startTick: Integer;
+  lastJobCount: Integer; //Hold the last number of active jobs
 begin
   WriteLn('Daemon started.');
 
@@ -72,9 +73,13 @@ begin
   begin
 
     //Check tick count
-     if (JobList.Count=0)and(((DateTimeToTimeStamp(Now).Time-startTick)/1000)=Timeout_Seconds) then
-      break; //Exit loop -> terminate daemon
+    if (InstallWorkers+ManagerWorkers)<>lastJobCount then
+     startTick:=DateTimeToTimeStamp(Now).Time;
 
+    lastJobCount:=InstallWorkers+ManagerWorkers;
+
+     if (InstallWorkers=0)and(ManagerWorkers=0)and(((DateTimeToTimeStamp(Now).Time-startTick)/1000)=Timeout_Seconds) then
+      break; //Exit loop -> terminate daemon
 
     // non blocking read of the next available message
     dbus_connection_read_write(conn, 0);
@@ -95,7 +100,6 @@ begin
        sMsg:=msg;
         JobList.Add(TDoAppInstall.Create(sMsg));
        Inc(InstallWorkers);
-       startTick:=DateTimeToTimeStamp(Now).Time;
       end;
     end else
     if (dbus_message_is_method_call(msg, 'org.freedesktop.Listaller.Manage', CALL_APPREMOVE) <> 0) then
@@ -104,7 +108,7 @@ begin
       begin
        sMsg:=msg;
         JobList.Add(TDoAppRemove.Create(sMsg));
-        startTick:=DateTimeToTimeStamp(Now).Time;
+       Inc(ManagerWorkers);
       end;
     end else
      // free the message

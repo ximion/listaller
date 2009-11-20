@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="318"/>
+      <CurrentBuildNr Value="321"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -37,8 +37,8 @@
         <Filename Value="listallerd.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerd"/>
-        <CursorPos X="29" Y="106"/>
-        <TopLine Value="78"/>
+        <CursorPos X="1" Y="83"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="37"/>
         <Loaded Value="True"/>
@@ -68,8 +68,8 @@
         <Filename Value="djobs.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="djobs"/>
-        <CursorPos X="3" Y="658"/>
-        <TopLine Value="638"/>
+        <CursorPos X="22" Y="494"/>
+        <TopLine Value="481"/>
         <UsageCount Value="37"/>
       </Unit4>
       <Unit5>
@@ -201,7 +201,16 @@
         <UsageCount Value="10"/>
       </Unit24>
     </Units>
-    <JumpHistory Count="0" HistoryIndex="-1"/>
+    <JumpHistory Count="2" HistoryIndex="1">
+      <Position1>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="106" Column="29" TopLine="78"/>
+      </Position1>
+      <Position2>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="22" Column="71" TopLine="18"/>
+      </Position2>
+    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>

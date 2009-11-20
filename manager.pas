@@ -133,7 +133,7 @@ var
   instLst: TStringList;
 
 //Published for use in uninstall.pas
-procedure OnMessage(msg: PChar;imp: TMType);cdecl;
+procedure OnMessage(msg: PChar;imp: TMType;data: Pointer);cdecl;
 
 //NOTE:
 //IMPORTANT: RegDir should be moved to libInstaller!
@@ -166,13 +166,13 @@ end;
 Application.ProcessMessages;
 end;
 
-procedure OnMessage(msg: PChar;imp: TMType);cdecl;
+procedure OnMessage(msg: PChar;imp: TMType;data: Pointer);cdecl;
 begin
  if imp=mtInfo then MnFrm.StatusLabel.Caption:=msg;
  if imp=mtWarning then ShowMessage(msg);
 end;
 
-function OnUserRequest(mtype: TRqType;msg: PChar): TRqResult;cdecl;
+function OnUserRequest(mtype: TRqType;msg: PChar;data: Pointer): TRqResult;cdecl;
 begin
  ShowMessage(msg);
  Result:=rqsOK;
@@ -853,10 +853,10 @@ end;     }
 li_mgr_register_app_call(@amgr,@OnNewAppFound);
 
 //Register callback to be notified if a message was thrown
-li_mgr_register_msg_call(@amgr,@OnMessage);
+li_mgr_register_msg_call(@amgr,@OnMessage,nil);
 
 //Register request call
-li_mgr_register_request_call(@amgr,@OnUserRequest);
+li_mgr_register_request_call(@amgr,@OnUserRequest,nil);
 
 InstAppButton.Down:=true;
 
