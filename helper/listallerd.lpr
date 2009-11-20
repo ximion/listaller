@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2009 Matthias Klumpp
 
   Authors:
    Matthias Klumpp

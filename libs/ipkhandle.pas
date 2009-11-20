@@ -437,7 +437,6 @@ var i: Integer;
     tmp: TStringList;
     mnpos: Integer;
     DInfo: TDistroInfo;
-    EPkgNotFound: Exception;
     one: Double;
     lInd: Integer;
 
@@ -459,6 +458,8 @@ begin
   pkit:=TPackageKit.Create;
   xtmp:=TStringList.Create;
   pkit.RsList:=xtmp;
+
+  lpos:=0;
 
   mnpos:=mnpos+1;
 
@@ -526,7 +527,6 @@ var z: TAbUnZipper;
     i: Integer;
     DInfo: TDistroInfo;
     cont: TIPKControl;
-    tmp: TStringList;
 begin
 
 //The user _really_ is root. (This happens, if the daemon executes this action)
@@ -1812,8 +1812,10 @@ begin
   // free reply
   dbus_message_unref(dmsg);
 
+  ////////////////////////////////////////////////////////////////////////////////////
+
   //Now start listening to Listaller dbus signals and forward them to
-  //native funktions until the "Finished" signal is received
+  //native functions until the "Finished" signal is received
 
   // add a rule for which messages we want to see
   dbus_bus_add_match(conn,

@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2009 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -296,20 +296,16 @@ end;
 
 function InstallUserRequest(mtype: TRqType;info: PChar;job: Pointer): TRqResult;cdecl;
 begin
-writeLn(info);
+ p_warning('User request handling needs to be implemented!');
+ p_debug(info);
 {with IWizFrm do
 begin
 case mtype of
 rqError: begin
   ShowMessage(msg);
   Result:=rqsOK;
-  if Assigned(InfoMemo) then
-  begin
-   InfoMemo.Lines.Add(rsInstFailed);
-   InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
-  end;
   setup.Free;
-  Application.Terminate;
+  Terminate;
   exit;
 end;
 rqWarning: begin
@@ -320,8 +316,7 @@ rqWarning: begin
    InfoMemo.Lines.Add('Installation aborted by user.');
    InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
    setup.Free;
-   Application.Terminate;
-   FreeAndNil(IWizFrm);
+   Terminate;
   end;
 end;
 rqQuestion: begin
@@ -495,7 +490,7 @@ var
   auth: PChar = '';
   serial: dbus_uint32_t = 0;
 begin
- p_info('Send reply called');
+   p_info('Send reply called');
 
   // create a reply from the message
    reply := dbus_message_new_method_return(replyMsg);
@@ -515,7 +510,6 @@ begin
      p_error('Out Of Memory!');
      exit;
    end;
-
    // send the reply & flush the connection
    if (dbus_connection_send(conn, reply, @serial) = 0) then
    begin
@@ -526,7 +520,6 @@ begin
 
    // free the reply
    dbus_message_unref(reply);
-
    // free the message
    dbus_message_unref(replyMsg);
 end;
@@ -568,15 +561,14 @@ end;
 
 function OnMgrUserRequest(mtype: TRqType;msg: PChar;job: Pointer): TRqResult;cdecl;
 begin
+ p_warning('User request handling needs to be implemented!');
  p_debug(msg);
 end;
 
-procedure OnMgrMessage(msg: PChar;imp: TMType;job: Pointer);cdecl;
+procedure OnMgrMessage(param: PChar;imp: TMType;job: Pointer);cdecl;
 var
   args: DBusMessageIter;
   dmsg: PDBusMessage;
-  s: String;
-  param: PChar;
 begin
   // create a signal & check for errors
   dmsg := dbus_message_new_signal('/org/freedesktop/Listaller/Manager1', // object name of the signal
@@ -587,8 +579,6 @@ begin
     p_error('Message Null');
     exit;
   end;
-  s:=msg;
-  param:=PChar(s);
   // append arguments onto signal
   dbus_message_iter_init_append(dmsg, @args);
   if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @param) = 0) then
@@ -602,11 +592,9 @@ begin
     p_error('Out Of Memory!');
     exit;
   end;
-
   dbus_connection_flush(conn);
   // free the message and close the connection
   dbus_message_unref(dmsg);
-  p_info(msg);
 end;
 
 procedure TDoAppRemove.Execute;

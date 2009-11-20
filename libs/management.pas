@@ -663,6 +663,24 @@ begin
   // free reply
   dbus_message_unref(dmsg);
 
+  //////////////////////////////////////////////////////////////////////
+
+  //Now start listening to Listaller dbus signals and forward them to
+  //native functions until the "Finished" signal is received
+
+  // add a rule for which messages we want to see
+  dbus_bus_add_match(conn,
+  'type=''signal'',sender=''org.freedesktop.Listaller'', interface=''org.freedesktop.Listaller.Manage'', path=''/org/freedesktop/Listaller/Manager1'''
+  , @err);
+
+  dbus_connection_flush(conn);
+  if (dbus_error_is_set(@err) <> 0) then
+  begin
+    p_error('Match Error ('+err.message+')');
+    exit;
+  end;
+  p_info('Match rule sent');
+
   setpos(0);
   action_finished:=false;
   // loop listening for signals being emmitted
@@ -731,7 +749,6 @@ begin
          end;
       end;
     end;
-
 
     // free the message
     dbus_message_unref(dmsg);

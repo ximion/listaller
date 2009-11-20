@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="910"/>
+      <CurrentBuildNr Value="915"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -33,8 +33,8 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="10" Y="23"/>
-        <TopLine Value="1"/>
+        <CursorPos X="111" Y="453"/>
+        <TopLine Value="444"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="52"/>
         <Loaded Value="True"/>
@@ -42,8 +42,8 @@
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="2" Y="31"/>
-        <TopLine Value="155"/>
+        <CursorPos X="11" Y="462"/>
+        <TopLine Value="441"/>
         <UsageCount Value="20"/>
       </Unit1>
       <Unit2>
@@ -154,8 +154,8 @@
       <Unit17>
         <Filename Value="management.pas"/>
         <UnitName Value="management"/>
-        <CursorPos X="6" Y="670"/>
-        <TopLine Value="629"/>
+        <CursorPos X="39" Y="51"/>
+        <TopLine Value="30"/>
         <UsageCount Value="11"/>
       </Unit17>
       <Unit18>
@@ -246,7 +246,7 @@
         <UsageCount Value="10"/>
       </Unit30>
     </Units>
-    <JumpHistory Count="22" HistoryIndex="21">
+    <JumpHistory Count="24" HistoryIndex="23">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="22" Column="25" TopLine="13"/>
@@ -333,8 +333,16 @@
       </Position21>
       <Position22>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="23" Column="10" TopLine="1"/>
+        <Caret Line="23" Column="11" TopLine="1"/>
       </Position22>
+      <Position23>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="29" TopLine="1"/>
+      </Position23>
+      <Position24>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="29" TopLine="1"/>
+      </Position24>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
