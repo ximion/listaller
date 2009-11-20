@@ -54,12 +54,12 @@ var
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////This will be done if "lipa" is started
 
-procedure OnSetupMessage(msg: PChar;imp: TMType);cdecl;
+procedure OnSetupMessage(msg: PChar;imp: TMType;data: Pointer);cdecl;
 begin
   writeLn(' '+msg);
 end;
 
-procedure OnSetupProgress(pos: Longint);cdecl;
+procedure OnSetupProgress(pos: Longint;data: Pointer);cdecl;
 begin
 with Application do
 begin
@@ -78,13 +78,13 @@ end;
 end;
 end;
 
-procedure OnSetupStateChange(msg: PChar;imp: TMType);cdecl;
+procedure OnSetupStateChange(msg: PChar;imp: TMType;data: Pointer);cdecl;
 begin
 if not Application.HasOption('verbose') then
   writeLn(' '+rsState+': '+msg);
 end;
 
-function OnSetupUserRequest(mtype: TRqType;msg: PChar): TRqResult;cdecl;
+function OnSetupUserRequest(mtype: TRqType;msg: PChar;data: Pointer): TRqResult;cdecl;
 var s: String;
 begin
   writeLn(rsQuestion);
