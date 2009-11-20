@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.11.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>ipkbuild</title>
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1 class="unit">Unit ipkbuild</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Uses">uses</a></td><td><a class="section"  href="#%40Classes">Classes, Interfaces, Objects and Records</a></td><td><a class="section"  href="#%40FuncsProcs">Functions and Procedures</a></td><td>Types</td><td>Constants</td><td>Variables</td></tr></table>
+<a name="%40Description"></a><h2 class="description">Description</h2>
+<p>
+Functions to build IPK packages from source files</p>
+<a name="%40Uses"></a><h2 class="uses">uses</h2>
+<ul class="useslist"><li>Classes</li><li>SysUtils</li><li>FileUtil</li><li><a   href="AbZipper.html">AbZipper</a></li><li><a   href="AbArcTyp.html">AbArcTyp</a></li><li>MD5</li><li><a   href="licommon.html">LiCommon</a></li><li>Process</li><li><a   href="opbitmapformats.html">OPBitmapFormats</a></li><li><a   href="ipkdef.html">ipkdef</a></li><li><a   href="litypes.html">litypes</a></li></ul><h2 class="overview">Overview</h2>
+<a name="%40Classes"></a><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
+<table class="classestable wide_list">
+<tr class="listheader">
+<th class="itemname">Name</th>
+<th class="itemdesc">Description</th>
+</tr>
+<tr class="list">
+<td class="itemname">record&nbsp;<a class="bold"  href="ipkbuild.TPackInfo.html"><code>TPackInfo</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+</table>
+<a name="%40FuncsProcs"></a><h3 class="summary">Functions and Procedures</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a   href="ipkbuild.html#BuildZIP">BuildZIP</a></b>(azipfilename : string; afiles : TStringList);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a   href="ipkbuild.html#CreateUpdateSource">CreateUpdateSource</a></b>(FName, path: String);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a   href="ipkbuild.html#BuildApplication">BuildApplication</a></b>(pk: <a   href="ipkbuild.TPackInfo.html">TPackInfo</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a   href="ipkbuild.html#BuildPackage">BuildPackage</a></b>(fi: String;o:String;genbutton:Boolean=false);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a   href="ipkbuild.html#CreateLiCompButton">CreateLiCompButton</a></b>(dlist: TStringList;op: String);</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Functions and Procedures</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="BuildZIP"></a><code>procedure <b>BuildZIP</b>(azipfilename : string; afiles : TStringList);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Builds a ZIP structure  </p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>azipfilename</dt>
+<dd>Name of the ZIP file</dd>
+<dt>afiles</dt>
+<dd>List of files the archive should contain</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="CreateUpdateSource"></a><code>procedure <b>CreateUpdateSource</b>(FName, path: String);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Creates an IPK-Update-Source (IPKUS)  </p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>FName</dt>
+<dd>Name of the IPS source file</dd>
+<dt>path</dt>
+<dd>Path to an folder where the source should be created</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="BuildApplication"></a><code>procedure <b>BuildApplication</b>(pk: <a   href="ipkbuild.TPackInfo.html">TPackInfo</a>);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Builds the application from source using the &lt;build&gt; elements </p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>Connection</dt>
+<dd>to an TPackageInfo</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="BuildPackage"></a><code>procedure <b>BuildPackage</b>(fi: String;o:String;genbutton:Boolean=false);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Builds an IPK package from an IPS source   </p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>fi</dt>
+<dd>IPS source</dd>
+<dt>o</dt>
+<dd>Output filename</dd>
+<dt>genbutton</dt>
+<dd>Generate distro info button</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="CreateLiCompButton"></a><code>procedure <b>CreateLiCompButton</b>(dlist: TStringList;op: String);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Creates the &quot;Linux distribution compatible&quot; button.  </p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>dlist</dt>
+<dd>Names of the distributions that are compatible</dd>
+<dt>of</dt>
+<dd>Name of the output PNG file</dd>
+</dl>
+</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2009-11-20 19:33:28</em>
+</span>
+</body></html>

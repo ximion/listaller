@@ -1,0 +1,347 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.11.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>AbUnzper: Class TAbCustomUnZipper</title>
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TAbCustomUnZipper"></a><h1 class="cio">Class TAbCustomUnZipper</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Hierarchy">Hierarchy</a></td><td><a class="section"  href="#%40Fields">Fields</a></td><td><a class="section"  href="#%40Methods">Methods</a></td><td><a class="section"  href="#%40Properties">Properties</a></td></tr></table>
+<a name="%40Description"></a><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a   href="AbUnzper.html">AbUnzper</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TAbCustomUnZipper = class(TAbCustomZipBrowser)</code></p>
+<h2 class="description">Description</h2>
+<a name="%40Hierarchy"></a><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TAbCustomZipBrowser</li>
+<li class="thisitem">TAbCustomUnZipper</li></ul><h2 class="overview">Overview</h2>
+<a name="%40Fields"></a><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="AbUnzper.TAbCustomUnZipper.html#FExtractOptions">FExtractOptions</a></b>: <a   href="AbArcTyp.html#TAbExtractOptions">TAbExtractOptions</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="AbUnzper.TAbCustomUnZipper.html#FOnConfirmOverwrite">FOnConfirmOverwrite</a></b>: <a   href="AbArcTyp.html#TAbConfirmOverwriteEvent">TAbConfirmOverwriteEvent</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="AbUnzper.TAbCustomUnZipper.html#FOnNeedPassword">FOnNeedPassword</a></b>: TAbNeedPasswordEvent;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="AbUnzper.TAbCustomUnZipper.html#FPasswordRetries">FPasswordRetries</a></b>: Byte;</code></td>
+</tr>
+</table>
+<a name="%40Methods"></a><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbUnzper.TAbCustomUnZipper.html#DoConfirmOverwrite">DoConfirmOverwrite</a></b>(var Name : string; var Confirm : Boolean); virtual;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbUnzper.TAbCustomUnZipper.html#DoNeedPassword">DoNeedPassword</a></b>(Sender : TObject; var NewPassword : string); virtual;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbUnzper.TAbCustomUnZipper.html#InitArchive">InitArchive</a></b>; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbUnzper.TAbCustomUnZipper.html#SetExtractOptions">SetExtractOptions</a></b>(Value : <a   href="AbArcTyp.html#TAbExtractOptions">TAbExtractOptions</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbUnzper.TAbCustomUnZipper.html#SetPasswordRetries">SetPasswordRetries</a></b>(Value : Byte);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbUnzper.TAbCustomUnZipper.html#UnzipProc">UnzipProc</a></b>(Sender : TObject; Item : <a   href="AbArcTyp.TAbArchiveItem.html">TAbArchiveItem</a>; const NewName : string );</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbUnzper.TAbCustomUnZipper.html#UnzipToStreamProc">UnzipToStreamProc</a></b>(Sender : TObject; Item : <a   href="AbArcTyp.TAbArchiveItem.html">TAbArchiveItem</a>; OutStream : TStream);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbUnzper.TAbCustomUnZipper.html#TestItemProc">TestItemProc</a></b>(Sender : TObject; Item : <a   href="AbArcTyp.TAbArchiveItem.html">TAbArchiveItem</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a   href="AbUnzper.TAbCustomUnZipper.html#Create">Create</a></b>( AOwner : TComponent ); override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>destructor <b><a   href="AbUnzper.TAbCustomUnZipper.html#Destroy">Destroy</a></b>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbUnzper.TAbCustomUnZipper.html#ExtractAt">ExtractAt</a></b>(Index : Integer; const NewName : string);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbUnzper.TAbCustomUnZipper.html#ExtractFiles">ExtractFiles</a></b>(const FileMask : string);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbUnzper.TAbCustomUnZipper.html#ExtractFilesEx">ExtractFilesEx</a></b>(const FileMask, ExclusionMask : string);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbUnzper.TAbCustomUnZipper.html#ExtractToStream">ExtractToStream</a></b>(const aFileName : string; ToStream : TStream);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbUnzper.TAbCustomUnZipper.html#ExtractTaggedItems">ExtractTaggedItems</a></b>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbUnzper.TAbCustomUnZipper.html#TestTaggedItems">TestTaggedItems</a></b>;</code></td>
+</tr>
+</table>
+<a name="%40Properties"></a><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>property <b><a   href="AbUnzper.TAbCustomUnZipper.html#ExtractOptions">ExtractOptions</a></b> : <a   href="AbArcTyp.html#TAbExtractOptions">TAbExtractOptions</a>
+      read  <a   href="AbUnzper.TAbCustomUnZipper.html#FExtractOptions">FExtractOptions</a>
+      write <a   href="AbUnzper.TAbCustomUnZipper.html#SetExtractOptions">SetExtractOptions</a>
+      default <a   href="AbArcTyp.html#AbDefExtractOptions">AbDefExtractOptions</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>property <b><a   href="AbUnzper.TAbCustomUnZipper.html#OnConfirmOverwrite">OnConfirmOverwrite</a></b> : <a   href="AbArcTyp.html#TAbConfirmOverwriteEvent">TAbConfirmOverwriteEvent</a>
+      read  <a   href="AbUnzper.TAbCustomUnZipper.html#FOnConfirmOverwrite">FOnConfirmOverwrite</a>
+      write <a   href="AbUnzper.TAbCustomUnZipper.html#FOnConfirmOverwrite">FOnConfirmOverwrite</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>property <b><a   href="AbUnzper.TAbCustomUnZipper.html#OnNeedPassword">OnNeedPassword</a></b> : TAbNeedPasswordEvent
+      read  <a   href="AbUnzper.TAbCustomUnZipper.html#FOnNeedPassword">FOnNeedPassword</a>
+      write <a   href="AbUnzper.TAbCustomUnZipper.html#FOnNeedPassword">FOnNeedPassword</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>property <b><a   href="AbUnzper.TAbCustomUnZipper.html#PasswordRetries">PasswordRetries</a></b> : Byte
+      read  <a   href="AbUnzper.TAbCustomUnZipper.html#FPasswordRetries">FPasswordRetries</a>
+      write <a   href="AbUnzper.TAbCustomUnZipper.html#SetPasswordRetries">SetPasswordRetries</a>
+      default AbDefPasswordRetries;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FExtractOptions"></a><code><b>FExtractOptions</b>: <a   href="AbArcTyp.html#TAbExtractOptions">TAbExtractOptions</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FOnConfirmOverwrite"></a><code><b>FOnConfirmOverwrite</b>: <a   href="AbArcTyp.html#TAbConfirmOverwriteEvent">TAbConfirmOverwriteEvent</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FOnNeedPassword"></a><code><b>FOnNeedPassword</b>: TAbNeedPasswordEvent;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FPasswordRetries"></a><code><b>FPasswordRetries</b>: Byte;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="DoConfirmOverwrite"></a><code>procedure <b>DoConfirmOverwrite</b>(var Name : string; var Confirm : Boolean); virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="DoNeedPassword"></a><code>procedure <b>DoNeedPassword</b>(Sender : TObject; var NewPassword : string); virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="InitArchive"></a><code>procedure <b>InitArchive</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="SetExtractOptions"></a><code>procedure <b>SetExtractOptions</b>(Value : <a   href="AbArcTyp.html#TAbExtractOptions">TAbExtractOptions</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="SetPasswordRetries"></a><code>procedure <b>SetPasswordRetries</b>(Value : Byte);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="UnzipProc"></a><code>procedure <b>UnzipProc</b>(Sender : TObject; Item : <a   href="AbArcTyp.TAbArchiveItem.html">TAbArchiveItem</a>; const NewName : string );</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="UnzipToStreamProc"></a><code>procedure <b>UnzipToStreamProc</b>(Sender : TObject; Item : <a   href="AbArcTyp.TAbArchiveItem.html">TAbArchiveItem</a>; OutStream : TStream);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="TestItemProc"></a><code>procedure <b>TestItemProc</b>(Sender : TObject; Item : <a   href="AbArcTyp.TAbArchiveItem.html">TAbArchiveItem</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>( AOwner : TComponent ); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExtractAt"></a><code>procedure <b>ExtractAt</b>(Index : Integer; const NewName : string);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExtractFiles"></a><code>procedure <b>ExtractFiles</b>(const FileMask : string);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExtractFilesEx"></a><code>procedure <b>ExtractFilesEx</b>(const FileMask, ExclusionMask : string);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExtractToStream"></a><code>procedure <b>ExtractToStream</b>(const aFileName : string; ToStream : TStream);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExtractTaggedItems"></a><code>procedure <b>ExtractTaggedItems</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="TestTaggedItems"></a><code>procedure <b>TestTaggedItems</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="ExtractOptions"></a><code>property <b>ExtractOptions</b> : <a   href="AbArcTyp.html#TAbExtractOptions">TAbExtractOptions</a>
+      read  <a   href="AbUnzper.TAbCustomUnZipper.html#FExtractOptions">FExtractOptions</a>
+      write <a   href="AbUnzper.TAbCustomUnZipper.html#SetExtractOptions">SetExtractOptions</a>
+      default <a   href="AbArcTyp.html#AbDefExtractOptions">AbDefExtractOptions</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="OnConfirmOverwrite"></a><code>property <b>OnConfirmOverwrite</b> : <a   href="AbArcTyp.html#TAbConfirmOverwriteEvent">TAbConfirmOverwriteEvent</a>
+      read  <a   href="AbUnzper.TAbCustomUnZipper.html#FOnConfirmOverwrite">FOnConfirmOverwrite</a>
+      write <a   href="AbUnzper.TAbCustomUnZipper.html#FOnConfirmOverwrite">FOnConfirmOverwrite</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="OnNeedPassword"></a><code>property <b>OnNeedPassword</b> : TAbNeedPasswordEvent
+      read  <a   href="AbUnzper.TAbCustomUnZipper.html#FOnNeedPassword">FOnNeedPassword</a>
+      write <a   href="AbUnzper.TAbCustomUnZipper.html#FOnNeedPassword">FOnNeedPassword</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="PasswordRetries"></a><code>property <b>PasswordRetries</b> : Byte
+      read  <a   href="AbUnzper.TAbCustomUnZipper.html#FPasswordRetries">FPasswordRetries</a>
+      write <a   href="AbUnzper.TAbCustomUnZipper.html#SetPasswordRetries">SetPasswordRetries</a>
+      default AbDefPasswordRetries;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2009-11-20 19:33:27</em>
+</span>
+</body></html>

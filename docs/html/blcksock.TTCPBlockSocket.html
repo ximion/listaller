@@ -1,0 +1,533 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.11.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>blcksock: Class TTCPBlockSocket</title>
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TTCPBlockSocket"></a><h1 class="cio">Class TTCPBlockSocket</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Hierarchy">Hierarchy</a></td><td><a class="section"  href="#%40Fields">Fields</a></td><td><a class="section"  href="#%40Methods">Methods</a></td><td><a class="section"  href="#%40Properties">Properties</a></td></tr></table>
+<a name="%40Description"></a><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a   href="blcksock.html">blcksock</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TTCPBlockSocket = class(<a class="normal"  href="blcksock.TSocksBlockSocket.html">TSocksBlockSocket</a>)</code></p>
+<h2 class="description">Description</h2>
+<div class="nodescription">no description available, TSocksBlockSocket description follows</div><div class="nodescription">no description available, TBlockSocket description follows</div><a name="%40Hierarchy"></a><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="ancestor"><a class="normal"  href="blcksock.TBlockSocket.html">TBlockSocket</a></li>
+<li class="ancestor"><a class="normal"  href="blcksock.TSocksBlockSocket.html">TSocksBlockSocket</a></li>
+<li class="thisitem">TTCPBlockSocket</li></ul><h2 class="overview">Overview</h2>
+<a name="%40Fields"></a><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="blcksock.TTCPBlockSocket.html#FOnAfterConnect">FOnAfterConnect</a></b>: <a   href="blcksock.html#THookAfterConnect">THookAfterConnect</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="blcksock.TTCPBlockSocket.html#FSSL">FSSL</a></b>: <a   href="blcksock.TCustomSSL.html">TCustomSSL</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelIP">FHTTPTunnelIP</a></b>: string;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelPort">FHTTPTunnelPort</a></b>: string;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnel">FHTTPTunnel</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelRemoteIP">FHTTPTunnelRemoteIP</a></b>: string;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelRemotePort">FHTTPTunnelRemotePort</a></b>: string;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelUser">FHTTPTunnelUser</a></b>: string;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelPass">FHTTPTunnelPass</a></b>: string;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelTimeout">FHTTPTunnelTimeout</a></b>: integer;</code></td>
+</tr>
+</table>
+<a name="%40Methods"></a><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="blcksock.TTCPBlockSocket.html#SocksDoConnect">SocksDoConnect</a></b>(IP, Port: string);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="blcksock.TTCPBlockSocket.html#HTTPTunnelDoConnect">HTTPTunnelDoConnect</a></b>(IP, Port: string);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="blcksock.TTCPBlockSocket.html#DoAfterConnect">DoAfterConnect</a></b>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a   href="blcksock.TTCPBlockSocket.html#Create">Create</a></b>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a   href="blcksock.TTCPBlockSocket.html#CreateWithSSL">CreateWithSSL</a></b>(SSLPlugin: <a   href="blcksock.html#TSSLClass">TSSLClass</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>destructor <b><a   href="blcksock.TTCPBlockSocket.html#Destroy">Destroy</a></b>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="blcksock.TTCPBlockSocket.html#GetErrorDescEx">GetErrorDescEx</a></b>: string; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="blcksock.TTCPBlockSocket.html#CloseSocket">CloseSocket</a></b>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="blcksock.TTCPBlockSocket.html#WaitingData">WaitingData</a></b>: Integer; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="blcksock.TTCPBlockSocket.html#Listen">Listen</a></b>; virtual;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="blcksock.TTCPBlockSocket.html#Accept">Accept</a></b>: TSocket;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="blcksock.TTCPBlockSocket.html#Connect">Connect</a></b>(IP, Port: string); override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="blcksock.TTCPBlockSocket.html#SSLDoConnect">SSLDoConnect</a></b>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="blcksock.TTCPBlockSocket.html#SSLDoShutdown">SSLDoShutdown</a></b>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="blcksock.TTCPBlockSocket.html#SSLAcceptConnection">SSLAcceptConnection</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="blcksock.TTCPBlockSocket.html#GetLocalSinIP">GetLocalSinIP</a></b>: string; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="blcksock.TTCPBlockSocket.html#GetRemoteSinIP">GetRemoteSinIP</a></b>: string; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="blcksock.TTCPBlockSocket.html#GetLocalSinPort">GetLocalSinPort</a></b>: Integer; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="blcksock.TTCPBlockSocket.html#GetRemoteSinPort">GetRemoteSinPort</a></b>: Integer; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="blcksock.TTCPBlockSocket.html#SendBuffer">SendBuffer</a></b>(Buffer: TMemory; Length: Integer): Integer; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="blcksock.TTCPBlockSocket.html#RecvBuffer">RecvBuffer</a></b>(Buffer: TMemory; Len: Integer): Integer; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="blcksock.TTCPBlockSocket.html#GetSocketType">GetSocketType</a></b>: integer; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="blcksock.TTCPBlockSocket.html#GetSocketProtocol">GetSocketProtocol</a></b>: integer; override;</code></td>
+</tr>
+</table>
+<a name="%40Properties"></a><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="blcksock.TTCPBlockSocket.html#SSL">SSL</a></b>: <a   href="blcksock.TCustomSSL.html">TCustomSSL</a> read <a   href="blcksock.TTCPBlockSocket.html#FSSL">FSSL</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="blcksock.TTCPBlockSocket.html#HTTPTunnel">HTTPTunnel</a></b>: Boolean read <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnel">FHTTPTunnel</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="published.gif" alt="Published" title="Published"></a></td>
+<td class="itemcode"><code>property <b><a   href="blcksock.TTCPBlockSocket.html#HTTPTunnelIP">HTTPTunnelIP</a></b>: string read <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelIP">FHTTPTunnelIP</a> Write <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelIP">FHTTPTunnelIP</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="published.gif" alt="Published" title="Published"></a></td>
+<td class="itemcode"><code>property <b><a   href="blcksock.TTCPBlockSocket.html#HTTPTunnelPort">HTTPTunnelPort</a></b>: string read <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelPort">FHTTPTunnelPort</a> Write <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelPort">FHTTPTunnelPort</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="published.gif" alt="Published" title="Published"></a></td>
+<td class="itemcode"><code>property <b><a   href="blcksock.TTCPBlockSocket.html#HTTPTunnelUser">HTTPTunnelUser</a></b>: string read <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelUser">FHTTPTunnelUser</a> Write <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelUser">FHTTPTunnelUser</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="published.gif" alt="Published" title="Published"></a></td>
+<td class="itemcode"><code>property <b><a   href="blcksock.TTCPBlockSocket.html#HTTPTunnelPass">HTTPTunnelPass</a></b>: string read <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelPass">FHTTPTunnelPass</a> Write <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelPass">FHTTPTunnelPass</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="published.gif" alt="Published" title="Published"></a></td>
+<td class="itemcode"><code>property <b><a   href="blcksock.TTCPBlockSocket.html#HTTPTunnelTimeout">HTTPTunnelTimeout</a></b>: integer read <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelTimeout">FHTTPTunnelTimeout</a> Write <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelTimeout">FHTTPTunnelTimeout</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="published.gif" alt="Published" title="Published"></a></td>
+<td class="itemcode"><code>property <b><a   href="blcksock.TTCPBlockSocket.html#OnAfterConnect">OnAfterConnect</a></b>: <a   href="blcksock.html#THookAfterConnect">THookAfterConnect</a> read <a   href="blcksock.TTCPBlockSocket.html#FOnAfterConnect">FOnAfterConnect</a> write <a   href="blcksock.TTCPBlockSocket.html#FOnAfterConnect">FOnAfterConnect</a>;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FOnAfterConnect"></a><code><b>FOnAfterConnect</b>: <a   href="blcksock.html#THookAfterConnect">THookAfterConnect</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FSSL"></a><code><b>FSSL</b>: <a   href="blcksock.TCustomSSL.html">TCustomSSL</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FHTTPTunnelIP"></a><code><b>FHTTPTunnelIP</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FHTTPTunnelPort"></a><code><b>FHTTPTunnelPort</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FHTTPTunnel"></a><code><b>FHTTPTunnel</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FHTTPTunnelRemoteIP"></a><code><b>FHTTPTunnelRemoteIP</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FHTTPTunnelRemotePort"></a><code><b>FHTTPTunnelRemotePort</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FHTTPTunnelUser"></a><code><b>FHTTPTunnelUser</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FHTTPTunnelPass"></a><code><b>FHTTPTunnelPass</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FHTTPTunnelTimeout"></a><code><b>FHTTPTunnelTimeout</b>: integer;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="SocksDoConnect"></a><code>procedure <b>SocksDoConnect</b>(IP, Port: string);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="HTTPTunnelDoConnect"></a><code>procedure <b>HTTPTunnelDoConnect</b>(IP, Port: string);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="DoAfterConnect"></a><code>procedure <b>DoAfterConnect</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="CreateWithSSL"></a><code>constructor <b>CreateWithSSL</b>(SSLPlugin: <a   href="blcksock.html#TSSLClass">TSSLClass</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetErrorDescEx"></a><code>function <b>GetErrorDescEx</b>: string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="CloseSocket"></a><code>procedure <b>CloseSocket</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="WaitingData"></a><code>function <b>WaitingData</b>: Integer; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Listen"></a><code>procedure <b>Listen</b>; virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Accept"></a><code>function <b>Accept</b>: TSocket;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Connect"></a><code>procedure <b>Connect</b>(IP, Port: string); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SSLDoConnect"></a><code>procedure <b>SSLDoConnect</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SSLDoShutdown"></a><code>procedure <b>SSLDoShutdown</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SSLAcceptConnection"></a><code>function <b>SSLAcceptConnection</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetLocalSinIP"></a><code>function <b>GetLocalSinIP</b>: string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetRemoteSinIP"></a><code>function <b>GetRemoteSinIP</b>: string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetLocalSinPort"></a><code>function <b>GetLocalSinPort</b>: Integer; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetRemoteSinPort"></a><code>function <b>GetRemoteSinPort</b>: Integer; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SendBuffer"></a><code>function <b>SendBuffer</b>(Buffer: TMemory; Length: Integer): Integer; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="RecvBuffer"></a><code>function <b>RecvBuffer</b>(Buffer: TMemory; Len: Integer): Integer; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetSocketType"></a><code>function <b>GetSocketType</b>: integer; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetSocketProtocol"></a><code>function <b>GetSocketProtocol</b>: integer; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SSL"></a><code>property <b>SSL</b>: <a   href="blcksock.TCustomSSL.html">TCustomSSL</a> read <a   href="blcksock.TTCPBlockSocket.html#FSSL">FSSL</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="HTTPTunnel"></a><code>property <b>HTTPTunnel</b>: Boolean read <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnel">FHTTPTunnel</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="published.gif" alt="Published" title="Published"></a></td>
+<td class="itemcode"><a name="HTTPTunnelIP"></a><code>property <b>HTTPTunnelIP</b>: string read <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelIP">FHTTPTunnelIP</a> Write <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelIP">FHTTPTunnelIP</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="published.gif" alt="Published" title="Published"></a></td>
+<td class="itemcode"><a name="HTTPTunnelPort"></a><code>property <b>HTTPTunnelPort</b>: string read <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelPort">FHTTPTunnelPort</a> Write <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelPort">FHTTPTunnelPort</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="published.gif" alt="Published" title="Published"></a></td>
+<td class="itemcode"><a name="HTTPTunnelUser"></a><code>property <b>HTTPTunnelUser</b>: string read <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelUser">FHTTPTunnelUser</a> Write <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelUser">FHTTPTunnelUser</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="published.gif" alt="Published" title="Published"></a></td>
+<td class="itemcode"><a name="HTTPTunnelPass"></a><code>property <b>HTTPTunnelPass</b>: string read <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelPass">FHTTPTunnelPass</a> Write <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelPass">FHTTPTunnelPass</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="published.gif" alt="Published" title="Published"></a></td>
+<td class="itemcode"><a name="HTTPTunnelTimeout"></a><code>property <b>HTTPTunnelTimeout</b>: integer read <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelTimeout">FHTTPTunnelTimeout</a> Write <a   href="blcksock.TTCPBlockSocket.html#FHTTPTunnelTimeout">FHTTPTunnelTimeout</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="published.gif" alt="Published" title="Published"></a></td>
+<td class="itemcode"><a name="OnAfterConnect"></a><code>property <b>OnAfterConnect</b>: <a   href="blcksock.html#THookAfterConnect">THookAfterConnect</a> read <a   href="blcksock.TTCPBlockSocket.html#FOnAfterConnect">FOnAfterConnect</a> write <a   href="blcksock.TTCPBlockSocket.html#FOnAfterConnect">FOnAfterConnect</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2009-11-20 19:33:28</em>
+</span>
+</body></html>

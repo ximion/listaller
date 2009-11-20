@@ -82,6 +82,7 @@ Core with implementation basic socket classes.
 {$H+}
 {$M+}
 
+//** Core with implementation basic socket classes for HTTP/FTP
 unit blcksock;
 
 interface

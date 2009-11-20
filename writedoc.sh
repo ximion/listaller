@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 cd ./docs/
-../tools/pasdoc --write-uses-list --staronly --format latex \
+pasdoc --write-uses-list --staronly --format html \
 ../listallgo.lpr ../lipa.lpr ../listallmgr.lpr  ../liupdate.lpr \
 ../libuild.lpr ../unibuild.pas ../litray.lpr \
 ../liCreator/licreator.lpr ../liCreator/editor.pas \
@@ -16,4 +16,5 @@ cd ./docs/
 ../opbitmap/gifanimator.pas ../opbitmap/opbitmapformats.pas \
 ../abbrevia/abunzper.pas ../abbrevia/abarctyp.pas \
 ../abbrevia/abzipper.pas ../libs/libinstaller.lpr \
-../aboutbox.pas
+../aboutbox.pas ../bindings/polkit.pas ../bindings/pkdesktop.pas \
+../bindings/gext.pas ../helper/listallerd.lpr ../helper/djobs.pas

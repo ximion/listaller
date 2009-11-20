@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.11.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>gext</title>
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1 class="unit">Unit gext</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Uses">uses</a></td><td>Classes, Interfaces, Objects and Records</td><td><a class="section"  href="#%40FuncsProcs">Functions and Procedures</a></td><td><a class="section"  href="#%40Types">Types</a></td><td>Constants</td><td>Variables</td></tr></table>
+<a name="%40Description"></a><h2 class="description">Description</h2>
+<p>
+Contains some additional GLib functions</p>
+<a name="%40Uses"></a><h2 class="uses">uses</h2>
+<ul class="useslist"><li>Classes</li><li>SysUtils</li><li>Process</li><li>glib2</li></ul><h2 class="overview">Overview</h2>
+<a name="%40FuncsProcs"></a><h3 class="summary">Functions and Procedures</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a   href="gext.html#InitializeGType">InitializeGType</a></b>;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="gext.html#g_cancellable_new">g_cancellable_new</a></b>: Pointer; cdecl; external gliblib  name 'g_cancellable_new';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="gext.html#g_cancellable_is_cancelled">g_cancellable_is_cancelled</a></b>(cancellable: Pointer): GBoolean; cdecl; external gliblib;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="gext.html#g_cancellable_set_error_if_cancelled">g_cancellable_set_error_if_cancelled</a></b>(cancellable: Pointer;error: PPGError): GBoolean; cdecl; external gliblib;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a   href="gext.html#g_cancellable_cancel">g_cancellable_cancel</a></b>(cancellable: <a   href="gext.html#PGCancellable">PGCancellable</a>); cdecl; external gliblib;</code></td>
+</tr>
+</table>
+<a name="%40Types"></a><h3 class="summary">Types</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="itemcode"><code><b><a   href="gext.html#GQuark">GQuark</a></b> = Integer;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="gext.html#PGAsyncResult">PGAsyncResult</a></b> = Pointer;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="gext.html#PGCancellable">PGCancellable</a></b> = PGObject;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="gext.html#TGAsyncReadyCallback">TGAsyncReadyCallback</a></b> = procedure(source_object: PGObject;res: Pointer;user_data: GPointer);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="gext.html#PGAsyncReadyCallback">PGAsyncReadyCallback</a></b> = &circ;<a   href="gext.html#TGAsyncReadyCallback">TGAsyncReadyCallback</a>;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Functions and Procedures</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="InitializeGType"></a><code>procedure <b>InitializeGType</b>;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Intialize the GType</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="g_cancellable_new"></a><code>function <b>g_cancellable_new</b>: Pointer; cdecl; external gliblib  name 'g_cancellable_new';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="g_cancellable_is_cancelled"></a><code>function <b>g_cancellable_is_cancelled</b>(cancellable: Pointer): GBoolean; cdecl; external gliblib;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="g_cancellable_set_error_if_cancelled"></a><code>function <b>g_cancellable_set_error_if_cancelled</b>(cancellable: Pointer;error: PPGError): GBoolean; cdecl; external gliblib;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="g_cancellable_cancel"></a><code>procedure <b>g_cancellable_cancel</b>(cancellable: <a   href="gext.html#PGCancellable">PGCancellable</a>); cdecl; external gliblib;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Types</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="GQuark"></a><code><b>GQuark</b> = Integer;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+A GQuark type</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="PGAsyncResult"></a><code><b>PGAsyncResult</b> = Pointer;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="PGCancellable"></a><code><b>PGCancellable</b> = PGObject;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="TGAsyncReadyCallback"></a><code><b>TGAsyncReadyCallback</b> = procedure(source_object: PGObject;res: Pointer;user_data: GPointer);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="PGAsyncReadyCallback"></a><code><b>PGAsyncReadyCallback</b> = &circ;<a   href="gext.html#TGAsyncReadyCallback">TGAsyncReadyCallback</a>;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2009-11-20 19:33:28</em>
+</span>
+</body></html>

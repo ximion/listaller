@@ -53,6 +53,7 @@ Used RFC: RFC-959, RFC-2228, RFC-2428
 {$ENDIF}
 {$H+}
 
+//** FTP client protocol
 unit ftpsend;
 
 interface

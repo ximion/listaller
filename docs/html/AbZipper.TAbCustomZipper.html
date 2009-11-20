@@ -1,0 +1,657 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.11.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>AbZipper: Class TAbCustomZipper</title>
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TAbCustomZipper"></a><h1 class="cio">Class TAbCustomZipper</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Hierarchy">Hierarchy</a></td><td><a class="section"  href="#%40Fields">Fields</a></td><td><a class="section"  href="#%40Methods">Methods</a></td><td><a class="section"  href="#%40Properties">Properties</a></td></tr></table>
+<a name="%40Description"></a><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a   href="AbZipper.html">AbZipper</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TAbCustomZipper = class(TAbCustomZipBrowser)</code></p>
+<h2 class="description">Description</h2>
+<a name="%40Hierarchy"></a><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TAbCustomZipBrowser</li>
+<li class="thisitem">TAbCustomZipper</li></ul><h2 class="overview">Overview</h2>
+<a name="%40Fields"></a><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="AbZipper.TAbCustomZipper.html#FAutoSave">FAutoSave</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="AbZipper.TAbCustomZipper.html#FCompressionMethodToUse">FCompressionMethodToUse</a></b>: TAbZipSupportedMethod;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="AbZipper.TAbCustomZipper.html#FDeflationOption">FDeflationOption</a></b>: TAbZipDeflationOption;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="AbZipper.TAbCustomZipper.html#FDOSMode">FDOSMode</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="AbZipper.TAbCustomZipper.html#FOnConfirmSave">FOnConfirmSave</a></b>: <a   href="AbArcTyp.html#TAbArchiveConfirmEvent">TAbArchiveConfirmEvent</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="AbZipper.TAbCustomZipper.html#FOnSave">FOnSave</a></b>: <a   href="AbArcTyp.html#TAbArchiveEvent">TAbArchiveEvent</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="AbZipper.TAbCustomZipper.html#FOnArchiveSaveProgress">FOnArchiveSaveProgress</a></b>: <a   href="AbArcTyp.html#TAbArchiveProgressEvent">TAbArchiveProgressEvent</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="AbZipper.TAbCustomZipper.html#FArchiveSaveProgressMeter">FArchiveSaveProgressMeter</a></b>: TAbMeterLink;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="AbZipper.TAbCustomZipper.html#FStoreOptions">FStoreOptions</a></b>: <a   href="AbArcTyp.html#TAbStoreOptions">TAbStoreOptions</a>;</code></td>
+</tr>
+</table>
+<a name="%40Methods"></a><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#DoConfirmSave">DoConfirmSave</a></b>(Sender : TObject; var Confirm : Boolean); virtual;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#DoSave">DoSave</a></b>(Sender : TObject); virtual;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#DoArchiveSaveProgress">DoArchiveSaveProgress</a></b>(Sender : TObject; Progress : Byte; var Abort : Boolean);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#InitArchive">InitArchive</a></b>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#SetAutoSave">SetAutoSave</a></b>(Value : Boolean);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#SetCompressionMethodToUse">SetCompressionMethodToUse</a></b>(Value : TAbZipSupportedMethod);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#SetDeflationOption">SetDeflationOption</a></b>(Value : TAbZipDeflationOption);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#SetDOSMode">SetDOSMode</a></b>( Value : Boolean );</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#SetFileName">SetFileName</a></b>(const aFileName : string); override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#SetStoreOptions">SetStoreOptions</a></b>( Value : <a   href="AbArcTyp.html#TAbStoreOptions">TAbStoreOptions</a> );</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#SetZipfileComment">SetZipfileComment</a></b>(Value : string); override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#ZipProc">ZipProc</a></b>(Sender : TObject; Item : <a   href="AbArcTyp.TAbArchiveItem.html">TAbArchiveItem</a>; OutStream : TStream);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#ZipFromStreamProc">ZipFromStreamProc</a></b>(Sender : TObject; Item : <a   href="AbArcTyp.TAbArchiveItem.html">TAbArchiveItem</a>; OutStream, InStream : TStream );</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#Notification">Notification</a></b>(Component: TComponent; Operation: TOperation); override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#ResetMeters">ResetMeters</a></b>; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a   href="AbZipper.TAbCustomZipper.html#Create">Create</a></b>(AOwner : TComponent); override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>destructor <b><a   href="AbZipper.TAbCustomZipper.html#Destroy">Destroy</a></b>; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#AddFiles">AddFiles</a></b>(const FileMask : string; SearchAttr : Integer);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#AddFilesEx">AddFilesEx</a></b>(const FileMask, ExclusionMask : string; SearchAttr : Integer);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#AddFromStream">AddFromStream</a></b>(const NewName : string; FromStream : TStream);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#DeleteAt">DeleteAt</a></b>(Index : Integer);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#DeleteFiles">DeleteFiles</a></b>(const FileMask : string);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#DeleteFilesEx">DeleteFilesEx</a></b>(const FileMask, ExclusionMask : string);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#DeleteTaggedItems">DeleteTaggedItems</a></b>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#FreshenFiles">FreshenFiles</a></b>(const FileMask : string);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#FreshenFilesEx">FreshenFilesEx</a></b>(const FileMask, ExclusionMask : string);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#FreshenTaggedItems">FreshenTaggedItems</a></b>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#Move">Move</a></b>(aItem : <a   href="AbArcTyp.TAbArchiveItem.html">TAbArchiveItem</a>; NewStoredPath : string);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#Save">Save</a></b>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="AbZipper.TAbCustomZipper.html#Replace">Replace</a></b>(aItem : <a   href="AbArcTyp.TAbArchiveItem.html">TAbArchiveItem</a>);</code></td>
+</tr>
+</table>
+<a name="%40Properties"></a><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>property <b><a   href="AbZipper.TAbCustomZipper.html#AutoSave">AutoSave</a></b> : Boolean
+      read  <a   href="AbZipper.TAbCustomZipper.html#FAutoSave">FAutoSave</a>
+      write <a   href="AbZipper.TAbCustomZipper.html#SetAutoSave">SetAutoSave</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>property <b><a   href="AbZipper.TAbCustomZipper.html#CompressionMethodToUse">CompressionMethodToUse</a></b> : TAbZipSupportedMethod
+      read  <a   href="AbZipper.TAbCustomZipper.html#FCompressionMethodToUse">FCompressionMethodToUse</a>
+      write <a   href="AbZipper.TAbCustomZipper.html#SetCompressionMethodToUse">SetCompressionMethodToUse</a>
+      default AbDefCompressionMethodToUse;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>property <b><a   href="AbZipper.TAbCustomZipper.html#DeflationOption">DeflationOption</a></b> : TAbZipDeflationOption
+      read  <a   href="AbZipper.TAbCustomZipper.html#FDeflationOption">FDeflationOption</a>
+      write <a   href="AbZipper.TAbCustomZipper.html#SetDeflationOption">SetDeflationOption</a>
+      default AbDefDeflationOption;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>property <b><a   href="AbZipper.TAbCustomZipper.html#DOSMode">DOSMode</a></b> : Boolean
+      read  <a   href="AbZipper.TAbCustomZipper.html#FDOSMode">FDOSMode</a>
+      write <a   href="AbZipper.TAbCustomZipper.html#SetDOSMode">SetDOSMode</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>property <b><a   href="AbZipper.TAbCustomZipper.html#StoreOptions">StoreOptions</a></b> : <a   href="AbArcTyp.html#TAbStoreOptions">TAbStoreOptions</a>
+      read  <a   href="AbZipper.TAbCustomZipper.html#FStoreOptions">FStoreOptions</a>
+      write <a   href="AbZipper.TAbCustomZipper.html#SetStoreOptions">SetStoreOptions</a>
+      default <a   href="AbArcTyp.html#AbDefStoreOptions">AbDefStoreOptions</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>property <b><a   href="AbZipper.TAbCustomZipper.html#ArchiveSaveProgressMeter">ArchiveSaveProgressMeter</a></b> : TAbMeterLink                   
+      read  <a   href="AbZipper.TAbCustomZipper.html#FArchiveSaveProgressMeter">FArchiveSaveProgressMeter</a>                                  
+      write <a   href="AbZipper.TAbCustomZipper.html#FArchiveSaveProgressMeter">FArchiveSaveProgressMeter</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>property <b><a   href="AbZipper.TAbCustomZipper.html#OnConfirmSave">OnConfirmSave</a></b> : <a   href="AbArcTyp.html#TAbArchiveConfirmEvent">TAbArchiveConfirmEvent</a>
+      read  <a   href="AbZipper.TAbCustomZipper.html#FOnConfirmSave">FOnConfirmSave</a>
+      write <a   href="AbZipper.TAbCustomZipper.html#FOnConfirmSave">FOnConfirmSave</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>property <b><a   href="AbZipper.TAbCustomZipper.html#OnSave">OnSave</a></b> : <a   href="AbArcTyp.html#TAbArchiveEvent">TAbArchiveEvent</a>
+      read  <a   href="AbZipper.TAbCustomZipper.html#FOnSave">FOnSave</a>
+      write <a   href="AbZipper.TAbCustomZipper.html#FOnSave">FOnSave</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>property <b><a   href="AbZipper.TAbCustomZipper.html#OnArchiveSaveProgress">OnArchiveSaveProgress</a></b> : <a   href="AbArcTyp.html#TAbArchiveProgressEvent">TAbArchiveProgressEvent</a>           
+      read <a   href="AbZipper.TAbCustomZipper.html#FOnArchiveSaveProgress">FOnArchiveSaveProgress</a>                                      
+      write <a   href="AbZipper.TAbCustomZipper.html#FOnArchiveSaveProgress">FOnArchiveSaveProgress</a>;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FAutoSave"></a><code><b>FAutoSave</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FCompressionMethodToUse"></a><code><b>FCompressionMethodToUse</b>: TAbZipSupportedMethod;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FDeflationOption"></a><code><b>FDeflationOption</b>: TAbZipDeflationOption;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FDOSMode"></a><code><b>FDOSMode</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FOnConfirmSave"></a><code><b>FOnConfirmSave</b>: <a   href="AbArcTyp.html#TAbArchiveConfirmEvent">TAbArchiveConfirmEvent</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FOnSave"></a><code><b>FOnSave</b>: <a   href="AbArcTyp.html#TAbArchiveEvent">TAbArchiveEvent</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FOnArchiveSaveProgress"></a><code><b>FOnArchiveSaveProgress</b>: <a   href="AbArcTyp.html#TAbArchiveProgressEvent">TAbArchiveProgressEvent</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FArchiveSaveProgressMeter"></a><code><b>FArchiveSaveProgressMeter</b>: TAbMeterLink;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FStoreOptions"></a><code><b>FStoreOptions</b>: <a   href="AbArcTyp.html#TAbStoreOptions">TAbStoreOptions</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="DoConfirmSave"></a><code>procedure <b>DoConfirmSave</b>(Sender : TObject; var Confirm : Boolean); virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="DoSave"></a><code>procedure <b>DoSave</b>(Sender : TObject); virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="DoArchiveSaveProgress"></a><code>procedure <b>DoArchiveSaveProgress</b>(Sender : TObject; Progress : Byte; var Abort : Boolean);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="InitArchive"></a><code>procedure <b>InitArchive</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="SetAutoSave"></a><code>procedure <b>SetAutoSave</b>(Value : Boolean);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="SetCompressionMethodToUse"></a><code>procedure <b>SetCompressionMethodToUse</b>(Value : TAbZipSupportedMethod);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="SetDeflationOption"></a><code>procedure <b>SetDeflationOption</b>(Value : TAbZipDeflationOption);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="SetDOSMode"></a><code>procedure <b>SetDOSMode</b>( Value : Boolean );</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="SetFileName"></a><code>procedure <b>SetFileName</b>(const aFileName : string); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="SetStoreOptions"></a><code>procedure <b>SetStoreOptions</b>( Value : <a   href="AbArcTyp.html#TAbStoreOptions">TAbStoreOptions</a> );</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="SetZipfileComment"></a><code>procedure <b>SetZipfileComment</b>(Value : string); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="ZipProc"></a><code>procedure <b>ZipProc</b>(Sender : TObject; Item : <a   href="AbArcTyp.TAbArchiveItem.html">TAbArchiveItem</a>; OutStream : TStream);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="ZipFromStreamProc"></a><code>procedure <b>ZipFromStreamProc</b>(Sender : TObject; Item : <a   href="AbArcTyp.TAbArchiveItem.html">TAbArchiveItem</a>; OutStream, InStream : TStream );</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="Notification"></a><code>procedure <b>Notification</b>(Component: TComponent; Operation: TOperation); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="ResetMeters"></a><code>procedure <b>ResetMeters</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AOwner : TComponent); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="AddFiles"></a><code>procedure <b>AddFiles</b>(const FileMask : string; SearchAttr : Integer);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="AddFilesEx"></a><code>procedure <b>AddFilesEx</b>(const FileMask, ExclusionMask : string; SearchAttr : Integer);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="AddFromStream"></a><code>procedure <b>AddFromStream</b>(const NewName : string; FromStream : TStream);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="DeleteAt"></a><code>procedure <b>DeleteAt</b>(Index : Integer);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="DeleteFiles"></a><code>procedure <b>DeleteFiles</b>(const FileMask : string);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="DeleteFilesEx"></a><code>procedure <b>DeleteFilesEx</b>(const FileMask, ExclusionMask : string);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="DeleteTaggedItems"></a><code>procedure <b>DeleteTaggedItems</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FreshenFiles"></a><code>procedure <b>FreshenFiles</b>(const FileMask : string);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FreshenFilesEx"></a><code>procedure <b>FreshenFilesEx</b>(const FileMask, ExclusionMask : string);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FreshenTaggedItems"></a><code>procedure <b>FreshenTaggedItems</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Move"></a><code>procedure <b>Move</b>(aItem : <a   href="AbArcTyp.TAbArchiveItem.html">TAbArchiveItem</a>; NewStoredPath : string);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Save"></a><code>procedure <b>Save</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Replace"></a><code>procedure <b>Replace</b>(aItem : <a   href="AbArcTyp.TAbArchiveItem.html">TAbArchiveItem</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="AutoSave"></a><code>property <b>AutoSave</b> : Boolean
+      read  <a   href="AbZipper.TAbCustomZipper.html#FAutoSave">FAutoSave</a>
+      write <a   href="AbZipper.TAbCustomZipper.html#SetAutoSave">SetAutoSave</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="CompressionMethodToUse"></a><code>property <b>CompressionMethodToUse</b> : TAbZipSupportedMethod
+      read  <a   href="AbZipper.TAbCustomZipper.html#FCompressionMethodToUse">FCompressionMethodToUse</a>
+      write <a   href="AbZipper.TAbCustomZipper.html#SetCompressionMethodToUse">SetCompressionMethodToUse</a>
+      default AbDefCompressionMethodToUse;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="DeflationOption"></a><code>property <b>DeflationOption</b> : TAbZipDeflationOption
+      read  <a   href="AbZipper.TAbCustomZipper.html#FDeflationOption">FDeflationOption</a>
+      write <a   href="AbZipper.TAbCustomZipper.html#SetDeflationOption">SetDeflationOption</a>
+      default AbDefDeflationOption;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="DOSMode"></a><code>property <b>DOSMode</b> : Boolean
+      read  <a   href="AbZipper.TAbCustomZipper.html#FDOSMode">FDOSMode</a>
+      write <a   href="AbZipper.TAbCustomZipper.html#SetDOSMode">SetDOSMode</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="StoreOptions"></a><code>property <b>StoreOptions</b> : <a   href="AbArcTyp.html#TAbStoreOptions">TAbStoreOptions</a>
+      read  <a   href="AbZipper.TAbCustomZipper.html#FStoreOptions">FStoreOptions</a>
+      write <a   href="AbZipper.TAbCustomZipper.html#SetStoreOptions">SetStoreOptions</a>
+      default <a   href="AbArcTyp.html#AbDefStoreOptions">AbDefStoreOptions</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="ArchiveSaveProgressMeter"></a><code>property <b>ArchiveSaveProgressMeter</b> : TAbMeterLink                   
+      read  <a   href="AbZipper.TAbCustomZipper.html#FArchiveSaveProgressMeter">FArchiveSaveProgressMeter</a>                                  
+      write <a   href="AbZipper.TAbCustomZipper.html#FArchiveSaveProgressMeter">FArchiveSaveProgressMeter</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="OnConfirmSave"></a><code>property <b>OnConfirmSave</b> : <a   href="AbArcTyp.html#TAbArchiveConfirmEvent">TAbArchiveConfirmEvent</a>
+      read  <a   href="AbZipper.TAbCustomZipper.html#FOnConfirmSave">FOnConfirmSave</a>
+      write <a   href="AbZipper.TAbCustomZipper.html#FOnConfirmSave">FOnConfirmSave</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="OnSave"></a><code>property <b>OnSave</b> : <a   href="AbArcTyp.html#TAbArchiveEvent">TAbArchiveEvent</a>
+      read  <a   href="AbZipper.TAbCustomZipper.html#FOnSave">FOnSave</a>
+      write <a   href="AbZipper.TAbCustomZipper.html#FOnSave">FOnSave</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="OnArchiveSaveProgress"></a><code>property <b>OnArchiveSaveProgress</b> : <a   href="AbArcTyp.html#TAbArchiveProgressEvent">TAbArchiveProgressEvent</a>           
+      read <a   href="AbZipper.TAbCustomZipper.html#FOnArchiveSaveProgress">FOnArchiveSaveProgress</a>                                      
+      write <a   href="AbZipper.TAbCustomZipper.html#FOnArchiveSaveProgress">FOnArchiveSaveProgress</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2009-11-20 19:33:27</em>
+</span>
+</body></html>

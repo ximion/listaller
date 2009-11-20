@@ -1,0 +1,317 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.11.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>packagekit: Class TPackageKit</title>
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TPackageKit"></a><h1 class="cio">Class TPackageKit</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Hierarchy">Hierarchy</a></td><td><a class="section"  href="#%40Fields">Fields</a></td><td><a class="section"  href="#%40Methods">Methods</a></td><td><a class="section"  href="#%40Properties">Properties</a></td></tr></table>
+<a name="%40Description"></a><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a   href="packagekit.html">packagekit</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TPackageKit = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<p>
+PackageKit wrapper</p>
+<a name="%40Hierarchy"></a><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TPackageKit</li></ul><h2 class="overview">Overview</h2>
+<a name="%40Fields"></a><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code><b><a   href="packagekit.TPackageKit.html#loop">loop</a></b>: Pointer;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code><b><a   href="packagekit.TPackageKit.html#pkclient">pkclient</a></b>: Pointer;</code></td>
+</tr>
+</table>
+<a name="%40Methods"></a><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a   href="packagekit.TPackageKit.html#Create">Create</a></b>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>destructor <b><a   href="packagekit.TPackageKit.html#Destroy">Destroy</a></b>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="packagekit.TPackageKit.html#Resolve">Resolve</a></b>(pkg: String): Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="packagekit.TPackageKit.html#GetRequires">GetRequires</a></b>(pkg: String): Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="packagekit.TPackageKit.html#RemovePkg">RemovePkg</a></b>(pkg: String): Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="packagekit.TPackageKit.html#InstallPkg">InstallPkg</a></b>(pkg: String): Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="packagekit.TPackageKit.html#PkgNameFromFile">PkgNameFromFile</a></b>(fname: String): Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="packagekit.TPackageKit.html#InstallLocalPkg">InstallLocalPkg</a></b>(fname: String): Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="packagekit.TPackageKit.html#FindPkgForFile">FindPkgForFile</a></b>(fname: String): Boolean;</code></td>
+</tr>
+</table>
+<a name="%40Properties"></a><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="packagekit.TPackageKit.html#RsList">RsList</a></b>: TStringList read result write result;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="packagekit.TPackageKit.html#PkFinished">PkFinished</a></b>: Boolean read done write done;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="packagekit.TPackageKit.html#PkFinishCode">PkFinishCode</a></b>: Integer read exitcode;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="packagekit.TPackageKit.html#Version">Version</a></b>: String read GetPkVersion;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="packagekit.TPackageKit.html#OnProgress">OnProgress</a></b>: <a   href="litypes.html#TProgressEvent">TProgressEvent</a> read FProg write FProg;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="packagekit.TPackageKit.html#LastErrorMessage">LastErrorMessage</a></b>: String read ErrorMsg;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="loop"></a><code><b>loop</b>: Pointer;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+GLib main loop</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="pkclient"></a><code><b>pkclient</b>: Pointer;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Pointer to a PkClient</p>
+</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Resolve"></a><code>function <b>Resolve</b>(pkg: String): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Check if package is installed  </p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>pkg</dt>
+<dd>Name of the package</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True if action was not cancelled</p></td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetRequires"></a><code>function <b>GetRequires</b>(pkg: String): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Returns the reverse dependencies of a package  </p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>pkg</dt>
+<dd>Name of the package</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True if action was not cancelled</p></td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="RemovePkg"></a><code>function <b>RemovePkg</b>(pkg: String): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Removes a package  </p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>pkg</dt>
+<dd>Name of the package</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True if action was not cancelled</p></td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="InstallPkg"></a><code>function <b>InstallPkg</b>(pkg: String): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Installs a package from repo  </p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>pkg</dt>
+<dd>Name of the package</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True if action was not cancelled</p></td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PkgNameFromFile"></a><code>function <b>PkgNameFromFile</b>(fname: String): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Get the name of the package, the file belongs to (!for installed pkgs only!)  </p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>fname</dt>
+<dd>Name of the file</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True if action was not cancelled</p></td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="InstallLocalPkg"></a><code>function <b>InstallLocalPkg</b>(fname: String): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Installs a package from file  </p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>fname</dt>
+<dd>Name of the package file</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True if action was not cancelled</p></td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FindPkgForFile"></a><code>function <b>FindPkgForFile</b>(fname: String): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Get the name of the package, the file belongs to (!for not installed pkgs too!)  </p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>fname</dt>
+<dd>Name of the file</dd>
+</dl>
+<h6 class="description_section">Returns</h6>
+<p class="return">True if action was not cancelled</p></td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="RsList"></a><code>property <b>RsList</b>: TStringList read result write result;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Grab the resulting package list</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PkFinished"></a><code>property <b>PkFinished</b>: Boolean read done write done;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Check if the last transaction was finished</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PkFinishCode"></a><code>property <b>PkFinishCode</b>: Integer read exitcode;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Read finish code</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Version"></a><code>property <b>Version</b>: String read GetPkVersion;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Reads the current Packagekit version as string</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="OnProgress"></a><code>property <b>OnProgress</b>: <a   href="litypes.html#TProgressEvent">TProgressEvent</a> read FProg write FProg;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Progress change callback (progress in %)</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="LastErrorMessage"></a><code>property <b>LastErrorMessage</b>: String read ErrorMsg;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+Read the last error message</p>
+</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2009-11-20 19:33:28</em>
+</span>
+</body></html>

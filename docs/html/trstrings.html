@@ -1,0 +1,2309 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.11.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>trstrings</title>
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1 class="unit">Unit trstrings</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section"  href="#%40Description">Description</a></td><td>uses</td><td>Classes, Interfaces, Objects and Records</td><td>Functions and Procedures</td><td>Types</td><td><a class="section"  href="#%40Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="%40Description"></a><h2 class="description">Description</h2>
+<p>
+This unit contains the default strings for translation</p>
+<a name="%40Uses"></a><h2 class="overview">Overview</h2>
+<a name="%40Constants"></a><h3 class="summary">Constants</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsBrokenDepsFixQ">rsBrokenDepsFixQ</a></b> = 'Some dependencies are missing. Should they be installed now?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCannotResolv">rsCannotResolv</a></b> = 'Cannot resolve dependencies';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCheckAppDepsQ">rsCheckAppDepsQ</a></b> = 'Do you want to check the applications''s dependencies?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCheckDepsQ">rsCheckDepsQ</a></b> = 'Check dependencies?';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCheckApps">rsCheckApps</a></b> = 'Check applications';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCheckRootAppsQ">rsCheckRootAppsQ</a></b> = 'Do you want to check global-installed applications too?';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCommands">rsCommands</a></b> = 'Commands:';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCouldntFindUpdater">rsCouldntFindUpdater</a></b> = 'Can''t find updater application!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInternalError">rsInternalError</a></b> = 'An internal error occured';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLaunchLiMgr">rsLaunchLiMgr</a></b> = 'Launch Listaller Manager';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLipaInfo2">rsLipaInfo2</a></b> = 'Resolve Listaller path variable';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLipaInfo3">rsLipaInfo3</a></b> = 'Installs an IPK package';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsListallerMgrNotFound">rsListallerMgrNotFound</a></b> = 'Can''t find Listaller Manager!';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsUnableFind">rsUnableFind</a></b> = 'Unable to find %s';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsNotFoundliTray">rsNotFoundliTray</a></b> = 'Could not find Listaller TrayIcon Application';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsOptions">rsOptions</a></b> = 'Options:';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLipaInfo4">rsLipaInfo4</a></b> = 'Runs installation in testmode';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLipaInfo5">rsLipaInfo5</a></b> = 'Print all available log messages';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLipaInfo6">rsLipaInfo6</a></b> = 'Check if dependencies of all installed applications are available and working';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCMDInfoPkgBuild">rsCMDInfoPkgBuild</a></b> = 'Package build commands:';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLiBuildInfoA">rsLiBuildInfoA</a></b> = 'Build IPK-package';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLiBuildInfoB">rsLiBuildInfoB</a></b> = 'Create/Update update-repository';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLiBuildInfoC">rsLiBuildInfoC</a></b> = 'Create DEB and RPM file from IPS';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsDone">rsDone</a></b> = 'Done.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsDoYouAcceptLicenseCMD">rsDoYouAcceptLicenseCMD</a></b> = 'Do you accept this license [y/n]?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsEnterNumber">rsEnterNumber</a></b> = 'You have to enter a number!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstAborted">rsInstAborted</a></b>='Installation aborted.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsAppNInstall">rsAppNInstall</a></b>='The application %a was not installed.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLipaAutoFixQ">rsLipaAutoFixQ</a></b> = 'Should lipa fix these problems automatically [y/n]?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLipaInfo1">rsLipaInfo1</a></b> = 'Listaller command-line tool to handle IPK-packages';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsModeNumber">rsModeNumber</a></b> = 'Mode number:';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsN">rsN</a></b> = 'n';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsNo">rsNo</a></b> = 'no';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsOkay">rsOkay</a></b> = 'Okay';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsPreparingInstall">rsPreparingInstall</a></b> = 'Preparing installation (please wait)';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsRootPassAdvancedPriv">rsRootPassAdvancedPriv</a></b> = 'Enter your password to run the application with '
+  +'advanced privileges.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsRootPassQAppEveryone">rsRootPassQAppEveryone</a></b> = 'Enter your password to install the application for '
+  +'everyone.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsConvDone">rsConvDone</a></b> = 'Conversion done. Do you want to close this window now?'#10'Press &quot;No&quot; if you want to check the output.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsSelectListNumber">rsSelectListNumber</a></b> = 'Please select a number shown in the list!';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsSelectIModeA">rsSelectIModeA</a></b> = 'Select the installation mode of this application:';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsShowDetailedInfoCMD">rsShowDetailedInfoCMD</a></b> = 'Do you want to see detailed information [y/n]?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsAborted">rsAborted</a></b> = 'Aborted.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsViewLogQ">rsViewLogQ</a></b> = 'Do you want to view the logfile?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsWasInstalled">rsWasInstalled</a></b>='The application %a was installed successfully!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsExecAppTesting">rsExecAppTesting</a></b> = 'Executing application for testing...';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstallNow">rsInstallNow</a></b>='Install now';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsRunParam">rsRunParam</a></b>='Please run &quot;listallgo&quot; with path to install-package as first parameter!';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsWelcome">rsWelcome</a></b>='Welcome!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsnToStart">rsnToStart</a></b>='Press &quot;Next&quot; to start the installation!';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsProgDesc">rsProgDesc</a></b>='Program description:';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLicense">rsLicense</a></b>='Software license';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rspleaseRead">rspleaseRead</a></b>='Please read the following information carefully:';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsRunning">rsRunning</a></b>='Running installation...';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsplWait">rsplWait</a></b>='Please wait.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsComplete">rsComplete</a></b>='Installation completed!';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstFailed">rsInstFailed</a></b>='Installation failed.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsPrFinish">rsPrFinish</a></b>='Press &quot;Finish&quot; to close.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsFinish">rsFinish</a></b>='Finish';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsAbort">rsAbort</a></b>='Abort';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsBack">rsBack</a></b>='Back';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsNext">rsNext</a></b>='Next';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsDispLog">rsDispLog</a></b>='Display installation log';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsIagree">rsIagree</a></b>='I agree with the above terms and conditions';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInagree">rsInagree</a></b>='I don''t agree';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLDnSupported">rsLDnSupported</a></b>='Your Linux distribution is not supported by Listaller yet!';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsnSupported">rsnSupported</a></b>='This package does not support your Linux distribution.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsDepNotFound">rsDepNotFound</a></b>='Found no package with the necessary library &quot;%l&quot; for your distribution.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsOpeningDB">rsOpeningDB</a></b> = 'Opening database...';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInClose">rsInClose</a></b>='The installer will close now';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCnOverride">rsCnOverride</a></b>='Unable to override the file %f.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCnCopy">rsCnCopy</a></b>='Unable to copy the file %s.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsNotifyDevs">rsNotifyDevs</a></b>='Please notify the developers on http://launchpad.net/listaller';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsExtractError">rsExtractError</a></b>='Error while extracting files!';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsPkgDM">rsPkgDM</a></b>='The IPK package could be damaged or you haven''t enough rights to access required files/folders.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsAbLoad">rsAbLoad</a></b>='Loading aborted.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsAlreadyInst">rsAlreadyInst</a></b>='This application is already installed';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstallAgain">rsInstallAgain</a></b>='Do you want to install it again?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsWelcomeTo">rsWelcomeTo</a></b>='Welcome to the installation of %a';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstOf">rsInstOf</a></b>='Installation of %a';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsTestmode">rsTestmode</a></b>='Testmode';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsTestFinished">rsTestFinished</a></b>='Test of the application finished.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCleaningUp">rsCleaningUp</a></b> = 'Cleaning up...';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rspkgInval">rspkgInval</a></b>='The package was invalid!';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCouldntSolve">rsCouldntSolve</a></b>='Dependencies couldn''t be solved!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsViewLog">rsViewLog</a></b>='Please view the logfile at %p';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsPKGError">rsPKGError</a></b>='Installation package is corrupt';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsAppClose">rsAppClose</a></b>='The application will close now ';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsStep1">rsStep1</a></b>='Phase 1/4: Resolving dependencies...';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsState">rsState</a></b> = 'State';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsWDLdep">rsWDLdep</a></b>='This application wants to download &amp; install a dependency from %l';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rswAllow">rswAllow</a></b>='Do you want confirm this action?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLiCloseANI">rsLiCloseANI</a></b>='Listaller will close now. The package couldn''t be installed.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsStep2">rsStep2</a></b>='Phase 2/4: Installing files...';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsStep3">rsStep3</a></b>='Phase 3/4: Chmod new files...';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsStep4">rsStep4</a></b>='Phase 4/4: Registering application...';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsAddUpdSrc">rsAddUpdSrc</a></b>='The installation tries to add the following update source: ';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsQAddUpdSrc">rsQAddUpdSrc</a></b>='Should this source be added to the update sources list?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsFinished">rsFinished</a></b>='Finished';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsinstAnyway">rsinstAnyway</a></b>='Do you want to install it anyway? (This could raise problems)';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInvArchitecture">rsInvArchitecture</a></b>='The application which this package contains was not built for the current system architecture.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsWillDLFiles">rsWillDLFiles</a></b>='(This program will download the needed files from the internet)';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInvalidDVersion">rsInvalidDVersion</a></b>='Package was not build for your Linux distribution release.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsFTPfailed">rsFTPfailed</a></b>='Problem while downloading the packages. Could not create working FTP connection.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsSuccess">rsSuccess</a></b>='Success!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsMain">rsMain</a></b>='Main';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsDetails">rsDetails</a></b>='Details';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstallation">rsInstallation</a></b>='Installation';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsNoLDSources">rsNoLDSources</a></b>='There are no sources available for your Linux distribution'#10'Try to install common packages?';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsUseCompPQ">rsUseCompPQ</a></b>='Use compatible packages?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsNoComp">rsNoComp</a></b>='No compatible packages found!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsActionNotPossiblePkg">rsActionNotPossiblePkg</a></b>='The selected action is not possible with this package.'#10'Please contact the package maintainer to get more information.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsReInstall">rsReInstall</a></b>='Re-install';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsPkgDownload">rsPkgDownload</a></b>='The following packages will be downloaded:';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsGetDependencyFrom">rsGetDependencyFrom</a></b>='Get dependency from';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsPlWait2">rsPlWait2</a></b>='Please wait...';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsDepDLProblem">rsDepDLProblem</a></b>='Problem while downloading the dep-file.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsHashError">rsHashError</a></b>='Hash doesn''t match!'#10'The package may be modified after creation.'#10'Please obtain a new copy';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstallationMode">rsInstallationMode</a></b>='Installation mode:';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsIModeInstruction">rsIModeInstruction</a></b>='Select which parts of the application should be installed.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsMode">rsMode</a></b>='Mode';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstPerformError">rsInstPerformError</a></b>='Error while performing installation:';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsYesNo1">rsYesNo1</a></b>='Yes/No?:';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstallLiBuild">rsInstallLiBuild</a></b>='You have to install the liBuild package before you can build packages!';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsFileNotExists">rsFileNotExists</a></b>='The file &quot;%f&quot; does not exists!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsWantToDoQ">rsWantToDoQ</a></b>='What do you want to do?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsDevVersion">rsDevVersion</a></b>='You use a development version of Listaller!'#10'This version is untested, be careful about what you do!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsSpkWarning">rsSpkWarning</a></b>='Make sure that you got this package from a save source and a serious publisher!';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstallEveryone">rsInstallEveryone</a></b>='Install application for everyone';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsTestApp">rsTestApp</a></b>='Test application';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstallHome">rsInstallHome</a></b>='Install into my Home directory';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsSelInstMode">rsSelInstMode</a></b>='Select installation mode';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsSoftwareManager">rsSoftwareManager</a></b>='Software Manager';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsUpdSources">rsUpdSources</a></b>='Update sources';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsClose">rsClose</a></b>='Close';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsDelSrc">rsDelSrc</a></b>='Delete source';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsListofSrc">rsListofSrc</a></b>='The following update sources are installed:';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsUninstall">rsUninstall</a></b>='Uninstall';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsSWCatalogue">rsSWCatalogue</a></b>='Browse catalogue';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsShow">rsShow</a></b>='Show:';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsAll">rsAll</a></b>='All';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsEducation">rsEducation</a></b>='Education';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsOffice">rsOffice</a></b>='Office';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsDevelopment">rsDevelopment</a></b>='Development';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsGraphic">rsGraphic</a></b>='Graphic';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsNetwork">rsNetwork</a></b>='Network';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsGames">rsGames</a></b>='Games';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsSystem">rsSystem</a></b>='System';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsMultimedia">rsMultimedia</a></b>='Multimedia';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsAddidional">rsAddidional</a></b>='Utilities';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsOther">rsOther</a></b>='Other';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsVersion">rsVersion</a></b>='Version';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsAuthor">rsAuthor</a></b>='Autor';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsUsername">rsUsername</a></b>='Username';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsPassword">rsPassword</a></b>='Password';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsProxySettings">rsProxySettings</a></b>='Proxy-Settings';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsEnableProxy">rsEnableProxy</a></b>='Enable Proxy-Server';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLOKIError">rsLOKIError</a></b>='Can''t load LOKI-Setup information.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCannotLoadIcon">rsCannotLoadIcon</a></b>='Unable to load the icon of %a. Please notify the developers of Listaller or this application!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsAutoLoadDep">rsAutoLoadDep</a></b>='Load dependencies from included webserver-urls automatically';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsReady">rsReady</a></b>='Ready.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsConvertPkg">rsConvertPkg</a></b>='You want to install an %x-Package, but your Linux-distribution''s package system is %y.'#10'This package can be converted using &quot;alien&quot;, but this will take some time and eventually the installed application won''t work'#10'Do you want to convert the package now?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsConvertPkgQ">rsConvertPkgQ</a></b>='Convert package?';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsConvTitle">rsConvTitle</a></b>='Converting %p package...';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsFiltering">rsFiltering</a></b>='Filtering...';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsFilter">rsFilter</a></b>='Filter...';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLoading">rsLoading</a></b>='Loading...';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstalledApps">rsInstalledApps</a></b>='Installed'#10'applications';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstallPkg">rsInstallPkg</a></b>='Install package';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsBrowseCatalog">rsBrowseCatalog</a></b>='Browse'#10'catalog';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsRepositories">rsRepositories</a></b>='Repositories';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsSettings">rsSettings</a></b>='Settings';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsNoGUIPkgManFound">rsNoGUIPkgManFound</a></b>='Could not find usable GUI package manager.'#10'Please install a PackageKit-GUI!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsUseLaunchpadForBugs">rsUseLaunchpadForBugs</a></b>='Please use https://bugs.launchpad.net/listaller'#10'for bug reports.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsDispRootApps">rsDispRootApps</a></b>='Display system applications';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsDispOnlyMyApps">rsDispOnlyMyApps</a></b>='Display my applications';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsSelMgrMode">rsSelMgrMode</a></b>='Select software-manager mode:';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsListallerAlien">rsListallerAlien</a></b>='Listaller uses &quot;alien&quot; to convert foreign packages, but the tool is not installed'#10'Do you want to install &quot;alien&quot; now to continue?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstPkgQ">rsInstPkgQ</a></b>='Install package?';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsPkgInstFail">rsPkgInstFail</a></b>='Package %p could not be installed.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsShowPkMon">rsShowPkMon</a></b>='Start PackageKit monitor before running transactions';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsStartLiTray">rsStartLiTray</a></b> = 'Start Listaller tray icon application (to check dependencies)';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsAboutListaller">rsAboutListaller</a></b>='About Listaller';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsBrowseLiCatalog">rsBrowseLiCatalog</a></b>='Browse Listaller''s software catalog';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsOpenDirsiCatalog">rsOpenDirsiCatalog</a></b>='Open your distribution''s package catalog';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsAbout">rsAbout</a></b>='About';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsAuthors">rsAuthors</a></b>='Authors';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsRmSrcQ">rsRmSrcQ</a></b>='Are you really sure that you want to delete this source?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsRmSrcQC">rsRmSrcQC</a></b>='Delete source?';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsPkitProbPkMon">rsPkitProbPkMon</a></b>='Problem while connecting PackageKit. Run &quot;pkmon&quot; to get further information.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsNoAppsFound">rsNoAppsFound</a></b>='No applications found!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsSourceDeleted">rsSourceDeleted</a></b>='Source was removed.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsPleaseSelectListItem">rsPleaseSelectListItem</a></b>='Please select an item from the list!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLiUpdateAccessFailed">rsLiUpdateAccessFailed</a></b>='Cannot access the liUpdate tool. Maybe it is not installed?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsChangePkgManSettings">rsChangePkgManSettings</a></b>='Change package manager settings';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCategory">rsCategory</a></b>='Category:';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsWInstallDl">rsWInstallDl</a></b>='Select software you want to download and to install:';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsNoInfo">rsNoInfo</a></b>='No information available!';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsDLSetUp">rsDLSetUp</a></b>='Downloading setup package...';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsErrContactMan">rsErrContactMan</a></b>='Cannot download this package. Please contact the catalogue managers on %h';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstalling">rsInstalling</a></b>='Running application installation...';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsDownloadCTbase">rsDownloadCTbase</a></b>='Downloading catalogue base information...';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsOpenPage">rsOpenPage</a></b>='Loading catalogue page...';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsctDLAbort">rsctDLAbort</a></b>='Do you really want to abort this download?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsRealUninstQ">rsRealUninstQ</a></b>='Do you really want to uninstall %a?';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsUnistSuccess">rsUnistSuccess</a></b>='Application uninstalled successfully!';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsRMerror">rsRMerror</a></b>='Error while uninstalling!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCannotHandleRM">rsCannotHandleRM</a></b>='This application is not a MoJo-Installation and no other package-type Listaller can handle.'#10'You have to remove it manually.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsRMUnsdDeps">rsRMUnsdDeps</a></b>='Uninstalling unused deps...';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsUninstalling">rsUninstalling</a></b>='Uninstalling...';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsRMPkg">rsRMPkg</a></b>='Do you really want to remove &quot;%p&quot;, containing %a?'#10'The following package(s) will be removed also: %pl'#10'If you aren''t sure that you won''t need those packages, press &quot;No&quot;!';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsRmPkgQ">rsRmPkgQ</a></b>='Really remove?';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsWaiting">rsWaiting</a></b>='Waiting...';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsRMAppC">rsRMAppC</a></b>='Uninstalling %a';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLinDesk">rsLinDesk</a></b>='Running under %s.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsNoUpdates">rsNoUpdates</a></b>='There are no updates available!';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsLogUpdInfo">rsLogUpdInfo</a></b>='Update info:';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsFilesChanged">rsFilesChanged</a></b>='%f files will be changed.';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsUpdTo">rsUpdTo</a></b>='The application will be updated to version %v';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsCheckForUpd">rsCheckForUpd</a></b>='Check for updates';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsInstUpd">rsInstUpd</a></b>='Install updates';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsShowUpdater">rsShowUpdater</a></b>='Show';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsQuitUpdater">rsQuitUpdater</a></b>='Quit';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsUpdInstalling">rsUpdInstalling</a></b>='Applying updates...';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsUpdConfError">rsUpdConfError</a></b>='Error while unpacking and configuring files.';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsQuestion">rsQuestion</a></b> = 'Question:';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsYes">rsYes</a></b> = 'yes';</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsY">rsY</a></b> = 'y';</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="trstrings.html#rsResolvingDep">rsResolvingDep</a></b> = 'Resolving dependencies...';</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Constants</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsBrokenDepsFixQ"></a><code><b>rsBrokenDepsFixQ</b> = 'Some dependencies are missing. Should they be installed now?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCannotResolv"></a><code><b>rsCannotResolv</b> = 'Cannot resolve dependencies';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCheckAppDepsQ"></a><code><b>rsCheckAppDepsQ</b> = 'Do you want to check the applications''s dependencies?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCheckDepsQ"></a><code><b>rsCheckDepsQ</b> = 'Check dependencies?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCheckApps"></a><code><b>rsCheckApps</b> = 'Check applications';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCheckRootAppsQ"></a><code><b>rsCheckRootAppsQ</b> = 'Do you want to check global-installed applications too?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCommands"></a><code><b>rsCommands</b> = 'Commands:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCouldntFindUpdater"></a><code><b>rsCouldntFindUpdater</b> = 'Can''t find updater application!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInternalError"></a><code><b>rsInternalError</b> = 'An internal error occured';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLaunchLiMgr"></a><code><b>rsLaunchLiMgr</b> = 'Launch Listaller Manager';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLipaInfo2"></a><code><b>rsLipaInfo2</b> = 'Resolve Listaller path variable';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLipaInfo3"></a><code><b>rsLipaInfo3</b> = 'Installs an IPK package';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsListallerMgrNotFound"></a><code><b>rsListallerMgrNotFound</b> = 'Can''t find Listaller Manager!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsUnableFind"></a><code><b>rsUnableFind</b> = 'Unable to find %s';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsNotFoundliTray"></a><code><b>rsNotFoundliTray</b> = 'Could not find Listaller TrayIcon Application';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsOptions"></a><code><b>rsOptions</b> = 'Options:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLipaInfo4"></a><code><b>rsLipaInfo4</b> = 'Runs installation in testmode';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLipaInfo5"></a><code><b>rsLipaInfo5</b> = 'Print all available log messages';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLipaInfo6"></a><code><b>rsLipaInfo6</b> = 'Check if dependencies of all installed applications are available and working';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCMDInfoPkgBuild"></a><code><b>rsCMDInfoPkgBuild</b> = 'Package build commands:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLiBuildInfoA"></a><code><b>rsLiBuildInfoA</b> = 'Build IPK-package';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLiBuildInfoB"></a><code><b>rsLiBuildInfoB</b> = 'Create/Update update-repository';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLiBuildInfoC"></a><code><b>rsLiBuildInfoC</b> = 'Create DEB and RPM file from IPS';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsDone"></a><code><b>rsDone</b> = 'Done.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsDoYouAcceptLicenseCMD"></a><code><b>rsDoYouAcceptLicenseCMD</b> = 'Do you accept this license [y/n]?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsEnterNumber"></a><code><b>rsEnterNumber</b> = 'You have to enter a number!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstAborted"></a><code><b>rsInstAborted</b>='Installation aborted.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsAppNInstall"></a><code><b>rsAppNInstall</b>='The application %a was not installed.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLipaAutoFixQ"></a><code><b>rsLipaAutoFixQ</b> = 'Should lipa fix these problems automatically [y/n]?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLipaInfo1"></a><code><b>rsLipaInfo1</b> = 'Listaller command-line tool to handle IPK-packages';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsModeNumber"></a><code><b>rsModeNumber</b> = 'Mode number:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsN"></a><code><b>rsN</b> = 'n';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsNo"></a><code><b>rsNo</b> = 'no';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsOkay"></a><code><b>rsOkay</b> = 'Okay';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsPreparingInstall"></a><code><b>rsPreparingInstall</b> = 'Preparing installation (please wait)';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsRootPassAdvancedPriv"></a><code><b>rsRootPassAdvancedPriv</b> = 'Enter your password to run the application with '
+  +'advanced privileges.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsRootPassQAppEveryone"></a><code><b>rsRootPassQAppEveryone</b> = 'Enter your password to install the application for '
+  +'everyone.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsConvDone"></a><code><b>rsConvDone</b> = 'Conversion done. Do you want to close this window now?'#10'Press &quot;No&quot; if you want to check the output.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsSelectListNumber"></a><code><b>rsSelectListNumber</b> = 'Please select a number shown in the list!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsSelectIModeA"></a><code><b>rsSelectIModeA</b> = 'Select the installation mode of this application:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsShowDetailedInfoCMD"></a><code><b>rsShowDetailedInfoCMD</b> = 'Do you want to see detailed information [y/n]?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsAborted"></a><code><b>rsAborted</b> = 'Aborted.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsViewLogQ"></a><code><b>rsViewLogQ</b> = 'Do you want to view the logfile?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsWasInstalled"></a><code><b>rsWasInstalled</b>='The application %a was installed successfully!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsExecAppTesting"></a><code><b>rsExecAppTesting</b> = 'Executing application for testing...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstallNow"></a><code><b>rsInstallNow</b>='Install now';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsRunParam"></a><code><b>rsRunParam</b>='Please run &quot;listallgo&quot; with path to install-package as first parameter!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsWelcome"></a><code><b>rsWelcome</b>='Welcome!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsnToStart"></a><code><b>rsnToStart</b>='Press &quot;Next&quot; to start the installation!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsProgDesc"></a><code><b>rsProgDesc</b>='Program description:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLicense"></a><code><b>rsLicense</b>='Software license';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rspleaseRead"></a><code><b>rspleaseRead</b>='Please read the following information carefully:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsRunning"></a><code><b>rsRunning</b>='Running installation...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsplWait"></a><code><b>rsplWait</b>='Please wait.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsComplete"></a><code><b>rsComplete</b>='Installation completed!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstFailed"></a><code><b>rsInstFailed</b>='Installation failed.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsPrFinish"></a><code><b>rsPrFinish</b>='Press &quot;Finish&quot; to close.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsFinish"></a><code><b>rsFinish</b>='Finish';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsAbort"></a><code><b>rsAbort</b>='Abort';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsBack"></a><code><b>rsBack</b>='Back';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsNext"></a><code><b>rsNext</b>='Next';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsDispLog"></a><code><b>rsDispLog</b>='Display installation log';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsIagree"></a><code><b>rsIagree</b>='I agree with the above terms and conditions';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInagree"></a><code><b>rsInagree</b>='I don''t agree';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLDnSupported"></a><code><b>rsLDnSupported</b>='Your Linux distribution is not supported by Listaller yet!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsnSupported"></a><code><b>rsnSupported</b>='This package does not support your Linux distribution.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsDepNotFound"></a><code><b>rsDepNotFound</b>='Found no package with the necessary library &quot;%l&quot; for your distribution.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsOpeningDB"></a><code><b>rsOpeningDB</b> = 'Opening database...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInClose"></a><code><b>rsInClose</b>='The installer will close now';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCnOverride"></a><code><b>rsCnOverride</b>='Unable to override the file %f.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCnCopy"></a><code><b>rsCnCopy</b>='Unable to copy the file %s.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsNotifyDevs"></a><code><b>rsNotifyDevs</b>='Please notify the developers on http://launchpad.net/listaller';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsExtractError"></a><code><b>rsExtractError</b>='Error while extracting files!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsPkgDM"></a><code><b>rsPkgDM</b>='The IPK package could be damaged or you haven''t enough rights to access required files/folders.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsAbLoad"></a><code><b>rsAbLoad</b>='Loading aborted.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsAlreadyInst"></a><code><b>rsAlreadyInst</b>='This application is already installed';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstallAgain"></a><code><b>rsInstallAgain</b>='Do you want to install it again?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsWelcomeTo"></a><code><b>rsWelcomeTo</b>='Welcome to the installation of %a';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstOf"></a><code><b>rsInstOf</b>='Installation of %a';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsTestmode"></a><code><b>rsTestmode</b>='Testmode';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsTestFinished"></a><code><b>rsTestFinished</b>='Test of the application finished.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCleaningUp"></a><code><b>rsCleaningUp</b> = 'Cleaning up...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rspkgInval"></a><code><b>rspkgInval</b>='The package was invalid!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCouldntSolve"></a><code><b>rsCouldntSolve</b>='Dependencies couldn''t be solved!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsViewLog"></a><code><b>rsViewLog</b>='Please view the logfile at %p';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsPKGError"></a><code><b>rsPKGError</b>='Installation package is corrupt';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsAppClose"></a><code><b>rsAppClose</b>='The application will close now ';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsStep1"></a><code><b>rsStep1</b>='Phase 1/4: Resolving dependencies...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsState"></a><code><b>rsState</b> = 'State';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsWDLdep"></a><code><b>rsWDLdep</b>='This application wants to download &amp; install a dependency from %l';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rswAllow"></a><code><b>rswAllow</b>='Do you want confirm this action?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLiCloseANI"></a><code><b>rsLiCloseANI</b>='Listaller will close now. The package couldn''t be installed.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsStep2"></a><code><b>rsStep2</b>='Phase 2/4: Installing files...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsStep3"></a><code><b>rsStep3</b>='Phase 3/4: Chmod new files...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsStep4"></a><code><b>rsStep4</b>='Phase 4/4: Registering application...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsAddUpdSrc"></a><code><b>rsAddUpdSrc</b>='The installation tries to add the following update source: ';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsQAddUpdSrc"></a><code><b>rsQAddUpdSrc</b>='Should this source be added to the update sources list?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsFinished"></a><code><b>rsFinished</b>='Finished';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsinstAnyway"></a><code><b>rsinstAnyway</b>='Do you want to install it anyway? (This could raise problems)';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInvArchitecture"></a><code><b>rsInvArchitecture</b>='The application which this package contains was not built for the current system architecture.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsWillDLFiles"></a><code><b>rsWillDLFiles</b>='(This program will download the needed files from the internet)';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInvalidDVersion"></a><code><b>rsInvalidDVersion</b>='Package was not build for your Linux distribution release.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsFTPfailed"></a><code><b>rsFTPfailed</b>='Problem while downloading the packages. Could not create working FTP connection.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsSuccess"></a><code><b>rsSuccess</b>='Success!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsMain"></a><code><b>rsMain</b>='Main';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsDetails"></a><code><b>rsDetails</b>='Details';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstallation"></a><code><b>rsInstallation</b>='Installation';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsNoLDSources"></a><code><b>rsNoLDSources</b>='There are no sources available for your Linux distribution'#10'Try to install common packages?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsUseCompPQ"></a><code><b>rsUseCompPQ</b>='Use compatible packages?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsNoComp"></a><code><b>rsNoComp</b>='No compatible packages found!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsActionNotPossiblePkg"></a><code><b>rsActionNotPossiblePkg</b>='The selected action is not possible with this package.'#10'Please contact the package maintainer to get more information.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsReInstall"></a><code><b>rsReInstall</b>='Re-install';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsPkgDownload"></a><code><b>rsPkgDownload</b>='The following packages will be downloaded:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsGetDependencyFrom"></a><code><b>rsGetDependencyFrom</b>='Get dependency from';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsPlWait2"></a><code><b>rsPlWait2</b>='Please wait...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsDepDLProblem"></a><code><b>rsDepDLProblem</b>='Problem while downloading the dep-file.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsHashError"></a><code><b>rsHashError</b>='Hash doesn''t match!'#10'The package may be modified after creation.'#10'Please obtain a new copy';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstallationMode"></a><code><b>rsInstallationMode</b>='Installation mode:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsIModeInstruction"></a><code><b>rsIModeInstruction</b>='Select which parts of the application should be installed.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsMode"></a><code><b>rsMode</b>='Mode';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstPerformError"></a><code><b>rsInstPerformError</b>='Error while performing installation:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsYesNo1"></a><code><b>rsYesNo1</b>='Yes/No?:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstallLiBuild"></a><code><b>rsInstallLiBuild</b>='You have to install the liBuild package before you can build packages!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsFileNotExists"></a><code><b>rsFileNotExists</b>='The file &quot;%f&quot; does not exists!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsWantToDoQ"></a><code><b>rsWantToDoQ</b>='What do you want to do?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsDevVersion"></a><code><b>rsDevVersion</b>='You use a development version of Listaller!'#10'This version is untested, be careful about what you do!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsSpkWarning"></a><code><b>rsSpkWarning</b>='Make sure that you got this package from a save source and a serious publisher!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstallEveryone"></a><code><b>rsInstallEveryone</b>='Install application for everyone';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsTestApp"></a><code><b>rsTestApp</b>='Test application';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstallHome"></a><code><b>rsInstallHome</b>='Install into my Home directory';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsSelInstMode"></a><code><b>rsSelInstMode</b>='Select installation mode';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsSoftwareManager"></a><code><b>rsSoftwareManager</b>='Software Manager';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsUpdSources"></a><code><b>rsUpdSources</b>='Update sources';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsClose"></a><code><b>rsClose</b>='Close';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsDelSrc"></a><code><b>rsDelSrc</b>='Delete source';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsListofSrc"></a><code><b>rsListofSrc</b>='The following update sources are installed:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsUninstall"></a><code><b>rsUninstall</b>='Uninstall';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsSWCatalogue"></a><code><b>rsSWCatalogue</b>='Browse catalogue';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsShow"></a><code><b>rsShow</b>='Show:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsAll"></a><code><b>rsAll</b>='All';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsEducation"></a><code><b>rsEducation</b>='Education';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsOffice"></a><code><b>rsOffice</b>='Office';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsDevelopment"></a><code><b>rsDevelopment</b>='Development';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsGraphic"></a><code><b>rsGraphic</b>='Graphic';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsNetwork"></a><code><b>rsNetwork</b>='Network';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsGames"></a><code><b>rsGames</b>='Games';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsSystem"></a><code><b>rsSystem</b>='System';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsMultimedia"></a><code><b>rsMultimedia</b>='Multimedia';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsAddidional"></a><code><b>rsAddidional</b>='Utilities';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsOther"></a><code><b>rsOther</b>='Other';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsVersion"></a><code><b>rsVersion</b>='Version';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsAuthor"></a><code><b>rsAuthor</b>='Autor';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsUsername"></a><code><b>rsUsername</b>='Username';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsPassword"></a><code><b>rsPassword</b>='Password';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsProxySettings"></a><code><b>rsProxySettings</b>='Proxy-Settings';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsEnableProxy"></a><code><b>rsEnableProxy</b>='Enable Proxy-Server';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLOKIError"></a><code><b>rsLOKIError</b>='Can''t load LOKI-Setup information.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCannotLoadIcon"></a><code><b>rsCannotLoadIcon</b>='Unable to load the icon of %a. Please notify the developers of Listaller or this application!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsAutoLoadDep"></a><code><b>rsAutoLoadDep</b>='Load dependencies from included webserver-urls automatically';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsReady"></a><code><b>rsReady</b>='Ready.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsConvertPkg"></a><code><b>rsConvertPkg</b>='You want to install an %x-Package, but your Linux-distribution''s package system is %y.'#10'This package can be converted using &quot;alien&quot;, but this will take some time and eventually the installed application won''t work'#10'Do you want to convert the package now?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsConvertPkgQ"></a><code><b>rsConvertPkgQ</b>='Convert package?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsConvTitle"></a><code><b>rsConvTitle</b>='Converting %p package...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsFiltering"></a><code><b>rsFiltering</b>='Filtering...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsFilter"></a><code><b>rsFilter</b>='Filter...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLoading"></a><code><b>rsLoading</b>='Loading...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstalledApps"></a><code><b>rsInstalledApps</b>='Installed'#10'applications';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstallPkg"></a><code><b>rsInstallPkg</b>='Install package';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsBrowseCatalog"></a><code><b>rsBrowseCatalog</b>='Browse'#10'catalog';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsRepositories"></a><code><b>rsRepositories</b>='Repositories';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsSettings"></a><code><b>rsSettings</b>='Settings';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsNoGUIPkgManFound"></a><code><b>rsNoGUIPkgManFound</b>='Could not find usable GUI package manager.'#10'Please install a PackageKit-GUI!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsUseLaunchpadForBugs"></a><code><b>rsUseLaunchpadForBugs</b>='Please use https://bugs.launchpad.net/listaller'#10'for bug reports.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsDispRootApps"></a><code><b>rsDispRootApps</b>='Display system applications';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsDispOnlyMyApps"></a><code><b>rsDispOnlyMyApps</b>='Display my applications';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsSelMgrMode"></a><code><b>rsSelMgrMode</b>='Select software-manager mode:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsListallerAlien"></a><code><b>rsListallerAlien</b>='Listaller uses &quot;alien&quot; to convert foreign packages, but the tool is not installed'#10'Do you want to install &quot;alien&quot; now to continue?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstPkgQ"></a><code><b>rsInstPkgQ</b>='Install package?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsPkgInstFail"></a><code><b>rsPkgInstFail</b>='Package %p could not be installed.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsShowPkMon"></a><code><b>rsShowPkMon</b>='Start PackageKit monitor before running transactions';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsStartLiTray"></a><code><b>rsStartLiTray</b> = 'Start Listaller tray icon application (to check dependencies)';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsAboutListaller"></a><code><b>rsAboutListaller</b>='About Listaller';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsBrowseLiCatalog"></a><code><b>rsBrowseLiCatalog</b>='Browse Listaller''s software catalog';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsOpenDirsiCatalog"></a><code><b>rsOpenDirsiCatalog</b>='Open your distribution''s package catalog';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsAbout"></a><code><b>rsAbout</b>='About';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsAuthors"></a><code><b>rsAuthors</b>='Authors';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsRmSrcQ"></a><code><b>rsRmSrcQ</b>='Are you really sure that you want to delete this source?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsRmSrcQC"></a><code><b>rsRmSrcQC</b>='Delete source?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsPkitProbPkMon"></a><code><b>rsPkitProbPkMon</b>='Problem while connecting PackageKit. Run &quot;pkmon&quot; to get further information.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsNoAppsFound"></a><code><b>rsNoAppsFound</b>='No applications found!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsSourceDeleted"></a><code><b>rsSourceDeleted</b>='Source was removed.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsPleaseSelectListItem"></a><code><b>rsPleaseSelectListItem</b>='Please select an item from the list!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLiUpdateAccessFailed"></a><code><b>rsLiUpdateAccessFailed</b>='Cannot access the liUpdate tool. Maybe it is not installed?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsChangePkgManSettings"></a><code><b>rsChangePkgManSettings</b>='Change package manager settings';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCategory"></a><code><b>rsCategory</b>='Category:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsWInstallDl"></a><code><b>rsWInstallDl</b>='Select software you want to download and to install:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsNoInfo"></a><code><b>rsNoInfo</b>='No information available!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsDLSetUp"></a><code><b>rsDLSetUp</b>='Downloading setup package...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsErrContactMan"></a><code><b>rsErrContactMan</b>='Cannot download this package. Please contact the catalogue managers on %h';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstalling"></a><code><b>rsInstalling</b>='Running application installation...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsDownloadCTbase"></a><code><b>rsDownloadCTbase</b>='Downloading catalogue base information...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsOpenPage"></a><code><b>rsOpenPage</b>='Loading catalogue page...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsctDLAbort"></a><code><b>rsctDLAbort</b>='Do you really want to abort this download?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsRealUninstQ"></a><code><b>rsRealUninstQ</b>='Do you really want to uninstall %a?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsUnistSuccess"></a><code><b>rsUnistSuccess</b>='Application uninstalled successfully!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsRMerror"></a><code><b>rsRMerror</b>='Error while uninstalling!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCannotHandleRM"></a><code><b>rsCannotHandleRM</b>='This application is not a MoJo-Installation and no other package-type Listaller can handle.'#10'You have to remove it manually.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsRMUnsdDeps"></a><code><b>rsRMUnsdDeps</b>='Uninstalling unused deps...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsUninstalling"></a><code><b>rsUninstalling</b>='Uninstalling...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsRMPkg"></a><code><b>rsRMPkg</b>='Do you really want to remove &quot;%p&quot;, containing %a?'#10'The following package(s) will be removed also: %pl'#10'If you aren''t sure that you won''t need those packages, press &quot;No&quot;!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsRmPkgQ"></a><code><b>rsRmPkgQ</b>='Really remove?';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsWaiting"></a><code><b>rsWaiting</b>='Waiting...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsRMAppC"></a><code><b>rsRMAppC</b>='Uninstalling %a';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLinDesk"></a><code><b>rsLinDesk</b>='Running under %s.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsNoUpdates"></a><code><b>rsNoUpdates</b>='There are no updates available!';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsLogUpdInfo"></a><code><b>rsLogUpdInfo</b>='Update info:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsFilesChanged"></a><code><b>rsFilesChanged</b>='%f files will be changed.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsUpdTo"></a><code><b>rsUpdTo</b>='The application will be updated to version %v';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsCheckForUpd"></a><code><b>rsCheckForUpd</b>='Check for updates';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsInstUpd"></a><code><b>rsInstUpd</b>='Install updates';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsShowUpdater"></a><code><b>rsShowUpdater</b>='Show';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsQuitUpdater"></a><code><b>rsQuitUpdater</b>='Quit';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsUpdInstalling"></a><code><b>rsUpdInstalling</b>='Applying updates...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsUpdConfError"></a><code><b>rsUpdConfError</b>='Error while unpacking and configuring files.';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsQuestion"></a><code><b>rsQuestion</b> = 'Question:';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsYes"></a><code><b>rsYes</b> = 'yes';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsY"></a><code><b>rsY</b> = 'y';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="rsResolvingDep"></a><code><b>rsResolvingDep</b> = 'Resolving dependencies...';</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2009-11-20 19:33:28</em>
+</span>
+</body></html>

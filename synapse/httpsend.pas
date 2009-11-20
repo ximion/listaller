@@ -52,6 +52,7 @@ Used RFC: RFC-1867, RFC-1947, RFC-2388, RFC-2616
 {$ENDIF}
 {$H+}
 
+//** HTTP protocol client
 unit httpsend;
 
 interface

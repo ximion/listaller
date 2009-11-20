@@ -1,0 +1,455 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.11.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>RegExpr: Class TRegExpr</title>
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TRegExpr"></a><h1 class="cio">Class TRegExpr</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section"  href="#%40Methods">Methods</a></td><td><a class="section"  href="#%40Properties">Properties</a></td></tr></table>
+<a name="%40Description"></a><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a   href="RegExpr.html">RegExpr</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TRegExpr = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<a name="%40Hierarchy"></a><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TRegExpr</li></ul><h2 class="overview">Overview</h2>
+<a name="%40Methods"></a><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a   href="RegExpr.TRegExpr.html#Create">Create</a></b>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>destructor <b><a   href="RegExpr.TRegExpr.html#Destroy">Destroy</a></b>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a   href="RegExpr.TRegExpr.html#VersionMajor">VersionMajor</a></b> : integer;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a   href="RegExpr.TRegExpr.html#VersionMinor">VersionMinor</a></b> : integer;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="RegExpr.TRegExpr.html#Exec">Exec</a></b> (const AInputString : <a   href="RegExpr.html#RegExprString">RegExprString</a>) : boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="RegExpr.TRegExpr.html#ExecNext">ExecNext</a></b> : boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="RegExpr.TRegExpr.html#ExecPos">ExecPos</a></b> (AOffset: integer ) : boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="RegExpr.TRegExpr.html#Substitute">Substitute</a></b> (const ATemplate : <a   href="RegExpr.html#RegExprString">RegExprString</a>) : <a   href="RegExpr.html#RegExprString">RegExprString</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="RegExpr.TRegExpr.html#Split">Split</a></b> (AInputStr : <a   href="RegExpr.html#RegExprString">RegExprString</a>; APieces : TStrings);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="RegExpr.TRegExpr.html#Replace">Replace</a></b> (AInputStr : <a   href="RegExpr.html#RegExprString">RegExprString</a>; const AReplaceStr : <a   href="RegExpr.html#RegExprString">RegExprString</a>; AUseSubstitution : boolean) : <a   href="RegExpr.html#RegExprString">RegExprString</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="RegExpr.TRegExpr.html#ReplaceEx">ReplaceEx</a></b> (AInputStr : <a   href="RegExpr.html#RegExprString">RegExprString</a>; AReplaceFunc : <a   href="RegExpr.html#TRegExprReplaceFunction">TRegExprReplaceFunction</a>) : <a   href="RegExpr.html#RegExprString">RegExprString</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="RegExpr.TRegExpr.html#LastError">LastError</a></b> : integer;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="RegExpr.TRegExpr.html#ErrorMsg">ErrorMsg</a></b> (AErrorID : integer) : <a   href="RegExpr.html#RegExprString">RegExprString</a>; virtual;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a   href="RegExpr.TRegExpr.html#InvertCaseFunction">InvertCaseFunction</a></b> (const Ch : <a   href="RegExpr.html#REChar">REChar</a>) : <a   href="RegExpr.html#REChar">REChar</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="RegExpr.TRegExpr.html#Compile">Compile</a></b>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="RegExpr.TRegExpr.html#Dump">Dump</a></b> : <a   href="RegExpr.html#RegExprString">RegExprString</a>;</code></td>
+</tr>
+</table>
+<a name="%40Properties"></a><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#Expression">Expression</a></b> : <a   href="RegExpr.html#RegExprString">RegExprString</a> read GetExpression write SetExpression;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#ModifierStr">ModifierStr</a></b> : <a   href="RegExpr.html#RegExprString">RegExprString</a> read GetModifierStr write SetModifierStr;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#ModifierI">ModifierI</a></b> : boolean index 1 read GetModifier write SetModifier;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#ModifierR">ModifierR</a></b> : boolean index 2 read GetModifier write SetModifier;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#ModifierS">ModifierS</a></b> : boolean index 3 read GetModifier write SetModifier;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#ModifierG">ModifierG</a></b> : boolean index 4 read GetModifier write SetModifier;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#ModifierM">ModifierM</a></b> : boolean index 5 read GetModifier write SetModifier;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#ModifierX">ModifierX</a></b> : boolean index 6 read GetModifier write SetModifier;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#InputString">InputString</a></b> : <a   href="RegExpr.html#RegExprString">RegExprString</a> read GetInputString write SetInputString;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#SubExprMatchCount">SubExprMatchCount</a></b> : integer read GetSubExprMatchCount;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#MatchPos">MatchPos</a></b> [Idx : integer]: integer read GetMatchPos;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#MatchLen">MatchLen</a></b> [Idx : integer]: integer read GetMatchLen;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#Match">Match</a></b> [Idx : integer]: <a   href="RegExpr.html#RegExprString">RegExprString</a> read GetMatch;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#CompilerErrorPos">CompilerErrorPos</a></b> : integer read GetCompilerErrorPos;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#SpaceChars">SpaceChars</a></b> : <a   href="RegExpr.html#RegExprString">RegExprString</a> read fSpaceChars write fSpaceChars;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#WordChars">WordChars</a></b> : <a   href="RegExpr.html#RegExprString">RegExprString</a> read fWordChars write fWordChars;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#LineSeparators">LineSeparators</a></b> : <a   href="RegExpr.html#RegExprString">RegExprString</a> read fLineSeparators write SetLineSeparators;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#LinePairedSeparator">LinePairedSeparator</a></b> : <a   href="RegExpr.html#RegExprString">RegExprString</a> read GetLinePairedSeparator write SetLinePairedSeparator;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="RegExpr.TRegExpr.html#InvertCase">InvertCase</a></b> : <a   href="RegExpr.html#TRegExprInvertCaseFunction">TRegExprInvertCaseFunction</a> read fInvertCase write fInvertCase;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Methods</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="VersionMajor"></a><code>class function <b>VersionMajor</b> : integer;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="VersionMinor"></a><code>class function <b>VersionMinor</b> : integer;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Exec"></a><code>function <b>Exec</b> (const AInputString : <a   href="RegExpr.html#RegExprString">RegExprString</a>) : boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExecNext"></a><code>function <b>ExecNext</b> : boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExecPos"></a><code>function <b>ExecPos</b> (AOffset: integer ) : boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Substitute"></a><code>function <b>Substitute</b> (const ATemplate : <a   href="RegExpr.html#RegExprString">RegExprString</a>) : <a   href="RegExpr.html#RegExprString">RegExprString</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Split"></a><code>procedure <b>Split</b> (AInputStr : <a   href="RegExpr.html#RegExprString">RegExprString</a>; APieces : TStrings);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Replace"></a><code>function <b>Replace</b> (AInputStr : <a   href="RegExpr.html#RegExprString">RegExprString</a>; const AReplaceStr : <a   href="RegExpr.html#RegExprString">RegExprString</a>; AUseSubstitution : boolean) : <a   href="RegExpr.html#RegExprString">RegExprString</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ReplaceEx"></a><code>function <b>ReplaceEx</b> (AInputStr : <a   href="RegExpr.html#RegExprString">RegExprString</a>; AReplaceFunc : <a   href="RegExpr.html#TRegExprReplaceFunction">TRegExprReplaceFunction</a>) : <a   href="RegExpr.html#RegExprString">RegExprString</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="LastError"></a><code>function <b>LastError</b> : integer;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ErrorMsg"></a><code>function <b>ErrorMsg</b> (AErrorID : integer) : <a   href="RegExpr.html#RegExprString">RegExprString</a>; virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="InvertCaseFunction"></a><code>class function <b>InvertCaseFunction</b> (const Ch : <a   href="RegExpr.html#REChar">REChar</a>) : <a   href="RegExpr.html#REChar">REChar</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Compile"></a><code>procedure <b>Compile</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Dump"></a><code>function <b>Dump</b> : <a   href="RegExpr.html#RegExprString">RegExprString</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Expression"></a><code>property <b>Expression</b> : <a   href="RegExpr.html#RegExprString">RegExprString</a> read GetExpression write SetExpression;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ModifierStr"></a><code>property <b>ModifierStr</b> : <a   href="RegExpr.html#RegExprString">RegExprString</a> read GetModifierStr write SetModifierStr;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ModifierI"></a><code>property <b>ModifierI</b> : boolean index 1 read GetModifier write SetModifier;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ModifierR"></a><code>property <b>ModifierR</b> : boolean index 2 read GetModifier write SetModifier;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ModifierS"></a><code>property <b>ModifierS</b> : boolean index 3 read GetModifier write SetModifier;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ModifierG"></a><code>property <b>ModifierG</b> : boolean index 4 read GetModifier write SetModifier;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ModifierM"></a><code>property <b>ModifierM</b> : boolean index 5 read GetModifier write SetModifier;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ModifierX"></a><code>property <b>ModifierX</b> : boolean index 6 read GetModifier write SetModifier;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="InputString"></a><code>property <b>InputString</b> : <a   href="RegExpr.html#RegExprString">RegExprString</a> read GetInputString write SetInputString;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SubExprMatchCount"></a><code>property <b>SubExprMatchCount</b> : integer read GetSubExprMatchCount;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="MatchPos"></a><code>property <b>MatchPos</b> [Idx : integer]: integer read GetMatchPos;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="MatchLen"></a><code>property <b>MatchLen</b> [Idx : integer]: integer read GetMatchLen;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Match"></a><code>property <b>Match</b> [Idx : integer]: <a   href="RegExpr.html#RegExprString">RegExprString</a> read GetMatch;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="CompilerErrorPos"></a><code>property <b>CompilerErrorPos</b> : integer read GetCompilerErrorPos;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SpaceChars"></a><code>property <b>SpaceChars</b> : <a   href="RegExpr.html#RegExprString">RegExprString</a> read fSpaceChars write fSpaceChars;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="WordChars"></a><code>property <b>WordChars</b> : <a   href="RegExpr.html#RegExprString">RegExprString</a> read fWordChars write fWordChars;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="LineSeparators"></a><code>property <b>LineSeparators</b> : <a   href="RegExpr.html#RegExprString">RegExprString</a> read fLineSeparators write SetLineSeparators;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="LinePairedSeparator"></a><code>property <b>LinePairedSeparator</b> : <a   href="RegExpr.html#RegExprString">RegExprString</a> read GetLinePairedSeparator write SetLinePairedSeparator;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="InvertCase"></a><code>property <b>InvertCase</b> : <a   href="RegExpr.html#TRegExprInvertCaseFunction">TRegExprInvertCaseFunction</a> read fInvertCase write fInvertCase;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2009-11-20 19:33:28</em>
+</span>
+</body></html>

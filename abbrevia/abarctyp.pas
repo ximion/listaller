@@ -29,9 +29,9 @@
 { * ABBREVIA: TABArchive, TABArchiveItem classes        * }
 { ******************************************************* }
 
-//** Archive types Abbrevia can handle
 {$I AbDefine.inc}
 
+//** Archive types Abbrevia can handle
 unit AbArcTyp;
 
 interface
