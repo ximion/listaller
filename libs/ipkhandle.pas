@@ -489,13 +489,13 @@ end;
 
 begin
  Result:=true;
- SetExtraPos(0);
+ SetExtraPos(1);
   if (Dependencies.Count>0) and (Dependencies[0]='[detectpkgs]') then
   begin
     Dependencies.Delete(0);
 
     DInfo:=GetDistro;
-    //On yum, PackageKit needs the complete path to find
+    //With yum backend, PackageKit needs the complete path to find
     //packages. Add the lib dir to libraries
     if DInfo.PackageSystem<>'DEB' then
      for i:=0 to Dependencies.Count-1 do
@@ -506,9 +506,7 @@ begin
     mnpos:=0;
     one:=100/(Dependencies.Count*2);
     SetExtraPos(Round(mnpos*one));
-    p:=TProcess.Create(nil);
     ShowPKMon();
-    p.Options:=[poUsePipes,poWaitOnExit];
     tmp:=TStringList.Create;
 
     // ProcThreadPool.MaxThreadCount:=4;
@@ -517,7 +515,7 @@ begin
     RemoveDuplicates(tmp);
     Dependencies.Assign(tmp);
     tmp.Free;
-    SetMainPos(100);
+    SetExtraPos(100);
   end;
 end;
 

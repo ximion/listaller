@@ -9,7 +9,7 @@ pasdoc --write-uses-list --staronly --format html \
 ../ipkbuild.pas ../ipkdef.pas ../synapse/httpsend.pas \
 ../synapse/ftpsend.pas ../synapse/blcksock.pas ../manager.pas \
 ../pkgconvertdisp.pas ../mnupdate.pas ../licommon.pas ../lentries.pas \
-../bindings/packagekit.pas ../bindings/appman.pas ../litypes.pas \
+../bindings/packagekit.pas ../bindings/appman.pas ../litypes.pas ../libasic.pas \
 ../bindings/installer.pas ../RegExpr.pas ../swcatalog.pas ../xtypefm.pas \
 ../trstrings.pas ../uninstall.pas ../updexec.pas ../xtypefm.pas \
 ../linotify.pas ../liCreator/editor.pas ../liCreator/prjwizard.pas \

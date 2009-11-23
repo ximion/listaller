@@ -820,6 +820,8 @@ tmp:=TStringList.Create;
 pkit.RsList:=tmp;
 pkit.PkgNameFromFile(id);
 
+setpos(20);
+
 if tmp.Count<=0 then
 begin UninstallMojo(id);tmp.Free;pkit.Free;exit;end;
 if pkit.PkFinishCode>0 then
@@ -831,7 +833,7 @@ msg('Looking for reverse-dependencies...',mtInfo);
 tmp.Clear;
 
 pkit.GetRequires(f);
-while not pkit.PkFinished do setpos(0);
+while not pkit.PkFinished do setpos(25);
 g:='';
 for i:=0 to tmp.Count-1 do
 g:=g+#10+tmp[i];
@@ -846,6 +848,7 @@ if (StringReplace(g,' ','',[rfReplaceAll])='')or
         rqWarning)=rqsYes)
 then
 begin
+setpos(50);
 
 msg('Uninstalling '+f+' ...',mtInfo);
 pkit.RemovePkg(f);
