@@ -50,7 +50,7 @@ var
   smsg: PDBusMessage;
   ret: cint;
   startTick: Integer;
-  lastJobCount: Integer; //Hold the last number of active jobs
+  lastJobCount: Integer=0; //Hold the last number of active jobs
 begin
   WriteLn('Daemon started.');
 

@@ -6,13 +6,13 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="916"/>
+      <CurrentBuildNr Value="924"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -33,7 +33,7 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="23" Y="22"/>
+        <CursorPos X="27" Y="22"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="52"/>
@@ -42,11 +42,9 @@
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="23" Y="498"/>
-        <TopLine Value="486"/>
-        <EditorIndex Value="1"/>
+        <CursorPos X="6" Y="452"/>
+        <TopLine Value="433"/>
         <UsageCount Value="20"/>
-        <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
@@ -248,7 +246,7 @@
         <UsageCount Value="10"/>
       </Unit30>
     </Units>
-    <JumpHistory Count="20" HistoryIndex="19">
+    <JumpHistory Count="15" HistoryIndex="14">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="152" Column="5" TopLine="132"/>
@@ -307,28 +305,8 @@
       </Position14>
       <Position15>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="23" TopLine="1"/>
+        <Caret Line="22" Column="27" TopLine="1"/>
       </Position15>
-      <Position16>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="13" Column="29" TopLine="1"/>
-      </Position16>
-      <Position17>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="136" Column="22" TopLine="116"/>
-      </Position17>
-      <Position18>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="434" Column="34" TopLine="414"/>
-      </Position18>
-      <Position19>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="1029" Column="13" TopLine="1009"/>
-      </Position19>
-      <Position20>
-        <Filename Value="ipkhandle.pas"/>
-        <Caret Line="136" Column="31" TopLine="116"/>
-      </Position20>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

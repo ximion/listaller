@@ -445,6 +445,8 @@ var pkit: TPackageKit;xtmp: TStringList;h: String;lpos: Integer;
 begin
 if Index=-1 then
 begin
+lpos:=0;
+lind:=0;
 while lInd<Dependencies.Count-1 do
 if lpos<>mnpos then
 begin
@@ -458,8 +460,6 @@ begin
   pkit:=TPackageKit.Create;
   xtmp:=TStringList.Create;
   pkit.RsList:=xtmp;
-
-  lpos:=0;
 
   mnpos:=mnpos+1;
 
