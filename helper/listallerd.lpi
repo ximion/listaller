@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="331"/>
+      <CurrentBuildNr Value="336"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -37,8 +37,8 @@
         <Filename Value="listallerd.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerd"/>
-        <CursorPos X="58" Y="22"/>
-        <TopLine Value="1"/>
+        <CursorPos X="1" Y="194"/>
+        <TopLine Value="155"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="37"/>
         <Loaded Value="True"/>
@@ -46,8 +46,8 @@
       <Unit1>
         <Filename Value="../bindings/installer.pas"/>
         <UnitName Value="installer"/>
-        <CursorPos X="55" Y="216"/>
-        <TopLine Value="194"/>
+        <CursorPos X="11" Y="91"/>
+        <TopLine Value="71"/>
         <UsageCount Value="10"/>
       </Unit1>
       <Unit2>
@@ -68,8 +68,8 @@
         <Filename Value="djobs.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="djobs"/>
-        <CursorPos X="13" Y="584"/>
-        <TopLine Value="564"/>
+        <CursorPos X="25" Y="394"/>
+        <TopLine Value="374"/>
         <UsageCount Value="37"/>
       </Unit4>
       <Unit5>
@@ -201,15 +201,19 @@
         <UsageCount Value="10"/>
       </Unit24>
     </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
+    <JumpHistory Count="3" HistoryIndex="2">
       <Position1>
         <Filename Value="listallerd.lpr"/>
         <Caret Line="106" Column="29" TopLine="78"/>
       </Position1>
       <Position2>
         <Filename Value="listallerd.lpr"/>
-        <Caret Line="22" Column="68" TopLine="1"/>
+        <Caret Line="22" Column="61" TopLine="1"/>
       </Position2>
+      <Position3>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="22" Column="61" TopLine="1"/>
+      </Position3>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

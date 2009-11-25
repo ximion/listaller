@@ -260,6 +260,12 @@ begin
  setup^.SetCurProfile(id);
 end;
 
+//** Set if update source should be registered
+procedure li_setup_enable_usource_registering(setup: PInstallation;b: Boolean);cdecl;
+begin
+ setup^.RegisterUpdateSource:=b;
+end;
+
 //** Read appversion
 function li_setup_appicon(setup: PInstallation): PChar;cdecl;
 begin
@@ -444,6 +450,7 @@ exports
  li_setup_appversion,
  li_setup_pkgid,
  li_setup_long_description,
+ li_setup_enable_usource_registering,
  li_setup_wizard_image_path,
  li_setup_license,
  li_setup_profiles_list,

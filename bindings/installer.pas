@@ -57,6 +57,7 @@ function  GetDesktopFiles: String;
 function  GetAppCMD: String;
 function  GetFileList: String;
 function  StartInstallation: Boolean;
+procedure EnableUSource(b: Boolean);
 procedure SetProfileID(i: Integer);
 procedure SetRootMode(b: Boolean);
 property Forced: String read ForcedActn write SetForced;
@@ -87,6 +88,7 @@ function  li_setup_appicon(setup: Pointer): PChar;cdecl; external libinst;
 function  li_setup_desktopfiles(setup: Pointer): PChar;cdecl; external libinst;
 function  li_setup_app_exec_command(setup: Pointer): PChar;cdecl; external libinst;
 function  li_setup_profile_current_filelist(setup: Pointer): PChar;cdecl; external libinst;
+procedure li_setup_enable_usource_registering(setup: Pointer;b: Boolean);cdecl; external libinst;
 function  li_setup_register_message_call(setup: Pointer;call: TMessageCall;user_data: Pointer): Boolean; cdecl; external libinst name 'li_setup_register_message_call';
 function  li_setup_register_step_message_call(setup: Pointer;call: TMessageCall;user_data: Pointer): Boolean; cdecl; external libinst name 'li_setup_register_step_message_call';
 function  li_setup_register_user_request_call(setup: Pointer;call: TRequestCall;user_data: Pointer): Boolean; cdecl; external libinst name 'li_setup_register_user_request_call';
@@ -226,9 +228,14 @@ begin
 Result:=li_setup_start(@ins);
 end;
 
-procedure TInstallPack.SetRootMode(b: boolean);
+procedure TInstallPack.SetRootMode(b: Boolean);
 begin
 li_setup_set_su_mode(@ins,b);
+end;
+
+procedure TInstallPack.EnableUSource(b: Boolean);
+begin
+li_setup_enable_usource_registering(@ins,b);
 end;
 
 procedure TInstallPack.SetProfileID(i: Integer);

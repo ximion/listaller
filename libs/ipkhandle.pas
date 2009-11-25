@@ -89,6 +89,8 @@ type
   RegDir: String;
   //All the things the user forces
   Forces: String;
+  //True, if update source should be set
+  AddUpdateSource: Boolean;
 
   //Set superuser mode correctly
   procedure SetRootMode(b: Boolean);
@@ -105,6 +107,8 @@ type
   procedure OnPKitProgress(pos: Integer;dp: Pointer);
   //Execute installation as root using dbus daemon & PolicyKit
   function  DoInstallationAsRoot(): Boolean;
+  //Add update source of the package
+  procedure CheckAddUSource;
  protected
   //UserData
   mainposudata: Pointer;
@@ -170,6 +174,8 @@ type
   property SuperuserMode: Boolean read SUMode write SetRootMode;
   //** Set forces identifier string
   property ForceActions: String read Forces write Forces;
+  //** True if update source will be registered
+  property RegisterUpdateSource: Boolean read AddUpdateSource write AddUpdateSource;
   //Progress events
   procedure RegOnProgressMainChange(call: TProgressCall;data: Pointer);
   procedure RegOnProgressExtraChange(call: TProgressCall;data: Pointer);
@@ -273,6 +279,9 @@ begin
   //Create text containers
   license:=TStringList.Create;
   longdesc:=TStringList.Create;
+
+  //Init
+  AddUpdateSource:=false;
 end;
 
 destructor TInstallation.Destroy;
@@ -1104,21 +1113,6 @@ for I:=0 to Dependencies.Count-1 do
 begin  //Download & install dependencies
 if (pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then
 begin
-
-//!!! Not supported by DBus. Needs reimplementation
-//Note: Move to initialize?
-{
-cnf:=TInifile.Create(ConfigDir+'config.cnf');
-if cnf.ReadBool('MainConf','AutoDepLoad',true)=false then
- if MakeUsrRequest(StringReplace(rsWDLDep,'%l',Dependencies[i],[rfReplaceAll])+#13+rsWAllow,rqWarning)=rqsNo then
- begin
-  Result:=false;
-  Abort_FreeAll();
-  exit;
- end;
-cnf.Free;
-}
-
     msg(rsGetDependencyFrom+' '+Dependencies[i]+'.');
     msg(rsPlWait2);
  if pos('http://',LowerCase(Dependencies[i]))>0 then
@@ -1527,7 +1521,9 @@ if ExecB<>'<disabled>' then begin
  //while Proc.Running do Application.ProcessMessages;
 end;
 
-if USource<>'#' then
+proc.Free;
+
+if (USource<>'#')and(AddUpdateSource) then
 begin
 fi:=TStringList.Create;
 if not FileExists(RegDir+'updates.list') then
@@ -1540,23 +1536,12 @@ for i:=1 to fi.Count-1 do
 if pos(USource,fi[i])>0 then break;
 if i=fi.Count then
 begin
-
-//!!! Not supported by DBus daemon. Move to extra function *after* daemon call?
-{
-if MakeUsrRequest(PAnsiChar(rsAddUpdSrc+#13+
-   copy(USource,pos(' <',USource)+2,length(USource)-pos(' <',USource)-2)+' ('+copy(uSource,3,pos(' <',USource)-3)+')'+#13+
-   PAnsiChar(rsQAddUpdSrc)),rqWarning)=rqsYes then
- begin
   fi.Add('- '+USource);
   fi.SaveToFile(RegDir+'updates.list');
- end;
-}
-
- end;
+end;
  fi.Free;
 end;
 
-proc.Free;
 mnpos:=mnpos+5;
 SetMainPos(Round(mnpos*max));
 
@@ -1706,6 +1691,28 @@ end; }
 SendStateMsg(rsSuccess);
 end;
 
+procedure TInstallation.CheckAddUSource;
+var fi: TStringList;i: Integer;
+begin
+if USource<>'#' then
+begin
+fi:=TStringList.Create;
+fi.LoadFromFile(RegDir+'updates.list');
+for i:=1 to fi.Count-1 do
+if pos(USource,fi[i])>0 then break;
+if i=fi.Count then
+begin
+if MakeUsrRequest(PAnsiChar(rsAddUpdSrc+#13+
+   copy(USource,pos(' <',USource)+2,length(USource)-pos(' <',USource)-2)+' ('+copy(uSource,3,pos(' <',USource)-3)+')'+#13+
+   PAnsiChar(rsQAddUpdSrc)),rqWarning)=rqsYes then
+ begin
+  AddUpdateSource:=true;
+ end;
+ end;
+ fi.Free;
+end;
+end;
+
 //This method submits all actions to the DBus daemon
 function TInstallation.DoInstallationAsRoot(): Boolean;
 var
@@ -1724,6 +1731,8 @@ var
   boolvalue: Boolean;
 begin
   Result:=false;
+
+  CheckAddUSource;
 
   dbus_error_init(@err);
 
@@ -1755,6 +1764,13 @@ begin
   param:=PChar(PkgPath);
   dbus_message_iter_init_append(dmsg, @args);
   if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @param) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+
+  //Append true if update source should be registered
+  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_BOOLEAN, @AddUpdateSource) = 0) then
   begin
     p_error('Out Of Memory!');
     exit;
@@ -1927,7 +1943,7 @@ begin
          dbus_message_iter_get_basic(@args, @strvalue);
          //The action failed. Diplay error and leave the loop
           MakeUsrRequest(strvalue,rqError);
-          action_finished:=true;
+          install_finished:=true;
       end;
     end;
 
@@ -1957,14 +1973,34 @@ begin
 end;
 
 function TInstallation.DoInstallation: Boolean;
-var cnf: TIniFile;
+var cnf: TIniFile;i: Integer;
 begin
+
+if pkType=ptLinstall then
+begin
+//Check if the package downloads native pkgs
+for i:=0 to Dependencies.Count-1 do
+if (pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then
+begin
+cnf:=TInifile.Create(ConfigDir+'config.cnf');
+if cnf.ReadBool('MainConf','AutoDepLoad',true)=false then
+ if MakeUsrRequest(StringReplace(rsWDLDep,'%l',Dependencies[i],[rfReplaceAll])+#13+rsWAllow,rqWarning)=rqsNo then
+ begin
+  Result:=false;
+  exit;
+ end;
+cnf.Free;
+end;
+end;
 
 if (SUMode)and(not IsRoot) then
 begin
  Result:=DoInstallationAsRoot();
  exit;
 end;
+
+//Check if we have update sources to register
+CheckAddUSource;
 
 //Load network connections
  HTTP:=THTTPSend.Create;

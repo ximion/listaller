@@ -51,6 +51,7 @@ type
  TDoAppInstall = class(TJob)
  private
   FileName: String;
+  actUSource: Boolean;
   //** Send reply to client
   procedure SendReply(stat: Boolean);override;
   //** Emit a progress changed signal
@@ -162,6 +163,14 @@ begin
       dbus_message_iter_get_basic(@args, @param);
 
    FileName:=param;
+
+   dbus_message_iter_next(@args);
+
+   if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
+      p_error('Argument is no boolean!')
+   else
+      dbus_message_iter_get_basic(@args, @actUSource);
+
 
    p_info('RunSetup called with '+FileName);
 
@@ -382,6 +391,7 @@ begin
  setup.SetUserRequestCall(@InstallUserRequest,self);
 
  setup.Initialize(FileName);
+ setup.EnableUSource(actUSource);
  setup.StartInstallation;
 
  setup.Free;
