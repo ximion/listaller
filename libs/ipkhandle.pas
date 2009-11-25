@@ -1105,6 +1105,9 @@ begin  //Download & install dependencies
 if (pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then
 begin
 
+//!!! Not supported by DBus. Needs reimplementation
+//Note: Move to initialize?
+{
 cnf:=TInifile.Create(ConfigDir+'config.cnf');
 if cnf.ReadBool('MainConf','AutoDepLoad',true)=false then
  if MakeUsrRequest(StringReplace(rsWDLDep,'%l',Dependencies[i],[rfReplaceAll])+#13+rsWAllow,rqWarning)=rqsNo then
@@ -1114,6 +1117,7 @@ if cnf.ReadBool('MainConf','AutoDepLoad',true)=false then
   exit;
  end;
 cnf.Free;
+}
 
     msg(rsGetDependencyFrom+' '+Dependencies[i]+'.');
     msg(rsPlWait2);
@@ -1537,13 +1541,16 @@ if pos(USource,fi[i])>0 then break;
 if i=fi.Count then
 begin
 
- if MakeUsrRequest(PAnsiChar(rsAddUpdSrc+#13+
+//!!! Not supported by DBus daemon. Move to extra function *after* daemon call?
+{
+if MakeUsrRequest(PAnsiChar(rsAddUpdSrc+#13+
    copy(USource,pos(' <',USource)+2,length(USource)-pos(' <',USource)-2)+' ('+copy(uSource,3,pos(' <',USource)-3)+')'+#13+
    PAnsiChar(rsQAddUpdSrc)),rqWarning)=rqsYes then
  begin
   fi.Add('- '+USource);
   fi.SaveToFile(RegDir+'updates.list');
  end;
+}
 
  end;
  fi.Free;
@@ -1904,6 +1911,23 @@ begin
       begin
          dbus_message_iter_get_basic(@args, @strvalue);
          SendStateMsg(strvalue);
+      end;
+    end;
+
+    //Break on error signal
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'Error') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no string!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @strvalue);
+         //The action failed. Diplay error and leave the loop
+          MakeUsrRequest(strvalue,rqError);
+          action_finished:=true;
       end;
     end;
 

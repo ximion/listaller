@@ -19,7 +19,7 @@ program listallerd;
 {$mode objfpc}{$H+}
 
 uses
-  cthreads, Interfaces, Classes, SysUtils, CustApp, dbus, polkit, djobs,
+  cthreads, Interfaces, Classes, SysUtils, CustApp, dbus, djobs,
   Contnrs, cTypes, liBasic, LCLIntf;
 
 type

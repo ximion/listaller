@@ -729,6 +729,23 @@ begin
       end;
     end;
 
+    //Break on error signal
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Manage', 'Error') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no string!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @strvalue);
+         //The action failed. Diplay error and leave the loop
+          request(strvalue,rqError);
+          action_finished:=true;
+      end;
+    end;
+
     //Check if the installation has finished
     if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Manage', 'Finished') <> 0) then
     begin

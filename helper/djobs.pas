@@ -70,6 +70,8 @@ type
   appinfo: TAppInfo;
   //** Send reply to client
   procedure SendReply(stat: Boolean);override;
+  //** Emit a global string signal
+  procedure EmitMessage(id: String;param: PChar);
  public
   constructor Create(aMsg: PDBusMessage);
   destructor  Destroy;override;
@@ -296,40 +298,17 @@ end;
 
 function InstallUserRequest(mtype: TRqType;info: PChar;job: Pointer): TRqResult;cdecl;
 begin
- p_warning('User request handling needs to be implemented!');
- p_debug(info);
-{with IWizFrm do
+//The daemon should not ask questions while doing a transaction.
+//All questions which need a reply should be done before or after the daemon call
+if mtype = rqError then
 begin
-case mtype of
-rqError: begin
-  ShowMessage(msg);
-  Result:=rqsOK;
-  setup.Free;
-  Terminate;
-  exit;
+ //Emit error message and quit job
+ TDoAppInstall(job).SendMessageSignal('Error',info);
+end else
+begin
+ p_error('Received invalid user request! (Deamon should _never_ ask questions which need a reply.');
+ p_debug(info);
 end;
-rqWarning: begin
-  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(Format(rsInstOf,[setup.GetAppName])),MB_YESNO)<>IDYES then
-  begin
-   ShowMessage(rsINClose);
-   Result:=rqsNo;
-   InfoMemo.Lines.Add('Installation aborted by user.');
-   InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
-   setup.Free;
-   Terminate;
-  end;
-end;
-rqQuestion: begin
-  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(Format(rsInstOf,[setup.GetAppName])),MB_YESNO)<>IDYES then
-   Result:=rqsNo else Result:=rqsYes;
-end;
-rqInfo: begin
-  ShowMessage(msg);
-  Result:=rqsOK;
-end;
- end;
-end; }
-
 end;
 
 procedure InstallMessage(info: PChar;imp: TMType;job: Pointer);cdecl;
@@ -524,6 +503,38 @@ begin
    dbus_message_unref(replyMsg);
 end;
 
+procedure TDoAppRemove.EmitMessage(id: String;param: PChar);
+var
+  args: DBusMessageIter;
+  dmsg: PDBusMessage;
+begin
+  // create a signal & check for errors
+  dmsg := dbus_message_new_signal('/org/freedesktop/Listaller/Manager1', // object name of the signal
+                                 'org.freedesktop.Listaller.Manage', // interface name of the signal
+                                 PChar(ID)); // name of the signal
+  if (dmsg = nil) then
+  begin
+    p_error('Message Null');
+    exit;
+  end;
+  // append arguments onto signal
+  dbus_message_iter_init_append(dmsg, @args);
+  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @param) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+  // send the message and flush the connection
+  if (dbus_connection_send(conn, dmsg, nil) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+  dbus_connection_flush(conn);
+  // free the message and close the connection
+  dbus_message_unref(dmsg);
+end;
+
 procedure OnMgrProgress(pos: Integer;job: Pointer);cdecl;
 var
   args: DBusMessageIter;
@@ -561,40 +572,22 @@ end;
 
 function OnMgrUserRequest(mtype: TRqType;msg: PChar;job: Pointer): TRqResult;cdecl;
 begin
- p_warning('User request handling needs to be implemented!');
+//The daemon should not ask questions while doing a transaction.
+//All questions which need a reply should be done before or after the daemon call
+if mtype = rqError then
+begin
+ //Emit error message and quit job
+ TDoAppRemove(job).EmitMessage('Error',msg);
+end else
+begin
+ p_error('Received invalid user request! (Deamon should _never_ ask questions which need a reply.');
  p_debug(msg);
+end;
 end;
 
 procedure OnMgrMessage(param: PChar;imp: TMType;job: Pointer);cdecl;
-var
-  args: DBusMessageIter;
-  dmsg: PDBusMessage;
 begin
-  // create a signal & check for errors
-  dmsg := dbus_message_new_signal('/org/freedesktop/Listaller/Manager1', // object name of the signal
-                                 'org.freedesktop.Listaller.Manage', // interface name of the signal
-                                 'Message'); // name of the signal
-  if (dmsg = nil) then
-  begin
-    p_error('Message Null');
-    exit;
-  end;
-  // append arguments onto signal
-  dbus_message_iter_init_append(dmsg, @args);
-  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @param) = 0) then
-  begin
-    p_error('Out Of Memory!');
-    exit;
-  end;
-  // send the message and flush the connection
-  if (dbus_connection_send(conn, dmsg, nil) = 0) then
-  begin
-    p_error('Out Of Memory!');
-    exit;
-  end;
-  dbus_connection_flush(conn);
-  // free the message and close the connection
-  dbus_message_unref(dmsg);
+ TDoAppRemove(job).EmitMessage('Message',param);
 end;
 
 procedure TDoAppRemove.Execute;
