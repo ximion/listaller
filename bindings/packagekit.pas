@@ -204,7 +204,7 @@ begin
  if result<>nil then
  begin
  rcode:=pk_results_get_exit_code(result);
-  writeLn(rcode);
+  p_debug('Rcode: '+IntToStr(LongInt(rcode)));
   TPackageKit(user_data).exitcode:=LongInt(rcode);
  g_object_unref(result);
  end else TPackageKit(user_data).exitcode:=8;

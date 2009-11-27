@@ -1,11 +1,11 @@
-# Main translation template for Listaller beta version 0.3.00b
+# Main translation template for Listaller beta version 0.3.50a
 # Copyright (C) 2009
 # This file is distributed under the same licence as the Listaller package.
 #
-# Matthias Klumpp, 2009.
+# Matthias Klumpp, 2008-2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.3.00b\n"
+"Project-Id-Version: 0.3.50a\n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
 "PO-Revision-Date: 2009-03-03 14:08-0100\n"
 "Language-Team: Listaller Team\n"
@@ -294,6 +294,10 @@ msgstr ""
 msgid "Unable to override the file %f."
 msgstr ""
 
+#: trstrings:rscncopy
+msgid "Unable to copy the file %s."
+msgstr ""
+
 #: trstrings:rsnotifydevs
 msgid "Please notify the developers on http://launchpad.net/listaller"
 msgstr ""
@@ -303,7 +307,7 @@ msgid "Error while extracting files!"
 msgstr ""
 
 #: trstrings:rspkgdm
-msgid "The IPK package could be damaged or you haven't enough rights to acces required files/folders."
+msgid "The IPK package could be damaged or you haven't enough rights to access required files/folders."
 msgstr ""
 
 #: trstrings:rsabload
@@ -391,7 +395,7 @@ msgid "Phase 4/4: Registering application..."
 msgstr ""
 
 #: trstrings:rsaddupdsrc
-msgid "The installation tries to add the following update source: "
+msgid "The installation contains the following update source: "
 msgstr ""
 
 #: trstrings:rsqaddupdsrc
@@ -419,7 +423,7 @@ msgid "Package was not build for your Linux distribution release."
 msgstr ""
 
 #: trstrings:rsftpfailed
-msgid "Problem while downloading the packages. Maybe the login on the FTP-Server failed."
+msgid "Problem while downloading the packages. Could not create working FTP connection."
 msgstr ""
 
 #: trstrings:rssuccess
@@ -452,10 +456,6 @@ msgstr ""
 
 #: trstrings:rsactionnotpossiblepkg
 msgid "The selected action is not possible with this package.\nPlease contact the package maintainer to get more information."
-msgstr ""
-
-#: trstrings:rsidinvalid
-msgid "This package has no valid ID\nThe installer will close."
 msgstr ""
 
 #: trstrings:rsreinstall
@@ -514,12 +514,12 @@ msgstr ""
 msgid "What do you want to do?"
 msgstr ""
 
-#: trstrings:rspackagekitwarning
-msgid "Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to work correctly.\nPlease update PackageKit!"
+#: trstrings:rsdevversion
+msgid "You use a development version of Listaller!\nThis version is untested, be careful about what you do!"
 msgstr ""
 
 #: trstrings:rsspkwarning
-msgid "Make sure that you have got this package from a save source and a serious publisher!"
+msgid "Make sure that you got this package from a save source and a serious publisher!"
 msgstr ""
 
 #: trstrings:rsinstalleveryone

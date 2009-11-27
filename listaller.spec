@@ -1,104 +1,70 @@
 Name:             listaller-core
-Version:          0.3.00b
+Version:          0.3.20~experimental
 Release:          1
 License:          GPLv3
-BuildRequires:    fpc >= 2.2.4, lazarus >= 0.9.27, glib2-devel, gtk2-devel, glib-devel, glib2, glib, fpc-src, gtk2, libqt4intf, sqlite-devel
-Source0:          listaller-0.3.00b.tar.gz
-%if 0%{?fedora_version} >= 10
-Requires:         xdg-utils, PackageKit, beesu
-%else
-Requires:         xdg-utils, PackageKit
-%endif
+BuildRequires:    fpc >= 2.2.4, lazarus >= 0.9.27, glib2-devel, gtk2-devel, glib2, fpc-src, gtk2, libqt4intf, sqlite-devel, PolicyKit-devel, PackageKit-devel
+Source0:          listaller-0.4~git261109.tar.gz
+
+Requires:         xdg-utils, PackageKit, PolicyKit, libinstaller-0.4.0
 
 Provides:         listaller
 Group:            Applications/System
-Summary:          Listaller basic tools and libraries
+Summary:          Listaller core files
 Vendor:           Listaller-Project
-URL: http://listaller.nlinux.org
-BuildRoot: %{_tmppath}/build-%{name}-%{version}
+URL: 		  http://listaller.nlinux.org
+BuildRoot:	  %{_tmppath}/build-%{name}-%{version}
 
 %description
-This package contains the 'lipa' command line tool.
-It allows installing/uninstalling/building IPK packages without GUI.
+Listaller is a cross-distribution install system.
+This package contains all files used by every Listaller module.
+It provides the Listaller daemon and the
+non-gui software installation tool "lipa".
 
 
 %prep
 %setup -c
 
 %build
-ARCH=$(uname -m)
-case "$ARCH" in
- "i686") ARCH="i386";;
- "i586") ARCH="i386";;
- "i486") ARCH="i386";;
-esac
-
-cd ./listaller-0.3.00b
-
-# Create GTK+ applications
-make WIDGET=gtk2 all
-make WIDGET=gtk2 licreator
-# Now build Qt applications
-make WIDGET=qt4 all
-make WIDGET=qt4 licreator
+cd ./main
+#Build for all widgetsets
+make all
+make licreator-gtk
+make licreator-qt
 
 %install
-cd ./listaller-0.3.00b
-# Necessary to get the right directories
-%if 0%{?fedora_version} >= 10
-ARCH=$(uname -m)
-case "$ARCH" in
- "i686") ARCH="i386";;
- "i586") ARCH="i386";;
- "i486") ARCH="i386";;
-esac
+cd ./main
 
-mkdir -p /home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH/usr/bin
-# Install architecture independend files
-make DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH install-data
-
-# Install cmd utilities
-make DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH libuildtools-inst
-make DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH install-lipa
-
-# Install GTK+ binaries
-make WIDGET=gtk2 DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH install
-make WIDGET=gtk2 DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH licreator-inst
-# Install Qt4 binaries
-make WIDGET=qt4 DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH install
-make WIDGET=qt4 DESTDIR=/home/abuild/rpmbuild/BUILDROOT/%{name}-%{version}-%{release}.$ARCH licreator-inst
-%else
 mkdir -p %{_tmppath}/build-%{name}-%{version}/usr/bin
 
-# Install architecture independend files
-make DESTDIR=%{_tmppath}/build-%{name}-%{version} install-data
+echo "Installing binaries..."
+#Install basics
+make DESTDIR=%{buildroot} install-all-bin
+#Install Listaller Creator (GTK2)
+make DESTDIR=%{buildroot} install-licreator-gtk
+#Install Listaller Creator (Qt4)
+make DESTDIR=%{buildroot} install-licreator-qt
 
-# Install cmd utilities
-make DESTDIR=%{_tmppath}/build-%{name}-%{version} libuildtools-inst
-make DESTDIR=%{_tmppath}/build-%{name}-%{version} install-lipa
-# Install GTK+ binaries
-make WIDGET=gtk2 DESTDIR=%{_tmppath}/build-%{name}-%{version} install
-make WIDGET=gtk2 DESTDIR=%{_tmppath}/build-%{name}-%{version} licreator-inst
-# Install Qt4 binaries
-make WIDGET=qt4 DESTDIR=%{_tmppath}/build-%{name}-%{version} install
-make WIDGET=qt4 DESTDIR=%{_tmppath}/build-%{name}-%{version} licreator-inst
-%endif
+echo "Installing architecture independent files..."
+make DESTDIR=%{buildroot} install-data
 
 %clean
-cd ./listaller-0.3.00b
+cd ./main
 make clean
 
 %files
 %defattr(-,root,root)
 %dir "/usr/bin"
 /usr/bin/lipa
+/usr/share/dbus-1/system-services/org.freedesktop.Listaller.service
+/etc/dbus-1/system.d/org.freedesktop.Listaller.conf
+/usr/share/polkit-1/actions/org.freedesktop.listaller.policy
+/usr/sbin/listallerd
 
 %package -n listaller-data
-Requires:         gtk2, cairo, glib2, gdk-pixbuf, listaller
 Group:            Applications/System
 Summary:          Listaller data
 Vendor:           Listaller-Project
-URL: http://listaller.nlinux.org
+URL:              http://listaller.nlinux.org
 
 %description -n listaller-data
 Listaller is a distribution-independ software install system.
@@ -113,18 +79,18 @@ This package contains platform and widgetset independent data of Listaller.
 echo "Installing mime extensions..."
 xdg-mime install '/usr/share/listaller/mime/x-ipk.xml'
 xdg-mime install '/usr/share/listaller/mime/x-ips.xml'
-xdg-icon-resource install --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ipk.png' 'application-x-ipk'
-xdg-icon-resource install --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ips.png' 'text-ips-script'
+xdg-icon-resource install --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ipk.png' 'application-x-installation'
+xdg-icon-resource install --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ips.png' 'application-ips-script'
 update-desktop-database
 echo "Done."
 
 
 %preun -n listaller-data
-echo "Uninstalling mime extensions..."
+echo "Uninstalling mime extension..."
 xdg-mime uninstall '/usr/share/listaller/mime/x-ipk.xml'
 xdg-mime uninstall '/usr/share/listaller/mime/x-ips.xml'
-xdg-icon-resource uninstall --context mimetypes --size 64 'mime-ipk' 'application-x-ipk'
-xdg-icon-resource uninstall --context mimetypes --size 64 'mime-ips' 'text-ips-script'
+xdg-icon-resource uninstall --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ipk.png' 'application-x-installation'
+xdg-icon-resource uninstall --context mimetypes --size 64 '/usr/share/listaller/graphics/mime-ips.png' 'application-ips-script'
 update-mime-database '/usr/share/mime'
 echo "Done."
 
@@ -132,18 +98,34 @@ echo "Done."
 %defattr(-,root,root)
 /usr/share/listaller/graphics
 /usr/share/listaller/mime
-/usr/share/listaller/pkitbind
 /usr/share/pixmaps/listaller.png
 /usr/share/listaller/locale
-/usr/share/mime-info/listaller-pack.mime
 /etc/lipa
+
+%package -n libinstaller-0.4.0
+Requires:         listaller-core, PackageKit, PolicyKit
+Group:            Applications/System
+Summary:          Listaller library
+Vendor:           Listaller-Project
+URL:              http://listaller.nlinux.org
+
+%description -n libinstaller-0.4.0
+Contains the libInstaller library, which allows
+programs to access install/uninstall functions
+of Listaller.
+
+%files -n libinstaller-0.4.0
+%defattr(-,root,root)
+%dir "/usr/bin"
+/usr/lib/libinstaller.so
+/usr/lib/libinstaller.so.*
 
 %package -n listaller-gtk
 Requires:         gtk2, cairo, glib2, gdk-pixbuf, listaller-data, listaller-core
 Group:            Applications/System
 Summary:          Listaller frontends (GTK2)
 Vendor:           Listaller-Project
-URL: http://listaller.nlinux.org
+URL:              http://listaller.nlinux.org
 
 %description -n listaller-gtk
 Listaller is a distribution-independ software install system.
@@ -169,9 +151,9 @@ Please note that this alpha-version should only be used for testing purposes.
 %package -n listaller-tools
 Requires:         listaller-core
 Group:            Applications/System
-Summary:          Command-line tools for Listaller package handling
+Summary:          Listaller package tools
 Vendor:           Listaller-Project
-URL: http://listaller.nlinux.org
+URL:              http://listaller.nlinux.org
 
 %description -n listaller-tools
 This package contains everything you need to build own IPK packages.
@@ -182,15 +164,14 @@ button for your software.
 %files -n listaller-tools
 %defattr(-,root,root)
 /usr/bin/libuild
-/usr/lib/listaller/unibuild
 /usr/share/listaller/graphics/libutton
 
 %package -n listaller-qt
-Requires:         listaller-core, listaller-data, kdesudo, libqt4intf, kde-icons-oxygen
+Requires:         listaller-core, listaller-data, libqt4intf, kde-icons-oxygen
 Group:            Applications/System
 Summary:          Listaller frontends (Qt4)
 Vendor:           Listaller-Project
-URL: http://listaller.nlinux.org
+URL:              http://listaller.nlinux.org
 
 %description -n listaller-qt
 Listaller is a distribution-independ software install system.
@@ -214,11 +195,11 @@ Please note that this alpha-version should only be used for testing purposes.
 /usr/bin/listallmgr-qt
 
 %package -n listaller-creator-qt
-Requires:         listaller-core, listaller-data, kdesudo, libqt4intf, kde-icons-oxygen, listaller-tools
+Requires:         listaller-core, listaller-data, libqt4intf, kde-icons-oxygen, listaller-tools
 Group:            Applications/System
 Summary:          Listaller Creator (Qt4)
 Vendor:           Listaller-Project
-URL: http://listaller.nlinux.org
+URL:              http://listaller.nlinux.org
 
 %description -n listaller-creator-qt
 Listaller is a cross-distribution software install system.
@@ -229,7 +210,7 @@ Please note that this is an alpha-release!
 
 %files -n listaller-creator-qt
 %defattr(-,root,root)
-/opt/appfiles/liCreator/
+/usr/appfiles/liCreator/
 /usr/share/applications/licreator.desktop
 /usr/bin/licreator
 
@@ -238,7 +219,7 @@ Requires:         listaller-core, listaller-data, listaller-tools
 Group:            Applications/System
 Summary:          Listaller Creator (GTK2)
 Vendor:           Listaller-Project
-URL: http://listaller.nlinux.org
+URL:              http://listaller.nlinux.org
 
 %description -n listaller-creator-gtk
 Listaller is a cross-distribution software install system.
@@ -249,6 +230,6 @@ Please note that this is an alpha-release!
 
 %files -n listaller-creator-gtk
 %defattr(-,root,root)
-/opt/appfiles/liCreator/
+/usr/appfiles/liCreator/
 /usr/share/applications/licreator.desktop
 /usr/bin/licreator
