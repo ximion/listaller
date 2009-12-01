@@ -1,21 +1,24 @@
+# Italian translation for listaller
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the listaller package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.9.16\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: listaller\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2009-05-06 13:39+0000\n"
-"Last-Translator: Liu Sizhuang <Unknown>\n"
-"Language-Team: newsfree <freefcw@gmail.com>\n"
+"PO-Revision-Date: 2009-05-06 13:34+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-08-01 21:04+0000\n"
+"X-Launchpad-Export-Date: 2009-11-30 20:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-"X-Poedit-Country: china\n"
-"X-Poedit-Language: chinese\n"
 
 #: trstrings:rsbrokendepsfixq
-msgid "You have missing dependencies. Should they be installed now?"
+msgid "Some dependencies are missing. Should they be installed now?"
 msgstr ""
 
 #: trstrings:rscannotresolv
@@ -24,6 +27,10 @@ msgstr ""
 
 #: trstrings:rscheckappdepsq
 msgid "Do you want to check the applications's dependencies?"
+msgstr ""
+
+#: trstrings:rscheckdepsq
+msgid "Check dependencies?"
 msgstr ""
 
 #: trstrings:rscheckapps
@@ -39,7 +46,7 @@ msgid "Commands:"
 msgstr ""
 
 #: trstrings:rscouldntfindupdater
-msgid "Can't find updater applications!"
+msgid "Can't find updater application!"
 msgstr ""
 
 #: trstrings:rsinternalerror
@@ -62,8 +69,12 @@ msgstr ""
 msgid "Can't find Listaller Manager!"
 msgstr ""
 
-#: trstrings:rsliupdaternotfound
-msgid "Unable to find liUpdater!"
+#: trstrings:rsunablefind
+msgid "Unable to find %s"
+msgstr ""
+
+#: trstrings:rsnotfoundlitray
+msgid "Could not find Listaller TrayIcon Application"
 msgstr ""
 
 #: trstrings:rsoptions
@@ -157,7 +168,7 @@ msgstr ""
 
 #: trstrings:rsconvdone
 msgid ""
-"Converting done. Do you want to close this window now?\n"
+"Conversion done. Do you want to close this window now?\n"
 "Press \"No\" if you want to check the output."
 msgstr ""
 
@@ -173,12 +184,20 @@ msgstr ""
 msgid "Do you want to see detailed information [y/n]?"
 msgstr ""
 
+#: trstrings:rsaborted
+msgid "Aborted."
+msgstr ""
+
 #: trstrings:rsviewlogq
 msgid "Do you want to view the logfile?"
 msgstr ""
 
 #: trstrings:rswasinstalled
 msgid "The application %a was installed successfully!"
+msgstr ""
+
+#: trstrings:rsexecapptesting
+msgid "Executing application for testing..."
 msgstr ""
 
 #: trstrings:rsinstallnow
@@ -236,7 +255,7 @@ msgstr ""
 
 #: trstrings:rsabort
 msgid "Abort"
-msgstr "中止"
+msgstr ""
 
 #: trstrings:rsback
 msgid "Back"
@@ -271,12 +290,20 @@ msgid ""
 "Found no package with the necessary library \"%l\" for your distribution."
 msgstr ""
 
+#: trstrings:rsopeningdb
+msgid "Opening database..."
+msgstr ""
+
 #: trstrings:rsinclose
 msgid "The installer will close now"
 msgstr ""
 
-#: trstrings:rscnoverwrite
-msgid "Unable to overwrite the file %f."
+#: trstrings:rscnoverride
+msgid "Unable to override the file %f."
+msgstr ""
+
+#: trstrings:rscncopy
+msgid "Unable to copy the file %s."
 msgstr ""
 
 #: trstrings:rsnotifydevs
@@ -289,7 +316,7 @@ msgstr ""
 
 #: trstrings:rspkgdm
 msgid ""
-"The IPK package could be damaged or you haven't enough rights to acces "
+"The IPK package could be damaged or you haven't enough rights to access "
 "required files/folders."
 msgstr ""
 
@@ -321,6 +348,10 @@ msgstr ""
 msgid "Test of the application finished."
 msgstr ""
 
+#: trstrings:rscleaningup
+msgid "Cleaning up..."
+msgstr ""
+
 #: trstrings:rspkginval
 msgid "The package was invalid!"
 msgstr ""
@@ -343,6 +374,10 @@ msgstr ""
 
 #: trstrings:rsstep1
 msgid "Phase 1/4: Resolving dependencies..."
+msgstr ""
+
+#: trstrings:rsstate
+msgid "State"
 msgstr ""
 
 #: trstrings:rswdldep
@@ -370,7 +405,7 @@ msgid "Phase 4/4: Registering application..."
 msgstr ""
 
 #: trstrings:rsaddupdsrc
-msgid "The installation tries to add the following update source: "
+msgid "The installation contains the following update source: "
 msgstr ""
 
 #: trstrings:rsqaddupdsrc
@@ -401,8 +436,8 @@ msgstr ""
 
 #: trstrings:rsftpfailed
 msgid ""
-"Problem while downloading the packages. Maybe the login on the FTP-Server "
-"failed."
+"Problem while downloading the packages. Could not create working FTP "
+"connection."
 msgstr ""
 
 #: trstrings:rssuccess
@@ -439,12 +474,6 @@ msgstr ""
 msgid ""
 "The selected action is not possible with this package.\n"
 "Please contact the package maintainer to get more information."
-msgstr ""
-
-#: trstrings:rsidinvalid
-msgid ""
-"This package has no valid ID\n"
-"The installer will close."
 msgstr ""
 
 #: trstrings:rsreinstall
@@ -486,10 +515,6 @@ msgstr ""
 msgid "Mode"
 msgstr ""
 
-#: trstrings:rscleanup
-msgid "Cleaning up..."
-msgstr ""
-
 #: trstrings:rsinstperformerror
 msgid "Error while performing installation:"
 msgstr ""
@@ -511,16 +536,15 @@ msgstr ""
 msgid "What do you want to do?"
 msgstr ""
 
-#: trstrings:rspackagekitwarning
+#: trstrings:rsdevversion
 msgid ""
-"Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to "
-"work correctly.\n"
-"Please update PackageKit!"
+"You use a development version of Listaller!\n"
+"This version is untested, be careful about what you do!"
 msgstr ""
 
 #: trstrings:rsspkwarning
 msgid ""
-"Make sure that you have got this package from a save source and a serious "
+"Make sure that you got this package from a save source and a serious "
 "publisher!"
 msgstr ""
 
@@ -688,7 +712,9 @@ msgid "Loading..."
 msgstr ""
 
 #: trstrings:rsinstalledapps
-msgid "Installed applications"
+msgid ""
+"Installed\n"
+"applications"
 msgstr ""
 
 #: trstrings:rsinstallpkg
@@ -696,7 +722,9 @@ msgid "Install package"
 msgstr ""
 
 #: trstrings:rsbrowsecatalog
-msgid "Browse catalog"
+msgid ""
+"Browse\n"
+"catalog"
 msgstr ""
 
 #: trstrings:rsrepositories
@@ -714,7 +742,9 @@ msgid ""
 msgstr ""
 
 #: trstrings:rsuselaunchpadforbugs
-msgid "Please use https://bugs.launchpad.net/listaller for bug reports."
+msgid ""
+"Please use https://bugs.launchpad.net/listaller\n"
+"for bug reports."
 msgstr ""
 
 #: trstrings:rsdisprootapps
@@ -746,6 +776,10 @@ msgstr ""
 
 #: trstrings:rsshowpkmon
 msgid "Start PackageKit monitor before running transactions"
+msgstr ""
+
+#: trstrings:rsstartlitray
+msgid "Start Listaller tray icon application (to check dependencies)"
 msgstr ""
 
 #: trstrings:rsaboutlistaller
@@ -886,7 +920,7 @@ msgid "Uninstalling %a"
 msgstr ""
 
 #: trstrings:rslindesk
-msgid "Running under %de."
+msgid "Running under %s."
 msgstr ""
 
 #: trstrings:rsnoupdates
@@ -944,619 +978,3 @@ msgstr ""
 #: trstrings:rsresolvingdep
 msgid "Resolving dependencies..."
 msgstr ""
-
-#~ msgid "Browser %s%s%s not executable."
-#~ msgstr "浏览 %s%s%s 不是可执行程序."
-
-#~ msgid "Browser %s%s%s not found."
-#~ msgstr "浏览 %s%s%s 未找到."
-
-#~ msgid "Error while executing %s%s%s:%s%s"
-#~ msgstr "当执行 %s%s%s 时错误:%s%s"
-
-#~ msgid "Unable to find a HTML browser."
-#~ msgstr "无法找到 HTML 浏览器"
-
-#~ msgid ""
-#~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
-#~ "Viewers"
-#~ msgstr "没有找到 HTML 浏览器。%s请在 帮助-> 配置帮助 -> 查看器 中定义一个"
-
-#~ msgid "The help database %s%s%s was unable to find file %s%s%s."
-#~ msgstr "帮助数据库 %s%s%s 无法找到文件 %s%s%s."
-
-#~ msgid "The macro %s in BrowserParams will be replaced by the URL."
-#~ msgstr "浏览框里的宏 %s 将被 URL 所替代."
-
-#~ msgid "Accept"
-#~ msgstr "接受"
-
-#~ msgid "application key"
-#~ msgstr "应用程序快捷键"
-
-#~ msgid "Backspace"
-#~ msgstr "退格"
-
-#~ msgid "Capital"
-#~ msgstr "大写字母"
-
-#~ msgid "Clear"
-#~ msgstr "清除"
-
-#~ msgid "Control"
-#~ msgstr "控件"
-
-#~ msgid "Convert"
-#~ msgstr "转换"
-
-#~ msgid "Down"
-#~ msgstr "下"
-
-#~ msgid "Escape"
-#~ msgstr "溢出"
-
-#~ msgid "Execute"
-#~ msgstr "执行"
-
-#~ msgid "Help"
-#~ msgstr "帮助"
-
-#~ msgid "Mouse Button Left"
-#~ msgstr "鼠标左键"
-
-#~ msgid "Left"
-#~ msgstr "左"
-
-#~ msgid "left windows key"
-#~ msgstr "左 Win 键"
-
-#~ msgid "Mouse Button Middle"
-#~ msgstr "鼠标中键"
-
-#~ msgctxt "lclstrconsts.ifsvk_menu"
-#~ msgid "Menu"
-#~ msgstr "菜单"
-
-#~ msgid "Mode Change"
-#~ msgstr "模式更改"
-
-#~ msgid "Nonconvert"
-#~ msgstr "不转换"
-
-#~ msgid "Numlock"
-#~ msgstr "数字锁定"
-
-#~ msgid "Numpad %d"
-#~ msgstr "数字键盘 %d"
-
-#~ msgid "Pause key"
-#~ msgstr "暂停键"
-
-#~ msgid "Print"
-#~ msgstr "打印"
-
-#~ msgid "Mouse Button Right"
-#~ msgstr "鼠标右键"
-
-#~ msgid "Return"
-#~ msgstr "返回"
-
-#~ msgid "Right"
-#~ msgstr "右"
-
-#~ msgid "right windows key"
-#~ msgstr "右 Win 键"
-
-#~ msgid "Scroll"
-#~ msgstr "滚动"
-
-#~ msgid "Select"
-#~ msgstr "选择"
-
-#~ msgid "Snapshot"
-#~ msgstr "快照"
-
-#~ msgid "Space key"
-#~ msgstr "空格键"
-
-#~ msgid "Unknown"
-#~ msgstr "未知"
-
-#~ msgid "Up"
-#~ msgstr "上"
-
-#~ msgctxt "lclstrconsts.lislclresourcesnotfound"
-#~ msgid "Resource %s not found"
-#~ msgstr "未找到资源 %s"
-
-#~ msgid "A control can't have itself as parent"
-#~ msgstr "控件无法把自己设为父节点"
-
-#~ msgid "All files (%s)|%s|%s"
-#~ msgstr "所有文件 (%s)|%s|%s"
-
-#~ msgid "Backward"
-#~ msgstr "后退"
-
-#~ msgid "Bitmaps"
-#~ msgstr "黑白位图"
-
-#~ msgid "Blank"
-#~ msgstr "空白"
-
-#~ msgid "Calculator"
-#~ msgstr "计算器"
-
-#~ msgid "Can not focus"
-#~ msgstr "无法聚焦"
-
-#~ msgid "Canvas does not allow drawing"
-#~ msgstr "Canvas 不允许画图"
-
-#~ msgid "Case sensitive"
-#~ msgstr "大小写敏感"
-
-#~ msgid "Creating gdb catchable error:"
-#~ msgstr "创建 GDB 可以捕捉的错误"
-
-#~ msgid "permissions user group size date time"
-#~ msgstr "权限 用户 组 大小 日期 时间"
-
-#~ msgid "Delete record?"
-#~ msgstr "删除记录？"
-
-#~ msgctxt "lclstrconsts.rsdeleterecordhint"
-#~ msgid "Delete"
-#~ msgstr "删除"
-
-#~ msgid "Direction"
-#~ msgstr "方向"
-
-#~ msgid "&Directory"
-#~ msgstr "目录(&D)"
-
-#~ msgid "Docking"
-#~ msgstr "融合"
-
-#~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
-#~ msgstr "在 %s %s地址 %s%s 框架 %s"
-
-#~ msgid "Error reading %s%s%s: %s"
-#~ msgstr "读取 %s%s%s 错误: %s"
-
-#~ msgid "Error while saving bitmap."
-#~ msgstr "保存位图时出错。"
-
-#~ msgid "Exception"
-#~ msgstr "异常"
-
-#~ msgid "Directory must exist"
-#~ msgstr "目录必须存在"
-
-#~ msgid "The directory \"%s\" does not exist."
-#~ msgstr "目录 \"%s\" 不存在."
-
-#~ msgid "The file \"%s\" already exists. Overwrite ?"
-#~ msgstr "文件 \"%s\" 已经存在.%s替换吗?"
-
-#~ msgid "File must exist"
-#~ msgstr "文件必须存在"
-
-#~ msgid "The file \"%s\" does not exist."
-#~ msgstr "文件 \"%s\" 不存在."
-
-#~ msgid "The file \"%s\" is not writable."
-#~ msgstr "文件 \"%s\" 为只读."
-
-#~ msgid "File is not writable"
-#~ msgstr "文件为只读"
-
-#~ msgid "Save file as"
-#~ msgstr "另存为"
-
-#~ msgid "Open existing file"
-#~ msgstr "打开文件"
-
-#~ msgid "Overwrite file ?"
-#~ msgstr "覆盖文件？"
-
-#~ msgid "Path must exist"
-#~ msgstr "路径不存在"
-
-#~ msgid "The path \"%s\" does not exist."
-#~ msgstr "路径 \"%s\" 不存在."
-
-#~ msgid "Select Directory"
-#~ msgstr "选择目录"
-
-#~ msgid "(file not found: \"%s\")"
-#~ msgstr "(未找到文件: \"%s\")"
-
-#~ msgid "File information"
-#~ msgstr "文件信息"
-
-#~ msgid "Find"
-#~ msgstr "查找"
-
-#~ msgid "Find more"
-#~ msgstr "查找更多"
-
-#~ msgid "FixedCols can't be >= ColCount"
-#~ msgstr "FixedCols 不能 >= ColCount"
-
-#~ msgid "FixedRows can't be >= RowCount"
-#~ msgstr "FixedRows 不能 >= RowCount"
-
-#~ msgid "Form streaming \"%s\" error: %s"
-#~ msgstr "窗体流 \"%s\" 错误: %s"
-
-#~ msgid "Forward"
-#~ msgstr "向前"
-
-#~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
-#~ msgstr "--gdk-debug flags     打开 GDK 跟踪/调试信息."
-
-#~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
-#~ msgstr "--gdk-no-debug flags  关闭 GDK 跟踪/调试信息."
-
-#~ msgid ""
-#~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
-#~ "the application."
-#~ msgstr "--g-fatal-warnings   使 Gtk+/GDK 产生的警告和错误终止应用程序。"
-
-#~ msgid "Grid file doesn't exists"
-#~ msgstr "网格文件不存在"
-
-#~ msgid "Grid index out of range."
-#~ msgstr "网格索引越界。"
-
-#~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
-#~ msgstr "GroupIndex 不能比之前的菜单项目的 GroupIndex 少"
-
-#~ msgid "Filter:"
-#~ msgstr "过滤器:"
-
-#~ msgid "History:"
-#~ msgstr "历史:"
-
-#~ msgid ""
-#~ "--class classname     Following Xt conventions, the class of a program is "
-#~ "the program name with the initial character capitalized. For example, the "
-#~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
-#~ "program will be set to \"classname\"."
-#~ msgstr ""
-#~ "--class classname     按照 Xt 转换规则， 一个程序的类别是第一个字母大写的程序名称。比如，gimp 的类别是 "
-#~ "\"Gimp\"。如果指定了 --class，程序的类别会被设为 \"classname\"。"
-
-#~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
-#~ msgstr "--gtk-debug flags     打开 Gtk+ 跟踪/调试信息."
-
-#~ msgid ""
-#~ "--display h:s:d       Connect to the specified X server, where \"h\" is the "
-#~ "hostname, \"s\" is the server number (usually 0), and \"d\" is the display "
-#~ "number (typically omitted). If --display is not specified, the DISPLAY "
-#~ "environment variable is used."
-#~ msgstr ""
-#~ "--display h:s:d       连接到指定的 X 服务器，其中 \"h\"是主机名，\"s\"是服务器编号(通常是0)，\"d\" "
-#~ "是显示编号(一般省略)。如果没有指定 --display ，将会使用 DISPLAY 环境变量。"
-
-#~ msgid "--gtk-module module   Load the specified module at startup."
-#~ msgstr "--gtk-module module   启动时载入指定模块"
-
-#~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
-#~ msgstr "--gtk-no-debug flags  关闭 Gtk+ 跟踪/调试信息."
-
-#~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
-#~ msgstr "--lcl-no-transient    不要为形式上的窗体设定临时顺序"
-
-#~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
-#~ msgstr "--no-xshm             禁止使用 X 共享内存扩展。"
-
-#~ msgid "%s: Already registered"
-#~ msgstr "%s: 已经注册"
-
-#~ msgid "Help Context not found"
-#~ msgstr "未找到帮助内容"
-
-#~ msgid "Help Database not found"
-#~ msgstr "未找到帮助数据库"
-
-#~ msgid "Help Error"
-#~ msgstr "帮助错误"
-
-#~ msgid "Help context %s not found."
-#~ msgstr "未找到帮助上下文 %s."
-
-#~ msgid "Help context %s not found in Database %s%s%s."
-#~ msgstr "没有找到 %s 的帮助内容在数据库 %s%s%s 中."
-
-#~ msgid ""
-#~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
-#~ msgstr "帮助数据库 %s%s%s 未找到浏览器可以阅读帮助页 %s 的类型"
-
-#~ msgid "Help Database %s%s%s not found"
-#~ msgstr "未找到帮助数据库 %s%s%s"
-
-#~ msgid "Help keyword %s%s%s not found."
-#~ msgstr "关键字 %s%s%s 未找到帮助."
-
-#~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
-#~ msgstr "关键字 %s 的帮助在数据库 %s%s%s 中没有找到."
-
-#~ msgid "Help node %s%s%s has no Help Database"
-#~ msgstr "帮助节点 %s%s%s 没有帮助数据库"
-
-#~ msgid "No help found for line %d, column %d of %s."
-#~ msgstr "没有找到 %s 的行 %d, 列 %d 的 %s 的相关帮助."
-
-#~ msgid "No help nodes available"
-#~ msgstr "没有有效的帮助节点"
-
-#~ msgid "Help not found"
-#~ msgstr "未找到帮助"
-
-#~ msgid "%s: Not registered"
-#~ msgstr "%s: 没有注册"
-
-#~ msgid "Help Selector Error"
-#~ msgstr "帮助选择器错误"
-
-#~ msgid "There is no viewer for help type %s%s%s"
-#~ msgstr "帮助类型 %s%s%s 没有查看器"
-
-#~ msgid "Help Viewer Error"
-#~ msgstr "帮助查看器错误"
-
-#~ msgid "Help Viewer not found"
-#~ msgstr "未找到帮助查看器"
-
-#~ msgid "Icon"
-#~ msgstr "图标"
-
-#~ msgid "%s Index %d out of bounds 0 .. %d"
-#~ msgstr "%s 索引 %d 超出范围 0 .. %d"
-
-#~ msgid "Index Out of range Cell[Col=%d Row=%d]"
-#~ msgstr "单元格索引超过范围[列=%d 行=%d]"
-
-#~ msgctxt "lclstrconsts.rsinsertrecordhint"
-#~ msgid "Insert"
-#~ msgstr "插入"
-
-#~ msgid "Invalid Date : %s"
-#~ msgstr "无效日期: %s"
-
-#~ msgid "Invalid Date: %s. Must be between %s and %s"
-#~ msgstr "无效日期: %s。 必须在 %s 和 %s 之间"
-
-#~ msgid "invalid Form object stream"
-#~ msgstr "无效窗体流对象"
-
-#~ msgid "Invalid property value"
-#~ msgstr "无效属性值"
-
-#~ msgid "Invalid stream format"
-#~ msgstr "无效流格式"
-
-#~ msgid "%s is already associated with %s"
-#~ msgstr "%s 已经与 %s 相关联"
-
-#~ msgid "List index exceeds bounds (%d)"
-#~ msgstr "list 索引超过限制 (%d)"
-
-#~ msgid "List must be empty"
-#~ msgstr "列表必须为空"
-
-#~ msgid "&All"
-#~ msgstr "所有(&A)"
-
-#~ msgctxt "lclstrconsts.rsmbcancel"
-#~ msgid "Cancel"
-#~ msgstr "取消"
-
-#~ msgid "&Close"
-#~ msgstr "关闭(&C)"
-
-#~ msgid "&Help"
-#~ msgstr "帮助(&H)"
-
-#~ msgid "&Ignore"
-#~ msgstr "忽略(&I)"
-
-#~ msgid "&No"
-#~ msgstr "否(&N)"
-
-#~ msgid "No to all"
-#~ msgstr "全部选否"
-
-#~ msgid "&OK"
-#~ msgstr "确定(&O)"
-
-#~ msgid "&Retry"
-#~ msgstr "重试(&R)"
-
-#~ msgid "&Yes"
-#~ msgstr "是(&Y)"
-
-#~ msgid "Yes to &All"
-#~ msgstr "全部选是(&A)"
-
-#~ msgctxt "lclstrconsts.rsmenucolorcaption"
-#~ msgid "Menu"
-#~ msgstr "菜单"
-
-#~ msgid "  modified "
-#~ msgstr "  已更改 "
-
-#~ msgid "Confirmation"
-#~ msgstr "确认"
-
-#~ msgid "Custom"
-#~ msgstr "自定义"
-
-#~ msgctxt "lclstrconsts.rsmterror"
-#~ msgid "Error"
-#~ msgstr "错误"
-
-#~ msgid "Information"
-#~ msgstr "信息"
-
-#~ msgid "Warning"
-#~ msgstr "警告"
-
-#~ msgctxt "lclstrconsts.rsnextrecordhint"
-#~ msgid "Next"
-#~ msgstr "下一个"
-
-#~ msgid "Not a valid grid file"
-#~ msgstr "不是有效的网格文件"
-
-#~ msgid ""
-#~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
-#~ "the programs uses clause."
-#~ msgstr "没有窗口部件集合对象，请检查单元 \"interfaces\" 是否已添加到程序的uses语句中。"
-
-#~ msgid "Select a date"
-#~ msgstr "选择日期"
-
-#~ msgid "Pixmap"
-#~ msgstr "位图"
-
-#~ msgid "Portable BitMap"
-#~ msgstr "便携黑白位图"
-
-#~ msgid "Portable GrayMap"
-#~ msgstr "便携灰度位图"
-
-#~ msgid "Portable Network Graphic"
-#~ msgstr "便携网络图片(PNG)"
-
-#~ msgid "Portable PixMap"
-#~ msgstr "便携位图"
-
-#~ msgid ""
-#~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill the "
-#~ "program."
-#~ msgstr "%s%s确定忽略但数据有遗失的风险。%s取消则终止程序."
-
-#~ msgctxt "lclstrconsts.rspriorrecordhint"
-#~ msgid "Prior"
-#~ msgstr "优先"
-
-#~ msgid "Property %s does not exist"
-#~ msgstr "属性 %s 不存在"
-
-#~ msgid "Replace"
-#~ msgstr "替换"
-
-#~ msgid "Replace all"
-#~ msgstr "替换所有"
-
-#~ msgctxt "lclstrconsts.rsresourcenotfound"
-#~ msgid "Resource %s not found"
-#~ msgstr "未找到资源 %s"
-
-#~ msgid "ScrollBar property out of range"
-#~ msgstr "滚动条属性超出范围"
-
-#~ msgid "Select color"
-#~ msgstr "选择颜色"
-
-#~ msgid "Select a font"
-#~ msgstr "选择字体"
-
-#~ msgid "  size "
-#~ msgstr "  大小 "
-
-#~ msgid "Text"
-#~ msgstr "文本"
-
-#~ msgid "Unable to load default font"
-#~ msgstr "无法装载默认字体"
-
-#~ msgid "Unknown Error, please report this bug"
-#~ msgstr "未知错误, 请报告这个错误"
-
-#~ msgid "Unknown picture extension"
-#~ msgstr "未知图形文件后缀"
-
-#~ msgid "Unsupported bitmap format."
-#~ msgstr "未支持的位图格式"
-
-#~ msgid "Unsupported clipboard format: %s"
-#~ msgstr "未支持的剪贴板格式: %s"
-
-#~ msgid "Whole words only"
-#~ msgstr "仅整个单词"
-
-#~ msgid "Error:"
-#~ msgstr "错误:"
-
-#~ msgid "Warning:"
-#~ msgstr "警告:"
-
-#~ msgid "Cannot focus a disabled or invisible window"
-#~ msgstr "不能聚焦于无法聚焦或者不可见的窗口"
-
-#~ msgid "Duplicate menus"
-#~ msgstr "重复的菜单"
-
-#~ msgid "Invalid action creation"
-#~ msgstr "无效创建行为"
-
-#~ msgid "Invalid action enumeration"
-#~ msgstr "无效列举行为"
-
-#~ msgid "Invalid action registration"
-#~ msgstr "无效的注册行为"
-
-#~ msgid "Invalid action unregistration"
-#~ msgstr "无效的取消注册行为"
-
-#~ msgid "The char set in mask \"%s\" is not valid!"
-#~ msgstr "\"%s\" 指定的字符集无效！"
-
-#~ msgid "Invalid image size"
-#~ msgstr "无效图像大小"
-
-#~ msgid "Invalid ImageList Index"
-#~ msgstr "无效 ImageList 索引"
-
-#~ msgid "Menu index out of range"
-#~ msgstr "菜单索引超过范围"
-
-#~ msgid "MenuItem is nil"
-#~ msgstr "MenuItem 为 nil"
-
-#~ msgid "Sub-menu is not in menu"
-#~ msgstr "子菜单不在菜单中"
-
-#~ msgid "No MDI form present."
-#~ msgstr "没有 MDI 窗体出现"
-
-#~ msgid "No timers available"
-#~ msgstr "无有效计时器"
-
-#~ msgid "Wrong token type: %s expected"
-#~ msgstr "错误的标识符类型：期望 %s"
-
-#~ msgid "Invalid floating point number: %s"
-#~ msgstr "无效的浮点数：%s"
-
-#~ msgid "Invalid integer number: %s"
-#~ msgstr "无效的整数：%s"
-
-#~ msgid " (at %d,%d, stream offset %.8x)"
-#~ msgstr " (在 %d,%d, 流偏移 %.8x)"
-
-#~ msgid "Unterminated byte value"
-#~ msgstr "未结束的字节值"
-
-#~ msgid "Unterminated string"
-#~ msgstr "未结束的字符串"
-
-#~ msgid "Wrong token symbol: %s expected but %s found"
-#~ msgstr "错误的标识符：期望 %s 但是找到了 %s"
-
-#~ msgid "Wrong token type: %s expected but %s found"
-#~ msgstr "错误的标识符类型：期望 %s 但是找到了 %s"

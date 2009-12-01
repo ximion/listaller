@@ -21,7 +21,7 @@ unit packagekit;
 interface
 
 uses
-  Classes, SysUtils, Process, glib2, distri, Dialogs, liTypes, gExt;
+  Classes, SysUtils, Process, glib2, distri, Dialogs, liTypes, gExt, liBasic;
 
 type
 

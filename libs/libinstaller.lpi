@@ -33,8 +33,8 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="38" Y="260"/>
-        <TopLine Value="217"/>
+        <CursorPos X="25" Y="22"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="53"/>
         <Loaded Value="True"/>
@@ -42,8 +42,8 @@
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="17" Y="1989"/>
-        <TopLine Value="1970"/>
+        <CursorPos X="66" Y="24"/>
+        <TopLine Value="1"/>
         <UsageCount Value="20"/>
       </Unit1>
       <Unit2>
@@ -63,8 +63,8 @@
       <Unit4>
         <Filename Value="../distri.pas"/>
         <UnitName Value="distri"/>
-        <CursorPos X="10" Y="41"/>
-        <TopLine Value="201"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit4>
       <Unit5>
@@ -91,8 +91,8 @@
       <Unit8>
         <Filename Value="../bindings/packagekit.pas"/>
         <UnitName Value="packagekit"/>
-        <CursorPos X="35" Y="194"/>
-        <TopLine Value="180"/>
+        <CursorPos X="77" Y="24"/>
+        <TopLine Value="97"/>
         <UsageCount Value="14"/>
       </Unit8>
       <Unit9>
@@ -246,7 +246,7 @@
         <UsageCount Value="10"/>
       </Unit30>
     </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
+    <JumpHistory Count="3" HistoryIndex="2">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="22" Column="28" TopLine="1"/>
@@ -255,6 +255,10 @@
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="453" Column="29" TopLine="427"/>
       </Position2>
+      <Position3>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="25" TopLine="1"/>
+      </Position3>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

@@ -1,34 +1,37 @@
-# translation of lclstrconsts.po to
-# Valdas Jankūnas <zmuogs@gmail.com>, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: lclstrconsts\n"
+"Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2009-05-06 13:37+0000\n"
-"Last-Translator: Valdas <zmogas@hotmail.com>\n"
-"Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
+"PO-Revision-Date: 2009-10-02 16:42+0000\n"
+"Last-Translator: Andy Lemz <andy.lemz@gmail.com>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-08-01 21:04+0000\n"
+"X-Launchpad-Export-Date: 2009-11-30 20:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: trstrings:rsbrokendepsfixq
-msgid "You have missing dependencies. Should they be installed now?"
+msgid "Some dependencies are missing. Should they be installed now?"
 msgstr ""
+"Пропущены некоторые зависимости. Следует ли их установить прямо сейчас?"
 
 #: trstrings:rscannotresolv
 msgid "Cannot resolve dependencies"
-msgstr ""
+msgstr "Не могу разрешить зависимости"
 
 #: trstrings:rscheckappdepsq
 msgid "Do you want to check the applications's dependencies?"
-msgstr ""
+msgstr "Хотите проверить зависимости приложений?"
+
+#: trstrings:rscheckdepsq
+msgid "Check dependencies?"
+msgstr "Проверить зависимости?"
 
 #: trstrings:rscheckapps
 msgid "Check applications"
-msgstr ""
+msgstr "Проверка приложений"
 
 #: trstrings:rscheckrootappsq
 msgid "Do you want to check global-installed applications too?"
@@ -36,15 +39,15 @@ msgstr ""
 
 #: trstrings:rscommands
 msgid "Commands:"
-msgstr ""
+msgstr "Команды:"
 
 #: trstrings:rscouldntfindupdater
-msgid "Can't find updater applications!"
+msgid "Can't find updater application!"
 msgstr ""
 
 #: trstrings:rsinternalerror
 msgid "An internal error occured"
-msgstr ""
+msgstr "Произошла ошибка"
 
 #: trstrings:rslaunchlimgr
 msgid "Launch Listaller Manager"
@@ -62,21 +65,25 @@ msgstr ""
 msgid "Can't find Listaller Manager!"
 msgstr ""
 
-#: trstrings:rsliupdaternotfound
-msgid "Unable to find liUpdater!"
+#: trstrings:rsunablefind
+msgid "Unable to find %s"
+msgstr "Невозможно найти %s"
+
+#: trstrings:rsnotfoundlitray
+msgid "Could not find Listaller TrayIcon Application"
 msgstr ""
 
 #: trstrings:rsoptions
 msgid "Options:"
-msgstr ""
+msgstr "Параметры:"
 
 #: trstrings:rslipainfo4
 msgid "Runs installation in testmode"
-msgstr ""
+msgstr "Запустить установку в тестовом режиме"
 
 #: trstrings:rslipainfo5
 msgid "Print all available log messages"
-msgstr ""
+msgstr "Распечатать весь доступный вывод log"
 
 #: trstrings:rslipainfo6
 msgid ""
@@ -101,11 +108,11 @@ msgstr ""
 
 #: trstrings:rsdone
 msgid "Done."
-msgstr ""
+msgstr "Выполнено."
 
 #: trstrings:rsdoyouacceptlicensecmd
 msgid "Do you accept this license [y/n]?"
-msgstr ""
+msgstr "Принимаете эту лицензию [y/n]?"
 
 #: trstrings:rsenternumber
 msgid "You have to enter a number!"
@@ -113,11 +120,11 @@ msgstr ""
 
 #: trstrings:rsinstaborted
 msgid "Installation aborted."
-msgstr ""
+msgstr "Установка прервана."
 
 #: trstrings:rsappninstall
 msgid "The application %a was not installed."
-msgstr ""
+msgstr "Приложение %a не установлено."
 
 #: trstrings:rslipaautofixq
 msgid "Should lipa fix these problems automatically [y/n]?"
@@ -145,7 +152,7 @@ msgstr ""
 
 #: trstrings:rspreparinginstall
 msgid "Preparing installation (please wait)"
-msgstr ""
+msgstr "Подготовка к установке (пожалуйста, ждите)"
 
 #: trstrings:rsrootpassadvancedpriv
 msgid "Enter your password to run the application with advanced privileges."
@@ -154,10 +161,12 @@ msgstr ""
 #: trstrings:rsrootpassqappeveryone
 msgid "Enter your password to install the application for everyone."
 msgstr ""
+"Введите пароль для того, чтобы установить это приложение для всех "
+"пользователей."
 
 #: trstrings:rsconvdone
 msgid ""
-"Converting done. Do you want to close this window now?\n"
+"Conversion done. Do you want to close this window now?\n"
 "Press \"No\" if you want to check the output."
 msgstr ""
 
@@ -167,10 +176,14 @@ msgstr ""
 
 #: trstrings:rsselectimodea
 msgid "Select the installation mode of this application:"
-msgstr ""
+msgstr "Выберите режим установки для этого приложения:"
 
 #: trstrings:rsshowdetailedinfocmd
 msgid "Do you want to see detailed information [y/n]?"
+msgstr ""
+
+#: trstrings:rsaborted
+msgid "Aborted."
 msgstr ""
 
 #: trstrings:rsviewlogq
@@ -179,11 +192,15 @@ msgstr ""
 
 #: trstrings:rswasinstalled
 msgid "The application %a was installed successfully!"
+msgstr "Приложение %a успешно установлено!"
+
+#: trstrings:rsexecapptesting
+msgid "Executing application for testing..."
 msgstr ""
 
 #: trstrings:rsinstallnow
 msgid "Install now"
-msgstr ""
+msgstr "Установить сейчас"
 
 #: trstrings:rsrunparam
 msgid ""
@@ -192,91 +209,99 @@ msgstr ""
 
 #: trstrings:rswelcome
 msgid "Welcome!"
-msgstr ""
+msgstr "Добро пожаловать!"
 
 #: trstrings:rsntostart
 msgid "Press \"Next\" to start the installation!"
-msgstr ""
+msgstr "Нажмите \"Далее\" для начала установки!"
 
 #: trstrings:rsprogdesc
 msgid "Program description:"
-msgstr ""
+msgstr "Описание программы:"
 
 #: trstrings:rslicense
 msgid "Software license"
-msgstr ""
+msgstr "Лицензия программы"
 
 #: trstrings:rspleaseread
 msgid "Please read the following information carefully:"
-msgstr ""
+msgstr "Пожалуйста, внимательно прочтите следующую информацию:"
 
 #: trstrings:rsrunning
 msgid "Running installation..."
-msgstr ""
+msgstr "Идёт установка..."
 
 #: trstrings:rsplwait
 msgid "Please wait."
-msgstr ""
+msgstr "Пожалуйста подождите."
 
 #: trstrings:rscomplete
 msgid "Installation completed!"
-msgstr ""
+msgstr "Установка завершена!"
 
 #: trstrings:rsinstfailed
 msgid "Installation failed."
-msgstr ""
+msgstr "Установка не удалась."
 
 #: trstrings:rsprfinish
 msgid "Press \"Finish\" to close."
-msgstr ""
+msgstr "Нажмите \"Готово\" для закрытия."
 
 #: trstrings:rsfinish
 msgid "Finish"
-msgstr ""
+msgstr "Готово"
 
 #: trstrings:rsabort
 msgid "Abort"
-msgstr "Nutraukti"
+msgstr "Прервать"
 
 #: trstrings:rsback
 msgid "Back"
-msgstr ""
+msgstr "Назад"
 
 #: trstrings:rsnext
 msgid "Next"
-msgstr ""
+msgstr "Дальше"
 
 #: trstrings:rsdisplog
 msgid "Display installation log"
-msgstr ""
+msgstr "Показать журнал установки"
 
 #: trstrings:rsiagree
 msgid "I agree with the above terms and conditions"
-msgstr ""
+msgstr "Я соглашаюсь с вышеприведёнными положениями и условиями"
 
 #: trstrings:rsinagree
 msgid "I don't agree"
-msgstr ""
+msgstr "Я не согласен"
 
 #: trstrings:rsldnsupported
 msgid "Your Linux distribution is not supported by Listaller yet!"
-msgstr ""
+msgstr "Ваш дистрибутив еще не поддерживается Listaller !"
 
 #: trstrings:rsnsupported
 msgid "This package does not support your Linux distribution."
-msgstr ""
+msgstr "Этот пакет не поддерживается вашим Linux дистрибутивом."
 
 #: trstrings:rsdepnotfound
 msgid ""
 "Found no package with the necessary library \"%l\" for your distribution."
 msgstr ""
 
-#: trstrings:rsinclose
-msgid "The installer will close now"
+#: trstrings:rsopeningdb
+msgid "Opening database..."
 msgstr ""
 
-#: trstrings:rscnoverwrite
-msgid "Unable to overwrite the file %f."
+#: trstrings:rsinclose
+msgid "The installer will close now"
+msgstr "Установка сейчас будет закрыта."
+
+#: trstrings:rscnoverride
+msgid "Unable to override the file %f."
+msgstr ""
+
+#: trstrings:rscncopy
+msgid "Unable to copy the file %s."
 msgstr ""
 
 #: trstrings:rsnotifydevs
@@ -285,25 +310,25 @@ msgstr ""
 
 #: trstrings:rsextracterror
 msgid "Error while extracting files!"
-msgstr ""
+msgstr "Ошибка при распаковке файлов!"
 
 #: trstrings:rspkgdm
 msgid ""
-"The IPK package could be damaged or you haven't enough rights to acces "
+"The IPK package could be damaged or you haven't enough rights to access "
 "required files/folders."
 msgstr ""
 
 #: trstrings:rsabload
 msgid "Loading aborted."
-msgstr ""
+msgstr "Загрузка прервана."
 
 #: trstrings:rsalreadyinst
 msgid "This application is already installed"
-msgstr ""
+msgstr "Программа уже установлена"
 
 #: trstrings:rsinstallagain
 msgid "Do you want to install it again?"
-msgstr ""
+msgstr "Хотите установить снова?"
 
 #: trstrings:rswelcometo
 msgid "Welcome to the installation of %a"
@@ -311,7 +336,7 @@ msgstr ""
 
 #: trstrings:rsinstof
 msgid "Installation of %a"
-msgstr ""
+msgstr "Установка %a"
 
 #: trstrings:rstestmode
 msgid "Testmode"
@@ -319,6 +344,10 @@ msgstr ""
 
 #: trstrings:rstestfinished
 msgid "Test of the application finished."
+msgstr ""
+
+#: trstrings:rscleaningup
+msgid "Cleaning up..."
 msgstr ""
 
 #: trstrings:rspkginval
@@ -335,19 +364,23 @@ msgstr ""
 
 #: trstrings:rspkgerror
 msgid "Installation package is corrupt"
-msgstr ""
+msgstr "Установочный пакет повреждён"
 
 #: trstrings:rsappclose
 msgid "The application will close now "
-msgstr ""
+msgstr "Приложение будет закрыто прямо сейчас "
 
 #: trstrings:rsstep1
 msgid "Phase 1/4: Resolving dependencies..."
 msgstr ""
 
+#: trstrings:rsstate
+msgid "State"
+msgstr ""
+
 #: trstrings:rswdldep
 msgid "This application wants to download & install a dependency from %l"
-msgstr ""
+msgstr "Приложение хочет скачать и установить все зависимые пакеты из %l"
 
 #: trstrings:rswallow
 msgid "Do you want confirm this action?"
@@ -359,7 +392,7 @@ msgstr ""
 
 #: trstrings:rsstep2
 msgid "Phase 2/4: Installing files..."
-msgstr ""
+msgstr "Этап 2/4: установка файлов..."
 
 #: trstrings:rsstep3
 msgid "Phase 3/4: Chmod new files..."
@@ -367,10 +400,10 @@ msgstr ""
 
 #: trstrings:rsstep4
 msgid "Phase 4/4: Registering application..."
-msgstr ""
+msgstr "Этап 4/4: регистрация приложения..."
 
 #: trstrings:rsaddupdsrc
-msgid "The installation tries to add the following update source: "
+msgid "The installation contains the following update source: "
 msgstr ""
 
 #: trstrings:rsqaddupdsrc
@@ -379,7 +412,7 @@ msgstr ""
 
 #: trstrings:rsfinished
 msgid "Finished"
-msgstr ""
+msgstr "Завершено"
 
 #: trstrings:rsinstanyway
 msgid "Do you want to install it anyway? (This could raise problems)"
@@ -393,7 +426,7 @@ msgstr ""
 
 #: trstrings:rswilldlfiles
 msgid "(This program will download the needed files from the internet)"
-msgstr ""
+msgstr "(Эта программа скачает необходимые файлы из интернета)"
 
 #: trstrings:rsinvaliddversion
 msgid "Package was not build for your Linux distribution release."
@@ -401,13 +434,13 @@ msgstr ""
 
 #: trstrings:rsftpfailed
 msgid ""
-"Problem while downloading the packages. Maybe the login on the FTP-Server "
-"failed."
+"Problem while downloading the packages. Could not create working FTP "
+"connection."
 msgstr ""
 
 #: trstrings:rssuccess
 msgid "Success!"
-msgstr ""
+msgstr "Успешно!"
 
 #: trstrings:rsmain
 msgid "Main"
@@ -419,7 +452,7 @@ msgstr ""
 
 #: trstrings:rsinstallation
 msgid "Installation"
-msgstr ""
+msgstr "Установка"
 
 #: trstrings:rsnoldsources
 msgid ""
@@ -441,15 +474,9 @@ msgid ""
 "Please contact the package maintainer to get more information."
 msgstr ""
 
-#: trstrings:rsidinvalid
-msgid ""
-"This package has no valid ID\n"
-"The installer will close."
-msgstr ""
-
 #: trstrings:rsreinstall
 msgid "Re-install"
-msgstr ""
+msgstr "Переустановить"
 
 #: trstrings:rspkgdownload
 msgid "The following packages will be downloaded:"
@@ -486,13 +513,9 @@ msgstr ""
 msgid "Mode"
 msgstr ""
 
-#: trstrings:rscleanup
-msgid "Cleaning up..."
-msgstr ""
-
 #: trstrings:rsinstperformerror
 msgid "Error while performing installation:"
-msgstr ""
+msgstr "Произошла ошибка во время установки:"
 
 #: trstrings:rsyesno1
 msgid "Yes/No?:"
@@ -509,24 +532,23 @@ msgstr ""
 
 #: trstrings:rswanttodoq
 msgid "What do you want to do?"
-msgstr ""
+msgstr "Что вы хотите сделать?"
 
-#: trstrings:rspackagekitwarning
+#: trstrings:rsdevversion
 msgid ""
-"Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to "
-"work correctly.\n"
-"Please update PackageKit!"
+"You use a development version of Listaller!\n"
+"This version is untested, be careful about what you do!"
 msgstr ""
 
 #: trstrings:rsspkwarning
 msgid ""
-"Make sure that you have got this package from a save source and a serious "
+"Make sure that you got this package from a save source and a serious "
 "publisher!"
 msgstr ""
 
 #: trstrings:rsinstalleveryone
 msgid "Install application for everyone"
-msgstr ""
+msgstr "Установить приложение для всех пользователей"
 
 #: trstrings:rstestapp
 msgid "Test application"
@@ -534,11 +556,11 @@ msgstr ""
 
 #: trstrings:rsinstallhome
 msgid "Install into my Home directory"
-msgstr ""
+msgstr "Установить в мой домашний каталог"
 
 #: trstrings:rsselinstmode
 msgid "Select installation mode"
-msgstr ""
+msgstr "Выберите режим установки"
 
 #: trstrings:rssoftwaremanager
 msgid "Software Manager"
@@ -546,15 +568,15 @@ msgstr ""
 
 #: trstrings:rsupdsources
 msgid "Update sources"
-msgstr ""
+msgstr "Обновить источники"
 
 #: trstrings:rsclose
 msgid "Close"
-msgstr ""
+msgstr "Закрыть"
 
 #: trstrings:rsdelsrc
 msgid "Delete source"
-msgstr ""
+msgstr "Удалить источник"
 
 #: trstrings:rslistofsrc
 msgid "The following update sources are installed:"
@@ -562,7 +584,7 @@ msgstr ""
 
 #: trstrings:rsuninstall
 msgid "Uninstall"
-msgstr ""
+msgstr "Удалить"
 
 #: trstrings:rsswcatalogue
 msgid "Browse catalogue"
@@ -570,23 +592,23 @@ msgstr ""
 
 #: trstrings:rsshow
 msgid "Show:"
-msgstr ""
+msgstr "Показать:"
 
 #: trstrings:rsall
 msgid "All"
-msgstr ""
+msgstr "Все"
 
 #: trstrings:rseducation
 msgid "Education"
-msgstr ""
+msgstr "Обучение"
 
 #: trstrings:rsoffice
 msgid "Office"
-msgstr ""
+msgstr "Офис"
 
 #: trstrings:rsdevelopment
 msgid "Development"
-msgstr ""
+msgstr "Средства разработки"
 
 #: trstrings:rsgraphic
 msgid "Graphic"
@@ -594,19 +616,19 @@ msgstr ""
 
 #: trstrings:rsnetwork
 msgid "Network"
-msgstr ""
+msgstr "Сеть"
 
 #: trstrings:rsgames
 msgid "Games"
-msgstr ""
+msgstr "Игры"
 
 #: trstrings:rssystem
 msgid "System"
-msgstr ""
+msgstr "Системные"
 
 #: trstrings:rsmultimedia
 msgid "Multimedia"
-msgstr ""
+msgstr "Мультимедиа"
 
 #: trstrings:rsaddidional
 msgid "Utilities"
@@ -618,23 +640,23 @@ msgstr ""
 
 #: trstrings:rsversion
 msgid "Version"
-msgstr ""
+msgstr "Версия"
 
 #: trstrings:rsauthor
 msgid "Autor"
-msgstr ""
+msgstr "Автор"
 
 #: trstrings:rsusername
 msgid "Username"
-msgstr ""
+msgstr "Имя пользователя"
 
 #: trstrings:rspassword
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #: trstrings:rsproxysettings
 msgid "Proxy-Settings"
-msgstr ""
+msgstr "Настройки прокси-сервера"
 
 #: trstrings:rsenableproxy
 msgid "Enable Proxy-Server"
@@ -681,22 +703,26 @@ msgstr ""
 
 #: trstrings:rsfilter
 msgid "Filter..."
-msgstr ""
+msgstr "Фильтр..."
 
 #: trstrings:rsloading
 msgid "Loading..."
-msgstr ""
+msgstr "Загружается..."
 
 #: trstrings:rsinstalledapps
-msgid "Installed applications"
+msgid ""
+"Installed\n"
+"applications"
 msgstr ""
 
 #: trstrings:rsinstallpkg
 msgid "Install package"
-msgstr ""
+msgstr "Установить пакет"
 
 #: trstrings:rsbrowsecatalog
-msgid "Browse catalog"
+msgid ""
+"Browse\n"
+"catalog"
 msgstr ""
 
 #: trstrings:rsrepositories
@@ -705,7 +731,7 @@ msgstr ""
 
 #: trstrings:rssettings
 msgid "Settings"
-msgstr ""
+msgstr "Настройки"
 
 #: trstrings:rsnoguipkgmanfound
 msgid ""
@@ -714,16 +740,18 @@ msgid ""
 msgstr ""
 
 #: trstrings:rsuselaunchpadforbugs
-msgid "Please use https://bugs.launchpad.net/listaller for bug reports."
+msgid ""
+"Please use https://bugs.launchpad.net/listaller\n"
+"for bug reports."
 msgstr ""
 
 #: trstrings:rsdisprootapps
 msgid "Display system applications"
-msgstr ""
+msgstr "Показать системные приложения"
 
 #: trstrings:rsdisponlymyapps
 msgid "Display my applications"
-msgstr ""
+msgstr "Показать мои приложения"
 
 #: trstrings:rsselmgrmode
 msgid "Select software-manager mode:"
@@ -738,7 +766,7 @@ msgstr ""
 
 #: trstrings:rsinstpkgq
 msgid "Install package?"
-msgstr ""
+msgstr "Установить пакет?"
 
 #: trstrings:rspkginstfail
 msgid "Package %p could not be installed."
@@ -746,6 +774,10 @@ msgstr ""
 
 #: trstrings:rsshowpkmon
 msgid "Start PackageKit monitor before running transactions"
+msgstr ""
+
+#: trstrings:rsstartlitray
+msgid "Start Listaller tray icon application (to check dependencies)"
 msgstr ""
 
 #: trstrings:rsaboutlistaller
@@ -770,7 +802,7 @@ msgstr ""
 
 #: trstrings:rsrmsrcq
 msgid "Are you really sure that you want to delete this source?"
-msgstr ""
+msgstr "Вы действительно хотите удалить этот источник?"
 
 #: trstrings:rsrmsrcqc
 msgid "Delete source?"
@@ -784,7 +816,7 @@ msgstr ""
 
 #: trstrings:rsnoappsfound
 msgid "No applications found!"
-msgstr ""
+msgstr "Приложения не найдены!"
 
 #: trstrings:rssourcedeleted
 msgid "Source was removed."
@@ -804,15 +836,15 @@ msgstr ""
 
 #: trstrings:rscategory
 msgid "Category:"
-msgstr ""
+msgstr "Категория:"
 
 #: trstrings:rswinstalldl
 msgid "Select software you want to download and to install:"
-msgstr ""
+msgstr "Выберите приложение для скачивания и установки"
 
 #: trstrings:rsnoinfo
 msgid "No information available!"
-msgstr ""
+msgstr "Нет информации!"
 
 #: trstrings:rsdlsetup
 msgid "Downloading setup package..."
@@ -825,7 +857,7 @@ msgstr ""
 
 #: trstrings:rsinstalling
 msgid "Running application installation..."
-msgstr ""
+msgstr "Запущена установка приложения..."
 
 #: trstrings:rsdownloadctbase
 msgid "Downloading catalogue base information..."
@@ -837,19 +869,19 @@ msgstr ""
 
 #: trstrings:rsctdlabort
 msgid "Do you really want to abort this download?"
-msgstr ""
+msgstr "Вы действительно хотите прервать эту закачку?"
 
 #: trstrings:rsrealuninstq
 msgid "Do you really want to uninstall %a?"
-msgstr ""
+msgstr "Вы действительно хотите удалить %a?"
 
 #: trstrings:rsunistsuccess
 msgid "Application uninstalled successfully!"
-msgstr ""
+msgstr "Удаление приложения успешно завершено!"
 
 #: trstrings:rsrmerror
 msgid "Error while uninstalling!"
-msgstr ""
+msgstr "Произошла ошибка во время удаления!"
 
 #: trstrings:rscannothandlerm
 msgid ""
@@ -864,7 +896,7 @@ msgstr ""
 
 #: trstrings:rsuninstalling
 msgid "Uninstalling..."
-msgstr ""
+msgstr "Удаление..."
 
 #: trstrings:rsrmpkg
 msgid ""
@@ -875,23 +907,23 @@ msgstr ""
 
 #: trstrings:rsrmpkgq
 msgid "Really remove?"
-msgstr ""
+msgstr "Точно удалить?"
 
 #: trstrings:rswaiting
 msgid "Waiting..."
-msgstr ""
+msgstr "Ожидание..."
 
 #: trstrings:rsrmappc
 msgid "Uninstalling %a"
-msgstr ""
+msgstr "Удаление %a"
 
 #: trstrings:rslindesk
-msgid "Running under %de."
+msgid "Running under %s."
 msgstr ""
 
 #: trstrings:rsnoupdates
 msgid "There are no updates available!"
-msgstr ""
+msgstr "Нет доступных обновлений!"
 
 #: trstrings:rslogupdinfo
 msgid "Update info:"
@@ -903,23 +935,23 @@ msgstr ""
 
 #: trstrings:rsupdto
 msgid "The application will be updated to version %v"
-msgstr ""
+msgstr "Это приложение будет обновлено до версии %v"
 
 #: trstrings:rscheckforupd
 msgid "Check for updates"
-msgstr ""
+msgstr "Проверить наличие обновлений"
 
 #: trstrings:rsinstupd
 msgid "Install updates"
-msgstr ""
+msgstr "Установить обновления"
 
 #: trstrings:rsshowupdater
 msgid "Show"
-msgstr ""
+msgstr "Показать"
 
 #: trstrings:rsquitupdater
 msgid "Quit"
-msgstr ""
+msgstr "Выйти"
 
 #: trstrings:rsupdinstalling
 msgid "Applying updates..."
@@ -946,29 +978,29 @@ msgid "Resolving dependencies..."
 msgstr ""
 
 #~ msgid "Browser %s%s%s not executable."
-#~ msgstr "Naršyklė %s%s%s nėra vykdomasis failas."
+#~ msgstr "Браузер %s%s%s не является исполнимым файлом."
 
 #~ msgid "Browser %s%s%s not found."
-#~ msgstr "Naršyklė %s%s%s nerasta."
+#~ msgstr "Браузер %s%s%s не найден."
 
 #~ msgid "Error while executing %s%s%s:%s%s"
-#~ msgstr "Įvyko klaida startuojant %s%s%s:%s%s"
+#~ msgstr "Ошибка при выполнении %s%s%s:%s%s"
 
 #~ msgid "Unable to find a HTML browser."
-#~ msgstr "Nepavyko rasti HTML naršyklės."
+#~ msgstr "Невозможно найти браузер HTML."
 
 #~ msgid ""
 #~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
 #~ "Viewers"
 #~ msgstr ""
-#~ "Nerasta HTML naršyklė.%sNurodykite kokią nors meniu „Žinynas -> Derinti "
-#~ "žinyną -> Žiūriklės“."
+#~ "Не найдена программа просмотра справки.%sЗадайте её в меню Справка -> "
+#~ "Параметры справки -> Программы просмотра"
 
 #~ msgid "The help database %s%s%s was unable to find file %s%s%s."
-#~ msgstr "Žinyno duomenų bazė %s%s%s neranda failo %s%s%s."
+#~ msgstr "База данных справки %s%s%s не смогла найти файл %s%s%s."
 
 #~ msgid "The macro %s in BrowserParams will be replaced by the URL."
-#~ msgstr "Makrokomanda %s naršyklės parametruose bus pakeista URL reikšme."
+#~ msgstr "Макрос %s в BrowserParams будет заменён на URL."
 
 #~ msgid "Alt"
 #~ msgstr "Alt"
@@ -980,51 +1012,51 @@ msgstr ""
 #~ msgstr "Accept"
 
 #~ msgid "application key"
-#~ msgstr "Programos klavišas"
+#~ msgstr "клавиша application"
 
 #~ msgid "Backspace"
-#~ msgstr "Backspace"
+#~ msgstr "Забой"
 
 #~ msgctxt "lclstrconsts.ifsvk_cancel"
 #~ msgid "Cancel"
 #~ msgstr "Cancel"
 
 #~ msgid "Capital"
-#~ msgstr "Caps Lock"
+#~ msgstr "CapsLock"
 
 #~ msgid "Clear"
 #~ msgstr "Clear"
 
 #~ msgid "Control"
-#~ msgstr "Ctrl"
+#~ msgstr "Элемент управления"
 
 #~ msgid "Convert"
-#~ msgstr "Convert"
+#~ msgstr "Преобразовать"
 
 #~ msgctxt "lclstrconsts.ifsvk_delete"
 #~ msgid "Delete"
 #~ msgstr "Delete"
 
 #~ msgid "Down"
-#~ msgstr "Down"
+#~ msgstr "Стрелка вниз"
 
 #~ msgid "End"
-#~ msgstr "End"
+#~ msgstr "Конец"
 
 #~ msgid "Escape"
-#~ msgstr "Esc"
+#~ msgstr "Escape"
 
 #~ msgid "Execute"
-#~ msgstr "Execute"
+#~ msgstr "Выполнить"
 
 #~ msgid "Final"
-#~ msgstr "Final"
+#~ msgstr "Итоговый"
 
 #~ msgid "Hanja"
-#~ msgstr "Hanja"
+#~ msgstr "Ханчча"
 
 #~ msgid "Help"
-#~ msgstr "Help"
+#~ msgstr "Справка"
 
 #~ msgid "Home"
 #~ msgstr "Home"
@@ -1034,36 +1066,36 @@ msgstr ""
 #~ msgstr "Insert"
 
 #~ msgid "Junja"
-#~ msgstr "Junja"
+#~ msgstr "Джанджа"
 
 #~ msgid "Kana"
-#~ msgstr "Kana"
+#~ msgstr "Кана"
 
 #~ msgid "Mouse Button Left"
-#~ msgstr "Kairys peles klavišas"
+#~ msgstr "Левая клавиша мыши"
 
 #~ msgid "Left"
-#~ msgstr "Left"
+#~ msgstr "Стрелка влево"
 
 #~ msgid "left windows key"
-#~ msgstr "Kairysis windows klavišas"
+#~ msgstr "левая клавиша windows"
 
 #~ msgid "Mouse Button Middle"
-#~ msgstr "Vidurinis pelės klavišas"
+#~ msgstr "Средняя клавиша мыши"
 
 #~ msgctxt "lclstrconsts.ifsvk_menu"
 #~ msgid "Menu"
 #~ msgstr "Menu"
 
 #~ msgid "Mode Change"
-#~ msgstr "Mode Change"
+#~ msgstr "Изменение режима"
 
 #~ msgctxt "lclstrconsts.ifsvk_next"
 #~ msgid "Next"
 #~ msgstr "Next"
 
 #~ msgid "Nonconvert"
-#~ msgstr "Nonconvert"
+#~ msgstr "Не преобразовывать"
 
 #~ msgid "Numlock"
 #~ msgstr "Numlock"
@@ -1072,32 +1104,32 @@ msgstr ""
 #~ msgstr "Numpad %d"
 
 #~ msgid "Pause key"
-#~ msgstr "Pause"
+#~ msgstr "Клавиша Pause"
 
 #~ msgid "Print"
-#~ msgstr "Print"
+#~ msgstr "Печать"
 
 #~ msgctxt "lclstrconsts.ifsvk_prior"
 #~ msgid "Prior"
 #~ msgstr "Prior"
 
 #~ msgid "Mouse Button Right"
-#~ msgstr "Dešinys pelės klavišas"
+#~ msgstr "Правая клавиша мыши"
 
 #~ msgid "Return"
-#~ msgstr "Return"
+#~ msgstr "Ввод"
 
 #~ msgid "Right"
-#~ msgstr "Right"
+#~ msgstr "Стрелка вправо"
 
 #~ msgid "right windows key"
-#~ msgstr "Dešinysis windows klavišas"
+#~ msgstr "правая клавиша windows"
 
 #~ msgid "Scroll"
 #~ msgstr "Scroll"
 
 #~ msgid "Select"
-#~ msgstr "Select"
+#~ msgstr "Выбрать"
 
 #~ msgid "Shift"
 #~ msgstr "Shift"
@@ -1106,249 +1138,271 @@ msgstr ""
 #~ msgstr "Snapshot"
 
 #~ msgid "Space key"
-#~ msgstr "Space"
+#~ msgstr "Пробел"
 
 #~ msgid "Tab"
 #~ msgstr "Tab"
 
 #~ msgid "Unknown"
-#~ msgstr "Nežinomas"
+#~ msgstr "Неизвестная"
 
 #~ msgid "Up"
-#~ msgstr "Up"
+#~ msgstr "Стрелка вверх"
 
 #~ msgctxt "lclstrconsts.lislclresourcesnotfound"
 #~ msgid "Resource %s not found"
-#~ msgstr "Resursas %s nerastas"
+#~ msgstr "Ресурс %s не найден"
 
 #~ msgid "3D Dark Shadow"
-#~ msgstr "3D tamsumos šešėlis"
+#~ msgstr "Затенённая часть объекта 3D"
 
 #~ msgid "3D Light"
-#~ msgstr "3D šviesuma"
+#~ msgstr "Освещённая часть объекта 3D"
 
 #~ msgid "A control can't have itself as parent"
-#~ msgstr "Valdiklio tėvas negali būti pats valdiklis"
+#~ msgstr "Элемент управления не может быть сам себе потомком"
 
 #~ msgid "Active Border"
-#~ msgstr "Aktyvus rėmelis"
+#~ msgstr "Граница активного окна"
 
 #~ msgid "Active Caption"
-#~ msgstr "Veikiamoji antraštė"
+#~ msgstr "Заголовок активного окна"
 
 #~ msgid "All files (%s)|%s|%s"
-#~ msgstr "Visi failai (%s)|%s|%s"
+#~ msgstr "Все файлы (%s)|%s|%s"
 
 #~ msgid "Application Workspace"
-#~ msgstr "Programos darbo laukas"
+#~ msgstr "Рабочая область приложения"
+
+#~ msgid "Aqua"
+#~ msgstr "Морской волны"
 
 #~ msgid "Desktop"
-#~ msgstr "Darbalaukis"
+#~ msgstr "Рабочий стол"
 
 #~ msgid "Backward"
-#~ msgstr "Atgal"
+#~ msgstr "Назад"
 
 #~ msgid "Bitmaps"
-#~ msgstr "Bitmap"
+#~ msgstr "Точечные рисунки"
+
+#~ msgid "Black"
+#~ msgstr "Чёрный"
 
 #~ msgid "Blank"
-#~ msgstr "Tuščias"
+#~ msgstr "Пустой"
+
+#~ msgid "Blue"
+#~ msgstr "Синий"
 
 #~ msgid "Button Face"
-#~ msgstr "Mygtuko paviršius"
+#~ msgstr "Лицевая часть кнопки"
 
 #~ msgid "Button Highlight"
-#~ msgstr "Mygtuko paryškinimas"
+#~ msgstr "Освещаемая сторона кнопки"
 
 #~ msgid "Button Shadow"
-#~ msgstr "Mygtuko šešėlis"
+#~ msgstr "Затенённая сторона кнопки"
 
 #~ msgid "Button Text"
-#~ msgstr "Mygtuko tekstas"
+#~ msgstr "Текст кнопки"
 
 #~ msgid "Calculator"
-#~ msgstr "Skaičiuotuvas"
+#~ msgstr "Калькулятор"
 
 #~ msgctxt "lclstrconsts.rscancelrecordhint"
 #~ msgid "Cancel"
-#~ msgstr "Atsisakyti"
+#~ msgstr "Отмена"
 
 #~ msgid "Can not focus"
-#~ msgstr "Suaktyvinti negalima"
+#~ msgstr "Не могу принять фокус"
 
 #~ msgid "Canvas does not allow drawing"
-#~ msgstr "Į „Canvas“ negalima piešti"
+#~ msgstr "Канва не поддерживает рисования"
 
 #~ msgid "Caption Text"
-#~ msgstr "Antraštės tekstas"
+#~ msgstr "Текст заголовка"
 
 #~ msgid "Case sensitive"
-#~ msgstr "Paisyti raidžių lygio"
+#~ msgstr "С учётом регистра"
+
+#~ msgid "Cream"
+#~ msgstr "Кремовый"
 
 #~ msgid "Creating gdb catchable error:"
-#~ msgstr "Kuriama GDB aptinkama klaida:"
+#~ msgstr "Создание ошибки, захватываемой GDB:"
 
 #~ msgid "Cursor"
-#~ msgstr "Žymeklis"
+#~ msgstr "Курсор"
 
 #~ msgid "Custom ..."
-#~ msgstr "Naudotojo…"
+#~ msgstr "Пользовательский ..."
+
+#~ msgid "Default"
+#~ msgstr "По умолчанию"
 
 #~ msgid "permissions user group size date time"
-#~ msgstr "leidimai naudotojas grupė dydis data laikas"
+#~ msgstr "права пользователь группа размер дата время"
 
 #~ msgid "Delete record?"
-#~ msgstr "Ištrinti įrašą?"
+#~ msgstr "Удалить запись?"
 
 #~ msgctxt "lclstrconsts.rsdeleterecordhint"
 #~ msgid "Delete"
-#~ msgstr "Delete"
+#~ msgstr "Удалить"
 
 #~ msgid "Direction"
-#~ msgstr "Kryptis"
+#~ msgstr "Направление"
 
 #~ msgid "&Directory"
-#~ msgstr "&Aplankas"
+#~ msgstr "&Каталог"
 
 #~ msgid "Docking"
-#~ msgstr "Pritvirtinimas"
+#~ msgstr "Стыковка"
 
 #~ msgid "Duplicate icon format."
-#~ msgstr "Piktogramos formatai dubliuojasi."
+#~ msgstr "Формат значков дублируется."
 
 #~ msgid "Edit"
-#~ msgstr "Keisti"
+#~ msgstr "Редактировать"
 
 #~ msgctxt "lclstrconsts.rserror"
 #~ msgid "Error"
-#~ msgstr "Klaida"
+#~ msgstr "Ошибка"
 
 #~ msgid "Error creating device context for %s.%s"
-#~ msgstr "Įvyko klaida kuriant įrenginio turinį, skirtą %s.%s"
+#~ msgstr "Ошибка создания контекста устройства для %s.%s"
 
 #~ msgid "ERROR in LCL: "
-#~ msgstr "LCL klaida: "
+#~ msgstr "ОШИБКА в LCL: "
 
 #~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
-#~ msgstr "%s įvyko klaida:%sadresas %s%s, kadras %s"
+#~ msgstr "Произошла ошибка в %s по %s адресу %s%s фрейм %s"
 
 #~ msgid "Error reading %s%s%s: %s"
-#~ msgstr "Įvyko klaida skaitant %s%s%s: %s"
+#~ msgstr "Ошибка чтения %s%s%s: %s"
 
 #~ msgid "Error while saving bitmap."
-#~ msgstr "Įrašant rastrinį paveikslą įvyko klaida."
+#~ msgstr "Ошибка при сохранении точечного рисунка (bitmap)."
 
 #~ msgid "Exception"
-#~ msgstr "Išimtinė situacija"
+#~ msgstr "Исключение"
 
 #~ msgid "Directory must exist"
-#~ msgstr "Aplankas turi egzistuoti"
+#~ msgstr "Каталог должен существовать"
 
 #~ msgid "The directory \"%s\" does not exist."
-#~ msgstr "Aplankas „%s“ neegzistuoja."
+#~ msgstr "Каталог \"%s\" не существует."
 
 #~ msgid "The file \"%s\" already exists. Overwrite ?"
-#~ msgstr "Toks failas „%s“ jayu yra. Rašyti ant viršaus?"
+#~ msgstr "Файл \"%s\" уже существует. Перезаписать?"
 
 #~ msgid "File must exist"
-#~ msgstr "Failas turi egzistuoti"
+#~ msgstr "Файл должен существовать"
 
 #~ msgid "The file \"%s\" does not exist."
-#~ msgstr "Failas „%s“ neegzistuoja."
+#~ msgstr "Файл \"%s\" не существует"
 
 #~ msgid "The file \"%s\" is not writable."
-#~ msgstr "Failas „%s“ nėra skirtas rašymui."
+#~ msgstr "Файл \"%s\" не доступен для записи."
 
 #~ msgid "File is not writable"
-#~ msgstr "Failas ne rašymui"
+#~ msgstr "Файл не доступен для записи"
 
 #~ msgid "Save file as"
-#~ msgstr "Įrašyti failą kaip"
+#~ msgstr "Сохранить файл как"
 
 #~ msgid "Open existing file"
-#~ msgstr "Atverti egzistuojanti failą"
+#~ msgstr "Открыть существующий файл"
 
 #~ msgid "Overwrite file ?"
-#~ msgstr "Perrašyti failą?"
+#~ msgstr "Перезаписать файл?"
 
 #~ msgid "Path must exist"
-#~ msgstr "Kelias turi egzistuoti"
+#~ msgstr "Путь должен существовать"
 
 #~ msgid "The path \"%s\" does not exist."
-#~ msgstr "Kelias „%s“ neegzistuoja."
+#~ msgstr "Путь \"%s\" не существует."
 
 #~ msgid "Select Directory"
-#~ msgstr "Nurodykit aplanką"
+#~ msgstr "Выберите каталог"
 
 #~ msgid "(file not found: \"%s\")"
-#~ msgstr "(failas nerastas: „%s“)"
+#~ msgstr "(файл не найден: \"%s\")"
 
 #~ msgid "File information"
-#~ msgstr "Informacija apie failą"
+#~ msgstr "Информация о файле"
 
 #~ msgid "Find"
-#~ msgstr "Ieškoti"
+#~ msgstr "Найти"
 
 #~ msgid "Find more"
-#~ msgstr "Ieškoti toliau"
+#~ msgstr "Найти далее"
 
 #~ msgid "First"
-#~ msgstr "Pirmasis"
+#~ msgstr "Первая"
 
 #~ msgid "FixedCols can't be >= ColCount"
-#~ msgstr "„FixedCols“ reikšmė negali būti lygi ar didesnė nei „ColCount“"
+#~ msgstr "FixedCols не может быть >= ColCount"
 
 #~ msgid "FixedRows can't be >= RowCount"
-#~ msgstr "„FixedRows“ reikšmė negali būti lygi ar didesnė nei „RowCount“"
+#~ msgstr "FixedRows не может быть >= RowCount"
 
 #~ msgid "Form"
-#~ msgstr "Nuo"
+#~ msgstr "Форма"
 
 #~ msgid "Form streaming \"%s\" error: %s"
-#~ msgstr "Formą siunčiant srautu „%s“ įvyko klaida: %s"
+#~ msgstr "Ошибка потоков \"%s\" форм: %s"
 
 #~ msgid "Forward"
-#~ msgstr "Pirmyn"
+#~ msgstr "Вперёд"
+
+#~ msgid "Fuchsia"
+#~ msgstr "Розовый"
 
 #~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
-#~ msgstr ""
-#~ "--gdk-debug žymės     Įjungiami nurodyti GDK sekimo/derinimo pranešimai."
+#~ msgstr "--gdk-debug flags     Включить указанные отладочные сообщения GDK."
 
 #~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
-#~ msgstr ""
-#~ "--gdk-no-debug žymės     Išjungiami nurodyti GDK sekimo/derinimo pranešimai."
+#~ msgstr "--gdk-no-debug flags  Выключить указанные отладочные сообщения GDK."
 
 #~ msgid ""
 #~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
 #~ "the application."
 #~ msgstr ""
-#~ "--g-fatal-warnings     GTK+ ar GDK sugeneravus perspėjimą arba klaidą, "
-#~ "programa bus sustabdyta."
+#~ "--g-fatal-warnings    Замечания и ошибки, выдаваемые Gtk+/GDK, остановят "
+#~ "приложение."
 
 #~ msgid "Gradient Active Caption"
-#~ msgstr "Veikiamosios antraštės gradientas"
+#~ msgstr "Градиент активного заголовка"
 
 #~ msgid "Gradient Inactive Caption"
-#~ msgstr "Įprastos antraštės gradientas"
+#~ msgstr "Градиент неактивного заголовка"
+
+#~ msgid "Gray"
+#~ msgstr "Тёмно-серый"
 
 #~ msgid "Gray Text"
-#~ msgstr "Neveiksnus tekstas"
+#~ msgstr "Серый текст"
+
+#~ msgid "Green"
+#~ msgstr "Тёмно-зелёный"
 
 #~ msgid "Grid file doesn't exists"
-#~ msgstr "Tinklelio failas neegzistuoja"
+#~ msgstr "Файл сетки не существует"
 
 #~ msgid "Grid index out of range."
-#~ msgstr "Tinklelio indeksas peržengia ribas"
+#~ msgstr "Индекс Grid'а вне диапазона допустимых значений."
 
 #~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
 #~ msgstr ""
-#~ "„GroupIndex“ negali būti mažesnis už ankstesnių menių punktų „GroupIndex“"
+#~ "GroupIndex не может быть меньше GroupIndex для предыдущего элемента меню"
 
 #~ msgid "Filter:"
-#~ msgstr "Filtras:"
+#~ msgstr "Фильтр:"
 
 #~ msgid "History:"
-#~ msgstr "Istorija:"
+#~ msgstr "История:"
 
 #~ msgid ""
 #~ "--class classname     Following Xt conventions, the class of a program is "
@@ -1356,14 +1410,13 @@ msgstr ""
 #~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
 #~ "program will be set to \"classname\"."
 #~ msgstr ""
-#~ "--class klasės_pavadinimas     Pagal Xt susitarimą, programos klasė yra "
-#~ "programos pavadinimas, kuriame pirmoji raidė yra didžioji. Pavyzdžiui: GIMP "
-#~ "programos klasė yra „Gimp“. Jei --class nurodytas, tai klasės pavadinimas "
-#~ "bus priskirtas „classname“."
+#~ "--class classname      Следуя соглашениям Xt, класс программы - это имя "
+#~ "программы с прописным первым символом. Например, имя класса для gimp - "
+#~ "\"Gimp\". Если задан --class, класс программы будет установлен в "
+#~ "\"classname\"."
 
 #~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
-#~ msgstr ""
-#~ "--gtk-debug žymės     Įjungiami nurodyti GTK+ sekimo/derinimo pranešimai."
+#~ msgstr "--gtk-debug flags     Включить указанные отладочные сообщения Gtk+."
 
 #~ msgid ""
 #~ "--display h:s:d       Connect to the specified X server, where \"h\" is the "
@@ -1371,30 +1424,32 @@ msgstr ""
 #~ "number (typically omitted). If --display is not specified, the DISPLAY "
 #~ "environment variable is used."
 #~ msgstr ""
-#~ "--display h:s:d     Prisijunti prie nurodyto X serverio, čia „h“ yra "
-#~ "hostname, „s“ - serverio numeris (paprastai 0), ir „d“ - ekrano numeris "
-#~ "(dažniausia praleidžiamas). Jei --display nenurodytas, tada naudojamas "
-#~ "DISPLAY aplinkos kintamasis."
+#~ "--display h:s:d       Связаться с указанным X-сервером, где \"h\" - имя хост-"
+#~ "машины, \"s\" - номер сервера (обычно 0), и \"d\" - номер дисплея (обычно "
+#~ "опускают). Если не задан --display, используется переменная окружения "
+#~ "DISPLAY."
 
 #~ msgid "--gtk-module module   Load the specified module at startup."
-#~ msgstr "--gtk-module modulis     Starto metu įkelti nurodytą modulį."
+#~ msgstr "--gtk-module модуль   Загрузить указанный модуль при запуске."
 
 #~ msgid ""
 #~ "--name programe       Set program name to \"progname\". If not specified, "
 #~ "program name will be set to ParamStrUTF8(0)."
 #~ msgstr ""
-#~ "--name programa       Programos pavadinimą nustatyti į „programa“. Jei "
-#~ "nenurodyta, tai programos pavadinimas bus nustatytas į ParamStrUTF8(0)."
+#~ "--name имяпрог       Установить имя программы в \"имяпрог\". Если не "
+#~ "указано, имя программы будет установлено в ParamStrUTF8(0)."
 
 #~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
-#~ msgstr ""
-#~ "--gtk-no-debug žymės     Išungiami nurodyti GTK+ sekimo/derinimo pranešimai."
+#~ msgstr "--gtk-no-debug flags  Выключить указанные отладочные сообщения Gtk+."
 
 #~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
-#~ msgstr "--lcl-no-transient     Modalinių formų eilę nedaryti trumpalaikę."
+#~ msgstr ""
+#~ "--lcl-no-transient    Не устанавливать временный порядок модальных форм"
 
 #~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
-#~ msgstr "--no-xshm     Nenaudoti „X Shared Memory“ plėtinio."
+#~ msgstr ""
+#~ "--no-xshm             Запрет использования расширений X по разделяемой "
+#~ "памяти."
 
 #~ msgid ""
 #~ "--sync                Call XSynchronize (display, True) after the Xserver "
@@ -1403,429 +1458,475 @@ msgstr ""
 #~ "received immediatey after the protocol request that generated the error has "
 #~ "been processed by the X server."
 #~ msgstr ""
-#~ "--sync     Kai XServer ryšys sukurtas, vykdyti „XSynchronize (display, "
-#~ "True)“. Tai padarys lengvesnį X protokolo klaidų derinimą, nes bus išjungtas "
-#~ "X kreipinių buferis ir X serveriui protokolo kreipinio apdorojimo metu "
-#~ "įvykusi klaida bus gauta iškart."
+#~ "--sync                Вызов XSynchronize (display, True) после установлени "
+#~ "соединения с Xserver'ом. Это облегчает отладку ошибок протокола X, т.к. "
+#~ "запросы буферизации X будут отключены, и ошибки X будут получены сразу после "
+#~ "запроса протокола, который вызвал эту ошибку, обработанную сервером X."
 
 #~ msgid "%s: Already registered"
-#~ msgstr "%s: jau yra registruotas"
+#~ msgstr "%s: Уже зарегистрирован"
 
 #~ msgid "Help Context not found"
-#~ msgstr "Žinyno turinys nerastas"
+#~ msgstr "Контекст справки не найден"
 
 #~ msgid "Help Database not found"
-#~ msgstr "Žinyno duomenų bazė nerasta"
+#~ msgstr "База данных справки не найдена"
 
 #~ msgid "Help Error"
-#~ msgstr "Žinyno klaida"
+#~ msgstr "Ошибка справки"
 
 #~ msgid "Help context %s not found."
-#~ msgstr "Žinyno turinys %s nerastas."
+#~ msgstr "Контекст справки %s не найден."
 
 #~ msgid "Help context %s not found in Database %s%s%s."
-#~ msgstr "Žinyno turinys %s duomenų bazėje %s%s%s nerastas."
+#~ msgstr "Контекст справки %s не найден в базе данных %s%s%s."
 
 #~ msgid ""
 #~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
-#~ msgstr "Žinyno duomenų bazė %s%s%s nerado žiūriklės %s tipo žinyno lapui."
+#~ msgstr ""
+#~ "База данных справки %s%s%s не нашла программу просмотра для страницы справки "
+#~ "типа %s"
 
 #~ msgid "Help Database %s%s%s not found"
-#~ msgstr "Žinyno duomenų bazė %s%s%s nerasta."
+#~ msgstr "База данных справки %s%s%s не найдена"
 
 #~ msgid "Help keyword %s%s%s not found."
-#~ msgstr "Žinyno raktažodis %s%s%s nerastas."
+#~ msgstr "Ключевое слово справки %s%s%s не найдено."
 
 #~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
-#~ msgstr "Žinyno raktažodis %s%s%s duomenų bazėje %s%s%s nerastas."
+#~ msgstr "Ключевое слово справки %s%s%s не найдено в базе данных %s%s%s."
 
 #~ msgid "Help node %s%s%s has no Help Database"
-#~ msgstr "Žynyno mazgas %s%s%s neturi žinyno duomenų bazės."
+#~ msgstr "Узел справки %s%s%s не имеет соответствующей базы данных"
 
 #~ msgid "No help found for line %d, column %d of %s."
-#~ msgstr "Žinyne nėra duomenų eilutei %d, stulpeliui %d šio %s."
+#~ msgstr "Не найдено справки для строки %d, столбца %d из %s."
 
 #~ msgid "No help nodes available"
-#~ msgstr "Žinyno nėra"
+#~ msgstr "Доступные узлы справки отсутствуют"
 
 #~ msgid "Help not found"
-#~ msgstr "Žinynas nerastas"
+#~ msgstr "Справка не найдена"
 
 #~ msgid "%s: Not registered"
-#~ msgstr "%s: neregistruotas"
+#~ msgstr "%s: Не зарегистрирован"
 
 #~ msgid "Help Selector Error"
-#~ msgstr "Žinyno išrinkėjo klaida"
+#~ msgstr "Ошибка переключателя справки"
 
 #~ msgid "There is no viewer for help type %s%s%s"
-#~ msgstr "Nerasta žiūriklė %s%s%s žinyno tipui."
+#~ msgstr "Отсутствует программа просмотра для типа справки %s%s%s"
 
 #~ msgid "Help Viewer Error"
-#~ msgstr "Žinyno žiūriklės klaida"
+#~ msgstr "Ошибка программы просмотра справки"
 
 #~ msgid "Help Viewer not found"
-#~ msgstr "Žinyno žiūriklė nerasta"
+#~ msgstr "Программа просмотра справки не найдена"
 
 #~ msgid "Highlight"
-#~ msgstr "Paryškinimas"
+#~ msgstr "Выделенное"
 
 #~ msgid "Highlight Text"
-#~ msgstr "Paryškintas tekstas"
+#~ msgstr "Текст выделенного"
 
 #~ msgid "Hot Light"
-#~ msgstr "Indikatorius"
+#~ msgstr "Выделение"
 
 #~ msgid "OSX Icon Resource"
-#~ msgstr "OSX piktogramos resursas"
+#~ msgstr "Ресурс значков OSX"
 
 #~ msgid "Icon"
-#~ msgstr "Piktograma"
+#~ msgstr "Значок"
 
 #~ msgid "Icon image cannot be empty"
-#~ msgstr "Piktogramos paveikslėlis neturi būti tuščias"
+#~ msgstr "Изображение значка не может быть пустым"
 
 #~ msgid "Icon image must have the same format"
-#~ msgstr "Piktogramos ir naujasis paveikslėliai turi būti to paties formato"
+#~ msgstr "Изображение значка должно иметь тот же формат"
 
 #~ msgid "Cannot change format of icon image"
-#~ msgstr "Neina pakeisti piktogramos paveikslo formato"
+#~ msgstr "Невозможно изменить формат изображения значка"
 
 #~ msgid "Icon image must have the same size"
-#~ msgstr "Piktogramos ir naujasis paveikslėliai turi būti to paties dydžio"
+#~ msgstr "Изображение значка должно иметь тот же размер"
 
 #~ msgid "Cannot change size of icon image"
-#~ msgstr "Neina pakeisti piktogramos paveikslo dydžio"
+#~ msgstr "Невозможно изменить размер изображения значка"
 
 #~ msgid "Icon has no current image"
-#~ msgstr "Veikiamoji piktograma neturi paveikslėlio"
+#~ msgstr "Значок не имеет текущего изображения"
 
 #~ msgid "Inactive Border"
-#~ msgstr "Neaktuvus rėmelis"
+#~ msgstr "Граница неактивного окна"
 
 #~ msgctxt "lclstrconsts.rsinactivecaptioncolorcaption"
 #~ msgid "Inactive Caption"
-#~ msgstr "Neaktyvi antraštė"
+#~ msgstr "Заголовок неактивного окна"
 
 #~ msgctxt "lclstrconsts.rsinactivecaptiontext"
 #~ msgid "Inactive Caption"
-#~ msgstr "Neaktyvi antraštė"
+#~ msgstr "Заголовок неактивного окна"
 
 #~ msgid "%s Index %d out of bounds 0 .. %d"
-#~ msgstr "%s indeksas %d peržengia ribas 0 .. %d"
+#~ msgstr "%s Индекс %d вне диапазона 0 .. %d"
 
 #~ msgid "Index Out of range Cell[Col=%d Row=%d]"
-#~ msgstr "Langelio [stulpelis = %d, eilutė = %d] indeksas peržengia ribas"
+#~ msgstr "Индекс вне диапазона Cell[Col=%d Row=%d]"
 
 #~ msgid "Info Background"
-#~ msgstr "Fonas informacijai"
+#~ msgstr "Фон сообщения"
 
 #~ msgid "Info Text"
-#~ msgstr "Informacijos tekstas"
+#~ msgstr "Текст сообщения"
 
 #~ msgctxt "lclstrconsts.rsinsertrecordhint"
 #~ msgid "Insert"
-#~ msgstr "Insert"
+#~ msgstr "Вставить"
 
 #~ msgid "Invalid Date : %s"
-#~ msgstr "Klaidinga data: %s"
+#~ msgstr "Неверная дата: %s"
 
 #~ msgid "Invalid Date: %s. Must be between %s and %s"
-#~ msgstr "Klaidinga data: %s. Ji turi būti tarp %s ir %s"
+#~ msgstr "Неверная дата: %s. Должна быть между %s and %s"
 
 #~ msgid "invalid Form object stream"
-#~ msgstr "klaidingas formos objekto srautas"
+#~ msgstr "неправильный поток объекта формы"
 
 #~ msgid "Invalid property value"
-#~ msgstr "Klaidinga savybės reikšmė"
+#~ msgstr "Неправильное значение свойства"
 
 #~ msgid "Invalid stream format"
-#~ msgstr "Klaidingas srauto formatas"
+#~ msgstr "Неправильный формат потока"
 
 #~ msgid "%s is already associated with %s"
-#~ msgstr "%s jau yra asocijuotas su %s"
+#~ msgstr "%s уже сопоставлено с %s"
 
 #~ msgid "Joint Picture Expert Group"
 #~ msgstr "Joint Picture Expert Group"
 
 #~ msgid "Last"
-#~ msgstr "Paskutinysis"
+#~ msgstr "Последняя"
+
+#~ msgid "Lime"
+#~ msgstr "Зелёный"
 
 #~ msgid "List index exceeds bounds (%d)"
-#~ msgstr "Sąrašo indeksas peržengė ribas (%d)"
+#~ msgstr "Индекс списка вне диапазона (%d)"
 
 #~ msgid "List must be empty"
-#~ msgstr "Sąrašas turi būti tuščias"
+#~ msgstr "Список должен быть пуст"
+
+#~ msgid "Maroon"
+#~ msgstr "Малиновый"
 
 #~ msgid "&All"
-#~ msgstr "&Visi"
+#~ msgstr "&Все"
 
 #~ msgctxt "lclstrconsts.rsmbcancel"
 #~ msgid "Cancel"
-#~ msgstr "Atsisakyti"
+#~ msgstr "Отмена"
 
 #~ msgid "&Close"
-#~ msgstr "&Užverti"
+#~ msgstr "&Закрыть"
 
 #~ msgid "&Help"
-#~ msgstr "Žin&ynas"
+#~ msgstr "&Справка"
 
 #~ msgid "&Ignore"
-#~ msgstr "&Ignoruoti"
+#~ msgstr "&Пропуск"
 
 #~ msgid "&No"
-#~ msgstr "&Ne"
+#~ msgstr "&Нет"
 
 #~ msgid "No to all"
-#~ msgstr "Visiada ne"
+#~ msgstr "Нет для всех"
 
 #~ msgid "&OK"
-#~ msgstr "&Tinka"
+#~ msgstr "&ОК"
 
 #~ msgid "&Retry"
-#~ msgstr "Ka&rtoti"
+#~ msgstr "&Повтор"
 
 #~ msgid "&Yes"
-#~ msgstr "&Taip"
+#~ msgstr "&Да"
 
 #~ msgid "Yes to &All"
-#~ msgstr "Vis&ada taip"
+#~ msgstr "Да для &всех"
+
+#~ msgid "Medium Gray"
+#~ msgstr "Серый"
 
 #~ msgid "Menu Bar"
-#~ msgstr "Meniu juosta"
+#~ msgstr "Панель меню"
 
 #~ msgctxt "lclstrconsts.rsmenucolorcaption"
 #~ msgid "Menu"
-#~ msgstr "Menu"
+#~ msgstr "Меню"
 
 #~ msgid "Menu Highlight"
-#~ msgstr "Paryškintas meniu"
+#~ msgstr "Выделенный пункт меню"
 
 #~ msgid "Menu Text"
-#~ msgstr "Menu tekstas"
+#~ msgstr "Текст меню"
 
 #~ msgid "  modified "
-#~ msgstr "  pakeista "
+#~ msgstr "  изменён "
+
+#~ msgid "Money Green"
+#~ msgstr "Светло-зелёный"
 
 #~ msgid "Confirmation"
-#~ msgstr "Patvirtinimas"
+#~ msgstr "Подтверждение"
 
 #~ msgid "Custom"
-#~ msgstr "Naudotojo"
+#~ msgstr "Пользовательский"
 
 #~ msgctxt "lclstrconsts.rsmterror"
 #~ msgid "Error"
-#~ msgstr "Klaida"
+#~ msgstr "Ошибка"
 
 #~ msgid "Information"
-#~ msgstr "Informacija"
+#~ msgstr "Сведения"
 
 #~ msgid "Warning"
-#~ msgstr "Perspėjimas"
+#~ msgstr "Предупреждение"
+
+#~ msgid "Navy"
+#~ msgstr "Тёмно-синий"
 
 #~ msgctxt "lclstrconsts.rsnextrecordhint"
 #~ msgid "Next"
-#~ msgstr "Kitas"
+#~ msgstr "Следующая"
+
+#~ msgid "None"
+#~ msgstr "Нет"
 
 #~ msgid "Not a valid grid file"
-#~ msgstr "Klaidingas tinklelio failas"
+#~ msgstr "Неверный файл сетки"
 
 #~ msgid ""
 #~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
 #~ "the programs uses clause."
 #~ msgstr ""
-#~ "Nevaldiklio objektas. Patikrinkite ar modulis „interfaces“ yra paminėtas "
-#~ "programos naudojamų modulių sąraše."
+#~ "Отсутствует объект библиотеки виджетов. Проверьте, что модуль \"interfaces\" "
+#~ "был добавлен в выражение uses программы."
+
+#~ msgid "Olive"
+#~ msgstr "Оливковый"
 
 #~ msgid "Select a date"
-#~ msgstr "Nurodykite datą"
+#~ msgstr "Выберите дату"
 
 #~ msgid "Pixmap"
 #~ msgstr "Pixmap"
 
 #~ msgid "Portable BitMap"
-#~ msgstr "Portatyvus BitMap"
+#~ msgstr "Portable BitMap"
 
 #~ msgid "Portable GrayMap"
-#~ msgstr "Portatyvus GreyMap"
+#~ msgstr "Portable GrayMap"
 
 #~ msgid "Portable Network Graphic"
 #~ msgstr "Portable Network Graphic"
 
 #~ msgid "Portable PixMap"
-#~ msgstr "Portatyvus PixMap"
+#~ msgstr "Portable PixMap"
 
 #~ msgid "Post"
-#~ msgstr "Tolesnis"
+#~ msgstr "Отправить"
 
 #~ msgid ""
 #~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill the "
 #~ "program."
 #~ msgstr ""
-#~ "%s%sPaspaude „Tinka“ ignoruosite, tačiau rizikuosite duomenimis.%sPaspaude "
-#~ "„Atsisakyti“ sustabdysite programą."
+#~ "%s%sНажмите 'Ok' чтобы игнорировать и подвергнуться риску повреждения "
+#~ "данных.%sНажмите 'Отмена' для закрытия программы."
 
 #~ msgctxt "lclstrconsts.rspriorrecordhint"
 #~ msgid "Prior"
-#~ msgstr "Ankstesnis"
+#~ msgstr "Предыдущая"
 
 #~ msgid "Property %s does not exist"
-#~ msgstr "Savybė %s neegzistuoja"
+#~ msgstr "Свойство %s не существует"
+
+#~ msgid "Purple"
+#~ msgstr "Лиловый"
 
 #~ msgid "Endupdate while no update in progress"
-#~ msgstr "„Endupdate“, tačiau niekas neatnaujinama"
+#~ msgstr "Команда Endupdate, хотя обновления не производилось"
 
 #~ msgid "Cannot save image while update in progress"
-#~ msgstr "Neina įrašyti paveikslo, nes jis atnaujinamas"
+#~ msgstr "Невозможно сохранить изображение во время обновления"
 
 #~ msgid "Cannot begin update all when canvas only update in progress"
-#~ msgstr "Visko atnaujinti negalima kai atnaujinamas tik „Canvas“"
+#~ msgstr "Невозможно начать обновление всех во время обновления канвы"
+
+#~ msgid "Red"
+#~ msgstr "Красный"
 
 #~ msgid "Refresh"
-#~ msgstr "Atnaujinti"
+#~ msgstr "Обновить"
 
 #~ msgid "Replace"
-#~ msgstr "Pakeisti"
+#~ msgstr "Заменить"
 
 #~ msgid "Replace all"
-#~ msgstr "Pakeisti visus"
+#~ msgstr "Заменить всё"
 
 #~ msgctxt "lclstrconsts.rsresourcenotfound"
 #~ msgid "Resource %s not found"
-#~ msgstr "Resursas %s nerastas"
+#~ msgstr "Ресурс %s не найден"
 
 #~ msgid "ScrollBar"
-#~ msgstr "Slinkies juosta"
+#~ msgstr "Полоса прокрутки"
 
 #~ msgid "ScrollBar property out of range"
-#~ msgstr "Savybės „ScrollBar“ vertė peržengia ribas"
+#~ msgstr "свойство ScrollBar вне диапазона"
 
 #~ msgid "Select color"
-#~ msgstr "Nurodykit spalvą"
+#~ msgstr "Выбрать цвет"
 
 #~ msgid "Select a font"
-#~ msgstr "Nurodykit šriftą"
+#~ msgstr "Выбрать шрифт"
+
+#~ msgid "Silver"
+#~ msgstr "Серебристый"
 
 #~ msgid "  size "
-#~ msgstr "  dydis "
+#~ msgstr "  размер "
+
+#~ msgid "Sky Blue"
+#~ msgstr "Голубой"
+
+#~ msgid "Teal"
+#~ msgstr "Бирюзовый"
 
 #~ msgid "Text"
-#~ msgstr "Tekstas"
+#~ msgstr "Текст"
 
 #~ msgid "Unable to load default font"
-#~ msgstr "Nepavyko įkelti numatytą šriftą"
+#~ msgstr "Не могу загрузить шрифт по умолчанию"
 
 #~ msgid "Unknown Error, please report this bug"
-#~ msgstr "Nežinoma klaida, prašau praneškite kūrėjams apie šią klaidą."
+#~ msgstr "Неизвестная ошибка, сообщите о ней разработчикам"
 
 #~ msgid "Unknown picture extension"
-#~ msgstr "Nežinomas paveikslo plėtinys"
+#~ msgstr "Неизвестное расширение файла изображения"
 
 #~ msgid "Unsupported bitmap format."
-#~ msgstr "Nepalaikomas rastrinio paveikslo formatas."
+#~ msgstr "Неподдерживаемый тип точечного рисунка."
 
 #~ msgid "Unsupported clipboard format: %s"
-#~ msgstr "Nepalaikomas iškarpinės formatas: %s"
+#~ msgstr "Неподдерживаемый формат буфера обмена: %s"
 
 #~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
-#~ msgstr " Perspėjimas: liko %d neatlaisvinti „DC“, išsamiau:"
+#~ msgstr ""
+#~ " ВНИМАНИЕ: Найдено %d неосвобождённых контекстов устройств, список см. ниже:"
 
 #~ msgid ""
 #~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
-#~ msgstr " Perspėjimas: liko %d neatlaisvinti „GDIObject“, išsamiau:"
+#~ msgstr " ВНИМАНИЕ: Найдено %d неосвобождённых GDIObject, список см. ниже:"
 
 #~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
-#~ msgstr " Perspėjimas: eilėje dar yra %d pranešimų, jie bus pašalinti."
+#~ msgstr " ВНИМАНИЕ: В очереди осталось %d сообщений! Они будут удалены"
 
 #~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
-#~ msgstr ""
-#~ " Perspėjimas: dar liko %d „TimerInfo“ struktūrų, jos bus sunaikintos."
+#~ msgstr " ВНИМАНИЕ: Осталось %d структур TimerInfo, они будут освобождены"
 
 #~ msgid ""
 #~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
 #~ msgstr ""
-#~ " Perspėjimas: liko %s nepašalintos nuorodos į LM_PAINT/LM_GtkPAINT "
-#~ "pranešimus."
+#~ " ВНИМАНИЕ: Найдено %s неудалённых ссылок на сообщение LM_PAINT/LM_GtkPAINT."
+
+#~ msgid "White"
+#~ msgstr "Белый"
 
 #~ msgid "Whole words only"
-#~ msgstr "Tik visų žodžių"
+#~ msgstr "Только целые слова"
 
 #~ msgid "Error:"
-#~ msgstr "Klaida:"
+#~ msgstr "Ошибка:"
 
 #~ msgid "Warning:"
-#~ msgstr "Perspėjimas:"
+#~ msgstr "Предупреждение:"
 
 #~ msgid "Window"
-#~ msgstr "Langas"
+#~ msgstr "Окно"
 
 #~ msgid "Window Frame"
-#~ msgstr "Lango rėmelis"
+#~ msgstr "Граница окна"
 
 #~ msgid "Window Text"
-#~ msgstr "Lango tekstas"
+#~ msgstr "Текст окна"
+
+#~ msgid "Yellow"
+#~ msgstr "Жёлтый"
 
 #~ msgid "Cannot focus a disabled or invisible window"
-#~ msgstr "Neįgalintą arba nematomą langą suaktyvinti negalima"
+#~ msgstr "Нельзя дать фокус отключённому или невидимому окну"
 
 #~ msgid "Duplicate menus"
-#~ msgstr "Meniu dubliuojasi"
+#~ msgstr "Повторяющиеся меню"
 
 #~ msgid "Invalid action creation"
-#~ msgstr "Klaidingas veiksmo kūrimas"
+#~ msgstr "Неправильное создание действия"
 
 #~ msgid "Invalid action enumeration"
-#~ msgstr "Klaidinga veiksmo enumeracija"
+#~ msgstr "Неправильное перечисление действий"
 
 #~ msgid "Invalid action registration"
-#~ msgstr "Klaidingas veiksmo registravimas"
+#~ msgstr "Неправильная регистрация действия"
 
 #~ msgid "Invalid action unregistration"
-#~ msgstr "Klaidingas veiksmo išregravimas"
+#~ msgstr "Неправильная разрегистрация действия"
 
 #~ msgid "The char set in mask \"%s\" is not valid!"
-#~ msgstr "Klaidinga kaukės „%s“ koduotė!"
+#~ msgstr "Набор символов в маске \"%s\" неверен!"
 
 #~ msgid "Invalid image size"
-#~ msgstr "Klaidingas paveikslo dydis"
+#~ msgstr "Неправильный размер рисунка"
 
 #~ msgid "Invalid ImageList Index"
-#~ msgstr "Klaidingas„ImageList“ indeksas"
+#~ msgstr "Неправильный индекс ImageList"
 
 #~ msgid "Menu index out of range"
-#~ msgstr "Meniu indeksas peržengia ribas"
+#~ msgstr "Индекс меню вне диапазона"
 
 #~ msgid "MenuItem is nil"
-#~ msgstr "„MenuItem“ reikšmė yra nil"
+#~ msgstr "MenuItem указывает на нуль"
 
 #~ msgid "Sub-menu is not in menu"
-#~ msgstr "Pomeniu nėra įdėtas į menių"
+#~ msgstr "Подменю не в меню"
 
 #~ msgid "No MDI form present."
-#~ msgstr "MDI formos nėra."
+#~ msgstr "Отсутствует форма MDI."
 
 #~ msgid "No timers available"
-#~ msgstr "Nėra laikmačių"
+#~ msgstr "Таймеры недоступны"
 
 #~ msgid "Wrong token type: %s expected"
-#~ msgstr "Klaidingas leksemos tipas: tikėtasi %s"
+#~ msgstr "Неверный тип лексемы: ожидался %s"
 
 #~ msgid "Invalid floating point number: %s"
-#~ msgstr "Klaidingas slankaus kablelio skaičius: %s"
+#~ msgstr "Неверное число с плавающей точкой: %s"
 
 #~ msgid "Invalid integer number: %s"
-#~ msgstr "Klaidingas sveikasis skaičius: %s"
+#~ msgstr "Неверное целое число: %s"
 
 #~ msgid " (at %d,%d, stream offset %.8x)"
-#~ msgstr " (ties %d,%d, srauto poslinkis %.8x)"
+#~ msgstr " (на %d,%d, смещение потока %.8x)"
 
 #~ msgid "Unterminated byte value"
-#~ msgstr "Neužbaigta bitų vertė"
+#~ msgstr "Незавершённое значение байта"
 
 #~ msgid "Unterminated string"
-#~ msgstr "Neužbaigta eilutė"
+#~ msgstr "Незавершённая строка"
 
 #~ msgid "Wrong token symbol: %s expected but %s found"
-#~ msgstr "Klaidingas leksemos simbolis: tikėtasi %s, tačiau rasta %s"
+#~ msgstr "Неверный символ лексемы: ожидался %s, но найден %s"
 
 #~ msgid "Wrong token type: %s expected but %s found"
-#~ msgstr "Klaidingas leksemos tipas: tikėtasi %s, tačiau rasta %s"
+#~ msgstr "Неверный тип лексемы: ожидался %s, но найден %s"
+
+#~ msgid "Installed applications"
+#~ msgstr "Установленные приложения"

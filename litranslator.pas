@@ -85,7 +85,13 @@ begin
   Result:='/usr/share/listaller/locale/'+lng+'.mo';
   if FileExistsUTF8(Result) then exit;
 
+  Result:='/usr/share/listaller/locale/'+liname'-'+lng+'.mo';
+  if FileExistsUTF8(Result) then exit;
+
   Result:='/usr/share/listaller/locale/'+LANG+'.mo';
+  if FileExistsUTF8(Result) then exit;
+
+  Result:='/usr/share/listaller/locale/'+liname+'-'+LANG+'.mo';
   if FileExistsUTF8(Result) then exit;
 
   //At first, check all was checked

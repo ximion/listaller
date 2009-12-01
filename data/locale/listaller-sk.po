@@ -1,21 +1,21 @@
+# translation of lclstrconsts.po to Slovenský
+# Slavko <slavino@slavino.sk>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: lclstrconsts\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
 "PO-Revision-Date: 2009-05-06 13:38+0000\n"
-"Last-Translator: Matthias Klumpp <Unknown>\n"
-"Language-Team: \n"
+"Last-Translator: Slavko <Unknown>\n"
+"Language-Team: Slovenský <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-08-01 21:04+0000\n"
+"X-Launchpad-Export-Date: 2009-11-30 20:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-"X-Poedit-Country: POLAND\n"
-"X-Poedit-Language: Polish\n"
 
 #: trstrings:rsbrokendepsfixq
-msgid "You have missing dependencies. Should they be installed now?"
+msgid "Some dependencies are missing. Should they be installed now?"
 msgstr ""
 
 #: trstrings:rscannotresolv
@@ -24,6 +24,10 @@ msgstr ""
 
 #: trstrings:rscheckappdepsq
 msgid "Do you want to check the applications's dependencies?"
+msgstr ""
+
+#: trstrings:rscheckdepsq
+msgid "Check dependencies?"
 msgstr ""
 
 #: trstrings:rscheckapps
@@ -39,7 +43,7 @@ msgid "Commands:"
 msgstr ""
 
 #: trstrings:rscouldntfindupdater
-msgid "Can't find updater applications!"
+msgid "Can't find updater application!"
 msgstr ""
 
 #: trstrings:rsinternalerror
@@ -62,8 +66,12 @@ msgstr ""
 msgid "Can't find Listaller Manager!"
 msgstr ""
 
-#: trstrings:rsliupdaternotfound
-msgid "Unable to find liUpdater!"
+#: trstrings:rsunablefind
+msgid "Unable to find %s"
+msgstr ""
+
+#: trstrings:rsnotfoundlitray
+msgid "Could not find Listaller TrayIcon Application"
 msgstr ""
 
 #: trstrings:rsoptions
@@ -157,7 +165,7 @@ msgstr ""
 
 #: trstrings:rsconvdone
 msgid ""
-"Converting done. Do you want to close this window now?\n"
+"Conversion done. Do you want to close this window now?\n"
 "Press \"No\" if you want to check the output."
 msgstr ""
 
@@ -173,12 +181,20 @@ msgstr ""
 msgid "Do you want to see detailed information [y/n]?"
 msgstr ""
 
+#: trstrings:rsaborted
+msgid "Aborted."
+msgstr ""
+
 #: trstrings:rsviewlogq
 msgid "Do you want to view the logfile?"
 msgstr ""
 
 #: trstrings:rswasinstalled
 msgid "The application %a was installed successfully!"
+msgstr ""
+
+#: trstrings:rsexecapptesting
+msgid "Executing application for testing..."
 msgstr ""
 
 #: trstrings:rsinstallnow
@@ -236,7 +252,7 @@ msgstr ""
 
 #: trstrings:rsabort
 msgid "Abort"
-msgstr "Porzuć"
+msgstr "Prerušiť"
 
 #: trstrings:rsback
 msgid "Back"
@@ -271,12 +287,20 @@ msgid ""
 "Found no package with the necessary library \"%l\" for your distribution."
 msgstr ""
 
+#: trstrings:rsopeningdb
+msgid "Opening database..."
+msgstr ""
+
 #: trstrings:rsinclose
 msgid "The installer will close now"
 msgstr ""
 
-#: trstrings:rscnoverwrite
-msgid "Unable to overwrite the file %f."
+#: trstrings:rscnoverride
+msgid "Unable to override the file %f."
+msgstr ""
+
+#: trstrings:rscncopy
+msgid "Unable to copy the file %s."
 msgstr ""
 
 #: trstrings:rsnotifydevs
@@ -289,7 +313,7 @@ msgstr ""
 
 #: trstrings:rspkgdm
 msgid ""
-"The IPK package could be damaged or you haven't enough rights to acces "
+"The IPK package could be damaged or you haven't enough rights to access "
 "required files/folders."
 msgstr ""
 
@@ -321,6 +345,10 @@ msgstr ""
 msgid "Test of the application finished."
 msgstr ""
 
+#: trstrings:rscleaningup
+msgid "Cleaning up..."
+msgstr ""
+
 #: trstrings:rspkginval
 msgid "The package was invalid!"
 msgstr ""
@@ -343,6 +371,10 @@ msgstr ""
 
 #: trstrings:rsstep1
 msgid "Phase 1/4: Resolving dependencies..."
+msgstr ""
+
+#: trstrings:rsstate
+msgid "State"
 msgstr ""
 
 #: trstrings:rswdldep
@@ -370,7 +402,7 @@ msgid "Phase 4/4: Registering application..."
 msgstr ""
 
 #: trstrings:rsaddupdsrc
-msgid "The installation tries to add the following update source: "
+msgid "The installation contains the following update source: "
 msgstr ""
 
 #: trstrings:rsqaddupdsrc
@@ -401,8 +433,8 @@ msgstr ""
 
 #: trstrings:rsftpfailed
 msgid ""
-"Problem while downloading the packages. Maybe the login on the FTP-Server "
-"failed."
+"Problem while downloading the packages. Could not create working FTP "
+"connection."
 msgstr ""
 
 #: trstrings:rssuccess
@@ -439,12 +471,6 @@ msgstr ""
 msgid ""
 "The selected action is not possible with this package.\n"
 "Please contact the package maintainer to get more information."
-msgstr ""
-
-#: trstrings:rsidinvalid
-msgid ""
-"This package has no valid ID\n"
-"The installer will close."
 msgstr ""
 
 #: trstrings:rsreinstall
@@ -486,10 +512,6 @@ msgstr ""
 msgid "Mode"
 msgstr ""
 
-#: trstrings:rscleanup
-msgid "Cleaning up..."
-msgstr ""
-
 #: trstrings:rsinstperformerror
 msgid "Error while performing installation:"
 msgstr ""
@@ -511,16 +533,15 @@ msgstr ""
 msgid "What do you want to do?"
 msgstr ""
 
-#: trstrings:rspackagekitwarning
+#: trstrings:rsdevversion
 msgid ""
-"Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to "
-"work correctly.\n"
-"Please update PackageKit!"
+"You use a development version of Listaller!\n"
+"This version is untested, be careful about what you do!"
 msgstr ""
 
 #: trstrings:rsspkwarning
 msgid ""
-"Make sure that you have got this package from a save source and a serious "
+"Make sure that you got this package from a save source and a serious "
 "publisher!"
 msgstr ""
 
@@ -688,7 +709,9 @@ msgid "Loading..."
 msgstr ""
 
 #: trstrings:rsinstalledapps
-msgid "Installed applications"
+msgid ""
+"Installed\n"
+"applications"
 msgstr ""
 
 #: trstrings:rsinstallpkg
@@ -696,7 +719,9 @@ msgid "Install package"
 msgstr ""
 
 #: trstrings:rsbrowsecatalog
-msgid "Browse catalog"
+msgid ""
+"Browse\n"
+"catalog"
 msgstr ""
 
 #: trstrings:rsrepositories
@@ -714,7 +739,9 @@ msgid ""
 msgstr ""
 
 #: trstrings:rsuselaunchpadforbugs
-msgid "Please use https://bugs.launchpad.net/listaller for bug reports."
+msgid ""
+"Please use https://bugs.launchpad.net/listaller\n"
+"for bug reports."
 msgstr ""
 
 #: trstrings:rsdisprootapps
@@ -746,6 +773,10 @@ msgstr ""
 
 #: trstrings:rsshowpkmon
 msgid "Start PackageKit monitor before running transactions"
+msgstr ""
+
+#: trstrings:rsstartlitray
+msgid "Start Listaller tray icon application (to check dependencies)"
 msgstr ""
 
 #: trstrings:rsaboutlistaller
@@ -886,7 +917,7 @@ msgid "Uninstalling %a"
 msgstr ""
 
 #: trstrings:rslindesk
-msgid "Running under %de."
+msgid "Running under %s."
 msgstr ""
 
 #: trstrings:rsnoupdates
@@ -945,361 +976,677 @@ msgstr ""
 msgid "Resolving dependencies..."
 msgstr ""
 
+#~ msgid "Browser %s%s%s not executable."
+#~ msgstr "Prehliadač %s%s%s nie je spustiteľný."
+
+#~ msgid "Browser %s%s%s not found."
+#~ msgstr "Prehliadač %s%s%s nenájdený."
+
+#~ msgid "Error while executing %s%s%s:%s%s"
+#~ msgstr "Chyba·pri·vykonávaní·%s%s%s:%s%s"
+
+#~ msgid "Unable to find a HTML browser."
+#~ msgstr "nemožno nájsť prehliadač HTML."
+
+#~ msgid ""
+#~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
+#~ "Viewers"
+#~ msgstr ""
+#~ "Nebol nájdený prehliadač HTML.%sProsím definujte v Pomoc->Konfigurovať pomoc-"
+#~ ">Prehliadače"
+
+#~ msgid "The help database %s%s%s was unable to find file %s%s%s."
+#~ msgstr "Databáza pomocníka %s%s%s nemohla nájsť súbor %s%s%s."
+
+#~ msgid "The macro %s in BrowserParams will be replaced by the URL."
+#~ msgstr "Makro %s v BrowserParams bude nahradené URL."
+
+#~ msgid "Alt"
+#~ msgstr "Alt"
+
+#~ msgid "Ctrl"
+#~ msgstr "Ctrl"
+
+#~ msgid "Backspace"
+#~ msgstr "Backspace"
+
+#~ msgctxt "lclstrconsts.ifsvk_cancel"
+#~ msgid "Cancel"
+#~ msgstr "Zrušiť"
+
+#~ msgid "Capital"
+#~ msgstr "Veľkým"
+
+#~ msgid "Clear"
+#~ msgstr "Vyčistiť"
+
+#~ msgid "Control"
+#~ msgstr "Prvok"
+
 #~ msgid "Convert"
-#~ msgstr "Konwertuj"
+#~ msgstr "Konvertovať"
+
+#~ msgctxt "lclstrconsts.ifsvk_delete"
+#~ msgid "Delete"
+#~ msgstr "Zmazať"
+
+#~ msgid "Down"
+#~ msgstr "Dole"
+
+#~ msgid "End"
+#~ msgstr "End"
+
+#~ msgid "Escape"
+#~ msgstr "Escape"
+
+#~ msgid "Execute"
+#~ msgstr "Spustiť"
+
+#~ msgid "Hanja"
+#~ msgstr "Hanja"
 
 #~ msgid "Help"
 #~ msgstr "Pomoc"
 
+#~ msgid "Home"
+#~ msgstr "Home"
+
+#~ msgctxt "lclstrconsts.ifsvk_insert"
+#~ msgid "Insert"
+#~ msgstr "Insert"
+
+#~ msgid "Junja"
+#~ msgstr "Junja"
+
+#~ msgid "Kana"
+#~ msgstr "Kana"
+
 #~ msgid "Mouse Button Left"
-#~ msgstr "Lewy przycisk myszy"
+#~ msgstr "Ľavé tlačítko myši"
+
+#~ msgid "left windows key"
+#~ msgstr "ľavý Win kláves"
 
 #~ msgid "Mouse Button Middle"
-#~ msgstr "Środkowy przycisk myszy"
+#~ msgstr "Stredné tlačítko·myši"
+
+#~ msgctxt "lclstrconsts.ifsvk_menu"
+#~ msgid "Menu"
+#~ msgstr "Menu"
+
+#~ msgctxt "lclstrconsts.ifsvk_next"
+#~ msgid "Next"
+#~ msgstr "Ďalej"
+
+#~ msgid "Numlock"
+#~ msgstr "Numlock"
+
+#~ msgid "Numpad %d"
+#~ msgstr "Numerická klávesnica %d"
+
+#~ msgid "Pause key"
+#~ msgstr "Kláves Pause"
+
+#~ msgid "Print"
+#~ msgstr "Tlačiť"
+
+#~ msgctxt "lclstrconsts.ifsvk_prior"
+#~ msgid "Prior"
+#~ msgstr "Pred"
 
 #~ msgid "Mouse Button Right"
-#~ msgstr "Prawy przycisk myszy"
+#~ msgstr "Pravé tlačítko·myši"
+
+#~ msgid "right windows key"
+#~ msgstr "pravý Win kláves"
+
+#~ msgid "Select"
+#~ msgstr "Vybrať"
+
+#~ msgid "Shift"
+#~ msgstr "Shift"
+
+#~ msgid "Snapshot"
+#~ msgstr "Snímka"
+
+#~ msgid "Space key"
+#~ msgstr "Medzerník"
+
+#~ msgid "Tab"
+#~ msgstr "Tab"
+
+#~ msgid "Unknown"
+#~ msgstr "Neznámy"
 
 #~ msgctxt "lclstrconsts.lislclresourcesnotfound"
 #~ msgid "Resource %s not found"
-#~ msgstr "Nie znaleziono zasobu: %s"
+#~ msgstr "Zdroj %s nenájdený"
 
 #~ msgid "A control can't have itself as parent"
-#~ msgstr "Kontrolka nie może być sama swoim rodzicem"
+#~ msgstr "Prvok nemôže mať sám seba za rodiča"
 
 #~ msgid "All files (%s)|%s|%s"
-#~ msgstr "Wszystkie pliki (%s)|%s|%s"
+#~ msgstr "Všetky súbory (%s)|%s|%s"
+
+#~ msgid "Backward"
+#~ msgstr "Spätný"
+
+#~ msgid "Bitmaps"
+#~ msgstr "Bitmapy"
 
 #~ msgid "Blank"
-#~ msgstr "Pusty"
+#~ msgstr "Prázdne"
 
 #~ msgid "Calculator"
-#~ msgstr "Kalkulator"
+#~ msgstr "Kalkulačka"
+
+#~ msgctxt "lclstrconsts.rscancelrecordhint"
+#~ msgid "Cancel"
+#~ msgstr "Zrušiť"
 
 #~ msgid "Can not focus"
-#~ msgstr "Nie można ustawić ogniska."
+#~ msgstr "Nemožno zamerať"
 
 #~ msgid "Canvas does not allow drawing"
-#~ msgstr "Canvas nie pozwala na rysowanie"
+#~ msgstr "Plátno nedovoľuje kreslenie"
 
-#~ msgid "Creating gdb catchable error:"
-#~ msgstr "Błąd przy tworzeniu \"gdb catchable\":"
+#~ msgid "Case sensitive"
+#~ msgstr "Citlivé na veľkosť"
+
+#~ msgid "Cursor"
+#~ msgstr "Kurzor"
+
+#~ msgid "Custom ..."
+#~ msgstr "Vlastné ..."
 
 #~ msgid "permissions user group size date time"
-#~ msgstr "uprawnienia użytkownik grupa rozmiar data czas"
+#~ msgstr "povolenia používateľ skupina veľkosť dátum čas"
+
+#~ msgid "Delete record?"
+#~ msgstr "Zmazať záznam?"
+
+#~ msgctxt "lclstrconsts.rsdeleterecordhint"
+#~ msgid "Delete"
+#~ msgstr "Delete"
+
+#~ msgid "Direction"
+#~ msgstr "Smer"
+
+#~ msgid "&Directory"
+#~ msgstr "A&dresár"
+
+#~ msgid "Docking"
+#~ msgstr "Dokovanie"
+
+#~ msgid "Duplicate icon format."
+#~ msgstr "Zdvojený formát ikony."
+
+#~ msgid "Edit"
+#~ msgstr "Upraviť"
+
+#~ msgctxt "lclstrconsts.rserror"
+#~ msgid "Error"
+#~ msgstr "Chyba"
 
 #~ msgid "Error creating device context for %s.%s"
-#~ msgstr "Błąd przy tworzeniu \"device context\" dla %s.%s"
+#~ msgstr "Chyba vytvárania kontextu zariadenie pre %s.%s"
 
 #~ msgid "ERROR in LCL: "
-#~ msgstr "BŁĄD w LCL: "
+#~ msgstr "Chyba v LCL: "
 
 #~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
-#~ msgstr "Błąd w %s przy %sAdres %s%s Ramka %s"
+#~ msgstr "Nastala chyba v %s na %sAdresa %s%s Rámec %s"
 
 #~ msgid "Error reading %s%s%s: %s"
-#~ msgstr "Błąd odczytu %s%s%s: %s"
+#~ msgstr "Chyba čítania %s%s%s: %s"
+
+#~ msgid "Error while saving bitmap."
+#~ msgstr "Chyba pri ukladaní bitmapy."
 
 #~ msgid "Exception"
-#~ msgstr "Wyjątek"
+#~ msgstr "Výnimka"
 
 #~ msgid "Directory must exist"
-#~ msgstr "Katalog musi istnieć"
+#~ msgstr "Adresár musí existovať"
 
 #~ msgid "The directory \"%s\" does not exist."
-#~ msgstr "Katalog \"%s\" nie istnieje."
+#~ msgstr "Adresár \"%s\" neexistuje."
+
+#~ msgid "The file \"%s\" already exists. Overwrite ?"
+#~ msgstr "Súbor \"%s\" už existuje. Prepísať?"
 
 #~ msgid "File must exist"
-#~ msgstr "Plik musi istnieć"
+#~ msgstr "Súbor musí existovať"
 
 #~ msgid "The file \"%s\" does not exist."
-#~ msgstr "Plik \"%s\" nie istnieje."
+#~ msgstr "Súbor \"%s\" neexistuje."
 
 #~ msgid "The file \"%s\" is not writable."
-#~ msgstr "Plik \"%s\" nie jest zapisywalny."
+#~ msgstr "Súbor \"%s\" nie·je·zapisovateľný."
 
 #~ msgid "File is not writable"
-#~ msgstr "Plik nie jest zapisywalny"
+#~ msgstr "Súbor nie je zapisovateľný"
 
 #~ msgid "Save file as"
-#~ msgstr "Zapisz plik jako"
+#~ msgstr "Uložiť súbor ako"
 
 #~ msgid "Open existing file"
-#~ msgstr "Otwórz istniejący plik"
+#~ msgstr "Otvoriť existujúci súbor"
 
 #~ msgid "Overwrite file ?"
-#~ msgstr "Chcesz nadpisać plik?"
+#~ msgstr "Prepísať súbor?"
 
 #~ msgid "Path must exist"
-#~ msgstr "Ścieżka musi istnieć"
+#~ msgstr "Cesta musí existovať"
 
 #~ msgid "The path \"%s\" does not exist."
-#~ msgstr "Ścieżka \"%s\" nie istnieje."
+#~ msgstr "Cesta \"%s\" neexistuje."
 
 #~ msgid "Select Directory"
-#~ msgstr "Wybierz katalog"
+#~ msgstr "Výber adresára"
 
 #~ msgid "(file not found: \"%s\")"
-#~ msgstr "(nie znaleziono pliku: \"%s\")"
+#~ msgstr "(súbor nenájdený: \"%s\")"
 
 #~ msgid "File information"
-#~ msgstr "Informacja o pliku"
+#~ msgstr "Súborové informácie"
+
+#~ msgid "Find"
+#~ msgstr "Hľadať"
+
+#~ msgid "Find more"
+#~ msgstr "Hľadať ďalej"
+
+#~ msgid "First"
+#~ msgstr "Prvý"
 
 #~ msgid "FixedCols can't be >= ColCount"
-#~ msgstr "FixedCols nie może być >= ColCount"
+#~ msgstr "FixedCols nemôže byť >= ColCount"
 
 #~ msgid "FixedRows can't be >= RowCount"
-#~ msgstr "FixedRows nie może być >= RowCount"
+#~ msgstr "FixedRows nemôže byť >= RowCount"
 
 #~ msgid "Form streaming \"%s\" error: %s"
-#~ msgstr "Błąd przy zapisie formularza do strumienia  \"%s\": %s"
-
-#~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
-#~ msgstr ""
-#~ "--gdk-debug flags     Włącz specificzne dla GDK komunikaty "
-#~ "śledzenia/odpluskwiania."
-
-#~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
-#~ msgstr ""
-#~ "--gdk-no-debug flags  Wyłącz specificzne dla GDK komunikaty "
-#~ "śledzenia/odpluskwiania."
-
-#~ msgid ""
-#~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
-#~ "the application."
-#~ msgstr ""
-#~ "--g-fatal-warnings    Ostrzerzenia i błędy Gtk+/GDK zatrzymają aplikację."
+#~ msgstr "Chyba streamovania formulára \"%s\": %s"
 
 #~ msgid "Grid file doesn't exists"
-#~ msgstr "Plik siatki nie istnieje"
+#~ msgstr "Súbor mriežky neexistuje"
+
+#~ msgid "Grid index out of range."
+#~ msgstr "Index mriežky mimo rozsahu."
 
 #~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
-#~ msgstr "GroupIndex nie może być mniejszy niż poprzedniego elementu menu"
+#~ msgstr ""
+#~ "GroupIndex nemmôže byť menší ako GroupIndex predchádzajúcej položky menu"
+
+#~ msgid "Filter:"
+#~ msgstr "Filter:"
 
 #~ msgid "History:"
-#~ msgstr "Historia:"
+#~ msgstr "História:"
+
+#~ msgid "%s: Already registered"
+#~ msgstr "%s: Už je registrovaný"
+
+#~ msgid "Help Context not found"
+#~ msgstr "Kontextová pomoc nenájdená"
+
+#~ msgid "Help Database not found"
+#~ msgstr "Databáza·pomoci nenájdená"
+
+#~ msgid "Help Error"
+#~ msgstr "Chyba pomoci"
+
+#~ msgid "Help context %s not found."
+#~ msgstr "Kontextová pomoc %s nenájdená."
+
+#~ msgid "Help context %s not found in Database %s%s%s."
+#~ msgstr "Kontextová pomoc %s nenájdená v databáze %s%s%s."
 
 #~ msgid ""
-#~ "--class classname     Following Xt conventions, the class of a program is "
-#~ "the program name with the initial character capitalized. For example, the "
-#~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
-#~ "program will be set to \"classname\"."
+#~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
 #~ msgstr ""
-#~ "--class classname     Zgodnie z konwencją Xt klasę programu tworzy jego "
-#~ "nazwa z pierwszą wielką literą. Np. nazwą klasy dla programu gimp jest "
-#~ "\"Gimp\". Jeśli --class jest podane, klasa programu będzie ustawiona na "
-#~ "\"classname\"."
+#~ "Databáza pomoci %s%s%s nenašla zobrazovač pre stránku pomocníka typu %s"
 
-#~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
-#~ msgstr ""
-#~ "--gtk-debug flags     Włącz specyficzne dla Gtk+ komunikaty "
-#~ "śledzenia/odpluskwiania."
+#~ msgid "Help Database %s%s%s not found"
+#~ msgstr "Databáza pomoci %s%s%s nenájdená"
 
-#~ msgid ""
-#~ "--display h:s:d       Connect to the specified X server, where \"h\" is the "
-#~ "hostname, \"s\" is the server number (usually 0), and \"d\" is the display "
-#~ "number (typically omitted). If --display is not specified, the DISPLAY "
-#~ "environment variable is used."
-#~ msgstr ""
-#~ "--display h:s:d       Połącz z podany mserwerem X; \"h\" jest nazwą hosta, "
-#~ "\"s\" jest numerem serwera (zwykle 0), a \"d\" jest numerem ekranu (zwyle "
-#~ "pomijanym). Jeśli --display nie jet podane, użyję zmienna środowiaka DISPLAY."
+#~ msgid "Help keyword %s%s%s not found."
+#~ msgstr "Kľúčové slovo pomoci %s%s%s nenájdené."
 
-#~ msgid "--gtk-module module   Load the specified module at startup."
-#~ msgstr "--gtk-module module   Ładuje podany moduł przy starcie."
+#~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
+#~ msgstr "Kľúčové·slovo·pomoci·%s%s%s nenájdené v databáze %s%s%s."
 
-#~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
-#~ msgstr ""
-#~ "--gtk-no-debug flags  Wyłącz specyficzne dla Gtk+ komunikaty "
-#~ "śledzenia/odpluskwiania."
+#~ msgid "Help node %s%s%s has no Help Database"
+#~ msgstr "Uzol pomocníka %s%s%s nemá databázu pomocníka"
 
-#~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
-#~ msgstr ""
-#~ "--lcl-no-transient    Nie ustawiaj nietrwałej kolejności dla modalnych "
-#~ "formularzy"
+#~ msgid "No help found for line %d, column %d of %s."
+#~ msgstr "Nenájdený pomocník pre riadok %d, stĺpec %d %s."
 
-#~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
-#~ msgstr "--no-xshm             Wyłącz używanie X Shared Memory Extension."
+#~ msgid "No help nodes available"
+#~ msgstr "Nie sú dostupné žiadne uzly pomoci"
 
-#~ msgid ""
-#~ "--sync                Call XSynchronize (display, True) after the Xserver "
-#~ "connection has been established. This makes debugging X protocol errors "
-#~ "easier, because X request buffering will be disabled and X errors will be "
-#~ "received immediatey after the protocol request that generated the error has "
-#~ "been processed by the X server."
-#~ msgstr ""
-#~ "--sync                Wywołaj XSynchronize (display, True) Po połączeniu z "
-#~ "serwerem X. To ułatwia odpluskwianie protokołu X, ponieważ buforowanie żądań "
-#~ "X będzie wyłączonei błędy X będą odbierane natychmiast po przetworzeniu "
-#~ "przez serwer X żądania, które spowodowało błąd."
+#~ msgid "Help not found"
+#~ msgstr "Pomoc nenájdená"
+
+#~ msgid "%s: Not registered"
+#~ msgstr "%s: Neregistrovaný"
+
+#~ msgid "Help Selector Error"
+#~ msgstr "Chyba selektora pomoci"
+
+#~ msgid "There is no viewer for help type %s%s%s"
+#~ msgstr "Nie je zobrazovač pre pomoc typu %s%s%s"
+
+#~ msgid "Help Viewer Error"
+#~ msgstr "Chyba zobrazovača pomoci"
+
+#~ msgid "Help Viewer not found"
+#~ msgstr "Zobrazovač pomoci nenájdený"
+
+#~ msgid "Icon"
+#~ msgstr "Ikona"
+
+#~ msgid "Icon image cannot be empty"
+#~ msgstr "Obrázok ikony nemôže byť prázdny"
+
+#~ msgid "Icon image must have the same format"
+#~ msgstr "Obrázok ikony musí mať rovnaký formát"
+
+#~ msgid "Cannot change format of icon image"
+#~ msgstr "Nemožno zmeniť formát obrázka ikony"
+
+#~ msgid "Icon image must have the same size"
+#~ msgstr "Obrázok ikony musí mať rovnakú veľkosť"
+
+#~ msgid "Cannot change size of icon image"
+#~ msgstr "Nemožno zmeniť veľkosť obrázka ikony"
+
+#~ msgid "Icon has no current image"
+#~ msgstr "Ikona nemá aktuálny obrázok"
 
 #~ msgid "%s Index %d out of bounds 0 .. %d"
-#~ msgstr "%s Indeks %d przekracza zakres 0 .. %d"
+#~ msgstr "%s Index %d presahuje hranicu 0 .. %d"
 
 #~ msgid "Index Out of range Cell[Col=%d Row=%d]"
-#~ msgstr "Indeks poza zakresem Cell[Col=%d Row=%d]"
+#~ msgstr "Index mimo rozsahu Bunka[Col=%d Row=%d]"
+
+#~ msgctxt "lclstrconsts.rsinsertrecordhint"
+#~ msgid "Insert"
+#~ msgstr "Insert"
+
+#~ msgid "Invalid Date : %s"
+#~ msgstr "Neplatný dátum: %s"
+
+#~ msgid "Invalid Date: %s. Must be between %s and %s"
+#~ msgstr "Neplatný dátum: %s. Musí byť medzi %s a %s"
 
 #~ msgid "invalid Form object stream"
-#~ msgstr "błędny strumień obiektu formularza"
+#~ msgstr "neplatný prúd objektu Form"
 
 #~ msgid "Invalid property value"
-#~ msgstr "Błędna wartość właściwości"
+#~ msgstr "Neplatná hodnota vlastnosti"
 
 #~ msgid "Invalid stream format"
-#~ msgstr "Błędny format strumienia"
+#~ msgstr "Neplatný formát streamu"
 
 #~ msgid "%s is already associated with %s"
-#~ msgstr "%s jest już skojarzony z %s"
+#~ msgstr "%s už je priradený k %s"
+
+#~ msgid "Last"
+#~ msgstr "Posledný"
 
 #~ msgid "List index exceeds bounds (%d)"
-#~ msgstr "Indeks listy poza zakresem (%d)"
+#~ msgstr "Index zoznamu prekračuje hranice (%d)"
 
 #~ msgid "List must be empty"
-#~ msgstr "Lista musi być pusta"
+#~ msgstr "Zoznam musí byť prázdny"
 
 #~ msgid "&All"
-#~ msgstr "&Wszystkie"
+#~ msgstr "&Všetko"
 
 #~ msgctxt "lclstrconsts.rsmbcancel"
 #~ msgid "Cancel"
-#~ msgstr "Anuluj"
+#~ msgstr "Zrušiť"
 
 #~ msgid "&Close"
-#~ msgstr "Z&amknij"
+#~ msgstr "&Zatvoriť"
 
 #~ msgid "&Help"
-#~ msgstr "P&omoc"
+#~ msgstr "&Pomoc"
 
 #~ msgid "&Ignore"
-#~ msgstr "&Zignoruj"
+#~ msgstr "&Ignorovať"
 
 #~ msgid "&No"
 #~ msgstr "&Nie"
 
 #~ msgid "No to all"
-#~ msgstr "Nie na wszystkie"
+#~ msgstr "Nie pre všetky"
 
 #~ msgid "&OK"
 #~ msgstr "&OK"
 
 #~ msgid "&Retry"
-#~ msgstr "&Ponów próbę"
+#~ msgstr "&Opakovať"
 
 #~ msgid "&Yes"
-#~ msgstr "&Tak"
+#~ msgstr "Án&o"
+
+#~ msgid "Yes to &All"
+#~ msgstr "Án&o pre všetky"
+
+#~ msgctxt "lclstrconsts.rsmenucolorcaption"
+#~ msgid "Menu"
+#~ msgstr "Menu"
 
 #~ msgid "  modified "
-#~ msgstr "  zmodyfikowany "
+#~ msgstr "  .. zmenené "
 
 #~ msgid "Confirmation"
-#~ msgstr "Potwierdzenie"
+#~ msgstr "Potvrdenie"
 
 #~ msgid "Custom"
-#~ msgstr "Inny"
+#~ msgstr "Vlastné"
 
 #~ msgctxt "lclstrconsts.rsmterror"
 #~ msgid "Error"
-#~ msgstr "Błąd"
+#~ msgstr "Chyba"
 
 #~ msgid "Information"
-#~ msgstr "Informacja"
+#~ msgstr "Informácia"
 
 #~ msgid "Warning"
-#~ msgstr "Ostrzeżenie"
+#~ msgstr "Upozornenie"
+
+#~ msgctxt "lclstrconsts.rsnextrecordhint"
+#~ msgid "Next"
+#~ msgstr "Ďalší"
 
 #~ msgid "Not a valid grid file"
-#~ msgstr "Nieprawidłowy plik siatki"
+#~ msgstr "Neplatný súbor mriežky"
+
+#~ msgid ""
+#~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
+#~ "the programs uses clause."
+#~ msgstr ""
+#~ "Neexistuje objekt widgetsetu. Prosím skontrolujte, či je jednotka "
+#~ "\"interfaces\" pridaná do klauzuly uses programu."
 
 #~ msgid "Select a date"
-#~ msgstr "Wybierz datę"
+#~ msgstr "Výber dátumu"
+
+#~ msgid "Pixmap"
+#~ msgstr "Pixmap"
+
+#~ msgid "Portable BitMap"
+#~ msgstr "Portable BitMap"
+
+#~ msgid "Portable GrayMap"
+#~ msgstr "Portable GrayMap"
+
+#~ msgid "Portable Network Graphic"
+#~ msgstr "Portable Network Graphic"
+
+#~ msgid "Portable PixMap"
+#~ msgstr "Portable PixMap"
+
+#~ msgid "Post"
+#~ msgstr "za"
+
+#~ msgid ""
+#~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill the "
+#~ "program."
+#~ msgstr ""
+#~ "%s%sStlačte OK pre ignorovanie a risk porušenia dát.%sStlačte Zrušiť pre "
+#~ "zabitie programu."
+
+#~ msgctxt "lclstrconsts.rspriorrecordhint"
+#~ msgid "Prior"
+#~ msgstr "Pred"
 
 #~ msgid "Property %s does not exist"
-#~ msgstr "Właściwość %s nie istnieje"
+#~ msgstr "Vlastnosť %s neexistuje"
+
+#~ msgid "Endupdate while no update in progress"
+#~ msgstr "Koniec aktualizácie, ale aktualizácia nie je vykonávaná"
+
+#~ msgid "Cannot save image while update in progress"
+#~ msgstr "Nemožno uložiť obrázok počas aktualizácie"
+
+#~ msgid "Cannot begin update all when canvas only update in progress"
+#~ msgstr "Nemožno začať aktualizáciu všetkého, počas aktualizácie len plátna"
+
+#~ msgid "Refresh"
+#~ msgstr "Obnoviť"
+
+#~ msgid "Replace"
+#~ msgstr "Nahradiť"
+
+#~ msgid "Replace all"
+#~ msgstr "Nahradiť všetko"
 
 #~ msgctxt "lclstrconsts.rsresourcenotfound"
 #~ msgid "Resource %s not found"
-#~ msgstr "Nie znaleziono zasobu: %s"
+#~ msgstr "Zdroj %s nenájdený"
 
 #~ msgid "ScrollBar property out of range"
-#~ msgstr "Właściwość ScrollBar'u poza zakresem"
+#~ msgstr "Vlastnosť ScrollBar mimo rozsahu"
 
 #~ msgid "Select color"
-#~ msgstr "Wybierz kolor"
+#~ msgstr "Výber farby"
 
 #~ msgid "Select a font"
-#~ msgstr "Wybierz czcionkę"
+#~ msgstr "Výber fontu"
 
 #~ msgid "  size "
-#~ msgstr "  rozmiar "
+#~ msgstr "  ..veľkosť "
+
+#~ msgid "Text"
+#~ msgstr "Text"
 
 #~ msgid "Unable to load default font"
-#~ msgstr "Nie można załadować domyślnej czcionki"
+#~ msgstr "Nemožno načítať predvolený font"
+
+#~ msgid "Unknown Error, please report this bug"
+#~ msgstr "Neznáma chyba, prosím ohláste túto chybu"
 
 #~ msgid "Unknown picture extension"
-#~ msgstr "Nieznane rozszerzenie pliku obrazka"
+#~ msgstr "Neznáma prípona obrázku"
 
 #~ msgid "Unsupported bitmap format."
-#~ msgstr "Nieobsługiwany format bitmapy."
+#~ msgstr "Nepodporovaný formát bitmapy"
 
 #~ msgid "Unsupported clipboard format: %s"
-#~ msgstr "Nieobsługiwany format schowka: %s"
+#~ msgstr "Nepodporovaný formát schránky: %s"
 
 #~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
-#~ msgstr " UWAGA: Pozostały %d niezwolnione DC, szczegółowy zrzut poniżej:"
+#~ msgstr ""
+#~ " UPOZORNENIE: Existuje %d neuvoľnených DCs, detailný výpis nasleduje:"
 
 #~ msgid ""
 #~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
 #~ msgstr ""
-#~ " UWAGA: Pozostało %d niezwolnionych GDIObject, szczegółowy zrzut poniżej:"
+#~ " UPOZORNENIE: Existuje %d neuvoľnených GDIObjects, detailný výpis nasleduje:"
 
 #~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
-#~ msgstr " UWAGA: Pozostało %d komunikatów w kolejce! Zostaną usunięte."
+#~ msgstr " UPOZORNENIE: Vo fronte ostáva %d správ! Uvoľním ich"
 
 #~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
-#~ msgstr " UWAGA: Pozostało %d struktur TimerInfo zostaną usunięte"
+#~ msgstr " UPOZORNENIE: Ostáva %d štruktúr TimerInfo, uvoľním ich"
 
 #~ msgid ""
 #~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
-#~ msgstr " UWAGA: Pozostały %s nieusunięte dowiązania do LM_PAINT/LM_GtkPAINT."
+#~ msgstr " UPOZORNENIE: Ostáva %s neodstránených správ LM_PAINT/LM_GtkPAINT."
+
+#~ msgid "Whole words only"
+#~ msgstr "Len celé slová"
 
 #~ msgid "Error:"
-#~ msgstr "Błąd:"
+#~ msgstr "Chyba:"
 
 #~ msgid "Warning:"
-#~ msgstr "Ostrzeżenie:"
+#~ msgstr "Upozornenie:"
 
 #~ msgid "Cannot focus a disabled or invisible window"
-#~ msgstr "Nie można ustawić ogniska na wyłączone lub niewidzialne okno"
+#~ msgstr "Nemôžem zamerať vypnuté alebo neviditeľné okno"
 
 #~ msgid "Duplicate menus"
-#~ msgstr "Zdublowane menu"
+#~ msgstr "Duplikované menu"
 
 #~ msgid "Invalid action creation"
-#~ msgstr "Błędne tworzenie akcji"
+#~ msgstr "Neplatné akcia vytvorenia"
 
 #~ msgid "Invalid action enumeration"
-#~ msgstr "Błędna enumeracja akcji"
+#~ msgstr "Neplatné·akcia vymenovania"
 
 #~ msgid "Invalid action registration"
-#~ msgstr "Błędna rejestracja akcji"
+#~ msgstr "Neplatné·akcia registrácie"
 
 #~ msgid "Invalid action unregistration"
-#~ msgstr "Błędne wyrejestrowanie akcji"
+#~ msgstr "Neplatné·akcia odregistrovania"
+
+#~ msgid "The char set in mask \"%s\" is not valid!"
+#~ msgstr "Množina znakov v maske \"%s\" nei je platná!"
 
 #~ msgid "Invalid image size"
-#~ msgstr "Błędny rozmiar obrazka"
+#~ msgstr "Neplatná veľkosť obrázku"
 
 #~ msgid "Invalid ImageList Index"
-#~ msgstr "Błędny indeks ImageList"
+#~ msgstr "Neplatný index ImageList"
 
 #~ msgid "Menu index out of range"
-#~ msgstr "Indeks menu poza zakresem"
+#~ msgstr "Index menu mimo rozsahu"
 
 #~ msgid "MenuItem is nil"
-#~ msgstr "Element menu ma wartość nil"
+#~ msgstr "MenuItem je nil"
 
 #~ msgid "Sub-menu is not in menu"
-#~ msgstr "Podmenu nie jest w menu"
+#~ msgstr "Podmenu nie je v menu"
+
+#~ msgid "No MDI form present."
+#~ msgstr "Nie je MIDI formulár"
 
 #~ msgid "No timers available"
-#~ msgstr "Brak dostępnych timerów"
+#~ msgstr "Nie sú dostupné žiadne časovače"
+
+#~ msgid "Wrong token type: %s expected"
+#~ msgstr "Zlý typ tokenu: očakávaný %s"
+
+#~ msgid "Invalid floating point number: %s"
+#~ msgstr "Neplatné číslo s pohyblivou rádovou čiarkou: %s"
+
+#~ msgid "Invalid integer number: %s"
+#~ msgstr "Neplatné celé číslo: %s"
+
+#~ msgid "Unterminated byte value"
+#~ msgstr "Neukončená bytová hodnota"
+
+#~ msgid "Unterminated string"
+#~ msgstr "Neukončený reťazec"
+
+#~ msgid "Wrong token symbol: %s expected but %s found"
+#~ msgstr "Zlý symbol tokenu: očakávaný bol %s, ale nájdený bol %s"
+
+#~ msgid "Wrong token type: %s expected but %s found"
+#~ msgstr "Zlý typ tokenu: očakávaný bol %s , ale nájdený bol %s"

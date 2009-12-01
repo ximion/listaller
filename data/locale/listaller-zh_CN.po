@@ -1,32 +1,38 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: 0.9.16\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2009-07-26 19:38+0000\n"
-"Last-Translator: Bora Akbay <boraakbay@boraakbay.info>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2009-11-30 16:58+0000\n"
+"Last-Translator: lhquark <lhquark@yahoo.com.cn>\n"
+"Language-Team: 简体中文 <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-08-01 21:04+0000\n"
+"X-Launchpad-Export-Date: 2009-11-30 20:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+"X-Poedit-Country: china\n"
+"X-Poedit-Language: chinese\n"
 
 #: trstrings:rsbrokendepsfixq
-msgid "You have missing dependencies. Should they be installed now?"
-msgstr ""
+msgid "Some dependencies are missing. Should they be installed now?"
+msgstr "缺少一些依赖关系，现在要安装吗？"
 
 #: trstrings:rscannotresolv
 msgid "Cannot resolve dependencies"
-msgstr ""
+msgstr "无法解决依赖关系"
 
 #: trstrings:rscheckappdepsq
 msgid "Do you want to check the applications's dependencies?"
-msgstr ""
+msgstr "您是否想要检查应用程序的依赖关系？"
+
+#: trstrings:rscheckdepsq
+msgid "Check dependencies?"
+msgstr "检查依赖关系？"
 
 #: trstrings:rscheckapps
 msgid "Check applications"
-msgstr ""
+msgstr "检查应用程序"
 
 #: trstrings:rscheckrootappsq
 msgid "Do you want to check global-installed applications too?"
@@ -34,19 +40,19 @@ msgstr ""
 
 #: trstrings:rscommands
 msgid "Commands:"
-msgstr ""
+msgstr "命令："
 
 #: trstrings:rscouldntfindupdater
-msgid "Can't find updater applications!"
+msgid "Can't find updater application!"
 msgstr ""
 
 #: trstrings:rsinternalerror
 msgid "An internal error occured"
-msgstr ""
+msgstr "发生了一个内部错误"
 
 #: trstrings:rslaunchlimgr
 msgid "Launch Listaller Manager"
-msgstr ""
+msgstr "启动 Listaller 管理器"
 
 #: trstrings:rslipainfo2
 msgid "Resolve Listaller path variable"
@@ -54,23 +60,27 @@ msgstr ""
 
 #: trstrings:rslipainfo3
 msgid "Installs an IPK package"
-msgstr ""
+msgstr "安装 IPK 软件包"
 
 #: trstrings:rslistallermgrnotfound
 msgid "Can't find Listaller Manager!"
-msgstr ""
+msgstr "无法找到 Listaller 管理器！"
 
-#: trstrings:rsliupdaternotfound
-msgid "Unable to find liUpdater!"
+#: trstrings:rsunablefind
+msgid "Unable to find %s"
+msgstr "无法找到 %s"
+
+#: trstrings:rsnotfoundlitray
+msgid "Could not find Listaller TrayIcon Application"
 msgstr ""
 
 #: trstrings:rsoptions
 msgid "Options:"
-msgstr ""
+msgstr "选项："
 
 #: trstrings:rslipainfo4
 msgid "Runs installation in testmode"
-msgstr ""
+msgstr "以测试模式进行安装"
 
 #: trstrings:rslipainfo5
 msgid "Print all available log messages"
@@ -95,27 +105,27 @@ msgstr ""
 
 #: trstrings:rslibuildinfoc
 msgid "Create DEB and RPM file from IPS"
-msgstr ""
+msgstr "从 IPS 创建 DEB 和 RPM 文件"
 
 #: trstrings:rsdone
 msgid "Done."
-msgstr ""
+msgstr "完成。"
 
 #: trstrings:rsdoyouacceptlicensecmd
 msgid "Do you accept this license [y/n]?"
-msgstr ""
+msgstr "您是否接受此协议 [y/n]？"
 
 #: trstrings:rsenternumber
 msgid "You have to enter a number!"
-msgstr ""
+msgstr "您必须输入一个数字！"
 
 #: trstrings:rsinstaborted
 msgid "Installation aborted."
-msgstr "Yükleme İptal Edildi."
+msgstr "安装已取消。"
 
 #: trstrings:rsappninstall
 msgid "The application %a was not installed."
-msgstr "%a Programı Yüklenmedi."
+msgstr "程序 %a 未被安装。"
 
 #: trstrings:rslipaautofixq
 msgid "Should lipa fix these problems automatically [y/n]?"
@@ -131,19 +141,19 @@ msgstr ""
 
 #: trstrings:rsn
 msgid "n"
-msgstr ""
+msgstr "n"
 
 #: trstrings:rsno
 msgid "no"
-msgstr ""
+msgstr "否"
 
 #: trstrings:rsokay
 msgid "Okay"
-msgstr ""
+msgstr "好的"
 
 #: trstrings:rspreparinginstall
 msgid "Preparing installation (please wait)"
-msgstr ""
+msgstr "正在准备安装 (请稍候)"
 
 #: trstrings:rsrootpassadvancedpriv
 msgid "Enter your password to run the application with advanced privileges."
@@ -151,337 +161,339 @@ msgstr ""
 
 #: trstrings:rsrootpassqappeveryone
 msgid "Enter your password to install the application for everyone."
-msgstr ""
+msgstr "请输入您的密码来将此程序安装给所有用户。"
 
 #: trstrings:rsconvdone
 msgid ""
-"Converting done. Do you want to close this window now?\n"
+"Conversion done. Do you want to close this window now?\n"
 "Press \"No\" if you want to check the output."
 msgstr ""
 
 #: trstrings:rsselectlistnumber
 msgid "Please select a number shown in the list!"
-msgstr ""
+msgstr "请从列表中选择一个数字！"
 
 #: trstrings:rsselectimodea
 msgid "Select the installation mode of this application:"
-msgstr ""
+msgstr "选择此程序的安装模式："
 
 #: trstrings:rsshowdetailedinfocmd
 msgid "Do you want to see detailed information [y/n]?"
+msgstr "您要查看详细信息吗 [y/n]？"
+
+#: trstrings:rsaborted
+msgid "Aborted."
 msgstr ""
 
 #: trstrings:rsviewlogq
 msgid "Do you want to view the logfile?"
-msgstr ""
+msgstr "您要查看日志文件吗？"
 
 #: trstrings:rswasinstalled
 msgid "The application %a was installed successfully!"
-msgstr "%a Programı Başarıyla Yüklendi!"
+msgstr "应用程序 %a 已成功安装！"
+
+#: trstrings:rsexecapptesting
+msgid "Executing application for testing..."
+msgstr ""
 
 #: trstrings:rsinstallnow
 msgid "Install now"
-msgstr "Şimdi Yükle!"
+msgstr "立即安装"
 
 #: trstrings:rsrunparam
 msgid ""
 "Please run \"listallgo\" with path to install-package as first parameter!"
 msgstr ""
-"Lütfen yükleme için ilk değişken olarak \"listallgo\" dosya dizinini "
-"çalıştırın!"
 
 #: trstrings:rswelcome
 msgid "Welcome!"
-msgstr "Hoşgeldiniz!"
+msgstr "欢迎！"
 
 #: trstrings:rsntostart
 msgid "Press \"Next\" to start the installation!"
-msgstr "Yüklemeye başlamak için \"İleri\" butonuna basınız!"
+msgstr "点击“下一步”开始安装！"
 
 #: trstrings:rsprogdesc
 msgid "Program description:"
-msgstr "Program Açıklaması."
+msgstr "程序描述："
 
 #: trstrings:rslicense
 msgid "Software license"
-msgstr "Uygulama Lisansı"
+msgstr "软件许可"
 
 #: trstrings:rspleaseread
 msgid "Please read the following information carefully:"
-msgstr "Lütfen aşağıdaki bilgiyi dikkatle okuyun:"
+msgstr "请仔细阅读以下信息："
 
 #: trstrings:rsrunning
 msgid "Running installation..."
-msgstr "Yükleme çalışıyor..."
+msgstr "正在安装..."
 
 #: trstrings:rsplwait
 msgid "Please wait."
-msgstr "Lütfen Bekleyin."
+msgstr "请等待。"
 
 #: trstrings:rscomplete
 msgid "Installation completed!"
-msgstr "Yükleme Tamamlandı!"
+msgstr "安装完成！"
 
 #: trstrings:rsinstfailed
 msgid "Installation failed."
-msgstr ""
+msgstr "安装失败"
 
 #: trstrings:rsprfinish
 msgid "Press \"Finish\" to close."
-msgstr "Yüklemeyi bitirmek için \"Bitir\" butonuna basınız."
+msgstr "点击“完成”以关闭。"
 
 #: trstrings:rsfinish
 msgid "Finish"
-msgstr "Bitir"
+msgstr "完成"
 
 #: trstrings:rsabort
 msgid "Abort"
-msgstr "Vazgeç"
+msgstr "中止"
 
 #: trstrings:rsback
 msgid "Back"
-msgstr "Geri"
+msgstr "后退"
 
 #: trstrings:rsnext
 msgid "Next"
-msgstr "İleri"
+msgstr "下一步"
 
 #: trstrings:rsdisplog
 msgid "Display installation log"
-msgstr "Yükleme kayıtlarını göster"
+msgstr "显示安装日志"
 
 #: trstrings:rsiagree
 msgid "I agree with the above terms and conditions"
-msgstr "Yukarıdaki şartları kabul ediyorum."
+msgstr "我同意以上条款"
 
 #: trstrings:rsinagree
 msgid "I don't agree"
-msgstr "Katılmıyorum"
+msgstr "我不同意"
 
 #: trstrings:rsldnsupported
 msgid "Your Linux distribution is not supported by Listaller yet!"
-msgstr "Linux sürümünüz Linstaller tarafından henüz desteklenmiyor."
+msgstr "Listaller 还不支持您的 Linux 发行版！"
 
 #: trstrings:rsnsupported
 msgid "This package does not support your Linux distribution."
-msgstr "Bu paket, Linux sürümünüzü desteklemiyor."
+msgstr "这个软件包不支持您的 Linux 发行版。"
 
 #: trstrings:rsdepnotfound
 msgid ""
 "Found no package with the necessary library \"%l\" for your distribution."
-msgstr ""
+msgstr "对于您的发行版，无法找到包含所需库“%l”的软件包。"
+
+#: trstrings:rsopeningdb
+msgid "Opening database..."
+msgstr "正在打开数据库..."
 
 #: trstrings:rsinclose
 msgid "The installer will close now"
-msgstr "Yükleyici şimdi kapanacak."
+msgstr "安装程序即将关闭"
 
-#: trstrings:rscnoverwrite
-msgid "Unable to overwrite the file %f."
-msgstr "%f dosyasının üzerine yazılamadı."
+#: trstrings:rscnoverride
+msgid "Unable to override the file %f."
+msgstr "无法覆盖文件 %f 。"
+
+#: trstrings:rscncopy
+msgid "Unable to copy the file %s."
+msgstr "无法复制文件 %s。"
 
 #: trstrings:rsnotifydevs
 msgid "Please notify the developers on http://launchpad.net/listaller"
-msgstr ""
-"Lütfen http://launchpad.net/linstaller adresi üzerinden yazılım "
-"geliştiricilerimizi haberdar ediniz."
+msgstr "请在 http://launchpad.net/listaller 告知开发者"
 
 #: trstrings:rsextracterror
 msgid "Error while extracting files!"
-msgstr "Dosyalar çıkartırken hata yaşandı!"
+msgstr "提取文件时发生错误！"
 
 #: trstrings:rspkgdm
 msgid ""
-"The IPK package could be damaged or you haven't enough rights to acces "
+"The IPK package could be damaged or you haven't enough rights to access "
 "required files/folders."
 msgstr ""
-"IPH paketi zarar görmüş olabilir ya da gereken dosyalara erişmek için "
-"yetkileriniz yeterli olmayabilir."
 
 #: trstrings:rsabload
 msgid "Loading aborted."
-msgstr "Yükleme iptal edildi."
+msgstr "已中止载入。"
 
 #: trstrings:rsalreadyinst
 msgid "This application is already installed"
-msgstr "Bu program zaten yüklenmiş."
+msgstr "此程序已安装"
 
 #: trstrings:rsinstallagain
 msgid "Do you want to install it again?"
-msgstr "Tekrar yüklemek ister misiniz?"
+msgstr "您想再次安装它吗？"
 
 #: trstrings:rswelcometo
 msgid "Welcome to the installation of %a"
-msgstr "%a programının yüklemesine hoşgeldiniz."
+msgstr ""
 
 #: trstrings:rsinstof
 msgid "Installation of %a"
-msgstr "%a Programının Yüklemesi"
+msgstr ""
 
 #: trstrings:rstestmode
 msgid "Testmode"
-msgstr "Test Modu"
+msgstr "测试模式"
 
 #: trstrings:rstestfinished
 msgid "Test of the application finished."
-msgstr "Uygulamanın testi bitti."
+msgstr "程序测试已完成。"
+
+#: trstrings:rscleaningup
+msgid "Cleaning up..."
+msgstr "正在清理..."
 
 #: trstrings:rspkginval
 msgid "The package was invalid!"
-msgstr "Paket geçersiz!"
+msgstr "软件包无效！"
 
 #: trstrings:rscouldntsolve
 msgid "Dependencies couldn't be solved!"
-msgstr "Bağımlılıklar çözülemedi."
+msgstr "无法解决依赖关系！"
 
 #: trstrings:rsviewlog
 msgid "Please view the logfile at %p"
-msgstr "Lütfen kayıtlara göz atınız. ( %p )"
+msgstr "请在 %p 下查看日志文件"
 
 #: trstrings:rspkgerror
 msgid "Installation package is corrupt"
-msgstr "Yükleme paketi hasar görmüş."
+msgstr ""
 
 #: trstrings:rsappclose
 msgid "The application will close now "
-msgstr "Uygulama şimdi kapanacak. "
+msgstr "程序即将关闭 "
 
 #: trstrings:rsstep1
 msgid "Phase 1/4: Resolving dependencies..."
-msgstr "Adım 1/4: Bağımlılıklar çözümleniyor..."
+msgstr "阶段 1/4：正在分析依赖关系..."
+
+#: trstrings:rsstate
+msgid "State"
+msgstr "状态"
 
 #: trstrings:rswdldep
 msgid "This application wants to download & install a dependency from %l"
 msgstr ""
-"Uygulama %l adresinden yeni bir bağımlılık indirip, yüklemek istiyor."
 
 #: trstrings:rswallow
 msgid "Do you want confirm this action?"
-msgstr "Bu hareketi onaylamak istiyor musunuz?"
+msgstr "您是否确认此操作？"
 
 #: trstrings:rslicloseani
 msgid "Listaller will close now. The package couldn't be installed."
-msgstr "Linstaller şimdi kapanacak. Paket yüklenemedi."
+msgstr "Listaller 即将关闭。无法安装软件包。"
 
 #: trstrings:rsstep2
 msgid "Phase 2/4: Installing files..."
-msgstr "Adım 2/4: Dosyalar yükleniyor..."
+msgstr "阶段 2/4：正在安装文件..."
 
 #: trstrings:rsstep3
 msgid "Phase 3/4: Chmod new files..."
-msgstr "Adım 3/4: Yeni dosyaların izinleri atanıyor..."
+msgstr ""
 
 #: trstrings:rsstep4
 msgid "Phase 4/4: Registering application..."
-msgstr "Adım 4/4: Program kaydı yapılıyor..."
+msgstr "阶段 4/4：正在注册程序"
 
 #: trstrings:rsaddupdsrc
-msgid "The installation tries to add the following update source: "
-msgstr "Uygulama aşağıdaki güncelleme kaynaklarını eklemek istiyor: "
+msgid "The installation contains the following update source: "
+msgstr ""
 
 #: trstrings:rsqaddupdsrc
 msgid "Should this source be added to the update sources list?"
-msgstr "Bu kaynak güncelleme kaynaklarının arasına eklenmeli mi?"
+msgstr "是否将此软件源添加到更新源列表？"
 
 #: trstrings:rsfinished
 msgid "Finished"
-msgstr "Bitti"
+msgstr "已完成"
 
 #: trstrings:rsinstanyway
 msgid "Do you want to install it anyway? (This could raise problems)"
-msgstr ""
-"Herşeye rağmen yüklemek istediğinize emin misiniz? (Bu sorunlara yol "
-"açabilir!)"
+msgstr "无论如何您都要安装吗？ (这可能导致问题)"
 
 #: trstrings:rsinvarchitecture
 msgid ""
 "The application which this package contains was not built for the current "
 "system architecture."
 msgstr ""
-"Bu paketin içerdiği uygulama, şu anki sistem mimarisine uygun tasarlanmamış."
 
 #: trstrings:rswilldlfiles
 msgid "(This program will download the needed files from the internet)"
-msgstr "(Bu program, gereken dosyaları internetten yükleyecek.)"
+msgstr "(此程序将从互联网下载所需文件)"
 
 #: trstrings:rsinvaliddversion
 msgid "Package was not build for your Linux distribution release."
-msgstr "Bu paket sisteminizde yüklü olan Linux dağıtımı için tasarlanmamış."
+msgstr ""
 
 #: trstrings:rsftpfailed
 msgid ""
-"Problem while downloading the packages. Maybe the login on the FTP-Server "
-"failed."
-msgstr ""
-"Paketler internetten indirilirken sorun yaşandı. Belki FTP Sunucusuna "
-"yapılan oturum açma denemesi başarısız olmuş olabilir."
+"Problem while downloading the packages. Could not create working FTP "
+"connection."
+msgstr "下载软件包时出错。无法建立可用的 FTP 连接。"
 
 #: trstrings:rssuccess
 msgid "Success!"
-msgstr "Zafer!"
+msgstr "成功！"
 
 #: trstrings:rsmain
 msgid "Main"
-msgstr "Temel"
+msgstr ""
 
 #: trstrings:rsdetails
 msgid "Details"
-msgstr "Detaylar"
+msgstr ""
 
 #: trstrings:rsinstallation
 msgid "Installation"
-msgstr "Yükleme"
+msgstr "安装"
 
 #: trstrings:rsnoldsources
 msgid ""
 "There are no sources available for your Linux distribution\n"
 "Try to install common packages?"
 msgstr ""
-"Sisteminizdeki Linux dağırımı için uygun kaynak(lar) bulunmuyor.\n"
-"Ortak paketlerin yüklenmesi denensin mi?"
 
 #: trstrings:rsusecomppq
 msgid "Use compatible packages?"
-msgstr "Uyumlu paketler kullanılsın mı?"
+msgstr "使用兼容的软件包吗？"
 
 #: trstrings:rsnocomp
 msgid "No compatible packages found!"
-msgstr "Uyumlu paket(ler) bulunamadı!"
+msgstr "没有找到兼容的软件包！"
 
 #: trstrings:rsactionnotpossiblepkg
 msgid ""
 "The selected action is not possible with this package.\n"
 "Please contact the package maintainer to get more information."
 msgstr ""
-"Seçilmiş hareket bu paketle mümkün değil.\n"
-"Daha fazla bilgi için lütfen paket sağlayıcısından bilgi alın."
-
-#: trstrings:rsidinvalid
-msgid ""
-"This package has no valid ID\n"
-"The installer will close."
-msgstr ""
-"Paketin geçerli bir kimliği yok.\n"
-"Yükleyici kapanacak."
+"对于当前软件包无法执行选定的操作。\n"
+"请联系软件包维护者以获得更多信息。"
 
 #: trstrings:rsreinstall
 msgid "Re-install"
-msgstr "Tekrar yükle."
+msgstr "重新安装"
 
 #: trstrings:rspkgdownload
 msgid "The following packages will be downloaded:"
-msgstr "Aşağıdaki paketler yüklenecek:"
+msgstr "将下载以下软件包："
 
 #: trstrings:rsgetdependencyfrom
 msgid "Get dependency from"
-msgstr "Bağımlılıkları şuradan al"
+msgstr ""
 
 #: trstrings:rsplwait2
 msgid "Please wait..."
-msgstr "Lütfen Bekleyiniz..."
+msgstr "请等待..."
 
 #: trstrings:rsdepdlproblem
 msgid "Problem while downloading the dep-file."
-msgstr "Bağımlılık dosyası indirilirken sorun yaşandı."
+msgstr ""
 
 #: trstrings:rshasherror
 msgid ""
@@ -489,33 +501,26 @@ msgid ""
 "The package may be modified after creation.\n"
 "Please obtain a new copy"
 msgstr ""
-"Hash kodu uyuşmadı.\n"
-"Oluşturulmasından sonra paket değişmiş olabilir.\n"
-"Lütfen yeni bir kopya edinin."
 
 #: trstrings:rsinstallationmode
 msgid "Installation mode:"
-msgstr "Yükleme modu:"
+msgstr "安装模式："
 
 #: trstrings:rsimodeinstruction
 msgid "Select which parts of the application should be installed."
-msgstr "Bu uygulamanın hangi kısmının yüklenmedini istediğinizi seçiniz."
+msgstr "请选择要安装那部分程序"
 
 #: trstrings:rsmode
 msgid "Mode"
-msgstr "Mod:"
-
-#: trstrings:rscleanup
-msgid "Cleaning up..."
-msgstr ""
+msgstr "模式"
 
 #: trstrings:rsinstperformerror
 msgid "Error while performing installation:"
-msgstr ""
+msgstr "进行安装时发生错误："
 
 #: trstrings:rsyesno1
 msgid "Yes/No?:"
-msgstr ""
+msgstr "是/否？"
 
 #: trstrings:rsinstalllibuild
 msgid ""
@@ -524,165 +529,157 @@ msgstr ""
 
 #: trstrings:rsfilenotexists
 msgid "The file \"%f\" does not exists!"
-msgstr ""
+msgstr "文件“%f”不存在！"
 
 #: trstrings:rswanttodoq
 msgid "What do you want to do?"
-msgstr "Ne yapmak istiyorsunuz?"
+msgstr "您想做什么？"
 
-#: trstrings:rspackagekitwarning
+#: trstrings:rsdevversion
 msgid ""
-"Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to "
-"work correctly.\n"
-"Please update PackageKit!"
+"You use a development version of Listaller!\n"
+"This version is untested, be careful about what you do!"
 msgstr ""
-"PackageKit versiyonunuz %cp. Linstaller ise düzgün çalışabilmek için "
-"PackageKit %np versiyonuna ihtiyaç duyuyor.\n"
-"Lütfen PackageKit'i güncelleştirin."
 
 #: trstrings:rsspkwarning
 msgid ""
-"Make sure that you have got this package from a save source and a serious "
+"Make sure that you got this package from a save source and a serious "
 "publisher!"
 msgstr ""
-"Bu programı güvenli bir kaynaktan ve/veya ciddi bir yayımcıdan aldığınıza "
-"emin olun!"
 
 #: trstrings:rsinstalleveryone
 msgid "Install application for everyone"
-msgstr "Uygulamayı herkes için yükle."
+msgstr "将程序安装给所有人"
 
 #: trstrings:rstestapp
 msgid "Test application"
-msgstr "Uygulamayı test et"
+msgstr "测试程序"
 
 #: trstrings:rsinstallhome
 msgid "Install into my Home directory"
-msgstr "Ev dizinime yükle."
+msgstr "安装到我的主目录"
 
 #: trstrings:rsselinstmode
 msgid "Select installation mode"
-msgstr "Yükleme modunu seç"
+msgstr "选择安装模式"
 
 #: trstrings:rssoftwaremanager
 msgid "Software Manager"
-msgstr "Yazılım Yöneticisi"
+msgstr "软件管理器"
 
 #: trstrings:rsupdsources
 msgid "Update sources"
-msgstr "Güncelleme kaynakları"
+msgstr "更新软件源"
 
 #: trstrings:rsclose
 msgid "Close"
-msgstr "Kapat"
+msgstr "关闭"
 
 #: trstrings:rsdelsrc
 msgid "Delete source"
-msgstr "Kaynağı sil"
+msgstr "删除软件源"
 
 #: trstrings:rslistofsrc
 msgid "The following update sources are installed:"
-msgstr "Aşağıdaki güncelleme kaynakları yüklendi:"
+msgstr ""
 
 #: trstrings:rsuninstall
 msgid "Uninstall"
-msgstr "Kaldır"
+msgstr "卸载"
 
 #: trstrings:rsswcatalogue
 msgid "Browse catalogue"
-msgstr ""
+msgstr "浏览类别"
 
 #: trstrings:rsshow
 msgid "Show:"
-msgstr "Göster:"
+msgstr ""
 
 #: trstrings:rsall
 msgid "All"
-msgstr "Tümü"
+msgstr "全部"
 
 #: trstrings:rseducation
 msgid "Education"
-msgstr "Eğitim"
+msgstr "教育"
 
 #: trstrings:rsoffice
 msgid "Office"
-msgstr "Ofis"
+msgstr "办公"
 
 #: trstrings:rsdevelopment
 msgid "Development"
-msgstr "Yazılım Geliştirme"
+msgstr "开发"
 
 #: trstrings:rsgraphic
 msgid "Graphic"
-msgstr "Grafik"
+msgstr "图形"
 
 #: trstrings:rsnetwork
 msgid "Network"
-msgstr "Ağ"
+msgstr "网络"
 
 #: trstrings:rsgames
 msgid "Games"
-msgstr "Oyunlar"
+msgstr "游戏"
 
 #: trstrings:rssystem
 msgid "System"
-msgstr "Sistem"
+msgstr "系统"
 
 #: trstrings:rsmultimedia
 msgid "Multimedia"
-msgstr "Çoklu Ortam"
+msgstr "多媒体"
 
 #: trstrings:rsaddidional
 msgid "Utilities"
-msgstr "Araçlar"
+msgstr "工具"
 
 #: trstrings:rsother
 msgid "Other"
-msgstr "Diğer"
+msgstr "其它"
 
 #: trstrings:rsversion
 msgid "Version"
-msgstr "Versiyon / Sürüm"
+msgstr "版本"
 
 #: trstrings:rsauthor
 msgid "Autor"
-msgstr "Yazar"
+msgstr "作者"
 
 #: trstrings:rsusername
 msgid "Username"
-msgstr "Kullanıcı Adı"
+msgstr "用户名"
 
 #: trstrings:rspassword
 msgid "Password"
-msgstr "Şifre"
+msgstr "密码"
 
 #: trstrings:rsproxysettings
 msgid "Proxy-Settings"
-msgstr "Vekil Sunucu (Proxy) Ayarları"
+msgstr "代理设置"
 
 #: trstrings:rsenableproxy
 msgid "Enable Proxy-Server"
-msgstr "Vekil Sunucuları (Proxy) Akrtive Et"
+msgstr "启用代理服务器"
 
 #: trstrings:rslokierror
 msgid "Can't load LOKI-Setup information."
-msgstr "LOKI-Ayar bilgileri yüklenemiyor."
+msgstr ""
 
 #: trstrings:rscannotloadicon
 msgid ""
 "Unable to load the icon of %a. Please notify the developers of Listaller or "
 "this application!"
-msgstr ""
-"%a 'nın simgesi yüklenemedi. Lütfen Linstaller'ın yazılım geliştiricilerini "
-"haberdar edin."
+msgstr "无法载入 %a 的图标，请告知 Listaller 或此程序的开发者！"
 
 #: trstrings:rsautoloaddep
 msgid "Load dependencies from included webserver-urls automatically"
-msgstr "İçerilen URL'lerden bağımlılıkları otomatik olarak yükle."
+msgstr ""
 
 #: trstrings:rsready
 msgid "Ready."
-msgstr "Hazır."
+msgstr "就绪。"
 
 #: trstrings:rsconvertpkg
 msgid ""
@@ -695,65 +692,79 @@ msgstr ""
 
 #: trstrings:rsconvertpkgq
 msgid "Convert package?"
-msgstr "Paket çevrilsin mi?"
+msgstr "转换软件包？"
 
 #: trstrings:rsconvtitle
 msgid "Converting %p package..."
-msgstr "%p Paketi çevriliyor."
+msgstr "正在转换 %p 软件包..."
 
 #: trstrings:rsfiltering
 msgid "Filtering..."
-msgstr "Süzülüyor..."
+msgstr "正在过滤..."
 
 #: trstrings:rsfilter
 msgid "Filter..."
-msgstr ""
+msgstr "过滤器..."
 
 #: trstrings:rsloading
 msgid "Loading..."
-msgstr "Yükleniyor..."
+msgstr "载入中..."
 
 #: trstrings:rsinstalledapps
-msgid "Installed applications"
+msgid ""
+"Installed\n"
+"applications"
 msgstr ""
+"已安装的\n"
+"程序"
 
 #: trstrings:rsinstallpkg
 msgid "Install package"
-msgstr ""
+msgstr "安装软件包"
 
 #: trstrings:rsbrowsecatalog
-msgid "Browse catalog"
+msgid ""
+"Browse\n"
+"catalog"
 msgstr ""
+"浏览\n"
+"类别"
 
 #: trstrings:rsrepositories
 msgid "Repositories"
-msgstr ""
+msgstr "软件仓库"
 
 #: trstrings:rssettings
 msgid "Settings"
-msgstr ""
+msgstr "设置"
 
 #: trstrings:rsnoguipkgmanfound
 msgid ""
 "Could not find usable GUI package manager.\n"
 "Please install a PackageKit-GUI!"
 msgstr ""
+"无法找到可用的图形界面软件包管理器。\n"
+"请安装 PackageKit-GUI！"
 
 #: trstrings:rsuselaunchpadforbugs
-msgid "Please use https://bugs.launchpad.net/listaller for bug reports."
+msgid ""
+"Please use https://bugs.launchpad.net/listaller\n"
+"for bug reports."
 msgstr ""
+"请使用 https://bugs.launchpad.net/listaller\n"
+"报告 bug。"
 
 #: trstrings:rsdisprootapps
 msgid "Display system applications"
-msgstr "Sistem uygulamalarını göster"
+msgstr "显示系统程序"
 
 #: trstrings:rsdisponlymyapps
 msgid "Display my applications"
-msgstr "Benim uygulamalarımı göster"
+msgstr "显示我的程序"
 
 #: trstrings:rsselmgrmode
 msgid "Select software-manager mode:"
-msgstr "Uygulama yöneticisi modunu seçin:"
+msgstr "选择软件管理器模式："
 
 #: trstrings:rslistalleralien
 msgid ""
@@ -764,63 +775,65 @@ msgstr ""
 
 #: trstrings:rsinstpkgq
 msgid "Install package?"
-msgstr "Paket yüklensin mi?"
+msgstr "安装软件包？"
 
 #: trstrings:rspkginstfail
 msgid "Package %p could not be installed."
-msgstr "%p paketi yüklenemedi."
+msgstr "软件包 %p 无法安装。"
 
 #: trstrings:rsshowpkmon
 msgid "Start PackageKit monitor before running transactions"
-msgstr "İşlemden önce PackageKit monitörünü başlat."
+msgstr ""
+
+#: trstrings:rsstartlitray
+msgid "Start Listaller tray icon application (to check dependencies)"
+msgstr ""
 
 #: trstrings:rsaboutlistaller
 msgid "About Listaller"
-msgstr "Linstaller Hakkında"
+msgstr "关于 Listaller"
 
 #: trstrings:rsbrowselicatalog
 msgid "Browse Listaller's software catalog"
-msgstr ""
+msgstr "浏览 Listaller 的软件类别"
 
 #: trstrings:rsopendirsicatalog
 msgid "Open your distribution's package catalog"
-msgstr ""
+msgstr "打开您发行版的软件包类别"
 
 #: trstrings:rsabout
 msgid "About"
-msgstr "Hakkında"
+msgstr "关于"
 
 #: trstrings:rsauthors
 msgid "Authors"
-msgstr "Yazarlar"
+msgstr "作者"
 
 #: trstrings:rsrmsrcq
 msgid "Are you really sure that you want to delete this source?"
-msgstr "Bu kaynağı silmek istediğinizden kesinlikle emin misiniz?"
+msgstr "您确定要删除此软件源吗？"
 
 #: trstrings:rsrmsrcqc
 msgid "Delete source?"
-msgstr "Kaynak silinsin mi?"
+msgstr "删除软件源？"
 
 #: trstrings:rspkitprobpkmon
 msgid ""
 "Problem while connecting PackageKit. Run \"pkmon\" to get further "
 "information."
-msgstr ""
-"PackageKit bağlanırken sorun oluştu. Daha fazla bilgi için \"pkmon\" "
-"sistemini çalıştırın."
+msgstr "连接 PackageKit 出现问题。运行“pkmon”来获取进一步的信息。"
 
 #: trstrings:rsnoappsfound
 msgid "No applications found!"
-msgstr "Uygulama bulunmadı!"
+msgstr "未找到程序！"
 
 #: trstrings:rssourcedeleted
 msgid "Source was removed."
-msgstr ""
+msgstr "软件源已删除。"
 
 #: trstrings:rspleaseselectlistitem
 msgid "Please select an item from the list!"
-msgstr ""
+msgstr "请从列表中选择一项！"
 
 #: trstrings:rsliupdateaccessfailed
 msgid "Cannot access the liUpdate tool. Maybe it is not installed?"
@@ -828,58 +841,56 @@ msgstr ""
 
 #: trstrings:rschangepkgmansettings
 msgid "Change package manager settings"
-msgstr ""
+msgstr "改变软件包管理器设置"
 
 #: trstrings:rscategory
 msgid "Category:"
-msgstr "Kategori:"
+msgstr "类别："
 
 #: trstrings:rswinstalldl
 msgid "Select software you want to download and to install:"
-msgstr "İndirip, yüklemek istediğiniz uygulamayı seçiniz:"
+msgstr "选择您要下载并安装的软件："
 
 #: trstrings:rsnoinfo
 msgid "No information available!"
-msgstr "Hakkında bilgi mümkün değil."
+msgstr "没有可用信息！"
 
 #: trstrings:rsdlsetup
 msgid "Downloading setup package..."
-msgstr "Yükleme paketi indiriliyor."
+msgstr "正在下载安装包..."
 
 #: trstrings:rserrcontactman
 msgid ""
 "Cannot download this package. Please contact the catalogue managers on %h"
 msgstr ""
-"Bu paket indirilemiyor. Lütfen %h adresindeki katalog ve menejerlerle "
-"görüşün."
 
 #: trstrings:rsinstalling
 msgid "Running application installation..."
-msgstr "Uygulama yüklemesi çalıştırılıyor..."
+msgstr "正在进行程序安装..."
 
 #: trstrings:rsdownloadctbase
 msgid "Downloading catalogue base information..."
-msgstr "Katalog baz bilgisi indiriliyor..."
+msgstr ""
 
 #: trstrings:rsopenpage
 msgid "Loading catalogue page..."
-msgstr "Katalog sayfası yükleniyor..."
+msgstr "正在载入类别页..."
 
 #: trstrings:rsctdlabort
 msgid "Do you really want to abort this download?"
-msgstr "Bu yüklemeyi gerçekten iptal etmek istiyor musunuz?"
+msgstr "您确定要中止下载吗？"
 
 #: trstrings:rsrealuninstq
 msgid "Do you really want to uninstall %a?"
-msgstr "%a uygulamasını gerçekten kaldırmak istiyor musunuz?"
+msgstr "您确定要卸载 %a 吗？"
 
 #: trstrings:rsunistsuccess
 msgid "Application uninstalled successfully!"
-msgstr "Uygulama başarıyla kaldırıldı!"
+msgstr "程序已成功卸载！"
 
 #: trstrings:rsrmerror
 msgid "Error while uninstalling!"
-msgstr "Uygulama kaldırılırken bir hata yaşandı!"
+msgstr "卸载时发生错误！"
 
 #: trstrings:rscannothandlerm
 msgid ""
@@ -887,17 +898,14 @@ msgid ""
 "Listaller can handle.\n"
 "You have to remove it manually."
 msgstr ""
-"Bu uygulama bir MoJo-Yüklemesi değil ve Linstaller başka paketlerle başa "
-"çıkamaz.\n"
-"Bu uygulamayı manuel olarak kaldırmalısınız."
 
 #: trstrings:rsrmunsddeps
 msgid "Uninstalling unused deps..."
-msgstr "Kullanılmayan bağımlılıklar kaldırılıyor..."
+msgstr "正在卸载未使用的依赖关系..."
 
 #: trstrings:rsuninstalling
 msgid "Uninstalling..."
-msgstr "Kaldırılıyor..."
+msgstr "正在卸载..."
 
 #: trstrings:rsrmpkg
 msgid ""
@@ -905,66 +913,65 @@ msgid ""
 "The following package(s) will be removed also: %pl\n"
 "If you aren't sure that you won't need those packages, press \"No\"!"
 msgstr ""
-"%a içeren \"%p\" paketini kaldırmak istediğinize emin misiniz?\n"
-"Şu paketler de beraberinde kaldırılacak: %pl\n"
-"Eğer bu paketlere ihtiyacınız olup olmayacağına emin değilseniz \"Hayır\" "
-"seçeneğine basın."
+"您确定要移除“%p”，其中包含 %a？\n"
+"以下软件包也将被移除： %pl\n"
+"如果您不确定您不再需要这些软件包，点击“否”"
 
 #: trstrings:rsrmpkgq
 msgid "Really remove?"
-msgstr "Gerçekten kaldırılsın?"
+msgstr "确定要移除？"
 
 #: trstrings:rswaiting
 msgid "Waiting..."
-msgstr "Bekleniyor..."
+msgstr "轻稍候..."
 
 #: trstrings:rsrmappc
 msgid "Uninstalling %a"
-msgstr "%a Kaldırılıyor"
+msgstr "正在卸载 %a"
 
 #: trstrings:rslindesk
-msgid "Running under %de."
+msgid "Running under %s."
 msgstr ""
 
 #: trstrings:rsnoupdates
 msgid "There are no updates available!"
-msgstr "Mümkün bir güncelleştirme bulunmuyor!"
+msgstr "没有可用更新！"
 
 #: trstrings:rslogupdinfo
 msgid "Update info:"
-msgstr "Güncelleştirme bilgisi:"
+msgstr "更新信息："
 
 #: trstrings:rsfileschanged
 msgid "%f files will be changed."
-msgstr "%f dosyaları değiştirilecek."
+msgstr "%f 个文件会变更。"
 
 #: trstrings:rsupdto
 msgid "The application will be updated to version %v"
-msgstr "Uygulama %v versiyonuna yükseltilecek."
+msgstr "程序将被更新到版本 %v"
 
 #: trstrings:rscheckforupd
 msgid "Check for updates"
-msgstr "Güncelleştirmeler için kontrol et"
+msgstr "检查更新"
 
 #: trstrings:rsinstupd
 msgid "Install updates"
-msgstr "Güncelleştirmeleri yükle"
+msgstr "安装更新"
 
 #: trstrings:rsshowupdater
 msgid "Show"
-msgstr "Göster"
+msgstr "显示"
 
 #: trstrings:rsquitupdater
 msgid "Quit"
-msgstr "Çık"
+msgstr "退出"
 
 #: trstrings:rsupdinstalling
 msgid "Applying updates..."
-msgstr "Güncelleştirmeler uygulanıyor..."
+msgstr "正在应用更新..."
 
 #: trstrings:rsupdconferror
 msgid "Error while unpacking and configuring files."
-msgstr "Dosyakar açılırken ve/veya konfigüre edilirken hata yaşandı."
+msgstr "解压和配置文件时发生错误。"
 
 #: trstrings:rsquestion
 msgid "Question:"
@@ -972,332 +979,289 @@ msgstr ""
 
 #: trstrings:rsyes
 msgid "yes"
-msgstr ""
+msgstr "是"
 
 #: trstrings:rsy
 msgid "y"
-msgstr ""
+msgstr "y"
 
 #: trstrings:rsresolvingdep
 msgid "Resolving dependencies..."
-msgstr ""
+msgstr "正在分析依赖关系..."
 
 #~ msgid "Browser %s%s%s not executable."
-#~ msgstr "%s%s%s tarayıcısı çalıştırılabilir değil."
+#~ msgstr "浏览 %s%s%s 不是可执行程序."
 
 #~ msgid "Browser %s%s%s not found."
-#~ msgstr "%s%s%s tarayıcısı bulunamadı."
+#~ msgstr "浏览 %s%s%s 未找到."
 
 #~ msgid "Error while executing %s%s%s:%s%s"
-#~ msgstr "%s%s%s:%s%s çalıştırılırken hata"
+#~ msgstr "当执行 %s%s%s 时错误:%s%s"
 
 #~ msgid "Unable to find a HTML browser."
-#~ msgstr "HTML tarayıcı bulunamıyor."
+#~ msgstr "无法找到 HTML 浏览器"
 
 #~ msgid ""
 #~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
 #~ "Viewers"
-#~ msgstr ""
-#~ "HTML tarayıcı bulunamadı. %s Yardım -> Yardımı Yapılandır -> "
-#~ "Görüntüleyiciler'den bir tane tanımlayın"
+#~ msgstr "没有找到 HTML 浏览器。%s请在 帮助-> 配置帮助 -> 查看器 中定义一个"
 
 #~ msgid "The help database %s%s%s was unable to find file %s%s%s."
-#~ msgstr "%s%s%s yardım veritabanı, %s%s%s dosyasını bulamadı."
+#~ msgstr "帮助数据库 %s%s%s 无法找到文件 %s%s%s."
 
 #~ msgid "The macro %s in BrowserParams will be replaced by the URL."
-#~ msgstr "BrowserParams içindeki %s betiği(makro) URL ile değiştirilecek."
-
-#~ msgid "Alt"
-#~ msgstr "Alt"
-
-#~ msgid "Ctrl"
-#~ msgstr "Ctrl"
+#~ msgstr "浏览框里的宏 %s 将被 URL 所替代."
 
 #~ msgid "Accept"
-#~ msgstr "Kabul"
+#~ msgstr "接受"
 
 #~ msgid "application key"
-#~ msgstr "uygulama tuşu"
+#~ msgstr "应用程序快捷键"
 
 #~ msgid "Backspace"
-#~ msgstr "Silme"
+#~ msgstr "退格"
 
 #~ msgid "Capital"
-#~ msgstr "Büyük harf"
+#~ msgstr "大写字母"
 
 #~ msgid "Clear"
-#~ msgstr "Temizle"
+#~ msgstr "清除"
 
 #~ msgid "Control"
-#~ msgstr "Kontrol"
+#~ msgstr "控件"
 
 #~ msgid "Convert"
-#~ msgstr "Dönüştür"
+#~ msgstr "转换"
 
 #~ msgid "Down"
-#~ msgstr "Aşağı"
-
-#~ msgid "End"
-#~ msgstr "Sona git"
+#~ msgstr "下"
 
 #~ msgid "Escape"
-#~ msgstr "Çıkış karakteri"
+#~ msgstr "溢出"
 
 #~ msgid "Execute"
-#~ msgstr "Çalıştır"
-
-#~ msgid "Final"
-#~ msgstr "Final"
-
-#~ msgid "Hanja"
-#~ msgstr "Hanja"
+#~ msgstr "执行"
 
 #~ msgid "Help"
-#~ msgstr "Yardım"
-
-#~ msgid "Home"
-#~ msgstr "Başa git"
-
-#~ msgid "Junja"
-#~ msgstr "Junja"
-
-#~ msgid "Kana"
-#~ msgstr "Kana"
+#~ msgstr "帮助"
 
 #~ msgid "Mouse Button Left"
-#~ msgstr "Sol fare düğmesi"
+#~ msgstr "鼠标左键"
 
 #~ msgid "Left"
-#~ msgstr "Sol"
+#~ msgstr "左"
 
 #~ msgid "left windows key"
-#~ msgstr "sol windows tuşu"
+#~ msgstr "左 Win 键"
 
 #~ msgid "Mouse Button Middle"
-#~ msgstr "Orta fare düğmesi"
+#~ msgstr "鼠标中键"
 
 #~ msgctxt "lclstrconsts.ifsvk_menu"
 #~ msgid "Menu"
-#~ msgstr "Menü"
+#~ msgstr "菜单"
 
 #~ msgid "Mode Change"
-#~ msgstr "Kip değişimi"
+#~ msgstr "模式更改"
 
 #~ msgid "Nonconvert"
-#~ msgstr "Dönüştürme"
+#~ msgstr "不转换"
 
 #~ msgid "Numlock"
-#~ msgstr "Numlock"
+#~ msgstr "数字锁定"
 
 #~ msgid "Numpad %d"
-#~ msgstr "Nümerik %d"
+#~ msgstr "数字键盘 %d"
 
 #~ msgid "Pause key"
-#~ msgstr "Durdurma tuşu"
+#~ msgstr "暂停键"
 
 #~ msgid "Print"
-#~ msgstr "Yazdır"
+#~ msgstr "打印"
 
 #~ msgid "Mouse Button Right"
-#~ msgstr "Sağ fare düğmesi"
+#~ msgstr "鼠标右键"
 
 #~ msgid "Return"
-#~ msgstr "Giriş"
+#~ msgstr "返回"
 
 #~ msgid "Right"
-#~ msgstr "Sağ"
+#~ msgstr "右"
 
 #~ msgid "right windows key"
-#~ msgstr "sağ windows tuşu"
+#~ msgstr "右 Win 键"
 
 #~ msgid "Scroll"
-#~ msgstr "Kaydırma"
+#~ msgstr "滚动"
 
 #~ msgid "Select"
-#~ msgstr "Seçim"
-
-#~ msgid "Shift"
-#~ msgstr "Üstkarakter"
+#~ msgstr "选择"
 
 #~ msgid "Snapshot"
-#~ msgstr "Kare yakala"
+#~ msgstr "快照"
 
 #~ msgid "Space key"
-#~ msgstr "Boşluk tuşu"
-
-#~ msgid "Tab"
-#~ msgstr "Sekme"
+#~ msgstr "空格键"
 
 #~ msgid "Unknown"
-#~ msgstr "Bilinmeyen"
+#~ msgstr "未知"
 
 #~ msgid "Up"
-#~ msgstr "Yukarı"
+#~ msgstr "上"
 
 #~ msgctxt "lclstrconsts.lislclresourcesnotfound"
 #~ msgid "Resource %s not found"
-#~ msgstr "%s adlı kaynak bulunamadı"
+#~ msgstr "未找到资源 %s"
 
 #~ msgid "A control can't have itself as parent"
-#~ msgstr "Bir denetim, kendikendini üstdenetim(parent) olarak gösteremez"
+#~ msgstr "控件无法把自己设为父节点"
 
 #~ msgid "All files (%s)|%s|%s"
-#~ msgstr "Tüm dosyalar (%s)|%s|%s"
+#~ msgstr "所有文件 (%s)|%s|%s"
 
 #~ msgid "Backward"
-#~ msgstr "Geriye doğru"
+#~ msgstr "后退"
 
 #~ msgid "Bitmaps"
-#~ msgstr "Bitmap resimleri"
+#~ msgstr "黑白位图"
 
 #~ msgid "Blank"
-#~ msgstr "Boş"
+#~ msgstr "空白"
 
 #~ msgid "Calculator"
-#~ msgstr "Hesap makinesi"
+#~ msgstr "计算器"
 
 #~ msgid "Can not focus"
-#~ msgstr "Odaklanamıyor"
+#~ msgstr "无法聚焦"
 
 #~ msgid "Canvas does not allow drawing"
-#~ msgstr "Tuval(canvas) çizmeye izin vermiyor"
+#~ msgstr "Canvas 不允许画图"
 
 #~ msgid "Case sensitive"
-#~ msgstr "Büyük/küçük harfe duyarlı"
+#~ msgstr "大小写敏感"
 
 #~ msgid "Creating gdb catchable error:"
-#~ msgstr "gdb catchable yaratma hatası:"
+#~ msgstr "创建 GDB 可以捕捉的错误"
 
 #~ msgid "permissions user group size date time"
-#~ msgstr "kullanıcı grup boyut tarih zaman izinleri"
+#~ msgstr "权限 用户 组 大小 日期 时间"
 
 #~ msgid "Delete record?"
-#~ msgstr "Kayıt silinsin mi?"
+#~ msgstr "删除记录？"
 
 #~ msgctxt "lclstrconsts.rsdeleterecordhint"
 #~ msgid "Delete"
-#~ msgstr "Sil"
+#~ msgstr "删除"
 
 #~ msgid "Direction"
-#~ msgstr "Yön"
+#~ msgstr "方向"
 
 #~ msgid "&Directory"
-#~ msgstr "&Dizin"
+#~ msgstr "目录(&D)"
 
 #~ msgid "Docking"
-#~ msgstr "Gömme"
-
-#~ msgid "Error creating device context for %s.%s"
-#~ msgstr "%s için aygıt bağlamı oluşturulurken hata.%s"
-
-#~ msgid "ERROR in LCL: "
-#~ msgstr "LCL'de HATA: "
+#~ msgstr "融合"
 
 #~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
-#~ msgstr "%s @ %s içinde hata oluştu. Adres %s%s Çerçeve %s"
+#~ msgstr "在 %s %s地址 %s%s 框架 %s"
 
 #~ msgid "Error reading %s%s%s: %s"
-#~ msgstr "%s%s%s okunurken hata: %s"
+#~ msgstr "读取 %s%s%s 错误: %s"
 
 #~ msgid "Error while saving bitmap."
-#~ msgstr "Bitmap verisini kaydederken hata."
+#~ msgstr "保存位图时出错。"
 
 #~ msgid "Exception"
-#~ msgstr "İstisna"
+#~ msgstr "异常"
 
 #~ msgid "Directory must exist"
-#~ msgstr "Dizin var olmak zorunda"
+#~ msgstr "目录必须存在"
 
 #~ msgid "The directory \"%s\" does not exist."
-#~ msgstr "\"%s\" dizini mevcut değil."
+#~ msgstr "目录 \"%s\" 不存在."
 
 #~ msgid "The file \"%s\" already exists. Overwrite ?"
-#~ msgstr "\"%s\" adlı dosya zaten var. Üzerine yazılsın mı?"
+#~ msgstr "文件 \"%s\" 已经存在.%s替换吗?"
 
 #~ msgid "File must exist"
-#~ msgstr "Dosya var olmak zorunda"
+#~ msgstr "文件必须存在"
 
 #~ msgid "The file \"%s\" does not exist."
-#~ msgstr "\"%s\" dosyası mevcut değil."
+#~ msgstr "文件 \"%s\" 不存在."
 
 #~ msgid "The file \"%s\" is not writable."
-#~ msgstr "\"%s\" dosyası yazılabilir değil."
+#~ msgstr "文件 \"%s\" 为只读."
 
 #~ msgid "File is not writable"
-#~ msgstr "Dosya yazılabilir değil"
+#~ msgstr "文件为只读"
 
 #~ msgid "Save file as"
-#~ msgstr "Dosyayı farklı kaydet"
+#~ msgstr "另存为"
 
 #~ msgid "Open existing file"
-#~ msgstr "Var olan bir dosyayı aç"
+#~ msgstr "打开文件"
 
 #~ msgid "Overwrite file ?"
-#~ msgstr "Dosyanın üzerine yazılsın mı?"
+#~ msgstr "覆盖文件？"
 
 #~ msgid "Path must exist"
-#~ msgstr "Yol var olmak zorunda"
+#~ msgstr "路径不存在"
 
 #~ msgid "The path \"%s\" does not exist."
-#~ msgstr "\"%s\" yolu mevcut değil."
+#~ msgstr "路径 \"%s\" 不存在."
 
 #~ msgid "Select Directory"
-#~ msgstr "Dizin seç"
+#~ msgstr "选择目录"
 
 #~ msgid "(file not found: \"%s\")"
-#~ msgstr "(dosya bulunamadı: \"%s\")"
+#~ msgstr "(未找到文件: \"%s\")"
 
 #~ msgid "File information"
-#~ msgstr "Dosya bilgisi"
+#~ msgstr "文件信息"
 
 #~ msgid "Find"
-#~ msgstr "Ara"
+#~ msgstr "查找"
 
 #~ msgid "Find more"
-#~ msgstr "Daha fazla ara"
+#~ msgstr "查找更多"
 
 #~ msgid "FixedCols can't be >= ColCount"
-#~ msgstr "FixedCols >= ColCount olamaz"
+#~ msgstr "FixedCols 不能 >= ColCount"
 
 #~ msgid "FixedRows can't be >= RowCount"
-#~ msgstr "FixedRows >= RowCount olamaz"
+#~ msgstr "FixedRows 不能 >= RowCount"
 
 #~ msgid "Form streaming \"%s\" error: %s"
-#~ msgstr "Form akışı \"%s\" hatası: %s"
+#~ msgstr "窗体流 \"%s\" 错误: %s"
 
 #~ msgid "Forward"
-#~ msgstr "İleriye doğru"
+#~ msgstr "向前"
 
 #~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
-#~ msgstr ""
-#~ "--gdk-debug flags     GDK'ya özgü izleme/hata ayıklama iletilerini açar."
+#~ msgstr "--gdk-debug flags     打开 GDK 跟踪/调试信息."
 
 #~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
-#~ msgstr ""
-#~ "-gdk-no-debug flags  GDK'ya özgü izleme/hata ayıklama iletilerini kapatır."
+#~ msgstr "--gdk-no-debug flags  关闭 GDK 跟踪/调试信息."
 
 #~ msgid ""
 #~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
 #~ "the application."
-#~ msgstr ""
-#~ "--g-fatal-warnings    Gtk+/GDK tarafından üretilen hatalar ve uyarılar "
-#~ "uygulamayı sonlandıracak."
+#~ msgstr "--g-fatal-warnings   使 Gtk+/GDK 产生的警告和错误终止应用程序。"
 
 #~ msgid "Grid file doesn't exists"
-#~ msgstr "Izgara dosyası mevcut değil"
+#~ msgstr "网格文件不存在"
 
 #~ msgid "Grid index out of range."
-#~ msgstr "Izgara tanımlayıcısı sınırın dışında."
+#~ msgstr "网格索引越界。"
 
 #~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
-#~ msgstr ""
-#~ "GroupIndex değeri, önceki menü bileşeninin GroupIndex değerinden az olamaz"
+#~ msgstr "GroupIndex 不能比之前的菜单项目的 GroupIndex 少"
 
 #~ msgid "Filter:"
-#~ msgstr "Süzgeç:"
+#~ msgstr "过滤器:"
 
 #~ msgid "History:"
-#~ msgstr "Geçmiş:"
+#~ msgstr "历史:"
 
 #~ msgid ""
 #~ "--class classname     Following Xt conventions, the class of a program is "
@@ -1305,14 +1269,11 @@ msgstr ""
 #~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
 #~ "program will be set to \"classname\"."
 #~ msgstr ""
-#~ "--class classname     Bir programın sınıfı büyük harfle başlayan program "
-#~ "adıyla aynı ise, Xt geleneklerini izler. Örneğin, gimp için sınıf adı "
-#~ "\"Gimp\". Eğer --class belirtilmişse, program sınıfı \"classname\" olacak "
-#~ "şekilde ayarlanacaktır."
+#~ "--class classname     按照 Xt 转换规则， 一个程序的类别是第一个字母大写的程序名称。比如，gimp 的类别是 "
+#~ "\"Gimp\"。如果指定了 --class，程序的类别会被设为 \"classname\"。"
 
 #~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
-#~ msgstr ""
-#~ "--gtk-debug flags     Gtk+'a özgü izleme/hata ayıklama iletilerini açar."
+#~ msgstr "--gtk-debug flags     打开 Gtk+ 跟踪/调试信息."
 
 #~ msgid ""
 #~ "--display h:s:d       Connect to the specified X server, where \"h\" is the "
@@ -1320,350 +1281,326 @@ msgstr ""
 #~ "number (typically omitted). If --display is not specified, the DISPLAY "
 #~ "environment variable is used."
 #~ msgstr ""
-#~ "--display h:s:d       Belirtilen X sunucusuna bağlanır, \"h\" bilgisayar "
-#~ "adı, \"s\" sunucu numarası (genellikle 0), ve \"d\" ekran numarasıdır "
-#~ "(genellikle yazılmaz). Eğer --display belirtilmezse, DISPLAY ortam değişkeni "
-#~ "kullanılır."
+#~ "--display h:s:d       连接到指定的 X 服务器，其中 \"h\"是主机名，\"s\"是服务器编号(通常是0)，\"d\" "
+#~ "是显示编号(一般省略)。如果没有指定 --display ，将会使用 DISPLAY 环境变量。"
 
 #~ msgid "--gtk-module module   Load the specified module at startup."
-#~ msgstr "--gtk-module module   Belirtilen modülü başlangıçta yükler."
+#~ msgstr "--gtk-module module   启动时载入指定模块"
 
 #~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
-#~ msgstr ""
-#~ "--gtk-no-debug flags  Gtk+'a özgü izleme/hata ayıklama iletilerini kapatır."
+#~ msgstr "--gtk-no-debug flags  关闭 Gtk+ 跟踪/调试信息."
 
 #~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
-#~ msgstr ""
-#~ "--lcl-no-transient    modal pencereler için transient sıralama seçeneğini "
-#~ "ayarlama"
+#~ msgstr "--lcl-no-transient    不要为形式上的窗体设定临时顺序"
 
 #~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
-#~ msgstr ""
-#~ "--no-xshm             X paylaşımlı bellek genişletmesini kullanmayı kapatır."
-
-#~ msgid ""
-#~ "--sync                Call XSynchronize (display, True) after the Xserver "
-#~ "connection has been established. This makes debugging X protocol errors "
-#~ "easier, because X request buffering will be disabled and X errors will be "
-#~ "received immediatey after the protocol request that generated the error has "
-#~ "been processed by the X server."
-#~ msgstr ""
-#~ "--sync                Xserver bağlantısı sağlandıktan sonra XSynchronize "
-#~ "(display, True) işlevini çağırır. Bu X protokol hatalarını ayıklamayı "
-#~ "kolaylaştırır, çünkü X istek tamponlama kapalı olacaktır ve X hataları hata "
-#~ "oluşturan protokol isteği X sunucu tarafından işlendikten hemen sonra "
-#~ "alınacaktır."
+#~ msgstr "--no-xshm             禁止使用 X 共享内存扩展。"
 
 #~ msgid "%s: Already registered"
-#~ msgstr "%s: Zaten kaydedilmiş"
+#~ msgstr "%s: 已经注册"
 
 #~ msgid "Help Context not found"
-#~ msgstr "Yardım bağlamı bulunamadı"
+#~ msgstr "未找到帮助内容"
 
 #~ msgid "Help Database not found"
-#~ msgstr "Yardım veritabanı bulunamadı"
+#~ msgstr "未找到帮助数据库"
 
 #~ msgid "Help Error"
-#~ msgstr "Yardım hatası"
+#~ msgstr "帮助错误"
 
 #~ msgid "Help context %s not found."
-#~ msgstr "%s yardım bağlamı bulunamadı."
+#~ msgstr "未找到帮助上下文 %s."
 
 #~ msgid "Help context %s not found in Database %s%s%s."
-#~ msgstr "%s yardım bağlamı, %s%s%s veritabanı içinde bulunamadı."
+#~ msgstr "没有找到 %s 的帮助内容在数据库 %s%s%s 中."
 
 #~ msgid ""
 #~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
-#~ msgstr ""
-#~ "%s%s%s yardım veritabanı %s türündeki yardım sayfası için bir görüntüleyici "
-#~ "bulamadı"
+#~ msgstr "帮助数据库 %s%s%s 未找到浏览器可以阅读帮助页 %s 的类型"
 
 #~ msgid "Help Database %s%s%s not found"
-#~ msgstr "%s%s%s Yardım veritabanı bulunamadı"
+#~ msgstr "未找到帮助数据库 %s%s%s"
 
 #~ msgid "Help keyword %s%s%s not found."
-#~ msgstr "%s%s%s yardım anahtar sözcüğü bulunamadı."
+#~ msgstr "关键字 %s%s%s 未找到帮助."
 
 #~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
-#~ msgstr "%s%s%s Yardım anahtar sözcüğü %s%s%s veritabanı içinde bulunamadı."
+#~ msgstr "关键字 %s 的帮助在数据库 %s%s%s 中没有找到."
 
 #~ msgid "Help node %s%s%s has no Help Database"
-#~ msgstr "%s%s%s yardım düğümü yardım veritabanına sahip değil"
+#~ msgstr "帮助节点 %s%s%s 没有帮助数据库"
 
 #~ msgid "No help found for line %d, column %d of %s."
-#~ msgstr "%s'nin satır %d, sütun %d için yardım bulunamadı."
+#~ msgstr "没有找到 %s 的行 %d, 列 %d 的 %s 的相关帮助."
 
 #~ msgid "No help nodes available"
-#~ msgstr "Kullanılabilir yardım düğümü yok"
+#~ msgstr "没有有效的帮助节点"
 
 #~ msgid "Help not found"
-#~ msgstr "Yardım bulunamadı"
+#~ msgstr "未找到帮助"
 
 #~ msgid "%s: Not registered"
-#~ msgstr "%s: kaydedilmemiş"
+#~ msgstr "%s: 没有注册"
 
 #~ msgid "Help Selector Error"
-#~ msgstr "Yardım seçici hatası"
+#~ msgstr "帮助选择器错误"
 
 #~ msgid "There is no viewer for help type %s%s%s"
-#~ msgstr "%s%s%s yardım türü için bir görüntüleyici yok"
+#~ msgstr "帮助类型 %s%s%s 没有查看器"
 
 #~ msgid "Help Viewer Error"
-#~ msgstr "Yardım görüntüleyici hatası"
+#~ msgstr "帮助查看器错误"
 
 #~ msgid "Help Viewer not found"
-#~ msgstr "Yardım görüntüleyici bulunamadı"
+#~ msgstr "未找到帮助查看器"
 
 #~ msgid "Icon"
-#~ msgstr "Simge"
+#~ msgstr "图标"
 
 #~ msgid "%s Index %d out of bounds 0 .. %d"
-#~ msgstr "%s Dizin %d sınırların dışında 0.. %d"
+#~ msgstr "%s 索引 %d 超出范围 0 .. %d"
 
 #~ msgid "Index Out of range Cell[Col=%d Row=%d]"
-#~ msgstr "Tanımlayıcı sınırın dışında Cell[Col=%d Row=%d]"
+#~ msgstr "单元格索引超过范围[列=%d 行=%d]"
 
 #~ msgctxt "lclstrconsts.rsinsertrecordhint"
 #~ msgid "Insert"
-#~ msgstr "Ekle"
+#~ msgstr "插入"
 
 #~ msgid "Invalid Date : %s"
-#~ msgstr "Geçersiz tarih : %s"
+#~ msgstr "无效日期: %s"
 
 #~ msgid "Invalid Date: %s. Must be between %s and %s"
-#~ msgstr "Geçersiz tarih : %s. %s ve %s arasında olmalı"
+#~ msgstr "无效日期: %s。 必须在 %s 和 %s 之间"
 
 #~ msgid "invalid Form object stream"
-#~ msgstr "Geçersiz Form nesnesi akışı"
+#~ msgstr "无效窗体流对象"
 
 #~ msgid "Invalid property value"
-#~ msgstr "Geçersiz özellik değeri"
+#~ msgstr "无效属性值"
 
 #~ msgid "Invalid stream format"
-#~ msgstr "Geçersiz akış biçimi"
+#~ msgstr "无效流格式"
 
 #~ msgid "%s is already associated with %s"
-#~ msgstr "%s, zaten %s ile birleştirilmiş durumda"
-
-#~ msgid "Joint Picture Expert Group"
-#~ msgstr "Joint Picture Expert Group"
+#~ msgstr "%s 已经与 %s 相关联"
 
 #~ msgid "List index exceeds bounds (%d)"
-#~ msgstr "Liste tanımlayıcısı sınırları aşıyor (%d)"
+#~ msgstr "list 索引超过限制 (%d)"
 
 #~ msgid "List must be empty"
-#~ msgstr "Liste boş olmak zorunda"
+#~ msgstr "列表必须为空"
 
 #~ msgid "&All"
-#~ msgstr "Tümü"
+#~ msgstr "所有(&A)"
 
 #~ msgctxt "lclstrconsts.rsmbcancel"
 #~ msgid "Cancel"
-#~ msgstr "İptal"
+#~ msgstr "取消"
 
 #~ msgid "&Close"
-#~ msgstr "Kapa&t"
+#~ msgstr "关闭(&C)"
 
 #~ msgid "&Help"
-#~ msgstr "&Yardım"
+#~ msgstr "帮助(&H)"
 
 #~ msgid "&Ignore"
-#~ msgstr "&Yoksay"
+#~ msgstr "忽略(&I)"
 
 #~ msgid "&No"
-#~ msgstr "&Hayır"
+#~ msgstr "否(&N)"
 
 #~ msgid "No to all"
-#~ msgstr "Tümüne hayır"
+#~ msgstr "全部选否"
 
 #~ msgid "&OK"
-#~ msgstr "&Tamam"
+#~ msgstr "确定(&O)"
 
 #~ msgid "&Retry"
-#~ msgstr "Tek&rar dene"
+#~ msgstr "重试(&R)"
 
 #~ msgid "&Yes"
-#~ msgstr "&Evet"
+#~ msgstr "是(&Y)"
 
 #~ msgid "Yes to &All"
-#~ msgstr "Tümüne evet"
+#~ msgstr "全部选是(&A)"
 
 #~ msgctxt "lclstrconsts.rsmenucolorcaption"
 #~ msgid "Menu"
-#~ msgstr "Menü"
+#~ msgstr "菜单"
 
 #~ msgid "  modified "
-#~ msgstr "  değiştirilmiş "
+#~ msgstr "  已更改 "
 
 #~ msgid "Confirmation"
-#~ msgstr "Onaylama"
+#~ msgstr "确认"
 
 #~ msgid "Custom"
-#~ msgstr "Özel"
+#~ msgstr "自定义"
 
 #~ msgctxt "lclstrconsts.rsmterror"
 #~ msgid "Error"
-#~ msgstr "Hata"
+#~ msgstr "错误"
 
 #~ msgid "Information"
-#~ msgstr "Bilgi"
+#~ msgstr "信息"
 
 #~ msgid "Warning"
-#~ msgstr "Dikkat"
+#~ msgstr "警告"
 
 #~ msgctxt "lclstrconsts.rsnextrecordhint"
 #~ msgid "Next"
-#~ msgstr "Sonraki"
+#~ msgstr "下一个"
 
 #~ msgid "Not a valid grid file"
-#~ msgstr "Geçerli bir ızgara dosyası değil"
+#~ msgstr "不是有效的网格文件"
 
 #~ msgid ""
 #~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
 #~ "the programs uses clause."
-#~ msgstr ""
-#~ "Parçacık nesnesi yok. Lütfen  \"interfaces\" biriminin programın uses "
-#~ "bölümüne eklenip eklenmediğini denetleyin."
+#~ msgstr "没有窗口部件集合对象，请检查单元 \"interfaces\" 是否已添加到程序的uses语句中。"
 
 #~ msgid "Select a date"
-#~ msgstr "Bir tarih seç"
+#~ msgstr "选择日期"
 
 #~ msgid "Pixmap"
-#~ msgstr "Pixmap"
+#~ msgstr "位图"
 
 #~ msgid "Portable BitMap"
-#~ msgstr "Taşınabilir BitMap"
+#~ msgstr "便携黑白位图"
 
 #~ msgid "Portable GrayMap"
-#~ msgstr "Taşınabilir GrayMap"
+#~ msgstr "便携灰度位图"
 
 #~ msgid "Portable Network Graphic"
-#~ msgstr "Taşınabilir ağ grafiği"
+#~ msgstr "便携网络图片(PNG)"
 
 #~ msgid "Portable PixMap"
-#~ msgstr "Taşınabilir PixMap"
+#~ msgstr "便携位图"
 
 #~ msgid ""
 #~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill the "
 #~ "program."
-#~ msgstr ""
-#~ "%s%s Yoksaymak ve verinin bozulması riskiyle devam etmek için Tamam'a basın. "
-#~ "%s Programı sonlandırmak için İptal'e basın."
+#~ msgstr "%s%s确定忽略但数据有遗失的风险。%s取消则终止程序."
 
 #~ msgctxt "lclstrconsts.rspriorrecordhint"
 #~ msgid "Prior"
-#~ msgstr "Önceki"
+#~ msgstr "优先"
 
 #~ msgid "Property %s does not exist"
-#~ msgstr "%s özelliği mevcut değil"
+#~ msgstr "属性 %s 不存在"
 
 #~ msgid "Replace"
-#~ msgstr "Değiştir"
+#~ msgstr "替换"
 
 #~ msgid "Replace all"
-#~ msgstr "Tümünü değiştir"
+#~ msgstr "替换所有"
 
 #~ msgctxt "lclstrconsts.rsresourcenotfound"
 #~ msgid "Resource %s not found"
-#~ msgstr "%s adlı kaynak bulunamadı"
+#~ msgstr "未找到资源 %s"
 
 #~ msgid "ScrollBar property out of range"
-#~ msgstr "ScrollBar özelliği sınırın dışında"
+#~ msgstr "滚动条属性超出范围"
 
 #~ msgid "Select color"
-#~ msgstr "Renk seç"
+#~ msgstr "选择颜色"
 
 #~ msgid "Select a font"
-#~ msgstr "Yazıtipi seç"
+#~ msgstr "选择字体"
 
 #~ msgid "  size "
-#~ msgstr "  boyut "
+#~ msgstr "  大小 "
 
 #~ msgid "Text"
-#~ msgstr "Metin"
+#~ msgstr "文本"
 
 #~ msgid "Unable to load default font"
-#~ msgstr "Varsayılan yazıtipi yüklenemiyor"
+#~ msgstr "无法装载默认字体"
 
 #~ msgid "Unknown Error, please report this bug"
-#~ msgstr "Bilinmeyen hata, lütfen bu hatayı bildirin"
+#~ msgstr "未知错误, 请报告这个错误"
 
 #~ msgid "Unknown picture extension"
-#~ msgstr "Bilinmeyen resim genişletmesi"
+#~ msgstr "未知图形文件后缀"
 
 #~ msgid "Unsupported bitmap format."
-#~ msgstr "Desteklenmeyen bitmap biçimi."
+#~ msgstr "未支持的位图格式"
 
 #~ msgid "Unsupported clipboard format: %s"
-#~ msgstr "Desteklenmeyen pano biçimi: %s"
-
-#~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
-#~ msgstr ""
-#~ " DİKKAT: %d adet serbest bırakılmamış DC var, ayrıntılı döküm aşağıda:"
-
-#~ msgid ""
-#~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
-#~ msgstr ""
-#~ " DİKKAT: %d adet serbest bırakılmamış GDIObject var, ayrıntılı döküm aşağıda:"
-
-#~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
-#~ msgstr " DİKKAT: Kuyrukta %d adet mesaj kaldı! Onları serbest bırakacağım"
-
-#~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
-#~ msgstr " DİKKAT: %d adet TimerInfo yapısı kaldı, onları serbest bırakacağım"
-
-#~ msgid ""
-#~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
-#~ msgstr ""
-#~ " DİKKAT: %s adet kaldırılmamış LM_PAINT/LM_GtkPAINT mesaj bağlantısı kaldı."
+#~ msgstr "未支持的剪贴板格式: %s"
 
 #~ msgid "Whole words only"
-#~ msgstr "Yalnızca tam sözcükler"
+#~ msgstr "仅整个单词"
 
 #~ msgid "Error:"
-#~ msgstr "Hata:"
+#~ msgstr "错误:"
 
 #~ msgid "Warning:"
-#~ msgstr "Dikkat:"
+#~ msgstr "警告:"
 
 #~ msgid "Cannot focus a disabled or invisible window"
-#~ msgstr "Etkisizleştirilmiş ya da görünmez pencerelere odaklanılamaz"
+#~ msgstr "不能聚焦于无法聚焦或者不可见的窗口"
 
 #~ msgid "Duplicate menus"
-#~ msgstr "Birbirinin aynı menüler"
+#~ msgstr "重复的菜单"
 
 #~ msgid "Invalid action creation"
-#~ msgstr "Geçersiz eylem yaratma"
+#~ msgstr "无效创建行为"
 
 #~ msgid "Invalid action enumeration"
-#~ msgstr "Geçersiz eylem sayımı"
+#~ msgstr "无效列举行为"
 
 #~ msgid "Invalid action registration"
-#~ msgstr "Geçersiz eylem kaydetme"
+#~ msgstr "无效的注册行为"
 
 #~ msgid "Invalid action unregistration"
-#~ msgstr "Geçersiz eylem kaydı silme"
+#~ msgstr "无效的取消注册行为"
 
 #~ msgid "The char set in mask \"%s\" is not valid!"
-#~ msgstr "maskede \"%s\" ile gösterilen karakter geçerli değil!"
+#~ msgstr "\"%s\" 指定的字符集无效！"
 
 #~ msgid "Invalid image size"
-#~ msgstr "Geçersiz görüntü boyutu"
+#~ msgstr "无效图像大小"
 
 #~ msgid "Invalid ImageList Index"
-#~ msgstr "Geçersiz ImageList tanımlayıcısı"
+#~ msgstr "无效 ImageList 索引"
 
 #~ msgid "Menu index out of range"
-#~ msgstr "Menü tanımlayıcısı sınırın dışında"
+#~ msgstr "菜单索引超过范围"
 
 #~ msgid "MenuItem is nil"
-#~ msgstr "MenuItem nil"
+#~ msgstr "MenuItem 为 nil"
 
 #~ msgid "Sub-menu is not in menu"
-#~ msgstr "Alt-menü, menü içinde değil"
+#~ msgstr "子菜单不在菜单中"
 
 #~ msgid "No MDI form present."
-#~ msgstr "MDI Pencere mevcut değil."
+#~ msgstr "没有 MDI 窗体出现"
 
 #~ msgid "No timers available"
-#~ msgstr "Kullanılabilir zamanlayıcı yok"
+#~ msgstr "无有效计时器"
+
+#~ msgid "Wrong token type: %s expected"
+#~ msgstr "错误的标识符类型：期望 %s"
+
+#~ msgid "Invalid floating point number: %s"
+#~ msgstr "无效的浮点数：%s"
+
+#~ msgid "Invalid integer number: %s"
+#~ msgstr "无效的整数：%s"
+
+#~ msgid " (at %d,%d, stream offset %.8x)"
+#~ msgstr " (在 %d,%d, 流偏移 %.8x)"
+
+#~ msgid "Unterminated byte value"
+#~ msgstr "未结束的字节值"
+
+#~ msgid "Unterminated string"
+#~ msgstr "未结束的字符串"
+
+#~ msgid "Wrong token symbol: %s expected but %s found"
+#~ msgstr "错误的标识符：期望 %s 但是找到了 %s"
+
+#~ msgid "Wrong token type: %s expected but %s found"
+#~ msgstr "错误的标识符类型：期望 %s 但是找到了 %s"

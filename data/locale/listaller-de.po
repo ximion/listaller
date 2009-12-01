@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2009-08-02 14:53+0000\n"
+"PO-Revision-Date: 2009-11-27 18:06+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-08-04 20:52+0000\n"
+"X-Launchpad-Export-Date: 2009-11-30 20:04+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: trstrings:rsbrokendepsfixq
@@ -314,6 +314,10 @@ msgstr "Der Listaller wird beendet."
 msgid "Unable to override the file %f."
 msgstr "Konnte die Datei %f nicht überschreiben."
 
+#: trstrings:rscncopy
+msgid "Unable to copy the file %s."
+msgstr "Konnte Datei %s nicht kopieren."
+
 #: trstrings:rsnotifydevs
 msgid "Please notify the developers on http://launchpad.net/listaller"
 msgstr ""
@@ -325,11 +329,11 @@ msgstr "Fehler beim Entpacken der Dateien!"
 
 #: trstrings:rspkgdm
 msgid ""
-"The IPK package could be damaged or you haven't enough rights to acces "
+"The IPK package could be damaged or you haven't enough rights to access "
 "required files/folders."
 msgstr ""
-"Das IPK Paket könnte beschädigt sein oder Sie haben nicht genug Rechte um "
-"auf einige benötigte Dateien/Ordner zuzugreifen."
+"Das IPK-Paket könnte beschädigt sein, oder Sie haben keine Rechte, auf "
+"benötigte Dateien/Ordner zuzugreifen."
 
 #: trstrings:rsabload
 msgid "Loading aborted."
@@ -419,9 +423,8 @@ msgid "Phase 4/4: Registering application..."
 msgstr "Phase 4/4: Anwendung registrieren..."
 
 #: trstrings:rsaddupdsrc
-msgid "The installation tries to add the following update source: "
-msgstr ""
-"Die Installation versuchte, die folgende Update-Quelle hinzuzufügen: "
+msgid "The installation contains the following update source: "
+msgstr "Die Installation enthält diese Updatequelle: "
 
 #: trstrings:rsqaddupdsrc
 msgid "Should this source be added to the update sources list?"
@@ -455,11 +458,11 @@ msgstr ""
 
 #: trstrings:rsftpfailed
 msgid ""
-"Problem while downloading the packages. Maybe the login on the FTP-Server "
-"failed."
+"Problem while downloading the packages. Could not create working FTP "
+"connection."
 msgstr ""
-"Problem beim herunterladen der Pakete. Vielleicht ist der Login am FTP-"
-"Server fehlgeschlagen?"
+"Problem beim Herunterladen der Pakete. Konnte keine funktionierende FTP "
+"Verbindung erstellen."
 
 #: trstrings:rssuccess
 msgid "Success!"
@@ -500,14 +503,6 @@ msgid ""
 msgstr ""
 "Die gewählte Aktion ist mit diesem Paket nicht möglich.\n"
 "Bitte kontaktieren Sie den Paketersteller für mehr Informationen."
-
-#: trstrings:rsidinvalid
-msgid ""
-"This package has no valid ID\n"
-"The installer will close."
-msgstr ""
-"Dieses Paket hat keine gültige ID.\n"
-"Der Installer wird geschlossen."
 
 #: trstrings:rsreinstall
 msgid "Re-install"
@@ -573,23 +568,21 @@ msgstr "Die Datei \"%f\" existiert nicht!"
 msgid "What do you want to do?"
 msgstr "Was möchten Sie tun?"
 
-#: trstrings:rspackagekitwarning
+#: trstrings:rsdevversion
 msgid ""
-"Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to "
-"work correctly.\n"
-"Please update PackageKit!"
+"You use a development version of Listaller!\n"
+"This version is untested, be careful about what you do!"
 msgstr ""
-"Ihre PackageKit version ist %cp. Der Listaller benötigt PackageKit %np oder "
-"größer um korrekt zu funktionieren.\n"
-"Bitte aktualisieren Sie PackageKit!"
+"Sie benutzen eine Entwicklungsversion des Listallers.\n"
+"Diese Version ist nicht getestet, passen Sie auf, was Sie tun!"
 
 #: trstrings:rsspkwarning
 msgid ""
-"Make sure that you have got this package from a save source and a serious "
+"Make sure that you got this package from a save source and a serious "
 "publisher!"
 msgstr ""
-"Stellen Sie sicher, dass dieses Paket aus einer sicheren Quelle und von "
-"einem seriösen Autor stammt!"
+"Stellen Sie sicher, dass das Paket aus sicherer Quelle stammt und Sie dem "
+"Autor trauen."
 
 #: trstrings:rsinstalleveryone
 msgid "Install application for everyone"
@@ -1059,6 +1052,47 @@ msgstr "Löse Abhängigkeiten auf ..."
 
 #~ msgid "Unable to overwrite the file %f."
 #~ msgstr "Konnte Datei %f nicht überschreiben."
+
+#~ msgid ""
+#~ "The IPK package could be damaged or you haven't enough rights to acces "
+#~ "required files/folders."
+#~ msgstr ""
+#~ "Das IPK Paket könnte beschädigt sein oder Sie haben nicht genug Rechte um "
+#~ "auf einige benötigte Dateien/Ordner zuzugreifen."
+
+#~ msgid "The installation tries to add the following update source: "
+#~ msgstr ""
+#~ "Die Installation versuchte, die folgende Update-Quelle hinzuzufügen: "
+
+#~ msgid ""
+#~ "Problem while downloading the packages. Maybe the login on the FTP-Server "
+#~ "failed."
+#~ msgstr ""
+#~ "Problem beim herunterladen der Pakete. Vielleicht ist der Login am FTP-"
+#~ "Server fehlgeschlagen?"
+
+#~ msgid ""
+#~ "This package has no valid ID\n"
+#~ "The installer will close."
+#~ msgstr ""
+#~ "Dieses Paket hat keine gültige ID.\n"
+#~ "Der Installer wird geschlossen."
+
+#~ msgid ""
+#~ "Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to "
+#~ "work correctly.\n"
+#~ "Please update PackageKit!"
+#~ msgstr ""
+#~ "Ihre PackageKit version ist %cp. Der Listaller benötigt PackageKit %np oder "
+#~ "größer um korrekt zu funktionieren.\n"
+#~ "Bitte aktualisieren Sie PackageKit!"
+
+#~ msgid ""
+#~ "Make sure that you have got this package from a save source and a serious "
+#~ "publisher!"
+#~ msgstr ""
+#~ "Stellen Sie sicher, dass dieses Paket aus einer sicheren Quelle und von "
+#~ "einem seriösen Autor stammt!"
 
 #~ msgid "Install new application"
 #~ msgstr "Neue Anwendung installieren"
