@@ -1,0 +1,1652 @@
+# translation of lclstrconsts.po to Slovenský
+# Slavko <slavino@slavino.sk>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: lclstrconsts\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-02-28 20:08-0100\n"
+"PO-Revision-Date: 2009-05-06 13:38+0000\n"
+"Last-Translator: Slavko <Unknown>\n"
+"Language-Team: Slovenský <sk@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-11-30 20:04+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: trstrings:rsbrokendepsfixq
+msgid "Some dependencies are missing. Should they be installed now?"
+msgstr ""
+
+#: trstrings:rscannotresolv
+msgid "Cannot resolve dependencies"
+msgstr ""
+
+#: trstrings:rscheckappdepsq
+msgid "Do you want to check the applications's dependencies?"
+msgstr ""
+
+#: trstrings:rscheckdepsq
+msgid "Check dependencies?"
+msgstr ""
+
+#: trstrings:rscheckapps
+msgid "Check applications"
+msgstr ""
+
+#: trstrings:rscheckrootappsq
+msgid "Do you want to check global-installed applications too?"
+msgstr ""
+
+#: trstrings:rscommands
+msgid "Commands:"
+msgstr ""
+
+#: trstrings:rscouldntfindupdater
+msgid "Can't find updater application!"
+msgstr ""
+
+#: trstrings:rsinternalerror
+msgid "An internal error occured"
+msgstr ""
+
+#: trstrings:rslaunchlimgr
+msgid "Launch Listaller Manager"
+msgstr ""
+
+#: trstrings:rslipainfo2
+msgid "Resolve Listaller path variable"
+msgstr ""
+
+#: trstrings:rslipainfo3
+msgid "Installs an IPK package"
+msgstr ""
+
+#: trstrings:rslistallermgrnotfound
+msgid "Can't find Listaller Manager!"
+msgstr ""
+
+#: trstrings:rsunablefind
+msgid "Unable to find %s"
+msgstr ""
+
+#: trstrings:rsnotfoundlitray
+msgid "Could not find Listaller TrayIcon Application"
+msgstr ""
+
+#: trstrings:rsoptions
+msgid "Options:"
+msgstr ""
+
+#: trstrings:rslipainfo4
+msgid "Runs installation in testmode"
+msgstr ""
+
+#: trstrings:rslipainfo5
+msgid "Print all available log messages"
+msgstr ""
+
+#: trstrings:rslipainfo6
+msgid ""
+"Check if dependencies of all installed applications are available and working"
+msgstr ""
+
+#: trstrings:rscmdinfopkgbuild
+msgid "Package build commands:"
+msgstr ""
+
+#: trstrings:rslibuildinfoa
+msgid "Build IPK-package"
+msgstr ""
+
+#: trstrings:rslibuildinfob
+msgid "Create/Update update-repository"
+msgstr ""
+
+#: trstrings:rslibuildinfoc
+msgid "Create DEB and RPM file from IPS"
+msgstr ""
+
+#: trstrings:rsdone
+msgid "Done."
+msgstr ""
+
+#: trstrings:rsdoyouacceptlicensecmd
+msgid "Do you accept this license [y/n]?"
+msgstr ""
+
+#: trstrings:rsenternumber
+msgid "You have to enter a number!"
+msgstr ""
+
+#: trstrings:rsinstaborted
+msgid "Installation aborted."
+msgstr ""
+
+#: trstrings:rsappninstall
+msgid "The application %a was not installed."
+msgstr ""
+
+#: trstrings:rslipaautofixq
+msgid "Should lipa fix these problems automatically [y/n]?"
+msgstr ""
+
+#: trstrings:rslipainfo1
+msgid "Listaller command-line tool to handle IPK-packages"
+msgstr ""
+
+#: trstrings:rsmodenumber
+msgid "Mode number:"
+msgstr ""
+
+#: trstrings:rsn
+msgid "n"
+msgstr ""
+
+#: trstrings:rsno
+msgid "no"
+msgstr ""
+
+#: trstrings:rsokay
+msgid "Okay"
+msgstr ""
+
+#: trstrings:rspreparinginstall
+msgid "Preparing installation (please wait)"
+msgstr ""
+
+#: trstrings:rsrootpassadvancedpriv
+msgid "Enter your password to run the application with advanced privileges."
+msgstr ""
+
+#: trstrings:rsrootpassqappeveryone
+msgid "Enter your password to install the application for everyone."
+msgstr ""
+
+#: trstrings:rsconvdone
+msgid ""
+"Conversion done. Do you want to close this window now?\n"
+"Press \"No\" if you want to check the output."
+msgstr ""
+
+#: trstrings:rsselectlistnumber
+msgid "Please select a number shown in the list!"
+msgstr ""
+
+#: trstrings:rsselectimodea
+msgid "Select the installation mode of this application:"
+msgstr ""
+
+#: trstrings:rsshowdetailedinfocmd
+msgid "Do you want to see detailed information [y/n]?"
+msgstr ""
+
+#: trstrings:rsaborted
+msgid "Aborted."
+msgstr ""
+
+#: trstrings:rsviewlogq
+msgid "Do you want to view the logfile?"
+msgstr ""
+
+#: trstrings:rswasinstalled
+msgid "The application %a was installed successfully!"
+msgstr ""
+
+#: trstrings:rsexecapptesting
+msgid "Executing application for testing..."
+msgstr ""
+
+#: trstrings:rsinstallnow
+msgid "Install now"
+msgstr ""
+
+#: trstrings:rsrunparam
+msgid ""
+"Please run \"listallgo\" with path to install-package as first parameter!"
+msgstr ""
+
+#: trstrings:rswelcome
+msgid "Welcome!"
+msgstr ""
+
+#: trstrings:rsntostart
+msgid "Press \"Next\" to start the installation!"
+msgstr ""
+
+#: trstrings:rsprogdesc
+msgid "Program description:"
+msgstr ""
+
+#: trstrings:rslicense
+msgid "Software license"
+msgstr ""
+
+#: trstrings:rspleaseread
+msgid "Please read the following information carefully:"
+msgstr ""
+
+#: trstrings:rsrunning
+msgid "Running installation..."
+msgstr ""
+
+#: trstrings:rsplwait
+msgid "Please wait."
+msgstr ""
+
+#: trstrings:rscomplete
+msgid "Installation completed!"
+msgstr ""
+
+#: trstrings:rsinstfailed
+msgid "Installation failed."
+msgstr ""
+
+#: trstrings:rsprfinish
+msgid "Press \"Finish\" to close."
+msgstr ""
+
+#: trstrings:rsfinish
+msgid "Finish"
+msgstr ""
+
+#: trstrings:rsabort
+msgid "Abort"
+msgstr "Prerušiť"
+
+#: trstrings:rsback
+msgid "Back"
+msgstr ""
+
+#: trstrings:rsnext
+msgid "Next"
+msgstr ""
+
+#: trstrings:rsdisplog
+msgid "Display installation log"
+msgstr ""
+
+#: trstrings:rsiagree
+msgid "I agree with the above terms and conditions"
+msgstr ""
+
+#: trstrings:rsinagree
+msgid "I don't agree"
+msgstr ""
+
+#: trstrings:rsldnsupported
+msgid "Your Linux distribution is not supported by Listaller yet!"
+msgstr ""
+
+#: trstrings:rsnsupported
+msgid "This package does not support your Linux distribution."
+msgstr ""
+
+#: trstrings:rsdepnotfound
+msgid ""
+"Found no package with the necessary library \"%l\" for your distribution."
+msgstr ""
+
+#: trstrings:rsopeningdb
+msgid "Opening database..."
+msgstr ""
+
+#: trstrings:rsinclose
+msgid "The installer will close now"
+msgstr ""
+
+#: trstrings:rscnoverride
+msgid "Unable to override the file %f."
+msgstr ""
+
+#: trstrings:rscncopy
+msgid "Unable to copy the file %s."
+msgstr ""
+
+#: trstrings:rsnotifydevs
+msgid "Please notify the developers on http://launchpad.net/listaller"
+msgstr ""
+
+#: trstrings:rsextracterror
+msgid "Error while extracting files!"
+msgstr ""
+
+#: trstrings:rspkgdm
+msgid ""
+"The IPK package could be damaged or you haven't enough rights to access "
+"required files/folders."
+msgstr ""
+
+#: trstrings:rsabload
+msgid "Loading aborted."
+msgstr ""
+
+#: trstrings:rsalreadyinst
+msgid "This application is already installed"
+msgstr ""
+
+#: trstrings:rsinstallagain
+msgid "Do you want to install it again?"
+msgstr ""
+
+#: trstrings:rswelcometo
+msgid "Welcome to the installation of %a"
+msgstr ""
+
+#: trstrings:rsinstof
+msgid "Installation of %a"
+msgstr ""
+
+#: trstrings:rstestmode
+msgid "Testmode"
+msgstr ""
+
+#: trstrings:rstestfinished
+msgid "Test of the application finished."
+msgstr ""
+
+#: trstrings:rscleaningup
+msgid "Cleaning up..."
+msgstr ""
+
+#: trstrings:rspkginval
+msgid "The package was invalid!"
+msgstr ""
+
+#: trstrings:rscouldntsolve
+msgid "Dependencies couldn't be solved!"
+msgstr ""
+
+#: trstrings:rsviewlog
+msgid "Please view the logfile at %p"
+msgstr ""
+
+#: trstrings:rspkgerror
+msgid "Installation package is corrupt"
+msgstr ""
+
+#: trstrings:rsappclose
+msgid "The application will close now "
+msgstr ""
+
+#: trstrings:rsstep1
+msgid "Phase 1/4: Resolving dependencies..."
+msgstr ""
+
+#: trstrings:rsstate
+msgid "State"
+msgstr ""
+
+#: trstrings:rswdldep
+msgid "This application wants to download & install a dependency from %l"
+msgstr ""
+
+#: trstrings:rswallow
+msgid "Do you want confirm this action?"
+msgstr ""
+
+#: trstrings:rslicloseani
+msgid "Listaller will close now. The package couldn't be installed."
+msgstr ""
+
+#: trstrings:rsstep2
+msgid "Phase 2/4: Installing files..."
+msgstr ""
+
+#: trstrings:rsstep3
+msgid "Phase 3/4: Chmod new files..."
+msgstr ""
+
+#: trstrings:rsstep4
+msgid "Phase 4/4: Registering application..."
+msgstr ""
+
+#: trstrings:rsaddupdsrc
+msgid "The installation contains the following update source: "
+msgstr ""
+
+#: trstrings:rsqaddupdsrc
+msgid "Should this source be added to the update sources list?"
+msgstr ""
+
+#: trstrings:rsfinished
+msgid "Finished"
+msgstr ""
+
+#: trstrings:rsinstanyway
+msgid "Do you want to install it anyway? (This could raise problems)"
+msgstr ""
+
+#: trstrings:rsinvarchitecture
+msgid ""
+"The application which this package contains was not built for the current "
+"system architecture."
+msgstr ""
+
+#: trstrings:rswilldlfiles
+msgid "(This program will download the needed files from the internet)"
+msgstr ""
+
+#: trstrings:rsinvaliddversion
+msgid "Package was not build for your Linux distribution release."
+msgstr ""
+
+#: trstrings:rsftpfailed
+msgid ""
+"Problem while downloading the packages. Could not create working FTP "
+"connection."
+msgstr ""
+
+#: trstrings:rssuccess
+msgid "Success!"
+msgstr ""
+
+#: trstrings:rsmain
+msgid "Main"
+msgstr ""
+
+#: trstrings:rsdetails
+msgid "Details"
+msgstr ""
+
+#: trstrings:rsinstallation
+msgid "Installation"
+msgstr ""
+
+#: trstrings:rsnoldsources
+msgid ""
+"There are no sources available for your Linux distribution\n"
+"Try to install common packages?"
+msgstr ""
+
+#: trstrings:rsusecomppq
+msgid "Use compatible packages?"
+msgstr ""
+
+#: trstrings:rsnocomp
+msgid "No compatible packages found!"
+msgstr ""
+
+#: trstrings:rsactionnotpossiblepkg
+msgid ""
+"The selected action is not possible with this package.\n"
+"Please contact the package maintainer to get more information."
+msgstr ""
+
+#: trstrings:rsreinstall
+msgid "Re-install"
+msgstr ""
+
+#: trstrings:rspkgdownload
+msgid "The following packages will be downloaded:"
+msgstr ""
+
+#: trstrings:rsgetdependencyfrom
+msgid "Get dependency from"
+msgstr ""
+
+#: trstrings:rsplwait2
+msgid "Please wait..."
+msgstr ""
+
+#: trstrings:rsdepdlproblem
+msgid "Problem while downloading the dep-file."
+msgstr ""
+
+#: trstrings:rshasherror
+msgid ""
+"Hash doesn't match!\n"
+"The package may be modified after creation.\n"
+"Please obtain a new copy"
+msgstr ""
+
+#: trstrings:rsinstallationmode
+msgid "Installation mode:"
+msgstr ""
+
+#: trstrings:rsimodeinstruction
+msgid "Select which parts of the application should be installed."
+msgstr ""
+
+#: trstrings:rsmode
+msgid "Mode"
+msgstr ""
+
+#: trstrings:rsinstperformerror
+msgid "Error while performing installation:"
+msgstr ""
+
+#: trstrings:rsyesno1
+msgid "Yes/No?:"
+msgstr ""
+
+#: trstrings:rsinstalllibuild
+msgid ""
+"You have to install the liBuild package before you can build packages!"
+msgstr ""
+
+#: trstrings:rsfilenotexists
+msgid "The file \"%f\" does not exists!"
+msgstr ""
+
+#: trstrings:rswanttodoq
+msgid "What do you want to do?"
+msgstr ""
+
+#: trstrings:rsdevversion
+msgid ""
+"You use a development version of Listaller!\n"
+"This version is untested, be careful about what you do!"
+msgstr ""
+
+#: trstrings:rsspkwarning
+msgid ""
+"Make sure that you got this package from a save source and a serious "
+"publisher!"
+msgstr ""
+
+#: trstrings:rsinstalleveryone
+msgid "Install application for everyone"
+msgstr ""
+
+#: trstrings:rstestapp
+msgid "Test application"
+msgstr ""
+
+#: trstrings:rsinstallhome
+msgid "Install into my Home directory"
+msgstr ""
+
+#: trstrings:rsselinstmode
+msgid "Select installation mode"
+msgstr ""
+
+#: trstrings:rssoftwaremanager
+msgid "Software Manager"
+msgstr ""
+
+#: trstrings:rsupdsources
+msgid "Update sources"
+msgstr ""
+
+#: trstrings:rsclose
+msgid "Close"
+msgstr ""
+
+#: trstrings:rsdelsrc
+msgid "Delete source"
+msgstr ""
+
+#: trstrings:rslistofsrc
+msgid "The following update sources are installed:"
+msgstr ""
+
+#: trstrings:rsuninstall
+msgid "Uninstall"
+msgstr ""
+
+#: trstrings:rsswcatalogue
+msgid "Browse catalogue"
+msgstr ""
+
+#: trstrings:rsshow
+msgid "Show:"
+msgstr ""
+
+#: trstrings:rsall
+msgid "All"
+msgstr ""
+
+#: trstrings:rseducation
+msgid "Education"
+msgstr ""
+
+#: trstrings:rsoffice
+msgid "Office"
+msgstr ""
+
+#: trstrings:rsdevelopment
+msgid "Development"
+msgstr ""
+
+#: trstrings:rsgraphic
+msgid "Graphic"
+msgstr ""
+
+#: trstrings:rsnetwork
+msgid "Network"
+msgstr ""
+
+#: trstrings:rsgames
+msgid "Games"
+msgstr ""
+
+#: trstrings:rssystem
+msgid "System"
+msgstr ""
+
+#: trstrings:rsmultimedia
+msgid "Multimedia"
+msgstr ""
+
+#: trstrings:rsaddidional
+msgid "Utilities"
+msgstr ""
+
+#: trstrings:rsother
+msgid "Other"
+msgstr ""
+
+#: trstrings:rsversion
+msgid "Version"
+msgstr ""
+
+#: trstrings:rsauthor
+msgid "Autor"
+msgstr ""
+
+#: trstrings:rsusername
+msgid "Username"
+msgstr ""
+
+#: trstrings:rspassword
+msgid "Password"
+msgstr ""
+
+#: trstrings:rsproxysettings
+msgid "Proxy-Settings"
+msgstr ""
+
+#: trstrings:rsenableproxy
+msgid "Enable Proxy-Server"
+msgstr ""
+
+#: trstrings:rslokierror
+msgid "Can't load LOKI-Setup information."
+msgstr ""
+
+#: trstrings:rscannotloadicon
+msgid ""
+"Unable to load the icon of %a. Please notify the developers of Listaller or "
+"this application!"
+msgstr ""
+
+#: trstrings:rsautoloaddep
+msgid "Load dependencies from included webserver-urls automatically"
+msgstr ""
+
+#: trstrings:rsready
+msgid "Ready."
+msgstr ""
+
+#: trstrings:rsconvertpkg
+msgid ""
+"You want to install an %x-Package, but your Linux-distribution's package "
+"system is %y.\n"
+"This package can be converted using \"alien\", but this will take some time "
+"and eventually the installed application won't work\n"
+"Do you want to convert the package now?"
+msgstr ""
+
+#: trstrings:rsconvertpkgq
+msgid "Convert package?"
+msgstr ""
+
+#: trstrings:rsconvtitle
+msgid "Converting %p package..."
+msgstr ""
+
+#: trstrings:rsfiltering
+msgid "Filtering..."
+msgstr ""
+
+#: trstrings:rsfilter
+msgid "Filter..."
+msgstr ""
+
+#: trstrings:rsloading
+msgid "Loading..."
+msgstr ""
+
+#: trstrings:rsinstalledapps
+msgid ""
+"Installed\n"
+"applications"
+msgstr ""
+
+#: trstrings:rsinstallpkg
+msgid "Install package"
+msgstr ""
+
+#: trstrings:rsbrowsecatalog
+msgid ""
+"Browse\n"
+"catalog"
+msgstr ""
+
+#: trstrings:rsrepositories
+msgid "Repositories"
+msgstr ""
+
+#: trstrings:rssettings
+msgid "Settings"
+msgstr ""
+
+#: trstrings:rsnoguipkgmanfound
+msgid ""
+"Could not find usable GUI package manager.\n"
+"Please install a PackageKit-GUI!"
+msgstr ""
+
+#: trstrings:rsuselaunchpadforbugs
+msgid ""
+"Please use https://bugs.launchpad.net/listaller\n"
+"for bug reports."
+msgstr ""
+
+#: trstrings:rsdisprootapps
+msgid "Display system applications"
+msgstr ""
+
+#: trstrings:rsdisponlymyapps
+msgid "Display my applications"
+msgstr ""
+
+#: trstrings:rsselmgrmode
+msgid "Select software-manager mode:"
+msgstr ""
+
+#: trstrings:rslistalleralien
+msgid ""
+"Listaller uses \"alien\" to convert foreign packages, but the tool is not "
+"installed\n"
+"Do you want to install \"alien\" now to continue?"
+msgstr ""
+
+#: trstrings:rsinstpkgq
+msgid "Install package?"
+msgstr ""
+
+#: trstrings:rspkginstfail
+msgid "Package %p could not be installed."
+msgstr ""
+
+#: trstrings:rsshowpkmon
+msgid "Start PackageKit monitor before running transactions"
+msgstr ""
+
+#: trstrings:rsstartlitray
+msgid "Start Listaller tray icon application (to check dependencies)"
+msgstr ""
+
+#: trstrings:rsaboutlistaller
+msgid "About Listaller"
+msgstr ""
+
+#: trstrings:rsbrowselicatalog
+msgid "Browse Listaller's software catalog"
+msgstr ""
+
+#: trstrings:rsopendirsicatalog
+msgid "Open your distribution's package catalog"
+msgstr ""
+
+#: trstrings:rsabout
+msgid "About"
+msgstr ""
+
+#: trstrings:rsauthors
+msgid "Authors"
+msgstr ""
+
+#: trstrings:rsrmsrcq
+msgid "Are you really sure that you want to delete this source?"
+msgstr ""
+
+#: trstrings:rsrmsrcqc
+msgid "Delete source?"
+msgstr ""
+
+#: trstrings:rspkitprobpkmon
+msgid ""
+"Problem while connecting PackageKit. Run \"pkmon\" to get further "
+"information."
+msgstr ""
+
+#: trstrings:rsnoappsfound
+msgid "No applications found!"
+msgstr ""
+
+#: trstrings:rssourcedeleted
+msgid "Source was removed."
+msgstr ""
+
+#: trstrings:rspleaseselectlistitem
+msgid "Please select an item from the list!"
+msgstr ""
+
+#: trstrings:rsliupdateaccessfailed
+msgid "Cannot access the liUpdate tool. Maybe it is not installed?"
+msgstr ""
+
+#: trstrings:rschangepkgmansettings
+msgid "Change package manager settings"
+msgstr ""
+
+#: trstrings:rscategory
+msgid "Category:"
+msgstr ""
+
+#: trstrings:rswinstalldl
+msgid "Select software you want to download and to install:"
+msgstr ""
+
+#: trstrings:rsnoinfo
+msgid "No information available!"
+msgstr ""
+
+#: trstrings:rsdlsetup
+msgid "Downloading setup package..."
+msgstr ""
+
+#: trstrings:rserrcontactman
+msgid ""
+"Cannot download this package. Please contact the catalogue managers on %h"
+msgstr ""
+
+#: trstrings:rsinstalling
+msgid "Running application installation..."
+msgstr ""
+
+#: trstrings:rsdownloadctbase
+msgid "Downloading catalogue base information..."
+msgstr ""
+
+#: trstrings:rsopenpage
+msgid "Loading catalogue page..."
+msgstr ""
+
+#: trstrings:rsctdlabort
+msgid "Do you really want to abort this download?"
+msgstr ""
+
+#: trstrings:rsrealuninstq
+msgid "Do you really want to uninstall %a?"
+msgstr ""
+
+#: trstrings:rsunistsuccess
+msgid "Application uninstalled successfully!"
+msgstr ""
+
+#: trstrings:rsrmerror
+msgid "Error while uninstalling!"
+msgstr ""
+
+#: trstrings:rscannothandlerm
+msgid ""
+"This application is not a MoJo-Installation and no other package-type "
+"Listaller can handle.\n"
+"You have to remove it manually."
+msgstr ""
+
+#: trstrings:rsrmunsddeps
+msgid "Uninstalling unused deps..."
+msgstr ""
+
+#: trstrings:rsuninstalling
+msgid "Uninstalling..."
+msgstr ""
+
+#: trstrings:rsrmpkg
+msgid ""
+"Do you really want to remove \"%p\", containing %a?\n"
+"The following package(s) will be removed also: %pl\n"
+"If you aren't sure that you won't need those packages, press \"No\"!"
+msgstr ""
+
+#: trstrings:rsrmpkgq
+msgid "Really remove?"
+msgstr ""
+
+#: trstrings:rswaiting
+msgid "Waiting..."
+msgstr ""
+
+#: trstrings:rsrmappc
+msgid "Uninstalling %a"
+msgstr ""
+
+#: trstrings:rslindesk
+msgid "Running under %s."
+msgstr ""
+
+#: trstrings:rsnoupdates
+msgid "There are no updates available!"
+msgstr ""
+
+#: trstrings:rslogupdinfo
+msgid "Update info:"
+msgstr ""
+
+#: trstrings:rsfileschanged
+msgid "%f files will be changed."
+msgstr ""
+
+#: trstrings:rsupdto
+msgid "The application will be updated to version %v"
+msgstr ""
+
+#: trstrings:rscheckforupd
+msgid "Check for updates"
+msgstr ""
+
+#: trstrings:rsinstupd
+msgid "Install updates"
+msgstr ""
+
+#: trstrings:rsshowupdater
+msgid "Show"
+msgstr ""
+
+#: trstrings:rsquitupdater
+msgid "Quit"
+msgstr ""
+
+#: trstrings:rsupdinstalling
+msgid "Applying updates..."
+msgstr ""
+
+#: trstrings:rsupdconferror
+msgid "Error while unpacking and configuring files."
+msgstr ""
+
+#: trstrings:rsquestion
+msgid "Question:"
+msgstr ""
+
+#: trstrings:rsyes
+msgid "yes"
+msgstr ""
+
+#: trstrings:rsy
+msgid "y"
+msgstr ""
+
+#: trstrings:rsresolvingdep
+msgid "Resolving dependencies..."
+msgstr ""
+
+#~ msgid "Browser %s%s%s not executable."
+#~ msgstr "Prehliadač %s%s%s nie je spustiteľný."
+
+#~ msgid "Browser %s%s%s not found."
+#~ msgstr "Prehliadač %s%s%s nenájdený."
+
+#~ msgid "Error while executing %s%s%s:%s%s"
+#~ msgstr "Chyba·pri·vykonávaní·%s%s%s:%s%s"
+
+#~ msgid "Unable to find a HTML browser."
+#~ msgstr "nemožno nájsť prehliadač HTML."
+
+#~ msgid ""
+#~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
+#~ "Viewers"
+#~ msgstr ""
+#~ "Nebol nájdený prehliadač HTML.%sProsím definujte v Pomoc->Konfigurovať pomoc-"
+#~ ">Prehliadače"
+
+#~ msgid "The help database %s%s%s was unable to find file %s%s%s."
+#~ msgstr "Databáza pomocníka %s%s%s nemohla nájsť súbor %s%s%s."
+
+#~ msgid "The macro %s in BrowserParams will be replaced by the URL."
+#~ msgstr "Makro %s v BrowserParams bude nahradené URL."
+
+#~ msgid "Alt"
+#~ msgstr "Alt"
+
+#~ msgid "Ctrl"
+#~ msgstr "Ctrl"
+
+#~ msgid "Backspace"
+#~ msgstr "Backspace"
+
+#~ msgctxt "lclstrconsts.ifsvk_cancel"
+#~ msgid "Cancel"
+#~ msgstr "Zrušiť"
+
+#~ msgid "Capital"
+#~ msgstr "Veľkým"
+
+#~ msgid "Clear"
+#~ msgstr "Vyčistiť"
+
+#~ msgid "Control"
+#~ msgstr "Prvok"
+
+#~ msgid "Convert"
+#~ msgstr "Konvertovať"
+
+#~ msgctxt "lclstrconsts.ifsvk_delete"
+#~ msgid "Delete"
+#~ msgstr "Zmazať"
+
+#~ msgid "Down"
+#~ msgstr "Dole"
+
+#~ msgid "End"
+#~ msgstr "End"
+
+#~ msgid "Escape"
+#~ msgstr "Escape"
+
+#~ msgid "Execute"
+#~ msgstr "Spustiť"
+
+#~ msgid "Hanja"
+#~ msgstr "Hanja"
+
+#~ msgid "Help"
+#~ msgstr "Pomoc"
+
+#~ msgid "Home"
+#~ msgstr "Home"
+
+#~ msgctxt "lclstrconsts.ifsvk_insert"
+#~ msgid "Insert"
+#~ msgstr "Insert"
+
+#~ msgid "Junja"
+#~ msgstr "Junja"
+
+#~ msgid "Kana"
+#~ msgstr "Kana"
+
+#~ msgid "Mouse Button Left"
+#~ msgstr "Ľavé tlačítko myši"
+
+#~ msgid "left windows key"
+#~ msgstr "ľavý Win kláves"
+
+#~ msgid "Mouse Button Middle"
+#~ msgstr "Stredné tlačítko·myši"
+
+#~ msgctxt "lclstrconsts.ifsvk_menu"
+#~ msgid "Menu"
+#~ msgstr "Menu"
+
+#~ msgctxt "lclstrconsts.ifsvk_next"
+#~ msgid "Next"
+#~ msgstr "Ďalej"
+
+#~ msgid "Numlock"
+#~ msgstr "Numlock"
+
+#~ msgid "Numpad %d"
+#~ msgstr "Numerická klávesnica %d"
+
+#~ msgid "Pause key"
+#~ msgstr "Kláves Pause"
+
+#~ msgid "Print"
+#~ msgstr "Tlačiť"
+
+#~ msgctxt "lclstrconsts.ifsvk_prior"
+#~ msgid "Prior"
+#~ msgstr "Pred"
+
+#~ msgid "Mouse Button Right"
+#~ msgstr "Pravé tlačítko·myši"
+
+#~ msgid "right windows key"
+#~ msgstr "pravý Win kláves"
+
+#~ msgid "Select"
+#~ msgstr "Vybrať"
+
+#~ msgid "Shift"
+#~ msgstr "Shift"
+
+#~ msgid "Snapshot"
+#~ msgstr "Snímka"
+
+#~ msgid "Space key"
+#~ msgstr "Medzerník"
+
+#~ msgid "Tab"
+#~ msgstr "Tab"
+
+#~ msgid "Unknown"
+#~ msgstr "Neznámy"
+
+#~ msgctxt "lclstrconsts.lislclresourcesnotfound"
+#~ msgid "Resource %s not found"
+#~ msgstr "Zdroj %s nenájdený"
+
+#~ msgid "A control can't have itself as parent"
+#~ msgstr "Prvok nemôže mať sám seba za rodiča"
+
+#~ msgid "All files (%s)|%s|%s"
+#~ msgstr "Všetky súbory (%s)|%s|%s"
+
+#~ msgid "Backward"
+#~ msgstr "Spätný"
+
+#~ msgid "Bitmaps"
+#~ msgstr "Bitmapy"
+
+#~ msgid "Blank"
+#~ msgstr "Prázdne"
+
+#~ msgid "Calculator"
+#~ msgstr "Kalkulačka"
+
+#~ msgctxt "lclstrconsts.rscancelrecordhint"
+#~ msgid "Cancel"
+#~ msgstr "Zrušiť"
+
+#~ msgid "Can not focus"
+#~ msgstr "Nemožno zamerať"
+
+#~ msgid "Canvas does not allow drawing"
+#~ msgstr "Plátno nedovoľuje kreslenie"
+
+#~ msgid "Case sensitive"
+#~ msgstr "Citlivé na veľkosť"
+
+#~ msgid "Cursor"
+#~ msgstr "Kurzor"
+
+#~ msgid "Custom ..."
+#~ msgstr "Vlastné ..."
+
+#~ msgid "permissions user group size date time"
+#~ msgstr "povolenia používateľ skupina veľkosť dátum čas"
+
+#~ msgid "Delete record?"
+#~ msgstr "Zmazať záznam?"
+
+#~ msgctxt "lclstrconsts.rsdeleterecordhint"
+#~ msgid "Delete"
+#~ msgstr "Delete"
+
+#~ msgid "Direction"
+#~ msgstr "Smer"
+
+#~ msgid "&Directory"
+#~ msgstr "A&dresár"
+
+#~ msgid "Docking"
+#~ msgstr "Dokovanie"
+
+#~ msgid "Duplicate icon format."
+#~ msgstr "Zdvojený formát ikony."
+
+#~ msgid "Edit"
+#~ msgstr "Upraviť"
+
+#~ msgctxt "lclstrconsts.rserror"
+#~ msgid "Error"
+#~ msgstr "Chyba"
+
+#~ msgid "Error creating device context for %s.%s"
+#~ msgstr "Chyba vytvárania kontextu zariadenie pre %s.%s"
+
+#~ msgid "ERROR in LCL: "
+#~ msgstr "Chyba v LCL: "
+
+#~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
+#~ msgstr "Nastala chyba v %s na %sAdresa %s%s Rámec %s"
+
+#~ msgid "Error reading %s%s%s: %s"
+#~ msgstr "Chyba čítania %s%s%s: %s"
+
+#~ msgid "Error while saving bitmap."
+#~ msgstr "Chyba pri ukladaní bitmapy."
+
+#~ msgid "Exception"
+#~ msgstr "Výnimka"
+
+#~ msgid "Directory must exist"
+#~ msgstr "Adresár musí existovať"
+
+#~ msgid "The directory \"%s\" does not exist."
+#~ msgstr "Adresár \"%s\" neexistuje."
+
+#~ msgid "The file \"%s\" already exists. Overwrite ?"
+#~ msgstr "Súbor \"%s\" už existuje. Prepísať?"
+
+#~ msgid "File must exist"
+#~ msgstr "Súbor musí existovať"
+
+#~ msgid "The file \"%s\" does not exist."
+#~ msgstr "Súbor \"%s\" neexistuje."
+
+#~ msgid "The file \"%s\" is not writable."
+#~ msgstr "Súbor \"%s\" nie·je·zapisovateľný."
+
+#~ msgid "File is not writable"
+#~ msgstr "Súbor nie je zapisovateľný"
+
+#~ msgid "Save file as"
+#~ msgstr "Uložiť súbor ako"
+
+#~ msgid "Open existing file"
+#~ msgstr "Otvoriť existujúci súbor"
+
+#~ msgid "Overwrite file ?"
+#~ msgstr "Prepísať súbor?"
+
+#~ msgid "Path must exist"
+#~ msgstr "Cesta musí existovať"
+
+#~ msgid "The path \"%s\" does not exist."
+#~ msgstr "Cesta \"%s\" neexistuje."
+
+#~ msgid "Select Directory"
+#~ msgstr "Výber adresára"
+
+#~ msgid "(file not found: \"%s\")"
+#~ msgstr "(súbor nenájdený: \"%s\")"
+
+#~ msgid "File information"
+#~ msgstr "Súborové informácie"
+
+#~ msgid "Find"
+#~ msgstr "Hľadať"
+
+#~ msgid "Find more"
+#~ msgstr "Hľadať ďalej"
+
+#~ msgid "First"
+#~ msgstr "Prvý"
+
+#~ msgid "FixedCols can't be >= ColCount"
+#~ msgstr "FixedCols nemôže byť >= ColCount"
+
+#~ msgid "FixedRows can't be >= RowCount"
+#~ msgstr "FixedRows nemôže byť >= RowCount"
+
+#~ msgid "Form streaming \"%s\" error: %s"
+#~ msgstr "Chyba streamovania formulára \"%s\": %s"
+
+#~ msgid "Grid file doesn't exists"
+#~ msgstr "Súbor mriežky neexistuje"
+
+#~ msgid "Grid index out of range."
+#~ msgstr "Index mriežky mimo rozsahu."
+
+#~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
+#~ msgstr ""
+#~ "GroupIndex nemmôže byť menší ako GroupIndex predchádzajúcej položky menu"
+
+#~ msgid "Filter:"
+#~ msgstr "Filter:"
+
+#~ msgid "History:"
+#~ msgstr "História:"
+
+#~ msgid "%s: Already registered"
+#~ msgstr "%s: Už je registrovaný"
+
+#~ msgid "Help Context not found"
+#~ msgstr "Kontextová pomoc nenájdená"
+
+#~ msgid "Help Database not found"
+#~ msgstr "Databáza·pomoci nenájdená"
+
+#~ msgid "Help Error"
+#~ msgstr "Chyba pomoci"
+
+#~ msgid "Help context %s not found."
+#~ msgstr "Kontextová pomoc %s nenájdená."
+
+#~ msgid "Help context %s not found in Database %s%s%s."
+#~ msgstr "Kontextová pomoc %s nenájdená v databáze %s%s%s."
+
+#~ msgid ""
+#~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
+#~ msgstr ""
+#~ "Databáza pomoci %s%s%s nenašla zobrazovač pre stránku pomocníka typu %s"
+
+#~ msgid "Help Database %s%s%s not found"
+#~ msgstr "Databáza pomoci %s%s%s nenájdená"
+
+#~ msgid "Help keyword %s%s%s not found."
+#~ msgstr "Kľúčové slovo pomoci %s%s%s nenájdené."
+
+#~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
+#~ msgstr "Kľúčové·slovo·pomoci·%s%s%s nenájdené v databáze %s%s%s."
+
+#~ msgid "Help node %s%s%s has no Help Database"
+#~ msgstr "Uzol pomocníka %s%s%s nemá databázu pomocníka"
+
+#~ msgid "No help found for line %d, column %d of %s."
+#~ msgstr "Nenájdený pomocník pre riadok %d, stĺpec %d %s."
+
+#~ msgid "No help nodes available"
+#~ msgstr "Nie sú dostupné žiadne uzly pomoci"
+
+#~ msgid "Help not found"
+#~ msgstr "Pomoc nenájdená"
+
+#~ msgid "%s: Not registered"
+#~ msgstr "%s: Neregistrovaný"
+
+#~ msgid "Help Selector Error"
+#~ msgstr "Chyba selektora pomoci"
+
+#~ msgid "There is no viewer for help type %s%s%s"
+#~ msgstr "Nie je zobrazovač pre pomoc typu %s%s%s"
+
+#~ msgid "Help Viewer Error"
+#~ msgstr "Chyba zobrazovača pomoci"
+
+#~ msgid "Help Viewer not found"
+#~ msgstr "Zobrazovač pomoci nenájdený"
+
+#~ msgid "Icon"
+#~ msgstr "Ikona"
+
+#~ msgid "Icon image cannot be empty"
+#~ msgstr "Obrázok ikony nemôže byť prázdny"
+
+#~ msgid "Icon image must have the same format"
+#~ msgstr "Obrázok ikony musí mať rovnaký formát"
+
+#~ msgid "Cannot change format of icon image"
+#~ msgstr "Nemožno zmeniť formát obrázka ikony"
+
+#~ msgid "Icon image must have the same size"
+#~ msgstr "Obrázok ikony musí mať rovnakú veľkosť"
+
+#~ msgid "Cannot change size of icon image"
+#~ msgstr "Nemožno zmeniť veľkosť obrázka ikony"
+
+#~ msgid "Icon has no current image"
+#~ msgstr "Ikona nemá aktuálny obrázok"
+
+#~ msgid "%s Index %d out of bounds 0 .. %d"
+#~ msgstr "%s Index %d presahuje hranicu 0 .. %d"
+
+#~ msgid "Index Out of range Cell[Col=%d Row=%d]"
+#~ msgstr "Index mimo rozsahu Bunka[Col=%d Row=%d]"
+
+#~ msgctxt "lclstrconsts.rsinsertrecordhint"
+#~ msgid "Insert"
+#~ msgstr "Insert"
+
+#~ msgid "Invalid Date : %s"
+#~ msgstr "Neplatný dátum: %s"
+
+#~ msgid "Invalid Date: %s. Must be between %s and %s"
+#~ msgstr "Neplatný dátum: %s. Musí byť medzi %s a %s"
+
+#~ msgid "invalid Form object stream"
+#~ msgstr "neplatný prúd objektu Form"
+
+#~ msgid "Invalid property value"
+#~ msgstr "Neplatná hodnota vlastnosti"
+
+#~ msgid "Invalid stream format"
+#~ msgstr "Neplatný formát streamu"
+
+#~ msgid "%s is already associated with %s"
+#~ msgstr "%s už je priradený k %s"
+
+#~ msgid "Last"
+#~ msgstr "Posledný"
+
+#~ msgid "List index exceeds bounds (%d)"
+#~ msgstr "Index zoznamu prekračuje hranice (%d)"
+
+#~ msgid "List must be empty"
+#~ msgstr "Zoznam musí byť prázdny"
+
+#~ msgid "&All"
+#~ msgstr "&Všetko"
+
+#~ msgctxt "lclstrconsts.rsmbcancel"
+#~ msgid "Cancel"
+#~ msgstr "Zrušiť"
+
+#~ msgid "&Close"
+#~ msgstr "&Zatvoriť"
+
+#~ msgid "&Help"
+#~ msgstr "&Pomoc"
+
+#~ msgid "&Ignore"
+#~ msgstr "&Ignorovať"
+
+#~ msgid "&No"
+#~ msgstr "&Nie"
+
+#~ msgid "No to all"
+#~ msgstr "Nie pre všetky"
+
+#~ msgid "&OK"
+#~ msgstr "&OK"
+
+#~ msgid "&Retry"
+#~ msgstr "&Opakovať"
+
+#~ msgid "&Yes"
+#~ msgstr "Án&o"
+
+#~ msgid "Yes to &All"
+#~ msgstr "Án&o pre všetky"
+
+#~ msgctxt "lclstrconsts.rsmenucolorcaption"
+#~ msgid "Menu"
+#~ msgstr "Menu"
+
+#~ msgid "  modified "
+#~ msgstr "  .. zmenené "
+
+#~ msgid "Confirmation"
+#~ msgstr "Potvrdenie"
+
+#~ msgid "Custom"
+#~ msgstr "Vlastné"
+
+#~ msgctxt "lclstrconsts.rsmterror"
+#~ msgid "Error"
+#~ msgstr "Chyba"
+
+#~ msgid "Information"
+#~ msgstr "Informácia"
+
+#~ msgid "Warning"
+#~ msgstr "Upozornenie"
+
+#~ msgctxt "lclstrconsts.rsnextrecordhint"
+#~ msgid "Next"
+#~ msgstr "Ďalší"
+
+#~ msgid "Not a valid grid file"
+#~ msgstr "Neplatný súbor mriežky"
+
+#~ msgid ""
+#~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
+#~ "the programs uses clause."
+#~ msgstr ""
+#~ "Neexistuje objekt widgetsetu. Prosím skontrolujte, či je jednotka "
+#~ "\"interfaces\" pridaná do klauzuly uses programu."
+
+#~ msgid "Select a date"
+#~ msgstr "Výber dátumu"
+
+#~ msgid "Pixmap"
+#~ msgstr "Pixmap"
+
+#~ msgid "Portable BitMap"
+#~ msgstr "Portable BitMap"
+
+#~ msgid "Portable GrayMap"
+#~ msgstr "Portable GrayMap"
+
+#~ msgid "Portable Network Graphic"
+#~ msgstr "Portable Network Graphic"
+
+#~ msgid "Portable PixMap"
+#~ msgstr "Portable PixMap"
+
+#~ msgid "Post"
+#~ msgstr "za"
+
+#~ msgid ""
+#~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill the "
+#~ "program."
+#~ msgstr ""
+#~ "%s%sStlačte OK pre ignorovanie a risk porušenia dát.%sStlačte Zrušiť pre "
+#~ "zabitie programu."
+
+#~ msgctxt "lclstrconsts.rspriorrecordhint"
+#~ msgid "Prior"
+#~ msgstr "Pred"
+
+#~ msgid "Property %s does not exist"
+#~ msgstr "Vlastnosť %s neexistuje"
+
+#~ msgid "Endupdate while no update in progress"
+#~ msgstr "Koniec aktualizácie, ale aktualizácia nie je vykonávaná"
+
+#~ msgid "Cannot save image while update in progress"
+#~ msgstr "Nemožno uložiť obrázok počas aktualizácie"
+
+#~ msgid "Cannot begin update all when canvas only update in progress"
+#~ msgstr "Nemožno začať aktualizáciu všetkého, počas aktualizácie len plátna"
+
+#~ msgid "Refresh"
+#~ msgstr "Obnoviť"
+
+#~ msgid "Replace"
+#~ msgstr "Nahradiť"
+
+#~ msgid "Replace all"
+#~ msgstr "Nahradiť všetko"
+
+#~ msgctxt "lclstrconsts.rsresourcenotfound"
+#~ msgid "Resource %s not found"
+#~ msgstr "Zdroj %s nenájdený"
+
+#~ msgid "ScrollBar property out of range"
+#~ msgstr "Vlastnosť ScrollBar mimo rozsahu"
+
+#~ msgid "Select color"
+#~ msgstr "Výber farby"
+
+#~ msgid "Select a font"
+#~ msgstr "Výber fontu"
+
+#~ msgid "  size "
+#~ msgstr "  ..veľkosť "
+
+#~ msgid "Text"
+#~ msgstr "Text"
+
+#~ msgid "Unable to load default font"
+#~ msgstr "Nemožno načítať predvolený font"
+
+#~ msgid "Unknown Error, please report this bug"
+#~ msgstr "Neznáma chyba, prosím ohláste túto chybu"
+
+#~ msgid "Unknown picture extension"
+#~ msgstr "Neznáma prípona obrázku"
+
+#~ msgid "Unsupported bitmap format."
+#~ msgstr "Nepodporovaný formát bitmapy"
+
+#~ msgid "Unsupported clipboard format: %s"
+#~ msgstr "Nepodporovaný formát schránky: %s"
+
+#~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
+#~ msgstr ""
+#~ " UPOZORNENIE: Existuje %d neuvoľnených DCs, detailný výpis nasleduje:"
+
+#~ msgid ""
+#~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
+#~ msgstr ""
+#~ " UPOZORNENIE: Existuje %d neuvoľnených GDIObjects, detailný výpis nasleduje:"
+
+#~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
+#~ msgstr " UPOZORNENIE: Vo fronte ostáva %d správ! Uvoľním ich"
+
+#~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
+#~ msgstr " UPOZORNENIE: Ostáva %d štruktúr TimerInfo, uvoľním ich"
+
+#~ msgid ""
+#~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
+#~ msgstr " UPOZORNENIE: Ostáva %s neodstránených správ LM_PAINT/LM_GtkPAINT."
+
+#~ msgid "Whole words only"
+#~ msgstr "Len celé slová"
+
+#~ msgid "Error:"
+#~ msgstr "Chyba:"
+
+#~ msgid "Warning:"
+#~ msgstr "Upozornenie:"
+
+#~ msgid "Cannot focus a disabled or invisible window"
+#~ msgstr "Nemôžem zamerať vypnuté alebo neviditeľné okno"
+
+#~ msgid "Duplicate menus"
+#~ msgstr "Duplikované menu"
+
+#~ msgid "Invalid action creation"
+#~ msgstr "Neplatné akcia vytvorenia"
+
+#~ msgid "Invalid action enumeration"
+#~ msgstr "Neplatné·akcia vymenovania"
+
+#~ msgid "Invalid action registration"
+#~ msgstr "Neplatné·akcia registrácie"
+
+#~ msgid "Invalid action unregistration"
+#~ msgstr "Neplatné·akcia odregistrovania"
+
+#~ msgid "The char set in mask \"%s\" is not valid!"
+#~ msgstr "Množina znakov v maske \"%s\" nei je platná!"
+
+#~ msgid "Invalid image size"
+#~ msgstr "Neplatná veľkosť obrázku"
+
+#~ msgid "Invalid ImageList Index"
+#~ msgstr "Neplatný index ImageList"
+
+#~ msgid "Menu index out of range"
+#~ msgstr "Index menu mimo rozsahu"
+
+#~ msgid "MenuItem is nil"
+#~ msgstr "MenuItem je nil"
+
+#~ msgid "Sub-menu is not in menu"
+#~ msgstr "Podmenu nie je v menu"
+
+#~ msgid "No MDI form present."
+#~ msgstr "Nie je MIDI formulár"
+
+#~ msgid "No timers available"
+#~ msgstr "Nie sú dostupné žiadne časovače"
+
+#~ msgid "Wrong token type: %s expected"
+#~ msgstr "Zlý typ tokenu: očakávaný %s"
+
+#~ msgid "Invalid floating point number: %s"
+#~ msgstr "Neplatné číslo s pohyblivou rádovou čiarkou: %s"
+
+#~ msgid "Invalid integer number: %s"
+#~ msgstr "Neplatné celé číslo: %s"
+
+#~ msgid "Unterminated byte value"
+#~ msgstr "Neukončená bytová hodnota"
+
+#~ msgid "Unterminated string"
+#~ msgstr "Neukončený reťazec"
+
+#~ msgid "Wrong token symbol: %s expected but %s found"
+#~ msgstr "Zlý symbol tokenu: očakávaný bol %s, ale nájdený bol %s"
+
+#~ msgid "Wrong token type: %s expected but %s found"
+#~ msgstr "Zlý typ tokenu: očakávaný bol %s , ale nájdený bol %s"
