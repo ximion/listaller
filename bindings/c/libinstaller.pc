@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libinstaller
+Description: Access software management features of Listaller
+Version: 0.4.0
+Requires: glib-2.0 >= 2.6, dbus-1 >= 0.76
+Libs: -L${libdir} -linstaller
+Cflags: -I${includedir}

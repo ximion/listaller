@@ -33,7 +33,7 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="25" Y="22"/>
+        <CursorPos X="28" Y="22"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="53"/>
@@ -42,7 +42,7 @@
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="66" Y="24"/>
+        <CursorPos X="65" Y="24"/>
         <TopLine Value="1"/>
         <UsageCount Value="20"/>
       </Unit1>
@@ -91,8 +91,8 @@
       <Unit8>
         <Filename Value="../bindings/packagekit.pas"/>
         <UnitName Value="packagekit"/>
-        <CursorPos X="77" Y="24"/>
-        <TopLine Value="97"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="133"/>
         <UsageCount Value="14"/>
       </Unit8>
       <Unit9>
@@ -257,7 +257,7 @@
       </Position2>
       <Position3>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="25" TopLine="1"/>
+        <Caret Line="22" Column="28" TopLine="1"/>
       </Position3>
     </JumpHistory>
   </ProjectOptions>

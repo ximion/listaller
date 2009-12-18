@@ -328,9 +328,9 @@ object MnFrm: TMnFrm
   end
   object StatusLabel: TLabel
     Left = 112
-    Height = 14
-    Top = 544
-    Width = 57
+    Height = 13
+    Top = 545
+    Width = 48
     Anchors = [akLeft, akBottom]
     Caption = 'Loading...'
     ParentColor = False
@@ -1898,9 +1898,9 @@ object MnFrm: TMnFrm
       ClientHeight = 476
       object Label1: TLabel
         Left = 6
-        Height = 14
+        Height = 13
         Top = 14
-        Width = 35
+        Width = 30
         Caption = 'Show:'
         ParentColor = False
       end
@@ -1956,7 +1956,7 @@ object MnFrm: TMnFrm
       end
       object FilterEdt: TEdit
         Left = 550
-        Height = 19
+        Height = 18
         Top = 8
         Width = 139
         Anchors = [akTop, akRight]
@@ -1970,7 +1970,7 @@ object MnFrm: TMnFrm
     object CatalogPage: TPage
       Caption = 'CatalogPage'
       ClientWidth = 692
-      ClientHeight = 453
+      ClientHeight = 454
       object BitBtn1: TBitBtn
         Left = 190
         Height = 40
@@ -1984,7 +1984,7 @@ object MnFrm: TMnFrm
       object BitBtn2: TBitBtn
         Left = 190
         Height = 40
-        Top = 237
+        Top = 238
         Width = 283
         Anchors = []
         Caption = 'Open your distribution''s package catalog'
@@ -1995,11 +1995,11 @@ object MnFrm: TMnFrm
     object RepoPage: TPage
       Caption = 'RepoPage'
       ClientWidth = 692
-      ClientHeight = 453
+      ClientHeight = 454
       object BitBtn5: TBitBtn
         Left = 198
         Height = 30
-        Top = 276
+        Top = 277
         Width = 267
         Anchors = []
         Caption = 'Update system'
@@ -2007,7 +2007,7 @@ object MnFrm: TMnFrm
       end
       object PageControl1: TPageControl
         Left = 0
-        Height = 453
+        Height = 454
         Top = 0
         Width = 692
         ActivePage = SysRepoSheet
@@ -2016,12 +2016,12 @@ object MnFrm: TMnFrm
         TabOrder = 1
         object SysRepoSheet: TTabSheet
           Caption = 'System repositories'
-          ClientHeight = 426
+          ClientHeight = 450
           ClientWidth = 688
           object BitBtn6: TBitBtn
             Left = 180
             Height = 30
-            Top = 183
+            Top = 194
             Width = 267
             Anchors = []
             Caption = 'Change package manager settings'
@@ -2031,7 +2031,7 @@ object MnFrm: TMnFrm
         end
         object UpdRepoSheet: TTabSheet
           Caption = 'Update repositories'
-          ClientHeight = 426
+          ClientHeight = 427
           ClientWidth = 688
           object UsILabel: TLabel
             Left = 6
@@ -2043,7 +2043,7 @@ object MnFrm: TMnFrm
           end
           object UListBox: TCheckListBox
             Left = 6
-            Height = 350
+            Height = 351
             Top = 32
             Width = 670
             Anchors = [akTop, akLeft, akRight, akBottom]
@@ -2055,7 +2055,7 @@ object MnFrm: TMnFrm
           object RmUpdSrcBtn: TBitBtn
             Left = 6
             Height = 26
-            Top = 390
+            Top = 391
             Width = 85
             Anchors = [akLeft, akBottom]
             AutoSize = True
@@ -2067,7 +2067,7 @@ object MnFrm: TMnFrm
           object UpdCheckBtn: TBitBtn
             Left = 564
             Height = 26
-            Top = 390
+            Top = 391
             Width = 105
             Anchors = [akRight, akBottom]
             AutoSize = True
@@ -2082,7 +2082,7 @@ object MnFrm: TMnFrm
     object ConfigPage: TPage
       Caption = 'ConfigPage'
       ClientWidth = 692
-      ClientHeight = 453
+      ClientHeight = 454
       object Label2: TLabel
         Left = 6
         Height = 14
@@ -2094,7 +2094,7 @@ object MnFrm: TMnFrm
       object AboutBtn: TButton
         Left = 587
         Height = 23
-        Top = 426
+        Top = 427
         Width = 95
         Anchors = [akRight, akBottom]
         AutoSize = True
@@ -2141,7 +2141,7 @@ object MnFrm: TMnFrm
         Width = 637
         Anchors = [akTop, akLeft, akRight]
         Caption = 'Proxy-Settings'
-        ClientHeight = 169
+        ClientHeight = 170
         ClientWidth = 633
         TabOrder = 4
         object Label4: TLabel

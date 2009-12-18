@@ -1,3 +1,5 @@
+{ Das ist eine automatisch erzeugte Lazarus-Ressourcendatei }
+
 LazarusResources.Add('TMnFrm','FORMDATA',[
   'TPF0'#6'TMnFrm'#5'MnFrm'#4'Left'#3#15#1#6'Height'#3'.'#2#3'Top'#3#229#0#5'Wi'
   +'dth'#3'0'#3#13'ActiveControl'#7#9'FilterEdt'#7'Caption'#6#16'Software Manag'
@@ -407,8 +409,8 @@ LazarusResources.Add('TMnFrm','FORMDATA',[
   +#7#12'FormActivate'#8'OnCreate'#7#10'FormCreate'#9'OnDestroy'#7#11'FormDestr'
   +'oy'#6'OnShow'#7#8'FormShow'#10'LCLVersion'#6#8'0.9.28.2'#0#6'TImage'#6'Imag'
   +'e1'#4'Left'#2#0#6'Height'#2'0'#3'Top'#2#0#5'Width'#3'0'#3#5'Align'#7#5'alTo'
-  +'p'#7'Stretch'#9#0#0#6'TLabel'#11'StatusLabel'#4'Left'#2'p'#6'Height'#2#14#3
-  +'Top'#3' '#2#5'Width'#2'9'#7'Anchors'#11#6'akLeft'#8'akBottom'#0#7'Caption'#6
+  +'p'#7'Stretch'#9#0#0#6'TLabel'#11'StatusLabel'#4'Left'#2'p'#6'Height'#2#13#3
+  +'Top'#3'!'#2#5'Width'#2'0'#7'Anchors'#11#6'akLeft'#8'akBottom'#0#7'Caption'#6
   +#10'Loading...'#11'ParentColor'#8#0#0#6'TPanel'#7'LeftBar'#4'Left'#2#0#6'Hei'
   +'ght'#3#254#1#3'Top'#2'0'#5'Width'#2'h'#5'Align'#7#6'alLeft'#10'BevelOuter'#7
   +#6'bvNone'#12'ClientHeight'#3#254#1#11'ClientWidth'#2'h'#8'TabOrder'#2#0#0#12
@@ -2160,8 +2162,8 @@ LazarusResources.Add('TMnFrm','FORMDATA',[
   +'Top'#2'8'#5'Width'#3#184#2#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#8'ak'
   +'Bottom'#0#9'PageIndex'#2#0#8'ShowTabs'#8#8'TabOrder'#2#1#0#5'TPage'#17'Inst'
   +'alledAppsPage'#7'Caption'#6#17'InstalledAppsPage'#11'ClientWidth'#3#180#2#12
-  +'ClientHeight'#3#220#1#0#6'TLabel'#6'Label1'#4'Left'#2#6#6'Height'#2#14#3'To'
-  +'p'#2#14#5'Width'#2'#'#7'Caption'#6#5'Show:'#11'ParentColor'#8#0#0#10'TScrol'
+  +'ClientHeight'#3#220#1#0#6'TLabel'#6'Label1'#4'Left'#2#6#6'Height'#2#13#3'To'
+  +'p'#2#14#5'Width'#2#30#7'Caption'#6#5'Show:'#11'ParentColor'#8#0#0#10'TScrol'
   +'lBox'#5'SWBox'#4'Left'#2#0#6'Height'#3#182#1#3'Top'#2'&'#5'Width'#3#180#2#5
   +'Align'#7#8'alBottom'#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#8'akBottom'
   +#0#11'BorderStyle'#7#6'bsNone'#12'ClientHeight'#3#182#1#11'ClientWidth'#3#180
@@ -2174,43 +2176,43 @@ LazarusResources.Add('TMnFrm','FORMDATA',[
   +'Graphic'#6#7'Network'#6#5'Games'#6#6'System'#6#10'Multimedia'#6#10'Addition'
   +'al'#6#5'Other'#0#9'MaxLength'#4#255#255#0#0#8'OnChange'#7#10'CBoxChange'#8
   +'TabOrder'#2#1#4'Text'#6#3'All'#0#0#5'TEdit'#9'FilterEdt'#4'Left'#3'&'#2#6'H'
-  +'eight'#2#19#3'Top'#2#8#5'Width'#3#139#0#7'Anchors'#11#5'akTop'#7'akRight'#0
+  +'eight'#2#18#3'Top'#2#8#5'Width'#3#139#0#7'Anchors'#11#5'akTop'#7'akRight'#0
   ,#7'OnEnter'#7#14'FilterEdtEnter'#6'OnExit'#7#13'FilterEdtExit'#9'OnKeyDown'#7
   +#16'FilterEdtKeyDown'#8'TabOrder'#2#2#4'Text'#6#1'*'#0#0#0#5'TPage'#11'Catal'
   +'ogPage'#7'Caption'#6#11'CatalogPage'#11'ClientWidth'#3#180#2#12'ClientHeigh'
-  +'t'#3#197#1#0#7'TBitBtn'#7'BitBtn1'#4'Left'#3#190#0#6'Height'#2'('#3'Top'#3
+  +'t'#3#198#1#0#7'TBitBtn'#7'BitBtn1'#4'Left'#3#190#0#6'Height'#2'('#3'Top'#3
   +#137#0#5'Width'#3#27#1#7'Anchors'#11#0#7'Caption'#6#26'Browse Listaller''s c'
   +'atalog'#7'OnClick'#7#12'BitBtn1Click'#8'TabOrder'#2#0#0#0#7'TBitBtn'#7'BitB'
-  +'tn2'#4'Left'#3#190#0#6'Height'#2'('#3'Top'#3#237#0#5'Width'#3#27#1#7'Anchor'
+  +'tn2'#4'Left'#3#190#0#6'Height'#2'('#3'Top'#3#238#0#5'Width'#3#27#1#7'Anchor'
   +'s'#11#0#7'Caption'#6'(Open your distribution''s package catalog'#7'OnClick'
   +#7#12'BitBtn2Click'#8'TabOrder'#2#1#0#0#0#5'TPage'#8'RepoPage'#7'Caption'#6#8
-  +'RepoPage'#11'ClientWidth'#3#180#2#12'ClientHeight'#3#197#1#0#7'TBitBtn'#7'B'
-  +'itBtn5'#4'Left'#3#198#0#6'Height'#2#30#3'Top'#3#20#1#5'Width'#3#11#1#7'Anch'
+  +'RepoPage'#11'ClientWidth'#3#180#2#12'ClientHeight'#3#198#1#0#7'TBitBtn'#7'B'
+  +'itBtn5'#4'Left'#3#198#0#6'Height'#2#30#3'Top'#3#21#1#5'Width'#3#11#1#7'Anch'
   +'ors'#11#0#7'Caption'#6#13'Update system'#8'TabOrder'#2#0#0#0#12'TPageContro'
-  +'l'#12'PageControl1'#4'Left'#2#0#6'Height'#3#197#1#3'Top'#2#0#5'Width'#3#180
+  +'l'#12'PageControl1'#4'Left'#2#0#6'Height'#3#198#1#3'Top'#2#0#5'Width'#3#180
   +#2#10'ActivePage'#7#12'SysRepoSheet'#5'Align'#7#8'alClient'#8'TabIndex'#2#0#8
   +'TabOrder'#2#1#0#9'TTabSheet'#12'SysRepoSheet'#7'Caption'#6#19'System reposi'
-  +'tories'#12'ClientHeight'#3#170#1#11'ClientWidth'#3#176#2#0#7'TBitBtn'#7'Bit'
-  +'Btn6'#4'Left'#3#180#0#6'Height'#2#30#3'Top'#3#183#0#5'Width'#3#11#1#7'Ancho'
+  +'tories'#12'ClientHeight'#3#194#1#11'ClientWidth'#3#176#2#0#7'TBitBtn'#7'Bit'
+  +'Btn6'#4'Left'#3#180#0#6'Height'#2#30#3'Top'#3#194#0#5'Width'#3#11#1#7'Ancho'
   +'rs'#11#0#7'Caption'#6#31'Change package manager settings'#7'OnClick'#7#12'B'
   +'itBtn6Click'#8'TabOrder'#2#0#0#0#0#9'TTabSheet'#12'UpdRepoSheet'#7'Caption'
-  +#6#19'Update repositories'#12'ClientHeight'#3#170#1#11'ClientWidth'#3#176#2#0
+  +#6#19'Update repositories'#12'ClientHeight'#3#171#1#11'ClientWidth'#3#176#2#0
   +#6'TLabel'#8'UsILabel'#4'Left'#2#6#6'Height'#2#13#3'Top'#2#8#5'Width'#3#166#0
   +#7'Caption'#6'$Here''s a list of all update-sources:'#11'ParentColor'#8#0#0
-  +#13'TCheckListBox'#8'UListBox'#4'Left'#2#6#6'Height'#3'^'#1#3'Top'#2' '#5'Wi'
+  +#13'TCheckListBox'#8'UListBox'#4'Left'#2#6#6'Height'#3'_'#1#3'Top'#2' '#5'Wi'
   +'dth'#3#158#2#7'Anchors'#11#5'akTop'#6'akLeft'#7'akRight'#8'akBottom'#0#10'I'
   +'temHeight'#2#0#7'OnClick'#7#13'UListBoxClick'#8'TabOrder'#2#0#8'TopIndex'#2
-  +#255#0#0#7'TBitBtn'#11'RmUpdSrcBtn'#4'Left'#2#6#6'Height'#2#26#3'Top'#3#134#1
+  +#255#0#0#7'TBitBtn'#11'RmUpdSrcBtn'#4'Left'#2#6#6'Height'#2#26#3'Top'#3#135#1
   +#5'Width'#2'U'#7'Anchors'#11#6'akLeft'#8'akBottom'#0#8'AutoSize'#9#7'Caption'
   +#6#13'Delete source'#9'NumGlyphs'#2#0#7'OnClick'#7#16'RmUpdSrcBtnClick'#8'Ta'
   +'bOrder'#2#1#0#0#7'TBitBtn'#11'UpdCheckBtn'#4'Left'#3'4'#2#6'Height'#2#26#3
-  +'Top'#3#134#1#5'Width'#2'i'#7'Anchors'#11#7'akRight'#8'akBottom'#0#8'AutoSiz'
+  +'Top'#3#135#1#5'Width'#2'i'#7'Anchors'#11#7'akRight'#8'akBottom'#0#8'AutoSiz'
   +'e'#9#7'Caption'#6#17'Check for updates'#9'NumGlyphs'#2#0#7'OnClick'#7#16'Up'
   +'dCheckBtnClick'#8'TabOrder'#2#2#0#0#0#0#0#5'TPage'#10'ConfigPage'#7'Caption'
-  +#6#10'ConfigPage'#11'ClientWidth'#3#180#2#12'ClientHeight'#3#197#1#0#6'TLabe'
+  +#6#10'ConfigPage'#11'ClientWidth'#3#180#2#12'ClientHeight'#3#198#1#0#6'TLabe'
   +'l'#6'Label2'#4'Left'#2#6#6'Height'#2#14#3'Top'#2#8#5'Width'#2'x'#7'Caption'
   +#6#19'Language: automatic'#11'ParentColor'#8#0#0#7'TButton'#8'AboutBtn'#4'Le'
-  +'ft'#3'K'#2#6'Height'#2#23#3'Top'#3#170#1#5'Width'#2'_'#7'Anchors'#11#7'akRi'
+  +'ft'#3'K'#2#6'Height'#2#23#3'Top'#3#171#1#5'Width'#2'_'#7'Anchors'#11#7'akRi'
   +'ght'#8'akBottom'#0#8'AutoSize'#9#7'Caption'#6#15'About Listaller'#7'OnClick'
   +#7#13'AboutBtnClick'#8'TabOrder'#2#0#0#0#9'TCheckBox'#10'WarnDistCb'#4'Left'
   +#2#6#6'Height'#2#21#3'Top'#2' '#5'Width'#3#16#1#7'Caption'#6'+Show warning i'
@@ -2224,7 +2226,7 @@ LazarusResources.Add('TMnFrm','FORMDATA',[
   +'ons'#8'OnChange'#7#17'CbShowPkMonChange'#8'TabOrder'#2#3#0#0#9'TGroupBox'#9
   +'GroupBox1'#4'Left'#2#6#6'Height'#3#184#0#3'Top'#3#142#0#5'Width'#3'}'#2#7'A'
   +'nchors'#11#5'akTop'#6'akLeft'#7'akRight'#0#7'Caption'#6#14'Proxy-Settings'
-  +#12'ClientHeight'#3#169#0#11'ClientWidth'#3'y'#2#8'TabOrder'#2#4#0#6'TLabel'
+  +#12'ClientHeight'#3#170#0#11'ClientWidth'#3'y'#2#8'TabOrder'#2#4#0#6'TLabel'
   +#6'Label4'#4'Left'#2#9#6'Height'#2#14#3'Top'#2'!'#5'Width'#2'N'#7'Caption'#6
   +#12'H&TTP-Proxy:'#7'Enabled'#8#11'ParentColor'#8#0#0#6'TLabel'#6'Label5'#4'L'
   +'eft'#3#191#0#6'Height'#2#14#3'Top'#2'!'#5'Width'#2#28#7'Caption'#6#5'Port:'

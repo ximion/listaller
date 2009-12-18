@@ -263,7 +263,7 @@ begin
   bmp.Free;
 end;
 
-procedure TMnFrm.ReloadAppList();
+procedure TMnFrm.ReloadAppList;
 begin
  if Assigned(AList) then AList.Free;
  AList:=TObjectList.Create;
