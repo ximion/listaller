@@ -37,8 +37,8 @@ for dir in $dirs
 do
    echo create $dir/Makefile 
    cd $dir
-   sed "s#%LAZDIR%#$lazarus#" Makefile.in > Makefile
-   sed -ixxx "s#%PREFIX%#$prefix#" Makefile
+   sed "s#%PREFIX%#$prefix#" Makefile.in > Makefile
+   #sed -ixxx "s#%PREFIX%#$prefix#" Makefile
    rc=$?
    cd $basedir
    if [[ $rc -ne 0 ]]; then 

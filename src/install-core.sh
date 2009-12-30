@@ -28,13 +28,13 @@ mkdir -p $DESTDIR/usr/share/dbus-1/system-services/
 mkdir -p $DESTDIR/etc/dbus-1/system.d/
 mkdir -p $DESTDIR/usr/share/polkit-1/actions/
 
-cp ./build/lipa $DESTDIR/usr/bin/
-cp ./build/listallerd $DESTDIR/usr/sbin/
-cp ./data/dbus/org.freedesktop.Listaller.service $DESTDIR/usr/share/dbus-1/system-services/
-cp ./data/dbus/org.freedesktop.Listaller.conf $DESTDIR/etc/dbus-1/system.d/
-cp ./data/dbus/org.freedesktop.listaller.policy $DESTDIR/usr/share/polkit-1/actions/
+cp ../build/lipa $DESTDIR/usr/bin/
+cp ../build/listallerd $DESTDIR/usr/sbin/
+cp ../data/dbus/org.freedesktop.Listaller.service $DESTDIR/usr/share/dbus-1/system-services/
+cp ../data/dbus/org.freedesktop.Listaller.conf $DESTDIR/etc/dbus-1/system.d/
+cp ../data/dbus/org.freedesktop.listaller.policy $DESTDIR/usr/share/polkit-1/actions/
 
-cp ./build/libinstaller.so.0.4.0 $DESTDIR/usr/lib/
+cp ../build/libinstaller.so.0.4.0 $DESTDIR/usr/lib/
 cd $DESTDIR/usr/lib/
 if [ ! -f libinstaller.so.0.4 ]; then
 ln -s /usr/lib/libinstaller.so.0.4.0 libinstaller.so.0.4
