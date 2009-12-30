@@ -1,0 +1,36 @@
+IPK-Standard-Version: 1.0
+
+Type: linstall
+Name: Listaller Creator
+Version: 0.3.40
+License: include:"../COPYING"
+Description: include:"./desc.txt"
+DSupport: Ubuntu,openSuSE
+Author: Listaller Project
+Icon: ../graphics/listaller_creator.png
+SDesc: Application that helps creating IPK packages
+SDesc[de]: Anwendung, die das Erstellen von IPK Paketen vereinfacht
+Group: Development
+AppCMD: $INST/liCreator/licreator
+Maintainer: Matthias Klumpp (matthias@nlinux.org)
+PkName: listaller-creator
+Build: ./make.sh
+ ../install-creator.sh DESTDIR=%IDIR
+Disallow: ioNothing
+Profile[0]: Standard
+Dependencies[DEB]:
+ listaller-core
+ listaller-tools
+Dependencies[RPM]:
+ listaller-core
+ listaller-tools
+
+!-Files #0
+>$INST/liCreator
+../build/licreator
+195f7bd6242782f35819a9600dbb74aa
+../graphics/listaller_creator.png
+aa0b5d7a5dab287a422f06c121ed8cf0
+>$APP/
+../liCreator/ips/licreator.desktop
+0351ef79d187dbed8599f612c0a2012c

@@ -1,0 +1,27 @@
+Version 0.4
+~~~~~~~~~~~~~
+ == Still in development ==
+
+ * Included libinstaller library
+ * Added PolicyKit support
+ * Changed to IPK1.0 and IPS1.0 standard for package building
+ * Rebased on PackageKit 0.5.x glib2 interface
+ * Added PolicyKit support
+
+Version 0.3.0b
+~~~~~~~~~~~~~
+ * First beta release, no changelog made
+ * Completely refreshed GUI
+ * Some other changes
+
+Version 0.2.00a
+~~~~~~~~~~~~~
+ * First alpha release, no changelog made
+
+Version 0.1.18
+~~~~~~~~~~~~~
+ * Test release 2, no changelog made
+
+Version 0.1.16
+~~~~~~~~~~~~~
+ * Test release 1, no changelog made

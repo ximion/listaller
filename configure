@@ -1,0 +1,53 @@
+#!/bin/bash 
+#
+# Check if all required components are present to build Listaller
+#
+# syntax :
+#    ./configure
+# set parameters
+if [ $# -gt 0 ]; then
+   export "$@"
+fi
+
+dirs=". \
+      ./src"
+
+#Add x right to execute build scripts
+cd ./src
+chmod +x ./make-base.sh
+chmod +x ./make-gui.sh
+chmod +x ./install-core.sh
+chmod +x ./install-tools.sh
+chmod +x ./install-data.sh
+chmod +x ./install-gui.sh
+chmod +x ./make-creator.sh
+chmod +x ./install-creator.sh
+chmod +x ./clean.sh
+chmod +x ./uninstall.sh
+cd ..
+
+#  Install directory
+if [ -z "$prefix" ]; then
+   export prefix=/usr/
+fi
+echo installing in $prefix
+
+basedir=$(pwd)
+for dir in $dirs 
+do
+   echo create $dir/Makefile 
+   cd $dir
+   sed "s#%LAZDIR%#$lazarus#" Makefile.in > Makefile
+   sed -ixxx "s#%PREFIX%#$prefix#" Makefile
+   rc=$?
+   cd $basedir
+   if [[ $rc -ne 0 ]]; then 
+      exit $rc
+   fi
+done
+
+echo
+echo "You can now run make all-<widgetset>" 
+echo "then make install-<widgetset>" 
+echo "Supported widgetsets are: qt4, gtk2"
+echo

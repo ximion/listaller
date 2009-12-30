@@ -1,0 +1,28 @@
+.TH lipa 8 "November 20, 2009" "" "Lipa"
+
+.SH NAME
+lipa \- program for...
+
+.SH SYNOPSIS
+.B lipa
+.RI [ options ]
+.br
+
+.SH DESCRIPTION
+This manual page explains the
+.B lipa
+program. This program...
+.PP
+\fBlipa\fP is for...
+
+.SH OPTIONS
+.B
+.IP -OPTION
+This option...
+
+.SH "EXIT STATUS"
+
+.SH NOTES
+
+.SH "SEE ALSO"
+

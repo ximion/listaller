@@ -1,0 +1,7 @@
+A simple tool to create Listaller-packages.
+liCreator contains a wizard which helps you to create the ipk-packages.
+Following IPK-types are supported:
+* Normal
+* DepGET
+* Autopackage/LOKI
+-----------

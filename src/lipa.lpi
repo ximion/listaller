@@ -1,0 +1,409 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="7"/>
+    <General>
+      <Flags>
+        <LRSInOutputDirectory Value="False"/>
+      </Flags>
+      <MainUnit Value="0"/>
+      <TargetFileExt Value=""/>
+      <Title Value="lipa"/>
+      <UseAppBundle Value="False"/>
+      <ActiveEditorIndexAtStart Value="0"/>
+    </General>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <CurrentMajorRevNr Value="2"/>
+      <CurrentBuildNr Value="272"/>
+      <ProjectVersion Value="0.2.0.1"/>
+    </VersionInfo>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|ppw|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+        <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+      </local>
+    </RunParams>
+    <Units Count="31">
+      <Unit0>
+        <Filename Value="lipa.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="lipa"/>
+        <CursorPos X="16" Y="6"/>
+        <TopLine Value="1"/>
+        <EditorIndex Value="0"/>
+        <UsageCount Value="49"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="abzipper.pas"/>
+        <UnitName Value="AbZipper"/>
+        <CursorPos X="20" Y="71"/>
+        <TopLine Value="49"/>
+        <UsageCount Value="10"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="abbrowse.pas"/>
+        <UnitName Value="AbBrowse"/>
+        <CursorPos X="15" Y="121"/>
+        <TopLine Value="99"/>
+        <UsageCount Value="10"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/fcl-xml/src/xmlread.pp"/>
+        <UnitName Value="XMLRead"/>
+        <CursorPos X="11" Y="44"/>
+        <TopLine Value="87"/>
+        <UsageCount Value="12"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="../../../../../usr/share/fpcsrc/packages/fcl-base/src/inc/custapp.pp"/>
+        <UnitName Value="CustApp"/>
+        <CursorPos X="3" Y="135"/>
+        <TopLine Value="91"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="../../../../../usr/share/fpcsrc/rtl/objpas/sysutils/sysutilh.inc"/>
+        <CursorPos X="4" Y="64"/>
+        <TopLine Value="42"/>
+        <UsageCount Value="10"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="../../../../../usr/share/fpcsrc/rtl/inc/systemh.inc"/>
+        <CursorPos X="11" Y="780"/>
+        <TopLine Value="758"/>
+        <UsageCount Value="10"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="utilities.pas"/>
+        <UnitName Value="utilities"/>
+        <CursorPos X="3" Y="259"/>
+        <TopLine Value="259"/>
+        <UsageCount Value="16"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="distri.pas"/>
+        <UnitName Value="distri"/>
+        <CursorPos X="1" Y="227"/>
+        <TopLine Value="186"/>
+        <UsageCount Value="11"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="RegExpr.pas"/>
+        <UnitName Value="RegExpr"/>
+        <CursorPos X="85" Y="838"/>
+        <TopLine Value="814"/>
+        <UsageCount Value="10"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="ipkbuild.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ipkbuild"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="37"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="abzbrows.pas"/>
+        <UnitName Value="AbZBrows"/>
+        <CursorPos X="21" Y="228"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="opbitmap/opbitmapformats.pas"/>
+        <UnitName Value="opbitmapformats"/>
+        <CursorPos X="42" Y="21"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="opbitmap/GraphicEx.pas"/>
+        <UnitName Value="GraphicEx"/>
+        <CursorPos X="9" Y="5666"/>
+        <TopLine Value="5642"/>
+        <UsageCount Value="10"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="abzipcry.pas"/>
+        <UnitName Value="AbZipCry"/>
+        <CursorPos X="11" Y="44"/>
+        <TopLine Value="21"/>
+        <UsageCount Value="10"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="abzipprc.pas"/>
+        <UnitName Value="AbZipPrc"/>
+        <CursorPos X="12" Y="68"/>
+        <TopLine Value="46"/>
+        <UsageCount Value="10"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="abutils.pas"/>
+        <UnitName Value="AbUtils"/>
+        <CursorPos X="12" Y="44"/>
+        <TopLine Value="23"/>
+        <UsageCount Value="10"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/fileutil.pas"/>
+        <UnitName Value="FileUtil"/>
+        <CursorPos X="2" Y="237"/>
+        <TopLine Value="212"/>
+        <UsageCount Value="10"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/include/scrollingwincontrol.inc"/>
+        <CursorPos X="30" Y="224"/>
+        <TopLine Value="204"/>
+        <UsageCount Value="10"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="ipkhandle.pas"/>
+        <UnitName Value="ipkhandle"/>
+        <CursorPos X="112" Y="1117"/>
+        <TopLine Value="1097"/>
+        <UsageCount Value="11"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="licommon.pas"/>
+        <UnitName Value="licommon"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="trstrings.pas"/>
+        <UnitName Value="trstrings"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="../../../../../usr/share/fpcsrc/2.2.4/packages/fcl-base/src/custapp.pp"/>
+        <UnitName Value="CustApp"/>
+        <CursorPos X="3" Y="26"/>
+        <TopLine Value="42"/>
+        <UsageCount Value="10"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="litranslator.pas"/>
+        <UnitName Value="litranslator"/>
+        <CursorPos X="10" Y="28"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="ipkscript.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ipkscript"/>
+        <CursorPos X="21" Y="67"/>
+        <TopLine Value="39"/>
+        <UsageCount Value="22"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="bindings/installer.pas"/>
+        <UnitName Value="installer"/>
+        <CursorPos X="24" Y="209"/>
+        <TopLine Value="188"/>
+        <UsageCount Value="10"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="litypes.pas"/>
+        <UnitName Value="litypes"/>
+        <CursorPos X="23" Y="15"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="manager.pas"/>
+        <ComponentName Value="MnFrm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="manager"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="109"/>
+        <UsageCount Value="10"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="bindings/appman.pas"/>
+        <UnitName Value="appman"/>
+        <CursorPos X="23" Y="15"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="../../../../../usr/lib/lazarus/lcl/forms.pp"/>
+        <UnitName Value="Forms"/>
+        <CursorPos X="3" Y="1080"/>
+        <TopLine Value="1324"/>
+        <UsageCount Value="10"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="ipkdef.pas"/>
+        <UnitName Value="ipkdef"/>
+        <CursorPos X="23" Y="15"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit30>
+    </Units>
+    <JumpHistory Count="29" HistoryIndex="28">
+      <Position1>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="27" Column="27" TopLine="1"/>
+      </Position1>
+      <Position2>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="28" Column="9" TopLine="1"/>
+      </Position2>
+      <Position3>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="29" Column="36" TopLine="1"/>
+      </Position3>
+      <Position4>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="30" Column="6" TopLine="1"/>
+      </Position4>
+      <Position5>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="29" Column="38" TopLine="1"/>
+      </Position5>
+      <Position6>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="30" Column="15" TopLine="30"/>
+      </Position6>
+      <Position7>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="189" Column="37" TopLine="169"/>
+      </Position7>
+      <Position8>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="57" Column="50" TopLine="37"/>
+      </Position8>
+      <Position9>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="190" Column="39" TopLine="170"/>
+      </Position9>
+      <Position10>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="62" Column="40" TopLine="42"/>
+      </Position10>
+      <Position11>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="192" Column="42" TopLine="172"/>
+      </Position11>
+      <Position12>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="11" Column="48" TopLine="1"/>
+      </Position12>
+      <Position13>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="165" Column="48" TopLine="135"/>
+      </Position13>
+      <Position14>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="390" Column="78" TopLine="370"/>
+      </Position14>
+      <Position15>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="27" Column="19" TopLine="9"/>
+      </Position15>
+      <Position16>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="16" Column="34" TopLine="1"/>
+      </Position16>
+      <Position17>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="205" Column="1" TopLine="186"/>
+      </Position17>
+      <Position18>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="411" Column="1" TopLine="368"/>
+      </Position18>
+      <Position19>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="193" Column="32" TopLine="173"/>
+      </Position19>
+      <Position20>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="57" Column="36" TopLine="37"/>
+      </Position20>
+      <Position21>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="196" Column="38" TopLine="176"/>
+      </Position21>
+      <Position22>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="81" Column="40" TopLine="61"/>
+      </Position22>
+      <Position23>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="193" Column="37" TopLine="173"/>
+      </Position23>
+      <Position24>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="57" Column="62" TopLine="37"/>
+      </Position24>
+      <Position25>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="194" Column="37" TopLine="174"/>
+      </Position25>
+      <Position26>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="62" Column="53" TopLine="42"/>
+      </Position26>
+      <Position27>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="195" Column="41" TopLine="175"/>
+      </Position27>
+      <Position28>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="87" Column="68" TopLine="67"/>
+      </Position28>
+      <Position29>
+        <Filename Value="lipa.lpr"/>
+        <Caret Line="196" Column="46" TopLine="176"/>
+      </Position29>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="8"/>
+    <Target>
+      <Filename Value="./build/lipa"/>
+    </Target>
+    <SearchPaths>
+      <OtherUnitFiles Value="abbrevia/;synapse/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;bindings/"/>
+      <LCLWidgetType Value="nogui"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <CStyleOperator Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
+    <Other>
+      <Verbosity>
+        <ShowNotes Value="False"/>
+      </Verbosity>
+      <CompilerMessages>
+        <IgnoredMessages idx5024="True"/>
+      </CompilerMessages>
+      <CustomOptions Value="-dOpbCompat"/>
+      <CompilerPath Value="$(CompPath)"/>
+      <ExecuteBefore>
+        <ScanForMakeMsgs Value="True"/>
+      </ExecuteBefore>
+      <CreateMakefileOnBuild Value="True"/>
+    </Other>
+  </CompilerOptions>
+</CONFIG>

@@ -1,0 +1,43 @@
+This file contains information about all libraries Listaller needs to run and to compile:
+
+=== Build dependencies ===
+Listaller needs the following modules to compile for Qt4, GTK2 and NoX:
+
+ * Lazarus >=0.9.28
+ * FPC Compiler >= 2.4.0
+ * GLib 2.0 development files
+ * libqt4intf (for your Qt4 version)
+ * Qt4 core >= 4.5
+ * SQLite3
+ * PackageKit >= 0.5.4
+ * PackageKit GLib2 module
+ * GNU Gettext
+ * DBus
+ * PolicyKit (GLib)
+
+=== Dependencies ===
+Listaller needs the following packages to run:
+
+General:
+ * xdg-utils (freedesktop.org utils)
+ * lsb-release (LSB release information)
+ * apt-file [only on APT based distributions]
+
+GTK2 version:
+ * libc6
+ * libglib2.0-0
+ * libgtk2.0-0
+ * libpango1.0-0
+ * libsqlite3-0
+ * libx11-6
+ * gksu
+ * gnome-packagekit [optional]
+
+Qt4 version:
+ * libc6
+ * libsqlite3-0
+ * kdesudo
+ * packagekit >=0.4.6
+ * libqt4intf
+ * kde-icons-oxygen
+ * kpackagekit [optional]
