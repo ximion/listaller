@@ -32,13 +32,13 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="25">
+    <Units Count="28">
       <Unit0>
         <Filename Value="listallerd.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerd"/>
-        <CursorPos X="1" Y="194"/>
-        <TopLine Value="155"/>
+        <CursorPos X="62" Y="22"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="37"/>
         <Loaded Value="True"/>
@@ -68,8 +68,8 @@
         <Filename Value="djobs.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="djobs"/>
-        <CursorPos X="25" Y="394"/>
-        <TopLine Value="374"/>
+        <CursorPos X="32" Y="24"/>
+        <TopLine Value="1"/>
         <UsageCount Value="37"/>
       </Unit4>
       <Unit5>
@@ -200,6 +200,27 @@
         <TopLine Value="181"/>
         <UsageCount Value="10"/>
       </Unit24>
+      <Unit25>
+        <Filename Value="../bindings/gext.pas"/>
+        <UnitName Value="gext"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="../bindings/polkit.pas"/>
+        <UnitName Value="polkit"/>
+        <CursorPos X="24" Y="24"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/gtk2/src/glib/glib2.pas"/>
+        <UnitName Value="glib2"/>
+        <CursorPos X="31" Y="59"/>
+        <TopLine Value="37"/>
+        <UsageCount Value="10"/>
+      </Unit27>
     </Units>
     <JumpHistory Count="3" HistoryIndex="2">
       <Position1>
@@ -212,7 +233,7 @@
       </Position2>
       <Position3>
         <Filename Value="listallerd.lpr"/>
-        <Caret Line="22" Column="61" TopLine="1"/>
+        <Caret Line="22" Column="62" TopLine="1"/>
       </Position3>
     </JumpHistory>
   </ProjectOptions>
@@ -223,7 +244,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../bindings/;../;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
+      <OtherUnitFiles Value="../bindings/;../src/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <CodeGeneration>

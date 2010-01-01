@@ -5,14 +5,9 @@ build
 *.compiled
 .directory
 *.bak
+*.manifest
+Makefile
 bindings/packagekit-old.pas
 bindings/test
-bindings/*~
-bindings/*.bak
-src/*.compiled
-src/*~
-src/*.bak
-licreator/*~
-licreator/*.bak
 .directory
 copylib.sh

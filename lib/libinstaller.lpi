@@ -28,12 +28,12 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="31">
+    <Units Count="37">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="28" Y="22"/>
+        <CursorPos X="9" Y="23"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="53"/>
@@ -154,8 +154,8 @@
       <Unit17>
         <Filename Value="management.pas"/>
         <UnitName Value="management"/>
-        <CursorPos X="5" Y="732"/>
-        <TopLine Value="717"/>
+        <CursorPos X="26" Y="1"/>
+        <TopLine Value="1"/>
         <UsageCount Value="11"/>
       </Unit17>
       <Unit18>
@@ -245,8 +245,50 @@
         <TopLine Value="255"/>
         <UsageCount Value="10"/>
       </Unit30>
+      <Unit31>
+        <Filename Value="../src/litypes.pas"/>
+        <UnitName Value="litypes"/>
+        <CursorPos X="26" Y="1"/>
+        <TopLine Value="43"/>
+        <UsageCount Value="10"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus.pas"/>
+        <UnitName Value="dbus"/>
+        <CursorPos X="23" Y="57"/>
+        <TopLine Value="52"/>
+        <UsageCount Value="10"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/fcl-db/src/sqlite/sqlite3ds.pas"/>
+        <UnitName Value="Sqlite3DS"/>
+        <CursorPos X="13" Y="65"/>
+        <TopLine Value="25"/>
+        <UsageCount Value="10"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/fcl-db/src/sqlite/customsqliteds.pas"/>
+        <UnitName Value="CustomSqliteDS"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/sqlite/src/sqlite3.pp"/>
+        <UnitName Value="sqlite3"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit35>
+      <Unit36>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/fcl-db/src/base/db.pas"/>
+        <UnitName Value="db"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="49"/>
+        <UsageCount Value="10"/>
+      </Unit36>
     </Units>
-    <JumpHistory Count="3" HistoryIndex="2">
+    <JumpHistory Count="5" HistoryIndex="4">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="22" Column="28" TopLine="1"/>
@@ -257,8 +299,16 @@
       </Position2>
       <Position3>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="28" TopLine="1"/>
+        <Caret Line="22" Column="65" TopLine="1"/>
       </Position3>
+      <Position4>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="23" Column="8" TopLine="1"/>
+      </Position4>
+      <Position5>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="23" Column="9" TopLine="1"/>
+      </Position5>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -268,7 +318,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../;../abbrevia/;../synapse/;../bindings/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
+      <OtherUnitFiles Value="../src/;../abbrevia/;../synapse/;../bindings/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <CodeGeneration>

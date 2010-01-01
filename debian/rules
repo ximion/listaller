@@ -8,7 +8,9 @@ build: build-stamp
 
 build-stamp:
 	dh_testdir
-
+	
+	@chmod +x ./configure
+	./configure
 	$(MAKE) all
 	$(MAKE) licreator-gtk
 	$(MAKE) licreator-qt

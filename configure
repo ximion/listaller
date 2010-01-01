@@ -3,15 +3,112 @@
 # Check if all required components are present to build Listaller
 #
 # syntax :
-#    ./configure
+#    ./configure <prefix>
+
 # set parameters
 if [ $# -gt 0 ]; then
    export "$@"
 fi
 
+if [ -e "Makefile" ]; then
+  echo "Cleaning up..."
+  make clean
+fi
+
+echo
+echo "=== Configuring Listaller ==="
+echo
+
+libdirs=". \
+	/usr/lib \
+	/usr/local/lib \
+	/lib/"
+
 dirs=". \
       ./src"
 
+basedir=$(pwd)
+
+GLIBNAME="libglib-2.0.so"
+QT4INTFNAME="libqt4intf.so"
+QT4CORENAME="libqt4core.so"
+SQLITENAME="libsqlite3.so"
+PACKAGEKITNAME="libpackagekit-glib2.so"
+DBUSNAME="libdbus-1.so"
+POLKITNAME="libpolkit-gobject-1.so"
+
+FOUND_GLIB="no"
+FOUND_QTINTF="no"
+FOUND_SQLITE="no"
+FOUND_PKIT="no"
+FOUND_DBUS="no"
+FOUND_POLKIT="no"
+
+echo "Checking component requirements..."
+echo
+for dir in $libdirs 
+do
+   cd $dir
+    [ -e $GLIBNAME ] && FOUND_GLIB="yes"
+    [ -e $QT4INTFNAME ] && FOUND_QTINTF="yes"
+    [ -e $SQLITENAME ] && FOUND_SQLITE="yes"
+    [ -e $PACKAGEKITNAME ] && FOUND_PKIT="yes"
+    [ -e $DBUSNAME ] && FOUND_DBUS="yes"
+    [ -e $POLKITNAME ] && FOUND_POLKIT="yes"
+   cd $basedir
+done
+
+INSTDEV="Please install the development files."
+
+echo "Found GLib-2 ...$FOUND_GLIB"
+if [ "$FOUND_GLIB" = "no" ]; then
+  echo " GLib was not found. $INSTDEV"
+  exit 8
+fi
+echo "Found Qt4 interface ...$FOUND_QTINTF"
+if [ "$FOUND_QTINTF" = "no" ]; then
+  echo " Qt4 pascal interface was not found. $INSTDEV"
+  exit 8
+fi
+echo "Found SQLite3 ...$FOUND_SQLITE"
+if [ "$FOUND_SQLITE" = "no" ]; then
+  echo " SQLite 3 was not found. $INSTDEV"
+  exit 8
+fi
+echo "Found PackageKit ...$FOUND_PKIT"
+if [ "$FOUND_PKIT" = "no" ]; then
+  echo " PackageKit was not found. $INSTDEV"
+  exit 8
+fi
+echo "Found DBus ...$FOUND_DBUS"
+if [ "$FOUND_DBUS" = "no" ]; then
+  echo " DBus was not found. $INSTDEV"
+  exit 8
+fi
+echo "Found PolicyKit ...$FOUND_POLKIT"
+if [ "$FOUND_POLKIT" = "no" ]; then
+  echo " PolicyKit was not found. $INSTDEV"
+  exit 8
+fi
+echo
+
+echo "Looking for working FPC..."
+if [ -e $(which fpc) ]; then
+  echo " FPC version: $(fpc -iW)"
+else
+  echo " FPC was not found. Please install the compiler."
+  exit 8
+fi
+
+echo "Searching LazBuild..."
+if [ -e $(which lazbuild) ]; then
+  echo " Found LazBuild version: $(lazbuild --version)"
+else
+  echo " LazBuild was not found. Is Lazarus installed?"
+  exit 8
+fi
+
+echo "Preparing scripts..."
 #Add x right to execute build scripts
 cd ./src
 chmod +x ./make-base.sh
@@ -25,14 +122,14 @@ chmod +x ./install-creator.sh
 chmod +x ./clean.sh
 chmod +x ./uninstall.sh
 cd ..
+echo "Done"
+echo
 
 #  Install directory
 if [ -z "$prefix" ]; then
    export prefix=/usr/
 fi
-echo installing in $prefix
 
-basedir=$(pwd)
 for dir in $dirs 
 do
    echo create $dir/Makefile 
@@ -46,6 +143,10 @@ do
    fi
 done
 
+echo
+echo "Conclusion:"
+echo " Installing into $prefix"
+echo
 echo
 echo "You can now run make all-<widgetset>" 
 echo "then make install-<widgetset>" 
