@@ -8,8 +8,13 @@ for arg; do
   case $arg in
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;
     WIDGET=*) WIDGET=${arg#WIDGET=};;
+    prefix=*) prefix=${arg#prefix=};;
   esac;
 done
+
+if [ -z "$prefix" ]; then
+   export prefix="/usr"
+fi
 
 ARCH=$(uname -m)
 
@@ -23,36 +28,36 @@ echo "Active widgetset: $WIDGET"
 
 # Does the install
 
-mkdir -p $DESTDIR/usr/bin
-mkdir -p $DESTDIR/usr/share/
-mkdir -p $DESTDIR/usr/share/applications/
-mkdir -p $DESTDIR/usr/lib/listaller
+mkdir -p $DESTDIR$prefix/bin
+mkdir -p $DESTDIR$prefix/share/
+mkdir -p $DESTDIR$prefix/share/applications/
+mkdir -p $DESTDIR$prefix/lib/listaller
 if [ "$WIDGET" == "qt4" ]; then
-mkdir -p $DESTDIR/usr/lib/listaller/qt4
+mkdir -p $DESTDIR$prefix/lib/listaller/qt4
 else
-mkdir -p $DESTDIR/usr/lib/listaller/gtk2
+mkdir -p $DESTDIR$prefix/lib/listaller/gtk2
 fi
 #Copy other files
 if [ "$WIDGET" == "qt4" ]; then
-cp ./build/qt4/listallgo $DESTDIR/usr/lib/listaller/qt4/
-cp ./build/qt4/listallmgr $DESTDIR/usr/lib/listaller/qt4/
-cp ./build/qt4/liupdate $DESTDIR/usr/lib/listaller/qt4/
-cp ./build/qt4/litray $DESTDIR/usr/lib/listaller/qt4/
+cp ./build/qt4/listallgo $DESTDIR$prefix/lib/listaller/qt4/
+cp ./build/qt4/listallmgr $DESTDIR$prefix/lib/listaller/qt4/
+cp ./build/qt4/liupdate $DESTDIR$prefix/lib/listaller/qt4/
+cp ./build/qt4/litray $DESTDIR$prefix/lib/listaller/qt4/
 else
-cp ./build/gtk2/listallgo $DESTDIR/usr/lib/listaller/gtk2/
-cp ./build/gtk2/listallmgr $DESTDIR/usr/lib/listaller/gtk2/
-cp ./build/gtk2/liupdate $DESTDIR/usr/lib/listaller/gtk2/
-cp ./build/gtk2/litray $DESTDIR/usr/lib/listaller/gtk2/
+cp ./build/gtk2/listallgo $DESTDIR$prefix/lib/listaller/gtk2/
+cp ./build/gtk2/listallmgr $DESTDIR$prefix/lib/listaller/gtk2/
+cp ./build/gtk2/liupdate $DESTDIR$prefix/lib/listaller/gtk2/
+cp ./build/gtk2/litray $DESTDIR$prefix/lib/listaller/gtk2/
 fi
 
 if [ "$WIDGET" == "qt4" ]; then
-cp ./data/applications/listaller-manager-kde.desktop $DESTDIR/usr/share/applications/
+cp ./data/applications/listaller-manager-kde.desktop $DESTDIR$prefix/share/applications/
 else
-cp ./data/applications/listaller-manager-gnome.desktop $DESTDIR/usr/share/applications/
+cp ./data/applications/listaller-manager-gnome.desktop $DESTDIR$prefix/share/applications/
 fi
 
 #Create symlink
-cd $DESTDIR/usr/bin
+cd $DESTDIR$prefix/bin
 if [ "$WIDGET" == "qt4" ]; then
 if [ ! -f listallmgr-qt ]; then
 ln -s /usr/lib/listaller/qt4/listallmgr listallmgr-qt

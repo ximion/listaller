@@ -6,8 +6,13 @@ set -e
 for arg; do
   case $arg in
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;
+    prefix=*) prefix=${arg#prefix=};;
   esac;
 done
+
+if [ -z "$prefix" ]; then
+   export prefix="/usr"
+fi
 
 ARCH=$(uname -m)
 case "$ARCH" in
@@ -20,20 +25,20 @@ esac
 #
 # "mkdir -p" is equivalent to ForceDirectories pascal function
 
-mkdir -p $DESTDIR/usr/share/listaller
-mkdir -p $DESTDIR/usr/share/listaller/graphics
-mkdir -p $DESTDIR/usr/share/listaller/graphics/libutton
-mkdir -p $DESTDIR/usr/bin
+mkdir -p $DESTDIR$prefix/share/listaller
+mkdir -p $DESTDIR$prefix/share/listaller/graphics
+mkdir -p $DESTDIR$prefix/share/listaller/graphics/libutton
+mkdir -p $DESTDIR$prefix/bin
 
-cp ./build/libuild $DESTDIR/usr/bin/
+cp ./build/libuild $DESTDIR$prefix/bin/
 
 #Copy graphics
-cp ./graphics/libutton/left.png $DESTDIR/usr/share/listaller/graphics/libutton/
-cp ./graphics/libutton/firstblock.png $DESTDIR/usr/share/listaller/graphics/libutton/
+cp ./graphics/libutton/left.png $DESTDIR$prefix/share/listaller/graphics/libutton/
+cp ./graphics/libutton/firstblock.png $DESTDIR$prefix/share/listaller/graphics/libutton/
 cp ./graphics/libutton/block.png $DESTDIR//usr/share/listaller/graphics/libutton/
-cp ./graphics/libutton/lastblock.png $DESTDIR/usr/share/listaller/graphics/libutton/
-cp -dpr ./graphics/libutton/distro/ $DESTDIR/usr/share/listaller/graphics/libutton/distro/
-rm -rf $DESTDIR/usr/share/listaller/graphics/libutton/distro/.svn
-rm -rf $DESTDIR/usr/share/listaller/graphics/libutton/distro/.directory
+cp ./graphics/libutton/lastblock.png $DESTDIR$prefix/share/listaller/graphics/libutton/
+cp -dpr ./graphics/libutton/distro/ $DESTDIR$prefix/share/listaller/graphics/libutton/distro/
+rm -rf $DESTDIR$prefix/share/listaller/graphics/libutton/distro/.svn
+rm -rf $DESTDIR$prefix/share/listaller/graphics/libutton/distro/.directory
 
 echo "Installation done."

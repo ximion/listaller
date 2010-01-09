@@ -2,6 +2,16 @@
 # Removes all files which are installed by listaller-install
 set -e
 
+for arg; do
+  case $arg in
+    prefix=*) prefix=${arg#prefix=};;
+  esac;
+done
+
+if [ -z "$prefix" ]; then
+   export prefix="/usr"
+fi
+
 echo "Uninstallation started."
 ARCH=$(uname -m)
 case "$ARCH" in
@@ -10,10 +20,10 @@ case "$ARCH" in
  "i486") ARCH="i386";;
 esac
 
-rmdir /usr/lib/listaller
-rmdir /usr/share/listaller
-rm -f /usr/bin/lipa
-rm -f /usr/bin/listallmgr-qt4
-rm -f /usr/bin/listallmgr-gtk2
+rmdir $prefix/lib/listaller
+rmdir $prefix/share/listaller
+rm -f $prefix/bin/lipa
+rm -f $prefix/bin/listallmgr-qt4
+rm -f $prefix/bin/listallmgr-gtk2
 
 echo "Uninstalled."

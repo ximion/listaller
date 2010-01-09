@@ -13,31 +13,31 @@ install:
 	./install-core.sh
 	./install-tools.sh
 	./install-data.sh
-	%GTK+%./install-gui.sh WIDGET=gtk2
-	%Qt%./install-gui.sh WIDGET=qt4
-	%Qt%%LiCreator%./install-creator.sh WIDGET=qt4
-	%GTK+%%LiCreator%./install-creator.sh WIDGET=gtk2
+	%GTK+%./install-gui.sh WIDGET=gtk2 prefix=%PREFIX%
+	%Qt%./install-gui.sh WIDGET=qt4 prefix=%PREFIX%
+	%Qt%%LiCreator%./install-creator.sh WIDGET=qt4 prefix=%PREFIX%
+	%GTK+%%LiCreator%./install-creator.sh WIDGET=gtk2 prefix=%PREFIX%
 
 install-all-bin:
 	./install-core.sh
 	./install-tools.sh
-	%GTK+%./install-gui.sh WIDGET=gtk2
-	%Qt%./install-gui.sh WIDGET=qt4
+	%GTK+%./install-gui.sh WIDGET=gtk2 prefix=%PREFIX%
+	%Qt%./install-gui.sh WIDGET=qt4 prefix=%PREFIX%
 
 install-data:
-	./install-data.sh
+	./install-data.sh prefix=%PREFIX%
 
 install-tools:
-	./install-core.sh
-	./install-tools.sh
+	./install-core.sh prefix=%PREFIX%
+	./install-tools.sh prefix=%PREFIX%
 
 install-front:
-	./install-core.sh
-	%GTK+%./install-gui.sh WIDGET=gtk2
-	%Qt%./install-gui.sh WIDGET=qt4
+	./install-core.sh prefix=%PREFIX%
+	%GTK+%./install-gui.sh WIDGET=gtk2 prefix=%PREFIX%
+	%Qt%./install-gui.sh WIDGET=qt4 prefix=%PREFIX%
 
 clean:
 	./clean.sh
 
 uninstall:
-	./uninstall.sh
+	./uninstall.sh prefix=%PREFIX%

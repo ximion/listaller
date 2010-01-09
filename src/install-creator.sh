@@ -9,8 +9,13 @@ for arg; do
   case $arg in
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;
     WIDGET=*) WIDGET=${arg#WIDGET=};;
+    prefix=*) prefix=${arg#prefix=};;
   esac;
 done
+
+if [ -z "$prefix" ]; then
+   export prefix="/usr"
+fi
 
 ARCH=$(uname -m)
 case "$ARCH" in
@@ -30,10 +35,10 @@ fi
 # "mkdir -p" is equivalent to ForceDirectories pascal function
 #
 
-mkdir -p $DESTDIR/usr/bin/
-mkdir -p $DESTDIR/opt/appfiles/
+mkdir -p $DESTDIR$prefix/bin/
+mkdir -p $DESTDIR/opt/appfiles/ #NEEDS to be edited for prefix
 mkdir -p $DESTDIR/opt/appfiles/liCreator
-mkdir -p $DESTDIR/usr/share/applications
+mkdir -p $DESTDIR$prefix/share/applications
 
 if [ "$WIDGET" == "qt4" ]; then
 cp './build/qt4/licreator' $DESTDIR/opt/appfiles/liCreator/
@@ -45,7 +50,7 @@ cp './graphics/listaller_creator.png' $DESTDIR/opt/appfiles/liCreator/
 cp "./liCreator/licreator.desktop" $DESTDIR"/usr/share/applications/"
 
 #Create symlink
-cd $DESTDIR/usr/bin
+cd $DESTDIR$prefix/bin
 ln -s /opt/appfiles/liCreator/licreator licreator
 
 echo "Installation done. (liCreator)"

@@ -7,8 +7,13 @@ set -e
 for arg; do
   case $arg in
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;
+    prefix=*) prefix=${arg#prefix=};;
   esac;
 done
+
+if [ -z "$prefix" ]; then
+   export prefix="/usr"
+fi
 
 ARCH=$(uname -m)
 case "$ARCH" in
@@ -19,23 +24,23 @@ esac
 
 # Does the install
 
-mkdir -p $DESTDIR/usr/lib
-mkdir -p $DESTDIR/usr/bin
-mkdir -p $DESTDIR/usr/sbin
-mkdir -p $DESTDIR/usr/share
-mkdir -p $DESTDIR/usr/share/dbus-1
-mkdir -p $DESTDIR/usr/share/dbus-1/system-services/
+mkdir -p $DESTDIR$prefix/lib
+mkdir -p $DESTDIR$prefix/bin
+mkdir -p $DESTDIR$prefix/sbin
+mkdir -p $DESTDIR$prefix/share
+mkdir -p $DESTDIR$prefix/share/dbus-1
+mkdir -p $DESTDIR$prefix/share/dbus-1/system-services/
 mkdir -p $DESTDIR/etc/dbus-1/system.d/
-mkdir -p $DESTDIR/usr/share/polkit-1/actions/
+mkdir -p $DESTDIR$prefix/share/polkit-1/actions/
 
-cp ../build/lipa $DESTDIR/usr/bin/
-cp ../build/listallerd $DESTDIR/usr/sbin/
-cp ../data/dbus/org.freedesktop.Listaller.service $DESTDIR/usr/share/dbus-1/system-services/
+cp ../build/lipa $DESTDIR$prefix/bin/
+cp ../build/listallerd $DESTDIR$prefix/sbin/
+cp ../data/dbus/org.freedesktop.Listaller.service $DESTDIR$prefix/share/dbus-1/system-services/
 cp ../data/dbus/org.freedesktop.Listaller.conf $DESTDIR/etc/dbus-1/system.d/
-cp ../data/dbus/org.freedesktop.listaller.policy $DESTDIR/usr/share/polkit-1/actions/
+cp ../data/dbus/org.freedesktop.listaller.policy $DESTDIR$prefix/share/polkit-1/actions/
 
-cp ../build/libinstaller.so.0.4.0 $DESTDIR/usr/lib/
-cd $DESTDIR/usr/lib/
+cp ../build/libinstaller.so.0.4.0 $DESTDIR$prefix/lib/
+cd $DESTDIR$prefix/lib/
 if [ ! -f libinstaller.so.0.4 ]; then
 ln -s /usr/lib/libinstaller.so.0.4.0 libinstaller.so.0.4
 fi

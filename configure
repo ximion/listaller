@@ -14,6 +14,7 @@ function usage
 {
   echo "Usage:"
   echo " ./configure <options> [parameters]"
+  echo "Use --enable-<option> to enable features for build."
 }
 
 eval set -- "$PARSED_OPTIONS"
@@ -130,7 +131,8 @@ if [ "$FOUND_POLKIT" = "no" ]; then
   exit 8
 fi
 echo "Looking for working FPC..."
-if [ -e $(which fpc) ]; then
+FPCP=$(which fpc)
+if ([ -e $FPCP ]&&[ "$FPCP" != '' ]); then
   echo " FPC version: $(fpc -iW)"
 else
   echo " FPC was not found. Please install the compiler."
@@ -138,10 +140,11 @@ else
 fi
 
 echo "Searching LazBuild..."
-if [ -e $(which lazbuild) ]; then
+LZBP=$(which lazbuild)
+if ([ -e $LZBP ]&&[ "$LZBP" != '' ]); then
   echo " Found LazBuild version: $(lazbuild --version)"
 else
-  echo " LazBuild was not found. Is Lazarus installed?"
+  echo " LazBuild was not found. Have you installed the Lazarus-IDE?"
   exit 8
 fi
 echo
@@ -164,7 +167,7 @@ echo
 
 #  Install directory
 if [ -z "$prefix" ]; then
-   export prefix=/usr/
+   export prefix=/usr
 fi
 
 for dir in $dirs 
