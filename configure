@@ -3,12 +3,42 @@
 # Check if all required components are present to build Listaller
 #
 # syntax :
-#    ./configure <prefix>
+#    ./configure <options> [parameters]
 
-# set parameters
-if [ $# -gt 0 ]; then
-   export "$@"
+
+OPTION_SPEC="help,enable-qt,enable-creator,enable-gtk,prefix:"
+PARSED_OPTIONS=$(getopt -n "$0" -a -o h --long $OPTION_SPEC -- "$@")
+OPTIONS_RET=$?
+
+function usage
+{
+  echo "Usage:"
+  echo " ./configure <options> [parameters]"
+}
+
+eval set -- "$PARSED_OPTIONS"
+
+if [ $OPTIONS_RET -ne 0 ] || [ $# -le 0 ]; then
+  usage;
+  exit 1;
 fi
+
+while [ $# -ge 1 ]; do
+    case $1 in
+      --help | -h )  usage; exit 0;;
+      --enable-qt )  ENABLE_QT=1;;
+      --enable-gtk )  ENABLE_GTK=1;;
+      --enable-creator )  ENABLE_CREATOR=1;;
+      --prefix ) case "$2" in
+                   "") echo "The prefix option needs an argument!"; exit 3 ;;
+                    *) export prefix=$2 ; shift 2 ;;
+                 esac ;;
+
+      -- ) shift;;
+      * ) echo "ERROR: unknown flag $1"; exit 2;;
+    esac
+    shift
+done
 
 if [ -e "Makefile" ]; then
   echo "Cleaning up..."
@@ -46,6 +76,13 @@ FOUND_POLKIT="no"
 
 echo "Checking component requirements..."
 echo
+
+if [ ! -e "$(pwd)/src/Makefile.in" ]; then
+  echo "Makefile template was not found."
+  echo "Please cd to the Listaller source directory."
+  exit 8
+fi
+
 for dir in $libdirs 
 do
    cd $dir
@@ -60,38 +97,38 @@ done
 
 INSTDEV="Please install the development files."
 
-echo "Found GLib-2 ...$FOUND_GLIB"
+echo "Found GLib-2... $FOUND_GLIB"
 if [ "$FOUND_GLIB" = "no" ]; then
   echo " GLib was not found. $INSTDEV"
   exit 8
 fi
-echo "Found Qt4 interface ...$FOUND_QTINTF"
-if [ "$FOUND_QTINTF" = "no" ]; then
-  echo " Qt4 pascal interface was not found. $INSTDEV"
-  exit 8
+if [ "$ENABLE_QT" == "1" ]; then
+  echo "Found Qt4 interface... $FOUND_QTINTF"
+  if [ "$FOUND_QTINTF" = "no" ]; then
+    echo " Qt4 pascal interface was not found. $INSTDEV"
+    exit 8
+  fi
 fi
-echo "Found SQLite3 ...$FOUND_SQLITE"
+echo "Found SQLite3... $FOUND_SQLITE"
 if [ "$FOUND_SQLITE" = "no" ]; then
   echo " SQLite 3 was not found. $INSTDEV"
   exit 8
 fi
-echo "Found PackageKit ...$FOUND_PKIT"
+echo "Found PackageKit... $FOUND_PKIT"
 if [ "$FOUND_PKIT" = "no" ]; then
   echo " PackageKit was not found. $INSTDEV"
   exit 8
 fi
-echo "Found DBus ...$FOUND_DBUS"
+echo "Found DBus... $FOUND_DBUS"
 if [ "$FOUND_DBUS" = "no" ]; then
   echo " DBus was not found. $INSTDEV"
   exit 8
 fi
-echo "Found PolicyKit ...$FOUND_POLKIT"
+echo "Found PolicyKit... $FOUND_POLKIT"
 if [ "$FOUND_POLKIT" = "no" ]; then
   echo " PolicyKit was not found. $INSTDEV"
   exit 8
 fi
-echo
-
 echo "Looking for working FPC..."
 if [ -e $(which fpc) ]; then
   echo " FPC version: $(fpc -iW)"
@@ -107,7 +144,7 @@ else
   echo " LazBuild was not found. Is Lazarus installed?"
   exit 8
 fi
-
+echo
 echo "Preparing scripts..."
 #Add x right to execute build scripts
 cd ./src
@@ -132,10 +169,24 @@ fi
 
 for dir in $dirs 
 do
-   echo create $dir/Makefile 
+   echo "Create $dir/Makefile" 
    cd $dir
    sed "s#%PREFIX%#$prefix#" Makefile.in > Makefile
-   #sed -ixxx "s#%PREFIX%#$prefix#" Makefile
+   if [ "$ENABLE_QT" = "1" ]; then
+    sed -i 's/%Qt%//g' Makefile
+   else
+    sed -i 's/%Qt%/#/g' Makefile
+   fi
+   if [ "$ENABLE_GTK" = "1" ]; then
+    sed -i 's/%GTK+%//g' Makefile
+   else
+    sed -i 's/%GTK+%/#/g' Makefile
+   fi
+   if [ "$ENABLE_CREATOR" = "1" ]; then
+    sed -i 's/%LiCreator%//g' Makefile
+   else
+    sed -i 's/%LiCreator%/#/g' Makefile
+   fi
    rc=$?
    cd $basedir
    if [[ $rc -ne 0 ]]; then 
@@ -147,8 +198,22 @@ echo
 echo "Conclusion:"
 echo " Installing into $prefix"
 echo
+echo "Listaller will be built with the following features:"
+echo " Daemon and library: [enabled]"
+echo " Command-Line tools: [enabled]"
+if [ "$ENABLE_QT" = "1" ]; then
+ echo " Qt4 frontend: [enabled]"
+else echo " Qt4 frontend: [disabled]"
+fi
+if [ "$ENABLE_GTK" = "1" ]; then
+ echo " GTK2 frontend: [enabled]"
+else echo " GTK2 frontend: [disabled]"
+fi
+if [ "$ENABLE_CREATOR" = "1" ]; then
+ echo " Setup creator GUI: [enabled]"
+else echo " Setup creator GUI: [disabled]"
+fi
 echo
-echo "You can now run make all-<widgetset>" 
-echo "then make install-<widgetset>" 
-echo "Supported widgetsets are: qt4, gtk2"
+echo "You can now run make" 
+echo "then make install"
 echo

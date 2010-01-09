@@ -4,32 +4,25 @@
 # The First target is the one build when there is nothing on make command line
 all:
 	./make-base.sh
-	./make-gui.sh WIDGET=gtk2
-	./make-gui.sh WIDGET=qt4
+	%GTK+%./make-gui.sh WIDGET=gtk2
+	%Qt%./make-gui.sh WIDGET=qt4
+	%Qt%%LiCreator%./make-creator.sh WIDGET=qt4
+	%GTK+%%LiCreator%./make-creator.sh WIDGET=gtk2
 
-all-qt:
-	./make-base.sh
-	./make-gui.sh WIDGET=qt4
-
-all-gtk:
-	./make-base.sh
-	./make-gui.sh WIDGET=gtk2
-
-all-nogui:
-	./make-base.sh
-
-install-all:
+install:
 	./install-core.sh
 	./install-tools.sh
 	./install-data.sh
-	./install-gui.sh WIDGET=gtk2
-	./install-gui.sh WIDGET=qt4
+	%GTK+%./install-gui.sh WIDGET=gtk2
+	%Qt%./install-gui.sh WIDGET=qt4
+	%Qt%%LiCreator%./install-creator.sh WIDGET=qt4
+	%GTK+%%LiCreator%./install-creator.sh WIDGET=gtk2
 
 install-all-bin:
 	./install-core.sh
 	./install-tools.sh
-	./install-gui.sh WIDGET=gtk2
-	./install-gui.sh WIDGET=qt4
+	%GTK+%./install-gui.sh WIDGET=gtk2
+	%Qt%./install-gui.sh WIDGET=qt4
 
 install-data:
 	./install-data.sh
@@ -38,37 +31,10 @@ install-tools:
 	./install-core.sh
 	./install-tools.sh
 
-install-front-gtk:
+install-front:
 	./install-core.sh
-	./install-gui.sh WIDGET=gtk2 
-
-install-front-qt:
-	./install-core.sh
-	./install-gui.sh WIDGET=qt4
-
-install-all-gtk:
-	./install-core.sh
-	./install-tools.sh
-	./install-data.sh
-	./install-gui.sh WIDGET=gtk2
-
-install-all-qt:
-	./install-core.sh
-	./install-tools.sh
-	./install-data.sh
-	./install-gui.sh WIDGET=qt4
-
-licreator-qt:
-	./make-creator.sh WIDGET=qt4
-	
-licreator-gtk:
-	./make-creator.sh WIDGET=gtk2
-
-install-licreator-gtk:
-	./install-creator.sh WIDGET=gtk2
-
-install-licreator-qt:
-	./install-creator.sh WIDGET=qt4
+	%GTK+%./install-gui.sh WIDGET=gtk2
+	%Qt%./install-gui.sh WIDGET=qt4
 
 clean:
 	./clean.sh
