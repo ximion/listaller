@@ -32,7 +32,7 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
         <CursorPos X="10" Y="27"/>
-        <TopLine Value="73"/>
+        <TopLine Value="27"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="24"/>
         <Loaded Value="True"/>
@@ -143,11 +143,11 @@
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="./build/libuild"/>
+      <Filename Value="../build/libuild"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="abbrevia/;opbitmap/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/components/codetools/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/packager/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/"/>
+      <OtherUnitFiles Value="../abbrevia/;../opbitmap/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/components/codetools/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/packager/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <Other>

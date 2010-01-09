@@ -41,16 +41,18 @@ mkdir -p $DESTDIR/opt/appfiles/liCreator
 mkdir -p $DESTDIR$prefix/share/applications
 
 if [ "$WIDGET" == "qt4" ]; then
-cp './build/qt4/licreator' $DESTDIR/opt/appfiles/liCreator/
+cp '../build/qt4/licreator' $DESTDIR/opt/appfiles/liCreator/
 else
-cp './build/gtk2/licreator' $DESTDIR/opt/appfiles/liCreator/
+cp '../build/gtk2/licreator' $DESTDIR/opt/appfiles/liCreator/
 fi
 
-cp './graphics/listaller_creator.png' $DESTDIR/opt/appfiles/liCreator/
-cp "./liCreator/licreator.desktop" $DESTDIR"/usr/share/applications/"
+cp '../graphics/listaller_creator.png' $DESTDIR/opt/appfiles/liCreator/
+cp "../licreator/licreator.desktop" $DESTDIR$prefix/share/applications/
 
 #Create symlink
-cd $DESTDIR$prefix/bin
-ln -s /opt/appfiles/liCreator/licreator licreator
+if [ ! -e "$DESTDIR$prefix/bin/licreator" ]; then
+ cd $DESTDIR$prefix/bin
+ ln -s /opt/appfiles/liCreator/licreator licreator
+fi
 
 echo "Installation done. (liCreator)"

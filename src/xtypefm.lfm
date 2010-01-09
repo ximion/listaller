@@ -1,7 +1,7 @@
 object IMdFrm: TIMdFrm
-  Left = 361
+  Left = 398
   Height = 144
-  Top = 402
+  Top = 407
   Width = 634
   HorzScrollBar.Page = 633
   HorzScrollBar.Range = 483
@@ -2167,10 +2167,10 @@ object IMdFrm: TIMdFrm
   end
   object Label2: TLabel
     Left = 40
-    Height = 30
+    Height = 28
     Top = 38
-    Width = 523
-    Caption = 'Your PackageKit version is %p. Listaller needs PackageKit 0.4.2 or higher to work correctly. '#10'Please update PackageKit!'
+    Width = 441
+    Caption = 'Your PackageKit version is %p. Listaller needs PackageKit 0.5.6 or higher to work correctly. '#10'Please update PackageKit!'
     ParentColor = False
     Visible = False
   end
@@ -2185,9 +2185,9 @@ object IMdFrm: TIMdFrm
   end
   object PkILabel: TLabel
     Left = 40
-    Height = 14
-    Top = 76
-    Width = 498
+    Height = 13
+    Top = 77
+    Width = 418
     Anchors = [akLeft, akBottom]
     Caption = 'Make sure that you have got this package from a save source and a serious publisher!'
     ParentColor = False
@@ -2197,7 +2197,7 @@ object IMdFrm: TIMdFrm
     Left = 8
     Height = 38
     Top = 97
-    Width = 192
+    Width = 165
     Anchors = [akLeft, akBottom]
     AutoSize = True
     Caption = 'Install application for everyone'
@@ -2207,10 +2207,10 @@ object IMdFrm: TIMdFrm
     TabOrder = 0
   end
   object btnTest: TBitBtn
-    Left = 274
+    Left = 282
     Height = 38
     Top = 97
-    Width = 105
+    Width = 89
     Anchors = [akBottom]
     AutoSize = True
     Caption = 'Test application'
@@ -2220,10 +2220,10 @@ object IMdFrm: TIMdFrm
     TabOrder = 1
   end
   object btnHome: TBitBtn
-    Left = 440
+    Left = 463
     Height = 38
     Top = 97
-    Width = 188
+    Width = 165
     Anchors = [akRight, akBottom]
     AutoSize = True
     Caption = 'Install into my Home-directory'

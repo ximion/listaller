@@ -18,7 +18,7 @@ install:
 	%Qt%%LiCreator%./install-creator.sh WIDGET=qt4 prefix=%PREFIX%
 	%GTK+%%LiCreator%./install-creator.sh WIDGET=gtk2 prefix=%PREFIX%
 
-install-all-bin:
+install-binonly:
 	./install-core.sh
 	./install-tools.sh
 	%GTK+%./install-gui.sh WIDGET=gtk2 prefix=%PREFIX%

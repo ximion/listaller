@@ -2,20 +2,11 @@
 all:
 	$(MAKE) -C ./src all
 
-all-qt:
-	$(MAKE) -C ./src all-qt
+install:
+	$(MAKE) -C ./src install
 
-all-gtk:
-	$(MAKE) -C ./src all-gtk
-
-all-nogui:
-	$(MAKE) -C ./src all-nogui
-
-install-all:
-	$(MAKE) -C ./src install-all
-
-install-all-bin:
-	$(MAKE) -C ./src install-all-bin
+install-binonly:
+	$(MAKE) -C ./src install-binonly
 
 install-data:
 	$(MAKE) -C ./src install-data
@@ -23,29 +14,8 @@ install-data:
 install-tools:
 	$(MAKE) -C ./src install-tools
 
-install-front-gtk:
-	$(MAKE) -C ./src install-front-gtk
-
-install-front-qt:
-	$(MAKE) -C ./src install-front-qt
-
-install-all-gtk:
-	$(MAKE) -C ./src install-all-gtk
-
-install-all-qt:
-	$(MAKE) -C ./src install-all-qt
-
-licreator-qt:
-	$(MAKE) -C ./src licreator-qt
-	
-licreator-gtk:
-	$(MAKE) -C ./src licreator-gtk
-
-install-licreator-gtk:
-	$(MAKE) -C ./src install-licreator-gtk
-
-install-licreator-qt:
-	$(MAKE) -C ./src install-licreator-qt
+install-front:
+	$(MAKE) -C ./src install-front
 
 clean:
 	$(MAKE) -C ./src clean

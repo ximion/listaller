@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -46,6 +46,9 @@ PkExitEnum = (PK_EXIT_ENUM_UNKNOWN,
 	PK_EXIT_ENUM_MEDIA_CHANGE_REQUIRED,
 	PK_EXIT_ENUM_NEED_UNTRUSTED,
 	PK_EXIT_ENUM_LAST);
+
+//** The pkBitfield var
+PkBitfield = GUInt64;
 
 TPkProgressCallback = procedure(progress: Pointer;ptype: PK_PROGRESS_TYPE;user_data: GPointer);
 
@@ -155,11 +158,11 @@ procedure pk_client_remove_packages_async(client: Pointer;package_ids: PPGChar;
                                                   progress_callback: TPkProgressCallback;progress_user_data: GPointer;
                                                   callback_ready: TGAsyncReadyCallback;user_data: GPointer);
                                                   cdecl;external pklib2 name 'pk_client_remove_packages_async';
-procedure pk_client_search_file_async(client: Pointer;filters: GuInt64;
-                                              values: PPGChar;cancellable: PGObject;
-                                              progress_callback: TPkProgressCallback;progress_user_data: GPointer;
-                                              callback_ready: TGAsyncReadyCallback;user_data: GPointer);
-                                              cdecl;external pklib2 name 'pk_client_search_file_async';
+procedure pk_client_search_files_async(client: Pointer;filters: PkBitfield;values: PPGChar;
+                                                  cancellable: PGCancellable;
+                                                  progress_callback: TPKProgressCallback;progress_user_data: GPointer;
+                                                  callback_ready: TGAsyncReadyCallback;user_data: GPointer);
+                                                  cdecl;external;
 procedure pk_client_install_files_async(client: Pointer;only_trusted: GBoolean;
                                                 files: PPGChar;cancellable: PGObject;
                                                 progress_callback: TPkProgressCallback;progress_user_data: GPointer;
@@ -408,7 +411,7 @@ begin
   filter:=pk_filter_bitfield_from_text('installed');
 
   cancellable:=g_cancellable_new;
-   pk_client_search_file_async(pkclient,filter,StringToPPchar(fname, 0),cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
+   pk_client_search_files_async(pkclient,filter,StringToPPchar(fname, 0),cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
   g_main_loop_run(loop);
 
   Result:=true;
@@ -464,7 +467,7 @@ begin
   filter:=pk_filter_bitfield_from_text('none');
 
   cancellable:=g_cancellable_new;
-   pk_client_search_file_async(pkclient,filter,StringToPPchar(fname, 0),cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
+   pk_client_search_files_async(pkclient,filter,StringToPPchar(fname, 0),cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
   g_main_loop_run(loop);
 
   Result:=true;

@@ -24,6 +24,9 @@ case "$ARCH" in
  "i486") ARCH="i386";;
 esac
 
+SDIR=$(pwd)
+cd ..
+
 echo "Active widgetset: $WIDGET"
 
 # Does the install
@@ -67,6 +70,7 @@ if [ ! -f listallmgr-gtk ]; then
 ln -s /usr/lib/listaller/gtk2/listallmgr listallmgr-gtk
 fi
 fi
+cd $SDIR
 
 echo "Installation done."
 

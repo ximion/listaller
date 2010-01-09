@@ -385,11 +385,11 @@
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="build/liupdate"/>
+      <Filename Value="../build/liupdate"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="synapse/;abbrevia/;bindings/"/>
+      <OtherUnitFiles Value="../synapse/;../abbrevia/;../bindings/"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Parsing>

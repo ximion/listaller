@@ -226,11 +226,11 @@
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="build/litray"/>
+      <Filename Value="../build/litray"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="abbrevia/;synapse/;bindings/"/>
+      <OtherUnitFiles Value="../bindings/"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Linking>

@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -25,7 +25,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms,
   igobase, dgunit, trStrings, LResources, SysUtils, LiBasic,
-  liTranslator, liTypes, Installer, LCLType, Dialogs;
+  liTranslator, liTypes, xtypefm, Installer, LCLType, Dialogs;
 
 {$IFDEF WINDOWS}{$R listallgo.rc}{$ENDIF}
 

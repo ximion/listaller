@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -23,8 +23,8 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
   ComCtrls, StdCtrls, FileUtil, ExtCtrls, process, Buttons, LCLType,
-  LCLIntf, distri, LiBasic, trStrings, SynEdit, xTypeFm, Installer,
-  liTypes, IconLoader;
+  LCLIntf, distri, LiBasic, trStrings, xTypeFm, Installer, liTypes,
+  IconLoader;
 
 type
 

@@ -21,6 +21,8 @@ case "$ARCH" in
  "i486") ARCH="i386";;
 esac
 
+SDIR=$(pwd)
+cd $SDIR/..
 # Does the install
 #
 # "mkdir -p" is equivalent to ForceDirectories pascal function
@@ -40,5 +42,6 @@ cp ./graphics/libutton/lastblock.png $DESTDIR$prefix/share/listaller/graphics/li
 cp -dpr ./graphics/libutton/distro/ $DESTDIR$prefix/share/listaller/graphics/libutton/distro/
 rm -rf $DESTDIR$prefix/share/listaller/graphics/libutton/distro/.svn
 rm -rf $DESTDIR$prefix/share/listaller/graphics/libutton/distro/.directory
+cd $SDIR
 
 echo "Installation done."

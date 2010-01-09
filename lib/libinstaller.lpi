@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="930"/>
+      <CurrentBuildNr Value="934"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -33,7 +33,7 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="9" Y="23"/>
+        <CursorPos X="25" Y="22"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="53"/>
@@ -91,8 +91,8 @@
       <Unit8>
         <Filename Value="../bindings/packagekit.pas"/>
         <UnitName Value="packagekit"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="133"/>
+        <CursorPos X="26" Y="1"/>
+        <TopLine Value="1"/>
         <UsageCount Value="14"/>
       </Unit8>
       <Unit9>
@@ -288,7 +288,7 @@
         <UsageCount Value="10"/>
       </Unit36>
     </Units>
-    <JumpHistory Count="5" HistoryIndex="4">
+    <JumpHistory Count="6" HistoryIndex="5">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="22" Column="28" TopLine="1"/>
@@ -309,6 +309,10 @@
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="23" Column="9" TopLine="1"/>
       </Position5>
+      <Position6>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="25" TopLine="1"/>
+      </Position6>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

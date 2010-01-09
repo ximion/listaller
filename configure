@@ -67,9 +67,11 @@ SQLITENAME="libsqlite3.so"
 PACKAGEKITNAME="libpackagekit-glib2.so"
 DBUSNAME="libdbus-1.so"
 POLKITNAME="libpolkit-gobject-1.so"
+GTKLIBNAME="libgtk-x11-2.0.so"
 
 FOUND_GLIB="no"
 FOUND_QTINTF="no"
+FOUND_GTK="no"
 FOUND_SQLITE="no"
 FOUND_PKIT="no"
 FOUND_DBUS="no"
@@ -89,6 +91,7 @@ do
    cd $dir
     [ -e $GLIBNAME ] && FOUND_GLIB="yes"
     [ -e $QT4INTFNAME ] && FOUND_QTINTF="yes"
+    [ -e $GTKLIBNAME ] && FOUND_GTK="yes"
     [ -e $SQLITENAME ] && FOUND_SQLITE="yes"
     [ -e $PACKAGEKITNAME ] && FOUND_PKIT="yes"
     [ -e $DBUSNAME ] && FOUND_DBUS="yes"
@@ -107,6 +110,13 @@ if [ "$ENABLE_QT" == "1" ]; then
   echo "Found Qt4 interface... $FOUND_QTINTF"
   if [ "$FOUND_QTINTF" = "no" ]; then
     echo " Qt4 pascal interface was not found. $INSTDEV"
+    exit 8
+  fi
+fi
+if [ "$ENABLE_GTK" == "1" ]; then
+  echo "Found GTK+... $FOUND_QTINTF"
+  if [ "$FOUND_GTK" = "no" ]; then
+    echo " GTK2 was not found. $INSTDEV"
     exit 8
   fi
 fi
