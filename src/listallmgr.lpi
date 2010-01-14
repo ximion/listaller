@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="3"/>
-      <CurrentBuildNr Value="1674"/>
+      <CurrentBuildNr Value="1676"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -61,8 +61,8 @@
         <ComponentName Value="MnFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="5" Y="123"/>
-        <TopLine Value="116"/>
+        <CursorPos X="72" Y="25"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="178"/>
         <Loaded Value="True"/>
@@ -632,8 +632,8 @@
       <Unit82>
         <Filename Value="lentries.pas"/>
         <UnitName Value="lentries"/>
-        <CursorPos X="6" Y="215"/>
-        <TopLine Value="191"/>
+        <CursorPos X="47" Y="219"/>
+        <TopLine Value="190"/>
         <UsageCount Value="10"/>
       </Unit82>
       <Unit83>
@@ -774,7 +774,7 @@
         <UsageCount Value="10"/>
       </Unit102>
     </Units>
-    <JumpHistory Count="26" HistoryIndex="25">
+    <JumpHistory Count="27" HistoryIndex="26">
       <Position1>
         <Filename Value="manager.pas"/>
         <Caret Line="777" Column="25" TopLine="748"/>
@@ -879,6 +879,10 @@
         <Filename Value="manager.pas"/>
         <Caret Line="124" Column="5" TopLine="116"/>
       </Position26>
+      <Position27>
+        <Filename Value="manager.pas"/>
+        <Caret Line="25" Column="72" TopLine="1"/>
+      </Position27>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

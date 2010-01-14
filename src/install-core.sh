@@ -28,7 +28,6 @@ mkdir -p $DESTDIR$prefix/lib
 mkdir -p $DESTDIR$prefix/bin
 mkdir -p $DESTDIR$prefix/sbin
 mkdir -p $DESTDIR$prefix/share
-mkdir -p $DESTDIR$prefix/share/dbus-1
 mkdir -p $DESTDIR$prefix/share/dbus-1/system-services/
 mkdir -p $DESTDIR/etc/dbus-1/system.d/
 mkdir -p $DESTDIR$prefix/share/polkit-1/actions/

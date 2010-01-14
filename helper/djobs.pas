@@ -460,7 +460,7 @@ begin
       dbus_message_iter_get_basic(@args, @param);
    appinfo.UId:=param;
 
-   p_info('Remove application called with '+appinfo.name);
+   p_info('Removing application called "'+appinfo.name+'"');
 
  //Start work
   Resume();
@@ -469,6 +469,7 @@ end;
 destructor TDoAppRemove.Destroy;
 begin
  Dec(ManagerWorkers);
+ p_debug('App remove job deleted.');
  inherited;
 end;
 
@@ -631,6 +632,7 @@ begin
   if allowed = AC_NOT_AUTHORIZED then
   begin
    p_error('Not authorized to call this action.');
+   SendReply(false);
    Terminate;
    exit;
   end;

@@ -37,6 +37,8 @@ type
  TRqResult = (rqsYes,rqsNo,rqsOK);
  //** Message types
  TMType    = (mtInfo,mtWarning);
+ //** Result of a DBus action
+ TProcStatus = (prFailed, prAuthorized, prBlocked, prFinished, prError, prInfo);
 
  //** Callback for user request
  TRequestCall = function(mtype: TRqType;msg: PChar;user_data: Pointer): TRqResult;cdecl;

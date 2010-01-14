@@ -20,7 +20,7 @@ library libinstaller;
 
 uses
   cthreads, Classes, ipkHandle, SysUtils, Controls, liCommon, liTypes,
-  management, liBasic;
+  management, liBasic, dbusproc;
 
 
 //////////////////////////////////////////////////////////////////////////////////////

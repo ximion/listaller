@@ -6,13 +6,13 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="934"/>
+      <CurrentBuildNr Value="1014"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -28,135 +28,137 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="37">
+    <Units Count="40">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="25" Y="22"/>
-        <TopLine Value="1"/>
+        <CursorPos X="10" Y="23"/>
+        <TopLine Value="23"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="53"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="65" Y="24"/>
+        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="19"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
         <UnitName Value="licommon"/>
         <CursorPos X="37" Y="547"/>
         <TopLine Value="527"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit2>
       <Unit3>
         <Filename Value="../ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
         <CursorPos X="44" Y="1048"/>
         <TopLine Value="1030"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit3>
       <Unit4>
         <Filename Value="../distri.pas"/>
         <UnitName Value="distri"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit4>
       <Unit5>
         <Filename Value="../packagekit.pas"/>
         <UnitName Value="packagekit"/>
         <CursorPos X="4" Y="203"/>
         <TopLine Value="175"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit5>
       <Unit6>
         <Filename Value="../header/installer.pas"/>
         <UnitName Value="installer"/>
         <CursorPos X="79" Y="76"/>
         <TopLine Value="61"/>
-        <UsageCount Value="14"/>
+        <UsageCount Value="13"/>
       </Unit6>
       <Unit7>
         <Filename Value="../bindings/installer.pas"/>
         <UnitName Value="installer"/>
         <CursorPos X="40" Y="231"/>
         <TopLine Value="213"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit7>
       <Unit8>
         <Filename Value="../bindings/packagekit.pas"/>
         <UnitName Value="packagekit"/>
         <CursorPos X="26" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="14"/>
+        <UsageCount Value="13"/>
       </Unit8>
       <Unit9>
         <Filename Value="../bindings/pkitclient.pas"/>
         <UnitName Value="pkitclient"/>
         <CursorPos X="1" Y="145"/>
         <TopLine Value="102"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit9>
       <Unit10>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.2.4/packages/gtk2/src/glib/glib2.pas"/>
         <UnitName Value="glib2"/>
         <CursorPos X="54" Y="1521"/>
         <TopLine Value="1486"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit10>
       <Unit11>
         <Filename Value="../litypes.pas"/>
         <UnitName Value="litypes"/>
         <CursorPos X="43" Y="35"/>
         <TopLine Value="15"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit11>
       <Unit12>
         <Filename Value="../ipkdef.pas"/>
         <UnitName Value="ipkdef"/>
         <CursorPos X="22" Y="138"/>
         <TopLine Value="117"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit12>
       <Unit13>
         <Filename Value="../trstrings.pas"/>
         <UnitName Value="trstrings"/>
         <CursorPos X="39" Y="121"/>
         <TopLine Value="101"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit13>
       <Unit14>
         <Filename Value="../bindings/packagekit2.pas"/>
         <UnitName Value="packagekit"/>
         <CursorPos X="17" Y="17"/>
         <TopLine Value="1"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit14>
       <Unit15>
         <Filename Value="../synapse/ftpsend.pas"/>
         <UnitName Value="ftpsend"/>
         <CursorPos X="11" Y="1040"/>
         <TopLine Value="1020"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit15>
       <Unit16>
         <Filename Value="../synapse/blcksock.pas"/>
         <UnitName Value="blcksock"/>
         <CursorPos X="33" Y="335"/>
         <TopLine Value="314"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit16>
       <Unit17>
         <Filename Value="management.pas"/>
         <UnitName Value="management"/>
-        <CursorPos X="26" Y="1"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="11"/>
+        <CursorPos X="59" Y="559"/>
+        <TopLine Value="538"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="14"/>
+        <Loaded Value="True"/>
       </Unit17>
       <Unit18>
         <Filename Value="../linotify.pas"/>
@@ -166,153 +168,267 @@
         <UnitName Value="linotify"/>
         <CursorPos X="20" Y="86"/>
         <TopLine Value="85"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit18>
       <Unit19>
         <Filename Value="../bindings/appman.pas"/>
         <UnitName Value="appman"/>
         <CursorPos X="27" Y="26"/>
         <TopLine Value="1"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit19>
       <Unit20>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/rtl/objpas/sysutils/diskh.inc"/>
         <CursorPos X="10" Y="21"/>
         <TopLine Value="1"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit20>
       <Unit21>
         <Filename Value="mtprocs.pas"/>
         <UnitName Value="MTProcs"/>
         <CursorPos X="15" Y="686"/>
         <TopLine Value="666"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit21>
       <Unit22>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/rtl/objpas/classes/classesh.inc"/>
         <CursorPos X="25" Y="1398"/>
         <TopLine Value="1378"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit22>
       <Unit23>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/rtl/inc/objpash.inc"/>
         <CursorPos X="8" Y="170"/>
         <TopLine Value="162"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit23>
       <Unit24>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/rtl/objpas/sysutils/sysutilh.inc"/>
         <CursorPos X="4" Y="66"/>
         <TopLine Value="58"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit24>
       <Unit25>
         <Filename Value="../RegExpr.pas"/>
         <UnitName Value="RegExpr"/>
         <CursorPos X="19" Y="3816"/>
         <TopLine Value="3795"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit25>
       <Unit26>
         <Filename Value="../libasic.pas"/>
         <UnitName Value="libasic"/>
         <CursorPos X="11" Y="86"/>
         <TopLine Value="66"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit26>
       <Unit27>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-protocol.inc"/>
         <CursorPos X="3" Y="61"/>
         <TopLine Value="47"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit27>
       <Unit28>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/diskh.inc"/>
         <CursorPos X="10" Y="20"/>
         <TopLine Value="1"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit28>
       <Unit29>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/inc/ctypes.pp"/>
         <UnitName Value="ctypes"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="25"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit29>
       <Unit30>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/inc/systemh.inc"/>
         <CursorPos X="3" Y="275"/>
         <TopLine Value="255"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit30>
       <Unit31>
         <Filename Value="../src/litypes.pas"/>
         <UnitName Value="litypes"/>
-        <CursorPos X="26" Y="1"/>
-        <TopLine Value="43"/>
-        <UsageCount Value="10"/>
+        <CursorPos X="2" Y="41"/>
+        <TopLine Value="20"/>
+        <UsageCount Value="12"/>
       </Unit31>
       <Unit32>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus.pas"/>
         <UnitName Value="dbus"/>
         <CursorPos X="23" Y="57"/>
         <TopLine Value="52"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit32>
       <Unit33>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/fcl-db/src/sqlite/sqlite3ds.pas"/>
         <UnitName Value="Sqlite3DS"/>
         <CursorPos X="13" Y="65"/>
         <TopLine Value="25"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit33>
       <Unit34>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/fcl-db/src/sqlite/customsqliteds.pas"/>
         <UnitName Value="CustomSqliteDS"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit34>
       <Unit35>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/sqlite/src/sqlite3.pp"/>
         <UnitName Value="sqlite3"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit35>
       <Unit36>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/fcl-db/src/base/db.pas"/>
         <UnitName Value="db"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="49"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit36>
+      <Unit37>
+        <Filename Value="dbusproc.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="dbusproc"/>
+        <CursorPos X="1" Y="192"/>
+        <TopLine Value="156"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="25"/>
+        <Loaded Value="True"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.2.4/rtl/inc/objpash.inc"/>
+        <CursorPos X="23" Y="151"/>
+        <TopLine Value="130"/>
+        <UsageCount Value="9"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.2.4/rtl/objpas/classes/classesh.inc"/>
+        <CursorPos X="3" Y="1357"/>
+        <TopLine Value="1384"/>
+        <UsageCount Value="9"/>
+      </Unit39>
     </Units>
-    <JumpHistory Count="6" HistoryIndex="5">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="28" TopLine="1"/>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="16" Column="18" TopLine="11"/>
       </Position1>
       <Position2>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="453" Column="29" TopLine="427"/>
+        <Filename Value="management.pas"/>
+        <Caret Line="553" Column="49" TopLine="538"/>
       </Position2>
       <Position3>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="65" TopLine="1"/>
+        <Filename Value="management.pas"/>
+        <Caret Line="560" Column="11" TopLine="542"/>
       </Position3>
       <Position4>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="23" Column="8" TopLine="1"/>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="31" Column="22" TopLine="10"/>
       </Position4>
       <Position5>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="23" Column="9" TopLine="1"/>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="51" Column="25" TopLine="18"/>
       </Position5>
       <Position6>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="25" TopLine="1"/>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="78" Column="10" TopLine="58"/>
       </Position6>
+      <Position7>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="37" Column="15" TopLine="16"/>
+      </Position7>
+      <Position8>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="80" Column="31" TopLine="59"/>
+      </Position8>
+      <Position9>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="88" Column="5" TopLine="69"/>
+      </Position9>
+      <Position10>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="42" Column="22" TopLine="13"/>
+      </Position10>
+      <Position11>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="15" Column="22" TopLine="1"/>
+      </Position11>
+      <Position12>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="69" Column="8" TopLine="48"/>
+      </Position12>
+      <Position13>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="77" Column="42" TopLine="56"/>
+      </Position13>
+      <Position14>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="18" Column="18" TopLine="8"/>
+      </Position14>
+      <Position15>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="78" Column="51" TopLine="57"/>
+      </Position15>
+      <Position16>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="80" Column="10" TopLine="58"/>
+      </Position16>
+      <Position17>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="115" Column="32" TopLine="93"/>
+      </Position17>
+      <Position18>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="114" Column="31" TopLine="91"/>
+      </Position18>
+      <Position19>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="201" Column="31" TopLine="179"/>
+      </Position19>
+      <Position20>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="225" Column="53" TopLine="25"/>
+      </Position20>
+      <Position21>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="226" Column="11" TopLine="205"/>
+      </Position21>
+      <Position22>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="255" Column="27" TopLine="234"/>
+      </Position22>
+      <Position23>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="101" Column="31" TopLine="65"/>
+      </Position23>
+      <Position24>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="269" Column="33" TopLine="236"/>
+      </Position24>
+      <Position25>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="302" Column="31" TopLine="281"/>
+      </Position25>
+      <Position26>
+        <Filename Value="management.pas"/>
+        <Caret Line="553" Column="2" TopLine="542"/>
+      </Position26>
+      <Position27>
+        <Filename Value="management.pas"/>
+        <Caret Line="53" Column="69" TopLine="46"/>
+      </Position27>
+      <Position28>
+        <Filename Value="management.pas"/>
+        <Caret Line="555" Column="16" TopLine="538"/>
+      </Position28>
+      <Position29>
+        <Filename Value="dbusproc.pas"/>
+        <Caret Line="16" Column="23" TopLine="1"/>
+      </Position29>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

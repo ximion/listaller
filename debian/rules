@@ -9,7 +9,7 @@ build: build-stamp
 build-stamp:
 	dh_testdir
 	
-	@chmod +x ./configure
+	@chmod +x ./configure --enable-gtk --enable-qt --enable-creator
 	./configure
 	$(MAKE) all
 	$(MAKE) licreator-gtk
@@ -55,7 +55,7 @@ binary-arch: build install
 	dh_installmime
 	dh_installman
 	dh_link
-	dh_strip # --dbg-package=listaller-gtk-dbg --dbg-package=listaller-tools-dbg --dbg-package=listaller-core-dbg --dbg-package=listaller-creation-gtk-dbg --dbg-package=lithememgr-gtk-dbg --dbg-package=listaller-qt-dbg --dbg-package=listaller-creation-qt-dbg
+	dh_strip
 	dh_compress
 	dh_fixperms
 	dh_makeshlibs

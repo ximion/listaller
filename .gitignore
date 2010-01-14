@@ -1,11 +1,13 @@
 *~
 *.patch
-build
 *.ppu
 *.compiled
-.directory
 *.bak
 *.manifest
+*.lrs
+*.so
+.directory
+build
 Makefile
 bindings/packagekit-old.pas
 bindings/test

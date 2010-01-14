@@ -213,7 +213,11 @@ end;
 
 procedure TListEntry.SetImage(AImage: String);
 begin
-Graphic.Picture.LoadFromFile(AImage);
+try
+ Graphic.Picture.LoadFromFile(AImage);
+except
+ writeLn('Error while loading "'+AImage+'"!');
+end;
 end;
 
 procedure TListEntry.LoadFromAppInfo(ai: TAppInfo);

@@ -19,13 +19,11 @@ fi
 
 ARCH=$(uname -m)
 case "$ARCH" in
-
  "i686") ARCH="i386";;
-
  "i586") ARCH="i386";;
-
  "i486") ARCH="i386";;
 esac
+
 if [ $ARCH = "x86_64" ]; then TDir="/usr/lib64/"
 else TDir="/usr/lib/"
 fi

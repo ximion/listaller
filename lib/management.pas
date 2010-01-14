@@ -22,8 +22,8 @@ interface
 
 uses
   Classes, SysUtils, SQLite3Ds, IniFiles, GetText, TRStrings, LiCommon,
-  DB, FileUtil, packagekit, Process, ipkhandle, liTypes, liBasic, dbus,
-  cTypes;
+  DB, FileUtil, packagekit, Process, ipkhandle, liTypes, liBasic,
+  dbusproc;
 
 type
  PAppManager = ^TAppManager;
@@ -49,8 +49,8 @@ type
   function UninstallMojo(dsk: String): Boolean;
   //** Catch the PackageKit progress
   procedure PkitProgress(pos: Integer;xd: Pointer);
-  //** Remove app as root via remote DBus connection
-  procedure UninstallAppAsRoot(obj: TAppInfo);
+  //** Catch status messages from DBus process
+  procedure DBusThreadStatusChange(ty: TProcStatus;data: TLiProcData);
  public
   constructor Create;
   destructor Destroy;override;
@@ -550,238 +550,31 @@ begin
 end;
 end;
 
-procedure TAppManager.UninstallAppAsRoot(obj: TAppInfo);
-var
-  dmsg: PDBusMessage;
-  args: DBusMessageIter;
-  pending: PDBusPendingCall;
-  stat: Boolean;
-  rec: PChar;
-  err: DBusError;
-  conn: PDBusConnection;
-  action_finished: Boolean;
-
-  intvalue: cuint32;
-  strvalue: PChar;
-  boolvalue: Boolean;
+procedure TAppManager.DBusThreadStatusChange(ty: TProcStatus;data: TLiProcData);
 begin
-
-  dbus_error_init(@err);
-
-  //New DBus connection
-  conn := dbus_bus_get_private(DBUS_BUS_SYSTEM, @err);
-
-  if dbus_error_is_set(@err) <> 0 then
-  begin
-    p_error('Connection Error: '#10+err.message);
-    dbus_error_free(@err);
-    request('An error occured during remove request.',rqError);
+  case data.changed of
+    pdProgress: setpos(data.progress);
+    pdInfo: msg(data.info,mtInfo);
+    pdError: request(data.msg,rqError);
+    pdStatus: p_debug('Thread status changed [finished]');
   end;
-
-  if conn = nil then exit;
-
-  p_info('Calling listaller-daemon...');
-  // create a new method call and check for errors
-  dmsg := dbus_message_new_method_call('org.freedesktop.Listaller', // target for the method call
-                                      '/org/freedesktop/Listaller/Manager1', // object to call on
-                                      'org.freedesktop.Listaller.Manage', // interface to call on
-                                      'RemoveApp'); // method name
-  if (dmsg = nil) then
-  begin
-    p_error('Message Null');
-    exit;
-  end;
-
-  //append arguments
-  dbus_message_iter_init_append(dmsg, @args);
-  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @obj.Name) = 0) then
-  begin
-    p_error('Out Of Memory!');
-    exit;
-  end;
-
-  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @obj.UId) = 0) then
-  begin
-    p_error('Out Of Memory!');
-    exit;
-  end;
-
-  // send message and get a handle for a reply
-  if (dbus_connection_send_with_reply(conn, dmsg, @pending, -1) = 0) then // -1 is default timeout
-  begin
-    p_error('Out Of Memory!');
-    exit;
-  end;
-  if (pending = nil) then
-  begin
-    p_error('Pending Call Null');
-    exit;
-  end;
-  dbus_connection_flush(conn);
-
-  p_info('AppRemove request sent');
-
-  // free message
-  dbus_message_unref(dmsg);
-
-  // block until we recieve a reply
-  dbus_pending_call_block(pending);
-
-  // get the reply message
-  dmsg := dbus_pending_call_steal_reply(pending);
-  if (dmsg = nil) then
-  begin
-    p_error('Reply Null');
-    exit;
-  end;
-  // free the pending message handle
-  dbus_pending_call_unref(pending);
-
-  // read the parameters
-  if (dbus_message_iter_init(dmsg, @args) = 0) then
-     p_error('Message has no arguments!')
-  else if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
-     p_error('Argument is not boolean!')
-  else
-     dbus_message_iter_get_basic(@args, @stat);
-
-  if (dbus_message_iter_next(@args) = 0) then
-     p_error('Message has too few arguments!')
-  else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
-     p_error('Argument is no string!')
-  else
-     dbus_message_iter_get_basic(@args, @rec);
-
-  if (stat = false) then
-  begin
-   if rec = 'blocked' then
-    request('You are not authorized to do this action!',rqInfo)
-   else
-    request('An error occured during install request.',rqError);
-   exit;
-  end;
-  // free reply
-  dbus_message_unref(dmsg);
-
-  //////////////////////////////////////////////////////////////////////
-
-  //Now start listening to Listaller dbus signals and forward them to
-  //native functions until the "Finished" signal is received
-
-  // add a rule for which messages we want to see
-  dbus_bus_add_match(conn,
-  'type=''signal'',sender=''org.freedesktop.Listaller'', interface=''org.freedesktop.Listaller.Manage'', path=''/org/freedesktop/Listaller/Manager1'''
-  , @err);
-
-  dbus_connection_flush(conn);
-  if (dbus_error_is_set(@err) <> 0) then
-  begin
-    p_error('Match Error ('+err.message+')');
-    exit;
-  end;
-  p_info('Match rule sent');
-
-  setpos(0);
-  action_finished:=false;
-  // loop listening for signals being emmitted
-  while (not action_finished) do
-  begin
-    // non blocking read of the next available message
-    dbus_connection_read_write(conn, 0);
-    dmsg:=dbus_connection_pop_message(conn);
-
-    // loop again if we haven't read a message
-    if (dmsg = nil) then
-    begin
-      sleep(1);
-      Continue;
-    end;
-
-    //Convert all DBus signals into standard callbacks
-
-    //Change of progress
-    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Manage', 'ProgressChange') <> 0) then
-    begin
-      // read the parameters
-      if (dbus_message_iter_init(dmsg, @args) = 0) then
-         p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_UINT32 <> dbus_message_iter_get_arg_type(@args)) then
-         p_error('Argument is no integer!')
-      else
-      begin
-         dbus_message_iter_get_basic(@args, @intvalue);
-         setpos(intvalue);
-      end;
-    end;
-
-    //Receive new message
-    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Manage', 'Message') <> 0) then
-    begin
-      // read the parameters
-      if (dbus_message_iter_init(dmsg, @args) = 0) then
-         p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
-         p_error('Argument is no string!')
-      else
-      begin
-         dbus_message_iter_get_basic(@args, @strvalue);
-         msg(strvalue,mtInfo);
-      end;
-    end;
-
-    //Break on error signal
-    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Manage', 'Error') <> 0) then
-    begin
-      // read the parameters
-      if (dbus_message_iter_init(dmsg, @args) = 0) then
-         p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
-         p_error('Argument is no string!')
-      else
-      begin
-         dbus_message_iter_get_basic(@args, @strvalue);
-         //The action failed. Diplay error and leave the loop
-          request(strvalue,rqError);
-          action_finished:=true;
-      end;
-    end;
-
-    //Check if the installation has finished
-    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Manage', 'Finished') <> 0) then
-    begin
-      // read the parameters
-      if (dbus_message_iter_init(dmsg, @args) = 0) then
-         p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
-         p_error('Argument is no boolean!')
-      else
-      begin
-         dbus_message_iter_get_basic(@args, @boolvalue);
-         action_finished:=boolvalue;
-         if (not boolvalue) then
-         begin
-          //The action failed. Leave the loop and display message
-          request('The action failed.',rqError);
-          action_finished:=true;
-         end;
-      end;
-    end;
-
-    // free the message
-    dbus_message_unref(dmsg);
-  end;
-
 end;
 
 procedure TAppManager.UninstallApp(obj: TAppInfo);
 var f,g: String; t:TProcess;tmp: TStringList;pkit: TPackageKit;i: Integer;
-    name,id: String;
+    name,id: String;buscmd: ListallerBusCommand;
 begin
 
 setpos(0);
 if (SUMode)and(not IsRoot) then
 begin
- UninstallAppAsRoot(obj);
+ //Create worker thread for this action
+ buscmd.cmdtype:=lbaUninstallApp;
+ buscmd.appinfo:=obj;
+ with TLiDBusAction.Create(buscmd) do
+ begin
+   OnStatus:=@DBusThreadStatusChange;
+ end;
  exit;
 end;
 
