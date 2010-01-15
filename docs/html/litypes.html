@@ -23,6 +23,10 @@ This unit contains some basic types (especially for use with libs)</p>
 <th class="itemdesc">Description</th>
 </tr>
 <tr class="list">
+<td class="itemname">record&nbsp;<a class="bold"  href="litypes.TLiStatusData.html"><code>TLiStatusData</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
 <td class="itemname">record&nbsp;<a class="bold"  href="litypes.TAppInfo.html"><code>TAppInfo</code></a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
@@ -39,30 +43,33 @@ This unit contains some basic types (especially for use with libs)</p>
 <td class="itemcode"><code><b><a   href="litypes.html#TRqResult">TRqResult</a></b> = (...);</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code><b><a   href="litypes.html#TMType">TMType</a></b> = (...);</code></td>
+<td class="itemcode"><code><b><a   href="litypes.html#TMessageType">TMessageType</a></b> = (...);</code></td>
 </tr>
 <tr class="list">
+<td class="itemcode"><code><b><a   href="litypes.html#LiProcStatus">LiProcStatus</a></b> = (...);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="litypes.html#LiStatusChange">LiStatusChange</a></b> = (...);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a></b> = procedure(change: <a   href="litypes.html#LiStatusChange">LiStatusChange</a>;data: <a   href="litypes.TLiStatusData.html">TLiStatusData</a>;user_data: Pointer); cdecl;</code></td>
+</tr>
+<tr class="list2">
 <td class="itemcode"><code><b><a   href="litypes.html#TRequestCall">TRequestCall</a></b> = function(mtype: <a   href="litypes.html#TRqType">TRqType</a>;msg: PChar;user_data: Pointer): <a   href="litypes.html#TRqResult">TRqResult</a>; cdecl;</code></td>
 </tr>
-<tr class="list2">
-<td class="itemcode"><code><b><a   href="litypes.html#TMessageCall">TMessageCall</a></b> = procedure(msg: PChar;imp: <a   href="litypes.html#TMType">TMType</a>;user_data: Pointer); cdecl;</code></td>
-</tr>
 <tr class="list">
-<td class="itemcode"><code><b><a   href="litypes.html#TProgressCall">TProgressCall</a></b> = procedure(pos: Integer;user_data: Pointer); cdecl;</code></td>
-</tr>
-<tr class="list2">
 <td class="itemcode"><code><b><a   href="litypes.html#TProgressEvent">TProgressEvent</a></b> = procedure(pos: Integer;user_data: Pointer) of object;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code><b><a   href="litypes.html#TGroupType">TGroupType</a></b> = (...);</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code><b><a   href="litypes.html#PAppInfo">PAppInfo</a></b> = &circ;<a   href="litypes.TAppInfo.html">TAppInfo</a>;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code><b><a   href="litypes.html#TAppEvent">TAppEvent</a></b> = function(name: PChar;obj: <a   href="litypes.html#PAppInfo">PAppInfo</a>): Boolean; cdecl;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code><b><a   href="litypes.html#TPkgType">TPkgType</a></b> = (...);</code></td>
 </tr>
 </table>
@@ -80,7 +87,7 @@ This unit contains some basic types (especially for use with libs)</p>
 </tr>
 <tr><td colspan="1">
 <p>
-Pointer to TStringList</p>
+Version of Listaller API Pointer to TStringList</p>
 </td></tr>
 </table>
 <table class="detail wide_list">
@@ -123,18 +130,73 @@ rqsOK: &nbsp;</li>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="TMType"></a><code><b>TMType</b> = (...);</code></td>
+<td class="itemcode"><a name="TMessageType"></a><code><b>TMessageType</b> = (...);</code></td>
 </tr>
 <tr><td colspan="1">
 <p>
-Message types</p>
+Type of a message (published)</p>
 <h6 class="description_section">Values</h6>
 <ul>
 <li>
-mtInfo: &nbsp;</li>
+mtStep: &nbsp;</li>
 <li>
-mtWarning: &nbsp;</li>
+mtInfo: &nbsp;</li>
 </ul>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="LiProcStatus"></a><code><b>LiProcStatus</b> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Result of a DBus action</p>
+<h6 class="description_section">Values</h6>
+<ul>
+<li>
+prFailed: &nbsp;</li>
+<li>
+prAuthorized: &nbsp;</li>
+<li>
+prBlocked: &nbsp;</li>
+<li>
+prFinished: &nbsp;</li>
+<li>
+prError: &nbsp;</li>
+<li>
+prInfo: &nbsp;</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="LiStatusChange"></a><code><b>LiStatusChange</b> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Things which can be changed</p>
+<h6 class="description_section">Values</h6>
+<ul>
+<li>
+scMnProgress: &nbsp;</li>
+<li>
+scExProgress: &nbsp;</li>
+<li>
+scActionResult: &nbsp;</li>
+<li>
+scMessage: &nbsp;</li>
+<li>
+scStepMessage: &nbsp;</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="TLiStatusChangeCall"></a><code><b>TLiStatusChangeCall</b> = procedure(change: <a   href="litypes.html#LiStatusChange">LiStatusChange</a>;data: <a   href="litypes.TLiStatusData.html">TLiStatusData</a>;user_data: Pointer); cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Callback for change of status</p>
 </td></tr>
 </table>
 <table class="detail wide_list">
@@ -144,24 +206,6 @@ mtWarning: &nbsp;</li>
 <tr><td colspan="1">
 <p>
 Callback for user request</p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="itemcode"><a name="TMessageCall"></a><code><b>TMessageCall</b> = procedure(msg: PChar;imp: <a   href="litypes.html#TMType">TMType</a>;user_data: Pointer); cdecl;</code></td>
-</tr>
-<tr><td colspan="1">
-<p>
-Callback that submits a notification</p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="itemcode"><a name="TProgressCall"></a><code><b>TProgressCall</b> = procedure(pos: Integer;user_data: Pointer); cdecl;</code></td>
-</tr>
-<tr><td colspan="1">
-<p>
-Called if a progress was changed</p>
 </td></tr>
 </table>
 <table class="detail wide_list">
@@ -255,6 +299,6 @@ ptUnknown: &nbsp;</li>
 Name of the Listaller library</p>
 </td></tr>
 </table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2009-11-23 22:26:17</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-01-15 19:52:44</em>
 </span>
 </body></html>

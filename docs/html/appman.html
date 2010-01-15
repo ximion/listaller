@@ -28,30 +28,27 @@ This unit contains libInstaller functions to manage applications</p>
 <td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_load_apps">li_mgr_load_apps</a></b>(mgr: Pointer): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_load_apps';</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_register_msg_call">li_mgr_register_msg_call</a></b>(mgr: Pointer;call: <a   href="litypes.html#TMessageCall">TMessageCall</a>; user_data: Pointer): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_register_msg_call';</code></td>
+<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_register_status_call">li_mgr_register_status_call</a></b>(mgr: Pointer;call: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>; user_data: Pointer): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_register_progress_call">li_mgr_register_progress_call</a></b>(mgr: Pointer;call: <a   href="litypes.html#TProgressCall">TProgressCall</a>;user_data: Pointer): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_register_progress_call';</code></td>
+<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_register_request_call">li_mgr_register_request_call</a></b>(mgr: Pointer;call: <a   href="litypes.html#TRequestCall">TRequestCall</a>;user_data: Pointer): <a   href="litypes.html#TRqResult">TRqResult</a>; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_register_request_call">li_mgr_register_request_call</a></b>(mgr: Pointer;call: <a   href="litypes.html#TRequestCall">TRequestCall</a>;user_data: Pointer): <a   href="litypes.html#TRqResult">TRqResult</a>; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_register_request_call';</code></td>
-</tr>
-<tr class="list">
 <td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_register_app_call">li_mgr_register_app_call</a></b>(mgr: Pointer;call: <a   href="litypes.html#TAppEvent">TAppEvent</a>): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_register_app_call';</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>procedure <b><a   href="appman.html#li_mgr_set_su_mode">li_mgr_set_su_mode</a></b>(mgr: Pointer;md: Boolean); cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_set_su_mode';</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_remove_app">li_mgr_remove_app</a></b>(mgr: Pointer;obj: <a   href="litypes.TAppInfo.html">TAppInfo</a>): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_remove_app';</code></td>
 </tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a   href="appman.html#li_remove_ipk_installed_app">li_remove_ipk_installed_app</a></b>(appname, appid: PChar;msgcall: <a   href="litypes.html#TMessageCall">TMessageCall</a>;poschange: <a   href="litypes.html#TProgressCall">TProgressCall</a>;fastmode: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_remove_ipk_installed_app';</code></td>
-</tr>
 <tr class="list">
+<td class="itemcode"><code>function <b><a   href="appman.html#li_remove_ipk_installed_app">li_remove_ipk_installed_app</a></b>(appname, appid: PChar;scall: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>;fastmode: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_remove_ipk_installed_app';</code></td>
+</tr>
+<tr class="list2">
 <td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_check_apps">li_mgr_check_apps</a></b>(mgr: Pointer;log: <a   href="litypes.html#PStringList">PStringList</a>;root: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_check_apps';</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_fix_apps">li_mgr_fix_apps</a></b>(mgr: Pointer;log: <a   href="litypes.html#PStringList">PStringList</a>;root: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_fix_apps';</code></td>
 </tr>
 </table>
@@ -80,21 +77,14 @@ This unit contains libInstaller functions to manage applications</p>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="li_mgr_register_msg_call"></a><code>function <b>li_mgr_register_msg_call</b>(mgr: Pointer;call: <a   href="litypes.html#TMessageCall">TMessageCall</a>; user_data: Pointer): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_register_msg_call';</code></td>
+<td class="itemcode"><a name="li_mgr_register_status_call"></a><code>function <b>li_mgr_register_status_call</b>(mgr: Pointer;call: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>; user_data: Pointer): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="li_mgr_register_progress_call"></a><code>function <b>li_mgr_register_progress_call</b>(mgr: Pointer;call: <a   href="litypes.html#TProgressCall">TProgressCall</a>;user_data: Pointer): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_register_progress_call';</code></td>
-</tr>
-<tr><td colspan="1">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="itemcode"><a name="li_mgr_register_request_call"></a><code>function <b>li_mgr_register_request_call</b>(mgr: Pointer;call: <a   href="litypes.html#TRequestCall">TRequestCall</a>;user_data: Pointer): <a   href="litypes.html#TRqResult">TRqResult</a>; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_register_request_call';</code></td>
+<td class="itemcode"><a name="li_mgr_register_request_call"></a><code>function <b>li_mgr_register_request_call</b>(mgr: Pointer;call: <a   href="litypes.html#TRequestCall">TRequestCall</a>;user_data: Pointer): <a   href="litypes.html#TRqResult">TRqResult</a>; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>
@@ -122,7 +112,7 @@ This unit contains libInstaller functions to manage applications</p>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="li_remove_ipk_installed_app"></a><code>function <b>li_remove_ipk_installed_app</b>(appname, appid: PChar;msgcall: <a   href="litypes.html#TMessageCall">TMessageCall</a>;poschange: <a   href="litypes.html#TProgressCall">TProgressCall</a>;fastmode: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_remove_ipk_installed_app';</code></td>
+<td class="itemcode"><a name="li_remove_ipk_installed_app"></a><code>function <b>li_remove_ipk_installed_app</b>(appname, appid: PChar;scall: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>;fastmode: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_remove_ipk_installed_app';</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>
@@ -141,6 +131,6 @@ This unit contains libInstaller functions to manage applications</p>
 <tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2009-11-23 22:26:17</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-01-15 19:52:43</em>
 </span>
 </body></html>

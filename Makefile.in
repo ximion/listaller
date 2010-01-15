@@ -17,6 +17,9 @@ install-tools:
 install-front:
 	$(MAKE) -C ./src install-front
 
+srcdoc:
+	$(MAKE) -C ./src srcdoc
+
 clean:
 	$(MAKE) -C ./src clean
 

@@ -3,7 +3,7 @@
 <head>
 <meta name="GENERATOR" content="PasDoc 0.11.0">
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-<title>ipkhandle: Class TInstallation</title>
+<title>ipkinstall: Class TInstallation</title>
 <link rel="StyleSheet" type="text/css" href="pasdoc.css">
 </head>
 <body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
@@ -13,7 +13,7 @@
 <td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Hierarchy">Hierarchy</a></td><td><a class="section"  href="#%40Fields">Fields</a></td><td><a class="section"  href="#%40Methods">Methods</a></td><td><a class="section"  href="#%40Properties">Properties</a></td></tr></table>
 <a name="%40Description"></a><h2 class="unit">Unit</h2>
 <p class="unitlink">
-<a   href="ipkhandle.html">ipkhandle</a></p>
+<a   href="ipkinstall.html">ipkinstall</a></p>
 <h2 class="declaration">Declaration</h2>
 <p class="declaration">
 <code>type TInstallation = class(TObject)</code></p>
@@ -25,193 +25,157 @@
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a   href="ipkhandle.TInstallation.html#mainposudata">mainposudata</a></b>: Pointer;</code></td>
+<td class="itemcode"><code><b><a   href="ipkinstall.TInstallation.html#requestudata">requestudata</a></b>: Pointer;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a   href="ipkhandle.TInstallation.html#extraposudata">extraposudata</a></b>: Pointer;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a   href="ipkhandle.TInstallation.html#requestudata">requestudata</a></b>: Pointer;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a   href="ipkhandle.TInstallation.html#statemsgudata">statemsgudata</a></b>: Pointer;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a   href="ipkhandle.TInstallation.html#messageudata">messageudata</a></b>: Pointer;</code></td>
+<td class="itemcode"><code><b><a   href="ipkinstall.TInstallation.html#statechangeudata">statechangeudata</a></b>: Pointer;</code></td>
 </tr>
 </table>
 <a name="%40Methods"></a><h3 class="summary">Methods</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>function <b><a   href="ipkhandle.TInstallation.html#CheckFTPConnection">CheckFTPConnection</a></b>(AFTPSend: <a   href="ftpsend.TFTPSend.html">TFTPSend</a>): Boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="ipkinstall.TInstallation.html#CheckFTPConnection">CheckFTPConnection</a></b>(AFTPSend: <a   href="ftpsend.TFTPSend.html">TFTPSend</a>): Boolean;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="ipkhandle.TInstallation.html#SetMainPos">SetMainPos</a></b>(pos: integer);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="ipkinstall.TInstallation.html#SetMainPos">SetMainPos</a></b>(pos: integer);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="ipkhandle.TInstallation.html#SetExtraPos">SetExtraPos</a></b>(pos: integer);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="ipkinstall.TInstallation.html#SetExtraPos">SetExtraPos</a></b>(pos: integer);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>function <b><a   href="ipkhandle.TInstallation.html#MakeUsrRequest">MakeUsrRequest</a></b>(msg: String;qtype: <a   href="litypes.html#TRqType">TRqType</a>): <a   href="litypes.html#TRqResult">TRqResult</a>;</code></td>
+<td class="itemcode"><code>function <b><a   href="ipkinstall.TInstallation.html#MakeUsrRequest">MakeUsrRequest</a></b>(msg: String;qtype: <a   href="litypes.html#TRqType">TRqType</a>): <a   href="litypes.html#TRqResult">TRqResult</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="ipkhandle.TInstallation.html#SendStateMsg">SendStateMsg</a></b>(msg: String);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="ipkinstall.TInstallation.html#SendStateMsg">SendStateMsg</a></b>(msg: String);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="ipkhandle.TInstallation.html#msg">msg</a></b>(str: String);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="ipkinstall.TInstallation.html#msg">msg</a></b>(str: String);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a   href="ipkhandle.TInstallation.html#Create">Create</a></b>;</code></td>
+<td class="itemcode"><code>constructor <b><a   href="ipkinstall.TInstallation.html#Create">Create</a></b>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>destructor <b><a   href="ipkhandle.TInstallation.html#Destroy">Destroy</a></b>; override;</code></td>
+<td class="itemcode"><code>destructor <b><a   href="ipkinstall.TInstallation.html#Destroy">Destroy</a></b>; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="ipkhandle.TInstallation.html#Initialize">Initialize</a></b>(fname: String): Boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="ipkinstall.TInstallation.html#Initialize">Initialize</a></b>(fname: String): Boolean;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="ipkhandle.TInstallation.html#DoInstallation">DoInstallation</a></b>: Boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="ipkinstall.TInstallation.html#DoInstallation">DoInstallation</a></b>: Boolean;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="ipkhandle.TInstallation.html#GetMaxInstSteps">GetMaxInstSteps</a></b>: Integer;</code></td>
+<td class="itemcode"><code>function <b><a   href="ipkinstall.TInstallation.html#GetMaxInstSteps">GetMaxInstSteps</a></b>: Integer;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="ipkhandle.TInstallation.html#ResolveDependencies">ResolveDependencies</a></b>: Boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="ipkinstall.TInstallation.html#ResolveDependencies">ResolveDependencies</a></b>: Boolean;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="ipkhandle.TInstallation.html#ReadProfiles">ReadProfiles</a></b>(lst: TStringList);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="ipkinstall.TInstallation.html#ReadProfiles">ReadProfiles</a></b>(lst: TStringList);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="ipkhandle.TInstallation.html#SetCurProfile">SetCurProfile</a></b>(i: Integer);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="ipkinstall.TInstallation.html#SetCurProfile">SetCurProfile</a></b>(i: Integer);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="ipkhandle.TInstallation.html#ReadDescription">ReadDescription</a></b>(sl: TStringList);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="ipkinstall.TInstallation.html#ReadDescription">ReadDescription</a></b>(sl: TStringList);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="ipkhandle.TInstallation.html#ReadLicense">ReadLicense</a></b>(sl: TStringList);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="ipkinstall.TInstallation.html#ReadLicense">ReadLicense</a></b>(sl: TStringList);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="ipkhandle.TInstallation.html#RegOnProgressMainChange">RegOnProgressMainChange</a></b>(call: <a   href="litypes.html#TProgressCall">TProgressCall</a>;data: Pointer);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="ipkinstall.TInstallation.html#RegOnStatusChange">RegOnStatusChange</a></b>(call: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>;data: Pointer);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="ipkhandle.TInstallation.html#RegOnProgressExtraChange">RegOnProgressExtraChange</a></b>(call: <a   href="litypes.html#TProgressCall">TProgressCall</a>;data: Pointer);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="ipkinstall.TInstallation.html#RegOnUsrRequest">RegOnUsrRequest</a></b>(call: <a   href="litypes.html#TRequestCall">TRequestCall</a>;data: Pointer);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="ipkhandle.TInstallation.html#RegOnUsrRequest">RegOnUsrRequest</a></b>(call: <a   href="litypes.html#TRequestCall">TRequestCall</a>;data: Pointer);</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="ipkhandle.TInstallation.html#RegOnStepMessage">RegOnStepMessage</a></b>(call: <a   href="litypes.html#TMessageCall">TMessageCall</a>;data: Pointer);</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="ipkhandle.TInstallation.html#RegOnMessage">RegOnMessage</a></b>(call: <a   href="litypes.html#TMessageCall">TMessageCall</a>;data: Pointer);</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="ipkhandle.TInstallation.html#UserRequestRegistered">UserRequestRegistered</a></b>: Boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="ipkinstall.TInstallation.html#UserRequestRegistered">UserRequestRegistered</a></b>: Boolean;</code></td>
 </tr>
 </table>
 <a name="%40Properties"></a><h3 class="summary">Properties</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkhandle.TInstallation.html#AppName">AppName</a></b>: String read IAppName;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#AppName">AppName</a></b>: String read IAppName;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkhandle.TInstallation.html#AppVersion">AppVersion</a></b>: String read IAppVersion;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#AppVersion">AppVersion</a></b>: String read IAppVersion;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkhandle.TInstallation.html#ID">ID</a></b>: String read PkgID;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#ID">ID</a></b>: String read PkgID;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkhandle.TInstallation.html#pType">pType</a></b>: <a   href="litypes.html#TPkgType">TPkgType</a> read pkType;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#pType">pType</a></b>: <a   href="litypes.html#TPkgType">TPkgType</a> read pkType;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkhandle.TInstallation.html#Disallows">Disallows</a></b>: String read FDisallow;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#Disallows">Disallows</a></b>: String read FDisallow;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkhandle.TInstallation.html#Distris">Distris</a></b>: String read FSupportedDistris;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#Distris">Distris</a></b>: String read FSupportedDistris;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkhandle.TInstallation.html#WizImage">WizImage</a></b>: String read FWizImage;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#WizImage">WizImage</a></b>: String read FWizImage;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkhandle.TInstallation.html#AppIcon">AppIcon</a></b>: String read IIconPath;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#AppIcon">AppIcon</a></b>: String read IIconPath;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkhandle.TInstallation.html#DesktopFiles">DesktopFiles</a></b>: String read IDesktopFiles;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#DesktopFiles">DesktopFiles</a></b>: String read IDesktopFiles;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkhandle.TInstallation.html#ADeps">ADeps</a></b>: TStringList read Dependencies write Dependencies;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#ADeps">ADeps</a></b>: TStringList read Dependencies write Dependencies;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkhandle.TInstallation.html#CMDLn">CMDLn</a></b>: String read IAppCMD;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#CMDLn">CMDLn</a></b>: String read IAppCMD;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkhandle.TInstallation.html#IFileInfo">IFileInfo</a></b>: String read FFileInfo;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#IFileInfo">IFileInfo</a></b>: String read FFileInfo;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkhandle.TInstallation.html#SuperuserMode">SuperuserMode</a></b>: Boolean read SUMode write SetRootMode;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#SuperuserMode">SuperuserMode</a></b>: Boolean read SUMode write SetRootMode;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkhandle.TInstallation.html#ForceActions">ForceActions</a></b>: String read Forces write Forces;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#ForceActions">ForceActions</a></b>: String read Forces write Forces;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="ipkinstall.TInstallation.html#RegisterUpdateSource">RegisterUpdateSource</a></b>: Boolean read AddUpdateSource write AddUpdateSource;</code></td>
 </tr>
 </table>
 <h2 class="description">Description</h2>
 <h3 class="detail">Fields</h3>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="mainposudata"></a><code><b>mainposudata</b>: Pointer;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="extraposudata"></a><code><b>extraposudata</b>: Pointer;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
@@ -223,15 +187,7 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="statemsgudata"></a><code><b>statemsgudata</b>: Pointer;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="messageudata"></a><code><b>messageudata</b>: Pointer;</code></td>
+<td class="itemcode"><a name="statechangeudata"></a><code><b>statechangeudata</b>: Pointer;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -394,39 +350,17 @@ Read the package license</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="RegOnProgressMainChange"></a><code>procedure <b>RegOnProgressMainChange</b>(call: <a   href="litypes.html#TProgressCall">TProgressCall</a>;data: Pointer);</code></td>
+<td class="itemcode"><a name="RegOnStatusChange"></a><code>procedure <b>RegOnStatusChange</b>(call: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>;data: Pointer);</code></td>
 </tr>
 <tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="RegOnProgressExtraChange"></a><code>procedure <b>RegOnProgressExtraChange</b>(call: <a   href="litypes.html#TProgressCall">TProgressCall</a>;data: Pointer);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
+<p>
+Register event to catch status messages</p>
+</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="RegOnUsrRequest"></a><code>procedure <b>RegOnUsrRequest</b>(call: <a   href="litypes.html#TRequestCall">TRequestCall</a>;data: Pointer);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="RegOnStepMessage"></a><code>procedure <b>RegOnStepMessage</b>(call: <a   href="litypes.html#TMessageCall">TMessageCall</a>;data: Pointer);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="RegOnMessage"></a><code>procedure <b>RegOnMessage</b>(call: <a   href="litypes.html#TMessageCall">TMessageCall</a>;data: Pointer);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -580,6 +514,16 @@ True on installation with superuser rights</p>
 Set forces identifier string</p>
 </td></tr>
 </table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2009-11-23 22:26:17</em>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="RegisterUpdateSource"></a><code>property <b>RegisterUpdateSource</b>: Boolean read AddUpdateSource write AddUpdateSource;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+True if update source will be registered</p>
+</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-01-15 19:52:44</em>
 </span>
 </body></html>

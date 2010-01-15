@@ -3,76 +3,92 @@
 <head>
 <meta name="GENERATOR" content="PasDoc 0.11.0">
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-<title>management: Class TAppManager</title>
+<title>MTProcs: Class TProcThreadPool</title>
 <link rel="StyleSheet" type="text/css" href="pasdoc.css">
 </head>
 <body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
-<a name="TAppManager"></a><h1 class="cio">Class TAppManager</h1>
+<a name="TProcThreadPool"></a><h1 class="cio">Class TProcThreadPool</h1>
 <table class="sections wide_list">
 <tr>
 <td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section"  href="#%40Methods">Methods</a></td><td><a class="section"  href="#%40Properties">Properties</a></td></tr></table>
 <a name="%40Description"></a><h2 class="unit">Unit</h2>
 <p class="unitlink">
-<a   href="management.html">management</a></p>
+<a   href="MTProcs.html">MTProcs</a></p>
 <h2 class="declaration">Declaration</h2>
 <p class="declaration">
-<code>type TAppManager = class(TObject)</code></p>
+<code>type TProcThreadPool = class(TObject)</code></p>
 <h2 class="description">Description</h2>
 <a name="%40Hierarchy"></a><h2 class="hierarchy">Hierarchy</h2>
 <ul class="hierarchy"><li class="ancestor">TObject</li>
-<li class="thisitem">TAppManager</li></ul><h2 class="overview">Overview</h2>
+<li class="thisitem">TProcThreadPool</li></ul><h2 class="overview">Overview</h2>
 <a name="%40Methods"></a><h3 class="summary">Methods</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a   href="management.TAppManager.html#Create">Create</a></b>;</code></td>
+<td class="itemcode"><code>procedure <b><a   href="MTProcs.TProcThreadPool.html#EnterPoolCriticalSection">EnterPoolCriticalSection</a></b>; inline;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>destructor <b><a   href="management.TAppManager.html#Destroy">Destroy</a></b>; override;</code></td>
+<td class="itemcode"><code>procedure <b><a   href="MTProcs.TProcThreadPool.html#LeavePoolCriticalSection">LeavePoolCriticalSection</a></b>; inline;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="management.TAppManager.html#LoadEntries">LoadEntries</a></b>;</code></td>
+<td class="itemcode"><code>constructor <b><a   href="MTProcs.TProcThreadPool.html#Create">Create</a></b>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="management.TAppManager.html#UninstallApp">UninstallApp</a></b>(obj: <a   href="litypes.TAppInfo.html">TAppInfo</a>);</code></td>
+<td class="itemcode"><code>destructor <b><a   href="MTProcs.TProcThreadPool.html#Destroy">Destroy</a></b>; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="management.TAppManager.html#CheckApps">CheckApps</a></b>(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;</code></td>
+<td class="itemcode"><code>procedure <b><a   href="MTProcs.TProcThreadPool.html#DoParallel">DoParallel</a></b>(const AMethod: <a   href="MTProcs.html#TMTMethod">TMTMethod</a>; StartIndex, EndIndex: PtrInt; Data: Pointer = nil; MaxThreads: PtrInt = 0); inline;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="management.TAppManager.html#RegOnMessage">RegOnMessage</a></b>(call: <a   href="litypes.html#TMessageCall">TMessageCall</a>;data: Pointer);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="MTProcs.TProcThreadPool.html#DoParallel">DoParallel</a></b>(const AProc: <a   href="MTProcs.html#TMTProcedure">TMTProcedure</a>; StartIndex, EndIndex: PtrInt; Data: Pointer = nil; MaxThreads: PtrInt = 0); inline;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="management.TAppManager.html#RegOnRequest">RegOnRequest</a></b>(call: <a   href="litypes.html#TRequestCall">TRequestCall</a>;data: Pointer);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="MTProcs.TProcThreadPool.html#DoParallelLocalProc">DoParallelLocalProc</a></b>(const LocalProc: Pointer; StartIndex, EndIndex: PtrInt; Data: Pointer = nil; MaxThreads: PtrInt = 0);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="management.TAppManager.html#RegOnProgress">RegOnProgress</a></b>(call: <a   href="litypes.html#TProgressCall">TProgressCall</a>;data: Pointer);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="MTProcs.TProcThreadPool.html#CalcBlockSize">CalcBlockSize</a></b>(LoopLength: PtrInt; out BlockCount, BlockSize: PtrInt; MinBlockSize: PtrInt = 0); inline;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="management.TAppManager.html#UserRequestRegistered">UserRequestRegistered</a></b>: Boolean;</code></td>
+<td class="itemcode"><code>procedure <b><a   href="MTProcs.TProcThreadPool.html#StopThreads">StopThreads</a></b>;</code></td>
 </tr>
 </table>
 <a name="%40Properties"></a><h3 class="summary">Properties</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="management.TAppManager.html#OnApplication">OnApplication</a></b>: <a   href="litypes.html#TAppEvent">TAppEvent</a> read FApp write FApp;</code></td>
+<td class="itemcode"><code>property <b><a   href="MTProcs.TProcThreadPool.html#MaxThreadCount">MaxThreadCount</a></b>: PtrInt read FMaxThreadCount write SetMaxThreadCount;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="management.TAppManager.html#SuperuserMode">SuperuserMode</a></b>: Boolean read SUMode write SUMode;</code></td>
+<td class="itemcode"><code>property <b><a   href="MTProcs.TProcThreadPool.html#ThreadCount">ThreadCount</a></b>: PtrInt read FThreadCount;</code></td>
 </tr>
 </table>
 <h2 class="description">Description</h2>
 <h3 class="detail">Methods</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="EnterPoolCriticalSection"></a><code>procedure <b>EnterPoolCriticalSection</b>; inline;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="LeavePoolCriticalSection"></a><code>procedure <b>LeavePoolCriticalSection</b>; inline;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -92,45 +108,7 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="LoadEntries"></a><code>procedure <b>LoadEntries</b>;</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
-Load software list entries</p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="UninstallApp"></a><code>procedure <b>UninstallApp</b>(obj: <a   href="litypes.TAppInfo.html">TAppInfo</a>);</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
-Removes an application</p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="CheckApps"></a><code>function <b>CheckApps</b>(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
-Checks dependencies of all installed apps   </p>
-<h6 class="description_section">Parameters</h6>
-<dl class="parameters">
-<dt>report</dt>
-<dd>Report of the executed actions</dd>
-<dt>fix</dt>
-<dd>True if all found issues should be fixed right now</dd>
-</dl>
-<h6 class="description_section">Returns</h6>
-<p class="return">True if everything is okay, False if dependencies are missing</p></td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="RegOnMessage"></a><code>procedure <b>RegOnMessage</b>(call: <a   href="litypes.html#TMessageCall">TMessageCall</a>;data: Pointer);</code></td>
+<td class="itemcode"><a name="DoParallel"></a><code>procedure <b>DoParallel</b>(const AMethod: <a   href="MTProcs.html#TMTMethod">TMTMethod</a>; StartIndex, EndIndex: PtrInt; Data: Pointer = nil; MaxThreads: PtrInt = 0); inline;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -138,7 +116,7 @@ Checks dependencies of all installed apps   </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="RegOnRequest"></a><code>procedure <b>RegOnRequest</b>(call: <a   href="litypes.html#TRequestCall">TRequestCall</a>;data: Pointer);</code></td>
+<td class="itemcode"><a name="DoParallel"></a><code>procedure <b>DoParallel</b>(const AProc: <a   href="MTProcs.html#TMTProcedure">TMTProcedure</a>; StartIndex, EndIndex: PtrInt; Data: Pointer = nil; MaxThreads: PtrInt = 0); inline;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -146,7 +124,7 @@ Checks dependencies of all installed apps   </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="RegOnProgress"></a><code>procedure <b>RegOnProgress</b>(call: <a   href="litypes.html#TProgressCall">TProgressCall</a>;data: Pointer);</code></td>
+<td class="itemcode"><a name="DoParallelLocalProc"></a><code>procedure <b>DoParallelLocalProc</b>(const LocalProc: Pointer; StartIndex, EndIndex: PtrInt; Data: Pointer = nil; MaxThreads: PtrInt = 0);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -154,7 +132,15 @@ Checks dependencies of all installed apps   </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="UserRequestRegistered"></a><code>function <b>UserRequestRegistered</b>: Boolean;</code></td>
+<td class="itemcode"><a name="CalcBlockSize"></a><code>procedure <b>CalcBlockSize</b>(LoopLength: PtrInt; out BlockCount, BlockSize: PtrInt; MinBlockSize: PtrInt = 0); inline;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="StopThreads"></a><code>procedure <b>StopThreads</b>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -163,7 +149,7 @@ Checks dependencies of all installed apps   </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="OnApplication"></a><code>property <b>OnApplication</b>: <a   href="litypes.html#TAppEvent">TAppEvent</a> read FApp write FApp;</code></td>
+<td class="itemcode"><a name="MaxThreadCount"></a><code>property <b>MaxThreadCount</b>: PtrInt read FMaxThreadCount write SetMaxThreadCount;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -171,11 +157,11 @@ Checks dependencies of all installed apps   </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SuperuserMode"></a><code>property <b>SuperuserMode</b>: Boolean read SUMode write SUMode;</code></td>
+<td class="itemcode"><a name="ThreadCount"></a><code>property <b>ThreadCount</b>: PtrInt read FThreadCount;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2009-11-23 22:26:17</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-01-15 19:52:44</em>
 </span>
 </body></html>

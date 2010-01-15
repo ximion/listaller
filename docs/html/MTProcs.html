@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.11.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>MTProcs</title>
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1 class="unit">Unit MTProcs</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Uses">uses</a></td><td><a class="section"  href="#%40Classes">Classes, Interfaces, Objects and Records</a></td><td>Functions and Procedures</td><td><a class="section"  href="#%40Types">Types</a></td><td>Constants</td><td><a class="section"  href="#%40Variables">Variables</a></td></tr></table>
+<a name="%40Description"></a><h2 class="description">Description</h2>
+&nbsp;<a name="%40Uses"></a><h2 class="uses">uses</h2>
+<ul class="useslist"><li>Classes</li><li>SysUtils</li><li>MTPCPU</li></ul><h2 class="overview">Overview</h2>
+<a name="%40Classes"></a><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
+<table class="classestable wide_list">
+<tr class="listheader">
+<th class="itemname">Name</th>
+<th class="itemdesc">Description</th>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold"  href="MTProcs.TMultiThreadProcItem.html"><code>TMultiThreadProcItem</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold"  href="MTProcs.TProcThread.html"><code>TProcThread</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold"  href="MTProcs.TProcThreadGroup.html"><code>TProcThreadGroup</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold"  href="MTProcs.TProcThreadPool.html"><code>TProcThreadPool</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+</table>
+<a name="%40Types"></a><h3 class="summary">Types</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="itemcode"><code><b><a   href="MTProcs.html#TMTPThreadState">TMTPThreadState</a></b> = (...);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="MTProcs.html#TMTPThreadList">TMTPThreadList</a></b> = (...);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="MTProcs.html#TMTMethod">TMTMethod</a></b> = procedure(Index: PtrInt; Data: Pointer; Item: <a   href="MTProcs.TMultiThreadProcItem.html">TMultiThreadProcItem</a>) of object;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="MTProcs.html#TMTProcedure">TMTProcedure</a></b> = procedure(Index: PtrInt; Data: Pointer; Item: <a   href="MTProcs.TMultiThreadProcItem.html">TMultiThreadProcItem</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="MTProcs.html#TMTPGroupState">TMTPGroupState</a></b> = (...);</code></td>
+</tr>
+</table>
+<a name="%40Variables"></a><h3 class="summary">Variables</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="itemcode"><code><b><a   href="MTProcs.html#ProcThreadPool">ProcThreadPool</a></b>: <a   href="MTProcs.TProcThreadPool.html">TProcThreadPool</a> = nil;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Types</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="TMTPThreadState"></a><code><b>TMTPThreadState</b> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;<h6 class="description_section">Values</h6>
+<ul>
+<li>
+mtptsNone: &nbsp;</li>
+<li>
+mtptsActive: &nbsp;</li>
+<li>
+mtptsWaitingForIndex: &nbsp;</li>
+<li>
+mtptsWaitingFailed: &nbsp;</li>
+<li>
+mtptsInactive: &nbsp;</li>
+<li>
+mtptsTerminated: &nbsp;</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="TMTPThreadList"></a><code><b>TMTPThreadList</b> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;<h6 class="description_section">Values</h6>
+<ul>
+<li>
+mtptlPool: &nbsp;</li>
+<li>
+mtptlGroup: &nbsp;</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="TMTMethod"></a><code><b>TMTMethod</b> = procedure(Index: PtrInt; Data: Pointer; Item: <a   href="MTProcs.TMultiThreadProcItem.html">TMultiThreadProcItem</a>) of object;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="TMTProcedure"></a><code><b>TMTProcedure</b> = procedure(Index: PtrInt; Data: Pointer; Item: <a   href="MTProcs.TMultiThreadProcItem.html">TMultiThreadProcItem</a>);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="TMTPGroupState"></a><code><b>TMTPGroupState</b> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;<h6 class="description_section">Values</h6>
+<ul>
+<li>
+mtpgsNone: &nbsp;</li>
+<li>
+mtpgsNeedThreads: &nbsp;</li>
+<li>
+mtpgsFinishing: &nbsp;</li>
+<li>
+mtpgsException: &nbsp;</li>
+</ul>
+</td></tr>
+</table>
+<h3 class="detail">Variables</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="ProcThreadPool"></a><code><b>ProcThreadPool</b>: <a   href="MTProcs.TProcThreadPool.html">TProcThreadPool</a> = nil;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-01-15 19:52:44</em>
+</span>
+</body></html>

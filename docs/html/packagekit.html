@@ -15,7 +15,7 @@
 <p>
 Contains Listaller's PackageKit-GLib2 bindings</p>
 <a name="%40Uses"></a><h2 class="uses">uses</h2>
-<ul class="useslist"><li>Classes</li><li>SysUtils</li><li>Process</li><li>glib2</li><li><a   href="distri.html">distri</a></li><li>Dialogs</li><li><a   href="litypes.html">liTypes</a></li><li><a   href="gext.html">gExt</a></li></ul><h2 class="overview">Overview</h2>
+<ul class="useslist"><li>Classes</li><li>SysUtils</li><li>Process</li><li>glib2</li><li><a   href="distri.html">distri</a></li><li>Dialogs</li><li><a   href="litypes.html">liTypes</a></li><li><a   href="gext.html">gExt</a></li><li><a   href="libasic.html">liBasic</a></li></ul><h2 class="overview">Overview</h2>
 <a name="%40Classes"></a><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
 <table class="classestable wide_list">
 <tr class="listheader">
@@ -58,7 +58,7 @@ Contains Listaller's PackageKit-GLib2 bindings</p>
 <td class="itemcode"><code>procedure <b><a   href="packagekit.html#pk_client_remove_packages_async">pk_client_remove_packages_async</a></b>(client: Pointer;package_ids: PPGChar; allow_deps: GBoolean;autoremove: GBoolean; cancellable: PGObject; progress_callback: <a   href="packagekit.html#TPkProgressCallback">TPkProgressCallback</a>;progress_user_data: GPointer; callback_ready: <a   href="gext.html#TGAsyncReadyCallback">TGAsyncReadyCallback</a>;user_data: GPointer); cdecl; external <a   href="packagekit.html#pklib2">pklib2</a>  name 'pk_client_remove_packages_async';</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="packagekit.html#pk_client_search_file_async">pk_client_search_file_async</a></b>(client: Pointer;filters: GuInt64; values: PPGChar;cancellable: PGObject; progress_callback: <a   href="packagekit.html#TPkProgressCallback">TPkProgressCallback</a>;progress_user_data: GPointer; callback_ready: <a   href="gext.html#TGAsyncReadyCallback">TGAsyncReadyCallback</a>;user_data: GPointer); cdecl; external <a   href="packagekit.html#pklib2">pklib2</a>  name 'pk_client_search_file_async';</code></td>
+<td class="itemcode"><code>procedure <b><a   href="packagekit.html#pk_client_search_files_async">pk_client_search_files_async</a></b>(client: Pointer;filters: <a   href="packagekit.html#PkBitfield">PkBitfield</a>;values: PPGChar; cancellable: <a   href="gext.html#PGCancellable">PGCancellable</a>; progress_callback: <a   href="packagekit.html#TPkProgressCallback">TPKProgressCallback</a>;progress_user_data: GPointer; callback_ready: <a   href="gext.html#TGAsyncReadyCallback">TGAsyncReadyCallback</a>;user_data: GPointer); cdecl; external;</code></td>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code>procedure <b><a   href="packagekit.html#pk_client_install_files_async">pk_client_install_files_async</a></b>(client: Pointer;only_trusted: GBoolean; files: PPGChar;cancellable: PGObject; progress_callback: <a   href="packagekit.html#TPkProgressCallback">TPkProgressCallback</a>;progress_user_data: GPointer; callback_ready: <a   href="gext.html#TGAsyncReadyCallback">TGAsyncReadyCallback</a>;user_data: GPointer); cdecl; external <a   href="packagekit.html#pklib2">pklib2</a>  name 'pk_client_install_files_async';</code></td>
@@ -85,12 +85,15 @@ Contains Listaller's PackageKit-GLib2 bindings</p>
 <td class="itemcode"><code><b><a   href="packagekit.html#PkExitEnum">PkExitEnum</a></b> = (...);</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code><b><a   href="packagekit.html#TPkProgressCallback">TPkProgressCallback</a></b> = procedure(progress: Pointer;ptype: <a   href="packagekit.html#PK_PROGRESS_TYPE">PK_PROGRESS_TYPE</a>;user_data: GPointer);</code></td>
+<td class="itemcode"><code><b><a   href="packagekit.html#PkBitfield">PkBitfield</a></b> = GUInt64;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code><b><a   href="packagekit.html#PPackageKit">PPackageKit</a></b> = &circ;<a   href="packagekit.TPackageKit.html">TPackageKit</a>;</code></td>
+<td class="itemcode"><code><b><a   href="packagekit.html#TPkProgressCallback">TPkProgressCallback</a></b> = procedure(progress: Pointer;ptype: <a   href="packagekit.html#PK_PROGRESS_TYPE">PK_PROGRESS_TYPE</a>;user_data: GPointer);</code></td>
 </tr>
 <tr class="list">
+<td class="itemcode"><code><b><a   href="packagekit.html#PPackageKit">PPackageKit</a></b> = &circ;<a   href="packagekit.TPackageKit.html">TPackageKit</a>;</code></td>
+</tr>
+<tr class="list2">
 <td class="itemcode"><code><b><a   href="packagekit.html#PPkPackageId">PPkPackageId</a></b> = &circ;<a   href="packagekit.PkPackageId.html">PkPackageID</a>;</code></td>
 </tr>
 </table>
@@ -160,7 +163,7 @@ Contains Listaller's PackageKit-GLib2 bindings</p>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="pk_client_search_file_async"></a><code>procedure <b>pk_client_search_file_async</b>(client: Pointer;filters: GuInt64; values: PPGChar;cancellable: PGObject; progress_callback: <a   href="packagekit.html#TPkProgressCallback">TPkProgressCallback</a>;progress_user_data: GPointer; callback_ready: <a   href="gext.html#TGAsyncReadyCallback">TGAsyncReadyCallback</a>;user_data: GPointer); cdecl; external <a   href="packagekit.html#pklib2">pklib2</a>  name 'pk_client_search_file_async';</code></td>
+<td class="itemcode"><a name="pk_client_search_files_async"></a><code>procedure <b>pk_client_search_files_async</b>(client: Pointer;filters: <a   href="packagekit.html#PkBitfield">PkBitfield</a>;values: PPGChar; cancellable: <a   href="gext.html#PGCancellable">PGCancellable</a>; progress_callback: <a   href="packagekit.html#TPkProgressCallback">TPKProgressCallback</a>;progress_user_data: GPointer; callback_ready: <a   href="gext.html#TGAsyncReadyCallback">TGAsyncReadyCallback</a>;user_data: GPointer); cdecl; external;</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>
@@ -263,6 +266,15 @@ PK_EXIT_ENUM_LAST: &nbsp;</li>
 </table>
 <table class="detail wide_list">
 <tr class="list">
+<td class="itemcode"><a name="PkBitfield"></a><code><b>PkBitfield</b> = GUInt64;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+The pkBitfield var</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
 <td class="itemcode"><a name="TPkProgressCallback"></a><code><b>TPkProgressCallback</b> = procedure(progress: Pointer;ptype: <a   href="packagekit.html#PK_PROGRESS_TYPE">PK_PROGRESS_TYPE</a>;user_data: GPointer);</code></td>
 </tr>
 <tr><td colspan="1">
@@ -292,6 +304,6 @@ Pointer to TPackageKit object</p>
 <tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2009-11-23 22:26:18</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-01-15 19:52:44</em>
 </span>
 </body></html>
