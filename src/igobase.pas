@@ -264,24 +264,6 @@ begin
   Application.Terminate;
 end;
 
-procedure MainPosChange(pos: LongInt;data: Pointer);cdecl;
-begin
- IWizFrm.InsProgress.Position:=pos;
- Application.ProcessMessages;
-end;
-
-procedure ExtraPosChange(pos: LongInt;data: Pointer); cdecl;
-begin
-with IWizFrm do
-begin
- ExProgress.Position:=pos;
- if(pos=0)and(ExProgress.Visible=true)then ExProgress.Visible:=false
- else ExProgress.Visible:=true;
-
- Application.ProcessMessages;
-end;
-end;
-
 function IsCommandRunning(cmd:String):Boolean;
 var t:TProcess;
 s:TStringList;
@@ -346,17 +328,26 @@ end;
 
 end;
 
-procedure MessageCall(msg: PChar;ty: TMessageType;data: Pointer);cdecl;
+procedure StatusChangeCall(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 begin
-if ty=mtInfo then
+if Assigned(IWizFrm) then
+with IWizFrm do
 begin
- writeLn(msg);
- if Assigned(IWizFrm) then
- IWizFrm.InfoMemo.Lines.Add(msg); //Needed for Log-messages, even if the control is invisible
+
+ case change of
+   scMnProgress : InsProgress.Position:=data.mnprogress;
+   scExProgress : begin ExProgress.Position:=data.exprogress;
+                        if(data.exprogress=0)and(ExProgress.Visible=true)then ExProgress.Visible:=false
+                        else ExProgress.Visible:=true;
+                  end;
+   scMessage    : begin //Necessary to add messages to log, even if it is invisible (to generate report)
+                        InfoMemo.Lines.Add(data.msg);
+                        p_info(data.msg);
+                  end;
+   scStepMessage: Label9.Caption:=data.msg;
+ end;
+
  Application.ProcessMessages;
-end else if ty=mtStep then
-begin
- IWizFrm.Label9.Caption:=msg;
 end;
 end;
 
@@ -393,7 +384,7 @@ writeLn('Begin loading IPK');
 
 setup:=TInstallPack.Create;
 setup.SetUserRequestCall(@RequestHandling,nil);
-setup.SetMessageCall(@MessageCall,nil);
+setup.SetStatusChangeCall(@StatusChangeCall,nil);
 
 //Set forced actions
 if Application.HasOption('force-architecture') then
@@ -655,10 +646,6 @@ while IPage.Visible=false do Application.ProcessMessages;
  AbortBtn1.Enabled:=true;
  ExProgress.Visible:=false;
  Label9.Caption:=rsStep1;
-
- //Assign event handlers
- setup.SetMainChangeCall(@MainPosChange,nil);
- setup.SetExtraChangeCall(@ExtraPosChange,nil);
 
  setup.SetProfileID(ModeGroup.ItemIndex);
 

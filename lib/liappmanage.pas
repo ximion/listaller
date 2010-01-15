@@ -14,7 +14,7 @@
   You should have received a copy of the GNU General Public License v3
   along with this library. If not, see <http://www.gnu.org/licenses/>.}
 //** Functions to manage applications (install/uninstall, dependency-check)
-unit management;
+unit liappmanage;
 
 {$mode objfpc}{$H+}
 
@@ -22,23 +22,22 @@ interface
 
 uses
   Classes, SysUtils, SQLite3Ds, IniFiles, GetText, TRStrings, LiCommon,
-  DB, FileUtil, packagekit, Process, ipkhandle, liTypes, liBasic,
-  dbusproc;
+  DB, FileUtil, packagekit, Process, liTypes, liBasic, liDBusProc,
+  ipkdef;
 
 type
  PAppManager = ^TAppManager;
  TAppManager = class
  private
   SUMode: Boolean;
-  FMsg: TMessageCall;
   FReq: TRequestCall;
   FApp: TAppEvent;
-  FProg: TProgressCall;
+  FStatus: TLiStatusChangeCall;
+  sdata: TLiStatusData; //Contains the current progress
 
   //Some user data
-  msgudata: Pointer;
+  statechangeudata: Pointer;
   requestudata: Pointer;
-  progudata: Pointer;
 
   procedure msg(s: String);
   function request(s: String;ty: TRqType): TRqResult;
@@ -50,7 +49,7 @@ type
   //** Catch the PackageKit progress
   procedure PkitProgress(pos: Integer;xd: Pointer);
   //** Catch status messages from DBus process
-  procedure DBusThreadStatusChange(ty: TProcStatus;data: TLiProcData);
+  procedure DBusThreadStatusChange(ty: LiProcStatus;data: TLiProcData);
  public
   constructor Create;
   destructor Destroy;override;
@@ -63,17 +62,26 @@ type
     @param fix True if all found issues should be fixed right now
     @returns True if everything is okay, False if dependencies are missing}
   function CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
-  procedure RegOnMessage(call: TMessageCall;data: Pointer);
+  procedure RegOnStatusChange(call: TLiStatusChangeCall;data: Pointer);
   procedure RegOnRequest(call: TRequestCall;data: Pointer);
-  procedure RegOnProgress(call: TProgressCall;data: Pointer);
   property OnApplication: TAppEvent read FApp write FApp;
   property SuperuserMode: Boolean read SUMode write SUMode;
   function UserRequestRegistered: Boolean;
 end;
 
-{ Process .desktop-file and add info to list @param fname Name of the .desktop file
-      @param tp Category name}
-//function ProcessDesktopFile(fname: String; tp: String): Boolean;
+{** Removes an IPK application
+     @param AppName Name of the application, that should be uninstalled
+     @param AppID ID of the application
+     @param FStatus Callback to receive the status of the procedure (set to nil if not needed)
+     @param fast Does a quick uninstallation if is true (Set to "False" by default)
+     @param RmDeps Remove dependencies if true (Set to "True" by default)}
+ procedure UninstallIPKApp(AppName, AppID: String; FStatus: TLiStatusChangeCall; fast: Boolean=false; RmDeps:Boolean=true);
+
+ //** Checks if package is installed
+ function IsPackageInstalled(aName: String;aID: String): Boolean;
+
+ //** Load application registration db into SQLiteDataset
+ procedure LoadAppDB(dsApp: TSQLite3Dataset);
 
 implementation
 
@@ -94,10 +102,10 @@ begin
  if Assigned(FReq) then Result:=true else Result:=false;
 end;
 
-procedure TAppManager.RegOnMessage(call: TMessageCall;data: Pointer);
+procedure TAppManager.RegOnStatusChange(call: TLiStatusChangeCall;data: Pointer);
 begin
- FMsg:=call;
- msgudata:=data;
+ FStatus:=call;
+ statechangeudata:=data;
 end;
 
 procedure TAppManager.RegOnRequest(call: TRequestCall;data: Pointer);
@@ -106,15 +114,10 @@ begin
  requestudata:=data;
 end;
 
-procedure TAppManager.RegOnProgress(call: TProgressCall;data: Pointer);
-begin
- FProg:=call;
- progudata:=data;
-end;
-
 procedure TAppManager.Msg(s: String);
 begin
- if Assigned(FMsg) then FMsg(PChar(s),mtInfo,msgudata);
+ sdata.msg:=PChar(s);
+ if Assigned(FStatus) then FStatus(scMessage,sdata,statechangeudata);
 end;
 
 function TAppManager.Request(s: String;ty: TRqType): TRqResult;
@@ -129,7 +132,8 @@ end;
 
 procedure TAppManager.SetPos(i: Integer);
 begin
- if Assigned(FProg) then FProg(i,progudata);
+ sdata.mnprogress:=i;
+ if Assigned(FStatus) then FStatus(scMnprogress,sdata,statechangeudata);
 end;
 
 function TAppManager.IsInList(nm: String;list: TStringList): Boolean;
@@ -550,7 +554,7 @@ begin
 end;
 end;
 
-procedure TAppManager.DBusThreadStatusChange(ty: TProcStatus;data: TLiProcData);
+procedure TAppManager.DBusThreadStatusChange(ty: LiProcStatus;data: TLiProcData);
 begin
   case data.changed of
     pdMainProgress: setpos(data.mnprogress);
@@ -589,7 +593,7 @@ begin
 if DirectoryExists(RegDir+LowerCase(name+'-'+id)) then
 begin
  //Remove IPK app
- UninstallIPKApp(name,id,FMsg,FProg,false);
+ UninstallIPKApp(name,id,FStatus,false);
 
 msg('Finished!');
 exit;
@@ -759,6 +763,352 @@ pkit.Free;
 dsApp.Close;
 writeLn('Check finished.');
 if not Result then writeLn('You have broken dependencies.');
+end;
+
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+
+procedure LoadAppDB(dsApp: TSQLite3Dataset);
+begin
+if not DirectoryExists(ExtractFilePath(RegDir)) then
+ CreateDir(ExtractFilePath(RegDir));
+if not DirectoryExists(RegDir) then
+ CreateDir(RegDir);
+
+ with dsApp do
+ begin
+   FileName:=RegDir+'applications.db';
+   TableName:='AppInfo';
+   if not FileExists(FileName) then
+   begin
+   with FieldDefs do
+     begin
+       Clear;
+       Add('Name',ftString,0,true);
+       Add('ID',ftString,0,true);
+       Add('Type',ftString,0,true);
+       Add('Description',ftString,0,False);
+       Add('Version',ftFloat,0,true);
+       Add('Publisher',ftString,0,False);
+       Add('Icon',ftString,0,False);
+       Add('Profile',ftString,0,False);
+       Add('AGroup',ftString,0,true);
+       Add('InstallDate',ftDateTime,0,False);
+       Add('Dependencies',ftMemo,0,False);
+     end;
+   CreateTable;
+ end;
+end;
+end;
+
+function IsPackageInstalled(aname: String;aid: String): Boolean;
+var dsApp: TSQLite3Dataset;
+begin
+dsApp:=TSQLite3Dataset.Create(nil);
+LoadAppDB(dsApp);
+dsApp.SQL:='SELECT * FROM AppInfo';
+dsApp.Open;
+dsApp.Filtered := true;
+dsApp.First;
+
+Result:=false;
+while not dsApp.EOF do
+begin
+ if (dsApp.FieldByName('Name').AsString=aName) and (dsApp.FieldByName('ID').AsString=aID) then
+begin
+Result:=true;
+break;
+end else Result:=false;
+ dsApp.Next;
+end;
+
+dsApp.Close;
+dsApp.Free;
+end;
+
+/////////////////////////////////////////////////////
+
+procedure UninstallIPKApp(AppName,AppID: String; FStatus: TLiStatusChangeCall; fast:Boolean=false; RmDeps:Boolean=true);
+var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;k: Boolean;upd: String;
+    proc: TProcess;dlink: Boolean;t: TProcess;
+    pkit: TPackageKit;
+    dsApp: TSQLite3Dataset;
+    mnprog: Integer;
+    bs: Double;
+    ipkc: TIPKControl;
+
+    sdata: TLiStatusData;
+procedure SetPosition(prog: Double);
+begin
+sdata.mnprogress:=Round(prog);
+if Assigned(FStatus) then FStatus(scMnProgress,sdata,nil);
+end;
+
+procedure msg(s: String);
+begin
+sdata.msg:=PChar(s);
+if Assigned(FStatus) then FStatus(scMessage,sdata,nil)
+else p_info(s);
+end;
+
+begin
+p:=RegDir+LowerCase(AppName+'-'+AppID)+'/';
+mnprog:=0;
+
+SetPosition(0);
+
+//Check if an update source was set
+ipkc:=TIPKControl.Create(p+'proginfo.pin');
+upd:=ipkc.USource;
+ipkc.Free;
+
+msg('Begin uninstallation...');
+
+dsApp:= TSQLite3Dataset.Create(nil);
+with dsApp do
+ begin
+   FileName:=RegDir+'applications.db';
+   TableName:='AppInfo';
+   if not FileExists(FileName) then
+   begin
+   with FieldDefs do
+     begin
+       Clear;
+       Add('Name',ftString,0,true);
+       Add('ID',ftString,0,true);
+       Add('Type',ftString,0,true);
+       Add('Description',ftString,0,False);
+       Add('Version',ftFloat,0,true);
+       Add('Publisher',ftString,0,False);
+       Add('Icon',ftString,0,False);
+       Add('Profile',ftString,0,False);
+       Add('AGroup',ftString,0,true);
+       Add('InstallDate',ftDateTime,0,False);
+       Add('Dependencies',ftMemo,0,False);
+     end;
+   CreateTable;
+ end;
+end;
+dsApp.Active:=true;
+
+dsApp.SQL:='SELECT * FROM AppInfo';
+dsApp.Edit;
+dsApp.Open;
+dsApp.Filtered:=true;
+msg('Database opened.');
+
+while not dsApp.EOF do
+begin
+ if (dsApp.FieldByName('Name').AsString=AppName) and (dsApp.FieldByName('ID').AsString=AppID) then
+ begin
+
+ if LowerCase(dsApp.FieldByName('Type').AsString) = 'dlink'
+ then dlink:=true
+ else dlink:=false;
+
+bs:=6;
+SetPosition(4);
+mnprog:=4;
+
+if not dlink then
+begin
+tmp:=TStringList.Create;
+tmp.LoadFromfile(p+'appfiles.list');
+bs:=(bs+tmp.Count)/100;
+end;
+
+if not fast then
+begin
+if FileExists(p+'prerm') then
+begin
+ msg('PreRM-Script found.');
+ t:=TProcess.Create(nil);
+ t.Options:=[poUsePipes,poWaitonexit];
+ t.CommandLine:='chmod 775 '''+p+'prerm''';
+ t.Execute;
+ msg('Executing prerm...');
+ t.CommandLine:=''''+p+'prerm''';
+ t.Execute;
+ t.Free;
+ msg('Done.');
+end;
+
+///////////////////////////////////////
+if RmDeps then
+begin
+msg(rsRMUnsdDeps);
+tmp2:=TStringList.Create;
+tmp2.Text:=dsApp.FieldByName('Dependencies').AsString;
+
+if tmp2.Count>-1 then
+begin
+bs:=(bs+tmp2.Count)/100;
+for i:=0 to tmp2.Count-1 do
+begin
+f:=tmp2[i];
+//Skip catalog based packages - impossible to detect unneeded dependencies
+if pos('cat:',f)>0 then break;
+
+if (LowerCase(f)<>'libc6') then
+begin
+//Check if another package requires this package
+t:=TProcess.Create(nil);
+if pos('>',f)>0 then
+msg(f+' # '+copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
+else msg(f);
+
+pkit:=TPackageKit.Create;
+
+s:=TStringlist.Create;
+
+pkit.RsList:=s;
+
+if pos('>',f)>0 then
+ pkit.GetRequires(copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
+else pkit.GetRequires(f);
+
+   if s.Count <=1 then
+   begin
+   if pos('>',f)>0 then
+   pkit.RemovePkg(copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
+   else pkit.RemovePkg(f);
+   //GetOutPutTimer.Enabled:=true;
+
+   msg('Removing '+f+'...');
+  end;
+
+ s.free;
+ pkit.Free;
+  end;
+  Inc(mnprog);
+  SetPosition(bs*mnprog);
+end; //End of tmp2-find loop
+
+end else msg('No installed deps found!');
+
+tmp2.Free;
+ end; //End of remove-deps request
+end; //End of "fast"-request
+//////////////////////////////////////////////////////
+
+if not dlink then
+begin
+slist:=TStringList.Create;
+
+//@obsolete This code is obsolete
+{if reg.ReadBool(AppName,'ContSFiles',false) then
+begin
+tmp2:=TStringList.Create;
+reg.ReadSections(tmp2);
+
+for i:=0 to tmp2.Count-1 do begin
+if reg.ReadBool(tmp2[i],'ContSFiles',false) then begin
+s:=TStringList.Create;
+
+s.LoadFromFile(p+'/appfiles.list');
+for j:=0 to s.Count-1 do
+if pos(' <s>',s[j])>0 then slist.Add(DeleteModifiers(s[j]));
+s.Free;
+  end;
+tmp2.Free;
+ end;
+end; //End of shared-test  }
+
+
+//Undo Mime-registration (if necessary)
+for i:=0 to tmp.Count-1 do
+begin
+if pos( '<mime>',tmp[i])>0 then
+begin
+msg('Uninstalling MIME-Type "'+ExtractFileName(tmp[i])+'" ...');
+t:=TProcess.Create(nil);
+if (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.png')
+or (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.xpm') then
+begin
+t.CommandLine:='xdg-icon-resource uninstall '+SysUtils.ChangeFileExt(ExtractFileName(DeleteModifiers(tmp[i])),'');
+t.Execute
+end else
+begin
+t.CommandLine:='xdg-mime uninstall '+DeleteModifiers(f+'/'+ExtractFileName(tmp[i]));
+t.Execute;
+end;
+t.Free;
+end;
+end;
+
+msg('Removing files...');
+//Uninstall application
+for i:=0 to tmp.Count-1 do
+begin
+
+f:=SyblToPath(tmp[i]);
+
+f:=DeleteModifiers(f);
+
+k:=false;
+for j:=0 to slist.Count-1 do
+if f = slist[j] then k:=true;
+
+if not k then
+DeleteFile(f);
+
+Inc(mnprog);
+SetPosition(bs*mnprog);
+end;
+
+Inc(mnprog);
+SetPosition(bs*mnprog);
+
+msg('Removing empty dirs...');
+tmp.LoadFromFile(p+'appdirs.list');
+proc:=TProcess.Create(nil);
+proc.Options:=[poWaitOnExit,poStdErrToOutPut,poUsePipes];
+for i:=0 to tmp.Count-1 do
+begin
+  proc.CommandLine :='rm -rf '+tmp[i];
+  proc.Execute;
+end;
+proc.Free;
+
+if upd<>'#' then begin
+tmp.LoadFromFile(RegDir+'updates.list');
+msg('Removing update-source...');
+for i:=1 to tmp.Count-1 do
+if pos(upd,tmp[i])>0 then begin tmp.Delete(i);break;end;
+tmp.SaveToFile(RegDir+'updates.list');
+tmp.Free;
+end;
+
+end;
+
+end;
+dsApp.Next;
+end;
+
+if mnprog>0 then
+begin
+msg('Unregistering...');
+
+dsApp.ExecuteDirect('DELETE FROM AppInfo WHERE rowid='+IntToStr(dsApp.RecNo));
+dsApp.ApplyUpdates;
+dsApp.Close;
+dsApp.Free;
+msg('Database connection closed.');
+
+proc:=TProcess.Create(nil);
+proc.Options:=[poWaitOnExit];
+proc.CommandLine :='rm -rf '+''''+ExcludeTrailingBackslash(p)+'''';
+proc.Execute;
+proc.Free;
+
+Inc(mnprog);
+SetPosition(bs*mnprog);
+
+msg('Application removed.');
+msg('- Finished -');
+end else msg('Application not found!');
+
 end;
 
 end.

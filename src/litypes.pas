@@ -42,14 +42,22 @@ type
  //** Type of a message (published)
  TMessageType = (mtStep,mtInfo);
  //** Result of a DBus action
- TProcStatus = (prFailed, prAuthorized, prBlocked, prFinished, prError, prInfo);
+ LiProcStatus = (prFailed, prAuthorized, prBlocked, prFinished, prError, prInfo);
 
+ //** Things which can be changed
+ LiStatusChange = (scMnProgress,scExProgress,scActionResult,scMessage,scStepMessage);
+ //** Data assigned to a status change
+ TLiStatusData = record
+  msg: PChar;
+  exprogress: Integer;
+  mnprogress: Integer;
+  lastresult: LiProcStatus;
+ end;
+
+ //** Callback for change of status
+ TLiStatusChangeCall = procedure(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
  //** Callback for user request
  TRequestCall = function(mtype: TRqType;msg: PChar;user_data: Pointer): TRqResult;cdecl;
- //** Callback that submits a notification
- TMessageCall = procedure(msg: PChar;ty: TMessageType;user_data: Pointer);cdecl;
- //** Called if a progress was changed
- TProgressCall = procedure(pos: Integer;user_data: Pointer);cdecl;
 
  //** Called if progress was changed; only for internal use
  TProgressEvent = procedure(pos: Integer;user_data: Pointer) of object;

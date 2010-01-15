@@ -19,8 +19,8 @@ library libinstaller;
 {$mode objfpc}{$H+}
 
 uses
-  cthreads, Classes, ipkHandle, SysUtils, Controls, liCommon, liTypes,
-  management, liBasic, dbusproc;
+  cthreads, Classes, ipkInstall, SysUtils, Controls, liCommon, liTypes,
+  liBasic, lidbusproc, liappmanage;
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -62,11 +62,11 @@ end;
 //Installer part
 
 //** Removes an application that was installed with an IPK package
-function li_remove_ipk_installed_app(appname, appid: PChar;msgcall: TMessageCall;poschange: TProgressCall;fastmode: Boolean): Boolean;cdecl;
+function li_remove_ipk_installed_app(appname, appid: PChar;statuscall: TLiStatusChangeCall;fastmode: Boolean): Boolean;cdecl;
 begin
 Result:=true;
 try
- UninstallIPKApp(appname, appid,msgcall,poschange, fastmode, true)
+ UninstallIPKApp(appname, appid, statuscall, fastmode, true)
 except
  Result:=false;
 end;
@@ -100,34 +100,12 @@ begin
  end;
 end;
 
-//** Register progress changes (main)
-function li_setup_register_main_progress_call(setup: PInstallation;call: TProgressCall;user_data: Pointer): Boolean;cdecl;
+//** Register callback on status change
+function li_setup_register_status_call(setup: PInstallation;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-   setup^.RegOnProgressMainChange(call,user_data);
- except
-  Result:=false;
- end;
-end;
-
-//** Register progress changes (extra)
-function li_setup_register_extra_progress_call(setup: PInstallation;call: TProgressCall;user_data: Pointer): Boolean;cdecl;
-begin
- Result:=true;
- try
-  setup^.RegOnProgressExtraChange(call,user_data);
- except
-  Result:=false;
- end;
-end;
-
-//** Message call
-function li_setup_register_message_call(setup: PInstallation;call: TMessageCall;user_data: Pointer): Boolean;cdecl;
-begin
- Result:=true;
- try
-  setup^.RegOnMessage(call,user_data);
+   setup^.RegOnStatusChange(call,user_data);
  except
   Result:=false;
  end;
@@ -324,12 +302,12 @@ except
 end;
 end;
 
-//** Register message call
-function li_mgr_register_msg_call(mgr: PAppManager;call: TMessageCall;user_data: Pointer): Boolean;cdecl;
+//** Register call on status change for appmanager
+function li_mgr_register_status_call(mgr: PAppManager;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-  mgr^.RegOnMessage(call,user_data);
+  mgr^.RegOnStatusChange(call,user_data);
  except
   Result:=false;
  end;
@@ -341,17 +319,6 @@ begin
  Result:=true;
  try
   mgr^.OnApplication:=call;
- except
-  Result:=false;
- end;
-end;
-
-//** Register event to recieve current progress
-function li_mgr_register_progress_call(mgr: PAppManager;call: TProgressCall;user_data: Pointer): Boolean;cdecl;
-begin
- Result:=true;
- try
-  mgr^.RegOnProgress(call,user_data);
  except
   Result:=false;
  end;
@@ -430,8 +397,7 @@ exports
  li_setup_free,
  li_setup_init,
  li_setup_set_su_mode,
- li_setup_register_main_progress_call,
- li_setup_register_extra_progress_call,
+ li_setup_register_status_call,
  li_setup_pkgtype,
  li_setup_disallows,
  li_setup_supported_distributions,
@@ -447,7 +413,6 @@ exports
  li_setup_desktopfiles,
  li_setup_app_exec_command,
  li_setup_profile_current_filelist,
- li_setup_register_message_call,
  li_setup_register_user_request_call,
  li_setup_start,
  li_setup_dependencies,
@@ -458,9 +423,8 @@ exports
  li_mgr_new,
  li_mgr_free,
  li_mgr_load_apps,
- li_mgr_register_msg_call,
+ li_mgr_register_status_call,
  li_mgr_register_app_call,
- li_mgr_register_progress_call,
  li_mgr_register_request_call,
  li_mgr_set_su_mode,
  li_mgr_remove_app,

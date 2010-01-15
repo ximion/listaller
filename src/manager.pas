@@ -22,9 +22,9 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
-  Inifiles, StdCtrls, process, LCLType, Buttons, ExtCtrls, Distri, LEntries,
+  Inifiles, StdCtrls, Process, LCLType, Buttons, ExtCtrls, Distri, LEntries,
   Uninstall, trStrings, FileUtil, CheckLst, xTypeFm, AppMan, LiBasic, liTypes,
-  Contnrs, AboutBox, GetText, PackageKit, Spin, iconLoader, LiCommon;
+  Contnrs, AboutBox, PackageKit, Spin, iconLoader, LiCommon;
 
 type
 
@@ -133,7 +133,7 @@ var
   instLst: TStringList;
 
 //Published for use in uninstall.pas
-procedure OnMessage(msg: PChar;ty: TMessageType;data: Pointer);cdecl;
+procedure OnMgrStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 
 //NOTE:
 //IMPORTANT: RegDir should be moved to libInstaller!
@@ -166,14 +166,15 @@ end;
 Application.ProcessMessages;
 end;
 
-procedure OnMessage(msg: PChar;ty: TMessageType;data: Pointer);cdecl;
+procedure OnMgrStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 begin
- if ty=mtStep then MnFrm.StatusLabel.Caption:=msg;
- if ty=mtInfo then
- begin
-  MnFrm.StatusLabel.Caption:=msg;
-  p_info(msg);
- end;
+case change of
+ scStepmessage: MnFrm.StatusLabel.Caption:=data.msg;
+ scMessage    : begin
+                     MnFrm.StatusLabel.Caption:=data.msg;
+                     p_info(data.msg);
+                end;
+end;
 end;
 
 function OnUserRequest(mtype: TRqType;msg: PChar;data: Pointer): TRqResult;cdecl;
@@ -857,7 +858,7 @@ end;     }
 li_mgr_register_app_call(@amgr,@OnNewAppFound);
 
 //Register callback to be notified if a message was thrown
-li_mgr_register_msg_call(@amgr,@OnMessage,nil);
+li_mgr_register_status_call(@amgr,@OnMgrStatus,nil);
 
 //Register request call
 li_mgr_register_request_call(@amgr,@OnUserRequest,nil);

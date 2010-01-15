@@ -14,7 +14,7 @@
   You should have received a copy of the GNU General Public License v3
   along with this library. If not, see <http://www.gnu.org/licenses/>.}
 //** Threads which can perform actions on Listaller's DBus interface
-unit dbusproc;
+unit lidbusproc;
 
 {$mode objfpc}{$H+}
 
@@ -39,7 +39,7 @@ type
  end;
 
  //** Event for thread signals
- TLiDAction = procedure(ty: TProcStatus;data: TLiProcData) of Object;
+ TLiDAction = procedure(ty: LiProcStatus;data: TLiProcData) of Object;
 
  //** Actions Listaller can perform on DBus root interface
  TListallerBusAction = (lbaUninstallApp,lbaInstallPack);
@@ -59,7 +59,7 @@ type
   FStatus: TLiDAction;
   cmdinfo: ListallerBusCommand;
 
-  status: TProcStatus;
+  status: LiProcStatus;
   procinfo: TLiProcData;
   procedure SyncProcStatus;
   procedure SendError(msg: String);

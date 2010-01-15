@@ -13,8 +13,8 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this library. If not, see <http://www.gnu.org/licenses/>.}
-//** Functions to handle IPK packages
-unit ipkhandle;
+//** Functions to install IPK packages
+unit ipkinstall;
 
 {$mode objfpc}{$H+}
 
@@ -23,7 +23,8 @@ interface
 uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, packagekit,
   sqlite3ds, db, AbUnZper, AbArcTyp, ipkdef, HTTPSend, FTPSend, blcksock,
-  MD5, liTypes, distri, MTProcs, FileUtil, liBasic, dbusproc;
+  MD5, liTypes, distri, MTProcs, FileUtil, liBasic, liDBusproc,
+  liAppManage;
 
 type
 
@@ -78,10 +79,10 @@ type
   //Container for license
   license: TStringList;
   //Progress message relais
-  FProgChange1: TProgressCall;
-  FProgChange2: TProgressCall;
+  FStatusChange: TLiStatusChangeCall;
   FRequest: TRequestCall;
-  FMessage:  TMessageCall;
+  //Data which contains the status of the current action
+  StatusData: TLiStatusData;
   // True if su mode enabled
   SUMode: Boolean;
   // Path to package registration
@@ -107,13 +108,11 @@ type
   //Add update source of the package
   procedure CheckAddUSource;
   //Catch signals of DBus thread
-  procedure DBusThreadStatusChange(ty: TProcStatus;data: TLiProcData);
+  procedure DBusThreadStatusChange(ty: LiProcStatus;data: TLiProcData);
  protected
   //UserData
-  mainposudata: Pointer;
-  extraposudata: Pointer;
   requestudata: Pointer;
-  messageudata: Pointer;
+  statechangeudata: Pointer;
   //Check if FTP connection is working
   function CheckFTPConnection(AFTPSend: TFTPSend): Boolean;
   //Set/Get methods for callbacks indication
@@ -174,54 +173,27 @@ type
   property ForceActions: String read Forces write Forces;
   //** True if update source will be registered
   property RegisterUpdateSource: Boolean read AddUpdateSource write AddUpdateSource;
-  //Progress events
-  procedure RegOnProgressMainChange(call: TProgressCall;data: Pointer);
-  procedure RegOnProgressExtraChange(call: TProgressCall;data: Pointer);
+  //** Register event to catch status messages
+  procedure RegOnStatusChange(call: TLiStatusChangeCall;data: Pointer);
   //Message events
   procedure RegOnUsrRequest(call: TRequestCall;data: Pointer);
-  procedure RegOnMessage(call: TMessageCall;data: Pointer);
   function  UserRequestRegistered: Boolean;
 end;
 
-{** Removes an IPK application
-     @param AppName Name of the application, that should be uninstalled
-     @param AppID ID of the application
-     @param FMsg Message event to catch the info messages (set to nil if not needed)
-     @param progress Function call for operation progress (set nil if not needed)
-     @param fast Does a quick uninstallation if is true (Set to "False" by default)
-     @param RmDeps Remove dependencies if true (Set to "True" by default)}
- procedure UninstallIPKApp(AppName, AppID: String; FMsg: TMessageCall;progress: TProgressCall; fast: Boolean=false; RmDeps:Boolean=true);
-
- //** Checks if package is installed
- function IsPackageInstalled(aName: String;aID: String): Boolean;
-
-
- //Note: The "Testmode" variable is in LiCommon
+ //Note: The "Testmode" variable is now in LiCommon
 
 implementation
 
-procedure TInstallation.RegOnProgressMainChange(call: TProgressCall;data: Pointer);
+procedure TInstallation.RegOnStatusChange(call: TLiStatusChangeCall;data: Pointer);
 begin
-  FProgChange1:=call;
-  mainposudata:=data;
-end;
-
-procedure TInstallation.RegOnProgressExtraChange(call: TProgressCall;data: Pointer);
-begin
-  FProgChange2:=call;
-  extraposudata:=data;
+ FStatusChange:=call;
+ statechangeudata:=data;
 end;
 
 procedure TInstallation.RegOnUsrRequest(call: TRequestCall;data: Pointer);
 begin
   FRequest:=call;
   requestudata:=data;
-end;
-
-procedure TInstallation.RegOnMessage(call: TMessageCall;data: Pointer);
-begin
-  FMessage:=call;
-  messageudata:=data;
 end;
 
 function TInstallation.UserRequestRegistered: boolean;
@@ -231,12 +203,14 @@ end;
 
 procedure TInstallation.SetMainPos(pos: integer);
 begin
- if Assigned(FProgChange1) then FProgChange1(pos,mainposudata);
+ statusdata.mnprogress:=pos;
+ if Assigned(FStatusChange) then FStatusChange(scMnProgress,statusdata,statechangeudata);
 end;
 
 procedure TInstallation.SetExtraPos(pos: integer);
 begin
- if Assigned(FProgChange2) then FProgChange2(pos,extraposudata);
+ statusdata.exprogress:=pos;
+ if Assigned(FStatusChange) then FStatusChange(scExProgress,statusdata,statechangeudata);
 end;
 
 function TInstallation.MakeUsrRequest(msg: String;qtype: TRqType): TRqResult;
@@ -248,12 +222,14 @@ end;
 
 procedure TInstallation.SendStateMsg(msg: String);
 begin
- if Assigned(FMessage) then FMessage(PChar(msg),mtStep,messageudata);
+ statusdata.msg:=PChar(msg);
+ if Assigned(FStatusChange) then FStatusChange(scStepMessage,statusdata,statechangeudata);
 end;
 
 procedure TInstallation.msg(str: String);
 begin
- if Assigned(FMessage) then FMessage(PChar(str),mtInfo,messageudata)
+ statusdata.msg:=PChar(str);
+ if Assigned(FStatusChange) then FStatusChange(scMessage,statusdata,statechangeudata)
  else p_info(str);
 end;
 
@@ -308,70 +284,12 @@ begin
   lst.Add(copy(PkProfiles[i],0,pos(' #',PkProfiles[i])));
 end;
 
-procedure LoadDB(dsApp: TSQLite3Dataset);
-begin
-if not DirectoryExists(ExtractFilePath(RegDir)) then
- CreateDir(ExtractFilePath(RegDir));
-if not DirectoryExists(RegDir) then
- CreateDir(RegDir);
-
- with dsApp do
- begin
-   FileName:=RegDir+'applications.db';
-   TableName:='AppInfo';
-   if not FileExists(FileName) then
-   begin
-   with FieldDefs do
-     begin
-       Clear;
-       Add('Name',ftString,0,true);
-       Add('ID',ftString,0,true);
-       Add('Type',ftString,0,true);
-       Add('Description',ftString,0,False);
-       Add('Version',ftFloat,0,true);
-       Add('Publisher',ftString,0,False);
-       Add('Icon',ftString,0,False);
-       Add('Profile',ftString,0,False);
-       Add('AGroup',ftString,0,true);
-       Add('InstallDate',ftDateTime,0,False);
-       Add('Dependencies',ftMemo,0,False);
-     end;
-   CreateTable;
- end;
-end;
-end;
-
-function IsPackageInstalled(aname: String;aid: String): Boolean;
-var dsApp: TSQLite3Dataset;
-begin
-dsApp:=TSQLite3Dataset.Create(nil);
-LoadDB(dsApp);
-dsApp.SQL:='SELECT * FROM AppInfo';
-dsApp.Open;
-dsApp.Filtered := true;
-dsApp.First;
-
-Result:=false;
-while not dsApp.EOF do
-begin
- if (dsApp.FieldByName('Name').AsString=aName) and (dsApp.FieldByName('ID').AsString=aID) then
-begin
-Result:=true;
-break;
-end else Result:=false;
- dsApp.Next;
-end;
-
-dsApp.Close;
-dsApp.Free;
-end;
-
 function IsAppInstalled(aname: String): Boolean;
 var dsApp: TSQLite3Dataset;
 begin
 dsApp:=TSQLite3Dataset.Create(nil);
 
-LoadDB(dsApp);
+LoadAppDB(dsApp);
 
 dsApp.SQL:='SELECT * FROM AppInfo';
 dsApp.Open;
@@ -547,7 +465,7 @@ begin
 end;
  Result:=true;
 
- LoadDB(dsApp);
+ LoadAppDB(dsApp);
 
 dsApp.Active:=true;
 msg('SQLite version: '+dsApp.SqliteVersion);
@@ -981,7 +899,7 @@ end;
 end;
 
 
-procedure TInstallation.DBusThreadStatusChange(ty: TProcStatus;data: TLiProcData);
+procedure TInstallation.DBusThreadStatusChange(ty: LiProcStatus;data: TLiProcData);
 begin
   case data.changed of
     pdMainProgress: SetMainPos(data.mnprogress);
@@ -1282,7 +1200,7 @@ SetExtraPos(0);
 if (RmApp)and(not Testmode) then
 begin
 //Uninstall old application
- UnInstallIPKApp(IAppName,pkgID,FMessage,FProgChange2,true);
+ UnInstallIPKApp(IAppName,pkgID,FStatusChange,true);
  SetExtraPos(0);
 end;
 
@@ -1803,290 +1721,6 @@ CheckAddUSource;
  FTP.DSock.Onstatus:=nil;
  FreeAndNil(HTTP);
  FreeAndNil(FTP);
-end;
-
-/////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-///////////////////////////////////////////////////
-procedure UninstallIPKApp(AppName,AppID: String; FMsg: TMessageCall;progress: TProgressCall; fast:Boolean=false; RmDeps:Boolean=true);
-var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;k: Boolean;upd: String;
-    proc: TProcess;dlink: Boolean;t: TProcess;
-    pkit: TPackageKit;
-    dsApp: TSQLite3Dataset;
-    FPos: TProgressCall;
-    mnprog: Integer;
-    bs: Double;
-    ipkc: TIPKControl;
-procedure SetPosition(prog: Double);
-begin
-if Assigned(FPos) then FPos(Round(prog),nil);
- //writeLn('[DBG]: RMC--> '+IntToStr(Round(prog)));
-end;
-
-procedure msg(s: String);
-begin
-if Assigned(FMsg) then FMsg(PChar(s),mtInfo,nil)
-else writeLn(s);
-end;
-
-begin
-p:=RegDir+LowerCase(AppName+'-'+AppID)+'/';
-FPos:=progress;
-mnprog:=0;
-
-SetPosition(0);
-
-//Check if an update source was set
-ipkc:=TIPKControl.Create(p+'proginfo.pin');
-upd:=ipkc.USource;
-ipkc.Free;
-
-msg('Begin uninstallation...');
-
-dsApp:= TSQLite3Dataset.Create(nil);
-with dsApp do
- begin
-   FileName:=RegDir+'applications.db';
-   TableName:='AppInfo';
-   if not FileExists(FileName) then
-   begin
-   with FieldDefs do
-     begin
-       Clear;
-       Add('Name',ftString,0,true);
-       Add('ID',ftString,0,true);
-       Add('Type',ftString,0,true);
-       Add('Description',ftString,0,False);
-       Add('Version',ftFloat,0,true);
-       Add('Publisher',ftString,0,False);
-       Add('Icon',ftString,0,False);
-       Add('Profile',ftString,0,False);
-       Add('AGroup',ftString,0,true);
-       Add('InstallDate',ftDateTime,0,False);
-       Add('Dependencies',ftMemo,0,False);
-     end;
-   CreateTable;
- end;
-end;
-dsApp.Active:=true;
-
-dsApp.SQL:='SELECT * FROM AppInfo';
-dsApp.Edit;
-dsApp.Open;
-dsApp.Filtered:=true;
-msg('Database opened.');
-
-while not dsApp.EOF do
-begin
- if (dsApp.FieldByName('Name').AsString=AppName) and (dsApp.FieldByName('ID').AsString=AppID) then
- begin
-
- if LowerCase(dsApp.FieldByName('Type').AsString) = 'dlink'
- then dlink:=true
- else dlink:=false;
-
-bs:=6;
-SetPosition(4);
-mnprog:=4;
-
-if not dlink then
-begin
-tmp:=TStringList.Create;
-tmp.LoadFromfile(p+'appfiles.list');
-bs:=(bs+tmp.Count)/100;
-end;
-
-if not fast then
-begin
-if FileExists(p+'prerm') then
-begin
- msg('PreRM-Script found.');
- t:=TProcess.Create(nil);
- t.Options:=[poUsePipes,poWaitonexit];
- t.CommandLine:='chmod 775 '''+p+'prerm''';
- t.Execute;
- msg('Executing prerm...');
- t.CommandLine:=''''+p+'prerm''';
- t.Execute;
- t.Free;
- msg('Done.');
-end;
-
-///////////////////////////////////////
-if RmDeps then
-begin
-msg(rsRMUnsdDeps);
-tmp2:=TStringList.Create;
-tmp2.Text:=dsApp.FieldByName('Dependencies').AsString;
-
-if tmp2.Count>-1 then
-begin
-bs:=(bs+tmp2.Count)/100;
-for i:=0 to tmp2.Count-1 do
-begin
-f:=tmp2[i];
-//Skip catalog based packages - impossible to detect unneeded dependencies
-if pos('cat:',f)>0 then break;
-
-if (LowerCase(f)<>'libc6') then
-begin
-//Check if another package requires this package
-t:=TProcess.Create(nil);
-if pos('>',f)>0 then
-msg(f+' # '+copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
-else msg(f);
-
-pkit:=TPackageKit.Create;
-
-s:=TStringlist.Create;
-
-pkit.RsList:=s;
-
-if pos('>',f)>0 then
- pkit.GetRequires(copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
-else pkit.GetRequires(f);
-
-   if s.Count <=1 then
-   begin
-   if pos('>',f)>0 then
-   pkit.RemovePkg(copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
-   else pkit.RemovePkg(f);
-   //GetOutPutTimer.Enabled:=true;
-
-   msg('Removing '+f+'...');
-  end;
-
- s.free;
- pkit.Free;
-  end;
-  Inc(mnprog);
-  SetPosition(bs*mnprog);
-end; //End of tmp2-find loop
-
-end else msg('No installed deps found!');
-
-tmp2.Free;
- end; //End of remove-deps request
-end; //End of "fast"-request
-//////////////////////////////////////////////////////
-
-if not dlink then
-begin
-slist:=TStringList.Create;
-
-//@obsolete This code is obsolete
-{if reg.ReadBool(AppName,'ContSFiles',false) then
-begin
-tmp2:=TStringList.Create;
-reg.ReadSections(tmp2);
-
-for i:=0 to tmp2.Count-1 do begin
-if reg.ReadBool(tmp2[i],'ContSFiles',false) then begin
-s:=TStringList.Create;
-
-s.LoadFromFile(p+'/appfiles.list');
-for j:=0 to s.Count-1 do
-if pos(' <s>',s[j])>0 then slist.Add(DeleteModifiers(s[j]));
-s.Free;
-  end;
-tmp2.Free;
- end;
-end; //End of shared-test  }
-
-
-//Undo Mime-registration (if necessary)
-for i:=0 to tmp.Count-1 do
-begin
-if pos( '<mime>',tmp[i])>0 then
-begin
-msg('Uninstalling MIME-Type "'+ExtractFileName(tmp[i])+'" ...');
-t:=TProcess.Create(nil);
-if (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.png')
-or (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.xpm') then
-begin
-t.CommandLine:='xdg-icon-resource uninstall '+SysUtils.ChangeFileExt(ExtractFileName(DeleteModifiers(tmp[i])),'');
-t.Execute
-end else
-begin
-t.CommandLine:='xdg-mime uninstall '+DeleteModifiers(f+'/'+ExtractFileName(tmp[i]));
-t.Execute;
-end;
-t.Free;
-end;
-end;
-
-msg('Removing files...');
-//Uninstall application
-for i:=0 to tmp.Count-1 do
-begin
-
-f:=SyblToPath(tmp[i]);
-
-f:=DeleteModifiers(f);
-
-k:=false;
-for j:=0 to slist.Count-1 do
-if f = slist[j] then k:=true;
-
-if not k then
-DeleteFile(f);
-
-Inc(mnprog);
-SetPosition(bs*mnprog);
-end;
-
-Inc(mnprog);
-SetPosition(bs*mnprog);
-
-msg('Removing empty dirs...');
-tmp.LoadFromFile(p+'appdirs.list');
-proc:=TProcess.Create(nil);
-proc.Options:=[poWaitOnExit,poStdErrToOutPut,poUsePipes];
-for i:=0 to tmp.Count-1 do
-begin
-  proc.CommandLine :='rm -rf '+tmp[i];
-  proc.Execute;
-end;
-proc.Free;
-
-if upd<>'#' then begin
-tmp.LoadFromFile(RegDir+'updates.list');
-msg('Removing update-source...');
-for i:=1 to tmp.Count-1 do
-if pos(upd,tmp[i])>0 then begin tmp.Delete(i);break;end;
-tmp.SaveToFile(RegDir+'updates.list');
-tmp.Free;
-end;
-
-end;
-
-end;
-dsApp.Next;
-end;
-
-if mnprog>0 then
-begin
-msg('Unregistering...');
-
-dsApp.ExecuteDirect('DELETE FROM AppInfo WHERE rowid='+IntToStr(dsApp.RecNo));
-dsApp.ApplyUpdates;
-dsApp.Close;
-dsApp.Free;
-msg('Database connection closed.');
-
-proc:=TProcess.Create(nil);
-proc.Options:=[poWaitOnExit];
-proc.CommandLine :='rm -rf '+''''+ExcludeTrailingBackslash(p)+'''';
-proc.Execute;
-proc.Free;
-
-Inc(mnprog);
-SetPosition(bs*mnprog);
-
-msg('Application removed.');
-msg('- Finished -');
-end else msg('Application not found!');
-
 end;
 
 end.

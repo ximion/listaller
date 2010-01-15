@@ -112,21 +112,18 @@ if Process1.ExitStatus>0 then begin
   end;
 end;
 
-procedure UProgressChange(pos: LongInt;data: Pointer);cdecl;
-begin
- RMForm.UProgress.Position:=pos;
- Application.ProcessMessages;
-end;
-
 procedure LogAdd(s: String);
 begin
 writeLn(s);
 RMForm.Memo1.Lines.add(s);
 end;
 
-procedure OnRmMessage(msg: PChar;ty: TMessageType;data: Pointer);cdecl;
+procedure OnRmStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 begin
- LogAdd(msg);
+ case change of
+  scMessage   : LogAdd(data.msg);
+  scMnProgress: RMForm.UProgress.Position:=data.mnprogress;
+ end;
  Application.ProcessMessages;
 end;
 
@@ -141,10 +138,9 @@ Label1.Caption:=StringReplace(rsRMAppC,'%a',MnFrm.uApp.Name,[rfReplaceAll]);
 
 if Application.MessageBox(PChar(StringReplace(rsRealUninstQ,'%a',MnFrm.uApp.Name,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then
 begin
- li_mgr_register_msg_call(@MnFrm.amgr,@OnRmMessage,nil);
- li_mgr_register_progress_call(@MnFrm.amgr,@UProgressChange,nil);
+ li_mgr_register_status_call(@MnFrm.amgr,@OnRmStatus,nil);
   li_mgr_remove_app(@MnFrm.amgr,MnFrm.uApp);
- li_mgr_register_msg_call(@MnFrm.amgr,@manager.OnMessage,nil);
+ li_mgr_register_status_call(@MnFrm.amgr,@manager.OnMgrStatus,nil);
  MnFrm.ReloadAppList();
 end else close;
 
