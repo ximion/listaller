@@ -45,8 +45,10 @@ type
   private
     { private declarations }
     FActiv: Boolean;
+    astatus: LiProcStatus;
   public
     { public declarations }
+    property RmProcStatus: LiProcStatus read astatus write astatus;
   end; 
 
 var
@@ -121,8 +123,9 @@ end;
 procedure OnRmStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 begin
  case change of
-  scMessage   : LogAdd(data.msg);
-  scMnProgress: RMForm.UProgress.Position:=data.mnprogress;
+  scMessage     : LogAdd(data.msg);
+  scMnProgress  : RMForm.UProgress.Position:=data.mnprogress;
+  scActionStatus: RMForm.astatus:=data.lastresult;
  end;
  Application.ProcessMessages;
 end;
@@ -139,7 +142,9 @@ Label1.Caption:=StringReplace(rsRMAppC,'%a',MnFrm.uApp.Name,[rfReplaceAll]);
 if Application.MessageBox(PChar(StringReplace(rsRealUninstQ,'%a',MnFrm.uApp.Name,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then
 begin
  li_mgr_register_status_call(@MnFrm.amgr,@OnRmStatus,nil);
+ astatus:=prNone;
   li_mgr_remove_app(@MnFrm.amgr,MnFrm.uApp);
+ while astatus=prNone do Application.ProcessMessages;
  li_mgr_register_status_call(@MnFrm.amgr,@manager.OnMgrStatus,nil);
  MnFrm.ReloadAppList();
 end else close;

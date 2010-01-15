@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1159"/>
+      <CurrentBuildNr Value="1162"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -33,7 +33,7 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="3" Y="23"/>
+        <CursorPos X="14" Y="23"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="61"/>
@@ -45,9 +45,7 @@
         <UnitName Value="ipkinstall"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <EditorIndex Value="1"/>
         <UsageCount Value="21"/>
-        <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
@@ -155,14 +153,12 @@
         <UsageCount Value="9"/>
       </Unit16>
       <Unit17>
-        <Filename Value="liappmanage.pas"/>
+        <Filename Value="limanageapp.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="liappmanage"/>
-        <CursorPos X="8" Y="809"/>
-        <TopLine Value="1"/>
-        <EditorIndex Value="2"/>
+        <UnitName Value="limanageapp"/>
+        <CursorPos X="93" Y="565"/>
+        <TopLine Value="544"/>
         <UsageCount Value="20"/>
-        <Loaded Value="True"/>
       </Unit17>
       <Unit18>
         <Filename Value="../linotify.pas"/>
@@ -254,8 +250,8 @@
       <Unit31>
         <Filename Value="../src/litypes.pas"/>
         <UnitName Value="litypes"/>
-        <CursorPos X="89" Y="58"/>
-        <TopLine Value="38"/>
+        <CursorPos X="60" Y="48"/>
+        <TopLine Value="58"/>
         <UsageCount Value="13"/>
       </Unit31>
       <Unit32>
@@ -297,8 +293,8 @@
         <Filename Value="lidbusproc.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lidbusproc"/>
-        <CursorPos X="17" Y="62"/>
-        <TopLine Value="41"/>
+        <CursorPos X="31" Y="98"/>
+        <TopLine Value="590"/>
         <UsageCount Value="27"/>
       </Unit37>
       <Unit38>
@@ -321,7 +317,7 @@
         <UsageCount Value="10"/>
       </Unit40>
     </Units>
-    <JumpHistory Count="26" HistoryIndex="25">
+    <JumpHistory Count="13" HistoryIndex="12">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="23" Column="29" TopLine="1"/>
@@ -371,61 +367,9 @@
         <Caret Line="443" Column="1" TopLine="402"/>
       </Position12>
       <Position13>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="1781" Column="5" TopLine="1739"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="23" Column="14" TopLine="1"/>
       </Position13>
-      <Position14>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="26" Column="57" TopLine="5"/>
-      </Position14>
-      <Position15>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="27" Column="15" TopLine="1"/>
-      </Position15>
-      <Position16>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="27" Column="10" TopLine="6"/>
-      </Position16>
-      <Position17>
-        <Filename Value="liappmanage.pas"/>
-        <Caret Line="1" Column="1" TopLine="1"/>
-      </Position17>
-      <Position18>
-        <Filename Value="liappmanage.pas"/>
-        <Caret Line="25" Column="63" TopLine="1"/>
-      </Position18>
-      <Position19>
-        <Filename Value="liappmanage.pas"/>
-        <Caret Line="26" Column="9" TopLine="1"/>
-      </Position19>
-      <Position20>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="22" Column="35" TopLine="6"/>
-      </Position20>
-      <Position21>
-        <Filename Value="liappmanage.pas"/>
-        <Caret Line="764" Column="54" TopLine="753"/>
-      </Position21>
-      <Position22>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="237" Column="29" TopLine="227"/>
-      </Position22>
-      <Position23>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="285" Column="5" TopLine="278"/>
-      </Position23>
-      <Position24>
-        <Filename Value="liappmanage.pas"/>
-        <Caret Line="83" Column="58" TopLine="69"/>
-      </Position24>
-      <Position25>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="292" Column="8" TopLine="271"/>
-      </Position25>
-      <Position26>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="468" Column="9" TopLine="447"/>
-      </Position26>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

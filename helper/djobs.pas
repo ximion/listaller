@@ -1,4 +1,4 @@
-{ Copyright (C) 2009 Matthias Klumpp
+{ Copyright (C) 2009-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this unit. If not, see <http://www.gnu.org/licenses/>.}
-//** Processes which listen on the DBus for new calls
+//** Contains threads which process software management jobs
 unit djobs;
 
 {$mode objfpc}{$H+}
@@ -295,16 +295,6 @@ begin
    dbus_message_unref(replyMsg);
 end;
 
-procedure InstallMainChange(pos: LongInt;job: Pointer);cdecl;
-begin
- TDoAppInstall(job).SendProgressSignal('MainProgressChange',pos);
-end;
-
-procedure InstallExtraChange(pos: LongInt;job: Pointer);cdecl;
-begin
- TDoAppInstall(job).SendProgressSignal('ExtraProgressChange',pos);
-end;
-
 function InstallUserRequest(mtype: TRqType;info: PChar;job: Pointer): TRqResult;cdecl;
 begin
 //The daemon should not ask questions while doing a transaction.
@@ -320,14 +310,14 @@ begin
 end;
 end;
 
-procedure InstallMessage(info: PChar;imp: TMType;job: Pointer);cdecl;
+procedure OnInstallStatus(change: LiStatusChange;data: TLiStatusData;job: Pointer);cdecl;
 begin
- TDoAppInstall(job).SendMessageSignal('Message',info);
-end;
-
-procedure InstallStepMessage(info: PChar;imp: TMType;job: Pointer);cdecl;
-begin
- TDoAppInstall(job).SendMessageSignal('StepMessage',info);
+ case change of
+  scMessage    : TDoAppInstall(job).SendMessageSignal('Message',data.msg);
+  scStepMessage: TDoAppInstall(job).SendMessageSignal('StepMessage',data.msg);
+  scMnProgress : TDoAppInstall(job).SendProgressSignal('MainProgressChange',data.mnprogress);
+  scExProgress : TDoAppInstall(job).SendProgressSignal('ExtraProgressChange',data.exprogress);
+ end;
 end;
 
 procedure TDoAppInstall.Execute;
@@ -384,10 +374,7 @@ begin
  { This is a fast install. Should never be called directly! }
  setup:=TInstallPack.Create;
 
- setup.SetMainChangeCall(@InstallMainChange,self);
- setup.SetExtraChangeCall(@InstallExtraChange,self);
- setup.SetMessageCall(@InstallMessage,self);
- setup.SetStepMessageCall(@InstallStepMessage,self);
+ setup.SetStatusChangeCall(@OnInstallStatus,self);
  setup.SetUserRequestCall(@InstallUserRequest,self);
 
  setup.Initialize(FileName);
@@ -546,13 +533,30 @@ begin
   dbus_message_unref(dmsg);
 end;
 
-procedure OnMgrProgress(pos: Integer;job: Pointer);cdecl;
+function OnMgrUserRequest(mtype: TRqType;msg: PChar;job: Pointer): TRqResult;cdecl;
+begin
+//The daemon should not ask questions while doing a transaction.
+//All questions which need a reply should be done before or after the daemon call
+if mtype = rqError then
+begin
+ //Emit error message and quit job
+ TDoAppRemove(job).EmitMessage('Error',msg);
+end else
+begin
+ p_error('Received invalid user request! (Deamon should _never_ ask questions which need a reply.');
+ p_debug(msg);
+end;
+end;
+
+procedure OnMgrStatus(change: LiStatusChange;data: TLiStatusData;job: Pointer);cdecl;
+
+procedure sub_sendProgress;
 var
   args: DBusMessageIter;
   msg: PDBusMessage;
   sigvalue: cuint32;
 begin
-  sigvalue:=pos;
+  sigvalue:=data.mnprogress;
   // create a signal & check for errors
   msg := dbus_message_new_signal('/org/freedesktop/Listaller/Manager1', // object name of the signal
                                  'org.freedesktop.Listaller.Manage', // interface name of the signal
@@ -581,24 +585,11 @@ begin
   dbus_message_unref(msg);
 end;
 
-function OnMgrUserRequest(mtype: TRqType;msg: PChar;job: Pointer): TRqResult;cdecl;
 begin
-//The daemon should not ask questions while doing a transaction.
-//All questions which need a reply should be done before or after the daemon call
-if mtype = rqError then
-begin
- //Emit error message and quit job
- TDoAppRemove(job).EmitMessage('Error',msg);
-end else
-begin
- p_error('Received invalid user request! (Deamon should _never_ ask questions which need a reply.');
- p_debug(msg);
-end;
-end;
-
-procedure OnMgrMessage(param: PChar;imp: TMType;job: Pointer);cdecl;
-begin
- TDoAppRemove(job).EmitMessage('Message',param);
+ case change of
+  scMessage   : TDoAppRemove(job).EmitMessage('Message',data.msg);
+  scMnprogress: sub_sendProgress;
+ end;
 end;
 
 procedure TDoAppRemove.Execute;
@@ -641,9 +632,8 @@ begin
  try
   mgr:=li_mgr_new;
   li_mgr_set_su_mode(@mgr,true);
-  li_mgr_register_progress_call(@mgr,@OnMgrProgress,self);
+  li_mgr_register_status_call(@mgr,@OnMgrStatus,self);
   li_mgr_register_request_call(@mgr,@OnMgrUserRequest,self);
-  li_mgr_register_msg_call(@mgr,@OnMgrMessage,self);
  except
   SendReply(false);
   p_warning('Manage job failed.');

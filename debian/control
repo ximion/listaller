@@ -1,14 +1,15 @@
 Source: listaller
-Standards-Version: 3.8.3
 Section: admin
 Maintainer: Matthias Klumpp <matthias@nlinux.org>
 Priority: optional
 Homepage: http://listaller.nlinux.org
-Build-Depends: libgtk2.0-dev, lazarus (>=0.9.28), fpc (>= 2.3.0), debhelper (>= 5), libqt4intf-dev,
- libsqlite3-dev, libglib2.0-dev, libpackagekit-glib2-dev (>= 0.5.3), libdbus-1-dev, libpolkit-gobject-1-dev
+Standards-Version: 3.8.3
+Build-Depends: libgtk2.0-dev, lazarus (>=0.9.28), fpc (>= 2.4.0),
+ debhelper (>= 5), libqt4intf-dev, libsqlite3-dev, libglib2.0-dev,
+ libpackagekit-glib2-dev (>= 0.5.6), libdbus-1-dev, libpolkit-gobject-1-dev
 
 Package: libinstaller-0.4.0
-Architecture: i386 powerpc sparc amd64 arm
+Architecture: any
 Depends: ${shlibs:Depends}, apt-file, listaller-core
 Description: Listaller library
  Contains the libInstaller library, which allows
@@ -16,7 +17,7 @@ Description: Listaller library
  of Listaller.
 
 Package: listaller-core
-Architecture: i386 powerpc sparc amd64 arm
+Architecture: any
 Depends: ${shlibs:Depends}
 Description: Listaller core files
  Listaller is a cross-distribution install system.
@@ -25,7 +26,7 @@ Description: Listaller core files
  non-gui software installation tool "lipa".
 
 Package: listaller-tools
-Architecture: i386 powerpc sparc amd64 arm
+Architecture: any
 Depends: ${shlibs:Depends}, libinstaller-0.4.0 (= ${binary:Version}), listaller-core
 Description: Listaller package tools
  This package contains everything you need to build own IPK packages.
@@ -34,7 +35,7 @@ Description: Listaller package tools
  button for your software.
 
 Package: listaller-gtk
-Architecture: i386 powerpc sparc amd64 arm
+Architecture: any
 Depends: ${shlibs:Depends}, listaller-data (= ${source:Version})
 Provides: listaller-frontend
 Description: Listaller frontends (GTK2)
@@ -47,7 +48,7 @@ Description: Listaller frontends (GTK2)
  Please note that this alpha-version should only be used for testing purposes.
 
 Package: listaller-qt
-Architecture: i386 powerpc sparc amd64 arm
+Architecture: any
 Depends: ${shlibs:Depends}, listaller-data (= ${source:Version}), kdesudo, packagekit,
   libqt4intf, kde-icons-oxygen
 Provides: listaller-frontend

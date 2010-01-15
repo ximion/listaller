@@ -10,7 +10,7 @@ pasdoc --write-uses-list --staronly --format html \
 ../../src/libuild.lpr ../../src/unibuild.pas ../../src/litray.lpr \
 ../../licreator/licreator.lpr ../../licreator/editor.pas \
 ../../licreator/prjwizard.pas ../../src/igobase.pas ../../src/distri.pas ../../src/dgunit.pas \
-../../src/litranslator.pas ../../lib/ipkinstall.pas ../../lib/liappmanage.pas \
+../../src/litranslator.pas ../../lib/ipkinstall.pas ../../lib/limanageapp.pas \
 ../../src/ipkbuild.pas ../../src/ipkdef.pas ../../synapse/httpsend.pas \
 ../../synapse/ftpsend.pas ../../synapse/blcksock.pas ../../src/manager.pas \
 ../../src/pkgconvertdisp.pas ../../src/mnupdate.pas ../../src/licommon.pas ../../src/lentries.pas \

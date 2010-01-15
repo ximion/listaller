@@ -95,6 +95,7 @@ begin
  status:=prFinished;
  procinfo.changed:=pdStatus;
  Synchronize(@SyncProcStatus);
+ p_debug('DBus action done.');
  inherited;
 end;
 

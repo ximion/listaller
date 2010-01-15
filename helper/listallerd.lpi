@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="337"/>
+      <CurrentBuildNr Value="346"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -32,12 +32,12 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="28">
+    <Units Count="29">
       <Unit0>
         <Filename Value="listallerd.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerd"/>
-        <CursorPos X="61" Y="22"/>
+        <CursorPos X="62" Y="22"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="37"/>
@@ -68,8 +68,8 @@
         <Filename Value="djobs.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="djobs"/>
-        <CursorPos X="37" Y="472"/>
-        <TopLine Value="484"/>
+        <CursorPos X="25" Y="651"/>
+        <TopLine Value="644"/>
         <UsageCount Value="37"/>
       </Unit4>
       <Unit5>
@@ -221,6 +221,13 @@
         <TopLine Value="37"/>
         <UsageCount Value="10"/>
       </Unit27>
+      <Unit28>
+        <Filename Value="../src/litypes.pas"/>
+        <UnitName Value="litypes"/>
+        <CursorPos X="2" Y="41"/>
+        <TopLine Value="20"/>
+        <UsageCount Value="10"/>
+      </Unit28>
     </Units>
     <JumpHistory Count="3" HistoryIndex="2">
       <Position1>
@@ -233,7 +240,7 @@
       </Position2>
       <Position3>
         <Filename Value="listallerd.lpr"/>
-        <Caret Line="22" Column="61" TopLine="1"/>
+        <Caret Line="22" Column="62" TopLine="1"/>
       </Position3>
     </JumpHistory>
   </ProjectOptions>

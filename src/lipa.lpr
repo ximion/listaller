@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -26,7 +26,7 @@ uses
   Classes, SysUtils, CustApp,
   Process, liBasic, installer,
   TRStrings, IniFiles, HTTPSend,
-  FTPSend, Distri, LiTranslator, ipkdef,
+  Distri, LiTranslator, ipkdef,
   appman, liTypes, Forms, liCommon;
 
 type
@@ -54,34 +54,28 @@ var
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////This will be done if "lipa" is started
 
-procedure OnSetupMessage(msg: PChar;imp: TMType;data: Pointer);cdecl;
+procedure OnSetupStatusChange(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 begin
-  writeLn(' '+msg);
-end;
-
-procedure OnSetupProgress(pos: Longint;data: Pointer);cdecl;
-begin
-with Application do
-begin
-if not HasOption('verbose') then
-begin
- //Simple, stupid progress animation
-  if xs=0 then begin xs:=1; write(#13' '+IntToStr(pos)+'%    ');end else
-  if xs=1 then begin xs:=2; write(#13' '+IntToStr(pos)+'%    ');end else
-  if xs=2 then begin xs:=3; write(#13' '+IntToStr(pos)+'%    ');end else
-  if xs=3 then begin xs:=4; write(#13' '+IntToStr(pos)+'%    ');end else
-  if xs=4 then begin xs:=5; write(#13' '+IntToStr(pos)+'%    ');end else
-  if xs=5 then begin xs:=6; write(#13' '+IntToStr(pos)+'%    ');end else
-  if xs=6 then begin xs:=7; write(#13' '+IntToStr(pos)+'%    ');end else
-  if xs=7 then begin xs:=0; write(#13' '+IntToStr(pos)+'%    ');end;
-end;
-end;
-end;
-
-procedure OnSetupStateChange(msg: PChar;imp: TMType;data: Pointer);cdecl;
-begin
-if not Application.HasOption('verbose') then
-  writeLn(' '+rsState+': '+msg);
+ case change of
+  scMessage    : writeLn(' '+data.msg);
+  scStepMessage: if not Application.HasOption('verbose') then
+                  writeLn(' '+rsState+': '+data.msg);
+  scMnProgress : with Application do
+                 begin
+                      if not HasOption('verbose') then
+                      begin
+                      //Simple, stupid progress animation
+                       if xs=0 then begin xs:=1; write(#13' '+IntToStr(data.mnprogress)+'%    ');end else
+                       if xs=1 then begin xs:=2; write(#13' '+IntToStr(data.mnprogress)+'%    ');end else
+                       if xs=2 then begin xs:=3; write(#13' '+IntToStr(data.mnprogress)+'%    ');end else
+                       if xs=3 then begin xs:=4; write(#13' '+IntToStr(data.mnprogress)+'%    ');end else
+                       if xs=4 then begin xs:=5; write(#13' '+IntToStr(data.mnprogress)+'%    ');end else
+                       if xs=5 then begin xs:=6; write(#13' '+IntToStr(data.mnprogress)+'%    ');end else
+                       if xs=6 then begin xs:=7; write(#13' '+IntToStr(data.mnprogress)+'%    ');end else
+                       if xs=7 then begin xs:=0; write(#13' '+IntToStr(data.mnprogress)+'%    ');end;
+                       end;
+                 end;
+  end;
 end;
 
 function OnSetupUserRequest(mtype: TRqType;msg: PChar;data: Pointer): TRqResult;cdecl;
@@ -103,7 +97,6 @@ end;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-var HTTP: THttpSend; FTP: TFTPSend;
 procedure TLipa.DoRun;
 var
   ErrorMsg,a,c: String;
@@ -190,10 +183,8 @@ begin
 
     setup:=TInstallPack.Create;
     //Assign callbacks
-    setup.SetMessageCall(@OnSetupMessage);
-    setup.SetMainChangeCall(@OnSetupProgress);
+    setup.SetStatusChangeCall(@OnSetupStatusChange);
     setup.SetUserRequestCall(@OnSetupUserRequest);
-    setup.SetStepMessageCall(@OnSetupStateChange);
 
     //Check Testmode
     if HasOption('testmode') then Testmode:=true

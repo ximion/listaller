@@ -14,7 +14,7 @@
   You should have received a copy of the GNU General Public License v3
   along with this library. If not, see <http://www.gnu.org/licenses/>.}
 //** Functions to manage applications (install/uninstall, dependency-check)
-unit liappmanage;
+unit limanageapp;
 
 {$mode objfpc}{$H+}
 
@@ -560,7 +560,10 @@ begin
     pdMainProgress: setpos(data.mnprogress);
     pdInfo        : msg(data.info);
     pdError       : request(data.msg,rqError);
-    pdStatus      : p_debug('Thread status changed [finished]');
+    pdStatus      : begin
+                     sdata.lastresult:=ty;
+                     if Assigned(FStatus) then FStatus(scActionStatus,sdata,statechangeudata);
+                    end;
   end;
 end;
 

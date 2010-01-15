@@ -26,7 +26,7 @@ uses
   Forms,
   SysUtils,
   manager, uninstall, pkgconvertdisp, swcatalog,
-  LiCommon, LiTranslator, LResources, Process;
+  LiCommon, LiTranslator, xtypefm, LResources, Process;
 
 {$IFDEF WINDOWS}{$R listallmgr.rc}{$ENDIF}
 

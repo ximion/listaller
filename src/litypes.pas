@@ -42,10 +42,10 @@ type
  //** Type of a message (published)
  TMessageType = (mtStep,mtInfo);
  //** Result of a DBus action
- LiProcStatus = (prFailed, prAuthorized, prBlocked, prFinished, prError, prInfo);
+ LiProcStatus = (prNone, prFailed, prAuthorized, prBlocked, prFinished, prError, prInfo);
 
  //** Things which can be changed
- LiStatusChange = (scMnProgress,scExProgress,scActionResult,scMessage,scStepMessage);
+ LiStatusChange = (scMnProgress,scExProgress,scActionStatus,scMessage,scStepMessage);
  //** Data assigned to a status change
  TLiStatusData = record
   msg: PChar;

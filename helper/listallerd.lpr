@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this unit. If not, see <http://www.gnu.org/licenses/>.}
-//** The Listaller DBus daemon tool
+//** The Listaller DBus helper daemon
 program listallerd;
 
 {$mode objfpc}{$H+}
