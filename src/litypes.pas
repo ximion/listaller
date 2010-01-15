@@ -23,8 +23,12 @@ interface
 uses
   Classes, SysUtils;
 
-//** Name of the Listaller library
- const libinst = 'libinstaller.so';
+ const
+  //** Name of the Listaller library
+  libinst = 'libinstaller.so';
+
+  //** Version of Listaller API
+  {$DEFINE APIVersion040}
 
 type
 
@@ -35,17 +39,18 @@ type
  TRqType   = (rqError,rqWarning,rqQuestion,rqInfo);
  //** Request result types
  TRqResult = (rqsYes,rqsNo,rqsOK);
- //** Message types
- TMType    = (mtInfo,mtWarning);
+ //** Type of a message (published)
+ TMessageType = (mtStep,mtInfo);
  //** Result of a DBus action
  TProcStatus = (prFailed, prAuthorized, prBlocked, prFinished, prError, prInfo);
 
  //** Callback for user request
  TRequestCall = function(mtype: TRqType;msg: PChar;user_data: Pointer): TRqResult;cdecl;
  //** Callback that submits a notification
- TMessageCall = procedure(msg: PChar;imp: TMType;user_data: Pointer);cdecl;
+ TMessageCall = procedure(msg: PChar;ty: TMessageType;user_data: Pointer);cdecl;
  //** Called if a progress was changed
  TProgressCall = procedure(pos: Integer;user_data: Pointer);cdecl;
+
  //** Called if progress was changed; only for internal use
  TProgressEvent = procedure(pos: Integer;user_data: Pointer) of object;
 

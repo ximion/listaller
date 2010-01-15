@@ -133,17 +133,6 @@ begin
  end;
 end;
 
-//** Step message call
-function li_setup_register_step_message_call(setup: PInstallation;call: TMessageCall;user_data: Pointer): Boolean;cdecl;
-begin
- Result:=true;
- try
-  setup^.RegOnStepMessage(call,user_data);
- except
-  Result:=false;
- end;
-end;
-
 //** User request message call
 function li_setup_register_user_request_call(setup: PInstallation;call: TRequestCall;user_data: Pointer): Boolean;cdecl;
 begin
@@ -459,7 +448,6 @@ exports
  li_setup_app_exec_command,
  li_setup_profile_current_filelist,
  li_setup_register_message_call,
- li_setup_register_step_message_call,
  li_setup_register_user_request_call,
  li_setup_start,
  li_setup_dependencies,

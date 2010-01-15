@@ -1,3 +1,19 @@
+{ Copyright (C) 2010 Matthias Klumpp
+
+  Authors:
+   Matthias Klumpp
+
+  This library is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation, version 3.
+
+  This library is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License v3
+  along with this library. If not, see <http://www.gnu.org/licenses/>.}
+//** Threads which can perform actions on Listaller's DBus interface
 unit dbusproc;
 
 {$mode objfpc}{$H+}
@@ -9,12 +25,14 @@ uses
 
 type
  //** Which detail of the process was changed?
- TLiProcDetail = (pdProgress, pdMessage, pdInfo, pdStatus, pdError);
+ TLiProcDetail = (pdMainProgress, pdMessage,
+                  pdInfo, pdStatus, pdError,
+                  pdStepMessage, pdExtraProgress);
 
  //** Record which contains data about the current thread
  TLiProcData = record
    changed: TLiProcDetail;
-   progress: Integer;
+   mnprogress, exprogress: Integer;
    jobID: String;
    msg: String;
    info: String;
@@ -24,12 +42,14 @@ type
  TLiDAction = procedure(ty: TProcStatus;data: TLiProcData) of Object;
 
  //** Actions Listaller can perform on DBus root interface
- TListallerBusAction = (lbaUninstallApp);
+ TListallerBusAction = (lbaUninstallApp,lbaInstallPack);
 
  //** A command Listaller should do on DBus
  ListallerBusCommand = record
    cmdtype: TListallerBusAction;
    appinfo: TAppInfo;
+   pkgname: String;
+   addsrc: Boolean;
  end;
 
  //** Thread which can perform various Listaller-DBus actions
@@ -37,15 +57,18 @@ type
  private
   cmd: TListallerBusAction;
   FStatus: TLiDAction;
-  appinfo: TAppInfo;
+  cmdinfo: ListallerBusCommand;
 
   status: TProcStatus;
   procinfo: TLiProcData;
   procedure SyncProcStatus;
   procedure SendError(msg: String);
-  procedure SendProgress(val: Integer);
+  procedure SendProgress(val: Integer;const ty: TLiProcDetail=pdMainProgress);
+  procedure SendMessage(msg: String;const ty: TLiProcDetail=pdInfo);
   //** Remove app as root via remote DBus connection
   procedure UninstallAppAsRoot(obj: TAppInfo);
+  //** Execute installation as root using dbus daemon & PolicyKit
+  function  DoInstallationAsRoot(pkgpath: String;addsrc: Boolean): Boolean;
  public
   constructor Create(action: ListallerBusCommand);
   destructor Destroy;override;
@@ -63,7 +86,7 @@ begin
  inherited Create(true);
  FreeOnTerminate:=true;
  cmd:=action.cmdtype;
- appinfo:=action.appinfo;
+ cmdinfo:=action;
  Resume;
 end;
 
@@ -84,7 +107,10 @@ end;
 
 procedure TLiDBusAction.Execute;
 begin
- if cmd=lbaUninstallApp then UninstallAppAsRoot(appinfo);
+ case cmd of
+  lbaUninstallApp: UninstallAppAsRoot(cmdinfo.appinfo);
+  lbaInstallPack : DoInstallationAsRoot(cmdinfo.pkgname,cmdinfo.addsrc);
+ end;
 end;
 
 procedure TLiDBusAction.SendError(msg: String);
@@ -92,12 +118,25 @@ begin
  procinfo.msg:=msg;
  procinfo.changed:=pdError;
  Synchronize(@SyncProcStatus);
+ procinfo.msg:='#';
 end;
 
-procedure TLiDBusAction.SendProgress(val: Integer);
+procedure TLiDBusAction.SendMessage(msg: String;const ty: TLiProcDetail=pdInfo);
 begin
- procinfo.changed:=pdProgress;
- procinfo.progress:=val;
+ procinfo.msg:=msg;
+ procinfo.changed:=ty;
+ Synchronize(@SyncProcStatus);
+ procinfo.msg:='#';
+end;
+
+procedure TLiDBusAction.SendProgress(val: Integer;const ty: TLiProcDetail=pdMainProgress);
+begin
+ procinfo.changed:=ty;
+ if ty=pdMainprogress then
+  procinfo.mnprogress:=val
+ else
+  procinfo.exprogress:=val;
+
  Synchronize(@SyncProcStatus);
 end;
 
@@ -116,7 +155,6 @@ var
   strvalue: PChar;
   boolvalue: Boolean;
 begin
-
   dbus_error_init(@err);
 
   //New DBus connection
@@ -236,7 +274,7 @@ begin
   end;
   p_info('Match rule sent');
 
-  procinfo.progress:=0;
+  procinfo.mnprogress:=0;
   action_finished:=false;
   // loop listening for signals being emmitted
   while (not action_finished) do
@@ -330,6 +368,261 @@ begin
     // free the message
     dbus_message_unref(dmsg);
   end;
+end;
+
+//This method submits all actions to the DBus daemon
+function TLiDBusAction.DoInstallationAsRoot(pkgpath: String;addsrc: Boolean): Boolean;
+var
+  dmsg: PDBusMessage;
+  args: DBusMessageIter;
+  pending: PDBusPendingCall;
+  stat: Boolean;
+  rec: PChar;
+  param: PChar;
+  err: DBusError;
+  conn: PDBusConnection;
+
+  install_finished: Boolean;
+  intvalue: cuint;
+  strvalue: PChar;
+  boolvalue: Boolean;
+begin
+  Result:=false;
+  dbus_error_init(@err);
+
+  //New DBus connection
+  conn := dbus_bus_get_private(DBUS_BUS_SYSTEM, @err);
+
+  if dbus_error_is_set(@err) <> 0 then
+  begin
+    p_error('Connection Error: '#10+err.message);
+    dbus_error_free(@err);
+    SendError('An error occured during install request.');
+  end;
+
+  if conn = nil then exit;
+
+  p_info('Calling listaller-daemon...');
+  // create a new method call and check for errors
+  dmsg := dbus_message_new_method_call('org.freedesktop.Listaller', // target for the method call
+                                      '/org/freedesktop/Listaller/Installer1', // object to call on
+                                      'org.freedesktop.Listaller.Install', // interface to call on
+                                      'ExecuteSetup'); // method name
+  if (dmsg = nil) then
+  begin
+    p_error('Message Null');
+    exit;
+  end;
+
+  // append arguments
+  param:=PChar(pkgpath);
+  dbus_message_iter_init_append(dmsg, @args);
+  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @param) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+
+  //Append true if update source should be registered
+  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_BOOLEAN, @addsrc) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+
+  // send message and get a handle for a reply
+  if (dbus_connection_send_with_reply(conn, dmsg, @pending, -1) = 0) then // -1 is default timeout
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+  if (pending = nil) then
+  begin
+    p_error('Pending Call Null');
+    exit;
+  end;
+  dbus_connection_flush(conn);
+
+  p_info('InstallPkg request sent');
+
+  // free message
+  dbus_message_unref(dmsg);
+
+  // block until we recieve a reply
+  dbus_pending_call_block(pending);
+
+  // get the reply message
+  dmsg := dbus_pending_call_steal_reply(pending);
+  if (dmsg = nil) then
+  begin
+    p_error('Reply Null');
+    exit;
+  end;
+  // free the pending message handle
+  dbus_pending_call_unref(pending);
+
+  // read the parameters
+  if (dbus_message_iter_init(dmsg, @args) = 0) then
+     p_error('Message has no arguments!')
+  else if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
+     p_error('Argument is not boolean!')
+  else
+     dbus_message_iter_get_basic(@args, @stat);
+
+  if (dbus_message_iter_next(@args) = 0) then
+     p_error('Message has too few arguments!')
+  else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+     p_error('Argument is no string!')
+  else
+     dbus_message_iter_get_basic(@args, @rec);
+
+  if (stat = false) then
+  begin
+   if rec = 'blocked' then
+    SendError('You are not authorized to do this action!')
+   else
+    SendError('An error occured during install request.');
+   exit;
+  end;
+  // free reply
+  dbus_message_unref(dmsg);
+
+  ////////////////////////////////////////////////////////////////////////////////////
+
+  //Now start listening to Listaller dbus signals and forward them to
+  //native functions until the "Finished" signal is received
+
+  // add a rule for which messages we want to see
+  dbus_bus_add_match(conn,
+  'type=''signal'',sender=''org.freedesktop.Listaller'', interface=''org.freedesktop.Listaller.Install'', path=''/org/freedesktop/Listaller/Installer1'''
+  , @err);
+
+  dbus_connection_flush(conn);
+  if (dbus_error_is_set(@err) <> 0) then
+  begin
+    p_error('Match Error ('+err.message+')');
+    exit;
+  end;
+  p_info('Match rule sent');
+
+  install_finished:=false;
+  SendProgress(0);
+  // loop listening for signals being emmitted
+  while (not install_finished) do
+  begin
+
+    // non blocking read of the next available message
+    dbus_connection_read_write(conn, 0);
+    dmsg:=dbus_connection_pop_message(conn);
+
+    // loop again if we haven't read a message
+    if (dmsg = nil) then
+    begin
+      sleep(1);
+      Continue;
+    end;
+
+    //Convert all DBus signals into standard callbacks
+
+    //Change of the main progress bar
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'MainProgressChange') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_UINT32 <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no integer!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @intvalue);
+         SendProgress(intvalue);
+      end;
+    end;
+
+    //Change of the extra progress bar
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'ExtraProgressChange') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_UINT32 <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no integer!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @intvalue);
+         SendProgress(intvalue,pdExtraProgress);
+      end;
+    end;
+
+    //Receive new message
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'Message') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no string!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @strvalue);
+         SendMessage(strvalue);
+      end;
+    end;
+
+    //Receive current state of installation progress
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'StateMessage') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no string!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @strvalue);
+         SendMessage(strvalue,pdStepMessage);
+      end;
+    end;
+
+    //Break on error signal
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'Error') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no string!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @strvalue);
+         //The action failed. Diplay error and leave the loop
+          SendError(strvalue);
+          install_finished:=true;
+      end;
+    end;
+
+    //Check if the installation has finished
+    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'Finished') <> 0) then
+    begin
+      // read the parameters
+      if (dbus_message_iter_init(dmsg, @args) = 0) then
+         p_error('Message Has No Parameters')
+      else if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
+         p_error('Argument is no string!')
+      else
+      begin
+         dbus_message_iter_get_basic(@args, @boolvalue);
+         install_finished:=boolvalue;
+      end;
+    end;
+
+
+    // free the message
+    dbus_message_unref(dmsg);
+  end;
+
+ //If we are here, the installation was successful
+ Result:=true;
 
 end;
 

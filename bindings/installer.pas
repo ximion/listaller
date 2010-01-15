@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -39,7 +39,6 @@ procedure SetMainChangeCall(call: TProgressCall;const userdata: Pointer=nil);
 procedure SetExtraChangeCall(call: TProgressCall;const userdata: Pointer=nil);
 procedure SetUserRequestCall(call: TRequestCall;const userdata: Pointer=nil);
 procedure SetMessageCall(call: TMessageCall;const userdata: Pointer=nil);
-procedure SetStepMessageCall(call: TMessageCall;const userdata: Pointer=nil);
 function  PkType: TPkgType;
 procedure SetTestmode(b: Boolean);
 function  GetDisallows: String;
@@ -89,14 +88,13 @@ function  li_setup_desktopfiles(setup: Pointer): PChar;cdecl; external libinst;
 function  li_setup_app_exec_command(setup: Pointer): PChar;cdecl; external libinst;
 function  li_setup_profile_current_filelist(setup: Pointer): PChar;cdecl; external libinst;
 procedure li_setup_enable_usource_registering(setup: Pointer;b: Boolean);cdecl; external libinst;
-function  li_setup_register_message_call(setup: Pointer;call: TMessageCall;user_data: Pointer): Boolean; cdecl; external libinst name 'li_setup_register_message_call';
-function  li_setup_register_step_message_call(setup: Pointer;call: TMessageCall;user_data: Pointer): Boolean; cdecl; external libinst name 'li_setup_register_step_message_call';
-function  li_setup_register_user_request_call(setup: Pointer;call: TRequestCall;user_data: Pointer): Boolean; cdecl; external libinst name 'li_setup_register_user_request_call';
-function  li_setup_start(setup: Pointer): Boolean;cdecl; external libinst name 'li_setup_start';
-procedure li_setup_set_forced(setup: Pointer;str: PChar);cdecl; external libinst name 'li_setup_set_forced';
-function  li_setup_dependencies(setup: Pointer; list: PStringList): Boolean; cdecl; external libinst name 'li_setup_dependencies';
-function  li_setup_set_profileid(setup: Pointer;id: ShortInt): Boolean;cdecl;  external libinst name 'li_setup_set_profileid';
-function  li_is_ipk_app_installed(appname: PChar;appid: PChar): Boolean;cdecl; external libinst name 'li_is_ipk_app_installed';
+function  li_setup_register_message_call(setup: Pointer;call: TMessageCall;user_data: Pointer): Boolean; cdecl; external libinst;
+function  li_setup_register_user_request_call(setup: Pointer;call: TRequestCall;user_data: Pointer): Boolean; cdecl; external libinst;
+function  li_setup_start(setup: Pointer): Boolean;cdecl; external libinst;
+procedure li_setup_set_forced(setup: Pointer;str: PChar);cdecl; external libinst;
+function  li_setup_dependencies(setup: Pointer; list: PStringList): Boolean; cdecl; external libinst;
+function  li_setup_set_profileid(setup: Pointer;id: ShortInt): Boolean;cdecl;  external libinst;
+function  li_is_ipk_app_installed(appname: PChar;appid: PChar): Boolean;cdecl; external libinst;
 procedure li_testmode(st: Boolean);cdecl; external libinst name 'li_testmode';
 
 { TInstallPack }
@@ -211,11 +209,6 @@ end;
 procedure TInstallPack.SetMessageCall(call: TMessageCall;const userdata: Pointer=nil);
 begin
 li_setup_register_message_call(@ins,call,userdata)
-end;
-
-procedure TInstallPack.SetStepMessageCall(call: TMessageCall;const userdata: Pointer=nil);
-begin
-li_setup_register_step_message_call(@ins,call,userdata)
 end;
 
 procedure TInstallPack.ReadDeps(lst: TStringList);

@@ -133,7 +133,7 @@ var
   instLst: TStringList;
 
 //Published for use in uninstall.pas
-procedure OnMessage(msg: PChar;imp: TMType;data: Pointer);cdecl;
+procedure OnMessage(msg: PChar;ty: TMessageType;data: Pointer);cdecl;
 
 //NOTE:
 //IMPORTANT: RegDir should be moved to libInstaller!
@@ -166,10 +166,14 @@ end;
 Application.ProcessMessages;
 end;
 
-procedure OnMessage(msg: PChar;imp: TMType;data: Pointer);cdecl;
+procedure OnMessage(msg: PChar;ty: TMessageType;data: Pointer);cdecl;
 begin
- if imp=mtInfo then MnFrm.StatusLabel.Caption:=msg;
- if imp=mtWarning then ShowMessage(msg);
+ if ty=mtStep then MnFrm.StatusLabel.Caption:=msg;
+ if ty=mtInfo then
+ begin
+  MnFrm.StatusLabel.Caption:=msg;
+  p_info(msg);
+ end;
 end;
 
 function OnUserRequest(mtype: TRqType;msg: PChar;data: Pointer): TRqResult;cdecl;

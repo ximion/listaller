@@ -40,7 +40,7 @@ type
   requestudata: Pointer;
   progudata: Pointer;
 
-  procedure msg(s: String;t: TMType);
+  procedure msg(s: String);
   function request(s: String;ty: TRqType): TRqResult;
   procedure newapp(s: String;oj: TAppInfo);
   procedure setpos(i: Integer);
@@ -112,9 +112,9 @@ begin
  progudata:=data;
 end;
 
-procedure TAppManager.Msg(s: String;t: TMType);
+procedure TAppManager.Msg(s: String);
 begin
- if Assigned(FMsg) then FMsg(PChar(s),t,msgudata);
+ if Assigned(FMsg) then FMsg(PChar(s),mtInfo,msgudata);
 end;
 
 function TAppManager.Request(s: String;ty: TRqType): TRqResult;
@@ -194,7 +194,7 @@ begin
        and(d.ReadString('Desktop Entry','OnlyShowIn','')='')
        and(d.ReadString('Desktop Entry','X-AllowRemove','true')='true')then
        begin
-       msg(rsLoading+'  '+ExtractFileName(fname),mtInfo);
+       msg(rsLoading+'  '+ExtractFileName(fname));
 
        //Check for Autopackage.org installation
        if pos('apkg-remove',LowerCase(d.ReadString('Desktop Entry','Actions','')))>0 then
@@ -316,7 +316,7 @@ begin
             Icon:=PChar(d.ReadString('Desktop Entry','Icon',''));
         end;
         //If icon loading failed
-        except writeLn('ERROR: Unable to load icon!');msg(StringReplace(rsCannotLoadIcon,'%a',Name,[rfReplaceAll]),mtWarning);
+        except writeLn('ERROR: Unable to load icon!');msg(StringReplace(rsCannotLoadIcon,'%a',Name,[rfReplaceAll]));
         end;
        end;
       end;
@@ -324,14 +324,14 @@ begin
       //  if Assigned(dt) then dt.Free;
          if translate then dt.Free;
 
-        end else msg('Skipped  '+ExtractFileName(fname),mtInfo);
+        end else msg('Skipped  '+ExtractFileName(fname));
        d.Free;
 end;
 
 begin
 j:=0;
 
-msg(rsLoading,mtInfo);
+msg(rsLoading);
 blst:=TStringList.Create; //Create Blacklist
 
 writeLn('Opening database...');
@@ -485,9 +485,9 @@ ini.Free;
 
 //Check LOKI-success:
 if j>100 then
-msg(rsLOKIError,mtWarning);
+msg(rsLOKIError);
 
-msg(rsReady,mtInfo); //Loading list finished!
+msg(rsReady); //Loading list finished!
 
 dsApp.Free;
 blst.Free; //Free blacklist
@@ -500,7 +500,7 @@ function TAppManager.UninstallMojo(dsk: String): Boolean;
 var inf: TIniFile;tmp: TStringList;t: TProcess;mandir: String;
 begin
 Result:=true;
-msg('Package could be installed with MoJo/LOKI...',mtInfo);
+msg('Package could be installed with MoJo/LOKI...');
 inf:=TIniFile.Create(dsk);
 if not DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))) then
 begin
@@ -511,13 +511,13 @@ begin
 //MOJO
 mandir:=ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'.mojosetup';
 inf.Free;
-msg('Mojo manifest found.',mtInfo);
+msg('Mojo manifest found.');
 setpos(40);
 tmp:=TStringList.Create;
 tmp.Assign(FindAllFiles(mandir+'/manifest','*.xml',false));
 if tmp.Count<=0 then exit;
 setpos(50);
-msg('Uninstalling application...',mtInfo);
+msg('Uninstalling application...');
  t:=TProcess.Create(nil);
  t.CommandLine:=mandir+'/mojosetup uninstall '+copy(ExtractFileName(tmp[0]),1,pos('.',ExtractFileName(tmp[0]))-1);
  t.Options:=[poUsePipes,poWaitonexit];
@@ -531,8 +531,8 @@ end else
 if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'.manifest') then
 begin
  setpos(50);
- msg('LOKI setup detected.',mtInfo);
- msg('Uninstalling application...',mtInfo);
+ msg('LOKI setup detected.');
+ msg('Uninstalling application...');
 
  t:=TProcess.Create(nil);
  t.CommandLine:=ExtractFilePath(inf.ReadString('Desktop Entry','Exec','?'))+'/uninstall';
@@ -553,10 +553,10 @@ end;
 procedure TAppManager.DBusThreadStatusChange(ty: TProcStatus;data: TLiProcData);
 begin
   case data.changed of
-    pdProgress: setpos(data.progress);
-    pdInfo: msg(data.info,mtInfo);
-    pdError: request(data.msg,rqError);
-    pdStatus: p_debug('Thread status changed [finished]');
+    pdMainProgress: setpos(data.mnprogress);
+    pdInfo        : msg(data.info);
+    pdError       : request(data.msg,rqError);
+    pdStatus      : p_debug('Thread status changed [finished]');
   end;
 end;
 
@@ -582,7 +582,7 @@ end;
 name:=obj.Name;
 id:=obj.UId;
 
-msg('Reading application information...',mtInfo);
+msg('Reading application information...');
 
 if not FileExists(obj.UId) then
 begin
@@ -591,7 +591,7 @@ begin
  //Remove IPK app
  UninstallIPKApp(name,id,FMsg,FProg,false);
 
-msg('Finished!',mtInfo);
+msg('Finished!');
 exit;
 end else
 begin
@@ -620,8 +620,8 @@ begin
 
 ShowPKMon();
 
-msg('Connecting to PackageKit... (run "pkmon" to see the actions)',mtInfo);
-msg('Detecting package...',mtInfo);
+msg('Connecting to PackageKit... (run "pkmon" to see the actions)');
+msg('Detecting package...');
 
 pkit:=TPackageKit.Create;
 pkit.OnProgress:=@PkitProgress;
@@ -638,7 +638,7 @@ if pkit.PkFinishCode>0 then
 begin request(rsPKitProbPkMon,rqError);pkit.Free;tmp.Free;exit;end;
 f:=tmp[0];
 
-msg('Looking for reverse-dependencies...',mtInfo);
+msg('Looking for reverse-dependencies...');
 
 tmp.Clear;
 
@@ -652,7 +652,7 @@ tmp.Free;
 // Ehm... Dont't know what the function of this code was - needs testing!
 //g:=copy(g,pos(f,g)+length(f),length(g));
 
-msg('Package detected: '+f,mtInfo);
+msg('Package detected: '+f);
 if (StringReplace(g,' ','',[rfReplaceAll])='')or
 (request(StringReplace(StringReplace(StringReplace(rsRMPkg,'%p',f,[rfReplaceAll]),'%a',obj.Name,[rfReplaceAll]),'%pl',PAnsiChar(g),[rfReplaceAll]),
         rqWarning)=rqsYes)
@@ -660,14 +660,18 @@ then
 begin
 setpos(50);
 
-msg('Uninstalling '+f+' ...',mtInfo);
+msg('Uninstalling '+f+' ...');
 pkit.RemovePkg(f);
 
-if pkit.PkFinishCode>0 then begin
-request(rsRmError,rqError);exit;pkit.Free;end;
+if pkit.PkFinishCode>0 then
+begin
+ request(rsRmError,rqError);
+ pkit.Free;
+ exit;
+end;
 
 setpos(100);
-msg('Done.',mtInfo);
+msg('Done.');
 exit;
 end else exit;
 

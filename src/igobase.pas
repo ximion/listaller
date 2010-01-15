@@ -346,17 +346,18 @@ end;
 
 end;
 
-procedure MessageCall(msg: PChar;imp: TMType;data: Pointer);cdecl;
+procedure MessageCall(msg: PChar;ty: TMessageType;data: Pointer);cdecl;
+begin
+if ty=mtInfo then
 begin
  writeLn(msg);
  if Assigned(IWizFrm) then
  IWizFrm.InfoMemo.Lines.Add(msg); //Needed for Log-messages, even if the control is invisible
  Application.ProcessMessages;
-end;
-
-procedure StepMessage(msg: PChar;imp: TMType;data: Pointer);cdecl;
+end else if ty=mtStep then
 begin
  IWizFrm.Label9.Caption:=msg;
+end;
 end;
 
 function LoadIPKFile(): Boolean;
@@ -658,8 +659,6 @@ while IPage.Visible=false do Application.ProcessMessages;
  //Assign event handlers
  setup.SetMainChangeCall(@MainPosChange,nil);
  setup.SetExtraChangeCall(@ExtraPosChange,nil);
-
- setup.SetStepMessageCall(@StepMessage,nil);
 
  setup.SetProfileID(ModeGroup.ItemIndex);
 

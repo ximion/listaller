@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, packagekit,
   sqlite3ds, db, AbUnZper, AbArcTyp, ipkdef, HTTPSend, FTPSend, blcksock,
-  MD5, liTypes, distri, MTProcs, FileUtil, liBasic, dbus, CTypes;
+  MD5, liTypes, distri, MTProcs, FileUtil, liBasic, dbusproc;
 
 type
 
@@ -81,7 +81,6 @@ type
   FProgChange1: TProgressCall;
   FProgChange2: TProgressCall;
   FRequest: TRequestCall;
-  FSMessage:  TMessageCall;
   FMessage:  TMessageCall;
   // True if su mode enabled
   SUMode: Boolean;
@@ -105,16 +104,15 @@ type
      const Value: string);
   //Handler for PackageKit progress
   procedure OnPKitProgress(pos: Integer;dp: Pointer);
-  //Execute installation as root using dbus daemon & PolicyKit
-  function  DoInstallationAsRoot(): Boolean;
   //Add update source of the package
   procedure CheckAddUSource;
+  //Catch signals of DBus thread
+  procedure DBusThreadStatusChange(ty: TProcStatus;data: TLiProcData);
  protected
   //UserData
   mainposudata: Pointer;
   extraposudata: Pointer;
   requestudata: Pointer;
-  statemsgudata: Pointer;
   messageudata: Pointer;
   //Check if FTP connection is working
   function CheckFTPConnection(AFTPSend: TFTPSend): Boolean;
@@ -181,7 +179,6 @@ type
   procedure RegOnProgressExtraChange(call: TProgressCall;data: Pointer);
   //Message events
   procedure RegOnUsrRequest(call: TRequestCall;data: Pointer);
-  procedure RegOnStepMessage(call: TMessageCall;data: Pointer);
   procedure RegOnMessage(call: TMessageCall;data: Pointer);
   function  UserRequestRegistered: Boolean;
 end;
@@ -221,12 +218,6 @@ begin
   requestudata:=data;
 end;
 
-procedure TInstallation.RegOnStepMessage(call: TMessageCall;data: Pointer);
-begin
-  FSMessage:=call;
-  statemsgudata:=data;
-end;
-
 procedure TInstallation.RegOnMessage(call: TMessageCall;data: Pointer);
 begin
   FMessage:=call;
@@ -257,7 +248,7 @@ end;
 
 procedure TInstallation.SendStateMsg(msg: String);
 begin
- if Assigned(FSMessage) then FSMessage(PChar(msg),mtInfo,statemsgudata);
+ if Assigned(FMessage) then FMessage(PChar(msg),mtStep,messageudata);
 end;
 
 procedure TInstallation.msg(str: String);
@@ -989,6 +980,17 @@ except
 end;
 end;
 
+
+procedure TInstallation.DBusThreadStatusChange(ty: TProcStatus;data: TLiProcData);
+begin
+  case data.changed of
+    pdMainProgress: SetMainPos(data.mnprogress);
+    pdInfo: msg(data.info);
+    pdError: MakeUsrRequest(data.msg,rqError);
+    pdStatus: p_debug('Thread status changed [finished]');
+  end;
+end;
+
 function TInstallation.RunNormalInstallation: Boolean;
 var
 i,j: Integer;
@@ -1713,267 +1715,8 @@ if MakeUsrRequest(PAnsiChar(rsAddUpdSrc+#13+
 end;
 end;
 
-//This method submits all actions to the DBus daemon
-function TInstallation.DoInstallationAsRoot(): Boolean;
-var
-  dmsg: PDBusMessage;
-  args: DBusMessageIter;
-  pending: PDBusPendingCall;
-  stat: Boolean;
-  rec: PChar;
-  param: PChar;
-  err: DBusError;
-  conn: PDBusConnection;
-
-  install_finished: Boolean;
-  intvalue: cuint;
-  strvalue: PChar;
-  boolvalue: Boolean;
-begin
-  Result:=false;
-
-  CheckAddUSource;
-
-  dbus_error_init(@err);
-
-  //New DBus connection
-  conn := dbus_bus_get_private(DBUS_BUS_SYSTEM, @err);
-
-  if dbus_error_is_set(@err) <> 0 then
-  begin
-    p_error('Connection Error: '#10+err.message);
-    dbus_error_free(@err);
-    MakeUsrRequest('An error occured during install request.',rqError);
-  end;
-
-  if conn = nil then exit;
-
-  p_info('Calling listaller-daemon...');
-  // create a new method call and check for errors
-  dmsg := dbus_message_new_method_call('org.freedesktop.Listaller', // target for the method call
-                                      '/org/freedesktop/Listaller/Installer1', // object to call on
-                                      'org.freedesktop.Listaller.Install', // interface to call on
-                                      'ExecuteSetup'); // method name
-  if (dmsg = nil) then
-  begin
-    p_error('Message Null');
-    exit;
-  end;
-
-  // append arguments
-  param:=PChar(PkgPath);
-  dbus_message_iter_init_append(dmsg, @args);
-  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @param) = 0) then
-  begin
-    p_error('Out Of Memory!');
-    exit;
-  end;
-
-  //Append true if update source should be registered
-  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_BOOLEAN, @AddUpdateSource) = 0) then
-  begin
-    p_error('Out Of Memory!');
-    exit;
-  end;
-
-  // send message and get a handle for a reply
-  if (dbus_connection_send_with_reply(conn, dmsg, @pending, -1) = 0) then // -1 is default timeout
-  begin
-    p_error('Out Of Memory!');
-    exit;
-  end;
-  if (pending = nil) then
-  begin
-    p_error('Pending Call Null');
-    exit;
-  end;
-  dbus_connection_flush(conn);
-
-  p_info('InstallPkg request sent');
-
-  // free message
-  dbus_message_unref(dmsg);
-
-  // block until we recieve a reply
-  dbus_pending_call_block(pending);
-
-  // get the reply message
-  dmsg := dbus_pending_call_steal_reply(pending);
-  if (dmsg = nil) then
-  begin
-    p_error('Reply Null');
-    exit;
-  end;
-  // free the pending message handle
-  dbus_pending_call_unref(pending);
-
-  // read the parameters
-  if (dbus_message_iter_init(dmsg, @args) = 0) then
-     p_error('Message has no arguments!')
-  else if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
-     p_error('Argument is not boolean!')
-  else
-     dbus_message_iter_get_basic(@args, @stat);
-
-  if (dbus_message_iter_next(@args) = 0) then
-     p_error('Message has too few arguments!')
-  else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
-     p_error('Argument is no string!')
-  else
-     dbus_message_iter_get_basic(@args, @rec);
-
-  if (stat = false) then
-  begin
-   if rec = 'blocked' then
-    MakeUsrRequest('You are not authorized to do this action!',rqInfo)
-   else
-    MakeUsrRequest('An error occured during install request.',rqError);
-   exit;
-  end;
-  // free reply
-  dbus_message_unref(dmsg);
-
-  ////////////////////////////////////////////////////////////////////////////////////
-
-  //Now start listening to Listaller dbus signals and forward them to
-  //native functions until the "Finished" signal is received
-
-  // add a rule for which messages we want to see
-  dbus_bus_add_match(conn,
-  'type=''signal'',sender=''org.freedesktop.Listaller'', interface=''org.freedesktop.Listaller.Install'', path=''/org/freedesktop/Listaller/Installer1'''
-  , @err);
-
-  dbus_connection_flush(conn);
-  if (dbus_error_is_set(@err) <> 0) then
-  begin
-    p_error('Match Error ('+err.message+')');
-    exit;
-  end;
-  p_info('Match rule sent');
-
-  install_finished:=false;
-  SetMainPos(0);
-  // loop listening for signals being emmitted
-  while (not install_finished) do
-  begin
-
-    // non blocking read of the next available message
-    dbus_connection_read_write(conn, 0);
-    dmsg:=dbus_connection_pop_message(conn);
-
-    // loop again if we haven't read a message
-    if (dmsg = nil) then
-    begin
-      sleep(1);
-      Continue;
-    end;
-
-    //Convert all DBus signals into standard callbacks
-
-    //Change of the main progress bar
-    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'MainProgressChange') <> 0) then
-    begin
-      // read the parameters
-      if (dbus_message_iter_init(dmsg, @args) = 0) then
-         p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_UINT32 <> dbus_message_iter_get_arg_type(@args)) then
-         p_error('Argument is no integer!')
-      else
-      begin
-         dbus_message_iter_get_basic(@args, @intvalue);
-         SetMainPos(intvalue);
-      end;
-    end;
-
-    //Change of the extra progress bar
-    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'ExtraProgressChange') <> 0) then
-    begin
-      // read the parameters
-      if (dbus_message_iter_init(dmsg, @args) = 0) then
-         p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_UINT32 <> dbus_message_iter_get_arg_type(@args)) then
-         p_error('Argument is no integer!')
-      else
-      begin
-         dbus_message_iter_get_basic(@args, @intvalue);
-         SetExtraPos(intvalue);
-      end;
-    end;
-
-    //Receive new message
-    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'Message') <> 0) then
-    begin
-      // read the parameters
-      if (dbus_message_iter_init(dmsg, @args) = 0) then
-         p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
-         p_error('Argument is no string!')
-      else
-      begin
-         dbus_message_iter_get_basic(@args, @strvalue);
-         msg(strvalue);
-      end;
-    end;
-
-    //Receive current state of installation progress
-    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'StateMessage') <> 0) then
-    begin
-      // read the parameters
-      if (dbus_message_iter_init(dmsg, @args) = 0) then
-         p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
-         p_error('Argument is no string!')
-      else
-      begin
-         dbus_message_iter_get_basic(@args, @strvalue);
-         SendStateMsg(strvalue);
-      end;
-    end;
-
-    //Break on error signal
-    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'Error') <> 0) then
-    begin
-      // read the parameters
-      if (dbus_message_iter_init(dmsg, @args) = 0) then
-         p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
-         p_error('Argument is no string!')
-      else
-      begin
-         dbus_message_iter_get_basic(@args, @strvalue);
-         //The action failed. Diplay error and leave the loop
-          MakeUsrRequest(strvalue,rqError);
-          install_finished:=true;
-      end;
-    end;
-
-    //Check if the installation has finished
-    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Install', 'Finished') <> 0) then
-    begin
-      // read the parameters
-      if (dbus_message_iter_init(dmsg, @args) = 0) then
-         p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
-         p_error('Argument is no string!')
-      else
-      begin
-         dbus_message_iter_get_basic(@args, @boolvalue);
-         install_finished:=boolvalue;
-      end;
-    end;
-
-
-    // free the message
-    dbus_message_unref(dmsg);
-  end;
-
- //If we are here, the installation was successful
- Result:=true;
-
-end;
-
 function TInstallation.DoInstallation: Boolean;
-var cnf: TIniFile;i: Integer;
+var cnf: TIniFile;i: Integer;buscmd: ListallerBusCommand;
 begin
 
 if pkType=ptLinstall then
@@ -1995,7 +1738,14 @@ end;
 
 if (SUMode)and(not IsRoot) then
 begin
- Result:=DoInstallationAsRoot();
+ //Create worker thread for this action
+ buscmd.cmdtype:=lbaInstallPack;
+ buscmd.pkgname:=PkgName;
+ CheckAddUSource;
+ buscmd.addsrc:=AddUpdateSource;
+ with TLiDBusAction.Create(buscmd) do
+  OnStatus:=@DBusThreadStatusChange;
+ Result:=true; //Transaction submitted
  exit;
 end;
 
