@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="application/x-installation">
-    <sub-class-of type="application/zip"/>
+    <sub-class-of type="application/x-xz-compressed-tar"/>
     <comment>Software installation package</comment>
     <comment xml:lang="de">Software Installationspaket</comment>
     <glob pattern="*.ipk"/>
-    <icon kde="ipk-package"/>
+    <generic-icon name="ipk-package"/>
     <supported-by>
-      <application name="listallgo"/>
+      <application name="listallmgr-gtk"/>
+      <application name="listallmgr-qt"/>
     </supported-by>
   </mime-type>
 </mime-info> 

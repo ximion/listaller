@@ -40,7 +40,7 @@ type
    destructor  Destroy;override;
 
    //** Add a new file to the IPK structure @return False if already finalized
-   function  AddFile(fname: String;todir: String): Boolean;
+   function  AddFile(todir: String;fname: String): Boolean;
    //** Finalize the base file for signing
    procedure Finalize;
    //** Sign the package
@@ -52,24 +52,43 @@ type
  //** Unpacks IPK package structure
  TLiUnpacker = class
  private
+  ipkfile: String;
+  workdir: String;
  public
   constructor Create(aIPKFile: String);
   destructor  Destroy;override;
+
+  //** Decompress IPK tar file
+  procedure Decompress;
+ end;
+
+ //** Create small LZMA compressed files for update sources
+ TLiUpdateBit = class
+  private
+   encoder: TLZMAEncoder;
+   decoder: TLZMADecoder;
+   algorithm: Integer;
+  public
+   constructor Create;
+   destructor  Destroy;override;
+
+   //** Compress files to XZ
+   procedure Compress(infile: String;outfile: String);
  end;
 
 implementation
 
 { TLiPackager }
 
-constructor TLiPackager.Create(AFile: String);
+constructor TLiPackager.Create(aIPKFile: String);
 begin
  inherited Create;
  randomize;
  pkrandom:='-'+RandomID+RandomID+RandomID;
  finalized:=false;
- basename:=tmpdir+'/'+ExtractFileName(AFile)+pkrandom+'.tar';
+  OutFileName:=aIPKFile;
+ basename:=tmpdir+'/'+ExtractFileName(OutFileName)+pkrandom+'.tar';
  mntar:=TTarWriter.Create(basename);
- OutFileName:=AFile;
  algorithm:=2;
 end;
 
@@ -84,7 +103,7 @@ begin
  Result:=IntToStr(random(99));
 end;
 
-function TLiPackager.AddFile(fname: String;todir: String): Boolean;
+function TLiPackager.AddFile(todir: String;fname: String): Boolean;
 begin
 if finalized then
  Result:=false
@@ -136,6 +155,117 @@ begin
  if not encoder.SetLcLpPb(3, 0, 2) then
   raise Exception.Create('Incorrect -lc or -lp or -pb value');
 
+
+  encoder.SetEndMarkerMode(eos);
+  encoder.WriteCoderProperties(outStream);
+
+  if eos then
+   fileSize:=-1
+  else fileSize:=inStream.Size;
+
+  for i := 0 to 7 do
+   WriteByte(outStream,(fileSize shr (8 * i)) and $FF);
+
+  encoder.Code(inStream, outStream, -1, -1);
+
+  encoder.free;
+  outStream.Free;
+  inStream.Free;
+  DeleteFile(basename);
+end;
+
+{ TLiUnpacker }
+
+constructor TLiUnpacker.Create(aIPKFile: String);
+begin
+ inherited Create;
+ ipkfile:=aIPKFile;
+ workdir:=tmpdir+'/listaller/'+ExtractFileName(ipkfile)+'/';
+ SysUtils.ForceDirectories(workdir);
+end;
+
+destructor TLiUnpacker.Destroy;
+begin
+ inherited;
+end;
+
+procedure TLiUnpacker.Decompress;
+var inStream:TBufferedFS;
+    outStream:TBufferedFS;
+    decoder: TLZMADecoder;
+    properties:array[0..4] of byte;
+    outSize:int64;
+    i: Integer;
+    v: byte;
+const propertiessize=5;
+begin
+ if not FileExists(ipkfile) then Exception.Create('IPK file does not exists!');
+
+ inStream:=TBufferedFS.Create(ipkfile,fmOpenRead or fmsharedenynone);
+ outStream:=TBufferedFS.Create(workdir+'ipktar.tar',fmcreate);
+
+ if inStream.read(properties, propertiesSize) <> propertiesSize then
+  raise Exception.Create('IPK input .lzma file is too short');
+ decoder := TLZMADecoder.Create;
+ if not decoder.SetDecoderProperties(properties) then
+  raise Exception.Create('Incorrect stream properties');
+
+  outSize := 0;
+ for i:=0 to 7 do
+ begin
+  v := (ReadByte(inStream));
+  if v < 0 then
+   raise Exception.Create('Can''t read stream size');
+
+  outSize := outSize or v shl (8 * i);
+ end;
+
+ if not decoder.Code(inStream, outStream, outSize) then
+  raise Exception.Create('Error in data stream');
+
+ decoder.Free;
+ outStream.Free;
+ inStream.Free;
+end;
+
+{ TLiUpdateBit }
+
+constructor TLiUpdateBit.Create;
+begin
+ inherited;
+ algorithm:=2;
+ encoder:=TLZMAEncoder.Create;
+ decoder:=TLZMADecoder.Create;
+end;
+
+destructor TLiUpdateBit.Destroy;
+begin
+ encoder.Free;
+ decoder.Free;
+ inherited;
+end;
+
+procedure TLiUpdateBit.Compress(infile: String;outfile: String);
+var inStream:TBufferedFS;
+    outStream:TBufferedFS;
+    eos: Boolean=false; //Don't write end marker
+    fileSize: Int64;
+    i: Integer;
+begin
+ inStream:=TBufferedFS.Create(infile,fmOpenRead or fmShareDenyNone);
+ outStream:=TBufferedFS.Create(outfile,fmcreate);
+
+ if not encoder.SetAlgorithm(algorithm) then
+  raise Exception.Create('Incorrect compression mode');
+ if not encoder.SetDictionarySize(1 shl 23) then
+  raise Exception.Create('Incorrect dictionary size');
+
+ if not encoder.SeNumFastBytes(128) then
+  raise Exception.Create('Incorrect -fb value');
+ if not encoder.SetMatchFinder(1) then
+  raise Exception.Create('Incorrect -mf value');
+ if not encoder.SetLcLpPb(3, 0, 2) then
+  raise Exception.Create('Incorrect -lc or -lp or -pb value');
 
   encoder.SetEndMarkerMode(eos);
   encoder.WriteCoderProperties(outStream);

@@ -6,13 +6,13 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1162"/>
+      <CurrentBuildNr Value="1167"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -28,12 +28,12 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="41">
+    <Units Count="43">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="51" Y="16"/>
+        <CursorPos X="24" Y="22"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="61"/>
@@ -43,9 +43,11 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
+        <CursorPos X="19" Y="441"/>
+        <TopLine Value="420"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="21"/>
+        <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
@@ -316,8 +318,24 @@
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit40>
+      <Unit41>
+        <Filename Value="../bindings/gext.pas"/>
+        <UnitName Value="gext"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit41>
+      <Unit42>
+        <Filename Value="../packager/ipkpackage.pas"/>
+        <UnitName Value="ipkpackage"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="49"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit42>
     </Units>
-    <JumpHistory Count="13" HistoryIndex="12">
+    <JumpHistory Count="15" HistoryIndex="14">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="23" Column="29" TopLine="1"/>
@@ -370,6 +388,14 @@
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="23" Column="14" TopLine="1"/>
       </Position13>
+      <Position14>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="24" TopLine="1"/>
+      </Position14>
+      <Position15>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="25" Column="23" TopLine="12"/>
+      </Position15>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -379,7 +405,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../src/;../abbrevia/;../synapse/;../bindings/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
+      <OtherUnitFiles Value="../src/;../packager/;../packager/compression/;../synapse/;../bindings/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <CodeGeneration>

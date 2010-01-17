@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, packagekit,
-  sqlite3ds, db, AbUnZper, AbArcTyp, ipkdef, HTTPSend, FTPSend, blcksock,
+  sqlite3ds, db, IPKPackage, ipkdef, HTTPSend, FTPSend, blcksock,
   MD5, liTypes, distri, MTProcs, FileUtil, liBasic, liDBusproc,
   limanageapp;
 
@@ -438,7 +438,7 @@ begin
 end;
 
 function TInstallation.Initialize(fname: String): Boolean;
-var z: TAbUnZipper;
+var pkg: TLiUnpacker;
     FDir,n: String;
     i: Integer;
     DInfo: TDistroInfo;

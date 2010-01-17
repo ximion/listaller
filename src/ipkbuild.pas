@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -21,12 +21,11 @@ unit ipkbuild;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, AbZipper, AbArcTyp, MD5, LiCommon, Process,
+  Classes, SysUtils, FileUtil, IPKPackage, MD5, LiCommon, Process,
   OPBitmapFormats, ipkdef, litypes;
 
 type
 
- { TPackInfo }
  //** Information about the new package
   TPackInfo = record
    desc: TStringList;
@@ -37,10 +36,6 @@ type
    out: String;
   end;
 
-{** Builds a ZIP structure
-    @param azipfilename Name of the ZIP file
-    @param afiles List of files the archive should contain}
-procedure BuildZIP(azipfilename : string; afiles : TStringList);
 {** Creates an IPK-Update-Source (IPKUS)
     @param FName Name of the IPS source file
     @param path Path to an folder where the source should be created}
@@ -69,29 +64,6 @@ const
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////Functions that are used by the others////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-procedure BuildZIP(aZipFileName: string; afiles : TStringList);
-  var
-    zip : TAbZipper; j:integer;
-  begin
-    zip := TAbZipper.Create(nil);
-    try
-      if afiles.count > 0 then
-      begin
-        zip.BaseDirectory :=WDir;
-        zip.FileName := azipfilename;
-        zip.StoreOptions := [soStripDrive];
-        for j:=0 to afiles.Count-1 do
-        begin
-          zip.addfiles(StringReplace(afiles[j],WDir,'',[rfReplaceAll]), 0);
-        end;
-        zip.Save;
-        zip.CloseArchive;
-      end
-    finally
-      zip.Free;
-    end;
-end;
-
 procedure BuildApplication(pk: TPackInfo);
 var i: Integer;
    M: TMemoryStream;
@@ -166,7 +138,7 @@ end;
 ///////////////////Create Update-Source from IPS-File///////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 procedure CreateUpdateSource(FName, path: String);
-var ips,script,fls: TStringList;i,j: Integer;zip : TAbZipper;h,dir:String;
+var ips,script,fls: TStringList;i,j: Integer;ubit: TLiUpdateBit;h,dir:String;
 begin
 ips:=TStringList.Create;
 ips.LoadFromFile(FName);
@@ -184,8 +156,11 @@ fls:=TStringList.Create;
   ips.Free;
 writeLn('Building update source...');
 writeLn('Please wait!');
+ubit:=TLiUpdateBit.Create;
+
 i:=0;
-while i <= fls.Count-1 do begin
+while i <= fls.Count-1 do
+begin
 
 if fls[i][1]='>' then dir:=copy(fls[i],2,length(fls[i]))
 else
@@ -214,16 +189,10 @@ begin
 
  if (i=fls.Count-1)or(MD5.MDPrint(MD5.MD5File(DeleteModifiers(fls[i]),1024))<>fls[i+1]) then
  begin
- zip := TAbZipper.Create(nil);
- zip.BaseDirectory :=h;
-        writeln('Writing '+ExtractFileName(DeleteModifiers(fls[i]))+' ...');
-        zip.FileName := h+'/'+ExtractFileName(DeleteModifiers(fls[i])+'.zip');
-        zip.StoreOptions := [soStripDrive];
-        zip.addfiles(DeleteModifiers(fls[i]),0);
-        zip.Save;
-        zip.CloseArchive;
- zip.Free;
- SysUtils.RenameFile(h+'/'+ExtractFileName(DeleteModifiers(fls[i]))+'.zip',h+'/'+ExtractFileName(DeleteModifiers(fls[i])));
+  writeln('Writing '+ExtractFileName(DeleteModifiers(fls[i]))+' ...');
+ ubit.Compress(DeleteModifiers(fls[i]),h+'/'+ExtractFileName(DeleteModifiers(fls[i])));
+ ubit.Free;
+
  if (fls[i][1]='/')or(fls[i][1]='.')then
   fls.Insert(i+1,'');
 
@@ -241,6 +210,8 @@ begin
 
  Inc(i);
 end;
+
+ ubit.Free;
 
  writeLn('Save configuration...');
  script.SaveToFile(path+'source.pin');
@@ -266,15 +237,16 @@ end;
 ///////////////////Function to build IPK-Packages///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 procedure BuildPackage(fi: String;o:String;genbutton:Boolean=false);
-var i,j,id: Integer;fc: TStringList;lh,h,s: String;pkgtype: TPkgType;tmp,sl,files,fsec,script: TStringList;
+var i,j,id: Integer;fc: TStringList;lh,h,s: String;pkgtype: TPkgType;sl,files,fsec,script: TStringList;
   dlist: TStringList;aname: String;
   control: TIPKScript;
+  ipkpkg: TLiPackager;
 begin
 if FileExists(o) then begin
 writeLn('error: ');
-writeLn('This file already exists.');
-writeLn('Please choose another one!');
-writeLn('[Build canceled]');
+writeLn(' This file already exists.');
+writeLn(' Please choose another target!');
+halt(6);
 exit;
 end;
 if FileExists(WDir) then begin
@@ -291,8 +263,7 @@ files:=TStringList.Create;
 fsec:=TStringList.Create;
 
 if LowerCase(sl[0])<>'ipk-standard-version: 1.0' then begin
- writeLn('This is no valid IPS source file');
- writeLn('[Build canceled]');
+ writeLn(' This is no valid IPS source file');
  halt(1);
 end;
 
@@ -315,10 +286,10 @@ writeLn('');
 
   //Creating dirs
   CreateDir(WDir+'data/');
-  SysUtils.CreateDir(WDir+'stuff/');
+  SysUtils.CreateDir(WDir+'pkginfo/');
 
   fc:=TStringList.Create;
-  tmp:=TStringList.Create;
+  ipkpkg:=TLiPackager.Create(o);
 
   writeLn('Preparing files.');
   write('[..');
@@ -353,8 +324,7 @@ writeLn('');
  and (not FileExists(ExtractFilePath(fi)+DeleteModifiers(Files[i]))) then
  begin
  writeLn('error: ');
- writeln('The file '+DeleteModifiers(Files[i])+' doesn''t exists!');
- writeLn('[Build canceled]');
+ writeln(' The file '+DeleteModifiers(Files[i])+' doesn''t exists!');
  halt(6);
  end;
 
@@ -375,7 +345,9 @@ writeLn('');
  fc.Add('/data'+SyblToX(s)+'/'+ExtractFileName(DeleteModifiers(Files[i])));
  //'/data'+StringReplace(Files[i+2],'$INST','',[rfReplaceAll])+'/'+ExtractFileName(DeleteModifiers(Files[i]))+copy(Files[i],pos(ExtractFileName(DeleteModifiers(Files[i])),Files[i])+length(ExtractFileName(DeleteModifiers(Files[i]))),length(Files[i])));
 //writeLn('Add: '+fc[fc.Count-1]);
- tmp.Add(WDir+'data'+SyblToX(s)+'/'+ExtractFileName(DeleteModifiers(Files[i])));
+
+ ipkpkg.AddFile('./data'+SyblToX(s),WDir+'/data'+SyblToX(s)+'/'+ExtractFileName(DeleteModifiers(Files[i])));
+
  fc.Add(MD5.MDPrint(MD5.MD5File(DeleteModifiers(Files[i]),1024)));//ExcludeTrailingBackslash(Files[i+1]));
  write('.');
 
@@ -386,8 +358,9 @@ writeLn('');
 
 //
 if id >-1 then begin
- fc.SaveToFile(WDir+'stuff/'+'fileinfo-'+IntToStr(id)+'.id');
- tmp.Add(WDir+'stuff/'+'fileinfo-'+IntToStr(id)+'.id');
+ fc.SaveToFile(WDir+'pkginfo/'+'fileinfo-'+IntToStr(id)+'.id');
+
+ ipkpkg.AddFile('./pkginfo/',WDir+'pkginfo/fileinfo-'+IntToStr(id)+'.id');
 end;
 //
 
@@ -404,7 +377,8 @@ script.Free; //Was only temporary
 
 pkgtype:=control.SType;
 
-if pkgtype=ptLinstall then begin
+if pkgtype=ptLinstall then
+begin
 writeLn('Mode: Build standard IPK');
 
 if genbutton then
@@ -426,24 +400,23 @@ begin
        delete(lh,1,i);
       end;
     end;
- writeLn('A compatibility button will be generated.');
+ writeLn(' I: A compatibility button will be generated.');
 end;
 
 writeLn('Making control-script...');
-SysUtils.CreateDir(WDir+'stuff/');
+SysUtils.CreateDir(WDir+'pkginfo/');
 
 if control.Icon<>'' then
 if not FileExists(control.Icon) then
 begin
  writeLn('error: ');
- writeLn('Icon-path is invalid!');
- writeLn('[Build canceled]');
+ writeLn(' Icon-path is invalid!');
  halt(9);
 end else
 begin
- FileCopy(control.Icon,WDir+'stuff/'+'packicon.png'); //!!! Changes needed to support more image types
- control.Icon:='/stuff/'+'packicon.png';
- tmp.Add(WDir+'stuff/'+'packicon.png');
+ FileCopy(control.Icon,WDir+'pkginfo/'+'packicon.png'); //!!! Changes needed to support more image types
+ control.Icon:='/pkginfo/'+'packicon.png';
+ ipkpkg.AddFile('./pkginfo',WDir+'pkginfo/'+'packicon.png');
 end;
 
 sl:=TStringList.Create;
@@ -453,11 +426,11 @@ if sl.Count>0 then
 begin
 control.WriteAppLicense(sl);
 {
-FileCopy(lh,WDir+'stuff/'+'license'+ExtractFileExt(lh));
-SetNode(FindChildNode(xn,'license'),'/stuff/'+'license'+ExtractFileExt(lh));
-tmp.Add(WDir+'stuff/'+'license'+ExtractFileExt(lh));
+FileCopy(lh,WDir+'pkginfo/'+'license'+ExtractFileExt(lh));
+SetNode(FindChildNode(xn,'license'),'/pkginfo/'+'license'+ExtractFileExt(lh));
+tmp.Add(WDir+'pkginfo/'+'license'+ExtractFileExt(lh));
 }
-end else writeLn(' Warning: No license file found!');
+end else writeLn(' W: No license file found!');
 
 sl.Clear;
 control.ReadAppDescription(sl);
@@ -465,11 +438,11 @@ if sl.Count>0 then
 begin
 control.WriteAppDescription(sl);
 {
-FileCopy(lh,WDir+'stuff/'+'description'+ExtractFileExt(lh));
-tmp.Add(WDir+'stuff/'+'description'+ExtractFileExt(lh));
+FileCopy(lh,WDir+'pkginfo/'+'description'+ExtractFileExt(lh));
+tmp.Add(WDir+'pkginfo/'+'description'+ExtractFileExt(lh));
 
-SetNode(FindChildNode(xn,'description'),'/stuff/'+'description'+ExtractFileExt(lh));}
-end else writeLn(' Warning: No long description found!');
+SetNode(FindChildNode(xn,'description'),'/pkginfo/'+'description'+ExtractFileExt(lh));}
+end else writeLn(' W: No long description found!');
 
 sl.Free;
 
@@ -477,20 +450,21 @@ sl.Free;
 if FileExists(ExtractFilePath(fi)+'/preinst') then
 begin
 FileCopy(ExtractFilePath(fi)+'/preinst',WDir+'preinst');
-tmp.Add(WDir+'preinst');
-writeLn(' Info: Preinst script found.');
+ipkpkg.AddFile('.',WDir+'preinst');
+
+writeLn(' I: Preinst script found.');
 end;
 if FileExists(ExtractFilePath(fi)+'/postinst') then
 begin
 FileCopy(ExtractFilePath(fi)+'/postinst',WDir+'postinst');
-tmp.Add(WDir+'postinst');
-writeLn(' Info: Postinst script found.');
+ipkpkg.AddFile('.',WDir+'postinst');
+writeLn(' I: Postinst script found.');
 end;
 if FileExists(ExtractFilePath(fi)+'/prerm') then
 begin
 FileCopy(ExtractFilePath(fi)+'/prerm',WDir+'prerm');
-tmp.Add(WDir+'prerm');
-writeLn(' Info: Prerm script found.');
+ipkpkg.AddFile('.',WDir+'prerm');
+writeLn(' I: Prerm script found.');
 end;
 
 end else
@@ -505,8 +479,7 @@ control.ReadAppDescription(sl);
 if sl.Count<=0 then
 begin
  writeLn('error: ');
- writeLn('Description file is invalid!');
- writeLn('[Build canceled]');
+ writeLn(' Description file is invalid!');
  halt(10);
 end;
 
@@ -517,14 +490,13 @@ begin
 if (not FileExists(control.Icon))and(control.Icon<>'') then
 begin
 writeLn('error: ');
-writeLn('Icon-path is invalid!');
-writeLn('[Build canceled]');
+writeLn(' Icon-path is invalid!');
 halt(9);
 end else
 begin
-FileCopy(control.Icon,WDir+'stuff/'+'packicon.png'); //!!! Should be changed to support more picture-filetypes
-control.Icon:='/stuff/'+'packicon.png';
-tmp.Add(WDir+'stuff/'+'packicon.png');
+FileCopy(control.Icon,WDir+'pkginfo/'+'packicon.png'); //!!! Should be changed to support more picture-filetypes
+control.Icon:='/pkginfo/'+'packicon.png';
+ipkpkg.AddFile('./pkginfo',WDir+'pkginfo/'+'packicon.png');
 writeLn(' Info: Icon added.');
 end;
 end; //END <>nil
@@ -538,7 +510,7 @@ begin
 writeLn('Mode: Build container IPK package');
 
 FileCopy(control.Binary,WDir+'data/'+ExtractFileName(control.Binary));
-tmp.Add(WDir+'data/'+ExtractFileName(control.Binary));
+ipkpkg.AddFile('./data',WDir+'data/'+ExtractFileName(control.Binary));
 control.Binary:='/data/'+ExtractFileName(control.Binary);
 end;
 end;
@@ -547,18 +519,24 @@ randomize;
 
 control.SaveToFile(WDir+'arcinfo.pin');
 
-tmp.Add(WDir+'arcinfo.pin');
+ipkpkg.AddFile('.',WDir+'arcinfo.pin');
+
+ipkpkg.Finalize; //Freeze the IPK package state
+
+files.Free;
 
 i:=random(9999)+1000;
-writeLn('Generate package...');
 
 writeLn('Creating package...');
-writeLn(o+' ('+ChangeFileExt(o,'')+IntToStr(i)+'.zip'+')');
-BuildZIP(ChangeFileExt(o,'')+IntToStr(i)+'.zip',tmp);
-tmp.Free;
+writeLn(' #-> '+o);
+if not ipkpkg.ProduceIPKPackage then
+begin
+ writeln('error:');
+ writeLn(' Build of IPK package failed!');
+ helt(1);
+ exit;
+end;
 sleep(20);
-RenameFile(ChangeFileExt(o,'')+IntToStr(i)+'.zip',o);
-Files.Free;
 
 writeLn('Done!');
 if (genbutton)and(Assigned(dlist)) then
