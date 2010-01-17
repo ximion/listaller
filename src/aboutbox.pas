@@ -67,6 +67,7 @@ begin
    AboutSheet.Caption:=rsAbout;
    AuthorSheet.Caption:=rsAuthors;
    BitBtn1.Caption:=rsClose;
+   Memo2.Text:=rsTranslators;
    {$IFDEF LCLgtk2}
     Label1.Caption:='Listaller (GTK+)';
    {$ENDIF}

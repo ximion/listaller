@@ -61,8 +61,8 @@
         <ComponentName Value="MnFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="92" Y="136"/>
-        <TopLine Value="105"/>
+        <CursorPos X="15" Y="27"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="178"/>
         <Loaded Value="True"/>
@@ -297,8 +297,8 @@
       <Unit34>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="10" Y="213"/>
-        <TopLine Value="212"/>
+        <CursorPos X="41" Y="244"/>
+        <TopLine Value="220"/>
         <UsageCount Value="33"/>
       </Unit34>
       <Unit35>
@@ -534,8 +534,8 @@
         <ComponentName Value="FmAbout"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="aboutbox"/>
-        <CursorPos X="49" Y="24"/>
-        <TopLine Value="1"/>
+        <CursorPos X="30" Y="70"/>
+        <TopLine Value="46"/>
         <UsageCount Value="71"/>
       </Unit68>
       <Unit69>
@@ -782,7 +782,7 @@
         <UsageCount Value="10"/>
       </Unit103>
     </Units>
-    <JumpHistory Count="16" HistoryIndex="15">
+    <JumpHistory Count="17" HistoryIndex="16">
       <Position1>
         <Filename Value="manager.pas"/>
         <Caret Line="10" Column="47" TopLine="1"/>
@@ -847,6 +847,10 @@
         <Filename Value="manager.pas"/>
         <Caret Line="136" Column="22" TopLine="115"/>
       </Position16>
+      <Position17>
+        <Filename Value="manager.pas"/>
+        <Caret Line="27" Column="15" TopLine="1"/>
+      </Position17>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -856,7 +860,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../synapse/;../abbrevia/;../bindings/"/>
+      <OtherUnitFiles Value="../synapse/;../bindings/"/>
       <UnitOutputDirectory Value="../build"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>

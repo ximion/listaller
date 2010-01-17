@@ -253,7 +253,7 @@ begin
   Label16.Caption:=rsCleaningUp;
   Label16.Visible:=true;
   FinPage.Refresh;
-  DeleteDirectory(lp+ExtractFileName(paramstr(1)),false);
+  DeleteDirectory(tmpdir+ExtractFileName(paramstr(1)),false);
 
   if (setup.GetAppCMD<>'#')and(CbExecApp.Checked) then
   begin

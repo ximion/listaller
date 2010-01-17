@@ -27,7 +27,7 @@ const
   //** Version of the Listaller applicationset
   LiVersion='0.3.10a~dev';
   //** Working directory of Listaller
-  lp='/tmp/';
+  tmpdir='/tmp/';
 
 var
   //** The Listaller package lib directory

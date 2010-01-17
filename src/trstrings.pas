@@ -241,6 +241,7 @@ rsRmPkgQ='Really remove?';
 rsWaiting='Waiting...';
 rsRMAppC='Uninstalling %a';
 rsLinDesk='Running under %s.';
+rsTranslators='List of translators:'#10;
 
 rsNoUpdates='There are no updates available!';
 rsLogUpdInfo='Update info:';

@@ -7,7 +7,7 @@
       <TargetFileExt Value=""/>
       <Icon Value="0"/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <ProjectVersion Value=""/>
@@ -21,20 +21,18 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
-        <HostApplicationFilename Value="/home/matthias/Development/listaller/trunk/build/libuild"/>
-        <CommandLineParams Value="-b /home/matthias/Desktop/ListallerPacks/Songbird/sb-script.ips /home/matthias/Desktop/ListallerPacks/Songbird/testbuild.ipk"/>
         <LaunchingApplication Use="True" PathPlusParams="/usr/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="11">
+    <Units Count="15">
       <Unit0>
         <Filename Value="libuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
-        <CursorPos X="10" Y="27"/>
-        <TopLine Value="27"/>
+        <CursorPos X="8" Y="27"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="24"/>
+        <UsageCount Value="25"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -106,10 +104,44 @@
         <UnitName Value="unibuild"/>
         <CursorPos X="56" Y="24"/>
         <TopLine Value="1"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="22"/>
       </Unit10>
+      <Unit11>
+        <Filename Value="../packager/ipkpackage.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ipkpackage"/>
+        <CursorPos X="31" Y="58"/>
+        <TopLine Value="21"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="../packager/libtar.pas"/>
+        <UnitName Value="LibTar"/>
+        <CursorPos X="39" Y="79"/>
+        <TopLine Value="70"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="libasic.pas"/>
+        <UnitName Value="libasic"/>
+        <CursorPos X="6" Y="30"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.2.4/rtl/linux/ostypes.inc"/>
+        <CursorPos X="3" Y="164"/>
+        <TopLine Value="143"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit14>
     </Units>
-    <JumpHistory Count="7" HistoryIndex="6">
+    <JumpHistory Count="24" HistoryIndex="23">
       <Position1>
         <Filename Value="libuild.lpr"/>
         <Caret Line="116" Column="15" TopLine="93"/>
@@ -138,6 +170,74 @@
         <Filename Value="libuild.lpr"/>
         <Caret Line="27" Column="10" TopLine="6"/>
       </Position7>
+      <Position8>
+        <Filename Value="../packager/ipkpackage.pas"/>
+        <Caret Line="24" Column="26" TopLine="1"/>
+      </Position8>
+      <Position9>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="27" Column="8" TopLine="1"/>
+      </Position9>
+      <Position10>
+        <Filename Value="../packager/ipkpackage.pas"/>
+        <Caret Line="24" Column="34" TopLine="1"/>
+      </Position10>
+      <Position11>
+        <Filename Value="../packager/libtar.pas"/>
+        <Caret Line="19" Column="87" TopLine="1"/>
+      </Position11>
+      <Position12>
+        <Filename Value="../packager/libtar.pas"/>
+        <Caret Line="83" Column="29" TopLine="61"/>
+      </Position12>
+      <Position13>
+        <Filename Value="../packager/libtar.pas"/>
+        <Caret Line="720" Column="2" TopLine="687"/>
+      </Position13>
+      <Position14>
+        <Filename Value="../packager/libtar.pas"/>
+        <Caret Line="724" Column="2" TopLine="49"/>
+      </Position14>
+      <Position15>
+        <Filename Value="../packager/libtar.pas"/>
+        <Caret Line="1" Column="3" TopLine="49"/>
+      </Position15>
+      <Position16>
+        <Filename Value="../packager/libtar.pas"/>
+        <Caret Line="218" Column="2" TopLine="193"/>
+      </Position16>
+      <Position17>
+        <Filename Value="../packager/libtar.pas"/>
+        <Caret Line="244" Column="11" TopLine="218"/>
+      </Position17>
+      <Position18>
+        <Filename Value="../packager/libtar.pas"/>
+        <Caret Line="267" Column="15" TopLine="254"/>
+      </Position18>
+      <Position19>
+        <Filename Value="../packager/libtar.pas"/>
+        <Caret Line="286" Column="11" TopLine="266"/>
+      </Position19>
+      <Position20>
+        <Filename Value="../packager/libtar.pas"/>
+        <Caret Line="283" Column="10" TopLine="262"/>
+      </Position20>
+      <Position21>
+        <Filename Value="../packager/libtar.pas"/>
+        <Caret Line="270" Column="18" TopLine="262"/>
+      </Position21>
+      <Position22>
+        <Filename Value="../packager/libtar.pas"/>
+        <Caret Line="283" Column="24" TopLine="262"/>
+      </Position22>
+      <Position23>
+        <Filename Value="../packager/libtar.pas"/>
+        <Caret Line="353" Column="16" TopLine="335"/>
+      </Position23>
+      <Position24>
+        <Filename Value="../packager/ipkpackage.pas"/>
+        <Caret Line="53" Column="12" TopLine="14"/>
+      </Position24>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -147,7 +247,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../abbrevia/;../opbitmap/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/components/codetools/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/packager/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/"/>
+      <OtherUnitFiles Value="../abbrevia/;../opbitmap/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/components/codetools/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/packager/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/$(LCLWidgetType)/;/home/matthias/Development/listaller/master/packager/"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <Other>

@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this library. If not, see <http://www.gnu.org/licenses/>.}
-//** Listaller library for all IPK installation related processes
+//** Listaller library for all software management processes
 library libinstaller;
 
 {$mode objfpc}{$H+}

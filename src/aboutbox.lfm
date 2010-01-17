@@ -34,7 +34,7 @@ object FmAbout: TFmAbout
     Left = 117
     Height = 13
     Top = 40
-    Width = 75
+    Width = 76
     Caption = 'Version ...-...'
     Font.Height = -9
     Font.Name = 'Sans'
@@ -44,9 +44,9 @@ object FmAbout: TFmAbout
   end
   object Label3: TLabel
     Left = 117
-    Height = 14
+    Height = 13
     Top = 58
-    Width = 192
+    Width = 166
     Caption = 'Under Linux desktop environment'
     ParentColor = False
   end
@@ -55,19 +55,19 @@ object FmAbout: TFmAbout
     Height = 268
     Top = 112
     Width = 324
-    ActivePage = AboutSheet
+    ActivePage = TabSheet1
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 0
     object AboutSheet: TTabSheet
       Caption = 'About'
-      ClientHeight = 241
+      ClientHeight = 242
       ClientWidth = 320
       object Label4: TLabel
         Left = 6
-        Height = 94
-        Top = 62
-        Width = 267
+        Height = 88
+        Top = 65
+        Width = 225
         Anchors = [akLeft]
         Caption = 'Software installer && manager'#10#10'© 2008-2009 Matthias Klumpp'#10#10'http://listaller.nlinux.org'#10'License: GNU General Public License Version 3'
         ParentColor = False
@@ -75,11 +75,11 @@ object FmAbout: TFmAbout
     end
     object AuthorSheet: TTabSheet
       Caption = 'Authors'
-      ClientHeight = 241
+      ClientHeight = 242
       ClientWidth = 320
       object Label5: TLabel
         Left = 0
-        Height = 30
+        Height = 28
         Top = 0
         Width = 320
         Align = alTop
@@ -88,8 +88,8 @@ object FmAbout: TFmAbout
       end
       object Memo1: TMemo
         Left = 0
-        Height = 204
-        Top = 37
+        Height = 207
+        Top = 35
         Width = 320
         Align = alClient
         BorderStyle = bsNone
@@ -105,9 +105,6 @@ object FmAbout: TFmAbout
           'Dennis Seid'
           '   jumcore@yahoo.de'
           '   Designer'
-          ''
-          'Listaller uses the Components:'
-          'OPBitmap, Abbrevia, Synapse'
         )
         ParentColor = True
         ReadOnly = True
@@ -117,7 +114,7 @@ object FmAbout: TFmAbout
       object Panel1: TPanel
         Left = 0
         Height = 7
-        Top = 30
+        Top = 28
         Width = 320
         Align = alTop
         BevelOuter = bvNone
@@ -126,11 +123,11 @@ object FmAbout: TFmAbout
     end
     object TabSheet1: TTabSheet
       Caption = 'Translators'
-      ClientHeight = 241
+      ClientHeight = 242
       ClientWidth = 320
       object Memo2: TMemo
         Left = 0
-        Height = 241
+        Height = 242
         Top = 0
         Width = 320
         Align = alClient
@@ -143,10 +140,10 @@ object FmAbout: TFmAbout
     end
   end
   object BitBtn1: TBitBtn
-    Left = 283
-    Height = 23
-    Top = 387
-    Width = 49
+    Left = 288
+    Height = 22
+    Top = 388
+    Width = 44
     Anchors = [akRight, akBottom]
     AutoSize = True
     Caption = 'Close'

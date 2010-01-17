@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -25,7 +25,7 @@ uses
   Interfaces, //We need an widgetset (NoGUI) for graphic handling
   Classes, SysUtils, CustApp,
   liBasic, Process, ipkbuild,
-  trStrings, LiTranslator, unibuild;
+  trStrings, LiTranslator, unibuild, ipkpackage;
 
 type
 

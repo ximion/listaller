@@ -9,7 +9,7 @@
 .directory
 build
 Makefile
-bindings/packagekit-old.pas
+packager/test
 bindings/test
 .directory
 copylib.sh

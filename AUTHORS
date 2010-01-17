@@ -1,4 +1,23 @@
 Matthias Klumpp <matthias@nlinux.org>
 
-TODO: Add authors of Synapse, Abbrevia and OPBitmap component set
-      include list of names of the designers.
+liCreator: Matthias Klumpp <matthias@nlinux.org>
+	   Thomas Dieffenbach <giantics@gmx.net>
+
+Graphics:  Dennis Seid <jumcore@yahoo.de>
+
+
+----------
+Listaller uses the following 3rd-party components:
+
+LZMA-SDK: (c) 1999-2006 Igor Pavlov
+	  Licensed under LGPLv2 and others
+
+LibTar:   (c) 2001-2007 Stefan Heymann
+	  Licensed under LGPLv3
+
+Synapse:  (c) 1999-2002, Lukas Gebauer
+	  Licensed under own, GPL-compatible license
+
+
+
+TODO: Add authors of OPBitmap component set
