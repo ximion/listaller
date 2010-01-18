@@ -77,7 +77,7 @@ Date        Author Changes
 //** Unit to work with TAR archives
 unit libtar;
 
-{$mode delphi} //Switch on delphi mode
+{$mode delphi} //Switch to Delphi mode
 
 INTERFACE
 

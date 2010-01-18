@@ -16,14 +16,13 @@
 //** Contains class to package signed and unsigned IPK package source files
 unit ipkpackage;
 
-//{$mode objfpc}{$H+}
-{$mode Delphi}
+{$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, LibTar, liBasic,
-  ULZMAEncoder, ULZMADecoder, UBufferedFS, ULZMACommon, Dialogs;
+  Classes, SysUtils, LibTar, liBasic, ULZMAEncoder, ULZMADecoder,
+  UBufferedFS, ULZMACommon, gpgsign, Dialogs;
 
 type
  //** Creates IPK packages from preprocessed source files
@@ -45,7 +44,7 @@ type
    //** Finalize the base file for signing
    procedure Finalize;
    //** Sign the package
-   procedure SignPackage;
+   function SignPackage: Boolean;
    //** Compress package and copy it to output @returns Success of operation
    function ProduceIPKPackage: Boolean;
  end;
@@ -95,7 +94,7 @@ end;
 
 destructor TLiPackager.Destroy;
 begin
- if Assigned(mntar) then mntar.Free;
+ if not finalized then mntar.Free;
  inherited;
 end;
 
@@ -118,14 +117,38 @@ end;
 procedure TLiPackager.Finalize;
 begin
  mntar.Finalize;
- FreeAndNil(mntar);
+ mntar.Free;
  finalized:=true;
 end;
 
-procedure TLiPackager.SignPackage;
+function TLiPackager.SignPackage: Boolean;
+var sign: TGPGSignWrapper;oldbase: String;
 begin
+ Result:=false;
  if (not Finalized) then raise Exception.Create('IPK file was not finalized before signing.');
- //Impossible at time
+
+ oldbase:=basename;
+ sign:=TGPGSignWrapper.Create;
+ sign.FileName:=oldbase;
+ Result:=true;
+ if not sign.Signfile(ExtractFilePath(oldbase)+'/signature.asc') then
+ begin
+   Result:=false;
+   sign.Free;
+   exit;
+ end;
+ sign.Free;
+
+ pkrandom:='-'+RandomID+RandomID+RandomID;
+ basename:=tmpdir+'/'+ExtractFileName(OutFileName)+pkrandom+'.tar';
+ mntar:=TTarWriter.Create(basename);
+ mntar.AddFile(oldbase,'content.tar');
+ mntar.AddFile(ExtractFilePath(oldbase)+'/signature.asc','signature.asc');
+ mntar.Finalize;
+ mntar.Free;
+
+ DeleteFile(ExtractFilePath(oldbase)+'/signature.asc');
+ DeleteFile(oldbase);
 end;
 
 function TLiPackager.ProduceIPKPackage: Boolean;

@@ -19,9 +19,9 @@ program libuild;
 {$mode objfpc}{$H+}
 
 uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
+  {$IFDEF UNIX}
   cthreads,
-  {$ENDIF}{$ENDIF}
+  {$ENDIF}
   Interfaces, //We need an widgetset (NoGUI) for graphic handling
   Classes, SysUtils, CustApp,
   liBasic, Process, ipkbuild,
@@ -95,7 +95,7 @@ begin
 
  while paramstr(i)<>'' do
  begin
-   if paramstr(i)[1]='/' then
+   if paramstr(i)[1]<>'-' then
     if a = '' then a := paramstr(i)
     else b:=paramstr(i);
     Inc(i);
@@ -140,6 +140,7 @@ begin
   end;
 
   if HasOption('generate-button') then x:=true else x:=false;
+
    if (FileExists(a))
    then
    begin
@@ -149,7 +150,7 @@ begin
    and (LowerCase(ExtractFileExt(b))='.ipk')
    and (DirectoryExists(ExtractFilePath(b))) then
    begin
-   BuildPackage(a,b,x);
+   BuildPackage(a,b,x,HasOption('sign'));
    end else
    begin
    writeln('Can''t build file.');

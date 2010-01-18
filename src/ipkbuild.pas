@@ -46,8 +46,9 @@ procedure BuildApplication(pk: TPackInfo);
 {** Builds an IPK package from an IPS source
     @param fi IPS source
     @param o Output filename
-    @param genbutton Generate distro info button}
-procedure BuildPackage(fi: String;o:String;genbutton:Boolean=false);
+    @param genbutton Generate distro info button
+    @param signpkg Create signed package}
+procedure BuildPackage(fi: String;o:String;genbutton:Boolean=false;signpkg: Boolean=false);
 {** Creates the "Linux distribution compatible" button.
     @param dlist Names of the distributions that are compatible
     @param of Name of the output PNG file}
@@ -522,8 +523,15 @@ control.SaveToFile(WDir+'arcinfo.pin');
 ipkpkg.AddFile('.',WDir+'arcinfo.pin');
 
 ipkpkg.Finalize; //Freeze the IPK package state
-
 files.Free;
+
+if signpkg then
+begin
+ writeLn('Now signing package.');
+ writeLn('Calling GnuPG sign...');
+ if not ipkpkg.SignPackage then
+  writeLn('E: Signing of package FAILED!');
+end else writeLn('I: Package is not signed.');
 
 i:=random(9999)+1000;
 
