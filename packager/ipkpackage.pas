@@ -16,13 +16,14 @@
 //** Contains class to package signed and unsigned IPK package source files
 unit ipkpackage;
 
-{$mode objfpc}{$H+}
+//{$mode objfpc}{$H+}
+{$mode Delphi}
 
 interface
 
 uses
   Classes, SysUtils, LibTar, liBasic,
-  ULZMAEncoder, ULZMADecoder, UBufferedFS, ULZMACommon;
+  ULZMAEncoder, ULZMADecoder, UBufferedFS, ULZMACommon, Dialogs;
 
 type
  //** Creates IPK packages from preprocessed source files
@@ -189,43 +190,53 @@ begin
  inherited;
 end;
 
+
 procedure TLiUnpacker.Decompress;
-var inStream:TBufferedFS;
-    outStream:TBufferedFS;
+var inStream:TFileStream;
+    outStream:TFileStream;
     decoder: TLZMADecoder;
     properties:array[0..4] of byte;
-    outSize:int64;
+    filesize,outSize:Int64;
     i: Integer;
     v: byte;
 const propertiessize=5;
 begin
  if not FileExists(ipkfile) then Exception.Create('IPK file does not exists!');
 
- inStream:=TBufferedFS.Create(ipkfile,fmOpenRead or fmsharedenynone);
- outStream:=TBufferedFS.Create(workdir+'ipktar.tar',fmcreate);
+ try
+  inStream:=TFileStream.Create(ipkfile, fmOpenRead or fmShareDenyNone);
+ try
+  outStream:=TFileStream.Create(workdir+'ipktar.tar', fmCreate);
 
- if inStream.read(properties, propertiesSize) <> propertiesSize then
-  raise Exception.Create('IPK input .lzma file is too short');
- decoder := TLZMADecoder.Create;
- if not decoder.SetDecoderProperties(properties) then
-  raise Exception.Create('Incorrect stream properties');
+  decoder:=TLZMADecoder.Create;
+  inStream.position:=0;
+    with decoder do
+    begin
+      if inStream.read(properties, propertiesSize) <> propertiesSize then
+       raise Exception.Create('input .lzma file is too short');
+      if not SetDecoderProperties(properties) then
+       raise Exception.Create('Incorrect stream properties');
 
-  outSize := 0;
- for i:=0 to 7 do
- begin
-  v := (ReadByte(inStream));
-  if v < 0 then
-   raise Exception.Create('Can''t read stream size');
+      outSize := 0;
+      for i := 0 to 7 do
+      begin
+       v := {shortint}(ReadByte(inStream));
+       if v < 0 then
+        raise Exception.Create('Can''t read stream size');
+       outSize := outSize or v shl (8 * i);
+      end;
+      if not Code(inStream, outStream, outSize) then
+       raise Exception.Create('Error in data stream');
+     end;
+     decoder.Free;
 
-  outSize := outSize or v shl (8 * i);
+ finally
+  outStream.Free;
+ end;
+ finally
+  inStream.Free;
  end;
 
- if not decoder.Code(inStream, outStream, outSize) then
-  raise Exception.Create('Error in data stream');
-
- decoder.Free;
- outStream.Free;
- inStream.Free;
 end;
 
 { TLiUpdateBit }

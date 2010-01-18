@@ -378,11 +378,13 @@ while (outSize < 0) or (nowPos64 < outSize) do begin
                                end;
                        end else rep0 := posSlot;
                     end;
-      if (rep0 >= nowPos64) or (rep0 >= m_DictionarySizeCheck) then begin
+      if (rep0 >= nowPos64) or (rep0 >= m_DictionarySizeCheck) then
+      begin
          m_OutWindow.Flush();
          result:=false;
          exit;
-         end;
+      end;
+
       m_OutWindow.CopyBlock(rep0, len);
       nowPos64 := nowPos64 + len;
       prevByte := m_OutWindow.GetByte(0);
