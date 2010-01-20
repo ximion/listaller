@@ -48,12 +48,14 @@ var m,symbol,bitindex,bit:integer;
 begin
 m:=1;
 symbol:=0;
-for bitindex:=0 to numbitlevels-1 do begin
-    bit:=rangeDecoder.DecodeBit(Models, m);
-    m:=(m shl 1) + bit;
-    symbol:=symbol or (bit shl bitIndex);
-    end;
-result:=symbol;
+for bitIndex:=0 to NumBitLevels-1 do
+begin
+ bit:=rangeDecoder.DecodeBit(Models, m);
+ m:=m shl 1;
+ m+=bit;
+ symbol:=symbol or (bit shl bitIndex);
+end;
+Result:=symbol;
 end;
 
 function ReverseDecode(var Models: array of smallint;const startIndex:integer;

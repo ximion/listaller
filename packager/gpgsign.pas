@@ -50,6 +50,9 @@ type
    property OnStatus: TLiStatusChangeCall read FStatusEvent write FStatusEvent;
   end;
 
+  //** Check if GPG was found
+  function GPGFound: Boolean;
+
 implementation
 
 { TGPGSignWrapper }
@@ -121,6 +124,14 @@ begin
  CBProcess.CommandLine:=gpg+'--verify "'+ascFile+'" "'+FFileName+'"';
  CBProcess.Execute;
  Result:= CBProcess.ExitCode = 0;
+end;
+
+function GPGFound: Boolean;
+begin
+  if FileUtil.FindDefaultExecutablePath('gpg2') = '' then
+   Result:=false
+  else
+   Result:=true;
 end;
 
 end.

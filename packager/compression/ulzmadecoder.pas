@@ -311,13 +311,15 @@ nowPos64 := 0;
 prevByte := 0;
 progint:=outsize div CodeProgressInterval;
 lpos:=progint;
-while (outSize < 0) or (nowPos64 < outSize) do begin
+while (outSize < 0) or (nowPos64 < outSize) do
+begin
       if (nowPos64 >=lpos) then begin
          DoProgress(LPAPos,nowPos64);
          lpos:=lpos+progint;
          end;
       posState := nowPos64 and m_PosStateMask;
-      if (m_RangeDecoder.DecodeBit(m_IsMatchDecoders, (state shl ULZMABase.kNumPosStatesBitsMax) + posState) = 0) then begin
+      if (m_RangeDecoder.DecodeBit(m_IsMatchDecoders, (state shl ULZMABase.kNumPosStatesBitsMax) + posState) = 0) then
+      begin
          decoder2 := m_LiteralDecoder.GetDecoder(nowPos64, prevByte);
          if not ULZMABase.StateIsCharState(state) then
             prevByte := decoder2.DecodeWithMatchByte(m_RangeDecoder, m_OutWindow.GetByte(rep0))
@@ -325,26 +327,31 @@ while (outSize < 0) or (nowPos64 < outSize) do begin
          m_OutWindow.PutByte(prevByte);
          state := ULZMABase.StateUpdateChar(state);
          inc(nowPos64);
-         end else begin
+         end else
+         begin
              if (m_RangeDecoder.DecodeBit(m_IsRepDecoders, state) = 1) then begin
                 len := 0;
                 if (m_RangeDecoder.DecodeBit(m_IsRepG0Decoders, state) = 0) then begin
-                   if (m_RangeDecoder.DecodeBit(m_IsRep0LongDecoders, (state shl ULZMABase.kNumPosStatesBitsMax) + posState) = 0) then begin
+                   if (m_RangeDecoder.DecodeBit(m_IsRep0LongDecoders, (state shl ULZMABase.kNumPosStatesBitsMax) + posState) = 0) then
+                   begin
                       state := ULZMABase.StateUpdateShortRep(state);
                       len := 1;
-                      end;
-                   end else begin
+                   end;
+                   end else
+                   begin
                        if m_RangeDecoder.DecodeBit(m_IsRepG1Decoders, state) = 0 then
                           distance := rep1
-                       else begin
+                       else
+                       begin
                             if (m_RangeDecoder.DecodeBit(m_IsRepG2Decoders, state) = 0) then
                                distance := rep2
-                            else begin
+                            else
+                            begin
                                  distance := rep3;
                                  rep3 := rep2;
-                                 end;
-                            rep2 := rep1;
                             end;
+                            rep2 := rep1;
+                       end;
                        rep1 := rep0;
                        rep0 := distance;
                        end;
@@ -365,17 +372,19 @@ while (outSize < 0) or (nowPos64 < outSize) do begin
                        if posSlot < ULZMABase.kEndPosModelIndex then
                           rep0 := rep0 + UBitTreeDecoder.ReverseDecode(m_PosDecoders,
                                    rep0 - posSlot - 1, m_RangeDecoder, numDirectBits)
-                          else begin
+                          else
+                          begin
                                rep0 := rep0 + (m_RangeDecoder.DecodeDirectBits(
                                         numDirectBits - ULZMABase.kNumAlignBits) shl ULZMABase.kNumAlignBits);
                                rep0 := rep0 + m_PosAlignDecoder.ReverseDecode(m_RangeDecoder);
-                               if rep0 < 0 then begin
+                               if rep0 < 0 then
+                               begin
                                   if rep0 = -1 then
                                      break;
                                   result:=false;
                                   exit;
-                                  end;
                                end;
+                          end;
                        end else rep0 := posSlot;
                     end;
       if (rep0 >= nowPos64) or (rep0 >= m_DictionarySizeCheck) then
@@ -384,7 +393,6 @@ while (outSize < 0) or (nowPos64 < outSize) do begin
          result:=false;
          exit;
       end;
-
       m_OutWindow.CopyBlock(rep0, len);
       nowPos64 := nowPos64 + len;
       prevByte := m_OutWindow.GetByte(0);

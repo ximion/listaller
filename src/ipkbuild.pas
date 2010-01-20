@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, IPKPackage, MD5, LiCommon, Process,
-  OPBitmapFormats, ipkdef, litypes;
+  OPBitmapFormats, IPKDef, liTypes, GPGSign;
 
 type
 
@@ -237,7 +237,7 @@ end;
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////Function to build IPK-Packages///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-procedure BuildPackage(fi: String;o:String;genbutton:Boolean=false);
+procedure BuildPackage(fi: String;o:String;genbutton:Boolean=false;signpkg:Boolean=false);
 var i,j,id: Integer;fc: TStringList;lh,h,s: String;pkgtype: TPkgType;sl,files,fsec,script: TStringList;
   dlist: TStringList;aname: String;
   control: TIPKScript;
@@ -528,9 +528,13 @@ files.Free;
 if signpkg then
 begin
  writeLn('Now signing package.');
- writeLn('Calling GnuPG sign...');
- if not ipkpkg.SignPackage then
-  writeLn('E: Signing of package FAILED!');
+ if GPGFound then
+ begin
+  writeLn('Calling GnuPG sign...');
+  if not ipkpkg.SignPackage then
+   writeLn('E: Signing of package FAILED!');
+ end else
+  writeLn('E: GPG was not found! Cannot sign package.');
 end else writeLn('I: Package is not signed.');
 
 i:=random(9999)+1000;

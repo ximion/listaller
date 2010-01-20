@@ -51,17 +51,19 @@ end;
 function TRangeDecoder.DecodeDirectBits(const numTotalBits:integer):integer;
 var i,t:integer;
 begin
-result:=0;
-for i := numTotalBits downto 1 do begin
-    range:=range shr 1;
-    t := ((Code - Range) shr 31);
-    Code := Code - Range and (t - 1);
-    result := (result shl 1) or (1 - t);
-    if ((Range and kTopMask) = 0) then begin
-       Code := (Code shl 8) or ReadByte(stream);
-       Range := Range shl 8;
-       end;
-    end;
+Result:=0;
+for i:=numTotalBits downto 1 do
+begin
+ range:=range shr 1;
+ t := ((Code - Range) shr 31);
+ Code := Code - Range and (t - 1);
+ Result := (result shl 1) or (1 - t);
+ if ((Range and kTopMask) = 0) then
+ begin
+  Code := (Code shl 8) or Stream.ReadByte();
+  Range := Range shl 8;
+ end;
+end;
 end;
 
 function TRangeDecoder.DecodeBit(var probs: array of smallint;const index:integer):integer;

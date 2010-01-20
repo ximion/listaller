@@ -243,7 +243,7 @@ begin
       outSize := 0;
       for i := 0 to 7 do
       begin
-       v := {shortint}(ReadByte(inStream));
+       v := inStream.ReadByte;
        if v < 0 then
         raise Exception.Create('Can''t read stream size');
        outSize := outSize or v shl (8 * i);

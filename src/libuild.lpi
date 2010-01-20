@@ -7,7 +7,7 @@
       <TargetFileExt Value=""/>
       <Icon Value="0"/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <ProjectVersion Value=""/>
@@ -24,13 +24,13 @@
         <LaunchingApplication Use="True" PathPlusParams="/usr/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="17">
+    <Units Count="21">
       <Unit0>
         <Filename Value="libuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
-        <CursorPos X="14" Y="153"/>
-        <TopLine Value="135"/>
+        <CursorPos X="27" Y="27"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="26"/>
         <Loaded Value="True"/>
@@ -45,9 +45,11 @@
       <Unit2>
         <Filename Value="ipkbuild.pas"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="48" Y="525"/>
-        <TopLine Value="507"/>
+        <CursorPos X="44" Y="25"/>
+        <TopLine Value="1"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="11"/>
+        <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="abbrevia/abzipprc.pas"/>
@@ -110,9 +112,11 @@
         <Filename Value="../packager/ipkpackage.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="14" Y="137"/>
-        <TopLine Value="115"/>
+        <CursorPos X="16" Y="251"/>
+        <TopLine Value="217"/>
+        <EditorIndex Value="2"/>
         <UsageCount Value="22"/>
+        <Loaded Value="True"/>
       </Unit11>
       <Unit12>
         <Filename Value="../packager/libtar.pas"/>
@@ -144,20 +148,84 @@
       <Unit16>
         <Filename Value="../packager/gpgsign.pas"/>
         <UnitName Value="gpgsign"/>
-        <CursorPos X="13" Y="44"/>
-        <TopLine Value="23"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="37"/>
         <UsageCount Value="10"/>
       </Unit16>
+      <Unit17>
+        <Filename Value="../opbitmap/opbitmapformats.pas"/>
+        <UnitName Value="opbitmapformats"/>
+        <CursorPos X="3" Y="99"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.2.4/rtl/unix/baseunix.pp"/>
+        <UnitName Value="BaseUnix"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="51"/>
+        <UsageCount Value="10"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="../packager/compression/ulzmadecoder.pas"/>
+        <UnitName Value="ULZMADecoder"/>
+        <CursorPos X="12" Y="316"/>
+        <TopLine Value="294"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="../packager/compression/ubittreedecoder.pas"/>
+        <UnitName Value="UBitTreeDecoder"/>
+        <CursorPos X="13" Y="28"/>
+        <TopLine Value="25"/>
+        <EditorIndex Value="4"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit20>
     </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
+    <JumpHistory Count="10" HistoryIndex="9">
       <Position1>
         <Filename Value="libuild.lpr"/>
         <Caret Line="27" Column="25" TopLine="3"/>
       </Position1>
       <Position2>
         <Filename Value="libuild.lpr"/>
-        <Caret Line="153" Column="14" TopLine="135"/>
+        <Caret Line="153" Column="12" TopLine="135"/>
       </Position2>
+      <Position3>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="27" Column="27" TopLine="1"/>
+      </Position3>
+      <Position4>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="24" Column="37" TopLine="1"/>
+      </Position4>
+      <Position5>
+        <Filename Value="../packager/ipkpackage.pas"/>
+        <Caret Line="251" Column="16" TopLine="217"/>
+      </Position5>
+      <Position6>
+        <Filename Value="../packager/compression/ulzmadecoder.pas"/>
+        <Caret Line="49" Column="23" TopLine="28"/>
+      </Position6>
+      <Position7>
+        <Filename Value="../packager/compression/ulzmadecoder.pas"/>
+        <Caret Line="366" Column="64" TopLine="354"/>
+      </Position7>
+      <Position8>
+        <Filename Value="../packager/compression/ubittreedecoder.pas"/>
+        <Caret Line="21" Column="23" TopLine="1"/>
+      </Position8>
+      <Position9>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="24" Column="37" TopLine="1"/>
+      </Position9>
+      <Position10>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="240" Column="76" TopLine="219"/>
+      </Position10>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

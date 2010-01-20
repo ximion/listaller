@@ -143,8 +143,9 @@ UnButton:=TBitBtn.Create(nil);
 UnButton.Parent:=self;
 with UnButton do
 begin
-Height:=24;
-Width:=120;
+Constraints.MinHeight:=24;
+Constraints.MinWidth:=120;
+UnButton.AutoSize:=true;
 Caption:=rsUninstall;
 Anchors:=[akBottom,akRight];
 Top:=self.Height-40;

@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
-  Inifiles, StdCtrls, Process, LCLType, Buttons, ExtCtrls, Distri, LEntries,
+  Inifiles, StdCtrls, Process, LCLType, Buttons, ExtCtrls, Distri, AppList,
   Uninstall, trStrings, FileUtil, CheckLst, xTypeFm, AppMan, LiBasic, liTypes,
   Contnrs, AboutBox, PackageKit, Spin, iconLoader, LiCommon;
 
@@ -114,7 +114,7 @@ type
     { public declarations }
     DInfo: TDistroInfo;
     //** Visual package list
-    AList: TObjectList;
+    appList: TAppListView;
     //** Information about the application that should be uninstalled
     uApp: TAppInfo;
     //** Pointer to our AppManager object
@@ -147,21 +147,19 @@ uses pkgconvertdisp, swcatalog;
 procedure TMnFrm.UninstallClick(Sender: TObject);
 begin
 //Set the AppInfo of the to-be-removed app
-uApp:=TListEntry((Sender as TBitBtn).Parent).appInfo;
+ //uApp:=TListEntry((Sender as TBitBtn).Parent).appInfo;
 //Start removing by showing the uninstall form
 RMForm.ShowModal;
 end;
 
 function OnNewAppFound(name: PChar;obj: PAppInfo): Boolean;cdecl;
-var entry: TListEntry;
 begin
 Result:=true;
 with MnFrm do begin
- entry:=TListEntry.Create(MnFrm);
- entry.Parent:=SWBox;
- entry.UnButton.OnClick:=@UninstallClick;
- entry.LoadFromAppInfo(TAppInfo(obj^));
- AList.Add(entry);
+ //entry.UnButton.OnClick:=@UninstallClick;
+ //entry.LoadFromAppInfo(TAppInfo(obj^));
+ //AList.Add(entry);
+ appList.ItemFromAppInfo(TAppInfo(obj^));
 end;
 Application.ProcessMessages;
 end;
@@ -270,8 +268,8 @@ end;
 
 procedure TMnFrm.ReloadAppList;
 begin
- if Assigned(AList) then AList.Free;
- AList:=TObjectList.Create;
+ if Assigned(appList) then appList.Free;
+ appList:=TAppListView.Create(self);
  li_mgr_load_apps(@MnFrm.amgr);
 end;
 
@@ -554,10 +552,10 @@ begin
   MBar.Visible:=true;
   StatusLabel.Caption:=rsFiltering;
 
-  if gt=gtALL then
+ { if gt=gtALL then
   begin
-  for i:=0 to AList.Count-1 do
-   TListEntry(AList[i]).Visible:=true;
+  for i:=0 to appList.Count-1 do
+   appList[i].Visible:=true;
   end else
   for i:=0 to AList.Count-1 do
   begin
@@ -565,7 +563,7 @@ begin
    Application.ProcessMessages;
    if TListEntry(AList[i]).appInfo.Group<>gt then
       TListEntry(AList[i]).Visible:=false;
-  end;
+  end;  }
 
   StatusLabel.Caption:=rsReady;
   SWBox.Enabled:=true;
@@ -699,7 +697,7 @@ begin
      CBox.Enabled:=false;
      Application.ProcessMessages;
 
-     if ((FilterEdt.Text=' ') or (FilterEdt.Text='*')or (FilterEdt.Text='')) then
+    { if ((FilterEdt.Text=' ') or (FilterEdt.Text='*')or (FilterEdt.Text='')) then
      begin
      for i:=0 to AList.Count-1 do
      TListEntry(AList[i]).Visible:=true;
@@ -716,7 +714,7 @@ begin
          and (LowerCase(FilterEdt.Text)<>LowerCase(TListEntry(AList[i]).AppName)) then
          TListEntry(AList[i]).Visible:=false;
          end;
-       end;
+       end; }
 StatusLabel.Caption:=rsReady;
 FilterEdt.Enabled:=true;
 SWBox.Enabled:=true;
@@ -737,7 +735,6 @@ end;
 procedure TMnFrm.FormCreate(Sender: TObject);
 var xFrm: TimdFrm;i: Integer;tmp: TStringList;
 begin
-
 SWBox.DoubleBuffered:=true;
 DoubleBuffered:=true;
 DInfo:=GetDistro;
@@ -747,8 +744,6 @@ amgr:=li_mgr_new; //Create new app manager
  if not DirectoryExists(RegDir) then SysUtils.CreateDir(RegDir);
   
  uApp.UId:='';
-
- AList:=TObjectList.Create(true); //Create object-list to store AppInfo-Panels
 
  Superuser:=IsRoot;
  if not IsRoot then
@@ -790,6 +785,16 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
   UListBox.items.Add(copy(tmp[i],pos(' <',tmp[i])+2,length(tmp[i])-pos(' <',tmp[i])-2)+' ('+copy(tmp[i],3,pos(' <',tmp[i])-3)+')');
   UListBox.Checked[UListBox.Items.Count-1]:=tmp[i][1]='-';
   end;
+
+ appList:=TAppListView.Create(self); //New application list
+ appList.Parent:=InstalledAppsPage;
+ SWBox.Visible:=false;
+ appList.Width:=SWBox.Width;
+ appList.Height:=SWBox.Height;
+ appList.Top:=SWBox.Top;
+ appList.Left:=SWBox.Left;
+ appList.Align:=alBottom;
+ appList.Anchors:=[akTop];
 
  //Translate
  Caption:=rsSoftwareManager;
@@ -891,7 +896,7 @@ begin
   li_mgr_free(@aMgr); //Free appmanager
   if Assigned(blst) then blst.Free;       //Free blacklist
   if Assigned(InstLst) then InstLst.Free; //Free list of installed apps
-  if Assigned(AList) then AList.Free;     //Free AppPanel store
+  if Assigned(appList) then appList.Free; //Free Application List
 end;
 
 initialization
