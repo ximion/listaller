@@ -5,7 +5,7 @@ object MnFrm: TMnFrm
   Width = 816
   ActiveControl = FilterEdt
   Caption = 'Software Manager'
-  ClientHeight = 558
+  ClientHeight = 554
   ClientWidth = 816
   Color = clBackground
   Icon.Data = {
@@ -313,6 +313,7 @@ object MnFrm: TMnFrm
     0000000000000000000000000000000000000000000000000000000000000000
     0000
   }
+  Menu = MainMenu1
   OnActivate = FormActivate
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -329,7 +330,7 @@ object MnFrm: TMnFrm
   object StatusLabel: TLabel
     Left = 112
     Height = 13
-    Top = 545
+    Top = 541
     Width = 48
     Anchors = [akLeft, akBottom]
     Caption = 'Loading...'
@@ -337,12 +338,12 @@ object MnFrm: TMnFrm
   end
   object LeftBar: TPanel
     Left = 0
-    Height = 510
+    Height = 506
     Top = 48
     Width = 104
     Align = alLeft
     BevelOuter = bvNone
-    ClientHeight = 510
+    ClientHeight = 506
     ClientWidth = 104
     TabOrder = 0
     object InstallButton: TSpeedButton
@@ -1885,7 +1886,7 @@ object MnFrm: TMnFrm
   end
   object Notebook1: TNotebook
     Left = 112
-    Height = 480
+    Height = 476
     Top = 56
     Width = 696
     Anchors = [akTop, akLeft, akRight, akBottom]
@@ -1895,7 +1896,7 @@ object MnFrm: TMnFrm
     object InstalledAppsPage: TPage
       Caption = 'InstalledAppsPage'
       ClientWidth = 692
-      ClientHeight = 476
+      ClientHeight = 472
       object Label1: TLabel
         Left = 6
         Height = 13
@@ -1906,13 +1907,13 @@ object MnFrm: TMnFrm
       end
       object SWBox: TScrollBox
         Left = 0
-        Height = 438
+        Height = 434
         Top = 38
         Width = 692
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderStyle = bsNone
-        ClientHeight = 438
+        ClientHeight = 434
         ClientWidth = 692
         Color = clForm
         ParentColor = False
@@ -2280,7 +2281,7 @@ object MnFrm: TMnFrm
   object MBar: TProgressBar
     Left = 680
     Height = 6
-    Top = 544
+    Top = 540
     Width = 128
     Anchors = [akRight, akBottom]
     Smooth = True
@@ -2296,6 +2297,10 @@ object MnFrm: TMnFrm
   end
   object ImageList1: TImageList
     left = 736
+    top = 8
+  end
+  object MainMenu1: TMainMenu
+    left = 696
     top = 8
   end
 end

@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, Process, LCLType, Buttons, ExtCtrls, Distri, AppList,
   Uninstall, trStrings, FileUtil, CheckLst, xTypeFm, AppMan, LiBasic, liTypes,
-  Contnrs, AboutBox, PackageKit, Spin, iconLoader, LiCommon;
+  Contnrs, AboutBox, PackageKit, Spin, Menus, iconLoader, LiCommon, AppItem;
 
 type
 
@@ -37,6 +37,7 @@ type
     BitBtn5: TBitBtn;
     BitBtn6: TBitBtn;
     Button1: TButton;
+    MainMenu1: TMainMenu;
     MBar: TProgressBar;
     StatusLabel: TLabel;
     RmUpdSrcBtn: TBitBtn;
@@ -109,7 +110,8 @@ type
   private
     { private declarations }
     blst: TStringList;
-    procedure UninstallClick(Sender: TObject);
+    procedure UninstallClick(Sender: TObject; Index: Integer;
+  item: TAppInfoItem);
   public
     { public declarations }
     DInfo: TDistroInfo;
@@ -142,12 +144,19 @@ implementation
 
 uses pkgconvertdisp, swcatalog;
 
-{ TListEntry }
+{ TMainForm }
 
-procedure TMnFrm.UninstallClick(Sender: TObject);
+procedure TMnFrm.UninstallClick(Sender: TObject; Index: Integer;
+  item: TAppInfoItem);
 begin
-//Set the AppInfo of the to-be-removed app
- //uApp:=TListEntry((Sender as TBitBtn).Parent).appInfo;
+ //Set the AppInfo of the to-be-removed app
+ with uApp do
+ begin
+  UId:=PChar(item.UId);
+  Name:=PChar(item.Name);
+  Version:=PChar(item.Version);
+  Author:=PChar(item.Author);
+ end;
 //Start removing by showing the uninstall form
 RMForm.ShowModal;
 end;
@@ -155,10 +164,8 @@ end;
 function OnNewAppFound(name: PChar;obj: PAppInfo): Boolean;cdecl;
 begin
 Result:=true;
-with MnFrm do begin
- //entry.UnButton.OnClick:=@UninstallClick;
- //entry.LoadFromAppInfo(TAppInfo(obj^));
- //AList.Add(entry);
+with MnFrm do
+begin
  appList.ItemFromAppInfo(TAppInfo(obj^));
 end;
 Application.ProcessMessages;
@@ -795,6 +802,7 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
  appList.Left:=SWBox.Left;
  appList.Align:=alBottom;
  appList.Anchors:=[akTop];
+ appList.OnRmButtonClick:=@UninstallClick;
 
  //Translate
  Caption:=rsSoftwareManager;
