@@ -81,7 +81,7 @@ type TLZMALenDecoder = class;
          m_PosMask:integer;
          procedure _Create(const numPosBits, numPrevBits:integer);
          procedure Init;
-         function GetDecoder(const pos:integer;const prevByte:byte):TLZMADecoder2;
+         function GetDecoder(const pos:int64;const prevByte:byte):TLZMADecoder2;
          destructor Destroy;override;
        end;
 
@@ -204,7 +204,7 @@ for i := 0 to numStates -1 do
     m_Coders[i].Init;
 end;
 
-function TLZMALiteralDecoder.GetDecoder(const pos:integer;const prevByte:byte):TLZMADecoder2;
+function TLZMALiteralDecoder.GetDecoder(const pos:int64;const prevByte:byte):TLZMADecoder2;
 begin
 result:=m_Coders[((pos and m_PosMask) shl m_NumPrevBits) + ((prevByte and $FF) shr (8 - m_NumPrevBits))];
 end;
@@ -290,19 +290,19 @@ m_RangeDecoder.Init;
 end;
 
 function TLZMADecoder.Code(const inStream,outStream:TStream;outSize:int64):boolean;
-var state,rep0,rep1,rep2,rep3:integer;
-    nowPos64:int64;
+var state,rep0,rep1,rep2,rep3:Int64;
+    nowPos64:Int64;
     prevByte:byte;
-    posState:integer;
+    posState:int64;
     decoder2:TLZMADecoder2;
-    len,distance,posSlot,numDirectBits:integer;
+    len,distance,posSlot,numDirectBits:Int64;
     lpos:int64;
     progint:int64;
 begin
 DoProgress(LPAMax,outSize);
 m_RangeDecoder.SetStream(inStream);
 m_OutWindow.SetStream(outStream);
-Init;
+self.Init;
 
 state := ULZMABase.StateInit;
 rep0 := 0; rep1 := 0; rep2 := 0; rep3 := 0;

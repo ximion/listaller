@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LibTar, liBasic, ULZMAEncoder, ULZMADecoder,
-  UBufferedFS, ULZMACommon, gpgsign, Dialogs;
+  UBufferedFS, ULZMACommon, gpgsign, CallbackProcess;
 
 type
  //** Creates IPK packages from preprocessed source files
@@ -215,8 +215,8 @@ end;
 
 
 procedure TLiUnpacker.Decompress;
-var inStream:TFileStream;
-    outStream:TFileStream;
+var inStream:TBufferedFS;
+    outStream:TBufferedFS;
     decoder: TLZMADecoder;
     properties:array[0..4] of byte;
     filesize,outSize:Int64;
@@ -227,9 +227,9 @@ begin
  if not FileExists(ipkfile) then Exception.Create('IPK file does not exists!');
 
  try
-  inStream:=TFileStream.Create(ipkfile, fmOpenRead or fmShareDenyNone);
+  inStream:=TBufferedFS.Create(ipkfile, fmOpenRead or fmShareDenyNone);
  try
-  outStream:=TFileStream.Create(workdir+'ipktar.tar', fmCreate);
+  outStream:=TBufferedFS.Create(workdir+'ipktar.tar', fmCreate);
 
   decoder:=TLZMADecoder.Create;
   inStream.position:=0;
@@ -246,7 +246,7 @@ begin
        v := inStream.ReadByte;
        if v < 0 then
         raise Exception.Create('Can''t read stream size');
-       outSize := outSize or v shl (8 * i);
+       outSize := outSize or (v shl ((8 *i) and 31));
       end;
       if not Code(inStream, outStream, outSize) then
        raise Exception.Create('Error in data stream');
@@ -259,8 +259,13 @@ begin
  finally
   inStream.Free;
  end;
-
 end;
+
+{procedure TLiUnpacker.Decompress;
+begin
+ //Cause the built-in decompress does not work, we use xz-utils
+
+end;}
 
 { TLiUpdateBit }
 

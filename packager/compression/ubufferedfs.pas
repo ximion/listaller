@@ -36,9 +36,9 @@ type TByteArray = array of byte;
      
 implementation
 
-function MovePointer(const P:pointer;const dist:integer):pointer;
+function MovePointer(const P:Pointer;const dist:integer):Pointer;
 begin
-result:=pointer(integer(p)+dist);
+result:=Pointer(PtrUInt(p)+dist);
 end;
 
 procedure TBufferedFS.Init;
@@ -119,7 +119,7 @@ if count<=bytesinbuffer then begin
 end;
 
 function TBufferedFS.Write(const Buffer; Count: Longint): Longint;
-var p:pointer;
+var p:Pointer;
     bytestowrite:integer;
     b:integer;
 begin

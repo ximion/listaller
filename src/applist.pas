@@ -26,40 +26,49 @@ uses
   LCLType, Buttons, IconLoader, liBasic, AppItem, liTypes;
 
 type
- TRmButtonClick = procedure(Sender: TObject;Index: Integer;item: TAppInfoItem) of Object;
+ TAListRmButtonClick = procedure(Sender: TObject;Index: Integer;item: TAppInfoItem) of Object;
+ TAListItemSelect = procedure(Sender: TObject;item: TAppInfoItem) of Object;
 
  TAppListView = class(TCustomListBox)
  private
   btn: TBitBtn;
   aList: TAppItemList;
-  procedure AppListViewDrawItem(Control: TWinControl; Index: Integer;
+  procedure AListDrawItem(Control: TWinControl; Index: Integer;
      ARect: TRect; State: TOwnerDrawState);
-  procedure CustomDrawItem(Control: TWinControl; Index: Integer; Rect: TRect;
+  procedure AListCustomDrawItem(Control: TWinControl; Index: Integer; Rect: TRect;
             State: TOwnerDrawState);
-  procedure OnRmBtnClick(Sender: TObject);
+  procedure AListOnRmBtnClick(Sender: TObject);
+  procedure AListSelectionChange(Sender: TObject; User: boolean);
  protected
-  FOnRmClick: TRmButtonClick;
+  FOnRmClick: TAListRmButtonClick;
+  FOnItemSelect: TAListItemSelect;
+  procedure SetVisible(Value: Boolean);override;
  public
-  constructor Create(TheOwner: TComponent); override;
+  constructor Create(TheOwner: TComponent;const ownItems: Boolean=true);
   destructor  Destroy; override;
 
   procedure ItemFromAppInfo(ai: TAppInfo);
-  property OnRmButtonClick: TRmButtonClick read FOnRmClick write FOnRmClick;
+  procedure AddItem(item: TAppInfoItem);
+  procedure ClearList;
+  property OnRmButtonClick: TAListRmButtonClick read FOnRmClick write FOnRmClick;
+  property OnItemSelect: TAListItemSelect read FOnItemSelect write FOnItemSelect;
+  property AppItems: TAppItemList read aList write aList;
  end;
 
 implementation
 
 { TAppListView }
 
-constructor TAppListView.Create(TheOwner: TComponent);
-var pic: TPicture;
+constructor TAppListView.Create(TheOwner: TComponent;const ownItems: Boolean=true);
 begin
- inherited;
+ inherited Create(TheOwner);
+
  Style:=lbOwnerDrawVariable;
  ItemHeight:=48;
- OnDrawItem:=@AppListViewDrawItem;
+ OnSelectionChange:=@AListSelectionChange;
+ OnDrawItem:=@AListDrawItem;
 
- aList:=TAppItemList.Create(true);
+ aList:=TAppItemList.Create(ownItems);
 
  btn:=TBitBtn.Create(self);
  btn.Parent:=self;
@@ -67,7 +76,8 @@ begin
  btn.Width:=40;
  btn.Height:=40;
  btn.Visible:=false;
- btn.OnClick:=@OnRmBtnClick;
+ btn.OnClick:=@AListOnRmBtnClick;
+
  LoadStockPixmap(STOCK_DELETE,ICON_SIZE_BUTTON,btn.Glyph);
 end;
 
@@ -78,13 +88,18 @@ begin
  inherited;
 end;
 
-procedure TAppListView.AppListViewDrawItem(Control: TWinControl;
+procedure TAppListView.AListDrawItem(Control: TWinControl;
   Index: Integer; ARect: TRect; State: TOwnerDrawState);
 begin
-  CustomDrawItem(Control, Index, ARect, State);
+  AListCustomDrawItem(Control, Index, ARect, State);
 end;
 
-procedure TAppListView.CustomDrawItem(Control: TWinControl; Index: Integer; Rect: TRect;
+procedure TAppListView.AListSelectionChange(Sender: TObject; User: boolean);
+begin
+  if Assigned(FOnItemSelect) then FOnItemSelect(self,aList[self.ItemIndex]);
+end;
+
+procedure TAppListView.AListCustomDrawItem(Control: TWinControl; Index: Integer; Rect: TRect;
   State: TOwnerDrawState);
 var
   bmp: TBitmap;
@@ -153,14 +168,18 @@ begin
 
  try
  if FileExists(ai.Icon) then
-   pic.LoadFromFile(ai.Icon)
+   new.IconPath:=ai.Icon
  else
-   pic.LoadFromFile(GetDataFile('graphics/spackage.png'));
+   new.IconPath:=GetDataFile('graphics/spackage.png');
 
+
+   pic.LoadFromFile(new.IconPath);
  except
   writeLn('Error while loading "'+ai.Icon+'"!');
-  pic.LoadFromFile(GetDataFile('graphics/spackage.png'));
+  new.IconPath:=GetDataFile('graphics/spackage.png');
  end;
+
+  pic.LoadFromFile(new.IconPath);
 
   bmp:=TBitmap.Create;
   rect.Top:=0;
@@ -170,6 +189,7 @@ begin
   bmp.Width:=size;
   bmp.height:=size;
   bmp.Canvas.Brush.Color:=clNone;
+  bmp.Transparent:=true;
   bmp.Canvas.FillRect(0,0,size,size);
   bmp.Canvas.StretchDraw(rect,TGraphic(pic.Bitmap));
   pic.Free;
@@ -177,9 +197,28 @@ begin
   bmp.Free;
 end;
 
-procedure TAppListView.OnRmBtnClick(Sender: TObject);
+procedure TAppListView.AListOnRmBtnClick(Sender: TObject);
 begin
  FOnRmClick(Sender,btn.Tag,aList[btn.Tag]);
+end;
+
+procedure TAppListView.SetVisible(Value: Boolean);
+begin
+ inherited;
+ if not Value then
+  btn.Visible:=false;
+end;
+
+procedure TAppListView.AddItem(item: TAppInfoItem);
+begin
+ Items.Add('');
+ aList.Add(item);
+end;
+
+procedure TAppListView.ClearList;
+begin
+ Items.Clear;
+ aList.Clear;
 end;
 
 end.

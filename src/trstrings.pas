@@ -214,7 +214,6 @@ rsAuthors='Authors';
 rsRmSrcQ='Are you really sure that you want to delete this source?';
 rsRmSrcQC='Delete source?';
 rsPkitProbPkMon='Problem while connecting PackageKit. Run "pkmon" to get further information.';
-rsNoAppsFound='No applications found!';
 rsSourceDeleted='Source was removed.';
 rsPleaseSelectListItem='Please select an item from the list!';
 rsLiUpdateAccessFailed='Cannot access the liUpdate tool. Maybe it is not installed?';

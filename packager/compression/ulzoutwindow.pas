@@ -20,7 +20,7 @@ type TLZOutWindow=class
          procedure ReleaseStream;
          procedure Init(const solid:boolean);
          procedure Flush;
-         procedure CopyBlock(const distance:integer; len:integer);
+         procedure CopyBlock(const distance:int64; len:integer);
          procedure PutByte(const b:byte);
          function GetByte(const distance:integer):byte;
        end;
@@ -68,7 +68,7 @@ if (pos >= windowSize) then
 streamPos := pos;
 end;
 
-procedure TLZOutWindow.CopyBlock(const distance:integer;len:integer);
+procedure TLZOutWindow.CopyBlock(const distance:int64;len:integer);
 var pos:integer;
 begin
 pos := self.pos - distance - 1;

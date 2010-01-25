@@ -28,6 +28,7 @@ type
   private
    bmp: TBitmap;
    FName: String;
+   FIconPath: String;
    FSDesc: String;
    FAuthor: String;
    FGroup: TGroupType;
@@ -44,6 +45,7 @@ type
    property Icon: TBitmap read bmp write bmp;
    property Version: String read FVersion write FVersion;
    property UId: String read FUId write FUId;
+   property IconPath: String read FIconPath write FIconPath;
  end;
 
  TAppItemList = class(TObjectList)
@@ -66,7 +68,6 @@ implementation
 
 constructor TAppInfoItem.Create;
 begin
- inherited;
  bmp:=TBitmap.Create;
 end;
 

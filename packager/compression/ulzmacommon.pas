@@ -20,6 +20,7 @@ implementation
 
 function ReadByte(const stream:TStream):byte;
 begin
+Result:=0;
 stream.Read(result,1);
 end;
 

@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, Process, LCLType, Buttons, ExtCtrls, Distri, AppList,
   Uninstall, trStrings, FileUtil, CheckLst, xTypeFm, AppMan, LiBasic, liTypes,
-  Contnrs, AboutBox, PackageKit, Spin, Menus, iconLoader, LiCommon, AppItem;
+  AboutBox, PackageKit, Spin, Menus, iconLoader, LiCommon, AppItem;
 
 type
 
@@ -34,11 +34,21 @@ type
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
     AboutBtn: TButton;
+    AppDescLbl: TLabel;
+    AppVersionLbl: TLabel;
+    UnButton: TBitBtn;
     BitBtn5: TBitBtn;
     BitBtn6: TBitBtn;
     Button1: TButton;
+    AppImage: TImage;
+    AppNameLbl: TLabel;
     MainMenu1: TMainMenu;
     MBar: TProgressBar;
+    MenuItem1: TMenuItem;
+    MItemInstallPkg: TMenuItem;
+    AppInfoPanel: TPanel;
+    SWBox: TPanel;
+    Splitter1: TSplitter;
     StatusLabel: TLabel;
     RmUpdSrcBtn: TBitBtn;
     UpdCheckBtn: TBitBtn;
@@ -59,13 +69,10 @@ type
     edtUsername: TLabeledEdit;
     FilterEdt: TEdit;
     GroupBox1: TGroupBox;
-    Image1: TImage;
     ImageList1: TImageList;
-    InstallButton: TSpeedButton;
     InstAppButton: TSpeedButton;
     Label1: TLabel;
     Label2: TLabel;
-    Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
@@ -80,7 +87,7 @@ type
     ConfigPage: TPage;
     SettingsButton: TSpeedButton;
     RepoButton: TSpeedButton;
-    SWBox: TScrollBox;
+    procedure appListItemSelect(Sender: TObject; item: TAppInfoItem);
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn6Click(Sender: TObject);
     procedure btnInstallClick(Sender: TObject);
@@ -93,8 +100,10 @@ type
     procedure AutoDepLdCbChange(Sender: TObject);
     procedure CbShowPkMonChange(Sender: TObject);
     procedure EnableProxyCbChange(Sender: TObject);
+    procedure MItemInstallPkgClick(Sender: TObject);
     procedure RmUpdSrcBtnClick(Sender: TObject);
     procedure UListBoxClick(Sender: TObject);
+    procedure UnButtonClick(Sender: TObject);
     procedure UpdCheckBtnClick(Sender: TObject);
     procedure WarnDistCbChange(Sender: TObject);
     procedure FilterEdtEnter(Sender: TObject);
@@ -110,13 +119,16 @@ type
   private
     { private declarations }
     blst: TStringList;
+    activeRmItem: TAppInfoItem;
     procedure UninstallClick(Sender: TObject; Index: Integer;
-  item: TAppInfoItem);
+              item: TAppInfoItem);
   public
     { public declarations }
     DInfo: TDistroInfo;
-    //** Visual package list
+    //** Visual application list
     appList: TAppListView;
+    //** Visual applist for search results
+    appResList: TAppListView;
     //** Information about the application that should be uninstalled
     uApp: TAppInfo;
     //** Pointer to our AppManager object
@@ -281,117 +293,26 @@ begin
 end;
 
 procedure TMnFrm.btnInstallClick(Sender: TObject);
-var p: TProcess;pkit: TPackageKit;
 begin
-  if OpenDialog1.Execute then
-  if FileExists(OpenDialog1.Filename) then
-  begin
-  if (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.ipk')
-  or (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.zip') then
-  begin
-  p:=TProcess.Create(nil);
-  p.Options:=[];
-  p.CommandLine := ExtractFilePath(Application.ExeName)+'listallgo '+OpenDialog1.Filename;
-  p.Execute;
-  MnFrm.Hide;
-  while p.Running do Application.ProcessMessages;
-  p.Free;
-  MnFrm.Show;
-  end else
-  begin
-  if (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.deb') then
-  if DInfo.PackageSystem='DEB' then
-  begin
-  //Open DEB-File
-   p:=TProcess.Create(nil);
-   p.Options:=[poWaitOnExit,poNewConsole];
-   Application.ProcessMessages;
-   p.CommandLine:='xdg-open '+''''+OpenDialog1.FileName+'''';
-   p.Execute;
-   p.Free;
-   exit;
-  end else
-   if Application.MessageBox(PAnsiChar(StringReplace(StringReplace(rsConvertPkg,'%x','DEB',[rfReplaceAll]),'%y','RPM',[rfReplaceAll])),
-                              PAnsiChar(rsConvertPkgQ),MB_YESNO)=IDYES then
-   begin
-   with ConvDisp do
-   begin
-   if not FileExists('/usr/bin/alien') then
-    if Application.MessageBox(PChar(rsListallerAlien),PChar(rsInstPkgQ),MB_YESNO)=IDYES then
-    begin
-      ShowMessage(rsplWait);
-      pkit:=TPackageKit.Create;
-      pkit.InstallPkg('alien');
-      while not pkit.PkFinished do Application.ProcessMessages;
-
-      if pkit.PkFinishCode>0 then
-      begin
-       ShowMessage(StringReplace(rsPkgInstFail,'%p','alien',[rfreplaceAll]));
-       pkit.Free;
-       exit;
-       end;
-      pkit.Free;
-     end else exit;
-   Application.ProcessMessages;
-   Caption:=StringReplace(rsConvTitle,'%p','DEB',[rfReplaceAll]);
-   Process1.CommandLine:='alien --to-rpm -v -i --scripts '+''''+OpenDialog1.FileName+'''';
-   GetOutPutTimer.Enabled:=true;
-   Process1.Execute;
-   ShowModal;
-   end;
-   exit;
-   end;
-  if (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.rpm') then
-  if DInfo.PackageSystem='RPM' then
-  begin
-   //Open RPM-File
-   p:=TProcess.Create(nil);
-   p.Options:=[poWaitOnExit,poNewConsole];
-   Application.ProcessMessages;
-   p.CommandLine:='xdg-open '+''''+OpenDialog1.FileName+'''';
-   p.Execute;
-   p.Free;
-   exit;
-  end else
-   if Application.MessageBox(PAnsiChar(StringReplace(StringReplace(rsConvertPkg,'%x','RPM',[rfReplaceAll]),'%y','DEB',[rfReplaceAll])),
-                              PAnsiChar(rsConvertPkgQ),MB_YESNO)=IDYES then
-   begin
-   with ConvDisp do
-   begin
-
-   if not FileExists('/usr/bin/alien') then
-    if Application.MessageBox(PChar(rsListallerAlien),PChar(rsInstPkgQ),MB_YESNO)=IDYES then
-    begin
-      ShowMessage(rsplWait);
-      pkit.InstallPkg('alien');
-      while not pkit.PkFinished do Application.ProcessMessages;
-
-      if pkit.PkFinishCode>0 then
-      begin
-       ShowMessage(StringReplace(rsPkgInstFail,'%p','alien',[rfreplaceAll]));
-       pkit.Free;
-       exit;
-       end;
-      pkit.Free;
-     end else exit;
-
-   Application.ProcessMessages;
-   Caption:=StringReplace(rsConvTitle,'%p','RPM',[rfReplaceAll]);
-   Process1.CommandLine:='alien --to-deb -v -i --scripts '+''''+OpenDialog1.FileName+'''';
-   GetOutPutTimer.Enabled:=true;
-   Process1.Execute;
-   ShowModal;
-   end;
-   exit;
-   end;
-   
-   end;
-  end;
 end;
 
 procedure TMnFrm.BitBtn1Click(Sender: TObject);
 begin
   SCForm.ShowModal;
+end;
+
+procedure TMnFrm.appListItemSelect(Sender: TObject; item: TAppInfoItem);
+begin
+ if FileExists(item.IconPath) then
+  AppImage.Picture.LoadFromFile(item.IconPath);
+ AppNameLbl.Caption:=item.Name;
+ AppDescLbl.Caption:=item.SDesc;
+ if item.Version<>'' then
+  AppVersionLbl.Caption:='Version: '+item.Version
+ else
+  AppVersionLbl.Caption:='Version: unknown';
+ AppInfoPanel.Visible:=true;
+ activeRmItem:=item;
 end;
 
 procedure TMnFrm.BitBtn6Click(Sender: TObject);
@@ -559,18 +480,23 @@ begin
   MBar.Visible:=true;
   StatusLabel.Caption:=rsFiltering;
 
- { if gt=gtALL then
+  if gt=gtALL then
+  begin
+   appList.Visible:=true;
+   appResList.ClearList;
+   appResList.Visible:=false;
+   AppInfoPanel.Visible:=false;
+  end else
   begin
   for i:=0 to appList.Count-1 do
-   appList[i].Visible:=true;
-  end else
-  for i:=0 to AList.Count-1 do
   begin
-   TListEntry(AList[i]).Visible:=true;
    Application.ProcessMessages;
-   if TListEntry(AList[i]).appInfo.Group<>gt then
-      TListEntry(AList[i]).Visible:=false;
-  end;  }
+   if appList.AppItems[i].Group=gt then
+      appResList.AddItem(appList.AppItems[i]);
+  end;
+   appResList.Visible:=true;
+   AppInfoPanel.Visible:=false;
+  end;
 
   StatusLabel.Caption:=rsReady;
   SWBox.Enabled:=true;
@@ -599,8 +525,8 @@ end;
 procedure TMnFrm.EnableProxyCbChange(Sender: TObject);
 var p: String;cnf: TIniFile;
 begin
-  if (Sender as TCheckBox).Checked then begin
-  Label3.Enabled:=true;
+  if (Sender as TCheckBox).Checked then
+  begin
   Edit1.Enabled:=true;
   SpinEdit1.Enabled:=true;
   edtUsername.Enabled:=true;
@@ -609,8 +535,8 @@ begin
   spinEdit2.Enabled:=true;
   Label4.Enabled:=true;
   Label5.Enabled:=true;
-  end else begin
-  Label3.Enabled:=false;
+  end else
+  begin
   Edit1.Enabled:=false;
   SpinEdit1.Enabled:=false;
   Label4.Enabled:=false;
@@ -624,6 +550,115 @@ begin
   cnf:=TIniFile.Create(p+'config.cnf');
   cnf.WriteBool('Proxy','UseProxy',(Sender as TCheckBox).Checked);
   cnf.Free;
+end;
+
+procedure TMnFrm.MItemInstallPkgClick(Sender: TObject);
+var p: TProcess;pkit: TPackageKit;
+begin
+  if OpenDialog1.Execute then
+  if FileExists(OpenDialog1.Filename) then
+  begin
+  if (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.ipk')
+  or (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.zip') then
+  begin
+  p:=TProcess.Create(nil);
+  p.Options:=[];
+  p.CommandLine := ExtractFilePath(Application.ExeName)+'listallgo '+OpenDialog1.Filename;
+  p.Execute;
+  MnFrm.Hide;
+  while p.Running do Application.ProcessMessages;
+  p.Free;
+  MnFrm.Show;
+  end else
+  begin
+  if (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.deb') then
+  if DInfo.PackageSystem='DEB' then
+  begin
+  //Open DEB-File
+   p:=TProcess.Create(nil);
+   p.Options:=[poWaitOnExit,poNewConsole];
+   Application.ProcessMessages;
+   p.CommandLine:='xdg-open '+''''+OpenDialog1.FileName+'''';
+   p.Execute;
+   p.Free;
+   exit;
+  end else
+   if Application.MessageBox(PAnsiChar(StringReplace(StringReplace(rsConvertPkg,'%x','DEB',[rfReplaceAll]),'%y','RPM',[rfReplaceAll])),
+                              PAnsiChar(rsConvertPkgQ),MB_YESNO)=IDYES then
+   begin
+   with ConvDisp do
+   begin
+   if not FileExists('/usr/bin/alien') then
+    if Application.MessageBox(PChar(rsListallerAlien),PChar(rsInstPkgQ),MB_YESNO)=IDYES then
+    begin
+      ShowMessage(rsplWait);
+      pkit:=TPackageKit.Create;
+      pkit.InstallPkg('alien');
+      while not pkit.PkFinished do Application.ProcessMessages;
+
+      if pkit.PkFinishCode>0 then
+      begin
+       ShowMessage(StringReplace(rsPkgInstFail,'%p','alien',[rfreplaceAll]));
+       pkit.Free;
+       exit;
+       end;
+      pkit.Free;
+     end else exit;
+   Application.ProcessMessages;
+   Caption:=StringReplace(rsConvTitle,'%p','DEB',[rfReplaceAll]);
+   Process1.CommandLine:='alien --to-rpm -v -i --scripts '+''''+OpenDialog1.FileName+'''';
+   GetOutPutTimer.Enabled:=true;
+   Process1.Execute;
+   ShowModal;
+   end;
+   exit;
+   end;
+  if (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.rpm') then
+  if DInfo.PackageSystem='RPM' then
+  begin
+   //Open RPM-File
+   p:=TProcess.Create(nil);
+   p.Options:=[poWaitOnExit,poNewConsole];
+   Application.ProcessMessages;
+   p.CommandLine:='xdg-open '+''''+OpenDialog1.FileName+'''';
+   p.Execute;
+   p.Free;
+   exit;
+  end else
+   if Application.MessageBox(PAnsiChar(StringReplace(StringReplace(rsConvertPkg,'%x','RPM',[rfReplaceAll]),'%y','DEB',[rfReplaceAll])),
+                              PAnsiChar(rsConvertPkgQ),MB_YESNO)=IDYES then
+   begin
+   with ConvDisp do
+   begin
+
+   if not FileExists('/usr/bin/alien') then
+    if Application.MessageBox(PChar(rsListallerAlien),PChar(rsInstPkgQ),MB_YESNO)=IDYES then
+    begin
+      ShowMessage(rsplWait);
+      pkit.InstallPkg('alien');
+      while not pkit.PkFinished do Application.ProcessMessages;
+
+      if pkit.PkFinishCode>0 then
+      begin
+       ShowMessage(StringReplace(rsPkgInstFail,'%p','alien',[rfreplaceAll]));
+       pkit.Free;
+       exit;
+       end;
+      pkit.Free;
+     end else exit;
+
+   Application.ProcessMessages;
+   Caption:=StringReplace(rsConvTitle,'%p','RPM',[rfReplaceAll]);
+   Process1.CommandLine:='alien --to-deb -v -i --scripts '+''''+OpenDialog1.FileName+'''';
+   GetOutPutTimer.Enabled:=true;
+   Process1.Execute;
+   ShowModal;
+   end;
+   exit;
+   end;
+
+   end;
+  end;
 end;
 
 procedure TMnFrm.RmUpdSrcBtnClick(Sender: TObject);
@@ -656,6 +691,11 @@ begin
  uconf[UListBox.ItemIndex+1]:=h;
  uconf.SaveToFile(RegDir+'updates.list');
  uconf.Free;
+end;
+
+procedure TMnFrm.UnButtonClick(Sender: TObject);
+begin
+  UninstallClick(Sender,-1,activeRmItem);
 end;
 
 procedure TMnFrm.UpdCheckBtnClick(Sender: TObject);
@@ -698,30 +738,37 @@ var i: Integer;
 begin
   if Key = VK_RETURN then
   begin
-     SWBox.HorzScrollbar.Position:=0;
      SWBox.Enabled:=false;
      FilterEdt.Enabled:=false;
      CBox.Enabled:=false;
      Application.ProcessMessages;
 
-    { if ((FilterEdt.Text=' ') or (FilterEdt.Text='*')or (FilterEdt.Text='')) then
+     if ((FilterEdt.Text=' ')
+     or (FilterEdt.Text='*')
+     or (FilterEdt.Text=rsFilter)
+     or (FilterEdt.Text='')) then
      begin
-     for i:=0 to AList.Count-1 do
-     TListEntry(AList[i]).Visible:=true;
+      appResList.ClearList;
+      appResList.Visible:=false;
      end else
      begin
      Application.ProcessMessages;
      StatusLabel.Caption:=rsFiltering;
-     for i:=0 to AList.Count-1 do
+     appResList.ClearList;
+     for i:=0 to appList.Count-1 do
      begin
-      TListEntry(AList[i]).Visible:=true;
        Application.ProcessMessages;
-        if ((pos(LowerCase(FilterEdt.Text),LowerCase(TListEntry(AList[i]).AppName))<=0)
-        or (pos(LowerCase(FilterEdt.Text),LowerCase(TListEntry(AList[i]).AppDesc))<=0))
-         and (LowerCase(FilterEdt.Text)<>LowerCase(TListEntry(AList[i]).AppName)) then
-         TListEntry(AList[i]).Visible:=false;
+        if ((pos(LowerCase(FilterEdt.Text),LowerCase(appList.AppItems[i].Name))>0)
+        or (pos(LowerCase(FilterEdt.Text),LowerCase(appList.AppItems[i].SDesc))>0))
+         and (LowerCase(FilterEdt.Text)<>LowerCase(appList.AppItems[i].Name)) then
+         begin
+          appResList.AddItem(appList.AppItems[i]);
          end;
-       end; }
+     end;
+      appResList.Visible:=true;
+     end;
+
+     AppInfoPanel.Visible:=false;
 StatusLabel.Caption:=rsReady;
 FilterEdt.Enabled:=true;
 SWBox.Enabled:=true;
@@ -794,26 +841,32 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
   end;
 
  appList:=TAppListView.Create(self); //New application list
- appList.Parent:=InstalledAppsPage;
- SWBox.Visible:=false;
- appList.Width:=SWBox.Width;
- appList.Height:=SWBox.Height;
- appList.Top:=SWBox.Top;
- appList.Left:=SWBox.Left;
- appList.Align:=alBottom;
- appList.Anchors:=[akTop];
+ appList.Parent:=SWBox;
+ appList.Align:=alClient;
  appList.OnRmButtonClick:=@UninstallClick;
+ appList.OnItemSelect:=@appListItemSelect;
+
+ appResList:=TAppListView.Create(self,false); //Applist to display results
+ appResList.Parent:=SWBox;
+ appResList.Align:=alClient;
+ appResList.OnRmButtonClick:=@UninstallClick;
+ appResList.OnItemSelect:=@appListItemSelect;
+ appResList.Visible:=false;
+
+ AppInfoPanel.Caption:='';
+ AppInfoPanel.Visible:=false;
+ LoadStockPixmap(STOCK_DELETE,ICON_SIZE_BUTTON,UnButton.Glyph);
+
 
  //Translate
  Caption:=rsSoftwareManager;
  CatButton.Caption:=rsSWCatalogue;
  Label1.Caption:=rsShow;
- Label3.Caption:=rsNoAppsFound;
  AboutBtn.Caption:=rsAboutListaller;
  BitBtn1.Caption:=rsBrowseLiCatalog;
  BitBtn2.Caption:=rsOpenDirsiCatalog;
  InstAppButton.Caption:=rsInstalledApps;
- InstallButton.Caption:=rsInstallPkg;
+ MItemInstallPkg.Caption:=rsInstallPkg;
  CatButton.Caption:=rsBrowseCatalog;
  RepoButton.Caption:=rsRepositories;
  SettingsButton.Caption:=rsSettings;
@@ -847,7 +900,6 @@ begin
  Items[9]:=rsAddidional;
  Items[10]:=rsOther;
 end;
- Image1.Picture.LoadFromFile(GetDataFile('graphics/header.png'));
  Application.ShowMainForm:=true;
  instLst:=TStringList.Create;
  blst:=TStringList.Create; //Create Blacklist
@@ -911,14 +963,3 @@ initialization
   {$I manager.lrs}
 
 end.
-
-{
-//Create GIFThread for Throbber animation
-gif:=TGifThread.Create(true);
-gif.FileName:=GetDataFile('graphics/throbber.gif');
-ThrobberBox.Width:=gif.Width;
-ThrobberBox.Height:=gif.Height;
-ThrobberBox.Top:=(InstalledAppsPage.Height div 2)-(ThrobberBox.Height div 2);
-ThrobberBox.Left:=(InstalledAppsPage.Width div 2)-(ThrobberBox.Width div 2);
-gif.Initialize(ThrobberBox.Canvas);
-}
