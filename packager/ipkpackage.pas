@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LibTar, liBasic, ULZMAEncoder, ULZMADecoder,
-  UBufferedFS, ULZMACommon, gpgsign, CallbackProcess;
+  UBufferedFS, ULZMACommon, gpgsign, CallbackProcess, Dialogs;
 
 type
  //** Creates IPK packages from preprocessed source files
@@ -54,12 +54,19 @@ type
  private
   ipkfile: String;
   workdir: String;
+  signChecked: Boolean;
  public
   constructor Create(aIPKFile: String);
   destructor  Destroy;override;
 
   //** Decompress IPK tar file
   procedure Decompress;
+  //** Verify signature (if there is any)
+  function  CheckSignature: Boolean;
+  //** Unpack file @returns Success of operation
+  function UnpackFile(fname: String;fdest: String): Boolean;
+  //** Unpacker's working dir
+  property WDir: String read workdir;
  end;
 
  //** Create small LZMA compressed files for update sources
@@ -74,6 +81,8 @@ type
 
    //** Compress files to XZ
    procedure Compress(infile: String;outfile: String);
+   //** Decompress a file
+   procedure Decompress(infile: String;outfile: String);
  end;
 
 implementation
@@ -206,6 +215,7 @@ begin
  ipkfile:=aIPKFile;
  workdir:=tmpdir+'/listaller/'+ExtractFileName(ipkfile)+'/';
  SysUtils.ForceDirectories(workdir);
+ signChecked:=false;
 end;
 
 destructor TLiUnpacker.Destroy;
@@ -259,6 +269,69 @@ begin
  finally
   inStream.Free;
  end;
+end;
+
+function TLiUnpacker.CheckSignature: Boolean;
+var mnarc: TTarArchive;
+    dir: TTarDirRec;
+    hasSignature: Boolean;
+    sign: TGPGSignWrapper;
+begin
+ Result:=true;
+ hasSignature:=false;
+ mnarc:=TTarArchive.Create(workdir+'ipktar.tar');
+ mnarc.Reset;
+ //Check if package has signature
+ while mnarc.FindNext(dir) do
+ begin
+  if dir.Name='signature.asc' then
+  begin
+   hasSignature:=true;
+   break;
+  end;
+ end;
+ if hasSignature then
+ begin
+
+  mnarc.Reset;
+  while mnarc.FindNext(dir) do
+  begin
+   if dir.Name='signature.asc' then
+    mnarc.ReadFile(workdir+'signature.asc');
+   if dir.Name='content.tar' then
+    mnarc.ReadFile(workdir+'content.tar');
+  end;
+  DeleteFile(workdir+'ipktar.tar');
+  RenameFile(workdir+'content.tar',workdir+'ipktar.tar');
+  //Now check signature
+  sign:=TGPGSignWrapper.Create;
+  sign.FileName:=workdir+'ipktar.tar';
+  Result:=sign.Verify(workdir+'signature.asc');
+  sign.Free;
+ end;
+ mnarc.Free;
+ signChecked:=true;
+end;
+
+function TLiUnpacker.UnpackFile(fname: String;fdest: String): Boolean;
+var arc: TTarArchive;
+    dir: TTarDirRec;
+begin
+if not signChecked then CheckSignature;
+ Result:=false;
+ arc:=TTarArchive.Create(workdir+'ipktar.tar');
+ arc.Reset;
+ //Check if package has signature
+ while arc.FindNext(dir) do
+ begin
+  if dir.Name=fname then
+  begin
+   arc.ReadFile(fdest);
+   Result:=true;
+   break;
+  end;
+ end;
+ arc.Free;
 end;
 
 { TLiUpdateBit }
@@ -315,6 +388,53 @@ begin
   encoder.free;
   outStream.Free;
   inStream.Free;
+end;
+
+procedure TLiUpdateBit.Decompress(infile: String;outfile: String);
+ var inStream:TBufferedFS;
+    outStream:TBufferedFS;
+    properties:array[0..4] of byte;
+    filesize,outSize:Int64;
+    i: Integer;
+    v: byte;
+const propertiessize=5;
+begin
+ if not FileExists(infile) then Exception.Create('UpdateBit does not exists!!');
+
+ try
+  inStream:=TBufferedFS.Create(infile, fmOpenRead or fmShareDenyNone);
+ try
+  if FileExists(outfile) then DeleteFile(outfile);
+  outStream:=TBufferedFS.Create(outfile, fmCreate);
+
+  decoder:=TLZMADecoder.Create;
+  inStream.position:=0;
+    with decoder do
+    begin
+      if inStream.read(properties, propertiesSize) <> propertiesSize then
+       raise Exception.Create('input .lzma file is too short');
+      if not SetDecoderProperties(properties) then
+       raise Exception.Create('Incorrect stream properties');
+
+      outSize := 0;
+      for i := 0 to 7 do
+      begin
+       v := inStream.ReadByte;
+       if v < 0 then
+        raise Exception.Create('Can''t read stream size');
+       outSize := outSize or (v shl ((8 *i) and 31));
+      end;
+      if not Code(inStream, outStream, outSize) then
+       raise Exception.Create('Error in data stream');
+     end;
+     decoder.Free;
+
+ finally
+  outStream.Free;
+ end;
+ finally
+  inStream.Free;
+ end;
 end;
 
 end.

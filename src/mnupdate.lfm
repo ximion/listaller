@@ -23,10 +23,10 @@ object UMnForm: TUMnForm
     TabOrder = 0
   end
   object BitBtn1: TBitBtn
-    Left = 576
-    Height = 23
-    Top = 477
-    Width = 101
+    Left = 590
+    Height = 22
+    Top = 478
+    Width = 87
     Anchors = [akRight, akBottom]
     AutoSize = True
     Caption = 'Install updates'
@@ -48,9 +48,9 @@ object UMnForm: TUMnForm
   end
   object BitBtn2: TBitBtn
     Left = 8
-    Height = 23
-    Top = 477
-    Width = 121
+    Height = 22
+    Top = 478
+    Width = 106
     Anchors = [akLeft, akBottom]
     AutoSize = True
     Caption = 'Check for updates'

@@ -545,7 +545,7 @@ if not ipkpkg.ProduceIPKPackage then
 begin
  writeln('error:');
  writeLn(' Build of IPK package failed!');
- helt(1);
+ halt(1);
  exit;
 end;
 sleep(20);

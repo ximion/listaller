@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ComCtrls, HTTPSend, FileUtil, AbUnZper, AbArcTyp, Process, LiCommon, IniFiles,
+  ComCtrls, HTTPSend, FileUtil, IPKPackage, Process, LiCommon, IniFiles,
   blcksock, trStrings, sqlite3ds, db, LiBasic;
 
 type
@@ -88,10 +88,11 @@ end;
 
 procedure TUExecFm.FormActivate(Sender: TObject);
 var
-  i,j,k: Integer;z: TAbUnZipper;
+  i,j,k: Integer;xz: TLiUpdateBit;
   c: TProcess;
   cnf,dsk: TIniFile;
   s: TStringList;
+  xh: String;
   dsApp: TSQLite3Dataset; //AppDB connection
 begin
 if fstact then begin
@@ -160,23 +161,20 @@ Memo1.Lines.Add('Log:');
     else
     HTTP.Document.SaveToFile('/tmp/liupd/'+ExtractFileName(ulist[j][i])+'.zip');
     try
-    z:=TAbUnZipper.Create(nil);
-    WriteLog('Unpacking file...');
-    ILabel.Caption:='Install...';
-    Application.ProcessMessages;
-    if ExtractFileExt(ulist[j][i])<>'' then
-    z.FileName:='/tmp/liupd/'+StringReplace(ExtractFileName(ulist[j][i]),ExtractFileExt(ulist[j][i]),'.zip',[rfReplaceAll])
-    else
-    z.FileName:='/tmp/liupd/'+ExtractFileName(ulist[j][i])+'.zip';
+     xz:=TLiUpdateBit.Create;
+     WriteLog('Unpacking file...');
+     ILabel.Caption:='Install...';
+     Application.ProcessMessages;
+     if ExtractFileExt(ulist[j][i])<>'' then
+      xh:='/tmp/liupd/'+ExtractFileName(ulist[j][i])
+     else
+      xh:='/tmp/liupd/'+ExtractFileName(ulist[j][i])+'.xz';
     
-    z.ExtractOptions:=[eoCreateDirs]+[eoRestorePath];
-    z.BaseDirectory:=DeleteModifiers(ulist[j][i+1]);
-    Application.ProcessMessages;
+     xz.Decompress(xh,DeleteModifiers(ulist[j][i+1])+ExtractFileName(ulist[j][i]));
 
-    DeleteFile(DeleteModifiers(ulist[j][i+1])+'/'+ExtractFileName(ulist[j][i])); //Delete old File (not always necessary, but sometimes needed)
+     Application.ProcessMessages;
 
-    z.ExtractFiles(ExtractFileName(ulist[j][i]));
-    Application.ProcessMessages;
+      //DeleteFile(DeleteModifiers(ulist[j][i+1])+'/'+ExtractFileName(ulist[j][i])); //Delete old File (not always necessary, but sometimes needed)
 
     if(pos('.desktop',LowerCase(ExtractFileName(ulist[j][i])))>0) then
        begin
@@ -203,7 +201,7 @@ Memo1.Lines.Add('Log:');
     except
    ShowMessage(rsExtractError);
    WriteLog(rsUpdConfError);
-    z.Free;
+    xz.Free;
     exit;
     end;
 
@@ -218,7 +216,7 @@ c.Execute;
 end;
 Memo1.Lines.Add('Finishing...');
     ProgressBar1.Position:=ProgressBar1.Position+1;
-    z.Free;
+    xz.Free;
     Memo1.Lines.Add('Okay');
       finally
     HTTP.Free;
