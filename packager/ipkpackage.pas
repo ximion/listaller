@@ -261,12 +261,6 @@ begin
  end;
 end;
 
-{procedure TLiUnpacker.Decompress;
-begin
- //Cause the built-in decompress does not work, we use xz-utils
-
-end;}
-
 { TLiUpdateBit }
 
 constructor TLiUpdateBit.Create;

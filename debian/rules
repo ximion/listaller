@@ -1,69 +1,12 @@
 #!/usr/bin/make -f
-# -*- makefile -*-
 
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/rules/patchsys-quilt.mk
+include /usr/share/cdbs/1/class/makefile.mk
 
-build: build-stamp
+DEB_SRCDIR:=./src
 
-build-stamp:
-	dh_testdir
-	
-	@chmod +x ./configure --enable-gtk --enable-qt --enable-creator
-	./configure
-	$(MAKE) all
-	$(MAKE) licreator-gtk
-	$(MAKE) licreator-qt
-	#docbook-to-man debian/listaller.sgml > listaller.1
-
-	touch $@
-
-clean:
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp configure-stamp
-	rm -rf debian/tmp
-	$(MAKE) clean
-
-	dh_clean 
-
-install: build
-	dh_testdir
-	dh_testroot
-	dh_prep
-	dh_installdirs
-	mkdir debian/tmp
-	
-	@echo "Installing binaries..."
-	#Install basics
-	$(MAKE) DESTDIR=./debian/tmp install-all-bin
-	#Install Listaller Creator (GTK2)
-	$(MAKE) DESTDIR=./debian/listaller-creator-gtk install-licreator-gtk
-	#Install Listaller Creator (Qt4)
-	$(MAKE) DESTDIR=./debian/listaller-creator-qt install-licreator-qt
-
-binary-indep: build install
-	@echo "Installing architecture independent files..."
-	$(MAKE) DESTDIR=./debian/listaller-data install-data
-
-binary-arch: build install
-	dh_testdir
-	dh_testroot
-	dh_installchangelogs 
-	dh_installdocs
-	dh_install --sourcedir=debian/tmp
-	dh_installmime
-	dh_installman
-	dh_link
-	dh_strip
-	dh_compress
-	dh_fixperms
-	dh_makeshlibs
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install
+common-configure-arch common-configure-indep:: common-configure
+common-configure::
+		chmod +x $(CURDIR)/configure
+		$(CURDIR)/configure --enable-gtk --enable-qt --enable-creator --prefix=/usr
