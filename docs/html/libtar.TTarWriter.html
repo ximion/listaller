@@ -1,0 +1,387 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.11.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>libtar: Class TTarWriter</title>
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<a name="TTarWriter"></a><h1 class="cio">Class TTarWriter</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Hierarchy">Hierarchy</a></td><td><a class="section"  href="#%40Fields">Fields</a></td><td><a class="section"  href="#%40Methods">Methods</a></td><td><a class="section"  href="#%40Properties">Properties</a></td></tr></table>
+<a name="%40Description"></a><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a   href="libtar.html">libtar</a></p>
+<h2 class="declaration">Declaration</h2>
+<p class="declaration">
+<code>type TTarWriter = class(TObject)</code></p>
+<h2 class="description">Description</h2>
+<a name="%40Hierarchy"></a><h2 class="hierarchy">Hierarchy</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TTarWriter</li></ul><h2 class="overview">Overview</h2>
+<a name="%40Fields"></a><h3 class="summary">Fields</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="libtar.TTarWriter.html#FStream">FStream</a></b>: TStream;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="libtar.TTarWriter.html#FOwnsStream">FOwnsStream</a></b>: BOOLEAN;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="libtar.TTarWriter.html#FFinalized">FFinalized</a></b>: BOOLEAN;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="libtar.TTarWriter.html#FPermissions">FPermissions</a></b>: <a   href="libtar.html#TTarPermissions">TTarPermissions</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="libtar.TTarWriter.html#FUID">FUID</a></b>: INTEGER;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="libtar.TTarWriter.html#FGID">FGID</a></b>: INTEGER;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="libtar.TTarWriter.html#FUserName">FUserName</a></b>: STRING;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="libtar.TTarWriter.html#FGroupName">FGroupName</a></b>: STRING;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="libtar.TTarWriter.html#FMode">FMode</a></b>: <a   href="libtar.html#TTarModes">TTarModes</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="libtar.TTarWriter.html#FMagic">FMagic</a></b>: STRING;</code></td>
+</tr>
+</table>
+<a name="%40Methods"></a><h3 class="summary">Methods</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>CONSTRUCTOR <b><a   href="libtar.TTarWriter.html#CreateEmpty">CreateEmpty</a></b>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>CONSTRUCTOR <b><a   href="libtar.TTarWriter.html#Create">Create</a></b> (TargetStream : TStream); OVERLOAD;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>CONSTRUCTOR <b><a   href="libtar.TTarWriter.html#Create">Create</a></b> (TargetFilename : STRING; Mode : INTEGER = fmCreate); OVERLOAD;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>DESTRUCTOR <b><a   href="libtar.TTarWriter.html#Destroy">Destroy</a></b>; OVERRIDE;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.TTarWriter.html#AddFile">AddFile</a></b> (Filename : STRING; TarFilename : STRING = '');</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.TTarWriter.html#AddStream">AddStream</a></b> (Stream : TStream; TarFilename : STRING; FileDateGmt : TDateTime);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.TTarWriter.html#AddString">AddString</a></b> (Contents : STRING; TarFilename : STRING; FileDateGmt : TDateTime);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.TTarWriter.html#AddDir">AddDir</a></b> (Dirname : STRING; DateGmt : TDateTime; MaxDirSize : INT64 = 0);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.TTarWriter.html#AddSymbolicLink">AddSymbolicLink</a></b> (Filename, Linkname : STRING; DateGmt : TDateTime);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.TTarWriter.html#AddLink">AddLink</a></b> (Filename, Linkname : STRING; DateGmt : TDateTime);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.TTarWriter.html#AddVolumeHeader">AddVolumeHeader</a></b> (VolumeId : STRING; DateGmt : TDateTime);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.TTarWriter.html#Finalize">Finalize</a></b>;</code></td>
+</tr>
+</table>
+<a name="%40Properties"></a><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="libtar.TTarWriter.html#Permissions">Permissions</a></b> : <a   href="libtar.html#TTarPermissions">TTarPermissions</a> READ <a   href="libtar.TTarWriter.html#FPermissions">FPermissions</a> WRITE <a   href="libtar.TTarWriter.html#FPermissions">FPermissions</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="libtar.TTarWriter.html#UID">UID</a></b>         : INTEGER         READ <a   href="libtar.TTarWriter.html#FUID">FUID</a>         WRITE <a   href="libtar.TTarWriter.html#FUID">FUID</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="libtar.TTarWriter.html#GID">GID</a></b>         : INTEGER         READ <a   href="libtar.TTarWriter.html#FGID">FGID</a>         WRITE <a   href="libtar.TTarWriter.html#FGID">FGID</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="libtar.TTarWriter.html#UserName">UserName</a></b>    : STRING          READ <a   href="libtar.TTarWriter.html#FUserName">FUserName</a>    WRITE <a   href="libtar.TTarWriter.html#FUserName">FUserName</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="libtar.TTarWriter.html#GroupName">GroupName</a></b>   : STRING          READ <a   href="libtar.TTarWriter.html#FGroupName">FGroupName</a>   WRITE <a   href="libtar.TTarWriter.html#FGroupName">FGroupName</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="libtar.TTarWriter.html#Mode">Mode</a></b>        : <a   href="libtar.html#TTarModes">TTarModes</a>       READ <a   href="libtar.TTarWriter.html#FMode">FMode</a>        WRITE <a   href="libtar.TTarWriter.html#FMode">FMode</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="libtar.TTarWriter.html#Magic">Magic</a></b>       : STRING          READ <a   href="libtar.TTarWriter.html#FMagic">FMagic</a>       WRITE <a   href="libtar.TTarWriter.html#FMagic">FMagic</a>;</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Fields</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FStream"></a><code><b>FStream</b>: TStream;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FOwnsStream"></a><code><b>FOwnsStream</b>: BOOLEAN;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FFinalized"></a><code><b>FFinalized</b>: BOOLEAN;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FPermissions"></a><code><b>FPermissions</b>: <a   href="libtar.html#TTarPermissions">TTarPermissions</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FUID"></a><code><b>FUID</b>: INTEGER;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FGID"></a><code><b>FGID</b>: INTEGER;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FUserName"></a><code><b>FUserName</b>: STRING;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FGroupName"></a><code><b>FGroupName</b>: STRING;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FMode"></a><code><b>FMode</b>: <a   href="libtar.html#TTarModes">TTarModes</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FMagic"></a><code><b>FMagic</b>: STRING;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Methods</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="CreateEmpty"></a><code>CONSTRUCTOR <b>CreateEmpty</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>CONSTRUCTOR <b>Create</b> (TargetStream : TStream); OVERLOAD;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>CONSTRUCTOR <b>Create</b> (TargetFilename : STRING; Mode : INTEGER = fmCreate); OVERLOAD;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Destroy"></a><code>DESTRUCTOR <b>Destroy</b>; OVERRIDE;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="AddFile"></a><code>PROCEDURE <b>AddFile</b> (Filename : STRING; TarFilename : STRING = '');</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="AddStream"></a><code>PROCEDURE <b>AddStream</b> (Stream : TStream; TarFilename : STRING; FileDateGmt : TDateTime);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="AddString"></a><code>PROCEDURE <b>AddString</b> (Contents : STRING; TarFilename : STRING; FileDateGmt : TDateTime);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="AddDir"></a><code>PROCEDURE <b>AddDir</b> (Dirname : STRING; DateGmt : TDateTime; MaxDirSize : INT64 = 0);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="AddSymbolicLink"></a><code>PROCEDURE <b>AddSymbolicLink</b> (Filename, Linkname : STRING; DateGmt : TDateTime);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="AddLink"></a><code>PROCEDURE <b>AddLink</b> (Filename, Linkname : STRING; DateGmt : TDateTime);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="AddVolumeHeader"></a><code>PROCEDURE <b>AddVolumeHeader</b> (VolumeId : STRING; DateGmt : TDateTime);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Finalize"></a><code>PROCEDURE <b>Finalize</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Permissions"></a><code>property <b>Permissions</b> : <a   href="libtar.html#TTarPermissions">TTarPermissions</a> READ <a   href="libtar.TTarWriter.html#FPermissions">FPermissions</a> WRITE <a   href="libtar.TTarWriter.html#FPermissions">FPermissions</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="UID"></a><code>property <b>UID</b>         : INTEGER         READ <a   href="libtar.TTarWriter.html#FUID">FUID</a>         WRITE <a   href="libtar.TTarWriter.html#FUID">FUID</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GID"></a><code>property <b>GID</b>         : INTEGER         READ <a   href="libtar.TTarWriter.html#FGID">FGID</a>         WRITE <a   href="libtar.TTarWriter.html#FGID">FGID</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="UserName"></a><code>property <b>UserName</b>    : STRING          READ <a   href="libtar.TTarWriter.html#FUserName">FUserName</a>    WRITE <a   href="libtar.TTarWriter.html#FUserName">FUserName</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GroupName"></a><code>property <b>GroupName</b>   : STRING          READ <a   href="libtar.TTarWriter.html#FGroupName">FGroupName</a>   WRITE <a   href="libtar.TTarWriter.html#FGroupName">FGroupName</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Mode"></a><code>property <b>Mode</b>        : <a   href="libtar.html#TTarModes">TTarModes</a>       READ <a   href="libtar.TTarWriter.html#FMode">FMode</a>        WRITE <a   href="libtar.TTarWriter.html#FMode">FMode</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Magic"></a><code>property <b>Magic</b>       : STRING          READ <a   href="libtar.TTarWriter.html#FMagic">FMagic</a>       WRITE <a   href="libtar.TTarWriter.html#FMagic">FMagic</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-01-27 18:58:47</em>
+</span>
+</body></html>

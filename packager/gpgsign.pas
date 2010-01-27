@@ -40,7 +40,9 @@ type
    constructor Create;
    destructor  Destroy;override;
 
-   //** Sign file @param ascFile File for signature @returns Success of operation
+   {** Sign file
+       @param ascFile File for signature
+       @returns Success of operation}
    function Signfile(ascFile: String): Boolean;
    //** Verify a signature
    function Verify(ascFile: String): Boolean;

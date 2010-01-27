@@ -21,7 +21,7 @@ unit ipkinstall;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, packagekit,
+  Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, PackageKit,
   sqlite3ds, db, IPKPackage, ipkdef, HTTPSend, FTPSend, blcksock,
   MD5, liTypes, distri, MTProcs, FileUtil, liBasic, liDBusproc,
   limanageapp;

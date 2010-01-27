@@ -28,12 +28,12 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="43">
+    <Units Count="44">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="24" Y="22"/>
+        <CursorPos X="30" Y="22"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="62"/>
@@ -43,9 +43,11 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="10" Y="1433"/>
-        <TopLine Value="1399"/>
+        <CursorPos X="19" Y="25"/>
+        <TopLine Value="1"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="22"/>
+        <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
@@ -326,12 +328,34 @@
       <Unit42>
         <Filename Value="../packager/ipkpackage.pas"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="60" Y="214"/>
-        <TopLine Value="202"/>
+        <CursorPos X="34" Y="25"/>
+        <TopLine Value="1"/>
+        <EditorIndex Value="2"/>
         <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit42>
+      <Unit43>
+        <Filename Value="../packager/gpgsign.pas"/>
+        <UnitName Value="gpgsign"/>
+        <CursorPos X="8" Y="45"/>
+        <TopLine Value="25"/>
+        <UsageCount Value="10"/>
+      </Unit43>
     </Units>
-    <JumpHistory Count="0" HistoryIndex="-1"/>
+    <JumpHistory Count="3" HistoryIndex="2">
+      <Position1>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="30" TopLine="1"/>
+      </Position1>
+      <Position2>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="25" Column="19" TopLine="1"/>
+      </Position2>
+      <Position3>
+        <Filename Value="../packager/ipkpackage.pas"/>
+        <Caret Line="25" Column="34" TopLine="1"/>
+      </Position3>
+    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>

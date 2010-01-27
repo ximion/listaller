@@ -3,7 +3,7 @@
 <head>
 <meta name="GENERATOR" content="PasDoc 0.11.0">
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-<title>liappmanage: Class TAppManager</title>
+<title>limanageapp: Class TAppManager</title>
 <link rel="StyleSheet" type="text/css" href="pasdoc.css">
 </head>
 <body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
@@ -13,7 +13,7 @@
 <td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section"  href="#%40Methods">Methods</a></td><td><a class="section"  href="#%40Properties">Properties</a></td></tr></table>
 <a name="%40Description"></a><h2 class="unit">Unit</h2>
 <p class="unitlink">
-<a   href="liappmanage.html">liappmanage</a></p>
+<a   href="limanageapp.html">limanageapp</a></p>
 <h2 class="declaration">Declaration</h2>
 <p class="declaration">
 <code>type TAppManager = class(TObject)</code></p>
@@ -25,46 +25,46 @@
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a   href="liappmanage.TAppManager.html#Create">Create</a></b>;</code></td>
+<td class="itemcode"><code>constructor <b><a   href="limanageapp.TAppManager.html#Create">Create</a></b>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>destructor <b><a   href="liappmanage.TAppManager.html#Destroy">Destroy</a></b>; override;</code></td>
+<td class="itemcode"><code>destructor <b><a   href="limanageapp.TAppManager.html#Destroy">Destroy</a></b>; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="liappmanage.TAppManager.html#LoadEntries">LoadEntries</a></b>;</code></td>
+<td class="itemcode"><code>procedure <b><a   href="limanageapp.TAppManager.html#LoadEntries">LoadEntries</a></b>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="liappmanage.TAppManager.html#UninstallApp">UninstallApp</a></b>(obj: <a   href="litypes.TAppInfo.html">TAppInfo</a>);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="limanageapp.TAppManager.html#UninstallApp">UninstallApp</a></b>(obj: <a   href="litypes.TAppInfo.html">TAppInfo</a>);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="liappmanage.TAppManager.html#CheckApps">CheckApps</a></b>(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="limanageapp.TAppManager.html#CheckApps">CheckApps</a></b>(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="liappmanage.TAppManager.html#RegOnStatusChange">RegOnStatusChange</a></b>(call: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>;data: Pointer);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="limanageapp.TAppManager.html#RegOnStatusChange">RegOnStatusChange</a></b>(call: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>;data: Pointer);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="liappmanage.TAppManager.html#RegOnRequest">RegOnRequest</a></b>(call: <a   href="litypes.html#TRequestCall">TRequestCall</a>;data: Pointer);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="limanageapp.TAppManager.html#RegOnRequest">RegOnRequest</a></b>(call: <a   href="litypes.html#TRequestCall">TRequestCall</a>;data: Pointer);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="liappmanage.TAppManager.html#UserRequestRegistered">UserRequestRegistered</a></b>: Boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="limanageapp.TAppManager.html#UserRequestRegistered">UserRequestRegistered</a></b>: Boolean;</code></td>
 </tr>
 </table>
 <a name="%40Properties"></a><h3 class="summary">Properties</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="liappmanage.TAppManager.html#OnApplication">OnApplication</a></b>: <a   href="litypes.html#TAppEvent">TAppEvent</a> read FApp write FApp;</code></td>
+<td class="itemcode"><code>property <b><a   href="limanageapp.TAppManager.html#OnApplication">OnApplication</a></b>: <a   href="litypes.html#TAppEvent">TAppEvent</a> read FApp write FApp;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="liappmanage.TAppManager.html#SuperuserMode">SuperuserMode</a></b>: Boolean read SUMode write SUMode;</code></td>
+<td class="itemcode"><code>property <b><a   href="limanageapp.TAppManager.html#SuperuserMode">SuperuserMode</a></b>: Boolean read SUMode write SUMode;</code></td>
 </tr>
 </table>
 <h2 class="description">Description</h2>
@@ -164,6 +164,6 @@ Checks dependencies of all installed apps   </p>
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-01-15 19:52:44</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-01-27 18:58:47</em>
 </span>
 </body></html>

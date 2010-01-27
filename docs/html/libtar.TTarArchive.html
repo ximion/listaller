@@ -3,76 +3,84 @@
 <head>
 <meta name="GENERATOR" content="PasDoc 0.11.0">
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-<title>AbArcTyp: Class TAbArchiveStreamHelper</title>
+<title>libtar: Class TTarArchive</title>
 <link rel="StyleSheet" type="text/css" href="pasdoc.css">
 </head>
 <body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
-<a name="TAbArchiveStreamHelper"></a><h1 class="cio">Class TAbArchiveStreamHelper</h1>
+<a name="TTarArchive"></a><h1 class="cio">Class TTarArchive</h1>
 <table class="sections wide_list">
 <tr>
 <td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Hierarchy">Hierarchy</a></td><td><a class="section"  href="#%40Fields">Fields</a></td><td><a class="section"  href="#%40Methods">Methods</a></td><td>Properties</td></tr></table>
 <a name="%40Description"></a><h2 class="unit">Unit</h2>
 <p class="unitlink">
-<a   href="AbArcTyp.html">AbArcTyp</a></p>
+<a   href="libtar.html">libtar</a></p>
 <h2 class="declaration">Declaration</h2>
 <p class="declaration">
-<code>type TAbArchiveStreamHelper = class(TObject)</code></p>
+<code>type TTarArchive = class(TObject)</code></p>
 <h2 class="description">Description</h2>
 <a name="%40Hierarchy"></a><h2 class="hierarchy">Hierarchy</h2>
 <ul class="hierarchy"><li class="ancestor">TObject</li>
-<li class="thisitem">TAbArchiveStreamHelper</li></ul><h2 class="overview">Overview</h2>
+<li class="thisitem">TTarArchive</li></ul><h2 class="overview">Overview</h2>
 <a name="%40Fields"></a><h3 class="summary">Fields</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a   href="AbArcTyp.TAbArchiveStreamHelper.html#FStream">FStream</a></b>: TStream;</code></td>
+<td class="itemcode"><code><b><a   href="libtar.TTarArchive.html#FStream">FStream</a></b>: TStream;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="libtar.TTarArchive.html#FOwnsStream">FOwnsStream</a></b>: BOOLEAN;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a   href="libtar.TTarArchive.html#FBytesToGo">FBytesToGo</a></b>: INT64;</code></td>
 </tr>
 </table>
 <a name="%40Methods"></a><h3 class="summary">Methods</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a   href="AbArcTyp.TAbArchiveStreamHelper.html#Create">Create</a></b>(AStream : TStream);</code></td>
+<td class="itemcode"><code>CONSTRUCTOR <b><a   href="libtar.TTarArchive.html#Create">Create</a></b> (Stream : TStream); OVERLOAD;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="AbArcTyp.TAbArchiveStreamHelper.html#ExtractItemData">ExtractItemData</a></b>(AStream : TStream); virtual; abstract;</code></td>
+<td class="itemcode"><code>CONSTRUCTOR <b><a   href="libtar.TTarArchive.html#Create">Create</a></b> (Filename : STRING; FileMode : WORD = fmOpenRead OR fmShareDenyWrite); OVERLOAD;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="AbArcTyp.TAbArchiveStreamHelper.html#FindFirstItem">FindFirstItem</a></b> : Boolean; virtual; abstract;</code></td>
+<td class="itemcode"><code>DESTRUCTOR <b><a   href="libtar.TTarArchive.html#Destroy">Destroy</a></b>; OVERRIDE;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="AbArcTyp.TAbArchiveStreamHelper.html#FindNextItem">FindNextItem</a></b> : Boolean; virtual; abstract;</code></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.TTarArchive.html#Reset">Reset</a></b>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="AbArcTyp.TAbArchiveStreamHelper.html#ReadHeader">ReadHeader</a></b>; virtual; abstract;</code></td>
+<td class="itemcode"><code>FUNCTION <b><a   href="libtar.TTarArchive.html#FindNext">FindNext</a></b> (VAR DirRec : <a   href="libtar.TTarDirRec.html">TTarDirRec</a>) : BOOLEAN;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="AbArcTyp.TAbArchiveStreamHelper.html#ReadTail">ReadTail</a></b>; virtual; abstract;</code></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.TTarArchive.html#ReadFile">ReadFile</a></b> (Buffer : POINTER); OVERLOAD;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="AbArcTyp.TAbArchiveStreamHelper.html#SeekItem">SeekItem</a></b>(Index : Integer): Boolean; virtual; abstract;</code></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.TTarArchive.html#ReadFile">ReadFile</a></b> (Stream : TStream); OVERLOAD;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="AbArcTyp.TAbArchiveStreamHelper.html#WriteArchiveHeader">WriteArchiveHeader</a></b>; virtual; abstract;</code></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.TTarArchive.html#ReadFile">ReadFile</a></b> (Filename : STRING); OVERLOAD;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="AbArcTyp.TAbArchiveStreamHelper.html#WriteArchiveItem">WriteArchiveItem</a></b>(AStream : TStream); virtual; abstract;</code></td>
+<td class="itemcode"><code>FUNCTION <b><a   href="libtar.TTarArchive.html#ReadFile">ReadFile</a></b> : STRING; OVERLOAD;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="AbArcTyp.TAbArchiveStreamHelper.html#WriteArchiveTail">WriteArchiveTail</a></b>; virtual; abstract;</code></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.TTarArchive.html#GetFilePos">GetFilePos</a></b> (VAR Current, Size : INT64);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="AbArcTyp.TAbArchiveStreamHelper.html#GetItemCount">GetItemCount</a></b> : Integer; virtual; abstract;</code></td>
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.TTarArchive.html#SetFilePos">SetFilePos</a></b> (NewPos : INT64);</code></td>
 </tr>
 </table>
 <h2 class="description">Description</h2>
@@ -85,11 +93,27 @@
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FOwnsStream"></a><code><b>FOwnsStream</b>: BOOLEAN;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FBytesToGo"></a><code><b>FBytesToGo</b>: INT64;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <h3 class="detail">Methods</h3>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AStream : TStream);</code></td>
+<td class="itemcode"><a name="Create"></a><code>CONSTRUCTOR <b>Create</b> (Stream : TStream); OVERLOAD;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -97,7 +121,7 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ExtractItemData"></a><code>procedure <b>ExtractItemData</b>(AStream : TStream); virtual; abstract;</code></td>
+<td class="itemcode"><a name="Create"></a><code>CONSTRUCTOR <b>Create</b> (Filename : STRING; FileMode : WORD = fmOpenRead OR fmShareDenyWrite); OVERLOAD;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -105,7 +129,7 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="FindFirstItem"></a><code>function <b>FindFirstItem</b> : Boolean; virtual; abstract;</code></td>
+<td class="itemcode"><a name="Destroy"></a><code>DESTRUCTOR <b>Destroy</b>; OVERRIDE;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -113,7 +137,7 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="FindNextItem"></a><code>function <b>FindNextItem</b> : Boolean; virtual; abstract;</code></td>
+<td class="itemcode"><a name="Reset"></a><code>PROCEDURE <b>Reset</b>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -121,7 +145,7 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ReadHeader"></a><code>procedure <b>ReadHeader</b>; virtual; abstract;</code></td>
+<td class="itemcode"><a name="FindNext"></a><code>FUNCTION <b>FindNext</b> (VAR DirRec : <a   href="libtar.TTarDirRec.html">TTarDirRec</a>) : BOOLEAN;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -129,7 +153,7 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ReadTail"></a><code>procedure <b>ReadTail</b>; virtual; abstract;</code></td>
+<td class="itemcode"><a name="ReadFile"></a><code>PROCEDURE <b>ReadFile</b> (Buffer : POINTER); OVERLOAD;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -137,7 +161,7 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SeekItem"></a><code>function <b>SeekItem</b>(Index : Integer): Boolean; virtual; abstract;</code></td>
+<td class="itemcode"><a name="ReadFile"></a><code>PROCEDURE <b>ReadFile</b> (Stream : TStream); OVERLOAD;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -145,7 +169,7 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="WriteArchiveHeader"></a><code>procedure <b>WriteArchiveHeader</b>; virtual; abstract;</code></td>
+<td class="itemcode"><a name="ReadFile"></a><code>PROCEDURE <b>ReadFile</b> (Filename : STRING); OVERLOAD;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -153,7 +177,7 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="WriteArchiveItem"></a><code>procedure <b>WriteArchiveItem</b>(AStream : TStream); virtual; abstract;</code></td>
+<td class="itemcode"><a name="ReadFile"></a><code>FUNCTION <b>ReadFile</b> : STRING; OVERLOAD;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -161,7 +185,7 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="WriteArchiveTail"></a><code>procedure <b>WriteArchiveTail</b>; virtual; abstract;</code></td>
+<td class="itemcode"><a name="GetFilePos"></a><code>PROCEDURE <b>GetFilePos</b> (VAR Current, Size : INT64);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -169,11 +193,11 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetItemCount"></a><code>function <b>GetItemCount</b> : Integer; virtual; abstract;</code></td>
+<td class="itemcode"><a name="SetFilePos"></a><code>PROCEDURE <b>SetFilePos</b> (NewPos : INT64);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-01-15 19:52:42</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-01-27 18:58:47</em>
 </span>
 </body></html>

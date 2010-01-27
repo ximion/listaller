@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<meta name="GENERATOR" content="PasDoc 0.11.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>libtar</title>
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
+<h1 class="unit">Unit libtar</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Uses">uses</a></td><td><a class="section"  href="#%40Classes">Classes, Interfaces, Objects and Records</a></td><td><a class="section"  href="#%40FuncsProcs">Functions and Procedures</a></td><td><a class="section"  href="#%40Types">Types</a></td><td><a class="section"  href="#%40Constants">Constants</a></td><td>Variables</td></tr></table>
+<a name="%40Description"></a><h2 class="description">Description</h2>
+<p>
+Unit to work with TAR archives</p>
+<a name="%40Uses"></a><h2 class="uses">uses</h2>
+<ul class="useslist"><li>SysUtils</li><li>Classes</li></ul><h2 class="overview">Overview</h2>
+<a name="%40Classes"></a><h3 class="cio">Classes, Interfaces, Objects and Records</h3>
+<table class="classestable wide_list">
+<tr class="listheader">
+<th class="itemname">Name</th>
+<th class="itemdesc">Description</th>
+</tr>
+<tr class="list">
+<td class="itemname">record&nbsp;<a class="bold"  href="libtar.TTarDirRec.html"><code>TTarDirRec</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Class&nbsp;<a class="bold"  href="libtar.TTarArchive.html"><code>TTarArchive</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname">Class&nbsp;<a class="bold"  href="libtar.TTarWriter.html"><code>TTarWriter</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+</table>
+<a name="%40FuncsProcs"></a><h3 class="summary">Functions and Procedures</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="itemcode"><code>FUNCTION <b><a   href="libtar.html#PermissionString">PermissionString</a></b> (Permissions : <a   href="libtar.html#TTarPermissions">TTarPermissions</a>) : STRING;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>FUNCTION <b><a   href="libtar.html#ConvertFilename">ConvertFilename</a></b> (Filename : STRING) : STRING;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>FUNCTION <b><a   href="libtar.html#FileTimeGMT">FileTimeGMT</a></b> (FileName : STRING) : TDateTime; OVERLOAD;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>FUNCTION <b><a   href="libtar.html#FileTimeGMT">FileTimeGMT</a></b> (SearchRec : TSearchRec) : TDateTime; OVERLOAD;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>PROCEDURE <b><a   href="libtar.html#ClearDirRec">ClearDirRec</a></b> (VAR DirRec : <a   href="libtar.TTarDirRec.html">TTarDirRec</a>);</code></td>
+</tr>
+</table>
+<a name="%40Types"></a><h3 class="summary">Types</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="itemcode"><code><b><a   href="libtar.html#TTarPermission">TTarPermission</a></b> = (...);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="libtar.html#TTarPermissions">TTarPermissions</a></b> = SET OF <a   href="libtar.html#TTarPermission">TTarPermission</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="libtar.html#TFileType">TFileType</a></b> = (...);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="libtar.html#TTarMode">TTarMode</a></b> = (...);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="libtar.html#TTarModes">TTarModes</a></b> = SET OF <a   href="libtar.html#TTarMode">TTarMode</a>;</code></td>
+</tr>
+</table>
+<a name="%40Constants"></a><h3 class="summary">Constants</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="itemcode"><code><b><a   href="libtar.html#FILETYPE_NAME">FILETYPE_NAME</a></b> : ARRAY [<a   href="libtar.html#TFileType">TFileType</a>] OF STRING =
+                  ('Regular', 'Link', 'Symbolic Link', 'Char File', 'Block File',
+                   'Directory', 'FIFO File', 'Contiguous', 'Dir Dump', 'Multivol', 'Volume Header');</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="libtar.html#ALL_PERMISSIONS">ALL_PERMISSIONS</a></b>     = [tpReadByOwner, tpWriteByOwner, tpExecuteByOwner,
+                         tpReadByGroup, tpWriteByGroup, tpExecuteByGroup,
+                         tpReadByOther, tpWriteByOther, tpExecuteByOther];</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="libtar.html#READ_PERMISSIONS">READ_PERMISSIONS</a></b>    = [tpReadByOwner, tpReadByGroup,  tpReadByOther];</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a   href="libtar.html#WRITE_PERMISSIONS">WRITE_PERMISSIONS</a></b>   = [tpWriteByOwner, tpWriteByGroup, tpWriteByOther];</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a   href="libtar.html#EXECUTE_PERMISSIONS">EXECUTE_PERMISSIONS</a></b> = [tpExecuteByOwner, tpExecuteByGroup, tpExecuteByOther];</code></td>
+</tr>
+</table>
+<h2 class="description">Description</h2>
+<h3 class="detail">Functions and Procedures</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="PermissionString"></a><code>FUNCTION <b>PermissionString</b> (Permissions : <a   href="libtar.html#TTarPermissions">TTarPermissions</a>) : STRING;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="ConvertFilename"></a><code>FUNCTION <b>ConvertFilename</b> (Filename : STRING) : STRING;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="FileTimeGMT"></a><code>FUNCTION <b>FileTimeGMT</b> (FileName : STRING) : TDateTime; OVERLOAD;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="FileTimeGMT"></a><code>FUNCTION <b>FileTimeGMT</b> (SearchRec : TSearchRec) : TDateTime; OVERLOAD;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="ClearDirRec"></a><code>PROCEDURE <b>ClearDirRec</b> (VAR DirRec : <a   href="libtar.TTarDirRec.html">TTarDirRec</a>);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Types</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="TTarPermission"></a><code><b>TTarPermission</b> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;<h6 class="description_section">Values</h6>
+<ul>
+<li>
+tpReadByOwner: &nbsp;</li>
+<li>
+tpWriteByOwner: &nbsp;</li>
+<li>
+tpExecuteByOwner: &nbsp;</li>
+<li>
+tpReadByGroup: &nbsp;</li>
+<li>
+tpWriteByGroup: &nbsp;</li>
+<li>
+tpExecuteByGroup: &nbsp;</li>
+<li>
+tpReadByOther: &nbsp;</li>
+<li>
+tpWriteByOther: &nbsp;</li>
+<li>
+tpExecuteByOther: &nbsp;</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="TTarPermissions"></a><code><b>TTarPermissions</b> = SET OF <a   href="libtar.html#TTarPermission">TTarPermission</a>;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="TFileType"></a><code><b>TFileType</b> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;<h6 class="description_section">Values</h6>
+<ul>
+<li>
+ftNormal: &nbsp;</li>
+<li>
+ftLink: &nbsp;</li>
+<li>
+ftSymbolicLink: &nbsp;</li>
+<li>
+ftCharacter: &nbsp;</li>
+<li>
+ftBlock: &nbsp;</li>
+<li>
+ftDirectory: &nbsp;</li>
+<li>
+ftFifo: &nbsp;</li>
+<li>
+ftContiguous: &nbsp;</li>
+<li>
+ftDumpDir: &nbsp;</li>
+<li>
+ftMultiVolume: &nbsp;</li>
+<li>
+ftVolumeHeader: &nbsp;</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="TTarMode"></a><code><b>TTarMode</b> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;<h6 class="description_section">Values</h6>
+<ul>
+<li>
+tmSetUid: &nbsp;</li>
+<li>
+tmSetGid: &nbsp;</li>
+<li>
+tmSaveText: &nbsp;</li>
+</ul>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="TTarModes"></a><code><b>TTarModes</b> = SET OF <a   href="libtar.html#TTarMode">TTarMode</a>;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Constants</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="FILETYPE_NAME"></a><code><b>FILETYPE_NAME</b> : ARRAY [<a   href="libtar.html#TFileType">TFileType</a>] OF STRING =
+                  ('Regular', 'Link', 'Symbolic Link', 'Char File', 'Block File',
+                   'Directory', 'FIFO File', 'Contiguous', 'Dir Dump', 'Multivol', 'Volume Header');</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="ALL_PERMISSIONS"></a><code><b>ALL_PERMISSIONS</b>     = [tpReadByOwner, tpWriteByOwner, tpExecuteByOwner,
+                         tpReadByGroup, tpWriteByGroup, tpExecuteByGroup,
+                         tpReadByOther, tpWriteByOther, tpExecuteByOther];</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="READ_PERMISSIONS"></a><code><b>READ_PERMISSIONS</b>    = [tpReadByOwner, tpReadByGroup,  tpReadByOther];</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="WRITE_PERMISSIONS"></a><code><b>WRITE_PERMISSIONS</b>   = [tpWriteByOwner, tpWriteByGroup, tpWriteByOther];</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="EXECUTE_PERMISSIONS"></a><code><b>EXECUTE_PERMISSIONS</b> = [tpExecuteByOwner, tpExecuteByGroup, tpExecuteByOther];</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-01-27 18:58:47</em>
+</span>
+</body></html>
