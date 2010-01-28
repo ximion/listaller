@@ -359,9 +359,6 @@
       <OtherUnitFiles Value="../src/;../packager/;../packager/compression/;../synapse/;../bindings/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
-    <CodeGeneration>
-      <SmartLinkUnit Value="True"/>
-    </CodeGeneration>
     <Linking>
       <Options>
         <ExecutableType Value="Library"/>

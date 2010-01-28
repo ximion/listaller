@@ -1012,6 +1012,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
+      <OtherUnitFiles Value="../synapse/"/>
       <UnitOutputDirectory Value="../build"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>

@@ -6,7 +6,6 @@ include /usr/share/cdbs/1/class/makefile.mk
 
 DEB_SRCDIR:=./src
 
-common-configure-arch common-configure-indep:: common-configure
-common-configure::
+common-configure-arch::
 		chmod +x $(CURDIR)/configure
 		$(CURDIR)/configure --enable-gtk --enable-qt --enable-creator --prefix=/usr
