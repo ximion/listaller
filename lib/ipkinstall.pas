@@ -443,6 +443,13 @@ var pkg: TLiUnpacker;
     i: Integer;
     DInfo: TDistroInfo;
     cont: TIPKControl;
+
+procedure Emergency_FreeAll();
+begin
+ if pkg is TLiUnpacker then pkg.Free;
+ if cont is TIPKControl then cont.Free;
+end;
+
 begin
 
 //The user _really_ is root. (This happens, if the daemon executes this action)
@@ -487,7 +494,7 @@ if not pkg.CheckSignature then
 
 if not pkg.UnpackFile('arcinfo.pin',pkg.WDir+'/arcinfo.pin') then
 begin
-pkg.Free;
+Emergency_FreeAll();
 MakeUsrRequest(rsExtractError+#13+rsPkgDM+#13+rsABLoad,rqError);
 Result:=false;
 exit;
@@ -667,7 +674,7 @@ begin
  begin
   MakeUsrRequest(rsNoComp+#13+rsInClose,rqError);
   Dependencies.Free;
-  pkg.Free;
+  Emergency_FreeAll();
   PkProfiles.Free;
   Result:=false;
   exit;
@@ -693,8 +700,10 @@ if Dependencies[i][1]='.' then pkg.UnpackFile(Dependencies[i],pkg.WDir+ExtractFi
 pkg.Free;
 
 msg('Profiles count is '+IntToStr(PkProfiles.Count));
-if PkProfiles.Count<0 then begin
- MakeUsrRequest(rsPkgInval+#13'Message: No profiles and no file list found!',rqError);
+if PkProfiles.Count<0 then
+begin
+Emergency_FreeAll();
+MakeUsrRequest(rsPkgInval+#13'Message: No profiles and no file list found!',rqError);
 PkProfiles.Free;
 Result:=false;
 exit;
@@ -788,7 +797,7 @@ if pkType=ptContainer then
 begin
 msg('Package type is "container"');
 
-//Installation is done later
+//IPK package has been initialized
 end;
 cont.Free;
 end;

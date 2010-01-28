@@ -6,13 +6,13 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1216"/>
+      <CurrentBuildNr Value="1220"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -43,8 +43,8 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="19" Y="25"/>
-        <TopLine Value="1"/>
+        <CursorPos X="11" Y="449"/>
+        <TopLine Value="428"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="22"/>
         <Loaded Value="True"/>
@@ -328,8 +328,8 @@
       <Unit42>
         <Filename Value="../packager/ipkpackage.pas"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="34" Y="25"/>
-        <TopLine Value="1"/>
+        <CursorPos X="35" Y="321"/>
+        <TopLine Value="293"/>
         <EditorIndex Value="2"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
@@ -342,7 +342,7 @@
         <UsageCount Value="10"/>
       </Unit43>
     </Units>
-    <JumpHistory Count="3" HistoryIndex="2">
+    <JumpHistory Count="6" HistoryIndex="5">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="22" Column="30" TopLine="1"/>
@@ -355,6 +355,18 @@
         <Filename Value="../packager/ipkpackage.pas"/>
         <Caret Line="25" Column="34" TopLine="1"/>
       </Position3>
+      <Position4>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="495" Column="20" TopLine="469"/>
+      </Position4>
+      <Position5>
+        <Filename Value="../packager/ipkpackage.pas"/>
+        <Caret Line="67" Column="22" TopLine="46"/>
+      </Position5>
+      <Position6>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="495" Column="24" TopLine="481"/>
+      </Position6>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

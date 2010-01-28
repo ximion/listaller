@@ -1,0 +1,42 @@
+object LoadDisp: TLoadDisp
+  Left = 361
+  Height = 115
+  Top = 323
+  Width = 232
+  AutoSize = True
+  BorderIcons = []
+  BorderStyle = bsNone
+  Caption = 'Loading...'
+  ClientHeight = 115
+  ClientWidth = 232
+  FormStyle = fsSplash
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  Position = poScreenCenter
+  LCLVersion = '0.9.28.2'
+  object Label1: TLabel
+    Left = 8
+    Height = 13
+    Top = 8
+    Width = 78
+    Caption = 'Loading setup...'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 8
+    Height = 13
+    Top = 24
+    Width = 60
+    Caption = 'Please wait!'
+    ParentColor = False
+  end
+  object ProgressBar1: TProgressBar
+    Left = 8
+    Height = 20
+    Top = 48
+    Width = 216
+    Smooth = True
+    Style = pbstMarquee
+    TabOrder = 0
+  end
+end

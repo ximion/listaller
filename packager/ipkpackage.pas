@@ -318,6 +318,7 @@ var arc: TTarArchive;
     dir: TTarDirRec;
 begin
 if not signChecked then CheckSignature;
+if fname[1]<>'.' then fname:='./'+fname;
  Result:=false;
  arc:=TTarArchive.Create(workdir+'ipktar.tar');
  arc.Reset;
@@ -326,6 +327,7 @@ if not signChecked then CheckSignature;
  begin
   if dir.Name=fname then
   begin
+   p_debug('file '+fname+' found in tar. (Dest: '+fdest+')');
    arc.ReadFile(fdest);
    Result:=true;
    break;

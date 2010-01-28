@@ -107,7 +107,7 @@ var
 
 implementation
 
-uses DGUnit;
+uses DGUnit, LoadFrm;
 
 { TIWizFrm }
 
@@ -352,7 +352,7 @@ end;
 end;
 
 function LoadIPKFile(): Boolean;
-var imForm: TimdFrm;
+var imForm: TimdFrm;lfm: TLoadDisp;
 begin
 if not DirectoryExists(RegDir) then
 begin
@@ -368,13 +368,18 @@ begin
   Application.Terminate;
 end;
 
+//Show Loading splash screen
+lfm:=TLoadDisp.Create(nil);
+lfm.Show;
+Application.ProcessMessages;
+
   DInfo.DName:='';
   Dinfo:=GetDistro;
 
  Result:=true;
  //Check distribution
   if DInfo.DName='' then begin
-   ShowMessage(rsLDnSupported+#13+rsInClose+#13+rsNotifyDevs);
+   ShowMessage(rsLDnSupported+#10+rsInClose+#10+rsNotifyDevs);
    Result:=false;
    Application.Terminate;
    exit;
@@ -392,8 +397,11 @@ if Application.HasOption('force-architecture') then
 //Load the IPK data
 setup.Initialize(paramstr(1));
 
-//Prepare exectype form
+//Remove Load-Display
+lfm.Hide;
+lfm.Free;
 
+//Prepare exectype form
 if (setup.PkType=ptLinstall)and(not Superuser) then
 begin
   imForm:=TimdFrm.Create(nil);
