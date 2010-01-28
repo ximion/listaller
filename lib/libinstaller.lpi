@@ -6,13 +6,13 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1220"/>
+      <CurrentBuildNr Value="1223"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -33,8 +33,8 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="30" Y="22"/>
-        <TopLine Value="1"/>
+        <CursorPos X="1" Y="443"/>
+        <TopLine Value="399"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="62"/>
         <Loaded Value="True"/>
@@ -43,11 +43,9 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="11" Y="449"/>
-        <TopLine Value="428"/>
-        <EditorIndex Value="1"/>
+        <CursorPos X="3" Y="467"/>
+        <TopLine Value="455"/>
         <UsageCount Value="22"/>
-        <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
@@ -330,9 +328,7 @@
         <UnitName Value="ipkpackage"/>
         <CursorPos X="35" Y="321"/>
         <TopLine Value="293"/>
-        <EditorIndex Value="2"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit42>
       <Unit43>
         <Filename Value="../packager/gpgsign.pas"/>
@@ -342,31 +338,15 @@
         <UsageCount Value="10"/>
       </Unit43>
     </Units>
-    <JumpHistory Count="6" HistoryIndex="5">
+    <JumpHistory Count="2" HistoryIndex="1">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="22" Column="30" TopLine="1"/>
       </Position1>
       <Position2>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="25" Column="19" TopLine="1"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="30" TopLine="1"/>
       </Position2>
-      <Position3>
-        <Filename Value="../packager/ipkpackage.pas"/>
-        <Caret Line="25" Column="34" TopLine="1"/>
-      </Position3>
-      <Position4>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="495" Column="20" TopLine="469"/>
-      </Position4>
-      <Position5>
-        <Filename Value="../packager/ipkpackage.pas"/>
-        <Caret Line="67" Column="22" TopLine="46"/>
-      </Position5>
-      <Position6>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="495" Column="24" TopLine="481"/>
-      </Position6>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

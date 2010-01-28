@@ -213,19 +213,19 @@ echo "Conclusion:"
 echo " Installing into $prefix"
 echo
 echo "Listaller will be built with the following features:"
-echo " Daemon and library: [enabled]"
-echo " Command-Line tools: [enabled]"
+echo " Daemon and library:  enabled"
+echo " Command-Line tools:  enabled"
 if [ "$ENABLE_QT" = "1" ]; then
- echo " Qt4 frontend: [enabled]"
-else echo " Qt4 frontend: [disabled]"
+ echo " Qt4 frontend:        enabled"
+else echo " Qt4 frontend:        disabled"
 fi
 if [ "$ENABLE_GTK" = "1" ]; then
- echo " GTK2 frontend: [enabled]"
-else echo " GTK2 frontend: [disabled]"
+ echo " GTK2 frontend:       enabled"
+else echo " GTK2 frontend:       disabled"
 fi
 if [ "$ENABLE_CREATOR" = "1" ]; then
- echo " Setup creator GUI: [enabled]"
-else echo " Setup creator GUI: [disabled]"
+ echo " Setup creator GUI:   enabled"
+else echo " Setup creator GUI:   disabled"
 fi
 echo
 echo "You can now run make" 

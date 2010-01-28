@@ -357,6 +357,7 @@ var i: Integer;
     DInfo: TDistroInfo;
     one: Double;
     lInd: Integer;
+    error: Boolean;
 
 procedure SearchForPackage(Index: PtrInt; Data: Pointer; Item: TMultiThreadProcItem);
 var pkit: TPackageKit;xtmp: TStringList;h: String;lpos: Integer;
@@ -371,9 +372,16 @@ begin
  SetExtraPos(Round(mnpos*one));
  lpos:=mnpos;
 end;
+if error then
+begin
+ MakeUsrRequest(StringReplace(rsDepNotFound,'%l',Dependencies[Index],[rfReplaceAll])+#10+rsInClose,rqError);
+ ProcThreadPool.StopThreads;
+end;
+
 end else
 begin
 
+  if error then exit;
  //Open PKit connection and assign tmp stringlist
   pkit:=TPackageKit.Create;
   xtmp:=TStringList.Create;
@@ -387,10 +395,9 @@ begin
   begin
    pkit.Free;
    xtmp.Free;
-   MakeUsrRequest(StringReplace(rsDepNotFound,'%l',Dependencies[Index],[rfReplaceAll])+#13+rsInClose,rqError);
-   ProcThreadPool.StopThreads;
-    tmp.Free;
-    exit;
+   tmp.Free;
+   error:=true;
+   exit;
   end;
 
   h:=xtmp[0];
@@ -408,6 +415,8 @@ end;
 begin
  Result:=true;
  SetExtraPos(1);
+ error:=false;
+
   if (Dependencies.Count>0) and (Dependencies[0]='[detectpkgs]') then
   begin
     Dependencies.Delete(0);

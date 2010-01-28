@@ -61,8 +61,8 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="10" Y="401"/>
-        <TopLine Value="375"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -939,8 +939,8 @@
         <ComponentName Value="LoadDisp"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="loadfrm"/>
-        <CursorPos X="1" Y="37"/>
-        <TopLine Value="7"/>
+        <CursorPos X="29" Y="38"/>
+        <TopLine Value="13"/>
         <UsageCount Value="22"/>
       </Unit126>
       <Unit127>
