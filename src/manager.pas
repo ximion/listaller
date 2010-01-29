@@ -31,7 +31,6 @@ type
   { TMnFrm }
 
   TMnFrm = class(TForm)
-    BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
     AboutBtn: TButton;
     AppDescLbl: TLabel;
@@ -88,9 +87,7 @@ type
     SettingsButton: TSpeedButton;
     RepoButton: TSpeedButton;
     procedure appListItemSelect(Sender: TObject; item: TAppInfoItem);
-    procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn6Click(Sender: TObject);
-    procedure btnInstallClick(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure btnSettingsClick(Sender: TObject);
     procedure btnCatClick(Sender: TObject);
@@ -154,7 +151,7 @@ procedure OnMgrStatus(change: LiStatusChange;data: TLiStatusData;user_data: Poin
 
 implementation
 
-uses pkgconvertdisp, swcatalog;
+uses pkgconvertdisp;
 
 { TMainForm }
 
@@ -290,15 +287,6 @@ begin
  if Assigned(appList) then appList.Free;
  appList:=TAppListView.Create(self);
  li_mgr_load_apps(@MnFrm.amgr);
-end;
-
-procedure TMnFrm.btnInstallClick(Sender: TObject);
-begin
-end;
-
-procedure TMnFrm.BitBtn1Click(Sender: TObject);
-begin
-  SCForm.ShowModal;
 end;
 
 procedure TMnFrm.appListItemSelect(Sender: TObject; item: TAppInfoItem);
@@ -863,7 +851,6 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
  CatButton.Caption:=rsSWCatalogue;
  Label1.Caption:=rsShow;
  AboutBtn.Caption:=rsAboutListaller;
- BitBtn1.Caption:=rsBrowseLiCatalog;
  BitBtn2.Caption:=rsOpenDirsiCatalog;
  InstAppButton.Caption:=rsInstalledApps;
  MItemInstallPkg.Caption:=rsInstallPkg;

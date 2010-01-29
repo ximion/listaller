@@ -318,8 +318,9 @@ var arc: TTarArchive;
     dir: TTarDirRec;
 begin
 if not signChecked then CheckSignature;
+Result:=false;
+if length(fname)<2 then exit;
 if fname[1]<>'.' then fname:='./'+fname;
- Result:=false;
  arc:=TTarArchive.Create(workdir+'ipktar.tar');
  arc.Reset;
  //Check if package has signature

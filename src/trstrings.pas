@@ -207,7 +207,6 @@ rsPkgInstFail='Package %p could not be installed.';
 rsShowPkMon='Start PackageKit monitor before running transactions';
 rsStartLiTray = 'Start Listaller tray icon application (to check dependencies)';
 rsAboutListaller='About Listaller';
-rsBrowseLiCatalog='Browse Listaller''s software catalog';
 rsOpenDirsiCatalog='Open your distribution''s package catalog';
 rsAbout='About';
 rsAuthors='Authors';

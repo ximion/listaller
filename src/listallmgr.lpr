@@ -25,7 +25,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms,
   SysUtils,
-  manager, uninstall, pkgconvertdisp, swcatalog,
+  manager, uninstall, pkgconvertdisp,
   LiCommon, LiTranslator, xtypefm, LResources, Process, appitem;
 
 {$IFDEF WINDOWS}{$R listallmgr.rc}{$ENDIF}
@@ -53,7 +53,6 @@ begin
   writeLn('Application initialized.');
   Application.CreateForm(TMnFrm, MnFrm);
   Application.CreateForm(TConvDisp, ConvDisp);
-  Application.CreateForm(TSCForm, SCForm);
   Application.Run;
   writeLn('Listaller manager closed.');
   end;

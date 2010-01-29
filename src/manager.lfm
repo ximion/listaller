@@ -1,9 +1,8 @@
 object MnFrm: TMnFrm
-  Left = 241
+  Left = 267
   Height = 558
-  Top = 264
+  Top = 244
   Width = 816
-  ActiveControl = FilterEdt
   Caption = 'Software Manager'
   ClientHeight = 538
   ClientWidth = 816
@@ -1643,10 +1642,13 @@ object MnFrm: TMnFrm
         Top = 414
         Width = 692
         Align = alBottom
+        BevelOuter = bvNone
         Caption = 'Software-Info'
         ClientHeight = 90
         ClientWidth = 692
+        Color = clWindow
         Constraints.MaxHeight = 285
+        ParentColor = False
         TabOrder = 2
         object AppImage: TImage
           Left = 6
@@ -1720,26 +1722,16 @@ object MnFrm: TMnFrm
     object CatalogPage: TPage
       Caption = 'CatalogPage'
       ClientWidth = 692
-      ClientHeight = 482
-      object BitBtn1: TBitBtn
-        Left = 190
-        Height = 40
-        Top = 147
-        Width = 283
-        Anchors = []
-        Caption = 'Browse Listaller''s catalog'
-        OnClick = BitBtn1Click
-        TabOrder = 0
-      end
+      ClientHeight = 504
       object BitBtn2: TBitBtn
-        Left = 190
+        Left = 206
         Height = 40
-        Top = 254
+        Top = 206
         Width = 283
         Anchors = []
         Caption = 'Open your distribution''s package catalog'
         OnClick = BitBtn2Click
-        TabOrder = 1
+        TabOrder = 0
       end
     end
     object RepoPage: TPage
