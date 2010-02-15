@@ -176,7 +176,7 @@ end;
 function ConfigDir: String;
 var h: String;
 begin
-h:=getenvironmentvariable('HOME');
+h:=GetEnvironmentVariable('HOME');
 h:=h+'/.config';
 if not DirectoryExists(h) then CreateDir(h);
 h:=h+'/Listaller';

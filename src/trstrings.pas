@@ -191,6 +191,7 @@ rsConvTitle='Converting %p package...';
 rsFiltering='Filtering...';
 rsFilter='Filter...';
 rsLoading='Loading...';
+rsApplications='Applications';
 rsInstalledApps='Installed'#10'applications';
 rsInstallPkg='Install package';
 rsBrowseCatalog='Browse'#10'catalog';

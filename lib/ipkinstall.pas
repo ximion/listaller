@@ -516,7 +516,7 @@ pkg.Decompress;
 if not pkg.CheckSignature then
  p_debug('Warning! Signature invalid or no signature found.');
 
-if not pkg.UnpackFile('arcinfo.pin',pkg.WDir+'/arcinfo.pin') then
+if not pkg.UnpackFile('./arcinfo.pin',pkg.WDir+'/arcinfo.pin') then
 begin
 Emergency_FreeAll();
 MakeUsrRequest(rsExtractError+#13+rsPkgDM+#13+rsABLoad,rqError);
@@ -583,7 +583,7 @@ cont.ReadProfiles(PkProfiles);
 for i:=0 to PkProfiles.Count-1 do
 begin
 msg('Found installation profile '+PkProfiles[PkProfiles.Count-1]);
-pkg.UnpackFile('/pkginfo/fileinfo-'+IntToStr(i)+'.id',pkg.WDir+'/fileinfo-'+IntToStr(i)+'.id');
+pkg.UnpackFile('/pkginfo/fileinfo-'+IntToStr(i)+'.id',pkg.WDir+'/pkginfo/fileinfo-'+IntToStr(i)+'.id');
 end;
 
 IAppName:=cont.AppName;
@@ -957,6 +957,12 @@ begin
   mnpos:=mnpos-10;
   SetMainPos(Round(mnpos*max));
  end;
+ for i:=0 to ndirs.Count-1 do
+ begin
+  msg('Removing '+ndirs[i]);
+  DeleteDirectory(ndirs[i],true);
+ end;
+ ndirs.Free;
  appfiles.Free;
 end;
 
@@ -1272,9 +1278,8 @@ FDir:=pkg.WDir+ExtractFileName(PkgPath)+'/';
 if not DirectoryExists(FDir) then
 CreateDir(FDIR);
 
-try
- pkg.UnpackFile(h,pkg.WDir+ExtractFileName(h));
-except
+if not pkg.UnpackFile(h,pkg.WDir+ExtractFileName(h)) then
+begin
  MakeUsrRequest(rsExtractError,rqError);
  RollbackInstallation;
  Result:=false;
@@ -1284,7 +1289,8 @@ end;
 
 msg('Copy file '+ExtractFileName(h)+' to '+dest+' ...');
 
-if fi[i+1] <> MDPrint((MD5.MD5File(DeleteModifiers(pkg.WDir+h),1024))) then begin
+if fi[i+1] <> MDPrint((MD5.MD5File(DeleteModifiers(pkg.WDir+ExtractFileName(h)),1024))) then
+begin
  MakeUsrRequest(rsHashError,rqError);
  RollbackInstallation;
  Result:=false;

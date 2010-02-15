@@ -342,6 +342,8 @@ if not signChecked then CheckSignature;
 Result:=false;
 if length(fname)<2 then exit;
 if fname[1]<>'.' then fname:='./'+fname;
+ fname:=StringReplace(fname,'//','/',[rfReplaceAll]);
+
  arc:=TTarArchive.Create(workdir+'ipktar.tar');
  arc.Reset;
  //Create dir struct
@@ -349,9 +351,10 @@ if fname[1]<>'.' then fname:='./'+fname;
  //Check if package has signature
  while arc.FindNext(dir) do
  begin
-  if dir.Name=fname then
+ if pos('rubber',fname)>0 then
+  p_debug(dir.name+' # '+fname+' >> '+fdest);
+  if StringReplace(dir.name,'//','/',[rfReplaceAll])=fname then
   begin
-   p_debug('file '+fname+' found in tar. (Dest: '+fdest+')');
    arc.ReadFile(fdest);
    Result:=true;
    break;

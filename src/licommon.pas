@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, process, RegExpr,
-  distri, Graphics, liBasic;
+  distri, Graphics, liBasic, trStrings, BaseUnix;
 
 type
 
@@ -136,42 +136,47 @@ s:=StringReplace(s,'$ICON-256','/usr/share/icons/hicolor/256x256/apps',[rfReplac
 s:=StringReplace(s,'$PIX','/usr/share/pixmaps',[rfReplaceAll]);
 end else
 begin
-if not DirectoryExists(GetXHome+'/applications/') then CreateDir(GetXHome+'/applications/');
-if not DirectoryExists(GetXHome+'/applications/files') then CreateDir(GetXHome+'/applications/files');
-if not DirectoryExists(GetXHome+'/applications/files/icons') then CreateDir(GetXHome+'/applications/files/icons');
+if not DirectoryExists(GetXHome+'/.applications/') then
+begin
+ CreateDir(GetXHome+'/.applications/');
+ if fpSymLink(PChar(GetXHome+'/.applications/'),PChar(GetXHome+'/'+rsApplications))<>0 then
+    P_error('Unable to creat symlink!');
+end;
+if not DirectoryExists(GetXHome+'/.appfiles') then CreateDir(GetXHome+'/.appfiles/');
+if not DirectoryExists(GetXHome+'/.appfiles/icons') then CreateDir(GetXHome+'/.appfiles/icons');
 //Iconpaths
-if not DirectoryExists(GetXHome+'/applications/files/icons/16x16')  then CreateDir(GetXHome+'/applications/files/icons/16x16');
-if not DirectoryExists(GetXHome+'/applications/files/icons/24x24')  then CreateDir(GetXHome+'/applications/files/icons/24x24');
-if not DirectoryExists(GetXHome+'/applications/files/icons/32x32')  then CreateDir(GetXHome+'/applications/files/icons/32x32');
-if not DirectoryExists(GetXHome+'/applications/files/icons/48x48')  then CreateDir(GetXHome+'/applications/files/icons/48x48');
-if not DirectoryExists(GetXHome+'/applications/files/icons/64x64')  then CreateDir(GetXHome+'/applications/files/icons/64x64');
-if not DirectoryExists(GetXHome+'/applications/files/icons/128x128')then CreateDir(GetXHome+'/applications/files/icons/128x128');
-if not DirectoryExists(GetXHome+'/applications/files/icons/256x256')then CreateDir(GetXHome+'/applications/files/icons/256x256');
-if not DirectoryExists(GetXHome+'/applications/files/icons/common')then CreateDir(GetXHome+'/applications/files/icons/common');
+if not DirectoryExists(GetXHome+'/.appfiles/icons/16x16')  then CreateDir(GetXHome+'/.appfiles/icons/16x16');
+if not DirectoryExists(GetXHome+'/.appfiles/icons/24x24')  then CreateDir(GetXHome+'/.appfiles/icons/24x24');
+if not DirectoryExists(GetXHome+'/.appfiles/icons/32x32')  then CreateDir(GetXHome+'/.appfiles/icons/32x32');
+if not DirectoryExists(GetXHome+'/.appfiles/icons/48x48')  then CreateDir(GetXHome+'/.appfiles/icons/48x48');
+if not DirectoryExists(GetXHome+'/.appfiles/icons/64x64')  then CreateDir(GetXHome+'/.appfiles/icons/64x64');
+if not DirectoryExists(GetXHome+'/.appfiles/icons/128x128')then CreateDir(GetXHome+'/.appfiles/icons/128x128');
+if not DirectoryExists(GetXHome+'/.appfiles/icons/256x256')then CreateDir(GetXHome+'/.appfiles/icons/256x256');
+if not DirectoryExists(GetXHome+'/.appfiles/icons/common')then CreateDir(GetXHome+'/.appfiles/icons/common');
 if LowerCase(n)='x86_64' then
 begin
- if not DirectoryExists(GetXHome+'/applications/files/lib64')then CreateDir(GetXHome+'/applications/files/lib64');
+ if not DirectoryExists(GetXHome+'/.appfiles/lib64')then CreateDir(GetXHome+'/.appfiles/lib64');
 end else
- if not DirectoryExists(GetXHome+'/applications/files/lib')then CreateDir(GetXHome+'/applications/files/lib');
+ if not DirectoryExists(GetXHome+'/.appfiles/lib')then CreateDir(GetXHome+'/.appfiles/lib');
 //
-s:=StringReplace(s,'$BIN',GetXHome+'/applications/files/binary',[rfReplaceAll]);
+s:=StringReplace(s,'$BIN',GetXHome+'/.appfiles/binary',[rfReplaceAll]);
 if LowerCase(n)='x86_64' then
-  s:=StringReplace(s,'$LIB',GetXHome+'/applications/files/lib64',[rfReplaceAll])
+  s:=StringReplace(s,'$LIB',GetXHome+'/.appfiles/lib64',[rfReplaceAll])
  else
-  s:=StringReplace(s,'$LIB',GetXHome+'/applications/files/lib',[rfReplaceAll]);
+  s:=StringReplace(s,'$LIB',GetXHome+'/.appfiles/lib',[rfReplaceAll]);
 
-s:=StringReplace(s,'$INST',GetXHome+'/applications/files',[rfReplaceAll]);
-s:=StringReplace(s,'$INST-X',GetXHome+'/applications/files',[rfReplaceAll]);
-s:=StringReplace(s,'$OPT',GetXHome+'/applications/files',[rfReplaceAll]);
-s:=StringReplace(s,'$APP',GetXHome+'/applications',[rfReplaceAll]);
-s:=StringReplace(s,'$ICON-16',GetXHome+'/applications/files/icons/16x16',[rfReplaceAll]);
-s:=StringReplace(s,'$ICON-24',GetXHome+'/applications/files/icons/24x24',[rfReplaceAll]);
-s:=StringReplace(s,'$ICON-32',GetXHome+'/applications/files/icons/32x32',[rfReplaceAll]);
-s:=StringReplace(s,'$ICON-48',GetXHome+'/applications/files/icons/48x48',[rfReplaceAll]);
-s:=StringReplace(s,'$ICON-64',GetXHome+'/applications/files/icons/64x64',[rfReplaceAll]);
-s:=StringReplace(s,'$ICON-128',GetXHome+'/applications/files/icons/128x128',[rfReplaceAll]);
-s:=StringReplace(s,'$ICON-256',GetXHome+'/applications/files/icons/256x256',[rfReplaceAll]);
-s:=StringReplace(s,'$PIX',GetXHome+'/applications/files/icons/common',[rfReplaceAll]);
+s:=StringReplace(s,'$INST',GetXHome+'/.appfiles',[rfReplaceAll]);
+s:=StringReplace(s,'$INST-X',GetXHome+'/.appfiles',[rfReplaceAll]);
+s:=StringReplace(s,'$OPT',GetXHome+'/.appfiles',[rfReplaceAll]);
+s:=StringReplace(s,'$APP',GetXHome+'/.applications',[rfReplaceAll]);
+s:=StringReplace(s,'$ICON-16',GetXHome+'/.appfiles/icons/16x16',[rfReplaceAll]);
+s:=StringReplace(s,'$ICON-24',GetXHome+'/.appfiles/icons/24x24',[rfReplaceAll]);
+s:=StringReplace(s,'$ICON-32',GetXHome+'/.appfiles/icons/32x32',[rfReplaceAll]);
+s:=StringReplace(s,'$ICON-48',GetXHome+'/.appfiles/icons/48x48',[rfReplaceAll]);
+s:=StringReplace(s,'$ICON-64',GetXHome+'/.appfiles/icons/64x64',[rfReplaceAll]);
+s:=StringReplace(s,'$ICON-128',GetXHome+'/.appfiles/icons/128x128',[rfReplaceAll]);
+s:=StringReplace(s,'$ICON-256',GetXHome+'/.appfiles/icons/256x256',[rfReplaceAll]);
+s:=StringReplace(s,'$PIX',GetXHome+'/.appfiles/icons/common',[rfReplaceAll]);
 end;
 Result:=s;
 end;
