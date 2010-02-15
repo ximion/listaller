@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1295"/>
+      <CurrentBuildNr Value="1310"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -46,13 +46,13 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="129">
+    <Units Count="130">
       <Unit0>
         <Filename Value="listallgo.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallgo"/>
-        <CursorPos X="12" Y="41"/>
-        <TopLine Value="37"/>
+        <CursorPos X="31" Y="43"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -63,8 +63,8 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="23" Y="4"/>
-        <TopLine Value="13"/>
+        <CursorPos X="57" Y="392"/>
+        <TopLine Value="371"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -690,7 +690,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="xtypefm"/>
-        <CursorPos X="26" Y="1"/>
+        <CursorPos X="62" Y="58"/>
         <TopLine Value="1"/>
         <UsageCount Value="22"/>
       </Unit90>
@@ -937,7 +937,6 @@
       </Unit125>
       <Unit126>
         <Filename Value="loadfrm.pas"/>
-        <IsPartOfProject Value="True"/>
         <ComponentName Value="LoadDisp"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="loadfrm"/>
@@ -959,8 +958,15 @@
         <TopLine Value="94"/>
         <UsageCount Value="10"/>
       </Unit128>
+      <Unit129>
+        <Filename Value="../synapse/ftpsend.pas"/>
+        <UnitName Value="ftpsend"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit129>
     </Units>
-    <JumpHistory Count="11" HistoryIndex="10">
+    <JumpHistory Count="18" HistoryIndex="17">
       <Position1>
         <Filename Value="igobase.pas"/>
         <Caret Line="347" Column="40" TopLine="317"/>
@@ -1005,6 +1011,34 @@
         <Filename Value="igobase.pas"/>
         <Caret Line="372" Column="28" TopLine="351"/>
       </Position11>
+      <Position12>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="4" Column="23" TopLine="4"/>
+      </Position12>
+      <Position13>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="110" Column="13" TopLine="77"/>
+      </Position13>
+      <Position14>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="355" Column="21" TopLine="334"/>
+      </Position14>
+      <Position15>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="26" Column="44" TopLine="15"/>
+      </Position15>
+      <Position16>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="401" Column="36" TopLine="375"/>
+      </Position16>
+      <Position17>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="26" Column="43" TopLine="1"/>
+      </Position17>
+      <Position18>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="392" Column="57" TopLine="371"/>
+      </Position18>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -1014,7 +1048,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../synapse/"/>
+      <OtherUnitFiles Value="../synapse/;../bindings/"/>
       <UnitOutputDirectory Value="../build"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>

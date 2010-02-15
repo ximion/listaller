@@ -107,7 +107,7 @@ var
 
 implementation
 
-uses DGUnit, LoadFrm;
+uses DGUnit;
 
 { TIWizFrm }
 
@@ -352,7 +352,7 @@ end;
 end;
 
 function LoadIPKFile(): Boolean;
-var imForm: TimdFrm;lfm: TLoadDisp;
+var imForm: TimdFrm;
 begin
 if not DirectoryExists(RegDir) then
 begin
@@ -368,9 +368,6 @@ begin
   Application.Terminate;
 end;
 
-//Show Loading splash screen
-lfm:=TLoadDisp.Create(nil);
-lfm.Show;
 Application.ProcessMessages;
 
   DInfo.DName:='';
@@ -386,10 +383,13 @@ Application.ProcessMessages;
   end;
 
 writeLn('Begin loading IPK');
+imForm:=TimdFrm.Create(nil);
+imForm.EnterLoadingState;
 
 setup:=TInstallPack.Create;
 setup.SetUserRequestCall(@RequestHandling,nil);
-setup.SetStatusChangeCall(@StatusChangeCall,nil);
+//Set status handler for init stage
+setup.SetStatusChangeCall(@xtypefm.PkgInitProgressChange,imForm);
 
 //Set forced actions
 if Application.HasOption('force-architecture') then
@@ -397,14 +397,13 @@ if Application.HasOption('force-architecture') then
 //Load the IPK data
 setup.Initialize(paramstr(1));
 
-//Remove Load-Display
-lfm.Hide;
-lfm.Free;
+//Now set new status change callback handler
+setup.SetStatusChangeCall(@StatusChangeCall,nil);
 
 //Prepare exectype form
 if (setup.PkType=ptLinstall)and(not Superuser) then
 begin
-  imForm:=TimdFrm.Create(nil);
+  imForm.LeaveLoadingState;
   with imForm do
   begin
     btnTest.Enabled:=true;
@@ -425,7 +424,7 @@ end;
 
 if (setup.PkType=ptDLink)and(not Superuser) then
 begin
-  imForm:=TimdFrm.Create(nil);
+  imForm.LeaveLoadingState;
   with imForm do
   begin
   btnTest.Enabled:=false;
@@ -440,7 +439,7 @@ end;
 
 if (setup.PkType=ptContainer)and(not Superuser) then
 begin
-  imForm:=TimdFrm.Create(nil);
+  imForm.LeaveLoadingState;
   with imForm do
   begin
   btnTest.Visible:=false;

@@ -1,7 +1,7 @@
 object IMdFrm: TIMdFrm
-  Left = 398
+  Left = 370
   Height = 144
-  Top = 407
+  Top = 428
   Width = 634
   HorzScrollBar.Page = 633
   HorzScrollBar.Range = 483
@@ -2231,5 +2231,14 @@ object IMdFrm: TIMdFrm
     NumGlyphs = 0
     OnClick = btnHomeClick
     TabOrder = 2
+  end
+  object LoadProgress: TProgressBar
+    Left = 8
+    Height = 20
+    Top = 72
+    Width = 196
+    Smooth = True
+    TabOrder = 3
+    Visible = False
   end
 end

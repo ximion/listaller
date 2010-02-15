@@ -35,6 +35,7 @@ type
  { TInstallation }
 
  TInstallation = class
+   procedure pkgProgress(pos: Integer; user_data: Pointer);
  private
   //Basic information about the package and the new application
   IAppName,IAppVersion, IAppCMD, IAuthor, ShDesc, IGroup: String;
@@ -261,6 +262,11 @@ begin
  longdesc.Free;
 end;
 
+procedure TInstallation.pkgProgress(pos: Integer; user_data: Pointer);
+begin
+  SetExtraPos(pos);
+end;
+
 procedure TInstallation.SetRootMode(b: Boolean);
 begin
  SUMode:=b;
@@ -272,7 +278,7 @@ end;
 
 procedure TInstallation.SetCurProfile(i: Integer);
 begin
- FFileInfo:='/stuff/fileinfo-'+IntToStr(i)+'.id';
+ FFileInfo:='/pkginfo/fileinfo-'+IntToStr(i)+'.id';
  CurProfile:=IntToStr(i);
 end;
 
@@ -395,7 +401,6 @@ begin
   begin
    pkit.Free;
    xtmp.Free;
-   tmp.Free;
    error:=true;
    exit;
   end;
@@ -417,6 +422,7 @@ begin
  SetExtraPos(1);
  error:=false;
 
+ p_debug('Resolving dependencies.');
   if (Dependencies.Count>0) and (Dependencies[0]='[detectpkgs]') then
   begin
     Dependencies.Delete(0);
@@ -434,15 +440,23 @@ begin
     one:=100/(Dependencies.Count*2);
     SetExtraPos(Round(mnpos*one));
     ShowPKMon();
-    tmp:=TStringList.Create;
 
+    tmp:=TStringList.Create;
     // ProcThreadPool.MaxThreadCount:=4;
+
      ProcThreadPool.DoParallelLocalProc(@SearchForPackage,-1,Dependencies.Count-1,nil);
 
     RemoveDuplicates(tmp);
     Dependencies.Assign(tmp);
+
+    if error then
+    begin
+     //TODO: Throw a nice error massage
+    end;
+
     tmp.Free;
     SetExtraPos(100);
+    p_debug('Depresolve finished.');
   end;
 end;
 
@@ -495,6 +509,7 @@ if DirectoryExists(tmpdir+ExtractFileName(fname)) then
  DeleteDirectory(tmpdir+ExtractFileName(fname),false);
 
 pkg:=TLiUnpacker.Create(fname);
+pkg.OnProgress:=@pkgProgress;
 //Uncompress LZMA
 pkg.Decompress;
 
@@ -568,7 +583,7 @@ cont.ReadProfiles(PkProfiles);
 for i:=0 to PkProfiles.Count-1 do
 begin
 msg('Found installation profile '+PkProfiles[PkProfiles.Count-1]);
-pkg.UnpackFile('/stuff/fileinfo-'+IntToStr(i)+'.id',pkg.WDir+'/fileinfo-'+IntToStr(i)+'.id');
+pkg.UnpackFile('/pkginfo/fileinfo-'+IntToStr(i)+'.id',pkg.WDir+'/fileinfo-'+IntToStr(i)+'.id');
 end;
 
 IAppName:=cont.AppName;
@@ -718,7 +733,7 @@ Result:=false;
 exit;
 end;
 
-if PkProfiles.Count=1 then FFileInfo:='/stuff/fileinfo-'+copy(PkProfiles[0],pos(' #',PkProfiles[0])+2,length(PkProfiles[0]))+'.id'
+if PkProfiles.Count=1 then FFileInfo:='/pkginfo/fileinfo-'+copy(PkProfiles[0],pos(' #',PkProfiles[0])+2,length(PkProfiles[0]))+'.id'
 else FFileInfo:='*';
 
 SetCurProfile(0);

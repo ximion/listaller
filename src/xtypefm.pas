@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Process, ExtCtrls, LiBasic, LCLType, Buttons, Distri, trStrings, ComCtrls,
-  iconLoader;
+  iconLoader, liTypes;
 
 type
 
@@ -38,6 +38,7 @@ type
     Label1: TLabel;
     Label2: TLabel;
     PkILabel: TLabel;
+    LoadProgress: TProgressBar;
     procedure btnHomeClick(Sender: TObject);
     procedure btnInstallAllClick(Sender: TObject);
     procedure btnTestClick(Sender: TObject);
@@ -49,7 +50,13 @@ type
     { private declarations }
   public
     { public declarations }
+    procedure EnterLoadingState;
+    procedure LeaveLoadingState;
   end; 
+
+// Publish procedure so it can be used by igobase
+//** Receive progress change signal on package initialization
+procedure PkgInitProgressChange(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 
 var
   //** Form to choose runmode
@@ -71,6 +78,7 @@ begin
  btnHome.Caption:=rsInstallHome;
  Label1.Caption:=rsWantToDoQ;
  PkILabel.Caption:=rsSpkWarning;
+ LoadProgress.Visible:=false;
 
  //Show development version warning
  if (pos('exp',LiVersion)>0)or(pos('dev',LiVersion)>0) then
@@ -89,6 +97,15 @@ begin
   LoadStockPixmap(STOCK_DIALOG_WARNING,ICON_SIZE_SMALL_TOOLBAR,PkWarnImg.Picture.Bitmap);
   PkiLabel.Visible:=true;
 end;
+end;
+
+procedure PkgInitProgressChange(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
+begin
+ if change=scExProgress then
+ begin
+  TIMdFrm(user_data).LoadProgress.Position:=data.exprogress;
+ end;
+ Application.ProcessMessages;
 end;
 
 procedure TIMdFrm.btnInstallAllClick(Sender: TObject);
@@ -134,6 +151,28 @@ end;
 procedure TIMdFrm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
 if btnHome.Tag <= 0 then begin Application.Terminate;halt(0);end;
+end;
+
+procedure TIMdFrm.EnterLoadingState;
+begin
+ PkILabel.Visible:=false;
+ PkWarnImg.Visible:=false;
+ LoadProgress.Visible:=true;
+ btnInstallAll.Enabled:=false;
+ btnTest.Enabled:=false;
+ btnHome.Enabled:=false;
+ Show;
+end;
+
+procedure TIMdFrm.LeaveLoadingState;
+begin
+ PkILabel.Visible:=true;
+ PkWarnImg.Visible:=true;
+ LoadProgress.Visible:=false;
+ btnInstallAll.Enabled:=true;
+ btnTest.Enabled:=true;
+ btnHome.Enabled:=true;
+ Hide;
 end;
 
 initialization

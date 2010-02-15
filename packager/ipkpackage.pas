@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LibTar, liBasic, ULZMAEncoder, ULZMADecoder,
-  UBufferedFS, ULZMACommon, gpgsign, CallbackProcess, Dialogs;
+  UBufferedFS, ULZMACommon, gpgsign, CallbackProcess, liTypes;
 
 type
  //** Creates IPK packages from preprocessed source files
@@ -50,11 +50,18 @@ type
  end;
 
  //** Unpacks IPK package structure
+
+ { TLiUnpacker }
+
  TLiUnpacker = class
+   procedure decoderProgress(const Action: TLZMAProgressAction;
+     const Value: int64);
  private
   ipkfile: String;
   workdir: String;
   signChecked: Boolean;
+  FProgress: TProgressEvent;
+  one: Double;
  public
   constructor Create(aIPKFile: String);
   destructor  Destroy;override;
@@ -67,6 +74,8 @@ type
   function UnpackFile(fname: String;fdest: String): Boolean;
   //** Unpacker's working dir
   property WDir: String read workdir;
+  //** On unpackger decompress progress
+  property OnProgress: TProgressEvent read FProgress write FProgress;
  end;
 
  //** Create small LZMA compressed files for update sources
@@ -223,6 +232,17 @@ begin
  inherited;
 end;
 
+procedure TLiUnpacker.decoderProgress(const Action: TLZMAProgressAction;
+  const Value: int64);
+begin
+  if Assigned(FProgress) then
+  begin
+   if Action=LPAMax then
+    one:=100/value
+   else
+    FProgress(Round(value*one),nil);
+  end;
+end;
 
 procedure TLiUnpacker.Decompress;
 var inStream:TBufferedFS;
@@ -242,6 +262,7 @@ begin
   outStream:=TBufferedFS.Create(workdir+'ipktar.tar', fmCreate);
 
   decoder:=TLZMADecoder.Create;
+  decoder.OnProgress:=@decoderProgress;
   inStream.position:=0;
     with decoder do
     begin
@@ -323,6 +344,8 @@ if length(fname)<2 then exit;
 if fname[1]<>'.' then fname:='./'+fname;
  arc:=TTarArchive.Create(workdir+'ipktar.tar');
  arc.Reset;
+ //Create dir struct
+ ForceDirectories(ExtractFilePath(fdest));
  //Check if package has signature
  while arc.FindNext(dir) do
  begin
