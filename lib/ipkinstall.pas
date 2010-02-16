@@ -278,7 +278,7 @@ end;
 
 procedure TInstallation.SetCurProfile(i: Integer);
 begin
- FFileInfo:='/pkginfo/fileinfo-'+IntToStr(i)+'.id';
+ FFileInfo:='/pkgdata/fileinfo-'+IntToStr(i)+'.id';
  CurProfile:=IntToStr(i);
 end;
 
@@ -583,7 +583,7 @@ cont.ReadProfiles(PkProfiles);
 for i:=0 to PkProfiles.Count-1 do
 begin
 msg('Found installation profile '+PkProfiles[PkProfiles.Count-1]);
-pkg.UnpackFile('/pkginfo/fileinfo-'+IntToStr(i)+'.id',pkg.WDir+'/pkginfo/fileinfo-'+IntToStr(i)+'.id');
+pkg.UnpackFile('/pkgdata/fileinfo-'+IntToStr(i)+'.id',pkg.WDir+'/pkgdata/fileinfo-'+IntToStr(i)+'.id');
 end;
 
 IAppName:=cont.AppName;
@@ -733,7 +733,7 @@ Result:=false;
 exit;
 end;
 
-if PkProfiles.Count=1 then FFileInfo:='/pkginfo/fileinfo-'+copy(PkProfiles[0],pos(' #',PkProfiles[0])+2,length(PkProfiles[0]))+'.id'
+if PkProfiles.Count=1 then FFileInfo:='/pkgdata/fileinfo-'+copy(PkProfiles[0],pos(' #',PkProfiles[0])+2,length(PkProfiles[0]))+'.id'
 else FFileInfo:='*';
 
 SetCurProfile(0);

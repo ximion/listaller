@@ -41,10 +41,10 @@ while [ $# -ge 1 ]; do
     shift
 done
 
-if [ -e "Makefile" ]; then
-  echo "Cleaning up..."
-  make clean
-fi
+#if [ -e "Makefile" ]; then
+#  echo "Cleaning up..."
+#  make clean
+#fi
 
 echo
 echo "=== Configuring Listaller ==="

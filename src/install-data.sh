@@ -21,7 +21,6 @@ mkdir -p $DESTDIR$prefix/share/listaller/mime
 mkdir -p $DESTDIR$prefix/share/listaller/graphics
 mkdir -p $DESTDIR$prefix/share/listaller/graphics/categories
 #Copy graphics
-cp ../graphics/header.png $DESTDIR$prefix/share/listaller/graphics/
 cp ../graphics/mime-ipk.png $DESTDIR$prefix/share/listaller/graphics/
 cp ../graphics/mime-ips.png $DESTDIR$prefix/share/listaller/graphics/
 cp ../graphics/listaller.png $DESTDIR$prefix/share/pixmaps

@@ -23,5 +23,8 @@ srcdoc:
 clean:
 	$(MAKE) -C ./src clean
 
+distclean:
+	$(MAKE) clean
+
 uninstall:
 	$(MAKE) -C ./src uninstall

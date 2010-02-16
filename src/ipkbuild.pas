@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, IPKPackage, MD5, LiCommon, Process,
-  OPBitmapFormats, IPKDef, liTypes, GPGSign;
+  OPBitmapFormats, IPKDef, liTypes, GPGSign, liBasic;
 
 type
 
@@ -234,26 +234,54 @@ writeLn('to create an update source in this directory.');
 writeLn('To update the repository, execute the "lipa -u" command with the same parameters again.');
 end;
 
+function IsNumeric(Value: string; const AllowFloat: Boolean=false): Boolean;
+var
+  ValueInt: Integer;
+  ValueFloat: Extended;
+  ErrCode: Integer;
+begin
+// Check for integer: Val only accepts integers when passed integer param
+Value := SysUtils.Trim(Value);
+Val(Value, ValueInt, ErrCode);
+Result := ErrCode = 0;      // Val sets error code 0 if OK
+if not Result and AllowFloat then
+    begin
+    // Check for float: Val accepts floats when passed float param
+    Val(Value, ValueFloat, ErrCode);
+    Result := ErrCode = 0;    // Val sets error code 0 if OK
+    end;
+end;
+
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////Function to build IPK-Packages///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 procedure BuildPackage(fi: String;o:String;genbutton:Boolean=false;signpkg:Boolean=false);
-var i,j,id: Integer;fc: TStringList;lh,h,s: String;pkgtype: TPkgType;sl,files,fsec,script: TStringList;
-  dlist: TStringList;aname: String;
+var
+  i,j: Integer;
+  fc: TStringList;
+  lh,h,s: String;
+  pkgtype: TPkgType;
+  sl,files,fsec,script: TStringList;
+  prID: String;
+  dlist: TStringList;
+  aname: String;
   control: TIPKScript;
   ipkpkg: TLiPackager;
+  res: Boolean;
 begin
-if FileExists(o) then begin
-writeLn('error: ');
-writeLn(' This file already exists.');
-writeLn(' Please choose another target!');
-halt(6);
-exit;
+if FileExists(o) then
+begin
+ writeLn('error: ');
+ writeLn(' This file already exists.');
+ writeLn(' Please choose another target!');
+ halt(6);
+ exit;
 end;
-if FileExists(WDir) then begin
-writeLn('Cleaning up...');
-  FileUtil.DeleteDirectory(WDir,false);
-  end;
+if FileExists(WDir) then
+begin
+ writeLn('Cleaning up...');
+ FileUtil.DeleteDirectory(WDir,false);
+end;
 
   writeLn('Reading file...');
 
@@ -286,8 +314,8 @@ writeLn('');
   end;
 
   //Creating dirs
-  CreateDir(WDir+'data/');
-  SysUtils.CreateDir(WDir+'pkginfo/');
+  CreateDir(WDir+'files/');
+  SysUtils.CreateDir(WDir+'pkgdata/');
 
   fc:=TStringList.Create;
   ipkpkg:=TLiPackager.Create(o);
@@ -299,10 +327,10 @@ writeLn('');
   begin
    files.Clear;
    fc.Clear;
-   id:=-1;
+   prID:='-1';
    if pos('!-Files ~',fsec[j])>0 then
    begin
-    id:=StrToInt(copy(fsec[j],pos('~',fsec[j])+1,length(fsec[j])));
+    prID:=(copy(fsec[j],pos('~',fsec[j])+1,length(fsec[j])));
     for i:=j+1 to fsec.count-1 do
      if pos('!-Files ~',fsec[i])>0 then break
        else files.Add(fsec[i]);
@@ -324,30 +352,40 @@ writeLn('');
  if (not FileExists(DeleteModifiers(Files[i])))
  and (not FileExists(ExtractFilePath(fi)+DeleteModifiers(Files[i]))) then
  begin
- writeLn('error: ');
- writeln(' The file '+DeleteModifiers(Files[i])+' doesn''t exists!');
- halt(6);
+  writeLn('error: ');
+  writeln(' The file '+DeleteModifiers(Files[i])+' doesn''t exists!');
+  halt(6);
  end;
 
- if not DirectoryExists(WDir+'data'+SyblToX(s))
- then CreateDir(WDir+'data'+SyblToX(s));
- h:=WDir+'data'+SyblToX(s);
- while not DirectoryExists(WDir+'data'+SyblToX(s)) do begin
- CreateDir(h);
- if DirectoryExists(h) then h:=WDir+'data'+SyblToX(s)
- else h:=ExtractFilePath(ExcludeTrailingBackslash(h));
- end;
+ if not IsNumeric(prID) then
+ begin
+  if prID[1]='{' then
+   prID:=copy(prID,2,length(prID)-1);  //If own dir is forced
+
+   h:='/files/'+prID+'/'+SyblToX(s) //For multiarch packages
+ end else
+  h:='/files/'+SyblToX(s); //Normal mode
+
+ if not DirectoryExists(WDir+h)
+ then FileUtil.ForceDirectory(WDir+h);
 
  if files[i][1]='.' then
- FileCopy(ExtractFilePath(fi)+DeleteModifiers(Files[i]),WDir+'data'+SyblToX(s)+'/'+ExtractFileName(DeleteModifiers(Files[i])))
+  res:=FileCopy(ExtractFilePath(fi)+DeleteModifiers(Files[i]),WDir+h+'/'+ExtractFileName(DeleteModifiers(Files[i])))
  else
- FileCopy(DeleteModifiers(Files[i]),WDir+'data'+SyblToX(s)+'/'+ExtractFileName(DeleteModifiers(Files[i])));
+  res:=FileCopy(DeleteModifiers(Files[i]),WDir+h+'/'+ExtractFileName(DeleteModifiers(Files[i])));
 
- fc.Add('/data'+SyblToX(s)+'/'+ExtractFileName(DeleteModifiers(Files[i])));
- //'/data'+StringReplace(Files[i+2],'$INST','',[rfReplaceAll])+'/'+ExtractFileName(DeleteModifiers(Files[i]))+copy(Files[i],pos(ExtractFileName(DeleteModifiers(Files[i])),Files[i])+length(ExtractFileName(DeleteModifiers(Files[i]))),length(Files[i])));
+ if not res then
+ begin
+  writeLn('error: ');
+  writeln(' Copying of '+DeleteModifiers(Files[i])+' failed.');
+  halt(5);
+ end;
+
+ fc.Add(h+'/'+ExtractFileName(DeleteModifiers(Files[i])));
+ //'/files'+StringReplace(Files[i+2],'$INST','',[rfReplaceAll])+'/'+ExtractFileName(DeleteModifiers(Files[i]))+copy(Files[i],pos(ExtractFileName(DeleteModifiers(Files[i])),Files[i])+length(ExtractFileName(DeleteModifiers(Files[i]))),length(Files[i])));
 //writeLn('Add: '+fc[fc.Count-1]);
 
- ipkpkg.AddFile('./data'+SyblToX(s),WDir+'/data'+SyblToX(s)+'/'+ExtractFileName(DeleteModifiers(Files[i])));
+ ipkpkg.AddFile('.'+h,WDir+h+'/'+ExtractFileName(DeleteModifiers(Files[i])));
 
  fc.Add(MD5.MDPrint(MD5.MD5File(DeleteModifiers(Files[i]),1024)));//ExcludeTrailingBackslash(Files[i+1]));
  write('.');
@@ -358,10 +396,10 @@ writeLn('');
  end;
 
 //
-if id >-1 then begin
- fc.SaveToFile(WDir+'pkginfo/'+'fileinfo-'+IntToStr(id)+'.id');
+if prID<>'-1' then begin
+ fc.SaveToFile(WDir+'pkgdata/'+'fileinfo-'+prID+'.id');
 
- ipkpkg.AddFile('./pkginfo/',WDir+'pkginfo/fileinfo-'+IntToStr(id)+'.id');
+ ipkpkg.AddFile('./pkgdata/',WDir+'pkgdata/fileinfo-'+prID+'.id');
 end;
 //
 
@@ -405,7 +443,7 @@ begin
 end;
 
 writeLn('Making control-script...');
-SysUtils.CreateDir(WDir+'pkginfo/');
+SysUtils.CreateDir(WDir+'pkgdata/');
 
 if control.Icon<>'' then
 if not FileExists(control.Icon) then
@@ -415,9 +453,9 @@ begin
  halt(9);
 end else
 begin
- FileCopy(control.Icon,WDir+'pkginfo/'+'packicon.png'); //!!! Changes needed to support more image types
- control.Icon:='/pkginfo/'+'packicon.png';
- ipkpkg.AddFile('./pkginfo',WDir+'pkginfo/'+'packicon.png');
+ FileCopy(control.Icon,WDir+'pkgdata/'+'packicon.png'); //!!! Changes needed to support more image types
+ control.Icon:='/pkgdata/'+'packicon.png';
+ ipkpkg.AddFile('./pkgdata',WDir+'pkgdata/'+'packicon.png');
 end;
 
 sl:=TStringList.Create;
@@ -427,9 +465,9 @@ if sl.Count>0 then
 begin
 control.WriteAppLicense(sl);
 {
-FileCopy(lh,WDir+'pkginfo/'+'license'+ExtractFileExt(lh));
+FileCopy(lh,WDir+'pkgdata/'+'license'+ExtractFileExt(lh));
 SetNode(FindChildNode(xn,'license'),'/pkginfo/'+'license'+ExtractFileExt(lh));
-tmp.Add(WDir+'pkginfo/'+'license'+ExtractFileExt(lh));
+tmp.Add(WDir+'pkgdata/'+'license'+ExtractFileExt(lh));
 }
 end else writeLn(' W: No license file found!');
 
@@ -439,10 +477,10 @@ if sl.Count>0 then
 begin
 control.WriteAppDescription(sl);
 {
-FileCopy(lh,WDir+'pkginfo/'+'description'+ExtractFileExt(lh));
+FileCopy(lh,WDir+'pkgdata/'+'description'+ExtractFileExt(lh));
 tmp.Add(WDir+'pkginfo/'+'description'+ExtractFileExt(lh));
 
-SetNode(FindChildNode(xn,'description'),'/pkginfo/'+'description'+ExtractFileExt(lh));}
+SetNode(FindChildNode(xn,'description'),'/pkgdata/'+'description'+ExtractFileExt(lh));}
 end else writeLn(' W: No long description found!');
 
 sl.Free;
@@ -495,9 +533,9 @@ writeLn(' Icon-path is invalid!');
 halt(9);
 end else
 begin
-FileCopy(control.Icon,WDir+'pkginfo/'+'packicon.png'); //!!! Should be changed to support more picture-filetypes
-control.Icon:='/pkginfo/'+'packicon.png';
-ipkpkg.AddFile('./pkginfo',WDir+'pkginfo/'+'packicon.png');
+FileCopy(control.Icon,WDir+'pkgdata/'+'packicon.png'); //!!! Should be changed to support more picture-filetypes
+control.Icon:='/pkgdata/'+'packicon.png';
+ipkpkg.AddFile('./pkgdata',WDir+'pkgdata/'+'packicon.png');
 writeLn(' Info: Icon added.');
 end;
 end; //END <>nil
@@ -510,9 +548,9 @@ if pkgtype=ptContainer then
 begin
 writeLn('Mode: Build container IPK package');
 
-FileCopy(control.Binary,WDir+'data/'+ExtractFileName(control.Binary));
-ipkpkg.AddFile('./data',WDir+'data/'+ExtractFileName(control.Binary));
-control.Binary:='/data/'+ExtractFileName(control.Binary);
+FileCopy(control.Binary,WDir+'files/'+ExtractFileName(control.Binary));
+ipkpkg.AddFile('./files',WDir+'files/'+ExtractFileName(control.Binary));
+control.Binary:='/files/'+ExtractFileName(control.Binary);
 end;
 end;
 

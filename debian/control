@@ -3,12 +3,12 @@ Section: admin
 Maintainer: Matthias Klumpp <matthias@nlinux.org>
 Priority: optional
 Homepage: http://listaller.nlinux.org
-Standards-Version: 3.8.3
+Standards-Version: 3.8.4
 Build-Depends: libgtk2.0-dev, cdbs, quilt, lazarus (>=0.9.28), fpc (>= 2.4.0),
  debhelper (>= 5), libqt4intf-dev, libsqlite3-dev, libglib2.0-dev,
- libpackagekit-glib2-dev (>= 0.5.5), libdbus-1-dev, libpolkit-gobject-1-dev
+ libpackagekit-glib2-dev (>= 0.5.6), libdbus-1-dev, libpolkit-gobject-1-dev
 
-Package: libinstaller-0.4.0
+Package: libinstaller0.4.0
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, apt-file, listaller-core
 Description: Listaller library
@@ -27,7 +27,7 @@ Description: Listaller core files
 
 Package: listaller-tools
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, libinstaller-0.4.0 (= ${binary:Version}), listaller-core
+Depends: ${misc:Depends}, ${shlibs:Depends}, libinstaller0.4.0 (= ${binary:Version}), listaller-core
 Description: Listaller package tools
  This package contains everything you need to build own IPK packages.
  It also contains the needed tools to build RPM and DEB packages from
@@ -74,7 +74,7 @@ Description: Listaller data
  This package contains platform and widgetset independent data of Listaller.
 
 Package: listaller-creator-gtk
-Architecture: i386 powerpc sparc amd64 arm
+Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, xdg-utils, lsb-release, listaller-tools (= ${binary:Version})
 Replaces: listaller-creator-qt
 Breaks: listaller-creator-qt (<= ${source:Version})
@@ -86,7 +86,7 @@ Description: Listaller Creator (GTK2)
  Please note that this is an alpha-release!
 
 Package: listaller-creator-qt
-Architecture: i386 powerpc sparc amd64 arm
+Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, xdg-utils, lsb-release, listaller-tools (= ${binary:Version})
 Replaces: listaller-creator-gtk
 Breaks: listaller-creator-gtk (<= ${source:Version})
