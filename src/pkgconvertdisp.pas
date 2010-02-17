@@ -1,5 +1,5 @@
 { pkgconvertdisp.pas
-  Copyright (C) Listaller Project 2008-2009
+  Copyright (C) Listaller Project 2008-2010
 
   pkgconvertdisp.pas is free software: you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  process, ExtCtrls, LiBasic, LCLType, manager, TRStrings, appman, liTypes;
+  Process, ExtCtrls, LiBasic, LCLType, Manager, TRStrings, AppMan;
 
 type
 

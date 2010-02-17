@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -146,7 +146,7 @@ begin
   li_mgr_remove_app(@MnFrm.amgr,MnFrm.uApp);
  while astatus=prNone do Application.ProcessMessages;
  li_mgr_register_status_call(@MnFrm.amgr,@manager.OnMgrStatus,nil);
- MnFrm.ReloadAppList();
+ MnFrm.ReloadAppList(true);
 end else close;
 
 end else

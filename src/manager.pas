@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, Process, LCLType, Buttons, ExtCtrls, Distri, AppList,
-  Uninstall, trStrings, FileUtil, CheckLst, xTypeFm, AppMan, LiBasic, liTypes,
+  Uninstall, trStrings, FileUtil, CheckLst, AppMan, LiBasic, liTypes,
   AboutBox, PackageKit, Spin, Menus, iconLoader, LiCommon, AppItem;
 
 type
@@ -31,25 +31,29 @@ type
   { TMnFrm }
 
   TMnFrm = class(TForm)
+    AppDescLbl: TLabel;
+    AppImage: TImage;
+    AppInfoPanel: TPanel;
+    AppNameLbl: TLabel;
+    AppVersionLbl: TLabel;
     BitBtn2: TBitBtn;
     AboutBtn: TButton;
-    AppDescLbl: TLabel;
-    AppVersionLbl: TLabel;
-    UnButton: TBitBtn;
+    AppViewControl: TPageControl;
+    SWBox: TPanel;
     BitBtn5: TBitBtn;
     BitBtn6: TBitBtn;
     Button1: TButton;
-    AppImage: TImage;
-    AppNameLbl: TLabel;
     MainMenu1: TMainMenu;
     MBar: TProgressBar;
     MenuItem1: TMenuItem;
     MItemInstallPkg: TMenuItem;
-    AppInfoPanel: TPanel;
-    SWBox: TPanel;
     Splitter1: TSplitter;
     StatusLabel: TLabel;
     RmUpdSrcBtn: TBitBtn;
+    SWBoxSU: TPanel;
+    MyAppSheet: TTabSheet;
+    SysAppSheet: TTabSheet;
+    UnButton: TBitBtn;
     UpdCheckBtn: TBitBtn;
     CatButton: TSpeedButton;
     CBox: TComboBox;
@@ -87,6 +91,7 @@ type
     SettingsButton: TSpeedButton;
     RepoButton: TSpeedButton;
     procedure appListItemSelect(Sender: TObject; item: TAppInfoItem);
+    procedure AppViewControlChange(Sender: TObject);
     procedure BitBtn6Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure btnSettingsClick(Sender: TObject);
@@ -98,7 +103,9 @@ type
     procedure CbShowPkMonChange(Sender: TObject);
     procedure EnableProxyCbChange(Sender: TObject);
     procedure MItemInstallPkgClick(Sender: TObject);
+    procedure MyAppSheetShow(Sender: TObject);
     procedure RmUpdSrcBtnClick(Sender: TObject);
+    procedure SysAppSheetShow(Sender: TObject);
     procedure UListBoxClick(Sender: TObject);
     procedure UnButtonClick(Sender: TObject);
     procedure UpdCheckBtnClick(Sender: TObject);
@@ -107,31 +114,37 @@ type
     procedure FilterEdtExit(Sender: TObject);
     procedure FilterEdtKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure InstAppButtonClick(Sender: TObject);
     procedure RepoButtonClick(Sender: TObject);
   private
     { private declarations }
+
     blst: TStringList;
+    //** Selected application item
     activeRmItem: TAppInfoItem;
+    //** Visual application list
+    appList: TAppListView;
+    //** Visual application list for shared apps
+    appListSU: TAppListView;
+    //** Visual applist for search results
+    appResList: TAppListView;
     procedure UninstallClick(Sender: TObject; Index: Integer;
               item: TAppInfoItem);
+    function CreateNewUserAppList: TAppListView;
+    function CreateNewSuAppList: TAppListView;
   public
     { public declarations }
     DInfo: TDistroInfo;
-    //** Visual application list
-    appList: TAppListView;
-    //** Visual applist for search results
-    appResList: TAppListView;
     //** Information about the application that should be uninstalled
     uApp: TAppInfo;
     //** Pointer to our AppManager object
     amgr: Pointer;
-    //** Reload the application list
-    procedure ReloadAppList;
+    //** Reference to current active list
+    currAppList: TAppListView;
+    //** Reload the current application list
+    procedure ReloadAppList(const force: Boolean=false);
   end;
 
   //** Fill ImageList with category icons
@@ -139,9 +152,11 @@ type
 
 var
  //** Main formular instance
-  MnFrm:   TMnFrm;
+ MnFrm:   TMnFrm;
  //** List of installed application names
-  instLst: TStringList;
+ instLst: TStringList;
+ //** Show Su-Apps (or not)
+ SUApps: Boolean=false;
 
 //Published for use in uninstall.pas
 procedure OnMgrStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
@@ -175,7 +190,7 @@ begin
 Result:=true;
 with MnFrm do
 begin
- appList.ItemFromAppInfo(TAppInfo(obj^));
+ currAppList.ItemFromAppInfo(TAppInfo(obj^));
 end;
 Application.ProcessMessages;
 end;
@@ -209,12 +224,6 @@ begin
         s.Delete(iHigh);
 end;
 
-var fAct: Boolean;
-procedure TMnFrm.FormShow(Sender: TObject);
-begin
-fAct:=true;
-end;
-
 procedure TMnFrm.InstAppButtonClick(Sender: TObject);
 begin
   Notebook1.ActivePageComponent:=InstalledAppsPage;
@@ -231,6 +240,32 @@ begin
   SettingsButton.Down:=false;
   RepoButton.Down:=true;
   InstAppButton.Down:=false;
+end;
+
+function TMnFrm.CreateNewSuAppList: TAppListView;
+begin
+ //New applist for shared apps
+ Result:=TAppListView.Create(self); //New application list
+ with Result do
+ begin
+  Parent:=SWBoxSU;
+  Align:=alClient;
+  OnRmButtonClick:=@UninstallClick;
+  OnItemSelect:=@appListItemSelect;
+ end;
+end;
+
+function TMnFrm.CreateNewUserAppList: TAppListView;
+begin
+ //New applist for user-apps
+ Result:=TAppListView.Create(self); //New application list
+ with Result do
+ begin
+  Parent:=SWBox;
+  Align:=alClient;
+  OnRmButtonClick:=@UninstallClick;
+  OnItemSelect:=@appListItemSelect;
+ end;
 end;
 
 procedure FillImageList(IList: TImageList);
@@ -282,11 +317,33 @@ begin
   bmp.Free;
 end;
 
-procedure TMnFrm.ReloadAppList;
+procedure TMnFrm.ReloadAppList(const force: Boolean=false);
 begin
- if Assigned(appList) then appList.Free;
- appList:=TAppListView.Create(self);
+if currAppList=appList then
+begin
+ SUApps:=false;
+ li_mgr_set_su_mode(@aMgr,SuApps);
+ if (appList.Count<=0)or(force) then
+ begin
+  appList.ClearList;
+ {if Assigned(appList) then appList.Free;
+ appList:=CreateNewUserAppList;}
  li_mgr_load_apps(@MnFrm.amgr);
+ end;
+end else
+if currAppList=appListSU then
+begin
+ SUApps:=true;
+ li_mgr_set_su_mode(@aMgr,SuApps);
+ if (appListSU.Count<=0)or(force) then
+ begin
+  appListSU.ClearList;
+
+  {if Assigned(appListSU) then appListSU.Free;
+ appListSU:=CreateNewSuAppList;}
+  li_mgr_load_apps(@MnFrm.amgr);
+ end;
+end;
 end;
 
 procedure TMnFrm.appListItemSelect(Sender: TObject; item: TAppInfoItem);
@@ -301,6 +358,11 @@ begin
   AppVersionLbl.Caption:='Version: unknown';
  AppInfoPanel.Visible:=true;
  activeRmItem:=item;
+end;
+
+procedure TMnFrm.AppViewControlChange(Sender: TObject);
+begin
+
 end;
 
 procedure TMnFrm.BitBtn6Click(Sender: TObject);
@@ -649,6 +711,14 @@ begin
   end;
 end;
 
+procedure TMnFrm.MyAppSheetShow(Sender: TObject);
+begin
+ currAppList:=appList;
+ AppViewControl.Enabled:=false;
+ ReloadAppList;
+ AppViewControl.Enabled:=true;
+end;
+
 procedure TMnFrm.RmUpdSrcBtnClick(Sender: TObject);
 var uconf: TStringList;
 begin
@@ -665,6 +735,14 @@ begin
   ShowMessage(rsSourceDeleted);
  end;
 end else ShowMessage(rsPleaseSelectListItem);
+end;
+
+procedure TMnFrm.SysAppSheetShow(Sender: TObject);
+begin
+ currAppList:=appListSU;
+ AppViewControl.Enabled:=false;
+ ReloadAppList;
+ AppViewControl.Enabled:=true;
 end;
 
 procedure TMnFrm.UListBoxClick(Sender: TObject);
@@ -764,18 +842,8 @@ CBox.Enabled:=true;
 end;
 end;
 
-procedure TMnFrm.FormActivate(Sender: TObject);
-begin
-  if fAct then
-  begin fAct:=false;
-   MBar.Visible:=true;
-   li_mgr_load_apps(@amgr);
-   MBar.Visible:=false;
-  end;
-end;
-
 procedure TMnFrm.FormCreate(Sender: TObject);
-var xFrm: TimdFrm;i: Integer;tmp: TStringList;
+var i: Integer;tmp: TStringList;
 begin
 SWBox.DoubleBuffered:=true;
 DoubleBuffered:=true;
@@ -787,29 +855,13 @@ amgr:=li_mgr_new; //Create new app manager
   
  uApp.UId:='';
 
- Superuser:=IsRoot;
- if not IsRoot then
- begin
- xFrm:=TimdFrm.Create(nil);
+ SuApps:=IsRoot;
 
  //Set reg-dir
  RegDir:=SyblToPath('$INST/app-reg/');
 
 
- with xFrm do
- begin
-  Caption:=rsSelMgrMode;
-  btnTest.Visible:=false;
-  CatButton.Caption:=rsSWCatalogue;
-  btnInstallAll.Caption:=rsDispRootApps;
-  btnHome.Caption:=rsDispOnlyMyApps;
-  Refresh;
-  ShowModal;
- end;
-xFrm.Free;
-end;
-
-li_mgr_set_su_mode(@aMgr,Superuser);
+li_mgr_set_su_mode(@aMgr,SuApps);
 
 if not DirectoryExists(RegDir) then CreateDir(RegDir);
 
@@ -828,18 +880,32 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
   UListBox.Checked[UListBox.Items.Count-1]:=tmp[i][1]='-';
   end;
 
- appList:=TAppListView.Create(self); //New application list
- appList.Parent:=SWBox;
- appList.Align:=alClient;
- appList.OnRmButtonClick:=@UninstallClick;
- appList.OnItemSelect:=@appListItemSelect;
+ //New applist for user-apps
+ appList:=CreateNewUserAppList;
 
- appResList:=TAppListView.Create(self,false); //Applist to display results
- appResList.Parent:=SWBox;
- appResList.Align:=alClient;
- appResList.OnRmButtonClick:=@UninstallClick;
- appResList.OnItemSelect:=@appListItemSelect;
- appResList.Visible:=false;
+ //New applist for shared apps
+ appListSU:=CreateNewSuAppList;
+
+ //Applist to display search results
+ appResList:=TAppListView.Create(self,false);
+ with appResList do
+ begin
+  Parent:=SWBox;
+  Align:=alClient;
+  OnRmButtonClick:=@UninstallClick;
+  OnItemSelect:=@appListItemSelect;
+  Visible:=false;
+ end;
+
+ if SuApps then
+ begin
+  AppViewControl.ActivePage:=SysAppSheet;
+  currAppList:=appListSU;
+ end else
+ begin
+  AppViewControl.ActivePage:=MyAppSheet;
+  currAppList:=appList;
+ end;
 
  AppInfoPanel.Caption:='';
  AppInfoPanel.Visible:=false;
@@ -858,6 +924,8 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
  RepoButton.Caption:=rsRepositories;
  SettingsButton.Caption:=rsSettings;
  FilterEdt.Text:=rsFilter;
+ MyAppSheet.Caption:=rsMyApps;
+ SysAppSheet.Caption:=rsSharedApps;
  //Translate config page
  edtUsername.Caption:=rsUsername+':';
  edtPasswd.Caption:=rsPassword+':';
@@ -943,7 +1011,9 @@ begin
   li_mgr_free(@aMgr); //Free appmanager
   if Assigned(blst) then blst.Free;       //Free blacklist
   if Assigned(InstLst) then InstLst.Free; //Free list of installed apps
-  if Assigned(appList) then appList.Free; //Free Application List
+  if Assigned(appResList) then appResList.Free; //Free app reult list
+  if Assigned(appList) then appList.Free; //Free application list
+  if Assigned(appListSU) then appListSU.Free; //Free application SU list
 end;
 
 initialization

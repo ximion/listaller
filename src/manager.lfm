@@ -3,6 +3,7 @@ object MnFrm: TMnFrm
   Height = 558
   Top = 244
   Width = 816
+  ActiveControl = AppViewControl
   Caption = 'Software Manager'
   ClientHeight = 538
   ClientWidth = 816
@@ -313,10 +314,8 @@ object MnFrm: TMnFrm
     0000
   }
   Menu = MainMenu1
-  OnActivate = FormActivate
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  OnShow = FormShow
   LCLVersion = '0.9.28.2'
   object StatusLabel: TLabel
     Left = 112
@@ -1626,7 +1625,7 @@ object MnFrm: TMnFrm
       end
       object FilterEdt: TEdit
         Left = 550
-        Height = 18
+        Height = 20
         Top = 8
         Width = 139
         Anchors = [akTop, akRight]
@@ -1636,10 +1635,62 @@ object MnFrm: TMnFrm
         TabOrder = 1
         Text = '*'
       end
+      object Splitter1: TSplitter
+        Cursor = crVSplit
+        Left = 0
+        Height = 5
+        Top = 499
+        Width = 692
+        Align = alBottom
+        ResizeAnchor = akBottom
+      end
+      object AppViewControl: TPageControl
+        Left = 0
+        Height = 363
+        Top = 46
+        Width = 692
+        ActivePage = MyAppSheet
+        Align = alBottom
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        TabIndex = 0
+        TabOrder = 3
+        object MyAppSheet: TTabSheet
+          Caption = 'My Apps'
+          ClientHeight = 337
+          ClientWidth = 688
+          OnShow = MyAppSheetShow
+          object SWBox: TPanel
+            Left = 0
+            Height = 337
+            Top = 0
+            Width = 688
+            Align = alClient
+            BevelOuter = bvNone
+            Caption = 'Software-List'
+            TabOrder = 0
+          end
+        end
+        object SysAppSheet: TTabSheet
+          Caption = 'Shared Apps'
+          ClientHeight = 337
+          ClientWidth = 688
+          OnShow = SysAppSheetShow
+          object SWBoxSU: TPanel
+            Left = 0
+            Height = 337
+            Top = 0
+            Width = 688
+            Align = alClient
+            BevelOuter = bvNone
+            Caption = 'Software-List (Root)'
+            TabOrder = 0
+          end
+        end
+      end
       object AppInfoPanel: TPanel
         Left = 0
         Height = 90
-        Top = 414
+        Top = 409
         Width = 692
         Align = alBottom
         BevelOuter = bvNone
@@ -1649,7 +1700,7 @@ object MnFrm: TMnFrm
         Color = clWindow
         Constraints.MaxHeight = 285
         ParentColor = False
-        TabOrder = 2
+        TabOrder = 4
         object AppImage: TImage
           Left = 6
           Height = 64
@@ -1698,35 +1749,15 @@ object MnFrm: TMnFrm
           TabOrder = 0
         end
       end
-      object Splitter1: TSplitter
-        Cursor = crVSplit
-        Left = 0
-        Height = 5
-        Top = 409
-        Width = 692
-        Align = alBottom
-        ResizeAnchor = akBottom
-      end
-      object SWBox: TPanel
-        Left = 0
-        Height = 371
-        Top = 38
-        Width = 692
-        Align = alBottom
-        Anchors = [akTop, akLeft, akRight, akBottom]
-        BevelOuter = bvNone
-        Caption = 'Software-List'
-        TabOrder = 4
-      end
     end
     object CatalogPage: TPage
       Caption = 'CatalogPage'
       ClientWidth = 692
-      ClientHeight = 504
+      ClientHeight = 482
       object BitBtn2: TBitBtn
         Left = 206
         Height = 40
-        Top = 206
+        Top = 196
         Width = 283
         Anchors = []
         Caption = 'Open your distribution''s package catalog'

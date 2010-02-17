@@ -16,8 +16,8 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <CurrentMajorRevNr Value="3"/>
-      <CurrentBuildNr Value="2041"/>
+      <CurrentMajorRevNr Value="4"/>
+      <CurrentBuildNr Value="2064"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -49,7 +49,7 @@
         <UnitName Value="listallmgr"/>
         <CursorPos X="1" Y="60"/>
         <TopLine Value="17"/>
-        <UsageCount Value="190"/>
+        <UsageCount Value="191"/>
       </Unit0>
       <Unit1>
         <Filename Value="manager.pas"/>
@@ -57,10 +57,10 @@
         <ComponentName Value="MnFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="31" Y="84"/>
-        <TopLine Value="70"/>
+        <CursorPos X="17" Y="928"/>
+        <TopLine Value="907"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="190"/>
+        <UsageCount Value="191"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
@@ -286,15 +286,15 @@
         <ComponentName Value="RMForm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uninstall"/>
-        <CursorPos X="68" Y="51"/>
-        <TopLine Value="34"/>
-        <UsageCount Value="175"/>
+        <CursorPos X="26" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="176"/>
       </Unit33>
       <Unit34>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="36" Y="209"/>
-        <TopLine Value="189"/>
+        <CursorPos X="28" Y="201"/>
+        <TopLine Value="181"/>
         <UsageCount Value="33"/>
       </Unit34>
       <Unit35>
@@ -361,9 +361,9 @@
         <ComponentName Value="ConvDisp"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="pkgconvertdisp"/>
-        <CursorPos X="29" Y="25"/>
+        <CursorPos X="44" Y="2"/>
         <TopLine Value="1"/>
-        <UsageCount Value="140"/>
+        <UsageCount Value="141"/>
       </Unit44>
       <Unit45>
         <Filename Value="swcatalog.pas"/>
@@ -494,7 +494,6 @@
       </Unit63>
       <Unit64>
         <Filename Value="xtypefm.pas"/>
-        <IsPartOfProject Value="True"/>
         <ComponentName Value="IMdFrm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
@@ -531,7 +530,7 @@
         <UnitName Value="aboutbox"/>
         <CursorPos X="30" Y="70"/>
         <TopLine Value="46"/>
-        <UsageCount Value="83"/>
+        <UsageCount Value="84"/>
       </Unit68>
       <Unit69>
         <Filename Value="../../../../../usr/lib/lazarus/components/turbopower_ipro/iphtmlpv.pas"/>
@@ -641,8 +640,8 @@
       <Unit84>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="1" Y="26"/>
-        <TopLine Value="13"/>
+        <CursorPos X="11" Y="35"/>
+        <TopLine Value="134"/>
         <UsageCount Value="10"/>
       </Unit84>
       <Unit85>
@@ -833,8 +832,8 @@
       <Unit112>
         <Filename Value="applist.pas"/>
         <UnitName Value="applist"/>
-        <CursorPos X="21" Y="209"/>
-        <TopLine Value="183"/>
+        <CursorPos X="2" Y="32"/>
+        <TopLine Value="184"/>
         <UsageCount Value="17"/>
       </Unit112>
       <Unit113>
@@ -843,7 +842,7 @@
         <UnitName Value="appitem"/>
         <CursorPos X="61" Y="48"/>
         <TopLine Value="22"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="33"/>
       </Unit113>
       <Unit114>
         <Filename Value="../opbitmap/opbitmapformats.pas"/>
@@ -918,123 +917,123 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="manager.pas"/>
-        <Caret Line="778" Column="21" TopLine="727"/>
+        <Caret Line="758" Column="60" TopLine="733"/>
       </Position1>
       <Position2>
         <Filename Value="manager.pas"/>
-        <Caret Line="25" Column="30" TopLine="4"/>
+        <Caret Line="759" Column="59" TopLine="733"/>
       </Position2>
       <Position3>
         <Filename Value="manager.pas"/>
-        <Caret Line="726" Column="3" TopLine="722"/>
+        <Caret Line="761" Column="37" TopLine="733"/>
       </Position3>
       <Position4>
         <Filename Value="manager.pas"/>
-        <Caret Line="25" Column="30" TopLine="4"/>
+        <Caret Line="942" Column="38" TopLine="919"/>
       </Position4>
       <Position5>
         <Filename Value="manager.pas"/>
-        <Caret Line="26" Column="56" TopLine="1"/>
+        <Caret Line="909" Column="23" TopLine="875"/>
       </Position5>
       <Position6>
         <Filename Value="manager.pas"/>
-        <Caret Line="25" Column="70" TopLine="1"/>
+        <Caret Line="139" Column="33" TopLine="126"/>
       </Position6>
       <Position7>
         <Filename Value="manager.pas"/>
-        <Caret Line="738" Column="28" TopLine="721"/>
+        <Caret Line="144" Column="16" TopLine="126"/>
       </Position7>
       <Position8>
         <Filename Value="manager.pas"/>
-        <Caret Line="752" Column="51" TopLine="728"/>
+        <Caret Line="145" Column="21" TopLine="126"/>
       </Position8>
       <Position9>
         <Filename Value="manager.pas"/>
-        <Caret Line="25" Column="30" TopLine="4"/>
+        <Caret Line="318" Column="8" TopLine="303"/>
       </Position9>
       <Position10>
         <Filename Value="manager.pas"/>
-        <Caret Line="482" Column="13" TopLine="458"/>
+        <Caret Line="355" Column="12" TopLine="334"/>
       </Position10>
       <Position11>
         <Filename Value="manager.pas"/>
-        <Caret Line="121" Column="29" TopLine="109"/>
+        <Caret Line="716" Column="2" TopLine="710"/>
       </Position11>
       <Position12>
         <Filename Value="manager.pas"/>
-        <Caret Line="123" Column="15" TopLine="102"/>
+        <Caret Line="742" Column="2" TopLine="737"/>
       </Position12>
       <Position13>
         <Filename Value="manager.pas"/>
-        <Caret Line="314" Column="20" TopLine="281"/>
+        <Caret Line="713" Column="23" TopLine="695"/>
       </Position13>
       <Position14>
         <Filename Value="manager.pas"/>
-        <Caret Line="25" Column="30" TopLine="4"/>
+        <Caret Line="623" Column="10" TopLine="615"/>
       </Position14>
       <Position15>
         <Filename Value="manager.pas"/>
-        <Caret Line="497" Column="32" TopLine="472"/>
+        <Caret Line="22" Column="39" TopLine="1"/>
       </Position15>
       <Position16>
         <Filename Value="manager.pas"/>
-        <Caret Line="25" Column="30" TopLine="4"/>
+        <Caret Line="217" Column="22" TopLine="206"/>
       </Position16>
       <Position17>
         <Filename Value="manager.pas"/>
-        <Caret Line="444" Column="12" TopLine="405"/>
+        <Caret Line="736" Column="31" TopLine="705"/>
       </Position17>
       <Position18>
         <Filename Value="manager.pas"/>
-        <Caret Line="25" Column="14" TopLine="4"/>
+        <Caret Line="735" Column="12" TopLine="705"/>
       </Position18>
       <Position19>
         <Filename Value="manager.pas"/>
-        <Caret Line="27" Column="70" TopLine="4"/>
+        <Caret Line="147" Column="28" TopLine="126"/>
       </Position19>
       <Position20>
         <Filename Value="manager.pas"/>
-        <Caret Line="24" Column="12" TopLine="8"/>
+        <Caret Line="320" Column="31" TopLine="299"/>
       </Position20>
       <Position21>
         <Filename Value="manager.pas"/>
-        <Caret Line="23" Column="2" TopLine="3"/>
+        <Caret Line="326" Column="4" TopLine="299"/>
       </Position21>
       <Position22>
         <Filename Value="manager.pas"/>
-        <Caret Line="25" Column="3" TopLine="1"/>
+        <Caret Line="128" Column="18" TopLine="107"/>
       </Position22>
       <Position23>
         <Filename Value="manager.pas"/>
-        <Caret Line="698" Column="28" TopLine="677"/>
+        <Caret Line="344" Column="33" TopLine="258"/>
       </Position23>
       <Position24>
         <Filename Value="manager.pas"/>
-        <Caret Line="699" Column="28" TopLine="677"/>
+        <Caret Line="26" Column="7" TopLine="11"/>
       </Position24>
       <Position25>
         <Filename Value="manager.pas"/>
-        <Caret Line="157" Column="20" TopLine="124"/>
+        <Caret Line="870" Column="19" TopLine="851"/>
       </Position25>
       <Position26>
         <Filename Value="manager.pas"/>
-        <Caret Line="294" Column="1" TopLine="280"/>
+        <Caret Line="872" Column="27" TopLine="851"/>
       </Position26>
       <Position27>
         <Filename Value="manager.pas"/>
-        <Caret Line="293" Column="1" TopLine="280"/>
+        <Caret Line="873" Column="29" TopLine="863"/>
       </Position27>
       <Position28>
         <Filename Value="manager.pas"/>
-        <Caret Line="856" Column="33" TopLine="835"/>
+        <Caret Line="874" Column="26" TopLine="863"/>
       </Position28>
       <Position29>
         <Filename Value="manager.pas"/>
-        <Caret Line="855" Column="37" TopLine="835"/>
+        <Caret Line="861" Column="15" TopLine="851"/>
       </Position29>
       <Position30>
         <Filename Value="manager.pas"/>
-        <Caret Line="89" Column="70" TopLine="69"/>
+        <Caret Line="928" Column="36" TopLine="911"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -1058,6 +1057,7 @@
       <SmartLinkUnit Value="True"/>
     </CodeGeneration>
     <Linking>
+      <LinkSmart Value="True"/>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>
@@ -1069,7 +1069,7 @@
         <StopAfterErrCount Value="2"/>
       </ConfigFile>
       <CompilerMessages>
-        <IgnoredMessages idx5026="True"/>
+        <IgnoredMessages idx5024="True" idx5026="True"/>
       </CompilerMessages>
       <CustomOptions Value="-dOpbCompat
 -dUSE_QT_45
