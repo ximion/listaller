@@ -3,7 +3,7 @@ object MnFrm: TMnFrm
   Height = 558
   Top = 244
   Width = 816
-  ActiveControl = AppViewControl
+  ActiveControl = FilterEdt
   Caption = 'Software Manager'
   ClientHeight = 538
   ClientWidth = 816
@@ -2063,7 +2063,7 @@ object MnFrm: TMnFrm
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '.*.ipk'
-    Filter = 'All supported packages|*.ipk;*.zip;*.rpm;*.deb|Listaller Installation packages|*.ipk;*.zip|RPM-Packages|*.rpm|DEB-Packages|*.deb'
+    Filter = 'All supported packages|*.ipk;*.lpk;*.tar.xz;*.rpm;*.deb|Listaller Installation packages|*.ipk;*.lpk|RPM-Packages|*.rpm|DEB-Packages|*.deb'
     left = 576
     top = 8
   end

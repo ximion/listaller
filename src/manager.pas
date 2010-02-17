@@ -609,7 +609,7 @@ begin
   if FileExists(OpenDialog1.Filename) then
   begin
   if (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.ipk')
-  or (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.zip') then
+  or (LowerCase(ExtractFileExt(OpenDialog1.FileName))='.xz') then
   begin
   p:=TProcess.Create(nil);
   p.Options:=[];
@@ -714,9 +714,9 @@ end;
 procedure TMnFrm.MyAppSheetShow(Sender: TObject);
 begin
  currAppList:=appList;
- AppViewControl.Enabled:=false;
+ Notebook1.Enabled:=false;
  ReloadAppList;
- AppViewControl.Enabled:=true;
+ Notebook1.Enabled:=true;
 end;
 
 procedure TMnFrm.RmUpdSrcBtnClick(Sender: TObject);
@@ -740,9 +740,9 @@ end;
 procedure TMnFrm.SysAppSheetShow(Sender: TObject);
 begin
  currAppList:=appListSU;
- AppViewControl.Enabled:=false;
+ Notebook1.Enabled:=false;
  ReloadAppList;
- AppViewControl.Enabled:=true;
+ Notebook1.Enabled:=true;
 end;
 
 procedure TMnFrm.UListBoxClick(Sender: TObject);
@@ -821,14 +821,15 @@ begin
      Application.ProcessMessages;
      StatusLabel.Caption:=rsFiltering;
      appResList.ClearList;
-     for i:=0 to appList.Count-1 do
+     appResList.Parent:=currAppList.Parent;
+     for i:=0 to currAppList.Count-1 do
      begin
        Application.ProcessMessages;
-        if ((pos(LowerCase(FilterEdt.Text),LowerCase(appList.AppItems[i].Name))>0)
-        or (pos(LowerCase(FilterEdt.Text),LowerCase(appList.AppItems[i].SDesc))>0))
-         and (LowerCase(FilterEdt.Text)<>LowerCase(appList.AppItems[i].Name)) then
+        if ((pos(LowerCase(FilterEdt.Text),LowerCase(currAppList.AppItems[i].Name))>0)
+        or (pos(LowerCase(FilterEdt.Text),LowerCase(currAppList.AppItems[i].SDesc))>0))
+         and (LowerCase(FilterEdt.Text)<>LowerCase(currAppList.AppItems[i].Name)) then
          begin
-          appResList.AddItem(appList.AppItems[i]);
+          appResList.AddItem(currAppList.AppItems[i]);
          end;
      end;
       appResList.Visible:=true;

@@ -3,13 +3,13 @@ msgstr ""
 "Project-Id-Version: 0.9.16\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2009-11-30 16:58+0000\n"
-"Last-Translator: lhquark <lhquark@yahoo.com.cn>\n"
+"PO-Revision-Date: 2009-12-21 17:23+0000\n"
+"Last-Translator: Aron Xu <Unknown>\n"
 "Language-Team: 简体中文 <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-11-30 20:04+0000\n"
+"X-Launchpad-Export-Date: 2010-02-17 16:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: china\n"
 "X-Poedit-Language: chinese\n"
@@ -36,7 +36,7 @@ msgstr "检查应用程序"
 
 #: trstrings:rscheckrootappsq
 msgid "Do you want to check global-installed applications too?"
-msgstr ""
+msgstr "您是否也要检查全局安装的应用程序？"
 
 #: trstrings:rscommands
 msgid "Commands:"
@@ -44,7 +44,7 @@ msgstr "命令："
 
 #: trstrings:rscouldntfindupdater
 msgid "Can't find updater application!"
-msgstr ""
+msgstr "无法找到升级程序！"
 
 #: trstrings:rsinternalerror
 msgid "An internal error occured"
@@ -56,7 +56,7 @@ msgstr "启动 Listaller 管理器"
 
 #: trstrings:rslipainfo2
 msgid "Resolve Listaller path variable"
-msgstr ""
+msgstr "解析 Listaller 路径变量"
 
 #: trstrings:rslipainfo3
 msgid "Installs an IPK package"
@@ -72,7 +72,7 @@ msgstr "无法找到 %s"
 
 #: trstrings:rsnotfoundlitray
 msgid "Could not find Listaller TrayIcon Application"
-msgstr ""
+msgstr "无法找到 Listaller TrayIcon 程序"
 
 #: trstrings:rsoptions
 msgid "Options:"
@@ -84,24 +84,24 @@ msgstr "以测试模式进行安装"
 
 #: trstrings:rslipainfo5
 msgid "Print all available log messages"
-msgstr ""
+msgstr "输出所有日志消息"
 
 #: trstrings:rslipainfo6
 msgid ""
 "Check if dependencies of all installed applications are available and working"
-msgstr ""
+msgstr "检查所有已安装程序的依赖关系是否完整和有效"
 
 #: trstrings:rscmdinfopkgbuild
 msgid "Package build commands:"
-msgstr ""
+msgstr "创建软件包命令："
 
 #: trstrings:rslibuildinfoa
 msgid "Build IPK-package"
-msgstr ""
+msgstr "创建 IPK 软件包"
 
 #: trstrings:rslibuildinfob
 msgid "Create/Update update-repository"
-msgstr ""
+msgstr "创建/更新 更新源"
 
 #: trstrings:rslibuildinfoc
 msgid "Create DEB and RPM file from IPS"
@@ -129,15 +129,15 @@ msgstr "程序 %a 未被安装。"
 
 #: trstrings:rslipaautofixq
 msgid "Should lipa fix these problems automatically [y/n]?"
-msgstr ""
+msgstr "让 lipa 自动修正这些问题吗 [y/n]？"
 
 #: trstrings:rslipainfo1
 msgid "Listaller command-line tool to handle IPK-packages"
-msgstr ""
+msgstr "用来操作 IPK 软件包的 Listaller 命令行工具"
 
 #: trstrings:rsmodenumber
 msgid "Mode number:"
-msgstr ""
+msgstr "模式号："
 
 #: trstrings:rsn
 msgid "n"
@@ -157,7 +157,7 @@ msgstr "正在准备安装 (请稍候)"
 
 #: trstrings:rsrootpassadvancedpriv
 msgid "Enter your password to run the application with advanced privileges."
-msgstr ""
+msgstr "请输入您的密码来以高级特权运行此程序。"
 
 #: trstrings:rsrootpassqappeveryone
 msgid "Enter your password to install the application for everyone."
@@ -168,6 +168,8 @@ msgid ""
 "Conversion done. Do you want to close this window now?\n"
 "Press \"No\" if you want to check the output."
 msgstr ""
+"转换完成。您想要关闭此窗口吗？\n"
+"如果您想查看输出，点击“否”。"
 
 #: trstrings:rsselectlistnumber
 msgid "Please select a number shown in the list!"
@@ -183,7 +185,7 @@ msgstr "您要查看详细信息吗 [y/n]？"
 
 #: trstrings:rsaborted
 msgid "Aborted."
-msgstr ""
+msgstr "已中止。"
 
 #: trstrings:rsviewlogq
 msgid "Do you want to view the logfile?"
@@ -195,7 +197,7 @@ msgstr "应用程序 %a 已成功安装！"
 
 #: trstrings:rsexecapptesting
 msgid "Executing application for testing..."
-msgstr ""
+msgstr "正在测试运行应用程序..."
 
 #: trstrings:rsinstallnow
 msgid "Install now"
@@ -204,7 +206,7 @@ msgstr "立即安装"
 #: trstrings:rsrunparam
 msgid ""
 "Please run \"listallgo\" with path to install-package as first parameter!"
-msgstr ""
+msgstr "请以安装软件包的路径作为第一个参数运行 “listallgo”！"
 
 #: trstrings:rswelcome
 msgid "Welcome!"
@@ -315,7 +317,7 @@ msgstr "提取文件时发生错误！"
 msgid ""
 "The IPK package could be damaged or you haven't enough rights to access "
 "required files/folders."
-msgstr ""
+msgstr "IPK 软件包可能已损坏或者您没有足够的权限访问所需的文件/文件夹。"
 
 #: trstrings:rsabload
 msgid "Loading aborted."
@@ -331,11 +333,11 @@ msgstr "您想再次安装它吗？"
 
 #: trstrings:rswelcometo
 msgid "Welcome to the installation of %a"
-msgstr ""
+msgstr "欢迎安装 %a"
 
 #: trstrings:rsinstof
 msgid "Installation of %a"
-msgstr ""
+msgstr "安装 %a"
 
 #: trstrings:rstestmode
 msgid "Testmode"
@@ -363,7 +365,7 @@ msgstr "请在 %p 下查看日志文件"
 
 #: trstrings:rspkgerror
 msgid "Installation package is corrupt"
-msgstr ""
+msgstr "安装包已损坏"
 
 #: trstrings:rsappclose
 msgid "The application will close now "
@@ -379,7 +381,7 @@ msgstr "状态"
 
 #: trstrings:rswdldep
 msgid "This application wants to download & install a dependency from %l"
-msgstr ""
+msgstr "此程序要从 %l 下载并安装依赖文件"
 
 #: trstrings:rswallow
 msgid "Do you want confirm this action?"
@@ -395,7 +397,7 @@ msgstr "阶段 2/4：正在安装文件..."
 
 #: trstrings:rsstep3
 msgid "Phase 3/4: Chmod new files..."
-msgstr ""
+msgstr "阶段 3/4：更改文件权限..."
 
 #: trstrings:rsstep4
 msgid "Phase 4/4: Registering application..."
@@ -403,7 +405,7 @@ msgstr "阶段 4/4：正在注册程序"
 
 #: trstrings:rsaddupdsrc
 msgid "The installation contains the following update source: "
-msgstr ""
+msgstr "安装程序包含下列更新源： "
 
 #: trstrings:rsqaddupdsrc
 msgid "Should this source be added to the update sources list?"
@@ -421,7 +423,7 @@ msgstr "无论如何您都要安装吗？ (这可能导致问题)"
 msgid ""
 "The application which this package contains was not built for the current "
 "system architecture."
-msgstr ""
+msgstr "此软件包包含的程序不适合当前系统架构。"
 
 #: trstrings:rswilldlfiles
 msgid "(This program will download the needed files from the internet)"
@@ -429,7 +431,7 @@ msgstr "(此程序将从互联网下载所需文件)"
 
 #: trstrings:rsinvaliddversion
 msgid "Package was not build for your Linux distribution release."
-msgstr ""
+msgstr "软件包不适合您的 Linux 发行版版本。"
 
 #: trstrings:rsftpfailed
 msgid ""
@@ -443,11 +445,11 @@ msgstr "成功！"
 
 #: trstrings:rsmain
 msgid "Main"
-msgstr ""
+msgstr "主要"
 
 #: trstrings:rsdetails
 msgid "Details"
-msgstr ""
+msgstr "细节"
 
 #: trstrings:rsinstallation
 msgid "Installation"
@@ -458,6 +460,8 @@ msgid ""
 "There are no sources available for your Linux distribution\n"
 "Try to install common packages?"
 msgstr ""
+"没有适合您的 Linux 发行版的资源\n"
+"要尝试安装通用软件包吗？"
 
 #: trstrings:rsusecomppq
 msgid "Use compatible packages?"
@@ -485,7 +489,7 @@ msgstr "将下载以下软件包："
 
 #: trstrings:rsgetdependencyfrom
 msgid "Get dependency from"
-msgstr ""
+msgstr "获取依赖从"
 
 #: trstrings:rsplwait2
 msgid "Please wait..."
@@ -493,7 +497,7 @@ msgstr "请等待..."
 
 #: trstrings:rsdepdlproblem
 msgid "Problem while downloading the dep-file."
-msgstr ""
+msgstr "下载依赖文件时发生错误。"
 
 #: trstrings:rshasherror
 msgid ""
@@ -501,6 +505,9 @@ msgid ""
 "The package may be modified after creation.\n"
 "Please obtain a new copy"
 msgstr ""
+"校验值不符！\n"
+"软件包可能在创建后被修改过。\n"
+"请获取一个新副本"
 
 #: trstrings:rsinstallationmode
 msgid "Installation mode:"
@@ -525,7 +532,7 @@ msgstr "是/否？"
 #: trstrings:rsinstalllibuild
 msgid ""
 "You have to install the liBuild package before you can build packages!"
-msgstr ""
+msgstr "在创建软件包前您必须先安装 liBuild 包！"
 
 #: trstrings:rsfilenotexists
 msgid "The file \"%f\" does not exists!"
@@ -540,12 +547,14 @@ msgid ""
 "You use a development version of Listaller!\n"
 "This version is untested, be careful about what you do!"
 msgstr ""
+"您使用的是 Listaller 的开发版！\n"
+"此版本未经测试，请谨慎使用！"
 
 #: trstrings:rsspkwarning
 msgid ""
 "Make sure that you got this package from a save source and a serious "
 "publisher!"
-msgstr ""
+msgstr "确认您是从安全的软件源和可信的发布者获得的此软件包。"
 
 #: trstrings:rsinstalleveryone
 msgid "Install application for everyone"
@@ -581,7 +590,7 @@ msgstr "删除软件源"
 
 #: trstrings:rslistofsrc
 msgid "The following update sources are installed:"
-msgstr ""
+msgstr "安装了下列更新源："
 
 #: trstrings:rsuninstall
 msgid "Uninstall"
@@ -593,7 +602,7 @@ msgstr "浏览类别"
 
 #: trstrings:rsshow
 msgid "Show:"
-msgstr ""
+msgstr "显示："
 
 #: trstrings:rsall
 msgid "All"
@@ -637,7 +646,7 @@ msgstr "工具"
 
 #: trstrings:rsother
 msgid "Other"
-msgstr "其它"
+msgstr "其他"
 
 #: trstrings:rsversion
 msgid "Version"
@@ -665,7 +674,7 @@ msgstr "启用代理服务器"
 
 #: trstrings:rslokierror
 msgid "Can't load LOKI-Setup information."
-msgstr ""
+msgstr "无法载入 LOKI-Setup 信息。"
 
 #: trstrings:rscannotloadicon
 msgid ""
@@ -689,6 +698,9 @@ msgid ""
 "and eventually the installed application won't work\n"
 "Do you want to convert the package now?"
 msgstr ""
+"您要安装一个 %x 软件包，但您 Linux 发行版的软件包系统是 %y 。\n"
+"此软包可以使用 “alien” 转换格式，但要耗费一点时间而且安装后应用程序无法工作。\n"
+"您要立即转换软件包吗？"
 
 #: trstrings:rsconvertpkgq
 msgid "Convert package?"
@@ -772,6 +784,8 @@ msgid ""
 "installed\n"
 "Do you want to install \"alien\" now to continue?"
 msgstr ""
+"Listaller 使用 “alien” 转换外来软件包，但此工具尚未安装\n"
+"您要立即安装 “alien” 以继续吗？"
 
 #: trstrings:rsinstpkgq
 msgid "Install package?"
@@ -787,7 +801,7 @@ msgstr ""
 
 #: trstrings:rsstartlitray
 msgid "Start Listaller tray icon application (to check dependencies)"
-msgstr ""
+msgstr "启动 Listaller 托盘图标程序 (用以检查依赖关系)"
 
 #: trstrings:rsaboutlistaller
 msgid "About Listaller"
@@ -837,7 +851,7 @@ msgstr "请从列表中选择一项！"
 
 #: trstrings:rsliupdateaccessfailed
 msgid "Cannot access the liUpdate tool. Maybe it is not installed?"
-msgstr ""
+msgstr "无法访问 liUpdate 工具。也许它尚未安装？"
 
 #: trstrings:rschangepkgmansettings
 msgid "Change package manager settings"
@@ -862,7 +876,7 @@ msgstr "正在下载安装包..."
 #: trstrings:rserrcontactman
 msgid ""
 "Cannot download this package. Please contact the catalogue managers on %h"
-msgstr ""
+msgstr "无法下载此软件包。请联系 %h 上的类别管理者"
 
 #: trstrings:rsinstalling
 msgid "Running application installation..."
@@ -870,7 +884,7 @@ msgstr "正在进行程序安装..."
 
 #: trstrings:rsdownloadctbase
 msgid "Downloading catalogue base information..."
-msgstr ""
+msgstr "正在下载类别基本信息..."
 
 #: trstrings:rsopenpage
 msgid "Loading catalogue page..."
@@ -898,6 +912,8 @@ msgid ""
 "Listaller can handle.\n"
 "You have to remove it manually."
 msgstr ""
+"此程序不是 MoJo 安装包，也非其它 Listaller 可以处理的软件包类型。\n"
+"您必须手动删除它。"
 
 #: trstrings:rsrmunsddeps
 msgid "Uninstalling unused deps..."
@@ -931,7 +947,7 @@ msgstr "正在卸载 %a"
 
 #: trstrings:rslindesk
 msgid "Running under %s."
-msgstr ""
+msgstr "在 %s 下运行"
 
 #: trstrings:rsnoupdates
 msgid "There are no updates available!"
@@ -975,7 +991,7 @@ msgstr "解压和配置文件时发生错误。"
 
 #: trstrings:rsquestion
 msgid "Question:"
-msgstr ""
+msgstr "问题："
 
 #: trstrings:rsyes
 msgid "yes"
