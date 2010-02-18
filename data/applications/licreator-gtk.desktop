@@ -1,0 +1,20 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Listaller Creator (GTK+)
+Name[de]=Listaller Creator (GTK+)
+Categories=Application;Development;
+Comment=GUI wizard to create setup packages
+Comment[de]=GUI Assistent zum Erstellen von Installationspaketen
+Exec=/opt/appfiles/liCreator/licreator-gtk
+GenericName=Create setup package
+GenericName[de]=Setup Paket erstellen
+Icon=/opt/appfiles/liCreator/listaller_creator-gtk.png
+MimeType=application/ips-script;
+StartupNotify=true
+Terminal=false
+Type=Application
+Version=1.0
+X-AppVersion=0.4.0
+X-DCOP-ServiceType=none
+X-KDE-SubstituteUID=false
+X-Publisher=Listaller Project

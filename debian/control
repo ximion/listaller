@@ -75,9 +75,7 @@ Description: Listaller data
 
 Package: listaller-creator-gtk
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, xdg-utils, lsb-release, listaller-tools (= ${binary:Version})
-Replaces: listaller-creator-qt
-Breaks: listaller-creator-qt (<= ${source:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, xdg-utils, listaller-tools (= ${binary:Version})
 Description: Listaller Creator (GTK2)
  Listaller is a cross-distribution software install system.
  This is an alpha-release of Listaller's graphical package creation tool.
@@ -87,9 +85,7 @@ Description: Listaller Creator (GTK2)
 
 Package: listaller-creator-qt
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, xdg-utils, lsb-release, listaller-tools (= ${binary:Version})
-Replaces: listaller-creator-gtk
-Breaks: listaller-creator-gtk (<= ${source:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, xdg-utils, listaller-tools (= ${binary:Version})
 Description: Listaller Creator (Qt4)
  Listaller is a cross-distribution software install system.
  This is an alpha-release of Listaller's graphical package creation tool.
