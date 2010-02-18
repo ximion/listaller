@@ -397,7 +397,7 @@ begin
 
   pkit.FindPkgForFile(Dependencies[Index]);
 
-  if (pkit.PkFinishCode>0)or(xtmp.Count<=0) then
+  if (pkit.PkFinishCode=1)or(xtmp.Count<=0) then
   begin
    pkit.Free;
    xtmp.Free;
@@ -1045,7 +1045,7 @@ begin
  msg('Installing package catalog...');
  pkit.InstallLocalPkg(copy(Dependencies[0],5,length(Dependencies[0])));
 
- if pkit.PkFinishCode>0 then
+ if pkit.PkFinishCode=1 then
  begin
   MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
   Result:=false;
@@ -1165,7 +1165,7 @@ begin
    s:=TStringList.Create;
    pkit.RsList:=s;
    pkit.Resolve(copy(Dependencies[i],pos(' <',Dependencies[i])+2,length(Dependencies[i])-1));
-    if pkit.PkFinishCode>0 then
+    if pkit.PkFinishCode=1 then
     begin
      pkit.InstallLocalPkg('/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i]))));
 
@@ -1179,7 +1179,7 @@ begin
     SetMainPos(Round(mnpos*max));
 
     //Check if the package was really installed
-    if pkit.PkFinishCode>0 then
+    if pkit.PkFinishCode=1 then
     begin
      MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
      Result:=false;
@@ -1198,12 +1198,12 @@ begin
 
      pkit.Resolve(Dependencies[i]);
 
-     if pkit.PkFinishCode>0 then
+     if pkit.PkFinishCode=1 then
      begin
       pkit.InstallPkg(Dependencies[i]);
 
     //Check if the package was really installed
-   if pkit.PkFinishCode>0 then
+   if pkit.PkFinishCode=1 then
     begin
      msg('Package '+Dependencies[i]+' can not be installed.');
      MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
@@ -1543,7 +1543,7 @@ pkit.OnProgress:=@OnPKitProgress;
 
    pkit.Resolve(Dependencies[i]);
 
-  if pkit.PkFinishCode>0 then
+  if pkit.PkFinishCode=1 then
   begin
    msg('Installing '+Dependencies[i]+'...');
 
@@ -1554,7 +1554,7 @@ pkit.OnProgress:=@OnPKitProgress;
    msg('Looking for '+copy(Dependencies[i],1,pos(' -',Dependencies[i])-1));
    pkit.Resolve(copy(Dependencies[i],1,pos(' -',Dependencies[i])-1));
 
-  if pkit.PkFinishCode>0 then
+  if pkit.PkFinishCode=1 then
   begin
    msg('Downloading package...');
 

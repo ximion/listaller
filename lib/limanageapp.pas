@@ -644,7 +644,7 @@ setpos(20);
 
 if tmp.Count<=0 then
 begin UninstallMojo(id);tmp.Free;pkit.Free;exit;end;
-if pkit.PkFinishCode>0 then
+if pkit.PkFinishCode=1 then
 begin request(rsPKitProbPkMon,rqError);pkit.Free;tmp.Free;exit;end;
 f:=tmp[0];
 
@@ -673,7 +673,7 @@ setpos(50);
 msg('Uninstalling '+f+' ...');
 pkit.RemovePkg(f);
 
-if pkit.PkFinishCode>0 then
+if pkit.PkFinishCode=1 then
 begin
  request(rsRmError,rqError);
  pkit.Free;
@@ -747,7 +747,7 @@ begin
  for i:=0 to deps.Count-1 do
  begin
   pkit.Resolve(deps[i]);
-  if pkit.PkFinishCode=0 then
+  if pkit.PkFinishCode=1 then
    report.Add(deps[i]+' found.')
   else
   begin

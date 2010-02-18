@@ -21,7 +21,7 @@ unit packagekit;
 interface
 
 uses
-  Classes, SysUtils, Process, glib2, distri, Dialogs, liTypes, gExt, liBasic;
+  Classes, SysUtils, Process, glib2, distri, liTypes, gExt, liBasic;
 
 type
 
@@ -70,12 +70,16 @@ private
  ErrorMsg: String;
  //ProgressChange event
  FProg: TProgressEvent;
+ //List of received package ids
+ pkglist: TStringList;
  //Set new progress
  procedure SetProgress(i: Integer);
  //Function to get PackageKit version from pkcon
  function GetPkVersion: String;
  //Quit a main loop
  procedure LoopQuit();
+ //Resolve for internal use
+ function INTERN_Resolve(name: String;filt: String;toPublic: Boolean): Boolean;
 public
  //** GLib main loop
  loop: Pointer;
@@ -86,6 +90,9 @@ public
  {** Check if package is installed @param pkg Name of the package
      @returns True if action was not cancelled}
  function Resolve(pkg: String): Boolean;
+ {** Resolve a package name
+     @returns True if action was not cancelled}
+ function ResolveInstalled(pkg: String): Boolean;
  {** Returns the reverse dependencies of a package
      @param pkg Name of the package
      @returns True if action was not cancelled}
@@ -130,7 +137,7 @@ end;
 const pklib2 = 'libpackagekit-glib2.so';
 
 //Bitfield
-function pk_filter_bitfield_from_text(filters: PChar): GuInt64; cdecl; external pklib2 name 'pk_filter_bitfield_from_text';
+function pk_filter_bitfield_from_text(filters: PChar): GuInt64; cdecl; external pklib2;
 //Package obj conversion
 function pk_package_obj_to_string(obj: GPointer): PChar;cdecl; external pklib2 name 'pk_package_obj_to_string';
 function pk_package_obj_get_id(obj: GPointer): PPkPackageID;cdecl; external pklib2 name 'pk_package_obj_get_id';
@@ -170,7 +177,7 @@ procedure pk_client_install_files_async(client: Pointer;only_trusted: GBoolean;
                                                 cdecl;external pklib2 name 'pk_client_install_files_async';
 
 function  pk_client_generic_finish(client: Pointer;res: Pointer;error: PPGError): Pointer;cdecl;external pklib2 name 'pk_client_generic_finish';
-function  pk_results_get_exit_code(results: Pointer): PkExitEnum;cdecl;external pklib2 name 'pk_client_generic_finish';
+function  pk_results_get_exit_code(results: Pointer): PkExitEnum;cdecl;external pklib2;
 function  pk_client_error_quark(): GQuark;cdecl;external name 'pk_client_error_quark';
 function  pk_client_get_type(): GType;cdecl;external name 'pk_client_get_type';
 
@@ -233,7 +240,7 @@ pk:=TPackageKit(user_data);
    PK_PROGRESS_TYPE_PERCENTAGE:
    begin
     g_object_get(progress,'percentage', @percentage,nil);
-    ShowMessage('Percentage: '+IntToStr(percentage));
+    // ShowMessage('Percentage: '+IntToStr(percentage));
     if percentage = 101 then
      pk.Setprogress(0)
     else
@@ -251,10 +258,12 @@ begin
   pkclient := pk_client_new;
 
   loop:=g_main_loop_new(nil,false);
+  pkglist:=TStringList.Create;
 end;
 
 destructor TPackageKit.Destroy;
 begin
+  pkglist.free;
   g_object_unref(pkclient);
   g_main_loop_unref(loop);
   inherited Destroy;
@@ -291,18 +300,39 @@ else Result:='?';
 s.Free;
 end;
 
-function TPackageKit.Resolve(pkg: String): Boolean;
+procedure INTERNAL_OnPkProgress(progress: Pointer;ptype: PK_PROGRESS_TYPE;user_data: GPointer);
+var pk: TPackageKit;pid: PGChar;percentage: GuInt;
+begin
+pk:=TPackageKit(user_data);
+
+  case ptype of
+   PK_PROGRESS_TYPE_PACKAGE_ID:
+   begin
+    if Assigned(pk.pkglist) then
+    begin
+     g_object_get(progress,'package-id', @pid,nil);
+      pk.pkglist.Add(pid);
+    end;
+   end;
+  end;
+end;
+
+function TPackageKit.INTERN_Resolve(name: String;filt: String;toPublic: Boolean): Boolean;
 var filter: guint64;
     arg: PPChar;
     error: PGError=nil;
     cancellable: Pointer;
 begin
   done:=false;
-  filter:=pk_filter_bitfield_from_text('installed');
-  arg := StringToPPchar(pkg, 0);
+  filter:=pk_filter_bitfield_from_text(PChar(filt));
+  arg := StringToPPchar(name, 0);
 
   cancellable:=g_cancellable_new;
-   pk_client_resolve_async(pkclient,filter,arg,cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
+  if toPublic then
+   pk_client_resolve_async(pkclient,filter,arg,cancellable,@OnPkProgress,self,@OnPkActionFinished,self)
+  else
+   pk_client_resolve_async(pkclient,filter,arg,cancellable,@INTERNAL_OnPkProgress,self,@OnPkActionFinished,self);
+
   g_main_loop_run(loop);
 
   Result:=true;
@@ -315,6 +345,16 @@ begin
     Result:=false;
   end;
   g_object_unref(cancellable);
+end;
+
+function TPackageKit.ResolveInstalled(pkg: String): Boolean;
+begin
+ Result:=INTERN_Resolve(pkg,'installed',true);
+end;
+
+function TPackageKit.Resolve(pkg: String): Boolean;
+begin
+ Result:=INTERN_Resolve(pkg,'available',true);
 end;
 
 function TPackageKit.GetRequires(pkg: String): Boolean;
@@ -346,15 +386,23 @@ begin
 end;
 
 function TPackageKit.RemovePkg(pkg: String): Boolean;
-var ast: String;
-    arg: PPChar;
+var arg: PPChar;
     error: PGError=nil;
     cancellable: Pointer;
 begin
-  writeLn('Remove package called!');
   done:=false;
-  ast := pkg+';;;';
-  arg := StringToPPchar(ast, 0);
+  pkglist.Clear;
+  Result:=INTERN_Resolve(pkg,'none',false);
+  while not done do ;
+  if not Result then exit;
+  if pkglist.Count<=0 then
+  begin
+   Result:=false;
+   exit;
+  end;
+  pkg:=pkglist[0];
+  done:=false;
+  arg := StringToPPchar(pkg, 0);
 
   cancellable:=g_cancellable_new;
   writeLn(pkg);
@@ -375,15 +423,23 @@ begin
 end;
 
 function TPackageKit.InstallPkg(pkg: String): Boolean;
-var ast: String;
-    arg: PPChar;
+var arg: PPChar;
     error: PGError=nil;
     gcan: Pointer;
 begin
-
   done:=false;
-  ast := pkg+';;;';
-  arg := StringToPPchar(ast, 0);
+  pkglist.Clear;
+  Result:=INTERN_Resolve(pkg,'none',false);
+  while not done do ;
+  if not Result then exit;
+  if pkglist.Count<=0 then
+  begin
+   Result:=false;
+   exit;
+  end;
+  pkg:=pkglist[0];
+  done:=false;
+  arg := StringToPPchar(pkg, 0);
 
   gcan:=g_cancellable_new;
    pk_client_install_packages_async(pkclient,false,arg,gcan,@OnPkProgress,self,@OnPkActionFinished,self);
