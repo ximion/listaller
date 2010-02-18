@@ -105,7 +105,7 @@ begin
  pkrandom:='-'+RandomID+RandomID+RandomID;
  finalized:=false;
   OutFileName:=aIPKFile;
- basename:=tmpdir+'/'+ExtractFileName(OutFileName)+pkrandom+'.tar';
+ basename:=tmpdir+'/listaller/'+ExtractFileName(OutFileName)+pkrandom+'.tar';
  mntar:=TTarWriter.Create(basename);
  algorithm:=2;
 end;
@@ -158,7 +158,7 @@ begin
  sign.Free;
 
  pkrandom:='-'+RandomID+RandomID+RandomID;
- basename:=tmpdir+'/'+ExtractFileName(OutFileName)+pkrandom+'.tar';
+ basename:=tmpdir+'/listaller/'+ExtractFileName(OutFileName)+pkrandom+'.tar';
  mntar:=TTarWriter.Create(basename);
  mntar.AddFile(oldbase,'content.tar');
  mntar.AddFile(ExtractFilePath(oldbase)+'/signature.asc','signature.asc');

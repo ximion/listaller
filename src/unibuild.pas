@@ -39,7 +39,7 @@ if not FileExists(fname) then begin writeLn('File "'+fname+'" does not exists!')
 end;
 
 function ReadInformation(fips: String): TPackinfo;
-var tmp,script: TIPKScript;h: String;i,at: Integer;
+var script: TIPKScript;
 begin
   CheckFileA(fips);
   writeLn('Reading ips script file...');

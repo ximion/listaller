@@ -926,7 +926,7 @@ procedure TInstallation.DBusThreadStatusChange(ty: LiProcStatus;data: TLiProcDat
 begin
   case data.changed of
     pdMainProgress: SetMainPos(data.mnprogress);
-    pdInfo: msg(data.info);
+    pdInfo: msg(data.msg);
     pdError: MakeUsrRequest(data.msg,rqError);
     pdStatus: p_debug('Thread status changed [finished]');
   end;

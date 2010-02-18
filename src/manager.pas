@@ -201,7 +201,7 @@ case change of
  scStepmessage: MnFrm.StatusLabel.Caption:=data.msg;
  scMessage    : begin
                      MnFrm.StatusLabel.Caption:=data.msg;
-                     p_info(data.msg);
+                      //p_info(data.msg);
                 end;
 end;
 end;

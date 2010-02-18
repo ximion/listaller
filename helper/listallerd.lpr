@@ -95,21 +95,15 @@ begin
     // check this is a method call for the right interface & method
     if (dbus_message_is_method_call(msg, 'org.freedesktop.Listaller.Install', CALL_RUNSETUP) <> 0) then
     begin
-      if InstallWorkers = 0 then
-      begin
        sMsg:=msg;
         JobList.Add(TDoAppInstall.Create(sMsg));
        Inc(InstallWorkers);
-      end;
     end else
     if (dbus_message_is_method_call(msg, 'org.freedesktop.Listaller.Manage', CALL_APPREMOVE) <> 0) then
     begin
-      if InstallWorkers = 0 then
-      begin
        sMsg:=msg;
         JobList.Add(TDoAppRemove.Create(sMsg));
        Inc(ManagerWorkers);
-      end;
     end else
      // free the message
      dbus_message_unref(msg);

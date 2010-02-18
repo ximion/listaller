@@ -35,7 +35,6 @@ type
    mnprogress, exprogress: Integer;
    jobID: String;
    msg: String;
-   info: String;
  end;
 
  //** Event for thread signals
@@ -52,8 +51,8 @@ type
    addsrc: Boolean;
  end;
 
- //** Thread which can perform various Listaller-DBus actions
- TLiDBusAction = class(TThread)
+ //** Object which can perform various actions on Listaller's DBus interface
+ TLiDBusAction = class
  private
   cmd: TListallerBusAction;
   FStatus: TLiDAction;
@@ -61,6 +60,7 @@ type
 
   status: LiProcStatus;
   procinfo: TLiProcData;
+  done: Boolean;
   procedure SyncProcStatus;
   procedure SendError(msg: String);
   procedure SendProgress(val: Integer;const ty: TLiProcDetail=pdMainProgress);
@@ -73,8 +73,9 @@ type
   constructor Create(action: ListallerBusCommand);
   destructor Destroy;override;
 
-  procedure Execute;override;
+  procedure ExecuteAction;
   property OnStatus: TLiDAction read FStatus write FStatus;
+  property Finished: Boolean read done;
  end;
 
 implementation
@@ -83,18 +84,16 @@ implementation
 
 constructor TLiDBusAction.Create(action: ListallerBusCommand);
 begin
- inherited Create(true);
- FreeOnTerminate:=true;
  cmd:=action.cmdtype;
  cmdinfo:=action;
- Resume;
+ done:=false;
 end;
 
 destructor TLiDBusAction.Destroy;
 begin
  status:=prFinished;
  procinfo.changed:=pdStatus;
- Synchronize(@SyncProcStatus);
+ SyncProcStatus;
  p_debug('DBus action done.');
  inherited;
 end;
@@ -102,11 +101,11 @@ end;
 procedure TLiDBusAction.SyncProcStatus;
 begin
  if Assigned(FStatus) then FStatus(status,procinfo);
- procinfo.msg:='~?error';
- procinfo.info:='~?error';
+ {procinfo.msg:='~?error';
+ procinfo.info:='~?error';}
 end;
 
-procedure TLiDBusAction.Execute;
+procedure TLiDBusAction.ExecuteAction;
 begin
  case cmd of
   lbaUninstallApp: UninstallAppAsRoot(cmdinfo.appinfo);
@@ -118,7 +117,7 @@ procedure TLiDBusAction.SendError(msg: String);
 begin
  procinfo.msg:=msg;
  procinfo.changed:=pdError;
- Synchronize(@SyncProcStatus);
+ SyncProcStatus;
  procinfo.msg:='#';
 end;
 
@@ -126,7 +125,7 @@ procedure TLiDBusAction.SendMessage(msg: String;const ty: TLiProcDetail=pdInfo);
 begin
  procinfo.msg:=msg;
  procinfo.changed:=ty;
- Synchronize(@SyncProcStatus);
+ SyncProcStatus;
  procinfo.msg:='#';
 end;
 
@@ -138,7 +137,7 @@ begin
  else
   procinfo.exprogress:=val;
 
- Synchronize(@SyncProcStatus);
+ SyncProcStatus;
 end;
 
 procedure TLiDBusAction.UninstallAppAsRoot(obj: TAppInfo);
@@ -155,6 +154,7 @@ var
   intvalue: cuint32;
   strvalue: PChar;
   boolvalue: Boolean;
+  jobID: String;
 begin
   dbus_error_init(@err);
 
@@ -167,7 +167,7 @@ begin
     dbus_error_free(@err);
 
     SendError('An error occured during remove request.');
-    Terminate;
+    exit;
   end;
 
   if conn = nil then exit;
@@ -175,7 +175,7 @@ begin
   p_info('Calling listaller-daemon...');
   // create a new method call and check for errors
   dmsg := dbus_message_new_method_call('org.freedesktop.Listaller', // target for the method call
-                                      '/org/freedesktop/Listaller/Manager1', // object to call on
+                                      '/org/freedesktop/Listaller/Manager', // object to call on
                                       'org.freedesktop.Listaller.Manage', // interface to call on
                                       'RemoveApp'); // method name
   if (dmsg = nil) then
@@ -229,6 +229,7 @@ begin
   // free the pending message handle
   dbus_pending_call_unref(pending);
 
+  stat:=false;
   // read the parameters
   if (dbus_message_iter_init(dmsg, @args) = 0) then
      p_error('Message has no arguments!')
@@ -244,19 +245,27 @@ begin
   else
      dbus_message_iter_get_basic(@args, @rec);
 
-  if (stat = false) then
+  if (dbus_message_iter_next(@args) = 0) then
+     p_error('Message has too few arguments!')
+  else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+     p_error('Argument is no string!')
+  else
+     dbus_message_iter_get_basic(@args, @strvalue);
+
+  jobID:=strvalue;
+
+  if (not stat)or(rec = 'blocked')or(jobID='') then
   begin
    if rec = 'blocked' then
     SendError('You are not authorized to do this action!')
    else
     SendError('An error occured during install request.');
-   Synchronize(@SyncProcStatus);
-   Terminate;
    exit;
   end;
   // free reply
   dbus_message_unref(dmsg);
 
+  p_debug('Got job '+jobID);
   //////////////////////////////////////////////////////////////////////
 
   //Now start listening to Listaller dbus signals and forward them to
@@ -264,7 +273,7 @@ begin
 
   // add a rule for which messages we want to see
   dbus_bus_add_match(conn,
-  'type=''signal'',sender=''org.freedesktop.Listaller'', interface=''org.freedesktop.Listaller.Manage'', path=''/org/freedesktop/Listaller/Manager1'''
+  PChar('type=''signal'',sender=''org.freedesktop.Listaller'', interface=''org.freedesktop.Listaller.Manage'', path=''/org/freedesktop/Listaller/'+jobID+'''')
   , @err);
 
   dbus_connection_flush(conn);
@@ -274,6 +283,8 @@ begin
     exit;
   end;
   p_info('Match rule sent');
+
+  P_debug(jobID);
 
   procinfo.mnprogress:=0;
   action_finished:=false;
@@ -320,9 +331,7 @@ begin
       else
       begin
          dbus_message_iter_get_basic(@args, @strvalue);
-         procinfo.changed:=pdInfo;
-         procinfo.info:=strvalue;
-         Synchronize(@SyncProcStatus);
+         SendMessage(strvalue);
       end;
     end;
 
@@ -339,7 +348,6 @@ begin
          dbus_message_iter_get_basic(@args, @strvalue);
          //The action failed. Diplay error and leave the loop
           SendError(strvalue);
-          Terminate;
           action_finished:=true;
       end;
     end;
@@ -360,7 +368,6 @@ begin
          begin
           //The action failed. Leave the loop and display message
           SendError('The action failed.');
-          Terminate;
           action_finished:=true;
          end;
       end;

@@ -6,13 +6,13 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1256"/>
+      <CurrentBuildNr Value="1292"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -28,24 +28,26 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="48">
+    <Units Count="50">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="29" Y="22"/>
-        <TopLine Value="1"/>
+        <CursorPos X="94" Y="405"/>
+        <TopLine Value="402"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="64"/>
+        <UsageCount Value="65"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="13" Y="581"/>
-        <TopLine Value="557"/>
-        <UsageCount Value="24"/>
+        <CursorPos X="25" Y="929"/>
+        <TopLine Value="908"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="25"/>
+        <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
@@ -156,9 +158,11 @@
         <Filename Value="limanageapp.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="limanageapp"/>
-        <CursorPos X="93" Y="565"/>
-        <TopLine Value="544"/>
-        <UsageCount Value="23"/>
+        <CursorPos X="33" Y="562"/>
+        <TopLine Value="541"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="24"/>
+        <Loaded Value="True"/>
       </Unit17>
       <Unit18>
         <Filename Value="../linotify.pas"/>
@@ -293,9 +297,11 @@
         <Filename Value="lidbusproc.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lidbusproc"/>
-        <CursorPos X="31" Y="98"/>
-        <TopLine Value="590"/>
-        <UsageCount Value="30"/>
+        <CursorPos X="16" Y="37"/>
+        <TopLine Value="16"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="31"/>
+        <Loaded Value="True"/>
       </Unit37>
       <Unit38>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.2.4/rtl/inc/objpash.inc"/>
@@ -326,8 +332,8 @@
       <Unit42>
         <Filename Value="../packager/ipkpackage.pas"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="46" Y="355"/>
-        <TopLine Value="312"/>
+        <CursorPos X="28" Y="24"/>
+        <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit42>
       <Unit43>
@@ -364,8 +370,111 @@
         <TopLine Value="173"/>
         <UsageCount Value="10"/>
       </Unit47>
+      <Unit48>
+        <Filename Value="../packager/tarfile.pas"/>
+        <UnitName Value="tarfile"/>
+        <CursorPos X="22" Y="76"/>
+        <TopLine Value="42"/>
+        <UsageCount Value="10"/>
+      </Unit48>
+      <Unit49>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/fcl-base/src/libtar.pp"/>
+        <UnitName Value="libtar"/>
+        <CursorPos X="62" Y="25"/>
+        <TopLine Value="4"/>
+        <UsageCount Value="10"/>
+      </Unit49>
     </Units>
-    <JumpHistory Count="0" HistoryIndex="-1"/>
+    <JumpHistory Count="22" HistoryIndex="21">
+      <Position1>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="240" Column="26" TopLine="217"/>
+      </Position1>
+      <Position2>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="25" Column="61" TopLine="1"/>
+      </Position2>
+      <Position3>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="27" TopLine="1"/>
+      </Position3>
+      <Position4>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="25" Column="22" TopLine="1"/>
+      </Position4>
+      <Position5>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="27" TopLine="1"/>
+      </Position5>
+      <Position6>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="74" Column="25" TopLine="61"/>
+      </Position6>
+      <Position7>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="557" Column="27" TopLine="536"/>
+      </Position7>
+      <Position8>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="583" Column="24" TopLine="560"/>
+      </Position8>
+      <Position9>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="52" Column="35" TopLine="31"/>
+      </Position9>
+      <Position10>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="581" Column="17" TopLine="548"/>
+      </Position10>
+      <Position11>
+        <Filename Value="lidbusproc.pas"/>
+        <Caret Line="340" Column="21" TopLine="311"/>
+      </Position11>
+      <Position12>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="583" Column="26" TopLine="548"/>
+      </Position12>
+      <Position13>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="52" Column="35" TopLine="31"/>
+      </Position13>
+      <Position14>
+        <Filename Value="lidbusproc.pas"/>
+        <Caret Line="374" Column="17" TopLine="353"/>
+      </Position14>
+      <Position15>
+        <Filename Value="lidbusproc.pas"/>
+        <Caret Line="68" Column="24" TopLine="45"/>
+      </Position15>
+      <Position16>
+        <Filename Value="lidbusproc.pas"/>
+        <Caret Line="105" Column="33" TopLine="93"/>
+      </Position16>
+      <Position17>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="561" Column="22" TopLine="536"/>
+      </Position17>
+      <Position18>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="443" Column="1" TopLine="399"/>
+      </Position18>
+      <Position19>
+        <Filename Value="lidbusproc.pas"/>
+        <Caret Line="77" Column="20" TopLine="62"/>
+      </Position19>
+      <Position20>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="564" Column="76" TopLine="549"/>
+      </Position20>
+      <Position21>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="51" Column="46" TopLine="20"/>
+      </Position21>
+      <Position22>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="25" Column="22" TopLine="49"/>
+      </Position22>
+    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>

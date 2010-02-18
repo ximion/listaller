@@ -36,8 +36,11 @@ type
 
   authority: PPolkitAuthority;
   replyMsg: PDBusMessage;
+  jobID: String;
+  remove: Boolean;
  private
-  procedure SendReply(stat: Boolean);virtual;abstract;
+  function RandomCode: String;
+  procedure SendReply(stat: Boolean;jID: PChar);virtual;abstract;
  public
   constructor Create(aMsg: PDBusMessage);
   destructor  Destroy;override;
@@ -45,6 +48,7 @@ type
   property Authorization: TAccessType read allowed write allowed;
   property Identifier: String read ident write ident;
   property MainLoop: PGMainLoop read loop write loop;
+  property DId: String read jobID write jobID;
  end;
 
  //** Job which can install software packages
@@ -53,7 +57,7 @@ type
   FileName: String;
   actUSource: Boolean;
   //** Send reply to client
-  procedure SendReply(stat: Boolean);override;
+  procedure SendReply(stat: Boolean;jID: PChar);override;
   //** Emit a progress changed signal
   procedure SendProgressSignal(xn: String;sigvalue: cuint);
   //** Emit a message signal with the current message
@@ -69,8 +73,10 @@ type
  TDoAppRemove = class(TJob)
  private
   appinfo: TAppInfo;
+  //** Pointer to management object
+  mgr: Pointer;
   //** Send reply to client
-  procedure SendReply(stat: Boolean);override;
+  procedure SendReply(stat: Boolean;jID: PChar);override;
   //** Emit a global string signal
   procedure EmitMessage(id: String;param: PChar);
  public
@@ -97,10 +103,12 @@ begin
  inherited Create(true);
 
  replyMsg:=aMsg;
+ remove:=false;
 
  authority:=polkit_authority_get();
  loop:=g_main_loop_new (nil, false);
  allowed:=AC_UNKNOWN;
+ jobID:=RandomCode;
  FreeOnTerminate:=true;
 end;
 
@@ -109,6 +117,12 @@ begin
  g_object_unref(authority);
  g_main_loop_unref(loop);
  inherited;
+end;
+
+function TJob.RandomCode: String;
+begin
+ randomize;
+ Result:=IntToStr(random(9))+IntToStr(random(9))+IntToStr(random(9))+IntToStr(random(9));
 end;
 
 procedure check_authorization_cb(authority: PPolkitAuthority;res: PGAsyncResult;job: TJob);
@@ -252,7 +266,7 @@ begin
   dbus_message_unref(msg);
 end;
 
-procedure TDoAppInstall.SendReply(stat: Boolean);
+procedure TDoAppInstall.SendReply(stat: Boolean;jID: PChar);
 var
   reply: PDBusMessage;
   args: DBusMessageIter;
@@ -351,7 +365,7 @@ begin
   if allowed = AC_NOT_AUTHORIZED then
   begin
    p_error('Not authorized to call this action.');
-   SendReply(false);
+   SendReply(false,'');
    Terminate;
    exit;
   end;
@@ -362,13 +376,13 @@ begin
  begin
   p_error('Installation package not found!');
   p_debug(FileName);
-  SendReply(false);
+  SendReply(false,'');
   Terminate;
   exit;
  end;
 
  //We got authorization!
- SendReply(true);
+ SendReply(true,PChar(jobID));
 
  try
  { This is a fast install. Should never be called directly! }
@@ -422,116 +436,10 @@ begin
  Terminate;
 end;
 
+///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+
 { TDoAppRemove }
-
-constructor TDoAppRemove.Create(aMsg: PDBusMessage);
-var args: DBusMessageIter;param: PChar = '';
-begin
- inherited Create(aMsg);
- ident:='DoAppRemove~'+dbus_message_get_sender(aMsg);
-
- // read the arguments
-   if (dbus_message_iter_init(aMsg, @args) = 0) then
-      p_error('Message has no arguments!')
-   else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
-      p_error('Argument is no string!')
-   else
-      dbus_message_iter_get_basic(@args, @param);
-
-   appinfo.Name:=param;
-   dbus_message_iter_next(@args);
-
-   if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
-      p_error('Argument is no string!')
-   else
-      dbus_message_iter_get_basic(@args, @param);
-   appinfo.UId:=param;
-
-   p_info('Removing application called "'+appinfo.name+'"');
-
- //Start work
-  Resume();
-end;
-
-destructor TDoAppRemove.Destroy;
-begin
- Dec(ManagerWorkers);
- p_debug('App remove job deleted.');
- inherited;
-end;
-
-procedure TDoAppRemove.SendReply(stat: Boolean);
-var
-  reply: PDBusMessage;
-  args: DBusMessageIter;
-  auth: PChar = '';
-  serial: dbus_uint32_t = 0;
-begin
-   p_info('Send reply called');
-
-  // create a reply from the message
-   reply := dbus_message_new_method_return(replyMsg);
-
-   // add the arguments to the reply
-   dbus_message_iter_init_append(reply, @args);
-   if (dbus_message_iter_append_basic(@args, DBUS_TYPE_BOOLEAN, @stat) = 0) then
-   begin
-     p_error('Out Of Memory!');
-     exit;
-   end;
-   auth:='';
-   if allowed = AC_AUTHORIZED then auth:='authorized'
-   else if allowed = AC_NOT_AUTHORIZED then auth:='blocked';
-   if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @auth) = 0) then
-   begin
-     p_error('Out Of Memory!');
-     exit;
-   end;
-   // send the reply & flush the connection
-   if (dbus_connection_send(conn, reply, @serial) = 0) then
-   begin
-     p_error('Out Of Memory!');
-     Exit;
-   end;
-   dbus_connection_flush(conn);
-
-   // free the reply
-   dbus_message_unref(reply);
-   // free the message
-   dbus_message_unref(replyMsg);
-end;
-
-procedure TDoAppRemove.EmitMessage(id: String;param: PChar);
-var
-  args: DBusMessageIter;
-  dmsg: PDBusMessage;
-begin
-  // create a signal & check for errors
-  dmsg := dbus_message_new_signal('/org/freedesktop/Listaller/Manager1', // object name of the signal
-                                 'org.freedesktop.Listaller.Manage', // interface name of the signal
-                                 PChar(ID)); // name of the signal
-  if (dmsg = nil) then
-  begin
-    p_error('Message Null');
-    exit;
-  end;
-  // append arguments onto signal
-  dbus_message_iter_init_append(dmsg, @args);
-  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @param) = 0) then
-  begin
-    p_error('Out Of Memory!');
-    exit;
-  end;
-  // send the message and flush the connection
-  if (dbus_connection_send(conn, dmsg, nil) = 0) then
-  begin
-    p_error('Out Of Memory!');
-    exit;
-  end;
-  dbus_connection_flush(conn);
-  // free the message and close the connection
-  dbus_message_unref(dmsg);
-end;
 
 function OnMgrUserRequest(mtype: TRqType;msg: PChar;job: Pointer): TRqResult;cdecl;
 begin
@@ -557,8 +465,9 @@ var
   sigvalue: cuint32;
 begin
   sigvalue:=data.mnprogress;
+  p_debug(TDoAppRemove(job).DId+'->ProgressChange::'+IntToStr(sigvalue));
   // create a signal & check for errors
-  msg := dbus_message_new_signal('/org/freedesktop/Listaller/Manager1', // object name of the signal
+  msg := dbus_message_new_signal(PChar('/org/freedesktop/Listaller/'+TDoAppRemove(job).DId), // object name of the signal
                                  'org.freedesktop.Listaller.Manage', // interface name of the signal
                                  'ProgressChange'); // name of the signal
 
@@ -592,18 +501,39 @@ begin
  end;
 end;
 
-procedure TDoAppRemove.Execute;
-var
- action_id: PGChar;
- subject: PPolkitSubject;
- target: String;
- mgr: Pointer;
- success: Boolean;
+constructor TDoAppRemove.Create(aMsg: PDBusMessage);
+var args: DBusMessageIter;
+    param: PChar = '';
 
- args: DBusMessageIter;
- msg: PDBusMessage;
+    action_id: PGChar;
+    subject: PPolkitSubject;
+    target: String;
 begin
-  action_id:='org.freedesktop.listaller.remove-application';
+ inherited Create(aMsg);
+ jobID:='manager'+jobID;
+ // read the arguments
+   if (dbus_message_iter_init(aMsg, @args) = 0) then
+      p_error('Message has no arguments!')
+   else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+      p_error('Argument is no string!')
+   else
+      dbus_message_iter_get_basic(@args, @param);
+
+   appinfo.Name:=param;
+   dbus_message_iter_next(@args);
+
+   if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+      p_error('Argument is no string!')
+   else
+      dbus_message_iter_get_basic(@args, @param);
+   appinfo.UId:=param;
+
+   p_info('Removing application called "'+appinfo.name+'" Job:'+jobID);
+
+
+
+
+   action_id:='org.freedesktop.listaller.remove-application';
   target:=dbus_message_get_sender(replyMsg);
 
   subject:=polkit_system_bus_name_new(PGChar(target));
@@ -623,8 +553,9 @@ begin
   if allowed = AC_NOT_AUTHORIZED then
   begin
    p_error('Not authorized to call this action.');
-   SendReply(false);
-   Terminate;
+   SendReply(false,'');
+   remove:=true;
+   Resume();
    exit;
   end;
 
@@ -635,22 +566,130 @@ begin
   li_mgr_register_status_call(@mgr,@OnMgrStatus,self);
   li_mgr_register_request_call(@mgr,@OnMgrUserRequest,self);
  except
-  SendReply(false);
+  SendReply(false,'');
   p_warning('Manage job failed.');
-  Terminate;
+  remove:=true;
+  Resume();
   exit;
  end;
-  SendReply(true);
+
+  SendReply(true,PChar(jobID));
+
+
+ //Start work
+  Resume();
+end;
+
+destructor TDoAppRemove.Destroy;
+begin
+ Dec(ManagerWorkers);
+ p_debug('App remove job deleted.');
+ inherited;
+end;
+
+procedure TDoAppRemove.SendReply(stat: Boolean;jID: PChar);
+var
+  reply: PDBusMessage;
+  args: DBusMessageIter;
+  auth: PChar = '';
+  serial: dbus_uint32_t = 0;
+begin
+   p_info('Send reply called');
+
+  // create a reply from the message
+   reply := dbus_message_new_method_return(replyMsg);
+
+   // add the arguments to the reply
+   dbus_message_iter_init_append(reply, @args);
+   if (dbus_message_iter_append_basic(@args, DBUS_TYPE_BOOLEAN, @stat) = 0) then
+   begin
+     p_error('Out Of Memory!');
+     exit;
+   end;
+   auth:='';
+   if allowed = AC_AUTHORIZED then auth:='authorized'
+   else if allowed = AC_NOT_AUTHORIZED then auth:='blocked';
+   if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @auth) = 0) then
+   begin
+     p_error('Out Of Memory!');
+     exit;
+   end;
+   if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @jID) = 0) then
+   begin
+     p_error('Out Of Memory!');
+     exit;
+   end;
+   // send the reply & flush the connection
+   if (dbus_connection_send(conn, reply, @serial) = 0) then
+   begin
+     p_error('Out Of Memory!');
+     Exit;
+   end;
+   dbus_connection_flush(conn);
+
+   // free the reply
+   dbus_message_unref(reply);
+   // free the message
+   dbus_message_unref(replyMsg);
+end;
+
+procedure TDoAppRemove.EmitMessage(id: String;param: PChar);
+var
+  args: DBusMessageIter;
+  dmsg: PDBusMessage;
+begin
+  p_debug(jobID+'->'+id+':: '+param);
+  // create a signal & check for errors
+  dmsg := dbus_message_new_signal(PChar('/org/freedesktop/Listaller/'+jobID), // object name of the signal
+                                 'org.freedesktop.Listaller.Manage', // interface name of the signal
+                                 PChar(ID)); // name of the signal
+  if (dmsg = nil) then
+  begin
+    p_error('Message Null');
+    exit;
+  end;
+  // append arguments onto signal
+  dbus_message_iter_init_append(dmsg, @args);
+  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @param) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+  // send the message and flush the connection
+  if (dbus_connection_send(conn, dmsg, nil) = 0) then
+  begin
+    p_error('Out Of Memory!');
+    exit;
+  end;
+  dbus_connection_flush(conn);
+  // free the message and close the connection
+  dbus_message_unref(dmsg);
+end;
+
+procedure TDoAppRemove.Execute;
+var
+ success: Boolean;
+
+ args: DBusMessageIter;
+ msg: PDBusMessage;
+begin
+if remove then
+begin
+ Terminate;
+ exit;
+end;
+
   try
-  li_mgr_remove_app(@mgr,appinfo);
-  li_mgr_free(@mgr);
-  success:=true;
+   li_mgr_remove_app(@mgr,appinfo);
+   li_mgr_free(@mgr);
+   success:=true;
   except
    success:=false;
   end;
- //Now emit action finished signal:
+
+  //Now emit action finished signal:
   // create a signal & check for errors
-  msg := dbus_message_new_signal('/org/freedesktop/Listaller/Manager1', // object name of the signal
+  msg := dbus_message_new_signal(PChar('/org/freedesktop/Listaller/'+jobID), // object name of the signal
                                  'org.freedesktop.Listaller.Manage', // interface name of the signal
                                  'Finished'); // name of the signal
   if (msg = nil) then
@@ -677,7 +716,7 @@ begin
   // free the message and close the connection
   dbus_message_unref(msg);
 
-  p_info('App uninstallation job finished.');
+  p_info('App uninstallation job "'+jobID+'" finished.');
  Terminate;
 end;
 

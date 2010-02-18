@@ -48,8 +48,8 @@ type
   function UninstallMojo(dsk: String): Boolean;
   //** Catch the PackageKit progress
   procedure PkitProgress(pos: Integer;xd: Pointer);
-  //** Catch status messages from DBus process
-  procedure DBusThreadStatusChange(ty: LiProcStatus;data: TLiProcData);
+  //** Catch status messages from DBus action
+  procedure DBusStatusChange(ty: LiProcStatus;data: TLiProcData);
  public
   constructor Create;
   destructor Destroy;override;
@@ -554,11 +554,12 @@ begin
 end;
 end;
 
-procedure TAppManager.DBusThreadStatusChange(ty: LiProcStatus;data: TLiProcData);
+procedure TAppManager.DBusStatusChange(ty: LiProcStatus;data: TLiProcData);
 begin
+  p_debug('Status changed.');
   case data.changed of
     pdMainProgress: setpos(data.mnprogress);
-    pdInfo        : msg(data.info);
+    pdInfo        : msg(data.msg);
     pdError       : request(data.msg,rqError);
     pdStatus      : begin
                      sdata.lastresult:=ty;
@@ -580,7 +581,9 @@ begin
  buscmd.appinfo:=obj;
  with TLiDBusAction.Create(buscmd) do
  begin
-   OnStatus:=@DBusThreadStatusChange;
+   OnStatus:=@DBusStatusChange;
+   ExecuteAction;
+   Free;
  end;
  exit;
 end;

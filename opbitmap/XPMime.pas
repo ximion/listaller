@@ -312,10 +312,9 @@ var
   fs: TFileStream;
   Buffer: TByteArr;
   tempCard: Cardinal;
-  i, ui, cnt: integer;
+  i,ui: integer;
 
   mo: TMagicObject;
-  found: Boolean;
 
 //inner
   function CheckMagic(Mo: TMagicObject): Boolean;
