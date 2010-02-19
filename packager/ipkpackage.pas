@@ -21,8 +21,8 @@ unit ipkpackage;
 interface
 
 uses
-  Classes, SysUtils, LibTar, liBasic, ULZMAEncoder, ULZMADecoder,
-  UBufferedFS, ULZMACommon, gpgsign, CallbackProcess, liTypes;
+  Classes, SysUtils, TarFile, liBasic, ULZMAEncoder, ULZMADecoder,
+  UBufferedFS, ULZMACommon, gpgsign, liTypes, FileUtil;
 
 type
  //** Creates IPK packages from preprocessed source files
@@ -31,22 +31,25 @@ type
    OutFileName: String;
    pkrandom: String;
    basename: String;
-   mntar: TTarWriter;
+   mntar: TTarArchive;
    finalized: Boolean;
    algorithm: Integer;
+   bdir: String;
    function RandomID: String;
   public
    constructor Create(aIPKFile: String);
    destructor  Destroy;override;
 
-   //** Add a new file to the IPK structure @return False if already finalized
-   function  AddFile(todir: String;fname: String): Boolean;
+   //** Add a new file to the IPK structure @return False if already finalized or other error
+   function  AddFile(fname: String): Boolean;
    //** Finalize the base file for signing
    procedure Finalize;
    //** Sign the package
    function SignPackage: Boolean;
    //** Compress package and copy it to output @returns Success of operation
    function ProduceIPKPackage: Boolean;
+   //** Base directory (root of package)
+   property BaseDir: String read bdir write bdir;
  end;
 
  //** Unpacks IPK package structure
@@ -71,7 +74,7 @@ type
   //** Verify signature (if there is any)
   function  CheckSignature: Boolean;
   //** Unpack file @returns Success of operation
-  function UnpackFile(fname: String;fdest: String): Boolean;
+  function UnpackFile(fname: String): Boolean;
   //** Unpacker's working dir
   property WDir: String read workdir;
   //** On unpackger decompress progress
@@ -106,7 +109,8 @@ begin
  finalized:=false;
   OutFileName:=aIPKFile;
  basename:=tmpdir+'/listaller/'+ExtractFileName(OutFileName)+pkrandom+'.tar';
- mntar:=TTarWriter.Create(basename);
+ mntar:=TTarArchive.Create;
+ mntar.TarArchive:=basename;
  algorithm:=2;
 end;
 
@@ -121,26 +125,28 @@ begin
  Result:=IntToStr(random(99));
 end;
 
-function TLiPackager.AddFile(todir: String;fname: String): Boolean;
+function TLiPackager.AddFile(fname: String): Boolean;
 begin
 if finalized then
  Result:=false
 else
 begin
- mntar.AddFile(fname,todir+'/'+ExtractFileName(fname));
- Result:=true;
+ mntar.BaseDir:=bdir;
+ if mntar.AddFile(fname) = 0 then
+  Result:=true
+ else
+  Result:=false;
 end;
 end;
 
 procedure TLiPackager.Finalize;
 begin
- mntar.Finalize;
  mntar.Free;
  finalized:=true;
 end;
 
 function TLiPackager.SignPackage: Boolean;
-var sign: TGPGSignWrapper;oldbase: String;
+var sign: TGPGSignWrapper;oldbase: String;rs: Integer;
 begin
  Result:=false;
  if (not Finalized) then raise Exception.Create('IPK file was not finalized before signing.');
@@ -149,6 +155,9 @@ begin
  sign:=TGPGSignWrapper.Create;
  sign.FileName:=oldbase;
  Result:=true;
+ if FileExistsUTF8(ExtractFilePath(oldbase)+'/signature.asc') then
+  DeleteFile(ExtractFilePath(oldbase)+'/signature.asc');
+
  if not sign.Signfile(ExtractFilePath(oldbase)+'/signature.asc') then
  begin
    Result:=false;
@@ -159,13 +168,29 @@ begin
 
  pkrandom:='-'+RandomID+RandomID+RandomID;
  basename:=tmpdir+'/listaller/'+ExtractFileName(OutFileName)+pkrandom+'.tar';
- mntar:=TTarWriter.Create(basename);
- mntar.AddFile(oldbase,'content.tar');
- mntar.AddFile(ExtractFilePath(oldbase)+'/signature.asc','signature.asc');
- mntar.Finalize;
+ mntar:=TTarArchive.Create;
+ mntar.TarArchive:=basename;
+
+ p_debug(basename);
+
+ mntar.BaseDir:=ExtractFilePath(oldbase);
+
+ p_debug(mntar.BaseDir);
+
+ RenameFile(oldbase,ExtractFilePath(oldbase)+'/content.tar');
+ oldbase:=ExtractFilePath(oldbase)+'/content.tar';
+
+ rs:=mntar.AddFile(oldbase);
+ if rs = 0 then
+ begin
+ rs:=mntar.AddFile(ExtractFilePath(oldbase)+'signature.asc');
+ if rs<>0 then
+  raise Exception.Create('Error while combining signed package.');
+ end else
+  raise Exception.Create('Error while combining signed package.');
  mntar.Free;
 
- DeleteFile(ExtractFilePath(oldbase)+'/signature.asc');
+ DeleteFile(ExtractFilePath(oldbase)+'signature.asc');
  DeleteFile(oldbase);
 end;
 
@@ -249,7 +274,7 @@ var inStream:TBufferedFS;
     outStream:TBufferedFS;
     decoder: TLZMADecoder;
     properties:array[0..4] of byte;
-    filesize,outSize:Int64;
+    outSize:Int64;
     i: Integer;
     v: byte;
 const propertiessize=5;
@@ -294,34 +319,30 @@ end;
 
 function TLiUnpacker.CheckSignature: Boolean;
 var mnarc: TTarArchive;
-    dir: TTarDirRec;
     hasSignature: Boolean;
     sign: TGPGSignWrapper;
+    res: Integer;
 begin
  Result:=true;
  hasSignature:=false;
- mnarc:=TTarArchive.Create(workdir+'ipktar.tar');
- mnarc.Reset;
+ mnarc:=TTarArchive.Create;
+ mnarc.TarArchive:=workdir+'ipktar.tar';
+ mnarc.BaseDir:=workdir;
+
  //Check if package has signature
- while mnarc.FindNext(dir) do
- begin
-  if dir.Name='signature.asc' then
-  begin
-   hasSignature:=true;
-   break;
-  end;
- end;
+ hasSignature:=mnarc.FileInArchive('signature.asc');
+
  if hasSignature then
  begin
+  res:=mnarc.ExtractFile('signature.asc');
+  res+=mnarc.ExtractFile('content.tar');
 
-  mnarc.Reset;
-  while mnarc.FindNext(dir) do
+  if res<>0 then
   begin
-   if dir.Name='signature.asc' then
-    mnarc.ReadFile(workdir+'signature.asc');
-   if dir.Name='content.tar' then
-    mnarc.ReadFile(workdir+'content.tar');
+   //!!! This should be done better!
+   raise Exception.Create('Could not verify signature!');
   end;
+
   DeleteFile(workdir+'ipktar.tar');
   RenameFile(workdir+'content.tar',workdir+'ipktar.tar');
   //Now check signature
@@ -334,32 +355,24 @@ begin
  signChecked:=true;
 end;
 
-function TLiUnpacker.UnpackFile(fname: String;fdest: String): Boolean;
+function TLiUnpacker.UnpackFile(fname: String): Boolean;
 var arc: TTarArchive;
-    dir: TTarDirRec;
 begin
 if not signChecked then CheckSignature;
 Result:=false;
 if length(fname)<2 then exit;
-if fname[1]<>'.' then fname:='./'+fname;
+
  fname:=StringReplace(fname,'//','/',[rfReplaceAll]);
 
- arc:=TTarArchive.Create(workdir+'ipktar.tar');
- arc.Reset;
+ arc:=TTarArchive.Create;
+ arc.TarArchive:=workdir+'ipktar.tar';
+ arc.BaseDir:=workdir;
  //Create dir struct
- ForceDirectories(ExtractFilePath(fdest));
+ //ForceDirectories(ExtractFilePath(fdest));
  //Check if package has signature
- while arc.FindNext(dir) do
- begin
- if pos('rubber',fname)>0 then
-  p_debug(dir.name+' # '+fname+' >> '+fdest);
-  if StringReplace(dir.name,'//','/',[rfReplaceAll])=fname then
-  begin
-   arc.ReadFile(fdest);
-   Result:=true;
-   break;
-  end;
- end;
+ if arc.ExtractFile(fname) = 0 then
+  Result:=true;
+
  arc.Free;
 end;
 
@@ -423,7 +436,7 @@ procedure TLiUpdateBit.Decompress(infile: String;outfile: String);
  var inStream:TBufferedFS;
     outStream:TBufferedFS;
     properties:array[0..4] of byte;
-    filesize,outSize:Int64;
+    outSize:Int64;
     i: Integer;
     v: byte;
 const propertiessize=5;

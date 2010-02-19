@@ -10,7 +10,7 @@ Build-Depends: libgtk2.0-dev, cdbs, quilt, lazarus (>=0.9.28), fpc (>= 2.4.0),
 
 Package: libinstaller0.4.0
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, apt-file, listaller-core
+Depends: ${misc:Depends}, ${shlibs:Depends}, apt-file, listaller-core, tar
 Description: Listaller library
  Contains the libInstaller library, which allows
  programs to access install/uninstall functions

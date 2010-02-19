@@ -6,13 +6,13 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1294"/>
+      <CurrentBuildNr Value="1332"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -33,20 +33,20 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="94" Y="405"/>
+        <CursorPos X="1" Y="443"/>
         <TopLine Value="399"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="65"/>
+        <UsageCount Value="66"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="25" Y="1557"/>
-        <TopLine Value="1536"/>
+        <CursorPos X="17" Y="1281"/>
+        <TopLine Value="1262"/>
         <EditorIndex Value="1"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
@@ -161,7 +161,7 @@
         <CursorPos X="25" Y="750"/>
         <TopLine Value="729"/>
         <EditorIndex Value="2"/>
-        <UsageCount Value="24"/>
+        <UsageCount Value="25"/>
         <Loaded Value="True"/>
       </Unit17>
       <Unit18>
@@ -300,7 +300,7 @@
         <CursorPos X="16" Y="37"/>
         <TopLine Value="16"/>
         <EditorIndex Value="3"/>
-        <UsageCount Value="31"/>
+        <UsageCount Value="32"/>
         <Loaded Value="True"/>
       </Unit37>
       <Unit38>
@@ -332,9 +332,9 @@
       <Unit42>
         <Filename Value="../packager/ipkpackage.pas"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="28" Y="24"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="10"/>
+        <CursorPos X="34" Y="372"/>
+        <TopLine Value="349"/>
+        <UsageCount Value="11"/>
       </Unit42>
       <Unit43>
         <Filename Value="../packager/gpgsign.pas"/>
@@ -366,15 +366,15 @@
       <Unit47>
         <Filename Value="../src/trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="31" Y="194"/>
-        <TopLine Value="173"/>
+        <CursorPos X="1" Y="98"/>
+        <TopLine Value="77"/>
         <UsageCount Value="10"/>
       </Unit47>
       <Unit48>
         <Filename Value="../packager/tarfile.pas"/>
         <UnitName Value="tarfile"/>
-        <CursorPos X="22" Y="76"/>
-        <TopLine Value="42"/>
+        <CursorPos X="6" Y="126"/>
+        <TopLine Value="98"/>
         <UsageCount Value="10"/>
       </Unit48>
       <Unit49>
@@ -385,127 +385,67 @@
         <UsageCount Value="10"/>
       </Unit49>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="15" HistoryIndex="14">
       <Position1>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="27" TopLine="1"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="586" Column="17" TopLine="555"/>
       </Position1>
       <Position2>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="74" Column="25" TopLine="61"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="651" Column="42" TopLine="630"/>
       </Position2>
       <Position3>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="557" Column="27" TopLine="536"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="664" Column="59" TopLine="630"/>
       </Position3>
       <Position4>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="583" Column="24" TopLine="560"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="665" Column="60" TopLine="630"/>
       </Position4>
       <Position5>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="52" Column="35" TopLine="31"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="666" Column="57" TopLine="630"/>
       </Position5>
       <Position6>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="581" Column="17" TopLine="548"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="736" Column="41" TopLine="715"/>
       </Position6>
       <Position7>
-        <Filename Value="lidbusproc.pas"/>
-        <Caret Line="340" Column="21" TopLine="311"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="835" Column="65" TopLine="814"/>
       </Position7>
       <Position8>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="583" Column="26" TopLine="548"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="879" Column="45" TopLine="858"/>
       </Position8>
       <Position9>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="52" Column="35" TopLine="31"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="897" Column="31" TopLine="858"/>
       </Position9>
       <Position10>
-        <Filename Value="lidbusproc.pas"/>
-        <Caret Line="374" Column="17" TopLine="353"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="697" Column="28" TopLine="677"/>
       </Position10>
       <Position11>
-        <Filename Value="lidbusproc.pas"/>
-        <Caret Line="68" Column="24" TopLine="45"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="697" Column="28" TopLine="677"/>
       </Position11>
       <Position12>
-        <Filename Value="lidbusproc.pas"/>
-        <Caret Line="105" Column="33" TopLine="93"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="1281" Column="19" TopLine="1262"/>
       </Position12>
       <Position13>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="561" Column="22" TopLine="536"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="7" Column="45" TopLine="1"/>
       </Position13>
       <Position14>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="443" Column="1" TopLine="399"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="522" Column="30" TopLine="501"/>
       </Position14>
       <Position15>
-        <Filename Value="lidbusproc.pas"/>
-        <Caret Line="77" Column="20" TopLine="62"/>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="1281" Column="17" TopLine="1262"/>
       </Position15>
-      <Position16>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="564" Column="76" TopLine="549"/>
-      </Position16>
-      <Position17>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="51" Column="46" TopLine="20"/>
-      </Position17>
-      <Position18>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="562" Column="33" TopLine="541"/>
-      </Position18>
-      <Position19>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="572" Column="57" TopLine="563"/>
-      </Position19>
-      <Position20>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="647" Column="23" TopLine="626"/>
-      </Position20>
-      <Position21>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="676" Column="23" TopLine="655"/>
-      </Position21>
-      <Position22>
-        <Filename Value="limanageapp.pas"/>
-        <Caret Line="647" Column="22" TopLine="626"/>
-      </Position22>
-      <Position23>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="924" Column="19" TopLine="908"/>
-      </Position23>
-      <Position24>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="400" Column="26" TopLine="379"/>
-      </Position24>
-      <Position25>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="1048" Column="24" TopLine="1027"/>
-      </Position25>
-      <Position26>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="1168" Column="27" TopLine="1147"/>
-      </Position26>
-      <Position27>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="1182" Column="27" TopLine="1161"/>
-      </Position27>
-      <Position28>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="1201" Column="28" TopLine="1180"/>
-      </Position28>
-      <Position29>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="1206" Column="26" TopLine="1185"/>
-      </Position29>
-      <Position30>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="1546" Column="25" TopLine="1525"/>
-      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

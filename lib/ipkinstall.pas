@@ -504,7 +504,7 @@ msg('Loading IPK package...');
 //Begin loading package
 RmApp:=false;
 
-//Clean up the mess of an old installation
+//Clean up possible mess of an old installation
 if DirectoryExists(tmpdir+ExtractFileName(fname)) then
  DeleteDirectory(tmpdir+ExtractFileName(fname),false);
 
@@ -516,7 +516,7 @@ pkg.Decompress;
 if not pkg.CheckSignature then
  p_debug('Warning! Signature invalid or no signature found.');
 
-if not pkg.UnpackFile('./arcinfo.pin',pkg.WDir+'/arcinfo.pin') then
+if not pkg.UnpackFile('arcinfo.pin') then
 begin
 Emergency_FreeAll();
 MakeUsrRequest(rsExtractError+#13+rsPkgDM+#13+rsABLoad,rqError);
@@ -583,7 +583,7 @@ cont.ReadProfiles(PkProfiles);
 for i:=0 to PkProfiles.Count-1 do
 begin
 msg('Found installation profile '+PkProfiles[PkProfiles.Count-1]);
-pkg.UnpackFile('/pkgdata/fileinfo-'+IntToStr(i)+'.id',pkg.WDir+'/pkgdata/fileinfo-'+IntToStr(i)+'.id');
+pkg.UnpackFile('pkgdata/fileinfo-'+IntToStr(i)+'.id');
 end;
 
 IAppName:=cont.AppName;
@@ -638,7 +638,7 @@ end;
 IIconPath:=cont.Icon;
 if IIconPath<>'' then
 begin
-pkg.UnpackFile(IIconPath,pkg.WDir+ExtractFileName(IIconPath));
+pkg.UnpackFile(IIconPath);
 IIconPath:=pkg.WDir+IIconPath;
 end;
 
@@ -650,14 +650,14 @@ FSupportedDistris:=LowerCase(cont.DSupport);
 FWizImage:=GetDataFile('graphics/wizardimage.png');
 if (FWizImage<>'') and (FWizImage[1] = '/') then
 begin
- pkg.UnpackFile(FWizImage,pkg.WDir+ExtractFileName(FWizImage));
+ pkg.UnpackFile(FWizImage);
  if FileExists(pkg.WDir+FWizImage) then
  FWizImage:=pkg.WDir+FWizImage;
 end;
 
-pkg.UnpackFile('preinst',pkg.WDir+'preinst');
-pkg.UnpackFile('postinst',pkg.WDir+'postinst');
-pkg.UnpackFile('prerm',pkg.WDir+'prerm');
+pkg.UnpackFile('preinst');
+pkg.UnpackFile('postinst');
+pkg.UnpackFile('prerm');
 ExecA:='<disabled>';
 ExecB:='<disabled>';
 ExecX:='<disabled>';
@@ -719,7 +719,7 @@ end;
  end;}
 
 for i:=0 to Dependencies.Count-1 do
-if Dependencies[i][1]='.' then pkg.UnpackFile(Dependencies[i],pkg.WDir+ExtractFileName(Dependencies[i]));
+if Dependencies[i][1]='.' then pkg.UnpackFile(Dependencies[i]);
 
 pkg.Free;
 
@@ -755,7 +755,7 @@ IAppVersion:=cont.AppVersion;
 IIconPath:=cont.Icon;
 if IIconPath<>'' then
 begin
-pkg.UnpackFile(IIconPath,pkg.WDir+ExtractFileName(IIconPath));
+pkg.UnpackFile(IIconPath);
 IIconPath:=pkg.WDir+ExtractFileName(IIconPath);
 end;
 
@@ -883,12 +883,12 @@ Result:=true;
 try
 pkg:=TLiUnpacker.Create(PkgPath);
 
-pkg.UnpackFile(cont.Binary,pkg.WDir+ExtractFileName(cont.Binary));
+pkg.UnpackFile(cont.Binary);
 
 tmp:=TStringList.Create;
 cont.GetFiles(0,tmp);
 for i:=0 to tmp.Count-1 do
-pkg.UnpackFile(tmp[i],pkg.WDir+ExtractFileName(tmp[i]));
+pkg.UnpackFile(tmp[i]);
 
 tmp.Free;
 pkg.Free;
@@ -1278,7 +1278,7 @@ FDir:=pkg.WDir+ExtractFileName(PkgPath)+'/';
 if not DirectoryExists(FDir) then
 CreateDir(FDIR);
 
-if not pkg.UnpackFile(h,pkg.WDir+ExtractFileName(h)) then
+if not pkg.UnpackFile(h) then
 begin
  MakeUsrRequest(rsExtractError,rqError);
  RollbackInstallation;
@@ -1289,7 +1289,7 @@ end;
 
 msg('Copy file '+ExtractFileName(h)+' to '+dest+' ...');
 
-if fi[i+1] <> MDPrint((MD5.MD5File(DeleteModifiers(pkg.WDir+ExtractFileName(h)),1024))) then
+if fi[i+1] <> MDPrint((MD5.MD5File(DeleteModifiers(pkg.WDir+h),1024))) then
 begin
  MakeUsrRequest(rsHashError,rqError);
  RollbackInstallation;
@@ -1302,10 +1302,10 @@ Inc(j);
 
 try
 if FOverwrite then
-FileCopy(DeleteModifiers(pkg.WDir+ExtractFileName(h)),dest+'/'+ExtractFileName(DeleteModifiers(h)))
+FileCopy(DeleteModifiers(pkg.WDir+h),dest+'/'+ExtractFileName(DeleteModifiers(h)))
 else
 if (not FileExists(dest+'/'+ExtractFileName(DeleteModifiers(h)))) then
- FileCopy(DeleteModifiers(pkg.WDir+ExtractFileName(h)),dest+'/'+ExtractFileName(DeleteModifiers(h)))
+ FileCopy(DeleteModifiers(pkg.WDir+h),dest+'/'+ExtractFileName(DeleteModifiers(h)))
 else
 begin
   MakeUsrRequest(StringReplace(rsCnOverride,'%f',dest+'/'+ExtractFileName(DeleteModifiers(h)),[rfReplaceAll])+#10+rsInClose,rqError);

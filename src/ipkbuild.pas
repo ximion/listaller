@@ -319,6 +319,7 @@ writeLn('');
 
   fc:=TStringList.Create;
   ipkpkg:=TLiPackager.Create(o);
+  ipkpkg.BaseDir:=wdir;
 
   writeLn('Preparing files.');
   write('[..');
@@ -385,7 +386,12 @@ writeLn('');
  //'/files'+StringReplace(Files[i+2],'$INST','',[rfReplaceAll])+'/'+ExtractFileName(DeleteModifiers(Files[i]))+copy(Files[i],pos(ExtractFileName(DeleteModifiers(Files[i])),Files[i])+length(ExtractFileName(DeleteModifiers(Files[i]))),length(Files[i])));
 //writeLn('Add: '+fc[fc.Count-1]);
 
- ipkpkg.AddFile('.'+h,WDir+h+'/'+ExtractFileName(DeleteModifiers(Files[i])));
+if not ipkpkg.AddFile(WDir+h+'/'+ExtractFileName(DeleteModifiers(Files[i]))) then
+ begin
+  writeLn('error: ');
+  writeln(' Could not add file "'+DeleteModifiers(Files[i])+'" to TAR archive.');
+  halt(8);
+ end;
 
  fc.Add(MD5.MDPrint(MD5.MD5File(DeleteModifiers(Files[i]),1024)));//ExcludeTrailingBackslash(Files[i+1]));
  write('.');
@@ -399,7 +405,7 @@ writeLn('');
 if prID<>'-1' then begin
  fc.SaveToFile(WDir+'pkgdata/'+'fileinfo-'+prID+'.id');
 
- ipkpkg.AddFile('./pkgdata/',WDir+'pkgdata/fileinfo-'+prID+'.id');
+ ipkpkg.AddFile(WDir+'pkgdata/fileinfo-'+prID+'.id');
 end;
 //
 
@@ -455,7 +461,7 @@ end else
 begin
  FileCopy(control.Icon,WDir+'pkgdata/'+'packicon.png'); //!!! Changes needed to support more image types
  control.Icon:='/pkgdata/'+'packicon.png';
- ipkpkg.AddFile('./pkgdata',WDir+'pkgdata/'+'packicon.png');
+ ipkpkg.AddFile(WDir+'pkgdata/'+'packicon.png');
 end;
 
 sl:=TStringList.Create;
@@ -489,20 +495,20 @@ sl.Free;
 if FileExists(ExtractFilePath(fi)+'/preinst') then
 begin
 FileCopy(ExtractFilePath(fi)+'/preinst',WDir+'preinst');
-ipkpkg.AddFile('.',WDir+'preinst');
+ipkpkg.AddFile(WDir+'preinst');
 
 writeLn(' I: Preinst script found.');
 end;
 if FileExists(ExtractFilePath(fi)+'/postinst') then
 begin
 FileCopy(ExtractFilePath(fi)+'/postinst',WDir+'postinst');
-ipkpkg.AddFile('.',WDir+'postinst');
+ipkpkg.AddFile(WDir+'postinst');
 writeLn(' I: Postinst script found.');
 end;
 if FileExists(ExtractFilePath(fi)+'/prerm') then
 begin
 FileCopy(ExtractFilePath(fi)+'/prerm',WDir+'prerm');
-ipkpkg.AddFile('.',WDir+'prerm');
+ipkpkg.AddFile(WDir+'prerm');
 writeLn(' I: Prerm script found.');
 end;
 
@@ -535,7 +541,7 @@ end else
 begin
 FileCopy(control.Icon,WDir+'pkgdata/'+'packicon.png'); //!!! Should be changed to support more picture-filetypes
 control.Icon:='/pkgdata/'+'packicon.png';
-ipkpkg.AddFile('./pkgdata',WDir+'pkgdata/'+'packicon.png');
+ipkpkg.AddFile(WDir+'pkgdata/'+'packicon.png');
 writeLn(' Info: Icon added.');
 end;
 end; //END <>nil
@@ -549,7 +555,7 @@ begin
 writeLn('Mode: Build container IPK package');
 
 FileCopy(control.Binary,WDir+'files/'+ExtractFileName(control.Binary));
-ipkpkg.AddFile('./files',WDir+'files/'+ExtractFileName(control.Binary));
+ipkpkg.AddFile(WDir+'files/'+ExtractFileName(control.Binary));
 control.Binary:='/files/'+ExtractFileName(control.Binary);
 end;
 end;
@@ -558,7 +564,7 @@ randomize;
 
 control.SaveToFile(WDir+'arcinfo.pin');
 
-ipkpkg.AddFile('.',WDir+'arcinfo.pin');
+ipkpkg.AddFile(WDir+'arcinfo.pin');
 
 ipkpkg.Finalize; //Freeze the IPK package state
 files.Free;
