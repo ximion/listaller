@@ -288,19 +288,17 @@ end;
 
 function RequestHandling(mtype: TRqType;msg: PChar;data: Pointer): TRqResult; cdecl;
 begin
-with IWizFrm do
-begin
 case mtype of
 rqError: begin
   ShowMessage(msg);
-  Result:=rqsOK;
-  if Assigned(InfoMemo) then
+  if Assigned(IWizFrm) then
   begin
-   InfoMemo.Lines.Add(rsInstFailed);
-   InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
+   IWizFrm.InfoMemo.Lines.Add(rsInstFailed);
+   IWizFrm.InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
   end;
   setup.Free;
-  Application.Terminate;
+  Result:=rqsOK;
+  halt(6); //Kill application
   exit;
 end;
 rqWarning: begin
@@ -308,8 +306,12 @@ rqWarning: begin
   begin
    ShowMessage(rsINClose);
    Result:=rqsNo;
-   InfoMemo.Lines.Add('Installation aborted by user.');
-   InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
+   if Assigned(IWizFrm) then
+   begin
+    IWizFrm.InfoMemo.Lines.Add('Installation aborted by user.');
+    IWizFrm.InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
+   end;
+
    setup.Free;
    Application.Terminate;
    FreeAndNil(IWizFrm);
@@ -322,7 +324,6 @@ end;
 rqInfo: begin
   ShowMessage(msg);
   Result:=rqsOK;
-end;
  end;
 end;
 

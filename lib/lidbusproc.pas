@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this library. If not, see <http://www.gnu.org/licenses/>.}
-//** Threads which can perform actions on Listaller's DBus interface
+//** Class which can perform various actions on Listaller's DBus interface
 unit lidbusproc;
 
 {$mode objfpc}{$H+}
@@ -21,7 +21,7 @@ unit lidbusproc;
 interface
 
 uses
-  Classes, SysUtils, liTypes, DBus, ctypes, liBasic;
+  Classes, SysUtils, liTypes, SimDBus, DBus, ctypes, liBasic;
 
 type
  //** Which detail of the process was changed?
@@ -142,117 +142,50 @@ end;
 
 procedure TLiDBusAction.UninstallAppAsRoot(obj: TAppInfo);
 var
+  bus: TDBusClient;
   dmsg: PDBusMessage;
-  args: DBusMessageIter;
-  pending: PDBusPendingCall;
   stat: Boolean;
   rec: PChar;
-  err: DBusError;
-  conn: PDBusConnection;
   action_finished: Boolean;
 
-  intvalue: cuint32;
-  strvalue: PChar;
-  boolvalue: Boolean;
   jobID: String;
 begin
-  dbus_error_init(@err);
 
   //New DBus connection
-  conn := dbus_bus_get_private(DBUS_BUS_SYSTEM, @err);
-
-  if dbus_error_is_set(@err) <> 0 then
+  bus:=TDBusClient.Create(DBUS_BUS_SYSTEM);
+  if bus.Failed then
   begin
-    p_error('Connection Error: '#10+err.message);
-    dbus_error_free(@err);
-
-    SendError('An error occured during remove request.');
+    SendError('An error occured during remove request.'#10'Unable to connect to DBus!');
     exit;
   end;
-
-  if conn = nil then exit;
 
   p_info('Calling listaller-daemon...');
   // create a new method call and check for errors
-  dmsg := dbus_message_new_method_call('org.freedesktop.Listaller', // target for the method call
+  dmsg := bus.Connect('org.freedesktop.Listaller', // target for the method call
                                       '/org/freedesktop/Listaller/Manager', // object to call on
                                       'org.freedesktop.Listaller.Manage', // interface to call on
-                                      'RemoveApp'); // method name
-  if (dmsg = nil) then
+                                      'RemoveApp'); //Method
+  if bus.Failed then
   begin
-    p_error('Message Null');
-    exit;
+   SendError('Could not get reply from DBus!');
+   exit;
   end;
 
-  //append arguments
-  dbus_message_iter_init_append(dmsg, @args);
-  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @obj.Name) = 0) then
-  begin
-    p_error('Out Of Memory!');
-    exit;
-  end;
+  bus.ReplyMessageAddString(dmsg,obj.Name);
+  bus.ReplyMessageAddString(dmsg,obj.UId);
 
-  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @obj.UId) = 0) then
-  begin
-    p_error('Out Of Memory!');
-    exit;
-  end;
-
-  // send message and get a handle for a reply
-  if (dbus_connection_send_with_reply(conn, dmsg, @pending, -1) = 0) then // -1 is default timeout
-  begin
-    p_error('Out Of Memory!');
-    exit;
-  end;
-  if (pending = nil) then
-  begin
-    p_error('Pending Call Null');
-    exit;
-  end;
-  dbus_connection_flush(conn);
-
-  p_info('AppRemove request sent');
-
-  // free message
-  dbus_message_unref(dmsg);
-
-  // block until we recieve a reply
-  dbus_pending_call_block(pending);
-
-  // get the reply message
-  dmsg := dbus_pending_call_steal_reply(pending);
-  if (dmsg = nil) then
-  begin
-    p_error('Reply Null');
-    exit;
-  end;
-  // free the pending message handle
-  dbus_pending_call_unref(pending);
+  p_info('Sending AppRemove request...');
+  dmsg:=bus.SendReplyAndWait(dmsg);
+  if not bus.Failed then
+   p_info('Got reply.');
 
   stat:=false;
   // read the parameters
-  if (dbus_message_iter_init(dmsg, @args) = 0) then
-     p_error('Message has no arguments!')
-  else if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
-     p_error('Argument is not boolean!')
-  else
-     dbus_message_iter_get_basic(@args, @stat);
+  stat:=bus.ReadMessageParamBool(dmsg);
+  rec:=PChar(bus.ReadMessageParamStr(dmsg));
+  p_debug(rec);
 
-  if (dbus_message_iter_next(@args) = 0) then
-     p_error('Message has too few arguments!')
-  else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
-     p_error('Argument is no string!')
-  else
-     dbus_message_iter_get_basic(@args, @rec);
-
-  if (dbus_message_iter_next(@args) = 0) then
-     p_error('Message has too few arguments!')
-  else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
-     p_error('Argument is no string!')
-  else
-     dbus_message_iter_get_basic(@args, @strvalue);
-
-  jobID:=strvalue;
+  jobID:=bus.ReadMessageParamStr(dmsg);
 
   if (not stat)or(rec = 'blocked')or(jobID='') then
   begin
@@ -263,7 +196,7 @@ begin
    exit;
   end;
   // free reply
-  dbus_message_unref(dmsg);
+  bus.FreeMessage(dmsg);
 
   p_debug('Got job '+jobID);
   //////////////////////////////////////////////////////////////////////
@@ -271,31 +204,17 @@ begin
   //Now start listening to Listaller dbus signals and forward them to
   //native functions until the "Finished" signal is received
 
-  // add a rule for which messages we want to see
-  dbus_bus_add_match(conn,
-  PChar('type=''signal'',sender=''org.freedesktop.Listaller'', interface=''org.freedesktop.Listaller.Manage'', path=''/org/freedesktop/Listaller/'+jobID+'''')
-  , @err);
+  bus.StartListening('/org/freedesktop/Listaller/'+jobID);
 
-  dbus_connection_flush(conn);
-  if (dbus_error_is_set(@err) <> 0) then
-  begin
-    p_error('Match Error ('+err.message+')');
-    exit;
-  end;
-  p_info('Match rule sent');
-
-  P_debug(jobID);
+  p_debug(jobID);
 
   procinfo.mnprogress:=0;
   action_finished:=false;
   // loop listening for signals being emmitted
   while (not action_finished) do
   begin
-    // non blocking read of the next available message
-    dbus_connection_read_write(conn, 0);
-    dmsg:=dbus_connection_pop_message(conn);
-
-    // loop again if we haven't read a message
+    dmsg:=bus.ReadSignalMessage;
+    //loop again if we haven't read a message
     if (dmsg = nil) then
     begin
       sleep(1);
@@ -305,76 +224,32 @@ begin
     //Convert all DBus signals into standard callbacks
 
     //Change of progress
-    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Manage', 'ProgressChange') <> 0) then
-    begin
-      // read the parameters
-      if (dbus_message_iter_init(dmsg, @args) = 0) then
-         p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_UINT32 <> dbus_message_iter_get_arg_type(@args)) then
-         p_error('Argument is no integer!')
-      else
-      begin
-         dbus_message_iter_get_basic(@args, @intvalue);
-
-         SendProgress(intvalue);
-      end;
-    end;
+    if bus.ReceivedSignal(dmsg,'ProgressChange') then
+     SendProgress(bus.ReadSignalInt(dmsg));
 
     //Receive new message
-    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Manage', 'Message') <> 0) then
-    begin
-      // read the parameters
-      if (dbus_message_iter_init(dmsg, @args) = 0) then
-         p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
-         p_error('Argument is no string!')
-      else
-      begin
-         dbus_message_iter_get_basic(@args, @strvalue);
-         SendMessage(strvalue);
-      end;
-    end;
+    if bus.ReceivedSignal(dmsg,'Message') then
+      SendMessage(bus.ReadSignalStr(dmsg));
 
     //Break on error signal
-    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Manage', 'Error') <> 0) then
+    if bus.ReceivedSignal(dmsg,'Error') then
     begin
-      // read the parameters
-      if (dbus_message_iter_init(dmsg, @args) = 0) then
-         p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
-         p_error('Argument is no string!')
-      else
-      begin
-         dbus_message_iter_get_basic(@args, @strvalue);
          //The action failed. Diplay error and leave the loop
-          SendError(strvalue);
+          SendError(bus.ReadSignalStr(dmsg));
           action_finished:=true;
-      end;
     end;
 
     //Check if the installation has finished
-    if (dbus_message_is_signal(dmsg, 'org.freedesktop.Listaller.Manage', 'Finished') <> 0) then
+    if bus.ReceivedSignal(dmsg, 'Finished') then
     begin
-      // read the parameters
-      if (dbus_message_iter_init(dmsg, @args) = 0) then
-         p_error('Message Has No Parameters')
-      else if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
-         p_error('Argument is no boolean!')
-      else
-      begin
-         dbus_message_iter_get_basic(@args, @boolvalue);
-         action_finished:=boolvalue;
-         if (not boolvalue) then
-         begin
-          //The action failed. Leave the loop and display message
-          SendError('The action failed.');
-          action_finished:=true;
-         end;
-      end;
+       action_finished:=true;
+       if (not bus.ReadSignalBool(dmsg)) then
+        //The action failed. Leave the loop and display message
+        SendError('The action failed.');
     end;
 
     // free the message
-    dbus_message_unref(dmsg);
+    bus.FreeMessage(dmsg);
   end;
 end;
 

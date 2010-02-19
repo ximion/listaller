@@ -11,7 +11,7 @@
       <Title Value="Installer"/>
       <UseAppBundle Value="False"/>
       <Icon Value="0"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <i18n>
       <OutDir Value="locale"/>
@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1310"/>
+      <CurrentBuildNr Value="1313"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -53,9 +53,7 @@
         <UnitName Value="listallgo"/>
         <CursorPos X="31" Y="43"/>
         <TopLine Value="1"/>
-        <EditorIndex Value="1"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="igobase.pas"/>
@@ -63,8 +61,8 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="57" Y="392"/>
-        <TopLine Value="371"/>
+        <CursorPos X="13" Y="312"/>
+        <TopLine Value="280"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -966,7 +964,7 @@
         <UsageCount Value="10"/>
       </Unit129>
     </Units>
-    <JumpHistory Count="18" HistoryIndex="17">
+    <JumpHistory Count="19" HistoryIndex="18">
       <Position1>
         <Filename Value="igobase.pas"/>
         <Caret Line="347" Column="40" TopLine="317"/>
@@ -1039,6 +1037,10 @@
         <Filename Value="igobase.pas"/>
         <Caret Line="392" Column="57" TopLine="371"/>
       </Position18>
+      <Position19>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="390" Column="35" TopLine="371"/>
+      </Position19>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

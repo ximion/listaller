@@ -876,12 +876,12 @@ var pkg: TLiUnpacker;
     tmp: TStringList;
     i: Integer;
 begin
-cont:=TIPKControl.Create(pkg.WDir+PkgName+'/arcinfo.pin'); //Read IPK configuration
-cont.LangCode:=GetLangID; //Set language code, so we get localized entries
 
 Result:=true;
 try
 pkg:=TLiUnpacker.Create(PkgPath);
+cont:=TIPKControl.Create(pkg.WDir+PkgName+'/arcinfo.pin'); //Read IPK configuration
+cont.LangCode:=GetLangID; //Set language code, so we get localized entries
 
 pkg.UnpackFile(cont.Binary);
 
