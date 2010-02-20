@@ -23,8 +23,8 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, Process, LCLType, Buttons, ExtCtrls, Distri, AppList,
-  Uninstall, trStrings, FileUtil, CheckLst, AppMan, LiBasic, liTypes,
-  AboutBox, PackageKit, Spin, Menus, iconLoader, LiCommon, AppItem;
+  Uninstall, trStrings, FileUtil, CheckLst, AppMan, LiBasic, liTypes, AboutBox,
+  PackageKit, Spin, Menus, iconLoader, LiCommon, AppItem;
 
 type
 
@@ -711,12 +711,26 @@ begin
   end;
 end;
 
+//No throbber needed at time. Maybe later.
+{function TMnFrm.NewThrobber: TGifThread;
+begin
+  //Create GIFThread for Throbber animation
+  Result:=TGifThread.Create(true);
+  Result.FileName:=GetDataFile('graphics/throbber.gif');
+  ThrobberBox.Width:=Result.Width;
+  ThrobberBox.Height:=Result.Height;
+  ThrobberBox.Top:=(AppViewControl.Height div 2)-(ThrobberBox.Height div 2);
+  ThrobberBox.Left:=(AppViewControl.Width div 2)-(ThrobberBox.Width div 2);
+  Result.Initialize(ThrobberBox.Canvas);
+end; }
+
 procedure TMnFrm.MyAppSheetShow(Sender: TObject);
 begin
  currAppList:=appList;
- Notebook1.Enabled:=false;
+ SWBox.Visible:=false;
+
  ReloadAppList;
- Notebook1.Enabled:=true;
+ SWBox.Visible:=true;
 end;
 
 procedure TMnFrm.RmUpdSrcBtnClick(Sender: TObject);
@@ -740,9 +754,9 @@ end;
 procedure TMnFrm.SysAppSheetShow(Sender: TObject);
 begin
  currAppList:=appListSU;
- Notebook1.Enabled:=false;
+ SWBoxSU.Visible:=false;
  ReloadAppList;
- Notebook1.Enabled:=true;
+ SWBoxSU.Visible:=true;
 end;
 
 procedure TMnFrm.UListBoxClick(Sender: TObject);

@@ -1646,8 +1646,8 @@ object MnFrm: TMnFrm
       end
       object AppViewControl: TPageControl
         Left = 0
-        Height = 363
-        Top = 46
+        Height = 371
+        Top = 38
         Width = 692
         ActivePage = MyAppSheet
         Align = alBottom
@@ -1656,12 +1656,12 @@ object MnFrm: TMnFrm
         TabOrder = 3
         object MyAppSheet: TTabSheet
           Caption = 'My Apps'
-          ClientHeight = 337
+          ClientHeight = 345
           ClientWidth = 688
           OnShow = MyAppSheetShow
           object SWBox: TPanel
             Left = 0
-            Height = 337
+            Height = 345
             Top = 0
             Width = 688
             Align = alClient
@@ -1672,12 +1672,12 @@ object MnFrm: TMnFrm
         end
         object SysAppSheet: TTabSheet
           Caption = 'Shared Apps'
-          ClientHeight = 337
+          ClientHeight = 345
           ClientWidth = 688
           OnShow = SysAppSheetShow
           object SWBoxSU: TPanel
             Left = 0
-            Height = 337
+            Height = 345
             Top = 0
             Width = 688
             Align = alClient
