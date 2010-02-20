@@ -31,7 +31,6 @@ type
   error: Boolean;
   connected: Boolean;
   args: DBusMessageIter;
-  argInit: Boolean;
 
   bname, bintf: String;
   procedure ShowError(info: String);
@@ -40,16 +39,18 @@ type
   destructor Destroy;override;
 
   function Connect(name: String;path: String;intf:String;method: String): PDBusMessage;
+
   function ReplyMessageAddString(msg: PDBusMessage;str: String): Boolean;
+  function ReplyMessageAddBool(msg: PDBusMessage;bool: Boolean): Boolean;
   function SendReplyAndWait(msg: PDBusMessage): PDBusMessage;
 
+  function MessageIterNext: Boolean;
   function ReadMessageParamStr(msg: PDBusMessage): String;
   function ReadMessageParamBool(msg: PDBusMessage): Boolean;
 
   function StartListening(objpath: String): Boolean;
   function ReadSignalMessage: PDBusMessage;
-
-  function ReceivedSignal(msg: PDBusMessage;name: String): Boolean;
+  function ReceivedSignalIs(msg: PDBusMessage;sigName: String): Boolean;
   function ReadSignalStr(msg: PDBusMessage): String;
   function ReadSignalInt(msg: PDBusMessage): Integer;
   function ReadSignalBool(msg: PDBusMessage): Boolean;
@@ -67,7 +68,6 @@ constructor TDBusClient.Create(bustype: DBusBusType);
 begin
  dbus_error_init(@err);
  error:=false;
- argInit:=false;
  conn := dbus_bus_get_private(bustype, @err);
 
   if dbus_error_is_set(@err) <> 0 then
@@ -118,7 +118,19 @@ begin
  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @val) = 0) then
   begin
     ShowError('Out Of Memory!');
-    exit;
+    Result:=false;
+  end;
+end;
+
+function TDBusClient.ReplyMessageAddBool(msg: PDBusMessage;bool: Boolean): Boolean;
+var val: cbool;
+begin
+ Result:=true;
+ val:=bool;
+ if (dbus_message_iter_append_basic(@args, DBUS_TYPE_BOOLEAN, @val) = 0) then
+  begin
+    ShowError('Out Of Memory!');
+    Result:=false;
   end;
 end;
 
@@ -153,53 +165,45 @@ begin
   end;
   // free the pending message handle
   dbus_pending_call_unref(pending);
+
   if (dbus_message_iter_init(msg, @args) = 0) then
    ShowError('Message has no arguments!');
+end;
 
-  argInit:=false;
+function TDBusClient.MessageIterNext: Boolean;
+begin
+ Result:=true;
+ if (dbus_message_iter_next(@args) = 0) then
+  begin
+     ShowError('Message has too few arguments!');
+     Result:=false;
+  end;
 end;
 
 function TDBusClient.ReadMessageParamBool(msg: PDBusMessage): Boolean;
 var boolv: cbool;
 begin
  Result:=false;
- if argInit then
- begin
-  if (dbus_message_iter_next(@args) = 0) then
-  begin
-     ShowError('Message has too few arguments!');
-     exit;
-  end;
- end else if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
+ if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
      ShowError('Argument is not boolean!')
   else
   begin
    dbus_message_iter_get_basic(@args, @boolv);
    Result:=boolv;
   end;
- argInit:=true;
 end;
 
 function TDBusClient.ReadMessageParamStr(msg: PDBusMessage): String;
 var strv: PChar;
 begin
  Result:='';
- if argInit then
- begin
-  if (dbus_message_iter_next(@args) = 0) then
-  begin
-     ShowError('Message has too few arguments!');
-     exit;
-  end;
- end else if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+ if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
      ShowError('Argument is no string!')
   else
   begin
      dbus_message_iter_get_basic(@args, @strv);
      Result:=strv;
-     writeln(strv);
   end;
- argInit:=true;
 end;
 
 procedure TDBusClient.FreeMessage(msg: PDBusMessage);
@@ -209,7 +213,7 @@ end;
 
 function TDBusClient.StartListening(objpath: String): Boolean;
 begin
- Result:=true;
+  Result:=true;
  // add a rule for which messages we want to see
   dbus_bus_add_match(conn,
   PChar('type=''signal'',sender='''+PChar(bname)+''', interface='''+PChar(bintf)+''', path='''+PChar(objpath)+'''')
@@ -233,10 +237,10 @@ begin
  Result:=dbus_connection_pop_message(conn);
 end;
 
-function TDBusClient.ReceivedSignal(msg: PDBusMessage;name: String): Boolean;
+function TDBusClient.ReceivedSignalIs(msg: PDBusMessage;sigName: String): Boolean;
 begin
  Result:=false;
- if (dbus_message_is_signal(msg, PChar(bintf), PChar(bname)) <> 0) then
+ if (dbus_message_is_signal(msg, PChar(bintf), PChar(sigName)) <> 0) then
     Result:=true;
 end;
 

@@ -122,7 +122,6 @@ end;
 
 procedure OnRmStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 begin
- p_debug('Signal received.');
  case change of
   scMessage     : LogAdd(data.msg);
   scMnProgress  : RMForm.UProgress.Position:=data.mnprogress;

@@ -469,6 +469,8 @@ end;
 
  //Set if Testmode
  setup.SetTestmode(Testmode);
+
+ writeLn('Superuser: ',Superuser);
  //Set if root installation
  setup.SetRootMode(Superuser);
 end;

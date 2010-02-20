@@ -163,10 +163,16 @@ end;
 { TDoAppInstall }
 
 constructor TDoAppInstall.Create(aMsg: PDBusMessage);
-var args: DBusMessageIter;param: PChar = '';
+var args: DBusMessageIter;
+    param: PChar = '';
+
+    action_id: PGChar;
+    subject: PPolkitSubject;
+    target: String;
 begin
  inherited Create(aMsg);
  ident:='DoAppInstall~'+dbus_message_get_sender(aMsg);
+ jobId:='installer'+jobId;
 
  // read the arguments
    if (dbus_message_iter_init(aMsg, @args) = 0) then
@@ -188,6 +194,45 @@ begin
 
    p_info('RunSetup called with '+FileName);
 
+   action_id:='org.freedesktop.listaller.execute-installation';
+  target:=dbus_message_get_sender(replyMsg);
+
+  subject:=polkit_system_bus_name_new(PGChar(target));
+  polkit_authority_check_authorization(authority,subject,action_id,
+                                        nil,
+                                        POLKIT_CHECK_AUTHORIZATION_FLAGS_ALLOW_USER_INTERACTION,
+                                        nil,
+                                        TGAsyncReadyCallback(@check_authorization_cb),
+                                        self);
+
+
+
+  g_object_unref(subject);
+  g_main_loop_run(loop);
+
+  //If not authorized, quit the job
+  if allowed = AC_NOT_AUTHORIZED then
+  begin
+   p_error('Not authorized to call this action.');
+   SendReply(false,'');
+   Terminate;
+   exit;
+  end;
+
+ p_info('New app install job for '+dbus_message_get_sender(replyMsg)+' started.');
+
+ if not FileExists(FileName) then
+ begin
+  p_error('Installation package not found!');
+  p_debug(FileName);
+  SendReply(false,'');
+  Terminate;
+  exit;
+ end;
+
+ //We got authorization!
+ SendReply(true,PChar(jobID));
+
  //Start work
   Resume();
 end;
@@ -204,7 +249,7 @@ var
   msg: PDBusMessage;
 begin
   // create a signal & check for errors
-  msg := dbus_message_new_signal('/org/freedesktop/Listaller/Installer1', // object name of the signal
+  msg := dbus_message_new_signal(PChar('/org/freedesktop/Listaller/'+jobID), // object name of the signal
                                  'org.freedesktop.Listaller.Install', // interface name of the signal
                                  PChar(xn)); // name of the signal
 
@@ -238,7 +283,7 @@ var
   msg: PDBusMessage;
 begin
   // create a signal & check for errors
-  msg := dbus_message_new_signal('/org/freedesktop/Listaller/Installer1', // object name of the signal
+  msg := dbus_message_new_signal(PChar('/org/freedesktop/Listaller/'+jobID), // object name of the signal
                                  'org.freedesktop.Listaller.Install', // interface name of the signal
                                  PChar(xn)); // name of the signal
 
@@ -293,6 +338,11 @@ begin
      p_error('Out Of Memory!');
      exit;
    end;
+   if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @jID) = 0) then
+   begin
+     p_error('Out Of Memory!');
+     exit;
+   end;
 
    // send the reply & flush the connection
    if (dbus_connection_send(conn, reply, @serial) = 0) then
@@ -311,6 +361,7 @@ end;
 
 function InstallUserRequest(mtype: TRqType;info: PChar;job: Pointer): TRqResult;cdecl;
 begin
+Result:=rqsOK;
 //The daemon should not ask questions while doing a transaction.
 //All questions which need a reply should be done before or after the daemon call
 if mtype = rqError then
@@ -319,7 +370,8 @@ begin
  TDoAppInstall(job).SendMessageSignal('Error',info);
 end else
 begin
- p_error('Received invalid user request! (Deamon should _never_ ask questions which need a reply.');
+ p_error('Received invalid user request! (Daemon should _never_ ask questions which need a reply.)');
+ Result:=rqsNO;
  p_debug(info);
 end;
 end;
@@ -336,54 +388,12 @@ end;
 
 procedure TDoAppInstall.Execute;
 var
- action_id: PGChar;
- subject: PPolkitSubject;
- target: String;
  setup: TInstallPack;
 
  args: DBusMessageIter;
  msg: PDBusMessage;
  success: Boolean;
 begin
-  action_id:='org.freedesktop.listaller.execute-installation';
-  target:=dbus_message_get_sender(replyMsg);
-
-  subject:=polkit_system_bus_name_new(PGChar(target));
-  polkit_authority_check_authorization(authority,subject,action_id,
-                                        nil,
-                                        POLKIT_CHECK_AUTHORIZATION_FLAGS_ALLOW_USER_INTERACTION,
-                                        nil,
-                                        TGAsyncReadyCallback(@check_authorization_cb),
-                                        self);
-
-
-
-  g_object_unref(subject);
-  g_main_loop_run(loop);
-
-  //If not authorized, quit the job
-  if allowed = AC_NOT_AUTHORIZED then
-  begin
-   p_error('Not authorized to call this action.');
-   SendReply(false,'');
-   Terminate;
-   exit;
-  end;
-
- p_info('New app install job for '+dbus_message_get_sender(replyMsg)+' started.');
-
- if not FileExists(FileName) then
- begin
-  p_error('Installation package not found!');
-  p_debug(FileName);
-  SendReply(false,'');
-  Terminate;
-  exit;
- end;
-
- //We got authorization!
- SendReply(true,PChar(jobID));
-
  try
  { This is a fast install. Should never be called directly! }
  setup:=TInstallPack.Create;
@@ -405,7 +415,7 @@ begin
  //Now emit action finished signal:
 
   // create a signal & check for errors
-  msg := dbus_message_new_signal('/org/freedesktop/Listaller/Installer1', // object name of the signal
+  msg := dbus_message_new_signal(PChar('/org/freedesktop/Listaller/'+jobID), // object name of the signal
                                  'org.freedesktop.Listaller.Install', // interface name of the signal
                                  'Finished'); // name of the signal
 
@@ -443,6 +453,7 @@ end;
 
 function OnMgrUserRequest(mtype: TRqType;msg: PChar;job: Pointer): TRqResult;cdecl;
 begin
+Result:=rqsOK;
 //The daemon should not ask questions while doing a transaction.
 //All questions which need a reply should be done before or after the daemon call
 if mtype = rqError then
@@ -452,6 +463,7 @@ begin
 end else
 begin
  p_error('Received invalid user request! (Deamon should _never_ ask questions which need a reply.');
+ Result:=rqsNO;
  p_debug(msg);
 end;
 end;

@@ -12,9 +12,6 @@ Listaller uses the following 3rd-party components:
 LZMA-SDK: (c) 1999-2006 Igor Pavlov
 	  Licensed under LGPLv2 and others
 
-LibTar:   (c) 2001-2007 Stefan Heymann
-	  Licensed under LGPLv3
-
 Synapse:  (c) 1999-2002, Lukas Gebauer
 	  Licensed under own, GPL-compatible license
 

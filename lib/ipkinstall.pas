@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, PackageKit,
-  sqlite3ds, db, IPKPackage, ipkdef, HTTPSend, FTPSend, blcksock,
+  sqlite3ds, IPKPackage, ipkdef, HTTPSend, FTPSend, blcksock,
   MD5, liTypes, distri, MTProcs, FileUtil, liBasic, liDBusproc,
   limanageapp;
 
@@ -357,7 +357,6 @@ end;
 
 function TInstallation.ResolveDependencies: Boolean;
 var i: Integer;
-    p: TProcess;
     tmp: TStringList;
     mnpos: Integer;
     DInfo: TDistroInfo;
@@ -462,7 +461,7 @@ end;
 
 function TInstallation.Initialize(fname: String): Boolean;
 var pkg: TLiUnpacker;
-    FDir,n: String;
+    n: String;
     i: Integer;
     DInfo: TDistroInfo;
     cont: TIPKControl;
@@ -548,8 +547,7 @@ FDisallow:=LowerCase(cont.Disallows);
 
 n:=GetSystemArchitecture;
 
-msg('Architectures: '+n);
-msg('Package-Arch: '+cont.Architectures);
+msg('Package-Archs: '+cont.Architectures);
 if (pos(n,LowerCase(cont.Architectures))<=0)
 and (LowerCase(cont.Architectures)<>'all')
 and (pos('architecture',forces)<=0) then
@@ -1686,11 +1684,15 @@ if (SUMode)and(not IsRoot) then
 begin
  //Create worker thread for this action
  buscmd.cmdtype:=lbaInstallPack;
- buscmd.pkgname:=PkgName;
+ buscmd.pkgname:=PkgPath; //Add path to setup file to DBus request
  CheckAddUSource;
  buscmd.addsrc:=AddUpdateSource;
  with TLiDBusAction.Create(buscmd) do
+ begin
   OnStatus:=@DBusThreadStatusChange;
+  ExecuteAction;
+  Free;
+ end;
  Result:=true; //Transaction submitted
  exit;
 end;

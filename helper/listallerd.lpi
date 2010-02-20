@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="364"/>
+      <CurrentBuildNr Value="368"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -38,7 +38,7 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerd"/>
         <CursorPos X="36" Y="105"/>
-        <TopLine Value="70"/>
+        <TopLine Value="106"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="38"/>
         <Loaded Value="True"/>
@@ -68,8 +68,8 @@
         <Filename Value="djobs.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="djobs"/>
-        <CursorPos X="22" Y="641"/>
-        <TopLine Value="622"/>
+        <CursorPos X="16" Y="466"/>
+        <TopLine Value="433"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="38"/>
         <Loaded Value="True"/>
@@ -231,7 +231,7 @@
         <UsageCount Value="10"/>
       </Unit28>
     </Units>
-    <JumpHistory Count="15" HistoryIndex="14">
+    <JumpHistory Count="21" HistoryIndex="20">
       <Position1>
         <Filename Value="listallerd.lpr"/>
         <Caret Line="106" Column="29" TopLine="78"/>
@@ -292,6 +292,30 @@
         <Filename Value="djobs.pas"/>
         <Caret Line="637" Column="41" TopLine="628"/>
       </Position15>
+      <Position16>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="414" Column="40" TopLine="427"/>
+      </Position16>
+      <Position17>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="383" Column="4" TopLine="303"/>
+      </Position17>
+      <Position18>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="171" Column="5" TopLine="147"/>
+      </Position18>
+      <Position19>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="416" Column="70" TopLine="395"/>
+      </Position19>
+      <Position20>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="362" Column="75" TopLine="341"/>
+      </Position20>
+      <Position21>
+        <Filename Value="djobs.pas"/>
+        <Caret Line="364" Column="15" TopLine="341"/>
+      </Position21>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
