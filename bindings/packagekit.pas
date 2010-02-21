@@ -544,6 +544,13 @@ begin
   s:=TStringList.Create;
   p:=TProcess.Create(nil);
   p.Options:=[poUsePipes];
+  if not FileExists('/usr/bin/apt-file') then
+  begin
+   p_error('The apt-file utility was not found!');
+   p_error('Please install apt-file and run this setup again.');
+   p_error('[Emergency halt.]');
+   halt(4);
+  end;
   p.CommandLine:='apt-file -l -N search '+fname;
  try
   p.Execute;

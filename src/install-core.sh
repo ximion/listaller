@@ -38,6 +38,12 @@ cp ../data/dbus/org.freedesktop.Listaller.service $DESTDIR$prefix/share/dbus-1/s
 cp ../data/dbus/org.freedesktop.Listaller.conf $DESTDIR/etc/dbus-1/system.d/
 cp ../data/dbus/org.freedesktop.listaller.policy $DESTDIR$prefix/share/polkit-1/actions/
 
+#Other required data files
+mkdir -p $DESTDIR/etc/lipa
+mkdir -p $DESTDIR/etc/lipa/app-reg
+cp ../data/blacklist $DESTDIR/etc/lipa/
+cp ../data/ignore-deps.list $DESTDIR/etc/lipa/
+
 cp ../build/libinstaller.so.0.4.0 $DESTDIR$prefix/lib/
 cd $DESTDIR$prefix/lib/
 if [ ! -f libinstaller.so.0.4 ]; then

@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, PackageKit,
   sqlite3ds, IPKPackage, ipkdef, HTTPSend, FTPSend, blcksock,
   MD5, liTypes, distri, MTProcs, FileUtil, liBasic, liDBusproc,
-  limanageapp;
+  limanageapp, RegExpr;
 
 type
 
@@ -182,6 +182,9 @@ type
 end;
 
  //Note: The "Testmode" variable is now in LiCommon
+
+const
+  DEPIGNORE_LIST='/etc/lipa/ignore-deps.list';
 
 implementation
 
@@ -356,13 +359,14 @@ begin
 end;
 
 function TInstallation.ResolveDependencies: Boolean;
-var i: Integer;
+var i,j: Integer;
     tmp: TStringList;
     mnpos: Integer;
     DInfo: TDistroInfo;
     one: Double;
     lInd: Integer;
     error: Boolean;
+    eIndex: Integer; //Index of the errorneus dep
 
 procedure SearchForPackage(Index: PtrInt; Data: Pointer; Item: TMultiThreadProcItem);
 var pkit: TPackageKit;xtmp: TStringList;h: String;lpos: Integer;
@@ -372,21 +376,25 @@ begin
 lpos:=0;
 lind:=0;
 while lInd<Dependencies.Count-1 do
-if lpos<>mnpos then
 begin
- SetExtraPos(Round(mnpos*one));
- lpos:=mnpos;
-end;
-if error then
-begin
- MakeUsrRequest(StringReplace(rsDepNotFound,'%l',Dependencies[Index],[rfReplaceAll])+#10+rsInClose,rqError);
- ProcThreadPool.StopThreads;
+ if lpos<>mnpos then
+ begin
+  SetExtraPos(Round(mnpos*one));
+  lpos:=mnpos;
+ end;
+ if error then
+ begin
+  ProcThreadPool.StopThreads;
+  break;
+ end;
 end;
 
 end else
 begin
 
+  p_debug('Delta: '+IntToStr(Index));
   if error then exit;
+  p_debug('TaZ');
  //Open PKit connection and assign tmp stringlist
   pkit:=TPackageKit.Create;
   xtmp:=TStringList.Create;
@@ -400,6 +408,7 @@ begin
   begin
    pkit.Free;
    xtmp.Free;
+   eIndex:=Index;
    error:=true;
    exit;
   end;
@@ -426,6 +435,33 @@ begin
   begin
     Dependencies.Delete(0);
 
+    //Preprepare dependencies
+     //Remove all distribution core deps
+    if FileExists(DEPIGNORE_LIST) then
+    begin
+     tmp:=TStringList.Create;
+     tmp.LoadFromFile(DEPIGNORE_LIST);
+     i:=0;
+     while i<=Dependencies.Count-1 do
+     begin
+      for j:=0 to tmp.Count-1 do
+      begin
+       try
+        if ExecRegExpr(tmp[j],Dependencies[i]) then
+        begin
+         Dependencies.Delete(i);
+         break;
+        end;
+      except
+       p_error('Malformed dependency-ignore entry! (Please fix this.)');
+      end;
+      end;
+      Inc(i);
+     end;
+     i:=0;
+     tmp.Free;
+    end;
+
     DInfo:=GetDistro;
     //With yum backend, PackageKit needs the complete path to find
     //packages. Add the lib dir to libraries
@@ -443,19 +479,23 @@ begin
     tmp:=TStringList.Create;
     // ProcThreadPool.MaxThreadCount:=4;
 
+    p_debug('Start reolve threads.');
      ProcThreadPool.DoParallelLocalProc(@SearchForPackage,-1,Dependencies.Count-1,nil);
+
+    if error then
+    begin
+     MakeUsrRequest(StringReplace(rsDepNotFound,'%l',Dependencies[eIndex],[rfReplaceAll])+#10+rsInClose,rqError);
+     Result:=false;
+     tmp.Free;
+     exit;
+    end;
 
     RemoveDuplicates(tmp);
     Dependencies.Assign(tmp);
 
-    if error then
-    begin
-     //TODO: Throw a nice error massage
-    end;
-
     tmp.Free;
     SetExtraPos(100);
-    p_debug('Depresolve finished.');
+    p_debug('DepResolve finished.');
   end;
 end;
 
@@ -1194,7 +1234,7 @@ begin
      msg('DepInstall: '+Dependencies[i]+' (using PackageKit)');
      msg('');
 
-     pkit.Resolve(Dependencies[i]);
+     //pkit.Resolve(Dependencies[i]);
 
      if pkit.PkFinishCode=1 then
      begin

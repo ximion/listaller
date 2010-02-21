@@ -101,8 +101,7 @@ end;
 procedure TLiDBusAction.SyncProcStatus;
 begin
  if Assigned(FStatus) then FStatus(status,procinfo);
- {procinfo.msg:='~?error';
- procinfo.info:='~?error';}
+ procinfo.msg:='~?error';
 end;
 
 procedure TLiDBusAction.ExecuteAction;

@@ -171,11 +171,7 @@ begin
  mntar:=TTarArchive.Create;
  mntar.TarArchive:=basename;
 
- p_debug(basename);
-
  mntar.BaseDir:=ExtractFilePath(oldbase);
-
- p_debug(mntar.BaseDir);
 
  RenameFile(oldbase,ExtractFilePath(oldbase)+'/content.tar');
  oldbase:=ExtractFilePath(oldbase)+'/content.tar';

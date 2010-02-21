@@ -29,8 +29,8 @@
         <Filename Value="libuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
-        <CursorPos X="3" Y="49"/>
-        <TopLine Value="28"/>
+        <CursorPos X="26" Y="27"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="29"/>
         <Loaded Value="True"/>
@@ -45,11 +45,9 @@
       <Unit2>
         <Filename Value="ipkbuild.pas"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="3" Y="239"/>
-        <TopLine Value="218"/>
-        <EditorIndex Value="1"/>
+        <CursorPos X="35" Y="24"/>
+        <TopLine Value="1"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="abbrevia/abzipprc.pas"/>
@@ -112,8 +110,8 @@
         <Filename Value="../packager/ipkpackage.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="9" Y="459"/>
-        <TopLine Value="435"/>
+        <CursorPos X="42" Y="174"/>
+        <TopLine Value="153"/>
         <UsageCount Value="25"/>
       </Unit11>
       <Unit12>
@@ -233,27 +231,15 @@
         <UsageCount Value="22"/>
       </Unit28>
     </Units>
-    <JumpHistory Count="5" HistoryIndex="4">
+    <JumpHistory Count="2" HistoryIndex="1">
       <Position1>
         <Filename Value="libuild.lpr"/>
         <Caret Line="27" Column="26" TopLine="3"/>
       </Position1>
       <Position2>
-        <Filename Value="ipkbuild.pas"/>
-        <Caret Line="25" Column="23" TopLine="13"/>
-      </Position2>
-      <Position3>
-        <Filename Value="ipkbuild.pas"/>
-        <Caret Line="24" Column="38" TopLine="13"/>
-      </Position3>
-      <Position4>
-        <Filename Value="ipkbuild.pas"/>
-        <Caret Line="24" Column="38" TopLine="13"/>
-      </Position4>
-      <Position5>
         <Filename Value="libuild.lpr"/>
-        <Caret Line="27" Column="26" TopLine="3"/>
-      </Position5>
+        <Caret Line="27" Column="26" TopLine="1"/>
+      </Position2>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

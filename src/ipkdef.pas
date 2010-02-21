@@ -643,6 +643,7 @@ else
  Inc(i);
   repeat
    s:=text[i];
+   if length(s)>0 then
    if s[1]=' ' then
    begin
     s:=copy(s,2,length(s));
