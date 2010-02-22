@@ -10,7 +10,7 @@ Build-Depends: libgtk2.0-dev, cdbs, quilt, lazarus (>=0.9.28), fpc (>= 2.4.0),
 
 Package: libinstaller0.4.0
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, apt-file, listaller-core, tar
+Depends: ${misc:Depends}, ${shlibs:Depends}, apt-file, listaller-core
 Description: Listaller library
  Contains the libInstaller library, which allows
  programs to access install/uninstall functions
@@ -27,7 +27,7 @@ Description: Listaller core files
 
 Package: listaller-tools
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, libinstaller0.4.0 (= ${binary:Version}), listaller-core
+Depends: ${misc:Depends}, ${shlibs:Depends}, libinstaller0.4 (= ${binary:Version}), listaller-core
 Description: Listaller package tools
  This package contains everything you need to build own IPK packages.
  It also contains the needed tools to build RPM and DEB packages from

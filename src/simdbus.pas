@@ -60,6 +60,42 @@ type
   property Failed: Boolean read error;
  end;
 
+ TDBusServer = class
+ private
+  conn: PDBusConnection;
+  err: DBusError;
+  args: DBusMessageIter;
+  error: Boolean;
+  procedure ShowError(info: String);
+ public
+  constructor Create(bname: String;ty: DBusBusType;flags: cuint);
+  constructor Create(dConn: PDBusConnection);
+  destructor  Destroy;
+
+  function ReadMessage: PDBusMessage;
+  function MessageIsMethodCall(msg: PDBusMessage;intf: String;call: String): Boolean;
+
+  function InitMessageIter(msg: PDBusMessage): Boolean;
+  procedure MessageIterNext;
+  function ReadMessageParamStr: String;
+  function ReadMessageParamBool: Boolean;
+
+  function CreateReturnMessage(msg: PDBusMessage): PDBusMessage;
+
+  function AppendBool(val: Boolean): Boolean;
+  function AppendStr(val: String): Boolean;
+  function AppendUInt(val: Integer): Boolean;
+  function SendMessage(msg: PDBusMessage): Boolean;
+
+  function GetMessageSender(msg: PDBusMessage): String;
+  procedure FreeMessage(msg: PDBusMessage);
+
+  function CreateNewSignal(objName: String;intfName: String;sigName: String): PDBusMessage;
+
+  property Failed: Boolean read error;
+  property Connection: PDBusConnection read conn;
+ end;
+
 implementation
 
 { TSimDBus }
@@ -82,6 +118,8 @@ end;
 
 destructor TDBusClient.Destroy;
 begin
+ if conn<>nil then
+  dbus_connection_close(conn);
  inherited;
 end;
 
@@ -290,6 +328,191 @@ begin
   dbus_message_iter_get_basic(@args, @boolv);
   Result:=boolv;
  end;
+end;
+
+{ TDBusServer }
+
+constructor TDBusServer.Create(bname: String;ty: DBusBusType;flags: CUInt);
+var ret: cint;
+begin
+  error:=false;
+  conn := dbus_bus_get_private(ty, @err);
+  if dbus_error_is_set(@err) <> 0 then
+  begin
+    ShowError('DBus connection Error: '+err.message);
+    dbus_error_free(@err);
+  end;
+  if conn = nil then Exit;
+
+  dbus_error_init(@err);
+  //Request the name of the bus
+  ret:=dbus_bus_request_name(conn, PChar(bname), flags, @err);
+
+  if dbus_error_is_set(@err) <> 0 then
+  begin
+    p_error('Name Error: ' + err.message);
+    dbus_error_free(@err);
+  end;
+
+  if ret<>DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER then error:=true;
+end;
+
+constructor TDBusServer.Create(dConn: PDBusConnection);
+begin
+ error:=false;
+ dbus_error_init(@err);
+ conn:=dConn;
+end;
+
+destructor TDBusServer.Destroy;
+begin
+ if conn<>nil then
+  dbus_connection_close(conn);
+ inherited;
+end;
+
+procedure TDBusServer.ShowError(info: String);
+begin
+ p_error(info);
+ error:=true;
+end;
+
+function TDBusServer.ReadMessage: PDBusMessage;
+begin
+  //non blocking read of the next available message
+  dbus_connection_read_write(conn, 0);
+  Result:=dbus_connection_pop_message(conn);
+end;
+
+function TDBusServer.MessageIsMethodCall(msg: PDBusMessage;intf: String;call: String): Boolean;
+begin
+ if dbus_message_is_method_call(msg,PChar(intf),PChar(call)) <> 0 then
+  Result:=true
+ else
+  Result:=false;
+end;
+
+procedure TDBusServer.FreeMessage(msg: PDBusMessage);
+begin
+ dbus_message_unref(msg);
+end;
+
+function TDBusServer.InitMessageIter(msg: PDBusMessage): Boolean;
+begin
+ if (dbus_message_iter_init(msg, @args) = 0) then
+ begin
+  ShowError('Message has no arguments!');
+  Result:=false;
+ end else
+  Result:=true;
+end;
+
+procedure TDBusServer.MessageIterNext;
+begin
+ dbus_message_iter_next(@args);
+end;
+
+function TDBusServer.ReadMessageParamStr: String;
+var strv: PChar;
+begin
+ Result:='';
+ if (DBUS_TYPE_STRING <> dbus_message_iter_get_arg_type(@args)) then
+      ShowError('Argument is no string!')
+   else
+   begin
+      dbus_message_iter_get_basic(@args, @strv);
+      Result:=strv;
+   end;
+end;
+
+function TDBusServer.ReadMessageParamBool: Boolean;
+var boolv: cbool;
+begin
+ Result:=false;
+ if (DBUS_TYPE_BOOLEAN <> dbus_message_iter_get_arg_type(@args)) then
+      ShowError('Argument is no boolean!')
+ else
+ begin
+      dbus_message_iter_get_basic(@args, @boolv);
+      Result:=boolv;
+ end;
+end;
+
+function TDBusServer.GetMessageSender(msg: PDBusMessage): String;
+begin
+ Result:=dbus_message_get_sender(msg)
+end;
+
+function TDBusServer.CreateReturnMessage(msg: PDBusMessage): PDBusMessage;
+begin
+ Result:=dbus_message_new_method_return(msg);
+ dbus_message_iter_init_append(Result, @args);
+end;
+
+function TDBusServer.AppendBool(val: Boolean): Boolean;
+var boolv: cbool;
+begin
+ boolv:=val;
+ Result:=true;
+ if (dbus_message_iter_append_basic(@args, DBUS_TYPE_BOOLEAN, @boolv) = 0) then
+   begin
+     ShowError('Out Of Memory!');
+     Result:=false;
+   end;
+end;
+
+function TDBusServer.AppendStr(val: String): Boolean;
+var strv: PChar;
+begin
+ strv:=PChar(val);
+ Result:=true;
+ if (dbus_message_iter_append_basic(@args, DBUS_TYPE_STRING, @strv) = 0) then
+   begin
+     ShowError('Out Of Memory!');
+     Result:=false;
+   end;
+end;
+
+function TDBusServer.SendMessage(msg: PDBusMessage): Boolean;
+var serial: dbus_uint32_t = 0;
+begin
+ Result:=true;
+ //Send the reply & flush the connection
+ if (dbus_connection_send(conn, msg, @serial) = 0) then
+ begin
+     ShowError('Out Of Memory!');
+     Result:=false;
+     exit;
+ end;
+ dbus_connection_flush(conn);
+
+ //Free the reply
+ dbus_message_unref(msg);
+end;
+
+function TDBusServer.CreateNewSignal(objName: String;intfName: String;sigName: String): PDBusMessage;
+begin
+ Result:=dbus_message_new_signal(PChar(objName),PChar(intfName),PChar(sigName));
+
+ if (Result = nil) then
+ begin
+  ShowError('Message Null');
+  exit;
+ end;
+  //Prepare argument inter
+  dbus_message_iter_init_append(Result, @args);
+end;
+
+function TDBusServer.AppendUInt(val: Integer): Boolean;
+var uintv: cuint;
+begin
+ uintv:=val;
+ Result:=true;
+ if (dbus_message_iter_append_basic(@args, DBUS_TYPE_UINT32, @uintv) = 0) then
+  begin
+    ShowError('Out Of Memory!');
+    Result:=false;
+  end;
 end;
 
 end.

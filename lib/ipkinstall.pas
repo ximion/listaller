@@ -392,9 +392,7 @@ end;
 end else
 begin
 
-  p_debug('Delta: '+IntToStr(Index));
   if error then exit;
-  p_debug('TaZ');
  //Open PKit connection and assign tmp stringlist
   pkit:=TPackageKit.Create;
   xtmp:=TStringList.Create;
@@ -453,10 +451,13 @@ begin
          break;
         end;
       except
-       p_error('Malformed dependency-ignore entry! (Please fix this.)');
+       p_error('Malformed dependency-ignore entry "'+tmp[j]+'"! (Please fix this.)');
+       tmp.Delete(j);
+       break;
       end;
       end;
-      Inc(i);
+      if j<>tmp.Count-1 then
+       Inc(i);
      end;
      i:=0;
      tmp.Free;

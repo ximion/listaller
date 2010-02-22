@@ -20,7 +20,7 @@ program listallerd;
 
 uses
   cthreads, Interfaces, Classes, SysUtils, CustApp, dbus, djobs,
-  Contnrs, cTypes, liBasic, LCLIntf;
+  Contnrs, SimDBus, liBasic, LCLIntf;
 
 type
 
@@ -29,7 +29,7 @@ type
   //** The Listaller helper daemon for root actions
   TLiDaemon = class(TCustomApplication)
   protected
-    err: DBusError;
+    bs: TDBusServer;
     procedure DoRun; override;
   private
     JobList: TObjectList;
@@ -47,23 +47,15 @@ const
 procedure TLiDaemon.ListenForCall;
 var
   msg: PDBusMessage;
-  smsg: PDBusMessage;
-  ret: cint;
   startTick: Integer;
+  lastTime: Integer;
   lastJobCount: Integer=0; //Hold the last number of active jobs
 begin
   WriteLn('Daemon started.');
+  lstTime:=0;
 
-  // Request the name of the bus
-  ret:=dbus_bus_request_name(conn, 'org.freedesktop.Listaller', DBUS_NAME_FLAG_REPLACE_EXISTING, @err);
+  if bs.Failed then exit;
 
-  if dbus_error_is_set(@err) <> 0 then
-  begin
-    p_error('Name Error: ' + err.message);
-    dbus_error_free(@err);
-  end;
-
-  if ret<>DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER then exit;
 
   //Set tick count
   startTick:=DateTimeToTimeStamp(Now).Time;
@@ -78,12 +70,17 @@ begin
 
     lastJobCount:=InstallWorkers+ManagerWorkers;
 
-     if (InstallWorkers=0)and(ManagerWorkers=0)and(((DateTimeToTimeStamp(Now).Time-startTick)/1000)=Timeout_Seconds) then
+     if (InstallWorkers=0)and(ManagerWorkers=0)and(lastTime>=Timeout_Seconds) then
       break; //Exit loop -> terminate daemon
 
-    // non blocking read of the next available message
-    dbus_connection_read_write(conn, 0);
-    msg:=dbus_connection_pop_message(conn);
+    if lastTime<>Round(((DateTimeToTimeStamp(Now).Time-startTick)/1000)) then
+    begin
+     lastTime:=Round(((DateTimeToTimeStamp(Now).Time-startTick)/1000));
+     if (InstallWorkers=0)and(ManagerWorkers=0) then
+      p_debug(IntToStr(lastTime)+' seconds idle');
+    end;
+
+    msg:=bs.ReadMessage;
 
     // loop again if we haven't got a message
     if (msg = nil) then
@@ -93,20 +90,18 @@ begin
     end;
 
     // check this is a method call for the right interface & method
-    if (dbus_message_is_method_call(msg, 'org.freedesktop.Listaller.Install', CALL_RUNSETUP) <> 0) then
+    if bs.MessageIsMethodCall(msg,'org.freedesktop.Listaller.Install', CALL_RUNSETUP) then
     begin
-       sMsg:=msg;
-        JobList.Add(TDoAppInstall.Create(sMsg));
-       Inc(InstallWorkers);
+        JobList.Add(TDoAppInstall.Create(msg,bs.Connection));
+        Inc(InstallWorkers);
     end else
-    if (dbus_message_is_method_call(msg, 'org.freedesktop.Listaller.Manage', CALL_APPREMOVE) <> 0) then
+    if bs.MessageIsMethodCall(msg, 'org.freedesktop.Listaller.Manage', CALL_APPREMOVE) then
     begin
-       sMsg:=msg;
-        JobList.Add(TDoAppRemove.Create(sMsg));
+        JobList.Add(TDoAppRemove.Create(msg,bs.Connection));
        Inc(ManagerWorkers);
     end else
-     // free the message
-     dbus_message_unref(msg);
+     //Free the message
+     bs.FreeMessage(msg);
   end;
 end;
 
@@ -142,16 +137,7 @@ begin
 
 if IsRoot then
 begin
-  dbus_error_init(@err);
-  conn := dbus_bus_get_private(DBUS_BUS_SYSTEM, @err);
-
-  if dbus_error_is_set(@err) <> 0 then
-  begin
-    WriteLn('DBus connection Error: '+err.message);
-    dbus_error_free(@err);
-  end;
-
-  if conn = nil then Exit;
+  bs:=TDBusServer.Create('org.freedesktop.Listaller',DBUS_BUS_SYSTEM,DBUS_NAME_FLAG_REPLACE_EXISTING);
 
   JobList:=TObjectList.Create;
 end else
@@ -164,8 +150,7 @@ end;
 
 destructor TLiDaemon.Destroy;
 begin
- if conn<>nil then
-  dbus_connection_close(conn);
+  bs.Free;
   inherited Destroy;
 end;
 

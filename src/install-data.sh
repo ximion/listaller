@@ -40,8 +40,7 @@ cp ../graphics/categories/science.png $DESTDIR$prefix/share/listaller/graphics/c
 cp ../graphics/categories/system.png $DESTDIR$prefix/share/listaller/graphics/categories/
 #Copy other files
 cp -dpr ../build/locale/ $DESTDIR$prefix/share/listaller/
-rm -f $DESTDIR$prefix/share/listaller/lang/.svn
-rm -f $DESTDIR$prefix/share/listaller/lang/.directory
+rm -f $DESTDIR$prefix/share/listaller/locale/.directory
 
 chmod -R 0755 $DESTDIR$prefix/share/listaller/graphics
 
