@@ -94,6 +94,10 @@ type
  //** Listaller package types
  TPkgType = (ptLinstall, ptDLink, ptContainer, ptUnknown);
 
+ //** Package signature status
+ TPkgSigState = (psNone, psTrusted, psUntrusted);
+
+
 implementation
 
 end.

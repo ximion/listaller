@@ -92,6 +92,8 @@ type
   Forces: String;
   //True, if update source should be set
   AddUpdateSource: Boolean;
+  //Level of pkg signature
+  sigState: TPkgSigState;
 
   //Set superuser mode correctly
   procedure SetRootMode(b: Boolean);
@@ -162,6 +164,8 @@ type
   property CMDLn: String read IAppCMD;
   //** Path to the current file information (that fits the profile)
   property IFileInfo: String read FFileInfo;
+  //** Level of the package signature
+  property SignatureInfo: TPkgSigState read sigState;
   //** Set current profile by ID
   procedure SetCurProfile(i: Integer);
   //** Read the package description
@@ -456,7 +460,6 @@ begin
        break;
       end;
       end;
-      if j<>tmp.Count-1 then
        Inc(i);
      end;
      i:=0;
@@ -553,8 +556,12 @@ pkg.OnProgress:=@pkgProgress;
 //Uncompress LZMA
 pkg.Decompress;
 
-if not pkg.CheckSignature then
- p_debug('Warning! Signature invalid or no signature found.');
+sigState:=pkg.CheckSignature;
+case sigState of
+psNone: msg('Package is unsigned.');
+psTrusted: msg('Package has trusted signature.');
+psUntrusted: msg('Package signature is UNTRUSTED!');
+end;
 
 if not pkg.UnpackFile('arcinfo.pin') then
 begin

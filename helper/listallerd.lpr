@@ -52,7 +52,7 @@ var
   lastJobCount: Integer=0; //Hold the last number of active jobs
 begin
   WriteLn('Daemon started.');
-  lstTime:=0;
+  lastTime:=0;
 
   if bs.Failed then exit;
 

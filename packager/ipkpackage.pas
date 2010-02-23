@@ -72,7 +72,7 @@ type
   //** Decompress IPK tar file
   procedure Decompress;
   //** Verify signature (if there is any)
-  function  CheckSignature: Boolean;
+  function  CheckSignature: TPkgSigState;
   //** Unpack file @returns Success of operation
   function UnpackFile(fname: String): Boolean;
   //** Unpacker's working dir
@@ -313,18 +313,18 @@ begin
  end;
 end;
 
-function TLiUnpacker.CheckSignature: Boolean;
+function TLiUnpacker.CheckSignature: TPkgSigState;
 var mnarc: TTarArchive;
     hasSignature: Boolean;
     sign: TGPGSignWrapper;
     res: Integer;
 begin
- Result:=true;
  hasSignature:=false;
  mnarc:=TTarArchive.Create;
  mnarc.TarArchive:=workdir+'ipktar.tar';
  mnarc.BaseDir:=workdir;
 
+ Result:=psNone;
  //Check if package has signature
  hasSignature:=mnarc.FileInArchive('signature.asc');
 
@@ -341,10 +341,12 @@ begin
 
   DeleteFile(workdir+'ipktar.tar');
   RenameFile(workdir+'content.tar',workdir+'ipktar.tar');
+  Result:=psUntrusted;
   //Now check signature
   sign:=TGPGSignWrapper.Create;
   sign.FileName:=workdir+'ipktar.tar';
-  Result:=sign.Verify(workdir+'signature.asc');
+  if sign.Verify(workdir+'signature.asc') then
+   Result:=psTrusted;
   sign.Free;
  end;
  mnarc.Free;
