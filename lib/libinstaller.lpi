@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1394"/>
+      <CurrentBuildNr Value="1397"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -33,8 +33,8 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="1" Y="450"/>
-        <TopLine Value="1"/>
+        <CursorPos X="26" Y="257"/>
+        <TopLine Value="233"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="73"/>
         <Loaded Value="True"/>
@@ -43,8 +43,8 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="11" Y="462"/>
-        <TopLine Value="428"/>
+        <CursorPos X="50" Y="1723"/>
+        <TopLine Value="1693"/>
         <UsageCount Value="33"/>
       </Unit1>
       <Unit2>
@@ -326,8 +326,8 @@
       <Unit42>
         <Filename Value="../packager/ipkpackage.pas"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="50" Y="316"/>
-        <TopLine Value="295"/>
+        <CursorPos X="33" Y="283"/>
+        <TopLine Value="43"/>
         <UsageCount Value="12"/>
       </Unit42>
       <Unit43>
@@ -353,8 +353,8 @@
       <Unit46>
         <Filename Value="../src/licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="39" Y="171"/>
-        <TopLine Value="141"/>
+        <CursorPos X="10" Y="93"/>
+        <TopLine Value="72"/>
         <UsageCount Value="10"/>
       </Unit46>
       <Unit47>
@@ -405,27 +405,19 @@
         <UsageCount Value="10"/>
       </Unit53>
     </Units>
-    <JumpHistory Count="5" HistoryIndex="4">
+    <JumpHistory Count="3" HistoryIndex="2">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="186" Column="74" TopLine="165"/>
+        <Caret Line="22" Column="29" TopLine="1"/>
       </Position1>
       <Position2>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="421" Column="31" TopLine="400"/>
+        <Caret Line="16" Column="22" TopLine="1"/>
       </Position2>
       <Position3>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="443" Column="9" TopLine="409"/>
+        <Caret Line="257" Column="26" TopLine="233"/>
       </Position3>
-      <Position4>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="29" TopLine="1"/>
-      </Position4>
-      <Position5>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="29" TopLine="1"/>
-      </Position5>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

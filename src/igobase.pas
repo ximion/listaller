@@ -473,12 +473,13 @@ if Application.MessageBox(PAnsiChar(PAnsiChar(rsnSupported)+#13+PAnsiChar(rsInst
  end;
 end;
 
- //Set if Testmode
+//Set if Testmode
  setup.SetTestmode(Testmode);
 
  writeLn('Superuser: ',Superuser);
  //Set if root installation
  setup.SetRootMode(Superuser);
+
 end;
 
 procedure TIWizFrm.FormCreate(Sender: TObject);
@@ -574,7 +575,7 @@ end;
 procedure TIWizFrm.FormDestroy(Sender: TObject);
 begin
   //Free instances;
-  setup.Free;
+  if Assigned(setup) then setup.Free;
   writeLn('Listaller unloaded.');
 end;
 
@@ -667,7 +668,7 @@ while IPage.Visible=false do Application.ProcessMessages;
 
  setup.StartInstallation;
 
- if not Testmode then
+if not Testmode then
 begin
 NoteBook1.PageIndex:=5;
 
@@ -678,9 +679,12 @@ AbortBtn1.Visible:=false;
 FinPage.Refresh;
 end else
 begin
+  p_debug('Testmode: Executing new app...');
   Process1.CommandLine:=setup.GetAppCMD;
-  Process1.Options:=[poWaitOnExit];
+  ShowMessage(Process1.CommandLine);
+  Process1.Options:=[poWaitOnExit,poUsePipes];
   Hide;
+  setup.Free;
   Application.ProcessMessages;
   Process1.Execute;
   ShowMessage(rsTestFinished);

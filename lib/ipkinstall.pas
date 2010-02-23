@@ -452,6 +452,7 @@ begin
         if ExecRegExpr(tmp[j],Dependencies[i]) then
         begin
          Dependencies.Delete(i);
+         Dec(i);
          break;
         end;
       except
@@ -483,7 +484,7 @@ begin
     tmp:=TStringList.Create;
     // ProcThreadPool.MaxThreadCount:=4;
 
-    p_debug('Start reolve threads.');
+    p_debug('Start resolve threads.');
      ProcThreadPool.DoParallelLocalProc(@SearchForPackage,-1,Dependencies.Count-1,nil);
 
     if error then
@@ -552,9 +553,18 @@ if DirectoryExists(tmpdir+ExtractFileName(fname)) then
  DeleteDirectory(tmpdir+ExtractFileName(fname),false);
 
 pkg:=TLiUnpacker.Create(fname);
-pkg.OnProgress:=@pkgProgress;
-//Uncompress LZMA
-pkg.Decompress;
+if not SUMode then
+begin
+ pkg.OnProgress:=@pkgProgress;
+ //Uncompress LZMA
+ pkg.Decompress;
+end else
+if not FileExists(pkg.WDir+'ipktar.tar') then
+begin
+ pkg.OnProgress:=@pkgProgress;
+ //Uncompress LZMA
+ pkg.Decompress;
+end;
 
 sigState:=pkg.CheckSignature;
 case sigState of
@@ -654,15 +664,6 @@ IAppCMD:='#';
 if IAppCMD <> '#' then
 msg('Application main exec command is '+IAppCMD);
 
-if (IAppCMD='#')and (Testmode) then
-begin
- MakeUsrRequest(rsActionNotPossiblePkg, rqError);
- pkg.Free;
- Result:=false;
- exit;
-end;
-
-IAppCMD:=SyblToPath(IAppCMD);
 
 //Load Description
 ShDesc:=cont.SDesc;
@@ -1462,6 +1463,9 @@ SetMainPos(Round(mnpos*max));
 fi.Free;
 SendStateMsg(rsStep4);
 
+if Testmode then
+ msg('Testmode: Do not register package.')
+else
 if not FPatch then
 begin
 
@@ -1713,6 +1717,15 @@ begin
 
 if pkType=ptLinstall then
 begin
+//Set Testmode settings
+if (IAppCMD='#')and (Testmode) then
+begin
+ MakeUsrRequest(rsActionNotPossiblePkg, rqError);
+ Result:=false;
+ exit;
+end;
+IAppCMD:=SyblToPath(IAppCMD);
+
 //Check if the package downloads native pkgs
 for i:=0 to Dependencies.Count-1 do
 if (pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then
