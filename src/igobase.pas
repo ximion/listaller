@@ -353,7 +353,7 @@ end;
 end;
 
 function LoadIPKFile(): Boolean;
-var imForm: TimdFrm;
+var imForm: TimdFrm;sig: TPkgSigState;
 begin
 if not DirectoryExists(RegDir) then
 begin
@@ -384,7 +384,7 @@ Application.ProcessMessages;
   end;
 
 writeLn('Begin loading IPK');
-imForm:=TimdFrm.Create(nil);
+imForm:=TIMdFrm.Create(nil);
 imForm.EnterLoadingState;
 
 setup:=TInstallPack.Create;
@@ -401,12 +401,15 @@ setup.Initialize(paramstr(1));
 //Now set new status change callback handler
 setup.SetStatusChangeCall(@StatusChangeCall,nil);
 
+sig:=setup.GetSignatureState;
+
 //Prepare exectype form
 if (setup.PkType=ptLinstall)and(not Superuser) then
 begin
   imForm.LeaveLoadingState;
   with imForm do
   begin
+    SetSigState(sig);
     btnTest.Enabled:=true;
     btnHome.Enabled:=true;
     PkWarnImg.Visible:=true;
@@ -428,12 +431,13 @@ begin
   imForm.LeaveLoadingState;
   with imForm do
   begin
-  btnTest.Enabled:=false;
-  btnHome.Enabled:=false;
-  PkWarnImg.Visible:=true;
-  PkILabel.Caption:=rsSpkWarning;
-  //
-  ShowModal;
+   SetSigState(sig);
+   btnTest.Enabled:=false;
+   btnHome.Enabled:=false;
+   PkWarnImg.Visible:=true;
+   PkILabel.Caption:=rsSpkWarning;
+   //
+   ShowModal;
   end;
   imForm.Free;
 end;
@@ -443,22 +447,24 @@ begin
   imForm.LeaveLoadingState;
   with imForm do
   begin
-  btnTest.Visible:=false;
-  pkWarnImg.Visible:=true;
-  if (pos('iolocal',setup.GetDisallows)>0) then
-    btnHome.Enabled:=false;
-  if (pos('iobase',setup.GetDisallows)>0) then
-    btnInstallAll.Enabled:=false;
-  PkILabel.Caption:=rsSpkWarning;
-  //
-  ShowModal;
+   SetSigState(sig);
+   btnTest.Visible:=false;
+   pkWarnImg.Visible:=true;
+   if (pos('iolocal',setup.GetDisallows)>0) then
+     btnHome.Enabled:=false;
+   if (pos('iobase',setup.GetDisallows)>0) then
+     btnInstallAll.Enabled:=false;
+   PkILabel.Caption:=rsSpkWarning;
+   //
+   ShowModal;
   end;
   imForm.Free;
 end;
 
 //Check distribution
 if (pos(LowerCase(DInfo.DName),setup.GetSupDistris)<=0)
-and (setup.GetSupDistris<>'all') then begin
+and (setup.GetSupDistris<>'all') then
+begin
 if Application.MessageBox(PAnsiChar(PAnsiChar(rsnSupported)+#13+PAnsiChar(rsInstAnyway)),'Distro-Error',MB_YESNO)= IDNO then
  begin
  Result:=false;

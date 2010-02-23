@@ -25,7 +25,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms,
   igobase, dgunit, trStrings, LResources, SysUtils, LiBasic,
-  liTranslator, liTypes, xtypefm, Installer, LCLType, Dialogs;
+  liTranslator, liTypes, xtypefm, Installer, LCLType, Dialogs, siginfodisp;
 
 {$IFDEF WINDOWS}{$R listallgo.rc}{$ENDIF}
 
@@ -65,11 +65,11 @@ begin
     end;
    end;
    Application.CreateForm(TIWizFrm, IWizFrm);
+   Application.CreateForm(TDGForm, DGForm);
   end else
   { --- Prepare DLink Install --- }
   if setup.PkType=ptDLink then
   begin
-   Application.CreateForm(TDGForm, DGForm);
 
    DGForm.IIconPath:=setup.GetAppIcon;
    DGForm.IDesktopFiles:=setup.GetDesktopFiles;

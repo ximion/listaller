@@ -48,10 +48,14 @@ type
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
+    FShow: Boolean;
+    sig: TPkgSigState;
   public
     { public declarations }
     procedure EnterLoadingState;
     procedure LeaveLoadingState;
+
+    procedure SetSigState(sigstate: TPkgSigState);
   end; 
 
 // Publish procedure so it can be used by igobase
@@ -66,10 +70,13 @@ var
 
 implementation
 
+uses SigInfoDisp;
+
 { TIMdFrm }
 
 procedure TIMdFrm.FormCreate(Sender: TObject);
 begin
+ FShow:=false;
  //Set translation strings
  Caption:=rsSelInstMode;
  PkILabel.Caption:=rsSpkWarning;
@@ -138,8 +145,25 @@ begin
 end;
 
 procedure TIMdFrm.FormActivate(Sender: TObject);
+var secInfo: TSigInfoFrm;
 begin
   Refresh;
+
+  if FShow then
+begin
+ FShow:=false;
+ if (sig=psNone)or(sig=psUntrusted) then
+ begin
+  secInfo:=TSigInfoFrm.Create(nil);
+  if sig=psNone then
+   secInfo.LblPkgSigned.Caption:=rsPkgUnsigned
+  else
+   secInfo.LblPkgSigned.Caption:=rsPkgUntrusted;
+
+  secInfo.ShowModal;
+  secInfo.Free;
+ end;
+end;
 end;
 
 procedure TIMdFrm.btnHomeClick(Sender: TObject);
@@ -173,6 +197,12 @@ begin
  btnTest.Enabled:=true;
  btnHome.Enabled:=true;
  Hide;
+end;
+
+procedure TIMdFrm.SetSigState(sigstate: TPkgSigState);
+begin
+ FShow:=true;
+ sig:=sigstate;
 end;
 
 initialization

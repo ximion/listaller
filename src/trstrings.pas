@@ -255,6 +255,8 @@ rsQuestion = 'Question:';
 rsYes = 'yes';
 rsY = 'y';
 rsResolvingDep = 'Resolving dependencies...';
+rsPkgUnsigned = 'This package is not signed!';
+rsPkgUntrusted = 'This package is untrusted!';
 implementation
 end.
 

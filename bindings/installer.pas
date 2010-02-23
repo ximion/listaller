@@ -54,6 +54,7 @@ function  GetDesktopFiles: String;
 function  GetAppCMD: String;
 function  GetFileList: String;
 function  StartInstallation: Boolean;
+function  GetSignatureState: TPkgSigState;
 procedure EnableUSource(b: Boolean);
 procedure SetProfileID(i: Integer);
 procedure SetRootMode(b: Boolean);
@@ -227,6 +228,11 @@ procedure TInstallPack.SetForced(s: String);
 begin
 ForcedActn:=s;
 li_setup_set_forced(@ins,PChar(s));
+end;
+
+function TInstallPack.GetSignatureState: TPkgSigState;
+begin
+ Result:=li_setup_get_signature_state(@ins);
 end;
 
 function IsIPKAppInstalled(appname: String;appid: String): Boolean;

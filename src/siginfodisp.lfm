@@ -1,0 +1,42 @@
+object SigInfoFrm: TSigInfoFrm
+  Left = 405
+  Height = 166
+  Top = 355
+  Width = 314
+  ActiveControl = Button1
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsToolWindow
+  Caption = 'Security warning'
+  ClientHeight = 166
+  ClientWidth = 314
+  Position = poScreenCenter
+  LCLVersion = '0.9.28.2'
+  object LblPkgSigned: TLabel
+    Left = 24
+    Height = 21
+    Top = 8
+    Width = 225
+    Caption = 'This package is not signed!'
+    Font.Height = -17
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object LblInfo: TLabel
+    Left = 16
+    Height = 73
+    Top = 40
+    Width = 270
+    Caption = 'Please install this package only if you got it from a safe,'#10'secure source. There is a serious risk that it damages'#10'your system. (It also can contain malware)'#10'Be careful with this package, especially if you install it'#10'with superuser rights. (System installation)'
+    ParentColor = False
+  end
+  object Button1: TButton
+    Left = 96
+    Height = 25
+    Top = 128
+    Width = 128
+    Caption = 'I know the risk'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+end
