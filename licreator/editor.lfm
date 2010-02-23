@@ -5,18 +5,18 @@ object FrmEditor: TFrmEditor
   Width = 922
   ActiveControl = IPSNotebook
   Caption = 'Listaller package creator'
-  ClientHeight = 633
+  ClientHeight = 634
   ClientWidth = 922
   Menu = mmMain
   OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '0.9.27'
+  LCLVersion = '0.9.28.2'
   object memLog: TMemo
     Left = 0
     Height = 86
-    Top = 547
+    Top = 548
     Width = 922
     Align = alBottom
     Lines.Strings = (
@@ -27,7 +27,7 @@ object FrmEditor: TFrmEditor
   end
   object IPSNotebook: TNotebook
     Left = 0
-    Height = 541
+    Height = 542
     Top = 0
     Width = 922
     Align = alClient
@@ -38,10 +38,10 @@ object FrmEditor: TFrmEditor
     object ScriptPage: TPage
       Caption = 'Script'
       ClientWidth = 918
-      ClientHeight = 503
+      ClientHeight = 504
       object MainScriptEdit: TSynEdit
         Left = 0
-        Height = 503
+        Height = 504
         Top = 0
         Width = 918
         Align = alClient
@@ -53,6 +53,7 @@ object FrmEditor: TFrmEditor
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 35
+        BookMarkOptions.OnChange = nil
         Gutter.Width = 53
         Gutter.MouseActions = <        
           item
@@ -653,6 +654,17 @@ object FrmEditor: TFrmEditor
             MoveCaret = False
             Option = 0
             Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
           end>
         Lines.Strings = (
           'IPK-Standard-Version: 1.0'
@@ -792,7 +804,7 @@ object FrmEditor: TFrmEditor
     Cursor = crVSplit
     Left = 0
     Height = 6
-    Top = 541
+    Top = 542
     Width = 922
     Align = alBottom
     ResizeAnchor = akBottom

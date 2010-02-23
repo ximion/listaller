@@ -29,6 +29,7 @@ uses
 {$IFDEF WINDOWS}{$R licreator.rc}{$ENDIF}
 
 begin
+  Application.Title:='liCreator';
   {$I licreator.lrs}
   Application.Initialize;
   Application.CreateForm(TFrmEditor, FrmEditor);

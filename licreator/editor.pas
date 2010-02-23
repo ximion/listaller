@@ -142,7 +142,6 @@ type
     procedure TabSheet2Show(Sender: TObject);
     procedure TabSheet3Show(Sender: TObject);
   private
-    { private declarations }
  //   procedure CreateMD5Sums;
   //** Saves the IPS file
     procedure SaveIPSFile(IFn: String);
@@ -150,8 +149,8 @@ type
     procedure ReadOutput;
     function GetActiveSynEdit: TSynEdit;
   public
-  { public declarations }
     procedure NewBlank;
+    procedure LoadIPSScript(ipspath: String);
   end; 
 
 const
@@ -694,8 +693,15 @@ begin
   if fActiv then
   begin
     fActiv:=false;
-    frmProjectWizard.ShowModal;
-    frmProjectWizard.Free;
+    if (FileExists(paramstr(1)))
+    and(LowerCase(ExtractFileExt(paramstr(1)))='.ips') then
+    begin
+     LoadIPSScript(paramstr(1));
+    end else
+    begin
+     frmProjectWizard.ShowModal;
+     frmProjectWizard.Free;
+    end;
   end;
 end;
 
@@ -720,8 +726,6 @@ end;
 end;
 }
 
-
-
 procedure TFrmEditor.mnuFileSaveAsClick(Sender: TObject);
 begin
   if SaveDialog2.Execute then
@@ -731,7 +735,7 @@ begin
   end;
 end;
 
-procedure TFrmEditor.mnuFileLoadIPSClick(Sender: TObject);
+procedure TFrmEditor.LoadIPSScript(ipspath: String);
 
   function BeginsFilesPart(str: String;var iProfileIndex:Integer):Boolean;
   var
@@ -771,12 +775,9 @@ var
   AFileEdit: TSynEdit;
   strInstallPath: String;
 begin
-  if OpenDialog1.Execute then
-  if FileExists(OpenDialog1.FileName) then
-  begin
     NewBlank;
     ips:=TStringList.Create;
-    ips.LoadFromFile(OpenDialog1.FileName);
+    ips.LoadFromFile(ipspath);
     for i:=1 to ips.Count-1 do
     begin
       if BeginsFilesPart(ips[i],iProfileIndex) then break
@@ -804,9 +805,17 @@ begin
       inc(j);
     end;
 
-    FName:=OpenDialog1.FileName;
+    FName:=ipspath;
     Caption:= FORM_CAPTION+ ' - "'+ExtractFileName(FName)+'"';
- end;
+end;
+
+procedure TFrmEditor.mnuFileLoadIPSClick(Sender: TObject);
+begin
+ if OpenDialog1.Execute then
+  if FileExists(OpenDialog1.FileName) then
+  begin
+   LoadIPSScript(OpenDialog1.FileName);
+  end;
 end;
 
 procedure TFrmEditor.mnuFileCloseClick(Sender: TObject);

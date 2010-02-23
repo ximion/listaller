@@ -33,8 +33,8 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="26" Y="257"/>
-        <TopLine Value="233"/>
+        <CursorPos X="30" Y="22"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="73"/>
         <Loaded Value="True"/>
@@ -43,8 +43,8 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="50" Y="1723"/>
-        <TopLine Value="1693"/>
+        <CursorPos X="12" Y="27"/>
+        <TopLine Value="1"/>
         <UsageCount Value="33"/>
       </Unit1>
       <Unit2>
@@ -156,8 +156,8 @@
         <Filename Value="limanageapp.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="limanageapp"/>
-        <CursorPos X="25" Y="750"/>
-        <TopLine Value="657"/>
+        <CursorPos X="10" Y="862"/>
+        <TopLine Value="841"/>
         <UsageCount Value="32"/>
       </Unit17>
       <Unit18>
@@ -405,7 +405,7 @@
         <UsageCount Value="10"/>
       </Unit53>
     </Units>
-    <JumpHistory Count="3" HistoryIndex="2">
+    <JumpHistory Count="4" HistoryIndex="3">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="22" Column="29" TopLine="1"/>
@@ -418,6 +418,10 @@
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="257" Column="26" TopLine="233"/>
       </Position3>
+      <Position4>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="30" TopLine="1"/>
+      </Position4>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

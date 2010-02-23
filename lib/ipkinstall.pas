@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, PackageKit,
   sqlite3ds, IPKPackage, ipkdef, HTTPSend, FTPSend, blcksock,
   MD5, liTypes, distri, MTProcs, FileUtil, liBasic, liDBusproc,
-  limanageapp, RegExpr;
+  liManageApp, RegExpr;
 
 type
 
