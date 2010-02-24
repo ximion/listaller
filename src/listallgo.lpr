@@ -56,7 +56,7 @@ begin
    //Check if app is already installed
    if not Testmode then
    begin
-    if IsIPKAppInstalled(setup.GetAppName,setup.GetAppID) then
+    if IsIPKAppInstalled(setup.GetAppName,setup.GetAppID,Superuser) then
     if Application.MessageBox(PAnsiChar(PAnsiChar(rsAlreadyInst)+#13+PAnsiChar(rsInstallAgain)),PAnsiChar(rsReInstall),MB_YESNO)= IDNO then
     begin
      setup.Free;

@@ -72,9 +72,9 @@ begin
 //Check which Distribution is used
 Result.DName:='';
 uv:=TStringList.Create;
-if FileExists('/etc/lipa/distribution') then
+if FileExists(LI_CONFIG_DIR+'distribution') then
 begin
-uv.LoadFromFile('/etc/lipa/distribution');
+uv.LoadFromFile(LI_CONFIG_DIR+'distribution');
 Result.DName:=copy(uv[0],pos(' ',uv[0])+1,length(uv[0]));
 Result.Release:=copy(uv[1],pos(' ',uv[1])+1,length(uv[1]));
 Result.PackageSystem:=copy(uv[2],pos(' ',uv[2])+1,length(uv[2]));

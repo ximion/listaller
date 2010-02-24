@@ -39,6 +39,12 @@ type
     BitBtn2: TBitBtn;
     AboutBtn: TButton;
     AppViewControl: TPageControl;
+    BtnPanel: TPanel;
+    CatButton: TSpeedButton;
+    InstAppButton: TSpeedButton;
+    RepoButton: TSpeedButton;
+    SettingsButton: TSpeedButton;
+    SpacerPan: TPanel;
     SWBox: TPanel;
     BitBtn5: TBitBtn;
     BitBtn6: TBitBtn;
@@ -55,7 +61,6 @@ type
     SysAppSheet: TTabSheet;
     UnButton: TBitBtn;
     UpdCheckBtn: TBitBtn;
-    CatButton: TSpeedButton;
     CBox: TComboBox;
     CbShowPkMon: TCheckBox;
     UListBox: TCheckListBox;
@@ -73,7 +78,6 @@ type
     FilterEdt: TEdit;
     GroupBox1: TGroupBox;
     ImageList1: TImageList;
-    InstAppButton: TSpeedButton;
     Label1: TLabel;
     Label2: TLabel;
     Label4: TLabel;
@@ -88,8 +92,6 @@ type
     SpinEdit2: TSpinEdit;
     RepoPage: TPage;
     ConfigPage: TPage;
-    SettingsButton: TSpeedButton;
-    RepoButton: TSpeedButton;
     procedure appListItemSelect(Sender: TObject; item: TAppInfoItem);
     procedure AppViewControlChange(Sender: TObject);
     procedure BitBtn6Click(Sender: TObject);
@@ -353,7 +355,7 @@ begin
  AppNameLbl.Caption:=item.Name;
  AppDescLbl.Caption:=item.SDesc;
  if item.Version<>'' then
-  AppVersionLbl.Caption:='Version: '+item.Version
+  AppVersionLbl.Caption:=item.Version
  else
   AppVersionLbl.Caption:='Version: unknown';
  AppInfoPanel.Visible:=true;
@@ -421,8 +423,8 @@ begin
   end else
   begin
     if (DInfo.DName='Ubuntu') then
-    if FileExists('/usr/bin/gnome-app-install') then
-     p.CommandLine:='/usr/bin/gnome-app-install'
+    if FileExists('/usr/bin/software-center') then
+     p.CommandLine:='/usr/bin/software-center'
     else
      p.CommandLine:='/usr/bin/gpk-application'
    else
@@ -726,11 +728,14 @@ end; }
 
 procedure TMnFrm.MyAppSheetShow(Sender: TObject);
 begin
+ AppInfoPanel.Visible:=false;
  currAppList:=appList;
  SWBox.Visible:=false;
+ MBar.Visible:=true;
 
  ReloadAppList;
  SWBox.Visible:=true;
+ MBar.Visible:=false;
 end;
 
 procedure TMnFrm.RmUpdSrcBtnClick(Sender: TObject);
@@ -753,10 +758,13 @@ end;
 
 procedure TMnFrm.SysAppSheetShow(Sender: TObject);
 begin
+ AppInfoPanel.Visible:=false;
  currAppList:=appListSU;
+ MBar.Visible:=true;
  SWBoxSU.Visible:=false;
  ReloadAppList;
  SWBoxSU.Visible:=true;
+ MBar.Visible:=false;
 end;
 
 procedure TMnFrm.UListBoxClick(Sender: TObject);

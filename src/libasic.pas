@@ -83,6 +83,10 @@ procedure p_info(msg: String);
 //** Show a debug bessage
 procedure p_debug(msg: String);
 
+const
+ LI_CONFIG_DIR = '/etc/lipa/';
+ LI_APPDB_PREF = 'app-reg/';
+
 implementation
 
 uses distri; //Access to distribution data

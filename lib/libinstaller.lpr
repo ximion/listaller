@@ -159,9 +159,9 @@ begin
 end;
 
 //** Check if application is installed
-function li_get_ipk_app_installed(appname: PChar;appid: PChar): Boolean;cdecl;
+function li_get_ipk_app_installed(appname: PChar;appid: PChar;sumode: Boolean): Boolean;cdecl;
 begin
-  Result:=IsPackageInstalled(appname,appid);
+  Result:=IsPackageInstalled(appname,appid,sumode);
 end;
 
 //** Readout application name

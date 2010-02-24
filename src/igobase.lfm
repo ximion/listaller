@@ -99,7 +99,7 @@ object IWizFrm: TIWizFrm
         ParentColor = False
       end
       object LblTestMode: TLabel
-        Left = 166
+        Left = 158
         Height = 21
         Top = 157
         Width = 87

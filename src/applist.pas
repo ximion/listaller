@@ -139,9 +139,10 @@ or ((ItemRect(btn.Tag).Top)<(Top+4)) then
       TopDif := (ItemHeight div 2) - (Canvas.TextHeight('A') div 2);
       Canvas.Font.Height:=9;
       Canvas.TextRect(Rect, Rect.Left+bmp.Width+6,Rect.Top+TopDif+2, aList[Index].SDesc);
-      if aList[Index].SDesc<>'' then
+      {if aList[Index].SDesc<>'' then
        TopDif := TopDif+(Canvas.TextHeight('A') div 2);
       Canvas.TextRect(Rect, Rect.Left+bmp.Width+6+10,Rect.Top+TopDif+2, aList[Index].Version);
+      }
       Canvas.Draw(Rect.Left, Rect.Top, bmp);
   finally
     bmp.Free;

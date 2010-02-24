@@ -61,7 +61,7 @@ procedure SetRootMode(b: Boolean);
 property Forced: String read ForcedActn write SetForced;
 end;
 
-function IsIPKAppInstalled(appname: String;appid: String): Boolean;
+function IsIPKAppInstalled(appname: String;appid: String;sumode: Boolean): Boolean;
 
 implementation
 
@@ -92,7 +92,7 @@ procedure li_setup_set_forced(setup: Pointer;str: PChar);cdecl;external libinst;
 function  li_setup_get_dependencies(setup: Pointer; list: PStringList): Boolean;cdecl;external libinst;
 function  li_setup_set_profileid(setup: Pointer;id: ShortInt): Boolean;cdecl;external libinst;
 function  li_setup_get_signature_state(setup: Pointer): TPkgSigState;cdecl;external libinst;
-function  li_get_ipk_app_installed(appname: PChar;appid: PChar): Boolean;cdecl;external libinst;
+function  li_get_ipk_app_installed(appname: PChar;appid: PChar;sumode: Boolean): Boolean;cdecl;external libinst;
 procedure li_set_testmode(st: Boolean);cdecl;external libinst;
 
 { TInstallPack }
@@ -235,9 +235,9 @@ begin
  Result:=li_setup_get_signature_state(@ins);
 end;
 
-function IsIPKAppInstalled(appname: String;appid: String): Boolean;
+function IsIPKAppInstalled(appname: String;appid: String;sumode: Boolean): Boolean;
 begin
-Result:=li_get_ipk_app_installed(PChar(appname), PChar(appid));
+Result:=li_get_ipk_app_installed(PChar(appname), PChar(appid),sumode);
 end;
 
 end.

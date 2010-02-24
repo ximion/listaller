@@ -78,10 +78,10 @@ end;
  procedure UninstallIPKApp(AppName, AppID: String; FStatus: TLiStatusChangeCall; fast: Boolean=false; RmDeps:Boolean=true);
 
  //** Checks if package is installed
- function IsPackageInstalled(aName: String;aID: String): Boolean;
+ function IsPackageInstalled(aName: String;aID: String;sumode: Boolean): Boolean;
 
  //** Load application registration db into SQLiteDataset
- procedure LoadAppDB(dsApp: TSQLite3Dataset);
+ procedure LoadAppDB(dsApp: TSQLite3Dataset;const forcesu: Boolean=false);
 
 implementation
 
@@ -342,6 +342,9 @@ writeLn('Opening database...');
 dsApp:= TSQLite3Dataset.Create(nil);
 with dsApp do
  begin
+   if SUMode then
+    RegDir:=LI_CONFIG_DIR+'app-reg/';
+
    FileName:=RegDir+'applications.db';
    TableName:='AppInfo';
    if not FileExists(FileName) then
@@ -369,7 +372,7 @@ dsApp.Active:=true;
 if blst.Count<4 then
 begin
 blst.Clear;
-blst.LoadFromFile('/etc/lipa/blacklist');
+blst.LoadFromFile(LI_CONFIG_DIR+'blacklist');
 blst.Delete(0);
 end;
 
@@ -775,16 +778,22 @@ end;
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-procedure LoadAppDB(dsApp: TSQLite3Dataset);
+procedure LoadAppDB(dsApp: TSQLite3Dataset;const forcesu: Boolean=false);
+var rd: String;
 begin
-if not DirectoryExists(ExtractFilePath(RegDir)) then
- CreateDir(ExtractFilePath(RegDir));
-if not DirectoryExists(RegDir) then
- CreateDir(RegDir);
+ if forcesu then
+  rd:=LI_CONFIG_DIR+'app-reg/'
+ else
+  rd:=RegDir;
+
+if not DirectoryExists(ExtractFilePath(rd)) then
+ CreateDir(ExtractFilePath(rd));
+if not DirectoryExists(rd) then
+ CreateDir(rd);
 
  with dsApp do
  begin
-   FileName:=RegDir+'applications.db';
+   FileName:=rd+'applications.db';
    TableName:='AppInfo';
    if not FileExists(FileName) then
    begin
@@ -808,11 +817,11 @@ if not DirectoryExists(RegDir) then
 end;
 end;
 
-function IsPackageInstalled(aname: String;aid: String): Boolean;
+function IsPackageInstalled(aname: String;aid: String;sumode: Boolean): Boolean;
 var dsApp: TSQLite3Dataset;
 begin
 dsApp:=TSQLite3Dataset.Create(nil);
-LoadAppDB(dsApp);
+LoadAppDB(dsApp,sumode);
 dsApp.SQL:='SELECT * FROM AppInfo';
 dsApp.Open;
 dsApp.Filtered := true;
@@ -821,7 +830,8 @@ dsApp.First;
 Result:=false;
 while not dsApp.EOF do
 begin
- if (dsApp.FieldByName('Name').AsString=aName) and (dsApp.FieldByName('ID').AsString=aID) then
+ if (dsApp.FieldByName('Name').AsString=aName) then
+ // and (dsApp.FieldByName('ID').AsString=aID) then
 begin
 Result:=true;
 break;
@@ -1077,7 +1087,8 @@ begin
 end;
 proc.Free;
 
-if upd<>'#' then begin
+if upd<>'#' then
+begin
 tmp.LoadFromFile(RegDir+'updates.list');
 msg('Removing update-source...');
 for i:=1 to tmp.Count-1 do

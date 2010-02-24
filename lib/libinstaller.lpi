@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1397"/>
+      <CurrentBuildNr Value="1402"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -28,12 +28,12 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="54">
+    <Units Count="55">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="30" Y="22"/>
+        <CursorPos X="26" Y="22"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="73"/>
@@ -43,8 +43,8 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="12" Y="27"/>
-        <TopLine Value="1"/>
+        <CursorPos X="23" Y="1698"/>
+        <TopLine Value="1677"/>
         <UsageCount Value="33"/>
       </Unit1>
       <Unit2>
@@ -156,8 +156,8 @@
         <Filename Value="limanageapp.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="limanageapp"/>
-        <CursorPos X="10" Y="862"/>
-        <TopLine Value="841"/>
+        <CursorPos X="10" Y="872"/>
+        <TopLine Value="851"/>
         <UsageCount Value="32"/>
       </Unit17>
       <Unit18>
@@ -312,8 +312,8 @@
       <Unit40>
         <Filename Value="../src/libasic.pas"/>
         <UnitName Value="libasic"/>
-        <CursorPos X="19" Y="179"/>
-        <TopLine Value="107"/>
+        <CursorPos X="2" Y="89"/>
+        <TopLine Value="67"/>
         <UsageCount Value="10"/>
       </Unit40>
       <Unit41>
@@ -353,15 +353,15 @@
       <Unit46>
         <Filename Value="../src/licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="10" Y="93"/>
-        <TopLine Value="72"/>
+        <CursorPos X="48" Y="284"/>
+        <TopLine Value="18"/>
         <UsageCount Value="10"/>
       </Unit46>
       <Unit47>
         <Filename Value="../src/trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="1" Y="98"/>
-        <TopLine Value="77"/>
+        <CursorPos X="1" Y="102"/>
+        <TopLine Value="80"/>
         <UsageCount Value="10"/>
       </Unit47>
       <Unit48>
@@ -404,25 +404,15 @@
         <TopLine Value="19"/>
         <UsageCount Value="10"/>
       </Unit53>
+      <Unit54>
+        <Filename Value="../src/distri.pas"/>
+        <UnitName Value="distri"/>
+        <CursorPos X="32" Y="77"/>
+        <TopLine Value="56"/>
+        <UsageCount Value="10"/>
+      </Unit54>
     </Units>
-    <JumpHistory Count="4" HistoryIndex="3">
-      <Position1>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="29" TopLine="1"/>
-      </Position1>
-      <Position2>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="16" Column="22" TopLine="1"/>
-      </Position2>
-      <Position3>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="257" Column="26" TopLine="233"/>
-      </Position3>
-      <Position4>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="30" TopLine="1"/>
-      </Position4>
-    </JumpHistory>
+    <JumpHistory Count="0" HistoryIndex="-1"/>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>
