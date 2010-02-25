@@ -257,6 +257,7 @@ rsY = 'y';
 rsResolvingDep = 'Resolving dependencies...';
 rsPkgUnsigned = 'This package is not signed!';
 rsPkgUntrusted = 'This package is untrusted!';
+rsCouldNotInstallApp = 'The application %a could not be installed!';
 implementation
 end.
 

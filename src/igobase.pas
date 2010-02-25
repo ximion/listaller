@@ -40,6 +40,8 @@ type
     ExProgress: TProgressBar;
     FinBtn1: TBitBtn;
     GetOutPutTimer: TIdleTimer;
+    Label15: TLabel;
+    Label17: TLabel;
     LeftImg: TImage;
     InfoMemo: TMemo;
     InsProgress: TProgressBar;
@@ -66,6 +68,7 @@ type
     OpenDialog1: TOpenDialog;
     IMPage: TPage;
     ModeGroup: TRadioGroup;
+    FailPage: TPage;
     WPage: TPage;
     DPage: TPage;
     LPage: TPage;
@@ -86,13 +89,12 @@ type
     procedure GetOutputTimerTimer(Sender: TObject);
     procedure RadioButton1Change(Sender: TObject);
   private
-    { private declarations }
     //** True if installation is beeing aborted
     AbortIns: Boolean;
     //** Start the GUI inatallation
     procedure StartInstallation;
   public
-    { public declarations }
+    SetupFailed: Boolean;
   end; 
 
 var
@@ -253,8 +255,8 @@ begin
   Label16.Caption:=rsCleaningUp;
   Label16.Visible:=true;
   FinPage.Refresh;
-  DeleteDirectory(tmpdir+ExtractFileName(paramstr(1)),false);
 
+  if not SetupFailed then
   if (setup.GetAppCMD<>'#')and(CbExecApp.Checked) then
   begin
    Process1.CommandLine:=setup.GetAppCMD;
@@ -293,13 +295,24 @@ rqError: begin
   ShowMessage(msg);
   if Assigned(IWizFrm) then
   begin
-   IWizFrm.InfoMemo.Lines.Add(rsInstFailed);
-   IWizFrm.InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
+   with IWizFrm do
+   begin
+    InfoMemo.Lines.Add(rsInstFailed);
+    InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
+    NoteBook1.PageIndex:=6;
+    Label17.Caption:=StringReplace(rsCouldNotInstallApp, '%a',setup.GetAppName, [rfReplaceAll]);
+    SetupFailed:=true;
+
+    FinBtn1.Visible:=true;
+    AbortBtn1.Visible:=false;
+   end;
+  end else
+  begin
+   setup.Free;
+   Result:=rqsOK;
+   halt(6); //Kill application
+   exit;
   end;
-  setup.Free;
-  Result:=rqsOK;
-  halt(6); //Kill application
-  exit;
 end;
 rqWarning: begin
   if Application.MessageBox(PAnsiChar(msg),PAnsiChar(Format(rsInstOf,[setup.GetAppName])),MB_YESNO)<>IDYES then
@@ -308,14 +321,23 @@ rqWarning: begin
    Result:=rqsNo;
    if Assigned(IWizFrm) then
    begin
-    IWizFrm.InfoMemo.Lines.Add('Installation aborted by user.');
-    IWizFrm.InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
-   end;
+    with IWizFrm do
+     begin
+      InfoMemo.Lines.Add('Installation aborted by user.');
+      InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
+      NoteBook1.PageIndex:=6;
+      Label17.Caption:=StringReplace(rsCouldNotInstallApp, '%a',setup.GetAppName, [rfReplaceAll]);
+      SetupFailed:=true;
 
+      FinBtn1.Visible:=true;
+      AbortBtn1.Visible:=false;
+     end;
+  end else
+  begin
    setup.Free;
    Application.Terminate;
-   FreeAndNil(IWizFrm);
   end;
+end;
 end;
 rqQuestion: begin
   if Application.MessageBox(PAnsiChar(msg),PAnsiChar(Format(rsInstOf,[setup.GetAppName])),MB_YESNO)<>IDYES then
@@ -668,6 +690,7 @@ while IPage.Visible=false do Application.ProcessMessages;
 
  setup.StartInstallation;
 
+if not SetupFailed then
 if not Testmode then
 begin
 NoteBook1.PageIndex:=5;
@@ -691,7 +714,7 @@ begin
    Process1.CommandLine := 'rm -rf /tmp/litest';
    Process1.Execute;
   Application.Terminate;
- end;
+end;
 
 end;
 

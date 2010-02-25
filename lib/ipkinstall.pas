@@ -261,6 +261,7 @@ end;
 
 destructor TInstallation.Destroy;
 begin
+ DeleteDirectory(tmpdir+PkgName,false);
  inherited Destroy;
  dsApp.Free;
  msg('Database connection closed.');
@@ -518,6 +519,9 @@ begin
 end;
 
 begin
+//Create temporary dir
+if not DirectoryExists(tmpdir) then
+ ForceDirectory(tmpdir);
 
 //The user _really_ is root. (This happens, if the daemon executes this action)
 //Set the right paths and execute install
@@ -941,7 +945,7 @@ tmp.Free;
 pkg.Free;
 
  p:=TProcess.create(nil);
- p.CommandLine:='chmod 755 ''/tmp/'+cont.Binary+'''';
+ p.CommandLine:='chmod 755 '''+tmpdir++cont.Binary+'''';
  p.Options:=[poUsePipes,poWaitonexit];
  p.Execute;
  p.Options:=[poUsePipes,poWaitonexit,poNewConsole];
@@ -949,7 +953,7 @@ pkg.Free;
  if FileExists('/usr/bin/package') then
  p.Options:=[poUsePipes,poWaitonexit];
 
- p.CommandLine:='/tmp/'+cont.Binary;
+ p.CommandLine:=tmpdir+cont.Binary;
  p.Execute;
  p.Free;
  end else
@@ -957,12 +961,12 @@ pkg.Free;
  if cont.InTerminal then
  p.Options:=[poUsePipes, poWaitOnExit, poNewConsole]
  else p.Options:=[poUsePipes, poWaitOnExit];
- p.CommandLine:='/tmp/'+cont.Binary;
+ p.CommandLine:=tmpdir+cont.Binary;
  p.Execute;
  p.Free;
  end;
 
-DeleteFile('/tmp/'+cont.Binary);
+DeleteFile(tmpdir+cont.Binary);
 except
  Result:=false;
 end;

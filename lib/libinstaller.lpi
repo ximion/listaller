@@ -28,13 +28,13 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="55">
+    <Units Count="56">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="26" Y="22"/>
-        <TopLine Value="1"/>
+        <CursorPos X="30" Y="22"/>
+        <TopLine Value="13"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="73"/>
         <Loaded Value="True"/>
@@ -43,8 +43,8 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="23" Y="1698"/>
-        <TopLine Value="1677"/>
+        <CursorPos X="23" Y="522"/>
+        <TopLine Value="511"/>
         <UsageCount Value="33"/>
       </Unit1>
       <Unit2>
@@ -312,8 +312,8 @@
       <Unit40>
         <Filename Value="../src/libasic.pas"/>
         <UnitName Value="libasic"/>
-        <CursorPos X="2" Y="89"/>
-        <TopLine Value="67"/>
+        <CursorPos X="20" Y="28"/>
+        <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit40>
       <Unit41>
@@ -326,8 +326,8 @@
       <Unit42>
         <Filename Value="../packager/ipkpackage.pas"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="33" Y="283"/>
-        <TopLine Value="43"/>
+        <CursorPos X="33" Y="268"/>
+        <TopLine Value="259"/>
         <UsageCount Value="12"/>
       </Unit42>
       <Unit43>
@@ -411,8 +411,20 @@
         <TopLine Value="56"/>
         <UsageCount Value="10"/>
       </Unit54>
+      <Unit55>
+        <Filename Value="../../../../../../usr/lib/lazarus/0.9.28.2/lcl/fileutil.pas"/>
+        <UnitName Value="FileUtil"/>
+        <CursorPos X="10" Y="70"/>
+        <TopLine Value="49"/>
+        <UsageCount Value="10"/>
+      </Unit55>
     </Units>
-    <JumpHistory Count="0" HistoryIndex="-1"/>
+    <JumpHistory Count="1" HistoryIndex="0">
+      <Position1>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="30" TopLine="13"/>
+      </Position1>
+    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>

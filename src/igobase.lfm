@@ -338,9 +338,9 @@ object IWizFrm: TIWizFrm
       ClientWidth = 647
       ClientHeight = 353
       object Label10: TLabel
-        Left = 12
+        Left = 6
         Height = 27
-        Top = 6
+        Top = 8
         Width = 253
         Caption = 'Installation completed!'
         Font.Height = -21
@@ -349,39 +349,63 @@ object IWizFrm: TIWizFrm
         ParentFont = False
       end
       object Label11: TLabel
-        Left = 12
-        Height = 14
+        Left = 6
+        Height = 13
         Top = 56
-        Width = 315
+        Width = 262
         Caption = 'The application <unknown> was installed successfully!'
         ParentColor = False
       end
       object Label12: TLabel
-        Left = 12
-        Height = 14
+        Left = 6
+        Height = 13
         Top = 88
-        Width = 133
+        Width = 110
         Caption = 'Press "Finish" to close.'
         ParentColor = False
       end
       object Label16: TLabel
         Left = 12
-        Height = 14
+        Height = 13
         Top = 336
-        Width = 45
+        Width = 39
         Caption = 'Label16'
         ParentColor = False
         Visible = False
       end
       object CbExecApp: TCheckBox
-        Left = 12
+        Left = 6
         Height = 21
         Top = 109
-        Width = 181
+        Width = 159
         Caption = 'Execute the new application'
         Checked = True
         State = cbChecked
         TabOrder = 0
+      end
+    end
+    object FailPage: TPage
+      Caption = 'Failed'
+      ClientWidth = 647
+      ClientHeight = 353
+      object Label15: TLabel
+        Left = 6
+        Height = 27
+        Top = 8
+        Width = 197
+        Caption = 'Installation failed!'
+        Font.Height = -21
+        Font.Name = 'Sans'
+        ParentColor = False
+        ParentFont = False
+      end
+      object Label17: TLabel
+        Left = 6
+        Height = 13
+        Top = 56
+        Width = 242
+        Caption = 'The application <unknown> could not be installed!'
+        ParentColor = False
       end
     end
   end

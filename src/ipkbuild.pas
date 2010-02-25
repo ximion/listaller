@@ -308,7 +308,7 @@ sl.Free;
 writeLn('Building package...');
 writeLn('Please wait!');
 writeLn('');
-  if not DirectoryExists('/tmp/listaller/') then SysUtils.CreateDir('/tmp/listaller/');
+  if not DirectoryExists(tmpdir) then SysUtils.CreateDir(tmpdir);
   if not DirectoryExists(WDir) then SysUtils.CreateDir(WDir) else begin
   DeleteDirectory(WDir,true);SysUtils.CreateDir(WDir);
   end;
