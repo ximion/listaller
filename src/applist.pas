@@ -113,7 +113,7 @@ or ((ItemRect(btn.Tag).Top)<(Top+4)) then
   bmp := TBitmap.Create;
   try
       //bmp.Transparent := True;
-      if (Index>0) and (Index<Items.Count) then
+      if (Index>=0) and (Index<Items.Count) then
        bmp.Assign(aList[Index].Icon);
 
        {$IFDEF LCLQt}

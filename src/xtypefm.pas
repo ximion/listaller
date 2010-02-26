@@ -63,8 +63,6 @@ type
 procedure PkgInitProgressChange(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 
 var
-  //** Form to choose runmode
-  IMdFrm: TIMdFrm;
   //** True if superuser mode is enabled
   Superuser: Boolean=false;
 
