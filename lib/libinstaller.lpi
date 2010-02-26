@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1402"/>
+      <CurrentBuildNr Value="1408"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -43,8 +43,8 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="23" Y="522"/>
-        <TopLine Value="511"/>
+        <CursorPos X="29" Y="1013"/>
+        <TopLine Value="1013"/>
         <UsageCount Value="33"/>
       </Unit1>
       <Unit2>
@@ -414,8 +414,8 @@
       <Unit55>
         <Filename Value="../../../../../../usr/lib/lazarus/0.9.28.2/lcl/fileutil.pas"/>
         <UnitName Value="FileUtil"/>
-        <CursorPos X="10" Y="70"/>
-        <TopLine Value="49"/>
+        <CursorPos X="10" Y="71"/>
+        <TopLine Value="50"/>
         <UsageCount Value="10"/>
       </Unit55>
     </Units>
@@ -434,6 +434,7 @@
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
       <OtherUnitFiles Value="../src/;../packager/;../packager/compression/;../synapse/;../bindings/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
+      <UnitOutputDirectory Value="../build"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <Linking>

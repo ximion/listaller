@@ -945,7 +945,7 @@ tmp.Free;
 pkg.Free;
 
  p:=TProcess.create(nil);
- p.CommandLine:='chmod 755 '''+tmpdir++cont.Binary+'''';
+ p.CommandLine:='chmod 755 '''+tmpdir+cont.Binary+'''';
  p.Options:=[poUsePipes,poWaitonexit];
  p.Execute;
  p.Options:=[poUsePipes,poWaitonexit,poNewConsole];
@@ -1011,7 +1011,11 @@ begin
  for i:=0 to ndirs.Count-1 do
  begin
   msg('Removing '+ndirs[i]);
-  DeleteDirectory(ndirs[i],true);
+  try
+   DeleteDirectory(ndirs[i],false);
+  except
+   p_error('Caould not remove directory. Please report this bug.');
+  end;
  end;
  ndirs.Free;
  appfiles.Free;
@@ -1019,6 +1023,7 @@ end;
 
 procedure Abort_FreeAll();
 begin
+try
  if Assigned(fi) then fi.Free;
  if Assigned(ndirs) then ndirs.Free;
  if Assigned(s) then s.Free;
@@ -1029,6 +1034,9 @@ begin
  if Assigned(p) then p.Free;
  if Assigned(proc) then proc.Free;
  if Assigned(pkit) then pkit.Free;
+except
+ p_error('Error while cleaning up.');
+end;
 end;
 
 begin

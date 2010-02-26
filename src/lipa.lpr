@@ -25,8 +25,8 @@ uses
   Interfaces, //We use NoGUI widgetset
   Classes, SysUtils, CustApp,
   Process, liBasic, installer,
-  TRStrings, IniFiles, HTTPSend,
-  Distri, LiTranslator, ipkdef,
+  TRStrings, IniFiles, Distri,
+  LiTranslator, ipkdef,
   appman, liTypes, Forms, liCommon;
 
 type
@@ -57,7 +57,7 @@ var
 procedure OnSetupStatusChange(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 begin
  case change of
-  scMessage    : writeLn(' '+data.msg);
+  scMessage    : if not verbose then writeLn(' '+data.msg);
   scStepMessage: if not Application.HasOption('verbose') then
                   writeLn(' '+rsState+': '+data.msg);
   scMnProgress : with Application do
@@ -80,19 +80,44 @@ end;
 
 function OnSetupUserRequest(mtype: TRqType;msg: PChar;data: Pointer): TRqResult;cdecl;
 var s: String;
+
+function AskQuestion: TRqResult;
 begin
-  writeLn(rsQuestion);
-  writeLn(' '+msg);
+ writeLn(' '+msg);
   writeLn('');
   write(rsYesNo1);
   readln(s);
   s:=LowerCase(s);
   if (s=LowerCase(rsYes))or(s=LowerCase(rsY)) then
+   Result:=ryYes
   else
   begin
+  Result:=rsNo;
   writeLn(rsInstAborted);
   halt(6);
   end;
+end;
+
+begin
+case mtype of
+rqQuestion: begin
+  writeLn(rsQuestion);
+  Result:=AskQuestion;
+  end;
+rqError: begin
+  writeLn(' '+msg);
+  readln;
+  halt(5);
+  end;
+rqWarning: begin
+  writeLn(rsWarning);
+  Result:=AskQuestion;
+end;
+rqInfo: begin
+  writeLn(msg);
+  readln;
+end;
+end;
 end;
 
 ////////////////////////////////////////////////////////////////////////////////

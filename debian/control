@@ -27,7 +27,7 @@ Description: Listaller core files
 
 Package: listaller-tools
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, libinstaller0.4 (= ${binary:Version}), listaller-core
+Depends: ${misc:Depends}, ${shlibs:Depends}, libinstaller0.4.0 (= ${binary:Version}), listaller-core
 Description: Listaller package tools
  This package contains everything you need to build own IPK packages.
  It also contains the needed tools to build RPM and DEB packages from
