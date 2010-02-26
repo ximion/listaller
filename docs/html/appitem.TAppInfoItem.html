@@ -3,68 +3,68 @@
 <head>
 <meta name="GENERATOR" content="PasDoc 0.11.0">
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-<title>limanageapp: Class TAppManager</title>
+<title>appitem: Class TAppInfoItem</title>
 <link rel="StyleSheet" type="text/css" href="pasdoc.css">
 </head>
 <body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#FF0000">
-<a name="TAppManager"></a><h1 class="cio">Class TAppManager</h1>
+<a name="TAppInfoItem"></a><h1 class="cio">Class TAppInfoItem</h1>
 <table class="sections wide_list">
 <tr>
 <td><a class="section"  href="#%40Description">Description</a></td><td><a class="section"  href="#%40Hierarchy">Hierarchy</a></td><td>Fields</td><td><a class="section"  href="#%40Methods">Methods</a></td><td><a class="section"  href="#%40Properties">Properties</a></td></tr></table>
 <a name="%40Description"></a><h2 class="unit">Unit</h2>
 <p class="unitlink">
-<a   href="limanageapp.html">limanageapp</a></p>
+<a   href="appitem.html">appitem</a></p>
 <h2 class="declaration">Declaration</h2>
 <p class="declaration">
-<code>type TAppManager = class(TObject)</code></p>
+<code>type TAppInfoItem = class(TObject)</code></p>
 <h2 class="description">Description</h2>
 <a name="%40Hierarchy"></a><h2 class="hierarchy">Hierarchy</h2>
 <ul class="hierarchy"><li class="ancestor">TObject</li>
-<li class="thisitem">TAppManager</li></ul><h2 class="overview">Overview</h2>
+<li class="thisitem">TAppInfoItem</li></ul><h2 class="overview">Overview</h2>
 <a name="%40Methods"></a><h3 class="summary">Methods</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a   href="limanageapp.TAppManager.html#Create">Create</a></b>;</code></td>
+<td class="itemcode"><code>constructor <b><a   href="appitem.TAppInfoItem.html#Create">Create</a></b>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>destructor <b><a   href="limanageapp.TAppManager.html#Destroy">Destroy</a></b>; override;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="limanageapp.TAppManager.html#LoadEntries">LoadEntries</a></b>;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="limanageapp.TAppManager.html#UninstallApp">UninstallApp</a></b>(obj: <a   href="litypes.TAppInfo.html">TAppInfo</a>);</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="limanageapp.TAppManager.html#CheckApps">CheckApps</a></b>(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="limanageapp.TAppManager.html#RegOnStatusChange">RegOnStatusChange</a></b>(call: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>;data: Pointer);</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="limanageapp.TAppManager.html#RegOnRequest">RegOnRequest</a></b>(call: <a   href="litypes.html#TRequestCall">TRequestCall</a>;data: Pointer);</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="limanageapp.TAppManager.html#UserRequestRegistered">UserRequestRegistered</a></b>: Boolean;</code></td>
+<td class="itemcode"><code>destructor <b><a   href="appitem.TAppInfoItem.html#Destroy">Destroy</a></b>; override;</code></td>
 </tr>
 </table>
 <a name="%40Properties"></a><h3 class="summary">Properties</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="limanageapp.TAppManager.html#OnApplication">OnApplication</a></b>: <a   href="litypes.html#TAppEvent">TAppEvent</a> read FApp write FApp;</code></td>
+<td class="itemcode"><code>property <b><a   href="appitem.TAppInfoItem.html#Name">Name</a></b>: String read <a   href="editor.html#FName">FName</a> write <a   href="editor.html#FName">FName</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="limanageapp.TAppManager.html#SuperuserMode">SuperuserMode</a></b>: Boolean read SUMode write SUMode;</code></td>
+<td class="itemcode"><code>property <b><a   href="appitem.TAppInfoItem.html#SDesc">SDesc</a></b>: String read FSDesc write FSDesc;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="appitem.TAppInfoItem.html#Author">Author</a></b>: String read FAuthor write FAuthor;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="appitem.TAppInfoItem.html#Group">Group</a></b>: <a   href="litypes.html#TGroupType">TGroupType</a> read FGroup write FGroup;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="appitem.TAppInfoItem.html#Icon">Icon</a></b>: TBitmap read bmp write bmp;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="appitem.TAppInfoItem.html#Version">Version</a></b>: String read FVersion write FVersion;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="appitem.TAppInfoItem.html#UId">UId</a></b>: String read FUId write FUId;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="appitem.TAppInfoItem.html#IconPath">IconPath</a></b>: String read FIconPath write FIconPath;</code></td>
 </tr>
 </table>
 <h2 class="description">Description</h2>
@@ -85,73 +85,11 @@
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="LoadEntries"></a><code>procedure <b>LoadEntries</b>;</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
-Load software list entries</p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="UninstallApp"></a><code>procedure <b>UninstallApp</b>(obj: <a   href="litypes.TAppInfo.html">TAppInfo</a>);</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
-Removes an application</p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="CheckApps"></a><code>function <b>CheckApps</b>(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
-Checks dependencies of all installed apps   </p>
-<h6 class="description_section">Parameters</h6>
-<dl class="parameters">
-<dt>report</dt>
-<dd>Report of the executed actions</dd>
-<dt>fix</dt>
-<dd>True if all found issues should be fixed right now</dd>
-</dl>
-<h6 class="description_section">Returns</h6>
-<p class="return">True if everything is okay, False if dependencies are missing</p></td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="RegOnStatusChange"></a><code>procedure <b>RegOnStatusChange</b>(call: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>;data: Pointer);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="RegOnRequest"></a><code>procedure <b>RegOnRequest</b>(call: <a   href="litypes.html#TRequestCall">TRequestCall</a>;data: Pointer);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="UserRequestRegistered"></a><code>function <b>UserRequestRegistered</b>: Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
 <h3 class="detail">Properties</h3>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="OnApplication"></a><code>property <b>OnApplication</b>: <a   href="litypes.html#TAppEvent">TAppEvent</a> read FApp write FApp;</code></td>
+<td class="itemcode"><a name="Name"></a><code>property <b>Name</b>: String read <a   href="editor.html#FName">FName</a> write <a   href="editor.html#FName">FName</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -159,11 +97,59 @@ Checks dependencies of all installed apps   </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SuperuserMode"></a><code>property <b>SuperuserMode</b>: Boolean read SUMode write SUMode;</code></td>
+<td class="itemcode"><a name="SDesc"></a><code>property <b>SDesc</b>: String read FSDesc write FSDesc;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-02-26 16:38:07</em>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Author"></a><code>property <b>Author</b>: String read FAuthor write FAuthor;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Group"></a><code>property <b>Group</b>: <a   href="litypes.html#TGroupType">TGroupType</a> read FGroup write FGroup;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Icon"></a><code>property <b>Icon</b>: TBitmap read bmp write bmp;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Version"></a><code>property <b>Version</b>: String read FVersion write FVersion;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="UId"></a><code>property <b>UId</b>: String read FUId write FUId;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="IconPath"></a><code>property <b>IconPath</b>: String read FIconPath write FIconPath;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-02-26 16:38:06</em>
 </span>
 </body></html>

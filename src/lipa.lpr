@@ -57,7 +57,7 @@ var
 procedure OnSetupStatusChange(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 begin
  case change of
-  scMessage    : if not verbose then writeLn(' '+data.msg);
+  scMessage    : if not Application.HasOption('verbose') then writeLn(' '+data.msg);
   scStepMessage: if not Application.HasOption('verbose') then
                   writeLn(' '+rsState+': '+data.msg);
   scMnProgress : with Application do
@@ -89,10 +89,10 @@ begin
   readln(s);
   s:=LowerCase(s);
   if (s=LowerCase(rsYes))or(s=LowerCase(rsY)) then
-   Result:=ryYes
+   Result:=rqsYes
   else
   begin
-  Result:=rsNo;
+  Result:=rqsNo;
   writeLn(rsInstAborted);
   halt(6);
   end;

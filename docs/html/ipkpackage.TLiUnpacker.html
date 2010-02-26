@@ -18,8 +18,6 @@
 <p class="declaration">
 <code>type TLiUnpacker = class(TObject)</code></p>
 <h2 class="description">Description</h2>
-<p>
-Unpacks IPK package structure</p>
 <a name="%40Hierarchy"></a><h2 class="hierarchy">Hierarchy</h2>
 <ul class="hierarchy"><li class="ancestor">TObject</li>
 <li class="thisitem">TLiUnpacker</li></ul><h2 class="overview">Overview</h2>
@@ -27,23 +25,27 @@ Unpacks IPK package structure</p>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a   href="ipkpackage.TLiUnpacker.html#Create">Create</a></b>(aIPKFile: String);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="ipkpackage.TLiUnpacker.html#decoderProgress">decoderProgress</a></b>(const Action: TLZMAProgressAction; const Value: int64);</code></td>
 </tr>
 <tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a   href="ipkpackage.TLiUnpacker.html#Create">Create</a></b>(aIPKFile: String);</code></td>
+</tr>
+<tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>destructor <b><a   href="ipkpackage.TLiUnpacker.html#Destroy">Destroy</a></b>; override;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>procedure <b><a   href="ipkpackage.TLiUnpacker.html#Decompress">Decompress</a></b>;</code></td>
 </tr>
-<tr class="list2">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="ipkpackage.TLiUnpacker.html#CheckSignature">CheckSignature</a></b>: Boolean;</code></td>
-</tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a   href="ipkpackage.TLiUnpacker.html#UnpackFile">UnpackFile</a></b>(fname: String;fdest: String): Boolean;</code></td>
+<td class="itemcode"><code>function <b><a   href="ipkpackage.TLiUnpacker.html#CheckSignature">CheckSignature</a></b>: <a   href="litypes.html#TPkgSigState">TPkgSigState</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a   href="ipkpackage.TLiUnpacker.html#UnpackFile">UnpackFile</a></b>(fname: String): Boolean;</code></td>
 </tr>
 </table>
 <a name="%40Properties"></a><h3 class="summary">Properties</h3>
@@ -52,9 +54,21 @@ Unpacks IPK package structure</p>
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>property <b><a   href="ipkpackage.TLiUnpacker.html#WDir">WDir</a></b>: String read workdir;</code></td>
 </tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="ipkpackage.TLiUnpacker.html#OnProgress">OnProgress</a></b>: <a   href="litypes.html#TProgressEvent">TProgressEvent</a> read FProgress write FProgress;</code></td>
+</tr>
 </table>
 <h2 class="description">Description</h2>
 <h3 class="detail">Methods</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="decoderProgress"></a><code>procedure <b>decoderProgress</b>(const Action: TLZMAProgressAction; const Value: int64);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -84,7 +98,7 @@ Decompress IPK tar file</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="CheckSignature"></a><code>function <b>CheckSignature</b>: Boolean;</code></td>
+<td class="itemcode"><a name="CheckSignature"></a><code>function <b>CheckSignature</b>: <a   href="litypes.html#TPkgSigState">TPkgSigState</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
@@ -94,7 +108,7 @@ Verify signature (if there is any)</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="UnpackFile"></a><code>function <b>UnpackFile</b>(fname: String;fdest: String): Boolean;</code></td>
+<td class="itemcode"><a name="UnpackFile"></a><code>function <b>UnpackFile</b>(fname: String): Boolean;</code></td>
 </tr>
 <tr><td colspan="2">
 <p>
@@ -113,6 +127,16 @@ Unpack file </p>
 Unpacker's working dir</p>
 </td></tr>
 </table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-01-27 18:58:47</em>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="OnProgress"></a><code>property <b>OnProgress</b>: <a   href="litypes.html#TProgressEvent">TProgressEvent</a> read FProgress write FProgress;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+On unpackger decompress progress</p>
+</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-02-26 16:38:07</em>
 </span>
 </body></html>
