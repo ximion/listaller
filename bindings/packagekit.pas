@@ -359,15 +359,24 @@ end;
 
 function TPackageKit.GetRequires(pkg: String): Boolean;
 var filter: guint64;
-    ast: String;
     arg: PPChar;
     error: PGError=nil;
     cancellable: Pointer;
 begin
   done:=false;
+  pkglist.Clear;
+  Result:=INTERN_Resolve(pkg,'installed',false);
+  while not done do ;
+  if not Result then exit;
+  if pkglist.Count<=0 then
+  begin
+   Result:=false;
+   exit;
+  end;
+  pkg:=pkglist[0];
+
   filter:=pk_filter_bitfield_from_text('installed');
-  ast := pkg+';;;';
-  arg := StringToPPchar(ast, 0);
+  arg := StringToPPchar(pkg, 0);
 
   cancellable:=g_cancellable_new;
    pk_client_get_requires_async(pkclient,filter,arg,true,cancellable,@OnPkProgress,self,@OnPkActionFinished,self);

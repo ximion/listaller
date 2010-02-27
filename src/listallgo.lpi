@@ -61,8 +61,8 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="26" Y="259"/>
-        <TopLine Value="252"/>
+        <CursorPos X="115" Y="343"/>
+        <TopLine Value="312"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>

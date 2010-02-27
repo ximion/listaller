@@ -292,7 +292,7 @@ function RequestHandling(mtype: TRqType;msg: PChar;data: Pointer): TRqResult; cd
 begin
 case mtype of
 rqError: begin
-  ShowMessage(msg);
+  Application.MessageBox(msg,'Error',MB_OK+MB_IconError);
   if Assigned(IWizFrm) then
   begin
    with IWizFrm do
@@ -315,7 +315,7 @@ rqError: begin
   end;
 end;
 rqWarning: begin
-  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(Format(rsInstOf,[setup.GetAppName])),MB_YESNO)<>IDYES then
+  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(Format(rsInstOf,[setup.GetAppName])),MB_YESNO+MB_IconWarning)<>IDYES then
   begin
    ShowMessage(rsINClose);
    Result:=rqsNo;
@@ -340,7 +340,7 @@ rqWarning: begin
 end;
 end;
 rqQuestion: begin
-  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(Format(rsInstOf,[setup.GetAppName])),MB_YESNO)<>IDYES then
+  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(Format(rsInstOf,[setup.GetAppName])),MB_YESNO+MB_IconQuestion)<>IDYES then
    Result:=rqsNo else Result:=rqsYes;
 end;
 rqInfo: begin

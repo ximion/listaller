@@ -1762,7 +1762,10 @@ begin
  buscmd.cmdtype:=lbaInstallPack;
  buscmd.pkgname:=PkgPath; //Add path to setup file to DBus request
  CheckAddUSource;
- buscmd.addsrc:=AddUpdateSource;
+ if pkType=ptLinstall then
+  buscmd.addsrc:=AddUpdateSource
+ else buscmd.addsrc:=false;
+
  with TLiDBusAction.Create(buscmd) do
  begin
   OnStatus:=@DBusThreadStatusChange;

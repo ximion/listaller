@@ -11,13 +11,13 @@
       <Title Value="Listaller Manager"/>
       <UseAppBundle Value="False"/>
       <Icon Value="0"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="2097"/>
+      <CurrentBuildNr Value="2099"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -42,7 +42,7 @@
         <MinVersion Major="1" Valid="True"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="125">
+    <Units Count="127">
       <Unit0>
         <Filename Value="listallmgr.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -57,8 +57,8 @@
         <ComponentName Value="MnFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="71" Y="25"/>
-        <TopLine Value="1"/>
+        <CursorPos X="4" Y="350"/>
+        <TopLine Value="322"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="191"/>
         <Loaded Value="True"/>
@@ -286,8 +286,8 @@
         <ComponentName Value="RMForm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uninstall"/>
-        <CursorPos X="16" Y="149"/>
-        <TopLine Value="133"/>
+        <CursorPos X="16" Y="152"/>
+        <TopLine Value="121"/>
         <UsageCount Value="176"/>
       </Unit33>
       <Unit34>
@@ -736,8 +736,8 @@
       <Unit98>
         <Filename Value="litypes.pas"/>
         <UnitName Value="litypes"/>
-        <CursorPos X="3" Y="83"/>
-        <TopLine Value="61"/>
+        <CursorPos X="2" Y="45"/>
+        <TopLine Value="24"/>
         <UsageCount Value="12"/>
       </Unit98>
       <Unit99>
@@ -825,8 +825,8 @@
       <Unit111>
         <Filename Value="../../../../../../usr/lib/lazarus/0.9.28.2/lcl/lcltype.pp"/>
         <UnitName Value="LCLType"/>
-        <CursorPos X="20" Y="55"/>
-        <TopLine Value="34"/>
+        <CursorPos X="3" Y="657"/>
+        <TopLine Value="636"/>
         <UsageCount Value="10"/>
       </Unit111>
       <Unit112>
@@ -834,9 +834,7 @@
         <UnitName Value="applist"/>
         <CursorPos X="18" Y="116"/>
         <TopLine Value="97"/>
-        <EditorIndex Value="1"/>
         <UsageCount Value="17"/>
-        <Loaded Value="True"/>
       </Unit112>
       <Unit113>
         <Filename Value="appitem.pas"/>
@@ -911,8 +909,8 @@
       <Unit123>
         <Filename Value="../../../../../../usr/lib/lazarus/0.9.28.2/lcl/forms.pp"/>
         <UnitName Value="Forms"/>
-        <CursorPos X="3" Y="45"/>
-        <TopLine Value="24"/>
+        <CursorPos X="17" Y="1225"/>
+        <TopLine Value="1203"/>
         <UsageCount Value="10"/>
       </Unit123>
       <Unit124>
@@ -922,124 +920,125 @@
         <TopLine Value="1484"/>
         <UsageCount Value="10"/>
       </Unit124>
+      <Unit125>
+        <Filename Value="../../../../../../usr/lib/lazarus/0.9.28.2/lcl/dialogs.pp"/>
+        <UnitName Value="Dialogs"/>
+        <CursorPos X="11" Y="510"/>
+        <TopLine Value="525"/>
+        <UsageCount Value="10"/>
+      </Unit125>
+      <Unit126>
+        <Filename Value="../../../../../../usr/lib/lazarus/0.9.28.2/lcl/include/winapih.inc"/>
+        <CursorPos X="10" Y="175"/>
+        <TopLine Value="154"/>
+        <UsageCount Value="10"/>
+      </Unit126>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="26" HistoryIndex="25">
       <Position1>
         <Filename Value="manager.pas"/>
-        <Caret Line="938" Column="31" TopLine="923"/>
+        <Caret Line="353" Column="32" TopLine="337"/>
       </Position1>
       <Position2>
         <Filename Value="manager.pas"/>
-        <Caret Line="937" Column="31" TopLine="923"/>
+        <Caret Line="352" Column="32" TopLine="337"/>
       </Position2>
       <Position3>
         <Filename Value="manager.pas"/>
-        <Caret Line="149" Column="28" TopLine="119"/>
+        <Caret Line="358" Column="32" TopLine="337"/>
       </Position3>
       <Position4>
         <Filename Value="manager.pas"/>
-        <Caret Line="765" Column="22" TopLine="745"/>
+        <Caret Line="357" Column="32" TopLine="337"/>
       </Position4>
       <Position5>
         <Filename Value="manager.pas"/>
-        <Caret Line="25" Column="71" TopLine="1"/>
+        <Caret Line="356" Column="32" TopLine="337"/>
       </Position5>
       <Position6>
         <Filename Value="manager.pas"/>
-        <Caret Line="358" Column="48" TopLine="337"/>
+        <Caret Line="355" Column="32" TopLine="337"/>
       </Position6>
       <Position7>
         <Filename Value="manager.pas"/>
-        <Caret Line="358" Column="32" TopLine="337"/>
+        <Caret Line="354" Column="32" TopLine="337"/>
       </Position7>
       <Position8>
         <Filename Value="manager.pas"/>
-        <Caret Line="357" Column="32" TopLine="337"/>
+        <Caret Line="353" Column="32" TopLine="337"/>
       </Position8>
       <Position9>
         <Filename Value="manager.pas"/>
-        <Caret Line="356" Column="32" TopLine="337"/>
+        <Caret Line="352" Column="32" TopLine="337"/>
       </Position9>
       <Position10>
         <Filename Value="manager.pas"/>
-        <Caret Line="355" Column="32" TopLine="337"/>
+        <Caret Line="358" Column="32" TopLine="337"/>
       </Position10>
       <Position11>
         <Filename Value="manager.pas"/>
-        <Caret Line="354" Column="32" TopLine="337"/>
+        <Caret Line="357" Column="32" TopLine="337"/>
       </Position11>
       <Position12>
         <Filename Value="manager.pas"/>
-        <Caret Line="353" Column="32" TopLine="337"/>
+        <Caret Line="356" Column="32" TopLine="337"/>
       </Position12>
       <Position13>
         <Filename Value="manager.pas"/>
-        <Caret Line="352" Column="32" TopLine="337"/>
+        <Caret Line="355" Column="32" TopLine="337"/>
       </Position13>
       <Position14>
         <Filename Value="manager.pas"/>
-        <Caret Line="358" Column="32" TopLine="337"/>
+        <Caret Line="354" Column="32" TopLine="337"/>
       </Position14>
       <Position15>
         <Filename Value="manager.pas"/>
-        <Caret Line="357" Column="32" TopLine="337"/>
+        <Caret Line="353" Column="32" TopLine="337"/>
       </Position15>
       <Position16>
         <Filename Value="manager.pas"/>
-        <Caret Line="356" Column="32" TopLine="337"/>
+        <Caret Line="352" Column="32" TopLine="337"/>
       </Position16>
       <Position17>
         <Filename Value="manager.pas"/>
-        <Caret Line="355" Column="32" TopLine="337"/>
+        <Caret Line="25" Column="71" TopLine="1"/>
       </Position17>
       <Position18>
         <Filename Value="manager.pas"/>
-        <Caret Line="354" Column="32" TopLine="337"/>
+        <Caret Line="26" Column="8" TopLine="1"/>
       </Position18>
       <Position19>
         <Filename Value="manager.pas"/>
-        <Caret Line="353" Column="32" TopLine="337"/>
+        <Caret Line="211" Column="34" TopLine="193"/>
       </Position19>
       <Position20>
         <Filename Value="manager.pas"/>
-        <Caret Line="352" Column="32" TopLine="337"/>
+        <Caret Line="214" Column="17" TopLine="193"/>
       </Position20>
       <Position21>
         <Filename Value="manager.pas"/>
-        <Caret Line="358" Column="32" TopLine="337"/>
+        <Caret Line="215" Column="21" TopLine="193"/>
       </Position21>
       <Position22>
         <Filename Value="manager.pas"/>
-        <Caret Line="357" Column="32" TopLine="337"/>
+        <Caret Line="215" Column="19" TopLine="193"/>
       </Position22>
       <Position23>
         <Filename Value="manager.pas"/>
-        <Caret Line="356" Column="32" TopLine="337"/>
+        <Caret Line="216" Column="67" TopLine="193"/>
       </Position23>
       <Position24>
         <Filename Value="manager.pas"/>
-        <Caret Line="355" Column="32" TopLine="337"/>
+        <Caret Line="220" Column="26" TopLine="193"/>
       </Position24>
       <Position25>
         <Filename Value="manager.pas"/>
-        <Caret Line="354" Column="32" TopLine="337"/>
+        <Caret Line="26" Column="8" TopLine="12"/>
       </Position25>
       <Position26>
         <Filename Value="manager.pas"/>
-        <Caret Line="353" Column="32" TopLine="337"/>
+        <Caret Line="149" Column="28" TopLine="128"/>
       </Position26>
-      <Position27>
-        <Filename Value="manager.pas"/>
-        <Caret Line="352" Column="32" TopLine="337"/>
-      </Position27>
-      <Position28>
-        <Filename Value="manager.pas"/>
-        <Caret Line="25" Column="71" TopLine="1"/>
-      </Position28>
-      <Position29>
-        <Filename Value="applist.pas"/>
-        <Caret Line="146" Column="40" TopLine="109"/>
-      </Position29>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

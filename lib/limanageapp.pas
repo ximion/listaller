@@ -50,6 +50,7 @@ type
   procedure PkitProgress(pos: Integer;xd: Pointer);
   //** Catch status messages from DBus action
   procedure DBusStatusChange(ty: LiProcStatus;data: TLiProcData);
+  procedure InternalRemoveApp(obj: TAppInfo);
  public
   constructor Create;
   destructor Destroy;override;
@@ -571,30 +572,22 @@ begin
   end;
 end;
 
-procedure TAppManager.UninstallApp(obj: TAppInfo);
-var f,g: String; t:TProcess;tmp: TStringList;pkit: TPackageKit;i: Integer;
-    name,id: String;buscmd: ListallerBusCommand;
+//Can remove Autopackage.org or native package.
+// Only for interal use, called by UninstallApp.
+// This function exists to speed up the removal process.
+procedure TAppManager.InternalRemoveApp(obj: TAppInfo);
+var t:TProcess;
+    pkit: TPackageKit;
+    name,id: String;
 begin
-
 setpos(0);
-if (SUMode)and(not IsRoot) then
-begin
- //Create worker thread for this action
- buscmd.cmdtype:=lbaUninstallApp;
- buscmd.appinfo:=obj;
- with TLiDBusAction.Create(buscmd) do
- begin
-   OnStatus:=@DBusStatusChange;
-   ExecuteAction;
-   Free;
- end;
- exit;
-end;
 
 //Needed
 name:=obj.Name;
 id:=obj.UId;
 
+if copy(id,1,4)<>'pkg:' then
+begin
 msg('Reading application information...');
 
 if not FileExists(obj.UId) then
@@ -624,59 +617,16 @@ begin //Autopackage
  end;
 end;
 
-if (id[1]='/')
-then
-begin
-
-// /!\
-///////////////////////////////////////////////////////
-
-ShowPKMon();
-
-msg('Connecting to PackageKit... (run "pkmon" to see the actions)');
-msg('Detecting package...');
-
-pkit:=TPackageKit.Create;
-pkit.OnProgress:=@PkitProgress;
-
-tmp:=TStringList.Create;
-pkit.RsList:=tmp;
-pkit.PkgNameFromFile(id);
-
-setpos(20);
-
-if tmp.Count<=0 then
-begin UninstallMojo(id);tmp.Free;pkit.Free;exit;end;
-if pkit.PkFinishCode=1 then
-begin request(rsPKitProbPkMon,rqError);pkit.Free;tmp.Free;exit;end;
-f:=tmp[0];
-
-msg('Looking for reverse-dependencies...');
-
-tmp.Clear;
-
-pkit.GetRequires(f);
-while not pkit.PkFinished do setpos(25);
-g:='';
-for i:=0 to tmp.Count-1 do
-g:=g+#10+tmp[i];
-tmp.Free;
-
-// Ehm... Dont't know what the function of this code was - needs testing!
-//g:=copy(g,pos(f,g)+length(f),length(g));
-
-msg('Package detected: '+f);
-if (StringReplace(g,' ','',[rfReplaceAll])='')or
-(request(StringReplace(StringReplace(StringReplace(rsRMPkg,'%p',f,[rfReplaceAll]),'%a',obj.Name,[rfReplaceAll]),'%pl',PAnsiChar(g),[rfReplaceAll]),
-        rqWarning)=rqsYes)
-then
+end else
 begin
 setpos(50);
+pkit:=TPackageKit.Create;
+pkit.OnProgress:=@PkitProgress;
+name:=copy(id,5,length(id));
+msg('Uninstalling '+name+' ...');
+pkit.RemovePkg(name);
 
-msg('Uninstalling '+f+' ...');
-pkit.RemovePkg(f);
-
-if pkit.PkFinishCode=1 then
+if pkit.PkFinishCode>1 then
 begin
  request(rsRmError,rqError);
  pkit.Free;
@@ -685,22 +635,105 @@ end;
 
 setpos(100);
 msg('Done.');
+pkit.Free;
 exit;
-end else exit;
+end;
 
-////////////////////////////////////////////////////////////////////////////
-//
+end;
+
+//Initialize appremove: Detect rdepends if package is native, if package is native, add "pkg:" to
+// identification string - if not, pkg has to be Loki/Mojo, so intitiate Mojo-Removal. After rdepends and pkg resolve is done,
+// run uninstall as root if necessary. At the end, RemoveAppInternal() is called (if LOKI-Remove was not run) to uninstall
+// native or autopackage setup.
+procedure TAppManager.UninstallApp(obj: TAppInfo);
+var id: String;
+    i: Integer;
+    pkit: TPackageKit;
+    tmp: TStringList;
+    f,g: String;
+    buscmd: ListallerBusCommand;
+begin
+ id:=obj.UId;
+ if (FileExists(id))
+ and(id[1]='/')
+ and(copy(id,1,4)<>'pkg:') then
+ begin
+  ShowPKMon();
+
+  msg('Connecting to PackageKit... (run "pkmon" to see the actions)');
+  msg('Detecting package...');
+
+  pkit:=TPackageKit.Create;
+  pkit.OnProgress:=@PkitProgress;
+
+  tmp:=TStringList.Create;
+  pkit.RsList:=tmp;
+  pkit.PkgNameFromFile(id);
+
+  setpos(20);
+
+   if pkit.PkFinishCode>1 then
+   begin request(rsPKitProbPkMon,rqError);pkit.Free;tmp.Free;exit;end;
+
+   msg('Package detected: '+f);
+  if (tmp.Count>0) then
+  begin
+   f:=tmp[0];
+
+   msg('Looking for reverse-dependencies...');
+
+   tmp.Clear;
+   pkit.GetRequires(f);
+   while not pkit.PkFinished do setpos(25);
+   g:='';
+
+   for i:=0 to tmp.Count-1 do
+   begin
+    p_debug(tmp[i]);
+    g:=g+#10+tmp[i];
+   end;
+   tmp.Free;
+
+   pkit.Free;
+   if (StringReplace(g,' ','',[rfReplaceAll])='')or
+   (request(StringReplace(StringReplace(StringReplace(rsRMPkg,'%p',f,[rfReplaceAll]),'%a',obj.Name,[rfReplaceAll]),'%pl',PChar(g),[rfReplaceAll]),
+        rqWarning)=rqsYes)
+   then
+    obj.UId:=PChar('pkg:'+f)
+   else
+    exit;
   end;
+end;
+
+
+ if (SUMode)and(not IsRoot) then
+ begin
+  //Create worker thread for this action
+  buscmd.cmdtype:=lbaUninstallApp;
+  buscmd.appinfo:=obj;
+  with TLiDBusAction.Create(buscmd) do
+  begin
+    OnStatus:=@DBusStatusChange;
+    ExecuteAction;
+    Free;
+  end;
+  exit;
+ end;
+
+ if (id[1]='/') then
+  UninstallMojo(id)
+ else
+  InternalRemoveApp(obj);
 end;
 
 function TAppManager.CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
 var dsApp: TSQLite3Dataset;deps: TStringList;i: Integer;pkit: TPackageKit;s: String;
 begin
-writeLn('Checking dependencies of all registered applications...');
+msg('Checking dependencies of all registered applications...');
 if forceroot then
-writeLn('You are scanning only the ROOT installed applications.')
+msg('You are scanning only the ROOT installed applications.')
 else
-writeLn('You are scanning your local installed applications.');
+msg('You are scanning your local installed applications.');
 
 if not forceroot then
   s:=SyblToPath('$INST')+'/app-reg/'

@@ -210,8 +210,17 @@ end;
 
 function OnUserRequest(mtype: TRqType;msg: PChar;data: Pointer): TRqResult;cdecl;
 begin
- ShowMessage(msg);
- Result:=rqsOK;
+Result:=rqsOK;
+case mtype of
+rqError: begin Application.MessageBox(msg,'Error',MB_OK+MB_IconError);
+               RMForm.RmProcStatus:=prFailed;
+         end;
+rqWarning:  if Application.MessageBox(msg,'Warning',MB_YesNo+MB_IconWarning)= idYes then
+             Result:=rqsYes else Result:=rqsNo;
+rqQuestion: if Application.MessageBox(msg,'Question',MB_YesNo+MB_IconQuestion)= idYes then
+             Result:=rqsYes else Result:=rqsNo;
+rqInfo: ShowMessage(msg);
+end;
 end;
 
 { TMnFrm }

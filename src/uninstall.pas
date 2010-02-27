@@ -143,10 +143,13 @@ if Application.MessageBox(PChar(StringReplace(rsRealUninstQ,'%a',MnFrm.uApp.Name
 begin
  li_mgr_register_status_call(@MnFrm.amgr,@OnRmStatus,nil);
  astatus:=prNone;
+ BitBtn1.Enabled:=false;
   li_mgr_remove_app(@MnFrm.amgr,MnFrm.uApp);
  while astatus=prNone do Application.ProcessMessages;
  li_mgr_register_status_call(@MnFrm.amgr,@manager.OnMgrStatus,nil);
- MnFrm.ReloadAppList(true);
+ BitBtn1.Enabled:=true;
+  //!!!
+  //MnFrm.ReloadAppList(true);
 end else close;
 
 end else
