@@ -141,9 +141,11 @@ Label1.Caption:=StringReplace(rsRMAppC,'%a',MnFrm.uApp.Name,[rfReplaceAll]);
 
 if Application.MessageBox(PChar(StringReplace(rsRealUninstQ,'%a',MnFrm.uApp.Name,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then
 begin
+  UProgress.Position:=0;
  li_mgr_register_status_call(@MnFrm.amgr,@OnRmStatus,nil);
  astatus:=prNone;
  BitBtn1.Enabled:=false;
+ Application.ProcessMessages;
   li_mgr_remove_app(@MnFrm.amgr,MnFrm.uApp);
  while astatus=prNone do Application.ProcessMessages;
  li_mgr_register_status_call(@MnFrm.amgr,@manager.OnMgrStatus,nil);

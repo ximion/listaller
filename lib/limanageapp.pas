@@ -592,7 +592,7 @@ msg('Reading application information...');
 
 if not FileExists(obj.UId) then
 begin
-if DirectoryExists(RegDir+LowerCase(name+'-'+id)) then
+if DirectoryExistsUTF8(RegDir+LowerCase(name+'-'+id)) then
 begin
  //Remove IPK app
  UninstallIPKApp(name,id,FStatus,false);
@@ -601,7 +601,8 @@ msg('Finished!');
 exit;
 end else
 begin
- request('The registration of this package is broken!',rqError);exit;
+ request('The registration of this package is broken!',rqError);
+ exit;
 end;
 
 end else
@@ -614,6 +615,10 @@ begin //Autopackage
  t.Execute;
  t.Free;
  exit;
+ end else
+ begin
+  request('Unable to remove this application!',rqError);
+  exit;
  end;
 end;
 

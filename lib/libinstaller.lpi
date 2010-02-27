@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1435"/>
+      <CurrentBuildNr Value="1443"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -33,8 +33,8 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="20" Y="23"/>
-        <TopLine Value="1"/>
+        <CursorPos X="1" Y="450"/>
+        <TopLine Value="406"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="76"/>
         <Loaded Value="True"/>
@@ -156,8 +156,8 @@
         <Filename Value="limanageapp.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="limanageapp"/>
-        <CursorPos X="16" Y="625"/>
-        <TopLine Value="620"/>
+        <CursorPos X="44" Y="910"/>
+        <TopLine Value="904"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="35"/>
         <Loaded Value="True"/>
@@ -295,8 +295,8 @@
         <Filename Value="lidbusproc.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lidbusproc"/>
-        <CursorPos X="43" Y="142"/>
-        <TopLine Value="217"/>
+        <CursorPos X="28" Y="104"/>
+        <TopLine Value="195"/>
         <UsageCount Value="42"/>
       </Unit37>
       <Unit38>
@@ -362,8 +362,8 @@
       <Unit47>
         <Filename Value="../src/trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="1" Y="102"/>
-        <TopLine Value="80"/>
+        <CursorPos X="20" Y="7"/>
+        <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit47>
       <Unit48>
@@ -421,87 +421,123 @@
         <UsageCount Value="10"/>
       </Unit55>
     </Units>
-    <JumpHistory Count="20" HistoryIndex="19">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="25" TopLine="13"/>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="53" Column="46" TopLine="23"/>
       </Position1>
       <Position2>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="23" Column="20" TopLine="1"/>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="624" Column="25" TopLine="602"/>
       </Position2>
       <Position3>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="72" Column="27" TopLine="49"/>
+        <Caret Line="623" Column="28" TopLine="602"/>
       </Position3>
       <Position4>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="677" Column="11" TopLine="656"/>
+        <Caret Line="638" Column="4" TopLine="605"/>
       </Position4>
       <Position5>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="658" Column="14" TopLine="632"/>
+        <Caret Line="649" Column="14" TopLine="629"/>
       </Position5>
       <Position6>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="53" Column="46" TopLine="23"/>
+        <Caret Line="668" Column="10" TopLine="647"/>
       </Position6>
       <Position7>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="624" Column="25" TopLine="602"/>
+        <Caret Line="644" Column="16" TopLine="623"/>
       </Position7>
       <Position8>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="623" Column="28" TopLine="602"/>
+        <Caret Line="668" Column="14" TopLine="647"/>
       </Position8>
       <Position9>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="638" Column="4" TopLine="605"/>
+        <Caret Line="644" Column="16" TopLine="637"/>
       </Position9>
       <Position10>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="649" Column="14" TopLine="629"/>
+        <Caret Line="704" Column="23" TopLine="684"/>
       </Position10>
       <Position11>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="668" Column="10" TopLine="647"/>
+        <Caret Line="577" Column="41" TopLine="557"/>
       </Position11>
       <Position12>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="644" Column="16" TopLine="623"/>
+        <Caret Line="724" Column="19" TopLine="704"/>
       </Position12>
       <Position13>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="668" Column="14" TopLine="647"/>
+        <Caret Line="687" Column="17" TopLine="680"/>
       </Position13>
       <Position14>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="644" Column="16" TopLine="637"/>
+        <Caret Line="716" Column="14" TopLine="692"/>
       </Position14>
       <Position15>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="704" Column="23" TopLine="684"/>
+        <Caret Line="626" Column="31" TopLine="596"/>
       </Position15>
       <Position16>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="577" Column="41" TopLine="557"/>
+        <Caret Line="717" Column="15" TopLine="680"/>
       </Position16>
       <Position17>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="724" Column="19" TopLine="704"/>
+        <Caret Line="598" Column="14" TopLine="584"/>
       </Position17>
       <Position18>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="687" Column="17" TopLine="680"/>
+        <Caret Line="79" Column="27" TopLine="58"/>
       </Position18>
       <Position19>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="716" Column="14" TopLine="692"/>
+        <Caret Line="598" Column="17" TopLine="577"/>
       </Position19>
       <Position20>
         <Filename Value="limanageapp.pas"/>
-        <Caret Line="626" Column="31" TopLine="596"/>
+        <Caret Line="15" Column="35" TopLine="1"/>
       </Position20>
+      <Position21>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="79" Column="27" TopLine="58"/>
+      </Position21>
+      <Position22>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="24" Column="55" TopLine="1"/>
+      </Position22>
+      <Position23>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="595" Column="39" TopLine="577"/>
+      </Position23>
+      <Position24>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="23" Column="20" TopLine="1"/>
+      </Position24>
+      <Position25>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="598" Column="12" TopLine="574"/>
+      </Position25>
+      <Position26>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="79" Column="27" TopLine="58"/>
+      </Position26>
+      <Position27>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="598" Column="17" TopLine="577"/>
+      </Position27>
+      <Position28>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="918" Column="16" TopLine="904"/>
+      </Position28>
+      <Position29>
+        <Filename Value="limanageapp.pas"/>
+        <Caret Line="919" Column="14" TopLine="904"/>
+      </Position29>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

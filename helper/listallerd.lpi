@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="406"/>
+      <CurrentBuildNr Value="413"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -37,7 +37,7 @@
         <Filename Value="listallerd.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerd"/>
-        <CursorPos X="62" Y="22"/>
+        <CursorPos X="60" Y="22"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="42"/>
@@ -68,8 +68,8 @@
         <Filename Value="djobs.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="djobs"/>
-        <CursorPos X="46" Y="24"/>
-        <TopLine Value="25"/>
+        <CursorPos X="3" Y="537"/>
+        <TopLine Value="514"/>
         <UsageCount Value="42"/>
       </Unit4>
       <Unit5>
@@ -297,7 +297,7 @@
       </Position8>
       <Position9>
         <Filename Value="listallerd.lpr"/>
-        <Caret Line="22" Column="62" TopLine="1"/>
+        <Caret Line="22" Column="60" TopLine="1"/>
       </Position9>
     </JumpHistory>
   </ProjectOptions>

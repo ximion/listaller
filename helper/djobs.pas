@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, dbus, polkit, glib2, gExt, Installer, AppMan,
-  liBasic, liTypes, SimDBus;
+  liBasic, liTypes, SimDBus, Contnrs;
 
 type
  TAccessType = (AC_UNKNOWN,AC_AUTHORIZED,AC_NOT_AUTHORIZED);
