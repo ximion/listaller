@@ -108,7 +108,7 @@ begin
  pkrandom:='-'+RandomID+RandomID+RandomID;
  finalized:=false;
   OutFileName:=aIPKFile;
- basename:=tmpdir+'/listaller/'+ExtractFileName(OutFileName)+pkrandom+'.tar';
+ basename:=tmpdir+ExtractFileName(OutFileName)+pkrandom+'.tar';
  mntar:=TTarArchive.Create;
  mntar.TarArchive:=basename;
  algorithm:=2;
@@ -167,7 +167,7 @@ begin
  sign.Free;
 
  pkrandom:='-'+RandomID+RandomID+RandomID;
- basename:=tmpdir+'/listaller/'+ExtractFileName(OutFileName)+pkrandom+'.tar';
+ basename:=tmpdir+ExtractFileName(OutFileName)+pkrandom+'.tar';
  mntar:=TTarArchive.Create;
  mntar.TarArchive:=basename;
 
@@ -243,7 +243,7 @@ constructor TLiUnpacker.Create(aIPKFile: String);
 begin
  inherited Create;
  ipkfile:=aIPKFile;
- workdir:=tmpdir+'/listaller/'+ExtractFileName(ipkfile)+'/';
+ workdir:=tmpdir+ExtractFileName(ipkfile)+'/';
  SysUtils.ForceDirectories(workdir);
  signChecked:=false;
 end;

@@ -101,7 +101,9 @@ begin
     Inc(i);
   end;
 
+  if a<>'' then
   a:=ExpandFileName(a);
+  if b<>'' then
   b:=ExpandFileName(b);
 
   if HasOption('b','build') then
@@ -146,7 +148,7 @@ begin
    begin
    if b<>'' then
    begin
-   if (not FileExists(b))
+   if  (not FileExists(b))
    and (LowerCase(ExtractFileExt(b))='.ipk')
    and (DirectoryExists(ExtractFilePath(b))) then
    begin
@@ -161,12 +163,7 @@ begin
    end;
    end else
    begin
-   if not FileExists(ChangeFileExt(a,'.ipk')) then
-   BuildPackage(a,ChangeFileExt(a,'.ipk'),x)else
-   begin
-   writeLn('The package "'+ChangeFileExt(a,'.ipk')+'" already exists!');
-   halt(10);
-   end;
+    BuildPackage(a,'',x);
    end;
    end;
    halt;

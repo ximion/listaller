@@ -926,12 +926,13 @@ var pkg: TLiUnpacker;
     p: TProcess;
     tmp: TStringList;
     i: Integer;
+    WDir: String;
 begin
 
 Result:=true;
 try
 pkg:=TLiUnpacker.Create(PkgPath);
-cont:=TIPKControl.Create(pkg.WDir+PkgName+'/arcinfo.pin'); //Read IPK configuration
+cont:=TIPKControl.Create(pkg.WDir+'/arcinfo.pin'); //Read IPK configuration
 cont.LangCode:=GetLangID; //Set language code, so we get localized entries
 
 pkg.UnpackFile(cont.Binary);
@@ -942,10 +943,12 @@ for i:=0 to tmp.Count-1 do
 pkg.UnpackFile(tmp[i]);
 
 tmp.Free;
+WDir:=pkg.WDir;
 pkg.Free;
 
- p:=TProcess.create(nil);
- p.CommandLine:='chmod 755 '''+tmpdir+cont.Binary+'''';
+ p:=TProcess.Create(nil);
+
+ p.CommandLine:='chmod 755 '''+WDir+cont.Binary+'''';
  p.Options:=[poUsePipes,poWaitonexit];
  p.Execute;
  p.Options:=[poUsePipes,poWaitonexit,poNewConsole];
@@ -953,7 +956,7 @@ pkg.Free;
  if FileExists('/usr/bin/package') then
  p.Options:=[poUsePipes,poWaitonexit];
 
- p.CommandLine:=tmpdir+cont.Binary;
+ p.CommandLine:=WDir+cont.Binary;
  p.Execute;
  p.Free;
  end else
@@ -961,12 +964,12 @@ pkg.Free;
  if cont.InTerminal then
  p.Options:=[poUsePipes, poWaitOnExit, poNewConsole]
  else p.Options:=[poUsePipes, poWaitOnExit];
- p.CommandLine:=tmpdir+cont.Binary;
+ p.CommandLine:=WDir+cont.Binary;
  p.Execute;
  p.Free;
  end;
 
-DeleteFile(tmpdir+cont.Binary);
+DeleteFile(WDir+cont.Binary);
 except
  Result:=false;
 end;

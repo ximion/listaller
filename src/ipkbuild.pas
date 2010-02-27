@@ -305,6 +305,12 @@ end;
   fsec.Add(sl[j]);
 
 sl.Free;
+
+control:=TIPKScript.Create;
+control.LoadFromList(script);
+if (LowerCase(ExtractFileExt(o))<>'.ipk') then
+ o:=ExtractFilePath(fi)+'/'+control.PkName+'.ipk';
+
 writeLn('Building package...');
 writeLn('Please wait!');
 writeLn('');
@@ -413,10 +419,6 @@ end;
  write('..]');
  writeLn('');
  fsec.Free;
-
-
-control:=TIPKScript.Create;
-control.LoadFromList(script);
 
 script.Free; //Was only temporary
 

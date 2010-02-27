@@ -53,7 +53,10 @@ echo
 libdirs=". \
 	/usr/lib \
 	/usr/local/lib \
-	/lib/"
+	/lib/ \
+	/usr/lib64
+	/usr/local/lib64
+	/lib64"
 
 dirs=". \
       ./src"

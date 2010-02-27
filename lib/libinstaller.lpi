@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1408"/>
+      <CurrentBuildNr Value="1413"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -33,7 +33,7 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="30" Y="22"/>
+        <CursorPos X="29" Y="22"/>
         <TopLine Value="13"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="73"/>
@@ -43,8 +43,8 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="29" Y="1013"/>
-        <TopLine Value="1013"/>
+        <CursorPos X="1" Y="950"/>
+        <TopLine Value="949"/>
         <UsageCount Value="33"/>
       </Unit1>
       <Unit2>
@@ -326,8 +326,8 @@
       <Unit42>
         <Filename Value="../packager/ipkpackage.pas"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="33" Y="268"/>
-        <TopLine Value="259"/>
+        <CursorPos X="23" Y="367"/>
+        <TopLine Value="335"/>
         <UsageCount Value="12"/>
       </Unit42>
       <Unit43>
@@ -422,7 +422,7 @@
     <JumpHistory Count="1" HistoryIndex="0">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="30" TopLine="13"/>
+        <Caret Line="22" Column="29" TopLine="13"/>
       </Position1>
     </JumpHistory>
   </ProjectOptions>
