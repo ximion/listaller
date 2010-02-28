@@ -24,15 +24,15 @@
         <LaunchingApplication Use="True" PathPlusParams="/usr/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="29">
+    <Units Count="30">
       <Unit0>
         <Filename Value="libuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
-        <CursorPos X="13" Y="155"/>
-        <TopLine Value="136"/>
+        <CursorPos X="42" Y="166"/>
+        <TopLine Value="133"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="29"/>
+        <UsageCount Value="32"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -45,9 +45,12 @@
       <Unit2>
         <Filename Value="ipkbuild.pas"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="2" Y="60"/>
-        <TopLine Value="25"/>
-        <UsageCount Value="11"/>
+        <CursorPos X="11" Y="667"/>
+        <TopLine Value="646"/>
+        <UsageCount Value="12"/>
+        <Bookmarks Count="1">
+          <Item0 X="53" Y="481" ID="8"/>
+        </Bookmarks>
       </Unit2>
       <Unit3>
         <Filename Value="abbrevia/abzipprc.pas"/>
@@ -66,8 +69,8 @@
       <Unit5>
         <Filename Value="ipkdef.pas"/>
         <UnitName Value="ipkdef"/>
-        <CursorPos X="22" Y="340"/>
-        <TopLine Value="786"/>
+        <CursorPos X="24" Y="479"/>
+        <TopLine Value="453"/>
         <UsageCount Value="11"/>
       </Unit5>
       <Unit6>
@@ -102,9 +105,9 @@
         <Filename Value="unibuild.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="unibuild"/>
-        <CursorPos X="34" Y="24"/>
-        <TopLine Value="13"/>
-        <UsageCount Value="26"/>
+        <CursorPos X="6" Y="38"/>
+        <TopLine Value="114"/>
+        <UsageCount Value="29"/>
       </Unit10>
       <Unit11>
         <Filename Value="../packager/ipkpackage.pas"/>
@@ -112,7 +115,7 @@
         <UnitName Value="ipkpackage"/>
         <CursorPos X="17" Y="246"/>
         <TopLine Value="225"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="28"/>
       </Unit11>
       <Unit12>
         <Filename Value="../packager/libtar.pas"/>
@@ -185,8 +188,8 @@
       <Unit22>
         <Filename Value="../../../../../../usr/lib/lazarus/0.9.28.2/lcl/fileutil.pas"/>
         <UnitName Value="FileUtil"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="121"/>
+        <CursorPos X="5" Y="99"/>
+        <TopLine Value="78"/>
         <UsageCount Value="10"/>
       </Unit22>
       <Unit23>
@@ -230,8 +233,14 @@
         <TopLine Value="86"/>
         <UsageCount Value="22"/>
       </Unit28>
+      <Unit29>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/sysstrh.inc"/>
+        <CursorPos X="28" Y="33"/>
+        <TopLine Value="12"/>
+        <UsageCount Value="10"/>
+      </Unit29>
     </Units>
-    <JumpHistory Count="8" HistoryIndex="7">
+    <JumpHistory Count="12" HistoryIndex="11">
       <Position1>
         <Filename Value="libuild.lpr"/>
         <Caret Line="27" Column="26" TopLine="3"/>
@@ -264,6 +273,22 @@
         <Filename Value="libuild.lpr"/>
         <Caret Line="155" Column="13" TopLine="136"/>
       </Position8>
+      <Position9>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="28" Column="31" TopLine="13"/>
+      </Position9>
+      <Position10>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="117" Column="17" TopLine="97"/>
+      </Position10>
+      <Position11>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="27" Column="26" TopLine="13"/>
+      </Position11>
+      <Position12>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="155" Column="13" TopLine="133"/>
+      </Position12>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

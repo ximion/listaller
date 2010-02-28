@@ -163,7 +163,7 @@ begin
    end;
    end else
    begin
-    BuildPackage(a,'',x);
+    BuildPackage(a,'',x,HasOption('sign'));
    end;
    end;
    halt;

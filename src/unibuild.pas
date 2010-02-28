@@ -33,15 +33,9 @@ const
    //** Size of the Linux output pipe
    READ_BYTES = 2048;
 
-procedure CheckFileA(fname: String);
-begin
-if not FileExists(fname) then begin writeLn('File "'+fname+'" does not exists!');writeLn('Action aborted.');halt(6);end;
-end;
-
 function ReadInformation(fips: String): TPackinfo;
 var script: TIPKScript;
 begin
-  CheckFileA(fips);
   writeLn('Reading ips script file...');
 
   script:=TIPKScript.Create;
@@ -59,38 +53,16 @@ begin
    writeLn('Package maintainer: '+result.Maintainer);
 
 
-    //??? Needs update of IPS1.0 standard!
 
-    {h:=FindChildNode(xn,'build').NodeValue;
-    at:=1;
-    while length(h)>0 do begin
-       at:=pos(';',h);
-      if at = 0 then begin
-       result.build.Add(h);
-       h:='';
-      end else begin
-       result.build.Add(copy(h,1,at-1));
-       delete(h,1,at);
-      end;
-    end;
+   script.ReadBuildCMDs(Result.Build);
 
-    xn:=dc.FindNode('package');
-    xn:=FindChildNodeX(xn,'DepDEB');
-     for i:=0 to xn.ChildNodes.Count-1 do
-        result.depDEB.Add(xn.ChildNodes.Item[i].FirstChild.NodeValue);
-    xn:=dc.FindNode('package');
-    xn:=FindChildNodeX(xn,'DepRPM');
-    for i:=0 to xn.ChildNodes.Count-1 do
-        result.depRPM.Add(xn.ChildNodes.Item[i].FirstChild.NodeValue);
+   script.ReadDependencies('DEB',Result.depDEB);
+   script.ReadDependencies('RPM',Result.depRPM);
 
-   xn:=dc.DocumentElement.FindNode('application');
+   script.ReadAppDescription(Result.desc);
+   result.version:=script.AppVersion;
 
-   CheckFileA(FindChildNode(xn,'description').NodeValue);
-   result.Desc.LoadFromFile(FindChildNode(xn,'description').NodeValue);
-   result.version:=FindChildNode(xn,'version').NodeValue;
-
-   DeleteFile('/tmp/build-pk.xml');
-   }
+   script.Free;
 end;
 
 procedure CreateDEB(pk: TPackInfo);
@@ -147,12 +119,14 @@ p.CurrentDirectory:=pk.out;
      M.SetSize(BytesRead + READ_BYTES);
      nm := P.Output.Read((M.Memory + BytesRead)^, READ_BYTES);
      if nm > 0
-     then begin
+     then
+     begin
      SetString(s, PChar(M.Memory + BytesRead), nm);
        write(s);
        Inc(BytesRead, nm);
      end
-     else begin
+     else
+     begin
        // no data, wait 100 ms
        Sleep(100);
      end;
@@ -163,7 +137,8 @@ p.CurrentDirectory:=pk.out;
      // try reading it
      nm := P.Output.Read((M.Memory + BytesRead)^, READ_BYTES);
      if nm > 0
-     then begin
+     then
+     begin
      SetString(s, PChar(M.Memory + BytesRead), nm);
        write(s);
        Inc(BytesRead, nm);
@@ -171,7 +146,8 @@ p.CurrentDirectory:=pk.out;
    until nm <= 0;
    M.Free;
 
-   if p.ExitStatus > 0 then begin
+   if p.ExitStatus > 0 then
+   begin
    writeLn('Build failed.');
    writeLn('Please fix all errors to continue');
    writeLn('[Aborted]');
@@ -235,12 +211,14 @@ p.CommandLine:='sudo rpmbuild -ba --rmspec --buildroot="'+pk.out+'pkbuild/"'+' -
      M.SetSize(BytesRead + READ_BYTES);
      nm := P.Output.Read((M.Memory + BytesRead)^, READ_BYTES);
      if nm > 0
-     then begin
+     then
+     begin
      SetString(s, PChar(M.Memory + BytesRead), nm);
        write(s);
        Inc(BytesRead, nm);
      end
-     else begin
+     else
+     begin
        // no data, wait 100 ms
        Sleep(100);
      end;
@@ -251,7 +229,8 @@ p.CommandLine:='sudo rpmbuild -ba --rmspec --buildroot="'+pk.out+'pkbuild/"'+' -
      // try reading it
      nm := P.Output.Read((M.Memory + BytesRead)^, READ_BYTES);
      if nm > 0
-     then begin
+     then
+     begin
      SetString(s, PChar(M.Memory + BytesRead), nm);
        write(s);
        Inc(BytesRead, nm);
@@ -259,7 +238,8 @@ p.CommandLine:='sudo rpmbuild -ba --rmspec --buildroot="'+pk.out+'pkbuild/"'+' -
    until nm <= 0;
    M.Free;
 
-   if p.ExitStatus > 0 then begin
+   if p.ExitStatus > 0 then
+   begin
    writeLn('Build failed.');
    writeLn('Please fix all errors to continue');
    writeLn('[Aborted]');

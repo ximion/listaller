@@ -883,7 +883,7 @@ begin
 Result:=0;
 j:=0;
 fi:=TStringList.Create;
-fi.LoadFromFile(tmpdir+'/listaller/'+ExtractFileName(PkgName)+'/'+FFileInfo);
+fi.LoadFromFile(tmpdir+ExtractFileName(PkgName)+'/'+FFileInfo);
 for i:=0 to fi.Count-1 do
  if fi[i][1]<>'>' then Inc(j);
 Result:=((Dependencies.Count+(j div 2))*10)+16;
@@ -1045,8 +1045,18 @@ end;
 begin
 //First resolve all dependencies and prepare installation
 ResolveDependencies();
+if not FileExists(tmpdir+ExtractFileName(PkgName)+'/'+FFileInfo) then
+begin
+  MakeUsrRequest(rsInstFailed,rqError);
+  p_error('No file information found!');
+  p_error('IPK package seems to be broken.');
+  Result:=false;
+  Abort_FreeAll();
+  exit;
+end;
+
 fi:=TStringList.Create;
-fi.LoadFromFile(tmpdir+'/listaller/'+ExtractFileName(PkgName)+'/'+FFileInfo);
+fi.LoadFromFile(tmpdir+ExtractFileName(PkgName)+'/'+FFileInfo);
 
 proc:=TProcess.Create(nil);
 proc.Options:=[poUsePipes,poStdErrToOutPut];
@@ -1235,7 +1245,7 @@ begin
     end;
    s.Free;
   end else
-    pkit.InstallLocalPkg(tmpdir+'/listaller/'+ExtractFileName(PkgName)+'/'+Dependencies[i]);
+    pkit.InstallLocalPkg(tmpdir+ExtractFileName(PkgName)+'/'+Dependencies[i]);
 
     mnpos:=mnpos+5;
     SetMainPos(Round(mnpos*max));

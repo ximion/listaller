@@ -98,6 +98,8 @@ TIPKBasic = class
   property Disallows: String read ReadDisallows write WriteDisallows;
   procedure ReadProfiles(lst: TStrings);
   procedure WriteProfiles(lst: TStrings);
+  procedure ReadBuildCMDs(lst: TStrings);
+  procedure WriteBuildCMDs(lst: TStrings);
   property AppCMD: String read ReadAppCMD write WriteAppCMD;
   property Architectures: String read ReadArchs write WriteArchs;
   property PkName: String read ReadPkgName write WritePkgName;
@@ -465,6 +467,16 @@ begin
  if s='multimedia' then Result:=gtMULTIMEDIA;
  if s='additional' then Result:=gtADDITIONAL;
  if s='other' then Result:=gtOTHER;
+end;
+
+procedure TIPKBasic.ReadBuildCMDs(lst: TStrings);
+begin
+ ReadField('Build',lst);
+end;
+
+procedure TIPKBasic.WriteBuildCMDs(lst: TStrings);
+begin
+ WriteField('Build',lst);
 end;
 
 procedure TIPKBasic.WriteAuthor(s: String);

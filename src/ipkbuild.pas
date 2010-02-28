@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, IPKPackage, MD5, LiCommon, Process,
-  OPBitmapFormats, IPKDef, liTypes, GPGSign, liBasic;
+  OPBitmapFormats, IPKDef, liTypes, GPGSign, liBasic, RegExpr;
 
 type
 
@@ -40,7 +40,7 @@ type
     @param FName Name of the IPS source file
     @param path Path to an folder where the source should be created}
 procedure CreateUpdateSource(FName, path: String);
-{** Builds the application from source using the <build> elements
+{** Builds the application from source using the "Build" element
     @param Connection to an TPackageInfo}
 procedure BuildApplication(pk: TPackInfo);
 {** Builds an IPK package from an IPS source
@@ -78,14 +78,24 @@ CreateDir(pk.out+'/pkbuild');
 p:=TProcess.Create(nil);
 p.Options:=[poUsePipes];
 
-for i:=0 to pk.build.count-1 do begin
- if pk.build[i][1]='.' then begin
- p.CurrentDirectory:=ExtractFilePath(copy(pk.path+pk.build[i],0,pos(' ',pk.path+pk.build[i])));
- p.CommandLine:=StringReplace(pk.path+pk.build[i],'%IDIR',pk.out+'/pkbuild',[rfReplaceAll]);
- end else begin
- p.CurrentDirectory:=ExtractFilePath(copy(pk.build[i],0,pos(' ',pk.build[i])));
- p.CommandLine:=StringReplace(pk.build[i],'%IDIR',pk.out+'/pkbuild',[rfReplaceAll]);
+for i:=0 to pk.build.Count-1 do
+ if pos('include:"',pk.build[i])>0 then
+ begin
+  pk.build[i]:=StringReplace(pk.build[i],'include:"','',[rfReplaceAll]);
+  pk.build[i]:=copy(pk.build[i],1,pos('"',pk.build[i])-1);
  end;
+
+for i:=0 to pk.build.count-1 do
+begin
+ if pk.build[i][1]='.' then
+ begin
+  p.CurrentDirectory:=ExtractFilePath(copy(pk.path+pk.build[i],0,pos(' ',pk.path+pk.build[i])));
+  p.CommandLine:=StringReplace(pk.path+pk.build[i],'%IDIR',pk.out+'/pkbuild',[rfReplaceAll]);
+ end else
+ begin
+  p.CurrentDirectory:=ExtractFilePath(copy(pk.build[i],0,pos(' ',pk.build[i])));
+  p.CommandLine:=StringReplace(pk.build[i],'%IDIR',pk.out+'/pkbuild',[rfReplaceAll]);
+end;
 
  writeLn('[Exec]: '+pk.build[i]);
  p.Execute;
@@ -99,12 +109,14 @@ for i:=0 to pk.build.count-1 do begin
      M.SetSize(BytesRead + READ_BYTES);
      n := P.Output.Read((M.Memory + BytesRead)^, READ_BYTES);
      if n > 0
-     then begin
+     then
+     begin
      SetString(s, PChar(M.Memory + BytesRead), n);
        write(s);
        Inc(BytesRead, n);
      end
-     else begin
+     else
+     begin
        // no data, wait 100 ms
        Sleep(100);
      end;
@@ -115,7 +127,8 @@ for i:=0 to pk.build.count-1 do begin
      // try reading it
      n := P.Output.Read((M.Memory + BytesRead)^, READ_BYTES);
      if n > 0
-     then begin
+     then
+     begin
      SetString(s, PChar(M.Memory + BytesRead), n);
        write(s);
        Inc(BytesRead, n);
@@ -123,11 +136,12 @@ for i:=0 to pk.build.count-1 do begin
    until n <= 0;
    M.Free;
 
-   if p.ExitStatus > 0 then begin
-   writeLn('Build failed.');
-   writeLn('Please fix all errors to continue');
-   writeLn('[Aborted]');
-   halt(p.ExitStatus);
+   if p.ExitStatus > 0 then
+   begin
+    writeLn('Build failed.');
+    writeLn('Please fix all errors to continue');
+    writeLn('[Aborted]');
+    halt(p.ExitStatus);
    end;
 end;
 
@@ -252,12 +266,52 @@ if not Result and AllowFloat then
     end;
 end;
 
+procedure FindFiles(FilesList: TStringList; StartDir, FileMask: string);
+var
+  SR: TSearchRec;
+  DirList: TStringList;
+  IsFound: Boolean;
+  i: integer;
+begin
+  if FileMask = '' then FileMask:='*';
+
+  if StartDir[length(StartDir)] <> '/' then
+    StartDir := StartDir + '/';
+
+  IsFound := FindFirst(StartDir+FileMask, faAnyFile-faDirectory, SR) = 0;
+  while IsFound do
+  begin
+    FilesList.Add(StartDir + SR.Name);
+    IsFound := FindNext(SR) = 0;
+  end;
+  FindClose(SR);
+
+  // Build a list of subdirectories
+  DirList := TStringList.Create;
+  IsFound := FindFirst(StartDir+'*', faAnyFile, SR) = 0;
+  while IsFound do
+  begin
+    if ((SR.Attr and faDirectory) <> 0) and
+         (SR.Name[1] <> '.') then
+      DirList.Add(StartDir + SR.Name);
+    IsFound := FindNext(SR) = 0;
+  end;
+  FindClose(SR);
+
+  // Scan the list of subdirectories
+  for i := 0 to DirList.Count - 1 do
+  begin
+    FindFiles(FilesList, DirList[i], FileMask);
+  end;
+  DirList.Free;
+end;
+
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////Function to build IPK-Packages///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 procedure BuildPackage(fi: String;o:String;genbutton:Boolean=false;signpkg:Boolean=false);
 var
-  i,j: Integer;
+  i,j,k: Integer;
   fc: TStringList;
   lh,h,s: String;
   pkgtype: TPkgType;
@@ -268,7 +322,54 @@ var
   control: TIPKScript;
   ipkpkg: TLiPackager;
   res: Boolean;
+
+procedure bp_AddFile(fname: String;const basepath: String='');
+var orig: String;
+    x: String;
 begin
+ orig:=h;
+ h:=h+'/'+StringReplace(ExtractFilePath(fname),basepath,'',[rfReplaceAll]);
+ h:=StringReplace(h,'//','/',[rfReplaceAll]);
+ ForceDirectories(WDir+h);
+
+ if fname[1]='.' then
+  res:=FileCopy(ExtractFilePath(fi)+DeleteModifiers(fname),WDir+h+'/'+ExtractFileName(DeleteModifiers(fname)))
+ else
+  res:=FileCopy(DeleteModifiers(fname),WDir+h+'/'+ExtractFileName(DeleteModifiers(fname)));
+
+ if not res then
+ begin
+  writeLn('error: ');
+  writeln(' Copying of '+DeleteModifiers(fname)+' failed.');
+  halt(5);
+ end;
+
+ x:=StringReplace(ExtractFilePath(fname),basepath,'',[rfReplaceAll]);
+ x:=StringReplace(x,'/','',[rfReplaceAll]);
+ x:=StringReplace(x,' ','',[rfReplaceAll]);
+ if x<>'' then
+ begin
+  fc.Add('>'+StringReplace(s+'/'+StringReplace(ExtractFilePath(fname),basepath,'',[rfReplaceAll]),'//','/',[rfReplaceAll]));
+ end;
+ fc.Add(StringReplace(h+'/'+ExtractFileName(DeleteModifiers(fname)),'//','/',[rfReplaceAll]));
+ //'/files'+StringReplace(Files[i+2],'$INST','',[rfReplaceAll])+'/'+ExtractFileName(DeleteModifiers(Files[i]))+copy(Files[i],pos(ExtractFileName(DeleteModifiers(Files[i])),Files[i])+length(ExtractFileName(DeleteModifiers(Files[i]))),length(Files[i])));
+//writeLn('Add: '+fc[fc.Count-1]);
+
+if not ipkpkg.AddFile(WDir+h+'/'+ExtractFileName(DeleteModifiers(fname))) then
+ begin
+  writeLn('error: ');
+  writeln(' Could not add file "'+DeleteModifiers(fname)+'" to TAR archive.');
+  halt(8);
+ end;
+
+ fc.Add(MD5.MDPrint(MD5.MD5File(DeleteModifiers(fname),1024)));//ExcludeTrailingBackslash(Files[i+1]));
+
+ h:=orig;
+ write('.');
+end;
+
+begin
+
 if FileExists(o) then
 begin
  writeLn('error: ');
@@ -311,12 +412,16 @@ control.LoadFromList(script);
 if (LowerCase(ExtractFileExt(o))<>'.ipk') then
  o:=ExtractFilePath(fi)+'/'+control.PkName+'.ipk';
 
+o:=StringReplace(o,'//','/',[rfReplaceAll]);
+
 writeLn('Building package...');
 writeLn('Please wait!');
 writeLn('');
   if not DirectoryExists(tmpdir) then SysUtils.CreateDir(tmpdir);
-  if not DirectoryExists(WDir) then SysUtils.CreateDir(WDir) else begin
-  DeleteDirectory(WDir,true);SysUtils.CreateDir(WDir);
+  if not DirectoryExists(WDir) then SysUtils.CreateDir(WDir) else
+  begin
+   DeleteDirectory(WDir,true);
+   SysUtils.CreateDir(WDir);
   end;
 
   //Creating dirs
@@ -344,8 +449,8 @@ writeLn('');
     end;
 
   i:=0;
- while i < files.Count-1 do begin
-
+ while i < files.Count do
+ begin
  if files[i][1]='>' then
  begin
   //We have a new target folder. Set path
@@ -356,13 +461,6 @@ writeLn('');
  begin
  if (files[i][1]='/')or(files[i][1]='.') then
  begin
- if (not FileExists(DeleteModifiers(Files[i])))
- and (not FileExists(ExtractFilePath(fi)+DeleteModifiers(Files[i]))) then
- begin
-  writeLn('error: ');
-  writeln(' The file '+DeleteModifiers(Files[i])+' doesn''t exists!');
-  halt(6);
- end;
 
  if not IsNumeric(prID) then
  begin
@@ -376,31 +474,26 @@ writeLn('');
  if not DirectoryExists(WDir+h)
  then FileUtil.ForceDirectory(WDir+h);
 
- if files[i][1]='.' then
-  res:=FileCopy(ExtractFilePath(fi)+DeleteModifiers(Files[i]),WDir+h+'/'+ExtractFileName(DeleteModifiers(Files[i])))
- else
-  res:=FileCopy(DeleteModifiers(Files[i]),WDir+h+'/'+ExtractFileName(DeleteModifiers(Files[i])));
-
- if not res then
+ if (DirectoryExistsUTF8(DeleteModifiers(Files[i])))
+ or (pos('*',ExtractFileName(Files[i]))>0) then
  begin
-  writeLn('error: ');
-  writeln(' Copying of '+DeleteModifiers(Files[i])+' failed.');
-  halt(5);
- end;
+  sl:=TStringList.Create;
+  FindFiles(sl,ExtractFilePath(Files[i]),ExtractFileName(Files[i]));
+  for k:=0 to sl.Count-1 do
+   bp_AddFile(sl[k],ExtractFilePath(files[i]));
 
- fc.Add(h+'/'+ExtractFileName(DeleteModifiers(Files[i])));
- //'/files'+StringReplace(Files[i+2],'$INST','',[rfReplaceAll])+'/'+ExtractFileName(DeleteModifiers(Files[i]))+copy(Files[i],pos(ExtractFileName(DeleteModifiers(Files[i])),Files[i])+length(ExtractFileName(DeleteModifiers(Files[i]))),length(Files[i])));
-//writeLn('Add: '+fc[fc.Count-1]);
-
-if not ipkpkg.AddFile(WDir+h+'/'+ExtractFileName(DeleteModifiers(Files[i]))) then
+  sl.Free;
+ end else
  begin
-  writeLn('error: ');
-  writeln(' Could not add file "'+DeleteModifiers(Files[i])+'" to TAR archive.');
-  halt(8);
+  if (not FileExists(DeleteModifiers(Files[i])))
+  and (not FileExists(ExtractFilePath(fi)+DeleteModifiers(Files[i]))) then
+  begin
+   writeLn('error: ');
+   writeln(' The file '+DeleteModifiers(Files[i])+' doesn''t exists!');
+   halt(6);
+  end;
+  bp_AddFile(Files[i]);
  end;
-
- fc.Add(MD5.MDPrint(MD5.MD5File(DeleteModifiers(Files[i]),1024)));//ExcludeTrailingBackslash(Files[i+1]));
- write('.');
 
   end;
  end;
@@ -415,7 +508,7 @@ if prID<>'-1' then begin
 end;
 //
 
- end; //End of file including
+end; //End of file including
  write('..]');
  writeLn('');
  fsec.Free;
@@ -586,6 +679,13 @@ end else writeLn('I: Package is not signed.');
 i:=random(9999)+1000;
 
 writeLn('Creating package...');
+if FileExists(o) then
+begin
+writeLn('warning:');
+writeLn(' The file "'+ExtractFileName(o)+'" already exists in output dir.');
+writeLn(' Renamed to "'+ExtractFileName(o)+'~'+IntToStr(i)+'.ipk"');
+o:=o+'~'+IntToStr(i)+'.ipk';
+end;
 writeLn(' #-> '+o);
 if not ipkpkg.ProduceIPKPackage then
 begin

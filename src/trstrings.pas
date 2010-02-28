@@ -121,6 +121,12 @@ rsStep4='Phase 4/4: Registering application...';
 rsAddUpdSrc='The installation contains the following update source: ';
 rsQAddUpdSrc='Should this source be added to the update sources list?';
 rsFinished='Finished';
+rsSecurityInfo='Please install this package only if you got it from a safe,'#10+
+ 'trusted source. There is a serious risk that the software'#10+
+ 'damages your system. (It could also contain malware)'#10+
+ 'Be careful with this package, especially if you install it'#10+
+ 'with superuser rights. (System installation)'#10;
+rsSecurityWarning='Security warning';
 rsinstAnyway='Do you want to install it anyway? (This could raise problems)';
 rsInvArchitecture='The application which this package contains was not built for the current system architecture.';
 rsWillDLFiles='(This program will download the needed files from the internet)';

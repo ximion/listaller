@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
-  StdCtrls;
+  StdCtrls, trStrings;
 
 type
 
@@ -33,6 +33,7 @@ type
     LblInfo: TLabel;
     LblPkgSigned: TLabel;
     procedure Button1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { private declarations }
   public
@@ -46,6 +47,12 @@ implementation
 procedure TSigInfoFrm.Button1Click(Sender: TObject);
 begin
   close;
+end;
+
+procedure TSigInfoFrm.FormCreate(Sender: TObject);
+begin
+ LblInfo.Caption:=rsSecurityInfo;
+ Caption:=rsSecurityWarning;
 end;
 
 initialization

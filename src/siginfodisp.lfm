@@ -9,6 +9,7 @@ object SigInfoFrm: TSigInfoFrm
   Caption = 'Security warning'
   ClientHeight = 166
   ClientWidth = 314
+  OnCreate = FormCreate
   Position = poScreenCenter
   LCLVersion = '0.9.28.2'
   object LblPkgSigned: TLabel
@@ -27,7 +28,7 @@ object SigInfoFrm: TSigInfoFrm
     Height = 73
     Top = 40
     Width = 270
-    Caption = 'Please install this package only if you got it from a safe,'#10'secure source. There is a serious risk that it damages'#10'your system. (It also can contain malware)'#10'Be careful with this package, especially if you install it'#10'with superuser rights. (System installation)'
+    Caption = 'Please install this package only if you got it from a safe,'#10'trusted source. There is a serious risk that the software'#10'damages your system. (It could also contain malware)'#10'Be careful with this package, especially if you install it'#10'with superuser rights. (System installation)'
     ParentColor = False
   end
   object Button1: TButton
