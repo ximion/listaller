@@ -189,9 +189,10 @@ end;
 
 procedure TLiBuild.OnExeception(Sender : TObject;E : Exception);
 begin
-writeLn(rsInternalError);
-writeLn('[Message]: '+E.Message);
-writeLn('(Aborted)');
+writeLn;
+writeLn('error:');
+writeLn(' '+rsInternalError);
+writeLn(' :: '+E.Message);
 halt(8);
 end;
 

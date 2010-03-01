@@ -69,6 +69,8 @@ function GetSystemArchitecture: String;
     @param icon Path to an icon for the operation
     @param optn Set of TProcessOption to apply on the process object}
 function  ExecuteAsRoot(cmd: String;comment: String; icon: String;optn: TProcessOptions=[]): Boolean;
+//** Cleans up messy file path
+function CleanFilePath(path: String): String;
 {** Check if user is root
  @returns If user is root (Bool)}
 function IsRoot: Boolean;
@@ -304,6 +306,11 @@ begin
  finally
  t.Free;
  end;
+end;
+
+function CleanFilePath(path: String): String;
+begin
+ Result:=StringReplace(path,'//','/',[rfReplaceAll]);
 end;
 
 function ExecuteAsRoot(cmd: String;comment: String; icon: String;optn: TProcessOptions=[]): Boolean;

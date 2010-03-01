@@ -128,6 +128,7 @@ TIPKScript = class(TIPKBasic)
   function  LoadFromList(lst: TStrings): Boolean;
   procedure GetDirectFileList(id: Integer;lst: TStrings);
   procedure GetFiles(id: Integer;lst: TStrings);virtual;
+  procedure FinalizeToControl;
 end;
 
 //** Class to read IPK control files
@@ -851,6 +852,12 @@ begin
   exit;
  end else
   text.Assign(lst);
+end;
+
+procedure TIPKScript.FinalizeToControl;
+begin
+ //TODO: Remove all functions & comments which are not necessary
+ // for IPK control files.
 end;
 
 procedure TIPKScript.GetDirectFileList(id: Integer;lst: TStrings);

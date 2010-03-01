@@ -72,6 +72,7 @@ var i: Integer;
    BytesRead: LongInt;
    p: TProcess;
    s: String;
+   lastDir: String;
 begin
 CreateDir(pk.out+'/pkbuild');
 
@@ -85,8 +86,12 @@ for i:=0 to pk.build.Count-1 do
   pk.build[i]:=copy(pk.build[i],1,pos('"',pk.build[i])-1);
  end;
 
+getdir(0,lastDir);
+chdir(pk.path);
 for i:=0 to pk.build.count-1 do
 begin
+ if length(pk.build[i])>0 then
+ begin
  if pk.build[i][1]='.' then
  begin
   p.CurrentDirectory:=ExtractFilePath(copy(pk.path+pk.build[i],0,pos(' ',pk.path+pk.build[i])));
@@ -95,7 +100,9 @@ begin
  begin
   p.CurrentDirectory:=ExtractFilePath(copy(pk.build[i],0,pos(' ',pk.build[i])));
   p.CommandLine:=StringReplace(pk.build[i],'%IDIR',pk.out+'/pkbuild',[rfReplaceAll]);
-end;
+ end;
+ end else
+  Continue;
 
  writeLn('[Exec]: '+pk.build[i]);
  p.Execute;
@@ -138,13 +145,14 @@ end;
 
    if p.ExitStatus > 0 then
    begin
-    writeLn('Build failed.');
-    writeLn('Please fix all errors to continue');
-    writeLn('[Aborted]');
+    writeLn('error:');
+    writeLn(' Build failed!');
+    writeLn(' Please fix all errors to continue');
     halt(p.ExitStatus);
    end;
 end;
 
+chdir(lastDir);
 p.Free;
 pk.build.Free;
 end;
@@ -315,6 +323,7 @@ var
   fc: TStringList;
   lh,h,s: String;
   pkgtype: TPkgType;
+  pki: TPackInfo;
   sl,files,fsec,script: TStringList;
   prID: String;
   dlist: TStringList;
@@ -329,7 +338,7 @@ var orig: String;
 begin
  orig:=h;
  h:=h+'/'+StringReplace(ExtractFilePath(fname),basepath,'',[rfReplaceAll]);
- h:=StringReplace(h,'//','/',[rfReplaceAll]);
+ h:=CleanFilePath(h);
  ForceDirectories(WDir+h);
 
  if fname[1]='.' then
@@ -351,7 +360,7 @@ begin
  begin
   fc.Add('>'+StringReplace(s+'/'+StringReplace(ExtractFilePath(fname),basepath,'',[rfReplaceAll]),'//','/',[rfReplaceAll]));
  end;
- fc.Add(StringReplace(h+'/'+ExtractFileName(DeleteModifiers(fname)),'//','/',[rfReplaceAll]));
+ fc.Add(CleanFilePath(h+'/'+ExtractFileName(DeleteModifiers(fname))));
  //'/files'+StringReplace(Files[i+2],'$INST','',[rfReplaceAll])+'/'+ExtractFileName(DeleteModifiers(Files[i]))+copy(Files[i],pos(ExtractFileName(DeleteModifiers(Files[i])),Files[i])+length(ExtractFileName(DeleteModifiers(Files[i]))),length(Files[i])));
 //writeLn('Add: '+fc[fc.Count-1]);
 
@@ -407,14 +416,37 @@ end;
 
 sl.Free;
 
+//Replace all build-time placeholders
+for i:=0 to fsec.Count-1 do
+ fsec[i]:=StringReplace(fsec[i],'%IDIR',CleanFilePath(ExtractFilePath(o)+'/pkbuild'),[rfReplaceAll]);
+
 control:=TIPKScript.Create;
 control.LoadFromList(script);
 if (LowerCase(ExtractFileExt(o))<>'.ipk') then
  o:=ExtractFilePath(fi)+'/'+control.PkName+'.ipk';
 
-o:=StringReplace(o,'//','/',[rfReplaceAll]);
+o:=CleanFilePath(o);
 
-writeLn('Building package...');
+sl:=TStringList.Create;
+control.ReadBuildCMDs(sl);
+if sl.Count>0 then
+begin
+writeLn;
+writeLn('=== Building application ===');
+for i:=0 to sl.Count-1 do
+ if (length(sl[i])>0)
+ and(sl[i][1]=' ') then
+  sl[i]:=copy(sl[i],2,length(sl[i]));
+
+pki.build:=sl;
+pki.path:=ExtractFilePath(fi);
+pki.out:=ExtractFilePath(o);
+BuildApplication(pki);
+end;
+if Assigned(sl) then sl.Free; //Can be freed by BuildApplication()
+
+writeLn;
+writeLn('=== Building IPK Package ===');
 writeLn('Please wait!');
 writeLn('');
   if not DirectoryExists(tmpdir) then SysUtils.CreateDir(tmpdir);
@@ -714,7 +746,9 @@ end;
 procedure CreateLiCompButton(dlist: TStringList; op: String);
 var bt,buf,res:TPNGImage;i,j: Integer;
 begin
-writeLn('Creating "Linux compatible" button '+ExtractFileName(op)+' ...');
+writeLn;
+writeLn('=== Creating graphics ===');
+writeLn('Generating "Linux compatible" button '+ExtractFileName(op)+' ...');
 bt:=TPNGImage.Create;
 buf:=TPNGImage.Create;
 res:=TPNGImage.Create;

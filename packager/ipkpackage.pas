@@ -360,7 +360,7 @@ if not signChecked then CheckSignature;
 Result:=false;
 if length(fname)<2 then exit;
 
- fname:=StringReplace(fname,'//','/',[rfReplaceAll]);
+ fname:=CleanFilePath(fname);
 
  arc:=TTarArchive.Create;
  arc.TarArchive:=workdir+'ipktar.tar';
