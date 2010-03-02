@@ -53,6 +53,9 @@ var
 begin
   // quick check parameters
 
+  if not HasOption('noquietcrash') then
+   OnException:=@OnExeception;
+
   ErrorMsg:=CheckOptions('h','help');
   ErrorMsg:=CheckOptions('?','help');
   //
@@ -222,7 +225,6 @@ var
 
 begin
   Application:=TLiBuild.Create(nil);
-  Application.OnException:=@Application.OnExeception;
   Application.Run;
   Application.Free;
 end.

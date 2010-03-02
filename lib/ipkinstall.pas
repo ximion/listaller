@@ -325,26 +325,6 @@ dsApp.Close;
 dsApp.Free;
 end;
 
-procedure RemoveDuplicates(sl: TStringList);
-var
-i,j:Integer;
-begin
-i := 0;
-  while i <= sl.Count-1 do
-  begin
-    for j := i+1 to sl.Count-1 do
-    begin
-      if sl.Strings[i] = sl.Strings[j] then
-      begin
-         dec(i);
-         sl.Delete(j);
-        break;
-      end;
-    end;
-    inc(i);
-  end;
-end;
-
 procedure TInstallation.ReadDescription(sl: TStringList);
 var i: Integer;
 begin

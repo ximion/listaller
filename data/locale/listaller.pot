@@ -405,6 +405,14 @@ msgstr ""
 msgid "Finished"
 msgstr ""
 
+#: trstrings:rssecurityinfo
+msgid "Please install this package only if you got it from a safe,\ntrusted source. There is a serious risk that the software\ndamages your system. (It could also contain malware)\nBe careful with this package, especially if you install it\nwith superuser rights. (System installation)\n"
+msgstr ""
+
+#: trstrings:rssecuritywarning
+msgid "Security warning"
+msgstr ""
+
 #: trstrings:rsinstanyway
 msgid "Do you want to install it anyway? (This could raise problems)"
 msgstr ""
@@ -682,7 +690,7 @@ msgid "Applications"
 msgstr ""
 
 #: trstrings:rsinstalledapps
-msgid "Installed\napplications"
+msgid "Installed applications"
 msgstr ""
 
 #: trstrings:rsinstallpkg
@@ -690,7 +698,7 @@ msgid "Install package"
 msgstr ""
 
 #: trstrings:rsbrowsecatalog
-msgid "Browse\ncatalog"
+msgid "Browse catalog"
 msgstr ""
 
 #: trstrings:rsrepositories
@@ -919,5 +927,21 @@ msgstr ""
 
 #: trstrings:rsresolvingdep
 msgid "Resolving dependencies..."
+msgstr ""
+
+#: trstrings:rspkgunsigned
+msgid "This package is not signed!"
+msgstr ""
+
+#: trstrings:rspkguntrusted
+msgid "This package is untrusted!"
+msgstr ""
+
+#: trstrings:rscouldnotinstallapp
+msgid "The application %a could not be installed!"
+msgstr ""
+
+#: trstrings:rswarning
+msgid "Warning!"
 msgstr ""
 

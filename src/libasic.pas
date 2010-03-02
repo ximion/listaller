@@ -74,6 +74,8 @@ function CleanFilePath(path: String): String;
 {** Check if user is root
  @returns If user is root (Bool)}
 function IsRoot: Boolean;
+//** Remove duplicate entries from stringlist
+procedure RemoveDuplicates(sl: TStringList);
 //** Get current date as string
 function GetDateAsString: String;
 //** Show an error message
@@ -160,6 +162,26 @@ var
 begin
   GetDate(Year,Month,Day,WDay);
   Result:=IntToStr(Day)+'.'+IntToStr(Month)+'.'+IntToStr(Year);
+end;
+
+procedure RemoveDuplicates(sl: TStringList);
+var
+i,j:Integer;
+begin
+i := 0;
+  while i <= sl.Count-1 do
+  begin
+    for j := i+1 to sl.Count-1 do
+    begin
+      if sl.Strings[i] = sl.Strings[j] then
+      begin
+         dec(i);
+         sl.Delete(j);
+        break;
+      end;
+    end;
+    inc(i);
+  end;
 end;
 
 function GetLangID: String;

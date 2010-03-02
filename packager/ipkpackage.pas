@@ -50,6 +50,8 @@ type
    function ProduceIPKPackage: Boolean;
    //** Base directory (root of package)
    property BaseDir: String read bdir write bdir;
+   //** Set IPK file name
+   property IPKFile: String read OutFileName write OutFileName;
  end;
 
  //** Unpacks IPK package structure

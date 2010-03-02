@@ -79,13 +79,16 @@ CreateDir(pk.out+'/pkbuild');
 p:=TProcess.Create(nil);
 p.Options:=[poUsePipes];
 
+writeLn;
+writeLn('=== Building application ===');
+
 for i:=0 to pk.build.Count-1 do
  if pos('include:"',pk.build[i])>0 then
  begin
   pk.build[i]:=StringReplace(pk.build[i],'include:"','',[rfReplaceAll]);
   pk.build[i]:=copy(pk.build[i],1,pos('"',pk.build[i])-1);
  end;
-
+lastDir:='';
 getdir(0,lastDir);
 chdir(pk.path);
 for i:=0 to pk.build.count-1 do
@@ -104,7 +107,8 @@ begin
  end else
   Continue;
 
- writeLn('[Exec]: '+pk.build[i]);
+ writeLn('[Exec]: '+p.CommandLine);//pk.build[i]);
+ p.CommandLine:='bash '+p.CommandLine;
  p.Execute;
  n:=0;
 
@@ -320,11 +324,13 @@ end;
 procedure BuildPackage(fi: String;o:String;genbutton:Boolean=false;signpkg:Boolean=false);
 var
   i,j,k: Integer;
+  b: Boolean;
   fc: TStringList;
   lh,h,s: String;
   pkgtype: TPkgType;
   pki: TPackInfo;
   sl,files,fsec,script: TStringList;
+  tmpdepends: TStringList; //Contains all autodetected dependencies
   prID: String;
   dlist: TStringList;
   aname: String;
@@ -335,6 +341,7 @@ var
 procedure bp_AddFile(fname: String;const basepath: String='');
 var orig: String;
     x: String;
+    forig: String;
 begin
  orig:=h;
  h:=h+'/'+StringReplace(ExtractFilePath(fname),basepath,'',[rfReplaceAll]);
@@ -342,9 +349,20 @@ begin
  ForceDirectories(WDir+h);
 
  if fname[1]='.' then
-  res:=FileCopy(ExtractFilePath(fi)+DeleteModifiers(fname),WDir+h+'/'+ExtractFileName(DeleteModifiers(fname)))
- else
-  res:=FileCopy(DeleteModifiers(fname),WDir+h+'/'+ExtractFileName(DeleteModifiers(fname)));
+ begin
+  forig:=ExtractFilePath(fi)+DeleteModifiers(fname);
+  res:=FileCopy(forig,WDir+h+'/'+ExtractFileName(DeleteModifiers(fname)))
+ end else
+ begin
+  forig:=DeleteModifiers(fname);
+  res:=FileCopy(forig,WDir+h+'/'+ExtractFileName(DeleteModifiers(fname)));
+ end;
+
+ if b then
+ if FileIsExecutable(forig) then
+ begin
+  GetLibDepends(forig,tmpdepends);
+ end;
 
  if not res then
  begin
@@ -401,12 +419,14 @@ script:=TStringList.Create;
 files:=TStringList.Create;
 fsec:=TStringList.Create;
 
-if LowerCase(sl[0])<>'ipk-standard-version: 1.0' then begin
+if LowerCase(sl[0])<>'ipk-standard-version: 1.0' then
+begin
  writeLn(' This is no valid IPS source file');
  halt(1);
 end;
 
-  for i:=0 to sl.Count-1 do begin
+  for i:=0 to sl.Count-1 do
+  begin
   if pos('!-Files ~',sl[i])>0 then break
   else script.Add(sl[i]);
   end;
@@ -415,10 +435,6 @@ end;
   fsec.Add(sl[j]);
 
 sl.Free;
-
-//Replace all build-time placeholders
-for i:=0 to fsec.Count-1 do
- fsec[i]:=StringReplace(fsec[i],'%IDIR',CleanFilePath(ExtractFilePath(o)+'/pkbuild'),[rfReplaceAll]);
 
 control:=TIPKScript.Create;
 control.LoadFromList(script);
@@ -431,8 +447,6 @@ sl:=TStringList.Create;
 control.ReadBuildCMDs(sl);
 if sl.Count>0 then
 begin
-writeLn;
-writeLn('=== Building application ===');
 for i:=0 to sl.Count-1 do
  if (length(sl[i])>0)
  and(sl[i][1]=' ') then
@@ -443,7 +457,7 @@ pki.path:=ExtractFilePath(fi);
 pki.out:=ExtractFilePath(o);
 BuildApplication(pki);
 end;
-if Assigned(sl) then sl.Free; //Can be freed by BuildApplication()
+if sl is TStringList then sl.Free; //Can be freed by BuildApplication()
 
 writeLn;
 writeLn('=== Building IPK Package ===');
@@ -464,8 +478,24 @@ writeLn('');
   ipkpkg:=TLiPackager.Create(o);
   ipkpkg.BaseDir:=wdir;
 
+  tmpdepends:=TStringList.Create;
+
+  b:=false;
+  control.ReadDependencies('',sl);
+ for i:=0 to sl.Count-1 do
+ if pos('%AUTODEPENDS',sl[i])>0 then
+ begin
+  sl.Delete(i);
+  b:=true;
+  break;
+ end;
+
   writeLn('Preparing files.');
   write('[..');
+
+  //Replace all build-time placeholders
+ for i:=0 to fsec.Count-1 do
+  fsec[i]:=StringReplace(fsec[i],'%IDIR',CleanFilePath(ExtractFilePath(o)+'/pkbuild/'),[rfReplaceAll]);
 
   for j:=0 to fsec.Count-1 do
   begin
@@ -506,6 +536,7 @@ writeLn('');
  if not DirectoryExists(WDir+h)
  then FileUtil.ForceDirectory(WDir+h);
 
+ p_debug(Files[i]);
  if (DirectoryExistsUTF8(DeleteModifiers(Files[i])))
  or (pos('*',ExtractFileName(Files[i]))>0) then
  begin
@@ -549,6 +580,9 @@ script.Free; //Was only temporary
 
 pkgtype:=control.SType;
 
+if LowerCase(control.Architectures)='any' then
+ control.Architectures:=GetSystemArchitecture;
+
 if pkgtype=ptLinstall then
 begin
 writeLn('Mode: Build standard IPK');
@@ -575,8 +609,20 @@ begin
  writeLn(' I: A compatibility button will be generated.');
 end;
 
-writeLn('Making control-script...');
+writeLn('Creating control-script...');
 SysUtils.CreateDir(WDir+'pkgdata/');
+
+sl:=TStringList.Create;
+if b then
+begin
+writeLn('Updating dependecy information...');
+ for i:=0 to sl.Count do
+  tmpdepends.Add(sl[i]);
+ RemoveDuplicates(tmpdepends);
+ control.WriteDependencies('',tmpdepends);
+end;
+sl.Free;
+tmpdepends.Free;
 
 if control.Icon<>'' then
 if not FileExists(control.Icon) then
@@ -719,6 +765,7 @@ writeLn(' Renamed to "'+ExtractFileName(o)+'~'+IntToStr(i)+'.ipk"');
 o:=o+'~'+IntToStr(i)+'.ipk';
 end;
 writeLn(' #-> '+o);
+ipkpkg.IPKFile:=o;
 if not ipkpkg.ProduceIPKPackage then
 begin
  writeln('error:');

@@ -74,9 +74,9 @@ begin
   for i:=0 to s.Count-1 do
    if pos('=>',s[i])>0 then
    begin
-    lst.Add(copy(s[i],2,pos('=',s[i])-2));
+    lst.Add(copy(s[i],2,pos('=',s[i])-3));
    end else
-    lst.Add(copy(s[i],2,pos('(',s[i])-2));
+    lst.Add(copy(s[i],2,pos('(',s[i])-3));
   s.Free;
 end;
 
@@ -248,6 +248,11 @@ begin
      FileClose(fSrc);
    end;
  end;
+end;
+
+function SolveBuildTimeSybl(str: String): String;
+begin
+
 end;
 
 procedure ShowPopupNotify(msg: String;urgency: TUrgencyLevel;time:Integer);
