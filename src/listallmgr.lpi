@@ -11,13 +11,13 @@
       <Title Value="Listaller Manager"/>
       <UseAppBundle Value="False"/>
       <Icon Value="0"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="2099"/>
+      <CurrentBuildNr Value="2101"/>
       <ProjectVersion Value="0.1.18.1"/>
       <Language Value="0809"/>
     </VersionInfo>
@@ -57,8 +57,8 @@
         <ComponentName Value="MnFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="8" Y="26"/>
-        <TopLine Value="1"/>
+        <CursorPos X="41" Y="949"/>
+        <TopLine Value="934"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="191"/>
         <Loaded Value="True"/>
@@ -288,9 +288,7 @@
         <UnitName Value="uninstall"/>
         <CursorPos X="30" Y="148"/>
         <TopLine Value="121"/>
-        <EditorIndex Value="1"/>
         <UsageCount Value="176"/>
-        <Loaded Value="True"/>
       </Unit33>
       <Unit34>
         <Filename Value="trstrings.pas"/>
@@ -936,7 +934,7 @@
         <UsageCount Value="10"/>
       </Unit126>
     </Units>
-    <JumpHistory Count="27" HistoryIndex="26">
+    <JumpHistory Count="28" HistoryIndex="27">
       <Position1>
         <Filename Value="manager.pas"/>
         <Caret Line="353" Column="32" TopLine="337"/>
@@ -1045,6 +1043,10 @@
         <Filename Value="manager.pas"/>
         <Caret Line="26" Column="8" TopLine="1"/>
       </Position27>
+      <Position28>
+        <Filename Value="manager.pas"/>
+        <Caret Line="949" Column="34" TopLine="928"/>
+      </Position28>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

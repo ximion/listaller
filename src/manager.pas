@@ -946,13 +946,12 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
 
  //Translate
  Caption:=rsSoftwareManager;
- CatButton.Caption:=rsSWCatalogue;
+ CatButton.Caption:=rsOpenDistroPkgList;
  Label1.Caption:=rsShow;
  AboutBtn.Caption:=rsAboutListaller;
  BitBtn2.Caption:=rsOpenDirsiCatalog;
  InstAppButton.Caption:=rsInstalledApps;
  MItemInstallPkg.Caption:=rsInstallPkg;
- CatButton.Caption:=rsBrowseCatalog;
  RepoButton.Caption:=rsRepositories;
  SettingsButton.Caption:=rsSettings;
  FilterEdt.Text:=rsFilter;

@@ -255,6 +255,7 @@ rsPkgUnsigned = 'This package is not signed!';
 rsPkgUntrusted = 'This package is untrusted!';
 rsCouldNotInstallApp = 'The application %a could not be installed!';
 rsWarning = 'Warning!';
+rsOpenDistroPkgList = 'Open the built-in package list';
 implementation
 end.
 

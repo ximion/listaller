@@ -1780,11 +1780,11 @@ object MnFrm: TMnFrm
     object CatalogPage: TPage
       Caption = 'CatalogPage'
       ClientWidth = 700
-      ClientHeight = 512
+      ClientHeight = 534
       object BitBtn2: TBitBtn
         Left = 210
         Height = 40
-        Top = 209
+        Top = 219
         Width = 283
         Anchors = []
         Caption = 'Open your distribution''s package catalog'

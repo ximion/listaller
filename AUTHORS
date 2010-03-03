@@ -3,7 +3,8 @@ Matthias Klumpp <matthias@nlinux.org>
 liCreator: Matthias Klumpp <matthias@nlinux.org>
 	   Thomas Dieffenbach <giantics@gmx.net>
 
-Graphics:  Dennis Seid <jumcore@yahoo.de>
+Graphics:  Matthias Klumpp <matthias@nlinux.org>
+	   Dennis Seid <jumcore@yahoo.de>
 
 
 ----------
@@ -17,6 +18,7 @@ Synapse:  (c) 1999-2002, Lukas Gebauer
 
 RegExpr:  (c) 1999-2004 Andrey V. Sorokin
 
-
-
-TODO: Add authors of OPBitmap component set
+OPBitmap: (c) 2007-2010 Theo Lustenberger
+	  (c) 1999, 2001 Colosseum Builders, Inc.
+	  (c) 1995-1998 Jean-loup Gailly and Mark Adler
+	  (c) 2000, Wolfgang Krug

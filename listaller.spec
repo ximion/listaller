@@ -1,11 +1,12 @@
 Name:             listaller-core
-Version:          0.3.20~experimental
+Version:          0.3.70+git20100303
 Release:          1
 License:          GPLv3
-BuildRequires:    fpc >= 2.2.4, lazarus >= 0.9.27, glib2-devel, gtk2-devel, glib2, fpc-src, gtk2, libqt4intf, sqlite-devel, PolicyKit-devel, PackageKit-devel
-Source0:          listaller-0.4~git261109.tar.gz
+BuildRequires:    fpc >= 2.4.0, lazarus >= 0.9.28, glib2-devel,
+		  gtk2-devel, glib2, fpc-src, gtk2, libqt4intf5, sqlite-devel, PackageKit-glib-devel >=0.5.6, PolicyKit-devel
+Source0:          listaller_0.3.70-0+git20100303~1unstable.tar.gz
 
-Requires:         xdg-utils, PackageKit, PolicyKit, libinstaller-0.4.0
+Requires:         xdg-utils, PackageKit, PolicyKit, libInstaller-0.4
 
 Provides:         listaller
 Group:            Applications/System
@@ -25,30 +26,19 @@ non-gui software installation tool "lipa".
 %setup -c
 
 %build
-cd ./main
+cd ./listaller-gitsnapshot
 #Build for all widgetsets
-make all
-make licreator-gtk
-make licreator-qt
+./configure --enable-gtk --enable-qt --enable-creator
+make
 
 %install
-cd ./main
+cd ./listaller-gitsnapshot
 
 mkdir -p %{_tmppath}/build-%{name}-%{version}/usr/bin
-
-echo "Installing binaries..."
-#Install basics
-make DESTDIR=%{buildroot} install-all-bin
-#Install Listaller Creator (GTK2)
-make DESTDIR=%{buildroot} install-licreator-gtk
-#Install Listaller Creator (Qt4)
-make DESTDIR=%{buildroot} install-licreator-qt
-
-echo "Installing architecture independent files..."
-make DESTDIR=%{buildroot} install-data
+make install
 
 %clean
-cd ./main
+cd ./listaller-gitsnapshot
 make clean
 
 %files
@@ -102,22 +92,21 @@ echo "Done."
 /usr/share/listaller/locale
 /etc/lipa
 
-%package -n libinstaller-0.4.0
+%package -n libInstaller-0.4
 Requires:         listaller-core, PackageKit, PolicyKit
 Group:            Applications/System
 Summary:          Listaller library
 Vendor:           Listaller-Project
 URL:              http://listaller.nlinux.org
 
-%description -n libinstaller-0.4.0
+%description -n libInstaller-0.4
 Contains the libInstaller library, which allows
 programs to access install/uninstall functions
 of Listaller.
 
-%files -n libinstaller-0.4.0
+%files -n libInstaller-0.4
 %defattr(-,root,root)
 %dir "/usr/bin"
-/usr/lib/libinstaller.so
 /usr/lib/libinstaller.so.*
 
 %package -n listaller-gtk
@@ -210,9 +199,9 @@ Please note that this is an alpha-release!
 
 %files -n listaller-creator-qt
 %defattr(-,root,root)
-/usr/appfiles/liCreator/
-/usr/share/applications/licreator.desktop
-/usr/bin/licreator
+#/opt/appfiles/liCreator/
+#/usr/share/applications/licreator-qt.desktop
+#/usr/bin/licreator-qt
 
 %package -n listaller-creator-gtk
 Requires:         listaller-core, listaller-data, listaller-tools
@@ -230,6 +219,6 @@ Please note that this is an alpha-release!
 
 %files -n listaller-creator-gtk
 %defattr(-,root,root)
-/usr/appfiles/liCreator/
-/usr/share/applications/licreator.desktop
-/usr/bin/licreator
+/opt/appfiles/liCreator/
+/usr/share/applications/licreator-gtk.desktop
+/usr/bin/licreator-gtk
