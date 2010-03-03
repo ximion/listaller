@@ -36,10 +36,10 @@
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
-        <CursorPos X="13" Y="95"/>
-        <TopLine Value="71"/>
+        <CursorPos X="9" Y="28"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="49"/>
+        <UsageCount Value="50"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -109,7 +109,7 @@
         <UnitName Value="ipkbuild"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="37"/>
+        <UsageCount Value="38"/>
       </Unit10>
       <Unit11>
         <Filename Value="abzbrows.pas"/>
@@ -183,9 +183,9 @@
       <Unit21>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="10"/>
+        <CursorPos X="165" Y="231"/>
+        <TopLine Value="217"/>
+        <UsageCount Value="11"/>
       </Unit21>
       <Unit22>
         <Filename Value="../../../../../usr/share/fpcsrc/2.2.4/packages/fcl-base/src/custapp.pp"/>
@@ -207,7 +207,7 @@
         <UnitName Value="ipkscript"/>
         <CursorPos X="21" Y="67"/>
         <TopLine Value="39"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit24>
       <Unit25>
         <Filename Value="bindings/installer.pas"/>
@@ -265,123 +265,123 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="411" Column="1" TopLine="368"/>
+        <Caret Line="193" Column="32" TopLine="173"/>
       </Position1>
       <Position2>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="193" Column="32" TopLine="173"/>
+        <Caret Line="57" Column="36" TopLine="37"/>
       </Position2>
       <Position3>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="57" Column="36" TopLine="37"/>
+        <Caret Line="196" Column="38" TopLine="176"/>
       </Position3>
       <Position4>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="196" Column="38" TopLine="176"/>
+        <Caret Line="81" Column="40" TopLine="61"/>
       </Position4>
       <Position5>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="81" Column="40" TopLine="61"/>
+        <Caret Line="193" Column="37" TopLine="173"/>
       </Position5>
       <Position6>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="193" Column="37" TopLine="173"/>
+        <Caret Line="57" Column="62" TopLine="37"/>
       </Position6>
       <Position7>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="57" Column="62" TopLine="37"/>
+        <Caret Line="194" Column="37" TopLine="174"/>
       </Position7>
       <Position8>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="194" Column="37" TopLine="174"/>
+        <Caret Line="62" Column="53" TopLine="42"/>
       </Position8>
       <Position9>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="62" Column="53" TopLine="42"/>
+        <Caret Line="195" Column="41" TopLine="175"/>
       </Position9>
       <Position10>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="195" Column="41" TopLine="175"/>
+        <Caret Line="87" Column="68" TopLine="67"/>
       </Position10>
       <Position11>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="87" Column="68" TopLine="67"/>
+        <Caret Line="196" Column="46" TopLine="176"/>
       </Position11>
       <Position12>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="196" Column="46" TopLine="176"/>
+        <Caret Line="29" Column="28" TopLine="13"/>
       </Position12>
       <Position13>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="29" Column="28" TopLine="13"/>
+        <Caret Line="30" Column="13" TopLine="1"/>
       </Position13>
       <Position14>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="30" Column="13" TopLine="1"/>
+        <Caret Line="60" Column="34" TopLine="39"/>
       </Position14>
       <Position15>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="60" Column="34" TopLine="39"/>
+        <Caret Line="83" Column="5" TopLine="62"/>
       </Position15>
       <Position16>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="83" Column="5" TopLine="62"/>
+        <Caret Line="62" Column="49" TopLine="41"/>
       </Position16>
       <Position17>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="62" Column="49" TopLine="41"/>
+        <Caret Line="77" Column="18" TopLine="50"/>
       </Position17>
       <Position18>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="77" Column="18" TopLine="50"/>
+        <Caret Line="75" Column="87" TopLine="47"/>
       </Position18>
       <Position19>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="75" Column="87" TopLine="47"/>
+        <Caret Line="187" Column="7" TopLine="166"/>
       </Position19>
       <Position20>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="187" Column="7" TopLine="166"/>
+        <Caret Line="107" Column="22" TopLine="1"/>
       </Position20>
       <Position21>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="107" Column="22" TopLine="1"/>
+        <Caret Line="187" Column="8" TopLine="166"/>
       </Position21>
       <Position22>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="187" Column="8" TopLine="166"/>
+        <Caret Line="107" Column="22" TopLine="86"/>
       </Position22>
       <Position23>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="107" Column="22" TopLine="86"/>
+        <Caret Line="27" Column="24" TopLine="8"/>
       </Position23>
       <Position24>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="27" Column="24" TopLine="8"/>
+        <Caret Line="29" Column="2" TopLine="1"/>
       </Position24>
       <Position25>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="29" Column="2" TopLine="1"/>
+        <Caret Line="81" Column="40" TopLine="73"/>
       </Position25>
       <Position26>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="81" Column="40" TopLine="73"/>
+        <Caret Line="113" Column="21" TopLine="85"/>
       </Position26>
       <Position27>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="113" Column="21" TopLine="85"/>
+        <Caret Line="60" Column="57" TopLine="39"/>
       </Position27>
       <Position28>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="60" Column="57" TopLine="39"/>
+        <Caret Line="92" Column="14" TopLine="72"/>
       </Position28>
       <Position29>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="92" Column="14" TopLine="72"/>
+        <Caret Line="81" Column="76" TopLine="71"/>
       </Position29>
       <Position30>
         <Filename Value="lipa.lpr"/>
-        <Caret Line="81" Column="76" TopLine="71"/>
+        <Caret Line="28" Column="9" TopLine="1"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
