@@ -252,7 +252,7 @@ end;
 
 function SolveBuildTimeSybl(str: String): String;
 begin
-
+ Result:=str;
 end;
 
 procedure ShowPopupNotify(msg: String;urgency: TUrgencyLevel;time:Integer);

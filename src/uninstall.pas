@@ -64,7 +64,7 @@ uses manager;
 procedure TRMForm.FormShow(Sender: TObject);
 begin
  Label1.Caption:=rsWaiting;
- Caption:=StringReplace(rsRMAppC,'%a','...',[rfReplaceAll])
+ self.Caption:=StringReplace(rsRMAppC,'%a','...',[rfReplaceAll])
 end;
 
 procedure TRMForm.GetOutPutTimerTimer(Sender: TObject);
@@ -147,11 +147,16 @@ begin
  BitBtn1.Enabled:=false;
  Application.ProcessMessages;
   li_mgr_remove_app(@MnFrm.amgr,MnFrm.uApp);
- while astatus=prNone do Application.ProcessMessages;
+ while astatus=prNone do
+ begin
+  sleep(1);
+  Application.ProcessMessages;
+ end;
  li_mgr_register_status_call(@MnFrm.amgr,@manager.OnMgrStatus,nil);
+
+ //!!!: Misterious crash appears when executing this code.
+ //MnFrm.ReloadAppList(true);
  BitBtn1.Enabled:=true;
-  //!!!
-  //MnFrm.ReloadAppList(true);
 end else close;
 
 end else

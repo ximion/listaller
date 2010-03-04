@@ -534,6 +534,7 @@ begin
  exit;
 end;
 
+try
   try
    li_mgr_remove_app(@mgr,appinfo);
    li_mgr_free(@mgr);
@@ -542,6 +543,8 @@ end;
    success:=false;
   end;
 
+
+finally
   //Now emit action finished signal:
   // create a signal & check for errors
   msg:=bs.CreateNewSignal('/org/freedesktop/Listaller/'+jobID, // object name of the signal
@@ -552,6 +555,7 @@ end;
 
   p_info('App uninstallation job "'+jobID+'" finished.');
  Terminate;
+ end;
 end;
 
 end.

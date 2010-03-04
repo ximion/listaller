@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1447"/>
+      <CurrentBuildNr Value="1460"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -28,13 +28,13 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="56">
+    <Units Count="57">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="1" Y="450"/>
-        <TopLine Value="409"/>
+        <CursorPos X="20" Y="23"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="76"/>
         <Loaded Value="True"/>
@@ -43,8 +43,8 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="46" Y="1052"/>
-        <TopLine Value="1040"/>
+        <CursorPos X="17" Y="1762"/>
+        <TopLine Value="1738"/>
         <UsageCount Value="36"/>
       </Unit1>
       <Unit2>
@@ -156,7 +156,7 @@
         <Filename Value="limanageapp.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="limanageapp"/>
-        <CursorPos X="44" Y="910"/>
+        <CursorPos X="60" Y="25"/>
         <TopLine Value="1"/>
         <UsageCount Value="35"/>
       </Unit17>
@@ -293,8 +293,8 @@
         <Filename Value="lidbusproc.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lidbusproc"/>
-        <CursorPos X="28" Y="104"/>
-        <TopLine Value="195"/>
+        <CursorPos X="6" Y="106"/>
+        <TopLine Value="336"/>
         <UsageCount Value="42"/>
       </Unit37>
       <Unit38>
@@ -382,8 +382,8 @@
         <Filename Value="../src/simdbus.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="simdbus"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
+        <CursorPos X="26" Y="51"/>
+        <TopLine Value="30"/>
         <UsageCount Value="30"/>
       </Unit50>
       <Unit51>
@@ -418,8 +418,14 @@
         <TopLine Value="50"/>
         <UsageCount Value="10"/>
       </Unit55>
+      <Unit56>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/objpas/classes/classesh.inc"/>
+        <CursorPos X="17" Y="1429"/>
+        <TopLine Value="1408"/>
+        <UsageCount Value="10"/>
+      </Unit56>
     </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
+    <JumpHistory Count="10" HistoryIndex="9">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="23" Column="20" TopLine="1"/>
@@ -428,6 +434,38 @@
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="450" Column="1" TopLine="406"/>
       </Position2>
+      <Position3>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="27" TopLine="1"/>
+      </Position3>
+      <Position4>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="23" Column="20" TopLine="1"/>
+      </Position4>
+      <Position5>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="30" TopLine="1"/>
+      </Position5>
+      <Position6>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="23" Column="19" TopLine="1"/>
+      </Position6>
+      <Position7>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="29" TopLine="1"/>
+      </Position7>
+      <Position8>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="23" Column="19" TopLine="1"/>
+      </Position8>
+      <Position9>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="31" TopLine="1"/>
+      </Position9>
+      <Position10>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="23" Column="20" TopLine="1"/>
+      </Position10>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

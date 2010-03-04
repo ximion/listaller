@@ -105,7 +105,7 @@ rsInstOf='Installation of %a';
 rsTestmode='Testmode';
 rsTestFinished='Test-installation of package finished.';
 rsCleaningUp = 'Cleaning up...';
-rspkgInval='The submitted package was invalid!';
+rspkgInval='The submitted package is invalid!';
 rsCouldntSolve='Dependencies couldn''t be solved!';
 rsViewLog='Please view the logfile at %p';
 rsPKGError='Installation package is corrupt';
@@ -202,6 +202,7 @@ rsApplications='Applications';
 rsInstalledApps='Installed applications';
 rsInstallPkg='Install package';
 rsRepositories='Repositories';
+rsPackageLists='Package lists';
 rsSettings='Settings';
 rsMyApps='My apps';
 rsSharedApps='Shared apps';
@@ -255,7 +256,6 @@ rsPkgUnsigned = 'This package is not signed!';
 rsPkgUntrusted = 'This package is untrusted!';
 rsCouldNotInstallApp = 'The application %a could not be installed!';
 rsWarning = 'Warning!';
-rsOpenDistroPkgList = 'Open the built-in package list';
 implementation
 end.
 

@@ -680,10 +680,11 @@ begin
    if pkit.PkFinishCode>1 then
    begin request(rsPKitProbPkMon,rqError);pkit.Free;tmp.Free;exit;end;
 
-   msg('Package detected: '+f);
   if (tmp.Count>0) then
   begin
    f:=tmp[0];
+
+   msg('Package detected: '+f);
 
    msg('Looking for reverse-dependencies...');
 
@@ -721,6 +722,7 @@ end;
     OnStatus:=@DBusStatusChange;
     ExecuteAction;
     Free;
+    p_debug('DBus service closed.');
   end;
   exit;
  end;

@@ -1,9 +1,9 @@
 object MnFrm: TMnFrm
-  Left = 255
+  Left = 271
   Height = 558
-  Top = 186
+  Top = 192
   Width = 816
-  ActiveControl = LeftBar
+  ActiveControl = SWBox
   Caption = 'Software Manager'
   ClientHeight = 538
   ClientWidth = 816
@@ -1780,11 +1780,11 @@ object MnFrm: TMnFrm
     object CatalogPage: TPage
       Caption = 'CatalogPage'
       ClientWidth = 700
-      ClientHeight = 534
+      ClientHeight = 512
       object BitBtn2: TBitBtn
         Left = 210
         Height = 40
-        Top = 219
+        Top = 209
         Width = 283
         Anchors = []
         Caption = 'Open your distribution''s package catalog'

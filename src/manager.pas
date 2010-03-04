@@ -336,8 +336,8 @@ begin
  li_mgr_set_su_mode(@aMgr,SuApps);
  if (appList.Count<=0)or(force) then
  begin
-  appList.ClearList;
- {if Assigned(appList) then appList.Free;
+ appList.ClearList;
+{ if appList is TAppListView then appList.Free;
  appList:=CreateNewUserAppList;}
  li_mgr_load_apps(@MnFrm.amgr);
  end;
@@ -349,8 +349,7 @@ begin
  if (appListSU.Count<=0)or(force) then
  begin
   appListSU.ClearList;
-
-  {if Assigned(appListSU) then appListSU.Free;
+  {if appListSU is TAppListView then appListSU.Free;
  appListSU:=CreateNewSuAppList;}
   li_mgr_load_apps(@MnFrm.amgr);
  end;
@@ -752,7 +751,7 @@ var uconf: TStringList;
 begin
 if UListBox.ItemIndex>-1 then
 begin
- if Application.MessageBox(PChar(rsRmSrcQ),PChar(rsRmSrcQC),MB_YESNO)=IDYES then
+ if Application.MessageBox(PChar(rsRmSrcQ),PChar(rsRmSrcQC),MB_YESNO+MB_IconWarning)=IDYES then
  begin
   uconf:=tStringList.Create;
   uconf.LoadFromFile(RegDir+'updates.list');
@@ -871,6 +870,7 @@ StatusLabel.Caption:=rsReady;
 FilterEdt.Enabled:=true;
 SWBox.Enabled:=true;
 CBox.Enabled:=true;
+FilterEdt.SetFocus;
 end;
 end;
 
@@ -946,11 +946,11 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
 
  //Translate
  Caption:=rsSoftwareManager;
- CatButton.Caption:=rsOpenDistroPkgList;
+ CatButton.Caption:=rsPackageLists;
  Label1.Caption:=rsShow;
  AboutBtn.Caption:=rsAboutListaller;
  BitBtn2.Caption:=rsOpenDirsiCatalog;
- InstAppButton.Caption:=rsInstalledApps;
+ InstAppButton.Caption:=rsApplications;//rsInstalledApps;
  MItemInstallPkg.Caption:=rsInstallPkg;
  RepoButton.Caption:=rsRepositories;
  SettingsButton.Caption:=rsSettings;

@@ -55,7 +55,7 @@
         <ComponentName Value="FrmEditor"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="editor"/>
-        <CursorPos X="33" Y="696"/>
+        <CursorPos X="21" Y="678"/>
         <TopLine Value="676"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="149"/>
@@ -463,7 +463,7 @@
         <UsageCount Value="10"/>
       </Unit59>
     </Units>
-    <JumpHistory Count="7" HistoryIndex="6">
+    <JumpHistory Count="5" HistoryIndex="4">
       <Position1>
         <Filename Value="editor.pas"/>
         <Caret Line="19" Column="18" TopLine="1"/>
@@ -474,24 +474,16 @@
       </Position2>
       <Position3>
         <Filename Value="editor.pas"/>
-        <Caret Line="190" Column="51" TopLine="217"/>
+        <Caret Line="885" Column="7" TopLine="847"/>
       </Position3>
       <Position4>
         <Filename Value="editor.pas"/>
-        <Caret Line="885" Column="7" TopLine="847"/>
+        <Caret Line="153" Column="36" TopLine="138"/>
       </Position4>
       <Position5>
         <Filename Value="editor.pas"/>
-        <Caret Line="699" Column="6" TopLine="704"/>
-      </Position5>
-      <Position6>
-        <Filename Value="editor.pas"/>
-        <Caret Line="153" Column="36" TopLine="138"/>
-      </Position6>
-      <Position7>
-        <Filename Value="editor.pas"/>
         <Caret Line="727" Column="2" TopLine="691"/>
-      </Position7>
+      </Position5>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

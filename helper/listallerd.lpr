@@ -66,7 +66,9 @@ begin
 
     //Check tick count
     if (InstallWorkers+ManagerWorkers)<>lastJobCount then
-     startTick:=DateTimeToTimeStamp(Now).Time;
+     startTick:=DateTimeToTimeStamp(Now).Time
+    else
+     lastTime:=Round(((DateTimeToTimeStamp(Now).Time-startTick)/1000));
 
     lastJobCount:=InstallWorkers+ManagerWorkers;
 

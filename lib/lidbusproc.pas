@@ -51,7 +51,7 @@ type
    addsrc: Boolean;
  end;
 
- //** Object which can perform various actions on Listaller's DBus interface
+ //** Object which can perform various actions on Listaller's DBus interface (currently NO Thread anymore)
  TLiDBusAction = class
  private
   cmd: TListallerBusAction;
@@ -84,6 +84,7 @@ implementation
 
 constructor TLiDBusAction.Create(action: ListallerBusCommand);
 begin
+ //FreeOnTerminate:=true;
  cmd:=action.cmdtype;
  cmdinfo:=action;
  done:=false;
@@ -91,6 +92,9 @@ end;
 
 destructor TLiDBusAction.Destroy;
 begin
+ {if Assigned(FatalException) then
+  raise FatalException; }
+
  status:=prFinished;
  procinfo.changed:=pdStatus;
  SyncProcStatus;
@@ -106,10 +110,14 @@ end;
 
 procedure TLiDBusAction.ExecuteAction;
 begin
+done:=false;
+//if Terminated then exit;
  case cmd of
   lbaUninstallApp: UninstallAppAsRoot(cmdinfo.appinfo);
   lbaInstallPack : DoInstallationAsRoot(cmdinfo.pkgname,cmdinfo.addsrc);
  end;
+done:=true;
+p_debug('Job done.');
 end;
 
 procedure TLiDBusAction.SendError(msg: String);
@@ -204,10 +212,10 @@ begin
   //Now start listening to Listaller dbus signals and forward them to
   //native functions until the "Finished" signal is received
 
-  bus.StartListening('/org/freedesktop/Listaller/'+jobID);
-
   procinfo.mnprogress:=0;
   action_finished:=false;
+  //Add a rule for which messages we want to see
+  bus.StartListening('/org/freedesktop/Listaller/'+jobID);
   // loop listening for signals being emmitted
   while (not action_finished) do
   begin
@@ -220,6 +228,15 @@ begin
     end;
 
     //Convert all DBus signals into standard callbacks
+
+    //Check if the installation has finished
+    if bus.ReceivedSignalIs(dmsg, 'Finished') then
+    begin
+       action_finished:=true;
+       if (not bus.ReadSignalBool(dmsg)) then
+        //The action failed. Leave the loop and display message
+        SendError('The action failed.');
+    end;
 
     //Change of progress
     if bus.ReceivedSignalIs(dmsg,'ProgressChange') then
@@ -235,15 +252,6 @@ begin
          //The action failed. Diplay error and leave the loop
           SendError(bus.ReadSignalStr(dmsg));
           action_finished:=true;
-    end;
-
-    //Check if the installation has finished
-    if bus.ReceivedSignalIs(dmsg, 'Finished') then
-    begin
-       action_finished:=true;
-       if (not bus.ReadSignalBool(dmsg)) then
-        //The action failed. Leave the loop and display message
-        SendError('The action failed.');
     end;
 
     // free the message

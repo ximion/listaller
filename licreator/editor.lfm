@@ -1,7 +1,7 @@
 object FrmEditor: TFrmEditor
-  Left = 247
+  Left = 262
   Height = 654
-  Top = 200
+  Top = 215
   Width = 922
   ActiveControl = IPSNotebook
   Caption = 'Listaller package creator'
@@ -53,7 +53,6 @@ object FrmEditor: TFrmEditor
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 35
-        BookMarkOptions.OnChange = nil
         Gutter.Width = 53
         Gutter.MouseActions = <        
           item
@@ -512,6 +511,17 @@ object FrmEditor: TFrmEditor
             Priority = 0
           end>
         MouseSelActions = <        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
+          end        
           item
             Shift = []
             ShiftMask = []
