@@ -42,6 +42,7 @@ type
     BtnPanel: TPanel;
     CatButton: TSpeedButton;
     InstAppButton: TSpeedButton;
+    MenuItem2: TMenuItem;
     RepoButton: TSpeedButton;
     SettingsButton: TSpeedButton;
     SpacerPan: TPanel;
@@ -104,6 +105,7 @@ type
     procedure AutoDepLdCbChange(Sender: TObject);
     procedure CbShowPkMonChange(Sender: TObject);
     procedure EnableProxyCbChange(Sender: TObject);
+    procedure MenuItem2Click(Sender: TObject);
     procedure MItemInstallPkgClick(Sender: TObject);
     procedure MyAppSheetShow(Sender: TObject);
     procedure RmUpdSrcBtnClick(Sender: TObject);
@@ -394,7 +396,7 @@ begin
       p.CommandLine:='/usr/bin/kpackagekit';
   end;
   Notebook1.Enabled:=false;
-  LeftBar.Enabled:=false;
+  BtnPanel.Enabled:=false;
   MBar.Visible:=true;
   try
    p.Execute;
@@ -407,7 +409,7 @@ begin
   while p.Running do Application.ProcessMessages;
   p.Free;
   Notebook1.Enabled:=true;
-  LeftBar.Enabled:=true;
+  BtnPanel.Enabled:=true;
   MBar.Visible:=false;
 end;
 
@@ -448,13 +450,13 @@ begin
    exit;
   end;
   Notebook1.Enabled:=false;
-  LeftBar.Enabled:=false;
+  BtnPanel.Enabled:=false;
   MBar.Visible:=true;
   p.Execute;
   while p.Running do Application.ProcessMessages;
   p.Free;
   Notebook1.Enabled:=true;
-  LeftBar.Enabled:=true;
+  BtnPanel.Enabled:=true;
   MBar.Visible:=false;
 end;
 
@@ -610,6 +612,50 @@ begin
   cnf:=TIniFile.Create(p+'config.cnf');
   cnf.WriteBool('Proxy','UseProxy',(Sender as TCheckBox).Checked);
   cnf.Free;
+end;
+
+procedure TMnFrm.MenuItem2Click(Sender: TObject);
+var rep: TStringList;
+    root: Boolean;
+    appcheckmgr: Pointer;
+
+procedure LogQ;
+begin
+if Application.MessageBox(PAnsiChar(rsViewLogQ), 'ViewLog', MB_YESNO+MB_IconQuestion)=IDYES then
+  ShowMessage(rep.Text);
+end;
+
+procedure PerformCheck;
+begin
+Notebook1.Visible:=false;
+BtnPanel.Enabled:=false;
+MBar.Visible:=true;
+if not li_mgr_check_apps(@appcheckmgr,@rep,root) then
+begin
+ if Application.MessageBox(PAnsiChar(rsBrokenDepsFixQ), 'FixDeps', MB_YESNO+MB_IconQuestion)=IDYES then
+   li_mgr_fix_apps(@appcheckmgr,@rep,root);
+end;
+Notebook1.Visible:=true;
+BtnPanel.Enabled:=true;
+MBar.Visible:=false;
+end;
+
+begin
+root:=false;
+if Application.MessageBox(PAnsiChar(rsCheckAppDepsQ), PChar(rsCheckDepsQ), MB_YESNO+MB_IconQuestion)=
+  IDYES then
+begin
+ appcheckmgr:=li_mgr_new; //New appmanager
+ if Application.MessageBox(PAnsiChar(rsCheckRootAppsQ), PChar(rsCheckDepsQ), MB_YESNO+MB_IconQuestion)=IDYES then
+ begin
+  rep:=TStringList.Create;
+  PerformCheck;
+  root:=true;
+  PerformCheck;
+ end else PerformCheck;
+ LogQ;
+ li_mgr_free(@appcheckmgr);
+end;
 end;
 
 procedure TMnFrm.MItemInstallPkgClick(Sender: TObject);

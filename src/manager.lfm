@@ -3,7 +3,7 @@ object MnFrm: TMnFrm
   Height = 558
   Top = 192
   Width = 816
-  ActiveControl = SWBox
+  ActiveControl = LeftBar
   Caption = 'Software Manager'
   ClientHeight = 538
   ClientWidth = 816
@@ -2079,7 +2079,7 @@ object MnFrm: TMnFrm
   end
   object MBar: TProgressBar
     Left = 392
-    Height = 6
+    Height = 8
     Top = 248
     Width = 128
     Anchors = [akRight, akBottom]
@@ -2107,6 +2107,10 @@ object MnFrm: TMnFrm
       object MItemInstallPkg: TMenuItem
         Caption = 'Install package...'
         OnClick = MItemInstallPkgClick
+      end
+      object MenuItem2: TMenuItem
+        Caption = 'Check applications'
+        OnClick = MenuItem2Click
       end
     end
   end
