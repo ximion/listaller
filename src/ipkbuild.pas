@@ -165,22 +165,23 @@ end;
 ///////////////////Create Update-Source from IPS-File///////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 procedure CreateUpdateSource(FName, path: String);
-var ips,script,fls: TStringList;i,j: Integer;ubit: TLiUpdateBit;h,dir:String;
+var fls: TStringList;
+    i: Integer;
+    ubit: TLiUpdateBit;
+    h,dir,fn:String;
+    script: TStringList;
 begin
-ips:=TStringList.Create;
-ips.LoadFromFile(FName);
-script:=TStringList.Create;
+if not FileExists(ChangeFileExt(fname,'')+'_fdata.ulist') then
+begin
+ writeLn('error:');
+ writeLn(' No file information found. You need to build the package first!');
+ halt(1);
+ exit;
+end;
+
 fls:=TStringList.Create;
+fls.LoadFromFile(ChangeFileExt(fname,'')+'_fdata.ulist');
 
-  for i:=1 to ips.Count-1 do begin
-  if pos('!-Files ~',ips[i])>0 then break
-  else script.Add(ips[i]);
-  end;
-
-  for j:=i+1 to ips.Count-1 do
-  fls.Add(ips[j]);
-
-  ips.Free;
 writeLn('Building update source...');
 writeLn('Please wait!');
 ubit:=TLiUpdateBit.Create;
@@ -195,45 +196,37 @@ begin
 if (fls[i][1]='/')or(fls[i][1]='.') then
 begin
 
- if (not FileExists(DeleteModifiers(fls[i])))
- and (not FileExists(ExtractFilePath(FName)+fls[i])) then
+ if fls[i][1]='.' then
+  fn:=CleanFilePath(ExtractFilePath(fname)+'/'+fls[i])
+ else
+  fn:=fls[i];
+
+ fn:=DeleteModifiers(fn);
+
+ if (not FileExists(DeleteModifiers(fn)))
+ and (not FileExists(ExtractFilePath(FName)+fn)) then
  begin
  writeLn('error: ');
- writeln('The file '+DeleteModifiers(fls[i])+' does not exists!');
- writeLn('[Action canceled]');
+ writeln(' The file "'+fn+'" does not exists!');
  halt(101);
  end;
 
- if not DirectoryExists(path+'/'+StringReplace(fls[i],'$','',[]))
- then CreateDir(path+'/'+StringReplace(dir,'$','',[]));
- h:=path+'/'+StringReplace(dir,'$','',[]);
- while not DirectoryExists(path+'/'+StringReplace(dir,'$','',[])) do
+ if not DirectoryExists(path+'/'+SyblToX(dir))
+ then ForceDirectories(path+'/'+SyblToX(dir));
+ h:=path+'/'+SyblToX(dir);
+
+ if (i=fls.Count-1)or(MD5.MDPrint(MD5.MD5File(fn,1024))<>fls[i+1]) then
  begin
- CreateDir(h);
- if DirectoryExists(h) then h:=path+'/'+StringReplace(dir,'$','',[])
- else h:=ExtractFilePath(ExcludeTrailingBackslash(h));
- end;
+  writeln('Writing '+ExtractFileName(fn)+' ...');
+ ubit.Compress(fn,CleanFilePath(h+'/'+ExtractFileName(fn)+'.xz'));
 
- if (i=fls.Count-1)or(MD5.MDPrint(MD5.MD5File(DeleteModifiers(fls[i]),1024))<>fls[i+1]) then
- begin
-  writeln('Writing '+ExtractFileName(DeleteModifiers(fls[i]))+' ...');
- ubit.Compress(DeleteModifiers(fls[i]),h+'/'+ExtractFileName(DeleteModifiers(fls[i])));
- ubit.Free;
-
- if (fls[i][1]='/')or(fls[i][1]='.')then
-  fls.Insert(i+1,'');
-
- if fls[i][1]='/' then
- fls[i+1]:=MDPrint(MD5.MD5File(DeleteModifiers(fls[i])))
- else
- fls[i+1]:=MDPrint(MD5.MD5File(ExtractFilePath(FName)+DeleteModifiers(fls[i])));
-
- //FileCopy(DeleteModifiers(Files[i]),path+StringReplace(Files[i+2],'$INST','',[rfReplaceAll])+'/'+ExtractFileName(DeleteModifiers(Files[i])));
- end;
- writeLn('File '+ExtractFileName(DeleteModifiers(fls[i]))+' checked out.');
+ fls[i+1]:=MD5.MDPrint(MD5.MD5File(fn,1024));
 
  end;
-  end;
+ writeLn('File '+ExtractFileName(fn)+' checked out.');
+
+ end;
+end;
 
  Inc(i);
 end;
@@ -241,23 +234,27 @@ end;
  ubit.Free;
 
  writeLn('Save configuration...');
+
+ fls.SaveToFile(ChangeFileExt(fname,'')+'_fdata.ulist');
+
+ fls.LoadFromFile(fname);
+ script:=TStringList.Create;
+ for i:=1 to fls.Count-1 do
+ begin
+  if pos('!-Files ~',fls[i])>0 then break
+  else script.Add(fls[i]);
+ end;
+ fls.Free;
+ script.Delete(0);
  script.SaveToFile(path+'source.pin');
- ips:=TStringList.Create;
- ips.Add('IPK-Source.Version: 0.8');
- for i:=0 to script.Count-1 do
- ips.Add(script[i]);
- fls.SaveToFile(path+'sinfo.id');
- for i:=0 to fls.Count-1 do
- ips.Add(fls[i]);
- ips.SaveToFile(FName);
- ips.Free;
  script.Free;
+
 
 writeLn('Done.');
 writeLn('');
-writeLn('Copy the folder '+path+' to an location on a webserver,');
-writeLn('to create an update source in this directory.');
-writeLn('To update the repository, execute the "lipa -u" command with the same parameters again.');
+writeLn(' Copy the folder '+path+' to an location on a webserver,');
+writeLn(' to create an update source in this directory.');
+writeLn(' To update the repository, execute the "lipa -u" command with the same parameters again.');
 end;
 
 function IsNumeric(Value: string; const AllowFloat: Boolean=false): Boolean;
@@ -337,12 +334,14 @@ var
   control: TIPKScript;
   ipkpkg: TLiPackager;
   res: Boolean;
+  uinfo: TStringList; //Generate update source baseinfo
 
 procedure bp_AddFile(fname: String;const basepath: String='');
 var orig: String;
     x: String;
     forig: String;
 begin
+ if fname='' then exit;
  orig:=h;
  h:=h+'/'+StringReplace(ExtractFilePath(fname),basepath,'',[rfReplaceAll]);
  h:=CleanFilePath(h);
@@ -389,7 +388,12 @@ if not ipkpkg.AddFile(WDir+h+'/'+ExtractFileName(DeleteModifiers(fname))) then
   halt(8);
  end;
 
+ //Add information to file control section
  fc.Add(MD5.MDPrint(MD5.MD5File(DeleteModifiers(fname),1024)));//ExcludeTrailingBackslash(Files[i+1]));
+
+ //Add info to update source info
+ uinfo.Add(fname);
+ uinfo.Add(MD5.MDPrint(MD5.MD5File(DeleteModifiers(fname),1024)));
 
  h:=orig;
  write('.');
@@ -442,6 +446,8 @@ if (LowerCase(ExtractFileExt(o))<>'.ipk') then
  o:=ExtractFilePath(fi)+'/'+control.PkName+'.ipk';
 
 o:=CleanFilePath(o);
+
+uinfo:=TStringList.Create;
 
 sl:=TStringList.Create;
 control.ReadBuildCMDs(sl);
@@ -505,6 +511,7 @@ writeLn('');
    if pos('!-Files ~',fsec[j])>0 then
    begin
     prID:=(copy(fsec[j],pos('~',fsec[j])+1,length(fsec[j])));
+    uinfo.Add('!-Files ~'+prID);
     for i:=j+1 to fsec.count-1 do
      if pos('!-Files ~',fsec[i])>0 then break
        else files.Add(fsec[i]);
@@ -519,6 +526,8 @@ writeLn('');
   s:=copy(files[i],2,length(files[i]));
   //Copy targed folder section
   fc.Add(files[i]);
+  //Add info to update info list too
+  uinfo.Add(files[i]);
  end else
  begin
  if (files[i][1]='/')or(files[i][1]='.') then
@@ -536,7 +545,6 @@ writeLn('');
  if not DirectoryExists(WDir+h)
  then FileUtil.ForceDirectory(WDir+h);
 
- p_debug(Files[i]);
  if (DirectoryExistsUTF8(DeleteModifiers(Files[i])))
  or (pos('*',ExtractFileName(Files[i]))>0) then
  begin
@@ -545,7 +553,7 @@ writeLn('');
   for k:=0 to sl.Count-1 do
    bp_AddFile(sl[k],ExtractFilePath(files[i]));
 
-  sl.Free;
+  if sl is TStringList then sl.Free;
  end else
  begin
   if (not FileExists(DeleteModifiers(Files[i])))
@@ -685,6 +693,8 @@ ipkpkg.AddFile(WDir+'prerm');
 writeLn(' I: Prerm script found.');
 end;
 
+writeLn('Saving update info to "'+ChangeFileExt(ExtractFileName(fi),'')+'_fdata.ulist"');
+uinfo.SaveToFile(ChangeFileExt(fi,'')+'_fdata.ulist');
 end else
 begin //If pkgtype is another one
 if pkgtype=ptDLink then
@@ -732,6 +742,8 @@ ipkpkg.AddFile(WDir+'files/'+ExtractFileName(control.Binary));
 control.Binary:='/files/'+ExtractFileName(control.Binary);
 end;
 end;
+
+uinfo.Free;
 
 randomize;
 

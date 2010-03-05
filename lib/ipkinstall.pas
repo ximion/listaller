@@ -569,7 +569,7 @@ end;
 
 if not pkg.UnpackFile('arcinfo.pin') then
 begin
-MakeUsrRequest(rsExtractError+#13+rsPkgDM+#13+rsABLoad,rqError);
+MakeUsrRequest(rsExtractError+#10+rsPkgDM+#10+rsABLoad,rqError);
 Emergency_FreeAll();
 Result:=false;
 exit;
@@ -737,7 +737,7 @@ begin
 
  if MakeUsrRequest(rsInvalidDVersion,rqWarning) = rqsNo then
  begin
-  MakeUsrRequest(rsNoComp+#13+rsInClose,rqError);
+  MakeUsrRequest(rsNoComp+#10+rsInClose,rqError);
   Dependencies.Free;
   Emergency_FreeAll();
   PkProfiles.Free;
@@ -768,7 +768,7 @@ msg('Profiles count is '+IntToStr(PkProfiles.Count));
 if PkProfiles.Count<0 then
 begin
 Emergency_FreeAll();
-MakeUsrRequest(rsPkgInval+#13'Message: No profiles and no file list found!',rqError);
+MakeUsrRequest(rsPkgInval+#10'Message: No profiles and no file list found!',rqError);
 PkProfiles.Free;
 Result:=false;
 exit;
@@ -840,7 +840,7 @@ begin
 
  if MakeUsrRequest(rsInvalidDVersion,rqWarning) = rqsNo then
  begin
-  MakeUsrRequest(rsNoComp+#13+rsInClose,rqError);
+  MakeUsrRequest(rsNoComp+#10+rsInClose,rqError);
   Dependencies.Free;
   pkg.Free;
   PkProfiles.Free;
@@ -1109,7 +1109,7 @@ begin
 
  if pkit.PkFinishCode=1 then
  begin
-  MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
+  MakeUsrRequest(rsCouldntSolve+#10+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
   Result:=false;
   Abort_FreeAll();
   exit;
@@ -1243,7 +1243,7 @@ begin
     //Check if the package was really installed
     if pkit.PkFinishCode=1 then
     begin
-     MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
+     MakeUsrRequest(rsCouldntSolve+#10+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
      Result:=false;
      Abort_FreeAll();
      exit;
@@ -1268,7 +1268,7 @@ begin
    if pkit.PkFinishCode=1 then
     begin
      msg('Package '+Dependencies[i]+' can not be installed.');
-     MakeUsrRequest(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
+     MakeUsrRequest(rsCouldntSolve+#10+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
      Result:=false;
      Abort_FreeAll();
      exit;
@@ -1715,8 +1715,8 @@ for i:=1 to fi.Count-1 do
 if pos(USource,fi[i])>0 then break;
 if i=fi.Count then
 begin
-if MakeUsrRequest(PAnsiChar(rsAddUpdSrc+#13+
-   copy(USource,pos(' <',USource)+2,length(USource)-pos(' <',USource)-2)+' ('+copy(uSource,3,pos(' <',USource)-3)+')'+#13+
+if MakeUsrRequest(PAnsiChar(rsAddUpdSrc+#10+
+   copy(USource,pos(' <',USource)+2,length(USource)-pos(' <',USource)-2)+' ('+copy(uSource,3,pos(' <',USource)-3)+')'+#10+
    PAnsiChar(rsQAddUpdSrc)),rqWarning)=rqsYes then
  begin
   AddUpdateSource:=true;
@@ -1748,7 +1748,7 @@ if (pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then
 begin
 cnf:=TInifile.Create(ConfigDir+'config.cnf');
 if cnf.ReadBool('MainConf','AutoDepLoad',true)=false then
- if MakeUsrRequest(StringReplace(rsWDLDep,'%l',Dependencies[i],[rfReplaceAll])+#13+rsWAllow,rqWarning)=rqsNo then
+ if MakeUsrRequest(StringReplace(rsWDLDep,'%l',Dependencies[i],[rfReplaceAll])+#10+rsWAllow,rqWarning)=rqsNo then
  begin
   Result:=false;
   exit;

@@ -111,6 +111,7 @@ begin
 
   if HasOption('b','build') then
   begin
+  writeln;
   if HasOption('deb')or HasOption('rpm')or HasOption('dpack') then
   begin
     pki:=ReadInformation(paramstr(2));

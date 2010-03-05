@@ -427,7 +427,6 @@ begin
 
   encoder.Code(inStream, outStream, -1, -1);
 
-  encoder.free;
   outStream.Free;
   inStream.Free;
 end;
@@ -469,7 +468,6 @@ begin
       if not Code(inStream, outStream, outSize) then
        raise Exception.Create('Error in data stream');
      end;
-     decoder.Free;
 
  finally
   outStream.Free;
