@@ -6,13 +6,13 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1460"/>
+      <CurrentBuildNr Value="1461"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -28,12 +28,12 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="57">
+    <Units Count="58">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="20" Y="23"/>
+        <CursorPos X="27" Y="22"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="76"/>
@@ -43,9 +43,11 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="17" Y="1762"/>
-        <TopLine Value="1738"/>
+        <CursorPos X="40" Y="1706"/>
+        <TopLine Value="1697"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="36"/>
+        <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
@@ -186,8 +188,8 @@
       <Unit21>
         <Filename Value="mtprocs.pas"/>
         <UnitName Value="MTProcs"/>
-        <CursorPos X="15" Y="686"/>
-        <TopLine Value="666"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit21>
       <Unit22>
@@ -360,8 +362,8 @@
       <Unit47>
         <Filename Value="../src/trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="66" Y="127"/>
-        <TopLine Value="105"/>
+        <CursorPos X="24" Y="161"/>
+        <TopLine Value="200"/>
         <UsageCount Value="10"/>
       </Unit47>
       <Unit48>
@@ -424,8 +426,14 @@
         <TopLine Value="1408"/>
         <UsageCount Value="10"/>
       </Unit56>
+      <Unit57>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/unix/bunxovlh.inc"/>
+        <CursorPos X="11" Y="43"/>
+        <TopLine Value="22"/>
+        <UsageCount Value="10"/>
+      </Unit57>
     </Units>
-    <JumpHistory Count="10" HistoryIndex="9">
+    <JumpHistory Count="17" HistoryIndex="16">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="23" Column="20" TopLine="1"/>
@@ -466,6 +474,34 @@
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="23" Column="20" TopLine="1"/>
       </Position10>
+      <Position11>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="27" TopLine="1"/>
+      </Position11>
+      <Position12>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="109" Column="39" TopLine="97"/>
+      </Position12>
+      <Position13>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="136" Column="26" TopLine="97"/>
+      </Position13>
+      <Position14>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="1763" Column="12" TopLine="1743"/>
+      </Position14>
+      <Position15>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="112" Column="28" TopLine="91"/>
+      </Position15>
+      <Position16>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="1781" Column="13" TopLine="1748"/>
+      </Position16>
+      <Position17>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="112" Column="28" TopLine="91"/>
+      </Position17>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

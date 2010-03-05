@@ -49,7 +49,6 @@ var
   msg: PDBusMessage;
   startTick: Integer;
   lastTime: Integer;
-  lastJobCount: Integer=0; //Hold the last number of active jobs
 begin
   WriteLn('Daemon started.');
   lastTime:=0;
@@ -65,12 +64,8 @@ begin
   begin
 
     //Check tick count
-    if (InstallWorkers+ManagerWorkers)<>lastJobCount then
-     startTick:=DateTimeToTimeStamp(Now).Time
-    else
-     lastTime:=Round(((DateTimeToTimeStamp(Now).Time-startTick)/1000));
-
-    lastJobCount:=InstallWorkers+ManagerWorkers;
+    if (InstallWorkers+ManagerWorkers)>0 then
+     startTick:=DateTimeToTimeStamp(Now).Time;
 
      if (InstallWorkers=0)and(ManagerWorkers=0)and(lastTime>=Timeout_Seconds) then
       break; //Exit loop -> terminate daemon

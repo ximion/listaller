@@ -158,7 +158,7 @@ rsWantToDoQ='What do you want to do?';
 rsDevVersion='You use a development version of Listaller!'#10'This version is not tested and may cause problems!';
 rsSpkWarning='Make sure that you got this package from a save source and from a serious publisher!';
 rsInstallEveryone='Install application for everyone';
-rsTestApp='Test setup & software';
+rsTestApp='Test setup && software';
 rsInstallHome='Install into my Home directory';
 rsSelInstMode='Select installation mode';
 
@@ -256,6 +256,8 @@ rsPkgUnsigned = 'This package is not signed!';
 rsPkgUntrusted = 'This package is untrusted!';
 rsCouldNotInstallApp = 'The application %a could not be installed!';
 rsWarning = 'Warning!';
+rsTmpWriteDenied = 'Listaller cannot write into its temporary directory: '
+  +'Access denied!';
 implementation
 end.
 

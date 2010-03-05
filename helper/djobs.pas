@@ -215,7 +215,9 @@ begin
   if allowed = AC_NOT_AUTHORIZED then
   begin
    p_error('Not authorized to call this action.');
-   Error_Terminate;
+   SendReply(false,'');
+   remove:=true;
+   Resume();
    exit;
   end;
 
@@ -238,6 +240,8 @@ end;
 
 destructor TDoAppInstall.Destroy;
 begin
+ if Assigned(FatalException) then
+  raise FatalException;
  Dec(InstallWorkers);
  inherited;
 end;
@@ -339,12 +343,17 @@ begin
  setup.EnableUSource(actUSource);
  setup.StartInstallation;
 
- setup.Free;
+ //setup.Free;
 
- p_info('AppInstall job '+'???'+ ' completed.');
+ p_info('AppInstall job '+jobID+ ' completed.');
   success:=true; //Finished without problems
  except
-  success:=false;
+  on E: Exception do
+  begin
+   p_error(E.Message);
+   success:=false;
+  end;
+  //success:=false;
  end;
  //Now emit action finished signal:
 
@@ -484,6 +493,9 @@ end;
 destructor TDoAppRemove.Destroy;
 begin
  Dec(ManagerWorkers);
+ if Assigned(FatalException) then
+  raise FatalException;
+
  p_debug('App remove job deleted.');
  inherited;
 end;

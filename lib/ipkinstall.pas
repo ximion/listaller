@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, PackageKit,
   sqlite3ds, IPKPackage, ipkdef, HTTPSend, FTPSend, blcksock,
   MD5, liTypes, distri, MTProcs, FileUtil, liBasic, liDBusproc,
-  liManageApp, RegExpr;
+  liManageApp, RegExpr, BaseUnix;
 
 type
 
@@ -536,6 +536,16 @@ RmApp:=false;
 if DirectoryExists(tmpdir+ExtractFileName(fname)) then
  DeleteDirectory(tmpdir+ExtractFileName(fname),false);
 
+//Check if user can write to dir
+if (fpAccess(tmpdir+ExtractFileName(fname),W_OK)>0)
+or (DirectoryExists(tmpdir+ExtractFileName(fname))) then
+begin
+ MakeUsrRequest(rsTmpWriteDenied, rqError);
+ Emergency_FreeAll();
+ Result:=false;
+ exit;
+end;
+
 pkg:=TLiUnpacker.Create(fname);
 if not SUMode then
 begin
@@ -559,8 +569,8 @@ end;
 
 if not pkg.UnpackFile('arcinfo.pin') then
 begin
-Emergency_FreeAll();
 MakeUsrRequest(rsExtractError+#13+rsPkgDM+#13+rsABLoad,rqError);
+Emergency_FreeAll();
 Result:=false;
 exit;
 end;
@@ -1697,7 +1707,7 @@ end;
 procedure TInstallation.CheckAddUSource;
 var fi: TStringList;i: Integer;
 begin
-if USource<>'#' then
+if (USource<>'#')and(USource<>'') then
 begin
 fi:=TStringList.Create;
 fi.LoadFromFile(RegDir+'updates.list');
@@ -1720,6 +1730,7 @@ function TInstallation.DoInstallation: Boolean;
 var cnf: TIniFile;i: Integer;buscmd: ListallerBusCommand;
 begin
 
+if not IsRoot then
 if pkType=ptLinstall then
 begin
 //Set Testmode settings
@@ -1767,6 +1778,7 @@ begin
 end;
 
 //Check if we have update sources to register
+if not IsRoot then
 CheckAddUSource;
 
 //Load network connections
