@@ -6,13 +6,13 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1462"/>
+      <CurrentBuildNr Value="1463"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -33,7 +33,7 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="26" Y="22"/>
+        <CursorPos X="28" Y="22"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="76"/>
@@ -43,11 +43,9 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="8" Y="466"/>
-        <TopLine Value="448"/>
-        <EditorIndex Value="1"/>
+        <CursorPos X="16" Y="971"/>
+        <TopLine Value="960"/>
         <UsageCount Value="36"/>
-        <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
@@ -158,8 +156,8 @@
         <Filename Value="limanageapp.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="limanageapp"/>
-        <CursorPos X="60" Y="25"/>
-        <TopLine Value="1"/>
+        <CursorPos X="24" Y="66"/>
+        <TopLine Value="57"/>
         <UsageCount Value="35"/>
       </Unit17>
       <Unit18>
@@ -295,8 +293,8 @@
         <Filename Value="lidbusproc.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lidbusproc"/>
-        <CursorPos X="6" Y="106"/>
-        <TopLine Value="336"/>
+        <CursorPos X="2" Y="28"/>
+        <TopLine Value="7"/>
         <UsageCount Value="42"/>
       </Unit37>
       <Unit38>
@@ -362,8 +360,8 @@
       <Unit47>
         <Filename Value="../src/trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="24" Y="161"/>
-        <TopLine Value="200"/>
+        <CursorPos X="1" Y="230"/>
+        <TopLine Value="204"/>
         <UsageCount Value="10"/>
       </Unit47>
       <Unit48>
@@ -384,8 +382,8 @@
         <Filename Value="../src/simdbus.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="simdbus"/>
-        <CursorPos X="26" Y="51"/>
-        <TopLine Value="30"/>
+        <CursorPos X="1" Y="259"/>
+        <TopLine Value="243"/>
         <UsageCount Value="30"/>
       </Unit50>
       <Unit51>
@@ -440,7 +438,7 @@
         <SyntaxHighlighter Value="None"/>
       </Unit58>
     </Units>
-    <JumpHistory Count="16" HistoryIndex="15">
+    <JumpHistory Count="13" HistoryIndex="12">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="23" Column="20" TopLine="1"/>
@@ -486,25 +484,13 @@
         <Caret Line="22" Column="26" TopLine="1"/>
       </Position11>
       <Position12>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="469" Column="15" TopLine="445"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="23" Column="18" TopLine="1"/>
       </Position12>
       <Position13>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="372" Column="14" TopLine="344"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="28" TopLine="1"/>
       </Position13>
-      <Position14>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="14" Column="37" TopLine="1"/>
-      </Position14>
-      <Position15>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="136" Column="26" TopLine="115"/>
-      </Position15>
-      <Position16>
-        <Filename Value="ipkinstall.pas"/>
-        <Caret Line="11" Column="54" TopLine="1"/>
-      </Position16>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

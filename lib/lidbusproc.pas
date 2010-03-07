@@ -21,7 +21,7 @@ unit lidbusproc;
 interface
 
 uses
-  Classes, SysUtils, liTypes, SimDBus, DBus, liBasic;
+  Classes, SysUtils, liTypes, SimDBus, DBus, liBasic, trStrings;
 
 type
  //** Which detail of the process was changed?
@@ -235,7 +235,7 @@ begin
        action_finished:=true;
        if (not bus.ReadSignalBool(dmsg)) then
         //The action failed. Leave the loop and display message
-        SendError('The action failed.');
+        SendError(rsRMerror);
     end;
 
     //Change of progress
@@ -362,7 +362,10 @@ begin
     //Check if the installation has finished
     if bus.ReceivedSignalIs(dmsg,'Finished') then
     begin
-         install_finished:=bus.ReadSignalBool(dmsg);
+         install_finished:=true;
+         if (not bus.ReadSignalBool(dmsg)) then
+          //The action failed. Leave the loop and display message
+          SendError(rsInstFailed);
     end;
 
     //Free the message

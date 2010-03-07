@@ -466,7 +466,7 @@ begin
      //ProcThreadPool.MaxThreadCount:=4;
 
     p_debug('Start resolve threads.');
-    ProcThreadPool.DoParallelLocalProc(@SearchForPackage,-1,Dependencies.Count-1,nil);
+     ProcThreadPool.DoParallelLocalProc(@SearchForPackage,-1,Dependencies.Count-1,nil);
 
     if error then
     begin
@@ -970,6 +970,7 @@ procedure TInstallation.DBusThreadStatusChange(ty: LiProcStatus;data: TLiProcDat
 begin
   case data.changed of
     pdMainProgress: SetMainPos(data.mnprogress);
+    pdExtraProgress: SetExtraPos(data.exprogress);
     pdInfo: msg(data.msg);
     pdError: MakeUsrRequest(data.msg,rqError);
     pdStatus: p_debug('Thread status changed [finished]');

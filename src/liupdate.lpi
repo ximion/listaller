@@ -11,7 +11,7 @@
       <Title Value="Updater"/>
       <UseAppBundle Value="False"/>
       <Icon Value="0"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <ProjectVersion Value=""/>
@@ -48,7 +48,7 @@
         <ComponentName Value="UMnForm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="mnupdate"/>
-        <CursorPos X="26" Y="1"/>
+        <CursorPos X="69" Y="25"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="45"/>
@@ -68,9 +68,11 @@
         <ComponentName Value="UExecFm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="updexec"/>
-        <CursorPos X="7" Y="219"/>
-        <TopLine Value="198"/>
+        <CursorPos X="26" Y="1"/>
+        <TopLine Value="151"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="42"/>
+        <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="abunzper.pas"/>
@@ -353,7 +355,7 @@
       </Position18>
       <Position19>
         <Filename Value="mnupdate.pas"/>
-        <Caret Line="25" Column="64" TopLine="1"/>
+        <Caret Line="25" Column="69" TopLine="1"/>
       </Position19>
     </JumpHistory>
   </ProjectOptions>

@@ -6,7 +6,7 @@
 #    ./configure <options> [parameters]
 
 
-OPTION_SPEC="help,enable-qt,enable-creator,enable-gtk,prefix:"
+OPTION_SPEC="help,enable-qt,enable-creator,enable-gtk,enable-all,prefix:"
 PARSED_OPTIONS=$(getopt -n "$0" -a -o h --long $OPTION_SPEC -- "$@")
 OPTIONS_RET=$?
 

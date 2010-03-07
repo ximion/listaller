@@ -62,9 +62,6 @@ type
 
 var
   UMnForm: TUMnForm;
-  
-const
-  lp='/tmp/'; //Working directory of Listaller
 
 implementation
 
