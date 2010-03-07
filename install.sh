@@ -25,11 +25,15 @@ APPLINIK_T="pappi_trust.desktop"
 
 # Reading information about the distribution
 LSB_RELEASE_FILE="/etc/lsb-release"
+FEDORA_RELEASE_FILE="/etc/fedora-release"
 
 if [ -f $LSB_RELEASE_FILE ]; then
 	source $LSB_RELEASE_FILE
+elif [ -e $FEDORA_RELEASE_FILE ]; then 
+	DISTRIB_ID="Fedora" 
+	DISTRIB_RELEASE=`rpm -q --qf "%{version}\n" fedora-release`
 else
-	echo "Error: Installation LSB release file \"$LSB_RELEASE_FILE\" has not been found!"
+	echo "Error: Installation LSB release file \"$LSB_RELEASE_FILE\" or fedora release file \"$FEDORA_RELEASE_FILE\" has not been found!"
 	exit 1
 fi
 
