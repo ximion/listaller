@@ -897,19 +897,23 @@ var tmp,tmp2,s,slist: TStringList;p,f: String;i,j: Integer;k: Boolean;upd: Strin
     sdata: TLiStatusData;
 procedure SetPosition(prog: Double);
 begin
-sdata.mnprogress:=Round(prog);
-if Assigned(FStatus) then FStatus(scMnProgress,sdata,nil);
+//??? Does not work with listallerd!
+ {sdata.mnprogress:=Round(prog);
+ if Assigned(FStatus) then FStatus(scMnProgress,sdata,nil);}
 end;
 
 procedure msg(s: String);
 begin
-sdata.msg:=PChar(s);
+//??? Does not work with listallerd!
+{sdata.msg:=PChar(s);
 if Assigned(FStatus) then FStatus(scMessage,sdata,nil)
-else p_info(s);
+else p_info(s); }
 end;
 
 begin
 p:=RegDir+LowerCase(AppName+'-'+AppID)+'/';
+p:=CleanFilePath(p);
+
 mnprog:=0;
 
 SetPosition(0);
@@ -922,30 +926,7 @@ ipkc.Free;
 msg('Begin uninstallation...');
 
 dsApp:= TSQLite3Dataset.Create(nil);
-with dsApp do
- begin
-   FileName:=RegDir+'applications.db';
-   TableName:='AppInfo';
-   if not FileExists(FileName) then
-   begin
-   with FieldDefs do
-     begin
-       Clear;
-       Add('Name',ftString,0,true);
-       Add('ID',ftString,0,true);
-       Add('Type',ftString,0,true);
-       Add('Description',ftString,0,False);
-       Add('Version',ftFloat,0,true);
-       Add('Publisher',ftString,0,False);
-       Add('Icon',ftString,0,False);
-       Add('Profile',ftString,0,False);
-       Add('AGroup',ftString,0,true);
-       Add('InstallDate',ftDateTime,0,False);
-       Add('Dependencies',ftMemo,0,False);
-     end;
-   CreateTable;
- end;
-end;
+LoadAppDB(dsApp);
 dsApp.Active:=true;
 
 dsApp.SQL:='SELECT * FROM AppInfo';

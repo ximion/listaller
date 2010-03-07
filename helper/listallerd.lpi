@@ -11,7 +11,7 @@
       <TargetFileExt Value=""/>
       <Title Value="Listaller Daemon"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
@@ -48,9 +48,7 @@
         <UnitName Value="installer"/>
         <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <EditorIndex Value="2"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="../bindings/appman.pas"/>
@@ -71,10 +69,8 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="djobs"/>
         <CursorPos X="22" Y="364"/>
-        <TopLine Value="337"/>
-        <EditorIndex Value="1"/>
+        <TopLine Value="301"/>
         <UsageCount Value="42"/>
-        <Loaded Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus-message.inc"/>
@@ -266,7 +262,7 @@
         <UsageCount Value="10"/>
       </Unit33>
     </Units>
-    <JumpHistory Count="15" HistoryIndex="14">
+    <JumpHistory Count="11" HistoryIndex="10">
       <Position1>
         <Filename Value="listallerd.lpr"/>
         <Caret Line="98" Column="29" TopLine="45"/>
@@ -311,22 +307,6 @@
         <Filename Value="listallerd.lpr"/>
         <Caret Line="92" Column="30" TopLine="73"/>
       </Position11>
-      <Position12>
-        <Filename Value="djobs.pas"/>
-        <Caret Line="242" Column="20" TopLine="227"/>
-      </Position12>
-      <Position13>
-        <Filename Value="djobs.pas"/>
-        <Caret Line="344" Column="12" TopLine="320"/>
-      </Position13>
-      <Position14>
-        <Filename Value="djobs.pas"/>
-        <Caret Line="342" Column="13" TopLine="320"/>
-      </Position14>
-      <Position15>
-        <Filename Value="djobs.pas"/>
-        <Caret Line="353" Column="4" TopLine="331"/>
-      </Position15>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

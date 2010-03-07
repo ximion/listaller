@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, PackageKit,
   sqlite3ds, IPKPackage, ipkdef, HTTPSend, FTPSend, blcksock,
-  MD5, liTypes, distri, MTProcs, FileUtil, liBasic, liDBusproc,
+  MD5, liTypes, distri, MTProcs, FileUtil, liBasic, liDBusProc,
   liManageApp, RegExpr, BaseUnix;
 
 type
@@ -553,7 +553,7 @@ begin
  //Uncompress LZMA
  pkg.Decompress;
 end else
-if not FileExists(pkg.WDir+'ipktar.tar') then
+if not FileExists(CleanFilePath(pkg.WDir+'/ipktar.tar')) then
 begin
  pkg.OnProgress:=@pkgProgress;
  //Uncompress LZMA
@@ -971,6 +971,7 @@ begin
   case data.changed of
     pdMainProgress: SetMainPos(data.mnprogress);
     pdExtraProgress: SetExtraPos(data.exprogress);
+    pdStepMessage: SendStateMsg(data.msg);
     pdInfo: msg(data.msg);
     pdError: MakeUsrRequest(data.msg,rqError);
     pdStatus: p_debug('Thread status changed [finished]');
@@ -1048,6 +1049,7 @@ end;
 
 fi:=TStringList.Create;
 fi.LoadFromFile(tmpdir+ExtractFileName(PkgName)+'/'+FFileInfo);
+
 
 proc:=TProcess.Create(nil);
 proc.Options:=[poUsePipes,poStdErrToOutPut];
@@ -1415,7 +1417,7 @@ appfiles.Add(dest+'/'+ExtractFileName(fi[i]));
 //Delete temp file
 DeleteFile(DeleteModifiers(pkg.WDir+ExtractFileName(h)));
 
-msg('Okay.');
+ //msg('Okay.');
 
 mnpos:=mnpos+10;
 SetMainPos(Round(mnpos*max));

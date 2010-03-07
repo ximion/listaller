@@ -474,11 +474,10 @@ begin
 end;
 
 function TDBusServer.SendMessage(msg: PDBusMessage): Boolean;
-var serial: dbus_uint32_t = 0;
 begin
  Result:=true;
  //Send the reply & flush the connection
- if (dbus_connection_send(conn, msg, @serial) = 0) then
+ if (dbus_connection_send(conn, msg, nil) = 0) then
  begin
      ShowError('Out Of Memory!');
      Result:=false;

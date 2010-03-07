@@ -348,7 +348,7 @@ begin
          SendMessage(bus.ReadSignalStr(dmsg));
 
     //Receive current state of installation progress
-    if bus.ReceivedSignalIs(dmsg,'StateMessage') then
+    if bus.ReceivedSignalIs(dmsg,'StepMessage') then
          SendMessage(bus.ReadSignalStr(dmsg),pdStepMessage);
 
     //Break on error signal
