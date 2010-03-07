@@ -30,6 +30,7 @@ while [ $# -ge 1 ]; do
       --enable-qt )  ENABLE_QT=1;;
       --enable-gtk )  ENABLE_GTK=1;;
       --enable-creator )  ENABLE_CREATOR=1;;
+      --enable-all ) ENABLE_QT=1; ENABLE_GTK=1; ENABLE_CREATOR=1;;
       --prefix ) case "$2" in
                    "") echo "The prefix option needs an argument!"; exit 3 ;;
                     *) export prefix=$2 ; shift 2 ;;

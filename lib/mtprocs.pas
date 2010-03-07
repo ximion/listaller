@@ -12,12 +12,9 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
  **********************************************************************}
-{
-  Abstract:
-    Light weight threads.
+{** Light weight threads.
     This unit provides methods to easily run a procedure/method with several
-    threads at once.
-}
+    threads at once.}
 unit MTProcs;
 
 {$mode objfpc}{$H+}

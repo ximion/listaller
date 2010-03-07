@@ -343,7 +343,7 @@ begin
  setup.EnableUSource(actUSource);
  setup.StartInstallation;
 
- //setup.Free;
+ setup.Free;
 
  p_info('AppInstall job '+jobID+ ' completed.');
   success:=true; //Finished without problems
@@ -361,7 +361,7 @@ begin
   msg:=bs.CreateNewSignal('/org/freedesktop/Listaller/'+jobID, // object name of the signal
                           'org.freedesktop.Listaller.Install', // interface name of the signal
                           'Finished'); // name of the signal
-  bs.AppendBool(success);
+  bs.AppendBool(false);
   bs.SendMessage(msg);
 
  Terminate;

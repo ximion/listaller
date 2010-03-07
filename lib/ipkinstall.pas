@@ -463,10 +463,10 @@ begin
     ShowPKMon();
 
     tmp:=TStringList.Create;
-    // ProcThreadPool.MaxThreadCount:=4;
+     //ProcThreadPool.MaxThreadCount:=4;
 
     p_debug('Start resolve threads.');
-     ProcThreadPool.DoParallelLocalProc(@SearchForPackage,-1,Dependencies.Count-1,nil);
+    ProcThreadPool.DoParallelLocalProc(@SearchForPackage,-1,Dependencies.Count-1,nil);
 
     if error then
     begin

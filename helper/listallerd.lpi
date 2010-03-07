@@ -17,7 +17,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="421"/>
+      <CurrentBuildNr Value="422"/>
       <ProjectVersion Value="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
@@ -70,8 +70,8 @@
         <Filename Value="djobs.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="djobs"/>
-        <CursorPos X="18" Y="356"/>
-        <TopLine Value="333"/>
+        <CursorPos X="22" Y="364"/>
+        <TopLine Value="337"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="42"/>
         <Loaded Value="True"/>

@@ -6,13 +6,13 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1461"/>
+      <CurrentBuildNr Value="1462"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -28,12 +28,12 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="58">
+    <Units Count="59">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="29" Y="22"/>
+        <CursorPos X="26" Y="22"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="76"/>
@@ -43,9 +43,11 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="83" Y="1751"/>
-        <TopLine Value="1730"/>
+        <CursorPos X="8" Y="466"/>
+        <TopLine Value="448"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="36"/>
+        <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
@@ -186,7 +188,7 @@
       <Unit21>
         <Filename Value="mtprocs.pas"/>
         <UnitName Value="MTProcs"/>
-        <CursorPos X="1" Y="1"/>
+        <CursorPos X="21" Y="17"/>
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit21>
@@ -430,8 +432,15 @@
         <TopLine Value="22"/>
         <UsageCount Value="10"/>
       </Unit57>
+      <Unit58>
+        <Filename Value="../helper/djobs.pas.bak"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+        <SyntaxHighlighter Value="None"/>
+      </Unit58>
     </Units>
-    <JumpHistory Count="11" HistoryIndex="10">
+    <JumpHistory Count="16" HistoryIndex="15">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="23" Column="20" TopLine="1"/>
@@ -474,8 +483,28 @@
       </Position10>
       <Position11>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="29" TopLine="1"/>
+        <Caret Line="22" Column="26" TopLine="1"/>
       </Position11>
+      <Position12>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="469" Column="15" TopLine="445"/>
+      </Position12>
+      <Position13>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="372" Column="14" TopLine="344"/>
+      </Position13>
+      <Position14>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="14" Column="37" TopLine="1"/>
+      </Position14>
+      <Position15>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="136" Column="26" TopLine="115"/>
+      </Position15>
+      <Position16>
+        <Filename Value="ipkinstall.pas"/>
+        <Caret Line="11" Column="54" TopLine="1"/>
+      </Position16>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
