@@ -20,7 +20,7 @@ library libinstaller;
 
 uses
   cthreads, Classes, ipkInstall, SysUtils, Controls, liCommon, liTypes,
-  liBasic, liManageApp;
+  liBasic, liManageApp, liUpdateApp;
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -179,7 +179,7 @@ end;
 //** Get package ID
 function li_setup_get_pkgid(setup: PInstallation): PChar;cdecl;
 begin
-  Result:=PChar(setup^.ID);
+  Result:=PChar(setup^.AppID);
 end;
 
 //** Get trust level of pkg signature
@@ -390,6 +390,64 @@ if log<> nil then
 else p_error('Check log != nil failed.');
 end;
 
+////////////////////////////////////////////////////////////////////
+//Updater part
+
+//** Creates a new TAppUpdater object
+function li_updater_new: Pointer;cdecl;
+begin
+ Result:=TAppUpdater.Create;
+end;
+
+//** Removes an TAppUpdater object
+procedure li_updater_free(upd: PAppUpdater);cdecl;
+begin
+ upd^.Free;
+end;
+
+//** Register call on status change for updater
+function li_updater_register_status_call(upd: PAppUpdater;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;
+begin
+ Result:=true;
+ try
+  upd^.RegOnStatusChange(call,user_data);
+ except
+  Result:=false;
+ end;
+end;
+
+//** Register event to recieve user requests
+function li_updater_register_request_call(upd: PAppUpdater;call: TRequestCall;user_data: Pointer): Boolean;cdecl;
+begin
+ Result:=true;
+ try
+  upd^.RegOnRequest(call,user_data);
+ except
+  Result:=false;
+ end;
+end;
+
+//** Register event for new updates
+function li_updater_register_newupdate_call(upd: PAppUpdater;call: TNewUpdateEvent;user_data: Pointer): Boolean;cdecl;
+begin
+ Result:=true;
+ try
+  upd^.RegOnNewUpdate(call,user_data);
+ except
+  on E: Exception do
+  begin
+   Result:=false;
+   p_error(E.Message);
+  end;
+ end;
+end;
+
+//** Look for new updates
+function li_updater_search_updates(upd: PAppUpdater): Boolean;cdecl;
+begin
+ Result:=upd^.CheckUpdates;
+end;
+
 ///////////////////////
 exports
  //Stringlist functions
@@ -437,6 +495,14 @@ exports
  li_mgr_remove_app,
  li_mgr_check_apps,
  li_mgr_fix_apps,
+
+ //Updater functions
+ li_updater_new,
+ li_updater_free,
+ li_updater_register_status_call,
+ li_updater_register_request_call,
+ li_updater_register_newupdate_call,
+ li_updater_search_updates,
 
  //Other functions
  li_remove_ipk_installed_app,

@@ -57,6 +57,8 @@ TIPKBasic = class
   function  ReadArchs: String;
   procedure WritePkgName(s: String);
   function  ReadPkgName: String;
+  procedure WriteIPKName(s: String);
+  function  ReadIPKName: String;
   procedure WriteDSupport(s: String);
   function  ReadDSupport: String;
   procedure WriteWizImage(s: String);
@@ -103,6 +105,7 @@ TIPKBasic = class
   property AppCMD: String read ReadAppCMD write WriteAppCMD;
   property Architectures: String read ReadArchs write WriteArchs;
   property PkName: String read ReadPkgName write WritePkgName;
+  property IPKName: String read ReadIPKName write WriteIPKName;
   property DSupport: String read ReadDSupport write WriteDSupport;
   property WizImage: String read ReadWizImage write WriteWizImage;
   property Binary: String read ReadBinary write WriteBinary;
@@ -614,6 +617,22 @@ var j: Integer;
 begin
  Result:='';
  j:=SearchKeyIndex('PkName');
+ if j>-1 then
+  Result:=GetValue(text[j]);
+end;
+
+procedure TIPKBasic.WriteIPKName(s: String);
+var k: String;
+begin
+ k:='IPKName';
+ WriteEntry(k,s);
+end;
+
+function TIPKBasic.ReadIPKName: String;
+var j: Integer;
+begin
+ Result:='';
+ j:=SearchKeyIndex('IPKName');
  if j>-1 then
   Result:=GetValue(text[j]);
 end;

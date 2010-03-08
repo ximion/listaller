@@ -354,7 +354,7 @@ with dsApp do
      begin
        Clear;
        Add('Name',ftString,0,true);
-       Add('ID',ftString,0,true);
+       Add('PkName',ftString,0,true);
        Add('Type',ftString,0,true);
        Add('Description',ftString,0,False);
        Add('Version',ftFloat,0,true);
@@ -393,8 +393,10 @@ begin
 
  entry.Name:=PChar(dsApp.FieldByName('Name').AsString);
 
+ p_debug(entry.Name);
  blst.Add(entry.Name);
- entry.UId:=PChar(dsApp.FieldByName('ID').AsString);
+
+ entry.UId:=PChar(dsApp.FieldByName('PkName').AsString);
 
  entry.Version:=PChar(rsVersion+': '+dsApp.FieldByName('Version').AsString);
  entry.Author:=PChar(rsAuthor+': '+dsApp.FieldByName('Publisher').AsString);
@@ -422,6 +424,7 @@ begin
 
  if FileExists(p+'icon.png') then
  entry.Icon:=PChar(p+'icon.png');
+
  newapp('ipk',entry);
 
  dsApp.Next;
@@ -745,34 +748,11 @@ msg('You are scanning your local installed applications.');
 if not forceroot then
   s:=SyblToPath('$INST')+'/app-reg/'
 else
-  s:='/etc/lipa/app-reg/';
+  s:=LI_CONFIG_DIR+'app-reg/';
 
 writeLn('-> Opening database...');
 dsApp:= TSQLite3Dataset.Create(nil);
-with dsApp do
- begin
-   FileName:=s+'applications.db';
-   TableName:='AppInfo';
-   if not FileExists(FileName) then
-   begin
-   with FieldDefs do
-     begin
-       Clear;
-       Add('Name',ftString,0,true);
-       Add('ID',ftString,0,true);
-       Add('Type',ftString,0,true);
-       Add('Description',ftString,0,False);
-       Add('Version',ftFloat,0,true);
-       Add('Publisher',ftString,0,False);
-       Add('Icon',ftString,0,False);
-       Add('Profile',ftString,0,False);
-       Add('AGroup',ftString,0,true);
-       Add('InstallDate',ftDateTime,0,False);
-       Add('Dependencies',ftMemo,0,False);
-     end;
-   CreateTable;
- end;
-end;
+LoadAppDB(dsApp);
 dsApp.Active:=true;
 
 Result:=true;
@@ -841,7 +821,7 @@ if not DirectoryExists(rd) then
      begin
        Clear;
        Add('Name',ftString,0,true);
-       Add('ID',ftString,0,true);
+       Add('PkName',ftString,0,true);
        Add('Type',ftString,0,true);
        Add('Description',ftString,0,False);
        Add('Version',ftFloat,0,true);
@@ -937,7 +917,7 @@ msg('Database opened.');
 
 while not dsApp.EOF do
 begin
- if (dsApp.FieldByName('Name').AsString=AppName) and (dsApp.FieldByName('ID').AsString=AppID) then
+ if (dsApp.FieldByName('Name').AsString=AppName) and (dsApp.FieldByName('PkName').AsString=AppID) then
  begin
 
  if LowerCase(dsApp.FieldByName('Type').AsString) = 'dlink'

@@ -95,7 +95,7 @@ var
   xh: String;
   dsApp: TSQLite3Dataset; //AppDB connection
 begin
-if fstact then begin
+{if fstact then begin
 fstact:=false;
 Memo1.Lines.Clear;
 Memo1.Lines.Add('Log:');
@@ -254,7 +254,7 @@ end;
   Button1.Enabled:=true;
   WriteLog('Update finished!');
   ILabel.Caption:=rsSuccess;
-end;
+end;  }
 end;
 
 procedure TUExecFm.FormClose(Sender: TObject; var CloseAction: TCloseAction);

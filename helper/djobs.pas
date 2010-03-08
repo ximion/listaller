@@ -361,7 +361,7 @@ begin
   msg:=bs.CreateNewSignal('/org/freedesktop/Listaller/'+jobID, // object name of the signal
                           'org.freedesktop.Listaller.Install', // interface name of the signal
                           'Finished'); // name of the signal
-  bs.AppendBool(false);
+  bs.AppendBool(success);
   bs.SendMessage(msg);
 
  Terminate;

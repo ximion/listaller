@@ -8,6 +8,7 @@ object UMnForm: TUMnForm
   ClientHeight = 614
   ClientWidth = 688
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   LCLVersion = '0.9.28.2'
   object InfoMemo: TMemo

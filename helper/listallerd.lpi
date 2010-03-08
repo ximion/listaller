@@ -37,8 +37,8 @@
         <Filename Value="listallerd.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerd"/>
-        <CursorPos X="30" Y="92"/>
-        <TopLine Value="73"/>
+        <CursorPos X="6" Y="124"/>
+        <TopLine Value="109"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="42"/>
         <Loaded Value="True"/>
@@ -68,8 +68,8 @@
         <Filename Value="djobs.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="djobs"/>
-        <CursorPos X="22" Y="364"/>
-        <TopLine Value="301"/>
+        <CursorPos X="24" Y="364"/>
+        <TopLine Value="323"/>
         <UsageCount Value="42"/>
       </Unit4>
       <Unit5>
@@ -305,7 +305,7 @@
       </Position10>
       <Position11>
         <Filename Value="listallerd.lpr"/>
-        <Caret Line="92" Column="30" TopLine="73"/>
+        <Caret Line="92" Column="29" TopLine="61"/>
       </Position11>
     </JumpHistory>
   </ProjectOptions>

@@ -45,8 +45,8 @@
         <ComponentName Value="Form1"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="linotify"/>
-        <CursorPos X="67" Y="25"/>
-        <TopLine Value="5"/>
+        <CursorPos X="26" Y="80"/>
+        <TopLine Value="61"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="22"/>
         <Loaded Value="True"/>
@@ -108,7 +108,7 @@
         <UsageCount Value="10"/>
       </Unit9>
     </Units>
-    <JumpHistory Count="28" HistoryIndex="27">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="linotify.pas"/>
         <Caret Line="25" Column="71" TopLine="10"/>
@@ -221,6 +221,10 @@
         <Filename Value="linotify.pas"/>
         <Caret Line="26" Column="3" TopLine="5"/>
       </Position28>
+      <Position29>
+        <Filename Value="linotify.pas"/>
+        <Caret Line="25" Column="67" TopLine="5"/>
+      </Position29>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

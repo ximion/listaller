@@ -286,7 +286,7 @@ initialization
  if IsRoot then
   RegDir:=LI_CONFIG_DIR+LI_APPDB_PREF
   else
-  RegDir:=SyblToPath('$INST')+'/'+li_APPDB_PREF;
+  RegDir:=SyblToPath('$INST')+'/'+LI_APPDB_PREF;
 
 end.
 

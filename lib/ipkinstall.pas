@@ -109,7 +109,7 @@ type
   //Handler for PackageKit progress
   procedure OnPKitProgress(pos: Integer;dp: Pointer);
   //Add update source of the package
-  procedure CheckAddUSource;
+  procedure CheckAddUSource(const forceroot: Boolean=false);
   //Catch signals of DBus thread
   procedure DBusThreadStatusChange(ty: LiProcStatus;data: TLiProcData);
  protected
@@ -143,7 +143,7 @@ type
   //** Version of the to-be-installed application
   property AppVersion: String read IAppVersion;
   //** ID of the application
-  property ID: String read PkgID;
+  property AppID: String read PkgID;
   //** Listaller package type
   property pType: TPkgType read pkType;
   //** Unformatted disallows string
@@ -313,7 +313,7 @@ dsApp.First;
 Result:=false;
 while not dsApp.EOF do
 begin
- if (dsApp.FieldByName('Name').AsString=aName) then
+ if (dsApp.FieldByName('PkName').AsString=aName) then
 begin
 Result:=true;
 break;
@@ -782,7 +782,7 @@ SetCurProfile(0);
 //Only executed to make sure that "RmApp" property is set
 
 if not Testmode then
-if IsAppInstalled(IAppName) then RmApp:=true;
+if IsAppInstalled(pkgID) then RmApp:=true;
 
 end else //Handle other IPK types
 if pkType=ptDLink then begin
@@ -1542,11 +1542,6 @@ pkg.Free;
 if (USource<>'#')and(AddUpdateSource) then
 begin
 fi:=TStringList.Create;
-if not FileExists(RegDir+'updates.list') then
-begin
-fi.Add('Listaller UpdateSources-V0.8');
-fi.SaveToFile(RegDir+'updates.list');
-end;
 fi.LoadFromFile(RegDir+'updates.list');
 for i:=1 to fi.Count-1 do
 if pos(USource,fi[i])>0 then break;
@@ -1707,16 +1702,28 @@ end; }
 SendStateMsg(rsSuccess);
 end;
 
-procedure TInstallation.CheckAddUSource;
-var fi: TStringList;i: Integer;
+procedure TInstallation.CheckAddUSource(const forceroot: Boolean=false);
+var fi: TStringList;i: Integer;found: Boolean;
+    s: String;
 begin
+if not forceroot then
+  s:=RegDir
+else
+  s:=LI_CONFIG_DIR+'app-reg/';
+
 if (USource<>'#')and(USource<>'') then
 begin
 fi:=TStringList.Create;
-fi.LoadFromFile(RegDir+'updates.list');
+if not FileExists(s+'updates.list') then
+begin
+fi.Add('List of update repositories v.1.0');
+fi.SaveToFile(s+'updates.list');
+end;
+fi.LoadFromFile(s+'updates.list');
+found:=false;
 for i:=1 to fi.Count-1 do
-if pos(USource,fi[i])>0 then break;
-if i=fi.Count then
+if pos(USource,fi[i])>0 then begin break;found:=true;end;
+if not found then
 begin
 if MakeUsrRequest(PAnsiChar(rsAddUpdSrc+#10+
    copy(USource,pos(' <',USource)+2,length(USource)-pos(' <',USource)-2)+' ('+copy(uSource,3,pos(' <',USource)-3)+')'+#10+
@@ -1724,7 +1731,7 @@ if MakeUsrRequest(PAnsiChar(rsAddUpdSrc+#10+
  begin
   AddUpdateSource:=true;
  end;
- end;
+end;
  fi.Free;
 end;
 end;
@@ -1743,8 +1750,8 @@ begin
  Result:=false;
  exit;
 end;
-IAppCMD:=SyblToPath(IAppCMD);
 
+IAppCMD:=SyblToPath(IAppCMD);
 //Check if the package downloads native pkgs
 for i:=0 to Dependencies.Count-1 do
 if (pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then
@@ -1765,7 +1772,9 @@ begin
  //Create worker thread for this action
  buscmd.cmdtype:=lbaInstallPack;
  buscmd.pkgname:=PkgPath; //Add path to setup file to DBus request
- CheckAddUSource;
+
+ //Force check of root update source
+ CheckAddUSource(true);
  if pkType=ptLinstall then
   buscmd.addsrc:=AddUpdateSource
  else buscmd.addsrc:=false;
@@ -1780,8 +1789,8 @@ begin
  exit;
 end;
 
-//Check if we have update sources to register
-if not IsRoot then
+if (not IsRoot)and(pkType=ptLinstall) then
+//Check if we have update source to register
 CheckAddUSource;
 
 //Load network connections

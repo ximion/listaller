@@ -237,6 +237,7 @@ end;
 
  fls.SaveToFile(ChangeFileExt(fname,'')+'_fdata.ulist');
 
+ fls.SaveToFile(path+'content.id');
  fls.LoadFromFile(fname);
  script:=TStringList.Create;
  for i:=1 to fls.Count-1 do
@@ -343,7 +344,11 @@ var orig: String;
 begin
  if fname='' then exit;
  orig:=h;
- h:=h+'/'+StringReplace(ExtractFilePath(fname),basepath,'',[rfReplaceAll]);
+ if basepath<>'' then
+  h:=h+'/'+StringReplace(ExtractFilePath(fname),basepath,'',[rfReplaceAll])
+ else
+  h:=h+'/';
+
  h:=CleanFilePath(h);
  ForceDirectories(WDir+h);
 
@@ -370,12 +375,15 @@ begin
   halt(5);
  end;
 
- x:=StringReplace(ExtractFilePath(fname),basepath,'',[rfReplaceAll]);
- x:=StringReplace(x,'/','',[rfReplaceAll]);
- x:=StringReplace(x,' ','',[rfReplaceAll]);
+ if basepath<>'' then
+ begin
+  x:=StringReplace(ExtractFilePath(fname),basepath,'',[rfReplaceAll]);
+  x:=StringReplace(x,'/','',[rfReplaceAll]);
+  x:=StringReplace(x,' ','',[rfReplaceAll]);
  if x<>'' then
  begin
-  fc.Add('>'+StringReplace(s+'/'+StringReplace(ExtractFilePath(fname),basepath,'',[rfReplaceAll]),'//','/',[rfReplaceAll]));
+  fc.Add('>'+CleanFilePath(s+'/'+StringReplace(ExtractFilePath(fname),basepath,'',[rfReplaceAll])));
+ end;
  end;
  fc.Add(CleanFilePath(h+'/'+ExtractFileName(DeleteModifiers(fname))));
  //'/files'+StringReplace(Files[i+2],'$INST','',[rfReplaceAll])+'/'+ExtractFileName(DeleteModifiers(Files[i]))+copy(Files[i],pos(ExtractFileName(DeleteModifiers(Files[i])),Files[i])+length(ExtractFileName(DeleteModifiers(Files[i]))),length(Files[i])));
@@ -443,7 +451,12 @@ sl.Free;
 control:=TIPKScript.Create;
 control.LoadFromList(script);
 if (LowerCase(ExtractFileExt(o))<>'.ipk') then
- o:=ExtractFilePath(fi)+'/'+control.PkName+'.ipk';
+begin
+ if control.IPKName='' then
+  o:=ExtractFilePath(fi)+'/'+control.PkName+'.ipk'
+ else
+  o:=ExtractFilePath(fi)+'/'+control.IPKName+'.ipk'
+end;
 
 o:=CleanFilePath(o);
 
@@ -520,6 +533,7 @@ writeLn('');
   i:=0;
  while i < files.Count do
  begin
+ if length(files[i])>0 then
  if files[i][1]='>' then
  begin
   //We have a new target folder. Set path

@@ -78,6 +78,8 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   TrayIcon.Visible:=true;
+  TrayIcon.Icon.Width:=32;
+  TrayIcon.Icon.Height:=32;
   MenuItem1.Caption:=rsCheckApps;
   MenuItem2.Caption:=rsCheckForUpd;
   MenuItem4.Caption:=rsLaunchLiMgr;

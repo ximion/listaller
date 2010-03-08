@@ -91,6 +91,9 @@ type
  //** Event to catch thrown application records
  TAppEvent = function(name: PChar;obj: PAppInfo): Boolean;cdecl;
 
+ //** Shows information about new update
+ TNewUpdateEvent = procedure(name: PChar;id: Integer;user_data: Pointer);cdecl;
+
  //** Listaller package types
  TPkgType = (ptLinstall, ptDLink, ptContainer, ptUnknown);
 
