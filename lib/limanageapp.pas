@@ -737,7 +737,7 @@ end;
 end;
 
 function TAppManager.CheckApps(report: TStringList;const fix: Boolean=false;const forceroot: Boolean=false): Boolean;
-var dsApp: TSQLite3Dataset;deps: TStringList;i: Integer;pkit: TPackageKit;s: String;
+var dsApp: TSQLite3Dataset;deps: TStringList;i: Integer;pkit: TPackageKit;
 begin
 msg('Checking dependencies of all registered applications...');
 if forceroot then
@@ -745,14 +745,9 @@ msg('You are scanning only the ROOT installed applications.')
 else
 msg('You are scanning your local installed applications.');
 
-if not forceroot then
-  s:=SyblToPath('$INST')+'/app-reg/'
-else
-  s:=LI_CONFIG_DIR+'app-reg/';
-
 writeLn('-> Opening database...');
 dsApp:= TSQLite3Dataset.Create(nil);
-LoadAppDB(dsApp);
+LoadAppDB(dsApp,forceroot);
 dsApp.Active:=true;
 
 Result:=true;

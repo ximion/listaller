@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -21,7 +21,7 @@ unit ipkdef;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, litypes;
+  Classes, SysUtils, liTypes, liBasic;
 
 type
 
@@ -937,7 +937,11 @@ end;
 constructor TIPKControl.Create(path: String);
 begin
  inherited Create;
- LoadFromFile(path);
+ if FileExists(path) then
+ begin
+ text.LoadFromFile(path);
+ FBasePath:=ExtractFilePath(path);
+ end;
  fname:=path;
 end;
 

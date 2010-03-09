@@ -165,7 +165,7 @@ end;
 function TAppUpdater.CheckUpdates: Boolean;
 var
   tmp,h,sinfo,sources: TStringList;
-  i,j,k: Integer;
+  j,k: Integer;
   ok: Boolean;
   p: String;
   progpos: Integer;
@@ -201,8 +201,16 @@ begin
   end;
 
   for k:=1 to h.Count-1 do
-   if h[k][1]='-' then sources.Add(copy(h[k],2,pos(' <',h[k])-2));
-
+  begin
+  p_debug(h[k]);
+  if pos(' <',h[k])>0 then
+  begin
+   if h[k][1]='-' then sources.Add(copy(h[k],2,pos(' <',h[k])-2))
+  end else
+  begin
+   if h[k][1]='-' then sources.Add(copy(h[k],2,length(h[k])));
+  end;
+  end;
   max:=sources.Count;
   h.Free;
 
@@ -219,9 +227,13 @@ begin
 
   for k:=0 to sources.Count-1 do
   begin
-  try
+    HTTP.Clear;
     HTTP.HTTPMethod('GET', sources[k]+'/'+'source.pin');
     tmp.LoadFromStream(HTTP.Document);
+
+    if not DirectoryExists(tmpdir) then ForceDirectories(tmpdir);
+
+    if (tmp.Count<=0)or(pos('type:',LowerCase(tmp[0]))<=0) then break;
     tmp.SaveToFile(TMPDIR+'source0.pin');
 
     control:=TIPKControl.Create(TMPDIR+'source0.pin');
@@ -231,6 +243,7 @@ begin
     dsApp.First;
     while not dsApp.EOF do
     begin
+     p_debug(control.PkName+' # '+dsApp.FieldByName('PkName').AsString);
      if (control.PkName=dsApp.FieldByName('PkName').AsString) then
      begin
       ok:=true;
@@ -248,14 +261,15 @@ begin
 
      ui:=TUpdateInfo.Create;
     for j:=0 to sinfo.Count-1 do
-    if length(sinfo[i])>0 then
-    if sinfo[j][1]='>' then p:=SyblToPath(copy(sinfo[j],2,length(sinfo[j])))
-    else
-    begin
-     if sinfo[j+1]<>MDPrint((MD5.MD5File(DeleteModifiers(SyblToPath(sinfo[j])),1024))) then
+     if length(sinfo[j])>0 then
      begin
-      ui.files.Add(sources[k]+'/'+DeleteModifiers(SyblToX(sinfo[j])));
-      ui.files.Add(SyblToPath(CleanFilePath(p+'/'+sinfo[j])));
+     if sinfo[j][1]='>' then p:=SyblToPath(copy(sinfo[j],2,length(sinfo[j])))
+     else
+      if sinfo[j+1]<>MDPrint((MD5.MD5File(DeleteModifiers(SyblToPath(sinfo[j])),1024))) then
+      begin
+       ui.files.Add(sources[k]+'/'+DeleteModifiers(SyblToX(sinfo[j])));
+       ui.files.Add(SyblToPath(CleanFilePath(p+'/'+sinfo[j])));
+      end;
      end;
 
     ulist.Add(ui);
@@ -271,16 +285,12 @@ begin
      NewUpdate(ui.AppName,ui.updid);
     end else
      ui.Free;
-
-    end;
   end;
   control.Free;
+  end;
+
   tmp.Free;
   sinfo.Free;
-  finally
-    HTTP.Free;
-  end;
-  end;
 
   dsApp.Free;
   writeLn('Database connection closed.');

@@ -48,8 +48,8 @@
         <ComponentName Value="UMnForm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="mnupdate"/>
-        <CursorPos X="20" Y="152"/>
-        <TopLine Value="125"/>
+        <CursorPos X="20" Y="74"/>
+        <TopLine Value="53"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="45"/>
         <Loaded Value="True"/>
@@ -296,7 +296,7 @@
         <Loaded Value="True"/>
       </Unit35>
     </Units>
-    <JumpHistory Count="27" HistoryIndex="26">
+    <JumpHistory Count="26" HistoryIndex="25">
       <Position1>
         <Filename Value="mnupdate.pas"/>
         <Caret Line="5" Column="58" TopLine="1"/>
@@ -401,10 +401,6 @@
         <Filename Value="mnupdate.pas"/>
         <Caret Line="26" Column="77" TopLine="1"/>
       </Position26>
-      <Position27>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="101" Column="3" TopLine="128"/>
-      </Position27>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

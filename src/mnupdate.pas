@@ -66,12 +66,13 @@ implementation
 
 { TUMnForm }
 
-procedure OnNewUpdateFound(name: PChar;id: Integer;user_data: Pointer);cdecl;
+procedure OnNewUpdateFound(appName: PChar;id: Integer;user_data: Pointer);cdecl;
 begin
  if Assigned(UMnForm) then
  with UMnForm do
  begin
-  CheckListBox1.Items.Add(name);
+  p_debug(appName);
+  //CheckListBox1.Items.Add(appName);
  end;
 end;
 
