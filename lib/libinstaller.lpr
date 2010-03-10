@@ -448,6 +448,24 @@ begin
  Result:=upd^.CheckUpdates;
 end;
 
+//** Fetch old version of application
+function li_updater_updateid_oldversion(upd: PAppUpdater;uid: Integer): PChar;cdecl;
+begin
+ Result:=PChar(upd^.UpdateIDGetOldVersion(uid));
+end;
+
+//** fetch new application version
+function li_updater_updateid_newversion(upd: PAppUpdater;uid: Integer): PChar;cdecl;
+begin
+ Result:=PChar(upd^.UpdateIDGetNewVersion(uid));
+end;
+
+//**Execute update for given update ID
+function li_updater_execute_update(upd: PAppUpdater;uid: Integer): Boolean;cdecl;
+begin
+ Result:=upd^.ExecuteUpdate(uid);
+end;
+
 ///////////////////////
 exports
  //Stringlist functions
@@ -503,6 +521,9 @@ exports
  li_updater_register_request_call,
  li_updater_register_newupdate_call,
  li_updater_search_updates,
+ li_updater_updateid_newversion,
+ li_updater_updateid_oldversion,
+ li_updater_execute_update,
 
  //Other functions
  li_remove_ipk_installed_app,

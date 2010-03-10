@@ -29,8 +29,8 @@
         <Filename Value="libuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
-        <CursorPos X="23" Y="27"/>
-        <TopLine Value="1"/>
+        <CursorPos X="20" Y="177"/>
+        <TopLine Value="143"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="37"/>
         <Loaded Value="True"/>
@@ -45,11 +45,11 @@
       <Unit2>
         <Filename Value="ipkbuild.pas"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="4" Y="538"/>
-        <TopLine Value="469"/>
+        <CursorPos X="11" Y="248"/>
+        <TopLine Value="218"/>
         <UsageCount Value="14"/>
         <Bookmarks Count="1">
-          <Item0 X="53" Y="566" ID="8"/>
+          <Item0 X="53" Y="565" ID="8"/>
         </Bookmarks>
       </Unit2>
       <Unit3>
@@ -253,7 +253,7 @@
         <UsageCount Value="10"/>
       </Unit31>
     </Units>
-    <JumpHistory Count="13" HistoryIndex="12">
+    <JumpHistory Count="14" HistoryIndex="13">
       <Position1>
         <Filename Value="libuild.lpr"/>
         <Caret Line="27" Column="26" TopLine="13"/>
@@ -306,6 +306,10 @@
         <Filename Value="libuild.lpr"/>
         <Caret Line="27" Column="23" TopLine="1"/>
       </Position13>
+      <Position14>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="177" Column="20" TopLine="143"/>
+      </Position14>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

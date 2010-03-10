@@ -240,13 +240,12 @@ end;
  fls.SaveToFile(path+'content.id');
  fls.LoadFromFile(fname);
  script:=TStringList.Create;
- for i:=1 to fls.Count-1 do
+ for i:=0 to fls.Count-1 do
  begin
   if pos('!-Files ~',fls[i])>0 then break
   else script.Add(fls[i]);
  end;
  fls.Free;
- script.Delete(0);
  script.SaveToFile(path+'source.pin');
  script.Free;
 

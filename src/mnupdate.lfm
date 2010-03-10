@@ -3,7 +3,7 @@ object UMnForm: TUMnForm
   Height = 614
   Top = 180
   Width = 688
-  ActiveControl = CheckListBox1
+  ActiveControl = UpdListBox
   Caption = 'Update Manager'
   ClientHeight = 614
   ClientWidth = 688
@@ -36,14 +36,14 @@ object UMnForm: TUMnForm
     OnClick = BitBtn1Click
     TabOrder = 1
   end
-  object CheckListBox1: TCheckListBox
+  object UpdListBox: TCheckListBox
     Left = 8
     Height = 454
     Top = 8
     Width = 669
     Anchors = [akTop, akLeft, akRight, akBottom]
     ItemHeight = 0
-    OnClick = CheckListBox1Click
+    OnClick = UpdListBoxClick
     TabOrder = 2
     TopIndex = -1
   end

@@ -28,24 +28,17 @@ uses
 type
 
   { TUMnForm }
-  
-  TAppNotes = record
-  AppName: String;
-  NVersion, OVersion: String;
-  ID: String;
-  end;
-
   TUMnForm = class(TForm)
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
-    CheckListBox1: TCheckListBox;
+    UpdListBox: TCheckListBox;
     InfoMemo: TMemo;
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
     PopupMenu1: TPopupMenu;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
-    procedure CheckListBox1Click(Sender: TObject);
+    procedure UpdListBoxClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -53,10 +46,10 @@ type
     procedure MenuItem2Click(Sender: TObject);
   private
     { private declarations }
-    updater: Pointer;
   public
     { public declarations }
-    ANotes: Array of TAppNotes;
+    UpdateIDs: TStringList;
+    updater: Pointer;
   end; 
 
 var
@@ -71,36 +64,58 @@ begin
  if Assigned(UMnForm) then
  with UMnForm do
  begin
-  p_debug(appName);
-  //CheckListBox1.Items.Add(appName);
+  UpdListBox.Items.Add(appName);
+  UpdateIDs.Add(IntToStr(id));;
  end;
 end;
 
 function OnRequest(mtype: TRqType;msg: PChar;user_data: Pointer): TRqResult;cdecl;
 begin
- p_debug(msg);
- Result:=rqsOK;
+case mtype of
+rqError: begin
+  Application.MessageBox(msg,'Error',MB_OK+MB_IconError);
+  Result:=rqsOK;
+end;
+rqWarning: begin
+  if Application.MessageBox(PAnsiChar(msg),PChar(rsWarning),MB_YESNO+MB_IconWarning)<>IDYES then
+  begin
+   ShowMessage(rsINClose);
+   Result:=rqsNo;
+  end else Result:=rqsYes;
+end;
+rqQuestion: begin
+  if Application.MessageBox(PAnsiChar(msg),PChar(rsQuestion),MB_YESNO+MB_IconQuestion)<>IDYES then
+   Result:=rqsNo else Result:=rqsYes;
+end;
+rqInfo: begin
+  ShowMessage(msg);
+  Result:=rqsOK;
+ end;
+end;
 end;
 
 procedure TUMnForm.BitBtn1Click(Sender: TObject);
 begin
-UExecFm.ShowModal;
+ UExecFm.ShowModal;
 end;
 
 procedure TUMnForm.BitBtn2Click(Sender: TObject);
 begin
  li_updater_search_updates(@updater);
+ if UpdListBox.Items.Count>0 then
+  BitBtn1.Enabled:=true;
 end;
 
-procedure TUMnForm.CheckListBox1Click(Sender: TObject);
+procedure TUMnForm.UpdListBoxClick(Sender: TObject);
 begin
-if CheckListBox1.ItemIndex>-1 then
+if UpdListBox.ItemIndex>-1 then
 begin
 InfoMemo.Enabled:=true;
 InfoMemo.Lines.Clear;
 InfoMemo.Lines.Add(rsLogUpdInfo);
-//InfoMemo.Lines.Add(StringReplace(rsFilesChanged,'%f',IntToStr((ulist[CheckListBox1.ItemIndex].Count div 2)),[rfReplaceAll]));
-InfoMemo.Lines.Add(StringReplace(rsUpdTo,'%v','"'+anotes[CheckListBox1.ItemIndex].NVersion+'"',[rfReplaceAll]));
+//InfoMemo.Lines.Add(StringReplace(rsFilesChanged,'%f',IntToStr((ulist[UpdListBox.ItemIndex].Count div 2)),[rfReplaceAll]));
+InfoMemo.Lines.Add(StringReplace(rsUpdTo,'%v','"'+
+ li_updater_updateid_newversion(@updater,StrToInt(updateids[UpdListBox.ItemIndex]))+'"',[rfReplaceAll]));
 end;
 end;
 
@@ -142,6 +157,7 @@ BitBtn2.Caption:=rsCheckForUpd;
 BitBtn1.Caption:=rsInstUpd;
 MenuItem1.Caption:=rsQuitUpdater;
 MenuItem2.Caption:=rsShowUpdater;
+UpdateIDs:=TStringList.Create;
 
 updater:=li_updater_new;
 li_updater_register_newupdate_call(@updater,@OnNewUpdateFound,nil);
@@ -150,6 +166,7 @@ end;
 
 procedure TUMnForm.FormDestroy(Sender: TObject);
 begin
+  UpdateIDs.Free;
   li_updater_free(@updater);
 end;
 

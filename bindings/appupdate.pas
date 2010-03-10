@@ -29,6 +29,9 @@ uses
   function  li_updater_register_request_call(upd: Pointer;call: TRequestCall;user_data: Pointer): Boolean;cdecl;external libinst;
   function  li_updater_register_newupdate_call(upd: Pointer;call: TNewUpdateEvent;user_data: Pointer): Boolean;cdecl;external libinst;
   function  li_updater_search_updates(upd: Pointer): Boolean;cdecl;external libinst;
+  function  li_updater_updateid_oldversion(upd: Pointer;uid: Integer): PChar;cdecl;external libinst;
+  function  li_updater_updateid_newversion(upd: Pointer;uid: Integer): PChar;cdecl;external libinst;
+  function  li_updater_execute_update(upd: Pointer;uid: Integer): Boolean;cdecl;external libinst;
 
 implementation
 end.

@@ -22,7 +22,8 @@ interface
 
 uses
   Classes, SysUtils, HTTPSend, FTPSend, liManageApp, liBasic, liCommon,
-  liTypes, ipkdef, Contnrs, SqLite3DS, trStrings, MD5;
+  liTypes, ipkdef, Contnrs, SqLite3DS, trStrings, MD5, ipkPackage, Process,
+  IniFiles, FileUtil;
 
 type
 
@@ -59,8 +60,10 @@ type
   procedure SetMnPos(i: Integer);
   procedure SetExPos(i: Integer);
   procedure Msg(s: String);
+  procedure StepMsg(s: String);
   function  Request(s: String;ty: TRqType): TRqResult;
   procedure NewUpdate(nm: String;id: Integer);
+  function ValidUpdateId(uid: Integer): Boolean;
  public
   constructor Create;
   destructor  Destroy;override;
@@ -70,6 +73,11 @@ type
   procedure RegOnStatusChange(call: TLiStatusChangeCall;data: Pointer);
   procedure RegOnRequest(call: TRequestCall;data: Pointer);
   procedure RegOnNewUpdate(call: TNewUpdateEvent;data: Pointer);
+
+  function UpdateIDGetNewVersion(uid: Integer): String;
+  function UpdateIDGetOldVersion(uid: Integer): String;
+
+  function ExecuteUpdate(uid: Integer): Boolean;
  end;
 
 implementation
@@ -94,6 +102,7 @@ constructor TAppUpdater.Create;
 begin
  HTTP:=THTTPSend.Create;
  FTP:=TFTPSend.Create;
+ //HTTP.Sock.OnStatus:=@HookSock;
  ulist:=TObjectList.Create(true);
  HTTP.UserAgent:='Listaller-Update';
  SetSuMode(false);
@@ -140,6 +149,12 @@ begin
  if Assigned(FStatus) then FStatus(scMessage,sdata,statechangeudata);
 end;
 
+procedure TAppUpdater.StepMsg(s: String);
+begin
+ sdata.msg:=PChar(s);
+ if Assigned(FStatus) then FStatus(scStepMessage,sdata,statechangeudata);
+end;
+
 function TAppUpdater.Request(s: String;ty: TRqType): TRqResult;
 begin
  if Assigned(FReq) then Result:=FReq(ty,PChar(s),requestudata);
@@ -173,7 +188,6 @@ var
   control: TIPKControl;
   dsApp: TSQLite3Dataset; //AppDB connection
   max: Integer;
-  lastID: Integer;
 begin
   if ulist.Count>0 then
   begin
@@ -187,7 +201,6 @@ begin
   sources:=TStringList.Create;
 
   progpos:=0;
-  lastID:=0;
 
   if not FileExists(AppReg+'updates.list') then
   begin Result:=false;exit;end;
@@ -265,10 +278,13 @@ begin
      begin
      if sinfo[j][1]='>' then p:=SyblToPath(copy(sinfo[j],2,length(sinfo[j])))
      else
-      if sinfo[j+1]<>MDPrint((MD5.MD5File(DeleteModifiers(SyblToPath(sinfo[j])),1024))) then
+      if (sinfo[j][1]='.')or(sinfo[j][1]='/') then
+      begin
+      if sinfo[j+1]<>MDPrint((MD5.MD5File(CleanFilePath(DeleteModifiers(p+'/'+ExtractFileName(sinfo[j]))),1024))) then
       begin
        ui.files.Add(sources[k]+'/'+DeleteModifiers(SyblToX(sinfo[j])));
-       ui.files.Add(SyblToPath(CleanFilePath(p+'/'+sinfo[j])));
+       ui.files.Add(SyblToPath(CleanFilePath(p+'/'+ExtractFileName(sinfo[j]))));
+      end;
       end;
      end;
 
@@ -280,8 +296,7 @@ begin
 
     if ui.files.Count>0 then
     begin
-     Inc(lastID);
-     ui.updid:=lastID;
+     ui.updid:=ulist.Count-1;
      NewUpdate(ui.AppName,ui.updid);
     end else
      ui.Free;
@@ -293,9 +308,156 @@ begin
   sinfo.Free;
 
   dsApp.Free;
-  writeLn('Database connection closed.');
 
+if ulist.Count<=0 then
 request(rsNoUpdates,rqInfo);
+end;
+
+function TAppUpdater.ValidUpdateId(uid: Integer): Boolean;
+begin
+ Result:=true;
+ if (uid > ulist.Count-1)or(uID<0) then
+ begin
+  p_error('Invalid update ID received. (This may be a bug in the application using libInstaller)');
+  Result:=false;
+ end;
+end;
+
+function TAppUpdater.UpdateIDGetNewVersion(uid: Integer): String;
+begin
+ Result:='?';
+ if not ValidUpdateId(uid) then exit;
+ Result:=TUpdateInfo(ulist[uid]).NVersion;
+end;
+
+function TAppUpdater.UpdateIDGetOldVersion(uid: Integer): String;
+begin
+ Result:='?';
+ if not ValidUpdateId(uid) then exit;
+ Result:=TUpdateInfo(ulist[uid]).OVersion;
+end;
+
+function TAppUpdater.ExecuteUpdate(uid: Integer): Boolean;
+var
+  i,k: Integer;
+  xz: TLiUpdateBit;
+  c: TProcess;
+  dsk: TIniFile;
+  s: TStringList;
+  prog,max: Integer; //To set progress bar position
+  xh,tmp: String;
+  files: TStringList;
+  dsApp: TSQLite3Dataset; //AppDB connection
+begin
+    Result:=true;
+    if not ValidUpdateId(uid) then exit;
+
+    tmp:=CleanFilePath(tmpdir+'/liupd/');
+    ForceDirectories(tmp);
+    c:=TProcess.create(nil);
+    c.Options:=[poUsePipes,poWaitonexit];
+
+    dsApp:= TSQLite3Dataset.Create(nil);
+    LoadAppDB(dsApp);
+    dsApp.Active:=true;
+
+    msg('Begin update of '+TUpdateInfo(ulist[uid]).AppName);
+    xz:=TLiUpdateBit.Create;
+    files:=TUpdateInfo(ulist[uid]).files;
+    max:=(files.Count div 2);
+    for i:=0 to files.Count-1 do
+    if i mod 2 = 0 then
+    begin
+     msg('GET: '+files[i]);
+
+    // try
+      HTTP.HTTPMethod('GET', files[i]+'.xz');
+
+      HTTP.Document.SaveToFile(tmp+ExtractFileName(files[i])+'.xz');
+
+     xh:=tmp+ExtractFileName(files[i]+'.xz');
+     msg('Install...');
+     p_debug(xh+' ## '+DeleteModifiers(files[i+1]));
+     xz.Decompress(xh,DeleteModifiers(files[i+1]));
+
+     DeleteFile(xh);
+      //DeleteFile(DeleteModifiers(ulist[j][i+1])+'/'+ExtractFileName(ulist[j][i])); //Delete old File (not always necessary, but sometimes needed)
+
+     {except
+     request(rsExtractError,rqError);
+     msg(rsUpdConfError);
+     xz.Free;
+     exit;
+    end; }
+
+    if(pos('.desktop',LowerCase(ExtractFileName(files[i+1])))>0) then
+    begin
+       msg('Writing configuration for '+ExtractFileName(files[i+1]));
+       dsk:=TIniFile.Create(files[i+1]);
+       if dsk.ValueExists('Desktop Entry','Icon') then
+       dsk.WriteString('Desktop Entry','Icon',SyblToPath(dsk.ReadString('Desktop Entry','Icon','*')));
+       if dsk.ValueExists('Desktop Entry','Exec') then
+       dsk.WriteString('Desktop Entry','Exec',SyblToPath(dsk.ReadString('Desktop Entry','Exec','*')));
+       dsk.Free;
+    end;
+
+    if(pos(' <setvars>',LowerCase(ExtractFileName(files[i+1])))>0) then
+    begin
+       msg('Writing configuration for '+ExtractFileName(files[i+1]));
+       s:=TStringList.Create;
+       s.LoadFromFile(files[i+1]);
+       for k:=0 to s.Count-1 do
+        s[k]:=SyblToPath(s[k]);
+       s.SaveToFile(files[i+1]);
+       s.Free;
+    end;
+
+msg('chmod...');
+msg('Assign rights..');
+if pos(' <chmod:',files[i+1])>0 then
+begin
+ c.CommandLine := 'chmod '+copy(files[i+1],pos(' <chmod:',files[i+1])+8,3)+SyblToPath(files[i+1])+'/'+ExtractFileName(DeleteModifiers(files[i+1]));
+ c.Execute;
+end else
+begin
+ c.CommandLine :='chmod 755 '+DeleteModifiers(SyblToPath(files[i+1]))+'/'+ExtractFileName(files[i]);
+ c.Execute;
+end;
+    msg('Finishing...');
+    SetMnPos(Round((100/max)*prog));
+    msg('Okay');
+end;
+
+xz.free;
+
+    if TUpdateInfo(ulist[uid]).NVersion<>'' then
+    begin
+     dsApp.SQL:='SELECT * FROM AppInfo';
+     dsApp.Open;
+     dsApp.Filtered:=true;
+     dsApp.Edit;
+     dsApp.First;
+    while not dsApp.EOF do
+    begin
+     if (dsApp.FieldByName('Name').AsString=TUpdateInfo(ulist[uid]).AppName) and (dsApp.FieldByName('PkName').AsString=TUpdateInfo(ulist[uid]).ID) then
+     begin
+      dsApp.FieldByName('Version').AsString:=TUpdateInfo(ulist[uid]).NVersion;
+      break;
+     end;
+    dsApp.Next;
+    end;
+    dsApp.ApplyUpdates;
+   dsApp.Close;
+   end;
+
+ulist.Delete(uid); //Remove update information
+
+  msg('Cleaning up...');
+  c.Free;
+  dsApp.Free;
+
+  FileUtil.DeleteDirectory(tmp,false);
+  StepMsg('Update finished!');
 end;
 
 end.

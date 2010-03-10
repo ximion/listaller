@@ -382,14 +382,14 @@ constructor TLiUpdateBit.Create;
 begin
  inherited;
  algorithm:=2;
- encoder:=TLZMAEncoder.Create;
- decoder:=TLZMADecoder.Create;
+ //encoder:=TLZMAEncoder.Create;
+ //decoder:=TLZMADecoder.Create;
 end;
 
 destructor TLiUpdateBit.Destroy;
 begin
- encoder.Free;
- decoder.Free;
+ //encoder.Free;
+ //decoder.Free;
  inherited;
 end;
 
@@ -403,6 +403,7 @@ begin
  inStream:=TBufferedFS.Create(infile,fmOpenRead or fmShareDenyNone);
  outStream:=TBufferedFS.Create(outfile,fmcreate);
 
+ encoder:=TLZMAEncoder.Create;
  if not encoder.SetAlgorithm(algorithm) then
   raise Exception.Create('Incorrect compression mode');
  if not encoder.SetDictionarySize(1 shl 23) then
@@ -414,6 +415,7 @@ begin
   raise Exception.Create('Incorrect -mf value');
  if not encoder.SetLcLpPb(3, 0, 2) then
   raise Exception.Create('Incorrect -lc or -lp or -pb value');
+
 
   encoder.SetEndMarkerMode(eos);
   encoder.WriteCoderProperties(outStream);
@@ -427,13 +429,14 @@ begin
 
   encoder.Code(inStream, outStream, -1, -1);
 
+  encoder.free;
   outStream.Free;
   inStream.Free;
 end;
 
 procedure TLiUpdateBit.Decompress(infile: String;outfile: String);
- var inStream:TBufferedFS;
-    outStream:TBufferedFS;
+ var inStream:TFileStream;
+    outStream:TFileStream;
     properties:array[0..4] of byte;
     outSize:Int64;
     i: Integer;
@@ -443,13 +446,13 @@ begin
  if not FileExists(infile) then Exception.Create('UpdateBit does not exists!!');
 
  try
-  inStream:=TBufferedFS.Create(infile, fmOpenRead or fmShareDenyNone);
+  inStream:=TFileStream.Create(infile, fmOpenRead or fmShareDenyNone);
  try
   if FileExists(outfile) then DeleteFile(outfile);
-  outStream:=TBufferedFS.Create(outfile, fmCreate);
+  outStream:=TFileStream.Create(outfile, fmCreate);
 
-  decoder:=TLZMADecoder.Create;
   inStream.position:=0;
+  decoder:=TLZMADecoder.Create;
     with decoder do
     begin
       if inStream.read(properties, propertiesSize) <> propertiesSize then
@@ -468,7 +471,7 @@ begin
       if not Code(inStream, outStream, outSize) then
        raise Exception.Create('Error in data stream');
      end;
-
+  decoder.Free;
  finally
   outStream.Free;
  end;
