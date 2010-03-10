@@ -22,7 +22,8 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ComCtrls, HTTPSend, FileUtil, Process, LiCommon, trStrings, LiBasic, AppUpdate;
+  ComCtrls, HTTPSend, FileUtil, Process, LiCommon, trStrings, LiBasic, AppUpdate,
+  liTypes;
 
 type
 
@@ -42,8 +43,6 @@ type
   private
     { private declarations }
     fstact: Boolean;
-    //** Hook on HTTP/FTP socket
-     //procedure HookSock(Sender: TObject; Reason:THookSocketReason; const Value: string);
   public
     { public declarations }
   end; 
@@ -57,6 +56,22 @@ uses mnupdate;
 
 { TUExecFm }
 
+procedure OnEXStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
+begin
+if not Assigned(UExecFm) then begin p_error('UExecForm not created!');exit;end;
+with UExecFm do
+begin
+ case change of
+  scMessage: begin
+   p_info(data.msg);
+   Memo1.Lines.Add(data.msg);
+  end;
+  scStepMessage: ILabel.Caption:=data.msg;
+  scMnProgress: ProgressBar2.Position:=data.mnprogress;
+ end;
+end;
+end;
+
 procedure TUExecFm.FormShow(Sender: TObject);
 begin
 end;
@@ -66,16 +81,6 @@ begin
   Close;
   UMnForm.BitBtn2Click(nil);
 end;
-    
-{procedure TUExecFm.HookSock(Sender: TObject; Reason: THookSocketReason;
-const Value: string);
-begin
-if HTTP.DownloadSize>100 then begin
-ProgressBar2.Max:=HTTP.DownloadSize;
-ProgressBar2.Position:=HTTP.Document.Size;
-end;
-Application.ProcessMessages;
-end;}
 
 procedure TUExecFm.FormActivate(Sender: TObject);
 var i: Integer;
@@ -83,6 +88,8 @@ begin
  if fstact then
  begin
   fstact:=false;
+  li_updater_register_status_call(@UMnForm.updater,@OnEXStatus,nil);
+
   for i:=0 to UMnForm.UpdListBox.Count-1 do
    if UMnForm.UpdListBox.Checked[i] then
     ProgressBar1.Max:=ProgressBar1.Max+1;
@@ -93,12 +100,15 @@ begin
     li_updater_execute_update(@UMnForm.updater,StrToInt(UMnForm.UpdateIDs[i]));
     ProgressBar1.Position:=ProgressBar1.Position+1;
    end;
+   li_updater_register_status_call(@UMnForm.updater,@mnupdate.OnMNStatus,nil);
+  Button1.Enabled:=true;
  end;
 end;
 
 procedure TUExecFm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   fstact:=true;
+  Button1.Enabled:=false;
 end;
 
 procedure TUExecFm.FormCreate(Sender: TObject);
@@ -106,6 +116,7 @@ begin
   Memo1.Font.Color:=clWhite;
   Caption:=rsUpdInstalling;
   Button1.Caption:=rsClose;
+  Button1.Enabled:=false;
   fstact:=true;
 end;
 

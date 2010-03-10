@@ -1,12 +1,12 @@
 object UMnForm: TUMnForm
-  Left = 282
-  Height = 614
-  Top = 180
-  Width = 688
+  Left = 267
+  Height = 594
+  Top = 176
+  Width = 608
   ActiveControl = UpdListBox
   Caption = 'Update Manager'
-  ClientHeight = 614
-  ClientWidth = 688
+  ClientHeight = 594
+  ClientWidth = 608
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -14,8 +14,8 @@ object UMnForm: TUMnForm
   object InfoMemo: TMemo
     Left = 8
     Height = 90
-    Top = 510
-    Width = 669
+    Top = 480
+    Width = 589
     Anchors = [akLeft, akRight, akBottom]
     Enabled = False
     Lines.Strings = (
@@ -24,9 +24,9 @@ object UMnForm: TUMnForm
     TabOrder = 0
   end
   object BitBtn1: TBitBtn
-    Left = 590
+    Left = 510
     Height = 22
-    Top = 478
+    Top = 448
     Width = 87
     Anchors = [akRight, akBottom]
     AutoSize = True
@@ -38,9 +38,9 @@ object UMnForm: TUMnForm
   end
   object UpdListBox: TCheckListBox
     Left = 8
-    Height = 454
+    Height = 432
     Top = 8
-    Width = 669
+    Width = 589
     Anchors = [akTop, akLeft, akRight, akBottom]
     ItemHeight = 0
     OnClick = UpdListBoxClick
@@ -50,7 +50,7 @@ object UMnForm: TUMnForm
   object BitBtn2: TBitBtn
     Left = 8
     Height = 22
-    Top = 478
+    Top = 448
     Width = 106
     Anchors = [akLeft, akBottom]
     AutoSize = True
@@ -58,6 +58,28 @@ object UMnForm: TUMnForm
     NumGlyphs = 0
     OnClick = BitBtn2Click
     TabOrder = 3
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 16
+    Top = 578
+    Width = 608
+    Panels = <    
+      item
+        Alignment = taRightJustify
+        Width = 80
+      end>
+    SimplePanel = False
+  end
+  object ProgressBar: TProgressBar
+    Left = 448
+    Height = 12
+    Top = 582
+    Width = 140
+    Anchors = [akRight, akBottom]
+    Smooth = True
+    Step = 1
+    TabOrder = 5
   end
   object PopupMenu1: TPopupMenu
     left = 648

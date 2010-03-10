@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, HTTPSend, FTPSend, liManageApp, liBasic, liCommon,
   liTypes, ipkdef, Contnrs, SqLite3DS, trStrings, MD5, ipkPackage, Process,
-  IniFiles, FileUtil;
+  IniFiles, FileUtil, Blcksock;
 
 type
 
@@ -64,6 +64,9 @@ type
   function  Request(s: String;ty: TRqType): TRqResult;
   procedure NewUpdate(nm: String;id: Integer);
   function ValidUpdateId(uid: Integer): Boolean;
+  //Hook on HTTP socket
+  procedure HookSock(Sender: TObject; Reason: THookSocketReason;
+    const Value: string);
  public
   constructor Create;
   destructor  Destroy;override;
@@ -102,7 +105,7 @@ constructor TAppUpdater.Create;
 begin
  HTTP:=THTTPSend.Create;
  FTP:=TFTPSend.Create;
- //HTTP.Sock.OnStatus:=@HookSock;
+ HTTP.Sock.OnStatus:=@HookSock;
  ulist:=TObjectList.Create(true);
  HTTP.UserAgent:='Listaller-Update';
  SetSuMode(false);
@@ -177,6 +180,15 @@ begin
  if Assigned(FStatus) then FStatus(scExProgress,sdata,statechangeudata);
 end;
 
+procedure TAppUpdater.HookSock(Sender: TObject; Reason: THookSocketReason;
+const Value: string);
+begin
+if HTTP.DownloadSize>20 then
+begin
+ SetExPos(Round(100/HTTP.DownloadSize*HTTP.Document.Size));
+end;
+end;
+
 function TAppUpdater.CheckUpdates: Boolean;
 var
   tmp,h,sinfo,sources: TStringList;
@@ -215,7 +227,6 @@ begin
 
   for k:=1 to h.Count-1 do
   begin
-  p_debug(h[k]);
   if pos(' <',h[k])>0 then
   begin
    if h[k][1]='-' then sources.Add(copy(h[k],2,pos(' <',h[k])-2))
@@ -246,7 +257,7 @@ begin
 
     if not DirectoryExists(tmpdir) then ForceDirectories(tmpdir);
 
-    if (tmp.Count<=0)or(pos('type:',LowerCase(tmp[0]))<=0) then break;
+    if (tmp.Count<=0)or(pos('ipk-standard',LowerCase(tmp[0]))<=0) then break;
     tmp.SaveToFile(TMPDIR+'source0.pin');
 
     control:=TIPKControl.Create(TMPDIR+'source0.pin');
@@ -256,7 +267,6 @@ begin
     dsApp.First;
     while not dsApp.EOF do
     begin
-     p_debug(control.PkName+' # '+dsApp.FieldByName('PkName').AsString);
      if (control.PkName=dsApp.FieldByName('PkName').AsString) then
      begin
       ok:=true;
@@ -273,17 +283,18 @@ begin
      sinfo.LoadFromStream(HTTP.Document);
 
      ui:=TUpdateInfo.Create;
+     p:='??';
     for j:=0 to sinfo.Count-1 do
      if length(sinfo[j])>0 then
      begin
-     if sinfo[j][1]='>' then p:=SyblToPath(copy(sinfo[j],2,length(sinfo[j])))
+     if sinfo[j][1]='>' then p:=copy(sinfo[j],2,length(sinfo[j]))
      else
       if (sinfo[j][1]='.')or(sinfo[j][1]='/') then
       begin
-      if sinfo[j+1]<>MDPrint((MD5.MD5File(CleanFilePath(DeleteModifiers(p+'/'+ExtractFileName(sinfo[j]))),1024))) then
+      if sinfo[j+1]<>MDPrint((MD5.MD5File(CleanFilePath(DeleteModifiers(SyblToPath(p)+'/'+ExtractFileName(sinfo[j]))),1024))) then
       begin
-       ui.files.Add(sources[k]+'/'+DeleteModifiers(SyblToX(sinfo[j])));
-       ui.files.Add(SyblToPath(CleanFilePath(p+'/'+ExtractFileName(sinfo[j]))));
+       ui.files.Add(copy(sources[k],2,length(sources[k]))+CleanFilePath('/'+SyblToX(p)+'/'+ExtractFileName(sinfo[j])+'.xz'));
+       ui.files.Add(SyblToPath(CleanFilePath(SyblToPath(p)+'/'+ExtractFileName(sinfo[j]))));
       end;
       end;
      end;
@@ -370,25 +381,24 @@ begin
     begin
      msg('GET: '+files[i]);
 
-    // try
-      HTTP.HTTPMethod('GET', files[i]+'.xz');
+    try
+      HTTP.Clear;
+      HTTP.HTTPMethod('GET', files[i]);
 
-      HTTP.Document.SaveToFile(tmp+ExtractFileName(files[i])+'.xz');
-
-     xh:=tmp+ExtractFileName(files[i]+'.xz');
+     xh:=tmp+ExtractFileName(files[i]);
+     HTTP.Document.SaveToFile(xh);
      msg('Install...');
-     p_debug(xh+' ## '+DeleteModifiers(files[i+1]));
      xz.Decompress(xh,DeleteModifiers(files[i+1]));
 
      DeleteFile(xh);
       //DeleteFile(DeleteModifiers(ulist[j][i+1])+'/'+ExtractFileName(ulist[j][i])); //Delete old File (not always necessary, but sometimes needed)
 
-     {except
+    except
      request(rsExtractError,rqError);
      msg(rsUpdConfError);
      xz.Free;
      exit;
-    end; }
+    end;
 
     if(pos('.desktop',LowerCase(ExtractFileName(files[i+1])))>0) then
     begin
@@ -437,15 +447,18 @@ xz.free;
      dsApp.Filtered:=true;
      dsApp.Edit;
      dsApp.First;
-    while not dsApp.EOF do
+     dsApp.ExecuteDirect('UPDATE AppInfo SET Version = '''+TUpdateInfo(ulist[uid]).NVersion+''' WHERE PkName = '''+TUpdateInfo(ulist[uid]).ID+'''');
+
+   { while not dsApp.EOF do
     begin
-     if (dsApp.FieldByName('Name').AsString=TUpdateInfo(ulist[uid]).AppName) and (dsApp.FieldByName('PkName').AsString=TUpdateInfo(ulist[uid]).ID) then
+     if (dsApp.FieldByName('Name').AsString=TUpdateInfo(ulist[uid]).AppName) and (dsApp.FieldByName('PkName').AsString=) then
      begin
-      dsApp.FieldByName('Version').AsString:=TUpdateInfo(ulist[uid]).NVersion;
+
+      dsApp.FieldByName('Version').Value:=TUpdateInfo(ulist[uid]).NVersion;
       break;
      end;
     dsApp.Next;
-    end;
+    end;}
     dsApp.ApplyUpdates;
    dsApp.Close;
    end;

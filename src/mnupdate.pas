@@ -22,8 +22,9 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, Buttons, CheckLst, HTTPSend, IniFiles, MD5, LiBasic, updexec, LCLType,
-  Process, Menus, trstrings, ldunit,IconLoader, LiCommon, AppUpdate, liTypes;
+  StdCtrls, Buttons, CheckLst, HTTPSend, IniFiles, MD5, LiBasic, updexec,
+  LCLType, Process, Menus, ComCtrls, trstrings, IconLoader, LiCommon,
+  AppUpdate, liTypes;
 
 type
 
@@ -31,6 +32,8 @@ type
   TUMnForm = class(TForm)
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
+    ProgressBar: TProgressBar;
+    StatusBar1: TStatusBar;
     UpdListBox: TCheckListBox;
     InfoMemo: TMemo;
     MenuItem1: TMenuItem;
@@ -54,6 +57,9 @@ type
 
 var
   UMnForm: TUMnForm;
+
+ //Published, so update display can access it
+ procedure OnMNStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 
 implementation
 
@@ -94,6 +100,13 @@ rqInfo: begin
 end;
 end;
 
+procedure OnMNStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
+begin
+ case change of
+  scMessage: p_info(data.msg);
+ end;
+end;
+
 procedure TUMnForm.BitBtn1Click(Sender: TObject);
 begin
  UExecFm.ShowModal;
@@ -101,9 +114,13 @@ end;
 
 procedure TUMnForm.BitBtn2Click(Sender: TObject);
 begin
+ ProgressBar.Position:=0;
+ Application.ProcessMessages;
  li_updater_search_updates(@updater);
  if UpdListBox.Items.Count>0 then
   BitBtn1.Enabled:=true;
+ ProgressBar.Position:=100;
+ BitBtn2.Enabled:=false;
 end;
 
 procedure TUMnForm.UpdListBoxClick(Sender: TObject);
@@ -162,6 +179,7 @@ UpdateIDs:=TStringList.Create;
 updater:=li_updater_new;
 li_updater_register_newupdate_call(@updater,@OnNewUpdateFound,nil);
 li_updater_register_request_call(@updater,@OnRequest,nil);
+li_updater_register_status_call(@updater,@OnMNStatus,nil);
 end;
 
 procedure TUMnForm.FormDestroy(Sender: TObject);

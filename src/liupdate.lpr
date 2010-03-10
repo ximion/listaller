@@ -24,7 +24,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, mnupdate, httpsend, updexec,
-  LiBasic, ldunit, LResources,
+  LiBasic, LResources,
   liTranslator, SysUtils, LiCommon;
 
 {$IFDEF WINDOWS}{$R liupdate.rc}{$ENDIF}
@@ -38,7 +38,6 @@ begin
   Application.CreateForm(TUMnForm, UMnForm);
   Application.CreateForm(TUExecFm, UExecFm);
   writeLn('GUI created.');
-  Application.CreateForm(TLoadForm, LoadForm);
   writeLn('Completed.');
   Application.Run;
   writeLn('Updater closed.');

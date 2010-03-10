@@ -6,13 +6,13 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="2"/>
+      <ActiveEditorIndexAtStart Value="1"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1591"/>
+      <CurrentBuildNr Value="1605"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -326,11 +326,9 @@
       <Unit42>
         <Filename Value="../packager/ipkpackage.pas"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="25" Y="449"/>
-        <TopLine Value="427"/>
-        <EditorIndex Value="2"/>
+        <CursorPos X="10" Y="470"/>
+        <TopLine Value="379"/>
         <UsageCount Value="12"/>
-        <Loaded Value="True"/>
       </Unit42>
       <Unit43>
         <Filename Value="../packager/gpgsign.pas"/>
@@ -443,8 +441,8 @@
         <Filename Value="liupdateapp.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="liupdateapp"/>
-        <CursorPos X="99" Y="394"/>
-        <TopLine Value="333"/>
+        <CursorPos X="5" Y="189"/>
+        <TopLine Value="167"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="24"/>
         <Loaded Value="True"/>
@@ -468,9 +466,7 @@
         <UnitName Value="ULZMADecoder"/>
         <CursorPos X="39" Y="9"/>
         <TopLine Value="1"/>
-        <EditorIndex Value="3"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit62>
       <Unit63>
         <Filename Value="../packager/compression/ulzoutwindow.pas"/>
@@ -480,7 +476,7 @@
         <UsageCount Value="10"/>
       </Unit63>
     </Units>
-    <JumpHistory Count="19" HistoryIndex="18">
+    <JumpHistory Count="20" HistoryIndex="19">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="23" Column="34" TopLine="1"/>
@@ -526,37 +522,41 @@
         <Caret Line="380" Column="16" TopLine="349"/>
       </Position11>
       <Position12>
-        <Filename Value="../packager/ipkpackage.pas"/>
-        <Caret Line="99" Column="24" TopLine="78"/>
+        <Filename Value="liupdateapp.pas"/>
+        <Caret Line="448" Column="44" TopLine="423"/>
       </Position12>
       <Position13>
-        <Filename Value="../packager/ipkpackage.pas"/>
-        <Caret Line="287" Column="1" TopLine="266"/>
+        <Filename Value="liupdateapp.pas"/>
+        <Caret Line="381" Column="16" TopLine="357"/>
       </Position13>
       <Position14>
         <Filename Value="liupdateapp.pas"/>
-        <Caret Line="448" Column="44" TopLine="423"/>
+        <Caret Line="381" Column="16" TopLine="350"/>
       </Position14>
       <Position15>
         <Filename Value="liupdateapp.pas"/>
-        <Caret Line="381" Column="16" TopLine="357"/>
+        <Caret Line="276" Column="8" TopLine="254"/>
       </Position15>
       <Position16>
-        <Filename Value="../packager/ipkpackage.pas"/>
-        <Caret Line="99" Column="24" TopLine="78"/>
+        <Filename Value="liupdateapp.pas"/>
+        <Caret Line="442" Column="73" TopLine="410"/>
       </Position16>
       <Position17>
-        <Filename Value="../packager/ipkpackage.pas"/>
-        <Caret Line="270" Column="33" TopLine="261"/>
+        <Filename Value="liupdateapp.pas"/>
+        <Caret Line="108" Column="29" TopLine="97"/>
       </Position17>
       <Position18>
-        <Filename Value="../packager/ipkpackage.pas"/>
-        <Caret Line="24" Column="62" TopLine="1"/>
+        <Filename Value="liupdateapp.pas"/>
+        <Caret Line="68" Column="13" TopLine="131"/>
       </Position18>
       <Position19>
-        <Filename Value="../packager/compression/ulzmadecoder.pas"/>
-        <Caret Line="9" Column="39" TopLine="1"/>
+        <Filename Value="liupdateapp.pas"/>
+        <Caret Line="26" Column="31" TopLine="11"/>
       </Position19>
+      <Position20>
+        <Filename Value="liupdateapp.pas"/>
+        <Caret Line="56" Column="20" TopLine="178"/>
+      </Position20>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
