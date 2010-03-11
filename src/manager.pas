@@ -335,7 +335,7 @@ begin
 if currAppList=appList then
 begin
  SUApps:=false;
- li_mgr_set_su_mode(@aMgr,SuApps);
+ li_mgr_set_sumode(@aMgr,SuApps);
  if (appList.Count<=0)or(force) then
  begin
  appList.ClearList;
@@ -347,7 +347,7 @@ end else
 if currAppList=appListSU then
 begin
  SUApps:=true;
- li_mgr_set_su_mode(@aMgr,SuApps);
+ li_mgr_set_sumode(@aMgr,SuApps);
  if (appListSU.Count<=0)or(force) then
  begin
   appListSU.ClearList;
@@ -939,7 +939,7 @@ amgr:=li_mgr_new; //Create new app manager
  RegDir:=SyblToPath('$INST/app-reg/');
 
 
-li_mgr_set_su_mode(@aMgr,SuApps);
+li_mgr_set_sumode(@aMgr,SuApps);
 
 if not DirectoryExists(RegDir) then CreateDir(RegDir);
 

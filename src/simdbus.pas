@@ -29,7 +29,6 @@ type
   err: DBusError;
   conn: PDBusConnection;
   error: Boolean;
-  connected: Boolean;
   args: DBusMessageIter;
 
   bname, bintf: String;
@@ -42,6 +41,7 @@ type
 
   function ReplyMessageAddString(msg: PDBusMessage;str: String): Boolean;
   function ReplyMessageAddBool(msg: PDBusMessage;bool: Boolean): Boolean;
+  function ReplyMessageAddInt(msg: PDBusMessage;int: Integer): Boolean;
   function SendReplyAndWait(msg: PDBusMessage): PDBusMessage;
 
   function MessageIterNext: Boolean;
@@ -79,6 +79,7 @@ type
   procedure MessageIterNext;
   function ReadMessageParamStr: String;
   function ReadMessageParamBool: Boolean;
+  function ReadMessageParamInt: Integer;
 
   function CreateReturnMessage(msg: PDBusMessage): PDBusMessage;
 
@@ -166,6 +167,18 @@ begin
  Result:=true;
  val:=bool;
  if (dbus_message_iter_append_basic(@args, DBUS_TYPE_BOOLEAN, @val) = 0) then
+  begin
+    ShowError('Out Of Memory!');
+    Result:=false;
+  end;
+end;
+
+function TDBusClient.ReplyMessageAddInt(msg: PDBusMessage;int: Integer): Boolean;
+var val: cuint32;
+begin
+ Result:=true;
+ val:=int;
+ if (dbus_message_iter_append_basic(@args, DBUS_TYPE_UINT32, @val) = 0) then
   begin
     ShowError('Out Of Memory!');
     Result:=false;
@@ -435,6 +448,19 @@ begin
  begin
       dbus_message_iter_get_basic(@args, @boolv);
       Result:=boolv;
+ end;
+end;
+
+function TDBusServer.ReadMessageParamInt: Integer;
+var intv: cuint;
+begin
+ Result:=-1;
+ if (DBUS_TYPE_UINT32 <> dbus_message_iter_get_arg_type(@args)) then
+      ShowError('Argument is no integer!')
+ else
+ begin
+      dbus_message_iter_get_basic(@args, @intv);
+      Result:=intv;
  end;
 end;
 

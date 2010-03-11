@@ -6,13 +6,13 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1605"/>
+      <CurrentBuildNr Value="1633"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -28,24 +28,24 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="64">
+    <Units Count="66">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="101" Y="20"/>
+        <CursorPos X="19" Y="23"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="81"/>
+        <UsageCount Value="82"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="41"/>
+        <CursorPos X="46" Y="800"/>
+        <TopLine Value="775"/>
+        <UsageCount Value="42"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
@@ -156,9 +156,9 @@
         <Filename Value="limanageapp.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="limanageapp"/>
-        <CursorPos X="26" Y="750"/>
-        <TopLine Value="731"/>
-        <UsageCount Value="40"/>
+        <CursorPos X="30" Y="356"/>
+        <TopLine Value="336"/>
+        <UsageCount Value="41"/>
       </Unit17>
       <Unit18>
         <Filename Value="../linotify.pas"/>
@@ -285,17 +285,17 @@
       <Unit36>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/fcl-db/src/base/db.pas"/>
         <UnitName Value="db"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="49"/>
-        <UsageCount Value="9"/>
+        <CursorPos X="14" Y="1287"/>
+        <TopLine Value="1266"/>
+        <UsageCount Value="10"/>
       </Unit36>
       <Unit37>
         <Filename Value="lidbusproc.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lidbusproc"/>
-        <CursorPos X="36" Y="131"/>
-        <TopLine Value="110"/>
-        <UsageCount Value="47"/>
+        <CursorPos X="13" Y="66"/>
+        <TopLine Value="45"/>
+        <UsageCount Value="48"/>
       </Unit37>
       <Unit38>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.2.4/rtl/inc/objpash.inc"/>
@@ -382,9 +382,9 @@
         <Filename Value="../src/simdbus.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="simdbus"/>
-        <CursorPos X="61" Y="8"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="35"/>
+        <CursorPos X="60" Y="181"/>
+        <TopLine Value="157"/>
+        <UsageCount Value="36"/>
       </Unit50>
       <Unit51>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-shared.inc"/>
@@ -441,10 +441,10 @@
         <Filename Value="liupdateapp.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="liupdateapp"/>
-        <CursorPos X="5" Y="189"/>
-        <TopLine Value="167"/>
+        <CursorPos X="13" Y="414"/>
+        <TopLine Value="391"/>
         <EditorIndex Value="1"/>
-        <UsageCount Value="24"/>
+        <UsageCount Value="25"/>
         <Loaded Value="True"/>
       </Unit59>
       <Unit60>
@@ -475,88 +475,89 @@
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit63>
+      <Unit64>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-bus.inc"/>
+        <CursorPos X="10" Y="27"/>
+        <TopLine Value="11"/>
+        <UsageCount Value="10"/>
+      </Unit64>
+      <Unit65>
+        <Filename Value="../synapse/httpsend.pas"/>
+        <UnitName Value="httpsend"/>
+        <CursorPos X="28" Y="388"/>
+        <TopLine Value="367"/>
+        <UsageCount Value="10"/>
+      </Unit65>
     </Units>
-    <JumpHistory Count="20" HistoryIndex="19">
+    <JumpHistory Count="17" HistoryIndex="16">
       <Position1>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="23" Column="34" TopLine="1"/>
+        <Filename Value="liupdateapp.pas"/>
+        <Caret Line="472" Column="32" TopLine="451"/>
       </Position1>
       <Position2>
-        <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="27" TopLine="1"/>
+        <Filename Value="liupdateapp.pas"/>
+        <Caret Line="379" Column="3" TopLine="358"/>
       </Position2>
       <Position3>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="23" Column="18" TopLine="1"/>
+        <Caret Line="23" Column="18" TopLine="9"/>
       </Position3>
       <Position4>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="27" TopLine="1"/>
+        <Caret Line="144" Column="30" TopLine="123"/>
       </Position4>
       <Position5>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="27" TopLine="1"/>
+        <Caret Line="162" Column="69" TopLine="123"/>
       </Position5>
       <Position6>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="448" Column="22" TopLine="431"/>
+        <Caret Line="164" Column="50" TopLine="143"/>
       </Position6>
       <Position7>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="27" TopLine="1"/>
+        <Caret Line="347" Column="29" TopLine="324"/>
       </Position7>
       <Position8>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="27" TopLine="1"/>
+        <Caret Line="15" Column="32" TopLine="1"/>
       </Position8>
       <Position9>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="526" Column="28" TopLine="493"/>
+        <Caret Line="144" Column="30" TopLine="123"/>
       </Position9>
       <Position10>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="23" Column="31" TopLine="1"/>
+        <Caret Line="162" Column="69" TopLine="123"/>
       </Position10>
       <Position11>
-        <Filename Value="liupdateapp.pas"/>
-        <Caret Line="380" Column="16" TopLine="349"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="164" Column="50" TopLine="143"/>
       </Position11>
       <Position12>
-        <Filename Value="liupdateapp.pas"/>
-        <Caret Line="448" Column="44" TopLine="423"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="347" Column="15" TopLine="324"/>
       </Position12>
       <Position13>
-        <Filename Value="liupdateapp.pas"/>
-        <Caret Line="381" Column="16" TopLine="357"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="347" Column="15" TopLine="324"/>
       </Position13>
       <Position14>
-        <Filename Value="liupdateapp.pas"/>
-        <Caret Line="381" Column="16" TopLine="350"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="524" Column="113" TopLine="503"/>
       </Position14>
       <Position15>
-        <Filename Value="liupdateapp.pas"/>
-        <Caret Line="276" Column="8" TopLine="254"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="516" Column="47" TopLine="503"/>
       </Position15>
       <Position16>
-        <Filename Value="liupdateapp.pas"/>
-        <Caret Line="442" Column="73" TopLine="410"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="544" Column="1" TopLine="503"/>
       </Position16>
       <Position17>
-        <Filename Value="liupdateapp.pas"/>
-        <Caret Line="108" Column="29" TopLine="97"/>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="23" Column="19" TopLine="1"/>
       </Position17>
-      <Position18>
-        <Filename Value="liupdateapp.pas"/>
-        <Caret Line="68" Column="13" TopLine="131"/>
-      </Position18>
-      <Position19>
-        <Filename Value="liupdateapp.pas"/>
-        <Caret Line="26" Column="31" TopLine="11"/>
-      </Position19>
-      <Position20>
-        <Filename Value="liupdateapp.pas"/>
-        <Caret Line="56" Column="20" TopLine="178"/>
-      </Position20>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -579,7 +580,8 @@
       <CompilerMessages>
         <IgnoredMessages idx5024="True"/>
       </CompilerMessages>
-      <CustomOptions Value="-fPIC"/>
+      <CustomOptions Value="-fPIC
+"/>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>

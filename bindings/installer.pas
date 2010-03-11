@@ -68,7 +68,7 @@ implementation
 //Import library functions
 function  li_setup_new: Pointer; cdecl;external libinst;
 procedure li_setup_free(setup: Pointer);external libinst;
-procedure li_setup_set_su_mode(setup: Pointer;b: Boolean);cdecl;external libinst;
+procedure li_setup_set_sumode(setup: Pointer;b: Boolean);cdecl;external libinst;
 function  li_setup_init(setup: Pointer;pkname: PChar): PChar;cdecl;external libinst;
 function  li_setup_get_pkgtype(setup: Pointer): TPkgType;cdecl;external libinst;
 function  li_setup_get_disallows(setup: Pointer): PChar;cdecl;external libinst;
@@ -211,7 +211,7 @@ end;
 
 procedure TInstallPack.SetRootMode(b: Boolean);
 begin
-li_setup_set_su_mode(@ins,b);
+li_setup_set_sumode(@ins,b);
 end;
 
 procedure TInstallPack.EnableUSource(b: Boolean);

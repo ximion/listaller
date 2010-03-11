@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ComCtrls, HTTPSend, FileUtil, Process, LiCommon, trStrings, LiBasic, AppUpdate,
+  ComCtrls, FileUtil, Process, LiCommon, trStrings, LiBasic, AppUpdate,
   liTypes;
 
 type
@@ -58,6 +58,7 @@ uses mnupdate;
 
 procedure OnEXStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 begin
+Application.ProcessMessages;
 if not Assigned(UExecFm) then begin p_error('UExecForm not created!');exit;end;
 with UExecFm do
 begin
@@ -70,6 +71,7 @@ begin
   scMnProgress: ProgressBar2.Position:=data.mnprogress;
  end;
 end;
+Application.ProcessMessages;
 end;
 
 procedure TUExecFm.FormShow(Sender: TObject);

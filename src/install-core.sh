@@ -34,9 +34,9 @@ mkdir -p $DESTDIR$prefix/share/polkit-1/actions/
 
 cp ../build/lipa $DESTDIR$prefix/bin/
 cp ../build/listallerd $DESTDIR$prefix/sbin/
-cp ../data/dbus/org.freedesktop.Listaller.service $DESTDIR$prefix/share/dbus-1/system-services/
-cp ../data/dbus/org.freedesktop.Listaller.conf $DESTDIR/etc/dbus-1/system.d/
-cp ../data/dbus/org.freedesktop.listaller.policy $DESTDIR$prefix/share/polkit-1/actions/
+cp ../data/dbus/org.nlinux.Listaller.service $DESTDIR$prefix/share/dbus-1/system-services/
+cp ../data/dbus/org.nlinux.Listaller.conf $DESTDIR/etc/dbus-1/system.d/
+cp ../data/dbus/org.nlinux.listaller.policy $DESTDIR$prefix/share/polkit-1/actions/
 
 #Other required data files
 mkdir -p $DESTDIR/etc/lipa

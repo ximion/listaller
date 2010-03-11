@@ -73,7 +73,7 @@ object UMnForm: TUMnForm
   end
   object ProgressBar: TProgressBar
     Left = 448
-    Height = 12
+    Height = 10
     Top = 582
     Width = 140
     Anchors = [akRight, akBottom]

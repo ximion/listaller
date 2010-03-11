@@ -141,7 +141,7 @@ begin
 end;
 
 //** Set TInstallation to superuser mode
-procedure li_setup_set_su_mode(setup: PInstallation;b: Boolean);cdecl;
+procedure li_setup_set_sumode(setup: PInstallation;b: Boolean);cdecl;
 begin
  setup^.SuperuserMode:=b;
 end;
@@ -342,7 +342,7 @@ begin
 end;
 
 //** Sets if aplications should work in root mode
-procedure li_mgr_set_su_mode(mgr: PAppManager;md: Boolean);cdecl;
+procedure li_mgr_set_sumode(mgr: PAppManager;md: Boolean);cdecl;
 begin
  mgr^.SuperuserMode:=md;
 end;
@@ -403,6 +403,12 @@ end;
 procedure li_updater_free(upd: PAppUpdater);cdecl;
 begin
  upd^.Free;
+end;
+
+//** Set superuser mode (or not)
+procedure li_updater_set_sumode(upd: PAppUpdater;val: Boolean);cdecl;
+begin
+ upd^.SetSumode(val);
 end;
 
 //** Register call on status change for updater
@@ -478,7 +484,7 @@ exports
  li_setup_new,
  li_setup_free,
  li_setup_init,
- li_setup_set_su_mode,
+ li_setup_set_sumode,
  li_setup_register_status_call,
  li_setup_get_pkgtype,
  li_setup_get_disallows,
@@ -509,7 +515,7 @@ exports
  li_mgr_register_status_call,
  li_mgr_register_app_call,
  li_mgr_register_request_call,
- li_mgr_set_su_mode,
+ li_mgr_set_sumode,
  li_mgr_remove_app,
  li_mgr_check_apps,
  li_mgr_fix_apps,
@@ -517,6 +523,7 @@ exports
  //Updater functions
  li_updater_new,
  li_updater_free,
+ li_updater_set_sumode,
  li_updater_register_status_call,
  li_updater_register_request_call,
  li_updater_register_newupdate_call,

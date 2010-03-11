@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, dbus, polkit, glib2, gExt, Installer, AppMan,
-  liBasic, liTypes, SimDBus, Contnrs;
+  liBasic, liTypes, SimDBus, Contnrs, AppUpdate;
 
 type
  TAccessType = (AC_UNKNOWN,AC_AUTHORIZED,AC_NOT_AUTHORIZED);
@@ -87,9 +87,28 @@ type
   procedure Execute;override;
  end;
 
+ //** Job which updates an application
+ TDoAppUpdate = class(TJob)
+ private
+  //** Pointer updater object
+  upd: Pointer;
+  //* Receive update ID nr
+  updID: Integer;
+  //** Send reply to client
+  procedure SendReply(stat: Boolean;jID: String);override;
+  //** Emit a global string signal
+  procedure EmitMessage(id: String;param: String);
+ public
+  constructor Create(aMsg: PDBusMessage;dbusConn: PDBusConnection);
+  destructor  Destroy;override;
+
+  procedure Execute;override;
+ end;
+
 const
  CALL_RUNSETUP  = 'ExecuteSetup';
  CALL_APPREMOVE = 'RemoveApp';
+ CALL_UPDATEAPP = 'UpdateApp';
 var
  InstallWorkers: Integer;
  ManagerWorkers: Integer;
@@ -195,7 +214,7 @@ begin
 
    p_info('RunSetup called with '+FileName);
 
-   action_id:='org.freedesktop.listaller.execute-installation';
+   action_id:='org.nlinux.listaller.execute-installation';
   target:=dbus_message_get_sender(origMsg);
 
   subject:=polkit_system_bus_name_new(PGChar(target));
@@ -251,8 +270,8 @@ var
   msg: PDBusMessage;
 begin
   // create a signal & check for errors
-  msg:=bs.CreateNewSignal('/org/freedesktop/Listaller/'+jobID, // object name of the signal
-                          'org.freedesktop.Listaller.Install', // interface name of the signal
+  msg:=bs.CreateNewSignal('/org/nlinux/Listaller/'+jobID, // object name of the signal
+                          'org.nlinux.Listaller.Install', // interface name of the signal
                           xn);
 
   bs.AppendUInt(sigvalue);
@@ -264,8 +283,8 @@ var
   msg: PDBusMessage;
 begin
   // create a signal & check for errors
-  msg:=bs.CreateNewSignal('/org/freedesktop/Listaller/'+jobID, // object name of the signal
-                          'org.freedesktop.Listaller.Install', // interface name of the signal
+  msg:=bs.CreateNewSignal('/org/nlinux/Listaller/'+jobID, // object name of the signal
+                          'org.nlinux.Listaller.Install', // interface name of the signal
                           xn); // name of the signal
 
   bs.AppendStr(sigvalue);
@@ -358,8 +377,8 @@ begin
  //Now emit action finished signal:
 
   // create a signal & check for errors
-  msg:=bs.CreateNewSignal('/org/freedesktop/Listaller/'+jobID, // object name of the signal
-                          'org.freedesktop.Listaller.Install', // interface name of the signal
+  msg:=bs.CreateNewSignal('/org/nlinux/Listaller/'+jobID, // object name of the signal
+                          'org.nlinux.Listaller.Install', // interface name of the signal
                           'Finished'); // name of the signal
   bs.AppendBool(success);
   bs.SendMessage(msg);
@@ -399,8 +418,8 @@ begin
   sigvalue:=data.mnprogress;
   p_debug(TDoAppRemove(job).DId+'->ProgressChange::'+IntToStr(sigvalue));
   // create a signal & check for errors
-  msg:=TDoAppRemove(job).bs.CreateNewSignal('/org/freedesktop/Listaller/'+TDoAppRemove(job).DId, // object name of the signal
-                          'org.freedesktop.Listaller.Manage', // interface name of the signal
+  msg:=TDoAppRemove(job).bs.CreateNewSignal('/org/nlinux/Listaller/'+TDoAppRemove(job).DId, // object name of the signal
+                          'org.nlinux.Listaller.Manage', // interface name of the signal
                           'ProgressChange'); // name of the signal
 
 
@@ -445,7 +464,7 @@ begin
 
  p_info('Removing application called "'+appinfo.name+'" Job:'+jobID);
 
- action_id:='org.freedesktop.listaller.remove-application';
+ action_id:='org.nlinux.listaller.remove-application';
  target:=bs.GetMessageSender(origMsg);
 
   subject:=polkit_system_bus_name_new(PGChar(target));
@@ -474,7 +493,7 @@ begin
  p_info('New app uninstallation job for '+bs.GetMessageSender(origMsg)+' started.');
  try
   mgr:=li_mgr_new;
-  li_mgr_set_su_mode(@mgr,true);
+  li_mgr_set_sumode(@mgr,true);
   li_mgr_register_status_call(@mgr,@OnMgrStatus,self);
   li_mgr_register_request_call(@mgr,@OnMgrUserRequest,self);
  except
@@ -527,8 +546,8 @@ var
 begin
   p_debug(jobID+'->'+id+':: '+param);
   // create a signal & check for errors
-  dmsg:=bs.CreateNewSignal('/org/freedesktop/Listaller/'+jobID, // object name of the signal
-                           'org.freedesktop.Listaller.Manage', // interface name of the signal
+  dmsg:=bs.CreateNewSignal('/org/nlinux/Listaller/'+jobID, // object name of the signal
+                           'org.nlinux.Listaller.Manage', // interface name of the signal
                            id); // name of the signal
   bs.AppendStr(param);
   bs.SendMessage(dmsg);
@@ -559,13 +578,218 @@ try
 finally
   //Now emit action finished signal:
   // create a signal & check for errors
-  msg:=bs.CreateNewSignal('/org/freedesktop/Listaller/'+jobID, // object name of the signal
-                          'org.freedesktop.Listaller.Manage', // interface name of the signal
+  msg:=bs.CreateNewSignal('/org/nlinux/Listaller/'+jobID, // object name of the signal
+                          'org.nlinux.Listaller.Manage', // interface name of the signal
                           'Finished'); // name of the signal
   bs.AppendBool(success);
   bs.SendMessage(msg);
 
   p_info('App uninstallation job "'+jobID+'" finished.');
+ Terminate;
+ end;
+end;
+
+///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+
+{ TDoAppUpdate }
+
+function OnUpdaterUserRequest(mtype: TRqType;msg: PChar;job: Pointer): TRqResult;cdecl;
+begin
+Result:=rqsOK;
+//The daemon should not ask questions while doing a transaction.
+//All questions which need a reply should be done before or after the daemon call
+if mtype = rqError then
+begin
+ //Emit error message and quit job
+ TDoAppUpdate(job).EmitMessage('Error',msg);
+end else
+begin
+ p_error('Received invalid user request! (Deamon should _never_ ask questions which need a reply.');
+ Result:=rqsNO;
+ p_debug(msg);
+end;
+end;
+
+procedure OnUpdaterStatus(change: LiStatusChange;data: TLiStatusData;job: Pointer);cdecl;
+
+procedure sub_sendProgress;
+var
+  msg: PDBusMessage;
+  sigvalue: Integer;
+begin
+  sigvalue:=data.mnprogress;
+  p_debug(TDoAppUpdate(job).DId+'->ProgressChange::'+IntToStr(sigvalue));
+  // create a signal & check for errors
+  msg:=TDoAppUpdate(job).bs.CreateNewSignal('/org/nlinux/Listaller/'+TDoAppUpdate(job).DId, // object name of the signal
+                          'org.nlinux.Listaller.Manage', // interface name of the signal
+                          'ProgressChange'); // name of the signal
+
+
+  TDoAppUpdate(job).bs.AppendUInt(sigvalue);
+  TDoAppUpdate(job).bs.SendMessage(msg);
+end;
+
+begin
+ case change of
+  scMessage   : TDoAppUpdate(job).EmitMessage('Message',data.msg);
+  scMnprogress: sub_sendProgress;
+ end;
+end;
+
+constructor TDoAppUpdate.Create(aMsg: PDBusMessage;dbusConn: PDBusConnection);
+var action_id: PGChar;
+    subject: PPolkitSubject;
+    target: String;
+
+procedure Error_Terminate;
+begin
+ SendReply(false,'');
+ remove:=true;
+ Terminate;
+ Resume();
+end;
+
+begin
+ inherited Create(aMsg,dbusConn);
+ jobID:='updater'+jobID;
+
+ //Read the arguments
+  if not bs.InitMessageIter(origMsg) then
+ begin
+  Error_Terminate;
+  exit;
+ end;
+
+ updID:=-1;
+ updID:=bs.ReadMessageParamInt;
+ {bs.MessageIterNext;
+ updName:=PChar(bs.ReadMessageParamStr);}
+
+ p_info('Update su application called (Job:'+jobID+')');
+
+ action_id:='org.nlinux.listaller.make-su-update';
+ target:=bs.GetMessageSender(origMsg);
+
+  subject:=polkit_system_bus_name_new(PGChar(target));
+  polkit_authority_check_authorization(authority,subject,action_id,
+                                        nil,
+                                        POLKIT_CHECK_AUTHORIZATION_FLAGS_ALLOW_USER_INTERACTION,
+                                        nil,
+                                        TGAsyncReadyCallback(@check_authorization_cb),
+                                        self);
+
+
+
+  g_object_unref(subject);
+  g_main_loop_run(loop);
+
+  //If not authorized, quit the job
+  if allowed = AC_NOT_AUTHORIZED then
+  begin
+   p_error('Not authorized to call this action.');
+   SendReply(false,'');
+   remove:=true;
+   Resume();
+   exit;
+  end;
+
+ p_info('New app update job for '+bs.GetMessageSender(origMsg)+' started.');
+ try
+  upd:=li_updater_new;
+  li_updater_set_sumode(@upd,true);
+  li_updater_register_status_call(@upd,@OnUpdaterStatus,self);
+  li_updater_register_request_call(@upd,@OnUpdaterUserRequest,self);
+ except
+  Error_Terminate;
+  p_warning('Update job failed.');
+  exit;
+ end;
+
+ SendReply(true,PChar(jobID));
+
+
+ //Start work
+  Resume();
+end;
+
+destructor TDoAppUpdate.Destroy;
+begin
+ Dec(ManagerWorkers);
+ if Assigned(FatalException) then
+  raise FatalException;
+
+ p_debug('App update job deleted.');
+ inherited;
+end;
+
+procedure TDoAppUpdate.SendReply(stat: Boolean;jID: String);
+var
+  reply: PDBusMessage;
+  auth: PChar = '';
+begin
+   p_info('Send reply called');
+
+  //Create a reply from the message
+  reply:=bs.CreateReturnMessage(origMsg);
+
+  bs.AppendBool(stat);
+  auth:='';
+   if allowed = AC_AUTHORIZED then auth:='authorized'
+   else if allowed = AC_NOT_AUTHORIZED then auth:='blocked';
+  bs.AppendStr(auth);
+  bs.AppendStr(jID);
+
+  bs.SendMessage(reply);
+  bs.FreeMessage(origMsg);
+end;
+
+procedure TDoAppUpdate.EmitMessage(id: String;param: String);
+var
+  dmsg: PDBusMessage;
+begin
+  p_debug(jobID+'->'+id+':: '+param);
+  // create a signal & check for errors
+  dmsg:=bs.CreateNewSignal('/org/nlinux/Listaller/'+jobID, // object name of the signal
+                           'org.nlinux.Listaller.Manage', // interface name of the signal
+                           id); // name of the signal
+  bs.AppendStr(param);
+  bs.SendMessage(dmsg);
+end;
+
+procedure TDoAppUpdate.Execute;
+var
+ success: Boolean;
+
+ msg: PDBusMessage;
+begin
+if remove then
+begin
+ Terminate;
+ exit;
+end;
+
+try
+  try
+   li_updater_search_updates(@upd);
+   li_updater_execute_update(@upd,updID);
+   li_updater_free(@upd);
+   success:=true;
+  except
+   success:=false;
+  end;
+
+
+finally
+  //Now emit action finished signal:
+  // create a signal & check for errors
+  msg:=bs.CreateNewSignal('/org/nlinux/Listaller/'+jobID, // object name of the signal
+                          'org.nlinux.Listaller.Manage', // interface name of the signal
+                          'Finished'); // name of the signal
+  bs.AppendBool(success);
+  bs.SendMessage(msg);
+
+  p_info('App update job "'+jobID+'" finished.');
  Terminate;
  end;
 end;

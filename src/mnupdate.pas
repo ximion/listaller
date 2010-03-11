@@ -22,9 +22,8 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, Buttons, CheckLst, HTTPSend, IniFiles, MD5, LiBasic, updexec,
-  LCLType, Process, Menus, ComCtrls, trstrings, IconLoader, LiCommon,
-  AppUpdate, liTypes;
+  StdCtrls, Buttons, CheckLst, LiBasic, updexec, LCLType, Process, Menus, ComCtrls,
+  trStrings, IconLoader, LiCommon, AppUpdate, liTypes;
 
 type
 
@@ -67,6 +66,7 @@ implementation
 
 procedure OnNewUpdateFound(appName: PChar;id: Integer;user_data: Pointer);cdecl;
 begin
+ Application.ProcessMessages;
  if Assigned(UMnForm) then
  with UMnForm do
  begin
@@ -102,8 +102,10 @@ end;
 
 procedure OnMNStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 begin
+ Application.ProcessMessages;
  case change of
   scMessage: p_info(data.msg);
+  scMnProgress: UMnForm.ProgressBar.Position:=data.mnprogress;
  end;
 end;
 
@@ -116,11 +118,11 @@ procedure TUMnForm.BitBtn2Click(Sender: TObject);
 begin
  ProgressBar.Position:=0;
  Application.ProcessMessages;
+ BitBtn2.Enabled:=false;
  li_updater_search_updates(@updater);
  if UpdListBox.Items.Count>0 then
   BitBtn1.Enabled:=true;
  ProgressBar.Position:=100;
- BitBtn2.Enabled:=false;
 end;
 
 procedure TUMnForm.UpdListBoxClick(Sender: TObject);

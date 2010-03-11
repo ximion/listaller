@@ -134,7 +134,7 @@ end;
 procedure TAppManager.SetPos(i: Integer);
 begin
  sdata.mnprogress:=i;
- if Assigned(FStatus) then FStatus(scMnprogress,sdata,statechangeudata);
+ if Assigned(FStatus) then FStatus(scMnProgress,sdata,statechangeudata);
 end;
 
 function TAppManager.IsInList(nm: String;list: TStringList): Boolean;
@@ -339,36 +339,8 @@ j:=0;
 msg(rsLoading);
 blst:=TStringList.Create; //Create Blacklist
 
-writeLn('Opening database...');
 dsApp:= TSQLite3Dataset.Create(nil);
-with dsApp do
- begin
-   if SUMode then
-    RegDir:=LI_CONFIG_DIR+'app-reg/';
-
-   FileName:=RegDir+'applications.db';
-   TableName:='AppInfo';
-   if not FileExists(FileName) then
-   begin
-   with FieldDefs do
-     begin
-       Clear;
-       Add('Name',ftString,0,true);
-       Add('PkName',ftString,0,true);
-       Add('Type',ftString,0,true);
-       Add('Description',ftString,0,False);
-       Add('Version',ftFloat,0,true);
-       Add('Publisher',ftString,0,False);
-       Add('Icon',ftString,0,False);
-       Add('Profile',ftString,0,False);
-       Add('AGroup',ftString,0,true);
-       Add('InstallDate',ftDateTime,0,False);
-       Add('Dependencies',ftMemo,0,False);
-     end;
-   CreateTable;
- end;
-end;
-dsApp.Active:=true;
+LoadAppDB(dsApp,sumode);
 
 if blst.Count<4 then
 begin
@@ -379,21 +351,22 @@ end;
 
 
 if not DirectoryExists(RegDir) then
-begin
-CreateDir(ExtractFilePath(RegDir));
-CreateDir(RegDir);
-end;
+ ForceDirectories(RegDir);
 
+if FileExists(dsApp.FileName) then
+begin
 dsApp.SQL:='SELECT * FROM AppInfo';
 dsApp.Open;
 dsApp.Filtered:=true;
 dsApp.First;
+
 while not dsApp.EOF do
 begin
-
+ p_debug('A');
+ dsApp.FieldByName('Name');
+ p_debug('B');
  entry.Name:=PChar(dsApp.FieldByName('Name').AsString);
 
- p_debug(entry.Name);
  blst.Add(entry.Name);
 
  entry.UId:=PChar(dsApp.FieldByName('PkName').AsString);
@@ -430,6 +403,7 @@ begin
  dsApp.Next;
 end;
 dsApp.Close;
+end;
 
 {if (CBox.ItemIndex=0) or (CBox.ItemIndex=10) then
 begin
@@ -474,6 +448,8 @@ ini:=TIniFile.Create(n+'config.cnf');
 tmp:=TStringList.Create;
 xtmp:=TStringList.Create;
 
+writeLn('Sumode: ',sumode);
+
 if SUMode then //Only if user is root
 begin
 tmp.Assign(FindAllFiles('/usr/share/applications/','*.desktop',true));
@@ -503,8 +479,6 @@ msg(rsReady); //Loading list finished!
 dsApp.Free;
 blst.Free; //Free blacklist
 end;
-
-
 
 //Uninstall Mojo and LOKI Setups
 function TAppManager.UninstallMojo(dsk: String): Boolean;
@@ -563,7 +537,6 @@ end;
 
 procedure TAppManager.DBusStatusChange(ty: LiProcStatus;data: TLiProcData);
 begin
-  p_debug('Status changed.');
   case data.changed of
     pdMainProgress: setpos(data.mnprogress);
     pdInfo        : msg(data.msg);
@@ -725,7 +698,6 @@ end;
     OnStatus:=@DBusStatusChange;
     ExecuteAction;
     Free;
-    p_debug('DBus service closed.');
   end;
   exit;
  end;
@@ -745,7 +717,6 @@ msg('You are scanning only the ROOT installed applications.')
 else
 msg('You are scanning your local installed applications.');
 
-writeLn('-> Opening database...');
 dsApp:= TSQLite3Dataset.Create(nil);
 LoadAppDB(dsApp,forceroot);
 dsApp.Active:=true;
@@ -810,6 +781,9 @@ if not DirectoryExists(rd) then
  begin
    FileName:=rd+'applications.db';
    TableName:='AppInfo';
+   if ((forcesu)and(not IsRoot))
+   then
+   else
    if not FileExists(FileName) then
    begin
    with FieldDefs do
@@ -830,6 +804,7 @@ if not DirectoryExists(rd) then
    CreateTable;
  end;
 end;
+p_info('Database opened.');
 end;
 
 function IsPackageInstalled(aname: String;aid: String;sumode: Boolean): Boolean;

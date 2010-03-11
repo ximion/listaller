@@ -166,7 +166,6 @@ begin
  aList.Add(new);
 
  pic:=TPicture.Create;
-
  try
  if FileExists(ai.Icon) then
    new.IconPath:=ai.Icon

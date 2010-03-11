@@ -8,7 +8,7 @@
   <icon_name>listaller</icon_name>
 
 
-  <action id="org.freedesktop.listaller.execute-installation">
+  <action id="org.nlinux.listaller.execute-installation">
     <description>Install package directly</description>
     <message>System policy prevents the installer from running the installation</message>
     <defaults>
@@ -18,7 +18,7 @@
     </defaults>
   </action>
 
-  <action id="org.freedesktop.listaller.load-system-app-list">
+  <action id="org.nlinux.listaller.load-system-app-list">
     <description>Reload the global application list</description>
     <message>System policy prevents refreshing the global application list.</message>
     <defaults>
@@ -28,13 +28,23 @@
     </defaults>
   </action>
 
-  <action id="org.freedesktop.listaller.remove-application">
+  <action id="org.nlinux.listaller.remove-application">
     <description>Remove an application</description>
     <message>System policy prevents removing this application.</message>
     <defaults>
       <allow_any>no</allow_any>
       <allow_inactive>no</allow_inactive>
       <allow_active>auth_admin</allow_active>
+    </defaults>
+  </action>
+
+  <action id="org.nlinux.listaller.make-su-update">
+    <description>Make system-wide application update</description>
+    <message>System policy prevents updating shared applications.</message>
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
     </defaults>
   </action>
   

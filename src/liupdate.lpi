@@ -48,8 +48,8 @@
         <ComponentName Value="UMnForm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="mnupdate"/>
-        <CursorPos X="68" Y="25"/>
-        <TopLine Value="1"/>
+        <CursorPos X="36" Y="26"/>
+        <TopLine Value="4"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="45"/>
         <Loaded Value="True"/>
@@ -68,8 +68,8 @@
         <ComponentName Value="UExecFm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="updexec"/>
-        <CursorPos X="30" Y="67"/>
-        <TopLine Value="61"/>
+        <CursorPos X="13" Y="25"/>
+        <TopLine Value="4"/>
         <UsageCount Value="42"/>
       </Unit3>
       <Unit4>
@@ -291,7 +291,7 @@
         <UsageCount Value="10"/>
       </Unit35>
     </Units>
-    <JumpHistory Count="26" HistoryIndex="25">
+    <JumpHistory Count="28" HistoryIndex="27">
       <Position1>
         <Filename Value="mnupdate.pas"/>
         <Caret Line="44" Column="37" TopLine="37"/>
@@ -396,6 +396,14 @@
         <Filename Value="mnupdate.pas"/>
         <Caret Line="25" Column="68" TopLine="1"/>
       </Position26>
+      <Position27>
+        <Filename Value="mnupdate.pas"/>
+        <Caret Line="109" Column="25" TopLine="88"/>
+      </Position27>
+      <Position28>
+        <Filename Value="mnupdate.pas"/>
+        <Caret Line="25" Column="31" TopLine="4"/>
+      </Position28>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

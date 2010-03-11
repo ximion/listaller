@@ -36,7 +36,7 @@ function  SyblToPath(s: String): String;
 //** Removes every symbol or replace it an simpla dummy path @returns Cleaned string
 function  SyblToX(s: String): String;
 //** Check if file is a shared one @returns States as bool
-function  IsSharedFile(s: String): Boolean;
+function  HasSharedMod(fname: String): Boolean;
 {** Fast check if entry is in a list
     @param nm Name of the entry that has to be checked
     @param list The string list that has to be searched}
@@ -48,6 +48,8 @@ function  IsInList(nm: String;list: TStringList): Boolean;
 function GetLibDepends(f: String; lst: TStringList): Boolean;
 //** Advanced file copy method @returns Success of the command
 function  FileCopy(source,dest: String): Boolean;
+//** Check if file is configuration file
+function  HasConfigMod(fname: String): Boolean;
 
 //** Shows system notification box
 procedure ShowPopupNotify(msg: String;urgency: TUrgencyLevel;time:Integer);
@@ -80,9 +82,14 @@ begin
   s.Free;
 end;
 
-function IsSharedFile(s: String): Boolean;
+function HasSharedMod(fname: String): Boolean;
 begin
-Result:=pos(' <s>',s)>0;
+Result:=pos(' <s>',fname)>0;
+end;
+
+function HasConfigMod(fname: String): Boolean;
+begin
+Result:=pos(' <config>',fname)>0;
 end;
 
 function IsInList(nm: String;list: TStringList): Boolean;
@@ -205,6 +212,7 @@ function DeleteModifiers(s: String): String;
 var h: String;
 begin
 h:=SysUtils.StringReplace(s,' <s>','',[rfReplaceAll]);
+h:=SysUtils.StringReplace(s,' <config>','',[rfReplaceAll]);
 h:=ReplaceRegExpr(' <chmod:([0-7]{3})>', h, '', false);
 h:=ReplaceRegExpr(' <([a-zA-Z_]{4,})-only>', h, '', false);
 h:=SysUtils.StringReplace(h,' <mime>','',[rfReplaceAll]);

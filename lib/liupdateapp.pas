@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, HTTPSend, FTPSend, liManageApp, liBasic, liCommon,
   liTypes, ipkdef, Contnrs, SqLite3DS, trStrings, MD5, ipkPackage, Process,
-  IniFiles, FileUtil, Blcksock;
+  IniFiles, FileUtil, Blcksock, liDBusProc;
 
 type
 
@@ -67,6 +67,8 @@ type
   //Hook on HTTP socket
   procedure HookSock(Sender: TObject; Reason: THookSocketReason;
     const Value: string);
+  //Catch DBus messages
+  procedure DBusStatusChange(ty: LiProcStatus;data: TLiProcData);
  public
   constructor Create;
   destructor  Destroy;override;
@@ -126,6 +128,7 @@ begin
   AppReg:=LI_CONFIG_DIR+LI_APPDB_PREF
  else
   AppReg:=SyblToPath('$INST')+'/'+LI_APPDB_PREF;
+ ulist.Clear;
 end;
 
 procedure TAppUpdater.RegOnStatusChange(call: TLiStatusChangeCall;data: Pointer);
@@ -235,11 +238,11 @@ begin
    if h[k][1]='-' then sources.Add(copy(h[k],2,length(h[k])));
   end;
   end;
-  max:=sources.Count;
+  max:=sources.Count*2;
   h.Free;
 
   dsApp:= TSQLite3Dataset.Create(nil);
-  LoadAppDB(dsApp);
+  LoadAppDB(dsApp,sumode);
   msg('Software database opened.');
 
   dsApp.Active:=true;
@@ -254,6 +257,8 @@ begin
     HTTP.Clear;
     HTTP.HTTPMethod('GET', sources[k]+'/'+'source.pin');
     tmp.LoadFromStream(HTTP.Document);
+    Inc(progpos);
+    SetMnPos(Round(100/max*progpos));
 
     if not DirectoryExists(tmpdir) then ForceDirectories(tmpdir);
 
@@ -303,7 +308,8 @@ begin
     ui.AppName:=control.AppName;
     ui.NVersion:=control.AppVersion;
     ui.ID:=control.PkName;
-    SetMnPos(Round(((progpos+1)/max)*100));
+    Inc(progpos);
+    SetMnPos(Round(100/max*progpos));
 
     if ui.files.Count>0 then
     begin
@@ -348,6 +354,20 @@ begin
  Result:=TUpdateInfo(ulist[uid]).OVersion;
 end;
 
+procedure TAppUpdater.DBusStatusChange(ty: LiProcStatus;data: TLiProcData);
+begin
+  case data.changed of
+    pdMainProgress : SetMnPos(data.mnprogress);
+    pdExtraProgress: SetExPos(data.exprogress);
+    pdInfo         : msg(data.msg);
+    pdError        : request(data.msg,rqError);
+    pdStatus       : begin
+                      sdata.lastresult:=ty;
+                      if Assigned(FStatus) then FStatus(scActionStatus,sdata,statechangeudata);
+                     end;
+  end;
+end;
+
 function TAppUpdater.ExecuteUpdate(uid: Integer): Boolean;
 var
   i,k: Integer;
@@ -355,6 +375,7 @@ var
   c: TProcess;
   dsk: TIniFile;
   s: TStringList;
+  buscmd: ListallerBusCommand;
   prog,max: Integer; //To set progress bar position
   xh,tmp: String;
   files: TStringList;
@@ -362,6 +383,20 @@ var
 begin
     Result:=true;
     if not ValidUpdateId(uid) then exit;
+
+     if (SUMode)and(not IsRoot) then
+     begin
+      //Create worker thread for this action
+      buscmd.cmdtype:=lbaUninstallApp;
+      buscmd.updid:=uid;
+      with TLiDBusAction.Create(buscmd) do
+      begin
+       OnStatus:=@DBusStatusChange;
+       ExecuteAction;
+       Free;
+      end;
+      exit;
+     end;
 
     tmp:=CleanFilePath(tmpdir+'/liupd/');
     ForceDirectories(tmp);
@@ -376,6 +411,7 @@ begin
     xz:=TLiUpdateBit.Create;
     files:=TUpdateInfo(ulist[uid]).files;
     max:=(files.Count div 2);
+    prog:=0;
     for i:=0 to files.Count-1 do
     if i mod 2 = 0 then
     begin
@@ -434,6 +470,7 @@ begin
  c.Execute;
 end;
     msg('Finishing...');
+    Inc(prog);
     SetMnPos(Round((100/max)*prog));
     msg('Okay');
 end;

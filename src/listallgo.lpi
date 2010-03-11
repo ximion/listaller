@@ -20,7 +20,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1369"/>
+      <CurrentBuildNr Value="1371"/>
       <ProjectVersion Value="0.1.16.1"/>
       <Language Value="0809"/>
       <CharSet Value="04B0"/>
@@ -51,8 +51,8 @@
         <Filename Value="listallgo.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallgo"/>
-        <CursorPos X="14" Y="59"/>
-        <TopLine Value="38"/>
+        <CursorPos X="1" Y="92"/>
+        <TopLine Value="51"/>
         <UsageCount Value="200"/>
       </Unit0>
       <Unit1>
@@ -61,7 +61,7 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="44" Y="26"/>
+        <CursorPos X="57" Y="26"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
@@ -922,8 +922,8 @@
       <Unit124>
         <Filename Value="../bindings/installer.pas"/>
         <UnitName Value="installer"/>
-        <CursorPos X="17" Y="241"/>
-        <TopLine Value="200"/>
+        <CursorPos X="16" Y="214"/>
+        <TopLine Value="193"/>
         <UsageCount Value="10"/>
       </Unit124>
       <Unit125>
@@ -1083,7 +1083,7 @@
       </Position23>
       <Position24>
         <Filename Value="igobase.pas"/>
-        <Caret Line="26" Column="44" TopLine="1"/>
+        <Caret Line="26" Column="57" TopLine="1"/>
       </Position24>
     </JumpHistory>
   </ProjectOptions>

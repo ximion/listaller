@@ -11,7 +11,7 @@ rm -rf *.bak
 rm -rf *.compiled
 rm -rf *.lrt
 rm -rf *.lrs
-rm -f Makefile
+ #rm -f Makefile
 
 rm -rf *~
 rm -rf "../build"
@@ -37,7 +37,7 @@ rm -rf *~
 cd ..
 
 #Clean root dir
-rm -f Makefile
+ #rm -f Makefile
 rm -rf *~
 rm -rf *.bak
 

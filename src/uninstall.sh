@@ -20,8 +20,10 @@ case "$ARCH" in
  "i486") ARCH="i386";;
 esac
 
-rmdir $prefix/lib/listaller
-rmdir $prefix/share/listaller
+rm -rf $prefix/lib/listaller
+rm -f $prefix/lib/libinstaller.so
+rm -f $prefix/lib/libinstaller.so.*
+rm -rf $prefix/share/listaller
 rm -f $prefix/bin/lipa
 rm -f $prefix/bin/listallmgr-qt4
 rm -f $prefix/bin/listallmgr-gtk2

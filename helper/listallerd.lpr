@@ -87,12 +87,12 @@ begin
     end;
 
     // check this is a method call for the right interface & method
-    if bs.MessageIsMethodCall(msg,'org.freedesktop.Listaller.Install', CALL_RUNSETUP) then
+    if bs.MessageIsMethodCall(msg,'org.nlinux.Listaller.Install', CALL_RUNSETUP) then
     begin
         JobList.Add(TDoAppInstall.Create(msg,bs.Connection));
         Inc(InstallWorkers);
     end else
-    if bs.MessageIsMethodCall(msg, 'org.freedesktop.Listaller.Manage', CALL_APPREMOVE) then
+    if bs.MessageIsMethodCall(msg, 'org.nlinux.Listaller.Manage', CALL_APPREMOVE) then
     begin
         JobList.Add(TDoAppRemove.Create(msg,bs.Connection));
        Inc(ManagerWorkers);
@@ -134,7 +134,7 @@ begin
 
 if IsRoot then
 begin
-  bs:=TDBusServer.Create('org.freedesktop.Listaller',DBUS_BUS_SYSTEM,DBUS_NAME_FLAG_REPLACE_EXISTING);
+  bs:=TDBusServer.Create('org.nlinux.Listaller',DBUS_BUS_SYSTEM,DBUS_NAME_FLAG_REPLACE_EXISTING);
 
   JobList:=TObjectList.Create;
 end else

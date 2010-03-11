@@ -1,4 +1,4 @@
 [D-BUS Service]
-Name=org.freedesktop.Listaller
+Name=org.nlinux.Listaller
 Exec=/usr/sbin/listallerd
 User=root

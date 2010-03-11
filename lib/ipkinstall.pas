@@ -1511,6 +1511,7 @@ dsApp.ExecuteDirect('INSERT INTO "AppInfo" VALUES ('''+IAppName+''', '''+
 dsApp.ApplyUpdates;
 dsApp.Close;
 
+p_debug('Icon: '+IIconPath);
 if IIconPath[1]='/' then
 FileCopy(pkg.WDir+IIconPath,RegDir+LowerCase(IAppName+'-'+pkgID)+'/icon'+ExtractFileExt(IIconPath));
 

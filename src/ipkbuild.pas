@@ -399,8 +399,11 @@ if not ipkpkg.AddFile(WDir+h+'/'+ExtractFileName(DeleteModifiers(fname))) then
  fc.Add(MD5.MDPrint(MD5.MD5File(DeleteModifiers(fname),1024)));//ExcludeTrailingBackslash(Files[i+1]));
 
  //Add info to update source info
- uinfo.Add(fname);
- uinfo.Add(MD5.MDPrint(MD5.MD5File(DeleteModifiers(fname),1024)));
+ if not HasSharedMod(fname) then
+ begin
+  uinfo.Add(fname);
+  uinfo.Add(MD5.MDPrint(MD5.MD5File(DeleteModifiers(fname),1024)));
+ end;
 
  h:=orig;
  write('.');
