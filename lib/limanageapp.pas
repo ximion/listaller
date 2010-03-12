@@ -84,6 +84,9 @@ end;
  //** Load application registration db into SQLiteDataset
  procedure LoadAppDB(dsApp: TSQLite3Dataset;const forcesu: Boolean=false);
 
+ //** Helper procedure to create USource file if missing
+ procedure CreateUpdateSourceList(path: String);
+
 implementation
 
 { TAppManager }
@@ -804,7 +807,7 @@ if not DirectoryExists(rd) then
    CreateTable;
  end;
 end;
-p_info('Database opened.');
+p_info(rsDBOpened);
 end;
 
 function IsPackageInstalled(aname: String;aid: String;sumode: Boolean): Boolean;
@@ -812,6 +815,9 @@ var dsApp: TSQLite3Dataset;
 begin
 dsApp:=TSQLite3Dataset.Create(nil);
 LoadAppDB(dsApp,sumode);
+
+if FileExists(dsApp.FileName) then
+begin
 dsApp.SQL:='SELECT * FROM AppInfo';
 dsApp.Open;
 dsApp.Filtered := true;
@@ -831,6 +837,7 @@ end;
 
 dsApp.Close;
 dsApp.Free;
+end else Result:=false; //No database => no application installed
 end;
 
 /////////////////////////////////////////////////////
@@ -941,8 +948,8 @@ if (LowerCase(f)<>'libc6') then
 begin
 //Check if another package requires this package
 t:=TProcess.Create(nil);
-if pos('>',f)>0 then
-msg(f+' # '+copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
+if pos(')',f)>0 then
+msg(f+' # '+copy(f,pos(' (',f)+2,length(f)-pos(' (',f)-2))
 else msg(f);
 
 pkit:=TPackageKit.Create;
@@ -951,14 +958,14 @@ s:=TStringlist.Create;
 
 pkit.RsList:=s;
 
-if pos('>',f)>0 then
- pkit.GetRequires(copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
+if pos(')',f)>0 then
+ pkit.GetRequires(copy(f,pos(' (',f)+2,length(f)-pos(' (',f)-2))
 else pkit.GetRequires(f);
 
    if s.Count <=1 then
    begin
-   if pos('>',f)>0 then
-   pkit.RemovePkg(copy(f,pos(' <',f)+2,length(f)-pos(' <',f)-2))
+   if pos(')',f)>0 then
+   pkit.RemovePkg(copy(f,pos(' (',f)+2,length(f)-pos(' (',f)-2))
    else pkit.RemovePkg(f);
    //GetOutPutTimer.Enabled:=true;
 
@@ -1060,12 +1067,16 @@ proc.Free;
 
 if upd<>'#' then
 begin
-tmp.LoadFromFile(RegDir+'updates.list');
-msg('Removing update-source...');
-for i:=1 to tmp.Count-1 do
-if pos(upd,tmp[i])>0 then begin tmp.Delete(i);break;end;
-tmp.SaveToFile(RegDir+'updates.list');
-tmp.Free;
+CreateUpdateSourceList(RegDir);
+if FileExists(RegDir+'updates.list') then
+begin
+ tmp.LoadFromFile(RegDir+'updates.list');
+ msg('Removing update-source...');
+ for i:=1 to tmp.Count-1 do
+ if pos(upd,tmp[i])>0 then begin tmp.Delete(i);break;end;
+ tmp.SaveToFile(RegDir+'updates.list');
+ tmp.Free;
+end;
 end;
 
 end;
@@ -1097,6 +1108,18 @@ msg('Application removed.');
 msg('- Finished -');
 end else msg('Application not found!');
 
+end;
+
+procedure CreateUpdateSourceList(path: String);
+var fi: TStringList;
+begin
+if not FileExists(path+'updates.list') then
+begin
+ fi:=TStringList.Create;
+ fi.Add('List of update repositories v.1.0');
+ fi.SaveToFile(path+'updates.list');
+ fi.Free;
+end;
 end;
 
 end.

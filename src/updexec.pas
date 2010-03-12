@@ -85,12 +85,13 @@ begin
 end;
 
 procedure TUExecFm.FormActivate(Sender: TObject);
-var i: Integer;
+var i: Integer;strID: String;
 begin
  if fstact then
  begin
   fstact:=false;
   li_updater_register_status_call(@UMnForm.updater,@OnEXStatus,nil);
+  li_updater_register_status_call(@UMnForm.updaterSU,@OnEXStatus,nil);
 
   for i:=0 to UMnForm.UpdListBox.Count-1 do
    if UMnForm.UpdListBox.Checked[i] then
@@ -99,10 +100,21 @@ begin
   for i:=0 to UMnForm.UpdListBox.Count-1 do
    if UMnForm.UpdListBox.Checked[i] then
    begin
-    li_updater_execute_update(@UMnForm.updater,StrToInt(UMnForm.UpdateIDs[i]));
+    strID:=UMnForm.UpdateIDs[i];
+    if pos('(su)',strID)>0 then
+    begin
+      strID:=StringReplace(UMnForm.UpdateIDs[i],' (su)','',[rfReplaceAll]);
+      li_updater_execute_update(@UMnForm.updaterSU,StrToInt(strID));
+    end else
+    begin
+     li_updater_execute_update(@UMnForm.updater,StrToInt(strID));
+    end;
     ProgressBar1.Position:=ProgressBar1.Position+1;
    end;
    li_updater_register_status_call(@UMnForm.updater,@mnupdate.OnMNStatus,nil);
+   li_updater_register_status_call(@UMnForm.updaterSU,@mnupdate.OnMNStatus,nil);
+   UMnForm.UpdListBox.Items.Clear;
+   UMnForm.UpdateIDs.Clear;
   Button1.Enabled:=true;
  end;
 end;

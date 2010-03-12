@@ -20,7 +20,7 @@ program listallerd;
 
 uses
   cthreads, Interfaces, Classes, SysUtils, CustApp, dbus, djobs,
-  Contnrs, SimDBus, liBasic, LCLIntf;
+  Contnrs, SimDBus, liBasic, LCLIntf, SyncObjs;
 
 type
 
@@ -58,6 +58,9 @@ begin
 
   //Set tick count
   startTick:=DateTimeToTimeStamp(Now).Time;
+
+  //Init critical section for usage in threads
+  InitCriticalSection(critsec);
 
   // loop, testing for new messages
   while (true) do
@@ -100,6 +103,9 @@ begin
      //Free the message
      bs.FreeMessage(msg);
   end;
+
+  //Finalize and remove critical section
+  DoneCriticalSection(critsec);
 end;
 
 procedure TLiDaemon.DoRun;

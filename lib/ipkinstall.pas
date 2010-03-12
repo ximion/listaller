@@ -244,7 +244,6 @@ end;
 constructor TInstallation.Create;
 begin
  inherited Create;
- msg(rsOpeningDB);
  dsApp:= TSQLite3Dataset.Create(nil);
  if SUMode then
   RegDir:='/etc/lipa/app-reg/'
@@ -1542,6 +1541,7 @@ pkg.Free;
 
 if (USource<>'#')and(AddUpdateSource) then
 begin
+CreateUpdateSourceList(RegDir);
 fi:=TStringList.Create;
 fi.LoadFromFile(RegDir+'updates.list');
 for i:=1 to fi.Count-1 do
@@ -1714,26 +1714,33 @@ else
 
 if (USource<>'#')and(USource<>'') then
 begin
-fi:=TStringList.Create;
+
 if not FileExists(s+'updates.list') then
+if (IsRoot)or(not forceroot) then
 begin
-fi.Add('List of update repositories v.1.0');
-fi.SaveToFile(s+'updates.list');
+CreateUpdateSourceList(s);
+end else found:=false; //Unable to create updatelist on root-filesystem without su rights
+
+if FileExists(s+'updates.list') then
+begin
+ fi:=TStringList.Create;
+ fi.LoadFromFile(s+'updates.list');
+ found:=false;
+ for i:=1 to fi.Count-1 do
+  if pos(USource,fi[i])>0 then begin break;found:=true;end;
+ fi.Free;
 end;
-fi.LoadFromFile(s+'updates.list');
-found:=false;
-for i:=1 to fi.Count-1 do
-if pos(USource,fi[i])>0 then begin break;found:=true;end;
+
+AddUpdateSource:=false;
 if not found then
 begin
 if MakeUsrRequest(PAnsiChar(rsAddUpdSrc+#10+
-   copy(USource,pos(' <',USource)+2,length(USource)-pos(' <',USource)-2)+' ('+copy(uSource,3,pos(' <',USource)-3)+')'+#10+
+   USource+#10+
    PAnsiChar(rsQAddUpdSrc)),rqWarning)=rqsYes then
  begin
   AddUpdateSource:=true;
  end;
-end;
- fi.Free;
+end else AddUpdateSource:=true;
 end;
 end;
 

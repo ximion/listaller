@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, dbus, polkit, glib2, gExt, Installer, AppMan,
-  liBasic, liTypes, SimDBus, Contnrs, AppUpdate;
+  liBasic, liTypes, SimDBus, Contnrs, AppUpdate, SyncObjs;
 
 type
  TAccessType = (AC_UNKNOWN,AC_AUTHORIZED,AC_NOT_AUTHORIZED);
@@ -112,6 +112,7 @@ const
 var
  InstallWorkers: Integer;
  ManagerWorkers: Integer;
+ critsec       : TRTLCriticalSection;
 
 implementation
 
@@ -269,6 +270,8 @@ procedure TDoAppInstall.SendProgressSignal(xn: String;sigvalue: Integer);
 var
   msg: PDBusMessage;
 begin
+ EnterCriticalSection(critsec);
+ try
   // create a signal & check for errors
   msg:=bs.CreateNewSignal('/org/nlinux/Listaller/'+jobID, // object name of the signal
                           'org.nlinux.Listaller.Install', // interface name of the signal
@@ -276,12 +279,17 @@ begin
 
   bs.AppendUInt(sigvalue);
   bs.SendMessage(msg);
+ finally
+  LeaveCriticalSection(critsec);
+ end;
 end;
 
 procedure TDoAppInstall.SendMessageSignal(xn: String;sigvalue: String);
 var
   msg: PDBusMessage;
 begin
+  EnterCriticalSection(critsec);
+  try
   // create a signal & check for errors
   msg:=bs.CreateNewSignal('/org/nlinux/Listaller/'+jobID, // object name of the signal
                           'org.nlinux.Listaller.Install', // interface name of the signal
@@ -289,6 +297,9 @@ begin
 
   bs.AppendStr(sigvalue);
   bs.SendMessage(msg);
+  finally
+   LeaveCriticalSection(critsec);
+  end;
 end;
 
 procedure TDoAppInstall.SendReply(stat: Boolean;jID: String);
@@ -415,6 +426,8 @@ var
   msg: PDBusMessage;
   sigvalue: Integer;
 begin
+  EnterCriticalSection(critsec);
+  try
   sigvalue:=data.mnprogress;
   p_debug(TDoAppRemove(job).DId+'->ProgressChange::'+IntToStr(sigvalue));
   // create a signal & check for errors
@@ -425,6 +438,9 @@ begin
 
   TDoAppRemove(job).bs.AppendUInt(sigvalue);
   TDoAppRemove(job).bs.SendMessage(msg);
+  finally
+   LeaveCriticalSection(critsec);
+  end;
 end;
 
 begin
@@ -525,7 +541,8 @@ var
   auth: PChar = '';
 begin
    p_info('Send reply called');
-
+  EnterCriticalSection(critsec);
+  try
   //Create a reply from the message
   reply:=bs.CreateReturnMessage(origMsg);
 
@@ -538,6 +555,9 @@ begin
 
   bs.SendMessage(reply);
   bs.FreeMessage(origMsg);
+  finally
+   LeaveCriticalSection(critsec);
+  end;
 end;
 
 procedure TDoAppRemove.EmitMessage(id: String;param: String);
@@ -545,12 +565,17 @@ var
   dmsg: PDBusMessage;
 begin
   p_debug(jobID+'->'+id+':: '+param);
+  EnterCriticalSection(critsec);
+  try
   // create a signal & check for errors
   dmsg:=bs.CreateNewSignal('/org/nlinux/Listaller/'+jobID, // object name of the signal
                            'org.nlinux.Listaller.Manage', // interface name of the signal
                            id); // name of the signal
   bs.AppendStr(param);
   bs.SendMessage(dmsg);
+  finally
+   LeaveCriticalSection(critsec);
+  end;
 end;
 
 procedure TDoAppRemove.Execute;
@@ -619,6 +644,8 @@ var
   sigvalue: Integer;
 begin
   sigvalue:=data.mnprogress;
+  EnterCriticalSection(critsec);
+  try
   p_debug(TDoAppUpdate(job).DId+'->ProgressChange::'+IntToStr(sigvalue));
   // create a signal & check for errors
   msg:=TDoAppUpdate(job).bs.CreateNewSignal('/org/nlinux/Listaller/'+TDoAppUpdate(job).DId, // object name of the signal
@@ -628,6 +655,9 @@ begin
 
   TDoAppUpdate(job).bs.AppendUInt(sigvalue);
   TDoAppUpdate(job).bs.SendMessage(msg);
+  finally
+   LeaveCriticalSection(critsec);
+  end;
 end;
 
 begin

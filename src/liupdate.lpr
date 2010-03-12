@@ -1,5 +1,5 @@
 { liupdate.lpr
-  Copyright (C) Listaller Project 2008
+  Copyright (C) Listaller Project 2008-2010
 
   liupdate.lpr is free software: you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -23,7 +23,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, mnupdate, httpsend, updexec,
+  Forms, mnupdate, UpdExec,
   LiBasic, LResources,
   liTranslator, SysUtils, LiCommon;
 

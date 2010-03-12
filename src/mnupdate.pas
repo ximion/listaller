@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, Buttons, CheckLst, LiBasic, updexec, LCLType, Process, Menus, ComCtrls,
+  StdCtrls, Buttons, CheckLst, LiBasic, UpdExec, LCLType, Process, Menus, ComCtrls,
   trStrings, IconLoader, LiCommon, AppUpdate, liTypes;
 
 type
@@ -52,6 +52,7 @@ type
     { public declarations }
     UpdateIDs: TStringList;
     updater: Pointer;
+    updaterSU: Pointer;
   end; 
 
 var
@@ -72,6 +73,17 @@ begin
  begin
   UpdListBox.Items.Add(appName);
   UpdateIDs.Add(IntToStr(id));;
+ end;
+end;
+
+procedure OnNewUpdateFoundSU(appName: PChar;id: Integer;user_data: Pointer);cdecl;
+begin
+ Application.ProcessMessages;
+ if Assigned(UMnForm) then
+ with UMnForm do
+ begin
+  UpdListBox.Items.Add(appName+' [SU]');
+  UpdateIDs.Add(IntToStr(id)+' (su)');;
  end;
 end;
 
@@ -120,12 +132,14 @@ begin
  Application.ProcessMessages;
  BitBtn2.Enabled:=false;
  li_updater_search_updates(@updater);
+ li_updater_search_updates(@updaterSU);
  if UpdListBox.Items.Count>0 then
   BitBtn1.Enabled:=true;
  ProgressBar.Position:=100;
 end;
 
 procedure TUMnForm.UpdListBoxClick(Sender: TObject);
+var id: String;
 begin
 if UpdListBox.ItemIndex>-1 then
 begin
@@ -133,8 +147,18 @@ InfoMemo.Enabled:=true;
 InfoMemo.Lines.Clear;
 InfoMemo.Lines.Add(rsLogUpdInfo);
 //InfoMemo.Lines.Add(StringReplace(rsFilesChanged,'%f',IntToStr((ulist[UpdListBox.ItemIndex].Count div 2)),[rfReplaceAll]));
-InfoMemo.Lines.Add(StringReplace(rsUpdTo,'%v','"'+
- li_updater_updateid_newversion(@updater,StrToInt(updateids[UpdListBox.ItemIndex]))+'"',[rfReplaceAll]));
+if pos('(su)',updateids[UpdListBox.ItemIndex])>0 then
+begin
+ //Application is superuser app
+ id:=StringReplace(updateids[UpdListBox.ItemIndex],' (su','',[rfReplaceAll]);
+ InfoMemo.Lines.Add(StringReplace(rsUpdTo,'%v','"'+
+   li_updater_updateid_newversion(@updaterSU,StrToInt(id))+'"',[rfReplaceAll]));
+end else
+begin
+ id:=updateids[UpdListBox.ItemIndex];
+ InfoMemo.Lines.Add(StringReplace(rsUpdTo,'%v','"'+
+   li_updater_updateid_newversion(@updater,StrToInt(id))+'"',[rfReplaceAll]));
+end;
 end;
 end;
 
@@ -178,16 +202,25 @@ MenuItem1.Caption:=rsQuitUpdater;
 MenuItem2.Caption:=rsShowUpdater;
 UpdateIDs:=TStringList.Create;
 
+//Create normal updater
 updater:=li_updater_new;
 li_updater_register_newupdate_call(@updater,@OnNewUpdateFound,nil);
 li_updater_register_request_call(@updater,@OnRequest,nil);
 li_updater_register_status_call(@updater,@OnMNStatus,nil);
+li_updater_set_sumode(@updater,false);
+//Create updater for shared su applications
+updaterSU:=li_updater_new;
+li_updater_register_newupdate_call(@updaterSU,@OnNewUpdateFoundSU,nil);
+li_updater_register_request_call(@updaterSU,@OnRequest,nil);
+li_updater_register_status_call(@updaterSU,@OnMNStatus,nil);
+li_updater_set_sumode(@updaterSU,true);
 end;
 
 procedure TUMnForm.FormDestroy(Sender: TObject);
 begin
   UpdateIDs.Free;
   li_updater_free(@updater);
+  li_updater_free(@updaterSU);
 end;
 
 procedure TUMnForm.FormShow(Sender: TObject);
