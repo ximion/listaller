@@ -180,6 +180,8 @@ type
   property RegisterUpdateSource: Boolean read AddUpdateSource write AddUpdateSource;
   //** Register event to catch status messages
   procedure RegOnStatusChange(call: TLiStatusChangeCall;data: Pointer);
+  //** Check if package is okay, if not raise error and return false
+  function  PkgOkay: Boolean;
   //Message events
   procedure RegOnUsrRequest(call: TRequestCall;data: Pointer);
   function  UserRequestRegistered: Boolean;
@@ -568,10 +570,10 @@ end;
 
 if not pkg.UnpackFile('arcinfo.pin') then
 begin
-MakeUsrRequest(rsExtractError+#10+rsPkgDM+#10+rsABLoad,rqError);
-Emergency_FreeAll();
-Result:=false;
-exit;
+ MakeUsrRequest(rsExtractError+#10+rsPkgDM+#10+rsABLoad,rqError);
+ Emergency_FreeAll();
+ Result:=false;
+ exit;
 end;
 
 PkgName:=ExtractFileName(fname);
@@ -1744,9 +1746,21 @@ end else AddUpdateSource:=true;
 end;
 end;
 
+function TInstallation.PkgOkay: Boolean;
+begin
+ Result:=true;
+ if (PkgName='')or(AppName='') then
+ begin
+  MakeUsrRequest('Unknown error occured!'+#10+rsPkgDM+#10+rsABLoad,rqError);
+  Result:=false;
+  exit;
+ end;
+end;
+
 function TInstallation.DoInstallation: Boolean;
 var cnf: TIniFile;i: Integer;buscmd: ListallerBusCommand;
 begin
+if not PkgOkay then exit;
 
 if not IsRoot then
 if pkType=ptLinstall then

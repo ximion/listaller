@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1639"/>
+      <CurrentBuildNr Value="1666"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -28,24 +28,24 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="66">
+    <Units Count="68">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="29" Y="22"/>
-        <TopLine Value="1"/>
+        <CursorPos X="13" Y="283"/>
+        <TopLine Value="262"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="82"/>
+        <UsageCount Value="83"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="5" Y="290"/>
-        <TopLine Value="271"/>
-        <UsageCount Value="42"/>
+        <CursorPos X="15" Y="1751"/>
+        <TopLine Value="1728"/>
+        <UsageCount Value="43"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
@@ -156,9 +156,9 @@
         <Filename Value="limanageapp.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="limanageapp"/>
-        <CursorPos X="11" Y="1113"/>
-        <TopLine Value="1083"/>
-        <UsageCount Value="41"/>
+        <CursorPos X="21" Y="69"/>
+        <TopLine Value="48"/>
+        <UsageCount Value="42"/>
       </Unit17>
       <Unit18>
         <Filename Value="../linotify.pas"/>
@@ -295,7 +295,7 @@
         <UnitName Value="lidbusproc"/>
         <CursorPos X="13" Y="66"/>
         <TopLine Value="45"/>
-        <UsageCount Value="48"/>
+        <UsageCount Value="49"/>
       </Unit37>
       <Unit38>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.2.4/rtl/inc/objpash.inc"/>
@@ -312,8 +312,8 @@
       <Unit40>
         <Filename Value="../src/libasic.pas"/>
         <UnitName Value="libasic"/>
-        <CursorPos X="1" Y="1"/>
-        <TopLine Value="61"/>
+        <CursorPos X="20" Y="272"/>
+        <TopLine Value="251"/>
         <UsageCount Value="10"/>
       </Unit40>
       <Unit41>
@@ -326,8 +326,8 @@
       <Unit42>
         <Filename Value="../packager/ipkpackage.pas"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="10" Y="470"/>
-        <TopLine Value="379"/>
+        <CursorPos X="9" Y="302"/>
+        <TopLine Value="281"/>
         <UsageCount Value="12"/>
       </Unit42>
       <Unit43>
@@ -367,8 +367,8 @@
       <Unit48>
         <Filename Value="../packager/tarfile.pas"/>
         <UnitName Value="tarfile"/>
-        <CursorPos X="6" Y="126"/>
-        <TopLine Value="98"/>
+        <CursorPos X="16" Y="127"/>
+        <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit48>
       <Unit49>
@@ -384,7 +384,7 @@
         <UnitName Value="simdbus"/>
         <CursorPos X="60" Y="181"/>
         <TopLine Value="157"/>
-        <UsageCount Value="36"/>
+        <UsageCount Value="37"/>
       </Unit50>
       <Unit51>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-shared.inc"/>
@@ -443,7 +443,7 @@
         <UnitName Value="liupdateapp"/>
         <CursorPos X="13" Y="414"/>
         <TopLine Value="391"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="26"/>
       </Unit59>
       <Unit60>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/fcl-base/src/contnrs.pp"/>
@@ -462,7 +462,7 @@
       <Unit62>
         <Filename Value="../packager/compression/ulzmadecoder.pas"/>
         <UnitName Value="ULZMADecoder"/>
-        <CursorPos X="39" Y="9"/>
+        <CursorPos X="51" Y="9"/>
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit62>
@@ -486,12 +486,94 @@
         <TopLine Value="367"/>
         <UsageCount Value="10"/>
       </Unit65>
+      <Unit66>
+        <Filename Value="../packager/compression/ubittreedecoder.pas"/>
+        <UnitName Value="UBitTreeDecoder"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit66>
+      <Unit67>
+        <Filename Value="../packager/compression/urangedecoder.pas"/>
+        <UnitName Value="URangeDecoder"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="10"/>
+      </Unit67>
     </Units>
-    <JumpHistory Count="1" HistoryIndex="0">
+    <JumpHistory Count="18" HistoryIndex="17">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="29" TopLine="1"/>
+        <Caret Line="9" Column="27" TopLine="1"/>
       </Position1>
+      <Position2>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="143" Column="36" TopLine="122"/>
+      </Position2>
+      <Position3>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="23" Column="20" TopLine="1"/>
+      </Position3>
+      <Position4>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="25" TopLine="1"/>
+      </Position4>
+      <Position5>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="98" Column="25" TopLine="73"/>
+      </Position5>
+      <Position6>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="93" Column="6" TopLine="77"/>
+      </Position6>
+      <Position7>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="305" Column="35" TopLine="293"/>
+      </Position7>
+      <Position8>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="128" Column="6" TopLine="108"/>
+      </Position8>
+      <Position9>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="153" Column="6" TopLine="133"/>
+      </Position9>
+      <Position10>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="160" Column="6" TopLine="140"/>
+      </Position10>
+      <Position11>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="173" Column="6" TopLine="153"/>
+      </Position11>
+      <Position12>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="180" Column="6" TopLine="160"/>
+      </Position12>
+      <Position13>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="187" Column="6" TopLine="167"/>
+      </Position13>
+      <Position14>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="194" Column="6" TopLine="174"/>
+      </Position14>
+      <Position15>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="215" Column="13" TopLine="194"/>
+      </Position15>
+      <Position16>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="259" Column="13" TopLine="238"/>
+      </Position16>
+      <Position17>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="267" Column="13" TopLine="246"/>
+      </Position17>
+      <Position18>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="275" Column="13" TopLine="254"/>
+      </Position18>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

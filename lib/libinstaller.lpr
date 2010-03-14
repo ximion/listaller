@@ -85,9 +85,9 @@ begin
 end;
 
 //** Initializes the setup
-function li_setup_init(setup: PInstallation;pkname: PChar): PChar;cdecl;
+function li_setup_init(setup: PInstallation;pkname: PChar): Boolean;cdecl;
 begin
- Result:='';
+ Result:=true;
  if not setup^.UserRequestRegistered then
  begin
   p_warning('No user request callback is registered!');
@@ -95,8 +95,9 @@ begin
 
  try
   setup^.Initialize(pkname);
+  Result:=setup^.PkgOkay;
  except
-  Result:=PChar('Failed to initialize setup package '+ExtractFileName(pkname)+' !');
+  Result:=false;
  end;
 end;
 
@@ -125,6 +126,7 @@ end;
 //** Installation type
 function li_setup_get_pkgtype(setup: PInstallation): TPkgType;cdecl;
 begin
+  if not setup^.PkgOkay then exit;
   Result:=setup^.pType;
 end;
 
@@ -149,12 +151,14 @@ end;
 //** Read disallows property
 function li_setup_get_disallows(setup: PInstallation): PChar;cdecl;
 begin
+  if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.Disallows);
 end;
 
 //** Read supported Linux distributions
 function li_setup_get_supported_distributions(setup: PInstallation): PChar;cdecl;
 begin
+  if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.Distris);
 end;
 
@@ -167,30 +171,36 @@ end;
 //** Readout application name
 function li_setup_get_appname(setup: PInstallation): PChar;cdecl;
 begin
+  if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.AppName);
 end;
 
 //** Read appversion
 function li_setup_get_appversion(setup: PInstallation): PChar;cdecl;
 begin
+  if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.AppVersion);
 end;
 
 //** Get package ID
 function li_setup_get_pkgid(setup: PInstallation): PChar;cdecl;
 begin
+  if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.AppID);
 end;
 
 //** Get trust level of pkg signature
 function li_setup_get_signature_state(setup: PInstallation): TPkgSigState;cdecl;
 begin
+  if not setup^.PkgOkay then exit;
   Result:=setup^.SignatureInfo;
 end;
 
 //** Get description
 function li_setup_get_long_description(setup: PInstallation; list: PStringList): Boolean;cdecl;
 begin
+ Result:=false;
+ if not setup^.PkgOkay then exit;
 try
  Result:=true;
  setup^.ReadDescription(list^);
@@ -202,6 +212,8 @@ end;
 //** Get wizard image patch
 function li_setup_get_wizard_image_path(setup: PInstallation): PChar;cdecl;
 begin
+  Result:='';
+  if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.WizImage);
 end;
 
@@ -219,6 +231,8 @@ end;
 //** Get profiles list
 function li_setup_get_profiles_list(setup: PInstallation; list: PStringList): Boolean;cdecl;
 begin
+  Result:=false;
+  if not setup^.PkgOkay then exit;
 try
  Result:=true;
  setup^.ReadProfiles(list^);
@@ -242,24 +256,32 @@ end;
 //** Read appversion
 function li_setup_get_appicon(setup: PInstallation): PChar;cdecl;
 begin
+  Result:='';
+  if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.AppIcon);
 end;
 
 //** Read desktopfiles
 function li_setup_get_desktopfiles(setup: PInstallation): PChar;cdecl;
 begin
+  Result:='';
+  if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.DesktopFiles);
 end;
 
 //** Read appcmd
 function li_setup_get_app_exec_command(setup: PInstallation): PChar;cdecl;
 begin
+  Result:='';
+  if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.CMDLn);
 end;
 
 //** Read path to file list
 function li_setup_get_current_profile_filelist(setup: PInstallation): PChar;cdecl;
 begin
+  Result:='';
+  if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.IFileInfo);
 end;
 
@@ -272,6 +294,8 @@ end;
 //** Get dependencies
 function li_setup_get_dependencies(setup: PInstallation; list: PStringList): Boolean;cdecl;
 begin
+  Result:=false;
+  if not setup^.PkgOkay then exit;
 try
  Result:=true;
  list^.Assign(setup^.ADeps);

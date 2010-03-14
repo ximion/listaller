@@ -306,7 +306,6 @@ begin
        raise Exception.Create('Error in data stream');
      end;
      decoder.Free;
-
  finally
   outStream.Free;
  end;
