@@ -17,6 +17,13 @@ echo " "
 
 echo -n "Copying files ..."
 
+# Has the user used the regular install.sh script which called this file or
+# has he executed this script directly?
+if [ -z "$INSTDIR" ]; then
+   echo "Error: Don't use this file directly, use install.sh instead!"
+   exit -1
+fi
+
 mkdir $INSTDIR
 cp -r ./files/* $INSTDIR/
 chmod +x $INSTDIR/bin/pappi
@@ -33,6 +40,12 @@ if [ ! -d "$MIMEDB" ]; then
 fi
 if [ ! -d "$APPDB" ]; then
 	mkdir -p $APPDB
+fi
+
+# Does the Mime-File already exist? remove!
+if [ -f "$MIMEDB/$MIMEFILE" ]; then
+   echo "Mime file already exist. removing..."
+   rm "$MIMEDB/$MIMEFILE"
 fi
 
 echo '<?xml version="1.0" encoding="UTF-8"?>' >> $MIMEDB'/'$MIMEFILE
