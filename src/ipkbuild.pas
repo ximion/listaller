@@ -588,9 +588,9 @@ writeLn('');
  end;
 
 //
-if prID<>'-1' then begin
+if prID<>'-1' then
+begin
  fc.SaveToFile(WDir+'pkgdata/'+'fileinfo-'+prID+'.id');
-
  ipkpkg.AddFile(WDir+'pkgdata/fileinfo-'+prID+'.id');
 end;
 //
@@ -607,6 +607,24 @@ pkgtype:=control.SType;
 if LowerCase(control.Architectures)='any' then
  control.Architectures:=GetSystemArchitecture;
 
+//Add icon
+if control.Icon<>'' then
+begin
+if (not FileExists(control.Icon))and(control.Icon<>'') then
+begin
+writeLn('error: ');
+writeLn(' Icon-path is invalid!');
+halt(9);
+end else
+begin
+FileCopy(control.Icon,WDir+'pkgdata/'+'packicon.png'); //!!! Should be changed to support more picture-filetypes
+control.Icon:='/pkgdata/'+'packicon.png';
+ipkpkg.AddFile(WDir+'pkgdata/'+'packicon.png');
+writeLn(' I: Icon included.');
+end;
+end; //END <>nil
+
+//Linstall specific actions
 if pkgtype=ptLinstall then
 begin
 writeLn('Mode: Build standard IPK');
@@ -647,19 +665,6 @@ writeLn('Updating dependecy information...');
 end;
 sl.Free;
 tmpdepends.Free;
-
-if control.Icon<>'' then
-if not FileExists(control.Icon) then
-begin
- writeLn('error: ');
- writeLn(' Icon-path is invalid!');
- halt(9);
-end else
-begin
- FileCopy(control.Icon,WDir+'pkgdata/'+'packicon.png'); //!!! Changes needed to support more image types
- control.Icon:='/pkgdata/'+'packicon.png';
- ipkpkg.AddFile(WDir+'pkgdata/'+'packicon.png');
-end;
 
 sl:=TStringList.Create;
 
@@ -723,28 +728,11 @@ control.ReadAppDescription(sl);
 if sl.Count<=0 then
 begin
  writeLn('error: ');
- writeLn(' Description file is invalid!');
+ writeLn(' Description is invalid!');
  halt(10);
 end;
 
 control.WriteAppDescription(sl);
-
-if control.Icon<>'' then
-begin
-if (not FileExists(control.Icon))and(control.Icon<>'') then
-begin
-writeLn('error: ');
-writeLn(' Icon-path is invalid!');
-halt(9);
-end else
-begin
-FileCopy(control.Icon,WDir+'pkgdata/'+'packicon.png'); //!!! Should be changed to support more picture-filetypes
-control.Icon:='/pkgdata/'+'packicon.png';
-ipkpkg.AddFile(WDir+'pkgdata/'+'packicon.png');
-writeLn(' Info: Icon added.');
-end;
-end; //END <>nil
-
 
 end;
 //??? Container builder needs more work!
@@ -763,6 +751,7 @@ uinfo.Free;
 
 randomize;
 
+control.FinalizeToControl;
 control.SaveToFile(WDir+'arcinfo.pin');
 
 ipkpkg.AddFile(WDir+'arcinfo.pin');

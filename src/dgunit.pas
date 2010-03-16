@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -101,48 +101,43 @@ end;
 procedure TDGForm.FormCloseQuery(Sender: TObject; var CanClose: boolean);
 begin
   Application.Terminate;
-  DGForm.Free;
 end;
 
 procedure TDGForm.BitBtn1Click(Sender: TObject);
 begin
  BitBtn1.Enabled:=false;
+ FinBtn1.Visible:=false;
  TabSheet3.TabVisible:=true;
  TabSheet2.TabVisible:=false;
  TabSheet1.TabVisible:=false;
  PageControl1.ActivePageIndex:=3;
- HTTP := THTTPSend.Create;
+ {HTTP := THTTPSend.Create;
  HTTP.Sock.OnStatus:=HookSock;
  HTTP.KeepAlive:=true;
  FTP := TFTPSend.Create;
  FTP.DSock.OnStatus:=HookSock;
- //???
- //setup.HTTPSend:=HTTP;
- //setup.FTPSend:=FTP;
- GetOutPutTimer.Enabled:=true;
- //setup.DoInstallation(Process1,Memo3.Lines);
- GetOutPutTimer.Enabled:=false;
+ GetOutPutTimer.Enabled:=true;}
+ setup.StartInstallation;
 
- HTTP.Free;
-FTP:=nil;
-FTP.Free;
+{ HTTP.Free;
+ FTP:=nil;
+ FTP.Free; }
 
-PageControl1.Visible:=false;
+ PageControl1.Visible:=false;
 
-//???
-{if (FileExists(setup.AppIcon))and(
-(LowerCase(ExtractFileExt(setup.AppIcon))='.png')or
-(LowerCase(ExtractFileExt(setup.AppIcon))='.bmp')or
-(LowerCase(ExtractFileExt(setup.AppIcon))='.jpg')) then
+if (FileExists(setup.GetAppIcon))and(
+(LowerCase(ExtractFileExt(setup.GetAppIcon))='.png')or
+(LowerCase(ExtractFileExt(setup.GetAppIcon))='.bmp')or
+(LowerCase(ExtractFileExt(setup.GetAppIcon))='.jpg')) then
 begin
 Image1.Picture.Clear;
-Image1.Picture.LoadFromFile(setup.AppIcon);
+Image1.Picture.LoadFromFile(setup.GetAppIcon);
 Image1.Repaint;
-end; }
+end;
 
 Label2.Visible:=false;
 BitBtn1.Visible:=false;
-
+FinBtn1.Visible:=true;
 end;
 
 procedure TDGForm.FinBtn1Click(Sender: TObject);
@@ -169,7 +164,6 @@ end;
 
 procedure TDGForm.FormShow(Sender: TObject);
 begin
-  IWizFrm.Hide;
   PageControl1.Visible:=true;
   TabSheet1.Caption:=rsMain;
   TabSheet2.Caption:=rsDetails;

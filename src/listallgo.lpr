@@ -48,7 +48,7 @@ begin
    setup.Free;
    Application.Terminate;
    exit;
-  end;
+  end else
 
   { --- Prepare Listallation --- }
   if setup.PkType=ptLinstall then
@@ -65,11 +65,12 @@ begin
     end;
    end;
    Application.CreateForm(TIWizFrm, IWizFrm);
-   Application.CreateForm(TDGForm, DGForm);
+   Application.UpdateMainForm(IWizFrm);
   end else
   { --- Prepare DLink Install --- }
   if setup.PkType=ptDLink then
   begin
+   Application.CreateForm(TDGForm, DGForm);
 
    DGForm.IIconPath:=setup.GetAppIcon;
    DGForm.IDesktopFiles:=setup.GetDesktopFiles;
@@ -81,6 +82,7 @@ begin
    Memo2.Clear;
    Memo2.Lines.Add(rsPkgDownload);
    end;
+   Application.UpdateMainForm(DGForm);
  end;
 
 

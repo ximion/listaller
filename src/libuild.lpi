@@ -24,12 +24,12 @@
         <LaunchingApplication Use="True" PathPlusParams="/usr/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="32">
+    <Units Count="33">
       <Unit0>
         <Filename Value="libuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
-        <CursorPos X="23" Y="27"/>
+        <CursorPos X="24" Y="27"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="37"/>
@@ -45,8 +45,8 @@
       <Unit2>
         <Filename Value="ipkbuild.pas"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="6" Y="406"/>
-        <TopLine Value="373"/>
+        <CursorPos X="21" Y="786"/>
+        <TopLine Value="766"/>
         <UsageCount Value="14"/>
         <Bookmarks Count="1">
           <Item0 X="53" Y="568" ID="8"/>
@@ -113,8 +113,8 @@
         <Filename Value="../packager/ipkpackage.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="10" Y="470"/>
-        <TopLine Value="438"/>
+        <CursorPos X="1" Y="235"/>
+        <TopLine Value="213"/>
         <UsageCount Value="33"/>
       </Unit11>
       <Unit12>
@@ -252,6 +252,13 @@
         <TopLine Value="37"/>
         <UsageCount Value="10"/>
       </Unit31>
+      <Unit32>
+        <Filename Value="../packager/compression/ulzmaencoder.pas"/>
+        <UnitName Value="ULZMAEncoder"/>
+        <CursorPos X="20" Y="130"/>
+        <TopLine Value="109"/>
+        <UsageCount Value="10"/>
+      </Unit32>
     </Units>
     <JumpHistory Count="15" HistoryIndex="14">
       <Position1>
@@ -312,7 +319,7 @@
       </Position14>
       <Position15>
         <Filename Value="libuild.lpr"/>
-        <Caret Line="27" Column="23" TopLine="1"/>
+        <Caret Line="27" Column="24" TopLine="1"/>
       </Position15>
     </JumpHistory>
   </ProjectOptions>

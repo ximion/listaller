@@ -612,6 +612,9 @@ begin
  exit;
 end;
 
+//Detect distribution details
+DInfo:=GetDistro;
+
 if pkType=ptLinstall then
 begin
 
@@ -716,8 +719,6 @@ cont.ReadAppLicense(license);
 //Load Dependencies
 Dependencies:=TStringList.Create;
 
-DInfo:=GetDistro;
-
 cont.ReadDependencies('',dependencies);
 
 i:=0;
@@ -734,25 +735,39 @@ begin
  cont.ReadDependencies(DInfo.DName,dependencies);
 if dependencies.Count<=0 then
 begin
- cont.ReadDependencies(DInfo.PackageSystem,dependencies);
-
- if MakeUsrRequest(rsInvalidDVersion,rqWarning) = rqsNo then
+cont.ReadDependencies(DInfo.DName,dependencies);
+if dependencies.Count<=0 then
+begin
+ if (not forces)and(MakeUsrRequest(rsInvalidDVersion+#10+rsUseCompPQ,rqWarning) = rqsNo) then
  begin
-  MakeUsrRequest(rsNoComp+#10+rsInClose,rqError);
+  MakeUsrRequest(rsInClose,rqError);
   Dependencies.Free;
-  Emergency_FreeAll();
+  pkg.Free;
   PkProfiles.Free;
   Result:=false;
   exit;
+ end else
+ begin
+  dependencies.Clear;
+  cont.ReadDependencies(DInfo.PackageSystem,dependencies);
+  if dependencies.Count<=0 then
+  begin
+   MakeUsrRequest(rsNoComp+#10+rsInClose,rqError);
+   Dependencies.Free;
+   pkg.Free;
+   PkProfiles.Free;
+   Result:=false;
+   exit;
+  end;
  end;
- end;
+end;
 
 //Resolve names
 for i:=0 to dependencies.Count-1 do
-if pos(' <',n)>0 then
-Dependencies[i]:=copy(n,pos(' <',n)+2,length(n)-pos(' <',n)-2)+' - '+copy(n,1,pos(' <',n)-1);
+if pos(' (',n)>0 then
+Dependencies[i]:=copy(n,pos(' (',n)+2,length(n)-pos(' (',n)-2)+' - '+copy(n,1,pos(' (',n)-1);
 end;
-
+end;
 
 { if xnode.FindNode('pkcatalog')<>nil then
  begin
@@ -762,8 +777,6 @@ end;
 
 for i:=0 to Dependencies.Count-1 do
 if Dependencies[i][1]='.' then pkg.UnpackFile(Dependencies[i]);
-
-pkg.Free;
 
 msg('Profiles count is '+IntToStr(PkProfiles.Count));
 if PkProfiles.Count<0 then
@@ -786,11 +799,13 @@ if not Testmode then
 if IsAppInstalled(pkgID) then RmApp:=true;
 
 end else //Handle other IPK types
-if pkType=ptDLink then begin
+if pkType=ptDLink then
+begin
 msg('Package type is "dlink"');
 
 cont.ReadAppDescription(longdesc);
 
+PkgID:=cont.PkName;
 IAppName:=cont.AppName;
 IAppVersion:=cont.AppVersion;
 
@@ -804,6 +819,9 @@ end;
 IAuthor:=cont.Author;
 if IAuthor='' then
 IAuthor:='#';
+
+//DLink packages can only be installed as root!
+SUMode:=true;
 
 //Set group as string
 case cont.Group of
@@ -822,8 +840,6 @@ end;
 
 IDesktopFiles:=cont.Desktopfiles;
 
-pkg.Free;
-
 //Load Description
 ShDesc:=cont.SDesc;
 
@@ -837,26 +853,34 @@ begin
  cont.ReadDependencies(DInfo.DName,dependencies);
 if dependencies.Count<=0 then
 begin
- cont.ReadDependencies(DInfo.PackageSystem,dependencies);
-
- if MakeUsrRequest(rsInvalidDVersion,rqWarning) = rqsNo then
+ if (not forces)and(MakeUsrRequest(rsInvalidDVersion+#10+rsUseCompPQ,rqWarning) = rqsNo) then
  begin
-  MakeUsrRequest(rsNoComp+#10+rsInClose,rqError);
+  MakeUsrRequest(rsInClose,rqError);
   Dependencies.Free;
   pkg.Free;
   PkProfiles.Free;
   Result:=false;
   exit;
+ end else
+ begin
+  cont.ReadDependencies(DInfo.PackageSystem,dependencies);
+  if dependencies.Count<=0 then
+  begin
+   MakeUsrRequest(rsNoComp+#10+rsInClose,rqError);
+   Dependencies.Free;
+   pkg.Free;
+   PkProfiles.Free;
+   Result:=false;
+   exit;
+  end;
  end;
- end;
+end;
 
 //Resolve names
 for i:=0 to dependencies.Count-1 do
-if pos(' <',n)>0 then
-Dependencies[i]:=copy(n,pos(' <',n)+2,length(n)-pos(' <',n)-2)+' - '+copy(n,1,pos(' <',n)-1);
+if pos(' (',n)>0 then
+Dependencies[i]:=copy(n,pos(' (',n)+2,length(n)-pos(' (',n)-2)+' - '+copy(n,1,pos(' (',n)-1);
 end;
-
-pkg.Free;
 
 end else
 if pkType=ptContainer then
@@ -865,6 +889,7 @@ msg('Package type is "container"');
 
 //IPK package has been initialized
 end;
+pkg.Free;
 cont.Free;
 end;
 
@@ -1583,7 +1608,8 @@ HTTP.UserAgent:='Listaller-GET';
 
 //Set Proxy-Settings
 cnf:=TInifile.Create(ConfigDir+'config.cnf');
-if cnf.ReadBool('Proxy','UseProxy',false) then begin
+if cnf.ReadBool('Proxy','UseProxy',false) then
+begin
 //Set HTTP
 HTTP.ProxyPort:=cnf.ReadString('Proxy','hPort','');
 HTTP.ProxyHost:=cnf.ReadString('Proxy','hServer','');
@@ -1749,7 +1775,7 @@ end;
 function TInstallation.PkgOkay: Boolean;
 begin
  Result:=true;
- if (PkgName='')or(AppName='') then
+ if (PkgID='')or(AppName='') then
  begin
   MakeUsrRequest('Unknown error occured!'+#10+rsPkgDM+#10+rsABLoad,rqError);
   Result:=false;
@@ -1761,6 +1787,9 @@ function TInstallation.DoInstallation: Boolean;
 var cnf: TIniFile;i: Integer;buscmd: ListallerBusCommand;
 begin
 if not PkgOkay then exit;
+
+//Force installing DLink packages as root
+if pkType=ptDLink then SUMode:=true;
 
 if not IsRoot then
 if pkType=ptLinstall then

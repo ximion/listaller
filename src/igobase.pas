@@ -483,7 +483,7 @@ begin
   imForm.Free;
 end;
 
-//Check distribution
+{//Check distribution
 if (pos(LowerCase(DInfo.DName),setup.GetSupDistris)<=0)
 and (setup.GetSupDistris<>'all') then
 begin
@@ -493,7 +493,7 @@ if Application.MessageBox(PAnsiChar(PAnsiChar(rsnSupported)+#13+PAnsiChar(rsInst
  Application.Terminate;
  exit;
  end;
-end;
+end;}
 
 //Set if Testmode
  setup.SetTestmode(Testmode);

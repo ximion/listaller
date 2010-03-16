@@ -253,6 +253,7 @@ begin
  begin
  info.Add(GetValue(text[i]));
  Inc(i);
+ if i<text.Count then
   repeat
    s:=text[i];
    if s[1]=' ' then
@@ -261,7 +262,7 @@ begin
    info.Add(s);
    end;
    Inc(i);
-  until (i>=text.Count)or(text[i][1]<>' ');
+  until (i>=text.Count)or(text[i][1]<>' ')or(length(text[i])<1);
  end;
 end;
 

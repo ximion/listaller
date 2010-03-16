@@ -63,9 +63,9 @@ object DGForm: TDGForm
   end
   object Label2: TLabel
     Left = 8
-    Height = 14
+    Height = 13
     Top = 24
-    Width = 363
+    Width = 304
     Caption = '(This program will download the needed files from the internet)'
     ParentColor = False
   end
@@ -100,12 +100,12 @@ object DGForm: TDGForm
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Main'
-      ClientHeight = 249
+      ClientHeight = 250
       ClientWidth = 622
       object Memo1: TMemo
         Left = 6
-        Height = 230
-        Top = 11
+        Height = 208
+        Top = 8
         Width = 613
         Anchors = [akTop, akLeft, akRight, akBottom]
         Lines.Strings = (
@@ -116,11 +116,11 @@ object DGForm: TDGForm
     end
     object TabSheet2: TTabSheet
       Caption = 'Details'
-      ClientHeight = 249
+      ClientHeight = 250
       ClientWidth = 622
       object Memo2: TMemo
         Left = 0
-        Height = 249
+        Height = 250
         Top = 0
         Width = 622
         Align = alClient
@@ -134,11 +134,11 @@ object DGForm: TDGForm
     end
     object TabSheet3: TTabSheet
       Caption = 'Installation'
-      ClientHeight = 249
+      ClientHeight = 250
       ClientWidth = 622
       object Memo3: TMemo
         Left = 6
-        Height = 172
+        Height = 173
         Top = 69
         Width = 603
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -182,10 +182,10 @@ object DGForm: TDGForm
     TabOrder = 1
   end
   object FinBtn1: TBitBtn
-    Left = 567
-    Height = 23
-    Top = 293
-    Width = 49
+    Left = 576
+    Height = 22
+    Top = 294
+    Width = 43
     Anchors = [akRight, akBottom]
     AutoSize = True
     Caption = 'Finish'
@@ -197,7 +197,7 @@ object DGForm: TDGForm
     Enabled = False
     Interval = 8
     OnTimer = GetOutPutTimerTimer
-    left = 576
+    left = 40
     top = 280
   end
   object Process1: TProcess
@@ -213,7 +213,7 @@ object DGForm: TDGForm
     WindowTop = 0
     WindowWidth = 0
     FillAttribute = 0
-    left = 544
+    left = 8
     top = 280
   end
 end

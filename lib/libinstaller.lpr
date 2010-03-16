@@ -93,14 +93,16 @@ begin
   p_warning('No user request callback is registered!');
  end;
 
- try
+ //try
   setup^.Initialize(pkname);
   Result:=setup^.PkgOkay;
- except
+ {except
+  setup^.PkgOkay;
   Result:=false;
- end;
+ end; }
 end;
 
+function li_setup_set
 //** Register callback on status change
 function li_setup_register_status_call(setup: PInstallation;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;
 begin

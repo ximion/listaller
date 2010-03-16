@@ -106,8 +106,8 @@ Result.DName:='Xandros';
 if pos('FEDORA',UpperCase(uv[i]))>0 then
 Result.DName:='Fedora';
 
-if pos('MOBLIN',UpperCase(uv[i]))>0 then
-Result.DName:='Moblin';
+if pos('MEEGO',UpperCase(uv[i]))>0 then
+Result.DName:='MeeGO';
 
 end;
 if Result.DName='' then begin
@@ -162,8 +162,8 @@ Result.DName:='Xandros';
 if pos('FEDORA',UpperCase(uv[i]))>0 then
 Result.DName:='Fedora';
 
-if pos('MOBLIN',UpperCase(uv[i]))>0 then
-Result.DName:='Moblin';
+if pos('MEEGO',UpperCase(uv[i]))>0 then
+Result.DName:='MeeGO';
 
 end;
  
@@ -189,10 +189,11 @@ Result.PackageSystem:='DEB';
 if Result.DName='Fedora' then
 Result.PackageSystem:='RPM';
 
-if Result.DName='Moblin' then
+if Result.DName='MeeGO' then
 Result.PackageSystem:='RPM';
 
-if FileExists('/etc/lsb-release') then begin
+if FileExists('/etc/lsb-release') then
+begin
 uv.LoadFromFile('/etc/lsb-release');
 for i:=0 to uv.Count-1 do
 if pos('DISTRIB_RELEASE=',uv[i])>0 then break;
@@ -217,10 +218,10 @@ if Result.Desktop='' then
 Result.Desktop:=GetEnvironmentVariable('GDMSESSION');
 Result.Desktop:=UpperCase(Result.Desktop);
 
-if Result.DName='Moblin' then
+if Result.DName='MeeGO' then
 begin
  Result.DBase:='GNOME';
- Result.Desktop:='Linux Mobile (Clutter)';
+ Result.Desktop:='Linux Mobile';
 end;
 
 uv.Free;
