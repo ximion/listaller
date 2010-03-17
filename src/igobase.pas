@@ -356,7 +356,6 @@ begin
 if Assigned(IWizFrm) then
 with IWizFrm do
 begin
-
  case change of
    scMnProgress : InsProgress.Position:=data.mnprogress;
    scExProgress : begin ExProgress.Position:=data.exprogress;
@@ -369,9 +368,29 @@ begin
                   end;
    scStepMessage: Label9.Caption:=data.msg;
  end;
+end
+
+else
+if Assigned(DGForm) then
+with DGForm do
+begin
+ case change of
+   scMnProgress : MainProgress.Position:=data.mnprogress;
+   scExProgress : begin DlProgress.Position:=data.exprogress;
+                        if(data.exprogress=0)and(DlProgress.Visible=true)then DlProgress.Visible:=false
+                        else DlProgress.Visible:=true;
+                  end;
+   scMessage    : begin //Necessary to add messages to log, even if it is invisible (to generate report)
+                        Memo3.Lines.Add(data.msg);
+                        p_info(data.msg);
+                  end;
+   scStepMessage: ;//Label9.Caption:=data.msg;
+ end;
+end
+else
+ p_warning('Listaller Setup tool seems to owns none of the required display forms!');
 
  Application.ProcessMessages;
-end;
 end;
 
 function LoadIPKFile(): Boolean;

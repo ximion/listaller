@@ -719,8 +719,8 @@ cont.ReadAppLicense(license);
 //Load Dependencies
 Dependencies:=TStringList.Create;
 
-cont.ReadDependencies('',dependencies);
 
+cont.ReadDependencies('',dependencies);
 i:=0;
 while i<= Dependencies.Count-1 do
 begin
@@ -729,7 +729,7 @@ begin
 end;
 
 if dependencies.Count>0 then
- dependencies.Insert(0,'[detectpkgs]') //Instruction to detect packages first
+ dependencies.Insert(0,'[detectpkgs]') //Instruction to detect required packages first
 else
 begin
  cont.ReadDependencies(DInfo.DName,dependencies);
@@ -738,7 +738,7 @@ begin
 cont.ReadDependencies(DInfo.DName,dependencies);
 if dependencies.Count<=0 then
 begin
- if (not forces)and(MakeUsrRequest(rsInvalidDVersion+#10+rsUseCompPQ,rqWarning) = rqsNo) then
+ if (pos(forces,'norequest')<=0)and(MakeUsrRequest(rsInvalidDVersion+#10+rsUseCompPQ,rqWarning) = rqsNo) then
  begin
   MakeUsrRequest(rsInClose,rqError);
   Dependencies.Free;
@@ -764,9 +764,15 @@ end;
 
 //Resolve names
 for i:=0 to dependencies.Count-1 do
-if pos(' (',n)>0 then
-Dependencies[i]:=copy(n,pos(' (',n)+2,length(n)-pos(' (',n)-2)+' - '+copy(n,1,pos(' (',n)-1);
+ if pos(' (',n)>0 then
+ Dependencies[i]:=copy(n,pos(' (',n)+2,length(n)-pos(' (',n)-2)+' - '+copy(n,1,pos(' (',n)-1);
 end;
+end;
+i:=0;
+while i<= Dependencies.Count-1 do
+begin
+ if StringReplace(Dependencies[i],' ','',[rfReplaceAll])='' then Dependencies.Delete(i);
+ Inc(i);
 end;
 
 { if xnode.FindNode('pkcatalog')<>nil then
@@ -853,7 +859,7 @@ begin
  cont.ReadDependencies(DInfo.DName,dependencies);
 if dependencies.Count<=0 then
 begin
- if (not forces)and(MakeUsrRequest(rsInvalidDVersion+#10+rsUseCompPQ,rqWarning) = rqsNo) then
+ if (pos(forces,'norequest')<=0)and(MakeUsrRequest(rsInvalidDVersion+#10+rsUseCompPQ,rqWarning) = rqsNo) then
  begin
   MakeUsrRequest(rsInClose,rqError);
   Dependencies.Free;
@@ -878,8 +884,14 @@ end;
 
 //Resolve names
 for i:=0 to dependencies.Count-1 do
-if pos(' (',n)>0 then
-Dependencies[i]:=copy(n,pos(' (',n)+2,length(n)-pos(' (',n)-2)+' - '+copy(n,1,pos(' (',n)-1);
+ if pos(' (',n)>0 then
+ Dependencies[i]:=copy(n,pos(' (',n)+2,length(n)-pos(' (',n)-2)+' - '+copy(n,1,pos(' (',n)-1);
+end;
+i:=0;
+while i<= Dependencies.Count-1 do
+begin
+ if StringReplace(Dependencies[i],' ','',[rfReplaceAll])='' then Dependencies.Delete(i);
+ Inc(i);
 end;
 
 end else

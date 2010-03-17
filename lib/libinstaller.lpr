@@ -102,7 +102,6 @@ begin
  end; }
 end;
 
-function li_setup_set
 //** Register callback on status change
 function li_setup_register_status_call(setup: PInstallation;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;
 begin
@@ -295,14 +294,17 @@ end;
 
 //** Get dependencies
 function li_setup_get_dependencies(setup: PInstallation; list: PStringList): Boolean;cdecl;
+var i: Integer;
 begin
   Result:=false;
   if not setup^.PkgOkay then exit;
 try
  Result:=true;
- list^.Assign(setup^.ADeps);
+ for i:=0 to setup^.ADeps.Count-1 do
+  list^.Add(setup^.ADeps[i]);
 except
  Result:=false;
+ p_error('get_dependencies() failed!');
 end;
 end;
 

@@ -156,21 +156,27 @@ BitBtn1.Caption:=rsInstallNow;
 //Load deps
 tmp:=TStringList.Create;
 setup.ReadDeps(tmp);
-for i:=0 to tmp.Count-1 do Memo2.Lines.Add(tmp[i]);
+for i:=0 to tmp.Count-1 do
+begin
+ Memo2.Lines.Add(tmp[i]);
+end;
+Memo2.Update;
 tmp.Free;
 
 setup.ReadLongDescription(TStringList(Memo1.Lines));
+
+TabSheet1.Caption:=rsMain;
+TabSheet2.Caption:=rsDetails;
+TabSheet3.Caption:=rsInstallation;
+
+FinBtn1.Caption:=rsFinish;
+LoadStockPixmap(STOCK_QUIT,ICON_SIZE_BUTTON,FinBtn1.Glyph);
+TabSheet3.TabVisible:=false;
 end;
 
 procedure TDGForm.FormShow(Sender: TObject);
 begin
   PageControl1.Visible:=true;
-  TabSheet1.Caption:=rsMain;
-  TabSheet2.Caption:=rsDetails;
-  TabSheet3.Caption:=rsInstallation;
-  
-  FinBtn1.Caption:=rsFinish;
-  LoadStockPixmap(STOCK_QUIT,ICON_SIZE_BUTTON,FinBtn1.Glyph);
 end;
 
 procedure TDGForm.GetOutPutTimerTimer(Sender: TObject);

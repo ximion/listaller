@@ -3,7 +3,7 @@ object DGForm: TDGForm
   Height = 324
   Top = 364
   Width = 626
-  ActiveControl = BitBtn1
+  ActiveControl = Memo1
   Caption = 'Simple depGet'
   ClientHeight = 324
   ClientWidth = 626
@@ -90,24 +90,23 @@ object DGForm: TDGForm
   end
   object PageControl1: TPageControl
     Left = 0
-    Height = 276
+    Height = 240
     Top = 48
     Width = 626
     ActivePage = TabSheet1
-    Align = alBottom
     Anchors = [akTop, akLeft, akRight, akBottom]
     TabIndex = 0
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Main'
-      ClientHeight = 250
+      ClientHeight = 214
       ClientWidth = 622
       object Memo1: TMemo
-        Left = 6
-        Height = 208
-        Top = 8
-        Width = 613
-        Anchors = [akTop, akLeft, akRight, akBottom]
+        Left = 0
+        Height = 214
+        Top = 0
+        Width = 622
+        Align = alClient
         Lines.Strings = (
           '<no description given>'
         )
@@ -116,29 +115,28 @@ object DGForm: TDGForm
     end
     object TabSheet2: TTabSheet
       Caption = 'Details'
-      ClientHeight = 250
+      ClientHeight = 214
       ClientWidth = 622
       object Memo2: TMemo
         Left = 0
-        Height = 250
+        Height = 214
         Top = 0
         Width = 622
         Align = alClient
         Lines.Strings = (
           'The following packages will be downloaded:'
         )
-        ReadOnly = True
         ScrollBars = ssAutoBoth
         TabOrder = 0
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Installation'
-      ClientHeight = 250
+      ClientHeight = 214
       ClientWidth = 622
       object Memo3: TMemo
         Left = 6
-        Height = 173
+        Height = 137
         Top = 69
         Width = 603
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -148,7 +146,7 @@ object DGForm: TDGForm
         TabOrder = 0
       end
       object DlProgress: TProgressBar
-        Left = 6
+        Left = 4
         Height = 20
         Top = 40
         Width = 605
@@ -182,9 +180,9 @@ object DGForm: TDGForm
     TabOrder = 1
   end
   object FinBtn1: TBitBtn
-    Left = 576
+    Left = 583
     Height = 22
-    Top = 294
+    Top = 296
     Width = 43
     Anchors = [akRight, akBottom]
     AutoSize = True

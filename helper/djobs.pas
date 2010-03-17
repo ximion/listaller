@@ -368,7 +368,7 @@ begin
 
  setup.SetStatusChangeCall(@OnInstallStatus,self);
  setup.SetUserRequestCall(@InstallUserRequest,self);
- setup.Forced:=true; //Prevent asking questions: Skip requests and continue (should only be used in this daemon!)
+ setup.Forced:=setup.Forced+';norequest'; //Prevent asking questions: Skip requests and continue (should only be used in this daemon!)
 
  setup.Initialize(FileName);
  setup.EnableUSource(actUSource);
