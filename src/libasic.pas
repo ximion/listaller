@@ -27,7 +27,7 @@ const
   //** Version of the Listaller applicationset
   LiVersion='0.3.49a~dev';
   //** Working directory of Listaller
-  TMPDIR='/tmp/listaller/';
+  TMPDIR='/tmp/listaller/'; //Never forget trailing backslash!
 
 var
   //** The Listaller package lib directory
@@ -86,6 +86,8 @@ procedure p_warning(msg: String);
 procedure p_info(msg: String);
 //** Show a debug bessage
 procedure p_debug(msg: String);
+//** Replace string a with b
+function StrSubst(s,a,b: String): String;
 
 const
  LI_CONFIG_DIR = '/etc/lipa/';
@@ -403,6 +405,11 @@ end;
 function IsInList(nm: String;list: TStringList): Boolean;
 begin
 Result:=list.IndexOf(nm)>-1;
+end;
+
+function StrSubst(s,a,b: String): String;
+begin
+ Result:=StringReplace(s,a,b,[rfReplaceAll]);
 end;
 
 end.

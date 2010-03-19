@@ -138,6 +138,8 @@ begin
  bs.Free;
  g_object_unref(authority);
  g_main_loop_unref(loop);
+ if Assigned(FatalException) then
+  raise FatalException;
  inherited;
 end;
 
@@ -260,8 +262,6 @@ end;
 
 destructor TDoAppInstall.Destroy;
 begin
- if Assigned(FatalException) then
-  raise FatalException;
  Dec(InstallWorkers);
  inherited;
 end;

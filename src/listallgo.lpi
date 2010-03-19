@@ -61,8 +61,8 @@
         <ComponentName Value="IWizFrm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="igobase"/>
-        <CursorPos X="6" Y="358"/>
-        <TopLine Value="348"/>
+        <CursorPos X="9" Y="112"/>
+        <TopLine Value="85"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -380,8 +380,8 @@
         <ComponentName Value="DGForm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="dgunit"/>
-        <CursorPos X="37" Y="132"/>
-        <TopLine Value="117"/>
+        <CursorPos X="6" Y="27"/>
+        <TopLine Value="166"/>
         <UsageCount Value="162"/>
       </Unit46>
       <Unit47>
@@ -988,7 +988,7 @@
         <UsageCount Value="10"/>
       </Unit132>
     </Units>
-    <JumpHistory Count="26" HistoryIndex="25">
+    <JumpHistory Count="27" HistoryIndex="26">
       <Position1>
         <Filename Value="igobase.pas"/>
         <Caret Line="259" Column="6" TopLine="237"/>
@@ -1093,6 +1093,10 @@
         <Filename Value="igobase.pas"/>
         <Caret Line="391" Column="4" TopLine="1"/>
       </Position26>
+      <Position27>
+        <Filename Value="igobase.pas"/>
+        <Caret Line="112" Column="9" TopLine="85"/>
+      </Position27>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

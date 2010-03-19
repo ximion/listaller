@@ -106,6 +106,7 @@ begin
  dbus_error_init(@err);
  error:=false;
  conn := dbus_bus_get_private(bustype, @err);
+ dbus_connection_set_exit_on_disconnect(conn,false);
 
   if dbus_error_is_set(@err) <> 0 then
   begin

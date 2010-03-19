@@ -45,8 +45,8 @@
       <Unit2>
         <Filename Value="ipkbuild.pas"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="21" Y="786"/>
-        <TopLine Value="766"/>
+        <CursorPos X="22" Y="608"/>
+        <TopLine Value="586"/>
         <UsageCount Value="14"/>
         <Bookmarks Count="1">
           <Item0 X="53" Y="568" ID="8"/>

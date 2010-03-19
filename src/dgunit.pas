@@ -23,8 +23,8 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Buttons, ComCtrls, LCLType, LCLIntf, igobase, ExtCtrls, process, HTTPSend,
-  blcksock, FTPSend, LiBasic, trstrings, IconLoader;
+  Buttons, ComCtrls, LCLType, LCLIntf, igobase, ExtCtrls, process, LiBasic,
+  trStrings, IconLoader;
 
 type
 
@@ -56,9 +56,6 @@ type
     procedure GetOutPutTimerTimer(Sender: TObject);
   private
     { private declarations }
-    HTTP: THTTPSend;FTP: TFTPSend; //FTP and HTTP controls
-    op, om: Integer;
-    procedure HookSock(Sender: TObject; Reason:THookSocketReason; const Value: string); //Hook to HTTP and FTP socket
   public
     { public declarations }
     //** Path to iconfiles
@@ -73,30 +70,6 @@ var
 implementation
 
 { TDGForm }
-
-procedure TDGForm.HookSock(Sender: TObject; Reason: THookSocketReason;
-const Value: string);
-begin
-Application.ProcessMessages;
-//HTTP
-if (Http.Document.Size>120) then begin
-  if op=-1 then begin
-  om:=MainProgress.Max;
-  op:=MainProgress.Position;
-  end;
-
-  DLProgress.Max:=HTTP.DownloadSize;
-
-  DLProgress.Position:=HTTP.Document.Size;
-
-  MainProgress.Position:=op+Http.Document.Size;
-  MainProgress.Max:=HTTP.DownloadSize+om;
-  exit;
- end;
-//FTP
-if FTP.DSock.RecvCounter>100 then
- DLProgress.Position:=FTP.DSock.RecvCounter;
-end;
 
 procedure TDGForm.FormCloseQuery(Sender: TObject; var CanClose: boolean);
 begin

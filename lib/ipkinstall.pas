@@ -94,6 +94,8 @@ type
   AddUpdateSource: Boolean;
   //Level of pkg signature
   sigState: TPkgSigState;
+  //Store filesize of file ftpsend is downloading
+  ftpfilesize: Integer;
 
   //Set superuser mode correctly
   procedure SetRootMode(b: Boolean);
@@ -471,7 +473,7 @@ begin
 
     if error then
     begin
-     MakeUsrRequest(StringReplace(rsDepNotFound,'%l',Dependencies[eIndex],[rfReplaceAll])+#10+rsInClose,rqError);
+     MakeUsrRequest(StrSubst(rsDepNotFound,'%l',Dependencies[eIndex])+#10+rsInClose,rqError);
      Result:=false;
      tmp.Free;
      exit;
@@ -492,6 +494,7 @@ var pkg: TLiUnpacker;
     i: Integer;
     DInfo: TDistroInfo;
     cont: TIPKControl;
+    hres: TRqResult;
 
 procedure Emergency_FreeAll();
 begin
@@ -600,9 +603,9 @@ FDisallow:=LowerCase(cont.Disallows);
 
 n:=GetSystemArchitecture;
 
-msg('Package-Archs: '+cont.Architectures);
-if (pos(n,LowerCase(cont.Architectures))<=0)
-and (LowerCase(cont.Architectures)<>'all')
+msg('Package-Archs: '+cont.Architecture);
+if (pos(n,LowerCase(cont.Architecture))<=0)
+and (LowerCase(cont.Architecture)<>'all')
 and (pos('architecture',forces)<=0) then
 begin
  MakeUsrRequest(rsInvArchitecture,rqError);
@@ -738,7 +741,12 @@ begin
 cont.ReadDependencies(DInfo.DName,dependencies);
 if dependencies.Count<=0 then
 begin
- if (pos(forces,'norequest')<=0)and(MakeUsrRequest(rsInvalidDVersion+#10+rsUseCompPQ,rqWarning) = rqsNo) then
+ if (pos('norequest',forces)<=0) then
+  hres:=MakeUsrRequest(rsInvalidDVersion+#10+rsUseCompPQ,rqWarning)
+ else
+  hres:=rqsYes;
+
+ if hres=rqsNo then
  begin
   MakeUsrRequest(rsInClose,rqError);
   Dependencies.Free;
@@ -859,7 +867,13 @@ begin
  cont.ReadDependencies(DInfo.DName,dependencies);
 if dependencies.Count<=0 then
 begin
- if (pos(forces,'norequest')<=0)and(MakeUsrRequest(rsInvalidDVersion+#10+rsUseCompPQ,rqWarning) = rqsNo) then
+
+ if (pos('norequest',forces)<=0) then
+  hres:=MakeUsrRequest(rsInvalidDVersion+#10+rsUseCompPQ,rqWarning)
+ else
+  hres:=rqsYes;
+
+ if hres=rqsNo then
  begin
   MakeUsrRequest(rsInClose,rqError);
   Dependencies.Free;
@@ -913,7 +927,7 @@ j:=0;
 fi:=TStringList.Create;
 fi.LoadFromFile(tmpdir+ExtractFileName(PkgName)+'/'+FFileInfo);
 for i:=0 to fi.Count-1 do
- if fi[i][1]<>'>' then Inc(j);
+ if fi[i][1]<>')' then Inc(j);
 Result:=((Dependencies.Count+(j div 2))*10)+16;
 fi.Free;
 end;
@@ -922,13 +936,16 @@ procedure TInstallation.NetSockHook(Sender: TObject; Reason: THookSocketReason;
   const Value: string);
 begin
 //HTTP
-if Http.DownloadSize>100 then
+if Http.DownloadSize>10 then
 begin
- SetExtraPos((HTTP.DownloadSize div 100)*HTTP.Document.Size);
+ SetExtraPos(Round((100 / HTTP.DownloadSize)*HTTP.Document.Size));
  exit;
-end;
+end else
 //FTP
-SetExtraPos(50); //??? Cannot detect file size at time
+if FTP.DSock.RecvCounter>10 then
+begin
+ SetExtraPos(Round((100 / ftpfilesize)*FTP.DSock.RecvCounter));
+end;
 end;
 
 function TInstallation.CheckFTPConnection(AFtpSend: TFtpSend): Boolean;
@@ -1029,6 +1046,7 @@ pkit: TPackageKit; //PackageKit object
 DInfo: TDistroInfo; //Distribution information
 mnpos: Integer; //Current positions of operation
 max: Double;
+dlfname: String; //Name of file which will be downloaded
 
 //Necessary if e.g. file copying fails
 procedure RollbackInstallation;
@@ -1150,7 +1168,7 @@ begin
 
  if pkit.PkFinishCode=1 then
  begin
-  MakeUsrRequest(rsCouldntSolve+#10+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
+  MakeUsrRequest(rsCouldntSolve+#10+StrSubst(rsViewLog,'%p','/tmp/install-'+IAppName+'.log'),rqError);
   Result:=false;
   Abort_FreeAll();
   exit;
@@ -1165,13 +1183,14 @@ for I:=0 to Dependencies.Count-1 do
 begin  //Download & install dependencies
 if (pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then
 begin
+    dlfname:=ExtractFileName(copy(Dependencies[i],1,pos(' (',Dependencies[i])-1));
     msg(rsGetDependencyFrom+' '+Dependencies[i]+'.');
     msg(rsPlWait2);
  if pos('http://',LowerCase(Dependencies[i]))>0 then
  begin
   try
-    HTTP.HTTPMethod('GET', copy(Dependencies[i],1,pos(' <',Dependencies[i])-1));
-    HTTP.Document.SaveToFile('/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)));
+    HTTP.HTTPMethod('GET', copy(Dependencies[i],1,pos(' (',Dependencies[i])-1));
+    HTTP.Document.SaveToFile('/tmp/'+dlfname);
   except
    MakeUsrRequest(rsDepDLProblem,rqError);
    Result:=false;
@@ -1183,10 +1202,10 @@ begin
 
 with FTP do
 begin
-    TargetHost := GetServerName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1));
+    TargetHost := GetServerName(copy(Dependencies[i],1,pos(' (',Dependencies[i])-1));
 
   try
-    DirectFileName := '/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1));
+    DirectFileName := '/tmp/'+dlfname;
     DirectFile:=True;
     if not CheckFTPConnection(FTP) then
     begin
@@ -1195,9 +1214,10 @@ begin
       Abort_FreeAll();
       exit;
     end;
-    ChangeWorkingDir(GetServerPath(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)));
+    ChangeWorkingDir(GetServerPath(copy(Dependencies[i],1,pos(' (',Dependencies[i])-1)));
 
-    RetrieveFile(ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1)), false);
+    ftpfilesize:=FTP.FileSize(dlfname);
+    RetrieveFile(dlfname, false);
     Logout;
   except
    MakeUsrRequest(rsDepDLProblem,rqError);
@@ -1210,9 +1230,9 @@ end;
 
 //Add package-name
 
-if (DInfo.PackageSystem='DEB')and(pos(' <',Dependencies[i])<=0) then begin
+if (DInfo.PackageSystem='DEB')and(pos(' (',Dependencies[i])<=0) then begin
     p:=tprocess.create(nil);
-    p.CommandLine:='dpkg --info /tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i])-1));
+    p.CommandLine:='dpkg --info /tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' (',Dependencies[i])-1));
     p.Options:=[poUsePipes,poWaitonexit];
     try
     p.Execute;
@@ -1221,7 +1241,7 @@ if (DInfo.PackageSystem='DEB')and(pos(' <',Dependencies[i])<=0) then begin
     s.LoadFromStream(p.Output);
     for j:=0 to s.Count-1 do
     if pos('Package: ',s[j])>0 then break;
-    Dependencies[i]:=Dependencies[i]+' <'+copy(s[j],11,length(s[j]))+'>';
+    Dependencies[i]:=Dependencies[i]+' ('+copy(s[j],11,length(s[j]))+')';
     finally
     s.free;
     end;
@@ -1229,7 +1249,7 @@ if (DInfo.PackageSystem='DEB')and(pos(' <',Dependencies[i])<=0) then begin
     p.Free;
     end;
 end else begin
-if (pos(' <',Dependencies[i])<=0) then begin
+if (pos(' (',Dependencies[i])<=0) then begin
     p:=TProcess.create(nil);
     p.CommandLine:='rpm -qip /tmp/'+ExtractFileName(Dependencies[i]);
     p.Options:=[poUsePipes,poWaitonexit];
@@ -1240,7 +1260,7 @@ if (pos(' <',Dependencies[i])<=0) then begin
     s.LoadFromStream(p.Output);
     for j:=0 to s.Count-1 do
     if pos('Name ',s[j])>0 then break;
-    Dependencies[i]:=Dependencies[i]+' <'+copy(s[j],15,pos(' ',copy(s[j],15,length(s[j])))-1)+'>';
+    Dependencies[i]:=Dependencies[i]+' ('+copy(s[j],15,pos(' ',copy(s[j],15,length(s[j])))-1)+')';
     finally
     s.free;
     end;
@@ -1267,10 +1287,10 @@ begin
   begin
    s:=TStringList.Create;
    pkit.RsList:=s;
-   pkit.Resolve(copy(Dependencies[i],pos(' <',Dependencies[i])+2,length(Dependencies[i])-1));
+   pkit.Resolve(copy(Dependencies[i],pos(' (',Dependencies[i])+2,length(Dependencies[i])-1));
     if pkit.PkFinishCode=1 then
     begin
-     pkit.InstallLocalPkg('/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' <',Dependencies[i]))));
+     pkit.InstallLocalPkg('/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' (',Dependencies[i]))));
 
      SetExtraPos(0);
     end;
@@ -1284,7 +1304,7 @@ begin
     //Check if the package was really installed
     if pkit.PkFinishCode=1 then
     begin
-     MakeUsrRequest(rsCouldntSolve+#10+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
+     MakeUsrRequest(rsCouldntSolve+#10+StrSubst(rsViewLog,'%p','/tmp/install-'+IAppName+'.log'),rqError);
      Result:=false;
      Abort_FreeAll();
      exit;
@@ -1309,7 +1329,7 @@ begin
    if pkit.PkFinishCode=1 then
     begin
      msg('Package '+Dependencies[i]+' can not be installed.');
-     MakeUsrRequest(rsCouldntSolve+#10+StringReplace(rsViewLog,'%p','/tmp/install-'+IAppName+'.log',[rfReplaceAll]),rqError);
+     MakeUsrRequest(rsCouldntSolve+#10+StrSubst(rsViewLog,'%p','/tmp/install-'+IAppName+'.log'),rqError);
      Result:=false;
      Abort_FreeAll();
      exit;
@@ -1411,7 +1431,7 @@ if (not FileExists(dest+'/'+ExtractFileName(DeleteModifiers(h)))) then
  FileCopy(DeleteModifiers(pkg.WDir+h),dest+'/'+ExtractFileName(DeleteModifiers(h)))
 else
 begin
-  MakeUsrRequest(StringReplace(rsCnOverride,'%f',dest+'/'+ExtractFileName(DeleteModifiers(h)),[rfReplaceAll])+#10+rsInClose,rqError);
+  MakeUsrRequest(StrSubst(rsCnOverride,'%f',dest+'/'+ExtractFileName(DeleteModifiers(h)))+#10+rsInClose,rqError);
   RollbackInstallation;
   Result:=false;
   Abort_FreeAll();
@@ -1602,7 +1622,13 @@ sleep(600);
 end;
 
 function TInstallation.RunDLinkInstallation: Boolean;
-var i: Integer;cnf,ar: TIniFile;pkit: TPackageKit;mnpos,max: Integer;
+var i: Integer;
+    cnf,ar: TIniFile;
+    pkit: TPackageKit;
+    mnpos: Integer;
+    max: Double;
+    pkg: String;
+    fpath: String;
 
 procedure Abort_FreeAll();
 begin
@@ -1612,13 +1638,13 @@ begin
 end;
 
 begin
-max:=Dependencies.Count*6000;
+max:=100/(Dependencies.Count*4);
 mnpos:=0;
 SetMainPos(Round(mnpos*max));
 HTTP.UserAgent:='Listaller-GET';
 
 
-//Set Proxy-Settings
+{//Set Proxy-Settings
 cnf:=TInifile.Create(ConfigDir+'config.cnf');
 if cnf.ReadBool('Proxy','UseProxy',false) then
 begin
@@ -1632,41 +1658,58 @@ HTTP.ProxyPass:=cnf.ReadString('Proxy','Password',''); //The PW is visible in th
 HTTP.ProxyPass:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_user');
 HTTP.ProxyUser:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_password');
  end;}
-end;
+end; }
 
 ShowPKMon();
 
 pkit:=TPackageKit.Create;
 pkit.OnProgress:=@OnPKitProgress;
 
-  for i:=1 to Dependencies.Count-1 do
-  begin
+for i:=0 to Dependencies.Count-1 do
+begin
   if pos('://',Dependencies[i])<=0 then
   begin
    msg('Looking for '+Dependencies[i]);
 
    pkit.Resolve(Dependencies[i]);
 
+   Inc(mnpos);
+   SetMainPos(Round(mnpos*max));
+
   if pkit.PkFinishCode=1 then
   begin
    msg('Installing '+Dependencies[i]+'...');
 
+   Inc(mnpos);
+   SetMainPos(Round(mnpos*max));
+
    pkit.InstallPkg(Dependencies[i]);
+
+   Inc(mnpos);Inc(mnpos);
+   SetMainPos(Round(mnpos*max));
   end;
   end else
   begin
-   msg('Looking for '+copy(Dependencies[i],1,pos(' -',Dependencies[i])-1));
-   pkit.Resolve(copy(Dependencies[i],1,pos(' -',Dependencies[i])-1));
+   pkg:=copy(Dependencies[i],pos(' (',Dependencies[i])+2,length(dependencies[i]));
+   pkg:=copy(pkg,1,pos(')',pkg)-1);
+   fpath:=copy(Dependencies[i],1,pos(' (',Dependencies[i])-1);
+   p_debug('Looking for '+pkg);
+   msg('Looking for '+pkg);
+   pkit.Resolve(pkg);
+
+   Inc(mnpos);
+   SetMainPos(Round(mnpos*max));
 
   if pkit.PkFinishCode=1 then
   begin
    msg('Downloading package...');
 
- if pos('http://',LowerCase(Dependencies[i]))>0 then
+ if pos('http://',fpath)>0 then
  begin
   try
-   HTTP.HTTPMethod('GET', copy(Dependencies[i],pos(' -',Dependencies[i])+2,length(Dependencies[i])-pos(' -',Dependencies[i])+2));
-   HTTP.Document.SaveToFile('/tmp/'+ExtractFileName(Dependencies[i]));
+   HTTP.HTTPMethod('GET', fpath);
+   p_debug('HTTPResCode:=> '+IntToStr(HTTP.ResultCode));
+   HTTP.Document.SaveToFile(tmpdir+ExtractFileName(fpath));
   except
    MakeUsrRequest(rsDepDlProblem,rqError);
    Result:=false;
@@ -1678,9 +1721,9 @@ pkit.OnProgress:=@OnPKitProgress;
   begin
   with FTP do
   begin
-    TargetHost := GetServerName(Dependencies[i]);
+    TargetHost := GetServerName(fpath);
   try
-    DirectFileName := '/tmp/'+ExtractFileName(Dependencies[i]);
+    DirectFileName := tmpdir+ExtractFileName(fpath);
     DirectFile:=True;
 
     if not CheckFTPConnection(FTP) then
@@ -1691,14 +1734,12 @@ pkit.OnProgress:=@OnPKitProgress;
       exit;
     end;
 
-    ChangeWorkingDir(GetServerPath(Dependencies[i]));
-
-    //???
-    //emax:=FileSize(ExtractFileName(Dependencies[i]));
+    ChangeWorkingDir(GetServerPath(fpath));
 
     SetExtraPos(0);
 
-    RetrieveFile(ExtractFileName(Dependencies[i]), false);
+    ftpfilesize:=FTP.FileSize(ExtractFileName(fpath));
+    RetrieveFile(ExtractFileName(fpath), false);
     Logout;
   except
    MakeUsrRequest(rsDepDlProblem,rqError);
@@ -1707,13 +1748,25 @@ pkit.OnProgress:=@OnPKitProgress;
    exit;
   end;
   end;
+
 end;
 
-  msg('Installing '+copy(Dependencies[i],1,pos(' -',Dependencies[i])-1)+'...');
-  pkit.InstallLocalPkg('/tmp/'+ExtractFileName(Dependencies[i]));
+ Inc(mnpos);
+ SetMainPos(Round(mnpos*max));
+
+  msg('Installing '+pkg+'...');
+  pkit.InstallLocalPkg('/tmp/'+ExtractFileName(fpath));
+
+  if pkit.PkFinishCode>1 then
+  begin
+   MakeUsrRequest(StrSubst(rsInstPkgFailed,'%s',pkg)+#10+rsECode+' '+IntToStr(pkit.PkFinishCode),rqError);
+   Result:=false;
+   Abort_FreeAll();
+   exit;
+  end;
 end;
 
-  mnpos:=mnpos+6000;
+  Inc(mnpos);
   SetMainPos(Round(mnpos*max));
 end;
 
@@ -1732,13 +1785,6 @@ IDesktopFiles:=copy(IDesktopFiles,pos(';',IDesktopFiles)+1,length(IDesktopFiles)
 else IDesktopFiles:='';
 ar.Free;
 end;
-
-{for i:=1 to Dependencies.Count-1 do begin
-if pos('://',Dependencies[i])<=0 then
-ar.WriteString('DepOS','ID'+IntToStr(i),Dependencies[i])
-else
-ar.WriteString('DepOS','ID'+IntToStr(i),copy(Dependencies[i],1,pos(' -',Dependencies[i])-1));
-end; }
 
 SendStateMsg(rsSuccess);
 end;
@@ -1821,7 +1867,7 @@ if (pos('http://',Dependencies[i])>0)or(pos('ftp://',Dependencies[i])>0) then
 begin
 cnf:=TInifile.Create(ConfigDir+'config.cnf');
 if cnf.ReadBool('MainConf','AutoDepLoad',true)=false then
- if MakeUsrRequest(StringReplace(rsWDLDep,'%l',Dependencies[i],[rfReplaceAll])+#10+rsWAllow,rqWarning)=rqsNo then
+ if MakeUsrRequest(StrSubst(rsWDLDep,'%l',Dependencies[i])+#10+rsWAllow,rqWarning)=rqsNo then
  begin
   Result:=false;
   exit;
@@ -1865,7 +1911,7 @@ CheckAddUSource;
 
  FTP.DSock.Onstatus:=@NetSockHook;
 
- //??? This needs a better solution - take proxy settings from system settings?
+{ //??? This needs a better solution - take proxy settings from system settings?
  cnf:=TInifile.Create(ConfigDir+'config.cnf');
  if cnf.ReadBool('Proxy','UseProxy',false) then
  begin
@@ -1876,10 +1922,11 @@ CheckAddUSource;
   HTTP.ProxyPass:=cnf.ReadString('Proxy','Password',''); //The PW is visible in the file! It should be crypted
 
  //??? Not needed
- {if DInfo.Desktop='GNOME' then begin
- HTTP.ProxyPass:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_user');
- HTTP.ProxyUser:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_password');
-  end; }
+  //if DInfo.Desktop='GNOME' then
+  //  begin
+  //HTTP.ProxyPass:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_user');
+  //HTTP.ProxyUser:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_password');
+   //end;
 
  //Set FTP
  {FTP.ProxyPort:=cnf.ReadString('Proxy','fPort','');
@@ -1888,7 +1935,7 @@ CheckAddUSource;
  FTP.ProxyPass:=cnf.ReadString('Proxy','Password',''); }
 
  end;
-  cnf.Free;
+  cnf.Free;}
 
  if pkType=ptLinstall then Result:=RunNormalInstallation
  else

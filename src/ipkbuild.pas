@@ -604,8 +604,8 @@ script.Free; //Was only temporary
 
 pkgtype:=control.SType;
 
-if LowerCase(control.Architectures)='any' then
- control.Architectures:=GetSystemArchitecture;
+if LowerCase(control.Architecture)='any' then
+ control.Architecture:=GetSystemArchitecture;
 
 //Add icon
 if control.Icon<>'' then

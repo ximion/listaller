@@ -103,7 +103,7 @@ TIPKBasic = class
   procedure ReadBuildCMDs(lst: TStrings);
   procedure WriteBuildCMDs(lst: TStrings);
   property AppCMD: String read ReadAppCMD write WriteAppCMD;
-  property Architectures: String read ReadArchs write WriteArchs;
+  property Architecture: String read ReadArchs write WriteArchs;
   property PkName: String read ReadPkgName write WritePkgName;
   property IPKName: String read ReadIPKName write WriteIPKName;
   property DSupport: String read ReadDSupport write WriteDSupport;
@@ -593,7 +593,7 @@ end;
 procedure TIPKBasic.WriteArchs(s: String);
 var k: String;
 begin
- k:='Architectures';
+ k:='Architecture';
  WriteEntry(k,s);
 end;
 
@@ -601,7 +601,7 @@ function TIPKBasic.ReadArchs: String;
 var j: Integer;
 begin
  Result:='';
- j:=SearchKeyIndex('Architectures',false);
+ j:=SearchKeyIndex('Architecture',false);
  if j>-1 then
   Result:=GetValue(text[j]);
 end;
