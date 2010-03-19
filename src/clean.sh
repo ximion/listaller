@@ -1,5 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 # Clean up all files which were used during the compile process or which are just backup files
+
+for arg; do
+  case $arg in
+    ALL=*) ALL=${arg#ALL=};;
+  esac;
+done
 
 rm -rf *.o
 rm -rf *.ppu
@@ -11,7 +17,9 @@ rm -rf *.bak
 rm -rf *.compiled
 rm -rf *.lrt
 rm -rf *.lrs
- #rm -f Makefile
+if [ "$ALL" == "1" ]; then
+ rm -f Makefile
+fi
 
 rm -rf *~
 rm -rf "../build"
@@ -37,7 +45,10 @@ rm -rf *~
 cd ..
 
 #Clean root dir
- #rm -f Makefile
+if [ "$ALL" == "1" ]; then
+ rm -f Makefile
+fi
+
 rm -rf *~
 rm -rf *.bak
 

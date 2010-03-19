@@ -11,7 +11,7 @@
       <TargetFileExt Value=""/>
       <Title Value="Listaller Daemon"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
@@ -32,12 +32,12 @@
         <LaunchingApplication PathPlusParams="/usr/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="39">
+    <Units Count="40">
       <Unit0>
         <Filename Value="listallerd.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerd"/>
-        <CursorPos X="16" Y="23"/>
+        <CursorPos X="24" Y="23"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="43"/>
@@ -153,7 +153,7 @@
       <Unit17>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-arch-deps.inc"/>
         <CursorPos X="3" Y="39"/>
-        <TopLine Value="5"/>
+        <TopLine Value="4"/>
         <UsageCount Value="10"/>
       </Unit17>
       <Unit18>
@@ -231,11 +231,9 @@
       <Unit29>
         <Filename Value="../src/simdbus.pas"/>
         <UnitName Value="simdbus"/>
-        <CursorPos X="21" Y="109"/>
+        <CursorPos X="47" Y="109"/>
         <TopLine Value="85"/>
-        <EditorIndex Value="1"/>
         <UsageCount Value="12"/>
-        <Loaded Value="True"/>
       </Unit29>
       <Unit30>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-shared.inc"/>
@@ -252,7 +250,7 @@
       <Unit32>
         <Filename Value="../src/libasic.pas"/>
         <UnitName Value="libasic"/>
-        <CursorPos X="1" Y="1"/>
+        <CursorPos X="20" Y="28"/>
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit32>
@@ -290,12 +288,18 @@
       </Unit37>
       <Unit38>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-connection.inc"/>
-        <CursorPos X="11" Y="88"/>
+        <CursorPos X="29" Y="89"/>
         <TopLine Value="67"/>
         <UsageCount Value="10"/>
       </Unit38>
+      <Unit39>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-types.inc"/>
+        <CursorPos X="25" Y="31"/>
+        <TopLine Value="10"/>
+        <UsageCount Value="10"/>
+      </Unit39>
     </Units>
-    <JumpHistory Count="17" HistoryIndex="16">
+    <JumpHistory Count="16" HistoryIndex="15">
       <Position1>
         <Filename Value="listallerd.lpr"/>
         <Caret Line="92" Column="29" TopLine="61"/>
@@ -358,12 +362,8 @@
       </Position15>
       <Position16>
         <Filename Value="listallerd.lpr"/>
-        <Caret Line="23" Column="16" TopLine="1"/>
+        <Caret Line="23" Column="24" TopLine="1"/>
       </Position16>
-      <Position17>
-        <Filename Value="../src/simdbus.pas"/>
-        <Caret Line="109" Column="21" TopLine="85"/>
-      </Position17>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

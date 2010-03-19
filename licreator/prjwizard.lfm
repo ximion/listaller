@@ -7,7 +7,7 @@ object frmProjectWizard: TfrmProjectWizard
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Project Wizard'
-  ClientHeight = 645
+  ClientHeight = 646
   ClientWidth = 836
   Constraints.MinHeight = 666
   Constraints.MinWidth = 836
@@ -58,7 +58,7 @@ object frmProjectWizard: TfrmProjectWizard
   LCLVersion = '0.9.28.2'
   object Notebook1: TNotebook
     Left = 0
-    Height = 604
+    Height = 605
     Top = 0
     Width = 836
     Align = alClient
@@ -68,7 +68,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page1: TPage
       Caption = 'Page1'
       ClientWidth = 832
-      ClientHeight = 600
+      ClientHeight = 601
       object SpeedButton1: TSpeedButton
         Left = 85
         Height = 104
@@ -1669,9 +1669,9 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label3: TLabel
         Left = 207
-        Height = 46
+        Height = 43
         Top = 119
-        Width = 325
+        Width = 275
         Caption = 'Create an IPK-Package that has all needed files included.'#10'It can point on DEB/RPM packages and can use'#10'Listaller''s build-in update service.'
         Font.Pitch = fpVariable
         ParentColor = False
@@ -1679,9 +1679,9 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label4: TLabel
         Left = 207
-        Height = 62
+        Height = 58
         Top = 239
-        Width = 299
+        Width = 255
         Caption = 'Create an IPK-Package that contains the links where'#10'the DEB/RPM files for a specific distribution are.'#10'Listaller will download and install the files. This type'#10'is similar to openSuSE''s 1-Click Install.'
         Font.Pitch = fpVariable
         ParentColor = False
@@ -1701,9 +1701,9 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label6: TLabel
         Left = 207
-        Height = 46
+        Height = 43
         Top = 367
-        Width = 230
+        Width = 195
         Caption = 'Create an IPK-Package that contains an'#10'Autopackage.org or LOKI script. Listaller'#10'will manage all this package systems.'
         Font.Pitch = fpVariable
         ParentColor = False
@@ -1744,9 +1744,9 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label25: TLabel
         Left = 207
-        Height = 46
+        Height = 43
         Top = 487
-        Width = 217
+        Width = 182
         Caption = 'Load an existing IPS file,'#10'which contains all needed information'#10'to build an Listaller package.'
         Font.Pitch = fpVariable
         ParentColor = False
@@ -1756,7 +1756,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page2: TPage
       Caption = 'Page2'
       ClientWidth = 832
-      ClientHeight = 577
+      ClientHeight = 578
       object Label8: TLabel
         Left = 7
         Height = 20
@@ -1774,7 +1774,7 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 29
         Width = 808
         Caption = 'Application'
-        ClientHeight = 185
+        ClientHeight = 186
         ClientWidth = 804
         TabOrder = 0
         object Label9: TLabel
@@ -2000,7 +2000,7 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 231
         Width = 809
         Caption = 'Package'
-        ClientHeight = 153
+        ClientHeight = 154
         ClientWidth = 805
         TabOrder = 1
         object Label11: TLabel
@@ -2123,7 +2123,7 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 405
         Width = 480
         Caption = 'Short Description:'
-        ClientHeight = 169
+        ClientHeight = 170
         ClientWidth = 476
         TabOrder = 2
         object Label12: TLabel
@@ -2202,7 +2202,7 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 405
         Width = 322
         Caption = 'Profiles'
-        ClientHeight = 169
+        ClientHeight = 170
         ClientWidth = 318
         TabOrder = 3
         object lbProfiles: TListBox
@@ -2253,7 +2253,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page3: TPage
       Caption = 'Page3'
       ClientWidth = 832
-      ClientHeight = 577
+      ClientHeight = 578
       object Label17: TLabel
         Left = 7
         Height = 20
@@ -2268,7 +2268,7 @@ object frmProjectWizard: TfrmProjectWizard
       object lvPackageFiles: TListView
         Left = 0
         Height = 392
-        Top = 185
+        Top = 186
         Width = 832
         Align = alBottom
         Columns = <        
@@ -2312,7 +2312,7 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 1
           Width = 403
           Caption = 'Select folder:'
-          ClientHeight = 34
+          ClientHeight = 35
           ClientWidth = 399
           TabOrder = 0
           object DirectoryEdit1: TDirectoryEdit
@@ -2332,7 +2332,7 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 49
           Width = 403
           Caption = 'CopyToPath:'
-          ClientHeight = 30
+          ClientHeight = 31
           ClientWidth = 399
           TabOrder = 1
           object Edit6: TEdit
@@ -2360,7 +2360,7 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 1
           Width = 376
           Caption = 'Select file:'
-          ClientHeight = 33
+          ClientHeight = 34
           ClientWidth = 372
           TabOrder = 0
           object FileNameEdit3: TFileNameEdit
@@ -2382,7 +2382,7 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 49
           Width = 376
           Caption = 'CopyToPath:'
-          ClientHeight = 30
+          ClientHeight = 31
           ClientWidth = 372
           TabOrder = 1
           object Edit7: TEdit
@@ -2439,7 +2439,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page4: TPage
       Caption = 'Page4'
       ClientWidth = 832
-      ClientHeight = 577
+      ClientHeight = 578
       object Label19: TLabel
         Left = 7
         Height = 20
@@ -2470,7 +2470,7 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object tvDependencies: TTreeView
         Left = 310
-        Height = 225
+        Height = 226
         Top = 342
         Width = 509
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -2493,7 +2493,7 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 478
         Width = 297
         Caption = 'Add entry'
-        ClientHeight = 90
+        ClientHeight = 91
         ClientWidth = 293
         Enabled = False
         TabOrder = 1
@@ -2570,7 +2570,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page5: TPage
       Caption = 'Page5'
       ClientWidth = 832
-      ClientHeight = 577
+      ClientHeight = 578
       object Label18: TLabel
         Left = 7
         Height = 20
@@ -2584,7 +2584,7 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Memo1: TMemo
         Left = 6
-        Height = 497
+        Height = 498
         Top = 38
         Width = 804
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -2600,7 +2600,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page6: TPage
       Caption = 'Page6'
       ClientWidth = 832
-      ClientHeight = 577
+      ClientHeight = 578
       object Label21: TLabel
         Left = 7
         Height = 20
@@ -2618,7 +2618,7 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 221
         Width = 513
         Caption = 'LOKI/Autopackage- file:'
-        ClientHeight = 50
+        ClientHeight = 51
         ClientWidth = 509
         TabOrder = 0
         object FileNameEdit4: TFileNameEdit
@@ -2641,7 +2641,7 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 299
         Width = 513
         Caption = 'If the application uses terminal output'
-        ClientHeight = 41
+        ClientHeight = 42
         ClientWidth = 509
         TabOrder = 1
         object chkShowInTerminal: TCheckBox
@@ -2658,7 +2658,7 @@ object frmProjectWizard: TfrmProjectWizard
   object Panel1: TPanel
     Left = 0
     Height = 41
-    Top = 604
+    Top = 605
     Width = 836
     Align = alBottom
     ClientHeight = 41
@@ -2668,7 +2668,7 @@ object frmProjectWizard: TfrmProjectWizard
       Left = 8
       Height = 28
       Top = 8
-      Width = 60
+      Width = 52
       Anchors = [akTop, akLeft, akBottom]
       AutoSize = True
       Caption = '  Back  '
@@ -2678,10 +2678,10 @@ object frmProjectWizard: TfrmProjectWizard
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
-      Left = 380
+      Left = 384
       Height = 28
       Top = 8
-      Width = 65
+      Width = 56
       Anchors = [akTop, akBottom]
       AutoSize = True
       Caption = '  Close  '
@@ -2690,10 +2690,10 @@ object frmProjectWizard: TfrmProjectWizard
       TabOrder = 1
     end
     object BitBtn3: TBitBtn
-      Left = 771
+      Left = 776
       Height = 28
       Top = 8
-      Width = 58
+      Width = 53
       Anchors = [akTop, akRight, akBottom]
       AutoSize = True
       Caption = '  Next  '

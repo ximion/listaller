@@ -285,7 +285,7 @@ begin
     exit;
   end;
 
-  rs.Architectures:=Edit3.Text;
+  rs.Architecture:=Edit3.Text;
 
   rs.AppName:=Edit1.Text;
 
