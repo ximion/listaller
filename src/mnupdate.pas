@@ -162,28 +162,6 @@ end;
 end;
 end;
 
-function IsCommandRunning(cmd:String):Boolean;
-var t:TProcess;
-s:TStringList;
-begin
- Result:=false;
- t:=tprocess.create(nil);
- t.CommandLine:='ps -A'+cmd;
- t.Options:=[poUsePipes,poWaitonexit];
- try
-  t.Execute;
-  s:=tstringlist.Create;
-  try
-   s.LoadFromStream(t.Output);
-   Result:=Pos(cmd,s.Text)>0;
-  finally
-  s.free;
-  end;
- finally
- t.Free;
- end;
-end;
-
 procedure TUMnForm.FormCreate(Sender: TObject);
 begin
 if not DirectoryExists(RegDir) then

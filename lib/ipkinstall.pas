@@ -993,12 +993,12 @@ pkg.Free;
 
  p:=TProcess.Create(nil);
 
- p.CommandLine:='chmod 755 '''+WDir+cont.Binary+'''';
+ p.CommandLine:=FindBinary('chmod')+' 755 '''+WDir+cont.Binary+'''';
  p.Options:=[poUsePipes,poWaitonexit];
  p.Execute;
  p.Options:=[poUsePipes,poWaitonexit,poNewConsole];
  if LowerCase(ExtractFileExt(cont.Binary))='.package' then begin
- if FileExists('/usr/bin/package') then
+ if FileExists(FindBinary('package')) then
  p.Options:=[poUsePipes,poWaitonexit];
 
  p.CommandLine:=WDir+cont.Binary;
@@ -1038,7 +1038,7 @@ var
 i,j: Integer;
 fi,ndirs, s, appfiles: TStringList;
 dest,h, FDir: String; // h is an helper variable - used for various actions
-dsk, cnf: TIniFile; // Configuration files etc.
+dsk: TIniFile; //Desktop files
 pkg: TLiUnpacker; // IPK decompressor
 setcm: Boolean;
 p, proc: TProcess; // Helper process with pipes
@@ -1065,7 +1065,7 @@ begin
   try
    DeleteDirectory(ndirs[i],false);
   except
-   p_error('Caould not remove directory. Please report this bug.');
+   p_error('Could not remove directory. Please report this bug.');
   end;
  end;
  ndirs.Free;
@@ -1080,7 +1080,6 @@ try
  if Assigned(s) then s.Free;
  if Assigned(appfiles) then appfiles.Free;
  if Assigned(dsk) then dsk.Free;
- if Assigned(cnf) then cnf.Free;
  if Assigned(pkg) then pkg.Free;
  if Assigned(p) then p.Free;
  if Assigned(proc) then proc.Free;
@@ -1128,26 +1127,18 @@ SetMainPos(Round(max*mnpos));
 
 if Testmode then
 begin
- proc.CommandLine := 'rm -rf /tmp/litest';
+ proc.CommandLine := FindBinary('rm')+' -rf /tmp/litest';
  proc.Execute;
 end;
 
 //Check if PackageKit trackmode is enabled:
-cnf:=TIniFile.Create(ConfigDir+'config.cnf');
-if cnf.ReadBool('MainConf','ShowPkMon',false) then begin
-p:=TProcess.Create(nil);
-p.CommandLine:='pkmon';
-p.Options:=[poNewConsole];
-p.Execute;
-p.free;
-end;
-cnf.free;
+ShowPkMon();
 
 SetExtraPos(0);
 //Execute programs/scripts
 if ExecA<>'<disabled>' then
 begin
-    Proc.CommandLine := 'chmod 777 '+ExecA;
+    Proc.CommandLine := FindBinary('chmod')+' 777 '+ExecA;
     Proc.Execute;
  //while proc.Running do Application.ProcessMessages;
     Proc.CommandLine := ExecA;
@@ -1232,7 +1223,7 @@ end;
 
 if (DInfo.PackageSystem='DEB')and(pos(' (',Dependencies[i])<=0) then begin
     p:=tprocess.create(nil);
-    p.CommandLine:='dpkg --info /tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' (',Dependencies[i])-1));
+    p.CommandLine:=FindBinary('dpkg')+' --info /tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' (',Dependencies[i])-1));
     p.Options:=[poUsePipes,poWaitonexit];
     try
     p.Execute;
@@ -1251,7 +1242,7 @@ if (DInfo.PackageSystem='DEB')and(pos(' (',Dependencies[i])<=0) then begin
 end else begin
 if (pos(' (',Dependencies[i])<=0) then begin
     p:=TProcess.create(nil);
-    p.CommandLine:='rpm -qip /tmp/'+ExtractFileName(Dependencies[i]);
+    p.CommandLine:=FindBinary('rpm')+' -qip /tmp/'+ExtractFileName(Dependencies[i]);
     p.Options:=[poUsePipes,poWaitonexit];
     try
     p.Execute;
@@ -1508,11 +1499,11 @@ begin
 h:=fi[i];
 
 if pos(' <chmod:',h)>0 then begin
-proc.CommandLine := 'chmod '+copy(h,pos(' <chmod:',h)+8,3)+dest+'/'+ExtractFileName(DeleteModifiers(fi[i]));
+proc.CommandLine := FindBinary('chmod')+' '+copy(h,pos(' <chmod:',h)+8,3)+dest+'/'+ExtractFileName(DeleteModifiers(fi[i]));
 proc.Execute;
 end else
 begin
-proc.CommandLine := 'chmod 755 '+dest+'/'+ExtractFileName(DeleteModifiers(fi[i]));
+proc.CommandLine := FindBinary('chmod')+' 755 '+dest+'/'+ExtractFileName(DeleteModifiers(fi[i]));
 proc.Execute;
 end;
 
@@ -1527,7 +1518,7 @@ begin
 //Set rights per folder
 for i:=0 to ndirs.Count-1 do
 begin
-proc.CommandLine := 'chmod 755 -R '+SyblToPath(ndirs[i]);
+proc.CommandLine := FindBinary('chmod')+' 755 -R '+SyblToPath(ndirs[i]);
 proc.Execute;
 msg('Rights assigned to folder '+ExtractFileName(SyblToPath(ndirs[i])));
  end;
@@ -1586,7 +1577,7 @@ mnpos:=mnpos+5;
 SetMainPos(Round(mnpos*max));
 //Execute Program/Script
 if ExecB<>'<disabled>' then begin
-    proc.CommandLine := 'chmod 777 '+ExecB;
+    proc.CommandLine := FindBinary('chmod')+' 777 '+ExecB;
     Proc.Execute;
  //while Proc.Running do Application.ProcessMessages;
     Proc.CommandLine := ExecB;
@@ -1623,7 +1614,7 @@ end;
 
 function TInstallation.RunDLinkInstallation: Boolean;
 var i: Integer;
-    cnf,ar: TIniFile;
+    ar: TIniFile;
     pkit: TPackageKit;
     mnpos: Integer;
     max: Double;
@@ -1632,7 +1623,6 @@ var i: Integer;
 
 procedure Abort_FreeAll();
 begin
- if Assigned(cnf) then cnf.Free;
  if Assigned(ar) then ar.Free;
  if Assigned(pkit) then pkit.Free;
 end;
@@ -1710,6 +1700,14 @@ begin
    HTTP.HTTPMethod('GET', fpath);
    p_debug('HTTPResCode:=> '+IntToStr(HTTP.ResultCode));
    HTTP.Document.SaveToFile(tmpdir+ExtractFileName(fpath));
+   if HTTP.ResultCode>210 then
+   begin
+    MakeUsrRequest(rsDepDlProblem+#10+rsECode+' '+IntToStr(HTTP.ResultCode),rqError);
+    Result:=false;
+    Abort_FreeAll();
+    exit;
+   end;
+
   except
    MakeUsrRequest(rsDepDlProblem,rqError);
    Result:=false;

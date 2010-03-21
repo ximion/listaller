@@ -90,6 +90,14 @@ Basic IPK reader class</p>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="ipkdef.TIPKBasic.html#ReadBuildCMDs">ReadBuildCMDs</a></b>(lst: TStrings);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a   href="ipkdef.TIPKBasic.html#WriteBuildCMDs">WriteBuildCMDs</a></b>(lst: TStrings);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>procedure <b><a   href="ipkdef.TIPKBasic.html#ReadDependencies">ReadDependencies</a></b>(dname: String;info: TStringList);</code></td>
 </tr>
 <tr class="list2">
@@ -157,7 +165,7 @@ Basic IPK reader class</p>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkdef.TIPKBasic.html#Architectures">Architectures</a></b>: String read ReadArchs write WriteArchs;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkdef.TIPKBasic.html#Architecture">Architecture</a></b>: String read ReadArchs write WriteArchs;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -165,25 +173,29 @@ Basic IPK reader class</p>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a   href="ipkdef.TIPKBasic.html#DSupport">DSupport</a></b>: String read ReadDSupport write WriteDSupport;</code></td>
+<td class="itemcode"><code>property <b><a   href="ipkdef.TIPKBasic.html#IPKName">IPKName</a></b>: String read ReadIPKName write WriteIPKName;</code></td>
 </tr>
 <tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a   href="ipkdef.TIPKBasic.html#DSupport">DSupport</a></b>: String read ReadDSupport write WriteDSupport;</code></td>
+</tr>
+<tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>property <b><a   href="ipkdef.TIPKBasic.html#WizImage">WizImage</a></b>: String read ReadWizImage write WriteWizImage;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>property <b><a   href="ipkdef.TIPKBasic.html#Binary">Binary</a></b>: String read ReadBinary write WriteBinary;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>property <b><a   href="ipkdef.TIPKBasic.html#USource">USource</a></b>: String read ReadUSource write WriteUSource;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>property <b><a   href="ipkdef.TIPKBasic.html#Desktopfiles">Desktopfiles</a></b>: String read ReadDesktopFiles write WriteDesktopFiles;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>property <b><a   href="ipkdef.TIPKBasic.html#InTerminal">InTerminal</a></b>: Boolean read ReadInTerminal write WriteInTerminal;</code></td>
 </tr>
@@ -307,6 +319,22 @@ Basic IPK reader class</p>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="WriteProfiles"></a><code>procedure <b>WriteProfiles</b>(lst: TStrings);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ReadBuildCMDs"></a><code>procedure <b>ReadBuildCMDs</b>(lst: TStrings);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="WriteBuildCMDs"></a><code>procedure <b>WriteBuildCMDs</b>(lst: TStrings);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -443,7 +471,7 @@ Basic IPK reader class</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Architectures"></a><code>property <b>Architectures</b>: String read ReadArchs write WriteArchs;</code></td>
+<td class="itemcode"><a name="Architecture"></a><code>property <b>Architecture</b>: String read ReadArchs write WriteArchs;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -452,6 +480,14 @@ Basic IPK reader class</p>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="PkName"></a><code>property <b>PkName</b>: String read ReadPkgName write WritePkgName;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="IPKName"></a><code>property <b>IPKName</b>: String read ReadIPKName write WriteIPKName;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -504,6 +540,6 @@ Basic IPK reader class</p>
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-02-26 16:38:07</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-03-21 19:40:23</em>
 </span>
 </body></html>

@@ -272,7 +272,7 @@ s:TStringList;
 begin
  Result:=false;
  t:=tprocess.create(nil);
- t.CommandLine:='ps -A'+cmd;
+ t.CommandLine:=FindBinary('ps')+' -A'+cmd;
  t.Options:=[poUsePipes,poWaitonexit];
  try
   t.Execute;

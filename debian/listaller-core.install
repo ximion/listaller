@@ -1,8 +1,8 @@
 usr/bin/lipa
 usr/sbin/listallerd
-usr/share/dbus-1/system-services/org.freedesktop.Listaller.service
-etc/dbus-1/system.d/org.freedesktop.Listaller.conf
-usr/share/polkit-1/actions/org.freedesktop.listaller.policy
+usr/share/dbus-1/system-services/org.nlinux.Listaller.service
+etc/dbus-1/system.d/org.nlinux.Listaller.conf
+usr/share/polkit-1/actions/org.nlinux.listaller.policy
 etc/lipa/blacklist
 etc/lipa/ignore-deps.list
 etc/lipa/app-reg

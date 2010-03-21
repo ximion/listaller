@@ -37,7 +37,7 @@
         <Filename Value="listallerd.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerd"/>
-        <CursorPos X="24" Y="23"/>
+        <CursorPos X="61" Y="22"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="43"/>
@@ -68,8 +68,8 @@
         <Filename Value="djobs.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="djobs"/>
-        <CursorPos X="2" Y="141"/>
-        <TopLine Value="361"/>
+        <CursorPos X="32" Y="30"/>
+        <TopLine Value="1"/>
         <UsageCount Value="43"/>
       </Unit4>
       <Unit5>
@@ -250,7 +250,7 @@
       <Unit32>
         <Filename Value="../src/libasic.pas"/>
         <UnitName Value="libasic"/>
-        <CursorPos X="20" Y="28"/>
+        <CursorPos X="31" Y="141"/>
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit32>
@@ -299,7 +299,7 @@
         <UsageCount Value="10"/>
       </Unit39>
     </Units>
-    <JumpHistory Count="16" HistoryIndex="15">
+    <JumpHistory Count="17" HistoryIndex="16">
       <Position1>
         <Filename Value="listallerd.lpr"/>
         <Caret Line="92" Column="29" TopLine="61"/>
@@ -362,8 +362,12 @@
       </Position15>
       <Position16>
         <Filename Value="listallerd.lpr"/>
-        <Caret Line="23" Column="24" TopLine="1"/>
+        <Caret Line="23" Column="25" TopLine="1"/>
       </Position16>
+      <Position17>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="22" Column="61" TopLine="1"/>
+      </Position17>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

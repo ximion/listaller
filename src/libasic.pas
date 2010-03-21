@@ -88,6 +88,10 @@ procedure p_info(msg: String);
 procedure p_debug(msg: String);
 //** Replace string a with b
 function StrSubst(s,a,b: String): String;
+//** Find absolute path for system binary
+function FindBinary(name: String): String;
+//** Check if program is running @param cmd Command name
+function IsCommandRunning(cmd:String):Boolean;
 
 const
  LI_CONFIG_DIR = '/etc/lipa/';
@@ -106,6 +110,28 @@ p1 := 1;
 p2 := Pos('/',url);
 //
 Result := Copy(url,P1,(P2-1));
+end;
+
+function IsCommandRunning(cmd:String):Boolean;
+var t:TProcess;
+s:TStringList;
+begin
+ Result:=false;
+ t:=tprocess.create(nil);
+ t.CommandLine:=FindBinary('ps')+' -A'+cmd;
+ t.Options:=[poUsePipes,poWaitonexit];
+ try
+  t.Execute;
+  s:=tstringlist.Create;
+  try
+   s.LoadFromStream(t.Output);
+   Result:=Pos(cmd,s.Text)>0;
+  finally
+  s.free;
+  end;
+ finally
+ t.Free;
+ end;
 end;
 
 function GetServerPath(url:string):string;
@@ -138,12 +164,32 @@ end else
  Result:='/usr/share/listaller/'+s;
 end;
 
+function FindBinary(name: String): String;
+var res: String;
+
+function FExists(p: String): Boolean;
+begin
+ res:=p+'/'+name;
+ Result:=FileExists(res);
+end;
+begin
+ if FExists('/usr/local/sbin') then Result:=res
+ else if FExists('/usr/local/bin') then Result:=res
+ else if FExists('/usr/sbin') then Result:=res
+ else if FExists('/usr/bin') then Result:=res
+ else if FExists('/sbin') then Result:=res
+ else if FExists('/bin') then Result:=res
+ else if FExists('/usr/games') then Result:=res
+ else
+  Result:=name;
+end;
+
 function GetSystemArchitecture: String;
 var p: TProcess;x: TStringList;s: String;
 begin
  p:=TProcess.Create(nil);
  p.Options:=[poUsePipes, poWaitOnExit];
- p.CommandLine:='uname -m';
+ p.CommandLine:=FindBinary('uname')+' -m';
  p.Execute;
  x:=TStringList.Create;
  x.LoadFromStream(p.OutPut);
@@ -259,7 +305,7 @@ cnf:=TIniFile.Create(ConfigDir+'config.cnf');
   if cnf.ReadBool('MainConf','ShowPkMon',false) then
   begin
    t:=TProcess.Create(nil);
-   t.CommandLine:='pkmon -v';
+   t.CommandLine:=FindBinary('pkmon')+' -v';
    t.Options:=[poNewConsole];
    t.Execute;
   end;
@@ -337,6 +383,7 @@ begin
  Result:=StringReplace(path,'//','/',[rfReplaceAll]);
 end;
 
+//This should no longer be necessary since Listaller uses PolicyKit
 function ExecuteAsRoot(cmd: String;comment: String; icon: String;optn: TProcessOptions=[]): Boolean;
 var p: TProcess; DInfo: TDistroInfo;
 begin
@@ -344,25 +391,25 @@ DInfo:=GetDistro;
 p:=TProcess.Create(nil);
 if DInfo.DBase='KDE' then
 begin
- if FileExists('/usr/bin/kdesu') then
-  p.CommandLine := 'kdesu -d --comment "'+comment+'" -i '+icon+' '+cmd
+ if FileExists(FindBinary('kdesu')) then
+  p.CommandLine := FindBinary('kdesu')+' -d --comment "'+comment+'" -i '+icon+' '+cmd
  else
- if FileExists('/usr/bin/kdesudo') then
-  p.CommandLine := 'kdesudo -d --comment "'+comment+'" -i '+icon+' '+cmd
+ if FileExists(FindBinary('kdesudo')) then
+  p.CommandLine := FindBinary('kdesudo')+' -d --comment "'+comment+'" -i '+icon+' '+cmd
 end else
 begin
  if DInfo.DName='Fedora' then
   //Fedora uses Consolehelper to run apps as root. So we use "beesu" to make CH work for Listaller
-  p.CommandLine := 'beesu -l '+cmd
+  p.CommandLine := FindBinary('beesu')+' -l '+cmd
  else
-   if FileExists('/usr/bin/gksudo') then
-    p.CommandLine := 'gksudo --message "'+comment+'" '+cmd
+   if FileExists(FindBinary('gksudo')) then
+    p.CommandLine := FindBinary('gksudo')+' --message "'+comment+'" '+cmd
     else
-   if FileExists('/usr/bin/gksu') then
-    p.CommandLine := 'gksu --message "'+comment+'" '+cmd
+   if FileExists(FindBinary('gksu')) then
+    p.CommandLine := FindBinary('gksu')+' --message "'+comment+'" '+cmd
     else
-   if FileExists('/usr/bin/gnomesu') then
-    p.CommandLine := 'gnomesu '+cmd
+   if FileExists(FindBinary('gnomesu')) then
+    p.CommandLine := FindBinary('gnomesu')+' '+cmd
    else
    begin
     writeLn('Unable to execute the application as root.'#13'Please do this manually!');

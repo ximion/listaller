@@ -58,7 +58,13 @@ This unit contains basic functions and types which are used nearly everywhere</p
 <td class="itemcode"><code>function <b><a   href="libasic.html#ExecuteAsRoot">ExecuteAsRoot</a></b>(cmd: String;comment: String; icon: String;optn: TProcessOptions=[]): Boolean;</code></td>
 </tr>
 <tr class="list2">
+<td class="itemcode"><code>function <b><a   href="libasic.html#CleanFilePath">CleanFilePath</a></b>(path: String): String;</code></td>
+</tr>
+<tr class="list">
 <td class="itemcode"><code>function <b><a   href="libasic.html#IsRoot">IsRoot</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a   href="libasic.html#RemoveDuplicates">RemoveDuplicates</a></b>(sl: TStringList);</code></td>
 </tr>
 <tr class="list">
 <td class="itemcode"><code>function <b><a   href="libasic.html#GetDateAsString">GetDateAsString</a></b>: String;</code></td>
@@ -75,14 +81,23 @@ This unit contains basic functions and types which are used nearly everywhere</p
 <tr class="list">
 <td class="itemcode"><code>procedure <b><a   href="libasic.html#p_debug">p_debug</a></b>(msg: String);</code></td>
 </tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="libasic.html#StrSubst">StrSubst</a></b>(s,a,b: String): String;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a   href="libasic.html#FindBinary">FindBinary</a></b>(name: String): String;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a   href="libasic.html#IsCommandRunning">IsCommandRunning</a></b>(cmd:String):Boolean;</code></td>
+</tr>
 </table>
 <a name="%40Constants"></a><h3 class="summary">Constants</h3>
 <table class="summary wide_list">
 <tr class="list">
-<td class="itemcode"><code><b><a   href="libasic.html#LiVersion">LiVersion</a></b>='0.3.49a&tilde;dev';</code></td>
+<td class="itemcode"><code><b><a   href="libasic.html#LiVersion">LiVersion</a></b>='0.3.77a&tilde;dev';</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code><b><a   href="libasic.html#tmpdir">tmpdir</a></b>='/tmp/listaller/';</code></td>
+<td class="itemcode"><code><b><a   href="libasic.html#TMPDIR">TMPDIR</a></b>='/tmp/listaller/';</code></td>
 </tr>
 <tr class="list">
 <td class="itemcode"><code><b><a   href="libasic.html#LI_CONFIG_DIR">LI_CONFIG_DIR</a></b> = '/etc/lipa/';</code></td>
@@ -253,6 +268,15 @@ Executes an application as root using an graphical input prompt    </p>
 </table>
 <table class="detail wide_list">
 <tr class="list">
+<td class="itemcode"><a name="CleanFilePath"></a><code>function <b>CleanFilePath</b>(path: String): String;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Cleans up messy file path</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
 <td class="itemcode"><a name="IsRoot"></a><code>function <b>IsRoot</b>: Boolean;</code></td>
 </tr>
 <tr><td colspan="1">
@@ -260,6 +284,15 @@ Executes an application as root using an graphical input prompt    </p>
 Check if user is root </p>
 <h6 class="description_section">Returns</h6>
 <p class="return">If user is root (Bool)</p></td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="RemoveDuplicates"></a><code>procedure <b>RemoveDuplicates</b>(sl: TStringList);</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Remove duplicate entries from stringlist</p>
+</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
@@ -306,10 +339,42 @@ Displays info</p>
 Show a debug bessage</p>
 </td></tr>
 </table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="StrSubst"></a><code>function <b>StrSubst</b>(s,a,b: String): String;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Replace string a with b</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="FindBinary"></a><code>function <b>FindBinary</b>(name: String): String;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Find absolute path for system binary</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="IsCommandRunning"></a><code>function <b>IsCommandRunning</b>(cmd:String):Boolean;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+Check if program is running </p>
+<h6 class="description_section">Parameters</h6>
+<dl class="parameters">
+<dt>cmd</dt>
+<dd>Command name</dd>
+</dl>
+</td></tr>
+</table>
 <h3 class="detail">Constants</h3>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="LiVersion"></a><code><b>LiVersion</b>='0.3.49a&tilde;dev';</code></td>
+<td class="itemcode"><a name="LiVersion"></a><code><b>LiVersion</b>='0.3.77a&tilde;dev';</code></td>
 </tr>
 <tr><td colspan="1">
 <p>
@@ -318,7 +383,7 @@ Version of the Listaller applicationset</p>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="tmpdir"></a><code><b>tmpdir</b>='/tmp/listaller/';</code></td>
+<td class="itemcode"><a name="TMPDIR"></a><code><b>TMPDIR</b>='/tmp/listaller/';</code></td>
 </tr>
 <tr><td colspan="1">
 <p>
@@ -358,6 +423,6 @@ The Listaller package lib directory</p>
 True if Listaller is in testmode</p>
 </td></tr>
 </table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-02-26 16:38:07</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-03-21 19:40:23</em>
 </span>
 </body></html>

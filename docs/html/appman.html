@@ -19,13 +19,13 @@ This unit contains libInstaller functions to manage applications</p>
 <a name="%40FuncsProcs"></a><h3 class="summary">Functions and Procedures</h3>
 <table class="summary wide_list">
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_new">li_mgr_new</a></b>: Pointer; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_new';</code></td>
+<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_new">li_mgr_new</a></b>: Pointer; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>procedure <b><a   href="appman.html#li_mgr_free">li_mgr_free</a></b>(mgr: Pointer); cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_free';</code></td>
+<td class="itemcode"><code>procedure <b><a   href="appman.html#li_mgr_free">li_mgr_free</a></b>(mgr: Pointer); cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_load_apps">li_mgr_load_apps</a></b>(mgr: Pointer): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_load_apps';</code></td>
+<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_load_apps">li_mgr_load_apps</a></b>(mgr: Pointer): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_register_status_call">li_mgr_register_status_call</a></b>(mgr: Pointer;call: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>; user_data: Pointer): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
@@ -34,43 +34,43 @@ This unit contains libInstaller functions to manage applications</p>
 <td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_register_request_call">li_mgr_register_request_call</a></b>(mgr: Pointer;call: <a   href="litypes.html#TRequestCall">TRequestCall</a>;user_data: Pointer): <a   href="litypes.html#TRqResult">TRqResult</a>; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_register_app_call">li_mgr_register_app_call</a></b>(mgr: Pointer;call: <a   href="litypes.html#TAppEvent">TAppEvent</a>): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_register_app_call';</code></td>
+<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_register_app_call">li_mgr_register_app_call</a></b>(mgr: Pointer;call: <a   href="litypes.html#TAppEvent">TAppEvent</a>): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>procedure <b><a   href="appman.html#li_mgr_set_su_mode">li_mgr_set_su_mode</a></b>(mgr: Pointer;md: Boolean); cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_set_su_mode';</code></td>
+<td class="itemcode"><code>procedure <b><a   href="appman.html#li_mgr_set_sumode">li_mgr_set_sumode</a></b>(mgr: Pointer;md: Boolean); cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_remove_app">li_mgr_remove_app</a></b>(mgr: Pointer;obj: <a   href="litypes.TAppInfo.html">TAppInfo</a>): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_remove_app';</code></td>
+<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_remove_app">li_mgr_remove_app</a></b>(mgr: Pointer;obj: <a   href="litypes.TAppInfo.html">TAppInfo</a>): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="appman.html#li_remove_ipk_installed_app">li_remove_ipk_installed_app</a></b>(appname, appid: PChar;scall: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>;fastmode: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_remove_ipk_installed_app';</code></td>
+<td class="itemcode"><code>function <b><a   href="appman.html#li_remove_ipk_installed_app">li_remove_ipk_installed_app</a></b>(appname, appid: PChar;scall: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>;fastmode: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_check_apps">li_mgr_check_apps</a></b>(mgr: Pointer;log: <a   href="litypes.html#PStringList">PStringList</a>;root: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_check_apps';</code></td>
+<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_check_apps">li_mgr_check_apps</a></b>(mgr: Pointer;log: <a   href="litypes.html#PStringList">PStringList</a>;root: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_fix_apps">li_mgr_fix_apps</a></b>(mgr: Pointer;log: <a   href="litypes.html#PStringList">PStringList</a>;root: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_fix_apps';</code></td>
+<td class="itemcode"><code>function <b><a   href="appman.html#li_mgr_fix_apps">li_mgr_fix_apps</a></b>(mgr: Pointer;log: <a   href="litypes.html#PStringList">PStringList</a>;root: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 </table>
 <h2 class="description">Description</h2>
 <h3 class="detail">Functions and Procedures</h3>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="li_mgr_new"></a><code>function <b>li_mgr_new</b>: Pointer; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_new';</code></td>
+<td class="itemcode"><a name="li_mgr_new"></a><code>function <b>li_mgr_new</b>: Pointer; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="li_mgr_free"></a><code>procedure <b>li_mgr_free</b>(mgr: Pointer); cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_free';</code></td>
+<td class="itemcode"><a name="li_mgr_free"></a><code>procedure <b>li_mgr_free</b>(mgr: Pointer); cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="li_mgr_load_apps"></a><code>function <b>li_mgr_load_apps</b>(mgr: Pointer): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_load_apps';</code></td>
+<td class="itemcode"><a name="li_mgr_load_apps"></a><code>function <b>li_mgr_load_apps</b>(mgr: Pointer): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>
@@ -91,46 +91,46 @@ This unit contains libInstaller functions to manage applications</p>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="li_mgr_register_app_call"></a><code>function <b>li_mgr_register_app_call</b>(mgr: Pointer;call: <a   href="litypes.html#TAppEvent">TAppEvent</a>): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_register_app_call';</code></td>
+<td class="itemcode"><a name="li_mgr_register_app_call"></a><code>function <b>li_mgr_register_app_call</b>(mgr: Pointer;call: <a   href="litypes.html#TAppEvent">TAppEvent</a>): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="li_mgr_set_su_mode"></a><code>procedure <b>li_mgr_set_su_mode</b>(mgr: Pointer;md: Boolean); cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_set_su_mode';</code></td>
+<td class="itemcode"><a name="li_mgr_set_sumode"></a><code>procedure <b>li_mgr_set_sumode</b>(mgr: Pointer;md: Boolean); cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="li_mgr_remove_app"></a><code>function <b>li_mgr_remove_app</b>(mgr: Pointer;obj: <a   href="litypes.TAppInfo.html">TAppInfo</a>): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_remove_app';</code></td>
+<td class="itemcode"><a name="li_mgr_remove_app"></a><code>function <b>li_mgr_remove_app</b>(mgr: Pointer;obj: <a   href="litypes.TAppInfo.html">TAppInfo</a>): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="li_remove_ipk_installed_app"></a><code>function <b>li_remove_ipk_installed_app</b>(appname, appid: PChar;scall: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>;fastmode: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_remove_ipk_installed_app';</code></td>
+<td class="itemcode"><a name="li_remove_ipk_installed_app"></a><code>function <b>li_remove_ipk_installed_app</b>(appname, appid: PChar;scall: <a   href="litypes.html#TLiStatusChangeCall">TLiStatusChangeCall</a>;fastmode: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="li_mgr_check_apps"></a><code>function <b>li_mgr_check_apps</b>(mgr: Pointer;log: <a   href="litypes.html#PStringList">PStringList</a>;root: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_check_apps';</code></td>
+<td class="itemcode"><a name="li_mgr_check_apps"></a><code>function <b>li_mgr_check_apps</b>(mgr: Pointer;log: <a   href="litypes.html#PStringList">PStringList</a>;root: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="li_mgr_fix_apps"></a><code>function <b>li_mgr_fix_apps</b>(mgr: Pointer;log: <a   href="litypes.html#PStringList">PStringList</a>;root: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>  name 'li_mgr_fix_apps';</code></td>
+<td class="itemcode"><a name="li_mgr_fix_apps"></a><code>function <b>li_mgr_fix_apps</b>(mgr: Pointer;log: <a   href="litypes.html#PStringList">PStringList</a>;root: Boolean): Boolean; cdecl; external <a   href="litypes.html#libinst">libinst</a>;</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-02-26 16:38:06</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-03-21 19:40:22</em>
 </span>
 </body></html>

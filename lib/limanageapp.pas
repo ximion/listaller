@@ -919,7 +919,7 @@ begin
  msg('PreRM-Script found.');
  t:=TProcess.Create(nil);
  t.Options:=[poUsePipes,poWaitonexit];
- t.CommandLine:='chmod 775 '''+p+'prerm''';
+ t.CommandLine:=FindBinary('chmod')+' 775 '''+p+'prerm''';
  t.Execute;
  msg('Executing prerm...');
  t.CommandLine:=''''+p+'prerm''';
@@ -1020,11 +1020,11 @@ t:=TProcess.Create(nil);
 if (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.png')
 or (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i])))='.xpm') then
 begin
-t.CommandLine:='xdg-icon-resource uninstall '+SysUtils.ChangeFileExt(ExtractFileName(DeleteModifiers(tmp[i])),'');
+t.CommandLine:=FindBinary('xdg-icon-resource')+' uninstall '+SysUtils.ChangeFileExt(ExtractFileName(DeleteModifiers(tmp[i])),'');
 t.Execute
 end else
 begin
-t.CommandLine:='xdg-mime uninstall '+DeleteModifiers(f+'/'+ExtractFileName(tmp[i]));
+t.CommandLine:=FindBinary('xdg-mime')+' uninstall '+DeleteModifiers(f+'/'+ExtractFileName(tmp[i]));
 t.Execute;
 end;
 t.Free;
@@ -1060,7 +1060,7 @@ proc:=TProcess.Create(nil);
 proc.Options:=[poWaitOnExit,poStdErrToOutPut,poUsePipes];
 for i:=0 to tmp.Count-1 do
 begin
-  proc.CommandLine :='rm -rf '+tmp[i];
+  proc.CommandLine:=FindBinary('rm')+' -rf '+tmp[i];
   proc.Execute;
 end;
 proc.Free;
@@ -1097,7 +1097,7 @@ msg('Database connection closed.');
 
 proc:=TProcess.Create(nil);
 proc.Options:=[poWaitOnExit];
-proc.CommandLine :='rm -rf '+''''+ExcludeTrailingBackslash(p)+'''';
+proc.CommandLine :=FindBinary('rm')+' -rf '+''''+ExcludeTrailingBackslash(p)+'''';
 proc.Execute;
 proc.Free;
 

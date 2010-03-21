@@ -61,7 +61,7 @@ var p: TProcess;s: TStringList;i: Integer;
 begin
   p:=TProcess.Create(nil);
   p.Options:=[poUsePipes,poWaitOnExit];
-  p.CommandLine:='ldd '+f;
+  p.CommandLine:=FindBinary('ldd')+' '+f;
   p.Execute;
   Result:=true;
   if p.ExitStatus>0 then
@@ -76,9 +76,9 @@ begin
   for i:=0 to s.Count-1 do
    if pos('=>',s[i])>0 then
    begin
-    lst.Add(copy(s[i],2,pos('=',s[i])-3));
+    lst.Add(copy(s[i],2,pos('=',s[i])-4));
    end else
-    lst.Add(copy(s[i],2,pos('(',s[i])-3));
+    lst.Add(copy(s[i],2,pos('(',s[i])-4));
   s.Free;
 end;
 
@@ -107,19 +107,11 @@ begin
 end;
 
 function SyblToPath(s: String): String;
-var t: TProcess;n: String;x: TStringList;
+var n: String;
 begin
 s:=StringReplace(s,'$HOME',GetEnvironmentVariable('HOME'),[rfReplaceAll]);
 
- t:=TProcess.Create(nil);
- t.Options:=[poUsePipes, poWaitOnExit];
- t.CommandLine:='uname -m';
- t.Execute;
- x:=TStringList.Create;
- x.LoadFromStream(t.OutPut);
- n:=x[0];
- x.Free;
- t.Free;
+n:=GetSystemArchitecture;
 
 if IsRoot then
 begin
@@ -271,7 +263,7 @@ begin
  p.Options:=[poUsePipes];
  if DInfo.DBase='KDE' then
  begin
-  p.CommandLine:='kdialog --passivepopup "'+msg+'" --title "Listaller Message" '+IntToStr(time);
+  p.CommandLine:=FindBinary('kdialog')+' --passivepopup "'+msg+'" --title "Listaller Message" '+IntToStr(time);
   p.Execute;
   p.Free;
   exit;
@@ -283,7 +275,7 @@ begin
   ulLow: s:='low';
   ulCritical: s:='critical';
   end;
-  p.CommandLine:='notify-send '+'--urgency='+s+' --expire-time='+IntToStr(time*1000)+' "'+msg+'"';
+  p.CommandLine:=FindBinary('notify-send')+' --urgency='+s+' --expire-time='+IntToStr(time*1000)+' "'+msg+'"';
   p.Execute;
   p.Free;
   exit;

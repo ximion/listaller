@@ -33,7 +33,15 @@
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code><b><a   href="mnupdate.TUMnForm.html#CheckListBox1">CheckListBox1</a></b>: TCheckListBox;</code></td>
+<td class="itemcode"><code><b><a   href="mnupdate.TUMnForm.html#ProgressBar">ProgressBar</a></b>: TProgressBar;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code><b><a   href="mnupdate.TUMnForm.html#StatusBar1">StatusBar1</a></b>: TStatusBar;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code><b><a   href="mnupdate.TUMnForm.html#UpdListBox">UpdListBox</a></b>: TCheckListBox;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -53,11 +61,15 @@
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code><b><a   href="mnupdate.TUMnForm.html#ulist">ulist</a></b>: Array of TStringList;</code></td>
+<td class="itemcode"><code><b><a   href="mnupdate.TUMnForm.html#UpdateIDs">UpdateIDs</a></b>: TStringList;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code><b><a   href="mnupdate.TUMnForm.html#ANotes">ANotes</a></b>: Array of <a   href="mnupdate.TAppNotes.html">TAppNotes</a>;</code></td>
+<td class="itemcode"><code><b><a   href="mnupdate.TUMnForm.html#updater">updater</a></b>: Pointer;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code><b><a   href="mnupdate.TUMnForm.html#updaterSU">updaterSU</a></b>: Pointer;</code></td>
 </tr>
 </table>
 <a name="%40Methods"></a><h3 class="summary">Methods</h3>
@@ -72,7 +84,7 @@
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="mnupdate.TUMnForm.html#CheckListBox1Click">CheckListBox1Click</a></b>(Sender: TObject);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="mnupdate.TUMnForm.html#UpdListBoxClick">UpdListBoxClick</a></b>(Sender: TObject);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -80,19 +92,19 @@
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="mnupdate.TUMnForm.html#FormShow">FormShow</a></b>(Sender: TObject);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="mnupdate.TUMnForm.html#FormDestroy">FormDestroy</a></b>(Sender: TObject);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="mnupdate.TUMnForm.html#MenuItem1Click">MenuItem1Click</a></b>(Sender: TObject);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="mnupdate.TUMnForm.html#FormShow">FormShow</a></b>(Sender: TObject);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="mnupdate.TUMnForm.html#MenuItem2Click">MenuItem2Click</a></b>(Sender: TObject);</code></td>
+<td class="itemcode"><code>procedure <b><a   href="mnupdate.TUMnForm.html#MenuItem1Click">MenuItem1Click</a></b>(Sender: TObject);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a   href="mnupdate.TUMnForm.html#CheckForUpdates">CheckForUpdates</a></b>;</code></td>
+<td class="itemcode"><code>procedure <b><a   href="mnupdate.TUMnForm.html#MenuItem2Click">MenuItem2Click</a></b>(Sender: TObject);</code></td>
 </tr>
 </table>
 <h2 class="description">Description</h2>
@@ -116,7 +128,23 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="CheckListBox1"></a><code><b>CheckListBox1</b>: TCheckListBox;</code></td>
+<td class="itemcode"><a name="ProgressBar"></a><code><b>ProgressBar</b>: TProgressBar;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="StatusBar1"></a><code><b>StatusBar1</b>: TStatusBar;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="UpdListBox"></a><code><b>UpdListBox</b>: TCheckListBox;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -156,7 +184,7 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ulist"></a><code><b>ulist</b>: Array of TStringList;</code></td>
+<td class="itemcode"><a name="UpdateIDs"></a><code><b>UpdateIDs</b>: TStringList;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -164,7 +192,15 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ANotes"></a><code><b>ANotes</b>: Array of <a   href="mnupdate.TAppNotes.html">TAppNotes</a>;</code></td>
+<td class="itemcode"><a name="updater"></a><code><b>updater</b>: Pointer;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="updaterSU"></a><code><b>updaterSU</b>: Pointer;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -189,7 +225,7 @@
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="CheckListBox1Click"></a><code>procedure <b>CheckListBox1Click</b>(Sender: TObject);</code></td>
+<td class="itemcode"><a name="UpdListBoxClick"></a><code>procedure <b>UpdListBoxClick</b>(Sender: TObject);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -198,6 +234,14 @@
 <tr class="list">
 <td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="FormCreate"></a><code>procedure <b>FormCreate</b>(Sender: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FormDestroy"></a><code>procedure <b>FormDestroy</b>(Sender: TObject);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -226,14 +270,6 @@
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a   href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="CheckForUpdates"></a><code>procedure <b>CheckForUpdates</b>;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-02-26 16:38:07</em>
+<hr noshade size="1"><span class="appinfo"><em>Generated by <a  target="_parent" href="http://pasdoc.sourceforge.net/">PasDoc 0.11.0</a> on 2010-03-21 19:40:23</em>
 </span>
 </body></html>

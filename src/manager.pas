@@ -384,16 +384,16 @@ begin
   p.Options:=[poUsePipes];
   if DInfo.DBase='KDE' then
   begin
-     if FileExists('/usr/bin/kpackagekit') then
-      p.CommandLine:='/usr/bin/kpackagekit --settings'
+     if FileExists(FindBinary('kpackagekit')) then
+      p.CommandLine:=FindBinary('kpackagekit')+' --settings'
      else
-      p.CommandLine:='/usr/bin/gpk-repo';
+      p.CommandLine:=FindBinary('gpk-repo');
   end else
   begin
-     if FileExists('/usr/bin/gpk-repo') then
-      p.CommandLine:='/usr/bin/gpk-repo'
+     if FileExists(FindBinary('gpk-repo')) then
+      p.CommandLine:=FindBinary('gpk-repo')
      else
-      p.CommandLine:='/usr/bin/kpackagekit';
+      p.CommandLine:=FindBinary('kpackagekit');
   end;
   Notebook1.Enabled:=false;
   BtnPanel.Enabled:=false;
@@ -421,27 +421,27 @@ begin
   if DInfo.DBase='KDE' then
   begin
    if (DInfo.DName='Ubuntu') then
-    if FileExists('/usr/bin/qappinstall') then
-     p.CommandLine:='/usr/bin/qappinstall'
+    if FileExists(FindBinary('qappinstall')) then
+     p.CommandLine:=FindBinary('qappinstall')
     else
-     p.CommandLine:='/usr/bin/kpackagekit'
+     p.CommandLine:=FindBinary('kpackagekit')
    else
-     if FileExists('/usr/bin/kpackagekit') then
-      p.CommandLine:='/usr/bin/kpackagekit'
+     if FileExists(FindBinary('kpackagekit')) then
+      p.CommandLine:=FindBinary('kpackagekit')
      else
-      p.CommandLine:='/usr/bin/gpk-application';
+      p.CommandLine:=FindBinary('gpk-application');
   end else
   begin
     if (DInfo.DName='Ubuntu') then
-    if FileExists('/usr/bin/software-center') then
-     p.CommandLine:='/usr/bin/software-center'
+    if FileExists(FindBinary('software-center')) then
+     p.CommandLine:=FindBinary('software-center')
     else
-     p.CommandLine:='/usr/bin/gpk-application'
+     p.CommandLine:=FindBinary('gpk-application')
    else
-     if FileExists('/usr/bin/gpk-application') then
-      p.CommandLine:='/usr/bin/gpk-application'
+     if FileExists(FindBinary('gpk-application')) then
+      p.CommandLine:=FindBinary('gpk-application')
      else
-      p.CommandLine:='/usr/bin/kpackagekit';
+      p.CommandLine:=FindBinary('kpackagekit');
   end;
   if not FileExists(p.CommandLine) then
   begin

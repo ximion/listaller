@@ -39,32 +39,8 @@ end;
 
 //** Get the distro-infos
 function GetDistro: TDistroInfo;
-//** Check if program is running @param cmd Command name
-function IsCommandRunning(cmd:String):Boolean;
 
 implementation
-
-function IsCommandRunning(cmd:String):Boolean;
-var t:TProcess;
-s:TStringList;
-begin
- Result:=false;
- t:=tprocess.create(nil);
- t.CommandLine:='ps -A'+cmd;
- t.Options:=[poUsePipes,poWaitonexit];
- try
-  t.Execute;
-  s:=tstringlist.Create;
-  try
-   s.LoadFromStream(t.Output);
-   Result:=Pos(cmd,s.Text)>0;
-  finally
-  s.free;
-  end;
- finally
- t.Free;
- end;
-end;
 
 function GetDistro: TDistroInfo;
 var uv: TStringList;i: Integer;

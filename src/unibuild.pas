@@ -105,7 +105,7 @@ p:=TProcess.Create(nil);
 p.Options:=[poUsePipes];
 p.CurrentDirectory:=pk.out;
 
- p.CommandLine:='dpkg -b '+pk.out+'pkbuild';
+ p.CommandLine:=FindBinary('dpkg')+' -b '+pk.out+'pkbuild';
 
  writeLn('[Exec]: dpkg');
  p.Execute;
@@ -195,9 +195,9 @@ begin
 p:=TProcess.Create(nil);
 p.Options:=[poUsePipes];
 p.CurrentDirectory:=pk.out;
-writeLn('rpmbuild -bb --rmspec --buildroot="'+pk.out+'pkbuild/"'+' --dbpath="'+pk.out+'" '+pk.out+pk.pkName+'.spec');
+writeLn('rpmbuild'+' -bb --rmspec --buildroot="'+pk.out+'pkbuild/"'+' --dbpath="'+pk.out+'" '+pk.out+pk.pkName+'.spec');
 
-p.CommandLine:='sudo rpmbuild -ba --rmspec --buildroot="'+pk.out+'pkbuild/"'+' --dbpath="'+pk.out+'" '+pk.out+pk.pkName+'.spec';
+p.CommandLine:='sudo '+FindBinary('rpmbuild')+' -ba --rmspec --buildroot="'+pk.out+'pkbuild/"'+' --dbpath="'+pk.out+'" '+pk.out+pk.pkName+'.spec';
 
  writeLn('[Exec]: rpmbuild');
  p.Execute;

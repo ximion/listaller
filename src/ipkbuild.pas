@@ -108,7 +108,7 @@ begin
   Continue;
 
  writeLn('[Exec]: '+p.CommandLine);//pk.build[i]);
- p.CommandLine:='bash '+p.CommandLine;
+ p.CommandLine:=FindBinary('bash')+' '+p.CommandLine;
  p.Execute;
  n:=0;
 

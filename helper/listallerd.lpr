@@ -50,7 +50,6 @@ var
   startTick: Integer;
   lastTime: Integer;
 begin
-  WriteLn('Daemon started.');
   lastTime:=0;
 
   if bs.Failed then exit;
@@ -148,6 +147,7 @@ begin
  writeLn('Please run listallerd as root!');
  halt(1);
 end;
+WriteLn('Daemon started.');
 
 end;
 

@@ -12,7 +12,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="1740"/>
+      <CurrentBuildNr Value="1750"/>
       <ProjectVersion Value="0.4.0.0"/>
       <ProductName Value="Listaller"/>
     </VersionInfo>
@@ -28,24 +28,24 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="68">
+    <Units Count="77">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="29" Y="22"/>
+        <CursorPos X="26" Y="22"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
-        <UsageCount Value="86"/>
+        <UsageCount Value="88"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="14" Y="1769"/>
-        <TopLine Value="1749"/>
-        <UsageCount Value="46"/>
+        <CursorPos X="27" Y="1708"/>
+        <TopLine Value="1680"/>
+        <UsageCount Value="48"/>
       </Unit1>
       <Unit2>
         <Filename Value="../licommon.pas"/>
@@ -156,9 +156,9 @@
         <Filename Value="limanageapp.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="limanageapp"/>
-        <CursorPos X="43" Y="12"/>
-        <TopLine Value="1"/>
-        <UsageCount Value="45"/>
+        <CursorPos X="5" Y="1101"/>
+        <TopLine Value="1080"/>
+        <UsageCount Value="47"/>
       </Unit17>
       <Unit18>
         <Filename Value="../linotify.pas"/>
@@ -186,8 +186,8 @@
       <Unit21>
         <Filename Value="mtprocs.pas"/>
         <UnitName Value="MTProcs"/>
-        <CursorPos X="21" Y="17"/>
-        <TopLine Value="1"/>
+        <CursorPos X="22" Y="333"/>
+        <TopLine Value="312"/>
         <UsageCount Value="10"/>
       </Unit21>
       <Unit22>
@@ -293,9 +293,9 @@
         <Filename Value="lidbusproc.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lidbusproc"/>
-        <CursorPos X="13" Y="66"/>
-        <TopLine Value="45"/>
-        <UsageCount Value="52"/>
+        <CursorPos X="24" Y="114"/>
+        <TopLine Value="93"/>
+        <UsageCount Value="54"/>
       </Unit37>
       <Unit38>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.2.4/rtl/inc/objpash.inc"/>
@@ -312,8 +312,8 @@
       <Unit40>
         <Filename Value="../src/libasic.pas"/>
         <UnitName Value="libasic"/>
-        <CursorPos X="26" Y="412"/>
-        <TopLine Value="375"/>
+        <CursorPos X="39" Y="405"/>
+        <TopLine Value="384"/>
         <UsageCount Value="10"/>
       </Unit40>
       <Unit41>
@@ -326,15 +326,15 @@
       <Unit42>
         <Filename Value="../packager/ipkpackage.pas"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="9" Y="302"/>
-        <TopLine Value="281"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
         <UsageCount Value="12"/>
       </Unit42>
       <Unit43>
         <Filename Value="../packager/gpgsign.pas"/>
         <UnitName Value="gpgsign"/>
-        <CursorPos X="8" Y="45"/>
-        <TopLine Value="25"/>
+        <CursorPos X="11" Y="127"/>
+        <TopLine Value="99"/>
         <UsageCount Value="10"/>
       </Unit43>
       <Unit44>
@@ -353,22 +353,22 @@
       <Unit46>
         <Filename Value="../src/licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="11" Y="37"/>
-        <TopLine Value="208"/>
+        <CursorPos X="4" Y="279"/>
+        <TopLine Value="251"/>
         <UsageCount Value="10"/>
       </Unit46>
       <Unit47>
         <Filename Value="../src/trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="17" Y="139"/>
-        <TopLine Value="125"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit47>
       <Unit48>
         <Filename Value="../packager/tarfile.pas"/>
         <UnitName Value="tarfile"/>
-        <CursorPos X="16" Y="127"/>
-        <TopLine Value="1"/>
+        <CursorPos X="6" Y="142"/>
+        <TopLine Value="109"/>
         <UsageCount Value="10"/>
       </Unit48>
       <Unit49>
@@ -382,9 +382,9 @@
         <Filename Value="../src/simdbus.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="simdbus"/>
-        <CursorPos X="60" Y="181"/>
-        <TopLine Value="157"/>
-        <UsageCount Value="40"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="1"/>
+        <UsageCount Value="42"/>
       </Unit50>
       <Unit51>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-shared.inc"/>
@@ -407,8 +407,8 @@
       <Unit54>
         <Filename Value="../src/distri.pas"/>
         <UnitName Value="distri"/>
-        <CursorPos X="6" Y="71"/>
-        <TopLine Value="189"/>
+        <CursorPos X="33" Y="41"/>
+        <TopLine Value="23"/>
         <UsageCount Value="10"/>
       </Unit54>
       <Unit55>
@@ -441,9 +441,9 @@
         <Filename Value="liupdateapp.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="liupdateapp"/>
-        <CursorPos X="13" Y="414"/>
-        <TopLine Value="391"/>
-        <UsageCount Value="29"/>
+        <CursorPos X="44" Y="469"/>
+        <TopLine Value="449"/>
+        <UsageCount Value="31"/>
       </Unit59>
       <Unit60>
         <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/fcl-base/src/contnrs.pp"/>
@@ -500,11 +500,86 @@
         <TopLine Value="1"/>
         <UsageCount Value="10"/>
       </Unit67>
+      <Unit68>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/fcl-process/src/process.pp"/>
+        <UnitName Value="process"/>
+        <CursorPos X="37" Y="112"/>
+        <TopLine Value="91"/>
+        <UsageCount Value="10"/>
+      </Unit68>
+      <Unit69>
+        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/fcl-process/src/pipes.pp"/>
+        <UnitName Value="Pipes"/>
+        <CursorPos X="3" Y="31"/>
+        <TopLine Value="10"/>
+        <UsageCount Value="10"/>
+      </Unit69>
+      <Unit70>
+        <Filename Value="../src/manager.pas"/>
+        <ComponentName Value="MnFrm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="manager"/>
+        <CursorPos X="4" Y="673"/>
+        <TopLine Value="652"/>
+        <UsageCount Value="10"/>
+      </Unit70>
+      <Unit71>
+        <Filename Value="../src/unibuild.pas"/>
+        <UnitName Value="unibuild"/>
+        <CursorPos X="48" Y="200"/>
+        <TopLine Value="182"/>
+        <UsageCount Value="10"/>
+      </Unit71>
+      <Unit72>
+        <Filename Value="../src/igobase.pas"/>
+        <ComponentName Value="IWizFrm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="igobase"/>
+        <CursorPos X="11" Y="731"/>
+        <TopLine Value="710"/>
+        <UsageCount Value="10"/>
+      </Unit72>
+      <Unit73>
+        <Filename Value="../src/linotify.pas"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="linotify"/>
+        <CursorPos X="4" Y="69"/>
+        <TopLine Value="48"/>
+        <UsageCount Value="10"/>
+      </Unit73>
+      <Unit74>
+        <Filename Value="../src/mnupdate.pas"/>
+        <ComponentName Value="UMnForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="mnupdate"/>
+        <CursorPos X="5" Y="163"/>
+        <TopLine Value="153"/>
+        <UsageCount Value="10"/>
+      </Unit74>
+      <Unit75>
+        <Filename Value="../src/ipkbuild.pas"/>
+        <UnitName Value="ipkbuild"/>
+        <CursorPos X="37" Y="111"/>
+        <TopLine Value="91"/>
+        <UsageCount Value="10"/>
+      </Unit75>
+      <Unit76>
+        <Filename Value="../packager/callbackprocess.pas"/>
+        <UnitName Value="callbackprocess"/>
+        <CursorPos X="13" Y="100"/>
+        <TopLine Value="79"/>
+        <UsageCount Value="10"/>
+      </Unit76>
     </Units>
     <JumpHistory Count="1" HistoryIndex="0">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
-        <Caret Line="22" Column="29" TopLine="1"/>
+        <Caret Line="22" Column="26" TopLine="1"/>
       </Position1>
     </JumpHistory>
   </ProjectOptions>

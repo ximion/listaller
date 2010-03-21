@@ -462,11 +462,11 @@ msg('chmod...');
 msg('Assign rights..');
 if pos(' <chmod:',files[i+1])>0 then
 begin
- c.CommandLine := 'chmod '+copy(files[i+1],pos(' <chmod:',files[i+1])+8,3)+SyblToPath(files[i+1])+'/'+ExtractFileName(DeleteModifiers(files[i+1]));
+ c.CommandLine := FindBinary('chmod')+' '+copy(files[i+1],pos(' <chmod:',files[i+1])+8,3)+SyblToPath(files[i+1])+'/'+ExtractFileName(DeleteModifiers(files[i+1]));
  c.Execute;
 end else
 begin
- c.CommandLine :='chmod 755 '+DeleteModifiers(SyblToPath(files[i+1]))+'/'+ExtractFileName(files[i]);
+ c.CommandLine := FindBinary('chmod 755')+' '+DeleteModifiers(SyblToPath(files[i+1]))+'/'+ExtractFileName(files[i]);
  c.Execute;
 end;
     msg('Finishing...');

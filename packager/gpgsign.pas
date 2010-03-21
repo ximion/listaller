@@ -65,7 +65,7 @@ begin
  CBProcess:=TCallbackProcess.Create(nil);
  CBProcess.CallBackEvent:=@OnProcessEvent;
  status.lastresult:=prNone;
- gpg:='gpg --no-tty --batch ';
+ gpg:=FindBinary('gpg')+' --no-tty --batch ';
 end;
 
 destructor TGPGSignWrapper.Destroy;
