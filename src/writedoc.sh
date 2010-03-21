@@ -19,11 +19,11 @@ pasdoc --write-uses-list --staronly --format html \
 ../../src/trstrings.pas ../../src/uninstall.pas ../../src/updexec.pas ../../src/xtypefm.pas \
 ../../src/linotify.pas ../../licreator/editor.pas ../../licreator/prjwizard.pas \
 ../../opbitmap/gifanimator.pas ../../lib/mtprocs.pas ../../lib/libinstaller.lpr ../../lib/lidbusproc.pas \
-../../src/aboutbox.pas ../../bindings/polkit.pas ../../bindings/pkdesktop.pas \
+../../bindings/polkit.pas ../../bindings/pkdesktop.pas ../../bindings/appupdate.pas \
 ../../bindings/gext.pas ../../helper/listallerd.lpr ../../helper/djobs.pas \
 ../../packager/ipkpackage.pas ../../packager/gpgsign.pas ../../packager/callbackprocess.pas \
 ../../packager/tarfile.pas ../../src/simdbus.pas
 else
-  echo " PasDoc was not found. Please PasDoc."
+  echo " PasDoc was not found. Please install PasDoc."
   exit 8
 fi
