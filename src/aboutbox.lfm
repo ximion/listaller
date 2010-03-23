@@ -34,7 +34,7 @@ object FmAbout: TFmAbout
     Left = 117
     Height = 13
     Top = 40
-    Width = 76
+    Width = 75
     Caption = 'Version ...-...'
     Font.Height = -9
     Font.Name = 'Sans'
@@ -55,9 +55,9 @@ object FmAbout: TFmAbout
     Height = 268
     Top = 112
     Width = 324
-    ActivePage = TabSheet1
+    ActivePage = AboutSheet
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 2
+    TabIndex = 0
     TabOrder = 0
     object AboutSheet: TTabSheet
       Caption = 'About'
@@ -69,7 +69,7 @@ object FmAbout: TFmAbout
         Top = 65
         Width = 225
         Anchors = [akLeft]
-        Caption = 'Software installer && manager'#10#10'© 2008-2009 Matthias Klumpp'#10#10'http://listaller.nlinux.org'#10'License: GNU General Public License Version 3'
+        Caption = 'Software installer && manager'#10#10'© 2008-2010 Matthias Klumpp'#10#10'http://listaller.nlinux.org'#10'License: GNU General Public License Version 3'
         ParentColor = False
       end
     end
@@ -103,8 +103,8 @@ object FmAbout: TFmAbout
           '    Developer'
           ''
           'Dennis Seid'
-          '   jumcore@yahoo.de'
-          '   Designer'
+          '    jumcore@yahoo.de'
+          '    Designer'
         )
         ParentColor = True
         ReadOnly = True

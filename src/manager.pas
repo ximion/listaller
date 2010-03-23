@@ -42,6 +42,7 @@ type
     BtnPanel: TPanel;
     CatButton: TSpeedButton;
     InstAppButton: TSpeedButton;
+    MBar: TProgressBar;
     MenuItem2: TMenuItem;
     RepoButton: TSpeedButton;
     SettingsButton: TSpeedButton;
@@ -51,7 +52,6 @@ type
     BitBtn6: TBitBtn;
     Button1: TButton;
     MainMenu1: TMainMenu;
-    MBar: TProgressBar;
     MenuItem1: TMenuItem;
     MItemInstallPkg: TMenuItem;
     Splitter1: TSplitter;

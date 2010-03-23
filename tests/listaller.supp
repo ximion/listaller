@@ -1,0 +1,94 @@
+# Valgrind suppressions file for Listaller modules
+#
+# Started by Matthias Klumpp <matthias@nlinux.org> 2010-03-24
+
+{
+   FPSYSCALL-Leak
+   Memcheck:Param
+   stat(file_name)
+   fun:SYSTEM_FPSYSCALL$INT64$INT64$INT64$$INT64
+   fun:SYSTEM_FPSTAT$PCHAR$STAT$$LONGINT
+   fun:main
+}
+{
+   FPSYSCALL-Leak2
+   Memcheck:Param
+   access(pathname)
+   fun:SYSTEM_FPSYSCALL$INT64$INT64$INT64$$INT64
+   fun:SYSTEM_FPACCESS$PCHAR$LONGINT$$LONGINT
+   fun:main
+}
+{
+   Qt4-Initleak-listallgo1
+   Memcheck:Leak
+   fun:malloc
+   fun:XInitExtension
+   fun:XextAddDisplay
+   fun:XSyncQueryExtension
+   obj:/usr/lib/libQtGui.so.4.6.2
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   fun:_ZN12QApplicationC1ERiPPci
+   fun:QApplication_create
+   fun:QTINT_TQTWIDGETSET_$__CREATE$$TQTWIDGETSET
+   fun:FORMS_CREATEWIDGETSET$TWIDGETSETCLASS
+   fun:INTERFACES_init
+   fun:fpc_initializeunits
+   fun:(below main)
+}
+{
+   Qt4-Initleak-listallgo2
+   Memcheck:Leak
+   fun:malloc
+   fun:XInitExtension
+   fun:XextAddDisplay
+   obj:/usr/lib/libXrandr.so.2.2.0
+   fun:XRRQueryExtension
+   obj:/usr/lib/libQtGui.so.4.6.2
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   fun:_ZN12QApplicationC1ERiPPci
+   fun:QApplication_create
+   fun:QTINT_TQTWIDGETSET_$__CREATE$$TQTWIDGETSET
+   fun:FORMS_CREATEWIDGETSET$TWIDGETSETCLASS
+   fun:INTERFACES_init
+   fun:fpc_initializeunits
+   fun:(below main)
+}
+{
+   Qt4-Initleak3
+   Memcheck:Leak
+   fun:malloc
+   fun:XInitExtension
+   fun:XRenderFindDisplay
+   fun:XRenderQueryExtension
+   obj:/usr/lib/libQtGui.so.4.6.2
+   fun:_ZN19QApplicationPrivate9constructEP9_XDisplaymm
+   fun:_ZN12QApplicationC1ERiPPci
+   fun:QApplication_create
+   fun:QTINT_TQTWIDGETSET_$__CREATE$$TQTWIDGETSET
+   fun:FORMS_CREATEWIDGETSET$TWIDGETSETCLASS
+   fun:INTERFACES_init
+   fun:fpc_initializeunits
+   fun:(below main)
+}
+{
+   Qt4Leak1
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib/libfontconfig.so.*
+   ...
+   obj:/usr/lib/libQtGui.so.*
+}
+{
+   Qt4Leak2
+   Memcheck:Leak
+   fun:calloc
+   ...
+   obj:/usr/lib/libQtCore.so.*
+}
+{
+   FontconfigLeak
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib/libfontconfig.so.1.4.4
+   ...
+}

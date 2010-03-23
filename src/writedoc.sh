@@ -20,7 +20,7 @@ pasdoc --write-uses-list --staronly --format html \
 ../../src/linotify.pas ../../licreator/editor.pas ../../licreator/prjwizard.pas \
 ../../opbitmap/gifanimator.pas ../../lib/mtprocs.pas ../../lib/libinstaller.lpr ../../lib/lidbusproc.pas \
 ../../bindings/polkit.pas ../../bindings/pkdesktop.pas ../../bindings/appupdate.pas \
-../../bindings/gext.pas ../../helper/listallerd.lpr ../../helper/djobs.pas \
+../../bindings/gext.pas ../../src/listallerd.lpr ../../src/djobs.pas \
 ../../packager/ipkpackage.pas ../../packager/gpgsign.pas ../../packager/callbackprocess.pas \
 ../../packager/tarfile.pas ../../src/simdbus.pas
 else

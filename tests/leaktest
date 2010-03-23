@@ -1,0 +1,27 @@
+#!/bin/bash
+# Script to launch Listaller module under valgrind for memory error/leak checking.
+set -e
+
+modpath=$1
+
+function usage
+{
+  echo "Check memory leaks in Listaller toolset using Valgrind."
+  echo "Usage:"
+  echo " leaktest <listaller-module>"
+}
+
+eval set -- "$PARSED_OPTIONS"
+
+if [ "$modpath" == "" ]; then
+  usage;
+  exit 1;
+fi
+
+sdir=$0
+sdir=${sdir%/*}
+
+echo "Running Valgrind..."
+
+valgrind --log-file=valgrind.log --leak-check=full --suppressions="$sdir/listaller.supp" --gen-suppressions=all --num-callers=20 \
+$modpath "$@"

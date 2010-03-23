@@ -64,6 +64,7 @@ begin
    Label2.Caption:=rsVersion+': '+LiVersion;
    Label5.Caption:=rsUseLaunchpadForBugs;
    Label3.Caption:=Format(rsLinDesk,[GetDistro.Desktop]);
+   PageControl1.ActivePageIndex:=0;
    AboutSheet.Caption:=rsAbout;
    AuthorSheet.Caption:=rsAuthors;
    BitBtn1.Caption:=rsClose;

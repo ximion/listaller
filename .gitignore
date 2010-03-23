@@ -9,7 +9,5 @@
 .directory
 build
 Makefile
-packager/test
-bindings/test
 .directory
 copylib.sh

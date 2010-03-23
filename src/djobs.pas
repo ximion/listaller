@@ -28,7 +28,7 @@ type
  TAccessType = (AC_UNKNOWN,AC_AUTHORIZED,AC_NOT_AUTHORIZED);
 
  //** Base class for all jobs
- TJob = class(TThread)
+ TJob = class//(TThread)
  protected
   allowed: TAccessType;
   ident:  String;
@@ -45,6 +45,9 @@ type
  public
   constructor Create(aMsg: PDBusMessage;dbusConn: PDBusConnection);
   destructor  Destroy;override;
+
+  //!
+  procedure Execute;virtual;abstract;
 
   property Authorization: TAccessType read allowed write allowed;
   property Identifier: String read ident write ident;
@@ -120,7 +123,7 @@ implementation
 
 constructor TJob.Create(aMsg: PDBusMessage;dbusConn: PDBusConnection);
 begin
- inherited Create(true);
+ inherited Create;//(true);
 
  origMsg:=aMsg;
  remove:=false;
@@ -130,7 +133,7 @@ begin
  loop:=g_main_loop_new (nil, false);
  allowed:=AC_UNKNOWN;
  jobID:=RandomCode;
- FreeOnTerminate:=true;
+  //FreeOnTerminate:=true;
 end;
 
 destructor TJob.Destroy;
@@ -138,8 +141,8 @@ begin
  bs.Free;
  g_object_unref(authority);
  g_main_loop_unref(loop);
- if Assigned(FatalException) then
-  raise FatalException;
+ {if Assigned(FatalException) then
+  raise FatalException;}
  inherited;
 end;
 
@@ -194,8 +197,8 @@ var action_id: PGChar;
 procedure Error_Terminate;
 begin
  SendReply(false,'');
- Terminate;
- Resume();
+ {Terminate;
+ Resume();}
 end;
 
 begin
@@ -239,7 +242,7 @@ begin
    p_error('Not authorized to call this action.');
    SendReply(false,'');
    remove:=true;
-   Resume();
+   //Resume();
    exit;
   end;
 
@@ -257,7 +260,8 @@ begin
  SendReply(true,PChar(jobID));
 
  //Start work
-  Resume();
+  //Resume();
+  Execute();
 end;
 
 destructor TDoAppInstall.Destroy;
@@ -360,9 +364,11 @@ var
  success: Boolean;
 begin
 
- if Terminated then exit;
+ //if Terminated then exit;
 
  try
+ //try
+ success:=false;
  { This is a fast install. Should never be called directly! }
  setup:=TInstallPack.Create;
 
@@ -378,14 +384,14 @@ begin
 
  p_info('AppInstall job '+jobID+ ' completed.');
   success:=true; //Finished without problems
- except
+ {except
   on E: Exception do
   begin
    p_error(E.Message);
    success:=false;
   end;
-  //success:=false;
- end;
+ end;}
+ finally
  //Now emit action finished signal:
 
   // create a signal & check for errors
@@ -394,8 +400,8 @@ begin
                           'Finished'); // name of the signal
   bs.AppendBool(success);
   bs.SendMessage(msg);
-
- Terminate;
+ end;
+  //Terminate;
 end;
 
 ///////////////////////////////////////////////////////////////////////
@@ -460,8 +466,8 @@ procedure Error_Terminate;
 begin
  SendReply(false,'');
  remove:=true;
- Terminate;
- Resume();
+ {Terminate;
+ Resume();}
 end;
 
 begin
@@ -503,7 +509,7 @@ begin
    p_error('Not authorized to call this action.');
    SendReply(false,'');
    remove:=true;
-   Resume();
+   //Resume();
    exit;
   end;
 
@@ -523,14 +529,15 @@ begin
 
 
  //Start work
-  Resume();
+  //Resume();
+  Execute();
 end;
 
 destructor TDoAppRemove.Destroy;
 begin
  Dec(ManagerWorkers);
- if Assigned(FatalException) then
-  raise FatalException;
+ {if Assigned(FatalException) then
+  raise FatalException; }
 
  p_debug('App remove job deleted.');
  inherited;
@@ -587,7 +594,7 @@ var
 begin
 if remove then
 begin
- Terminate;
+ //Terminate;
  exit;
 end;
 
@@ -611,7 +618,7 @@ finally
   bs.SendMessage(msg);
 
   p_info('App uninstallation job "'+jobID+'" finished.');
- Terminate;
+ //Terminate;
  end;
 end;
 
@@ -677,8 +684,8 @@ procedure Error_Terminate;
 begin
  SendReply(false,'');
  remove:=true;
- Terminate;
- Resume();
+ {Terminate;
+ Resume();}
 end;
 
 begin
@@ -721,7 +728,7 @@ begin
    p_error('Not authorized to call this action.');
    SendReply(false,'');
    remove:=true;
-   Resume();
+   //Resume();
    exit;
   end;
 
@@ -741,14 +748,15 @@ begin
 
 
  //Start work
-  Resume();
+  //Resume();
+  Execute();
 end;
 
 destructor TDoAppUpdate.Destroy;
 begin
  Dec(ManagerWorkers);
- if Assigned(FatalException) then
-  raise FatalException;
+ {if Assigned(FatalException) then
+  raise FatalException;}
 
  p_debug('App update job deleted.');
  inherited;
@@ -796,7 +804,7 @@ var
 begin
 if remove then
 begin
- Terminate;
+ //Terminate;
  exit;
 end;
 
@@ -821,7 +829,7 @@ finally
   bs.SendMessage(msg);
 
   p_info('App update job "'+jobID+'" finished.');
- Terminate;
+ //Terminate;
  end;
 end;
 

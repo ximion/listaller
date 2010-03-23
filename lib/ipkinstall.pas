@@ -564,11 +564,14 @@ begin
  pkg.Decompress;
 end;
 
-sigState:=pkg.CheckSignature;
-case sigState of
-psNone: msg('Package is unsigned.');
-psTrusted: msg('Package has trusted signature.');
-psUntrusted: msg('Package signature is UNTRUSTED!');
+if not IsRoot then
+begin
+ sigState:=pkg.CheckSignature;
+ case sigState of
+  psNone: msg('Package is unsigned.');
+  psTrusted: msg('Package has trusted signature.');
+  psUntrusted: msg('Package signature is UNTRUSTED!');
+ end;
 end;
 
 if not pkg.UnpackFile('arcinfo.pin') then

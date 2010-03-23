@@ -48,7 +48,7 @@ if [ ! -f "libinstaller.so" ]; then
 fi
 
 echo "Compiling Listaller daemon..."
-lazbuild -B --ws=nogui ../helper/listallerd.lpr
+lazbuild -B --ws=nogui listallerd.lpr
 
 echo "Compiling command-line tool..."
 lazbuild -B --ws=nogui lipa.lpr

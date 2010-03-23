@@ -344,15 +344,14 @@ object MnFrm: TMnFrm
       Width = 112
       Align = alBottom
       Anchors = [akTop, akLeft, akRight, akBottom]
-      AutoSize = True
       BevelOuter = bvNone
       ClientHeight = 506
       ClientWidth = 112
       TabOrder = 0
       object SettingsButton: TSpeedButton
-        Left = 0
+        Left = 8
         Height = 80
-        Top = 328
+        Top = 329
         Width = 96
         Anchors = [akLeft]
         Caption = 'Settings'
@@ -660,7 +659,7 @@ object MnFrm: TMnFrm
         ParentShowHint = False
       end
       object InstAppButton: TSpeedButton
-        Left = 0
+        Left = 8
         Height = 72
         Top = 8
         Width = 96
@@ -972,7 +971,7 @@ object MnFrm: TMnFrm
         ParentShowHint = False
       end
       object CatButton: TSpeedButton
-        Left = 0
+        Left = 8
         Height = 80
         Top = 104
         Width = 96
@@ -1282,7 +1281,7 @@ object MnFrm: TMnFrm
         ParentShowHint = False
       end
       object RepoButton: TSpeedButton
-        Left = 0
+        Left = 8
         Height = 80
         Top = 216
         Width = 96
@@ -1776,6 +1775,17 @@ object MnFrm: TMnFrm
           TabOrder = 0
         end
       end
+      object MBar: TProgressBar
+        Left = 286
+        Height = 8
+        Top = 246
+        Width = 128
+        Anchors = [akRight, akBottom]
+        Smooth = True
+        Step = 1
+        Style = pbstMarquee
+        TabOrder = 5
+      end
     end
     object CatalogPage: TPage
       Caption = 'CatalogPage'
@@ -2076,17 +2086,6 @@ object MnFrm: TMnFrm
         TabOrder = 5
       end
     end
-  end
-  object MBar: TProgressBar
-    Left = 392
-    Height = 8
-    Top = 248
-    Width = 128
-    Anchors = [akRight, akBottom]
-    Smooth = True
-    Step = 1
-    Style = pbstMarquee
-    TabOrder = 2
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '.*.ipk'

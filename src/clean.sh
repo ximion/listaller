@@ -68,19 +68,19 @@ rm -rf *~
 
 cd ..
 
-#Clean helper daemon directory
-cd ./helper
-rm -rf *.o
-rm -rf *.ppu
+#Cleanup testing dirs
+cd ./tests
+find -iname *.ppu -exec rm {} \;
+find -iname *.o -exec rm {} \;
+find -iname *.a -exec rm {} \;
+find -iname *.pas~ -exec rm {} \;
+find -iname *.bak -exec rm {} \;
 
-rm -rf *.pas~
-rm -rf *.sh~
-rm -rf *.bak
+find -iname *.compiled -exec rm {} \;
+find -iname *.manifest -exec rm {} \;
+find -iname *.lrs -exec rm {} \;
 
-rm -rf *.compiled
-rm -rf *.lrs
-
-rm -rf *~
+find -iname *~ -exec rm {} \;
 
 cd ../src
 

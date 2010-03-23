@@ -1,12 +1,16 @@
 Version 0.4
 ~~~~~~~~~~~~~
  == Still in development ==
-
+ 
+ * Added LZMA support for IPK1.0
+ * Dropped Abbrevia components
  * Included libinstaller library
  * Added PolicyKit support
  * Changed to IPK1.0 and IPS1.0 standard for package building
+ * Removed support for IPK0.8
  * Rebased on PackageKit 0.5.x glib2 interface
- * Added PolicyKit support
+ * Completely updated the GUI interfaces
+ * Switched to Lazarus 0.9.28 and FPC 2.4.0
 
 Version 0.3.0b
 ~~~~~~~~~~~~~
