@@ -1,10 +1,9 @@
 Name:             listaller-core
-Version:          0.3.70+git20100303
+Version:          0.3.77+git20100325
 Release:          1
 License:          GPLv3
-BuildRequires:    fpc >= 2.4.0, lazarus >= 0.9.28, glib2-devel,
-		  gtk2-devel, glib2, fpc-src, gtk2, libqt4intf5, sqlite-devel, PackageKit-glib-devel >=0.5.6, PolicyKit-devel
-Source0:          listaller_0.3.70-0+git20100303~1unstable.tar.gz
+BuildRequires:    fpc >= 2.4.0, lazarus >= 0.9.28, PackageKit-glib-devel >= 0.5.6, glib2-devel, gtk2-devel, fpc-src, libqt4intf5, sqlite-devel, PolicyKit-devel
+Source0:          listaller_0.3.77-0+git20100325.tar.gz
 
 Requires:         xdg-utils, PackageKit, PolicyKit, libInstaller-0.4
 
@@ -35,7 +34,7 @@ make
 cd ./listaller-gitsnapshot
 
 mkdir -p %{_tmppath}/build-%{name}-%{version}/usr/bin
-make install
+make install DESTDIR=%{buildroot}
 
 %clean
 cd ./listaller-gitsnapshot
@@ -45,9 +44,9 @@ make clean
 %defattr(-,root,root)
 %dir "/usr/bin"
 /usr/bin/lipa
-/usr/share/dbus-1/system-services/org.freedesktop.Listaller.service
-/etc/dbus-1/system.d/org.freedesktop.Listaller.conf
-/usr/share/polkit-1/actions/org.freedesktop.listaller.policy
+/usr/share/dbus-1/system-services/org.nlinux.Listaller.service
+/etc/dbus-1/system.d/org.nlinux.Listaller.conf
+/usr/share/polkit-1/actions/org.nlinux.listaller.policy
 /usr/sbin/listallerd
 
 %package -n listaller-data
@@ -156,7 +155,7 @@ button for your software.
 /usr/share/listaller/graphics/libutton
 
 %package -n listaller-qt
-Requires:         listaller-core, listaller-data, libqt4intf, kde-icons-oxygen
+Requires:         listaller-core, listaller-data, oxygen-icon-theme
 Group:            Applications/System
 Summary:          Listaller frontends (Qt4)
 Vendor:           Listaller-Project
@@ -184,7 +183,7 @@ Please note that this alpha-version should only be used for testing purposes.
 /usr/bin/listallmgr-qt
 
 %package -n listaller-creator-qt
-Requires:         listaller-core, listaller-data, libqt4intf, kde-icons-oxygen, listaller-tools
+Requires:         listaller-core, listaller-data, oxygen-icon-theme, listaller-tools
 Group:            Applications/System
 Summary:          Listaller Creator (Qt4)
 Vendor:           Listaller-Project
@@ -199,9 +198,10 @@ Please note that this is an alpha-release!
 
 %files -n listaller-creator-qt
 %defattr(-,root,root)
-#/opt/appfiles/liCreator/
-#/usr/share/applications/licreator-qt.desktop
-#/usr/bin/licreator-qt
+/usr/bin/licreator-qt
+/usr/share/applications/licreator-qt.desktop
+/opt/appfiles/liCreator/licreator-qt
+/opt/appfiles/liCreator/listaller_creator-qt.png
 
 %package -n listaller-creator-gtk
 Requires:         listaller-core, listaller-data, listaller-tools
@@ -219,6 +219,7 @@ Please note that this is an alpha-release!
 
 %files -n listaller-creator-gtk
 %defattr(-,root,root)
-/opt/appfiles/liCreator/
-/usr/share/applications/licreator-gtk.desktop
 /usr/bin/licreator-gtk
+/usr/share/applications/licreator-gtk.desktop
+/opt/appfiles/liCreator/licreator-gtk
+/opt/appfiles/liCreator/listaller_creator-gtk.png

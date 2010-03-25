@@ -29,8 +29,8 @@
         <Filename Value="libuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
-        <CursorPos X="24" Y="27"/>
-        <TopLine Value="1"/>
+        <CursorPos X="16" Y="143"/>
+        <TopLine Value="133"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="37"/>
         <Loaded Value="True"/>
@@ -45,12 +45,14 @@
       <Unit2>
         <Filename Value="ipkbuild.pas"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="22" Y="608"/>
-        <TopLine Value="586"/>
+        <CursorPos X="4" Y="244"/>
+        <TopLine Value="218"/>
+        <EditorIndex Value="2"/>
         <UsageCount Value="14"/>
         <Bookmarks Count="1">
-          <Item0 X="53" Y="568" ID="8"/>
+          <Item0 X="53" Y="573" ID="8"/>
         </Bookmarks>
+        <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="abbrevia/abzipprc.pas"/>
@@ -90,9 +92,11 @@
       <Unit8>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="3" Y="194"/>
-        <TopLine Value="172"/>
+        <CursorPos X="1" Y="1"/>
+        <TopLine Value="224"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit8>
       <Unit9>
         <Filename Value="unibuild.lpr"/>
@@ -260,7 +264,7 @@
         <UsageCount Value="10"/>
       </Unit32>
     </Units>
-    <JumpHistory Count="15" HistoryIndex="14">
+    <JumpHistory Count="17" HistoryIndex="16">
       <Position1>
         <Filename Value="libuild.lpr"/>
         <Caret Line="27" Column="26" TopLine="13"/>
@@ -319,8 +323,16 @@
       </Position14>
       <Position15>
         <Filename Value="libuild.lpr"/>
-        <Caret Line="27" Column="24" TopLine="1"/>
+        <Caret Line="27" Column="25" TopLine="1"/>
       </Position15>
+      <Position16>
+        <Filename Value="ipkbuild.pas"/>
+        <Caret Line="42" Column="29" TopLine="37"/>
+      </Position16>
+      <Position17>
+        <Filename Value="libuild.lpr"/>
+        <Caret Line="28" Column="9" TopLine="1"/>
+      </Position17>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

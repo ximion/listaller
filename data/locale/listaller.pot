@@ -1,6 +1,6 @@
 # Main translation template for Listaller version 0.4.00
 # Copyright (C) 2009-2010
-# This file is distributed under the same licence as the Listaller project.
+# This file is distributed under the same license as the Listaller project.
 #
 # Matthias Klumpp, 2008-2010.
 msgid ""
@@ -120,6 +120,10 @@ msgstr ""
 
 #: trstrings:rsinstaborted
 msgid "Installation aborted."
+msgstr ""
+
+#: trstrings:rsinstabortedbyuser
+msgid "Installation aborted by user."
 msgstr ""
 
 #: trstrings:rsappninstall
@@ -282,8 +286,8 @@ msgstr ""
 msgid "Found no package with the necessary library \"%l\" for your distribution."
 msgstr ""
 
-#: trstrings:rsopeningdb
-msgid "Opening software database..."
+#: trstrings:rsdbopened
+msgid "Software database opened."
 msgstr ""
 
 #: trstrings:rsinclose
@@ -343,7 +347,7 @@ msgid "Cleaning up..."
 msgstr ""
 
 #: trstrings:rspkginval
-msgid "The submitted package was invalid!"
+msgid "The submitted package is invalid!"
 msgstr ""
 
 #: trstrings:rscouldntsolve
@@ -446,6 +450,14 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
+#: trstrings:rsinstpkgfailed
+msgid "Installation of package %s failed!"
+msgstr ""
+
+#: trstrings:rsecode
+msgid "Code:"
+msgstr ""
+
 #: trstrings:rsinstallation
 msgid "Installation"
 msgstr ""
@@ -535,7 +547,7 @@ msgid "Install application for everyone"
 msgstr ""
 
 #: trstrings:rstestapp
-msgid "Test setup & software"
+msgid "Test setup && software"
 msgstr ""
 
 #: trstrings:rsinstallhome
@@ -696,6 +708,10 @@ msgstr ""
 
 #: trstrings:rsrepositories
 msgid "Repositories"
+msgstr ""
+
+#: trstrings:rspackagelists
+msgid "Package lists"
 msgstr ""
 
 #: trstrings:rssettings
@@ -900,5 +916,13 @@ msgstr ""
 
 #: trstrings:rswarning
 msgid "Warning!"
+msgstr ""
+
+#: trstrings:rstmpwritedenied
+msgid "Listaller cannot write into its temporary directory: Access denied!"
+msgstr ""
+
+#: trstrings:rserror
+msgid "Error"
 msgstr ""
 

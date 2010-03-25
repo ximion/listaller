@@ -48,6 +48,7 @@ rsDone = 'Done.';
 rsDoYouAcceptLicenseCMD = 'Do you accept this license [y/n]?';
 rsEnterNumber = 'You have to enter a number!';
 rsInstAborted='Installation aborted.';
+rsInstAbortedByUser='Installation aborted by user.';
 rsAppNInstall='The application %a was not installed.';
 rsLipaAutoFixQ = 'Should lipa fix these problems automatically [y/n]?';
 rsLipaInfo1 = 'Listaller command-line tool to handle IPK-packages';
@@ -260,6 +261,7 @@ rsCouldNotInstallApp = 'The application %a could not be installed!';
 rsWarning = 'Warning!';
 rsTmpWriteDenied = 'Listaller cannot write into its temporary directory: '
   +'Access denied!';
+rsError = 'Error';
 implementation
 end.
 

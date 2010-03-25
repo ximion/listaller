@@ -230,9 +230,9 @@ begin
 
   for k:=1 to h.Count-1 do
   begin
-  if pos(' <',h[k])>0 then
+  if pos(' (',h[k])>0 then
   begin
-   if h[k][1]='-' then sources.Add(copy(h[k],2,pos(' <',h[k])-2))
+   if h[k][1]='-' then sources.Add(copy(h[k],2,pos(' (',h[k])-2))
   end else
   begin
    if h[k][1]='-' then sources.Add(copy(h[k],2,length(h[k])));

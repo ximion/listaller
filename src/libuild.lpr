@@ -139,8 +139,8 @@ begin
     CreateRPM(pki);
     end else
     begin
-     writeLn('ERROR:');
-     writeLn('Cannot build RPM package. You need to install "rpmbuild" before.');
+     writeLn('error:');
+     writeLn(' Cannot build RPM package. You need to install "rpmbuild" before.');
     end;
     end;
   end;

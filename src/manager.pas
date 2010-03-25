@@ -214,12 +214,12 @@ function OnUserRequest(mtype: TRqType;msg: PChar;data: Pointer): TRqResult;cdecl
 begin
 Result:=rqsOK;
 case mtype of
-rqError: begin Application.MessageBox(msg,'Error',MB_OK+MB_IconError);
+rqError: begin Application.MessageBox(msg,PChar(rsError),MB_OK+MB_IconError);
                RMForm.RmProcStatus:=prFailed;
          end;
-rqWarning:  if Application.MessageBox(msg,'Warning',MB_YesNo+MB_IconWarning)= idYes then
+rqWarning:  if Application.MessageBox(msg,PChar(rsWarning),MB_YesNo+MB_IconWarning)= idYes then
              Result:=rqsYes else Result:=rqsNo;
-rqQuestion: if Application.MessageBox(msg,'Question',MB_YesNo+MB_IconQuestion)= idYes then
+rqQuestion: if Application.MessageBox(msg,PChar(rsQuestion),MB_YesNo+MB_IconQuestion)= idYes then
              Result:=rqsYes else Result:=rqsNo;
 rqInfo: ShowMessage(msg);
 end;
@@ -954,7 +954,7 @@ if not DirectoryExists(RegDir) then CreateDir(RegDir);
   end;
   tmp.LoadFromFile(RegDir+'updates.list');
   for i:=1 to tmp.Count-1 do begin
-  UListBox.items.Add(copy(tmp[i],pos(' <',tmp[i])+2,length(tmp[i])-pos(' <',tmp[i])-2)+' ('+copy(tmp[i],3,pos(' <',tmp[i])-3)+')');
+  UListBox.items.Add(copy(tmp[i],pos(' (',tmp[i])+2,length(tmp[i])-pos(' (',tmp[i])-2)+' ('+copy(tmp[i],3,pos(' (',tmp[i])-3)+')');
   UListBox.Checked[UListBox.Items.Count-1]:=tmp[i][1]='-';
   end;
 

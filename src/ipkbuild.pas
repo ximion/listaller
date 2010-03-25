@@ -237,6 +237,11 @@ end;
 
  fls.SaveToFile(ChangeFileExt(fname,'')+'_fdata.ulist');
 
+ for i:=0 to fls.Count-1 do
+  if (length(fls[i])>0)
+  and((fls[i][1]='/')or(fls[i][1]='.')) then
+   fls[i]:=ExtractFileName(fls[i]);
+
  fls.SaveToFile(path+'content.id');
  fls.LoadFromFile(fname);
  script:=TStringList.Create;

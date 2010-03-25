@@ -323,7 +323,7 @@ rqWarning: begin
    begin
     with IWizFrm do
      begin
-      InfoMemo.Lines.Add('Installation aborted by user.');
+      InfoMemo.Lines.Add(rsInstAbortedByUser);
       InfoMemo.Lines.SaveTofile('/tmp/install-'+setup.GetAppName+'.log');
       NoteBook1.PageIndex:=6;
       Label17.Caption:=StringReplace(rsCouldNotInstallApp, '%a',setup.GetAppName, [rfReplaceAll]);
@@ -388,7 +388,10 @@ begin
  end;
 end
 else
+begin
  p_warning('Listaller Setup tool seems to owns none of the required display forms!');
+ p_warning('This should _never_ happen!');
+end;
 
  Application.ProcessMessages;
 end;

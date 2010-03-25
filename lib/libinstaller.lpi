@@ -6,7 +6,7 @@
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ActiveEditorIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
@@ -33,7 +33,7 @@
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libinstaller"/>
-        <CursorPos X="27" Y="22"/>
+        <CursorPos X="31" Y="23"/>
         <TopLine Value="1"/>
         <EditorIndex Value="0"/>
         <UsageCount Value="88"/>
@@ -43,8 +43,8 @@
         <Filename Value="ipkinstall.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
-        <CursorPos X="3" Y="1701"/>
-        <TopLine Value="1680"/>
+        <CursorPos X="39" Y="16"/>
+        <TopLine Value="1"/>
         <EditorIndex Value="1"/>
         <UsageCount Value="48"/>
         <Loaded Value="True"/>
@@ -443,8 +443,8 @@
         <Filename Value="liupdateapp.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="liupdateapp"/>
-        <CursorPos X="44" Y="469"/>
-        <TopLine Value="449"/>
+        <CursorPos X="55" Y="235"/>
+        <TopLine Value="1"/>
         <UsageCount Value="31"/>
       </Unit59>
       <Unit60>
@@ -578,7 +578,7 @@
         <UsageCount Value="10"/>
       </Unit76>
     </Units>
-    <JumpHistory Count="5" HistoryIndex="4">
+    <JumpHistory Count="6" HistoryIndex="5">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="22" Column="57" TopLine="1"/>
@@ -599,6 +599,10 @@
         <Filename Value="ipkinstall.pas"/>
         <Caret Line="1665" Column="20" TopLine="1644"/>
       </Position5>
+      <Position6>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="23" Column="31" TopLine="1"/>
+      </Position6>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
