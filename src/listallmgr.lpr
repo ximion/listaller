@@ -1,5 +1,5 @@
 { listallmngr.lpr
-  Copyright (C) Listaller Project 2008-2009
+  Copyright (C) Listaller Project 2008-2010
 
   listallmngr.lpr is free software: you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -18,42 +18,47 @@ program listallmgr;
 
 {$mode objfpc}{$H+}
 
-uses
-  {$IFDEF UNIX}
-  cthreads,
-  {$ENDIF}
+uses {$IFDEF UNIX}
+  cthreads, {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
   SysUtils,
-  manager, uninstall, pkgconvertdisp,
-  LiCommon, LiTranslator, LResources, Process, appitem;
-
-{$IFDEF WINDOWS}{$R listallmgr.rc}{$ENDIF}
+  Manager,
+  Uninstall,
+  PkgConvertDisp,
+  LiCommon,
+  LiTranslator,
+  Process,
+  AppItem;
 
 var
- p: TProcess;
+  p: TProcess;
+
+{$R listallmgr.res}
+
 begin
-  {$I listallmgr.lrs}
   //Submit IPK packages to listallgo and quit.
   //If no package exists, open Listaller Manager surface
-  if FileExists(paramstr(1)) then
+  if FileExists(ParamStr(1)) then
   begin
-   p:=TProcess.Create(nil);
-   p.Options:=[];
-   p.CommandLine := ExtractFilePath(Application.ExeName)+'listallgo '+paramstr(1);
-   p.Execute;
-   p.Free;
-   halt(0);
-   exit;
-  end else
+    p := TProcess.Create(nil);
+    p.Options := [];
+    p.CommandLine := ExtractFilePath(Application.ExeName) + 'listallgo ' + ParamStr(1);
+    p.Execute;
+    p.Free;
+    halt(0);
+    exit;
+  end
+  else
   begin
-  Application.Title:='Listaller Manager';
-  Application.ShowMainForm:=false;
-  Application.Initialize;
-  writeLn('Application initialized.');
-  Application.CreateForm(TMnFrm, MnFrm);
-  Application.CreateForm(TConvDisp, ConvDisp);
-  Application.Run;
-  writeLn('Listaller manager closed.');
+    Application.Title := 'Listaller Manager';
+    Application.ShowMainForm := False;
+    Application.Initialize;
+    writeLn('Application initialized.');
+    Application.CreateForm(TMnFrm, MnFrm);
+    Application.CreateForm(TConvDisp, ConvDisp);
+    Application.Run;
+    writeLn('Listaller manager closed.');
   end;
 end.
+

@@ -87,10 +87,10 @@ public
  pkclient: Pointer;
  constructor Create;
  destructor Destroy; override;
- {** Check if package is installed @param pkg Name of the package
+ {** Resolve a package name
      @returns True if action was not cancelled}
  function Resolve(pkg: String): Boolean;
- {** Resolve a package name
+ {** Check if package is installed @param pkg Name of the package
      @returns True if action was not cancelled}
  function ResolveInstalled(pkg: String): Boolean;
  {** Returns the reverse dependencies of a package

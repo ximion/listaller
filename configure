@@ -65,7 +65,7 @@ dirs=". \
 basedir=$(pwd)
 
 GLIBNAME="libglib-2.0.so"
-QT4INTFNAME="libqt4intf.so"
+QT4INTFNAME="libQt4Pas.so"
 QT4CORENAME="libqt4core.so"
 SQLITENAME="libsqlite3.so"
 PACKAGEKITNAME="libpackagekit-glib2.so"
@@ -113,7 +113,7 @@ fi
 if [ "$ENABLE_QT" == "1" ]; then
   echo "Found Qt4 interface... $FOUND_QTINTF"
   if [ "$FOUND_QTINTF" = "no" ]; then
-    echo " Qt4 pascal interface was not found. $INSTDEV"
+    echo " Qt4 Pascal interface was not found. $INSTDEV"
     exit 8
   fi
 fi

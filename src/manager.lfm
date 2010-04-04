@@ -316,7 +316,7 @@ object MnFrm: TMnFrm
   Menu = MainMenu1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '0.9.28.2'
+  LCLVersion = '0.9.29'
   object StatusLabel: TLabel
     Left = 112
     Height = 13
@@ -1790,7 +1790,7 @@ object MnFrm: TMnFrm
     object CatalogPage: TPage
       Caption = 'CatalogPage'
       ClientWidth = 700
-      ClientHeight = 512
+      ClientHeight = 534
       object BitBtn2: TBitBtn
         Left = 210
         Height = 40
@@ -1805,7 +1805,7 @@ object MnFrm: TMnFrm
     object RepoPage: TPage
       Caption = 'RepoPage'
       ClientWidth = 700
-      ClientHeight = 512
+      ClientHeight = 534
       object BitBtn5: TBitBtn
         Left = 202
         Height = 30
@@ -1826,7 +1826,7 @@ object MnFrm: TMnFrm
         TabOrder = 1
         object SysRepoSheet: TTabSheet
           Caption = 'System repositories'
-          ClientHeight = 486
+          ClientHeight = 508
           ClientWidth = 696
           object BitBtn6: TBitBtn
             Left = 184
@@ -1841,7 +1841,7 @@ object MnFrm: TMnFrm
         end
         object UpdRepoSheet: TTabSheet
           Caption = 'Update repositories'
-          ClientHeight = 486
+          ClientHeight = 508
           ClientWidth = 696
           object UsILabel: TLabel
             Left = 6
@@ -1892,7 +1892,7 @@ object MnFrm: TMnFrm
     object ConfigPage: TPage
       Caption = 'ConfigPage'
       ClientWidth = 700
-      ClientHeight = 512
+      ClientHeight = 534
       object Label2: TLabel
         Left = 6
         Height = 14

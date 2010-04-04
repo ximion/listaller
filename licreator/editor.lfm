@@ -12,7 +12,7 @@ object FrmEditor: TFrmEditor
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '0.9.28.2'
+  LCLVersion = '0.9.29'
   object memLog: TMemo
     Left = 0
     Height = 86
@@ -39,22 +39,21 @@ object FrmEditor: TFrmEditor
       Caption = 'Script'
       ClientWidth = 918
       ClientHeight = 504
-      object MainScriptEdit: TSynEdit
+      inline MainScriptEdit: TSynEdit
         Left = 0
         Height = 504
         Top = 0
         Width = 918
         Align = alClient
-        Font.Height = -10
-        Font.Name = '-adobe-courier-medium-r-normal-*-*-*-*-*-*-*-iso10646-1'
+        Font.CharSet = 4
+        Font.Height = -12
+        Font.Name = 'Serif'
         Font.Pitch = fpFixed
-        Font.Quality = fqNonAntialiased
         ParentColor = False
         ParentFont = False
         TabOrder = 0
         BookMarkOptions.Xoffset = 35
-        BookMarkOptions.OnChange = nil
-        Gutter.Width = 53
+        Gutter.Width = 67
         Gutter.MouseActions = <        
           item
             Shift = []
@@ -687,6 +686,17 @@ object FrmEditor: TFrmEditor
             MoveCaret = False
             Option = 0
             Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
           end>
         Lines.Strings = (
           'IPK-Standard-Version: 1.0'
@@ -696,7 +706,7 @@ object FrmEditor: TFrmEditor
           'Version: 1.0'
           'Architecture: x86_64'
           'License: GPLv2'
-          ' Ad the license text here'
+          ' Add the license text here'
           'Description: SampleApp - Do thinks better!'
           ' With SampleApp you do things even better!'
           'DSupport: Ubuntu,openSuSE,Fedora,Mandriva,Debian'
@@ -712,12 +722,12 @@ object FrmEditor: TFrmEditor
         Options = [eoAutoIndent, eoDragDropEditing, eoGroupUndo, eoScrollPastEol, eoSmartTabs, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces, eoBracketHighlight]
         ScrollBars = ssAutoBoth
         BracketHighlightStyle = sbhsBoth
-        object TSynGutterPartList
+        inline TSynGutterPartList
           object TSynGutterMarks
             Width = 23
           end
           object TSynGutterLineNumber
-            Width = 13
+            Width = 27
             MouseActions = <>
             MarkupInfo.Background = clBtnFace
             MarkupInfo.Foreground = clNone

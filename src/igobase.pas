@@ -109,7 +109,9 @@ var
 
 implementation
 
-uses DGUnit;
+{$R igobase.lfm}
+
+uses dgfrm;
 
 { TIWizFrm }
 
@@ -747,9 +749,6 @@ begin
   else Button1.Enabled:=false;
   end;
 end;
-
-initialization
-  {$I igobase.lrs}
 
 end.
 

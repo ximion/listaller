@@ -8,10 +8,10 @@ PRODUCTVERSION 0,4,0,0
   {
    VALUE "Comments", "\000"
    VALUE "CompanyName", "\000"
-   VALUE "FileDescription", "\000"
+   VALUE "FileDescription", "Library for basic Listaller features\000"
    VALUE "FileVersion", "0.4.0.1750\000"
-   VALUE "InternalName", "\000"
-   VALUE "LegalCopyright", "\000"
+   VALUE "InternalName", "libInstaller\000"
+   VALUE "LegalCopyright", "Listaller Project\000"
    VALUE "LegalTrademarks", "\000"
    VALUE "OriginalFilename", "\000"
    VALUE "ProductName", "Listaller\000"

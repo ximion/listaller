@@ -47,6 +47,8 @@ var
 
 implementation
 
+{$R pkgconvertdisp.lfm}
+
 { TConvDisp }
 
 procedure TConvDisp.GetOutPutTimerTimer(Sender: TObject);
@@ -106,9 +108,6 @@ procedure TConvDisp.FormCreate(Sender: TObject);
 begin
 
 end;
-
-initialization
-  {$I pkgconvertdisp.lrs}
 
 end.
 

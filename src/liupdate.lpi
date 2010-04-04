@@ -10,11 +10,12 @@
       <TargetFileExt Value=""/>
       <Title Value="Updater"/>
       <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
       <Icon Value="0"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
-      <ProjectVersion Value=""/>
+      <StringTable Comments="" CompanyName="" FileDescription="" FileVersion="0.0.0.0" InternalName="" LegalCopyright="" LegalTrademarks="" OriginalFilename="" ProductName="" ProductVersion=""/>
     </VersionInfo>
     <PublishOptions>
       <Version Value="2"/>
@@ -38,68 +39,73 @@
         <Filename Value="liupdate.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="liupdate"/>
-        <CursorPos X="1" Y="44"/>
-        <TopLine Value="3"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="19" Y="26"/>
         <UsageCount Value="45"/>
+        <Loaded Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="mnupdate.pas"/>
+        <Filename Value="updatefrm.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="UMnForm"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="mnupdate"/>
-        <CursorPos X="44" Y="25"/>
-        <TopLine Value="204"/>
+        <UnitName Value="updatefrm"/>
         <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="33"/>
+        <CursorPos X="1" Y="67"/>
         <UsageCount Value="45"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="synapse/httpsend.pas"/>
-        <IsPartOfProject Value="True"/>
         <UnitName Value="httpsend"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="45"/>
       </Unit2>
       <Unit3>
-        <Filename Value="updexec.pas"/>
+        <Filename Value="updexecfrm.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="UExecFm"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="updexec"/>
-        <CursorPos X="28" Y="117"/>
-        <TopLine Value="86"/>
-        <EditorIndex Value="1"/>
+        <UnitName Value="updexecfrm"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="93"/>
+        <CursorPos X="65" Y="117"/>
         <UsageCount Value="42"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="abunzper.pas"/>
         <UnitName Value="AbUnzper"/>
-        <CursorPos X="34" Y="68"/>
         <TopLine Value="47"/>
+        <CursorPos X="34" Y="68"/>
         <UsageCount Value="14"/>
       </Unit4>
       <Unit5>
         <Filename Value="abzbrows.pas"/>
         <UnitName Value="AbZBrows"/>
-        <CursorPos X="1" Y="239"/>
         <TopLine Value="216"/>
+        <CursorPos X="1" Y="239"/>
         <UsageCount Value="14"/>
       </Unit5>
       <Unit6>
         <Filename Value="abarctyp.pas"/>
         <UnitName Value="AbArcTyp"/>
-        <CursorPos X="3" Y="184"/>
         <TopLine Value="511"/>
+        <CursorPos X="3" Y="184"/>
         <UsageCount Value="10"/>
       </Unit6>
       <Unit7>
         <Filename Value="abunzprc.pas"/>
         <UnitName Value="AbUnzPrc"/>
-        <CursorPos X="1" Y="1402"/>
         <TopLine Value="1376"/>
+        <CursorPos X="1" Y="1402"/>
         <UsageCount Value="14"/>
       </Unit7>
       <Unit8>
@@ -107,315 +113,223 @@
         <ComponentName Value="LoadForm"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ldunit"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="33"/>
       </Unit8>
       <Unit9>
         <Filename Value="synapse/synaip.pas"/>
         <UnitName Value="synaip"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit9>
       <Unit10>
         <Filename Value="utilities.pas"/>
         <UnitName Value="utilities"/>
-        <CursorPos X="52" Y="198"/>
         <TopLine Value="175"/>
+        <CursorPos X="52" Y="198"/>
         <UsageCount Value="11"/>
       </Unit10>
       <Unit11>
         <Filename Value="../../../../../usr/share/fpcsrc/packages/extra/gtk2/gtk+/gtk/gtkiconfactory.inc"/>
-        <CursorPos X="61" Y="47"/>
         <TopLine Value="26"/>
+        <CursorPos X="61" Y="47"/>
         <UsageCount Value="10"/>
       </Unit11>
       <Unit12>
         <Filename Value="../../../../../usr/share/fpcsrc/packages/extra/gtk2/gtk+/gtk/gtkimage.inc"/>
-        <CursorPos X="4" Y="10"/>
         <TopLine Value="124"/>
+        <CursorPos X="4" Y="10"/>
         <UsageCount Value="10"/>
       </Unit12>
       <Unit13>
         <Filename Value="distri.pas"/>
         <UnitName Value="distri"/>
-        <CursorPos X="10" Y="48"/>
         <TopLine Value="37"/>
+        <CursorPos X="10" Y="48"/>
         <UsageCount Value="11"/>
       </Unit13>
       <Unit14>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="8" Y="189"/>
         <TopLine Value="149"/>
+        <CursorPos X="8" Y="189"/>
         <UsageCount Value="13"/>
       </Unit14>
       <Unit15>
         <Filename Value="../../../../../usr/share/fpcsrc/packages/extra/gtk2/gtk+/gtk/gtkenums.inc"/>
-        <CursorPos X="6" Y="287"/>
         <TopLine Value="264"/>
+        <CursorPos X="6" Y="287"/>
         <UsageCount Value="11"/>
       </Unit15>
       <Unit16>
         <Filename Value="../../../../../usr/share/fpcsrc/packages/fcl-xml/src/xmlread.pp"/>
         <UnitName Value="XMLRead"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="13"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit16>
       <Unit17>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk/gtklclintf.inc"/>
-        <CursorPos X="28" Y="767"/>
         <TopLine Value="757"/>
+        <CursorPos X="28" Y="767"/>
         <UsageCount Value="10"/>
       </Unit17>
       <Unit18>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk2/gtk2trayicon.inc"/>
-        <CursorPos X="1" Y="371"/>
         <TopLine Value="353"/>
+        <CursorPos X="1" Y="371"/>
         <UsageCount Value="10"/>
       </Unit18>
       <Unit19>
         <Filename Value="../../../../../usr/lib/lazarus/packager/registration/lazaruspackageintf.pas"/>
         <UnitName Value="LazarusPackageIntf"/>
-        <CursorPos X="51" Y="10"/>
         <TopLine Value="1"/>
+        <CursorPos X="51" Y="10"/>
         <UsageCount Value="10"/>
       </Unit19>
       <Unit20>
         <Filename Value="../../../../../usr/lib/lazarus/ide/lazarus.pp"/>
         <UnitName Value="Lazarus"/>
-        <CursorPos X="1" Y="122"/>
         <TopLine Value="74"/>
+        <CursorPos X="1" Y="122"/>
         <UsageCount Value="10"/>
       </Unit20>
       <Unit21>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/graphics.pp"/>
         <UnitName Value="Graphics"/>
-        <CursorPos X="59" Y="38"/>
         <TopLine Value="14"/>
+        <CursorPos X="59" Y="38"/>
         <UsageCount Value="10"/>
       </Unit21>
       <Unit22>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/interfaces/gtk2/interfaces.pas"/>
         <UnitName Value="Interfaces"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit22>
       <Unit23>
         <Filename Value="../../../../../usr/lib/lazarus/components/tachart/taseries.pas"/>
         <UnitName Value="TASeries"/>
-        <CursorPos X="7" Y="38"/>
         <TopLine Value="14"/>
+        <CursorPos X="7" Y="38"/>
         <UsageCount Value="10"/>
       </Unit23>
       <Unit24>
         <Filename Value="../../../../../usr/share/fpcsrc/2.2.2/packages/gtk2/src/gtk+/gtk/gtkenums.inc"/>
-        <CursorPos X="6" Y="287"/>
         <TopLine Value="264"/>
+        <CursorPos X="6" Y="287"/>
         <UsageCount Value="11"/>
       </Unit24>
       <Unit25>
         <Filename Value="../../../../../usr/share/fpcsrc/2.2.2/rtl/objpas/sysutils/sysstrh.inc"/>
-        <CursorPos X="28" Y="33"/>
         <TopLine Value="10"/>
+        <CursorPos X="28" Y="33"/>
         <UsageCount Value="10"/>
       </Unit25>
       <Unit26>
         <Filename Value="../listaller-base.gtk2/unibuild.lpi"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
-        <UsageCount Value="10"/>
+        <CursorPos X="1" Y="1"/>
         <SyntaxHighlighter Value="XML"/>
+        <UsageCount Value="10"/>
       </Unit26>
       <Unit27>
         <Filename Value="common.pas"/>
         <UnitName Value="common"/>
-        <CursorPos X="58" Y="192"/>
         <TopLine Value="109"/>
+        <CursorPos X="58" Y="192"/>
         <UsageCount Value="10"/>
       </Unit27>
       <Unit28>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="1" Y="19"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="19"/>
         <UsageCount Value="10"/>
       </Unit28>
       <Unit29>
         <Filename Value="../../../../../usr/share/fpcsrc/2.2.4/rtl/objpas/sysutils/osutilsh.inc"/>
-        <CursorPos X="10" Y="21"/>
         <TopLine Value="1"/>
+        <CursorPos X="10" Y="21"/>
         <UsageCount Value="10"/>
       </Unit29>
       <Unit30>
         <Filename Value="iconloader.pas"/>
         <UnitName Value="iconloader"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit30>
       <Unit31>
         <Filename Value="libasic.pas"/>
         <UnitName Value="libasic"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit31>
       <Unit32>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="241"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit32>
       <Unit33>
         <Filename Value="../packager/ipkpackage.pas"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="27" Y="395"/>
         <TopLine Value="375"/>
+        <CursorPos X="27" Y="395"/>
         <UsageCount Value="10"/>
       </Unit33>
       <Unit34>
         <Filename Value="../bindings/appupdate.pas"/>
         <UnitName Value="appupdate"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit34>
       <Unit35>
         <Filename Value="litypes.pas"/>
         <UnitName Value="litypes"/>
-        <CursorPos X="2" Y="50"/>
         <TopLine Value="29"/>
+        <CursorPos X="2" Y="50"/>
         <UsageCount Value="10"/>
       </Unit35>
       <Unit36>
-        <Filename Value="../../../../../../usr/lib/lazarus/0.9.28.2/lcl/forms.pp"/>
+        <Filename Value="/usr/lib/lazarus/0.9.28.2/lcl/forms.pp"/>
         <UnitName Value="Forms"/>
-        <CursorPos X="14" Y="550"/>
         <TopLine Value="529"/>
+        <CursorPos X="14" Y="550"/>
         <UsageCount Value="10"/>
       </Unit36>
       <Unit37>
         <Filename Value="../synapse/httpsend.pas"/>
         <UnitName Value="httpsend"/>
-        <CursorPos X="34" Y="388"/>
         <TopLine Value="367"/>
+        <CursorPos X="34" Y="388"/>
         <UsageCount Value="10"/>
       </Unit37>
     </Units>
-    <JumpHistory Count="27" HistoryIndex="26">
+    <JumpHistory Count="4" HistoryIndex="3">
       <Position1>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="139" Column="25" TopLine="117"/>
+        <Filename Value="updatefrm.pas"/>
+        <Caret Line="67" Column="1" TopLine="33"/>
       </Position1>
       <Position2>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="155" Column="67" TopLine="128"/>
+        <Filename Value="liupdate.lpr"/>
+        <Caret Line="28" Column="36" TopLine="1"/>
       </Position2>
       <Position3>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="147" Column="58" TopLine="110"/>
+        <Filename Value="updexecfrm.pas"/>
+        <Caret Line="56" Column="1" TopLine="28"/>
       </Position3>
       <Position4>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="26" Column="77" TopLine="1"/>
+        <Filename Value="updexecfrm.pas"/>
+        <Caret Line="57" Column="15" TopLine="34"/>
       </Position4>
-      <Position5>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="79" Column="13" TopLine="77"/>
-      </Position5>
-      <Position6>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="59" Column="27" TopLine="46"/>
-      </Position6>
-      <Position7>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="26" Column="62" TopLine="11"/>
-      </Position7>
-      <Position8>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="25" Column="68" TopLine="11"/>
-      </Position8>
-      <Position9>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="80" Column="60" TopLine="59"/>
-      </Position9>
-      <Position10>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="93" Column="4" TopLine="66"/>
-      </Position10>
-      <Position11>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="73" Column="9" TopLine="51"/>
-      </Position11>
-      <Position12>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="163" Column="26" TopLine="151"/>
-      </Position12>
-      <Position13>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="97" Column="32" TopLine="67"/>
-      </Position13>
-      <Position14>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="172" Column="1" TopLine="139"/>
-      </Position14>
-      <Position15>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="84" Column="16" TopLine="78"/>
-      </Position15>
-      <Position16>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="86" Column="16" TopLine="78"/>
-      </Position16>
-      <Position17>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="87" Column="16" TopLine="78"/>
-      </Position17>
-      <Position18>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="122" Column="28" TopLine="115"/>
-      </Position18>
-      <Position19>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="27" Column="8" TopLine="1"/>
-      </Position19>
-      <Position20>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="25" Column="68" TopLine="1"/>
-      </Position20>
-      <Position21>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="109" Column="25" TopLine="88"/>
-      </Position21>
-      <Position22>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="25" Column="31" TopLine="4"/>
-      </Position22>
-      <Position23>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="195" Column="24" TopLine="165"/>
-      </Position23>
-      <Position24>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="135" Column="38" TopLine="129"/>
-      </Position24>
-      <Position25>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="126" Column="14" TopLine="124"/>
-      </Position25>
-      <Position26>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="26" Column="40" TopLine="1"/>
-      </Position26>
-      <Position27>
-        <Filename Value="mnupdate.pas"/>
-        <Caret Line="25" Column="44" TopLine="1"/>
-      </Position27>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

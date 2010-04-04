@@ -738,7 +738,7 @@ begin
  deps.Text:=dsApp.FieldByName('Dependencies').AsString;
  for i:=0 to deps.Count-1 do
  begin
-  pkit.Resolve(deps[i]);
+  pkit.ResolveInstalled(deps[i]);
   if pkit.PkFinishCode=1 then
    report.Add(deps[i]+' found.')
   else

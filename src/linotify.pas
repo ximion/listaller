@@ -51,6 +51,8 @@ var
 
 implementation
 
+{$R linotify.lfm}
+
 { TForm1 }
 
 procedure TForm1.MenuItem3Click(Sender: TObject);
@@ -138,9 +140,6 @@ begin
   ShowMessage(rsCouldntFindUpdater);
  end;
 end;
-
-initialization
-  {$I linotify.lrs}
 
 end.
 

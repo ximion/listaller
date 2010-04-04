@@ -55,10 +55,10 @@ object frmProjectWizard: TfrmProjectWizard
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
-  LCLVersion = '0.9.28.2'
+  LCLVersion = '0.9.29'
   object Notebook1: TNotebook
     Left = 0
-    Height = 605
+    Height = 625
     Top = 0
     Width = 836
     Align = alClient
@@ -68,7 +68,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page1: TPage
       Caption = 'Page1'
       ClientWidth = 832
-      ClientHeight = 601
+      ClientHeight = 621
       object SpeedButton1: TSpeedButton
         Left = 85
         Height = 104
@@ -1756,7 +1756,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page2: TPage
       Caption = 'Page2'
       ClientWidth = 832
-      ClientHeight = 578
+      ClientHeight = 621
       object Label8: TLabel
         Left = 7
         Height = 20
@@ -1909,6 +1909,7 @@ object frmProjectWizard: TfrmProjectWizard
           HideDirectories = False
           ButtonWidth = 23
           NumGlyphs = 0
+          MaxLength = 0
           TabOrder = 3
         end
         object FileNameEdit2: TFileNameEdit
@@ -1921,6 +1922,7 @@ object frmProjectWizard: TfrmProjectWizard
           HideDirectories = False
           ButtonWidth = 23
           NumGlyphs = 0
+          MaxLength = 0
           TabOrder = 4
         end
         object Edit10: TEdit
@@ -1943,6 +1945,7 @@ object frmProjectWizard: TfrmProjectWizard
           HideDirectories = False
           ButtonWidth = 23
           NumGlyphs = 0
+          MaxLength = 0
           TabOrder = 6
         end
         object cgrIMethods: TCheckGroup
@@ -2253,7 +2256,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page3: TPage
       Caption = 'Page3'
       ClientWidth = 832
-      ClientHeight = 578
+      ClientHeight = 621
       object Label17: TLabel
         Left = 7
         Height = 20
@@ -2291,6 +2294,7 @@ object frmProjectWizard: TfrmProjectWizard
             Caption = 'Checksum'
             Width = 280
           end>
+        ItemIndex = -1
         MultiSelect = True
         PopupMenu = PopupMenu1
         TabOrder = 0
@@ -2323,6 +2327,7 @@ object frmProjectWizard: TfrmProjectWizard
             ShowHidden = False
             ButtonWidth = 23
             NumGlyphs = 1
+            MaxLength = 0
             TabOrder = 0
           end
         end
@@ -2373,6 +2378,7 @@ object frmProjectWizard: TfrmProjectWizard
             HideDirectories = False
             ButtonWidth = 23
             NumGlyphs = 1
+            MaxLength = 0
             TabOrder = 0
           end
         end
@@ -2439,7 +2445,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page4: TPage
       Caption = 'Page4'
       ClientWidth = 832
-      ClientHeight = 578
+      ClientHeight = 621
       object Label19: TLabel
         Left = 7
         Height = 20
@@ -2570,7 +2576,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page5: TPage
       Caption = 'Page5'
       ClientWidth = 832
-      ClientHeight = 578
+      ClientHeight = 621
       object Label18: TLabel
         Left = 7
         Height = 20
@@ -2600,7 +2606,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page6: TPage
       Caption = 'Page6'
       ClientWidth = 832
-      ClientHeight = 578
+      ClientHeight = 621
       object Label21: TLabel
         Left = 7
         Height = 20
@@ -2632,6 +2638,7 @@ object frmProjectWizard: TfrmProjectWizard
           HideDirectories = False
           ButtonWidth = 23
           NumGlyphs = 0
+          MaxLength = 0
           TabOrder = 0
         end
       end
@@ -2658,7 +2665,7 @@ object frmProjectWizard: TfrmProjectWizard
   object Panel1: TPanel
     Left = 0
     Height = 41
-    Top = 605
+    Top = 625
     Width = 836
     Align = alBottom
     ClientHeight = 41

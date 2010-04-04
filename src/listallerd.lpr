@@ -166,7 +166,7 @@ end;
 var
   Application: TLiDaemon;
 
-{$IFDEF WINDOWS}{$R listallerd.rc}{$ENDIF}
+{$R *.res}
 
 begin
   Application:=TLiDaemon.Create(nil);

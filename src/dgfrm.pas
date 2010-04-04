@@ -15,7 +15,7 @@
   along with this program. If not, see <http://www.gnu.org/licenses/>.}
 //** This unit contains the stuff neded for installing AutoGET-IPK-types
 
-unit dgunit;
+unit dgfrm;
 
 {$mode delphi}{$H+}
 
@@ -68,6 +68,8 @@ var
   DGForm: TDGForm;
 
 implementation
+
+{$R dgfrm.lfm}
 
 { TDGForm }
 
@@ -199,9 +201,6 @@ if Process1.ExitStatus>0 then begin
     exit;
   end;
 end;
-
-initialization
-  {$I dgunit.lrs}
 
 end.
 

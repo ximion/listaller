@@ -23,14 +23,13 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, mnupdate, UpdExec,
-  LiBasic, LResources,
+  Forms, updatefrm, updexecfrm,
+  LiBasic,
   liTranslator, SysUtils, LiCommon;
 
-{$IFDEF WINDOWS}{$R liupdate.rc}{$ENDIF}
+{$R *.res}
 
 begin
-  {$I liupdate.lrs}
   Application.Title:='Updater';
   Application.Initialize;
   writeLn('Updater initialized.');

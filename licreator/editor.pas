@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -166,6 +166,8 @@ var
   FileProfiles: TFileProfiles;
 
 implementation
+
+{$R *.lfm}
 
 uses prjwizard;
 
@@ -889,9 +891,6 @@ begin
   // StatusBar1.Panels[0].Text:='Ready';
   Application.ProcessMessages;
 end;
-
-initialization
-  {$I editor.lrs}
 
 end.
 

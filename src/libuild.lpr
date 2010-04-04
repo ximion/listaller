@@ -222,7 +222,7 @@ end;
 var
   Application: TLiBuild;
 
-{$IFDEF WINDOWS}{$R libuild.rc}{$ENDIF}
+{$R *.res}
 
 begin
   Application:=TLiBuild.Create(nil);

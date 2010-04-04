@@ -57,6 +57,8 @@ var
 
 implementation
 
+{$R uninstall.lfm}
+
 uses manager;
 
 { TRMForm }
@@ -200,9 +202,6 @@ begin
   FActiv:=true;
   DetailsBtnClick(Sender);
 end;
-
-initialization
-  {$I uninstall.lrs}
 
 end.
 

@@ -14,7 +14,7 @@
   You should have received a copy of the GNU General Public License v3
   along with this program. If not, see <http://www.gnu.org/licenses/>.}
 //** Executes software updates (GUI based)
-unit updexec;
+unit updexecfrm;
 
 {$mode objfpc}{$H+}
 
@@ -52,7 +52,9 @@ var
 
 implementation
 
-uses mnupdate;
+{$R updexecfrm.lfm}
+
+uses updatefrm;
 
 { TUExecFm }
 
@@ -111,8 +113,8 @@ begin
     end;
     ProgressBar1.Position:=ProgressBar1.Position+1;
    end;
-   li_updater_register_status_call(@UMnForm.updater,@mnupdate.OnMNStatus,nil);
-   li_updater_register_status_call(@UMnForm.updaterSU,@mnupdate.OnMNStatus,nil);
+   li_updater_register_status_call(@UMnForm.updater,@updatefrm.OnMNStatus,nil);
+   li_updater_register_status_call(@UMnForm.updaterSU,@updatefrm.OnMNStatus,nil);
    UMnForm.UpdListBox.Items.Clear;
    UMnForm.UpdateIDs.Clear;
   Button1.Enabled:=true;
@@ -133,9 +135,6 @@ begin
   Button1.Enabled:=false;
   fstact:=true;
 end;
-
-initialization
-  {$I updexec.lrs}
 
 end.
 

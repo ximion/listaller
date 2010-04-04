@@ -11,7 +11,7 @@ object frmFileWizard: TfrmFileWizard
   ClientWidth = 496
   FormStyle = fsMDIForm
   Position = poMainFormCenter
-  LCLVersion = '0.9.27'
+  LCLVersion = '0.9.29'
   object btnAddFiles: TBitBtn
     Left = 8
     Height = 30
@@ -37,7 +37,7 @@ object frmFileWizard: TfrmFileWizard
     Left = 8
     Height = 21
     Top = 16
-    Width = 230
+    Width = 195
     Caption = 'Add files from folder and subfolders'
     Checked = True
     OnChange = rbAddFilesFromFoldersChange
@@ -58,17 +58,18 @@ object frmFileWizard: TfrmFileWizard
       Top = 6
       Width = 465
       Caption = 'Select folder:'
-      ClientHeight = 42
+      ClientHeight = 43
       ClientWidth = 461
       TabOrder = 0
       object edtFolder: TDirectoryEdit
         Left = 6
-        Height = 19
+        Height = 20
         Top = 11
         Width = 424
         ShowHidden = False
         ButtonWidth = 23
         NumGlyphs = 1
+        MaxLength = 0
         TabOrder = 0
       end
     end
@@ -78,12 +79,12 @@ object frmFileWizard: TfrmFileWizard
       Top = 70
       Width = 465
       Caption = 'CopyToPath:'
-      ClientHeight = 49
+      ClientHeight = 50
       ClientWidth = 461
       TabOrder = 1
       object edtFolderCopyToPath: TEdit
         Left = 6
-        Height = 19
+        Height = 20
         Top = 11
         Width = 424
         TabOrder = 0
@@ -106,12 +107,12 @@ object frmFileWizard: TfrmFileWizard
       Top = 6
       Width = 463
       Caption = 'Select file:'
-      ClientHeight = 33
+      ClientHeight = 34
       ClientWidth = 459
       TabOrder = 0
       object edtFIle: TFileNameEdit
         Left = 3
-        Height = 19
+        Height = 20
         Top = 3
         Width = 424
         DialogOptions = []
@@ -119,6 +120,7 @@ object frmFileWizard: TfrmFileWizard
         HideDirectories = False
         ButtonWidth = 23
         NumGlyphs = 1
+        MaxLength = 0
         TabOrder = 0
       end
     end
@@ -128,12 +130,12 @@ object frmFileWizard: TfrmFileWizard
       Top = 62
       Width = 463
       Caption = 'CopyToPath:'
-      ClientHeight = 34
+      ClientHeight = 35
       ClientWidth = 459
       TabOrder = 1
       object edtFileCopyToPath: TEdit
         Left = 3
-        Height = 19
+        Height = 20
         Top = 3
         Width = 424
         TabOrder = 0
@@ -145,7 +147,7 @@ object frmFileWizard: TfrmFileWizard
     Left = 8
     Height = 21
     Top = 191
-    Width = 103
+    Width = 88
     Caption = 'Add single file'
     TabOrder = 5
     TabStop = False

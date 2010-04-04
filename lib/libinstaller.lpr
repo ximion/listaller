@@ -565,7 +565,7 @@ exports
  li_set_testmode,
  li_get_ipk_app_installed;
 
-{$IFDEF WINDOWS}{$R libinstaller.rc}{$ENDIF}
+{$R *.res}
 
 begin
 end.

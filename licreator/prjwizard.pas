@@ -230,6 +230,8 @@ var
 
 implementation
 
+{$R *.lfm}
+
 { TfrmProjectWizard }
 
 procedure TfrmProjectWizard.BitBtn2Click(Sender: TObject);
@@ -1220,9 +1222,6 @@ begin
     tvShortDescriptions.Items.Delete(tvShortDescriptions.Selected);
   end;
 end;
-
-initialization
-  {$I prjwizard.lrs}
 
 end.
 

@@ -48,12 +48,14 @@ type
     { private declarations }
   public
     { public declarations }
-  end; 
+  end;
 
 var
   FmAbout: TFmAbout;
 
 implementation
+
+{$R aboutbox.lfm}
 
 { TFmAbout }
 
@@ -81,9 +83,6 @@ procedure TFmAbout.BitBtn1Click(Sender: TObject);
 begin
   close;
 end;
-
-initialization
-  {$I aboutbox.lrs}
 
 end.
 

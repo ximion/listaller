@@ -5,12 +5,13 @@
     <General>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
-      <Icon Value="0"/>
+      <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <Icon Value="0"/>
+      <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
-      <ProjectVersion Value=""/>
+      <StringTable Comments="" CompanyName="" FileDescription="" FileVersion="0.0.0.0" InternalName="" LegalCopyright="" LegalTrademarks="" OriginalFilename="" ProductName="" ProductVersion=""/>
     </VersionInfo>
     <PublishOptions>
       <Version Value="2"/>
@@ -29,242 +30,242 @@
         <Filename Value="libuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
-        <CursorPos X="16" Y="143"/>
-        <TopLine Value="133"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="186"/>
+        <CursorPos X="25" Y="223"/>
         <UsageCount Value="37"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="29" Y="39"/>
         <TopLine Value="25"/>
+        <CursorPos X="29" Y="39"/>
         <UsageCount Value="10"/>
       </Unit1>
       <Unit2>
         <Filename Value="ipkbuild.pas"/>
         <UnitName Value="ipkbuild"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
         <CursorPos X="4" Y="244"/>
-        <TopLine Value="218"/>
-        <EditorIndex Value="2"/>
         <UsageCount Value="14"/>
         <Bookmarks Count="1">
           <Item0 X="53" Y="573" ID="8"/>
         </Bookmarks>
-        <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="abbrevia/abzipprc.pas"/>
         <UnitName Value="AbZipPrc"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit3>
       <Unit4>
         <Filename Value="opbitmap/opbitmap.pas"/>
         <UnitName Value="opbitmap"/>
-        <CursorPos X="50" Y="2464"/>
         <TopLine Value="2444"/>
+        <CursorPos X="50" Y="2464"/>
         <UsageCount Value="10"/>
       </Unit4>
       <Unit5>
         <Filename Value="ipkdef.pas"/>
         <UnitName Value="ipkdef"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="49"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="11"/>
       </Unit5>
       <Unit6>
         <Filename Value="litypes.pas"/>
         <UnitName Value="litypes"/>
-        <CursorPos X="2" Y="73"/>
         <TopLine Value="37"/>
+        <CursorPos X="2" Y="73"/>
         <UsageCount Value="10"/>
       </Unit6>
       <Unit7>
         <Filename Value="litranslator.pas"/>
         <UnitName Value="litranslator"/>
-        <CursorPos X="72" Y="15"/>
         <TopLine Value="1"/>
+        <CursorPos X="72" Y="15"/>
         <UsageCount Value="10"/>
       </Unit7>
       <Unit8>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
         <CursorPos X="1" Y="1"/>
-        <TopLine Value="224"/>
-        <EditorIndex Value="1"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit8>
       <Unit9>
         <Filename Value="unibuild.lpr"/>
         <UnitName Value="unibuild"/>
-        <CursorPos X="20" Y="54"/>
         <TopLine Value="1"/>
+        <CursorPos X="20" Y="54"/>
         <UsageCount Value="10"/>
       </Unit9>
       <Unit10>
         <Filename Value="unibuild.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="unibuild"/>
-        <CursorPos X="6" Y="38"/>
         <TopLine Value="114"/>
+        <CursorPos X="6" Y="38"/>
         <UsageCount Value="34"/>
       </Unit10>
       <Unit11>
         <Filename Value="../packager/ipkpackage.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="1" Y="235"/>
         <TopLine Value="213"/>
+        <CursorPos X="1" Y="235"/>
         <UsageCount Value="33"/>
       </Unit11>
       <Unit12>
         <Filename Value="../packager/libtar.pas"/>
         <UnitName Value="libtar"/>
-        <CursorPos X="1" Y="480"/>
         <TopLine Value="169"/>
+        <CursorPos X="1" Y="480"/>
         <UsageCount Value="10"/>
       </Unit12>
       <Unit13>
         <Filename Value="libasic.pas"/>
         <UnitName Value="libasic"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="49"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit13>
       <Unit14>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.2.4/rtl/linux/ostypes.inc"/>
-        <CursorPos X="3" Y="164"/>
+        <Filename Value="/usr/share/fpcsrc/2.2.4/rtl/linux/ostypes.inc"/>
         <TopLine Value="143"/>
+        <CursorPos X="3" Y="164"/>
         <UsageCount Value="10"/>
       </Unit14>
       <Unit15>
-        <Filename Value="../../../../../../usr/lib/lazarus/0.9.28.2/lcl/interfaces/nogui/interfaces.pp"/>
+        <Filename Value="/usr/lib/lazarus/0.9.28.2/lcl/interfaces/nogui/interfaces.pp"/>
         <UnitName Value="Interfaces"/>
-        <CursorPos X="3" Y="27"/>
         <TopLine Value="1"/>
+        <CursorPos X="3" Y="27"/>
         <UsageCount Value="10"/>
       </Unit15>
       <Unit16>
         <Filename Value="../packager/gpgsign.pas"/>
         <UnitName Value="gpgsign"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="37"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit16>
       <Unit17>
         <Filename Value="../opbitmap/opbitmapformats.pas"/>
         <UnitName Value="opbitmapformats"/>
-        <CursorPos X="3" Y="99"/>
         <TopLine Value="1"/>
+        <CursorPos X="3" Y="99"/>
         <UsageCount Value="10"/>
       </Unit17>
       <Unit18>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.2.4/rtl/unix/baseunix.pp"/>
+        <Filename Value="/usr/share/fpcsrc/2.2.4/rtl/unix/baseunix.pp"/>
         <UnitName Value="BaseUnix"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="51"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit18>
       <Unit19>
         <Filename Value="../packager/compression/ulzmadecoder.pas"/>
         <UnitName Value="ULZMADecoder"/>
-        <CursorPos X="12" Y="316"/>
         <TopLine Value="294"/>
+        <CursorPos X="12" Y="316"/>
         <UsageCount Value="10"/>
       </Unit19>
       <Unit20>
         <Filename Value="../packager/compression/ubittreedecoder.pas"/>
         <UnitName Value="UBitTreeDecoder"/>
-        <CursorPos X="13" Y="28"/>
         <TopLine Value="25"/>
+        <CursorPos X="13" Y="28"/>
         <UsageCount Value="10"/>
       </Unit20>
       <Unit21>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/diskh.inc"/>
-        <CursorPos X="10" Y="22"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/diskh.inc"/>
         <TopLine Value="1"/>
+        <CursorPos X="10" Y="22"/>
         <UsageCount Value="10"/>
       </Unit21>
       <Unit22>
-        <Filename Value="../../../../../../usr/lib/lazarus/0.9.28.2/lcl/fileutil.pas"/>
+        <Filename Value="/usr/lib/lazarus/0.9.28.2/lcl/fileutil.pas"/>
         <UnitName Value="FileUtil"/>
-        <CursorPos X="5" Y="99"/>
         <TopLine Value="78"/>
+        <CursorPos X="5" Y="99"/>
         <UsageCount Value="10"/>
       </Unit22>
       <Unit23>
         <Filename Value="../opbitmap/XPMime.pas"/>
         <UnitName Value="XPMime"/>
-        <CursorPos X="17" Y="308"/>
         <TopLine Value="287"/>
+        <CursorPos X="17" Y="308"/>
         <UsageCount Value="10"/>
       </Unit23>
       <Unit24>
         <Filename Value="../opbitmap/uMimeBytes.pas"/>
         <UnitName Value="uMimeBytes"/>
-        <CursorPos X="7" Y="271"/>
         <TopLine Value="241"/>
+        <CursorPos X="7" Y="271"/>
         <UsageCount Value="10"/>
       </Unit24>
       <Unit25>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/syspchh.inc"/>
-        <CursorPos X="10" Y="26"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/syspchh.inc"/>
         <TopLine Value="5"/>
+        <CursorPos X="10" Y="26"/>
         <UsageCount Value="10"/>
       </Unit25>
       <Unit26>
         <Filename Value="../packager/tartyp.pas"/>
         <UnitName Value="TarTyp"/>
-        <CursorPos X="42" Y="847"/>
         <TopLine Value="1139"/>
+        <CursorPos X="42" Y="847"/>
         <UsageCount Value="10"/>
       </Unit26>
       <Unit27>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/fcl-base/src/libtar.pp"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/fcl-base/src/libtar.pp"/>
         <UnitName Value="libtar"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit27>
       <Unit28>
         <Filename Value="../packager/tarfile.pas"/>
         <UnitName Value="tarfile"/>
-        <CursorPos X="17" Y="98"/>
         <TopLine Value="86"/>
+        <CursorPos X="17" Y="98"/>
         <UsageCount Value="22"/>
       </Unit28>
       <Unit29>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/sysstrh.inc"/>
-        <CursorPos X="28" Y="33"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/sysstrh.inc"/>
         <TopLine Value="12"/>
+        <CursorPos X="28" Y="33"/>
         <UsageCount Value="10"/>
       </Unit29>
       <Unit30>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/inc/systemh.inc"/>
-        <CursorPos X="11" Y="876"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/inc/systemh.inc"/>
         <TopLine Value="855"/>
+        <CursorPos X="11" Y="876"/>
         <UsageCount Value="10"/>
       </Unit30>
       <Unit31>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/fcl-base/src/custapp.pp"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/fcl-base/src/custapp.pp"/>
         <UnitName Value="CustApp"/>
-        <CursorPos X="14" Y="58"/>
         <TopLine Value="37"/>
+        <CursorPos X="14" Y="58"/>
         <UsageCount Value="10"/>
       </Unit31>
       <Unit32>
         <Filename Value="../packager/compression/ulzmaencoder.pas"/>
         <UnitName Value="ULZMAEncoder"/>
-        <CursorPos X="20" Y="130"/>
         <TopLine Value="109"/>
+        <CursorPos X="20" Y="130"/>
         <UsageCount Value="10"/>
       </Unit32>
     </Units>
-    <JumpHistory Count="17" HistoryIndex="16">
+    <JumpHistory Count="16" HistoryIndex="15">
       <Position1>
         <Filename Value="libuild.lpr"/>
         <Caret Line="27" Column="26" TopLine="13"/>
@@ -326,13 +327,9 @@
         <Caret Line="27" Column="25" TopLine="1"/>
       </Position15>
       <Position16>
-        <Filename Value="ipkbuild.pas"/>
-        <Caret Line="42" Column="29" TopLine="37"/>
-      </Position16>
-      <Position17>
         <Filename Value="libuild.lpr"/>
         <Caret Line="28" Column="9" TopLine="1"/>
-      </Position17>
+      </Position16>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

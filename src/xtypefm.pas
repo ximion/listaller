@@ -68,6 +68,8 @@ var
 
 implementation
 
+{$R xtypefm.lfm}
+
 uses SigInfoDisp;
 
 { TIMdFrm }
@@ -202,9 +204,6 @@ begin
  FShow:=true;
  sig:=sigstate;
 end;
-
-initialization
-  {$I xtypefm.lrs}
 
 end.
 

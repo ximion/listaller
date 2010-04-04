@@ -554,8 +554,13 @@ pkg:=TLiUnpacker.Create(fname);
 if not SUMode then
 begin
  pkg.OnProgress:=@pkgProgress;
+ try
  //Uncompress LZMA
  pkg.Decompress;
+ except
+  on E: Exception do
+   MakeUsrRequest(rsPkgDM+#10+rsABLoad+#10+E.Message,rqError);
+ end;
 end else
 if not FileExists(CleanFilePath(pkg.WDir+'/ipktar.tar')) then
 begin
@@ -1281,7 +1286,7 @@ begin
   begin
    s:=TStringList.Create;
    pkit.RsList:=s;
-   pkit.Resolve(copy(Dependencies[i],pos(' (',Dependencies[i])+2,length(Dependencies[i])-1));
+   pkit.ResolveInstalled(copy(Dependencies[i],pos(' (',Dependencies[i])+2,length(Dependencies[i])-1));
     if pkit.PkFinishCode=1 then
     begin
      pkit.InstallLocalPkg('/tmp/'+ExtractFileName(copy(Dependencies[i],1,pos(' (',Dependencies[i]))));
@@ -1664,7 +1669,7 @@ begin
   begin
    msg('Looking for '+Dependencies[i]);
 
-   pkit.Resolve(Dependencies[i]);
+   pkit.ResolveInstalled(Dependencies[i]);
 
    Inc(mnpos);
    SetMainPos(Round(mnpos*max));
@@ -1688,7 +1693,7 @@ begin
    fpath:=copy(Dependencies[i],1,pos(' (',Dependencies[i])-1);
    p_debug('Looking for '+pkg);
    msg('Looking for '+pkg);
-   pkit.Resolve(pkg);
+   pkit.ResolveInstalled(pkg);
 
    Inc(mnpos);
    SetMainPos(Round(mnpos*max));

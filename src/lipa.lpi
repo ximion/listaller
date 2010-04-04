@@ -10,14 +10,15 @@
       <TargetFileExt Value=""/>
       <Title Value="lipa"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ResourceType Value="res"/>
+      <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <CurrentMajorRevNr Value="2"/>
-      <CurrentBuildNr Value="288"/>
-      <ProjectVersion Value="0.2.0.1"/>
+      <MinorVersionNr Value="2"/>
+      <BuildNr Value="288"/>
+      <StringTable Comments="" CompanyName="" FileDescription="" FileVersion="0.2.0.288" InternalName="" LegalCopyright="" LegalTrademarks="" OriginalFilename="" ProductName="" ProductVersion="0.2.0.1"/>
     </VersionInfo>
     <PublishOptions>
       <Version Value="2"/>
@@ -36,191 +37,193 @@
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
-        <CursorPos X="20" Y="177"/>
-        <TopLine Value="157"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="381"/>
+        <CursorPos X="5" Y="418"/>
         <UsageCount Value="50"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="abzipper.pas"/>
         <UnitName Value="AbZipper"/>
-        <CursorPos X="20" Y="71"/>
         <TopLine Value="49"/>
+        <CursorPos X="20" Y="71"/>
         <UsageCount Value="10"/>
       </Unit1>
       <Unit2>
         <Filename Value="abbrowse.pas"/>
         <UnitName Value="AbBrowse"/>
-        <CursorPos X="15" Y="121"/>
         <TopLine Value="99"/>
+        <CursorPos X="15" Y="121"/>
         <UsageCount Value="10"/>
       </Unit2>
       <Unit3>
         <Filename Value="../../../../../usr/share/fpcsrc/packages/fcl-xml/src/xmlread.pp"/>
         <UnitName Value="XMLRead"/>
-        <CursorPos X="11" Y="44"/>
         <TopLine Value="87"/>
+        <CursorPos X="11" Y="44"/>
         <UsageCount Value="12"/>
       </Unit3>
       <Unit4>
         <Filename Value="../../../../../usr/share/fpcsrc/packages/fcl-base/src/inc/custapp.pp"/>
         <UnitName Value="CustApp"/>
-        <CursorPos X="3" Y="135"/>
         <TopLine Value="91"/>
+        <CursorPos X="3" Y="135"/>
         <UsageCount Value="10"/>
       </Unit4>
       <Unit5>
         <Filename Value="../../../../../usr/share/fpcsrc/rtl/objpas/sysutils/sysutilh.inc"/>
-        <CursorPos X="4" Y="64"/>
         <TopLine Value="42"/>
+        <CursorPos X="4" Y="64"/>
         <UsageCount Value="10"/>
       </Unit5>
       <Unit6>
         <Filename Value="../../../../../usr/share/fpcsrc/rtl/inc/systemh.inc"/>
-        <CursorPos X="11" Y="780"/>
         <TopLine Value="758"/>
+        <CursorPos X="11" Y="780"/>
         <UsageCount Value="10"/>
       </Unit6>
       <Unit7>
         <Filename Value="utilities.pas"/>
         <UnitName Value="utilities"/>
-        <CursorPos X="3" Y="259"/>
         <TopLine Value="259"/>
+        <CursorPos X="3" Y="259"/>
         <UsageCount Value="16"/>
       </Unit7>
       <Unit8>
         <Filename Value="distri.pas"/>
         <UnitName Value="distri"/>
-        <CursorPos X="1" Y="227"/>
         <TopLine Value="186"/>
+        <CursorPos X="1" Y="227"/>
         <UsageCount Value="11"/>
       </Unit8>
       <Unit9>
         <Filename Value="RegExpr.pas"/>
         <UnitName Value="RegExpr"/>
-        <CursorPos X="85" Y="838"/>
         <TopLine Value="814"/>
+        <CursorPos X="85" Y="838"/>
         <UsageCount Value="10"/>
       </Unit9>
       <Unit10>
         <Filename Value="ipkbuild.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkbuild"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="38"/>
       </Unit10>
       <Unit11>
         <Filename Value="abzbrows.pas"/>
         <UnitName Value="AbZBrows"/>
-        <CursorPos X="21" Y="228"/>
         <TopLine Value="1"/>
+        <CursorPos X="21" Y="228"/>
         <UsageCount Value="10"/>
       </Unit11>
       <Unit12>
         <Filename Value="opbitmap/opbitmapformats.pas"/>
         <UnitName Value="opbitmapformats"/>
-        <CursorPos X="42" Y="21"/>
         <TopLine Value="1"/>
+        <CursorPos X="42" Y="21"/>
         <UsageCount Value="10"/>
       </Unit12>
       <Unit13>
         <Filename Value="opbitmap/GraphicEx.pas"/>
         <UnitName Value="GraphicEx"/>
-        <CursorPos X="9" Y="5666"/>
         <TopLine Value="5642"/>
+        <CursorPos X="9" Y="5666"/>
         <UsageCount Value="10"/>
       </Unit13>
       <Unit14>
         <Filename Value="abzipcry.pas"/>
         <UnitName Value="AbZipCry"/>
-        <CursorPos X="11" Y="44"/>
         <TopLine Value="21"/>
+        <CursorPos X="11" Y="44"/>
         <UsageCount Value="10"/>
       </Unit14>
       <Unit15>
         <Filename Value="abzipprc.pas"/>
         <UnitName Value="AbZipPrc"/>
-        <CursorPos X="12" Y="68"/>
         <TopLine Value="46"/>
+        <CursorPos X="12" Y="68"/>
         <UsageCount Value="10"/>
       </Unit15>
       <Unit16>
         <Filename Value="abutils.pas"/>
         <UnitName Value="AbUtils"/>
-        <CursorPos X="12" Y="44"/>
         <TopLine Value="23"/>
+        <CursorPos X="12" Y="44"/>
         <UsageCount Value="10"/>
       </Unit16>
       <Unit17>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/fileutil.pas"/>
         <UnitName Value="FileUtil"/>
-        <CursorPos X="2" Y="237"/>
         <TopLine Value="212"/>
+        <CursorPos X="2" Y="237"/>
         <UsageCount Value="10"/>
       </Unit17>
       <Unit18>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/include/scrollingwincontrol.inc"/>
-        <CursorPos X="30" Y="224"/>
         <TopLine Value="204"/>
+        <CursorPos X="30" Y="224"/>
         <UsageCount Value="10"/>
       </Unit18>
       <Unit19>
         <Filename Value="ipkhandle.pas"/>
         <UnitName Value="ipkhandle"/>
-        <CursorPos X="112" Y="1117"/>
         <TopLine Value="1097"/>
+        <CursorPos X="112" Y="1117"/>
         <UsageCount Value="11"/>
       </Unit19>
       <Unit20>
         <Filename Value="licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit20>
       <Unit21>
         <Filename Value="trstrings.pas"/>
         <UnitName Value="trstrings"/>
-        <CursorPos X="165" Y="231"/>
         <TopLine Value="217"/>
+        <CursorPos X="165" Y="231"/>
         <UsageCount Value="11"/>
       </Unit21>
       <Unit22>
         <Filename Value="../../../../../usr/share/fpcsrc/2.2.4/packages/fcl-base/src/custapp.pp"/>
         <UnitName Value="CustApp"/>
-        <CursorPos X="3" Y="26"/>
         <TopLine Value="42"/>
+        <CursorPos X="3" Y="26"/>
         <UsageCount Value="10"/>
       </Unit22>
       <Unit23>
         <Filename Value="litranslator.pas"/>
         <UnitName Value="litranslator"/>
-        <CursorPos X="49" Y="88"/>
         <TopLine Value="67"/>
+        <CursorPos X="49" Y="88"/>
         <UsageCount Value="10"/>
       </Unit23>
       <Unit24>
         <Filename Value="ipkscript.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkscript"/>
-        <CursorPos X="21" Y="67"/>
         <TopLine Value="39"/>
+        <CursorPos X="21" Y="67"/>
         <UsageCount Value="23"/>
       </Unit24>
       <Unit25>
         <Filename Value="bindings/installer.pas"/>
         <UnitName Value="installer"/>
-        <CursorPos X="24" Y="209"/>
         <TopLine Value="188"/>
+        <CursorPos X="24" Y="209"/>
         <UsageCount Value="10"/>
       </Unit25>
       <Unit26>
         <Filename Value="litypes.pas"/>
         <UnitName Value="litypes"/>
-        <CursorPos X="2" Y="41"/>
         <TopLine Value="20"/>
+        <CursorPos X="2" Y="41"/>
         <UsageCount Value="10"/>
       </Unit26>
       <Unit27>
@@ -229,36 +232,36 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="manager"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="109"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit27>
       <Unit28>
         <Filename Value="bindings/appman.pas"/>
         <UnitName Value="appman"/>
-        <CursorPos X="23" Y="15"/>
         <TopLine Value="1"/>
+        <CursorPos X="23" Y="15"/>
         <UsageCount Value="10"/>
       </Unit28>
       <Unit29>
         <Filename Value="../../../../../usr/lib/lazarus/lcl/forms.pp"/>
         <UnitName Value="Forms"/>
-        <CursorPos X="3" Y="1080"/>
         <TopLine Value="1324"/>
+        <CursorPos X="3" Y="1080"/>
         <UsageCount Value="10"/>
       </Unit29>
       <Unit30>
         <Filename Value="ipkdef.pas"/>
         <UnitName Value="ipkdef"/>
-        <CursorPos X="23" Y="15"/>
         <TopLine Value="1"/>
+        <CursorPos X="23" Y="15"/>
         <UsageCount Value="10"/>
       </Unit30>
       <Unit31>
         <Filename Value="../bindings/installer.pas"/>
         <UnitName Value="installer"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="13"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit31>
     </Units>

@@ -417,7 +417,7 @@ writeLn('('+rsAborted+')');
 halt(8);
 end;
 
-{$IFDEF WINDOWS}{$R lipa.rc}{$ENDIF}
+{$R *.res}
 
 begin
   Application:=TLipa.Create(nil);

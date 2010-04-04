@@ -16,6 +16,12 @@
 //** Contains threads which process software management jobs
 unit djobs;
 
+//////////////////////////////
+//IMPORTANT: The actions should be separate threads. Cause of some bugs, listallerd
+//           does not use threads at time.
+//           Please leave the (uncommented) parts which are used for multithreading.
+//           They may be used some time later.
+
 {$mode objfpc}{$H+}
 
 interface

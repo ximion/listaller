@@ -1,10 +1,11 @@
 *~
-*.patch
 *.ppu
 *.compiled
 *.bak
 *.manifest
 *.lrs
+*.res
+*.ro
 *.so
 .directory
 build

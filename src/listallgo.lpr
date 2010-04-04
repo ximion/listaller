@@ -24,13 +24,12 @@ uses
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
-  igobase, dgunit, trStrings, LResources, SysUtils, LiBasic,
+  igobase, dgfrm, trStrings, LResources, SysUtils, LiBasic,
   liTranslator, liTypes, xtypefm, Installer, LCLType, Dialogs, siginfodisp;
 
-{$IFDEF WINDOWS}{$R listallgo.rc}{$ENDIF}
+{$R listallgo.res}
 
 begin
-  {$I listallgo.lrs}
 
    //Init application
    Application.Title:='Installer';

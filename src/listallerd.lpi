@@ -11,14 +11,15 @@
       <TargetFileExt Value=""/>
       <Title Value="Listaller Daemon"/>
       <UseAppBundle Value="False"/>
-      <ActiveEditorIndexAtStart Value="1"/>
+      <ResourceType Value="res"/>
+      <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <CurrentMajorRevNr Value="4"/>
-      <CurrentBuildNr Value="463"/>
-      <ProjectVersion Value="0.4.0.0"/>
+      <MinorVersionNr Value="4"/>
+      <BuildNr Value="463"/>
+      <StringTable Comments="" CompanyName="" FileDescription="" FileVersion="0.4.0.463" InternalName="" LegalCopyright="" LegalTrademarks="" OriginalFilename="" ProductName="" ProductVersion="0.4.0.0"/>
     </VersionInfo>
     <PublishOptions>
       <Version Value="2"/>
@@ -37,267 +38,270 @@
         <Filename Value="listallerd.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerd"/>
-        <CursorPos X="62" Y="22"/>
-        <TopLine Value="1"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="133"/>
+        <CursorPos X="26" Y="167"/>
         <UsageCount Value="43"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="../bindings/installer.pas"/>
         <UnitName Value="installer"/>
-        <CursorPos X="10" Y="61"/>
         <TopLine Value="28"/>
+        <CursorPos X="10" Y="61"/>
         <UsageCount Value="10"/>
       </Unit1>
       <Unit2>
         <Filename Value="../bindings/appman.pas"/>
         <UnitName Value="appman"/>
-        <CursorPos X="23" Y="32"/>
         <TopLine Value="1"/>
+        <CursorPos X="23" Y="32"/>
         <UsageCount Value="10"/>
       </Unit2>
       <Unit3>
         <Filename Value="../distri.pas"/>
         <UnitName Value="distri"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit3>
       <Unit4>
         <Filename Value="djobs.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="djobs"/>
-        <CursorPos X="4" Y="832"/>
-        <TopLine Value="793"/>
         <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="157"/>
+        <CursorPos X="1" Y="24"/>
         <UsageCount Value="43"/>
         <Loaded Value="True"/>
       </Unit4>
       <Unit5>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus-message.inc"/>
-        <CursorPos X="10" Y="96"/>
+        <Filename Value="/usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus-message.inc"/>
         <TopLine Value="76"/>
+        <CursorPos X="10" Y="96"/>
         <UsageCount Value="10"/>
       </Unit5>
       <Unit6>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus.pas"/>
+        <Filename Value="/usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus.pas"/>
         <UnitName Value="dbus"/>
-        <CursorPos X="17" Y="68"/>
         <TopLine Value="53"/>
+        <CursorPos X="17" Y="68"/>
         <UsageCount Value="10"/>
       </Unit6>
       <Unit7>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus-threads.inc"/>
-        <CursorPos X="1" Y="1"/>
+        <Filename Value="/usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus-threads.inc"/>
         <TopLine Value="55"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit7>
       <Unit8>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/rtl/objpas/classes/classesh.inc"/>
-        <CursorPos X="20" Y="1428"/>
+        <Filename Value="/usr/share/fpcsrc/2.3.1/rtl/objpas/classes/classesh.inc"/>
         <TopLine Value="1408"/>
+        <CursorPos X="20" Y="1428"/>
         <UsageCount Value="10"/>
       </Unit8>
       <Unit9>
         <Filename Value="../licommon.pas"/>
         <UnitName Value="licommon"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="25"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit9>
       <Unit10>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/rtl/inc/objpash.inc"/>
-        <CursorPos X="23" Y="175"/>
+        <Filename Value="/usr/share/fpcsrc/2.3.1/rtl/inc/objpash.inc"/>
         <TopLine Value="155"/>
+        <CursorPos X="23" Y="175"/>
         <UsageCount Value="10"/>
       </Unit10>
       <Unit11>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus-connection.inc"/>
-        <CursorPos X="32" Y="90"/>
+        <Filename Value="/usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus-connection.inc"/>
         <TopLine Value="70"/>
+        <CursorPos X="32" Y="90"/>
         <UsageCount Value="10"/>
       </Unit11>
       <Unit12>
         <Filename Value="../libasic.pas"/>
         <UnitName Value="libasic"/>
-        <CursorPos X="11" Y="88"/>
         <TopLine Value="73"/>
+        <CursorPos X="11" Y="88"/>
         <UsageCount Value="10"/>
       </Unit12>
       <Unit13>
         <Filename Value="../litypes.pas"/>
         <UnitName Value="litypes"/>
-        <CursorPos X="70" Y="42"/>
         <TopLine Value="26"/>
+        <CursorPos X="70" Y="42"/>
         <UsageCount Value="10"/>
       </Unit13>
       <Unit14>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/inc/ctypes.pp"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/inc/ctypes.pp"/>
         <UnitName Value="ctypes"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit14>
       <Unit15>
-        <Filename Value="../../../../../../usr/lib/lazarus/0.9.28.2/lcl/interfaces/nogui/interfaces.pp"/>
+        <Filename Value="/usr/lib/lazarus/0.9.28.2/lcl/interfaces/nogui/interfaces.pp"/>
         <UnitName Value="Interfaces"/>
-        <CursorPos X="3" Y="27"/>
         <TopLine Value="1"/>
+        <CursorPos X="3" Y="27"/>
         <UsageCount Value="10"/>
       </Unit15>
       <Unit16>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-message.inc"/>
-        <CursorPos X="3" Y="33"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-message.inc"/>
         <TopLine Value="13"/>
+        <CursorPos X="3" Y="33"/>
         <UsageCount Value="10"/>
       </Unit16>
       <Unit17>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-arch-deps.inc"/>
-        <CursorPos X="3" Y="39"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-arch-deps.inc"/>
         <TopLine Value="4"/>
+        <CursorPos X="3" Y="39"/>
         <UsageCount Value="10"/>
       </Unit17>
       <Unit18>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-protocol.inc"/>
-        <CursorPos X="3" Y="59"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-protocol.inc"/>
         <TopLine Value="37"/>
+        <CursorPos X="3" Y="59"/>
         <UsageCount Value="10"/>
       </Unit18>
       <Unit19>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/objpas/classes/classesh.inc"/>
-        <CursorPos X="17" Y="1428"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/classes/classesh.inc"/>
         <TopLine Value="1408"/>
+        <CursorPos X="17" Y="1428"/>
         <UsageCount Value="10"/>
       </Unit19>
       <Unit20>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/gtk2/src/glib/gtypes.inc"/>
-        <CursorPos X="4" Y="23"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/gtk2/src/glib/gtypes.inc"/>
         <TopLine Value="3"/>
+        <CursorPos X="4" Y="23"/>
         <UsageCount Value="10"/>
       </Unit20>
       <Unit21>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/datih.inc"/>
-        <CursorPos X="20" Y="148"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/datih.inc"/>
         <TopLine Value="87"/>
+        <CursorPos X="20" Y="148"/>
         <UsageCount Value="10"/>
       </Unit21>
       <Unit22>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/inc/systemh.inc"/>
-        <CursorPos X="3" Y="300"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/inc/systemh.inc"/>
         <TopLine Value="280"/>
+        <CursorPos X="3" Y="300"/>
         <UsageCount Value="10"/>
       </Unit22>
       <Unit23>
-        <Filename Value="../../../../../../usr/lib/lazarus/0.9.28.2/lcl/lclintf.pas"/>
+        <Filename Value="/usr/lib/lazarus/0.9.28.2/lcl/lclintf.pas"/>
         <UnitName Value="LCLIntf"/>
-        <CursorPos X="10" Y="80"/>
         <TopLine Value="60"/>
+        <CursorPos X="10" Y="80"/>
         <UsageCount Value="10"/>
       </Unit23>
       <Unit24>
         <Filename Value="../bindings/packagekit.pas"/>
         <UnitName Value="packagekit"/>
-        <CursorPos X="48" Y="194"/>
         <TopLine Value="181"/>
+        <CursorPos X="48" Y="194"/>
         <UsageCount Value="10"/>
       </Unit24>
       <Unit25>
         <Filename Value="../bindings/gext.pas"/>
         <UnitName Value="gext"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit25>
       <Unit26>
         <Filename Value="../bindings/polkit.pas"/>
         <UnitName Value="polkit"/>
-        <CursorPos X="26" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="26" Y="1"/>
         <UsageCount Value="10"/>
       </Unit26>
       <Unit27>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/gtk2/src/glib/glib2.pas"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/gtk2/src/glib/glib2.pas"/>
         <UnitName Value="glib2"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit27>
       <Unit28>
         <Filename Value="litypes.pas"/>
         <UnitName Value="litypes"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit28>
       <Unit29>
         <Filename Value="simdbus.pas"/>
         <UnitName Value="simdbus"/>
-        <CursorPos X="47" Y="109"/>
         <TopLine Value="85"/>
+        <CursorPos X="47" Y="109"/>
         <UsageCount Value="12"/>
       </Unit29>
       <Unit30>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-shared.inc"/>
-        <CursorPos X="4" Y="39"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-shared.inc"/>
         <TopLine Value="18"/>
+        <CursorPos X="4" Y="39"/>
         <UsageCount Value="10"/>
       </Unit30>
       <Unit31>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-bus.inc"/>
-        <CursorPos X="10" Y="35"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-bus.inc"/>
         <TopLine Value="10"/>
+        <CursorPos X="10" Y="35"/>
         <UsageCount Value="10"/>
       </Unit31>
       <Unit32>
         <Filename Value="libasic.pas"/>
         <UnitName Value="libasic"/>
-        <CursorPos X="31" Y="141"/>
         <TopLine Value="1"/>
+        <CursorPos X="31" Y="141"/>
         <UsageCount Value="10"/>
       </Unit32>
       <Unit33>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus.pas"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus.pas"/>
         <UnitName Value="dbus"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit33>
       <Unit34>
         <Filename Value="../bindings/appupdate.pas"/>
         <UnitName Value="appupdate"/>
-        <CursorPos X="85" Y="28"/>
         <TopLine Value="1"/>
+        <CursorPos X="85" Y="28"/>
         <UsageCount Value="10"/>
       </Unit34>
       <Unit35>
-        <Filename Value="../../../../../../usr/lib/lazarus/0.9.28.2/lcl/include/winapih.inc"/>
-        <CursorPos X="11" Y="159"/>
+        <Filename Value="/usr/lib/lazarus/0.9.28.2/lcl/include/winapih.inc"/>
         <TopLine Value="138"/>
+        <CursorPos X="11" Y="159"/>
         <UsageCount Value="10"/>
       </Unit35>
       <Unit36>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/inc/threadh.inc"/>
-        <CursorPos X="11" Y="147"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/inc/threadh.inc"/>
         <TopLine Value="121"/>
+        <CursorPos X="11" Y="147"/>
         <UsageCount Value="10"/>
       </Unit36>
       <Unit37>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/rtl/linux/sysosh.inc"/>
-        <CursorPos X="3" Y="28"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/linux/sysosh.inc"/>
         <TopLine Value="1"/>
+        <CursorPos X="3" Y="28"/>
         <UsageCount Value="10"/>
       </Unit37>
       <Unit38>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-connection.inc"/>
-        <CursorPos X="29" Y="89"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-connection.inc"/>
         <TopLine Value="67"/>
+        <CursorPos X="29" Y="89"/>
         <UsageCount Value="10"/>
       </Unit38>
       <Unit39>
-        <Filename Value="../../../../../../usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-types.inc"/>
-        <CursorPos X="25" Y="31"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-types.inc"/>
         <TopLine Value="10"/>
+        <CursorPos X="25" Y="31"/>
         <UsageCount Value="10"/>
       </Unit39>
     </Units>
@@ -431,7 +435,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../bindings/;./;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
+      <OtherUnitFiles Value="../bindings/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
       <UnitOutputDirectory Value="../build"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>

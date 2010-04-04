@@ -24,13 +24,12 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
-  editor, fwiz, prjwizard, LResources;
+  editor, fwiz, prjwizard;
 
-{$IFDEF WINDOWS}{$R licreator.rc}{$ENDIF}
+{$R licreator.res}
 
 begin
   Application.Title:='liCreator';
-  {$I licreator.lrs}
   Application.Initialize;
   Application.CreateForm(TFrmEditor, FrmEditor);
   Application.CreateForm(TfrmFileWizard, frmFileWizard);

@@ -2142,7 +2142,7 @@ object IMdFrm: TIMdFrm
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '0.9.28.2'
+  LCLVersion = '0.9.29'
   object Label1: TLabel
     Left = 8
     Height = 20

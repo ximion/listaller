@@ -11,7 +11,7 @@ object SigInfoFrm: TSigInfoFrm
   ClientWidth = 314
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '0.9.28.2'
+  LCLVersion = '0.9.29'
   object LblPkgSigned: TLabel
     Left = 24
     Height = 21

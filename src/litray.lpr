@@ -23,14 +23,13 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, linotify, LResources,
+  Forms, linotify,
   LiTranslator;
 
-{$IFDEF WINDOWS}{$R litray.rc}{$ENDIF}
+{$R *.res}
 
 begin
   Application.Title:='Listaller Notify';
-  {$I litray.lrs}
   Application.Initialize;
   Application.ShowMainForm:=false;
   Application.CreateForm(TForm1, Form1);

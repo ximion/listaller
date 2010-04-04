@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
   Inifiles, StdCtrls, Process, LCLType, Buttons, ExtCtrls, Distri, AppList,
   Uninstall, trStrings, FileUtil, CheckLst, AppMan, LiBasic, liTypes, AboutBox,
-  PackageKit, Spin, Menus, iconLoader, LiCommon, AppItem;
+  PackageKit, Spin, Menus, IconLoader, LiCommon, AppItem;
 
 type
 
@@ -169,6 +169,8 @@ procedure OnMgrStatus(change: LiStatusChange;data: TLiStatusData;user_data: Poin
 //IMPORTANT: RegDir should be moved to libInstaller!
 
 implementation
+
+{$R manager.lfm}
 
 uses pkgconvertdisp;
 
@@ -1092,8 +1094,5 @@ begin
   if Assigned(appList) then appList.Free; //Free application list
   if Assigned(appListSU) then appListSU.Free; //Free application SU list
 end;
-
-initialization
-  {$I manager.lrs}
 
 end.

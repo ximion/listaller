@@ -42,6 +42,8 @@ type
 
 implementation
 
+{$R siginfodisp.lfm}
+
 { TSigInfoFrm }
 
 procedure TSigInfoFrm.Button1Click(Sender: TObject);
@@ -54,9 +56,6 @@ begin
  LblInfo.Caption:=rsSecurityInfo;
  Caption:=rsSecurityWarning;
 end;
-
-initialization
-  {$I siginfodisp.lrs}
 
 end.
 

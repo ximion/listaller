@@ -14,7 +14,7 @@
   You should have received a copy of the GNU General Public License v3
   along with this program. If not, see <http://www.gnu.org/licenses/>.}
 //** Main unit of the updater application
-unit mnupdate;
+unit updatefrm;
 
 {$mode objfpc}{$H+}
 
@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, Buttons, CheckLst, LiBasic, UpdExec, LCLType, Process, Menus, ComCtrls,
+  StdCtrls, Buttons, CheckLst, LiBasic, updexecfrm, LCLType, Process, Menus, ComCtrls,
   trStrings, IconLoader, LiCommon, AppUpdate, liTypes;
 
 type
@@ -62,6 +62,8 @@ var
  procedure OnMNStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
 
 implementation
+
+{$R updatefrm.lfm}
 
 { TUMnForm }
 
@@ -215,9 +217,6 @@ procedure TUMnForm.MenuItem2Click(Sender: TObject);
 begin
   UMnForm.Show;
 end;
-
-initialization
-  {$I mnupdate.lrs}
 
 end.
 

@@ -58,6 +58,8 @@ var
 
 implementation
 
+{$R *.lfm}
+
 uses editor;
 
 { TfrmFileWizard }
@@ -147,9 +149,6 @@ begin
   else
     Result := False;
 end;
-
-initialization
-  {$I fwiz.lrs}
 
 end.
 
