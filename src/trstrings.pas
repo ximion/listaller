@@ -49,7 +49,7 @@ rsDoYouAcceptLicenseCMD = 'Do you accept this license [y/n]?';
 rsEnterNumber = 'You have to enter a number!';
 rsInstAborted='Installation aborted.';
 rsInstAbortedByUser='Installation aborted by user.';
-rsAppNInstall='The application %a was not installed.';
+rsAppNInstall='The application "%a" was not installed.';
 rsLipaAutoFixQ = 'Should lipa fix these problems automatically [y/n]?';
 rsLipaInfo1 = 'Listaller command-line tool to handle IPK-packages';
 rsModeNumber = 'Mode number:';
@@ -99,13 +99,20 @@ rsNotifyDevs='Please notify the developers on http://launchpad.net/listaller';
 rsExtractError='Error while extracting files!';
 rsPkgDM='The package may be damaged or you haven''t enough permissions to execute this action!';
 rsAbLoad='Loading aborted.';
+rsOneInstAtTime='You cannot install two applications at the same time.'
+   +#10'Please finish the first installation, then install this one again.'
+   +#10'(If you do not run two installations, try to remove the temporary installer directory';
 rsAlreadyInst='This application is already installed';
 rsInstallAgain='Do you want to install it again?';
 rsWelcomeTo='Welcome to the installation of %a';
 rsInstOf='Installation of %a';
+rsInst='Installation';
 rsTestmode='Testmode';
 rsTestFinished='Test-installation of package finished.';
 rsCleaningUp = 'Cleaning up...';
+rsNotExecAsRootPolKit = 'Please do not execute this action with superuser rights!'
+    +#10'(PolicyKit will ask for authorization if privileges are required.)'
+    +#10'Do you want to force Listaller to execute all with superuser permission?';
 rspkgInval='The submitted package is invalid!';
 rsCouldntSolve='Dependencies couldn''t be solved!';
 rsViewLog='Please view the logfile at %p';

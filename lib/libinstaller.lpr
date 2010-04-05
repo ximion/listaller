@@ -172,14 +172,14 @@ end;
 //** Readout application name
 function li_setup_get_appname(setup: PInstallation): PChar;cdecl;
 begin
-  if not setup^.PkgOkay then exit;
+  // if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.AppName);
 end;
 
 //** Read appversion
 function li_setup_get_appversion(setup: PInstallation): PChar;cdecl;
 begin
-  if not setup^.PkgOkay then exit;
+ // if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.AppVersion);
 end;
 
@@ -290,6 +290,12 @@ end;
 function li_setup_execute(setup: PInstallation): Boolean;cdecl;
 begin
   Result:=setup^.DoInstallation;
+end;
+
+//** Set daemon mode
+procedure li_setup_exec_by_daemon(setup: PInstallation;b: Boolean);cdecl;
+begin
+ setup^.DaemonMode:=b;
 end;
 
 //** Get dependencies
@@ -488,16 +494,22 @@ begin
  Result:=PChar(upd^.UpdateIDGetOldVersion(uid));
 end;
 
-//** fetch new application version
+//** Fetch new application version
 function li_updater_updateid_newversion(upd: PAppUpdater;uid: Integer): PChar;cdecl;
 begin
  Result:=PChar(upd^.UpdateIDGetNewVersion(uid));
 end;
 
-//**Execute update for given update ID
+//** Execute update for given update ID
 function li_updater_execute_update(upd: PAppUpdater;uid: Integer): Boolean;cdecl;
 begin
  Result:=upd^.ExecuteUpdate(uid);
+end;
+
+//** Get registration dir
+function li_regdir: PChar;cdecl;
+begin
+ Result:=PChar(RegDir);
 end;
 
 ///////////////////////
@@ -535,6 +547,7 @@ exports
  li_setup_get_dependencies,
  li_setup_set_forced,
  li_setup_set_profileid,
+ li_setup_exec_by_daemon,
 
  //Management functions
  li_mgr_new,
@@ -561,6 +574,7 @@ exports
  li_updater_execute_update,
 
  //Other functions
+ li_regdir,
  li_remove_ipk_installed_app,
  li_set_testmode,
  li_get_ipk_app_installed;

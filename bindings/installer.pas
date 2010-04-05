@@ -59,12 +59,13 @@ procedure EnableUSource(b: Boolean);
 procedure SetProfileID(i: Integer);
 procedure SetRootMode(b: Boolean);
 property Forced: String read ForcedActn write SetForced;
+property RemoteObject: Pointer read ins;
 end;
 
 function IsIPKAppInstalled(appname: String;appid: String;sumode: Boolean): Boolean;
 
+procedure li_setup_exec_by_daemon(setup: Pointer;b: Boolean);cdecl;external libinst;
 implementation
-
 //Import library functions
 function  li_setup_new: Pointer; cdecl;external libinst;
 procedure li_setup_free(setup: Pointer);external libinst;

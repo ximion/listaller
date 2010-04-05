@@ -1,5 +1,5 @@
-listaller (0.3.77-0+git20100319~1unstable~k) karmic; urgency=low
+listaller (0.3.77-0+git20100406~0unstable) experimental; urgency=low
 
   * New development snapshot of 0.4 series (auto-generated)
 
- -- Matthias Klumpp <matthias@nlinux.org>  Tue, 08 Sep 2009 21:37:48 +0200
+ -- Matthias Klumpp <matthias@nlinux.org>  Mon, 06 Apr 2010 18:37:48 +0200

@@ -96,6 +96,8 @@ type
   sigState: TPkgSigState;
   //Store filesize of file ftpsend is downloading
   ftpfilesize: Integer;
+  //Daemon-Mode?
+  daemonm: Boolean;
 
   //Set superuser mode correctly
   procedure SetRootMode(b: Boolean);
@@ -176,6 +178,8 @@ type
   procedure ReadLicense(sl: TStringList);
   //** True on installation with superuser rights
   property SuperuserMode: Boolean read SUMode write SetRootMode;
+  //** True if setup is executed by listallerd
+  property DaemonMode: Boolean read daemonm write daemonm;
   //** Set forces identifier string
   property ForceActions: String read Forces write Forces;
   //** True if update source will be registered
@@ -248,6 +252,7 @@ end;
 constructor TInstallation.Create;
 begin
  inherited Create;
+ daemonm:=false; //Daemon mode has to be set manually by listallerd
  dsApp:= TSQLite3Dataset.Create(nil);
  if SUMode then
   RegDir:='/etc/lipa/app-reg/'
@@ -264,13 +269,14 @@ end;
 
 destructor TInstallation.Destroy;
 begin
- DeleteDirectory(tmpdir+PkgName,false);
- inherited Destroy;
+ if PkgName<>'' then
+  DeleteDirectory(tmpdir+PkgName,false);
  dsApp.Free;
  msg('Database connection closed.');
  if Assigned(Dependencies) then Dependencies.Free;
  license.Free;
  longdesc.Free;
+ inherited Destroy;
 end;
 
 procedure TInstallation.pkgProgress(pos: Integer; user_data: Pointer);
@@ -503,6 +509,16 @@ begin
 end;
 
 begin
+Result:=false;
+
+if (IsRoot) and (not daemonm) then
+begin
+ p_error('Do not execute this action with superuser rights! (PolicyKit will handle it!)');
+ //Listaller should alsways use PolicyKit to install apps as root
+ if MakeUsrRequest(rsNotExecAsRootPolKit,rqWarning) = rqsNo then
+  exit;
+end;
+
 //Create temporary dir
 if not DirectoryExists(tmpdir) then
  ForceDirectory(tmpdir);
@@ -537,12 +553,13 @@ msg('Loading IPK package...');
 RmApp:=false;
 
 //Clean up possible mess of an old installation
+if not daemonm then //Daemon accepts data from previous install
 if DirectoryExists(tmpdir+ExtractFileName(fname)) then
  DeleteDirectory(tmpdir+ExtractFileName(fname),false);
 
 //Check if user can write to dir
 if (fpAccess(tmpdir+ExtractFileName(fname),W_OK)>0)
-or (DirectoryExists(tmpdir+ExtractFileName(fname))) then
+or ((DirectoryExists(tmpdir+ExtractFileName(fname)))and(not IsRoot)) then
 begin
  MakeUsrRequest(rsTmpWriteDenied, rqError);
  Emergency_FreeAll();
@@ -551,9 +568,9 @@ begin
 end;
 
 pkg:=TLiUnpacker.Create(fname);
+pkg.OnProgress:=@pkgProgress;
 if not SUMode then
 begin
- pkg.OnProgress:=@pkgProgress;
  try
  //Uncompress LZMA
  pkg.Decompress;
@@ -564,12 +581,16 @@ begin
 end else
 if not FileExists(CleanFilePath(pkg.WDir+'/ipktar.tar')) then
 begin
- pkg.OnProgress:=@pkgProgress;
+ try
  //Uncompress LZMA
  pkg.Decompress;
+ except
+  on E: Exception do
+   MakeUsrRequest(rsPkgDM+#10+rsABLoad+#10+E.Message,rqError);
+ end;
 end;
 
-if not IsRoot then
+if not daemonm then  //Why?
 begin
  sigState:=pkg.CheckSignature;
  case sigState of
@@ -1652,11 +1673,11 @@ HTTP.ProxyHost:=cnf.ReadString('Proxy','hServer','');
 HTTP.ProxyUser:=cnf.ReadString('Proxy','Username','');
 HTTP.ProxyPass:=cnf.ReadString('Proxy','Password',''); //The PW is visible in the file! It should be crypted
 //Not needed
-{if DInfo.Desktop='GNOME' then begin
+if DInfo.Desktop='GNOME' then begin
 HTTP.ProxyPass:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_user');
 HTTP.ProxyUser:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_password');
- end;}
-end; }
+ end;
+end;}
 
 ShowPKMon();
 
@@ -1848,9 +1869,23 @@ begin
 end;
 
 function TInstallation.DoInstallation: Boolean;
-var cnf: TIniFile;i: Integer;buscmd: ListallerBusCommand;
+var cnf: TIniFile;
+    i: Integer;
+    buscmd: ListallerBusCommand;
+    tmp: TStringList;
 begin
+Result:=false;
 if not PkgOkay then exit;
+
+tmp:=TStringList.Create;
+FindDirs(tmp,tmpdir);
+if tmp.Count>1 then
+begin
+ tmp.Free;
+ MakeUsrRequest(rsOneInstAtTime,rqError);
+ exit;
+end;
+tmp.free;
 
 //Force installing DLink packages as root
 if pkType=ptDLink then SUMode:=true;
@@ -1935,10 +1970,10 @@ CheckAddUSource;
    //end;
 
  //Set FTP
- {FTP.ProxyPort:=cnf.ReadString('Proxy','fPort','');
+ FTP.ProxyPort:=cnf.ReadString('Proxy','fPort','');
  FTP.ProxyHost:=cnf.ReadString('Proxy','fServer','');
  FTP.ProxyUser:=cnf.ReadString('Proxy','Username','');
- FTP.ProxyPass:=cnf.ReadString('Proxy','Password',''); }
+ FTP.ProxyPass:=cnf.ReadString('Proxy','Password','');
 
  end;
   cnf.Free;}

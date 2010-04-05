@@ -290,8 +290,15 @@ begin
  end;
 end;
 
-function RequestHandling(mtype: TRqType;msg: PChar;data: Pointer): TRqResult; cdecl;
+function RequestHandling(mtype: TRqType;msg: PChar;data: Pointer): TRqResult;cdecl;
+var s: String;
 begin
+//Window title
+if setup.GetAppName = '' then
+ s:=rsInst
+else
+ s:= Format(rsInstOf,[setup.GetAppName]);
+//Handle interaction types
 case mtype of
 rqError: begin
   Application.MessageBox(msg,'Error',MB_OK+MB_IconError);
@@ -317,7 +324,7 @@ rqError: begin
   end;
 end;
 rqWarning: begin
-  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(Format(rsInstOf,[setup.GetAppName])),MB_YESNO+MB_IconWarning)<>IDYES then
+  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(s),MB_YESNO+MB_IconWarning)<>IDYES then
   begin
    ShowMessage(rsINClose);
    Result:=rqsNo;
@@ -342,7 +349,7 @@ rqWarning: begin
 end;
 end;
 rqQuestion: begin
-  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(Format(rsInstOf,[setup.GetAppName])),MB_YESNO+MB_IconQuestion)<>IDYES then
+  if Application.MessageBox(PAnsiChar(msg),PAnsiChar(s),MB_YESNO+MB_IconQuestion)<>IDYES then
    Result:=rqsNo else Result:=rqsYes;
 end;
 rqInfo: begin
@@ -441,6 +448,7 @@ setup.SetStatusChangeCall(@xtypefm.PkgInitProgressChange,imForm);
 //Set forced actions
 if Application.HasOption('force-architecture') then
  setup.Forced:='architecture;';
+
 //Load the IPK data
 setup.Initialize(paramstr(1));
 

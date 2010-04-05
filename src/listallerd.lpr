@@ -93,11 +93,19 @@ begin
     begin
         JobList.Add(TDoAppInstall.Create(msg,bs.Connection));
         Inc(InstallWorkers);
+        JobList.Delete(0); //Can be removed if threading is enabled
     end else
     if bs.MessageIsMethodCall(msg, 'org.nlinux.Listaller.Manage', CALL_APPREMOVE) then
     begin
         JobList.Add(TDoAppRemove.Create(msg,bs.Connection));
-       Inc(ManagerWorkers);
+        Inc(ManagerWorkers);
+        JobList.Delete(0); //Can be removed if threading is enabled
+    end else
+    if bs.MessageIsMethodCall(msg, 'org.nlinux.Listaller.Manage', CALL_UPDATEAPP) then
+    begin
+        JobList.Add(TDoAppUpdate.Create(msg,bs.Connection));
+        Inc(ManagerWorkers);
+        JobList.Delete(0); //Can be removed if threading is enabled
     end else
      //Free the message
      bs.FreeMessage(msg);

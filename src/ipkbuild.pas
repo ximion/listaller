@@ -280,46 +280,6 @@ if not Result and AllowFloat then
     end;
 end;
 
-procedure FindFiles(FilesList: TStringList; StartDir, FileMask: string);
-var
-  SR: TSearchRec;
-  DirList: TStringList;
-  IsFound: Boolean;
-  i: integer;
-begin
-  if FileMask = '' then FileMask:='*';
-
-  if StartDir[length(StartDir)] <> '/' then
-    StartDir := StartDir + '/';
-
-  IsFound := FindFirst(StartDir+FileMask, faAnyFile-faDirectory, SR) = 0;
-  while IsFound do
-  begin
-    FilesList.Add(StartDir + SR.Name);
-    IsFound := FindNext(SR) = 0;
-  end;
-  FindClose(SR);
-
-  // Build a list of subdirectories
-  DirList := TStringList.Create;
-  IsFound := FindFirst(StartDir+'*', faAnyFile, SR) = 0;
-  while IsFound do
-  begin
-    if ((SR.Attr and faDirectory) <> 0) and
-         (SR.Name[1] <> '.') then
-      DirList.Add(StartDir + SR.Name);
-    IsFound := FindNext(SR) = 0;
-  end;
-  FindClose(SR);
-
-  // Scan the list of subdirectories
-  for i := 0 to DirList.Count - 1 do
-  begin
-    FindFiles(FilesList, DirList[i], FileMask);
-  end;
-  DirList.Free;
-end;
-
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////Function to build IPK-Packages///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -796,6 +756,12 @@ begin
  exit;
 end;
 sleep(20);
+
+if FileExists(WDir) then
+begin
+ writeLn('Cleaning up...');
+ FileUtil.DeleteDirectory(WDir,false);
+end;
 
 writeLn('Done!');
 if (genbutton)and(Assigned(dlist)) then

@@ -21,7 +21,7 @@ unit libasic;
 interface
 
 uses
-  Classes, SysUtils, DOS, Process, IniFiles, BaseUnix, pwd;
+  Classes, SysUtils, Process, IniFiles, BaseUnix, pwd, Dos;
 
 const
   //** Version of the Listaller applicationset
@@ -61,6 +61,10 @@ function  IsInList(nm: String;list: TStringList): Boolean;
 procedure ShowPKMon();
 //** Get the current, usable language variable
 function GetLangID: String;
+//** Search for files in dir
+procedure FindFiles(FilesList: TStringList; StartDir, FileMask: string;const recursive: Boolean=true);
+//** Find all dirs in a directory (NOT recursive!)
+procedure FindDirs(DirList: TStringList;StartDir: String);
 //** Reads the current system architecture @returns Detected architecture as string
 function GetSystemArchitecture: String;
 {** Executes an application as root using an graphical input prompt
@@ -91,7 +95,7 @@ function StrSubst(s,a,b: String): String;
 //** Find absolute path for system binary
 function FindBinary(name: String): String;
 //** Check if program is running @param cmd Command name
-function IsCommandRunning(cmd:String):Boolean;
+function IsCommandRunning(cmd: String):Boolean;
 
 const
  LI_CONFIG_DIR = '/etc/lipa/';
@@ -101,7 +105,7 @@ implementation
 
 uses distri; //Access to distribution data
 
-function GetServerName(url:string):string;
+function GetServerName(url: String): String;
 var p1,p2 : integer;
 begin
 url := StringReplace(url,'ftp://','',[rfReplaceAll]);
@@ -112,7 +116,7 @@ p2 := Pos('/',url);
 Result := Copy(url,P1,(P2-1));
 end;
 
-function IsCommandRunning(cmd:String):Boolean;
+function IsCommandRunning(cmd: String):Boolean;
 var t:TProcess;
 s:TStringList;
 begin
@@ -134,7 +138,7 @@ begin
  end;
 end;
 
-function GetServerPath(url:string):string;
+function GetServerPath(url: String): String;
 var p1,p2 : integer;
 begin
 url := StringReplace(url,'http://','',[rfReplaceAll]);
@@ -162,6 +166,65 @@ else
  Result:='/usr/share/listaller/'+s;
 end else
  Result:='/usr/share/listaller/'+s;
+end;
+
+procedure FindDirs(DirList: TStringList;StartDir: String);
+var
+  SR: TSearchRec;
+  IsFound: Boolean;
+begin
+  IsFound := SysUtils.FindFirst(StartDir+'*', faAnyFile, SR) = 0;
+  while IsFound do
+  begin
+    if ((SR.Attr and faDirectory) <> 0) and
+         (SR.Name[1] <> '.') then
+      DirList.Add(StartDir + SR.Name);
+    IsFound := SysUtils.FindNext(SR) = 0;
+  end;
+  SysUtils.FindClose(SR);
+end;
+
+procedure FindFiles(FilesList: TStringList; StartDir, FileMask: String;const recursive: Boolean=true);
+var
+  SR: TSearchRec;
+  DirList: TStringList;
+  IsFound: Boolean;
+  i: integer;
+begin
+  if FileMask = '' then FileMask:='*';
+
+  if StartDir[length(StartDir)] <> '/' then
+    StartDir := StartDir + '/';
+
+  IsFound := SysUtils.FindFirst(StartDir+FileMask, faAnyFile-faDirectory, SR) = 0;
+  while IsFound do
+  begin
+    FilesList.Add(StartDir + SR.Name);
+    IsFound := SysUtils.FindNext(SR) = 0;
+  end;
+  SysUtils.FindClose(SR);
+
+  if recursive then
+  begin
+  // Build a list of subdirectories
+  DirList := TStringList.Create;
+  IsFound := SysUtils.FindFirst(StartDir+'*', faAnyFile, SR) = 0;
+  while IsFound do
+  begin
+    if ((SR.Attr and faDirectory) <> 0) and
+         (SR.Name[1] <> '.') then
+      DirList.Add(StartDir + SR.Name);
+    IsFound := SysUtils.FindNext(SR) = 0;
+  end;
+  SysUtils.FindClose(SR);
+
+  // Scan the list of subdirectories
+  for i := 0 to DirList.Count - 1 do
+  begin
+    FindFiles(FilesList, DirList[i], FileMask);
+  end;
+  DirList.Free;
+  end;
 end;
 
 function FindBinary(name: String): String;

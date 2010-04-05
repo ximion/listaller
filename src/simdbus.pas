@@ -70,7 +70,7 @@ type
  public
   constructor Create(bname: String;ty: DBusBusType;flags: cuint);
   constructor Create(dConn: PDBusConnection);
-  destructor  Destroy;
+  destructor  Destroy;override;
 
   function ReadMessage: PDBusMessage;
   function MessageIsMethodCall(msg: PDBusMessage;intf: String;call: String): Boolean;
