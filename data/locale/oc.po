@@ -1,16 +1,16 @@
-# Swedish translation for listaller
-# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# Occitan (post 1500) translation for listaller
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
 # This file is distributed under the same license as the listaller package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2009-12-07 22:46+0000\n"
-"Last-Translator: Christian Widell <Christian_widell@hotmail.com>\n"
-"Language-Team: Swedish <sv@li.org>\n"
+"PO-Revision-Date: 2010-03-13 17:45+0000\n"
+"Last-Translator: Cédric VALMARY (Per Tot en òc) <cvalmary@yahoo.fr>\n"
+"Language-Team: Occitan (post 1500) <oc@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,7 +35,7 @@ msgstr ""
 
 #: trstrings:rscheckapps
 msgid "Check applications"
-msgstr ""
+msgstr "Verificar las aplicacions"
 
 #: trstrings:rscheckrootappsq
 msgid "Do you want to check global-installed applications too?"
@@ -43,7 +43,7 @@ msgstr ""
 
 #: trstrings:rscommands
 msgid "Commands:"
-msgstr ""
+msgstr "Comandas :"
 
 #: trstrings:rscouldntfindupdater
 msgid "Can't find update-tool!"
@@ -51,11 +51,11 @@ msgstr ""
 
 #: trstrings:rsinternalerror
 msgid "An internal error occured"
-msgstr ""
+msgstr "Una error intèrna s'es producha"
 
 #: trstrings:rslaunchlimgr
 msgid "Launch Listaller Manager"
-msgstr ""
+msgstr "Aviar Listaller Manager"
 
 #: trstrings:rslipainfo2
 msgid "Resolve Listaller path variable"
@@ -63,31 +63,31 @@ msgstr ""
 
 #: trstrings:rslipainfo3
 msgid "Installs an IPK package"
-msgstr ""
+msgstr "Installa un paquet IPK"
 
 #: trstrings:rslistallermgrnotfound
 msgid "Can't find Listaller Manager!"
-msgstr ""
+msgstr "Pòt pas trobar lo Gestionari Listaller"
 
 #: trstrings:rsunablefind
 msgid "Unable to find %s"
-msgstr ""
+msgstr "Impossible de trobar %s"
 
 #: trstrings:rsnotfoundlitray
 msgid "Could not find Listaller TrayIcon Application"
-msgstr ""
+msgstr "Pòt pas trobar l'icòna de notificacion Listaller"
 
 #: trstrings:rsoptions
 msgid "Options:"
-msgstr ""
+msgstr "Opcions :"
 
 #: trstrings:rslipainfo4
 msgid "Runs installation in testmode"
-msgstr ""
+msgstr "Aviar l'installacion en mòde tèst"
 
 #: trstrings:rslipainfo5
 msgid "Print all available log messages"
-msgstr ""
+msgstr "Estampar totes los messatges del jornal disponibles"
 
 #: trstrings:rslipainfo6
 msgid "Check if dependencies of all installed applications are available."
@@ -95,11 +95,11 @@ msgstr ""
 
 #: trstrings:rscmdinfopkgbuild
 msgid "Package build commands:"
-msgstr ""
+msgstr "Comandas de creacion del paquet :"
 
 #: trstrings:rslibuildinfoa
 msgid "Build IPK-package"
-msgstr ""
+msgstr "Construire un paquet IPK"
 
 #: trstrings:rslibuildinfob
 msgid "Create/Update update-repository"
@@ -107,23 +107,23 @@ msgstr ""
 
 #: trstrings:rslibuildinfoc
 msgid "Create DEB and RPM file from IPS"
-msgstr ""
+msgstr "Crear un paquet DEB e RPM dempuèi un fichièr IPS"
 
 #: trstrings:rsdone
 msgid "Done."
-msgstr ""
+msgstr "Acabat."
 
 #: trstrings:rsdoyouacceptlicensecmd
 msgid "Do you accept this license [y/n]?"
-msgstr ""
+msgstr "Acceptatz aquesta licéncia [o/n] ?"
 
 #: trstrings:rsenternumber
 msgid "You have to enter a number!"
-msgstr ""
+msgstr "Vos cal entrar un nombre !"
 
 #: trstrings:rsinstaborted
 msgid "Installation aborted."
-msgstr ""
+msgstr "Installacion anullada."
 
 #: trstrings:rsinstabortedbyuser
 msgid "Installation aborted by user."
@@ -143,19 +143,19 @@ msgstr ""
 
 #: trstrings:rsmodenumber
 msgid "Mode number:"
-msgstr ""
+msgstr "Mòde numerica :"
 
 #: trstrings:rsn
 msgid "n"
-msgstr ""
+msgstr "n"
 
 #: trstrings:rsno
 msgid "no"
-msgstr ""
+msgstr "Non"
 
 #: trstrings:rsokay
 msgid "Okay"
-msgstr ""
+msgstr "D'acòrdi"
 
 #: trstrings:rspreparinginstall
 msgid "Preparing installation (please wait)"
@@ -205,7 +205,7 @@ msgstr ""
 
 #: trstrings:rsinstallnow
 msgid "Install now"
-msgstr "Installera nu"
+msgstr ""
 
 #: trstrings:rsrunparam
 msgid ""
@@ -214,7 +214,7 @@ msgstr ""
 
 #: trstrings:rswelcome
 msgid "Welcome!"
-msgstr "Välkommen!"
+msgstr "Benvenguda !"
 
 #: trstrings:rsntostart
 msgid "Press \"Next\" to start the installation!"
@@ -222,11 +222,11 @@ msgstr ""
 
 #: trstrings:rsprogdesc
 msgid "Program description:"
-msgstr "Programbeskrivning:"
+msgstr "Descripcion del programa :"
 
 #: trstrings:rslicense
 msgid "Software license"
-msgstr ""
+msgstr "Licéncia del logicial"
 
 #: trstrings:rspleaseread
 msgid "Please read the following information carefully:"
@@ -234,39 +234,39 @@ msgstr ""
 
 #: trstrings:rsrunning
 msgid "Running installation..."
-msgstr ""
+msgstr "Execucion de l'installacion..."
 
 #: trstrings:rsplwait
 msgid "Please wait."
-msgstr ""
+msgstr "Esperatz."
 
 #: trstrings:rscomplete
 msgid "Installation completed!"
-msgstr ""
+msgstr "Installacion acabada !"
 
 #: trstrings:rsinstfailed
 msgid "Installation failed."
-msgstr ""
+msgstr "Fracàs de l'installacion"
 
 #: trstrings:rsprfinish
 msgid "Press \"Finish\" to close."
-msgstr ""
+msgstr "Clicatz sus « Acabar » per tampar."
 
 #: trstrings:rsfinish
 msgid "Finish"
-msgstr "Avsluta"
+msgstr "Acabar"
 
 #: trstrings:rsabort
 msgid "Abort"
-msgstr "Avbryt"
+msgstr "Abandonar"
 
 #: trstrings:rsback
 msgid "Back"
-msgstr "Bakåt"
+msgstr "Retorn"
 
 #: trstrings:rsnext
 msgid "Next"
-msgstr "Nästa"
+msgstr ""
 
 #: trstrings:rsdisplog
 msgid "Display installation log"
@@ -303,7 +303,7 @@ msgstr ""
 
 #: trstrings:rscnoverride
 msgid "Unable to override the file %f."
-msgstr ""
+msgstr "Impossible d'espotir lo paquet %f."
 
 #: trstrings:rscncopy
 msgid "Unable to copy the file %s."
@@ -325,7 +325,7 @@ msgstr ""
 
 #: trstrings:rsabload
 msgid "Loading aborted."
-msgstr ""
+msgstr "Cargament interromput ."
 
 #: trstrings:rsalreadyinst
 msgid "This application is already installed"
@@ -337,15 +337,15 @@ msgstr ""
 
 #: trstrings:rswelcometo
 msgid "Welcome to the installation of %a"
-msgstr ""
+msgstr "Benvengut(da) dins l'installacion de %a"
 
 #: trstrings:rsinstof
 msgid "Installation of %a"
-msgstr ""
+msgstr "Installacion de %a"
 
 #: trstrings:rstestmode
 msgid "Testmode"
-msgstr ""
+msgstr "Mòde Tèst"
 
 #: trstrings:rstestfinished
 msgid "Test-installation of package finished."
@@ -353,7 +353,7 @@ msgstr ""
 
 #: trstrings:rscleaningup
 msgid "Cleaning up..."
-msgstr ""
+msgstr "Netejatge..."
 
 #: trstrings:rspkginval
 msgid "The submitted package is invalid!"
@@ -381,7 +381,7 @@ msgstr ""
 
 #: trstrings:rsstate
 msgid "State"
-msgstr ""
+msgstr "Estat"
 
 #: trstrings:rswdldep
 msgid "This application wants to fetch a dependency from %l"
@@ -417,7 +417,7 @@ msgstr ""
 
 #: trstrings:rsfinished
 msgid "Finished"
-msgstr ""
+msgstr "Acabat"
 
 #: trstrings:rssecurityinfo
 msgid ""
@@ -430,7 +430,7 @@ msgstr ""
 
 #: trstrings:rssecuritywarning
 msgid "Security warning"
-msgstr ""
+msgstr "Alèrta de seguretat"
 
 #: trstrings:rsinstanyway
 msgid "Do you want to install it anyway? (This could cause problems)"
@@ -458,7 +458,7 @@ msgstr ""
 
 #: trstrings:rssuccess
 msgid "Success!"
-msgstr ""
+msgstr "Òsca !"
 
 #: trstrings:rsmain
 msgid "Main"
@@ -466,7 +466,7 @@ msgstr ""
 
 #: trstrings:rsdetails
 msgid "Details"
-msgstr ""
+msgstr "Detalhs"
 
 #: trstrings:rsinstpkgfailed
 msgid "Installation of package %s failed!"
@@ -478,7 +478,7 @@ msgstr ""
 
 #: trstrings:rsinstallation
 msgid "Installation"
-msgstr ""
+msgstr "Installacion"
 
 #: trstrings:rsnoldsources
 msgid ""
@@ -488,7 +488,7 @@ msgstr ""
 
 #: trstrings:rsusecomppq
 msgid "Use compatible packages?"
-msgstr ""
+msgstr "Utilizacion dels paquets compatibles ?"
 
 #: trstrings:rsnocomp
 msgid "No compatible packages found!"
@@ -502,7 +502,7 @@ msgstr ""
 
 #: trstrings:rsreinstall
 msgid "Re-install"
-msgstr ""
+msgstr "Reïnstallacion"
 
 #: trstrings:rspkgdownload
 msgid "The following dependencies will be downloaded:"
@@ -514,7 +514,7 @@ msgstr ""
 
 #: trstrings:rsplwait2
 msgid "Please wait..."
-msgstr ""
+msgstr "Esperatz..."
 
 #: trstrings:rsdepdlproblem
 msgid "Problem while downloading the dependency."
@@ -529,7 +529,7 @@ msgstr ""
 
 #: trstrings:rsinstallationmode
 msgid "Installation mode:"
-msgstr ""
+msgstr "mòde d'installacion"
 
 #: trstrings:rsimodeinstruction
 msgid "Select which parts of the application should be installed."
@@ -537,7 +537,7 @@ msgstr ""
 
 #: trstrings:rsmode
 msgid "Mode"
-msgstr ""
+msgstr "Mòde"
 
 #: trstrings:rsinstperformerror
 msgid "Error while performing installation:"
@@ -558,7 +558,7 @@ msgstr ""
 
 #: trstrings:rswanttodoq
 msgid "What do you want to do?"
-msgstr ""
+msgstr "Qué volètz far ?"
 
 #: trstrings:rsdevversion
 msgid ""
@@ -582,7 +582,7 @@ msgstr ""
 
 #: trstrings:rsinstallhome
 msgid "Install into my Home directory"
-msgstr ""
+msgstr "Installar dins mon dorsièr personal"
 
 #: trstrings:rsselinstmode
 msgid "Select installation mode"
@@ -590,19 +590,19 @@ msgstr ""
 
 #: trstrings:rssoftwaremanager
 msgid "Software Manager"
-msgstr ""
+msgstr "Gestionari de logicials"
 
 #: trstrings:rsupdsources
 msgid "Update repositories"
-msgstr ""
+msgstr "Mesa a jorn dels depauses"
 
 #: trstrings:rsclose
 msgid "Close"
-msgstr ""
+msgstr "Tampar"
 
 #: trstrings:rsdelsrc
 msgid "Delete source"
-msgstr ""
+msgstr "Suprimir la font"
 
 #: trstrings:rslistofsrc
 msgid "The following update repositories are installed:"
@@ -610,75 +610,75 @@ msgstr ""
 
 #: trstrings:rsuninstall
 msgid "Uninstall"
-msgstr ""
+msgstr "Desinstallar"
 
 #: trstrings:rsshow
 msgid "Show:"
-msgstr ""
+msgstr "Afichar :"
 
 #: trstrings:rsall
 msgid "All"
-msgstr ""
+msgstr "Tot"
 
 #: trstrings:rseducation
 msgid "Education"
-msgstr ""
+msgstr "Educacion"
 
 #: trstrings:rsoffice
 msgid "Office"
-msgstr ""
+msgstr "Burèu"
 
 #: trstrings:rsdevelopment
 msgid "Development"
-msgstr ""
+msgstr "Desvolopament"
 
 #: trstrings:rsgraphic
 msgid "Graphic"
-msgstr ""
+msgstr "Grafisme"
 
 #: trstrings:rsnetwork
 msgid "Network"
-msgstr ""
+msgstr "Ret"
 
 #: trstrings:rsgames
 msgid "Games"
-msgstr ""
+msgstr "Jòcs"
 
 #: trstrings:rssystem
 msgid "System"
-msgstr ""
+msgstr "Sistèma"
 
 #: trstrings:rsmultimedia
 msgid "Multimedia"
-msgstr ""
+msgstr "Multimèdia"
 
 #: trstrings:rsaddidional
 msgid "Utilities"
-msgstr ""
+msgstr "Utilitaris"
 
 #: trstrings:rsother
 msgid "Other"
-msgstr ""
+msgstr "Autre"
 
 #: trstrings:rsversion
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #: trstrings:rsauthor
 msgid "Autor"
-msgstr ""
+msgstr "Autor"
 
 #: trstrings:rsusername
 msgid "Username"
-msgstr ""
+msgstr "Nom d'utilizaire"
 
 #: trstrings:rspassword
 msgid "Password"
-msgstr ""
+msgstr "Senhal"
 
 #: trstrings:rsproxysettings
 msgid "Proxy-Settings"
-msgstr ""
+msgstr "Paramètres de proxy"
 
 #: trstrings:rsenableproxy
 msgid "Enable Proxy-Server"
@@ -700,7 +700,7 @@ msgstr ""
 
 #: trstrings:rsready
 msgid "Ready."
-msgstr ""
+msgstr "Prèst."
 
 #: trstrings:rsconvertpkg
 msgid ""
@@ -722,31 +722,31 @@ msgstr ""
 
 #: trstrings:rsfiltering
 msgid "Filtering..."
-msgstr ""
+msgstr "Filtratge..."
 
 #: trstrings:rsfilter
 msgid "Filter..."
-msgstr ""
+msgstr "Filtrar..."
 
 #: trstrings:rsloading
 msgid "Loading..."
-msgstr ""
+msgstr "Cargament..."
 
 #: trstrings:rsapplications
 msgid "Applications"
-msgstr ""
+msgstr "Aplicacions"
 
 #: trstrings:rsinstalledapps
 msgid "Installed applications"
-msgstr ""
+msgstr "Aplicacions installadas"
 
 #: trstrings:rsinstallpkg
 msgid "Install package"
-msgstr ""
+msgstr "Installacion paquet"
 
 #: trstrings:rsrepositories
 msgid "Repositories"
-msgstr ""
+msgstr "Depauses"
 
 #: trstrings:rspackagelists
 msgid "Package lists"
@@ -754,7 +754,7 @@ msgstr ""
 
 #: trstrings:rssettings
 msgid "Settings"
-msgstr ""
+msgstr "Configuracion"
 
 #: trstrings:rsmyapps
 msgid "My apps"
@@ -801,7 +801,7 @@ msgstr ""
 
 #: trstrings:rsaboutlistaller
 msgid "About Listaller"
-msgstr ""
+msgstr "A prepaus de Listaller"
 
 #: trstrings:rsopendirsicatalog
 msgid "Open your distribution's package catalog"
@@ -809,11 +809,11 @@ msgstr ""
 
 #: trstrings:rsabout
 msgid "About"
-msgstr ""
+msgstr "A prepaus"
 
 #: trstrings:rsauthors
 msgid "Authors"
-msgstr ""
+msgstr "Autors"
 
 #: trstrings:rsrmsrcq
 msgid "Are you really sure that you want to delete this source?"
@@ -870,7 +870,7 @@ msgstr ""
 
 #: trstrings:rsuninstalling
 msgid "Uninstalling..."
-msgstr ""
+msgstr "Desinstallacion..."
 
 #: trstrings:rsrmpkg
 msgid ""
@@ -885,7 +885,7 @@ msgstr ""
 
 #: trstrings:rswaiting
 msgid "Waiting..."
-msgstr ""
+msgstr "En espèra ..."
 
 #: trstrings:rsrmappc
 msgid "Uninstalling %a"
@@ -917,19 +917,19 @@ msgstr ""
 
 #: trstrings:rscheckforupd
 msgid "Check for updates"
-msgstr ""
+msgstr "Recercar de mesas a jorn"
 
 #: trstrings:rsinstupd
 msgid "Install updates"
-msgstr ""
+msgstr "Installar las mesas a jorn"
 
 #: trstrings:rsshowupdater
 msgid "Show"
-msgstr ""
+msgstr "Afichar"
 
 #: trstrings:rsquitupdater
 msgid "Quit"
-msgstr ""
+msgstr "Quitar"
 
 #: trstrings:rsupdinstalling
 msgid "Applying updates..."
@@ -941,15 +941,15 @@ msgstr ""
 
 #: trstrings:rsquestion
 msgid "Question:"
-msgstr ""
+msgstr "Question :"
 
 #: trstrings:rsyes
 msgid "yes"
-msgstr ""
+msgstr "òc"
 
 #: trstrings:rsy
 msgid "y"
-msgstr ""
+msgstr "o"
 
 #: trstrings:rsresolvingdep
 msgid "Resolving dependencies..."
@@ -969,7 +969,7 @@ msgstr ""
 
 #: trstrings:rswarning
 msgid "Warning!"
-msgstr ""
+msgstr "Atencion !"
 
 #: trstrings:rstmpwritedenied
 msgid "Listaller cannot write into its temporary directory: Access denied!"

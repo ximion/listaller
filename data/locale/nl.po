@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-17 16:00+0000\n"
+"X-Launchpad-Export-Date: 2010-04-05 15:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: trstrings:rsbrokendepsfixq
@@ -41,7 +41,7 @@ msgid "Commands:"
 msgstr ""
 
 #: trstrings:rscouldntfindupdater
-msgid "Can't find updater application!"
+msgid "Can't find update-tool!"
 msgstr ""
 
 #: trstrings:rsinternalerror
@@ -85,8 +85,7 @@ msgid "Print all available log messages"
 msgstr ""
 
 #: trstrings:rslipainfo6
-msgid ""
-"Check if dependencies of all installed applications are available and working"
+msgid "Check if dependencies of all installed applications are available."
 msgstr ""
 
 #: trstrings:rscmdinfopkgbuild
@@ -120,6 +119,10 @@ msgstr ""
 #: trstrings:rsinstaborted
 msgid "Installation aborted."
 msgstr "Installatie afgebroken."
+
+#: trstrings:rsinstabortedbyuser
+msgid "Installation aborted by user."
+msgstr ""
 
 #: trstrings:rsappninstall
 msgid "The application %a was not installed."
@@ -192,7 +195,7 @@ msgid "The application %a was installed successfully!"
 msgstr "De applicatie %a is succesvol geïnstalleerd!"
 
 #: trstrings:rsexecapptesting
-msgid "Executing application for testing..."
+msgid "Executing application main executable..."
 msgstr ""
 
 #: trstrings:rsinstallnow
@@ -201,7 +204,7 @@ msgstr "Nu installeren"
 
 #: trstrings:rsrunparam
 msgid ""
-"Please run \"listallgo\" with path to install-package as first parameter!"
+"Please run \"listallgo\" with path to setup-package as first parameter!"
 msgstr ""
 
 #: trstrings:rswelcome
@@ -285,8 +288,8 @@ msgid ""
 "Found no package with the necessary library \"%l\" for your distribution."
 msgstr ""
 
-#: trstrings:rsopeningdb
-msgid "Opening database..."
+#: trstrings:rsdbopened
+msgid "Software database opened."
 msgstr ""
 
 #: trstrings:rsinclose
@@ -312,8 +315,8 @@ msgstr "Error tijdens het uitpakken van bestanden!"
 
 #: trstrings:rspkgdm
 msgid ""
-"The IPK package could be damaged or you haven't enough rights to access "
-"required files/folders."
+"The package may be damaged or you haven't enough permissions to execute this "
+"action!"
 msgstr ""
 
 #: trstrings:rsabload
@@ -341,7 +344,7 @@ msgid "Testmode"
 msgstr ""
 
 #: trstrings:rstestfinished
-msgid "Test of the application finished."
+msgid "Test-installation of package finished."
 msgstr ""
 
 #: trstrings:rscleaningup
@@ -349,8 +352,8 @@ msgid "Cleaning up..."
 msgstr ""
 
 #: trstrings:rspkginval
-msgid "The package was invalid!"
-msgstr "Het pakket is ongeldig!"
+msgid "The submitted package is invalid!"
+msgstr ""
 
 #: trstrings:rscouldntsolve
 msgid "Dependencies couldn't be solved!"
@@ -365,8 +368,8 @@ msgid "Installation package is corrupt"
 msgstr "Installatiepakket is corrupt"
 
 #: trstrings:rsappclose
-msgid "The application will close now "
-msgstr "De applicatie zal nu sluiten "
+msgid "The application will close now."
+msgstr ""
 
 #: trstrings:rsstep1
 msgid "Phase 1/4: Resolving dependencies..."
@@ -377,11 +380,11 @@ msgid "State"
 msgstr ""
 
 #: trstrings:rswdldep
-msgid "This application wants to download & install a dependency from %l"
-msgstr "Deze applicatie wil een gebiedsdeel downloaden & installeren van %l"
+msgid "This application wants to fetch a dependency from %l"
+msgstr ""
 
 #: trstrings:rswallow
-msgid "Do you want confirm this action?"
+msgid "Do you want confirm this download of external files?"
 msgstr ""
 
 #: trstrings:rslicloseani
@@ -401,19 +404,32 @@ msgid "Phase 4/4: Registering application..."
 msgstr "Stap 4/4: Registreren van applicatie..."
 
 #: trstrings:rsaddupdsrc
-msgid "The installation contains the following update source: "
+msgid "The software provides the following update source:"
 msgstr ""
 
 #: trstrings:rsqaddupdsrc
-msgid "Should this source be added to the update sources list?"
+msgid "Should this repository be registered to get software updates?"
 msgstr ""
 
 #: trstrings:rsfinished
 msgid "Finished"
 msgstr "Voltooid"
 
+#: trstrings:rssecurityinfo
+msgid ""
+"Please install this package only if you got it from a \n"
+"trusted source. There is a serious risk that the software in this package\n"
+"damages your system. (The package could also contain malware)\n"
+"Be careful with this package, especially if you install it system-wide\n"
+"with superuser rights.\n"
+msgstr ""
+
+#: trstrings:rssecuritywarning
+msgid "Security warning"
+msgstr ""
+
 #: trstrings:rsinstanyway
-msgid "Do you want to install it anyway? (This could raise problems)"
+msgid "Do you want to install it anyway? (This could cause problems)"
 msgstr ""
 
 #: trstrings:rsinvarchitecture
@@ -432,8 +448,8 @@ msgstr ""
 
 #: trstrings:rsftpfailed
 msgid ""
-"Problem while downloading the packages. Could not create working FTP "
-"connection."
+"Problem while downloading the required packages. Could not create working "
+"FTP connection."
 msgstr ""
 
 #: trstrings:rssuccess
@@ -448,13 +464,21 @@ msgstr "Algemeen"
 msgid "Details"
 msgstr "Details"
 
+#: trstrings:rsinstpkgfailed
+msgid "Installation of package %s failed!"
+msgstr ""
+
+#: trstrings:rsecode
+msgid "Code:"
+msgstr ""
+
 #: trstrings:rsinstallation
 msgid "Installation"
 msgstr "Installatie"
 
 #: trstrings:rsnoldsources
 msgid ""
-"There are no sources available for your Linux distribution\n"
+"There are no explicit package sources available for your Linux distribution\n"
 "Try to install common packages?"
 msgstr ""
 
@@ -477,7 +501,7 @@ msgid "Re-install"
 msgstr ""
 
 #: trstrings:rspkgdownload
-msgid "The following packages will be downloaded:"
+msgid "The following dependencies will be downloaded:"
 msgstr ""
 
 #: trstrings:rsgetdependencyfrom
@@ -489,12 +513,12 @@ msgid "Please wait..."
 msgstr ""
 
 #: trstrings:rsdepdlproblem
-msgid "Problem while downloading the dep-file."
-msgstr "Probleem tijdens het downloaden van het dep-bestand."
+msgid "Problem while downloading the dependency."
+msgstr ""
 
 #: trstrings:rshasherror
 msgid ""
-"Hash doesn't match!\n"
+"Hash value doesn't match!\n"
 "The package may be modified after creation.\n"
 "Please obtain a new copy"
 msgstr ""
@@ -521,7 +545,7 @@ msgstr ""
 
 #: trstrings:rsinstalllibuild
 msgid ""
-"You have to install the liBuild package before you can build packages!"
+"You have to install the \"libuild\" tool before you can build packages!"
 msgstr ""
 
 #: trstrings:rsfilenotexists
@@ -535,12 +559,12 @@ msgstr ""
 #: trstrings:rsdevversion
 msgid ""
 "You use a development version of Listaller!\n"
-"This version is untested, be careful about what you do!"
+"This version is not tested and may cause problems!"
 msgstr ""
 
 #: trstrings:rsspkwarning
 msgid ""
-"Make sure that you got this package from a save source and a serious "
+"Make sure that you got this package from a save source and from a serious "
 "publisher!"
 msgstr ""
 
@@ -549,7 +573,7 @@ msgid "Install application for everyone"
 msgstr ""
 
 #: trstrings:rstestapp
-msgid "Test application"
+msgid "Test setup && software"
 msgstr ""
 
 #: trstrings:rsinstallhome
@@ -565,8 +589,8 @@ msgid "Software Manager"
 msgstr ""
 
 #: trstrings:rsupdsources
-msgid "Update sources"
-msgstr "Updaten van bronnen"
+msgid "Update repositories"
+msgstr ""
 
 #: trstrings:rsclose
 msgid "Close"
@@ -577,16 +601,12 @@ msgid "Delete source"
 msgstr "Verwijder bron"
 
 #: trstrings:rslistofsrc
-msgid "The following update sources are installed:"
+msgid "The following update repositories are installed:"
 msgstr ""
 
 #: trstrings:rsuninstall
 msgid "Uninstall"
 msgstr "Deïnstalleren"
-
-#: trstrings:rsswcatalogue
-msgid "Browse catalogue"
-msgstr ""
 
 #: trstrings:rsshow
 msgid "Show:"
@@ -661,16 +681,14 @@ msgid "Enable Proxy-Server"
 msgstr "Schakel Proxyserver in"
 
 #: trstrings:rslokierror
-msgid "Can't load LOKI-Setup information."
-msgstr "Kan LOKI-Setupinformatie niet laden"
+msgid "Unable to load information about LOKI-Setup."
+msgstr ""
 
 #: trstrings:rscannotloadicon
 msgid ""
 "Unable to load the icon of %a. Please notify the developers of Listaller or "
-"this application!"
+"of this application!"
 msgstr ""
-"Niet in staat om het icoon van %a te laden. Kijk alstublieft na wie de "
-"ontwikkelaars zijn van Listaller van deze applicatie!"
 
 #: trstrings:rsautoloaddep
 msgid "Load dependencies from included webserver-urls automatically"
@@ -683,9 +701,10 @@ msgstr "Gereed."
 #: trstrings:rsconvertpkg
 msgid ""
 "You want to install an %x-Package, but your Linux-distribution's package "
-"system is %y.\n"
-"This package can be converted using \"alien\", but this will take some time "
-"and eventually the installed application won't work\n"
+"management system is based on %y.\n"
+"This package can be converted into a compatible format using \"alien\", but "
+"this will take some time and eventually the installed application won't work "
+"properly\n"
 "Do you want to convert the package now?"
 msgstr ""
 
@@ -709,28 +728,36 @@ msgstr ""
 msgid "Loading..."
 msgstr "Bezig met laden..."
 
+#: trstrings:rsapplications
+msgid "Applications"
+msgstr ""
+
 #: trstrings:rsinstalledapps
-msgid ""
-"Installed\n"
-"applications"
+msgid "Installed applications"
 msgstr ""
 
 #: trstrings:rsinstallpkg
 msgid "Install package"
 msgstr ""
 
-#: trstrings:rsbrowsecatalog
-msgid ""
-"Browse\n"
-"catalog"
-msgstr ""
-
 #: trstrings:rsrepositories
 msgid "Repositories"
 msgstr ""
 
+#: trstrings:rspackagelists
+msgid "Package lists"
+msgstr ""
+
 #: trstrings:rssettings
 msgid "Settings"
+msgstr ""
+
+#: trstrings:rsmyapps
+msgid "My apps"
+msgstr ""
+
+#: trstrings:rssharedapps
+msgid "Shared apps"
 msgstr ""
 
 #: trstrings:rsnoguipkgmanfound
@@ -743,18 +770,6 @@ msgstr ""
 msgid ""
 "Please use https://bugs.launchpad.net/listaller\n"
 "for bug reports."
-msgstr ""
-
-#: trstrings:rsdisprootapps
-msgid "Display system applications"
-msgstr ""
-
-#: trstrings:rsdisponlymyapps
-msgid "Display my applications"
-msgstr ""
-
-#: trstrings:rsselmgrmode
-msgid "Select software-manager mode:"
 msgstr ""
 
 #: trstrings:rslistalleralien
@@ -777,15 +792,11 @@ msgid "Start PackageKit monitor before running transactions"
 msgstr ""
 
 #: trstrings:rsstartlitray
-msgid "Start Listaller tray icon application (to check dependencies)"
+msgid "Start Listaller tray icon application (e.g. to check dependencies)"
 msgstr ""
 
 #: trstrings:rsaboutlistaller
 msgid "About Listaller"
-msgstr ""
-
-#: trstrings:rsbrowselicatalog
-msgid "Browse Listaller's software catalog"
 msgstr ""
 
 #: trstrings:rsopendirsicatalog
@@ -810,12 +821,8 @@ msgstr ""
 
 #: trstrings:rspkitprobpkmon
 msgid ""
-"Problem while connecting PackageKit. Run \"pkmon\" to get further "
+"Problem while communicating with PackageKit. Run \"pkmon\" to get further "
 "information."
-msgstr ""
-
-#: trstrings:rsnoappsfound
-msgid "No applications found!"
 msgstr ""
 
 #: trstrings:rssourcedeleted
@@ -827,59 +834,20 @@ msgid "Please select an item from the list!"
 msgstr ""
 
 #: trstrings:rsliupdateaccessfailed
-msgid "Cannot access the liUpdate tool. Maybe it is not installed?"
+msgid "Cannot access the Listaller Update tool. Maybe it is not installed?"
 msgstr ""
 
 #: trstrings:rschangepkgmansettings
 msgid "Change package manager settings"
 msgstr ""
 
-#: trstrings:rscategory
-msgid "Category:"
-msgstr "Categorie:"
-
-#: trstrings:rswinstalldl
-msgid "Select software you want to download and to install:"
-msgstr "Selecteer de software die je wil downloaden en installeren:"
-
-#: trstrings:rsnoinfo
-msgid "No information available!"
-msgstr "Geen informatie beschikbaar!"
-
-#: trstrings:rsdlsetup
-msgid "Downloading setup package..."
-msgstr ""
-
-#: trstrings:rserrcontactman
-msgid ""
-"Cannot download this package. Please contact the catalogue managers on %h"
-msgstr ""
-"Kan dit pakket niet downloaden. Neem alstublieft contact op met de "
-"catalogusmanagers op %h"
-
-#: trstrings:rsinstalling
-msgid "Running application installation..."
-msgstr "Uitvoeren van applicatie installatie..."
-
-#: trstrings:rsdownloadctbase
-msgid "Downloading catalogue base information..."
-msgstr "Downloaden van catalogusbasis informatie..."
-
-#: trstrings:rsopenpage
-msgid "Loading catalogue page..."
-msgstr "Laden van cataloguspagina..."
-
-#: trstrings:rsctdlabort
-msgid "Do you really want to abort this download?"
-msgstr "Wil je deze download echt afbreken?"
-
 #: trstrings:rsrealuninstq
 msgid "Do you really want to uninstall %a?"
 msgstr "Weet je zeker dat je %a wilt deïnstalleren?"
 
 #: trstrings:rsunistsuccess
-msgid "Application uninstalled successfully!"
-msgstr "Applicatie succesvol gedeïnstalleerd."
+msgid "Application was successfully removed!"
+msgstr ""
 
 #: trstrings:rsrmerror
 msgid "Error while uninstalling!"
@@ -887,14 +855,14 @@ msgstr "Fout tijdens deïnstalleren!"
 
 #: trstrings:rscannothandlerm
 msgid ""
-"This application is not a MoJo-Installation and no other package-type "
-"Listaller can handle.\n"
-"You have to remove it manually."
+"This application does not look like a MoJo-Installation and it is not "
+"installed via an other package-type Listaller can handle.\n"
+"Get instructions how to remove this application from the program author."
 msgstr ""
 
 #: trstrings:rsrmunsddeps
-msgid "Uninstalling unused deps..."
-msgstr "Deïnstalleren van ongebruikte deps..."
+msgid "Uninstalling unused dependencies..."
+msgstr ""
 
 #: trstrings:rsuninstalling
 msgid "Uninstalling..."
@@ -904,7 +872,7 @@ msgstr "Deïnstalleren...."
 msgid ""
 "Do you really want to remove \"%p\", containing %a?\n"
 "The following package(s) will be removed also: %pl\n"
-"If you aren't sure that you won't need those packages, press \"No\"!"
+"If you're not sure if you need those packages, press \"No\"!"
 msgstr ""
 
 #: trstrings:rsrmpkgq
@@ -921,6 +889,10 @@ msgstr "Deïnstalleren van %a"
 
 #: trstrings:rslindesk
 msgid "Running under %s."
+msgstr ""
+
+#: trstrings:rstranslators
+msgid "List of translators:\n"
 msgstr ""
 
 #: trstrings:rsnoupdates
@@ -979,6 +951,55 @@ msgstr ""
 msgid "Resolving dependencies..."
 msgstr ""
 
+#: trstrings:rspkgunsigned
+msgid "This package is not signed!"
+msgstr ""
+
+#: trstrings:rspkguntrusted
+msgid "This package is untrusted!"
+msgstr ""
+
+#: trstrings:rscouldnotinstallapp
+msgid "The application %a could not be installed!"
+msgstr ""
+
+#: trstrings:rswarning
+msgid "Warning!"
+msgstr ""
+
+#: trstrings:rstmpwritedenied
+msgid "Listaller cannot write into its temporary directory: Access denied!"
+msgstr ""
+
+#: trstrings:rserror
+msgid "Error"
+msgstr ""
+
+#~ msgid "The package was invalid!"
+#~ msgstr "Het pakket is ongeldig!"
+
+#~ msgid "This application wants to download & install a dependency from %l"
+#~ msgstr "Deze applicatie wil een gebiedsdeel downloaden & installeren van %l"
+
+#~ msgid "The application will close now "
+#~ msgstr "De applicatie zal nu sluiten "
+
+#~ msgid "Problem while downloading the dep-file."
+#~ msgstr "Probleem tijdens het downloaden van het dep-bestand."
+
+#~ msgid "Update sources"
+#~ msgstr "Updaten van bronnen"
+
+#~ msgid ""
+#~ "Unable to load the icon of %a. Please notify the developers of Listaller or "
+#~ "this application!"
+#~ msgstr ""
+#~ "Niet in staat om het icoon van %a te laden. Kijk alstublieft na wie de "
+#~ "ontwikkelaars zijn van Listaller van deze applicatie!"
+
+#~ msgid "Can't load LOKI-Setup information."
+#~ msgstr "Kan LOKI-Setupinformatie niet laden"
+
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "
 #~ "system is %y.\rThis package can be converted using \"alien\", but this will "
@@ -990,6 +1011,36 @@ msgstr ""
 #~ "\"alien\", maar dit kan lang duren en uiteindelijk zal de applicatie niet "
 #~ "werken.\rWilt u het pakket nu converteren?"
 
+#~ msgid "Category:"
+#~ msgstr "Categorie:"
+
+#~ msgid "No information available!"
+#~ msgstr "Geen informatie beschikbaar!"
+
+#~ msgid "Select software you want to download and to install:"
+#~ msgstr "Selecteer de software die je wil downloaden en installeren:"
+
+#~ msgid "Do you really want to abort this download?"
+#~ msgstr "Wil je deze download echt afbreken?"
+
+#~ msgid "Application uninstalled successfully!"
+#~ msgstr "Applicatie succesvol gedeïnstalleerd."
+
+#~ msgid "Downloading catalogue base information..."
+#~ msgstr "Downloaden van catalogusbasis informatie..."
+
+#~ msgid ""
+#~ "Cannot download this package. Please contact the catalogue managers on %h"
+#~ msgstr ""
+#~ "Kan dit pakket niet downloaden. Neem alstublieft contact op met de "
+#~ "catalogusmanagers op %h"
+
+#~ msgid "Running application installation..."
+#~ msgstr "Uitvoeren van applicatie installatie..."
+
+#~ msgid "Loading catalogue page..."
+#~ msgstr "Laden van cataloguspagina..."
+
 #~ msgid ""
 #~ "Do you really want to remove \"%p\", containing %a?\rThe following "
 #~ "package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
@@ -998,6 +1049,9 @@ msgstr ""
 #~ "Weet u zeker dat u \"%p\" wilt verwijderen, het bevat %a?\rDe volgende "
 #~ "pakketten zullen ook verwijderd worden: %pl\rAls u niet zeker bent of u de "
 #~ "pakketten niet nodig heeft klik \"Nee\"!"
+
+#~ msgid "Uninstalling unused deps..."
+#~ msgstr "Deïnstalleren van ongebruikte deps..."
 
 #~ msgid "Browser %s%s%s not executable."
 #~ msgstr "Browser %s%s%s niet uitvoerbaar"

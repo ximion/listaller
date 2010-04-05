@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-17 16:00+0000\n"
+"X-Launchpad-Export-Date: 2010-04-05 15:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: trstrings:rsbrokendepsfixq
@@ -46,8 +46,8 @@ msgid "Commands:"
 msgstr "פקודות:"
 
 #: trstrings:rscouldntfindupdater
-msgid "Can't find updater application!"
-msgstr "לא ניתן למצוא את יישום העדכון!"
+msgid "Can't find update-tool!"
+msgstr ""
 
 #: trstrings:rsinternalerror
 msgid "An internal error occured"
@@ -90,8 +90,7 @@ msgid "Print all available log messages"
 msgstr ""
 
 #: trstrings:rslipainfo6
-msgid ""
-"Check if dependencies of all installed applications are available and working"
+msgid "Check if dependencies of all installed applications are available."
 msgstr ""
 
 #: trstrings:rscmdinfopkgbuild
@@ -125,6 +124,10 @@ msgstr "עליך להזין מספר!"
 #: trstrings:rsinstaborted
 msgid "Installation aborted."
 msgstr "ההתקנה בוטלה."
+
+#: trstrings:rsinstabortedbyuser
+msgid "Installation aborted by user."
+msgstr ""
 
 #: trstrings:rsappninstall
 msgid "The application %a was not installed."
@@ -198,8 +201,8 @@ msgid "The application %a was installed successfully!"
 msgstr "היישום %a הותקן בהצלחה!"
 
 #: trstrings:rsexecapptesting
-msgid "Executing application for testing..."
-msgstr "היישום מופעל לצרכי בדיקה..."
+msgid "Executing application main executable..."
+msgstr ""
 
 #: trstrings:rsinstallnow
 msgid "Install now"
@@ -207,7 +210,7 @@ msgstr "התקן כעת"
 
 #: trstrings:rsrunparam
 msgid ""
-"Please run \"listallgo\" with path to install-package as first parameter!"
+"Please run \"listallgo\" with path to setup-package as first parameter!"
 msgstr ""
 
 #: trstrings:rswelcome
@@ -291,9 +294,9 @@ msgid ""
 "Found no package with the necessary library \"%l\" for your distribution."
 msgstr ""
 
-#: trstrings:rsopeningdb
-msgid "Opening database..."
-msgstr "מסד הנתונים נפתח..."
+#: trstrings:rsdbopened
+msgid "Software database opened."
+msgstr ""
 
 #: trstrings:rsinclose
 msgid "The installer will close now"
@@ -317,8 +320,8 @@ msgstr "שגיאה בעת חילוץ הקבצים!"
 
 #: trstrings:rspkgdm
 msgid ""
-"The IPK package could be damaged or you haven't enough rights to access "
-"required files/folders."
+"The package may be damaged or you haven't enough permissions to execute this "
+"action!"
 msgstr ""
 
 #: trstrings:rsabload
@@ -346,16 +349,16 @@ msgid "Testmode"
 msgstr "מצב בדיקה"
 
 #: trstrings:rstestfinished
-msgid "Test of the application finished."
-msgstr "בדיקת היישום הושלמה."
+msgid "Test-installation of package finished."
+msgstr ""
 
 #: trstrings:rscleaningup
 msgid "Cleaning up..."
 msgstr "מנקה ומסדר..."
 
 #: trstrings:rspkginval
-msgid "The package was invalid!"
-msgstr "החבילה הינה פגומה!"
+msgid "The submitted package is invalid!"
+msgstr ""
 
 #: trstrings:rscouldntsolve
 msgid "Dependencies couldn't be solved!"
@@ -370,8 +373,8 @@ msgid "Installation package is corrupt"
 msgstr "התקנת החבילה פגומה"
 
 #: trstrings:rsappclose
-msgid "The application will close now "
-msgstr "היישום יסגר כעת "
+msgid "The application will close now."
+msgstr ""
 
 #: trstrings:rsstep1
 msgid "Phase 1/4: Resolving dependencies..."
@@ -382,12 +385,12 @@ msgid "State"
 msgstr "מצב"
 
 #: trstrings:rswdldep
-msgid "This application wants to download & install a dependency from %l"
-msgstr "יישום זה מעוניין להוריד ולהתקין תלות מהכתובת %l"
+msgid "This application wants to fetch a dependency from %l"
+msgstr ""
 
 #: trstrings:rswallow
-msgid "Do you want confirm this action?"
-msgstr "האם ברצונך לאשר פעולה זו?"
+msgid "Do you want confirm this download of external files?"
+msgstr ""
 
 #: trstrings:rslicloseani
 msgid "Listaller will close now. The package couldn't be installed."
@@ -406,19 +409,32 @@ msgid "Phase 4/4: Registering application..."
 msgstr "שלב 4/4: רושם את התוכנה..."
 
 #: trstrings:rsaddupdsrc
-msgid "The installation contains the following update source: "
+msgid "The software provides the following update source:"
 msgstr ""
 
 #: trstrings:rsqaddupdsrc
-msgid "Should this source be added to the update sources list?"
+msgid "Should this repository be registered to get software updates?"
 msgstr ""
 
 #: trstrings:rsfinished
 msgid "Finished"
 msgstr "הסתיים"
 
+#: trstrings:rssecurityinfo
+msgid ""
+"Please install this package only if you got it from a \n"
+"trusted source. There is a serious risk that the software in this package\n"
+"damages your system. (The package could also contain malware)\n"
+"Be careful with this package, especially if you install it system-wide\n"
+"with superuser rights.\n"
+msgstr ""
+
+#: trstrings:rssecuritywarning
+msgid "Security warning"
+msgstr ""
+
 #: trstrings:rsinstanyway
-msgid "Do you want to install it anyway? (This could raise problems)"
+msgid "Do you want to install it anyway? (This could cause problems)"
 msgstr ""
 
 #: trstrings:rsinvarchitecture
@@ -437,8 +453,8 @@ msgstr ""
 
 #: trstrings:rsftpfailed
 msgid ""
-"Problem while downloading the packages. Could not create working FTP "
-"connection."
+"Problem while downloading the required packages. Could not create working "
+"FTP connection."
 msgstr ""
 
 #: trstrings:rssuccess
@@ -453,13 +469,21 @@ msgstr "ראשי"
 msgid "Details"
 msgstr "פרטים"
 
+#: trstrings:rsinstpkgfailed
+msgid "Installation of package %s failed!"
+msgstr ""
+
+#: trstrings:rsecode
+msgid "Code:"
+msgstr ""
+
 #: trstrings:rsinstallation
 msgid "Installation"
 msgstr "התקנה"
 
 #: trstrings:rsnoldsources
 msgid ""
-"There are no sources available for your Linux distribution\n"
+"There are no explicit package sources available for your Linux distribution\n"
 "Try to install common packages?"
 msgstr ""
 
@@ -482,7 +506,7 @@ msgid "Re-install"
 msgstr ""
 
 #: trstrings:rspkgdownload
-msgid "The following packages will be downloaded:"
+msgid "The following dependencies will be downloaded:"
 msgstr ""
 
 #: trstrings:rsgetdependencyfrom
@@ -494,12 +518,12 @@ msgid "Please wait..."
 msgstr ""
 
 #: trstrings:rsdepdlproblem
-msgid "Problem while downloading the dep-file."
-msgstr "שגיאה בעת הורדת קובץ ה־dep."
+msgid "Problem while downloading the dependency."
+msgstr ""
 
 #: trstrings:rshasherror
 msgid ""
-"Hash doesn't match!\n"
+"Hash value doesn't match!\n"
 "The package may be modified after creation.\n"
 "Please obtain a new copy"
 msgstr ""
@@ -526,7 +550,7 @@ msgstr ""
 
 #: trstrings:rsinstalllibuild
 msgid ""
-"You have to install the liBuild package before you can build packages!"
+"You have to install the \"libuild\" tool before you can build packages!"
 msgstr ""
 
 #: trstrings:rsfilenotexists
@@ -540,12 +564,12 @@ msgstr ""
 #: trstrings:rsdevversion
 msgid ""
 "You use a development version of Listaller!\n"
-"This version is untested, be careful about what you do!"
+"This version is not tested and may cause problems!"
 msgstr ""
 
 #: trstrings:rsspkwarning
 msgid ""
-"Make sure that you got this package from a save source and a serious "
+"Make sure that you got this package from a save source and from a serious "
 "publisher!"
 msgstr ""
 
@@ -554,7 +578,7 @@ msgid "Install application for everyone"
 msgstr ""
 
 #: trstrings:rstestapp
-msgid "Test application"
+msgid "Test setup && software"
 msgstr ""
 
 #: trstrings:rsinstallhome
@@ -570,8 +594,8 @@ msgid "Software Manager"
 msgstr ""
 
 #: trstrings:rsupdsources
-msgid "Update sources"
-msgstr "עדכן מקורות"
+msgid "Update repositories"
+msgstr ""
 
 #: trstrings:rsclose
 msgid "Close"
@@ -582,16 +606,12 @@ msgid "Delete source"
 msgstr "מחק מקור"
 
 #: trstrings:rslistofsrc
-msgid "The following update sources are installed:"
+msgid "The following update repositories are installed:"
 msgstr ""
 
 #: trstrings:rsuninstall
 msgid "Uninstall"
 msgstr "הסרה"
-
-#: trstrings:rsswcatalogue
-msgid "Browse catalogue"
-msgstr ""
 
 #: trstrings:rsshow
 msgid "Show:"
@@ -666,15 +686,14 @@ msgid "Enable Proxy-Server"
 msgstr "אפשר שרת מתווך"
 
 #: trstrings:rslokierror
-msgid "Can't load LOKI-Setup information."
-msgstr "לא ניתן לטעון את נתוני ה־LOKI של ההתקנה."
+msgid "Unable to load information about LOKI-Setup."
+msgstr ""
 
 #: trstrings:rscannotloadicon
 msgid ""
 "Unable to load the icon of %a. Please notify the developers of Listaller or "
-"this application!"
+"of this application!"
 msgstr ""
-"לא ניתן לטעון את הסמל %a. אנא דווח על כך למפתחי Listaller או למפתחי היישום!"
 
 #: trstrings:rsautoloaddep
 msgid "Load dependencies from included webserver-urls automatically"
@@ -687,9 +706,10 @@ msgstr "מוכן."
 #: trstrings:rsconvertpkg
 msgid ""
 "You want to install an %x-Package, but your Linux-distribution's package "
-"system is %y.\n"
-"This package can be converted using \"alien\", but this will take some time "
-"and eventually the installed application won't work\n"
+"management system is based on %y.\n"
+"This package can be converted into a compatible format using \"alien\", but "
+"this will take some time and eventually the installed application won't work "
+"properly\n"
 "Do you want to convert the package now?"
 msgstr ""
 
@@ -713,28 +733,36 @@ msgstr ""
 msgid "Loading..."
 msgstr "טוען..."
 
+#: trstrings:rsapplications
+msgid "Applications"
+msgstr ""
+
 #: trstrings:rsinstalledapps
-msgid ""
-"Installed\n"
-"applications"
+msgid "Installed applications"
 msgstr ""
 
 #: trstrings:rsinstallpkg
 msgid "Install package"
 msgstr ""
 
-#: trstrings:rsbrowsecatalog
-msgid ""
-"Browse\n"
-"catalog"
-msgstr ""
-
 #: trstrings:rsrepositories
 msgid "Repositories"
 msgstr ""
 
+#: trstrings:rspackagelists
+msgid "Package lists"
+msgstr ""
+
 #: trstrings:rssettings
 msgid "Settings"
+msgstr ""
+
+#: trstrings:rsmyapps
+msgid "My apps"
+msgstr ""
+
+#: trstrings:rssharedapps
+msgid "Shared apps"
 msgstr ""
 
 #: trstrings:rsnoguipkgmanfound
@@ -747,18 +775,6 @@ msgstr ""
 msgid ""
 "Please use https://bugs.launchpad.net/listaller\n"
 "for bug reports."
-msgstr ""
-
-#: trstrings:rsdisprootapps
-msgid "Display system applications"
-msgstr ""
-
-#: trstrings:rsdisponlymyapps
-msgid "Display my applications"
-msgstr ""
-
-#: trstrings:rsselmgrmode
-msgid "Select software-manager mode:"
 msgstr ""
 
 #: trstrings:rslistalleralien
@@ -781,15 +797,11 @@ msgid "Start PackageKit monitor before running transactions"
 msgstr ""
 
 #: trstrings:rsstartlitray
-msgid "Start Listaller tray icon application (to check dependencies)"
+msgid "Start Listaller tray icon application (e.g. to check dependencies)"
 msgstr ""
 
 #: trstrings:rsaboutlistaller
 msgid "About Listaller"
-msgstr ""
-
-#: trstrings:rsbrowselicatalog
-msgid "Browse Listaller's software catalog"
 msgstr ""
 
 #: trstrings:rsopendirsicatalog
@@ -814,12 +826,8 @@ msgstr ""
 
 #: trstrings:rspkitprobpkmon
 msgid ""
-"Problem while connecting PackageKit. Run \"pkmon\" to get further "
+"Problem while communicating with PackageKit. Run \"pkmon\" to get further "
 "information."
-msgstr ""
-
-#: trstrings:rsnoappsfound
-msgid "No applications found!"
 msgstr ""
 
 #: trstrings:rssourcedeleted
@@ -831,57 +839,20 @@ msgid "Please select an item from the list!"
 msgstr ""
 
 #: trstrings:rsliupdateaccessfailed
-msgid "Cannot access the liUpdate tool. Maybe it is not installed?"
+msgid "Cannot access the Listaller Update tool. Maybe it is not installed?"
 msgstr ""
 
 #: trstrings:rschangepkgmansettings
 msgid "Change package manager settings"
 msgstr ""
 
-#: trstrings:rscategory
-msgid "Category:"
-msgstr "קטגוריה:"
-
-#: trstrings:rswinstalldl
-msgid "Select software you want to download and to install:"
-msgstr "בחר תוכנה שברצונך להוריד ולהתקין:"
-
-#: trstrings:rsnoinfo
-msgid "No information available!"
-msgstr "אין מידע זמין!"
-
-#: trstrings:rsdlsetup
-msgid "Downloading setup package..."
-msgstr ""
-
-#: trstrings:rserrcontactman
-msgid ""
-"Cannot download this package. Please contact the catalogue managers on %h"
-msgstr "לא ניתן להוריד חבילה זו. אנא צור קשר עם מנהלי הקטלוג דרך %h"
-
-#: trstrings:rsinstalling
-msgid "Running application installation..."
-msgstr "מריץ התקנת יישום..."
-
-#: trstrings:rsdownloadctbase
-msgid "Downloading catalogue base information..."
-msgstr "מוריד את נתוני הבסיס של הקטלוג..."
-
-#: trstrings:rsopenpage
-msgid "Loading catalogue page..."
-msgstr "טוען את עמוד הקטלוג..."
-
-#: trstrings:rsctdlabort
-msgid "Do you really want to abort this download?"
-msgstr "האם אתה בטוח שברצונך לבטל הורדה זו?"
-
 #: trstrings:rsrealuninstq
 msgid "Do you really want to uninstall %a?"
 msgstr "אם אתה בטוח שברצונך להסיר את %a?"
 
 #: trstrings:rsunistsuccess
-msgid "Application uninstalled successfully!"
-msgstr "היישום הוסר בהצלחה!"
+msgid "Application was successfully removed!"
+msgstr ""
 
 #: trstrings:rsrmerror
 msgid "Error while uninstalling!"
@@ -889,14 +860,14 @@ msgstr "שגיאה בעת ההסרה!"
 
 #: trstrings:rscannothandlerm
 msgid ""
-"This application is not a MoJo-Installation and no other package-type "
-"Listaller can handle.\n"
-"You have to remove it manually."
+"This application does not look like a MoJo-Installation and it is not "
+"installed via an other package-type Listaller can handle.\n"
+"Get instructions how to remove this application from the program author."
 msgstr ""
 
 #: trstrings:rsrmunsddeps
-msgid "Uninstalling unused deps..."
-msgstr "מתקין קבצי dep שאינם בשימוש..."
+msgid "Uninstalling unused dependencies..."
+msgstr ""
 
 #: trstrings:rsuninstalling
 msgid "Uninstalling..."
@@ -906,7 +877,7 @@ msgstr "מסיר..."
 msgid ""
 "Do you really want to remove \"%p\", containing %a?\n"
 "The following package(s) will be removed also: %pl\n"
-"If you aren't sure that you won't need those packages, press \"No\"!"
+"If you're not sure if you need those packages, press \"No\"!"
 msgstr ""
 
 #: trstrings:rsrmpkgq
@@ -923,6 +894,10 @@ msgstr "מסיר את %a"
 
 #: trstrings:rslindesk
 msgid "Running under %s."
+msgstr ""
+
+#: trstrings:rstranslators
+msgid "List of translators:\n"
 msgstr ""
 
 #: trstrings:rsnoupdates
@@ -981,6 +956,82 @@ msgstr ""
 msgid "Resolving dependencies..."
 msgstr ""
 
+#: trstrings:rspkgunsigned
+msgid "This package is not signed!"
+msgstr ""
+
+#: trstrings:rspkguntrusted
+msgid "This package is untrusted!"
+msgstr ""
+
+#: trstrings:rscouldnotinstallapp
+msgid "The application %a could not be installed!"
+msgstr ""
+
+#: trstrings:rswarning
+msgid "Warning!"
+msgstr ""
+
+#: trstrings:rstmpwritedenied
+msgid "Listaller cannot write into its temporary directory: Access denied!"
+msgstr ""
+
+#: trstrings:rserror
+msgid "Error"
+msgstr ""
+
+#~ msgid "The package was invalid!"
+#~ msgstr "החבילה הינה פגומה!"
+
+#~ msgid "This application wants to download & install a dependency from %l"
+#~ msgstr "יישום זה מעוניין להוריד ולהתקין תלות מהכתובת %l"
+
+#~ msgid "The application will close now "
+#~ msgstr "היישום יסגר כעת "
+
+#~ msgid "Problem while downloading the dep-file."
+#~ msgstr "שגיאה בעת הורדת קובץ ה־dep."
+
+#~ msgid "Update sources"
+#~ msgstr "עדכן מקורות"
+
+#~ msgid "Can't load LOKI-Setup information."
+#~ msgstr "לא ניתן לטעון את נתוני ה־LOKI של ההתקנה."
+
+#~ msgid ""
+#~ "Unable to load the icon of %a. Please notify the developers of Listaller or "
+#~ "this application!"
+#~ msgstr ""
+#~ "לא ניתן לטעון את הסמל %a. אנא דווח על כך למפתחי Listaller או למפתחי היישום!"
+
+#~ msgid "Category:"
+#~ msgstr "קטגוריה:"
+
+#~ msgid "No information available!"
+#~ msgstr "אין מידע זמין!"
+
+#~ msgid "Select software you want to download and to install:"
+#~ msgstr "בחר תוכנה שברצונך להוריד ולהתקין:"
+
+#~ msgid "Application uninstalled successfully!"
+#~ msgstr "היישום הוסר בהצלחה!"
+
+#~ msgid ""
+#~ "Cannot download this package. Please contact the catalogue managers on %h"
+#~ msgstr "לא ניתן להוריד חבילה זו. אנא צור קשר עם מנהלי הקטלוג דרך %h"
+
+#~ msgid "Running application installation..."
+#~ msgstr "מריץ התקנת יישום..."
+
+#~ msgid "Downloading catalogue base information..."
+#~ msgstr "מוריד את נתוני הבסיס של הקטלוג..."
+
+#~ msgid "Do you really want to abort this download?"
+#~ msgstr "האם אתה בטוח שברצונך לבטל הורדה זו?"
+
+#~ msgid "Loading catalogue page..."
+#~ msgstr "טוען את עמוד הקטלוג..."
+
 #~ msgid ""
 #~ "Do you really want to remove \"%p\", containing %a?\rThe following "
 #~ "package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
@@ -988,6 +1039,9 @@ msgstr ""
 #~ msgstr ""
 #~ "האם אתה בטוח שברצונך להסיר את \"%p\", המכילה את %a?\rהחבילה/ות הבאה/ות יוסרו "
 #~ "גם כן: %pl\rאם אינך בטוח שלא תזדקק לחבילות אלו, לחץ על \"לא\"!"
+
+#~ msgid "Uninstalling unused deps..."
+#~ msgstr "מתקין קבצי dep שאינם בשימוש..."
 
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "
@@ -998,3 +1052,18 @@ msgstr ""
 #~ "האם ברצונך להתקין חבילת %x, אך מערכת החבילות של הפצת הלינוקס שלך הינה "
 #~ "%y.\rניתן להמיר חבילה זו באמצעות \"alien\", אך פעולה זו עלולה לארוך זמן מה "
 #~ "ולבסוף היישום עלול לא לעבוד\rהאם ברצונך להמיר את החבילה כעת?"
+
+#~ msgid "Can't find updater application!"
+#~ msgstr "לא ניתן למצוא את יישום העדכון!"
+
+#~ msgid "Executing application for testing..."
+#~ msgstr "היישום מופעל לצרכי בדיקה..."
+
+#~ msgid "Opening database..."
+#~ msgstr "מסד הנתונים נפתח..."
+
+#~ msgid "Test of the application finished."
+#~ msgstr "בדיקת היישום הושלמה."
+
+#~ msgid "Do you want confirm this action?"
+#~ msgstr "האם ברצונך לאשר פעולה זו?"

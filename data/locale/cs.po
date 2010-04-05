@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-17 16:00+0000\n"
+"X-Launchpad-Export-Date: 2010-04-05 15:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: trstrings:rsbrokendepsfixq
@@ -46,7 +46,7 @@ msgid "Commands:"
 msgstr ""
 
 #: trstrings:rscouldntfindupdater
-msgid "Can't find updater application!"
+msgid "Can't find update-tool!"
 msgstr ""
 
 #: trstrings:rsinternalerror
@@ -90,8 +90,7 @@ msgid "Print all available log messages"
 msgstr ""
 
 #: trstrings:rslipainfo6
-msgid ""
-"Check if dependencies of all installed applications are available and working"
+msgid "Check if dependencies of all installed applications are available."
 msgstr ""
 
 #: trstrings:rscmdinfopkgbuild
@@ -125,6 +124,10 @@ msgstr ""
 #: trstrings:rsinstaborted
 msgid "Installation aborted."
 msgstr "Instalace přerušena"
+
+#: trstrings:rsinstabortedbyuser
+msgid "Installation aborted by user."
+msgstr ""
 
 #: trstrings:rsappninstall
 msgid "The application %a was not installed."
@@ -197,7 +200,7 @@ msgid "The application %a was installed successfully!"
 msgstr "Aplikace %a byla úspěšně nainstalována!"
 
 #: trstrings:rsexecapptesting
-msgid "Executing application for testing..."
+msgid "Executing application main executable..."
 msgstr ""
 
 #: trstrings:rsinstallnow
@@ -206,10 +209,8 @@ msgstr "Nainstalovat nyní"
 
 #: trstrings:rsrunparam
 msgid ""
-"Please run \"listallgo\" with path to install-package as first parameter!"
+"Please run \"listallgo\" with path to setup-package as first parameter!"
 msgstr ""
-"Prosím spusťte \"listallgo\" a jako první parametr uveďte cestu k "
-"instalačnímu balíku!"
 
 #: trstrings:rswelcome
 msgid "Welcome!"
@@ -292,8 +293,8 @@ msgid ""
 "Found no package with the necessary library \"%l\" for your distribution."
 msgstr ""
 
-#: trstrings:rsopeningdb
-msgid "Opening database..."
+#: trstrings:rsdbopened
+msgid "Software database opened."
 msgstr ""
 
 #: trstrings:rsinclose
@@ -318,8 +319,8 @@ msgstr "Chyba při rozbalování souborů!"
 
 #: trstrings:rspkgdm
 msgid ""
-"The IPK package could be damaged or you haven't enough rights to access "
-"required files/folders."
+"The package may be damaged or you haven't enough permissions to execute this "
+"action!"
 msgstr ""
 
 #: trstrings:rsabload
@@ -347,16 +348,16 @@ msgid "Testmode"
 msgstr "Testovací režim"
 
 #: trstrings:rstestfinished
-msgid "Test of the application finished."
-msgstr "Test aplikace byl ukončen"
+msgid "Test-installation of package finished."
+msgstr ""
 
 #: trstrings:rscleaningup
 msgid "Cleaning up..."
 msgstr ""
 
 #: trstrings:rspkginval
-msgid "The package was invalid!"
-msgstr "Balík byl neplatný!"
+msgid "The submitted package is invalid!"
+msgstr ""
 
 #: trstrings:rscouldntsolve
 msgid "Dependencies couldn't be solved!"
@@ -371,8 +372,8 @@ msgid "Installation package is corrupt"
 msgstr "Instalační balík je poškozen"
 
 #: trstrings:rsappclose
-msgid "The application will close now "
-msgstr "Aplikace se nyní ukončí "
+msgid "The application will close now."
+msgstr ""
 
 #: trstrings:rsstep1
 msgid "Phase 1/4: Resolving dependencies..."
@@ -383,12 +384,12 @@ msgid "State"
 msgstr ""
 
 #: trstrings:rswdldep
-msgid "This application wants to download & install a dependency from %l"
-msgstr "Tato aplikace chce stáhnout a nainstalovat závislosti z %l"
+msgid "This application wants to fetch a dependency from %l"
+msgstr ""
 
 #: trstrings:rswallow
-msgid "Do you want confirm this action?"
-msgstr "Přejete si tuto akci potvrdit?"
+msgid "Do you want confirm this download of external files?"
+msgstr ""
 
 #: trstrings:rslicloseani
 msgid "Listaller will close now. The package couldn't be installed."
@@ -407,20 +408,33 @@ msgid "Phase 4/4: Registering application..."
 msgstr "Fáze 4/4: Zanesení aplikace do databáze..."
 
 #: trstrings:rsaddupdsrc
-msgid "The installation contains the following update source: "
+msgid "The software provides the following update source:"
 msgstr ""
 
 #: trstrings:rsqaddupdsrc
-msgid "Should this source be added to the update sources list?"
-msgstr "Mám tento zdroj aktualizací přidat?"
+msgid "Should this repository be registered to get software updates?"
+msgstr ""
 
 #: trstrings:rsfinished
 msgid "Finished"
 msgstr "Hotovo"
 
+#: trstrings:rssecurityinfo
+msgid ""
+"Please install this package only if you got it from a \n"
+"trusted source. There is a serious risk that the software in this package\n"
+"damages your system. (The package could also contain malware)\n"
+"Be careful with this package, especially if you install it system-wide\n"
+"with superuser rights.\n"
+msgstr ""
+
+#: trstrings:rssecuritywarning
+msgid "Security warning"
+msgstr ""
+
 #: trstrings:rsinstanyway
-msgid "Do you want to install it anyway? (This could raise problems)"
-msgstr "Přejete si balík i přesto nainstalovat? (Může to způsobit problémy.)"
+msgid "Do you want to install it anyway? (This could cause problems)"
+msgstr ""
 
 #: trstrings:rsinvarchitecture
 msgid ""
@@ -440,8 +454,8 @@ msgstr "Balík nebyl vytvořen pro toto vydání vaší distribuce."
 
 #: trstrings:rsftpfailed
 msgid ""
-"Problem while downloading the packages. Could not create working FTP "
-"connection."
+"Problem while downloading the required packages. Could not create working "
+"FTP connection."
 msgstr ""
 
 #: trstrings:rssuccess
@@ -456,17 +470,23 @@ msgstr "Hlavní"
 msgid "Details"
 msgstr "Detaily"
 
+#: trstrings:rsinstpkgfailed
+msgid "Installation of package %s failed!"
+msgstr ""
+
+#: trstrings:rsecode
+msgid "Code:"
+msgstr ""
+
 #: trstrings:rsinstallation
 msgid "Installation"
 msgstr "Instalace"
 
 #: trstrings:rsnoldsources
 msgid ""
-"There are no sources available for your Linux distribution\n"
+"There are no explicit package sources available for your Linux distribution\n"
 "Try to install common packages?"
 msgstr ""
-"Pro vaši Linuxovou distribuci nejsou k dispozici žádné zdroje\n"
-"Mám se pokusit nainstalovat \"obecný\" balík?"
 
 #: trstrings:rsusecomppq
 msgid "Use compatible packages?"
@@ -489,8 +509,8 @@ msgid "Re-install"
 msgstr "Přeinstalovat"
 
 #: trstrings:rspkgdownload
-msgid "The following packages will be downloaded:"
-msgstr "Následující balíky budou staženy:"
+msgid "The following dependencies will be downloaded:"
+msgstr ""
 
 #: trstrings:rsgetdependencyfrom
 msgid "Get dependency from"
@@ -501,18 +521,15 @@ msgid "Please wait..."
 msgstr "Prosím čekejte..."
 
 #: trstrings:rsdepdlproblem
-msgid "Problem while downloading the dep-file."
-msgstr "Chyba při stahování dep-souboru."
+msgid "Problem while downloading the dependency."
+msgstr ""
 
 #: trstrings:rshasherror
 msgid ""
-"Hash doesn't match!\n"
+"Hash value doesn't match!\n"
 "The package may be modified after creation.\n"
 "Please obtain a new copy"
 msgstr ""
-"Kontrolní součet nesouhlasí!\n"
-"Balík byl po vytvoření nejspíš upraven.\n"
-"Obstarejte si prosím novou kopii"
 
 #: trstrings:rsinstallationmode
 msgid "Installation mode:"
@@ -536,7 +553,7 @@ msgstr ""
 
 #: trstrings:rsinstalllibuild
 msgid ""
-"You have to install the liBuild package before you can build packages!"
+"You have to install the \"libuild\" tool before you can build packages!"
 msgstr ""
 
 #: trstrings:rsfilenotexists
@@ -550,12 +567,12 @@ msgstr "Co si přejete udělat?"
 #: trstrings:rsdevversion
 msgid ""
 "You use a development version of Listaller!\n"
-"This version is untested, be careful about what you do!"
+"This version is not tested and may cause problems!"
 msgstr ""
 
 #: trstrings:rsspkwarning
 msgid ""
-"Make sure that you got this package from a save source and a serious "
+"Make sure that you got this package from a save source and from a serious "
 "publisher!"
 msgstr ""
 
@@ -564,8 +581,8 @@ msgid "Install application for everyone"
 msgstr "Nainstalovat aplikaci pro všechny uživatele"
 
 #: trstrings:rstestapp
-msgid "Test application"
-msgstr "Otestovat aplikaci"
+msgid "Test setup && software"
+msgstr ""
 
 #: trstrings:rsinstallhome
 msgid "Install into my Home directory"
@@ -580,8 +597,8 @@ msgid "Software Manager"
 msgstr "Správce softwaru"
 
 #: trstrings:rsupdsources
-msgid "Update sources"
-msgstr "Aktualizovat zdroje"
+msgid "Update repositories"
+msgstr ""
 
 #: trstrings:rsclose
 msgid "Close"
@@ -592,16 +609,12 @@ msgid "Delete source"
 msgstr "Smazat zdroj"
 
 #: trstrings:rslistofsrc
-msgid "The following update sources are installed:"
-msgstr "Budou přidány následujcí zdroje pro aktualizace."
+msgid "The following update repositories are installed:"
+msgstr ""
 
 #: trstrings:rsuninstall
 msgid "Uninstall"
 msgstr "Odinstalovat"
-
-#: trstrings:rsswcatalogue
-msgid "Browse catalogue"
-msgstr ""
 
 #: trstrings:rsshow
 msgid "Show:"
@@ -676,16 +689,14 @@ msgid "Enable Proxy-Server"
 msgstr "Povolit proxy server"
 
 #: trstrings:rslokierror
-msgid "Can't load LOKI-Setup information."
-msgstr "Nemohu načíst informace LOKI-Setup"
+msgid "Unable to load information about LOKI-Setup."
+msgstr ""
 
 #: trstrings:rscannotloadicon
 msgid ""
 "Unable to load the icon of %a. Please notify the developers of Listaller or "
-"this application!"
+"of this application!"
 msgstr ""
-"Nemohu načíst ikonu aplikace %a.. Informujte vývojáře Listaller nebo této "
-"aplikace!"
 
 #: trstrings:rsautoloaddep
 msgid "Load dependencies from included webserver-urls automatically"
@@ -698,9 +709,10 @@ msgstr "Připraven."
 #: trstrings:rsconvertpkg
 msgid ""
 "You want to install an %x-Package, but your Linux-distribution's package "
-"system is %y.\n"
-"This package can be converted using \"alien\", but this will take some time "
-"and eventually the installed application won't work\n"
+"management system is based on %y.\n"
+"This package can be converted into a compatible format using \"alien\", but "
+"this will take some time and eventually the installed application won't work "
+"properly\n"
 "Do you want to convert the package now?"
 msgstr ""
 
@@ -724,28 +736,36 @@ msgstr ""
 msgid "Loading..."
 msgstr "Načítání..."
 
+#: trstrings:rsapplications
+msgid "Applications"
+msgstr ""
+
 #: trstrings:rsinstalledapps
-msgid ""
-"Installed\n"
-"applications"
+msgid "Installed applications"
 msgstr ""
 
 #: trstrings:rsinstallpkg
 msgid "Install package"
 msgstr ""
 
-#: trstrings:rsbrowsecatalog
-msgid ""
-"Browse\n"
-"catalog"
-msgstr ""
-
 #: trstrings:rsrepositories
 msgid "Repositories"
 msgstr ""
 
+#: trstrings:rspackagelists
+msgid "Package lists"
+msgstr ""
+
 #: trstrings:rssettings
 msgid "Settings"
+msgstr ""
+
+#: trstrings:rsmyapps
+msgid "My apps"
+msgstr ""
+
+#: trstrings:rssharedapps
+msgid "Shared apps"
 msgstr ""
 
 #: trstrings:rsnoguipkgmanfound
@@ -759,18 +779,6 @@ msgid ""
 "Please use https://bugs.launchpad.net/listaller\n"
 "for bug reports."
 msgstr ""
-
-#: trstrings:rsdisprootapps
-msgid "Display system applications"
-msgstr "Zobrazit systémové aplikace"
-
-#: trstrings:rsdisponlymyapps
-msgid "Display my applications"
-msgstr "Zobrazit mé aplikace"
-
-#: trstrings:rsselmgrmode
-msgid "Select software-manager mode:"
-msgstr "Vyberte režim správce softwaru:"
 
 #: trstrings:rslistalleralien
 msgid ""
@@ -792,16 +800,12 @@ msgid "Start PackageKit monitor before running transactions"
 msgstr "Před provedením změn spusťte PackaKit"
 
 #: trstrings:rsstartlitray
-msgid "Start Listaller tray icon application (to check dependencies)"
+msgid "Start Listaller tray icon application (e.g. to check dependencies)"
 msgstr ""
 
 #: trstrings:rsaboutlistaller
 msgid "About Listaller"
 msgstr "O aplikaci Listaller"
-
-#: trstrings:rsbrowselicatalog
-msgid "Browse Listaller's software catalog"
-msgstr ""
 
 #: trstrings:rsopendirsicatalog
 msgid "Open your distribution's package catalog"
@@ -825,14 +829,9 @@ msgstr "Smazat zdroj?"
 
 #: trstrings:rspkitprobpkmon
 msgid ""
-"Problem while connecting PackageKit. Run \"pkmon\" to get further "
+"Problem while communicating with PackageKit. Run \"pkmon\" to get further "
 "information."
 msgstr ""
-"Chyba při spojení s PackageKit. Spusťte \"pkmon\" pro více informací."
-
-#: trstrings:rsnoappsfound
-msgid "No applications found!"
-msgstr "Žádné aplikace nebyly nalezeny!"
 
 #: trstrings:rssourcedeleted
 msgid "Source was removed."
@@ -843,58 +842,20 @@ msgid "Please select an item from the list!"
 msgstr ""
 
 #: trstrings:rsliupdateaccessfailed
-msgid "Cannot access the liUpdate tool. Maybe it is not installed?"
+msgid "Cannot access the Listaller Update tool. Maybe it is not installed?"
 msgstr ""
 
 #: trstrings:rschangepkgmansettings
 msgid "Change package manager settings"
 msgstr ""
 
-#: trstrings:rscategory
-msgid "Category:"
-msgstr "Kategorie:"
-
-#: trstrings:rswinstalldl
-msgid "Select software you want to download and to install:"
-msgstr "Vyberte software, který chcete stáhnout a nainstalovat:"
-
-#: trstrings:rsnoinfo
-msgid "No information available!"
-msgstr "Žádné informace nejsou dostupné!"
-
-#: trstrings:rsdlsetup
-msgid "Downloading setup package..."
-msgstr "Stahování konfiguračního balíku..."
-
-#: trstrings:rserrcontactman
-msgid ""
-"Cannot download this package. Please contact the catalogue managers on %h"
-msgstr ""
-"Nemohu stáhnout tento balík. Prosím kontaktujte správce katalogu - %h"
-
-#: trstrings:rsinstalling
-msgid "Running application installation..."
-msgstr "Spouštění instalace aplikace..."
-
-#: trstrings:rsdownloadctbase
-msgid "Downloading catalogue base information..."
-msgstr "Stahování katalogu informací..."
-
-#: trstrings:rsopenpage
-msgid "Loading catalogue page..."
-msgstr "Načítání strany katalogu..."
-
-#: trstrings:rsctdlabort
-msgid "Do you really want to abort this download?"
-msgstr "Opravdu si přejete přerušit stahování?"
-
 #: trstrings:rsrealuninstq
 msgid "Do you really want to uninstall %a?"
 msgstr "Opravdu si přejete odinstalovat %a?"
 
 #: trstrings:rsunistsuccess
-msgid "Application uninstalled successfully!"
-msgstr "Aplikace byla úspěšně odinstalována!"
+msgid "Application was successfully removed!"
+msgstr ""
 
 #: trstrings:rsrmerror
 msgid "Error while uninstalling!"
@@ -902,17 +863,14 @@ msgstr "Chyba při odinstalaci!"
 
 #: trstrings:rscannothandlerm
 msgid ""
-"This application is not a MoJo-Installation and no other package-type "
-"Listaller can handle.\n"
-"You have to remove it manually."
+"This application does not look like a MoJo-Installation and it is not "
+"installed via an other package-type Listaller can handle.\n"
+"Get instructions how to remove this application from the program author."
 msgstr ""
-"Tato aplikace není typu MoJo-Installation - Listaller bohužel neumí pracovat "
-"s jinými typy balíků.\n"
-"Musíte jej odstranit ručně."
 
 #: trstrings:rsrmunsddeps
-msgid "Uninstalling unused deps..."
-msgstr "Odstraňování nepotřebných závislostí..."
+msgid "Uninstalling unused dependencies..."
+msgstr ""
 
 #: trstrings:rsuninstalling
 msgid "Uninstalling..."
@@ -922,11 +880,8 @@ msgstr "Odinstalace..."
 msgid ""
 "Do you really want to remove \"%p\", containing %a?\n"
 "The following package(s) will be removed also: %pl\n"
-"If you aren't sure that you won't need those packages, press \"No\"!"
+"If you're not sure if you need those packages, press \"No\"!"
 msgstr ""
-"Opravdu si přejete odstranit \"%p\", které obsahuje %a?\n"
-"Následující balíky budou odstraněny: %pl\n"
-"Pokud si nejste jist, že tyto balíky potřebujete, stiskněte \"Ne\"!"
 
 #: trstrings:rsrmpkgq
 msgid "Really remove?"
@@ -942,6 +897,10 @@ msgstr "Odinstalace %a"
 
 #: trstrings:rslindesk
 msgid "Running under %s."
+msgstr ""
+
+#: trstrings:rstranslators
+msgid "List of translators:\n"
 msgstr ""
 
 #: trstrings:rsnoupdates
@@ -1000,6 +959,30 @@ msgstr ""
 msgid "Resolving dependencies..."
 msgstr ""
 
+#: trstrings:rspkgunsigned
+msgid "This package is not signed!"
+msgstr ""
+
+#: trstrings:rspkguntrusted
+msgid "This package is untrusted!"
+msgstr ""
+
+#: trstrings:rscouldnotinstallapp
+msgid "The application %a could not be installed!"
+msgstr ""
+
+#: trstrings:rswarning
+msgid "Warning!"
+msgstr ""
+
+#: trstrings:rstmpwritedenied
+msgid "Listaller cannot write into its temporary directory: Access denied!"
+msgstr ""
+
+#: trstrings:rserror
+msgid "Error"
+msgstr ""
+
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "
 #~ "system is %y.\rThis package can be converted using \"alien\", but this will "
@@ -1020,6 +1003,12 @@ msgstr ""
 #~ "automaticky odstraněny: %pl\rPokud si nejste jistě, jestli tyto balíky "
 #~ "potřebujete, stiskněte \"Ne\"!"
 
+#~ msgid ""
+#~ "Please run \"listallgo\" with path to install-package as first parameter!"
+#~ msgstr ""
+#~ "Prosím spusťte \"listallgo\" a jako první parametr uveďte cestu k "
+#~ "instalačnímu balíku!"
+
 #~ msgid "Unable to overwrite the file %f."
 #~ msgstr "Nemohu přepsat soubor %f."
 
@@ -1030,8 +1019,29 @@ msgstr ""
 #~ "Balík IPK je nejspíš poškozen nebo nemáte dostatečná oprávnění pro přístup k "
 #~ "potřebný souborům a složkám."
 
+#~ msgid "Test of the application finished."
+#~ msgstr "Test aplikace byl ukončen"
+
+#~ msgid "The package was invalid!"
+#~ msgstr "Balík byl neplatný!"
+
+#~ msgid "The application will close now "
+#~ msgstr "Aplikace se nyní ukončí "
+
+#~ msgid "This application wants to download & install a dependency from %l"
+#~ msgstr "Tato aplikace chce stáhnout a nainstalovat závislosti z %l"
+
+#~ msgid "Do you want confirm this action?"
+#~ msgstr "Přejete si tuto akci potvrdit?"
+
 #~ msgid "The installation tries to add the following update source: "
 #~ msgstr "Instalátor by chtěl přidat následující zdroj pro aktualizace: "
+
+#~ msgid "Should this source be added to the update sources list?"
+#~ msgstr "Mám tento zdroj aktualizací přidat?"
+
+#~ msgid "Do you want to install it anyway? (This could raise problems)"
+#~ msgstr "Přejete si balík i přesto nainstalovat? (Může to způsobit problémy.)"
 
 #~ msgid ""
 #~ "Problem while downloading the packages. Maybe the login on the FTP-Server "
@@ -1040,11 +1050,33 @@ msgstr ""
 #~ "Chyba při stahování balíků. Nejspíš selhalo přihlášení na FTP server."
 
 #~ msgid ""
+#~ "There are no sources available for your Linux distribution\n"
+#~ "Try to install common packages?"
+#~ msgstr ""
+#~ "Pro vaši Linuxovou distribuci nejsou k dispozici žádné zdroje\n"
+#~ "Mám se pokusit nainstalovat \"obecný\" balík?"
+
+#~ msgid ""
 #~ "This package has no valid ID\n"
 #~ "The installer will close."
 #~ msgstr ""
 #~ "Balík nemá platný identifikátor\n"
 #~ "Instalátor se nyní ukončí."
+
+#~ msgid "The following packages will be downloaded:"
+#~ msgstr "Následující balíky budou staženy:"
+
+#~ msgid "Problem while downloading the dep-file."
+#~ msgstr "Chyba při stahování dep-souboru."
+
+#~ msgid ""
+#~ "Hash doesn't match!\n"
+#~ "The package may be modified after creation.\n"
+#~ "Please obtain a new copy"
+#~ msgstr ""
+#~ "Kontrolní součet nesouhlasí!\n"
+#~ "Balík byl po vytvoření nejspíš upraven.\n"
+#~ "Obstarejte si prosím novou kopii"
 
 #~ msgid ""
 #~ "Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to "
@@ -1062,6 +1094,15 @@ msgstr ""
 #~ "Ujistěte se, že jste tento balík získali z bezpečného zdroje a od "
 #~ "důvěryhodného tvůrce!"
 
+#~ msgid "Test application"
+#~ msgstr "Otestovat aplikaci"
+
+#~ msgid "Update sources"
+#~ msgstr "Aktualizovat zdroje"
+
+#~ msgid "The following update sources are installed:"
+#~ msgstr "Budou přidány následujcí zdroje pro aktualizace."
+
 #~ msgid "Install new application"
 #~ msgstr "Nainstalovat novou aplikaci"
 
@@ -1070,6 +1111,16 @@ msgstr ""
 
 #~ msgid "Software catalogue"
 #~ msgstr "Katalog softwaru"
+
+#~ msgid "Can't load LOKI-Setup information."
+#~ msgstr "Nemohu načíst informace LOKI-Setup"
+
+#~ msgid ""
+#~ "Unable to load the icon of %a. Please notify the developers of Listaller or "
+#~ "this application!"
+#~ msgstr ""
+#~ "Nemohu načíst ikonu aplikace %a.. Informujte vývojáře Listaller nebo této "
+#~ "aplikace!"
 
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "
@@ -1087,6 +1138,15 @@ msgstr ""
 #~ msgid "Filter:"
 #~ msgstr "Filtr:"
 
+#~ msgid "Display system applications"
+#~ msgstr "Zobrazit systémové aplikace"
+
+#~ msgid "Display my applications"
+#~ msgstr "Zobrazit mé aplikace"
+
+#~ msgid "Select software-manager mode:"
+#~ msgstr "Vyberte režim správce softwaru:"
+
 #~ msgid ""
 #~ "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
 #~ "installed.\n"
@@ -1095,6 +1155,68 @@ msgstr ""
 #~ "K překonvertování cizích balíků používá Listaller nástroj \"alien\", který "
 #~ "ovšem není nainstalován.\n"
 #~ "Přejete si \"alien\" nainstalovat a pokračovat?"
+
+#~ msgid ""
+#~ "Problem while connecting PackageKit. Run \"pkmon\" to get further "
+#~ "information."
+#~ msgstr ""
+#~ "Chyba při spojení s PackageKit. Spusťte \"pkmon\" pro více informací."
+
+#~ msgid "No applications found!"
+#~ msgstr "Žádné aplikace nebyly nalezeny!"
+
+#~ msgid "Category:"
+#~ msgstr "Kategorie:"
+
+#~ msgid "Select software you want to download and to install:"
+#~ msgstr "Vyberte software, který chcete stáhnout a nainstalovat:"
+
+#~ msgid "No information available!"
+#~ msgstr "Žádné informace nejsou dostupné!"
+
+#~ msgid "Downloading setup package..."
+#~ msgstr "Stahování konfiguračního balíku..."
+
+#~ msgid ""
+#~ "Cannot download this package. Please contact the catalogue managers on %h"
+#~ msgstr ""
+#~ "Nemohu stáhnout tento balík. Prosím kontaktujte správce katalogu - %h"
+
+#~ msgid "Running application installation..."
+#~ msgstr "Spouštění instalace aplikace..."
+
+#~ msgid "Downloading catalogue base information..."
+#~ msgstr "Stahování katalogu informací..."
+
+#~ msgid "Loading catalogue page..."
+#~ msgstr "Načítání strany katalogu..."
+
+#~ msgid "Do you really want to abort this download?"
+#~ msgstr "Opravdu si přejete přerušit stahování?"
+
+#~ msgid "Application uninstalled successfully!"
+#~ msgstr "Aplikace byla úspěšně odinstalována!"
+
+#~ msgid ""
+#~ "This application is not a MoJo-Installation and no other package-type "
+#~ "Listaller can handle.\n"
+#~ "You have to remove it manually."
+#~ msgstr ""
+#~ "Tato aplikace není typu MoJo-Installation - Listaller bohužel neumí pracovat "
+#~ "s jinými typy balíků.\n"
+#~ "Musíte jej odstranit ručně."
+
+#~ msgid "Uninstalling unused deps..."
+#~ msgstr "Odstraňování nepotřebných závislostí..."
+
+#~ msgid ""
+#~ "Do you really want to remove \"%p\", containing %a?\n"
+#~ "The following package(s) will be removed also: %pl\n"
+#~ "If you aren't sure that you won't need those packages, press \"No\"!"
+#~ msgstr ""
+#~ "Opravdu si přejete odstranit \"%p\", které obsahuje %a?\n"
+#~ "Následující balíky budou odstraněny: %pl\n"
+#~ "Pokud si nejste jist, že tyto balíky potřebujete, stiskněte \"Ne\"!"
 
 #~ msgid "Running under %de (or similar)"
 #~ msgstr "Spouštím pod %de (nebo podobné)"
