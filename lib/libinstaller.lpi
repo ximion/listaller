@@ -37,7 +37,7 @@
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="25" Y="22"/>
+        <CursorPos X="29" Y="22"/>
         <UsageCount Value="88"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -46,8 +46,8 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkinstall"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="572"/>
-        <CursorPos X="28" Y="593"/>
+        <TopLine Value="1"/>
+        <CursorPos X="10" Y="409"/>
         <UsageCount Value="48"/>
       </Unit1>
       <Unit2>
@@ -161,8 +161,8 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="limanageapp"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="831"/>
-        <CursorPos X="5" Y="854"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="47"/>
       </Unit17>
       <Unit18>
@@ -298,8 +298,9 @@
         <Filename Value="lidbusproc.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lidbusproc"/>
-        <TopLine Value="93"/>
-        <CursorPos X="24" Y="114"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="510"/>
         <UsageCount Value="54"/>
       </Unit37>
       <Unit38>
@@ -595,7 +596,7 @@
         <UsageCount Value="10"/>
       </Unit77>
     </Units>
-    <JumpHistory Count="11" HistoryIndex="10">
+    <JumpHistory Count="13" HistoryIndex="12">
       <Position1>
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="22" Column="28" TopLine="1"/>
@@ -640,6 +641,14 @@
         <Filename Value="libinstaller.lpr"/>
         <Caret Line="22" Column="25" TopLine="1"/>
       </Position11>
+      <Position12>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="23" Column="17" TopLine="1"/>
+      </Position12>
+      <Position13>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="29" TopLine="1"/>
+      </Position13>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

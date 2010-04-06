@@ -24,8 +24,6 @@ uses
 
 type
 
-  { TLiDaemon }
-
   //** The Listaller helper daemon for root actions
   TLiDaemon = class(TCustomApplication)
   protected
@@ -41,94 +39,100 @@ type
   end;
 
 const
- Timeout_Seconds = 18; //Quit daemon after 18 seconds of inactivity
-{ TLiDaemon }
+  Timeout_Seconds = 18; //Quit daemon after 18 seconds of inactivity
+  { TLiDaemon }
 
 procedure TLiDaemon.ListenForCall;
 var
-  msg: PDBusMessage;
-  startTick: Integer;
-  lastTime: Integer;
+   msg: PDBusMessage;
+   startTick: integer;
+   lastTime: integer;
 begin
-  lastTime:=0;
+ lastTime := 0;
+ if bs.Failed then
+  exit;
 
-  if bs.Failed then exit;
+ //Set tick count
+ startTick := DateTimeToTimeStamp(Now).Time;
 
+ //Init critical section for usage in threads
+ InitCriticalSection(critsec);
 
-  //Set tick count
-  startTick:=DateTimeToTimeStamp(Now).Time;
+ // loop, testing for new messages
+ while (true) do
+ begin
+   //Check tick count
+   if (InstallWorkers + ManagerWorkers) > 0 then
+     startTick := DateTimeToTimeStamp(Now).Time;
 
-  //Init critical section for usage in threads
-  InitCriticalSection(critsec);
+   if (InstallWorkers = 0) and (ManagerWorkers = 0) and
+      (lastTime >= Timeout_Seconds) then
+        break; //Exit loop -> terminate daemon
 
-  // loop, testing for new messages
-  while (true) do
-  begin
+   if lastTime <> Round(((DateTimeToTimeStamp(Now).Time - startTick) / 1000)) then
+   begin
+     lastTime := Round(((DateTimeToTimeStamp(Now).Time - startTick) / 1000));
+     if (InstallWorkers = 0) and (ManagerWorkers = 0) then
+       p_debug(IntToStr(lastTime) + ' seconds idle');
+   end;
 
-    //Check tick count
-    if (InstallWorkers+ManagerWorkers)>0 then
-     startTick:=DateTimeToTimeStamp(Now).Time;
+   msg := bs.ReadMessage;
 
-     if (InstallWorkers=0)and(ManagerWorkers=0)and(lastTime>=Timeout_Seconds) then
-      break; //Exit loop -> terminate daemon
+   // loop again if we haven't got a message
+   if (msg = nil) then
+   begin
+     sleep(1);
+     Continue;
+   end;
 
-    if lastTime<>Round(((DateTimeToTimeStamp(Now).Time-startTick)/1000)) then
-    begin
-     lastTime:=Round(((DateTimeToTimeStamp(Now).Time-startTick)/1000));
-     if (InstallWorkers=0)and(ManagerWorkers=0) then
-      p_debug(IntToStr(lastTime)+' seconds idle');
-    end;
+   // check this is a method call for the right interface & method
+   if bs.MessageIsMethodCall(msg, 'org.nlinux.Listaller.Install', CALL_RUNSETUP) then
+   begin
+     JobList.Add(TDoAppInstall.Create(msg, bs.Connection));
+     Inc(InstallWorkers);
+     JobList.Delete(0); //Can be removed if threading is enabled
+   end
+   else
+     if bs.MessageIsMethodCall(msg, 'org.nlinux.Listaller.Manage',
+      CALL_APPREMOVE) then
+     begin
+       JobList.Add(TDoAppRemove.Create(msg, bs.Connection));
+       Inc(ManagerWorkers);
+       JobList.Delete(0); //Can be removed if threading is enabled
+     end
+     else
+       if bs.MessageIsMethodCall(msg, 'org.nlinux.Listaller.Manage',
+         CALL_UPDATEAPP) then
+       begin
+         JobList.Add(TDoAppUpdate.Create(msg, bs.Connection));
+         Inc(ManagerWorkers);
+         JobList.Delete(0); //Can be removed if threading is enabled
+       end
+       else
+         //Free the message
+         bs.FreeMessage(msg);
+ end;
 
-    msg:=bs.ReadMessage;
-
-    // loop again if we haven't got a message
-    if (msg = nil) then
-    begin
-      sleep(1);
-      Continue;
-    end;
-
-    // check this is a method call for the right interface & method
-    if bs.MessageIsMethodCall(msg,'org.nlinux.Listaller.Install', CALL_RUNSETUP) then
-    begin
-        JobList.Add(TDoAppInstall.Create(msg,bs.Connection));
-        Inc(InstallWorkers);
-        JobList.Delete(0); //Can be removed if threading is enabled
-    end else
-    if bs.MessageIsMethodCall(msg, 'org.nlinux.Listaller.Manage', CALL_APPREMOVE) then
-    begin
-        JobList.Add(TDoAppRemove.Create(msg,bs.Connection));
-        Inc(ManagerWorkers);
-        JobList.Delete(0); //Can be removed if threading is enabled
-    end else
-    if bs.MessageIsMethodCall(msg, 'org.nlinux.Listaller.Manage', CALL_UPDATEAPP) then
-    begin
-        JobList.Add(TDoAppUpdate.Create(msg,bs.Connection));
-        Inc(ManagerWorkers);
-        JobList.Delete(0); //Can be removed if threading is enabled
-    end else
-     //Free the message
-     bs.FreeMessage(msg);
-  end;
-
-  //Finalize and remove critical section
-  DoneCriticalSection(critsec);
+ //Finalize and remove critical section
+ DoneCriticalSection(critsec);
 end;
 
 procedure TLiDaemon.DoRun;
 var
-  ErrorMsg: String;
+  ErrorMsg: string;
 begin
   // quick check parameters
-  ErrorMsg:=CheckOptions('h','help');
-  if ErrorMsg<>'' then begin
+  ErrorMsg := CheckOptions('h', 'help');
+  if ErrorMsg <> '' then
+  begin
     ShowException(Exception.Create(ErrorMsg));
     Terminate;
     Exit;
   end;
 
   // parse parameters
-  if HasOption('h','help') then begin
+  if HasOption('h', 'help') then
+  begin
     WriteHelp;
     Terminate;
     Exit;
@@ -143,19 +147,21 @@ end;
 constructor TLiDaemon.Create(TheOwner: TComponent);
 begin
   inherited Create(TheOwner);
-  StopOnException:=True;
+  StopOnException := true;
 
-if IsRoot then
-begin
-  bs:=TDBusServer.Create('org.nlinux.Listaller',DBUS_BUS_SYSTEM,DBUS_NAME_FLAG_REPLACE_EXISTING);
+  if IsRoot then
+  begin
+    bs := TDBusServer.Create('org.nlinux.Listaller', DBUS_BUS_SYSTEM,
+      DBUS_NAME_FLAG_REPLACE_EXISTING);
 
-  JobList:=TObjectList.Create;
-end else
-begin
- writeLn('Please run listallerd as root!');
- halt(1);
-end;
-WriteLn('Daemon started.');
+    JobList := TObjectList.Create;
+  end
+  else
+  begin
+    writeLn('Please run listallerd as root!');
+    halt(1);
+  end;
+  WriteLn('Daemon started.');
 
 end;
 
@@ -168,7 +174,7 @@ end;
 procedure TLiDaemon.WriteHelp;
 begin
   { add your help code here }
-  writeln('Usage: ',ExeName,' -h');
+  writeln('Usage: ', ExeName, ' -h');
 end;
 
 var
@@ -177,8 +183,8 @@ var
 {$R *.res}
 
 begin
-  Application:=TLiDaemon.Create(nil);
-  Application.Title:='Listaller Daemon';
+  Application := TLiDaemon.Create(nil);
+  Application.Title := 'Listaller Daemon';
   Application.Run;
   Application.Free;
 end.

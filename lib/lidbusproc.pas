@@ -24,62 +24,64 @@ uses
   Classes, SysUtils, liTypes, SimDBus, DBus, liBasic, trStrings;
 
 type
- //** Which detail of the process was changed?
- TLiProcDetail = (pdMainProgress, pdMessage,
-                  pdInfo, pdStatus, pdError,
-                  pdStepMessage, pdExtraProgress);
+  //** Which detail of the process was changed?
+  TLiProcDetail = (pdMainProgress, pdMessage,
+    pdInfo, pdStatus, pdError,
+    pdStepMessage, pdExtraProgress);
 
- //** Record which contains data about the current thread
- TLiProcData = record
-   changed: TLiProcDetail;
-   mnprogress, exprogress: Integer;
-   jobID: String;
-   msg: String;
- end;
+  //** Record which contains data about the current thread
+  TLiProcData = record
+    changed: TLiProcDetail;
+    mnprogress, exprogress: integer;
+    jobID: string;
+    msg: string;
+  end;
 
- //** Event for thread signals
- TLiDAction = procedure(ty: LiProcStatus;data: TLiProcData) of Object;
+  //** Event for thread signals
+  TLiDAction = procedure(ty: LiProcStatus; Data: TLiProcData) of object;
 
- //** Actions Listaller can perform on DBus root interface
- TListallerBusAction = (lbaUninstallApp,lbaInstallPack,lbaUpdateApp);
+  //** Actions Listaller can perform on DBus root interface
+  TListallerBusAction = (lbaUninstallApp, lbaInstallPack, lbaUpdateApp);
 
- //** A command Listaller should do on DBus
- ListallerBusCommand = record
-   cmdtype: TListallerBusAction;
-   appinfo: TAppInfo;
-   pkgname: String;
-   updid  : Integer;
-   addsrc : Boolean;
- end;
+  //** A command Listaller should do on DBus
+  ListallerBusCommand = record
+    cmdtype: TListallerBusAction;
+    appinfo: TAppInfo;
+    pkgname: string;
+    overrides: string;
+    updid: integer;
+    addsrc: boolean;
+  end;
 
- //** Object which can perform various actions on Listaller's DBus interface (currently NO Thread anymore)
- TLiDBusAction = class
- private
-  cmd: TListallerBusAction;
-  FStatus: TLiDAction;
-  cmdinfo: ListallerBusCommand;
+  //** Object which can perform various actions on Listaller's DBus interface (currently NO Thread anymore)
+  TLiDBusAction = class
+  private
+    cmd: TListallerBusAction;
+    FStatus: TLiDAction;
+    cmdinfo: ListallerBusCommand;
 
-  status: LiProcStatus;
-  procinfo: TLiProcData;
-  done: Boolean;
-  procedure SyncProcStatus;
-  procedure SendError(msg: String);
-  procedure SendProgress(val: Integer;const ty: TLiProcDetail=pdMainProgress);
-  procedure SendMessage(msg: String;const ty: TLiProcDetail=pdInfo);
-  //** Remove app as root via remote DBus connection
-  procedure UninstallAppAsRoot(obj: TAppInfo);
-  //** Execute installation as root using dbus daemon & PolicyKit
-  function  DoInstallationAsRoot(pkgpath: String;addsrc: Boolean): Boolean;
-  //** Update shared application via dbus daemon & PolicyKit
-  function  DoUpdateAsRoot(uid: Integer): Boolean;
- public
-  constructor Create(action: ListallerBusCommand);
-  destructor Destroy;override;
+    status: LiProcStatus;
+    procinfo: TLiProcData;
+    done: boolean;
+    procedure SyncProcStatus;
+    procedure SendError(msg: string);
+    procedure SendProgress(val: integer; const ty: TLiProcDetail = pdMainProgress);
+    procedure SendMessage(msg: string; const ty: TLiProcDetail = pdInfo);
+    //** Remove app as root via remote DBus connection
+    procedure UninstallAppAsRoot(obj: TAppInfo);
+    //** Execute installation as root using dbus daemon & PolicyKit
+    function DoInstallationAsRoot(pkgpath: string; overrides: string;
+      addsrc: boolean): boolean;
+    //** Update shared application via dbus daemon & PolicyKit
+    function DoUpdateAsRoot(uid: integer): boolean;
+  public
+    constructor Create(action: ListallerBusCommand);
+    destructor Destroy; override;
 
-  procedure ExecuteAction;
-  property OnStatus: TLiDAction read FStatus write FStatus;
-  property Finished: Boolean read done;
- end;
+    procedure ExecuteAction;
+    property OnStatus: TLiDAction read FStatus write FStatus;
+    property Finished: boolean read done;
+  end;
 
 implementation
 
@@ -87,10 +89,10 @@ implementation
 
 constructor TLiDBusAction.Create(action: ListallerBusCommand);
 begin
- //FreeOnTerminate:=true;
- cmd:=action.cmdtype;
- cmdinfo:=action;
- done:=false;
+  //FreeOnTerminate:=true;
+  cmd := action.cmdtype;
+  cmdinfo := action;
+  done := false;
 end;
 
 destructor TLiDBusAction.Destroy;
@@ -98,72 +100,75 @@ begin
  {if Assigned(FatalException) then
   raise FatalException; }
 
- status:=prFinished;
- procinfo.changed:=pdStatus;
- SyncProcStatus;
- p_debug('DBus action done.');
- inherited;
+  status := prFinished;
+  procinfo.changed := pdStatus;
+  SyncProcStatus;
+  p_debug('DBus action done.');
+  inherited;
 end;
 
 procedure TLiDBusAction.SyncProcStatus;
 begin
- if Assigned(FStatus) then FStatus(status,procinfo);
- procinfo.msg:='~?error';
+  if Assigned(FStatus) then
+    FStatus(status, procinfo);
+  procinfo.msg := '~?error';
 end;
 
 procedure TLiDBusAction.ExecuteAction;
 begin
-done:=false;
-//if Terminated then exit;
- case cmd of
-  lbaUninstallApp: UninstallAppAsRoot(cmdinfo.appinfo);
-  lbaInstallPack : DoInstallationAsRoot(cmdinfo.pkgname,cmdinfo.addsrc);
-  lbaUpdateApp   : DoUpdateAsRoot(cmdinfo.updid);
- end;
-done:=true;
-p_debug('Job done.');
+  done := false;
+  //if Terminated then exit;
+  case cmd of
+    lbaUninstallApp: UninstallAppAsRoot(cmdinfo.appinfo);
+    lbaInstallPack: DoInstallationAsRoot(cmdinfo.pkgname, cmdinfo, overrides,
+        cmdinfo.addsrc);
+    lbaUpdateApp: DoUpdateAsRoot(cmdinfo.updid);
+  end;
+  done := true;
+  p_debug('Job done.');
 end;
 
-procedure TLiDBusAction.SendError(msg: String);
+procedure TLiDBusAction.SendError(msg: string);
 begin
- procinfo.msg:=msg;
- procinfo.changed:=pdError;
- SyncProcStatus;
- procinfo.msg:='#';
+  procinfo.msg := msg;
+  procinfo.changed := pdError;
+  SyncProcStatus;
+  procinfo.msg := '#';
 end;
 
-procedure TLiDBusAction.SendMessage(msg: String;const ty: TLiProcDetail=pdInfo);
+procedure TLiDBusAction.SendMessage(msg: string; const ty: TLiProcDetail = pdInfo);
 begin
- procinfo.msg:=msg;
- procinfo.changed:=ty;
- SyncProcStatus;
- procinfo.msg:='#';
+  procinfo.msg := msg;
+  procinfo.changed := ty;
+  SyncProcStatus;
+  procinfo.msg := '#';
 end;
 
-procedure TLiDBusAction.SendProgress(val: Integer;const ty: TLiProcDetail=pdMainProgress);
+procedure TLiDBusAction.SendProgress(val: integer;
+  const ty: TLiProcDetail = pdMainProgress);
 begin
- procinfo.changed:=ty;
- if ty=pdMainprogress then
-  procinfo.mnprogress:=val
- else
-  procinfo.exprogress:=val;
+  procinfo.changed := ty;
+  if ty = pdMainprogress then
+    procinfo.mnprogress := val
+  else
+    procinfo.exprogress := val;
 
- SyncProcStatus;
+  SyncProcStatus;
 end;
 
 procedure TLiDBusAction.UninstallAppAsRoot(obj: TAppInfo);
 var
   bus: TDBusClient;
   dmsg: PDBusMessage;
-  stat: Boolean;
+  stat: boolean;
   rec: PChar;
-  action_finished: Boolean;
+  action_finished: boolean;
 
-  jobID: String;
+  jobID: string;
 begin
 
   //New DBus connection
-  bus:=TDBusClient.Create(DBUS_BUS_SYSTEM);
+  bus := TDBusClient.Create(DBUS_BUS_SYSTEM);
   if bus.Failed then
   begin
     SendError('An error occured during remove request.'#10'Unable to connect to DBus!');
@@ -173,57 +178,59 @@ begin
   p_info('Calling listaller-daemon...');
   // create a new method call and check for errors
   dmsg := bus.Connect('org.nlinux.Listaller', // target for the method call
-                                      '/org/nlinux/Listaller/Manager', // object to call on
-                                      'org.nlinux.Listaller.Manage', // interface to call on
-                                      'RemoveApp'); //Method
+    '/org/nlinux/Listaller/Manager',
+    // object to call on
+    'org.nlinux.Listaller.Manage',
+    // interface to call on
+    'RemoveApp'); //Method
   if bus.Failed then
   begin
-   SendError('Could not get reply from DBus!');
-   exit;
+    SendError('Could not get reply from DBus!');
+    exit;
   end;
 
-  bus.ReplyMessageAddString(dmsg,obj.Name);
-  bus.ReplyMessageAddString(dmsg,obj.UId);
+  bus.ReplyMessageAddString(dmsg, obj.Name);
+  bus.ReplyMessageAddString(dmsg, obj.UId);
 
   p_info('Sending AppRemove request...');
-  dmsg:=bus.SendReplyAndWait(dmsg);
+  dmsg := bus.SendReplyAndWait(dmsg);
   if not bus.Failed then
-   p_info('Got reply.');
+    p_info('Got reply.');
 
-  stat:=false;
+  stat := false;
   // read the parameters
-  stat:=bus.ReadMessageParamBool(dmsg);
+  stat := bus.ReadMessageParamBool(dmsg);
   bus.MessageIterNext;
-  rec:=PChar(bus.ReadMessageParamStr(dmsg));
+  rec := PChar(bus.ReadMessageParamStr(dmsg));
 
   bus.MessageIterNext;
-  jobID:=bus.ReadMessageParamStr(dmsg);
+  jobID := bus.ReadMessageParamStr(dmsg);
 
-  if (not stat)or(rec = 'blocked')or(jobID='') then
+  if (not stat) or (rec = 'blocked') or (jobID = '') then
   begin
-   if rec = 'blocked' then
-    SendError('You are not authorized to do this action!')
-   else
-    SendError('An error occured during install request.');
-   exit;
+    if rec = 'blocked' then
+      SendError('You are not authorized to do this action!')
+    else
+      SendError('An error occured during install request.');
+    exit;
   end;
   // free reply
   bus.FreeMessage(dmsg);
 
-  p_debug('Got job '+jobID);
+  p_debug('Got job ' + jobID);
   //////////////////////////////////////////////////////////////////////
 
   //Now start listening to Listaller dbus signals and forward them to
   //native functions until the "Finished" signal is received
 
-  procinfo.mnprogress:=0;
-  action_finished:=false;
+  procinfo.mnprogress := 0;
+  action_finished := false;
   //Add a rule for which messages we want to see
-  bus.StartListening('/org/nlinux/Listaller/'+jobID);
+  bus.StartListening('/org/nlinux/Listaller/' + jobID);
   // loop listening for signals being emmitted
   while (not action_finished) do
   begin
-    dmsg:=bus.ReadSignalMessage;
+    dmsg := bus.ReadSignalMessage;
     //loop again if we haven't read a message
     if (dmsg = nil) then
     begin
@@ -236,26 +243,26 @@ begin
     //Check if the installation has finished
     if bus.ReceivedSignalIs(dmsg, 'Finished') then
     begin
-       action_finished:=true;
-       if (not bus.ReadSignalBool(dmsg)) then
+      action_finished := true;
+      if (not bus.ReadSignalBool(dmsg)) then
         //The action failed. Leave the loop and display message
         SendError(rsRMerror);
     end;
 
     //Change of progress
-    if bus.ReceivedSignalIs(dmsg,'ProgressChange') then
-     SendProgress(bus.ReadSignalInt(dmsg));
+    if bus.ReceivedSignalIs(dmsg, 'ProgressChange') then
+      SendProgress(bus.ReadSignalInt(dmsg));
 
     //Receive new message
-    if bus.ReceivedSignalIs(dmsg,'Message') then
+    if bus.ReceivedSignalIs(dmsg, 'Message') then
       SendMessage(bus.ReadSignalStr(dmsg));
 
     //Break on error signal
-    if bus.ReceivedSignalIs(dmsg,'Error') then
+    if bus.ReceivedSignalIs(dmsg, 'Error') then
     begin
-         //The action failed. Diplay error and leave the loop
-          SendError(bus.ReadSignalStr(dmsg));
-          action_finished:=true;
+      //The action failed. Diplay error and leave the loop
+      SendError(bus.ReadSignalStr(dmsg));
+      action_finished := true;
     end;
 
     // free the message
@@ -264,25 +271,26 @@ begin
 end;
 
 //This method submits all actions to the DBus daemon
-function TLiDBusAction.DoInstallationAsRoot(pkgpath: String;addsrc: Boolean): Boolean;
+function TLiDBusAction.DoInstallationAsRoot(pkgpath: string;
+  overrides: string; addsrc: boolean): boolean;
 var
   dmsg: PDBusMessage;
   bus: TDBusClient;
-  stat: Boolean;
-  rec: String;
-  jobID: String;
+  stat: boolean;
+  rec: string;
+  jobID: string;
 
-  install_finished: Boolean;
+  install_finished: boolean;
 begin
-  Result:=false;
-  bus:=TDBusClient.Create(DBUS_BUS_SYSTEM);
+  Result := false;
+  bus := TDBusClient.Create(DBUS_BUS_SYSTEM);
 
-  if bus.Failed then exit;
+  if bus.Failed then
+    exit;
 
   p_info('Calling listaller-daemon...');
-  dmsg := bus.Connect('org.nlinux.Listaller','/org/nlinux/Listaller/Installer',
-                                      'org.nlinux.Listaller.Install',
-                                      'ExecuteSetup');
+  dmsg := bus.Connect('org.nlinux.Listaller', '/org/nlinux/Listaller/Installer',
+    'org.nlinux.Listaller.Install', 'ExecuteSetup');
   if (dmsg = nil) then
   begin
     p_error('Message Null');
@@ -291,27 +299,30 @@ begin
 
   //Append arguments
 
-  bus.ReplyMessageAddString(dmsg,pkgpath);
+  //Add path to package
+  bus.ReplyMessageAddString(dmsg, pkgpath);
+  //Add overrides
+  bus.ReplyMessageAddString(dmsg, overrides);
   //Append true if update source should be registered
-  bus.ReplyMessageAddBool(dmsg,addsrc);
+  bus.ReplyMessageAddBool(dmsg, addsrc);
 
-  dmsg:=bus.SendReplyAndWait(dmsg);
+  dmsg := bus.SendReplyAndWait(dmsg);
 
   p_info('InstallPkg request sent');
 
-  stat:=bus.ReadMessageParamBool(dmsg);
+  stat := bus.ReadMessageParamBool(dmsg);
   bus.MessageIterNext;
-  rec:=bus.ReadMessageParamStr(dmsg);
+  rec := bus.ReadMessageParamStr(dmsg);
   bus.MessageIterNext;
-  jobID:=bus.ReadMessageParamStr(dmsg);
+  jobID := bus.ReadMessageParamStr(dmsg);
 
-  if (stat = false)or(jobID='') then
+  if (stat = false) or (jobID = '') then
   begin
-   if rec = 'blocked' then
-    SendError('You are not authorized to do this action!')
-   else
-    SendError('An error occured during install request.');
-   exit;
+    if rec = 'blocked' then
+      SendError('You are not authorized to do this action!')
+    else
+      SendError('An error occured during install request.');
+    exit;
   end;
   // free reply
   bus.FreeMessage(dmsg);
@@ -322,14 +333,14 @@ begin
   //native functions until the "Finished" signal is received
 
   //Add a rule for which messages we want to see
-  bus.StartListening('/org/nlinux/Listaller/'+jobID);
+  bus.StartListening('/org/nlinux/Listaller/' + jobID);
 
-  install_finished:=false;
+  install_finished := false;
   SendProgress(0);
   // loop listening for signals being emmitted
   while (not install_finished) do
   begin
-    dmsg:=bus.ReadSignalMessage;
+    dmsg := bus.ReadSignalMessage;
     //loop again if we haven't read a message
     if (dmsg = nil) then
     begin
@@ -340,60 +351,60 @@ begin
     //Convert all DBus signals into standard Listaller callbacks
 
     //Change of the main progress bar
-    if bus.ReceivedSignalIs(dmsg,'MainProgressChange') then
-         SendProgress(bus.ReadSignalInt(dmsg));
+    if bus.ReceivedSignalIs(dmsg, 'MainProgressChange') then
+      SendProgress(bus.ReadSignalInt(dmsg));
 
     //Change of the extra progress bar
-    if bus.ReceivedSignalIs(dmsg,'ExtraProgressChange') then
-         SendProgress(bus.ReadSignalInt(dmsg),pdExtraProgress);
+    if bus.ReceivedSignalIs(dmsg, 'ExtraProgressChange') then
+      SendProgress(bus.ReadSignalInt(dmsg), pdExtraProgress);
 
     //Receive new message
-    if bus.ReceivedSignalIs(dmsg,'Message') then
-         SendMessage(bus.ReadSignalStr(dmsg));
+    if bus.ReceivedSignalIs(dmsg, 'Message') then
+      SendMessage(bus.ReadSignalStr(dmsg));
 
     //Receive current state of installation progress
-    if bus.ReceivedSignalIs(dmsg,'StepMessage') then
-         SendMessage(bus.ReadSignalStr(dmsg),pdStepMessage);
+    if bus.ReceivedSignalIs(dmsg, 'StepMessage') then
+      SendMessage(bus.ReadSignalStr(dmsg), pdStepMessage);
 
     //Break on error signal
-    if bus.ReceivedSignalIs(dmsg,'Error') then
+    if bus.ReceivedSignalIs(dmsg, 'Error') then
     begin
-         //The action failed. Diplay error and leave the loop
-          SendError(bus.ReadSignalStr(dmsg));
-          install_finished:=true;
+      //The action failed. Diplay error and leave the loop
+      SendError(bus.ReadSignalStr(dmsg));
+      install_finished := true;
     end;
 
     //Check if the installation has finished
-    if bus.ReceivedSignalIs(dmsg,'Finished') then
+    if bus.ReceivedSignalIs(dmsg, 'Finished') then
     begin
-         install_finished:=true;
-         if (not bus.ReadSignalBool(dmsg)) then
-          //The action failed. Leave the loop and display message
-          SendError(rsInstFailed);
+      install_finished := true;
+      if (not bus.ReadSignalBool(dmsg)) then
+        //The action failed. Leave the loop and display message
+        SendError(rsInstFailed);
     end;
 
     //Free the message
     bus.FreeMessage(dmsg);
   end;
 
- //If we are here, the installation was successful
- Result:=true;
+  //If we are here, the installation was successful
+  Result := true;
 end;
 
 //Execute an update over DBus
-function TLiDBusAction.DoUpdateAsRoot(uid: Integer): Boolean;
+function TLiDBusAction.DoUpdateAsRoot(uid: integer): boolean;
 var
   bus: TDBusClient;
   dmsg: PDBusMessage;
-  stat: Boolean;
+  stat: boolean;
   rec: PChar;
-  action_finished: Boolean;
+  action_finished: boolean;
 
-  jobID: String;
+  jobID: string;
 begin
-  Result:=true;
+  Result := true;
   //New DBus connection
-  bus:=TDBusClient.Create(DBUS_BUS_SYSTEM);
+  bus := TDBusClient.Create(DBUS_BUS_SYSTEM);
   if bus.Failed then
   begin
     SendError('An error occured during update request.'#10'Unable to connect to DBus!');
@@ -403,56 +414,58 @@ begin
   p_info('Calling listaller-daemon...');
   // create a new method call and check for errors
   dmsg := bus.Connect('org.nlinux.Listaller', // target for the method call
-                                      '/org/nlinux/Listaller/Manager', // object to call on
-                                      'org.nlinux.Listaller.Manage', // interface to call on
-                                      'UpdateApp'); //Method
+    '/org/nlinux/Listaller/Manager',
+    // object to call on
+    'org.nlinux.Listaller.Manage',
+    // interface to call on
+    'UpdateApp'); //Method
   if bus.Failed then
   begin
-   SendError('Could not get reply from DBus!');
-   exit;
+    SendError('Could not get reply from DBus!');
+    exit;
   end;
 
-  bus.ReplyMessageAddInt(dmsg,uid);
+  bus.ReplyMessageAddInt(dmsg, uid);
 
   p_info('Sending AppUpdate request...');
-  dmsg:=bus.SendReplyAndWait(dmsg);
+  dmsg := bus.SendReplyAndWait(dmsg);
   if not bus.Failed then
-   p_info('Got reply.');
+    p_info('Got reply.');
 
-  stat:=false;
+  stat := false;
   // read the parameters
-  stat:=bus.ReadMessageParamBool(dmsg);
+  stat := bus.ReadMessageParamBool(dmsg);
   bus.MessageIterNext;
-  rec:=PChar(bus.ReadMessageParamStr(dmsg));
+  rec := PChar(bus.ReadMessageParamStr(dmsg));
 
   bus.MessageIterNext;
-  jobID:=bus.ReadMessageParamStr(dmsg);
+  jobID := bus.ReadMessageParamStr(dmsg);
 
-  if (not stat)or(rec = 'blocked')or(jobID='') then
+  if (not stat) or (rec = 'blocked') or (jobID = '') then
   begin
-   if rec = 'blocked' then
-    SendError('You are not authorized to execute an update of this application!')
-   else
-    SendError('An error occured during update request.');
-   exit;
+    if rec = 'blocked' then
+      SendError('You are not authorized to execute an update of this application!')
+    else
+      SendError('An error occured during update request.');
+    exit;
   end;
   // free reply
   bus.FreeMessage(dmsg);
 
-  p_debug('Got job '+jobID);
+  p_debug('Got job ' + jobID);
   //////////////////////////////////////////////////////////////////////
 
   //Now start listening to Listaller dbus signals and forward them to
   //native functions until the "Finished" signal is received
 
-  procinfo.mnprogress:=0;
-  action_finished:=false;
+  procinfo.mnprogress := 0;
+  action_finished := false;
   //Add a rule for which messages we want to see
-  bus.StartListening('/org/nlinux/Listaller/'+jobID);
+  bus.StartListening('/org/nlinux/Listaller/' + jobID);
   // loop listening for signals being emmitted
   while (not action_finished) do
   begin
-    dmsg:=bus.ReadSignalMessage;
+    dmsg := bus.ReadSignalMessage;
     //loop again if we haven't read a message
     if (dmsg = nil) then
     begin
@@ -465,27 +478,27 @@ begin
     //Check if the installation has finished
     if bus.ReceivedSignalIs(dmsg, 'Finished') then
     begin
-       action_finished:=true;
-       if (not bus.ReadSignalBool(dmsg)) then
+      action_finished := true;
+      if (not bus.ReadSignalBool(dmsg)) then
         //The action failed. Leave the loop and display message
         SendError(rsRMerror);
     end;
 
     //Change of progress
-    if bus.ReceivedSignalIs(dmsg,'ProgressChange') then
-     SendProgress(bus.ReadSignalInt(dmsg));
+    if bus.ReceivedSignalIs(dmsg, 'ProgressChange') then
+      SendProgress(bus.ReadSignalInt(dmsg));
 
     //Receive new message
-    if bus.ReceivedSignalIs(dmsg,'Message') then
+    if bus.ReceivedSignalIs(dmsg, 'Message') then
       SendMessage(bus.ReadSignalStr(dmsg));
 
     //Break on error signal
-    if bus.ReceivedSignalIs(dmsg,'Error') then
+    if bus.ReceivedSignalIs(dmsg, 'Error') then
     begin
-         //The action failed. Diplay error and leave the loop
-          SendError(bus.ReadSignalStr(dmsg));
-          Result:=false;
-          action_finished:=true;
+      //The action failed. Diplay error and leave the loop
+      SendError(bus.ReadSignalStr(dmsg));
+      Result := false;
+      action_finished := true;
     end;
 
     // free the message

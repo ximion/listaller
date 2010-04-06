@@ -42,8 +42,8 @@
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="38" Y="106"/>
-        <UsageCount Value="43"/>
+        <CursorPos X="1" Y="196"/>
+        <UsageCount Value="44"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -73,9 +73,9 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="djobs"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="89"/>
-        <CursorPos X="17" Y="111"/>
-        <UsageCount Value="43"/>
+        <TopLine Value="105"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="44"/>
       </Unit4>
       <Unit5>
         <Filename Value="/usr/share/fpcsrc/2.3.1/packages/dbus/src/dbus-message.inc"/>
@@ -313,7 +313,7 @@
         <UsageCount Value="10"/>
       </Unit40>
     </Units>
-    <JumpHistory Count="11" HistoryIndex="10">
+    <JumpHistory Count="13" HistoryIndex="12">
       <Position1>
         <Filename Value="listallerd.lpr"/>
         <Caret Line="63" Column="10" TopLine="42"/>
@@ -358,6 +358,14 @@
         <Filename Value="listallerd.lpr"/>
         <Caret Line="106" Column="38" TopLine="79"/>
       </Position11>
+      <Position12>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="22" Column="61" TopLine="1"/>
+      </Position12>
+      <Position13>
+        <Filename Value="listallerd.lpr"/>
+        <Caret Line="28" Column="6" TopLine="1"/>
+      </Position13>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

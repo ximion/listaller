@@ -66,6 +66,7 @@ type
   private
     FileName: string;
     actUSource: boolean;
+    overrides: string;
     //** Send reply to client
     procedure SendReply(stat: boolean; jID: string); override;
     //** Emit a progress changed signal
@@ -133,11 +134,11 @@ begin
   inherited Create;//(true);
 
   origMsg := aMsg;
-  remove := False;
+  remove := false;
   bs := TDBusServer.Create(dbusConn);
 
   authority := polkit_authority_get();
-  loop := g_main_loop_new(nil, False);
+  loop := g_main_loop_new(nil, false);
   allowed := AC_UNKNOWN;
   jobID := RandomCode;
   //FreeOnTerminate:=true;
@@ -156,7 +157,8 @@ end;
 function TJob.RandomCode: string;
 begin
   randomize;
-  Result := IntToStr(random(9)) + IntToStr(random(9)) + IntToStr(random(9)) + IntToStr(random(9));
+  Result := IntToStr(random(9)) + IntToStr(random(9)) + IntToStr(random(9)) +
+    IntToStr(random(9));
 end;
 
 procedure check_authorization_cb(authority: PPolkitAuthority;
@@ -183,9 +185,9 @@ begin
     if (polkit_authorization_result_get_is_authorized(Result)) then
       result_str := 'authorized'
     else if (polkit_authorization_result_get_is_challenge(Result)) then
-      result_str := 'challenge'
-    else
-      result_str := 'not authorized';
+        result_str := 'challenge'
+      else
+        result_str := 'not authorized';
 
     p_info('Authorization result for ' + job.Identifier + ': ' + result_str);
   end;
@@ -206,13 +208,14 @@ var
 
   procedure Error_Terminate;
   begin
-    SendReply(False, '');
+    SendReply(false, '');
  {Terminate;
  Resume();}
   end;
 
 begin
   inherited Create(aMsg, dbusConn);
+  overrides := '';
   ident := 'DoAppInstall~' + dbus_message_get_sender(aMsg);
   jobId := 'installer' + jobId;
 
@@ -224,6 +227,8 @@ begin
   end;
 
   FileName := bs.ReadMessageParamStr;
+  bs.MessageIterNext;
+  overrides := bs.ReadMessageParamStr;
   bs.MessageIterNext;
   actUSource := bs.ReadMessageParamBool;
 
@@ -250,8 +255,8 @@ begin
   if allowed = AC_NOT_AUTHORIZED then
   begin
     p_error('Not authorized to call this action.');
-    SendReply(False, '');
-    remove := True;
+    SendReply(false, '');
+    remove := true;
     //Resume();
     exit;
   end;
@@ -267,7 +272,7 @@ begin
   end;
 
   //We got authorization!
-  SendReply(True, PChar(jobID));
+  SendReply(true, PChar(jobID));
 
   //Start work
   //Resume();
@@ -287,7 +292,8 @@ begin
   EnterCriticalSection(critsec);
   try
     // create a signal & check for errors
-    msg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID, // object name of the signal
+    msg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID,
+      // object name of the signal
       'org.nlinux.Listaller.Install', // interface name of the signal
       xn);
 
@@ -305,7 +311,8 @@ begin
   EnterCriticalSection(critsec);
   try
     // create a signal & check for errors
-    msg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID, // object name of the signal
+    msg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID,
+      // object name of the signal
       'org.nlinux.Listaller.Install', // interface name of the signal
       xn); // name of the signal
 
@@ -331,7 +338,7 @@ begin
   if allowed = AC_AUTHORIZED then
     auth := 'authorized'
   else if allowed = AC_NOT_AUTHORIZED then
-    auth := 'blocked';
+      auth := 'blocked';
   bs.AppendStr(auth);
   bs.AppendStr(jID);
 
@@ -359,7 +366,8 @@ begin
   end;
 end;
 
-procedure OnInstallStatus(change: LiStatusChange; Data: TLiStatusData; job: Pointer); cdecl;
+procedure OnInstallStatus(change: LiStatusChange; Data: TLiStatusData;
+  job: Pointer); cdecl;
 begin
   case change of
     scMessage: TDoAppInstall(job).SendMessageSignal('Message', Data.msg);
@@ -382,14 +390,14 @@ begin
 
   try
     //try
-    success := False;
+    success := false;
     { This is a fast install. Should never be called directly! }
     setup := TInstallPack.Create;
 
-    li_setup_exec_by_daemon(@setup.RemoteObject, True);
+    li_setup_exec_by_daemon(@setup.RemoteObject, true);
     setup.SetStatusChangeCall(@OnInstallStatus, self);
     setup.SetUserRequestCall(@InstallUserRequest, self);
-    setup.Forced := setup.Forced + ';norequest';
+    setup.Forced := setup.Forced + overrides + ';norequest';
     //Prevent asking questions: Skip requests and continue (should only be used in this daemon!)
 
     setup.Initialize(FileName);
@@ -399,7 +407,7 @@ begin
     setup.Free;
 
     p_info('AppInstall job ' + jobID + ' completed.');
-    success := True; //Finished without problems
+    success := true; //Finished without problems
  {except
   on E: Exception do
   begin
@@ -411,7 +419,8 @@ begin
     //Now emit action finished signal:
 
     // create a signal & check for errors
-    msg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID, // object name of the signal
+    msg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID,
+      // object name of the signal
       'org.nlinux.Listaller.Install', // interface name of the signal
       'Finished'); // name of the signal
     bs.AppendBool(success);
@@ -483,8 +492,8 @@ var
 
   procedure Error_Terminate;
   begin
-    SendReply(False, '');
-    remove := True;
+    SendReply(false, '');
+    remove := true;
  {Terminate;
  Resume();}
   end;
@@ -526,8 +535,8 @@ begin
   if allowed = AC_NOT_AUTHORIZED then
   begin
     p_error('Not authorized to call this action.');
-    SendReply(False, '');
-    remove := True;
+    SendReply(false, '');
+    remove := true;
     //Resume();
     exit;
   end;
@@ -535,7 +544,7 @@ begin
   p_info('New app uninstallation job for ' + bs.GetMessageSender(origMsg) + ' started.');
   try
     mgr := li_mgr_new;
-    li_mgr_set_sumode(@mgr, True);
+    li_mgr_set_sumode(@mgr, true);
     li_mgr_register_status_call(@mgr, @OnMgrStatus, self);
     li_mgr_register_request_call(@mgr, @OnMgrUserRequest, self);
   except
@@ -544,7 +553,7 @@ begin
     exit;
   end;
 
-  SendReply(True, PChar(jobID));
+  SendReply(true, PChar(jobID));
 
 
   //Start work
@@ -578,7 +587,7 @@ begin
     if allowed = AC_AUTHORIZED then
       auth := 'authorized'
     else if allowed = AC_NOT_AUTHORIZED then
-      auth := 'blocked';
+        auth := 'blocked';
     bs.AppendStr(auth);
     bs.AppendStr(jID);
 
@@ -597,7 +606,8 @@ begin
   EnterCriticalSection(critsec);
   try
     // create a signal & check for errors
-    dmsg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID, // object name of the signal
+    dmsg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID,
+      // object name of the signal
       'org.nlinux.Listaller.Manage', // interface name of the signal
       id); // name of the signal
     bs.AppendStr(param);
@@ -609,7 +619,7 @@ end;
 
 procedure TDoAppRemove.Execute;
 var
-  success: Boolean;
+  success: boolean;
   msg: PDBusMessage;
 begin
   if remove then
@@ -622,16 +632,17 @@ begin
     try
       li_mgr_remove_app(@mgr, appinfo);
       li_mgr_free(@mgr);
-      success := True;
+      success := true;
     except
-      success := False;
+      success := false;
     end;
 
 
   finally
     //Now emit action finished signal:
     // create a signal & check for errors
-    msg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID, // object name of the signal
+    msg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID,
+      // object name of the signal
       'org.nlinux.Listaller.Manage', // interface name of the signal
       'Finished'); // name of the signal
     bs.AppendBool(success);
@@ -647,7 +658,8 @@ end;
 
 { TDoAppUpdate }
 
-function OnUpdaterUserRequest(mtype: TRqType; msg: PChar; job: Pointer): TRqResult; cdecl;
+function OnUpdaterUserRequest(mtype: TRqType; msg: PChar;
+  job: Pointer): TRqResult; cdecl;
 begin
   Result := rqsOK;
   //The daemon should not ask questions while doing a transaction.
@@ -665,7 +677,8 @@ begin
   end;
 end;
 
-procedure OnUpdaterStatus(change: LiStatusChange; Data: TLiStatusData; job: Pointer); cdecl;
+procedure OnUpdaterStatus(change: LiStatusChange; Data: TLiStatusData;
+  job: Pointer); cdecl;
 
   procedure sub_sendProgress;
   var
@@ -705,8 +718,8 @@ var
 
   procedure Error_Terminate;
   begin
-    SendReply(False, '');
-    remove := True;
+    SendReply(false, '');
+    remove := true;
  {Terminate;
  Resume();}
   end;
@@ -749,8 +762,8 @@ begin
   if allowed = AC_NOT_AUTHORIZED then
   begin
     p_error('Not authorized to call this action.');
-    SendReply(False, '');
-    remove := True;
+    SendReply(false, '');
+    remove := true;
     //Resume();
     exit;
   end;
@@ -758,7 +771,7 @@ begin
   p_info('New app update job for ' + bs.GetMessageSender(origMsg) + ' started.');
   try
     upd := li_updater_new;
-    li_updater_set_sumode(@upd, True);
+    li_updater_set_sumode(@upd, true);
     li_updater_register_status_call(@upd, @OnUpdaterStatus, self);
     li_updater_register_request_call(@upd, @OnUpdaterUserRequest, self);
   except
@@ -767,7 +780,7 @@ begin
     exit;
   end;
 
-  SendReply(True, PChar(jobID));
+  SendReply(true, PChar(jobID));
 
 
   //Start work
@@ -800,7 +813,7 @@ begin
   if allowed = AC_AUTHORIZED then
     auth := 'authorized'
   else if allowed = AC_NOT_AUTHORIZED then
-    auth := 'blocked';
+      auth := 'blocked';
   bs.AppendStr(auth);
   bs.AppendStr(jID);
 
@@ -814,7 +827,8 @@ var
 begin
   p_debug(jobID + '->' + id + ':: ' + param);
   // create a signal & check for errors
-  dmsg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID, // object name of the signal
+  dmsg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID,
+    // object name of the signal
     'org.nlinux.Listaller.Manage', // interface name of the signal
     id); // name of the signal
   bs.AppendStr(param);
@@ -837,15 +851,16 @@ begin
       li_updater_search_updates(@upd);
       li_updater_execute_update(@upd, updID);
       li_updater_free(@upd);
-      success := True;
+      success := true;
     except
-      success := False;
+      success := false;
     end;
 
   finally
     //Now emit action finished signal:
     // create a signal & check for errors
-    msg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID, // object name of the signal
+    msg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID,
+      // object name of the signal
       'org.nlinux.Listaller.Manage', // interface name of the signal
       'Finished'); // name of the signal
     bs.AppendBool(success);
