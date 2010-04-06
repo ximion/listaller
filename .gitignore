@@ -5,10 +5,9 @@
 *.manifest
 *.lrs
 *.res
-*.ro
+*.or
 *.so
 .directory
 build
 Makefile
-.directory
 copylib.sh

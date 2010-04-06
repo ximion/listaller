@@ -93,12 +93,27 @@ begin
  if BH <> 0 then
     bmp.Handle:=BH;
 {$ELSE}
-var cicon: String;pic: TPicture;s: String;
+var cicon: String;
+    pic: TPicture;
+    s: String;
+    dir: String;
+
+    function CheckDir(path: String): Boolean;
+    begin
+      Result:=true;
+      if DirectoryExists(path+'22x22/') then
+       dir:=path
+      else
+       Result:=false;
+    end;
+
 begin
-if not DirectoryExists(KDE_ICON_DIR+'22x22/') then
- if not DirectoryExists('/usr/share/icons/default.kde/22x22') then
-  if not DirectoryExists('/usr/share/icons/oxygen/22x22') then
-   if not DirectoryExists('/usr/share/icons/hicolor/22x22') then exit;
+ dir:='';
+if not CheckDir(KDE_ICON_DIR) then
+ if not CheckDir('/usr/share/icons/default.kde/') then
+  if not CheckDir('/usr/share/icons/oxygen/') then
+   if not CheckDir('/usr/share/icons/hicolor/') then exit;
+
  if StockId = STOCK_QUIT then cicon:='process-stop.png';
  if StockId = STOCK_GO_FORWARD then cicon:='arrow-right.png';
  if StockId = STOCK_GO_BACK then cicon:='arrow-left.png';
@@ -113,13 +128,13 @@ if not DirectoryExists(KDE_ICON_DIR+'22x22/') then
  if StockId = STOCK_OPEN then cicon:='../places/folder.png';
 
  if IconSize=4 then
-  s:=KDE_ICON_DIR+'16x16/actions/';
+  s:=dir+'16x16/actions/';
  if IconSize=3 then
-  s:=KDE_ICON_DIR+'32x32/actions/';
+  s:=dir+'32x32/actions/';
  if IconSize=2 then
-  s:=KDE_ICON_DIR+'22x22/actions/';
+  s:=dir+'22x22/actions/';
  if IconSize=1 then
-  s:=KDE_ICON_DIR+'16x16/actions/';
+  s:=dir+'16x16/actions/';
  if not FileExists(s) then exit;
  pic:=TPicture.Create;
  pic.LoadFromFile(s+cicon);

@@ -1,0 +1,631 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <ProjectSession>
+    <Version Value="7"/>
+    <Units Count="78">
+      <Unit0>
+        <Filename Value="libinstaller.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="libinstaller"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="29" Y="22"/>
+        <UsageCount Value="88"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="ipkinstall.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ipkinstall"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="10" Y="409"/>
+        <UsageCount Value="48"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="../licommon.pas"/>
+        <UnitName Value="licommon"/>
+        <TopLine Value="527"/>
+        <CursorPos X="37" Y="547"/>
+        <UsageCount Value="9"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../ipkhandle.pas"/>
+        <UnitName Value="ipkhandle"/>
+        <TopLine Value="1030"/>
+        <CursorPos X="44" Y="1048"/>
+        <UsageCount Value="8"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="../distri.pas"/>
+        <UnitName Value="distri"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="9"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="../packagekit.pas"/>
+        <UnitName Value="packagekit"/>
+        <TopLine Value="175"/>
+        <CursorPos X="4" Y="203"/>
+        <UsageCount Value="8"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="../header/installer.pas"/>
+        <UnitName Value="installer"/>
+        <TopLine Value="61"/>
+        <CursorPos X="79" Y="76"/>
+        <UsageCount Value="13"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="../bindings/installer.pas"/>
+        <UnitName Value="installer"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="27"/>
+        <CursorPos X="85" Y="92"/>
+        <UsageCount Value="11"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="../bindings/packagekit.pas"/>
+        <UnitName Value="packagekit"/>
+        <TopLine Value="189"/>
+        <CursorPos X="33" Y="216"/>
+        <UsageCount Value="14"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="../bindings/pkitclient.pas"/>
+        <UnitName Value="pkitclient"/>
+        <TopLine Value="102"/>
+        <CursorPos X="1" Y="145"/>
+        <UsageCount Value="9"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="/usr/share/fpcsrc/2.2.4/packages/gtk2/src/glib/glib2.pas"/>
+        <UnitName Value="glib2"/>
+        <TopLine Value="1486"/>
+        <CursorPos X="54" Y="1521"/>
+        <UsageCount Value="9"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="../litypes.pas"/>
+        <UnitName Value="litypes"/>
+        <TopLine Value="15"/>
+        <CursorPos X="43" Y="35"/>
+        <UsageCount Value="10"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="../ipkdef.pas"/>
+        <UnitName Value="ipkdef"/>
+        <TopLine Value="117"/>
+        <CursorPos X="22" Y="138"/>
+        <UsageCount Value="10"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="../trstrings.pas"/>
+        <UnitName Value="trstrings"/>
+        <TopLine Value="101"/>
+        <CursorPos X="39" Y="121"/>
+        <UsageCount Value="10"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="../bindings/packagekit2.pas"/>
+        <UnitName Value="packagekit"/>
+        <TopLine Value="1"/>
+        <CursorPos X="17" Y="17"/>
+        <UsageCount Value="9"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="../synapse/ftpsend.pas"/>
+        <UnitName Value="ftpsend"/>
+        <TopLine Value="287"/>
+        <CursorPos X="23" Y="308"/>
+        <UsageCount Value="10"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="../synapse/blcksock.pas"/>
+        <UnitName Value="blcksock"/>
+        <TopLine Value="705"/>
+        <CursorPos X="14" Y="726"/>
+        <UsageCount Value="10"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="limanageapp.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="limanageapp"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="47"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="../linotify.pas"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="linotify"/>
+        <TopLine Value="85"/>
+        <CursorPos X="20" Y="86"/>
+        <UsageCount Value="9"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="../bindings/appman.pas"/>
+        <UnitName Value="appman"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="10"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="/usr/share/fpcsrc/2.3.1/rtl/objpas/sysutils/diskh.inc"/>
+        <TopLine Value="1"/>
+        <CursorPos X="10" Y="21"/>
+        <UsageCount Value="9"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="mtprocs.pas"/>
+        <UnitName Value="MTProcs"/>
+        <TopLine Value="312"/>
+        <CursorPos X="22" Y="333"/>
+        <UsageCount Value="10"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="/usr/share/fpcsrc/2.3.1/rtl/objpas/classes/classesh.inc"/>
+        <TopLine Value="1378"/>
+        <CursorPos X="25" Y="1398"/>
+        <UsageCount Value="9"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="/usr/share/fpcsrc/2.3.1/rtl/inc/objpash.inc"/>
+        <TopLine Value="162"/>
+        <CursorPos X="8" Y="170"/>
+        <UsageCount Value="9"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="/usr/share/fpcsrc/2.3.1/rtl/objpas/sysutils/sysutilh.inc"/>
+        <TopLine Value="58"/>
+        <CursorPos X="4" Y="66"/>
+        <UsageCount Value="9"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="../RegExpr.pas"/>
+        <UnitName Value="RegExpr"/>
+        <TopLine Value="3795"/>
+        <CursorPos X="19" Y="3816"/>
+        <UsageCount Value="9"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="libasic.pas"/>
+        <UnitName Value="libasic"/>
+        <TopLine Value="66"/>
+        <CursorPos X="11" Y="86"/>
+        <UsageCount Value="9"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-protocol.inc"/>
+        <TopLine Value="47"/>
+        <CursorPos X="3" Y="61"/>
+        <UsageCount Value="9"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/diskh.inc"/>
+        <TopLine Value="1"/>
+        <CursorPos X="10" Y="20"/>
+        <UsageCount Value="9"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/inc/ctypes.pp"/>
+        <UnitName Value="ctypes"/>
+        <TopLine Value="25"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="9"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/inc/systemh.inc"/>
+        <TopLine Value="255"/>
+        <CursorPos X="3" Y="275"/>
+        <UsageCount Value="9"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="../src/litypes.pas"/>
+        <UnitName Value="litypes"/>
+        <TopLine Value="1"/>
+        <CursorPos X="30" Y="20"/>
+        <UsageCount Value="14"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus.pas"/>
+        <UnitName Value="dbus"/>
+        <TopLine Value="52"/>
+        <CursorPos X="23" Y="57"/>
+        <UsageCount Value="9"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/fcl-db/src/sqlite/sqlite3ds.pas"/>
+        <UnitName Value="Sqlite3DS"/>
+        <TopLine Value="25"/>
+        <CursorPos X="13" Y="65"/>
+        <UsageCount Value="9"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/fcl-db/src/sqlite/customsqliteds.pas"/>
+        <UnitName Value="CustomSqliteDS"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="9"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/sqlite/src/sqlite3.pp"/>
+        <UnitName Value="sqlite3"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="9"/>
+      </Unit35>
+      <Unit36>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/fcl-db/src/base/db.pas"/>
+        <UnitName Value="db"/>
+        <TopLine Value="1266"/>
+        <CursorPos X="14" Y="1287"/>
+        <UsageCount Value="10"/>
+      </Unit36>
+      <Unit37>
+        <Filename Value="lidbusproc.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="lidbusproc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="510"/>
+        <UsageCount Value="54"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="/usr/share/fpcsrc/2.2.4/rtl/inc/objpash.inc"/>
+        <TopLine Value="130"/>
+        <CursorPos X="23" Y="151"/>
+        <UsageCount Value="9"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="/usr/share/fpcsrc/2.2.4/rtl/objpas/classes/classesh.inc"/>
+        <TopLine Value="1384"/>
+        <CursorPos X="3" Y="1357"/>
+        <UsageCount Value="9"/>
+      </Unit39>
+      <Unit40>
+        <Filename Value="../src/libasic.pas"/>
+        <UnitName Value="libasic"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="227"/>
+        <CursorPos X="31" Y="250"/>
+        <UsageCount Value="10"/>
+      </Unit40>
+      <Unit41>
+        <Filename Value="../bindings/gext.pas"/>
+        <UnitName Value="gext"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="10"/>
+      </Unit41>
+      <Unit42>
+        <Filename Value="../packager/ipkpackage.pas"/>
+        <UnitName Value="ipkpackage"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="225"/>
+        <CursorPos X="9" Y="248"/>
+        <UsageCount Value="12"/>
+      </Unit42>
+      <Unit43>
+        <Filename Value="../packager/gpgsign.pas"/>
+        <UnitName Value="gpgsign"/>
+        <TopLine Value="99"/>
+        <CursorPos X="11" Y="127"/>
+        <UsageCount Value="10"/>
+      </Unit43>
+      <Unit44>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/sysstrh.inc"/>
+        <TopLine Value="199"/>
+        <CursorPos X="10" Y="220"/>
+        <UsageCount Value="10"/>
+      </Unit44>
+      <Unit45>
+        <Filename Value="../src/ipkdef.pas"/>
+        <UnitName Value="ipkdef"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="573"/>
+        <CursorPos X="18" Y="596"/>
+        <UsageCount Value="11"/>
+      </Unit45>
+      <Unit46>
+        <Filename Value="../src/licommon.pas"/>
+        <UnitName Value="licommon"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="105"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="10"/>
+      </Unit46>
+      <Unit47>
+        <Filename Value="../src/trstrings.pas"/>
+        <UnitName Value="trstrings"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="89"/>
+        <CursorPos X="84" Y="114"/>
+        <UsageCount Value="10"/>
+      </Unit47>
+      <Unit48>
+        <Filename Value="../packager/tarfile.pas"/>
+        <UnitName Value="tarfile"/>
+        <TopLine Value="109"/>
+        <CursorPos X="6" Y="142"/>
+        <UsageCount Value="10"/>
+      </Unit48>
+      <Unit49>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/fcl-base/src/libtar.pp"/>
+        <UnitName Value="libtar"/>
+        <TopLine Value="4"/>
+        <CursorPos X="62" Y="25"/>
+        <UsageCount Value="10"/>
+      </Unit49>
+      <Unit50>
+        <Filename Value="../src/simdbus.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="simdbus"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="50"/>
+        <CursorPos X="32" Y="73"/>
+        <UsageCount Value="42"/>
+      </Unit50>
+      <Unit51>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-shared.inc"/>
+        <TopLine Value="18"/>
+        <CursorPos X="4" Y="39"/>
+        <UsageCount Value="10"/>
+      </Unit51>
+      <Unit52>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-message.inc"/>
+        <TopLine Value="5"/>
+        <CursorPos X="10" Y="146"/>
+        <UsageCount Value="10"/>
+      </Unit52>
+      <Unit53>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/unix/aliasctp.inc"/>
+        <TopLine Value="19"/>
+        <CursorPos X="3" Y="32"/>
+        <UsageCount Value="10"/>
+      </Unit53>
+      <Unit54>
+        <Filename Value="../src/distri.pas"/>
+        <UnitName Value="distri"/>
+        <TopLine Value="23"/>
+        <CursorPos X="33" Y="41"/>
+        <UsageCount Value="10"/>
+      </Unit54>
+      <Unit55>
+        <Filename Value="/usr/lib/lazarus/0.9.28.2/lcl/fileutil.pas"/>
+        <UnitName Value="FileUtil"/>
+        <TopLine Value="50"/>
+        <CursorPos X="10" Y="71"/>
+        <UsageCount Value="10"/>
+      </Unit55>
+      <Unit56>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/classes/classesh.inc"/>
+        <TopLine Value="1408"/>
+        <CursorPos X="17" Y="1429"/>
+        <UsageCount Value="10"/>
+      </Unit56>
+      <Unit57>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/unix/bunxovlh.inc"/>
+        <TopLine Value="22"/>
+        <CursorPos X="11" Y="43"/>
+        <UsageCount Value="10"/>
+      </Unit57>
+      <Unit58>
+        <Filename Value="../helper/djobs.pas.bak"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <SyntaxHighlighter Value="None"/>
+        <UsageCount Value="10"/>
+      </Unit58>
+      <Unit59>
+        <Filename Value="liupdateapp.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="liupdateapp"/>
+        <TopLine Value="1"/>
+        <CursorPos X="55" Y="235"/>
+        <UsageCount Value="31"/>
+      </Unit59>
+      <Unit60>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/fcl-base/src/contnrs.pp"/>
+        <UnitName Value="contnrs"/>
+        <TopLine Value="60"/>
+        <CursorPos X="17" Y="81"/>
+        <UsageCount Value="10"/>
+      </Unit60>
+      <Unit61>
+        <Filename Value="../bindings/appupdate.pas"/>
+        <UnitName Value="appupdate"/>
+        <TopLine Value="1"/>
+        <CursorPos X="51" Y="34"/>
+        <UsageCount Value="20"/>
+      </Unit61>
+      <Unit62>
+        <Filename Value="../packager/compression/ulzmadecoder.pas"/>
+        <UnitName Value="ULZMADecoder"/>
+        <TopLine Value="1"/>
+        <CursorPos X="51" Y="9"/>
+        <UsageCount Value="10"/>
+      </Unit62>
+      <Unit63>
+        <Filename Value="../packager/compression/ulzoutwindow.pas"/>
+        <UnitName Value="ULZOutWindow"/>
+        <TopLine Value="1"/>
+        <CursorPos X="4" Y="33"/>
+        <UsageCount Value="10"/>
+      </Unit63>
+      <Unit64>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/dbus/src/dbus-bus.inc"/>
+        <TopLine Value="11"/>
+        <CursorPos X="10" Y="27"/>
+        <UsageCount Value="10"/>
+      </Unit64>
+      <Unit65>
+        <Filename Value="../synapse/httpsend.pas"/>
+        <UnitName Value="httpsend"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="365"/>
+        <CursorPos X="28" Y="388"/>
+        <UsageCount Value="10"/>
+      </Unit65>
+      <Unit66>
+        <Filename Value="../packager/compression/ubittreedecoder.pas"/>
+        <UnitName Value="UBitTreeDecoder"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="10"/>
+      </Unit66>
+      <Unit67>
+        <Filename Value="../packager/compression/urangedecoder.pas"/>
+        <UnitName Value="URangeDecoder"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="10"/>
+      </Unit67>
+      <Unit68>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/fcl-process/src/process.pp"/>
+        <UnitName Value="process"/>
+        <TopLine Value="91"/>
+        <CursorPos X="37" Y="112"/>
+        <UsageCount Value="10"/>
+      </Unit68>
+      <Unit69>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/fcl-process/src/pipes.pp"/>
+        <UnitName Value="Pipes"/>
+        <TopLine Value="10"/>
+        <CursorPos X="3" Y="31"/>
+        <UsageCount Value="10"/>
+      </Unit69>
+      <Unit70>
+        <Filename Value="../src/manager.pas"/>
+        <ComponentName Value="MnFrm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="manager"/>
+        <TopLine Value="652"/>
+        <CursorPos X="4" Y="673"/>
+        <UsageCount Value="10"/>
+      </Unit70>
+      <Unit71>
+        <Filename Value="../src/unibuild.pas"/>
+        <UnitName Value="unibuild"/>
+        <TopLine Value="182"/>
+        <CursorPos X="48" Y="200"/>
+        <UsageCount Value="10"/>
+      </Unit71>
+      <Unit72>
+        <Filename Value="../src/igobase.pas"/>
+        <ComponentName Value="IWizFrm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="igobase"/>
+        <TopLine Value="710"/>
+        <CursorPos X="11" Y="731"/>
+        <UsageCount Value="10"/>
+      </Unit72>
+      <Unit73>
+        <Filename Value="../src/linotify.pas"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="linotify"/>
+        <TopLine Value="48"/>
+        <CursorPos X="4" Y="69"/>
+        <UsageCount Value="10"/>
+      </Unit73>
+      <Unit74>
+        <Filename Value="../src/mnupdate.pas"/>
+        <ComponentName Value="UMnForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="mnupdate"/>
+        <TopLine Value="153"/>
+        <CursorPos X="5" Y="163"/>
+        <UsageCount Value="10"/>
+      </Unit74>
+      <Unit75>
+        <Filename Value="../src/ipkbuild.pas"/>
+        <UnitName Value="ipkbuild"/>
+        <TopLine Value="91"/>
+        <CursorPos X="37" Y="111"/>
+        <UsageCount Value="10"/>
+      </Unit75>
+      <Unit76>
+        <Filename Value="../packager/callbackprocess.pas"/>
+        <UnitName Value="callbackprocess"/>
+        <TopLine Value="79"/>
+        <CursorPos X="13" Y="100"/>
+        <UsageCount Value="10"/>
+      </Unit76>
+      <Unit77>
+        <Filename Value="/usr/share/fpcsrc/2.4.1/rtl/objpas/sysutils/filutilh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="10" Y="87"/>
+        <UsageCount Value="10"/>
+      </Unit77>
+    </Units>
+    <General>
+      <ActiveWindowIndexAtStart Value="0"/>
+    </General>
+    <JumpHistory Count="13" HistoryIndex="12">
+      <Position1>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="28" TopLine="1"/>
+      </Position1>
+      <Position2>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="29" TopLine="1"/>
+      </Position2>
+      <Position3>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="29" TopLine="1"/>
+      </Position3>
+      <Position4>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="98" Column="25" TopLine="76"/>
+      </Position4>
+      <Position5>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="100" Column="17" TopLine="76"/>
+      </Position5>
+      <Position6>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="130" Column="24" TopLine="108"/>
+      </Position6>
+      <Position7>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="155" Column="24" TopLine="133"/>
+      </Position7>
+      <Position8>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="162" Column="24" TopLine="133"/>
+      </Position8>
+      <Position9>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="175" Column="24" TopLine="133"/>
+      </Position9>
+      <Position10>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="182" Column="24" TopLine="160"/>
+      </Position10>
+      <Position11>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="25" TopLine="1"/>
+      </Position11>
+      <Position12>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="23" Column="17" TopLine="1"/>
+      </Position12>
+      <Position13>
+        <Filename Value="libinstaller.lpr"/>
+        <Caret Line="22" Column="29" TopLine="1"/>
+      </Position13>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

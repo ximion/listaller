@@ -21,9 +21,10 @@ unit updatefrm;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, Buttons, CheckLst, LiBasic, updexecfrm, LCLType, Process, Menus, ComCtrls,
-  trStrings, IconLoader, LiCommon, AppUpdate, liTypes;
+  AppUpdate, Buttons, CheckLst, Classes, ComCtrls,
+  Controls, Dialogs, ExtCtrls,
+  Forms, Graphics, IconLoader, LCLType, LiBasic, LiCommon, liTypes,
+  LResources, Menus, Process, StdCtrls, SysUtils, trStrings, updexecfrm;
 
 type
 
@@ -53,13 +54,14 @@ type
     UpdateIDs: TStringList;
     updater: Pointer;
     updaterSU: Pointer;
-  end; 
+  end;
 
 var
   UMnForm: TUMnForm;
 
- //Published, so update display can access it
- procedure OnMNStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
+//Published, so update display can access it
+procedure OnMNStatus(change: LiStatusChange; Data: TLiStatusData;
+  user_data: Pointer); cdecl;
 
 implementation
 
@@ -67,133 +69,148 @@ implementation
 
 { TUMnForm }
 
-procedure OnNewUpdateFound(appName: PChar;id: Integer;user_data: Pointer);cdecl;
+procedure OnNewUpdateFound(appName: PChar; id: integer; user_data: Pointer); cdecl;
 begin
- Application.ProcessMessages;
- if Assigned(UMnForm) then
- with UMnForm do
- begin
-  UpdListBox.Items.Add(appName);
-  UpdateIDs.Add(IntToStr(id));;
- end;
+  Application.ProcessMessages;
+  if Assigned(UMnForm) then
+    with UMnForm do
+    begin
+      UpdListBox.Items.Add(appName);
+      UpdateIDs.Add(IntToStr(id));
+      ;
+    end;
 end;
 
-procedure OnNewUpdateFoundSU(appName: PChar;id: Integer;user_data: Pointer);cdecl;
+procedure OnNewUpdateFoundSU(appName: PChar; id: integer; user_data: Pointer); cdecl;
 begin
- Application.ProcessMessages;
- if Assigned(UMnForm) then
- with UMnForm do
- begin
-  UpdListBox.Items.Add(appName+' [SU]');
-  UpdateIDs.Add(IntToStr(id)+' (su)');;
- end;
+  Application.ProcessMessages;
+  if Assigned(UMnForm) then
+    with UMnForm do
+    begin
+      UpdListBox.Items.Add(appName + ' [SU]');
+      UpdateIDs.Add(IntToStr(id) + ' (su)');
+      ;
+    end;
 end;
 
-function OnRequest(mtype: TRqType;msg: PChar;user_data: Pointer): TRqResult;cdecl;
+function OnRequest(mtype: TRqType; msg: PChar; user_data: Pointer): TRqResult; cdecl;
 begin
-case mtype of
-rqError: begin
-  Application.MessageBox(msg,'Error',MB_OK+MB_IconError);
-  Result:=rqsOK;
-end;
-rqWarning: begin
-  if Application.MessageBox(PAnsiChar(msg),PChar(rsWarning),MB_YESNO+MB_IconWarning)<>IDYES then
-  begin
-   ShowMessage(rsINClose);
-   Result:=rqsNo;
-  end else Result:=rqsYes;
-end;
-rqQuestion: begin
-  if Application.MessageBox(PAnsiChar(msg),PChar(rsQuestion),MB_YESNO+MB_IconQuestion)<>IDYES then
-   Result:=rqsNo else Result:=rqsYes;
-end;
-rqInfo: begin
-  ShowMessage(msg);
-  Result:=rqsOK;
- end;
-end;
+  case mtype of
+    rqError:
+    begin
+      Application.MessageBox(msg, 'Error', MB_OK + MB_IconError);
+      Result := rqsOK;
+    end;
+    rqWarning:
+    begin
+      if Application.MessageBox(PAnsiChar(msg), PChar(rsWarning), MB_YESNO +
+        MB_IconWarning) <> idYes then
+      begin
+        ShowMessage(rsINClose);
+        Result := rqsNo;
+      end
+      else
+        Result := rqsYes;
+    end;
+    rqQuestion:
+    begin
+      if Application.MessageBox(PAnsiChar(msg), PChar(rsQuestion), MB_YESNO +
+        MB_IconQuestion) <> idYes then
+        Result := rqsNo
+      else
+        Result := rqsYes;
+    end;
+    rqInfo:
+    begin
+      ShowMessage(msg);
+      Result := rqsOK;
+    end;
+  end;
 end;
 
-procedure OnMNStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
+procedure OnMNStatus(change: LiStatusChange; Data: TLiStatusData;
+  user_data: Pointer); cdecl;
 begin
- Application.ProcessMessages;
- case change of
-  scMessage: p_info(data.msg);
-  scMnProgress: UMnForm.ProgressBar.Position:=data.mnprogress;
- end;
+  Application.ProcessMessages;
+  case change of
+    scMessage: p_info(Data.msg);
+    scMnProgress: UMnForm.ProgressBar.Position := Data.mnprogress;
+  end;
 end;
 
 procedure TUMnForm.BitBtn1Click(Sender: TObject);
 begin
- UExecFm.ShowModal;
+  UExecFm.ShowModal;
 end;
 
 procedure TUMnForm.BitBtn2Click(Sender: TObject);
 begin
- ProgressBar.Position:=0;
- Application.ProcessMessages;
- BitBtn2.Enabled:=false;
- li_updater_search_updates(@updater);
- li_updater_search_updates(@updaterSU);
- if UpdListBox.Items.Count>0 then
-  BitBtn1.Enabled:=true;
- ProgressBar.Position:=100;
+  ProgressBar.Position := 0;
+  Application.ProcessMessages;
+  BitBtn2.Enabled := false;
+  li_updater_search_updates(@updater);
+  li_updater_search_updates(@updaterSU);
+  if UpdListBox.Items.Count > 0 then
+    BitBtn1.Enabled := true;
+  ProgressBar.Position := 100;
 end;
 
 procedure TUMnForm.UpdListBoxClick(Sender: TObject);
-var id: String;
+var
+  id: string;
 begin
-if UpdListBox.ItemIndex>-1 then
-begin
-InfoMemo.Enabled:=true;
-InfoMemo.Lines.Clear;
-InfoMemo.Lines.Add(rsLogUpdInfo);
-//InfoMemo.Lines.Add(StringReplace(rsFilesChanged,'%f',IntToStr((ulist[UpdListBox.ItemIndex].Count div 2)),[rfReplaceAll]));
-if pos('(su)',updateids[UpdListBox.ItemIndex])>0 then
-begin
- //Application is superuser app
- id:=StringReplace(updateids[UpdListBox.ItemIndex],' (su','',[rfReplaceAll]);
- InfoMemo.Lines.Add(StringReplace(rsUpdTo,'%v','"'+
-   li_updater_updateid_newversion(@updaterSU,StrToInt(id))+'"',[rfReplaceAll]));
-end else
-begin
- id:=updateids[UpdListBox.ItemIndex];
- InfoMemo.Lines.Add(StringReplace(rsUpdTo,'%v','"'+
-   li_updater_updateid_newversion(@updater,StrToInt(id))+'"',[rfReplaceAll]));
-end;
-end;
+  if UpdListBox.ItemIndex > -1 then
+  begin
+    InfoMemo.Enabled := true;
+    InfoMemo.Lines.Clear;
+    InfoMemo.Lines.Add(rsLogUpdInfo);
+    //InfoMemo.Lines.Add(StringReplace(rsFilesChanged,'%f',IntToStr((ulist[UpdListBox.ItemIndex].Count div 2)),[rfReplaceAll]));
+    if pos('(su)', updateids[UpdListBox.ItemIndex]) > 0 then
+    begin
+      //Application is superuser app
+      id := StringReplace(updateids[UpdListBox.ItemIndex], ' (su', '', [rfReplaceAll]);
+      InfoMemo.Lines.Add(StringReplace(rsUpdTo, '%v', '"' +
+        li_updater_updateid_newversion(@updaterSU, StrToInt(id)) + '"', [rfReplaceAll]));
+    end
+    else
+    begin
+      id := updateids[UpdListBox.ItemIndex];
+      InfoMemo.Lines.Add(StringReplace(rsUpdTo, '%v', '"' +
+        li_updater_updateid_newversion(@updater, StrToInt(id)) + '"', [rfReplaceAll]));
+    end;
+  end;
 end;
 
 procedure TUMnForm.FormCreate(Sender: TObject);
 begin
-if not DirectoryExists(RegDir) then
-begin
-CreateDir(ExtractFilePath(RegDir));
-CreateDir(RegDir);
-end;
+  if not DirectoryExists(RegDir) then
+  begin
+    CreateDir(ExtractFilePath(RegDir));
+    CreateDir(RegDir);
+  end;
 
-//Set icons
-LoadStockPixmap(STOCK_REFRESH,ICON_SIZE_BUTTON,BitBtn2.Glyph);
-LoadStockPixmap(STOCK_APPLY,ICON_SIZE_BUTTON,BitBtn1.Glyph);
-//Translation
-BitBtn2.Caption:=rsCheckForUpd;
-BitBtn1.Caption:=rsInstUpd;
-MenuItem1.Caption:=rsQuitUpdater;
-MenuItem2.Caption:=rsShowUpdater;
-UpdateIDs:=TStringList.Create;
+  //Set icons
+  LoadStockPixmap(STOCK_REFRESH, ICON_SIZE_BUTTON, BitBtn2.Glyph);
+  LoadStockPixmap(STOCK_APPLY, ICON_SIZE_BUTTON, BitBtn1.Glyph);
+  //Translation
+  BitBtn2.Caption := rsCheckForUpd;
+  BitBtn1.Caption := rsInstUpd;
+  MenuItem1.Caption := rsQuitUpdater;
+  MenuItem2.Caption := rsShowUpdater;
+  UpdateIDs := TStringList.Create;
 
-//Create normal updater
-updater:=li_updater_new;
-li_updater_register_newupdate_call(@updater,@OnNewUpdateFound,nil);
-li_updater_register_request_call(@updater,@OnRequest,nil);
-li_updater_register_status_call(@updater,@OnMNStatus,nil);
-li_updater_set_sumode(@updater,false);
-//Create updater for shared su applications
-updaterSU:=li_updater_new;
-li_updater_register_newupdate_call(@updaterSU,@OnNewUpdateFoundSU,nil);
-li_updater_register_request_call(@updaterSU,@OnRequest,nil);
-li_updater_register_status_call(@updaterSU,@OnMNStatus,nil);
-li_updater_set_sumode(@updaterSU,true);
+  //Create normal updater
+  updater := li_updater_new;
+  li_updater_register_newupdate_call(@updater, @OnNewUpdateFound, nil);
+  li_updater_register_request_call(@updater, @OnRequest, nil);
+  li_updater_register_status_call(@updater, @OnMNStatus, nil);
+  li_updater_set_sumode(@updater, false);
+  //Create updater for shared su applications
+  updaterSU := li_updater_new;
+  li_updater_register_newupdate_call(@updaterSU, @OnNewUpdateFoundSU, nil);
+  li_updater_register_request_call(@updaterSU, @OnRequest, nil);
+  li_updater_register_status_call(@updaterSU, @OnMNStatus, nil);
+  li_updater_set_sumode(@updaterSU, true);
 end;
 
 procedure TUMnForm.FormDestroy(Sender: TObject);

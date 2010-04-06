@@ -29,7 +29,7 @@ uses
 {$R *.res}
 
 begin
-  Application.Title:='Listaller Notify';
+  Application.Title:='Listaller TrayControl';
   Application.Initialize;
   Application.ShowMainForm:=false;
   Application.CreateForm(TForm1, Form1);

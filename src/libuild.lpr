@@ -225,6 +225,7 @@ var
 {$R *.res}
 
 begin
+  Application.Title:='Listaller Builder';
   Application:=TLiBuild.Create(nil);
   Application.Run;
   Application.Free;

@@ -30,7 +30,7 @@ uses
 {$R *.res}
 
 begin
-  Application.Title:='Updater';
+  Application.Title:='Listaller Updater';
   Application.Initialize;
   writeLn('Updater initialized.');
   RegDir:=SyblToPath('$INST/app-reg/');

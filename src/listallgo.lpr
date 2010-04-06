@@ -24,7 +24,7 @@ uses
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
-  igobase, dgfrm, trStrings, LResources, SysUtils, LiBasic,
+  igobase, dgfrm, trStrings, SysUtils, LiBasic,
   liTranslator, liTypes, xtypefm, Installer, LCLType, Dialogs, siginfodisp;
 
 {$R listallgo.res}
@@ -32,7 +32,7 @@ uses
 begin
 
    //Init application
-   Application.Title:='Installer';
+   Application.Title:='Software Installer';
    Application.Initialize;
    writeLn('Application initialized.');
 

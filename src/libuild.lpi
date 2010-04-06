@@ -3,12 +3,14 @@
   <ProjectOptions>
     <Version Value="7"/>
     <General>
+      <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
+      <Title Value="Listaller Builder"/>
+      <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
       <Icon Value="0"/>
-      <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <StringTable Comments="" CompanyName="" FileDescription="" FileVersion="0.0.0.0" InternalName="" LegalCopyright="" LegalTrademarks="" OriginalFilename="" ProductName="" ProductVersion=""/>
@@ -25,293 +27,23 @@
         <LaunchingApplication Use="True" PathPlusParams="/usr/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="33">
+    <Units Count="3">
       <Unit0>
         <Filename Value="libuild.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libuild"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="0"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="157"/>
-        <CursorPos X="24" Y="27"/>
-        <UsageCount Value="37"/>
-        <Loaded Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="licommon.pas"/>
-        <UnitName Value="licommon"/>
-        <TopLine Value="25"/>
-        <CursorPos X="29" Y="39"/>
-        <UsageCount Value="10"/>
-      </Unit1>
-      <Unit2>
-        <Filename Value="ipkbuild.pas"/>
-        <UnitName Value="ipkbuild"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="740"/>
-        <CursorPos X="1" Y="765"/>
-        <UsageCount Value="14"/>
-        <Bookmarks Count="1">
-          <Item0 X="53" Y="573" ID="8"/>
-        </Bookmarks>
-      </Unit2>
-      <Unit3>
-        <Filename Value="abbrevia/abzipprc.pas"/>
-        <UnitName Value="AbZipPrc"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
-        <UsageCount Value="10"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="opbitmap/opbitmap.pas"/>
-        <UnitName Value="opbitmap"/>
-        <TopLine Value="2444"/>
-        <CursorPos X="50" Y="2464"/>
-        <UsageCount Value="10"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="ipkdef.pas"/>
-        <UnitName Value="ipkdef"/>
-        <TopLine Value="49"/>
-        <CursorPos X="1" Y="1"/>
-        <UsageCount Value="11"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="litypes.pas"/>
-        <UnitName Value="litypes"/>
-        <TopLine Value="37"/>
-        <CursorPos X="2" Y="73"/>
-        <UsageCount Value="10"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="litranslator.pas"/>
-        <UnitName Value="litranslator"/>
-        <TopLine Value="1"/>
-        <CursorPos X="72" Y="15"/>
-        <UsageCount Value="10"/>
-      </Unit7>
-      <Unit8>
-        <Filename Value="trstrings.pas"/>
-        <UnitName Value="trstrings"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
-        <UsageCount Value="10"/>
-      </Unit8>
-      <Unit9>
-        <Filename Value="unibuild.lpr"/>
-        <UnitName Value="unibuild"/>
-        <TopLine Value="1"/>
-        <CursorPos X="20" Y="54"/>
-        <UsageCount Value="10"/>
-      </Unit9>
-      <Unit10>
         <Filename Value="unibuild.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="unibuild"/>
-        <TopLine Value="114"/>
-        <CursorPos X="6" Y="38"/>
-        <UsageCount Value="34"/>
-      </Unit10>
-      <Unit11>
+      </Unit1>
+      <Unit2>
         <Filename Value="../packager/ipkpackage.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkpackage"/>
-        <TopLine Value="213"/>
-        <CursorPos X="1" Y="235"/>
-        <UsageCount Value="33"/>
-      </Unit11>
-      <Unit12>
-        <Filename Value="../packager/libtar.pas"/>
-        <UnitName Value="libtar"/>
-        <TopLine Value="169"/>
-        <CursorPos X="1" Y="480"/>
-        <UsageCount Value="10"/>
-      </Unit12>
-      <Unit13>
-        <Filename Value="libasic.pas"/>
-        <UnitName Value="libasic"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="7"/>
-        <CursorPos X="3" Y="30"/>
-        <UsageCount Value="10"/>
-      </Unit13>
-      <Unit14>
-        <Filename Value="/usr/share/fpcsrc/2.2.4/rtl/linux/ostypes.inc"/>
-        <TopLine Value="143"/>
-        <CursorPos X="3" Y="164"/>
-        <UsageCount Value="10"/>
-      </Unit14>
-      <Unit15>
-        <Filename Value="/usr/lib/lazarus/0.9.28.2/lcl/interfaces/nogui/interfaces.pp"/>
-        <UnitName Value="Interfaces"/>
-        <TopLine Value="1"/>
-        <CursorPos X="3" Y="27"/>
-        <UsageCount Value="10"/>
-      </Unit15>
-      <Unit16>
-        <Filename Value="../packager/gpgsign.pas"/>
-        <UnitName Value="gpgsign"/>
-        <TopLine Value="37"/>
-        <CursorPos X="1" Y="1"/>
-        <UsageCount Value="10"/>
-      </Unit16>
-      <Unit17>
-        <Filename Value="../opbitmap/opbitmapformats.pas"/>
-        <UnitName Value="opbitmapformats"/>
-        <TopLine Value="1"/>
-        <CursorPos X="3" Y="99"/>
-        <UsageCount Value="10"/>
-      </Unit17>
-      <Unit18>
-        <Filename Value="/usr/share/fpcsrc/2.2.4/rtl/unix/baseunix.pp"/>
-        <UnitName Value="BaseUnix"/>
-        <TopLine Value="51"/>
-        <CursorPos X="1" Y="1"/>
-        <UsageCount Value="10"/>
-      </Unit18>
-      <Unit19>
-        <Filename Value="../packager/compression/ulzmadecoder.pas"/>
-        <UnitName Value="ULZMADecoder"/>
-        <TopLine Value="294"/>
-        <CursorPos X="12" Y="316"/>
-        <UsageCount Value="10"/>
-      </Unit19>
-      <Unit20>
-        <Filename Value="../packager/compression/ubittreedecoder.pas"/>
-        <UnitName Value="UBitTreeDecoder"/>
-        <TopLine Value="25"/>
-        <CursorPos X="13" Y="28"/>
-        <UsageCount Value="10"/>
-      </Unit20>
-      <Unit21>
-        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/diskh.inc"/>
-        <TopLine Value="1"/>
-        <CursorPos X="10" Y="22"/>
-        <UsageCount Value="10"/>
-      </Unit21>
-      <Unit22>
-        <Filename Value="/usr/lib/lazarus/0.9.28.2/lcl/fileutil.pas"/>
-        <UnitName Value="FileUtil"/>
-        <TopLine Value="78"/>
-        <CursorPos X="5" Y="99"/>
-        <UsageCount Value="10"/>
-      </Unit22>
-      <Unit23>
-        <Filename Value="../opbitmap/XPMime.pas"/>
-        <UnitName Value="XPMime"/>
-        <TopLine Value="287"/>
-        <CursorPos X="17" Y="308"/>
-        <UsageCount Value="10"/>
-      </Unit23>
-      <Unit24>
-        <Filename Value="../opbitmap/uMimeBytes.pas"/>
-        <UnitName Value="uMimeBytes"/>
-        <TopLine Value="241"/>
-        <CursorPos X="7" Y="271"/>
-        <UsageCount Value="10"/>
-      </Unit24>
-      <Unit25>
-        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/syspchh.inc"/>
-        <TopLine Value="5"/>
-        <CursorPos X="10" Y="26"/>
-        <UsageCount Value="10"/>
-      </Unit25>
-      <Unit26>
-        <Filename Value="../packager/tartyp.pas"/>
-        <UnitName Value="TarTyp"/>
-        <TopLine Value="1139"/>
-        <CursorPos X="42" Y="847"/>
-        <UsageCount Value="10"/>
-      </Unit26>
-      <Unit27>
-        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/fcl-base/src/libtar.pp"/>
-        <UnitName Value="libtar"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
-        <UsageCount Value="10"/>
-      </Unit27>
-      <Unit28>
-        <Filename Value="../packager/tarfile.pas"/>
-        <UnitName Value="tarfile"/>
-        <TopLine Value="86"/>
-        <CursorPos X="17" Y="98"/>
-        <UsageCount Value="22"/>
-      </Unit28>
-      <Unit29>
-        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/sysstrh.inc"/>
-        <TopLine Value="12"/>
-        <CursorPos X="28" Y="33"/>
-        <UsageCount Value="10"/>
-      </Unit29>
-      <Unit30>
-        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/inc/systemh.inc"/>
-        <TopLine Value="855"/>
-        <CursorPos X="11" Y="876"/>
-        <UsageCount Value="10"/>
-      </Unit30>
-      <Unit31>
-        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/fcl-base/src/custapp.pp"/>
-        <UnitName Value="CustApp"/>
-        <TopLine Value="37"/>
-        <CursorPos X="14" Y="58"/>
-        <UsageCount Value="10"/>
-      </Unit31>
-      <Unit32>
-        <Filename Value="../packager/compression/ulzmaencoder.pas"/>
-        <UnitName Value="ULZMAEncoder"/>
-        <TopLine Value="109"/>
-        <CursorPos X="20" Y="130"/>
-        <UsageCount Value="10"/>
-      </Unit32>
+      </Unit2>
     </Units>
-    <JumpHistory Count="11" HistoryIndex="10">
-      <Position1>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="27" Column="22" TopLine="13"/>
-      </Position1>
-      <Position2>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="225" Column="40" TopLine="188"/>
-      </Position2>
-      <Position3>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="58" Column="3" TopLine="43"/>
-      </Position3>
-      <Position4>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="56" Column="10" TopLine="35"/>
-      </Position4>
-      <Position5>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="27" Column="23" TopLine="1"/>
-      </Position5>
-      <Position6>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="148" Column="12" TopLine="130"/>
-      </Position6>
-      <Position7>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="27" Column="23" TopLine="1"/>
-      </Position7>
-      <Position8>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="177" Column="20" TopLine="143"/>
-      </Position8>
-      <Position9>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="27" Column="25" TopLine="1"/>
-      </Position9>
-      <Position10>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="28" Column="9" TopLine="1"/>
-      </Position10>
-      <Position11>
-        <Filename Value="libuild.lpr"/>
-        <Caret Line="27" Column="24" TopLine="1"/>
-      </Position11>
-    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>

@@ -1,7 +1,7 @@
-# Makefile for Listaller 0.4
+# Makefile for Listaller Project
 #
 # Targets:
-# The First target is the one build when there is nothing on make command line
+# The First target is the one built when there is nothing on make command line
 all:
 	./make-base.sh
 	%GTK+%./make-gui.sh WIDGET=gtk2
