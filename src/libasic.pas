@@ -393,6 +393,12 @@ var
   cnf: TIniFile;
   t: TProcess;
 begin
+  if not FileExists(FindBinary('pkmon')) then
+  begin
+    p_error('Could not find "pkmon". Monitor not started.');
+    exit;
+  end;
+
   //Check if PackageKit checkmode is enabled:
   cnf := TIniFile.Create(ConfigDir + 'config.cnf');
   if cnf.ReadBool('MainConf', 'ShowPkMon', false) then

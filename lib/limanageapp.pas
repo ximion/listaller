@@ -1283,6 +1283,7 @@ var
 begin
   if not FileExists(path + 'updates.list') then
   begin
+    ForceDirectories(path);
     fi := TStringList.Create;
     fi.Add('List of update repositories v.1.0');
     fi.SaveToFile(path + 'updates.list');

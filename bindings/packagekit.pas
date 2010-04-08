@@ -555,9 +555,10 @@ begin
   p.Options:=[poUsePipes];
   if not FileExists('/usr/bin/apt-file') then
   begin
-   p_error('The apt-file utility was not found!');
-   p_error('Please install apt-file and run this setup again.');
-   p_error('[Emergency halt.]');
+   writeLn('error:');
+   writeLn(' The apt-file utility was not found!');
+   writeLn(' Please install apt-file and run this setup again.');
+   writeLn(' [Emergency halt.]');
    halt(4);
   end;
   p.CommandLine:='apt-file -l -N search '+fname;

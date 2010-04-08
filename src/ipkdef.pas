@@ -21,7 +21,7 @@ unit ipkdef;
 interface
 
 uses
-  Classes, liBasic, liTypes, SysUtils;
+  Classes, GetText, liBasic, liTypes, SysUtils;
 
 type
 
@@ -140,6 +140,7 @@ type
   TIPKControl = class(TIPKBasic)
   private
     fname: String;
+    mofile: String;
   public
     constructor Create;
     constructor Create(path: String);
@@ -148,6 +149,7 @@ type
     function SaveToFile(s: String): Boolean;
     procedure GetInternalFilesSection(lst: TStrings);
     function LoadFromFile(s: String): Boolean; override;
+    function trl(str: String): String;
 
     property RawText: TStringList read Text write Text;
   end;
@@ -1070,18 +1072,19 @@ end;
 constructor TIPKControl.Create(path: String);
 begin
   inherited Create;
-  if FileExists(path) then
-  begin
-    Text.LoadFromFile(path);
-    FBasePath := ExtractFilePath(path);
-  end;
+
+  LoadFromFile(path);
+  FBasePath := ExtractFilePath(path);
+
   fname := path;
+  basepath := '';
 end;
 
 constructor TIPKControl.Create;
 begin
   inherited Create;
   fname := '';
+  basepath := '';
 end;
 
 destructor TIPKControl.Destroy;
@@ -1102,6 +1105,8 @@ begin
 end;
 
 function TIPKControl.LoadFromFile(s: String): Boolean;
+var
+  i: Integer;
 begin
   Result := true;
   if FileExists(s) then
@@ -1117,6 +1122,18 @@ begin
   end
   else
     Result := false;
+
+  for i := 0 to Text.Count - 1 do
+    if pos('include:', Text[i]) > 0 then
+      if LowerCase(ExtractFileExt(SolveInclude(Text[i]))) = '.mo' then
+      begin
+        mofile := ExtractFileName(SolveInclude(Text[i]));
+        if (mofile = GetLangId + '.mo') or
+          (copy(mofile, pos('-', mofile) + 1, length(mofile)) = GetlangId + '.mo') then
+          break
+        else
+          mofile := '';
+      end;
 end;
 
 procedure TIPKControl.GetInternalFilesSection(lst: TStrings);
@@ -1129,6 +1146,20 @@ begin
   begin
     ReadField('Files', lst);
   end;
+end;
+
+function TIPKControl.trl(str: String): String;
+var
+  mo: TMoFile;
+  i: Integer;
+begin
+  Result := str;
+  if mofile = '' then
+    exit;
+
+  mo := TMoFile.Create(fbasepath + mofile);
+  Result := mo.Translate(str);
+  mo.Free;
 end;
 
 end.
