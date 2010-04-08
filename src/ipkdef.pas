@@ -146,6 +146,8 @@ type
     destructor Destroy; override;
 
     function SaveToFile(s: String): Boolean;
+    procedure GetInternalFilesSection(lst: TStrings);
+    function LoadFromFile(s: String): Boolean; override;
 
     property RawText: TStringList read Text write Text;
   end;
@@ -1079,7 +1081,7 @@ end;
 constructor TIPKControl.Create;
 begin
   inherited Create;
-  fname:='';
+  fname := '';
 end;
 
 destructor TIPKControl.Destroy;
@@ -1096,6 +1098,36 @@ begin
     fname := s;
   except
     Result := false;
+  end;
+end;
+
+function TIPKControl.LoadFromFile(s: String): Boolean;
+begin
+  Result := true;
+  if FileExists(s) then
+  begin
+    Text.LoadFromFile(s);
+    if Text[0] <> 'IPK-Standard-Version: 1.0' then
+    begin
+      Result := false;
+      exit;
+    end;
+    FBasePath := ExtractFilePath(s);
+    fname := s;
+  end
+  else
+    Result := false;
+end;
+
+procedure TIPKControl.GetInternalFilesSection(lst: TStrings);
+var
+  j: Integer;
+begin
+  //Search for container-IPK files section
+  j := SearchKeyIndex('Files');
+  if j > -1 then
+  begin
+    ReadField('Files', lst);
   end;
 end;
 

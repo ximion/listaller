@@ -582,6 +582,5 @@ exports
 {$R *.res}
 
 begin
-  Application.Title:='Listaller Library';
 end.
 

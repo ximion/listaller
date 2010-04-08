@@ -120,7 +120,7 @@ begin
   //if Terminated then exit;
   case cmd of
     lbaUninstallApp: UninstallAppAsRoot(cmdinfo.appinfo);
-    lbaInstallPack: DoInstallationAsRoot(cmdinfo.pkgname, cmdinfo, overrides,
+    lbaInstallPack: DoInstallationAsRoot(cmdinfo.pkgname, cmdinfo.overrides,
         cmdinfo.addsrc);
     lbaUpdateApp: DoUpdateAsRoot(cmdinfo.updid);
   end;

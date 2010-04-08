@@ -1066,7 +1066,7 @@ begin
     pkg.UnpackFile(cont.Binary);
 
     tmp := TStringList.Create;
-    cont.GetFiles(0, tmp);
+    cont.GetInternalFilesSection(tmp);
     for i := 0 to tmp.Count - 1 do
       pkg.UnpackFile(tmp[i]);
 
