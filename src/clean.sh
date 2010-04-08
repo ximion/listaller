@@ -20,7 +20,9 @@ fi
 
 cd ..
 
-rm -rf ./build
+if [ -d ./build ] ;then
+ rm -rf ./build
+fi
 
 find -iname *.ppu -exec rm {} \;
 find -iname *.o -exec rm {} \;
@@ -34,7 +36,7 @@ find -iname *.compiled -exec rm {} \;
 find -iname *.manifest -exec rm {} \;
 find -iname *.lrs -exec rm {} \;
 
-find -iname *~ -exec rm {} \;
+find . -name *~ -exec rm {} \;
 
 cd ./src
 

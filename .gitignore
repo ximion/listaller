@@ -7,6 +7,7 @@
 *.res
 *.or
 *.so
+*.lps
 .directory
 build
 Makefile

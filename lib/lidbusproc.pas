@@ -21,7 +21,7 @@ unit lidbusproc;
 interface
 
 uses
-  Classes, SysUtils, liTypes, SimDBus, DBus, liBasic, trStrings;
+  Classes, DBus, liBasic, liTypes, SimDBus, SysUtils, trStrings;
 
 type
   //** Which detail of the process was changed?
@@ -32,9 +32,9 @@ type
   //** Record which contains data about the current thread
   TLiProcData = record
     changed: TLiProcDetail;
-    mnprogress, exprogress: integer;
-    jobID: string;
-    msg: string;
+    mnprogress, exprogress: Integer;
+    jobID: String;
+    msg: String;
   end;
 
   //** Event for thread signals
@@ -47,10 +47,10 @@ type
   ListallerBusCommand = record
     cmdtype: TListallerBusAction;
     appinfo: TAppInfo;
-    pkgname: string;
-    overrides: string;
-    updid: integer;
-    addsrc: boolean;
+    pkgname: String;
+    overrides: String;
+    updid: Integer;
+    addsrc: Boolean;
   end;
 
   //** Object which can perform various actions on Listaller's DBus interface (currently NO Thread anymore)
@@ -62,25 +62,25 @@ type
 
     status: LiProcStatus;
     procinfo: TLiProcData;
-    done: boolean;
+    done: Boolean;
     procedure SyncProcStatus;
-    procedure SendError(msg: string);
-    procedure SendProgress(val: integer; const ty: TLiProcDetail = pdMainProgress);
-    procedure SendMessage(msg: string; const ty: TLiProcDetail = pdInfo);
+    procedure SendError(msg: String);
+    procedure SendProgress(val: Integer; const ty: TLiProcDetail = pdMainProgress);
+    procedure SendMessage(msg: String; const ty: TLiProcDetail = pdInfo);
     //** Remove app as root via remote DBus connection
     procedure UninstallAppAsRoot(obj: TAppInfo);
     //** Execute installation as root using dbus daemon & PolicyKit
-    function DoInstallationAsRoot(pkgpath: string; overrides: string;
-      addsrc: boolean): boolean;
+    function DoInstallationAsRoot(pkgpath: String; overrides: String;
+      addsrc: Boolean): Boolean;
     //** Update shared application via dbus daemon & PolicyKit
-    function DoUpdateAsRoot(uid: integer): boolean;
+    function DoUpdateAsRoot(uid: Integer): Boolean;
   public
     constructor Create(action: ListallerBusCommand);
     destructor Destroy; override;
 
     procedure ExecuteAction;
     property OnStatus: TLiDAction read FStatus write FStatus;
-    property Finished: boolean read done;
+    property Finished: Boolean read done;
   end;
 
 implementation
@@ -128,7 +128,7 @@ begin
   p_debug('Job done.');
 end;
 
-procedure TLiDBusAction.SendError(msg: string);
+procedure TLiDBusAction.SendError(msg: String);
 begin
   procinfo.msg := msg;
   procinfo.changed := pdError;
@@ -136,7 +136,7 @@ begin
   procinfo.msg := '#';
 end;
 
-procedure TLiDBusAction.SendMessage(msg: string; const ty: TLiProcDetail = pdInfo);
+procedure TLiDBusAction.SendMessage(msg: String; const ty: TLiProcDetail = pdInfo);
 begin
   procinfo.msg := msg;
   procinfo.changed := ty;
@@ -144,7 +144,7 @@ begin
   procinfo.msg := '#';
 end;
 
-procedure TLiDBusAction.SendProgress(val: integer;
+procedure TLiDBusAction.SendProgress(val: Integer;
   const ty: TLiProcDetail = pdMainProgress);
 begin
   procinfo.changed := ty;
@@ -160,11 +160,11 @@ procedure TLiDBusAction.UninstallAppAsRoot(obj: TAppInfo);
 var
   bus: TDBusClient;
   dmsg: PDBusMessage;
-  stat: boolean;
+  stat: Boolean;
   rec: PChar;
-  action_finished: boolean;
+  action_finished: Boolean;
 
-  jobID: string;
+  jobID: String;
 begin
 
   //New DBus connection
@@ -271,16 +271,16 @@ begin
 end;
 
 //This method submits all actions to the DBus daemon
-function TLiDBusAction.DoInstallationAsRoot(pkgpath: string;
-  overrides: string; addsrc: boolean): boolean;
+function TLiDBusAction.DoInstallationAsRoot(pkgpath: String;
+  overrides: String; addsrc: Boolean): Boolean;
 var
   dmsg: PDBusMessage;
   bus: TDBusClient;
-  stat: boolean;
-  rec: string;
-  jobID: string;
+  stat: Boolean;
+  rec: String;
+  jobID: String;
 
-  install_finished: boolean;
+  install_finished: Boolean;
 begin
   Result := false;
   bus := TDBusClient.Create(DBUS_BUS_SYSTEM);
@@ -392,15 +392,15 @@ begin
 end;
 
 //Execute an update over DBus
-function TLiDBusAction.DoUpdateAsRoot(uid: integer): boolean;
+function TLiDBusAction.DoUpdateAsRoot(uid: Integer): Boolean;
 var
   bus: TDBusClient;
   dmsg: PDBusMessage;
-  stat: boolean;
+  stat: Boolean;
   rec: PChar;
-  action_finished: boolean;
+  action_finished: Boolean;
 
-  jobID: string;
+  jobID: String;
 begin
   Result := true;
   //New DBus connection

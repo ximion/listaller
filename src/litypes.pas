@@ -15,92 +15,94 @@
   along with this unit. If not, see <http://www.gnu.org/licenses/>.}
 //** This unit contains some basic types (especially for use with libs)
 unit litypes;
- 
+
 {$MODE objfpc}{$H+}
- 
+
 interface
- 
+
 uses
   Classes, SysUtils;
 
- const
+const
   //** Name of the Listaller library
   libinst = 'libinstaller.so';
 
-  //** Version of Listaller API
+//** Version of Listaller API
   {$DEFINE APIVersion040}
 
 type
 
- //** Pointer to TStringList
- PStringList = ^TStringList;
+  //** Pointer to TStringList
+  PStringList = ^TStringList;
 
- //** Request types
- TRqType   = (rqError,rqWarning,rqQuestion,rqInfo);
- //** Request result types
- TRqResult = (rqsYes,rqsNo,rqsOK);
- //** Type of a message (published)
- TMessageType = (mtStep,mtInfo);
- //** Result of a DBus action
- LiProcStatus = (prNone, prFailed, prAuthorized, prBlocked, prFinished, prError, prInfo);
+  //** Request types
+  TRqType = (rqError, rqWarning, rqQuestion, rqInfo);
+  //** Request result types
+  TRqResult = (rqsYes, rqsNo, rqsOK);
+  //** Type of a message (published)
+  TMessageType = (mtStep, mtInfo);
+  //** Result of a DBus action
+  LiProcStatus = (prNone, prFailed, prAuthorized, prBlocked, prFinished, prError, prInfo);
 
- //** Things which can be changed
- LiStatusChange = (scMnProgress,scExProgress,scActionStatus,scMessage,scStepMessage);
- //** Data assigned to a status change
- TLiStatusData = record
-  msg: PChar;
-  exprogress: Integer;
-  mnprogress: Integer;
-  lastresult: LiProcStatus;
- end;
+  //** Things which can be changed
+  LiStatusChange = (scMnProgress, scExProgress, scActionStatus, scMessage, scStepMessage);
+  //** Data assigned to a status change
+  TLiStatusData = record
+    msg: PChar;
+    exprogress: Integer;
+    mnprogress: Integer;
+    lastresult: LiProcStatus;
+  end;
 
- //** Callback for change of status
- TLiStatusChangeCall = procedure(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
- //** Callback for user request
- TRequestCall = function(mtype: TRqType;msg: PChar;user_data: Pointer): TRqResult;cdecl;
+  //** Callback for change of status
+  TLiStatusChangeCall = procedure(change: LiStatusChange; Data: TLiStatusData;
+    user_data: Pointer); cdecl;
+  //** Callback for user request
+  TRequestCall = function(mtype: TRqType; msg: PChar; user_data: Pointer): TRqResult; cdecl;
 
- //** Called if progress was changed; only for internal use
- TProgressEvent = procedure(pos: Integer;user_data: Pointer) of object;
+  //** Called if progress was changed; only for internal use
+  TProgressEvent = procedure(pos: Integer; user_data: Pointer) of object;
 
- //** Application groups
- TGroupType = (gtALL,
-              gtEDUCATION,
-              gtOFFICE,
-              gtDEVELOPMENT,
-              gtGRAPHIC,
-              gtNETWORK,
-              gtGAMES,
-              gtSYSTEM,
-              gtMULTIMEDIA,
-              gtADDITIONAL,
-              gtOTHER,
-              gtUNKNOWN);
+  //** Application groups
+  TGroupType = (gtALL,
+    gtEDUCATION,
+    gtOFFICE,
+    gtDEVELOPMENT,
+    gtGRAPHIC,
+    gtNETWORK,
+    gtGAMES,
+    gtSYSTEM,
+    gtMULTIMEDIA,
+    gtADDITIONAL,
+    gtOTHER,
+    gtUNKNOWN);
 
- //** Container for information about apps
- TAppInfo = record
-  Name: PChar;
-  ShortDesc: PChar;
-  Version: PChar;
-  Author: PChar;
-  Icon: PChar;
-  UId: PChar;
-  Group: TGroupType;
- end;
- PAppInfo = ^TAppInfo;
+  //** Container for information about apps
+  TAppInfo = record
+    Name: PChar;
+    ShortDesc: PChar;
+    Version: PChar;
+    Author: PChar;
+    Icon: PChar;
+    UId: PChar;
+    Group: TGroupType;
+  end;
+  PAppInfo = ^TAppInfo;
 
- //** Event to catch thrown application records
- TAppEvent = function(name: PChar;obj: PAppInfo): Boolean;cdecl;
+  //** Event to catch thrown application records
+  TAppEvent = function(Name: PChar; obj: PAppInfo): Boolean; cdecl;
 
- //** Shows information about new update
- TNewUpdateEvent = procedure(name: PChar;id: Integer;user_data: Pointer);cdecl;
+  //** Shows information about new update
+  TNewUpdateEvent = procedure(Name: PChar; id: Integer; user_data: Pointer); cdecl;
 
- //** Listaller package types
- TPkgType = (ptLinstall, ptDLink, ptContainer, ptUnknown);
+  //** Listaller package types
+  TPkgType = (ptLinstall, ptDLink, ptContainer, ptUnknown);
 
- //** Package signature status
- TPkgSigState = (psNone, psTrusted, psUntrusted);
+  //** Package signature status
+  TPkgSigState = (psNone, psTrusted, psUntrusted);
 
 
 implementation
 
 end.
+

@@ -20,161 +20,167 @@ program libuild;
 
 uses
   {$IFDEF UNIX}
-  cthreads,
-  {$ENDIF}
+  cthreads, {$ENDIF}
   Interfaces, //We need an widgetset (NoGUI) for graphic handling
-  Classes, SysUtils, CustApp,
-  liBasic, Process, ipkbuild,
-  trStrings, LiTranslator, unibuild;
+  Classes, SysUtils, CustApp, liBasic, Process, ipkbuild, trStrings,
+  LiTranslator, unibuild;
 
 type
 
-  { TLiBuild }
+ { TLiBuild }
 
-  TLiBuild = class(TCustomApplication)
-  protected
-    procedure DoRun; override;
-  public
-    constructor Create(TheOwner: TComponent); override;
-    destructor Destroy; override;
-    procedure WriteHelp; virtual;
-     //** Exception handler
-    procedure OnExeception(Sender : TObject;E : Exception);
-  end;
+ TLiBuild = class(TCustomApplication)
+ protected
+   procedure DoRun; override;
+ public
+   constructor Create(TheOwner: TComponent); override;
+   destructor Destroy; override;
+   procedure WriteHelp; virtual;
+   //** Exception handler
+   procedure OnExeception(Sender: TObject; E: Exception);
+ end;
 
-{ TLiBuild }
+ { TLiBuild }
 
 procedure TLiBuild.DoRun;
 var
-  ErrorMsg,a,b: String;
+  ErrorMsg, a, b: String;
   i: Integer;
   x: Boolean;
   pki: TPackInfo;
 begin
   // quick check parameters
 
-  if not HasOption('noquietcrash') then
-   OnException:=@OnExeception;
+if not HasOption('noquietcrash') then
+    OnException := @OnExeception;
 
-  ErrorMsg:=CheckOptions('h','help');
-  ErrorMsg:=CheckOptions('?','help');
-  //
-  ErrorMsg:=CheckOptions('b','build');
-  ErrorMsg:=CheckOptions('u','gen-update');
-  ErrorMsg:=CheckOptions('v','version');
+  ErrorMsg := CheckOptions('h', 'help');
+  ErrorMsg := CheckOptions('?', 'help');
+
+  ErrorMsg := CheckOptions('b', 'build');
+  ErrorMsg := CheckOptions('u', 'gen-update');
+  ErrorMsg := CheckOptions('v', 'version');
  { if ErrorMsg<>'' then begin
     ShowException(Exception.Create(ErrorMsg));
     Halt;
   end;  }
 
   //Parse parameters
-  i:=1;
-  a:='';
-  b:='';
+  i := 1;
+  a := '';
+  b := '';
 
-  if HasOption('h','help') then
+  if HasOption('h', 'help') then
   begin
     WriteHelp;
     Halt(0);
   end;
 
-  if HasOption('?','help') then
+  if HasOption('?', 'help') then
   begin
     WriteHelp;
     Halt(0);
   end;
 
-  if HasOption('v','version') then
+  if HasOption('v', 'version') then
   begin
-    writeLn('Version: '+LiVersion);
+    writeLn('Version: ' + LiVersion);
     Halt(0);
   end;
 
-  if paramstr(1)='' then
+  if ParamStr(1) = '' then
   begin
-   writeln('Usage: ',ExeName,' <option> [file] ...');
-   Terminate;
+    writeln('Usage: ', ExeName, ' <option> [file] ...');
+    Terminate;
   end;
 
- while paramstr(i)<>'' do
- begin
-   if paramstr(i)[1]<>'-' then
-    if a = '' then a := paramstr(i)
-    else b:=paramstr(i);
+  while ParamStr(i) <> '' do
+  begin
+    if ParamStr(i)[1] <> '-' then
+      if a = '' then
+        a := ParamStr(i)
+      else
+        b := ParamStr(i);
     Inc(i);
   end;
 
-  if a<>'' then
-  a:=ExpandFileName(a);
-  if b<>'' then
-  b:=ExpandFileName(b);
+  if a <> '' then
+    a := ExpandFileName(a);
+  if b <> '' then
+    b := ExpandFileName(b);
 
-  if HasOption('b','build') then
+  if HasOption('b', 'build') then
   begin
-  writeln;
-  if HasOption('deb')or HasOption('rpm')or HasOption('dpack') then
-  begin
-    pki:=ReadInformation(paramstr(2));
-    pki.out:=ExtractFilePath(paramstr(2));
-    pki.path:=ExtractFilePath(paramstr(2));
-    writeLn('== Creating application ==');
-    BuildApplication(pki);
-    if HasOption('deb')or HasOption('dpack') then
+    writeln;
+    if HasOption('deb') or HasOption('rpm') or HasOption('dpack') then
     begin
-    if FileExists('/usr/bin/dpkg') then
-    begin
-    writeLn('== Creating DEB package ==');
-    CreateDEB(pki);
-    end else
-    begin
-     writeLn('ERROR:');
-     writeLn('Cannot build DEB package. You need to install "deb" and "dpkg" before.');
+      pki := ReadInformation(ParamStr(2));
+      pki.out := ExtractFilePath(ParamStr(2));
+      pki.path := ExtractFilePath(ParamStr(2));
+      writeLn('== Creating application ==');
+      BuildApplication(pki);
+      if HasOption('deb') or HasOption('dpack') then
+      begin
+        if FileExists('/usr/bin/dpkg') then
+        begin
+          writeLn('== Creating DEB package ==');
+          CreateDEB(pki);
+        end
+        else
+        begin
+          writeLn('ERROR:');
+          writeLn('Cannot build DEB package. You need to install "deb" and "dpkg" before.');
+        end;
+      end;
+      if HasOption('rpm') or HasOption('dpack') then
+      begin
+        if FileExists('/usr/bin/rpmbuild') then
+        begin
+          writeLn('== Creating RPM package ==');
+          CreateRPM(pki);
+        end
+        else
+        begin
+          writeLn('error:');
+          writeLn(' Cannot build RPM package. You need to install "rpmbuild" before.');
+        end;
+      end;
     end;
-    end;
-    if HasOption('rpm')or HasOption('dpack') then
+
+ if HasOption('generate-button') then
+      x := true
+    else
+      x := false;
+
+ if (FileExists(a)) then
     begin
-    if FileExists('/usr/bin/rpmbuild') then
-    begin
-    writeLn('== Creating RPM package ==');
-    CreateRPM(pki);
-    end else
-    begin
-     writeLn('error:');
-     writeLn(' Cannot build RPM package. You need to install "rpmbuild" before.');
+      if b <> '' then
+      begin
+        if (not FileExists(b)) and (LowerCase(ExtractFileExt(b)) = '.ipk') and
+          (DirectoryExists(ExtractFilePath(b))) then
+        begin
+          BuildPackage(a, b, x, HasOption('sign'));
+        end
+        else
+        begin
+          writeln('Can''t build file.');
+          writeLn('- Does the input-file exist?');
+          writeLn('- Has the output-file parameter the extension .IPK?');
+          writeln('- Does the IPK-File already exists?');
+          halt(10);
+        end;
+      end
+      else
+      begin
+        BuildPackage(a, '', x, HasOption('sign'));
+      end;
     end;
-    end;
+    halt;
   end;
 
-  if HasOption('generate-button') then x:=true else x:=false;
-
-   if (FileExists(a))
-   then
-   begin
-   if b<>'' then
-   begin
-   if  (not FileExists(b))
-   and (LowerCase(ExtractFileExt(b))='.ipk')
-   and (DirectoryExists(ExtractFilePath(b))) then
-   begin
-   BuildPackage(a,b,x,HasOption('sign'));
-   end else
-   begin
-   writeln('Can''t build file.');
-   writeLn('- Does the input-file exist?');
-   writeLn('- Has the output-file parameter the extension .IPK?');
-   writeln('- Does the IPK-File already exists?');
-   halt(10);
-   end;
-   end else
-   begin
-    BuildPackage(a,'',x,HasOption('sign'));
-   end;
-   end;
-   halt;
-  end;
-
-  if HasOption('u','gen-update') and(FileExists(paramstr(2)))and(DirectoryExists(paramstr(3)))
-  then CreateUpdateSource(paramstr(2),paramstr(3)+'/');
+  if HasOption('u', 'gen-update') and (FileExists(ParamStr(2))) and
+    (DirectoryExists(ParamStr(3))) then
+    CreateUpdateSource(ParamStr(2), ParamStr(3) + '/');
 
   //Stop program loop
   Terminate;
@@ -183,7 +189,7 @@ end;
 constructor TLiBuild.Create(TheOwner: TComponent);
 begin
   inherited Create(TheOwner);
-  StopOnException:=True;
+  StopOnException := true;
 end;
 
 destructor TLiBuild.Destroy;
@@ -191,32 +197,32 @@ begin
   inherited Destroy;
 end;
 
-procedure TLiBuild.OnExeception(Sender : TObject;E : Exception);
+procedure TLiBuild.OnExeception(Sender: TObject; E: Exception);
 begin
-writeLn;
-writeLn('error:');
-writeLn(' '+rsInternalError);
-writeLn(' :: '+E.Message);
-halt(8);
+  writeLn;
+  writeLn('error:');
+  writeLn(' ' + rsInternalError);
+  writeLn(' :: ' + E.Message);
+  halt(8);
 end;
 
 procedure TLiBuild.WriteHelp;
 begin
-writeLn('Listaller''s package builder');
-writeln('Usage: ',ExeName,' <option> [file] ...');
-writeLn('Commands:');
-writeln('-?, --help                                 Show this help');
-writeln('-v, --version                              Show Listaller version');
-writeLn(rsLiBuildInfoA);
-writeLn('-u, --gen-update [IPS-File] [Repo-Path]    Create/Update update-repository');
-writeLn('-b, --build [IPS-File]                     Create DEB and RPM file from IPS');
-writeLn('  Options:');
-writeLn('    --generate-button                      Generates the "Linux-compatible" PNG button for this package');
-writeLn('  Enables these options:');
-writeLn('    --dpack                                Generates DEB/RPM package from IPS file');
-writeLn('    --deb                                  Create DEB package');
-writeLn('    --rpm                                  Create RPM package');
-writeLn('');
+  writeLn('Listaller''s package builder');
+  writeln('Usage: ', ExeName, ' <option> [file] ...');
+  writeLn('Commands:');
+  writeln('-?, --help                                 Show this help');
+  writeln('-v, --version                              Show Listaller version');
+  writeLn(rsLiBuildInfoA);
+  writeLn('-u, --gen-update [IPS-File] [Repo-Path]    Create/Update update-repository');
+  writeLn('-b, --build [IPS-File]                     Create DEB and RPM file from IPS');
+  writeLn('  Options:');
+  writeLn('    --generate-button                      Generates the "Linux-compatible" PNG button for this package');
+  writeLn('  Enables these options:');
+  writeLn('    --dpack                                Generates DEB/RPM package from IPS file');
+  writeLn('    --deb                                  Create DEB package');
+  writeLn('    --rpm                                  Create RPM package');
+  writeLn('');
 end;
 
 var
@@ -225,8 +231,7 @@ var
 {$R *.res}
 
 begin
-  Application.Title:='Listaller Builder';
-  Application:=TLiBuild.Create(nil);
+  Application := TLiBuild.Create(nil);
   Application.Run;
   Application.Free;
 end.

@@ -21,10 +21,11 @@ unit ipkinstall;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, Process, LiCommon, trStrings, PackageKit,
-  sqlite3ds, IPKPackage, ipkdef, HTTPSend, FTPSend, blcksock,
-  MD5, liTypes, distri, MTProcs, FileUtil, liBasic, liDBusProc,
-  liManageApp, RegExpr, BaseUnix;
+  BaseUnix, blcksock,
+  Classes, distri, FileUtil, FTPSend, HTTPSend, IniFiles, ipkdef,
+  IPKPackage, liBasic, LiCommon, liDBusProc,
+  liManageApp, liTypes, MD5, MTProcs, PackageKit,
+  Process, RegExpr, sqlite3ds, SysUtils, trStrings;
 
 type
 
@@ -35,42 +36,42 @@ type
   { TInstallation }
 
   TInstallation = class
-    procedure pkgProgress(pos: integer; user_data: Pointer);
+    procedure pkgProgress(pos: Integer; user_data: Pointer);
   private
     //Basic information about the package and the new application
-    IAppName, IAppVersion, IAppCMD, IAuthor, ShDesc, IGroup: string;
-    IDesktopFiles: string;
-    PkgName, PkgPath, PkgID: string;
+    IAppName, IAppVersion, IAppCMD, IAuthor, ShDesc, IGroup: String;
+    IDesktopFiles: String;
+    PkgName, PkgPath, PkgID: String;
     //Path to a wizard image
-    FWizImage: string;
+    FWizImage: String;
     //Package database connection
     dsApp: TSQLite3Dataset;
     //Current active profile
-    CurProfile: string;
+    CurProfile: String;
     //List of application's dependencies
     Dependencies: TStringList;
     //Package profiles
     PkProfiles: TStringList;
     //Information about new files
-    FFileInfo: string;
+    FFileInfo: String;
     //Name of the update source which should be registered
-    USource: string;
+    USource: String;
     //Path of the package icon
-    IIconPath: string;
+    IIconPath: String;
     //Execute external applications that are linked in the IPK-file
-    ExecA, ExecB, ExecX: string;
+    ExecA, ExecB, ExecX: String;
     //Overwrite all files? (needed for patches)
-    FOverwrite: boolean;
+    FOverwrite: Boolean;
     // True if IPK package is a patch
-    FPatch: boolean;
+    FPatch: Boolean;
     //Current setup type
     pkType: TPkgType;
     //Disallow-line (every action the package disallows, unformated)
-    FDisallow: string;
+    FDisallow: String;
     //Only set if old package should be removed
-    RmApp: boolean;
+    RmApp: Boolean;
     //All supported distribution of this package
-    FSupportedDistris: string;
+    FSupportedDistris: String;
     //HTTP protocol connection
     HTTP: THTTPSend;
     //FTP protocol connection
@@ -85,35 +86,35 @@ type
     //Data which contains the status of the current action
     StatusData: TLiStatusData;
     // True if su mode enabled
-    SUMode: boolean;
+    SUMode: Boolean;
     // Path to package registration
-    RegDir: string;
+    RegDir: String;
     //All the stuff the user forces to do
-    Forces: string;
+    Forces: String;
     //True, if update source should be set
-    AddUpdateSource: boolean;
+    AddUpdateSource: Boolean;
     //Level of pkg signature
     sigState: TPkgSigState;
     //Store filesize of file ftpsend is downloading
-    ftpfilesize: integer;
+    ftpfilesize: Integer;
     //Daemon-Mode?
-    daemonm: boolean;
+    daemonm: Boolean;
 
     //Set superuser mode correctly
-    procedure SetRootMode(b: boolean);
+    procedure SetRootMode(b: Boolean);
     //Executed if Linstallation should be done
-    function RunNormalInstallation: boolean;
+    function RunNormalInstallation: Boolean;
     //Runs a DLink installation
-    function RunDLinkInstallation: boolean;
+    function RunDLinkInstallation: Boolean;
     //Does the container installation
-    function RunContainerInstallation: boolean;
+    function RunContainerInstallation: Boolean;
     //Socket hook for FTPSend and HTTPSend to get progress
     procedure NetSockHook(Sender: TObject; Reason: THookSocketReason;
-      const Value: string);
+      const Value: String);
     //Handler for PackageKit progress
-    procedure OnPKitProgress(pos: integer; dp: Pointer);
+    procedure OnPKitProgress(pos: Integer; dp: Pointer);
     //Add update source of the package
-    procedure CheckAddUSource(const forceroot: boolean = false);
+    procedure CheckAddUSource(const forceroot: Boolean = false);
     //Catch signals of DBus thread
     procedure DBusThreadStatusChange(ty: LiProcStatus; Data: TLiProcData);
   protected
@@ -121,76 +122,76 @@ type
     requestudata: Pointer;
     statechangeudata: Pointer;
     //Check if FTP connection is working
-    function CheckFTPConnection(AFTPSend: TFTPSend): boolean;
+    function CheckFTPConnection(AFTPSend: TFTPSend): Boolean;
     //Set/Get methods for callbacks indication
-    procedure SetMainPos(pos: integer);
-    procedure SetExtraPos(pos: integer);
-    function MakeUsrRequest(msg: string; qtype: TRqType): TRqResult;
-    procedure SendStateMsg(msg: string);
-    procedure msg(str: string);
+    procedure SetMainPos(pos: Integer);
+    procedure SetExtraPos(pos: Integer);
+    function MakeUsrRequest(msg: String; qtype: TRqType): TRqResult;
+    procedure SendStateMsg(msg: String);
+    procedure msg(str: String);
   public
     //** Constructor
     constructor Create;
     //** Destructor
     destructor Destroy; override;
     //** Loads an IPK package @param fname Path to IPK file
-    function Initialize(fname: string): boolean;
+    function Initialize(fname: String): Boolean;
   {** Executes the installation
       @returns Sucess of operation}
-    function DoInstallation: boolean;
+    function DoInstallation: Boolean;
     //** Gets the maximal steps the installation needs
-    function GetMaxInstSteps: integer;
+    function GetMaxInstSteps: Integer;
     //** Function to solve all dependencies on libraries the package has
-    function ResolveDependencies: boolean;
+    function ResolveDependencies: Boolean;
     //** Name of the application
-    property AppName: string read IAppName;
+    property AppName: String read IAppName;
     //** Version of the to-be-installed application
-    property AppVersion: string read IAppVersion;
+    property AppVersion: String read IAppVersion;
     //** ID of the application
-    property AppID: string read PkgID;
+    property AppID: String read PkgID;
     //** Listaller package type
     property pType: TPkgType read pkType;
     //** Unformatted disallows string
-    property Disallows: string read FDisallow;
+    property Disallows: String read FDisallow;
     //** All distributions the package supports
-    property Distris: string read FSupportedDistris;
+    property Distris: String read FSupportedDistris;
     //** Path to an wizard image
-    property WizImage: string read FWizImage;
+    property WizImage: String read FWizImage;
     //** List of all profiles the package has
     procedure ReadProfiles(lst: TStringList);
     //** Path to an icon of the applications/setup
-    property AppIcon: string read IIconPath;
+    property AppIcon: String read IIconPath;
     //** All registerd .desktop files
-    property DesktopFiles: string read IDesktopFiles;
+    property DesktopFiles: String read IDesktopFiles;
     //** List of all dependencies
     property ADeps: TStringList read Dependencies write Dependencies;
     //** Commend line to execute the new application
-    property CMDLn: string read IAppCMD;
+    property CMDLn: String read IAppCMD;
     //** Path to the current file information (that fits the profile)
-    property IFileInfo: string read FFileInfo;
+    property IFileInfo: String read FFileInfo;
     //** Level of the package signature
     property SignatureInfo: TPkgSigState read sigState;
     //** Set current profile by ID
-    procedure SetCurProfile(i: integer);
+    procedure SetCurProfile(i: Integer);
     //** Read the package description
     procedure ReadDescription(sl: TStringList);
     //** Read the package license
     procedure ReadLicense(sl: TStringList);
     //** True on installation with superuser rights
-    property SuperuserMode: boolean read SUMode write SetRootMode;
+    property SuperuserMode: Boolean read SUMode write SetRootMode;
     //** True if setup is executed by listallerd
-    property DaemonMode: boolean read daemonm write daemonm;
+    property DaemonMode: Boolean read daemonm write daemonm;
     //** Set forces identifier string
-    property ForceActions: string read Forces write Forces;
+    property ForceActions: String read Forces write Forces;
     //** True if update source will be registered
-    property RegisterUpdateSource: boolean read AddUpdateSource write AddUpdateSource;
+    property RegisterUpdateSource: Boolean read AddUpdateSource write AddUpdateSource;
     //** Register event to catch status messages
     procedure RegOnStatusChange(call: TLiStatusChangeCall; Data: Pointer);
     //** Check if package is okay, if not raise error and return false
-    function PkgOkay: boolean;
+    function PkgOkay: Boolean;
     //Message events
     procedure RegOnUsrRequest(call: TRequestCall; Data: Pointer);
-    function UserRequestRegistered: boolean;
+    function UserRequestRegistered: Boolean;
   end;
 
 //Note: The "Testmode" variable is now in LiCommon
@@ -212,7 +213,7 @@ begin
   requestudata := Data;
 end;
 
-function TInstallation.UserRequestRegistered: boolean;
+function TInstallation.UserRequestRegistered: Boolean;
 begin
   if Assigned(FRequest) then
     Result := true
@@ -220,21 +221,21 @@ begin
     Result := false;
 end;
 
-procedure TInstallation.SetMainPos(pos: integer);
+procedure TInstallation.SetMainPos(pos: Integer);
 begin
   statusdata.mnprogress := pos;
   if Assigned(FStatusChange) then
     FStatusChange(scMnProgress, statusdata, statechangeudata);
 end;
 
-procedure TInstallation.SetExtraPos(pos: integer);
+procedure TInstallation.SetExtraPos(pos: Integer);
 begin
   statusdata.exprogress := pos;
   if Assigned(FStatusChange) then
     FStatusChange(scExProgress, statusdata, statechangeudata);
 end;
 
-function TInstallation.MakeUsrRequest(msg: string; qtype: TRqType): TRqResult;
+function TInstallation.MakeUsrRequest(msg: String; qtype: TRqType): TRqResult;
 begin
   if Assigned(FRequest) then
     Result := FRequest(qtype, PChar(msg), requestudata)
@@ -242,14 +243,14 @@ begin
     p_warning('No user request handler assigned!');
 end;
 
-procedure TInstallation.SendStateMsg(msg: string);
+procedure TInstallation.SendStateMsg(msg: String);
 begin
   statusdata.msg := PChar(msg);
   if Assigned(FStatusChange) then
     FStatusChange(scStepMessage, statusdata, statechangeudata);
 end;
 
-procedure TInstallation.msg(str: string);
+procedure TInstallation.msg(str: String);
 begin
   statusdata.msg := PChar(str);
   if Assigned(FStatusChange) then
@@ -289,12 +290,12 @@ begin
   inherited Destroy;
 end;
 
-procedure TInstallation.pkgProgress(pos: integer; user_data: Pointer);
+procedure TInstallation.pkgProgress(pos: Integer; user_data: Pointer);
 begin
   SetExtraPos(pos);
 end;
 
-procedure TInstallation.SetRootMode(b: boolean);
+procedure TInstallation.SetRootMode(b: Boolean);
 begin
   SUMode := b;
   if SUMode then
@@ -303,7 +304,7 @@ begin
     RegDir := SyblToPath('$INST') + '/app-reg/';
 end;
 
-procedure TInstallation.SetCurProfile(i: integer);
+procedure TInstallation.SetCurProfile(i: Integer);
 begin
   FFileInfo := '/pkgdata/fileinfo-' + IntToStr(i) + '.id';
   CurProfile := IntToStr(i);
@@ -311,14 +312,14 @@ end;
 
 procedure TInstallation.ReadProfiles(lst: TStringList);
 var
-  i: integer;
+  i: Integer;
 begin
   lst.Clear;
   for i := 0 to PkProfiles.Count - 1 do
     lst.Add(copy(PkProfiles[i], 0, pos(' #', PkProfiles[i])));
 end;
 
-function IsAppInstalled(aname: string): boolean;
+function IsAppInstalled(aname: String): Boolean;
 var
   dsApp: TSQLite3Dataset;
 begin
@@ -350,7 +351,7 @@ end;
 
 procedure TInstallation.ReadDescription(sl: TStringList);
 var
-  i: integer;
+  i: Integer;
 begin
   //Asign does not work
   sl.Clear;
@@ -360,7 +361,7 @@ end;
 
 procedure TInstallation.ReadLicense(sl: TStringList);
 var
-  i: integer;
+  i: Integer;
 begin
   //Assign does not work
   sl.Clear;
@@ -368,23 +369,23 @@ begin
     sl.Add(license[i]);
 end;
 
-function TInstallation.ResolveDependencies: boolean;
+function TInstallation.ResolveDependencies: Boolean;
 var
-  i, j: integer;
+  i, j: Integer;
   tmp: TStringList;
-  mnpos: integer;
+  mnpos: Integer;
   DInfo: TDistroInfo;
-  one: double;
-  lInd: integer;
-  error: boolean;
-  eIndex: integer; //Index of the errorneus dep
+  one: Double;
+  lInd: Integer;
+  error: Boolean;
+  eIndex: Integer; //Index of the errorneus dep
 
   procedure SearchForPackage(Index: PtrInt; Data: Pointer; Item: TMultiThreadProcItem);
   var
     pkit: TPackageKit;
     xtmp: TStringList;
-    h: string;
-    lpos: integer;
+    h: String;
+    lpos: Integer;
   begin
     if Index = -1 then
     begin
@@ -468,7 +469,8 @@ begin
               break;
             end;
           except
-            p_error('Malformed dependency-ignore entry "' + tmp[j] + '"! (Please fix this.)');
+            p_error('Malformed dependency-ignore entry "' + tmp[j] +
+              '"! (Please fix this.)');
             tmp.Delete(j);
             break;
           end;
@@ -497,7 +499,8 @@ begin
     //ProcThreadPool.MaxThreadCount:=4;
 
     p_debug('Start resolve threads.');
-    ProcThreadPool.DoParallelLocalProc(@SearchForPackage, -1, Dependencies.Count - 1, nil);
+    ProcThreadPool.DoParallelLocalProc(@SearchForPackage, -1,
+      Dependencies.Count - 1, nil);
 
     if error then
     begin
@@ -517,11 +520,11 @@ begin
   end;
 end;
 
-function TInstallation.Initialize(fname: string): boolean;
+function TInstallation.Initialize(fname: String): Boolean;
 var
   pkg: TLiUnpacker;
-  n: string;
-  i: integer;
+  n: String;
+  i: Integer;
   DInfo: TDistroInfo;
   cont: TIPKControl;
   hres: TRqResult;
@@ -659,8 +662,8 @@ end else FPatch:=false;
 
   n := GetSystemArchitecture;
   msg('Package-Archs: ' + cont.Architecture);
-  if (pos(n, LowerCase(cont.Architecture)) <= 0) and (LowerCase(cont.Architecture) <> 'all') and
-    (pos('architecture', forces) <= 0) then
+  if (pos(n, LowerCase(cont.Architecture)) <= 0) and
+    (LowerCase(cont.Architecture) <> 'all') and (pos('architecture', forces) <= 0) then
   begin
     MakeUsrRequest(rsInvArchitecture, rqError);
     cont.Free;
@@ -790,7 +793,8 @@ end else FPatch:=false;
     end;
 
     if dependencies.Count > 0 then
-      dependencies.Insert(0, '[detectpkgs]') //Instruction to detect required packages first
+      dependencies.Insert(0, '[detectpkgs]')
+    //Instruction to detect required packages first
     else
     begin
       cont.ReadDependencies(DInfo.DName, dependencies);
@@ -832,7 +836,8 @@ end else FPatch:=false;
         //Resolve names
         for i := 0 to dependencies.Count - 1 do
           if pos(' (', n) > 0 then
-            Dependencies[i] := copy(n, pos(' (', n) + 2, length(n) - pos(' (', n) - 2) + ' - ' +
+            Dependencies[i] :=
+              copy(n, pos(' (', n) + 2, length(n) - pos(' (', n) - 2) + ' - ' +
               copy(n, 1, pos(' (', n) - 1);
       end;
     end;
@@ -858,15 +863,16 @@ end else FPatch:=false;
     if PkProfiles.Count < 0 then
     begin
       Emergency_FreeAll();
-      MakeUsrRequest(rsPkgInval + #10'Message: No profiles and no file list found!', rqError);
+      MakeUsrRequest(rsPkgInval + #10'Message: No profiles and no file list found!',
+        rqError);
       PkProfiles.Free;
       Result := false;
       exit;
     end;
 
     if PkProfiles.Count = 1 then
-      FFileInfo := '/pkgdata/fileinfo-' + copy(PkProfiles[0], pos(' #', PkProfiles[0]) +
-        2, length(PkProfiles[0])) + '.id'
+      FFileInfo := '/pkgdata/fileinfo-' + copy(PkProfiles[0],
+        pos(' #', PkProfiles[0]) + 2, length(PkProfiles[0])) + '.id'
     else
       FFileInfo := '*';
 
@@ -967,7 +973,8 @@ end else FPatch:=false;
         //Resolve names
         for i := 0 to dependencies.Count - 1 do
           if pos(' (', n) > 0 then
-            Dependencies[i] := copy(n, pos(' (', n) + 2, length(n) - pos(' (', n) - 2) + ' - ' +
+            Dependencies[i] :=
+              copy(n, pos(' (', n) + 2, length(n) - pos(' (', n) - 2) + ' - ' +
               copy(n, 1, pos(' (', n) - 1);
       end;
       i := 0;
@@ -990,10 +997,10 @@ end else FPatch:=false;
   cont.Free;
 end;
 
-function TInstallation.GetMaxInstSteps: integer;
+function TInstallation.GetMaxInstSteps: Integer;
 var
   fi: TStringList;
-  i, j: integer;
+  i, j: Integer;
 begin
   Result := 0;
   j := 0;
@@ -1007,7 +1014,7 @@ begin
 end;
 
 procedure TInstallation.NetSockHook(Sender: TObject; Reason: THookSocketReason;
-  const Value: string);
+  const Value: String);
 begin
   //HTTP
   if Http.DownloadSize > 10 then
@@ -1023,7 +1030,7 @@ begin
     end;
 end;
 
-function TInstallation.CheckFTPConnection(AFtpSend: TFtpSend): boolean;
+function TInstallation.CheckFTPConnection(AFtpSend: TFtpSend): Boolean;
 begin
   if AFtpSend.Sock.Socket = not (0) then
     Result := AFtpSend.Login
@@ -1034,20 +1041,20 @@ begin
       Result := AFtpSend.Login;
 end;
 
-procedure TInstallation.OnPKitProgress(pos: integer; dp: Pointer);
+procedure TInstallation.OnPKitProgress(pos: Integer; dp: Pointer);
 begin
   //user_data Pointer is always nil
   SetExtraPos(pos); //Set position of extra progress to PackageKit transaction progress
 end;
 
-function TInstallation.RunContainerInstallation: boolean;
+function TInstallation.RunContainerInstallation: Boolean;
 var
   pkg: TLiUnpacker;
   cont: TIPKControl;
   p: TProcess;
   tmp: TStringList;
-  i: integer;
-  WDir: string;
+  i: Integer;
+  WDir: String;
 begin
 
   Result := true;
@@ -1111,25 +1118,25 @@ begin
   end;
 end;
 
-function TInstallation.RunNormalInstallation: boolean;
+function TInstallation.RunNormalInstallation: Boolean;
 var
-  i, j: integer;
+  i, j: Integer;
   fi, ndirs, s, appfiles: TStringList;
-  dest, h, FDir: string; // h is an helper variable - used for various actions
+  dest, h, FDir: String; // h is an helper variable - used for various actions
   dsk: TIniFile; //Desktop files
   pkg: TLiUnpacker; // IPK decompressor
-  setcm: boolean;
+  setcm: Boolean;
   p, proc: TProcess; // Helper process with pipes
   pkit: TPackageKit; //PackageKit object
   DInfo: TDistroInfo; //Distribution information
-  mnpos: integer; //Current positions of operation
-  max: double;
-  dlfname: string; //Name of file which will be downloaded
+  mnpos: Integer; //Current positions of operation
+  max: Double;
+  dlfname: String; //Name of file which will be downloaded
 
   //Necessary if e.g. file copying fails
   procedure RollbackInstallation;
   var
-    i: integer;
+    i: Integer;
   begin
     for i := 0 to appfiles.Count - 1 do
     begin
@@ -1254,22 +1261,26 @@ end; }
       end;
       SetExtraPos(0);
 
-      Dependencies[0] := 'cat:' + ExtractFileName(copy(Dependencies[0], 5, length(Dependencies[0])));
+      Dependencies[0] := 'cat:' +
+        ExtractFileName(copy(Dependencies[0], 5, length(Dependencies[0])));
 
     end
     else
     begin
       for I := 0 to Dependencies.Count - 1 do
       begin  //Download & install dependencies
-        if (pos('http://', Dependencies[i]) > 0) or (pos('ftp://', Dependencies[i]) > 0) then
+        if (pos('http://', Dependencies[i]) > 0) or
+          (pos('ftp://', Dependencies[i]) > 0) then
         begin
-          dlfname := ExtractFileName(copy(Dependencies[i], 1, pos(' (', Dependencies[i]) - 1));
+          dlfname := ExtractFileName(copy(Dependencies[i], 1,
+            pos(' (', Dependencies[i]) - 1));
           msg(rsGetDependencyFrom + ' ' + Dependencies[i] + '.');
           msg(rsPlWait2);
           if pos('http://', LowerCase(Dependencies[i])) > 0 then
           begin
             try
-              HTTP.HTTPMethod('GET', copy(Dependencies[i], 1, pos(' (', Dependencies[i]) - 1));
+              HTTP.HTTPMethod('GET', copy(Dependencies[i], 1,
+                pos(' (', Dependencies[i]) - 1));
               HTTP.Document.SaveToFile('/tmp/' + dlfname);
             except
               MakeUsrRequest(rsDepDLProblem, rqError);
@@ -1282,7 +1293,8 @@ end; }
           begin
             with FTP do
             begin
-              TargetHost := GetServerName(copy(Dependencies[i], 1, pos(' (', Dependencies[i]) - 1));
+              TargetHost := GetServerName(copy(Dependencies[i], 1,
+                pos(' (', Dependencies[i]) - 1));
 
               try
                 DirectFileName := '/tmp/' + dlfname;
@@ -1294,7 +1306,8 @@ end; }
                   Abort_FreeAll();
                   exit;
                 end;
-                ChangeWorkingDir(GetServerPath(copy(Dependencies[i], 1, pos(' (', Dependencies[i]) - 1)));
+                ChangeWorkingDir(GetServerPath(copy(Dependencies[i],
+                  1, pos(' (', Dependencies[i]) - 1)));
 
                 ftpfilesize := FTP.FileSize(dlfname);
                 RetrieveFile(dlfname, false);
@@ -1312,8 +1325,8 @@ end; }
           if (DInfo.PackageSystem = 'DEB') and (pos(' (', Dependencies[i]) <= 0) then
           begin
             p := tprocess.Create(nil);
-            p.CommandLine := FindBinary('dpkg') + ' --info /tmp/' + ExtractFileName(
-              copy(Dependencies[i], 1, pos(' (', Dependencies[i]) - 1));
+            p.CommandLine := FindBinary('dpkg') + ' --info /tmp/' +
+              ExtractFileName(copy(Dependencies[i], 1, pos(' (', Dependencies[i]) - 1));
             p.Options := [poUsePipes, poWaitonexit];
             try
               p.Execute;
@@ -1323,7 +1336,8 @@ end; }
                 for j := 0 to s.Count - 1 do
                   if pos('Package: ', s[j]) > 0 then
                     break;
-                Dependencies[i] := Dependencies[i] + ' (' + copy(s[j], 11, length(s[j])) + ')';
+                Dependencies[i] :=
+                  Dependencies[i] + ' (' + copy(s[j], 11, length(s[j])) + ')';
               finally
                 s.Free;
               end;
@@ -1336,7 +1350,8 @@ end; }
             if (pos(' (', Dependencies[i]) <= 0) then
             begin
               p := TProcess.Create(nil);
-              p.CommandLine := FindBinary('rpm') + ' -qip /tmp/' + ExtractFileName(Dependencies[i]);
+              p.CommandLine :=
+                FindBinary('rpm') + ' -qip /tmp/' + ExtractFileName(Dependencies[i]);
               p.Options := [poUsePipes, poWaitonexit];
               try
                 p.Execute;
@@ -1346,8 +1361,9 @@ end; }
                   for j := 0 to s.Count - 1 do
                     if pos('Name ', s[j]) > 0 then
                       break;
-                  Dependencies[i] := Dependencies[i] + ' (' + copy(
-                    s[j], 15, pos(' ', copy(s[j], 15, length(s[j]))) - 1) + ')';
+                  Dependencies[i] :=
+                    Dependencies[i] + ' (' + copy(s[j], 15,
+                    pos(' ', copy(s[j], 15, length(s[j]))) - 1) + ')';
                 finally
                   s.Free;
                 end;
@@ -1370,7 +1386,8 @@ end; }
           msg('DepInstall: ' + Dependencies[i] + ' (using PackageKit +x)');
           msg('');
 
-          if (pos('http://', Dependencies[i]) > 0) or (pos('ftp://', Dependencies[i]) > 0) then
+          if (pos('http://', Dependencies[i]) > 0) or
+            (pos('ftp://', Dependencies[i]) > 0) then
           begin
             s := TStringList.Create;
             pkit.RsList := s;
@@ -1386,7 +1403,8 @@ end; }
             s.Free;
           end
           else
-            pkit.InstallLocalPkg(tmpdir + ExtractFileName(PkgName) + '/' + Dependencies[i]);
+            pkit.InstallLocalPkg(tmpdir + ExtractFileName(PkgName) +
+              '/' + Dependencies[i]);
 
           mnpos := mnpos + 5;
           SetMainPos(Round(mnpos * max));
@@ -1507,7 +1525,8 @@ end; }
 
           msg('Copy file ' + ExtractFileName(h) + ' to ' + dest + ' ...');
 
-          if fi[i + 1] <> MDPrint((MD5.MD5File(DeleteModifiers(pkg.WDir + h), 1024))) then
+          if fi[i + 1] <> MDPrint(
+            (MD5.MD5File(DeleteModifiers(pkg.WDir + h), 1024))) then
           begin
             MakeUsrRequest(rsHashError, rqError);
             RollbackInstallation;
@@ -1520,14 +1539,17 @@ end; }
 
           try
             if FOverwrite then
-              FileCopy(DeleteModifiers(pkg.WDir + h), dest + '/' + ExtractFileName(DeleteModifiers(h)))
+              FileCopy(DeleteModifiers(pkg.WDir + h), dest + '/' +
+                ExtractFileName(DeleteModifiers(h)))
             else
               if (not FileExists(dest + '/' + ExtractFileName(DeleteModifiers(h)))) then
-                FileCopy(DeleteModifiers(pkg.WDir + h), dest + '/' + ExtractFileName(DeleteModifiers(h)))
+                FileCopy(DeleteModifiers(pkg.WDir + h), dest + '/' +
+                  ExtractFileName(DeleteModifiers(h)))
               else
               begin
-                MakeUsrRequest(StrSubst(rsCnOverride, '%f', dest + '/' + ExtractFileName(
-                  DeleteModifiers(h))) + #10 + rsInClose, rqError);
+                MakeUsrRequest(StrSubst(rsCnOverride, '%f', dest +
+                  '/' + ExtractFileName(DeleteModifiers(h))) + #10 +
+                  rsInClose, rqError);
                 RollbackInstallation;
                 Result := false;
                 Abort_FreeAll();
@@ -1535,8 +1557,9 @@ end; }
               end;
           except
             //Unable to copy the file
-            MakeUsrRequest(Format(rsCnCopy, [dest + '/' + ExtractFileName(DeleteModifiers(h))]) +
-              #10 + rsInClose, rqError);
+            MakeUsrRequest(Format(rsCnCopy,
+              [dest + '/' + ExtractFileName(DeleteModifiers(h))]) + #10 +
+              rsInClose, rqError);
             RollbackInstallation;
             Result := false;
             Abort_FreeAll();
@@ -1608,19 +1631,22 @@ end; }
 
           if pos(' <chmod:', h) > 0 then
           begin
-            proc.CommandLine := FindBinary('chmod') + ' ' + copy(h, pos(' <chmod:', h) + 8, 3) +
+            proc.CommandLine :=
+              FindBinary('chmod') + ' ' + copy(h, pos(' <chmod:', h) + 8, 3) +
               dest + '/' + ExtractFileName(DeleteModifiers(fi[i]));
             proc.Execute;
           end
           else
           begin
-            proc.CommandLine := FindBinary('chmod') + ' 755 ' + dest + '/' + ExtractFileName(
+            proc.CommandLine :=
+              FindBinary('chmod') + ' 755 ' + dest + '/' + ExtractFileName(
               DeleteModifiers(fi[i]));
             proc.Execute;
           end;
 
           //while proc.Running do Application.ProcessMessages;
-          msg('Rights assigned to ' + DeleteModifiers(ExtractFileName(SyblToPath(fi[i]))));
+          msg('Rights assigned to ' +
+            DeleteModifiers(ExtractFileName(SyblToPath(fi[i]))));
         end;
       end;
     end;
@@ -1650,7 +1676,8 @@ end; }
     begin
       if not DirectoryExists(RegDir + LowerCase(IAppName + '-' + pkgID)) then
         SysUtils.CreateDir(RegDir + LowerCase(IAppName + '-' + pkgID));
-      FileCopy(pkg.WDir + '/arcinfo.pin', RegDir + LowerCase(IAppName + '-' + pkgID) + '/proginfo.pin');
+      FileCopy(pkg.WDir + '/arcinfo.pin', RegDir + LowerCase(IAppName + '-' + pkgID) +
+        '/proginfo.pin');
 
       //Save list of installed files
       appfiles.SaveToFile(RegDir + LowerCase(IAppName + '-' + pkgID) + '/appfiles.list');
@@ -1668,9 +1695,10 @@ end; }
         h := 'containerF';
 
       dsApp.Insert;
-      dsApp.ExecuteDirect('INSERT INTO "AppInfo" VALUES (''' + IAppName + ''', ''' +
-        pkgID + ''', ''' + h + ''', ''' + ShDesc + ''',''' + IAppVersion + ''',''' +
-        IAuthor + ''',''' + 'icon' + ExtractFileExt(IIconPath) + ''',''' + CurProfile + ''',''' +
+      dsApp.ExecuteDirect('INSERT INTO "AppInfo" VALUES (''' + IAppName +
+        ''', ''' + pkgID + ''', ''' + h + ''', ''' + ShDesc + ''',''' +
+        IAppVersion + ''',''' + IAuthor + ''',''' + 'icon' +
+        ExtractFileExt(IIconPath) + ''',''' + CurProfile + ''',''' +
         IGroup + ''',''' + GetDateAsString + ''', ''' + Dependencies.Text + ''');');
 
       //Write changes
@@ -1732,15 +1760,15 @@ end; }
   sleep(600);
 end;
 
-function TInstallation.RunDLinkInstallation: boolean;
+function TInstallation.RunDLinkInstallation: Boolean;
 var
-  i: integer;
+  i: Integer;
   ar: TIniFile;
   pkit: TPackageKit;
-  mnpos: integer;
-  max: double;
-  pkg: string;
-  fpath: string;
+  mnpos: Integer;
+  max: Double;
+  pkg: String;
+  fpath: String;
 
   procedure Abort_FreeAll();
   begin
@@ -1805,7 +1833,8 @@ end;}
     end
     else
     begin
-      pkg := copy(Dependencies[i], pos(' (', Dependencies[i]) + 2, length(dependencies[i]));
+      pkg := copy(Dependencies[i], pos(' (', Dependencies[i]) + 2,
+        length(dependencies[i]));
       pkg := copy(pkg, 1, pos(')', pkg) - 1);
       fpath := copy(Dependencies[i], 1, pos(' (', Dependencies[i]) - 1);
       p_debug('Looking for ' + pkg);
@@ -1827,7 +1856,8 @@ end;}
             HTTP.Document.SaveToFile(tmpdir + ExtractFileName(fpath));
             if HTTP.ResultCode > 210 then
             begin
-              MakeUsrRequest(rsDepDlProblem + #10 + rsECode + ' ' + IntToStr(HTTP.ResultCode), rqError);
+              MakeUsrRequest(rsDepDlProblem + #10 + rsECode + ' ' +
+                IntToStr(HTTP.ResultCode), rqError);
               Result := false;
               Abort_FreeAll();
               exit;
@@ -1883,8 +1913,8 @@ end;}
 
         if pkit.PkFinishCode > 1 then
         begin
-          MakeUsrRequest(StrSubst(rsInstPkgFailed, '%s', pkg) + #10 + rsECode + ' ' +
-            IntToStr(pkit.PkFinishCode), rqError);
+          MakeUsrRequest(StrSubst(rsInstPkgFailed, '%s', pkg) + #10 +
+            rsECode + ' ' + IntToStr(pkit.PkFinishCode), rqError);
           Result := false;
           Abort_FreeAll();
           exit;
@@ -1909,7 +1939,8 @@ end;}
     ar.WriteString('Desktop Entry', 'X-AppVersion', IAppVersion);
     ar.WriteString('Desktop Entry', 'X-Publisher', IAuthor);
     if pos(';', IDesktopFiles) > 0 then
-      IDesktopFiles := copy(IDesktopFiles, pos(';', IDesktopFiles) + 1, length(IDesktopFiles))
+      IDesktopFiles := copy(IDesktopFiles, pos(';', IDesktopFiles) +
+        1, length(IDesktopFiles))
     else
       IDesktopFiles := '';
     ar.Free;
@@ -1918,12 +1949,12 @@ end;}
   SendStateMsg(rsSuccess);
 end;
 
-procedure TInstallation.CheckAddUSource(const forceroot: boolean = false);
+procedure TInstallation.CheckAddUSource(const forceroot: Boolean = false);
 var
   fi: TStringList;
-  i: integer;
-  found: boolean;
-  s: string;
+  i: Integer;
+  found: Boolean;
+  s: String;
 begin
   if not forceroot then
     s := RegDir
@@ -1969,7 +2000,7 @@ begin
   end;
 end;
 
-function TInstallation.PkgOkay: boolean;
+function TInstallation.PkgOkay: Boolean;
 begin
   Result := true;
   if (PkgID = '') or (AppName = '') then
@@ -1980,10 +2011,10 @@ begin
   end;
 end;
 
-function TInstallation.DoInstallation: boolean;
+function TInstallation.DoInstallation: Boolean;
 var
   cnf: TIniFile;
-  i: integer;
+  i: Integer;
   buscmd: ListallerBusCommand;
   tmp: TStringList;
 begin
@@ -2019,12 +2050,13 @@ begin
       IAppCMD := SyblToPath(IAppCMD);
       //Check if the package downloads native pkgs
       for i := 0 to Dependencies.Count - 1 do
-        if (pos('http://', Dependencies[i]) > 0) or (pos('ftp://', Dependencies[i]) > 0) then
+        if (pos('http://', Dependencies[i]) > 0) or
+          (pos('ftp://', Dependencies[i]) > 0) then
         begin
           cnf := TInifile.Create(ConfigDir + 'config.cnf');
           if cnf.ReadBool('MainConf', 'AutoDepLoad', true) = false then
-            if MakeUsrRequest(StrSubst(rsWDLDep, '%l', Dependencies[i]) + #10 + rsWAllow,
-              rqWarning) = rqsNo then
+            if MakeUsrRequest(StrSubst(rsWDLDep, '%l', Dependencies[i]) +
+              #10 + rsWAllow, rqWarning) = rqsNo then
             begin
               Result := false;
               exit;
