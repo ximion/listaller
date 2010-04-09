@@ -49,8 +49,8 @@ procedure BuildApplication(pk: TPackInfo);
     @param o Output filename
     @param genbutton Generate distro info button
     @param signpkg Create signed package}
-procedure BuildPackage(fi: String; o: String; genbutton: Boolean = false;
-  signpkg: Boolean = false);
+procedure BuildPackage(fi: String; o: String; ProgressHandler: TProgressEvent;
+  genbutton: Boolean = false; signpkg: Boolean = false);
 {** Creates the "Linux distribution compatible" button.
     @param dlist Names of the distributions that are compatible
     @param of Name of the output PNG file}
@@ -102,13 +102,15 @@ begin
       begin
         p.CurrentDirectory := ExtractFilePath(
           copy(pk.path + pk.build[i], 0, pos(' ', pk.path + pk.build[i])));
-        p.CommandLine := StringReplace(pk.path + pk.build[i], '%IDIR', pk.out +
-          '/pkbuild', [rfReplaceAll]);
+        p.CommandLine := StringReplace(pk.path + pk.build[i], '%IDIR',
+          pk.out + '/pkbuild', [rfReplaceAll]);
       end
       else
       begin
-        p.CurrentDirectory := ExtractFilePath(copy(pk.build[i], 0, pos(' ', pk.build[i])));
-        p.CommandLine := StringReplace(pk.build[i], '%IDIR', pk.out + '/pkbuild', [rfReplaceAll]);
+        p.CurrentDirectory :=
+          ExtractFilePath(copy(pk.build[i], 0, pos(' ', pk.build[i])));
+        p.CommandLine := StringReplace(pk.build[i], '%IDIR', pk.out +
+          '/pkbuild', [rfReplaceAll]);
       end;
     end
     else
@@ -291,8 +293,8 @@ end;
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////Function to build IPK-Packages///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-procedure BuildPackage(fi: String; o: String; genbutton: Boolean = false;
-  signpkg: Boolean = false);
+procedure BuildPackage(fi: String; o: String;
+  ProgressHandler: TProgressEvent; genbutton: Boolean = false; signpkg: Boolean = false);
 var
   i, j, k: Integer;
   b: Boolean;
@@ -310,6 +312,13 @@ var
   ipkpkg: TLiPackager;
   res: Boolean;
   uinfo: TStringList; //Generate update source baseinfo
+
+  procedure RaiseCopyError(fname: String);
+  begin
+    writeLn('error: ');
+    writeln(' Copying of ' + fname + ' failed.');
+    halt(5);
+  end;
 
   procedure bp_AddFile(fname: String; const basepath: String = '');
   var
@@ -346,11 +355,7 @@ var
       end;
 
     if not res then
-    begin
-      writeLn('error: ');
-      writeln(' Copying of ' + DeleteModifiers(fname) + ' failed.');
-      halt(5);
-    end;
+      RaiseCopyError(DeleteModifiers(fname));
 
     if basepath <> '' then
     begin
@@ -359,13 +364,11 @@ var
       x := StringReplace(x, ' ', '', [rfReplaceAll]);
       if x <> '' then
       begin
-        fc.Add('>' + CleanFilePath(s + '/' + StringReplace(ExtractFilePath(fname),
-          basepath, '', [rfReplaceAll])));
+        fc.Add('>' + CleanFilePath(s + '/' + StringReplace(
+          ExtractFilePath(fname), basepath, '', [rfReplaceAll])));
       end;
     end;
     fc.Add(CleanFilePath(h + '/' + ExtractFileName(DeleteModifiers(fname))));
-    //'/files'+StringReplace(Files[i+2],'$INST','',[rfReplaceAll])+'/'+ExtractFileName(DeleteModifiers(Files[i]))+copy(Files[i],pos(ExtractFileName(DeleteModifiers(Files[i])),Files[i])+length(ExtractFileName(DeleteModifiers(Files[i]))),length(Files[i])));
-    //writeLn('Add: '+fc[fc.Count-1]);
 
     if not ipkpkg.AddFile(WDir + h + '/' + ExtractFileName(DeleteModifiers(fname))) then
     begin
@@ -404,7 +407,13 @@ begin
     FileUtil.DeleteDirectory(WDir, false);
   end;
 
-  writeLn('Reading file...');
+  if not FileExists(fi) then
+  begin
+    writeLn('Input file does not exists!');
+    halt(5);
+  end;
+
+  writeLn('Reading IPS source file...');
 
   sl := TStringList.Create; //ReadIn file
   sl.LoadFromFile(fi);
@@ -425,10 +434,12 @@ begin
 
   sl.Free;
 
-  script:=TIPKScript.Create;
+  script := TIPKScript.Create;
   script.LoadFromFile(fi);
   control := script.FinalizeToControl;
   script.Free;
+
+  control.BasePath := ExtractFilePath(fi);
 
   if (LowerCase(ExtractFileExt(o)) <> '.ipk') then
   begin
@@ -460,8 +471,7 @@ begin
 
   writeLn;
   writeLn('=== Building IPK Package ===');
-  writeLn('Please wait!');
-  writeLn('');
+  writeLn;
   if not DirectoryExists(tmpdir) then
     SysUtils.CreateDir(tmpdir);
   if not DirectoryExists(WDir) then
@@ -492,8 +502,7 @@ begin
       break;
     end;
 
-  writeLn('Preparing files.');
-  Write('[..');
+  Write('Preparing files.');
 
   //Replace all build-time placeholders
   for i := 0 to fsec.Count - 1 do
@@ -583,11 +592,9 @@ begin
     end;
 
   end; //End of file including
-  Write('..]');
-  writeLn('');
+  writeLn;
+  writeLn;
   fsec.Free;
-
-  script.Free; //Was only temporary
 
   pkgtype := control.SType;
 
@@ -698,8 +705,26 @@ begin
       writeLn(' I: Prerm script found.');
     end;
 
-    writeLn('Saving update info to "' + ChangeFileExt(ExtractFileName(fi), '') + '_fdata.ulist"');
+    //Include mo files for translation
+    sl := TStringList.Create;
+    control.GetMoFileList(sl);
+    control.SetMoFilesToDir('locale');
+    if sl.Count > 0 then
+      ForceDirectories(WDir + 'locale');
+    for i := 0 to sl.Count - 1 do
+    begin
+      if not FileCopy(sl[i], WDir + 'locale/' + ExtractFileName(sl[i])) then
+        RaiseCopyError(sl[i]);
+      writeLn(' I: Include locale: ' + ExtractFileName(sl[i]));
+      ipkpkg.AddFile(WDir + 'locale/' + ExtractFileName(sl[i]));
+    end;
+    sl.Free;
+
+    writeLn('Saving update info to "' + ChangeFileExt(ExtractFileName(fi), '') +
+      '_fdata.ulist"');
     uinfo.SaveToFile(ChangeFileExt(fi, '') + '_fdata.ulist');
+
+    //Done mofiles
   end
   else
   begin //If pkgtype is another one
@@ -726,7 +751,10 @@ begin
     begin
       writeLn('Mode: Build container IPK package');
 
-      FileCopy(control.Binary, WDir + 'files/' + ExtractFileName(control.Binary));
+      if not FileCopy(control.Binary, WDir + 'files/' +
+        ExtractFileName(control.Binary)) then
+        RaiseCopyError(control.Binary);
+
       ipkpkg.AddFile(WDir + 'files/' + ExtractFileName(control.Binary));
       control.Binary := '/files/' + ExtractFileName(control.Binary);
     end;
@@ -750,17 +778,17 @@ begin
     begin
       writeLn('Calling GnuPG sign...');
       if not ipkpkg.SignPackage then
-        writeLn('E: Signing of package FAILED!');
+        writeLn(' E: Package signing FAILED!');
     end
     else
-      writeLn('E: GPG was not found! Cannot sign package.');
+      writeLn(' E: GPG was not found! Cannot sign package.');
   end
   else
-    writeLn('I: Package is not signed.');
+    writeLn(' I: Package is not signed.');
 
   i := random(9999) + 1000;
 
-  writeLn('Creating package...');
+  writeLn('Compressing package...');
   if FileExists(o) then
   begin
     writeLn('warning:');
@@ -770,6 +798,7 @@ begin
   end;
   writeLn(' #-> ' + o);
   ipkpkg.IPKFile := o;
+  ipkpkg.OnProgress := ProgressHandler;
   if not ipkpkg.ProduceIPKPackage then
   begin
     writeln('error:');

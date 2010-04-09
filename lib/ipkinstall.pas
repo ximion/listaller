@@ -62,8 +62,6 @@ type
     ExecA, ExecB, ExecX: String;
     //Overwrite all files? (needed for patches)
     FOverwrite: Boolean;
-    // True if IPK package is a patch
-    FPatch: Boolean;
     //Current setup type
     pkType: TPkgType;
     //Disallow-line (every action the package disallows, unformated)
@@ -83,6 +81,8 @@ type
     //Progress message relais
     FStatusChange: TLiStatusChangeCall;
     FRequest: TRequestCall;
+    //List of available mo files
+    mofiles: TStringList;
     //Data which contains the status of the current action
     StatusData: TLiStatusData;
     // True if su mode enabled
@@ -265,13 +265,15 @@ begin
   daemonm := false; //Daemon mode has to be set manually by listallerd
   dsApp := TSQLite3Dataset.Create(nil);
   if SUMode then
-    RegDir := '/etc/lipa/app-reg/'
+    RegDir := LI_CONFIG_DIR + LI_APPDB_PREF
   else
-    RegDir := SyblToPath('$INST') + '/app-reg/';
+    RegDir := SyblToPath('$INST') + '/' + LI_APPDB_PREF;
 
   //Create text containers
   license := TStringList.Create;
   longdesc := TStringList.Create;
+
+  mofiles := TStringList.Create;
 
   //Init
   AddUpdateSource := false;
@@ -287,6 +289,7 @@ begin
     Dependencies.Free;
   license.Free;
   longdesc.Free;
+  mofiles.Free;
   inherited Destroy;
 end;
 
@@ -299,9 +302,9 @@ procedure TInstallation.SetRootMode(b: Boolean);
 begin
   SUMode := b;
   if SUMode then
-    RegDir := '/etc/lipa/app-reg/'
+    RegDir := LI_CONFIG_DIR + LI_APPDB_PREF
   else
-    RegDir := SyblToPath('$INST') + '/app-reg/';
+    RegDir := SyblToPath('$INST') + '/' + LI_APPDB_PREF;
 end;
 
 procedure TInstallation.SetCurProfile(i: Integer);
@@ -557,11 +560,7 @@ begin
   if IsRoot then
   begin
     SUMode := true;
-
-    if SUMode then
-      RegDir := '/etc/lipa/app-reg/'
-    else
-      RegDir := SyblToPath('$INST') + '/app-reg/';
+    SetRootMode(true);
   end;
 
   if IAppName <> '' then
@@ -645,18 +644,9 @@ begin
 
   cont.LangCode := GetLangID; //Set language code, so we get localized entries
 
-  pkType := cont.SType;
+  cont.GetMoFileList(mofiles); //Grab all available mofiles
 
-  //!!! Support for patches was dropped in IPK1.0
-{
-if (xnode.Attributes.GetNamedItem('patch')<>nil)
-and(xnode.Attributes.GetNamedItem('patch').NodeValue='true')
-then
-begin
-FPatch:=true;
-msg('WARNING: This package patches another application on your machine!');
-end else FPatch:=false;
-}
+  pkType := cont.SType;
 
   FDisallow := LowerCase(cont.Disallows);
 
@@ -837,8 +827,8 @@ end else FPatch:=false;
         for i := 0 to dependencies.Count - 1 do
           if pos(' (', n) > 0 then
             Dependencies[i] :=
-              copy(n, pos(' (', n) + 2, length(n) - pos(' (', n) - 2) + ' - ' +
-              copy(n, 1, pos(' (', n) - 1);
+              copy(n, pos(' (', n) + 2, length(n) - pos(' (', n) - 2) +
+              ' - ' + copy(n, 1, pos(' (', n) - 1);
       end;
     end;
     i := 0;
@@ -974,8 +964,8 @@ end else FPatch:=false;
         for i := 0 to dependencies.Count - 1 do
           if pos(' (', n) > 0 then
             Dependencies[i] :=
-              copy(n, pos(' (', n) + 2, length(n) - pos(' (', n) - 2) + ' - ' +
-              copy(n, 1, pos(' (', n) - 1);
+              copy(n, pos(' (', n) + 2, length(n) - pos(' (', n) - 2) +
+              ' - ' + copy(n, 1, pos(' (', n) - 1);
       end;
       i := 0;
       while i <= Dependencies.Count - 1 do
@@ -1261,8 +1251,8 @@ end; }
       end;
       SetExtraPos(0);
 
-      Dependencies[0] := 'cat:' +
-        ExtractFileName(copy(Dependencies[0], 5, length(Dependencies[0])));
+      Dependencies[0] := 'cat:' + ExtractFileName(
+        copy(Dependencies[0], 5, length(Dependencies[0])));
 
     end
     else
@@ -1362,8 +1352,8 @@ end; }
                     if pos('Name ', s[j]) > 0 then
                       break;
                   Dependencies[i] :=
-                    Dependencies[i] + ' (' + copy(s[j], 15,
-                    pos(' ', copy(s[j], 15, length(s[j]))) - 1) + ')';
+                    Dependencies[i] + ' (' +
+                    copy(s[j], 15, pos(' ', copy(s[j], 15, length(s[j]))) - 1) + ')';
                 finally
                   s.Free;
                 end;
@@ -1557,9 +1547,8 @@ end; }
               end;
           except
             //Unable to copy the file
-            MakeUsrRequest(Format(rsCnCopy,
-              [dest + '/' + ExtractFileName(DeleteModifiers(h))]) + #10 +
-              rsInClose, rqError);
+            MakeUsrRequest(Format(rsCnCopy, [dest + '/' +
+              ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose, rqError);
             RollbackInstallation;
             Result := false;
             Abort_FreeAll();
@@ -1645,8 +1634,8 @@ end; }
           end;
 
           //while proc.Running do Application.ProcessMessages;
-          msg('Rights assigned to ' +
-            DeleteModifiers(ExtractFileName(SyblToPath(fi[i]))));
+          msg('Rights assigned to ' + DeleteModifiers(
+            ExtractFileName(SyblToPath(fi[i]))));
         end;
       end;
     end;
@@ -1672,52 +1661,57 @@ end; }
   if Testmode then
     msg('Testmode: Do not register package.')
   else
-    if not FPatch then
-    begin
-      if not DirectoryExists(RegDir + LowerCase(IAppName + '-' + pkgID)) then
-        SysUtils.CreateDir(RegDir + LowerCase(IAppName + '-' + pkgID));
-      FileCopy(pkg.WDir + '/arcinfo.pin', RegDir + LowerCase(IAppName + '-' + pkgID) +
-        '/proginfo.pin');
+    if not DirectoryExists(RegDir + LowerCase(pkgID)) then
+      SysUtils.CreateDir(RegDir + LowerCase(pkgID));
+  FileCopy(pkg.WDir + '/arcinfo.pin', RegDir + LowerCase(pkgID) +
+    '/application');
 
-      //Save list of installed files
-      appfiles.SaveToFile(RegDir + LowerCase(IAppName + '-' + pkgID) + '/appfiles.list');
-      appfiles.Free;
+  //Save list of installed files
+  appfiles.SaveToFile(RegDir + LowerCase(pkgID) + '/files.list');
+  appfiles.Free;
 
-      //Open database connection
-      dsApp.Open;
-      dsApp.Edit;
+  if mofiles.Count>0 then
+  begin
+   ForceDirectories(RegDir + LowerCase(pkgID)+'/locale/');
+   for i:=0 to mofiles.Count-1 do
+   begin
+    FileCopy(pkg.WDir+mofiles[i],RegDir + LowerCase(pkgID)+'/locale/'+ExtractFileName(mofiles[i]));
+   end;
+  end;
 
-      if pkType = ptLinstall then
-        h := 'linstall';
-      if pkType = ptDLink then
-        h := 'dlink';
-      if pkType = ptContainer then
-        h := 'containerF';
+  //Open database connection
+  dsApp.Open;
+  dsApp.Edit;
 
-      dsApp.Insert;
-      dsApp.ExecuteDirect('INSERT INTO "AppInfo" VALUES (''' + IAppName +
-        ''', ''' + pkgID + ''', ''' + h + ''', ''' + ShDesc + ''',''' +
-        IAppVersion + ''',''' + IAuthor + ''',''' + 'icon' +
-        ExtractFileExt(IIconPath) + ''',''' + CurProfile + ''',''' +
-        IGroup + ''',''' + GetDateAsString + ''', ''' + Dependencies.Text + ''');');
+  if pkType = ptLinstall then
+    h := 'linstall';
+  if pkType = ptDLink then
+    h := 'dlink';
+  if pkType = ptContainer then
+    h := 'container';
 
-      //Write changes
-      dsApp.ApplyUpdates;
-      dsApp.Close;
+  dsApp.Insert;
+  dsApp.ExecuteDirect('INSERT INTO "AppInfo" VALUES (''' + IAppName +
+    ''', ''' + pkgID + ''', ''' + h + ''', ''' + ShDesc + ''',''' +
+    IAppVersion + ''',''' + IAuthor + ''',''' + 'icon' +
+    ExtractFileExt(IIconPath) + ''',''' + CurProfile + ''',''' +
+    IGroup + ''',''' + GetDateAsString + ''', ''' + Dependencies.Text + ''');');
 
-      p_debug('Icon: ' + IIconPath);
-      if IIconPath[1] = '/' then
-        FileCopy(pkg.WDir + IIconPath, RegDir + LowerCase(IAppName + '-' + pkgID) +
-          '/icon' + ExtractFileExt(IIconPath));
+  //Write changes
+  dsApp.ApplyUpdates;
+  dsApp.Close;
 
-      ndirs.SaveToFile(RegDir + LowerCase(IAppName + '-' + pkgID) + '/appdirs.list');
+  p_debug('Icon: ' + IIconPath);
+  if IIconPath[1] = '/' then
+    FileCopy(pkg.WDir + IIconPath, RegDir + LowerCase(pkgID) +
+      '/icon' + ExtractFileExt(IIconPath));
 
-      if ExecX <> '<disabled>' then
-        FileCopy(ExecX, RegDir + LowerCase(IAppName + '-' + pkgID) + '/prerm');
+  ndirs.SaveToFile(RegDir + LowerCase(pkgID) + '/dirs.list');
 
-      ndirs.Free;
+  if ExecX <> '<disabled>' then
+    FileCopy(ExecX, RegDir + LowerCase(pkgID) + '/prerm');
 
-    end; //End of Patch check
+  ndirs.Free;
 
   mnpos := mnpos + 5;
   SetMainPos(Round(mnpos * max));
@@ -1959,7 +1953,7 @@ begin
   if not forceroot then
     s := RegDir
   else
-    s := LI_CONFIG_DIR + 'app-reg/';
+    s := LI_CONFIG_DIR + LI_APPDB_PREF;
 
   if (USource <> '#') and (USource <> '') then
   begin

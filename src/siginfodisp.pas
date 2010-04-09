@@ -21,8 +21,8 @@ unit siginfodisp;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, trStrings;
+  Classes, Controls, Dialogs,
+  FileUtil, Forms, Graphics, LResources, StdCtrls, SysUtils, trStrings;
 
 type
 
@@ -48,13 +48,14 @@ implementation
 
 procedure TSigInfoFrm.Button1Click(Sender: TObject);
 begin
-  close;
+  Close;
 end;
 
 procedure TSigInfoFrm.FormCreate(Sender: TObject);
 begin
- LblInfo.Caption:=rsSecurityInfo;
- Caption:=rsSecurityWarning;
+  LblInfo.Caption := rsSecurityInfo;
+  Caption := rsSecurityWarning;
+  Button1.Caption := rsIKnowTheRisk;
 end;
 
 end.

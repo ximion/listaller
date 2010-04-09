@@ -27,6 +27,9 @@ uses
 
 type
   //** Creates IPK packages from preprocessed source files
+
+  { TLiPackager }
+
   TLiPackager = class
   private
     OutFileName: String;
@@ -36,7 +39,12 @@ type
     finalized: Boolean;
     algorithm: Integer;
     bdir: String;
+    maxbytes: Int64;
+    FProgress: TProgressEvent;
+
     function RandomID: String;
+        procedure encoderProgress(const Action: TLZMAProgressAction;
+      const Value: int64);
   public
     constructor Create(aIPKFile: String);
     destructor Destroy; override;
@@ -53,6 +61,8 @@ type
     property BaseDir: String read bdir write bdir;
     //** Set IPK file name
     property IPKFile: String read OutFileName write OutFileName;
+    //** On compression progress change
+    property OnProgress: TProgressEvent read FProgress write FProgress;
   end;
 
   //** Unpacks IPK package structure
@@ -60,13 +70,14 @@ type
   { TLiUnpacker }
 
   TLiUnpacker = class
-    procedure decoderProgress(const Action: TLZMAProgressAction; const Value: int64);
   private
     ipkfile: String;
     workdir: String;
     signChecked: Boolean;
     FProgress: TProgressEvent;
     one: Double;
+
+    procedure decoderProgress(const Action: TLZMAProgressAction; const Value: int64);
   public
     constructor Create(aIPKFile: String);
     destructor Destroy; override;
@@ -79,7 +90,7 @@ type
     function UnpackFile(fname: String): Boolean;
     //** Unpacker's working dir
     property WDir: String read workdir;
-    //** On unpackger decompress progress
+    //** On unpacker decompress progress
     property OnProgress: TProgressEvent read FProgress write FProgress;
   end;
 
@@ -121,6 +132,15 @@ begin
   if not finalized then
     mntar.Free;
   inherited;
+end;
+
+procedure TLiPackager.encoderProgress(const Action: TLZMAProgressAction;
+  const Value: int64);
+begin
+  case Action of
+   LPAMax: maxbytes:=value;
+   LPAPos: if Assigned(FProgress) then FProgress(Round(100/maxbytes*Value),nil);
+  end;
 end;
 
 function TLiPackager.RandomID: String;
@@ -217,6 +237,7 @@ begin
   outStream := TBufferedFS.Create(OutFileName, fmcreate);
 
   encoder := TLZMAEncoder.Create;
+  encoder.OnProgress:=@encoderProgress;
   if not encoder.SetAlgorithm(algorithm) then
     raise Exception.Create('Incorrect compression mode');
   if not encoder.SetDictionarySize(1 shl 23) then

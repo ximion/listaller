@@ -72,7 +72,7 @@ type
     procedure WriteInTerminal(b: Boolean);
     function ReadInTerminal: Boolean;
   protected
-    Text: TStringList;
+    text: TStringList;
     FBasePath: String;
     clang: String;
     procedure WriteField(Name: String; info: TStrings);
@@ -150,8 +150,10 @@ type
     procedure GetInternalFilesSection(lst: TStrings);
     function LoadFromFile(s: String): Boolean; override;
     function trl(str: String): String;
+    procedure GetMoFileList(list: TStringList);
+    procedure SetMoFilesToDir(dir: String);
 
-    property RawText: TStringList read Text write Text;
+    property RawText: TStringList read text write text;
   end;
 
 implementation
@@ -1077,14 +1079,13 @@ begin
   FBasePath := ExtractFilePath(path);
 
   fname := path;
-  basepath := '';
 end;
 
 constructor TIPKControl.Create;
 begin
   inherited Create;
   fname := '';
-  basepath := '';
+  FBasePath := '';
 end;
 
 destructor TIPKControl.Destroy;
@@ -1160,6 +1161,39 @@ begin
   mo := TMoFile.Create(fbasepath + mofile);
   Result := mo.Translate(str);
   mo.Free;
+end;
+
+procedure TIPKControl.GetMoFileList(list: TStringList);
+var
+  i: Integer;
+begin
+  for i := 0 to Text.Count - 1 do
+    if pos('include:', Text[i]) > 0 then
+    begin
+      if (ExtractFileExt(SolveInclude(text[i]))) = '.mo' then
+        list.Add(SolveInclude(text[i]));
+    end;
+end;
+
+procedure TIPKControl.SetMoFilesToDir(dir: String);
+var list: TStringList;
+    i: Integer;
+begin
+  list:=TStringList.Create;
+  GetMoFileList(list);
+  i:=0;
+  while i < text.Count do
+  begin
+    if (pos('include:',text[i])>0)
+    and(pos('.mo',text[i])>0) then
+    begin
+      text.Delete(i);
+    end else Inc(i);
+  end;
+  text.Insert(1,'');
+  for i:=0 to list.Count-1 do
+   text.Insert(1,'include:"'+dir+'/'+ExtractFileName(list[i])+'"');
+  list.Free;
 end;
 
 end.

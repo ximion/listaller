@@ -30,6 +30,8 @@ type
  { TLiBuild }
 
  TLiBuild = class(TCustomApplication)
+ private
+   procedure OnCompressionProgress(pos: Integer; user_data: Pointer);
  protected
    procedure DoRun; override;
  public
@@ -42,9 +44,14 @@ type
 
  { TLiBuild }
 
+procedure TLiBuild.OnCompressionProgress(pos: Integer; user_data: Pointer);
+begin
+ write(#13+' Progress: '+IntToStr(pos)+'%  ');
+end;
+
 procedure TLiBuild.DoRun;
 var
-  ErrorMsg, a, b: String;
+  a, b: String;
   i: Integer;
   x: Boolean;
   pki: TPackInfo;
@@ -54,16 +61,19 @@ begin
 if not HasOption('noquietcrash') then
     OnException := @OnExeception;
 
-  ErrorMsg := CheckOptions('h', 'help');
-  ErrorMsg := CheckOptions('?', 'help');
+  CheckOptions('h', 'help');
+  CheckOptions('?', 'help');
 
-  ErrorMsg := CheckOptions('b', 'build');
-  ErrorMsg := CheckOptions('u', 'gen-update');
-  ErrorMsg := CheckOptions('v', 'version');
- { if ErrorMsg<>'' then begin
-    ShowException(Exception.Create(ErrorMsg));
-    Halt;
-  end;  }
+  CheckOptions('b', 'build');
+  CheckOptions('u', 'gen-update');
+  CheckOptions('v', 'version');
+
+  if paramstr(1) = '' then
+  begin
+    writeLn('Listaller''s package builder');
+    writeln('Usage: ', ExeName, ' <option> [file] ...');
+    halt;
+  end;
 
   //Parse parameters
   i := 1;
@@ -100,6 +110,7 @@ if not HasOption('noquietcrash') then
       if a = '' then
         a := ParamStr(i)
       else
+       if b='' then
         b := ParamStr(i);
     Inc(i);
   end;
@@ -159,7 +170,7 @@ if not HasOption('noquietcrash') then
         if (not FileExists(b)) and (LowerCase(ExtractFileExt(b)) = '.ipk') and
           (DirectoryExists(ExtractFilePath(b))) then
         begin
-          BuildPackage(a, b, x, HasOption('sign'));
+          BuildPackage(a, b, @OnCompressionProgress, x, HasOption('sign'));
         end
         else
         begin
@@ -172,7 +183,7 @@ if not HasOption('noquietcrash') then
       end
       else
       begin
-        BuildPackage(a, '', x, HasOption('sign'));
+        BuildPackage(a, '', @OnCompressionProgress, x, HasOption('sign'));
       end;
     end;
     halt;

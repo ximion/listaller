@@ -135,6 +135,7 @@ resourcestring
     'Be careful with this package, especially if you install it system-wide'#10 +
     'with superuser rights.'#10;
   rsSecurityWarning = 'Security warning';
+  rsIKnowTheRisk = 'I know the risk';
   rsinstAnyway = 'Do you want to install it anyway? (This could cause problems)';
   rsInvArchitecture =
     'The application which this package contains was not built for the current system architecture.';

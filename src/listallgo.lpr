@@ -18,77 +18,89 @@ program listallgo;
 
 {$mode objfpc}{$H+}
 
-uses
-  {$IFDEF UNIX}
-  cthreads,
-  {$ENDIF}
+uses {$IFDEF UNIX}
+  cthreads, {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
-  igobase, dgfrm, trStrings, SysUtils, LiBasic,
-  liTranslator, liTypes, xtypefm, Installer, LCLType, Dialogs, siginfodisp;
+  igobase,
+  dgfrm,
+  trStrings,
+  SysUtils,
+  LiBasic,
+  liTranslator,
+  liTypes,
+  xtypefm,
+  Installer,
+  LCLType,
+  Dialogs;
 
 {$R listallgo.res}
 
 begin
+  //Init application
+  Application.Title := 'Software Installer';
+  Application.Initialize;
+  writeLn('Application initialized.');
 
-   //Init application
-   Application.Title:='Software Installer';
-   Application.Initialize;
-   writeLn('Application initialized.');
-
-   //Load IPK-File, quit on failure
+  //Load IPK-File, quit on failure
   if LoadIPKFile() then
   begin
-  { --- Do Container setup --- }
-  if setup.PkType=ptContainer then
-  begin
-   if not setup.StartInstallation then
-    ShowMessage(rsInstFailed);
-   setup.Free;
-   Application.Terminate;
-   exit;
-  end else
-
-  { --- Prepare Listallation --- }
-  if setup.PkType=ptLinstall then
-  begin
-   //Check if app is already installed
-   if not Testmode then
-   begin
-    if IsIPKAppInstalled(setup.GetAppName,setup.GetAppID,Superuser) then
-    if Application.MessageBox(PAnsiChar(PAnsiChar(rsAlreadyInst)+#13+PAnsiChar(rsInstallAgain)),PAnsiChar(rsReInstall),MB_YESNO)= IDNO then
+    { --- Do Container setup --- }
+    if setup.PkType = ptContainer then
     begin
-     setup.Free;
-     Application.Terminate;
-     exit;
-    end;
-   end;
-   Application.CreateForm(TIWizFrm, IWizFrm);
-   Application.UpdateMainForm(IWizFrm);
-  end else
-  { --- Prepare DLink Install --- }
-  if setup.PkType=ptDLink then
-  begin
-   Application.CreateForm(TDGForm, DGForm);
+      if not setup.StartInstallation then
+        ShowMessage(rsInstFailed);
+      setup.Free;
+      Application.Terminate;
+      exit;
+    end
+    else
 
-   DGForm.IIconPath:=setup.GetAppIcon;
-   DGForm.IDesktopFiles:=setup.GetDesktopFiles;
-  with DGForm do
-  begin
-   Label1.Caption:=StringReplace(rsInstOf,'%a',setup.GetAppName,[rfReplaceAll]);
-   Label2.Caption:=rsWillDLFiles;
-   Caption:=Label1.Caption;
-   Memo2.Clear;
-   Memo2.Lines.Add(rsPkgDownload);
-   end;
-   Application.UpdateMainForm(DGForm);
- end;
+    { --- Prepare Listallation --- }
+      if setup.PkType = ptLinstall then
+      begin
+        //Check if app is already installed
+        if not Testmode then
+        begin
+          if IsIPKAppInstalled(setup.GetAppName, setup.GetAppID, Superuser) then
+            if Application.MessageBox(PAnsiChar(PAnsiChar(rsAlreadyInst) + #13 +
+              PAnsiChar(rsInstallAgain)), PAnsiChar(rsReInstall), MB_YESNO) = idNo then
+            begin
+              setup.Free;
+              Application.Terminate;
+              exit;
+            end;
+        end;
+        Application.CreateForm(TIWizFrm, IWizFrm);
+        Application.UpdateMainForm(IWizFrm);
+      end
+      else
+      { --- Prepare DLink Install --- }
+        if setup.PkType = ptDLink then
+        begin
+          Application.CreateForm(TDGForm, DGForm);
+
+          DGForm.IIconPath := setup.GetAppIcon;
+          DGForm.IDesktopFiles := setup.GetDesktopFiles;
+          with DGForm do
+          begin
+            Label1.Caption := StringReplace(rsInstOf, '%a', setup.GetAppName, [rfReplaceAll]);
+            Label2.Caption := rsWillDLFiles;
+            Caption := Label1.Caption;
+            Memo2.Clear;
+            Memo2.Lines.Add(rsPkgDownload);
+          end;
+          Application.UpdateMainForm(DGForm);
+        end;
 
 
-   Application.ShowMainForm:=true;
-   writeLn('GUI created.');
-   Application.Run;
-   writeLn('Installer closed.');
-  end else Application.Terminate;
+    Application.ShowMainForm := true;
+    writeLn('GUI created.');
+    Application.Run;
+    writeLn('Installer closed.');
+  end
+  else
+    Application.Terminate;
+
 end.
 

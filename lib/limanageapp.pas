@@ -216,12 +216,11 @@ var
         // and(pos('base',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
         and (pos('wine', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <=
         0) and (pos('wine', LowerCase(d.ReadString('Desktop Entry',
-        'Categories', ''))) <=
-        0) and (d.ReadString('Desktop Entry', 'X-KDE-ParentApp', '#') = '#') and
+        'Categories', ''))) <= 0) and
+        (d.ReadString('Desktop Entry', 'X-KDE-ParentApp', '#') = '#') and
         (pos('screensaver', LowerCase(d.ReadString('Desktop Entry',
-        'Categories', ''))) <=
-        0) and (pos('setting',
-        LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <= 0)
+        'Categories', ''))) <= 0) and
+        (pos('setting', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <= 0)
         // and(pos('utility',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
         and (d.ReadString('Desktop Entry', 'OnlyShowIn', '') = '') and
         (d.ReadString('Desktop Entry', 'X-AllowRemove', 'true') = 'true') then
@@ -393,8 +392,7 @@ var
               begin
                 if (FileExists(d.ReadString('Desktop Entry', 'Icon', ''))) and
                   (LowerCase(ExtractFileExt(d.ReadString('Desktop Entry',
-                  'Icon', ''))) <>
-                  '.svg') then
+                  'Icon', ''))) <> '.svg') then
                   Icon := PChar(d.ReadString('Desktop Entry', 'Icon', ''));
               end;
               //If icon loading failed
@@ -455,7 +453,7 @@ begin
       entry.Author := PChar(rsAuthor + ': ' + dsApp.FieldByName('Publisher').AsString);
       if dsApp.FieldByName('Publisher').AsString = '' then
         entry.Author := '';
-      p := RegDir + LowerCase(entry.Name + '-' + entry.UId) + '/';
+      p := RegDir + LowerCase(entry.UId) + '/';
 
       n := LowerCase(dsApp.FieldByName('AGroup').AsString);
 
@@ -684,7 +682,7 @@ begin
 
     if not FileExists(obj.UId) then
     begin
-      if DirectoryExistsUTF8(RegDir + LowerCase(Name + '-' + id)) then
+      if DirectoryExistsUTF8(RegDir + LowerCase(id)) then
       begin
         //Remove IPK app
         UninstallIPKApp(Name, id, FStatus, false);
@@ -900,7 +898,7 @@ var
   rd: String;
 begin
   if forcesu then
-    rd := LI_CONFIG_DIR + 'app-reg/'
+    rd := LI_CONFIG_DIR + LI_APPDB_PREF
   else
     rd := RegDir;
 
@@ -1011,7 +1009,7 @@ var
   end;
 
 begin
-  p := RegDir + LowerCase(AppName + '-' + AppID) + '/';
+  p := RegDir + LowerCase(AppID) + '/';
   p := CleanFilePath(p);
 
   mnprog := 0;
@@ -1019,7 +1017,7 @@ begin
   SetPosition(0);
 
   //Check if an update source was set
-  ipkc := TIPKControl.Create(p + 'proginfo.pin');
+  ipkc := TIPKControl.Create(p + 'application');
   upd := ipkc.USource;
   ipkc.Free;
 
@@ -1053,7 +1051,7 @@ begin
       if not dlink then
       begin
         tmp := TStringList.Create;
-        tmp.LoadFromfile(p + 'appfiles.list');
+        tmp.LoadFromfile(p + 'files.list');
         bs := (bs + tmp.Count) / 100;
       end;
 
@@ -1144,25 +1142,6 @@ begin
       begin
         slist := TStringList.Create;
 
-        //@obsolete This code is obsolete
-{if reg.ReadBool(AppName,'ContSFiles',false) then
-begin
-tmp2:=TStringList.Create;
-reg.ReadSections(tmp2);
-
-for i:=0 to tmp2.Count-1 do begin
-if reg.ReadBool(tmp2[i],'ContSFiles',false) then begin
-s:=TStringList.Create;
-
-s.LoadFromFile(p+'/appfiles.list');
-for j:=0 to s.Count-1 do
-if pos(' <s>',s[j])>0 then slist.Add(DeleteModifiers(s[j]));
-s.Free;
-  end;
-tmp2.Free;
- end;
-end; //End of shared-test  }
-
 
         //Undo Mime-registration (if necessary)
         for i := 0 to tmp.Count - 1 do
@@ -1215,7 +1194,7 @@ end; //End of shared-test  }
         SetPosition(bs * mnprog);
 
         msg('Removing empty dirs...');
-        tmp.LoadFromFile(p + 'appdirs.list');
+        tmp.LoadFromFile(p + 'dirs.list');
         proc := TProcess.Create(nil);
         proc.Options := [poWaitOnExit, poStdErrToOutPut, poUsePipes];
         for i := 0 to tmp.Count - 1 do

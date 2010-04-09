@@ -61,6 +61,8 @@ function IsInList(nm: String; list: TStringList): Boolean;
 procedure ShowPKMon();
 //** Get the current, usable language variable
 function GetLangID: String;
+//** Check if mo filename matches locale
+function MoFileMatchesLang(id: String; mo: String): Boolean;
 //** Search for files in dir
 procedure FindFiles(FilesList: TStringList; StartDir, FileMask: String;
   const recursive: Boolean = true);
@@ -101,7 +103,7 @@ function IsCommandRunning(cmd: String): Boolean;
 
 const
   LI_CONFIG_DIR = '/etc/lipa/';
-  LI_APPDB_PREF = 'app-reg/';
+  LI_APPDB_PREF = 'info/';
 
 implementation
 
@@ -556,6 +558,14 @@ begin
   finally
     t.Free;
   end;
+end;
+
+function MoFileMatchesLang(id: String;mo: String): Boolean;
+begin
+  Result:=false;
+  mo:=ExtractFileName(mo);
+  if copy(mo,pos(mo,'-')+1,length(mo))=id+'.mo' then Result:=true;
+  if id+'.mo' = mo then Result:=true;
 end;
 
 function IsInList(nm: String; list: TStringList): Boolean;
