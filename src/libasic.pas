@@ -290,6 +290,10 @@ function GetDateAsString: String;
 var
   Year, Month, Day, WDay: word;
 begin
+  Year:=0;
+  Month:=0;
+  Day:=0;
+  WDay:=0;
   GetDate(Year, Month, Day, WDay);
   Result := IntToStr(Day) + '.' + IntToStr(Month) + '.' + IntToStr(Year);
 end;

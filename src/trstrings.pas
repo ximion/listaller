@@ -68,6 +68,7 @@ resourcestring
   rsAborted = 'Aborted.';
   rsViewLogQ = 'Do you want to view the logfile?';
   rsWasInstalled = 'The application %a was installed successfully!';
+  rsCNFindAppExecutable = 'Could not find main executable of this application!';
   rsExecAppTesting = 'Executing application main executable...';
   rsInstallNow = 'Install now';
   rsRunParam = 'Please run "listallgo" with path to setup-package as first parameter!';
@@ -161,6 +162,7 @@ resourcestring
   rsInstallationMode = 'Installation mode:';
   rsIModeInstruction = 'Select which parts of the application should be installed.';
   rsMode = 'Mode';
+  rsExecNewApp = 'Execute the new application';
   rsInstPerformError = 'Error while performing installation:';
   rsYesNo1 = 'Yes/No?:';
   rsInstallLiBuild = 'You have to install the "libuild" tool before you can build packages!';

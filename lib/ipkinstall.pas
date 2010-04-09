@@ -662,6 +662,13 @@ begin
     exit;
   end;
 
+  IIconPath := cont.Icon;
+  if IIconPath <> '' then
+  begin
+    pkg.UnpackFile(IIconPath);
+    IIconPath := CleanFilePath(pkg.WDir + IIconPath);
+  end;
+
   //Detect distribution details
   DInfo := GetDistro;
 
@@ -731,13 +738,6 @@ begin
       gtOTHER: IGroup := 'Other';
     end;
 
-    IIconPath := cont.Icon;
-    if IIconPath <> '' then
-    begin
-      pkg.UnpackFile(IIconPath);
-      IIconPath := pkg.WDir + IIconPath;
-    end;
-
     //Load info about supported distributions
     FSupportedDistris := LowerCase(cont.DSupport);
 
@@ -747,7 +747,7 @@ begin
     begin
       pkg.UnpackFile(FWizImage);
       if FileExists(pkg.WDir + FWizImage) then
-        FWizImage := pkg.WDir + FWizImage;
+        FWizImage := CleanFilePath(pkg.WDir + FWizImage);
     end;
 
     pkg.UnpackFile('preinst');
@@ -885,13 +885,6 @@ begin
       PkgID := cont.PkName;
       IAppName := cont.AppName;
       IAppVersion := cont.AppVersion;
-
-      IIconPath := cont.Icon;
-      if IIconPath <> '' then
-      begin
-        pkg.UnpackFile(IIconPath);
-        IIconPath := pkg.WDir + ExtractFileName(IIconPath);
-      end;
 
       IAuthor := cont.Author;
       if IAuthor = '' then
@@ -1352,8 +1345,8 @@ end; }
                     if pos('Name ', s[j]) > 0 then
                       break;
                   Dependencies[i] :=
-                    Dependencies[i] + ' (' +
-                    copy(s[j], 15, pos(' ', copy(s[j], 15, length(s[j]))) - 1) + ')';
+                    Dependencies[i] + ' (' + copy(s[j], 15,
+                    pos(' ', copy(s[j], 15, length(s[j]))) - 1) + ')';
                 finally
                   s.Free;
                 end;
@@ -1547,8 +1540,9 @@ end; }
               end;
           except
             //Unable to copy the file
-            MakeUsrRequest(Format(rsCnCopy, [dest + '/' +
-              ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose, rqError);
+            MakeUsrRequest(Format(rsCnCopy,
+              [dest + '/' + ExtractFileName(DeleteModifiers(h))]) +
+              #10 + rsInClose, rqError);
             RollbackInstallation;
             Result := false;
             Abort_FreeAll();
@@ -1663,20 +1657,20 @@ end; }
   else
     if not DirectoryExists(RegDir + LowerCase(pkgID)) then
       SysUtils.CreateDir(RegDir + LowerCase(pkgID));
-  FileCopy(pkg.WDir + '/arcinfo.pin', RegDir + LowerCase(pkgID) +
-    '/application');
+  FileCopy(pkg.WDir + '/arcinfo.pin', RegDir + LowerCase(pkgID) + '/application');
 
   //Save list of installed files
   appfiles.SaveToFile(RegDir + LowerCase(pkgID) + '/files.list');
   appfiles.Free;
 
-  if mofiles.Count>0 then
+  if mofiles.Count > 0 then
   begin
-   ForceDirectories(RegDir + LowerCase(pkgID)+'/locale/');
-   for i:=0 to mofiles.Count-1 do
-   begin
-    FileCopy(pkg.WDir+mofiles[i],RegDir + LowerCase(pkgID)+'/locale/'+ExtractFileName(mofiles[i]));
-   end;
+    ForceDirectories(RegDir + LowerCase(pkgID) + '/locale/');
+    for i := 0 to mofiles.Count - 1 do
+    begin
+      FileCopy(pkg.WDir + mofiles[i], RegDir + LowerCase(pkgID) + '/locale/' +
+        ExtractFileName(mofiles[i]));
+    end;
   end;
 
   //Open database connection
@@ -1701,9 +1695,9 @@ end; }
   dsApp.ApplyUpdates;
   dsApp.Close;
 
-  p_debug('Icon: ' + IIconPath);
+  if length(IIconPath)>0 then
   if IIconPath[1] = '/' then
-    FileCopy(pkg.WDir + IIconPath, RegDir + LowerCase(pkgID) +
+    FileCopy(IIconPath, RegDir + LowerCase(pkgID) +
       '/icon' + ExtractFileExt(IIconPath));
 
   ndirs.SaveToFile(RegDir + LowerCase(pkgID) + '/dirs.list');

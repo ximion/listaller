@@ -290,7 +290,7 @@ var
   s: TStringList;
 begin
   Result := false;
-  t := tprocess.Create(nil);
+  t := TProcess.Create(nil);
   t.CommandLine := FindBinary('ps') + ' -A' + cmd;
   t.Options := [poUsePipes, poWaitonexit];
   try
@@ -612,6 +612,7 @@ begin
   Label13.Caption := rsInstallationMode;
   Label14.Caption := rsIModeInstruction;
   ModeGroup.Caption := rsMode;
+  CbExecApp.Caption := rsExecNewApp;
 
   NoteBook1.PageIndex := 0;
   NoteBook1.ShowTabs := false;
@@ -800,7 +801,7 @@ begin
       Application.ProcessMessages;
       if FileExists(Process1.CommandLine) then
        Process1.Execute
-      else ShowMessage('Executable of this app was not found!');
+      else ShowMessage(rsCNFindAppExecutable);
       ShowMessage(rsTestFinished);
       Process1.CommandLine := 'rm -rf /tmp/litest';
       Process1.Execute;
