@@ -22,8 +22,7 @@ interface
 
 uses
   Classes, DB, FileUtil, GetText, IniFiles, ipkdef, liBasic, LiCommon,
-  liDBusProc,
-  liTypes, packagekit, Process, SQLite3Ds, SysUtils, TRStrings;
+  liDBusProc, liTypes, PackageKit, Process, SQLite3Ds, SysUtils, TRStrings;
 
 type
   PAppManager = ^TAppManager;
@@ -317,89 +316,12 @@ var
             Version := PChar(rsVersion + ': ' +
               d.ReadString('Desktop Entry', 'X-AppVersion', ''));
 
-          //Load the icon
-          if (LowerCase(ExtractFileExt(d.ReadString('Desktop Entry', 'Icon', ''))) <>
-            '.tiff') then
+          entry.Icon := PChar(GetAppIconPath(d.ReadString('Desktop Entry', 'Icon', '')));
+
+          if not FileExists(entry.Icon) then
           begin
             entry.Icon := '';
-            try
-              if (d.ReadString('Desktop Entry', 'Icon', '') <> '') and
-                (d.ReadString('Desktop Entry', 'Icon', '')[1] <> '/') then
-              begin
-                if FileExists('/usr/share/icons/hicolor/64x64/apps/' +
-                  d.ReadString('Desktop Entry', 'Icon', '') + '.png') then
-                  Icon := PChar('/usr/share/icons/hicolor/64x64/apps/' +
-                    d.ReadString('Desktop Entry', 'Icon', '') + '.png')
-                else
-                  if FileExists('/usr/share/icons/hicolor/64x64/apps/' +
-                    d.ReadString('Desktop Entry', 'Icon', '')) then
-                    Icon := PChar('/usr/share/icons/hicolor/64x64/apps/' +
-                      d.ReadString('Desktop Entry', 'Icon', ''))
-                  else
-
-                    if FileExists('/usr/share/pixmaps/' + ChangeFileExt(
-                      d.ReadString('Desktop Entry', 'Icon', ''), '') + '.xpm') and
-                      (ExtractFileExt(d.ReadString('Desktop Entry', 'Icon', '')) =
-                      '.xpm') then
-                      Icon := PChar('/usr/share/pixmaps/' + ChangeFileExt(
-                        d.ReadString('Desktop Entry', 'Icon', ''), '') + '.xpm')
-                    else if FileExists('/usr/share/pixmaps/' +
-                        d.ReadString('Desktop Entry', 'Icon', '') + '.xpm') then
-                        Icon :=
-                          PChar('/usr/share/pixmaps/' + d.ReadString(
-                          'Desktop Entry', 'Icon', '') + '.xpm');
-                if (FileExists('/usr/share/pixmaps/' + ChangeFileExt(
-                  d.ReadString('Desktop Entry', 'Icon', ''), '') + '.png')) and
-                  (ExtractFileExt(d.ReadString('Desktop Entry', 'Icon', '')) =
-                  '.png') then
-                  Icon := PChar('/usr/share/pixmaps/' + ChangeFileExt(
-                    d.ReadString('Desktop Entry', 'Icon', ''), '') + '.png')
-                else if FileExists('/usr/share/pixmaps/' + d.ReadString(
-                    'Desktop Entry', 'Icon', '') + '.png') then
-                    Icon := PChar('/usr/share/pixmaps/' + d.ReadString(
-                      'Desktop Entry', 'Icon', '') + '.png');
-                if FileExists('/usr/share/icons/hicolor/128x128/apps/' +
-                  d.ReadString('Desktop Entry', 'Icon', '') + '.png') then
-                  Icon := PChar('/usr/share/icons/hicolor/128x128/apps/' +
-                    d.ReadString('Desktop Entry', 'Icon', '') + '.png')
-                else
-                  if FileExists('/usr/share/icons/hicolor/128x128/apps/' +
-                    d.ReadString('Desktop Entry', 'Icon', '')) then
-                    Icon := PChar('/usr/share/icons/hicolor/128x128/apps/' +
-                      d.ReadString('Desktop Entry', 'Icon', ''));
-
-                { This code is EXPERIMENTAL!}
-                //Load KDE4 Icons
-                //GetEnvironmentVariable('KDEDIRS')
-
-                if FileExists('/usr/share/icons/default.kde4/64x64/apps/' +
-                  d.ReadString('Desktop Entry', 'Icon', '') + '.png') then
-                  Icon := PChar('/usr/share/icons/default.kde4/64x64/apps/' +
-                    d.ReadString('Desktop Entry', 'Icon', '') + '.png')
-                else
-                  if FileExists('/usr/lib/kde4/share/icons/hicolor/64x64/apps/' +
-                    d.ReadString('Desktop Entry', 'Icon', '') + '.png') then
-                    Icon := PChar('/usr/lib/kde4/share/icons/hicolor/64x64/apps/' +
-                      d.ReadString('Desktop Entry', 'Icon', '') + '.png')
-                  else
-                    if FileExists('/usr/share/icons/default.kde/64x64/apps/' +
-                      d.ReadString('Desktop Entry', 'Icon', '') + '.png') then
-                      Icon := PChar('/usr/share/icons/default.kde/64x64/apps/' +
-                        d.ReadString('Desktop Entry', 'Icon', '') + '.png');
-
-              end
-              else
-              begin
-                if (FileExists(d.ReadString('Desktop Entry', 'Icon', ''))) and
-                  (LowerCase(ExtractFileExt(d.ReadString('Desktop Entry',
-                  'Icon', ''))) <> '.svg') then
-                  Icon := PChar(d.ReadString('Desktop Entry', 'Icon', ''));
-              end;
-              //If icon loading failed
-            except
-              writeLn('ERROR: Unable to load icon!');
-              msg(StringReplace(rsCannotLoadIcon, '%a', Name, [rfReplaceAll]));
-            end;
+            msg(StrSubst(rsCannotLoadIcon, '%a', Name));
           end;
         end;
         newapp(fname, entry);

@@ -50,6 +50,8 @@ function GetLibDepends(f: String; lst: TStringList): Boolean;
 function FileCopy(Source, dest: String): Boolean;
 //** Check if file is configuration file
 function HasConfigMod(fname: String): Boolean;
+//** Search for full application icon path on system
+function GetAppIconPath(icon: String): String;
 
 //** Shows system notification box
 procedure ShowPopupNotify(msg: String; urgency: TUrgencyLevel; time: Integer);
@@ -132,13 +134,20 @@ begin
     else
       s := StringReplace(s, '$LIB', '/usr/lib', [rfReplaceAll]);
     s := StringReplace(s, '$APP', '/usr/share/applications', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-16', '/usr/share/icons/hicolor/16x16/apps', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-24', '/usr/share/icons/hicolor/24x24/apps', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-32', '/usr/share/icons/hicolor/32x32/apps', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-48', '/usr/share/icons/hicolor/48x48/apps', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-64', '/usr/share/icons/hicolor/64x64/apps', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-128', '/usr/share/icons/hicolor/128x128/apps', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-256', '/usr/share/icons/hicolor/256x256/apps', [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-16', '/usr/share/icons/hicolor/16x16/apps',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-24', '/usr/share/icons/hicolor/24x24/apps',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-32', '/usr/share/icons/hicolor/32x32/apps',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-48', '/usr/share/icons/hicolor/48x48/apps',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-64', '/usr/share/icons/hicolor/64x64/apps',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-128', '/usr/share/icons/hicolor/128x128/apps',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-256', '/usr/share/icons/hicolor/256x256/apps',
+      [rfReplaceAll]);
     s := StringReplace(s, '$PIX', '/usr/share/pixmaps', [rfReplaceAll]);
   end
   else
@@ -190,13 +199,20 @@ begin
     s := StringReplace(s, '$INST-X', GetXHome + '/.appfiles', [rfReplaceAll]);
     s := StringReplace(s, '$OPT', GetXHome + '/.appfiles', [rfReplaceAll]);
     s := StringReplace(s, '$APP', GetXHome + '/.applications', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-16', GetXHome + '/.appfiles/icons/16x16', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-24', GetXHome + '/.appfiles/icons/24x24', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-32', GetXHome + '/.appfiles/icons/32x32', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-48', GetXHome + '/.appfiles/icons/48x48', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-64', GetXHome + '/.appfiles/icons/64x64', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-128', GetXHome + '/.appfiles/icons/128x128', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-256', GetXHome + '/.appfiles/icons/256x256', [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-16', GetXHome + '/.appfiles/icons/16x16',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-24', GetXHome + '/.appfiles/icons/24x24',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-32', GetXHome + '/.appfiles/icons/32x32',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-48', GetXHome + '/.appfiles/icons/48x48',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-64', GetXHome + '/.appfiles/icons/64x64',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-128', GetXHome + '/.appfiles/icons/128x128',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-256', GetXHome + '/.appfiles/icons/256x256',
+      [rfReplaceAll]);
     s := StringReplace(s, '$PIX', GetXHome + '/.appfiles/icons/common', [rfReplaceAll]);
   end;
   Result := s;
@@ -278,6 +294,96 @@ begin
   Result := str;
 end;
 
+function GetAppIconPath(icon: String): String;
+var
+  res: String;
+  hasExt: Boolean;
+
+  function GetExt(str: String): String;
+  begin
+    Result := LowerCase(ExtractFileExt(str));
+  end;
+
+  function CheckRes: Boolean;
+  begin
+    Result := true;
+    if not FileExists(res) then
+      res := '';
+    if res = '' then
+      Result := false;
+  end;
+
+  function Checkdir(dir: String): Boolean;
+  begin
+    dir := dir+'/';
+    if not hasExt then
+    begin
+      res := dir+icon+'.png';
+      if not Checkres then
+      begin
+        res := dir+icon+'.xpm';
+        if not Checkres then
+        begin
+          res := dir+icon+'.jpg';
+          if not Checkres then
+          begin
+            res := dir+icon+'.bmp';
+            Checkres;
+          end;
+        end;
+      end;
+    end
+    else
+    begin
+      res := dir+icon;
+      Checkres;
+    end;
+    Result := true;
+    if res = '' then
+      Result := false;
+  end;
+
+begin
+  Result := '';
+  if icon = '' then
+    exit;
+  //Cannot work with those files
+  if GetExt(icon) = '.tiff' then
+    exit;
+  if GetExt(icon) = '.svg' then
+    exit;
+
+  if (FileExists(icon)) then
+    Result := icon;
+  hasExt := true;
+  if GetExt(icon) = '' then
+    hasExt := false;
+
+  if Checkdir('/usr/share/icons/hicolor/64x64/apps') then
+    Result := res;
+  if res = '' then
+    if Checkdir('/usr/share/pixmaps') then
+      Result := res;
+  if res = '' then
+    if Checkdir('/usr/share/icons/hicolor/48x48/apps') then
+      Result := res;
+  if res = '' then
+    if Checkdir('/usr/share/icons/hicolor/128x128/apps') then
+      Result := res;
+  if res = '' then
+    if Checkdir('/usr/share/icons/locolor/64x64/apps') then
+      Result := res;
+  if res = '' then
+    if Checkdir('/usr/share/icons/default.kde4/64x64/apps') then
+      Result := res;
+  if res = '' then
+    if Checkdir('/usr/lib/kde4/share/icons/hicolor/64x64/apps') then
+      Result := res;
+  if res = '' then
+    if Checkdir('/usr/share/icons/default.kde/64x64/apps') then
+      Result := res;
+end;
+
 procedure ShowPopupNotify(msg: String; urgency: TUrgencyLevel; time: Integer);
 var
   p: TProcess;
@@ -289,8 +395,8 @@ begin
   p.Options := [poUsePipes];
   if DInfo.DBase = 'KDE' then
   begin
-    p.CommandLine := FindBinary('kdialog') + ' --passivepopup "' + msg +
-      '" --title "Listaller Message" ' + IntToStr(time);
+    p.CommandLine := FindBinary('kdialog') + ' --passivepopup "' +
+      msg +  '" --title "Listaller Message" ' + IntToStr(time);
     p.Execute;
     p.Free;
     exit;
@@ -303,8 +409,8 @@ begin
         ulLow: s := 'low';
         ulCritical: s := 'critical';
       end;
-      p.CommandLine := FindBinary('notify-send') + ' --urgency=' + s + ' --expire-time=' +
-        IntToStr(time * 1000) + ' "' + msg + '"';
+      p.CommandLine := FindBinary('notify-send') + ' --urgency=' +
+        s + ' --expire-time=' +  IntToStr(time * 1000) + ' "' + msg + '"';
       p.Execute;
       p.Free;
       exit;
