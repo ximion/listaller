@@ -365,6 +365,9 @@ begin
     if Checkdir('/usr/share/pixmaps') then
       Result := res;
   if res = '' then
+    if Checkdir('/usr/share/icons') then
+      Result := res;
+  if res = '' then
     if Checkdir('/usr/share/icons/hicolor/48x48/apps') then
       Result := res;
   if res = '' then

@@ -4,8 +4,8 @@ Maintainer: Matthias Klumpp <matthias@nlinux.org>
 Priority: optional
 Homepage: http://listaller.nlinux.org
 Standards-Version: 3.8.4
-Build-Depends: libgtk2.0-dev, cdbs, quilt, lazarus (>=0.9.29), fpc (>= 2.4.0),
- debhelper (>= 5), libqt4pas-dev, libsqlite3-dev, libglib2.0-dev,
+Build-Depends: libgtk2.0-dev, cdbs, debhelper (>= 5), fpc (>= 2.4.0), lcl-units (>=0.9.29),
+ lcl-utils, lcl-gtk2, lcl-qt4, lcl-nogui, libqt4pas-dev, libsqlite3-dev, libglib2.0-dev,
  libpackagekit-glib2-dev (>= 0.5.6), libdbus-1-dev, libpolkit-gobject-1-dev
 
 Package: libinstaller0.4.0

@@ -688,13 +688,14 @@ begin
 
     tmp := TStringList.Create;
     pkit.RsList := tmp;
-    pkit.PkgNameFromFile(id);
+    pkit.PkgNameFromFile(id,true);
 
     setpos(20);
 
+    p_debug('PkgNameSearch finished.');
     if pkit.PkFinishCode > 1 then
     begin
-      request(rsPKitProbPkMon, rqError);
+      request(PAnsiChar(rsPKitProbPkMon+#10+rsECode+' '+IntToStr(pkit.PkFinishCode)), rqError);
       pkit.Free;
       tmp.Free;
       exit;
@@ -702,6 +703,8 @@ begin
 
     if (tmp.Count > 0) then
     begin
+      p_debug('Start detection...');
+      p_debug('PkgName: '+tmp[0]);
       f := tmp[0];
 
       msg('Package detected: ' + f);

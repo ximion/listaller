@@ -105,7 +105,7 @@ public
  function InstallPkg(pkg: String): Boolean;
  {** Get the name of the package, the file belongs to (!for installed pkgs only!) @param fname Name of the file
     @returns True if action was not cancelled}
- function PkgNameFromFile(fname: String): Boolean;
+ function PkgNameFromFile(fname: String;const desktopfile: Boolean=false): Boolean;
  {** Installs a package from file @param fname Name of the package file
       @returns True if action was not cancelled}
  function InstallLocalPkg(fname: String): Boolean;
@@ -183,6 +183,8 @@ function  pk_client_get_type(): GType;cdecl;external name 'pk_client_get_type';
 
 implementation
 
+uses PkDesktop;
+
 procedure InitializeGType;
 begin
  //Needed for use with Qt4
@@ -239,7 +241,7 @@ pk:=TPackageKit(user_data);
    end;
    PK_PROGRESS_TYPE_PERCENTAGE:
    begin
-    g_object_get(progress,'percentage', @percentage,nil);
+     g_object_get(progress,'percentage', @percentage,nil);
     // ShowMessage('Percentage: '+IntToStr(percentage));
     if percentage = 101 then
      pk.Setprogress(0)
@@ -313,6 +315,14 @@ pk:=TPackageKit(user_data);
      g_object_get(progress,'package-id', @pid,nil);
       pk.pkglist.Add(pid);
     end;
+   end;
+   PK_PROGRESS_TYPE_PERCENTAGE:
+   begin
+    g_object_get(progress,'percentage', @percentage,nil);
+    if percentage = 101 then
+     pk.Setprogress(0)
+    else
+     pk.SetProgress(percentage);
    end;
   end;
 end;
@@ -414,7 +424,6 @@ begin
   arg := StringToPPchar(pkg, 0);
 
   cancellable:=g_cancellable_new;
-  writeLn(pkg);
    pk_client_remove_packages_async(pkclient,arg,true,false,cancellable,@OnPKProgress,self,@OnPkActionFinished,self);
   g_main_loop_run(loop);
 
@@ -467,28 +476,62 @@ begin
   g_object_unref(gcan);
 end;
 
-function TPackageKit.PkgNameFromFile(fname: String): Boolean;
+function TPackageKit.PkgNameFromFile(fname: String;const desktopfile: Boolean=false): Boolean;
 var filter: guint64;
     error: PGError=nil;
     cancellable: Pointer;
+    pkg: String;
+    pkdesk: Pointer;
 begin
   done:=false;
-  filter:=pk_filter_bitfield_from_text('installed');
 
-  cancellable:=g_cancellable_new;
-   pk_client_search_files_async(pkclient,filter,StringToPPchar(fname, 0),cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
-  g_main_loop_run(loop);
+  pkglist.Clear;
+  pkg:='';
+  //Do not use this for _every_ desktop file.
+  //Sometimes it might be better to do a complete search.
+  // Using PkDesktop can be set by var desktopfile
+  if (desktopfile=true)and(LowerCase(ExtractFileExt(fname))='.desktop')
+  then
+  begin
+    pkdesk := pk_desktop_new();
+    try
+     pk_desktop_open_database(pkdesk,@error);
+     if error = nil then
+      pkg := pk_desktop_get_package_for_file(pkdesk,PGChar(fname),@error);
+      pkglist.Add(pkg);
 
-  Result:=true;
-  g_cancellable_set_error_if_cancelled(cancellable,@error);
+     exitcode:=1;
+    finally
+     g_object_unref(pkdesk);
+    end;
+    Result:=true;
+  end;
+
+  //If package was not found yet or PkDesktop-mode is not activated
+  if StrSubst(pkg,' ','')='' then
+  begin
+    pkglist.Clear;
+    Result:=false;
+    if error<>nil then g_error_free(error);
+     filter:=pk_filter_bitfield_from_text('installed');
+
+    cancellable:=g_cancellable_new;
+     pk_client_search_files_async(pkclient,filter,StringToPPchar(fname, 0),cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
+    g_main_loop_run(loop);
+
+    Result:=true;
+    g_cancellable_set_error_if_cancelled(cancellable,@error);
+    g_object_unref(cancellable);
+  end;
+
   if error<>nil then
   begin
     g_warning('failed: %s', [error^.message]);
     ErrorMsg:=error^.message;
     g_error_free(error);
+    exitcode:=112;
     Result:=false;
   end;
-  g_object_unref(cancellable);
 end;
 
 function TPackageKit.InstallLocalPkg(fname: String): Boolean;

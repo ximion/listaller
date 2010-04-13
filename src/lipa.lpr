@@ -420,7 +420,6 @@ end;
 {$R *.res}
 
 begin
-  Application.Title:='Lipa';
   Application:=TLipa.Create(nil);
   Application.OnException:=@Application.OnExeception;
   Application.Run;
