@@ -6,6 +6,7 @@
 *.lrs
 *.res
 *.or
+*.o
 *.so
 *.lps
 .directory

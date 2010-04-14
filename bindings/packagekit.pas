@@ -188,9 +188,9 @@ uses PkDesktop;
 procedure InitializeGType;
 begin
  //Needed for use with Qt4
- {$IFNDEF LCLGTK2}
+ //{$IFNDEF LCLGTK2}
   g_type_init();
- {$ENDIF}
+ //{$ENDIF}
 end;
 
 function PK_CLIENT(o: GPointer): PGTypeInstance;
@@ -484,6 +484,7 @@ var filter: guint64;
     pkdesk: Pointer;
 begin
   done:=false;
+  error:=nil;
 
   pkglist.Clear;
   pkg:='';
@@ -512,7 +513,12 @@ begin
   begin
     pkglist.Clear;
     Result:=false;
-    if error<>nil then g_error_free(error);
+    if error<>nil then
+    begin
+      g_error_free(error);
+      error:=nil;
+    end;
+
      filter:=pk_filter_bitfield_from_text('installed');
 
     cancellable:=g_cancellable_new;

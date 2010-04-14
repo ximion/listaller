@@ -5,13 +5,12 @@ program project1;
 uses
   cthreads,
   Interfaces, // this includes the LCL widgetset
-  Forms, Unit1, LResources, pkdesktop
+  Forms, Unit1, pkdesktop
   { you can add units after this };
 
-{$IFDEF WINDOWS}{$R project1.rc}{$ENDIF}
+{$R project1.res}
 
 begin
-  {$I project1.lrs}
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
   Application.Run;

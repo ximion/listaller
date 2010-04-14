@@ -8,7 +8,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ComCtrls, packagekit, Messages, pkdesktop, glib2;
+  StdCtrls, ComCtrls, packagekit, Messages, pkdesktop, glib2, Installer;
 
 type
 
@@ -29,7 +29,11 @@ var
   Form1: TForm1;
   pkit: TPackageKit;
 
+function test_pkit: PChar;cdecl;external 'libinstaller.so';
+
 implementation
+
+{$R *.lfm}
 
 { TForm1 }
 
@@ -51,13 +55,13 @@ begin
   ShowMessage(tmp[0]);
   //ShowMessage(h[0]);
   ShowMessage('OK, Done'#10+pkit.LastErrorMessage);
-  pkit.Free;
+  pkit.Free;  }
 
-{ p:=pk_desktop_new;
+ p:=pk_desktop_new;
  pk_desktop_open_database(p,nil);
  q:=pk_desktop_get_files_for_package(p,'lazarus',nil);
 
- g_ptr_array_foreach(q,@ArrFunc,nil);  }
+ g_ptr_array_foreach(q,@ArrFunc,nil);
 
 end;
 
@@ -66,9 +70,6 @@ begin
   ProgressBar1.Position:=pos;
   Application.ProcessMessages;
 end;
-
-initialization
-  {$I unit1.lrs}
 
 end.
 
