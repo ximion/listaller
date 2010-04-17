@@ -1592,8 +1592,8 @@ object MnFrm: TMnFrm
       end
       object SpacerPan: TPanel
         Left = 0
-        Height = 98
-        Top = 408
+        Height = 1
+        Top = 505
         Width = 112
         Align = alBottom
         AutoSize = True

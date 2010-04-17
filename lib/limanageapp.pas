@@ -21,8 +21,10 @@ unit limanageapp;
 interface
 
 uses
-  Classes, DB, FileUtil, GetText, IniFiles, ipkdef, liBasic, LiCommon,
-  liDBusProc, liTypes, PackageKit, Process, SQLite3Ds, SysUtils, TRStrings;
+  DB, GLib2, ipkdef, Classes, GetText, liBasic, liTypes, MTProcs,
+  Process, FileUtil, IniFiles, LiCommon,
+  SysUtils, SQLite3Ds, TRStrings,
+  liDBusProc, PackageKit;
 
 type
   PAppManager = ^TAppManager;
@@ -33,16 +35,20 @@ type
     FReq: TRequestCall;
     FApp: TAppEvent;
     FStatus: TLiStatusChangeCall;
-    sdata: TLiStatusData; //Contains the current progress
 
     //Some user data
     statechangeudata: Pointer;
     requestudata: Pointer;
 
+    //State data
+    sdata: TLiStatusData; //Contains the current progress
+
     procedure msg(s: String);
     function request(s: String; ty: TRqType): TRqResult;
     procedure newapp(s: String; oj: TAppInfo);
+    procedure setstate(state: LiProcStatus);
     procedure setpos(i: Integer);
+
     function IsInList(nm: String; list: TStringList): Boolean;
     //** Method that removes MOJO/LOKI installed applications @param dsk Path to the .desktop file of the application
     function UninstallMojo(dsk: String): Boolean;
@@ -95,7 +101,7 @@ implementation
 
 constructor TAppManager.Create;
 begin
-  inherited;
+  inherited Create;
 end;
 
 destructor TAppManager.Destroy;
@@ -149,6 +155,13 @@ begin
     FStatus(scMnProgress, sdata, statechangeudata);
 end;
 
+procedure TAppManager.SetState(state: LiProcStatus);
+begin
+  sdata.lastresult := state;
+  if Assigned(FStatus) then
+    FStatus(scStatus, sdata, statechangeudata);
+end;
+
 function TAppManager.IsInList(nm: String; list: TStringList): Boolean;
 begin
   Result := list.IndexOf(nm) > -1;
@@ -179,7 +192,7 @@ var
     lp: String;
     translate: Boolean; //Used, because Assigned(dt) throws an AV
     gr: TGroupType;
-    //Translate string if possible/necessary
+    //Translate string if possible
     function ldt(s: String): String;
     var
       h: String;
@@ -578,7 +591,7 @@ begin
     begin
       sdata.lastresult := ty;
       if Assigned(FStatus) then
-        FStatus(scActionStatus, sdata, statechangeudata);
+        FStatus(scStatus, sdata, statechangeudata);
     end;
   end;
 end;
@@ -662,6 +675,7 @@ begin
 
 end;
 
+
 //Initialize appremove: Detect rdepends if package is native, if package is native, add "pkg:" to
 // identification string - if not, pkg has to be Loki/Mojo, so intitiate Mojo-Removal. After rdepends and pkg resolve is done,
 // run uninstall as root if necessary. At the end, RemoveAppInternal() is called (if LOKI-Remove was not run) to uninstall
@@ -676,6 +690,12 @@ var
   buscmd: ListallerBusCommand;
 begin
   id := obj.UId;
+  if id = '' then
+  begin
+    p_error('Invalid application info passed: No ID found.');
+    exit;
+  end;
+  SetState(prStarted);
   if (FileExists(id)) and (id[1] = '/') and (copy(id, 1, 4) <> 'pkg:') then
   begin
     ShowPKMon();
@@ -683,19 +703,27 @@ begin
     msg('Connecting to PackageKit... (run "pkmon" to see the actions)');
     msg('Detecting package...');
 
+    p_debug('A');
     pkit := TPackageKit.Create;
     pkit.OnProgress := @PkitProgress;
+    p_debug('B');
 
     tmp := TStringList.Create;
     pkit.RsList := tmp;
-    pkit.PkgNameFromFile(id,true);
+
+    pkit.PkgNameFromFile(id, true);
+
+    p_debug('C');
 
     setpos(20);
+    p_debug('D');
+    while not pkit.Finished do ;
 
     p_debug('PkgNameSearch finished.');
     if pkit.PkFinishCode > 1 then
     begin
-      request(PAnsiChar(rsPKitProbPkMon+#10+rsECode+' '+IntToStr(pkit.PkFinishCode)), rqError);
+      request(PAnsiChar(rsPKitProbPkMon+#10+rsECode+' '+IntToStr(pkit.PkFinishCode)),
+        rqError);
       pkit.Free;
       tmp.Free;
       exit;
@@ -708,13 +736,14 @@ begin
       f := tmp[0];
 
       msg('Package detected: ' + f);
-
       msg('Looking for reverse-dependencies...');
 
       tmp.Clear;
+
       pkit.GetRequires(f);
-      while not pkit.PkFinished do
-        setpos(25);
+      while not pkit.Finished do ;
+
+      setpos(25);
       g := '';
 
       for i := 0 to tmp.Count - 1 do
@@ -746,6 +775,7 @@ begin
       OnStatus := @DBusStatusChange;
       ExecuteAction;
       Free;
+      SetState(prFinished);
     end;
     exit;
   end;
@@ -754,6 +784,7 @@ begin
     UninstallMojo(id)
   else
     InternalRemoveApp(obj);
+  SetState(prFinished);
 end;
 
 function TAppManager.CheckApps(report: TStringList; const fix: Boolean = false;

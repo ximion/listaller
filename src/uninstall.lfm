@@ -109,13 +109,6 @@ object RMForm: TRMForm
     OnClick = DetailsBtnClick
     TabOrder = 3
   end
-  object GetOutPutTimer: TIdleTimer
-    Enabled = False
-    Interval = 8
-    OnTimer = GetOutPutTimerTimer
-    left = 400
-    top = 8
-  end
   object Process1: TProcess
     Active = False
     Options = [poUsePipes, poStderrToOutPut, poNoConsole]

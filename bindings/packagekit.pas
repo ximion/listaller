@@ -55,7 +55,7 @@ TPkProgressCallback = procedure(progress: Pointer;ptype: PK_PROGRESS_TYPE;user_d
 //** Pointer to TPackageKit object
 PPackageKit = ^TPackageKit;
 
-//** PackageKit wrapper
+//** Custom PackageKit wrapper
 TPackageKit = class
 private
  //Resulting list
@@ -124,6 +124,8 @@ public
  property OnProgress: TProgressEvent read FProg write FProg;
  //** Read the last error message
  property LastErrorMessage: String read ErrorMsg;
+ //** Read if object is idle
+ property Finished: Boolean read done;
 end;
 
 PPkPackageId = ^PkPackageID;
@@ -188,9 +190,9 @@ uses PkDesktop;
 procedure InitializeGType;
 begin
  //Needed for use with Qt4
- //{$IFNDEF LCLGTK2}
-  g_type_init();
- //{$ENDIF}
+  //{$IFNDEF LCLGTK2}
+   g_type_init();
+  //{$ENDIF}
 end;
 
 function PK_CLIENT(o: GPointer): PGTypeInstance;
@@ -350,7 +352,7 @@ begin
   if error<>nil then
   begin
     Result:=false;
-    g_warning('failed: %s', [error^.message]);
+    g_warning('action failed: %s', [error^.message]);
     g_error_free(error);
     Result:=false;
   end;
@@ -432,7 +434,7 @@ begin
   if error<>nil then
   begin
     Result:=false;
-    g_warning('failed: %s', [error^.message]);
+    g_warning('action failed: %s', [error^.message]);
     ErrorMsg:=error^.message;
     g_error_free(error);
     Result:=false;

@@ -22,176 +22,187 @@ unit applist;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, StdCtrls, Graphics, Controls,
-  LCLType, Buttons, IconLoader, liBasic, AppItem, liTypes;
+  AppItem, Buttons, Classes, LCLType, liBasic, liTypes, ComCtrls, Controls,
+  Graphics, StdCtrls, SysUtils, IconLoader;
 
 type
- TAListRmButtonClick = procedure(Sender: TObject;Index: Integer;item: TAppInfoItem) of Object;
- TAListItemSelect = procedure(Sender: TObject;item: TAppInfoItem) of Object;
+  TAListRmButtonClick = procedure(Sender: TObject; Index: Integer;
+    item: TAppInfoItem) of object;
+  TAListItemSelect = procedure(Sender: TObject; item: TAppInfoItem) of object;
 
- TAppListView = class(TCustomListBox)
- private
-  btn: TBitBtn;
-  aList: TAppItemList;
-  procedure AListDrawItem(Control: TWinControl; Index: Integer;
-     ARect: TRect; State: TOwnerDrawState);
-  procedure AListCustomDrawItem(Control: TWinControl; Index: Integer; Rect: TRect;
-            State: TOwnerDrawState);
-  procedure AListOnRmBtnClick(Sender: TObject);
-  procedure AListSelectionChange(Sender: TObject; User: boolean);
- protected
-  FOnRmClick: TAListRmButtonClick;
-  FOnItemSelect: TAListItemSelect;
-  procedure SetVisible(Value: Boolean);override;
- public
-  constructor Create(TheOwner: TComponent;const ownItems: Boolean=true);
-  destructor  Destroy; override;
+  TAppListView = class(TCustomListBox)
+  private
+    btn: TBitBtn;
+    aList: TAppItemList;
+    procedure AListDrawItem(Control: TWinControl; Index: Integer;
+      ARect: TRect; State: TOwnerDrawState);
+    procedure AListCustomDrawItem(Control: TWinControl; Index: Integer;
+      Rect: TRect; State: TOwnerDrawState);
+    procedure AListOnRmBtnClick(Sender: TObject);
+    procedure AListSelectionChange(Sender: TObject; User: Boolean);
+  protected
+    FOnRmClick: TAListRmButtonClick;
+    FOnItemSelect: TAListItemSelect;
+    procedure SetVisible(Value: Boolean); override;
+  public
+    constructor Create(TheOwner: TComponent; const ownItems: Boolean = true);
+    destructor Destroy; override;
 
-  procedure ItemFromAppInfo(ai: TAppInfo);
-  procedure AddItem(item: TAppInfoItem);
-  procedure ClearList;
-  property OnRmButtonClick: TAListRmButtonClick read FOnRmClick write FOnRmClick;
-  property OnItemSelect: TAListItemSelect read FOnItemSelect write FOnItemSelect;
-  property AppItems: TAppItemList read aList write aList;
- end;
+    procedure ItemFromAppInfo(ai: TAppInfo);
+    procedure AddItem(item: TAppInfoItem);
+    procedure ClearList;
+    property OnRmButtonClick: TAListRmButtonClick read FOnRmClick write FOnRmClick;
+    property OnItemSelect: TAListItemSelect read FOnItemSelect write FOnItemSelect;
+    property AppItems: TAppItemList read aList write aList;
+  end;
 
 implementation
 
 { TAppListView }
 
-constructor TAppListView.Create(TheOwner: TComponent;const ownItems: Boolean=true);
+constructor TAppListView.Create(TheOwner: TComponent; const ownItems: Boolean = true);
 begin
- inherited Create(TheOwner);
+  inherited Create(TheOwner);
 
- Style:=lbOwnerDrawVariable;
- ItemHeight:=48;
- OnSelectionChange:=@AListSelectionChange;
- OnDrawItem:=@AListDrawItem;
+  Style := lbOwnerDrawVariable;
+  ItemHeight := 48;
+  OnSelectionChange := @AListSelectionChange;
+  OnDrawItem := @AListDrawItem;
 
- aList:=TAppItemList.Create(ownItems);
+  aList := TAppItemList.Create(ownItems);
 
- btn:=TBitBtn.Create(self);
- btn.Parent:=self;
- btn.Tag:=-1;
- btn.Width:=40;
- btn.Height:=40;
- btn.Visible:=false;
- btn.OnClick:=@AListOnRmBtnClick;
+  btn := TBitBtn.Create(self);
+  btn.Parent := self;
+  btn.Tag := -1;
+  btn.Width := 40;
+  btn.Height := 40;
+  btn.Visible := false;
+  btn.OnClick := @AListOnRmBtnClick;
 
- LoadStockPixmap(STOCK_DELETE,ICON_SIZE_BUTTON,btn.Glyph);
+  LoadStockPixmap(STOCK_DELETE, ICON_SIZE_BUTTON, btn.Glyph);
 end;
 
 destructor TAppListView.Destroy;
 begin
- btn.Free;
- aList.Free;
- inherited;
+  btn.Free;
+  aList.Free;
+  inherited;
 end;
 
-procedure TAppListView.AListDrawItem(Control: TWinControl;
-  Index: Integer; ARect: TRect; State: TOwnerDrawState);
+procedure TAppListView.AListDrawItem(Control: TWinControl; Index: Integer;
+  ARect: TRect; State: TOwnerDrawState);
 begin
   AListCustomDrawItem(Control, Index, ARect, State);
 end;
 
-procedure TAppListView.AListSelectionChange(Sender: TObject; User: boolean);
+procedure TAppListView.AListSelectionChange(Sender: TObject; User: Boolean);
 begin
-  if Assigned(FOnItemSelect) then FOnItemSelect(self,aList[self.ItemIndex]);
+  if Assigned(FOnItemSelect) then
+    FOnItemSelect(self, aList[self.ItemIndex]);
 end;
 
-procedure TAppListView.AListCustomDrawItem(Control: TWinControl; Index: Integer; Rect: TRect;
-  State: TOwnerDrawState);
+procedure TAppListView.AListCustomDrawItem(Control: TWinControl;
+  Index: Integer; Rect: TRect; State: TOwnerDrawState);
 var
   bmp: TBitmap;
   TopDif: Integer;
 begin
-if btn.Tag>=0 then
-if ((ItemRect(btn.Tag).Top)>(Top+Height-6))
-or ((ItemRect(btn.Tag).Top)<(Top+4)) then
- btn.Visible:=false;
+  if btn.Tag>0 then
+    if ((ItemRect(btn.Tag).Top)>(Top+Height-6))or ((ItemRect(btn.Tag).Top)<(Top+4)) then
+      btn.Visible := false;
 
   bmp := TBitmap.Create;
   try
-      //bmp.Transparent := True;
-      if (Index>=0) and (Index<Items.Count) then
-       bmp.Assign(aList[Index].Icon);
+    //bmp.Transparent := True;
+    if (Index>=0) and (Index<Items.Count) then
+      bmp.Assign(aList[Index].Icon);
 
-       {$IFDEF LCLQt}
-       if odSelected in State then
-        Canvas.Brush.Color:=clHighlight
-       else
-        Canvas.Brush.Color:=clWhite;
-       Canvas.FillRect(Rect);
-       {$ENDIF}
+    {$IFDEF LCLQt}
+     if odSelected in State then
+       Canvas.Brush.Color := clHighlight
+     else
+       Canvas.Brush.Color := clWhite;
+     Canvas.FillRect(Rect);
+    {$ENDIF}
 
-      if odSelected in State then
-      begin
-        Canvas.Font.Color:=clHotLight;
-        btn.Visible:=true;
-        btn.Top:=Rect.Top+6;
-        btn.Left:=Width-btn.Width-28;
-        btn.Tag:=Index;
-      end else
-        Canvas.Font.Color:=clWindowText;
+    if odSelected in State then
+    begin
+      // Canvas.Font.Color := clHotLight;
+      btn.Visible := true;
+      btn.Top := Rect.Top+6;
+      btn.Left := Width-btn.Width-26;
+      btn.Tag := Index;
+    end
+    else
+      Canvas.Font.Color := clWindowText;
 
-      Canvas.Font.Height:=12;
-      Canvas.TextRect(Rect, Rect.Left+bmp.Width+6,Rect.Top+4, aList[Index].Name);
-      TopDif := (ItemHeight div 2) - (Canvas.TextHeight('A') div 2);
-      Canvas.Font.Height:=9;
-      Canvas.TextRect(Rect, Rect.Left+bmp.Width+6,Rect.Top+TopDif+2, aList[Index].SDesc);
+    Canvas.Font.Height := 12;
+    Canvas.TextRect(Rect, Rect.Left+bmp.Width+6, Rect.Top+4, aList[Index].Name);
+    TopDif := (ItemHeight div 2) - (Canvas.TextHeight('A') div 2);
+    Canvas.Font.Height := 9;
+    Canvas.TextRect(Rect, Rect.Left+bmp.Width+6, Rect.Top+TopDif+2, aList[Index].SDesc);
       {if aList[Index].SDesc<>'' then
        TopDif := TopDif+(Canvas.TextHeight('A') div 2);
       Canvas.TextRect(Rect, Rect.Left+bmp.Width+6+10,Rect.Top+TopDif+2, aList[Index].Version);
       }
-      Canvas.Draw(Rect.Left, Rect.Top, bmp);
+    Canvas.Draw(Rect.Left, Rect.Top, bmp);
   finally
     bmp.Free;
   end;
 end;
 
 procedure TAppListView.ItemFromAppInfo(ai: TAppInfo);
-var new: TAppInfoItem;pic: TPicture;bmp: TBitmap;rect: TRect;
-const size=48;
+var
+  new: TAppInfoItem;
+  pic: TPicture;
+  bmp: TBitmap;
+  rect: TRect;
+const
+  size = 48;
 begin
- Items.Add(' ');
+  Items.Add(' ');
 
- new:=TAppInfoItem.Create;
- new.Name:=ai.Name;
- new.Author:=ai.Author;
- new.SDesc:=ai.ShortDesc;
- new.UId:=ai.UId;
- new.Version:=ai.Version;
- new.Group:=ai.Group;
+  new := TAppInfoItem.Create;
+  new.Name := ai.Name;
+  new.Author := ai.Author;
+  new.SDesc := ai.ShortDesc;
+  new.UId := ai.UId;
+  new.Version := ai.Version;
+  new.Group := ai.Group;
 
- aList.Add(new);
+  aList.Add(new);
 
- pic:=TPicture.Create;
- try
- if FileExists(ai.Icon) then
-   new.IconPath:=ai.Icon
- else
-   new.IconPath:=GetDataFile('graphics/spackage.png');
+  pic := TPicture.Create;
+  try
+    if FileExists(ai.Icon) then
+      new.IconPath := ai.Icon
+    else
+      new.IconPath := GetDataFile('graphics/spackage.png');
 
 
-   pic.LoadFromFile(new.IconPath);
- except
-  writeLn('Error while loading "'+ai.Icon+'"!');
-  new.IconPath:=GetDataFile('graphics/spackage.png');
- end;
+    pic.LoadFromFile(new.IconPath);
+  except
+    writeLn('Error while loading "'+ai.Icon+'"!');
+    new.IconPath := GetDataFile('graphics/spackage.png');
+  end;
 
   pic.LoadFromFile(new.IconPath);
 
-  bmp:=TBitmap.Create;
-  rect.Top:=0;
-  rect.Left:=0;
-  rect.Bottom:=size;
-  rect.Right:=size;
-  bmp.Width:=size;
-  bmp.height:=size;
-  bmp.Canvas.Brush.Color:=clNone;
-  bmp.Transparent:=true;
-  bmp.Canvas.FillRect(0,0,size,size);
-  bmp.Canvas.StretchDraw(rect,TGraphic(pic.Bitmap));
+  bmp := TBitmap.Create;
+  rect.Top := 0;
+  rect.Left := 0;
+  rect.Bottom := size;
+  rect.Right := size;
+  bmp.Width := size;
+  bmp.Height := size;
+  bmp.Canvas.Brush.Color := clNone;
+  bmp.Transparent := true;
+  bmp.Canvas.FillRect(0, 0, size, size);
+  {$IFNDEF LCLQt}
+   bmp.Mask(clNone);
+   bmp.Masked := true;
+  {$ENDIF}
+  bmp.Canvas.StretchDraw(rect, pic.Graphic);
   pic.Free;
   new.Icon.Assign(bmp);
   bmp.Free;
@@ -199,26 +210,26 @@ end;
 
 procedure TAppListView.AListOnRmBtnClick(Sender: TObject);
 begin
- FOnRmClick(Sender,btn.Tag,aList[btn.Tag]);
+  FOnRmClick(Sender, btn.Tag, aList[btn.Tag]);
 end;
 
 procedure TAppListView.SetVisible(Value: Boolean);
 begin
- inherited;
- if not Value then
-  btn.Visible:=false;
+  inherited;
+  if not Value then
+    btn.Visible := false;
 end;
 
 procedure TAppListView.AddItem(item: TAppInfoItem);
 begin
- Items.Add('');
- aList.Add(item);
+  Items.Add('');
+  aList.Add(item);
 end;
 
 procedure TAppListView.ClearList;
 begin
- Items.Clear;
- aList.Clear;
+  Items.Clear;
+  aList.Clear;
 end;
 
 end.

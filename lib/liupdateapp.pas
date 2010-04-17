@@ -387,7 +387,7 @@ begin
     begin
       sdata.lastresult := ty;
       if Assigned(FStatus) then
-        FStatus(scActionStatus, sdata, statechangeudata);
+        FStatus(scStatus, sdata, statechangeudata);
     end;
   end;
 end;

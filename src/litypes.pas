@@ -41,17 +41,18 @@ type
   TRqResult = (rqsYes, rqsNo, rqsOK);
   //** Type of a message (published)
   TMessageType = (mtStep, mtInfo);
-  //** Result of a DBus action
-  LiProcStatus = (prNone, prFailed, prAuthorized, prBlocked, prFinished, prError, prInfo);
+  //** Status of current job
+  LiProcStatus = (prNone, prFailed, prAuthorized, prBlocked, prFinished, prError, prInfo, prStarted);
 
   //** Things which can be changed
-  LiStatusChange = (scMnProgress, scExProgress, scActionStatus, scMessage, scStepMessage);
+  LiStatusChange = (scNone, scMnProgress, scExProgress, scStatus, scMessage, scStepMessage);
   //** Data assigned to a status change
   TLiStatusData = record
     msg: PChar;
     exprogress: Integer;
     mnprogress: Integer;
     lastresult: LiProcStatus;
+    change: LiStatusChange;
   end;
 
   //** Callback for change of status

@@ -30,7 +30,6 @@ type
   TRMForm = class(TForm)
     BitBtn1: TBitBtn;
     DetailsBtn: TBitBtn;
-    GetOutPutTimer: TIdleTimer;
     Label1: TLabel;
     Memo1: TMemo;
     Process1: TProcess;
@@ -41,7 +40,6 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure GetOutPutTimerTimer(Sender: TObject);
   private
     { private declarations }
     FActiv: Boolean;
@@ -69,53 +67,6 @@ begin
  self.Caption:=StringReplace(rsRMAppC,'%a','...',[rfReplaceAll])
 end;
 
-procedure TRMForm.GetOutPutTimerTimer(Sender: TObject);
-  var
-  NoMoreOutput: boolean;
-
-  procedure DoStuffForProcess(Process: TProcess;
-    OutputMemo: TMemo);
-  var
-    Buffer: string;
-    BytesAvailable: DWord;
-    BytesRead:LongInt;
-  begin
-
-    if Process.Running then
-    begin
-
-      BytesAvailable := Process.Output.NumBytesAvailable;
-      BytesRead := 0;
-      while BytesAvailable>0 do
-       begin
-        SetLength(Buffer, BytesAvailable);
-        BytesRead := Process.OutPut.Read(Buffer[1], BytesAvailable);
-        OutputMemo.Text := OutputMemo.Text + copy(Buffer,1, BytesRead);
-        Application.ProcessMessages;
-        BytesAvailable := Process.OutPut.NumBytesAvailable;
-        NoMoreOutput := false;
-      end;
-      if BytesRead>0 then
-        OutputMemo.SelStart := Length(OutputMemo.Text);
-    end;
-
-  end;
-begin
-  repeat
-    NoMoreOutput := true;
-    Application.ProcessMessages;
-
-    DoStuffForProcess(Process1, Memo1);
-  until noMoreOutput;
-if Process1.ExitStatus>0 then begin
-    GetOutputTimer.Enabled:=false;
-    ShowMessage(rsRMError);
-    Memo1.Lines.SaveTofile(ConfigDir+'uninstall.log');
-    halt;
-    exit;
-  end;
-end;
-
 procedure LogAdd(s: String);
 begin
 writeLn(s);
@@ -127,7 +78,7 @@ begin
  case change of
   scMessage     : LogAdd(data.msg);
   scMnProgress  : RMForm.UProgress.Position:=data.mnprogress;
-  scActionStatus: RMForm.astatus:=data.lastresult;
+  scStatus: RMForm.astatus:=data.lastresult;
  end;
  Application.ProcessMessages;
 end;
@@ -149,11 +100,13 @@ begin
  BitBtn1.Enabled:=false;
  Application.ProcessMessages;
   li_mgr_remove_app(@MnFrm.amgr,MnFrm.uApp);
- while astatus=prNone do
+ {while (astatus<>prFinished)
+  and (astatus<>prFailed)
+  and (astatus<>prError)do
  begin
   sleep(1);
   Application.ProcessMessages;
- end;
+ end; }
  li_mgr_register_status_call(@MnFrm.amgr,@manager.OnMgrStatus,nil);
 
  //!!!: Misterious crash appears when executing this code.

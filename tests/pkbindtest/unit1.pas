@@ -52,16 +52,18 @@ begin
   pkit.PkgNameFromFile('/usr/share/applications/nemiver.desktop');
   //pkit.RemovePkg('amor');
 
+  while not pkit.Finished do Application.ProcessMessages;
+
   ShowMessage(tmp[0]);
   //ShowMessage(h[0]);
   ShowMessage('OK, Done'#10+pkit.LastErrorMessage);
-  pkit.Free;  }
+  pkit.Free;
 
- p:=pk_desktop_new;
+{ p:=pk_desktop_new;
  pk_desktop_open_database(p,nil);
  q:=pk_desktop_get_files_for_package(p,'lazarus',nil);
 
- g_ptr_array_foreach(q,@ArrFunc,nil);
+ g_ptr_array_foreach(q,@ArrFunc,nil); }
 
 end;
 
