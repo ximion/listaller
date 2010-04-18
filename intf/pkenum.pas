@@ -1,0 +1,91 @@
+{ Copyright (C) 2010 Matthias Klumpp
+
+  Authors:
+   Matthias Klumpp
+
+  This unit is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation, version 3.
+
+  This unit is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License v3
+  along with this unit. If not, see <http://www.gnu.org/licenses/>.}
+//** Some PackageKit enums
+unit pkenum;
+
+{$mode objfpc}
+
+interface
+
+uses
+  Classes, SysUtils;
+
+type
+  //** PackageKit progress types
+  PkProgressType = (PK_PROGRESS_TYPE_PACKAGE_ID,
+    PK_PROGRESS_TYPE_PERCENTAGE,
+    PK_PROGRESS_TYPE_SUBPERCENTAGE,
+    PK_PROGRESS_TYPE_ALLOW_CANCEL,
+    PK_PROGRESS_TYPE_STATUS,
+    PK_PROGRESS_TYPE_ROLE,
+    PK_PROGRESS_TYPE_CALLER_ACTIVE,
+    PK_PROGRESS_TYPE_INVALID);
+
+  //** How the backend exits
+  PkExitEnum = (PK_EXIT_ENUM_UNKNOWN,
+    PK_EXIT_ENUM_SUCCESS,
+    PK_EXIT_ENUM_FAILED,
+    PK_EXIT_ENUM_CANCELLED,
+    PK_EXIT_ENUM_KEY_REQUIRED,
+    PK_EXIT_ENUM_EULA_REQUIRED,
+    PK_EXIT_ENUM_KILLED,
+    PK_EXIT_ENUM_MEDIA_CHANGE_REQUIRED,
+    PK_EXIT_ENUM_NEED_UNTRUSTED,
+    PK_EXIT_ENUM_LAST);
+
+  //** Transaction roles
+  PkRoleEnum = (PK_ROLE_ENUM_UNKNOWN,
+    PK_ROLE_ENUM_CANCEL,
+    PK_ROLE_ENUM_GET_DEPENDS,
+    PK_ROLE_ENUM_GET_DETAILS,
+    PK_ROLE_ENUM_GET_FILES,
+    PK_ROLE_ENUM_GET_PACKAGES,
+    PK_ROLE_ENUM_GET_REPO_LIST,
+    PK_ROLE_ENUM_GET_REQUIRES,
+    PK_ROLE_ENUM_GET_UPDATE_DETAIL,
+    PK_ROLE_ENUM_GET_UPDATES,
+    PK_ROLE_ENUM_INSTALL_FILES,
+    PK_ROLE_ENUM_INSTALL_PACKAGES,
+    PK_ROLE_ENUM_INSTALL_SIGNATURE,
+    PK_ROLE_ENUM_REFRESH_CACHE,
+    PK_ROLE_ENUM_REMOVE_PACKAGES,
+    PK_ROLE_ENUM_REPO_ENABLE,
+    PK_ROLE_ENUM_REPO_SET_DATA,
+    PK_ROLE_ENUM_RESOLVE,
+    PK_ROLE_ENUM_ROLLBACK,
+    PK_ROLE_ENUM_SEARCH_DETAILS,
+    PK_ROLE_ENUM_SEARCH_FILE,
+    PK_ROLE_ENUM_SEARCH_GROUP,
+    PK_ROLE_ENUM_SEARCH_NAME,
+    PK_ROLE_ENUM_UPDATE_PACKAGES,
+    PK_ROLE_ENUM_UPDATE_SYSTEM,
+    PK_ROLE_ENUM_WHAT_PROVIDES,
+    PK_ROLE_ENUM_ACCEPT_EULA,
+    PK_ROLE_ENUM_DOWNLOAD_PACKAGES,
+    PK_ROLE_ENUM_GET_DISTRO_UPGRADES,
+    PK_ROLE_ENUM_GET_CATEGORIES,
+    PK_ROLE_ENUM_GET_OLD_TRANSACTIONS,
+    PK_ROLE_ENUM_SIMULATE_INSTALL_FILES,
+    PK_ROLE_ENUM_SIMULATE_INSTALL_PACKAGES,
+    PK_ROLE_ENUM_SIMULATE_REMOVE_PACKAGES,
+    PK_ROLE_ENUM_SIMULATE_UPDATE_PACKAGES,
+    PK_ROLE_ENUM_LAST);
+
+
+implementation
+
+end.
+

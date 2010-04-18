@@ -101,7 +101,8 @@
       <Filename Value="../build/licreator"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../;../src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/components/synedit/"/>
+      <Libraries Value="$(ProjOutDir)/"/>
+      <OtherUnitFiles Value="../src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/components/synedit/"/>
       <UnitOutputDirectory Value="../build"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>

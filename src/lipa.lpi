@@ -56,7 +56,9 @@
       <Filename Value="../build/lipa"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../bindings/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
+      <Libraries Value="$(ProjOutDir)/"/>
+      <OtherUnitFiles Value="../intf/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
+      <UnitOutputDirectory Value="../build"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <Parsing>

@@ -21,39 +21,19 @@ unit packagekit;
 interface
 
 uses
-  gExt, glib2, distri, Classes, liBasic, liTypes, Process, SysUtils;
+  gExt, glib2, distri, Classes, liBasic, liTypes, Process, SysUtils, pkEnum;
 
 type
-  //** PackageKit progress type
-  PK_PROGRESS_TYPE = (PK_PROGRESS_TYPE_PACKAGE_ID,
-    PK_PROGRESS_TYPE_PERCENTAGE,
-    PK_PROGRESS_TYPE_SUBPERCENTAGE,
-    PK_PROGRESS_TYPE_ALLOW_CANCEL,
-    PK_PROGRESS_TYPE_STATUS,
-    PK_PROGRESS_TYPE_ROLE,
-    PK_PROGRESS_TYPE_CALLER_ACTIVE,
-    PK_PROGRESS_TYPE_INVALID);
-
-  //** How the backend exits
-  PkExitEnum = (PK_EXIT_ENUM_UNKNOWN,
-    PK_EXIT_ENUM_SUCCESS,
-    PK_EXIT_ENUM_FAILED,
-    PK_EXIT_ENUM_CANCELLED,
-    PK_EXIT_ENUM_KEY_REQUIRED,
-    PK_EXIT_ENUM_EULA_REQUIRED,
-    PK_EXIT_ENUM_KILLED,
-    PK_EXIT_ENUM_MEDIA_CHANGE_REQUIRED,
-    PK_EXIT_ENUM_NEED_UNTRUSTED,
-    PK_EXIT_ENUM_LAST);
-
   //** The pkBitfield var
   PkBitfield = GUInt64;
 
-  TPkProgressCallback = procedure(progress: Pointer; ptype: PK_PROGRESS_TYPE;
-    user_data: GPointer);
+  TPkProgressCallback = procedure(progress: Pointer; ptype: PkProgressType;
+    user_data: GPointer);cdecl;
 
   //** Pointer to PkClient GObject
   PPkClient = Pointer;
+  PPkResults = Pointer;
+  PPkError = Pointer;
 
   //** Pointer to TPackageKit object
   PPackageKit = ^TPackageKit;
@@ -201,7 +181,8 @@ procedure pk_client_get_details_async(client: PPkClient;package_ids: PPGChar;can
                                               callback_ready: TGAsyncReadyCallback;user_data: GPointer);cdecl; external pklib2;
 
 function  pk_client_generic_finish(client: PPkClient;res: Pointer;error: PPGError): Pointer;cdecl;external pklib2;
-function  pk_results_get_exit_code(results: Pointer): PkExitEnum;cdecl;external pklib2;
+function  pk_results_get_exit_code(results: PPkResults): PkExitEnum;cdecl;external pklib2;
+function  pk_results_get_error_code(results: PPkResults): PPkError;cdecl;external pklib2;
 function  pk_results_get_details_array(results: Pointer): PGPtrArray;cdecl;external pklib2;
 
 function  pk_client_error_quark(): GQuark;cdecl;external pklib2;
@@ -213,19 +194,29 @@ uses PkDesktop;
 
 function PK_CLIENT(o: GPointer): PGTypeInstance;
 begin
-  G_TYPE_CHECK_INSTANCE_CAST(o, pk_client_get_type());
+  Result := G_TYPE_CHECK_INSTANCE_CAST(o, pk_client_get_type());
 end;
 
-procedure OnPkActionFinished(source_object: PGObject; res: Pointer; user_data: GPointer);
+procedure OnPkPackage(pkg: Pointer;data: GPointer;udata: GPointer);cdecl;
 var
-  Result: Pointer;
-  rcode: PkExitEnum;
+  pk: TPackageKit;
+  summary: PGChar = nil;
+begin
+  pk := TPackageKit(udata);
+
+  g_object_get(pkg,'summary', summary,nil);
+  pk.pkgdetails.Text := summary;
+end;
+
+procedure OnPkActionFinished(source_object: PGObject; res: Pointer; user_data: GPointer);cdecl;
+var
+  results: Pointer;
   error: PGError = nil;
   detArr: PGPtrArray;
-  i: Integer;
-  gchar: PGChar;
+  role: PkRoleEnum;
+  pk: TPackageKit;
 begin
-  Result := pk_client_generic_finish(source_object, res, @error);
+  results := pk_client_generic_finish(source_object, res, @error);
 
   if error<>nil then
   begin
@@ -235,39 +226,39 @@ begin
     exit;
   end;
 
-  if Result<>nil then
+  pk := TPackageKit(user_data);
+  if results = nil then
+  begin
+   pk.LoopQuit();
+   pk.done := true;
+   exit;
+  end;
+
+  //pk.exitcode := pk_results_get_error_code(results);
+
+  //Get the role
+  g_object_get(G_OBJECT(results), 'role', @role, nil);
+
+  if role  = PK_ROLE_ENUM_GET_DETAILS then
   begin
     detArr := pk_results_get_details_array(source_object);
     if detArr <> nil then
-    with TPackageKit(user_data) do
     begin
-      if pkgdetails = nil then
-       pkgdetails := TStringList.Create
-      else
-       pkgdetails.Clear;
-
-      gchar := g_ptr_array_index(detArr, 0);
-      i := 0;
-      repeat
-        pkgdetails.Add(gchar);
-        Inc(i);
-        gchar := g_ptr_array_index(detArr, i);
-      until gchar = nil;
-
-      g_ptr_array_free(detArr,true);
+     if pk.pkgdetails = nil then
+      pk.pkgdetails := TStringList.Create
+     else
+      pk.pkgdetails.Clear;
+     g_ptr_array_foreach(detArr, @OnPkPackage, pk);
     end;
-    rcode := pk_results_get_exit_code(Result);
-    p_debug('Rcode: '+IntToStr(longint(rcode)));
-    TPackageKit(user_data).exitcode := longint(rcode);
-    g_object_unref(Result);
-  end
-  else
-    TPackageKit(user_data).exitcode := 8;
-  TPackageKit(user_data).LoopQuit();
-  TPackageKit(user_data).done := true;
+      g_ptr_array_free(detArr,true);
+  end;
+    pk.exitcode := Integer(pk_results_get_exit_code(results));
+    g_object_unref(results);
+  pk.LoopQuit();
+  pk.done := true;
 end;
 
-procedure OnPkProgress(progress: Pointer; ptype: PK_PROGRESS_TYPE; user_data: GPointer);
+procedure OnPkProgress(progress: Pointer; ptype: PkProgressType; user_data: GPointer);cdecl;
 var
   pk: TPackageKit;
   pid: PGChar;
@@ -374,8 +365,8 @@ begin
   s.Free;
 end;
 
-procedure INTERNAL_OnPkProgress(progress: Pointer; ptype: PK_PROGRESS_TYPE;
-  user_data: GPointer);
+procedure INTERNAL_OnPkProgress(progress: Pointer; ptype: PkProgressType;
+  user_data: GPointer);cdecl;
 var
   pk: TPackageKit;
   pid: PGChar;

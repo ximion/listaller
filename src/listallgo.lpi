@@ -91,7 +91,8 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../synapse/;../bindings/"/>
+      <Libraries Value="$(ProjOutDir)/"/>
+      <OtherUnitFiles Value="../intf/"/>
       <UnitOutputDirectory Value="../build"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
