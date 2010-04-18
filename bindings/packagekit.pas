@@ -21,120 +21,129 @@ unit packagekit;
 interface
 
 uses
-  Classes, SysUtils, Process, glib2, distri, liTypes, gExt, liBasic;
+  gExt, glib2, distri, Classes, liBasic, liTypes, Process, SysUtils;
 
 type
+  //** PackageKit progress type
+  PK_PROGRESS_TYPE = (PK_PROGRESS_TYPE_PACKAGE_ID,
+    PK_PROGRESS_TYPE_PERCENTAGE,
+    PK_PROGRESS_TYPE_SUBPERCENTAGE,
+    PK_PROGRESS_TYPE_ALLOW_CANCEL,
+    PK_PROGRESS_TYPE_STATUS,
+    PK_PROGRESS_TYPE_ROLE,
+    PK_PROGRESS_TYPE_CALLER_ACTIVE,
+    PK_PROGRESS_TYPE_INVALID);
 
-//** PackageKit progress type
-PK_PROGRESS_TYPE = (PK_PROGRESS_TYPE_PACKAGE_ID,
-  PK_PROGRESS_TYPE_PERCENTAGE,
-  PK_PROGRESS_TYPE_SUBPERCENTAGE,
-  PK_PROGRESS_TYPE_ALLOW_CANCEL,
-  PK_PROGRESS_TYPE_STATUS,
-  PK_PROGRESS_TYPE_ROLE,
-  PK_PROGRESS_TYPE_CALLER_ACTIVE,
-  PK_PROGRESS_TYPE_INVALID);
+  //** How the backend exits
+  PkExitEnum = (PK_EXIT_ENUM_UNKNOWN,
+    PK_EXIT_ENUM_SUCCESS,
+    PK_EXIT_ENUM_FAILED,
+    PK_EXIT_ENUM_CANCELLED,
+    PK_EXIT_ENUM_KEY_REQUIRED,
+    PK_EXIT_ENUM_EULA_REQUIRED,
+    PK_EXIT_ENUM_KILLED,
+    PK_EXIT_ENUM_MEDIA_CHANGE_REQUIRED,
+    PK_EXIT_ENUM_NEED_UNTRUSTED,
+    PK_EXIT_ENUM_LAST);
 
-//** How the backend exits
-PkExitEnum = (PK_EXIT_ENUM_UNKNOWN,
-	PK_EXIT_ENUM_SUCCESS,
-	PK_EXIT_ENUM_FAILED,
-	PK_EXIT_ENUM_CANCELLED,
-	PK_EXIT_ENUM_KEY_REQUIRED,
-	PK_EXIT_ENUM_EULA_REQUIRED,
-	PK_EXIT_ENUM_KILLED,
-	PK_EXIT_ENUM_MEDIA_CHANGE_REQUIRED,
-	PK_EXIT_ENUM_NEED_UNTRUSTED,
-	PK_EXIT_ENUM_LAST);
+  //** The pkBitfield var
+  PkBitfield = GUInt64;
 
-//** The pkBitfield var
-PkBitfield = GUInt64;
+  TPkProgressCallback = procedure(progress: Pointer; ptype: PK_PROGRESS_TYPE;
+    user_data: GPointer);
 
-TPkProgressCallback = procedure(progress: Pointer;ptype: PK_PROGRESS_TYPE;user_data: GPointer);
+  //** Pointer to TPackageKit object
+  PPackageKit = ^TPackageKit;
 
-//** Pointer to TPackageKit object
-PPackageKit = ^TPackageKit;
+  //** Custom PackageKit wrapper
+  TPackageKit = class
+  private
+    //Resulting list
+    Result: TStringList;
+    //True if transaction finished
+    done: Boolean;
+    //Catch the exitcode
+    exitcode: Integer;
+    //Current progress
+    prog: Integer;
+    //Last error message
+    ErrorMsg: String;
+    //ProgressChange event
+    FProg: TProgressEvent;
+    //List of received package ids
+    pkglist: TStringList;
+    //Processes actions asyncronous
+    doasync: Boolean;
+    //Set new progress
+    procedure SetProgress(i: Integer);
+    //Function to get PackageKit version from pkcon
+    function GetPkVersion: String;
+    //Run the main loop if doasync=false
+    procedure RunLoop();
+    //Quit a main loop
+    procedure LoopQuit();
+    //Check if error is set (if it is, print a console message)
+    function IsErrorSet(aError: PGError): Boolean;
+    //Resolve for internal use
+    function INTERN_Resolve(Name: String; filt: String; toPublic: Boolean): Boolean;
+  public
+    //** GLib main loop
+    loop: Pointer;
+    //** Pointer to a PkClient
+    pkclient: Pointer;
+    constructor Create;
+    destructor Destroy; override;
+    {** Resolve a package name
+        @returns True if action was not cancelled}
+    function Resolve(pkg: String): Boolean;
+    {** Check if package is installed @param pkg Name of the package
+        @returns True if action was not cancelled}
+    function ResolveInstalled(pkg: String): Boolean;
+    {** Returns the reverse dependencies of a package
+        @param pkg Name of the package
+        @returns True if action was not cancelled}
+    function GetRequires(pkg: String): Boolean;
+    {** Removes a package @param pkg Name of the package
+        @returns True if action was not cancelled}
+    function RemovePkg(pkg: String): Boolean;
+    {** Installs a package from repo @param pkg Name of the package
+        @returns True if action was not cancelled}
+    function InstallPkg(pkg: String): Boolean;
+    {** Get the name of the package, the file belongs to (!for installed pkgs only!) @param fname Name of the file
+        @returns True if action was not cancelled}
+    function PkgNameFromFile(fname: String; const desktopfile: Boolean = false): Boolean;
+    {** Installs a package from file @param fname Name of the package file
+        @returns True if action was not cancelled}
+    function InstallLocalPkg(fname: String): Boolean;
+    {** Get the name of the package, the file belongs to (!for not installed pkgs too!) @param fname Name of the file
+        @returns True if action was not cancelled}
+    function FindPkgForFile(fname: String): Boolean;
+    //** Grab the resulting package list
+    property RsList: TStringList read Result write Result;
+    //** Check if the last transaction was finished
+    property PkFinished: Boolean read done write done;
+    //** Read finish code
+    property PkFinishCode: Integer read exitcode;
+    //** Reads the current Packagekit version as string
+    property Version: String read GetPkVersion;
+    //** Progress change callback (progress in %)
+    property OnProgress: TProgressEvent read FProg write FProg;
+    //** Read the last error message
+    property LastErrorMessage: String read ErrorMsg;
+    //** Read if object is idle
+    property Finished: Boolean read done;
+    //** If true, the instance won't wait until the action completes
+    property NoWait: Boolean read doasync write doasync;
+  end;
 
-//** Custom PackageKit wrapper
-TPackageKit = class
-private
- //Resulting list
- result: TStringList;
- //True if transaction finished
- done: Boolean;
- //Catch the exitcode
- exitcode: Integer;
- //Current progress
- prog: Integer;
- //Last error message
- ErrorMsg: String;
- //ProgressChange event
- FProg: TProgressEvent;
- //List of received package ids
- pkglist: TStringList;
- //Set new progress
- procedure SetProgress(i: Integer);
- //Function to get PackageKit version from pkcon
- function GetPkVersion: String;
- //Quit a main loop
- procedure LoopQuit();
- //Resolve for internal use
- function INTERN_Resolve(name: String;filt: String;toPublic: Boolean): Boolean;
-public
- //** GLib main loop
- loop: Pointer;
- //** Pointer to a PkClient
- pkclient: Pointer;
- constructor Create;
- destructor Destroy; override;
- {** Resolve a package name
-     @returns True if action was not cancelled}
- function Resolve(pkg: String): Boolean;
- {** Check if package is installed @param pkg Name of the package
-     @returns True if action was not cancelled}
- function ResolveInstalled(pkg: String): Boolean;
- {** Returns the reverse dependencies of a package
-     @param pkg Name of the package
-     @returns True if action was not cancelled}
- function GetRequires(pkg: String): Boolean;
- {** Removes a package @param pkg Name of the package
-    @returns True if action was not cancelled}
- function RemovePkg(pkg: String): Boolean;
- {** Installs a package from repo @param pkg Name of the package
-    @returns True if action was not cancelled}
- function InstallPkg(pkg: String): Boolean;
- {** Get the name of the package, the file belongs to (!for installed pkgs only!) @param fname Name of the file
-    @returns True if action was not cancelled}
- function PkgNameFromFile(fname: String;const desktopfile: Boolean=false): Boolean;
- {** Installs a package from file @param fname Name of the package file
-      @returns True if action was not cancelled}
- function InstallLocalPkg(fname: String): Boolean;
- {** Get the name of the package, the file belongs to (!for not installed pkgs too!) @param fname Name of the file
-      @returns True if action was not cancelled}
- function FindPkgForFile(fname: String): Boolean;
- //** Grab the resulting package list
- property RsList: TStringList read result write result;
- //** Check if the last transaction was finished
- property PkFinished: Boolean read done write done;
- //** Read finish code
- property PkFinishCode: Integer read exitcode;
- //** Reads the current Packagekit version as string
- property Version: String read GetPkVersion;
- //** Progress change callback (progress in %)
- property OnProgress: TProgressEvent read FProg write FProg;
- //** Read the last error message
- property LastErrorMessage: String read ErrorMsg;
- //** Read if object is idle
- property Finished: Boolean read done;
-end;
+  PPkPackageId = ^PkPackageID;
 
-PPkPackageId = ^PkPackageID;
-PkPackageId = record
- name: PChar;
- version: PChar;
- arch: PChar;
- data: PChar;
-end;
+  PkPackageId = record
+    Name: PChar;
+    version: PChar;
+    arch: PChar;
+    Data: PChar;
+  end;
 
 const pklib2 = 'libpackagekit-glib2.so';
 
@@ -189,67 +198,72 @@ uses PkDesktop;
 
 procedure InitializeGType;
 begin
- //Needed for use with Qt4
   //{$IFNDEF LCLGTK2}
-   g_type_init();
+  g_type_init();
   //{$ENDIF}
 end;
 
 function PK_CLIENT(o: GPointer): PGTypeInstance;
 begin
-  G_TYPE_CHECK_INSTANCE_CAST(o,pk_client_get_type());
+  G_TYPE_CHECK_INSTANCE_CAST(o, pk_client_get_type());
 end;
 
-procedure OnPkActionFinished(source_object: PGObject;res: Pointer;user_data: GPointer);
-var result: Pointer;
-    rcode: PkExitEnum;
-    error: PGError=nil;
+procedure OnPkActionFinished(source_object: PGObject; res: Pointer; user_data: GPointer);
+var
+  Result: Pointer;
+  rcode: PkExitEnum;
+  error: PGError = nil;
 begin
- result:=pk_client_generic_finish(source_object,res,@error);
+  Result := pk_client_generic_finish(source_object, res, @error);
 
- if error<>nil then
+  if error<>nil then
   begin
     g_warning('failed: %s', [error^.message]);
     g_error_free(error);
-    TPackageKit(user_data).exitcode:=8;
+    TPackageKit(user_data).exitcode := 8;
     exit;
   end;
 
- if result<>nil then
- begin
- rcode:=pk_results_get_exit_code(result);
-  p_debug('Rcode: '+IntToStr(LongInt(rcode)));
-  TPackageKit(user_data).exitcode:=LongInt(rcode);
- g_object_unref(result);
- end else TPackageKit(user_data).exitcode:=8;
- TPackageKit(user_data).LoopQuit();
- TPackageKit(user_data).done:=true;
+  if Result<>nil then
+  begin
+    rcode := pk_results_get_exit_code(Result);
+    p_debug('Rcode: '+IntToStr(longint(rcode)));
+    TPackageKit(user_data).exitcode := longint(rcode);
+    g_object_unref(Result);
+  end
+  else
+    TPackageKit(user_data).exitcode := 8;
+  TPackageKit(user_data).LoopQuit();
+  TPackageKit(user_data).done := true;
 end;
 
-procedure OnPkProgress(progress: Pointer;ptype: PK_PROGRESS_TYPE;user_data: GPointer);
-var pk: TPackageKit;pid: PGChar;percentage: GuInt;
+procedure OnPkProgress(progress: Pointer; ptype: PK_PROGRESS_TYPE; user_data: GPointer);
+var
+  pk: TPackageKit;
+  pid: PGChar;
+  percentage: GuInt;
 begin
-pk:=TPackageKit(user_data);
+  pk := TPackageKit(user_data);
 
   case ptype of
-   PK_PROGRESS_TYPE_PACKAGE_ID:
-   begin
-    if Assigned(pk.RsList) then
+    PK_PROGRESS_TYPE_PACKAGE_ID:
     begin
-     g_object_get(progress,'package-id', @pid,nil);
-     if (pid<>'') then
-      pk.RsList.Add(copy(pid,0,pos(';',pid)-1));
+      if Assigned(pk.RsList) then
+      begin
+        g_object_get(progress, 'package-id', @pid, nil);
+        if (pid<>'') then
+          pk.RsList.Add(copy(pid, 0, pos(';', pid)-1));
+      end;
     end;
-   end;
-   PK_PROGRESS_TYPE_PERCENTAGE:
-   begin
-     g_object_get(progress,'percentage', @percentage,nil);
-    // ShowMessage('Percentage: '+IntToStr(percentage));
-    if percentage = 101 then
-     pk.Setprogress(0)
-    else
-     pk.SetProgress(percentage);
-   end;
+    PK_PROGRESS_TYPE_PERCENTAGE:
+    begin
+      g_object_get(progress, 'percentage', @percentage, nil);
+      // ShowMessage('Percentage: '+IntToStr(percentage));
+      if percentage = 101 then
+        pk.Setprogress(0)
+      else
+        pk.SetProgress(percentage);
+    end;
   end;
 end;
 
@@ -261,13 +275,14 @@ begin
   //Create new PackageKit client
   pkclient := pk_client_new;
 
-  loop:=g_main_loop_new(nil,false);
-  pkglist:=TStringList.Create;
+  loop := g_main_loop_new(nil, false);
+  doasync := false;
+  pkglist := TStringList.Create;
 end;
 
 destructor TPackageKit.Destroy;
 begin
-  pkglist.free;
+  pkglist.Free;
   g_object_unref(pkclient);
   g_main_loop_unref(loop);
   inherited Destroy;
@@ -275,363 +290,387 @@ end;
 
 procedure TPackageKit.LoopQuit();
 begin
- g_main_loop_quit(loop);
+  if g_main_loop_is_running(loop) then
+    g_main_loop_quit(loop);
+end;
+
+procedure TPackageKit.RunLoop();
+begin
+  if not doasync then
+    g_main_loop_run(loop);
+end;
+
+function TPackageKit.IsErrorSet(aError: PGError): Boolean;
+begin
+  Result := false;
+  if aError<>nil then
+  begin
+    Result := true;
+    errorMsg:=aError^.message;
+    g_warning('action failed: %s', [errorMsg]);
+    exitcode:=88;
+    g_error_free(aError);
+  end;
 end;
 
 procedure TPackageKit.SetProgress(i: Integer);
 begin
- prog:=i;
- if Assigned(FProg) then FProg(i,nil);
+  prog := i;
+  if Assigned(FProg) then
+    FProg(i, nil);
 end;
 
 function TPackageKit.GetPkVersion: String;
-var s: TStringList;t: TProcess;
+var
+  s: TStringList;
+  t: TProcess;
 begin
- s:=TStringList.Create;
- t:=TProcess.create(nil);
- t.Options:=[poUsePipes];
- t.CommandLine:='pkcon --version';
- try
-  t.Execute;
-  while t.Running do begin end;
-  s.LoadFromStream(t.Output);
- finally
- t.Free;
- end;
-if s.Count>=0 then
-Result:=s[0]
-else Result:='?';
-s.Free;
+  s := TStringList.Create;
+  t := TProcess.Create(nil);
+  t.Options := [poUsePipes];
+  t.CommandLine := 'pkcon --version';
+  try
+    t.Execute;
+    while t.Running do
+    begin
+    end;
+    s.LoadFromStream(t.Output);
+  finally
+    t.Free;
+  end;
+  if s.Count>=0 then
+    Result := s[0]
+  else
+    Result := '?';
+  s.Free;
 end;
 
-procedure INTERNAL_OnPkProgress(progress: Pointer;ptype: PK_PROGRESS_TYPE;user_data: GPointer);
-var pk: TPackageKit;pid: PGChar;percentage: GuInt;
+procedure INTERNAL_OnPkProgress(progress: Pointer; ptype: PK_PROGRESS_TYPE;
+  user_data: GPointer);
+var
+  pk: TPackageKit;
+  pid: PGChar;
+  percentage: GuInt;
 begin
-pk:=TPackageKit(user_data);
+  pk := TPackageKit(user_data);
 
   case ptype of
-   PK_PROGRESS_TYPE_PACKAGE_ID:
-   begin
-    if Assigned(pk.pkglist) then
+    PK_PROGRESS_TYPE_PACKAGE_ID:
     begin
-     g_object_get(progress,'package-id', @pid,nil);
-      pk.pkglist.Add(pid);
+      if Assigned(pk.pkglist) then
+      begin
+        g_object_get(progress, 'package-id', @pid, nil);
+        pk.pkglist.Add(pid);
+      end;
     end;
-   end;
-   PK_PROGRESS_TYPE_PERCENTAGE:
-   begin
-    g_object_get(progress,'percentage', @percentage,nil);
-    if percentage = 101 then
-     pk.Setprogress(0)
-    else
-     pk.SetProgress(percentage);
-   end;
+    PK_PROGRESS_TYPE_PERCENTAGE:
+    begin
+      g_object_get(progress, 'percentage', @percentage, nil);
+      if percentage = 101 then
+        pk.Setprogress(0)
+      else
+        pk.SetProgress(percentage);
+    end;
   end;
 end;
 
-function TPackageKit.INTERN_Resolve(name: String;filt: String;toPublic: Boolean): Boolean;
-var filter: guint64;
-    arg: PPChar;
-    error: PGError=nil;
-    cancellable: Pointer;
+function TPackageKit.INTERN_Resolve(Name: String; filt: String;
+  toPublic: Boolean): Boolean;
+var
+  filter: guint64;
+  arg: PPChar;
+  error: PGError = nil;
+  cancellable: Pointer;
 begin
-  done:=false;
-  filter:=pk_filter_bitfield_from_text(PChar(filt));
-  arg := StringToPPchar(name, 0);
+  done := false;
+  filter := pk_filter_bitfield_from_text(PChar(filt));
+  arg := StringToPPchar(Name, 0);
 
-  cancellable:=g_cancellable_new;
+  cancellable := g_cancellable_new;
   if toPublic then
-   pk_client_resolve_async(pkclient,filter,arg,cancellable,@OnPkProgress,self,@OnPkActionFinished,self)
+    pk_client_resolve_async(pkclient, filter, arg, cancellable, @OnPkProgress,
+      self, @OnPkActionFinished, self)
   else
-   pk_client_resolve_async(pkclient,filter,arg,cancellable,@INTERNAL_OnPkProgress,self,@OnPkActionFinished,self);
+    pk_client_resolve_async(pkclient, filter, arg, cancellable,
+      @INTERNAL_OnPkProgress, self, @OnPkActionFinished, self);
 
-  g_main_loop_run(loop);
-
-  Result:=true;
-  g_cancellable_set_error_if_cancelled(cancellable,@error);
-  if error<>nil then
-  begin
-    Result:=false;
-    g_warning('action failed: %s', [error^.message]);
-    g_error_free(error);
-    Result:=false;
-  end;
+  Result := true;
+  g_cancellable_set_error_if_cancelled(cancellable, @error);
+  Result := not IsErrorSet(error);
   g_object_unref(cancellable);
+
+  if Result then
+   RunLoop();
 end;
 
 function TPackageKit.ResolveInstalled(pkg: String): Boolean;
 begin
- Result:=INTERN_Resolve(pkg,'installed',true);
+  Result := INTERN_Resolve(pkg, 'installed', true);
 end;
 
 function TPackageKit.Resolve(pkg: String): Boolean;
 begin
- Result:=INTERN_Resolve(pkg,'available',true);
+  Result := INTERN_Resolve(pkg, 'available', true);
 end;
 
 function TPackageKit.GetRequires(pkg: String): Boolean;
-var filter: guint64;
-    arg: PPChar;
-    error: PGError=nil;
-    cancellable: Pointer;
+var
+  filter: guint64;
+  arg: PPChar;
+  error: PGError = nil;
+  cancellable: Pointer;
 begin
-  done:=false;
+  done := false;
   pkglist.Clear;
-  Result:=INTERN_Resolve(pkg,'installed',false);
+  Result := INTERN_Resolve(pkg, 'installed', false);
   while not done do ;
-  if not Result then exit;
+  if not Result then
+    exit;
   if pkglist.Count<=0 then
   begin
-   Result:=false;
-   exit;
+    Result := false;
+    exit;
   end;
-  pkg:=pkglist[0];
+  pkg := pkglist[0];
 
-  filter:=pk_filter_bitfield_from_text('installed');
+  filter := pk_filter_bitfield_from_text('installed');
   arg := StringToPPchar(pkg, 0);
 
-  cancellable:=g_cancellable_new;
-   pk_client_get_requires_async(pkclient,filter,arg,true,cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
-  g_main_loop_run(loop);
+  cancellable := g_cancellable_new;
+  pk_client_get_requires_async(pkclient, filter, arg, true, cancellable,
+    @OnPkProgress, self, @OnPkActionFinished, self);
 
-  Result:=true;
-  g_cancellable_set_error_if_cancelled(cancellable,@error);
-  if error<>nil then
-  begin
-    g_warning('failed: %s', [error^.message]);
-    ErrorMsg:=error^.message;
-    g_error_free(error);
-    Result:=false;
-  end;
+  Result := true;
+  g_cancellable_set_error_if_cancelled(cancellable, @error);
+  Result := not IsErrorSet(error);
   g_object_unref(cancellable);
+
+  if Result then
+   RunLoop();
 end;
 
 function TPackageKit.RemovePkg(pkg: String): Boolean;
-var arg: PPChar;
-    error: PGError=nil;
-    cancellable: Pointer;
+var
+  arg: PPChar;
+  error: PGError = nil;
+  cancellable: Pointer;
 begin
-  done:=false;
+  done := false;
   pkglist.Clear;
-  Result:=INTERN_Resolve(pkg,'none',false);
+  Result := INTERN_Resolve(pkg, 'none', false);
   while not done do ;
-  if not Result then exit;
+  if not Result then
+    exit;
   if pkglist.Count<=0 then
   begin
-   Result:=false;
-   exit;
+    Result := false;
+    exit;
   end;
-  pkg:=pkglist[0];
-  done:=false;
+  pkg := pkglist[0];
+  done := false;
   arg := StringToPPchar(pkg, 0);
 
-  cancellable:=g_cancellable_new;
-   pk_client_remove_packages_async(pkclient,arg,true,false,cancellable,@OnPKProgress,self,@OnPkActionFinished,self);
-  g_main_loop_run(loop);
+  cancellable := g_cancellable_new;
+  pk_client_remove_packages_async(pkclient, arg, true, false, cancellable,
+    @OnPKProgress, self, @OnPkActionFinished, self);
 
-  Result:=true;
-  g_cancellable_set_error_if_cancelled(cancellable,@error);
-  if error<>nil then
-  begin
-    Result:=false;
-    g_warning('action failed: %s', [error^.message]);
-    ErrorMsg:=error^.message;
-    g_error_free(error);
-    Result:=false;
-  end;
+  Result := true;
+  g_cancellable_set_error_if_cancelled(cancellable, @error);
+  Result := not IsErrorSet(error);
   g_object_unref(cancellable);
+
+  if Result then
+   RunLoop();
 end;
 
 function TPackageKit.InstallPkg(pkg: String): Boolean;
-var arg: PPChar;
-    error: PGError=nil;
-    gcan: Pointer;
+var
+  arg: PPChar;
+  error: PGError = nil;
+  gcan: Pointer;
 begin
-  done:=false;
+  done := false;
   pkglist.Clear;
-  Result:=INTERN_Resolve(pkg,'none',false);
+  Result := INTERN_Resolve(pkg, 'none', false);
   while not done do ;
-  if not Result then exit;
+  if not Result then
+    exit;
   if pkglist.Count<=0 then
   begin
-   Result:=false;
-   exit;
+    Result := false;
+    exit;
   end;
-  pkg:=pkglist[0];
-  done:=false;
+  pkg := pkglist[0];
+  done := false;
   arg := StringToPPchar(pkg, 0);
 
-  gcan:=g_cancellable_new;
-   pk_client_install_packages_async(pkclient,false,arg,gcan,@OnPkProgress,self,@OnPkActionFinished,self);
-  g_main_loop_run(loop);
+  gcan := g_cancellable_new;
+  pk_client_install_packages_async(pkclient, false, arg, gcan, @OnPkProgress,
+    self, @OnPkActionFinished, self);
 
-  Result:=true;
-  g_cancellable_set_error_if_cancelled(gcan,@error);
-  if error<>nil then
-  begin
-    Result:=false;
-    g_warning('failed: %s', [error^.message]);
-    ErrorMsg:=error^.message;
-    g_error_free(error);
-    Result:=false;
-  end;
+  Result := true;
+  g_cancellable_set_error_if_cancelled(gcan, @error);
+  Result := not IsErrorSet(error);
   g_object_unref(gcan);
+  if Result then
+   RunLoop();
 end;
 
-function TPackageKit.PkgNameFromFile(fname: String;const desktopfile: Boolean=false): Boolean;
-var filter: guint64;
-    error: PGError=nil;
-    cancellable: Pointer;
-    pkg: String;
-    pkdesk: Pointer;
+function TPackageKit.PkgNameFromFile(fname: String;
+  const desktopfile: Boolean = false): Boolean;
+var
+  filter: guint64;
+  error: PGError = nil;
+  cancellable: Pointer;
+  pkg: String;
+  pkdesk: Pointer;
 begin
-  done:=false;
-  error:=nil;
+  done := false;
+  error := nil;
 
   pkglist.Clear;
-  pkg:='';
+  pkg := '';
   //Do not use this for _every_ desktop file.
   //Sometimes it might be better to do a complete search.
   // Using PkDesktop can be set by var desktopfile
-  if (desktopfile=true)and(LowerCase(ExtractFileExt(fname))='.desktop')
-  then
+  if (desktopfile = true)and(LowerCase(ExtractFileExt(fname)) = '.desktop') then
   begin
     pkdesk := pk_desktop_new();
     try
-     pk_desktop_open_database(pkdesk,@error);
-     if error = nil then
-      pkg := pk_desktop_get_package_for_file(pkdesk,PGChar(fname),@error);
-      pkglist.Add(pkg);
+      pk_desktop_open_database(pkdesk, @error);
+      if not IsErrorSet(error) then
+      begin
+        pkg := pk_desktop_get_package_for_file(pkdesk, PGChar(fname), @error);
+        pkglist.Add(pkg);
+      end;
 
-     exitcode:=1;
+      exitcode := 1;
     finally
-     g_object_unref(pkdesk);
+      g_object_unref(pkdesk);
     end;
-    Result:=true;
+    Result := true;
   end;
 
+  Result := not IsErrorSet(error);
   //If package was not found yet or PkDesktop-mode is not activated
-  if StrSubst(pkg,' ','')='' then
+  if StrSubst(pkg, ' ', '') = '' then
   begin
+    p_debug('Using pk_client_search_files_async()');
     pkglist.Clear;
-    Result:=false;
+    Result := false;
     if error<>nil then
-    begin
-      g_error_free(error);
-      error:=nil;
-    end;
+      error := nil;
 
-     filter:=pk_filter_bitfield_from_text('installed');
+    filter := pk_filter_bitfield_from_text('installed');
 
-    cancellable:=g_cancellable_new;
-     pk_client_search_files_async(pkclient,filter,StringToPPchar(fname, 0),cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
-    g_main_loop_run(loop);
+    cancellable := g_cancellable_new;
+    pk_client_search_files_async(pkclient, filter, StringToPPchar(fname,
+      0), cancellable, @OnPkProgress, self, @OnPkActionFinished, self);
 
-    Result:=true;
-    g_cancellable_set_error_if_cancelled(cancellable,@error);
+    p_debug('Command executed.');
+    p_debug(' Progress call handle: '+IntToStr(PtrUInt(@OnPkProgress)));
+    p_debug(' ActionFinished call handle: '+IntToStr(PtrUInt(@OnPkActionFinished)));
+    p_debug(' Filter: '+IntToStr(filter));
+    Result := true;
+    g_cancellable_set_error_if_cancelled(cancellable, @error);
     g_object_unref(cancellable);
-  end;
-
-  if error<>nil then
-  begin
-    g_warning('failed: %s', [error^.message]);
-    ErrorMsg:=error^.message;
-    g_error_free(error);
-    exitcode:=112;
-    Result:=false;
+    Result := not IsErrorSet(error);
+    p_debug('Error check done.');
+    p_debug('Running mainloop...');
+    if Result then
+     RunLoop();
+    p_debug('Loop finished.');
   end;
 end;
 
 function TPackageKit.InstallLocalPkg(fname: String): Boolean;
-var arg: PPChar;
-    error: PGError=nil;
-    cancellable: Pointer;
+var
+  arg: PPChar;
+  error: PGError = nil;
+  cancellable: Pointer;
 begin
-  done:=false;
-  arg:=StringToPPchar(fname, 0);
+  done := false;
+  arg := StringToPPchar(fname, 0);
 
-  cancellable:=g_cancellable_new;
-   pk_client_install_files_async(pkclient,false,arg,cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
-  g_main_loop_run(loop);
+  cancellable := g_cancellable_new;
+  pk_client_install_files_async(pkclient, false, arg, cancellable,
+    @OnPkProgress, self, @OnPkActionFinished, self);
 
-  Result:=true;
-  g_cancellable_set_error_if_cancelled(cancellable,@error);
-  if error<>nil then
-  begin
-    Result:=false;
-    g_warning('failed: %s', [error^.message]);
-    ErrorMsg:=error^.message;
-    g_error_free(error);
-    Result:=false;
-  end;
+  Result := true;
+  g_cancellable_set_error_if_cancelled(cancellable, @error);
+  Result := not IsErrorSet(error);
   g_object_unref(cancellable);
+
+  if Result then
+   RunLoop();
 end;
 
 function TPackageKit.FindPkgForFile(fname: String): Boolean;
-var filter: guint64;
-    error: PGError=nil;
-    DInfo: TDistroInfo;
-    p: TProcess;
-    s: TStringList;
-    cancellable: Pointer;
+var
+  filter: guint64;
+  error: PGError = nil;
+  DInfo: TDistroInfo;
+  p: TProcess;
+  s: TStringList;
+  cancellable: Pointer;
 begin
-DInfo:=GetDistro;
-if DInfo.PackageSystem<>'DEB' then
-begin
-  writeLn('DEBUG: Using native pkit backend.');
-  done:=false;
-  filter:=pk_filter_bitfield_from_text('none');
-
-  cancellable:=g_cancellable_new;
-   pk_client_search_files_async(pkclient,filter,StringToPPchar(fname, 0),cancellable,@OnPkProgress,self,@OnPkActionFinished,self);
-  g_main_loop_run(loop);
-
-  Result:=true;
-  g_cancellable_set_error_if_cancelled(cancellable,@error);
-  if error<>nil then
+  DInfo := GetDistro;
+  if DInfo.PackageSystem<>'DEB' then
   begin
-    g_warning('failed: %s', [error^.message]);
-    ErrorMsg:=error^.message;
-    g_error_free(error);
-    Result:=false;
-  end;
-  g_object_unref(cancellable);
-end else
-begin
- // We need to use apt-file, because the PackageKit
- // APT backend does not support searching for not-installed packages
-  done:=false;
-  s:=TStringList.Create;
-  p:=TProcess.Create(nil);
-  p.Options:=[poUsePipes];
-  if not FileExists('/usr/bin/apt-file') then
+    writeLn('DEBUG: Using native pkit backend.');
+    done := false;
+    filter := pk_filter_bitfield_from_text('none');
+
+    cancellable := g_cancellable_new;
+    pk_client_search_files_async(pkclient, filter, StringToPPchar(fname,
+      0), cancellable, @OnPkProgress, self, @OnPkActionFinished, self);
+
+    Result := true;
+    g_cancellable_set_error_if_cancelled(cancellable, @error);
+    Result := not IsErrorSet(error);
+    g_object_unref(cancellable);
+    if Result then
+     RunLoop();
+  end
+  else
   begin
-   writeLn('error:');
-   writeLn(' The apt-file utility was not found!');
-   writeLn(' Please install apt-file and run this setup again.');
-   writeLn(' [Emergency halt.]');
-   halt(4);
+    // We need to use apt-file, because the PackageKit
+    // APT backend does not support searching for not-installed packages
+    done := false;
+    s := TStringList.Create;
+    p := TProcess.Create(nil);
+    p.Options := [poUsePipes];
+    if not FileExists('/usr/bin/apt-file') then
+    begin
+      writeLn('error:');
+      writeLn(' The apt-file utility was not found!');
+      writeLn(' Please install apt-file and run this setup again.');
+      writeLn(' [Emergency halt.]');
+      halt(4);
+    end;
+    p.CommandLine := 'apt-file -l -N search '+fname;
+    try
+      p.Execute;
+      while p.Running do
+      begin
+      end;
+      s.LoadFromStream(p.Output);
+    finally
+      p.Free;
+    end;
+    RsList.Assign(s);
+    if s.Count>=0 then
+      Result := true
+    else
+      Result := false;
+    s.Free;
+    done := true;
   end;
-  p.CommandLine:='apt-file -l -N search '+fname;
- try
-  p.Execute;
-  while p.Running do begin end;
-   s.LoadFromStream(p.Output);
- finally
- p.Free;
- end;
- RsList.Assign(s);
- if s.Count>=0 then
-  Result:=true
- else Result:=false;
- s.Free;
- done:=true;
-end;
 
 end;
 
 initialization
- InitializeGType;
+  InitializeGType;
 
 end.
 

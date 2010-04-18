@@ -703,20 +703,15 @@ begin
     msg('Connecting to PackageKit... (run "pkmon" to see the actions)');
     msg('Detecting package...');
 
-    p_debug('A');
     pkit := TPackageKit.Create;
     pkit.OnProgress := @PkitProgress;
-    p_debug('B');
 
     tmp := TStringList.Create;
     pkit.RsList := tmp;
 
     pkit.PkgNameFromFile(id, true);
-
-    p_debug('C');
-
     setpos(20);
-    p_debug('D');
+
     while not pkit.Finished do ;
 
     p_debug('PkgNameSearch finished.');
