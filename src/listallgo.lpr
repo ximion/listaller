@@ -21,6 +21,7 @@ program listallgo;
 uses {$IFDEF UNIX}
   cthreads, {$ENDIF}
   Interfaces, // this includes the LCL widgetset
+  gExt,
   Forms,
   igobase,
   dgfrm,
@@ -40,6 +41,8 @@ begin
   //Init application
   Application.Title := 'Software Installer';
   Application.Initialize;
+  //Make the GType system work for us
+  InitializeGType();
   writeLn('Application initialized.');
 
   //Load IPK-File, quit on failure

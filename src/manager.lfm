@@ -3,7 +3,7 @@ object MnFrm: TMnFrm
   Height = 558
   Top = 192
   Width = 816
-  ActiveControl = LeftBar
+  ActiveControl = SWBox
   Caption = 'Software Manager'
   ClientHeight = 538
   ClientWidth = 816

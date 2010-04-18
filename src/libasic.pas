@@ -419,12 +419,12 @@ end;
 
 procedure p_error(msg: String);
 begin
-  writeLn('[ERROR] ' + msg);
+  writeLn('error: ' + msg);
 end;
 
 procedure p_warning(msg: String);
 begin
-  writeLn('[WARNING] ' + msg);
+  writeLn('warning: ' + msg);
 end;
 
 procedure p_info(msg: String);
@@ -434,7 +434,9 @@ end;
 
 procedure p_debug(msg: String);
 begin
-  writeLn('[DEBUG] ' + msg);
+  {$IFNDEF NoDebugMsg}
+   writeLn('debug: ' + msg);
+  {$ENDIF}
 end;
 
 function CmdFinResult(cmd: String): String;

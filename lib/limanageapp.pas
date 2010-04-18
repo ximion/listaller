@@ -714,7 +714,6 @@ begin
 
     while not pkit.Finished do ;
 
-    p_debug('PkgNameSearch finished.');
     if pkit.PkFinishCode > 1 then
     begin
       request(PAnsiChar(rsPKitProbPkMon+#10+rsECode+' '+IntToStr(pkit.PkFinishCode)),
@@ -726,8 +725,6 @@ begin
 
     if (tmp.Count > 0) then
     begin
-      p_debug('Start detection...');
-      p_debug('PkgName: '+tmp[0]);
       f := tmp[0];
 
       msg('Package detected: ' + f);

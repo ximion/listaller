@@ -53,8 +53,5 @@ begin
  {$ENDIF}
 end;
 
-initialization
- InitializeGType;
-
 end.
 

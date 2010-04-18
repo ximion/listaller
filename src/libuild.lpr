@@ -23,7 +23,7 @@ uses
   cthreads, {$ENDIF}
   Interfaces, //We need an widgetset (NoGUI) for graphic handling
   Classes, SysUtils, CustApp, liBasic, Process, ipkbuild, trStrings,
-  LiTranslator, unibuild;
+  LiTranslator, unibuild, gExt;
 
 type
 
@@ -243,6 +243,8 @@ var
 
 begin
   Application := TLiBuild.Create(nil);
+  //Make GType work for us
+  InitializeGType();
   Application.Run;
   Application.Free;
 end.

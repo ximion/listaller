@@ -788,7 +788,8 @@ begin
  currAppList:=appList;
  SWBox.Visible:=false;
  MBar.Visible:=true;
-
+ SWBoxSU.Visible:=false;
+ Application.ProcessMessages;
  ReloadAppList;
  SWBox.Visible:=true;
  MBar.Visible:=false;
@@ -818,6 +819,8 @@ begin
  currAppList:=appListSU;
  MBar.Visible:=true;
  SWBoxSU.Visible:=false;
+ SWBox.Visible:=false;
+ Application.ProcessMessages;
  ReloadAppList;
  SWBoxSU.Visible:=true;
  MBar.Visible:=false;

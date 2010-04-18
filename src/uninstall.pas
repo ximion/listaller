@@ -100,13 +100,13 @@ begin
  BitBtn1.Enabled:=false;
  Application.ProcessMessages;
   li_mgr_remove_app(@MnFrm.amgr,MnFrm.uApp);
- {while (astatus<>prFinished)
+ while (astatus<>prFinished)
   and (astatus<>prFailed)
   and (astatus<>prError)do
  begin
   sleep(1);
   Application.ProcessMessages;
- end; }
+ end;
  li_mgr_register_status_call(@MnFrm.amgr,@manager.OnMgrStatus,nil);
 
  //!!!: Misterious crash appears when executing this code.

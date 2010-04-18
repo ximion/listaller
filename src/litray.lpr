@@ -24,13 +24,15 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, linotify,
-  LiTranslator;
+  LiTranslator, gExt;
 
 {$R *.res}
 
 begin
   Application.Title:='Listaller TrayControl';
   Application.Initialize;
+  //Make the GType system work for us
+  InitializeGType();
   Application.ShowMainForm:=false;
   Application.CreateForm(TForm1, Form1);
   Application.Run;

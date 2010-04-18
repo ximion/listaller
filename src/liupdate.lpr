@@ -25,13 +25,16 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, updatefrm, updexecfrm,
   LiBasic,
-  liTranslator, SysUtils, LiCommon;
+  liTranslator, SysUtils, LiCommon,
+  gExt;
 
 {$R *.res}
 
 begin
   Application.Title:='Listaller Updater';
   Application.Initialize;
+  //Make the GType system work for us
+  InitializeGType();
   writeLn('Updater initialized.');
   RegDir:=SyblToPath('$INST/app-reg/');
   Application.CreateForm(TUMnForm, UMnForm);

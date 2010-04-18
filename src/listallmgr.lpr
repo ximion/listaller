@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this program.  If not, see <http://www.gnu.org/licenses/>}
-//** Application that manages all installed applications
+//** Listaller software manager GUI
 program listallmgr;
 
 {$mode objfpc}{$H+}
@@ -21,6 +21,7 @@ program listallmgr;
 uses {$IFDEF UNIX}
   cthreads, {$ENDIF}
   Interfaces, // this includes the LCL widgetset
+  gExt,
   Forms,
   SysUtils,
   Manager,
@@ -54,6 +55,8 @@ begin
     Application.Title := 'Listaller Manager';
     Application.ShowMainForm := False;
     Application.Initialize;
+    //Make GType work for us
+    InitializeGType();
     writeLn('Application initialized.');
     Application.CreateForm(TMnFrm, MnFrm);
     Application.CreateForm(TConvDisp, ConvDisp);

@@ -20,7 +20,7 @@ program listallerd;
 
 uses
   cthreads, Interfaces, Classes, SysUtils, CustApp, dbus, djobs,
-  Contnrs, SimDBus, liBasic, LCLIntf, SyncObjs;
+  Contnrs, SimDBus, liBasic, LCLIntf, SyncObjs, gExt;
 
 type
 
@@ -184,7 +184,8 @@ var
 
 begin
   Application := TLiDaemon.Create(nil);
-  Application.Title := 'Listaller Daemon';
+  //Make the GType system work for us
+  InitializeGType();
   Application.Run;
   Application.Free;
 end.

@@ -22,7 +22,7 @@ interface
 
 uses
   Blcksock, Classes, Contnrs, FileUtil, FTPSend, HTTPSend, IniFiles,
-  ipkdef, ipkPackage, liBasic, liCommon, liDBusProc, liManageApp,
+  ipkdef, ipkPackage, liBasic, liDBusProc, liManageApp, liCommon,
   liTypes, MD5, Process, SqLite3DS, SysUtils, trStrings;
 
 type

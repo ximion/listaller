@@ -26,7 +26,7 @@ uses
   Classes, SysUtils, CustApp,
   Process, liBasic, installer,
   TRStrings, IniFiles, Distri,
-  LiTranslator, ipkdef,
+  LiTranslator, ipkdef, gExt,
   appman, liTypes, Forms, liCommon;
 
 type
@@ -422,6 +422,8 @@ end;
 begin
   Application:=TLipa.Create(nil);
   Application.OnException:=@Application.OnExeception;
+  //Make GType work for us
+  InitializeGType();
   Application.Run;
   Application.Free;
 end.
