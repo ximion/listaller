@@ -21,10 +21,10 @@ unit updatefrm;
 interface
 
 uses
-  AppUpdate, Buttons, CheckLst, Classes, ComCtrls,
-  Controls, Dialogs, ExtCtrls,
-  Forms, Graphics, IconLoader, LCLType, LiBasic, LiCommon, liTypes,
-  LResources, Menus, Process, StdCtrls, SysUtils, trStrings, updexecfrm;
+  Forms, Menus, Buttons, Classes, Dialogs, LCLType, liTypes,
+  LiUtils, Process, CheckLst, ComCtrls, Controls, ExtCtrls,
+  Graphics, StdCtrls, SysUtils, AppUpdate, strLocale, IconLoader,
+  LResources, updexecfrm;
 
 type
 
@@ -69,7 +69,7 @@ implementation
 
 { TUMnForm }
 
-procedure OnNewUpdateFound(appName: PChar; id: integer; user_data: Pointer); cdecl;
+procedure OnNewUpdateFound(appName: PChar; id: Integer; user_data: Pointer); cdecl;
 begin
   Application.ProcessMessages;
   if Assigned(UMnForm) then
@@ -81,7 +81,7 @@ begin
     end;
 end;
 
-procedure OnNewUpdateFoundSU(appName: PChar; id: integer; user_data: Pointer); cdecl;
+procedure OnNewUpdateFoundSU(appName: PChar; id: Integer; user_data: Pointer); cdecl;
 begin
   Application.ProcessMessages;
   if Assigned(UMnForm) then
@@ -103,8 +103,8 @@ begin
     end;
     rqWarning:
     begin
-      if Application.MessageBox(PAnsiChar(msg), PChar(rsWarning), MB_YESNO +
-        MB_IconWarning) <> idYes then
+      if Application.MessageBox(PAnsiChar(msg), PChar(rsWarning),
+        MB_YESNO +  MB_IconWarning) <> idYes then
       begin
         ShowMessage(rsINClose);
         Result := rqsNo;
@@ -114,8 +114,8 @@ begin
     end;
     rqQuestion:
     begin
-      if Application.MessageBox(PAnsiChar(msg), PChar(rsQuestion), MB_YESNO +
-        MB_IconQuestion) <> idYes then
+      if Application.MessageBox(PAnsiChar(msg), PChar(rsQuestion),
+        MB_YESNO +  MB_IconQuestion) <> idYes then
         Result := rqsNo
       else
         Result := rqsYes;
@@ -157,7 +157,7 @@ end;
 
 procedure TUMnForm.UpdListBoxClick(Sender: TObject);
 var
-  id: string;
+  id: String;
 begin
   if UpdListBox.ItemIndex > -1 then
   begin

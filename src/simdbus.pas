@@ -21,7 +21,7 @@ unit simdbus;
 interface
 
 uses
-  Classes, SysUtils, DBus, liBasic, CTypes;
+  Classes, SysUtils, DBus, liUtils, CTypes;
 
 type
  TDBusClient = class

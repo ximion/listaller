@@ -1,4 +1,4 @@
-{ Copyright (C) 2009-2010 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -13,27 +13,36 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this unit. If not, see <http://www.gnu.org/licenses/>.}
-//** This unit contains basic functions and types which are used nearly everywhere
-unit libasic;
+//** This unit contains basic functions and consts which are used nearly everywhere
+unit liutils;
 
 {$mode objfpc}{$H+}
 
 interface
 
 uses
-  BaseUnix, Classes, Dos, IniFiles, Process, pwd, SysUtils;
+  Dos, pwd, Classes, Process, BaseUnix, IniFiles, SysUtils, strLocale,
+  RegExpr;
 
 const
   //** Version of the Listaller applicationset
   LiVersion = '0.3.81a+dev~git';
   //** Working directory of Listaller
   TMPDIR = '/tmp/listaller/'; //Never forget trailing backslash!
+  //** Root configuration directory
+  LI_CONFIG_DIR = '/etc/lipa/';
+  //** Prefix for application database
+  LI_APPDB_PREF = 'info/';
 
 var
   //** The Listaller package lib directory
   RegDir: String = '';
   //** True if Listaller is in testmode
   Testmode: Boolean = false;
+
+type
+  //** Urgency levels
+  TUrgencyLevel = (ulLow, ulNormal, ulCritical);
 
 //** Creates Listaller's config dir @returns Current config dir
 function ConfigDir: String;
@@ -75,8 +84,8 @@ function GetSystemArchitecture: String;
     @param comment Description of the action the user is doing (why are root-rights needed?
     @param icon Path to an icon for the operation
     @param optn Set of TProcessOption to apply on the process object}
-function ExecuteAsRoot(cmd: String; comment: String;
-  icon: String; optn: TProcessOptions = []): Boolean;
+function ExecuteAsRoot(cmd: String; comment: String; icon: String;
+  optn: TProcessOptions = []): Boolean;
 //** Cleans up messy file path
 function CleanFilePath(path: String): String;
 {** Check if user is root
@@ -100,10 +109,28 @@ function StrSubst(s, a, b: String): String;
 function FindBinary(Name: String): String;
 //** Check if program is running @param cmd Command name
 function IsCommandRunning(cmd: String): Boolean;
+//** Remove modifiers from a string @returns Cleaned string
+function DeleteModifiers(s: String): String;
+//** Replaces placeholders (like $INSt or $APP) with their current paths @returns Final path as string
+function SyblToPath(s: String): String;
+//** Removes every symbol or replace it an simpla dummy path @returns Cleaned string
+function SyblToX(s: String): String;
+//** Check if file is a shared one @returns States as bool
+function HasSharedMod(fname: String): Boolean;
+{** Get dependencies of an executable
+    @param f Name of the binary file
+    @param lst StringList to recieve the output
+    @returns Success of operation}
+function GetLibDepends(f: String; lst: TStringList): Boolean;
+//** Advanced file copy method @returns Success of the command
+function FileCopy(Source, dest: String): Boolean;
+//** Check if file is configuration file
+function HasConfigMod(fname: String): Boolean;
+//** Search for full application icon path on system
+function GetAppIconPath(icon: String): String;
 
-const
-  LI_CONFIG_DIR = '/etc/lipa/';
-  LI_APPDB_PREF = 'info/';
+//** Shows system notification box
+procedure ShowPopupNotify(msg: String; urgency: TUrgencyLevel; time: Integer);
 
 implementation
 
@@ -290,10 +317,10 @@ function GetDateAsString: String;
 var
   Year, Month, Day, WDay: word;
 begin
-  Year:=0;
-  Month:=0;
-  Day:=0;
-  WDay:=0;
+  Year := 0;
+  Month := 0;
+  Day := 0;
+  WDay := 0;
   GetDate(Year, Month, Day, WDay);
   Result := IntToStr(Day) + '.' + IntToStr(Month) + '.' + IntToStr(Year);
 end;
@@ -461,7 +488,8 @@ begin
       begin
         SetLength(Buffer, BytesAvailable);
         BytesRead := t.OutPut.Read(Buffer[1], BytesAvailable);
-        if (pos(#13, Buffer) > 0) or (pos(#26, Buffer) > 0) or (Pos(#10, Buffer) > 0) then
+        if (pos(#13, Buffer) > 0) or (pos(#26, Buffer) > 0) or
+          (Pos(#10, Buffer) > 0) then
           Result := '';
         Result := Result + copy(Buffer, 1, BytesRead);
         BytesAvailable := t.OutPut.NumBytesAvailable;
@@ -494,8 +522,8 @@ begin
 end;
 
 //This should no longer be necessary since Listaller uses PolicyKit
-function ExecuteAsRoot(cmd: String; comment: String;
-  icon: String; optn: TProcessOptions = []): Boolean;
+function ExecuteAsRoot(cmd: String; comment: String; icon: String;
+  optn: TProcessOptions = []): Boolean;
 var
   p: TProcess;
   DInfo: TDistroInfo;
@@ -505,10 +533,12 @@ begin
   if DInfo.DBase = 'KDE' then
   begin
     if FileExists(FindBinary('kdesu')) then
-      p.CommandLine := FindBinary('kdesu') + ' -d --comment "' + comment + '" -i ' + icon + ' ' + cmd
+      p.CommandLine := FindBinary('kdesu') + ' -d --comment "' +
+        comment + '" -i ' + icon + ' ' + cmd
     else
       if FileExists(FindBinary('kdesudo')) then
-        p.CommandLine := FindBinary('kdesudo') + ' -d --comment "' + comment + '" -i ' + icon + ' ' + cmd;
+        p.CommandLine := FindBinary('kdesudo') + ' -d --comment "' +
+          comment + '" -i ' + icon + ' ' + cmd;
   end
   else
   begin
@@ -566,12 +596,14 @@ begin
   end;
 end;
 
-function MoFileMatchesLang(id: String;mo: String): Boolean;
+function MoFileMatchesLang(id: String; mo: String): Boolean;
 begin
-  Result:=false;
-  mo:=ExtractFileName(mo);
-  if copy(mo,pos(mo,'-')+1,length(mo))=id+'.mo' then Result:=true;
-  if id+'.mo' = mo then Result:=true;
+  Result := false;
+  mo := ExtractFileName(mo);
+  if copy(mo, pos(mo, '-')+1, length(mo)) = id+'.mo' then
+    Result := true;
+  if id+'.mo' = mo then
+    Result := true;
 end;
 
 function IsInList(nm: String; list: TStringList): Boolean;
@@ -583,6 +615,369 @@ function StrSubst(s, a, b: String): String;
 begin
   Result := StringReplace(s, a, b, [rfReplaceAll]);
 end;
+
+function GetLibDepends(f: String; lst: TStringList): Boolean;
+var
+  p: TProcess;
+  s: TStringList;
+  i: Integer;
+begin
+  p := TProcess.Create(nil);
+  p.Options := [poUsePipes, poWaitOnExit];
+  p.CommandLine := FindBinary('ldd') + ' ' + f;
+  p.Execute;
+  Result := true;
+  if p.ExitStatus > 0 then
+  begin
+    Result := false;
+    p.Free;
+    exit;
+  end;
+  s := TStringList.Create;
+  s.LoadFromStream(p.Output);
+  p.Free;
+  for i := 0 to s.Count - 1 do
+    if pos('=>', s[i]) > 0 then
+    begin
+      lst.Add(copy(s[i], 2, pos('=', s[i]) - 4));
+    end
+    else
+      lst.Add(copy(s[i], 2, pos('(', s[i]) - 4));
+  s.Free;
+end;
+
+function HasSharedMod(fname: String): Boolean;
+begin
+  Result := pos(' <s>', fname) > 0;
+end;
+
+function HasConfigMod(fname: String): Boolean;
+begin
+  Result := pos(' <config>', fname) > 0;
+end;
+
+function GetXHome: String;
+begin
+  if TestMode then
+  begin
+    Result := '/tmp/litest';
+    CreateDir(Result);
+  end
+  else
+    Result := GetEnvironmentVariable('HOME');
+end;
+
+function SyblToPath(s: String): String;
+var
+  n: String;
+begin
+  s := StringReplace(s, '$HOME', GetEnvironmentVariable('HOME'), [rfReplaceAll]);
+
+  n := GetSystemArchitecture;
+
+  if IsRoot then
+  begin
+    s := StringReplace(s, '$INST', '/opt/appfiles', [rfReplaceAll]);
+    s := StringReplace(s, '$INST-X', '/usr/share', [rfReplaceAll]);
+    s := StringReplace(s, '$OPT', '/opt', [rfReplaceAll]);
+    s := StringReplace(s, '$BIN', '/usr/bin', [rfReplaceAll]);
+
+    if LowerCase(n) = 'x86_64' then
+      s := StringReplace(s, '$LIB', '/usr/lib64', [rfReplaceAll])
+    else
+      s := StringReplace(s, '$LIB', '/usr/lib', [rfReplaceAll]);
+    s := StringReplace(s, '$APP', '/usr/share/applications', [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-16', '/usr/share/icons/hicolor/16x16/apps',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-24', '/usr/share/icons/hicolor/24x24/apps',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-32', '/usr/share/icons/hicolor/32x32/apps',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-48', '/usr/share/icons/hicolor/48x48/apps',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-64', '/usr/share/icons/hicolor/64x64/apps',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-128', '/usr/share/icons/hicolor/128x128/apps',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-256', '/usr/share/icons/hicolor/256x256/apps',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$PIX', '/usr/share/pixmaps', [rfReplaceAll]);
+  end
+  else
+  begin
+    if not DirectoryExists(GetXHome + '/.applications/') then
+    begin
+      CreateDir(GetXHome + '/.applications/');
+      if fpSymLink(PChar(GetXHome + '/.applications/'), PChar(
+        GetXHome + '/' + rsApplications)) <> 0 then
+        P_error('Unable to creat symlink!');
+    end;
+    if not DirectoryExists(GetXHome + '/.appfiles') then
+      CreateDir(GetXHome + '/.appfiles/');
+    if not DirectoryExists(GetXHome + '/.appfiles/icons') then
+      CreateDir(GetXHome + '/.appfiles/icons');
+    //Iconpaths
+    if not DirectoryExists(GetXHome + '/.appfiles/icons/16x16') then
+      CreateDir(GetXHome + '/.appfiles/icons/16x16');
+    if not DirectoryExists(GetXHome + '/.appfiles/icons/24x24') then
+      CreateDir(GetXHome + '/.appfiles/icons/24x24');
+    if not DirectoryExists(GetXHome + '/.appfiles/icons/32x32') then
+      CreateDir(GetXHome + '/.appfiles/icons/32x32');
+    if not DirectoryExists(GetXHome + '/.appfiles/icons/48x48') then
+      CreateDir(GetXHome + '/.appfiles/icons/48x48');
+    if not DirectoryExists(GetXHome + '/.appfiles/icons/64x64') then
+      CreateDir(GetXHome + '/.appfiles/icons/64x64');
+    if not DirectoryExists(GetXHome + '/.appfiles/icons/128x128') then
+      CreateDir(GetXHome + '/.appfiles/icons/128x128');
+    if not DirectoryExists(GetXHome + '/.appfiles/icons/256x256') then
+      CreateDir(GetXHome + '/.appfiles/icons/256x256');
+    if not DirectoryExists(GetXHome + '/.appfiles/icons/common') then
+      CreateDir(GetXHome + '/.appfiles/icons/common');
+    if LowerCase(n) = 'x86_64' then
+    begin
+      if not DirectoryExists(GetXHome + '/.appfiles/lib64') then
+        CreateDir(GetXHome + '/.appfiles/lib64');
+    end
+    else
+      if not DirectoryExists(GetXHome + '/.appfiles/lib') then
+        CreateDir(GetXHome + '/.appfiles/lib');
+
+    s := StringReplace(s, '$BIN', GetXHome + '/.appfiles/binary', [rfReplaceAll]);
+    if LowerCase(n) = 'x86_64' then
+      s := StringReplace(s, '$LIB', GetXHome + '/.appfiles/lib64', [rfReplaceAll])
+    else
+      s := StringReplace(s, '$LIB', GetXHome + '/.appfiles/lib', [rfReplaceAll]);
+
+    s := StringReplace(s, '$INST', GetXHome + '/.appfiles', [rfReplaceAll]);
+    s := StringReplace(s, '$INST-X', GetXHome + '/.appfiles', [rfReplaceAll]);
+    s := StringReplace(s, '$OPT', GetXHome + '/.appfiles', [rfReplaceAll]);
+    s := StringReplace(s, '$APP', GetXHome + '/.applications', [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-16', GetXHome + '/.appfiles/icons/16x16',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-24', GetXHome + '/.appfiles/icons/24x24',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-32', GetXHome + '/.appfiles/icons/32x32',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-48', GetXHome + '/.appfiles/icons/48x48',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-64', GetXHome + '/.appfiles/icons/64x64',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-128', GetXHome + '/.appfiles/icons/128x128',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-256', GetXHome + '/.appfiles/icons/256x256',
+      [rfReplaceAll]);
+    s := StringReplace(s, '$PIX', GetXHome + '/.appfiles/icons/common', [rfReplaceAll]);
+  end;
+  Result := s;
+end;
+
+function SyblToX(s: String): String;
+begin
+  s := StringReplace(s, '$INST', '', [rfReplaceAll]);
+  s := StringReplace(s, '$INST-X', '', [rfReplaceAll]);
+  s := StringReplace(s, '$OPT', '/opt', [rfReplaceAll]);
+  s := StringReplace(s, '$APP', '/app', [rfReplaceAll]);
+  s := StringReplace(s, '$HOME', '/hdir', [rfReplaceAll]);
+  s := StringReplace(s, '$ICON-16', '/icon16', [rfReplaceAll]);
+  s := StringReplace(s, '$ICON-24', '/icon24', [rfReplaceAll]);
+  s := StringReplace(s, '$ICON-32', '/icon32', [rfReplaceAll]);
+  s := StringReplace(s, '$ICON-48', '/icon48', [rfReplaceAll]);
+  s := StringReplace(s, '$ICON-64', '/icon64', [rfReplaceAll]);
+  s := StringReplace(s, '$ICON-128', '/icon128', [rfReplaceAll]);
+  s := StringReplace(s, '$ICON-256', '/icon265', [rfReplaceAll]);
+  s := StringReplace(s, '$PIX', '/icon', [rfReplaceAll]);
+  s := StringReplace(s, '$LIB', '/lib', [rfReplaceAll]);
+  s := StringReplace(s, '$LIB', '/binary', [rfReplaceAll]);
+  Result := s;
+end;
+
+function DeleteModifiers(s: String): String;
+var
+  h: String;
+begin
+  h := SysUtils.StringReplace(s, ' <s>', '', [rfReplaceAll]);
+  h := SysUtils.StringReplace(s, ' <config>', '', [rfReplaceAll]);
+  h := ReplaceRegExpr(' <chmod:([0-7]{3})>', h, '', false);
+  h := ReplaceRegExpr(' <([a-zA-Z_]{4,})-only>', h, '', false);
+  h := SysUtils.StringReplace(h, ' <mime>', '', [rfReplaceAll]);
+  h := SysUtils.StringReplace(h, ' <setvars>', '', [rfReplaceAll]);
+  h := SysUtils.StringReplace(h, '>', '', [rfReplaceAll]);
+  Result := h;
+end;
+
+function FileCopy(Source, dest: String): Boolean;
+var
+  fSrc, fDst, len: Integer;
+  ct, units, size: longint;
+  buffer: packed array [0..2047] of byte;
+begin
+  ct := 0;
+  Result := false; { Assume that it WONT work }
+  if Source <> dest then
+  begin
+    fSrc := FileOpen(Source, fmOpenRead);
+    if fSrc >= 0 then
+    begin
+      size := FileSeek(fSrc, 0, 2);
+      units := size div 2048;
+      FileSeek(fSrc, 0, 0);
+      fDst := FileCreate(dest);
+      if fDst >= 0 then
+      begin
+        while size > 0 do
+        begin
+          len := FileRead(fSrc, buffer, sizeof(buffer));
+          FileWrite(fDst, buffer, len);
+          size := size - len;
+          if units > 0 then
+            ct := ct + 1;
+        end;
+        FileSetDate(fDst, FileGetDate(fSrc));
+        FileClose(fDst);
+        FileSetAttr(dest, FileGetAttr(Source));
+        Result := true;
+      end;
+      FileClose(fSrc);
+    end;
+  end;
+end;
+
+function SolveBuildTimeSybl(str: String): String;
+begin
+  Result := str;
+end;
+
+function GetAppIconPath(icon: String): String;
+var
+  res: String;
+  hasExt: Boolean;
+
+  function GetExt(str: String): String;
+  begin
+    Result := LowerCase(ExtractFileExt(str));
+  end;
+
+  function CheckRes: Boolean;
+  begin
+    Result := true;
+    if not FileExists(res) then
+      res := '';
+    if res = '' then
+      Result := false;
+  end;
+
+  function Checkdir(dir: String): Boolean;
+  begin
+    dir := dir+'/';
+    if not hasExt then
+    begin
+      res := dir+icon+'.png';
+      if not Checkres then
+      begin
+        res := dir+icon+'.xpm';
+        if not Checkres then
+        begin
+          res := dir+icon+'.jpg';
+          if not Checkres then
+          begin
+            res := dir+icon+'.bmp';
+            Checkres;
+          end;
+        end;
+      end;
+    end
+    else
+    begin
+      res := dir+icon;
+      Checkres;
+    end;
+    Result := true;
+    if res = '' then
+      Result := false;
+  end;
+
+begin
+  Result := '';
+  if icon = '' then
+    exit;
+  //Cannot work with those files
+  if GetExt(icon) = '.tiff' then
+    exit;
+  if GetExt(icon) = '.svg' then
+    exit;
+
+  if (FileExists(icon)) then
+    Result := icon;
+  hasExt := true;
+  if GetExt(icon) = '' then
+    hasExt := false;
+
+  if Checkdir('/usr/share/icons/hicolor/64x64/apps') then
+    Result := res;
+  if res = '' then
+    if Checkdir('/usr/share/pixmaps') then
+      Result := res;
+  if res = '' then
+    if Checkdir('/usr/share/icons') then
+      Result := res;
+  if res = '' then
+    if Checkdir('/usr/share/icons/hicolor/48x48/apps') then
+      Result := res;
+  if res = '' then
+    if Checkdir('/usr/share/icons/hicolor/128x128/apps') then
+      Result := res;
+  if res = '' then
+    if Checkdir('/usr/share/icons/locolor/64x64/apps') then
+      Result := res;
+  if res = '' then
+    if Checkdir('/usr/share/icons/default.kde4/64x64/apps') then
+      Result := res;
+  if res = '' then
+    if Checkdir('/usr/lib/kde4/share/icons/hicolor/64x64/apps') then
+      Result := res;
+  if res = '' then
+    if Checkdir('/usr/share/icons/default.kde/64x64/apps') then
+      Result := res;
+end;
+
+procedure ShowPopupNotify(msg: String; urgency: TUrgencyLevel; time: Integer);
+var
+  p: TProcess;
+  DInfo: TDistroInfo;
+  s: String;
+begin
+  DInfo := GetDistro;
+  p := TProcess.Create(nil);
+  p.Options := [poUsePipes];
+  if DInfo.DBase = 'KDE' then
+  begin
+    p.CommandLine := FindBinary('kdialog') + ' --passivepopup "' +
+      msg +  '" --title "Listaller Message" ' + IntToStr(time);
+    p.Execute;
+    p.Free;
+    exit;
+  end
+  else
+    if FileExists('/usr/bin/notify-send') then
+    begin
+      case urgency of
+        ulNormal: s := 'normal';
+        ulLow: s := 'low';
+        ulCritical: s := 'critical';
+      end;
+      p.CommandLine := FindBinary('notify-send') + ' --urgency=' +
+        s + ' --expire-time=' +  IntToStr(time * 1000) + ' "' + msg + '"';
+      p.Execute;
+      p.Free;
+      exit;
+    end;
+end;
+
+initialization
+  if IsRoot then
+    RegDir := LI_CONFIG_DIR + LI_APPDB_PREF
+  else
+    RegDir := SyblToPath('$INST') + '/' + LI_APPDB_PREF;
 
 end.
 

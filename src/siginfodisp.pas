@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, Controls, Dialogs,
-  FileUtil, Forms, Graphics, LResources, StdCtrls, SysUtils, trStrings;
+  FileUtil, Forms, Graphics, LResources, StdCtrls, SysUtils, strLocale;
 
 type
 

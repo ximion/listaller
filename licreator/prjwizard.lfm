@@ -58,7 +58,7 @@ object frmProjectWizard: TfrmProjectWizard
   LCLVersion = '0.9.29'
   object Notebook1: TNotebook
     Left = 0
-    Height = 625
+    Height = 605
     Top = 0
     Width = 836
     Align = alClient
@@ -68,7 +68,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page1: TPage
       Caption = 'Page1'
       ClientWidth = 832
-      ClientHeight = 621
+      ClientHeight = 601
       object SpeedButton1: TSpeedButton
         Left = 85
         Height = 104
@@ -1756,7 +1756,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page2: TPage
       Caption = 'Page2'
       ClientWidth = 832
-      ClientHeight = 621
+      ClientHeight = 601
       object Label8: TLabel
         Left = 7
         Height = 20
@@ -2256,7 +2256,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page3: TPage
       Caption = 'Page3'
       ClientWidth = 832
-      ClientHeight = 621
+      ClientHeight = 601
       object Label17: TLabel
         Left = 7
         Height = 20
@@ -2445,7 +2445,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page4: TPage
       Caption = 'Page4'
       ClientWidth = 832
-      ClientHeight = 621
+      ClientHeight = 601
       object Label19: TLabel
         Left = 7
         Height = 20
@@ -2576,7 +2576,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page5: TPage
       Caption = 'Page5'
       ClientWidth = 832
-      ClientHeight = 621
+      ClientHeight = 601
       object Label18: TLabel
         Left = 7
         Height = 20
@@ -2606,7 +2606,7 @@ object frmProjectWizard: TfrmProjectWizard
     object Page6: TPage
       Caption = 'Page6'
       ClientWidth = 832
-      ClientHeight = 621
+      ClientHeight = 601
       object Label21: TLabel
         Left = 7
         Height = 20
@@ -2665,7 +2665,7 @@ object frmProjectWizard: TfrmProjectWizard
   object Panel1: TPanel
     Left = 0
     Height = 41
-    Top = 625
+    Top = 605
     Width = 836
     Align = alBottom
     ClientHeight = 41

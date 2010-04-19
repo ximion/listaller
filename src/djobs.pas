@@ -28,7 +28,7 @@ interface
 
 uses
   Classes, SysUtils, dbus, polkit, glib2, gExt, Installer, AppMan,
-  liBasic, liTypes, SimDBus, Contnrs, AppUpdate, SyncObjs;
+  liUtils, liTypes, SimDBus, Contnrs, AppUpdate, SyncObjs;
 
 type
   TAccessType = (AC_UNKNOWN, AC_AUTHORIZED, AC_NOT_AUTHORIZED);

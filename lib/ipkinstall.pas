@@ -23,9 +23,8 @@ interface
 uses
   BaseUnix, blcksock,
   Classes, distri, FileUtil, FTPSend, HTTPSend, IniFiles, ipkdef,
-  IPKPackage, liBasic, LiCommon, liDBusProc,
-  liManageApp, liTypes, MD5, MTProcs, PackageKit,
-  Process, RegExpr, sqlite3ds, SysUtils, trStrings;
+  IPKPackage, liUtils, liDBusProc, liManageApp, liTypes, MD5, MTProcs,
+  PackageKit, Process, RegExpr, sqlite3ds, SysUtils, strLocale;
 
 type
 

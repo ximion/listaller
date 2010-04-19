@@ -1,5 +1,4 @@
-{ liupdate.lpr
-  Copyright (C) Listaller Project 2008-2010
+{ Copyright (C) Listaller Project 2008-2010
 
   liupdate.lpr is free software: you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published
@@ -24,8 +23,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, updatefrm, updexecfrm,
-  LiBasic,
-  liTranslator, SysUtils, LiCommon,
+  liTranslator, SysUtils,
   gExt;
 
 {$R *.res}
@@ -36,7 +34,6 @@ begin
   //Make the GType system work for us
   InitializeGType();
   writeLn('Updater initialized.');
-  RegDir:=SyblToPath('$INST/app-reg/');
   Application.CreateForm(TUMnForm, UMnForm);
   Application.CreateForm(TUExecFm, UExecFm);
   writeLn('GUI created.');

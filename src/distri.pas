@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -20,7 +20,7 @@ unit distri;
 
 interface
 
-uses SysUtils, Classes, Process, liBasic;
+uses SysUtils, Classes, Process, liUtils;
 
 type
 //** Contains information about the current Linux distribution

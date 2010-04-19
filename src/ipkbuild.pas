@@ -21,7 +21,7 @@ unit ipkbuild;
 interface
 
 uses
-  Classes, FileUtil, GPGSign, IPKDef, IPKPackage, liBasic, LiCommon,
+  Classes, FileUtil, GPGSign, IPKDef, IPKPackage, liUtils,
   liTypes, MD5, OPBitmapFormats, Process,
   RegExpr, SysUtils;
 

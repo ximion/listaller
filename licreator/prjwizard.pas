@@ -1,4 +1,4 @@
-{ Copyright (C) 2008-2009 Matthias Klumpp
+{ Copyright (C) 2008-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -24,8 +24,8 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Buttons, ExtCtrls, ComCtrls, EditBtn, Grids, popupnotifier, FileCtrl, FileUtil,
-  MD5, Menus, editor, LCLType, CheckLst, LiCommon, SynEdit, LiTypes, IconLoader,
-  ipkdef, liBasic;
+  MD5, Menus, editor, LCLType, CheckLst, liUtils, SynEdit, LiTypes, IconLoader,
+  ipkdef;
 
 type
 

@@ -23,8 +23,8 @@ interface
 uses
   AppUpdate,
   Classes, ComCtrls, Controls, Dialogs, FileUtil, Forms, Graphics,
-  LiBasic, LiCommon, liTypes, LResources, Process, StdCtrls,
-  SysUtils, trStrings;
+  LiUtils, liTypes, LResources, Process, StdCtrls,
+  SysUtils, strLocale;
 
 type
 

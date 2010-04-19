@@ -22,7 +22,7 @@ unit applist;
 interface
 
 uses
-  AppItem, Buttons, Classes, LCLType, liBasic, liTypes, ComCtrls, Controls,
+  AppItem, Buttons, Classes, LCLType, LiUtils, LiTypes, ComCtrls, Controls,
   Graphics, StdCtrls, SysUtils, IconLoader;
 
 type

@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, CallbackProcess, liTypes, FileUtil,
-  liBasic;
+  liUtils;
 
 type
   //** Class to sign files using GPG

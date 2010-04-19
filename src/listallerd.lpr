@@ -20,7 +20,7 @@ program listallerd;
 
 uses
   cthreads, Interfaces, Classes, SysUtils, CustApp, dbus, djobs,
-  Contnrs, SimDBus, liBasic, LCLIntf, SyncObjs, gExt;
+  Contnrs, SimDBus, liUtils, LCLIntf, SyncObjs, gExt;
 
 type
 

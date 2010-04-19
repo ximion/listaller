@@ -21,7 +21,7 @@ unit ipkpackage;
 interface
 
 uses
-  Classes, FileUtil, gpgsign, liBasic, liTypes, SysUtils, TarFile,
+  Classes, FileUtil, gpgsign, liUtils, liTypes, SysUtils, TarFile,
   UBufferedFS, ULZMACommon, ULZMADecoder,
   ULZMAEncoder;
 

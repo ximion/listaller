@@ -21,7 +21,7 @@ unit lidbusproc;
 interface
 
 uses
-  Classes, DBus, liBasic, liTypes, SimDBus, SysUtils, trStrings;
+  Classes, DBus, liUtils, liTypes, SimDBus, SysUtils, strLocale;
 
 type
   //** Which detail of the process was changed?

@@ -20,9 +20,8 @@ unit uninstall;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ComCtrls,
-  StdCtrls, LCLType, LiBasic, Buttons, ExtCtrls, process, trStrings, FileUtil,
-  appman, liTypes, PackageKit;
+  Forms, AppMan, Buttons, Classes, Dialogs, LCLType, LiUtils, liTypes, Process, ComCtrls,
+  Controls, ExtCtrls, FileUtil, Graphics, StdCtrls, SysUtils, strLocale, LResources;
 
 type
 
@@ -47,10 +46,10 @@ type
   public
     { public declarations }
     property RmProcStatus: LiProcStatus read astatus write astatus;
-  end; 
+  end;
 
 var
- //** Window that shows the progress of the uninstallation
+  //** Window that shows the progress of the uninstallation
   RMForm: TRMForm;
 
 implementation
@@ -63,64 +62,69 @@ uses manager;
 
 procedure TRMForm.FormShow(Sender: TObject);
 begin
- Label1.Caption:=rsWaiting;
- self.Caption:=StringReplace(rsRMAppC,'%a','...',[rfReplaceAll])
+  Label1.Caption := rsWaiting;
+  self.Caption := StringReplace(rsRMAppC, '%a', '...', [rfReplaceAll]);
 end;
 
 procedure LogAdd(s: String);
 begin
-writeLn(s);
-RMForm.Memo1.Lines.add(s);
+  writeLn(s);
+  RMForm.Memo1.Lines.add(s);
 end;
 
-procedure OnRmStatus(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
+procedure OnRmStatus(change: LiStatusChange; Data: TLiStatusData;
+  user_data: Pointer); cdecl;
 begin
- case change of
-  scMessage     : LogAdd(data.msg);
-  scMnProgress  : RMForm.UProgress.Position:=data.mnprogress;
-  scStatus: RMForm.astatus:=data.lastresult;
- end;
- Application.ProcessMessages;
+  case change of
+    scMessage: LogAdd(Data.msg);
+    scMnProgress: RMForm.UProgress.Position := Data.mnprogress;
+    scStatus: RMForm.astatus := Data.lastresult;
+  end;
+  Application.ProcessMessages;
 end;
 
 procedure TRMForm.FormActivate(Sender: TObject);
 begin
-if FActiv then
-begin
-FActiv:=false;
-if MnFrm.uApp.uID<>'' then
-begin
-Label1.Caption:=StringReplace(rsRMAppC,'%a',MnFrm.uApp.Name,[rfReplaceAll]);
+  if FActiv then
+  begin
+    FActiv := false;
+    if MnFrm.uApp.uID<>'' then
+    begin
+      Label1.Caption := StrSubst(rsRMAppC, '%a', MnFrm.uApp.Name);
+      Caption := StrSubst(rsRMAppC, '%a', '...');
 
-if Application.MessageBox(PChar(StringReplace(rsRealUninstQ,'%a',MnFrm.uApp.Name,[rfReplaceAll])),'Uninstall?',MB_YESNO)=IDYES then
-begin
-  UProgress.Position:=0;
- li_mgr_register_status_call(@MnFrm.amgr,@OnRmStatus,nil);
- astatus:=prNone;
- BitBtn1.Enabled:=false;
- Application.ProcessMessages;
-  li_mgr_remove_app(@MnFrm.amgr,MnFrm.uApp);
- while (astatus<>prFinished)
-  and (astatus<>prFailed)
-  and (astatus<>prError)do
- begin
-  sleep(1);
-  Application.ProcessMessages;
- end;
- li_mgr_register_status_call(@MnFrm.amgr,@manager.OnMgrStatus,nil);
+      if Application.MessageBox(PChar(
+        StringReplace(rsRealUninstQ, '%a', MnFrm.uApp.Name, [rfReplaceAll])),
+        'Uninstall?', MB_YESNO) = idYes then
+      begin
+        UProgress.Position := 0;
+        li_mgr_register_status_call(@MnFrm.amgr, @OnRmStatus, nil);
+        astatus := prNone;
+        BitBtn1.Enabled := false;
+        Application.ProcessMessages;
+        li_mgr_remove_app(@MnFrm.amgr, MnFrm.uApp);
+        while (astatus<>prFinished)  and (astatus<>prFailed)  and (astatus<>prError) do
+        begin
+          sleep(1);
+          Application.ProcessMessages;
+        end;
+        li_mgr_register_status_call(@MnFrm.amgr, @manager.OnMgrStatus, nil);
 
- //!!!: Misterious crash appears when executing this code.
- //MnFrm.ReloadAppList(true);
- BitBtn1.Enabled:=true;
-end else close;
+        //!!!: Misterious crash appears when executing this code.
+        //MnFrm.ReloadAppList(true);
+        BitBtn1.Enabled := true;
+      end
+      else
+        Close;
 
-end else
-begin
- ShowMessage('Error in selection.');
- close;
- exit;
-end;
-end;
+    end
+    else
+    begin
+      ShowMessage('Error in selection.');
+      Close;
+      exit;
+    end;
+  end;
 end;
 
 procedure TRMForm.BitBtn1Click(Sender: TObject);
@@ -132,27 +136,28 @@ procedure TRMForm.DetailsBtnClick(Sender: TObject);
 begin
   if Memo1.Visible then
   begin
-   Memo1.Visible:=false;
-   Width:=456;
-   Height:=134;
-   DetailsBtn.Caption:=rsDetails+' -> ';
-  end else
+    Memo1.Visible := false;
+    Width := 456;
+    Height := 134;
+    DetailsBtn.Caption := rsDetails+' -> ';
+  end
+  else
   begin
-   Memo1.Visible:=true;
-   Width:=456;
-   Height:=294;
-   DetailsBtn.Caption:=rsDetails+' <- ';
+    Memo1.Visible := true;
+    Width := 456;
+    Height := 294;
+    DetailsBtn.Caption := rsDetails+' <- ';
   end;
 end;
 
 procedure TRMForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  FActiv:=true;
+  FActiv := true;
 end;
 
 procedure TRMForm.FormCreate(Sender: TObject);
 begin
-  FActiv:=true;
+  FActiv := true;
   DetailsBtnClick(Sender);
 end;
 

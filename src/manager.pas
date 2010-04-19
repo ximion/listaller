@@ -22,10 +22,9 @@ interface
 
 uses
   Spin, Forms, Menus, AppMan, Distri, AppItem, AppList,
-  Buttons, Classes, Dialogs, LCLType, LiBasic, liTypes, Process, AboutBox,
-  CheckLst, ComCtrls,
-  Controls, ExtCtrls, FileUtil, Graphics, Inifiles, LiCommon, StdCtrls,
-  SysUtils, trStrings, Uninstall, IconLoader, LResources, PackageKit;
+  Buttons, Classes, Dialogs, LCLType, liTypes, liUtils, Process, AboutBox,
+  CheckLst, ComCtrls, Controls, ExtCtrls, FileUtil, Graphics, Inifiles, StdCtrls,
+  SysUtils, strLocale, Uninstall, IconLoader, LResources, PackageKit;
 
 type
 
@@ -134,8 +133,7 @@ type
     appListSU: TAppListView;
     //** Visual applist for search results
     appResList: TAppListView;
-    procedure UninstallClick(Sender: TObject; Index: Integer;
-      item: TAppInfoItem);
+    procedure UninstallClick(Sender: TObject; Index: Integer; item: TAppInfoItem);
     function CreateNewUserAppList: TAppListView;
     function CreateNewSuAppList: TAppListView;
   public
@@ -223,13 +221,13 @@ begin
       Application.MessageBox(msg, PChar(rsError), MB_OK+MB_IconError);
       RMForm.RmProcStatus := prFailed;
     end;
-    rqWarning: if Application.MessageBox(msg, PChar(rsWarning), MB_YesNo+MB_IconWarning) =
-        idYes then
+    rqWarning: if Application.MessageBox(msg, PChar(rsWarning),
+        MB_YesNo+MB_IconWarning) = idYes then
         Result := rqsYes
       else
         Result := rqsNo;
-    rqQuestion: if Application.MessageBox(msg, PChar(rsQuestion), MB_YesNo+MB_IconQuestion) =
-        idYes then
+    rqQuestion: if Application.MessageBox(msg, PChar(rsQuestion),
+        MB_YesNo+MB_IconQuestion) = idYes then
         Result := rqsYes
       else
         Result := rqsNo;
@@ -741,14 +739,14 @@ begin
           else
             if Application.MessageBox(PAnsiChar(
               StringReplace(StringReplace(rsConvertPkg, '%x', 'DEB', [rfReplaceAll]),
-              '%y', 'RPM', [rfReplaceAll])), PAnsiChar(
-              rsConvertPkgQ), MB_YESNO) = idYes then
+              '%y', 'RPM', [rfReplaceAll])), PAnsiChar(rsConvertPkgQ),
+              MB_YESNO) = idYes then
             begin
               with ConvDisp do
               begin
                 if not FileExists('/usr/bin/alien') then
-                  if Application.MessageBox(PChar(rsListallerAlien), PChar(rsInstPkgQ),
-                    MB_YESNO) = idYes then
+                  if Application.MessageBox(PChar(rsListallerAlien),
+                    PChar(rsInstPkgQ), MB_YESNO) = idYes then
                   begin
                     ShowMessage(rsplWait);
                     pkit := TPackageKit.Create;
@@ -758,7 +756,8 @@ begin
 
                     if pkit.PkFinishCode>0 then
                     begin
-                      ShowMessage(StringReplace(rsPkgInstFail, '%p', 'alien', [rfreplaceAll]));
+                      ShowMessage(StringReplace(rsPkgInstFail, '%p',
+                        'alien', [rfreplaceAll]));
                       pkit.Free;
                       exit;
                     end;
@@ -768,8 +767,8 @@ begin
                     exit;
                 Application.ProcessMessages;
                 Caption := StringReplace(rsConvTitle, '%p', 'DEB', [rfReplaceAll]);
-                Process1.CommandLine := 'alien --to-rpm -v -i --scripts '+''''+
-                  OpenDialog1.FileName+'''';
+                Process1.CommandLine :=
+                  'alien --to-rpm -v -i --scripts '+''''+  OpenDialog1.FileName+'''';
                 GetOutPutTimer.Enabled := true;
                 Process1.Execute;
                 ShowModal;
@@ -791,15 +790,15 @@ begin
           else
             if Application.MessageBox(PAnsiChar(
               StringReplace(StringReplace(rsConvertPkg, '%x', 'RPM', [rfReplaceAll]),
-              '%y', 'DEB', [rfReplaceAll])), PAnsiChar(
-              rsConvertPkgQ), MB_YESNO) = idYes then
+              '%y', 'DEB', [rfReplaceAll])), PAnsiChar(rsConvertPkgQ),
+              MB_YESNO) = idYes then
             begin
               with ConvDisp do
               begin
 
                 if not FileExists('/usr/bin/alien') then
-                  if Application.MessageBox(PChar(rsListallerAlien), PChar(rsInstPkgQ),
-                    MB_YESNO) = idYes then
+                  if Application.MessageBox(PChar(rsListallerAlien),
+                    PChar(rsInstPkgQ), MB_YESNO) = idYes then
                   begin
                     ShowMessage(rsplWait);
                     pkit.InstallPkg('alien');
@@ -808,7 +807,8 @@ begin
 
                     if pkit.PkFinishCode>0 then
                     begin
-                      ShowMessage(StringReplace(rsPkgInstFail, '%p', 'alien', [rfreplaceAll]));
+                      ShowMessage(StringReplace(rsPkgInstFail, '%p',
+                        'alien', [rfreplaceAll]));
                       pkit.Free;
                       exit;
                     end;
@@ -819,8 +819,8 @@ begin
 
                 Application.ProcessMessages;
                 Caption := StringReplace(rsConvTitle, '%p', 'RPM', [rfReplaceAll]);
-                Process1.CommandLine := 'alien --to-deb -v -i --scripts '+''''+
-                  OpenDialog1.FileName+'''';
+                Process1.CommandLine :=
+                  'alien --to-deb -v -i --scripts '+''''+  OpenDialog1.FileName+'''';
                 GetOutPutTimer.Enabled := true;
                 Process1.Execute;
                 ShowModal;
@@ -847,7 +847,7 @@ end; }
 
 procedure TMnFrm.MyAppSheetShow(Sender: TObject);
 begin
-  AppViewControl.Enabled := false;
+  AppViewControl.Visible := false;
   AppInfoPanel.Visible := false;
   currAppList := appList;
   SWBox.Visible := false;
@@ -857,7 +857,7 @@ begin
   ReloadAppList;
   SWBox.Visible := true;
   MBar.Visible := false;
-  AppViewControl.Enabled := true;
+  AppViewControl.Visible := true;
 end;
 
 procedure TMnFrm.RmUpdSrcBtnClick(Sender: TObject);
@@ -866,8 +866,8 @@ var
 begin
   if UListBox.ItemIndex>-1 then
   begin
-    if Application.MessageBox(PChar(rsRmSrcQ), PChar(rsRmSrcQC), MB_YESNO+
-      MB_IconWarning) = idYes then
+    if Application.MessageBox(PChar(rsRmSrcQ), PChar(rsRmSrcQC),
+      MB_YESNO+  MB_IconWarning) = idYes then
     begin
       uconf := TStringList.Create;
       uconf.LoadFromFile(RegDir+'updates.list');
@@ -884,7 +884,7 @@ end;
 
 procedure TMnFrm.SysAppSheetShow(Sender: TObject);
 begin
-  AppViewControl.Enabled := false;
+  AppViewControl.Visible := false;
   AppInfoPanel.Visible := false;
   currAppList := appListSU;
   MBar.Visible := true;
@@ -894,7 +894,7 @@ begin
   ReloadAppList;
   SWBoxSU.Visible := true;
   MBar.Visible := false;
-  AppViewControl.Enabled := true;
+  AppViewControl.Visible := true;
 end;
 
 procedure TMnFrm.UListBoxClick(Sender: TObject);
@@ -985,8 +985,9 @@ begin
       begin
         Application.ProcessMessages;
         if ((pos(LowerCase(FilterEdt.Text), LowerCase(currAppList.AppItems[i].Name))>
-          0)  or (pos(LowerCase(FilterEdt.Text), LowerCase(currAppList.AppItems[i].SDesc))>0))
-          and (LowerCase(FilterEdt.Text)<>LowerCase(currAppList.AppItems[i].Name)) then
+          0)  or (pos(LowerCase(FilterEdt.Text),
+          LowerCase(currAppList.AppItems[i].SDesc))>0))  and
+          (LowerCase(FilterEdt.Text)<>LowerCase(currAppList.AppItems[i].Name)) then
         begin
           appResList.AddItem(currAppList.AppItems[i]);
         end;
@@ -1042,8 +1043,9 @@ begin
   tmp.LoadFromFile(RegDir+'updates.list');
   for i := 1 to tmp.Count-1 do
   begin
-    UListBox.items.Add(copy(tmp[i], pos(' (', tmp[i])+2, length(tmp[i])-pos(' (', tmp[i])-2)+
-      ' ('+copy(tmp[i], 3, pos(' (', tmp[i])-3)+')');
+    UListBox.items.Add(copy(tmp[i], pos(' (', tmp[i])+2,
+      length(tmp[i])-pos(' (', tmp[i])-2)+  ' ('+copy(tmp[i], 3,
+      pos(' (', tmp[i])-3)+')');
     UListBox.Checked[UListBox.Items.Count-1] := tmp[i][1] = '-';
   end;
 

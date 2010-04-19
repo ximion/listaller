@@ -21,7 +21,7 @@ unit tarfile;
 interface
 
 uses
-  Classes, SysUtils, Process, FileUtil, liBasic;
+  Classes, SysUtils, Process, FileUtil, liUtils;
 
 type
  TTarArchive = class

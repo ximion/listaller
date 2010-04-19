@@ -21,7 +21,7 @@ unit ipkdef;
 interface
 
 uses
-  Classes, GetText, liBasic, liTypes, SysUtils;
+  Classes, GetText, liUtils, liTypes, SysUtils;
 
 type
 

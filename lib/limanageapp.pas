@@ -21,9 +21,8 @@ unit limanageapp;
 interface
 
 uses
-  DB, GLib2, ipkdef, Classes, GetText, liBasic, liTypes, MTProcs,
-  Process, FileUtil, IniFiles, LiCommon,
-  SysUtils, SQLite3Ds, TRStrings,
+  DB, GLib2, ipkdef, Classes, GetText, liUtils, liTypes, MTProcs,
+  Process, FileUtil, IniFiles, SysUtils, SQLite3Ds, strLocale,
   liDBusProc, PackageKit;
 
 type

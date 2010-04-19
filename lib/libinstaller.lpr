@@ -19,8 +19,8 @@ library libinstaller;
 {$mode objfpc}{$H+}
 
 uses
-  cthreads, Classes, ipkInstall, SysUtils, Controls, liCommon, liTypes,
-  liBasic, liManageApp, liUpdateApp;
+  cthreads, Classes, ipkInstall, SysUtils, Controls, liTypes, liUtils,
+  liManageApp, liUpdateApp;
 
 
 //////////////////////////////////////////////////////////////////////////////////////

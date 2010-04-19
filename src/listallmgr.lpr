@@ -27,7 +27,6 @@ uses {$IFDEF UNIX}
   Manager,
   Uninstall,
   PkgConvertDisp,
-  LiCommon,
   LiTranslator,
   Process,
   AppItem;
