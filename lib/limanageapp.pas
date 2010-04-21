@@ -731,8 +731,8 @@ begin
 
       tmp.Clear;
 
+      setpos(18);
       pkit.GetRequires(f);
-      while not pkit.Finished do ;
 
       setpos(25);
       g := '';
@@ -744,6 +744,7 @@ begin
       end;
       tmp.Free;
 
+      p_debug('Asking dependency question...');
       pkit.Free;
       if (StringReplace(g, ' ', '', [rfReplaceAll]) = '') or
         (request(StringReplace(StringReplace(
@@ -753,9 +754,11 @@ begin
       else
         exit;
     end;
+    p_debug('A');
   end;
 
 
+  p_debug('Application UId is: '+obj.UId);
   if (SUMode) and (not IsRoot) then
   begin
     //Create worker thread for this action

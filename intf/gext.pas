@@ -43,6 +43,8 @@ function  g_cancellable_is_cancelled(cancellable: Pointer): GBoolean;cdecl;exter
 function  g_cancellable_set_error_if_cancelled(cancellable: Pointer;error: PPGError): GBoolean;cdecl;external gliblib;
 procedure g_cancellable_cancel(cancellable: PGCancellable);cdecl;external gliblib;
 
+procedure g_ptr_array_unref(arr: PGPtrArray);cdecl;external gliblib;
+
 implementation
 
 procedure InitializeGType;

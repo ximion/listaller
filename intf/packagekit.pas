@@ -35,6 +35,16 @@ type
   PPkResults = Pointer;
   PPkError = Pointer;
 
+  TPkPackage = record
+    PkDesc: String;
+    PkLicense: String;
+    PkSummary: String;
+    PkUrl: String;
+    PkSize: Int64;
+    PkGroup: Integer;
+    PkPackageId: String;
+  end;
+
   //** Pointer to TPackageKit object
   PPackageKit = ^TPackageKit;
 
@@ -57,8 +67,8 @@ type
     pkglist: TStringList;
     //Processes actions asyncronous
     doasync: Boolean;
-    //List with package details
-    pkgdetails: TStringList;
+    //Last detected package
+    lpkg: TPkPackage;
     //Set new progress
     procedure SetProgress(i: Integer);
     //Function to get PackageKit version from pkcon
@@ -122,8 +132,8 @@ type
     property Finished: Boolean read done;
     //** If true, the instance won't wait until the action completes
     property NoWait: Boolean read doasync write doasync;
-    //** Details about a package (result of GetPkgDetails)
-    property PkgDetailsList: TStringList read pkgdetails write pkgdetails;
+    //** Package information from the last call
+    property LastPackage: TPkPackage read lpkg;
   end;
 
   PPkPackageId = ^PkPackageID;
@@ -183,7 +193,7 @@ procedure pk_client_get_details_async(client: PPkClient;package_ids: PPGChar;can
 function  pk_client_generic_finish(client: PPkClient;res: Pointer;error: PPGError): Pointer;cdecl;external pklib2;
 function  pk_results_get_exit_code(results: PPkResults): PkExitEnum;cdecl;external pklib2;
 function  pk_results_get_error_code(results: PPkResults): PPkError;cdecl;external pklib2;
-function  pk_results_get_details_array(results: Pointer): PGPtrArray;cdecl;external pklib2;
+function  pk_results_get_details_array(results: PPkResults): PGPtrArray;cdecl;external pklib2;
 
 function  pk_client_error_quark(): GQuark;cdecl;external pklib2;
 function  pk_client_get_type(): GType;cdecl;external pklib2;
@@ -197,22 +207,13 @@ begin
   Result := G_TYPE_CHECK_INSTANCE_CAST(o, pk_client_get_type());
 end;
 
-procedure OnPkPackage(pkg: Pointer;data: GPointer;udata: GPointer);cdecl;
-var
-  pk: TPackageKit;
-  summary: PGChar = nil;
-begin
-  pk := TPackageKit(udata);
-
-  g_object_get(pkg,'summary', summary,nil);
-  pk.pkgdetails.Text := summary;
-end;
-
 procedure OnPkActionFinished(source_object: PGObject; res: Pointer; user_data: GPointer);cdecl;
 var
   results: Pointer;
   error: PGError = nil;
   detArr: PGPtrArray;
+  str: PGChar;
+  pkg: Pointer;
   role: PkRoleEnum;
   pk: TPackageKit;
 begin
@@ -241,16 +242,21 @@ begin
 
   if role  = PK_ROLE_ENUM_GET_DETAILS then
   begin
-    detArr := pk_results_get_details_array(source_object);
+    detArr := pk_results_get_details_array(results);
     if detArr <> nil then
+    if detArr^.len = 1 then
     begin
-     if pk.pkgdetails = nil then
-      pk.pkgdetails := TStringList.Create
-     else
-      pk.pkgdetails.Clear;
-     g_ptr_array_foreach(detArr, @OnPkPackage, pk);
-    end;
-      g_ptr_array_free(detArr,true);
+      pkg := g_ptr_array_index(detArr, 0);
+      g_object_get(pkg, 'description', @str, nil);
+      pk.lpkg.PkDesc := str;
+      g_object_get(pkg, 'package-id', @str, nil);
+      pk.lpkg.PkPackageId := str;
+      g_object_get(pkg, 'url', @str, nil);
+      pk.lpkg.PkUrl := str;
+      g_object_get(pkg, 'license', @str, nil);
+      pk.lpkg.PkLicense := str;
+    end else writeLn('No one entry found!');
+     g_ptr_array_unref(detArr);
   end;
     pk.exitcode := Integer(pk_results_get_exit_code(results));
     g_object_unref(results);
