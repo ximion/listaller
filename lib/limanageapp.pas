@@ -517,12 +517,13 @@ var
   mandir: String;
 begin
   Result := true;
+  p_debug('MoJo remover: dsk: '+dsk);
   msg('Package could be installed with MoJo/LOKI...');
   inf := TIniFile.Create(dsk);
   if not DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry',
     'Exec', '?'))) then
   begin
-    writeLn('Listaller cannot handle this installation!');
+    p_warning('Listaller cannot handle this installation!');
     request(rsCannotHandleRM, rqError);
     inf.Free;
   end
@@ -728,10 +729,12 @@ begin
 
       msg('Package detected: ' + f);
       msg('Looking for reverse-dependencies...');
+      p_debug('ZeroTest!');
 
       tmp.Clear;
 
       setpos(18);
+      p_debug('GetRequires()');
       pkit.GetRequires(f);
 
       setpos(25);
@@ -766,6 +769,7 @@ begin
     buscmd.appinfo := obj;
     with TLiDBusAction.Create(buscmd) do
     begin
+      p_debug('DbusAction::run!');
       OnStatus := @DBusStatusChange;
       ExecuteAction;
       Free;
