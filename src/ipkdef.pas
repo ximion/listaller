@@ -21,7 +21,7 @@ unit ipkdef;
 interface
 
 uses
-  Classes, GetText, liUtils, liTypes, SysUtils;
+  Classes, GetText, liTypes, liUtils, SysUtils;
 
 type
 
@@ -31,6 +31,7 @@ type
     function GetValue(s: String): String;
     function SearchKeyIndex(s: String; localized: Boolean = true): Integer;
     function SolveInclude(s: String): String;
+    function translate(s: String): String;
     procedure WriteEntry(k, s: String);
 
     procedure WriteType(atype: TPkgType);
@@ -75,6 +76,8 @@ type
     text: TStringList;
     FBasePath: String;
     clang: String;
+    motrans: Boolean;
+    mofile: String;
     procedure WriteField(Name: String; info: TStrings);
     procedure ReadField(Name: String; info: TStrings);
   public
@@ -116,6 +119,9 @@ type
     procedure WriteDependencies(dname: String; path: String);
     procedure WriteDependencies(dname: String; info: TStringList);
     function LoadFromFile(s: String): Boolean; virtual; abstract;
+    property UseMoTranslation: Boolean read motrans write motrans;
+    procedure GetMoFileList(list: TStringList);
+    procedure SetMoFilesToDir(dir: String);
   end;
 
   TIPKControl = class;
@@ -140,7 +146,6 @@ type
   TIPKControl = class(TIPKBasic)
   private
     fname: String;
-    mofile: String;
   public
     constructor Create;
     constructor Create(path: String);
@@ -149,9 +154,6 @@ type
     function SaveToFile(s: String): Boolean;
     procedure GetInternalFilesSection(lst: TStrings);
     function LoadFromFile(s: String): Boolean; override;
-    function trl(str: String): String;
-    procedure GetMoFileList(list: TStringList);
-    procedure SetMoFilesToDir(dir: String);
 
     property RawText: TStringList read text write text;
   end;
@@ -166,6 +168,8 @@ begin
   Text := TStringList.Create;
   FBasePath := ExtractFilePath(ParamStr(0));
   clang := '';
+  mofile := '';
+  motrans := false;
 end;
 
 destructor TIPKBasic.Destroy;
@@ -239,6 +243,71 @@ begin
     Result := FBasePath + '/' + h
   else
     Result := h;
+end;
+
+function TIPKBasic.Translate(s: String): String;
+var
+  i: Integer;
+  mo: TMoFile;
+begin
+  Result := s;
+  if mofile = '~' then
+    exit;
+  if mofile = '' then
+  begin
+    for i := 0 to text.Count - 1 do
+      if pos('include:', Text[i]) > 0 then
+        if LowerCase(ExtractFileExt(SolveInclude(Text[i]))) = '.mo' then
+        begin
+          mofile := ExtractFileName(SolveInclude(Text[i]));
+          if (mofile = GetLangId + '.mo') or
+            (copy(mofile, pos('-', mofile) + 1, length(mofile)) = GetlangId + '.mo') then
+            break
+          else
+            mofile := '~';
+        end;
+  end;
+  p_debug('MoFile: '+FBasePath+mofile);
+  if not FileExists(FBasePath+mofile) then
+    exit;
+  mo := TMoFile.Create(FBasePath+mofile);
+  Result := mo.Translate(s);
+  mo.Free;
+end;
+
+procedure TIPKBasic.GetMoFileList(list: TStringList);
+var
+  i: Integer;
+begin
+  for i := 0 to Text.Count - 1 do
+    if pos('include:', Text[i]) > 0 then
+    begin
+      if (ExtractFileExt(SolveInclude(text[i]))) = '.mo' then
+        list.Add(SolveInclude(text[i]));
+    end;
+end;
+
+procedure TIPKBasic.SetMoFilesToDir(dir: String);
+var
+  list: TStringList;
+  i: Integer;
+begin
+  list := TStringList.Create;
+  GetMoFileList(list);
+  i := 0;
+  while i < text.Count do
+  begin
+    if (pos('include:', text[i])>0)  and(pos('.mo', text[i])>0) then
+    begin
+      text.Delete(i);
+    end
+    else
+      Inc(i);
+  end;
+  text.Insert(1, '');
+  for i := 0 to list.Count-1 do
+    text.Insert(1, 'include:"'+dir+'/'+ExtractFileName(list[i])+'"');
+  list.Free;
 end;
 
 procedure TIPKBasic.WriteField(Name: String; info: TStrings);
@@ -349,6 +418,7 @@ begin
   j := SearchKeyIndex('Name');
   if j > -1 then
     Result := GetValue(Text[j]);
+  Result := translate(Result);
 end;
 
 procedure TIPKBasic.WriteVersion(s: String);
@@ -470,6 +540,8 @@ begin
   j := SearchKeyIndex('SDesc');
   if j > -1 then
     Result := GetValue(Text[j]);
+
+  Result := translate(Result);
 end;
 
 procedure TIPKBasic.WriteGroup(g: TGroupType);
@@ -562,6 +634,7 @@ begin
   j := SearchKeyIndex('Author');
   if j > -1 then
     Result := GetValue(Text[j]);
+  Result := translate(Result);
 end;
 
 procedure TIPKBasic.WriteMaintainer(s: String);
@@ -584,6 +657,7 @@ begin
   j := SearchKeyIndex('Maintainer');
   if j > -1 then
     Result := GetValue(Text[j]);
+  Result := translate(Result);
 end;
 
 procedure TIPKBasic.WriteDisallows(s: String);
@@ -1106,8 +1180,6 @@ begin
 end;
 
 function TIPKControl.LoadFromFile(s: String): Boolean;
-var
-  i: Integer;
 begin
   Result := true;
   if FileExists(s) then
@@ -1124,17 +1196,7 @@ begin
   else
     Result := false;
 
-  for i := 0 to Text.Count - 1 do
-    if pos('include:', Text[i]) > 0 then
-      if LowerCase(ExtractFileExt(SolveInclude(Text[i]))) = '.mo' then
-      begin
-        mofile := ExtractFileName(SolveInclude(Text[i]));
-        if (mofile = GetLangId + '.mo') or
-          (copy(mofile, pos('-', mofile) + 1, length(mofile)) = GetlangId + '.mo') then
-          break
-        else
-          mofile := '';
-      end;
+  UseMoTranslation := true;
 end;
 
 procedure TIPKControl.GetInternalFilesSection(lst: TStrings);
@@ -1147,53 +1209,6 @@ begin
   begin
     ReadField('Files', lst);
   end;
-end;
-
-function TIPKControl.trl(str: String): String;
-var
-  mo: TMoFile;
-  i: Integer;
-begin
-  Result := str;
-  if mofile = '' then
-    exit;
-
-  mo := TMoFile.Create(fbasepath + mofile);
-  Result := mo.Translate(str);
-  mo.Free;
-end;
-
-procedure TIPKControl.GetMoFileList(list: TStringList);
-var
-  i: Integer;
-begin
-  for i := 0 to Text.Count - 1 do
-    if pos('include:', Text[i]) > 0 then
-    begin
-      if (ExtractFileExt(SolveInclude(text[i]))) = '.mo' then
-        list.Add(SolveInclude(text[i]));
-    end;
-end;
-
-procedure TIPKControl.SetMoFilesToDir(dir: String);
-var list: TStringList;
-    i: Integer;
-begin
-  list:=TStringList.Create;
-  GetMoFileList(list);
-  i:=0;
-  while i < text.Count do
-  begin
-    if (pos('include:',text[i])>0)
-    and(pos('.mo',text[i])>0) then
-    begin
-      text.Delete(i);
-    end else Inc(i);
-  end;
-  text.Insert(1,'');
-  for i:=0 to list.Count-1 do
-   text.Insert(1,'include:"'+dir+'/'+ExtractFileName(list[i])+'"');
-  list.Free;
 end;
 
 end.
