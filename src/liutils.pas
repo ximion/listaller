@@ -21,8 +21,7 @@ unit liutils;
 interface
 
 uses
-  Dos, pwd, Classes, Process, BaseUnix, IniFiles, SysUtils, strLocale,
-  RegExpr;
+  Dos, pwd, Classes, Process, RegExpr, BaseUnix, IniFiles, SysUtils, strLocale;
 
 const
   //** Version of the Listaller applicationset
@@ -190,18 +189,21 @@ begin
   if (FileExists(ExtractFilePath(ParamStr(0)) + s)) or
     (DirectoryExists(ExtractFilePath(ParamStr(0)) + s)) then
     Result := ExtractFilePath(ParamStr(0)) + s
-  else
-    if pos('graphics/', s) > 0 then
-    begin
-      D := GetDistro;
-      //Apply graphics branding
-      if FileExists('/usr/share/listaller/branding/' + LowerCase(D.DName) + '/' + s) then
-        Result := '/usr/share/listaller/branding/' + LowerCase(D.DName) + '/' + s
+  else if (FileExists(ExtractFilePath(ParamStr(0)) + '../'+ s)) or
+      (DirectoryExists(ExtractFilePath(ParamStr(0)) + '../' + s)) then
+      Result := ExtractFilePath(ParamStr(0)) + '../' + s
+    else
+      if pos('graphics/', s) > 0 then
+      begin
+        D := GetDistro;
+        //Apply graphics branding
+        if FileExists('/usr/share/listaller/branding/' + LowerCase(D.DName) + '/' + s) then
+          Result := '/usr/share/listaller/branding/' + LowerCase(D.DName) + '/' + s
+        else
+          Result := '/usr/share/listaller/' + s;
+      end
       else
         Result := '/usr/share/listaller/' + s;
-    end
-    else
-      Result := '/usr/share/listaller/' + s;
 end;
 
 procedure FindDirs(DirList: TStringList; StartDir: String);

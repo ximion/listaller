@@ -42,11 +42,13 @@ type
     BtnPanel: TPanel;
     CatButton: TSpeedButton;
     InstAppButton: TSpeedButton;
+    FuncList: TListView;
     MBar: TProgressBar;
     MenuItem2: TMenuItem;
     RepoButton: TSpeedButton;
     SettingsButton: TSpeedButton;
     SpacerPan: TPanel;
+    StatusBar1: TStatusBar;
     SWBox: TPanel;
     BitBtn5: TBitBtn;
     BitBtn6: TBitBtn;
@@ -55,7 +57,6 @@ type
     MenuItem1: TMenuItem;
     MItemInstallPkg: TMenuItem;
     Splitter1: TSplitter;
-    StatusLabel: TLabel;
     RmUpdSrcBtn: TBitBtn;
     SWBoxSU: TPanel;
     MyAppSheet: TTabSheet;
@@ -105,6 +106,8 @@ type
     procedure AutoDepLdCbChange(Sender: TObject);
     procedure CbShowPkMonChange(Sender: TObject);
     procedure EnableProxyCbChange(Sender: TObject);
+    procedure FuncListSelectItem(Sender: TObject; Item: TListItem;
+      Selected: Boolean);
     procedure MenuItem2Click(Sender: TObject);
     procedure MItemInstallPkgClick(Sender: TObject);
     procedure MyAppSheetShow(Sender: TObject);
@@ -203,10 +206,10 @@ procedure OnMgrStatus(change: LiStatusChange; Data: TLiStatusData;
   user_data: Pointer); cdecl;
 begin
   case change of
-    scStepmessage: MnFrm.StatusLabel.Caption := Data.msg;
+    scStepmessage: MnFrm.StatusBar1.Panels[0].Text := Data.msg;
     scMessage:
     begin
-      MnFrm.StatusLabel.Caption := Data.msg;
+      MnFrm.StatusBar1.Panels[0].Text := Data.msg;
       //p_info(data.msg);
     end;
   end;
@@ -568,28 +571,29 @@ begin
     10: gt := gtOTHER;
   end;
   MBar.Visible := true;
-  StatusLabel.Caption := rsFiltering;
+  StatusBar1.Panels[0].Text := rsFiltering;
 
   if gt = gtALL then
   begin
-    appList.Visible := true;
+    currAppList.Visible := true;
     appResList.ClearList;
     appResList.Visible := false;
     AppInfoPanel.Visible := false;
   end
   else
   begin
-    for i := 0 to appList.Count-1 do
+    for i := 0 to currAppList.Count-1 do
     begin
       Application.ProcessMessages;
-      if appList.AppItems[i].Group = gt then
-        appResList.AddItem(appList.AppItems[i]);
+      if currAppList.AppItems[i].Group = gt then
+        appResList.AddItem(currAppList.AppItems[i]);
     end;
+    appResList.Parent := currAppList.Parent;
     appResList.Visible := true;
     AppInfoPanel.Visible := false;
   end;
 
-  StatusLabel.Caption := rsReady;
+  StatusBar1.Panels[0].Text := rsReady;
   SWBox.Enabled := true;
   MBar.Visible := false;
   CBox.Enabled := true;
@@ -648,6 +652,18 @@ begin
   cnf := TIniFile.Create(p+'config.cnf');
   cnf.WriteBool('Proxy', 'UseProxy', (Sender as TCheckBox).Checked);
   cnf.Free;
+end;
+
+procedure TMnFrm.FuncListSelectItem(Sender: TObject; Item: TListItem;
+  Selected: Boolean);
+begin
+  if not Selected then exit;
+  case Item.Index of
+    0: InstAppButtonClick(Sender);
+    1: BtnCatClick(Sender);
+    2: RepoButtonClick(Sender);
+    3: btnSettingsClick(Sender);
+  end;
 end;
 
 procedure TMnFrm.MenuItem2Click(Sender: TObject);
@@ -978,7 +994,7 @@ begin
     else
     begin
       Application.ProcessMessages;
-      StatusLabel.Caption := rsFiltering;
+      StatusBar1.Panels[0].Text := rsFiltering;
       appResList.ClearList;
       appResList.Parent := currAppList.Parent;
       for i := 0 to currAppList.Count-1 do
@@ -996,7 +1012,7 @@ begin
     end;
 
     AppInfoPanel.Visible := false;
-    StatusLabel.Caption := rsReady;
+    StatusBar1.Panels[0].Text := rsReady;
     FilterEdt.Enabled := true;
     SWBox.Enabled := true;
     CBox.Enabled := true;
@@ -1008,6 +1024,7 @@ procedure TMnFrm.FormCreate(Sender: TObject);
 var
   i: Integer;
   tmp: TStringList;
+  pic: TPicture;
 begin
   SWBox.DoubleBuffered := true;
   DoubleBuffered := true;
@@ -1081,35 +1098,6 @@ begin
   AppInfoPanel.Visible := false;
   LoadStockPixmap(STOCK_DELETE, ICON_SIZE_BUTTON, UnButton.Glyph);
 
-
-  //Translate
-  Caption := rsSoftwareManager;
-  CatButton.Caption := rsPackageLists;
-  Label1.Caption := rsShow;
-  AboutBtn.Caption := rsAboutListaller;
-  BitBtn2.Caption := rsOpenDirsiCatalog;
-  InstAppButton.Caption := rsApplications;//rsInstalledApps;
-  MItemInstallPkg.Caption := rsInstallPkg;
-  RepoButton.Caption := rsRepositories;
-  SettingsButton.Caption := rsSettings;
-  FilterEdt.Text := rsFilter;
-  MyAppSheet.Caption := rsMyApps;
-  SysAppSheet.Caption := rsSharedApps;
-  //Translate config page
-  edtUsername.Caption := rsUsername+':';
-  edtPasswd.Caption := rsPassword+':';
-  EnableProxyCb.Caption := rsEnableProxy;
-  GroupBox1.Caption := rsProxySettings;
-  AutoDepLdCb.Caption := rsAutoLoadDep;
-  CbShowPkMon.Caption := rsShowPkMon;
-  Button1.Caption := rsStartLiTray;
-  //Translate repo page(s)
-  UpdRepoSheet.Caption := rsUpdSources;
-  RmUpdSrcBtn.Caption := rsDelSrc;
-  UpdCheckBtn.Caption := rsCheckForUpd;
-  UsILabel.Caption := rsListofSrc;
-  BitBtn6.Caption := rsChangePkgManSettings;
-
   with CBox do
   begin
     Items[0] := rsAll;
@@ -1155,6 +1143,72 @@ end;     }
   InstAppButton.Down := true;
 
   Notebook1.ActivePageComponent := InstalledAppsPage;
+
+
+  pic := TPicture.Create;
+  //Enable some Widget-Dependent stuff
+  {$IFDEF LCLGtk2}
+   LeftBar.Visible := false;
+   with ImageList1 do
+   begin
+     pic.LoadFromFile(GetDataFile('graphics/icon48-appremove.png'));
+     Add(pic.Bitmap,nil);
+     pic.LoadFromFile(GetDataFile('graphics/icon48-catalog.png'));
+     Add(pic.Bitmap,nil);
+     pic.LoadFromFile(GetDataFile('graphics/icon48-repository.png'));
+     Add(pic.Bitmap,nil);
+     pic.LoadFromFile(GetDataFile('graphics/icon48-settings.png'));
+     Add(pic.Bitmap,nil);
+   end;
+   //Load translation
+   FuncList.Items[0].Caption := rsApplications;//rsInstalledApps;
+   FuncList.Items[1].Caption := rsRepositories;
+   FuncList.Items[2].Caption := rsSettings;
+   FuncList.Items[3].Caption := rsPackageLists;
+   FuncList.ItemIndex := 0;
+  {$ELSE}
+   FuncList.Visible := false;
+   pic.LoadFromFile(GetDataFile('graphics/icon48-appremove.png'));
+   InstAppButton.Glyph.Assign(pic.Bitmap);
+   pic.LoadFromFile(GetDataFile('graphics/icon48-catalog.png'));
+   CatButton.Glyph.Assign(pic.Bitmap);
+   pic.LoadFromFile(GetDataFile('graphics/icon48-repository.png'));
+   RepoButton.Glyph.Assign(pic.Bitmap);
+   pic.LoadFromFile(GetDataFile('graphics/icon48-settings.png'));
+   SettingsButton.Glyph.Assign(pic.Bitmap);
+
+   //Load translation
+   InstAppButton.Caption := rsApplications;//rsInstalledApps;
+   RepoButton.Caption := rsRepositories;
+   SettingsButton.Caption := rsSettings;
+   CatButton.Caption := rsPackageLists;
+  {$ENDIF}
+  pic.Free;
+
+  //Translate all other stuff
+  Caption := rsSoftwareManager;
+  Label1.Caption := rsShow;
+  AboutBtn.Caption := rsAboutListaller;
+  BitBtn2.Caption := rsOpenDirsiCatalog;
+  MItemInstallPkg.Caption := rsInstallPkg;
+  FilterEdt.Text := rsFilter;
+  MyAppSheet.Caption := rsMyApps;
+  SysAppSheet.Caption := rsSharedApps;
+  //Translate config page
+  edtUsername.Caption := rsUsername+':';
+  edtPasswd.Caption := rsPassword+':';
+  EnableProxyCb.Caption := rsEnableProxy;
+  GroupBox1.Caption := rsProxySettings;
+  AutoDepLdCb.Caption := rsAutoLoadDep;
+  CbShowPkMon.Caption := rsShowPkMon;
+  Button1.Caption := rsStartLiTray;
+  //Translate repo page(s)
+  UpdRepoSheet.Caption := rsUpdSources;
+  RmUpdSrcBtn.Caption := rsDelSrc;
+  UpdCheckBtn.Caption := rsCheckForUpd;
+  UsILabel.Caption := rsListofSrc;
+  BitBtn6.Caption := rsChangePkgManSettings;
+
   WriteLn('GUI loaded.');
 end;
 

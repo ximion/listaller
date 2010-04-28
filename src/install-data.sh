@@ -27,6 +27,10 @@ cp ../graphics/listaller.png $DESTDIR$prefix/share/pixmaps
 cp ../graphics/wizardimage.png $DESTDIR$prefix/share/listaller/graphics/
 cp ../graphics/spackage.png $DESTDIR$prefix/share/listaller/graphics/
 cp ../graphics/throbber.gif $DESTDIR$prefix/share/listaller/graphics/
+cp ../graphics/icon48-appremove.png $DESTDIR$prefix/share/listaller/graphics/
+cp ../graphics/icon48-catalog.png $DESTDIR$prefix/share/listaller/graphics/
+cp ../graphics/icon48-repository.png $DESTDIR$prefix/share/listaller/graphics/
+cp ../graphics/icon48-settings.png $DESTDIR$prefix/share/listaller/graphics/
 cp ../graphics/categories/accessories.png $DESTDIR$prefix/share/listaller/graphics/categories/
 cp ../graphics/categories/all.png $DESTDIR$prefix/share/listaller/graphics/categories/
 cp ../graphics/categories/development.png $DESTDIR$prefix/share/listaller/graphics/categories/
