@@ -31,8 +31,8 @@ GQuark = Integer;
 PGAsyncResult = Pointer;
 PGCancellable = PGObject;
 
-TGAsyncReadyCallback = procedure(source_object: PGObject;res: Pointer;user_data: GPointer);cdecl;
-PGAsyncReadyCallback = ^TGAsyncReadyCallback;
+GAsyncReadyCallback = procedure(source_object: PGObject;res: Pointer;user_data: GPointer);cdecl;
+PGAsyncReadyCallback = ^GAsyncReadyCallback;
 
 //** Intialize the GType
 procedure InitializeGType;

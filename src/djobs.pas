@@ -27,7 +27,7 @@ unit djobs;
 interface
 
 uses
-  Classes, SysUtils, dbus, polkit, glib2, gExt, Installer, AppMan,
+  Classes, SysUtils, dbus, PolKit, glib2, gExt, Installer, AppMan,
   liUtils, liTypes, SimDBus, Contnrs, AppUpdate, SyncObjs;
 
 type
@@ -162,12 +162,22 @@ begin
 end;
 
 procedure check_authorization_cb(authority: PPolkitAuthority;
-  res: PGAsyncResult; job: TJob);
+  res: PGAsyncResult; j: Pointer);cdecl;
 var
   error: PGError;
   Result: PPolkitAuthorizationResult;
   result_str: PGChar;
+  job: TJob;
 begin
+  if not (TObject(j) is TJob) then
+  begin
+    p_error('Invalid Job received! This is a critical bug, listallerd will terminate.');
+    p_error('Please report this issue.');
+    halt(500);
+    exit;
+  end;
+
+  job := TJob(j);
   error := nil;
   result_str := '';
 
@@ -239,13 +249,13 @@ begin
   target := dbus_message_get_sender(origMsg);
 
   subject := polkit_system_bus_name_new(PGChar(target));
+
   polkit_authority_check_authorization(authority, subject, action_id,
     nil,
     POLKIT_CHECK_AUTHORIZATION_FLAGS_ALLOW_USER_INTERACTION,
     nil,
-    TGAsyncReadyCallback(@check_authorization_cb),
+    @check_authorization_cb,
     self);
-
 
 
   g_object_unref(subject);
@@ -523,7 +533,7 @@ begin
     nil,
     POLKIT_CHECK_AUTHORIZATION_FLAGS_ALLOW_USER_INTERACTION,
     nil,
-    TGAsyncReadyCallback(@check_authorization_cb),
+    @check_authorization_cb,
     self);
 
 
@@ -750,7 +760,7 @@ begin
     nil,
     POLKIT_CHECK_AUTHORIZATION_FLAGS_ALLOW_USER_INTERACTION,
     nil,
-    TGAsyncReadyCallback(@check_authorization_cb),
+    @check_authorization_cb,
     self);
 
 

@@ -39,7 +39,7 @@ type
   end;
 
 const
-  Timeout_Seconds = 18; //Quit daemon after 18 seconds of inactivity
+  TIMEOUT_SECONDS = 18; //Quit daemon after 18 seconds of inactivity
   { TLiDaemon }
 
 procedure TLiDaemon.ListenForCall;
