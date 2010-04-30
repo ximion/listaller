@@ -729,7 +729,6 @@ begin
 
       msg('Package detected: ' + f);
       msg('Looking for reverse-dependencies...');
-      p_debug('ZeroTest!');
 
       tmp.Clear;
 
@@ -757,7 +756,10 @@ begin
       else
         exit;
     end;
-    p_debug('A');
+    p_debug('Done. ID is set.');
+
+    //Important: ID needs to be the same as TAppInfo.UId
+    id := obj.UId;
   end;
 
 
