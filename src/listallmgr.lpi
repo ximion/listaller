@@ -91,7 +91,7 @@
       <Libraries Value="$(ProjOutDir)/"/>
       <OtherUnitFiles Value="../intf/;../opbitmap/"/>
       <UnitOutputDirectory Value="../build"/>
-      <LCLWidgetType Value="qt"/>
+      <LCLWidgetType Value="gtk2"/>
     </SearchPaths>
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>

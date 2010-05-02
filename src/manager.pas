@@ -106,6 +106,8 @@ type
     procedure AutoDepLdCbChange(Sender: TObject);
     procedure CbShowPkMonChange(Sender: TObject);
     procedure EnableProxyCbChange(Sender: TObject);
+    procedure FuncListMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
     procedure FuncListSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
     procedure MenuItem2Click(Sender: TObject);
@@ -654,9 +656,22 @@ begin
   cnf.Free;
 end;
 
+procedure TMnFrm.FuncListMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var
+  item: TListItem;
+begin
+  if FuncList.SelCount = 0 then exit;
+  item := FuncList.GetItemAt(x,y);
+  //Required cause SelectItem() event does not work by itself
+  if item is TListItem then
+   FuncListSelectItem(Sender, item, true);
+end;
+
 procedure TMnFrm.FuncListSelectItem(Sender: TObject; Item: TListItem;
   Selected: Boolean);
 begin
+  //??? Does not work: Event does not call this function. Bug in LCL?
   if not Selected then exit;
   case Item.Index of
     0: InstAppButtonClick(Sender);
