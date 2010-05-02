@@ -21,7 +21,7 @@ unit installer;
 interface
 
 uses
-Classes, SysUtils, liTypes;
+Classes, SysUtils, liTypes, GLib2;
 
 type
 
@@ -59,42 +59,42 @@ procedure EnableUSource(b: Boolean);
 procedure SetProfileID(i: Integer);
 procedure SetRootMode(b: Boolean);
 property Forced: String read ForcedActn write SetForced;
-property RemoteObject: Pointer read ins;
+property RemoteObject: GPointer read ins;
 end;
 
 function IsIPKAppInstalled(appname: String;appid: String;sumode: Boolean): Boolean;
 
-procedure li_setup_exec_by_daemon(setup: Pointer;b: Boolean);cdecl;external libinst;
+procedure li_setup_exec_by_daemon(setup: GPointer;b: Boolean);cdecl;external libinst;
 implementation
 //Import library functions
-function  li_setup_new: Pointer; cdecl;external libinst;
-procedure li_setup_free(setup: Pointer);external libinst;
-procedure li_setup_set_sumode(setup: Pointer;b: Boolean);cdecl;external libinst;
-function  li_setup_init(setup: Pointer;pkname: PChar): PChar;cdecl;external libinst;
-function  li_setup_get_pkgtype(setup: Pointer): TPkgType;cdecl;external libinst;
-function  li_setup_get_disallows(setup: Pointer): PChar;cdecl;external libinst;
-function  li_setup_get_supported_distributions(setup: Pointer): PChar; cdecl;external libinst;
-function  li_setup_get_appname(setup: Pointer): PChar;cdecl;external libinst;
-function  li_setup_get_appversion(setup: Pointer): PChar;cdecl;external libinst;
-function  li_setup_get_pkgid(setup: Pointer): PChar;cdecl;external libinst;
-function  li_setup_get_long_description(setup: Pointer; list: Pointer): Boolean;cdecl;external libinst;
-function  li_setup_get_wizard_image_path(setup: Pointer): PChar;cdecl;external libinst;
-function  li_setup_get_license(setup: Pointer; list: Pointer): Boolean;cdecl;external libinst;
-function  li_setup_get_profiles_list(setup: Pointer; list: Pointer): Boolean;cdecl;external libinst;
-function  li_setup_get_appicon(setup: Pointer): PChar;cdecl;external libinst;
-function  li_setup_get_desktopfiles(setup: Pointer): PChar;cdecl;external libinst;
-function  li_setup_get_app_exec_command(setup: Pointer): PChar;cdecl;external libinst;
-function  li_setup_get_current_profile_filelist(setup: Pointer): PChar;cdecl;external libinst;
-procedure li_setup_enable_usource_registering(setup: Pointer;b: Boolean);cdecl;external libinst;
-function  li_setup_register_status_call(setup: Pointer;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;external libinst;
-function  li_setup_register_user_request_call(setup: Pointer;call: TRequestCall;user_data: Pointer): Boolean;cdecl;external libinst;
-function  li_setup_execute(setup: Pointer): Boolean;cdecl;external libinst;
-procedure li_setup_set_forced(setup: Pointer;str: PChar);cdecl;external libinst;
-function  li_setup_get_dependencies(setup: Pointer; list: PStringList): Boolean;cdecl;external libinst;
-function  li_setup_set_profileid(setup: Pointer;id: ShortInt): Boolean;cdecl;external libinst;
-function  li_setup_get_signature_state(setup: Pointer): TPkgSigState;cdecl;external libinst;
-function  li_get_ipk_app_installed(appname: PChar;appid: PChar;sumode: Boolean): Boolean;cdecl;external libinst;
-procedure li_set_testmode(st: Boolean);cdecl;external libinst;
+function  li_setup_new: GPointer; cdecl;external libinst;
+procedure li_setup_free(setup: GPointer);external libinst;
+procedure li_setup_set_sumode(setup: GPointer;b: GBoolean);cdecl;external libinst;
+function  li_setup_init(setup: GPointer;pkname: PGChar): PChar;cdecl;external libinst;
+function  li_setup_get_pkgtype(setup: GPointer): TPkgType;cdecl;external libinst;
+function  li_setup_get_disallows(setup: GPointer): PGChar;cdecl;external libinst;
+function  li_setup_get_supported_distributions(setup: GPointer): PGChar; cdecl;external libinst;
+function  li_setup_get_appname(setup: GPointer): PGChar;cdecl;external libinst;
+function  li_setup_get_appversion(setup: GPointer): PGChar;cdecl;external libinst;
+function  li_setup_get_pkgid(setup: GPointer): PGChar;cdecl;external libinst;
+function  li_setup_get_long_description(setup: GPointer; list: GPointer): GBoolean;cdecl;external libinst;
+function  li_setup_get_wizard_image_path(setup: GPointer): PGChar;cdecl;external libinst;
+function  li_setup_get_license(setup: GPointer; list: GPointer): GBoolean;cdecl;external libinst;
+function  li_setup_get_profiles_list(setup: GPointer; list: GPointer): GBoolean;cdecl;external libinst;
+function  li_setup_get_appicon(setup: GPointer): PGChar;cdecl;external libinst;
+function  li_setup_get_desktopfiles(setup: GPointer): PGChar;cdecl;external libinst;
+function  li_setup_get_app_exec_command(setup: GPointer): PGChar;cdecl;external libinst;
+function  li_setup_get_current_profile_filelist(setup: GPointer): PGChar;cdecl;external libinst;
+procedure li_setup_enable_usource_registering(setup: GPointer;b: GBoolean);cdecl;external libinst;
+function  li_setup_register_status_call(setup: GPointer;call: TLiStatusChangeCall;user_data: GPointer): GBoolean;cdecl;external libinst;
+function  li_setup_register_user_request_call(setup: GPointer;call: TRequestCall;user_data: GPointer): GBoolean;cdecl;external libinst;
+function  li_setup_execute(setup: GPointer): GBoolean;cdecl;external libinst;
+procedure li_setup_set_forced(setup: GPointer;str: PGChar);cdecl;external libinst;
+function  li_setup_get_dependencies(setup: GPointer; list: PStringList): GBoolean;cdecl;external libinst;
+function  li_setup_set_profileid(setup: GPointer;id: GInt16): GBoolean;cdecl;external libinst;
+function  li_setup_get_signature_state(setup: GPointer): TPkgSigState;cdecl;external libinst;
+function  li_get_ipk_app_installed(appname: PGChar;appid: PGChar;sumode: GBoolean): GBoolean;cdecl;external libinst;
+procedure li_set_testmode(st: GBoolean);cdecl;external libinst;
 
 { TInstallPack }
 
@@ -115,7 +115,7 @@ begin
 li_setup_init(@ins,PChar(pkname))
 end;
 
-procedure TInstallPack.SetStatusChangeCall(call: TLiStatusChangeCall;const userdata: Pointer=nil);
+procedure TInstallPack.SetStatusChangeCall(call: TLiStatusChangeCall;const userdata: GPointer=nil);
 begin
 li_setup_register_status_call(@ins,call,userdata)
 end;
@@ -195,7 +195,7 @@ begin
 Result:=li_setup_get_current_profile_filelist(@ins);
 end;
 
-procedure TInstallPack.SetUserRequestCall(call: TRequestCall;const userdata: Pointer=nil);
+procedure TInstallPack.SetUserRequestCall(call: TRequestCall;const userdata: GPointer=nil);
 begin
 li_setup_register_user_request_call(@ins,call,userdata)
 end;
