@@ -92,6 +92,7 @@ resourcestring
   rsLDnSupported = 'Your Linux distribution is not supported by Listaller yet!';
   rsnSupported = 'This package does not support your Linux distribution.';
   rsDepNotFound = 'Found no package with the necessary library "%l" for your distribution.';
+  rsResolvingDynDeps = 'Resolving dynamic dependencies...';
   rsDBOpened = 'Software database opened.';
   rsInClose = 'The installer will close now';
   rsCnOverride = 'Unable to override the file %f.';

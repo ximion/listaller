@@ -55,8 +55,8 @@
     <Version Value="8"/>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../../bindings/;../../src/"/>
-      <LCLWidgetType Value="gtk2"/>
+      <OtherUnitFiles Value="../../intf/;../../src/"/>
+      <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Linking>
       <LinkSmart Value="True"/>

@@ -8,7 +8,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ComCtrls, packagekit, Messages, pkdesktop, glib2, Installer;
+  StdCtrls, ComCtrls, PackageKit, Messages, pkdesktop, glib2, Installer;
 
 type
 
@@ -43,21 +43,27 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
-var p,q: Pointer;tmp: TStringList;
+var p,q: Pointer;
+ pkit2: TPackageKit;
 begin
   pkit:=TPackageKit.Create;
   pkit.OnProgress:=@pkitProgress;
-  tmp:=TStringList.Create;
-  pkit.RsList:=tmp;
+  pkit.NoWait:=true;
+
+  pkit2:=TPackageKit.Create;
+  pkit.NoWait := true;
   pkit.PkgNameFromFile('/usr/share/applications/nemiver.desktop');
+  pkit2.PkgNameFromFile('/usr/share/applications/vlc.desktop');
   //pkit.RemovePkg('amor');
 
   while not pkit.Finished do Application.ProcessMessages;
 
-  ShowMessage(tmp[0]);
+  ShowMessage(pkit.RList[0]);
+  ShowMessage(pkit2.RList[0]);
   //ShowMessage(h[0]);
   ShowMessage('OK, Done'#10+pkit.LastErrorMessage);
   pkit.Free;
+  pkit2.Free;
 
 { p:=pk_desktop_new;
  pk_desktop_open_database(p,nil);

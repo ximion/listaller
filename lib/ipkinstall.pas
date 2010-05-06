@@ -21,10 +21,9 @@ unit ipkinstall;
 interface
 
 uses
-  BaseUnix, blcksock,
-  Classes, distri, FileUtil, FTPSend, HTTPSend, IniFiles, ipkdef,
-  IPKPackage, liUtils, liDBusProc, liManageApp, liTypes, MD5, MTProcs,
-  PackageKit, Process, RegExpr, sqlite3ds, SysUtils, strLocale;
+  MD5, glib2, distri, ipkdef, Classes, Contnrs, FTPSend, liTypes, liUtils, MTProcs,
+  Process, RegExpr, BaseUnix, blcksock, FileUtil, HTTPSend, IniFiles,
+  SysUtils, sqlite3ds, strLocale, IPKPackage, liDBusProc, PackageKit, liManageApp;
 
 type
 
@@ -32,10 +31,7 @@ type
   PInstallation = ^TInstallation;
   //** Everything which is needed for an installation
 
-  { TInstallation }
-
   TInstallation = class
-    procedure pkgProgress(pos: Integer; user_data: Pointer);
   private
     //Basic information about the package and the new application
     IAppName, IAppVersion, IAppCMD, IAuthor, ShDesc, IGroup: String;
@@ -99,6 +95,7 @@ type
     //Daemon-Mode?
     daemonm: Boolean;
 
+    procedure pkgProgress(pos: Integer; user_data: Pointer);
     //Set superuser mode correctly
     procedure SetRootMode(b: Boolean);
     //Executed if Linstallation should be done
@@ -371,81 +368,93 @@ begin
     sl.Add(license[i]);
 end;
 
+
+//Search for dependencies using async PackageKit:
+type
+  //Could use record here, but class is much easier...
+  DRInfo = class
+  public
+    list: TObjectList;
+    max: Integer;
+    active: Integer;
+    pos: Integer;
+    mpos: Double;
+    loop: PGMainLoop;
+    deps: TStringList;
+    inst: TInstallation;
+    errorI: Integer;
+    res: TStringList;
+  end;
+
+function OnIdle(pkInf: DRInfo): GBoolean;cdecl;
+var i: Integer;
+    pk: TPackageKit;
+begin
+  Result := true;
+  i:=pkInf.list.Count-1;
+
+  if pkInf.list.Count <= 0 then
+  begin
+    g_main_loop_quit(pkInf.loop);
+    Result := false;
+    exit;
+  end;
+
+  while i >= 0 do
+  begin
+    pk := pkinf.list[i] as TPackageKit;
+    if pk.Tag >= 0 then
+    begin
+      if pkinf.active < pkinf.max then
+      begin
+        pkinf.active+=1;
+        p_debug('New Job: '+IntToStr(pk.Tag));
+        pk.FindPkgForFile(pkInf.deps[pk.Tag-1]);
+        pk.Tag := pk.Tag*-1;
+      end;
+    end else
+      if pk.Finished then
+      begin
+        P_debug('Finished! ['+IntToStr(pk.Tag)+']');
+        Inc(pkinf.pos);
+        pkInf.inst.SetExtraPos(Round(pkinf.pos * pkinf.mpos));
+
+        //Check if package was found
+        if pk.RList.Count <= 0 then
+        begin
+          pkInf.errorI := (pk.Tag*-1)-1;
+          g_main_loop_quit(pkInf.loop);
+          Result := false;
+          exit;
+        end;
+
+        pkinf.active-=1;
+        pkInf.res.Add(pk.RList[0]);
+        pkinf.list.Delete(i);
+      end;
+    Dec(i);
+  end;
+end;
+
 function TInstallation.ResolveDependencies: Boolean;
 var
   i, j: Integer;
-  tmp: TStringList;
+  pkitList: TObjectList;
   mnpos: Integer;
   DInfo: TDistroInfo;
   one: Double;
-  lInd: Integer;
-  error: Boolean;
-  eIndex: Integer; //Index of the errorneus dep
-
-  procedure SearchForPackage(Index: PtrInt; Data: Pointer; Item: TMultiThreadProcItem);
-  var
-    pkit: TPackageKit;
-    xtmp: TStringList;
-    h: String;
-    lpos: Integer;
-  begin
-    if Index = -1 then
-    begin
-      lpos := 0;
-      lind := 0;
-      while lInd < Dependencies.Count - 1 do
-      begin
-        if lpos <> mnpos then
-        begin
-          SetExtraPos(Round(mnpos * one));
-          lpos := mnpos;
-        end;
-        if error then
-        begin
-          ProcThreadPool.StopThreads;
-          break;
-        end;
-      end;
-
-    end
-    else
-    begin
-      if error then
-        exit;
-      //Open PKit connection and assign tmp stringlist
-      pkit := TPackageKit.Create;
-      xtmp := TStringList.Create;
-      pkit.RsList := xtmp;
-
-      mnpos := mnpos + 1;
-
-      pkit.FindPkgForFile(Dependencies[Index]);
-
-      if (pkit.PkFinishCode = 1) or (xtmp.Count <= 0) then
-      begin
-        pkit.Free;
-        xtmp.Free;
-        eIndex := Index;
-        error := true;
-        exit;
-      end;
-
-      h := xtmp[0];
-      tmp.Add(h);
-      h := '';
-      xtmp.Clear;
-      mnpos := mnpos + 1;
-      lInd := Index;
-
-      pkit.Free;
-      xtmp.Free;
-    end;
-  end;
+  pk: TPackageKit;
+  eIndex: Integer;
+  tmp: TStringList;
+  pkdata: DRInfo;
+  loop: PGMainLoop;
+  idle: PGSource;
+const
+  MAXACTIVE = 4;
 
 begin
   Result := true;
   SetExtraPos(1);
-  error := false;
 
   p_debug('Resolving dependencies.');
   if (Dependencies.Count > 0) and (Dependencies[0] = '[detectpkgs]') then
@@ -483,6 +492,8 @@ begin
       tmp.Free;
     end;
 
+    msg(rsResolvingDynDeps);
+
     DInfo := GetDistro;
     //With yum backend, PackageKit needs the complete path to find
     //packages. Add the lib dir to libraries
@@ -497,22 +508,61 @@ begin
     SetExtraPos(Round(mnpos * one));
     ShowPKMon();
 
+    p_debug('Start resolving deps.');
+
     tmp := TStringList.Create;
-    //ProcThreadPool.MaxThreadCount:=4;
 
-    p_debug('Start resolve threads.');
-    ProcThreadPool.DoParallelLocalProc(@SearchForPackage, -1,
-      Dependencies.Count - 1, nil);
-
-    if error then
+    pkitList := TObjectList.Create;
+    for i := 0 to Dependencies.Count - 1 do
     begin
+      pk := TPackageKit.Create;
+      pkitList.Add(pk);
+      pk.NoWait := true;
+      pk.Tag := i+1;
+    end;
+
+    eIndex := -1;
+
+    loop := g_main_loop_new(nil, false);
+    idle := g_idle_source_new();
+
+    pkdata := DRInfo.Create;
+    with pkdata do
+    begin
+      active:=0;
+      max := MAXACTIVE;
+      list := pkitList;
+      pos := mnpos;
+      mpos := one;
+      deps := Dependencies;
+      errorI := -1;
+      res := tmp;
+    end;
+    pkdata.loop := loop;
+    pkdata.inst := self;
+
+    g_source_set_callback(idle,TGSourceFunc(@OnIdle),pkdata,nil);
+    g_source_attach(idle,g_main_loop_get_context(loop));
+
+    g_main_loop_run(loop);
+
+    eIndex := pkdata.errorI;
+
+    pkdata.Free;
+
+    if eIndex > -1 then
+    begin
+      for i := 0 to pkitList.Count-1 do
+        TPackageKit(pkitList[i]).Cancel;
+      pkitList.Free;
       MakeUsrRequest(StrSubst(rsDepNotFound, '%l', Dependencies[eIndex]) +
         #10 + rsInClose, rqError);
-      Result := false;
       tmp.Free;
+      Result := false;
       exit;
     end;
 
+    pkitList.Free;
     RemoveDuplicates(tmp);
     Dependencies.Assign(tmp);
 
@@ -1344,7 +1394,7 @@ end; }
                     if pos('Name ', s[j]) > 0 then
                       break;
                   Dependencies[i] :=
-                    Dependencies[i] + ' (' + copy(s[j], 15,
+                    Dependencies[i] + ' (' +  copy(s[j], 15,
                     pos(' ', copy(s[j], 15, length(s[j]))) - 1) + ')';
                 finally
                   s.Free;
@@ -1371,8 +1421,7 @@ end; }
           if (pos('http://', Dependencies[i]) > 0) or
             (pos('ftp://', Dependencies[i]) > 0) then
           begin
-            s := TStringList.Create;
-            pkit.RsList := s;
+            s := pkit.RList;
             pkit.ResolveInstalled(copy(Dependencies[i], pos(' (', Dependencies[i]) +
               2, length(Dependencies[i]) - 1));
             if pkit.PkFinishCode = 1 then
@@ -1382,7 +1431,6 @@ end; }
 
               SetExtraPos(0);
             end;
-            s.Free;
           end
           else
             pkit.InstallLocalPkg(tmpdir + ExtractFileName(PkgName) +
@@ -1540,7 +1588,7 @@ end; }
           except
             //Unable to copy the file
             MakeUsrRequest(Format(rsCnCopy,
-              [dest + '/' + ExtractFileName(DeleteModifiers(h))]) +
+              [dest + '/' +  ExtractFileName(DeleteModifiers(h))]) +
               #10 + rsInClose, rqError);
             RollbackInstallation;
             Result := false;
@@ -1667,8 +1715,8 @@ end; }
     ForceDirectories(RegDir + LowerCase(pkgID) + '/locale/');
     for i := 0 to mofiles.Count - 1 do
     begin
-      FileCopy(pkg.WDir + mofiles[i], RegDir + LowerCase(pkgID) + '/locale/' +
-        ExtractFileName(mofiles[i]));
+      FileCopy(pkg.WDir + mofiles[i], RegDir + LowerCase(pkgID) +
+        '/locale/' +  ExtractFileName(mofiles[i]));
     end;
   end;
 
@@ -1695,9 +1743,9 @@ end; }
   dsApp.Close;
 
   if length(IIconPath)>0 then
-  if IIconPath[1] = '/' then
-    FileCopy(IIconPath, RegDir + LowerCase(pkgID) +
-      '/icon' + ExtractFileExt(IIconPath));
+    if IIconPath[1] = '/' then
+      FileCopy(IIconPath, RegDir + LowerCase(pkgID) +  '/icon' +
+        ExtractFileExt(IIconPath));
 
   ndirs.SaveToFile(RegDir + LowerCase(pkgID) + '/dirs.list');
 

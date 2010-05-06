@@ -21,39 +21,39 @@ unit gpgsign;
 interface
 
 uses
-  Classes, SysUtils, CallbackProcess, liTypes, FileUtil,
-  liUtils;
+  Classes, liTypes, liUtils, FileUtil,
+  SysUtils, CallbackProcess;
 
 type
   //** Class to sign files using GPG
   TGPGSignWrapper = class
   private
-   CBProcess: TCallBackProcess;
-   FFileName: String;
-   status : TLiStatusData;
-   FStatusEvent: TLiStatusChangeCall;
-   gpg: String;
+    CBProcess: TCallBackProcess;
+    FFileName: String;
+    status: TLiStatusData;
+    FStatusEvent: TLiStatusChangeCall;
+    gpg: String;
 
-   procedure OnProcessEvent(pcChannel: TProcessChannel; strData: String);
-   procedure ChangeStatus(ty: LiProcStatus;msg:String);
+    procedure OnProcessEvent(pcChannel: TProcessChannel; strData: String);
+    procedure ChangeStatus(ty: LiProcStatus; msg: String);
   public
-   constructor Create;
-   destructor  Destroy;override;
+    constructor Create;
+    destructor Destroy; override;
 
    {** Sign file
        @param ascFile File for signature
        @returns Success of operation}
-   function Signfile(ascFile: String): Boolean;
-   //** Verify a signature
-   function Verify(ascFile: String): Boolean;
-   //** (Binary) file to sign
-   property FileName: String read FFileName write FFileName;
-   //** Get the status of the current action
-   property OnStatus: TLiStatusChangeCall read FStatusEvent write FStatusEvent;
+    function Signfile(ascFile: String): Boolean;
+    //** Verify a signature
+    function Verify(ascFile: String): Boolean;
+    //** (Binary) file to sign
+    property FileName: String read FFileName write FFileName;
+    //** Get the status of the current action
+    property OnStatus: TLiStatusChangeCall read FStatusEvent write FStatusEvent;
   end;
 
-  //** Check if GPG was found
-  function GPGFound: Boolean;
+//** Check if GPG was found
+function GPGFound: Boolean;
 
 implementation
 
@@ -61,79 +61,83 @@ implementation
 
 constructor TGPGSignWrapper.Create;
 begin
- inherited;
- CBProcess:=TCallbackProcess.Create(nil);
- CBProcess.CallBackEvent:=@OnProcessEvent;
- status.lastresult:=prNone;
- gpg:=FindBinary('gpg')+' --no-tty --batch ';
+  inherited;
+  CBProcess := TCallbackProcess.Create;
+  CBProcess.CallBackEvent := @OnProcessEvent;
+  CBProcess.WaitOnExit := true;
+  status.lastresult := prNone;
+  gpg := FindBinary('gpg')+' --no-tty --batch ';
 end;
 
 destructor TGPGSignWrapper.Destroy;
 begin
- CBProcess.Free;
- inherited;
+  CBProcess.Free;
+  inherited;
 end;
 
-procedure TGPGSignWrapper.ChangeStatus(ty: LiProcStatus;msg: String);
+procedure TGPGSignWrapper.ChangeStatus(ty: LiProcStatus; msg: String);
 begin
- status.lastresult:=ty;
- status.msg:=PChar(msg);
- if Assigned(FStatusEvent) then
- begin
-  FStatusEvent(scMessage,status,nil);
- end else
- begin
-  p_info(status.msg);
- end;
+  status.lastresult := ty;
+  status.msg := PChar(msg);
+  if Assigned(FStatusEvent) then
+  begin
+    FStatusEvent(scMessage, status, nil);
+  end
+  else
+  begin
+    p_info(status.msg);
+  end;
 end;
 
 procedure TGPGSignWrapper.OnProcessEvent(pcChannel: TProcessChannel; strData: String);
 begin
-  if pcChannel=pcStdError then
-    ChangeStatus(prError,strData);
-  if pcChannel=pcStdOut then
-    ChangeStatus(prInfo,strData);
-  if pcChannel=pcFinished then
-    ChangeStatus(prFinished,strData);
-  if pcChannel=pcError then
-    ChangeStatus(prError,strData);
+  if pcChannel = pcStdError then
+    ChangeStatus(prError, strData);
+  if pcChannel = pcStdOut then
+    ChangeStatus(prInfo, strData);
+  if pcChannel = pcFinished then
+    ChangeStatus(prFinished, strData);
+  if pcChannel = pcError then
+    ChangeStatus(prError, strData);
 end;
 
 function TGPGSignWrapper.Signfile(ascFile: String): Boolean;
-var resfile: String;
+var
+  resfile: String;
 begin
- Result:=true;
- if FileExists(ascFile) then
- begin
-  Result:=false;
-  ChangeStatus(prError,'File "'+ascFile+'" already exists!');
-  exit;
- end;
+  Result := true;
+  if FileExists(ascFile) then
+  begin
+    Result := false;
+    ChangeStatus(prError, 'File "'+ascFile+'" already exists!');
+    exit;
+  end;
 
- CBProcess.CommandLine:=gpg+'--detach-sign -a "'+FFileName+'"';
- CBProcess.Execute;
- resfile:=ExtractFilePath(FFileName)+'/'+ExtractFileName(FFileName)+'.asc';
- if not FileExists(resfile) then
- begin
-  Result:=false;
-  exit;
- end;
- FileUtil.RenameFileUTF8(resfile,ascFile);
+  CBProcess.CommandLine := gpg+'--detach-sign -a "'+FFileName+'"';
+  CBProcess.RunCommand;
+  while CBProcess.Running do ;
+  resfile := ExtractFilePath(FFileName)+'/'+ExtractFileName(FFileName)+'.asc';
+  if not FileExists(resfile) then
+  begin
+    Result := false;
+    exit;
+  end;
+  FileUtil.RenameFileUTF8(resfile, ascFile);
 end;
 
 function TGPGSignWrapper.Verify(ascFile: String): Boolean;
 begin
- CBProcess.CommandLine:=gpg+'--verify "'+ascFile+'" "'+FFileName+'"';
- CBProcess.Execute;
- Result:= CBProcess.ExitCode = 0;
+  CBProcess.CommandLine := gpg+'--verify "'+ascFile+'" "'+FFileName+'"';
+  CBProcess.RunCommand;
+  Result := CBProcess.ExitCode = 0;
 end;
 
 function GPGFound: Boolean;
 begin
   if FileUtil.FindDefaultExecutablePath('gpg2') = '' then
-   Result:=false
+    Result := false
   else
-   Result:=true;
+    Result := true;
 end;
 
 end.

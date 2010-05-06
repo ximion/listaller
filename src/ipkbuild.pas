@@ -628,12 +628,16 @@ begin
     if genbutton then
     begin
       dlist := TStringList.Create;
+      control.UseMoTranslation := false;
       aname := control.AppName;
       lh := control.DSupport;
+      control.UseMoTranslation := true;
       i := 1;
       while length(lh) > 0 do
       begin
         i := pos(',', lh);
+        if i<= 0 then
+         i := pos(';', lh);
         if i = 0 then
         begin
           dlist.Add(lh);

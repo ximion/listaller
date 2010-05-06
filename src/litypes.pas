@@ -21,7 +21,7 @@ unit litypes;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, glib2;
 
 const
   //** Name of the Listaller library
@@ -48,9 +48,9 @@ type
   LiStatusChange = (scNone, scMnProgress, scExProgress, scStatus, scMessage, scStepMessage);
   //** Data assigned to a status change
   TLiStatusData = record
-    msg: PChar;
-    exprogress: Integer;
-    mnprogress: Integer;
+    msg: PGChar;
+    exprogress: GInt32;
+    mnprogress: GInt32;
     lastresult: LiProcStatus;
     change: LiStatusChange;
   end;
@@ -80,12 +80,12 @@ type
 
   //** Container for information about apps
   TAppInfo = record
-    Name: PChar;
-    ShortDesc: PChar;
-    Version: PChar;
-    Author: PChar;
-    Icon: PChar;
-    UId: PChar;
+    Name: PGChar;
+    ShortDesc: PGChar;
+    Version: PGChar;
+    Author: PGChar;
+    Icon: PGChar;
+    UId: PGChar;
     Group: TGroupType;
   end;
   PAppInfo = ^TAppInfo;

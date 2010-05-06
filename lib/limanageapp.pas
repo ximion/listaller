@@ -706,9 +706,6 @@ begin
     pkit := TPackageKit.Create;
     pkit.OnProgress := @PkitProgress;
 
-    tmp := TStringList.Create;
-    pkit.RsList := tmp;
-
     pkit.PkgNameFromFile(id, true);
     setpos(20);
 
@@ -722,6 +719,8 @@ begin
       tmp.Free;
       exit;
     end;
+
+    tmp := pkit.RList;
 
     if (tmp.Count > 0) then
     begin
@@ -744,7 +743,6 @@ begin
         p_debug(tmp[i]);
         g := g + #10 + tmp[i];
       end;
-      tmp.Free;
 
       p_debug('Asking dependency question...');
       pkit.Free;
@@ -1055,10 +1053,7 @@ begin
                   msg(f);
 
                 pkit := TPackageKit.Create;
-
-                s := TStringList.Create;
-
-                pkit.RsList := s;
+                s := pkit.RList;
 
                 if pos(')', f) > 0 then
                   pkit.GetRequires(copy(f, pos(' (', f) + 2, length(f) -
@@ -1078,7 +1073,6 @@ begin
                   msg('Removing ' + f + '...');
                 end;
 
-                s.Free;
                 pkit.Free;
               end;
               Inc(mnprog);
