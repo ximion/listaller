@@ -13,15 +13,7 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this unit. If not, see <http://www.gnu.org/licenses/>.}
-//** Find desktop metadata about a package (PackageKit binding)
-unit pkdesktop;
-
-{$mode objfpc}{$H+}
-
-interface
-
-uses
-  Classes, SysUtils, PackageKit, glib2;
+// Find desktop metadata about a package (PackageKit binding)
 
 //type
 //TGFunc = procedure(data: GPointer;user_data: GPointer);
@@ -31,7 +23,3 @@ function pk_desktop_new: Pointer;cdecl;external pklib2 name 'pk_desktop_new';
 function pk_desktop_open_database(desktop: Pointer;error: PPGError): GBoolean;cdecl;external pklib2 name 'pk_desktop_open_database';
 function pk_desktop_get_package_for_file(desktop: Pointer;filename: PGChar;error: PPGError): PGChar;cdecl;external pklib2 name 'pk_desktop_get_package_for_file';
 function pk_desktop_get_files_for_package(desktop: Pointer;pkg: PGChar;error: PPGError): PGPtrArray;cdecl;external pklib2 name 'pk_desktop_get_files_for_package';
-
-implementation
-end.
-

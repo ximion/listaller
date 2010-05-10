@@ -429,7 +429,7 @@ begin
         end;
 
         pkinf.active-=1;
-        pkInf.res.Add(pk.RList[0]);
+        pkInf.res.Add(pk.RList[0].PackageId);
         pkinf.list.Delete(i);
       end;
     Dec(i);
@@ -1421,7 +1421,6 @@ end; }
           if (pos('http://', Dependencies[i]) > 0) or
             (pos('ftp://', Dependencies[i]) > 0) then
           begin
-            s := pkit.RList;
             pkit.ResolveInstalled(copy(Dependencies[i], pos(' (', Dependencies[i]) +
               2, length(Dependencies[i]) - 1));
             if pkit.PkFinishCode = 1 then

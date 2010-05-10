@@ -716,11 +716,12 @@ begin
       request(PAnsiChar(rsPKitProbPkMon+#10+rsECode+' '+IntToStr(pkit.PkFinishCode)),
         rqError);
       pkit.Free;
-      tmp.Free;
       exit;
     end;
 
-    tmp := pkit.RList;
+    tmp := TStringList.Create;
+    for i:=0 to pkit.RList.Count-1 do
+     tmp.Add(pkit.RList[i].PackageId);
 
     if (tmp.Count > 0) then
     begin
@@ -754,6 +755,7 @@ begin
       else
         exit;
     end;
+    tmp.Free;
     p_debug('Done. ID is set.');
 
     //Important: ID needs to be the same as TAppInfo.UId
@@ -930,7 +932,7 @@ end;
 procedure UninstallIPKApp(AppName, AppID: String; FStatus: TLiStatusChangeCall;
   fast: Boolean = false; RmDeps: Boolean = true);
 var
-  tmp, tmp2, s, slist: TStringList;
+  tmp, tmp2, slist: TStringList;
   p, f: String;
   i, j: Integer;
   k: Boolean;
@@ -1053,7 +1055,6 @@ begin
                   msg(f);
 
                 pkit := TPackageKit.Create;
-                s := pkit.RList;
 
                 if pos(')', f) > 0 then
                   pkit.GetRequires(copy(f, pos(' (', f) + 2, length(f) -
@@ -1061,7 +1062,7 @@ begin
                 else
                   pkit.GetRequires(f);
 
-                if s.Count <= 1 then
+                if pkit.RList.Count <= 1 then
                 begin
                   if pos(')', f) > 0 then
                     pkit.RemovePkg(copy(f, pos(' (', f) + 2, length(f) -

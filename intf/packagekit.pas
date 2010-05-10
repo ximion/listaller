@@ -21,8 +21,7 @@ unit packagekit;
 interface
 
 uses
-  gExt, glib2, distri, pkEnum,
-  Classes, liTypes, liUtils, Process, SysUtils;
+  gExt, glib2, distri, Classes, liTypes, liUtils, Process, SysUtils, pktypes;
 
 type
   //** The pkBitfield var
@@ -35,15 +34,16 @@ type
   PPkClient = Pointer;
   PPkResults = Pointer;
   PPkError = Pointer;
+  PPkPackageSack = Pointer;
+  PPkPackage = Pointer;
 
-  TPkPackage = record
-    PkDesc: String;
-    PkLicense: String;
-    PkSummary: String;
-    PkUrl: String;
-    PkSize: int64;
-    PkGroup: Integer;
-    PkPackageId: String;
+  PPkPackageId = ^PkPackageID;
+
+  PkPackageId = record
+    Name: PChar;
+    version: PChar;
+    arch: PChar;
+    Data: PChar;
   end;
 
   //** Pointer to TPackageKit object
@@ -63,11 +63,9 @@ type
     //ProgressChange event
     FProg: TProgressEvent;
     //List of received package ids
-    pkglist: TStringList;
+    pkglist: TPackageList;
     //Processes actions asyncronous
     doasync: Boolean;
-    //Last detected package
-    lpkg: TPkPackage;
     //Our GCancellable
     cancellable: PGObject;
     //Tag
@@ -122,7 +120,7 @@ type
         @returns True if action was not cancelled}
     function FindPkgForFile(fname: String): Boolean;
     //** Grab the resulting package list
-    property RList: TStringList read PkgList write PkgList;
+    property RList: TPackageList read PkgList write PkgList;
     //** Check if the last transaction was finished
     property PkFinished: Boolean read done write done;
     //** Read finish code
@@ -137,92 +135,14 @@ type
     property Finished: Boolean read done;
     //** If true, the instance won't wait until the action completes
     property NoWait: Boolean read doasync write doasync;
-    //** Package information from the last call
-    property LastPackage: TPkPackage read lpkg;
     //** Tag
     property Tag: Integer read tagid write tagid;
   end;
 
-  PPkPackageId = ^PkPackageID;
-
-  PkPackageId = record
-    Name: PChar;
-    version: PChar;
-    arch: PChar;
-    Data: PChar;
-  end;
-
-const
-  pklib2 = 'libpackagekit-glib2.so';
-
-//Bitfield
-function pk_filter_bitfield_from_string(roles: PChar): GuInt64; cdecl;external pklib2 Name 'pk_filter_bitfield_from_text';
-//Package obj conversion
-function pk_package_obj_to_string(obj: GPointer): PChar; cdecl; external pklib2;
-function pk_package_obj_get_id(obj: GPointer): PPkPackageID; cdecl; external pklib2;
-//Actions
-function pk_client_new: Pointer; cdecl; external pklib2;
-procedure pk_client_resolve_async(client: PPkClient; filters: GuInt64;
-                                           packages: PPChar; cancellable: PGObject;
-                                           progress_callback: TPkProgressCallback;
-                                           progress_user_data: GPointer;
-                                           callback_ready: GAsyncReadyCallback;
-                                           user_data: GPointer);
-                                           cdecl; external pklib2;
-procedure pk_client_install_packages_async(client: PPkClient; only_trusted: GBoolean;
-                                                   package_ids: PPGChar;
-                                                   cancellable: PGObject;
-                                                   progress_callback:
-                                                   TPkProgressCallback; progress_user_data: GPointer;
-                                                   callback_ready: GAsyncReadyCallback;
-                                                   user_data: GPointer);
-                                                   cdecl; external pklib2;
-procedure pk_client_get_requires_async(client: PPkClient; filters: GuInt64;
-                                               package_ids: PPGChar; recursive: GBoolean;
-                                               cancellable: PGObject;
-                                               progress_callback: TPkProgressCallback;
-                                               progress_user_data: GPointer;
-                                               callback_ready: GAsyncReadyCallback;
-                                               user_data: GPointer);
-                                               cdecl; external pklib2;
-procedure pk_client_remove_packages_async(client: PPkClient; package_ids: PPGChar;
-                                                  allow_deps: GBoolean;
-                                                  autoremove: GBoolean; cancellable:
-                                                  PGObject; progress_callback:
-                                                  TPkProgressCallback; progress_user_data: GPointer;
-                                                  callback_ready: GAsyncReadyCallback;
-                                                  user_data: GPointer);
-                                                  cdecl; external pklib2;
-procedure pk_client_search_files_async(client: PPkClient; filters: PkBitfield;
-                                               values: PPGChar; cancellable:
-                                               PGCancellable; progress_callback:
-                                               TPKProgressCallback; progress_user_data: GPointer;
-                                               callback_ready: GAsyncReadyCallback;
-                                               user_data: GPointer);
-                                               cdecl; external pklib2;
-procedure pk_client_install_files_async(client: PPkClient; only_trusted: GBoolean;
-                                                files: PPGChar; cancellable: PGObject;
-                                                progress_callback: TPkProgressCallback;
-                                                progress_user_data: GPointer;
-                                                callback_ready: GAsyncReadyCallback;
-                                                user_data: GPointer);
-                                                cdecl; external pklib2;
-procedure pk_client_get_details_async(client: PPkClient; package_ids: PPGChar;
-                                              cancellable: PGCancellable;
-                                              progress_callback: TPkProgressCallback;
-                                              progress_user_data: GPointer;
-                                              callback_ready: GAsyncReadyCallback;
-                                              user_data: GPointer); cdecl; external pklib2;
-function pk_client_generic_finish(client: PPkClient; res: Pointer;error: PPGError): Pointer; cdecl; external pklib2;
-function pk_results_get_exit_code(results: PPkResults): PkExitEnum;cdecl; external pklib2;
-function pk_results_get_error_code(results: PPkResults): PPkError; cdecl; external pklib2;
-function pk_results_get_details_array(results: PPkResults): PGPtrArray;cdecl; external pklib2;
-function pk_client_error_quark(): GQuark; cdecl; external pklib2;
-function pk_client_get_type(): GType; cdecl; external pklib2;
+  {$I pkclient.inc}
+  {$I pkdesktop.inc}
 
 implementation
-
-uses PkDesktop;
 
 function PK_CLIENT(o: GPointer): PGTypeInstance;
 begin
@@ -239,6 +159,8 @@ var
   pkg: Pointer;
   role: PkRoleEnum;
   pk: TPackageKit;
+  newpkg: TPkPackage;
+  sack: PPkPackageSack;
 begin
   results := pk_client_generic_finish(source_object, res, @error);
 
@@ -266,21 +188,33 @@ begin
   if role = PK_ROLE_ENUM_GET_DETAILS then
   begin
     detArr := pk_results_get_details_array(results);
+    sack := pk_results_get_package_sack(results);
     if detArr <> nil then
       if detArr^.len = 1 then
       begin
         pkg := g_ptr_array_index(detArr, 0);
+        newpkg := TPkPackage.Create;
         g_object_get(pkg, 'description', @str, nil);
-        pk.lpkg.PkDesc := str;
+        newpkg.Description := str;
         g_object_get(pkg, 'package-id', @str, nil);
-        pk.lpkg.PkPackageId := str;
+        newpkg.PackageId := str;
         g_object_get(pkg, 'url', @str, nil);
-        pk.lpkg.PkUrl := str;
+        newpkg.Url := str;
         g_object_get(pkg, 'license', @str, nil);
-        pk.lpkg.PkLicense := str;
+        newpkg.License := str;
+
+        pkg := pk_package_sack_find_by_id(sack, PChar(newpkg.PackageId));
+        if pkg <> nil then
+        begin
+         g_object_get(pkg, 'info', @newpkg.Status, nil);
+         g_object_unref(pkg);
+        end;
+
+        pk.pkglist.Add(newpkg);
       end
       else
         writeLn('No one entry found!');
+    g_object_unref(sack);
     g_ptr_array_unref(detArr);
   end;
   pk.exitcode := integer(pk_results_get_exit_code(results));
@@ -305,7 +239,7 @@ begin
       begin
         g_object_get(progress, 'package-id', @pid, nil);
         if (pid<>'') then
-          pk.RList.Add(copy(pid, 0, pos(';', pid)-1));
+          pk.RList.Add(TPkPackage.Create(copy(pid, 0, pos(';', pid)-1)));
       end;
     end;
     PK_PROGRESS_TYPE_PERCENTAGE:
@@ -330,7 +264,7 @@ begin
   cancellable := g_cancellable_new;
   loop := g_main_loop_new(nil, false);
   doasync := false;
-  pkglist := TStringList.Create;
+  pkglist := TPackageList.Create(true);
   done := true; //TPackageKit is idle
 end;
 
@@ -422,7 +356,7 @@ begin
       if Assigned(pk.pkglist) then
       begin
         g_object_get(progress, 'package-id', @pid, nil);
-        pk.pkglist.Add(pid);
+        pk.pkglist.Add(TPkPackage.Create(pid));
       end;
     end;
     PK_PROGRESS_TYPE_PERCENTAGE:
@@ -443,12 +377,15 @@ var
   arg: PPChar;
   error: PGError = nil;
 begin
-  if not done then
+  if toPublic then
   begin
-    Result := false;
-    exit;
-  end;
+   if not done then
+   begin
+     Result := false;
+     exit;
+   end;
   done := false;
+  end;
 
   filter := pk_filter_bitfield_from_string(PChar(filt));
   arg := StringToPPchar(Name, 0);
@@ -465,6 +402,9 @@ begin
   Result := not IsErrorSet(error);
 
   if Result then
+   if not toPublic then
+    g_main_loop_run(loop)
+   else
     RunLoop();
 end;
 
@@ -493,7 +433,6 @@ begin
 
   pkglist.Clear;
   Result := INTERN_Resolve(pkg, 'installed', false);
-  while not done do ;
   if not Result then
     exit;
   if pkglist.Count<=0 then
@@ -501,7 +440,8 @@ begin
     Result := false;
     exit;
   end;
-  pkg := pkglist[0];
+  pkg := pkglist[0].PackageId;
+  pkglist.Clear;
 
   filter := pk_filter_bitfield_from_string('installed');
   arg := StringToPPchar(pkg, 0);
@@ -532,7 +472,6 @@ begin
 
   pkglist.Clear;
   Result := INTERN_Resolve(pkg, 'none', false);
-  while not done do ;
   if not Result then
     exit;
   if pkglist.Count<=0 then
@@ -540,7 +479,8 @@ begin
     Result := false;
     exit;
   end;
-  pkg := pkglist[0];
+  pkg := pkglist[0].PackageId;
+  pkglist.Clear;
   done := false;
   arg := StringToPPchar(pkg, 0);
 
@@ -569,7 +509,6 @@ begin
 
   pkglist.Clear;
   Result := INTERN_Resolve(pkg, 'none', false);
-  while not done do ;
   if not Result then
     exit;
   if pkglist.Count<=0 then
@@ -577,8 +516,9 @@ begin
     Result := false;
     exit;
   end;
-  pkg := pkglist[0];
   done := false;
+  pkg := pkglist[0].PackageId;
+  pkglist.Clear;
   arg := StringToPPchar(pkg, 0);
 
   pk_client_install_packages_async(pkclient, false, arg, cancellable, @OnPkProgress,
@@ -613,8 +553,9 @@ begin
     Result := false;
     exit;
   end;
-  pkg := pkglist[0];
   done := false;
+  pkg := pkglist[0].PackageId;
+  pkglist.Clear;
   arg := StringToPPchar(pkg, 0);
 
   pk_client_get_details_async(pkclient, arg, cancellable, @OnPkProgress,
@@ -656,7 +597,7 @@ begin
       if not IsErrorSet(error) then
       begin
         pkg := pk_desktop_get_package_for_file(pkdesk, PGChar(fname), @error);
-        pkglist.Add(pkg);
+        pkglist.Add(TPkPackage.Create(pkg));
       end;
 
       exitcode := 1;

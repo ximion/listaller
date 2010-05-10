@@ -1,4 +1,4 @@
-{ Copyright (C) 2009 Matthias Klumpp
+{ Copyright (C) 2009-2010 Matthias Klumpp
 
   Authors:
    Matthias Klumpp
@@ -37,11 +37,13 @@ type
     Label5: TLabel;
     Memo1: TMemo;
     Memo2: TMemo;
+    Memo3: TMemo;
     PageControl1: TPageControl;
     AboutSheet: TTabSheet;
     AuthorSheet: TTabSheet;
     Panel1: TPanel;
     TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
     procedure BitBtn1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
