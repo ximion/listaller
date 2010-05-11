@@ -422,9 +422,10 @@ begin
         //Check if package was found
         if pk.RList.Count <= 0 then
         begin
+          p_debug(' !finished with error.');
           pkInf.errorI := (pk.Tag*-1)-1;
-          g_main_loop_quit(pkInf.loop);
           Result := false;
+          g_main_loop_quit(pkInf.loop);
           exit;
         end;
 
@@ -504,7 +505,7 @@ begin
           Dependencies[i] := '/usr/lib/' + Dependencies[i];
 
     mnpos := 0;
-    one := 100 / (Dependencies.Count * 2);
+    one := 100 / Dependencies.Count;
     SetExtraPos(Round(mnpos * one));
     ShowPKMon();
 
@@ -545,24 +546,29 @@ begin
     g_source_attach(idle,g_main_loop_get_context(loop));
 
     g_main_loop_run(loop);
+    g_source_destroy(idle);
+
+    g_main_loop_unref(loop);
 
     eIndex := pkdata.errorI;
 
-    pkdata.Free;
-
     if eIndex > -1 then
     begin
-      for i := 0 to pkitList.Count-1 do
-        TPackageKit(pkitList[i]).Cancel;
+      //??? Needs some work...
+     { for i := 0 to pkitList.Count-1 do
+        TPackageKit(pkitList[i]).Cancel; }
       pkitList.Free;
       MakeUsrRequest(StrSubst(rsDepNotFound, '%l', Dependencies[eIndex]) +
         #10 + rsInClose, rqError);
       tmp.Free;
+      pkdata.Free;
       Result := false;
       exit;
     end;
 
     pkitList.Free;
+    pkdata.Free;
+
     RemoveDuplicates(tmp);
     Dependencies.Assign(tmp);
 
@@ -1519,7 +1525,7 @@ end; }
         dest := SyblToPath(dest);
         if not DirectoryExists(dest) then
         begin
-          SysUtils.CreateDir(dest);
+          ForceDirectories(dest);
           ndirs.Add(dest);
         end;
         h := dest;
@@ -1701,8 +1707,9 @@ end; }
   if Testmode then
     msg('Testmode: Do not register package.')
   else
+  begin
     if not DirectoryExists(RegDir + LowerCase(pkgID)) then
-      SysUtils.CreateDir(RegDir + LowerCase(pkgID));
+      ForceDirectories(RegDir + LowerCase(pkgID));
   FileCopy(pkg.WDir + '/arcinfo.pin', RegDir + LowerCase(pkgID) + '/application');
 
   //Save list of installed files
@@ -1751,8 +1758,6 @@ end; }
   if ExecX <> '<disabled>' then
     FileCopy(ExecX, RegDir + LowerCase(pkgID) + '/prerm');
 
-  ndirs.Free;
-
   mnpos := mnpos + 5;
   SetMainPos(Round(mnpos * max));
   //Execute Program/Script
@@ -1765,10 +1770,6 @@ end; }
     Proc.Execute;
     //while Proc.Running do Application.ProcessMessages;
   end;
-
-  proc.Free;
-
-  pkg.Free;
 
   if (USource <> '#') and (AddUpdateSource) then
   begin
@@ -1786,12 +1787,18 @@ end; }
     fi.Free;
   end;
 
+end;
+  ndirs.Free;
+  proc.Free;
+  pkg.Free;
+
   mnpos := mnpos + 5;
   SetMainPos(Round(mnpos * max));
 
   Result := true;
   SendStateMsg(rsFinished);
-  sleep(600);
+  SetMainPos(100);
+  sleep(400);
 end;
 
 function TInstallation.RunDLinkInstallation: Boolean;

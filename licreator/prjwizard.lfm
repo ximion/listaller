@@ -3,7 +3,7 @@ object frmProjectWizard: TfrmProjectWizard
   Height = 666
   Top = 188
   Width = 836
-  ActiveControl = Panel1
+  ActiveControl = Memo1
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Project Wizard'
@@ -62,7 +62,7 @@ object frmProjectWizard: TfrmProjectWizard
     Top = 0
     Width = 836
     Align = alClient
-    PageIndex = 0
+    PageIndex = 4
     ShowTabs = False
     TabOrder = 0
     object Page1: TPage
@@ -1853,15 +1853,15 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object Label32: TLabel
           Left = 10
-          Height = 14
+          Height = 13
           Top = 160
-          Width = 96
+          Width = 83
           Caption = 'Main executable:'
           ParentColor = False
         end
         object Edit1: TEdit
           Left = 150
-          Height = 19
+          Height = 20
           Top = 10
           Width = 248
           OnChange = Edit1Change
@@ -1870,7 +1870,7 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object Edit2: TEdit
           Left = 150
-          Height = 19
+          Height = 20
           Top = 37
           Width = 80
           OnChange = Edit2Change
@@ -1901,7 +1901,7 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object FileNameEdit1: TFileNameEdit
           Left = 150
-          Height = 19
+          Height = 20
           Top = 99
           Width = 288
           DialogOptions = []
@@ -1914,7 +1914,7 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object FileNameEdit2: TFileNameEdit
           Left = 150
-          Height = 19
+          Height = 20
           Top = 126
           Width = 288
           DialogOptions = []
@@ -1927,7 +1927,7 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object Edit10: TEdit
           Left = 566
-          Height = 19
+          Height = 20
           Top = 10
           Width = 200
           TabOrder = 5
@@ -1935,7 +1935,7 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object FileNameEdit5: TFileNameEdit
           Left = 566
-          Height = 19
+          Height = 20
           Top = 37
           Width = 200
           DialogTitle = 'Select icon...'
@@ -1977,7 +1977,7 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object edtExec: TEdit
           Left = 150
-          Height = 19
+          Height = 20
           Top = 156
           Width = 287
           TabOrder = 8
@@ -2008,25 +2008,25 @@ object frmProjectWizard: TfrmProjectWizard
         TabOrder = 1
         object Label11: TLabel
           Left = 6
-          Height = 14
+          Height = 13
           Top = 9
-          Width = 73
+          Width = 63
           Caption = 'Architecture:'
           ParentColor = False
         end
         object Label16: TLabel
           Left = 6
-          Height = 14
+          Height = 13
           Top = 41
-          Width = 139
+          Width = 116
           Caption = 'Supported distributions:'
           ParentColor = False
         end
         object Label27: TLabel
           Left = 391
-          Height = 14
+          Height = 13
           Top = 9
-          Width = 48
+          Width = 42
           Caption = 'idName:'
           ParentColor = False
         end
@@ -2045,9 +2045,9 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object Label29: TLabel
           Left = 391
-          Height = 14
+          Height = 13
           Top = 57
-          Width = 80
+          Width = 67
           Caption = 'Desktop Files:'
           ParentColor = False
         end
@@ -2062,7 +2062,7 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object Edit3: TEdit
           Left = 151
-          Height = 19
+          Height = 20
           Top = 6
           Width = 137
           TabOrder = 0
@@ -2089,7 +2089,7 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object Edit5: TEdit
           Left = 8
-          Height = 19
+          Height = 20
           Top = 59
           Width = 104
           TabOrder = 3
@@ -2106,7 +2106,7 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object Edit11: TEdit
           Left = 485
-          Height = 19
+          Height = 20
           Top = 6
           Width = 80
           TabOrder = 5
@@ -2114,7 +2114,7 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object Edit12: TEdit
           Left = 485
-          Height = 19
+          Height = 20
           Top = 50
           Width = 300
           TabOrder = 6
@@ -2140,9 +2140,9 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object Label31: TLabel
           Left = 390
-          Height = 14
+          Height = 13
           Top = 73
-          Width = 65
+          Width = 58
           Caption = 'Lang-Code:'
           ParentColor = False
         end
@@ -2152,7 +2152,7 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 63
           Width = 372
           AutoExpand = True
-          DefaultItemHeight = 15
+          DefaultItemHeight = 14
           HideSelection = False
           TabOrder = 0
           OnClick = tvShortDescriptionsClick
@@ -2165,7 +2165,7 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object edtShortDescription: TEdit
           Left = 6
-          Height = 19
+          Height = 20
           Top = 33
           Width = 376
           OnChange = edtShortDescriptionChange
@@ -2183,7 +2183,7 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object edtLangCode: TEdit
           Left = 390
-          Height = 19
+          Height = 20
           Top = 97
           Width = 47
           TabOrder = 3
@@ -2238,15 +2238,15 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object edtProfileName: TLabeledEdit
           Left = 8
-          Height = 19
+          Height = 20
           Top = 42
           Width = 96
           EditLabel.AnchorSideLeft.Control = edtProfileName
           EditLabel.AnchorSideBottom.Control = edtProfileName
           EditLabel.Left = 8
-          EditLabel.Height = 14
-          EditLabel.Top = 25
-          EditLabel.Width = 77
+          EditLabel.Height = 13
+          EditLabel.Top = 26
+          EditLabel.Width = 65
           EditLabel.Caption = 'Profile name:'
           EditLabel.ParentColor = False
           TabOrder = 3
@@ -2270,8 +2270,8 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object lvPackageFiles: TListView
         Left = 0
-        Height = 392
-        Top = 186
+        Height = 403
+        Top = 198
         Width = 832
         Align = alBottom
         Columns = <        
@@ -2304,10 +2304,10 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object GroupBox4: TGroupBox
         Left = 7
-        Height = 120
+        Height = 103
         Top = 55
         Width = 424
-        ClientHeight = 116
+        ClientHeight = 99
         ClientWidth = 420
         TabOrder = 1
         object GroupBox5: TGroupBox
@@ -2321,7 +2321,7 @@ object frmProjectWizard: TfrmProjectWizard
           TabOrder = 0
           object DirectoryEdit1: TDirectoryEdit
             Left = 6
-            Height = 19
+            Height = 20
             Top = 1
             Width = 363
             ShowHidden = False
@@ -2342,7 +2342,7 @@ object frmProjectWizard: TfrmProjectWizard
           TabOrder = 1
           object Edit6: TEdit
             Left = 6
-            Height = 19
+            Height = 20
             Top = 1
             Width = 384
             TabOrder = 0
@@ -2352,10 +2352,10 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object GroupBox7: TGroupBox
         Left = 431
-        Height = 120
+        Height = 104
         Top = 55
         Width = 393
-        ClientHeight = 116
+        ClientHeight = 100
         ClientWidth = 389
         Enabled = False
         TabOrder = 2
@@ -2370,7 +2370,7 @@ object frmProjectWizard: TfrmProjectWizard
           TabOrder = 0
           object FileNameEdit3: TFileNameEdit
             Left = 3
-            Height = 19
+            Height = 20
             Top = 3
             Width = 339
             DialogOptions = []
@@ -2393,7 +2393,7 @@ object frmProjectWizard: TfrmProjectWizard
           TabOrder = 1
           object Edit7: TEdit
             Left = 6
-            Height = 19
+            Height = 20
             Top = 1
             Width = 245
             TabOrder = 0
@@ -2405,7 +2405,7 @@ object frmProjectWizard: TfrmProjectWizard
         Left = 7
         Height = 21
         Top = 39
-        Width = 230
+        Width = 195
         Caption = 'Add files from folder and subfolders'
         Checked = True
         OnChange = RadioButton1Change
@@ -2416,15 +2416,15 @@ object frmProjectWizard: TfrmProjectWizard
         Left = 431
         Height = 21
         Top = 39
-        Width = 103
+        Width = 88
         Caption = 'Add single file'
         TabOrder = 4
         TabStop = False
       end
       object Button6: TButton
-        Left = 358
+        Left = 334
         Height = 25
-        Top = 174
+        Top = 166
         Width = 112
         Caption = 'Add files to list'
         OnClick = Button6Click
@@ -2432,7 +2432,7 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object cmbProfiles: TComboBox
         Left = 181
-        Height = 23
+        Height = 22
         Top = 5
         Width = 168
         ItemHeight = 0
@@ -2459,18 +2459,18 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Label20: TLabel
         Left = 14
-        Height = 94
+        Height = 88
         Top = 374
-        Width = 258
+        Width = 220
         Caption = 'You can add ftp:// or http:// weblinks.'#10'On DEB-based systems you can use '#10'the package name instead.'#10'You can add the real package name after the'#10'link, eg.'#10'http://example.com/test-1.0-i386.deb (test)'
         Enabled = False
         ParentColor = False
       end
       object Label33: TLabel
         Left = 7
-        Height = 14
+        Height = 13
         Top = 38
-        Width = 279
+        Width = 235
         Caption = 'The following dependencies have been detected:'
         ParentColor = False
       end
@@ -2481,7 +2481,7 @@ object frmProjectWizard: TfrmProjectWizard
         Width = 509
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoExpand = True
-        DefaultItemHeight = 15
+        DefaultItemHeight = 14
         Enabled = False
         TabOrder = 0
         OnClick = tvDependenciesClick
@@ -2514,7 +2514,7 @@ object frmProjectWizard: TfrmProjectWizard
         end
         object Edit8: TEdit
           Left = 5
-          Height = 19
+          Height = 20
           Top = 11
           Width = 280
           TabOrder = 1
@@ -2525,7 +2525,7 @@ object frmProjectWizard: TfrmProjectWizard
         Left = 7
         Height = 21
         Top = 342
-        Width = 178
+        Width = 151
         Caption = 'Add specific dependencies:'
         OnChange = ChkAddDDepsChange
         TabOrder = 2
@@ -2541,22 +2541,22 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object EdtNewDep: TLabeledEdit
         Left = 7
-        Height = 19
+        Height = 20
         Top = 286
         Width = 224
         EditLabel.AnchorSideLeft.Control = EdtNewDep
         EditLabel.AnchorSideBottom.Control = EdtNewDep
         EditLabel.Left = 7
-        EditLabel.Height = 14
-        EditLabel.Top = 269
-        EditLabel.Width = 155
+        EditLabel.Height = 13
+        EditLabel.Top = 270
+        EditLabel.Width = 132
         EditLabel.Caption = 'Add dependency file name:'
         EditLabel.ParentColor = False
         TabOrder = 4
       end
       object AddDepBtn: TButton
         Left = 238
-        Height = 25
+        Height = 20
         Top = 286
         Width = 96
         Caption = 'Add dependency'
@@ -2590,9 +2590,9 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Memo1: TMemo
         Left = 6
-        Height = 498
+        Height = 552
         Top = 38
-        Width = 804
+        Width = 816
         Anchors = [akTop, akLeft, akRight, akBottom]
         Font.Height = -11
         Font.Name = 'Courier 10 Pitch'

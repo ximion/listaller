@@ -66,6 +66,7 @@ end;
 procedure TTarArchive.SetCMD(param: String);
 begin
  cmdln:=FindBinary('tar')+' '+param;
+ //p_debug('TARCmd: '+cmdln);
  proc.CommandLine:=cmdln;
 end;
 

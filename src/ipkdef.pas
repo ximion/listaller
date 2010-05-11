@@ -255,6 +255,7 @@ begin
     exit;
   if mofile = '' then
   begin
+    mofile := '~';
     for i := 0 to text.Count - 1 do
       if pos('include:', Text[i]) > 0 then
         if LowerCase(ExtractFileExt(SolveInclude(Text[i]))) = '.mo' then
@@ -267,8 +268,10 @@ begin
             mofile := '~';
         end;
   end;
-  p_debug('MoFile: '+FBasePath+mofile);
-  if not FileExists(FBasePath+mofile) then
+  p_debug('MoFile: '+FBasePath+'|'+mofile);
+  if (mofile = '~')
+  or (StrSubst(' ','',mofile)='')
+  or (not FileExists(FBasePath+mofile)) then
     exit;
   mo := TMoFile.Create(FBasePath+mofile);
   Result := mo.Translate(s);

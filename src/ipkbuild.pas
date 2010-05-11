@@ -320,6 +320,12 @@ var
     halt(5);
   end;
 
+  procedure RaiseError(str: String);
+  begin
+    writeLn('error:');
+    writeLn(' '+str);
+  end;
+
   procedure bp_AddFile(fname: String; const basepath: String = '');
   var
     orig: String;
@@ -440,6 +446,13 @@ begin
   script.Free;
 
   control.BasePath := ExtractFilePath(fi);
+
+  if pos(' ',control.PkName)>0 then
+  begin
+    RaiseError('Package ID must not contain spaces!');
+    control.Free;
+    exit;
+  end;
 
   if (LowerCase(ExtractFileExt(o)) <> '.ipk') then
   begin

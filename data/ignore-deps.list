@@ -1,6 +1,7 @@
 linux-gate.so.*
-/lib/ld-linux.so.*
-libstdc++.so.*
+ld-linux.so.*
+ld-linux-x86-64.so.*
+libstdc\+\+.so.*
 libm.so.*
 libgcc_s.so.*
 libc.so.*
@@ -30,3 +31,6 @@ libXt.so.*
 librt.so.*
 libpcre.so.*
 libz.so.*
+libnvidia-tls.so.*
+libGLcore.so.*
+linux-vdso.so.*

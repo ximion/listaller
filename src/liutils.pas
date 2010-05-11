@@ -641,10 +641,10 @@ begin
   for i := 0 to s.Count - 1 do
     if pos('=>', s[i]) > 0 then
     begin
-      lst.Add(copy(s[i], 2, pos('=', s[i]) - 4));
+      lst.Add(copy(s[i], 2, pos('=', s[i]) - 3));
     end
     else
-      lst.Add(copy(s[i], 2, pos('(', s[i]) - 4));
+      lst.Add(copy(s[i], 2, pos('(', s[i]) - 3));
   s.Free;
 end;
 
