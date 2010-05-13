@@ -173,6 +173,8 @@ begin
   end;
 
   pk := TPackageKit(user_data);
+  if not (pk is TPackageKit) then exit;
+
   if results = nil then
   begin
     pk.LoopQuit();
@@ -231,6 +233,7 @@ var
   percentage: GuInt;
 begin
   pk := TPackageKit(user_data);
+  if not (pk is TPackageKit) then exit;
 
   case ptype of
     PK_PROGRESS_TYPE_PACKAGE_ID:

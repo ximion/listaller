@@ -391,6 +391,7 @@ var i: Integer;
     pk: TPackageKit;
 begin
   Result := true;
+  if not (pkInf is DRInfo) then exit;
   i:=pkInf.list.Count-1;
 
   if pkInf.list.Count <= 0 then
@@ -554,9 +555,8 @@ begin
 
     if eIndex > -1 then
     begin
-      //??? Needs some work...
-     { for i := 0 to pkitList.Count-1 do
-        TPackageKit(pkitList[i]).Cancel; }
+      for i := 0 to pkitList.Count-1 do
+        TPackageKit(pkitList[i]).Cancel;
       pkitList.Free;
       MakeUsrRequest(StrSubst(rsDepNotFound, '%l', Dependencies[eIndex]) +
         #10 + rsInClose, rqError);
@@ -1224,7 +1224,12 @@ var
 
 begin
   //First resolve all dependencies and prepare installation
-  ResolveDependencies();
+  if not ResolveDependencies() then
+  begin
+    Result := false;
+    exit;
+  end;
+
   if not FileExists(tmpdir + ExtractFileName(PkgName) + '/' + FFileInfo) then
   begin
     MakeUsrRequest(rsInstFailed, rqError);
@@ -1246,12 +1251,11 @@ begin
   Result := false;
   mnpos := 0;
 
-  //!!! @deprecated
-{
-//Check if fileinfo contains shared files
-for i:=0 to (fi.Count div 3)-1 do begin
-if IsSharedFile(lp+PkgName+fi[i*3]) then ContSFiles:=true;
-end; }
+   //!!! @deprecated
+  {//Check if fileinfo contains shared files
+   for i:=0 to (fi.Count div 3)-1 do begin
+   if IsSharedFile(lp+PkgName+fi[i*3]) then ContSFiles:=true;
+   end; }
 
   max := 100 / GetMaxInstSteps;
 

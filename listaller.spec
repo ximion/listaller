@@ -1,11 +1,19 @@
 Name:             listaller-core
-Version:          0.3.77+git20100325
+Version:          0.3.77+git20100512
 Release:          1
 License:          GPLv3
-BuildRequires:    fpc >= 2.4.0, lazarus >= 0.9.28, PackageKit-glib-devel >= 0.5.6, glib2-devel, gtk2-devel, fpc-src, libqt4intf5, sqlite-devel, PolicyKit-devel
-Source0:          listaller_0.3.77-0+git20100325.tar.gz
+BuildRequires:    fpc >= 2.4.0
+BuildRequires:    lazarus >= 0.9.29
+%if 0%{?suse_version} >= 1110  
+BuildRequires:    libpackagekit-glib2-devel >= 0.5.6
+%else
+BuildRequires:    PackageKit-glib-devel >= 0.5.6
+%endif
+BuildRequires:    glib2-devel, gtk2-devel, fpc-src, libQt4Pas5-devel, sqlite-devel, polkit-devel
 
-Requires:         xdg-utils, PackageKit, PolicyKit, libInstaller-0.4
+Source0:          listaller-gitsnapshot.20100512.tar.gz
+
+Requires:         xdg-utils
 
 Provides:         listaller
 Group:            Applications/System
