@@ -1,7 +1,13 @@
-Version 0.4
+Version 0.4b
 ~~~~~~~~~~~~~
  == Still in development ==
  
+ * [listallmgr] Redesigned interface
+ * Dropped C/Python bindings
+ * Switched to Lazarus 0.9.29 to use the new FPC resource system
+ * [lipa] Update to work with new components
+ * [listallgo] Updated GUI
+ * [libuid] Work with new IPK1.0 specs
  * Added LZMA support for IPK1.0
  * Dropped Abbrevia components
  * Included libinstaller library
@@ -12,20 +18,21 @@ Version 0.4
  * Completely updated the GUI interfaces
  * Switched to Lazarus 0.9.28 and FPC 2.4.0
 
-Version 0.3.0b
+Version 0.3.0a
 ~~~~~~~~~~~~~
- * First beta release, no changelog made
+ * First beta release, no changelog created
  * Completely refreshed GUI
  * Some other changes
+ * Switch to IPKXML
 
 Version 0.2.00a
 ~~~~~~~~~~~~~
- * First alpha release, no changelog made
+ * First alpha release, no changelog created
 
 Version 0.1.18
 ~~~~~~~~~~~~~
- * Test release 2, no changelog made
+ * Test release 2, no changelog created
 
 Version 0.1.16
 ~~~~~~~~~~~~~
- * Test release 1, no changelog made
+ * Test release 1, no changelog created

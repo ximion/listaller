@@ -612,7 +612,7 @@ begin
 
   Result := not IsErrorSet(error);
   //If package was not found yet or PkDesktop-mode is not activated
-  if StrSubst(pkg, ' ', '') = '' then
+  if trim(pkg) = '' then
   begin
     pkglist.Clear;
     Result := false;

@@ -49,8 +49,8 @@ Description: Listaller frontends (GTK2)
 
 Package: listaller-qt
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, listaller-data (= ${source:Version}), kdesudo, packagekit,
-  libqt4intf, kde-icons-oxygen
+Depends: ${misc:Depends}, ${shlibs:Depends}, listaller-data (= ${source:Version}), packagekit,
+ kde-icons-oxygen
 Provides: listaller-frontend
 Description: Listaller frontends (Qt4)
  Listaller is a distribution-independ software install system.

@@ -212,23 +212,29 @@ begin
   begin
     for i := 0 to Text.Count - 1 do
     begin
+      if (length(Text[i])>0)and(Text[i][1]<>'#')and(Text[i][1]<>' ') then
+      begin
       h := copy(Text[i], 0, pos(':', Text[i]) - 1);
       if LowerCase(h) = LowerCase(s) + '[' + clang + ']' then
       begin
         Result := i;
         break;
       end;
+      end;
     end;
   end;
-  if (not localized) or (LowerCase(h) <> LowerCase(s) + '[' + clang + ']') then
-    //Then search the general key
+  //Then search the general key
+  if (not localized) or (Result < 0) then
     for i := 0 to Text.Count - 1 do
     begin
+      if (length(Text[i])>0)and(Text[i][1]<>'#')and(Text[i][1]<>' ') then
+      begin
       h := copy(Text[i], 0, pos(':', Text[i]) - 1);
       if LowerCase(h) = LowerCase(s) then
       begin
         Result := i;
         break;
+      end;
       end;
     end;
 end;
@@ -269,9 +275,7 @@ begin
         end;
   end;
   p_debug('MoFile: '+FBasePath+'|'+mofile);
-  if (mofile = '~')
-  or (StrSubst(' ','',mofile)='')
-  or (not FileExists(FBasePath+mofile)) then
+  if (mofile = '~')  or (trim(mofile) = '')  or (not FileExists(FBasePath+mofile)) then
     exit;
   mo := TMoFile.Create(FBasePath+mofile);
   Result := mo.Translate(s);
@@ -518,7 +522,7 @@ var
   j: Integer;
 begin
   Result := '';
-  j := SearchKeyIndex('Icon');
+  j := SearchKeyIndex('Icon', false);
   if j > -1 then
     Result := GetValue(Text[j]);
 end;
@@ -566,8 +570,8 @@ begin
   end;
   s := 'Group: ' + s;
 
-  if SearchKeyIndex('Group') > -1 then
-    Text[SearchKeyIndex('Group')] := s
+  if SearchKeyIndex('Group', false) > -1 then
+    Text[SearchKeyIndex('Group', false)] := s
   else
     Text.Add(s);
 end;
@@ -578,7 +582,7 @@ var
   s: String;
 begin
   Result := gtUNKNOWN;
-  j := SearchKeyIndex('SDesc');
+  j := SearchKeyIndex('Group', false);
   if j > -1 then
     s := GetValue(Text[j]);
 
@@ -676,7 +680,7 @@ var
   j: Integer;
 begin
   Result := '';
-  j := SearchKeyIndex('Disallow');
+  j := SearchKeyIndex('Disallow', false);
   if j > -1 then
     Result := GetValue(Text[j]);
 end;
@@ -735,7 +739,7 @@ var
   j: Integer;
 begin
   Result := '';
-  j := SearchKeyIndex('AppCMD');
+  j := SearchKeyIndex('AppCMD', false);
   if j > -1 then
     Result := GetValue(Text[j]);
 end;
@@ -771,7 +775,7 @@ var
   j: Integer;
 begin
   Result := '';
-  j := SearchKeyIndex('PkName');
+  j := SearchKeyIndex('PkName', false);
   if j > -1 then
     Result := GetValue(Text[j]);
 end;
@@ -789,7 +793,7 @@ var
   j: Integer;
 begin
   Result := '';
-  j := SearchKeyIndex('IPKName');
+  j := SearchKeyIndex('IPKName', false);
   if j > -1 then
     Result := GetValue(Text[j]);
 end;
@@ -807,7 +811,7 @@ var
   j: Integer;
 begin
   Result := '';
-  j := SearchKeyIndex('DSupport');
+  j := SearchKeyIndex('DSupport', false);
   if j > -1 then
     Result := GetValue(Text[j]);
 end;
@@ -918,7 +922,7 @@ var
   j: Integer;
 begin
   Result := '';
-  j := SearchKeyIndex('WizImage');
+  j := SearchKeyIndex('WizImage', false);
   if j > -1 then
     Result := GetValue(Text[j]);
 end;
@@ -933,7 +937,7 @@ var
   j: Integer;
 begin
   Result := '';
-  j := SearchKeyIndex('Binary');
+  j := SearchKeyIndex('Binary', false);
   if j > -1 then
     Result := GetValue(Text[j]);
 end;
@@ -948,7 +952,7 @@ var
   j: Integer;
 begin
   Result := '';
-  j := SearchKeyIndex('USource');
+  j := SearchKeyIndex('USource', false);
   if j > -1 then
     Result := GetValue(Text[j]);
 end;
@@ -963,7 +967,7 @@ var
   j: Integer;
 begin
   Result := '';
-  j := SearchKeyIndex('Desktopfiles');
+  j := SearchKeyIndex('Desktopfiles', false);
   if j > -1 then
     Result := GetValue(Text[j]);
 end;
@@ -981,7 +985,7 @@ var
   j: Integer;
   s: String;
 begin
-  j := SearchKeyIndex('InTerminal');
+  j := SearchKeyIndex('InTerminal', false);
   if j > -1 then
     s := GetValue(Text[j]);
   if LowerCase(s) = 'true' then
@@ -1207,7 +1211,7 @@ var
   j: Integer;
 begin
   //Search for container-IPK files section
-  j := SearchKeyIndex('Files');
+  j := SearchKeyIndex('Files', false);
   if j > -1 then
   begin
     ReadField('Files', lst);

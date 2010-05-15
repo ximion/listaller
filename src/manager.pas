@@ -769,8 +769,8 @@ begin
           end
           else
             if Application.MessageBox(PAnsiChar(
-              StringReplace(StringReplace(rsConvertPkg, '%x', 'DEB', [rfReplaceAll]),
-              '%y', 'RPM', [rfReplaceAll])), PAnsiChar(rsConvertPkgQ),
+              StrSubst(StrSubst(rsConvertPkg, '%x', 'DEB'),
+              '%y', 'RPM')), PAnsiChar(rsConvertPkgQ),
               MB_YESNO) = idYes then
             begin
               with ConvDisp do
@@ -787,8 +787,8 @@ begin
 
                     if pkit.PkFinishCode>0 then
                     begin
-                      ShowMessage(StringReplace(rsPkgInstFail, '%p',
-                        'alien', [rfreplaceAll]));
+                      ShowMessage(StrSubst(rsPkgInstFail, '%p',
+                        'alien'));
                       pkit.Free;
                       exit;
                     end;

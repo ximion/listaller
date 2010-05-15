@@ -442,6 +442,15 @@ begin
 
   script := TIPKScript.Create;
   script.LoadFromFile(fi);
+
+  if (LowerCase(ExtractFileExt(o)) <> '.ipk') then
+  begin
+    if script.IPKName = '' then
+      o := ExtractFilePath(fi) + '/' + script.PkName + '.ipk'
+    else
+      o := ExtractFilePath(fi) + '/' + script.IPKName + '.ipk';
+  end;
+
   control := script.FinalizeToControl;
   script.Free;
 
@@ -454,12 +463,11 @@ begin
     exit;
   end;
 
-  if (LowerCase(ExtractFileExt(o)) <> '.ipk') then
+  if trim(control.PkName) = '' then
   begin
-    if control.IPKName = '' then
-      o := ExtractFilePath(fi) + '/' + control.PkName + '.ipk'
-    else
-      o := ExtractFilePath(fi) + '/' + control.IPKName + '.ipk';
+    RaiseError('Package must have a unique ID!');
+    control.Free;
+    exit;
   end;
 
   o := CleanFilePath(o);
@@ -811,7 +819,7 @@ begin
     writeLn('warning:');
     writeLn(' The file "' + ExtractFileName(o) + '" already exists in output dir.');
     writeLn(' Renamed to "' + ExtractFileName(o) + '~' + IntToStr(i) + '.ipk"');
-    o := o + '~' + IntToStr(i) + '.ipk';
+    o := ChangeFileExt(o,'') + '~' + IntToStr(i) + '.ipk';
   end;
   writeLn(' #-> ' + o);
   ipkpkg.IPKFile := o;

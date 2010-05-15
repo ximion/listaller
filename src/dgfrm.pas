@@ -195,7 +195,7 @@ begin
   until noMoreOutput;
 if Process1.ExitStatus>0 then begin
     GetOutputTimer.Enabled:=false;
-    ShowMessage(rsCouldntSolve+#13+StringReplace(rsViewLog,'%p',ConfigDir,[rfReplaceAll]));
+    ShowMessage(rsCouldntSolve+#13+StrSubst(rsViewLog,'%p',ConfigDir));
     Memo3.Lines.SaveTofile(ConfigDir+'/install.log');
     Application.Terminate;
     exit;

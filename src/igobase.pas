@@ -208,7 +208,7 @@ begin
   if NoteBook1.PageIndex = 5 then
   begin
     Label10.Caption := rsInstAborted;
-    Label11.Caption := StringReplace(rsAppNInstall, '%a', setup.GetAppName, [rfReplaceAll]);
+    Label11.Caption := StrSubst(rsAppNInstall, '%a', setup.GetAppName);
     AbortIns := true;
   end
   else
@@ -327,8 +327,7 @@ begin
           InfoMemo.Lines.Add(rsInstFailed);
           InfoMemo.Lines.SaveTofile('/tmp/install-' + setup.GetAppName + '.log');
           NoteBook1.PageIndex := 6;
-          Label17.Caption := StringReplace(rsCouldNotInstallApp, '%a', setup.GetAppName,
-            [rfReplaceAll]);
+          Label17.Caption := StrSubst(rsCouldNotInstallApp, '%a', setup.GetAppName);
           SetupFailed := true;
 
           FinBtn1.Visible := true;
@@ -357,8 +356,7 @@ begin
             InfoMemo.Lines.Add(rsInstAbortedByUser);
             InfoMemo.Lines.SaveTofile('/tmp/install-' + setup.GetAppName + '.log');
             NoteBook1.PageIndex := 6;
-            Label17.Caption := StringReplace(rsCouldNotInstallApp, '%a', setup.GetAppName,
-              [rfReplaceAll]);
+            Label17.Caption := StrSubst(rsCouldNotInstallApp, '%a', setup.GetAppName);
             SetupFailed := true;
 
             FinBtn1.Visible := true;
@@ -631,16 +629,16 @@ begin
   LicMemo.Lines.Clear;
   setup.ReadLicense(TStringList(LicMemo.Lines));
 
-  Label2.Caption := StringReplace(rsWelcomeTo, '%a', setup.GetAppName, [rfReplaceAll]);
+  Label2.Caption := StrSubst(rsWelcomeTo, '%a', setup.GetAppName);
   if Testmode then
   begin
-    IWizFrm.Caption := StringReplace(rsInstOf, '%a', setup.GetAppName, [rfReplaceAll]) +
+    IWizFrm.Caption := StrSubst(rsInstOf, '%a', setup.GetAppName) +
       ' [' + rsTestMode + ']';
     LblTestMode.Caption := rsTestMode + '!';
     LblTestMode.Visible := true;
   end
   else
-    IWizFrm.Caption := StringReplace(rsInstOf, '%a', setup.GetAppName, [rfReplaceAll]);
+    IWizFrm.Caption := StrSubst(rsInstOf, '%a', setup.GetAppName);
 
   ListBox1.Items.Add('Distribution: ' + DInfo.DName);
   ListBox1.Items.Add('Version: ' + DInfo.Release);
@@ -743,8 +741,8 @@ begin
       GetOutputTimer.Enabled := false;
       writeLn('Connection to backend broken.');
       writeLn(rsCannotResolv);
-      ShowMessage(rsCouldntSolve + #13 + StringReplace(
-        rsViewLog, '%p', '/tmp/install-' + setup.GetAppName + '.log', [rfReplaceAll]) + #13 +
+      ShowMessage(rsCouldntSolve + #13 + StrSubst(
+        rsViewLog, '%p', '/tmp/install-' + setup.GetAppName + '.log') + #13 +
         'Code: ' + IntToStr(Process1.ExitStatus));
       InfoMemo.Lines.SaveTofile('/tmp/install-' + setup.GetAppName + '.log');
       halt;
@@ -783,7 +781,7 @@ begin
     begin
       NoteBook1.PageIndex := 5;
 
-      Label11.Caption := StringReplace(rsWasInstalled, '%a', setup.GetAppName, [rfReplaceAll]);
+      Label11.Caption := StrSubst(rsWasInstalled, '%a', setup.GetAppName);
 
       FinBtn1.Visible := true;
       AbortBtn1.Visible := false;
