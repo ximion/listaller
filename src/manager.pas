@@ -387,7 +387,7 @@ begin
   if item.Version<>'' then
     AppVersionLbl.Caption := item.Version
   else
-    AppVersionLbl.Caption := 'Version: unknown';
+    AppVersionLbl.Caption := rsVersionUnknown;
   AppInfoPanel.Visible := true;
   activeRmItem := item;
 end;

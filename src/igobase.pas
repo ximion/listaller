@@ -312,7 +312,7 @@ var
 begin
   //Window title
   if setup.GetAppName = '' then
-    s := rsInst
+    s := rsInstallation
   else
     s := Format(rsInstOf, [setup.GetAppName]);
   //Handle interaction types
@@ -678,7 +678,7 @@ begin
   //Free instances;
   if Assigned(setup) then
     setup.Free;
-  writeLn('Listaller unloaded.');
+  p_debug('Listaller unloaded.');
 end;
 
 procedure TIWizFrm.FormShow(Sender: TObject);
@@ -762,8 +762,8 @@ begin
 
   if setup.GetFileList = '' then
   begin
-    ShowMessage(rsPKGError + #13'Message: No file information was found for this profile!' +
-      #13 + rsAppClose);
+    ShowMessage(rsPKGError + #10'Message: No file information was found for this profile!' +
+      #10 + rsAppClose);
     Application.Terminate;
     exit;
   end;

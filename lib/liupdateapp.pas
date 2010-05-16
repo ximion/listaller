@@ -534,7 +534,7 @@ begin
 
   ulist.Delete(uid); //Remove update information
 
-  msg('Cleaning up...');
+  msg(rsCleaningUp);
   c.Free;
   dsApp.Free;
 

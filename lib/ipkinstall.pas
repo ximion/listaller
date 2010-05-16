@@ -280,7 +280,7 @@ begin
   if PkgName <> '' then
     DeleteDirectory(tmpdir + PkgName, false);
   dsApp.Free;
-  msg('Database connection closed.');
+  msg(rsDBConnClosed);
   if Assigned(Dependencies) then
     Dependencies.Free;
   license.Free;
@@ -678,9 +678,9 @@ begin
   begin
     sigState := pkg.CheckSignature;
     case sigState of
-      psNone: msg('Package is unsigned.');
-      psTrusted: msg('Package has trusted signature.');
-      psUntrusted: msg('Package signature is UNTRUSTED!');
+      psNone: msg(rsPackageIsUnsigned);
+      psTrusted: msg(rsPackageHasTrustedSign);
+      psUntrusted: msg(rsPackageSigIsUntrusted);
     end;
   end;
 
@@ -729,7 +729,7 @@ begin
 
   if pkType = ptLinstall then
   begin
-    msg('Package type is "linstall"');
+    msg(StrSubst(rsPackageTypeIsX,'%s','linstall'));
 
     if (pos('iofilecheck', FDisallow) > 0) then
     begin
@@ -750,7 +750,7 @@ begin
 
     for i := 0 to PkProfiles.Count - 1 do
     begin
-      msg('Found installation profile ' + PkProfiles[PkProfiles.Count - 1]);
+      msg(StrSubst(rsFoundInstallProfileX,'%s',PkProfiles[PkProfiles.Count - 1]));
       pkg.UnpackFile('pkgdata/fileinfo-' + IntToStr(i) + '.id');
     end;
 
@@ -933,7 +933,7 @@ begin
   else //Handle other IPK types
     if pkType = ptDLink then
     begin
-      msg('Package type is "dlink"');
+      msg(StrSubst(rsPackageTypeIsX,'%s','dlink'));
 
       cont.ReadAppDescription(longdesc);
 
@@ -1027,7 +1027,7 @@ begin
     else
       if pkType = ptContainer then
       begin
-        msg('Package type is "container"');
+        msg(StrSubst(rsPackageTypeIsX,'%s','container'));
 
         //IPK package has been initialized
       end;
@@ -1684,8 +1684,8 @@ begin
           end;
 
           //while proc.Running do Application.ProcessMessages;
-          msg('Rights assigned to ' + DeleteModifiers(
-            ExtractFileName(SyblToPath(fi[i]))));
+          msg(StrSubst(rsRightsAssignedToX,'%a',DeleteModifiers(
+            ExtractFileName(SyblToPath(fi[i])))));
         end;
       end;
     end;
@@ -1709,7 +1709,7 @@ begin
   SendStateMsg(rsStep4);
 
   if Testmode then
-    msg('Testmode: Do not register package.')
+    msg(rsTestmodeDNRegister)
   else
   begin
     if not DirectoryExists(RegDir + LowerCase(pkgID)) then
@@ -1855,7 +1855,7 @@ end;}
   begin
     if pos('://', Dependencies[i]) <= 0 then
     begin
-      msg('Looking for ' + Dependencies[i]);
+      msg(StrSubst(rsLookingForX,'%a',Dependencies[i]));
 
       pkit.ResolveInstalled(Dependencies[i]);
 
@@ -1864,7 +1864,7 @@ end;}
 
       if pkit.PkFinishCode = 1 then
       begin
-        msg('Installing ' + Dependencies[i] + '...');
+        msg(StrSubst(rsInstallingX,'%a',Dependencies[i]));
 
         Inc(mnpos);
         SetMainPos(Round(mnpos * max));
@@ -1883,7 +1883,7 @@ end;}
       pkg := copy(pkg, 1, pos(')', pkg) - 1);
       fpath := copy(Dependencies[i], 1, pos(' (', Dependencies[i]) - 1);
       p_debug('Looking for ' + pkg);
-      msg('Looking for ' + pkg);
+      msg(StrSubst(rsLookingForX,'%a',pkg));
       pkit.ResolveInstalled(pkg);
 
       Inc(mnpos);
@@ -1891,7 +1891,7 @@ end;}
 
       if pkit.PkFinishCode = 1 then
       begin
-        msg('Downloading package...');
+        msg(rsDownloadingPkg);
 
         if pos('http://', fpath) > 0 then
         begin
@@ -1953,7 +1953,7 @@ end;}
         Inc(mnpos);
         SetMainPos(Round(mnpos * max));
 
-        msg('Installing ' + pkg + '...');
+        msg(StrSubst(rsInstallingX,'%a',pkg));
         pkit.InstallLocalPkg('/tmp/' + ExtractFileName(fpath));
 
         if pkit.PkFinishCode > 1 then
@@ -2050,7 +2050,7 @@ begin
   Result := true;
   if (PkgID = '') or (AppName = '') then
   begin
-    MakeUsrRequest('Unknown error occured!' + #10 + rsPkgDM + #10 + rsABLoad, rqError);
+    MakeUsrRequest(rsUnknownErrorOC + #10 + rsPkgDM + #10 + rsABLoad, rqError);
     Result := false;
     exit;
   end;
@@ -2183,7 +2183,7 @@ begin
         Result := RunContainerInstallation
       else
       begin
-        msg('Could not detect package type!');
+        msg(rsCouldNotDetectPkgType);
         msg('TInstallation failure.');
         Result := false;
       end;

@@ -93,6 +93,7 @@ resourcestring
   rsnSupported = 'This package does not support your Linux distribution.';
   rsDepNotFound = 'Found no package with the necessary library "%l" for your distribution.';
   rsResolvingDynDeps = 'Resolving dynamic dependencies...';
+  rsDBConnClosed = 'Database connection closed.';
   rsDBOpened = 'Software database opened.';
   rsInClose = 'The installer will close now';
   rsCnOverride = 'Unable to override the file %f.';
@@ -100,7 +101,11 @@ resourcestring
   rsNotifyDevs = 'Please notify the developers on http://launchpad.net/listaller';
   rsExtractError = 'Error while extracting files!';
   rsPkgDM = 'The package may be damaged or you haven''t enough permissions to execute this action!';
+  rsUnknownErrorOC = 'Unknown error occured!';
   rsAbLoad = 'Loading aborted.';
+  rsPackageIsUnsigned = 'Package is unsigned.';
+  rsPackageHasTrustedSign = 'Package has trusted signature.';
+  rsPackageSigIsUntrusted = 'Package signature is UNTRUSTED!';
   rsOneInstAtTime = 'You cannot install two applications at the same time.' +
     #10'Please finish the first installation, then install this one again.' +
     #10'(If you do not run two installations, try to remove the temporary installer directory';
@@ -108,7 +113,6 @@ resourcestring
   rsInstallAgain = 'Do you want to install it again?';
   rsWelcomeTo = 'Welcome to the installation of %a';
   rsInstOf = 'Installation of %a';
-  rsInst = 'Installation';
   rsTestmode = 'Testmode';
   rsTestFinished = 'Test-installation of package finished.';
   rsCleaningUp = 'Cleaning up...';
@@ -124,10 +128,13 @@ resourcestring
   rsState = 'State';
   rsWDLdep = 'This application wants to fetch a dependency from %l';
   rswAllow = 'Do you want confirm this download of external files?';
+  rsCouldNotDetectPkgType = 'Could not detect package type!';
   rsLiCloseANI = 'Listaller will close now. The package couldn''t be installed.';
   rsStep2 = 'Phase 2/4: Installing files...';
   rsStep3 = 'Phase 3/4: Chmod new files...';
   rsStep4 = 'Phase 4/4: Registering application...';
+  rsTestmodeDNRegister = 'Testmode: Do not register package.';
+  rsRightsAssignedToX = 'Rights assigned to %a.';
   rsAddUpdSrc = 'The software provides the following update source:';
   rsQAddUpdSrc = 'Should this repository be registered to get software updates?';
   rsFinished = 'Finished';
@@ -141,6 +148,8 @@ resourcestring
   rsinstAnyway = 'Do you want to install it anyway? (This could cause problems)';
   rsInvArchitecture =
     'The application which this package contains was not built for the current system architecture.';
+  rsPackageTypeIsX = 'Package type is "%s"';
+  rsFoundInstallProfileX = 'Found installation profile %s.';
   rsWillDLFiles = '(This program will download the needed files from the internet)';
   rsInvalidDVersion = 'Package was not build for your Linux distribution release.';
   rsFTPfailed = 'Problem while downloading the required packages. Could not create working FTP connection.';
@@ -149,6 +158,8 @@ resourcestring
   rsDetails = 'Details';
   rsInstPkgFailed = 'Installation of package %s failed!';
   rsECode = 'Code:';
+  rsLookingForRevDeps = 'Looking for reverse-dependencies...';
+  rsPackageDetected = 'Package detected: %s';
   rsInstallation = 'Installation';
   rsNoLDSources = 'There are no explicit package sources available for your Linux distribution'#10'Try to install common packages?';
   rsUseCompPQ = 'Use compatible packages?';
@@ -159,6 +170,9 @@ resourcestring
   rsGetDependencyFrom = 'Get dependency from';
   rsPlWait2 = 'Please wait...';
   rsDepDLProblem = 'Problem while downloading the dependency.';
+  rsLookingForX = 'Looking for %a.';
+  rsDownloadingPkg = 'Downloading package...';
+  rsInstallingX = 'Installing %a...';
   rsHashError = 'Hash value doesn''t match!'#10'The package may be modified after creation.'#10'Please obtain a new copy';
   rsInstallationMode = 'Installation mode:';
   rsIModeInstruction = 'Select which parts of the application should be installed.';
@@ -212,6 +226,7 @@ resourcestring
   rsFiltering = 'Filtering...';
   rsFilter = 'Filter...';
   rsLoading = 'Loading...';
+  rsSkippedX = 'Skipped %a';
   rsApplications = 'Applications';
   rsInstalledApps = 'Installed applications';
   rsInstallPkg = 'Install package';
@@ -221,6 +236,7 @@ resourcestring
   rsMyApps = 'My apps';
   rsSharedApps = 'Shared apps';
   rsNoGUIPkgManFound = 'Could not find usable GUI package manager.'#10'Please install a PackageKit-GUI!';
+  rsVersionUnknown = 'Version: unknown';
   rsUseLaunchpadForBugs = 'Please use https://bugs.launchpad.net/listaller'#10'for bug reports.';
   rsListallerAlien = 'Listaller uses "alien" to convert foreign packages, but the tool is not installed'#10'Do you want to install "alien" now to continue?';
   rsInstPkgQ = 'Install package?';
@@ -234,19 +250,36 @@ resourcestring
   rsRmSrcQ = 'Are you really sure that you want to delete this source?';
   rsRmSrcQC = 'Delete source?';
   rsPkitProbPkMon = 'Problem while communicating with PackageKit. Run "pkmon" to get further information.';
+  rsCallingPackageKitPKMonExecActions = 'Calling PackageKit... (run "pkmon" to monitor the executed actions)';
+  rsDetectingPackage = 'Detecting package...';
   rsSourceDeleted = 'Source was removed.';
   rsPleaseSelectListItem = 'Please select an item from the list!';
   rsLiUpdateAccessFailed = 'Cannot access the Listaller Update tool. Maybe it is not installed?';
   rsChangePkgManSettings = 'Change package manager settings';
-  //Uninstall
+
   rsRealUninstQ = 'Do you really want to uninstall %a?';
   rsUnistSuccess = 'Application was successfully removed!';
   rsRMerror = 'Error while uninstalling!';
+  rsUnableToRemoveApp = 'Unable to remove this application!';
   rsCannotHandleRM =
     'This application does not look like a MoJo-Installation and it is not installed via an other package-type Listaller can handle.'#10'Get instructions how to remove this application from the program author.';
+  rsReadingAppInfo = 'Reading application information...';
+  rsAppRegistBroken = 'The registration of this package is broken!';
+  rsRemovingApp = 'Removing application...';
+  rsLOKISetupFound = 'LOKI setup found.';
+  rsPkgCouldBeInstalledWithLoki = 'Package could be installed with MoJo/LOKI.';
   rsRMUnsdDeps = 'Uninstalling unused dependencies...';
+  rsStartingUninstall = 'Starting uninstallation.';
   rsUninstalling = 'Uninstalling...';
   rsRMPkg = 'Do you really want to remove "%p", containing %a?'#10'The following package(s) will be removed also: %pl'#10'If you''re not sure if you need those packages, press "No"!';
+  rsCheckDepsRegisteredApps = 'Checking dependencies of all registered '
+    +'applications...';
+  rsYouScanOnlyRootInstalledApps = 'You are scanning only the ROOT installed '
+    +'applications.';
+  rsYouScanOnlyLocalInstalledApps = 'You are scanning your local installed '
+    +'applications.';
+  rsInstalledDepX = 'Installed dependency %s';
+  rsDepXIsNotInstall = 'Dependency "%s" is not installed!';
   rsRmPkgQ = 'Really remove?';
   rsWaiting = 'Waiting...';
   rsRMAppC = 'Uninstalling %a';

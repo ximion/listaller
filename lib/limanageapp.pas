@@ -343,7 +343,7 @@ var
 
       end
       else
-        msg('Skipped  ' + ExtractFileName(fname));
+        msg(StrSubst(rsSkippedX,'%a',ExtractFileName(fname)));
     d.Free;
   end;
 
@@ -418,7 +418,7 @@ begin
 
       entry.ShortDesc := PChar(dsApp.FieldByName('Description').AsString);
       if entry.ShortDesc = '#' then
-        entry.ShortDesc := 'No description given';
+        entry.ShortDesc := 'No description available';
 
       if FileExists(p + 'icon.png') then
         entry.Icon := PChar(p + 'icon.png');
@@ -518,7 +518,7 @@ var
 begin
   Result := true;
   p_debug('MoJo remover: dsk: '+dsk);
-  msg('Package could be installed with MoJo/LOKI...');
+  msg(rsPkgCouldBeInstalledWithLoki);
   inf := TIniFile.Create(dsk);
   if not DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry',
     'Exec', '?'))) then
@@ -542,7 +542,7 @@ begin
       if tmp.Count <= 0 then
         exit;
       setpos(50);
-      msg('Uninstalling application...');
+      msg(rsRemovingApp);
       t := TProcess.Create(nil);
       t.CommandLine := mandir + '/mojosetup uninstall ' + copy(
         ExtractFileName(tmp[0]), 1, pos('.', ExtractFileName(tmp[0])) - 1);
@@ -559,8 +559,8 @@ begin
         '.manifest') then
       begin
         setpos(50);
-        msg('LOKI setup detected.');
-        msg('Uninstalling application...');
+        msg(rsLOKISetupFound);
+        msg(rsRemovingApp);
 
         t := TProcess.Create(nil);
         t.CommandLine := ExtractFilePath(inf.ReadString('Desktop Entry', 'Exec', '?')) +
@@ -575,7 +575,7 @@ begin
       else
       begin
         Result := false;
-        writeLn('Listaller cannot handle this installation type!');
+        p_error('Listaller cannot handle this installation type!');
         request(rsCannotHandleRM, rqError);
         inf.Free;
       end;
@@ -613,7 +613,7 @@ begin
 
   if copy(id, 1, 4) <> 'pkg:' then
   begin
-    msg('Reading application information...');
+    msg(rsReadingAppInfo);
 
     if not FileExists(obj.UId) then
     begin
@@ -627,7 +627,7 @@ begin
       end
       else
       begin
-        request('The registration of this package is broken!', rqError);
+        request(rsAppRegistBroken, rqError);
         exit;
       end;
 
@@ -645,7 +645,7 @@ begin
       end
       else
       begin
-        request('Unable to remove this application!', rqError);
+        request(rsUnableToRemoveApp, rqError);
         exit;
       end;
     end;
@@ -657,7 +657,7 @@ begin
     pkit := TPackageKit.Create;
     pkit.OnProgress := @PkitProgress;
     Name := copy(id, 5, length(id));
-    msg('Uninstalling ' + Name + ' ...');
+    msg(StrSubst(rsRMAppC,'%a',Name) + ' ...');
     pkit.RemovePkg(Name);
 
     if pkit.PkFinishCode > 1 then
@@ -668,7 +668,7 @@ begin
     end;
 
     setpos(100);
-    msg('Done.');
+    msg(rsDone);
     pkit.Free;
     exit;
   end;
@@ -700,8 +700,8 @@ begin
   begin
     ShowPKMon();
 
-    msg('Connecting to PackageKit... (run "pkmon" to see the actions)');
-    msg('Detecting package...');
+    msg(rsCallingPackageKitPKMonExecActions);
+    msg(rsDetectingPackage);
 
     pkit := TPackageKit.Create;
     pkit.OnProgress := @PkitProgress;
@@ -727,8 +727,8 @@ begin
     begin
       f := tmp[0];
 
-      msg('Package detected: ' + f);
-      msg('Looking for reverse-dependencies...');
+      msg(StrSubst(rsPackageDetected,'%s',f));
+      msg(rsLookingForRevDeps);
 
       tmp.Clear;
 
@@ -795,11 +795,11 @@ var
   i: Integer;
   pkit: TPackageKit;
 begin
-  msg('Checking dependencies of all registered applications...');
+  msg(rsCheckDepsRegisteredApps);
   if forceroot then
-    msg('You are scanning only the ROOT installed applications.')
+    msg(rsYouScanOnlyRootInstalledApps)
   else
-    msg('You are scanning your local installed applications.');
+    msg(rsYouScanOnlyLocalInstalledApps);
 
   dsApp := TSQLite3Dataset.Create(nil);
   LoadAppDB(dsApp, forceroot);
@@ -824,14 +824,14 @@ begin
         report.Add(deps[i] + ' found.')
       else
       begin
-        report.Add(deps[i] + ' is not installed!');
+        report.Add(StrSubst(rsDepXIsNotInstall,'%s',deps[i]));
         Result := false;
         if fix then
         begin
           Write('  Repairing dependency ' + deps[i] + '  ');
           pkit.InstallPkg(deps[i]);
           writeLn(' [OK]');
-          report.Add('Installed dependency ' + deps[i]);
+          report.Add(StrSubst(rsInstalledDepX,'%s',deps[i]));
         end;
       end;
     end;
@@ -977,7 +977,7 @@ begin
   upd := ipkc.USource;
   ipkc.Free;
 
-  msg('Begin uninstallation...');
+  msg(rsStartingUninstall);
 
   dsApp := TSQLite3Dataset.Create(nil);
   LoadAppDB(dsApp);
@@ -987,7 +987,7 @@ begin
   dsApp.Edit;
   dsApp.Open;
   dsApp.Filtered := true;
-  msg('Database opened.');
+  msg(rsDBOpened);
 
   while not dsApp.EOF do
   begin
