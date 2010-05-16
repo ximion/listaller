@@ -2,6 +2,7 @@ Version 0.4b
 ~~~~~~~~~~~~~
  == Still in development ==
  
+ * Made liCreator use the new IPS defs
  * [listallmgr] Redesigned interface
  * Dropped C/Python bindings
  * Switched to Lazarus 0.9.29 to use the new FPC resource system
