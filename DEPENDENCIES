@@ -3,13 +3,13 @@ This file contains information about all libraries Listaller needs to run and to
 === Build dependencies ===
 Listaller needs the following modules to compile for Qt4, GTK2 and NoX:
 
- * Lazarus >=0.9.28
+ * Lazarus >=0.9.30
  * FPC Compiler >= 2.4.0
  * GLib 2.0 development files
- * libqt4intf (for your Qt4 version)
- * Qt4 core >= 4.5
+ * libqt4pas (for your Qt4 version)
+ * Qt4 core libraries >= 4.5
  * SQLite3
- * PackageKit >= 0.5.4
+ * PackageKit >= 0.5.6
  * PackageKit GLib2 module
  * GNU Gettext
  * DBus
@@ -38,6 +38,6 @@ Qt4 version:
  * libsqlite3-0
  * kdesudo
  * packagekit >=0.4.6
- * libqt4intf
+ * libqt4pas
  * kde-icons-oxygen
  * kpackagekit [optional]
