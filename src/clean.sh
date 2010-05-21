@@ -35,6 +35,7 @@ find -iname *.bak -exec rm {} \;
 find -iname *.compiled -exec rm {} \;
 find -iname *.manifest -exec rm {} \;
 find -iname *.lrs -exec rm {} \;
+find -iname *.rst -exec rm {} \;
 
 find . -name *~ -exec rm {} \;
 

@@ -54,7 +54,11 @@ cp ../data/mime/x-ips.xml $DESTDIR$prefix/share/listaller/mime
 #mkdir -p $DESTDIR$prefix/bin
 #cp ./build/lipa $DESTDIR$prefix/bin/
 
-#Execute installscript
-sh ../data/scripts/postinst
+#Execute installscript if root
+if [[ $EUID -ne 0 ]]; then
+ sh ../data/scripts/postinst
+else
+ echo "Not running as root: Did not run postinst script."
+fi
 
 echo "liData installation done."

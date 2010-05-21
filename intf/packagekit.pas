@@ -264,7 +264,7 @@ begin
   //Create new PackageKit client
   pkclient := pk_client_new;
 
-  cancellable := g_cancellable_new;
+  cancellable := g_cancellable_new();
   loop := g_main_loop_new(nil, false);
   doasync := false;
   pkglist := TPackageList.Create(true);

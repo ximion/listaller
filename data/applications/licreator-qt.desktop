@@ -1,5 +1,6 @@
 [Desktop Entry]
-Encoding=UTF-8
+Version=1.0
+Type=Application
 Name=Listaller Creator (Qt)
 Name[de]=Listaller Creator (Qt)
 Categories=Application;Development;
@@ -12,8 +13,6 @@ Icon=/opt/appfiles/liCreator/listaller_creator-qt.png
 MimeType=application/ips-script;
 StartupNotify=true
 Terminal=false
-Type=Application
-Version=1.0
 X-AppVersion=0.4.0
 X-DCOP-ServiceType=none
 X-KDE-SubstituteUID=false

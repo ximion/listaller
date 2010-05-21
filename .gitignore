@@ -9,6 +9,7 @@
 *.o
 *.so
 *.lps
+*.rst
 .directory
 build
 Makefile

@@ -38,7 +38,7 @@ PGAsyncReadyCallback = ^GAsyncReadyCallback;
 procedure InitializeGType;
 
 //GLib-GCancellable
-function  g_cancellable_new: Pointer;cdecl;external gliblib name 'g_cancellable_new';
+function  g_cancellable_new: Pointer;cdecl;external gliblib;
 function  g_cancellable_is_cancelled(cancellable: Pointer): GBoolean;cdecl;external gliblib;
 function  g_cancellable_set_error_if_cancelled(cancellable: Pointer;error: PPGError): GBoolean;cdecl;external gliblib;
 procedure g_cancellable_cancel(cancellable: PGCancellable);cdecl;external gliblib;

@@ -262,7 +262,7 @@ resourcestring
   rsRMerror = 'Error while uninstalling!';
   rsUnableToRemoveApp = 'Unable to remove this application!';
   rsCannotHandleRM =
-    'This application does not look like a MoJo-Installation and it is not installed via an other package-type Listaller can handle.'#10'Get instructions how to remove this application from the program author.';
+    'This application does not look like a MoJo-Installation and it is not installed via any other package-type Listaller can handle.'#10'Get instructions how to remove this application from the program author.';
   rsReadingAppInfo = 'Reading application information...';
   rsAppRegistBroken = 'The registration of this package is broken!';
   rsRemovingApp = 'Removing application...';
