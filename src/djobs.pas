@@ -681,7 +681,7 @@ begin
   end
   else
   begin
-    p_error('Received invalid user request! (Deamon should _never_ ask questions which need a reply.');
+    p_error('Received invalid user request! (Daemon should _never_ ask questions which need a reply.');
     Result := rqsNO;
     p_debug(msg);
   end;

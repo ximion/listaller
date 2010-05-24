@@ -4,7 +4,7 @@ Maintainer: Matthias Klumpp <matthias@nlinux.org>
 Priority: optional
 Homepage: http://listaller.nlinux.org
 Standards-Version: 3.8.4
-Build-Depends: libgtk2.0-dev, cdbs, debhelper (>= 5), fpc (>= 2.4.0), lcl (>=0.9.29),
+Build-Depends: libgtk2.0-dev, cdbs, quilt, debhelper (>= 5), fpc (>= 2.4.0), lcl (>=0.9.29),
  lcl-gtk2, lcl-qt4, lcl-nogui, libqt4pas-dev, libsqlite3-dev, libglib2.0-dev,
  libpackagekit-glib2-dev (>= 0.5.6), libdbus-1-dev, libpolkit-gobject-1-dev
 
@@ -21,7 +21,7 @@ Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Listaller core files
  Listaller is a cross-distribution application management system.
- This package contains contains generic Listaller modules.
+ This package contains generic Listaller modules.
  It provides the Listaller daemon and the
  command-line software installation tool "lipa".
 
@@ -47,7 +47,8 @@ Description: Listaller frontends (GTK2)
  The tool is based on PackageKit an trues to be compatible to all available
  Linux distributions.
  .
- This package contains GTK+ frontends for the Listaller manager, updater and installer.
+ This package provides GTK+ frontends for the Listaller manager,
+ updater and installer.
  .
  Please note that this alpha-version should only be used for testing purposes.
 
@@ -65,7 +66,8 @@ Description: Listaller frontends (Qt4)
  The tool is based on PackageKit an trues to be compatible to all available
  Linux distributions.
  .
- This package contains Qt frontends for the Listaller manager, updater and installer.
+ This package contains Qt frontends for the Listaller manager,
+ updater and installer.
  .
  Please note that this alpha-version should only be used for testing purposes.
 

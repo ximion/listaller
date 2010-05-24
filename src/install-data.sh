@@ -46,7 +46,7 @@ cp ../graphics/categories/system.png $DESTDIR$prefix/share/listaller/graphics/ca
 cp -dpr ../build/locale/ $DESTDIR$prefix/share/listaller/
 rm -f $DESTDIR$prefix/share/listaller/locale/.directory
 
-chmod -R 0755 $DESTDIR$prefix/share/listaller/graphics
+#chmod -R 0755 $DESTDIR$prefix/share/listaller/graphics
 
 cp ../data/mime/x-ipk.xml $DESTDIR$prefix/share/listaller/mime
 cp ../data/mime/x-ips.xml $DESTDIR$prefix/share/listaller/mime
