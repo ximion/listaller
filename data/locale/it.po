@@ -8,171 +8,171 @@ msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2010-02-17 21:24+0000\n"
+"PO-Revision-Date: 2010-04-16 19:36+0000\n"
 "Last-Translator: Omar Inverso <omainv@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-05 15:12+0000\n"
+"X-Launchpad-Export-Date: 2010-05-25 17:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: trstrings:rsbrokendepsfixq
+#: strlocale:rsbrokendepsfixq
 msgid "Some dependencies are missing. Should they be installed now?"
 msgstr "Mancano alcune dipendenze. Si desidera installarle adesso?"
 
-#: trstrings:rscannotresolv
+#: strlocale:rscannotresolv
 msgid "Cannot resolve dependencies"
 msgstr "Impossibile risolvere le dipendenze"
 
-#: trstrings:rscheckappdepsq
+#: strlocale:rscheckappdepsq
 msgid "Do you want to check the applications's dependencies?"
 msgstr ""
 
-#: trstrings:rscheckdepsq
+#: strlocale:rscheckdepsq
 msgid "Check dependencies?"
 msgstr "Controllare le dipendenze?"
 
-#: trstrings:rscheckapps
+#: strlocale:rscheckapps
 msgid "Check applications"
 msgstr ""
 
-#: trstrings:rscheckrootappsq
+#: strlocale:rscheckrootappsq
 msgid "Do you want to check global-installed applications too?"
 msgstr "Controllare anche le applicazioni installate globalmente?"
 
-#: trstrings:rscommands
+#: strlocale:rscommands
 msgid "Commands:"
 msgstr "Comandi:"
 
-#: trstrings:rscouldntfindupdater
+#: strlocale:rscouldntfindupdater
 msgid "Can't find update-tool!"
 msgstr ""
 
-#: trstrings:rsinternalerror
+#: strlocale:rsinternalerror
 msgid "An internal error occured"
 msgstr "Si è verificato un errore interno"
 
-#: trstrings:rslaunchlimgr
+#: strlocale:rslaunchlimgr
 msgid "Launch Listaller Manager"
 msgstr ""
 
-#: trstrings:rslipainfo2
+#: strlocale:rslipainfo2
 msgid "Resolve Listaller path variable"
 msgstr ""
 
-#: trstrings:rslipainfo3
+#: strlocale:rslipainfo3
 msgid "Installs an IPK package"
 msgstr "Installazione di un pacchetto IPK"
 
-#: trstrings:rslistallermgrnotfound
+#: strlocale:rslistallermgrnotfound
 msgid "Can't find Listaller Manager!"
-msgstr ""
+msgstr "Impossibile trovare Listaller Manager."
 
-#: trstrings:rsunablefind
+#: strlocale:rsunablefind
 msgid "Unable to find %s"
 msgstr "Impossibile trovare %s"
 
-#: trstrings:rsnotfoundlitray
+#: strlocale:rsnotfoundlitray
 msgid "Could not find Listaller TrayIcon Application"
 msgstr ""
 
-#: trstrings:rsoptions
+#: strlocale:rsoptions
 msgid "Options:"
 msgstr "Opzioni:"
 
-#: trstrings:rslipainfo4
+#: strlocale:rslipainfo4
 msgid "Runs installation in testmode"
 msgstr "Esecuzione dell'applicazione in modalità di test"
 
-#: trstrings:rslipainfo5
+#: strlocale:rslipainfo5
 msgid "Print all available log messages"
-msgstr ""
+msgstr "Stampa tutti i messaggi di log disponibili"
 
-#: trstrings:rslipainfo6
+#: strlocale:rslipainfo6
 msgid "Check if dependencies of all installed applications are available."
 msgstr ""
 
-#: trstrings:rscmdinfopkgbuild
+#: strlocale:rscmdinfopkgbuild
 msgid "Package build commands:"
 msgstr "Comandi per la creazione del pacchetto:"
 
-#: trstrings:rslibuildinfoa
+#: strlocale:rslibuildinfoa
 msgid "Build IPK-package"
 msgstr "Creazione pacchetto IPK"
 
-#: trstrings:rslibuildinfob
+#: strlocale:rslibuildinfob
 msgid "Create/Update update-repository"
 msgstr ""
 
-#: trstrings:rslibuildinfoc
+#: strlocale:rslibuildinfoc
 msgid "Create DEB and RPM file from IPS"
 msgstr "Creazione file DEB e RPM da IPS"
 
-#: trstrings:rsdone
+#: strlocale:rsdone
 msgid "Done."
 msgstr "Fatto."
 
-#: trstrings:rsdoyouacceptlicensecmd
+#: strlocale:rsdoyouacceptlicensecmd
 msgid "Do you accept this license [y/n]?"
-msgstr ""
+msgstr "Accetti questa licenza [y/n]?"
 
-#: trstrings:rsenternumber
+#: strlocale:rsenternumber
 msgid "You have to enter a number!"
 msgstr "È necessario inserire un numero."
 
-#: trstrings:rsinstaborted
+#: strlocale:rsinstaborted
 msgid "Installation aborted."
 msgstr "Installazione interrotta."
 
-#: trstrings:rsinstabortedbyuser
+#: strlocale:rsinstabortedbyuser
 msgid "Installation aborted by user."
+msgstr "Installazione annullata dall'utente."
+
+#: strlocale:rsappninstall
+msgid "The application \"%a\" was not installed."
 msgstr ""
 
-#: trstrings:rsappninstall
-msgid "The application %a was not installed."
-msgstr "L'applicazione %a non è stata installata."
-
-#: trstrings:rslipaautofixq
+#: strlocale:rslipaautofixq
 msgid "Should lipa fix these problems automatically [y/n]?"
 msgstr ""
 
-#: trstrings:rslipainfo1
+#: strlocale:rslipainfo1
 msgid "Listaller command-line tool to handle IPK-packages"
 msgstr ""
 "Utilità Listaller a linea di comando per la gestione di pacchetti IPK"
 
-#: trstrings:rsmodenumber
+#: strlocale:rsmodenumber
 msgid "Mode number:"
 msgstr ""
 
-#: trstrings:rsn
+#: strlocale:rsn
 msgid "n"
 msgstr ""
 
-#: trstrings:rsno
+#: strlocale:rsno
 msgid "no"
 msgstr ""
 
-#: trstrings:rsokay
+#: strlocale:rsokay
 msgid "Okay"
 msgstr "Ok"
 
-#: trstrings:rspreparinginstall
+#: strlocale:rspreparinginstall
 msgid "Preparing installation (please wait)"
 msgstr "Preparazione dell'installazione in corso (attendere prego)"
 
-#: trstrings:rsrootpassadvancedpriv
+#: strlocale:rsrootpassadvancedpriv
 msgid "Enter your password to run the application with advanced privileges."
 msgstr ""
 "Inserire la password per eseguire l'applicazione con privilegi avanzati."
 
-#: trstrings:rsrootpassqappeveryone
+#: strlocale:rsrootpassqappeveryone
 msgid "Enter your password to install the application for everyone."
 msgstr ""
 "Inserire la password per installare l'applicazione per tutti gli utenti."
 
-#: trstrings:rsconvdone
+#: strlocale:rsconvdone
 msgid ""
 "Conversion done. Do you want to close this window now?\n"
 "Press \"No\" if you want to check the output."
@@ -180,253 +180,310 @@ msgstr ""
 "Conversione completata. Chiudere questa finestra adesso?\n"
 "Premere \"No\" se si desidera controllare l'output."
 
-#: trstrings:rsselectlistnumber
+#: strlocale:rsselectlistnumber
 msgid "Please select a number shown in the list!"
 msgstr "Selezionare un numero mostrato nella lista."
 
-#: trstrings:rsselectimodea
+#: strlocale:rsselectimodea
 msgid "Select the installation mode of this application:"
 msgstr "Selezionare la modalità d'installazione per questa applicazione:"
 
-#: trstrings:rsshowdetailedinfocmd
+#: strlocale:rsshowdetailedinfocmd
 msgid "Do you want to see detailed information [y/n]?"
-msgstr ""
+msgstr "Vuoi vedere informazioni dettagliate [y/n]?"
 
-#: trstrings:rsaborted
+#: strlocale:rsaborted
 msgid "Aborted."
 msgstr "Interrotto."
 
-#: trstrings:rsviewlogq
+#: strlocale:rsviewlogq
 msgid "Do you want to view the logfile?"
 msgstr "Si desidera vedere il file di log?"
 
-#: trstrings:rswasinstalled
+#: strlocale:rswasinstalled
 msgid "The application %a was installed successfully!"
 msgstr "L'applicazione %a è stata installata con successo."
 
-#: trstrings:rsexecapptesting
+#: strlocale:rscnfindappexecutable
+msgid "Could not find main executable of this application!"
+msgstr ""
+
+#: strlocale:rsexecapptesting
 msgid "Executing application main executable..."
 msgstr ""
 
-#: trstrings:rsinstallnow
+#: strlocale:rsinstallnow
 msgid "Install now"
 msgstr "Installa ora"
 
-#: trstrings:rsrunparam
+#: strlocale:rsrunparam
 msgid ""
 "Please run \"listallgo\" with path to setup-package as first parameter!"
 msgstr ""
 
-#: trstrings:rswelcome
+#: strlocale:rswelcome
 msgid "Welcome!"
 msgstr "Benvenuto!"
 
-#: trstrings:rsntostart
+#: strlocale:rsntostart
 msgid "Press \"Next\" to start the installation!"
 msgstr ""
 
-#: trstrings:rsprogdesc
+#: strlocale:rsprogdesc
 msgid "Program description:"
 msgstr "Descrizione del programma:"
 
-#: trstrings:rslicense
+#: strlocale:rslicense
 msgid "Software license"
 msgstr "Licenza software"
 
-#: trstrings:rspleaseread
+#: strlocale:rspleaseread
 msgid "Please read the following information carefully:"
 msgstr "Si prega di leggere con attenzione le seguenti informazioni:"
 
-#: trstrings:rsrunning
+#: strlocale:rsrunning
 msgid "Running installation..."
 msgstr "Esecuzione dell'installazione in corso..,."
 
-#: trstrings:rsplwait
+#: strlocale:rsplwait
 msgid "Please wait."
 msgstr "Attendere prego."
 
-#: trstrings:rscomplete
+#: strlocale:rscomplete
 msgid "Installation completed!"
 msgstr "Installazione completata."
 
-#: trstrings:rsinstfailed
+#: strlocale:rsinstfailed
 msgid "Installation failed."
 msgstr "Installazione non riuscita."
 
-#: trstrings:rsprfinish
+#: strlocale:rsprfinish
 msgid "Press \"Finish\" to close."
 msgstr ""
 
-#: trstrings:rsfinish
+#: strlocale:rsfinish
 msgid "Finish"
 msgstr "Fine"
 
-#: trstrings:rsabort
+#: strlocale:rsabort
 msgid "Abort"
 msgstr "Annulla"
 
-#: trstrings:rsback
+#: strlocale:rsback
 msgid "Back"
 msgstr "Indietro"
 
-#: trstrings:rsnext
+#: strlocale:rsnext
 msgid "Next"
 msgstr "Avanti"
 
-#: trstrings:rsdisplog
+#: strlocale:rsdisplog
 msgid "Display installation log"
 msgstr "Visualizza il log di installazione"
 
-#: trstrings:rsiagree
+#: strlocale:rsiagree
 msgid "I agree with the above terms and conditions"
 msgstr "Accetto termini e condizioni mostrati sopra"
 
-#: trstrings:rsinagree
+#: strlocale:rsinagree
 msgid "I don't agree"
 msgstr "Non accetto"
 
-#: trstrings:rsldnsupported
+#: strlocale:rsldnsupported
 msgid "Your Linux distribution is not supported by Listaller yet!"
 msgstr ""
 
-#: trstrings:rsnsupported
+#: strlocale:rsnsupported
 msgid "This package does not support your Linux distribution."
 msgstr ""
 
-#: trstrings:rsdepnotfound
+#: strlocale:rsdepnotfound
 msgid ""
 "Found no package with the necessary library \"%l\" for your distribution."
 msgstr ""
 
-#: trstrings:rsdbopened
+#: strlocale:rsresolvingdyndeps
+msgid "Resolving dynamic dependencies..."
+msgstr ""
+
+#: strlocale:rsdbconnclosed
+msgid "Database connection closed."
+msgstr ""
+
+#: strlocale:rsdbopened
 msgid "Software database opened."
 msgstr ""
 
-#: trstrings:rsinclose
+#: strlocale:rsinclose
 msgid "The installer will close now"
 msgstr ""
 
-#: trstrings:rscnoverride
+#: strlocale:rscnoverride
 msgid "Unable to override the file %f."
 msgstr "Impossibile sovrascrivere il file %f."
 
-#: trstrings:rscncopy
+#: strlocale:rscncopy
 msgid "Unable to copy the file %s."
 msgstr "Impossibile copiare il file %s.Q"
 
-#: trstrings:rsnotifydevs
+#: strlocale:rsnotifydevs
 msgid "Please notify the developers on http://launchpad.net/listaller"
 msgstr ""
 "Si prega di avvertire gli sviluppatori su http://launchpad.net/listaller"
 
-#: trstrings:rsextracterror
+#: strlocale:rsextracterror
 msgid "Error while extracting files!"
 msgstr "Errore durante l'estrazione dei file."
 
-#: trstrings:rspkgdm
+#: strlocale:rspkgdm
 msgid ""
 "The package may be damaged or you haven't enough permissions to execute this "
 "action!"
 msgstr ""
+"Il pacchetto potrebbe essere danneggiato oppure non si disponde delle "
+"autorizzazioni necessarie per eseguire l'azione specificata."
 
-#: trstrings:rsabload
+#: strlocale:rsunknownerroroc
+msgid "Unknown error occured!"
+msgstr ""
+
+#: strlocale:rsabload
 msgid "Loading aborted."
 msgstr "Caricamento interrotto."
 
-#: trstrings:rsalreadyinst
+#: strlocale:rspackageisunsigned
+msgid "Package is unsigned."
+msgstr ""
+
+#: strlocale:rspackagehastrustedsign
+msgid "Package has trusted signature."
+msgstr ""
+
+#: strlocale:rspackagesigisuntrusted
+msgid "Package signature is UNTRUSTED!"
+msgstr ""
+
+#: strlocale:rsoneinstattime
+msgid ""
+"You cannot install two applications at the same time.\n"
+"Please finish the first installation, then install this one again.\n"
+"(If you do not run two installations, try to remove the temporary installer "
+"directory"
+msgstr ""
+
+#: strlocale:rsalreadyinst
 msgid "This application is already installed"
 msgstr "Questa applicazione è già installata"
 
-#: trstrings:rsinstallagain
+#: strlocale:rsinstallagain
 msgid "Do you want to install it again?"
 msgstr "Installare l'applicazione ancora una volta?"
 
-#: trstrings:rswelcometo
+#: strlocale:rswelcometo
 msgid "Welcome to the installation of %a"
 msgstr ""
 
-#: trstrings:rsinstof
+#: strlocale:rsinstof
 msgid "Installation of %a"
 msgstr "Installazione di %a"
 
-#: trstrings:rstestmode
+#: strlocale:rstestmode
 msgid "Testmode"
 msgstr "Modalità di test"
 
-#: trstrings:rstestfinished
+#: strlocale:rstestfinished
 msgid "Test-installation of package finished."
-msgstr ""
+msgstr "Installazione di prova del pacchetto terminata."
 
-#: trstrings:rscleaningup
+#: strlocale:rscleaningup
 msgid "Cleaning up..."
 msgstr "Pulizia in corso..."
 
-#: trstrings:rspkginval
+#: strlocale:rsnotexecasrootpolkit
+msgid ""
+"Please do not execute this action with superuser rights!\n"
+"(PolicyKit will ask for authorization if privileges are required.)\n"
+"Do you want to force Listaller to execute all with superuser permission?"
+msgstr ""
+
+#: strlocale:rspkginval
 msgid "The submitted package is invalid!"
 msgstr ""
 
-#: trstrings:rscouldntsolve
+#: strlocale:rscouldntsolve
 msgid "Dependencies couldn't be solved!"
 msgstr "Non è stato possibile soddisfare le dipendenze."
 
-#: trstrings:rsviewlog
+#: strlocale:rsviewlog
 msgid "Please view the logfile at %p"
 msgstr "Consultare il file di log alla locazione %p"
 
-#: trstrings:rspkgerror
+#: strlocale:rspkgerror
 msgid "Installation package is corrupt"
 msgstr "Il pacchetto d'installazione è corrotto"
 
-#: trstrings:rsappclose
+#: strlocale:rsappclose
 msgid "The application will close now."
 msgstr ""
 
-#: trstrings:rsstep1
+#: strlocale:rsstep1
 msgid "Phase 1/4: Resolving dependencies..."
 msgstr "Fase 1/4: Risoluzione delle dipendenze in corso..."
 
-#: trstrings:rsstate
+#: strlocale:rsstate
 msgid "State"
 msgstr ""
 
-#: trstrings:rswdldep
+#: strlocale:rswdldep
 msgid "This application wants to fetch a dependency from %l"
-msgstr ""
+msgstr "L'applicazione sta tentando di recuperare una dipendenza da %l"
 
-#: trstrings:rswallow
+#: strlocale:rswallow
 msgid "Do you want confirm this download of external files?"
+msgstr "Confermare il download dei file esterni?"
+
+#: strlocale:rscouldnotdetectpkgtype
+msgid "Could not detect package type!"
 msgstr ""
 
-#: trstrings:rslicloseani
+#: strlocale:rslicloseani
 msgid "Listaller will close now. The package couldn't be installed."
 msgstr ""
 "Listaller verrà chiuso ora. Non è stato possibile installare il pacchetto."
 
-#: trstrings:rsstep2
+#: strlocale:rsstep2
 msgid "Phase 2/4: Installing files..."
 msgstr "Fase 2/4: Installazione dei file in corso..."
 
-#: trstrings:rsstep3
+#: strlocale:rsstep3
 msgid "Phase 3/4: Chmod new files..."
 msgstr "Fase 3/4: Esecuzione di chmod sui nuovi file..."
 
-#: trstrings:rsstep4
+#: strlocale:rsstep4
 msgid "Phase 4/4: Registering application..."
 msgstr "Fase 4/4: Registrazione dell'applicazione in corso..."
 
-#: trstrings:rsaddupdsrc
+#: strlocale:rstestmodednregister
+msgid "Testmode: Do not register package."
+msgstr ""
+
+#: strlocale:rsrightsassignedtox
+msgid "Rights assigned to %a."
+msgstr ""
+
+#: strlocale:rsaddupdsrc
 msgid "The software provides the following update source:"
 msgstr ""
 
-#: trstrings:rsqaddupdsrc
+#: strlocale:rsqaddupdsrc
 msgid "Should this repository be registered to get software updates?"
 msgstr ""
 
-#: trstrings:rsfinished
+#: strlocale:rsfinished
 msgid "Finished"
 msgstr "Completato"
 
-#: trstrings:rssecurityinfo
+#: strlocale:rssecurityinfo
 msgid ""
 "Please install this package only if you got it from a \n"
 "trusted source. There is a serious risk that the software in this package\n"
@@ -434,16 +491,26 @@ msgid ""
 "Be careful with this package, especially if you install it system-wide\n"
 "with superuser rights.\n"
 msgstr ""
+"Installare questo pacchetto soltanto se è stato ottenuto da una  \n"
+"fonte sicura. Esiste la possibilità che il software contenuto nel pacchetto\n"
+"possa danneggiare il sistema. (Il pacchetto potrebbe contenere malware)\n"
+"Si raccomanda prudenza con questo pacchetto, soprattutto nel caso in cui "
+"esso venga installato per l'intero sistema\n"
+"utilizzando i privilegi di amministratore.\n"
 
-#: trstrings:rssecuritywarning
+#: strlocale:rssecuritywarning
 msgid "Security warning"
+msgstr "Avviso di sicurezza"
+
+#: strlocale:rsiknowtherisk
+msgid "I know the risk"
 msgstr ""
 
-#: trstrings:rsinstanyway
+#: strlocale:rsinstanyway
 msgid "Do you want to install it anyway? (This could cause problems)"
-msgstr ""
+msgstr "Installarlo comunque? (Questo potrebbe causare problemi)"
 
-#: trstrings:rsinvarchitecture
+#: strlocale:rsinvarchitecture
 msgid ""
 "The application which this package contains was not built for the current "
 "system architecture."
@@ -451,267 +518,308 @@ msgstr ""
 "L'applicazione contenuta in questo pacchetto non è adeguata per la corrente "
 "architettura di sistema."
 
-#: trstrings:rswilldlfiles
+#: strlocale:rspackagetypeisx
+msgid "Package type is \"%s\""
+msgstr ""
+
+#: strlocale:rsfoundinstallprofilex
+msgid "Found installation profile %s."
+msgstr ""
+
+#: strlocale:rswilldlfiles
 msgid "(This program will download the needed files from the internet)"
 msgstr "(Questo programma scaricherà da internet i file necessari)"
 
-#: trstrings:rsinvaliddversion
+#: strlocale:rsinvaliddversion
 msgid "Package was not build for your Linux distribution release."
 msgstr ""
 
-#: trstrings:rsftpfailed
+#: strlocale:rsftpfailed
 msgid ""
 "Problem while downloading the required packages. Could not create working "
 "FTP connection."
 msgstr ""
+"Si è verificato un problema durante il download dei pacchetti richiesti. Non "
+"è stato possibile stabilire una connessione FTP."
 
-#: trstrings:rssuccess
+#: strlocale:rssuccess
 msgid "Success!"
-msgstr ""
+msgstr "Riuscito."
 
-#: trstrings:rsmain
+#: strlocale:rsmain
 msgid "Main"
 msgstr ""
 
-#: trstrings:rsdetails
+#: strlocale:rsdetails
 msgid "Details"
 msgstr "Dettagli"
 
-#: trstrings:rsinstpkgfailed
+#: strlocale:rsinstpkgfailed
 msgid "Installation of package %s failed!"
-msgstr ""
+msgstr "Installazione del pacchetto %s fallita."
 
-#: trstrings:rsecode
+#: strlocale:rsecode
 msgid "Code:"
+msgstr "Codice:"
+
+#: strlocale:rslookingforrevdeps
+msgid "Looking for reverse-dependencies..."
 msgstr ""
 
-#: trstrings:rsinstallation
+#: strlocale:rspackagedetected
+msgid "Package detected: %s"
+msgstr ""
+
+#: strlocale:rsinstallation
 msgid "Installation"
 msgstr "Installazione"
 
-#: trstrings:rsnoldsources
+#: strlocale:rsnoldsources
 msgid ""
 "There are no explicit package sources available for your Linux distribution\n"
 "Try to install common packages?"
 msgstr ""
 
-#: trstrings:rsusecomppq
+#: strlocale:rsusecomppq
 msgid "Use compatible packages?"
 msgstr "Usare pacchetti compatibili?"
 
-#: trstrings:rsnocomp
+#: strlocale:rsnocomp
 msgid "No compatible packages found!"
 msgstr "Non sono stati trovati pacchetti compatibili."
 
-#: trstrings:rsactionnotpossiblepkg
+#: strlocale:rsactionnotpossiblepkg
 msgid ""
 "The selected action is not possible with this package.\n"
 "Please contact the package maintainer to get more information."
 msgstr ""
 
-#: trstrings:rsreinstall
+#: strlocale:rsreinstall
 msgid "Re-install"
 msgstr "Re-installa"
 
-#: trstrings:rspkgdownload
+#: strlocale:rspkgdownload
 msgid "The following dependencies will be downloaded:"
 msgstr ""
 
-#: trstrings:rsgetdependencyfrom
+#: strlocale:rsgetdependencyfrom
 msgid "Get dependency from"
 msgstr ""
 
-#: trstrings:rsplwait2
+#: strlocale:rsplwait2
 msgid "Please wait..."
 msgstr "Attendere..."
 
-#: trstrings:rsdepdlproblem
+#: strlocale:rsdepdlproblem
 msgid "Problem while downloading the dependency."
 msgstr ""
 
-#: trstrings:rshasherror
+#: strlocale:rslookingforx
+msgid "Looking for %a."
+msgstr ""
+
+#: strlocale:rsdownloadingpkg
+msgid "Downloading package..."
+msgstr ""
+
+#: strlocale:rsinstallingx
+msgid "Installing %a..."
+msgstr ""
+
+#: strlocale:rshasherror
 msgid ""
 "Hash value doesn't match!\n"
 "The package may be modified after creation.\n"
 "Please obtain a new copy"
 msgstr ""
+"I valori di hash non corrispondono!\n"
+"Il pacchetto potrebbe essere stato modificato in seguito alla sua "
+"creazione.\n"
+"È necessario procurarsene una nuova copia"
 
-#: trstrings:rsinstallationmode
+#: strlocale:rsinstallationmode
 msgid "Installation mode:"
 msgstr "Modalità installazione:"
 
-#: trstrings:rsimodeinstruction
+#: strlocale:rsimodeinstruction
 msgid "Select which parts of the application should be installed."
 msgstr "Selezionare le parti dell'applicazione da installare."
 
-#: trstrings:rsmode
+#: strlocale:rsmode
 msgid "Mode"
 msgstr "Modalità"
 
-#: trstrings:rsinstperformerror
+#: strlocale:rsexecnewapp
+msgid "Execute the new application"
+msgstr ""
+
+#: strlocale:rsinstperformerror
 msgid "Error while performing installation:"
 msgstr "Errore durante l'esecuzione dell'installazione:"
 
-#: trstrings:rsyesno1
+#: strlocale:rsyesno1
 msgid "Yes/No?:"
 msgstr ""
 
-#: trstrings:rsinstalllibuild
+#: strlocale:rsinstalllibuild
 msgid ""
 "You have to install the \"libuild\" tool before you can build packages!"
 msgstr ""
+"Per generare pacchetti è necessario installare l'utilità \"libuild\"."
 
-#: trstrings:rsfilenotexists
+#: strlocale:rsfilenotexists
 msgid "The file \"%f\" does not exists!"
 msgstr "Il file \"%f\" non esiste."
 
-#: trstrings:rswanttodoq
+#: strlocale:rswanttodoq
 msgid "What do you want to do?"
 msgstr "Come si vuole procedere?"
 
-#: trstrings:rsdevversion
+#: strlocale:rsdevversion
 msgid ""
 "You use a development version of Listaller!\n"
 "This version is not tested and may cause problems!"
 msgstr ""
+"Si sta utilizzando una versione di sviluppo di Listaller!\n"
+"Non è testata e potrebbe creare problemi!"
 
-#: trstrings:rsspkwarning
+#: strlocale:rsspkwarning
 msgid ""
 "Make sure that you got this package from a save source and from a serious "
 "publisher!"
 msgstr ""
 
-#: trstrings:rsinstalleveryone
+#: strlocale:rsinstalleveryone
 msgid "Install application for everyone"
 msgstr ""
 
-#: trstrings:rstestapp
+#: strlocale:rstestapp
 msgid "Test setup && software"
 msgstr ""
 
-#: trstrings:rsinstallhome
+#: strlocale:rsinstallhome
 msgid "Install into my Home directory"
 msgstr ""
 
-#: trstrings:rsselinstmode
+#: strlocale:rsselinstmode
 msgid "Select installation mode"
 msgstr ""
 
-#: trstrings:rssoftwaremanager
+#: strlocale:rssoftwaremanager
 msgid "Software Manager"
 msgstr "Gestore Applicazioni"
 
-#: trstrings:rsupdsources
+#: strlocale:rsupdsources
 msgid "Update repositories"
 msgstr ""
 
-#: trstrings:rsclose
+#: strlocale:rsclose
 msgid "Close"
 msgstr "Chiudi"
 
-#: trstrings:rsdelsrc
+#: strlocale:rsdelsrc
 msgid "Delete source"
 msgstr ""
 
-#: trstrings:rslistofsrc
+#: strlocale:rslistofsrc
 msgid "The following update repositories are installed:"
 msgstr ""
 
-#: trstrings:rsuninstall
+#: strlocale:rsuninstall
 msgid "Uninstall"
 msgstr "Disinstalla"
 
-#: trstrings:rsshow
+#: strlocale:rsshow
 msgid "Show:"
 msgstr "Visualizza:"
 
-#: trstrings:rsall
+#: strlocale:rsall
 msgid "All"
 msgstr ""
 
-#: trstrings:rseducation
+#: strlocale:rseducation
 msgid "Education"
 msgstr "Formazione"
 
-#: trstrings:rsoffice
+#: strlocale:rsoffice
 msgid "Office"
 msgstr "Ufficio"
 
-#: trstrings:rsdevelopment
+#: strlocale:rsdevelopment
 msgid "Development"
 msgstr "Sviluppo"
 
-#: trstrings:rsgraphic
+#: strlocale:rsgraphic
 msgid "Graphic"
 msgstr "Grafica"
 
-#: trstrings:rsnetwork
+#: strlocale:rsnetwork
 msgid "Network"
 msgstr "Rete"
 
-#: trstrings:rsgames
+#: strlocale:rsgames
 msgid "Games"
 msgstr "Giochi"
 
-#: trstrings:rssystem
+#: strlocale:rssystem
 msgid "System"
 msgstr "Sistema"
 
-#: trstrings:rsmultimedia
+#: strlocale:rsmultimedia
 msgid "Multimedia"
 msgstr "Multimedia"
 
-#: trstrings:rsaddidional
+#: strlocale:rsaddidional
 msgid "Utilities"
 msgstr "Utilità"
 
-#: trstrings:rsother
+#: strlocale:rsother
 msgid "Other"
 msgstr "Altro"
 
-#: trstrings:rsversion
+#: strlocale:rsversion
 msgid "Version"
 msgstr "Versione"
 
-#: trstrings:rsauthor
+#: strlocale:rsauthor
 msgid "Autor"
 msgstr "Autore"
 
-#: trstrings:rsusername
+#: strlocale:rsusername
 msgid "Username"
 msgstr "Nome utente"
 
-#: trstrings:rspassword
+#: strlocale:rspassword
 msgid "Password"
 msgstr "Password"
 
-#: trstrings:rsproxysettings
+#: strlocale:rsproxysettings
 msgid "Proxy-Settings"
 msgstr "Impostazioni proxy"
 
-#: trstrings:rsenableproxy
+#: strlocale:rsenableproxy
 msgid "Enable Proxy-Server"
 msgstr "Abilita server proxy"
 
-#: trstrings:rslokierror
+#: strlocale:rslokierror
 msgid "Unable to load information about LOKI-Setup."
 msgstr ""
 
-#: trstrings:rscannotloadicon
+#: strlocale:rscannotloadicon
 msgid ""
 "Unable to load the icon of %a. Please notify the developers of Listaller or "
 "of this application!"
 msgstr ""
 
-#: trstrings:rsautoloaddep
+#: strlocale:rsautoloaddep
 msgid "Load dependencies from included webserver-urls automatically"
 msgstr ""
 
-#: trstrings:rsready
+#: strlocale:rsready
 msgid "Ready."
 msgstr "Pronto."
 
-#: trstrings:rsconvertpkg
+#: strlocale:rsconvertpkg
 msgid ""
 "You want to install an %x-Package, but your Linux-distribution's package "
 "management system is based on %y.\n"
@@ -721,65 +829,73 @@ msgid ""
 "Do you want to convert the package now?"
 msgstr ""
 
-#: trstrings:rsconvertpkgq
+#: strlocale:rsconvertpkgq
 msgid "Convert package?"
 msgstr "Convertire il pacchetto?"
 
-#: trstrings:rsconvtitle
+#: strlocale:rsconvtitle
 msgid "Converting %p package..."
 msgstr "Conversione del pacchetto %p in corso..."
 
-#: trstrings:rsfiltering
+#: strlocale:rsfiltering
 msgid "Filtering..."
 msgstr ""
 
-#: trstrings:rsfilter
+#: strlocale:rsfilter
 msgid "Filter..."
 msgstr ""
 
-#: trstrings:rsloading
+#: strlocale:rsloading
 msgid "Loading..."
 msgstr "Caricamento in corso..."
 
-#: trstrings:rsapplications
+#: strlocale:rsskippedx
+msgid "Skipped %a"
+msgstr ""
+
+#: strlocale:rsapplications
 msgid "Applications"
 msgstr ""
 
-#: trstrings:rsinstalledapps
+#: strlocale:rsinstalledapps
 msgid "Installed applications"
 msgstr ""
 
-#: trstrings:rsinstallpkg
+#: strlocale:rsinstallpkg
 msgid "Install package"
 msgstr ""
 
-#: trstrings:rsrepositories
+#: strlocale:rsrepositories
 msgid "Repositories"
 msgstr ""
 
-#: trstrings:rspackagelists
+#: strlocale:rspackagelists
 msgid "Package lists"
 msgstr ""
 
-#: trstrings:rssettings
+#: strlocale:rssettings
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: trstrings:rsmyapps
+#: strlocale:rsmyapps
 msgid "My apps"
 msgstr ""
 
-#: trstrings:rssharedapps
+#: strlocale:rssharedapps
 msgid "Shared apps"
 msgstr ""
 
-#: trstrings:rsnoguipkgmanfound
+#: strlocale:rsnoguipkgmanfound
 msgid ""
 "Could not find usable GUI package manager.\n"
 "Please install a PackageKit-GUI!"
 msgstr ""
 
-#: trstrings:rsuselaunchpadforbugs
+#: strlocale:rsversionunknown
+msgid "Version: unknown"
+msgstr ""
+
+#: strlocale:rsuselaunchpadforbugs
 msgid ""
 "Please use https://bugs.launchpad.net/listaller\n"
 "for bug reports."
@@ -787,7 +903,7 @@ msgstr ""
 "Usare https://bugs.launchpad.net/listaller\n"
 "per segnalare i bug."
 
-#: trstrings:rslistalleralien
+#: strlocale:rslistalleralien
 msgid ""
 "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
 "installed\n"
@@ -797,201 +913,260 @@ msgstr ""
 "è installata\n"
 "Installare \"alien\" ora per continuare?"
 
-#: trstrings:rsinstpkgq
+#: strlocale:rsinstpkgq
 msgid "Install package?"
 msgstr "Installare il pacchetto?"
 
-#: trstrings:rspkginstfail
+#: strlocale:rspkginstfail
 msgid "Package %p could not be installed."
 msgstr "Impossibile installare il pacchetto %p."
 
-#: trstrings:rsshowpkmon
+#: strlocale:rsshowpkmon
 msgid "Start PackageKit monitor before running transactions"
 msgstr ""
 
-#: trstrings:rsstartlitray
+#: strlocale:rsstartlitray
 msgid "Start Listaller tray icon application (e.g. to check dependencies)"
 msgstr ""
 
-#: trstrings:rsaboutlistaller
+#: strlocale:rsaboutlistaller
 msgid "About Listaller"
 msgstr "Informazioni su Listaller"
 
-#: trstrings:rsopendirsicatalog
+#: strlocale:rsopendirsicatalog
 msgid "Open your distribution's package catalog"
 msgstr ""
 
-#: trstrings:rsabout
+#: strlocale:rsabout
 msgid "About"
 msgstr "Informazioni"
 
-#: trstrings:rsauthors
+#: strlocale:rsauthors
 msgid "Authors"
 msgstr "Autori"
 
-#: trstrings:rsrmsrcq
+#: strlocale:rsrmsrcq
 msgid "Are you really sure that you want to delete this source?"
 msgstr ""
 
-#: trstrings:rsrmsrcqc
+#: strlocale:rsrmsrcqc
 msgid "Delete source?"
 msgstr ""
 
-#: trstrings:rspkitprobpkmon
+#: strlocale:rspkitprobpkmon
 msgid ""
 "Problem while communicating with PackageKit. Run \"pkmon\" to get further "
 "information."
 msgstr ""
 
-#: trstrings:rssourcedeleted
+#: strlocale:rscallingpackagekitpkmonexecactions
+msgid "Calling PackageKit... (run \"pkmon\" to monitor the executed actions)"
+msgstr ""
+
+#: strlocale:rsdetectingpackage
+msgid "Detecting package..."
+msgstr ""
+
+#: strlocale:rssourcedeleted
 msgid "Source was removed."
 msgstr ""
 
-#: trstrings:rspleaseselectlistitem
+#: strlocale:rspleaseselectlistitem
 msgid "Please select an item from the list!"
 msgstr ""
 
-#: trstrings:rsliupdateaccessfailed
+#: strlocale:rsliupdateaccessfailed
 msgid "Cannot access the Listaller Update tool. Maybe it is not installed?"
 msgstr ""
 
-#: trstrings:rschangepkgmansettings
+#: strlocale:rschangepkgmansettings
 msgid "Change package manager settings"
 msgstr ""
 
-#: trstrings:rsrealuninstq
+#: strlocale:rsrealuninstq
 msgid "Do you really want to uninstall %a?"
 msgstr ""
 
-#: trstrings:rsunistsuccess
+#: strlocale:rsunistsuccess
 msgid "Application was successfully removed!"
 msgstr ""
 
-#: trstrings:rsrmerror
+#: strlocale:rsrmerror
 msgid "Error while uninstalling!"
 msgstr ""
 
-#: trstrings:rscannothandlerm
+#: strlocale:rsunabletoremoveapp
+msgid "Unable to remove this application!"
+msgstr ""
+
+#: strlocale:rscannothandlerm
 msgid ""
 "This application does not look like a MoJo-Installation and it is not "
 "installed via an other package-type Listaller can handle.\n"
 "Get instructions how to remove this application from the program author."
 msgstr ""
 
-#: trstrings:rsrmunsddeps
+#: strlocale:rsreadingappinfo
+msgid "Reading application information..."
+msgstr ""
+
+#: strlocale:rsappregistbroken
+msgid "The registration of this package is broken!"
+msgstr ""
+
+#: strlocale:rsremovingapp
+msgid "Removing application..."
+msgstr ""
+
+#: strlocale:rslokisetupfound
+msgid "LOKI setup found."
+msgstr ""
+
+#: strlocale:rspkgcouldbeinstalledwithloki
+msgid "Package could be installed with MoJo/LOKI."
+msgstr ""
+
+#: strlocale:rsrmunsddeps
 msgid "Uninstalling unused dependencies..."
 msgstr ""
 
-#: trstrings:rsuninstalling
+#: strlocale:rsstartinguninstall
+msgid "Starting uninstallation."
+msgstr ""
+
+#: strlocale:rsuninstalling
 msgid "Uninstalling..."
 msgstr ""
 
-#: trstrings:rsrmpkg
+#: strlocale:rsrmpkg
 msgid ""
 "Do you really want to remove \"%p\", containing %a?\n"
 "The following package(s) will be removed also: %pl\n"
 "If you're not sure if you need those packages, press \"No\"!"
 msgstr ""
 
-#: trstrings:rsrmpkgq
+#: strlocale:rscheckdepsregisteredapps
+msgid "Checking dependencies of all registered applications..."
+msgstr ""
+
+#: strlocale:rsyouscanonlyrootinstalledapps
+msgid "You are scanning only the ROOT installed applications."
+msgstr ""
+
+#: strlocale:rsyouscanonlylocalinstalledapps
+msgid "You are scanning your local installed applications."
+msgstr ""
+
+#: strlocale:rsinstalleddepx
+msgid "Installed dependency %s"
+msgstr ""
+
+#: strlocale:rsdepxisnotinstall
+msgid "Dependency \"%s\" is not installed!"
+msgstr ""
+
+#: strlocale:rsrmpkgq
 msgid "Really remove?"
 msgstr ""
 
-#: trstrings:rswaiting
+#: strlocale:rswaiting
 msgid "Waiting..."
 msgstr ""
 
-#: trstrings:rsrmappc
+#: strlocale:rsrmappc
 msgid "Uninstalling %a"
 msgstr ""
 
-#: trstrings:rslindesk
+#: strlocale:rslindesk
 msgid "Running under %s."
 msgstr ""
 
-#: trstrings:rstranslators
+#: strlocale:rstranslators
 msgid "List of translators:\n"
 msgstr ""
 
-#: trstrings:rsnoupdates
+#: strlocale:rsnoupdates
 msgid "There are no updates available!"
 msgstr ""
 
-#: trstrings:rslogupdinfo
+#: strlocale:rslogupdinfo
 msgid "Update info:"
 msgstr ""
 
-#: trstrings:rsfileschanged
+#: strlocale:rsfileschanged
 msgid "%f files will be changed."
 msgstr ""
 
-#: trstrings:rsupdto
+#: strlocale:rsupdto
 msgid "The application will be updated to version %v"
 msgstr ""
 
-#: trstrings:rscheckforupd
+#: strlocale:rscheckforupd
 msgid "Check for updates"
 msgstr ""
 
-#: trstrings:rsinstupd
+#: strlocale:rsinstupd
 msgid "Install updates"
 msgstr ""
 
-#: trstrings:rsshowupdater
+#: strlocale:rsshowupdater
 msgid "Show"
 msgstr ""
 
-#: trstrings:rsquitupdater
+#: strlocale:rsquitupdater
 msgid "Quit"
 msgstr ""
 
-#: trstrings:rsupdinstalling
+#: strlocale:rsupdinstalling
 msgid "Applying updates..."
 msgstr ""
 
-#: trstrings:rsupdconferror
+#: strlocale:rsupdconferror
 msgid "Error while unpacking and configuring files."
 msgstr ""
 
-#: trstrings:rsquestion
+#: strlocale:rsquestion
 msgid "Question:"
 msgstr ""
 
-#: trstrings:rsyes
+#: strlocale:rsyes
 msgid "yes"
 msgstr ""
 
-#: trstrings:rsy
+#: strlocale:rsy
 msgid "y"
 msgstr ""
 
-#: trstrings:rsresolvingdep
+#: strlocale:rsresolvingdep
 msgid "Resolving dependencies..."
 msgstr ""
 
-#: trstrings:rspkgunsigned
+#: strlocale:rspkgunsigned
 msgid "This package is not signed!"
 msgstr ""
 
-#: trstrings:rspkguntrusted
+#: strlocale:rspkguntrusted
 msgid "This package is untrusted!"
 msgstr ""
 
-#: trstrings:rscouldnotinstallapp
+#: strlocale:rscouldnotinstallapp
 msgid "The application %a could not be installed!"
 msgstr ""
 
-#: trstrings:rswarning
+#: strlocale:rswarning
 msgid "Warning!"
 msgstr ""
 
-#: trstrings:rstmpwritedenied
+#: strlocale:rstmpwritedenied
 msgid "Listaller cannot write into its temporary directory: Access denied!"
 msgstr ""
 
-#: trstrings:rserror
+#: strlocale:rserror
 msgid "Error"
 msgstr ""
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "L'applicazione %a non è stata installata."
 
 #~ msgid "Opening database..."
 #~ msgstr "Apertura del database in corso..."
