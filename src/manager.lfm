@@ -3,7 +3,7 @@ object MnFrm: TMnFrm
   Height = 558
   Top = 192
   Width = 816
-  ActiveControl = UListBox
+  ActiveControl = LeftBar
   Caption = 'Software Manager'
   ClientHeight = 538
   ClientWidth = 816
@@ -506,7 +506,7 @@ object MnFrm: TMnFrm
         TabOrder = 3
         object MyAppSheet: TTabSheet
           Caption = 'My Apps'
-          ClientHeight = 359
+          ClientHeight = 381
           ClientWidth = 584
           OnShow = MyAppSheetShow
           object SWBox: TPanel
@@ -522,7 +522,7 @@ object MnFrm: TMnFrm
         end
         object SysAppSheet: TTabSheet
           Caption = 'Shared Apps'
-          ClientHeight = 359
+          ClientHeight = 381
           ClientWidth = 584
           OnShow = SysAppSheetShow
           object SWBoxSU: TPanel
@@ -644,9 +644,9 @@ object MnFrm: TMnFrm
         Height = 518
         Top = 0
         Width = 588
-        ActivePage = UpdRepoSheet
+        ActivePage = SysRepoSheet
         Align = alClient
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 1
         object SysRepoSheet: TTabSheet
           Caption = 'System repositories'

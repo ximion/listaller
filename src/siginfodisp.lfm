@@ -1,22 +1,24 @@
 object SigInfoFrm: TSigInfoFrm
   Left = 405
-  Height = 27
+  Height = 160
   Top = 355
-  Width = 287
+  Width = 316
   ActiveControl = Button1
-  AutoSize = True
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsToolWindow
   Caption = 'Security warning'
-  ClientHeight = 27
-  ClientWidth = 287
+  ClientHeight = 160
+  ClientWidth = 316
+  Constraints.MinHeight = 160
+  Constraints.MinWidth = 316
   OnCreate = FormCreate
+  OnShow = FormShow
   Position = poScreenCenter
   LCLVersion = '0.9.29'
   object LblPkgSigned: TLabel
-    Left = 32
+    Left = 47
     Height = 21
-    Top = -7
+    Top = 8
     Width = 225
     Anchors = []
     Caption = 'This package is not signed!'
@@ -26,18 +28,19 @@ object SigInfoFrm: TSigInfoFrm
     ParentFont = False
   end
   object LblInfo: TLabel
-    Left = 10
+    Left = 25
     Height = 73
-    Top = -23
+    Top = 41
     Width = 270
     Anchors = []
     Caption = 'Please install this package only if you got it from a safe,'#10'trusted source. There is a serious risk that the software'#10'damages your system. (It could also contain malware)'#10'Be careful with this package, especially if you install it'#10'with superuser rights. (System installation)'
+    Constraints.MinWidth = 270
     ParentColor = False
   end
   object Button1: TButton
-    Left = 80
+    Left = 95
     Height = 25
-    Top = -8
+    Top = 125
     Width = 128
     Anchors = [akBottom]
     Caption = 'I know the risk'

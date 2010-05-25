@@ -21,8 +21,7 @@ unit siginfodisp;
 interface
 
 uses
-  Classes, Controls, Dialogs,
-  FileUtil, Forms, Graphics, LResources, StdCtrls, SysUtils, strLocale;
+  Forms, Classes, Dialogs, Controls, FileUtil, Graphics, StdCtrls, SysUtils, strLocale, LResources;
 
 type
 
@@ -34,6 +33,7 @@ type
     LblPkgSigned: TLabel;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { private declarations }
   public
@@ -56,6 +56,11 @@ begin
   LblInfo.Caption := rsSecurityInfo;
   Caption := rsSecurityWarning;
   Button1.Caption := rsIKnowTheRisk;
+end;
+
+procedure TSigInfoFrm.FormShow(Sender: TObject);
+begin
+  self.ClientWidth := ClientWidth+lblInfo.Width-lblInfo.Constraints.MinWidth-20;
 end;
 
 end.

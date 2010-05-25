@@ -403,6 +403,7 @@ var
 begin
   p := TProcess.Create(nil);
   p.Options := [poUsePipes];
+  p.CommandLine:='';
   if DInfo.DBase = 'KDE' then
   begin
     if FileExists(FindBinary('kpackagekit')) then
@@ -412,6 +413,13 @@ begin
   end
   else
   begin
+    if (DInfo.DName='Ubuntu')or(DInfo.DName='Debian') then
+    begin
+      if (FileExists(FindBinary('software-properties-gtk')))
+      and(FileExists(FindBinary('gksu'))) then
+       p.CommandLine := 'gksu --desktop /usr/share/applications/software-properties-gtk.desktop '+FindBinary('gpk-repo')
+    end;
+    if p.CommandLine = '' then
     if FileExists(FindBinary('gpk-repo')) then
       p.CommandLine := FindBinary('gpk-repo')
     else
