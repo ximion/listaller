@@ -3,7 +3,7 @@ object MnFrm: TMnFrm
   Height = 558
   Top = 192
   Width = 816
-  ActiveControl = LeftBar
+  ActiveControl = UListBox
   Caption = 'Software Manager'
   ClientHeight = 538
   ClientWidth = 816
@@ -433,7 +433,7 @@ object MnFrm: TMnFrm
     Top = 0
     Width = 592
     Align = alClient
-    PageIndex = 0
+    PageIndex = 2
     ShowTabs = False
     TabOrder = 1
     object InstalledAppsPage: TPage
@@ -644,18 +644,18 @@ object MnFrm: TMnFrm
         Height = 518
         Top = 0
         Width = 588
-        ActivePage = SysRepoSheet
+        ActivePage = UpdRepoSheet
         Align = alClient
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 1
         object SysRepoSheet: TTabSheet
           Caption = 'System repositories'
-          ClientHeight = 514
+          ClientHeight = 492
           ClientWidth = 584
           object BitBtn6: TBitBtn
             Left = 172
             Height = 30
-            Top = 206
+            Top = 197
             Width = 267
             Anchors = []
             Caption = 'Change package manager settings'
@@ -665,21 +665,21 @@ object MnFrm: TMnFrm
         end
         object UpdRepoSheet: TTabSheet
           Caption = 'Update repositories'
-          ClientHeight = 514
+          ClientHeight = 492
           ClientWidth = 584
           object UsILabel: TLabel
             Left = 6
             Height = 13
             Top = 8
-            Width = 166
+            Width = 165
             Caption = 'Here''s a list of all update-sources:'
             ParentColor = False
           end
           object UListBox: TCheckListBox
             Left = 6
-            Height = 410
-            Top = 32
-            Width = 678
+            Height = 400
+            Top = 30
+            Width = 574
             Anchors = [akTop, akLeft, akRight, akBottom]
             ItemHeight = 0
             OnClick = UListBoxClick
@@ -688,9 +688,9 @@ object MnFrm: TMnFrm
           end
           object RmUpdSrcBtn: TBitBtn
             Left = 6
-            Height = 26
-            Top = 450
-            Width = 85
+            Height = 22
+            Top = 446
+            Width = 84
             Anchors = [akLeft, akBottom]
             AutoSize = True
             Caption = 'Delete source'
@@ -699,10 +699,10 @@ object MnFrm: TMnFrm
             TabOrder = 1
           end
           object UpdCheckBtn: TBitBtn
-            Left = 572
-            Height = 26
-            Top = 450
-            Width = 105
+            Left = 474
+            Height = 22
+            Top = 446
+            Width = 106
             Anchors = [akRight, akBottom]
             AutoSize = True
             Caption = 'Check for updates'

@@ -86,6 +86,7 @@ resourcestring
   rsAbort = 'Abort';
   rsBack = 'Back';
   rsNext = 'Next';
+  rsFile = 'File';
   rsDispLog = 'Display installation log';
   rsIagree = 'I agree with the above terms and conditions';
   rsInagree = 'I don''t agree';

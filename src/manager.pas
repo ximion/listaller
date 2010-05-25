@@ -445,9 +445,6 @@ begin
   if DInfo.DBase = 'KDE' then
   begin
     if (DInfo.DName = 'Ubuntu') then
-      if FileExists(FindBinary('qappinstall')) then
-        p.CommandLine := FindBinary('qappinstall')
-      else
         p.CommandLine := FindBinary('kpackagekit')
     else
       if FileExists(FindBinary('kpackagekit')) then
