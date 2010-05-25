@@ -645,7 +645,7 @@ begin
   SetFocus;
   strTargetName := ChangeFileExt(FName,'.ipk');
   if FileExists(strTargetName) then DeleteFile(strTargetName);
-  Process1.CommandLine:='lipa -b '+''''+FName+''' '''+strTargetName+'''';
+  Process1.CommandLine:='libuild -b '+''''+FName+''' '''+strTargetName+'''';
   memLog.Lines.Add('Execute '+Process1.CommandLine+' ...');
   IPSNotebook.Enabled:=false;
   Process1.Execute;

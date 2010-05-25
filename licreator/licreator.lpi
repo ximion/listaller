@@ -14,7 +14,10 @@
       <Icon Value="0"/>
     </General>
     <VersionInfo>
-      <StringTable Comments="" CompanyName="" FileDescription="" FileVersion="0.0.0.0" InternalName="" LegalCopyright="" LegalTrademarks="" OriginalFilename="" ProductName="" ProductVersion=""/>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <MinorVersionNr Value="4"/>
+      <StringTable Comments="GUI creator for IPS scripts" CompanyName="" FileDescription="" FileVersion="0.4.0.0" InternalName="liCreator" LegalCopyright="" LegalTrademarks="" OriginalFilename="" ProductName="Listaller" ProductVersion="0.4.b"/>
     </VersionInfo>
     <PublishOptions>
       <Version Value="2"/>
@@ -41,7 +44,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="9">
+    <Units Count="4">
       <Unit0>
         <Filename Value="licreator.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -62,37 +65,12 @@
         <UnitName Value="fwiz"/>
       </Unit2>
       <Unit3>
-        <Filename Value="../abzipper.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="AbZipper"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="../abbase.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="AbBase"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="../abarctyp.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="AbArcTyp"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="../abzipkit.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="AbZipKit"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="../variables.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="variables"/>
-      </Unit7>
-      <Unit8>
         <Filename Value="prjwizard.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmProjectWizard"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="prjwizard"/>
-      </Unit8>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

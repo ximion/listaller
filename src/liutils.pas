@@ -111,9 +111,11 @@ function IsCommandRunning(cmd: String): Boolean;
 //** Remove modifiers from a string @returns Cleaned string
 function DeleteModifiers(s: String): String;
 //** Replaces placeholders (like $INSt or $APP) with their current paths @returns Final path as string
-function SyblToPath(s: String): String;
-//** Removes every symbol or replace it an simpla dummy path @returns Cleaned string
+function SyblToPath(s: String;root: Boolean=false): String;
+//** Removes symbol or replace it an simple dummy path (Used in IPKPackager) @returns Cleaned string
 function SyblToX(s: String): String;
+//** Deletes all variables in string
+function DeleteSybls(s: String): String;
 //** Check if file is a shared one @returns States as bool
 function HasSharedMod(fname: String): Boolean;
 {** Get dependencies of an executable
@@ -669,25 +671,35 @@ begin
     Result := GetEnvironmentVariable('HOME');
 end;
 
-function SyblToPath(s: String): String;
+function SyblToPath(s: String;root: Boolean=false): String;
 var
   n: String;
+  DInfo: TDistroInfo;
 begin
   s := StringReplace(s, '$HOME', GetEnvironmentVariable('HOME'), [rfReplaceAll]);
 
   n := GetSystemArchitecture;
 
-  if IsRoot then
+  if not root then root := IsRoot;
+
+  DInfo := GetDistro;
+
+  if root then
   begin
     s := StringReplace(s, '$INST', '/opt/appfiles', [rfReplaceAll]);
-    s := StringReplace(s, '$INST-X', '/usr/share', [rfReplaceAll]);
+    s := StringReplace(s, '$SHARE', '/usr/share', [rfReplaceAll]);
     s := StringReplace(s, '$OPT', '/opt', [rfReplaceAll]);
     s := StringReplace(s, '$BIN', '/usr/bin', [rfReplaceAll]);
+    s := StringReplace(s, '$SBIN', '/usr/sbin', [rfReplaceAll]);
 
-    if LowerCase(n) = 'x86_64' then
+    //Fedora uses lib64 dir.
+    if (LowerCase(n) = 'x86_64')and(DInfo.DName='Fedora') then
       s := StringReplace(s, '$LIB', '/usr/lib64', [rfReplaceAll])
     else
       s := StringReplace(s, '$LIB', '/usr/lib', [rfReplaceAll]);
+
+    s := StringReplace(s, '$LIB32', '/usr/lib32', [rfReplaceAll]);
+
     s := StringReplace(s, '$APP', '/usr/share/applications', [rfReplaceAll]);
     s := StringReplace(s, '$ICON-16', '/usr/share/icons/hicolor/16x16/apps',
       [rfReplaceAll]);
@@ -744,14 +756,19 @@ begin
       if not DirectoryExists(GetXHome + '/.appfiles/lib') then
         CreateDir(GetXHome + '/.appfiles/lib');
 
+    //SBin and Bin go to the same directory on HOME install
     s := StringReplace(s, '$BIN', GetXHome + '/.appfiles/binary', [rfReplaceAll]);
-    if LowerCase(n) = 'x86_64' then
-      s := StringReplace(s, '$LIB', GetXHome + '/.appfiles/lib64', [rfReplaceAll])
+    s := StringReplace(s, '$SBIN', GetXHome + '/.appfiles/binary', [rfReplaceAll]);
+
+    if LowerCase(n) = 'i386' then
+      s := StringReplace(s, '$LIB', GetXHome + '/.appfiles/lib32', [rfReplaceAll])
     else
       s := StringReplace(s, '$LIB', GetXHome + '/.appfiles/lib', [rfReplaceAll]);
 
+    s := StringReplace(s, '$LIB32', GetXHome + '/.appfiles/lib32', [rfReplaceAll]);
+
     s := StringReplace(s, '$INST', GetXHome + '/.appfiles', [rfReplaceAll]);
-    s := StringReplace(s, '$INST-X', GetXHome + '/.appfiles', [rfReplaceAll]);
+    s := StringReplace(s, '$SHARE', GetXHome + '/.appfiles', [rfReplaceAll]);
     s := StringReplace(s, '$OPT', GetXHome + '/.appfiles', [rfReplaceAll]);
     s := StringReplace(s, '$APP', GetXHome + '/.applications', [rfReplaceAll]);
     s := StringReplace(s, '$ICON-16', GetXHome + '/.appfiles/icons/16x16',
@@ -776,7 +793,8 @@ end;
 function SyblToX(s: String): String;
 begin
   s := StringReplace(s, '$INST', '', [rfReplaceAll]);
-  s := StringReplace(s, '$INST-X', '', [rfReplaceAll]);
+  s := StringReplace(s, '$SHARE', '', [rfReplaceAll]);
+  s := StringReplace(s, '$BIN', '', [rfReplaceAll]);
   s := StringReplace(s, '$OPT', '/opt', [rfReplaceAll]);
   s := StringReplace(s, '$APP', '/app', [rfReplaceAll]);
   s := StringReplace(s, '$HOME', '/hdir', [rfReplaceAll]);
@@ -789,7 +807,29 @@ begin
   s := StringReplace(s, '$ICON-256', '/icon265', [rfReplaceAll]);
   s := StringReplace(s, '$PIX', '/icon', [rfReplaceAll]);
   s := StringReplace(s, '$LIB', '/lib', [rfReplaceAll]);
-  s := StringReplace(s, '$LIB', '/binary', [rfReplaceAll]);
+  s := StringReplace(s, '$LIB32', '/lib32', [rfReplaceAll]);
+  Result := s;
+end;
+
+function DeleteSybls(s: String): String;
+begin
+  s := StrSubst(s, '$INST', '');
+  s := StrSubst(s, '$SHARE', '');
+  s := StrSubst(s, '$BIN', '');
+  s := StrSubst(s, '$OPT', '');
+  s := StrSubst(s, '$APP', '');
+  s := StrSubst(s, '$HOME', '');
+  s := StrSubst(s, '$ICON-16', '');
+  s := StrSubst(s, '$ICON-24', '');
+  s := StrSubst(s, '$ICON-32', '');
+  s := StrSubst(s, '$ICON-48', '');
+  s := StrSubst(s, '$ICON-64', '');
+  s := StrSubst(s, '$ICON-128', '');
+  s := StrSubst(s, '$ICON-256', '');
+  s := StrSubst(s, '$PIX', '');
+  s := StrSubst(s, '$LIB', '');
+  s := StrSubst(s, '$LIB32', '');
+  if s[1]='/' then s:=copy(s,2,length(s));
   Result := s;
 end;
 

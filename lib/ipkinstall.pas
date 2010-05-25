@@ -475,7 +475,7 @@ begin
         for j := 0 to tmp.Count - 1 do
         begin
           try
-            if ExecRegExpr(tmp[j], Dependencies[i]) then
+            if ExecRegExpr(DeleteSybls(tmp[j]), Dependencies[i]) then
             begin
               Dependencies.Delete(i);
               Dec(i);
@@ -497,13 +497,9 @@ begin
     msg(rsResolvingDynDeps);
 
     DInfo := GetDistro;
-    //With yum backend, PackageKit needs the complete path to find
-    //packages. Add the lib dir to libraries
-    if DInfo.PackageSystem <> 'DEB' then
+    //Resolve all substitution variables in dependency list
       for i := 0 to Dependencies.Count - 1 do
-        if (LowerCase(ExtractFileExt(Dependencies[i])) = '.so') and
-          (Dependencies[i][1] <> '/') then
-          Dependencies[i] := '/usr/lib/' + Dependencies[i];
+        Dependencies[i]:=SyblToPath(Dependencies[i],true);
 
     mnpos := 0;
     one := 100 / Dependencies.Count;

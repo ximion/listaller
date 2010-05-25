@@ -274,7 +274,6 @@ begin
             mofile := '~';
         end;
   end;
-  p_debug('MoFile: '+FBasePath+'|'+mofile);
   if (mofile = '~')  or (trim(mofile) = '')  or (not FileExists(FBasePath+mofile)) then
     exit;
   mo := TMoFile.Create(FBasePath+mofile);
