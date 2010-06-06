@@ -678,7 +678,7 @@ procedure TMnFrm.FuncListSelectItem(Sender: TObject; Item: TListItem;
 begin
   //??? Does not work: Event does not call this function. Bug in LCL?
   if not Selected then exit;
-  case Item.Index of
+  case Item.ImageIndex of //We use ImageIndex cause order of buttons my change due localisation
     0: InstAppButtonClick(Sender);
     1: BtnCatClick(Sender);
     2: RepoButtonClick(Sender);
@@ -1166,7 +1166,9 @@ end;     }
 
 
   pic := TPicture.Create;
-  //Enable some Widget-Dependent stuff
+  //Enable some Widgetset-dependent stuff
+
+  { GTK2 special stuff does not work with some new versions of GTK+
   {$IFDEF LCLGtk2}
    LeftBar.Visible := false;
    with ImageList1 do
@@ -1187,6 +1189,7 @@ end;     }
    FuncList.Items[3].Caption := rsPackageLists;
    FuncList.ItemIndex := 0;
   {$ELSE}
+  }
    FuncList.Visible := false;
    pic.LoadFromFile(GetDataFile('graphics/icon48-appremove.png'));
    InstAppButton.Glyph.Assign(pic.Bitmap);
@@ -1202,7 +1205,7 @@ end;     }
    RepoButton.Caption := rsRepositories;
    SettingsButton.Caption := rsSettings;
    CatButton.Caption := rsPackageLists;
-  {$ENDIF}
+  //{$ENDIF}
   pic.Free;
 
   //Translate all other stuff

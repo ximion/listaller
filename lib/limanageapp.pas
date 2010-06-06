@@ -706,7 +706,7 @@ begin
     pkit := TPackageKit.Create;
     pkit.OnProgress := @PkitProgress;
 
-    pkit.PkgNameFromFile(id, true);
+    pkit.PkgNameFromFile(id, false); //!!! ,false for debugging
     setpos(20);
 
     while not pkit.Finished do ;
