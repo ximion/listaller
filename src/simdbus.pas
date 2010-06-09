@@ -218,7 +218,7 @@ begin
   // free the pending message handle
   dbus_pending_call_unref(pending);
 
-  if (dbus_message_iter_init(msg, @args) = 0) then
+  if (dbus_message_iter_init(Result, @args) = 0) then
    ShowError('Message has no arguments!');
 end;
 
