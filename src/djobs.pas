@@ -299,8 +299,6 @@ procedure TDoAppInstall.SendProgressSignal(xn: string; sigvalue: integer);
 var
   msg: PDBusMessage;
 begin
-  EnterCriticalSection(critsec);
-  try
     // create a signal & check for errors
     msg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID,
       // object name of the signal
@@ -309,17 +307,12 @@ begin
 
     bs.AppendUInt(sigvalue);
     bs.SendMessage(msg);
-  finally
-    LeaveCriticalSection(critsec);
-  end;
 end;
 
 procedure TDoAppInstall.SendMessageSignal(xn: string; sigvalue: string);
 var
   msg: PDBusMessage;
 begin
-  EnterCriticalSection(critsec);
-  try
     // create a signal & check for errors
     msg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID,
       // object name of the signal
@@ -328,9 +321,6 @@ begin
 
     bs.AppendStr(sigvalue);
     bs.SendMessage(msg);
-  finally
-    LeaveCriticalSection(critsec);
-  end;
 end;
 
 procedure TDoAppInstall.SendReply(stat: boolean; jID: string);
@@ -469,8 +459,6 @@ procedure OnMgrStatus(change: LiStatusChange; Data: TLiStatusData; job: Pointer)
     msg: PDBusMessage;
     sigvalue: integer;
   begin
-    EnterCriticalSection(critsec);
-    try
       sigvalue := Data.mnprogress;
       p_debug(TDoAppRemove(job).DId + '->ProgressChange::' + IntToStr(sigvalue));
       // create a signal & check for errors
@@ -482,9 +470,6 @@ procedure OnMgrStatus(change: LiStatusChange; Data: TLiStatusData; job: Pointer)
 
       TDoAppRemove(job).bs.AppendUInt(sigvalue);
       TDoAppRemove(job).bs.SendMessage(msg);
-    finally
-      LeaveCriticalSection(critsec);
-    end;
   end;
 
 begin
@@ -587,8 +572,6 @@ var
   auth: PChar = '';
 begin
   p_info('Send reply called');
-  EnterCriticalSection(critsec);
-  try
     //Create a reply from the message
     reply := bs.CreateReturnMessage(origMsg);
 
@@ -603,9 +586,6 @@ begin
 
     bs.SendMessage(reply);
     bs.FreeMessage(origMsg);
-  finally
-    LeaveCriticalSection(critsec);
-  end;
 end;
 
 procedure TDoAppRemove.EmitMessage(id: string; param: string);
@@ -613,8 +593,6 @@ var
   dmsg: PDBusMessage;
 begin
   p_debug(jobID + '->' + id + ':: ' + param);
-  EnterCriticalSection(critsec);
-  try
     // create a signal & check for errors
     dmsg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID,
       // object name of the signal
@@ -622,9 +600,6 @@ begin
       id); // name of the signal
     bs.AppendStr(param);
     bs.SendMessage(dmsg);
-  finally
-    LeaveCriticalSection(critsec);
-  end;
 end;
 
 procedure TDoAppRemove.Execute;
@@ -696,8 +671,6 @@ procedure OnUpdaterStatus(change: LiStatusChange; Data: TLiStatusData;
     sigvalue: integer;
   begin
     sigvalue := Data.mnprogress;
-    EnterCriticalSection(critsec);
-    try
       p_debug(TDoAppUpdate(job).DId + '->ProgressChange::' + IntToStr(sigvalue));
       // create a signal & check for errors
       msg := TDoAppUpdate(job).bs.CreateNewSignal('/org/nlinux/Listaller/' +
@@ -708,9 +681,6 @@ procedure OnUpdaterStatus(change: LiStatusChange; Data: TLiStatusData;
 
       TDoAppUpdate(job).bs.AppendUInt(sigvalue);
       TDoAppUpdate(job).bs.SendMessage(msg);
-    finally
-      LeaveCriticalSection(critsec);
-    end;
   end;
 
 begin

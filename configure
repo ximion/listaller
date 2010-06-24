@@ -216,7 +216,7 @@ do
 done
 
 echo
-echo "Conclusion:"
+echo "Summary:"
 echo " Installing into $prefix"
 echo
 echo "Listaller will be built with the following features:"
