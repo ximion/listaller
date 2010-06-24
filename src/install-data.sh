@@ -56,9 +56,9 @@ cp ../data/mime/x-ips.xml $DESTDIR$prefix/share/listaller/mime
 
 #Execute installscript if root
 if [[ $EUID -ne 0 ]]; then
- sh ../data/scripts/postinst
+ echo "Not running as root: Do not execute postinst script."
 else
- echo "Not running as root: Did not run postinst script."
+ sh ../data/scripts/postinst
 fi
 
 echo "liData installation done."

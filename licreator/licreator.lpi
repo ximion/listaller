@@ -80,7 +80,7 @@
     </Target>
     <SearchPaths>
       <Libraries Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/components/synedit/"/>
+      <OtherUnitFiles Value="../src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
       <UnitOutputDirectory Value="../build"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>

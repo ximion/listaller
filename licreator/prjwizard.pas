@@ -590,7 +590,12 @@ begin
             end;
           end;
 
-          DependencyBox.Items.Assign(sl);
+          for i:=0 to sl.Count-1 do
+           if sl[i][length(sl[i])]='.' then
+            DependencyBox.Items.Add(sl[i]+'*')
+           else
+            DependencyBox.Items.Add(sl[i]);
+
           sl.Free;
 
           RemoveDuplicates(DependencyBox.Items);
@@ -782,10 +787,10 @@ begin
   if CreaType = ptContainer then
   begin
     ipks := CreateScript(ptContainer);
-    ipks.SaveTofile('/tmp/litmp.xml');
+    ipks.SaveTofile('/tmp/litmp.ips');
     ipks.Free;
-    frmEditor.MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.xml');
-    DeleteFile('/tmp/litmp.xml');
+    frmEditor.MainScriptEdit.Lines.LoadFromFile('/tmp/litmp.ips');
+    DeleteFile('/tmp/litmp.ips');
     // frmEditor.Page2.TabVisible:=false;
     Close;
   end; //End of LOKI

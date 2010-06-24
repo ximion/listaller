@@ -21,9 +21,8 @@ unit ipkbuild;
 interface
 
 uses
-  Classes, FileUtil, GPGSign, IPKDef, IPKPackage, liUtils,
-  liTypes, MD5, OPBitmapFormats, Process,
-  RegExpr, SysUtils;
+  Classes, FileUtil, GPGSign, IPKDef, IPKPackage, liUtils, liTypes,
+  MD5, OPBitmapFormats, Process, RegExpr, SysUtils;
 
 type
 
@@ -343,16 +342,12 @@ var
     h := CleanFilePath(h);
     ForceDirectories(WDir + h);
 
-    if fname[1] = '.' then
-    begin
-      forig := ExtractFilePath(fi) + DeleteModifiers(fname);
-      res := FileCopy(forig, WDir + h + '/' + ExtractFileName(DeleteModifiers(fname)));
-    end
+    if not FileNameIsAbsolute(fname) then
+      forig := ExtractFilePath(fi) + DeleteModifiers(fname)
     else
-    begin
       forig := DeleteModifiers(fname);
-      res := FileCopy(forig, WDir + h + '/' + ExtractFileName(DeleteModifiers(fname)));
-    end;
+
+    res := FileCopy(forig, WDir + AppendPathDelim(h) + ExtractFileName(DeleteModifiers(fname)));
 
     if b then
       if FileIsExecutable(forig) then
@@ -454,7 +449,7 @@ begin
   control := script.FinalizeToControl;
   script.Free;
 
-  control.BasePath := ExtractFilePath(fi);
+  control.BasePath := AppendPathDelim(ExtractFilePath(fi));
 
   if pos(' ',control.PkName)>0 then
   begin
@@ -561,7 +556,7 @@ begin
         end
         else
         begin
-          if (files[i][1] = '/') or (files[i][1] = '.') then
+          if (files[i][1] <> '#') then
           begin
 
             if not IsNumeric(prID) then
@@ -625,7 +620,11 @@ begin
   //Add icon
   if control.Icon <> '' then
   begin
-    if (not FileExists(control.Icon)) and (control.Icon <> '') then
+    h := control.Icon;
+    if not FileNameIsAbsolute(h) then
+     h := control.BasePath + h;
+
+    if not FileExists(h) then
     begin
       writeLn('error: ');
       writeLn(' Icon-path is invalid!');
@@ -633,7 +632,7 @@ begin
     end
     else
     begin
-      FileCopy(control.Icon, WDir + 'pkgdata/' + 'packicon.png');
+      FileCopy(h, WDir + 'pkgdata/' + 'packicon.png');
       //!!! Should be changed to support more picture-filetypes
       control.Icon := '/pkgdata/' + 'packicon.png';
       ipkpkg.AddFile(WDir + 'pkgdata/' + 'packicon.png');
@@ -683,6 +682,11 @@ begin
       for i := 0 to sl.Count do
         tmpdepends.Add(sl[i]);
       RemoveDuplicates(tmpdepends);
+
+      for i:=0 to tmpdepends.Count-1 do
+       if tmpdepends[i][length(tmpdepends[i])]='.' then
+        tmpdepends[i] := tmpdepends[i]+'*';
+
       control.WriteDependencies('', tmpdepends);
     end;
     sl.Free;

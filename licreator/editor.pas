@@ -22,20 +22,22 @@ unit editor;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, SynEdit,
-  ComCtrls, Menus, StdCtrls, fwiz, FileUtil, SynHighlighterXML, ExtCtrls,
-  process, SynHighlighterTeX, SynHighlighterAny, SynEditTypes, MD5;
+  MD5, fwiz, Forms, Menus, Classes, Dialogs, Process, SynEdit,
+  ComCtrls, Controls, ExtCtrls,
+  FileUtil, Graphics, StdCtrls, SysUtils, LResources, SynEditTypes,
+  SynHighlighterAny, SynHighlighterTeX, SynHighlighterXML;
 
 type
 
   { TFileProfile }
 
-  TFileProfile=class
+  TFileProfile = class
     FPage: TPage;
     FSynEdit: TSynEdit;
     FProfileIndex: Integer;
   public
-    constructor Create(AOwner: TObject; ParentNotebook: TNotebook; ProfileIndex: Integer);
+    constructor Create(AOwner: TObject; ParentNotebook: TNotebook;
+      ProfileIndex: Integer);
     destructor Destroy; override;
   published
     property ProfileIndex: Integer read FProfileIndex write FProfileIndex;
@@ -45,7 +47,7 @@ type
 
   { TFileProfiles }
 
-  TFileProfiles=class
+  TFileProfiles = class
     FFileProfiles: TList;
     FParentNotebook: TNotebook;
   private
@@ -142,21 +144,21 @@ type
     procedure TabSheet2Show(Sender: TObject);
     procedure TabSheet3Show(Sender: TObject);
   private
- //   procedure CreateMD5Sums;
-  //** Saves the IPS file
+    //   procedure CreateMD5Sums;
+    //** Saves the IPS file
     procedure SaveIPSFile(IFn: String);
-  //** Reads the Output of Process1
+    //** Reads the Output of Process1
     procedure ReadOutput;
     function GetActiveSynEdit: TSynEdit;
   public
     procedure NewBlank;
     procedure LoadIPSScript(ipspath: String);
-  end; 
+  end;
 
 const
-   //** Size of the Linux output pipe
-   READ_BYTES = 2048;
-   FORM_CAPTION = 'Listaller package creator';
+  //** Size of the Linux output pipe
+  READ_BYTES = 2048;
+  FORM_CAPTION = 'Listaller package creator';
 
 var
   FrmEditor: TFrmEditor;
@@ -173,7 +175,8 @@ uses prjwizard;
 
 {TFileProfile}
 
-constructor TFileProfile.Create(AOwner: TObject; ParentNotebook: TNotebook; ProfileIndex: Integer);
+constructor TFileProfile.Create(AOwner: TObject; ParentNotebook: TNotebook;
+  ProfileIndex: Integer);
 var
   temp: Integer;
 begin
@@ -185,8 +188,8 @@ begin
   FSynEdit.Parent := FPage;
   FSynEdit.Align := alClient;
 
-  FSynEdit.Gutter.LeftOffset:=0;
-  FSynEdit.Gutter.RightOffset:=0;
+  FSynEdit.Gutter.LeftOffset := 0;
+  FSynEdit.Gutter.RightOffset := 0;
   FSynEdit.Font.Size := 10;
   FSynEdit.Highlighter := FrmEditor.FileHighlight;
 end;
@@ -211,7 +214,7 @@ destructor TFileProfiles.Destroy();
 var
   k: Integer;
 begin
-  for k:=FFileProfiles.Count-1 downto 0 do
+  for k := FFileProfiles.Count-1 downto 0 do
   begin
     TFileProfile(FFileProfiles[k]).Free;
   end;
@@ -221,21 +224,21 @@ end;
 
 function TFileProfiles.GetNewProfileIndex: Integer;
 var
-  k,ind: Integer;
+  k, ind: Integer;
   used: Boolean;
 begin
   ind := -1;
   repeat
-    inc(ind);
+    Inc(ind);
     used := false;
-    for k:=0 to FFileProfiles.Count-1 do
-      if TFileProfile(FFileProfiles[k]).ProfileIndex=ind then
+    for k := 0 to FFileProfiles.Count-1 do
+      if TFileProfile(FFileProfiles[k]).ProfileIndex = ind then
         used := true;
   until not used;
   Result := ind;
 end;
 
-function TFileProfiles.GetCount : Integer;
+function TFileProfiles.GetCount: Integer;
 begin
   Result := FFileProfiles.Count;
 end;
@@ -246,7 +249,7 @@ var
 begin
   temp := GetNewProfileIndex;
   iIndex := FFileProfiles.Add(TFileProfile.Create(Self, FParentNotebook, temp));
-  TFileProfile(FFileProfiles[iIndex]).ProfileIndex:=temp;
+  TFileProfile(FFileProfiles[iIndex]).ProfileIndex := temp;
   Result := TFileProfile(FFileProfiles[iIndex]);
 end;
 
@@ -255,7 +258,7 @@ var
   iIndex: Integer;
 begin
   iIndex := FFileProfiles.Add(TFileProfile.Create(Self, FParentNotebook, ProfileIndex));
-  TFileProfile(FFileProfiles[iIndex]).ProfileIndex:=ProfileIndex;
+  TFileProfile(FFileProfiles[iIndex]).ProfileIndex := ProfileIndex;
   Result := TFileProfile(FFileProfiles[iIndex]);
 end;
 
@@ -263,7 +266,7 @@ procedure TFileProfiles.Clear;
 var
   i: Integer;
 begin
-  for i:=FFileProfiles.Count-1 downto 0 do
+  for i := FFileProfiles.Count-1 downto 0 do
   begin
     Remove(i);
   end;
@@ -273,9 +276,9 @@ procedure TFileProfiles.RemoveProfile(APage: TPage);
 var
   k: Integer;
 begin
-  for k:=FFileProfiles.Count-1 downto 0 do
+  for k := FFileProfiles.Count-1 downto 0 do
   begin
-    if TFileProfile(FFileProfiles[k]).Page =APage then
+    if TFileProfile(FFileProfiles[k]).Page = APage then
     begin
       Remove(k);
       break;
@@ -287,9 +290,9 @@ procedure TFileProfiles.RemoveProfile(ProfileIndex: Integer);
 var
   k: Integer;
 begin
-  for k:=FFileProfiles.Count-1 downto 0 do
+  for k := FFileProfiles.Count-1 downto 0 do
   begin
-    if TFileProfile(FFileProfiles[k]).ProfileIndex=ProfileIndex then
+    if TFileProfile(FFileProfiles[k]).ProfileIndex = ProfileIndex then
     begin
       Remove(k);
       break;
@@ -309,9 +312,9 @@ var
   k: Integer;
 begin
   Result := nil;
-  for k:=FFileProfiles.Count-1 downto 0 do
+  for k := FFileProfiles.Count-1 downto 0 do
   begin
-    if TFileProfile(FFileProfiles[k]).Page =APage then
+    if TFileProfile(FFileProfiles[k]).Page = APage then
     begin
       Result := TFileProfile(FFileProfiles[k]);
       exit;
@@ -325,9 +328,9 @@ var
   k: Integer;
 begin
   Result := nil;
-  for k:=FFileProfiles.Count-1 downto 0 do
+  for k := FFileProfiles.Count-1 downto 0 do
   begin
-    if TFileProfile(FFileProfiles[k]).ProfileIndex=ProfileIndex then
+    if TFileProfile(FFileProfiles[k]).ProfileIndex = ProfileIndex then
     begin
       Result := TFileProfile(FFileProfiles[k]);
       exit;
@@ -347,7 +350,7 @@ end;
 
 procedure TFrmEditor.FormCreate(Sender: TObject);
 begin
-  IPSNotebook.PageIndex:=0;
+  IPSNotebook.PageIndex := 0;
   FileProfiles := TFileProfiles.Create(Self, IPSNotebook);
 end;
 
@@ -406,39 +409,43 @@ begin
 end;
 
 
-function FileCopy(source,dest: String): Boolean;
+function FileCopy(Source, dest: String): Boolean;
 var
- fSrc,fDst,len: Integer;
- ct,units,size: Longint;
- buffer: packed array [0..2047] of Byte;
+  fSrc, fDst, len: Integer;
+  ct, units, size: longint;
+  buffer: packed array [0..2047] of byte;
 begin
- ct:=0;
- Result := False; { Assume that it WONT work }
- if source <> dest then begin
-   fSrc := FileOpen(source,fmOpenRead);
-   if fSrc >= 0 then begin
-     size := FileSeek(fSrc,0,2);
-     units:=size div 2048;
-     FileSeek(fSrc,0,0);
-     fDst := FileCreate(dest);
-     if fDst >= 0 then begin
-       while size > 0 do begin
-         len := FileRead(fSrc,buffer,sizeof(buffer));
-         FileWrite(fDst,buffer,len);
-         size := size - len;
-         if units > 0 then
-         ct:=ct+1;
-       end;
-       FileSetDate(fDst,FileGetDate(fSrc));
-       FileClose(fDst);
-       FileSetAttr(dest,FileGetAttr(source));
-       Result := True;
-     end;
-     FileClose(fSrc);
-   end;
- end;
+  ct := 0;
+  Result := false; { Assume that it WONT work }
+  if Source <> dest then
+  begin
+    fSrc := FileOpen(Source, fmOpenRead);
+    if fSrc >= 0 then
+    begin
+      size := FileSeek(fSrc, 0, 2);
+      units := size div 2048;
+      FileSeek(fSrc, 0, 0);
+      fDst := FileCreate(dest);
+      if fDst >= 0 then
+      begin
+        while size > 0 do
+        begin
+          len := FileRead(fSrc, buffer, sizeof(buffer));
+          FileWrite(fDst, buffer, len);
+          size := size - len;
+          if units > 0 then
+            ct := ct+1;
+        end;
+        FileSetDate(fDst, FileGetDate(fSrc));
+        FileClose(fDst);
+        FileSetAttr(dest, FileGetAttr(Source));
+        Result := true;
+      end;
+      FileClose(fSrc);
+    end;
+  end;
 end;
-  
+
 procedure TFrmEditor.mnuBuildCreatePackageClick(Sender: TObject);
 begin
   mnuFileSaveClick(nil);
@@ -446,21 +453,22 @@ begin
   begin
     if FileExists(SaveDialog1.FileName) then
     begin
-      if not (MessageDlg('This file already exists.'#13'Overwrite it?',mtCOnfirmation,
-        [mbYes,mbNo],0)=mrYes) then
-      exit;
+      if not (MessageDlg('This file already exists.'#13'Overwrite it?', mtConfirmation,
+        [mbYes, mbNo], 0) = mrYes) then
+        exit;
       DeleteFile(SaveDialog1.FileName);
     end;
     Application.ProcessMessages;
     SetFocus;
 
-    Process1.CommandLine:='lipa -b '+''''+FName+''' '''+SaveDialog1.FileName+'''';
+    Process1.CommandLine := 'lipa -b '+''''+FName+''' '''+SaveDialog1.FileName+'''';
     memLog.Lines.Add('Execute '+Process1.CommandLine+' ...');
-    IPSNotebook.Enabled:=false;
+    IPSNotebook.Enabled := false;
     Process1.Execute;
     ReadOutput();
-    if Process1.ExitStatus>0 then ShowMessage('Build failed!');
-    IPSNotebook.Enabled:=true;
+    if Process1.ExitStatus>0 then
+      ShowMessage('Build failed!');
+    IPSNotebook.Enabled := true;
   end;
 end;
 
@@ -468,10 +476,11 @@ procedure TFrmEditor.mnuEditAddFilePathClick(Sender: TObject);
 begin
   if OpenDialog2.Execute then
   begin
-    if (ScriptPage.Visible) and (IPSNotebook.ActivePageComponent=ScriptPage) then
+    if (ScriptPage.Visible) and (IPSNotebook.ActivePageComponent = ScriptPage) then
       MainScriptEdit.Lines.Add(OpenDialog2.FileName)
     else if FileProfiles.Profiles_By_Page(IPSNotebook.ActivePageComponent)<>nil then
-       FileProfiles.Profiles_By_Page(IPSNotebook.ActivePageComponent).SynEdit.Lines.Add(OpenDialog2.FileName);
+        FileProfiles.Profiles_By_Page(IPSNotebook.ActivePageComponent).SynEdit.Lines.Add(
+          OpenDialog2.FileName);
   end;
 end;
 
@@ -524,38 +533,38 @@ begin
 end;
 
 procedure TFrmEditor.SaveIPSFile(IFn: String);
-var ips,ipsx: TStringList;i,k: Integer;
+var
+  ips, ipsx: TStringList;
+  i, k: Integer;
 begin
-  ips:=TStringList.Create;
-  ipsx:=TStringList.Create;
+  ips := TStringList.Create;
+  ipsx := TStringList.Create;
 
-  I:=0;
+  I := 0;
 
   ips.Clear;
-  for i:=0 to MainScriptEdit.Lines.Count-1 do
+  for i := 0 to MainScriptEdit.Lines.Count-1 do
     ips.Add(MainScriptEdit.Lines[i]);
 
   //Preprocess files
   ips.Add('');
-  for k:=0 to FileProfiles.Count-1 do
+  for k := 0 to FileProfiles.Count-1 do
   begin
     ips.Add('!-Files ~'+IntToStr(FileProfiles.Profiles_By_Index(k).ProfileIndex));
     //NEEDS IMPROVEMENTS!!
-    for i:=0 to FileProfiles.Profiles_By_Index(k).SynEdit.Lines.Count-1 do
-      if i mod 2 = 0 then
-      begin
-        ips.Add(FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i]);
-        ips.Add(FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i+1]);
-       // ips.Add(MD5.MDPrint(MD5.MD5File(FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i+1],1024)));
-      end;
+    for i := 0 to FileProfiles.Profiles_By_Index(k).SynEdit.Lines.Count-1 do
+      ips.Add(CreateRelativePath(FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i],
+        ExtractFilePath(IFn)));
+    // ips.Add(MD5.MDPrint(MD5.MD5File(FileProfiles.Profiles_By_Index(k).SynEdit.Lines[i+1],1024)));
+
   end;
 
-  for i:=0 to ipsx.Count-1 do
+  for i := 0 to ipsx.Count-1 do
     ips.Add(ipsx[i]);
-  ipsx.free;
+  ipsx.Free;
   ips.SaveToFile(IFn);
   ips.Free;
-  FName:=Ifn;
+  FName := Ifn;
 end;
 
 procedure TFrmEditor.mnuFileSaveClick(Sender: TObject);
@@ -563,7 +572,8 @@ begin
   if FName<>'' then
   begin
     SaveIPSFile(FName);
-  end else
+  end
+  else
   begin
     mnuFileSaveAsClick(Sender);
   end;
@@ -572,7 +582,7 @@ end;
 procedure TFrmEditor.mnuFileNewWizardClick(Sender: TObject);
 begin
   NewBlank;
-  frmProjectWizard:=TfrmProjectWizard.Create(nil);
+  frmProjectWizard := TfrmProjectWizard.Create(nil);
   frmProjectWizard.ShowModal;
   frmProjectWizard.Free;
 end;
@@ -584,74 +594,80 @@ end;
 
 procedure TFrmEditor.NewBlank;
 begin
-  FName:='';
-  Caption:= FORM_CAPTION;
+  FName := '';
+  Caption := FORM_CAPTION;
   MainScriptEdit.Lines.Clear;
   FileProfiles.Clear;
 end;
 
 procedure TFrmEditor.ReadOutput;
-var M: TMemoryStream;
-   n: LongInt;
-   BytesRead: LongInt;
-   s: String;
+var
+  M: TMemoryStream;
+  n: longint;
+  BytesRead: longint;
+  s: String;
 begin
- M := TMemoryStream.Create;
- m.Clear;
-   BytesRead := 0;
-   while Process1.Running do
-   begin
-     M.SetSize(BytesRead + READ_BYTES);
-     n := Process1.Output.Read((M.Memory + BytesRead)^, READ_BYTES);
-     if n > 0
-     then begin
-       //Convert to string and write
-       SetString(s, PChar(M.Memory + BytesRead), n);
-       memLog.Lines.Add(s);
-       Inc(BytesRead, n);
-       Application.ProcessMessages;
-       // the following line is necessary for the Memo to scroll down, bug in LCL?
-       memLog.Lines.Delete(memLog.Lines.Add(''));
-     end
-     else begin
-       // no data, wait 100 ms
-       Sleep(100);
-     end;
-   end;
-   // read last part
-   repeat
-     M.SetSize(BytesRead + READ_BYTES);
-     // try reading it
-     n := Process1.Output.Read((M.Memory + BytesRead)^, READ_BYTES);
-     if n > 0
-     then begin
-       SetString(s, PChar(M.Memory + BytesRead), n);
-       memLog.Lines.Add(s);
-       Inc(BytesRead, n);
-       Application.ProcessMessages;
-       // the following line is necessary for the Memo to scroll down, bug in LCL?
-       memLog.Lines.Delete(memLog.Lines.Add(''));
-     end;
-   until n <= 0;
-   M.Free;
+  M := TMemoryStream.Create;
+  m.Clear;
+  BytesRead := 0;
+  while Process1.Running do
+  begin
+    M.SetSize(BytesRead + READ_BYTES);
+    n := Process1.Output.Read((M.Memory + BytesRead)^, READ_BYTES);
+    if n > 0 then
+    begin
+      //Convert to string and write
+      SetString(s, PChar(M.Memory + BytesRead), n);
+      memLog.Lines.Add(s);
+      Inc(BytesRead, n);
+      Application.ProcessMessages;
+      // the following line is necessary for the Memo to scroll down, bug in LCL?
+      memLog.Lines.Delete(memLog.Lines.Add(''));
+    end
+    else
+    begin
+      // no data, wait 100 ms
+      Sleep(100);
+    end;
+  end;
+  // read last part
+  repeat
+    M.SetSize(BytesRead + READ_BYTES);
+    // try reading it
+    n := Process1.Output.Read((M.Memory + BytesRead)^, READ_BYTES);
+    if n > 0 then
+    begin
+      SetString(s, PChar(M.Memory + BytesRead), n);
+      memLog.Lines.Add(s);
+      Inc(BytesRead, n);
+      Application.ProcessMessages;
+      // the following line is necessary for the Memo to scroll down, bug in LCL?
+      memLog.Lines.Delete(memLog.Lines.Add(''));
+    end;
+  until n <= 0;
+  M.Free;
 end;
 
 procedure TFrmEditor.mnuBuildFastClick(Sender: TObject);
-var strTargetName: String;
+var
+  strTargetName: String;
 begin
   mnuFileSaveClick(nil);
-  if not FileExists(FName) then exit;
+  if not FileExists(FName) then
+    exit;
   Application.ProcessMessages;
   SetFocus;
-  strTargetName := ChangeFileExt(FName,'.ipk');
-  if FileExists(strTargetName) then DeleteFile(strTargetName);
-  Process1.CommandLine:='libuild -b '+''''+FName+''' '''+strTargetName+'''';
+  strTargetName := ChangeFileExt(FName, '.ipk');
+  if FileExists(strTargetName) then
+    DeleteFile(strTargetName);
+  Process1.CommandLine := 'libuild -b '+''''+FName+''' '''+strTargetName+'''';
   memLog.Lines.Add('Execute '+Process1.CommandLine+' ...');
-  IPSNotebook.Enabled:=false;
+  IPSNotebook.Enabled := false;
   Process1.Execute;
   ReadOutput();
-  if Process1.ExitStatus>0 then ShowMessage('Build failed!');
-  IPSNotebook.Enabled:=true;
+  if Process1.ExitStatus>0 then
+    ShowMessage('Build failed!');
+  IPSNotebook.Enabled := true;
 end;
 
 procedure TFrmEditor.Button1Click(Sender: TObject);
@@ -662,7 +678,7 @@ end;
 function TFrmEditor.GetActiveSynEdit: TSynEdit;
 begin
   try
-    if IPSNotebook.ActivePageComponent=ScriptPage then
+    if IPSNotebook.ActivePageComponent = ScriptPage then
       Result := MainScriptEdit
     else
       Result := FileProfiles.Profiles_By_Page(IPSNotebook.ActivePageComponent).SynEdit;
@@ -677,32 +693,38 @@ var
   srOptions: TSynSearchOptions;
 begin
   AEdit := GetActiveSynEdit;
-  if AEdit= nil then
+  if AEdit = nil then
     exit;
   srOptions := [];
-  if not (frDown in FindDialog.Options) then Include(srOptions,ssoBackwards);
-  if (frMatchCase in FindDialog.Options) then Include(srOptions, ssoMatchCase);
-  if (frWholeWord in FindDialog.Options) then Include(srOptions, ssoWholeWord);
-  if AEdit.SearchReplace(FindDialog.FindText,'',srOptions)=0 then
+  if not (frDown in FindDialog.Options) then
+    Include(srOptions, ssoBackwards);
+  if (frMatchCase in FindDialog.Options) then
+    Include(srOptions, ssoMatchCase);
+  if (frWholeWord in FindDialog.Options) then
+    Include(srOptions, ssoWholeWord);
+  if AEdit.SearchReplace(FindDialog.FindText, '', srOptions) = 0 then
   begin
     ShowMessage('Not found.');
   end;
 end;
 
-var fActiv: Boolean=true;
+var
+  fActiv: Boolean = true;
+
 procedure TFrmEditor.FormActivate(Sender: TObject);
 begin
   if fActiv then
   begin
-    fActiv:=false;
-    if (FileExists(paramstr(1)))
-    and(LowerCase(ExtractFileExt(paramstr(1)))='.ips') then
+    fActiv := false;
+    if (FileExists(ParamStr(1)))  and
+      (LowerCase(ExtractFileExt(ParamStr(1))) = '.ips') then
     begin
-     LoadIPSScript(paramstr(1));
-    end else
+      LoadIPSScript(ParamStr(1));
+    end
+    else
     begin
-     frmProjectWizard.ShowModal;
-     frmProjectWizard.Free;
+      frmProjectWizard.ShowModal;
+      frmProjectWizard.Free;
     end;
   end;
 end;
@@ -739,85 +761,91 @@ end;
 
 procedure TFrmEditor.LoadIPSScript(ipspath: String);
 
-  function BeginsFilesPart(str: String;var iProfileIndex:Integer):Boolean;
+  function BeginsFilesPart(str: String; var iProfileIndex: Integer): Boolean;
   var
     k: Integer;
   begin
-    Result := False;
+    Result := false;
     if (Length(str)>=7) then
     begin
-     if LowerCase(Copy(str,1,7))='!-files' then
-     begin
-       Result := True;
-       try
-         k:=Pos('#',str);
-         iProfileIndex := StrToInt(Copy(str,k+1,Length(str)-k));
-       except
-         iProfileIndex := -1;
-       end;
-     end;
+      if LowerCase(Copy(str, 1, 7)) = '!-files' then
+      begin
+        Result := true;
+        try
+          k := Pos('#', str);
+          iProfileIndex := StrToInt(Copy(str, k+1, Length(str)-k));
+        except
+          iProfileIndex := -1;
+        end;
+      end;
     end;
   end;
 
-  function IsInstallationPath(str: String):Boolean;
+  function IsInstallationPath(str: String): Boolean;
   begin
-    Result := False;
-    if length(str)>0 then Result := str[1]='>';
+    Result := false;
+    if length(str)>0 then
+      Result := str[1] = '>';
   end;
 
-  function IsFilePath(str: String):Boolean;
+  function IsFilePath(str: String): Boolean;
   begin
-    Result := False;
-    if length(str)>0 then Result := str[1]='/';
+    Result := false;
+    if length(str)>0 then
+      Result := str[1] = '/';
   end;
 
 var
   ips: TStringList;
-  i,j,iProfileIndex: integer;
+  i, j, iProfileIndex: Integer;
   AFileEdit: TSynEdit;
   strInstallPath: String;
 begin
-    NewBlank;
-    ips:=TStringList.Create;
-    ips.LoadFromFile(ipspath);
-    for i:=1 to ips.Count-1 do
-    begin
-      if BeginsFilesPart(ips[i],iProfileIndex) then break
-      else MainScriptEdit.Lines.Add(ips[i]);
-    end;
+  NewBlank;
+  ips := TStringList.Create;
+  ips.LoadFromFile(ipspath);
+  for i := 0 to ips.Count-1 do
+  begin
+    if BeginsFilesPart(ips[i], iProfileIndex) then
+      break
+    else
+      MainScriptEdit.Lines.Add(ips[i]);
+  end;
 
-    j:=i;
-    AFileEdit := nil;
-    while (j<=ips.count-2) do
+  j := i;
+  AFileEdit := nil;
+  while (j<=ips.Count-2) do
+  begin
+    if BeginsFilesPart(ips[j], iProfileIndex) then
     begin
-      if BeginsFilesPart(ips[j],iProfileIndex) then
-      begin
-        AFileEdit := FileProfiles.AddProfile(iProfileIndex).SynEdit;
-      end else if IsInstallationPath(ips[j]) then
+      AFileEdit := FileProfiles.AddProfile(iProfileIndex).SynEdit;
+    end
+    else if IsInstallationPath(ips[j]) then
       begin
         strInstallPath := ips[j];
-      end else if IsFilePath(ips[j]) then
-      begin
-       if not (AFileEdit=nil) then
-       begin
-         AFileEdit.Lines.Add(strInstallPath);
-         AFileEdit.Lines.Add(ips[j]);
+      end
+      else if IsFilePath(ips[j]) then
+        begin
+          if not (AFileEdit = nil) then
+          begin
+            AFileEdit.Lines.Add(strInstallPath);
+            AFileEdit.Lines.Add(ips[j]);
+          end;
         end;
-      end;
-      inc(j);
-    end;
+    Inc(j);
+  end;
 
-    FName:=ipspath;
-    Caption:= FORM_CAPTION+ ' - "'+ExtractFileName(FName)+'"';
+  FName := ipspath;
+  Caption := FORM_CAPTION+ ' - "'+ExtractFileName(FName)+'"';
 end;
 
 procedure TFrmEditor.mnuFileLoadIPSClick(Sender: TObject);
 begin
- if OpenDialog1.Execute then
-  if FileExists(OpenDialog1.FileName) then
-  begin
-   LoadIPSScript(OpenDialog1.FileName);
-  end;
+  if OpenDialog1.Execute then
+    if FileExists(OpenDialog1.FileName) then
+    begin
+      LoadIPSScript(OpenDialog1.FileName);
+    end;
 end;
 
 procedure TFrmEditor.mnuFileCloseClick(Sender: TObject);
@@ -836,13 +864,17 @@ var
   srOptions: TSynSearchOptions;
 begin
   AEdit := GetActiveSynEdit;
-  if AEdit= nil then
+  if AEdit = nil then
     exit;
   srOptions := [];
-  if not (frDown in ReplaceDialog.Options) then Include(srOptions,ssoBackwards);
-  if (frMatchCase in ReplaceDialog.Options) then Include(srOptions, ssoMatchCase);
-  if (frWholeWord in ReplaceDialog.Options) then Include(srOptions, ssoWholeWord);
-  if AEdit.SearchReplace(ReplaceDialog.FindText,ReplaceDialog.ReplaceText,srOptions)=0 then
+  if not (frDown in ReplaceDialog.Options) then
+    Include(srOptions, ssoBackwards);
+  if (frMatchCase in ReplaceDialog.Options) then
+    Include(srOptions, ssoMatchCase);
+  if (frWholeWord in ReplaceDialog.Options) then
+    Include(srOptions, ssoWholeWord);
+  if AEdit.SearchReplace(ReplaceDialog.FindText, ReplaceDialog.ReplaceText,
+    srOptions) = 0 then
   begin
     ShowMessage('Not found.');
   end;
@@ -854,13 +886,17 @@ var
   srOptions: TSynSearchOptions;
 begin
   AEdit := GetActiveSynEdit;
-  if AEdit= nil then
+  if AEdit = nil then
     exit;
   srOptions := [ssoReplace];
-  if not (frDown in ReplaceDialog.Options) then Include(srOptions,ssoBackwards);
-  if (frMatchCase in ReplaceDialog.Options) then Include(srOptions, ssoMatchCase);
-  if (frWholeWord in ReplaceDialog.Options) then Include(srOptions, ssoWholeWord);
-  if (frReplaceAll in ReplaceDialog.Options) then Include(srOptions, ssoReplaceAll);
+  if not (frDown in ReplaceDialog.Options) then
+    Include(srOptions, ssoBackwards);
+  if (frMatchCase in ReplaceDialog.Options) then
+    Include(srOptions, ssoMatchCase);
+  if (frWholeWord in ReplaceDialog.Options) then
+    Include(srOptions, ssoWholeWord);
+  if (frReplaceAll in ReplaceDialog.Options) then
+    Include(srOptions, ssoReplaceAll);
 
   if (AEdit.SelAvail) and (AEdit.SelStart>0) and (not(ssoBackwards in srOptions)) then
     // Set SelStart one position back, otherwise the next element will be replaced
@@ -868,7 +904,8 @@ begin
   if (AEdit.SelAvail) and (AEdit.SelStart>0) and (ssoBackwards in srOptions) then
     // Set SelStart to SelEnd, otherwise the previous element will be replaced
     AEdit.SelStart := AEdit.SelEnd;
-  if AEdit.SearchReplace(ReplaceDialog.FindText,ReplaceDialog.ReplaceText,srOptions)=0 then
+  if AEdit.SearchReplace(ReplaceDialog.FindText, ReplaceDialog.ReplaceText,
+    srOptions) = 0 then
   begin
     ShowMessage('Not found.');
   end;
@@ -876,12 +913,12 @@ end;
 
 procedure TFrmEditor.TabSheet1Show(Sender: TObject);
 begin
-  mnuEditFileWizard.Visible:=false;
+  mnuEditFileWizard.Visible := false;
 end;
 
 procedure TFrmEditor.TabSheet2Show(Sender: TObject);
 begin
-  mnuEditFileWizard.Visible:=true;
+  mnuEditFileWizard.Visible := true;
 end;
 
 procedure TFrmEditor.TabSheet3Show(Sender: TObject);

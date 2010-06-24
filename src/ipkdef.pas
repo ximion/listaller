@@ -21,7 +21,7 @@ unit ipkdef;
 interface
 
 uses
-  Classes, GetText, liTypes, liUtils, SysUtils;
+  Classes, GetText, liTypes, liUtils, SysUtils, FileUtil;
 
 type
 
@@ -245,8 +245,8 @@ var
 begin
   h := copy(s, pos('"', s) + 1, length(s));
   h := copy(h, 0, pos('"', h) - 1);
-  if h[1] = '.' then
-    Result := FBasePath + '/' + h
+  if not FilenameIsAbsolute(h) then
+    Result := AppendPathDelim(FBasePath) + h
   else
     Result := h;
 end;
