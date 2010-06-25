@@ -461,7 +461,7 @@ begin
     Application.ProcessMessages;
     SetFocus;
 
-    Process1.CommandLine := 'lipa -b '+''''+FName+''' '''+SaveDialog1.FileName+'''';
+    Process1.CommandLine := 'libuild -b '+''''+FName+''' '''+SaveDialog1.FileName+'''';
     memLog.Lines.Add('Execute '+Process1.CommandLine+' ...');
     IPSNotebook.Enabled := false;
     Process1.Execute;

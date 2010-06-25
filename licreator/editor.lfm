@@ -762,6 +762,17 @@ object FrmEditor: TFrmEditor
             MoveCaret = False
             Option = 0
             Priority = 0
+          end        
+          item
+            Shift = []
+            ShiftMask = []
+            Button = mbLeft
+            ClickCount = ccSingle
+            ClickDir = cdDown
+            Command = 9
+            MoveCaret = False
+            Option = 0
+            Priority = 0
           end>
         Lines.Strings = (
           'IPK-Standard-Version: 1.0'
