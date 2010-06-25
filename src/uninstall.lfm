@@ -89,23 +89,27 @@ object RMForm: TRMForm
     TabOrder = 1
   end
   object BitBtn1: TBitBtn
-    Left = 389
+    Left = 420
     Height = 30
     Top = 231
-    Width = 75
+    Width = 44
     Anchors = [akRight, akBottom]
+    AutoSize = True
     Caption = 'Close'
+    Constraints.MinHeight = 30
     NumGlyphs = 0
     OnClick = BitBtn1Click
     TabOrder = 2
   end
   object DetailsBtn: TBitBtn
     Left = 8
-    Height = 22
+    Height = 26
     Top = 72
-    Width = 65
+    Width = 69
     AutoSize = True
-    Caption = 'Details ->'
+    Caption = 'Details >>'
+    Constraints.MaxHeight = 26
+    Constraints.MinHeight = 26
     OnClick = DetailsBtnClick
     TabOrder = 3
   end

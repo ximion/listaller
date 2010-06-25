@@ -55,9 +55,9 @@ object FmAbout: TFmAbout
     Height = 268
     Top = 104
     Width = 324
-    ActivePage = AuthorSheet
+    ActivePage = AboutSheet
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     object AboutSheet: TTabSheet
       Caption = 'About'
@@ -132,6 +132,11 @@ object FmAbout: TFmAbout
         Width = 320
         Align = alClient
         BorderStyle = bsNone
+        Lines.Strings = (
+          ''
+          'Christian Bley'
+          ' ...for his amazing work as alpha-tester.'
+        )
         ParentColor = True
         ReadOnly = True
         ScrollBars = ssAutoVertical

@@ -1,5 +1,5 @@
-listaller (0.3.90-0+git20100524~exp) experimental; urgency=low
+listaller (0.3.90-0+git20100625) UNRELEASED; urgency=low
 
-  * New development snapshot of 0.4 series (auto-generated)
+  * New development snapshot of 0.4b series (auto-generated)
 
  -- Matthias Klumpp <matthias@nlinux.org>  Mon, 06 Apr 2010 18:37:48 +0200

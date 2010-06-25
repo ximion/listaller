@@ -139,14 +139,14 @@ begin
     Memo1.Visible := false;
     Width := 456;
     Height := 134;
-    DetailsBtn.Caption := rsDetails+' -> ';
+    DetailsBtn.Caption := rsDetails+' >> ';
   end
   else
   begin
     Memo1.Visible := true;
     Width := 456;
     Height := 294;
-    DetailsBtn.Caption := rsDetails+' <- ';
+    DetailsBtn.Caption := rsDetails+' << ';
   end;
 end;
 
