@@ -2,22 +2,30 @@ Version 0.4b
 ~~~~~~~~~~~~~
  == Still in development ==
  
- * Made liCreator use the new IPS defs
- * [listallmgr] Redesigned interface
- * Dropped C/Python bindings
- * Switched to Lazarus 0.9.29 to use the new FPC resource system
- * [lipa] Update to work with new components
- * [listallgo] Updated GUI
- * [libuid] Work with new IPK1.0 specs
- * Added LZMA support for IPK1.0
- * Dropped Abbrevia components
- * Included libinstaller library
- * Added PolicyKit support
- * Changed to IPK1.0 and IPS1.0 standard for package building
- * Removed support for IPK0.8
- * Rebased on PackageKit 0.5.x glib2 interface
- * Completely updated the GUI interfaces
- * Switched to Lazarus 0.9.28 and FPC 2.4.0
+ * licreator: Use the new IPS defs
+ * listallmgr: Redesigned interface
+ * listallmgr: Revised Qt4 GUI
+ * listallmgr: Removed catalog feature (might be replaced by PAPPI)
+ * master: New module: libInstaller library
+ * master: Advanced translation support
+ * master: Completely new build system
+ * master: Dropped C/Python bindings
+ * master: Switched to Lazarus 0.9.29 to use the new FPC resource system
+ * master: Changed to IPK1.0 and IPS1.0 standard for package building
+ * master: Added LZMA support for IPK1.0
+ * master: Dropped Abbrevia components
+ * master: Included libinstaller library
+ * master: Completely updated the GUI interfaces
+ * master: Switched to Lazarus 0.9.29 and FPC 2.4.0
+ * master: Removed support for IPK0.8
+ * master: Dropped "PkgXTransact" - replaced with PackageKit
+ * lipa: Update to work with new components
+ * listallgo: Updated GUI
+ * libuild: Work with new IPK1.0 specs
+ * libuild: Use LZMA compression for IPK
+ * libinstaller: Added PolicyKit support
+ * libinstaller: Rebased on PackageKit 0.5.x glib2 interface
+
 
 Version 0.3.0a
 ~~~~~~~~~~~~~
