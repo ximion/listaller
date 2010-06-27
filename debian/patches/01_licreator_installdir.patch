@@ -1,10 +1,12 @@
-Don't install licreator to /opt/appfiles.
-Install it to /usr/lib instead.
-#
+Description: Change liCreator installation dir from /opt/appfiles.
+ to /usr/lib to fulfill Debian standards.
+Author: Matthias Klumpp <matthias@nlinux.org>
+Last-Update: 2010-06-26
+
 Index: listaller-0.4b/data/applications/licreator-gtk.desktop
 ===================================================================
---- listaller-0.4b.orig/data/applications/licreator-gtk.desktop	2010-05-21 11:00:16.229177438 +0200
-+++ listaller-0.4b/data/applications/licreator-gtk.desktop	2010-05-21 11:02:08.379181487 +0200
+--- a/data/applications/licreator-gtk.desktop	2010-05-21 11:00:16.229177438 +0200
++++ b/data/applications/licreator-gtk.desktop	2010-05-21 11:02:08.379181487 +0200
 @@ -8,7 +8,7 @@
  Exec=licreator-gtk
  GenericName=Create setup package
@@ -16,8 +18,8 @@ Index: listaller-0.4b/data/applications/licreator-gtk.desktop
  Terminal=false
 Index: listaller-0.4b/data/applications/licreator-qt.desktop
 ===================================================================
---- listaller-0.4b.orig/data/applications/licreator-qt.desktop	2010-05-21 11:00:17.556676649 +0200
-+++ listaller-0.4b/data/applications/licreator-qt.desktop	2010-05-21 11:02:24.156676041 +0200
+--- a/data/applications/licreator-qt.desktop	2010-05-21 11:00:17.556676649 +0200
++++ b/data/applications/licreator-qt.desktop	2010-05-21 11:02:24.156676041 +0200
 @@ -8,7 +8,7 @@
  Exec=licreator-qt
  GenericName=Create setup package
@@ -29,8 +31,8 @@ Index: listaller-0.4b/data/applications/licreator-qt.desktop
  Terminal=false
 Index: listaller-0.4b/src/install-creator.sh
 ===================================================================
---- listaller-0.4b.orig/src/install-creator.sh	2010-05-21 11:00:09.919179529 +0200
-+++ listaller-0.4b/src/install-creator.sh	2010-05-21 11:01:35.566676969 +0200
+--- a/src/install-creator.sh	2010-05-21 11:00:09.919179529 +0200
++++ b/src/install-creator.sh	2010-05-21 11:01:35.566676969 +0200
 @@ -34,27 +34,26 @@
  #
  

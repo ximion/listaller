@@ -416,7 +416,7 @@ begin
     end else
       if pk.Finished then
       begin
-        P_debug('Finished! ['+IntToStr(pk.Tag)+']');
+        p_debug('Finished! ['+IntToStr(pk.Tag)+']');
         Inc(pkinf.pos);
         pkInf.inst.SetExtraPos(Round(pkinf.pos * pkinf.mpos));
 
@@ -443,7 +443,6 @@ var
   i, j: Integer;
   pkitList: TObjectList;
   mnpos: Integer;
-  DInfo: TDistroInfo;
   one: Double;
   pk: TPackageKit;
   eIndex: Integer;
@@ -496,10 +495,9 @@ begin
 
     msg(rsResolvingDynDeps);
 
-    DInfo := GetDistro;
     //Resolve all substitution variables in dependency list
       for i := 0 to Dependencies.Count - 1 do
-        Dependencies[i]:=SyblToPath(Dependencies[i],true);
+        Dependencies[i]:=StrSubst(SyblToPath(Dependencies[i],true),'*','');
 
     mnpos := 0;
     one := 100 / Dependencies.Count;

@@ -121,8 +121,6 @@ type
     function FindPkgForFile(fname: String): Boolean;
     //** Grab the resulting package list
     property RList: TPackageList read PkgList write PkgList;
-    //** Check if the last transaction was finished
-    property PkFinished: Boolean read done write done;
     //** Read finish code
     property PkFinishCode: Integer read exitcode;
     //** Reads the current Packagekit version as string
@@ -131,7 +129,7 @@ type
     property OnProgress: TProgressEvent read FProg write FProg;
     //** Read the last error message
     property LastErrorMessage: String read ErrorMsg;
-    //** Read if object is idle
+    //** Check if the last transaction has finished (object idle)
     property Finished: Boolean read done;
     //** If true, the instance won't wait until the action completes
     property NoWait: Boolean read doasync write doasync;
@@ -308,6 +306,7 @@ begin
     errorMsg := aError^.message;
     g_warning('action failed: %s', [errorMsg]);
     exitcode := 88;
+    done := true;
     g_error_free(aError);
   end;
 end;
