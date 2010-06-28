@@ -787,7 +787,7 @@ begin
                     ShowMessage(rsplWait);
                     pkit := TPackageKit.Create;
                     pkit.InstallPkg('alien');
-                    while not pkit.PkFinished do
+                    while not pkit.Finished do
                       Application.ProcessMessages;
 
                     if pkit.PkFinishCode>0 then
@@ -838,7 +838,7 @@ begin
                   begin
                     ShowMessage(rsplWait);
                     pkit.InstallPkg('alien');
-                    while not pkit.PkFinished do
+                    while not pkit.Finished do
                       Application.ProcessMessages;
 
                     if pkit.PkFinishCode>0 then
