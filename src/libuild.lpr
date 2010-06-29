@@ -31,7 +31,7 @@ type
 
  TLiBuild = class(TCustomApplication)
  private
-   procedure OnCompressionProgress(pos: Integer; user_data: Pointer);
+   procedure OnProgress(pos: Integer; user_data: Pointer);
  protected
    procedure DoRun; override;
  public
@@ -44,9 +44,9 @@ type
 
  { TLiBuild }
 
-procedure TLiBuild.OnCompressionProgress(pos: Integer; user_data: Pointer);
+procedure TLiBuild.OnProgress(pos: Integer; user_data: Pointer);
 begin
- write(#13+' Progress: '+IntToStr(pos)+'%  ');
+ write(#13+' Progress: '+IntToStr(pos)+'%');
 end;
 
 procedure TLiBuild.DoRun;
@@ -170,7 +170,7 @@ if not HasOption('noquietcrash') then
         if (not FileExists(b)) and (LowerCase(ExtractFileExt(b)) = '.ipk') and
           (DirectoryExists(ExtractFilePath(b))) then
         begin
-          BuildPackage(a, b, @OnCompressionProgress, x, HasOption('sign'));
+          BuildPackage(a, b, x, HasOption('sign'));
         end
         else
         begin
@@ -183,7 +183,7 @@ if not HasOption('noquietcrash') then
       end
       else
       begin
-        BuildPackage(a, '', @OnCompressionProgress, x, HasOption('sign'));
+        BuildPackage(a, '', x, HasOption('sign'));
       end;
     end;
     halt;

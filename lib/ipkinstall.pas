@@ -95,7 +95,6 @@ type
     //Daemon-Mode?
     daemonm: Boolean;
 
-    procedure pkgProgress(pos: Integer; user_data: Pointer);
     //Set superuser mode correctly
     procedure SetRootMode(b: Boolean);
     //Executed if Linstallation should be done
@@ -287,11 +286,6 @@ begin
   longdesc.Free;
   mofiles.Free;
   inherited Destroy;
-end;
-
-procedure TInstallation.pkgProgress(pos: Integer; user_data: Pointer);
-begin
-  SetExtraPos(pos);
 end;
 
 procedure TInstallation.SetRootMode(b: Boolean);
@@ -645,12 +639,10 @@ begin
   end;
 
   pkg := TLiUnpacker.Create(fname);
-  pkg.OnProgress := @pkgProgress;
   if not SUMode then
   begin
     try
-      //Uncompress LZMA
-      pkg.Decompress;
+      pkg.Prepare;
     except
       on E: Exception do
         MakeUsrRequest(rsPkgDM + #10 + rsABLoad + #10 + E.Message, rqError);
@@ -660,15 +652,14 @@ begin
     if not FileExists(CleanFilePath(pkg.WDir + '/ipktar.tar')) then
     begin
       try
-        //Uncompress LZMA
-        pkg.Decompress;
+        pkg.Prepare;
       except
         on E: Exception do
           MakeUsrRequest(rsPkgDM + #10 + rsABLoad + #10 + E.Message, rqError);
       end;
     end;
 
-  if not daemonm then  //Why?
+  if not daemonm then  //If running as daemon, don't check signature
   begin
     sigState := pkg.CheckSignature;
     case sigState of

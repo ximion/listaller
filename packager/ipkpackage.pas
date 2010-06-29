@@ -21,9 +21,7 @@ unit ipkpackage;
 interface
 
 uses
-  Classes, FileUtil, gpgsign, liUtils, liTypes, SysUtils, TarFile,
-  UBufferedFS, ULZMACommon, ULZMADecoder,
-  ULZMAEncoder;
+  Classes, FileUtil, gpgsign, liUtils, liTypes, SysUtils, TarFile;
 
 type
   //** Creates IPK packages from preprocessed source files
@@ -37,14 +35,10 @@ type
     basename: String;
     mntar: TTarArchive;
     finalized: Boolean;
-    algorithm: Integer;
     bdir: String;
     maxbytes: Int64;
-    FProgress: TProgressEvent;
 
     function RandomID: String;
-        procedure encoderProgress(const Action: TLZMAProgressAction;
-      const Value: int64);
   public
     constructor Create(aIPKFile: String);
     destructor Destroy; override;
@@ -61,8 +55,6 @@ type
     property BaseDir: String read bdir write bdir;
     //** Set IPK file name
     property IPKFile: String read OutFileName write OutFileName;
-    //** On compression progress change
-    property OnProgress: TProgressEvent read FProgress write FProgress;
   end;
 
   //** Unpacks IPK package structure
@@ -74,32 +66,25 @@ type
     ipkfile: String;
     workdir: String;
     signChecked: Boolean;
-    FProgress: TProgressEvent;
     one: Double;
-
-    procedure decoderProgress(const Action: TLZMAProgressAction; const Value: int64);
   public
     constructor Create(aIPKFile: String);
     destructor Destroy; override;
 
-    //** Decompress IPK tar file
-    procedure Decompress;
+    //** Prepare IPK tar file for extracting
+    procedure Prepare;
     //** Verify signature (if there is any)
     function CheckSignature: TPkgSigState;
     //** Unpack file @returns Success of operation
     function UnpackFile(fname: String): Boolean;
     //** Unpacker's working dir
     property WDir: String read workdir;
-    //** On unpacker decompress progress
-    property OnProgress: TProgressEvent read FProgress write FProgress;
   end;
 
   //** Create small LZMA compressed files for update sources
   TLiUpdateBit = class
   private
-    encoder: TLZMAEncoder;
-    decoder: TLZMADecoder;
-    algorithm: Integer;
+    xz: TTarArchive;
   public
     constructor Create;
     destructor Destroy; override;
@@ -123,8 +108,8 @@ begin
   OutFileName := aIPKFile;
   basename := tmpdir + ExtractFileName(OutFileName) + pkrandom + '.tar';
   mntar := TTarArchive.Create;
+  mntar.Compression:=cmXZ; //IPK packages are XZ compressed
   mntar.TarArchive := basename;
-  algorithm := 2;
 end;
 
 destructor TLiPackager.Destroy;
@@ -132,15 +117,6 @@ begin
   if not finalized then
     mntar.Free;
   inherited;
-end;
-
-procedure TLiPackager.encoderProgress(const Action: TLZMAProgressAction;
-  const Value: int64);
-begin
-  case Action of
-   LPAMax: maxbytes:=value;
-   LPAPos: if Assigned(FProgress) then FProgress(Round(100/maxbytes*Value),nil);
-  end;
 end;
 
 function TLiPackager.RandomID: String;
@@ -164,6 +140,9 @@ end;
 
 procedure TLiPackager.Finalize;
 begin
+  p_info('Finalizing package.');
+  if mntar.Finalize > 0 then
+      raise Exception.Create('Error while building package.');
   mntar.Free;
   finalized := true;
 end;
@@ -196,6 +175,7 @@ begin
   pkrandom := '-' + RandomID + RandomID + RandomID;
   basename := tmpdir + ExtractFileName(OutFileName) + pkrandom + '.tar';
   mntar := TTarArchive.Create;
+  mntar.Compression:=cmNone; //No compression here
   mntar.TarArchive := basename;
 
   mntar.BaseDir := ExtractFilePath(oldbase);
@@ -212,6 +192,7 @@ begin
   end
   else
     raise Exception.Create('Error while combining signed package.');
+  mntar.Finalize;
   mntar.Free;
 
   DeleteFile(ExtractFilePath(oldbase) + 'signature.asc');
@@ -220,53 +201,17 @@ end;
 
 function TLiPackager.ProduceIPKPackage: Boolean;
 var
-  encoder: TLZMAEncoder;
-  inStream: TBufferedFS;
-  outStream: TBufferedFS;
-  eos: Boolean = false; //Don't write end marker
-  fileSize: int64;
   i: Integer;
 begin
   Result := true;
   if FileExists(OutFileName) then
     Exception.Create('Output file already exists!');
   if (not Finalized) then
-    raise Exception.Create('IPK file was not finalized before compressing.');
+    raise Exception.Create('IPK file was not finalized.');
 
-  inStream := TBufferedFS.Create(basename, fmOpenRead or fmShareDenyNone);
-  outStream := TBufferedFS.Create(OutFileName, fmcreate);
+  if not finalized then mntar.Finalize;
 
-  encoder := TLZMAEncoder.Create;
-  encoder.OnProgress:=@encoderProgress;
-  if not encoder.SetAlgorithm(algorithm) then
-    raise Exception.Create('Incorrect compression mode');
-  if not encoder.SetDictionarySize(1 shl 23) then
-    raise Exception.Create('Incorrect dictionary size');
-
-  if not encoder.SeNumFastBytes(128) then
-    raise Exception.Create('Incorrect -fb value');
-  if not encoder.SetMatchFinder(1) then
-    raise Exception.Create('Incorrect -mf value');
-  if not encoder.SetLcLpPb(3, 0, 2) then
-    raise Exception.Create('Incorrect -lc or -lp or -pb value');
-
-
-  encoder.SetEndMarkerMode(eos);
-  encoder.WriteCoderProperties(outStream);
-
-  if eos then
-    fileSize := -1
-  else
-    fileSize := inStream.Size;
-
-  for i := 0 to 7 do
-    WriteByte(outStream, (fileSize shr (8 * i)) and $FF);
-
-  encoder.Code(inStream, outStream, -1, -1);
-
-  encoder.Free;
-  outStream.Free;
-  inStream.Free;
+  FileCopy(basename,outfilename);
   DeleteFile(basename);
 end;
 
@@ -286,66 +231,13 @@ begin
   inherited;
 end;
 
-procedure TLiUnpacker.decoderProgress(const Action: TLZMAProgressAction;
-  const Value: int64);
-begin
-  if Assigned(FProgress) then
-  begin
-    if Action = LPAMax then
-      one := 100 / Value
-    else
-      FProgress(Round(Value * one), nil);
-  end;
-end;
-
-procedure TLiUnpacker.Decompress;
-var
-  inStream: TBufferedFS;
-  outStream: TBufferedFS;
-  decoder: TLZMADecoder;
-  properties: array[0..4] of byte;
-  outSize: int64;
-  i: Integer;
-  v: byte;
-const
-  propertiessize = 5;
+procedure TLiUnpacker.Prepare;
 begin
   if not FileExists(ipkfile) then
     Exception.Create('IPK file does not exists!');
 
-  try
-    inStream := TBufferedFS.Create(ipkfile, fmOpenRead or fmShareDenyNone);
-    try
-      outStream := TBufferedFS.Create(workdir + 'ipktar.tar', fmCreate);
-
-      decoder := TLZMADecoder.Create;
-      decoder.OnProgress := @decoderProgress;
-      inStream.position := 0;
-      with decoder do
-      begin
-        if inStream.Read(properties, propertiesSize) <> propertiesSize then
-          raise Exception.Create('input .lzma file is too short');
-        if not SetDecoderProperties(properties) then
-          raise Exception.Create('Incorrect stream properties');
-
-        outSize := 0;
-        for i := 0 to 7 do
-        begin
-          v := inStream.ReadByte;
-          if v < 0 then
-            raise Exception.Create('Can''t read stream size');
-          outSize := outSize or (v shl ((8 * i) and 31));
-        end;
-        if not Code(inStream, outStream, outSize) then
-          raise Exception.Create('Error in data stream');
-      end;
-      decoder.Free;
-    finally
-      outStream.Free;
-    end;
-  finally
-    inStream.Free;
-  end;
+  FileCopy(ipkfile, workdir+'ipktar.tar');
+  //Some more praparation later...
 end;
 
 function TLiUnpacker.CheckSignature: TPkgSigState;
@@ -358,6 +250,7 @@ begin
   hasSignature := false;
   mnarc := TTarArchive.Create;
   mnarc.TarArchive := workdir + 'ipktar.tar';
+  mnarc.Compression:=cmNone; //If we have a signature, covering tar is not compressed
   mnarc.BaseDir := workdir;
 
   Result := psNone;
@@ -404,6 +297,7 @@ begin
   arc := TTarArchive.Create;
   arc.TarArchive := workdir + 'ipktar.tar';
   arc.BaseDir := workdir;
+  arc.Compression:=cmXZ;
   //Create dir struct
   //ForceDirectories(ExtractFilePath(fdest));
   //Check if package has signature
@@ -418,105 +312,30 @@ end;
 constructor TLiUpdateBit.Create;
 begin
   inherited;
-  algorithm := 2;
-  encoder := TLZMAEncoder.Create;
-  decoder := TLZMADecoder.Create;
+  xz := TTarArchive.Create;
+  xz.Compression:=cmLZMA;
 end;
 
 destructor TLiUpdateBit.Destroy;
 begin
-  encoder.Free;
-  decoder.Free;
+  xz.Free;
   inherited;
 end;
 
 procedure TLiUpdateBit.Compress(infile: String; outfile: String);
-var
-  inStream: TBufferedFS;
-  outStream: TBufferedFS;
-  eos: Boolean = false; //Don't write end marker
-  fileSize: int64;
-  i: Integer;
 begin
-  inStream := TBufferedFS.Create(infile, fmOpenRead or fmShareDenyNone);
-  outStream := TBufferedFS.Create(outfile, fmcreate);
-
-  if not encoder.SetAlgorithm(algorithm) then
-    raise Exception.Create('Incorrect compression mode');
-  if not encoder.SetDictionarySize(1 shl 23) then
-    raise Exception.Create('Incorrect dictionary size');
-
-  if not encoder.SeNumFastBytes(128) then
-    raise Exception.Create('Incorrect -fb value');
-  if not encoder.SetMatchFinder(1) then
-    raise Exception.Create('Incorrect -mf value');
-  if not encoder.SetLcLpPb(3, 0, 2) then
-    raise Exception.Create('Incorrect -lc or -lp or -pb value');
-
-
-  encoder.SetEndMarkerMode(eos);
-  encoder.WriteCoderProperties(outStream);
-
-  if eos then
-    fileSize := -1
-  else
-    fileSize := inStream.Size;
-
-  for i := 0 to 7 do
-    WriteByte(outStream, (fileSize shr (8 * i)) and $FF);
-
-  encoder.Code(inStream, outStream, -1, -1);
-
-  outStream.Free;
-  inStream.Free;
+  xz.BaseDir:=ExtractFilePath(infile);
+  xz.TarArchive:=outfile;
+  xz.AddFile(infile);
+  xz.Finalize;
 end;
 
 procedure TLiUpdateBit.Decompress(infile: String; outfile: String);
-var
-  inStream: TFileStream;
-  outStream: TFileStream;
-  properties: array[0..4] of byte;
-  outSize: int64;
-  i: Integer;
-  v: byte;
-const
-  propertiessize = 5;
 begin
-  if not FileExists(infile) then
-    Exception.Create('UpdateBit does not exists!!');
-
-  try
-    inStream := TFileStream.Create(infile, fmOpenRead or fmShareDenyNone);
-    try
-      if FileExists(outfile) then
-        DeleteFile(outfile);
-      outStream := TFileStream.Create(outfile, fmCreate);
-
-      inStream.position := 0;
-      with decoder do
-      begin
-        if inStream.Read(properties, propertiesSize) <> propertiesSize then
-          raise Exception.Create('input .lzma file is too short');
-        if not SetDecoderProperties(properties) then
-          raise Exception.Create('Incorrect stream properties');
-
-        outSize := 0;
-        for i := 0 to 7 do
-        begin
-          v := inStream.ReadByte;
-          if v < 0 then
-            raise Exception.Create('Can''t read stream size');
-          outSize := outSize or (v shl ((8 * i) and 31));
-        end;
-        if not Code(inStream, outStream, outSize) then
-          raise Exception.Create('Error in data stream');
-      end;
-    finally
-      outStream.Free;
-    end;
-  finally
-    inStream.Free;
-  end;
+  //NEEDS WORK!
+  xz.TarArchive:=infile;
+  xz.BaseDir:=ExtractFilePath(outfile);
+  xz.ExtractFile('*');
 end;
 
 end.

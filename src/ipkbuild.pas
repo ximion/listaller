@@ -21,8 +21,8 @@ unit ipkbuild;
 interface
 
 uses
-  Classes, FileUtil, GPGSign, IPKDef, IPKPackage, liUtils, liTypes,
-  MD5, OPBitmapFormats, Process, RegExpr, SysUtils;
+  MD5, IPKDef, Classes, GPGSign, liTypes,
+  liUtils, Process, RegExpr, FileUtil, SysUtils, IPKPackage, OPBitmapFormats;
 
 type
 
@@ -48,8 +48,8 @@ procedure BuildApplication(pk: TPackInfo);
     @param o Output filename
     @param genbutton Generate distro info button
     @param signpkg Create signed package}
-procedure BuildPackage(fi: String; o: String; ProgressHandler: TProgressEvent;
-  genbutton: Boolean = false; signpkg: Boolean = false);
+procedure BuildPackage(fi: String; o: String; genbutton: Boolean = false;
+  signpkg: Boolean = false);
 {** Creates the "Linux distribution compatible" button.
     @param dlist Names of the distributions that are compatible
     @param of Name of the output PNG file}
@@ -292,8 +292,8 @@ end;
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////Function to build IPK-Packages///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-procedure BuildPackage(fi: String; o: String;
-  ProgressHandler: TProgressEvent; genbutton: Boolean = false; signpkg: Boolean = false);
+procedure BuildPackage(fi: String; o: String; genbutton: Boolean = false;
+  signpkg: Boolean = false);
 var
   i, j, k: Integer;
   b: Boolean;
@@ -347,7 +347,8 @@ var
     else
       forig := DeleteModifiers(fname);
 
-    res := FileCopy(forig, WDir + AppendPathDelim(h) + ExtractFileName(DeleteModifiers(fname)));
+    res := FileCopy(forig, WDir + AppendPathDelim(h) +
+      ExtractFileName(DeleteModifiers(fname)));
 
     if b then
       if FileIsExecutable(forig) then
@@ -451,7 +452,7 @@ begin
 
   control.BasePath := AppendPathDelim(ExtractFilePath(fi));
 
-  if pos(' ',control.PkName)>0 then
+  if pos(' ', control.PkName)>0 then
   begin
     RaiseError('Package ID must not contain spaces!');
     control.Free;
@@ -622,7 +623,7 @@ begin
   begin
     h := control.Icon;
     if not FileNameIsAbsolute(h) then
-     h := control.BasePath + h;
+      h := control.BasePath + h;
 
     if not FileExists(h) then
     begin
@@ -657,7 +658,7 @@ begin
       begin
         i := pos(',', lh);
         if i<= 0 then
-         i := pos(';', lh);
+          i := pos(';', lh);
         if i = 0 then
         begin
           dlist.Add(lh);
@@ -683,9 +684,9 @@ begin
         tmpdepends.Add(sl[i]);
       RemoveDuplicates(tmpdepends);
 
-      for i:=0 to tmpdepends.Count-1 do
-       if tmpdepends[i][length(tmpdepends[i])]='.' then
-        tmpdepends[i] := tmpdepends[i]+'*';
+      for i := 0 to tmpdepends.Count-1 do
+        if tmpdepends[i][length(tmpdepends[i])] = '.' then
+          tmpdepends[i] := tmpdepends[i]+'*';
 
       control.WriteDependencies('', tmpdepends);
     end;
@@ -823,11 +824,10 @@ begin
     writeLn('warning:');
     writeLn(' The file "' + ExtractFileName(o) + '" already exists in output dir.');
     writeLn(' Renamed to "' + ExtractFileName(o) + '~' + IntToStr(i) + '.ipk"');
-    o := ChangeFileExt(o,'') + '~' + IntToStr(i) + '.ipk';
+    o := ChangeFileExt(o, '') + '~' + IntToStr(i) + '.ipk';
   end;
   writeLn(' #-> ' + o);
   ipkpkg.IPKFile := o;
-  ipkpkg.OnProgress := ProgressHandler;
   if not ipkpkg.ProduceIPKPackage then
   begin
     writeln('error:');
