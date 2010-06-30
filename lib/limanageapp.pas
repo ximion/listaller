@@ -1044,7 +1044,9 @@ begin
               if pos('cat:', f) > 0 then
                 break;
 
-              if (LowerCase(f) <> 'libc6') then
+              //Asterisk (*) indicates that package was newly installed by installer
+              if  (LowerCase(f) <> 'libc6')
+              and (f[1] <> '*') then
               begin
                 //Check if another package requires this package
                 t := TProcess.Create(nil);

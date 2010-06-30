@@ -1470,6 +1470,8 @@ begin
               exit;
             end;
 
+            Dependencies[i]:='*'+Dependencies[i];
+
           end; //E-of > 0
 
           mnpos := mnpos + 10;
