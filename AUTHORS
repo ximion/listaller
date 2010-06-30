@@ -10,9 +10,6 @@ Graphics:  Matthias Klumpp <matthias@nlinux.org>
 ----------
 Listaller uses the following 3rd-party components:
 
-LZMA-SDK: (c) 1999-2006 Igor Pavlov
-	  Licensed under LGPLv2 and others
-
 Synapse:  (c) 1999-2002, Lukas Gebauer
 	  Licensed under own, GPL-compatible license
 
