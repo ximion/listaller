@@ -1503,6 +1503,16 @@ begin
     SysUtils.CreateDir(SyblToPath('$INST'));
 
 
+  //Unpack files directory
+  if not pkg.UnpackFile('files') then
+  begin
+    MakeUsrRequest(rsExtractError, rqError);
+    RollbackInstallation;
+    Result := false;
+    Abort_FreeAll();
+    exit;
+  end;
+
   for i := 0 to fi.Count - 1 do
   begin
     if (pos(' <' + LowerCase(DInfo.DName) + '-only>', LowerCase(fi[i])) > 0) or
@@ -1539,15 +1549,6 @@ begin
           FDir := pkg.WDir + ExtractFileName(PkgPath) + '/';
           if not DirectoryExists(FDir) then
             CreateDir(FDIR);
-
-          if not pkg.UnpackFile(h) then
-          begin
-            MakeUsrRequest(rsExtractError, rqError);
-            RollbackInstallation;
-            Result := false;
-            Abort_FreeAll();
-            exit;
-          end;
 
           msg('Copy file ' + ExtractFileName(h) + ' to ' + dest + ' ...');
 

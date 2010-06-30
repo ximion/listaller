@@ -291,9 +291,9 @@ object IWizFrm: TIWizFrm
       end
       object Label9: TLabel
         Left = 6
-        Height = 14
+        Height = 13
         Top = 72
-        Width = 206
+        Width = 172
         Caption = 'Step 1/4: Resolving dependencies...'
         ParentColor = False
       end
@@ -323,12 +323,14 @@ object IWizFrm: TIWizFrm
         Top = 160
         Width = 635
         Anchors = [akLeft, akRight, akBottom]
-        Color = clAppWorkspace
+        Color = clBlack
+        Font.Color = clWhite
         Lines.Strings = (
           'Actions:'
         )
+        ParentFont = False
         ReadOnly = True
-        ScrollBars = ssAutoHorizontal
+        ScrollBars = ssAutoVertical
         TabOrder = 2
         Visible = False
       end

@@ -66,7 +66,6 @@ type
     ipkfile: String;
     workdir: String;
     signChecked: Boolean;
-    one: Double;
   public
     constructor Create(aIPKFile: String);
     destructor Destroy; override;
@@ -200,8 +199,6 @@ begin
 end;
 
 function TLiPackager.ProduceIPKPackage: Boolean;
-var
-  i: Integer;
 begin
   Result := true;
   if FileExists(OutFileName) then
