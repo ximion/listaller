@@ -380,13 +380,15 @@ type
     res: TStringList;
   end;
 
-function OnIdle(pkInf: DRInfo): GBoolean;cdecl;
-var i: Integer;
-    pk: TPackageKit;
+function OnIdle(pkInf: DRInfo): GBoolean; cdecl;
+var
+  i: Integer;
+  pk: TPackageKit;
 begin
   Result := true;
-  if not (pkInf is DRInfo) then exit;
-  i:=pkInf.list.Count-1;
+  if not (pkInf is DRInfo) then
+    exit;
+  i := pkInf.list.Count-1;
 
   if pkInf.list.Count <= 0 then
   begin
@@ -402,12 +404,13 @@ begin
     begin
       if pkinf.active < pkinf.max then
       begin
-        pkinf.active+=1;
+        pkinf.active += 1;
         p_debug('New Job: '+IntToStr(pk.Tag));
         pk.FindPkgForFile(pkInf.deps[pk.Tag-1]);
         pk.Tag := pk.Tag*-1;
       end;
-    end else
+    end
+    else
       if pk.Finished then
       begin
         p_debug('Finished! ['+IntToStr(pk.Tag)+']');
@@ -424,7 +427,7 @@ begin
           exit;
         end;
 
-        pkinf.active-=1;
+        pkinf.active -= 1;
         pkInf.res.Add(pk.RList[0].PackageId);
         pkinf.list.Delete(i);
       end;
@@ -490,8 +493,8 @@ begin
     msg(rsResolvingDynDeps);
 
     //Resolve all substitution variables in dependency list
-      for i := 0 to Dependencies.Count - 1 do
-        Dependencies[i]:=StrSubst(SyblToPath(Dependencies[i],true),'*','');
+    for i := 0 to Dependencies.Count - 1 do
+      Dependencies[i] := StrSubst(SyblToPath(Dependencies[i], true), '*', '');
 
     mnpos := 0;
     one := 100 / Dependencies.Count;
@@ -519,7 +522,7 @@ begin
     pkdata := DRInfo.Create;
     with pkdata do
     begin
-      active:=0;
+      active := 0;
       max := MAXACTIVE;
       list := pkitList;
       pos := mnpos;
@@ -531,8 +534,8 @@ begin
     pkdata.loop := loop;
     pkdata.inst := self;
 
-    g_source_set_callback(idle,TGSourceFunc(@OnIdle),pkdata,nil);
-    g_source_attach(idle,g_main_loop_get_context(loop));
+    g_source_set_callback(idle, TGSourceFunc(@OnIdle), pkdata, nil);
+    g_source_attach(idle, g_main_loop_get_context(loop));
 
     g_main_loop_run(loop);
     g_source_destroy(idle);
@@ -712,9 +715,14 @@ begin
   //Detect distribution details
   DInfo := GetDistro;
 
+  // Invalid package ID => package will be rejected
+  pkgID := '';
+  pkgID := cont.PkName;
+  msg('Package idName: ' + pkgID);
+
   if pkType = ptLinstall then
   begin
-    msg(StrSubst(rsPackageTypeIsX,'%s','linstall'));
+    msg(StrSubst(rsPackageTypeIsX, '%s', 'linstall'));
 
     if (pos('iofilecheck', FDisallow) > 0) then
     begin
@@ -724,10 +732,6 @@ begin
     else
       FOverwrite := false;
 
-    pkgID := '';
-    pkgID := cont.PkName;
-    msg('Package idName: ' + pkgID);
-
     //Find profiles
     i := 1;
     PkProfiles := TStringList.Create;
@@ -735,7 +739,7 @@ begin
 
     for i := 0 to PkProfiles.Count - 1 do
     begin
-      msg(StrSubst(rsFoundInstallProfileX,'%s',PkProfiles[PkProfiles.Count - 1]));
+      msg(StrSubst(rsFoundInstallProfileX, '%s', PkProfiles[PkProfiles.Count - 1]));
       pkg.UnpackFile('pkgdata/fileinfo-' + IntToStr(i) + '.id');
     end;
 
@@ -918,7 +922,7 @@ begin
   else //Handle other IPK types
     if pkType = ptDLink then
     begin
-      msg(StrSubst(rsPackageTypeIsX,'%s','dlink'));
+      msg(StrSubst(rsPackageTypeIsX, '%s', 'dlink'));
 
       cont.ReadAppDescription(longdesc);
 
@@ -1012,10 +1016,12 @@ begin
     else
       if pkType = ptContainer then
       begin
-        msg(StrSubst(rsPackageTypeIsX,'%s','container'));
-
-        //IPK package has been initialized
+        msg(StrSubst(rsPackageTypeIsX, '%s', 'container'));
+        IAppName := ExtractFileName(cont.Binary);
+        //At time we have less intialization of coverIPKs
       end;
+
+  //IPK package has been initialized
   pkg.Free;
   cont.Free;
 end;
@@ -1102,27 +1108,37 @@ begin
     p.CommandLine := FindBinary('chmod') + ' 755 ''' + WDir + cont.Binary + '''';
     p.Options := [poUsePipes, poWaitonexit];
     p.Execute;
-    p.Options := [poUsePipes, poWaitonexit, poNewConsole];
+
     if LowerCase(ExtractFileExt(cont.Binary)) = '.package' then
     begin
+      p.Options := [poUsePipes, poWaitonexit, poNewConsole];
       if FileExists(FindBinary('package')) then
         p.Options := [poUsePipes, poWaitonexit];
 
-      p.CommandLine := WDir + cont.Binary;
-      p.Execute;
-      p.Free;
+      if not SUMode then
+      begin
+        p.CommandLine := WDir + cont.Binary;
+        p.Execute;
+      end
+      else
+        ExecuteAsRoot(WDir + cont.Binary, rsRunBinAsRoot, '');
     end
     else
     begin
-      if cont.InTerminal then
-        p.Options := [poUsePipes, poWaitOnExit, poNewConsole]
+      if not SUMode then
+      begin
+        if cont.InTerminal then
+          p.Options := [poUsePipes, poWaitOnExit, poNewConsole]
+        else
+          p.Options := [poUsePipes, poWaitOnExit];
+        p.CommandLine := WDir + cont.Binary;
+        p.Execute;
+      end
       else
-        p.Options := [poUsePipes, poWaitOnExit];
-      p.CommandLine := WDir + cont.Binary;
-      p.Execute;
-      p.Free;
+        ExecuteAsRoot(WDir + cont.Binary, rsRunBinAsRoot, '');
     end;
 
+    p.Free;
     DeleteFile(WDir + cont.Binary);
   except
     Result := false;
@@ -1236,7 +1252,7 @@ begin
   Result := false;
   mnpos := 0;
 
-   //!!! @deprecated
+  //!!! @deprecated
   {//Check if fileinfo contains shared files
    for i:=0 to (fi.Count div 3)-1 do begin
    if IsSharedFile(lp+PkgName+fi[i*3]) then ContSFiles:=true;
@@ -1470,7 +1486,7 @@ begin
               exit;
             end;
 
-            Dependencies[i]:='*'+Dependencies[i];
+            Dependencies[i] := '*'+Dependencies[i];
 
           end; //E-of > 0
 
@@ -1584,9 +1600,8 @@ begin
               end;
           except
             //Unable to copy the file
-            MakeUsrRequest(Format(rsCnCopy,
-              [dest + '/' +  ExtractFileName(DeleteModifiers(h))]) +
-              #10 + rsInClose, rqError);
+            MakeUsrRequest(Format(rsCnCopy, [dest + '/' +
+              ExtractFileName(DeleteModifiers(h))]) +  #10 + rsInClose, rqError);
             RollbackInstallation;
             Result := false;
             Abort_FreeAll();
@@ -1672,7 +1687,7 @@ begin
           end;
 
           //while proc.Running do Application.ProcessMessages;
-          msg(StrSubst(rsRightsAssignedToX,'%a',DeleteModifiers(
+          msg(StrSubst(rsRightsAssignedToX, '%a', DeleteModifiers(
             ExtractFileName(SyblToPath(fi[i])))));
         end;
       end;
@@ -1702,84 +1717,84 @@ begin
   begin
     if not DirectoryExists(RegDir + LowerCase(pkgID)) then
       ForceDirectories(RegDir + LowerCase(pkgID));
-  FileCopy(pkg.WDir + '/arcinfo.pin', RegDir + LowerCase(pkgID) + '/application');
+    FileCopy(pkg.WDir + '/arcinfo.pin', RegDir + LowerCase(pkgID) + '/application');
 
-  //Save list of installed files
-  appfiles.SaveToFile(RegDir + LowerCase(pkgID) + '/files.list');
-  appfiles.Free;
+    //Save list of installed files
+    appfiles.SaveToFile(RegDir + LowerCase(pkgID) + '/files.list');
+    appfiles.Free;
 
-  if mofiles.Count > 0 then
-  begin
-    ForceDirectories(RegDir + LowerCase(pkgID) + '/locale/');
-    for i := 0 to mofiles.Count - 1 do
+    if mofiles.Count > 0 then
     begin
-      FileCopy(pkg.WDir + mofiles[i], RegDir + LowerCase(pkgID) +
-        '/locale/' +  ExtractFileName(mofiles[i]));
+      ForceDirectories(RegDir + LowerCase(pkgID) + '/locale/');
+      for i := 0 to mofiles.Count - 1 do
+      begin
+        FileCopy(pkg.WDir + mofiles[i], RegDir + LowerCase(pkgID) +
+          '/locale/' +  ExtractFileName(mofiles[i]));
+      end;
     end;
-  end;
 
-  //Open database connection
-  dsApp.Open;
-  dsApp.Edit;
+    //Open database connection
+    dsApp.Open;
+    dsApp.Edit;
 
-  if pkType = ptLinstall then
-    h := 'linstall';
-  if pkType = ptDLink then
-    h := 'dlink';
-  if pkType = ptContainer then
-    h := 'container';
+    if pkType = ptLinstall then
+      h := 'linstall';
+    if pkType = ptDLink then
+      h := 'dlink';
+    if pkType = ptContainer then
+      h := 'container';
 
-  dsApp.Insert;
-  dsApp.ExecuteDirect('INSERT INTO "AppInfo" VALUES (''' + IAppName +
-    ''', ''' + pkgID + ''', ''' + h + ''', ''' + ShDesc + ''',''' +
-    IAppVersion + ''',''' + IAuthor + ''',''' + 'icon' +
-    ExtractFileExt(IIconPath) + ''',''' + CurProfile + ''',''' +
-    IGroup + ''',''' + GetDateAsString + ''', ''' + Dependencies.Text + ''');');
+    dsApp.Insert;
+    dsApp.ExecuteDirect('INSERT INTO "AppInfo" VALUES (''' + IAppName +
+      ''', ''' + pkgID + ''', ''' + h + ''', ''' + ShDesc + ''',''' +
+      IAppVersion + ''',''' + IAuthor + ''',''' + 'icon' +
+      ExtractFileExt(IIconPath) + ''',''' + CurProfile + ''',''' +
+      IGroup + ''',''' + GetDateAsString + ''', ''' + Dependencies.Text + ''');');
 
-  //Write changes
-  dsApp.ApplyUpdates;
-  dsApp.Close;
+    //Write changes
+    dsApp.ApplyUpdates;
+    dsApp.Close;
 
-  if length(IIconPath)>0 then
-    if IIconPath[1] = '/' then
-      FileCopy(IIconPath, RegDir + LowerCase(pkgID) +  '/icon' +
-        ExtractFileExt(IIconPath));
+    if length(IIconPath)>0 then
+      if IIconPath[1] = '/' then
+        FileCopy(IIconPath, RegDir + LowerCase(pkgID) +  '/icon' +
+          ExtractFileExt(IIconPath));
 
-  ndirs.SaveToFile(RegDir + LowerCase(pkgID) + '/dirs.list');
+    ndirs.SaveToFile(RegDir + LowerCase(pkgID) + '/dirs.list');
 
-  if ExecX <> '<disabled>' then
-    FileCopy(ExecX, RegDir + LowerCase(pkgID) + '/prerm');
+    if ExecX <> '<disabled>' then
+      FileCopy(ExecX, RegDir + LowerCase(pkgID) + '/prerm');
 
-  mnpos := mnpos + 5;
-  SetMainPos(Round(mnpos * max));
-  //Execute Program/Script
-  if ExecB <> '<disabled>' then
-  begin
-    proc.CommandLine := FindBinary('chmod') + ' 777 ' + ExecB;
-    Proc.Execute;
-    //while Proc.Running do Application.ProcessMessages;
-    Proc.CommandLine := ExecB;
-    Proc.Execute;
-    //while Proc.Running do Application.ProcessMessages;
-  end;
-
-  if (USource <> '#') and (AddUpdateSource) then
-  begin
-    CreateUpdateSourceList(RegDir);
-    fi := TStringList.Create;
-    fi.LoadFromFile(RegDir + 'updates.list');
-    for i := 1 to fi.Count - 1 do
-      if pos(USource, fi[i]) > 0 then
-        break;
-    if i = fi.Count then
+    mnpos := mnpos + 5;
+    SetMainPos(Round(mnpos * max));
+    //Execute Program/Script
+    if ExecB <> '<disabled>' then
     begin
-      fi.Add('- ' + USource);
-      fi.SaveToFile(RegDir + 'updates.list');
+      proc.CommandLine := FindBinary('chmod') + ' 777 ' + ExecB;
+      Proc.Execute;
+      //while Proc.Running do Application.ProcessMessages;
+      Proc.CommandLine := ExecB;
+      Proc.Execute;
+      //while Proc.Running do Application.ProcessMessages;
     end;
-    fi.Free;
-  end;
 
-end;
+    if (USource <> '#') and (AddUpdateSource) then
+    begin
+      CreateUpdateSourceList(RegDir);
+      fi := TStringList.Create;
+      fi.LoadFromFile(RegDir + 'updates.list');
+      for i := 1 to fi.Count - 1 do
+        if pos(USource, fi[i]) > 0 then
+          break;
+      if i = fi.Count then
+      begin
+        fi.Add('- ' + USource);
+        fi.SaveToFile(RegDir + 'updates.list');
+      end;
+      fi.Free;
+    end;
+
+  end;
   ndirs.Free;
   proc.Free;
   pkg.Free;
@@ -1843,7 +1858,7 @@ end;}
   begin
     if pos('://', Dependencies[i]) <= 0 then
     begin
-      msg(StrSubst(rsLookingForX,'%a',Dependencies[i]));
+      msg(StrSubst(rsLookingForX, '%a', Dependencies[i]));
 
       pkit.ResolveInstalled(Dependencies[i]);
 
@@ -1852,7 +1867,7 @@ end;}
 
       if pkit.PkFinishCode = 1 then
       begin
-        msg(StrSubst(rsInstallingX,'%a',Dependencies[i]));
+        msg(StrSubst(rsInstallingX, '%a', Dependencies[i]));
 
         Inc(mnpos);
         SetMainPos(Round(mnpos * max));
@@ -1871,7 +1886,7 @@ end;}
       pkg := copy(pkg, 1, pos(')', pkg) - 1);
       fpath := copy(Dependencies[i], 1, pos(' (', Dependencies[i]) - 1);
       p_debug('Looking for ' + pkg);
-      msg(StrSubst(rsLookingForX,'%a',pkg));
+      msg(StrSubst(rsLookingForX, '%a', pkg));
       pkit.ResolveInstalled(pkg);
 
       Inc(mnpos);
@@ -1941,7 +1956,7 @@ end;}
         Inc(mnpos);
         SetMainPos(Round(mnpos * max));
 
-        msg(StrSubst(rsInstallingX,'%a',pkg));
+        msg(StrSubst(rsInstallingX, '%a', pkg));
         pkit.InstallLocalPkg('/tmp/' + ExtractFileName(fpath));
 
         if pkit.PkFinishCode > 1 then
@@ -2036,7 +2051,7 @@ end;
 function TInstallation.PkgOkay: Boolean;
 begin
   Result := true;
-  if (PkgID = '') or (AppName = '') then
+  if (PkgID = '') or (IAppName = '') then
   begin
     MakeUsrRequest(rsUnknownErrorOC + #10 + rsPkgDM + #10 + rsABLoad, rqError);
     Result := false;
@@ -2098,6 +2113,7 @@ begin
         end;
     end;
 
+  if (pkType <> ptContainer) then
   if (SUMode) and (not IsRoot) then
   begin
     //Create worker thread for this action

@@ -51,6 +51,7 @@ begin
     { --- Do Container setup --- }
     if setup.PkType = ptContainer then
     begin
+      setup.SetRootMode(false);
       if not setup.StartInstallation then
         ShowMessage(rsInstFailed);
       setup.Free;

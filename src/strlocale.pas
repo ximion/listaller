@@ -150,6 +150,7 @@ resourcestring
   rsInvArchitecture =
     'The application which this package contains was not built for the current system architecture.';
   rsPackageTypeIsX = 'Package type is "%s"';
+  rsRunBinAsRoot = 'Run binary setup file as root.';
   rsFoundInstallProfileX = 'Found installation profile %s.';
   rsWillDLFiles = '(This program will download the needed files from the internet)';
   rsInvalidDVersion = 'Package was not build for your Linux distribution release.';

@@ -436,8 +436,11 @@ begin
       end
     else
     begin
-      p_warning('Listaller Setup tool seems to owns none of the required display forms!');
-      p_warning('This should _never_ happen!');
+      if setup.PkType <> ptContainer then
+      begin
+       p_warning('Listaller Setup tool seems to owns none of the required display forms!');
+       p_warning('This should _never_ happen!');
+      end;
     end;
 
   Application.ProcessMessages;
@@ -545,9 +548,11 @@ begin
       SetSigState(sig);
       btnTest.Visible := false;
       pkWarnImg.Visible := true;
-      if (pos('iolocal', setup.GetDisallows) > 0) then
-        btnHome.Enabled := false;
-      if (pos('iobase', setup.GetDisallows) > 0) then
+      //Do not parse disallows for containerIPK at time
+      //??? Switch this on later!
+      //if (pos('iolocal', setup.GetDisallows) > 0) then
+      //  btnHome.Enabled := false;
+      //if (pos('iobase', setup.GetDisallows) > 0) then
         btnInstallAll.Enabled := false;
       PkILabel.Caption := rsSpkWarning;
 
