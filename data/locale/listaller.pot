@@ -5,7 +5,7 @@
 # Matthias Klumpp, 2008-2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.4.00\n"
+"Project-Id-Version: 0.4.00b\n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
 "PO-Revision-Date: 2010-02-18 16:20-0100\n"
 "Language-Team: Listaller Team\n"
@@ -266,6 +266,10 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
+#: strlocale:rsfile
+msgid "File"
+msgstr ""
+
 #: strlocale:rsdisplog
 msgid "Display installation log"
 msgstr ""
@@ -480,6 +484,10 @@ msgstr ""
 
 #: strlocale:rspackagetypeisx
 msgid "Package type is \"%s\""
+msgstr ""
+
+#: strlocale:rsrunbinasroot
+msgid "Run binary setup file as root."
 msgstr ""
 
 #: strlocale:rsfoundinstallprofilex
@@ -915,7 +923,7 @@ msgid "Unable to remove this application!"
 msgstr ""
 
 #: strlocale:rscannothandlerm
-msgid "This application does not look like a MoJo-Installation and it is not installed via an other package-type Listaller can handle.\nGet instructions how to remove this application from the program author."
+msgid "This application does not look like a MoJo-Installation and it is not installed via any other package-type Listaller can handle.\nGet instructions how to remove this application from the program author."
 msgstr ""
 
 #: strlocale:rsreadingappinfo
