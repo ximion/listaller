@@ -33,6 +33,8 @@ uses {$IFDEF UNIX}
 
 var
   p: TProcess;
+  param: String;
+  i: Integer;
 
 {$R listallmgr.res}
 
@@ -43,7 +45,11 @@ begin
   begin
     p := TProcess.Create(nil);
     p.Options := [];
-    p.CommandLine := ExtractFilePath(Application.ExeName) + 'listallgo ' + ParamStr(1);
+    param := '';
+    for i := 1 to ParamCount do
+     param := param+' '+paramstr(i);
+    writeLn('Running new software installation.');
+    p.CommandLine := ExtractFilePath(Application.ExeName) + 'listallgo' + param;
     p.Execute;
     p.Free;
     halt(0);

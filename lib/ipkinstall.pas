@@ -1224,12 +1224,11 @@ var
   end;
 
 begin
-  //First resolve all dependencies and prepare installation
-  if not ResolveDependencies() then
-  begin
-    Result := false;
-    exit;
-  end;
+  //Send information which stuff is foced:
+  if pos('dependencies',forces)<=0 then
+   msg('Dependencies are forced. Skiiping dependency check.');
+  if pos('architecture',forces)<=0 then
+   msg('Architecture forced. The software might not work on your system architecture.');
 
   if not FileExists(tmpdir + ExtractFileName(PkgName) + '/' + FFileInfo) then
   begin
@@ -1271,6 +1270,14 @@ begin
   //Check if PackageKit trackmode is enabled:
   ShowPkMon();
 
+  //Now resolve all dependencies and prepare installation
+  if pos('dependencies',forces)<=0 then
+  if not ResolveDependencies() then
+  begin
+    Result := false;
+    exit;
+  end;
+
   SetExtraPos(0);
   //Execute programs/scripts
   if ExecA <> '<disabled>' then
@@ -1286,6 +1293,7 @@ begin
   pkit := TPackageKit.Create;
   pkit.OnProgress := @OnPKitProgress;
 
+  if pos('dependencies',forces)<=0 then
   if Dependencies.Count > 0 then
   begin
     //Check if we should install a software catalog

@@ -140,6 +140,11 @@ end;
 //** Set actions which should be forced
 procedure li_setup_set_forced(setup: PInstallation;str: PGChar);cdecl;
 begin
+  (*
+   Possible strings:
+   architecture = Ignore architecture
+   dependencies = Do not process dependencies
+  *)
   setup^.ForceActions:=str;
 end;
 

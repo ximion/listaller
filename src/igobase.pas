@@ -21,9 +21,10 @@ unit igobase;
 interface
 
 uses
-  Buttons, Classes, ComCtrls, Controls, Dialogs,
-  distri, ExtCtrls, FileUtil, Forms, Graphics, IconLoader, Installer, LCLIntf, LCLType,
-  liUtils, liTypes, LResources, Process, StdCtrls, SysUtils, strLocale, xTypeFm;
+  Forms, distri, Buttons, Classes, Dialogs,
+  LCLIntf, LCLType,
+  liTypes, liUtils, Process, xTypeFm, ComCtrls, Controls, ExtCtrls,
+  FileUtil, Graphics, StdCtrls, SysUtils, Installer, strLocale, IconLoader, LResources;
 
 type
 
@@ -173,7 +174,8 @@ begin
     end;
     0:
     begin
-      if (DescMemo.Lines.Count <= 0) and (LicMemo.Lines.Count <= 0) and (setup.GetFileList <> '*') then
+      if (DescMemo.Lines.Count <= 0) and (LicMemo.Lines.Count <= 0) and
+        (setup.GetFileList <> '*') then
       begin
         Button5.Visible := false;
         Button1.Visible := false;
@@ -228,8 +230,6 @@ begin
     2:
     begin
       Button1.Caption := rsNext;
- { Button1.Width:=83;
-  Button1.Left:=566; }
 
       if DescMemo.Lines.Count <= 0 then
         Notebook1.PageIndex := 0
@@ -438,8 +438,8 @@ begin
     begin
       if setup.PkType <> ptContainer then
       begin
-       p_warning('Listaller Setup tool seems to owns none of the required display forms!');
-       p_warning('This should _never_ happen!');
+        p_warning('Listaller Setup tool seems to owns none of the required display forms!');
+        p_warning('This should _never_ happen!');
       end;
     end;
 
@@ -450,6 +450,7 @@ function LoadIPKFile(): Boolean;
 var
   imForm: TimdFrm;
   sig: TPkgSigState;
+  forcedOptions: String;
 begin
   if not DirectoryExists(RegDir) then
   begin
@@ -491,7 +492,10 @@ begin
 
   //Set forced actions
   if Application.HasOption('force-architecture') then
-    setup.Forced := 'architecture;';
+    forcedOptions := 'architecture;';
+  if Application.HasOption('force-depends') then
+    forcedOptions := 'dependencies;';
+  setup.Forced := forcedOptions;
 
   //Load the IPK data
   setup.Initialize(ParamStr(1));
@@ -553,7 +557,7 @@ begin
       //if (pos('iolocal', setup.GetDisallows) > 0) then
       //  btnHome.Enabled := false;
       //if (pos('iobase', setup.GetDisallows) > 0) then
-        btnInstallAll.Enabled := false;
+      btnInstallAll.Enabled := false;
       PkILabel.Caption := rsSpkWarning;
 
       ShowModal;
@@ -746,9 +750,9 @@ begin
       GetOutputTimer.Enabled := false;
       writeLn('Connection to backend broken.');
       writeLn(rsCannotResolv);
-      ShowMessage(rsCouldntSolve + #13 + StrSubst(
-        rsViewLog, '%p', '/tmp/install-' + setup.GetAppName + '.log') + #13 +
-        'Code: ' + IntToStr(Process1.ExitStatus));
+      ShowMessage(rsCouldntSolve + #13 + StrSubst(rsViewLog,
+        '%p', '/tmp/install-' + setup.GetAppName + '.log') + #13 +  'Code: ' +
+        IntToStr(Process1.ExitStatus));
       InfoMemo.Lines.SaveTofile('/tmp/install-' + setup.GetAppName + '.log');
       halt;
       exit;
@@ -767,8 +771,8 @@ begin
 
   if setup.GetFileList = '' then
   begin
-    ShowMessage(rsPKGError + #10'Message: No file information was found for this profile!' +
-      #10 + rsAppClose);
+    ShowMessage(rsPKGError + #10'Message: No file information was found for this profile!'
+      +  #10 + rsAppClose);
     Application.Terminate;
     exit;
   end;
@@ -802,8 +806,9 @@ begin
       setup.Free;
       Application.ProcessMessages;
       if FileExists(Process1.CommandLine) then
-       Process1.Execute
-      else ShowMessage(rsCNFindAppExecutable);
+        Process1.Execute
+      else
+        ShowMessage(rsCNFindAppExecutable);
       ShowMessage(rsTestFinished);
       Process1.CommandLine := 'rm -rf /tmp/litest';
       Process1.Execute;
