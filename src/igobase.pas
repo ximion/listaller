@@ -800,10 +800,8 @@ begin
     begin
       p_debug('Testmode: Executing new app...');
       Process1.CommandLine := setup.GetAppCMD;
-      ShowMessage(Process1.CommandLine);
       Process1.Options := [poWaitOnExit, poUsePipes];
       Hide;
-      setup.Free;
       Application.ProcessMessages;
       if FileExists(Process1.CommandLine) then
         Process1.Execute

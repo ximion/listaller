@@ -1226,7 +1226,7 @@ var
 begin
   //Send information which stuff is foced:
   if pos('dependencies',forces)<=0 then
-   msg('Dependencies are forced. Skiiping dependency check.');
+   msg('Dependencies are forced. Skipping dependency check.');
   if pos('architecture',forces)<=0 then
    msg('Architecture forced. The software might not work on your system architecture.');
 
