@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2010-04-16 19:36+0000\n"
+"PO-Revision-Date: 2010-05-25 23:18+0000\n"
 "Last-Translator: Omar Inverso <omainv@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-05-25 17:52+0000\n"
+"X-Launchpad-Export-Date: 2010-07-05 16:32+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: strlocale:rsbrokendepsfixq
@@ -277,6 +277,10 @@ msgstr "Indietro"
 msgid "Next"
 msgstr "Avanti"
 
+#: strlocale:rsfile
+msgid "File"
+msgstr ""
+
 #: strlocale:rsdisplog
 msgid "Display installation log"
 msgstr "Visualizza il log di installazione"
@@ -520,6 +524,10 @@ msgstr ""
 
 #: strlocale:rspackagetypeisx
 msgid "Package type is \"%s\""
+msgstr ""
+
+#: strlocale:rsrunbinasroot
+msgid "Run binary setup file as root."
 msgstr ""
 
 #: strlocale:rsfoundinstallprofilex
@@ -1002,7 +1010,7 @@ msgstr ""
 #: strlocale:rscannothandlerm
 msgid ""
 "This application does not look like a MoJo-Installation and it is not "
-"installed via an other package-type Listaller can handle.\n"
+"installed via any other package-type Listaller can handle.\n"
 "Get instructions how to remove this application from the program author."
 msgstr ""
 

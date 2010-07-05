@@ -3,170 +3,170 @@ msgstr ""
 "Project-Id-Version: 0.9.16\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-28 20:08-0100\n"
-"PO-Revision-Date: 2010-02-17 21:37+0000\n"
+"PO-Revision-Date: 2010-04-05 21:08+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: 简体中文 <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-04-05 15:12+0000\n"
+"X-Launchpad-Export-Date: 2010-07-05 16:32+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: china\n"
 "X-Poedit-Language: chinese\n"
 
-#: trstrings:rsbrokendepsfixq
+#: strlocale:rsbrokendepsfixq
 msgid "Some dependencies are missing. Should they be installed now?"
 msgstr "缺少一些依赖关系，现在要安装吗？"
 
-#: trstrings:rscannotresolv
+#: strlocale:rscannotresolv
 msgid "Cannot resolve dependencies"
 msgstr "无法解决依赖关系"
 
-#: trstrings:rscheckappdepsq
+#: strlocale:rscheckappdepsq
 msgid "Do you want to check the applications's dependencies?"
 msgstr "您是否想要检查应用程序的依赖关系？"
 
-#: trstrings:rscheckdepsq
+#: strlocale:rscheckdepsq
 msgid "Check dependencies?"
 msgstr "检查依赖关系？"
 
-#: trstrings:rscheckapps
+#: strlocale:rscheckapps
 msgid "Check applications"
 msgstr "检查应用程序"
 
-#: trstrings:rscheckrootappsq
+#: strlocale:rscheckrootappsq
 msgid "Do you want to check global-installed applications too?"
 msgstr "您是否也要检查全局安装的应用程序？"
 
-#: trstrings:rscommands
+#: strlocale:rscommands
 msgid "Commands:"
 msgstr "命令："
 
-#: trstrings:rscouldntfindupdater
+#: strlocale:rscouldntfindupdater
 msgid "Can't find update-tool!"
 msgstr ""
 
-#: trstrings:rsinternalerror
+#: strlocale:rsinternalerror
 msgid "An internal error occured"
 msgstr "发生了一个内部错误"
 
-#: trstrings:rslaunchlimgr
+#: strlocale:rslaunchlimgr
 msgid "Launch Listaller Manager"
 msgstr "启动 Listaller 管理器"
 
-#: trstrings:rslipainfo2
+#: strlocale:rslipainfo2
 msgid "Resolve Listaller path variable"
 msgstr "解析 Listaller 路径变量"
 
-#: trstrings:rslipainfo3
+#: strlocale:rslipainfo3
 msgid "Installs an IPK package"
 msgstr "安装 IPK 软件包"
 
-#: trstrings:rslistallermgrnotfound
+#: strlocale:rslistallermgrnotfound
 msgid "Can't find Listaller Manager!"
 msgstr "无法找到 Listaller 管理器！"
 
-#: trstrings:rsunablefind
+#: strlocale:rsunablefind
 msgid "Unable to find %s"
 msgstr "无法找到 %s"
 
-#: trstrings:rsnotfoundlitray
+#: strlocale:rsnotfoundlitray
 msgid "Could not find Listaller TrayIcon Application"
 msgstr "无法找到 Listaller TrayIcon 程序"
 
-#: trstrings:rsoptions
+#: strlocale:rsoptions
 msgid "Options:"
 msgstr "选项："
 
-#: trstrings:rslipainfo4
+#: strlocale:rslipainfo4
 msgid "Runs installation in testmode"
 msgstr "以测试模式进行安装"
 
-#: trstrings:rslipainfo5
+#: strlocale:rslipainfo5
 msgid "Print all available log messages"
 msgstr "输出所有日志消息"
 
-#: trstrings:rslipainfo6
+#: strlocale:rslipainfo6
 msgid "Check if dependencies of all installed applications are available."
 msgstr ""
 
-#: trstrings:rscmdinfopkgbuild
+#: strlocale:rscmdinfopkgbuild
 msgid "Package build commands:"
 msgstr "创建软件包命令："
 
-#: trstrings:rslibuildinfoa
+#: strlocale:rslibuildinfoa
 msgid "Build IPK-package"
 msgstr "创建 IPK 软件包"
 
-#: trstrings:rslibuildinfob
+#: strlocale:rslibuildinfob
 msgid "Create/Update update-repository"
 msgstr "创建/更新 更新源"
 
-#: trstrings:rslibuildinfoc
+#: strlocale:rslibuildinfoc
 msgid "Create DEB and RPM file from IPS"
 msgstr "从 IPS 创建 DEB 和 RPM 文件"
 
-#: trstrings:rsdone
+#: strlocale:rsdone
 msgid "Done."
 msgstr "完成。"
 
-#: trstrings:rsdoyouacceptlicensecmd
+#: strlocale:rsdoyouacceptlicensecmd
 msgid "Do you accept this license [y/n]?"
 msgstr "您是否接受此协议 [y/n]？"
 
-#: trstrings:rsenternumber
+#: strlocale:rsenternumber
 msgid "You have to enter a number!"
 msgstr "您必须输入一个数字！"
 
-#: trstrings:rsinstaborted
+#: strlocale:rsinstaborted
 msgid "Installation aborted."
 msgstr "安装已取消。"
 
-#: trstrings:rsinstabortedbyuser
+#: strlocale:rsinstabortedbyuser
 msgid "Installation aborted by user."
 msgstr ""
 
-#: trstrings:rsappninstall
-msgid "The application %a was not installed."
-msgstr "程序 %a 未被安装。"
+#: strlocale:rsappninstall
+msgid "The application \"%a\" was not installed."
+msgstr ""
 
-#: trstrings:rslipaautofixq
+#: strlocale:rslipaautofixq
 msgid "Should lipa fix these problems automatically [y/n]?"
 msgstr "让 lipa 自动修正这些问题吗 [y/n]？"
 
-#: trstrings:rslipainfo1
+#: strlocale:rslipainfo1
 msgid "Listaller command-line tool to handle IPK-packages"
 msgstr "用来操作 IPK 软件包的 Listaller 命令行工具"
 
-#: trstrings:rsmodenumber
+#: strlocale:rsmodenumber
 msgid "Mode number:"
 msgstr "模式号："
 
-#: trstrings:rsn
+#: strlocale:rsn
 msgid "n"
 msgstr "n"
 
-#: trstrings:rsno
+#: strlocale:rsno
 msgid "no"
 msgstr "否"
 
-#: trstrings:rsokay
+#: strlocale:rsokay
 msgid "Okay"
 msgstr "好的"
 
-#: trstrings:rspreparinginstall
+#: strlocale:rspreparinginstall
 msgid "Preparing installation (please wait)"
 msgstr "正在准备安装 (请稍候)"
 
-#: trstrings:rsrootpassadvancedpriv
+#: strlocale:rsrootpassadvancedpriv
 msgid "Enter your password to run the application with advanced privileges."
 msgstr "请输入您的密码来以高级特权运行此程序。"
 
-#: trstrings:rsrootpassqappeveryone
+#: strlocale:rsrootpassqappeveryone
 msgid "Enter your password to install the application for everyone."
 msgstr "请输入您的密码来将此程序安装给所有用户。"
 
-#: trstrings:rsconvdone
+#: strlocale:rsconvdone
 msgid ""
 "Conversion done. Do you want to close this window now?\n"
 "Press \"No\" if you want to check the output."
@@ -174,251 +174,310 @@ msgstr ""
 "转换完成。您想要关闭此窗口吗？\n"
 "如果您想查看输出，点击“否”。"
 
-#: trstrings:rsselectlistnumber
+#: strlocale:rsselectlistnumber
 msgid "Please select a number shown in the list!"
 msgstr "请从列表中选择一个数字！"
 
-#: trstrings:rsselectimodea
+#: strlocale:rsselectimodea
 msgid "Select the installation mode of this application:"
 msgstr "选择此程序的安装模式："
 
-#: trstrings:rsshowdetailedinfocmd
+#: strlocale:rsshowdetailedinfocmd
 msgid "Do you want to see detailed information [y/n]?"
 msgstr "您要查看详细信息吗 [y/n]？"
 
-#: trstrings:rsaborted
+#: strlocale:rsaborted
 msgid "Aborted."
 msgstr "已中止。"
 
-#: trstrings:rsviewlogq
+#: strlocale:rsviewlogq
 msgid "Do you want to view the logfile?"
 msgstr "您要查看日志文件吗？"
 
-#: trstrings:rswasinstalled
+#: strlocale:rswasinstalled
 msgid "The application %a was installed successfully!"
 msgstr "应用程序 %a 已成功安装！"
 
-#: trstrings:rsexecapptesting
+#: strlocale:rscnfindappexecutable
+msgid "Could not find main executable of this application!"
+msgstr ""
+
+#: strlocale:rsexecapptesting
 msgid "Executing application main executable..."
 msgstr ""
 
-#: trstrings:rsinstallnow
+#: strlocale:rsinstallnow
 msgid "Install now"
 msgstr "立即安装"
 
-#: trstrings:rsrunparam
+#: strlocale:rsrunparam
 msgid ""
 "Please run \"listallgo\" with path to setup-package as first parameter!"
 msgstr ""
 
-#: trstrings:rswelcome
+#: strlocale:rswelcome
 msgid "Welcome!"
 msgstr "欢迎！"
 
-#: trstrings:rsntostart
+#: strlocale:rsntostart
 msgid "Press \"Next\" to start the installation!"
 msgstr "点击“下一步”开始安装！"
 
-#: trstrings:rsprogdesc
+#: strlocale:rsprogdesc
 msgid "Program description:"
 msgstr "程序描述："
 
-#: trstrings:rslicense
+#: strlocale:rslicense
 msgid "Software license"
 msgstr "软件许可"
 
-#: trstrings:rspleaseread
+#: strlocale:rspleaseread
 msgid "Please read the following information carefully:"
 msgstr "请仔细阅读以下信息："
 
-#: trstrings:rsrunning
+#: strlocale:rsrunning
 msgid "Running installation..."
 msgstr "正在安装..."
 
-#: trstrings:rsplwait
+#: strlocale:rsplwait
 msgid "Please wait."
 msgstr "请等待。"
 
-#: trstrings:rscomplete
+#: strlocale:rscomplete
 msgid "Installation completed!"
 msgstr "安装完成！"
 
-#: trstrings:rsinstfailed
+#: strlocale:rsinstfailed
 msgid "Installation failed."
 msgstr "安装失败"
 
-#: trstrings:rsprfinish
+#: strlocale:rsprfinish
 msgid "Press \"Finish\" to close."
 msgstr "点击“完成”以关闭。"
 
-#: trstrings:rsfinish
+#: strlocale:rsfinish
 msgid "Finish"
 msgstr "完成"
 
-#: trstrings:rsabort
+#: strlocale:rsabort
 msgid "Abort"
 msgstr "中止"
 
-#: trstrings:rsback
+#: strlocale:rsback
 msgid "Back"
 msgstr "后退"
 
-#: trstrings:rsnext
+#: strlocale:rsnext
 msgid "Next"
 msgstr "下一步"
 
-#: trstrings:rsdisplog
+#: strlocale:rsfile
+msgid "File"
+msgstr ""
+
+#: strlocale:rsdisplog
 msgid "Display installation log"
 msgstr "显示安装日志"
 
-#: trstrings:rsiagree
+#: strlocale:rsiagree
 msgid "I agree with the above terms and conditions"
 msgstr "我同意以上条款"
 
-#: trstrings:rsinagree
+#: strlocale:rsinagree
 msgid "I don't agree"
 msgstr "我不同意"
 
-#: trstrings:rsldnsupported
+#: strlocale:rsldnsupported
 msgid "Your Linux distribution is not supported by Listaller yet!"
 msgstr "Listaller 还不支持您的 Linux 发行版！"
 
-#: trstrings:rsnsupported
+#: strlocale:rsnsupported
 msgid "This package does not support your Linux distribution."
 msgstr "这个软件包不支持您的 Linux 发行版。"
 
-#: trstrings:rsdepnotfound
+#: strlocale:rsdepnotfound
 msgid ""
 "Found no package with the necessary library \"%l\" for your distribution."
 msgstr "对于您的发行版，无法找到包含所需库“%l”的软件包。"
 
-#: trstrings:rsdbopened
+#: strlocale:rsresolvingdyndeps
+msgid "Resolving dynamic dependencies..."
+msgstr ""
+
+#: strlocale:rsdbconnclosed
+msgid "Database connection closed."
+msgstr ""
+
+#: strlocale:rsdbopened
 msgid "Software database opened."
 msgstr ""
 
-#: trstrings:rsinclose
+#: strlocale:rsinclose
 msgid "The installer will close now"
 msgstr "安装程序即将关闭"
 
-#: trstrings:rscnoverride
+#: strlocale:rscnoverride
 msgid "Unable to override the file %f."
 msgstr "无法覆盖文件 %f 。"
 
-#: trstrings:rscncopy
+#: strlocale:rscncopy
 msgid "Unable to copy the file %s."
 msgstr "无法复制文件 %s。"
 
-#: trstrings:rsnotifydevs
+#: strlocale:rsnotifydevs
 msgid "Please notify the developers on http://launchpad.net/listaller"
 msgstr "请在 http://launchpad.net/listaller 告知开发者"
 
-#: trstrings:rsextracterror
+#: strlocale:rsextracterror
 msgid "Error while extracting files!"
 msgstr "提取文件时发生错误！"
 
-#: trstrings:rspkgdm
+#: strlocale:rspkgdm
 msgid ""
 "The package may be damaged or you haven't enough permissions to execute this "
 "action!"
 msgstr ""
 
-#: trstrings:rsabload
+#: strlocale:rsunknownerroroc
+msgid "Unknown error occured!"
+msgstr ""
+
+#: strlocale:rsabload
 msgid "Loading aborted."
 msgstr "已中止载入。"
 
-#: trstrings:rsalreadyinst
+#: strlocale:rspackageisunsigned
+msgid "Package is unsigned."
+msgstr ""
+
+#: strlocale:rspackagehastrustedsign
+msgid "Package has trusted signature."
+msgstr ""
+
+#: strlocale:rspackagesigisuntrusted
+msgid "Package signature is UNTRUSTED!"
+msgstr ""
+
+#: strlocale:rsoneinstattime
+msgid ""
+"You cannot install two applications at the same time.\n"
+"Please finish the first installation, then install this one again.\n"
+"(If you do not run two installations, try to remove the temporary installer "
+"directory"
+msgstr ""
+
+#: strlocale:rsalreadyinst
 msgid "This application is already installed"
 msgstr "此程序已安装"
 
-#: trstrings:rsinstallagain
+#: strlocale:rsinstallagain
 msgid "Do you want to install it again?"
 msgstr "您想再次安装它吗？"
 
-#: trstrings:rswelcometo
+#: strlocale:rswelcometo
 msgid "Welcome to the installation of %a"
 msgstr "欢迎安装 %a"
 
-#: trstrings:rsinstof
+#: strlocale:rsinstof
 msgid "Installation of %a"
 msgstr "安装 %a"
 
-#: trstrings:rstestmode
+#: strlocale:rstestmode
 msgid "Testmode"
 msgstr "测试模式"
 
-#: trstrings:rstestfinished
+#: strlocale:rstestfinished
 msgid "Test-installation of package finished."
 msgstr ""
 
-#: trstrings:rscleaningup
+#: strlocale:rscleaningup
 msgid "Cleaning up..."
 msgstr "正在清理..."
 
-#: trstrings:rspkginval
+#: strlocale:rsnotexecasrootpolkit
+msgid ""
+"Please do not execute this action with superuser rights!\n"
+"(PolicyKit will ask for authorization if privileges are required.)\n"
+"Do you want to force Listaller to execute all with superuser permission?"
+msgstr ""
+
+#: strlocale:rspkginval
 msgid "The submitted package is invalid!"
 msgstr ""
 
-#: trstrings:rscouldntsolve
+#: strlocale:rscouldntsolve
 msgid "Dependencies couldn't be solved!"
 msgstr "无法解决依赖关系！"
 
-#: trstrings:rsviewlog
+#: strlocale:rsviewlog
 msgid "Please view the logfile at %p"
 msgstr "请在 %p 下查看日志文件"
 
-#: trstrings:rspkgerror
+#: strlocale:rspkgerror
 msgid "Installation package is corrupt"
 msgstr "安装包已损坏"
 
-#: trstrings:rsappclose
+#: strlocale:rsappclose
 msgid "The application will close now."
 msgstr ""
 
-#: trstrings:rsstep1
+#: strlocale:rsstep1
 msgid "Phase 1/4: Resolving dependencies..."
 msgstr "阶段 1/4：正在分析依赖关系..."
 
-#: trstrings:rsstate
+#: strlocale:rsstate
 msgid "State"
 msgstr "状态"
 
-#: trstrings:rswdldep
+#: strlocale:rswdldep
 msgid "This application wants to fetch a dependency from %l"
 msgstr ""
 
-#: trstrings:rswallow
+#: strlocale:rswallow
 msgid "Do you want confirm this download of external files?"
 msgstr ""
 
-#: trstrings:rslicloseani
+#: strlocale:rscouldnotdetectpkgtype
+msgid "Could not detect package type!"
+msgstr ""
+
+#: strlocale:rslicloseani
 msgid "Listaller will close now. The package couldn't be installed."
 msgstr "Listaller 即将关闭。无法安装软件包。"
 
-#: trstrings:rsstep2
+#: strlocale:rsstep2
 msgid "Phase 2/4: Installing files..."
 msgstr "阶段 2/4：正在安装文件..."
 
-#: trstrings:rsstep3
+#: strlocale:rsstep3
 msgid "Phase 3/4: Chmod new files..."
 msgstr "阶段 3/4：更改文件权限..."
 
-#: trstrings:rsstep4
+#: strlocale:rsstep4
 msgid "Phase 4/4: Registering application..."
 msgstr "阶段 4/4：正在注册程序"
 
-#: trstrings:rsaddupdsrc
+#: strlocale:rstestmodednregister
+msgid "Testmode: Do not register package."
+msgstr ""
+
+#: strlocale:rsrightsassignedtox
+msgid "Rights assigned to %a."
+msgstr ""
+
+#: strlocale:rsaddupdsrc
 msgid "The software provides the following update source:"
 msgstr ""
 
-#: trstrings:rsqaddupdsrc
+#: strlocale:rsqaddupdsrc
 msgid "Should this repository be registered to get software updates?"
 msgstr ""
 
-#: trstrings:rsfinished
+#: strlocale:rsfinished
 msgid "Finished"
 msgstr "已完成"
 
-#: trstrings:rssecurityinfo
+#: strlocale:rssecurityinfo
 msgid ""
 "Please install this package only if you got it from a \n"
 "trusted source. There is a serious risk that the software in this package\n"
@@ -427,73 +486,97 @@ msgid ""
 "with superuser rights.\n"
 msgstr ""
 
-#: trstrings:rssecuritywarning
+#: strlocale:rssecuritywarning
 msgid "Security warning"
 msgstr ""
 
-#: trstrings:rsinstanyway
+#: strlocale:rsiknowtherisk
+msgid "I know the risk"
+msgstr ""
+
+#: strlocale:rsinstanyway
 msgid "Do you want to install it anyway? (This could cause problems)"
 msgstr ""
 
-#: trstrings:rsinvarchitecture
+#: strlocale:rsinvarchitecture
 msgid ""
 "The application which this package contains was not built for the current "
 "system architecture."
 msgstr "此软件包包含的程序不适合当前系统架构。"
 
-#: trstrings:rswilldlfiles
+#: strlocale:rspackagetypeisx
+msgid "Package type is \"%s\""
+msgstr ""
+
+#: strlocale:rsrunbinasroot
+msgid "Run binary setup file as root."
+msgstr ""
+
+#: strlocale:rsfoundinstallprofilex
+msgid "Found installation profile %s."
+msgstr ""
+
+#: strlocale:rswilldlfiles
 msgid "(This program will download the needed files from the internet)"
 msgstr "(此程序将从互联网下载所需文件)"
 
-#: trstrings:rsinvaliddversion
+#: strlocale:rsinvaliddversion
 msgid "Package was not build for your Linux distribution release."
 msgstr "软件包不适合您的 Linux 发行版版本。"
 
-#: trstrings:rsftpfailed
+#: strlocale:rsftpfailed
 msgid ""
 "Problem while downloading the required packages. Could not create working "
 "FTP connection."
 msgstr ""
 
-#: trstrings:rssuccess
+#: strlocale:rssuccess
 msgid "Success!"
 msgstr "成功！"
 
-#: trstrings:rsmain
+#: strlocale:rsmain
 msgid "Main"
 msgstr "主要"
 
-#: trstrings:rsdetails
+#: strlocale:rsdetails
 msgid "Details"
 msgstr "细节"
 
-#: trstrings:rsinstpkgfailed
+#: strlocale:rsinstpkgfailed
 msgid "Installation of package %s failed!"
 msgstr ""
 
-#: trstrings:rsecode
+#: strlocale:rsecode
 msgid "Code:"
 msgstr ""
 
-#: trstrings:rsinstallation
+#: strlocale:rslookingforrevdeps
+msgid "Looking for reverse-dependencies..."
+msgstr ""
+
+#: strlocale:rspackagedetected
+msgid "Package detected: %s"
+msgstr ""
+
+#: strlocale:rsinstallation
 msgid "Installation"
 msgstr "安装"
 
-#: trstrings:rsnoldsources
+#: strlocale:rsnoldsources
 msgid ""
 "There are no explicit package sources available for your Linux distribution\n"
 "Try to install common packages?"
 msgstr ""
 
-#: trstrings:rsusecomppq
+#: strlocale:rsusecomppq
 msgid "Use compatible packages?"
 msgstr "使用兼容的软件包吗？"
 
-#: trstrings:rsnocomp
+#: strlocale:rsnocomp
 msgid "No compatible packages found!"
 msgstr "没有找到兼容的软件包！"
 
-#: trstrings:rsactionnotpossiblepkg
+#: strlocale:rsactionnotpossiblepkg
 msgid ""
 "The selected action is not possible with this package.\n"
 "Please contact the package maintainer to get more information."
@@ -501,209 +584,225 @@ msgstr ""
 "对于当前软件包无法执行选定的操作。\n"
 "请联系软件包维护者以获得更多信息。"
 
-#: trstrings:rsreinstall
+#: strlocale:rsreinstall
 msgid "Re-install"
 msgstr "重新安装"
 
-#: trstrings:rspkgdownload
+#: strlocale:rspkgdownload
 msgid "The following dependencies will be downloaded:"
 msgstr ""
 
-#: trstrings:rsgetdependencyfrom
+#: strlocale:rsgetdependencyfrom
 msgid "Get dependency from"
 msgstr "获取依赖从"
 
-#: trstrings:rsplwait2
+#: strlocale:rsplwait2
 msgid "Please wait..."
 msgstr "请等待..."
 
-#: trstrings:rsdepdlproblem
+#: strlocale:rsdepdlproblem
 msgid "Problem while downloading the dependency."
 msgstr ""
 
-#: trstrings:rshasherror
+#: strlocale:rslookingforx
+msgid "Looking for %a."
+msgstr ""
+
+#: strlocale:rsdownloadingpkg
+msgid "Downloading package..."
+msgstr ""
+
+#: strlocale:rsinstallingx
+msgid "Installing %a..."
+msgstr ""
+
+#: strlocale:rshasherror
 msgid ""
 "Hash value doesn't match!\n"
 "The package may be modified after creation.\n"
 "Please obtain a new copy"
 msgstr ""
 
-#: trstrings:rsinstallationmode
+#: strlocale:rsinstallationmode
 msgid "Installation mode:"
 msgstr "安装模式："
 
-#: trstrings:rsimodeinstruction
+#: strlocale:rsimodeinstruction
 msgid "Select which parts of the application should be installed."
 msgstr "请选择要安装那部分程序"
 
-#: trstrings:rsmode
+#: strlocale:rsmode
 msgid "Mode"
 msgstr "模式"
 
-#: trstrings:rsinstperformerror
+#: strlocale:rsexecnewapp
+msgid "Execute the new application"
+msgstr ""
+
+#: strlocale:rsinstperformerror
 msgid "Error while performing installation:"
 msgstr "进行安装时发生错误："
 
-#: trstrings:rsyesno1
+#: strlocale:rsyesno1
 msgid "Yes/No?:"
 msgstr "是/否？"
 
-#: trstrings:rsinstalllibuild
+#: strlocale:rsinstalllibuild
 msgid ""
 "You have to install the \"libuild\" tool before you can build packages!"
 msgstr ""
 
-#: trstrings:rsfilenotexists
+#: strlocale:rsfilenotexists
 msgid "The file \"%f\" does not exists!"
 msgstr "文件“%f”不存在！"
 
-#: trstrings:rswanttodoq
+#: strlocale:rswanttodoq
 msgid "What do you want to do?"
 msgstr "您想做什么？"
 
-#: trstrings:rsdevversion
+#: strlocale:rsdevversion
 msgid ""
 "You use a development version of Listaller!\n"
 "This version is not tested and may cause problems!"
 msgstr ""
 
-#: trstrings:rsspkwarning
+#: strlocale:rsspkwarning
 msgid ""
 "Make sure that you got this package from a save source and from a serious "
 "publisher!"
 msgstr ""
 
-#: trstrings:rsinstalleveryone
+#: strlocale:rsinstalleveryone
 msgid "Install application for everyone"
 msgstr "将程序安装给所有人"
 
-#: trstrings:rstestapp
+#: strlocale:rstestapp
 msgid "Test setup && software"
 msgstr ""
 
-#: trstrings:rsinstallhome
+#: strlocale:rsinstallhome
 msgid "Install into my Home directory"
 msgstr "安装到我的主目录"
 
-#: trstrings:rsselinstmode
+#: strlocale:rsselinstmode
 msgid "Select installation mode"
 msgstr "选择安装模式"
 
-#: trstrings:rssoftwaremanager
+#: strlocale:rssoftwaremanager
 msgid "Software Manager"
 msgstr "软件管理器"
 
-#: trstrings:rsupdsources
+#: strlocale:rsupdsources
 msgid "Update repositories"
 msgstr ""
 
-#: trstrings:rsclose
+#: strlocale:rsclose
 msgid "Close"
 msgstr "关闭"
 
-#: trstrings:rsdelsrc
+#: strlocale:rsdelsrc
 msgid "Delete source"
 msgstr "删除软件源"
 
-#: trstrings:rslistofsrc
+#: strlocale:rslistofsrc
 msgid "The following update repositories are installed:"
 msgstr ""
 
-#: trstrings:rsuninstall
+#: strlocale:rsuninstall
 msgid "Uninstall"
 msgstr "卸载"
 
-#: trstrings:rsshow
+#: strlocale:rsshow
 msgid "Show:"
 msgstr "显示："
 
-#: trstrings:rsall
+#: strlocale:rsall
 msgid "All"
 msgstr "全部"
 
-#: trstrings:rseducation
+#: strlocale:rseducation
 msgid "Education"
 msgstr "教育"
 
-#: trstrings:rsoffice
+#: strlocale:rsoffice
 msgid "Office"
 msgstr "办公"
 
-#: trstrings:rsdevelopment
+#: strlocale:rsdevelopment
 msgid "Development"
 msgstr "开发"
 
-#: trstrings:rsgraphic
+#: strlocale:rsgraphic
 msgid "Graphic"
 msgstr "图形"
 
-#: trstrings:rsnetwork
+#: strlocale:rsnetwork
 msgid "Network"
 msgstr "网络"
 
-#: trstrings:rsgames
+#: strlocale:rsgames
 msgid "Games"
 msgstr "游戏"
 
-#: trstrings:rssystem
+#: strlocale:rssystem
 msgid "System"
 msgstr "系统"
 
-#: trstrings:rsmultimedia
+#: strlocale:rsmultimedia
 msgid "Multimedia"
 msgstr "多媒体"
 
-#: trstrings:rsaddidional
+#: strlocale:rsaddidional
 msgid "Utilities"
 msgstr "工具"
 
-#: trstrings:rsother
+#: strlocale:rsother
 msgid "Other"
 msgstr "其他"
 
-#: trstrings:rsversion
+#: strlocale:rsversion
 msgid "Version"
 msgstr "版本"
 
-#: trstrings:rsauthor
+#: strlocale:rsauthor
 msgid "Autor"
 msgstr "作者"
 
-#: trstrings:rsusername
+#: strlocale:rsusername
 msgid "Username"
 msgstr "用户名"
 
-#: trstrings:rspassword
+#: strlocale:rspassword
 msgid "Password"
 msgstr "密码"
 
-#: trstrings:rsproxysettings
+#: strlocale:rsproxysettings
 msgid "Proxy-Settings"
 msgstr "代理设置"
 
-#: trstrings:rsenableproxy
+#: strlocale:rsenableproxy
 msgid "Enable Proxy-Server"
 msgstr "启用代理服务器"
 
-#: trstrings:rslokierror
+#: strlocale:rslokierror
 msgid "Unable to load information about LOKI-Setup."
 msgstr ""
 
-#: trstrings:rscannotloadicon
+#: strlocale:rscannotloadicon
 msgid ""
 "Unable to load the icon of %a. Please notify the developers of Listaller or "
 "of this application!"
 msgstr ""
 
-#: trstrings:rsautoloaddep
+#: strlocale:rsautoloaddep
 msgid "Load dependencies from included webserver-urls automatically"
 msgstr ""
 
-#: trstrings:rsready
+#: strlocale:rsready
 msgid "Ready."
 msgstr "就绪。"
 
-#: trstrings:rsconvertpkg
+#: strlocale:rsconvertpkg
 msgid ""
 "You want to install an %x-Package, but your Linux-distribution's package "
 "management system is based on %y.\n"
@@ -713,59 +812,63 @@ msgid ""
 "Do you want to convert the package now?"
 msgstr ""
 
-#: trstrings:rsconvertpkgq
+#: strlocale:rsconvertpkgq
 msgid "Convert package?"
 msgstr "转换软件包？"
 
-#: trstrings:rsconvtitle
+#: strlocale:rsconvtitle
 msgid "Converting %p package..."
 msgstr "正在转换 %p 软件包..."
 
-#: trstrings:rsfiltering
+#: strlocale:rsfiltering
 msgid "Filtering..."
 msgstr "正在过滤..."
 
-#: trstrings:rsfilter
+#: strlocale:rsfilter
 msgid "Filter..."
 msgstr "过滤器..."
 
-#: trstrings:rsloading
+#: strlocale:rsloading
 msgid "Loading..."
 msgstr "载入中..."
 
-#: trstrings:rsapplications
+#: strlocale:rsskippedx
+msgid "Skipped %a"
+msgstr ""
+
+#: strlocale:rsapplications
 msgid "Applications"
 msgstr ""
 
-#: trstrings:rsinstalledapps
+#: strlocale:rsinstalledapps
 msgid "Installed applications"
 msgstr ""
 
-#: trstrings:rsinstallpkg
+#: strlocale:rsinstallpkg
 msgid "Install package"
 msgstr "安装软件包"
 
-#: trstrings:rsrepositories
+#: strlocale:rsrepositories
 msgid "Repositories"
 msgstr "软件仓库"
 
-#: trstrings:rspackagelists
+#: strlocale:rspackagelists
 msgid "Package lists"
 msgstr ""
 
-#: trstrings:rssettings
+#: strlocale:rssettings
 msgid "Settings"
 msgstr "设置"
 
-#: trstrings:rsmyapps
+#: strlocale:rsmyapps
 msgid "My apps"
 msgstr ""
 
-#: trstrings:rssharedapps
+#: strlocale:rssharedapps
 msgid "Shared apps"
 msgstr ""
 
-#: trstrings:rsnoguipkgmanfound
+#: strlocale:rsnoguipkgmanfound
 msgid ""
 "Could not find usable GUI package manager.\n"
 "Please install a PackageKit-GUI!"
@@ -773,7 +876,11 @@ msgstr ""
 "无法找到可用的图形界面软件包管理器。\n"
 "请安装 PackageKit-GUI！"
 
-#: trstrings:rsuselaunchpadforbugs
+#: strlocale:rsversionunknown
+msgid "Version: unknown"
+msgstr ""
+
+#: strlocale:rsuselaunchpadforbugs
 msgid ""
 "Please use https://bugs.launchpad.net/listaller\n"
 "for bug reports."
@@ -781,7 +888,7 @@ msgstr ""
 "请使用 https://bugs.launchpad.net/listaller\n"
 "报告 bug。"
 
-#: trstrings:rslistalleralien
+#: strlocale:rslistalleralien
 msgid ""
 "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
 "installed\n"
@@ -790,119 +897,175 @@ msgstr ""
 "Listaller 使用 “alien” 转换外来软件包，但此工具尚未安装\n"
 "您要立即安装 “alien” 以继续吗？"
 
-#: trstrings:rsinstpkgq
+#: strlocale:rsinstpkgq
 msgid "Install package?"
 msgstr "安装软件包？"
 
-#: trstrings:rspkginstfail
+#: strlocale:rspkginstfail
 msgid "Package %p could not be installed."
 msgstr "软件包 %p 无法安装。"
 
-#: trstrings:rsshowpkmon
+#: strlocale:rsshowpkmon
 msgid "Start PackageKit monitor before running transactions"
 msgstr ""
 
-#: trstrings:rsstartlitray
+#: strlocale:rsstartlitray
 msgid "Start Listaller tray icon application (e.g. to check dependencies)"
 msgstr ""
 
-#: trstrings:rsaboutlistaller
+#: strlocale:rsaboutlistaller
 msgid "About Listaller"
 msgstr "关于 Listaller"
 
-#: trstrings:rsopendirsicatalog
+#: strlocale:rsopendirsicatalog
 msgid "Open your distribution's package catalog"
 msgstr "打开您发行版的软件包类别"
 
-#: trstrings:rsabout
+#: strlocale:rsabout
 msgid "About"
 msgstr "关于"
 
-#: trstrings:rsauthors
+#: strlocale:rsauthors
 msgid "Authors"
 msgstr "作者"
 
-#: trstrings:rsrmsrcq
+#: strlocale:rsrmsrcq
 msgid "Are you really sure that you want to delete this source?"
 msgstr "您确定要删除此软件源吗？"
 
-#: trstrings:rsrmsrcqc
+#: strlocale:rsrmsrcqc
 msgid "Delete source?"
 msgstr "删除软件源？"
 
-#: trstrings:rspkitprobpkmon
+#: strlocale:rspkitprobpkmon
 msgid ""
 "Problem while communicating with PackageKit. Run \"pkmon\" to get further "
 "information."
 msgstr ""
 
-#: trstrings:rssourcedeleted
+#: strlocale:rscallingpackagekitpkmonexecactions
+msgid "Calling PackageKit... (run \"pkmon\" to monitor the executed actions)"
+msgstr ""
+
+#: strlocale:rsdetectingpackage
+msgid "Detecting package..."
+msgstr ""
+
+#: strlocale:rssourcedeleted
 msgid "Source was removed."
 msgstr "软件源已删除。"
 
-#: trstrings:rspleaseselectlistitem
+#: strlocale:rspleaseselectlistitem
 msgid "Please select an item from the list!"
 msgstr "请从列表中选择一项！"
 
-#: trstrings:rsliupdateaccessfailed
+#: strlocale:rsliupdateaccessfailed
 msgid "Cannot access the Listaller Update tool. Maybe it is not installed?"
 msgstr ""
 
-#: trstrings:rschangepkgmansettings
+#: strlocale:rschangepkgmansettings
 msgid "Change package manager settings"
 msgstr "改变软件包管理器设置"
 
-#: trstrings:rsrealuninstq
+#: strlocale:rsrealuninstq
 msgid "Do you really want to uninstall %a?"
 msgstr "您确定要卸载 %a 吗？"
 
-#: trstrings:rsunistsuccess
+#: strlocale:rsunistsuccess
 msgid "Application was successfully removed!"
 msgstr ""
 
-#: trstrings:rsrmerror
+#: strlocale:rsrmerror
 msgid "Error while uninstalling!"
 msgstr "卸载时发生错误！"
 
-#: trstrings:rscannothandlerm
+#: strlocale:rsunabletoremoveapp
+msgid "Unable to remove this application!"
+msgstr ""
+
+#: strlocale:rscannothandlerm
 msgid ""
 "This application does not look like a MoJo-Installation and it is not "
-"installed via an other package-type Listaller can handle.\n"
+"installed via any other package-type Listaller can handle.\n"
 "Get instructions how to remove this application from the program author."
 msgstr ""
 
-#: trstrings:rsrmunsddeps
+#: strlocale:rsreadingappinfo
+msgid "Reading application information..."
+msgstr ""
+
+#: strlocale:rsappregistbroken
+msgid "The registration of this package is broken!"
+msgstr ""
+
+#: strlocale:rsremovingapp
+msgid "Removing application..."
+msgstr ""
+
+#: strlocale:rslokisetupfound
+msgid "LOKI setup found."
+msgstr ""
+
+#: strlocale:rspkgcouldbeinstalledwithloki
+msgid "Package could be installed with MoJo/LOKI."
+msgstr ""
+
+#: strlocale:rsrmunsddeps
 msgid "Uninstalling unused dependencies..."
 msgstr ""
 
-#: trstrings:rsuninstalling
+#: strlocale:rsstartinguninstall
+msgid "Starting uninstallation."
+msgstr ""
+
+#: strlocale:rsuninstalling
 msgid "Uninstalling..."
 msgstr "正在卸载..."
 
-#: trstrings:rsrmpkg
+#: strlocale:rsrmpkg
 msgid ""
 "Do you really want to remove \"%p\", containing %a?\n"
 "The following package(s) will be removed also: %pl\n"
 "If you're not sure if you need those packages, press \"No\"!"
 msgstr ""
 
-#: trstrings:rsrmpkgq
+#: strlocale:rscheckdepsregisteredapps
+msgid "Checking dependencies of all registered applications..."
+msgstr ""
+
+#: strlocale:rsyouscanonlyrootinstalledapps
+msgid "You are scanning only the ROOT installed applications."
+msgstr ""
+
+#: strlocale:rsyouscanonlylocalinstalledapps
+msgid "You are scanning your local installed applications."
+msgstr ""
+
+#: strlocale:rsinstalleddepx
+msgid "Installed dependency %s"
+msgstr ""
+
+#: strlocale:rsdepxisnotinstall
+msgid "Dependency \"%s\" is not installed!"
+msgstr ""
+
+#: strlocale:rsrmpkgq
 msgid "Really remove?"
 msgstr "确定要移除？"
 
-#: trstrings:rswaiting
+#: strlocale:rswaiting
 msgid "Waiting..."
 msgstr "轻稍候..."
 
-#: trstrings:rsrmappc
+#: strlocale:rsrmappc
 msgid "Uninstalling %a"
 msgstr "正在卸载 %a"
 
-#: trstrings:rslindesk
+#: strlocale:rslindesk
 msgid "Running under %s."
 msgstr "在 %s 下运行"
 
-#: trstrings:rstranslators
+#: strlocale:rstranslators
 msgid "List of translators:\n"
 msgstr ""
 "Aron Xu\n"
@@ -910,83 +1073,83 @@ msgstr ""
 "lhquark\n"
 "王英华\n"
 
-#: trstrings:rsnoupdates
+#: strlocale:rsnoupdates
 msgid "There are no updates available!"
 msgstr "没有可用更新！"
 
-#: trstrings:rslogupdinfo
+#: strlocale:rslogupdinfo
 msgid "Update info:"
 msgstr "更新信息："
 
-#: trstrings:rsfileschanged
+#: strlocale:rsfileschanged
 msgid "%f files will be changed."
 msgstr "%f 个文件会变更。"
 
-#: trstrings:rsupdto
+#: strlocale:rsupdto
 msgid "The application will be updated to version %v"
 msgstr "程序将被更新到版本 %v"
 
-#: trstrings:rscheckforupd
+#: strlocale:rscheckforupd
 msgid "Check for updates"
 msgstr "检查更新"
 
-#: trstrings:rsinstupd
+#: strlocale:rsinstupd
 msgid "Install updates"
 msgstr "安装更新"
 
-#: trstrings:rsshowupdater
+#: strlocale:rsshowupdater
 msgid "Show"
 msgstr "显示"
 
-#: trstrings:rsquitupdater
+#: strlocale:rsquitupdater
 msgid "Quit"
 msgstr "退出"
 
-#: trstrings:rsupdinstalling
+#: strlocale:rsupdinstalling
 msgid "Applying updates..."
 msgstr "正在应用更新..."
 
-#: trstrings:rsupdconferror
+#: strlocale:rsupdconferror
 msgid "Error while unpacking and configuring files."
 msgstr "解压和配置文件时发生错误。"
 
-#: trstrings:rsquestion
+#: strlocale:rsquestion
 msgid "Question:"
 msgstr "问题："
 
-#: trstrings:rsyes
+#: strlocale:rsyes
 msgid "yes"
 msgstr "是"
 
-#: trstrings:rsy
+#: strlocale:rsy
 msgid "y"
 msgstr "y"
 
-#: trstrings:rsresolvingdep
+#: strlocale:rsresolvingdep
 msgid "Resolving dependencies..."
 msgstr "正在分析依赖关系..."
 
-#: trstrings:rspkgunsigned
+#: strlocale:rspkgunsigned
 msgid "This package is not signed!"
 msgstr ""
 
-#: trstrings:rspkguntrusted
+#: strlocale:rspkguntrusted
 msgid "This package is untrusted!"
 msgstr ""
 
-#: trstrings:rscouldnotinstallapp
+#: strlocale:rscouldnotinstallapp
 msgid "The application %a could not be installed!"
 msgstr ""
 
-#: trstrings:rswarning
+#: strlocale:rswarning
 msgid "Warning!"
 msgstr ""
 
-#: trstrings:rstmpwritedenied
+#: strlocale:rstmpwritedenied
 msgid "Listaller cannot write into its temporary directory: Access denied!"
 msgstr ""
 
-#: trstrings:rserror
+#: strlocale:rserror
 msgid "Error"
 msgstr ""
 
@@ -1605,6 +1768,9 @@ msgstr ""
 
 #~ msgid "Wrong token type: %s expected but %s found"
 #~ msgstr "错误的标识符类型：期望 %s 但是找到了 %s"
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "程序 %a 未被安装。"
 
 #~ msgid "Opening database..."
 #~ msgstr "正在打开数据库..."
