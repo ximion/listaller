@@ -3,67 +3,63 @@ Description: Change liCreator installation dir from /opt/appfiles.
 Author: Matthias Klumpp <matthias@nlinux.org>
 Last-Update: 2010-06-26
 
-Index: listaller-0.4b/data/applications/licreator-gtk.desktop
-===================================================================
---- a/data/applications/licreator-gtk.desktop	2010-05-21 11:00:16.229177438 +0200
-+++ b/data/applications/licreator-gtk.desktop	2010-05-21 11:02:08.379181487 +0200
-@@ -8,7 +8,7 @@
+--- a/data/applications/licreator-gtk.desktop
++++ b/data/applications/licreator-gtk.desktop
+@@ -9,7 +9,7 @@
  Exec=licreator-gtk
  GenericName=Create setup package
  GenericName[de]=Setup Paket erstellen
 -Icon=/opt/appfiles/liCreator/listaller_creator-gtk.png
-+Icon=/usr/lib/licreator/listaller_creator-gtk.png
++Icon=listaller_creator-gtk.png
  MimeType=application/ips-script;
  StartupNotify=true
  Terminal=false
-Index: listaller-0.4b/data/applications/licreator-qt.desktop
-===================================================================
---- a/data/applications/licreator-qt.desktop	2010-05-21 11:00:17.556676649 +0200
-+++ b/data/applications/licreator-qt.desktop	2010-05-21 11:02:24.156676041 +0200
-@@ -8,7 +8,7 @@
+--- a/data/applications/licreator-qt.desktop
++++ b/data/applications/licreator-qt.desktop
+@@ -9,7 +9,7 @@
  Exec=licreator-qt
  GenericName=Create setup package
  GenericName[de]=Setup Paket erstellen
 -Icon=/opt/appfiles/liCreator/listaller_creator-qt.png
-+Icon=/usr/lib/licreator/listaller_creator-qt.png
++Icon=listaller_creator-qt.png
  MimeType=application/ips-script;
  StartupNotify=true
  Terminal=false
-Index: listaller-0.4b/src/install-creator.sh
-===================================================================
---- a/src/install-creator.sh	2010-05-21 11:00:09.919179529 +0200
-+++ b/src/install-creator.sh	2010-05-21 11:01:35.566676969 +0200
-@@ -34,27 +34,26 @@
+--- a/src/install-creator.sh
++++ b/src/install-creator.sh
+@@ -26,28 +26,27 @@
  #
  
  mkdir -p $DESTDIR$prefix/bin/
 -mkdir -p $DESTDIR/opt/appfiles/ #NEEDS to be edited for prefix
 -mkdir -p $DESTDIR/opt/appfiles/liCreator
-+mkdir -p $DESTDIR/usr/lib/licreator/
++mkdir -p $DESTDIR/usr/lib/licreator
  mkdir -p $DESTDIR$prefix/share/applications
+ mkdir -p $DESTDIR$prefix/share/pixmaps
  
  if [ "$WIDGET" == "qt4" ]; then
 -cp '../build/qt4/licreator-qt' $DESTDIR/opt/appfiles/liCreator/
-+cp '../build/qt4/licreator-qt' $DESTDIR/usr/lib/licreator/
++cp '../build/qt4/licreator-qt' $DESTDIR/usr/lib/licreator
  cp "../data/applications/licreator-qt.desktop" $DESTDIR$prefix/share/applications/
 -cp '../graphics/listaller_creator.png' $DESTDIR/opt/appfiles/liCreator/listaller_creator-qt.png
-+cp '../graphics/listaller_creator.png' $DESTDIR/usr/lib/licreator/listaller_creator-qt.png
++cp '../graphics/listaller_creator.png' $DESTDIR/usr/share/pixmaps/listaller_creator-qt.png
  #Create symlink
  if [ ! -e "$DESTDIR$prefix/bin/licreator-qt" ]; then
   cd $DESTDIR$prefix/bin
-  ln -s /opt/appfiles/liCreator/licreator-qt licreator-qt
+- ln -s /opt/appfiles/liCreator/licreator-qt licreator-qt
++#  ln -s $DESTDIR/usr/lib/licreator/licreator-qt licreator-qt
  fi
  else
 -cp '../build/gtk2/licreator-gtk' $DESTDIR/opt/appfiles/liCreator/
-+cp '../build/gtk2/licreator-gtk' $DESTDIR/usr/lib/licreator/
++cp '../build/gtk2/licreator-gtk' $DESTDIR/usr/lib/licreator
  cp "../data/applications/licreator-gtk.desktop" $DESTDIR$prefix/share/applications/
 -cp '../graphics/listaller_creator.png' $DESTDIR/opt/appfiles/liCreator/listaller_creator-gtk.png
-+cp '../graphics/listaller_creator.png' $DESTDIR/usr/lib/licreator/listaller_creator-gtk.png
++cp '../graphics/listaller_creator.png' $DESTDIR/usr/share/pixmaps/listaller_creator-gtk.png
  #Create symlink
  if [ ! -e "$DESTDIR$prefix/bin/licreator-gtk" ]; then
   cd $DESTDIR$prefix/bin
 - ln -s /opt/appfiles/liCreator/licreator-gtk licreator-gtk
-+ ln -s /usr/lib/licreator/licreator-gtk licreator-gtk
++ ln -s $DESTDIR/usr/lib/licreator/licreator-gtk licreator-gtk
  fi
  fi
  
