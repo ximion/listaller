@@ -55,9 +55,9 @@ object FmAbout: TFmAbout
     Height = 268
     Top = 104
     Width = 324
-    ActivePage = AboutSheet
+    ActivePage = ThanksSheet
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 0
     object AboutSheet: TTabSheet
       Caption = 'About'
@@ -121,7 +121,7 @@ object FmAbout: TFmAbout
         TabOrder = 1
       end
     end
-    object TabSheet2: TTabSheet
+    object ThanksSheet: TTabSheet
       Caption = 'Thanks to'
       ClientHeight = 242
       ClientWidth = 320

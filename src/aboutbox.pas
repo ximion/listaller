@@ -43,7 +43,7 @@ type
     AuthorSheet: TTabSheet;
     Panel1: TPanel;
     TabSheet1: TTabSheet;
-    TabSheet2: TTabSheet;
+    ThanksSheet: TTabSheet;
     procedure BitBtn1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -71,6 +71,7 @@ begin
    PageControl1.ActivePageIndex:=0;
    AboutSheet.Caption:=rsAbout;
    AuthorSheet.Caption:=rsAuthors;
+   ThanksSheet.Caption:=rsThanksTo;
    BitBtn1.Caption:=rsClose;
    Memo2.Text:=rsTranslators;
    {$IFDEF LCLgtk2}

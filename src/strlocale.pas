@@ -196,6 +196,7 @@ resourcestring
   rsSoftwareManager = 'Software Manager';
   rsUpdSources = 'Update repositories';
   rsClose = 'Close';
+  rsThanksTo = 'Thanks to';
   rsDelSrc = 'Delete source';
   rsListofSrc = 'The following update repositories are installed:';
   rsUninstall = 'Uninstall';

@@ -37,7 +37,6 @@ type
     AppNameLbl: TLabel;
     AppVersionLbl: TLabel;
     BitBtn2: TBitBtn;
-    AboutBtn: TButton;
     AppViewControl: TPageControl;
     BtnPanel: TPanel;
     CatButton: TSpeedButton;
@@ -45,6 +44,8 @@ type
     FuncList: TListView;
     MBar: TProgressBar;
     MenuItem2: TMenuItem;
+    MenuItem3: TMenuItem;
+    MenuItemAbout: TMenuItem;
     RepoButton: TSpeedButton;
     SettingsButton: TSpeedButton;
     SpacerPan: TPanel;
@@ -100,7 +101,6 @@ type
     procedure BitBtn2Click(Sender: TObject);
     procedure btnSettingsClick(Sender: TObject);
     procedure btnCatClick(Sender: TObject);
-    procedure AboutBtnClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure CBoxChange(Sender: TObject);
     procedure AutoDepLdCbChange(Sender: TObject);
@@ -111,6 +111,7 @@ type
     procedure FuncListSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
     procedure MenuItem2Click(Sender: TObject);
+    procedure MenuItemAboutClick(Sender: TObject);
     procedure MItemInstallPkgClick(Sender: TObject);
     procedure MyAppSheetShow(Sender: TObject);
     procedure RmUpdSrcBtnClick(Sender: TObject);
@@ -531,15 +532,6 @@ begin
   InstAppButton.Down := false;
 end;
 
-procedure TMnFrm.AboutBtnClick(Sender: TObject);
-var
-  abbox: TFmAbout;
-begin
-  abbox := TFmAbout.Create(self);
-  abbox.ShowModal;
-  abbox.Free;
-end;
-
 procedure TMnFrm.Button1Click(Sender: TObject);
 var
   p: TProcess;
@@ -734,6 +726,15 @@ begin
     LogQ;
     li_mgr_free(@appcheckmgr);
   end;
+end;
+
+procedure TMnFrm.MenuItemAboutClick(Sender: TObject);
+var
+  abbox: TFmAbout;
+begin
+  abbox := TFmAbout.Create(self);
+  abbox.ShowModal;
+  abbox.Free;
 end;
 
 procedure TMnFrm.MItemInstallPkgClick(Sender: TObject);
@@ -1160,8 +1161,6 @@ end;     }
   //Register request call
   li_mgr_register_request_call(@amgr, @OnUserRequest, nil);
 
-  InstAppButton.Down := true;
-
   Notebook1.ActivePageComponent := InstalledAppsPage;
 
 
@@ -1211,7 +1210,7 @@ end;     }
   //Translate all other stuff
   Caption := rsSoftwareManager;
   Label1.Caption := rsShow;
-  AboutBtn.Caption := rsAboutListaller;
+  MenuItemAbout.Caption := rsAboutListaller;
   BitBtn2.Caption := rsOpenDirsiCatalog;
   MItemInstallPkg.Caption := rsInstallPkg;
   FilterEdt.Text := rsFilter;
@@ -1232,6 +1231,7 @@ end;     }
   UsILabel.Caption := rsListofSrc;
   BitBtn6.Caption := rsChangePkgManSettings;
 
+  InstAppButton.Down := true;
   WriteLn('GUI loaded.');
 end;
 

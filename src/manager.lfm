@@ -433,7 +433,7 @@ object MnFrm: TMnFrm
     Top = 0
     Width = 592
     Align = alClient
-    PageIndex = 2
+    PageIndex = 0
     ShowTabs = False
     TabOrder = 1
     object InstalledAppsPage: TPage
@@ -506,7 +506,7 @@ object MnFrm: TMnFrm
         TabOrder = 3
         object MyAppSheet: TTabSheet
           Caption = 'My Apps'
-          ClientHeight = 381
+          ClientHeight = 359
           ClientWidth = 584
           OnShow = MyAppSheetShow
           object SWBox: TPanel
@@ -522,7 +522,7 @@ object MnFrm: TMnFrm
         end
         object SysAppSheet: TTabSheet
           Caption = 'Shared Apps'
-          ClientHeight = 381
+          ClientHeight = 359
           ClientWidth = 584
           OnShow = SysAppSheetShow
           object SWBoxSU: TPanel
@@ -725,17 +725,6 @@ object MnFrm: TMnFrm
         Caption = 'Language: automatic'
         ParentColor = False
       end
-      object AboutBtn: TButton
-        Left = 628
-        Height = 22
-        Top = 486
-        Width = 83
-        Anchors = [akRight, akBottom]
-        AutoSize = True
-        Caption = 'About Listaller'
-        OnClick = AboutBtnClick
-        TabOrder = 0
-      end
       object WarnDistCb: TCheckBox
         Left = 6
         Height = 21
@@ -746,7 +735,7 @@ object MnFrm: TMnFrm
         Enabled = False
         OnChange = WarnDistCbChange
         State = cbChecked
-        TabOrder = 1
+        TabOrder = 0
       end
       object AutoDepLdCb: TCheckBox
         Left = 6
@@ -757,7 +746,7 @@ object MnFrm: TMnFrm
         Checked = True
         OnChange = AutoDepLdCbChange
         State = cbChecked
-        TabOrder = 2
+        TabOrder = 1
       end
       object CbShowPkMon: TCheckBox
         Left = 6
@@ -766,7 +755,7 @@ object MnFrm: TMnFrm
         Width = 235
         Caption = 'Start PackageKit monitor while transactions'
         OnChange = CbShowPkMonChange
-        TabOrder = 3
+        TabOrder = 2
       end
       object GroupBox1: TGroupBox
         Left = 6
@@ -777,7 +766,7 @@ object MnFrm: TMnFrm
         Caption = 'Proxy-Settings'
         ClientHeight = 170
         ClientWidth = 662
-        TabOrder = 4
+        TabOrder = 3
         object Label4: TLabel
           Left = 9
           Height = 13
@@ -907,7 +896,7 @@ object MnFrm: TMnFrm
         AutoSize = True
         Caption = 'Start Listaller tray icon application (to check dependencies)'
         OnClick = Button1Click
-        TabOrder = 5
+        TabOrder = 4
       end
     end
   end
@@ -974,6 +963,13 @@ object MnFrm: TMnFrm
       object MenuItem2: TMenuItem
         Caption = 'Check applications'
         OnClick = MenuItem2Click
+      end
+    end
+    object MenuItem3: TMenuItem
+      Caption = '?'
+      object MenuItemAbout: TMenuItem
+        Caption = 'About'
+        OnClick = MenuItemAboutClick
       end
     end
   end
