@@ -47,7 +47,7 @@ Last-Update: 2010-06-26
  if [ ! -e "$DESTDIR$prefix/bin/licreator-qt" ]; then
   cd $DESTDIR$prefix/bin
 - ln -s /opt/appfiles/liCreator/licreator-qt licreator-qt
-+#  ln -s $DESTDIR/usr/lib/licreator/licreator-qt licreator-qt
++  ln -s $DESTDIR/usr/lib/licreator/licreator-qt licreator-qt
  fi
  else
 -cp '../build/gtk2/licreator-gtk' $DESTDIR/opt/appfiles/liCreator/
