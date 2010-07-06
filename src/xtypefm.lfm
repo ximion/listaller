@@ -2240,7 +2240,10 @@ object IMdFrm: TIMdFrm
     Height = 20
     Top = 72
     Width = 196
+    Anchors = [akLeft, akBottom]
+    Position = 10
     Smooth = True
+    Step = 1
     TabOrder = 3
     Visible = False
   end

@@ -94,6 +94,11 @@ begin
     Label2.Visible := true;
     Image2.Visible := true;
     LoadStockPixmap(STOCK_DIALOG_WARNING, ICON_SIZE_BUTTON, Image2.Picture.Bitmap);
+  end
+  else
+  begin
+    Constraints.MinHeight := Constraints.MinHeight - Image2.Height;
+    Height := Height - Image2.Height;
   end;
 end;
 
@@ -101,7 +106,8 @@ procedure TIMdFrm.FormShow(Sender: TObject);
 begin
   if PkWarnImg.Visible then
   begin
-    LoadStockPixmap(STOCK_DIALOG_WARNING, ICON_SIZE_SMALL_TOOLBAR, PkWarnImg.Picture.Bitmap);
+    LoadStockPixmap(STOCK_DIALOG_WARNING, ICON_SIZE_SMALL_TOOLBAR,
+      PkWarnImg.Picture.Bitmap);
     PkiLabel.Visible := true;
   end;
   //Gap between buttons: 150
@@ -109,6 +115,7 @@ begin
     (btnInstallAll.Width-btnInstallAll.Constraints.MinWidth)  +
     (btnTest.Width-btnTest.Constraints.MinWidth)+
     (btnHome.Width-btnHome.Constraints.MinWidth)-150;
+  Application.ProcessMessages;
 end;
 
 procedure PkgInitProgressChange(change: LiStatusChange; Data: TLiStatusData;
