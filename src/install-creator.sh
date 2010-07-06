@@ -10,33 +10,26 @@ for arg; do
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;
     WIDGET=*) WIDGET=${arg#WIDGET=};;
     prefix=*) prefix=${arg#prefix=};;
+    libdir=*) libdir=${arg#libdir=};;
   esac;
 done
 
 if [ -z "$prefix" ]; then
    export prefix="/usr"
 fi
-
-ARCH=$(uname -m)
-case "$ARCH" in
- "i686") ARCH="i386";;
- "i586") ARCH="i386";;
- "i486") ARCH="i386";;
-esac
-
-if [ $ARCH = "x86_64" ]; then TDir="/usr/lib64/"
-else TDir="/usr/lib/"
+if [ -z "$libdir" ]; then
+   export libdir="$prefix/lib"
 fi
+
 #
 # Does the install
-#
-# "mkdir -p" is equivalent to ForceDirectories pascal function
 #
 
 mkdir -p $DESTDIR$prefix/bin/
 mkdir -p $DESTDIR/opt/appfiles/ #NEEDS to be edited for prefix
 mkdir -p $DESTDIR/opt/appfiles/liCreator
 mkdir -p $DESTDIR$prefix/share/applications
+mkdir -p $DESTDIR$prefix/share/pixmaps
 
 if [ "$WIDGET" == "qt4" ]; then
 cp '../build/qt4/licreator-qt' $DESTDIR/opt/appfiles/liCreator/

@@ -1,30 +1,25 @@
 #!/usr/bin/env bash
 # Parses command line options. Currently supported options are:
 # DESTDIR		Destination root directory
-
 set -e
-
 for arg; do
   case $arg in
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;
     prefix=*) prefix=${arg#prefix=};;
+    libdir=*) libdir=${arg#libdir=};;
   esac;
 done
 
 if [ -z "$prefix" ]; then
    export prefix="/usr"
 fi
-
-ARCH=$(uname -m)
-case "$ARCH" in
- "i686") ARCH="i386";;
- "i586") ARCH="i386";;
- "i486") ARCH="i386";;
-esac
+if [ -z "$libdir" ]; then
+   export libdir="$prefix/lib"
+fi
 
 # Does the install
 
-mkdir -p $DESTDIR$prefix/lib
+mkdir -p $DESTDIR$libdir
 mkdir -p $DESTDIR$prefix/bin
 mkdir -p $DESTDIR$prefix/sbin
 mkdir -p $DESTDIR$prefix/share
@@ -44,8 +39,8 @@ mkdir -p $DESTDIR/etc/lipa/app-reg
 cp ../data/blacklist $DESTDIR/etc/lipa/
 cp ../data/ignore-deps.list $DESTDIR/etc/lipa/
 
-cp ../build/libinstaller.so.0.4.0 $DESTDIR$prefix/lib/
-cd $DESTDIR$prefix/lib/
+cp ../build/libinstaller.so.0.4.0 $DESTDIR$libdir
+cd $DESTDIR$libdir
 if [ ! -f libinstaller.so.0.4 ]; then
 ln -s /usr/lib/libinstaller.so.0.4.0 libinstaller.so.0.4
 fi

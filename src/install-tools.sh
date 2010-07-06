@@ -7,11 +7,15 @@ for arg; do
   case $arg in
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;
     prefix=*) prefix=${arg#prefix=};;
+    libdir=*) libdir=${arg#libdir=};;
   esac;
 done
 
 if [ -z "$prefix" ]; then
    export prefix="/usr"
+fi
+if [ -z "$libdir" ]; then
+   export libdir="$prefix/lib"
 fi
 
 ARCH=$(uname -m)
@@ -37,10 +41,9 @@ cp ./build/libuild $DESTDIR$prefix/bin/
 #Copy graphics
 cp ./graphics/libutton/left.png $DESTDIR$prefix/share/listaller/graphics/libutton/
 cp ./graphics/libutton/firstblock.png $DESTDIR$prefix/share/listaller/graphics/libutton/
-cp ./graphics/libutton/block.png $DESTDIR//usr/share/listaller/graphics/libutton/
+cp ./graphics/libutton/block.png $DESTDIR/usr/share/listaller/graphics/libutton/
 cp ./graphics/libutton/lastblock.png $DESTDIR$prefix/share/listaller/graphics/libutton/
 cp -dpr ./graphics/libutton/distro/ $DESTDIR$prefix/share/listaller/graphics/libutton/distro/
-rm -rf $DESTDIR$prefix/share/listaller/graphics/libutton/distro/.svn
 rm -rf $DESTDIR$prefix/share/listaller/graphics/libutton/distro/.directory
 cd $SDIR
 

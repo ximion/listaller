@@ -8,11 +8,15 @@ for arg; do
   case $arg in
     DESTDIR=*) DESTDIR=${arg#DESTDIR=};;
     prefix=*) prefix=${arg#prefix=};;
+    libdir=*) libdir=${arg#libdir=};;
   esac;
 done
 
 if [ -z "$prefix" ]; then
    export prefix="/usr"
+fi
+if [ -z "$libdir" ]; then
+   export libdir="$prefix/lib"
 fi
 
 echo "Installing Listaller's platform/widgetset independent data..."

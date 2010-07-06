@@ -5,6 +5,7 @@ set -e
 for arg; do
   case $arg in
     prefix=*) prefix=${arg#prefix=};;
+    libdir=*) libdir=${arg#libdir=};;
   esac;
 done
 
@@ -20,9 +21,9 @@ case "$ARCH" in
  "i486") ARCH="i386";;
 esac
 
-rm -rf $prefix/lib/listaller
-rm -f $prefix/lib/libinstaller.so
-rm -f $prefix/lib/libinstaller.so.*
+rm -rf $libdir/listaller
+rm -f $libdir/libinstaller.so
+rm -f $libdir/libinstaller.so.*
 rm -rf $prefix/share/listaller
 rm -f $prefix/bin/lipa
 rm -f $prefix/bin/listallmgr-qt4

@@ -6,7 +6,7 @@
 #    ./configure <options> [parameters]
 
 
-OPTION_SPEC="help,enable-qt,enable-creator,enable-gtk,enable-all,prefix:"
+OPTION_SPEC="help,enable-qt,enable-creator,enable-gtk,enable-all,prefix:,libdir:"
 PARSED_OPTIONS=$(getopt -n "$0" -a -o h --long $OPTION_SPEC -- "$@")
 OPTIONS_RET=$?
 
@@ -31,6 +31,10 @@ while [ $# -ge 1 ]; do
       --enable-gtk )  ENABLE_GTK=1;;
       --enable-creator )  ENABLE_CREATOR=1;;
       --enable-all ) ENABLE_QT=1; ENABLE_GTK=1; ENABLE_CREATOR=1;;
+      --libdir ) case "$2" in
+                   "") echo "The libdir option needs an argument!"; exit 3 ;;
+                    *) export libtarget=$2 ; shift 2 ;;
+                 esac ;;
       --prefix ) case "$2" in
                    "") echo "The prefix option needs an argument!"; exit 3 ;;
                     *) export prefix=$2 ; shift 2 ;;
@@ -183,9 +187,13 @@ cd ..
 echo "Done"
 echo
 
-#  Install directory
+# Install directory
 if [ -z "$prefix" ]; then
    export prefix=/usr
+fi
+# Library target
+if [ -z "$libtarget" ]; then
+   export libtarget="$prefix/lib"
 fi
 
 for dir in $dirs 
@@ -193,6 +201,8 @@ do
    echo "Create $dir/Makefile" 
    cd $dir
    sed "s#%PREFIX%#$prefix#" Makefile.in > Makefile
+   libtarget=${libtarget//"\""/"\\\""}
+   sed -i "s#%LIBDIR%#${libtarget}#g" Makefile 
    if [ "$ENABLE_QT" = "1" ]; then
     sed -i 's/%Qt%//g' Makefile
    else
@@ -218,6 +228,7 @@ done
 echo
 echo "Summary:"
 echo " Installing into $prefix"
+echo " Libraries go to $libtarget"
 echo
 echo "Listaller will be built with the following features:"
 echo " Daemon and library:  enabled"

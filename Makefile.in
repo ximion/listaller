@@ -24,9 +24,9 @@ clean:
 	$(MAKE) -C ./src clean
 
 distclean:
-	$(MAKE) clean
+	$(MAKE) clean-reset
 
-cleanreset:
+clean-reset:
 	$(MAKE) clean ALL=1
 
 uninstall:
