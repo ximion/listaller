@@ -19,7 +19,7 @@ const
   pklib2 = 'libpackagekit-glib2.so';
 
 //Bitfield
-function pk_filter_bitfield_from_string(roles: PChar): GuInt64; cdecl;external pklib2 Name 'pk_filter_bitfield_from_text';
+function pk_filter_bitfield_from_string(roles: PChar): GuInt64; cdecl;external pklib2;
 //Package obj conversion
 function pk_package_obj_to_string(obj: GPointer): PChar; cdecl; external pklib2;
 function pk_package_obj_get_id(obj: GPointer): PPkPackageID; cdecl; external pklib2;
