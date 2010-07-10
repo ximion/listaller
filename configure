@@ -4,11 +4,11 @@
 #
 # syntax :
 #    ./configure <options> [parameters]
-
-
+set -e
 OPTION_SPEC="help,enable-qt,enable-creator,enable-gtk,enable-all,prefix:,libdir:"
-PARSED_OPTIONS=$(getopt -n "Configure" -a -o h --long "$OPTION_SPEC" -- "$@")
-OPTIONS_RET=$?
+PARSED_OPTIONS=$(getopt -n "$0" -a -o h --l "$OPTION_SPEC" -- "$@")
+
+eval set -- "$PARSED_OPTIONS"
 
 function usage
 {
@@ -17,32 +17,27 @@ function usage
   echo "Use --enable-<option> to enable features for build."
 }
 
-eval set -- "$PARSED_OPTIONS"
-
-if [ $OPTIONS_RET -ne 0 ] || [ $# -le 0 ]; then
-  usage;
-  exit 1;
-fi
+if [ $? != 0 ] ; then usage ; exit 1 ; fi
 
 while true ; do
-    case "$1" in
-      --help | -h )  usage; exit 0;;
-      --enable-qt )  ENABLE_QT=1;;
-      --enable-gtk )  ENABLE_GTK=1;;
-      --enable-creator )  ENABLE_CREATOR=1;;
-      --enable-all ) ENABLE_QT=1; ENABLE_GTK=1; ENABLE_CREATOR=1;;
-      --libdir ) case "$2" in
-                   "") echo "The libdir option needs an argument!"; exit 3 ;;
-                    *) export libtarget=$2 ; shift 2 ;;
-                 esac ;;
-      --prefix ) case "$2" in
-                   "") echo "The prefix option needs an argument!"; exit 3 ;;
-                    *) export prefix=$2 ; shift 2 ;;
-                 esac ;;
+	case "$1" in
+		-h|--help )  usage; exit 0;;
+		--enable-qt )  ENABLE_QT=1; shift; ;;
+		--enable-gtk )  ENABLE_GTK=1; shift; ;;
+		--enable-creator )  ENABLE_CREATOR=1; shift; ;;
+		--enable-all ) ENABLE_QT=1; ENABLE_GTK=1; ENABLE_CREATOR=1; shift; ;;
+		--libdir ) case "$2" in
+			    "") echo "The libdir option needs an argument!"; exit 3 ;;
+			     *) export libtarget=$2 ; shift 2 ;;
+			   esac ;;
+		--prefix ) case "$2" in
+			    "") echo "The prefix option needs an argument!"; exit 3 ;;
+			     *) export prefix=$2 ; shift 2 ;;
+			   esac ;;
 
-      --) shift ; break ;;
-      * ) echo "ERROR: unknown flag $1"; exit 2;;
-    esac
+		--) shift ; break ;;
+		* ) echo "ERROR: unknown flag $1"; exit 2;;
+	esac
 done
 
 #if [ -e "Makefile" ]; then
@@ -50,7 +45,6 @@ done
 #  make clean
 #fi
 
-set -e
 echo
 echo "=== Configuring Listaller ==="
 echo

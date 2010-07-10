@@ -36,7 +36,7 @@ cp '../build/qt4/licreator-qt' $DESTDIR/opt/appfiles/liCreator/
 cp "../data/applications/licreator-qt.desktop" $DESTDIR$prefix/share/applications/
 cp '../graphics/listaller_creator.png' $DESTDIR/opt/appfiles/liCreator/listaller_creator-qt.png
 #Create symlink
-if [ ! -e "$DESTDIR$prefix/bin/licreator-qt" ]; then
+if [ ! -f "$DESTDIR$prefix/bin/licreator-qt" ]; then
  cd $DESTDIR$prefix/bin
  ln -s /opt/appfiles/liCreator/licreator-qt licreator-qt
 fi
@@ -45,11 +45,10 @@ cp '../build/gtk2/licreator-gtk' $DESTDIR/opt/appfiles/liCreator/
 cp "../data/applications/licreator-gtk.desktop" $DESTDIR$prefix/share/applications/
 cp '../graphics/listaller_creator.png' $DESTDIR/opt/appfiles/liCreator/listaller_creator-gtk.png
 #Create symlink
-if [ ! -e "$DESTDIR$prefix/bin/licreator-gtk" ]; then
+if [ ! -f "$DESTDIR$prefix/bin/licreator-gtk" ]; then
  cd $DESTDIR$prefix/bin
  ln -s /opt/appfiles/liCreator/licreator-gtk licreator-gtk
 fi
 fi
-
 
 echo "Installation done. (liCreator)"
