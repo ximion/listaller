@@ -42,7 +42,7 @@ cp ../data/ignore-deps.list $DESTDIR/etc/lipa/
 cp ../build/libinstaller.so.0.4.0 $DESTDIR$libdir
 cd $DESTDIR$libdir
 if [ ! -f libinstaller.so.0.4 ]; then
-ln -s /usr/lib/libinstaller.so.0.4.0 libinstaller.so.0.4
+ln -s $libdir/libinstaller.so.0.4.0 libinstaller.so.0.4
 fi
 
 echo "Installation of core files finished."

@@ -7,7 +7,7 @@
 
 
 OPTION_SPEC="help,enable-qt,enable-creator,enable-gtk,enable-all,prefix:,libdir:"
-PARSED_OPTIONS=$(getopt -n "$0" -a -o h --long $OPTION_SPEC -- "$@")
+PARSED_OPTIONS=$(getopt -n "Configure" -a -o h --long "$OPTION_SPEC" -- "$@")
 OPTIONS_RET=$?
 
 function usage
@@ -24,8 +24,8 @@ if [ $OPTIONS_RET -ne 0 ] || [ $# -le 0 ]; then
   exit 1;
 fi
 
-while [ $# -ge 1 ]; do
-    case $1 in
+while true ; do
+    case "$1" in
       --help | -h )  usage; exit 0;;
       --enable-qt )  ENABLE_QT=1;;
       --enable-gtk )  ENABLE_GTK=1;;
@@ -40,10 +40,9 @@ while [ $# -ge 1 ]; do
                     *) export prefix=$2 ; shift 2 ;;
                  esac ;;
 
-      -- ) shift;;
+      --) shift ; break ;;
       * ) echo "ERROR: unknown flag $1"; exit 2;;
     esac
-    shift
 done
 
 #if [ -e "Makefile" ]; then
