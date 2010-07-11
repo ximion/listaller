@@ -36,6 +36,7 @@ type
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
+    fActiv: Boolean;
   public
     { public declarations }
   end;
@@ -53,6 +54,7 @@ end;
 
 procedure TSigInfoFrm.FormCreate(Sender: TObject);
 begin
+  fActiv := true;
   LblInfo.Caption := rsSecurityInfo;
   Caption := rsSecurityWarning;
   Button1.Caption := rsIKnowTheRisk;
@@ -60,7 +62,16 @@ end;
 
 procedure TSigInfoFrm.FormShow(Sender: TObject);
 begin
-  self.ClientWidth := ClientWidth+lblInfo.Width-lblInfo.Constraints.MinWidth-20;
+  if fActiv then
+  begin
+    fActiv := false;
+    //Adjust sizes & layouts
+    LblInfo.Top := LblPkgSigned.Top + LblPkgSigned.Height + 8;
+    Button1.Top := LblInfo.Top + LblInfo.Height + 8;
+    ClientWidth := ClientWidth + lblInfo.Width - lblInfo.Constraints.MinWidth - 20;
+    ClientHeight := Button1.Top + Button1.Height + 12;
+  end;
+
 end;
 
 end.

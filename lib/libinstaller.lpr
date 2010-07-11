@@ -411,7 +411,7 @@ end;
 begin
 if Assigned(log^) then
   PerformCheck
-else p_error('Check log != nil failed.'+IntToStr(PtrUInt(log)));
+else p_error('Check log != nil failed.');
 end;
 
 //** Fix application dependencies

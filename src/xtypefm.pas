@@ -106,7 +106,7 @@ procedure TIMdFrm.FormShow(Sender: TObject);
 begin
   if PkWarnImg.Visible then
   begin
-    LoadStockPixmap(STOCK_DIALOG_WARNING, ICON_SIZE_SMALL_TOOLBAR,
+    LoadStockPixmap(STOCK_DIALOG_WARNING, ICON_SIZE_MENU,
       PkWarnImg.Picture.Bitmap);
     PkiLabel.Visible := true;
   end;
