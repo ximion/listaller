@@ -27,7 +27,7 @@ Last-Update: 2010-06-26
  Terminal=false
 --- a/src/install-creator.sh
 +++ b/src/install-creator.sh
-@@ -26,28 +26,27 @@
+@@ -26,30 +26,28 @@
  #
  
  mkdir -p $DESTDIR$prefix/bin/
@@ -44,7 +44,8 @@ Last-Update: 2010-06-26
 -cp '../graphics/listaller_creator.png' $DESTDIR/opt/appfiles/liCreator/listaller_creator-qt.png
 +cp '../graphics/listaller_creator.png' $DESTDIR/usr/share/pixmaps/listaller_creator-qt.png
  #Create symlink
- if [ ! -e "$DESTDIR$prefix/bin/licreator-qt" ]; then
+-if [ ! -e "$DESTDIR$prefix/bin/licreator-qt" ]; then
++if [ ! -f "$DESTDIR$prefix/bin/licreator-qt" ]; then
   cd $DESTDIR$prefix/bin
 - ln -s /opt/appfiles/liCreator/licreator-qt licreator-qt
 +  ln -s $DESTDIR/usr/lib/licreator/licreator-qt licreator-qt
@@ -56,10 +57,13 @@ Last-Update: 2010-06-26
 -cp '../graphics/listaller_creator.png' $DESTDIR/opt/appfiles/liCreator/listaller_creator-gtk.png
 +cp '../graphics/listaller_creator.png' $DESTDIR/usr/share/pixmaps/listaller_creator-gtk.png
  #Create symlink
- if [ ! -e "$DESTDIR$prefix/bin/licreator-gtk" ]; then
+-if [ ! -e "$DESTDIR$prefix/bin/licreator-gtk" ]; then
++if [ ! -f "$DESTDIR$prefix/bin/licreator-gtk" ]; then
   cd $DESTDIR$prefix/bin
 - ln -s /opt/appfiles/liCreator/licreator-gtk licreator-gtk
 + ln -s $DESTDIR/usr/lib/licreator/licreator-gtk licreator-gtk
  fi
  fi
  
+-
+ echo "Installation done. (liCreator)"

@@ -3,14 +3,14 @@ Section: admin
 Maintainer: Matthias Klumpp <matthias@nlinux.org>
 Priority: optional
 Homepage: http://listaller.nlinux.org
-Standards-Version: 3.8.4
+Standards-Version: 3.9.0
 Build-Depends: libgtk2.0-dev, cdbs, quilt, debhelper (>= 5), fpc (>= 2.4.0), lcl (>=0.9.29),
  lcl-gtk2, lcl-qt4, lcl-nogui, libqt4pas-dev, libsqlite3-dev, libglib2.0-dev,
  libpackagekit-glib2-dev (>= 0.5.6), libdbus-1-dev, libpolkit-gobject-1-dev
 
 Package: libinstaller0.4.0
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, apt-file, listaller-core
+Depends: ${misc:Depends}, ${shlibs:Depends}, apt-file, listaller-core (= ${binary:Version})
 Description: Listaller library
  Listaller is a cross-distribution application management system.
  This package contains the libinstaller library, which contains
@@ -49,8 +49,6 @@ Description: Listaller frontends (GTK2)
  .
  This package provides GTK+ frontends for the Listaller manager,
  updater and installer.
- .
- Please note that this alpha-version should only be used for testing purposes.
 
 Package: listaller-qt
 Architecture: any
@@ -68,12 +66,10 @@ Description: Listaller frontends (Qt4)
  .
  This package contains Qt frontends for the Listaller manager,
  updater and installer.
- .
- Please note that this alpha-version should only be used for testing purposes.
 
 Package: listaller-data
 Architecture: all
-Depends: ${misc:Depends}, desktop-file-utils
+Depends: ${misc:Depends}, desktop-file-utils, xdg-utils
 Description: Listaller data
  Listaller is a distribution-independ software install system.
  The application is able to uninstall every application on your
@@ -85,22 +81,22 @@ Description: Listaller data
 
 Package: listaller-creator-gtk
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, xdg-utils, listaller-tools (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, listaller-tools (= ${binary:Version})
 Description: Listaller Creator (GTK2)
  Listaller is a cross-distribution software install system.
  This is an alpha-release of Listaller's graphical package creation tool.
  With liCreator you can easily build your own IPK-packages for the
  Listaller system.
  .
- Please note that this is an alpha-release!
+ Please note that this is a beta-release!
 
 Package: listaller-creator-qt
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, xdg-utils, listaller-tools (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, listaller-tools (= ${binary:Version})
 Description: Listaller Creator (Qt4)
  Listaller is a cross-distribution software install system.
  This is an alpha-release of Listaller's graphical package creation tool.
  With liCreator you can easily build your own IPK-packages for
  the Listaller system.
  .
- Please note that this is an alpha-release!
+ Please note that this is a beta-release!
