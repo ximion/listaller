@@ -694,8 +694,8 @@ var
   procedure PerformCheck;
   begin
     Notebook1.Visible := false;
-    BtnPanel.Enabled := false;
     MBar.Visible := true;
+    Application.ProcessMessages;
     if not li_mgr_check_apps(@appcheckmgr, @rep, root) then
     begin
       if Application.MessageBox(PAnsiChar(rsBrokenDepsFixQ), 'FixDeps',
@@ -703,8 +703,8 @@ var
         li_mgr_fix_apps(@appcheckmgr, @rep, root);
     end;
     Notebook1.Visible := true;
-    BtnPanel.Enabled := true;
     MBar.Visible := false;
+    Application.ProcessMessages;
   end;
 
 begin
@@ -712,11 +712,12 @@ begin
   if Application.MessageBox(PAnsiChar(rsCheckAppDepsQ), PChar(rsCheckDepsQ),
     MB_YESNO+MB_IconQuestion) = idYes then
   begin
+    LeftBar.Enabled := false;
+    rep := TStringList.Create;
     appcheckmgr := li_mgr_new; //New appmanager
     if Application.MessageBox(PAnsiChar(rsCheckRootAppsQ), PChar(rsCheckDepsQ),
       MB_YESNO+MB_IconQuestion) = idYes then
     begin
-      rep := TStringList.Create;
       PerformCheck;
       root := true;
       PerformCheck;
@@ -725,6 +726,8 @@ begin
       PerformCheck;
     LogQ;
     li_mgr_free(@appcheckmgr);
+    rep.Free;
+    LeftBar.Enabled := true;
   end;
 end;
 
@@ -1061,7 +1064,7 @@ begin
   SuApps := IsRoot;
 
   //Set reg-dir
-  RegDir := SyblToPath('$INST/app-reg/');
+  RegDir := SyblToPath('$INST')+'/'+LI_APPDB_PREF;
 
 
   li_mgr_set_sumode(@aMgr, SuApps);

@@ -35,7 +35,7 @@ cp ../data/org.nlinux.listaller.policy $DESTDIR$prefix/share/polkit-1/actions/
 
 #Other required data files
 mkdir -p $DESTDIR/etc/lipa
-mkdir -p $DESTDIR/etc/lipa/app-reg
+mkdir -p $DESTDIR/etc/lipa/info
 cp ../data/blacklist $DESTDIR/etc/lipa/
 cp ../data/ignore-deps.list $DESTDIR/etc/lipa/
 

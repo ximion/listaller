@@ -378,9 +378,9 @@ begin
   StopOnException:=True;
   //Needed for e.g. the checkapps-parameter
   if IsRoot then
-  RegDir:='/etc/lipa/app-reg/'
+   RegDir := LI_CONFIG_DIR + LI_APPDB_PREF
   else
-  RegDir:=SyblToPath('$INST')+'/app-reg/';
+   RegDir := SyblToPath('$INST') + '/' + LI_APPDB_PREF;
 end;
 
 destructor TLipa.Destroy;

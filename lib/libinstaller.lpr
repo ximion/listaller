@@ -315,7 +315,7 @@ try
   list^.Add(setup^.ADeps[i]);
 except
  Result:=false;
- p_error('get_dependencies() failed!');
+ p_error('setup:get_dependencies() failed!');
 end;
 end;
 
@@ -409,9 +409,9 @@ begin
  end else Result:=true;
 end;
 begin
-if log<> nil then
+if Assigned(log^) then
   PerformCheck
-else p_error('Check log != nil failed.');
+else p_error('Check log != nil failed.'+IntToStr(PtrUInt(log)));
 end;
 
 //** Fix application dependencies
@@ -424,7 +424,7 @@ begin
  end else Result:=true;
 end;
 begin
-if log<> nil then
+if Assigned(log^) then
   PerformCheck
 else p_error('Check log != nil failed.');
 end;

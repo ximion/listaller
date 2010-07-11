@@ -444,7 +444,7 @@ object MnFrm: TMnFrm
         Left = 6
         Height = 13
         Top = 14
-        Width = 30
+        Width = 31
         Caption = 'Show:'
         ParentColor = False
       end
@@ -650,7 +650,7 @@ object MnFrm: TMnFrm
         TabOrder = 1
         object SysRepoSheet: TTabSheet
           Caption = 'System repositories'
-          ClientHeight = 492
+          ClientHeight = 514
           ClientWidth = 584
           object BitBtn6: TBitBtn
             Left = 172
@@ -665,7 +665,7 @@ object MnFrm: TMnFrm
         end
         object UpdRepoSheet: TTabSheet
           Caption = 'Update repositories'
-          ClientHeight = 492
+          ClientHeight = 514
           ClientWidth = 584
           object UsILabel: TLabel
             Left = 6

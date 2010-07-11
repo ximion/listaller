@@ -21,17 +21,16 @@ unit litypes;
 interface
 
 uses
-  Classes, SysUtils, glib2;
+  glib2, Classes, SysUtils;
 
 const
   //** Name of the Listaller library
   libinst = 'libinstaller.so';
 
-//** Version of Listaller API
+  //** Version of Listaller API
   {$DEFINE APIVersion040}
 
 type
-
   //** Pointer to TStringList
   PStringList = ^TStringList;
 
@@ -42,10 +41,12 @@ type
   //** Type of a message (published)
   TMessageType = (mtStep, mtInfo);
   //** Status of current job
-  LiProcStatus = (prNone, prFailed, prAuthorized, prBlocked, prFinished, prError, prInfo, prStarted);
+  LiProcStatus = (prNone, prFailed, prAuthorized, prBlocked, prFinished,
+    prError, prInfo, prStarted);
 
   //** Things which can be changed
-  LiStatusChange = (scNone, scMnProgress, scExProgress, scStatus, scMessage, scStepMessage);
+  LiStatusChange = (scNone, scMnProgress, scExProgress, scStatus,
+    scMessage, scStepMessage);
   //** Data assigned to a status change
   TLiStatusData = record
     msg: PGChar;
@@ -59,7 +60,8 @@ type
   TLiStatusChangeCall = procedure(change: LiStatusChange; Data: TLiStatusData;
     user_data: Pointer); cdecl;
   //** Callback for user request
-  TRequestCall = function(mtype: TRqType; msg: PChar; user_data: Pointer): TRqResult; cdecl;
+  TRequestCall = function(mtype: TRqType; msg: PChar;
+    user_data: Pointer): TRqResult; cdecl;
 
   //** Called if progress was changed; only for internal use
   TProgressEvent = procedure(pos: Integer; user_data: Pointer) of object;
