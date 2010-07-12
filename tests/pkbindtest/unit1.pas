@@ -7,8 +7,9 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ComCtrls, PackageKit, Messages, pkdesktop, glib2, Installer;
+  Forms, glib2, Classes, Dialogs,
+  ComCtrls, Controls, FileUtil, Graphics, Messages, StdCtrls, SysUtils,
+  Installer, LResources, PackageKit;
 
 type
 
@@ -16,20 +17,23 @@ type
 
   TForm1 = class(TForm)
     Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
     ProgressBar1: TProgressBar;
     procedure Button1Click(Sender: TObject);
-    procedure pkitProgress(pos: Integer;user_data: Pointer);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure pkitProgress(pos: Integer; user_data: Pointer);
   private
     { private declarations }
   public
     { public declarations }
-  end; 
+  end;
 
 var
   Form1: TForm1;
-  pkit: TPackageKit;
-
-function test_pkit: PChar;cdecl;external 'libinstaller.so';
 
 implementation
 
@@ -37,45 +41,89 @@ implementation
 
 { TForm1 }
 
-procedure ArrFunc(data: GPointer;user_data: GPointer);
+procedure ArrFunc(Data: GPointer; user_data: GPointer);
 begin
- ShowMessage(PGChar(data));
+  ShowMessage(PGChar(Data));
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
-var p,q: Pointer;
- pkit2: TPackageKit;
+var
+  p, q: Pointer;
+  pkit: TPackageKit;
+  pkit2: TPackageKit;
 begin
-  pkit:=TPackageKit.Create;
-  pkit.OnProgress:=@pkitProgress;
-  pkit.NoWait:=true;
+  pkit := TPackageKit.Create;
+  pkit.OnProgress := @pkitProgress;
+  pkit.NoWait := true;
 
-  pkit2:=TPackageKit.Create;
+  pkit2 := TPackageKit.Create;
   pkit.NoWait := true;
   pkit.PkgNameFromFile('/usr/share/applications/nemiver.desktop');
   pkit2.PkgNameFromFile('/usr/share/applications/vlc.desktop');
-  //pkit.RemovePkg('amor');
 
-  while not pkit.Finished do Application.ProcessMessages;
 
-  ShowMessage(pkit.RList[0]);
-  ShowMessage(pkit2.RList[0]);
-  //ShowMessage(h[0]);
+  if pkit.RList.Count > 0 then
+    ShowMessage(pkit.RList[0].PackageId)
+  else
+    ShowMessage('Pkit1 failed.');
+  if pkit2.RList.Count > 0 then
+    ShowMessage(pkit2.RList[0].PackageId)
+  else
+    ShowMessage('Pkit2 failed.');
+
   ShowMessage('OK, Done'#10+pkit.LastErrorMessage);
   pkit.Free;
   pkit2.Free;
-
-{ p:=pk_desktop_new;
- pk_desktop_open_database(p,nil);
- q:=pk_desktop_get_files_for_package(p,'lazarus',nil);
-
- g_ptr_array_foreach(q,@ArrFunc,nil); }
-
 end;
 
-procedure TForm1.pkitProgress(pos: Integer;user_data: Pointer);
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  pkit: TPackageKit;
 begin
-  ProgressBar1.Position:=pos;
+  pkit := TPackageKit.Create;
+  pkit.OnProgress := @pkitProgress;
+
+  pkit.PkgNameFromFile('/usr/share/applications/nemiver.desktop');
+  if pkit.RList.Count > 0 then
+    ShowMessage('Successful_1'#10+pkit.RList[0].PackageId+#10+'Code: '+
+      IntToStr(pkit.PkFinishCode))
+  else
+    ShowMessage('Failed_1'#10'Code: '+IntToStr(pkit.PkFinishCode));
+  pkit.PkgNameFromFile('/usr/share/applications/vlc.desktop');
+  if pkit.RList.Count > 0 then
+    ShowMessage('Successful_1'#10+pkit.RList[0].PackageId+#10+'Code: '+
+      IntToStr(pkit.PkFinishCode))
+  else
+    ShowMessage('Failed_1'#10'Code: '+IntToStr(pkit.PkFinishCode));
+  pkit.Free;
+end;
+
+
+procedure TForm1.Button3Click(Sender: TObject);
+var
+  pkit: TPackageKit;
+begin
+  pkit := TPackageKit.Create;
+  pkit.OnProgress := @pkitProgress;
+  pkit.RemovePkg('amor');
+  ShowMessage('Executed.');
+  pkit.Free;
+end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+var
+  pkit: TPackageKit;
+begin
+  pkit := TPackageKit.Create;
+  pkit.OnProgress := @pkitProgress;
+  pkit.InstallPkg('amor');
+  ShowMessage('Executed.');
+  pkit.Free;
+end;
+
+procedure TForm1.pkitProgress(pos: Integer; user_data: Pointer);
+begin
+  ProgressBar1.Position := pos;
   Application.ProcessMessages;
 end;
 

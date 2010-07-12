@@ -1,14 +1,14 @@
 object Form1: TForm1
-  Left = 418
+  Left = 456
   Height = 180
-  Top = 275
+  Top = 371
   Width = 226
   ActiveControl = Button1
-  Caption = 'Form1'
+  Caption = 'IPKPackager <Test>'
   ClientHeight = 180
   ClientWidth = 226
   OnCreate = FormCreate
-  LCLVersion = '0.9.28.2'
+  LCLVersion = '0.9.29'
   object Button1: TButton
     Left = 16
     Height = 25

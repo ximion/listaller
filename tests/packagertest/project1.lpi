@@ -5,14 +5,13 @@
     <General>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
-      <Icon Value="0"/>
       <UseXPManifest Value="True"/>
-      <ActiveEditorIndexAtStart Value="0"/>
+      <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
-      <ProjectVersion Value=""/>
       <Language Value=""/>
       <CharSet Value=""/>
+      <StringTable Comments="" CompanyName="" FileDescription="" FileVersion="0.0.0.0" InternalName="" LegalCopyright="" LegalTrademarks="" OriginalFilename="" ProductName="" ProductVersion=""/>
     </VersionInfo>
     <PublishOptions>
       <Version Value="2"/>
@@ -44,218 +43,220 @@
         <ComponentName Value="Form1"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
-        <CursorPos X="23" Y="10"/>
-        <TopLine Value="1"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="34" Y="22"/>
         <UsageCount Value="31"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="../../../../../../../usr/share/fpcsrc/2.2.4/rtl/unix/classes.pp"/>
+        <Filename Value="/usr/share/fpcsrc/2.2.4/rtl/unix/classes.pp"/>
         <UnitName Value="Classes"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit2>
       <Unit3>
         <Filename Value="../ipkpackage.pas"/>
         <UnitName Value="ipkpackage"/>
-        <CursorPos X="29" Y="183"/>
         <TopLine Value="157"/>
+        <CursorPos X="29" Y="183"/>
         <UsageCount Value="14"/>
       </Unit3>
       <Unit4>
         <Filename Value="../libtar.pas"/>
         <UnitName Value="libtar"/>
-        <CursorPos X="29" Y="153"/>
         <TopLine Value="119"/>
+        <CursorPos X="29" Y="153"/>
         <UsageCount Value="10"/>
       </Unit4>
       <Unit5>
         <Filename Value="../ULZMABench.pas"/>
         <UnitName Value="ULZMABench"/>
-        <CursorPos X="20" Y="9"/>
         <TopLine Value="1"/>
+        <CursorPos X="20" Y="9"/>
         <UsageCount Value="10"/>
       </Unit5>
       <Unit6>
         <Filename Value="../ucrc.pas"/>
         <UnitName Value="UCRC"/>
-        <CursorPos X="10" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="10" Y="1"/>
         <UsageCount Value="10"/>
       </Unit6>
       <Unit7>
         <Filename Value="../LZMA/ulzmacommon.pas"/>
         <UnitName Value="ULZMACommon"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit7>
       <Unit8>
         <Filename Value="../LZMA/ulzmaencoder.pas"/>
         <UnitName Value="ULZMAEncoder"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit8>
       <Unit9>
         <Filename Value="../compression/ulzmabase.pas"/>
         <UnitName Value="ULZMABase"/>
-        <CursorPos X="7" Y="29"/>
         <TopLine Value="29"/>
+        <CursorPos X="7" Y="29"/>
         <UsageCount Value="10"/>
       </Unit9>
       <Unit10>
         <Filename Value="../ulzmabench.pas"/>
         <UnitName Value="ULZMABench"/>
-        <CursorPos X="13" Y="10"/>
         <TopLine Value="1"/>
+        <CursorPos X="13" Y="10"/>
         <UsageCount Value="10"/>
       </Unit10>
       <Unit11>
         <Filename Value="../compression/ulzmaencoder.pas"/>
         <UnitName Value="ULZMAEncoder"/>
-        <CursorPos X="71" Y="129"/>
         <TopLine Value="108"/>
+        <CursorPos X="71" Y="129"/>
         <UsageCount Value="10"/>
       </Unit11>
       <Unit12>
         <Filename Value="../compression/ulzmacommon.pas"/>
         <UnitName Value="ULZMACommon"/>
-        <CursorPos X="6" Y="11"/>
         <TopLine Value="1"/>
+        <CursorPos X="6" Y="11"/>
         <UsageCount Value="10"/>
       </Unit12>
       <Unit13>
         <Filename Value="../compression/ulzmadecoder.pas"/>
         <UnitName Value="ULZMADecoder"/>
-        <CursorPos X="34" Y="51"/>
         <TopLine Value="30"/>
+        <CursorPos X="34" Y="51"/>
         <UsageCount Value="11"/>
       </Unit13>
       <Unit14>
         <Filename Value="../compression/ulzoutwindow.pas"/>
         <UnitName Value="ULZOutWindow"/>
-        <CursorPos X="50" Y="23"/>
         <TopLine Value="14"/>
+        <CursorPos X="50" Y="23"/>
         <UsageCount Value="10"/>
       </Unit14>
       <Unit15>
         <Filename Value="../compression/ubufferedfs.pas"/>
         <UnitName Value="UBufferedFS"/>
-        <CursorPos X="9" Y="41"/>
         <TopLine Value="20"/>
+        <CursorPos X="9" Y="41"/>
         <UsageCount Value="10"/>
       </Unit15>
       <Unit16>
         <Filename Value="../gpgsign.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="gpgsign"/>
-        <CursorPos X="3" Y="29"/>
         <TopLine Value="20"/>
+        <CursorPos X="3" Y="29"/>
         <UsageCount Value="29"/>
       </Unit16>
       <Unit17>
         <Filename Value="../callbackprocess.pas"/>
         <UnitName Value="callbackprocess"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit17>
       <Unit18>
         <Filename Value="../../src/litypes.pas"/>
         <UnitName Value="litypes"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="37"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="11"/>
       </Unit18>
       <Unit19>
-        <Filename Value="../../../../../../../usr/lib/lazarus/0.9.28.2/lcl/fileutil.pas"/>
+        <Filename Value="/usr/lib/lazarus/0.9.28.2/lcl/fileutil.pas"/>
         <UnitName Value="FileUtil"/>
-        <CursorPos X="1" Y="1"/>
         <TopLine Value="181"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="10"/>
       </Unit19>
       <Unit20>
         <Filename Value="LZMA.pas"/>
         <UnitName Value="LZMA"/>
-        <CursorPos X="17" Y="24"/>
         <TopLine Value="1"/>
+        <CursorPos X="17" Y="24"/>
         <UsageCount Value="10"/>
       </Unit20>
       <Unit21>
         <Filename Value="Compress.pas"/>
         <UnitName Value="Compress"/>
-        <CursorPos X="11" Y="17"/>
         <TopLine Value="19"/>
+        <CursorPos X="11" Y="17"/>
         <UsageCount Value="10"/>
       </Unit21>
       <Unit22>
         <Filename Value="Int64Em.pas"/>
         <UnitName Value="Int64Em"/>
-        <CursorPos X="11" Y="54"/>
         <TopLine Value="33"/>
+        <CursorPos X="11" Y="54"/>
         <UsageCount Value="10"/>
       </Unit22>
       <Unit23>
         <Filename Value="FileClass.pas"/>
         <UnitName Value="FileClass"/>
-        <CursorPos X="21" Y="260"/>
         <TopLine Value="514"/>
+        <CursorPos X="21" Y="260"/>
         <UsageCount Value="10"/>
       </Unit23>
       <Unit24>
         <Filename Value="CmnFunc2.pas"/>
         <UnitName Value="CmnFunc2"/>
-        <CursorPos X="3" Y="21"/>
         <TopLine Value="337"/>
+        <CursorPos X="3" Y="21"/>
         <UsageCount Value="10"/>
       </Unit24>
       <Unit25>
-        <Filename Value="../../../../../../../usr/share/fpcsrc/2.2.4/rtl/inc/systemh.inc"/>
-        <CursorPos X="11" Y="466"/>
+        <Filename Value="/usr/share/fpcsrc/2.2.4/rtl/inc/systemh.inc"/>
         <TopLine Value="541"/>
+        <CursorPos X="11" Y="466"/>
         <UsageCount Value="10"/>
       </Unit25>
       <Unit26>
-        <Filename Value="../../../../../../../usr/share/fpcsrc/2.2.4/rtl/objpas/classes/classesh.inc"/>
-        <CursorPos X="3" Y="784"/>
+        <Filename Value="/usr/share/fpcsrc/2.2.4/rtl/objpas/classes/classesh.inc"/>
         <TopLine Value="763"/>
+        <CursorPos X="3" Y="784"/>
         <UsageCount Value="10"/>
       </Unit26>
       <Unit27>
         <Filename Value="../compression/urangedecoder.pas"/>
         <UnitName Value="URangeDecoder"/>
-        <CursorPos X="30" Y="60"/>
         <TopLine Value="47"/>
+        <CursorPos X="30" Y="60"/>
         <UsageCount Value="10"/>
       </Unit27>
       <Unit28>
         <Filename Value="../compression/ubittreedecoder.pas"/>
         <UnitName Value="UBitTreeDecoder"/>
-        <CursorPos X="81" Y="46"/>
         <TopLine Value="22"/>
+        <CursorPos X="81" Y="46"/>
         <UsageCount Value="10"/>
       </Unit28>
       <Unit29>
         <Filename Value="../../src/libasic.pas"/>
         <UnitName Value="libasic"/>
-        <CursorPos X="15" Y="155"/>
         <TopLine Value="134"/>
+        <CursorPos X="15" Y="155"/>
         <UsageCount Value="10"/>
       </Unit29>
       <Unit30>
-        <Filename Value="../../../../../../../usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/filutilh.inc"/>
-        <CursorPos X="10" Y="97"/>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/filutilh.inc"/>
         <TopLine Value="62"/>
+        <CursorPos X="10" Y="97"/>
         <UsageCount Value="10"/>
       </Unit30>
       <Unit31>
         <Filename Value="../tarfile.pas"/>
         <UnitName Value="tarfile"/>
-        <CursorPos X="37" Y="91"/>
         <TopLine Value="75"/>
+        <CursorPos X="37" Y="91"/>
         <UsageCount Value="10"/>
       </Unit31>
     </Units>

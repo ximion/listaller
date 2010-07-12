@@ -1,29 +1,56 @@
 object Form1: TForm1
-  Left = 441
-  Height = 108
-  Top = 576
-  Width = 305
+  Left = 501
+  Height = 175
+  Top = 457
+  Width = 295
   ActiveControl = Button1
-  Caption = 'Form1'
-  ClientHeight = 108
-  ClientWidth = 305
+  Caption = 'PackageKit Bindings Test'
+  ClientHeight = 175
+  ClientWidth = 295
   LCLVersion = '0.9.29'
   object Button1: TButton
     Left = 56
     Height = 25
-    Top = 24
+    Top = 72
     Width = 160
-    Caption = 'Do something! (whatever...)'
+    Caption = 'NameFromFile (Async)'
     OnClick = Button1Click
     TabOrder = 0
   end
   object ProgressBar1: TProgressBar
-    Left = 8
+    Left = 16
     Height = 20
-    Top = 64
+    Top = 144
     Width = 256
     Smooth = True
     Step = 1
     TabOrder = 1
+  end
+  object Button2: TButton
+    Left = 56
+    Height = 25
+    Top = 104
+    Width = 160
+    Caption = 'NameFromFile (Sync)'
+    OnClick = Button2Click
+    TabOrder = 2
+  end
+  object Button3: TButton
+    Left = 56
+    Height = 25
+    Top = 8
+    Width = 160
+    Caption = 'RemovePackage'
+    OnClick = Button3Click
+    TabOrder = 3
+  end
+  object Button4: TButton
+    Left = 56
+    Height = 25
+    Top = 40
+    Width = 155
+    Caption = 'InstallPackage'
+    OnClick = Button4Click
+    TabOrder = 4
   end
 end
