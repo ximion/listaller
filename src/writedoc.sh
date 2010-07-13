@@ -51,6 +51,8 @@ pasdoc --write-uses-list --staronly --format html \
 ../../lib/mtprocs.pas \
 ../../lib/libinstaller.lpr \
 ../../lib/lidbusproc.pas \
+../../lib/dderesolve.pas \
+../../lib/slibmanage.pas \
 ../../licreator/editor.pas \
 ../../licreator/prjwizard.pas \
 ../../licreator/licreator.lpr \

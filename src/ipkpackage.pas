@@ -21,7 +21,7 @@ unit ipkpackage;
 interface
 
 uses
-  Classes, FileUtil, gpgsign, liUtils, liTypes, SysUtils, TarFile;
+  Classes, FileUtil, gpgsign, liUtils, liTypes, SysUtils, TarArchive;
 
 type
   //** Creates IPK packages from preprocessed source files

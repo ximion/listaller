@@ -32,11 +32,12 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="8">
+    <Units Count="9">
       <Unit0>
         <Filename Value="ddetest.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ddetest"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
@@ -56,11 +57,10 @@
         <Filename Value="../../lib/dderesolve.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="dderesolve"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="126"/>
-        <CursorPos X="14" Y="158"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
         <UsageCount Value="23"/>
         <Loaded Value="True"/>
       </Unit2>
@@ -102,6 +102,17 @@
         <CursorPos X="14" Y="641"/>
         <UsageCount Value="10"/>
       </Unit7>
+      <Unit8>
+        <Filename Value="../../lib/slibmanage.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="slibmanage"/>
+        <EditorIndex Value="2"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="50" Y="24"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit8>
     </Units>
     <JumpHistory Count="21" HistoryIndex="20">
       <Position1>

@@ -8,7 +8,7 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  Classes, SysUtils, CustApp, dderesolve, liUtils;
+  Classes, SysUtils, CustApp, dderesolve, liUtils, slibmanage;
 
 type
 

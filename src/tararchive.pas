@@ -14,7 +14,7 @@
   You should have received a copy of the GNU General Public License v3
   along with this program. If not, see <http://www.gnu.org/licenses/>.}
 //** Contains wrapper for GNUTar
-unit tarfile;
+unit tararchive;
 
 {$mode objfpc}{$H+}
 
