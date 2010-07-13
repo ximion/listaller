@@ -24,7 +24,7 @@ uses
   Classes, liUtils, Process, FileUtil, SysUtils;
 
 type
-  CompressionMethod = (cmNone, cmXZ, cmLZMA);
+  CompressionMethod = (cmNone, cmXZ, cmLZMA, cmBZIP2, cmGZIP);
 
   TTarArchive = class
   private
@@ -82,6 +82,8 @@ begin
   case compress of
     cmXZ: ln := '--xz ';
     cmLZMA: ln := '--lzma ';
+    cmBZIP2: ln := '--bzip2 ';
+    cmGZIP: ln := '--gzip ';
   end;
   cmdln := FindBinary('tar')+' '+ln+param;
    //p_debug('TARCmd: '+cmdln);
@@ -179,7 +181,7 @@ begin
   if fname[1] = '/' then
     fname := copy(fname, 2, length(fname)-1);
 
-  SetCMD('--extract --file='+tarfile+' -C '+bdir+' '+FName);
+  SetCMD('--extract --wildcards --file='+tarfile+' -C '+bdir+' '+FName);
   proc.Execute;
   Result := proc.ExitStatus;
 end;

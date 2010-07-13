@@ -3,11 +3,11 @@
   Authors:
    Matthias Klumpp
 
-  This library is free software: you can redistribute it and/or modify it under
+  This unit is free software: you can redistribute it and/or modify it under
   the terms of the GNU General Public License as publishedf by the Free Software
   Foundation, version 3.
 
-  This library is distributed in the hope that it will be useful, but WITHOUT
+  This unit is distributed in the hope that it will be useful, but WITHOUT
   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
   FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
@@ -99,11 +99,6 @@ begin
       Delete(s, 1, pos('''', s));
       pkg.PkName := copy(s, 1, Pos('''', s) - 1);
       Delete(s, 1, Pos(']', s));
-
-      {
-      p_debug('Distro: '+pkg.Distro);
-      p_debug('Name: '+pkg.pkName);
-      p_debug(s); }
     end;
     if pkg.Distro = 'sid' then
       break; //We prefer debian unstable packages, if available

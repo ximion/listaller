@@ -4,11 +4,14 @@ program ddetest;
 
 {$mode objfpc}{$H+}
 
-uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
-  cthreads,
-  {$ENDIF}{$ENDIF}
-  Classes, SysUtils, CustApp, dderesolve, liUtils, slibmanage;
+uses {$IFDEF UNIX} {$IFDEF UseCThreads}
+  cthreads, {$ENDIF} {$ENDIF}
+  Classes,
+  SysUtils,
+  CustApp,
+  dderesolve,
+  liUtils,
+  slibmanage;
 
 type
 
@@ -31,15 +34,17 @@ var
   ErrorMsg: String;
 begin
   // quick check parameters
-  ErrorMsg:=CheckOptions('h','help');
-  if ErrorMsg<>'' then begin
+  ErrorMsg := CheckOptions('h', 'help');
+  if ErrorMsg <> '' then
+  begin
     ShowException(Exception.Create(ErrorMsg));
     Terminate;
     Exit;
   end;
 
   // parse parameters
-  if HasOption('h','help') then begin
+  if HasOption('h', 'help') then
+  begin
     WriteHelp;
     Terminate;
     Exit;
@@ -52,28 +57,47 @@ begin
 end;
 
 procedure TDDELoader.Execute;
-var test: TDDEResolver;
+var
+  solver: TDDEResolver;
+  dc: TDEBConverter;
+  error: Boolean;
 begin
-  if paramstr(1) = '' then
+  if ParamStr(1) = '' then
   begin
     writeLn('Please add library name as parameter!');
     halt(1);
   end;
-  test := TDDEResolver.Create;
-  if test.ResolveString(paramstr(1)) then
+  error := false;
+  solver := TDDEResolver.Create;
+  if solver.ResolveString(ParamStr(1)) then
   begin
-    p_info(' Package: '+test.Pack.PkName);
-    p_info(' Distro: '+test.Pack.Distro);
-   if not test.DownloadPackage then
-    writeLn('Download failed :o');
-  end else
-   writeLn('Resolving failed :(');
+    p_info(' Package: ' + solver.Pack.PkName);
+    p_info(' Distro: ' + solver.Pack.Distro);
+    if not solver.DownloadPackage then
+    begin
+      writeLn('Download failed :o');
+      error := true;
+    end;
+  end
+  else
+  begin
+    writeLn('Resolving failed :(');
+    error := true;
+  end;
+  if error then
+    halt(2);
+
+  dc := TDEBConverter.Create(solver.Pack.Path);
+  solver.Free;
+  ForceDirectories('junk/test');
+  dc.UnpackDataTo('junk/test');
+  dc.Free;
 end;
 
 constructor TDDELoader.Create(TheOwner: TComponent);
 begin
   inherited Create(TheOwner);
-  StopOnException:=True;
+  StopOnException := true;
 end;
 
 destructor TDDELoader.Destroy;
@@ -84,7 +108,7 @@ end;
 procedure TDDELoader.WriteHelp;
 begin
   { add your help code here }
-  writeln('Usage: ',ExeName,' -h');
+  writeln('Usage: ', ExeName, ' -h');
 end;
 
 var
@@ -93,8 +117,8 @@ var
 {$R *.res}
 
 begin
-  Application:=TDDELoader.Create(nil);
-  Application.Title:='DDECheck';
+  Application := TDDELoader.Create(nil);
+  Application.Title := 'DDECheck';
   Application.Run;
   Application.Free;
 end.
