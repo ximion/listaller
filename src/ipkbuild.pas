@@ -353,7 +353,7 @@ var
     if b then
       if FileIsExecutable(forig) then
       begin
-        GetLibDepends(forig, tmpdepends);
+        GetELFDepends(forig, tmpdepends);
       end;
 
     if not res then

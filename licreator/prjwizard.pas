@@ -573,7 +573,7 @@ begin
             begin
               if FileIsExecutable(PPackageFile(Profile[i])^.FullName) then
               begin
-                GetLibDepends(PPackageFile(Profile[i])^.FullName, sl);
+                GetELFDepends(PPackageFile(Profile[i])^.FullName, sl);
               end;
             end;
           end;
@@ -590,16 +590,9 @@ begin
             end;
           end;
 
-          for i:=0 to sl.Count-1 do
-           if sl[i][length(sl[i])]='.' then
-            DependencyBox.Items.Add(sl[i]+'*')
-           else
-            DependencyBox.Items.Add(sl[i]);
-
+          DependencyBox.Items.Assign(sl);
+          RemoveDuplicates(DependencyBox.Items); //We do not need dependencies listed up twice
           sl.Free;
-
-          RemoveDuplicates(DependencyBox.Items);
-          //We do not need dependencies listed up twice
 
           for i := 0 to DependencyBox.Items.Count-1 do
             DependencyBox.Checked[i] := true;

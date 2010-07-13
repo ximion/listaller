@@ -122,7 +122,7 @@ function HasSharedMod(fname: String): Boolean;
     @param f Name of the binary file
     @param lst StringList to recieve the output
     @returns Success of operation}
-function GetLibDepends(f: String; lst: TStringList): Boolean;
+function GetELFDepends(f: String; lst: TStringList): Boolean;
 //** Advanced file copy method @returns Success of the command
 function FileCopy(Source, dest: String): Boolean;
 //** Check if file is configuration file
@@ -622,7 +622,7 @@ begin
   Result := StringReplace(s, a, b, [rfReplaceAll]);
 end;
 
-function GetLibDepends(f: String; lst: TStringList): Boolean;
+function GetELFDepends(f: String; lst: TStringList): Boolean;
 var
   p: TProcess;
   s: TStringList;
@@ -645,10 +645,10 @@ begin
   for i := 0 to s.Count - 1 do
     if pos('=>', s[i]) > 0 then
     begin
-      lst.Add(copy(s[i], 2, pos('=', s[i]) - 3));
+      lst.Add(copy(s[i], 2, pos('=', s[i]) - 2));
     end
     else
-      lst.Add(copy(s[i], 2, pos('(', s[i]) - 3));
+      lst.Add(copy(s[i], 2, pos('(', s[i]) - 2));
   s.Free;
 end;
 
