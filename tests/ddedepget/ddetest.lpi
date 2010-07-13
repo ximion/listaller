@@ -32,21 +32,163 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="1">
+    <Units Count="8">
       <Unit0>
         <Filename Value="ddetest.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ddetest"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="7" Y="12"/>
-        <UsageCount Value="20"/>
+        <CursorPos X="99" Y="15"/>
+        <UsageCount Value="23"/>
         <Loaded Value="True"/>
       </Unit0>
+      <Unit1>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/fcl-json/src/fpjson.pp"/>
+        <UnitName Value="fpjson"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="365"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="10"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="dderesolve"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="126"/>
+        <CursorPos X="14" Y="158"/>
+        <UsageCount Value="23"/>
+        <Loaded Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../../src/liutils.pas"/>
+        <UnitName Value="liutils"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="8"/>
+        <CursorPos X="3" Y="30"/>
+        <UsageCount Value="10"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="../../intf/packagekit.pas"/>
+        <UnitName Value="packagekit"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="404"/>
+        <CursorPos X="74" Y="24"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="../../intf/pktypes.pas"/>
+        <UnitName Value="pktypes"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="27"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="10"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/inc/systemh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="746"/>
+        <CursorPos X="11" Y="768"/>
+        <UsageCount Value="10"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/classes/classesh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="619"/>
+        <CursorPos X="14" Y="641"/>
+        <UsageCount Value="10"/>
+      </Unit7>
     </Units>
-    <JumpHistory Count="0" HistoryIndex="-1"/>
+    <JumpHistory Count="21" HistoryIndex="20">
+      <Position1>
+        <Filename Value="ddetest.lpr"/>
+        <Caret Line="12" Column="6" TopLine="1"/>
+      </Position1>
+      <Position2>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="24" Column="16" TopLine="1"/>
+      </Position2>
+      <Position3>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="24" Column="49" TopLine="17"/>
+      </Position3>
+      <Position4>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="72" Column="9" TopLine="30"/>
+      </Position4>
+      <Position5>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="82" Column="30" TopLine="41"/>
+      </Position5>
+      <Position6>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="86" Column="12" TopLine="45"/>
+      </Position6>
+      <Position7>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="81" Column="28" TopLine="48"/>
+      </Position7>
+      <Position8>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="80" Column="24" TopLine="48"/>
+      </Position8>
+      <Position9>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="85" Column="15" TopLine="48"/>
+      </Position9>
+      <Position10>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="89" Column="30" TopLine="53"/>
+      </Position10>
+      <Position11>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="111" Column="1" TopLine="67"/>
+      </Position11>
+      <Position12>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="128" Column="10" TopLine="88"/>
+      </Position12>
+      <Position13>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="142" Column="27" TopLine="102"/>
+      </Position13>
+      <Position14>
+        <Filename Value="ddetest.lpr"/>
+        <Caret Line="66" Column="40" TopLine="30"/>
+      </Position14>
+      <Position15>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="84" Column="8" TopLine="66"/>
+      </Position15>
+      <Position16>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="24" Column="16" TopLine="1"/>
+      </Position16>
+      <Position17>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="154" Column="12" TopLine="118"/>
+      </Position17>
+      <Position18>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="168" Column="1" TopLine="124"/>
+      </Position18>
+      <Position19>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="24" Column="30" TopLine="2"/>
+      </Position19>
+      <Position20>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="16" Column="35" TopLine="2"/>
+      </Position20>
+      <Position21>
+        <Filename Value="../../lib/dderesolve.pas"/>
+        <Caret Line="24" Column="21" TopLine="2"/>
+      </Position21>
+    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>
@@ -55,7 +197,9 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
+      <OtherUnitFiles Value="../../lib/;../../synapse/;../../src/;../../intf/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
       <UnitOutputDirectory Value="compiled/$(TargetCPU)-$(TargetOS)"/>
+      <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

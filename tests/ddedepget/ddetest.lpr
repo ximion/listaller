@@ -8,8 +8,7 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  Classes, SysUtils, CustApp,
-  JSON;
+  Classes, SysUtils, CustApp, dderesolve, liUtils;
 
 type
 
@@ -53,8 +52,22 @@ begin
 end;
 
 procedure TDDELoader.Execute;
+var test: TDDEResolver;
 begin
-
+  if paramstr(1) = '' then
+  begin
+    writeLn('Please add library name as parameter!');
+    halt(1);
+  end;
+  test := TDDEResolver.Create;
+  if test.ResolveString(paramstr(1)) then
+  begin
+    p_info(' Package: '+test.Pack.PkName);
+    p_info(' Distro: '+test.Pack.Distro);
+   if not test.DownloadPackage then
+    writeLn('Download failed :o');
+  end else
+   writeLn('Resolving failed :(');
 end;
 
 constructor TDDELoader.Create(TheOwner: TComponent);

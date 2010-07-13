@@ -314,6 +314,8 @@ begin
 
   if (s = 'i686') or (s = 'i586') or (s = 'i486') then
     s := 'i386';
+  if (s = 'x86_64') then
+    s := 'amd64';
   Result := s;
 end;
 
@@ -466,7 +468,7 @@ end;
 procedure p_debug(msg: String);
 begin
   {$IFNDEF NoDebugMsg}
-   writeLn('debug: ' + msg);
+   writeLn('dbg: ' + msg);
   {$ENDIF}
 end;
 
