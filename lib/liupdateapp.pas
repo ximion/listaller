@@ -22,8 +22,8 @@ interface
 
 uses
   Blcksock, Classes, Contnrs, FileUtil, FTPSend, HTTPSend, IniFiles,
-  ipkdef, ipkPackage, liUtils, liDBusProc, liManageApp, liTypes, MD5,
-  Process, SqLite3DS, SysUtils, strLocale;
+  IPKDef, IPKPackage, LiUtils, LiDBusProc, LiTypes, MD5, Process,
+  SoftwareDB, SysUtils, StrLocale;
 
 type
 
@@ -207,7 +207,7 @@ var
   progpos: Integer;
   ui: TUpdateInfo;
   control: TIPKControl;
-  dsApp: TSQLite3Dataset; //AppDB connection
+  sdb: TSoftwareDB; //AppDB connection
   max: Integer;
 begin
   if ulist.Count > 0 then
@@ -253,16 +253,9 @@ begin
   max := sources.Count * 2;
   h.Free;
 
-  dsApp := TSQLite3Dataset.Create(nil);
-  LoadAppDB(dsApp, sumode);
+  sdb := TSoftwareDB.Create;
+  sdb.Load(sumode);
   msg('Software database opened.');
-
-  dsApp.Active := true;
-
-  dsApp.SQL := 'SELECT * FROM AppInfo';
-  dsApp.Open;
-  dsApp.Filtered := true;
-  dsApp.Edit;
 
   for k := 0 to sources.Count - 1 do
   begin
@@ -283,15 +276,15 @@ begin
 
     ok := false;
 
-    dsApp.First;
-    while not dsApp.EOF do
+    sdb.OpenFilterAppList;
+    while not sdb.EndReached do
     begin
-      if (control.PkName = dsApp.FieldByName('PkName').AsString) then
+      if (control.PkName = sdb.DataField.App.PkName) then
       begin
         ok := true;
         break;
       end;
-      dsApp.Next;
+      sdb.NextField;
     end;
 
     if ok then
@@ -344,7 +337,7 @@ begin
   tmp.Free;
   sinfo.Free;
 
-  dsApp.Free;
+  sdb.Free;
 
   if ulist.Count <= 0 then
     request(rsNoUpdates, rqInfo);
@@ -403,7 +396,7 @@ var
   prog, max: Integer; //To set progress bar position
   xh, tmp: String;
   files: TStringList;
-  dsApp: TSQLite3Dataset; //AppDB connection
+  sdb: TSoftwareDB; //AppDB connection
 begin
   Result := true;
   if not ValidUpdateId(uid) then
@@ -428,9 +421,8 @@ begin
   c := TProcess.Create(nil);
   c.Options := [poUsePipes, poWaitonexit];
 
-  dsApp := TSQLite3Dataset.Create(nil);
-  LoadAppDB(dsApp);
-  dsApp.Active := true;
+  sdb := TSoftwareDB.Create;
+  sdb.Load;
 
   msg('Begin update of ' + TUpdateInfo(ulist[uid]).AppName);
   xz := TLiUpdateBit.Create;
@@ -510,33 +502,15 @@ begin
 
   if TUpdateInfo(ulist[uid]).NVersion <> '' then
   begin
-    dsApp.SQL := 'SELECT * FROM AppInfo';
-    dsApp.Open;
-    dsApp.Filtered := true;
-    dsApp.Edit;
-    dsApp.First;
-    dsApp.ExecuteDirect('UPDATE AppInfo SET Version = ''' + TUpdateInfo(
-      ulist[uid]).NVersion + ''' WHERE PkName = ''' + TUpdateInfo(ulist[uid]).ID + '''');
-
-   { while not dsApp.EOF do
-    begin
-     if (dsApp.FieldByName('Name').AsString=TUpdateInfo(ulist[uid]).AppName) and (dsApp.FieldByName('PkName').AsString=) then
-     begin
-
-      dsApp.FieldByName('Version').Value:=TUpdateInfo(ulist[uid]).NVersion;
-      break;
-     end;
-    dsApp.Next;
-    end;}
-    dsApp.ApplyUpdates;
-    dsApp.Close;
+    sdb.AppUpdateVersion(TUpdateInfo(ulist[uid]).ID, TUpdateInfo(
+      ulist[uid]).NVersion);
   end;
 
   ulist.Delete(uid); //Remove update information
 
   msg(rsCleaningUp);
   c.Free;
-  dsApp.Free;
+  sdb.Free;
 
   FileUtil.DeleteDirectory(tmp, false);
   StepMsg('Update finished!');

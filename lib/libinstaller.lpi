@@ -29,7 +29,7 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="5">
+    <Units Count="6">
       <Unit0>
         <Filename Value="libinstaller.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -55,6 +55,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="liupdateapp"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="softwaredb.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="softwaredb"/>
+      </Unit5>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

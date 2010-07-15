@@ -21,9 +21,9 @@ unit limanageapp;
 interface
 
 uses
-  DB, ipkdef, Classes, GetText, liTypes, liUtils, MTProcs,
-  Process, FileUtil, IniFiles, SysUtils, SQLite3Ds, strLocale,
-  liDBusProc, PackageKit;
+  ipkdef, Classes, GetText, liTypes, liUtils, MTProcs,
+  Process, FileUtil, IniFiles, SysUtils, strLocale,
+  liDBusProc, PackageKit, SoftwareDB;
 
 type
   PAppManager = ^TAppManager;
@@ -86,10 +86,7 @@ procedure UninstallIPKApp(AppName, AppID: String; FStatus: TLiStatusChangeCall;
   fast: Boolean = false; RmDeps: Boolean = true);
 
 //** Checks if package is installed
-function IsPackageInstalled(aName: String; aID: String; sumode: Boolean): Boolean;
-
-//** Load application registration db into SQLiteDataset
-function LoadAppDB(dsApp: TSQLite3Dataset; const forcesu: Boolean = false): Boolean;
+function IsPackageInstalled(aName: String = ''; aID: String = ''; sumode: Boolean = false): Boolean;
 
 //** Helper procedure to create USource file if missing
 procedure CreateUpdateSourceList(path: String);
@@ -177,9 +174,7 @@ var
   ini: TIniFile;
   tmp, xtmp: TStringList;
   i, j: Integer;
-  p, n: String;
-  entry: TAppInfo;
-  dsApp: TSQLite3Dataset;
+  db: TSoftwareDB;
   blst: TStringList;
 
   //Internal function to process desktop files
@@ -353,8 +348,9 @@ begin
   msg(rsLoading);
   blst := TStringList.Create; //Create Blacklist
 
-  dsApp := TSQLite3Dataset.Create(nil);
-  LoadAppDB(dsApp, sumode);
+  db := TSoftwareDB.Create;
+  DB.Load(sumode);
+  DB.OnNewApp := FApp;
 
   if blst.Count < 4 then
   begin
@@ -367,68 +363,7 @@ begin
   if not DirectoryExists(RegDir) then
     ForceDirectories(RegDir);
 
-  if FileExists(dsApp.FileName) then
-  begin
-    dsApp.SQL := 'SELECT * FROM AppInfo';
-    dsApp.Open;
-    dsApp.Filtered := true;
-    dsApp.First;
-
-    while not dsApp.EOF do
-    begin
-      dsApp.FieldByName('Name');
-      entry.Name := PChar(dsApp.FieldByName('Name').AsString);
-
-      blst.Add(entry.Name);
-
-      entry.UId := PChar(dsApp.FieldByName('PkName').AsString);
-
-      entry.Version := PChar(rsVersion + ': ' + dsApp.FieldByName('Version').AsString);
-      entry.Author := PChar(rsAuthor + ': ' + dsApp.FieldByName('Publisher').AsString);
-      if dsApp.FieldByName('Publisher').AsString = '' then
-        entry.Author := '';
-      p := RegDir + LowerCase(entry.UId) + '/';
-
-      n := LowerCase(dsApp.FieldByName('AGroup').AsString);
-
-      if n = 'all' then
-        entry.Group := gtALL;
-      if n = 'education' then
-        entry.Group := gtEDUCATION;
-      if n = 'office' then
-        entry.Group := gtOFFICE;
-      if n = 'development' then
-        entry.Group := gtDEVELOPMENT;
-      if n = 'graphic' then
-        entry.Group := gtGRAPHIC;
-      if n = 'network' then
-        entry.Group := gtNETWORK;
-      if n = 'games' then
-        entry.Group := gtGAMES;
-      if n = 'system' then
-        entry.Group := gtSYSTEM;
-      if n = 'multimedia' then
-        entry.Group := gtMULTIMEDIA;
-      if n = 'additional' then
-        entry.Group := gtADDITIONAL;
-      if n = 'other' then
-        entry.Group := gtOTHER;
-
-      // InstLst.Add(LowerCase(dsApp.FieldByName('ID').AsString));
-
-      entry.ShortDesc := PChar(dsApp.FieldByName('Description').AsString);
-      if entry.ShortDesc = '#' then
-        entry.ShortDesc := 'No description available';
-
-      if FileExists(p + 'icon.png') then
-        entry.Icon := PChar(p + 'icon.png');
-
-      newapp('ipk', entry);
-
-      dsApp.Next;
-    end;
-    dsApp.Close;
-  end;
+  DB.GetApplicationList(blst);
 
 {if (CBox.ItemIndex=0) or (CBox.ItemIndex=10) then
 begin
@@ -466,8 +401,8 @@ xtmp.Free;
 
 end; //End Autopackage  }
 
-  n := ConfigDir;
-  ini := TIniFile.Create(n + 'config.cnf');
+
+  ini := TIniFile.Create(ConfigDir + 'config.cnf');
 
   //Search for other applications that are installed on this system...
   tmp := TStringList.Create;
@@ -504,7 +439,7 @@ for i:=0 to xtmp.Count-1 do tmp.Add(xtmp[i]); }
 
   msg(rsReady); //Loading list finished!
 
-  dsApp.Free;
+  DB.Free;
   blst.Free; //Free blacklist
 end;
 
@@ -517,7 +452,7 @@ var
   mandir: String;
 begin
   Result := true;
-  p_debug('MoJo remover: dsk: '+dsk);
+  p_debug('MoJo remover: dsk: ' + dsk);
   msg(rsPkgCouldBeInstalledWithLoki);
   inf := TIniFile.Create(dsk);
   if not DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry',
@@ -713,14 +648,15 @@ begin
 
     if pkit.PkFinishCode > 1 then
     begin
-      request(PAnsiChar(rsPKitProbPkMon+#10+rsECode+' '+IntToStr(pkit.PkFinishCode)),
+      request(PAnsiChar(rsPKitProbPkMon + #10 + rsECode + ' ' +
+        IntToStr(pkit.PkFinishCode)),
         rqError);
       pkit.Free;
       exit;
     end;
 
     tmp := TStringList.Create;
-    for i := 0 to pkit.RList.Count-1 do
+    for i := 0 to pkit.RList.Count - 1 do
       tmp.Add(pkit.RList[i].PackageId);
 
     if (tmp.Count > 0) then
@@ -763,7 +699,7 @@ begin
   end;
 
 
-  p_debug('Application UId is: '+obj.UId);
+  p_debug('Application UId is: ' + obj.UId);
   if (SUMode) and (not IsRoot) then
   begin
     //Create worker thread for this action
@@ -790,7 +726,8 @@ end;
 function TAppManager.CheckApps(report: TStringList; const fix: Boolean = false;
   const forceroot: Boolean = false): Boolean;
 var
-  dsApp: TSQLite3Dataset;
+  db: TSoftwareDB;
+  app: TAppField;
   deps: TStringList;
   i: Integer;
   pkit: TPackageKit;
@@ -802,21 +739,17 @@ begin
   else
     msg(rsYouScanOnlyLocalInstalledApps);
 
-  dsApp := TSQLite3Dataset.Create(nil);
-  if LoadAppDB(dsApp, forceroot) then
+  db := TSoftwareDB.Create;
+  if db.Load(forceroot) then
   begin
-    dsApp.Active := true;
-
-    dsApp.SQL := 'SELECT * FROM AppInfo';
-    dsApp.Open;
-    dsApp.Filtered := true;
     deps := TStringList.Create;
     pkit := TPackageKit.Create;
-    dsApp.First;
-    while not dsApp.EOF do
+
+    while not db.EndReached do
     begin
-      writeLn(' Checking ' + dsApp.FieldByName('Name').AsString);
-      deps.Text := dsApp.FieldByName('Dependencies').AsString;
+      app := db.DataField.App;
+      writeLn(' Checking ' + app.AppName);
+      deps.Text := app.Dependencies;
       for i := 0 to deps.Count - 1 do
       begin
         pkit.ResolveInstalled(deps[i]);
@@ -835,15 +768,15 @@ begin
           end;
         end;
       end;
-      dsApp.Next;
+      DB.NextField;
     end;
     deps.Free;
     pkit.Free;
-    dsApp.Close;
+    db.Close;
   end
   else
     p_debug('No database found!');
-  dsApp.Free;
+  DB.Free;
   writeLn('Check finished.');
   if not Result then
     writeLn('You have broken dependencies.');
@@ -853,84 +786,22 @@ end;
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-function LoadAppDB(dsApp: TSQLite3Dataset; const forcesu: Boolean = false): Boolean;
-var
-  rd: String;
-begin
-  Result := true;
-  if forcesu then
-    rd := LI_CONFIG_DIR + LI_APPDB_PREF
-  else
-    rd := RegDir;
-
-  if not DirectoryExists(ExtractFilePath(rd)) then
-    CreateDir(ExtractFilePath(rd));
-  if not DirectoryExists(rd) then
-    CreateDir(rd);
-
-  with dsApp do
-  begin
-    FileName := rd + 'applications.db';
-    TableName := 'AppInfo';
-    if ((forcesu) and (not IsRoot)) then
-      Result := false
-    else
-      if not FileExists(FileName) then
-      begin
-        with FieldDefs do
-        begin
-          Clear;
-          Add('Name', ftString, 0, true);
-          Add('PkName', ftString, 0, true);
-          Add('Type', ftString, 0, true);
-          Add('Description', ftString, 0, false);
-          Add('Version', ftFloat, 0, true);
-          Add('Publisher', ftString, 0, false);
-          Add('Icon', ftString, 0, false);
-          Add('Profile', ftString, 0, false);
-          Add('AGroup', ftString, 0, true);
-          Add('InstallDate', ftDateTime, 0, false);
-          Add('Dependencies', ftMemo, 0, false);
-        end;
-        CreateTable;
-      end;
-  end;
-  p_info(rsDBOpened);
-end;
-
 function IsPackageInstalled(aname: String; aid: String; sumode: Boolean): Boolean;
 var
-  dsApp: TSQLite3Dataset;
+  db: TSoftwareDB;
 begin
-  dsApp := TSQLite3Dataset.Create(nil);
-  LoadAppDB(dsApp, sumode);
-
-  if FileExists(dsApp.FileName) then
+  if (aname = '') and (aid = '') then
   begin
-    dsApp.SQL := 'SELECT * FROM AppInfo';
-    dsApp.Open;
-    dsApp.Filtered := true;
-    dsApp.First;
-
+    p_warning('Empty strings received for IsPackageInstalled() query.');
     Result := false;
-    while not dsApp.EOF do
-    begin
-      if (dsApp.FieldByName('Name').AsString = aName) then
-        // and (dsApp.FieldByName('ID').AsString=aID) then
-      begin
-        Result := true;
-        break;
-      end
-      else
-        Result := false;
-      dsApp.Next;
-    end;
-
-    dsApp.Close;
-    dsApp.Free;
-  end
+    exit;
+  end;
+  db := TSoftwareDB.Create;
+  if db.Load(sumode) then
+   Result := db.ContainsApp(aname, aId)
   else
     Result := false; //No database => no application installed
+  db.Free;
 end;
 
 /////////////////////////////////////////////////////
@@ -947,7 +818,7 @@ var
   dlink: Boolean;
   t: TProcess;
   pkit: TPackageKit;
-  dsApp: TSQLite3Dataset;
+  db: TSoftwareDB;
   mnprog: Integer;
   bs: Double;
   ipkc: TIPKControl;
@@ -985,23 +856,18 @@ begin
 
   msg(rsStartingUninstall);
 
-  dsApp := TSQLite3Dataset.Create(nil);
-  LoadAppDB(dsApp);
-  dsApp.Active := true;
-
-  dsApp.SQL := 'SELECT * FROM AppInfo';
-  dsApp.Edit;
-  dsApp.Open;
-  dsApp.Filtered := true;
+  db := TSoftwareDB.Create;
+  db.Load;
   msg(rsDBOpened);
 
-  while not dsApp.EOF do
+  db.OpenFilterAppList;
+  while not db.EndReached do
   begin
-    if (dsApp.FieldByName('Name').AsString = AppName) and
-      (dsApp.FieldByName('PkName').AsString = AppID) then
+    if (db.DataField.App.AppName = AppName) and
+       (db.DataField.App.PkName = AppID) then
     begin
 
-      if LowerCase(dsApp.FieldByName('Type').AsString) = 'dlink' then
+      if LowerCase(db.DataField.App.LiType) = 'dlink' then
         dlink := true
       else
         dlink := false;
@@ -1038,7 +904,7 @@ begin
         begin
           msg(rsRMUnsdDeps);
           tmp2 := TStringList.Create;
-          tmp2.Text := dsApp.FieldByName('Dependencies').AsString;
+          tmp2.Text := db.DataField.App.Dependencies;
 
           if tmp2.Count > -1 then
           begin
@@ -1051,7 +917,7 @@ begin
                 break;
 
               //Asterisk (*) indicates that package was newly installed by installer
-              if (LowerCase(f) <> 'libc6')  and (f[1] <> '*') then
+              if (LowerCase(f) <> 'libc6') and (f[1] <> '*') then
               begin
                 //Check if another package requires this package
                 t := TProcess.Create(nil);
@@ -1183,18 +1049,15 @@ begin
       end;
 
     end;
-    dsApp.Next;
+    db.NextField;
   end;
 
   if mnprog > 0 then
   begin
     msg('Unregistering...');
 
-    dsApp.ExecuteDirect('DELETE FROM AppInfo WHERE rowid=' + IntToStr(dsApp.RecNo));
-    dsApp.ApplyUpdates;
-    dsApp.Close;
-    dsApp.Free;
-    msg('Database connection closed.');
+    db.AppDeleteCurrent;
+    db.Close;
 
     proc := TProcess.Create(nil);
     proc.Options := [poWaitOnExit];
@@ -1211,7 +1074,7 @@ begin
   end
   else
     msg('Application not found!');
-
+ db.Free;
 end;
 
 procedure CreateUpdateSourceList(path: String);

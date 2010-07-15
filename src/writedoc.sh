@@ -43,12 +43,13 @@ pasdoc --write-uses-list --staronly --format html \
 ../../intf/packagekit.pas \
 ../../intf/appman.pas \
 ../../intf/installer.pas \
-../../packager/ipkpackage.pas \
-../../packager/gpgsign.pas \
-../../packager/tarfile.pas \
+../../src/ipkpackage.pas \
+../../src/gpgsign.pas \
+../../src/tararchive.pas \
 ../../lib/ipkinstall.pas \
 ../../lib/limanageapp.pas \
 ../../lib/mtprocs.pas \
+../../lib/softwaredb.pas \
 ../../lib/libinstaller.lpr \
 ../../lib/lidbusproc.pas \
 ../../lib/dderesolve.pas \

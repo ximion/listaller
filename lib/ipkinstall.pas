@@ -3,11 +3,11 @@
   Authors:
    Matthias Klumpp
 
-  This library is free software: you can redistribute it and/or modify it under
+  This unit is free software: you can redistribute it and/or modify it under
   the terms of the GNU General Public License as publishedf by the Free Software
   Foundation, version 3.
 
-  This library is distributed in the hope that it will be useful, but WITHOUT
+  This unit is distributed in the hope that it will be useful, but WITHOUT
   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
   FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
@@ -22,8 +22,8 @@ interface
 
 uses
   MD5, glib2, distri, ipkdef, Classes, Contnrs, FTPSend, liTypes, liUtils, MTProcs,
-  Process, RegExpr, BaseUnix, blcksock, FileUtil, HTTPSend, IniFiles,
-  SysUtils, sqlite3ds, strLocale, IPKPackage, liDBusProc, PackageKit, liManageApp;
+  Process, RegExpr, BaseUnix, blcksock, FileUtil, HTTPSend, IniFiles, LiManageApp,
+  SysUtils, strLocale, IPKPackage, liDBusProc, PackageKit, SoftwareDB;
 
 type
 
@@ -34,13 +34,14 @@ type
   TInstallation = class
   private
     //Basic information about the package and the new application
-    IAppName, IAppVersion, IAppCMD, IAuthor, ShDesc, IGroup: String;
+    IAppName, IAppVersion, IAppCMD, IAuthor, ShDesc: String;
+    IGroup: TGroupType;
     IDesktopFiles: String;
     PkgName, PkgPath, PkgID: String;
     //Path to a wizard image
     FWizImage: String;
     //Package database connection
-    dsApp: TSQLite3Dataset;
+    sdb: TSoftwareDB;
     //Current active profile
     CurProfile: String;
     //List of application's dependencies
@@ -258,7 +259,7 @@ constructor TInstallation.Create;
 begin
   inherited Create;
   daemonm := false; //Daemon mode has to be set manually by listallerd
-  dsApp := TSQLite3Dataset.Create(nil);
+  sdb := TSoftwareDB.Create;
   if SUMode then
     RegDir := LI_CONFIG_DIR + LI_APPDB_PREF
   else
@@ -278,7 +279,7 @@ destructor TInstallation.Destroy;
 begin
   if PkgName <> '' then
     DeleteDirectory(tmpdir + PkgName, false);
-  dsApp.Free;
+  sdb.Free;
   msg(rsDBConnClosed);
   if Assigned(Dependencies) then
     Dependencies.Free;
@@ -310,36 +311,6 @@ begin
   lst.Clear;
   for i := 0 to PkProfiles.Count - 1 do
     lst.Add(copy(PkProfiles[i], 0, pos(' #', PkProfiles[i])));
-end;
-
-function IsAppInstalled(aname: String): Boolean;
-var
-  dsApp: TSQLite3Dataset;
-begin
-  dsApp := TSQLite3Dataset.Create(nil);
-
-  LoadAppDB(dsApp);
-
-  dsApp.SQL := 'SELECT * FROM AppInfo';
-  dsApp.Open;
-  dsApp.Filtered := true;
-  dsApp.First;
-
-  Result := false;
-  while not dsApp.EOF do
-  begin
-    if (dsApp.FieldByName('PkName').AsString = aName) then
-    begin
-      Result := true;
-      break;
-    end
-    else
-      Result := false;
-    dsApp.Next;
-  end;
-
-  dsApp.Close;
-  dsApp.Free;
 end;
 
 procedure TInstallation.ReadDescription(sl: TStringList);
@@ -617,10 +588,8 @@ begin
   end;
   Result := true;
 
-  LoadAppDB(dsApp);
-
-  dsApp.Active := true;
-  msg('SQLite version: ' + dsApp.SqliteVersion);
+  sdb.Load;
+  msg('SQLite version: ' + sdb.SQLiteVersion);
 
   msg('Loading IPK package...');
   //Begin loading package
@@ -768,19 +737,7 @@ begin
     //Load Description
     ShDesc := cont.SDesc;
 
-    case cont.Group of
-      gtALL: IGroup := 'All';
-      gtEDUCATION: IGroup := 'Education';
-      gtOFFICE: IGroup := 'Office';
-      gtDEVELOPMENT: IGroup := 'Development';
-      gtGRAPHIC: IGroup := 'Graphic';
-      gtNETWORK: IGroup := 'Network';
-      gtGAMES: IGroup := 'Games';
-      gtSYSTEM: IGroup := 'System';
-      gtMULTIMEDIA: IGroup := 'Multimedia';
-      gtADDITIONAL: IGroup := 'Additional';
-      gtOTHER: IGroup := 'Other';
-    end;
+    IGroup := cont.Group;
 
     //Load info about supported distributions
     FSupportedDistris := LowerCase(cont.DSupport);
@@ -915,7 +872,7 @@ begin
     //Only executed to make sure that "RmApp" property is set
 
     if not Testmode then
-      if IsAppInstalled(pkgID) then
+      if IsPackageInstalled('',pkgID,SUMode) then
         RmApp := true;
 
   end
@@ -937,20 +894,7 @@ begin
       //DLink packages can only be installed as root!
       SUMode := true;
 
-      //Set group as string
-      case cont.Group of
-        gtALL: IGroup := 'All';
-        gtEDUCATION: IGroup := 'Education';
-        gtOFFICE: IGroup := 'Office';
-        gtDEVELOPMENT: IGroup := 'Development';
-        gtGRAPHIC: IGroup := 'Graphic';
-        gtNETWORK: IGroup := 'Network';
-        gtGAMES: IGroup := 'Games';
-        gtSYSTEM: IGroup := 'System';
-        gtMULTIMEDIA: IGroup := 'Multimedia';
-        gtADDITIONAL: IGroup := 'Additional';
-        gtOTHER: IGroup := 'Other';
-      end;
+      IGroup := cont.Group;
 
       IDesktopFiles := cont.Desktopfiles;
 
@@ -1165,6 +1109,7 @@ var
   dsk: TIniFile; //Desktop files
   pkg: TLiUnpacker; // IPK decompressor
   setcm: Boolean;
+  appField: TAppField;
   p, proc: TProcess; // Helper process with pipes
   pkit: TPackageKit; //PackageKit object
   DInfo: TDistroInfo; //Distribution information
@@ -1741,27 +1686,22 @@ begin
       end;
     end;
 
-    //Open database connection
-    dsApp.Open;
-    dsApp.Edit;
+    with AppField do
+    begin
+      AppName := IAppName;
+      PkName := PkgID;
+      LiType := pkType;
+      Desc := ShDesc;
+      Version := IAppVersion;
+      Publisher := IAuthor;
+      IconName := IIconPath;
+      Profile := CurProfile;
+      Group := IGroup;
+    end;
+      AppField.Dependencies := Dependencies.Text;
 
-    if pkType = ptLinstall then
-      h := 'linstall';
-    if pkType = ptDLink then
-      h := 'dlink';
-    if pkType = ptContainer then
-      h := 'container';
-
-    dsApp.Insert;
-    dsApp.ExecuteDirect('INSERT INTO "AppInfo" VALUES (''' + IAppName +
-      ''', ''' + pkgID + ''', ''' + h + ''', ''' + ShDesc + ''',''' +
-      IAppVersion + ''',''' + IAuthor + ''',''' + 'icon' +
-      ExtractFileExt(IIconPath) + ''',''' + CurProfile + ''',''' +
-      IGroup + ''',''' + GetDateAsString + ''', ''' + Dependencies.Text + ''');');
-
-    //Write changes
-    dsApp.ApplyUpdates;
-    dsApp.Close;
+    sdb.AppAddNew(AppField);
+    sdb.Free;
 
     if length(IIconPath)>0 then
       if IIconPath[1] = '/' then
