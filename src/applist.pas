@@ -174,15 +174,15 @@ begin
 
   pic := TPicture.Create;
   try
-    if FileExists(ai.Icon) then
-      new.IconPath := ai.Icon
+    if FileExists(ai.IconName) then
+      new.IconPath := ai.IconName
     else
       new.IconPath := GetDataFile('graphics/spackage.png');
 
 
     pic.LoadFromFile(new.IconPath);
   except
-    writeLn('Error while loading "'+ai.Icon+'"!');
+    writeLn('Error while loading "'+ai.IconName+'"!');
     new.IconPath := GetDataFile('graphics/spackage.png');
   end;
 

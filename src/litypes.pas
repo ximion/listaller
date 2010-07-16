@@ -80,16 +80,25 @@ type
     gtOTHER,
     gtUNKNOWN);
 
+  //** Listaller package types
+  TPkgType = (ptLinstall, ptDLink, ptContainer, ptUnknown);
+
   //** Container for information about apps
   TAppInfo = record
     Name: PGChar;
+    PkName: PGChar;
+    PkType: TPkgType;
     ShortDesc: PGChar;
     Version: PGChar;
     Author: PGChar;
-    Icon: PGChar;
+    IconName: PGChar;
+    Profile: PGChar;
     UId: PGChar;
     Group: TGroupType;
+    InstallDate: TDateTime;
+    Dependencies: WideString;
   end;
+
   PAppInfo = ^TAppInfo;
 
   //** Event to catch thrown application records
@@ -97,9 +106,6 @@ type
 
   //** Shows information about new update
   TNewUpdateEvent = procedure(Name: PChar; id: Integer; user_data: Pointer); cdecl;
-
-  //** Listaller package types
-  TPkgType = (ptLinstall, ptDLink, ptContainer, ptUnknown);
 
   //** Package signature status
   TPkgSigState = (psNone, psTrusted, psUntrusted);

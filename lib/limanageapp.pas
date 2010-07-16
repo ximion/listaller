@@ -323,11 +323,11 @@ var
             Version := PChar(rsVersion + ': ' +
               d.ReadString('Desktop Entry', 'X-AppVersion', ''));
 
-          entry.Icon := PChar(GetAppIconPath(d.ReadString('Desktop Entry', 'Icon', '')));
+          entry.IconName := PChar(GetAppIconPath(d.ReadString('Desktop Entry', 'Icon', '')));
 
-          if not FileExists(entry.Icon) then
+          if not FileExists(entry.IconName) then
           begin
-            entry.Icon := '';
+            entry.IconName := '';
             msg(StrSubst(rsCannotLoadIcon, '%a', Name));
           end;
         end;
@@ -727,7 +727,7 @@ function TAppManager.CheckApps(report: TStringList; const fix: Boolean = false;
   const forceroot: Boolean = false): Boolean;
 var
   db: TSoftwareDB;
-  app: TAppField;
+  app: TAppInfo;
   deps: TStringList;
   i: Integer;
   pkit: TPackageKit;
@@ -748,7 +748,7 @@ begin
     while not db.EndReached do
     begin
       app := db.DataField.App;
-      writeLn(' Checking ' + app.AppName);
+      writeLn(' Checking ' + app.Name);
       deps.Text := app.Dependencies;
       for i := 0 to deps.Count - 1 do
       begin
@@ -863,11 +863,11 @@ begin
   db.OpenFilterAppList;
   while not db.EndReached do
   begin
-    if (db.DataField.App.AppName = AppName) and
+    if (db.DataField.App.Name = AppName) and
        (db.DataField.App.PkName = AppID) then
     begin
 
-      if LowerCase(db.DataField.App.LiType) = 'dlink' then
+      if db.DataField.App.PkType = ptDLink then
         dlink := true
       else
         dlink := false;

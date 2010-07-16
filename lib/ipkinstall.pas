@@ -1109,7 +1109,7 @@ var
   dsk: TIniFile; //Desktop files
   pkg: TLiUnpacker; // IPK decompressor
   setcm: Boolean;
-  appField: TAppField;
+  appField: TAppInfo;
   p, proc: TProcess; // Helper process with pipes
   pkit: TPackageKit; //PackageKit object
   DInfo: TDistroInfo; //Distribution information
@@ -1688,14 +1688,14 @@ begin
 
     with AppField do
     begin
-      AppName := IAppName;
-      PkName := PkgID;
-      LiType := pkType;
-      Desc := ShDesc;
-      Version := IAppVersion;
-      Publisher := IAuthor;
-      IconName := IIconPath;
-      Profile := CurProfile;
+      Name := PChar(IAppName);
+      PkName := PChar(PkgID);
+      PkType := pkType;
+      ShortDesc := PChar(ShDesc);
+      Version := PChar(IAppVersion);
+      Author := PChar(IAuthor);
+      IconName := PChar(IIconPath);
+      Profile := PChar(CurProfile);
       Group := IGroup;
     end;
       AppField.Dependencies := Dependencies.Text;

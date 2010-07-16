@@ -25,22 +25,8 @@ uses
 
 type
 
-  TAppField = record
-    AppName: String;
-    PkName: String;
-    LiType: TPkgType;
-    Desc: String;
-    Version: String;
-    Publisher: String;
-    IconName: String;
-    Profile: String;
-    Group: TGroupType;
-    InstallDate: TDateTime;
-    Dependencies: WideString;
-  end;
-
   TLiDBData = record
-    App: TAppField;
+    App: TAppInfo;
   end;
 
   TSoftwareDB = class
@@ -49,7 +35,7 @@ type
     FNewApp: TAppEvent;
     CurrField: TLiDBData;
     EOF: Boolean;
-    function GetAppField: TAppField;
+    function GetAppField: TAppInfo;
     function GetSQLiteVersion: String;
   public
     constructor Create;
@@ -70,7 +56,7 @@ type
     //** Delete current app
     procedure AppDeleteCurrent;
     //** Add a new application
-    procedure AppAddNew(app: TAppField);
+    procedure AppAddNew(app: TAppInfo);
     //** Update version of app
     procedure AppUpdateVersion(pkgID: String;newv: String);
 
@@ -171,53 +157,25 @@ begin
 
   while not dsApp.EOF do
   begin
-    dsApp.FieldByName('Name');
-    entry.Name := PChar(dsApp.FieldByName('Name').AsString);
-
     if Assigned(blacklist) then
       blacklist.Add(entry.Name);
 
-    entry.UId := PChar(dsApp.FieldByName('PkName').AsString);
+    entry := GetAppField;
+    entry.UId := entry.PkName;
 
-    entry.Version := PChar(rsVersion + ': ' + dsApp.FieldByName('Version').AsString);
-    entry.Author := PChar(rsAuthor + ': ' + dsApp.FieldByName('Publisher').AsString);
-    if dsApp.FieldByName('Publisher').AsString = '' then
-      entry.Author := '';
+    entry.Version := PChar(rsVersion + ': ' + entry.Version);
+    if entry.Author <> '' then
+      entry.Author := PChar(rsAuthor + ': ' + entry.Author);
+
     p := RegDir + LowerCase(entry.UId) + '/';
-
-    n := LowerCase(dsApp.FieldByName('AGroup').AsString);
-
-    if n = 'all' then
-      entry.Group := gtALL;
-    if n = 'education' then
-      entry.Group := gtEDUCATION;
-    if n = 'office' then
-      entry.Group := gtOFFICE;
-    if n = 'development' then
-      entry.Group := gtDEVELOPMENT;
-    if n = 'graphic' then
-      entry.Group := gtGRAPHIC;
-    if n = 'network' then
-      entry.Group := gtNETWORK;
-    if n = 'games' then
-      entry.Group := gtGAMES;
-    if n = 'system' then
-      entry.Group := gtSYSTEM;
-    if n = 'multimedia' then
-      entry.Group := gtMULTIMEDIA;
-    if n = 'additional' then
-      entry.Group := gtADDITIONAL;
-    if n = 'other' then
-      entry.Group := gtOTHER;
 
     // InstLst.Add(LowerCase(dsApp.FieldByName('ID').AsString));
 
-    entry.ShortDesc := PChar(dsApp.FieldByName('Description').AsString);
-    if entry.ShortDesc = '#' then
+    if entry.ShortDesc = '' then
       entry.ShortDesc := 'No description available';
 
     if FileExists(p + 'icon.png') then
-      entry.Icon := PChar(p + 'icon.png');
+      entry.IconName := PChar(p + 'icon.png');
 
     if Assigned(FNewApp) then
       FNewApp(entry.Name, @entry);
@@ -227,27 +185,34 @@ begin
   dsApp.Close;
 end;
 
-function TSoftwareDB.GetAppField: TAppField;
+function TSoftwareDB.GetAppField: TAppInfo;
 var
-  r: TAppField;
+  r: TAppInfo;
   h: String;
+
+  function _(s: WideString): PChar;
+  begin
+    Result := PChar(s);
+  end;
+
 begin
-  r.AppName := dsApp.FieldByName('Name').AsString;
-  r.PkName := dsApp.FieldByName('PkName').AsString;
+  r.Name := _(dsApp.FieldByName('Name').AsString);
+  r.PkName := _(dsApp.FieldByName('PkName').AsString);
   h := LowerCase(dsApp.FieldByName('Type').AsString);
   if h = 'linstall' then
-    r.LiType := ptLinstall
+    r.PkType := ptLinstall
   else
     if h = 'dlink' then
-      r.LiType := ptDLink
+      r.PkType := ptDLink
     else
       if h = 'container' then
-        r.LiType := ptContainer;
-  r.Desc := dsApp.FieldByName('Description').AsString;
-  r.Version := dsApp.FieldByName('Version').AsString;
-  r.Publisher := dsApp.FieldByName('Publisher').AsString;
-  r.IconName := dsApp.FieldByName('IconName').AsString;
-  r.Profile := dsApp.FieldByName('Profile').AsString;
+        r.PkType := ptContainer;
+
+  r.ShortDesc := _(dsApp.FieldByName('Description').AsString);
+  r.Version := _(dsApp.FieldByName('Version').AsString);
+  r.Author := _(dsApp.FieldByName('Publisher').AsString);
+  r.IconName := _(dsApp.FieldByName('IconName').AsString);
+  r.Profile := _(dsApp.FieldByName('Profile').AsString);
   h := dsApp.FieldByName('Group').AsString;
 
   if h = 'all' then
@@ -331,7 +296,7 @@ begin
   dsApp.ApplyUpdates;
 end;
 
-procedure TSoftwareDB.AppAddNew(app: TAppField);
+procedure TSoftwareDB.AppAddNew(app: TAppInfo);
 var
   g, h: String;
 begin
@@ -339,11 +304,11 @@ begin
   dsApp.Open;
   dsApp.Edit;
 
-  if app.LiType = ptLinstall then
+  if app.PkType = ptLinstall then
     h := 'linstall';
-  if app.LiType = ptDLink then
+  if app.PkType = ptDLink then
     h := 'dlink';
-  if app.LiType = ptContainer then
+  if app.PkType = ptContainer then
     h := 'container';
 
   //Set group as string
@@ -363,8 +328,8 @@ begin
 
   dsApp.Insert;
   dsApp.ExecuteDirect('INSERT INTO "Applications" VALUES (''' +
-    app.AppName + ''', ''' + app.PkName + ''', ''' + h + ''', ''' +
-    app.Desc + ''',''' + app.Version + ''',''' + app.Publisher +
+    app.Name + ''', ''' + app.PkName + ''', ''' + h + ''', ''' +
+    app.ShortDesc + ''',''' + app.Version + ''',''' + app.Author +
     ''',''' + 'icon' + ExtractFileExt(app.IconName) + ''',''' +
     app.Profile + ''',''' + g + ''',''' + GetDateAsString + ''', ''' +
     app.Dependencies + ''');');
