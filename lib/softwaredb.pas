@@ -21,7 +21,7 @@ unit softwaredb;
 interface
 
 uses
-  DB, GLib2, Classes, LiTypes, LiUtils, SysUtils, SQLite3DS, StrLocale;
+  DB, Classes, LiTypes, LiUtils, SysUtils, SQLite3DS, StrLocale;
 
 type
 
@@ -55,13 +55,19 @@ type
     //** Close (filter) connection
     procedure Close;
     //** Check if application is installed
-    function ContainsApp(appname, pkgname: String): Boolean;
+    function AppExisting(appname, pkgname: String): Boolean;
     //** Delete current app
     procedure AppDeleteCurrent;
     //** Add a new application
     procedure AppAddNew(app: TAppInfo);
     //** Update version of app
     procedure AppUpdateVersion(pkgID: String; newv: String);
+    //** Add new dependency to databse
+    procedure DepAddNew(Name: String; version: String; origin: String;
+      depnames: WideString);
+    //** Check if dependency is already present
+    function DepExisting(Name, version: String): Boolean;
+
 
     property EndReached: Boolean read EOF;
     property DataField: TLiDBData read CurrField;
@@ -82,6 +88,7 @@ end;
 destructor TSoftwareDB.Destroy;
 begin
   dsApp.Close; //Close, if opened
+  dsApp.Active := false;
   dsApp.Free;
   inherited;
 end;
@@ -95,9 +102,9 @@ function TSoftwareDB.DBOkay: Boolean;
 begin
   Result := false;
   if FileExists(dsApp.FileName) then
-   if dsApp.TableExists('Applications') then
-    if dsApp.TableExists('Dependencies') then
-     Result := true;
+    if dsApp.TableExists('Applications') then
+      if dsApp.TableExists('Dependencies') then
+        Result := true;
 end;
 
 function TSoftwareDB.Load(const forcesu: Boolean = false): Boolean;
@@ -105,15 +112,15 @@ var
   rd: String;
 begin
   Result := true;
-  dsApp.Close;
 
   if forcesu then
     rd := LI_CONFIG_DIR + LI_APPDB_PREF
   else
     rd := RegDir;
 
-  AppDataDir := rd + '/apps/';
-  DepDataDir := rd + '/deps/';
+  AppDataDir := CleanFilePath(rd + '/apps/');
+  DepDataDir := CleanFilePath(rd + '/deps/');
+  ForceDirectories(rd);
   ForceDirectories(AppDataDir);
   ForceDirectories(DepDataDir);
 
@@ -123,46 +130,48 @@ begin
     if ((forcesu) and (not IsRoot) and (not FileExists(FileName))) then
       Result := false
     else
-      if not FileExists(FileName) then
+    begin
+      //Create table for Applications
+      TableName := 'Applications';
+
+      if not TableExists then
       begin
-        //Create table for Applications
-        TableName := 'Applications';
-        if not TableExists then
+        with FieldDefs do
         begin
-          with FieldDefs do
-          begin
-            Clear;
-            Add('Name', ftString, 0, true);
-            Add('PkName', ftString, 0, true);
-            Add('Type', ftString, 0, true);
-            Add('Description', ftString, 0, false);
-            Add('Version', ftFloat, 0, true);
-            Add('Publisher', ftString, 0, false);
-            Add('IconName', ftString, 0, false);
-            Add('Profile', ftString, 0, false);
-            Add('Category', ftString, 0, true);
-            Add('InstallDate', ftDateTime, 0, false);
-            Add('Dependencies', ftMemo, 0, false);
-          end;
-          CreateTable;
+          Clear;
+          Add('Name', ftString, 0, true);
+          Add('PkName', ftString, 0, true);
+          Add('Type', ftString, 0, true);
+          Add('Description', ftString, 0, false);
+          Add('Version', ftFloat, 0, true);
+          Add('Publisher', ftString, 0, false);
+          Add('IconName', ftString, 0, false);
+          Add('Profile', ftString, 0, false);
+          Add('Category', ftString, 0, true);
+          Add('InstallDate', ftDateTime, 0, false);
+          Add('Dependencies', ftMemo, 0, false);
         end;
-        //Create table for Dependencies
-        TableName := 'Dependencies';
-        if not TableExists then
-        begin
-          with FieldDefs do
-          begin
-            Clear;
-            Add('Name', ftString, 0, true);
-            Add('Version', ftString, 0, true);
-            Add('Origin', ftString, 0, true);
-            Add('DepName', ftString, 0, true);
-            Add('InstallDate', ftDateTime, 0, false);
-          end;
-          CreateTable;
-        end;
-        ApplyUpdates;
+        CreateTable;
       end;
+      //Create table for Dependencies
+      TableName := 'Dependencies';
+      if not TableExists then
+      begin
+        with FieldDefs do
+        begin
+          Clear;
+          Add('Name', ftString, 0, true);
+          Add('Version', ftString, 0, true);
+          Add('Origin', ftString, 0, true);
+          Add('DepNames', ftMemo, 0, true);
+          Add('InstallDate', ftDateTime, 0, false);
+        end;
+        CreateTable;
+      end;
+    end;
+    Active := true;
+    //ApplyUpdates;
+    Open;
   end;
   p_info(rsDBOpened);
 end;
@@ -170,27 +179,26 @@ end;
 function TSoftwareDB.GetApplicationList(blacklist: TStringList = nil): Boolean;
 var
   entry: TAppInfo;
-  p, n: AnsiString;
+  p: AnsiString;
 begin
   Result := false;
+  dsApp.TableName := 'Applications';
   if not DBOkay then
     exit;
-  n := ConfigDir;
 
   dsApp.Close; //First close db
   dsApp.SQL := 'SELECT * FROM Applications';
-  ;
   dsApp.Open;
   dsApp.Filtered := true;
   dsApp.First;
 
   while not dsApp.EOF do
   begin
-    if Assigned(blacklist) then
-      blacklist.Add(entry.Name);
-
     entry := GetAppField;
     entry.UId := entry.PkName;
+
+    if Assigned(blacklist) then
+      blacklist.Add(entry.Name);
 
     entry.Version := PChar(rsVersion + ': ' + entry.Version);
     if entry.Author <> '' then
@@ -198,7 +206,7 @@ begin
 
     p := AppDataDir + LowerCase(entry.UId) + '/';
 
-    // InstLst.Add(LowerCase(dsApp.FieldByName('ID').AsString));
+    //InstLst.Add(LowerCase(dsApp.FieldByName('ID').AsString));
 
     if entry.ShortDesc = '' then
       entry.ShortDesc := 'No description available';
@@ -225,6 +233,7 @@ var
   end;
 
 begin
+  dsApp.TableName := 'Applications';
   r.Name := _(dsApp.FieldByName('Name').AsString);
   r.PkName := _(dsApp.FieldByName('PkName').AsString);
   h := LowerCase(dsApp.FieldByName('Type').AsString);
@@ -276,6 +285,7 @@ procedure TSoftwareDB.OpenFilterAppList;
 begin
   if not DBOkay then
     exit;
+  dsApp.TableName := 'Applications';
   dsApp.Active := true;
 
   dsApp.SQL := 'SELECT * FROM Applications';
@@ -298,11 +308,12 @@ begin
   dsApp.Close;
 end;
 
-function TSoftwareDB.ContainsApp(appname, pkgname: String): Boolean;
+function TSoftwareDB.AppExisting(appname, pkgname: String): Boolean;
 begin
   Result := false;
   if not DBOkay then
     exit;
+  dsApp.TableName := 'Applications';
   dsApp.SQL := 'SELECT * FROM Applications';
   dsApp.Open;
   dsApp.Filtered := true;
@@ -326,6 +337,7 @@ end;
 
 procedure TSoftwareDB.AppDeleteCurrent;
 begin
+  dsApp.TableName := 'Applications';
   dsApp.ExecuteDirect('DELETE FROM Applications WHERE rowid=' + IntToStr(dsApp.RecNo));
   dsApp.ApplyUpdates;
 end;
@@ -335,6 +347,7 @@ var
   g, h: String;
 begin
   //Open database connection
+  dsApp.TableName := 'Applications';
   dsApp.Open;
   dsApp.Edit;
 
@@ -375,6 +388,7 @@ end;
 
 procedure TSoftwareDB.AppUpdateVersion(pkgID: String; newv: String);
 begin
+  dsApp.TableName := 'Applications';
   dsApp.SQL := 'SELECT * FROM Applications';
   dsApp.Open;
   dsApp.Filtered := true;
@@ -382,18 +396,51 @@ begin
   dsApp.First;
   dsApp.ExecuteDirect('UPDATE AppInfo SET Version = ''' + newv +
     ''' WHERE PkName = ''' + pkgID + '''');
-
-   { while not dsApp.EOF do
-    begin
-     if (dsApp.FieldByName('Name').AsString=TUpdateInfo(ulist[uid]).AppName) and (dsApp.FieldByName('PkName').AsString=) then
-     begin
-
-      dsApp.FieldByName('Version').Value:=TUpdateInfo(ulist[uid]).NVersion;
-      break;
-     end;
-    dsApp.Next;
-    end;}
   dsApp.ApplyUpdates;
+  dsApp.Close;
+end;
+
+procedure TSoftwareDB.DepAddNew(Name: String; version: String;
+  origin: String; depnames: WideString);
+begin
+  //Open database connection
+  dsApp.TableName := 'Dependencies';
+  dsApp.Open;
+  dsApp.Edit;
+  dsApp.Insert;
+  dsApp.ExecuteDirect('INSERT INTO "Dependencies" VALUES (''' + Name +
+    ''', ''' + Version + ''', ''' + origin + ''', ''' + depnames +
+    ''', ''' + GetDateAsString + ''');');
+
+  //Write changes
+  dsApp.ApplyUpdates;
+  dsApp.Close;
+end;
+
+function TSoftwareDB.DepExisting(Name, version: String): Boolean;
+begin
+  Result := false;
+  if not DBOkay then
+    exit;
+  dsApp.TableName := 'Dependencies';
+  dsApp.SQL := 'SELECT * FROM Dependencies';
+  dsApp.Open;
+  dsApp.Filtered := true;
+  dsApp.First;
+
+  Result := false;
+  while not dsApp.EOF do
+  begin
+    if (dsApp.FieldByName('Name').AsString = Name) and
+      (dsApp.FieldByName('Version').AsString = Version) then
+    begin
+      Result := true;
+      break;
+    end
+    else
+      Result := false;
+    dsApp.Next;
+  end;
   dsApp.Close;
 end;
 

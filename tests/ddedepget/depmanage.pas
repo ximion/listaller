@@ -13,26 +13,27 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this library. If not, see <http://www.gnu.org/licenses/>.}
-//** Management of 3rd-party shared libraries
-unit slibmanage;
+//** Management of 3rd-party shared libraries and dependencies
+unit depmanage;
 
 {$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, LiUtils, Process, FileUtil, SysUtils, TarArchive, DDEResolve, LiTypes,
-  SoftwareDB;
+  Classes, LiTypes,
+  LiUtils, Process, FileUtil, SysUtils, DDEResolve, SoftwareDB, TarArchive;
 
 type
   //** Error codes of Listallers library solver
   LiLibSolveError = (NONE,
-          DOWNLOAD_FAILED,
-          RESOLVE_FAILED,
-          UNPACK_FAILED);
+    DOWNLOAD_FAILED,
+    RESOLVE_FAILED,
+    UNPACK_FAILED,
+    FATAL_COPY_ERROR);
 
   ArchEntry = record
-    name: String;
+    Name: String;
     comp: CompressionMethod;
   end;
 
@@ -40,7 +41,7 @@ type
   private
     FName: String;
     WDir: String;
-    function CheckCompression(nm: String;sl: TStringList): ArchEntry;
+    function CheckCompression(nm: String; sl: TStringList): ArchEntry;
   public
     constructor Create(debfile: String);
     destructor Destroy; override;
@@ -48,18 +49,20 @@ type
     function GetDataArchive: TTarArchive;
     function UnpackDataTo(ar: TTarArchive; path: String): Integer;
     function UnpackDataTo(path: String): Integer;
+    function UnpackDataToTmp: String;
     function GetControlScript(control: TStringList): Integer;
     property FileName: String read FName;
     property WorkDir: String read WDir;
   end;
 
-  TLibManager = class
+  TDepManager = class
   private
+    function GetVersionFromControl(cont: TStringList): String;
   public
     constructor Create;
     destructor Destroy; override;
 
-    function InstallLibrary(libname: String): LiLibSolveError;
+    function InstallDependency(libname: String): LiLibSolveError;
   end;
 
 
@@ -70,7 +73,7 @@ implementation
 constructor TDEBConverter.Create(debfile: String);
 begin
   FName := debfile;
-  WDir := TMPDIR + 'libwork/'+ExtractFileName(FName)+'/';
+  WDir := TMPDIR + 'libwork/' + ExtractFileName(FName) + '/';
   ForceDirectory(WDir);
 end;
 
@@ -82,29 +85,30 @@ begin
 end;
 
 function TDEBConverter.CheckCompression(nm: String; sl: TStringList): ArchEntry;
-var i: Integer;
+var
+  i: Integer;
 begin
-  i := sl.IndexOf(nm+'.tar');
+  i := sl.IndexOf(nm + '.tar');
   if i >= 0 then
-    Result.Comp := cmNone
+    Result.comp := cmNone
   else
   begin
-    i := sl.IndexOf(nm+'.tar.gz');
+    i := sl.IndexOf(nm + '.tar.gz');
     if i >= 0 then
-      Result.Comp := cmGZip
+      Result.comp := cmGZip
     else
     begin
-      i := sl.IndexOf(nm+'.tar.bz2');
-      if i >=0 then
-        Result.Comp := cmBZip2
+      i := sl.IndexOf(nm + '.tar.bz2');
+      if i >= 0 then
+        Result.comp := cmBZip2
       else
       begin
-        i := sl.IndexOf(nm+'.tar.lzma');
+        i := sl.IndexOf(nm + '.tar.lzma');
         if i >= 0 then
-         Result.Comp := cmLZMA
+          Result.comp := cmLZMA
         else
         begin
-          Result.Comp := cmNONE;
+          Result.comp := cmNONE;
           exit;
         end;
       end;
@@ -116,7 +120,7 @@ end;
 function TDEBConverter.GetDataArchive: TTarArchive;
 var
   pr: TProcess;
-  data: TTarArchive;
+  Data: TTarArchive;
   sl: TStringList;
   entry: ArchEntry;
 begin
@@ -132,16 +136,16 @@ begin
   sl := TStringList.Create;
   sl.LoadFromStream(pr.Output);
 
-  entry := CheckCompression('data',sl);
+  entry := CheckCompression('data', sl);
 
   sl.Free;
   pr.CommandLine := FindBinary('ar') + ' x ''' + FName + '''';
   pr.Execute;
 
-  data := TTarArchive.Create;
-  data.TarArchive := WDir + entry.Name;
-  data.Compression := entry.Comp;
-  Result := data;
+  Data := TTarArchive.Create;
+  Data.TarArchive := WDir + entry.Name;
+  Data.Compression := entry.comp;
+  Result := Data;
 end;
 
 function TDEBConverter.UnpackDataTo(ar: TTarArchive; path: String): Integer;
@@ -151,13 +155,23 @@ begin
 end;
 
 function TDEBConverter.UnpackDataTo(path: String): Integer;
-var ar: TTarArchive;
+var
+  ar: TTarArchive;
 begin
   ar := GetDataArchive;
   if not (ar is TTarArchive) then
-   Result := 8
+    Result := 8
   else
-   Result := UnpackDataTo(ar, path);
+    Result := UnpackDataTo(ar, path);
+end;
+
+function TDEBConverter.UnpackDataToTmp: String;
+begin
+  ForceDirectories(WDir + '/tmp');
+  if UnpackDataTo(WDir + '/tmp') = 0 then
+    Result := WDir + '/tmp'
+  else
+    Result := '';
 end;
 
 function TDEBConverter.GetControlScript(control: TStringList): Integer;
@@ -179,40 +193,63 @@ begin
   sl := TStringList.Create;
   sl.LoadFromStream(pr.Output);
 
-  entry := CheckCompression('control',sl);
+  entry := CheckCompression('control', sl);
 
   sl.Free;
-  pr.CommandLine := FindBinary('ar') + ' x ''' + FName + '''';
-  pr.Execute;
+  if not FileExists(WDir + entry.Name) then
+  begin
+    pr.CommandLine := FindBinary('ar') + ' x ''' + FName + '''';
+    pr.Execute;
+  end;
 
   arch := TTarArchive.Create;
+  arch.BaseDir := WDir;
   arch.TarArchive := WDir + entry.Name;
-  arch.Compression := entry.Comp;
-  Result := arch.ExtractFile('control');
+  arch.Compression := entry.comp;
+  Result := arch.ExtractFile('./control');
+  if not FileExists(WDir + 'control') then
+    Result := 4;
   if Result = 0 then
   begin
-   control.LoadFromFile(WDir + entry.Name + '/control');
+    control.LoadFromFile(WDir + 'control');
   end;
 end;
 
-{ TLibManager }
+{ TDepManager }
 
-constructor TLibManager.Create;
+constructor TDepManager.Create;
 begin
 
 end;
 
-destructor TLibManager.Destroy;
+destructor TDepManager.Destroy;
 begin
   inherited;
 end;
 
-function TLibManager.InstallLibrary(libname: String): LiLibSolveError;
-var solver: TDDEResolver;
- dc: TDEBConverter;
- cont: TStringList;
- pkg: DDEPackage;
- sdb: TSoftwareDB;
+function TDepManager.GetVersionFromControl(cont: TStringList): String;
+var
+  i: Integer;
+begin
+  Result := '';
+  for i := 0 to cont.Count - 1 do
+    if pos('Version: ', cont[i]) > 0 then
+    begin
+      Result := copy(cont[i], pos(': ', cont[i]) + 2, length(cont[i]));
+      break;
+    end;
+end;
+
+function TDepManager.InstallDependency(libname: String): LiLibSolveError;
+var
+  solver: TDDEResolver;
+  dc: TDEBConverter;
+  cont: TStringList;
+  pkg: DDEPackage;
+  sdb: TSoftwareDB;
+  i: Integer;
+  dir: String;
+  files: TStringList;
 begin
   Result := NONE;
   solver := TDDEResolver.Create;
@@ -224,7 +261,7 @@ begin
     end;
   end
   else
-   Result := RESOLVE_FAILED;
+    Result := RESOLVE_FAILED;
   if Result <> NONE then
     exit;
 
@@ -242,10 +279,51 @@ begin
     Result := UNPACK_FAILED;
     exit;
   end;
+  pkg.Version := GetVersionFromControl(cont);
 
-  ForceDirectories('junk/test');
-  dc.UnpackDataTo('junk/test');
+  if sdb.DepExisting(pkg.PkName, pkg.Version) then
+  begin
+    sdb.Free;
+    dc.Free;
+    exit;
+  end;
+
+  ForceDirectories(SyblToPath('$DEP'));
+
+  dir := dc.UnpackDataToTmp;
+  if dir = '' then
+  begin
+    Result := UNPACK_FAILED;
+    dc.Free;
+    sdb.Free;
+    exit;
+  end;
+  files := FindAllFiles(dir, '*', true);
+
+  for i := 0 to files.Count - 1 do
+  begin
+    files[i] := CleanFilePath(files[i]);
+    ForceDirectories(SyblToPath('$DEP') + StrSubst(ExtractFilePath(files[i]), CleanFilePath(dir + '/usr'), ''));
+    if not FileCopy(files[i], SyblToPath('$DEP') + StrSubst(files[i], CleanFilePath(dir + '/usr'), '')) then
+    begin
+      p_debug(files[i] + ' >> ' + SyblToPath('$DEP') + StrSubst(files[i], CleanFilePath(dir + '/usr'), ''));
+      Result := FATAL_COPY_ERROR;
+      exit;
+    end;
+  end;
   dc.Free;
+
+  for i := 0 to files.Count - 1 do
+    files[i] := CleanFilePath(SyblToPath('$DEP') + StrSubst(files[i], CleanFilePath(dir + '/usr'), ''));
+
+  sdb.DepAddNew(pkg.PkName, pkg.version, pkg.Distro, ExtractFileName(libname));
+
+  ForceDirectories(sdb.DepConfDir + pkg.PkName + '/');
+  files.SaveToFile(sdb.DepConfDir + pkg.PkName + '/files.info');
+  files.Free;
+  cont.SaveToFile(sdb.DepConfDir + pkg.PkName + '/control');
+  cont.Free;
+  sdb.Free;
 end;
 
 end.

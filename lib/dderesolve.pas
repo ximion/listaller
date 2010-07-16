@@ -29,6 +29,7 @@ type
     Distro: String;
     Link: String;
     Path: String;
+    Version: String;
   end;
 
   TDDEResolver = class

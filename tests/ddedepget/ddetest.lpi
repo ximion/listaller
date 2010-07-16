@@ -44,9 +44,9 @@
         <UnitName Value="dderesolve"/>
       </Unit1>
       <Unit2>
-        <Filename Value="../../lib/slibmanage.pas"/>
+        <Filename Value="depmanage.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="slibmanage"/>
+        <UnitName Value="depmanage"/>
       </Unit2>
     </Units>
   </ProjectOptions>

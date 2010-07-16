@@ -86,7 +86,8 @@ procedure UninstallIPKApp(AppName, AppID: String; FStatus: TLiStatusChangeCall;
   fast: Boolean = false; RmDeps: Boolean = true);
 
 //** Checks if package is installed
-function IsPackageInstalled(aName: String = ''; aID: String = ''; sumode: Boolean = false): Boolean;
+function IsPackageInstalled(aName: String = ''; aID: String = '';
+  sumode: Boolean = false): Boolean;
 
 //** Helper procedure to create USource file if missing
 procedure CreateUpdateSourceList(path: String);
@@ -323,7 +324,8 @@ var
             Version := PChar(rsVersion + ': ' +
               d.ReadString('Desktop Entry', 'X-AppVersion', ''));
 
-          entry.IconName := PChar(GetAppIconPath(d.ReadString('Desktop Entry', 'Icon', '')));
+          entry.IconName := PChar(
+            GetAppIconPath(d.ReadString('Desktop Entry', 'Icon', '')));
 
           if not FileExists(entry.IconName) then
           begin
@@ -348,7 +350,7 @@ begin
   msg(rsLoading);
   blst := TStringList.Create; //Create Blacklist
 
-  p_debug('SUMode: '+BoolToStr(sumode));
+  p_debug('SUMode: ' + BoolToStr(sumode));
 
   db := TSoftwareDB.Create;
   db.Load(sumode);
@@ -403,13 +405,10 @@ end; //End Autopackage  }
   ini := TIniFile.Create(ConfigDir + 'config.cnf');
 
   //Search for other applications that are installed on this system...
-  tmp := TStringList.Create;
-  xtmp := TStringList.Create;
-
   if SUMode then //Only if user wants to see shared apps
   begin
-    tmp.Assign(FindAllFiles('/usr/share/applications/', '*.desktop', true));
-    xtmp.Assign(FindAllFiles('/usr/local/share/applications/', '*.desktop', true));
+    tmp := FindAllFiles('/usr/share/applications/', '*.desktop', true);
+    xtmp := FindAllFiles('/usr/local/share/applications/', '*.desktop', true);
     for i := 0 to xtmp.Count - 1 do
       tmp.Add(xtmp[i]);
 
@@ -795,7 +794,7 @@ begin
   end;
   db := TSoftwareDB.Create;
   if db.Load(sumode) then
-   Result := db.ContainsApp(aname, aId)
+    Result := db.ContainsApp(aname, aId)
   else
     Result := false; //No database => no application installed
   db.Free;
@@ -860,8 +859,7 @@ begin
   db.OpenFilterAppList;
   while not db.EndReached do
   begin
-    if (db.DataField.App.Name = AppName) and
-       (db.DataField.App.PkName = AppID) then
+    if (db.DataField.App.Name = AppName) and (db.DataField.App.PkName = AppID) then
     begin
 
       if db.DataField.App.PkType = ptDLink then
@@ -1071,7 +1069,7 @@ begin
   end
   else
     msg('Application not found!');
- db.Free;
+  db.Free;
 end;
 
 procedure CreateUpdateSourceList(path: String);

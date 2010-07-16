@@ -689,6 +689,7 @@ begin
   if root then
   begin
     s := StringReplace(s, '$INST', '/opt/appfiles', [rfReplaceAll]);
+    s := StringReplace(s, '$DEP', '/opt/shared', [rfReplaceAll]);
     s := StringReplace(s, '$SHARE', '/usr/share', [rfReplaceAll]);
     s := StringReplace(s, '$OPT', '/opt', [rfReplaceAll]);
     s := StringReplace(s, '$BIN', '/usr/bin', [rfReplaceAll]);
@@ -769,6 +770,7 @@ begin
 
     s := StringReplace(s, '$LIB32', GetXHome + '/.appfiles/lib32', [rfReplaceAll]);
 
+    s := StringReplace(s, '$DEP', GetXHome + '/.appfiles', [rfReplaceAll]);
     s := StringReplace(s, '$INST', GetXHome + '/.appfiles', [rfReplaceAll]);
     s := StringReplace(s, '$SHARE', GetXHome + '/.appfiles', [rfReplaceAll]);
     s := StringReplace(s, '$OPT', GetXHome + '/.appfiles', [rfReplaceAll]);
@@ -817,6 +819,7 @@ function DeleteSybls(s: String): String;
 begin
   s := StrSubst(s, '$INST', '');
   s := StrSubst(s, '$SHARE', '');
+  s := StrSubst(s, '$DEP', '');
   s := StrSubst(s, '$BIN', '');
   s := StrSubst(s, '$OPT', '');
   s := StrSubst(s, '$APP', '');

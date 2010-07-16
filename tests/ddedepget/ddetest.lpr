@@ -11,7 +11,7 @@ uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   CustApp,
   dderesolve,
   liUtils,
-  slibmanage;
+  depmanage;
 
 type
 
@@ -58,40 +58,16 @@ end;
 
 procedure TDDELoader.Execute;
 var
-  solver: TDDEResolver;
-  dc: TDEBConverter;
-  error: Boolean;
+  depmgr: TDepManager;
 begin
   if ParamStr(1) = '' then
   begin
     writeLn('Please add library name as parameter!');
     halt(1);
   end;
-  error := false;
-  solver := TDDEResolver.Create;
-  if solver.ResolveString(ParamStr(1)) then
-  begin
-    p_info(' Package: ' + solver.Pack.PkName);
-    p_info(' Distro: ' + solver.Pack.Distro);
-    if not solver.DownloadPackage then
-    begin
-      writeLn('Download failed :o');
-      error := true;
-    end;
-  end
-  else
-  begin
-    writeLn('Resolving failed :(');
-    error := true;
-  end;
-  if error then
-    halt(2);
-
-  dc := TDEBConverter.Create(solver.Pack.Path);
-  solver.Free;
-  ForceDirectories('junk/test');
-  dc.UnpackDataTo('junk/test');
-  dc.Free;
+  depmgr := TDepManager.Create;
+  writeLn(depmgr.InstallDependency(paramstr(1)));
+  depmgr.Free;
 end;
 
 constructor TDDELoader.Create(TheOwner: TComponent);
