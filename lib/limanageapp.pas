@@ -794,7 +794,7 @@ begin
   end;
   db := TSoftwareDB.Create;
   if db.Load(sumode) then
-    Result := db.ContainsApp(aname, aId)
+    Result := db.AppExisting(aname, aId)
   else
     Result := false; //No database => no application installed
   db.Free;

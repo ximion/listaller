@@ -58,7 +58,8 @@ libdirs=". \
 	/lib64"
 
 dirs=". \
-      ./src"
+      ./src \
+      ./licreator"
 
 basedir=$(pwd)
 
@@ -171,8 +172,8 @@ chmod +x ./install-core.sh
 chmod +x ./install-tools.sh
 chmod +x ./install-data.sh
 chmod +x ./install-gui.sh
-chmod +x ./make-creator.sh
-chmod +x ./install-creator.sh
+chmod +x ../licreator/make.sh
+chmod +x ../licreator/install.sh
 chmod +x ./writedoc.sh
 chmod +x ./clean.sh
 chmod +x ./uninstall.sh

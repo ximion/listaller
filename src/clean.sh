@@ -14,6 +14,10 @@ fi
 rm -f ./libinstaller.so
 rm -f ./libinstaller.so.0.4
 
+cd ../licreator
+if [ "$ALL" == "1" ]; then
+ rm -f Makefile
+fi
 cd ..
 
 if [ "$ALL" == "1" ]; then

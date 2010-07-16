@@ -1,9 +1,11 @@
 # Makefile for Listaller 0.4
 all:
 	$(MAKE) -C ./src all
+	%LiCreator%$(MAKE) -C ./licreator all
 
 install:
 	$(MAKE) -C ./src install
+	%LiCreator%$(MAKE) -C ./licreator install
 
 install-binonly:
 	$(MAKE) -C ./src install-binonly

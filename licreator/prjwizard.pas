@@ -338,32 +338,30 @@ begin
     end;
   rs.LangCode := '';
 
-
-
   //Add the application group type
   s := LowerCase(ComboBox1.Items[ComboBox1.ItemIndex]);
   if s = 'all' then
-    rs.Group := gtALL;
+    rs.Category := gtALL;
   if s = 'education' then
-    rs.Group := gtEDUCATION;
+    rs.Category := gtEDUCATION;
   if s = 'office' then
-    rs.Group := gtOFFICE;
+    rs.Category := gtOFFICE;
   if s = 'development' then
-    rs.Group := gtDEVELOPMENT;
+    rs.Category := gtDEVELOPMENT;
   if s = 'graphic' then
-    rs.Group := gtGRAPHIC;
+    rs.Category := gtGRAPHIC;
   if s = 'network' then
-    rs.Group := gtNETWORK;
+    rs.Category := gtNETWORK;
   if s = 'games' then
-    rs.Group := gtGAMES;
+    rs.Category := gtGAMES;
   if s = 'system' then
-    rs.Group := gtSYSTEM;
+    rs.Category := gtSYSTEM;
   if s = 'multimedia' then
-    rs.Group := gtMULTIMEDIA;
+    rs.Category := gtMULTIMEDIA;
   if s = 'additional' then
-    rs.Group := gtADDITIONAL;
+    rs.Category := gtADDITIONAL;
   if s = 'other' then
-    rs.Group := gtOTHER;
+    rs.Category := gtOTHER;
 
   //Set which desktopfiles are used
   if (aType = ptDLink) then

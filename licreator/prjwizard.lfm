@@ -7,7 +7,7 @@ object frmProjectWizard: TfrmProjectWizard
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Project Wizard'
-  ClientHeight = 646
+  ClientHeight = 644
   ClientWidth = 836
   Constraints.MinHeight = 666
   Constraints.MinWidth = 836
@@ -58,7 +58,7 @@ object frmProjectWizard: TfrmProjectWizard
   LCLVersion = '0.9.29'
   object Notebook1: TNotebook
     Left = 0
-    Height = 605
+    Height = 603
     Top = 0
     Width = 836
     Align = alClient
@@ -67,8 +67,8 @@ object frmProjectWizard: TfrmProjectWizard
     TabOrder = 0
     object Page1: TPage
       Caption = 'Page1'
-      ClientWidth = 832
-      ClientHeight = 601
+      ClientWidth = 830
+      ClientHeight = 597
       object SpeedButton1: TSpeedButton
         Left = 85
         Height = 104
@@ -1755,8 +1755,8 @@ object frmProjectWizard: TfrmProjectWizard
     end
     object Page2: TPage
       Caption = 'Page2'
-      ClientWidth = 832
-      ClientHeight = 601
+      ClientWidth = 830
+      ClientHeight = 597
       object Label8: TLabel
         Left = 7
         Height = 20
@@ -1774,8 +1774,8 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 29
         Width = 808
         Caption = 'Application'
-        ClientHeight = 186
-        ClientWidth = 804
+        ClientHeight = 185
+        ClientWidth = 802
         TabOrder = 0
         object Label9: TLabel
           Left = 9
@@ -2003,8 +2003,8 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 231
         Width = 809
         Caption = 'Package'
-        ClientHeight = 154
-        ClientWidth = 805
+        ClientHeight = 153
+        ClientWidth = 803
         TabOrder = 1
         object Label11: TLabel
           Left = 6
@@ -2126,8 +2126,8 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 405
         Width = 480
         Caption = 'Short Description:'
-        ClientHeight = 170
-        ClientWidth = 476
+        ClientHeight = 169
+        ClientWidth = 474
         TabOrder = 2
         object Label12: TLabel
           Left = 6
@@ -2205,8 +2205,8 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 405
         Width = 322
         Caption = 'Profiles'
-        ClientHeight = 170
-        ClientWidth = 318
+        ClientHeight = 169
+        ClientWidth = 316
         TabOrder = 3
         object lbProfiles: TListBox
           Left = 114
@@ -2255,8 +2255,8 @@ object frmProjectWizard: TfrmProjectWizard
     end
     object Page3: TPage
       Caption = 'Page3'
-      ClientWidth = 832
-      ClientHeight = 601
+      ClientWidth = 830
+      ClientHeight = 597
       object Label17: TLabel
         Left = 7
         Height = 20
@@ -2307,8 +2307,8 @@ object frmProjectWizard: TfrmProjectWizard
         Height = 103
         Top = 55
         Width = 424
-        ClientHeight = 99
-        ClientWidth = 420
+        ClientHeight = 97
+        ClientWidth = 418
         TabOrder = 1
         object GroupBox5: TGroupBox
           Left = 3
@@ -2316,8 +2316,8 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 1
           Width = 403
           Caption = 'Select folder:'
-          ClientHeight = 35
-          ClientWidth = 399
+          ClientHeight = 34
+          ClientWidth = 397
           TabOrder = 0
           object DirectoryEdit1: TDirectoryEdit
             Left = 6
@@ -2337,8 +2337,8 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 49
           Width = 403
           Caption = 'CopyToPath:'
-          ClientHeight = 31
-          ClientWidth = 399
+          ClientHeight = 30
+          ClientWidth = 397
           TabOrder = 1
           object Edit6: TEdit
             Left = 6
@@ -2355,8 +2355,8 @@ object frmProjectWizard: TfrmProjectWizard
         Height = 104
         Top = 55
         Width = 393
-        ClientHeight = 100
-        ClientWidth = 389
+        ClientHeight = 98
+        ClientWidth = 387
         Enabled = False
         TabOrder = 2
         object GroupBox8: TGroupBox
@@ -2365,8 +2365,8 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 1
           Width = 376
           Caption = 'Select file:'
-          ClientHeight = 34
-          ClientWidth = 372
+          ClientHeight = 33
+          ClientWidth = 370
           TabOrder = 0
           object FileNameEdit3: TFileNameEdit
             Left = 3
@@ -2388,8 +2388,8 @@ object frmProjectWizard: TfrmProjectWizard
           Top = 49
           Width = 376
           Caption = 'CopyToPath:'
-          ClientHeight = 31
-          ClientWidth = 372
+          ClientHeight = 30
+          ClientWidth = 370
           TabOrder = 1
           object Edit7: TEdit
             Left = 6
@@ -2444,8 +2444,8 @@ object frmProjectWizard: TfrmProjectWizard
     end
     object Page4: TPage
       Caption = 'Page4'
-      ClientWidth = 832
-      ClientHeight = 601
+      ClientWidth = 830
+      ClientHeight = 597
       object Label19: TLabel
         Left = 7
         Height = 20
@@ -2499,8 +2499,8 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 478
         Width = 297
         Caption = 'Add entry'
-        ClientHeight = 91
-        ClientWidth = 293
+        ClientHeight = 90
+        ClientWidth = 291
         Enabled = False
         TabOrder = 1
         object Button4: TButton
@@ -2575,8 +2575,8 @@ object frmProjectWizard: TfrmProjectWizard
     end
     object Page5: TPage
       Caption = 'Page5'
-      ClientWidth = 832
-      ClientHeight = 601
+      ClientWidth = 830
+      ClientHeight = 597
       object Label18: TLabel
         Left = 7
         Height = 20
@@ -2590,9 +2590,9 @@ object frmProjectWizard: TfrmProjectWizard
       end
       object Memo1: TMemo
         Left = 6
-        Height = 552
+        Height = 548
         Top = 38
-        Width = 816
+        Width = 814
         Anchors = [akTop, akLeft, akRight, akBottom]
         Font.Height = -11
         Font.Name = 'Courier 10 Pitch'
@@ -2605,8 +2605,8 @@ object frmProjectWizard: TfrmProjectWizard
     end
     object Page6: TPage
       Caption = 'Page6'
-      ClientWidth = 832
-      ClientHeight = 601
+      ClientWidth = 830
+      ClientHeight = 597
       object Label21: TLabel
         Left = 7
         Height = 20
@@ -2624,8 +2624,8 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 221
         Width = 513
         Caption = 'LOKI/Autopackage- file:'
-        ClientHeight = 51
-        ClientWidth = 509
+        ClientHeight = 50
+        ClientWidth = 507
         TabOrder = 0
         object FileNameEdit4: TFileNameEdit
           Left = 6
@@ -2648,8 +2648,8 @@ object frmProjectWizard: TfrmProjectWizard
         Top = 299
         Width = 513
         Caption = 'If the application uses terminal output'
-        ClientHeight = 42
-        ClientWidth = 509
+        ClientHeight = 41
+        ClientWidth = 507
         TabOrder = 1
         object chkShowInTerminal: TCheckBox
           Left = 14
@@ -2665,7 +2665,7 @@ object frmProjectWizard: TfrmProjectWizard
   object Panel1: TPanel
     Left = 0
     Height = 41
-    Top = 605
+    Top = 603
     Width = 836
     Align = alBottom
     ClientHeight = 41
@@ -2675,7 +2675,7 @@ object frmProjectWizard: TfrmProjectWizard
       Left = 8
       Height = 28
       Top = 8
-      Width = 52
+      Width = 50
       Anchors = [akTop, akLeft, akBottom]
       AutoSize = True
       Caption = '  Back  '
@@ -2685,10 +2685,10 @@ object frmProjectWizard: TfrmProjectWizard
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
-      Left = 384
+      Left = 385
       Height = 28
       Top = 8
-      Width = 56
+      Width = 54
       Anchors = [akTop, akBottom]
       AutoSize = True
       Caption = '  Close  '
@@ -2697,10 +2697,10 @@ object frmProjectWizard: TfrmProjectWizard
       TabOrder = 1
     end
     object BitBtn3: TBitBtn
-      Left = 776
+      Left = 778
       Height = 28
       Top = 8
-      Width = 53
+      Width = 51
       Anchors = [akTop, akRight, akBottom]
       AutoSize = True
       Caption = '  Next  '

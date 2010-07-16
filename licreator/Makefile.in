@@ -1,0 +1,14 @@
+# Makefile for Listaller Project
+#
+# Targets:
+# The First target is the one built when there is nothing on make command line
+all:
+	%GTK+%./make.sh WIDGET=gtk2
+	%Qt%./make.sh WIDGET=qt4
+
+install:
+	%GTK+%./install.sh WIDGET=gtk2 prefix=%PREFIX% libdir=%LIBDIR%
+	%Qt%./install.sh WIDGET=qt4 prefix=%PREFIX% libdir=%LIBDIR%
+
+clean:
+	../src/clean.sh
