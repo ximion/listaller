@@ -35,7 +35,7 @@ type
   private
     //Basic information about the package and the new application
     IAppName, IAppVersion, IAppCMD, IAuthor, ShDesc: String;
-    IGroup: TGroupType;
+    ICategory: AppCategory;
     IDesktopFiles: String;
     PkgName, PkgPath, PkgID: String;
     //Path to a wizard image
@@ -737,7 +737,7 @@ begin
     //Load Description
     ShDesc := cont.SDesc;
 
-    IGroup := cont.Group;
+    ICategory := cont.Category;
 
     //Load info about supported distributions
     FSupportedDistris := LowerCase(cont.DSupport);
@@ -894,7 +894,7 @@ begin
       //DLink packages can only be installed as root!
       SUMode := true;
 
-      IGroup := cont.Group;
+      ICategory := cont.Category;
 
       IDesktopFiles := cont.Desktopfiles;
 
@@ -1668,20 +1668,18 @@ begin
     msg(rsTestmodeDNRegister)
   else
   begin
-    if not DirectoryExists(RegDir + LowerCase(pkgID)) then
-      ForceDirectories(RegDir + LowerCase(pkgID));
-    FileCopy(pkg.WDir + '/arcinfo.pin', RegDir + LowerCase(pkgID) + '/application');
+    FileCopy(pkg.WDir + '/arcinfo.pin', sdb.AppConfDir + '/application');
 
     //Save list of installed files
-    appfiles.SaveToFile(RegDir + LowerCase(pkgID) + '/files.list');
+    appfiles.SaveToFile(sdb.AppConfDir + '/files.list');
     appfiles.Free;
 
     if mofiles.Count > 0 then
     begin
-      ForceDirectories(RegDir + LowerCase(pkgID) + '/locale/');
+      ForceDirectories(sdb.AppConfDir + '/locale/');
       for i := 0 to mofiles.Count - 1 do
       begin
-        FileCopy(pkg.WDir + mofiles[i], RegDir + LowerCase(pkgID) +
+        FileCopy(pkg.WDir + mofiles[i], sdb.AppConfDir +
           '/locale/' +  ExtractFileName(mofiles[i]));
       end;
     end;
@@ -1696,7 +1694,7 @@ begin
       Author := PChar(IAuthor);
       IconName := PChar(IIconPath);
       Profile := PChar(CurProfile);
-      Group := IGroup;
+      Category := ICategory;
     end;
       AppField.Dependencies := Dependencies.Text;
 
@@ -1705,13 +1703,13 @@ begin
 
     if length(IIconPath)>0 then
       if IIconPath[1] = '/' then
-        FileCopy(IIconPath, RegDir + LowerCase(pkgID) +  '/icon' +
+        FileCopy(IIconPath, sdb.AppConfDir +  '/icon' +
           ExtractFileExt(IIconPath));
 
-    ndirs.SaveToFile(RegDir + LowerCase(pkgID) + '/dirs.list');
+    ndirs.SaveToFile(sdb.AppConfDir + '/dirs.list');
 
     if ExecX <> '<disabled>' then
-      FileCopy(ExecX, RegDir + LowerCase(pkgID) + '/prerm');
+      FileCopy(ExecX, sdb.AppConfDir + '/prerm');
 
     mnpos := mnpos + 5;
     SetMainPos(Round(mnpos * max));

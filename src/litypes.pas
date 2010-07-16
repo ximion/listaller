@@ -67,7 +67,7 @@ type
   TProgressEvent = procedure(pos: Integer; user_data: Pointer) of object;
 
   //** Application groups
-  TGroupType = (gtALL,
+  AppCategory = (gtALL,
     gtEDUCATION,
     gtOFFICE,
     gtDEVELOPMENT,
@@ -94,7 +94,7 @@ type
     IconName: PGChar;
     Profile: PGChar;
     UId: PGChar;
-    Group: TGroupType;
+    Category: AppCategory;
     InstallDate: TDateTime;
     Dependencies: WideString;
   end;

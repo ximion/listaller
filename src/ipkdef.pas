@@ -44,8 +44,8 @@ type
     function ReadIcon: String;
     procedure WriteSDesc(s: String);
     function ReadSDesc: String;
-    procedure WriteGroup(g: TGroupType);
-    function ReadGroup: TGroupType;
+    procedure WriteCategory(g: AppCategory);
+    function ReadCategory: AppCategory;
     procedure WriteAuthor(s: String);
     function ReadAuthor: String;
     procedure WriteMaintainer(s: String);
@@ -97,7 +97,7 @@ type
     property Icon: String read ReadIcon write WriteIcon;
     property LangCode: String read clang write clang;
     property SDesc: String read ReadSDesc write WriteSDesc;
-    property Group: TGroupType read ReadGroup write WriteGroup;
+    property Category: AppCategory read ReadCategory write WriteCategory;
     property Author: String read ReadAuthor write WriteAuthor;
     property Maintainer: String read ReadMaintainer write WriteMaintainer;
     property Disallows: String read ReadDisallows write WriteDisallows;
@@ -550,7 +550,7 @@ begin
   Result := translate(Result);
 end;
 
-procedure TIPKBasic.WriteGroup(g: TGroupType);
+procedure TIPKBasic.WriteCategory(g: AppCategory);
 var
   s: String;
 begin
@@ -575,7 +575,7 @@ begin
     Text.Add(s);
 end;
 
-function TIPKBasic.ReadGroup: TGroupType;
+function TIPKBasic.ReadCategory: AppCategory;
 var
   j: Integer;
   s: String;
@@ -998,7 +998,7 @@ end;
 constructor TIPKScript.Create;
 begin
   inherited;
-  Text.Add('IPK-Standard-Version: 1.0');
+  Text.Add('IPK-Standard-Version: 1.1');
   Text.Add('');
   fname := '';
 end;
@@ -1026,11 +1026,12 @@ begin
   if FileExists(s) then
   begin
     Text.LoadFromFile(s);
-    if Text[0] <> 'IPK-Standard-Version: 1.0' then
+    if (Text[0] <> 'IPK-Standard-Version: 1.1')
+    and(Text[0] <> 'IPK-Standard-Version: 1.0') then
     begin
       Result := false;
       Text.Clear;
-      Text.Add('IPK-Standard-Version: 1.0');
+      Text.Add('IPK-Standard-Version: 1.1');
       Text.Add('');
       exit;
     end;
@@ -1045,7 +1046,8 @@ function TIPKScript.LoadFromList(lst: TStrings): Boolean;
 begin
   Result := true;
   writeLn(lst[0]);
-  if lst[0] <> 'IPK-Standard-Version: 1.0' then
+  if (lst[0] <> 'IPK-Standard-Version: 1.1')
+  and(lst[0] <> 'IPK-Standard-Version: 1.0') then
   begin
     Result := false;
     exit;
@@ -1191,7 +1193,8 @@ begin
   if FileExists(s) then
   begin
     Text.LoadFromFile(s);
-    if Text[0] <> 'IPK-Standard-Version: 1.0' then
+    if (Text[0] <> 'IPK-Standard-Version: 1.1')
+    and(Text[0] <> 'IPK-Standard-Version: 1.0') then
     begin
       Result := false;
       exit;

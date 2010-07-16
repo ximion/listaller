@@ -168,7 +168,7 @@ begin
   new.SDesc := ai.ShortDesc;
   new.UId := ai.UId;
   new.Version := ai.Version;
-  new.Group := ai.Group;
+  new.Category := ai.Category;
 
   aList.Add(new);
 

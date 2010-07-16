@@ -8,12 +8,12 @@
         <MainUnitHasTitleStatement Value="False"/>
         <UseDefaultCompilerOptions Value="True"/>
       </Flags>
+      <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
       <Icon Value="0"/>
-      <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <VersionInfo>
       <Language Value=""/>
@@ -32,141 +32,23 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="13">
+    <Units Count="3">
       <Unit0>
         <Filename Value="ddetest.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ddetest"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="0"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="68"/>
-        <CursorPos X="24" Y="93"/>
-        <UsageCount Value="25"/>
-        <Loaded Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="/usr/share/fpcsrc/2.4.0/packages/fcl-json/src/fpjson.pp"/>
-        <UnitName Value="fpjson"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="365"/>
-        <CursorPos X="1" Y="1"/>
-        <UsageCount Value="10"/>
-      </Unit1>
-      <Unit2>
         <Filename Value="../../lib/dderesolve.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="dderesolve"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="53"/>
-        <CursorPos X="72" Y="15"/>
-        <UsageCount Value="25"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="../../src/liutils.pas"/>
-        <UnitName Value="liutils"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
-        <UsageCount Value="10"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="../../intf/packagekit.pas"/>
-        <UnitName Value="packagekit"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="404"/>
-        <CursorPos X="74" Y="24"/>
-        <UsageCount Value="10"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="../../intf/pktypes.pas"/>
-        <UnitName Value="pktypes"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="27"/>
-        <CursorPos X="1" Y="1"/>
-        <UsageCount Value="10"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/inc/systemh.inc"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="746"/>
-        <CursorPos X="11" Y="768"/>
-        <UsageCount Value="10"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/classes/classesh.inc"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="619"/>
-        <CursorPos X="14" Y="641"/>
-        <UsageCount Value="10"/>
-      </Unit7>
-      <Unit8>
+      </Unit1>
+      <Unit2>
         <Filename Value="../../lib/slibmanage.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="slibmanage"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="112"/>
-        <CursorPos X="31" Y="140"/>
-        <UsageCount Value="22"/>
-      </Unit8>
-      <Unit9>
-        <Filename Value="../../src/tararchive.pas"/>
-        <UnitName Value="tararchive"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="152"/>
-        <CursorPos X="33" Y="184"/>
-        <SyntaxHighlighter Value="FreePascal"/>
-        <UsageCount Value="10"/>
-        <DefaultSyntaxHighlighter Value="Text"/>
-      </Unit9>
-      <Unit10>
-        <Filename Value="../../src/callbackprocess.pas"/>
-        <UnitName Value="callbackprocess"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="1" Y="1"/>
-        <SyntaxHighlighter Value="FreePascal"/>
-        <UsageCount Value="10"/>
-        <DefaultSyntaxHighlighter Value="Text"/>
-      </Unit10>
-      <Unit11>
-        <Filename Value="/usr/share/fpcsrc/2.4.0/rtl/objpas/sysutils/diskh.inc"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="10" Y="21"/>
-        <SyntaxHighlighter Value="FreePascal"/>
-        <UsageCount Value="10"/>
-        <DefaultSyntaxHighlighter Value="Text"/>
-      </Unit11>
-      <Unit12>
-        <Filename Value="/usr/lib/lazarus/0.9.29/lcl/fileutil.pas"/>
-        <UnitName Value="FileUtil"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="49"/>
-        <CursorPos X="10" Y="71"/>
-        <SyntaxHighlighter Value="FreePascal"/>
-        <UsageCount Value="10"/>
-        <DefaultSyntaxHighlighter Value="Text"/>
-      </Unit12>
+      </Unit2>
     </Units>
-    <JumpHistory Count="4" HistoryIndex="3">
-      <Position1>
-        <Filename Value="ddetest.lpr"/>
-        <Caret Line="66" Column="40" TopLine="30"/>
-      </Position1>
-      <Position2>
-        <Filename Value="ddetest.lpr"/>
-        <Caret Line="92" Column="13" TopLine="53"/>
-      </Position2>
-      <Position3>
-        <Filename Value="ddetest.lpr"/>
-        <Caret Line="74" Column="31" TopLine="1"/>
-      </Position3>
-      <Position4>
-        <Filename Value="ddetest.lpr"/>
-        <Caret Line="92" Column="15" TopLine="1"/>
-      </Position4>
-    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>

@@ -34,9 +34,12 @@ type
     dsApp: TSQLite3Dataset;
     FNewApp: TAppEvent;
     CurrField: TLiDBData;
+    AppDataDir: String;
+    DepDataDir: String;
     EOF: Boolean;
     function GetAppField: TAppInfo;
     function GetSQLiteVersion: String;
+    function DBOkay: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -58,11 +61,13 @@ type
     //** Add a new application
     procedure AppAddNew(app: TAppInfo);
     //** Update version of app
-    procedure AppUpdateVersion(pkgID: String;newv: String);
+    procedure AppUpdateVersion(pkgID: String; newv: String);
 
     property EndReached: Boolean read EOF;
     property DataField: TLiDBData read CurrField;
     property SQLiteVersion: String read GetSQLiteVersion;
+    property AppConfDir: String read AppDataDir;
+    property DepConfDir: String read DepDataDir;
     //** Event: Called if new application was found
     property OnNewApp: TAppEvent read FNewApp write FNewApp;
   end;
@@ -86,57 +91,77 @@ begin
   Result := dsApp.SqliteVersion;
 end;
 
+function TSoftwareDB.DBOkay: Boolean;
+begin
+  Result := false;
+  if FileExists(dsApp.FileName) then
+   if dsApp.TableExists('Applications') then
+    if dsApp.TableExists('Dependencies') then
+     Result := true;
+end;
+
 function TSoftwareDB.Load(const forcesu: Boolean = false): Boolean;
 var
   rd: String;
 begin
   Result := true;
   dsApp.Close;
+
   if forcesu then
     rd := LI_CONFIG_DIR + LI_APPDB_PREF
   else
     rd := RegDir;
 
-  if not DirectoryExists(ExtractFilePath(rd)) then
-    CreateDir(ExtractFilePath(rd));
-  if not DirectoryExists(rd) then
-    CreateDir(rd);
+  AppDataDir := rd + '/apps/';
+  DepDataDir := rd + '/deps/';
+  ForceDirectories(AppDataDir);
+  ForceDirectories(DepDataDir);
 
   with dsApp do
   begin
     FileName := rd + 'software.db';
-    if ((forcesu) and (not IsRoot)) then
+    if ((forcesu) and (not IsRoot) and (not FileExists(FileName))) then
       Result := false
     else
       if not FileExists(FileName) then
       begin
         //Create table for Applications
         TableName := 'Applications';
-        with FieldDefs do
+        if not TableExists then
         begin
-          Clear;
-          Add('Name', ftString, 0, true);
-          Add('PkName', ftString, 0, true);
-          Add('Type', ftString, 0, true);
-          Add('Description', ftString, 0, false);
-          Add('Version', ftFloat, 0, true);
-          Add('Publisher', ftString, 0, false);
-          Add('IconName', ftString, 0, false);
-          Add('Profile', ftString, 0, false);
-          Add('Group', ftString, 0, true);
-          Add('InstallDate', ftDateTime, 0, false);
-          Add('Dependencies', ftMemo, 0, false);
+          with FieldDefs do
+          begin
+            Clear;
+            Add('Name', ftString, 0, true);
+            Add('PkName', ftString, 0, true);
+            Add('Type', ftString, 0, true);
+            Add('Description', ftString, 0, false);
+            Add('Version', ftFloat, 0, true);
+            Add('Publisher', ftString, 0, false);
+            Add('IconName', ftString, 0, false);
+            Add('Profile', ftString, 0, false);
+            Add('Category', ftString, 0, true);
+            Add('InstallDate', ftDateTime, 0, false);
+            Add('Dependencies', ftMemo, 0, false);
+          end;
+          CreateTable;
         end;
-        CreateTable;
         //Create table for Dependencies
         TableName := 'Dependencies';
-        with FieldDefs do
+        if not TableExists then
         begin
-          Clear;
-          Add('Name', ftString, 0, true);
-          Add('InstallDate', ftDateTime, 0, false);
+          with FieldDefs do
+          begin
+            Clear;
+            Add('Name', ftString, 0, true);
+            Add('Version', ftString, 0, true);
+            Add('Origin', ftString, 0, true);
+            Add('DepName', ftString, 0, true);
+            Add('InstallDate', ftDateTime, 0, false);
+          end;
+          CreateTable;
         end;
-        CreateTable;
+        ApplyUpdates;
       end;
   end;
   p_info(rsDBOpened);
@@ -147,10 +172,14 @@ var
   entry: TAppInfo;
   p, n: AnsiString;
 begin
+  Result := false;
+  if not DBOkay then
+    exit;
   n := ConfigDir;
 
   dsApp.Close; //First close db
   dsApp.SQL := 'SELECT * FROM Applications';
+  ;
   dsApp.Open;
   dsApp.Filtered := true;
   dsApp.First;
@@ -167,7 +196,7 @@ begin
     if entry.Author <> '' then
       entry.Author := PChar(rsAuthor + ': ' + entry.Author);
 
-    p := RegDir + LowerCase(entry.UId) + '/';
+    p := AppDataDir + LowerCase(entry.UId) + '/';
 
     // InstLst.Add(LowerCase(dsApp.FieldByName('ID').AsString));
 
@@ -213,30 +242,30 @@ begin
   r.Author := _(dsApp.FieldByName('Publisher').AsString);
   r.IconName := _(dsApp.FieldByName('IconName').AsString);
   r.Profile := _(dsApp.FieldByName('Profile').AsString);
-  h := dsApp.FieldByName('Group').AsString;
+  h := dsApp.FieldByName('Category').AsString;
 
   if h = 'all' then
-    r.Group := gtALL;
+    r.Category := gtALL;
   if h = 'education' then
-    r.Group := gtEDUCATION;
+    r.Category := gtEDUCATION;
   if h = 'office' then
-    r.Group := gtOFFICE;
+    r.Category := gtOFFICE;
   if h = 'development' then
-    r.Group := gtDEVELOPMENT;
+    r.Category := gtDEVELOPMENT;
   if h = 'graphic' then
-    r.Group := gtGRAPHIC;
+    r.Category := gtGRAPHIC;
   if h = 'network' then
-    r.Group := gtNETWORK;
+    r.Category := gtNETWORK;
   if h = 'games' then
-    r.Group := gtGAMES;
+    r.Category := gtGAMES;
   if h = 'system' then
-    r.Group := gtSYSTEM;
+    r.Category := gtSYSTEM;
   if h = 'multimedia' then
-    r.Group := gtMULTIMEDIA;
+    r.Category := gtMULTIMEDIA;
   if h = 'additional' then
-    r.Group := gtADDITIONAL;
+    r.Category := gtADDITIONAL;
   if h = 'other' then
-    r.Group := gtOTHER;
+    r.Category := gtOTHER;
 
   r.InstallDate := dsApp.FieldByName('InstallDate').AsDateTime;
   r.Dependencies := dsApp.FieldByName('Dependencies').AsWideString;
@@ -245,6 +274,8 @@ end;
 
 procedure TSoftwareDB.OpenFilterAppList;
 begin
+  if not DBOkay then
+    exit;
   dsApp.Active := true;
 
   dsApp.SQL := 'SELECT * FROM Applications';
@@ -269,6 +300,9 @@ end;
 
 function TSoftwareDB.ContainsApp(appname, pkgname: String): Boolean;
 begin
+  Result := false;
+  if not DBOkay then
+    exit;
   dsApp.SQL := 'SELECT * FROM Applications';
   dsApp.Open;
   dsApp.Filtered := true;
@@ -311,8 +345,8 @@ begin
   if app.PkType = ptContainer then
     h := 'container';
 
-  //Set group as string
-  case app.Group of
+  //Set Category as string
+  case app.Category of
     gtALL: g := 'All';
     gtEDUCATION: g := 'Education';
     gtOFFICE: g := 'Office';
@@ -342,11 +376,12 @@ end;
 procedure TSoftwareDB.AppUpdateVersion(pkgID: String; newv: String);
 begin
   dsApp.SQL := 'SELECT * FROM Applications';
-    dsApp.Open;
-    dsApp.Filtered := true;
-    dsApp.Edit;
-    dsApp.First;
-    dsApp.ExecuteDirect('UPDATE AppInfo SET Version = ''' + newv + ''' WHERE PkName = ''' + pkgID + '''');
+  dsApp.Open;
+  dsApp.Filtered := true;
+  dsApp.Edit;
+  dsApp.First;
+  dsApp.ExecuteDirect('UPDATE AppInfo SET Version = ''' + newv +
+    ''' WHERE PkName = ''' + pkgID + '''');
 
    { while not dsApp.EOF do
     begin
@@ -358,8 +393,8 @@ begin
      end;
     dsApp.Next;
     end;}
-    dsApp.ApplyUpdates;
-    dsApp.Close;
+  dsApp.ApplyUpdates;
+  dsApp.Close;
 end;
 
 end.

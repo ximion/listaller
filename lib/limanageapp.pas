@@ -185,7 +185,7 @@ var
     dt: TMOFile;
     lp: String;
     translate: Boolean; //Used, because Assigned(dt) throws an AV
-    gr: TGroupType;
+    gr: AppCategory;
     //Translate string if possible
     function ldt(s: String): String;
     var
@@ -304,7 +304,7 @@ var
 
           Name := PChar(StringReplace(Name, '&', '&&', [rfReplaceAll]));
 
-          Group := gr;
+          Category := gr;
 
           // instLst.Add(Lowercase(d.ReadString('Desktop Entry','Name','<error>')));
 
@@ -348,9 +348,11 @@ begin
   msg(rsLoading);
   blst := TStringList.Create; //Create Blacklist
 
+  p_debug('SUMode: '+BoolToStr(sumode));
+
   db := TSoftwareDB.Create;
-  DB.Load(sumode);
-  DB.OnNewApp := FApp;
+  db.Load(sumode);
+  db.OnNewApp := FApp;
 
   if blst.Count < 4 then
   begin
@@ -359,11 +361,7 @@ begin
     blst.Delete(0);
   end;
 
-
-  if not DirectoryExists(RegDir) then
-    ForceDirectories(RegDir);
-
-  DB.GetApplicationList(blst);
+  db.GetApplicationList(blst);
 
 {if (CBox.ItemIndex=0) or (CBox.ItemIndex=10) then
 begin
@@ -408,9 +406,7 @@ end; //End Autopackage  }
   tmp := TStringList.Create;
   xtmp := TStringList.Create;
 
-  writeLn('Sumode: ', sumode);
-
-  if SUMode then //Only if user is root
+  if SUMode then //Only if user wants to see shared apps
   begin
     tmp.Assign(FindAllFiles('/usr/share/applications/', '*.desktop', true));
     xtmp.Assign(FindAllFiles('/usr/local/share/applications/', '*.desktop', true));
@@ -430,6 +426,7 @@ for i:=0 to xtmp.Count-1 do tmp.Add(xtmp[i]); }
   begin
     ProcessDesktopFile(tmp[i]);
   end;
+
   tmp.Free;
   ini.Free;
 
@@ -439,7 +436,7 @@ for i:=0 to xtmp.Count-1 do tmp.Add(xtmp[i]); }
 
   msg(rsReady); //Loading list finished!
 
-  DB.Free;
+  db.Free;
   blst.Free; //Free blacklist
 end;
 

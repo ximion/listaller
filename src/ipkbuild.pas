@@ -422,7 +422,8 @@ begin
   files := TStringList.Create;
   fsec := TStringList.Create;
 
-  if LowerCase(sl[0]) <> 'ipk-standard-version: 1.0' then
+  if (LowerCase(sl[0]) <> 'ipk-standard-version: 1.1')
+  and(LowerCase(sl[0]) <> 'ipk-standard-version: 1.0') then
   begin
     writeLn(' This is no valid IPS source file');
     halt(1);

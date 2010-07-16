@@ -550,7 +550,7 @@ end;
 
 procedure TMnFrm.CBoxChange(Sender: TObject);
 var
-  gt: TGroupType;
+  gt: AppCategory;
   i: Integer;
 begin
   CBox.Enabled := false;
@@ -584,7 +584,7 @@ begin
     for i := 0 to currAppList.Count-1 do
     begin
       Application.ProcessMessages;
-      if currAppList.AppItems[i].Group = gt then
+      if currAppList.AppItems[i].Category = gt then
         appResList.AddItem(currAppList.AppItems[i]);
     end;
     appResList.Parent := currAppList.Parent;
