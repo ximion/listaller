@@ -1,3 +1,11 @@
+Version 0.5
+~~~~~~~~~~~~~
+ == Still in development ==
+ 
+ * [all] Added new software databse handler
+ * [all] New database layout
+ * [installer] Use Debian packages as dependency sources
+ 
 Version 0.4.10
 ~~~~~~~~~~~~~
  == Still in development ==
