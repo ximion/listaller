@@ -1,0 +1,81 @@
+.PHONY: visual-ldd clean distdir dist install
+
+CC=
+CXX=
+QTDIR=
+VERSION=1.0
+
+DISTFILES=\
+	main.cpp\
+	autopackage_ldd_Sub.cpp\
+	read_elf.cpp\
+	myListViewItem.cpp\
+	booleanListViewItem.cpp\
+	autopackage_ldd_Sub.h\
+	read_elf.h\
+	autopackage_ldd.ui\
+	visual-ldd.pro\
+	configure\
+	Makefile.in\
+	README\
+	AUTHORS\
+	COPYING\
+	visual-ldd.desktop\
+	visual-ldd.applications\
+	visual-ldd.keys\
+	visual-ldd.png
+
+visual-ldd:
+	QTDIR="$(QTDIR)" $(MAKE) -f Makefile.qt CC=$(CC) CXX=$(CXX) LINK=$(CXX)
+	strip --strip-all visual-ldd
+
+clean:
+	QTDIR="$(QTDIR)" $(MAKE) -f Makefile.qt clean
+	rm -f visual-ldd
+
+distdir:
+	rm -rf visual-ldd-$(VERSION)
+	mkdir visual-ldd-$(VERSION)
+	mkdir visual-ldd-$(VERSION)/autopackage
+	mkdir visual-ldd-$(VERSION)/elf
+	mkdir visual-ldd-$(VERSION)/images
+	cp main.cpp\
+	autopackage_ldd_Sub.cpp\
+	read_elf.cpp\
+	myListViewItem.cpp\
+	booleanListViewItem.cpp\
+	autopackage_ldd_Sub.h\
+	read_elf.h\
+	myListViewItem.h\
+	booleanListViewItem.h\
+	autopackage_ldd.ui\
+	visual-ldd.pro\
+	configure\
+	Makefile.in\
+	README\
+	AUTHORS\
+	COPYING\
+	visual-ldd.desktop\
+	visual-ldd.png\
+	visual-ldd-$(VERSION)/
+	cp autopackage/default.apspec visual-ldd-$(VERSION)/autopackage/
+	cp elf/*.h visual-ldd-$(VERSION)/elf/
+	cp images/editcopy\
+	images/editcut\
+	images/editpaste\
+	images/filenew\
+	images/fileopen\
+	images/filesave\
+	images/print\
+	images/redo\
+	images/searchfind\
+	images/undo\
+	visual-ldd-$(VERSION)/images/
+
+dist: distdir
+	tar -cf visual-ldd-$(VERSION).tar visual-ldd-$(VERSION)
+	gzip --best -f visual-ldd-$(VERSION).tar
+	rm -rf visual-ldd-$(VERSION)
+
+install:
+	@echo "There's no need to install! Just type ./visual-ldd"
