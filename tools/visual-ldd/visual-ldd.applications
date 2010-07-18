@@ -1,7 +1,0 @@
-visual-ldd
-	command=visual-ldd
-	name=Visual Dependency Walker
-	can_open_multiple_files=false
-	expects_uris=false
-	requires_terminal=false
-	mime_types=application/x-executable-binary
