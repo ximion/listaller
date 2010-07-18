@@ -18,8 +18,8 @@
     <normaloff>:/icons/AppIcon</normaloff>:/icons/AppIcon</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
      <widget class="QTreeView" name="treeView"/>
     </item>
    </layout>
@@ -38,8 +38,15 @@
      <string>File</string>
     </property>
     <addaction name="actionLoad"/>
+    <addaction name="actionClose"/>
+   </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>?</string>
+    </property>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menu"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -52,7 +59,15 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionLoad">
    <property name="text">
-    <string>Load...</string>
+    <string>Load binary</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close</string>
    </property>
   </action>
  </widget>
@@ -74,6 +89,22 @@
     <hint type="destinationlabel">
      <x>223</x>
      <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionClose</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>273</x>
+     <y>223</y>
     </hint>
    </hints>
   </connection>

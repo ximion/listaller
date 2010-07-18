@@ -23,7 +23,12 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
+    if(argc > 2)
+    {
+        std::cerr << "Usage: " << argv[0] << " [ELFfilename]\n";
+        exit(-1);
+    }
+    MainWindow w(argv[1]);
     w.show();
 
     return a.exec();

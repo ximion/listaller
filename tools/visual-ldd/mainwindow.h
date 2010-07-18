@@ -26,6 +26,13 @@
 #include <vector>
 #include <algorithm>
 #include "read_elf.h"
+#include "treeitem.h"
+
+using std::vector;
+using std::string;
+using std::cout;
+using std::cerr;
+using std::endl;
 
 namespace Ui {
     class MainWindow;
@@ -36,7 +43,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(const QString fname, QWidget *parent = 0);
     ~MainWindow();
     void traverse(const QString& dirname);
     QString findFullPath(QString soname);
@@ -47,9 +54,11 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
-    std::vector <QString> vectorLdConfig;
+    vector <QString> vectorLdConfig;
     QString lastFileName;
     QLabel *statusLabel;
+
+    void resolveItem(TreeItem* itemChild);
 };
 
 #endif // MAINWINDOW_H

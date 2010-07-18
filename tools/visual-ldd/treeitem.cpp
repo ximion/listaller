@@ -20,8 +20,8 @@
 TreeItem::TreeItem(const QString name, const QString dir, TreeItem *parent)
 {
     parentItem = parent;
-    soname = name;
-    path = dir;
+    d_soname = name;
+    d_dir = dir;
 }
 
 TreeItem::~TreeItem()
@@ -59,10 +59,20 @@ QVariant TreeItem::data(int column) const
 {
     switch (column)
     {
-    case 0: return soname;
-    case 1: return path;
+    case 0: return d_soname;
+    case 1: return d_dir;
     default: return "<?>";
     }
+}
+
+QString TreeItem::getData_Dir() const
+{
+    return d_dir;
+}
+
+QString TreeItem::getData_SOName() const
+{
+    return d_soname;
 }
 
 TreeItem *TreeItem::parent()

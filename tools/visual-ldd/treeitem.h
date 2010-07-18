@@ -37,11 +37,13 @@ public:
     int row() const;
     TreeItem *parent();
     void setParent(TreeItem *item);
+    QString getData_Dir() const;
+    QString getData_SOName() const;
 
 private:
     QList<TreeItem*> childItems;
-    QString soname;
-    QString path;
+    QString d_soname;
+    QString d_dir;
     TreeItem *parentItem;
 };
 

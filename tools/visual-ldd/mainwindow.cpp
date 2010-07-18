@@ -22,20 +22,15 @@
 #include "treemodel.h"
 #include "treeitem.h"
 
-using std::vector;
-using std::string;
-using std::cout;
-using std::cerr;
-using std::endl;
-
 //this is declared and specified in read_elf.cpp. It checks if the given filename is a valid ELF
 extern int processFile(char *, QWidget*);
-
 extern vector<unsigned int> displayError;
+
+//Needs to be global!
 vector <QString> neededLibVector;
 vector <QString> rpathVector;
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(const QString fname, QWidget *parent) :
         QMainWindow(parent),
         ui(new Ui::MainWindow)
 {
@@ -75,6 +70,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     statusLabel = new QLabel("No file loaded", 0);
     statusBar()->addWidget(statusLabel);
+
+    //If we have a binary parameter, load the file if it exists
+    if(fname != 0)
+    {
+        QFile f(fname);
+        if (f.exists())
+            loadFile(fname);
+    }
 }
 
 MainWindow::~MainWindow()
@@ -87,85 +90,124 @@ MainWindow::~MainWindow()
  */
 void MainWindow::traverse(const QString& dirname)
 {
-        QDir dir(dirname, "*.so*");
-        dir.setFilter(QDir::Files);
-        QFileInfoList fileinfolist = dir.entryInfoList();
-        QListIterator<QFileInfo> it(fileinfolist);
+    QDir dir(dirname, "*.so*");
+    dir.setFilter(QDir::Files);
+    QFileInfoList fileinfolist = dir.entryInfoList();
+    QListIterator<QFileInfo> it(fileinfolist);
 
-        QString string;
+    QString string;
 
 
-        while (it.hasNext())
+    while (it.hasNext())
+    {
+        QFileInfo fi = it.next();
+        if(fi.fileName() == "." || fi.fileName() == "..")
         {
-             QFileInfo fi = it.next();
-             if(fi.fileName() == "." || fi.fileName() == "..")
-             {
-                     continue;
-             }
-
-             if(fi.isDir() && fi.isReadable())
-                     ;
-             else
-             {
-                     string = QString(fi.fileName());
-                     vectorLdConfig.push_back((string.append(" => ")).append(fi.absoluteFilePath()));
-             }
+            continue;
         }
 
-        return;
+        if(fi.isDir() && fi.isReadable())
+            ;
+        else
+        {
+            string = QString(fi.fileName());
+            vectorLdConfig.push_back((string.append(" => ")).append(fi.absoluteFilePath()));
+        }
+    }
+
+    return;
 }
 
 QString MainWindow::findFullPath(QString soname)
 {
-   QString txt;
-   int index = 0;
+    QString txt;
+    int index = 0;
 
-   /* for each library name we must find the full path in vector ldconfig
+    /* for each library name we must find the full path in vector ldconfig
    The 'soname' looks like libcrypto.so.0.9.6 */
-   for(unsigned int i=0; i < vectorLdConfig.size(); i++)
-   {
-      if(vectorLdConfig[i].indexOf(soname)!=-1)
-      {
-         index = vectorLdConfig[i].indexOf("/");
-         if(index != -1)
-         {
-                                             //finally we remove /n
-            return vectorLdConfig[i].mid(index).remove(QChar('\n'));
-         }
-         else
-            cerr  << "_________________________INDEX = -1\n";
-      }
-   }
-   /* if the execution reaches here it means that the library with 'soname' as its name, was not found
+    for(unsigned int i=0; i < vectorLdConfig.size(); i++)
+    {
+        if(vectorLdConfig[i].indexOf(soname)!=-1)
+        {
+            index = vectorLdConfig[i].indexOf("/");
+            if(index != -1)
+            {
+                //finally we remove /n
+                return vectorLdConfig[i].mid(index).remove(QChar('\n'));
+            }
+            else
+                cerr  << "INDEX = -1\n";
+        }
+    }
+    /* if the execution reaches here it means that the library with 'soname' as its name, was not found
       inside ld's cache. Thus we look for RPATH existance */
 
-   //if rpath is found then rpathVector will have at least one item
-   //inside RPATH, directory names are separated with an ':' (Solaris only???)
-   if(rpathVector.size() > 0)
-   {
-      return rpathVector[0] + "/" + soname;
-   }
+    //if rpath is found then rpathVector will have at least one item
+    //inside RPATH, directory names are separated with an ':' (Solaris only???)
+    if(rpathVector.size() > 0)
+    {
+        return rpathVector[0] + "/" + soname;
+    }
 
 
-   // Have a look in the current directory for the library
-   txt = lastFileName.left(lastFileName.lastIndexOf("/")) + "/" + soname;
-   if (QFile::exists(txt))
-   {
-      return txt;
-   }
+    // Have a look in the current directory for the library
+    txt = lastFileName.left(lastFileName.lastIndexOf("/")) + "/" + soname;
+    if (QFile::exists(txt))
+    {
+        return txt;
+    }
 
-   // Maybe it exists with a slightly different name
-   QDir dir(lastFileName.left(lastFileName.lastIndexOf("/")));
-   QStringList entries = dir.entryList(QDir::Files, QDir::Name);
-   entries = entries.filter(QRegExp(soname + "*"));
+    // Maybe it exists with a slightly different name
+    QDir dir(lastFileName.left(lastFileName.lastIndexOf("/")));
+    QStringList entries = dir.entryList(QDir::Files, QDir::Name);
+    entries = entries.filter(QRegExp(soname + "*"));
 
-   for ( QStringList::Iterator it = entries.begin(); it != entries.end(); ++it )
-   {
-      return lastFileName.left(lastFileName.lastIndexOf("/")) + "/" + (*it);
-   }
+    for ( QStringList::Iterator it = entries.begin(); it != entries.end(); ++it )
+    {
+        return lastFileName.left(lastFileName.lastIndexOf("/")) + "/" + (*it);
+    }
 
-   cout << "Library " << qPrintable(soname) << " could not be found." << endl;  // we could not find the needed library...
-   return QString::null;
+    cout << "Library " << qPrintable(soname) << " could not be found." << endl;  // we could not find the required library...
+    return QString::null;
+}
+
+void MainWindow::resolveItem(TreeItem* itemChild)
+{
+    if(itemChild == NULL)
+    {
+        return;
+    }
+
+    int res = 1;
+
+    QString fullPath = findFullPath(itemChild->getData_Dir()+"/"+itemChild->getData_SOName());
+    char* tmp;
+
+    if (!fullPath.isEmpty())
+    {
+        tmp = (char*) malloc(fullPath.length() + 1);
+        strcpy(tmp, qPrintable(fullPath));
+    }
+    else
+    {
+        tmp = (char*) malloc(1);
+        tmp[0] = '\0';
+    }
+
+    neededLibVector.clear();
+    res = processFile(tmp, this);
+
+    if(res != 1 || neededLibVector.size() != 0) //the name  was not found
+        for(unsigned int i=0; i < neededLibVector.size(); i++)
+        {
+        QString dirname;
+        QString soname(neededLibVector[i].toAscii());
+        fullPath = findFullPath (soname);
+        dirname = fullPath.left(fullPath.lastIndexOf("/"));
+        itemChild->appendChild(new TreeItem(soname, dirname));
+    }
+
+    free(tmp);
 }
 
 void MainWindow::loadFile(QString filename)
@@ -206,26 +248,18 @@ void MainWindow::loadFile(QString filename)
         dirname = fullPath.left(fullPath.lastIndexOf("/"));
         //string soname contains only the name of the lib. dirname contains the lib's path
         model->getRoot()->appendChild(new TreeItem(soname, dirname));
-        //model->getRoot()->appendChild(item);
     }
 
-   /* TreeItem *parentItem = model->getRoot();
     //the first root
-     //QTreeWidgetItem *myChild = ui->treeView->;
-    while(myChild)
+    TreeItem *root = model->getRoot();
+    TreeItem *myChild = root;
+    for (int i = 0; i < root->childCount(); i++)
     {
+        myChild = root->child(i);
         //the resolver function called for each root
-        resolver(myChild);
-        myChild = dynamic_cast <booleanListViewItem*> (myChild->nextSibling());
+        resolveItem(myChild);
     }
 
-    //after we scan the whole list we then delete the not-found libraries
-    for(unsigned int i=0; i < deletedVector.size(); i++)
-    {
-        delete deletedVector[i];
-    }
-
-    deletedVector.clear(); */
     free(tmp);
 
     return;
@@ -233,15 +267,15 @@ void MainWindow::loadFile(QString filename)
 
 void MainWindow::fileOpen()
 {
-    QString startingPath = "/";
+    QString startingPath = "";
 
     if (!lastFileName.isEmpty())
     {
         // Strip off the filename, so we get just a directory
         startingPath = lastFileName.left(lastFileName.lastIndexOf("/"));
     }
-    QString filename = QFileDialog::getOpenFileName(this, "Select file to analyze...", startingPath, QString::null);
 
+    QString filename = QFileDialog::getOpenFileName(this, tr("Select file to analyze..."), startingPath, QString::null);
     loadFile(filename);
 
     return;
