@@ -1,8 +1,7 @@
 /*
-* Copyright (C) 2006 Filippos Papadopoulos
+* Copyright (C) 2010 Matthias Klumpp
 *
 * Authors:
-*  Filippos Papadopoulos
 *  Matthias Klumpp
 *
 * This unit is free software: you can redistribute it and/or modify it under
@@ -16,23 +15,34 @@
 * You should have received a copy of the GNU General Public License v3
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef TREEITEM_H
+#define TREEITEM_H
 
-#ifndef READ_ELF_H
-#define READ_ELF_H
+#include <QList>
+#include <QVariant>
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdarg.h>
-#include <assert.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <time.h>
-#include <qstring.h>
-#include <vector>
-#include <iostream>
+//! [0]
+class TreeItem
+{
+public:
+    TreeItem(const QString name, const QString dir, TreeItem *parent = 0);
+    ~TreeItem();
 
-extern std::vector <QString> neededLibVector;
-extern std::vector <QString> rpathVector;
-#endif 
+    void appendChild(TreeItem *child);
+
+    TreeItem *child(int row);
+    int childCount() const;
+    int columnCount() const;
+    QVariant data(int column) const;
+    int row() const;
+    TreeItem *parent();
+    void setParent(TreeItem *item);
+
+private:
+    QList<TreeItem*> childItems;
+    QString soname;
+    QString path;
+    TreeItem *parentItem;
+};
+
+#endif

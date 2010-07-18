@@ -1,13 +1,32 @@
-#include "read_elf.h"
+/*
+* Copyright (C) 2006 Filippos Papadopoulos
+*
+* Authors:
+*  Filippos Papadopoulos
+*  Matthias Klumpp
+*
+* This unit is free software: you can redistribute it and/or modify it under
+* the terms of the GNU General Public License as published by the Free Software
+* Foundation, version 3.
+*
+* This unit is distributed in the hope that it will be useful, but WITHOUT
+* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+* FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License v3
+* along with this library. If not, see <http://www.gnu.org/licenses/>.
+*/
 
-autopackage_ldd_Sub *global_parent;
+#include "read_elf.h"
+#include <QtCore>
+#include <QtGui>
 
 using std::vector;
 using std::cout;
 
 extern vector<unsigned int> displayError;
 
-
+QWidget *global_parent;
 
 #if __GNUC__ >= 2
 /* Define BFD64 here, even if our default architecture is 32 bit ELF
@@ -188,7 +207,7 @@ static int                process_dynamic_segment     PARAMS ((FILE *));
 //static int                process_section_contents    PARAMS ((FILE *));
 //static void               process_mips_fpe_exception  PARAMS ((int));
 //static int                process_mips_specific       PARAMS ((FILE *));
-int                process_file                PARAMS ((char *, autopackage_ldd_Sub *parent));
+int                         processFile                PARAMS ((char *, QWidget *parent));
 //static int                process_relocs              PARAMS ((FILE *));
 static int                process_version_sections    PARAMS ((FILE *));
 char *             get_ver_flags               PARAMS ((unsigned int));
@@ -397,7 +416,7 @@ static void print_vma(bfd_vma vma, print_mode mode)
 #endif
 }
 
-int process_file(char * file_name, autopackage_ldd_Sub *parent)
+int processFile(char * file_name, QWidget *parent)
 {
     FILE *       file;
     struct stat  statbuf;
@@ -407,7 +426,7 @@ int process_file(char * file_name, autopackage_ldd_Sub *parent)
 
     if (stat (file_name, & statbuf) < 0)
     {
-        /*  QMessageBox::warning(global_parent, "readELF warning", QString("Cannot stat input file %1").arg(file_name),
+        /*  QMessageBox::warning(parent, "readELF warning", QString("Cannot stat input file %1").arg(file_name),
                            QMessageBox::Ok, QMessageBox::NoButton);*/
         //      displayError = true;
         fprintf(stderr, "Cannot stat input file %s\n", file_name);
@@ -417,7 +436,7 @@ int process_file(char * file_name, autopackage_ldd_Sub *parent)
     file = fopen (file_name, "rb");
     if (file == NULL)
     {
-        QMessageBox::warning(global_parent, "readELF warning", QString("Input file %1 not found").arg(file_name),
+        QMessageBox::warning(parent, "readELF warning", QString("Input file %1 not found").arg(file_name),
                              QMessageBox::Ok, QMessageBox::NoButton);
         //printf("Input file %s not found.\n", file_name);
         return 1;
@@ -425,7 +444,7 @@ int process_file(char * file_name, autopackage_ldd_Sub *parent)
 
     if (! get_file_header (file))
     {
-        QMessageBox::warning(global_parent, "readELF warning", QString("%1: Failed to read file header").arg(file_name),
+        QMessageBox::warning(parent, "readELF warning", QString("%1: Failed to read file header").arg(file_name),
                              QMessageBox::Ok, QMessageBox::NoButton);
         //      printf("%s: Failed to read file header\n", file_name);
         fclose (file);
