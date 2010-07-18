@@ -1,0 +1,37 @@
+# libinstaller.la - a Listaller library file
+
+# The name that we can dlopen(3).
+dlname='libinstaller.so.0.4.0'
+
+# Names of this library.
+library_names='libinstaller.so.0.4.0 libinstaller.so.0 libinstaller.so'
+
+# The name of the static archive.
+old_library='libinstaller.a'
+
+# Linker flags that can not go in dependency_libs.
+inherited_linker_flags=''
+
+# Libraries that this one depends upon.
+dependency_libs=''
+
+# Names of additional weak libraries provided by this library
+weak_library_names=''
+
+# Version information for libinstaller.
+current=0
+age=4
+revision=0
+
+# Is this an already installed library?
+installed=yes
+
+# Should we warn about portability when linking against -modules?
+shouldnotlink=no
+
+# Files to dlopen/dlpreopen
+dlopen=''
+dlpreopen=''
+
+# Directory that this library needs to be installed in:
+libdir='%LIBDIR%'
