@@ -22,8 +22,9 @@ interface
 
 uses
   MD5, glib2, distri, ipkdef, Classes, Contnrs, FTPSend, liTypes, liUtils, MTProcs,
-  Process, RegExpr, BaseUnix, blcksock, FileUtil, HTTPSend, IniFiles, LiManageApp,
-  SysUtils, strLocale, IPKPackage, liDBusProc, PackageKit, SoftwareDB;
+  Process, RegExpr, BaseUnix, blcksock, FileUtil, HTTPSend, IniFiles,
+  SysUtils, DepManage, strLocale, IPKPackage, liDBusProc, PackageKit,
+  SoftwareDB, LiManageApp;
 
 type
 
@@ -137,8 +138,8 @@ type
     function DoInstallation: Boolean;
     //** Gets the maximal steps the installation needs
     function GetMaxInstSteps: Integer;
-    //** Function to solve all dependencies on libraries the package has
-    function ResolveDependencies: Boolean;
+    //** Function to solve all dependencies the package has
+    function ResolveDependencies(const fetchFromDebian: Boolean = true): Boolean;
     //** Name of the application
     property AppName: String read IAppName;
     //** Version of the to-be-installed application
@@ -346,6 +347,7 @@ type
     mpos: Double;
     loop: PGMainLoop;
     deps: TStringList;
+    debFetch: Boolean;
     inst: TInstallation;
     errorI: Integer;
     res: TStringList;
@@ -355,11 +357,13 @@ function OnIdle(pkInf: DRInfo): GBoolean; cdecl;
 var
   i: Integer;
   pk: TPackageKit;
+  depman: TDepManager;
+  err: LiLibSolveError;
 begin
   Result := true;
   if not (pkInf is DRInfo) then
     exit;
-  i := pkInf.list.Count-1;
+  i := pkInf.list.Count - 1;
 
   if pkInf.list.Count <= 0 then
   begin
@@ -376,26 +380,37 @@ begin
       if pkinf.active < pkinf.max then
       begin
         pkinf.active += 1;
-        p_debug('New Job: '+IntToStr(pk.Tag));
-        pk.FindPkgForFile(pkInf.deps[pk.Tag-1]);
-        pk.Tag := pk.Tag*-1;
+        p_debug('New Job: ' + IntToStr(pk.Tag));
+        pk.FindPkgForFile(pkInf.deps[pk.Tag - 1]);
+        pk.Tag := pk.Tag * -1;
       end;
     end
     else
       if pk.Finished then
       begin
-        p_debug('Finished! ['+IntToStr(pk.Tag)+']');
+        p_debug('Finished! [' + IntToStr(pk.Tag) + ']');
         Inc(pkinf.pos);
         pkInf.inst.SetExtraPos(Round(pkinf.pos * pkinf.mpos));
 
         //Check if package was found
         if pk.RList.Count <= 0 then
         begin
+          //Üackage was not installd
           p_debug(' !finished with error.');
-          pkInf.errorI := (pk.Tag*-1)-1;
-          Result := false;
-          g_main_loop_quit(pkInf.loop);
-          exit;
+          depman := TDepManager.Create;
+          //Install dependency with dependency manager
+          err := ERROR;
+          if pkInf.debFetch then
+            err := depman.InstallDependency(pkInf.deps[(pk.Tag * -1) - 1]);
+          if err <> NONE then
+          begin
+            depman.Free;
+            pkInf.errorI := (pk.Tag * -1) - 1;
+            Result := false;
+            g_main_loop_quit(pkInf.loop);
+            exit;
+          end;
+          depman.Free;
         end;
 
         pkinf.active -= 1;
@@ -406,7 +421,8 @@ begin
   end;
 end;
 
-function TInstallation.ResolveDependencies: Boolean;
+function TInstallation.ResolveDependencies(const fetchFromDebian: Boolean =
+  true): Boolean;
 var
   i, j: Integer;
   pkitList: TObjectList;
@@ -426,10 +442,8 @@ begin
   SetExtraPos(1);
 
   p_debug('Resolving dependencies.');
-  if (Dependencies.Count > 0) and (Dependencies[0] = '[detectpkgs]') then
+  if (Dependencies.Count > 0) then
   begin
-    Dependencies.Delete(0);
-
     //Preprepare dependencies
     //Remove all distribution core deps
     if FileExists(DEPIGNORE_LIST) then
@@ -482,7 +496,7 @@ begin
       pk := TPackageKit.Create;
       pkitList.Add(pk);
       pk.NoWait := true;
-      pk.Tag := i+1;
+      pk.Tag := i + 1;
     end;
 
     eIndex := -1;
@@ -499,6 +513,7 @@ begin
       pos := mnpos;
       mpos := one;
       deps := Dependencies;
+      debfetch := fetchFromDebian;
       errorI := -1;
       res := tmp;
     end;
@@ -517,7 +532,7 @@ begin
 
     if eIndex > -1 then
     begin
-      for i := 0 to pkitList.Count-1 do
+      for i := 0 to pkitList.Count - 1 do
         TPackageKit(pkitList[i]).Cancel;
       pkitList.Free;
       MakeUsrRequest(StrSubst(rsDepNotFound, '%l', Dependencies[eIndex]) +
@@ -562,7 +577,7 @@ begin
 
   if (IsRoot) and (not daemonm) then
   begin
-    p_error('Do not execute this action with superuser rights! (PolicyKit will handle it!)');
+    p_warning('Do not execute this action with superuser rights! (PolicyKit will handle it!)');
     //Listaller should alsways use PolicyKit to install apps as root
     if MakeUsrRequest(rsNotExecAsRootPolKit, rqWarning) = rqsNo then
       exit;
@@ -783,55 +798,6 @@ begin
       Inc(i);
     end;
 
-    if dependencies.Count > 0 then
-      dependencies.Insert(0, '[detectpkgs]')
-    //Instruction to detect required packages first
-    else
-    begin
-      cont.ReadDependencies(DInfo.DName, dependencies);
-      if dependencies.Count <= 0 then
-      begin
-        cont.ReadDependencies(DInfo.DName, dependencies);
-        if dependencies.Count <= 0 then
-        begin
-          if (pos('norequest', forces) <= 0) then
-            hres := MakeUsrRequest(rsInvalidDVersion + #10 + rsUseCompPQ, rqWarning)
-          else
-            hres := rqsYes;
-
-          if hres = rqsNo then
-          begin
-            MakeUsrRequest(rsInClose, rqError);
-            Dependencies.Free;
-            pkg.Free;
-            PkProfiles.Free;
-            Result := false;
-            exit;
-          end
-          else
-          begin
-            dependencies.Clear;
-            cont.ReadDependencies(DInfo.PackageSystem, dependencies);
-            if dependencies.Count <= 0 then
-            begin
-              MakeUsrRequest(rsNoComp + #10 + rsInClose, rqError);
-              Dependencies.Free;
-              pkg.Free;
-              PkProfiles.Free;
-              Result := false;
-              exit;
-            end;
-          end;
-        end;
-
-        //Resolve names
-        for i := 0 to dependencies.Count - 1 do
-          if pos(' (', n) > 0 then
-            Dependencies[i] :=
-              copy(n, pos(' (', n) + 2, length(n) - pos(' (', n) - 2) +
-              ' - ' + copy(n, 1, pos(' (', n) - 1);
-      end;
-    end;
     i := 0;
     while i <= Dependencies.Count - 1 do
     begin
@@ -872,7 +838,7 @@ begin
     //Only executed to make sure that "RmApp" property is set
 
     if not Testmode then
-      if IsPackageInstalled('',pkgID,SUMode) then
+      if IsPackageInstalled('', pkgID, SUMode) then
         RmApp := true;
 
   end
@@ -1170,10 +1136,10 @@ var
 
 begin
   //Send information which stuff is foced:
-  if pos('dependencies',forces)>0 then
-   msg('Dependencies are forced. Skipping dependency check.');
-  if pos('architecture',forces)>0 then
-   msg('Architecture forced. The software might not work on your system architecture.');
+  if pos('dependencies', forces) > 0 then
+    msg('Dependencies are forced. Skipping dependency check.');
+  if pos('architecture', forces) > 0 then
+    msg('Architecture forced. The software might not work on your system architecture.');
 
   if not FileExists(tmpdir + ExtractFileName(PkgName) + '/' + FFileInfo) then
   begin
@@ -1216,12 +1182,12 @@ begin
   ShowPkMon();
 
   //Now resolve all dependencies and prepare installation
-  if pos('dependencies',forces)<=0 then
-  if not ResolveDependencies() then
-  begin
-    Result := false;
-    exit;
-  end;
+  if pos('dependencies', forces) <= 0 then
+    if not ResolveDependencies(true) then
+    begin
+      Result := false;
+      exit;
+    end;
 
   SetExtraPos(0);
   //Execute programs/scripts
@@ -1238,173 +1204,27 @@ begin
   pkit := TPackageKit.Create;
   pkit.OnProgress := @OnPKitProgress;
 
-  if pos('dependencies',forces)<=0 then
-  if Dependencies.Count > 0 then
-  begin
-    //Check if we should install a software catalog
-    if pos('cat:', Dependencies[0]) > 0 then
-    begin
-      msg('Installing package catalog...');
-      pkit.InstallLocalPkg(copy(Dependencies[0], 5, length(Dependencies[0])));
-
-      if pkit.PkFinishCode = 1 then
-      begin
-        MakeUsrRequest(rsCouldntSolve + #10 + StrSubst(
-          rsViewLog, '%p', '/tmp/install-' + IAppName + '.log'), rqError);
-        Result := false;
-        Abort_FreeAll();
-        exit;
-      end;
-      SetExtraPos(0);
-
-      Dependencies[0] := 'cat:' + ExtractFileName(
-        copy(Dependencies[0], 5, length(Dependencies[0])));
-
-    end
-    else
+  if pos('dependencies', forces) <= 0 then
+    if Dependencies.Count > 0 then
     begin
       for I := 0 to Dependencies.Count - 1 do
       begin  //Download & install dependencies
-        if (pos('http://', Dependencies[i]) > 0) or
-          (pos('ftp://', Dependencies[i]) > 0) then
-        begin
-          dlfname := ExtractFileName(copy(Dependencies[i], 1,
-            pos(' (', Dependencies[i]) - 1));
-          msg(rsGetDependencyFrom + ' ' + Dependencies[i] + '.');
-          msg(rsPlWait2);
-          if pos('http://', LowerCase(Dependencies[i])) > 0 then
-          begin
-            try
-              HTTP.HTTPMethod('GET', copy(Dependencies[i], 1,
-                pos(' (', Dependencies[i]) - 1));
-              HTTP.Document.SaveToFile('/tmp/' + dlfname);
-            except
-              MakeUsrRequest(rsDepDLProblem, rqError);
-              Result := false;
-              Abort_FreeAll();
-              exit;
-            end;
-          end
-          else
-          begin
-            with FTP do
-            begin
-              TargetHost := GetServerName(copy(Dependencies[i], 1,
-                pos(' (', Dependencies[i]) - 1));
-
-              try
-                DirectFileName := '/tmp/' + dlfname;
-                DirectFile := true;
-                if not CheckFTPConnection(FTP) then
-                begin
-                  MakeUsrRequest(rsFTPFailed, rqError);
-                  Result := false;
-                  Abort_FreeAll();
-                  exit;
-                end;
-                ChangeWorkingDir(GetServerPath(copy(Dependencies[i],
-                  1, pos(' (', Dependencies[i]) - 1)));
-
-                ftpfilesize := FTP.FileSize(dlfname);
-                RetrieveFile(dlfname, false);
-                Logout;
-              except
-                MakeUsrRequest(rsDepDLProblem, rqError);
-                Result := false;
-                Abort_FreeAll();
-                exit;
-              end;
-            end;
-          end;
-
-          //Add package-name
-          if (DInfo.PackageSystem = 'DEB') and (pos(' (', Dependencies[i]) <= 0) then
-          begin
-            p := tprocess.Create(nil);
-            p.CommandLine := FindBinary('dpkg') + ' --info /tmp/' +
-              ExtractFileName(copy(Dependencies[i], 1, pos(' (', Dependencies[i]) - 1));
-            p.Options := [poUsePipes, poWaitonexit];
-            try
-              p.Execute;
-              s := TStringList.Create;
-              try
-                s.LoadFromStream(p.Output);
-                for j := 0 to s.Count - 1 do
-                  if pos('Package: ', s[j]) > 0 then
-                    break;
-                Dependencies[i] :=
-                  Dependencies[i] + ' (' + copy(s[j], 11, length(s[j])) + ')';
-              finally
-                s.Free;
-              end;
-            finally
-              p.Free;
-            end;
-          end
-          else
-          begin
-            if (pos(' (', Dependencies[i]) <= 0) then
-            begin
-              p := TProcess.Create(nil);
-              p.CommandLine :=
-                FindBinary('rpm') + ' -qip /tmp/' + ExtractFileName(Dependencies[i]);
-              p.Options := [poUsePipes, poWaitonexit];
-              try
-                p.Execute;
-                s := TStringList.Create;
-                try
-                  s.LoadFromStream(p.Output);
-                  for j := 0 to s.Count - 1 do
-                    if pos('Name ', s[j]) > 0 then
-                      break;
-                  Dependencies[i] :=
-                    Dependencies[i] + ' (' +  copy(s[j], 15,
-                    pos(' ', copy(s[j], 15, length(s[j]))) - 1) + ')';
-                finally
-                  s.Free;
-                end;
-              finally
-                p.Free;
-              end;
-
-            end;
-          end;
-
-          msg('Done.');
-        end;
 
         SetExtraPos(0);
-        sleep(18); //Wait...
 
-        if (Dependencies[i][1] = '/') or (pos('http://', Dependencies[i]) > 0) or
-          (pos('ftp://', Dependencies[i]) > 0) then
+        msg('DepInstall: ' + Dependencies[i] + ' (using PackageKit)');
+        msg('');
+
+        //pkit.Resolve(Dependencies[i]);
+
+        if pkit.PkFinishCode = 1 then
         begin
-          msg('DepInstall: ' + Dependencies[i] + ' (using PackageKit +x)');
-          msg('');
-
-          if (pos('http://', Dependencies[i]) > 0) or
-            (pos('ftp://', Dependencies[i]) > 0) then
-          begin
-            pkit.ResolveInstalled(copy(Dependencies[i], pos(' (', Dependencies[i]) +
-              2, length(Dependencies[i]) - 1));
-            if pkit.PkFinishCode = 1 then
-            begin
-              pkit.InstallLocalPkg('/tmp/' + ExtractFileName(
-                copy(Dependencies[i], 1, pos(' (', Dependencies[i]))));
-
-              SetExtraPos(0);
-            end;
-          end
-          else
-            pkit.InstallLocalPkg(tmpdir + ExtractFileName(PkgName) +
-              '/' + Dependencies[i]);
-
-          mnpos := mnpos + 5;
-          SetMainPos(Round(mnpos * max));
+          pkit.InstallPkg(Dependencies[i]);
 
           //Check if the package was really installed
           if pkit.PkFinishCode = 1 then
           begin
+            msg('Package ' + Dependencies[i] + ' can not be installed.');
             MakeUsrRequest(rsCouldntSolve + #10 + StrSubst(
               rsViewLog, '%p', '/tmp/install-' + IAppName + '.log'), rqError);
             Result := false;
@@ -1412,46 +1232,16 @@ begin
             exit;
           end;
 
-          mnpos := mnpos + 5;
-          SetMainPos(Round(mnpos * max));
+          Dependencies[i] := '*' + Dependencies[i];
 
-          //If only a file name given install them with distri-tool
-        end
-        else
-        begin
-          msg('DepInstall: ' + Dependencies[i] + ' (using PackageKit)');
-          msg('');
-
-          //pkit.Resolve(Dependencies[i]);
-
-          if pkit.PkFinishCode = 1 then
-          begin
-            pkit.InstallPkg(Dependencies[i]);
-
-            //Check if the package was really installed
-            if pkit.PkFinishCode = 1 then
-            begin
-              msg('Package ' + Dependencies[i] + ' can not be installed.');
-              MakeUsrRequest(rsCouldntSolve + #10 + StrSubst(
-                rsViewLog, '%p', '/tmp/install-' + IAppName + '.log'), rqError);
-              Result := false;
-              Abort_FreeAll();
-              exit;
-            end;
-
-            Dependencies[i] := '*'+Dependencies[i];
-
-          end; //E-of > 0
-
-          mnpos := mnpos + 10;
-          SetMainPos(Round(mnpos * max));
         end;
-      end; //End of PKCatalog end-else
-    end; //End of Dependecies.Count term
-  end; //End of dependency-check
+
+        mnpos := mnpos + 10;
+        SetMainPos(Round(mnpos * max));
+      end; //End of Dependecies.Count term
+    end; //End of dependency-check
 
   pkit.Free;
-
   SetExtraPos(0);
 
   //Delete old application installation if necessary
@@ -1554,7 +1344,7 @@ begin
           except
             //Unable to copy the file
             MakeUsrRequest(Format(rsCnCopy, [dest + '/' +
-              ExtractFileName(DeleteModifiers(h))]) +  #10 + rsInClose, rqError);
+              ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose, rqError);
             RollbackInstallation;
             Result := false;
             Abort_FreeAll();
@@ -1679,8 +1469,8 @@ begin
       ForceDirectories(sdb.AppConfDir + '/locale/');
       for i := 0 to mofiles.Count - 1 do
       begin
-        FileCopy(pkg.WDir + mofiles[i], sdb.AppConfDir +
-          '/locale/' +  ExtractFileName(mofiles[i]));
+        FileCopy(pkg.WDir + mofiles[i], sdb.AppConfDir + '/locale/' +
+          ExtractFileName(mofiles[i]));
       end;
     end;
 
@@ -1696,14 +1486,14 @@ begin
       Profile := PChar(CurProfile);
       Category := ICategory;
     end;
-      AppField.Dependencies := Dependencies.Text;
+    AppField.Dependencies := Dependencies.Text;
 
     sdb.AppAddNew(AppField);
     sdb.Free;
 
-    if length(IIconPath)>0 then
+    if length(IIconPath) > 0 then
       if IIconPath[1] = '/' then
-        FileCopy(IIconPath, sdb.AppConfDir +  '/icon' +
+        FileCopy(IIconPath, sdb.AppConfDir + '/icon' +
           ExtractFileExt(IIconPath));
 
     ndirs.SaveToFile(sdb.AppConfDir + '/dirs.list');
@@ -2060,29 +1850,29 @@ begin
     end;
 
   if (pkType <> ptContainer) then
-  if (SUMode) and (not IsRoot) then
-  begin
-    //Create worker thread for this action
-    buscmd.cmdtype := lbaInstallPack;
-    buscmd.pkgname := PkgPath; //Add path to setup file to DBus request
-    buscmd.overrides := forces;
-
-    //Force check of root update source
-    CheckAddUSource(true);
-    if pkType = ptLinstall then
-      buscmd.addsrc := AddUpdateSource
-    else
-      buscmd.addsrc := false;
-
-    with TLiDBusAction.Create(buscmd) do
+    if (SUMode) and (not IsRoot) then
     begin
-      OnStatus := @DBusThreadStatusChange;
-      ExecuteAction;
-      Free;
+      //Create worker thread for this action
+      buscmd.cmdtype := lbaInstallPack;
+      buscmd.pkgname := PkgPath; //Add path to setup file to DBus request
+      buscmd.overrides := forces;
+
+      //Force check of root update source
+      CheckAddUSource(true);
+      if pkType = ptLinstall then
+        buscmd.addsrc := AddUpdateSource
+      else
+        buscmd.addsrc := false;
+
+      with TLiDBusAction.Create(buscmd) do
+      begin
+        OnStatus := @DBusThreadStatusChange;
+        ExecuteAction;
+        Free;
+      end;
+      Result := true; //Transaction submitted
+      exit;
     end;
-    Result := true; //Transaction submitted
-    exit;
-  end;
 
   if (not IsRoot) and (pkType = ptLinstall) then
     //Check if we have update source to register

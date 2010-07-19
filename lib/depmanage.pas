@@ -30,7 +30,8 @@ type
     DOWNLOAD_FAILED,
     RESOLVE_FAILED,
     UNPACK_FAILED,
-    FATAL_COPY_ERROR);
+    FATAL_COPY_ERROR,
+    ERROR);
 
   ArchEntry = record
     Name: String;
