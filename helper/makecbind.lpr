@@ -39,6 +39,7 @@ type
 procedure TCBindGenerator.DoRun;
 var
   ErrorMsg: String;
+  test: TStringList;
 begin
   // quick check parameters
   ErrorMsg:=CheckOptions('h','help');
@@ -66,8 +67,12 @@ begin
     end;
   end;
 
-  { add your program here }
-
+  if FileExists(paramstr(1)) then
+  begin
+    test := ConvertToCInfo(paramstr(1));
+    writeLn(test.Text);
+    test.Free;
+  end;
   // stop program loop
   Terminate;
 end;
