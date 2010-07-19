@@ -5,12 +5,14 @@ Version 0.5
  * [all] Added new software databse handler
  * [all] New database layout
  * [installer] Use Debian packages as dependency sources
+ * [visual-ldd] Imported from Autopackage
+ * [visual-ldd] Updated GUI and added some more features
  
 Version 0.4.10
 ~~~~~~~~~~~~~
  == Still in development ==
  
- * Compatibility patch for PackageKit > 0.5
+ * [all] Compatibility patch for PackageKit > 0.5
 
 Version 0.4b
 ~~~~~~~~~~~~~

@@ -44,10 +44,15 @@ QVariant TreeModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
+    TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
+
+    if (role == Qt::BackgroundColorRole)
+    {
+         return QColor(item->getColor());
+    }
+
     if (role != Qt::DisplayRole)
         return QVariant();
-
-    TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
 
     return item->data(index.column());
 }

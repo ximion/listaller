@@ -88,7 +88,7 @@ MainWindow::~MainWindow()
 /* Searches for *.so*  in the current path (dirname)
  * and adds them to the vectorLdConfig
  */
-void MainWindow::traverse(const QString& dirname)
+void MainWindow::findLibs(const QString& dirname)
 {
     QDir dir(dirname, "*.so*");
     dir.setFilter(QDir::Files);
@@ -204,7 +204,9 @@ void MainWindow::resolveItem(TreeItem* itemChild)
         QString soname(neededLibVector[i].toAscii());
         fullPath = findFullPath (soname);
         dirname = fullPath.left(fullPath.lastIndexOf("/"));
-        itemChild->appendChild(new TreeItem(soname, dirname));
+        TreeItem *item = new TreeItem(soname, dirname);
+        itemChild->appendChild(item);
+        resolveItem(item);
     }
 
     free(tmp);
@@ -232,12 +234,18 @@ void MainWindow::loadFile(QString filename)
     if(res == 0)
         statusLabel->setText("File " + filename + " loaded");
     else
-        statusLabel->setText(" ");
+        statusLabel->setText("File is no valid ELF!");
 
-    traverse(currentPath);
+    findLibs(currentPath);
 
     TreeModel *model = new TreeModel(this);
     ui->treeView->setModel(model);
+
+    QHeaderView *header = new QHeaderView(Qt::Horizontal);
+    header->setMovable(false);
+    header->setResizeMode(QHeaderView::ResizeToContents);
+    ui->treeView->setHeader(header);
+    header->setVisible(true);
 
     //for each library on the 'first level'
     for(unsigned int i=0; i < neededLibVector.size(); i++)
@@ -261,6 +269,7 @@ void MainWindow::loadFile(QString filename)
     }
 
     free(tmp);
+    ui->treeView->expandToDepth(2);
 
     return;
 }

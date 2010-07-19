@@ -19,6 +19,7 @@
 #define TREEITEM_H
 
 #include <QList>
+#include <QColor>
 #include <QVariant>
 
 //! [0]
@@ -39,11 +40,13 @@ public:
     void setParent(TreeItem *item);
     QString getData_Dir() const;
     QString getData_SOName() const;
+    QColor  getColor() const;
 
 private:
     QList<TreeItem*> childItems;
     QString d_soname;
     QString d_dir;
+    QColor entryColor;
     TreeItem *parentItem;
 };
 

@@ -16,12 +16,20 @@
 * along with this library. If not, see <http://www.gnu.org/licenses/>.
 */
 #include "treeitem.h"
+#include <iostream>
 
 TreeItem::TreeItem(const QString name, const QString dir, TreeItem *parent)
 {
     parentItem = parent;
     d_soname = name;
     d_dir = dir;
+    //Paint all items light blue...
+    entryColor = QColor(152,245,255);
+    //..except they're essential system libs
+    if (name.indexOf(QRegExp("libc.*")) > -1)
+        entryColor = QColor(209,238,238);
+    if (name.indexOf(QRegExp("ld-linux*")) > -1)
+        entryColor = QColor(188,210,238);
 }
 
 TreeItem::~TreeItem()
@@ -53,6 +61,11 @@ int TreeItem::childCount() const
 int TreeItem::columnCount() const
 {
     return 2;
+}
+
+QColor TreeItem::getColor() const
+{
+    return entryColor;
 }
 
 QVariant TreeItem::data(int column) const

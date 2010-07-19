@@ -45,7 +45,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(const QString fname, QWidget *parent = 0);
     ~MainWindow();
-    void traverse(const QString& dirname);
     QString findFullPath(QString soname);
     void loadFile(QString filename);
 
@@ -58,6 +57,7 @@ private:
     QString lastFileName;
     QLabel *statusLabel;
 
+    void findLibs(const QString& dirname);
     void resolveItem(TreeItem* itemChild);
 };
 
