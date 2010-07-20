@@ -19,7 +19,7 @@ program makecbind;
 {$mode objfpc}{$H+}
 
 uses
-  Classes, SysUtils, CustApp, pasconv;
+  Classes, SysUtils, CustApp, PasConv, LiUtils;
 
 type
 
@@ -40,9 +40,11 @@ procedure TCBindGenerator.DoRun;
 var
   ErrorMsg: String;
   test: TStringList;
+  tmpl: TStringList;
+  hname: String;
 begin
   // quick check parameters
-  ErrorMsg:=CheckOptions('h','help');
+  ErrorMsg:=CheckOptions('hio',['help', 'template:']);
   if ErrorMsg<>'' then
   begin
     ShowException(Exception.Create(ErrorMsg));
@@ -58,20 +60,60 @@ begin
     Exit;
   end;
 
-  if HasOption('s','source') then
+  if HasOption('i','in') then
   begin
-    if not FileExists(GetOptionValue('s', 'source')) then
+    if not FileExists(GetOptionValue('i', 'in')) then
     begin
       writeLn('No source file found!');
       halt(1);
     end;
   end;
 
-  if FileExists(paramstr(1)) then
+  if HasOption('o','out') then
   begin
-    test := ConvertToCInfo(paramstr(1));
-    writeLn(test.Text);
+    if GetOptionValue('o', 'out') = '' then
+    begin
+      writeLn('No ouput file specified!');
+      halt(1);
+    end;
+  end;
+
+  if HasOption('template') then
+  begin
+    if not FileExists(GetOptionValue('template')) then
+    begin
+      writeLn('No template set!');
+      halt(1);
+    end;
+  end;
+
+  if (FileExists(GetOptionValue('i', 'in')))and(HasOption('o','out')) then
+  begin
+    tmpl := TStringList.Create;
+    if FileExists(GetOptionValue('template')) then
+     tmpl.LoadFromFile(GetOptionValue('template'));
+
+    test := ConvertToCInfo(GetOptionValue('i', 'in'));
+
+    if tmpl.IndexOf('@DECL@') > 0 then
+     tmpl[tmpl.IndexOf('@DECL@')] := test.Text
+    else
+     tmpl.Add(test.Text);
+
+    hname := StrSubst(ExtractFileName(GetOptionValue('o', 'out')),'-','_');
+    hname := StrSubst(hname, '.h', '');
+    hname := '__'+UpperCase(hname);
+
+    if tmpl.IndexOf('@BEGIN_DEFINE_ID@') > 0 then
+     tmpl[tmpl.IndexOf('@BEGIN_DEFINE_ID@')] := '#ifndef '+hname+#10+'#define '+hname;
+
+    if tmpl.IndexOf('@END_DEFINE_ID@') > 0 then
+     tmpl[tmpl.IndexOf('@END_DEFINE_ID@')] := '#endif /* '+hname+' */';
+
     test.Free;
+
+    tmpl.SaveToFile(GetOptionValue('o', 'out'));
+    tmpl.Free;
   end;
   // stop program loop
   Terminate;

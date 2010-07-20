@@ -24,7 +24,10 @@
 
 #define __LISTALLER_H_INSIDE__
 
+#include <listaller/li-types.h>
 #include <listaller/li-installer.h>
+#include <listaller/li-manager.h>
+#include <listaller/li-updater.h>
 
 #undef __LISTALLER_H_INSIDE__
 

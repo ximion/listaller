@@ -23,10 +23,29 @@
 #error "Only <listaller.h> can be included directly."
 #endif
 
-@BEGIN_DEFINE_ID@
+#ifndef __LI_UPDATER
+#define __LI_UPDATER
 
 #include <glib-object.h>
 
-@DECL@
 
-@END_DEFINE_ID@
+GPointer li_updater_new(void);
+
+void li_updater_free(void);
+
+void li_updater_set_sumode(void);
+
+GBoolean li_updater_register_status_call(GPointer upd,call TLiStatusChangeCall,GPointer user_data);
+
+GBoolean li_updater_register_request_call(GPointer upd,call TRequestCall,GPointer user_data);
+
+GBoolean li_updater_register_newupdate_call(GPointer upd,call TNewUpdateEvent,GPointer user_data);
+
+GBoolean li_updater_search_updates(GPointer upd);
+
+GChar *li_updater_updateid_oldversion(GPointer upd,uid GInt32);
+
+GChar *li_updater_updateid_newversion(GPointer upd,uid GInt32);
+
+
+#endif /* __LI_UPDATER */

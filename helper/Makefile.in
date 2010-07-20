@@ -1,0 +1,10 @@
+# Listaller Project Makefile
+all:
+	lazbuild -B --ws=nogui ./makecbind.lpr
+
+install:
+
+clean:
+	../src/clean.sh
+
+distclean:

@@ -23,10 +23,31 @@
 #error "Only <listaller.h> can be included directly."
 #endif
 
-@BEGIN_DEFINE_ID@
+#ifndef __LI_MANAGER
+#define __LI_MANAGER
 
 #include <glib-object.h>
 
-@DECL@
 
-@END_DEFINE_ID@
+GPointer li_mgr_new(void);
+
+void li_mgr_free(void);
+
+GBoolean li_mgr_load_apps(GPointer mgr);
+
+GBoolean li_mgr_register_status_call(GPointer mgr,call TLiStatusChangeCall,GPointer user_data);
+
+TRqResult li_mgr_register_request_call(GPointer mgr,call TRequestCall,GPointer user_data);
+
+GBoolean li_mgr_register_app_call(GPointer mgr,call TAppEvent);
+
+void li_mgr_set_sumode(GPointer mgr,call TAppEvent);
+
+GBoolean li_mgr_remove_app(GPointer mgr,obj TAppInfo);
+
+GBoolean li_remove_ipk_installed_app(PChar appname,appid PChar,TLiStatusChangeCall scall,fastmode GBoolean);
+
+GBoolean li_mgr_check_apps(GPointer mgr,log PStringList,GBoolean root);
+
+
+#endif /* __LI_MANAGER */

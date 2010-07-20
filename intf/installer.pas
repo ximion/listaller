@@ -64,8 +64,6 @@ end;
 
 function IsIPKAppInstalled(appname: String;appid: String;sumode: Boolean): Boolean;
 
-procedure li_setup_exec_by_daemon(setup: GPointer;b: Boolean);cdecl;external libinst;
-implementation
 //Import library functions
 function  li_setup_new: GPointer; cdecl;external libinst;
 procedure li_setup_free(setup: GPointer);external libinst;
@@ -95,6 +93,9 @@ function  li_setup_set_profileid(setup: GPointer;id: GInt16): GBoolean;cdecl;ext
 function  li_setup_get_signature_state(setup: GPointer): TPkgSigState;cdecl;external libinst;
 function  li_get_ipk_app_installed(appname: PGChar;appid: PGChar;sumode: GBoolean): GBoolean;cdecl;external libinst;
 procedure li_set_testmode(st: GBoolean);cdecl;external libinst;
+procedure li_setup_exec_by_daemon(setup: GPointer;b: Boolean);cdecl;external libinst;
+
+implementation
 
 { TInstallPack }
 

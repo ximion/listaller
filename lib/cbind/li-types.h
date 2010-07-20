@@ -23,10 +23,11 @@
 #error "Only <listaller.h> can be included directly."
 #endif
 
-@BEGIN_DEFINE_ID@
+#ifndef __LI_TYPES
+#define __LI_TYPES
 
 #include <glib-object.h>
 
-@DECL@
 
-@END_DEFINE_ID@
+
+#endif /* __LI_TYPES */

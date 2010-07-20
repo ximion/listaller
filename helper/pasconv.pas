@@ -98,16 +98,21 @@ var
   element: TPasElement;
   func, h, x: String;
   res: TStringList;
+  src: TStringList;
 begin
   Result := nil;
   eng := TSimpleEngine.Create;
   md := ParseSource(eng, fname, 'linux', '');
+  src := TStringList.Create;
+  src.LoadFromFile(fname);
 
   decls := md.InterfaceSection.Declarations;
   res := TStringList.Create;
   for I := 0 to Decls.Count - 1 do
   begin
     element := (TObject(Decls[I]) as TPasElement);
+
+    if pos('external', LowerCase(src[element.SourceLinenumber]))> 0 then
     if element.ElementTypeName = 'function' then
     begin
       res.Add('');
@@ -154,6 +159,7 @@ begin
       res.Add(x);
       end;
   end;
+  src.Free;
   FreeAndNil(md);
   FreeAndNil(eng);
   Result := res;
