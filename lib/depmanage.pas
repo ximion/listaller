@@ -21,8 +21,8 @@ unit depmanage;
 interface
 
 uses
-  Classes, LiTypes,
-  LiUtils, Process, FileUtil, SysUtils, DDEResolve, SoftwareDB, TarArchive;
+  GLib2, Classes, LiTypes, LiUtils, Process, FileUtil, SysUtils, DDEResolve,
+  PackageKit, SoftwareDB, TarArchive;
 
 type
   //** Error codes of Listallers library solver
@@ -38,6 +38,9 @@ type
     comp: CompressionMethod;
   end;
 
+  TDepResolveProgress = procedure(depIndex: Integer; prog: Integer) of object;
+
+  //** Work with Debian packages
   TDEBConverter = class
   private
     FName: String;
@@ -56,7 +59,32 @@ type
     property WorkDir: String read WDir;
   end;
 
-  TDepManager = class
+  //** Resolve dependency list to package list
+  TPackageResolver = class
+  private
+    DepList: TStringList;
+    running: Boolean;
+    pkit: array[1..4] of TPackageKit;
+    lastIndex: Integer;
+    loop: PGMainLoop;
+    resList: TStringList;
+    tmpDeps: TStringList;
+    FProgress: TDepResolveProgress;
+    procedure MakeProgress(index: Integer; prog: Integer);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function RunResolver: Boolean;
+
+    property DependencyList: TStringList read DepList write DepList;
+    property Results: TStringList read resList write resList;
+    property Working: Boolean read running;
+    property OnProgress: TDepResolveProgress read FProgress write FProgress;
+  end;
+
+  //** Manage external dependencies
+  TExDepManager = class
   private
     function GetVersionFromControl(cont: TStringList): String;
   public
@@ -66,8 +94,133 @@ type
     function InstallDependency(libname: String): LiLibSolveError;
   end;
 
-
 implementation
+
+{ TPackageResolver }
+
+constructor TPackageResolver.Create;
+var
+  i: Integer;
+begin
+  running := false;
+  for i := 1 to length(pkit) do
+  begin
+    pkit[i] := TPackageKit.Create;
+    pkit[i].AsyncMode := true;
+    pkit[i].Tag := -1;
+  end;
+  resList := TStringList.Create;
+  tmpDeps := TStringList.Create;
+end;
+
+destructor TPackageResolver.Destroy;
+var
+  i: Integer;
+begin
+  resList.Free;
+  tmpDeps.Free;
+  for i := 1 to length(pkit) do
+    pkit[i].Free;
+  inherited;
+end;
+
+procedure TPackageResolver.MakeProgress(index: Integer; prog: Integer);
+begin
+  if Assigned(FProgress) then
+    FProgress(index, prog);
+end;
+
+//GLib callback for async package resolving
+function PkResolverOnIdle(solver: TPackageResolver): GBoolean; cdecl;
+var
+  i: Integer;
+  pk: TPackageKit;
+  err: LiLibSolveError;
+begin
+  Result := true;
+  //Sanity check
+  if not (solver is TPackageResolver) then
+    exit;
+
+  //Quit if everything is resolved
+  if solver.lastIndex > solver.DependencyList.Count - 1 then
+  begin
+    g_main_loop_quit(solver.loop);
+    Result := false;
+    exit;
+  end;
+
+  for i := 1 to length(solver.pkit) do
+  begin
+    pk := solver.pkit[i] as TPackageKit;
+    if pk.Tag = -1 then
+    begin
+      pk.Tag := solver.lastIndex;
+      p_debug('New Job: ' + IntToStr(pk.Tag));
+      //If resolve call fails, set dep to "not resolved"
+      if not pk.FindPkgForFile(solver.tmpDeps[pk.Tag]) then
+       pk.Tag := -1;
+
+      solver.lastIndex := solver.lastIndex + 1;
+    end
+    else
+      if pk.Finished then
+      begin
+        p_debug('Finished! [ ' + IntToStr(pk.Tag) + ' ]');
+        solver.MakeProgress(pk.Tag, 100);
+
+        //Check if package was found
+        if pk.RList.Count <= 0 then
+        //Package was not found!
+        else
+        begin
+          solver.resList.Add(pk.RList[0].PackageId);
+          solver.DepList.Delete(solver.DepList.IndexOf(solver.tmpDeps[pk.Tag]));
+        end;
+        //Make TpackageKit ready to accept new jobs
+        pk.Tag := -1;
+      end;
+  end;
+end;
+
+function TPackageResolver.RunResolver: Boolean;
+var
+  idle: PGSource;
+begin
+  Result := false;
+  MakeProgress(0, 0);
+  ShowPKMon();
+
+  p_debug('Start resolving deps.');
+
+  loop := g_main_loop_new(nil, false);
+  idle := g_idle_source_new();
+
+  resList.Clear;
+  tmpDeps.Assign(depList);
+  lastIndex := 0;
+
+  lastIndex := 0;
+  g_source_set_callback(idle, TGSourceFunc(@PkResolverOnIdle), self, nil);
+  g_source_attach(idle, g_main_loop_get_context(loop));
+
+  //Start resolving!
+  running := true;
+  g_main_loop_run(loop);
+  //Cleanup...
+  running := false;
+  g_source_destroy(idle);
+  g_main_loop_unref(loop);
+
+  tmpDeps.Clear;
+
+  //If there are some entries left, not all stuff could be resolved
+  if depList.Count > 0 then
+    Result := false;
+
+  RemoveDuplicates(resList);
+  p_debug('DepResolve finished.');
+end;
 
 { TDEBConverter }
 
@@ -218,17 +371,17 @@ end;
 
 { TDepManager }
 
-constructor TDepManager.Create;
+constructor TExDepManager.Create;
 begin
 
 end;
 
-destructor TDepManager.Destroy;
+destructor TExDepManager.Destroy;
 begin
   inherited;
 end;
 
-function TDepManager.GetVersionFromControl(cont: TStringList): String;
+function TExDepManager.GetVersionFromControl(cont: TStringList): String;
 var
   i: Integer;
 begin
@@ -241,7 +394,7 @@ begin
     end;
 end;
 
-function TDepManager.InstallDependency(libname: String): LiLibSolveError;
+function TExDepManager.InstallDependency(libname: String): LiLibSolveError;
 var
   solver: TDDEResolver;
   dc: TDEBConverter;
@@ -304,10 +457,13 @@ begin
   for i := 0 to files.Count - 1 do
   begin
     files[i] := CleanFilePath(files[i]);
-    ForceDirectories(SyblToPath('$DEP') + StrSubst(ExtractFilePath(files[i]), CleanFilePath(dir + '/usr'), ''));
-    if not FileCopy(files[i], SyblToPath('$DEP') + StrSubst(files[i], CleanFilePath(dir + '/usr'), '')) then
+    ForceDirectories(SyblToPath('$DEP') + StrSubst(ExtractFilePath(files[i]),
+      CleanFilePath(dir + '/usr'), ''));
+    if not FileCopy(files[i], SyblToPath('$DEP') +
+      StrSubst(files[i], CleanFilePath(dir + '/usr'), '')) then
     begin
-      p_debug(files[i] + ' >> ' + SyblToPath('$DEP') + StrSubst(files[i], CleanFilePath(dir + '/usr'), ''));
+      p_debug(files[i] + ' >> ' + SyblToPath('$DEP') +
+        StrSubst(files[i], CleanFilePath(dir + '/usr'), ''));
       Result := FATAL_COPY_ERROR;
       exit;
     end;
@@ -315,7 +471,8 @@ begin
   dc.Free;
 
   for i := 0 to files.Count - 1 do
-    files[i] := CleanFilePath(SyblToPath('$DEP') + StrSubst(files[i], CleanFilePath(dir + '/usr'), ''));
+    files[i] := CleanFilePath(SyblToPath('$DEP') +
+      StrSubst(files[i], CleanFilePath(dir + '/usr'), ''));
 
   sdb.DepAddNew(pkg.PkName, pkg.version, pkg.Distro, ExtractFileName(libname));
 

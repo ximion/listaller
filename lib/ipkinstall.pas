@@ -21,8 +21,8 @@ unit ipkinstall;
 interface
 
 uses
-  MD5, glib2, distri, ipkdef, Classes, Contnrs, FTPSend, liTypes, liUtils, MTProcs,
-  Process, RegExpr, BaseUnix, blcksock, FileUtil, HTTPSend, IniFiles,
+  MD5, Distri, IPKDef, Classes, Contnrs, FTPSend, LiTypes, LiUtils, MTProcs,
+  Process, RegExpr, BaseUnix, Blcksock, FileUtil, HTTPSend, IniFiles,
   SysUtils, DepManage, strLocale, IPKPackage, liDBusProc, PackageKit,
   SoftwareDB, LiManageApp;
 
@@ -334,109 +334,16 @@ begin
     sl.Add(license[i]);
 end;
 
-
-//Search for dependencies using async PackageKit:
-type
-  //Could use record here, but class is much easier...
-  DRInfo = class
-  public
-    list: TObjectList;
-    max: Integer;
-    active: Integer;
-    pos: Integer;
-    mpos: Double;
-    loop: PGMainLoop;
-    deps: TStringList;
-    debFetch: Boolean;
-    inst: TInstallation;
-    errorI: Integer;
-    res: TStringList;
-  end;
-
-function OnIdle(pkInf: DRInfo): GBoolean; cdecl;
-var
-  i: Integer;
-  pk: TPackageKit;
-  depman: TDepManager;
-  err: LiLibSolveError;
-begin
-  Result := true;
-  if not (pkInf is DRInfo) then
-    exit;
-  i := pkInf.list.Count - 1;
-
-  if pkInf.list.Count <= 0 then
-  begin
-    g_main_loop_quit(pkInf.loop);
-    Result := false;
-    exit;
-  end;
-
-  while i >= 0 do
-  begin
-    pk := pkinf.list[i] as TPackageKit;
-    if pk.Tag >= 0 then
-    begin
-      if pkinf.active < pkinf.max then
-      begin
-        pkinf.active += 1;
-        p_debug('New Job: ' + IntToStr(pk.Tag));
-        pk.FindPkgForFile(pkInf.deps[pk.Tag - 1]);
-        pk.Tag := pk.Tag * -1;
-      end;
-    end
-    else
-      if pk.Finished then
-      begin
-        p_debug('Finished! [' + IntToStr(pk.Tag) + ']');
-        Inc(pkinf.pos);
-        pkInf.inst.SetExtraPos(Round(pkinf.pos * pkinf.mpos));
-
-        //Check if package was found
-        if pk.RList.Count <= 0 then
-        begin
-          //Üackage was not installd
-          p_debug(' !finished with error.');
-          depman := TDepManager.Create;
-          //Install dependency with dependency manager
-          err := ERROR;
-          if pkInf.debFetch then
-            err := depman.InstallDependency(pkInf.deps[(pk.Tag * -1) - 1]);
-          if err <> NONE then
-          begin
-            depman.Free;
-            pkInf.errorI := (pk.Tag * -1) - 1;
-            Result := false;
-            g_main_loop_quit(pkInf.loop);
-            exit;
-          end;
-          depman.Free;
-        end;
-
-        pkinf.active -= 1;
-        pkInf.res.Add(pk.RList[0].PackageId);
-        pkinf.list.Delete(i);
-      end;
-    Dec(i);
-  end;
-end;
-
-function TInstallation.ResolveDependencies(const fetchFromDebian: Boolean =
-  true): Boolean;
+function TInstallation.ResolveDependencies(
+  const fetchFromDebian: Boolean = true): Boolean;
 var
   i, j: Integer;
-  pkitList: TObjectList;
   mnpos: Integer;
   one: Double;
-  pk: TPackageKit;
-  eIndex: Integer;
   tmp: TStringList;
-  pkdata: DRInfo;
-  loop: PGMainLoop;
-  idle: PGSource;
-const
-  MAXACTIVE = 4;
-
+  err: LiLibSolveError;
+  depMan: TExDepManager;
+  solver: TPackageResolver;
 begin
   Result := true;
   SetExtraPos(1);
@@ -478,80 +385,40 @@ begin
     msg(rsResolvingDynDeps);
 
     //Resolve all substitution variables in dependency list
+    //We use rootmode here cause all distro package install files into /
     for i := 0 to Dependencies.Count - 1 do
-      Dependencies[i] := StrSubst(SyblToPath(Dependencies[i], true), '*', '');
+      Dependencies[i] := SyblToPath(Dependencies[i], true);
 
-    mnpos := 0;
-    one := 100 / Dependencies.Count;
-    SetExtraPos(Round(mnpos * one));
-    ShowPKMon();
-
-    p_debug('Start resolving deps.');
-
-    tmp := TStringList.Create;
-
-    pkitList := TObjectList.Create;
-    for i := 0 to Dependencies.Count - 1 do
+    solver := TPackageResolver.Create;
+    solver.DependencyList := Dependencies;
+    if not solver.RunResolver then
     begin
-      pk := TPackageKit.Create;
-      pkitList.Add(pk);
-      pk.NoWait := true;
-      pk.Tag := i + 1;
-    end;
+      //We could not find all libs in the distribution's repos
+      Dependencies.Assign(solver.Results);
+      //Dependency list now contains all items which couldn't be reolved
+      for i := 0 to solver.DependencyList.Count - 1 do
+      begin
+        //Install dependency with dependency manager
+        depMan := TExDepManager.Create;
+        err := ERROR;
+        if fetchFromDebian then
+          err := depman.InstallDependency(solver.DependencyList[i]);
+        if err <> NONE then
+        begin
+          depman.Free;
+          MakeUsrRequest(StrSubst(rsDepPkgsNotFound, '%l',
+            solver.DependencyList.Text) + #10 + rsInClose, rqError);
+          solver.Free;
+          Result := false;
+          exit;
+        end;
+      end;
+    end
+    else
+      //Wow, all files were present!
+      Dependencies.Assign(solver.Results);
+    solver.Free;
 
-    eIndex := -1;
-
-    loop := g_main_loop_new(nil, false);
-    idle := g_idle_source_new();
-
-    pkdata := DRInfo.Create;
-    with pkdata do
-    begin
-      active := 0;
-      max := MAXACTIVE;
-      list := pkitList;
-      pos := mnpos;
-      mpos := one;
-      deps := Dependencies;
-      debfetch := fetchFromDebian;
-      errorI := -1;
-      res := tmp;
-    end;
-    pkdata.loop := loop;
-    pkdata.inst := self;
-
-    g_source_set_callback(idle, TGSourceFunc(@OnIdle), pkdata, nil);
-    g_source_attach(idle, g_main_loop_get_context(loop));
-
-    g_main_loop_run(loop);
-    g_source_destroy(idle);
-
-    g_main_loop_unref(loop);
-
-    eIndex := pkdata.errorI;
-
-    if eIndex > -1 then
-    begin
-      for i := 0 to pkitList.Count - 1 do
-        TPackageKit(pkitList[i]).Cancel;
-      pkitList.Free;
-      MakeUsrRequest(StrSubst(rsDepNotFound, '%l', Dependencies[eIndex]) +
-        #10 + rsInClose, rqError);
-      tmp.Free;
-      pkdata.Free;
-      Result := false;
-      exit;
-    end;
-
-    pkitList.Free;
-    pkdata.Free;
-
-    RemoveDuplicates(tmp);
-    Dependencies.Assign(tmp);
-
-    tmp.Free;
-    SetExtraPos(100);
-    p_debug('DepResolve finished.');
   end;
 end;
 
@@ -1076,12 +943,11 @@ var
   pkg: TLiUnpacker; // IPK decompressor
   setcm: Boolean;
   appField: TAppInfo;
-  p, proc: TProcess; // Helper process with pipes
+  proc: TProcess; // Helper process with pipes
   pkit: TPackageKit; //PackageKit object
   DInfo: TDistroInfo; //Distribution information
   mnpos: Integer; //Current positions of operation
   max: Double;
-  dlfname: String; //Name of file which will be downloaded
 
   //Necessary if e.g. file copying fails
   procedure RollbackInstallation;
@@ -1123,8 +989,6 @@ var
         dsk.Free;
       if Assigned(pkg) then
         pkg.Free;
-      if Assigned(p) then
-        p.Free;
       if Assigned(proc) then
         proc.Free;
       if Assigned(pkit) then
@@ -1343,8 +1207,9 @@ begin
               end;
           except
             //Unable to copy the file
-            MakeUsrRequest(Format(rsCnCopy, [dest + '/' +
-              ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose, rqError);
+            MakeUsrRequest(Format(rsCnCopy,
+              [dest + '/' + ExtractFileName(DeleteModifiers(h))]) +
+              #10 + rsInClose, rqError);
             RollbackInstallation;
             Result := false;
             Abort_FreeAll();

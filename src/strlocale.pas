@@ -92,7 +92,7 @@ resourcestring
   rsInagree = 'I don''t agree';
   rsLDnSupported = 'Your Linux distribution is not supported by Listaller yet!';
   rsnSupported = 'This package does not support your Linux distribution.';
-  rsDepNotFound = 'Found no package with the necessary library "%l" for your distribution.';
+  rsDepPkgsNotFound = 'No packages containing the following libraries were found: %l';
   rsResolvingDynDeps = 'Resolving dynamic dependencies...';
   rsDBConnClosed = 'Database connection closed.';
   rsDBOpened = 'Software database opened.';

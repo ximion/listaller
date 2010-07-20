@@ -132,7 +132,7 @@ type
     //** Check if the last transaction has finished (object idle)
     property Finished: Boolean read done;
     //** If true, the instance won't wait until the action completes
-    property NoWait: Boolean read doasync write doasync;
+    property AsyncMode: Boolean read doasync write doasync;
     //** Tag
     property Tag: Integer read tagid write tagid;
   end;
