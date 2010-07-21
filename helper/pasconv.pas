@@ -58,6 +58,17 @@ var
   f, g, r: String;
   ty: Boolean;
   i: Integer;
+
+  procedure UpdateRVal;
+  begin
+    if g[1] = 'p' then
+      r := r + copy(g, 2, length(g)) + ' *' + f
+    else
+      r := r + g + ' ' + f;
+    if i <> length(arg) then
+      r := r + ',';
+  end;
+
 begin
   arg := StrSubst(arg, #10, '');
   arg := StrSubst(arg, #13, '');
@@ -70,11 +81,10 @@ begin
     else
       if arg[i] = ';' then
       begin
-        r := r + g + ' ' + f;
-        if i <> length(arg) then
-          r := r + ',';
+        UpdateRVal();
         g := '';
         f := '';
+        ty := not ty;
       end
       else
         if arg[i] <> ' ' then
@@ -85,7 +95,7 @@ begin
   end;
   //No ; appeared
   if (g <> '') and (f <> '') then
-    r := r + g + ' ' + f;
+    UpdateRVal;
   Result := r;
 end;
 
@@ -112,52 +122,53 @@ begin
   begin
     element := (TObject(Decls[I]) as TPasElement);
 
-    if pos('external', LowerCase(src[element.SourceLinenumber]))> 0 then
-    if element.ElementTypeName = 'function' then
-    begin
-      res.Add('');
-      func := element.GetDeclaration(true);
-
-      //Extract resturn type
-      h := copy(func, pos(')', func) + 1, length(func));
-      h := copy(h, pos(':', h) + 1, length(h));
-      h := StrSubst(h, ' ', '');
-
-      if LowerCase(h[1]) = 'p' then
-        x := copy(h, 2, length(h)) + ' *'
-      else
-        x := h + ' ';
-
-      x := LowerCase(x) + element.Name;
-
-      if pos('(', func) > 0 then
-      begin
-        h := copy(func, pos('(', func) + 1, length(func));
-        h := copy(h, 1, pos(')', h) - 1);
-        x := x + '(' + SolveArguments(h) + ');';
-      end
-      else
-        x := x + '(void);';
-
-      res.Add(x);
-    end else
-      if element.ElementTypeName = 'procedure' then
+    if pos('external', LowerCase(src[element.SourceLinenumber])) > 0 then
+      if element.ElementTypeName = 'function' then
       begin
         res.Add('');
-        x := 'void ';
-        x := x + element.Name;
+        func := element.GetDeclaration(true);
 
-      if pos('(', func) > 0 then
-      begin
-        h := copy(func, pos('(', func) + 1, length(func));
-        h := copy(h, 1, pos(')', h) - 1);
-        x := x + '(' + SolveArguments(h) + ');';
+        //Extract resturn type
+        h := copy(func, pos(')', func) + 1, length(func));
+        h := copy(h, pos(':', h) + 1, length(h));
+        h := StrSubst(h, ' ', '');
+
+        if LowerCase(h[1]) = 'p' then
+          x := copy(h, 2, length(h)) + ' *'
+        else
+          x := h + ' ';
+
+        x := LowerCase(x) + element.Name;
+
+        if pos('(', func) > 0 then
+        begin
+          h := copy(func, pos('(', func) + 1, length(func));
+          h := copy(h, 1, pos(')', h) - 1);
+          x := x + '(' + SolveArguments(h) + ');';
+        end
+        else
+          x := x + '(void);';
+
+        res.Add(x);
       end
       else
-        x := x + '(void);';
+        if element.ElementTypeName = 'procedure' then
+        begin
+          res.Add('');
+          x := 'void ';
+          x := x + element.Name;
 
-      res.Add(x);
-      end;
+          if pos('(', func) > 0 then
+          begin
+            h := copy(func, pos('(', func) + 1, length(func));
+            h := copy(h, 1, pos(')', h) - 1);
+            x := x + '(' + SolveArguments(h) + ');';
+          end
+          else
+            x := x + '(void);';
+
+          res.Add(x);
+        end;
   end;
   src.Free;
   FreeAndNil(md);

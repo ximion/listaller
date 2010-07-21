@@ -35,7 +35,7 @@ void li_setup_free(void);
 
 void li_setup_set_sumode(void);
 
-char *li_setup_init(gpointer setup,pkname PGChar);
+char *li_setup_init(gpointer setup,gchar *pkname);
 
 tpkgtype li_setup_get_pkgtype(gpointer setup);
 
@@ -49,13 +49,13 @@ gchar *li_setup_get_appversion(gpointer setup);
 
 gchar *li_setup_get_pkgid(gpointer setup);
 
-gboolean li_setup_get_long_description(gpointer setup,list GPointer);
+gboolean li_setup_get_long_description(gpointer setup,gpointer list);
 
 gchar *li_setup_get_wizard_image_path(gpointer setup);
 
-gboolean li_setup_get_license(gpointer setup,list GPointer);
+gboolean li_setup_get_license(gpointer setup,gpointer list);
 
-gboolean li_setup_get_profiles_list(gpointer setup,list GPointer);
+gboolean li_setup_get_profiles_list(gpointer setup,gpointer list);
 
 gchar *li_setup_get_appicon(gpointer setup);
 
@@ -67,23 +67,23 @@ gchar *li_setup_get_current_profile_filelist(gpointer setup);
 
 void li_setup_enable_usource_registering(gpointer setup);
 
-gboolean li_setup_register_status_call(gpointer setup,call TLiStatusChangeCall,gpointer user_data);
+gboolean li_setup_register_status_call(gpointer setup,tlistatuschangecall call,gpointer user_data);
 
-gboolean li_setup_register_user_request_call(gpointer setup,call TRequestCall,gpointer user_data);
+gboolean li_setup_register_user_request_call(gpointer setup,trequestcall call,gpointer user_data);
 
 gboolean li_setup_execute(gpointer setup);
 
 void li_setup_set_forced(gpointer setup);
 
-gboolean li_setup_get_dependencies(gpointer setup,list PStringList);
+gboolean li_setup_get_dependencies(gpointer setup,stringlist *list);
 
-gboolean li_setup_set_profileid(gpointer setup,id GInt16);
+gboolean li_setup_set_profileid(gpointer setup,gint16 id);
 
 tpkgsigstate li_setup_get_signature_state(gpointer setup);
 
-gboolean li_get_ipk_app_installed(pgchar appname,appid PGChar,gboolean sumode);
+gboolean li_get_ipk_app_installed(gchar *appname,gchar *appid,gboolean sumode);
 
-void li_set_testmode(pgchar appname,appid PGChar,gboolean sumode);
+void li_set_testmode(gchar *appname,gchar *appid,gboolean sumode);
 
 
 #endif /* __LI_INSTALLER */

@@ -11,6 +11,10 @@
 *.lps
 *.rst
 *.user
+*.pc
+*.patch
+*.cache
+*.anjuta
 moc_*
 .directory
 build

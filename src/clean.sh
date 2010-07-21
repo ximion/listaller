@@ -40,6 +40,7 @@ find -iname *.compiled -exec rm {} \;
 find -iname *.manifest -exec rm {} \;
 find -iname *.lrs -exec rm {} \;
 find -iname *.rst -exec rm {} \;
+find -iname *.pc -exec rm {} \;
 
 find . -name *~ -exec rm {} \;
 

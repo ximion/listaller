@@ -5,7 +5,7 @@
 # syntax :
 #    ./configure <options> [parameters]
 set -e
-OPTION_SPEC="help,enable-qt,enable-creator,enable-gtk,enable-all,prefix:,libdir:"
+OPTION_SPEC="help,enable-qt,enable-creator,enable-gtk,enable-all,disable-dev,prefix:,libdir:"
 PARSED_OPTIONS=$(getopt -n "$0" -a -o h --l "$OPTION_SPEC" -- "$@")
 
 eval set -- "$PARSED_OPTIONS"
@@ -19,6 +19,8 @@ function usage
 
 if [ $? != 0 ] ; then usage ; exit 1 ; fi
 
+INSTALL_DEV_FILES=1
+
 while true ; do
 	case "$1" in
 		-h|--help )  usage; exit 0;;
@@ -26,6 +28,7 @@ while true ; do
 		--enable-gtk )  ENABLE_GTK=1; shift; ;;
 		--enable-creator )  ENABLE_CREATOR=1; shift; ;;
 		--enable-all ) ENABLE_QT=1; ENABLE_GTK=1; ENABLE_CREATOR=1; shift; ;;
+		--disable-dev )  INSTALL_DEV_FILES=0; shift; ;;
 		--libdir ) case "$2" in
 			    "") echo "The libdir option needs an argument!"; exit 3 ;;
 			     *) export libtarget=$2 ; shift 2 ;;
@@ -196,7 +199,12 @@ do
    cd $dir
    sed "s#%PREFIX%#$prefix#" Makefile.in > Makefile
    libtarget=${libtarget//"\""/"\\\""}
-   sed -i "s#%LIBDIR%#${libtarget}#g" Makefile 
+   sed -i "s#%LIBDIR%#${libtarget}#g" Makefile
+   if [ "$INSTALL_DEV_FILES" = "1" ]; then
+    sed -i 's/%DEV%//g' Makefile
+   else
+    sed -i 's/%DEV%/#/g' Makefile
+   fi
    if [ "$ENABLE_QT" = "1" ]; then
     sed -i 's/%Qt%//g' Makefile
    else
