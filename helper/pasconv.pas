@@ -156,7 +156,7 @@ begin
   else
     if pos('procedure', eltype) > 0 then
     begin
-      r := 'typedef void (*' + el.FullName + 'GAsyncReadyCallback) ';
+      r := 'typedef void (*' + el.FullName + ') ';
       ArgumentsToHVar; //Quick, dirty helper function :)
       r := r + '{(' + h + ');}';
       res.Add('');
@@ -171,7 +171,7 @@ begin
         h := copy(h, pos(':', h) + 1, length(h));
         h := StrSubst(h, ' ', '');
 
-        r := 'typedef ' + h + ' (*' + el.FullName + 'GAsyncReadyCallback) ';
+        r := 'typedef ' + h + ' (*' + el.FullName + ') ';
         ArgumentsToHVar; //Quick, dirty helper function :)
         r := r + '{(' + h + ');}';
         res.Add('');

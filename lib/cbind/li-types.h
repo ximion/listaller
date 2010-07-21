@@ -76,11 +76,11 @@ struct TLiStatusData
       LiStatusChange change;
 };
 
-typedef void (*TLiStatusChangeCallGAsyncReadyCallback) {(LiStatusChange change,TLiStatusData Data,gpointer user_data);}
+typedef void (*TLiStatusChangeCall) {(LiStatusChange change,TLiStatusData Data,gpointer user_data);}
 
-typedef TRqResult (*TRequestCallGAsyncReadyCallback) {(TRqType mtype,char *msg,gpointer user_data);}
+typedef TRqResult (*TRequestCall) {(TRqType mtype,char *msg,gpointer user_data);}
 
-typedef void (*TProgressEventGAsyncReadyCallback) {(int pos,gpointer user_data);}
+typedef void (*TProgressEvent) {(int pos,gpointer user_data);}
 
 typedef enum {
       gtALL,
@@ -120,9 +120,9 @@ struct TAppInfo
       WideString Dependencies;
 };
 
-typedef GBoolean (*TAppEventGAsyncReadyCallback) {(char *Name,appinfo *obj);}
+typedef GBoolean (*TAppEvent) {(char *Name,appinfo *obj);}
 
-typedef void (*TNewUpdateEventGAsyncReadyCallback) {(char *Name,int id,gpointer user_data);}
+typedef void (*TNewUpdateEvent) {(char *Name,int id,gpointer user_data);}
 
 typedef enum {
       psNone,
