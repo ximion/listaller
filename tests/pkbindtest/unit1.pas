@@ -9,7 +9,7 @@ interface
 uses
   Forms, glib2, Classes, Dialogs,
   ComCtrls, Controls, FileUtil, Graphics, Messages, StdCtrls, SysUtils,
-  Installer, LResources, PackageKit;
+  Installer, LResources, PackageKit, PkTypes;
 
 type
 
@@ -52,12 +52,13 @@ var
   pkit: TPackageKit;
   pkit2: TPackageKit;
 begin
+  //Run async PackageKit resolving
   pkit := TPackageKit.Create;
   pkit.OnProgress := @pkitProgress;
-  pkit.NoWait := true;
+  pkit.AsyncMode := true;
 
   pkit2 := TPackageKit.Create;
-  pkit.NoWait := true;
+  pkit.AsyncMode := true;
   pkit.PkgNameFromFile('/usr/share/applications/nemiver.desktop');
   pkit2.PkgNameFromFile('/usr/share/applications/vlc.desktop');
 
@@ -86,15 +87,15 @@ begin
   pkit.PkgNameFromFile('/usr/share/applications/nemiver.desktop');
   if pkit.RList.Count > 0 then
     ShowMessage('Successful_1'#10+pkit.RList[0].PackageId+#10+'Code: '+
-      IntToStr(pkit.PkFinishCode))
+      IntToStr(Integer(pkit.PkExitStatus))+#10'Message:'#10+pkit.LastErrorMessage)
   else
-    ShowMessage('Failed_1'#10'Code: '+IntToStr(pkit.PkFinishCode));
+    ShowMessage('Failed_1'#10'Code: '+IntToStr(Integer(pkit.PkExitStatus))+#10'Message:'#10+pkit.LastErrorMessage);
   pkit.PkgNameFromFile('/usr/share/applications/vlc.desktop');
   if pkit.RList.Count > 0 then
     ShowMessage('Successful_1'#10+pkit.RList[0].PackageId+#10+'Code: '+
-      IntToStr(pkit.PkFinishCode))
+      IntToStr(Integer(pkit.PkExitStatus)))
   else
-    ShowMessage('Failed_1'#10'Code: '+IntToStr(pkit.PkFinishCode));
+    ShowMessage('Failed_1'#10'Code: '+IntToStr(Integer(pkit.PkExitStatus))+#10'Message:'#10+pkit.LastErrorMessage);
   pkit.Free;
 end;
 

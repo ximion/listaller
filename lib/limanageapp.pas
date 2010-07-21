@@ -22,7 +22,7 @@ interface
 
 uses
   ipkdef, Classes, GetText, liTypes, liUtils, MTProcs,
-  Process, FileUtil, IniFiles, SysUtils, strLocale,
+  PkTypes, Process, FileUtil, IniFiles, SysUtils, strLocale,
   liDBusProc, PackageKit, SoftwareDB;
 
 type
@@ -416,8 +416,8 @@ end; //End Autopackage  }
 for i:=0 to xtmp.Count-1 do tmp.Add(xtmp[i]); }
   end
   else
-    tmp.Assign(FindAllFiles(GetEnvironmentVariable('HOME') +
-      '/.local/share/applications', '*.desktop', false));
+    tmp := FindAllFiles(GetEnvironmentVariable('HOME') +
+      '/.local/share/applications', '*.desktop', false);
 
   xtmp.Free;
 
@@ -591,9 +591,9 @@ begin
     msg(StrSubst(rsRMAppC, '%a', Name) + ' ...');
     pkit.RemovePkg(Name);
 
-    if pkit.PkFinishCode > 1 then
+    if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
     begin
-      request(rsRmError, rqError);
+      request(rsRmError + #10 + rsEMsg + #10 + pkit.LastErrorMessage, rqError);
       pkit.Free;
       exit;
     end;
@@ -642,10 +642,10 @@ begin
 
     while not pkit.Finished do ;
 
-    if pkit.PkFinishCode > 1 then
+    if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
     begin
-      request(PAnsiChar(rsPKitProbPkMon + #10 + rsECode + ' ' +
-        IntToStr(pkit.PkFinishCode)),
+      request(PAnsiChar(rsPKitProbPkMon + #10 + rsEMsg + #10 +
+        pkit.LastErrorMessage),
         rqError);
       pkit.Free;
       exit;
@@ -749,22 +749,32 @@ begin
       for i := 0 to deps.Count - 1 do
       begin
         pkit.ResolveInstalled(deps[i]);
-        if pkit.PkFinishCode = 1 then
-          report.Add(deps[i] + ' found.')
+        if pkit.PkExitStatus = PK_EXIT_ENUM_SUCCESS then
+        begin
+          if pkit.RList.Count > 0 then
+            report.Add(deps[i] + ' found.')
+          else
+          begin
+            report.Add(StrSubst(rsDepXIsNotInstall, '%s', deps[i]));
+            Result := false;
+            if fix then
+            begin
+              Write('  Repairing dependency ' + deps[i] + '  ');
+              pkit.InstallPkg(deps[i]);
+              writeLn(' [OK]');
+              report.Add(StrSubst(rsInstalledDepX, '%s', deps[i]));
+            end;
+          end;
+        end
         else
         begin
-          report.Add(StrSubst(rsDepXIsNotInstall, '%s', deps[i]));
+          request(rsPkQueryFailed + #10 + rsEMsg + #10 +
+            pkit.LastErrorMessage, rqError);
           Result := false;
-          if fix then
-          begin
-            Write('  Repairing dependency ' + deps[i] + '  ');
-            pkit.InstallPkg(deps[i]);
-            writeLn(' [OK]');
-            report.Add(StrSubst(rsInstalledDepX, '%s', deps[i]));
-          end;
+          exit;
         end;
       end;
-      DB.NextField;
+      db.NextField;
     end;
     deps.Free;
     pkit.Free;
@@ -772,7 +782,7 @@ begin
   end
   else
     p_debug('No database found!');
-  DB.Free;
+  db.Free;
   writeLn('Check finished.');
   if not Result then
     writeLn('You have broken dependencies.');

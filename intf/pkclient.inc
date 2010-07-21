@@ -79,6 +79,7 @@ procedure pk_client_get_details_async(client: PPkClient; package_ids: PPGChar;
 function pk_client_generic_finish(client: PPkClient; res: Pointer;error: PPGError): Pointer; cdecl; external pklib2;
 function pk_results_get_exit_code(results: PPkResults): PkExitEnum;cdecl; external pklib2;
 function pk_results_get_error_code(results: PPkResults): PPkError; cdecl; external pklib2;
+function pk_error_get_details(error_code: PPkError): PGChar;cdecl; external pklib2;
 function pk_results_get_details_array(results: PPkResults): PGPtrArray;cdecl; external pklib2;
 function pk_client_error_quark(): GQuark; cdecl; external pklib2;
 function pk_client_get_type(): GType; cdecl; external pklib2;

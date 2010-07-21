@@ -21,7 +21,7 @@ unit appitem;
 interface
 
 uses
-  Classes, SysUtils, liTypes, Graphics, Contnrs;
+  Classes, SysUtils, LiTypes, Graphics, Contnrs;
 
 type
  TAppInfoItem = class

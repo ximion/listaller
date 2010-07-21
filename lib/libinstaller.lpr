@@ -19,7 +19,7 @@ library libinstaller;
 {$mode objfpc}{$H+}
 
 uses
-  CThreads, Classes, IpkInstall, SysUtils, Controls, liTypes, liUtils,
+  CThreads, Classes, IpkInstall, SysUtils, Controls, LiTypes, LiUtils,
   LiManageApp, LiUpdateApp, GLib2, softwaredb;
 
 

@@ -21,7 +21,7 @@ unit packagekit;
 interface
 
 uses
-  gExt, glib2, distri, Classes, liTypes, liUtils, Process, SysUtils, pktypes;
+  gExt, glib2, distri, Classes, liTypes, liUtils, Process, SysUtils, PkTypes;
 
 type
   //** The pkBitfield var
@@ -54,12 +54,12 @@ type
   private
     //True if transaction finished
     done: Boolean;
-    //Catch the exitcode
-    exitcode: Integer;
+    //Catch the exit status
+    exitenum: PkExitEnum;
     //Current progress
     prog: Integer;
     //Last error message
-    ErrorMsg: String;
+    lastErrorMsg: String;
     //ProgressChange event
     FProg: TProgressEvent;
     //List of received package ids
@@ -122,13 +122,13 @@ type
     //** Grab the resulting package list
     property RList: TPackageList read PkgList write PkgList;
     //** Read finish code
-    property PkFinishCode: Integer read exitcode;
+    property PkExitStatus: PkExitEnum read exitenum;
+    //** Get details about possible failures
+    property LastErrorMessage: String read lastErrorMsg;
     //** Reads the current Packagekit version as string
     property Version: String read GetPkVersion;
     //** Progress change callback (progress in %)
     property OnProgress: TProgressEvent read FProg write FProg;
-    //** Read the last error message
-    property LastErrorMessage: String read ErrorMsg;
     //** Check if the last transaction has finished (object idle)
     property Finished: Boolean read done;
     //** If true, the instance won't wait until the action completes
@@ -166,7 +166,7 @@ begin
   begin
     g_warning('failed: %s', [error^.message]);
     g_error_free(error);
-    TPackageKit(user_data).exitcode := 8;
+    TPackageKit(user_data).ExitEnum := PK_EXIT_ENUM_KILLED;
     exit;
   end;
 
@@ -217,7 +217,8 @@ begin
     g_object_unref(sack);
     g_ptr_array_unref(detArr);
   end;
-  pk.exitcode := integer(pk_results_get_exit_code(results));
+  pk.exitenum := pk_results_get_exit_code(results);
+  pk.lastErrorMsg := pk_error_get_details(pk_results_get_error_code(results));
   g_object_unref(results);
   pk.LoopQuit();
   pk.done := true;
@@ -266,6 +267,7 @@ begin
   loop := g_main_loop_new(nil, false);
   doasync := false;
   pkglist := TPackageList.Create(true);
+  lastErrorMsg := 'No message received!';
   done := true; //TPackageKit is idle
 end;
 
@@ -303,8 +305,8 @@ begin
   if aError<>nil then
   begin
     Result := true;
-    errorMsg := aError^.message;
-    g_warning('action failed: %s', [errorMsg]);
+    lastErrorMsg := aError^.message;
+    g_warning('action failed: %s', [lastErrorMsg]);
     exitcode := 88;
     done := true;
     g_error_free(aError);

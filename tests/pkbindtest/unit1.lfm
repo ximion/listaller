@@ -3,7 +3,7 @@ object Form1: TForm1
   Height = 175
   Top = 457
   Width = 295
-  ActiveControl = Button1
+  ActiveControl = Button3
   Caption = 'PackageKit Bindings Test'
   ClientHeight = 175
   ClientWidth = 295

@@ -25,7 +25,7 @@ uses
 
 const
   //** Version of the Listaller applicationset
-  LiVersion = '0.4-beta';
+  LiVersion = '0.4.20~dev';
   //** Working directory of Listaller
   TMPDIR = '/tmp/listaller/'; //Never forget trailing backslash!
   //** Root configuration directory
@@ -468,7 +468,7 @@ end;
 procedure p_debug(msg: String);
 begin
   {$IFNDEF NoDebugMsg}
-   writeLn('dbg: ' + msg);
+   writeLn('debug: ' + msg);
   {$ENDIF}
 end;
 

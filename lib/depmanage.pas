@@ -21,7 +21,7 @@ unit depmanage;
 interface
 
 uses
-  GLib2, Classes, LiTypes, LiUtils, Process, FileUtil, SysUtils, DDEResolve,
+  GLib2, Classes, LiTypes, LiUtils, PkTypes, Process, FileUtil, SysUtils, DDEResolve,
   PackageKit, SoftwareDB, TarArchive;
 
 type
@@ -70,6 +70,8 @@ type
     resList: TStringList;
     tmpDeps: TStringList;
     FProgress: TDepResolveProgress;
+    failed: Boolean;
+    errMsg: String;
     procedure MakeProgress(index: Integer; prog: Integer);
   public
     constructor Create;
@@ -80,6 +82,8 @@ type
     property DependencyList: TStringList read DepList write DepList;
     property Results: TStringList read resList write resList;
     property Working: Boolean read running;
+    property Failure: Boolean read failed;
+    property ErrorMessage: String read errMsg;
     property OnProgress: TDepResolveProgress read FProgress write FProgress;
   end;
 
@@ -159,7 +163,7 @@ begin
       p_debug('New Job: ' + IntToStr(pk.Tag));
       //If resolve call fails, set dep to "not resolved"
       if not pk.FindPkgForFile(solver.tmpDeps[pk.Tag]) then
-       pk.Tag := -1;
+        pk.Tag := -1;
 
       solver.lastIndex := solver.lastIndex + 1;
     end
@@ -171,7 +175,18 @@ begin
 
         //Check if package was found
         if pk.RList.Count <= 0 then
-        //Package was not found!
+        begin
+          //Package was not found!
+          if pk.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
+          begin
+            solver.failed := true;
+            solver.errMsg := pk.LastErrorMessage;
+            g_main_loop_quit(solver.loop);
+            Result := false;
+            exit;
+          end;
+
+        end
         else
         begin
           solver.resList.Add(pk.RList[0].PackageId);
@@ -188,6 +203,8 @@ var
   idle: PGSource;
 begin
   Result := false;
+  failed := false;
+  errMsg := 'No messages found.';
   MakeProgress(0, 0);
   ShowPKMon();
 
@@ -215,7 +232,8 @@ begin
   tmpDeps.Clear;
 
   //If there are some entries left, not all stuff could be resolved
-  if depList.Count > 0 then
+  //Set to false if not everything is resolved or a PackageKit failure appeared
+  if (depList.Count > 0) or (failed) then
     Result := false;
 
   RemoveDuplicates(resList);

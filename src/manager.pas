@@ -24,7 +24,7 @@ uses
   Spin, Forms, Menus, AppMan, Distri, AppItem, AppList,
   Buttons, Classes, Dialogs, LCLType, liTypes, liUtils, Process, AboutBox,
   CheckLst, ComCtrls, Controls, ExtCtrls, FileUtil, Graphics, Inifiles, StdCtrls,
-  SysUtils, strLocale, Uninstall, IconLoader, LResources, PackageKit;
+  SysUtils, strLocale, Uninstall, IconLoader, LResources, PackageKit, PkTypes;
 
 type
 
@@ -794,7 +794,7 @@ begin
                     while not pkit.Finished do
                       Application.ProcessMessages;
 
-                    if pkit.PkFinishCode>0 then
+                    if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
                     begin
                       ShowMessage(StrSubst(rsPkgInstFail, '%p',
                         'alien'));
@@ -842,10 +842,8 @@ begin
                   begin
                     ShowMessage(rsplWait);
                     pkit.InstallPkg('alien');
-                    while not pkit.Finished do
-                      Application.ProcessMessages;
 
-                    if pkit.PkFinishCode>0 then
+                    if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
                     begin
                       ShowMessage(StringReplace(rsPkgInstFail, '%p',
                         'alien', [rfreplaceAll]));

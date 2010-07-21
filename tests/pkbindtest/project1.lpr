@@ -5,7 +5,7 @@ program project1;
 uses
   cthreads,
   Interfaces, // this includes the LCL widgetset
-  Forms, Unit1, pkdesktop, glib2;
+  Forms, Unit1, glib2;
 
 {$R project1.res}
 

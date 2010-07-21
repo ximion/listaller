@@ -22,7 +22,7 @@ interface
 
 uses
   MD5, Distri, IPKDef, Classes, Contnrs, FTPSend, LiTypes, LiUtils, MTProcs,
-  Process, RegExpr, BaseUnix, Blcksock, FileUtil, HTTPSend, IniFiles,
+  PkTypes, Process, RegExpr, BaseUnix, Blcksock, FileUtil, HTTPSend, IniFiles,
   SysUtils, DepManage, strLocale, IPKPackage, liDBusProc, PackageKit,
   SoftwareDB, LiManageApp;
 
@@ -334,8 +334,8 @@ begin
     sl.Add(license[i]);
 end;
 
-function TInstallation.ResolveDependencies(
-  const fetchFromDebian: Boolean = true): Boolean;
+function TInstallation.ResolveDependencies(const fetchFromDebian: Boolean =
+  true): Boolean;
 var
   i, j: Integer;
   mnpos: Integer;
@@ -393,25 +393,36 @@ begin
     solver.DependencyList := Dependencies;
     if not solver.RunResolver then
     begin
-      //We could not find all libs in the distribution's repos
-      Dependencies.Assign(solver.Results);
-      //Dependency list now contains all items which couldn't be reolved
-      for i := 0 to solver.DependencyList.Count - 1 do
+      if not solver.Failure then
       begin
-        //Install dependency with dependency manager
-        depMan := TExDepManager.Create;
-        err := ERROR;
-        if fetchFromDebian then
-          err := depman.InstallDependency(solver.DependencyList[i]);
-        if err <> NONE then
+        //There was no crash in PackageResolver, we just could not find all libs in the distribution's repos
+        Dependencies.Assign(solver.Results);
+        //Dependency list now contains all items which couldn't be reolved
+        for i := 0 to solver.DependencyList.Count - 1 do
         begin
-          depman.Free;
-          MakeUsrRequest(StrSubst(rsDepPkgsNotFound, '%l',
-            solver.DependencyList.Text) + #10 + rsInClose, rqError);
-          solver.Free;
-          Result := false;
-          exit;
+          //Install dependency with dependency manager
+          depMan := TExDepManager.Create;
+          err := ERROR;
+          if fetchFromDebian then
+            err := depman.InstallDependency(solver.DependencyList[i]);
+          if err <> NONE then
+          begin
+            depman.Free;
+            MakeUsrRequest(StrSubst(rsDepPkgsNotFound, '%l',
+              solver.DependencyList.Text) + #10 + rsInClose, rqError);
+            solver.Free;
+            Result := false;
+            exit;
+          end;
         end;
+      end
+      else
+      begin
+        //There was a critical error in dependency solver
+        MakeUsrRequest(rsResolveError + #10 + rsEMsg +
+          #10 + solver.ErrorMessage, rqError);
+        Result := false;
+        //No exit here, we can continue
       end;
     end
     else
@@ -1081,15 +1092,16 @@ begin
 
         //pkit.Resolve(Dependencies[i]);
 
-        if pkit.PkFinishCode = 1 then
+        if pkit.PkExitStatus = PK_EXIT_ENUM_SUCCESS then
         begin
           pkit.InstallPkg(Dependencies[i]);
 
           //Check if the package was really installed
-          if pkit.PkFinishCode = 1 then
+          if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
           begin
-            msg('Package ' + Dependencies[i] + ' can not be installed.');
-            MakeUsrRequest(rsCouldntSolve + #10 + StrSubst(
+            msg('Package ' + Dependencies[i] + ' could not be installed.');
+            MakeUsrRequest(StrSubst(rsInstPkgFailed, '%s', Dependencies[i]) +
+              #10 + rsEMsg + #10 + pkit.LastErrorMessage + #10 + StrSubst(
               rsViewLog, '%p', '/tmp/install-' + IAppName + '.log'), rqError);
             Result := false;
             Abort_FreeAll();
@@ -1207,9 +1219,8 @@ begin
               end;
           except
             //Unable to copy the file
-            MakeUsrRequest(Format(rsCnCopy,
-              [dest + '/' + ExtractFileName(DeleteModifiers(h))]) +
-              #10 + rsInClose, rqError);
+            MakeUsrRequest(Format(rsCnCopy, [dest + '/' +
+              ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose, rqError);
             RollbackInstallation;
             Result := false;
             Abort_FreeAll();
@@ -1466,18 +1477,30 @@ end;}
       Inc(mnpos);
       SetMainPos(Round(mnpos * max));
 
-      if pkit.PkFinishCode = 1 then
+      if pkit.PkExitStatus = PK_EXIT_ENUM_SUCCESS then
       begin
-        msg(StrSubst(rsInstallingX, '%a', Dependencies[i]));
+        if pkit.RList.Count <= 0 then
+        begin
+          msg(StrSubst(rsInstallingX, '%a', Dependencies[i]));
 
-        Inc(mnpos);
-        SetMainPos(Round(mnpos * max));
+          Inc(mnpos);
+          SetMainPos(Round(mnpos * max));
 
-        pkit.InstallPkg(Dependencies[i]);
+          pkit.InstallPkg(Dependencies[i]);
 
-        Inc(mnpos);
-        Inc(mnpos);
-        SetMainPos(Round(mnpos * max));
+          Inc(mnpos);
+          Inc(mnpos);
+          SetMainPos(Round(mnpos * max));
+        end;
+      end
+      else
+      begin
+        MakeUsrRequest(rsPkQueryFailed + #10 + rsEMsg +
+          #10 + pkit.LastErrorMessage + #10 + StrSubst(rsViewLog, '%p', '/tmp/install-' +
+          IAppName + '.log'), rqError);
+        Result := false;
+        Abort_FreeAll();
+        exit;
       end;
     end
     else
@@ -1493,87 +1516,89 @@ end;}
       Inc(mnpos);
       SetMainPos(Round(mnpos * max));
 
-      if pkit.PkFinishCode = 1 then
+      if pkit.PkExitStatus = PK_EXIT_ENUM_SUCCESS then
       begin
-        msg(rsDownloadingPkg);
-
-        if pos('http://', fpath) > 0 then
+        if pkit.RList.Count <= 0 then
         begin
-          try
-            HTTP.HTTPMethod('GET', fpath);
-            p_debug('HTTPResCode:=> ' + IntToStr(HTTP.ResultCode));
-            HTTP.Document.SaveToFile(tmpdir + ExtractFileName(fpath));
-            if HTTP.ResultCode > 210 then
-            begin
-              MakeUsrRequest(rsDepDlProblem + #10 + rsECode + ' ' +
-                IntToStr(HTTP.ResultCode), rqError);
-              Result := false;
-              Abort_FreeAll();
-              exit;
-            end;
+          msg(rsDownloadingPkg);
 
-          except
-            MakeUsrRequest(rsDepDlProblem, rqError);
-            Result := false;
-            Abort_FreeAll();
-            exit;
-          end;
-
-        end
-        else
-        begin
-          with FTP do
+          if pos('http://', fpath) > 0 then
           begin
-            TargetHost := GetServerName(fpath);
             try
-              DirectFileName := tmpdir + ExtractFileName(fpath);
-              DirectFile := true;
-
-              if not CheckFTPConnection(FTP) then
+              HTTP.HTTPMethod('GET', fpath);
+              p_debug('HTTPResCode:=> ' + IntToStr(HTTP.ResultCode));
+              HTTP.Document.SaveToFile(tmpdir + ExtractFileName(fpath));
+              if HTTP.ResultCode > 210 then
               begin
-                MakeUsrRequest(rsFTPFailed, rqError);
+                MakeUsrRequest(rsDepDlProblem + #10 + rsECode + ' ' +
+                  IntToStr(HTTP.ResultCode), rqError);
                 Result := false;
                 Abort_FreeAll();
                 exit;
               end;
 
-              ChangeWorkingDir(GetServerPath(fpath));
-
-              SetExtraPos(0);
-
-              ftpfilesize := FTP.FileSize(ExtractFileName(fpath));
-              RetrieveFile(ExtractFileName(fpath), false);
-              Logout;
             except
               MakeUsrRequest(rsDepDlProblem, rqError);
               Result := false;
               Abort_FreeAll();
               exit;
             end;
+
+          end
+          else
+          begin
+            with FTP do
+            begin
+              TargetHost := GetServerName(fpath);
+              try
+                DirectFileName := tmpdir + ExtractFileName(fpath);
+                DirectFile := true;
+
+                if not CheckFTPConnection(FTP) then
+                begin
+                  MakeUsrRequest(rsFTPFailed, rqError);
+                  Result := false;
+                  Abort_FreeAll();
+                  exit;
+                end;
+
+                ChangeWorkingDir(GetServerPath(fpath));
+
+                SetExtraPos(0);
+
+                ftpfilesize := FTP.FileSize(ExtractFileName(fpath));
+                RetrieveFile(ExtractFileName(fpath), false);
+                Logout;
+              except
+                MakeUsrRequest(rsDepDlProblem, rqError);
+                Result := false;
+                Abort_FreeAll();
+                exit;
+              end;
+            end;
+
           end;
 
+          Inc(mnpos);
+          SetMainPos(Round(mnpos * max));
+
+          msg(StrSubst(rsInstallingX, '%a', pkg));
+          pkit.InstallLocalPkg('/tmp/' + ExtractFileName(fpath));
+
+          if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
+          begin
+            MakeUsrRequest(StrSubst(rsInstPkgFailed, '%s', pkg) + #10 +
+              rsEMsg + #10 + pkit.LastErrorMessage, rqError);
+            Result := false;
+            Abort_FreeAll();
+            exit;
+          end;
         end;
 
         Inc(mnpos);
         SetMainPos(Round(mnpos * max));
-
-        msg(StrSubst(rsInstallingX, '%a', pkg));
-        pkit.InstallLocalPkg('/tmp/' + ExtractFileName(fpath));
-
-        if pkit.PkFinishCode > 1 then
-        begin
-          MakeUsrRequest(StrSubst(rsInstPkgFailed, '%s', pkg) + #10 +
-            rsECode + ' ' + IntToStr(pkit.PkFinishCode), rqError);
-          Result := false;
-          Abort_FreeAll();
-          exit;
-        end;
       end;
-
-      Inc(mnpos);
-      SetMainPos(Round(mnpos * max));
     end;
-
   end;
 
   pkit.Free; //Free PackageKit

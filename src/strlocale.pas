@@ -160,6 +160,7 @@ resourcestring
   rsDetails = 'Details';
   rsInstPkgFailed = 'Installation of package %s failed!';
   rsECode = 'Code:';
+  rsEMsg = 'Error message:';
   rsLookingForRevDeps = 'Looking for reverse-dependencies...';
   rsPackageDetected = 'Package detected: %s';
   rsInstallation = 'Installation';
@@ -302,6 +303,8 @@ resourcestring
   rsQuestion = 'Question:';
   rsYes = 'yes';
   rsY = 'y';
+  rsPkQueryFailed = 'PackageKit transaction failed!';
+  rsResolveError = 'There was an error during package resolving.';
   rsResolvingDep = 'Resolving dependencies...';
   rsPkgUnsigned = 'This package is not signed!';
   rsPkgUntrusted = 'This package is untrusted!';
