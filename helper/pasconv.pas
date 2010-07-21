@@ -81,7 +81,7 @@ begin
           if not ty then
             f := f + arg[i]
           else
-            g := g + arg[i];
+            g := g + LowerCase(arg[i]);
   end;
   //No ; appeared
   if (g <> '') and (f <> '') then
@@ -128,7 +128,7 @@ begin
       else
         x := h + ' ';
 
-      x := x + element.Name;
+      x := LowerCase(x) + element.Name;
 
       if pos('(', func) > 0 then
       begin

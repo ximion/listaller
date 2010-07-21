@@ -29,23 +29,23 @@
 #include <glib-object.h>
 
 
-GPointer li_updater_new(void);
+gpointer li_updater_new(void);
 
 void li_updater_free(void);
 
 void li_updater_set_sumode(void);
 
-GBoolean li_updater_register_status_call(GPointer upd,call TLiStatusChangeCall,GPointer user_data);
+gboolean li_updater_register_status_call(gpointer upd,call TLiStatusChangeCall,gpointer user_data);
 
-GBoolean li_updater_register_request_call(GPointer upd,call TRequestCall,GPointer user_data);
+gboolean li_updater_register_request_call(gpointer upd,call TRequestCall,gpointer user_data);
 
-GBoolean li_updater_register_newupdate_call(GPointer upd,call TNewUpdateEvent,GPointer user_data);
+gboolean li_updater_register_newupdate_call(gpointer upd,call TNewUpdateEvent,gpointer user_data);
 
-GBoolean li_updater_search_updates(GPointer upd);
+gboolean li_updater_search_updates(gpointer upd);
 
-GChar *li_updater_updateid_oldversion(GPointer upd,uid GInt32);
+gchar *li_updater_updateid_oldversion(gpointer upd,uid GInt32);
 
-GChar *li_updater_updateid_newversion(GPointer upd,uid GInt32);
+gchar *li_updater_updateid_newversion(gpointer upd,uid GInt32);
 
 
 #endif /* __LI_UPDATER */

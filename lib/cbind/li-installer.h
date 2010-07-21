@@ -29,61 +29,61 @@
 #include <glib-object.h>
 
 
-GPointer li_setup_new(void);
+gpointer li_setup_new(void);
 
 void li_setup_free(void);
 
 void li_setup_set_sumode(void);
 
-Char *li_setup_init(GPointer setup,pkname PGChar);
+char *li_setup_init(gpointer setup,pkname PGChar);
 
-TPkgType li_setup_get_pkgtype(GPointer setup);
+tpkgtype li_setup_get_pkgtype(gpointer setup);
 
-GChar *li_setup_get_disallows(GPointer setup);
+gchar *li_setup_get_disallows(gpointer setup);
 
-GChar *li_setup_get_supported_distributions(GPointer setup);
+gchar *li_setup_get_supported_distributions(gpointer setup);
 
-GChar *li_setup_get_appname(GPointer setup);
+gchar *li_setup_get_appname(gpointer setup);
 
-GChar *li_setup_get_appversion(GPointer setup);
+gchar *li_setup_get_appversion(gpointer setup);
 
-GChar *li_setup_get_pkgid(GPointer setup);
+gchar *li_setup_get_pkgid(gpointer setup);
 
-GBoolean li_setup_get_long_description(GPointer setup,list GPointer);
+gboolean li_setup_get_long_description(gpointer setup,list GPointer);
 
-GChar *li_setup_get_wizard_image_path(GPointer setup);
+gchar *li_setup_get_wizard_image_path(gpointer setup);
 
-GBoolean li_setup_get_license(GPointer setup,list GPointer);
+gboolean li_setup_get_license(gpointer setup,list GPointer);
 
-GBoolean li_setup_get_profiles_list(GPointer setup,list GPointer);
+gboolean li_setup_get_profiles_list(gpointer setup,list GPointer);
 
-GChar *li_setup_get_appicon(GPointer setup);
+gchar *li_setup_get_appicon(gpointer setup);
 
-GChar *li_setup_get_desktopfiles(GPointer setup);
+gchar *li_setup_get_desktopfiles(gpointer setup);
 
-GChar *li_setup_get_app_exec_command(GPointer setup);
+gchar *li_setup_get_app_exec_command(gpointer setup);
 
-GChar *li_setup_get_current_profile_filelist(GPointer setup);
+gchar *li_setup_get_current_profile_filelist(gpointer setup);
 
-void li_setup_enable_usource_registering(GPointer setup);
+void li_setup_enable_usource_registering(gpointer setup);
 
-GBoolean li_setup_register_status_call(GPointer setup,call TLiStatusChangeCall,GPointer user_data);
+gboolean li_setup_register_status_call(gpointer setup,call TLiStatusChangeCall,gpointer user_data);
 
-GBoolean li_setup_register_user_request_call(GPointer setup,call TRequestCall,GPointer user_data);
+gboolean li_setup_register_user_request_call(gpointer setup,call TRequestCall,gpointer user_data);
 
-GBoolean li_setup_execute(GPointer setup);
+gboolean li_setup_execute(gpointer setup);
 
-void li_setup_set_forced(GPointer setup);
+void li_setup_set_forced(gpointer setup);
 
-GBoolean li_setup_get_dependencies(GPointer setup,list PStringList);
+gboolean li_setup_get_dependencies(gpointer setup,list PStringList);
 
-GBoolean li_setup_set_profileid(GPointer setup,id GInt16);
+gboolean li_setup_set_profileid(gpointer setup,id GInt16);
 
-TPkgSigState li_setup_get_signature_state(GPointer setup);
+tpkgsigstate li_setup_get_signature_state(gpointer setup);
 
-GBoolean li_get_ipk_app_installed(PGChar appname,appid PGChar,GBoolean sumode);
+gboolean li_get_ipk_app_installed(pgchar appname,appid PGChar,gboolean sumode);
 
-void li_set_testmode(PGChar appname,appid PGChar,GBoolean sumode);
+void li_set_testmode(pgchar appname,appid PGChar,gboolean sumode);
 
 
 #endif /* __LI_INSTALLER */

@@ -29,25 +29,25 @@
 #include <glib-object.h>
 
 
-GPointer li_mgr_new(void);
+gpointer li_mgr_new(void);
 
 void li_mgr_free(void);
 
-GBoolean li_mgr_load_apps(GPointer mgr);
+gboolean li_mgr_load_apps(gpointer mgr);
 
-GBoolean li_mgr_register_status_call(GPointer mgr,call TLiStatusChangeCall,GPointer user_data);
+gboolean li_mgr_register_status_call(gpointer mgr,call TLiStatusChangeCall,gpointer user_data);
 
-TRqResult li_mgr_register_request_call(GPointer mgr,call TRequestCall,GPointer user_data);
+trqresult li_mgr_register_request_call(gpointer mgr,call TRequestCall,gpointer user_data);
 
-GBoolean li_mgr_register_app_call(GPointer mgr,call TAppEvent);
+gboolean li_mgr_register_app_call(gpointer mgr,call TAppEvent);
 
-void li_mgr_set_sumode(GPointer mgr,call TAppEvent);
+void li_mgr_set_sumode(gpointer mgr,call TAppEvent);
 
-GBoolean li_mgr_remove_app(GPointer mgr,obj TAppInfo);
+gboolean li_mgr_remove_app(gpointer mgr,obj TAppInfo);
 
-GBoolean li_remove_ipk_installed_app(PChar appname,appid PChar,TLiStatusChangeCall scall,fastmode GBoolean);
+gboolean li_remove_ipk_installed_app(pchar appname,appid PChar,tlistatuschangecall scall,fastmode GBoolean);
 
-GBoolean li_mgr_check_apps(GPointer mgr,log PStringList,GBoolean root);
+gboolean li_mgr_check_apps(gpointer mgr,log PStringList,gboolean root);
 
 
 #endif /* __LI_MANAGER */
