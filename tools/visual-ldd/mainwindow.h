@@ -50,6 +50,7 @@ public:
 
 public slots:
     void fileOpen();
+    void showAboutBox();
 
 private:
     Ui::MainWindow *ui;

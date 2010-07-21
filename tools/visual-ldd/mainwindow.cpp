@@ -289,3 +289,21 @@ void MainWindow::fileOpen()
 
     return;
 }
+
+void MainWindow::showAboutBox()
+{
+    QMessageBox::about(this, "About visual-ldd",
+                      "Visual Dependency Walker is a tool that will show you a graphical tree of\n"
+                      "all the shared libraries that a given ELF binary links to. It can be used\n"
+                      "to figure out why your program is linked against a certain library, and to check\n"
+                      "for version conflicts.\n\n"
+                      "Version: 1.4\n\n"
+                      "Authors:\n"
+                      "    Matthias Klumpp\n"
+                      "    Filippos Papadopoulos\n"
+                      "    David Sansome\n\n"
+                      "(c) 2010 Listaller Team\n"
+                      "(c) 2003-2005 by The Autopackage Crew");
+
+    return;
+}

@@ -44,6 +44,7 @@
     <property name="title">
      <string>?</string>
     </property>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menu"/>
@@ -68,6 +69,11 @@
   <action name="actionClose">
    <property name="text">
     <string>Close</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>
@@ -97,6 +103,22 @@
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>273</x>
+     <y>223</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAbout</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showAboutBox()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
