@@ -29,5 +29,106 @@
 #include <glib-object.h>
 
 
+typedef enum {
+      rqError,
+      rqWarning,
+      rqQuestion,
+      rqInfo
+} TRqType;
+
+typedef enum {
+      rqsYes,
+      rqsNo,
+      rqsOK
+} TRqResult;
+
+typedef enum {
+      mtStep,
+      mtInfo
+} TMessageType;
+
+typedef enum {
+      prNone,
+      prFailed,
+      prAuthorized,
+      prBlocked,
+      prFinished,
+      prError,
+      prInfo,
+      prStarted
+} LiProcStatus;
+
+typedef enum {
+      scNone,
+      scMnProgress,
+      scExProgress,
+      scStatus,
+      scMessage,
+      scStepMessage
+} LiStatusChange;
+
+struct TLiStatusData
+{
+      gchar *msg;
+      gint32 exprogress;
+      gint32 mnprogress;
+      LiProcStatus lastresult;
+      LiStatusChange change;
+};
+
+typedef void (*TLiStatusChangeCallGAsyncReadyCallback) {(LiStatusChange change,TLiStatusData Data,gpointer user_data);}
+
+typedef TRqResult (*TRequestCallGAsyncReadyCallback) {(TRqType mtype,char *msg,gpointer user_data);}
+
+typedef void (*TProgressEventGAsyncReadyCallback) {(int pos,gpointer user_data);}
+
+typedef enum {
+      gtALL,
+      gtEDUCATION,
+      gtOFFICE,
+      gtDEVELOPMENT,
+      gtGRAPHIC,
+      gtNETWORK,
+      gtGAMES,
+      gtSYSTEM,
+      gtMULTIMEDIA,
+      gtADDITIONAL,
+      gtOTHER,
+      gtUNKNOWN
+} AppCategory;
+
+typedef enum {
+      ptLinstall,
+      ptDLink,
+      ptContainer,
+      ptUnknown
+} TPkgType;
+
+struct TAppInfo
+{
+      gchar *Name;
+      gchar *PkName;
+      TPkgType PkType;
+      gchar *ShortDesc;
+      gchar *Version;
+      gchar *Author;
+      gchar *IconName;
+      gchar *Profile;
+      gchar *UId;
+      AppCategory Category;
+      TDateTime InstallDate;
+      WideString Dependencies;
+};
+
+typedef GBoolean (*TAppEventGAsyncReadyCallback) {(char *Name,appinfo *obj);}
+
+typedef void (*TNewUpdateEventGAsyncReadyCallback) {(char *Name,int id,gpointer user_data);}
+
+typedef enum {
+      psNone,
+      psTrusted,
+      psUntrusted
+} TPkgSigState;
+
 
 #endif /* __LI_TYPES */

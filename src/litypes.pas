@@ -58,13 +58,13 @@ type
 
   //** Callback for change of status
   TLiStatusChangeCall = procedure(change: LiStatusChange; Data: TLiStatusData;
-    user_data: Pointer); cdecl;
+    user_data: GPointer); cdecl;
   //** Callback for user request
   TRequestCall = function(mtype: TRqType; msg: PChar;
-    user_data: Pointer): TRqResult; cdecl;
+    user_data: GPointer): TRqResult; cdecl;
 
   //** Called if progress was changed; only for internal use
-  TProgressEvent = procedure(pos: Integer; user_data: Pointer) of object;
+  TProgressEvent = procedure(pos: Integer; user_data: GPointer) of object;
 
   //** Application groups
   AppCategory = (gtALL,
@@ -102,10 +102,10 @@ type
   PAppInfo = ^TAppInfo;
 
   //** Event to catch thrown application records
-  TAppEvent = function(Name: PChar; obj: PAppInfo): Boolean; cdecl;
+  TAppEvent = function(Name: PChar; obj: PAppInfo): GBoolean; cdecl;
 
   //** Shows information about new update
-  TNewUpdateEvent = procedure(Name: PChar; id: Integer; user_data: Pointer); cdecl;
+  TNewUpdateEvent = procedure(Name: PChar; id: Integer; user_data: GPointer); cdecl;
 
   //** Package signature status
   TPkgSigState = (psNone, psTrusted, psUntrusted);

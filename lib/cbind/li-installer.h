@@ -37,7 +37,7 @@ void li_setup_set_sumode(void);
 
 char *li_setup_init(gpointer setup,gchar *pkname);
 
-tpkgtype li_setup_get_pkgtype(gpointer setup);
+TPkgType li_setup_get_pkgtype(gpointer setup);
 
 gchar *li_setup_get_disallows(gpointer setup);
 
@@ -67,9 +67,9 @@ gchar *li_setup_get_current_profile_filelist(gpointer setup);
 
 void li_setup_enable_usource_registering(gpointer setup);
 
-gboolean li_setup_register_status_call(gpointer setup,tlistatuschangecall call,gpointer user_data);
+gboolean li_setup_register_status_call(gpointer setup,TLiStatusChangeCall call,gpointer user_data);
 
-gboolean li_setup_register_user_request_call(gpointer setup,trequestcall call,gpointer user_data);
+gboolean li_setup_register_user_request_call(gpointer setup,TRequestCall call,gpointer user_data);
 
 gboolean li_setup_execute(gpointer setup);
 
@@ -79,7 +79,7 @@ gboolean li_setup_get_dependencies(gpointer setup,stringlist *list);
 
 gboolean li_setup_set_profileid(gpointer setup,gint16 id);
 
-tpkgsigstate li_setup_get_signature_state(gpointer setup);
+TPkgSigState li_setup_get_signature_state(gpointer setup);
 
 gboolean li_get_ipk_app_installed(gchar *appname,gchar *appid,gboolean sumode);
 

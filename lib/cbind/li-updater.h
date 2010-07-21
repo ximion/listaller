@@ -35,11 +35,11 @@ void li_updater_free(void);
 
 void li_updater_set_sumode(void);
 
-gboolean li_updater_register_status_call(gpointer upd,tlistatuschangecall call,gpointer user_data);
+gboolean li_updater_register_status_call(gpointer upd,TLiStatusChangeCall call,gpointer user_data);
 
-gboolean li_updater_register_request_call(gpointer upd,trequestcall call,gpointer user_data);
+gboolean li_updater_register_request_call(gpointer upd,TRequestCall call,gpointer user_data);
 
-gboolean li_updater_register_newupdate_call(gpointer upd,tnewupdateevent call,gpointer user_data);
+gboolean li_updater_register_newupdate_call(gpointer upd,TNewUpdateEvent call,gpointer user_data);
 
 gboolean li_updater_search_updates(gpointer upd);
 

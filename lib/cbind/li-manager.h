@@ -35,17 +35,17 @@ void li_mgr_free(void);
 
 gboolean li_mgr_load_apps(gpointer mgr);
 
-gboolean li_mgr_register_status_call(gpointer mgr,tlistatuschangecall call,gpointer user_data);
+gboolean li_mgr_register_status_call(gpointer mgr,TLiStatusChangeCall call,gpointer user_data);
 
-trqresult li_mgr_register_request_call(gpointer mgr,trequestcall call,gpointer user_data);
+TRqResult li_mgr_register_request_call(gpointer mgr,TRequestCall call,gpointer user_data);
 
-gboolean li_mgr_register_app_call(gpointer mgr,tappevent call);
+gboolean li_mgr_register_app_call(gpointer mgr,TAppEvent call);
 
-void li_mgr_set_sumode(gpointer mgr,tappevent call);
+void li_mgr_set_sumode(gpointer mgr,TAppEvent call);
 
-gboolean li_mgr_remove_app(gpointer mgr,tappinfo obj);
+gboolean li_mgr_remove_app(gpointer mgr,TAppInfo obj);
 
-gboolean li_remove_ipk_installed_app(char *appname,char *appid,tlistatuschangecall scall,gboolean fastmode);
+gboolean li_remove_ipk_installed_app(char *appname,char *appid,TLiStatusChangeCall scall,gboolean fastmode);
 
 gboolean li_mgr_check_apps(gpointer mgr,stringlist *log,gboolean root);
 
