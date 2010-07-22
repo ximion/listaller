@@ -19,7 +19,7 @@ Version 0.4.10
  == Still in development ==
  
  Bugfixes: 
-  * [all] Compatibility patch for PackageKit > 0.5
+  * Compatibility patch for PackageKit > 0.5
 
 Version 0.4b
 ~~~~~~~~~~~~~
