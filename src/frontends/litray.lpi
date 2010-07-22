@@ -49,11 +49,12 @@
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="../build/litray"/>
+      <Filename Value="../../build/litray"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../intf/"/>
+      <OtherUnitFiles Value="../;../bind/"/>
+      <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Linking>

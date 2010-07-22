@@ -3,28 +3,21 @@
   <ProjectOptions>
     <Version Value="7"/>
     <General>
-      <Flags>
-        <LRSInOutputDirectory Value="False"/>
-      </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
-      <Title Value="Software Installer"/>
+      <Title Value="Listaller Manager"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
       <Icon Value="0"/>
     </General>
-    <i18n>
-      <OutDir Value="locale"/>
-    </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="4"/>
-      <BuildNr Value="1390"/>
+      <BuildNr Value="2130"/>
       <Language Value="0809"/>
-      <CharSet Value="04B0"/>
-      <StringTable Comments="" CompanyName="" FileDescription="" FileVersion="0.4.0.1390" InternalName="" LegalCopyright="" LegalTrademarks="" OriginalFilename="" ProductName="" ProductVersion="0.1.16.1"/>
+      <StringTable Comments="" CompanyName="" FileDescription="" FileVersion="0.4.0.2130" InternalName="Listaller Manager" LegalCopyright="" LegalTrademarks="" OriginalFilename="listallmgr" ProductName="" ProductVersion="0.1.18.1"/>
     </VersionInfo>
     <PublishOptions>
       <Version Value="2"/>
@@ -40,61 +33,65 @@
     </RunParams>
     <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="FCL"/>
-        <MinVersion Major="1" Valid="True"/>
+        <PackageName Value="LCL"/>
       </Item1>
       <Item2>
-        <PackageName Value="LCL"/>
+        <PackageName Value="FCL"/>
+        <MinVersion Major="1" Valid="True"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="5">
+    <Units Count="6">
       <Unit0>
-        <Filename Value="listallgo.lpr"/>
+        <Filename Value="listallmgr.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="listallgo"/>
+        <UnitName Value="listallmgr"/>
       </Unit0>
       <Unit1>
-        <Filename Value="igobase.pas"/>
+        <Filename Value="manager.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="IWizFrm"/>
+        <ComponentName Value="MnFrm"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="igobase"/>
+        <UnitName Value="manager"/>
       </Unit1>
       <Unit2>
-        <Filename Value="dgfrm.pas"/>
+        <Filename Value="uninstall.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="DGForm"/>
+        <ComponentName Value="RMForm"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="dgfrm"/>
+        <UnitName Value="uninstall"/>
       </Unit2>
       <Unit3>
-        <Filename Value="xtypefm.pas"/>
+        <Filename Value="pkgconvertdisp.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="IMdFrm"/>
-        <HasResources Value="True"/>
+        <ComponentName Value="ConvDisp"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="xtypefm"/>
+        <UnitName Value="pkgconvertdisp"/>
       </Unit3>
       <Unit4>
-        <Filename Value="siginfodisp.pas"/>
+        <Filename Value="aboutbox.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="SigInfoFrm"/>
+        <ComponentName Value="FmAbout"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="siginfodisp"/>
+        <UnitName Value="aboutbox"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="appitem.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="appitem"/>
+      </Unit5>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="../build/listallgo"/>
+      <Filename Value="../../build/listallmgr"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
       <Libraries Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../intf/"/>
-      <UnitOutputDirectory Value="../build"/>
-      <LCLWidgetType Value="qt"/>
+      <OtherUnitFiles Value="../;../bind/"/>
+      <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
+      <LCLWidgetType Value="gtk2"/>
     </SearchPaths>
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>
@@ -108,26 +105,18 @@
       </Options>
     </Linking>
     <Other>
-      <Verbosity>
-        <ShowNotes Value="False"/>
-        <ShowGenInfo Value="False"/>
-        <ShoLineNum Value="True"/>
-        <ShowSummary Value="True"/>
-        <ShowHintsForUnusedUnitsInMainSrc Value="True"/>
-      </Verbosity>
       <CompilerMessages>
-        <IgnoredMessages idx4056="True"/>
+        <IgnoredMessages idx5024="True" idx5026="True"/>
       </CompilerMessages>
-      <CustomOptions Value="-dUSE_QT_45
+      <CustomOptions Value="-dOpbCompat
+-dUSE_QT_45
+-dQT_NATIVE_DIALOGS
 -XLAXi=
 -XLAgmodule-2.0=
 -XLAm=
 -XLAatk-1.0=
 -XLAXext="/>
       <CompilerPath Value="$(CompPath)"/>
-      <ExecuteBefore>
-        <ScanForMakeMsgs Value="True"/>
-      </ExecuteBefore>
       <CreateMakefileOnBuild Value="True"/>
     </Other>
   </CompilerOptions>

@@ -49,13 +49,13 @@
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="../build/listallerd"/>
+      <Filename Value="../../build/listallerd"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
       <Libraries Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../intf/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
-      <UnitOutputDirectory Value="../build"/>
+      <OtherUnitFiles Value="../;../bind/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
+      <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <CodeGeneration>

@@ -59,12 +59,12 @@
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="../build/liupdate"/>
+      <Filename Value="../../build/liupdate"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../intf/;../packager/"/>
-      <UnitOutputDirectory Value="../build"/>
+      <OtherUnitFiles Value="../;../bind/"/>
+      <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Parsing>

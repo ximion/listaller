@@ -62,7 +62,7 @@ libdirs=". \
 
 dirs=". \
       ./src \
-      ./licreator"
+      ./src/licreator"
 
 basedir=$(pwd)
 
@@ -165,23 +165,6 @@ else
   echo " LazBuild was not found. Have you installed the Lazarus-IDE?"
   exit 8
 fi
-echo
-echo "Preparing scripts..."
-#Add x right to execute build scripts
-cd ./src
-chmod +x ./make-base.sh
-chmod +x ./make-gui.sh
-chmod +x ./install-core.sh
-chmod +x ./install-tools.sh
-chmod +x ./install-data.sh
-chmod +x ./install-gui.sh
-chmod +x ../licreator/make.sh
-chmod +x ../licreator/install.sh
-chmod +x ./writedoc.sh
-chmod +x ./clean.sh
-chmod +x ./uninstall.sh
-cd ..
-echo "Done"
 echo
 
 # Install directory

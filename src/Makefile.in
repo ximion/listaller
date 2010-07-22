@@ -3,41 +3,41 @@
 # Targets:
 # The First target is the one built when there is nothing on make command line
 all:
-	./make-base.sh
-	%GTK+%./make-gui.sh WIDGET=gtk2
-	%Qt%./make-gui.sh WIDGET=qt4
+	bash ./make-base
+	%GTK+%bash ./make-gui WIDGET=gtk2
+	%Qt%bash ./make-gui WIDGET=qt4
 
 install:
-	./install-core.sh prefix=%PREFIX% libdir=%LIBDIR%
-	./install-tools.sh prefix=%PREFIX% libdir=%LIBDIR%
-	./install-data.sh prefix=%PREFIX% libdir=%LIBDIR%
-	%GTK+%./install-gui.sh WIDGET=gtk2 prefix=%PREFIX% libdir=%LIBDIR%
-	%Qt%./install-gui.sh WIDGET=qt4 prefix=%PREFIX% libdir=%LIBDIR%
-	%DEV%./install-dev.sh prefix=%PREFIX% libdir=%LIBDIR%
+	bash ./install-core prefix=%PREFIX% libdir=%LIBDIR%
+	bash ./install-tools prefix=%PREFIX% libdir=%LIBDIR%
+	bash ./install-data prefix=%PREFIX% libdir=%LIBDIR%
+	%GTK+%bash ./install-gui WIDGET=gtk2 prefix=%PREFIX% libdir=%LIBDIR%
+	%Qt%bash ./install-gui WIDGET=qt4 prefix=%PREFIX% libdir=%LIBDIR%
+	%DEV%bash ./install-dev prefix=%PREFIX% libdir=%LIBDIR%
 
 install-binonly:
-	./install-core.sh prefix=%PREFIX% libdir=%LIBDIR%
-	./install-tools.sh prefix=%PREFIX% libdir=%LIBDIR%
-	%GTK+%./install-gui.sh WIDGET=gtk2 prefix=%PREFIX% libdir=%LIBDIR%
-	%Qt%./install-gui.sh WIDGET=qt4 prefix=%PREFIX% libdir=%LIBDIR%
+	bash ./install-core prefix=%PREFIX% libdir=%LIBDIR%
+	bash ./install-tools prefix=%PREFIX% libdir=%LIBDIR%
+	%GTK+%bash ./install-gui WIDGET=gtk2 prefix=%PREFIX% libdir=%LIBDIR%
+	%Qt%bash ./install-gui WIDGET=qt4 prefix=%PREFIX% libdir=%LIBDIR%
 
 install-data:
-	./install-data.sh prefix=%PREFIX% libdir=%LIBDIR%
+	bash ./install-data prefix=%PREFIX% libdir=%LIBDIR%
 
 install-tools:
-	./install-core.sh prefix=%PREFIX% libdir=%LIBDIR%
-	./install-tools.sh prefix=%PREFIX% libdir=%LIBDIR%
+	bash ./install-core prefix=%PREFIX% libdir=%LIBDIR%
+	bash ./install-tools prefix=%PREFIX% libdir=%LIBDIR%
 
 install-front:
-	./install-core.sh prefix=%PREFIX% libdir=%LIBDIR%
-	%GTK+%./install-gui.sh WIDGET=gtk2 prefix=%PREFIX% libdir=%LIBDIR%
-	%Qt%./install-gui.sh WIDGET=qt4 prefix=%PREFIX% libdir=%LIBDIR%
+	bash ./install-core prefix=%PREFIX% libdir=%LIBDIR%
+	%GTK+%bash ./install-gui WIDGET=gtk2 prefix=%PREFIX% libdir=%LIBDIR%
+	%Qt%bash ./install-gui WIDGET=qt4 prefix=%PREFIX% libdir=%LIBDIR%
 
 srcdoc:
-	./writedoc.sh
+	bash ./writedoc
 
 clean:
-	./clean.sh
+	bash ./clean.sh
 
 uninstall:
-	./uninstall.sh prefix=%PREFIX% libdir=%LIBDIR%
+	bash ./uninstall prefix=%PREFIX% libdir=%LIBDIR%

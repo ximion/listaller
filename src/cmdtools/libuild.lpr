@@ -22,8 +22,8 @@ uses
   {$IFDEF UNIX}
   cthreads, {$ENDIF}
   Interfaces, //We need an widgetset (NoGUI) for graphic handling
-  Classes, SysUtils, CustApp, liUtils, Process, ipkbuild, strLocale,
-  LiTranslator, unibuild, gExt;
+  Classes, SysUtils, CustApp, liUtils, Process, IPKBuild, StrLocale,
+  LiTranslator, UniBuild, GExt;
 
 type
 

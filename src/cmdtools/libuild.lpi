@@ -6,11 +6,9 @@
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
-      <Title Value="Listaller Builder"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
-      <Icon Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
@@ -42,22 +40,22 @@
         <UnitName Value="unibuild"/>
       </Unit1>
       <Unit2>
-        <Filename Value="../packager/ipkpackage.pas"/>
+        <Filename Value="ipkbuild.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ipkpackage"/>
+        <UnitName Value="ipkbuild"/>
       </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="../build/libuild"/>
+      <Filename Value="../../build/libuild"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
       <Libraries Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../opbitmap/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
-      <UnitOutputDirectory Value="../build"/>
+      <OtherUnitFiles Value="../;../../opbitmap/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
+      <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <Other>

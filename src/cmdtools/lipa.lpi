@@ -9,7 +9,6 @@
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
-      <Title Value="Lipa"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -32,33 +31,23 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="3">
+    <Units Count="1">
       <Unit0>
         <Filename Value="lipa.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="lipa"/>
       </Unit0>
-      <Unit1>
-        <Filename Value="ipkbuild.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="ipkbuild"/>
-      </Unit1>
-      <Unit2>
-        <Filename Value="ipkscript.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="ipkscript"/>
-      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="../build/lipa"/>
+      <Filename Value="../../build/lipa"/>
     </Target>
     <SearchPaths>
       <Libraries Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../intf/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
-      <UnitOutputDirectory Value="../build"/>
+      <OtherUnitFiles Value="../;../bind/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
+      <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <Parsing>

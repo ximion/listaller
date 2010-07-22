@@ -31,30 +31,35 @@ echo "LAZTarget: $LCLDir"
 
 OS="linux"
 
+#Initialize build dirs
+# Create necessary dirs
+mkdir -p ../build
+mkdir -p ../build/locale
+mkdir -p ../build/lib_$ARCH-$OS
+mkdir -p ../build/$ARCH-$OS
+
 echo "Target operating system: $OS"
 echo "Active widgetset: $WIDGET"
 
 echo "Starting new Listaller build..."
-# Command line to build the sofware
-# Create necessary dirs
-mkdir -p ../build
-mkdir -p ../build/locale
 
 echo "Compiling libinstaller library..."
 lazbuild -B --ws=nogui ../lib/libinstaller.lpr
-if [ ! -f "libinstaller.so" ]; then
- ln -s ../build/libinstaller.so.0.4.0 libinstaller.so.0.4
+if [ ! -f "../build/libinstaller.so" ]; then
+ cd ../build
+ ln -s libinstaller.so.0.4.0 libinstaller.so.0.4
  ln -s libinstaller.so.0.4 libinstaller.so
+ cd ../src
 fi
 
 echo "Compiling Listaller daemon..."
-lazbuild -B --ws=nogui listallerd.lpr
+lazbuild -B --ws=nogui ./daemon/listallerd.lpr
 
 echo "Compiling command-line tool..."
-lazbuild -B --ws=nogui lipa.lpr
+lazbuild -B --ws=nogui ./cmdtools/lipa.lpr
 #fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewhi -l -Fuabbrevia/ -Fusynapse/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -vm5024 -FEbin/ -olipa -dOpbCompat lipa.lpr
 echo "Compiling package build tool..."
-lazbuild -B --ws=nogui libuild.lpr
+lazbuild -B --ws=nogui ./cmdtools/libuild.lpr
 #fpc -MObjFPC -Sgi -CX -O1 -gl -XX -vewnhi -l -Fuopbitmap/ -Fuabbrevia/ -Fu$LCLDir/lcl/units/$ARCH-$OS/ -Fu$LCLDir/lcl/units/$ARCH-$OS/nogui/ -Fu. -FUbin/ -FEbin/ -olibuild -dOpbCompat libuild.lpr
 
 #Compiling lanuage files

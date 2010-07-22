@@ -338,8 +338,6 @@ function TInstallation.ResolveDependencies(const fetchFromDebian: Boolean =
   true): Boolean;
 var
   i, j: Integer;
-  mnpos: Integer;
-  one: Double;
   tmp: TStringList;
   err: LiLibSolveError;
   depMan: TExDepManager;

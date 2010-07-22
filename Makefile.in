@@ -1,11 +1,11 @@
-# Makefile for Listaller 0.4
+# Makefile for Listaller 0.5
 all:
 	$(MAKE) -C ./src all
-	%LiCreator%$(MAKE) -C ./licreator all
+	%LiCreator%$(MAKE) -C ./src/licreator all
 
 install:
 	$(MAKE) -C ./src install
-	%LiCreator%$(MAKE) -C ./licreator install
+	%LiCreator%$(MAKE) -C ./src/licreator install
 
 install-binonly:
 	$(MAKE) -C ./src install-binonly
@@ -29,7 +29,7 @@ distclean:
 	$(MAKE) clean-reset
 
 clean-reset:
-	$(MAKE) clean ALL=1
+	$(MAKE) -C ./src clean ALL=1
 
 uninstall:
 	$(MAKE) -C ./src uninstall

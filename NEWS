@@ -2,17 +2,24 @@ Version 0.5
 ~~~~~~~~~~~~~
  == Still in development ==
  
- * [all] Added new software databse handler
- * [all] New database layout
- * [installer] Use Debian packages as dependency sources
- * [visual-ldd] Imported from Autopackage
- * [visual-ldd] Updated GUI and added some more features
+ Features:
+  * New software database handler
+  * Use Debian packages as dependency sources
+  * visual-ldd: Pulled from Autopackage
+  * visual-ldd: Ported to Qt4, updated GUI and added few more features
+ 
+ Specifications:
+  * Updated databse layout to new format
+ 
+ Bugfixes:
+  * Fix invalid dependencies on Fedora
  
 Version 0.4.10
 ~~~~~~~~~~~~~
  == Still in development ==
  
- * [all] Compatibility patch for PackageKit > 0.5
+ Bugfixes: 
+  * [all] Compatibility patch for PackageKit > 0.5
 
 Version 0.4b
 ~~~~~~~~~~~~~

@@ -14,11 +14,11 @@ fi
 rm -f ./libinstaller.so
 rm -f ./libinstaller.so.0.4
 
-cd ../licreator
+cd licreator
 if [ "$ALL" == "1" ]; then
  rm -f Makefile
 fi
-cd ..
+cd ../.. #Down to root level
 
 if [ "$ALL" == "1" ]; then
  rm -f Makefile
@@ -42,8 +42,9 @@ find -iname *.lrs -exec rm {} \;
 find -iname *.rst -exec rm {} \;
 find -iname *.pc -exec rm {} \;
 
-find . -name *~ -exec rm {} \;
+find -iname *~ -exec rm {} \;
+#find . -name *~ -exec rm {} \;
 
-cd ./src
+cd src
 
 echo "Source code directories cleaned up."

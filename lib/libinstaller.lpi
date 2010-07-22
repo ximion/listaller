@@ -6,7 +6,6 @@
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
-      <Title Value="Listaller Library"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
     </General>
@@ -69,8 +68,8 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../src/;../packager/;../packager/compression/;../synapse/;../intf/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
-      <UnitOutputDirectory Value="../build"/>
+      <OtherUnitFiles Value="../src/;../src/bind/;../synapse/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
+      <UnitOutputDirectory Value="../build/lib_$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <Linking>

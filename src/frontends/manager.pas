@@ -21,7 +21,7 @@ unit manager;
 interface
 
 uses
-  Spin, Forms, Menus, AppMan, Distri, AppItem, AppList,
+  Spin, Forms, Menus, AppMan, Distri, AppItem, AppList, GLib2,
   Buttons, Classes, Dialogs, LCLType, liTypes, liUtils, Process, AboutBox,
   CheckLst, ComCtrls, Controls, ExtCtrls, FileUtil, Graphics, Inifiles, StdCtrls,
   SysUtils, strLocale, Uninstall, IconLoader, LResources, PackageKit, PkTypes;
@@ -195,7 +195,7 @@ begin
   RMForm.ShowModal;
 end;
 
-function OnNewAppFound(Name: PChar; obj: PAppInfo): Boolean; cdecl;
+function OnNewAppFound(Name: PChar; obj: PAppInfo): GBoolean; cdecl;
 begin
   Result := true;
   with MnFrm do

@@ -24,10 +24,8 @@ interface
 uses
   MD5, Forms, Grids, Menus, editor, ipkdef, Buttons, Classes, Dialogs,
   EditBtn, LCLType, LiTypes, liUtils, SynEdit, CheckLst, ComCtrls,
-  Controls, ExtCtrls, FileCtrl, FileUtil,
-  Graphics, StdCtrls,
-  SysUtils, IconLoader,
-  LResources, popupnotifier;
+  Controls, ExtCtrls, FileCtrl, FileUtil, Graphics, StdCtrls,
+  SysUtils, IconLoader, LResources, popupnotifier;
 
 type
 
@@ -251,9 +249,9 @@ begin
   if NoteBook1.PageIndex = 2 then
     cmbProfilesChange(Sender);  // SaveFilesToProfile
   if (CreaType = ptDLink) and (NoteBook1.PageIndex = 4) then
-    NoteBook1.PageIndex := NoteBook1.PageIndex-1;
-  NoteBook1.PageIndex := NoteBook1.PageIndex-1;
-  if NoteBook1.PageIndex<=0 then
+    NoteBook1.PageIndex := NoteBook1.PageIndex - 1;
+  NoteBook1.PageIndex := NoteBook1.PageIndex - 1;
+  if NoteBook1.PageIndex <= 0 then
   begin
     BitBtn3.Enabled := false;
     BitBtn1.Enabled := false;
@@ -262,10 +260,10 @@ end;
 
 procedure TfrmProjectWizard.AddDepBtnClick(Sender: TObject);
 begin
-  if EdtNewDep.Text<>'' then
+  if EdtNewDep.Text <> '' then
   begin
     DependencyBox.Items.Add(EdtNewDep.Text);
-    DependencyBox.Checked[DependencyBox.items.Count-1] := true;
+    DependencyBox.Checked[DependencyBox.items.Count - 1] := true;
   end;
 end;
 
@@ -294,7 +292,7 @@ begin
 
   rs.AppVersion := Edit2.Text;
 
-  if (aType = ptLinstall)and(FileNameEdit1.FileName<>'') then
+  if (aType = ptLinstall) and (FileNameEdit1.FileName <> '') then
     //License not used in dlink- and container-packages
   begin
     rs.WriteAppLicense(FileNameEdit1.FileName);
@@ -303,12 +301,12 @@ begin
   rs.WriteAppDescription(FileNameEdit2.FileName);
 
   s := '';
-  for i := 0 to lbDistributions.Items.Count-1 do
+  for i := 0 to lbDistributions.Items.Count - 1 do
   begin
     if s = '' then
       s := lbDistributions.Items[i]
     else
-      s := s+';'+lbDistributions.Items[i];
+      s := s + ';' + lbDistributions.Items[i];
   end;
 
   rs.DSupport := s;
@@ -330,7 +328,7 @@ begin
   // LangCode contains the active language variable
   rs.LangCode := '';
   rs.SDesc := tvShortDescriptions.Items[0].GetFirstChild.Text;
-  for i := 1 to tvShortDescriptions.Items.Count-1 do
+  for i := 1 to tvShortDescriptions.Items.Count - 1 do
     if i mod 2 = 0 then
     begin
       rs.LangCode := tvShortDescriptions.Items[i].Text;
@@ -374,11 +372,11 @@ begin
 
   //Set disallowed actions
   if not cgrIMethods.Checked[0] then
-    s := s+';ioBase';
+    s := s + ';ioBase';
   if not cgrIMethods.Checked[1] then
-    s := s+';ioLocal';
+    s := s + ';ioLocal';
   if not cgrIMethods.Checked[2] then
-    s := s+';ioTest';
+    s := s + ';ioTest';
   s := copy(s, 2, length(s));
   rs.Disallows := s;
   s := '';
@@ -387,7 +385,7 @@ begin
   if aType = ptLinstall then      //Profiles are not used in dlink-packages
   begin
     tmp := TStringList.Create;
-    for i := 0 to GetProfileCount-1 do
+    for i := 0 to GetProfileCount - 1 do
     begin
       tmp.Add(GetProfileName(i));
     end;
@@ -399,13 +397,13 @@ begin
 
   //First write universal dependencies
   tmp := TStringList.Create;
-  if DependencyBox.Items.Count>0 then
+  if DependencyBox.Items.Count > 0 then
   begin
-    for i := 0 to DependencyBox.Items.Count-1 do
+    for i := 0 to DependencyBox.Items.Count - 1 do
       if DependencyBox.Checked[i] then
       begin
-        if pos('.so', DependencyBox.Items[i])>0 then
-          tmp.Add('$LIB/'+DependencyBox.Items[i])
+        if pos('.so', DependencyBox.Items[i]) > 0 then
+          tmp.Add('$LIB/' + DependencyBox.Items[i])
         else
           tmp.Add(DependencyBox.Items[i]);
       end;
@@ -417,11 +415,11 @@ begin
   if ChkAddDDeps.Checked then
   begin
     tmp := TStringList.Create;
-    for i := 0 to tvDependencies.Items.Count-1 do
+    for i := 0 to tvDependencies.Items.Count - 1 do
     begin
       if tvDependencies.Items[i].HasChildren then
       begin
-        for j := 0 to tvDependencies.Items[i].Count-1 do
+        for j := 0 to tvDependencies.Items[i].Count - 1 do
         begin
           tmp.Add(tvDependencies.Items[i].Items[j].Text);
         end;
@@ -471,21 +469,21 @@ begin
       begin
         //Files
         NewBlank;
-        for j := 0 to GetProfileCount-1 do
+        for j := 0 to GetProfileCount - 1 do
         begin
           Profile := GetProfile(j);
           TargetEdit := editor.FileProfiles.AddProfile(j).SynEdit;
           s := ''; //S is used for current file path
-          for i := 0 to Profile.Count-1 do
+          for i := 0 to Profile.Count - 1 do
           begin
             if PPackageFile(Profile[i])^.CopyTo <> s then
             begin
               s := PPackageFile(Profile[i])^.CopyTo;
               TargetEdit.Lines.Add('>' + s);
             end;
-            if PPackageFile(Profile[i])^.Modifier<>'' then
+            if PPackageFile(Profile[i])^.Modifier <> '' then
               TargetEdit.Lines.Add(PPackageFile(Profile[i])^.FullName
-                +' '+PPackageFile(Profile[i])^.Modifier)
+                + ' ' + PPackageFile(Profile[i])^.Modifier)
             else
               TargetEdit.Lines.Add(PPackageFile(Profile[i])^.FullName);
             //FileInfo.Add(PPackageFile(Profile[i])^.Checksum);
@@ -509,7 +507,7 @@ begin
     case NoteBook1.PageIndex of
       0:
       begin
-        NoteBook1.PageIndex := NoteBook1.PageIndex+1;
+        NoteBook1.PageIndex := NoteBook1.PageIndex + 1;
         (Sender as TBitBtn).Enabled := true;
         exit;
       end;
@@ -520,7 +518,7 @@ begin
           if not aTreeNode.HasChildren then
           begin
             ShowMessage('Please define a short description of your application ('
-              +aTreeNode.Text+')!');
+              + aTreeNode.Text + ')!');
             (Sender as TBitBtn).Enabled := true;
             exit;
           end;
@@ -533,7 +531,7 @@ begin
           exit;
         end;
 
-        if (cgrIMethods.Checked[2])  and(not cbUseAppCMD.Checked) then
+        if (cgrIMethods.Checked[2]) and (not cbUseAppCMD.Checked) then
         begin
           ShowMessage('Listaller''s tesmode requires an start command for your application!');
           (Sender as TBitBtn).Enabled := true;
@@ -541,33 +539,33 @@ begin
         end;
 
         // set settings for package files:
-        Edit6.Caption := '$INST/'+Edit1.Text;
+        Edit6.Caption := '$INST/' + Edit1.Text;
         Edit7.Caption := Edit6.Caption;
         cmbProfiles.Tag := -1;
         cmbProfiles.Items.Assign(lbProfiles.Items);
-        if cmbProfiles.Items.Count>0 then
+        if cmbProfiles.Items.Count > 0 then
           cmbProfiles.ItemIndex := 0;
         cmbProfilesChange(Sender);
 
-        NoteBook1.PageIndex := NoteBook1.PageIndex+1;
+        NoteBook1.PageIndex := NoteBook1.PageIndex + 1;
 
         (Sender as TBitBtn).Enabled := true;
         exit;
       end;
       2:
       begin
-        for i := 0 to lbDistributions.Count-1 do
+        for i := 0 to lbDistributions.Count - 1 do
           tvDependencies.Items.Add(nil, lbDistributions.Items[i]);
 
         cmbProfilesChange(Sender);
         //Load dependency list
-        if DependencyBox.Count<=0 then
+        if DependencyBox.Count <= 0 then
         begin
           sl := TStringList.Create;
-          for j := 0 to GetProfileCount-1 do
+          for j := 0 to GetProfileCount - 1 do
           begin
             Profile := GetProfile(j);
-            for i := 0 to Profile.Count-1 do
+            for i := 0 to Profile.Count - 1 do
             begin
               if FileIsExecutable(PPackageFile(Profile[i])^.FullName) then
               begin
@@ -576,12 +574,12 @@ begin
             end;
           end;
 
-          for j := 0 to GetProfileCount-1 do
+          for j := 0 to GetProfileCount - 1 do
           begin
             Profile := GetProfile(j);
-            for i := 0 to Profile.Count-1 do
+            for i := 0 to Profile.Count - 1 do
             begin
-              for k := 0 to sl.Count-1 do
+              for k := 0 to sl.Count - 1 do
                 if ExtractFileName(PPackageFile(Profile[i])^.FullName) =
                   ExtractFileName(sl[k]) then
                   sl.Delete(k);
@@ -589,25 +587,26 @@ begin
           end;
 
           DependencyBox.Items.Assign(sl);
-          RemoveDuplicates(DependencyBox.Items); //We do not need dependencies listed up twice
+          RemoveDuplicates(DependencyBox.Items);
+          //We do not need dependencies listed up twice
           sl.Free;
 
-          for i := 0 to DependencyBox.Items.Count-1 do
+          for i := 0 to DependencyBox.Items.Count - 1 do
             DependencyBox.Checked[i] := true;
         end;
 
-        NoteBook1.PageIndex := NoteBook1.PageIndex+1;
+        NoteBook1.PageIndex := NoteBook1.PageIndex + 1;
       end;
       3:
       begin
         cmbProfilesChange(Sender); //SaveFilesToProfile
-        if lvPackageFiles.Items.Count<1 then
+        if lvPackageFiles.Items.Count < 1 then
         begin
           ShowMessage('Select some files that will be installed.'#13'- a package without files is useless. ;-)');
           (Sender as TBitBtn).Enabled := true;
           exit;
         end;
-        NoteBook1.PageIndex := NoteBook1.PageIndex+1;
+        NoteBook1.PageIndex := NoteBook1.PageIndex + 1;
 
         BitBtn3.Caption := 'Generate script file';
         with Memo1.Lines do
@@ -617,55 +616,55 @@ begin
           Add('#');
           Add('Application:');
           Add('------------');
-          Add('Name:         '+Edit1.Text);
-          Add('Version:      '+Edit2.Text);
-          Add('Group:        '+ComboBox1.Items[ComboBox1.ItemIndex]);
+          Add('Name:         ' + Edit1.Text);
+          Add('Version:      ' + Edit2.Text);
+          Add('Group:        ' + ComboBox1.Items[ComboBox1.ItemIndex]);
           if FileExists(FileNameEdit1.FileName) then
-            Add('License-file: '+FileNameEdit1.FileName)
+            Add('License-file: ' + FileNameEdit1.FileName)
           else
             Add('License-file: <none>');
           if FileExists(FileNameEdit2.FileName) then
-            Add('LDesc-file:   '+FileNameEdit2.FileName)
+            Add('LDesc-file:   ' + FileNameEdit2.FileName)
           else
             Add('LDesc-file:   <none>');
           Add('Short-desc.:  ');
-          if tvShortDescriptions.Items<>nil then
+          if tvShortDescriptions.Items <> nil then
           begin
-            for i := 0 to tvShortDescriptions.Items.Count-1 do
+            for i := 0 to tvShortDescriptions.Items.Count - 1 do
               if i mod 2 = 0 then
-                Add('              '+tvShortDescriptions.Items[i].Text+
-                  ': '+tvShortDescriptions.Items[i].GetFirstChild.Text);
+                Add('              ' + tvShortDescriptions.Items[i].Text +
+                  ': ' + tvShortDescriptions.Items[i].GetFirstChild.Text);
 
           end
           else
             Add('              <none>');
           Add('Package:');
           Add('--------');
-          Add('Architecture:     '+Edit3.Text);
+          Add('Architecture:     ' + Edit3.Text);
           Add('Supported Distros:');
-          for i := 0 to lbDistributions.Count-1 do
-            Add('                  '+lbDistributions.Items[i]);
+          for i := 0 to lbDistributions.Count - 1 do
+            Add('                  ' + lbDistributions.Items[i]);
 
           Add('Dependencies:');
           Add('-------------');
-          for i := 0 to tvDependencies.Items.Count-1 do
+          for i := 0 to tvDependencies.Items.Count - 1 do
           begin
             if tvDependencies.Items[i].HasChildren then
             begin
-              Add('             '+tvDependencies.Items[i].Text);
-              for j := 0 to tvDependencies.Items[i].Count-1 do
-                Add('                 '+tvDependencies.Items[i].Items[j].Text);
+              Add('             ' + tvDependencies.Items[i].Text);
+              for j := 0 to tvDependencies.Items[i].Count - 1 do
+                Add('                 ' + tvDependencies.Items[i].Items[j].Text);
             end;
           end;
           Add('Files:');
-          for j := 0 to GetProfileCount-1 do
+          for j := 0 to GetProfileCount - 1 do
           begin
-            Add('--- #' + IntToStr(j) + ' '+ GetProfileName(j));
+            Add('--- #' + IntToStr(j) + ' ' + GetProfileName(j));
             Profile := GetProfile(j);
-            for i := 0 to Profile.Count-1 do
+            for i := 0 to Profile.Count - 1 do
             begin
               Add('      ' + PPackageFile(Profile[i])^.FileName +
-                '||' +  PPackageFile(Profile[i])^.FullName + '||' +
+                '||' + PPackageFile(Profile[i])^.FullName + '||' +
                 PPackageFile(Profile[i])^.CopyTo + '||' +
                 PPackageFile(Profile[i])^.Modifier + '||' +
                 PPackageFile(Profile[i])^.Checksum);
@@ -682,7 +681,7 @@ begin
     case NoteBook1.PageIndex of
       1:
       begin
-        if tvShortDescriptions.Items.Count<=1 then
+        if tvShortDescriptions.Items.Count <= 1 then
         begin
           ShowMessage('Please define a short description for your application!');
           (Sender as TBitBtn).Enabled := true;
@@ -695,12 +694,12 @@ begin
           exit;
         end;
         NoteBook1.PageIndex := 2;
-        for i := 0 to lbDistributions.Count-1 do
+        for i := 0 to lbDistributions.Count - 1 do
           tvDependencies.Items.Add(nil, lbDistributions.Items[i]);
       end;
       2:
       begin
-        if tvDependencies.Items.Count<=(2+lbDistributions.Count) then
+        if tvDependencies.Items.Count <= (2 + lbDistributions.Count) then
         begin
           ShowMessage('The dlink-package should have at least one dependency!');
           (Sender as TBitBtn).Enabled := true;
@@ -715,43 +714,43 @@ begin
           Add('#');
           Add('Application:');
           Add('------------');
-          Add('Name:         '+Edit1.Text);
-          Add('Version:      '+Edit2.Text);
-          Add('Group:        '+ComboBox1.Items[ComboBox1.ItemIndex]);
+          Add('Name:         ' + Edit1.Text);
+          Add('Version:      ' + Edit2.Text);
+          Add('Group:        ' + ComboBox1.Items[ComboBox1.ItemIndex]);
           if FileExists(FileNameEdit1.FileName) then
-            Add('License-file: '+FileNameEdit1.FileName)
+            Add('License-file: ' + FileNameEdit1.FileName)
           else
             Add('License-file: <none>');
           if FileExists(FileNameEdit2.FileName) then
-            Add('LDesc-file:   '+FileNameEdit2.FileName)
+            Add('LDesc-file:   ' + FileNameEdit2.FileName)
           else
             Add('LDesc-file:   <none>');
           Add('Short-desc.:  ');
-          if tvShortDescriptions.Items<>nil then
+          if tvShortDescriptions.Items <> nil then
           begin
-            for i := 0 to tvShortDescriptions.Items.Count-1 do
+            for i := 0 to tvShortDescriptions.Items.Count - 1 do
               if i mod 2 = 0 then
-                Add('              '+tvShortDescriptions.Items[i].Text+
-                  ': '+tvShortDescriptions.Items[i].GetFirstChild.Text);
+                Add('              ' + tvShortDescriptions.Items[i].Text +
+                  ': ' + tvShortDescriptions.Items[i].GetFirstChild.Text);
           end
           else
             Add('              <none>');
           Add('Package:');
           Add('--------');
-          Add('Architecture:     '+Edit3.Text);
+          Add('Architecture:     ' + Edit3.Text);
           Add('Supported Distros:');
-          for i := 0 to lbDistributions.Count-1 do
-            Add('                  '+lbDistributions.Items[i]);
+          for i := 0 to lbDistributions.Count - 1 do
+            Add('                  ' + lbDistributions.Items[i]);
 
           Add('Dependencies:');
           Add('-------------');
-          for i := 0 to tvDependencies.Items.Count-1 do
+          for i := 0 to tvDependencies.Items.Count - 1 do
           begin
             if tvDependencies.Items[i].HasChildren then
             begin
-              Add('             '+tvDependencies.Items[i].Text);
-              for j := 0 to tvDependencies.Items[i].Count-1 do
-                Add('                 '+tvDependencies.Items[i].Items[j].Text);
+              Add('             ' + tvDependencies.Items[i].Text);
+              for j := 0 to tvDependencies.Items[i].Count - 1 do
+                Add('                 ' + tvDependencies.Items[i].Items[j].Text);
             end;
           end;
         end;
@@ -793,7 +792,7 @@ procedure TfrmProjectWizard.btnAssignShortDescriptionClick(Sender: TObject);
 begin
   with tvShortDescriptions do
   begin
-    if Selected<>nil then
+    if Selected <> nil then
     begin
       if (Selected.HasChildren) then
         Selected.DeleteChildren;
@@ -806,7 +805,7 @@ procedure TfrmProjectWizard.DeleteProfile(iIndex: Integer);
 var
   Profile: TList;
 begin
-  Profile := lbProfiles.Items.Objects[iIndex] as  TList;
+  Profile := lbProfiles.Items.Objects[iIndex] as TList;
   ClearProfile(Profile);
   Profile.Free;
   lbProfiles.Items.Delete(iIndex);
@@ -814,7 +813,7 @@ end;
 
 function TfrmProjectWizard.GetProfileName(iIndex: Integer): String;
 begin
-  if iIndex<lbProfiles.Count then
+  if iIndex < lbProfiles.Count then
     Result := lbProfiles.Items[iIndex]
   else
     Result := '';
@@ -833,7 +832,7 @@ end;
 function TfrmProjectWizard.GetProfile(iIndex: Integer): TList;
 begin
   Result := nil;
-  if (iIndex>-1) and (iIndex<lbProfiles.Count) then
+  if (iIndex > -1) and (iIndex < lbProfiles.Count) then
   begin
     Result := lbProfiles.Items.Objects[iIndex] as TList;
   end;
@@ -847,12 +846,12 @@ end;
 
 procedure TfrmProjectWizard.btnProfileRemoveClick(Sender: TObject);
 begin
-  if (lbProfiles.Items.Count<=1) then
+  if (lbProfiles.Items.Count <= 1) then
   begin
     ShowMessage('There must be at least 1 profile! Create another one before deleting.');
     exit;
   end;
-  if (lbProfiles.ItemIndex>-1) then
+  if (lbProfiles.ItemIndex > -1) then
   begin
     DeleteProfile(lbProfiles.ItemIndex);
   end;
@@ -860,13 +859,13 @@ end;
 
 procedure TfrmProjectWizard.btnDistributionAddClick(Sender: TObject);
 begin
-  if StringReplace(Edit5.Text, ' ', '', [rfReplaceAll])<>'' then
+  if StringReplace(Edit5.Text, ' ', '', [rfReplaceAll]) <> '' then
     lbDistributions.Items.Add(Edit5.Text);
 end;
 
 procedure TfrmProjectWizard.btnDistributionRemoveClick(Sender: TObject);
 begin
-  if lbDistributions.ItemIndex>-1 then
+  if lbDistributions.ItemIndex > -1 then
     lbDistributions.Items.Delete(lbDistributions.ItemIndex);
 end;
 
@@ -879,9 +878,9 @@ begin
   begin
     if not (aNode.Parent = nil) then
       aNode := aNode.Parent;
-    if (StringReplace(Edit8.Text, ' ', '', [rfReplaceAll])<>'') and
-      ((pos('(', Edit8.Text)>0) or  ((pos('http://', Edit8.Text)<=0)and
-      (pos('ftp://', Edit8.Text)<=0))) then
+    if (StringReplace(Edit8.Text, ' ', '', [rfReplaceAll]) <> '') and
+      ((pos('(', Edit8.Text) > 0) or ((pos('http://', Edit8.Text) <= 0) and
+      (pos('ftp://', Edit8.Text) <= 0))) then
       tvDependencies.Items.AddChild(aNode, Edit8.Text)
     else
       ShowMessage('Please add the package-name!');
@@ -890,7 +889,7 @@ end;
 
 procedure TfrmProjectWizard.btnAddLangCodeClick(Sender: TObject);
 begin
-  if (Length(edtLangCode.Text)>1)and(edtLangCode.Text<>'') then
+  if (Length(edtLangCode.Text) > 1) and (edtLangCode.Text <> '') then
     tvShortDescriptions.Items.Add(nil, LowerCase(edtLangCode.Text));
 end;
 
@@ -898,7 +897,7 @@ procedure TfrmProjectWizard.ClearProfile(Profile: TList);
 var
   i: Integer;
 begin
-  for i := Profile.Count-1 downto 0 do
+  for i := Profile.Count - 1 downto 0 do
   begin
     Dispose(PPackageFile(Profile[i]));
     Profile.Delete(i);
@@ -912,7 +911,7 @@ var
   aItem: TListItem;
 begin
   lvPackageFiles.Items.Clear;
-  for i := 0 to Profile.Count-1 do
+  for i := 0 to Profile.Count - 1 do
   begin
     aItem := lvPackageFiles.Items.Add;
     PackageFile := Profile[i];
@@ -930,7 +929,7 @@ var
   PackageFile: PPackageFile;
 begin
   ClearProfile(Profile);
-  for i := 0 to lvPackageFiles.Items.Count-1 do
+  for i := 0 to lvPackageFiles.Items.Count - 1 do
   begin
     PackageFile := New(PPackageFile);
     PackageFile^.FileName := lvPackageFiles.Items[i].Caption;
@@ -954,7 +953,7 @@ begin
     tmp.Assign(FileUtil.FindAllFiles(DirectoryEdit1.Directory, '*', true));
     j := 0;
     i := 0;
-    for j := lvPackageFiles.Items.Count to tmp.Count+lvPackageFiles.Items.Count-1 do
+    for j := lvPackageFiles.Items.Count to tmp.Count + lvPackageFiles.Items.Count - 1 do
     begin
       if FileExists(tmp[i]) then
       begin
@@ -965,7 +964,7 @@ begin
         w := StringReplace(tmp[i], DirectoryEdit1.Directory, '', [rfReplaceAll]);
         w := StringReplace(w, ExtractFileName(tmp[i]), '', [rfReplaceAll]);
         w := ExcludeTrailingBackslash(w);
-        lvPackageFiles.Items[j].SubItems.Add(Edit6.Text+w);
+        lvPackageFiles.Items[j].SubItems.Add(Edit6.Text + w);
         lvPackageFiles.Items[j].SubItems.Add('');
         lvPackageFiles.Items[j].SubItems.Add(MD5.MDPrint(MD5.MD5File(tmp[i], 1024)));
       end;
@@ -977,7 +976,7 @@ begin
   else
   begin
     lvPackageFiles.Items.Add;
-    i := lvPackageFiles.Items.Count-1;
+    i := lvPackageFiles.Items.Count - 1;
     lvPackageFiles.Items[i].Caption := ExtractFileName(FileNameEdit3.FileName);
     lvPackageFiles.Items[i].SubItems.Add(FileNameEdit3.FileName);
     lvPackageFiles.Items[i].SubItems.Add(Edit7.Text);
@@ -1018,7 +1017,7 @@ end;
 
 procedure TfrmProjectWizard.cmbProfilesChange(Sender: TObject);
 begin
-  if cmbProfiles.Tag>-1 then
+  if cmbProfiles.Tag > -1 then
     SaveFilesToProfile(TList(cmbProfiles.Items.Objects[cmbProfiles.Tag]));
   LoadFilesFromProfile(TList(cmbProfiles.Items.Objects[cmbProfiles.ItemIndex]));
   cmbProfiles.Tag := cmbProfiles.ItemIndex;   // copy current itemindex to tag
@@ -1031,12 +1030,14 @@ end;
 
 procedure TfrmProjectWizard.Edit1Change(Sender: TObject);
 begin
-  Edit11.Caption := LowerCase(Edit1.Text)+StringReplace(Edit2.Text, '.', '', [rfReplaceAll]);
+  Edit11.Caption := LowerCase(Edit1.Text) + StringReplace(Edit2.Text,
+    '.', '', [rfReplaceAll]);
 end;
 
 procedure TfrmProjectWizard.Edit2Change(Sender: TObject);
 begin
-  Edit11.Caption := LowerCase(Edit1.Text)+StringReplace(Edit2.Text, '.', '', [rfReplaceAll]);
+  Edit11.Caption := LowerCase(Edit1.Text) + StringReplace(Edit2.Text,
+    '.', '', [rfReplaceAll]);
 end;
 
 procedure TfrmProjectWizard.edtShortDescriptionChange(Sender: TObject);
@@ -1057,7 +1058,7 @@ procedure TfrmProjectWizard.FormClose(Sender: TObject; var CloseAction: TCloseAc
 var
   i: Integer;
 begin
-  for i := lbProfiles.Count-1 downto 0 do
+  for i := lbProfiles.Count - 1 downto 0 do
   begin
     DeleteProfile(i);
   end;
@@ -1106,8 +1107,9 @@ procedure TfrmProjectWizard.lvPackageFilesDblClick(Sender: TObject);
 var
   s: String;
 begin
-  s := InputBox('Add modifier', 'Please type in the modifier, that you want to use!', '');
-  if (s<>'') then
+  s := InputBox('Add modifier',
+    'Please type in the modifier, that you want to use!', '');
+  if (s <> '') then
     lvPackageFiles.Selected.SubItems[2] := s;
 end;
 
@@ -1118,7 +1120,7 @@ var
 begin
   if Key = 46 then                     // Key "DEL"
   begin
-    for i := lvPackageFiles.Items.Count-1 downto 0 do
+    for i := lvPackageFiles.Items.Count - 1 downto 0 do
     begin
       if lvPackageFiles.Items[i].Selected then
         lvPackageFiles.Items.Delete(i);
@@ -1129,7 +1131,7 @@ end;
 
 procedure TfrmProjectWizard.MenuItem1Click(Sender: TObject);
 begin
-  if lvPackageFiles.Selected<>nil then
+  if lvPackageFiles.Selected <> nil then
     lvPackageFiles.Selected.Delete;
 end;
 
@@ -1148,27 +1150,26 @@ var
   s: String;
 begin
   s := 'List of available placeholders:';
-  s := s+#13'§INST : Points to "/opt/appfiles" in ROOT installation, otherwise to "$HOME/.appfiles"';
-  s := s+#13'$SHARE : Replaced by "/usr/share" on ROOT installation, "$HOME/.appfiles/" on installation in Home-directory.';
-  s := s+#13'$OPT : Points to "/opt" if user is ROOT, otherwise it does the same as $INST';
-  s := s+#13'$BIN : Pointer to "/usr/bin" if ROOT, else "$HOME/applications/binary"';
-  s := s+#13'$SBIN : Pointer to "/usr/sbin" if ROOT, else "$HOME/applications/binary"';
-  s := s+#13'$LIB : Pointer to "/usr/lib64" (on Fedora 64bit machines) or to "/usr/lib" (all others) if ROOT, else "$HOME/.appfiles/lib64" or "$HOME/.appfiles//lib"';
-  s := s+#13'$LIB32 : Replaces with 32bit lib dir "/usr/lib32" if ROOT, else "$HOME/applications/"';
-  s := s+#13'$APP : Pointer to "/usr/share/applications", if ROOT, else "$HOME/.applications"';
-  s := s+#13'$ICON-# : Points to "/usr/share/icons/hicolor/#x#/apps" if user is ROOT, else to "$HOME/.appfiles/icons/#x#". The "#" symbol has to be replaced with the icon size: 16, 24, 32, 48, 64, 128, 265 pixels.';
-  s := s+#13'$PIX : Symbol for general pixmaps. Points to "/usr/share/pixmaps" if ROOT, else "$HOME/.appfiles/icons/common"';
-  s := s+#13'($HOME stands for the home directory of the current user. It is NO Listaller placeholder and cannot be used as one!)';
+  s := s + #13'§INST : Points to "/opt/appfiles" in ROOT installation, otherwise to "$HOME/.appfiles"';
+  s := s + #13'$SHARE : Replaced by "/usr/share" on ROOT installation, "$HOME/.appfiles/" on installation in Home-directory.';
+  s := s + #13'$OPT : Points to "/opt" if user is ROOT, otherwise it does the same as $INST';
+  s := s + #13'$BIN : Pointer to "/usr/bin" if ROOT, else "$HOME/applications/binary"';
+  s := s + #13'$SBIN : Pointer to "/usr/sbin" if ROOT, else "$HOME/applications/binary"';
+  s := s + #13'$LIB : Pointer to "/usr/lib64" (on Fedora 64bit machines) or to "/usr/lib" (all others) if ROOT, else "$HOME/.appfiles/lib64" or "$HOME/.appfiles//lib"';
+  s := s + #13'$LIB32 : Replaces with 32bit lib dir "/usr/lib32" if ROOT, else "$HOME/applications/"';
+  s := s + #13'$APP : Pointer to "/usr/share/applications", if ROOT, else "$HOME/.applications"';
+  s := s + #13'$ICON-# : Points to "/usr/share/icons/hicolor/#x#/apps" if user is ROOT, else to "$HOME/.appfiles/icons/#x#". The "#" symbol has to be replaced with the icon size: 16, 24, 32, 48, 64, 128, 265 pixels.';
+  s := s + #13'$PIX : Symbol for general pixmaps. Points to "/usr/share/pixmaps" if ROOT, else "$HOME/.appfiles/icons/common"';
+  s := s + #13'($HOME stands for the home directory of the current user. It is NO Listaller placeholder and cannot be used as one!)';
   ShowMessage(s);
 end;
 
 procedure TfrmProjectWizard.MenuItem6Click(Sender: TObject);
 begin
-  ShowMessage('List of modifiers:'#13
-   +'<chmod:xxx> : Assign the rights xxx to the file.'#13
-   +'<s> : Mark file as shared file {obsolete!}'#13
-   +'<setvars> : Go inside the file and replace all placeholders with their current values'#13#13
-   +'If possible you should not use any modifier!');
+  ShowMessage('List of modifiers:'#13 +
+    '<chmod:xxx> : Assign the rights xxx to the file.'#13 +
+    '<s> : Mark file as shared file {obsolete!}'#13 +
+    '<setvars> : Go inside the file and replace all placeholders with their current values'#13#13 + 'If possible you should not use any modifier!');
 end;
 
 procedure TfrmProjectWizard.RadioButton1Change(Sender: TObject);
@@ -1187,7 +1188,7 @@ end;
 
 procedure TfrmProjectWizard.RmDepBtnClick(Sender: TObject);
 begin
-  if DependencyBox.ItemIndex>-1 then
+  if DependencyBox.ItemIndex > -1 then
   begin
     DependencyBox.Items.Delete(DependencyBox.ItemIndex);
   end;
@@ -1251,11 +1252,11 @@ end;
 
 procedure TfrmProjectWizard.tvShortDescriptionsClick(Sender: TObject);
 begin
-  if (tvShortDescriptions.Selected<>nil) then
+  if (tvShortDescriptions.Selected <> nil) then
   begin
     if not (tvShortDescriptions.Selected.Parent = nil) then
       tvShortDescriptions.Selected := tvShortDescriptions.Selected.Parent;
-    Label12.Caption := 'Description for ~'+tvShortDescriptions.Selected.Text+'~:';
+    Label12.Caption := 'Description for ~' + tvShortDescriptions.Selected.Text + '~:';
     if tvShortDescriptions.Selected.HasChildren then
       edtShortDescription.Text := tvShortDescriptions.Selected.GetFirstChild.Text;
   end;

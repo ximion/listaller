@@ -76,12 +76,12 @@
   <CompilerOptions>
     <Version Value="8"/>
     <Target>
-      <Filename Value="../build/licreator"/>
+      <Filename Value="../../build/licreator"/>
     </Target>
     <SearchPaths>
       <Libraries Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
-      <UnitOutputDirectory Value="../build"/>
+      <OtherUnitFiles Value="../;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
+      <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Parsing>
