@@ -1,0 +1,103 @@
+===== IPK 1.0 Specification =====
+
+FIXME This document needs an update! Please not that IPK1.1 will have a completely different structure according to our current plans.
+
+==== General ====
+
+=== Format ===
+
+An IPK setup-package is a [[http://en.wikipedia.org/wiki/Xz | XZ-Compressed]] [[http://en.wikipedia.org/wiki/Tar_%28file_format%29 | TAR-Archive]]. An IPK-Package has the file extension .ipk (= **I**nstallation **p**ac**k**age), which was choosen because it is simple and easy to remember. Unfortunately the Opkg and Ipkg package manager for Linux cellphones uses the same extension. But because Listaller setups are targeted to Linux desktops and not to cellphones, it should not be much confusing. That the extension was used by some other very old applications does not matter too. (IPK was an image-format for Nintendo® games)
+Most of the IPK packages are named in the following pattern: (Install)appname-version_architecture.ipk e.g if the name of the application is "Sample" the version is "1.0" and the architecture is "i386" the package should be named InstallSample-10_i386.ipk or Sample-10_i386.ipk
+
+=== Structure ===
+
+The structure depends on the case if a package is GPG-signed.
+
+If a package is not signed, an IPK package contains the following files and folders at toplevel / (the main tarfile)
+
+^ Name        ^ Type   ^ Function                                                    ^
+| files       | folder | Contains all files that have to be installed on the disk.   |
+| pkgdata     | folder | Contains some configuration file of the package, e.g. Licenses, descriptions file-lists, scripts etc. |
+| arcinfo.pin | file   | Contains basic information about the package   |
+
+
+If a package is signed, it contains a file signature.asc and a file content.tar at toplevel. Then tarfile contains the structure listed above. The ascfile contains the signature of content.tar. Listaller will detect automatically if a package is signed and check if the signature on the tarfile is valid. The directory "pkgdata", which contains all installation profiles is required. The "files" directory can have another name.
+
+==== The control file ====
+
+The arcinfo.pin file is nearly the same as the definition part in an IPS-Script. The package builder has changed file paths and removed some unnecessary elements, everything else is the same.
+An arcinfo.pin file may look like this:
+<code ips>
+IPK-Standard-Version: 1.0
+ 
+include:"/stuff/locale/setup-es.mo"
+ 
+Type: linstall 
+Name: FooBar
+Version: 1.0-a
+License: include:"/stuff/COPYING"
+Description: include:"/stuff//desc.txt"
+Icon: /stuff/foobar-icon.png
+SDesc: A new foo-ish bar
+SDesc[de]: Einen neue foo-bar
+Group: Development
+Author: Foobar Project
+Maintainer: Pete Foo (
+ petefoo@example.org This e-mail address is being protected from spambots. You need JavaScript enabled to view it
+ )
+Disallow: ioNothing
+Profile[0]: Standard
+AppCMD: $INST/foo/foobar
+Architectures: i386
+DSupport: Ubuntu,openSUSE
+Dependencies[DEB]:  
+ lynx
+ http://example.org/chd/dnd/package.deb (pkgname)
+Dependencies[RPM]:
+ lynx-rpm
+ http://example.org/chd/dnd/rpm/package.rpm (pkgname)
+Dependencies[Ubuntu]:
+  http://dfn.dl.sourceforge.net/sourceforge/listaller/listaller_0.1.16a_i386.deb (listaller)
+Dependencies[openSUSE]:
+ http://dfn.dl.sourceforge.net/sourceforge/listaller/listaller_0.1.16a_i386.rpm (listaller)
+Dependencies:
+ libc6.so
+ library2.so
+ /usr/lib/libnagra.so.4
+</code>
+
+All the main elements are described in the IPS specification. The following elements are IPK-specific or have different values:
+
+  * License, Description, Wizimage, Icon: The value has changed, it points now to a file in the IPK package. / is the package root. Licenses are usually saved in /stuff
+  * Include commands have also changed values.
+  * The !-Files part is missing.
+
+==== File information ====
+
+The information about installed files is saved in text files which are stored in the /stuff folder.
+Every file has a name following the sheme: fileinfo-.id The is replaced by the profile identification number. E.g. if the identification number is 2 the associated file-info file is named fileinfo-2.id The content of the fileinfo has the following structure:
+<code ips>
+>Destination
+Internal path to file
+MD5-hash
+Internal path to file
+MD5-hash
+...
+</code>
+A fileinfo-file can look like this: (extract)
+<code ips>
+>$INST/Songbird
+/data/Songbird/LICENSE.html
+9b5151a0cfec60dbc0c3d548cfa3e713
+/data/Songbird/README.txt
+a92100275b9f71115dbe82a18af61392
+/data/Songbird/TRADEMARK.txt
+c82c36a2843c9ad08c42d7170a9c12d1
+/data/Songbird/songbird
+77e7be1db488bf3c4b5e8abd52d6eb23
+/data/Songbird/application.ini
+ff85febb38852501439ea623725241c0
+>$INST/Songbird/jsmodules
+/data/Songbird/jsmodules/sbLibraryUtils.jsm
+418a7400354cd1176264b5ec79f29be2
+</code>
