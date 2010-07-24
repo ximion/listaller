@@ -134,15 +134,14 @@ var
   cnf: TIniFile;
 begin
   // quick check parameters
-
-  ErrorMsg:=CheckOptions('h','help');
-  ErrorMsg:=CheckOptions('?','help');
-  //
-  ErrorMsg:=CheckOptions('v','version');
- { if ErrorMsg<>'' then begin
-    ShowException(Exception.Create(ErrorMsg));
-    Halt;
-  end;  }
+  ErrorMsg:=CheckOptions('h?b:uvs:i:',['help', 'build:', 'gen-update', 'version', 'noquietcrash', 'deb', 'rpm', 'dpack',
+                                          'generate-button', 'sign', 'solve', 'testmode', 'install:', 'verbose', 'checkapps']);
+  if ErrorMsg<>'' then
+  begin
+    writeLn(ErrorMsg);
+    Terminate;
+    Exit;
+  end;
 
   if paramstr(1)='' then
   begin

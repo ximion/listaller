@@ -57,6 +57,14 @@ var
   pki: TPackInfo;
 begin
   // quick check parameters
+  ErrorMsg:=CheckOptions('h?b:uv',['help', 'build:', 'gen-update', 'version', 'noquietcrash', 'deb', 'rpm', 'dpack',
+                                          'generate-button', 'sign']);
+  if ErrorMsg<>'' then
+  begin
+    writeLn(ErrorMsg);
+    Terminate;
+    Exit;
+  end;
 
 if not HasOption('noquietcrash') then
     OnException := @OnExeception;
