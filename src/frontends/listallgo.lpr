@@ -19,19 +19,19 @@ program listallgo;
 {$mode objfpc}{$H+}
 
 uses {$IFDEF UNIX}
-  cthreads, {$ENDIF}
+  CThreads, {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  gExt,
+  GExt,
   Forms,
-  igobase,
-  dgfrm,
-  strLocale,
+  IGoBase,
+  DGFrm,
+  StrLocale,
   SysUtils,
-  liUtils,
-  liTranslator,
-  liTypes,
-  xtypefm,
-  Installer,
+  LiUtils,
+  LiTranslator,
+  LiTypes,
+  XTypeFm,
+  LiInstaller,
   LCLType,
   Dialogs;
 

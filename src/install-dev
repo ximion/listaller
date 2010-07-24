@@ -21,15 +21,23 @@ fi
 
 echo "Installing development files..."
 mkdir -p $DESTDIR$prefix/include/Listaller
+mkdir -p $DESTDIR$prefix/share/pascal/listaller
 mkdir -p $DESTDIR$libdir/pkgconfig/
 
 #Copy C headers
 cp ../lib/cbind/*.h $DESTDIR$prefix/include/Listaller/
-sed "s#%PREFIX%#$prefix#" ../lib/cbind/libinstaller.pc.in > ../lib/cbind/libinstaller.pc
 cp ../lib/cbind/*.pc $DESTDIR$libdir/pkgconfig/
+#Link library
+CUR=$(pwd)
 cd $DESTDIR$libdir
 if [ ! -f libinstaller.so ]; then
 ln -s $libdir/libinstaller.so.0.4 libinstaller.so
 fi
+cd $CUR
+#Copy Pascal units
+cp ./bind/liappmgr.pas $DESTDIR$prefix/share/pascal/listaller
+cp ./bind/liappupdate.pas $DESTDIR$prefix/share/pascal/listaller
+cp ./bind/liinstaller.pas $DESTDIR$prefix/share/pascal/listaller
+cp ./litypes.pas $DESTDIR$prefix/share/pascal/listaller
 
-echo "Devfiles installed."
+echo "Finished installation of development files."

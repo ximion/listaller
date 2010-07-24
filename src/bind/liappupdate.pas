@@ -13,8 +13,8 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this unit. If not, see <http://www.gnu.org/licenses/>.}
-//** This unit contains libInstaller functions to perform software updates
-unit appupdate;
+//** LibInstaller functions to perform software updates
+unit liappupdate;
 
 {$mode objfpc}{$H+}
 

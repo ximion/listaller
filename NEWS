@@ -7,6 +7,7 @@ Version 0.5
   * Use Debian packages as dependency sources
   * visual-ldd: Pulled from Autopackage
   * visual-ldd: Ported to Qt4, updated GUI and added few more features
+  * Pulled apbuild from Autopackage
  
  Specifications:
   * Updated databse layout to new format

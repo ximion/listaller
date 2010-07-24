@@ -38,10 +38,10 @@ object SigInfoFrm: TSigInfoFrm
     ParentColor = False
   end
   object Button1: TButton
-    Left = 112
+    Left = 113
     Height = 28
     Top = 126
-    Width = 83
+    Width = 81
     Anchors = [akBottom]
     AutoSize = True
     Caption = 'I know the risk'

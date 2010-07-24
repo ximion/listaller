@@ -13,8 +13,8 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this unit. If not, see <http://www.gnu.org/licenses/>.}
-//** This unit contains functions to use the installer part of libInstaller
-unit installer;
+//** LibInstaller functions to perform software installations
+unit liinstaller;
 
 {$MODE objfpc}{$H+}
 

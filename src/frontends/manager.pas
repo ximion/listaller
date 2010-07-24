@@ -21,10 +21,10 @@ unit manager;
 interface
 
 uses
-  Spin, Forms, Menus, AppMan, Distri, AppItem, AppList, GLib2,
+  Spin, Forms, Menus, LiAppMgr, Distri, AppItem, AppList, GLib2,
   Buttons, Classes, Dialogs, LCLType, liTypes, liUtils, Process, AboutBox,
   CheckLst, ComCtrls, Controls, ExtCtrls, FileUtil, Graphics, Inifiles, StdCtrls,
-  SysUtils, strLocale, Uninstall, IconLoader, LResources, PackageKit, PkTypes;
+  SysUtils, StrLocale, Uninstall, IconLoader, LResources, PackageKit, PkTypes;
 
 type
 

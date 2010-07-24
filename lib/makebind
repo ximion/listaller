@@ -2,11 +2,11 @@
 set -e
 GEN="../build/util/makecbind"
 if [ -e $GEN ]; then
- $GEN -i ../intf/appman.pas -o ./cbind/li-manager.h --template=./cbind/cheader.template
- $GEN -i ../intf/installer.pas -o ./cbind/li-installer.h --template=./cbind/cheader.template
- $GEN -i ../intf/appupdate.pas -o ./cbind/li-updater.h --template=./cbind/cheader.template
+ $GEN -i ../src/bind/liappmgr.pas -o ./cbind/li-manager.h --template=./cbind/cheader.template
+ $GEN -i ../src/bind/liinstaller.pas -o ./cbind/li-installer.h --template=./cbind/cheader.template
+ $GEN -i ../src/bind/liappupdate.pas -o ./cbind/li-updater.h --template=./cbind/cheader.template
  $GEN -i ../src/litypes.pas -o ./cbind/li-types.h --template=./cbind/cheader.template
 else
- echo "makecbind was not found!"
+ echo "MakeCBind was not found!"
  exit 1
 fi

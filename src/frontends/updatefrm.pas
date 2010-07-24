@@ -23,8 +23,8 @@ interface
 uses
   Forms, Menus, Buttons, Classes, Dialogs, LCLType, liTypes,
   LiUtils, Process, CheckLst, ComCtrls, Controls, ExtCtrls,
-  Graphics, StdCtrls, SysUtils, AppUpdate, strLocale, IconLoader,
-  LResources, updexecfrm;
+  Graphics, StdCtrls, SysUtils, StrLocale, IconLoader,
+  LResources, updexecfrm, LiAppUpdate;
 
 type
 
@@ -104,7 +104,7 @@ begin
     rqWarning:
     begin
       if Application.MessageBox(PAnsiChar(msg), PChar(rsWarning),
-        MB_YESNO +  MB_IconWarning) <> idYes then
+        MB_YESNO + MB_IconWarning) <> idYes then
       begin
         ShowMessage(rsINClose);
         Result := rqsNo;
@@ -115,7 +115,7 @@ begin
     rqQuestion:
     begin
       if Application.MessageBox(PAnsiChar(msg), PChar(rsQuestion),
-        MB_YESNO +  MB_IconQuestion) <> idYes then
+        MB_YESNO + MB_IconQuestion) <> idYes then
         Result := rqsNo
       else
         Result := rqsYes;

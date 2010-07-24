@@ -21,7 +21,7 @@ unit siginfodisp;
 interface
 
 uses
-  Forms, Classes, Dialogs, Controls, FileUtil, Graphics, StdCtrls, SysUtils, strLocale, LResources;
+  Forms, Classes, Dialogs, Controls, FileUtil, Graphics, StdCtrls, SysUtils, StrLocale, LResources;
 
 type
 

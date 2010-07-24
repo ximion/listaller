@@ -27,8 +27,8 @@ unit djobs;
 interface
 
 uses
-  Classes, SysUtils, dbus, PolKit, glib2, gExt, Installer, AppMan,
-  liUtils, liTypes, SimDBus, Contnrs, AppUpdate, SyncObjs;
+  Classes, SysUtils, DBus, PolKit, GLib2, gExt, LiInstaller, LiAppMgr,
+  LiUtils, LiTypes, SimDBus, Contnrs, LiAppUpdate, SyncObjs;
 
 type
   TAccessType = (AC_UNKNOWN, AC_AUTHORIZED, AC_NOT_AUTHORIZED);

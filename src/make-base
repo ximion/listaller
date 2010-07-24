@@ -33,7 +33,6 @@ OS="linux"
 
 #Initialize build dirs
 # Create necessary dirs
-mkdir -p ../build
 mkdir -p ../build/locale
 mkdir -p ../build/lib_$ARCH-$OS
 mkdir -p ../build/$ARCH-$OS
@@ -51,6 +50,8 @@ if [ ! -f "../build/libinstaller.so" ]; then
  ln -s libinstaller.so.0.4 libinstaller.so
  cd ../src
 fi
+#Write PC file
+sed "s#%PREFIX%#$prefix#" ../lib/cbind/libinstaller.pc.in > ../lib/cbind/libinstaller.pc
 
 echo "Compiling Listaller daemon..."
 lazbuild -B --ws=nogui ./daemon/listallerd.lpr

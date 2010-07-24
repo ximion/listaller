@@ -20,8 +20,8 @@ unit uninstall;
 interface
 
 uses
-  Forms, AppMan, Buttons, Classes, Dialogs, LCLType, LiUtils, liTypes, Process, ComCtrls,
-  Controls, ExtCtrls, FileUtil, Graphics, StdCtrls, SysUtils, strLocale, LResources;
+  Forms, LiAppMgr, Buttons, Classes, Dialogs, LCLType, LiUtils, liTypes, Process, ComCtrls,
+  Controls, ExtCtrls, FileUtil, Graphics, StdCtrls, SysUtils, StrLocale, LResources;
 
 type
 

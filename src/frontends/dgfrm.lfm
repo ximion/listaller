@@ -99,13 +99,13 @@ object DGForm: TDGForm
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Main'
-      ClientHeight = 214
-      ClientWidth = 622
+      ClientHeight = 210
+      ClientWidth = 620
       object Memo1: TMemo
         Left = 0
-        Height = 214
+        Height = 210
         Top = 0
-        Width = 622
+        Width = 620
         Align = alClient
         Lines.Strings = (
           '<no description given>'
@@ -115,8 +115,8 @@ object DGForm: TDGForm
     end
     object TabSheet2: TTabSheet
       Caption = 'Details'
-      ClientHeight = 214
-      ClientWidth = 622
+      ClientHeight = 210
+      ClientWidth = 620
       object Memo2: TMemo
         Left = 0
         Height = 214
@@ -132,8 +132,8 @@ object DGForm: TDGForm
     end
     object TabSheet3: TTabSheet
       Caption = 'Installation'
-      ClientHeight = 214
-      ClientWidth = 622
+      ClientHeight = 210
+      ClientWidth = 620
       object Memo3: TMemo
         Left = 6
         Height = 137
@@ -180,10 +180,10 @@ object DGForm: TDGForm
     TabOrder = 1
   end
   object FinBtn1: TBitBtn
-    Left = 583
-    Height = 22
-    Top = 296
-    Width = 43
+    Left = 585
+    Height = 24
+    Top = 294
+    Width = 41
     Anchors = [akRight, akBottom]
     AutoSize = True
     Caption = 'Finish'

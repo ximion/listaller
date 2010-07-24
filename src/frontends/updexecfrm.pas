@@ -21,10 +21,8 @@ unit updexecfrm;
 interface
 
 uses
-  AppUpdate,
-  Classes, ComCtrls, Controls, Dialogs, FileUtil, Forms, Graphics,
-  LiUtils, liTypes, LResources, Process, StdCtrls,
-  SysUtils, strLocale;
+  LiAppUpdate, Classes, ComCtrls, Controls, Dialogs, FileUtil, Forms, Graphics,
+  LiUtils, LiTypes, LResources, Process, StdCtrls, SysUtils, StrLocale;
 
 type
 

@@ -19,8 +19,8 @@ program listallerd;
 {$mode objfpc}{$H+}
 
 uses
-  cthreads, Interfaces, Classes, SysUtils, CustApp, dbus, djobs,
-  Contnrs, SimDBus, liUtils, LCLIntf, SyncObjs, gExt;
+  cthreads, Interfaces, Classes, SysUtils, CustApp, dbus, DJobs,
+  Contnrs, SimDBus, LiUtils, LCLIntf, SyncObjs, GExt;
 
 type
 
