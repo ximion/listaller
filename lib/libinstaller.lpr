@@ -20,7 +20,7 @@ library libinstaller;
 
 uses
   CThreads, Classes, IpkInstall, SysUtils, Controls, LiTypes, LiUtils,
-  LiManageApp, LiUpdateApp, GLib2, softwaredb;
+  LiManageApp, LiUpdateApp, GLib2, SoftwareDB;
 
 
 //////////////////////////////////////////////////////////////////////////////////////

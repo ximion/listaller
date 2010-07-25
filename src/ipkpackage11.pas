@@ -13,15 +13,15 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this program. If not, see <http://www.gnu.org/licenses/>.}
-//** Contains class to package signed and unsigned IPK package source files
-unit ipkpackage;
+//** Contains class to package signed and unsigned IPK package source files (IPK1.1 layout)
+unit ipkpackage11;
 
 {$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, FileUtil, gpgsign, liUtils, liTypes, SysUtils, TarArchive;
+  Classes, FileUtil, GPGSign, LiUtils, LiTypes, SysUtils, TarArchive;
 
 type
   //** Creates IPK packages from preprocessed source files

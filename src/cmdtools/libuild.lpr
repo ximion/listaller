@@ -55,11 +55,12 @@ var
   i: Integer;
   x: Boolean;
   pki: TPackInfo;
+  ErrorMsg: String;
 begin
   // quick check parameters
-  ErrorMsg:=CheckOptions('h?b:uv',['help', 'build:', 'gen-update', 'version', 'noquietcrash', 'deb', 'rpm', 'dpack',
+  ErrorMsg := CheckOptions('h?b:uv',['help', 'build:', 'gen-update', 'version', 'noquietcrash', 'deb', 'rpm', 'dpack',
                                           'generate-button', 'sign']);
-  if ErrorMsg<>'' then
+  if ErrorMsg <> '' then
   begin
     writeLn(ErrorMsg);
     Terminate;

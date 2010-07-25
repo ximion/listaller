@@ -1,0 +1,48 @@
+#!/bin/sh -e
+#
+#    signipk
+#    Copyright (C) 2010 Matthias Klumpp
+#
+#    Authors: Matthias Klumpp <matthias@nlinux.org>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, version 3 of the License.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+OPTION_SPEC="help,sign"
+PARSED_OPTIONS=$(getopt -n "$0" -a -o hp: --l "$OPTION_SPEC" -- "$@")
+
+eval set -- "$PARSED_OPTIONS"
+
+function usage
+{
+  echo "Usage:"
+  echo "signipk <options> [parameters]"
+  echo "Sign IPK packages using GPG."
+}
+
+if [ $? != 0 ] ; then usage ; exit 1 ; fi
+
+INSTALL_DEV_FILES=1
+
+while true ; do
+	case "$1" in
+		-h|--help )  usage; exit 0;;
+		--sign )  SIGN=1; shift; ;;
+		-p     ) case "$2" in
+			    "") echo "No package specified!"; exit 3 ;;
+			     *) export libtarget=$2 ; shift 2 ;;
+			   esac ;;
+		--) shift ; break ;;
+		* ) echo "ERROR: unknown flag $1"; exit 2;;
+	esac
+done
+
+#Sign package here!

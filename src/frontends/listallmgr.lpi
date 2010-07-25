@@ -91,7 +91,7 @@
       <Libraries Value="$(ProjOutDir)/"/>
       <OtherUnitFiles Value="../;../bind/"/>
       <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
-      <LCLWidgetType Value="gtk2"/>
+      <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>

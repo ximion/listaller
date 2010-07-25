@@ -22,10 +22,10 @@ unit prjwizard;
 interface
 
 uses
-  MD5, Forms, Grids, Menus, editor, ipkdef, Buttons, Classes, Dialogs,
+  MD5, Forms, Grids, Menus, editor, IPKCDef10, Buttons, Classes, Dialogs,
   EditBtn, LCLType, LiTypes, liUtils, SynEdit, CheckLst, ComCtrls,
   Controls, ExtCtrls, FileCtrl, FileUtil, Graphics, StdCtrls,
-  SysUtils, IconLoader, LResources, popupnotifier;
+  SysUtils, IconLoader, LResources, PopupNotifier;
 
 type
 

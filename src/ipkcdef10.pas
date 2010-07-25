@@ -13,8 +13,8 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this unit. If not, see <http://www.gnu.org/licenses/>.}
-//** Contains classes to process IPK files
-unit ipkdef;
+//** Contains classes to process IPK control and script files (version 1.0)
+unit ipkcdef10;
 
 {$mode objfpc}{$H+}
 

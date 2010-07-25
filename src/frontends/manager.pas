@@ -22,8 +22,8 @@ interface
 
 uses
   Spin, Forms, Menus, LiAppMgr, Distri, AppItem, AppList, GLib2,
-  Buttons, Classes, Dialogs, LCLType, liTypes, liUtils, Process, AboutBox,
-  CheckLst, ComCtrls, Controls, ExtCtrls, FileUtil, Graphics, Inifiles, StdCtrls,
+  Buttons, Classes, Dialogs, LCLType, LiTypes, LiUtils, Process, AboutBox,
+  CheckLst, ComCtrls, Controls, ExtCtrls, FileUtil, Graphics, IniFiles, StdCtrls,
   SysUtils, StrLocale, Uninstall, IconLoader, LResources, PackageKit, PkTypes;
 
 type
@@ -200,7 +200,7 @@ begin
   Result := true;
   with MnFrm do
   begin
-    currAppList.ItemFromAppInfo(TAppInfo(obj^));
+    currAppList.ItemFromAppInfo(obj^);
   end;
   Application.ProcessMessages;
 end;

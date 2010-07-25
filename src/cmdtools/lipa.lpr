@@ -26,8 +26,8 @@ uses
   Classes, SysUtils, CustApp,
   Process, liUtils, LiInstaller,
   StrLocale, IniFiles, Distri,
-  LiTranslator, IPKdef, GExt,
-  LiAppMgr, liTypes, Forms;
+  LiTranslator, IPKCDef10, GExt,
+  LiAppMgr, LiTypes, Forms;
 
 type
 
@@ -134,9 +134,9 @@ var
   cnf: TIniFile;
 begin
   // quick check parameters
-  ErrorMsg:=CheckOptions('h?b:uvs:i:',['help', 'build:', 'gen-update', 'version', 'noquietcrash', 'deb', 'rpm', 'dpack',
+  ErrorMsg := CheckOptions('h?b:uvs:i:',['help', 'build:', 'gen-update', 'version', 'noquietcrash', 'deb', 'rpm', 'dpack',
                                           'generate-button', 'sign', 'solve', 'testmode', 'install:', 'verbose', 'checkapps']);
-  if ErrorMsg<>'' then
+  if ErrorMsg <> '' then
   begin
     writeLn(ErrorMsg);
     Terminate;

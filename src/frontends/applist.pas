@@ -161,7 +161,6 @@ const
   size = 48;
 begin
   Items.Add(' ');
-
   new := TAppInfoItem.Create;
   new.Name := ai.Name;
   new.Author := ai.Author;

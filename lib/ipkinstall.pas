@@ -21,9 +21,9 @@ unit ipkinstall;
 interface
 
 uses
-  MD5, Distri, IPKDef, Classes, Contnrs, FTPSend, LiTypes, LiUtils, MTProcs,
+  MD5, Distri, IPKCDef10, Classes, Contnrs, FTPSend, LiTypes, LiUtils, MTProcs,
   PkTypes, Process, RegExpr, BaseUnix, Blcksock, FileUtil, HTTPSend, IniFiles,
-  SysUtils, DepManage, strLocale, IPKPackage, liDBusProc, PackageKit,
+  SysUtils, DepManage, strLocale, IPKPackage11, liDBusProc, PackageKit,
   SoftwareDB, LiManageApp;
 
 type

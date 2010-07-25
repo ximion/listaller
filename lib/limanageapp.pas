@@ -21,7 +21,7 @@ unit limanageapp;
 interface
 
 uses
-  ipkdef, Classes, GetText, liTypes, liUtils, MTProcs,
+  IPKCDef10, Classes, GetText, liTypes, liUtils, MTProcs,
   PkTypes, Process, FileUtil, IniFiles, SysUtils, strLocale,
   liDBusProc, PackageKit, SoftwareDB;
 
