@@ -1,0 +1,102 @@
+===== IPS 1.0 Specification =====
+
+**Specifications for IPS Installation-Package-Source files version 1.0**
+
+==== General Layout ====
+
+One IPS file contains a definition part which describes basic information about the package. It contains information about the application name, descriptions, translations etc.
+The second part contains all information about the files which should be installed.
+The IPS script can be commented by using the # symbol.
+If you have to include a longer text into the IPS script, you can use the //include// command. The include element can assign every textfile to a IPS-element. This code example loads the package description from an external textfile:
+<code ips>
+Description: include:"./desc.txt"
+</code>
+The include command can also be used to include MO-Coded translations. The .mo files can be used as alternative way to load translations, Listaller will automatically use the included .mo file to translate all available strings.
+
+
+Each IPS1.0 file has to contain the line //IPK-Standard-Version: 1.0// at the beginning of the document. The line is followed by an empty line.
+
+After this, the details of the new package are defined by entries. Normal IPS/IPK entries have a name and end with a colon, like **Name:** After a space follows the value of the type. If the entry has a special target, it contains the specification in brackets, e.g. The element **SDesc** defines a short description of the package, if the element is specified it looks like this: **SDesc[de]** This element specifies a short German description of the package. (SDesc is specified by the German language code in brackets)
+
+If a value of an entry needs more than one line, the following lines should start with a space.
+E.g:
+<code ips>
+Description: This application does something.
+ It can help you to do work faster...
+ ...with more lines.
+ And understand the uncomplicated
+ IPS/IPK syntax.
+</code>
+After the empty line which follows the header entry, every new line has to start with a keyword to define a specific aspect of the package. (Until the Files-part is reached or if some values need more line or if an include: command is present)
+
+==== IPS-Files for "standard" IPK packages ====
+
+=== Overview ===
+
+An IPS1.0 file to build an IPK file on type "normal" can look like this:
+<file ips example.ips>
+IPK-Standard-Version: 1.0
+ 
+include:"../locale/setup-es.mo"
+ 
+Type: linstall 
+Name: FooBar
+Version: 1.0-a
+License: include:"../COPYING"
+Description: include:"./desc.txt"
+Icon: ../graphics/foobar-icon.png
+SDesc: A new foo-ish bar
+SDesc[de]: Einen neue foo-bar
+Group: Development
+Author: Foobar Project
+Maintainer: Pete Foo (
+ petefoo@example.org This e-mail address is being protected from spambots. You need JavaScript enabled to view it
+ )
+USource: http://fooproject.org/repo/ipk/updates
+Disallow: ioNothing
+Profile[0]: Standard
+AppCMD: $INST/foo/foobar
+Architectures: i386
+PkName: foobar-1.0a-ipk
+DSupport: Ubuntu,openSUSE
+Dependencies[DEB]:  
+ lynx
+ http://example.org/chd/dnd/package.deb (pkgname)
+Dependencies[RPM]:
+ lynx-rpm
+ http://example.org/chd/dnd/rpm/package.rpm (pkgname)
+Dependencies[Ubuntu]:
+  http://dfn.dl.sourceforge.net/sourceforge/listaller/listaller_0.1.16a_i386.deb (listaller)
+Dependencies[openSUSE]:
+ http://dfn.dl.sourceforge.net/sourceforge/listaller/listaller_0.1.16a_i386.rpm (listaller)
+Dependencies:
+ libc6.so
+ library2.so
+ /usr/lib/libnagra.so.4
+ 
+!-Files ~0
+>$INST/foo
+../bin/foobar
+195f7bd6242782f35819a9600dbb74aa
+../graphics/foobar-icon.png
+aa0b5d7a5dab287a422f06c121ed8cf0
+>$APP/
+../foo/data/foobar.desktop
+0351ef79d187dbed8599f612c0a2012c
+</file>
+(Some files and dependencies are missing to keep the example clear)
+
+=== The definition part ===
+
+The order of the entries does not matter, but the following order is recommended: First, we have the **Type:** entry. It defines the type of the resulting IPK package. Possible values for the type attribute are //linstall// for an normal installation, //dlink// for an DepGET package and //container// for packages that contain binary setups. If an entry named **Patch: true** exists, the package will not be registered as an single application and the installer will overwrite every file on the installation-directory. This option is dangerous, use it only for patches! The option to accept patches has to be enabled manually in Listallers preferences.
+
+IPS1.0 supports the following elements:
+^ Element name      ^ Required?       ^ Function          ^
+| **Architecture**  | Sometimes 	     | This element contains the supported architectures of the application which has to be installed. Possible values: "all" "i386" "x68_64" and every other architecture which is supported by Listaller. If the script builds the application from scratch, the Architecture entry should not exist. If it does, it will override the current architecture and the package builder may not set the correct architecture.\\ If there is no build-element avilable, this is a required element. |
+| **PkName** 	    | Yes 	      | The  entry contains one unique name for the package to identify the application. It is usual to use the lower-cased application name followed by the application version number without dots.\\ E.g: if the application name is "SampleApp 1.0.2" the **PkName** element should have the value //sampleapp-102// |
+| **Disallow** 	    | No 	      | The  entry is used to disallow some installation types. Every type that is disallowed is delimited from the others with an comma. Possible values are:
+   ioTest: Disallow testmode (execution without installing)
+   ioLocal: Disallow installation into $HOME
+   ioBase: Disallow normal installation into /
+If you want to combine the values, divide them with a comma: , |
+| **Maintainer**    | Sometimes       | The element contains the name of the package creator. This element is an essential for the "unibuild" feature and it is recommendet for packages to have a maintainer. (But normal IPK packages do not need this element) |

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="7"/>
+    <Version Value="8"/>
     <General>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
@@ -82,7 +82,7 @@
     </Units>
   </ProjectOptions>
   <CompilerOptions>
-    <Version Value="8"/>
+    <Version Value="9"/>
     <Target>
       <Filename Value="../../build/listallmgr"/>
     </Target>
@@ -93,6 +93,11 @@
       <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <UseAnsiStrings Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>
     </CodeGeneration>
@@ -107,6 +112,7 @@
     <Other>
       <CompilerMessages>
         <IgnoredMessages idx5024="True" idx5026="True"/>
+        <UseMsgFile Value="True"/>
       </CompilerMessages>
       <CustomOptions Value="-dOpbCompat
 -dUSE_QT_45

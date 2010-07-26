@@ -319,31 +319,31 @@ object MnFrm: TMnFrm
   LCLVersion = '0.9.29'
   object LeftBar: TPanel
     Left = 0
-    Height = 516
+    Height = 538
     Top = 0
     Width = 108
     Align = alLeft
     AutoSize = True
     BevelOuter = bvNone
-    ClientHeight = 516
+    ClientHeight = 538
     ClientWidth = 108
     TabOrder = 0
     object BtnPanel: TPanel
       Left = 0
-      Height = 484
+      Height = 506
       Top = 32
       Width = 108
       Align = alBottom
       Anchors = [akTop, akLeft, akRight, akBottom]
       BevelOuter = bvNone
-      ClientHeight = 484
+      ClientHeight = 506
       ClientWidth = 108
       Constraints.MinWidth = 108
       TabOrder = 0
       object SettingsButton: TSpeedButton
         Left = 8
         Height = 80
-        Top = 313
+        Top = 329
         Width = 96
         Anchors = [akLeft]
         Caption = 'Settings'
@@ -361,7 +361,7 @@ object MnFrm: TMnFrm
       object InstAppButton: TSpeedButton
         Left = 8
         Height = 72
-        Top = 6
+        Top = 8
         Width = 96
         Anchors = [akLeft]
         AutoSize = True
@@ -381,7 +381,7 @@ object MnFrm: TMnFrm
       object CatButton: TSpeedButton
         Left = 8
         Height = 80
-        Top = 97
+        Top = 103
         Width = 96
         Anchors = [akLeft]
         Caption = 'Browse catalog'
@@ -399,7 +399,7 @@ object MnFrm: TMnFrm
       object RepoButton: TSpeedButton
         Left = 8
         Height = 80
-        Top = 205
+        Top = 216
         Width = 96
         Anchors = [akLeft]
         Caption = 'Repositories'
@@ -417,7 +417,7 @@ object MnFrm: TMnFrm
       object SpacerPan: TPanel
         Left = 0
         Height = 1
-        Top = 483
+        Top = 505
         Width = 108
         Align = alBottom
         AutoSize = True
@@ -429,7 +429,7 @@ object MnFrm: TMnFrm
   end
   object Notebook1: TNotebook
     Left = 224
-    Height = 516
+    Height = 538
     Top = 0
     Width = 592
     Align = alClient
@@ -439,7 +439,7 @@ object MnFrm: TMnFrm
     object InstalledAppsPage: TPage
       Caption = 'InstalledAppsPage'
       ClientWidth = 586
-      ClientHeight = 510
+      ClientHeight = 532
       object Label1: TLabel
         Left = 6
         Height = 13
@@ -489,14 +489,14 @@ object MnFrm: TMnFrm
         Cursor = crVSplit
         Left = 0
         Height = 5
-        Top = 415
+        Top = 437
         Width = 586
         Align = alBottom
         ResizeAnchor = akBottom
       end
       object AppViewControl: TPageControl
         Left = 0
-        Height = 377
+        Height = 399
         Top = 38
         Width = 586
         ActivePage = MyAppSheet
@@ -506,12 +506,12 @@ object MnFrm: TMnFrm
         TabOrder = 3
         object MyAppSheet: TTabSheet
           Caption = 'My Apps'
-          ClientHeight = 347
+          ClientHeight = 369
           ClientWidth = 580
           OnShow = MyAppSheetShow
           object SWBox: TPanel
             Left = 0
-            Height = 347
+            Height = 369
             Top = 0
             Width = 580
             Align = alClient
@@ -522,7 +522,7 @@ object MnFrm: TMnFrm
         end
         object SysAppSheet: TTabSheet
           Caption = 'Shared Apps'
-          ClientHeight = 347
+          ClientHeight = 369
           ClientWidth = 580
           OnShow = SysAppSheetShow
           object SWBoxSU: TPanel
@@ -540,7 +540,7 @@ object MnFrm: TMnFrm
       object AppInfoPanel: TPanel
         Left = 0
         Height = 90
-        Top = 420
+        Top = 442
         Width = 586
         Align = alBottom
         BevelOuter = bvNone
@@ -602,7 +602,7 @@ object MnFrm: TMnFrm
       object MBar: TProgressBar
         Left = 229
         Height = 8
-        Top = 226
+        Top = 236
         Width = 128
         Anchors = []
         Smooth = True
@@ -614,7 +614,7 @@ object MnFrm: TMnFrm
     object CatalogPage: TPage
       Caption = 'CatalogPage'
       ClientWidth = 586
-      ClientHeight = 510
+      ClientHeight = 532
       object BitBtn2: TBitBtn
         Left = 158
         Height = 40
@@ -629,7 +629,7 @@ object MnFrm: TMnFrm
     object RepoPage: TPage
       Caption = 'RepoPage'
       ClientWidth = 586
-      ClientHeight = 510
+      ClientHeight = 532
       object BitBtn5: TBitBtn
         Left = 214
         Height = 30
@@ -716,7 +716,7 @@ object MnFrm: TMnFrm
     object ConfigPage: TPage
       Caption = 'ConfigPage'
       ClientWidth = 586
-      ClientHeight = 510
+      ClientHeight = 532
       object Label2: TLabel
         Left = 6
         Height = 13
@@ -902,7 +902,7 @@ object MnFrm: TMnFrm
   end
   object FuncList: TListView
     Left = 108
-    Height = 516
+    Height = 538
     Top = 0
     Width = 116
     Align = alLeft
@@ -931,7 +931,7 @@ object MnFrm: TMnFrm
   object StatusBar1: TStatusBar
     Left = 0
     Height = 20
-    Top = 516
+    Top = 538
     Width = 816
     Panels = <    
       item
