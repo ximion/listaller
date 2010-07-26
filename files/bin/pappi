@@ -1,0 +1,186 @@
+#!/bin/bash
+# ==============================================================================
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# ==============================================================================
+# (C) 2009 Christian Beuschel <chris109(at)web.de>
+# (C) 2009 Steffen Wendzel
+
+
+APPDIR=$HOME'/.PersonalApps/Applications/'
+PREFERENCEFILE=$HOME'/.PersonalAppPreferences'
+
+STARTERDIR=$HOME'/.PersonalApps/ApplicationStarters/'
+STARTERLINK=$HOME'/Desktop/PersonalApps.desktop'
+
+INSTALLERDIR='/opt/pappi'
+
+RETURNVALUE=0
+
+# Check for a binary
+function check_prog()
+{
+	progname=$1
+	for testdir in /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin; do
+		if [ -x $testdir/$progname ]; then
+			return
+		fi
+	done
+	# Do not use GUI output here since you cannot be sure that zenity or similar
+	# tools are available at this point!
+	echo "Aborting: $progname not found"
+	exit 1
+}
+
+function check_files()
+{
+if [ ! -d $APPDIR ]; then
+	mkdir -p $APPDIR
+fi
+if [ ! -d $STARTERDIR ]; then
+	mkdir -p $STARTERDIR
+fi
+	echo $STARTERLINK
+	if [ ! -f $STARTERLINK ]; then
+			echo "#!/usr/bin/env xdg-open" >> $STARTERLINK
+			echo "[Desktop Entry]" >> $STARTERLINK
+			echo "Encoding=UTF-8" >> $STARTERLINK
+			echo "Version=1.0" >> $STARTERLINK
+			echo "Type=Link" >> $STARTERLINK
+			echo "URL=$STARTERDIR" >> $STARTERLINK
+			echo "Name=Personal Applications" >> $STARTERLINK
+			echo "Icon=$INSTALLERDIR/icons/pappi_128.png" >> $STARTERLINK
+	fi
+
+	if [ ! -f $PREFERENCEFILE ]; then
+	
+		echo '# Preferences for Personal Applications' > $PREFERENCEFILE
+
+		echo 'PAP_ENABLE_SOUND="yes"' >> $PREFERENCEFILE
+		echo '# "yes"|"no"' >> $PREFERENCEFILE
+
+		echo 'PAP_ENABLE_MUSIC="yes"' >> $PREFERENCEFILE
+		echo '# "yes"|"no"' >> $PREFERENCEFILE
+
+		echo 'PAP_DISPLAY_MODE="window"' >> $PREFERENCEFILE
+		echo '# "window" | "fullscreen"' >> $PREFERENCEFILE
+
+		echo 'PAP_KEYBOARD="with_num_pad"' >> $PREFERENCEFILE
+		echo '# "with_num_pad"|"without_num_pad"' >> $PREFERENCEFILE
+
+		echo 'PAP_USE_JOYSTIKS="auto"' >> $PREFERENCEFILE
+		echo '# "none"|"one"|"two"|"auto"' >> $PREFERENCEFILE
+
+	fi
+}
+# Check the availability of all needed binaries
+check_prog "zenity"
+
+
+if [ $# -gt 0 ]; then
+	ACTION=$1
+else
+	ACTION=''
+fi
+
+case $ACTION in
+	"-i")
+		check_files
+		FILEPATH=$2
+
+		if [ $(expr match $FILEPATH 'file://') -eq 7 ]; then
+			FILEPATH=${FILEPATH:7}
+		fi
+
+		if [ $# -eq 2 -a -f "$FILEPATH" ]; then
+			FILENAME=$(basename $FILEPATH)
+
+			exec 3> >(zenity --progress --title="Installation" --percentage=0 --width=400 --pulsate --auto-close )
+			echo "# Installing \"$FILENAME\" ..." >&3
+
+			cp $FILEPATH $APPDIR
+			cd $APPDIR
+			MIMETYPE=$(file --mime-type $FILENAME)
+			if [ "$MIMETYPE" = "$FILENAME: application/x-bzip2" ]; then
+				# Unpack
+				APP=$( echo $(tar -xvjf $FILENAME) | cut -d ' ' -f1 )
+				APP=${APP:0:$(( ${#APP} -1 ))}
+				# Create starter
+				cat $APPDIR$APP'/starter.ini' > $STARTERDIR$APP'.desktop'
+				echo 'Exec=bash '$APPDIR$APP'/run.sh "'$APPDIR$APP'"' >>$STARTERDIR$APP'.desktop'
+				echo "Icon=$APPDIR$APP/icon.png" >> $STARTERDIR$APP'.desktop'
+				zenity --info --title="Installation complete" --text="<b>$APP</b> has been\nsuccessfully installed!"
+			else
+				echo "Error: File is no Personal Application Package"
+				RETURNVALUE=1
+			fi
+			rm $FILENAME
+		else
+				echo "Error: You have to name a Personal Application Package file as second parameter."
+				RETURNVALUE=1
+		fi
+	;;
+	"-l")
+		ls $APPDIR
+	;;
+	"-r")
+		if [ -d "$APPDIR$2" -a -f "$STARTERDIR$2.desktop" ]; then
+			rm -R $APPDIR$2
+			rm "$STARTERDIR$2.desktop"
+			echo "Application $2 has been removed."
+			RETURNVALUE=0
+		else
+			echo "Error: Application $2 does not exist."
+			RETURNVALUE=1
+		fi
+	;;
+	"-ra")
+		echo "This script removes ..."
+		echo "... desktop entry \"$STARTERLINK\""
+		echo "... directory \"$APPDIR\" with all of its content."
+		echo "... directory \"$STARTERDIR\" with all of its content."
+		echo "... configuration file \"$PREFERENCEFILE\""
+		echo " "
+		echo -n "Do you want to proceed? [y/N] "
+		read PROCEED
+		echo " "
+		if [ "$PROCEED" = "y" ]; then
+			if [ -f "$STARTERLINK" ]; then
+				rm $STARTERLINK
+			else
+				echo "Error: $STARTERLINK does not exist!"
+			fi
+			if [ -d "$APPDIR" ]; then
+				rm -R $APPDIR
+			else
+				echo "Error: $APPDIR does not exist!"
+			fi		
+			if [ -d "$STARTERDIR" ]; then
+				rm -R $STARTERDIR
+			else
+				echo "Error: $STARTERDIR does not exist!"
+			fi
+			if [ -f "$PREFERENCEFILE" ]; then
+				rm $PREFERENCEFILE
+			else
+				echo "Error: $PREFERENCEFILE does not exist!"
+			fi		
+		fi
+	;;
+	*)
+		echo "Usage: $0 <OPTION> [APPLICATION|FILE]"
+		echo "Options:"
+		echo "    -i     Install given file."
+		echo "    -l     List installed applications."
+		echo "    -r     Remove the application with given name."
+		echo "    -ra    Remove all applications and preferences."
+	;;
+esac
+exit $RETURNVALUE
+

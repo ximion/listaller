@@ -1,0 +1,57 @@
+#!/bin/bash
+# ==============================================================================
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# ==============================================================================
+# (C) 2009 Christian Beuschel <chris109(at)web.de>
+
+# Configuring destionation directory
+INSTDIR="/opt/pappi"
+
+# Configuration for mime-type registration
+MIMEBASE="/usr/local/share/mime"
+MIMEDB=$MIMEBASE"/packages"
+MIMEFILE="pappi.xml"
+APPDB="/usr/local/share/applications"
+APPLIST="defaults.list"
+APPLINIK_I="pappi_install.desktop"
+APPLINIK_T="pappi_trust.desktop"
+
+echo "This script removes ..."
+echo "... symbolic link \"/usr/local/bin/pappi\""
+echo "... directory \"$INSTDIR\" with all of its content."
+echo "... mime type definition \"$MIMEDB/$MIMEFILE\""
+echo "... desktop entry \"$APPDB/$APPLINIK_I\""
+#echo "... desktop entry \"$APPDB/$APPLINIK_T\""
+echo "... all lines containig \"$APPLINIK_I\" from \"$APPDB/$APPLIST\""
+echo "... all lines containig \"$APPLINIK_T\" from \"$APPDB/$APPLIST\""
+echo " "
+echo -n "Do you want to proceed? [y/N] "
+read PROCEED
+echo " "
+if [ "$PROCEED" = "y" ]; then
+	echo -n "Uninstalling ..."
+
+	rm /usr/local/bin/pappi
+	rm -R $INSTDIR
+
+	rm $MIMEDB/$MIMEFILE
+
+	rm $APPDB/$APPLINIK_I
+#	rm $APPDB/$APPLINIK_T
+
+	cat $APPDB/$APPLIST | grep -v $APPLINIK_I > $APPDB/$APPLIST.tmp
+	cat $APPDB/$APPLIST.tmp | grep -v $APPLINIK_T > $APPDB/$APPLIST
+	rm $APPDB/$APPLIST.tmp
+
+	echo "... all done. - Have a nice day!"
+else
+	echo "Doing nothing! - Have a nice day!"
+fi
+
