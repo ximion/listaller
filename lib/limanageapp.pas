@@ -350,7 +350,10 @@ begin
   msg(rsLoading);
   blst := TStringList.Create; //Create Blacklist
 
-  p_debug('SUMode: ' + BoolToStr(sumode));
+  if sumode then
+   p_debug('SUMode: Yes')
+  else
+   p_debug('SUMode: No');
 
   db := TSoftwareDB.Create;
   db.Load(sumode);
@@ -411,15 +414,11 @@ end; //End Autopackage  }
     xtmp := FindAllFiles('/usr/local/share/applications/', '*.desktop', true);
     for i := 0 to xtmp.Count - 1 do
       tmp.Add(xtmp[i]);
-
-{xtmp.Assign(FindAllFiles('/usr/share/games/applications/','*.desktop',true));
-for i:=0 to xtmp.Count-1 do tmp.Add(xtmp[i]); }
+    xtmp.Free;
   end
   else
     tmp := FindAllFiles(GetEnvironmentVariable('HOME') +
       '/.local/share/applications', '*.desktop', false);
-
-  xtmp.Free;
 
   for i := 0 to tmp.Count - 1 do
   begin

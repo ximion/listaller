@@ -168,10 +168,10 @@ begin
         end;
         CreateTable;
       end;
+      Active := true;
+      //ApplyUpdates;
+      Open;
     end;
-    Active := true;
-    //ApplyUpdates;
-    Open;
   end;
   p_info(rsDBOpened);
 end;

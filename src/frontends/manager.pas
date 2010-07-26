@@ -200,7 +200,6 @@ begin
   Result := true;
   with MnFrm do
   begin
-    writeLn(obj^.IconName);
     currAppList.ItemFromAppInfo(obj^);
   end;
   Application.ProcessMessages;
