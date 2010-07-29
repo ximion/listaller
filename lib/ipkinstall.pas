@@ -532,7 +532,7 @@ begin
     end;
   end;
 
-  if not pkg.UnpackFile('arcinfo.pin') then
+  if not pkg.UnpackControlFile('arcinfo.pin') then
   begin
     MakeUsrRequest(rsExtractError + #10 + rsPkgDM + #10 + rsABLoad, rqError);
     Emergency_FreeAll();
@@ -568,7 +568,7 @@ begin
   IIconPath := cont.Icon;
   if IIconPath <> '' then
   begin
-    pkg.UnpackFile(IIconPath);
+    pkg.UnpackControlFile(IIconPath);
     IIconPath := CleanFilePath(pkg.WDir + IIconPath);
   end;
 
@@ -600,7 +600,7 @@ begin
     for i := 0 to PkProfiles.Count - 1 do
     begin
       msg(StrSubst(rsFoundInstallProfileX, '%s', PkProfiles[PkProfiles.Count - 1]));
-      pkg.UnpackFile('pkgdata/fileinfo-' + IntToStr(i) + '.id');
+      pkg.UnpackControlFile('pkgdata/fileinfo-' + IntToStr(i) + '.id');
     end;
 
     IAppName := cont.AppName;
@@ -637,14 +637,14 @@ begin
     FWizImage := GetDataFile('graphics/wizardimage.png');
     if (FWizImage <> '') and (FWizImage[1] = '/') then
     begin
-      pkg.UnpackFile(FWizImage);
+      pkg.UnpackControlFile(FWizImage);
       if FileExists(pkg.WDir + FWizImage) then
         FWizImage := CleanFilePath(pkg.WDir + FWizImage);
     end;
 
-    pkg.UnpackFile('preinst');
-    pkg.UnpackFile('postinst');
-    pkg.UnpackFile('prerm');
+    pkg.UnpackControlFile('preinst');
+    pkg.UnpackControlFile('postinst');
+    pkg.UnpackControlFile('prerm');
     ExecA := '<disabled>';
     ExecB := '<disabled>';
     ExecX := '<disabled>';
@@ -673,24 +673,6 @@ begin
         Dependencies.Delete(i);
       Inc(i);
     end;
-
-    i := 0;
-    while i <= Dependencies.Count - 1 do
-    begin
-      if StringReplace(Dependencies[i], ' ', '', [rfReplaceAll]) = '' then
-        Dependencies.Delete(i);
-      Inc(i);
-    end;
-
-{ if xnode.FindNode('pkcatalog')<>nil then
- begin
-  z.ExtractFiles(ExtractFileName(xnode.FindNode('pkcatalog').NodeValue));
-  Dependencies.Add('cat:'+lp+PkgName+xnode.FindNode('pkcatalog').NodeValue)
- end;}
-
-    for i := 0 to Dependencies.Count - 1 do
-      if Dependencies[i][1] = '.' then
-        pkg.UnpackFile(Dependencies[i]);
 
     msg('Profiles count is ' + IntToStr(PkProfiles.Count));
     if PkProfiles.Count < 0 then
@@ -878,12 +860,12 @@ begin
     cont := TIPKControl.Create(pkg.WDir + '/arcinfo.pin'); //Read IPK configuration
     cont.LangCode := GetLangID; //Set language code, so we get localized entries
 
-    pkg.UnpackFile(cont.Binary);
+    pkg.UnpackDataFile(cont.Binary);
 
     tmp := TStringList.Create;
     cont.GetInternalFilesSection(tmp);
     for i := 0 to tmp.Count - 1 do
-      pkg.UnpackFile(tmp[i]);
+      pkg.UnpackDataFile(tmp[i]);
 
     tmp.Free;
     WDir := pkg.WDir;
@@ -1137,7 +1119,7 @@ begin
 
 
   //Unpack files directory
-  if not pkg.UnpackFile('files') then
+  if not pkg.UnpackDataFile('files') then
   begin
     MakeUsrRequest(rsExtractError, rqError);
     RollbackInstallation;

@@ -372,7 +372,7 @@ var
     end;
     fc.Add(CleanFilePath(h + '/' + ExtractFileName(DeleteModifiers(fname))));
 
-    if not ipkpkg.AddFile(WDir + h + '/' + ExtractFileName(DeleteModifiers(fname))) then
+    if not ipkpkg.AddDataFile(WDir + h + '/' + ExtractFileName(DeleteModifiers(fname))) then
     begin
       writeLn('error: ');
       writeln(' Could not add file "' + DeleteModifiers(fname) + '" to TAR archive.');
@@ -606,7 +606,7 @@ begin
     if prID <> '-1' then
     begin
       fc.SaveToFile(WDir + 'pkgdata/' + 'fileinfo-' + prID + '.id');
-      ipkpkg.AddFile(WDir + 'pkgdata/fileinfo-' + prID + '.id');
+      ipkpkg.AddControlFile(WDir + 'pkgdata/fileinfo-' + prID + '.id');
     end;
 
   end; //End of file including
@@ -637,7 +637,7 @@ begin
       FileCopy(h, WDir + 'pkgdata/' + 'packicon.png');
       //!!! Should be changed to support more picture-filetypes
       control.Icon := '/pkgdata/' + 'packicon.png';
-      ipkpkg.AddFile(WDir + 'pkgdata/' + 'packicon.png');
+      ipkpkg.AddControlFile(WDir + 'pkgdata/' + 'packicon.png');
       writeLn(' I: Icon included.');
     end;
   end; //END <>nil
@@ -719,20 +719,20 @@ begin
     if FileExists(ExtractFilePath(fi) + '/preinst') then
     begin
       FileCopy(ExtractFilePath(fi) + '/preinst', WDir + 'preinst');
-      ipkpkg.AddFile(WDir + 'preinst');
+      ipkpkg.AddControlFile(WDir + 'preinst');
 
       writeLn(' I: Preinst script found.');
     end;
     if FileExists(ExtractFilePath(fi) + '/postinst') then
     begin
       FileCopy(ExtractFilePath(fi) + '/postinst', WDir + 'postinst');
-      ipkpkg.AddFile(WDir + 'postinst');
+      ipkpkg.AddControlFile(WDir + 'postinst');
       writeLn(' I: Postinst script found.');
     end;
     if FileExists(ExtractFilePath(fi) + '/prerm') then
     begin
       FileCopy(ExtractFilePath(fi) + '/prerm', WDir + 'prerm');
-      ipkpkg.AddFile(WDir + 'prerm');
+      ipkpkg.AddControlFile(WDir + 'prerm');
       writeLn(' I: Prerm script found.');
     end;
 
@@ -747,7 +747,7 @@ begin
       if not FileCopy(sl[i], WDir + 'locale/' + ExtractFileName(sl[i])) then
         RaiseCopyError(sl[i]);
       writeLn(' I: Include locale: ' + ExtractFileName(sl[i]));
-      ipkpkg.AddFile(WDir + 'locale/' + ExtractFileName(sl[i]));
+      ipkpkg.AddControlFile(WDir + 'locale/' + ExtractFileName(sl[i]));
     end;
     sl.Free;
 
@@ -786,7 +786,7 @@ begin
         ExtractFileName(control.Binary)) then
         RaiseCopyError(control.Binary);
 
-      ipkpkg.AddFile(WDir + 'files/' + ExtractFileName(control.Binary));
+      ipkpkg.AddControlFile(WDir + 'files/' + ExtractFileName(control.Binary));
       control.Binary := '/files/' + ExtractFileName(control.Binary);
     end;
   end;
@@ -797,7 +797,7 @@ begin
 
   control.SaveToFile(WDir + 'arcinfo.pin');
 
-  ipkpkg.AddFile(WDir + 'arcinfo.pin');
+  ipkpkg.AddControlFile(WDir + 'arcinfo.pin');
 
   ipkpkg.Finalize; //Freeze the IPK package state
   files.Free;
