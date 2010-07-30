@@ -14,17 +14,17 @@ simple and easy to remember. Unfortunately the Opkg and Ipkg package manager for
 (and IPK was an image-format for Nintendo® games), but because Listaller setups are targeted to Linux desktops and not to
 cellphones, this should not leat to much confusion.
 Most of the IPK packages are named in the following pattern: InstallAppname-version_architecture.ipk
-E.g if the name of the application is "Sample" the version is "1.0" and the architecture is "i386" the package should
-be named InstallSample-10_i386.ipk or Sample-10_i386.ipk
+E.g if the name of the application is "//Sample//" the version is "//1.0//" and the architecture is "//i386//" the package should
+be named //InstallSample-10_i386.ipk// or //Sample-10_i386.ipk//
 
 === Structure ===
 
 The IPK archive contains the following files and folders at toplevel:
 
 ^ Name                ^ Required? ^ Function                                                    ^
-| files-<id>.tar.xz   | yes       | Contains the files which have to be installed. The <id> indicates the profile number.                                                  |
+| data.tar.xz         | yes       | Contains the files which have to be installed.              |
 | control.tar.xz      | yes       | Archive with configuration files of this package, the main config file as well as e.g. Licenses, scripts, descriptions, file-info etc. |
-| _signature.asc      | no        | A GPG ASC signature of this package. (Only exists if the package is signed)   |
+| _signature          | no        | A GPG ASC signature of this package. (Only exists if the package is signed)   |
 
 
 Listaller will detect automatically if a package is signed and check if the signature on the IPK package is valid.
@@ -47,7 +47,7 @@ IPK-Standard-Version: 1.0
 include:"/stuff/locale/setup-es.mo"
  
 Type: linstall 
-Name: FooBar
+Name: Foobar
 Version: 1.0-a
 License: include:"/stuff/COPYING"
 Description: include:"/stuff/desc.txt"
@@ -56,6 +56,7 @@ SDesc: A new foo-ish bar
 SDesc[de]: Einen neue foo-bar
 Group: Development
 Author: Foobar Project
+Vendor: Foobar Publishing
 Maintainer: Pete Foo (petefoo@example.org)
 Disallow: ioNothing
 Profile[0]: Standard
@@ -74,14 +75,12 @@ The following elements are IPK-specific or have different values:
   * Include commands have also changed values.
   * The !-Files part is missing.
 
-@>HERE<@
-
 === File information ===
 
-The information about installed files is saved in text files which are stored in the /stuff folder.
-Every file has a name following the sheme: fileinfo-.id The is replaced by the profile identification number. E.g. if the identification number is 2 the associated file-info file is named fileinfo-2.id The content of the fileinfo has the following structure:
+The information about installed files is saved in a plain text file named //fileinfo.id// which
+is stored in the //control// archive. The content of the fileinfo file has the following structure:
 <code ips>
->Destination
+>Destination_dir
 Internal path to file
 MD5-hash
 Internal path to file
@@ -105,3 +104,17 @@ ff85febb38852501439ea623725241c0
 /data/Songbird/jsmodules/sbLibraryUtils.jsm
 418a7400354cd1176264b5ec79f29be2
 </code>
+The variables (indicated by the //$// sign) are resolved to absolute paths
+following the [[Global Variables | Variable Definitions]].
+
+==== Data archive ====
+
+The data archive //data.tar.xz// contains all data a package wants to install. The directories in which
+files have to be installed are defined by the //fileinfo.id// file in the control archive.
+Usually, the data is stored in a structure somehow matching the destination of the new files.
+E.g. if files go to //$INST/App/test//, they are located in the ///INST/App/test// directory of the
+data archive. The structure of files can be freely defined, it is only controlled by the //fileinfo.id//
+file. The structure mentioned above is recommended, but it is not forced. The IPK package builder of Listaller,
+**libuild** will create IPK packages matching this structure.
+
+TODO: Add information how multiarch-IPKs are structured & handled.

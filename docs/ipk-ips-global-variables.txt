@@ -1,0 +1,24 @@
+===== Listaller Global Variables =====
+
+==== Install-Time Variables ====
+
+Install-Time variables start with a //$// sign and are replaced with their value during the
+software installation process.They are placeholders for values (file paths in most cases) defined by
+the user, the software installer or the Linux distribution itself.
+This listing contains all genuine Listaller Install-Time variables:
+
+^ Variable      ^ Replaced with                                                                           ^
+| $INST         | "///opt/appfiles//" in ROOT installation, otherwise with "//$HOME/.appfiles"//'         |
+
+  s := s + #13'$SHARE : Replaced by "/usr/share" on ROOT installation, "$HOME/.appfiles/" on installation in Home-directory.';
+  s := s + #13'$OPT : Points to "/opt" if user is ROOT, otherwise it does the same as $INST';
+  s := s + #13'$BIN : Pointer to "/usr/bin" if ROOT, else "$HOME/applications/binary"';
+  s := s + #13'$SBIN : Pointer to "/usr/sbin" if ROOT, else "$HOME/applications/binary"';
+  s := s + #13'$LIB : Pointer to "/usr/lib64" (on Fedora 64bit machines) or to "/usr/lib" (all others) if ROOT, else "$HOME/.appfiles/lib64" or "$HOME/.appfiles//lib"';
+  s := s + #13'$LIB32 : Replaces with 32bit lib dir "/usr/lib32" if ROOT, else "$HOME/applications/"';
+  s := s + #13'$APP : Pointer to "/usr/share/applications", if ROOT, else "$HOME/.applications"';
+  s := s + #13'$ICON-# : Points to "/usr/share/icons/hicolor/#x#/apps" if user is ROOT, else to "$HOME/.appfiles/icons/#x#". The "#" symbol has to be replaced with the icon size: 16, 24, 32, 48, 64, 128, 265 pixels.';
+  s := s + #13'$PIX : Symbol for general pixmaps. Points to "/usr/share/pixmaps" if ROOT, else "$HOME/.appfiles/icons/common"';
+  s := s + #13'($HOME stands for the home directory of the current user. It is NO Listaller placeholder and cannot be used as one!)'; 
+
+==== Build-Time Variables ====
