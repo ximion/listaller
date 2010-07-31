@@ -84,7 +84,7 @@ type
   TPkgType = (ptLinstall, ptDLink, ptContainer, ptUnknown);
 
   //** Container for information about apps
-  TAppInfo = record
+  AppInfo = record
     Name: PGChar;
     PkName: PGChar;
     PkType: TPkgType;
@@ -99,7 +99,7 @@ type
     Dependencies: WideString;
   end;
 
-  PAppInfo = ^TAppInfo;
+  PAppInfo = ^AppInfo;
 
   //** Event to catch thrown application records
   TAppEvent = function(Name: PChar; obj: PAppInfo): GBoolean; cdecl;

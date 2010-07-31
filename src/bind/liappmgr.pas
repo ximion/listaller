@@ -30,7 +30,7 @@ uses
  function  li_mgr_register_request_call(mgr: GPointer;call: TRequestCall;user_data: GPointer): TRqResult;cdecl;external libinst;
  function  li_mgr_register_app_call(mgr: GPointer;call: TAppEvent): GBoolean;cdecl;external libinst;
  procedure li_mgr_set_sumode(mgr: GPointer;md: GBoolean);cdecl;external libinst;
- function  li_mgr_remove_app(mgr: GPointer;obj: TAppInfo): GBoolean;cdecl;external libinst;
+ function  li_mgr_remove_app(mgr: GPointer;obj: AppInfo): GBoolean;cdecl;external libinst;
  function  li_remove_ipk_installed_app(appname, appid: PChar;scall: TLiStatusChangeCall;fastmode: GBoolean): GBoolean; cdecl; external libinst;
  function  li_mgr_check_apps(mgr: GPointer;log: PStringList;root: GBoolean): GBoolean;cdecl;external libinst;
  function  li_mgr_fix_apps(mgr: GPointer;log: PStringList;root: GBoolean): GBoolean;cdecl;external libinst;

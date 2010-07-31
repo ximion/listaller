@@ -99,7 +99,7 @@ typedef enum {
       ptUnknown
 } TPkgType;
 
-struct TAppInfo
+struct AppInfo
 {
       gchar *Name;
       gchar *PkName;
@@ -111,8 +111,8 @@ struct TAppInfo
       gchar *Profile;
       gchar *UId;
       AppCategory Category;
-      TDateTime InstallDate;
-      WideString Dependencies;
+      int InstallDate;
+      char *Dependencies;
 };
 
 typedef enum {
@@ -123,15 +123,15 @@ typedef enum {
 
 G_BEGIN_DECLS
 
-typedef void (*TLiStatusChangeCall) {(LiStatusChange change,TLiStatusData Data,gpointer user_data);}
+typedef void (*TLiStatusChangeCall) (LiStatusChange change,TLiStatusData Data,gpointer user_data);
 
-typedef TRqResult (*TRequestCall) {(TRqType mtype,char *msg,gpointer user_data);}
+typedef TRqResult (*TRequestCall) (TRqType mtype,char *msg,gpointer user_data);
 
-typedef void (*TProgressEvent) {(int pos,gpointer user_data);}
+typedef void (*TProgressEvent) (int pos,gpointer user_data);
 
-typedef GBoolean (*TAppEvent) {(char *Name,appinfo *obj);}
+typedef gboolean (*TAppEvent) (char *Name,AppInfo obj);
 
-typedef void (*TNewUpdateEvent) {(char *Name,int id,gpointer user_data);}
+typedef void (*TNewUpdateEvent) (char *Name,int id,gpointer user_data);
 
 G_END_DECLS
 

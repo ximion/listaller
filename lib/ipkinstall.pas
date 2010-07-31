@@ -933,7 +933,7 @@ var
   dsk: TIniFile; //Desktop files
   pkg: TLiUnpacker; // IPK decompressor
   setcm: Boolean;
-  appField: TAppInfo;
+  appField: AppInfo;
   proc: TProcess; // Helper process with pipes
   pkit: TPackageKit; //PackageKit object
   DInfo: TDistroInfo; //Distribution information

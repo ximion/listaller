@@ -83,7 +83,7 @@ type
   //** Job which removes applications
   TDoAppRemove = class(TJob)
   private
-    appinfo: TAppInfo;
+    appinfo: AppInfo;
     //** Pointer to management object
     mgr: Pointer;
     //** Send reply to client

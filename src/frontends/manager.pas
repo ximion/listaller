@@ -146,7 +146,7 @@ type
     { public declarations }
     DInfo: TDistroInfo;
     //** Information about the application that should be uninstalled
-    uApp: TAppInfo;
+    uApp: AppInfo;
     //** Pointer to our AppManager object
     amgr: Pointer;
     //** Reference to current active list

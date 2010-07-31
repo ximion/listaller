@@ -48,7 +48,7 @@ type
     constructor Create(TheOwner: TComponent; const ownItems: Boolean = true);
     destructor Destroy; override;
 
-    procedure ItemFromAppInfo(ai: TAppInfo);
+    procedure ItemFromAppInfo(ai: AppInfo);
     procedure AddItem(item: TAppInfoItem);
     procedure ClearList;
     property OnRmButtonClick: TAListRmButtonClick read FOnRmClick write FOnRmClick;
@@ -151,7 +151,7 @@ begin
   end;
 end;
 
-procedure TAppListView.ItemFromAppInfo(ai: TAppInfo);
+procedure TAppListView.ItemFromAppInfo(ai: AppInfo);
 var
   new: TAppInfoItem;
   pic: TPicture;

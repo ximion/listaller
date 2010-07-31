@@ -76,7 +76,7 @@ gboolean li_setup_execute(gpointer setup);
 
 void li_setup_set_forced(gpointer setup);
 
-gboolean li_setup_get_dependencies(gpointer setup,stringlist *list);
+gboolean li_setup_get_dependencies(gpointer setup,gpointer list);
 
 gboolean li_setup_set_profileid(gpointer setup,gint16 id);
 

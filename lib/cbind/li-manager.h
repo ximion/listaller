@@ -44,11 +44,11 @@ gboolean li_mgr_register_app_call(gpointer mgr,TAppEvent call);
 
 void li_mgr_set_sumode(gpointer mgr,TAppEvent call);
 
-gboolean li_mgr_remove_app(gpointer mgr,TAppInfo obj);
+gboolean li_mgr_remove_app(gpointer mgr,AppInfo obj);
 
 gboolean li_remove_ipk_installed_app(char *appname,char *appid,TLiStatusChangeCall scall,gboolean fastmode);
 
-gboolean li_mgr_check_apps(gpointer mgr,stringlist *log,gboolean root);
+gboolean li_mgr_check_apps(gpointer mgr,gpointer log,gboolean root);
 
 
 #endif /* __LI_MANAGER */

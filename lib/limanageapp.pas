@@ -44,7 +44,7 @@ type
 
     procedure msg(s: String);
     function request(s: String; ty: TRqType): TRqResult;
-    procedure newapp(s: String; oj: TAppInfo);
+    procedure newapp(s: String; oj: AppInfo);
     procedure setstate(state: LiProcStatus);
     procedure setpos(i: Integer);
 
@@ -55,14 +55,14 @@ type
     procedure PkitProgress(pos: Integer; xd: Pointer);
     //** Catch status messages from DBus action
     procedure DBusStatusChange(ty: LiProcStatus; Data: TLiProcData);
-    procedure InternalRemoveApp(obj: TAppInfo);
+    procedure InternalRemoveApp(obj: AppInfo);
   public
     constructor Create;
     destructor Destroy; override;
     //** Load software list entries
     procedure LoadEntries;
     //** Removes an application
-    procedure UninstallApp(obj: TAppInfo);
+    procedure UninstallApp(obj: AppInfo);
  {** Checks dependencies of all installed apps
     @param report Report of the executed actions
     @param fix True if all found issues should be fixed right now
@@ -139,7 +139,7 @@ begin
     Result := FReq(ty, PChar(s), requestudata);
 end;
 
-procedure TAppManager.NewApp(s: String; oj: TAppInfo);
+procedure TAppManager.NewApp(s: String; oj: AppInfo);
 begin
   if Assigned(FApp) then
     FApp(PChar(s), @oj);
@@ -182,7 +182,7 @@ var
   procedure ProcessDesktopFile(fname: String);
   var
     d: TIniFile;
-    entry: TAppInfo;
+    entry: AppInfo;
     dt: TMOFile;
     lp: String;
     translate: Boolean; //Used, because Assigned(dt) throws an AV
@@ -529,7 +529,7 @@ end;
 //Can remove Autopackage.org or native package.
 // Only for interal use, called by UninstallApp.
 // This function exists to speed up the removal process.
-procedure TAppManager.InternalRemoveApp(obj: TAppInfo);
+procedure TAppManager.InternalRemoveApp(obj: AppInfo);
 var
   t: TProcess;
   pkit: TPackageKit;
@@ -610,7 +610,7 @@ end;
 // identification string - if not, pkg has to be Loki/Mojo, so intitiate Mojo-Removal. After rdepends and pkg resolve is done,
 // run uninstall as root if necessary. At the end, RemoveAppInternal() is called (if LOKI-Remove was not run) to uninstall
 // native or autopackage setup.
-procedure TAppManager.UninstallApp(obj: TAppInfo);
+procedure TAppManager.UninstallApp(obj: AppInfo);
 var
   id: String;
   i: Integer;
@@ -689,7 +689,7 @@ begin
     tmp.Free;
     p_debug('Done. ID is set.');
 
-    //Important: ID needs to be the same as TAppInfo.UId
+    //Important: ID needs to be the same as AppInfo.UId
     id := obj.UId;
   end;
 
@@ -722,7 +722,7 @@ function TAppManager.CheckApps(report: TStringList; const fix: Boolean = false;
   const forceroot: Boolean = false): Boolean;
 var
   db: TSoftwareDB;
-  app: TAppInfo;
+  app: AppInfo;
   deps: TStringList;
   i: Integer;
   pkit: TPackageKit;

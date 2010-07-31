@@ -68,18 +68,31 @@ var
   h: String;
 begin
   h := LowerCase(s);
+  if h = 'pstringlist' then //Workaround
+  begin
+    Result := 'gpointer';  //FIXME
+    exit;
+  end;
   if h[1] = 'p' then
   begin
-    h := copy(h, 2, length(h)) + ' *';
-    Result := h;
+    h := copy(s, 2, length(s));
+    if (LowerCase(h) = 'char') or (LowerCase(h) = 'gchar') or
+      (LowerCase(h) = '<placeholder>') then  //FIXME
+      Result := LowerCase(h) + ' *'
+    else
+      Result := h;
     exit;
   end;
   if h = 'integer' then
     Result := 'int'
   else if h[1] = 'g' then
       Result := h
-    else
-      Result := s;
+    else if h = 'tdatetime' then //FIXME: Needs a better expression!
+        Result := 'int'
+      else if h = 'widestring' then
+          Result := 'char *'
+        else
+          Result := s;
 end;
 
 { TPtCConverter }
@@ -180,8 +193,8 @@ begin
     if pos('procedure', eltype) > 0 then
     begin
       r := 'typedef void (*' + el.FullName + ') ';
-      ArgumentsToHVar; //Quick, dirty helper function :)
-      r := r + '{(' + h + ');}';
+      ArgumentsToHVar; //Quick & dirty helper function :)
+      r := r + '(' + h + ');';
       funcdecl.Add('');
       funcdecl.Add(r);
     end
@@ -194,9 +207,12 @@ begin
         h := copy(h, pos(':', h) + 1, length(h));
         h := StrSubst(h, ' ', '');
 
+        if LowerCase(h)[1] = 'g' then
+          h := LowerCase(h);
+
         r := 'typedef ' + h + ' (*' + el.FullName + ') ';
-        ArgumentsToHVar; //Quick, dirty helper function :)
-        r := r + '{(' + h + ');}';
+        ArgumentsToHVar; //Quick & dirty helper function :)
+        r := r + '(' + h + ');';
         funcdecl.Add('');
         funcdecl.Add(r);
       end
@@ -294,10 +310,10 @@ begin
   end;
   if funcdecl.Count > 2 then
   begin
-   funcdecl.Add('');
-   funcdecl.Add('G_END_DECLS');
-   res.Add('');
-   res.Add(funcdecl.Text);
+    funcdecl.Add('');
+    funcdecl.Add('G_END_DECLS');
+    res.Add('');
+    res.Add(funcdecl.Text);
   end;
 
   src.Free;

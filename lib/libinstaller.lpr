@@ -387,7 +387,7 @@ begin
 end;
 
 //** Removes the application
-function li_mgr_remove_app(mgr: PAppManager;obj: TAppInfo): GBoolean;cdecl;
+function li_mgr_remove_app(mgr: PAppManager;obj: AppInfo): GBoolean;cdecl;
 begin
  Result:=false;
 if not mgr^.UserRequestRegistered then begin p_error('You need to register a user request callback!');exit;end;
@@ -517,6 +517,12 @@ begin
  Result:=PChar(RegDir);
 end;
 
+//** Get Listaller version
+function li_version: PGChar;cdecl;
+begin
+ Result:=PChar(LiVersion);
+end;
+
 ///////////////////////
 exports
  //Stringlist functions
@@ -582,7 +588,8 @@ exports
  li_regdir,
  li_remove_ipk_installed_app,
  li_set_testmode,
- li_get_ipk_app_installed;
+ li_get_ipk_app_installed,
+ li_version;
 
 {$R *.res}
 

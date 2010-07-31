@@ -26,7 +26,7 @@ uses
 type
 
   TLiDBData = record
-    App: TAppInfo;
+    App: AppInfo;
   end;
 
   TSoftwareDB = class
@@ -37,7 +37,7 @@ type
     AppDataDir: String;
     DepDataDir: String;
     EOF: Boolean;
-    function GetAppField: TAppInfo;
+    function GetAppField: AppInfo;
     function GetSQLiteVersion: String;
     function DBOkay: Boolean;
   public
@@ -59,7 +59,7 @@ type
     //** Delete current app
     procedure AppDeleteCurrent;
     //** Add a new application
-    procedure AppAddNew(app: TAppInfo);
+    procedure AppAddNew(app: AppInfo);
     //** Update version of app
     procedure AppUpdateVersion(pkgID: String; newv: String);
     //** Add new dependency to databse
@@ -178,7 +178,7 @@ end;
 
 function TSoftwareDB.GetApplicationList(blacklist: TStringList = nil): Boolean;
 var
-  entry: TAppInfo;
+  entry: AppInfo;
   p: AnsiString;
 begin
   Result := false;
@@ -222,9 +222,9 @@ begin
   dsApp.Close;
 end;
 
-function TSoftwareDB.GetAppField: TAppInfo;
+function TSoftwareDB.GetAppField: AppInfo;
 var
-  r: TAppInfo;
+  r: AppInfo;
   h: String;
 
   function _(s: WideString): PChar;
@@ -342,7 +342,7 @@ begin
   dsApp.ApplyUpdates;
 end;
 
-procedure TSoftwareDB.AppAddNew(app: TAppInfo);
+procedure TSoftwareDB.AppAddNew(app: AppInfo);
 var
   g, h: String;
 begin
