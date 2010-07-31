@@ -34,7 +34,17 @@ type
     function FindElement(const AName: String): TPasElement; override;
   end;
 
-function ConvertToCInfo(fname: String): TStringList;
+  TPtCConverter = class
+  private
+    funcdecl: TStringList;
+    function SolveArguments(arg: String): String;
+    function ProcessClassDef(el: TPasElement; res: TStringList): Boolean;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function ConvertToCInfo(fname: String): TStringList;
+  end;
 
 implementation
 
@@ -72,7 +82,20 @@ begin
       Result := s;
 end;
 
-function SolveArguments(arg: String): String;
+{ TPtCConverter }
+
+constructor TPtCConverter.Create;
+begin
+  funcdecl := TStringList.Create;
+end;
+
+destructor TPtCConverter.Destroy;
+begin
+  funcdecl.Free;
+  inherited;
+end;
+
+function TPtCConverter.SolveArguments(arg: String): String;
 var
   f, g, r: String;
   ty: Boolean;
@@ -119,7 +142,7 @@ begin
   Result := r;
 end;
 
-function ProcessClassDef(el: TPasElement; res: TStringList): Boolean;
+function TPtCConverter.ProcessClassDef(el: TPasElement; res: TStringList): Boolean;
 var
   eltype: String;
   h, r: String;
@@ -159,8 +182,8 @@ begin
       r := 'typedef void (*' + el.FullName + ') ';
       ArgumentsToHVar; //Quick, dirty helper function :)
       r := r + '{(' + h + ');}';
-      res.Add('');
-      res.Add(r);
+      funcdecl.Add('');
+      funcdecl.Add(r);
     end
     else
       if pos('function', eltype) > 0 then
@@ -174,8 +197,8 @@ begin
         r := 'typedef ' + h + ' (*' + el.FullName + ') ';
         ArgumentsToHVar; //Quick, dirty helper function :)
         r := r + '{(' + h + ');}';
-        res.Add('');
-        res.Add(r);
+        funcdecl.Add('');
+        funcdecl.Add(r);
       end
       else
         if pos('record', eltype) > 0 then
@@ -193,11 +216,11 @@ begin
         end;
 end;
 
-function ConvertToCInfo(fname: String): TStringList;
+function TPtCConverter.ConvertToCInfo(fname: String): TStringList;
 var
   md: TPasModule;
   eng: TSimpleEngine;
-  I: Integer;
+  i: Integer;
   Decls: TList;
   element: TPasElement;
   func, h, x: String;
@@ -210,9 +233,12 @@ begin
   src := TStringList.Create;
   src.LoadFromFile(fname);
 
+  funcdecl.Clear;
+  funcdecl.Add('G_BEGIN_DECLS');
+
   decls := md.InterfaceSection.Declarations;
   res := TStringList.Create;
-  for I := 0 to Decls.Count - 1 do
+  for i := 0 to Decls.Count - 1 do
   begin
     element := (TObject(Decls[I]) as TPasElement);
 
@@ -266,6 +292,14 @@ begin
             res.Add(x);
           end;
   end;
+  if funcdecl.Count > 2 then
+  begin
+   funcdecl.Add('');
+   funcdecl.Add('G_END_DECLS');
+   res.Add('');
+   res.Add(funcdecl.Text);
+  end;
+
   src.Free;
   FreeAndNil(md);
   FreeAndNil(eng);

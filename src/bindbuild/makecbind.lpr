@@ -42,6 +42,7 @@ var
   test: TStringList;
   tmpl: TStringList;
   hname: String;
+  cv: TPtCConverter;
 begin
   // quick check parameters
   ErrorMsg:=CheckOptions('hio',['help', 'template:']);
@@ -93,7 +94,9 @@ begin
     if FileExists(GetOptionValue('template')) then
      tmpl.LoadFromFile(GetOptionValue('template'));
 
-    test := ConvertToCInfo(GetOptionValue('i', 'in'));
+    cv := TPtCConverter.Create;
+    test := cv.ConvertToCInfo(GetOptionValue('i', 'in'));
+    cv.Free;
 
     if tmpl.IndexOf('@DECL@') > 0 then
      tmpl[tmpl.IndexOf('@DECL@')] := test.Text

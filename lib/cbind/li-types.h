@@ -77,12 +77,6 @@ struct TLiStatusData
       LiStatusChange change;
 };
 
-typedef void (*TLiStatusChangeCall) {(LiStatusChange change,TLiStatusData Data,gpointer user_data);}
-
-typedef TRqResult (*TRequestCall) {(TRqType mtype,char *msg,gpointer user_data);}
-
-typedef void (*TProgressEvent) {(int pos,gpointer user_data);}
-
 typedef enum {
       gtALL,
       gtEDUCATION,
@@ -121,15 +115,26 @@ struct TAppInfo
       WideString Dependencies;
 };
 
-typedef GBoolean (*TAppEvent) {(char *Name,appinfo *obj);}
-
-typedef void (*TNewUpdateEvent) {(char *Name,int id,gpointer user_data);}
-
 typedef enum {
       psNone,
       psTrusted,
       psUntrusted
 } TPkgSigState;
+
+G_BEGIN_DECLS
+
+typedef void (*TLiStatusChangeCall) {(LiStatusChange change,TLiStatusData Data,gpointer user_data);}
+
+typedef TRqResult (*TRequestCall) {(TRqType mtype,char *msg,gpointer user_data);}
+
+typedef void (*TProgressEvent) {(int pos,gpointer user_data);}
+
+typedef GBoolean (*TAppEvent) {(char *Name,appinfo *obj);}
+
+typedef void (*TNewUpdateEvent) {(char *Name,int id,gpointer user_data);}
+
+G_END_DECLS
+
 
 
 #endif /* __LI_TYPES */
