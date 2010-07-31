@@ -5,6 +5,6 @@ all:
 install:
 
 clean:
-	../src/clean.sh
+	../clean.sh
 
 distclean:
