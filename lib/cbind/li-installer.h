@@ -26,7 +26,8 @@
 #ifndef __LI_INSTALLER
 #define __LI_INSTALLER
 
-#include <glib-object.h>
+#include <glib.h>
+#include <stdio.h>
 
 
 gpointer li_setup_new(void);

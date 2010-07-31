@@ -26,7 +26,8 @@
 #ifndef __LI_TYPES
 #define __LI_TYPES
 
-#include <glib-object.h>
+#include <glib.h>
+#include <stdio.h>
 
 
 typedef enum {

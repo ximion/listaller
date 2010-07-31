@@ -26,7 +26,8 @@
 #ifndef __LI_UPDATER
 #define __LI_UPDATER
 
-#include <glib-object.h>
+#include <glib.h>
+#include <stdio.h>
 
 
 gpointer li_updater_new(void);

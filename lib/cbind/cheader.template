@@ -25,7 +25,8 @@
 
 @BEGIN_DEFINE_ID@
 
-#include <glib-object.h>
+#include <glib.h>
+#include <stdio.h>
 
 @DECL@
 

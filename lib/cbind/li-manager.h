@@ -26,7 +26,8 @@
 #ifndef __LI_MANAGER
 #define __LI_MANAGER
 
-#include <glib-object.h>
+#include <glib.h>
+#include <stdio.h>
 
 
 gpointer li_mgr_new(void);

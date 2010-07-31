@@ -23,12 +23,16 @@
 #define __LISTALLER_H__
 
 #define __LISTALLER_H_INSIDE__
-
+#ifdef __cplusplus
+extern "C" {
+#endif 
 #include <Listaller/li-types.h>
 #include <Listaller/li-installer.h>
 #include <Listaller/li-manager.h>
 #include <Listaller/li-updater.h>
-
+#ifdef __cplusplus
+}
+#endif 
 #undef __LISTALLER_H_INSIDE__
 
 #endif /* __LISTALLER_H__ */
