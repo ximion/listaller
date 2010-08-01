@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="7"/>
+    <Version Value="8"/>
     <General>
       <Flags>
         <LRSInOutputDirectory Value="False"/>
@@ -57,12 +57,13 @@
     </Units>
   </ProjectOptions>
   <CompilerOptions>
-    <Version Value="8"/>
+    <Version Value="9"/>
     <Target>
       <Filename Value="../../build/liupdate"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
+      <Libraries Value="../../build/"/>
       <OtherUnitFiles Value="../;../bind/"/>
       <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="qt"/>
@@ -70,6 +71,7 @@
     <Parsing>
       <SyntaxOptions>
         <CStyleOperator Value="False"/>
+        <UseAnsiStrings Value="False"/>
       </SyntaxOptions>
     </Parsing>
     <Linking>
@@ -82,6 +84,7 @@
     <Other>
       <CompilerMessages>
         <IgnoredMessages idx5024="True"/>
+        <UseMsgFile Value="True"/>
       </CompilerMessages>
       <CustomOptions Value="-dUSE_QT_45
 -dQT_NATIVE_DIALOGS

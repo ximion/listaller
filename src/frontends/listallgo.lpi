@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="7"/>
+    <Version Value="8"/>
     <General>
       <Flags>
         <LRSInOutputDirectory Value="False"/>
@@ -85,17 +85,22 @@
     </Units>
   </ProjectOptions>
   <CompilerOptions>
-    <Version Value="8"/>
+    <Version Value="9"/>
     <Target>
       <Filename Value="../../build/listallgo"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <Libraries Value="$(ProjOutDir)/"/>
+      <Libraries Value="../../build/"/>
       <OtherUnitFiles Value="../;../bind/"/>
       <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <UseAnsiStrings Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>
     </CodeGeneration>
@@ -117,6 +122,7 @@
       </Verbosity>
       <CompilerMessages>
         <IgnoredMessages idx4056="True"/>
+        <UseMsgFile Value="True"/>
       </CompilerMessages>
       <CustomOptions Value="-dUSE_QT_45
 -XLAXi=
