@@ -32,9 +32,9 @@
 
 gpointer li_setup_new(void);
 
-void li_setup_free(void);
+void li_setup_free(gpointer setup);
 
-void li_setup_set_sumode(void);
+void li_setup_set_sumode(gpointer setup,gboolean b);
 
 char *li_setup_init(gpointer setup,gchar *pkname);
 
@@ -66,7 +66,7 @@ gchar *li_setup_get_app_exec_command(gpointer setup);
 
 gchar *li_setup_get_current_profile_filelist(gpointer setup);
 
-void li_setup_enable_usource_registering(gpointer setup);
+void li_setup_enable_usource_registering(gpointer setup,gboolean b);
 
 gboolean li_setup_register_status_call(gpointer setup,TLiStatusChangeCall call,gpointer user_data);
 
@@ -74,7 +74,7 @@ gboolean li_setup_register_user_request_call(gpointer setup,TRequestCall call,gp
 
 gboolean li_setup_execute(gpointer setup);
 
-void li_setup_set_forced(gpointer setup);
+void li_setup_set_forced(gpointer setup,gchar *str);
 
 gboolean li_setup_get_dependencies(gpointer setup,gpointer list);
 
@@ -84,7 +84,7 @@ TPkgSigState li_setup_get_signature_state(gpointer setup);
 
 gboolean li_get_ipk_app_installed(gchar *appname,gchar *appid,gboolean sumode);
 
-void li_set_testmode(gchar *appname,gchar *appid,gboolean sumode);
+void li_set_testmode(gboolean st);
 
 
 #endif /* __LI_INSTALLER */

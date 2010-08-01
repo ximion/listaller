@@ -25,8 +25,8 @@ mkdir -p $DESTDIR$prefix/share/pascal/listaller
 mkdir -p $DESTDIR$libdir/pkgconfig/
 
 #Copy C headers
-cp ../lib/cbind/*.h $DESTDIR$prefix/include/Listaller/
-cp ../lib/cbind/*.pc $DESTDIR$libdir/pkgconfig/
+cp ../lib/linst-cbind/*.h $DESTDIR$prefix/include/Listaller/
+cp ../lib/linst-cbind/*.pc $DESTDIR$libdir/pkgconfig/
 #Link library
 CUR=$(pwd)
 cd $DESTDIR$libdir

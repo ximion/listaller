@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 #
 # DESTDIR		Destination root directory
-
 set -e
 
 for arg; do
@@ -43,7 +42,7 @@ echo "Active widgetset: $WIDGET"
 echo "Starting new Listaller build..."
 
 echo "Compiling libinstaller library..."
-lazbuild -B --ws=nogui ../lib/libinstaller.lpr
+lazbuild -B --ws=nogui ../lib/installer/libinstaller.lpr
 if [ ! -f "../build/libinstaller.so" ]; then
  cd ../build
  ln -s libinstaller.so.0.4.0 libinstaller.so.0.4
@@ -51,7 +50,7 @@ if [ ! -f "../build/libinstaller.so" ]; then
  cd ../src
 fi
 #Write PC file
-sed "s#%PREFIX%#$prefix#" ../lib/cbind/libinstaller.pc.in > ../lib/cbind/libinstaller.pc
+sed "s#%PREFIX%#$prefix#" ../lib/linst-cbind/libinstaller.pc.in > ../lib/linst-cbind/libinstaller.pc
 
 echo "Compiling Listaller daemon..."
 lazbuild -B --ws=nogui ./daemon/listallerd.lpr

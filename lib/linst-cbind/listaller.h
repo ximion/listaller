@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2010 Matthias Klumpp <matthias@nlinux.org>
+ * Copyright (C) 2008-2010 Matthias Klumpp <matthias@nlinux.org>
  *
  * Licensed under the GNU General Public License Version 3
  *
@@ -19,34 +19,22 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#if !defined (__LISTALLER_H_INSIDE__)
-#error "Only <listaller.h> can be included directly."
+#ifndef __LISTALLER_H__
+#define __LISTALLER_H__
+
+#define __LISTALLER_H_INSIDE__
+#ifdef __cplusplus
+ extern "C" {
 #endif
 
-#ifndef __LI_UPDATER
-#define __LI_UPDATER
+#include <li-types.h>
+#include <li-installer.h>
+#include <li-manager.h>
+#include <li-updater.h>
 
-#include <glib.h>
-#include <stdio.h>
+#ifdef __cplusplus
+}
+#endif 
+#undef __LISTALLER_H_INSIDE__
 
-
-gpointer li_updater_new(void);
-
-void li_updater_free(void);
-
-void li_updater_set_sumode(void);
-
-gboolean li_updater_register_status_call(gpointer upd,TLiStatusChangeCall call,gpointer user_data);
-
-gboolean li_updater_register_request_call(gpointer upd,TRequestCall call,gpointer user_data);
-
-gboolean li_updater_register_newupdate_call(gpointer upd,TNewUpdateEvent call,gpointer user_data);
-
-gboolean li_updater_search_updates(gpointer upd);
-
-gchar *li_updater_updateid_oldversion(gpointer upd,gint32 uid);
-
-gchar *li_updater_updateid_newversion(gpointer upd,gint32 uid);
-
-
-#endif /* __LI_UPDATER */
+#endif /* __LISTALLER_H__ */

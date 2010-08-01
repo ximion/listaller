@@ -293,6 +293,8 @@ begin
           if element.ElementTypeName = 'procedure' then
           begin
             res.Add('');
+            func := element.GetDeclaration(true);
+
             x := 'void ';
             x := x + element.Name;
 

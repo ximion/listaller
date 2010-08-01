@@ -1,11 +1,16 @@
 #!/bin/sh
 set -e
+
+#Set paths
 GEN="../build/util/makecbind"
+PASBINDDIR="../src/bind"
+OUT="./linst-cbind"
+
 if [ -e $GEN ]; then
- $GEN -i ../src/bind/liappmgr.pas -o ./cbind/li-manager.h --template=./cbind/cheader.template
- $GEN -i ../src/bind/liinstaller.pas -o ./cbind/li-installer.h --template=./cbind/cheader.template
- $GEN -i ../src/bind/liappupdate.pas -o ./cbind/li-updater.h --template=./cbind/cheader.template
- $GEN -i ../src/litypes.pas -o ./cbind/li-types.h --template=./cbind/cheader.template
+ $GEN -i $PASBINDDIR/liappmgr.pas -o $OUT/li-manager.h --template=$OUT/cheader.template
+ $GEN -i $PASBINDDIR/liinstaller.pas -o $OUT/li-installer.h --template=$OUT/cheader.template
+ $GEN -i $PASBINDDIR/liappupdate.pas -o $OUT/li-updater.h --template=$OUT/cheader.template
+ $GEN -i ../src/litypes.pas -o $OUT/li-types.h --template=$OUT/cheader.template
 else
  echo "MakeCBind was not found!"
  exit 1

@@ -64,12 +64,12 @@
   <CompilerOptions>
     <Version Value="9"/>
     <Target>
-      <Filename Value="../build/libinstaller.so.0.4.0"/>
+      <Filename Value="../../build/libinstaller.so.0.4.0"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../src/;../src/bind/;../synapse/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
-      <UnitOutputDirectory Value="../build/lib_$(TargetCPU)-$(TargetOS)"/>
+      <OtherUnitFiles Value="../../src/;../../src/bind/;../../synapse/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
+      <UnitOutputDirectory Value="../../build/lib_$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
     <Parsing>

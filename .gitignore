@@ -15,6 +15,7 @@
 *.patch
 *.cache
 *.anjuta
+*.kdev4
 moc_*
 .directory
 build
