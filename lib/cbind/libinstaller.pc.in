@@ -6,7 +6,6 @@ includedir=${prefix}/include
 Name: libinstaller
 Description: Access software management features of Listaller
 Version: 0.4.0
-Requires.private: dbus-1, gthread-2.0
-Requires: glib-2.0, gobject-2.0, sqlite3
+Requires.private: dbus-1, glib-2.0, sqlite3
 Libs: -L${libdir} -linstaller
 Cflags: -I${includedir}/Listaller
