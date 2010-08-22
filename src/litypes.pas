@@ -17,15 +17,16 @@
 unit litypes;
 
 {$MODE objfpc}{$H+}
+//{$packrecords c}
 
 interface
 
 uses
-  glib2, Classes, SysUtils;
+  Classes, SysUtils;
 
 const
   //** Name of the Listaller library
-  libinst = 'libinstaller.so';
+  libinst = 'liblistaller.so';
 
   //** Version of Listaller API
   {$DEFINE APIVersion040}
@@ -50,21 +51,21 @@ type
   //** Data assigned to a status change
   TLiStatusData = record
     msg: PChar;
-    exprogress: GInt32;
-    mnprogress: GInt32;
+    exprogress: Longint;
+    mnprogress: Longint;
     lastresult: LiProcStatus;
     change: LiStatusChange;
   end;
 
   //** Callback for change of status
   TLiStatusChangeCall = procedure(change: LiStatusChange; Data: TLiStatusData;
-    user_data: GPointer); cdecl;
+    user_data: Pointer); cdecl;
   //** Callback for user request
   TRequestCall = function(mtype: TRqType; msg: PChar;
-    user_data: GPointer): TRqResult; cdecl;
+    user_data: Pointer): TRqResult; cdecl;
 
   //** Called if progress was changed; only for internal use
-  TProgressEvent = procedure(pos: Integer; user_data: GPointer) of object;
+  TProgressEvent = procedure(pos: Integer; user_data: Pointer) of object;
 
   //** Application groups
   AppCategory = (gtALL,
@@ -102,10 +103,10 @@ type
   PAppInfo = ^AppInfo;
 
   //** Event to catch thrown application records
-  TAppEvent = function(Name: PChar; obj: PAppInfo): GBoolean; cdecl;
+  TAppEvent = function(Name: PChar; obj: PAppInfo): Boolean; cdecl;
 
   //** Shows information about new update
-  TNewUpdateEvent = procedure(Name: PChar; id: Integer; user_data: GPointer); cdecl;
+  TNewUpdateEvent = procedure(Name: PChar; id: Integer; user_data: Pointer); cdecl;
 
   //** Package signature status
   TPkgSigState = (psNone, psTrusted, psUntrusted);

@@ -26,65 +26,65 @@
 #ifndef __LI_INSTALLER
 #define __LI_INSTALLER
 
-#include <glib.h>
-#include <stdio.h>
+#include<stdio.h>
+#include<iostream>
 
 
-gpointer li_setup_new(void);
+void* li_setup_new(void);
 
-void li_setup_free(gpointer setup);
+void li_setup_free(void* setup);
 
-void li_setup_set_sumode(gpointer setup,gboolean b);
+void li_setup_set_sumode(void* setup,bool b);
 
-char *li_setup_init(gpointer setup,gchar *pkname);
+char *li_setup_init(void* setup,char *pkname);
 
-TPkgType li_setup_get_pkgtype(gpointer setup);
+TPkgType li_setup_get_pkgtype(void* setup);
 
-gchar *li_setup_get_disallows(gpointer setup);
+char *li_setup_get_disallows(void* setup);
 
-gchar *li_setup_get_supported_distributions(gpointer setup);
+char *li_setup_get_supported_distributions(void* setup);
 
-gchar *li_setup_get_appname(gpointer setup);
+char *li_setup_get_appname(void* setup);
 
-gchar *li_setup_get_appversion(gpointer setup);
+char *li_setup_get_appversion(void* setup);
 
-gchar *li_setup_get_pkgid(gpointer setup);
+char *li_setup_get_pkgid(void* setup);
 
-gboolean li_setup_get_long_description(gpointer setup,gpointer list);
+bool li_setup_get_long_description(void* setup,void* list);
 
-gchar *li_setup_get_wizard_image_path(gpointer setup);
+char *li_setup_get_wizard_image_path(void* setup);
 
-gboolean li_setup_get_license(gpointer setup,gpointer list);
+bool li_setup_get_license(void* setup,void* list);
 
-gboolean li_setup_get_profiles_list(gpointer setup,gpointer list);
+bool li_setup_get_profiles_list(void* setup,void* list);
 
-gchar *li_setup_get_appicon(gpointer setup);
+char *li_setup_get_appicon(void* setup);
 
-gchar *li_setup_get_desktopfiles(gpointer setup);
+char *li_setup_get_desktopfiles(void* setup);
 
-gchar *li_setup_get_app_exec_command(gpointer setup);
+char *li_setup_get_app_exec_command(void* setup);
 
-gchar *li_setup_get_current_profile_filelist(gpointer setup);
+char *li_setup_get_current_profile_filelist(void* setup);
 
-void li_setup_enable_usource_registering(gpointer setup,gboolean b);
+void li_setup_enable_usource_registering(void* setup,bool b);
 
-gboolean li_setup_register_status_call(gpointer setup,TLiStatusChangeCall call,gpointer user_data);
+bool li_setup_register_status_call(void* setup,TLiStatusChangeCall call,void* user_data);
 
-gboolean li_setup_register_user_request_call(gpointer setup,TRequestCall call,gpointer user_data);
+bool li_setup_register_user_request_call(void* setup,TRequestCall call,void* user_data);
 
-gboolean li_setup_execute(gpointer setup);
+bool li_setup_execute(void* setup);
 
-void li_setup_set_forced(gpointer setup,gchar *str);
+void li_setup_set_forced(void* setup,char *str);
 
-gboolean li_setup_get_dependencies(gpointer setup,gpointer list);
+bool li_setup_get_dependencies(void* setup,void* list);
 
-gboolean li_setup_set_profileid(gpointer setup,gint16 id);
+bool li_setup_set_profileid(void* setup,int id);
 
-TPkgSigState li_setup_get_signature_state(gpointer setup);
+TPkgSigState li_setup_get_signature_state(void* setup);
 
-gboolean li_get_ipk_app_installed(gchar *appname,gchar *appid,gboolean sumode);
+bool li_get_ipk_app_installed(char *appname,char *appid,bool sumode);
 
-void li_set_testmode(gboolean st);
+void li_set_testmode(bool st);
 
 
 #endif /* __LI_INSTALLER */

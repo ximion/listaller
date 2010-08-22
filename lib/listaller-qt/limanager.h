@@ -22,8 +22,6 @@
 #include<QtGui>
 #include<listaller.h>
 
-typedef void* gpointer;
-
 struct AppData
 {
   QString name;
@@ -53,7 +51,7 @@ signals:
     
 
 private:
-    gpointer mgr;
+    void* mgr;
 };
 
 #endif // LIMANAGER_H

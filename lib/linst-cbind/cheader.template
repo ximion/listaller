@@ -25,8 +25,8 @@
 
 @BEGIN_DEFINE_ID@
 
-#include <glib.h>
-#include <stdio.h>
+#include<stdio.h>
+#include<iostream>
 
 @DECL@
 

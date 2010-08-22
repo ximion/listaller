@@ -26,29 +26,29 @@
 #ifndef __LI_MANAGER
 #define __LI_MANAGER
 
-#include <glib.h>
-#include <stdio.h>
+#include<stdio.h>
+#include<iostream>
 
 
-gpointer li_mgr_new(void);
+void* li_mgr_new(void);
 
-void li_mgr_free(gpointer mgr);
+void li_mgr_free(void* mgr);
 
-gboolean li_mgr_load_apps(gpointer mgr);
+bool li_mgr_load_apps(void* mgr);
 
-gboolean li_mgr_register_status_call(gpointer mgr,TLiStatusChangeCall call,gpointer user_data);
+bool li_mgr_register_status_call(void* mgr,TLiStatusChangeCall call,void* user_data);
 
-TRqResult li_mgr_register_request_call(gpointer mgr,TRequestCall call,gpointer user_data);
+TRqResult li_mgr_register_request_call(void* mgr,TRequestCall call,void* user_data);
 
-gboolean li_mgr_register_app_call(gpointer mgr,TAppEvent call);
+bool li_mgr_register_app_call(void* mgr,TAppEvent call);
 
-void li_mgr_set_sumode(gpointer mgr,gboolean md);
+void li_mgr_set_sumode(void* mgr,bool md);
 
-gboolean li_mgr_remove_app(gpointer mgr,AppInfo obj);
+bool li_mgr_remove_app(void* mgr,AppInfo obj);
 
-gboolean li_remove_ipk_installed_app(char *appname,char *appid,TLiStatusChangeCall scall,gboolean fastmode);
+bool li_remove_ipk_installed_app(char *appname,char *appid,TLiStatusChangeCall scall,bool fastmode);
 
-gboolean li_mgr_check_apps(gpointer mgr,gpointer log,gboolean root);
+bool li_mgr_check_apps(void* mgr,void* log,bool root);
 
 
 #endif /* __LI_MANAGER */

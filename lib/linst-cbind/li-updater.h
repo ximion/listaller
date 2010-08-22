@@ -26,27 +26,27 @@
 #ifndef __LI_UPDATER
 #define __LI_UPDATER
 
-#include <glib.h>
-#include <stdio.h>
+#include<stdio.h>
+#include<iostream>
 
 
-gpointer li_updater_new(void);
+void* li_updater_new(void);
 
-void li_updater_free(gpointer upd);
+void li_updater_free(void* upd);
 
-void li_updater_set_sumode(gpointer upd,gboolean val);
+void li_updater_set_sumode(void* upd,bool val);
 
-gboolean li_updater_register_status_call(gpointer upd,TLiStatusChangeCall call,gpointer user_data);
+bool li_updater_register_status_call(void* upd,TLiStatusChangeCall call,void* user_data);
 
-gboolean li_updater_register_request_call(gpointer upd,TRequestCall call,gpointer user_data);
+bool li_updater_register_request_call(void* upd,TRequestCall call,void* user_data);
 
-gboolean li_updater_register_newupdate_call(gpointer upd,TNewUpdateEvent call,gpointer user_data);
+bool li_updater_register_newupdate_call(void* upd,TNewUpdateEvent call,void* user_data);
 
-gboolean li_updater_search_updates(gpointer upd);
+bool li_updater_search_updates(void* upd);
 
-gchar *li_updater_updateid_oldversion(gpointer upd,gint32 uid);
+char *li_updater_updateid_oldversion(void* upd,int uid);
 
-gchar *li_updater_updateid_newversion(gpointer upd,gint32 uid);
+char *li_updater_updateid_newversion(void* upd,int uid);
 
 
 #endif /* __LI_UPDATER */

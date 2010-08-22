@@ -20,9 +20,9 @@
 #define LISETUP_H
 
 #include<QtGui>
+
 #include<listaller.h>
 
-typedef void* gpointer;
 class LiSetup {
   Q_OBJECT
 public:
@@ -43,7 +43,7 @@ public:
     
 
 private:
-    gpointer setup;
+    void* setup;
 };
 
 #endif // LISETUP_H

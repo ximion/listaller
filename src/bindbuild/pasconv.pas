@@ -70,7 +70,12 @@ begin
   h := LowerCase(s);
   if h = 'pstringlist' then //Workaround
   begin
-    Result := 'gpointer';  //FIXME
+    Result := 'void* ';  //FIXME
+    exit;
+  end;
+  if h = 'pointer' then
+  begin
+    Result := 'void* ';
     exit;
   end;
   if h[1] = 'p' then
@@ -83,16 +88,18 @@ begin
       Result := h;
     exit;
   end;
-  if h = 'integer' then
+  if (h = 'integer') or (h = 'longint') or (h = 'shortint') or (h = 'smallint') then
     Result := 'int'
   else if h[1] = 'g' then
       Result := h
-    else if h = 'tdatetime' then //FIXME: Needs a better expression!
-        Result := 'int'
-      else if h = 'widestring' then
-          Result := 'char *'
-        else
-          Result := s;
+    else if h = 'boolean' then
+        Result := 'bool'
+      else if h = 'tdatetime' then
+          Result := 'double'
+        else if h = 'widestring' then
+            Result := 'char *'
+          else
+            Result := s;
 end;
 
 { TPtCConverter }
@@ -206,9 +213,7 @@ begin
         h := copy(h, pos(')', h) + 1, length(h));
         h := copy(h, pos(':', h) + 1, length(h));
         h := StrSubst(h, ' ', '');
-
-        if LowerCase(h)[1] = 'g' then
-          h := LowerCase(h);
+        h := SubstTypes(h);
 
         r := 'typedef ' + h + ' (*' + el.FullName + ') ';
         ArgumentsToHVar; //Quick & dirty helper function :)
@@ -250,7 +255,7 @@ begin
   src.LoadFromFile(fname);
 
   funcdecl.Clear;
-  funcdecl.Add('G_BEGIN_DECLS');
+  //funcdecl.Add('G_BEGIN_DECLS');
 
   decls := md.InterfaceSection.Declarations;
   res := TStringList.Create;
@@ -312,8 +317,8 @@ begin
   end;
   if funcdecl.Count > 2 then
   begin
-    funcdecl.Add('');
-    funcdecl.Add('G_END_DECLS');
+    //funcdecl.Add('');
+    //funcdecl.Add('G_END_DECLS');
     res.Add('');
     res.Add(funcdecl.Text);
   end;

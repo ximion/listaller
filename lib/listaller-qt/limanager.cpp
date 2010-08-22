@@ -19,7 +19,6 @@
 #include "limanager.h"
 
 #include<QtGlobal>
-#include<glib.h>
 
 LiAppManager::LiAppManager()
 {

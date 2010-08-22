@@ -26,7 +26,7 @@ uses
 //////////////////////////////////////////////////////////////////////////////////////
 //Exported helper functions
 
-function li_new_stringlist: GPointer;cdecl;
+function li_new_stringlist: Pointer;cdecl;
 begin
  Result:=TStringList.Create;
 end;
@@ -41,15 +41,15 @@ except
 end;
 end;
 
-function li_stringlist_read_line(lst: PStringList;ln: Integer): PGChar;cdecl;
+function li_stringlist_read_line(lst: PStringList;ln: Integer): PChar;cdecl;
 begin
  if (ln < lst^.Count)and(ln > -1) then
  begin
-  Result:=PGChar(lst^[ln]);
+  Result:=PChar(lst^[ln]);
  end else Result:='List index out of bounds.';
 end;
 
-function li_stringlist_write_line(lst: PStringList;ln: Integer;val: PGChar): GBoolean;cdecl;
+function li_stringlist_write_line(lst: PStringList;ln: Integer;val: PChar): Boolean;cdecl;
 begin
  if (ln < lst^.Count)and(ln > -1) then
  begin
@@ -62,7 +62,7 @@ end;
 //Installer part
 
 //** Removes an application that was installed with an IPK package
-function li_remove_ipk_installed_app(appname, appid: PGChar;statuscall: TLiStatusChangeCall;fastmode: GBoolean): GBoolean;cdecl;
+function li_remove_ipk_installed_app(appname, appid: PChar;statuscall: TLiStatusChangeCall;fastmode: Boolean): Boolean;cdecl;
 begin
 Result:=true;
 try
@@ -73,7 +73,7 @@ end;
 end;
 
 //** Creates a new installation object
-function li_setup_new: GPointer;cdecl;
+function li_setup_new: Pointer;cdecl;
 begin
  Result:=TInstallation.Create;
 end;
@@ -85,7 +85,7 @@ begin
 end;
 
 //** Initializes the setup
-function li_setup_init(setup: PInstallation;pkname: PChar): GBoolean;cdecl;
+function li_setup_init(setup: PInstallation;pkname: PChar): Boolean;cdecl;
 begin
  Result:=true;
  if not setup^.UserRequestRegistered then
@@ -103,7 +103,7 @@ begin
 end;
 
 //** Register callback on status change
-function li_setup_register_status_call(setup: PInstallation;call: TLiStatusChangeCall;user_data: GPointer): GBoolean;cdecl;
+function li_setup_register_status_call(setup: PInstallation;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -114,7 +114,7 @@ begin
 end;
 
 //** User request message call
-function li_setup_register_user_request_call(setup: PInstallation;call: TRequestCall;user_data: GPointer): GBoolean;cdecl;
+function li_setup_register_user_request_call(setup: PInstallation;call: TRequestCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -138,7 +138,7 @@ begin
 end;
 
 //** Set actions which should be forced
-procedure li_setup_set_forced(setup: PInstallation;str: PGChar);cdecl;
+procedure li_setup_set_forced(setup: PInstallation;str: PChar);cdecl;
 begin
   (*
    Possible strings:
@@ -149,47 +149,47 @@ begin
 end;
 
 //** Set TInstallation to superuser mode
-procedure li_setup_set_sumode(setup: PInstallation;b: GBoolean);cdecl;
+procedure li_setup_set_sumode(setup: PInstallation;b: Boolean);cdecl;
 begin
  setup^.SuperuserMode:=b;
 end;
 
 //** Read disallows property
-function li_setup_get_disallows(setup: PInstallation): PGChar;cdecl;
+function li_setup_get_disallows(setup: PInstallation): PChar;cdecl;
 begin
   if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.Disallows);
 end;
 
 //** Read supported Linux distributions
-function li_setup_get_supported_distributions(setup: PInstallation): PGChar;cdecl;
+function li_setup_get_supported_distributions(setup: PInstallation): PChar;cdecl;
 begin
   if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.Distris);
 end;
 
 //** Check if application is installed
-function li_get_ipk_app_installed(appname: PGChar;appid: PGChar;sumode: Boolean): GBoolean;cdecl;
+function li_get_ipk_app_installed(appname: PChar;appid: PChar;sumode: Boolean): Boolean;cdecl;
 begin
   Result:=IsPackageInstalled(appname,appid,sumode);
 end;
 
 //** Readout application name
-function li_setup_get_appname(setup: PInstallation): PGChar;cdecl;
+function li_setup_get_appname(setup: PInstallation): PChar;cdecl;
 begin
   // if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.AppName);
 end;
 
 //** Read appversion
-function li_setup_get_appversion(setup: PInstallation): PGChar;cdecl;
+function li_setup_get_appversion(setup: PInstallation): PChar;cdecl;
 begin
  // if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.AppVersion);
 end;
 
 //** Get package ID
-function li_setup_get_pkgid(setup: PInstallation): PGChar;cdecl;
+function li_setup_get_pkgid(setup: PInstallation): PChar;cdecl;
 begin
   if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.AppID);
@@ -203,7 +203,7 @@ begin
 end;
 
 //** Get description
-function li_setup_get_long_description(setup: PInstallation; list: PStringList): GBoolean;cdecl;
+function li_setup_get_long_description(setup: PInstallation; list: PStringList): Boolean;cdecl;
 begin
  Result:=false;
  if not setup^.PkgOkay then exit;
@@ -216,7 +216,7 @@ end;
 end;
 
 //** Get wizard image patch
-function li_setup_get_wizard_image_path(setup: PInstallation): PGChar;cdecl;
+function li_setup_get_wizard_image_path(setup: PInstallation): PChar;cdecl;
 begin
   Result:='';
   if not setup^.PkgOkay then exit;
@@ -224,7 +224,7 @@ begin
 end;
 
 //** Get license
-function li_setup_get_license(setup: PInstallation; list: PStringList): GBoolean;cdecl;
+function li_setup_get_license(setup: PInstallation; list: PStringList): Boolean;cdecl;
 begin
 try
  Result:=true;
@@ -235,7 +235,7 @@ end;
 end;
 
 //** Get profiles list
-function li_setup_get_profiles_list(setup: PInstallation; list: PStringList): GBoolean;cdecl;
+function li_setup_get_profiles_list(setup: PInstallation; list: PStringList): Boolean;cdecl;
 begin
   Result:=false;
   if not setup^.PkgOkay then exit;
@@ -254,13 +254,13 @@ begin
 end;
 
 //** Set if update source should be registered
-procedure li_setup_enable_usource_registering(setup: PInstallation;b: GBoolean);cdecl;
+procedure li_setup_enable_usource_registering(setup: PInstallation;b: Boolean);cdecl;
 begin
  setup^.RegisterUpdateSource:=b;
 end;
 
 //** Read appversion
-function li_setup_get_appicon(setup: PInstallation): PGChar;cdecl;
+function li_setup_get_appicon(setup: PInstallation): PChar;cdecl;
 begin
   Result:='';
   if not setup^.PkgOkay then exit;
@@ -268,7 +268,7 @@ begin
 end;
 
 //** Read desktopfiles
-function li_setup_get_desktopfiles(setup: PInstallation): PGChar;cdecl;
+function li_setup_get_desktopfiles(setup: PInstallation): PChar;cdecl;
 begin
   Result:='';
   if not setup^.PkgOkay then exit;
@@ -276,7 +276,7 @@ begin
 end;
 
 //** Read appcmd
-function li_setup_get_app_exec_command(setup: PInstallation): PGChar;cdecl;
+function li_setup_get_app_exec_command(setup: PInstallation): PChar;cdecl;
 begin
   Result:='';
   if not setup^.PkgOkay then exit;
@@ -284,7 +284,7 @@ begin
 end;
 
 //** Read path to file list
-function li_setup_get_current_profile_filelist(setup: PInstallation): PGChar;cdecl;
+function li_setup_get_current_profile_filelist(setup: PInstallation): PChar;cdecl;
 begin
   Result:='';
   if not setup^.PkgOkay then exit;
@@ -292,19 +292,19 @@ begin
 end;
 
 //** Starts the installation
-function li_setup_execute(setup: PInstallation): GBoolean;cdecl;
+function li_setup_execute(setup: PInstallation): Boolean;cdecl;
 begin
   Result:=setup^.DoInstallation;
 end;
 
 //** Set daemon mode
-procedure li_setup_exec_by_daemon(setup: PInstallation;b: GBoolean);cdecl;
+procedure li_setup_exec_by_daemon(setup: PInstallation;b: Boolean);cdecl;
 begin
  setup^.DaemonMode:=b;
 end;
 
 //** Get dependencies
-function li_setup_get_dependencies(setup: PInstallation; list: PStringList): GBoolean;cdecl;
+function li_setup_get_dependencies(setup: PInstallation; list: PStringList): Boolean;cdecl;
 var i: Integer;
 begin
   Result:=false;
@@ -323,7 +323,7 @@ end;
 //Manager part
 
 //** Creates a new TAppManager object
-function li_mgr_new: GPointer;cdecl;
+function li_mgr_new: Pointer;cdecl;
 begin
  Result:=TAppManager.Create;
 end;
@@ -348,7 +348,7 @@ end;
 end;
 
 //** Register call on status change for appmanager
-function li_mgr_register_status_call(mgr: PAppManager;call: TLiStatusChangeCall;user_data: GPointer): GBoolean;cdecl;
+function li_mgr_register_status_call(mgr: PAppManager;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -359,7 +359,7 @@ begin
 end;
 
 //** Register application event to catch found apps
-function li_mgr_register_app_call(mgr: PAppManager;call: TAppEvent): GBoolean;cdecl;
+function li_mgr_register_app_call(mgr: PAppManager;call: TAppEvent): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -370,7 +370,7 @@ begin
 end;
 
 //** Register event to recieve user requests
-function li_mgr_register_request_call(mgr: PAppManager;call: TRequestCall;user_data: GPointer): GBoolean;cdecl;
+function li_mgr_register_request_call(mgr: PAppManager;call: TRequestCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -381,13 +381,13 @@ begin
 end;
 
 //** Sets if aplications should work in root mode
-procedure li_mgr_set_sumode(mgr: PAppManager;md: GBoolean);cdecl;
+procedure li_mgr_set_sumode(mgr: PAppManager;md: Boolean);cdecl;
 begin
  mgr^.SuperuserMode:=md;
 end;
 
 //** Removes the application
-function li_mgr_remove_app(mgr: PAppManager;obj: AppInfo): GBoolean;cdecl;
+function li_mgr_remove_app(mgr: PAppManager;obj: AppInfo): Boolean;cdecl;
 begin
  Result:=false;
 if not mgr^.UserRequestRegistered then begin p_error('You need to register a user request callback!');exit;end;
@@ -400,7 +400,7 @@ if not mgr^.UserRequestRegistered then begin p_error('You need to register a use
 end;
 
 //** Check application dependencies
-function li_mgr_check_apps(mgr: PAppManager;log: PStringList;root: GBoolean): GBoolean;cdecl;
+function li_mgr_check_apps(mgr: PAppManager;log: PStringList;root: Boolean): Boolean;cdecl;
 procedure PerformCheck;
 begin
  if not mgr^.CheckApps(log^,false,root) then
@@ -415,7 +415,7 @@ else p_error('Check log != nil failed.');
 end;
 
 //** Fix application dependencies
-function li_mgr_fix_apps(mgr: PAppManager;log: PStringList;root: GBoolean): GBoolean;cdecl;
+function li_mgr_fix_apps(mgr: PAppManager;log: PStringList;root: Boolean): Boolean;cdecl;
 procedure PerformCheck;
 begin
  if not mgr^.CheckApps(log^,true,root) then
@@ -433,7 +433,7 @@ end;
 //Updater part
 
 //** Creates a new TAppUpdater object
-function li_updater_new: GPointer;cdecl;
+function li_updater_new: Pointer;cdecl;
 begin
  Result:=TAppUpdater.Create;
 end;
@@ -445,13 +445,13 @@ begin
 end;
 
 //** Set superuser mode (or not)
-procedure li_updater_set_sumode(upd: PAppUpdater;val: GBoolean);cdecl;
+procedure li_updater_set_sumode(upd: PAppUpdater;val: Boolean);cdecl;
 begin
  upd^.SetSumode(val);
 end;
 
 //** Register call on status change for updater
-function li_updater_register_status_call(upd: PAppUpdater;call: TLiStatusChangeCall;user_data: GPointer): GBoolean;cdecl;
+function li_updater_register_status_call(upd: PAppUpdater;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -462,7 +462,7 @@ begin
 end;
 
 //** Register event to recieve user requests
-function li_updater_register_request_call(upd: PAppUpdater;call: TRequestCall;user_data: GPointer): GBoolean;cdecl;
+function li_updater_register_request_call(upd: PAppUpdater;call: TRequestCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -473,7 +473,7 @@ begin
 end;
 
 //** Register event for new updates
-function li_updater_register_newupdate_call(upd: PAppUpdater;call: TNewUpdateEvent;user_data: GPointer): GBoolean;cdecl;
+function li_updater_register_newupdate_call(upd: PAppUpdater;call: TNewUpdateEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -488,37 +488,37 @@ begin
 end;
 
 //** Look for new updates
-function li_updater_search_updates(upd: PAppUpdater): GBoolean;cdecl;
+function li_updater_search_updates(upd: PAppUpdater): Boolean;cdecl;
 begin
  Result:=upd^.CheckUpdates;
 end;
 
 //** Fetch old version of application
-function li_updater_updateid_oldversion(upd: PAppUpdater;uid: GInt32): PGChar;cdecl;
+function li_updater_updateid_oldversion(upd: PAppUpdater;uid: Longint): PChar;cdecl;
 begin
  Result:=PChar(upd^.UpdateIDGetOldVersion(uid));
 end;
 
 //** Fetch new application version
-function li_updater_updateid_newversion(upd: PAppUpdater;uid: GInt32): PGChar;cdecl;
+function li_updater_updateid_newversion(upd: PAppUpdater;uid: Longint): PChar;cdecl;
 begin
  Result:=PChar(upd^.UpdateIDGetNewVersion(uid));
 end;
 
 //** Execute update for given update ID
-function li_updater_execute_update(upd: PAppUpdater;uid: GInt32): GBoolean;cdecl;
+function li_updater_execute_update(upd: PAppUpdater;uid: Longint): Boolean;cdecl;
 begin
  Result:=upd^.ExecuteUpdate(uid);
 end;
 
 //** Get registration dir
-function li_regdir: PGChar;cdecl;
+function li_regdir: PChar;cdecl;
 begin
  Result:=PChar(RegDir);
 end;
 
 //** Get Listaller version
-function li_version: PGChar;cdecl;
+function li_version: PChar;cdecl;
 begin
  Result:=PChar(LiVersion);
 end;

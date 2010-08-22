@@ -21,18 +21,18 @@ unit liappupdate;
 interface
 
 uses
-  Classes, SysUtils, glib2, liTypes;
+  Classes, SysUtils, LiTypes;
 
-  function  li_updater_new: GPointer;cdecl;external libinst;
-  procedure li_updater_free(upd: GPointer);cdecl;external libinst;
-  procedure li_updater_set_sumode(upd: GPointer;val: GBoolean);cdecl;external libinst;
-  function  li_updater_register_status_call(upd: GPointer;call: TLiStatusChangeCall;user_data: GPointer): GBoolean;cdecl;external libinst;
-  function  li_updater_register_request_call(upd: GPointer;call: TRequestCall;user_data: GPointer): GBoolean;cdecl;external libinst;
-  function  li_updater_register_newupdate_call(upd: GPointer;call: TNewUpdateEvent;user_data: GPointer): GBoolean;cdecl;external libinst;
-  function  li_updater_search_updates(upd: GPointer): GBoolean;cdecl;external libinst;
-  function  li_updater_updateid_oldversion(upd: GPointer;uid: GInt32): PGChar;cdecl;external libinst;
-  function  li_updater_updateid_newversion(upd: GPointer;uid: GInt32): PGChar;cdecl;external libinst;
-  function  li_updater_execute_update(upd: GPointer;uid: GInt32): GBoolean;cdecl;external libinst;
+  function  li_updater_new: Pointer;cdecl;external libinst;
+  procedure li_updater_free(upd: Pointer);cdecl;external libinst;
+  procedure li_updater_set_sumode(upd: Pointer;val: Boolean);cdecl;external libinst;
+  function  li_updater_register_status_call(upd: Pointer;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;external libinst;
+  function  li_updater_register_request_call(upd: Pointer;call: TRequestCall;user_data: Pointer): Boolean;cdecl;external libinst;
+  function  li_updater_register_newupdate_call(upd: Pointer;call: TNewUpdateEvent;user_data: Pointer): Boolean;cdecl;external libinst;
+  function  li_updater_search_updates(upd: Pointer): Boolean;cdecl;external libinst;
+  function  li_updater_updateid_oldversion(upd: Pointer;uid: Longint): PChar;cdecl;external libinst;
+  function  li_updater_updateid_newversion(upd: Pointer;uid: Longint): PChar;cdecl;external libinst;
+  function  li_updater_execute_update(upd: Pointer;uid: Longint): Boolean;cdecl;external libinst;
 
 implementation
 end.

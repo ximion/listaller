@@ -19,7 +19,6 @@
 #include "lisetup.h"
 
 #include<QtGlobal>
-#include<glib.h>
 
 LiSetup::LiSetup()
 {
@@ -33,13 +32,13 @@ LiSetup::~LiSetup()
 
 void LiSetup::initialize(QString pkgName)
 {
-  li_setup_init(setup, (gchar*) qPrintable(pkgName));
+  li_setup_init(setup, (char*) qPrintable(pkgName));
 }
 
 
 void LiSetup::setSuMode(bool b)
 {
-  li_setup_set_sumode(setup, (gboolean) b);
+  li_setup_set_sumode(setup, b);
 }
 
 QString LiSetup::getDisallows() const
@@ -64,6 +63,6 @@ QString LiSetup::appVersion() const
 
 void LiSetup::setTestmode(bool b)
 {
-  li_set_testmode((gboolean) b);
+  li_set_testmode(b);
 }
 

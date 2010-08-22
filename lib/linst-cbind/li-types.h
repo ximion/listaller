@@ -26,8 +26,8 @@
 #ifndef __LI_TYPES
 #define __LI_TYPES
 
-#include <glib.h>
-#include <stdio.h>
+#include<stdio.h>
+#include<iostream>
 
 
 typedef enum {
@@ -71,8 +71,8 @@ typedef enum {
 struct TLiStatusData
 {
       char *msg;
-      gint32 exprogress;
-      gint32 mnprogress;
+      int exprogress;
+      int mnprogress;
       LiProcStatus lastresult;
       LiStatusChange change;
 };
@@ -111,7 +111,7 @@ struct AppInfo
       char *Profile;
       char *UId;
       AppCategory Category;
-      int InstallDate;
+      double InstallDate;
       char *Dependencies;
 };
 
@@ -121,19 +121,16 @@ typedef enum {
       psUntrusted
 } TPkgSigState;
 
-G_BEGIN_DECLS
 
-typedef void (*TLiStatusChangeCall) (LiStatusChange change,TLiStatusData Data,gpointer user_data);
+typedef void (*TLiStatusChangeCall) (LiStatusChange change,TLiStatusData Data,void* user_data);
 
-typedef TRqResult (*TRequestCall) (TRqType mtype,char *msg,gpointer user_data);
+typedef TRqResult (*TRequestCall) (TRqType mtype,char *msg,void* user_data);
 
-typedef void (*TProgressEvent) (int pos,gpointer user_data);
+typedef void (*TProgressEvent) (int pos,void* user_data);
 
-typedef gboolean (*TAppEvent) (char *Name,AppInfo obj);
+typedef bool (*TAppEvent) (char *Name,AppInfo obj);
 
-typedef void (*TNewUpdateEvent) (char *Name,int id,gpointer user_data);
-
-G_END_DECLS
+typedef void (*TNewUpdateEvent) (char *Name,int id,void* user_data);
 
 
 
