@@ -41,19 +41,19 @@ echo "Active widgetset: $WIDGET"
 
 echo "Starting new Listaller build..."
 
-echo "Compiling libinstaller library..."
-lazbuild -B --ws=nogui ../lib/installer/libinstaller.lpr
-if [ ! -f "../build/libinstaller.so" ]; then
+echo "Compiling liblistaller library..."
+lazbuild -B --ws=nogui ../lib/listaller/liblistaller.lpr
+if [ ! -f "../build/liblistaller.so" ]; then
  cd ../build
- ln -s libinstaller.so.0.4.0 libinstaller.so.0.4
- ln -s libinstaller.so.0.4 libinstaller.so
+ ln -s liblistaller.so.0.4.0 liblistaller.so.0.4
+ ln -s liblistaller.so.0.4 liblistaller.so
  cd ../src
 fi
 #Write PC file
-sed "s#%PREFIX%#$prefix#" ../lib/linst-cbind/libinstaller.pc.in > ../lib/linst-cbind/libinstaller.pc
+sed "s#%PREFIX%#$prefix#" ../lib/linst-cbind/liblistaller.pc.in > ../lib/linst-cbind/liblistaller.pc
 
-echo "Compiling Listaller daemon..."
-lazbuild -B --ws=nogui ./daemon/listallerd.lpr
+echo "Compiling Listaller helper daemon..."
+lazbuild -B --ws=nogui ./helper/listallhelperd.lpr
 
 echo "Compiling command-line tool..."
 lazbuild -B --ws=nogui ./cmdtools/lipa.lpr

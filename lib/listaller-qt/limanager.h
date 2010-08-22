@@ -16,25 +16,44 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef LISETUP_H
-#define LISETUP_H
+#ifndef LIAPPMANAGER_H
+#define LIAPPMANAGER_H
 
 #include<QtGui>
 #include<listaller.h>
-#include<glib.h>
 
-class LiSetup {
+typedef void* gpointer;
+
+struct AppData
+{
+  QString name;
+  QString pkName;
+  TPkgType PkType;
+  QString shortDesc;
+  QString version;
+  QString author;
+  QString iconName;
+  QString profile;
+  QString uId;
+  AppCategory Category;
+  int installDate;
+  QString dependencies;
+};
+
+class LiAppManager {
   Q_OBJECT
 public:
-    LiSetup();
-    ~LiSetup();
+    LiAppManager();
+    ~LiAppManager();
     
-    void initialize(QString pkgName);
-    void setSuMode(bool b);
+    bool loadApps();
+    
+signals:
+    void newApp(AppData app);
     
 
 private:
-    gpointer setup;
+    gpointer mgr;
 };
 
-#endif // LISETUP_H
+#endif // LIMANAGER_H

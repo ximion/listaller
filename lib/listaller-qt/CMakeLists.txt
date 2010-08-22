@@ -9,7 +9,7 @@ find_package(PkgConfig)
 
 include(${QT_USE_FILE})
 
-set(installer-qt_SRCS
+set(installer-qt_SRCS limanager.cpp
     lisetup.cpp
 )
 

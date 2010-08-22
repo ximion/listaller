@@ -35,9 +35,9 @@
     </RunParams>
     <Units Count="2">
       <Unit0>
-        <Filename Value="listallerd.lpr"/>
+        <Filename Value="listallhelperd.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="listallerd"/>
+        <UnitName Value="listallhelperd"/>
       </Unit0>
       <Unit1>
         <Filename Value="djobs.pas"/>
@@ -49,7 +49,7 @@
   <CompilerOptions>
     <Version Value="9"/>
     <Target>
-      <Filename Value="../../build/listallerd"/>
+      <Filename Value="../../build/listallhelperd"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>

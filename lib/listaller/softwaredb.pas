@@ -277,7 +277,7 @@ begin
     r.Category := gtOTHER;
 
   r.InstallDate := dsApp.FieldByName('InstallDate').AsDateTime;
-  r.Dependencies := dsApp.FieldByName('Dependencies').AsWideString;
+  r.Dependencies := PChar(dsApp.FieldByName('Dependencies').AsWideString);
   Result := r;
 end;
 

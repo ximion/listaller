@@ -70,7 +70,7 @@ typedef enum {
 
 struct TLiStatusData
 {
-      gchar *msg;
+      char *msg;
       gint32 exprogress;
       gint32 mnprogress;
       LiProcStatus lastresult;
@@ -101,15 +101,15 @@ typedef enum {
 
 struct AppInfo
 {
-      gchar *Name;
-      gchar *PkName;
+      char *Name;
+      char *PkName;
       TPkgType PkType;
-      gchar *ShortDesc;
-      gchar *Version;
-      gchar *Author;
-      gchar *IconName;
-      gchar *Profile;
-      gchar *UId;
+      char *ShortDesc;
+      char *Version;
+      char *Author;
+      char *IconName;
+      char *Profile;
+      char *UId;
       AppCategory Category;
       int InstallDate;
       char *Dependencies;

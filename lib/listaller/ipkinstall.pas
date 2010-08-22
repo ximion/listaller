@@ -1342,7 +1342,7 @@ begin
       Profile := PChar(CurProfile);
       Category := ICategory;
     end;
-    AppField.Dependencies := Dependencies.Text;
+    AppField.Dependencies := PChar(Dependencies.Text);
 
     sdb.AppAddNew(AppField);
     sdb.Free;

@@ -49,7 +49,7 @@ type
     scMessage, scStepMessage);
   //** Data assigned to a status change
   TLiStatusData = record
-    msg: PGChar;
+    msg: PChar;
     exprogress: GInt32;
     mnprogress: GInt32;
     lastresult: LiProcStatus;
@@ -85,18 +85,18 @@ type
 
   //** Container for information about apps
   AppInfo = record
-    Name: PGChar;
-    PkName: PGChar;
+    Name: PChar;
+    PkName: PChar;
     PkType: TPkgType;
-    ShortDesc: PGChar;
-    Version: PGChar;
-    Author: PGChar;
-    IconName: PGChar;
-    Profile: PGChar;
-    UId: PGChar;
+    ShortDesc: PChar;
+    Version: PChar;
+    Author: PChar;
+    IconName: PChar;
+    Profile: PChar;
+    UId: PChar;
     Category: AppCategory;
     InstallDate: TDateTime;
-    Dependencies: WideString;
+    Dependencies: PChar;
   end;
 
   PAppInfo = ^AppInfo;

@@ -17,7 +17,9 @@
 */
 
 #include "lisetup.h"
+
 #include<QtGlobal>
+#include<glib.h>
 
 LiSetup::LiSetup()
 {
@@ -39,3 +41,29 @@ void LiSetup::setSuMode(bool b)
 {
   li_setup_set_sumode(setup, (gboolean) b);
 }
+
+QString LiSetup::getDisallows() const
+{
+  return li_setup_get_disallows(setup);
+}
+
+QString LiSetup::getSupportedDistributions() const
+{
+  return li_setup_get_supported_distributions(setup);
+}
+
+QString LiSetup::appName() const
+{
+  return li_setup_get_appname(setup);
+}
+
+QString LiSetup::appVersion() const
+{
+  return li_setup_get_appversion(setup);
+}
+
+void LiSetup::setTestmode(bool b)
+{
+  li_set_testmode((gboolean) b);
+}
+

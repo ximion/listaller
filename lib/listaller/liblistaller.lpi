@@ -30,9 +30,9 @@
     </RunParams>
     <Units Count="6">
       <Unit0>
-        <Filename Value="libinstaller.lpr"/>
+        <Filename Value="liblistaller.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="libinstaller"/>
+        <UnitName Value="liblistaller"/>
       </Unit0>
       <Unit1>
         <Filename Value="ipkinstall.pas"/>
@@ -64,7 +64,7 @@
   <CompilerOptions>
     <Version Value="9"/>
     <Target>
-      <Filename Value="../../build/libinstaller.so.0.4.0"/>
+      <Filename Value="../../build/liblistaller.so.0.4.0"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>

@@ -3,9 +3,9 @@ exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
 
-Name: libinstaller
+Name: liblistaller
 Description: Access software management features of Listaller
 Version: 0.4.0
 Requires.private: dbus-1, glib-2.0, sqlite3
-Libs: -L${libdir} -linstaller
+Libs: -L${libdir} -llistaller
 Cflags: -I${includedir}/Listaller

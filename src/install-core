@@ -28,7 +28,7 @@ mkdir -p $DESTDIR/etc/dbus-1/system.d/
 mkdir -p $DESTDIR$prefix/share/polkit-1/actions/
 
 cp ../build/lipa $DESTDIR$prefix/bin/
-cp ../build/listallerd $DESTDIR$prefix/sbin/
+cp ../build/listallhelperd $DESTDIR$prefix/sbin/
 cp ../data/org.nlinux.Listaller.service $DESTDIR$prefix/share/dbus-1/system-services/
 cp ../data/org.nlinux.Listaller.conf $DESTDIR/etc/dbus-1/system.d/
 cp ../data/org.nlinux.listaller.policy $DESTDIR$prefix/share/polkit-1/actions/
@@ -39,10 +39,10 @@ mkdir -p $DESTDIR/etc/lipa/info
 cp ../data/blacklist $DESTDIR/etc/lipa/
 cp ../data/ignore-deps.list $DESTDIR/etc/lipa/
 
-cp ../build/libinstaller.so.0.4.0 $DESTDIR$libdir
+cp ../build/liblistaller.so.0.4.0 $DESTDIR$libdir
 cd $DESTDIR$libdir
-if [ ! -f libinstaller.so.0.4 ]; then
-ln -s $libdir/libinstaller.so.0.4.0 libinstaller.so.0.4
+if [ ! -f liblistaller.so.0.4 ]; then
+ln -s $libdir/liblistaller.so.0.4.0 liblistaller.so.0.4
 fi
 
 echo "Installation of core files finished."

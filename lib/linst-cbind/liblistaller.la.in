@@ -1,13 +1,13 @@
-# libinstaller.la - a Listaller library file
+# liblistaller.la - a Listaller library file
 
 # The name that we can dlopen(3).
-dlname='libinstaller.so.0.4.0'
+dlname='liblistaller.so.0.4.0'
 
 # Names of this library.
-library_names='libinstaller.so.0.4.0 libinstaller.so.0 libinstaller.so'
+library_names='liblistaller.so.0.4.0 liblistaller.so.0 liblistaller.so'
 
 # The name of the static archive.
-old_library='libinstaller.a'
+old_library='liblistaller.a'
 
 # Linker flags that can not go in dependency_libs.
 inherited_linker_flags=''
@@ -18,7 +18,7 @@ dependency_libs=''
 # Names of additional weak libraries provided by this library
 weak_library_names=''
 
-# Version information for libinstaller.
+# Version information for liblistaller.
 current=0
 age=4
 revision=0
