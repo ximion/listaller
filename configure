@@ -210,6 +210,14 @@ do
    fi
 done
 
+#Configure Qt4 library
+if [ "$ENABLE_QT" = "1" ]; then
+ echo
+ cd ./build
+ cmake -DCMAKE_INSTALL_PREFIX=$prefix ../lib/listaller-qt
+ cd ..
+fi
+
 echo
 echo "Summary:"
 echo " Installing into $prefix"

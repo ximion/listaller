@@ -20,8 +20,10 @@
 #define LIAPPMANAGER_H
 
 #include<QtGui>
-#include<listaller.h>
+#include"li-types.h"
 
+namespace Listaller {
+  
 struct AppData
 {
   QString name;
@@ -38,8 +40,10 @@ struct AppData
   QString dependencies;
 };
 
-class LiAppManager {
+class LiAppManager : public QObject
+{
   Q_OBJECT
+  
 public:
     LiAppManager();
     ~LiAppManager();
@@ -51,9 +55,10 @@ public:
 signals:
     void newApp(AppData app);
     
-
 private:
     void* mgr;
+};
+
 };
 
 #endif // LIMANAGER_H

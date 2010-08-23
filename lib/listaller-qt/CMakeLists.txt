@@ -33,6 +33,8 @@ set(listaller-qt_SRCS
 )
 
 set(listaller-qt_HEADERS
+   listaller-qt.h
+   li-types.h
    limanager.h
    lisetup.h
 )
@@ -48,22 +50,22 @@ include_directories(${CMAKE_SOURCE_DIR}
     ${qt4_include_dir}
     "${CMAKE_CURRENT_SOURCE_DIR}/../linst-cbind")
 
-ADD_LIBRARY(listaller-qt SHARED ${listaller-qt_SRCS})
+add_library(listaller-qt SHARED ${listaller-qt_SRCS})
 
 set_target_properties(listaller-qt PROPERTIES VERSION 0.4.0 SOVERSION 0.4)
-SET(CMAKE_INSTALL_LIBDIR lib CACHE PATH "Output directory for libraries")
+set(CMAKE_INSTALL_LIBDIR lib CACHE PATH "Output directory for libraries")
 
 target_link_libraries(listaller-qt
     ${Listaller_LIBRARIES}
 )
 
-SET(LIB_INSTALL_DIR "\${exec_prefix}/${CMAKE_INSTALL_LIBDIR}"
+set(LIB_INSTALL_DIR "\${exec_prefix}/${CMAKE_INSTALL_LIBDIR}"
   CACHE PATH "Directory where libraries will be installed"
   FORCE)
-set (RESOURCE_PREFIX "")
+set(RESOURCE_PREFIX "")
 
 configure_file("listaller-qt.pc.in" "listaller-qt.pc" @ONLY)
 
 install(TARGETS listaller-qt  DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(FILES listaller-qt.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/listaller-qt.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 install(FILES ${listaller-qt_HEADERS} DESTINATION include/listaller-qt COMPONENT Headers)

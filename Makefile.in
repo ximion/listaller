@@ -1,10 +1,12 @@
 # Makefile for Listaller 0.5
 all:
 	$(MAKE) -C ./src all
+	%Qt%$(MAKE) -C ./build all VERBOSE=1
 	%LiCreator%$(MAKE) -C ./src/licreator all
 
 install:
 	$(MAKE) -C ./src install
+	%Qt%$(MAKE) -C ./build install VERBOSE=1
 	%LiCreator%$(MAKE) -C ./src/licreator install
 
 install-binonly:

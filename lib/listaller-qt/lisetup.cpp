@@ -18,7 +18,10 @@
 
 #include "lisetup.h"
 
-#include<QtGlobal>
+#include<QtCore>
+#include<listaller.h>
+
+using namespace Listaller;
 
 LiSetup::LiSetup()
 {
@@ -34,7 +37,6 @@ void LiSetup::initialize(QString pkgName)
 {
   li_setup_init(setup, (char*) qPrintable(pkgName));
 }
-
 
 void LiSetup::setSuMode(bool b)
 {
@@ -61,8 +63,13 @@ QString LiSetup::appVersion() const
   return li_setup_get_appversion(setup);
 }
 
+QString LiSetup::description() const
+{
+  //return li_setup_get_long_description(setup);
+  return "FIXME: Implement this!";
+}
+
 void LiSetup::setTestmode(bool b)
 {
   li_set_testmode(b);
 }
-

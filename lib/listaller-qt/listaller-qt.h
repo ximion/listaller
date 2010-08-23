@@ -1,13 +1,13 @@
 /*
-    libinstaller-qt - Qt4 wrapper for libListaller
+    listaller-qt - Qt4 wrapper for libListaller
     Copyright (C) 2010 Matthias Klumpp
 
-    This program is free software: you can redistribute it and/or modify
+    This library is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
+    This library is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -16,29 +16,16 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "limanager.h"
+#ifndef __QLISTALLER_H__
+#define __QLISTALLER_H__
 
-#include<QtGlobal>
-#include<listaller.h>
+#define __QLISTALLER_H_INSIDE__
+#ifdef __cplusplus
 
-using namespace Listaller;
+#include <limanager.h>
+#include <lisetup.h>
 
-LiAppManager::LiAppManager()
-{
-  mgr = li_mgr_new();
-}
+#endif 
+#undef __QLISTALLER_H_INSIDE__
 
-LiAppManager::~LiAppManager()
-{
-  li_mgr_free(mgr);
-}
-
-bool LiAppManager::loadApps()
-{
-  return li_mgr_load_apps(mgr);
-}
-
-void LiAppManager::setSuMode(bool b)
-{
-  li_mgr_set_sumode(mgr, b);
-}
+#endif /* __LISTALLER_H__ */
