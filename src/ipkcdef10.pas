@@ -21,7 +21,7 @@ unit ipkcdef10;
 interface
 
 uses
-  Classes, GetText, liTypes, liUtils, SysUtils, FileUtil;
+  Classes, GetText, LiTypes, LiUtils, SysUtils, FileUtil;
 
 type
 

@@ -19,7 +19,7 @@ library liblistaller;
 {$mode objfpc}{$H+}
 
 uses
-  CThreads, Classes, IpkInstall, SysUtils, Controls, LiTypes, LiUtils,
+  CThreads, Classes, IpkInstall, SysUtils, LiTypes, LiUtils,
   LiManageApp, LiUpdateApp, GLib2, SoftwareDB;
 
 

@@ -21,7 +21,7 @@ unit dderesolve;
 interface
 
 uses
-  Classes, LiUtils, FileUtil, HTTPSend, SysUtils;
+  Classes, LiUtils, HTTPSend, SysUtils, FileUtil;
 
 type
   DDEPackage = record

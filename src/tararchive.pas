@@ -21,7 +21,7 @@ unit tararchive;
 interface
 
 uses
-  Classes, liUtils, Process, FileUtil, SysUtils;
+  Classes, LiUtils, Process, SysUtils, FileUtil;
 
 type
   CompressionMethod = (cmNone, cmXZ, cmLZMA, cmBZIP2, cmGZIP);

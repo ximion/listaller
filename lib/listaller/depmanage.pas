@@ -21,8 +21,8 @@ unit depmanage;
 interface
 
 uses
-  GLib2, Classes, LiTypes, LiUtils, PkTypes, Process, FileUtil, SysUtils, DDEResolve,
-  PackageKit, SoftwareDB, TarArchive;
+  GLib2, Classes, LiTypes, LiUtils, PkTypes, Process, SysUtils, DDEResolve,
+  PackageKit, SoftwareDB, TarArchive, FileUtil;
 
 type
   //** Error codes of Listallers library solver

@@ -21,7 +21,7 @@ unit liutils;
 interface
 
 uses
-  Dos, pwd, Classes, Process, RegExpr, BaseUnix, IniFiles, SysUtils, strLocale;
+  Dos, pwd, Classes, Process, RegExpr, BaseUnix, IniFiles, SysUtils, StrLocale;
 
 const
   //** Version of the Listaller applicationset
@@ -111,7 +111,7 @@ function IsCommandRunning(cmd: String): Boolean;
 //** Remove modifiers from a string @returns Cleaned string
 function DeleteModifiers(s: String): String;
 //** Replaces placeholders (like $INSt or $APP) with their current paths @returns Final path as string
-function SyblToPath(s: String;root: Boolean=false): String;
+function SyblToPath(s: String; root: Boolean = false): String;
 //** Removes symbol or replace it an simple dummy path (Used in IPKPackager) @returns Cleaned string
 function SyblToX(s: String): String;
 //** Deletes all variables in string
@@ -191,7 +191,7 @@ begin
   if (FileExists(ExtractFilePath(ParamStr(0)) + s)) or
     (DirectoryExists(ExtractFilePath(ParamStr(0)) + s)) then
     Result := ExtractFilePath(ParamStr(0)) + s
-  else if (FileExists(ExtractFilePath(ParamStr(0)) + '../'+ s)) or
+  else if (FileExists(ExtractFilePath(ParamStr(0)) + '../' + s)) or
       (DirectoryExists(ExtractFilePath(ParamStr(0)) + '../' + s)) then
       Result := ExtractFilePath(ParamStr(0)) + '../' + s
     else
@@ -199,7 +199,8 @@ begin
       begin
         D := GetDistro;
         //Apply graphics branding
-        if FileExists('/usr/share/listaller/branding/' + LowerCase(D.DName) + '/' + s) then
+        if FileExists('/usr/share/listaller/branding/' + LowerCase(D.DName) +
+          '/' + s) then
           Result := '/usr/share/listaller/branding/' + LowerCase(D.DName) + '/' + s
         else
           Result := '/usr/share/listaller/' + s;
@@ -468,7 +469,7 @@ end;
 procedure p_debug(msg: String);
 begin
   {$IFNDEF NoDebugMsg}
-   writeLn('debug: ' + msg);
+  writeLn('debug: ' + msg);
   {$ENDIF}
 end;
 
@@ -606,9 +607,9 @@ function MoFileMatchesLang(id: String; mo: String): Boolean;
 begin
   Result := false;
   mo := ExtractFileName(mo);
-  if copy(mo, pos(mo, '-')+1, length(mo)) = id+'.mo' then
+  if copy(mo, pos(mo, '-') + 1, length(mo)) = id + '.mo' then
     Result := true;
-  if id+'.mo' = mo then
+  if id + '.mo' = mo then
     Result := true;
 end;
 
@@ -673,7 +674,7 @@ begin
     Result := GetEnvironmentVariable('HOME');
 end;
 
-function SyblToPath(s: String;root: Boolean=false): String;
+function SyblToPath(s: String; root: Boolean = false): String;
 var
   n: String;
   DInfo: TDistroInfo;
@@ -682,7 +683,8 @@ begin
 
   n := GetSystemArchitecture;
 
-  if not root then root := IsRoot;
+  if not root then
+    root := IsRoot;
 
   DInfo := GetDistro;
 
@@ -696,7 +698,7 @@ begin
     s := StringReplace(s, '$SBIN', '/usr/sbin', [rfReplaceAll]);
 
     //Fedora uses lib64 dir.
-    if (LowerCase(n) = 'x86_64')and(DInfo.DName='Fedora') then
+    if (LowerCase(n) = 'x86_64') and (DInfo.DName = 'Fedora') then
       s := StringReplace(s, '$LIB', '/usr/lib64', [rfReplaceAll])
     else
       s := StringReplace(s, '$LIB', '/usr/lib', [rfReplaceAll]);
@@ -834,7 +836,8 @@ begin
   s := StrSubst(s, '$PIX', '');
   s := StrSubst(s, '$LIB', '');
   s := StrSubst(s, '$LIB32', '');
-  if s[1]='/' then s:=copy(s,2,length(s));
+  if s[1] = '/' then
+    s := copy(s, 2, length(s));
   Result := s;
 end;
 
@@ -915,19 +918,19 @@ var
 
   function Checkdir(dir: String): Boolean;
   begin
-    dir := dir+'/';
+    dir := dir + '/';
     if not hasExt then
     begin
-      res := dir+icon+'.png';
+      res := dir + icon + '.png';
       if not Checkres then
       begin
-        res := dir+icon+'.xpm';
+        res := dir + icon + '.xpm';
         if not Checkres then
         begin
-          res := dir+icon+'.jpg';
+          res := dir + icon + '.jpg';
           if not Checkres then
           begin
-            res := dir+icon+'.bmp';
+            res := dir + icon + '.bmp';
             Checkres;
           end;
         end;
@@ -935,7 +938,7 @@ var
     end
     else
     begin
-      res := dir+icon;
+      res := dir + icon;
       Checkres;
     end;
     Result := true;
@@ -999,7 +1002,7 @@ begin
   if DInfo.DBase = 'KDE' then
   begin
     p.CommandLine := FindBinary('kdialog') + ' --passivepopup "' +
-      msg +  '" --title "Listaller Message" ' + IntToStr(time);
+      msg + '" --title "Listaller Message" ' + IntToStr(time);
     p.Execute;
     p.Free;
     exit;
@@ -1013,7 +1016,7 @@ begin
         ulCritical: s := 'critical';
       end;
       p.CommandLine := FindBinary('notify-send') + ' --urgency=' +
-        s + ' --expire-time=' +  IntToStr(time * 1000) + ' "' + msg + '"';
+        s + ' --expire-time=' + IntToStr(time * 1000) + ' "' + msg + '"';
       p.Execute;
       p.Free;
       exit;
