@@ -1,0 +1,13 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=@CMAKE_INSTALL_PREFIX@
+libdir=@LIB_INSTALL_DIR@
+includedir=@CMAKE_INSTALL_PREFIX@/include/listaller-qt
+pkgdatadir=@CMAKE_INSTALL_PREFIX@/@RESOURCE_PREFIX@
+sysconfdir=@CMAKE_INSTALL_PREFIX@/@RESOURCE_PREFIX@
+
+Name: liblistaller-qt
+Description: Qt4 bindings to the Listaller library
+Version: 0.4.0
+Requires.private: dbus-1, glib-2.0, sqlite3
+Libs: -L${libdir} -llistaller-qt
+Cflags: -I${includedir}/Listaller -I${includedir}/listaller-qt

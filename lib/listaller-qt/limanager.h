@@ -1,5 +1,5 @@
 /*
-    libinstaller-qt - Qt4 wrapper for libinstaller
+    libinstaller-qt - Qt4 wrapper for libListaller
     Copyright (C) 2010 Matthias Klumpp
 
     This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ struct AppData
   QString profile;
   QString uId;
   AppCategory Category;
-  int installDate;
+  double installDate;
   QString dependencies;
 };
 
@@ -45,6 +45,8 @@ public:
     ~LiAppManager();
     
     bool loadApps();
+    
+    void setSuMode(bool b);
     
 signals:
     void newApp(AppData app);

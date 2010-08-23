@@ -30,8 +30,8 @@ cp ../lib/linst-cbind/*.pc $DESTDIR$libdir/pkgconfig/
 #Link library
 CUR=$(pwd)
 cd $DESTDIR$libdir
-if [ ! -f libinstaller.so ]; then
-ln -s $libdir/libinstaller.so.0.4 libinstaller.so
+if [ ! -f liblistaller.so ]; then
+ln -s $libdir/liblistaller.so.0.4 liblistaller.so
 fi
 cd $CUR
 #Copy Pascal units
