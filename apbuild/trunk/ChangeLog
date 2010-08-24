@@ -1,3 +1,17 @@
+2010-08-06  Jan Niklas Hasse  <jhasse@gmail.com>
+
+	* buildlist.vala: Using new libgee API for accessing keys of a HashMap.
+
+2010-07-24  Jan Niklas Hasse  <jhasse@gmail.com>
+
+	* apgcc: Bumped minimal glibc version to 2.7.0.
+	* buildlist.vala: Catch Glib.RegexError to avoid warning.
+
+2009-06-18  Jan Niklas Hasse  <jhasse@gmail.com>
+
+	* buildlist.vala: Fixed a bug which caused more unusable symbols then
+	needed. (e.g. pthread_cond_signal@GLIBC_DONT_USE_THIS_VERSION_2.3.2)
+
 2009-06-13  Jan Niklas Hasse  <jhasse@gmail.com>
 
 	* buildlist: Removing since the replacement buildlist.vala

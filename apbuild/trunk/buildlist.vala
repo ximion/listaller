@@ -10,25 +10,33 @@ class VersionNumber : Object
 	public VersionNumber(string version)
 	{
 		originalString = version;
-		var regex = new Regex("([[:digit:]]*)\\.([[:digit:]]*)\\.*([[:digit:]]*)");
-		var split = regex.split(version);
-		assert(split.length > 1); // TODO: Don't use assert, print a nice error message instead
-		major = split[1].to_int();
-		if(split.length > 2)
+		try
 		{
-			minor = split[2].to_int();
+			var regex = new Regex("([[:digit:]]*)\\.([[:digit:]]*)\\.*([[:digit:]]*)");
+			var split = regex.split(version);
+			assert(split.length > 1); // TODO: Don't use assert, print a nice error message instead
+			major = split[1].to_int();
+			if(split.length > 2)
+			{
+				minor = split[2].to_int();
+			}
+			else
+			{
+				minor = 0;
+			}
+			if(split.length > 3)
+			{
+				revision = split[3].to_int();
+			}
+			else
+			{
+				revision = 0;
+			}
 		}
-		else
+		catch(GLib.RegexError e)
 		{
-			minor = 0;
-		}
-		if(split.length > 3)
-		{
-			revision = split[3].to_int();
-		}
-		else
-		{
-			revision = 0;
+			stdout.printf("Error compiling regular expression!");
+			Posix.exit(-1);
 		}
 	}
 	
@@ -152,7 +160,7 @@ int main(string[] args)
 								symbolMap.set(symbolName, version);
 							}
 							// If the version in the map is already older then the minimum version, we should only add newer versions
-							if(minimumVersion.newerThan(versionInMap) && version.newerThan(versionInMap))
+							if(minimumVersion.newerThan(versionInMap) && version.newerThan(versionInMap) && minimumVersion.newerThan(version))
 							{
 								symbolMap.set(symbolName, version);
 							}
@@ -175,7 +183,7 @@ APBUILD_NOTE_METADATA("apbuild.version=" APBUILD_VERSION);
 
 /* apbuild generated symbol exclusion list */
 """);
-		var it = symbolMap.get_keys().iterator();
+		var it = symbolMap.keys.iterator();
 		while(it.next())
 		{
 			// Remove all symbols which aren't obsoleted by newer versions

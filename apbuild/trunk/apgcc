@@ -83,7 +83,7 @@ if (!defined $appath) {
 # Build the apsymbols.h header file
 my $headerPath = "$ENV{HOME}/.config/apbuild";
 run('mkdir', '-p', $headerPath);
-my $minimumGlibc = "2.3.0";
+my $minimumGlibc = "2.7.0";
 if (!empty($ENV{APBUILD_MINIMUM_GLIBC})) {
 	$minimumGlibc = $ENV{APBUILD_MINIMUM_GLIBC};
 }
