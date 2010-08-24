@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 2010-08-06  Jan Niklas Hasse  <jhasse@gmail.com>
 
 	* buildlist.vala: Using new libgee API for accessing keys of a HashMap.
 
+=======
+>>>>>>> 6273720... Fixed some bugs, see ChangeLog.
 2010-07-24  Jan Niklas Hasse  <jhasse@gmail.com>
 
 	* apgcc: Bumped minimal glibc version to 2.7.0.
