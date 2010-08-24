@@ -6,6 +6,5 @@ includedir=${prefix}/include
 Name: listaller
 Description: Access software management features of Listaller
 Version: 0.4.0
-Requires.private: dbus-1, sqlite3
 Libs: -L${libdir} -llistaller
 Cflags: -I${includedir}/listaller

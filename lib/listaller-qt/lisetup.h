@@ -24,13 +24,13 @@
 
 namespace Listaller {
 
-class LiSetup : public QObject
+class Setup : public QObject
 {
   Q_OBJECT
   
 public:
-    LiSetup();
-    ~LiSetup();
+    Setup();
+    ~Setup();
     
     void initialize(QString pkgName);
     void setSuMode(bool b);

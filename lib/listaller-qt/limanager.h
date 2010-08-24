@@ -40,13 +40,13 @@ struct AppData
   QString dependencies;
 };
 
-class LiAppManager : public QObject
+class AppManager : public QObject
 {
   Q_OBJECT
   
 public:
-    LiAppManager();
-    ~LiAppManager();
+    AppManager();
+    ~AppManager();
     
     bool loadApps();
     

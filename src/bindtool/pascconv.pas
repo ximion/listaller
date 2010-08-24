@@ -14,7 +14,7 @@
   You should have received a copy of the GNU General Public License v3
   along with this library. If not, see <http://www.gnu.org/licenses/>.}
 //** Helper for generating C-Headers from Pascal library source
-unit pasconv;
+unit pascconv;
 
 {$mode objfpc}{$H+}
 
@@ -25,7 +25,7 @@ uses
 
 type
   //Simple, stupid dummy engine
-  TSimpleEngine = class(TPasTreeContainer)
+  TSimplePTCEngine = class(TPasTreeContainer)
   public
     function CreateElement(AClass: TPTreeElement; const AName: String;
       AParent: TPasElement; AVisibility: TPasMemberVisibility;
@@ -48,7 +48,7 @@ type
 
 implementation
 
-function TSimpleEngine.CreateElement(AClass: TPTreeElement; const AName: String;
+function TSimplePTCEngine.CreateElement(AClass: TPTreeElement; const AName: String;
   AParent: TPasElement; AVisibility: TPasMemberVisibility;
   const ASourceFilename: String; ASourceLinenumber: Integer): TPasElement;
 begin
@@ -58,7 +58,7 @@ begin
   Result.SourceLinenumber := ASourceLinenumber;
 end;
 
-function TSimpleEngine.FindElement(const AName: String): TPasElement;
+function TSimplePTCEngine.FindElement(const AName: String): TPasElement;
 begin
   Result := nil;
 end;
@@ -240,7 +240,7 @@ end;
 function TPtCConverter.ConvertToCInfo(fname: String): TStringList;
 var
   md: TPasModule;
-  eng: TSimpleEngine;
+  eng: TSimplePTCEngine;
   i: Integer;
   Decls: TList;
   element: TPasElement;
@@ -249,7 +249,7 @@ var
   src: TStringList;
 begin
   Result := nil;
-  eng := TSimpleEngine.Create;
+  eng := TSimplePTCEngine.Create;
   md := ParseSource(eng, fname, 'linux', '');
   src := TStringList.Create;
   src.LoadFromFile(fname);

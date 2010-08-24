@@ -23,22 +23,22 @@
 
 using namespace Listaller;
 
-LiAppManager::LiAppManager()
+AppManager::AppManager()
 {
   mgr = li_mgr_new();
 }
 
-LiAppManager::~LiAppManager()
+AppManager::~AppManager()
 {
   li_mgr_free(mgr);
 }
 
-bool LiAppManager::loadApps()
+bool AppManager::loadApps()
 {
   return li_mgr_load_apps(mgr);
 }
 
-void LiAppManager::setSuMode(bool b)
+void AppManager::setSuMode(bool b)
 {
   li_mgr_set_sumode(mgr, b);
 }

@@ -24,7 +24,6 @@ uses
   CThreads, Classes, IpkInstall, SysUtils, LiTypes, LiUtils,
   LiManageApp, LiUpdateApp, GLib2, SoftwareDB;
 
-
 //////////////////////////////////////////////////////////////////////////////////////
 //Exported helper functions
 

@@ -39,8 +39,6 @@ add_library(listaller-qt SHARED ${listaller-qt_SRCS})
 set_target_properties(listaller-qt PROPERTIES VERSION 0.4.0 SOVERSION 0.4)
 set(CMAKE_INSTALL_LIBDIR lib CACHE PATH "Output directory for libraries")
 
-link_directories(${CMAKE_CURRENT_BINARY_DIR})
-
 target_link_libraries(listaller-qt
     ${CMAKE_CURRENT_BINARY_DIR}/liblistaller.so
 )
@@ -52,6 +50,6 @@ set(RESOURCE_PREFIX "")
 
 configure_file("listaller-qt.pc.in" "listaller-qt.pc" @ONLY)
 
-install(TARGETS listaller-qt  DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS listaller-qt DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/listaller-qt.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 install(FILES ${listaller-qt_HEADERS} DESTINATION include/listaller-qt COMPONENT Headers)

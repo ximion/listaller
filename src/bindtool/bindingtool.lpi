@@ -11,15 +11,16 @@
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
+      <Title Value="Listaller BindingTool"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
-      <MinorVersionNr Value="4"/>
+      <MinorVersionNr Value="2"/>
       <Language Value=""/>
       <CharSet Value=""/>
-      <StringTable Comments="Designed for the Listaller Project" CompanyName="" FileDescription="Simple generator for C-bindings from Pascal files" FileVersion="0.4.0.0" InternalName="makecbind" LegalCopyright="Matthias Klumpp" LegalTrademarks="" OriginalFilename="" ProductName="" ProductVersion=""/>
+      <StringTable Comments="Developed for the Listaller Project" CompanyName="" FileDescription="Simple generator for C-bindings from Pascal files" FileVersion="0.2.0.0" InternalName="bindtool" LegalCopyright="Matthias Klumpp" LegalTrademarks="" OriginalFilename="" ProductName="" ProductVersion=""/>
     </VersionInfo>
     <PublishOptions>
       <Version Value="2"/>
@@ -33,23 +34,28 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
-        <Filename Value="makecbind.lpr"/>
+        <Filename Value="bindingtool.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="makecbind"/>
+        <UnitName Value="bindingtool"/>
       </Unit0>
       <Unit1>
-        <Filename Value="pasconv.pas"/>
+        <Filename Value="pascconv.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="pasconv"/>
+        <UnitName Value="pascconv"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="pasbind.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="pasbind"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="9"/>
     <Target>
-      <Filename Value="../../build/util/makecbind"/>
+      <Filename Value="../../build/util/bindingtool"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>

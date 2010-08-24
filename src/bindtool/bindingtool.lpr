@@ -14,18 +14,18 @@
   You should have received a copy of the GNU General Public License v3
   along with this library. If not, see <http://www.gnu.org/licenses/>.}
 //** Helper for generating C-Headers from Pascal library source
-program makecbind;
+program bindingtool;
 
 {$mode objfpc}{$H+}
 
 uses
-  Classes, SysUtils, CustApp, PasConv, LiUtils;
+  Classes, SysUtils, CustApp, PasCConv, LiUtils, pasbind;
 
 type
 
-  { TCBindGenerator }
+  { TBindGenerator }
 
-  TCBindGenerator = class(TCustomApplication)
+  TBindGenerator = class(TCustomApplication)
   protected
     procedure DoRun; override;
   public
@@ -34,18 +34,19 @@ type
     procedure WriteHelp; virtual;
   end;
 
-{ TCBindGenerator }
+{ TBindGenerator }
 
-procedure TCBindGenerator.DoRun;
+procedure TBindGenerator.DoRun;
 var
   ErrorMsg: String;
   test: TStringList;
   tmpl: TStringList;
   hname: String;
-  cv: TPtCConverter;
+  ccv: TPtCConverter;
+  plg: TPasLibBindGen;
 begin
   // quick check parameters
-  ErrorMsg:=CheckOptions('hio',['help', 'template:']);
+  ErrorMsg:=CheckOptions('hio',['help', 'pastoc', 'pasbind', 'template:']);
   if ErrorMsg<>'' then
   begin
     ShowException(Exception.Create(ErrorMsg));
@@ -88,15 +89,17 @@ begin
     end;
   end;
 
+
+  if HasOption('pastoc') then
   if (FileExists(GetOptionValue('i', 'in')))and(HasOption('o','out')) then
   begin
     tmpl := TStringList.Create;
     if FileExists(GetOptionValue('template')) then
      tmpl.LoadFromFile(GetOptionValue('template'));
 
-    cv := TPtCConverter.Create;
-    test := cv.ConvertToCInfo(GetOptionValue('i', 'in'));
-    cv.Free;
+    ccv := TPtCConverter.Create;
+    test := ccv.ConvertToCInfo(GetOptionValue('i', 'in'));
+    ccv.Free;
 
     if tmpl.IndexOf('@DECL@') > 0 then
      tmpl[tmpl.IndexOf('@DECL@')] := test.Text
@@ -118,34 +121,44 @@ begin
     tmpl.SaveToFile(GetOptionValue('o', 'out'));
     tmpl.Free;
   end;
+
+  if HasOption('pasbind') then
+  if (FileExists(GetOptionValue('i', 'in'))) then
+  begin
+    plg := TPasLibBindGen.Create;
+    plg.LibMainSrcFile := GetOptionValue('i', 'in');
+    plg.Run;
+    plg.Free;
+  end;
+
   // stop program loop
   Terminate;
 end;
 
-constructor TCBindGenerator.Create(TheOwner: TComponent);
+constructor TBindGenerator.Create(TheOwner: TComponent);
 begin
   inherited Create(TheOwner);
   StopOnException:=True;
 end;
 
-destructor TCBindGenerator.Destroy;
+destructor TBindGenerator.Destroy;
 begin
   inherited Destroy;
 end;
 
-procedure TCBindGenerator.WriteHelp;
+procedure TBindGenerator.WriteHelp;
 begin
   writeln('Usage: ',ExeName,' -h');
 end;
 
 var
-  Application: TCBindGenerator;
+  Application: TBindGenerator;
 
 {$R *.res}
 
 begin
-  Application:=TCBindGenerator.Create(nil);
-  Application.Title:='make-cbind';
+  Application:=TBindGenerator.Create(nil);
+  Application.Title:='make-bind';
   Application.Run;
   Application.Free;
 end.

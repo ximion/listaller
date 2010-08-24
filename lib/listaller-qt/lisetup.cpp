@@ -23,53 +23,53 @@
 
 using namespace Listaller;
 
-LiSetup::LiSetup()
+Setup::Setup()
 {
   setup = li_setup_new();
 }
 
-LiSetup::~LiSetup()
+Setup::~Setup()
 {
   li_setup_free(setup);
 }
 
-void LiSetup::initialize(QString pkgName)
+void Setup::initialize(QString pkgName)
 {
   li_setup_init(setup, (char*) qPrintable(pkgName));
 }
 
-void LiSetup::setSuMode(bool b)
+void Setup::setSuMode(bool b)
 {
   li_setup_set_sumode(setup, b);
 }
 
-QString LiSetup::getDisallows() const
+QString Setup::getDisallows() const
 {
   return li_setup_get_disallows(setup);
 }
 
-QString LiSetup::getSupportedDistributions() const
+QString Setup::getSupportedDistributions() const
 {
   return li_setup_get_supported_distributions(setup);
 }
 
-QString LiSetup::appName() const
+QString Setup::appName() const
 {
   return li_setup_get_appname(setup);
 }
 
-QString LiSetup::appVersion() const
+QString Setup::appVersion() const
 {
   return li_setup_get_appversion(setup);
 }
 
-QString LiSetup::description() const
+QString Setup::description() const
 {
   //return li_setup_get_long_description(setup);
   return "FIXME: Implement this!";
 }
 
-void LiSetup::setTestmode(bool b)
+void Setup::setTestmode(bool b)
 {
   li_set_testmode(b);
 }
