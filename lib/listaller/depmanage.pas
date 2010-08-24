@@ -22,7 +22,7 @@ interface
 
 uses
   GLib2, Classes, LiTypes, LiUtils, PkTypes, Process, SysUtils, DDEResolve,
-  PackageKit, SoftwareDB, TarArchive, FileUtil;
+  PackageKit, SoftwareDB, TarArchive, LiFileUtil;
 
 type
   //** Error codes of Listallers library solver

@@ -18,9 +18,11 @@ program listallhelperd;
 
 {$mode objfpc}{$H+}
 
+//NOTE: We do not use a translatable GUI, so please use the -dNoGUI switch
+
 uses
-  cthreads, Interfaces, Classes, SysUtils, CustApp, dbus, DJobs,
-  Contnrs, SimDBus, LiUtils, LCLIntf, SyncObjs, GExt;
+  CThreads, Classes, SysUtils, CustApp, dbus, DJobs,
+  Contnrs, SimDBus, LiUtils, SyncObjs, GExt;
 
 type
 

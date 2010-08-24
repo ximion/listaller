@@ -20,7 +20,7 @@
  *****************************************************************************
 }
 //NOTE: This unit was *modified* for Listaller
-unit FileUtil;
+unit LiFileUtil;
 
 {$mode objfpc}{$H+}
 
@@ -28,7 +28,8 @@ interface
 
 uses
   // We do not use the LCL. LCLStrConsts and Masks are local Listaller versions
-  Classes, SysUtils, LCLStrConsts, Masks;
+  Classes, SysUtils, {$IFDEF NoGUI} NGLCLStrConsts {$ELSE} LCLStrConsts {$ENDIF},
+  {$IFDEF NoGUI} NGMasks {$ELSE} Masks {$ENDIF};
   
 {$if defined(Windows) or defined(darwin)}
 {$define CaseInsensitiveFilenames}
@@ -239,7 +240,7 @@ uses
 var
   UpChars: array[char] of char;
 
-{$I fileutil.inc}
+{$I lifileutil.inc}
 
 procedure InternalInit;
 var

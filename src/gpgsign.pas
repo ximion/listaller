@@ -21,7 +21,7 @@ unit gpgsign;
 interface
 
 uses
-  Classes, liTypes, liUtils, FileUtil,
+  Classes, liTypes, liUtils, LiFileUtil,
   SysUtils, CallbackProcess;
 
 type
@@ -122,7 +122,7 @@ begin
     Result := false;
     exit;
   end;
-  FileUtil.RenameFileUTF8(resfile, ascFile);
+  LiFileUtil.RenameFileUTF8(resfile, ascFile);
 end;
 
 function TGPGSignWrapper.Verify(ascFile: String): Boolean;
@@ -134,7 +134,7 @@ end;
 
 function GPGFound: Boolean;
 begin
-  if FileUtil.FindDefaultExecutablePath('gpg2') = '' then
+  if LiFileUtil.FindDefaultExecutablePath('gpg2') = '' then
     Result := false
   else
     Result := true;

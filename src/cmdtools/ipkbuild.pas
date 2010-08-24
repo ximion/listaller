@@ -21,8 +21,8 @@ unit ipkbuild;
 interface
 
 uses
-  MD5, IPKCDef10, Classes, GPGSign, LiTypes,
-  LiUtils, Process, RegExpr, FileUtil, SysUtils, IPKPackage11, OPBitmapFormats;
+  MD5, Classes, GPGSign, LiTypes, LiUtils, Process, RegExpr, SysUtils,
+  IPKCDef10, LiFileUtil, IPKPackage11, OPBitmapFormats;
 
 type
 
@@ -322,7 +322,7 @@ var
   procedure RaiseError(str: String);
   begin
     writeLn('error:');
-    writeLn(' '+str);
+    writeLn(' ' + str);
   end;
 
   procedure bp_AddFile(fname: String; const basepath: String = '');
@@ -372,7 +372,8 @@ var
     end;
     fc.Add(CleanFilePath(h + '/' + ExtractFileName(DeleteModifiers(fname))));
 
-    if not ipkpkg.AddDataFile(WDir + h + '/' + ExtractFileName(DeleteModifiers(fname))) then
+    if not ipkpkg.AddDataFile(WDir + h + '/' +
+      ExtractFileName(DeleteModifiers(fname))) then
     begin
       writeLn('error: ');
       writeln(' Could not add file "' + DeleteModifiers(fname) + '" to TAR archive.');
@@ -406,7 +407,7 @@ begin
   if FileExists(WDir) then
   begin
     writeLn('Cleaning up...');
-    FileUtil.DeleteDirectory(WDir, false);
+    LiFileUtil.DeleteDirectory(WDir, false);
   end;
 
   if not FileExists(fi) then
@@ -422,8 +423,8 @@ begin
   files := TStringList.Create;
   fsec := TStringList.Create;
 
-  if (LowerCase(sl[0]) <> 'ipk-standard-version: 1.1')
-  and(LowerCase(sl[0]) <> 'ipk-standard-version: 1.0') then
+  if (LowerCase(sl[0]) <> 'ipk-standard-version: 1.1') and
+    (LowerCase(sl[0]) <> 'ipk-standard-version: 1.0') then
   begin
     writeLn(' This is no valid IPS source file');
     halt(1);
@@ -453,7 +454,7 @@ begin
 
   control.BasePath := AppendPathDelim(ExtractFilePath(fi));
 
-  if pos(' ', control.PkName)>0 then
+  if pos(' ', control.PkName) > 0 then
   begin
     RaiseError('Package ID must not contain spaces!');
     control.Free;
@@ -572,7 +573,7 @@ begin
               h := '/files/' + SyblToX(s); //Normal mode
 
             if not DirectoryExists(WDir + h) then
-              FileUtil.ForceDirectory(WDir + h);
+              LiFileUtil.ForceDirectory(WDir + h);
 
             if (DirectoryExistsUTF8(DeleteModifiers(Files[i]))) or
               (pos('*', ExtractFileName(Files[i])) > 0) then
@@ -658,7 +659,7 @@ begin
       while length(lh) > 0 do
       begin
         i := pos(',', lh);
-        if i<= 0 then
+        if i <= 0 then
           i := pos(';', lh);
         if i = 0 then
         begin
@@ -685,9 +686,9 @@ begin
         tmpdepends.Add(sl[i]);
       RemoveDuplicates(tmpdepends);
 
-      for i := 0 to tmpdepends.Count-1 do
+      for i := 0 to tmpdepends.Count - 1 do
         if tmpdepends[i][length(tmpdepends[i])] = '.' then
-          tmpdepends[i] := tmpdepends[i]+'*';
+          tmpdepends[i] := tmpdepends[i] + '*';
 
       control.WriteDependencies('', tmpdepends);
     end;
@@ -841,7 +842,7 @@ begin
   if FileExists(WDir) then
   begin
     writeLn('Cleaning up...');
-    FileUtil.DeleteDirectory(WDir, false);
+    LiFileUtil.DeleteDirectory(WDir, false);
   end;
 
   writeLn('Done!');

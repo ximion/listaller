@@ -54,7 +54,7 @@
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
       <Libraries Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../;../bind/;../../opbitmap/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
+      <OtherUnitFiles Value="../;../bind/;../../opbitmap/"/>
       <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
@@ -64,7 +64,12 @@
       </SyntaxOptions>
     </Parsing>
     <Other>
-      <CustomOptions Value="-dOpbCompat"/>
+      <CompilerMessages>
+        <UseMsgFile Value="True"/>
+      </CompilerMessages>
+      <CustomOptions Value="-dOpbCompat
+-dNoGUI
+"/>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>

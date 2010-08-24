@@ -54,7 +54,7 @@
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
       <Libraries Value="../../build/"/>
-      <OtherUnitFiles Value="../;../bind/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
+      <OtherUnitFiles Value="../;../bind/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/"/>
       <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
@@ -73,6 +73,8 @@
       <CompilerMessages>
         <UseMsgFile Value="True"/>
       </CompilerMessages>
+      <CustomOptions Value="-dNoGUI
+"/>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>

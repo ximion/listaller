@@ -20,9 +20,8 @@ program libuild;
 
 uses
   {$IFDEF UNIX}
-  cthreads, {$ENDIF}
-  Interfaces, //We need an widgetset (NoGUI) for graphic handling
-  Classes, SysUtils, CustApp, liUtils, Process, IPKBuild, StrLocale,
+  CThreads, {$ENDIF}
+  Classes, SysUtils, CustApp, LiUtils, Process, IPKBuild, StrLocale,
   LiTranslator, UniBuild, GExt;
 
 type

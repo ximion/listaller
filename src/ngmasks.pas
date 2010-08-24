@@ -18,7 +18,7 @@
  *                                                                           *
  *****************************************************************************
 }
-unit Masks;
+unit NGMasks;
 
 {$mode objfpc}{$H+}
 
@@ -26,7 +26,7 @@ interface
 
 uses
   // For Smart Linking: Do not use the LCL!
-  Classes, SysUtils, Contnrs, LCLStrConsts;
+  Classes, SysUtils, Contnrs, NGLCLStrConsts;
 
 type
   TMaskCharType = (mcChar, mcCharSet, mcAnyChar, mcAnyText);

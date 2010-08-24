@@ -22,7 +22,7 @@ interface
 
 uses
   IPKCDef10, Classes, GetText, liTypes, liUtils, MTProcs,
-  PkTypes, Process, FileUtil, IniFiles, SysUtils, strLocale,
+  PkTypes, Process, LiFileUtil, IniFiles, SysUtils, strLocale,
   liDBusProc, PackageKit, SoftwareDB;
 
 type

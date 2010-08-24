@@ -22,7 +22,7 @@ interface
 
 uses
   MD5, Distri, IPKCDef10, Classes, FTPSend, LiTypes, LiUtils, MTProcs,
-  PkTypes, Process, RegExpr, BaseUnix, Blcksock, HTTPSend, IniFiles, FileUtil,
+  PkTypes, Process, RegExpr, BaseUnix, Blcksock, HTTPSend, IniFiles, LiFileUtil,
   SysUtils, DepManage, strLocale, IPKPackage11, liDBusProc, PackageKit,
   SoftwareDB, LiManageApp;
 

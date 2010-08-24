@@ -18,16 +18,17 @@ program lipa;
 
 {$mode objfpc}{$H+}
 
+//NOTE: We do not use a translatable GUI, so please use the -dNoGUI switch
+
 uses
   {$IFDEF UNIX}
   cthreads,
   {$ENDIF}
-  Interfaces, //We use NoGUI widgetset
   Classes, SysUtils, CustApp,
-  Process, liUtils, LiInstaller,
+  Process, LiUtils, LiInstaller,
   StrLocale, IniFiles, Distri,
   LiTranslator, IPKCDef10, GExt,
-  LiAppMgr, LiTypes, Forms;
+  LiAppMgr, LiTypes;
 
 type
 

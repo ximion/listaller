@@ -1,4 +1,4 @@
-{ Copyright (C) 2009 Matthias Klumpp
+{ Copyright (C) 2009-2010 Matthias Klumpp
 
   Authors:
    Lazarus Developer Team
@@ -24,10 +24,19 @@ unit litranslator;
 interface
 
 uses
-  Classes, GetText, LiUtils, TypInfo, Controls, FileUtil,
-  SysUtils, LResources;
+  Classes, GetText, LiUtils, TypInfo,
+  {$IFDEF NoGUI} LiFileUtil, {$ELSE} FileUtil, {$ENDIF}
+  SysUtils {$IFNDEF NoGUI}, LResources {$ENDIF};
 
 type
+  {$IFDEF NoGUI}
+  TAbstractTranslator = class(TObject)
+  public
+    procedure TranslateStringProperty(Sender: TObject; const Instance: TPersistent;
+      PropInfo: PPropInfo; var Content: String); virtual; abstract;
+  end;
+  {$ENDIF}
+
   TDefaultTranslator = class(TAbstractTranslator)
   private
     FMOFile: TMOFile;
@@ -40,7 +49,10 @@ type
 
 implementation
 
+{$IFNDEF NoGUI}
 uses Menus;
+
+{$ENDIF}
 
 function FindLocaleFileName: String;
 var
@@ -62,22 +74,24 @@ begin
   if LANG <> '' then
   begin
     //ParamStrUTF8(0) is said not to work properly in linux, but I've tested it
-    Result := ExtractFilePath(ParamStrUTF8(0)) + LANG + DirectorySeparator + liname + '.mo';
+    Result := ExtractFilePath(ParamStrUTF8(0)) + LANG + DirectorySeparator +
+      liname + '.mo';
     if FileExistsUTF8(Result) then
       exit;
 
-    Result := ExtractFilePath(ParamStrUTF8(0)) + 'languages' + DirectorySeparator + LANG +
+    Result := ExtractFilePath(ParamStrUTF8(0)) + 'languages' +
+      DirectorySeparator + LANG + DirectorySeparator + liname + '.mo';
+    if FileExistsUTF8(Result) then
+      exit;
+
+    Result := ExtractFilePath(ParamStrUTF8(0)) + 'locale' +
+      DirectorySeparator + LANG + DirectorySeparator + liname + '.mo';
+    if FileExistsUTF8(Result) then
+      exit;
+
+    Result := ExtractFilePath(ParamStrUTF8(0)) + 'locale' +
+      DirectorySeparator + LANG + DirectorySeparator + 'LC_MESSAGES' +
       DirectorySeparator + liname + '.mo';
-    if FileExistsUTF8(Result) then
-      exit;
-
-    Result := ExtractFilePath(ParamStrUTF8(0)) + 'locale' + DirectorySeparator
-      + LANG + DirectorySeparator + liname + '.mo';
-    if FileExistsUTF8(Result) then
-      exit;
-
-    Result := ExtractFilePath(ParamStrUTF8(0)) + 'locale' + DirectorySeparator
-      + LANG + DirectorySeparator + 'LC_MESSAGES' + DirectorySeparator + liname + '.mo';
     if FileExistsUTF8(Result) then
       exit;
 
@@ -106,22 +120,24 @@ begin
       exit;
 
     //At first, check all was checked
-    Result := ExtractFilePath(ParamStrUTF8(0)) + lng + DirectorySeparator + liname + '.mo';
+    Result := ExtractFilePath(ParamStrUTF8(0)) + lng + DirectorySeparator +
+      liname + '.mo';
     if FileExistsUTF8(Result) then
       exit;
 
-    Result := ExtractFilePath(ParamStrUTF8(0)) + 'languages' + DirectorySeparator + lng +
+    Result := ExtractFilePath(ParamStrUTF8(0)) + 'languages' +
+      DirectorySeparator + lng + DirectorySeparator + liname + '.mo';
+    if FileExistsUTF8(Result) then
+      exit;
+
+    Result := ExtractFilePath(ParamStrUTF8(0)) + 'locale' +
+      DirectorySeparator + lng + DirectorySeparator + liname + '.mo';
+    if FileExistsUTF8(Result) then
+      exit;
+
+    Result := ExtractFilePath(ParamStrUTF8(0)) + 'locale' +
+      DirectorySeparator + LANG + DirectorySeparator + 'LC_MESSAGES' +
       DirectorySeparator + liname + '.mo';
-    if FileExistsUTF8(Result) then
-      exit;
-
-    Result := ExtractFilePath(ParamStrUTF8(0)) + 'locale' + DirectorySeparator
-      + lng + DirectorySeparator + liname + '.mo';
-    if FileExistsUTF8(Result) then
-      exit;
-
-    Result := ExtractFilePath(ParamStrUTF8(0)) + 'locale' + DirectorySeparator
-      + LANG + DirectorySeparator + 'LC_MESSAGES' + DirectorySeparator + liname + '.mo';
     if FileExistsUTF8(Result) then
       exit;
 
@@ -132,22 +148,23 @@ begin
       if FileExistsUTF8(Result) then
         exit;
       //Common location (like in Lazarus)
-      Result := ExtractFilePath(ParamStrUTF8(0)) + 'locale' + DirectorySeparator +
-        liname + '.' + LANG + '.mo';
+      Result := ExtractFilePath(ParamStrUTF8(0)) + 'locale' +
+        DirectorySeparator + liname + '.' + LANG + '.mo';
       if FileExistsUTF8(Result) then
         exit;
 
-      Result := ExtractFilePath(ParamStrUTF8(0)) + 'locale' + DirectorySeparator +
-        liname + '-' + LANG + '.mo';
+      Result := ExtractFilePath(ParamStrUTF8(0)) + 'locale' +
+        DirectorySeparator + liname + '-' + LANG + '.mo';
       if FileExistsUTF8(Result) then
         exit;
 
-      Result := ExtractFilePath(ParamStrUTF8(0)) + 'locale' + DirectorySeparator + LANG + '.mo';
+      Result := ExtractFilePath(ParamStrUTF8(0)) + 'locale' +
+        DirectorySeparator + LANG + '.mo';
       if FileExistsUTF8(Result) then
         exit;
 
-      Result := ExtractFilePath(ParamStrUTF8(0)) + 'languages' + DirectorySeparator +
-        liname + '.' + LANG + '.mo';
+      Result := ExtractFilePath(ParamStrUTF8(0)) + 'languages' +
+        DirectorySeparator + liname + '.' + LANG + '.mo';
       if FileExistsUTF8(Result) then
         exit;
     except
@@ -174,8 +191,8 @@ begin
     if FileExistsUTF8(Result) then
       exit;
 
-    Result := ExtractFilePath(ParamStrUTF8(0)) + 'languages' + DirectorySeparator +
-      liname + '.' + lng + '.mo';
+    Result := ExtractFilePath(ParamStrUTF8(0)) + 'languages' +
+      DirectorySeparator + liname + '.' + lng + '.mo';
     if FileExistsUTF8(Result) then
       exit;
   end;
@@ -261,11 +278,15 @@ initialization
         TranslateResourceStrings(UTF8ToSys(LCLPath));
     end;
 
+    {$IFNDEF NoGUI}
     LRSTranslator := TDefaultTranslator.Create(lcfn);
+    {$ENDIF}
 
   end;
 
 finalization
+  {$IFNDEF NoGUI}
   LRSTranslator.Free;
+  {$ENDIF}
 end.
 

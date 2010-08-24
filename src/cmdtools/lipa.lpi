@@ -46,7 +46,7 @@
     </Target>
     <SearchPaths>
       <Libraries Value="../../build/"/>
-      <OtherUnitFiles Value="../;../bind/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/nogui/"/>
+      <OtherUnitFiles Value="../;../bind/"/>
       <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
@@ -67,7 +67,9 @@
         <IgnoredMessages idx5024="True"/>
         <UseMsgFile Value="True"/>
       </CompilerMessages>
-      <CustomOptions Value="-dOpbCompat"/>
+      <CustomOptions Value="-dOpbCompat
+-dNoGUI
+"/>
       <CompilerPath Value="$(CompPath)"/>
       <ExecuteBefore>
         <ScanForMakeMsgs Value="True"/>

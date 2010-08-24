@@ -18,6 +18,8 @@ library liblistaller;
 
 {$mode objfpc}{$H+}
 
+//NOTE: We do not use a translatable GUI, so please use the -dNoGUI switch
+
 uses
   CThreads, Classes, IpkInstall, SysUtils, LiTypes, LiUtils,
   LiManageApp, LiUpdateApp, GLib2, SoftwareDB;

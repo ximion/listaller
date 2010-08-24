@@ -21,7 +21,7 @@ unit liupdateapp;
 interface
 
 uses
-  Blcksock, Classes, Contnrs, FileUtil, FTPSend, HTTPSend, IniFiles,
+  Blcksock, Classes, Contnrs, LiFileUtil, FTPSend, HTTPSend, IniFiles,
   IPKCDef10, IPKPackage11, LiUtils, LiDBusProc, LiTypes, MD5, Process,
   SoftwareDB, SysUtils, StrLocale;
 
@@ -512,7 +512,7 @@ begin
   c.Free;
   sdb.Free;
 
-  FileUtil.DeleteDirectory(tmp, false);
+  LiFileUtil.DeleteDirectory(tmp, false);
   StepMsg('Update finished!');
 end;
 

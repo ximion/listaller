@@ -21,7 +21,7 @@ unit ipkpackage11;
 interface
 
 uses
-  Unix, Classes, GPGSign, LiTypes, LiUtils, FileUtil, SysUtils, TarArchive;
+  Unix, Classes, GPGSign, LiTypes, LiUtils, LiFileUtil, SysUtils, TarArchive;
 
 type
 

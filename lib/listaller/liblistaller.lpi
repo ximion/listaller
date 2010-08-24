@@ -88,6 +88,7 @@
         <UseMsgFile Value="True"/>
       </CompilerMessages>
       <CustomOptions Value="-fPIC
+-dNoGUI
 "/>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
