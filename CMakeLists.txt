@@ -37,23 +37,22 @@ set(CPACK_PACKAGE_VERSION_MINOR "5")
 set(CPACK_PACKAGE_VERSION_PATCH "0${VERSION_SUFFIX}")
 set(LISTALLER_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 
-#forbid in-tree building
+#forbid in-tree building & force "build" directory name
 if(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
       message(STATUS "Please do an out-of-tree build:")
       message(STATUS "rm -f CMakeCache.txt && mkdir build && cd build; cmake .. && make")
       message(FATAL_ERROR "In-tree-build detected!")     
 endif(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
+if(NOT ${CMAKE_SOURCE_DIR}/build MATCHES ${CMAKE_BINARY_DIR})
+      message("Please build only in 'build' subfolder!")
+      message(FATAL_ERROR "Not in /build!")
+endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/data/cmake_modules/)
 
 find_package(PkgConfig REQUIRED)
 find_package(UnixCommands REQUIRED)
 find_package(Gettext REQUIRED)
-find_package(GLIB2 REQUIRED)
-find_package(SQLite3 REQUIRED)
-pkg_check_modules(DBus REQUIRED dbus-1)
-pkg_check_modules(PolKitGObject REQUIRED polkit-gobject-1>=0.90)
-pkg_check_modules(PackageKitGLib2 REQUIRED packagekit-glib2>=0.6)
 find_library(QT4PAS_LIB NAMES Qt4Pas PATH /usr/lib /usr/local/lib /usr/lib64)
 if(QT4PAS_LIB)
     message(STATUS "Found Qt4Pas: ${QT4PAS_LIB}")
@@ -61,7 +60,6 @@ else(QT4PAS_LIB)
     message(FATAL_ERROR "Could not find Qt4Pas")
 endif(QT4PAS_LIB)
 
-message("")
 message(STATUS "Compiling Listaller version ${LISTALLER_VERSION}")
 
 add_subdirectory(lib)
