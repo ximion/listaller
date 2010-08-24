@@ -18,7 +18,7 @@
 
 #include "limanager.h"
 
-#include<QtGlobal>
+#include<QtCore>
 #include<listaller.h>
 
 using namespace Listaller;

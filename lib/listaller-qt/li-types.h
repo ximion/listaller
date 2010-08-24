@@ -25,6 +25,9 @@
 #include<stdio.h>
 #include<iostream>
 
+extern "C"
+{
+  
 typedef enum {
       rqError,
       rqWarning,
@@ -127,6 +130,6 @@ typedef bool (*TAppEvent) (char *Name,AppInfo obj);
 
 typedef void (*TNewUpdateEvent) (char *Name,int id,void* user_data);
 
-
+};
 
 #endif /* __LI_TYPES */
