@@ -6,8 +6,8 @@
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
+      <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
-      <UseXPManifest Value="True"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>

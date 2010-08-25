@@ -55,6 +55,9 @@ endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/data/cmake_modules/)
 
+add_definitions(-DCMAKE_INSTALL_PREFIX="\\\"${CMAKE_INSTALL_PREFIX}\\\"")
+add_definitions(-DCMAKE_INSTALL_LIBDIR="\\\"${CMAKE_INSTALL_LIBDIR}\\\"")
+
 find_package(PkgConfig REQUIRED)
 find_package(UnixCommands REQUIRED)
 find_package(Gettext REQUIRED)

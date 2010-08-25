@@ -1,2 +1,11 @@
+#CMake file for Listaller Library Headers
 
-#TODO: Install all llistaller headers
+set(llistaller_c_HEADERS
+    li-installer.h
+    li-manager.h
+    li-types.h
+    li-updater.h
+    listaller.h
+)
+
+install(FILES ${llistaller_c_HEADERS} DESTINATION include/listaller COMPONENT headers)
