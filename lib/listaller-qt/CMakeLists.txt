@@ -1,4 +1,3 @@
-project(installer-qt)
 
 cmake_minimum_required(VERSION 2.8.0)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/../../data/cmake_modules/)
@@ -36,11 +35,16 @@ include_directories(${CMAKE_SOURCE_DIR}
 
 add_library(listaller-qt SHARED ${listaller-qt_SRCS})
 
-set_target_properties(listaller-qt PROPERTIES VERSION 0.4.0 SOVERSION 0.4)
+if(NOT LIBS_FULL_VERSION)
+ message(FATAL_ERROR "Library version not defined. (This should never happen. Do you use the top CMakeLists?)")
+endif()
+
+set_target_properties(listaller-qt PROPERTIES VERSION ${LIBS_FULL_VERSION} SOVERSION ${LIBS_VERSION})
 set(CMAKE_INSTALL_LIBDIR lib CACHE PATH "Output directory for libraries")
 
 target_link_libraries(listaller-qt
-    ${CMAKE_CURRENT_BINARY_DIR}/liblistaller.so
+    ${QT_LIBRARIES}
+    ${LISTALLER_LIB}
 )
 
 set(LIB_INSTALL_DIR "\${exec_prefix}/${CMAKE_INSTALL_LIBDIR}"

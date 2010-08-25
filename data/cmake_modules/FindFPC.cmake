@@ -1,10 +1,12 @@
 # - Try to find the Free Pascal Compiler
 # Once done this will define
 #
-#  PASCAL_COMPILER - The FPC binary
+#  PASCAL_COMPILER       - The FPC binary
 #  PASCAL_COMPILER_FLAGS - A set of command-line arguments for FPC you can
-#		   set "pascal_compiler_flags_cmn" to extend the list
-#		   of flags before running find_package(FPC)
+#		  	   set "pascal_compiler_flags_cmn" to extend the list
+#		  	   of flags before running find_package(FPC)
+#  PASCAL_TARGET_ARCH    - Get FPC's current target architecture
+#  PASCAL_TARGET_OS      - Get FPC's current target os
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -15,6 +17,9 @@
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+
+if (PASCAL_TARGET_ARCH AND PASCAL_COMPILER_FLAGS AND PASCAL_TARGET_ARCH AND PASCAL_TARGET_OS)
+else()
 
 set(fpc_tryexe fpc)
 
@@ -27,7 +32,7 @@ endif(fpc_executable)
 message(STATUS "Check for working Pascal compiler: ${fpc_executable}")
 
 set(noexecstack_flags "-k-z" "-knoexecstack")
-set(checkdir "${CMAKE_CURRENT_BINARY_DIR}/check")
+set(checkdir "${CMAKE_BINARY_DIR}/CompilerFPCExec")
 make_directory(${checkdir})
 
 file(WRITE ${checkdir}/checkstack.pas "begin end.")
@@ -69,8 +74,21 @@ else()
 	message(FATAL_ERROR "FPC compiler was not found!")
 endif()
 
+exec_program(${fpc_executable}
+	ARGS -iSP
+	OUTPUT_VARIABLE PASCAL_TARGET_ARCH
+)
+exec_program(${fpc_executable}
+	ARGS -iSO
+	OUTPUT_VARIABLE PASCAL_TARGET_OS
+)
+
+if (NOT (PASCAL_TARGET_OS OR PASCAL_TARGET_ARCH))
+ message(FATAL_ERROR "Error while fetching FPC environment options!")
+endif()
+
 set(PASCAL_COMPILER ${fpc_executable})
 set(PASCAL_COMPILER_FLAGS "-MObjFPC" "-Scghi" "-O1" "-gl" "-XX" "-vewnhi" "-l"
-			  "-Fi${CMAKE_CURRENT_BINARY_DIR}"
-			  "-FU${CMAKE_CURRENT_BINARY_DIR}"
-			  ${noexecstack_flags} ${pascal_compiler_flags_cmn})
+			  ${noexecstack_flags} ${pascal_compiler_flags_cmn})	
+			  
+endif()

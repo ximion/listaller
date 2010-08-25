@@ -1,7 +1,5 @@
 #CMakeLists for libListaller build
 
-set(pascal_compiler_flags_cmn "-vm5024" "-fPIC" "-dNoGUI")
-
 find_package(FPC)
 find_package(GLIB2 REQUIRED)
 find_package(SQLite3 REQUIRED)
@@ -22,22 +20,37 @@ set(llistaller_base_sources
 	softwaredb.pas
 )
 
-set(llistaller_name "${CMAKE_CURRENT_BINARY_DIR}/liblistaller.so.${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}")
+set(listaller_libname "${LISTALLER_LIB}.${LIBS_VERSION}")
 
 set(llistaller_includes "-Fu${PROJECT_SOURCE_DIR}/src/"
 			"-Fu${PROJECT_SOURCE_DIR}/src/bind/"
 			"-Fu${PROJECT_SOURCE_DIR}/src/synapse/"
 			"-Fu/usr/share/fpcsrc/2.4.0/packages/dbus/src/"
-			"-Fu.")
-			
-set(llistaller_build_args ${PASCAL_COMPILER_FLAGS} "-o${llistaller_name}" ${llistaller_includes}
+			"-Fu${CMAKE_CURRENT_SOURCE_DIR}")
+
+set(pascal_compiler_flags_cmn "-vm5024" "-fPIC" "-dNoGUI")
+
+set(llistaller_build_args ${PASCAL_COMPILER_FLAGS}
+	${pascal_compiler_flags_cmn}
+	"-Fi${CMAKE_CURRENT_BINARY_DIR}"
+	"-FU${CMAKE_CURRENT_BINARY_DIR}"
+	"-o${CMAKE_BINARY_DIR}/${llistaller_libname}" ${llistaller_includes}
 	"${CMAKE_CURRENT_SOURCE_DIR}/${llistaller_project}")
 
-add_custom_command(OUTPUT ${llistaller_name}
+add_custom_command(OUTPUT llistaller_compile
 	COMMAND "${PASCAL_COMPILER}"
 	ARGS ${llistaller_build_args}
 	MAIN_DEPENDENCY ${llistaller_project}
 	DEPENDS ${llistaller_base_sources}
+	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-add_custom_target(liblistaller ALL DEPENDS ${llistaller_name})
+add_custom_command(OUTPUT llistaller_symlink
+	      COMMAND ln
+	      ARGS -f -s ${listaller_libname} ${LISTALLER_LIB}
+              MAIN_DEPENDENCY ${llistaller_project}
+              WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+)
+
+
+add_custom_target(listaller_compile ALL DEPENDS llistaller_compile llistaller_symlink)
