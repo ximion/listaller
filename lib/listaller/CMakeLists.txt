@@ -34,10 +34,10 @@ set(llistaller_build_args ${PASCAL_COMPILER_FLAGS}
 	${pascal_compiler_flags_cmn}
 	"-Fi${CMAKE_CURRENT_BINARY_DIR}"
 	"-FU${CMAKE_CURRENT_BINARY_DIR}"
-	"-o${CMAKE_BINARY_DIR}/${llistaller_libname}" ${llistaller_includes}
+	"-o${CMAKE_BINARY_DIR}/${listaller_libname}" ${llistaller_includes}
 	"${CMAKE_CURRENT_SOURCE_DIR}/${llistaller_project}")
 
-add_custom_command(OUTPUT llistaller_compile
+add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/${listaller_libname}"
 	COMMAND "${PASCAL_COMPILER}"
 	ARGS ${llistaller_build_args}
 	MAIN_DEPENDENCY ${llistaller_project}
@@ -45,7 +45,7 @@ add_custom_command(OUTPUT llistaller_compile
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-add_custom_command(OUTPUT llistaller_symlink
+add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/${LISTALLER_LIB}"
 	      COMMAND ln
 	      ARGS -f -s ${listaller_libname} ${LISTALLER_LIB}
               MAIN_DEPENDENCY ${llistaller_project}
@@ -53,4 +53,6 @@ add_custom_command(OUTPUT llistaller_symlink
 )
 
 
-add_custom_target(listaller_compile ALL DEPENDS llistaller_compile llistaller_symlink)
+add_custom_target(listallerlib ALL DEPENDS "${CMAKE_BINARY_DIR}/${listaller_libname}"
+					   "${PROJECT_BINARY_DIR}/${LISTALLER_LIB}"
+)

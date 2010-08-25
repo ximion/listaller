@@ -43,7 +43,7 @@ set_target_properties(listaller-qt PROPERTIES VERSION ${LIBS_FULL_VERSION} SOVER
 set(CMAKE_INSTALL_LIBDIR lib CACHE PATH "Output directory for libraries")
 
 target_link_libraries(listaller-qt
-    ${QT_LIBRARIES}
+    ${QT_QTCORE_LIBRARY}
     ${LISTALLER_LIB}
 )
 
