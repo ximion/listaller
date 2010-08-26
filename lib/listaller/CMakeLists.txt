@@ -64,8 +64,8 @@ add_custom_target(listallerlib ALL DEPENDS "${PROJECT_BINARY_DIR}/${listaller_li
 					   "${PROJECT_BINARY_DIR}/${LISTALLER_LIB}"
 )
 
-install(FILES ${PROJECT_BINARY_DIR}/${listaller_libname}
+set(llistaller_lib_parts ${PROJECT_BINARY_DIR}/${listaller_libname}
 	      ${PROJECT_BINARY_DIR}/${LISTALLER_LIB}.${LIBS_VERSION}
-	      ${PROJECT_BINARY_DIR}/${LISTALLER_LIB}
-	      DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
+	      ${PROJECT_BINARY_DIR}/${LISTALLER_LIB})
+
+#install(FILES ${llistaller_lib_parts} DESTINATION ${CMAKE_INSTALL_LIBDIR})

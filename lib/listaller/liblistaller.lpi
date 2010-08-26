@@ -12,9 +12,9 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <MinorVersionNr Value="4"/>
+      <MinorVersionNr Value="5"/>
       <BuildNr Value="1750"/>
-      <StringTable Comments="" CompanyName="" FileDescription="Library for basic Listaller features" FileVersion="0.4.0.1750" InternalName="libInstaller" LegalCopyright="Listaller Project" LegalTrademarks="" OriginalFilename="" ProductName="Listaller" ProductVersion="0.4.0.0"/>
+      <StringTable Comments="" CompanyName="" FileDescription="Advanced access to Listaller's features" FileVersion="0.5.0.1750" InternalName="libListaller" LegalCopyright="Listaller Project" LegalTrademarks="" OriginalFilename="" ProductName="Listaller" ProductVersion="0.5.0.0"/>
     </VersionInfo>
     <PublishOptions>
       <Version Value="2"/>
@@ -64,7 +64,7 @@
   <CompilerOptions>
     <Version Value="9"/>
     <Target>
-      <Filename Value="../../build/liblistaller.so.0.4.0"/>
+      <Filename Value="../../build/liblistaller.so.0.5.0"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>

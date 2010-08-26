@@ -592,6 +592,8 @@ exports
  li_get_ipk_app_installed,
  li_version;
 
+//{$R *.res}
+
 {$R *.res}
 
 begin
