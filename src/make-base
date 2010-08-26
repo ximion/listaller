@@ -45,8 +45,8 @@ echo "Compiling liblistaller library..."
 lazbuild -B --ws=nogui ../lib/listaller/liblistaller.lpr
 if [ ! -f "../build/liblistaller.so" ]; then
  cd ../build
- ln -s liblistaller.so.0.4.0 liblistaller.so.0.4
- ln -s liblistaller.so.0.4 liblistaller.so
+ ln -s liblistaller.so.0.5.0 liblistaller.so.0.5
+ ln -s liblistaller.so.0.5 liblistaller.so
  cd ../src
 fi
 #Write PC file

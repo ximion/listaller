@@ -39,10 +39,10 @@ mkdir -p $DESTDIR/etc/lipa/info
 cp ../data/blacklist $DESTDIR/etc/lipa/
 cp ../data/ignore-deps.list $DESTDIR/etc/lipa/
 
-cp ../build/liblistaller.so.0.4.0 $DESTDIR$libdir
+cp ../build/liblistaller.so.0.5.0 $DESTDIR$libdir
 cd $DESTDIR$libdir
-if [ ! -f liblistaller.so.0.4 ]; then
-ln -s $libdir/liblistaller.so.0.4.0 liblistaller.so.0.4
+if [ ! -f liblistaller.so.0.5 ]; then
+ln -s $libdir/liblistaller.so.0.5.0 liblistaller.so.0.5
 fi
 
 echo "Installation of core files finished."
