@@ -208,7 +208,7 @@ begin
 
     setup:=TInstallPack.Create;
     //Assign callbacks
-    setup.SetStatusChangeCall(@OnSetupStatusChange);
+    setup.SetStatusChangeEvent(@OnSetupStatusChange);
     setup.SetUserRequestCall(@OnSetupUserRequest);
 
     //Check Testmode

@@ -75,7 +75,7 @@ begin
    begin
      lastTime := Round(((DateTimeToTimeStamp(Now).Time - startTick) / 1000));
      if (InstallWorkers = 0) and (ManagerWorkers = 0) then
-       p_debug(IntToStr(lastTime) + ' seconds idle');
+       pdebug(IntToStr(lastTime) + ' seconds idle');
    end;
 
    msg := bs.ReadMessage;

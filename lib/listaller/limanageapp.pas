@@ -21,9 +21,9 @@ unit limanageapp;
 interface
 
 uses
-  IPKCDef10, Classes, GetText, liTypes, liUtils, MTProcs,
-  PkTypes, Process, LiFileUtil, IniFiles, SysUtils, strLocale,
-  liDBusProc, PackageKit, SoftwareDB;
+  Classes, GetText, liTypes, liUtils, MTProcs,
+  PkTypes, Process, IniFiles, SysUtils, IPKCDef10, strLocale,
+  liDBusProc, LiFileUtil, PackageKit, SoftwareDB;
 
 type
   PAppManager = ^TAppManager;
@@ -31,13 +31,9 @@ type
   TAppManager = class
   private
     SUMode: Boolean;
-    FReq: TRequestCall;
-    FApp: TAppEvent;
-    FStatus: TLiStatusChangeCall;
-
-    //Some user data
-    statechangeudata: Pointer;
-    requestudata: Pointer;
+    FReq: UserRequestCall;
+    FApp: NewAppEvent;
+    FStatus: StatusChangeEvent;
 
     //State data
     sdata: TLiStatusData; //Contains the current progress
@@ -54,8 +50,13 @@ type
     //** Catch the PackageKit progress
     procedure PkitProgress(pos: Integer; xd: Pointer);
     //** Catch status messages from DBus action
-    procedure DBusStatusChange(ty: LiProcStatus; Data: TLiProcData);
+    procedure DBusStatusChange(ty: LiProcStatus; data: TLiProcData);
     procedure InternalRemoveApp(obj: AppInfo);
+  protected
+    //Some user data for callbacks
+    statechange_udata: Pointer;
+    request_udata: Pointer;
+    newapp_udata: Pointer;
   public
     constructor Create;
     destructor Destroy; override;
@@ -69,9 +70,9 @@ type
     @returns True if everything is okay, False if dependencies are missing}
     function CheckApps(report: TStringList; const fix: Boolean = false;
       const forceroot: Boolean = false): Boolean;
-    procedure RegOnStatusChange(call: TLiStatusChangeCall; Data: Pointer);
-    procedure RegOnRequest(call: TRequestCall; Data: Pointer);
-    property OnApplication: TAppEvent read FApp write FApp;
+    procedure RegOnStatusChange(call: StatusChangeEvent; data: Pointer);
+    procedure RegOnRequest(call: UserRequestCall; data: Pointer);
+    procedure RegOnNewApp(call: NewAppEvent; data: Pointer);
     property SuperuserMode: Boolean read SUMode write SUMode;
     function UserRequestRegistered: Boolean;
   end;
@@ -82,7 +83,7 @@ type
      @param FStatus Callback to receive the status of the procedure (set to nil if not needed)
      @param fast Does a quick uninstallation if is true (Set to "False" by default)
      @param RmDeps Remove dependencies if true (Set to "True" by default)}
-procedure UninstallIPKApp(AppName, AppID: String; FStatus: TLiStatusChangeCall;
+procedure UninstallIPKApp(AppName, AppID: String; FStatus: StatusChangeEvent;
   fast: Boolean = false; RmDeps: Boolean = true);
 
 //** Checks if package is installed
@@ -114,49 +115,70 @@ begin
     Result := false;
 end;
 
-procedure TAppManager.RegOnStatusChange(call: TLiStatusChangeCall; Data: Pointer);
+procedure TAppManager.RegOnStatusChange(call: StatusChangeEvent; data: Pointer);
 begin
-  FStatus := call;
-  statechangeudata := Data;
+  if Assigned(call) then
+  begin
+    FStatus := call;
+    statechange_udata := data;
+  end
+  else
+    perror('Received invalid ´StatusChangeEvent´ pointer!');
 end;
 
-procedure TAppManager.RegOnRequest(call: TRequestCall; Data: Pointer);
+procedure TAppManager.RegOnRequest(call: UserRequestCall; data: Pointer);
 begin
-  FReq := call;
-  requestudata := Data;
+  if Assigned(call) then
+  begin
+    FReq := call;
+    request_udata := data;
+  end
+  else
+    perror('Received invalid ´UserRequestCall´ pointer!');
+end;
+
+procedure TAppManager.RegOnNewApp(call: NewAppEvent; data: Pointer);
+begin
+  if Assigned(call) then
+  begin
+    FApp := call;
+    newapp_udata := data;
+  end
+  else
+    perror('Received invalid ´StatusChangeEvent´ pointer!');
 end;
 
 procedure TAppManager.Msg(s: String);
 begin
   sdata.msg := PChar(s);
   if Assigned(FStatus) then
-    FStatus(scMessage, sdata, statechangeudata);
+    FStatus(scMessage, sdata, statechange_udata);
 end;
 
 function TAppManager.Request(s: String; ty: TRqType): TRqResult;
 begin
   if Assigned(FReq) then
-    Result := FReq(ty, PChar(s), requestudata);
+    Result := FReq(ty, PChar(s), request_udata);
 end;
 
 procedure TAppManager.NewApp(s: String; oj: AppInfo);
 begin
   if Assigned(FApp) then
-    FApp(PChar(s), @oj);
+    FApp(PChar(s), @oj, newapp_udata);
 end;
 
 procedure TAppManager.SetPos(i: Integer);
 begin
   sdata.mnprogress := i;
   if Assigned(FStatus) then
-    FStatus(scMnProgress, sdata, statechangeudata);
+    FStatus(scMnProgress, sdata, statechange_udata);
 end;
 
 procedure TAppManager.SetState(state: LiProcStatus);
 begin
   sdata.lastresult := state;
   if Assigned(FStatus) then
-    FStatus(scStatus, sdata, statechangeudata);
+    FStatus(scStatus, sdata, statechange_udata);
 end;
 
 function TAppManager.IsInList(nm: String; list: TStringList): Boolean;
@@ -351,9 +373,9 @@ begin
   blst := TStringList.Create; //Create Blacklist
 
   if sumode then
-   p_debug('SUMode: Yes')
+    pdebug('SUMode: Enabled')
   else
-   p_debug('SUMode: No');
+    pdebug('SUMode: Disabled');
 
   db := TSoftwareDB.Create;
   db.Load(sumode);
@@ -447,13 +469,13 @@ var
   mandir: String;
 begin
   Result := true;
-  p_debug('MoJo remover: dsk: ' + dsk);
+  pdebug('MoJo remover: dsk: ' + dsk);
   msg(rsPkgCouldBeInstalledWithLoki);
   inf := TIniFile.Create(dsk);
   if not DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry',
     'Exec', '?'))) then
   begin
-    p_warning('Listaller cannot handle this installation!');
+    pwarning('Listaller cannot handle this installation!');
     request(rsCannotHandleRM, rqError);
     inf.Free;
   end
@@ -505,7 +527,7 @@ begin
       else
       begin
         Result := false;
-        p_error('Listaller cannot handle this installation type!');
+        perror('Listaller cannot handle this installation type!');
         request(rsCannotHandleRM, rqError);
         inf.Free;
       end;
@@ -521,7 +543,7 @@ begin
     begin
       sdata.lastresult := ty;
       if Assigned(FStatus) then
-        FStatus(scStatus, sdata, statechangeudata);
+        FStatus(scStatus, sdata, statechange_udata);
     end;
   end;
 end;
@@ -622,7 +644,7 @@ begin
   id := obj.UId;
   if id = '' then
   begin
-    p_error('Invalid application info passed: No ID found.');
+    perror('Invalid application info passed: No ID found.');
     exit;
   end;
   SetState(prStarted);
@@ -664,7 +686,7 @@ begin
       tmp.Clear;
 
       setpos(18);
-      p_debug('GetRequires()');
+      pdebug('GetRequires()');
       pkit.GetRequires(f);
 
       setpos(25);
@@ -672,11 +694,11 @@ begin
 
       for i := 0 to tmp.Count - 1 do
       begin
-        p_debug(tmp[i]);
+        pdebug(tmp[i]);
         g := g + #10 + tmp[i];
       end;
 
-      p_debug('Asking dependency question...');
+      pdebug('Asking dependency question...');
       pkit.Free;
       if (StringReplace(g, ' ', '', [rfReplaceAll]) = '') or
         (request(StringReplace(StringReplace(
@@ -687,14 +709,14 @@ begin
         exit;
     end;
     tmp.Free;
-    p_debug('Done. ID is set.');
+    pdebug('Done. ID is set.');
 
     //Important: ID needs to be the same as AppInfo.UId
     id := obj.UId;
   end;
 
 
-  p_debug('Application UId is: ' + obj.UId);
+  pdebug('Application UId is: ' + obj.UId);
   if (SUMode) and (not IsRoot) then
   begin
     //Create worker thread for this action
@@ -702,7 +724,7 @@ begin
     buscmd.appinfo := obj;
     with TLiDBusAction.Create(buscmd) do
     begin
-      p_debug('DbusAction::run!');
+      pdebug('DbusAction::run!');
       OnStatus := @DBusStatusChange;
       ExecuteAction;
       Free;
@@ -780,7 +802,7 @@ begin
     db.Close;
   end
   else
-    p_debug('No database found!');
+    pdebug('No database found!');
   db.Free;
   writeLn('Check finished.');
   if not Result then
@@ -797,7 +819,7 @@ var
 begin
   if (aname = '') and (aid = '') then
   begin
-    p_warning('Empty strings received for IsPackageInstalled() query.');
+    pwarning('Empty strings received for IsPackageInstalled() query.');
     Result := false;
     exit;
   end;
@@ -811,7 +833,7 @@ end;
 
 /////////////////////////////////////////////////////
 
-procedure UninstallIPKApp(AppName, AppID: String; FStatus: TLiStatusChangeCall;
+procedure UninstallIPKApp(AppName, AppID: String; FStatus: StatusChangeEvent;
   fast: Boolean = false; RmDeps: Boolean = true);
 var
   tmp, tmp2, slist: TStringList;
@@ -843,7 +865,7 @@ var
     if Assigned(FStatus) then
       FStatus(scMessage, sdata, nil)
     else
-      p_info(s);
+      pinfo(s);
   end;
 
 begin

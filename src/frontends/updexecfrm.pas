@@ -63,7 +63,7 @@ begin
   Application.ProcessMessages;
   if not Assigned(UExecFm) then
   begin
-    p_error('UExecForm not created!');
+    perror('UExecForm not created!');
     exit;
   end;
   with UExecFm do
@@ -71,7 +71,7 @@ begin
     case change of
       scMessage:
       begin
-        p_info(Data.msg);
+        pinfo(Data.msg);
         Memo1.Lines.Add(Data.msg);
       end;
       scStepMessage: ILabel.Caption := Data.msg;

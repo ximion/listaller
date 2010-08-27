@@ -127,7 +127,7 @@ end;
 
 procedure TDBusClient.ShowError(info: String);
 begin
- p_error(info);
+ perror(info);
  error:=true;
 end;
 
@@ -278,7 +278,7 @@ begin
     Result:=false;
     exit;
   end;
-  p_info('Match rule sent');
+  pinfo('Match rule sent');
 end;
 
 function TDBusClient.ReadSignalMessage: PDBusMessage;
@@ -364,7 +364,7 @@ begin
 
   if dbus_error_is_set(@err) <> 0 then
   begin
-    p_error('Name Error: ' + err.message);
+    perror('Name Error: ' + err.message);
     dbus_error_free(@err);
   end;
 
@@ -387,7 +387,7 @@ end;
 
 procedure TDBusServer.ShowError(info: String);
 begin
- p_error(info);
+ perror(info);
  error:=true;
 end;
 

@@ -60,7 +60,7 @@ type
     //Overwrite all files? (needed for patches)
     FOverwrite: Boolean;
     //Current setup type
-    pkType: TPkgType;
+    pkType: PkgType;
     //Disallow-line (every action the package disallows, unformated)
     FDisallow: String;
     //Only set if old package should be removed
@@ -76,8 +76,8 @@ type
     //Container for license
     license: TStringList;
     //Progress message relais
-    FStatusChange: TLiStatusChangeCall;
-    FRequest: TRequestCall;
+    FStatusChange: StatusChangeEvent;
+    FRequest: UserRequestCall;
     //List of available mo files
     mofiles: TStringList;
     //Data which contains the status of the current action
@@ -91,7 +91,7 @@ type
     //True, if update source should be set
     AddUpdateSource: Boolean;
     //Level of pkg signature
-    sigState: TPkgSigState;
+    sigState: PkgSignatureState;
     //Store filesize of file ftpsend is downloading
     ftpfilesize: Integer;
     //Daemon-Mode?
@@ -115,9 +115,9 @@ type
     //Catch signals of DBus thread
     procedure DBusThreadStatusChange(ty: LiProcStatus; Data: TLiProcData);
   protected
-    //UserData
-    requestudata: Pointer;
-    statechangeudata: Pointer;
+    //User data for callbacks
+    request_udata: Pointer;
+    statechange_udata: Pointer;
     //Check if FTP connection is working
     function CheckFTPConnection(AFTPSend: TFTPSend): Boolean;
     //Set/Get methods for callbacks indication
@@ -147,7 +147,7 @@ type
     //** ID of the application
     property AppID: String read PkgID;
     //** Listaller package type
-    property pType: TPkgType read pkType;
+    property pType: PkgType read pkType;
     //** Unformatted disallows string
     property Disallows: String read FDisallow;
     //** All distributions the package supports
@@ -167,7 +167,7 @@ type
     //** Path to the current file information (that fits the profile)
     property IFileInfo: String read FFileInfo;
     //** Level of the package signature
-    property SignatureInfo: TPkgSigState read sigState;
+    property SignatureInfo: PkgSignatureState read sigState;
     //** Set current profile by ID
     procedure SetCurProfile(i: Integer);
     //** Read the package description
@@ -183,11 +183,11 @@ type
     //** True if update source will be registered
     property RegisterUpdateSource: Boolean read AddUpdateSource write AddUpdateSource;
     //** Register event to catch status messages
-    procedure RegOnStatusChange(call: TLiStatusChangeCall; Data: Pointer);
+    procedure RegOnStatusChange(call: StatusChangeEvent; Data: Pointer);
     //** Check if package is okay, if not raise error and return false
     function PkgOkay: Boolean;
     //Message events
-    procedure RegOnUsrRequest(call: TRequestCall; Data: Pointer);
+    procedure RegOnUsrRequest(call: UserRequestCall; Data: Pointer);
     function UserRequestRegistered: Boolean;
   end;
 
@@ -198,16 +198,24 @@ const
 
 implementation
 
-procedure TInstallation.RegOnStatusChange(call: TLiStatusChangeCall; Data: Pointer);
+procedure TInstallation.RegOnStatusChange(call: StatusChangeEvent; Data: Pointer);
 begin
+  if Assigned(call) then
+  begin
   FStatusChange := call;
-  statechangeudata := Data;
+  statechange_udata := data;
+  end else
+  perror('Received invalid ´StatusChangeEvent´ pointer!');
 end;
 
-procedure TInstallation.RegOnUsrRequest(call: TRequestCall; Data: Pointer);
+procedure TInstallation.RegOnUsrRequest(call: UserRequestCall; data: Pointer);
 begin
+  if Assigned(call) then
+  begin
   FRequest := call;
-  requestudata := Data;
+  request_udata := Data;
+  end else
+  perror('Received invalid ´UserRequestCall´ pointer!');
 end;
 
 function TInstallation.UserRequestRegistered: Boolean;
@@ -222,38 +230,38 @@ procedure TInstallation.SetMainPos(pos: Integer);
 begin
   statusdata.mnprogress := pos;
   if Assigned(FStatusChange) then
-    FStatusChange(scMnProgress, statusdata, statechangeudata);
+    FStatusChange(scMnProgress, statusdata, statechange_udata);
 end;
 
 procedure TInstallation.SetExtraPos(pos: Integer);
 begin
   statusdata.exprogress := pos;
   if Assigned(FStatusChange) then
-    FStatusChange(scExProgress, statusdata, statechangeudata);
+    FStatusChange(scExProgress, statusdata, statechange_udata);
 end;
 
 function TInstallation.MakeUsrRequest(msg: String; qtype: TRqType): TRqResult;
 begin
   if Assigned(FRequest) then
-    Result := FRequest(qtype, PChar(msg), requestudata)
+    Result := FRequest(qtype, PChar(msg), request_udata)
   else
-    p_warning('No user request handler assigned!');
+    pwarning('No user request handler assigned!');
 end;
 
 procedure TInstallation.SendStateMsg(msg: String);
 begin
   statusdata.msg := PChar(msg);
   if Assigned(FStatusChange) then
-    FStatusChange(scStepMessage, statusdata, statechangeudata);
+    FStatusChange(scStepMessage, statusdata, statechange_udata);
 end;
 
 procedure TInstallation.msg(str: String);
 begin
   statusdata.msg := PChar(str);
   if Assigned(FStatusChange) then
-    FStatusChange(scMessage, statusdata, statechangeudata)
+    FStatusChange(scMessage, statusdata, statechange_udata)
   else
-    p_info(str);
+    pinfo(str);
 end;
 
 constructor TInstallation.Create;
@@ -346,7 +354,7 @@ begin
   Result := true;
   SetExtraPos(1);
 
-  p_debug('Resolving dependencies.');
+  pdebug('Resolving dependencies.');
   if (Dependencies.Count > 0) then
   begin
     //Preprepare dependencies
@@ -368,7 +376,7 @@ begin
               break;
             end;
           except
-            p_error('Malformed dependency-ignore entry "' + tmp[j] +
+            perror('Malformed dependency-ignore entry "' + tmp[j] +
               '"! (Please fix this.)');
             tmp.Delete(j);
             break;
@@ -453,7 +461,7 @@ begin
 
   if (IsRoot) and (not daemonm) then
   begin
-    p_warning('Do not execute this action with superuser rights! (PolicyKit will handle it!)');
+    pwarning('Do not execute this action with superuser rights! (PolicyKit will handle it!)');
     //Listaller should alsways use PolicyKit to install apps as root
     if MakeUsrRequest(rsNotExecAsRootPolKit, rqWarning) = rqsNo then
       exit;
@@ -474,7 +482,7 @@ begin
   if IAppName <> '' then
   begin
     Result := false;
-    p_error('This Setup was already initialized. You have to create a new setup object to load a second file!');
+    perror('This Setup was already initialized. You have to create a new setup object to load a second file!');
     exit;
   end;
   Result := true;
@@ -921,7 +929,7 @@ begin
     pdStepMessage: SendStateMsg(Data.msg);
     pdInfo: msg(Data.msg);
     pdError: MakeUsrRequest(Data.msg, rqError);
-    pdStatus: p_debug('Thread status changed [finished]');
+    pdStatus: pdebug('Thread status changed [finished]');
   end;
 end;
 
@@ -958,7 +966,7 @@ var
       try
         DeleteDirectory(ndirs[i], false);
       except
-        p_error('Could not remove directory. Please report this bug.');
+        perror('Could not remove directory. Please report this bug.');
       end;
     end;
     ndirs.Free;
@@ -985,7 +993,7 @@ var
       if Assigned(pkit) then
         pkit.Free;
     except
-      p_error('Error while cleaning up.');
+      perror('Error while cleaning up.');
     end;
   end;
 
@@ -999,8 +1007,8 @@ begin
   if not FileExists(tmpdir + ExtractFileName(PkgName) + '/' + FFileInfo) then
   begin
     MakeUsrRequest(rsInstFailed, rqError);
-    p_error('No file information found!');
-    p_error('IPK package seems to be broken.');
+    perror('No file information found!');
+    perror('IPK package seems to be broken.');
     Result := false;
     Abort_FreeAll();
     exit;
@@ -1489,7 +1497,7 @@ end;}
         length(dependencies[i]));
       pkg := copy(pkg, 1, pos(')', pkg) - 1);
       fpath := copy(Dependencies[i], 1, pos(' (', Dependencies[i]) - 1);
-      p_debug('Looking for ' + pkg);
+      pdebug('Looking for ' + pkg);
       msg(StrSubst(rsLookingForX, '%a', pkg));
       pkit.ResolveInstalled(pkg);
 
@@ -1506,7 +1514,7 @@ end;}
           begin
             try
               HTTP.HTTPMethod('GET', fpath);
-              p_debug('HTTPResCode:=> ' + IntToStr(HTTP.ResultCode));
+              pdebug('HTTPResCode:=> ' + IntToStr(HTTP.ResultCode));
               HTTP.Document.SaveToFile(tmpdir + ExtractFileName(fpath));
               if HTTP.ResultCode > 210 then
               begin
@@ -1659,6 +1667,7 @@ begin
   Result := true;
   if (PkgID = '') or (IAppName = '') then
   begin
+    pwarning('Package check failed!');
     MakeUsrRequest(rsUnknownErrorOC + #10 + rsPkgDM + #10 + rsABLoad, rqError);
     Result := false;
     exit;

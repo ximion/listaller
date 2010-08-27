@@ -95,13 +95,13 @@ procedure RemoveDuplicates(sl: TStringList);
 //** Get current date as string
 function GetDateAsString: String;
 //** Show an error message
-procedure p_error(msg: String);
+procedure perror(msg: String);
 //** Displays a simple warning
-procedure p_warning(msg: String);
+procedure pwarning(msg: String);
 //** Displays info
-procedure p_info(msg: String);
+procedure pinfo(msg: String);
 //** Show a debug bessage
-procedure p_debug(msg: String);
+procedure pdebug(msg: String);
 //** Replace string a with b
 function StrSubst(s, a, b: String): String;
 //** Find absolute path for system binary
@@ -425,7 +425,7 @@ begin
       Result := true;
   end
   else
-    p_error('Internal error');
+    perror('Internal error');
 end;
 
 procedure ShowPKMon();
@@ -435,7 +435,7 @@ var
 begin
   if not FileExists(FindBinary('pkmon')) then
   begin
-    p_error('Could not find "pkmon". Monitor not started.');
+    perror('Could not find "pkmon". Monitor not started.');
     exit;
   end;
 
@@ -451,22 +451,22 @@ begin
   cnf.Free;
 end;
 
-procedure p_error(msg: String);
+procedure perror(msg: String);
 begin
   writeLn('error: ' + msg);
 end;
 
-procedure p_warning(msg: String);
+procedure pwarning(msg: String);
 begin
   writeLn('warning: ' + msg);
 end;
 
-procedure p_info(msg: String);
+procedure pinfo(msg: String);
 begin
   writeLn(msg);
 end;
 
-procedure p_debug(msg: String);
+procedure pdebug(msg: String);
 begin
   {$IFNDEF NoDebugMsg}
   writeLn('debug: ' + msg);
@@ -729,7 +729,7 @@ begin
       CreateDir(GetXHome + '/.applications/');
       if fpSymLink(PChar(GetXHome + '/.applications/'), PChar(
         GetXHome + '/' + rsApplications)) <> 0 then
-        P_error('Unable to creat symlink!');
+        perror('Unable to creat symlink!');
     end;
     if not DirectoryExists(GetXHome + '/.appfiles') then
       CreateDir(GetXHome + '/.appfiles/');

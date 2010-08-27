@@ -36,17 +36,17 @@ void li_mgr_free(void* mgr);
 
 bool li_mgr_load_apps(void* mgr);
 
-bool li_mgr_register_status_call(void* mgr,TLiStatusChangeCall call,void* user_data);
+bool li_mgr_register_status_call(void* mgr,StatusChangeEvent call,void* user_data);
 
-TRqResult li_mgr_register_request_call(void* mgr,TRequestCall call,void* user_data);
+TRqResult li_mgr_register_request_call(void* mgr,UserRequestCall call,void* user_data);
 
-bool li_mgr_register_app_call(void* mgr,TAppEvent call);
+bool li_mgr_register_app_call(void* mgr,NewAppEvent call,void* user_data);
 
 void li_mgr_set_sumode(void* mgr,bool md);
 
 bool li_mgr_remove_app(void* mgr,AppInfo obj);
 
-bool li_remove_ipk_installed_app(char *appname,char *appid,TLiStatusChangeCall scall,bool fastmode);
+bool li_remove_ipk_installed_app(char *appname,char *appid,StatusChangeEvent scall,bool fastmode);
 
 bool li_mgr_check_apps(void* mgr,void* log,bool root);
 

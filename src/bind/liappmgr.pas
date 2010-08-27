@@ -26,12 +26,12 @@ uses
  function  li_mgr_new: Pointer;cdecl;external libinst;
  procedure li_mgr_free(mgr: Pointer);cdecl;external libinst;
  function  li_mgr_load_apps(mgr: Pointer): Boolean;cdecl;external libinst;
- function  li_mgr_register_status_call(mgr: Pointer;call: TLiStatusChangeCall; user_data: Pointer): Boolean;cdecl;external libinst;
- function  li_mgr_register_request_call(mgr: Pointer;call: TRequestCall;user_data: Pointer): TRqResult;cdecl;external libinst;
- function  li_mgr_register_app_call(mgr: Pointer;call: TAppEvent): Boolean;cdecl;external libinst;
+ function  li_mgr_register_status_call(mgr: Pointer;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;external libinst;
+ function  li_mgr_register_request_call(mgr: Pointer;call: UserRequestCall;user_data: Pointer): TRqResult;cdecl;external libinst;
+ function  li_mgr_register_app_call(mgr: Pointer;call: NewAppEvent; user_data: Pointer): Boolean;cdecl;external libinst;
  procedure li_mgr_set_sumode(mgr: Pointer;md: Boolean);cdecl;external libinst;
  function  li_mgr_remove_app(mgr: Pointer;obj: AppInfo): Boolean;cdecl;external libinst;
- function  li_remove_ipk_installed_app(appname, appid: PChar;scall: TLiStatusChangeCall;fastmode: Boolean): Boolean; cdecl; external libinst;
+ function  li_remove_ipk_installed_app(appname, appid: PChar;scall: StatusChangeEvent;fastmode: Boolean): Boolean; cdecl; external libinst;
  function  li_mgr_check_apps(mgr: Pointer;log: PStringList;root: Boolean): Boolean;cdecl;external libinst;
  function  li_mgr_fix_apps(mgr: Pointer;log: PStringList;root: Boolean): Boolean;cdecl;external libinst;
 

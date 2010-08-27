@@ -74,7 +74,7 @@ type
     //** Prepare IPK tar file for installation & signature verifying
     function Prepare: Boolean;
     //** Verify signature (if there is any)
-    function CheckSignature: TPkgSigState;
+    function CheckSignature: PkgSignatureState;
     //** Unpack data file @returns Success of operation
     function UnpackDataFile(fname: String): Boolean;
     //** Unpack data file @returns Success of operation
@@ -167,7 +167,7 @@ begin
   if finalized then
     exit;
 
-  p_info('Finalizing package.');
+  pinfo('Finalizing package.');
   if ctar.Finalize > 0 then
     raise Exception.Create('Error while creating control container!');
   if dtar.Finalize > 0 then
@@ -286,7 +286,7 @@ begin
   DeleteFile(workdir + 'ipktar.tar');
 end;
 
-function TLiUnpacker.CheckSignature: TPkgSigState;
+function TLiUnpacker.CheckSignature: PkgSignatureState;
 var
   hasSignature: Boolean;
   sign: TGPGSignWrapper;

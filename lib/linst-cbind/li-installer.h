@@ -38,7 +38,7 @@ void li_setup_set_sumode(void* setup,bool b);
 
 char *li_setup_init(void* setup,char *pkname);
 
-TPkgType li_setup_get_pkgtype(void* setup);
+kgType li_setup_get_pkgtype(void* setup);
 
 char *li_setup_get_disallows(void* setup);
 
@@ -68,9 +68,9 @@ char *li_setup_get_current_profile_filelist(void* setup);
 
 void li_setup_enable_usource_registering(void* setup,bool b);
 
-bool li_setup_register_status_call(void* setup,TLiStatusChangeCall call,void* user_data);
+bool li_setup_register_status_call(void* setup,StatusChangeEvent call,void* user_data);
 
-bool li_setup_register_user_request_call(void* setup,TRequestCall call,void* user_data);
+bool li_setup_register_user_request_call(void* setup,UserRequestCall call,void* user_data);
 
 bool li_setup_execute(void* setup);
 
@@ -80,7 +80,7 @@ bool li_setup_get_dependencies(void* setup,void* list);
 
 bool li_setup_set_profileid(void* setup,int id);
 
-TPkgSigState li_setup_get_signature_state(void* setup);
+kgSignatureState li_setup_get_signature_state(void* setup);
 
 bool li_get_ipk_app_installed(char *appname,char *appid,bool sumode);
 

@@ -63,7 +63,7 @@ end;
 //Installer part
 
 //** Removes an application that was installed with an IPK package
-function li_remove_ipk_installed_app(appname, appid: PChar;statuscall: TLiStatusChangeCall;fastmode: Boolean): Boolean;cdecl;
+function li_remove_ipk_installed_app(appname, appid: PChar;statuscall: StatusChangeEvent;fastmode: Boolean): Boolean;cdecl;
 begin
 Result:=true;
 try
@@ -91,20 +91,15 @@ begin
  Result:=true;
  if not setup^.UserRequestRegistered then
  begin
-  p_warning('No user request callback is registered!');
+  pwarning('No user request callback is registered!');
  end;
 
- //try
   setup^.Initialize(pkname);
   Result:=setup^.PkgOkay;
- {except
-  setup^.PkgOkay;
-  Result:=false;
- end; }
 end;
 
 //** Register callback on status change
-function li_setup_register_status_call(setup: PInstallation;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;
+function li_setup_register_status_call(setup: PInstallation;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -115,7 +110,7 @@ begin
 end;
 
 //** User request message call
-function li_setup_register_user_request_call(setup: PInstallation;call: TRequestCall;user_data: Pointer): Boolean;cdecl;
+function li_setup_register_user_request_call(setup: PInstallation;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -126,7 +121,7 @@ begin
 end;
 
 //** Installation type
-function li_setup_get_pkgtype(setup: PInstallation): TPkgType;cdecl;
+function li_setup_get_pkgtype(setup: PInstallation): PkgType;cdecl;
 begin
   if not setup^.PkgOkay then exit;
   Result:=setup^.pType;
@@ -197,7 +192,7 @@ begin
 end;
 
 //** Get trust level of pkg signature
-function li_setup_get_signature_state(setup: PInstallation): TPkgSigState;cdecl;
+function li_setup_get_signature_state(setup: PInstallation): PkgSignatureState;cdecl;
 begin
   if not setup^.PkgOkay then exit;
   Result:=setup^.SignatureInfo;
@@ -316,7 +311,7 @@ try
   list^.Add(setup^.ADeps[i]);
 except
  Result:=false;
- p_error('setup:get_dependencies() failed!');
+ perror('setup:get_dependencies() failed!');
 end;
 end;
 
@@ -340,7 +335,12 @@ function li_mgr_load_apps(mgr: PAppManager): Boolean;cdecl;
 begin
 Result:=false;
 try
-if not mgr^.UserRequestRegistered then begin p_error('No user request callback was registered');exit;end;
+ if not mgr^.UserRequestRegistered then
+ begin
+  perror('No user request callback was registered');
+  exit;
+ end;
+
  Result:=true;
  mgr^.LoadEntries;
 except
@@ -349,7 +349,7 @@ end;
 end;
 
 //** Register call on status change for appmanager
-function li_mgr_register_status_call(mgr: PAppManager;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;
+function li_mgr_register_status_call(mgr: PAppManager;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -360,18 +360,18 @@ begin
 end;
 
 //** Register application event to catch found apps
-function li_mgr_register_app_call(mgr: PAppManager;call: TAppEvent): Boolean;cdecl;
+function li_mgr_register_app_call(mgr: PAppManager;call: NewAppEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-  mgr^.OnApplication:=call;
+  mgr^.RegOnNewApp(call, user_data);
  except
   Result:=false;
  end;
 end;
 
 //** Register event to recieve user requests
-function li_mgr_register_request_call(mgr: PAppManager;call: TRequestCall;user_data: Pointer): Boolean;cdecl;
+function li_mgr_register_request_call(mgr: PAppManager;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -391,7 +391,12 @@ end;
 function li_mgr_remove_app(mgr: PAppManager;obj: AppInfo): Boolean;cdecl;
 begin
  Result:=false;
-if not mgr^.UserRequestRegistered then begin p_error('You need to register a user request callback!');exit;end;
+ if not mgr^.UserRequestRegistered then
+ begin
+  perror('You need to register a user request callback!');
+  exit;
+ end;
+
  Result:=true;
  try
   mgr^.UninstallApp(obj);
@@ -412,7 +417,7 @@ end;
 begin
 if Assigned(log^) then
   PerformCheck
-else p_error('Check log != nil failed.');
+else perror('Check log != nil failed.');
 end;
 
 //** Fix application dependencies
@@ -427,7 +432,7 @@ end;
 begin
 if Assigned(log^) then
   PerformCheck
-else p_error('Check log != nil failed.');
+else perror('Check log != nil failed.');
 end;
 
 ////////////////////////////////////////////////////////////////////
@@ -452,7 +457,7 @@ begin
 end;
 
 //** Register call on status change for updater
-function li_updater_register_status_call(upd: PAppUpdater;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;
+function li_updater_register_status_call(upd: PAppUpdater;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -463,7 +468,7 @@ begin
 end;
 
 //** Register event to recieve user requests
-function li_updater_register_request_call(upd: PAppUpdater;call: TRequestCall;user_data: Pointer): Boolean;cdecl;
+function li_updater_register_request_call(upd: PAppUpdater;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -474,7 +479,7 @@ begin
 end;
 
 //** Register event for new updates
-function li_updater_register_newupdate_call(upd: PAppUpdater;call: TNewUpdateEvent;user_data: Pointer): Boolean;cdecl;
+function li_updater_register_newupdate_call(upd: PAppUpdater;call: NewUpdateEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -483,7 +488,7 @@ begin
   on E: Exception do
   begin
    Result:=false;
-   p_error(E.Message);
+   perror(E.Message);
   end;
  end;
 end;

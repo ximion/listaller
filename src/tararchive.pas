@@ -130,7 +130,7 @@ begin
   if (not FileExistsUTF8(fname)) or (not ValuesGood) then
   begin
     Result := 16;
-    p_debug('"'+fname+'"');
+    pdebug('"'+fname+'"');
     exit;
   end;
 

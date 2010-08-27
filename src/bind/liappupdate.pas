@@ -26,9 +26,9 @@ uses
   function  li_updater_new: Pointer;cdecl;external libinst;
   procedure li_updater_free(upd: Pointer);cdecl;external libinst;
   procedure li_updater_set_sumode(upd: Pointer;val: Boolean);cdecl;external libinst;
-  function  li_updater_register_status_call(upd: Pointer;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;external libinst;
-  function  li_updater_register_request_call(upd: Pointer;call: TRequestCall;user_data: Pointer): Boolean;cdecl;external libinst;
-  function  li_updater_register_newupdate_call(upd: Pointer;call: TNewUpdateEvent;user_data: Pointer): Boolean;cdecl;external libinst;
+  function  li_updater_register_status_call(upd: Pointer;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;external libinst;
+  function  li_updater_register_request_call(upd: Pointer;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;external libinst;
+  function  li_updater_register_newupdate_call(upd: Pointer;call: NewUpdateEvent;user_data: Pointer): Boolean;cdecl;external libinst;
   function  li_updater_search_updates(upd: Pointer): Boolean;cdecl;external libinst;
   function  li_updater_updateid_oldversion(upd: Pointer;uid: Longint): PChar;cdecl;external libinst;
   function  li_updater_updateid_newversion(upd: Pointer;uid: Longint): PChar;cdecl;external libinst;

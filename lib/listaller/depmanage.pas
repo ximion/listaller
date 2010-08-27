@@ -160,7 +160,7 @@ begin
     if pk.Tag = -1 then
     begin
       pk.Tag := solver.lastIndex;
-      p_debug('New Job: ' + IntToStr(pk.Tag));
+      pdebug('New Job: ' + IntToStr(pk.Tag));
       //If resolve call fails, set dep to "not resolved"
       if not pk.FindPkgForFile(solver.tmpDeps[pk.Tag]) then
         pk.Tag := -1;
@@ -170,7 +170,7 @@ begin
     else
       if pk.Finished then
       begin
-        p_debug('Finished! [ ' + IntToStr(pk.Tag) + ' ]');
+        pdebug('Finished! [ ' + IntToStr(pk.Tag) + ' ]');
         solver.MakeProgress(pk.Tag, 100);
 
         //Check if package was found
@@ -208,7 +208,7 @@ begin
   MakeProgress(0, 0);
   ShowPKMon();
 
-  p_debug('Start resolving deps.');
+  pdebug('Start resolving deps.');
 
   loop := g_main_loop_new(nil, false);
   idle := g_idle_source_new();
@@ -237,7 +237,7 @@ begin
     Result := false;
 
   RemoveDuplicates(resList);
-  p_debug('DepResolve finished.');
+  pdebug('DepResolve finished.');
 end;
 
 { TDEBConverter }
@@ -480,7 +480,7 @@ begin
     if not FileCopy(files[i], SyblToPath('$DEP') +
       StrSubst(files[i], CleanFilePath(dir + '/usr'), '')) then
     begin
-      p_debug(files[i] + ' >> ' + SyblToPath('$DEP') +
+      pdebug(files[i] + ' >> ' + SyblToPath('$DEP') +
         StrSubst(files[i], CleanFilePath(dir + '/usr'), ''));
       Result := FATAL_COPY_ERROR;
       exit;

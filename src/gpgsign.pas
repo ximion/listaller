@@ -31,7 +31,7 @@ type
     CBProcess: TCallBackProcess;
     FFileName: String;
     status: TLiStatusData;
-    FStatusEvent: TLiStatusChangeCall;
+    FStatusEvent: StatusChangeEvent;
     gpg: String;
 
     procedure OnProcessEvent(pcChannel: TProcessChannel; strData: String);
@@ -49,7 +49,7 @@ type
     //** (Binary) file to sign
     property FileName: String read FFileName write FFileName;
     //** Get the status of the current action
-    property OnStatus: TLiStatusChangeCall read FStatusEvent write FStatusEvent;
+    property OnStatus: StatusChangeEvent read FStatusEvent write FStatusEvent;
   end;
 
 //** Check if GPG was found
@@ -85,7 +85,7 @@ begin
   end
   else
   begin
-    p_info(status.msg);
+    pinfo(status.msg);
   end;
 end;
 

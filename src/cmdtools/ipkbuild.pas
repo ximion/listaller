@@ -299,7 +299,7 @@ var
   b: Boolean;
   fc: TStringList;
   lh, h, s: String;
-  pkgtype: TPkgType;
+  packtype: PkgType;
   pki: TPackInfo;
   sl, files, fsec: TStringList;
   tmpdepends: TStringList; //Contains all autodetected dependencies
@@ -615,7 +615,7 @@ begin
   writeLn;
   fsec.Free;
 
-  pkgtype := control.SType;
+  packtype := control.SType;
 
   if LowerCase(control.Architecture) = 'any' then
     control.Architecture := GetSystemArchitecture;
@@ -644,7 +644,7 @@ begin
   end; //END <>nil
 
   //Linstall specific actions
-  if pkgtype = ptLinstall then
+  if packtype = ptLinstall then
   begin
     writeLn('Mode: Build standard IPK');
 
@@ -760,7 +760,7 @@ begin
   end
   else
   begin //If pkgtype is another one
-    if pkgtype = ptDLink then
+    if packtype = ptDLink then
     begin
       writeLn('Mode: Build DLink IPK package');
 
@@ -779,7 +779,7 @@ begin
     end;
     //??? Container builder needs more work!
     //    (Add additional file processor)
-    if pkgtype = ptContainer then
+    if packtype = ptContainer then
     begin
       writeLn('Mode: Build container IPK package');
 

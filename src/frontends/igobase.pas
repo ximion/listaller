@@ -22,7 +22,7 @@ interface
 
 uses
   Forms, distri, Buttons, Classes, Dialogs,
-  LCLIntf, LCLType, liTypes, liUtils, Process, xTypeFm, ComCtrls, Controls, ExtCtrls,
+  LCLIntf, LCLType, LiTypes, LiUtils, Process, xTypeFm, ComCtrls, Controls, ExtCtrls,
   FileUtil, Graphics, StdCtrls, SysUtils, LiInstaller, StrLocale, IconLoader, LResources;
 
 type
@@ -405,7 +405,7 @@ begin
         scMessage:
         begin //Necessary to add messages to log, even if it is invisible (to generate report)
           InfoMemo.Lines.Add(Data.msg);
-          p_info(Data.msg);
+          pinfo(Data.msg);
         end;
         scStepMessage: Label9.Caption := Data.msg;
       end;
@@ -428,7 +428,7 @@ begin
           scMessage:
           begin //Necessary to add messages to log, even if it is invisible (to generate report)
             Memo3.Lines.Add(Data.msg);
-            p_info(Data.msg);
+            pinfo(Data.msg);
           end;
           scStepMessage: ;//Label9.Caption:=data.msg;
         end;
@@ -437,8 +437,8 @@ begin
     begin
       if setup.PkType <> ptContainer then
       begin
-        p_warning('Listaller Setup tool seems to owns none of the required display forms!');
-        p_warning('This should _never_ happen!');
+        pwarning('Listaller Setup tool seems to owns none of the required display forms!');
+        pwarning('This should _never_ happen!');
       end;
     end;
 
@@ -448,7 +448,7 @@ end;
 function LoadIPKFile(): Boolean;
 var
   imForm: TimdFrm;
-  sig: TPkgSigState;
+  sig: PkgSignatureState;
   forcedOptions: String;
 begin
   if not DirectoryExists(RegDir) then
@@ -487,7 +487,7 @@ begin
   setup := TInstallPack.Create;
   setup.SetUserRequestCall(@RequestHandling, nil);
   //Set status handler for init stage
-  setup.SetStatusChangeCall(@xtypefm.PkgInitProgressChange, imForm);
+  setup.SetStatusChangeEvent(@xtypefm.PkgInitProgressChange, imForm);
 
   //Set forced actions
   if Application.HasOption('force-architecture') then
@@ -500,7 +500,7 @@ begin
   setup.Initialize(ParamStr(1));
 
   //Now set new status change callback handler
-  setup.SetStatusChangeCall(@StatusChangeCall, nil);
+  setup.SetStatusChangeEvent(@StatusChangeCall, nil);
 
   sig := setup.GetSignatureState;
 
@@ -686,7 +686,7 @@ begin
   //Free instances;
   if Assigned(setup) then
     setup.Free;
-  p_debug('Listaller unloaded.');
+  pdebug('Listaller unloaded.');
 end;
 
 procedure TIWizFrm.FormShow(Sender: TObject);
@@ -797,7 +797,7 @@ begin
     end
     else
     begin
-      p_debug('Testmode: Executing new app...');
+      pdebug('Testmode: Executing new app...');
       Process1.CommandLine := setup.GetAppCMD;
       Process1.Options := [poWaitOnExit, poUsePipes];
       Hide;

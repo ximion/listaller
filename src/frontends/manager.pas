@@ -195,9 +195,8 @@ begin
   RMForm.ShowModal;
 end;
 
-function OnNewAppFound(Name: PChar; obj: PAppInfo): Boolean; cdecl;
+procedure OnNewAppFound(Name: PChar; obj: PAppInfo; udata: Pointer); cdecl;
 begin
-  Result := true;
   with MnFrm do
   begin
     currAppList.ItemFromAppInfo(obj^);
@@ -213,7 +212,7 @@ begin
     scMessage:
     begin
       MnFrm.StatusBar1.Panels[0].Text := Data.msg;
-      //p_info(data.msg);
+      //pinfo(data.msg);
     end;
   end;
 end;
@@ -1154,7 +1153,7 @@ begin
 end;     }
 
   //Register callback to be notified if new app was found
-  li_mgr_register_app_call(@amgr, @OnNewAppFound);
+  li_mgr_register_app_call(@amgr, @OnNewAppFound, nil);
 
   //Register callback to be notified if a message was thrown
   li_mgr_register_status_call(@amgr, @OnMgrStatus, nil);

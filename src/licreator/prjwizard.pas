@@ -207,7 +207,7 @@ type
     procedure tvShortDescriptionsKeyDown(Sender: TObject; var Key: word;
       Shift: TShiftState);
   private
-    function CreateScript(aType: TPkgType): TIPKScript;
+    function CreateScript(aType: PkgType): TIPKScript;
     procedure LoadFilesFromProfile(Profile: TList);
     procedure SaveFilesToProfile(Profile: TList);
     procedure ClearProfile(Profile: TList);
@@ -225,7 +225,7 @@ var
   //** Project wizard main formular
   frmProjectWizard: TfrmProjectWizard;
   //** IPK/IPS type that should be created
-  CreaType: TPkgType;
+  CreaType: PkgType;
 
 implementation
 
@@ -267,7 +267,7 @@ begin
   end;
 end;
 
-function TfrmProjectWizard.CreateScript(aType: TPkgType): TIPKScript;
+function TfrmProjectWizard.CreateScript(aType: PkgType): TIPKScript;
 var
   s: String;
   i, j: Integer;

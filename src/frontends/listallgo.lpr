@@ -43,7 +43,7 @@ begin
   Application.Initialize;
   //Make the GType system work for us
   InitializeGType();
-  writeLn('Application initialized.');
+  pinfo('Application initialized.');
 
   //Load IPK-File, quit on failure
   if LoadIPKFile() then

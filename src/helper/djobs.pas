@@ -171,8 +171,8 @@ var
 begin
   if not (TObject(j) is TJob) then
   begin
-    p_error('Invalid Job received! This is a critical bug, listallerd will terminate.');
-    p_error('Please report this issue.');
+    perror('Invalid Job received! This is a critical bug, listallerd will terminate.');
+    perror('Please report this issue.');
     halt(500);
     exit;
   end;
@@ -184,7 +184,7 @@ begin
   Result := polkit_authority_check_authorization_finish(authority, res, @error);
   if (error <> nil) then
   begin
-    p_error('Error checking authorization: '#10 + error^.message);
+    perror('Error checking authorization: '#10 + error^.message);
     g_error_free(error);
     job.Authorization := AC_NOT_AUTHORIZED;
     g_main_loop_quit(job.MainLoop);
@@ -199,7 +199,7 @@ begin
       else
         result_str := 'not authorized';
 
-    p_info('Authorization result for ' + job.Identifier + ': ' + result_str);
+    pinfo('Authorization result for ' + job.Identifier + ': ' + result_str);
   end;
   if result_str = 'authorized' then
     job.Authorization := AC_AUTHORIZED
@@ -243,7 +243,7 @@ begin
   actUSource := bs.ReadMessageParamBool;
 
 
-  p_info('RunSetup called with ' + FileName);
+  pinfo('RunSetup called with ' + FileName);
 
   action_id := 'org.nlinux.listaller.execute-installation';
   target := dbus_message_get_sender(origMsg);
@@ -264,19 +264,19 @@ begin
   //If not authorized, quit the job
   if allowed = AC_NOT_AUTHORIZED then
   begin
-    p_error('Not authorized to call this action.');
+    perror('Not authorized to call this action.');
     SendReply(false, '');
     remove := true;
     //Resume();
     exit;
   end;
 
-  p_info('New app install job for ' + bs.getMessageSender(aMsg) + ' started.');
+  pinfo('New app install job for ' + bs.getMessageSender(aMsg) + ' started.');
 
   if not FileExists(FileName) then
   begin
-    p_error('Installation package not found!');
-    p_debug(FileName);
+    perror('Installation package not found!');
+    pdebug(FileName);
     Error_Terminate;
     exit;
   end;
@@ -328,7 +328,7 @@ var
   reply: PDBusMessage;
   auth: PChar = '';
 begin
-  p_info('Send reply called');
+  pinfo('Send reply called');
 
   //Create a reply from the message
   reply := bs.CreateReturnMessage(origMsg);
@@ -360,9 +360,9 @@ begin
   end
   else
   begin
-    p_error('Received invalid user request! (Daemon should _never_ ask questions which need a reply.)');
+    perror('Received invalid user request! (Daemon should _never_ ask questions which need a reply.)');
     Result := rqsNO;
-    p_debug(info);
+    pdebug(info);
   end;
 end;
 
@@ -395,7 +395,7 @@ begin
     setup := TInstallPack.Create;
 
     li_setup_exec_by_daemon(@setup.RemoteObject, true);
-    setup.SetStatusChangeCall(@OnInstallStatus, self);
+    setup.SetStatusChangeEvent(@OnInstallStatus, self);
     setup.SetUserRequestCall(@InstallUserRequest, self);
     setup.Forced := setup.Forced + overrides + ';norequest';
     //Prevent asking questions: Skip requests and continue (should only be used in this daemon!)
@@ -406,7 +406,7 @@ begin
 
     setup.Free;
 
-    p_info('AppInstall job ' + jobID + ' completed.');
+    pinfo('AppInstall job ' + jobID + ' completed.');
     success := true; //Finished without problems
  {except
   on E: Exception do
@@ -446,9 +446,9 @@ begin
   end
   else
   begin
-    p_error('Received invalid user request! (Daemon should _never_ ask questions which need a reply.');
+    perror('Received invalid user request! (Daemon should _never_ ask questions which need a reply.');
     Result := rqsNO;
-    p_debug(msg);
+    pdebug(msg);
   end;
 end;
 
@@ -460,7 +460,7 @@ procedure OnMgrStatus(change: LiStatusChange; Data: TLiStatusData; job: Pointer)
     sigvalue: integer;
   begin
       sigvalue := Data.mnprogress;
-      p_debug(TDoAppRemove(job).DId + '->ProgressChange::' + IntToStr(sigvalue));
+      pdebug(TDoAppRemove(job).DId + '->ProgressChange::' + IntToStr(sigvalue));
       // create a signal & check for errors
       msg := TDoAppRemove(job).bs.CreateNewSignal('/org/nlinux/Listaller/' +
         TDoAppRemove(job).DId, // object name of the signal
@@ -508,7 +508,7 @@ begin
   bs.MessageIterNext;
   appinfo.UId := PChar(bs.ReadMessageParamStr);
 
-  p_info('Removing application called "' + appinfo.Name + '" Job:' + jobID);
+  pinfo('Removing application called "' + appinfo.Name + '" Job:' + jobID);
 
   action_id := 'org.nlinux.listaller.remove-application';
   target := bs.GetMessageSender(origMsg);
@@ -529,14 +529,14 @@ begin
   //If not authorized, quit the job
   if allowed = AC_NOT_AUTHORIZED then
   begin
-    p_error('Not authorized to call this action.');
+    perror('Not authorized to call this action.');
     SendReply(false, '');
     remove := true;
     //Resume();
     exit;
   end;
 
-  p_info('New app uninstallation job for ' + bs.GetMessageSender(origMsg) + ' started.');
+  pinfo('New app uninstallation job for ' + bs.GetMessageSender(origMsg) + ' started.');
   try
     mgr := li_mgr_new;
     li_mgr_set_sumode(@mgr, true);
@@ -544,7 +544,7 @@ begin
     li_mgr_register_request_call(@mgr, @OnMgrUserRequest, self);
   except
     Error_Terminate;
-    p_warning('Manage job failed.');
+    pwarning('Manage job failed.');
     exit;
   end;
 
@@ -562,7 +562,7 @@ begin
  {if Assigned(FatalException) then
   raise FatalException; }
 
-  p_debug('App remove job deleted.');
+  pdebug('App remove job deleted.');
   inherited;
 end;
 
@@ -571,7 +571,7 @@ var
   reply: PDBusMessage;
   auth: PChar = '';
 begin
-  p_info('Send reply called');
+  pinfo('Send reply called');
     //Create a reply from the message
     reply := bs.CreateReturnMessage(origMsg);
 
@@ -592,7 +592,7 @@ procedure TDoAppRemove.EmitMessage(id: string; param: string);
 var
   dmsg: PDBusMessage;
 begin
-  p_debug(jobID + '->' + id + ':: ' + param);
+  pdebug(jobID + '->' + id + ':: ' + param);
     // create a signal & check for errors
     dmsg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID,
       // object name of the signal
@@ -633,7 +633,7 @@ begin
     bs.AppendBool(success);
     bs.SendMessage(msg);
 
-    p_info('App uninstallation job "' + jobID + '" finished.');
+    pinfo('App uninstallation job "' + jobID + '" finished.');
     //Terminate;
   end;
 end;
@@ -656,9 +656,9 @@ begin
   end
   else
   begin
-    p_error('Received invalid user request! (Daemon should _never_ ask questions which need a reply.');
+    perror('Received invalid user request! (Daemon should _never_ ask questions which need a reply.');
     Result := rqsNO;
-    p_debug(msg);
+    pdebug(msg);
   end;
 end;
 
@@ -671,7 +671,7 @@ procedure OnUpdaterStatus(change: LiStatusChange; Data: TLiStatusData;
     sigvalue: integer;
   begin
     sigvalue := Data.mnprogress;
-      p_debug(TDoAppUpdate(job).DId + '->ProgressChange::' + IntToStr(sigvalue));
+      pdebug(TDoAppUpdate(job).DId + '->ProgressChange::' + IntToStr(sigvalue));
       // create a signal & check for errors
       msg := TDoAppUpdate(job).bs.CreateNewSignal('/org/nlinux/Listaller/' +
         TDoAppUpdate(job).DId, // object name of the signal
@@ -720,7 +720,7 @@ begin
  {bs.MessageIterNext;
  updName:=PChar(bs.ReadMessageParamStr);}
 
-  p_info('Update su application called (Job:' + jobID + ')');
+  pinfo('Update su application called (Job:' + jobID + ')');
 
   action_id := 'org.nlinux.listaller.make-su-update';
   target := bs.GetMessageSender(origMsg);
@@ -741,14 +741,14 @@ begin
   //If not authorized, quit the job
   if allowed = AC_NOT_AUTHORIZED then
   begin
-    p_error('Not authorized to call this action.');
+    perror('Not authorized to call this action.');
     SendReply(false, '');
     remove := true;
     //Resume();
     exit;
   end;
 
-  p_info('New app update job for ' + bs.GetMessageSender(origMsg) + ' started.');
+  pinfo('New app update job for ' + bs.GetMessageSender(origMsg) + ' started.');
   try
     upd := li_updater_new;
     li_updater_set_sumode(@upd, true);
@@ -756,7 +756,7 @@ begin
     li_updater_register_request_call(@upd, @OnUpdaterUserRequest, self);
   except
     Error_Terminate;
-    p_warning('Update job failed.');
+    pwarning('Update job failed.');
     exit;
   end;
 
@@ -774,7 +774,7 @@ begin
  {if Assigned(FatalException) then
   raise FatalException;}
 
-  p_debug('App update job deleted.');
+  pdebug('App update job deleted.');
   inherited;
 end;
 
@@ -783,7 +783,7 @@ var
   reply: PDBusMessage;
   auth: PChar = '';
 begin
-  p_info('Send reply called');
+  pinfo('Send reply called');
 
   //Create a reply from the message
   reply := bs.CreateReturnMessage(origMsg);
@@ -805,7 +805,7 @@ procedure TDoAppUpdate.EmitMessage(id: string; param: string);
 var
   dmsg: PDBusMessage;
 begin
-  p_debug(jobID + '->' + id + ':: ' + param);
+  pdebug(jobID + '->' + id + ':: ' + param);
   // create a signal & check for errors
   dmsg := bs.CreateNewSignal('/org/nlinux/Listaller/' + jobID,
     // object name of the signal
@@ -846,7 +846,7 @@ begin
     bs.AppendBool(success);
     bs.SendMessage(msg);
 
-    p_info('App update job "' + jobID + '" finished.');
+    pinfo('App update job "' + jobID + '" finished.');
     //Terminate;
   end;
 end;

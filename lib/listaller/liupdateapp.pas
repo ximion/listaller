@@ -21,9 +21,9 @@ unit liupdateapp;
 interface
 
 uses
-  Blcksock, Classes, Contnrs, LiFileUtil, FTPSend, HTTPSend, IniFiles,
-  IPKCDef10, IPKPackage11, LiUtils, LiDBusProc, LiTypes, MD5, Process,
-  SoftwareDB, SysUtils, StrLocale;
+  MD5, Classes, Contnrs, FTPSend, LiTypes, LiUtils, Process,
+  Blcksock, HTTPSend, IniFiles,
+  SysUtils, IPKCDef10, StrLocale, LiDBusProc, LiFileUtil, SoftwareDB, IPKPackage11;
 
 type
 
@@ -48,15 +48,12 @@ type
     HTTP: THTTPSend;
     FTP: TFTPSend;
     AppReg: String;
-    FReq: TRequestCall;
-    FStatus: TLiStatusChangeCall;
-    FNewUpd: TNewUpdateEvent;
+    FReq: UserRequestCall;
+    FStatus: StatusChangeEvent;
+    FNewUpd: NewUpdateEvent;
 
     ulist: TObjectList;
     sdata: TLiStatusData;
-
-    //User data
-    statechangeudata, requestudata, newupdudata: Pointer;
 
     procedure SetMnPos(i: Integer);
     procedure SetExPos(i: Integer);
@@ -68,16 +65,19 @@ type
     //Hook on HTTP socket
     procedure HookSock(Sender: TObject; Reason: THookSocketReason; const Value: String);
     //Catch DBus messages
-    procedure DBusStatusChange(ty: LiProcStatus; Data: TLiProcData);
+    procedure DBusStatusChange(ty: LiProcStatus; data: TLiProcData);
+  protected
+    //User data for callbacks
+    statechange_udata, request_udata, newupd_udata: Pointer;
   public
     constructor Create;
     destructor Destroy; override;
 
     function CheckUpdates: Boolean;
     procedure SetSumode(su: Boolean);
-    procedure RegOnStatusChange(call: TLiStatusChangeCall; Data: Pointer);
-    procedure RegOnRequest(call: TRequestCall; Data: Pointer);
-    procedure RegOnNewUpdate(call: TNewUpdateEvent; Data: Pointer);
+    procedure RegOnStatusChange(call: StatusChangeEvent; data: Pointer);
+    procedure RegOnRequest(call: UserRequestCall; data: Pointer);
+    procedure RegOnNewUpdate(call: NewUpdateEvent; data: Pointer);
 
     function UpdateIDGetNewVersion(uid: Integer): String;
     function UpdateIDGetOldVersion(uid: Integer): String;
@@ -131,62 +131,74 @@ begin
   ulist.Clear;
 end;
 
-procedure TAppUpdater.RegOnStatusChange(call: TLiStatusChangeCall; Data: Pointer);
+procedure TAppUpdater.RegOnStatusChange(call: StatusChangeEvent; data: Pointer);
 begin
+  if Assigned(call) then
+    begin
   FStatus := call;
-  statechangeudata := Data;
+  statechange_udata := data;
+    end else
+    perror('Received invalid ´StatusChangeEvent´ pointer!');
 end;
 
-procedure TAppUpdater.RegOnRequest(call: TRequestCall; Data: Pointer);
+procedure TAppUpdater.RegOnRequest(call: UserRequestCall; data: Pointer);
 begin
+  if Assigned(call) then
+    begin
   FReq := call;
-  requestudata := Data;
+  request_udata := data;
+    end else
+    perror('Received invalid ´UserRequestCall´ pointer!');
 end;
 
-procedure TAppUpdater.RegOnNewUpdate(call: TNewUpdateEvent; Data: Pointer);
+procedure TAppUpdater.RegOnNewUpdate(call: NewUpdateEvent; data: Pointer);
 begin
+  if Assigned(call) then
+    begin
   FNewUpd := call;
-  newupdudata := Data;
+  newupd_udata := data;
+    end else
+    perror('Received invalid ´NewUpdateEvent´ pointer!');
 end;
 
 procedure TAppUpdater.Msg(s: String);
 begin
   sdata.msg := PChar(s);
   if Assigned(FStatus) then
-    FStatus(scMessage, sdata, statechangeudata);
+    FStatus(scMessage, sdata, statechange_udata);
 end;
 
 procedure TAppUpdater.StepMsg(s: String);
 begin
   sdata.msg := PChar(s);
   if Assigned(FStatus) then
-    FStatus(scStepMessage, sdata, statechangeudata);
+    FStatus(scStepMessage, sdata, statechange_udata);
 end;
 
 function TAppUpdater.Request(s: String; ty: TRqType): TRqResult;
 begin
   if Assigned(FReq) then
-    Result := FReq(ty, PChar(s), requestudata);
+    Result := FReq(ty, PChar(s), request_udata);
 end;
 
 procedure TAppUpdater.NewUpdate(nm: String; id: Integer);
 begin
   if Assigned(FNewUpd) then
-    FNewUpd(PChar(nm), id, newupdudata);
+    FNewUpd(PChar(nm), id, newupd_udata);
 end;
 
 procedure TAppUpdater.SetMnPos(i: Integer);
 begin
   sdata.mnprogress := i;
   if Assigned(FStatus) then
-    FStatus(scMnprogress, sdata, statechangeudata);
+    FStatus(scMnprogress, sdata, statechange_udata);
 end;
 
 procedure TAppUpdater.SetExPos(i: Integer);
 begin
   sdata.exprogress := i;
   if Assigned(FStatus) then
-    FStatus(scExProgress, sdata, statechangeudata);
+    FStatus(scExProgress, sdata, statechange_udata);
 end;
 
 procedure TAppUpdater.HookSock(Sender: TObject; Reason: THookSocketReason;
@@ -212,7 +224,7 @@ var
 begin
   if ulist.Count > 0 then
   begin
-    p_error('Already searched for new updates. Object has to be cleaned before performing new search!');
+    perror('Already searched for new updates. Execute AppUpdater.Clear() before performing a new search!');
     Result := false;
     exit;
   end;
@@ -305,11 +317,12 @@ begin
             if (sinfo[j][1] = '.') or (sinfo[j][1] = '/') then
             begin
               if sinfo[j + 1] <> MDPrint(
-                (MD5.MD5File(CleanFilePath(DeleteModifiers(SyblToPath(p) + '/' + ExtractFileName(sinfo[j]))),
-                1024))) then
+                (MD5.MD5File(CleanFilePath(DeleteModifiers(SyblToPath(p) +
+                '/' + ExtractFileName(sinfo[j]))), 1024))) then
               begin
-                ui.files.Add(copy(sources[k], 2, length(sources[k])) + CleanFilePath(
-                  '/' + SyblToX(p) + '/' + ExtractFileName(sinfo[j]) + '.xz'));
+                ui.files.Add(copy(sources[k], 2, length(sources[k])) +
+                  CleanFilePath('/' + SyblToX(p) + '/' +
+                  ExtractFileName(sinfo[j]) + '.xz'));
                 ui.files.Add(SyblToPath(
                   CleanFilePath(SyblToPath(p) + '/' + ExtractFileName(sinfo[j]))));
               end;
@@ -348,7 +361,7 @@ begin
   Result := true;
   if (uid > ulist.Count - 1) or (uID < 0) then
   begin
-    p_error('Invalid update ID received. (This may be a bug in the application using libInstaller)');
+    perror('Invalid update ID received. (This may be a bug in the application using libInstaller)');
     Result := false;
   end;
 end;
@@ -380,7 +393,7 @@ begin
     begin
       sdata.lastresult := ty;
       if Assigned(FStatus) then
-        FStatus(scStatus, sdata, statechangeudata);
+        FStatus(scStatus, sdata, statechange_udata);
     end;
   end;
 end;
@@ -482,8 +495,9 @@ begin
       if pos(' <chmod:', files[i + 1]) > 0 then
       begin
         c.CommandLine := FindBinary('chmod') + ' ' + copy(
-          files[i + 1], pos(' <chmod:', files[i + 1]) + 8, 3) + SyblToPath(files[i + 1]) +
-          '/' + ExtractFileName(DeleteModifiers(files[i + 1]));
+          files[i + 1], pos(' <chmod:', files[i + 1]) + 8, 3) +
+          SyblToPath(files[i + 1]) + '/' +
+          ExtractFileName(DeleteModifiers(files[i + 1]));
         c.Execute;
       end
       else

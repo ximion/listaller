@@ -58,10 +58,10 @@ type
   end;
 
   //** Callback for change of status
-  TLiStatusChangeCall = procedure(change: LiStatusChange; Data: TLiStatusData;
+  StatusChangeEvent = procedure(change: LiStatusChange; data: TLiStatusData;
     user_data: Pointer); cdecl;
   //** Callback for user request
-  TRequestCall = function(mtype: TRqType; msg: PChar;
+  UserRequestCall = function(mtype: TRqType; msg: PChar;
     user_data: Pointer): TRqResult; cdecl;
 
   //** Called if progress was changed; only for internal use
@@ -82,13 +82,13 @@ type
     gtUNKNOWN);
 
   //** Listaller package types
-  TPkgType = (ptLinstall, ptDLink, ptContainer, ptUnknown);
+  PkgType = (ptLinstall, ptDLink, ptContainer, ptUnknown);
 
   //** Container for information about apps
   AppInfo = record
     Name: PChar;
     PkName: PChar;
-    PkType: TPkgType;
+    PkType: PkgType;
     ShortDesc: PChar;
     Version: PChar;
     Author: PChar;
@@ -103,13 +103,13 @@ type
   PAppInfo = ^AppInfo;
 
   //** Event to catch thrown application records
-  TAppEvent = function(Name: PChar; obj: PAppInfo): Boolean; cdecl;
+  NewAppEvent = procedure(name: PChar; obj: PAppInfo; user_data: Pointer); cdecl;
 
   //** Shows information about new update
-  TNewUpdateEvent = procedure(Name: PChar; id: Integer; user_data: Pointer); cdecl;
+  NewUpdateEvent = procedure(name: PChar; id: Integer; user_data: Pointer); cdecl;
 
   //** Package signature status
-  TPkgSigState = (psNone, psTrusted, psUntrusted);
+  PkgSignatureState = (psNone, psTrusted, psUntrusted);
 
 
 implementation

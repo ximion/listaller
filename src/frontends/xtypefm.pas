@@ -48,13 +48,13 @@ type
   private
     { private declarations }
     FShow: Boolean;
-    sig: TPkgSigState;
+    sig: PkgSignatureState;
   public
     { public declarations }
     procedure EnterLoadingState;
     procedure LeaveLoadingState;
 
-    procedure SetSigState(sigstate: TPkgSigState);
+    procedure SetSigState(sigstate: PkgSignatureState);
   end;
 
 // Publish procedure so it can be used by igobase
@@ -218,7 +218,7 @@ begin
   Hide;
 end;
 
-procedure TIMdFrm.SetSigState(sigstate: TPkgSigState);
+procedure TIMdFrm.SetSigState(sigstate: PkgSignatureState);
 begin
   FShow := true;
   sig := sigstate;

@@ -37,9 +37,9 @@ constructor Create;
 destructor  Destroy;override;
 
 procedure Initialize(pkname: String);
-procedure SetStatusChangeCall(call: TLiStatusChangeCall;const userdata: Pointer=nil);
-procedure SetUserRequestCall(call: TRequestCall;const userdata: Pointer=nil);
-function  PkType: TPkgType;
+procedure SetStatusChangeEvent(call: StatusChangeEvent;const userdata: Pointer=nil);
+procedure SetUserRequestCall(call: UserRequestCall;const userdata: Pointer=nil);
+function  PkType: PkgType;
 procedure SetTestmode(b: Boolean);
 function  GetDisallows: String;
 function  GetSupDistris: String;
@@ -56,7 +56,7 @@ function  GetDesktopFiles: String;
 function  GetAppCMD: String;
 function  GetFileList: String;
 function  StartInstallation: Boolean;
-function  GetSignatureState: TPkgSigState;
+function  GetSignatureState: PkgSignatureState;
 procedure EnableUSource(b: Boolean);
 procedure SetProfileID(i: Integer);
 procedure SetRootMode(b: Boolean);
@@ -71,7 +71,7 @@ function  li_setup_new: Pointer; cdecl;external libinst;
 procedure li_setup_free(setup: Pointer);external libinst;
 procedure li_setup_set_sumode(setup: Pointer;b: Boolean);cdecl;external libinst;
 function  li_setup_init(setup: Pointer;pkname: PChar): PChar;cdecl;external libinst;
-function  li_setup_get_pkgtype(setup: Pointer): TPkgType;cdecl;external libinst;
+function  li_setup_get_pkgtype(setup: Pointer): PkgType;cdecl;external libinst;
 function  li_setup_get_disallows(setup: Pointer): PChar;cdecl;external libinst;
 function  li_setup_get_supported_distributions(setup: Pointer): PChar; cdecl;external libinst;
 function  li_setup_get_appname(setup: Pointer): PChar;cdecl;external libinst;
@@ -86,13 +86,13 @@ function  li_setup_get_desktopfiles(setup: Pointer): PChar;cdecl;external libins
 function  li_setup_get_app_exec_command(setup: Pointer): PChar;cdecl;external libinst;
 function  li_setup_get_current_profile_filelist(setup: Pointer): PChar;cdecl;external libinst;
 procedure li_setup_enable_usource_registering(setup: Pointer;b: Boolean);cdecl;external libinst;
-function  li_setup_register_status_call(setup: Pointer;call: TLiStatusChangeCall;user_data: Pointer): Boolean;cdecl;external libinst;
-function  li_setup_register_user_request_call(setup: Pointer;call: TRequestCall;user_data: Pointer): Boolean;cdecl;external libinst;
+function  li_setup_register_status_call(setup: Pointer;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;external libinst;
+function  li_setup_register_user_request_call(setup: Pointer;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;external libinst;
 function  li_setup_execute(setup: Pointer): Boolean;cdecl;external libinst;
 procedure li_setup_set_forced(setup: Pointer;str: PChar);cdecl;external libinst;
 function  li_setup_get_dependencies(setup: Pointer; list: PStringList): Boolean;cdecl;external libinst;
 function  li_setup_set_profileid(setup: Pointer;id: Smallint): Boolean;cdecl;external libinst;
-function  li_setup_get_signature_state(setup: Pointer): TPkgSigState;cdecl;external libinst;
+function  li_setup_get_signature_state(setup: Pointer): PkgSignatureState;cdecl;external libinst;
 function  li_get_ipk_app_installed(appname: PChar;appid: PChar;sumode: Boolean): Boolean;cdecl;external libinst;
 procedure li_set_testmode(st: Boolean);cdecl;external libinst;
 procedure li_setup_exec_by_daemon(setup: Pointer;b: Boolean);cdecl;external libinst;
@@ -118,12 +118,12 @@ begin
 li_setup_init(@ins,PChar(pkname))
 end;
 
-procedure TInstallPack.SetStatusChangeCall(call: TLiStatusChangeCall;const userdata: Pointer=nil);
+procedure TInstallPack.SetStatusChangeEvent(call: StatusChangeEvent;const userdata: Pointer=nil);
 begin
 li_setup_register_status_call(@ins,call,userdata)
 end;
 
-function TInstallPack.PkType: TPkgType;
+function TInstallPack.PkType: PkgType;
 begin
 Result:=li_setup_get_pkgtype(@ins);
 end;
@@ -198,7 +198,7 @@ begin
 Result:=li_setup_get_current_profile_filelist(@ins);
 end;
 
-procedure TInstallPack.SetUserRequestCall(call: TRequestCall;const userdata: Pointer=nil);
+procedure TInstallPack.SetUserRequestCall(call: UserRequestCall;const userdata: Pointer=nil);
 begin
 li_setup_register_user_request_call(@ins,call,userdata)
 end;
@@ -234,7 +234,7 @@ ForcedActn:=s;
 li_setup_set_forced(@ins,PChar(s));
 end;
 
-function TInstallPack.GetSignatureState: TPkgSigState;
+function TInstallPack.GetSignatureState: PkgSignatureState;
 begin
  Result:=li_setup_get_signature_state(@ins);
 end;

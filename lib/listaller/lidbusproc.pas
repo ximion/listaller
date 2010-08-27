@@ -103,7 +103,7 @@ begin
   status := prFinished;
   procinfo.changed := pdStatus;
   SyncProcStatus;
-  p_debug('DBus action done.');
+  pdebug('DBus action done.');
   inherited;
 end;
 
@@ -125,7 +125,7 @@ begin
     lbaUpdateApp: DoUpdateAsRoot(cmdinfo.updid);
   end;
   done := true;
-  p_debug('Job done.');
+  pdebug('Job done.');
 end;
 
 procedure TLiDBusAction.SendError(msg: String);
@@ -175,7 +175,7 @@ begin
     exit;
   end;
 
-  p_info('Calling listaller-daemon...');
+  pinfo('Calling listaller-daemon...');
   // create a new method call and check for errors
   dmsg := bus.Connect('org.nlinux.Listaller', // target for the method call
     '/org/nlinux/Listaller/Manager',
@@ -192,10 +192,10 @@ begin
   bus.ReplyMessageAddString(dmsg, obj.Name);
   bus.ReplyMessageAddString(dmsg, obj.UId);
 
-  p_info('Sending AppRemove request...');
+  pinfo('Sending AppRemove request...');
   dmsg := bus.SendReplyAndWait(dmsg);
   if not bus.Failed then
-    p_info('Got reply.');
+    pinfo('Got reply.');
 
   stat := false;
   // read the parameters
@@ -217,7 +217,7 @@ begin
   // free reply
   bus.FreeMessage(dmsg);
 
-  p_debug('Got job ' + jobID);
+  pdebug('Got job ' + jobID);
   //////////////////////////////////////////////////////////////////////
 
   //Now start listening to Listaller dbus signals and forward them to
@@ -288,12 +288,12 @@ begin
   if bus.Failed then
     exit;
 
-  p_info('Calling listaller-daemon...');
+  pinfo('Calling listaller-daemon...');
   dmsg := bus.Connect('org.nlinux.Listaller', '/org/nlinux/Listaller/Installer',
     'org.nlinux.Listaller.Install', 'ExecuteSetup');
   if (dmsg = nil) then
   begin
-    p_error('Message Null');
+    perror('Message Null');
     exit;
   end;
 
@@ -308,7 +308,7 @@ begin
 
   dmsg := bus.SendReplyAndWait(dmsg);
 
-  p_info('InstallPkg request sent');
+  pinfo('InstallPkg request sent');
 
   stat := bus.ReadMessageParamBool(dmsg);
   bus.MessageIterNext;
@@ -411,7 +411,7 @@ begin
     exit;
   end;
 
-  p_info('Calling listaller-daemon...');
+  pinfo('Calling listaller-daemon...');
   // create a new method call and check for errors
   dmsg := bus.Connect('org.nlinux.Listaller', // target for the method call
     '/org/nlinux/Listaller/Manager',
@@ -427,10 +427,10 @@ begin
 
   bus.ReplyMessageAddInt(dmsg, uid);
 
-  p_info('Sending AppUpdate request...');
+  pinfo('Sending AppUpdate request...');
   dmsg := bus.SendReplyAndWait(dmsg);
   if not bus.Failed then
-    p_info('Got reply.');
+    pinfo('Got reply.');
 
   stat := false;
   // read the parameters
@@ -452,7 +452,7 @@ begin
   // free reply
   bus.FreeMessage(dmsg);
 
-  p_debug('Got job ' + jobID);
+  pdebug('Got job ' + jobID);
   //////////////////////////////////////////////////////////////////////
 
   //Now start listening to Listaller dbus signals and forward them to

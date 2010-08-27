@@ -32,11 +32,13 @@ type
   TSoftwareDB = class
   private
     dsApp: TSQLite3Dataset;
-    FNewApp: TAppEvent;
+    FNewApp: NewAppEvent;
     CurrField: TLiDBData;
     AppDataDir: String;
     DepDataDir: String;
     EOF: Boolean;
+    onnewapp_udata: Pointer;
+
     function GetAppField: AppInfo;
     function GetSQLiteVersion: String;
     function DBOkay: Boolean;
@@ -67,6 +69,8 @@ type
       depnames: WideString);
     //** Check if dependency is already present
     function DepExisting(Name, version: String): Boolean;
+    //** Register call to on new app found
+    procedure RegOnNewApp(call: NewAppEvent;user_data: Pointer);
 
 
     property EndReached: Boolean read EOF;
@@ -75,7 +79,7 @@ type
     property AppConfDir: String read AppDataDir;
     property DepConfDir: String read DepDataDir;
     //** Event: Called if new application was found
-    property OnNewApp: TAppEvent read FNewApp write FNewApp;
+    property OnNewApp: NewAppEvent read FNewApp write FNewApp;
   end;
 
 implementation
@@ -83,6 +87,7 @@ implementation
 constructor TSoftwareDB.Create;
 begin
   dsApp := TSQLite3Dataset.Create(nil);
+  onnewapp_udata := nil;
 end;
 
 destructor TSoftwareDB.Destroy;
@@ -96,6 +101,16 @@ end;
 function TSoftwareDB.GetSQLiteVersion: String;
 begin
   Result := dsApp.SqliteVersion;
+end;
+
+procedure TSoftwareDB.RegOnNewApp(call: NewAppEvent;user_data: Pointer);
+begin
+  if Assigned(call) then
+  begin
+   onnewapp_udata := user_data;
+   FNewApp := call;
+  end else
+   perror('Invalid NewAppEvent pointer received!');
 end;
 
 function TSoftwareDB.DBOkay: Boolean;
@@ -173,7 +188,7 @@ begin
       Open;
     end;
   end;
-  p_info(rsDBOpened);
+  pinfo(rsDBOpened);
 end;
 
 function TSoftwareDB.GetApplicationList(blacklist: TStringList = nil): Boolean;
@@ -215,7 +230,7 @@ begin
       entry.IconName := PChar(p + 'icon.png');
 
     if Assigned(FNewApp) then
-      FNewApp(entry.Name, @entry);
+      FNewApp(entry.Name, @entry, nil);
 
     dsApp.Next;
   end;

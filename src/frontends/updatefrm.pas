@@ -133,7 +133,7 @@ procedure OnMNStatus(change: LiStatusChange; Data: TLiStatusData;
 begin
   Application.ProcessMessages;
   case change of
-    scMessage: p_info(Data.msg);
+    scMessage: pinfo(Data.msg);
     scMnProgress: UMnForm.ProgressBar.Position := Data.mnprogress;
   end;
 end;
