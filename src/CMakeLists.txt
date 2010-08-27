@@ -5,6 +5,8 @@ if(LCL_VERSION LESS "929")
  message(FATAL_ERROR "LCL should be at least version 0.9.29!")
 endif()
 
+include(${CMAKE_SOURCE_DIR}/data/cmake_modules/listaller_build_gui.cmake)
+
 add_subdirectory(helper)
 add_subdirectory(cmdtools)
 

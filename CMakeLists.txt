@@ -3,12 +3,6 @@ project(listaller)
 
 cmake_minimum_required(VERSION 2.8.0 FATAL_ERROR)
 
-message("The CMake build system of Listaller is not yet complete.")
-message("Please use it only for testing purposes.")
-message("To compile Listaller, please checkout the ./configure script!")
-message("To use the CMake scripts, comment out this error.")
-message(FATAL_ERROR "UNSTABLE BUILD SYSTEM")
-
 if(COMMAND cmake_policy)
 	cmake_policy(SET CMP0003 NEW)
 endif(COMMAND cmake_policy)
