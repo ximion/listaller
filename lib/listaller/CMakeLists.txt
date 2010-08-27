@@ -68,4 +68,4 @@ set(llistaller_lib_parts ${PROJECT_BINARY_DIR}/${listaller_libname}
 	      ${PROJECT_BINARY_DIR}/${LISTALLER_LIB}.${LIBS_VERSION}
 	      ${PROJECT_BINARY_DIR}/${LISTALLER_LIB})
 
-#install(FILES ${llistaller_lib_parts} DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES ${llistaller_lib_parts} DESTINATION ${CMAKE_INSTALL_LIBDIR})

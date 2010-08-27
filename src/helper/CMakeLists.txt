@@ -27,3 +27,5 @@ add_custom_command(OUTPUT ${listallhelperd_name}
 )
 
 add_custom_target(lihelperd ALL DEPENDS ${listallhelperd_name})
+
+install(FILES ${listallhelperd_name} DESTINATION ${LISTALLER_INSTALL_DIR})

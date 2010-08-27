@@ -19,7 +19,7 @@
 #include "lisetup.h"
 
 #include<QtCore>
-#include<listaller.h>
+#include<listaller>
 
 using namespace Listaller;
 

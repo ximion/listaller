@@ -6,4 +6,7 @@ set(LIBS_VERSION "${LISTALLER_VERSION_MAJOR}.${LISTALLER_VERSION_MINOR}")
 
 add_subdirectory(listaller)
 add_subdirectory(linst-cbind)
-add_subdirectory(listaller-qt)
+
+if (USE_QT)
+  add_subdirectory(listaller-qt)
+endif(USE_QT)

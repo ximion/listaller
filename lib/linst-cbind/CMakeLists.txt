@@ -5,7 +5,7 @@ set(llistaller_c_HEADERS
     li-manager.h
     li-types.h
     li-updater.h
-    listaller.h
+    listaller
 )
 
 install(FILES ${llistaller_c_HEADERS} DESTINATION include/listaller COMPONENT headers)

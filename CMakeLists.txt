@@ -1,3 +1,4 @@
+#CMakeLists for the Listaller Project
 project(listaller)
 
 cmake_minimum_required(VERSION 2.8.0 FATAL_ERROR)
@@ -53,17 +54,25 @@ if(NOT ${CMAKE_SOURCE_DIR}/build MATCHES ${CMAKE_BINARY_DIR})
       message(FATAL_ERROR "Not in /build!")
 endif()
 
+########################################
+OPTION(USE_QT "Build Listaller's Qt4 modules" OFF)
+OPTION(USE_GTK "Build Listaller's GTK2 modules" OFF)
+OPTION(BUILD_CREATOR "Build the liCreator application" OFF)
+########################################
+
 add_definitions(-DCMAKE_INSTALL_PREFIX="\\\"${CMAKE_INSTALL_PREFIX}\\\"")
 add_definitions(-DCMAKE_INSTALL_LIBDIR="\\\"${CMAKE_INSTALL_LIBDIR}\\\"")
 
+set(CMAKE_INSTALL_LIBDIR lib CACHE PATH "Output directory for libraries")
+set(LISTALLER_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/listaller)
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/data/cmake_modules/)
 
-CONFIGURE_FILE(
-  "${CMAKE_MODULE_PATH}/cmake_uninstall.cmake.in"
+configure_file("${CMAKE_MODULE_PATH}/cmake_uninstall.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
   IMMEDIATE @ONLY)
   
-ADD_CUSTOM_TARGET(uninstall
+add_custom_target(uninstall
   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
 find_package(PkgConfig REQUIRED)

@@ -44,7 +44,6 @@ if(NOT LIBS_FULL_VERSION)
 endif()
 
 set_target_properties(listaller-qt PROPERTIES VERSION ${LIBS_FULL_VERSION} SOVERSION ${LIBS_VERSION})
-set(CMAKE_INSTALL_LIBDIR lib CACHE PATH "Output directory for libraries")
 
 target_link_libraries(listaller-qt
     ${KDE4_KDEUI_LIBS}
