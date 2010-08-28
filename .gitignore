@@ -4,7 +4,6 @@
 *.bak
 *.manifest
 *.lrs
-*.res
 *.or
 *.o
 *.so
