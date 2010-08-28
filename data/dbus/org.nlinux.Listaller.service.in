@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=org.nlinux.Listaller
+Exec=@LISTALLER_INSTALL_DIR@/listallhelperd
+User=root

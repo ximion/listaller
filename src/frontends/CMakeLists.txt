@@ -30,7 +30,7 @@ set(liupdate_base_sources
 ###
 
 ##########> Build GTK+ <##########
-if(USE_GTK)
+if(GTK)
 ## Listallgo
 li_set_build_project(${listallgo_project} gtk)
 
@@ -65,14 +65,19 @@ add_custom_target(frontendsGTK2 ALL DEPENDS ${listallgo_gtk_OUT}
   install(PROGRAMS ${listallgo_gtk_OUT}
 		   ${listallmgr_gtk_OUT}
 		   ${liupdate_gtk_OUT}
-		   DESTINATION ${LISTALLER_INSTALL_DIR}/gtk2)
-  install(PROGRAMS ${CMAKE_BINARY_DIR}/${listallmgr_project}-gtk DESTINATION bin)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/listaller-manager-gnome.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+		   DESTINATION ${LISTALLER_INSTALL_DIR}/gtk2
+		   COMPONENT frontends)
+  install(PROGRAMS ${CMAKE_BINARY_DIR}/${listallmgr_project}-gtk
+	  DESTINATION bin
+	  COMPONENT frontends)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/listaller-manager-gnome.desktop
+	  DESTINATION ${XDG_APPS_INSTALL_DIR}
+	  COMPONENT frontends)
 
-endif(USE_GTK)
+endif(GTK)
 
 ##########> Build Qt <##########
-if(USE_QT)
+if(QT)
 find_package(Qt4Pas REQUIRED)
 
 ## Listallgo
@@ -109,8 +114,13 @@ add_custom_target(frontendsQt4 ALL DEPENDS ${listallgo_qt_OUT}
   install(PROGRAMS ${listallgo_qt_OUT}
 		   ${listallmgr_qt_OUT}
 		   ${liupdate_qt_OUT}
-		   DESTINATION ${LISTALLER_INSTALL_DIR}/qt4)
-  install(PROGRAMS ${CMAKE_BINARY_DIR}/${listallmgr_project}-qt DESTINATION bin)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/listaller-manager-kde.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+		   DESTINATION ${LISTALLER_INSTALL_DIR}/qt4
+		   COMPONENT frontends)
+  install(PROGRAMS ${CMAKE_BINARY_DIR}/${listallmgr_project}-qt
+	  DESTINATION bin
+	  COMPONENT frontends)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/listaller-manager-kde.desktop
+	  DESTINATION ${XDG_APPS_INSTALL_DIR}
+	  COMPONENT frontends)
  
-endif(USE_QT)
+endif(QT)

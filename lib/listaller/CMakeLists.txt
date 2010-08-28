@@ -1,10 +1,10 @@
-#CMakeLists for libListaller build
+# CMakeLists for libListaller build
 
 find_package(FPC)
 find_package(GLIB2 REQUIRED)
 find_package(SQLite3 REQUIRED)
-pkg_check_modules(DBus REQUIRED dbus-1)
-pkg_check_modules(PolKitGObject REQUIRED polkit-gobject-1>=0.90)
+find_package(DBus REQUIRED)
+find_package(PolKit REQUIRED)
 pkg_check_modules(PackageKitGLib2 REQUIRED packagekit-glib2>=0.6)
 
 set(llistaller_project liblistaller.lpr)

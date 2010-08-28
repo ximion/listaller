@@ -2,8 +2,8 @@
 
 find_package(Lazbuild REQUIRED)
 find_package(GLIB2 REQUIRED)
-pkg_check_modules(DBus REQUIRED dbus-1)
-pkg_check_modules(PolKitGObject REQUIRED polkit-gobject-1>=0.90)
+find_package(DBus REQUIRED)
+find_package(PolKit REQUIRED)
 
 if(LCL_VERSION LESS "929")
  message(FATAL_ERROR "LCL should be at least version 0.9.29!")
@@ -26,6 +26,6 @@ add_custom_command(OUTPUT ${listallhelperd_name}
 	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_custom_target(lihelperd ALL DEPENDS ${listallhelperd_name})
+add_custom_target(liHelperD ALL DEPENDS ${listallhelperd_name})
 
 install(PROGRAMS ${listallhelperd_name} DESTINATION ${LISTALLER_INSTALL_DIR})

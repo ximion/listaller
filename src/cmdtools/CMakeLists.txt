@@ -20,6 +20,6 @@ add_custom_command(OUTPUT ${libuild_name}
 	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_custom_target(cmdtools ALL DEPENDS ${lipa_name} ${libuild_name})
+add_custom_target(cmdTools ALL DEPENDS ${lipa_name} ${libuild_name})
 
-install(PROGRAMS ${lipa_name} ${libuild_name} DESTINATION bin)
+install(PROGRAMS ${lipa_name} ${libuild_name} DESTINATION bin COMPONENT tools)
