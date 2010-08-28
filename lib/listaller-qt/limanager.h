@@ -30,7 +30,7 @@ struct AppData
 {
   QString name;
   QString pkName;
-  TPkgType PkType;
+  PkgType PkType;
   QString shortDesc;
   QString version;
   QString author;
@@ -67,6 +67,7 @@ signals:
 
 private slots:
     void emitStatusMessage(QString s) {emit(statusMessage(s));};
+    void emitNewApp(AppData app) {emit(newApp(app));};
     
 private:
     void* mgr;

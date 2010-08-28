@@ -20,6 +20,7 @@
 #define LIMSGREDIRECT_H
 
 #include<QtCore>
+#include<listaller>
 
 namespace Listaller {
 
@@ -35,9 +36,11 @@ class LiMsgRedirect : public QObject
   
 public:
   void sendStatusMessage(QString s){ emit(statusMessage(s)); }
+  void sendNewApp(AppInfo app){ emit(newApp(app)); }
   
 signals:
   void statusMessage(QString s);
+  void newApp(AppInfo app);
   
 };
 

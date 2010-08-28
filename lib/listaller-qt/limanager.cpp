@@ -26,9 +26,14 @@ using namespace Listaller;
 
 
 /* Listaller Callbacks */
-void manager_status_change_cb(LiStatusChange change, TLiStatusData Data, LiMsgRedirect *msg)
+void manager_status_change_cb(LiStatusChange change, TLiStatusData data, LiMsgRedirect *msg)
 {
-  msg->sendStatusMessage(QString(Data.msg));
+  msg->sendStatusMessage(QString(data.msg));
+}
+
+void manager_new_app_cb(char *name,AppInfo obj,LiMsgRedirect *msg)
+{
+  msg->sendNewApp(obj);
 }
 
 /* AppManager Class */
@@ -38,9 +43,12 @@ AppManager::AppManager()
   
   msgRedir = new LiMsgRedirect();
   connect(msgRedir, SIGNAL(statusMessage(QString)), this, SLOT(emitStatusMessage(QString)));
+  connect(msgRedir, SIGNAL(newApp(AppData)), this, SLOT(emitNewApp(AppData)));
   
   //Catch status messages
-  li_mgr_register_status_call(mgr, TLiStatusChangeCall(manager_status_change_cb), msgRedir);
+  li_mgr_register_status_call(mgr, StatusChangeEvent(manager_status_change_cb), msgRedir);
+  //Catch new apps
+  li_mgr_register_app_call(mgr, NewAppEvent(manager_new_app_cb), msgRedir);
   
   li_mgr_set_sumode(mgr, false);
 }

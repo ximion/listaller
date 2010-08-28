@@ -11,6 +11,7 @@ if [ -e $GEN ]; then
  $GEN --pastoc -i $PASBINDDIR/liinstaller.pas -o $OUT/li-installer.h --template=$OUT/cheader.template
  $GEN --pastoc -i $PASBINDDIR/liappupdate.pas -o $OUT/li-updater.h --template=$OUT/cheader.template
  $GEN --pastoc -i ../src/litypes.pas -o $OUT/li-types.h --template=$OUT/cheader.template
+ cp -u $OUT/li-types.h ./listaller-qt/
 else
  echo "BindingTool was not found!"
  exit 1

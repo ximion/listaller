@@ -100,6 +100,9 @@ implementation
 constructor TAppManager.Create;
 begin
   inherited Create;
+  FApp := nil;
+  FStatus := nil;
+  FReq := nil;
 end;
 
 destructor TAppManager.Destroy;

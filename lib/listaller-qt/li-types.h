@@ -25,9 +25,7 @@
 #include<stdio.h>
 #include<iostream>
 
-extern "C"
-{
-  
+
 typedef enum {
       rqError,
       rqWarning,
@@ -95,13 +93,13 @@ typedef enum {
       ptDLink,
       ptContainer,
       ptUnknown
-} TPkgType;
+} PkgType;
 
 struct AppInfo
 {
       char *Name;
       char *PkName;
-      TPkgType PkType;
+      PkgType PkType;
       char *ShortDesc;
       char *Version;
       char *Author;
@@ -117,19 +115,19 @@ typedef enum {
       psNone,
       psTrusted,
       psUntrusted
-} TPkgSigState;
+} PkgSignatureState;
 
 
-typedef void (*TLiStatusChangeCall) (LiStatusChange change,TLiStatusData Data,void* user_data);
+typedef void (*StatusChangeEvent) (LiStatusChange change,TLiStatusData data,void* user_data);
 
-typedef TRqResult (*TRequestCall) (TRqType mtype,char *msg,void* user_data);
+typedef TRqResult (*UserRequestCall) (TRqType mtype,char *msg,void* user_data);
 
 typedef void (*TProgressEvent) (int pos,void* user_data);
 
-typedef bool (*TAppEvent) (char *Name,AppInfo obj);
+typedef void (*NewAppEvent) (char *name,AppInfo obj,void* user_data);
 
-typedef void (*TNewUpdateEvent) (char *Name,int id,void* user_data);
+typedef void (*NewUpdateEvent) (char *name,int id,void* user_data);
 
-};
+
 
 #endif /* __LI_TYPES */
