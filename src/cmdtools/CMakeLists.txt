@@ -1,4 +1,4 @@
-#CMakeLists for Listaller Lipa & Libuild
+# CMakeLists for Listaller Lipa & Libuild
 
 set(lipa_project lipa.lpr)
 set(libuild_project libuild.lpr)
@@ -22,5 +22,4 @@ add_custom_command(OUTPUT ${libuild_name}
 
 add_custom_target(cmdtools ALL DEPENDS ${lipa_name} ${libuild_name})
 
-install(FILES ${lipa_name} DESTINATION bin)
-install(FILES ${libuild_name} DESTINATION bin)
+install(PROGRAMS ${lipa_name} ${libuild_name} DESTINATION bin)

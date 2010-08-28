@@ -1,5 +1,5 @@
 
-macro(li_set_build_project project_name project_bin widget)
+macro(li_set_build_project project_bin widget)
   if(${widget} MATCHES qt)
     set(ligui_build_args_gtk "-B" "--ws=qt")
     set(widget_f qt4)
@@ -15,13 +15,13 @@ macro(li_set_build_project project_name project_bin widget)
   set(${project_bin}_${widget}_OUT "${CMAKE_BINARY_DIR}/${widget_f}/${project_bin}")
   add_custom_command(OUTPUT ${${project_bin}_${widget}_OUT}
 	  COMMAND ${LAZBUILD_EXE}
-	  ARGS ${ligui_build_args_gtk} ${project_name}
+	  ARGS ${ligui_build_args_gtk} "${project_bin}.lpr"
 	  
 	  COMMAND ${CMAKE_COMMAND}
 	  ARGS -E rename ${CMAKE_BINARY_DIR}/${project_bin} ${CMAKE_BINARY_DIR}/${widget_f}/${project_bin}
 	  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
               
-	  MAIN_DEPENDENCY ${project_name}
+	  MAIN_DEPENDENCY "${CMAKE_CURRENT_SOURCE_DIR}/${project_bin}.lpr"
 	  DEPENDS ${${project_bin}_base_sources}
   )
 endmacro(li_set_build_project)

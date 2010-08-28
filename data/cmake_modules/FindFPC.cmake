@@ -9,14 +9,9 @@
 #  PASCAL_TARGET_OS      - Get FPC's current target os
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
-#
-
 # Copyright (c) 2010, Matthias Klumpp <matthias@nlinux.org>
-#  and others.
+# and others.
 #
-# Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 if (PASCAL_TARGET_ARCH AND PASCAL_COMPILER_FLAGS AND PASCAL_TARGET_ARCH AND PASCAL_TARGET_OS)
 else()
@@ -24,6 +19,7 @@ else()
 set(fpc_tryexe fpc)
 
 find_program(fpc_executable ${fpc_tryexe})
+mark_as_advanced(fpc_executable)
 
 if(fpc_executable)
 	 exec_program(${fpc_executable} ARGS "-h" OUTPUT_VARIABLE fpc_output)
@@ -78,17 +74,20 @@ exec_program(${fpc_executable}
 	ARGS -iSP
 	OUTPUT_VARIABLE PASCAL_TARGET_ARCH
 )
+set(PASCAL_TARGET_ARCH ${PASCAL_TARGET_ARCH} CACHE INTERNAL "Target architecture")
 exec_program(${fpc_executable}
 	ARGS -iSO
 	OUTPUT_VARIABLE PASCAL_TARGET_OS
 )
+set(PASCAL_TARGET_OS ${PASCAL_TARGET_OS} CACHE INTERNAL "Target OS")
 
 if (NOT (PASCAL_TARGET_OS OR PASCAL_TARGET_ARCH))
  message(FATAL_ERROR "Error while fetching FPC environment options!")
 endif()
 
-set(PASCAL_COMPILER ${fpc_executable})
+set(PASCAL_COMPILER ${fpc_executable} CACHE INTERNAL "FPC executable")
 set(PASCAL_COMPILER_FLAGS "-MObjFPC" "-Scghi" "-O1" "-gl" "-XX" "-vewnhi" "-l"
-			  ${noexecstack_flags} ${pascal_compiler_flags_cmn})	
+			  ${noexecstack_flags} ${pascal_compiler_flags_cmn} CACHE STRING "Standard FPC compiler flags"
+   )
 			  
 endif()

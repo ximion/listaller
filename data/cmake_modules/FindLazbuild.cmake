@@ -5,14 +5,8 @@
 #  LCL_VERSION  - Active version of the LCL
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
-#
-
 # Copyright (c) 2010, Matthias Klumpp <matthias@nlinux.org>
-#  and others.
 #
-# Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 if (LAZBUILD_EXE AND LCL_VERSION)
 else()

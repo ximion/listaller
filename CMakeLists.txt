@@ -1,4 +1,4 @@
-#CMakeLists for the Listaller Project
+# CMakeLists for the Listaller Project
 project(listaller)
 
 cmake_minimum_required(VERSION 2.8.0 FATAL_ERROR)
@@ -7,9 +7,10 @@ if(COMMAND cmake_policy)
 	cmake_policy(SET CMP0003 NEW)
 endif(COMMAND cmake_policy)
 
-set(VERSION_SUFFIX "-dev") #UNSET THIS VARIABLE AT RELEASE TIME
+#UNSET THIS VARIABLE AT RELEASE TIME
+set(VERSION_SUFFIX "-dev")
 
-#detect vcs revision (if present)
+# Detect Git revision (if present)
 if(VERSION_SUFFIX MATCHES "-dev")
 	if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
 		find_package(Git)
@@ -20,8 +21,8 @@ if(VERSION_SUFFIX MATCHES "-dev")
 		  if(check_fail)
 		   message(STATUS "Could not fetch current Git revision: ${check_fail}")
 		  else()
-		   message(STATUS "Builing revision: ${project_revision}")
-		   set(VERSION_SUFFIX "-dev:${project_revision}")
+		   message(STATUS "Found Git revision: ${project_revision}")
+		   set(VERSION_SUFFIX "${VERSIOn_SUFFIX}:${project_revision}")
 		  endif(check_fail)
 		endif(GIT_EXECUTABLE)
 	endif()
@@ -37,7 +38,7 @@ set(CPACK_PACKAGE_VERSION_MINOR "${LISTALLER_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "${LISTALLER_VERSION_PATCH}${VERSION_SUFFIX}")
 set(LISTALLER_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 
-#forbid in-tree building & force "build" directory name
+# Forbid in-tree building & force "build" directory name
 if(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
       message(STATUS "Please do an out-of-tree build:")
       message(STATUS "rm -f CMakeCache.txt && mkdir build && cd build; cmake .. && make")
@@ -54,6 +55,13 @@ OPTION(USE_GTK "Build Listaller's GTK2 modules" OFF)
 OPTION(BUILD_CREATOR "Build the liCreator application" OFF)
 ########################################
 
+IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  SET(CMAKE_INSTALL_PREFIX
+    "/usr" CACHE PATH "Listaller default install prefix" FORCE)
+ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+
+set(XDG_APPS_INSTALL_DIR share/applications)
+
 add_definitions(-DCMAKE_INSTALL_PREFIX="\\\"${CMAKE_INSTALL_PREFIX}\\\"")
 add_definitions(-DCMAKE_INSTALL_LIBDIR="\\\"${CMAKE_INSTALL_LIBDIR}\\\"")
 
@@ -69,17 +77,11 @@ configure_file("${CMAKE_MODULE_PATH}/cmake_uninstall.cmake.in"
 add_custom_target(uninstall
   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
+message(STATUS "Compiling Listaller version ${LISTALLER_VERSION}")
+
 find_package(PkgConfig REQUIRED)
 find_package(UnixCommands REQUIRED)
 find_package(Gettext REQUIRED)
-find_library(QT4PAS_LIB NAMES Qt4Pas PATH /usr/lib /usr/local/lib /usr/lib64)
-if(QT4PAS_LIB)
-    message(STATUS "Found Qt4Pas: ${QT4PAS_LIB}")
-else(QT4PAS_LIB)
-    message(FATAL_ERROR "Could not find Qt4Pas")
-endif(QT4PAS_LIB)
-
-message(STATUS "Compiling Listaller version ${LISTALLER_VERSION}")
  
 find_package(FPC REQUIRED)
 

@@ -1,19 +1,19 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=Listaller Creator (Qt)
-Name[de]=Listaller Creator (Qt)
+Name=Listaller Creator (@CURRENT_WS@)
+Name[de]=Listaller Creator (@CURRENT_WS@)
 Categories=Development;Building;
 Comment=GUI wizard to create setup packages
 Comment[de]=GUI Assistent zum Erstellen von Installationspaketen
-Exec=licreator-qt
+Exec=@licreator_current_exec@
 GenericName=Create setup package
 GenericName[de]=Setup Paket erstellen
-Icon=/opt/appfiles/liCreator/listaller_creator-qt.png
+Icon=listaller_creator
 MimeType=application/ips-script;
 StartupNotify=true
 Terminal=false
-X-AppVersion=0.4.0
+X-AppVersion=@LISTALLER_VERSION@
 X-DCOP-ServiceType=none
 X-KDE-SubstituteUID=false
 X-Publisher=Listaller Project

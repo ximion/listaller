@@ -1,4 +1,4 @@
-#CMakeLists for Listaller Helper Daemon build
+# CMakeLists for Listaller Helper Daemon build
 
 find_package(Lazbuild REQUIRED)
 find_package(GLIB2 REQUIRED)
@@ -28,4 +28,4 @@ add_custom_command(OUTPUT ${listallhelperd_name}
 
 add_custom_target(lihelperd ALL DEPENDS ${listallhelperd_name})
 
-install(FILES ${listallhelperd_name} DESTINATION ${LISTALLER_INSTALL_DIR})
+install(PROGRAMS ${listallhelperd_name} DESTINATION ${LISTALLER_INSTALL_DIR})
