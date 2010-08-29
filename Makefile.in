@@ -9,8 +9,7 @@ clean:
 	$(MAKE) -C ./build clean
 
 distclean:
-	$(MAKE) -C ./build distclean
-	rm -rf ./build
+	$(MAKE) -C ./build clean
 	bash ./tools/scripts/treeclean.sh
 
 uninstall:

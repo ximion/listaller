@@ -13,6 +13,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
+#NOTE: Polkit agent library is disabled!
+
 if (POLKIT_INCLUDE_DIR AND POLKIT_LIB)
     set(POLKIT_FIND_QUIETLY TRUE)
 endif (POLKIT_INCLUDE_DIR AND POLKIT_LIB)
@@ -22,7 +24,7 @@ if (NOT WIN32)
    # in the FIND_PATH() and FIND_LIBRARY() calls
    find_package(PkgConfig)
    pkg_check_modules(PC_POLKIT polkit-gobject-1)
-   pkg_check_modules(PC_POLKIT_AGENT polkit-agent-1)
+   #pkg_check_modules(PC_POLKIT_AGENT polkit-agent-1)
    set(POLKIT_DEFINITIONS ${PC_POLKIT_CFLAGS_OTHER})
 endif (NOT WIN32)
 
@@ -67,8 +69,10 @@ include(FindPackageHandleStandardArgs)
 
 # handle the QUIETLY and REQUIRED arguments and set POLKIT_FOUND to TRUE if
 # all listed variables are TRUE
-find_package_handle_standard_args(Polkit DEFAULT_MSG POLKIT_LIBRARIES POLKIT_AGENT_LIBRARY
-                                                     POLKIT_INCLUDE_DIR POLKIT_AGENT_INCLUDE_DIR GLIB2_FOUND)
+#find_package_handle_standard_args(Polkit DEFAULT_MSG POLKIT_LIBRARIES POLKIT_AGENT_LIBRARY
+#                                                     POLKIT_INCLUDE_DIR POLKIT_AGENT_INCLUDE_DIR GLIB2_FOUND)
+find_package_handle_standard_args(Polkit DEFAULT_MSG POLKIT_LIBRARIES
+                                                     POLKIT_INCLUDE_DIR GLIB2_FOUND)
 
 mark_as_advanced(POLKIT_INCLUDE_DIRS POLKIT_AGENT_INCLUDE_DIRS POLKIT_LIBRARIES POLKIT_AGENT_LIBRARY GLIB_INCLUDE_DIR)
 
