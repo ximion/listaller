@@ -1,35 +1,17 @@
 # Makefile for Listaller 0.5
 all:
-	$(MAKE) -C ./src all
-	%LiCreator%$(MAKE) -C ./src/licreator all
+	$(MAKE) -C ./build all
 
 install:
-	$(MAKE) -C ./src install
-	%LiCreator%$(MAKE) -C ./src/licreator install
-
-install-binonly:
-	$(MAKE) -C ./src install-binonly
-
-install-data:
-	$(MAKE) -C ./src install-data
-
-install-tools:
-	$(MAKE) -C ./src install-tools
-
-install-front:
-	$(MAKE) -C ./src install-front
-
-srcdoc:
-	$(MAKE) -C ./src srcdoc
+	$(MAKE) -C ./build install
 
 clean:
-	$(MAKE) -C ./src clean
+	$(MAKE) -C ./build clean
 
 distclean:
-	$(MAKE) clean-reset
-
-clean-reset:
-	$(MAKE) -C ./src clean ALL=1
+	$(MAKE) -C ./build distclean
+	rm -rf ./build
+	bash ./tools/scripts/treeclean.sh
 
 uninstall:
-	$(MAKE) -C ./src uninstall
+	$(MAKE) -C ./build uninstall

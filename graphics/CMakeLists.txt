@@ -14,8 +14,10 @@ install(FILES
 	libutton/lastblock.png
 	DESTINATION share/listaller/graphics/libutton/
 )
-
-cp -dpr ./graphics/libutton/distro/ $DESTDIR$prefix/share/listaller/graphics/libutton/distro/
+install(DIRECTORY libutton/distro
+	DESTINATION share/listaller/graphics/libutton/distro/
+	FILES_MATCHING PATTERN "*.png"
+)
 
 # Frontend graphics	
 if(FRONTENDS)

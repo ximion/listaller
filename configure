@@ -5,7 +5,7 @@
 # syntax :
 #    ./configure <options> [parameters]
 set -e
-OPTION_SPEC="help,enable-qt,enable-creator,enable-gtk,enable-all,disable-dev,prefix:,libdir:"
+OPTION_SPEC="help,enable-qt,enable-creator,enable-gtk,enable-frontends,enable-all,cmake-options:"
 PARSED_OPTIONS=$(getopt -n "$0" -a -o h --l "$OPTION_SPEC" -- "$@")
 
 eval set -- "$PARSED_OPTIONS"
@@ -19,23 +19,17 @@ function usage
 
 if [ $? != 0 ] ; then usage ; exit 1 ; fi
 
-INSTALL_DEV_FILES=1
-
 while true ; do
 	case "$1" in
 		-h|--help )  usage; exit 0;;
 		--enable-qt )  ENABLE_QT=1; shift; ;;
 		--enable-gtk )  ENABLE_GTK=1; shift; ;;
 		--enable-creator )  ENABLE_CREATOR=1; shift; ;;
-		--enable-all ) ENABLE_QT=1; ENABLE_GTK=1; ENABLE_CREATOR=1; shift; ;;
-		--disable-dev )  INSTALL_DEV_FILES=0; shift; ;;
-		--libdir ) case "$2" in
-			    "") echo "The libdir option needs an argument!"; exit 3 ;;
-			     *) export libtarget=$2 ; shift 2 ;;
-			   esac ;;
-		--prefix ) case "$2" in
-			    "") echo "The prefix option needs an argument!"; exit 3 ;;
-			     *) export prefix=$2 ; shift 2 ;;
+		--enable-frontends )  ENABLE_FRONT=1; shift; ;;
+		--enable-all ) ENABLE_QT=1; ENABLE_GTK=1; ENABLE_CREATOR=1; ENABLE_FRONT=1; shift; ;;
+		--cmake-options ) case "$2" in
+			    "") echo "CMake-Options need an argument!"; exit 3 ;;
+			     *) export cmakeoptn=$2 ; shift 2 ;;
 			   esac ;;
 
 		--) shift ; break ;;
@@ -43,192 +37,64 @@ while true ; do
 	esac
 done
 
-#if [ -e "Makefile" ]; then
-#  echo "Cleaning up..."
-#  make clean
-#fi
-
-echo
-echo "=== Configuring Listaller ==="
-echo
-
-libdirs=". \
-	/usr/lib \
-	/usr/local/lib \
-	/lib/ \
-	/usr/lib64
-	/usr/local/lib64
-	/lib64"
-
-dirs=". \
-      ./src \
-      ./src/licreator"
-
-basedir=$(pwd)
-
-GLIBNAME="libglib-2.0.so"
-QT4INTFNAME="libQt4Pas.so"
-QT4CORENAME="libqt4core.so"
-SQLITENAME="libsqlite3.so"
-PACKAGEKITNAME="libpackagekit-glib2.so"
-DBUSNAME="libdbus-1.so"
-POLKITNAME="libpolkit-gobject-1.so"
-GTKLIBNAME="libgtk-x11-2.0.so"
-
-FOUND_GLIB="no"
-FOUND_QTINTF="no"
-FOUND_GTK="no"
-FOUND_SQLITE="no"
-FOUND_PKIT="no"
-FOUND_DBUS="no"
-FOUND_POLKIT="no"
-
-echo "Checking component requirements..."
-echo
-
-if [ ! -e "$(pwd)/src/Makefile.in" ]; then
+if [ ! -e "$(pwd)/Makefile.in" ]; then
   echo "Makefile template was not found."
   echo "Please cd to the Listaller source directory."
   exit 8
 fi
 
-for dir in $libdirs 
-do
-   if [ -d $dir ] ;then
-    cd $dir
-     [ -e $GLIBNAME ] && FOUND_GLIB="yes"
-     [ -e $QT4INTFNAME ] && FOUND_QTINTF="yes"
-     [ -e $GTKLIBNAME ] && FOUND_GTK="yes"
-     [ -e $SQLITENAME ] && FOUND_SQLITE="yes"
-     [ -e $PACKAGEKITNAME ] && FOUND_PKIT="yes"
-     [ -e $DBUSNAME ] && FOUND_DBUS="yes"
-     [ -e $POLKITNAME ] && FOUND_POLKIT="yes"
-    cd $basedir
-   fi
-done
-
-INSTDEV="Please install the development files."
-
-echo "Found GLib-2... $FOUND_GLIB"
-if [ "$FOUND_GLIB" = "no" ]; then
-  echo " GLib was not found. $INSTDEV"
-  exit 8
-fi
-if [ "$ENABLE_QT" == "1" ]; then
-  echo "Found Qt4 interface... $FOUND_QTINTF"
-  if [ "$FOUND_QTINTF" = "no" ]; then
-    echo " Qt4 Pascal interface was not found. $INSTDEV"
-    exit 8
-  fi
-fi
-if [ "$ENABLE_GTK" == "1" ]; then
-  echo "Found GTK+... $FOUND_QTINTF"
-  if [ "$FOUND_GTK" = "no" ]; then
-    echo " GTK2 was not found. $INSTDEV"
-    exit 8
-  fi
-fi
-echo "Found SQLite3... $FOUND_SQLITE"
-if [ "$FOUND_SQLITE" = "no" ]; then
-  echo " SQLite 3 was not found. $INSTDEV"
-  exit 8
-fi
-echo "Found PackageKit... $FOUND_PKIT"
-if [ "$FOUND_PKIT" = "no" ]; then
-  echo " PackageKit was not found. $INSTDEV"
-  exit 8
-fi
-echo "Found DBus... $FOUND_DBUS"
-if [ "$FOUND_DBUS" = "no" ]; then
-  echo " DBus was not found. $INSTDEV"
-  exit 8
-fi
-echo "Found PolicyKit... $FOUND_POLKIT"
-if [ "$FOUND_POLKIT" = "no" ]; then
-  echo " PolicyKit was not found. $INSTDEV"
-  exit 8
-fi
-echo "Looking for working FPC..."
-FPCP=$(which fpc)
-if ([ -e $FPCP ]&&[ "$FPCP" != '' ]); then
-  echo " FPC version: $(fpc -iW)"
-else
-  echo " FPC was not found. Please install the compiler."
+CMAKE=$(which cmake)
+if ([ ! -e $CMAKE ]||[ "$CMAKE" == '' ]); then
+  echo "CMake was not found! Please install cmake."
   exit 8
 fi
 
-echo "Searching LazBuild..."
-LZBP=$(which lazbuild)
-if ([ -e $LZBP ]&&[ "$LZBP" != '' ]); then
-  echo " Found LazBuild version: $(lazbuild --version)"
-else
-  echo " LazBuild was not found. Have you installed the Lazarus-IDE?"
-  exit 8
-fi
-echo
+sed "s#%PREFIX%#$prefix#" Makefile.in > Makefile
 
-# Install directory
-if [ -z "$prefix" ]; then
-   export prefix=/usr
+CMAKE_OPTIONS=$cmakeoptn
+if [ "$ENABLE_QT" = "1" ]; then
+ CMAKE_OPTIONS="$CMAKE_OPTIONS -DQT=ON"
 fi
-# Library target
-if [ -z "$libtarget" ]; then
-   export libtarget="$prefix/lib"
+if [ "$ENABLE_GTK" = "1" ]; then
+ CMAKE_OPTIONS="$CMAKE_OPTIONS -DGTK=ON"
+fi
+if [ "$ENABLE_FRONT" = "1" ]; then
+ CMAKE_OPTIONS="$CMAKE_OPTIONS -DFRONTENDS=ON"
+fi
+if [ "$ENABLE_CREATOR" = "1" ]; then
+ CMAKE_OPTIONS="$CMAKE_OPTIONS -DCREATOR=ON"
 fi
 
-for dir in $dirs 
-do
-   echo "Create $dir/Makefile" 
-   cd $dir
-   sed "s#%PREFIX%#$prefix#" Makefile.in > Makefile
-   libtarget=${libtarget//"\""/"\\\""}
-   sed -i "s#%LIBDIR%#${libtarget}#g" Makefile
-   if [ "$INSTALL_DEV_FILES" = "1" ]; then
-    sed -i 's/%DEV%//g' Makefile
-   else
-    sed -i 's/%DEV%/#/g' Makefile
-   fi
-   if [ "$ENABLE_QT" = "1" ]; then
-    sed -i 's/%Qt%//g' Makefile
-   else
-    sed -i 's/%Qt%/#/g' Makefile
-   fi
-   if [ "$ENABLE_GTK" = "1" ]; then
-    sed -i 's/%GTK+%//g' Makefile
-   else
-    sed -i 's/%GTK+%/#/g' Makefile
-   fi
-   if [ "$ENABLE_CREATOR" = "1" ]; then
-    sed -i 's/%LiCreator%//g' Makefile
-   else
-    sed -i 's/%LiCreator%/#/g' Makefile
-   fi
-   rc=$?
-   cd $basedir
-   if [[ $rc -ne 0 ]]; then 
-      exit $rc
-   fi
-done
+mkdir -p build
+cd build
+cmake $CMAKE_OPTIONS ..
+cd ..
 
 echo
 echo "Summary:"
-echo " Installing into $prefix"
-echo " Libraries go to $libtarget"
 echo
 echo "Listaller will be built with the following features:"
-echo " Daemon and library:  enabled"
-echo " Command-Line tools:  enabled"
+echo " Daemon and library: enabled"
+echo " Command-Line tools: enabled"
 if [ "$ENABLE_QT" = "1" ]; then
- echo " Qt4 frontend:        enabled"
-else echo " Qt4 frontend:        disabled"
+ echo " Qt4 widgetset:      enabled"
+else
+ echo " Qt4 widgetset:      disabled"
 fi
 if [ "$ENABLE_GTK" = "1" ]; then
- echo " GTK2 frontend:       enabled"
-else echo " GTK2 frontend:       disabled"
+ echo " GTK2 widgetset:     enabled"
+else
+ echo " GTK2 widgetset:     disabled"
+fi
+if [ "$ENABLE_FRONT" = "1" ]; then
+ echo " GUI Frontends:      enabled"
+else 
+ echo " GUI Frontends:      disabled"
 fi
 if [ "$ENABLE_CREATOR" = "1" ]; then
- echo " Setup creator GUI:   enabled"
-else echo " Setup creator GUI:   disabled"
+ echo " Setup creator GUI:  enabled"
+else
+ echo " Setup creator GUI:  disabled"
 fi
 echo
 echo "You can now run make" 
