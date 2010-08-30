@@ -32,21 +32,23 @@
 
 void* li_updater_new(void);
 
-void li_updater_free(void* upd);
+void li_updater_free(AppUpdater upd);
 
-void li_updater_set_sumode(void* upd,bool val);
+void li_updater_set_sumode(AppUpdater upd,bool val);
 
-bool li_updater_register_status_call(void* upd,StatusChangeEvent call,void* user_data);
+bool li_updater_register_status_call(AppUpdater upd,StatusChangeEvent call,void* user_data);
 
-bool li_updater_register_request_call(void* upd,UserRequestCall call,void* user_data);
+bool li_updater_register_request_call(AppUpdater upd,UserRequestCall call,void* user_data);
 
-bool li_updater_register_newupdate_call(void* upd,NewUpdateEvent call,void* user_data);
+bool li_updater_register_newupdate_call(AppUpdater upd,NewUpdateEvent call,void* user_data);
 
-bool li_updater_search_updates(void* upd);
+bool li_updater_search_updates(AppUpdater upd);
 
-char *li_updater_updateid_oldversion(void* upd,int uid);
+char *li_updater_updateid_oldversion(AppUpdater upd,int uid);
 
-char *li_updater_updateid_newversion(void* upd,int uid);
+char *li_updater_updateid_newversion(AppUpdater upd,int uid);
+
+bool li_updater_execute_update(AppUpdater upd,int uid);
 
 
 #endif /* __LI_UPDATER */

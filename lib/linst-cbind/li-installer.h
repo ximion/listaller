@@ -30,61 +30,63 @@
 #include<iostream>
 
 
+bool li_remove_ipk_installed_app(char *appname,char *appid,StatusChangeEvent statuscall,bool fastmode);
+
 void* li_setup_new(void);
 
-void li_setup_free(void* setup);
+void li_setup_free(Installation setup);
 
-void li_setup_set_sumode(void* setup,bool b);
+bool li_setup_init(Installation setup,char *pkname);
 
-char *li_setup_init(void* setup,char *pkname);
+bool li_setup_register_status_call(Installation setup,StatusChangeEvent call,void* user_data);
 
-PkgType li_setup_get_pkgtype(void* setup);
+bool li_setup_register_user_request_call(Installation setup,UserRequestCall call,void* user_data);
 
-char *li_setup_get_disallows(void* setup);
+kgType li_setup_get_pkgtype(Installation setup);
 
-char *li_setup_get_supported_distributions(void* setup);
+void li_set_testmode(bool st);
 
-char *li_setup_get_appname(void* setup);
+void li_setup_set_forced(Installation setup,char *str);
 
-char *li_setup_get_appversion(void* setup);
+void li_setup_set_sumode(Installation setup,bool b);
 
-char *li_setup_get_pkgid(void* setup);
+char *li_setup_get_disallows(Installation setup);
 
-bool li_setup_get_long_description(void* setup,void* list);
-
-char *li_setup_get_wizard_image_path(void* setup);
-
-bool li_setup_get_license(void* setup,void* list);
-
-bool li_setup_get_profiles_list(void* setup,void* list);
-
-char *li_setup_get_appicon(void* setup);
-
-char *li_setup_get_desktopfiles(void* setup);
-
-char *li_setup_get_app_exec_command(void* setup);
-
-char *li_setup_get_current_profile_filelist(void* setup);
-
-void li_setup_enable_usource_registering(void* setup,bool b);
-
-bool li_setup_register_status_call(void* setup,StatusChangeEvent call,void* user_data);
-
-bool li_setup_register_user_request_call(void* setup,UserRequestCall call,void* user_data);
-
-bool li_setup_execute(void* setup);
-
-void li_setup_set_forced(void* setup,char *str);
-
-bool li_setup_get_dependencies(void* setup,void* list);
-
-bool li_setup_set_profileid(void* setup,int id);
-
-PkgSignatureState li_setup_get_signature_state(void* setup);
+char *li_setup_get_supported_distributions(Installation setup);
 
 bool li_get_ipk_app_installed(char *appname,char *appid,bool sumode);
 
-void li_set_testmode(bool st);
+char *li_setup_get_appname(Installation setup);
+
+char *li_setup_get_appversion(Installation setup);
+
+char *li_setup_get_pkgid(Installation setup);
+
+kgSignatureState li_setup_get_signature_state(Installation setup);
+
+bool li_setup_get_long_description(Installation setup,void* list);
+
+char *li_setup_get_wizard_image_path(Installation setup);
+
+bool li_setup_get_license(Installation setup,void* list);
+
+bool li_setup_get_profiles_list(Installation setup,void* list);
+
+void li_setup_set_profileid(Installation setup,int id);
+
+void li_setup_enable_usource_registering(Installation setup,bool b);
+
+char *li_setup_get_appicon(Installation setup);
+
+char *li_setup_get_desktopfiles(Installation setup);
+
+char *li_setup_get_app_exec_command(Installation setup);
+
+char *li_setup_get_current_profile_filelist(Installation setup);
+
+bool li_setup_execute(Installation setup);
+
+void li_setup_exec_by_daemon(Installation setup,bool b);
 
 
 #endif /* __LI_INSTALLER */

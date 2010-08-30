@@ -21,11 +21,18 @@ library liblistaller;
 //NOTE: We do not use a translatable GUI, so please use the -dNoGUI switch
 
 uses
-  CThreads, Classes, IpkInstall, SysUtils, LiTypes, LiUtils,
-  LiManageApp, LiUpdateApp, GLib2, SoftwareDB;
+  CThreads, Classes, LiTypes, IpkInstall, SysUtils, LiUtils,
+  LiManageApp, LiUpdateApp;
+
+type
+   PInstallation = ^TInstallation;
+   PAppManager = ^TAppManager;
+   PAppUpdater = ^TAppUpdater;
 
 //////////////////////////////////////////////////////////////////////////////////////
 //Exported helper functions
+
+{@BaseFunctions}
 
 function li_new_stringlist: Pointer;cdecl;
 begin
@@ -61,6 +68,8 @@ end;
 
 /////////////////////////////////////////////////////////////////////////////////////
 //Installer part
+
+{@Installer}
 
 //** Removes an application that was installed with an IPK package
 function li_remove_ipk_installed_app(appname, appid: PChar;statuscall: StatusChangeEvent;fastmode: Boolean): Boolean;cdecl;
@@ -244,7 +253,7 @@ end;
 end;
 
 //** Set current profile id
-procedure li_setup_set_profileid(setup: PInstallation;id: GInt16);cdecl;
+procedure li_setup_set_profileid(setup: PInstallation;id: SmallInt);cdecl;
 begin
  setup^.SetCurProfile(id);
 end;
@@ -317,6 +326,8 @@ end;
 
 ////////////////////////////////////////////////////////////////////
 //Manager part
+
+{@Manager}
 
 //** Creates a new TAppManager object
 function li_mgr_new: Pointer;cdecl;
@@ -437,6 +448,8 @@ end;
 
 ////////////////////////////////////////////////////////////////////
 //Updater part
+
+{@Updater}
 
 //** Creates a new TAppUpdater object
 function li_updater_new: Pointer;cdecl;

@@ -40,8 +40,6 @@ type
     destructor Destroy; override;
   end;
 
-  PAppUpdater = ^TAppUpdater;
-
   TAppUpdater = class
   private
     SUMode: Boolean;

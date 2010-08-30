@@ -21,48 +21,25 @@ unit pasbind;
 interface
 
 uses
-  Classes, LiUtils, PasTree, PParser, SysUtils, PScanner;
+  Classes, LiUtils, PasTree, PParser, PScanner, SysUtils;
 
 type
-//Simple, stupid dummy engine
-TSimplePTPEngine = class(TPasTreeContainer)
-public
-  function CreateElement(AClass: TPTreeElement; const AName: String;
-    AParent: TPasElement; AVisibility: TPasMemberVisibility;
-    const ASourceFilename: String; ASourceLinenumber: Integer): TPasElement;
-    override;
-  function FindElement(const AName: String): TPasElement; override;
-end;
+  TPasLibBindGen = class
+  private
+    FLibName: String;
+    FName: String;
+    FOutName: String;
+  public
+    constructor Create;
+    destructor Destroy; override;
 
-TPasLibBindGen = class
-private
-  FLibName: String;
-  FName: String;
-public
-  constructor Create;
-  destructor Destroy; override;
-
-  procedure Run;
-  property LibName: String read FLibName write FLibName;
-  property LibMainSrcFile: String read FName write FName;
-end;
+    procedure Run(component: String);
+    property LibName: String read FLibName write FLibName;
+    property LibMainSrcFile: String read FName write FName;
+    property BindOutFile: String read FOutName write FOutName;
+  end;
 
 implementation
-
-function TSimplePTPEngine.CreateElement(AClass: TPTreeElement; const AName: String;
-  AParent: TPasElement; AVisibility: TPasMemberVisibility;
-  const ASourceFilename: String; ASourceLinenumber: Integer): TPasElement;
-begin
-  Result := AClass.Create(AName, AParent);
-  Result.Visibility := AVisibility;
-  Result.SourceFilename := ASourceFilename;
-  Result.SourceLinenumber := ASourceLinenumber;
-end;
-
-function TSimplePTPEngine.FindElement(const AName: String): TPasElement;
-begin
-  Result := nil;
-end;
 
 { TPasLibBindGen }
 
@@ -76,31 +53,96 @@ begin
   inherited;
 end;
 
-procedure TPasLibBindGen.Run;
+procedure TPasLibBindGen.Run(component: String);
 var
-  md: TPasModule;
-  eng: TSimplePTPEngine;
-  i: Integer;
-  Decls: TList;
-  element: TPasElement;
-  func, h, x: String;
-  res: TStringList;
   src: TStringList;
+  exported: TStringList;
+  res: TStringList;
+  i: Integer;
+  r, h: String;
+  catchNext: Boolean;
 begin
-  eng := TSimplePTPEngine.Create;
-  writeLn('A');
-  md := ParseSource(eng, fname, 'linux', '');
   src := TStringList.Create;
-  src.LoadFromFile(fname);
+  src.LoadFromFile(FName);
 
-  writeLn('B');
-  decls := md.InterfaceSection.Declarations;
-
-  for i := 0 to Decls.Count - 1 do
+  exported := TStringList.Create;
+  for i := src.IndexOf('exports') to src.Count - 1 do
   begin
-    element := (TObject(Decls[i]) as TPasElement);
-    writeLn(element.GetDeclaration(false));
+    exported.Add(LowerCase(StringReplace(StringReplace(src[i], ' ',
+      '', [rfReplaceAll]), ',', '', [rfReplaceAll])));
+    if (length(src[i]) > 2) and (LowerCase(src[i][length(src[i])]) = ';') then
+      break;
   end;
+
+  res := TStringList.Create;
+  catchNext := false;
+  for i := src.IndexOf('{@'+component+'}') + 1 to src.Count - 1 do
+  begin
+    r := '';
+    if pos('{@', src[i]) > 0 then
+      break;
+    if StringReplace(src[i], ' ', '', [rfReplaceAll]) = '' then
+      Continue;
+    if catchNext then
+    begin
+      r := src[i];
+      res.Add(r);
+      r := StringReplace(r, ' ', '', [rfReplaceAll]);
+      if r[length(r)] <> ';' then
+        catchNext := true
+      else
+      begin
+        catchNext := false;
+        res[res.Count - 1] := res[res.Count - 1] + 'external ' + FLibName + ';';
+      end;
+    end;
+    if ((pos('function', src[i]) > 0) or (pos('procedure', src[i]) > 0)) and
+      (src[i][2] <> '/') then
+    begin
+      r := src[i];
+      //Extract function name
+      h := copy(r, pos(' ', r) + 1, length(r));
+      if pos('(', r) <= 0 then
+        h := copy(h, 1, pos(':', h) - 1)
+      else
+        h := copy(h, 1, pos('(', h) - 1);
+
+      if StringReplace(h, ' ', '', [rfReplaceAll]) = '' then
+        Continue;
+      if exported.IndexOf(h) > 0 then
+      begin
+        res.Add(r);
+        r := StringReplace(r, ' ', '', [rfReplaceAll]);
+        if r[length(r)] <> ';' then
+          catchNext := true
+        else
+          res[res.Count - 1] := res[res.Count - 1] + 'external ' + FLibName + ';';
+      end;
+    end;
+  end;
+  exported.Free;
+  src.LoadFromFile(FOutName);
+
+  i:=src.IndexOf('{@Begin:'+component+'}')+1;
+  repeat
+    src.Delete(i);
+    if i > src.Count-1 then
+    begin
+      writeLn('Invalid output template!');
+      writeLn(' Did you forget the "End"-Template?');
+      halt(2);
+    end;
+  until pos('{@End:'+component+'}', src[i])>0;
+
+  if StringReplace(res[0], ' ', '', [rfReplaceAll]) <> '' then res.Insert(0,'');
+
+  i:=src.IndexOf('{@Begin:'+component+'}');
+  src.Insert(i+1, res.Text);
+  res.Free;
+
+  //Write file back
+  src.SaveToFile(FOutName);
+  src.Free;
 end;
 
 end.

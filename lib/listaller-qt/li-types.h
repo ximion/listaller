@@ -19,6 +19,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#if !defined (__LISTALLER_H_INSIDE__)
+#error "Only <listaller.h> can be included directly."
+#endif
+
 #ifndef __LI_TYPES
 #define __LI_TYPES
 
@@ -99,7 +103,7 @@ struct AppInfo
 {
       char *Name;
       char *PkName;
-      PkgType PkType;
+      kgType PkType;
       char *ShortDesc;
       char *Version;
       char *Author;

@@ -23,16 +23,21 @@ interface
 uses
   Classes, SysUtils, LiTypes;
 
-  function  li_updater_new: Pointer;cdecl;external libinst;
-  procedure li_updater_free(upd: Pointer);cdecl;external libinst;
-  procedure li_updater_set_sumode(upd: Pointer;val: Boolean);cdecl;external libinst;
-  function  li_updater_register_status_call(upd: Pointer;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;external libinst;
-  function  li_updater_register_request_call(upd: Pointer;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;external libinst;
-  function  li_updater_register_newupdate_call(upd: Pointer;call: NewUpdateEvent;user_data: Pointer): Boolean;cdecl;external libinst;
-  function  li_updater_search_updates(upd: Pointer): Boolean;cdecl;external libinst;
-  function  li_updater_updateid_oldversion(upd: Pointer;uid: Longint): PChar;cdecl;external libinst;
-  function  li_updater_updateid_newversion(upd: Pointer;uid: Longint): PChar;cdecl;external libinst;
-  function  li_updater_execute_update(upd: Pointer;uid: Longint): Boolean;cdecl;external libinst;
+{@Begin:Updater}
+
+function li_updater_new: Pointer;cdecl;external liblistaller;
+procedure li_updater_free(upd: PAppUpdater);cdecl;external liblistaller;
+procedure li_updater_set_sumode(upd: PAppUpdater;val: Boolean);cdecl;external liblistaller;
+function li_updater_register_status_call(upd: PAppUpdater;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
+function li_updater_register_request_call(upd: PAppUpdater;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;external liblistaller;
+function li_updater_register_newupdate_call(upd: PAppUpdater;call: NewUpdateEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
+function li_updater_search_updates(upd: PAppUpdater): Boolean;cdecl;external liblistaller;
+function li_updater_updateid_oldversion(upd: PAppUpdater;uid: Longint): PChar;cdecl;external liblistaller;
+function li_updater_updateid_newversion(upd: PAppUpdater;uid: Longint): PChar;cdecl;external liblistaller;
+function li_updater_execute_update(upd: PAppUpdater;uid: Longint): Boolean;cdecl;external liblistaller;
+function li_regdir: PChar;cdecl;external liblistaller;
+
+{@End:Updater}
 
 implementation
 end.

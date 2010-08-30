@@ -26,8 +26,6 @@ uses
   liDBusProc, LiFileUtil, PackageKit, SoftwareDB;
 
 type
-  PAppManager = ^TAppManager;
-
   TAppManager = class
   private
     SUMode: Boolean;

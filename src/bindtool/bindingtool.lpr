@@ -46,7 +46,7 @@ var
   plg: TPasLibBindGen;
 begin
   // quick check parameters
-  ErrorMsg:=CheckOptions('hio',['help', 'pastoc', 'pasbind', 'template:']);
+  ErrorMsg:=CheckOptions('hioc',['help', 'pastoc', 'pasbind', 'template:', 'cmp:']);
   if ErrorMsg<>'' then
   begin
     ShowException(Exception.Create(ErrorMsg));
@@ -76,6 +76,15 @@ begin
     if GetOptionValue('o', 'out') = '' then
     begin
       writeLn('No ouput file specified!');
+      halt(1);
+    end;
+  end;
+
+  if HasOption('c','cmp') then
+  begin
+    if GetOptionValue('c', 'cmp') = '' then
+    begin
+      writeLn('No component specified!');
       halt(1);
     end;
   end;
@@ -127,7 +136,9 @@ begin
   begin
     plg := TPasLibBindGen.Create;
     plg.LibMainSrcFile := GetOptionValue('i', 'in');
-    plg.Run;
+    plg.BindOutFile := GetOptionValue('o', 'out');
+    plg.LibName:='liblistaller';
+    plg.Run(GetOptionValue('c','cmp'));
     plg.Free;
   end;
 

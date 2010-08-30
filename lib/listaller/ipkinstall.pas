@@ -27,11 +27,6 @@ uses
   SoftwareDB, LiManageApp;
 
 type
-
-  //** Pointer to TInstallation
-  PInstallation = ^TInstallation;
-  //** Everything which is needed for an installation
-
   TInstallation = class
   private
     //Basic information about the package and the new application

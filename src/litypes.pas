@@ -26,7 +26,7 @@ uses
 
 const
   //** Name of the Listaller library
-  libinst = 'liblistaller.so';
+  liblistaller = 'liblistaller.so';
 
   //** Version of Listaller API
   {$DEFINE APIVersion040}
@@ -34,6 +34,13 @@ const
 type
   //** Pointer to TStringList
   PStringList = ^TStringList;
+
+  //** Pointer to an AppManager
+  PAppManager = Pointer;
+  //** Pointer to Installation
+  PInstallation = Pointer;
+  //** Pointer to AppUpdater
+  PAppUpdater = Pointer;
 
   //** Request types
   TRqType = (rqError, rqWarning, rqQuestion, rqInfo);

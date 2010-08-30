@@ -32,23 +32,21 @@
 
 void* li_mgr_new(void);
 
-void li_mgr_free(void* mgr);
+void li_mgr_free(AppManager mgr);
 
-bool li_mgr_load_apps(void* mgr);
+bool li_mgr_load_apps(AppManager mgr);
 
-bool li_mgr_register_status_call(void* mgr,StatusChangeEvent call,void* user_data);
+bool li_mgr_register_status_call(AppManager mgr,StatusChangeEvent call,void* user_data);
 
-TRqResult li_mgr_register_request_call(void* mgr,UserRequestCall call,void* user_data);
+bool li_mgr_register_app_call(AppManager mgr,NewAppEvent call,void* user_data);
 
-bool li_mgr_register_app_call(void* mgr,NewAppEvent call,void* user_data);
+bool li_mgr_register_request_call(AppManager mgr,UserRequestCall call,void* user_data);
 
-void li_mgr_set_sumode(void* mgr,bool md);
+void li_mgr_set_sumode(AppManager mgr,bool md);
 
-bool li_mgr_remove_app(void* mgr,AppInfo obj);
+bool li_mgr_remove_app(AppManager mgr,AppInfo obj);
 
-bool li_remove_ipk_installed_app(char *appname,char *appid,StatusChangeEvent scall,bool fastmode);
-
-bool li_mgr_check_apps(void* mgr,void* log,bool root);
+bool li_mgr_check_apps(AppManager mgr,void* log,bool root);
 
 
 #endif /* __LI_MANAGER */
