@@ -27,7 +27,7 @@ uses
   SoftwareDB, LiManageApp;
 
 type
-  TInstallation = class
+  TLiInstallation = class
   private
     //Basic information about the package and the new application
     IAppName, IAppVersion, IAppCMD, IAuthor, ShDesc: String;
@@ -193,7 +193,7 @@ const
 
 implementation
 
-procedure TInstallation.RegOnStatusChange(call: StatusChangeEvent; Data: Pointer);
+procedure TLiInstallation.RegOnStatusChange(call: StatusChangeEvent; Data: Pointer);
 begin
   if Assigned(call) then
   begin
@@ -203,7 +203,7 @@ begin
   perror('Received invalid ´StatusChangeEvent´ pointer!');
 end;
 
-procedure TInstallation.RegOnUsrRequest(call: UserRequestCall; data: Pointer);
+procedure TLiInstallation.RegOnUsrRequest(call: UserRequestCall; data: Pointer);
 begin
   if Assigned(call) then
   begin
@@ -213,7 +213,7 @@ begin
   perror('Received invalid ´UserRequestCall´ pointer!');
 end;
 
-function TInstallation.UserRequestRegistered: Boolean;
+function TLiInstallation.UserRequestRegistered: Boolean;
 begin
   if Assigned(FRequest) then
     Result := true
@@ -221,21 +221,21 @@ begin
     Result := false;
 end;
 
-procedure TInstallation.SetMainPos(pos: Integer);
+procedure TLiInstallation.SetMainPos(pos: Integer);
 begin
   statusdata.mnprogress := pos;
   if Assigned(FStatusChange) then
     FStatusChange(scMnProgress, statusdata, statechange_udata);
 end;
 
-procedure TInstallation.SetExtraPos(pos: Integer);
+procedure TLiInstallation.SetExtraPos(pos: Integer);
 begin
   statusdata.exprogress := pos;
   if Assigned(FStatusChange) then
     FStatusChange(scExProgress, statusdata, statechange_udata);
 end;
 
-function TInstallation.MakeUsrRequest(msg: String; qtype: TRqType): TRqResult;
+function TLiInstallation.MakeUsrRequest(msg: String; qtype: TRqType): TRqResult;
 begin
   if Assigned(FRequest) then
     Result := FRequest(qtype, PChar(msg), request_udata)
@@ -243,14 +243,14 @@ begin
     pwarning('No user request handler assigned!');
 end;
 
-procedure TInstallation.SendStateMsg(msg: String);
+procedure TLiInstallation.SendStateMsg(msg: String);
 begin
   statusdata.msg := PChar(msg);
   if Assigned(FStatusChange) then
     FStatusChange(scStepMessage, statusdata, statechange_udata);
 end;
 
-procedure TInstallation.msg(str: String);
+procedure TLiInstallation.msg(str: String);
 begin
   statusdata.msg := PChar(str);
   if Assigned(FStatusChange) then
@@ -259,7 +259,7 @@ begin
     pinfo(str);
 end;
 
-constructor TInstallation.Create;
+constructor TLiInstallation.Create;
 begin
   inherited Create;
   daemonm := false; //Daemon mode has to be set manually by listallerd
@@ -279,7 +279,7 @@ begin
   AddUpdateSource := false;
 end;
 
-destructor TInstallation.Destroy;
+destructor TLiInstallation.Destroy;
 begin
   if PkgName <> '' then
     DeleteDirectory(tmpdir + PkgName, false);
@@ -293,7 +293,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TInstallation.SetRootMode(b: Boolean);
+procedure TLiInstallation.SetRootMode(b: Boolean);
 begin
   SUMode := b;
   if SUMode then
@@ -302,13 +302,13 @@ begin
     RegDir := SyblToPath('$INST') + '/' + LI_APPDB_PREF;
 end;
 
-procedure TInstallation.SetCurProfile(i: Integer);
+procedure TLiInstallation.SetCurProfile(i: Integer);
 begin
   FFileInfo := '/pkgdata/fileinfo-' + IntToStr(i) + '.id';
   CurProfile := IntToStr(i);
 end;
 
-procedure TInstallation.ReadProfiles(lst: TStringList);
+procedure TLiInstallation.ReadProfiles(lst: TStringList);
 var
   i: Integer;
 begin
@@ -317,7 +317,7 @@ begin
     lst.Add(copy(PkProfiles[i], 0, pos(' #', PkProfiles[i])));
 end;
 
-procedure TInstallation.ReadDescription(sl: TStringList);
+procedure TLiInstallation.ReadDescription(sl: TStringList);
 var
   i: Integer;
 begin
@@ -327,7 +327,7 @@ begin
     sl.Add(longdesc[i]);
 end;
 
-procedure TInstallation.ReadLicense(sl: TStringList);
+procedure TLiInstallation.ReadLicense(sl: TStringList);
 var
   i: Integer;
 begin
@@ -337,7 +337,7 @@ begin
     sl.Add(license[i]);
 end;
 
-function TInstallation.ResolveDependencies(const fetchFromDebian: Boolean =
+function TLiInstallation.ResolveDependencies(const fetchFromDebian: Boolean =
   true): Boolean;
 var
   i, j: Integer;
@@ -434,7 +434,7 @@ begin
   end;
 end;
 
-function TInstallation.Initialize(fname: String): Boolean;
+function TLiInstallation.Initialize(fname: String): Boolean;
 var
   pkg: TLiUnpacker;
   n: String;
@@ -797,7 +797,7 @@ begin
   cont.Free;
 end;
 
-function TInstallation.GetMaxInstSteps: Integer;
+function TLiInstallation.GetMaxInstSteps: Integer;
 var
   fi: TStringList;
   i, j: Integer;
@@ -813,7 +813,7 @@ begin
   fi.Free;
 end;
 
-procedure TInstallation.NetSockHook(Sender: TObject; Reason: THookSocketReason;
+procedure TLiInstallation.NetSockHook(Sender: TObject; Reason: THookSocketReason;
   const Value: String);
 begin
   //HTTP
@@ -830,7 +830,7 @@ begin
     end;
 end;
 
-function TInstallation.CheckFTPConnection(AFtpSend: TFtpSend): Boolean;
+function TLiInstallation.CheckFTPConnection(AFtpSend: TFtpSend): Boolean;
 begin
   if AFtpSend.Sock.Socket = not (0) then
     Result := AFtpSend.Login
@@ -841,13 +841,13 @@ begin
       Result := AFtpSend.Login;
 end;
 
-procedure TInstallation.OnPKitProgress(pos: Integer; dp: Pointer);
+procedure TLiInstallation.OnPKitProgress(pos: Integer; dp: Pointer);
 begin
   //user_data Pointer is always nil
   SetExtraPos(pos); //Set position of extra progress to PackageKit transaction progress
 end;
 
-function TInstallation.RunContainerInstallation: Boolean;
+function TLiInstallation.RunContainerInstallation: Boolean;
 var
   pkg: TLiUnpacker;
   cont: TIPKControl;
@@ -916,7 +916,7 @@ begin
   end;
 end;
 
-procedure TInstallation.DBusThreadStatusChange(ty: LiProcStatus; Data: TLiProcData);
+procedure TLiInstallation.DBusThreadStatusChange(ty: LiProcStatus; Data: TLiProcData);
 begin
   case Data.changed of
     pdMainProgress: SetMainPos(Data.mnprogress);
@@ -928,7 +928,7 @@ begin
   end;
 end;
 
-function TInstallation.RunNormalInstallation: Boolean;
+function TLiInstallation.RunNormalInstallation: Boolean;
 var
   i, j: Integer;
   fi, ndirs, s, appfiles: TStringList;
@@ -1403,7 +1403,7 @@ begin
   sleep(400);
 end;
 
-function TInstallation.RunDLinkInstallation: Boolean;
+function TLiInstallation.RunDLinkInstallation: Boolean;
 var
   i: Integer;
   ar: TIniFile;
@@ -1606,7 +1606,7 @@ end;}
   SendStateMsg(rsSuccess);
 end;
 
-procedure TInstallation.CheckAddUSource(const forceroot: Boolean = false);
+procedure TLiInstallation.CheckAddUSource(const forceroot: Boolean = false);
 var
   fi: TStringList;
   i: Integer;
@@ -1657,7 +1657,7 @@ begin
   end;
 end;
 
-function TInstallation.PkgOkay: Boolean;
+function TLiInstallation.PkgOkay: Boolean;
 begin
   Result := true;
   if (PkgID = '') or (IAppName = '') then
@@ -1669,7 +1669,7 @@ begin
   end;
 end;
 
-function TInstallation.DoInstallation: Boolean;
+function TLiInstallation.DoInstallation: Boolean;
 var
   cnf: TIniFile;
   i: Integer;
@@ -1798,7 +1798,7 @@ begin
       else
       begin
         msg(rsCouldNotDetectPkgType);
-        msg('TInstallation failure.');
+        msg('TLiInstallation failure.');
         Result := false;
       end;
 

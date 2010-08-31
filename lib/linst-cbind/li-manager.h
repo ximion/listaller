@@ -29,24 +29,22 @@
 #include<stdio.h>
 #include<iostream>
 
-
 void* li_mgr_new(void);
 
-void li_mgr_free(AppManager mgr);
+void li_mgr_free(LiAppManager mgr);
 
-bool li_mgr_load_apps(AppManager mgr);
+bool li_mgr_load_apps(LiAppManager mgr);
 
-bool li_mgr_register_status_call(AppManager mgr,StatusChangeEvent call,void* user_data);
+bool li_mgr_register_status_call(LiAppManager mgr,StatusChangeEvent call,void* user_data);
 
-bool li_mgr_register_app_call(AppManager mgr,NewAppEvent call,void* user_data);
+bool li_mgr_register_app_call(LiAppManager mgr,NewAppEvent call,void* user_data);
 
-bool li_mgr_register_request_call(AppManager mgr,UserRequestCall call,void* user_data);
+bool li_mgr_register_request_call(LiAppManager mgr,UserRequestCall call,void* user_data);
 
-void li_mgr_set_sumode(AppManager mgr,bool md);
+void li_mgr_set_sumode(LiAppManager mgr,bool md);
 
-bool li_mgr_remove_app(AppManager mgr,AppInfo obj);
+bool li_mgr_remove_app(LiAppManager mgr,AppInfo obj);
 
-bool li_mgr_check_apps(AppManager mgr,void* log,bool root);
-
+bool li_mgr_check_apps(LiAppManager mgr,void* log,bool root);
 
 #endif /* __LI_MANAGER */

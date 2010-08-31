@@ -29,6 +29,11 @@
 #include<stdio.h>
 #include<iostream>
 
+typedef const void* LiAppManager;
+
+typedef const void* LiInstallation;
+
+typedef const void* LiAppUpdater;
 
 typedef enum {
       rqError,
@@ -103,7 +108,7 @@ struct AppInfo
 {
       char *Name;
       char *PkName;
-      kgType PkType;
+      PkgType PkType;
       char *ShortDesc;
       char *Version;
       char *Author;
@@ -128,10 +133,9 @@ typedef TRqResult (*UserRequestCall) (TRqType mtype,char *msg,void* user_data);
 
 typedef void (*TProgressEvent) (int pos,void* user_data);
 
-typedef void (*NewAppEvent) (char *name,AppInfo obj,void* user_data);
+typedef void (*NewAppEvent) (char *name,AppInfo *obj,void* user_data);
 
 typedef void (*NewUpdateEvent) (char *name,int id,void* user_data);
-
 
 
 #endif /* __LI_TYPES */

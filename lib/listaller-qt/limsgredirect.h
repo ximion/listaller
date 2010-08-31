@@ -20,7 +20,7 @@
 #define LIMSGREDIRECT_H
 
 #include<QtCore>
-#include<listaller>
+#include<Listaller>
 
 namespace Listaller {
 

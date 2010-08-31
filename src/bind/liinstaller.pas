@@ -24,9 +24,6 @@ uses
 Classes, SysUtils, LiTypes;
 
 type
-
-LiSetup = Pointer;
-
 TInstallPack = class
 private
 ins: Pointer;
@@ -71,34 +68,34 @@ function IsIPKAppInstalled(appname: String;appid: String;sumode: Boolean): Boole
 
 function li_remove_ipk_installed_app(appname, appid: PChar;statuscall: StatusChangeEvent;fastmode: Boolean): Boolean;cdecl;external liblistaller;
 function li_setup_new: Pointer;cdecl;external liblistaller;
-procedure li_setup_free(setup: PInstallation);cdecl;external liblistaller;
-function li_setup_init(setup: PInstallation;pkname: PChar): Boolean;cdecl;external liblistaller;
-function li_setup_register_status_call(setup: PInstallation;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
-function li_setup_register_user_request_call(setup: PInstallation;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;external liblistaller;
-function li_setup_get_pkgtype(setup: PInstallation): PkgType;cdecl;external liblistaller;
+procedure li_setup_free(setup: PLiInstallation);cdecl;external liblistaller;
+function li_setup_init(setup: PLiInstallation;pkname: PChar): Boolean;cdecl;external liblistaller;
+function li_setup_register_status_call(setup: PLiInstallation;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
+function li_setup_register_user_request_call(setup: PLiInstallation;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;external liblistaller;
+function li_setup_get_pkgtype(setup: PLiInstallation): PkgType;cdecl;external liblistaller;
 procedure li_set_testmode(st: Boolean);cdecl;external liblistaller;
-procedure li_setup_set_forced(setup: PInstallation;str: PChar);cdecl;external liblistaller;
-procedure li_setup_set_sumode(setup: PInstallation;b: Boolean);cdecl;external liblistaller;
-function li_setup_get_disallows(setup: PInstallation): PChar;cdecl;external liblistaller;
-function li_setup_get_supported_distributions(setup: PInstallation): PChar;cdecl;external liblistaller;
+procedure li_setup_set_forced(setup: PLiInstallation;str: PChar);cdecl;external liblistaller;
+procedure li_setup_set_sumode(setup: PLiInstallation;b: Boolean);cdecl;external liblistaller;
+function li_setup_get_disallows(setup: PLiInstallation): PChar;cdecl;external liblistaller;
+function li_setup_get_supported_distributions(setup: PLiInstallation): PChar;cdecl;external liblistaller;
 function li_get_ipk_app_installed(appname: PChar;appid: PChar;sumode: Boolean): Boolean;cdecl;external liblistaller;
-function li_setup_get_appname(setup: PInstallation): PChar;cdecl;external liblistaller;
-function li_setup_get_appversion(setup: PInstallation): PChar;cdecl;external liblistaller;
-function li_setup_get_pkgid(setup: PInstallation): PChar;cdecl;external liblistaller;
-function li_setup_get_signature_state(setup: PInstallation): PkgSignatureState;cdecl;external liblistaller;
-function li_setup_get_long_description(setup: PInstallation; list: PStringList): Boolean;cdecl;external liblistaller;
-function li_setup_get_wizard_image_path(setup: PInstallation): PChar;cdecl;external liblistaller;
-function li_setup_get_license(setup: PInstallation; list: PStringList): Boolean;cdecl;external liblistaller;
-function li_setup_get_profiles_list(setup: PInstallation; list: PStringList): Boolean;cdecl;external liblistaller;
-procedure li_setup_set_profileid(setup: PInstallation;id: SmallInt);cdecl;external liblistaller;
-procedure li_setup_enable_usource_registering(setup: PInstallation;b: Boolean);cdecl;external liblistaller;
-function li_setup_get_appicon(setup: PInstallation): PChar;cdecl;external liblistaller;
-function li_setup_get_desktopfiles(setup: PInstallation): PChar;cdecl;external liblistaller;
-function li_setup_get_app_exec_command(setup: PInstallation): PChar;cdecl;external liblistaller;
-function li_setup_get_current_profile_filelist(setup: PInstallation): PChar;cdecl;external liblistaller;
-function li_setup_execute(setup: PInstallation): Boolean;cdecl;external liblistaller;
-procedure li_setup_exec_by_daemon(setup: PInstallation;b: Boolean);cdecl;external liblistaller;
-function li_setup_get_dependencies(setup: PInstallation; list: PStringList): Boolean;cdecl;external liblistaller;
+function li_setup_get_appname(setup: PLiInstallation): PChar;cdecl;external liblistaller;
+function li_setup_get_appversion(setup: PLiInstallation): PChar;cdecl;external liblistaller;
+function li_setup_get_pkgid(setup: PLiInstallation): PChar;cdecl;external liblistaller;
+function li_setup_get_signature_state(setup: PLiInstallation): PkgSignatureState;cdecl;external liblistaller;
+function li_setup_get_long_description(setup: PLiInstallation; list: PStringList): Boolean;cdecl;external liblistaller;
+function li_setup_get_wizard_image_path(setup: PLiInstallation): PChar;cdecl;external liblistaller;
+function li_setup_get_license(setup: PLiInstallation; list: PStringList): Boolean;cdecl;external liblistaller;
+function li_setup_get_profiles_list(setup: PLiInstallation; list: PStringList): Boolean;cdecl;external liblistaller;
+procedure li_setup_set_profileid(setup: PLiInstallation;id: SmallInt);cdecl;external liblistaller;
+procedure li_setup_enable_usource_registering(setup: PLiInstallation;b: Boolean);cdecl;external liblistaller;
+function li_setup_get_appicon(setup: PLiInstallation): PChar;cdecl;external liblistaller;
+function li_setup_get_desktopfiles(setup: PLiInstallation): PChar;cdecl;external liblistaller;
+function li_setup_get_app_exec_command(setup: PLiInstallation): PChar;cdecl;external liblistaller;
+function li_setup_get_current_profile_filelist(setup: PLiInstallation): PChar;cdecl;external liblistaller;
+function li_setup_execute(setup: PLiInstallation): Boolean;cdecl;external liblistaller;
+procedure li_setup_exec_by_daemon(setup: PLiInstallation;b: Boolean);cdecl;external liblistaller;
+function li_setup_get_dependencies(setup: PLiInstallation; list: PStringList): Boolean;cdecl;external liblistaller;
 
 {@End:Installer}
 

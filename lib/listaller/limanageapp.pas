@@ -26,7 +26,7 @@ uses
   liDBusProc, LiFileUtil, PackageKit, SoftwareDB;
 
 type
-  TAppManager = class
+  TLiAppManager = class
   private
     SUMode: Boolean;
     FReq: UserRequestCall;
@@ -93,9 +93,9 @@ procedure CreateUpdateSourceList(path: String);
 
 implementation
 
-{ TAppManager }
+{ TLiAppManager }
 
-constructor TAppManager.Create;
+constructor TLiAppManager.Create;
 begin
   inherited Create;
   FApp := nil;
@@ -103,12 +103,12 @@ begin
   FReq := nil;
 end;
 
-destructor TAppManager.Destroy;
+destructor TLiAppManager.Destroy;
 begin
   inherited;
 end;
 
-function TAppManager.UserRequestRegistered: Boolean;
+function TLiAppManager.UserRequestRegistered: Boolean;
 begin
   if Assigned(FReq) then
     Result := true
@@ -116,7 +116,7 @@ begin
     Result := false;
 end;
 
-procedure TAppManager.RegOnStatusChange(call: StatusChangeEvent; data: Pointer);
+procedure TLiAppManager.RegOnStatusChange(call: StatusChangeEvent; data: Pointer);
 begin
   if Assigned(call) then
   begin
@@ -127,7 +127,7 @@ begin
     perror('Received invalid ´StatusChangeEvent´ pointer!');
 end;
 
-procedure TAppManager.RegOnRequest(call: UserRequestCall; data: Pointer);
+procedure TLiAppManager.RegOnRequest(call: UserRequestCall; data: Pointer);
 begin
   if Assigned(call) then
   begin
@@ -138,7 +138,7 @@ begin
     perror('Received invalid ´UserRequestCall´ pointer!');
 end;
 
-procedure TAppManager.RegOnNewApp(call: NewAppEvent; data: Pointer);
+procedure TLiAppManager.RegOnNewApp(call: NewAppEvent; data: Pointer);
 begin
   if Assigned(call) then
   begin
@@ -149,51 +149,51 @@ begin
     perror('Received invalid ´StatusChangeEvent´ pointer!');
 end;
 
-procedure TAppManager.Msg(s: String);
+procedure TLiAppManager.Msg(s: String);
 begin
   sdata.msg := PChar(s);
   if Assigned(FStatus) then
     FStatus(scMessage, sdata, statechange_udata);
 end;
 
-function TAppManager.Request(s: String; ty: TRqType): TRqResult;
+function TLiAppManager.Request(s: String; ty: TRqType): TRqResult;
 begin
   if Assigned(FReq) then
     Result := FReq(ty, PChar(s), request_udata);
 end;
 
-procedure TAppManager.NewApp(s: String; oj: AppInfo);
+procedure TLiAppManager.NewApp(s: String; oj: AppInfo);
 begin
   if Assigned(FApp) then
     FApp(PChar(s), @oj, newapp_udata);
 end;
 
-procedure TAppManager.SetPos(i: Integer);
+procedure TLiAppManager.SetPos(i: Integer);
 begin
   sdata.mnprogress := i;
   if Assigned(FStatus) then
     FStatus(scMnProgress, sdata, statechange_udata);
 end;
 
-procedure TAppManager.SetState(state: LiProcStatus);
+procedure TLiAppManager.SetState(state: LiProcStatus);
 begin
   sdata.lastresult := state;
   if Assigned(FStatus) then
     FStatus(scStatus, sdata, statechange_udata);
 end;
 
-function TAppManager.IsInList(nm: String; list: TStringList): Boolean;
+function TLiAppManager.IsInList(nm: String; list: TStringList): Boolean;
 begin
   Result := list.IndexOf(nm) > -1;
 end;
 
-procedure TAppManager.PkitProgress(pos: Integer; xd: Pointer);
+procedure TLiAppManager.PkitProgress(pos: Integer; xd: Pointer);
 begin
   //User defindes pointer xd is always nil here
   setpos(pos);
 end;
 
-procedure TAppManager.LoadEntries;
+procedure TLiAppManager.LoadEntries;
 var
   ini: TIniFile;
   tmp, xtmp: TStringList;
@@ -462,7 +462,7 @@ end; //End Autopackage  }
 end;
 
 //Uninstall Mojo and LOKI Setups
-function TAppManager.UninstallMojo(dsk: String): Boolean;
+function TLiAppManager.UninstallMojo(dsk: String): Boolean;
 var
   inf: TIniFile;
   tmp: TStringList;
@@ -534,7 +534,7 @@ begin
       end;
 end;
 
-procedure TAppManager.DBusStatusChange(ty: LiProcStatus; Data: TLiProcData);
+procedure TLiAppManager.DBusStatusChange(ty: LiProcStatus; Data: TLiProcData);
 begin
   case Data.changed of
     pdMainProgress: setpos(Data.mnprogress);
@@ -552,7 +552,7 @@ end;
 //Can remove Autopackage.org or native package.
 // Only for interal use, called by UninstallApp.
 // This function exists to speed up the removal process.
-procedure TAppManager.InternalRemoveApp(obj: AppInfo);
+procedure TLiAppManager.InternalRemoveApp(obj: AppInfo);
 var
   t: TProcess;
   pkit: TPackageKit;
@@ -633,7 +633,7 @@ end;
 // identification string - if not, pkg has to be Loki/Mojo, so intitiate Mojo-Removal. After rdepends and pkg resolve is done,
 // run uninstall as root if necessary. At the end, RemoveAppInternal() is called (if LOKI-Remove was not run) to uninstall
 // native or autopackage setup.
-procedure TAppManager.UninstallApp(obj: AppInfo);
+procedure TLiAppManager.UninstallApp(obj: AppInfo);
 var
   id: String;
   i: Integer;
@@ -741,7 +741,7 @@ begin
   SetState(prFinished);
 end;
 
-function TAppManager.CheckApps(report: TStringList; const fix: Boolean = false;
+function TLiAppManager.CheckApps(report: TStringList; const fix: Boolean = false;
   const forceroot: Boolean = false): Boolean;
 var
   db: TSoftwareDB;

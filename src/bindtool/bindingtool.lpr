@@ -13,13 +13,13 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this library. If not, see <http://www.gnu.org/licenses/>.}
-//** Helper for generating C-Headers from Pascal library source
+//** Helper for generating updating/generating Listaller's library bindings
 program bindingtool;
 
 {$mode objfpc}{$H+}
 
 uses
-  Classes, SysUtils, CustApp, PasCConv, LiUtils, pasbind;
+  Classes, SysUtils, CustApp, PasCConv, LiUtils, PasBind;
 
 type
 

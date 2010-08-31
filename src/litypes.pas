@@ -36,11 +36,11 @@ type
   PStringList = ^TStringList;
 
   //** Pointer to an AppManager
-  PAppManager = Pointer;
+  PLiAppManager = Pointer;
   //** Pointer to Installation
-  PInstallation = Pointer;
+  PLiInstallation = Pointer;
   //** Pointer to AppUpdater
-  PAppUpdater = Pointer;
+  PLiAppUpdater = Pointer;
 
   //** Request types
   TRqType = (rqError, rqWarning, rqQuestion, rqInfo);

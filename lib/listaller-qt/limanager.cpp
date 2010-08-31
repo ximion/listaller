@@ -19,7 +19,7 @@
 #include "limanager.h"
 
 #include<QtCore>
-#include<listaller>
+#include<Listaller>
 #include "limsgredirect.h"
 
 using namespace Listaller;

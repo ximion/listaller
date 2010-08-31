@@ -15,9 +15,6 @@
   along with this unit. If not, see <http://www.gnu.org/licenses/>.}
 // Find desktop metadata about a package (PackageKit binding)
 
-//type
-//TGFunc = procedure(data: GPointer;user_data: GPointer);
-
 procedure g_ptr_array_foreach(ar: Pointer;func: TGFunc;user_data: GPointer);cdecl;external gliblib name 'g_ptr_array_foreach';
 function pk_desktop_new: Pointer;cdecl;external pklib2 name 'pk_desktop_new';
 function pk_desktop_open_database(desktop: Pointer;error: PPGError): GBoolean;cdecl;external pklib2 name 'pk_desktop_open_database';

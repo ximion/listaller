@@ -40,7 +40,7 @@ type
     destructor Destroy; override;
   end;
 
-  TAppUpdater = class
+  TLiAppUpdater = class
   private
     SUMode: Boolean;
     HTTP: THTTPSend;
@@ -99,9 +99,9 @@ begin
   files.Free;
 end;
 
-{ TAppUpdater }
+{ TLiAppUpdater }
 
-constructor TAppUpdater.Create;
+constructor TLiAppUpdater.Create;
 begin
   HTTP := THTTPSend.Create;
   FTP := TFTPSend.Create;
@@ -111,7 +111,7 @@ begin
   SetSuMode(false);
 end;
 
-destructor TAppUpdater.Destroy;
+destructor TLiAppUpdater.Destroy;
 begin
   ulist.Free;
   HTTP.Free;
@@ -119,7 +119,7 @@ begin
   inherited;
 end;
 
-procedure TAppUpdater.SetSumode(su: Boolean);
+procedure TLiAppUpdater.SetSumode(su: Boolean);
 begin
   SUMode := su;
   if SUMode then
@@ -129,7 +129,7 @@ begin
   ulist.Clear;
 end;
 
-procedure TAppUpdater.RegOnStatusChange(call: StatusChangeEvent; data: Pointer);
+procedure TLiAppUpdater.RegOnStatusChange(call: StatusChangeEvent; data: Pointer);
 begin
   if Assigned(call) then
     begin
@@ -139,7 +139,7 @@ begin
     perror('Received invalid ´StatusChangeEvent´ pointer!');
 end;
 
-procedure TAppUpdater.RegOnRequest(call: UserRequestCall; data: Pointer);
+procedure TLiAppUpdater.RegOnRequest(call: UserRequestCall; data: Pointer);
 begin
   if Assigned(call) then
     begin
@@ -149,7 +149,7 @@ begin
     perror('Received invalid ´UserRequestCall´ pointer!');
 end;
 
-procedure TAppUpdater.RegOnNewUpdate(call: NewUpdateEvent; data: Pointer);
+procedure TLiAppUpdater.RegOnNewUpdate(call: NewUpdateEvent; data: Pointer);
 begin
   if Assigned(call) then
     begin
@@ -159,47 +159,47 @@ begin
     perror('Received invalid ´NewUpdateEvent´ pointer!');
 end;
 
-procedure TAppUpdater.Msg(s: String);
+procedure TLiAppUpdater.Msg(s: String);
 begin
   sdata.msg := PChar(s);
   if Assigned(FStatus) then
     FStatus(scMessage, sdata, statechange_udata);
 end;
 
-procedure TAppUpdater.StepMsg(s: String);
+procedure TLiAppUpdater.StepMsg(s: String);
 begin
   sdata.msg := PChar(s);
   if Assigned(FStatus) then
     FStatus(scStepMessage, sdata, statechange_udata);
 end;
 
-function TAppUpdater.Request(s: String; ty: TRqType): TRqResult;
+function TLiAppUpdater.Request(s: String; ty: TRqType): TRqResult;
 begin
   if Assigned(FReq) then
     Result := FReq(ty, PChar(s), request_udata);
 end;
 
-procedure TAppUpdater.NewUpdate(nm: String; id: Integer);
+procedure TLiAppUpdater.NewUpdate(nm: String; id: Integer);
 begin
   if Assigned(FNewUpd) then
     FNewUpd(PChar(nm), id, newupd_udata);
 end;
 
-procedure TAppUpdater.SetMnPos(i: Integer);
+procedure TLiAppUpdater.SetMnPos(i: Integer);
 begin
   sdata.mnprogress := i;
   if Assigned(FStatus) then
     FStatus(scMnprogress, sdata, statechange_udata);
 end;
 
-procedure TAppUpdater.SetExPos(i: Integer);
+procedure TLiAppUpdater.SetExPos(i: Integer);
 begin
   sdata.exprogress := i;
   if Assigned(FStatus) then
     FStatus(scExProgress, sdata, statechange_udata);
 end;
 
-procedure TAppUpdater.HookSock(Sender: TObject; Reason: THookSocketReason;
+procedure TLiAppUpdater.HookSock(Sender: TObject; Reason: THookSocketReason;
   const Value: String);
 begin
   if HTTP.DownloadSize > 20 then
@@ -208,7 +208,7 @@ begin
   end;
 end;
 
-function TAppUpdater.CheckUpdates: Boolean;
+function TLiAppUpdater.CheckUpdates: Boolean;
 var
   tmp, h, sinfo, sources: TStringList;
   j, k: Integer;
@@ -354,7 +354,7 @@ begin
     request(rsNoUpdates, rqInfo);
 end;
 
-function TAppUpdater.ValidUpdateId(uid: Integer): Boolean;
+function TLiAppUpdater.ValidUpdateId(uid: Integer): Boolean;
 begin
   Result := true;
   if (uid > ulist.Count - 1) or (uID < 0) then
@@ -364,7 +364,7 @@ begin
   end;
 end;
 
-function TAppUpdater.UpdateIDGetNewVersion(uid: Integer): String;
+function TLiAppUpdater.UpdateIDGetNewVersion(uid: Integer): String;
 begin
   Result := '?';
   if not ValidUpdateId(uid) then
@@ -372,7 +372,7 @@ begin
   Result := TUpdateInfo(ulist[uid]).NVersion;
 end;
 
-function TAppUpdater.UpdateIDGetOldVersion(uid: Integer): String;
+function TLiAppUpdater.UpdateIDGetOldVersion(uid: Integer): String;
 begin
   Result := '?';
   if not ValidUpdateId(uid) then
@@ -380,7 +380,7 @@ begin
   Result := TUpdateInfo(ulist[uid]).OVersion;
 end;
 
-procedure TAppUpdater.DBusStatusChange(ty: LiProcStatus; Data: TLiProcData);
+procedure TLiAppUpdater.DBusStatusChange(ty: LiProcStatus; Data: TLiProcData);
 begin
   case Data.changed of
     pdMainProgress: SetMnPos(Data.mnprogress);
@@ -396,7 +396,7 @@ begin
   end;
 end;
 
-function TAppUpdater.ExecuteUpdate(uid: Integer): Boolean;
+function TLiAppUpdater.ExecuteUpdate(uid: Integer): Boolean;
 var
   i, k: Integer;
   xz: TLiUpdateBit;

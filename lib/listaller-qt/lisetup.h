@@ -20,7 +20,6 @@
 #define LISETUP_H
 
 #include<QtCore>
-#include"li-types.h"
 
 namespace Listaller {
 

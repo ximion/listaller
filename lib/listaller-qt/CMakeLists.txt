@@ -16,8 +16,7 @@ set(listaller-qt_HEADERS limsgredirect.h
    lisetup.h
 )
 
-set(listaller-qt_INST_HEADERS
-   listaller-qt
+set(listaller-qt_INST_HEADERS Listaller-Qt
    li-types.h
    limanager.h
    lisetup.h

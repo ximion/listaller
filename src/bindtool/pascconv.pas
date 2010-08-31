@@ -48,8 +48,8 @@ type
 
 implementation
 
-function TSimplePTCEngine.CreateElement(AClass: TPTreeElement; const AName: String;
-  AParent: TPasElement; AVisibility: TPasMemberVisibility;
+function TSimplePTCEngine.CreateElement(AClass: TPTreeElement;
+  const AName: String; AParent: TPasElement; AVisibility: TPasMemberVisibility;
   const ASourceFilename: String; ASourceLinenumber: Integer): TPasElement;
 begin
   Result := AClass.Create(AName, AParent);
@@ -73,6 +73,23 @@ begin
     Result := 'void* ';  //FIXME
     exit;
   end;
+  //Some listaller types to replace
+  if h = 'pliappmanager' then
+  begin
+    Result := 'LiAppManager';
+    exit;
+  end;
+  if h = 'pliinstallation' then
+  begin
+    Result := 'LiInstallation';
+    exit;
+  end;
+  if h = 'pliappupdater' then
+  begin
+    Result := 'LiAppUpdater';
+    exit;
+  end;
+
   if h = 'pointer' then
   begin
     Result := 'void* ';
@@ -82,10 +99,13 @@ begin
   begin
     h := copy(s, 2, length(s));
     if (LowerCase(h) = 'char') or (LowerCase(h) = 'gchar') or
-      (LowerCase(h) = '<placeholder>') then  //FIXME
-      Result := LowerCase(h) + ' *'
+      (LowerCase(h) = 'appinfo') or (LowerCase(h) = '<placeholder>') then  //FIXME
+      if LowerCase(h) = 'appinfo' then
+        Result := h + ' *'
+      else
+        Result := LowerCase(h) + ' *'
     else
-      Result := h;
+      Result := s;
     exit;
   end;
   if (h = 'integer') or (h = 'longint') or (h = 'shortint') or (h = 'smallint') then
@@ -182,59 +202,71 @@ begin
   if pos('type', eltype) <= 0 then
     exit;
   Result := true;
-  if pos('enumeration', eltype) > 0 then
+  if (pos('alias type', eltype) > 0) and (LowerCase(el.GetDeclaration(false)) =
+    'pointer') then
   begin
-    r := 'typedef enum {'#10;
+    r := 'typedef const void* ';
     h := el.GetDeclaration(true);
-    h := StrSubst(h, #10, '');
-    h := StrSubst(h, ' ', '');
-    h := copy(h, pos('(', h) + 1, length(h));
-    h := copy(h, 1, pos(')', h) - 1);
-    h := StrSubst(h, ',', ','#10'      ');
-    h := '      ' + h;
-    r := r + h + #10 + '} ' + el.FullName + ';';
+    h := copy(h, 1, pos(' ', h) - 1);
+    Delete(h, 1, 1);
+    r := r + h + ';';
     res.Add('');
     res.Add(r);
   end
   else
-    if pos('procedure', eltype) > 0 then
+    if pos('enumeration', eltype) > 0 then
     begin
-      r := 'typedef void (*' + el.FullName + ') ';
-      ArgumentsToHVar; //Quick & dirty helper function :)
-      r := r + '(' + h + ');';
-      funcdecl.Add('');
-      funcdecl.Add(r);
+      r := 'typedef enum {'#10;
+      h := el.GetDeclaration(true);
+      h := StrSubst(h, #10, '');
+      h := StrSubst(h, ' ', '');
+      h := copy(h, pos('(', h) + 1, length(h));
+      h := copy(h, 1, pos(')', h) - 1);
+      h := StrSubst(h, ',', ','#10'      ');
+      h := '      ' + h;
+      r := r + h + #10 + '} ' + el.FullName + ';';
+      res.Add('');
+      res.Add(r);
     end
     else
-      if pos('function', eltype) > 0 then
+      if pos('procedure', eltype) > 0 then
       begin
-        //Fetch return type
-        h := el.GetDeclaration(false);
-        h := copy(h, pos(')', h) + 1, length(h));
-        h := copy(h, pos(':', h) + 1, length(h));
-        h := StrSubst(h, ' ', '');
-        h := SubstTypes(h);
-
-        r := 'typedef ' + h + ' (*' + el.FullName + ') ';
+        r := 'typedef void (*' + el.FullName + ') ';
         ArgumentsToHVar; //Quick & dirty helper function :)
         r := r + '(' + h + ');';
         funcdecl.Add('');
         funcdecl.Add(r);
       end
       else
-        if pos('record', eltype) > 0 then
+        if pos('function', eltype) > 0 then
         begin
+          //Fetch return type
           h := el.GetDeclaration(false);
-          h := copy(h, 7, length(h)); //remove the "record" word
-          Delete(h, length(h) - 3, length(h)); //remove "end" from the end
-          h := SolveArguments(h); //SolveArguments() works here too!
+          h := copy(h, pos(')', h) + 1, length(h));
+          h := copy(h, pos(':', h) + 1, length(h));
+          h := StrSubst(h, ' ', '');
+          h := SubstTypes(h);
 
-          r := 'struct ' + el.FullName + #10'{'#10;
-          h := StrSubst(h, ',', ';'#10'      ');
-          r := r + '      ' + h + ';'#10'};';
-          res.Add('');
-          res.Add(r);
-        end;
+          r := 'typedef ' + h + ' (*' + el.FullName + ') ';
+          ArgumentsToHVar; //Quick & dirty helper function :)
+          r := r + '(' + h + ');';
+          funcdecl.Add('');
+          funcdecl.Add(r);
+        end
+        else
+          if pos('record', eltype) > 0 then
+          begin
+            h := el.GetDeclaration(false);
+            h := copy(h, 7, length(h)); //remove the "record" word
+            Delete(h, length(h) - 3, length(h)); //remove "end" from the end
+            h := SolveArguments(h); //SolveArguments() works here too!
+
+            r := 'struct ' + el.FullName + #10'{'#10;
+            h := StrSubst(h, ',', ';'#10'      ');
+            r := r + '      ' + h + ';'#10'};';
+            res.Add('');
+            res.Add(r);
+          end;
 end;
 
 function TPtCConverter.ConvertToCInfo(fname: String): TStringList;

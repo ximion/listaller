@@ -29,64 +29,62 @@
 #include<stdio.h>
 #include<iostream>
 
-
 bool li_remove_ipk_installed_app(char *appname,char *appid,StatusChangeEvent statuscall,bool fastmode);
 
 void* li_setup_new(void);
 
-void li_setup_free(Installation setup);
+void li_setup_free(LiInstallation setup);
 
-bool li_setup_init(Installation setup,char *pkname);
+bool li_setup_init(LiInstallation setup,char *pkname);
 
-bool li_setup_register_status_call(Installation setup,StatusChangeEvent call,void* user_data);
+bool li_setup_register_status_call(LiInstallation setup,StatusChangeEvent call,void* user_data);
 
-bool li_setup_register_user_request_call(Installation setup,UserRequestCall call,void* user_data);
+bool li_setup_register_user_request_call(LiInstallation setup,UserRequestCall call,void* user_data);
 
-kgType li_setup_get_pkgtype(Installation setup);
+PkgType li_setup_get_pkgtype(LiInstallation setup);
 
 void li_set_testmode(bool st);
 
-void li_setup_set_forced(Installation setup,char *str);
+void li_setup_set_forced(LiInstallation setup,char *str);
 
-void li_setup_set_sumode(Installation setup,bool b);
+void li_setup_set_sumode(LiInstallation setup,bool b);
 
-char *li_setup_get_disallows(Installation setup);
+char *li_setup_get_disallows(LiInstallation setup);
 
-char *li_setup_get_supported_distributions(Installation setup);
+char *li_setup_get_supported_distributions(LiInstallation setup);
 
 bool li_get_ipk_app_installed(char *appname,char *appid,bool sumode);
 
-char *li_setup_get_appname(Installation setup);
+char *li_setup_get_appname(LiInstallation setup);
 
-char *li_setup_get_appversion(Installation setup);
+char *li_setup_get_appversion(LiInstallation setup);
 
-char *li_setup_get_pkgid(Installation setup);
+char *li_setup_get_pkgid(LiInstallation setup);
 
-kgSignatureState li_setup_get_signature_state(Installation setup);
+PkgSignatureState li_setup_get_signature_state(LiInstallation setup);
 
-bool li_setup_get_long_description(Installation setup,void* list);
+bool li_setup_get_long_description(LiInstallation setup,void* list);
 
-char *li_setup_get_wizard_image_path(Installation setup);
+char *li_setup_get_wizard_image_path(LiInstallation setup);
 
-bool li_setup_get_license(Installation setup,void* list);
+bool li_setup_get_license(LiInstallation setup,void* list);
 
-bool li_setup_get_profiles_list(Installation setup,void* list);
+bool li_setup_get_profiles_list(LiInstallation setup,void* list);
 
-void li_setup_set_profileid(Installation setup,int id);
+void li_setup_set_profileid(LiInstallation setup,int id);
 
-void li_setup_enable_usource_registering(Installation setup,bool b);
+void li_setup_enable_usource_registering(LiInstallation setup,bool b);
 
-char *li_setup_get_appicon(Installation setup);
+char *li_setup_get_appicon(LiInstallation setup);
 
-char *li_setup_get_desktopfiles(Installation setup);
+char *li_setup_get_desktopfiles(LiInstallation setup);
 
-char *li_setup_get_app_exec_command(Installation setup);
+char *li_setup_get_app_exec_command(LiInstallation setup);
 
-char *li_setup_get_current_profile_filelist(Installation setup);
+char *li_setup_get_current_profile_filelist(LiInstallation setup);
 
-bool li_setup_execute(Installation setup);
+bool li_setup_execute(LiInstallation setup);
 
-void li_setup_exec_by_daemon(Installation setup,bool b);
-
+void li_setup_exec_by_daemon(LiInstallation setup,bool b);
 
 #endif /* __LI_INSTALLER */

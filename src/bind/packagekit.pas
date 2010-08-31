@@ -21,7 +21,7 @@ unit packagekit;
 interface
 
 uses
-  gExt, glib2, distri, Classes, liTypes, liUtils, Process, SysUtils, PkTypes;
+  gExt, glib2, distri, Classes, LiTypes, LiUtils, Process, SysUtils, PkTypes;
 
 type
   //** The pkBitfield var

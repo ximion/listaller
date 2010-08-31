@@ -1,11 +1,10 @@
 #CMake file for Listaller Library Headers
 
-set(llistaller_c_HEADERS
+set(llistaller_c_HEADERS Listaller
     li-installer.h
     li-manager.h
     li-types.h
     li-updater.h
-    listaller
 )
 
 set(llistaller_pas_BIND

@@ -20,7 +20,6 @@
 #define LIAPPMANAGER_H
 
 #include<QtGui>
-#include"li-types.h"
 
 namespace Listaller {
 
@@ -30,14 +29,12 @@ struct AppData
 {
   QString name;
   QString pkName;
-  PkgType PkType;
   QString shortDesc;
   QString version;
   QString author;
   QString iconName;
   QString profile;
   QString uId;
-  AppCategory Category;
   double installDate;
   QString dependencies;
 };
