@@ -88,6 +88,7 @@ add_custom_target(writedoc
 
 find_package(PkgConfig REQUIRED)
 find_package(UnixCommands REQUIRED)
+find_package(FPC REQUIRED)
 
 include(${CMAKE_SOURCE_DIR}/data/cmake/listaller_build_gui.cmake)
 
