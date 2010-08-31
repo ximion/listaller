@@ -15,7 +15,7 @@ install(FILES
 	DESTINATION share/listaller/graphics/libutton/
 )
 install(DIRECTORY libutton/distro
-	DESTINATION share/listaller/graphics/libutton/distro/
+	DESTINATION share/listaller/graphics/libutton/
 	FILES_MATCHING PATTERN "*.png"
 )
 

@@ -19,6 +19,7 @@ if(VERSION_SUFFIX MATCHES "-dev")
 		  execute_process(WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 				    COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
 				    OUTPUT_VARIABLE project_revision RESULT_VARIABLE check_fail)
+		  string(REGEX REPLACE "\n" "" project_revision ${project_revision})
 		  if(check_fail)
 		   message(STATUS "Could not fetch current Git revision: ${check_fail}")
 		  else()
@@ -93,7 +94,12 @@ find_package(FPC REQUIRED)
 include(${CMAKE_SOURCE_DIR}/data/cmake/listaller_build_gui.cmake)
 
 make_directory("${CMAKE_BINARY_DIR}/${PASCAL_TARGET_ARCH}-${PASCAL_TARGET_OS}")
-
+configure_file("${CMAKE_SOURCE_DIR}/src/liversion.inc.in"
+  "${CMAKE_SOURCE_DIR}/src/liversion.inc"
+  @ONLY
+)
+set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/src/liversion.inc)
+  
 add_subdirectory(lib)
 add_subdirectory(src)
 add_subdirectory(data)

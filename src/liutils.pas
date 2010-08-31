@@ -25,7 +25,7 @@ uses
 
 const
   //** Version of the Listaller applicationset
-  LiVersion = '0.4.20~dev';
+  LiVersion = {$I liversion.inc};
   //** Working directory of Listaller
   TMPDIR = '/tmp/listaller/'; //Never forget trailing backslash!
   //** Root configuration directory

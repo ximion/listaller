@@ -67,7 +67,7 @@ private slots:
     void emitNewApp(AppData app) {emit(newApp(app));};
     
 private:
-    void* mgr;
+    const void* mgr;
     LiMsgRedirect *msgRedir;
 };
 
