@@ -56,6 +56,8 @@ OPTION(QT "Build Listaller's Qt4 modules" OFF)
 OPTION(GTK "Build Listaller's GTK2 modules" OFF)
 OPTION(FRONTENDS "Compile Listaller's frontends" OFF)
 OPTION(CREATOR "Build the liCreator application" OFF)
+OPTION(BUILDTOOLS "APGCC and stuff to build your application" OFF)
+OPTION(VLDD "VisualLDD dependency explorer" OFF)
 ########################################
 
 IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -72,10 +74,11 @@ set(CMAKE_INSTALL_LIBDIR lib CACHE PATH "Output directory for libraries")
 set(LISTALLER_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/listaller)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/data/cmake/)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/data/cmake/vala)
 
 message(STATUS "Compiling Listaller version ${LISTALLER_VERSION}")
 
-configure_file("${CMAKE_MODULE_PATH}/cmake_uninstall.cmake.in"
+configure_file("${CMAKE_SOURCE_DIR}/data/cmake/cmake_uninstall.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
   IMMEDIATE @ONLY)
   
@@ -102,6 +105,7 @@ set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_D
   
 add_subdirectory(lib)
 add_subdirectory(src)
+add_subdirectory(tools)
 add_subdirectory(data)
 add_subdirectory(graphics)
 add_subdirectory(po)

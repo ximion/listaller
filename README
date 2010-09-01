@@ -1,4 +1,4 @@
-Listaller 0.4b
+Listaller 0.5:dev
 
 === Compiling instructions ===
 To compile Listaller, please read the file "DEPENDENCIES" first and make sure that you have all
@@ -17,6 +17,18 @@ You can pass the following options to the script:
 
 After configuring, you type "make all" to build the enabled modules.
 The compiled bianries are stored in subdirectories of /build.
+
+Alternatively you can use the CMake build system directly:
+mkdir build
+cd build
+cmake .. <flags>
+Possible flags are:
+ -DQT=ON          | Build Listaller's Qt4 modules (Qt4 interface & frontends)
+ -DGTK=ON         | Build Listaller's GTK2 modules (Frontends)
+ -DFRONTENDS=ON   | Compile Listaller's frontends (only usable if one GUI toolkit is enabled)
+ -DCREATOR=ON     | Build the liCreator application
+ -DBUILDTOOLS=ON  | APGCC and stuff to build your application for IPK packaging
+ -DVLDD=ON        | Compile VisualLDD dependency explorer (needs installed Qt4)
 
 === Installation ===
 To install the compiled binaries and required data files, execute

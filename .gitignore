@@ -16,7 +16,7 @@
 *.anjuta
 *.kdev4
 moc_*
+Makefile
 .directory
 build
-Makefile
-copylib.sh
+src/liversion.inc
