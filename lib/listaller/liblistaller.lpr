@@ -91,7 +91,7 @@ end;
 //** Removes an TInstallation object
 procedure li_setup_free(setup: PLiInstallation);cdecl;
 begin
- setup^.Free;
+ FReeAndNil(setup^);
 end;
 
 //** Initializes the setup
@@ -130,7 +130,7 @@ begin
 end;
 
 //** Installation type
-function li_setup_get_pkgtype(setup: PLiInstallation): PkgType;cdecl;
+function li_setup_pkgtype(setup: PLiInstallation): PkgType;cdecl;
 begin
   if not setup^.PkgOkay then exit;
   Result:=setup^.pType;
@@ -160,55 +160,55 @@ begin
 end;
 
 //** Read disallows property
-function li_setup_get_disallows(setup: PLiInstallation): PChar;cdecl;
+function li_setup_disallows(setup: PLiInstallation): PChar;cdecl;
 begin
   if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.Disallows);
 end;
 
 //** Read supported Linux distributions
-function li_setup_get_supported_distributions(setup: PLiInstallation): PChar;cdecl;
+function li_setup_supported_distros(setup: PLiInstallation): PChar;cdecl;
 begin
   if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.Distris);
 end;
 
 //** Check if application is installed
-function li_get_ipk_app_installed(appname: PChar;appid: PChar;sumode: Boolean): Boolean;cdecl;
+function li_ipk_app_is_installed(appname: PChar;appid: PChar;sumode: Boolean): Boolean;cdecl;
 begin
   Result:=IsPackageInstalled(appname,appid,sumode);
 end;
 
 //** Readout application name
-function li_setup_get_appname(setup: PLiInstallation): PChar;cdecl;
+function li_setup_appname(setup: PLiInstallation): PChar;cdecl;
 begin
   // if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.AppName);
 end;
 
 //** Read appversion
-function li_setup_get_appversion(setup: PLiInstallation): PChar;cdecl;
+function li_setup_appversion(setup: PLiInstallation): PChar;cdecl;
 begin
  // if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.AppVersion);
 end;
 
 //** Get package ID
-function li_setup_get_pkgid(setup: PLiInstallation): PChar;cdecl;
+function li_setup_pkgid(setup: PLiInstallation): PChar;cdecl;
 begin
   if not setup^.PkgOkay then exit;
   Result:=PChar(setup^.AppID);
 end;
 
 //** Get trust level of pkg signature
-function li_setup_get_signature_state(setup: PLiInstallation): PkgSignatureState;cdecl;
+function li_setup_signature_state(setup: PLiInstallation): PkgSignatureState;cdecl;
 begin
   if not setup^.PkgOkay then exit;
   Result:=setup^.SignatureInfo;
 end;
 
 //** Get description
-function li_setup_get_long_description(setup: PLiInstallation; list: PStringList): Boolean;cdecl;
+function li_setup_long_description(setup: PLiInstallation; list: PStringList): Boolean;cdecl;
 begin
  Result:=false;
  if not setup^.PkgOkay then exit;
@@ -221,7 +221,7 @@ end;
 end;
 
 //** Get wizard image patch
-function li_setup_get_wizard_image_path(setup: PLiInstallation): PChar;cdecl;
+function li_setup_wizard_image_path(setup: PLiInstallation): PChar;cdecl;
 begin
   Result:='';
   if not setup^.PkgOkay then exit;
@@ -229,7 +229,7 @@ begin
 end;
 
 //** Get license
-function li_setup_get_license(setup: PLiInstallation; list: PStringList): Boolean;cdecl;
+function li_setup_license(setup: PLiInstallation; list: PStringList): Boolean;cdecl;
 begin
 try
  Result:=true;
@@ -240,7 +240,7 @@ end;
 end;
 
 //** Get profiles list
-function li_setup_get_profiles_list(setup: PLiInstallation; list: PStringList): Boolean;cdecl;
+function li_setup_profiles_list(setup: PLiInstallation; list: PStringList): Boolean;cdecl;
 begin
   Result:=false;
   if not setup^.PkgOkay then exit;
@@ -265,7 +265,7 @@ begin
 end;
 
 //** Read appversion
-function li_setup_get_appicon(setup: PLiInstallation): PChar;cdecl;
+function li_setup_appicon(setup: PLiInstallation): PChar;cdecl;
 begin
   Result:='';
   if not setup^.PkgOkay then exit;
@@ -273,7 +273,7 @@ begin
 end;
 
 //** Read desktopfiles
-function li_setup_get_desktopfiles(setup: PLiInstallation): PChar;cdecl;
+function li_setup_desktopfiles(setup: PLiInstallation): PChar;cdecl;
 begin
   Result:='';
   if not setup^.PkgOkay then exit;
@@ -281,7 +281,7 @@ begin
 end;
 
 //** Read appcmd
-function li_setup_get_app_exec_command(setup: PLiInstallation): PChar;cdecl;
+function li_setup_app_exec_command(setup: PLiInstallation): PChar;cdecl;
 begin
   Result:='';
   if not setup^.PkgOkay then exit;
@@ -289,7 +289,7 @@ begin
 end;
 
 //** Read path to file list
-function li_setup_get_current_profile_filelist(setup: PLiInstallation): PChar;cdecl;
+function li_setup_current_profile_filelist(setup: PLiInstallation): PChar;cdecl;
 begin
   Result:='';
   if not setup^.PkgOkay then exit;
@@ -309,7 +309,7 @@ begin
 end;
 
 //** Get dependencies
-function li_setup_get_dependencies(setup: PLiInstallation; list: PStringList): Boolean;cdecl;
+function li_setup_dependencies(setup: PLiInstallation; list: PStringList): Boolean;cdecl;
 var i: Integer;
 begin
   Result:=false;
@@ -338,7 +338,7 @@ end;
 //** Removes an TAppManager object
 procedure li_mgr_free(mgr: PLiAppManager);cdecl;
 begin
- mgr^.Free;
+ FreeAndNil(mgr^);
 end;
 
 //** Start loading list of applications
@@ -556,25 +556,25 @@ exports
  li_setup_init,
  li_setup_set_sumode,
  li_setup_register_status_call,
- li_setup_get_pkgtype,
- li_setup_get_disallows,
- li_setup_get_supported_distributions,
- li_setup_get_appname,
- li_setup_get_appversion,
- li_setup_get_pkgid,
- li_setup_get_long_description,
+ li_setup_pkgtype,
+ li_setup_disallows,
+ li_setup_supported_distros,
+ li_setup_appname,
+ li_setup_appversion,
+ li_setup_pkgid,
+ li_setup_long_description,
  li_setup_enable_usource_registering,
- li_setup_get_wizard_image_path,
- li_setup_get_license,
- li_setup_get_profiles_list,
- li_setup_get_appicon,
- li_setup_get_desktopfiles,
- li_setup_get_app_exec_command,
- li_setup_get_signature_state,
- li_setup_get_current_profile_filelist,
+ li_setup_wizard_image_path,
+ li_setup_license,
+ li_setup_profiles_list,
+ li_setup_appicon,
+ li_setup_desktopfiles,
+ li_setup_app_exec_command,
+ li_setup_signature_state,
+ li_setup_current_profile_filelist,
  li_setup_register_user_request_call,
  li_setup_execute,
- li_setup_get_dependencies,
+ li_setup_dependencies,
  li_setup_set_forced,
  li_setup_set_profileid,
  li_setup_exec_by_daemon,
@@ -607,7 +607,7 @@ exports
  li_regdir,
  li_remove_ipk_installed_app,
  li_set_testmode,
- li_get_ipk_app_installed,
+ li_ipk_app_is_installed,
  li_version;
 
 {$R *.res}

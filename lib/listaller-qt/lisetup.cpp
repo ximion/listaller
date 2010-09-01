@@ -45,22 +45,22 @@ void Setup::setSuMode(bool b)
 
 QString Setup::getDisallows() const
 {
-  return li_setup_get_disallows(setup);
+  return li_setup_disallows(setup);
 }
 
 QString Setup::getSupportedDistributions() const
 {
-  return li_setup_get_supported_distributions(setup);
+  return li_setup_supported_distros(setup);
 }
 
 QString Setup::appName() const
 {
-  return li_setup_get_appname(setup);
+  return li_setup_appname(setup);
 }
 
 QString Setup::appVersion() const
 {
-  return li_setup_get_appversion(setup);
+  return li_setup_appversion(setup);
 }
 
 QString Setup::description() const
