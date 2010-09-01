@@ -18,9 +18,10 @@
 
 #include "limanager.h"
 
-#include<QtCore>
-#include<Listaller>
+#include <QtCore>
+#include <Listaller>
 #include "limsgredirect.h"
+#include <listaller-qt/limanager.h>
 
 using namespace Listaller;
 
@@ -31,7 +32,7 @@ void manager_status_change_cb(LiStatusChange change, TLiStatusData data, LiMsgRe
   msg->sendStatusMessage(QString(data.msg));
 }
 
-void manager_new_app_cb(char *name,AppInfo obj,LiMsgRedirect *msg)
+void manager_new_app_cb(char *name,AppInfo *obj,LiMsgRedirect *msg)
 {
   msg->sendNewApp(obj);
 }
@@ -43,7 +44,7 @@ AppManager::AppManager()
   
   msgRedir = new LiMsgRedirect();
   connect(msgRedir, SIGNAL(statusMessage(QString)), this, SLOT(emitStatusMessage(QString)));
-  connect(msgRedir, SIGNAL(newApp(AppData)), this, SLOT(emitNewApp(AppData)));
+  connect(msgRedir, SIGNAL(newApp(Application)), this, SLOT(emitNewApp(Application)));
   
   //Catch status messages
   li_mgr_register_status_call(mgr, StatusChangeEvent(manager_status_change_cb), msgRedir);

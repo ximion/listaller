@@ -19,8 +19,9 @@
 #ifndef LIMSGREDIRECT_H
 #define LIMSGREDIRECT_H
 
-#include<QtCore>
-#include<Listaller>
+#include <QtCore>
+#include <Listaller>
+#include "limanager.h"
 
 namespace Listaller {
 
@@ -36,11 +37,21 @@ class LiMsgRedirect : public QObject
   
 public:
   void sendStatusMessage(QString s){ emit(statusMessage(s)); }
-  void sendNewApp(AppInfo app){ emit(newApp(app)); }
+  void sendNewApp(AppInfo *ai){
+    Listaller::Application app;
+    app.author = ai->Author;
+    app.name = ai->Name;
+    app.pkName = ai->PkName;
+    app.shortDesc = ai->ShortDesc;
+    app.version = ai->Version;
+    app.installDate = ai->InstallDate;
+    app.iconName = ai->IconName;
+    emit(newApp(app));  
+  }
   
 signals:
   void statusMessage(QString s);
-  void newApp(AppInfo app);
+  void newApp(Application app);
   
 };
 

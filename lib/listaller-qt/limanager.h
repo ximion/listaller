@@ -25,7 +25,7 @@ namespace Listaller {
 
 class LiMsgRedirect;
 
-struct AppData
+struct Application
 {
   QString name;
   QString pkName;
@@ -59,12 +59,12 @@ public:
     void setSuMode(bool b);
     
 signals:
-    void newApp(AppData app);
+    void newApp(Application app);
     void statusMessage(QString msg);
 
 private slots:
-    void emitStatusMessage(QString s) {emit(statusMessage(s));};
-    void emitNewApp(AppData app) {emit(newApp(app));};
+    void emitStatusMessage(QString s) { emit(statusMessage(s)); };
+    void emitNewApp(Application a) { emit(newApp(a)); };
     
 private:
     const void* mgr;
