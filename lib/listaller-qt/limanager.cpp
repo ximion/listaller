@@ -27,14 +27,20 @@ using namespace Listaller;
 
 
 /* Listaller Callbacks */
-void manager_status_change_cb(LiStatusChange change, TLiStatusData data, LiMsgRedirect *msg)
+void manager_status_change_cb(LiStatusChange change, TLiStatusData data, LiMsgRedirect *rd)
 {
-  msg->sendStatusMessage(QString(data.msg));
+  rd->sendStatusMessage(QString(data.msg));
 }
 
-void manager_new_app_cb(char *name,AppInfo *obj,LiMsgRedirect *msg)
+void manager_new_app_cb(char *name,AppInfo *obj,LiMsgRedirect *rd)
 {
-  msg->sendNewApp(obj);
+  rd->sendNewApp(obj);
+}
+
+TRqResult manager_usr_request_cb(TRqType mtype,char *msg,LiMsgRedirect *rd)
+{
+  //Say yes to everything, until we have a nice request handler
+  return rqsYes;
 }
 
 /* AppManager Class */
@@ -47,25 +53,36 @@ AppManager::AppManager()
   connect(msgRedir, SIGNAL(newApp(Application)), this, SLOT(emitNewApp(Application)));
   
   //Catch status messages
-  li_mgr_register_status_call(mgr, StatusChangeEvent(manager_status_change_cb), msgRedir);
+  li_mgr_register_status_call(&mgr, StatusChangeEvent(manager_status_change_cb), msgRedir);
   //Catch new apps
-  li_mgr_register_app_call(mgr, NewAppEvent(manager_new_app_cb), msgRedir);
+  li_mgr_register_app_call(&mgr, NewAppEvent(manager_new_app_cb), msgRedir);
   
-  li_mgr_set_sumode(mgr, false);
+  li_mgr_register_request_call(&mgr, UserRequestCall(manager_usr_request_cb), msgRedir);
+  
+  setSuMode(false);
 }
 
 AppManager::~AppManager()
-{
-  li_mgr_free(mgr);
+{  
+  li_mgr_free(&mgr);
   delete msgRedir;
 }
 
-bool AppManager::loadApps()
+bool AppManager::rescanApps()
 {
-  return li_mgr_load_apps(mgr);
+  return li_mgr_load_apps(&mgr);
 }
 
 void AppManager::setSuMode(bool b)
 {
-  li_mgr_set_sumode(mgr, b);
+  li_mgr_set_sumode(&mgr, b);
+}
+
+bool AppManager::uninstallApp(Application app)
+{
+  AppInfo ai;
+  ai.UId = (char*) qPrintable(app.uId);
+  //TODO: Convert every part of Application to AppInfo
+  //etc...
+  li_mgr_remove_app(&mgr, ai);
 }

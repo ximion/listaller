@@ -29,7 +29,7 @@ set(llistaller_includes "-Fu${PROJECT_SOURCE_DIR}/src/"
 			"-Fu${CMAKE_CURRENT_SOURCE_DIR}"
 			"-Fu.")
 
-set(pascal_compiler_flags_cmn "-fPIC" "-dNoGUI")
+set(pascal_compiler_flags_cmn "-fPIC" "-dNoGUI" "-CX" "-XX")
 
 set(llistaller_build_args ${PASCAL_COMPILER_FLAGS}
 	${pascal_compiler_flags_cmn}

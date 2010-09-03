@@ -54,7 +54,8 @@ public:
     AppManager();
     ~AppManager();
     
-    bool loadApps();
+    bool rescanApps();
+    bool uninstallApp(Application app);
     
     void setSuMode(bool b);
     

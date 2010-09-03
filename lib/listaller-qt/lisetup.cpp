@@ -30,37 +30,37 @@ Setup::Setup()
 
 Setup::~Setup()
 {
-  li_setup_free(setup);
+  li_setup_free(&setup);
 }
 
 void Setup::initialize(QString pkgName)
 {
-  li_setup_init(setup, (char*) qPrintable(pkgName));
+  li_setup_init(&setup, (char*) qPrintable(pkgName));
 }
 
 void Setup::setSuMode(bool b)
 {
-  li_setup_set_sumode(setup, b);
+  li_setup_set_sumode(&setup, b);
 }
 
 QString Setup::getDisallows() const
 {
-  return li_setup_disallows(setup);
+  return li_setup_disallows(&setup);
 }
 
 QString Setup::getSupportedDistributions() const
 {
-  return li_setup_supported_distros(setup);
+  return li_setup_supported_distros(&setup);
 }
 
 QString Setup::appName() const
 {
-  return li_setup_appname(setup);
+  return li_setup_appname(&setup);
 }
 
 QString Setup::appVersion() const
 {
-  return li_setup_appversion(setup);
+  return li_setup_appversion(&setup);
 }
 
 QString Setup::description() const

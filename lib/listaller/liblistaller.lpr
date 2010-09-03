@@ -344,19 +344,19 @@ end;
 //** Start loading list of applications
 function li_mgr_load_apps(mgr: PLiAppManager): Boolean;cdecl;
 begin
-Result:=false;
-try
- if not mgr^.UserRequestRegistered then
- begin
-  perror('No user request callback was registered');
-  exit;
- end;
-
- Result:=true;
- mgr^.LoadEntries;
-except
  Result:=false;
-end;
+ try
+  if not mgr^.UserRequestRegistered then
+  begin
+   perror('No user request callback was registered');
+   exit;
+  end;
+
+  Result:=true;
+  mgr^.LoadEntries;
+ except
+  Result:=false;
+ end;
 end;
 
 //** Register call on status change for appmanager
@@ -373,6 +373,7 @@ end;
 //** Register application event to catch found apps
 function li_mgr_register_app_call(mgr: PLiAppManager;call: NewAppEvent;user_data: Pointer): Boolean;cdecl;
 begin
+ Result := false;
  Result:=true;
  try
   mgr^.RegOnNewApp(call, user_data);
@@ -426,9 +427,9 @@ begin
  end else Result:=true;
 end;
 begin
-if Assigned(log^) then
-  PerformCheck
-else perror('Check log != nil failed.');
+ if Assigned(log^) then
+   PerformCheck
+ else perror('Check log != nil failed.');
 end;
 
 //** Fix application dependencies
@@ -441,9 +442,9 @@ begin
  end else Result:=true;
 end;
 begin
-if Assigned(log^) then
-  PerformCheck
-else perror('Check log != nil failed.');
+ if Assigned(log^) then
+   PerformCheck
+ else perror('Check log != nil failed.');
 end;
 
 ////////////////////////////////////////////////////////////////////
