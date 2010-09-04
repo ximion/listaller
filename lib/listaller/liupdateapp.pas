@@ -51,13 +51,13 @@ type
     FNewUpd: NewUpdateEvent;
 
     ulist: TObjectList;
-    sdata: TLiStatusData;
+    sdata: LiStatusData;
 
     procedure SetMnPos(i: Integer);
     procedure SetExPos(i: Integer);
     procedure Msg(s: String);
     procedure StepMsg(s: String);
-    function Request(s: String; ty: TRqType): TRqResult;
+    function Request(s: String; ty: LiRqType): LiRqResult;
     procedure NewUpdate(nm: String; id: Integer);
     function ValidUpdateId(uid: Integer): Boolean;
     //Hook on HTTP socket
@@ -173,7 +173,7 @@ begin
     FStatus(scStepMessage, sdata, statechange_udata);
 end;
 
-function TLiAppUpdater.Request(s: String; ty: TRqType): TRqResult;
+function TLiAppUpdater.Request(s: String; ty: LiRqType): LiRqResult;
 begin
   if Assigned(FReq) then
     Result := FReq(ty, PChar(s), request_udata);

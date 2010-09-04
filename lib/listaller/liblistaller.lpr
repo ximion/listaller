@@ -41,12 +41,12 @@ end;
 
 function li_free_stringlist(lst: PStringList): Boolean;cdecl;
 begin
-Result:=true;
-try
- lst^.Free;
-except
- Result:=false;
-end;
+ Result:=true;
+ try
+  lst^.Free;
+ except
+  Result:=false;
+ end;
 end;
 
 function li_stringlist_read_line(lst: PStringList;ln: Integer): PChar;cdecl;
@@ -64,6 +64,11 @@ begin
   Result:=true;
   lst^[ln]:=val;
  end else Result:=false;
+end;
+
+function li_stringlist_to_text(lst: PStringList): PChar;cdecl;
+begin
+  Result := PChar(lst^.Text);
 end;
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -153,10 +158,16 @@ begin
   setup^.ForceActions:=str;
 end;
 
-//** Set TInstallation to superuser mode
+//** Set installation to superuser mode
 procedure li_setup_set_sumode(setup: PLiInstallation;b: Boolean);cdecl;
 begin
  setup^.SuperuserMode:=b;
+end;
+
+//** True if installation is set to sumode
+function li_setup_sumode(setup: PLiInstallation): Boolean;cdecl;
+begin
+ Result := setup^.SuperuserMode;
 end;
 
 //** Read disallows property
@@ -399,8 +410,14 @@ begin
  mgr^.SuperuserMode:=md;
 end;
 
+//** True if set to root mode
+function li_mgr_sumode(mgr: PLiAppManager): Boolean;cdecl;
+begin
+ Result := mgr^.SuperuserMode;
+end;
+
 //** Removes the application
-function li_mgr_remove_app(mgr: PLiAppManager;obj: AppInfo): Boolean;cdecl;
+function li_mgr_remove_app(mgr: PLiAppManager;obj: LiAppInfo): Boolean;cdecl;
 begin
  Result:=false;
  if not mgr^.UserRequestRegistered then
@@ -550,12 +567,14 @@ exports
  li_free_stringlist,
  li_stringlist_read_line,
  li_stringlist_write_line,
+ li_stringlist_to_text,
 
  //TInstallation related functions
  li_setup_new,
  li_setup_free,
  li_setup_init,
  li_setup_set_sumode,
+ li_setup_sumode,
  li_setup_register_status_call,
  li_setup_pkgtype,
  li_setup_disallows,
@@ -588,6 +607,7 @@ exports
  li_mgr_register_app_call,
  li_mgr_register_request_call,
  li_mgr_set_sumode,
+ li_mgr_sumode,
  li_mgr_remove_app,
  li_mgr_check_apps,
  li_mgr_fix_apps,

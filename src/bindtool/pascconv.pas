@@ -99,8 +99,8 @@ begin
   begin
     h := copy(s, 2, length(s));
     if (LowerCase(h) = 'char') or (LowerCase(h) = 'gchar') or
-      (LowerCase(h) = 'appinfo') or (LowerCase(h) = '<placeholder>') then  //FIXME
-      if LowerCase(h) = 'appinfo' then
+      (LowerCase(h) = 'liappinfo') or (LowerCase(h) = '<placeholder>') then  //FIXME
+      if LowerCase(h) = 'liappinfo' then
         Result := h + ' *'
       else
         Result := LowerCase(h) + ' *'

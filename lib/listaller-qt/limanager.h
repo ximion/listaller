@@ -58,6 +58,7 @@ public:
     bool uninstallApp(Application app);
     
     void setSuMode(bool b);
+    bool suMode() const;
     
 signals:
     void newApp(Application app);

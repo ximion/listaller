@@ -59,7 +59,7 @@ type
 
 // Publish procedure so it can be used by igobase
 //** Receive progress change signal on package initialization
-procedure PkgInitProgressChange(change: LiStatusChange; Data: TLiStatusData;
+procedure PkgInitProgressChange(change: LiStatusChange; data: LiStatusData;
   user_data: Pointer); cdecl;
 
 var
@@ -118,7 +118,7 @@ begin
   Application.ProcessMessages;
 end;
 
-procedure PkgInitProgressChange(change: LiStatusChange; Data: TLiStatusData;
+procedure PkgInitProgressChange(change: LiStatusChange; data: LiStatusData;
   user_data: Pointer); cdecl;
 begin
   if change = scExProgress then

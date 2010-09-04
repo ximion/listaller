@@ -29,6 +29,7 @@ function li_new_stringlist: Pointer;cdecl;external liblistaller;
 function li_free_stringlist(lst: PStringList): Boolean;cdecl;external liblistaller;
 function li_stringlist_read_line(lst: PStringList;ln: Integer): PChar;cdecl;external liblistaller;
 function li_stringlist_write_line(lst: PStringList;ln: Integer;val: PChar): Boolean;cdecl;external liblistaller;
+function li_stringlist_to_text(lst: PStringList): PChar;cdecl;external liblistaller;
 
 {@End:BaseFunctions}
 

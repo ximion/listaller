@@ -60,7 +60,7 @@ var
   UMnForm: TUMnForm;
 
 //Published, so update display can access it
-procedure OnMNStatus(change: LiStatusChange; Data: TLiStatusData;
+procedure OnMNStatus(change: LiStatusChange; data: LiStatusData;
   user_data: Pointer); cdecl;
 
 implementation
@@ -93,7 +93,7 @@ begin
     end;
 end;
 
-function OnRequest(mtype: TRqType; msg: PChar; user_data: Pointer): TRqResult; cdecl;
+function OnRequest(mtype: LiRqType; msg: PChar; user_data: Pointer): LiRqResult; cdecl;
 begin
   case mtype of
     rqError:
@@ -128,7 +128,7 @@ begin
   end;
 end;
 
-procedure OnMNStatus(change: LiStatusChange; Data: TLiStatusData;
+procedure OnMNStatus(change: LiStatusChange; data: LiStatusData;
   user_data: Pointer); cdecl;
 begin
   Application.ProcessMessages;

@@ -146,7 +146,7 @@ type
     { public declarations }
     DInfo: TDistroInfo;
     //** Information about the application that should be uninstalled
-    uApp: AppInfo;
+    uApp: LiAppInfo;
     //** Pointer to our AppManager object
     amgr: Pointer;
     //** Reference to current active list
@@ -167,7 +167,7 @@ var
   SUApps: Boolean = false;
 
 //Published for use in uninstall.pas
-procedure OnMgrStatus(change: LiStatusChange; Data: TLiStatusData;
+procedure OnMgrStatus(change: LiStatusChange; data: LiStatusData;
   user_data: Pointer); cdecl;
 
 //NOTE:
@@ -195,7 +195,7 @@ begin
   RMForm.ShowModal;
 end;
 
-procedure OnNewAppFound(Name: PChar; obj: PAppInfo; udata: Pointer); cdecl;
+procedure OnNewAppFound(name: PChar; obj: PLiAppInfo; udata: Pointer); cdecl;
 begin
   with MnFrm do
   begin
@@ -204,11 +204,11 @@ begin
   Application.ProcessMessages;
 end;
 
-procedure OnMgrStatus(change: LiStatusChange; Data: TLiStatusData;
+procedure OnMgrStatus(change: LiStatusChange; data: LiStatusData;
   user_data: Pointer); cdecl;
 begin
   case change of
-    scStepmessage: MnFrm.StatusBar1.Panels[0].Text := Data.msg;
+    scStepmessage: MnFrm.StatusBar1.Panels[0].Text := data.msg;
     scMessage:
     begin
       MnFrm.StatusBar1.Panels[0].Text := Data.msg;
@@ -217,7 +217,7 @@ begin
   end;
 end;
 
-function OnUserRequest(mtype: TRqType; msg: PChar; Data: Pointer): TRqResult; cdecl;
+function OnUserRequest(mtype: LiRqType; msg: PChar; udata: Pointer): LiRqResult; cdecl;
 begin
   Result := rqsOK;
   case mtype of

@@ -37,7 +37,7 @@ class LiMsgRedirect : public QObject
   
 public:
   void sendStatusMessage(QString s){ emit(statusMessage(s)); }
-  void sendNewApp(AppInfo *ai){
+  void sendNewApp(LiAppInfo *ai){
     Listaller::Application app;
     app.author = ai->Author;
     app.name = ai->Name;

@@ -32,11 +32,13 @@ public:
     ~Setup();
     
     void initialize(QString pkgName);
+    
     void setSuMode(bool b);
+    bool suMode() const;
     
-    QString getDisallows() const;
     
-    QString getSupportedDistributions() const;
+    QString disallows() const;
+    QString supportedDistributions() const;
     
     QString appName() const;
     QString appVersion() const;

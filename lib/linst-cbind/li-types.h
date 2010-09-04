@@ -40,18 +40,18 @@ typedef enum {
       rqWarning,
       rqQuestion,
       rqInfo
-} TRqType;
+} LiRqType;
 
 typedef enum {
       rqsYes,
       rqsNo,
       rqsOK
-} TRqResult;
+} LiRqResult;
 
 typedef enum {
       mtStep,
       mtInfo
-} TMessageType;
+} LiMessageType;
 
 typedef enum {
       prNone,
@@ -73,7 +73,7 @@ typedef enum {
       scStepMessage
 } LiStatusChange;
 
-struct TLiStatusData
+struct LiStatusData
 {
       char *msg;
       int exprogress;
@@ -104,7 +104,7 @@ typedef enum {
       ptUnknown
 } PkgType;
 
-struct AppInfo
+struct LiAppInfo
 {
       char *Name;
       char *PkName;
@@ -127,13 +127,13 @@ typedef enum {
 } PkgSignatureState;
 
 
-typedef void (*StatusChangeEvent) (LiStatusChange change,TLiStatusData data,void* user_data);
+typedef void (*StatusChangeEvent) (LiStatusChange change,LiStatusData data,void* user_data);
 
-typedef TRqResult (*UserRequestCall) (TRqType mtype,char *msg,void* user_data);
+typedef LiRqResult (*UserRequestCall) (LiRqType mtype,char *msg,void* user_data);
 
 typedef void (*TProgressEvent) (int pos,void* user_data);
 
-typedef void (*NewAppEvent) (char *name,AppInfo *obj,void* user_data);
+typedef void (*NewAppEvent) (char *name,LiAppInfo *obj,void* user_data);
 
 typedef void (*NewUpdateEvent) (char *name,int id,void* user_data);
 

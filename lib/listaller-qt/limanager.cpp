@@ -27,17 +27,17 @@ using namespace Listaller;
 
 
 /* Listaller Callbacks */
-void manager_status_change_cb(LiStatusChange change, TLiStatusData data, LiMsgRedirect *rd)
+void manager_status_change_cb(LiStatusChange change, LiStatusData data, LiMsgRedirect *rd)
 {
   rd->sendStatusMessage(QString(data.msg));
 }
 
-void manager_new_app_cb(char *name,AppInfo *obj,LiMsgRedirect *rd)
+void manager_new_app_cb(char *name,LiAppInfo *obj,LiMsgRedirect *rd)
 {
   rd->sendNewApp(obj);
 }
 
-TRqResult manager_usr_request_cb(TRqType mtype,char *msg,LiMsgRedirect *rd)
+LiRqResult manager_usr_request_cb(LiRqType mtype,char *msg,LiMsgRedirect *rd)
 {
   //Say yes to everything, until we have a nice request handler
   return rqsYes;
@@ -78,9 +78,14 @@ void AppManager::setSuMode(bool b)
   li_mgr_set_sumode(&mgr, b);
 }
 
+bool AppManager::suMode() const
+{
+  return li_mgr_sumode(&mgr);
+}
+
 bool AppManager::uninstallApp(Application app)
 {
-  AppInfo ai;
+  LiAppInfo ai;
   ai.UId = (char*) qPrintable(app.uId);
   //TODO: Convert every part of Application to AppInfo
   //etc...

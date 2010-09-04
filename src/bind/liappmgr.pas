@@ -32,7 +32,8 @@ function li_mgr_register_status_call(mgr: PLiAppManager;call: StatusChangeEvent;
 function li_mgr_register_app_call(mgr: PLiAppManager;call: NewAppEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
 function li_mgr_register_request_call(mgr: PLiAppManager;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;external liblistaller;
 procedure li_mgr_set_sumode(mgr: PLiAppManager;md: Boolean);cdecl;external liblistaller;
-function li_mgr_remove_app(mgr: PLiAppManager;obj: AppInfo): Boolean;cdecl;external liblistaller;
+function li_mgr_sumode(mgr: PLiAppManager): Boolean;cdecl;external liblistaller;
+function li_mgr_remove_app(mgr: PLiAppManager;obj: LiAppInfo): Boolean;cdecl;external liblistaller;
 function li_mgr_check_apps(mgr: PLiAppManager;log: PStringList;root: Boolean): Boolean;cdecl;external liblistaller;
 function li_mgr_fix_apps(mgr: PLiAppManager;log: PStringList;root: Boolean): Boolean;cdecl;external liblistaller;
 

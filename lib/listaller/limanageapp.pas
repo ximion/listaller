@@ -34,11 +34,11 @@ type
     FStatus: StatusChangeEvent;
 
     //State data
-    sdata: TLiStatusData; //Contains the current progress
+    sdata: LiStatusData; //Contains the current progress
 
     procedure msg(s: String);
-    function request(s: String; ty: TRqType): TRqResult;
-    procedure newapp(s: String; oj: AppInfo);
+    function request(s: String; ty: LiRqType): LiRqResult;
+    procedure newapp(s: String; oj: LiAppInfo);
     procedure setstate(state: LiProcStatus);
     procedure setpos(i: Integer);
 
@@ -49,7 +49,7 @@ type
     procedure PkitProgress(pos: Integer; xd: Pointer);
     //** Catch status messages from DBus action
     procedure DBusStatusChange(ty: LiProcStatus; data: TLiProcData);
-    procedure InternalRemoveApp(obj: AppInfo);
+    procedure InternalRemoveApp(obj: LiAppInfo);
   protected
     //Some user data for callbacks
     statechange_udata: Pointer;
@@ -61,7 +61,7 @@ type
     //** Load software list entries
     procedure LoadEntries;
     //** Removes an application
-    procedure UninstallApp(obj: AppInfo);
+    procedure UninstallApp(obj: LiAppInfo);
  {** Checks dependencies of all installed apps
     @param report Report of the executed actions
     @param fix True if all found issues should be fixed right now
@@ -156,13 +156,13 @@ begin
     FStatus(scMessage, sdata, statechange_udata);
 end;
 
-function TLiAppManager.Request(s: String; ty: TRqType): TRqResult;
+function TLiAppManager.Request(s: String; ty: LiRqType): LiRqResult;
 begin
   if Assigned(FReq) then
     Result := FReq(ty, PChar(s), request_udata);
 end;
 
-procedure TLiAppManager.NewApp(s: String; oj: AppInfo);
+procedure TLiAppManager.NewApp(s: String; oj: LiAppInfo);
 begin
   if Assigned(FApp) then
     FApp(PChar(s), @oj, newapp_udata);
@@ -205,7 +205,7 @@ var
   procedure ProcessDesktopFile(fname: String);
   var
     d: TIniFile;
-    entry: AppInfo;
+    entry: LiAppInfo;
     dt: TMOFile;
     lp: String;
     translate: Boolean; //Used, because Assigned(dt) throws an AV
@@ -552,7 +552,7 @@ end;
 //Can remove Autopackage.org or native package.
 // Only for interal use, called by UninstallApp.
 // This function exists to speed up the removal process.
-procedure TLiAppManager.InternalRemoveApp(obj: AppInfo);
+procedure TLiAppManager.InternalRemoveApp(obj: LiAppInfo);
 var
   t: TProcess;
   pkit: TPackageKit;
@@ -633,7 +633,7 @@ end;
 // identification string - if not, pkg has to be Loki/Mojo, so intitiate Mojo-Removal. After rdepends and pkg resolve is done,
 // run uninstall as root if necessary. At the end, RemoveAppInternal() is called (if LOKI-Remove was not run) to uninstall
 // native or autopackage setup.
-procedure TLiAppManager.UninstallApp(obj: AppInfo);
+procedure TLiAppManager.UninstallApp(obj: LiAppInfo);
 var
   id: String;
   i: Integer;
@@ -745,7 +745,7 @@ function TLiAppManager.CheckApps(report: TStringList; const fix: Boolean = false
   const forceroot: Boolean = false): Boolean;
 var
   db: TSoftwareDB;
-  app: AppInfo;
+  app: LiAppInfo;
   deps: TStringList;
   i: Integer;
   pkit: TPackageKit;
@@ -851,7 +851,7 @@ var
   bs: Double;
   ipkc: TIPKControl;
 
-  sdata: TLiStatusData;
+  sdata: LiStatusData;
 
   procedure SetPosition(prog: Double);
   begin

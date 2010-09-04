@@ -72,7 +72,7 @@ begin
   RMForm.Memo1.Lines.add(s);
 end;
 
-procedure OnRmStatus(change: LiStatusChange; Data: TLiStatusData;
+procedure OnRmStatus(change: LiStatusChange; data: LiStatusData;
   user_data: Pointer); cdecl;
 begin
   case change of

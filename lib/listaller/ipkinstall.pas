@@ -76,7 +76,7 @@ type
     //List of available mo files
     mofiles: TStringList;
     //Data which contains the status of the current action
-    StatusData: TLiStatusData;
+    StatusData: LiStatusData;
     // True if su mode enabled
     SUMode: Boolean;
     // Path to package registration
@@ -118,7 +118,7 @@ type
     //Set/Get methods for callbacks indication
     procedure SetMainPos(pos: Integer);
     procedure SetExtraPos(pos: Integer);
-    function MakeUsrRequest(msg: String; qtype: TRqType): TRqResult;
+    function MakeUsrRequest(msg: String; qtype: LiRqType): LiRqResult;
     procedure SendStateMsg(msg: String);
     procedure msg(str: String);
   public
@@ -235,7 +235,7 @@ begin
     FStatusChange(scExProgress, statusdata, statechange_udata);
 end;
 
-function TLiInstallation.MakeUsrRequest(msg: String; qtype: TRqType): TRqResult;
+function TLiInstallation.MakeUsrRequest(msg: String; qtype: LiRqType): LiRqResult;
 begin
   if Assigned(FRequest) then
     Result := FRequest(qtype, PChar(msg), request_udata)
@@ -441,7 +441,7 @@ var
   i: Integer;
   DInfo: TDistroInfo;
   cont: TIPKControl;
-  hres: TRqResult;
+  hres: LiRqResult;
 
   procedure Emergency_FreeAll();
   begin
@@ -936,7 +936,7 @@ var
   dsk: TIniFile; //Desktop files
   pkg: TLiUnpacker; // IPK decompressor
   setcm: Boolean;
-  appField: AppInfo;
+  appField: LiAppInfo;
   proc: TProcess; // Helper process with pipes
   pkit: TPackageKit; //PackageKit object
   DInfo: TDistroInfo; //Distribution information

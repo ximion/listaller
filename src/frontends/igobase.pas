@@ -305,7 +305,7 @@ begin
   end;
 end;
 
-function RequestHandling(mtype: TRqType; msg: PChar; Data: Pointer): TRqResult; cdecl;
+function RequestHandling(mtype: LiRqType; msg: PChar; udata: Pointer): LiRqResult; cdecl;
 var
   s: String;
 begin
@@ -386,7 +386,7 @@ begin
 
 end;
 
-procedure StatusChangeCall(change: LiStatusChange; Data: TLiStatusData;
+procedure StatusChangeCall(change: LiStatusChange; data: LiStatusData;
   user_data: Pointer); cdecl;
 begin
   if Assigned(IWizFrm) then

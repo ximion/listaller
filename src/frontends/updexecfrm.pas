@@ -57,7 +57,7 @@ uses updatefrm;
 
 { TUExecFm }
 
-procedure OnEXStatus(change: LiStatusChange; Data: TLiStatusData;
+procedure OnEXStatus(change: LiStatusChange; data: LiStatusData;
   user_data: Pointer); cdecl;
 begin
   Application.ProcessMessages;

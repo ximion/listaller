@@ -26,7 +26,7 @@ uses
 type
 
   TLiDBData = record
-    App: AppInfo;
+    App: LiAppInfo;
   end;
 
   TSoftwareDB = class
@@ -39,7 +39,7 @@ type
     EOF: Boolean;
     onnewapp_udata: Pointer;
 
-    function GetAppField: AppInfo;
+    function GetAppField: LiAppInfo;
     function GetSQLiteVersion: String;
     function DBOkay: Boolean;
   public
@@ -61,7 +61,7 @@ type
     //** Delete current app
     procedure AppDeleteCurrent;
     //** Add a new application
-    procedure AppAddNew(app: AppInfo);
+    procedure AppAddNew(app: LiAppInfo);
     //** Update version of app
     procedure AppUpdateVersion(pkgID: String; newv: String);
     //** Add new dependency to databse
@@ -193,7 +193,7 @@ end;
 
 function TSoftwareDB.GetApplicationList(blacklist: TStringList = nil): Boolean;
 var
-  entry: AppInfo;
+  entry: LiAppInfo;
   p: AnsiString;
 begin
   Result := false;
@@ -237,9 +237,9 @@ begin
   dsApp.Close;
 end;
 
-function TSoftwareDB.GetAppField: AppInfo;
+function TSoftwareDB.GetAppField: LiAppInfo;
 var
-  r: AppInfo;
+  r: LiAppInfo;
   h: String;
 
   function _(s: WideString): PChar;
@@ -357,7 +357,7 @@ begin
   dsApp.ApplyUpdates;
 end;
 
-procedure TSoftwareDB.AppAddNew(app: AppInfo);
+procedure TSoftwareDB.AppAddNew(app: LiAppInfo);
 var
   g, h: String;
 begin

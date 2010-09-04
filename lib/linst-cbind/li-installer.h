@@ -49,6 +49,8 @@ void li_setup_set_forced(LiInstallation setup,char *str);
 
 void li_setup_set_sumode(LiInstallation setup,bool b);
 
+bool li_setup_sumode(LiInstallation setup);
+
 char *li_setup_disallows(LiInstallation setup);
 
 char *li_setup_supported_distros(LiInstallation setup);

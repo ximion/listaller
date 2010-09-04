@@ -43,12 +43,17 @@ void Setup::setSuMode(bool b)
   li_setup_set_sumode(&setup, b);
 }
 
-QString Setup::getDisallows() const
+bool Setup::suMode() const
+{
+  return li_setup_sumode(&setup);
+}
+
+QString Setup::disallows() const
 {
   return li_setup_disallows(&setup);
 }
 
-QString Setup::getSupportedDistributions() const
+QString Setup::supportedDistributions() const
 {
   return li_setup_supported_distros(&setup);
 }

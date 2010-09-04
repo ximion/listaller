@@ -43,11 +43,11 @@ type
   PLiAppUpdater = Pointer;
 
   //** Request types
-  TRqType = (rqError, rqWarning, rqQuestion, rqInfo);
+  LiRqType = (rqError, rqWarning, rqQuestion, rqInfo);
   //** Request result types
-  TRqResult = (rqsYes, rqsNo, rqsOK);
+  LiRqResult = (rqsYes, rqsNo, rqsOK);
   //** Type of a message (published)
-  TMessageType = (mtStep, mtInfo);
+  LiMessageType = (mtStep, mtInfo);
   //** Status of current job
   LiProcStatus = (prNone, prFailed, prAuthorized, prBlocked, prFinished,
     prError, prInfo, prStarted);
@@ -56,7 +56,7 @@ type
   LiStatusChange = (scNone, scMnProgress, scExProgress, scStatus,
     scMessage, scStepMessage);
   //** Data assigned to a status change
-  TLiStatusData = record
+  LiStatusData = record
     msg: PChar;
     exprogress: Longint;
     mnprogress: Longint;
@@ -65,11 +65,11 @@ type
   end;
 
   //** Callback for change of status
-  StatusChangeEvent = procedure(change: LiStatusChange; data: TLiStatusData;
+  StatusChangeEvent = procedure(change: LiStatusChange; data: LiStatusData;
     user_data: Pointer); cdecl;
   //** Callback for user request
-  UserRequestCall = function(mtype: TRqType; msg: PChar;
-    user_data: Pointer): TRqResult; cdecl;
+  UserRequestCall = function(mtype: LiRqType; msg: PChar;
+    user_data: Pointer): LiRqResult; cdecl;
 
   //** Called if progress was changed; only for internal use
   TProgressEvent = procedure(pos: Integer; user_data: Pointer) of object;
@@ -92,7 +92,7 @@ type
   PkgType = (ptLinstall, ptDLink, ptContainer, ptUnknown);
 
   //** Container for information about apps
-  AppInfo = record
+  LiAppInfo = record
     Name: PChar;
     PkName: PChar;
     PkType: PkgType;
@@ -107,10 +107,10 @@ type
     Dependencies: PChar;
   end;
 
-  PAppInfo = ^AppInfo;
+  PLiAppInfo = ^LiAppInfo;
 
   //** Event to catch thrown application records
-  NewAppEvent = procedure(name: PChar; obj: PAppInfo; user_data: Pointer); cdecl;
+  NewAppEvent = procedure(name: PChar; obj: PLiAppInfo; user_data: Pointer); cdecl;
 
   //** Shows information about new update
   NewUpdateEvent = procedure(name: PChar; id: Integer; user_data: Pointer); cdecl;

@@ -43,7 +43,9 @@ bool li_mgr_register_request_call(LiAppManager mgr,UserRequestCall call,void* us
 
 void li_mgr_set_sumode(LiAppManager mgr,bool md);
 
-bool li_mgr_remove_app(LiAppManager mgr,AppInfo obj);
+bool li_mgr_sumode(LiAppManager mgr);
+
+bool li_mgr_remove_app(LiAppManager mgr,LiAppInfo obj);
 
 bool li_mgr_check_apps(LiAppManager mgr,void* log,bool root);
 

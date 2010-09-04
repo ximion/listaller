@@ -46,7 +46,7 @@ type
   //** A command Listaller should do on DBus
   ListallerBusCommand = record
     cmdtype: TListallerBusAction;
-    appinfo: AppInfo;
+    appinfo: LiAppInfo;
     pkgname: String;
     overrides: String;
     updid: Integer;
@@ -68,7 +68,7 @@ type
     procedure SendProgress(val: Integer; const ty: TLiProcDetail = pdMainProgress);
     procedure SendMessage(msg: String; const ty: TLiProcDetail = pdInfo);
     //** Remove app as root via remote DBus connection
-    procedure UninstallAppAsRoot(obj: AppInfo);
+    procedure UninstallAppAsRoot(obj: LiAppInfo);
     //** Execute installation as root using dbus daemon & PolicyKit
     function DoInstallationAsRoot(pkgpath: String; overrides: String;
       addsrc: Boolean): Boolean;
@@ -156,7 +156,7 @@ begin
   SyncProcStatus;
 end;
 
-procedure TLiDBusAction.UninstallAppAsRoot(obj: AppInfo);
+procedure TLiDBusAction.UninstallAppAsRoot(obj: LiAppInfo);
 var
   bus: TDBusClient;
   dmsg: PDBusMessage;

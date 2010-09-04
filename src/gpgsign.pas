@@ -30,7 +30,7 @@ type
   private
     CBProcess: TCallBackProcess;
     FFileName: String;
-    status: TLiStatusData;
+    status: LiStatusData;
     FStatusEvent: StatusChangeEvent;
     gpg: String;
 
