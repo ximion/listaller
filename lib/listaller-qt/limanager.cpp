@@ -20,11 +20,38 @@
 
 #include <QtCore>
 #include <Listaller>
-#include "limsgredirect.h"
-#include <listaller-qt/limanager.h>
 
 using namespace Listaller;
 
+#ifndef _LIMSGREDIRECT
+#define _LIMSGREDIRECT
+
+namespace Listaller {
+class LiMsgRedirect : public QObject
+{
+  Q_OBJECT
+  
+public:
+  void sendStatusMessage(QString s){ emit(statusMessage(s)); }
+  void sendNewApp(LiAppInfo *ai){
+    Listaller::Application app;
+    app.author = ai->Author;
+    app.name = ai->Name;
+    app.pkName = ai->PkName;
+    app.shortDesc = ai->ShortDesc;
+    app.version = ai->Version;
+    app.installDate = ai->InstallDate;
+    app.iconName = ai->IconName;
+    emit(newApp(app));  
+  }
+  
+signals:
+  void statusMessage(QString s);
+  void newApp(Application app);
+  
+};
+};
+#endif // _LIMSGREDIRECT
 
 /* Listaller Callbacks */
 void manager_status_change_cb(LiStatusChange change, LiStatusData data, LiMsgRedirect *rd)
@@ -85,9 +112,21 @@ bool AppManager::suMode() const
 
 bool AppManager::uninstallApp(Application app)
 {
+  struct local {
+     static char *qStringToChar(QString s)
+     {
+       return (char*) qPrintable(s);
+     }
+  };
+  
   LiAppInfo ai;
-  ai.UId = (char*) qPrintable(app.uId);
+  ai.UId = local::qStringToChar(app.uId);
+  ai.Author = local::qStringToChar(app.author);
+  ai.Dependencies = local::qStringToChar(app.dependencies);
+  ai.Name = local::qStringToChar(app.name);
+  //ai.PkType = local::qStringToChar(app.pkType);
+  ai.Profile = local::qStringToChar(app.profile);
   //TODO: Convert every part of Application to AppInfo
-  //etc...
+
   li_mgr_remove_app(&mgr, ai);
 }
