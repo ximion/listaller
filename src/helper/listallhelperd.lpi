@@ -52,7 +52,7 @@
       <Filename Value="../../build/listallhelperd"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir)/"/>
+      <IncludeFiles Value="$(ProjOutDir)/;../"/>
       <Libraries Value="../../build/"/>
       <OtherUnitFiles Value="../;../bind/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/"/>
       <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>

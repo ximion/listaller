@@ -55,7 +55,7 @@ var
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////This will be done if "lipa" is started
 
-procedure OnSetupStatusChange(change: LiStatusChange;data: TLiStatusData;user_data: Pointer);cdecl;
+procedure OnSetupStatusChange(change: LiStatusChange;data: LiStatusData;user_data: Pointer);cdecl;
 begin
  case change of
   scMessage    : if not Application.HasOption('verbose') then writeLn(' '+data.msg);
@@ -79,10 +79,10 @@ begin
   end;
 end;
 
-function OnSetupUserRequest(mtype: TRqType;msg: PChar;data: Pointer): TRqResult;cdecl;
+function OnSetupUserRequest(mtype: LiRqType;msg: PChar;data: Pointer): LiRqResult;cdecl;
 var s: String;
 
-function AskQuestion: TRqResult;
+function AskQuestion: LiRqResult;
 begin
  writeLn(' '+msg);
   writeLn('');

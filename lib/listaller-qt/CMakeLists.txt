@@ -11,7 +11,7 @@ set(listaller-qt_SRCS
     lisetup.cpp
 )
 
-set(listaller-qt_HEADERS limsgredirect.h
+set(listaller-qt_HEADERS
    limanager.h
    lisetup.h
 )

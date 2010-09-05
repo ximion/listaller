@@ -83,7 +83,7 @@ type
   //** Job which removes applications
   TDoAppRemove = class(TJob)
   private
-    appinfo: AppInfo;
+    appinfo: LiAppInfo;
     //** Pointer to management object
     mgr: Pointer;
     //** Send reply to client
@@ -348,7 +348,7 @@ begin
   bs.FreeMessage(origMsg);
 end;
 
-function InstallUserRequest(mtype: TRqType; info: PChar; job: Pointer): TRqResult; cdecl;
+function InstallUserRequest(mtype: LiRqType; info: PChar; job: Pointer): LiRqResult; cdecl;
 begin
   Result := rqsOK;
   //The daemon should not ask questions while doing a transaction.
@@ -366,7 +366,7 @@ begin
   end;
 end;
 
-procedure OnInstallStatus(change: LiStatusChange; Data: TLiStatusData;
+procedure OnInstallStatus(change: LiStatusChange; data: LiStatusData;
   job: Pointer); cdecl;
 begin
   case change of
@@ -434,7 +434,7 @@ end;
 
 { TDoAppRemove }
 
-function OnMgrUserRequest(mtype: TRqType; msg: PChar; job: Pointer): TRqResult; cdecl;
+function OnMgrUserRequest(mtype: LiRqType; msg: PChar; job: Pointer): LiRqResult; cdecl;
 begin
   Result := rqsOK;
   //The daemon should not ask questions while doing a transaction.
@@ -452,7 +452,7 @@ begin
   end;
 end;
 
-procedure OnMgrStatus(change: LiStatusChange; Data: TLiStatusData; job: Pointer); cdecl;
+procedure OnMgrStatus(change: LiStatusChange; data: LiStatusData; job: Pointer); cdecl;
 
   procedure sub_sendProgress;
   var
@@ -643,8 +643,8 @@ end;
 
 { TDoAppUpdate }
 
-function OnUpdaterUserRequest(mtype: TRqType; msg: PChar;
-  job: Pointer): TRqResult; cdecl;
+function OnUpdaterUserRequest(mtype: LiRqType; msg: PChar;
+  job: Pointer): LiRqResult; cdecl;
 begin
   Result := rqsOK;
   //The daemon should not ask questions while doing a transaction.
@@ -662,7 +662,7 @@ begin
   end;
 end;
 
-procedure OnUpdaterStatus(change: LiStatusChange; Data: TLiStatusData;
+procedure OnUpdaterStatus(change: LiStatusChange; data: LiStatusData;
   job: Pointer); cdecl;
 
   procedure sub_sendProgress;

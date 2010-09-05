@@ -22,7 +22,7 @@ interface
 
 uses
   MD5, Classes, GPGSign, LiTypes, LiUtils, Process, RegExpr, SysUtils,
-  IPKCDef10, LiFileUtil, IPKPackage11, OPBitmapFormats;
+  IPKCDef10, LiFileUtil, IPKPackage11;
 
 type
 
@@ -863,12 +863,15 @@ end;
 ////////////////////////////////////////////////////////////////////////////////
 procedure CreateLiCompButton(dlist: TStringList; op: String);
 var
-  bt, buf, res: TPNGImage;
+  //bt, buf, res: TPNGImage;
   i, j: Integer;
 begin
+  //FIXME: This function was based on OPBitmaps. It needs to be converted to StdGraphics or
+  //       something else which meets our requirements.
   writeLn;
   writeLn('=== Creating graphics ===');
-  writeLn('Generating "Linux compatible" button ' + ExtractFileName(op) + ' ...');
+  writeLn('TODO: Make the function use StdGraphics!');
+  {writeLn('Generating "Linux compatible" button ' + ExtractFileName(op) + ' ...');
   bt := TPNGImage.Create;
   buf := TPNGImage.Create;
   res := TPNGImage.Create;
@@ -926,7 +929,7 @@ begin
   res.SaveToFile(op);
   bt.Free;
   buf.Free;
-  res.Free;
+  res.Free;}
 end;
 
 end.
