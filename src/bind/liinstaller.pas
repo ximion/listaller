@@ -30,6 +30,8 @@ type
     ForcedActn: String;
     procedure SetForced(s: String);
     function IsRootMode: Boolean;
+    procedure SetTestmode(b: Boolean);
+    function IsTestmode: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -38,7 +40,6 @@ type
     procedure SetStatusChangeEvent(call: StatusChangeEvent; const userdata: Pointer = nil);
     procedure SetUserRequestCall(call: UserRequestCall; const userdata: Pointer = nil);
     function PkType: PkgType;
-    procedure SetTestmode(b: Boolean);
     function GetDisallows: String;
     function GetSupDistris: String;
     function GetAppName: String;
@@ -60,6 +61,7 @@ type
     procedure SetRootMode(b: Boolean);
     property Forced: String read ForcedActn write SetForced;
     property SUMode: Boolean read IsRootMode write SetRootMode;
+    property TestMode: Boolean read IsTestMode write SetTestMode;
     property RemoteObject: Pointer read ins;
   end;
 
@@ -75,7 +77,8 @@ function li_setup_init(setup: PLiInstallation;pkname: PChar): Boolean;cdecl;exte
 function li_setup_register_status_call(setup: PLiInstallation;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
 function li_setup_register_user_request_call(setup: PLiInstallation;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;external liblistaller;
 function li_setup_pkgtype(setup: PLiInstallation): PkgType;cdecl;external liblistaller;
-procedure li_set_testmode(st: Boolean);cdecl;external liblistaller;
+procedure li_setup_set_testmode(setup: PLiInstallation;st: Boolean);cdecl;external liblistaller;
+function li_setup_testmode(setup: PLiInstallation): Boolean;cdecl;external liblistaller;
 procedure li_setup_set_forced(setup: PLiInstallation;str: PChar);cdecl;external liblistaller;
 procedure li_setup_set_sumode(setup: PLiInstallation;b: Boolean);cdecl;external liblistaller;
 function li_setup_sumode(setup: PLiInstallation): Boolean;cdecl;external liblistaller;
@@ -87,6 +90,7 @@ function li_setup_appversion(setup: PLiInstallation): PChar;cdecl;external libli
 function li_setup_pkgid(setup: PLiInstallation): PChar;cdecl;external liblistaller;
 function li_setup_signature_state(setup: PLiInstallation): PkgSignatureState;cdecl;external liblistaller;
 function li_setup_long_description(setup: PLiInstallation; list: PStringList): Boolean;cdecl;external liblistaller;
+function li_setup_long_description_as_string(setup: PLiInstallation): PChar;cdecl;external liblistaller;
 function li_setup_wizard_image_path(setup: PLiInstallation): PChar;cdecl;external liblistaller;
 function li_setup_license(setup: PLiInstallation; list: PStringList): Boolean;cdecl;external liblistaller;
 function li_setup_profiles_list(setup: PLiInstallation; list: PStringList): Boolean;cdecl;external liblistaller;
@@ -134,9 +138,14 @@ begin
   Result := li_setup_pkgtype(@ins);
 end;
 
+function TInstallPack.IsTestmode: Boolean;
+begin
+  Result := li_setup_testmode(@ins);
+end;
+
 procedure TInstallPack.SetTestmode(b: Boolean);
 begin
-  li_set_testmode(b);
+  li_setup_set_testmode(@ins, b);
 end;
 
 function TInstallPack.GetDisallows: String;

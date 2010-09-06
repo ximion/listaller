@@ -97,7 +97,7 @@ AppManager::~AppManager()
 
 bool AppManager::rescanApps()
 {
-  return li_mgr_load_apps(&mgr);
+  return li_mgr_scan_apps(&mgr);
 }
 
 void AppManager::setSuMode(bool b)

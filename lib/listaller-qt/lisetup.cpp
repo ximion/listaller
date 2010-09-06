@@ -68,13 +68,12 @@ QString Setup::appVersion() const
   return li_setup_appversion(&setup);
 }
 
-QString Setup::description() const
+QString Setup::descriptionAsString() const
 {
-  //return li_setup_get_long_description(setup);
-  return "FIXME: Implement this!";
+  return QString(li_setup_long_description_as_string(&setup));
 }
 
 void Setup::setTestmode(bool b)
 {
-  li_set_testmode(b);
+  li_setup_set_testmode(&setup, b);
 }

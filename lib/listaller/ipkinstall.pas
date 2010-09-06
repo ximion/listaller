@@ -21,10 +21,11 @@ unit ipkinstall;
 interface
 
 uses
-  MD5, Distri, IPKCDef10, Classes, FTPSend, LiTypes, LiUtils, MTProcs,
-  PkTypes, Process, RegExpr, BaseUnix, Blcksock, HTTPSend, IniFiles, LiFileUtil,
-  SysUtils, DepManage, strLocale, IPKPackage11, liDBusProc, PackageKit,
-  SoftwareDB, LiManageApp;
+  MD5, Distri, Classes, FTPSend, LiTypes, LiUtils, MTProcs,
+  PkTypes, Process, RegExpr, BaseUnix, Blcksock, HTTPSend, IniFiles,
+  SysUtils, DepManage, IPKCDef10, strLocale, liDBusProc, LiFileUtil,
+  PackageKit,
+  SoftwareDB, LiManageApp, IPKPackage11;
 
 type
   TLiInstallation = class
@@ -91,6 +92,8 @@ type
     ftpfilesize: Integer;
     //Daemon-Mode?
     daemonm: Boolean;
+    //Testmode
+    FTestMode: Boolean;
 
     //Set superuser mode correctly
     procedure SetRootMode(b: Boolean);
@@ -177,6 +180,8 @@ type
     property ForceActions: String read Forces write Forces;
     //** True if update source will be registered
     property RegisterUpdateSource: Boolean read AddUpdateSource write AddUpdateSource;
+    //** Setup is in testmode?
+    property TestMode: Boolean read FTestMode write FTestMode;
     //** Register event to catch status messages
     procedure RegOnStatusChange(call: StatusChangeEvent; Data: Pointer);
     //** Check if package is okay, if not raise error and return false
@@ -197,20 +202,22 @@ procedure TLiInstallation.RegOnStatusChange(call: StatusChangeEvent; Data: Point
 begin
   if Assigned(call) then
   begin
-  FStatusChange := call;
-  statechange_udata := data;
-  end else
-  perror('Received invalid ´StatusChangeEvent´ pointer!');
+    FStatusChange := call;
+    statechange_udata := data;
+  end
+  else
+    perror('Received invalid ´StatusChangeEvent´ pointer!');
 end;
 
 procedure TLiInstallation.RegOnUsrRequest(call: UserRequestCall; data: Pointer);
 begin
   if Assigned(call) then
   begin
-  FRequest := call;
-  request_udata := Data;
-  end else
-  perror('Received invalid ´UserRequestCall´ pointer!');
+    FRequest := call;
+    request_udata := Data;
+  end
+  else
+    perror('Received invalid ´UserRequestCall´ pointer!');
 end;
 
 function TLiInstallation.UserRequestRegistered: Boolean;
@@ -263,11 +270,12 @@ constructor TLiInstallation.Create;
 begin
   inherited Create;
   daemonm := false; //Daemon mode has to be set manually by listallerd
+  FTestMode := false;
   sdb := TSoftwareDB.Create;
   if SUMode then
     RegDir := LI_CONFIG_DIR + LI_APPDB_PREF
   else
-    RegDir := SyblToPath('$INST') + '/' + LI_APPDB_PREF;
+    RegDir := SyblToPath('$INST', FTestMode) + '/' + LI_APPDB_PREF;
 
   //Create text containers
   license := TStringList.Create;
@@ -299,7 +307,7 @@ begin
   if SUMode then
     RegDir := LI_CONFIG_DIR + LI_APPDB_PREF
   else
-    RegDir := SyblToPath('$INST') + '/' + LI_APPDB_PREF;
+    RegDir := SyblToPath('$INST', FTestMode) + '/' + LI_APPDB_PREF;
 end;
 
 procedure TLiInstallation.SetCurProfile(i: Integer);
@@ -337,8 +345,8 @@ begin
     sl.Add(license[i]);
 end;
 
-function TLiInstallation.ResolveDependencies(const fetchFromDebian: Boolean =
-  true): Boolean;
+function TLiInstallation.ResolveDependencies(
+  const fetchFromDebian: Boolean = true): Boolean;
 var
   i, j: Integer;
   tmp: TStringList;
@@ -388,7 +396,7 @@ begin
     //Resolve all substitution variables in dependency list
     //We use rootmode here cause all distro package install files into /
     for i := 0 to Dependencies.Count - 1 do
-      Dependencies[i] := SyblToPath(Dependencies[i], true);
+      Dependencies[i] := SyblToPath(Dependencies[i], FTestMode, true);
 
     solver := TPackageResolver.Create;
     solver.DependencyList := Dependencies;
@@ -420,8 +428,8 @@ begin
       else
       begin
         //There was a critical error in dependency solver
-        MakeUsrRequest(rsResolveError + #10 + rsEMsg +
-          #10 + solver.ErrorMessage, rqError);
+        MakeUsrRequest(rsResolveError + #10 + rsEMsg + #10 +
+          solver.ErrorMessage, rqError);
         Result := false;
         //No exit here, we can continue
       end;
@@ -1084,8 +1092,8 @@ begin
           begin
             msg('Package ' + Dependencies[i] + ' could not be installed.');
             MakeUsrRequest(StrSubst(rsInstPkgFailed, '%s', Dependencies[i]) +
-              #10 + rsEMsg + #10 + pkit.LastErrorMessage + #10 + StrSubst(
-              rsViewLog, '%p', '/tmp/install-' + IAppName + '.log'), rqError);
+              #10 + rsEMsg + #10 + pkit.LastErrorMessage + #10 +
+              StrSubst(rsViewLog, '%p', '/tmp/install-' + IAppName + '.log'), rqError);
             Result := false;
             Abort_FreeAll();
             exit;
@@ -1117,8 +1125,8 @@ begin
 
   ndirs := TStringList.Create;
   j := 0;
-  if not DirectoryExists(SyblToPath('$INST')) then
-    SysUtils.CreateDir(SyblToPath('$INST'));
+  if not DirectoryExists(SyblToPath('$INST', FTestMode)) then
+    SysUtils.CreateDir(SyblToPath('$INST', FTestMode));
 
 
   //Unpack files directory
@@ -1141,7 +1149,7 @@ begin
       if fi[i][1] = '>' then
       begin
         dest := copy(fi[i], 2, length(fi[i]));
-        dest := SyblToPath(dest);
+        dest := SyblToPath(dest, FTestMode);
         if not DirectoryExists(dest) then
         begin
           ForceDirectories(dest);
@@ -1202,8 +1210,9 @@ begin
               end;
           except
             //Unable to copy the file
-            MakeUsrRequest(Format(rsCnCopy, [dest + '/' +
-              ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose, rqError);
+            MakeUsrRequest(Format(rsCnCopy,
+              [dest + '/' + ExtractFileName(DeleteModifiers(h))]) +
+              #10 + rsInClose, rqError);
             RollbackInstallation;
             Result := false;
             Abort_FreeAll();
@@ -1218,10 +1227,10 @@ begin
             dsk.WriteString('Desktop Entry', 'X-Publisher', IAuthor);
             if dsk.ValueExists('Desktop Entry', 'Icon') then
               dsk.WriteString('Desktop Entry', 'Icon', SyblToPath(
-                dsk.ReadString('Desktop Entry', 'Icon', '*')));
+                dsk.ReadString('Desktop Entry', 'Icon', '*'), FTestMode));
             if dsk.ValueExists('Desktop Entry', 'Exec') then
               dsk.WriteString('Desktop Entry', 'Exec', SyblToPath(
-                dsk.ReadString('Desktop Entry', 'Exec', '*')));
+                dsk.ReadString('Desktop Entry', 'Exec', '*'), FTestMode));
             dsk.Free;
           end;
 
@@ -1230,7 +1239,7 @@ begin
             s := TStringList.Create;
             s.LoadFromFile(dest + '/' + ExtractFileName(h));
             for j := 0 to s.Count - 1 do
-              s[j] := SyblToPath(s[j]);
+              s[j] := SyblToPath(s[j], FTestMode);
             s.SaveToFile(dest + '/' + ExtractFileName(h));
             s.Free;
           end;
@@ -1268,7 +1277,7 @@ begin
       begin
 
         if fi[i][1] = '>' then
-          dest := SyblToPath(fi[i])
+          dest := SyblToPath(fi[i], FTestMode)
         else
         begin
           h := fi[i];
@@ -1290,7 +1299,7 @@ begin
 
           //while proc.Running do Application.ProcessMessages;
           msg(StrSubst(rsRightsAssignedToX, '%a', DeleteModifiers(
-            ExtractFileName(SyblToPath(fi[i])))));
+            ExtractFileName(SyblToPath(fi[i], FTestMode)))));
         end;
       end;
     end;
@@ -1301,9 +1310,11 @@ begin
     //Set rights per folder
     for i := 0 to ndirs.Count - 1 do
     begin
-      proc.CommandLine := FindBinary('chmod') + ' 755 -R ' + SyblToPath(ndirs[i]);
+      proc.CommandLine := FindBinary('chmod') + ' 755 -R ' +
+        SyblToPath(ndirs[i], FTestMode);
       proc.Execute;
-      msg('Rights assigned to folder ' + ExtractFileName(SyblToPath(ndirs[i])));
+      msg('Rights assigned to folder ' +
+        ExtractFileName(SyblToPath(ndirs[i], FTestMode)));
     end;
   end; //End setcm
 
@@ -1478,8 +1489,8 @@ end;}
       end
       else
       begin
-        MakeUsrRequest(rsPkQueryFailed + #10 + rsEMsg +
-          #10 + pkit.LastErrorMessage + #10 + StrSubst(rsViewLog, '%p', '/tmp/install-' +
+        MakeUsrRequest(rsPkQueryFailed + #10 + rsEMsg + #10 +
+          pkit.LastErrorMessage + #10 + StrSubst(rsViewLog, '%p', '/tmp/install-' +
           IAppName + '.log'), rqError);
         Result := false;
         Abort_FreeAll();
@@ -1570,8 +1581,8 @@ end;}
 
           if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
           begin
-            MakeUsrRequest(StrSubst(rsInstPkgFailed, '%s', pkg) + #10 +
-              rsEMsg + #10 + pkit.LastErrorMessage, rqError);
+            MakeUsrRequest(StrSubst(rsInstPkgFailed, '%s', pkg) +
+              #10 + rsEMsg + #10 + pkit.LastErrorMessage, rqError);
             Result := false;
             Abort_FreeAll();
             exit;
@@ -1705,7 +1716,7 @@ begin
         exit;
       end;
 
-      IAppCMD := SyblToPath(IAppCMD);
+      IAppCMD := SyblToPath(IAppCMD, FTestMode);
       //Check if the package downloads native pkgs
       for i := 0 to Dependencies.Count - 1 do
         if (pos('http://', Dependencies[i]) > 0) or

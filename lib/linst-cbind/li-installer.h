@@ -43,7 +43,9 @@ bool li_setup_register_user_request_call(LiInstallation setup,UserRequestCall ca
 
 PkgType li_setup_pkgtype(LiInstallation setup);
 
-void li_set_testmode(bool st);
+void li_setup_set_testmode(LiInstallation setup,bool st);
+
+bool li_setup_testmode(LiInstallation setup);
 
 void li_setup_set_forced(LiInstallation setup,char *str);
 
@@ -66,6 +68,8 @@ char *li_setup_pkgid(LiInstallation setup);
 PkgSignatureState li_setup_signature_state(LiInstallation setup);
 
 bool li_setup_long_description(LiInstallation setup,void* list);
+
+char *li_setup_long_description_as_string(LiInstallation setup);
 
 char *li_setup_wizard_image_path(LiInstallation setup);
 

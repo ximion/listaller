@@ -19,7 +19,7 @@
 #ifndef LIAPPMANAGER_H
 #define LIAPPMANAGER_H
 
-#include<QtGui>
+#include<QtCore>
 
 namespace Listaller {
 

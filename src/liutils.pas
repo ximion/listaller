@@ -36,8 +36,6 @@ const
 var
   //** The Listaller package lib directory
   RegDir: String = '';
-  //** True if Listaller is in testmode
-  Testmode: Boolean = false;
 
 type
   //** Urgency levels
@@ -111,7 +109,7 @@ function IsCommandRunning(cmd: String): Boolean;
 //** Remove modifiers from a string @returns Cleaned string
 function DeleteModifiers(s: String): String;
 //** Replaces placeholders (like $INSt or $APP) with their current paths @returns Final path as string
-function SyblToPath(s: String; root: Boolean = false): String;
+function SyblToPath(s: String; const tm: Boolean = false; root: Boolean = false): String;
 //** Removes symbol or replace it an simple dummy path (Used in IPKPackager) @returns Cleaned string
 function SyblToX(s: String): String;
 //** Deletes all variables in string
@@ -663,7 +661,7 @@ begin
   Result := pos(' <config>', fname) > 0;
 end;
 
-function GetXHome: String;
+function GetXHome(const TestMode: Boolean = false): String;
 begin
   if TestMode then
   begin
@@ -674,7 +672,7 @@ begin
     Result := GetEnvironmentVariable('HOME');
 end;
 
-function SyblToPath(s: String; root: Boolean = false): String;
+function SyblToPath(s: String; const tm: Boolean = false; root: Boolean = false): String;
 var
   n: String;
   DInfo: TDistroInfo;
@@ -724,74 +722,74 @@ begin
   end
   else
   begin
-    if not DirectoryExists(GetXHome + '/.applications/') then
+    if not DirectoryExists(GetXHome(tm) + '/.applications/') then
     begin
-      CreateDir(GetXHome + '/.applications/');
-      if fpSymLink(PChar(GetXHome + '/.applications/'), PChar(
-        GetXHome + '/' + rsApplications)) <> 0 then
+      CreateDir(GetXHome(tm) + '/.applications/');
+      if fpSymLink(PChar(GetXHome(tm) + '/.applications/'), PChar(
+        GetXHome(tm) + '/' + rsApplications)) <> 0 then
         perror('Unable to creat symlink!');
     end;
-    if not DirectoryExists(GetXHome + '/.appfiles') then
-      CreateDir(GetXHome + '/.appfiles/');
-    if not DirectoryExists(GetXHome + '/.appfiles/icons') then
-      CreateDir(GetXHome + '/.appfiles/icons');
+    if not DirectoryExists(GetXHome(tm) + '/.appfiles') then
+      CreateDir(GetXHome(tm) + '/.appfiles/');
+    if not DirectoryExists(GetXHome(tm) + '/.appfiles/icons') then
+      CreateDir(GetXHome(tm) + '/.appfiles/icons');
     //Iconpaths
-    if not DirectoryExists(GetXHome + '/.appfiles/icons/16x16') then
-      CreateDir(GetXHome + '/.appfiles/icons/16x16');
-    if not DirectoryExists(GetXHome + '/.appfiles/icons/24x24') then
-      CreateDir(GetXHome + '/.appfiles/icons/24x24');
-    if not DirectoryExists(GetXHome + '/.appfiles/icons/32x32') then
-      CreateDir(GetXHome + '/.appfiles/icons/32x32');
-    if not DirectoryExists(GetXHome + '/.appfiles/icons/48x48') then
-      CreateDir(GetXHome + '/.appfiles/icons/48x48');
-    if not DirectoryExists(GetXHome + '/.appfiles/icons/64x64') then
-      CreateDir(GetXHome + '/.appfiles/icons/64x64');
-    if not DirectoryExists(GetXHome + '/.appfiles/icons/128x128') then
-      CreateDir(GetXHome + '/.appfiles/icons/128x128');
-    if not DirectoryExists(GetXHome + '/.appfiles/icons/256x256') then
-      CreateDir(GetXHome + '/.appfiles/icons/256x256');
-    if not DirectoryExists(GetXHome + '/.appfiles/icons/common') then
-      CreateDir(GetXHome + '/.appfiles/icons/common');
+    if not DirectoryExists(GetXHome(tm) + '/.appfiles/icons/16x16') then
+      CreateDir(GetXHome(tm) + '/.appfiles/icons/16x16');
+    if not DirectoryExists(GetXHome(tm) + '/.appfiles/icons/24x24') then
+      CreateDir(GetXHome(tm) + '/.appfiles/icons/24x24');
+    if not DirectoryExists(GetXHome(tm) + '/.appfiles/icons/32x32') then
+      CreateDir(GetXHome(tm) + '/.appfiles/icons/32x32');
+    if not DirectoryExists(GetXHome(tm) + '/.appfiles/icons/48x48') then
+      CreateDir(GetXHome(tm) + '/.appfiles/icons/48x48');
+    if not DirectoryExists(GetXHome(tm) + '/.appfiles/icons/64x64') then
+      CreateDir(GetXHome(tm) + '/.appfiles/icons/64x64');
+    if not DirectoryExists(GetXHome(tm) + '/.appfiles/icons/128x128') then
+      CreateDir(GetXHome(tm) + '/.appfiles/icons/128x128');
+    if not DirectoryExists(GetXHome(tm) + '/.appfiles/icons/256x256') then
+      CreateDir(GetXHome(tm) + '/.appfiles/icons/256x256');
+    if not DirectoryExists(GetXHome(tm) + '/.appfiles/icons/common') then
+      CreateDir(GetXHome(tm) + '/.appfiles/icons/common');
     if LowerCase(n) = 'x86_64' then
     begin
-      if not DirectoryExists(GetXHome + '/.appfiles/lib64') then
-        CreateDir(GetXHome + '/.appfiles/lib64');
+      if not DirectoryExists(GetXHome(tm) + '/.appfiles/lib64') then
+        CreateDir(GetXHome(tm) + '/.appfiles/lib64');
     end
     else
-      if not DirectoryExists(GetXHome + '/.appfiles/lib') then
-        CreateDir(GetXHome + '/.appfiles/lib');
+      if not DirectoryExists(GetXHome(tm) + '/.appfiles/lib') then
+        CreateDir(GetXHome(tm) + '/.appfiles/lib');
 
     //SBin and Bin go to the same directory on HOME install
-    s := StringReplace(s, '$BIN', GetXHome + '/.appfiles/binary', [rfReplaceAll]);
-    s := StringReplace(s, '$SBIN', GetXHome + '/.appfiles/binary', [rfReplaceAll]);
+    s := StringReplace(s, '$BIN', GetXHome(tm) + '/.appfiles/binary', [rfReplaceAll]);
+    s := StringReplace(s, '$SBIN', GetXHome(tm) + '/.appfiles/binary', [rfReplaceAll]);
 
     if LowerCase(n) = 'i386' then
-      s := StringReplace(s, '$LIB', GetXHome + '/.appfiles/lib32', [rfReplaceAll])
+      s := StringReplace(s, '$LIB', GetXHome(tm) + '/.appfiles/lib32', [rfReplaceAll])
     else
-      s := StringReplace(s, '$LIB', GetXHome + '/.appfiles/lib', [rfReplaceAll]);
+      s := StringReplace(s, '$LIB', GetXHome(tm) + '/.appfiles/lib', [rfReplaceAll]);
 
-    s := StringReplace(s, '$LIB32', GetXHome + '/.appfiles/lib32', [rfReplaceAll]);
+    s := StringReplace(s, '$LIB32', GetXHome(tm) + '/.appfiles/lib32', [rfReplaceAll]);
 
-    s := StringReplace(s, '$DEP', GetXHome + '/.appfiles', [rfReplaceAll]);
-    s := StringReplace(s, '$INST', GetXHome + '/.appfiles', [rfReplaceAll]);
-    s := StringReplace(s, '$SHARE', GetXHome + '/.appfiles', [rfReplaceAll]);
-    s := StringReplace(s, '$OPT', GetXHome + '/.appfiles', [rfReplaceAll]);
-    s := StringReplace(s, '$APP', GetXHome + '/.applications', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-16', GetXHome + '/.appfiles/icons/16x16',
+    s := StringReplace(s, '$DEP', GetXHome(tm) + '/.appfiles', [rfReplaceAll]);
+    s := StringReplace(s, '$INST', GetXHome(tm) + '/.appfiles', [rfReplaceAll]);
+    s := StringReplace(s, '$SHARE', GetXHome(tm) + '/.appfiles', [rfReplaceAll]);
+    s := StringReplace(s, '$OPT', GetXHome(tm) + '/.appfiles', [rfReplaceAll]);
+    s := StringReplace(s, '$APP', GetXHome(tm) + '/.applications', [rfReplaceAll]);
+    s := StringReplace(s, '$ICON-16', GetXHome(tm) + '/.appfiles/icons/16x16',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-24', GetXHome + '/.appfiles/icons/24x24',
+    s := StringReplace(s, '$ICON-24', GetXHome(tm) + '/.appfiles/icons/24x24',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-32', GetXHome + '/.appfiles/icons/32x32',
+    s := StringReplace(s, '$ICON-32', GetXHome(tm) + '/.appfiles/icons/32x32',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-48', GetXHome + '/.appfiles/icons/48x48',
+    s := StringReplace(s, '$ICON-48', GetXHome(tm) + '/.appfiles/icons/48x48',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-64', GetXHome + '/.appfiles/icons/64x64',
+    s := StringReplace(s, '$ICON-64', GetXHome(tm) + '/.appfiles/icons/64x64',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-128', GetXHome + '/.appfiles/icons/128x128',
+    s := StringReplace(s, '$ICON-128', GetXHome(tm) + '/.appfiles/icons/128x128',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-256', GetXHome + '/.appfiles/icons/256x256',
+    s := StringReplace(s, '$ICON-256', GetXHome(tm) + '/.appfiles/icons/256x256',
       [rfReplaceAll]);
-    s := StringReplace(s, '$PIX', GetXHome + '/.appfiles/icons/common', [rfReplaceAll]);
+    s := StringReplace(s, '$PIX', GetXHome(tm) + '/.appfiles/icons/common', [rfReplaceAll]);
   end;
   Result := s;
 end;

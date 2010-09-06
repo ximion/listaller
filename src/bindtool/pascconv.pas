@@ -68,9 +68,10 @@ var
   h: String;
 begin
   h := LowerCase(s);
-  if h = 'pstringlist' then //Workaround
+  //Workarounds
+  if h = 'pstringlist' then
   begin
-    Result := 'void* ';  //FIXME
+    Result := 'StringList ';
     exit;
   end;
   //Some listaller types to replace

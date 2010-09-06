@@ -33,7 +33,7 @@ const
 
 type
   //** Pointer to TStringList
-  PStringList = ^TStringList;
+  PStringList = Pointer;
 
   //** Pointer to an AppManager
   PLiAppManager = Pointer;

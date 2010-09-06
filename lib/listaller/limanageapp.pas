@@ -58,8 +58,8 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    //** Load software list entries
-    procedure LoadEntries;
+    //** Rescann all apps installed on the system
+    procedure RescanEntries;
     //** Removes an application
     procedure UninstallApp(obj: LiAppInfo);
  {** Checks dependencies of all installed apps
@@ -193,7 +193,7 @@ begin
   setpos(pos);
 end;
 
-procedure TLiAppManager.LoadEntries;
+procedure TLiAppManager.RescanEntries;
 var
   ini: TIniFile;
   tmp, xtmp: TStringList;
@@ -390,42 +390,6 @@ begin
   end;
 
   db.GetApplicationList(blst);
-
-{if (CBox.ItemIndex=0) or (CBox.ItemIndex=10) then
-begin
-tmp:=TStringList.Create;
-xtmp:=TStringList.Create;
-
-j:=0;
-for i:=0 to xtmp.Count-1 do begin
-try
-ReadXMLFile(Doc, xtmp[i]);
-xnode:=Doc.FindNode('product');
- SetLength(AList,ListLength+1);
- Inc(ListLength);
- AList[ListLength-1]:=TListEntry.Create(MnFrm);
- AList[ListLength-1].Parent:=SWBox;
- AList[ListLength-1].AppLabel.Caption:=xnode.Attributes.GetNamedItem('desc').NodeValue;
- instLst.Add(LowerCase(xnode.Attributes.GetNamedItem('desc').NodeValue));
- blst.Add(AList[ListLength-1].AppLabel.Caption);
-xnode:=Doc.DocumentElement.FindNode('component');
- AList[ListLength-1].Vlabel.Caption:=strVersion+': '+xnode.Attributes.GetNamedItem('version').NodeValue;
-IdList.Add(xtmp[i]);
-//Unsupported
-AList[ListLength-1].MnLabel.Visible:=false;
-AList[ListLength-1].DescLabel.Visible:=false;
-AList[Listlength-1].id:=IDList.Count-1;
-AList[ListLength-1].SetPositions;
-Application.ProcessMessages;
-except
-j:=101;
-end;
-end;
-
-tmp.free;
-xtmp.Free;
-
-end; //End Autopackage  }
 
 
   ini := TIniFile.Create(ConfigDir + 'config.cnf');

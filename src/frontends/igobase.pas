@@ -450,7 +450,9 @@ var
   imForm: TimdFrm;
   sig: PkgSignatureState;
   forcedOptions: String;
+  testmd: Boolean;
 begin
+  testmd := false;
   if not DirectoryExists(RegDir) then
   begin
     CreateDir(ExtractFilePath(RegDir));
@@ -524,6 +526,7 @@ begin
 
       ShowModal;
     end;
+    testmd := imForm.IsTestMode;
     imForm.Free;
   end;
 
@@ -540,6 +543,7 @@ begin
 
       ShowModal;
     end;
+    testmd := imForm.IsTestMode;
     imForm.Free;
   end;
 
@@ -561,6 +565,7 @@ begin
 
       ShowModal;
     end;
+    testmd := imForm.IsTestMode;
     imForm.Free;
   end;
 
@@ -577,7 +582,7 @@ if Application.MessageBox(PAnsiChar(PAnsiChar(rsnSupported)+#13+PAnsiChar(rsInst
 end;}
 
   //Set if Testmode
-  setup.SetTestmode(Testmode);
+  setup.Testmode := testmd;
 
   writeLn('Superuser: ', Superuser);
   //Set if root installation
@@ -638,7 +643,7 @@ begin
   setup.ReadLicense(TStringList(LicMemo.Lines));
 
   Label2.Caption := StrSubst(rsWelcomeTo, '%a', setup.GetAppName);
-  if Testmode then
+  if setup.Testmode then
   begin
     IWizFrm.Caption := StrSubst(rsInstOf, '%a', setup.GetAppName) +
       ' [' + rsTestMode + ']';
@@ -785,7 +790,7 @@ begin
   setup.StartInstallation;
 
   if not SetupFailed then
-    if not Testmode then
+    if not setup.Testmode then
     begin
       NoteBook1.PageIndex := 5;
 

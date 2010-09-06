@@ -48,6 +48,7 @@ type
   private
     { private declarations }
     FShow: Boolean;
+    FTestMode: Boolean;
     sig: PkgSignatureState;
   public
     { public declarations }
@@ -55,6 +56,7 @@ type
     procedure LeaveLoadingState;
 
     procedure SetSigState(sigstate: PkgSignatureState);
+    property IsTestMode: Boolean read FTestMode;
   end;
 
 // Publish procedure so it can be used by igobase
@@ -77,6 +79,7 @@ uses SigInfoDisp;
 procedure TIMdFrm.FormCreate(Sender: TObject);
 begin
   FShow := false;
+  FTestMode := false;
   //Set translation strings
   Caption := rsSelInstMode;
   PkILabel.Caption := rsSpkWarning;
@@ -153,7 +156,7 @@ end;
 
 procedure TIMdFrm.btnTestClick(Sender: TObject);
 begin
-  Testmode := true;
+  FTestmode := true;
   btnHome.Tag := 2;
   Close;
 end;

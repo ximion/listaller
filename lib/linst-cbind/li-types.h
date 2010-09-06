@@ -29,6 +29,8 @@
 #include<stdio.h>
 #include<iostream>
 
+typedef const void* StringList;
+
 typedef const void* LiAppManager;
 
 typedef const void* LiInstallation;

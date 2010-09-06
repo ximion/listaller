@@ -64,7 +64,7 @@ begin
       if setup.PkType = ptLinstall then
       begin
         //Check if app is already installed
-        if not Testmode then
+        if not setup.Testmode then
         begin
           if IsIPKAppInstalled(setup.GetAppName, setup.GetAppID, Superuser) then
             if Application.MessageBox(PAnsiChar(PAnsiChar(rsAlreadyInst) + #13 +

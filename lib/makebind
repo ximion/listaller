@@ -10,7 +10,7 @@ LIBSRC="./listaller/liblistaller.lpr"
 if [ -e $GEN ]; then
   #Update Pascal bindings
   echo "Updating Pascal bindings..."
-  $GEN --pasbind -i $LIBSRC --cmp="BaseFunctions" -o $PASBINDDIR/libasic.pas
+  #$GEN --pasbind -i $LIBSRC --cmp="BaseFunctions" -o $PASBINDDIR/libasic.pas
   $GEN --pasbind -i $LIBSRC --cmp="Manager" -o $PASBINDDIR/liappmgr.pas
   $GEN --pasbind -i $LIBSRC --cmp="Installer" -o $PASBINDDIR/liinstaller.pas
   $GEN --pasbind -i $LIBSRC --cmp="Updater" -o $PASBINDDIR/liappupdate.pas
@@ -21,7 +21,6 @@ if [ -e $GEN ]; then
   $GEN --pastoc -i $PASBINDDIR/liinstaller.pas -o $COUT/li-installer.h --template=$COUT/cheader.template
   $GEN --pastoc -i $PASBINDDIR/liappupdate.pas -o $COUT/li-updater.h --template=$COUT/cheader.template
   $GEN --pastoc -i ../src/litypes.pas -o $COUT/li-types.h --template=$COUT/cheader.template
-  cp -u $COUT/li-types.h ./listaller-qt/
   
   echo "Finished."
 else

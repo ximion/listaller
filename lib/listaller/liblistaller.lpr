@@ -25,6 +25,7 @@ uses
   LiManageApp, LiUpdateApp;
 
 type
+   PStringList = ^TStringList;
    PLiInstallation = ^TLiInstallation;
    PLiAppManager = ^TLiAppManager;
    PLiAppUpdater = ^TLiAppUpdater;
@@ -142,9 +143,15 @@ begin
 end;
 
 //** Set installation testmode
-procedure li_set_testmode(st: Boolean);cdecl;
+procedure li_setup_set_testmode(setup: PLiInstallation;st: Boolean);cdecl;
 begin
-  Testmode:=st;
+ setup^.TestMode := st;
+end;
+
+//** Check installation testmode
+function li_setup_testmode(setup: PLiInstallation): Boolean;cdecl;
+begin
+ Result := setup^.TestMode;
 end;
 
 //** Set actions which should be forced
@@ -221,13 +228,29 @@ end;
 //** Get description
 function li_setup_long_description(setup: PLiInstallation; list: PStringList): Boolean;cdecl;
 begin
- Result:=false;
+ Result := false;
  if not setup^.PkgOkay then exit;
 try
- Result:=true;
+ Result := true;
  setup^.ReadDescription(list^);
 except
- Result:=false;
+ Result := false;
+end;
+end;
+
+//** Get description (as string)
+function li_setup_long_description_as_string(setup: PLiInstallation): PChar;cdecl;
+var
+  tmp: TStringList;
+begin
+ if not setup^.PkgOkay then exit;
+ tmp := TStringList.Create;
+try
+ setup^.ReadDescription(tmp);
+ Result := PChar(tmp.Text);
+finally
+ tmp.Free;
+ Result := '';
 end;
 end;
 
@@ -353,7 +376,7 @@ begin
 end;
 
 //** Start loading list of applications
-function li_mgr_load_apps(mgr: PLiAppManager): Boolean;cdecl;
+function li_mgr_scan_apps(mgr: PLiAppManager): Boolean;cdecl;
 begin
  Result:=false;
  try
@@ -364,7 +387,7 @@ begin
   end;
 
   Result:=true;
-  mgr^.LoadEntries;
+  mgr^.RescanEntries;
  except
   Result:=false;
  end;
@@ -583,6 +606,7 @@ exports
  li_setup_appversion,
  li_setup_pkgid,
  li_setup_long_description,
+ li_setup_long_description_as_string,
  li_setup_enable_usource_registering,
  li_setup_wizard_image_path,
  li_setup_license,
@@ -597,12 +621,14 @@ exports
  li_setup_dependencies,
  li_setup_set_forced,
  li_setup_set_profileid,
+ li_setup_set_testmode,
+ li_setup_testmode,
  li_setup_exec_by_daemon,
 
  //Management functions
  li_mgr_new,
  li_mgr_free,
- li_mgr_load_apps,
+ li_mgr_scan_apps,
  li_mgr_register_status_call,
  li_mgr_register_app_call,
  li_mgr_register_request_call,
@@ -627,7 +653,6 @@ exports
  //Other functions
  li_regdir,
  li_remove_ipk_installed_app,
- li_set_testmode,
  li_ipk_app_is_installed,
  li_version;
 

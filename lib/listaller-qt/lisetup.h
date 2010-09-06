@@ -42,7 +42,7 @@ public:
     
     QString appName() const;
     QString appVersion() const;
-    QString description() const;
+    QString descriptionAsString() const;
     
     void setTestmode(bool b);
     
