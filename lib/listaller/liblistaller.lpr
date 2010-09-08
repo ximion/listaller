@@ -22,7 +22,7 @@ library liblistaller;
 
 uses
   CThreads, Classes, LiTypes, IpkInstall, SysUtils, LiUtils,
-  LiManageApp, LiUpdateApp, appinstalldb;
+  LiManageApp, LiUpdateApp;
 
 type
    PStringList = ^TStringList;
@@ -393,6 +393,18 @@ begin
  end;
 end;
 
+//** Update AppInstall db by rescanning all data
+function li_mgr_update_system_appdb(mgr: PLiAppManager): Boolean;cdecl;
+begin
+ Result:=false;
+ try
+  Result:=true;
+  mgr^.UpdateSysAppDB;
+ finally
+  Result:=false;
+ end;
+end;
+
 //** Register call on status change for appmanager
 function li_mgr_register_status_call(mgr: PLiAppManager;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;
 begin
@@ -629,6 +641,7 @@ exports
  li_mgr_new,
  li_mgr_free,
  li_mgr_scan_apps,
+ li_mgr_update_system_appdb,
  li_mgr_register_status_call,
  li_mgr_register_app_call,
  li_mgr_register_request_call,

@@ -141,7 +141,7 @@ begin
 
   with dsApp do
   begin
-    FileName := rd + 'software.db';
+    FileName := rd + 'ligeneric.db';
     if ((forcesu) and (not IsRoot) and (not FileExists(FileName))) then
       Result := false
     else

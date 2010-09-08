@@ -21,7 +21,7 @@ unit limanageapp;
 interface
 
 uses
-  Classes, GetText, liTypes, liUtils, MTProcs,
+  Classes, GetText, LiTypes, LiUtils, MTProcs,
   PkTypes, Process, IniFiles, SysUtils, IPKCDef10, strLocale,
   liDBusProc, LiFileUtil, PackageKit, SoftwareDB, AppInstallDB;
 
@@ -33,6 +33,7 @@ type
     SDesc: String;
     Author: String;
     Version: String;
+    FName: String;
   end;
 
   TLiAppManager = class
@@ -458,12 +459,11 @@ begin
     'Categories', ''))) <= 0)
     // and(pos('base',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
     and (pos('wine', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <=
-    0) and (pos('wine', LowerCase(d.ReadString('Desktop Entry',
-    'Categories', ''))) <= 0) and
-    (d.ReadString('Desktop Entry', 'X-KDE-ParentApp', '#') = '#') and
-    (pos('screensaver', LowerCase(d.ReadString('Desktop Entry',
-    'Categories', ''))) <= 0) and
-    (pos('setting', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <= 0)
+    0) and (pos('wine', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <=
+    0) and (d.ReadString('Desktop Entry', 'X-KDE-ParentApp', '#') = '#') and
+    (pos('screensaver', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <=
+    0) and (pos('setting', LowerCase(d.ReadString('Desktop Entry',
+    'Categories', ''))) <= 0)
     // and(pos('utility',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
     and (d.ReadString('Desktop Entry', 'OnlyShowIn', '') = '') and
     (d.ReadString('Desktop Entry', 'X-AllowRemove', 'true') = 'true') then
@@ -506,13 +506,48 @@ end;
 
 //Update system AppInstall database
 procedure TLiAppManager.UpdateSysAppDB;
+var
+  tmp, xtmp: TStringList;
+  i: Integer;
+  ddata: TDesktopData;
+  appID: String;
+  appRmID: String;
+  ai: TAppInstallDB;
 begin
   if not IsRoot then
   begin
     pwarning('Cannot update AppDB without beeing root!');
     exit;
   end;
-  //TODO: Scan system apps and update AppInstall data
+  //db.setDatabaseName("/home/daniel/code/os/app-install/share/desktop.db");
+  //Search for .desktop files
+  tmp := FindAllFiles('/usr/share/applications/', '*.desktop', true);
+  xtmp := FindAllFiles('/usr/local/share/applications/', '*.desktop', true);
+  for i := 0 to xtmp.Count - 1 do
+    tmp.Add(xtmp[i]);
+  xtmp.Free;
+
+  ai := TAppInstallDB.Create(true);
+  //Update database
+  for i := 0 to tmp.Count - 1 do
+  begin
+    ddata := ReadDesktopFile(tmp[i]);
+    appID := StrSubst(ExtractFileName(tmp[i]), '.desktop', '');
+    if ddata.Name = '' then
+      Continue;
+    //If not already in list, add it
+    if ai.ContainsAppEntry(appID) then
+      Continue
+    else
+    begin
+      appRmId := GenerateAppID(tmp[i]);
+      ai.AddApplication(appID, appRmId, ddata.Categories, 'installer:local',
+        ddata.IconName, ddata.Name, ddata.SDesc);
+    end;
+  end;
+  tmp.Free;
+  ai.Finalize; //Write to disk
+  ai.Free;
 end;
 
 //Uninstall Mojo and LOKI Setups

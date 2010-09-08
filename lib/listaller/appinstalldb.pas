@@ -21,31 +21,36 @@ unit appinstalldb;
 interface
 
 uses
-  Classes, SysUtils, LiUtils, SQLite3, SQLite3DS, DB;
+  DB, Classes, LiUtils, SQLite3, SysUtils, SQLite3DS;
 
 type
   TAppInstallDB = class
-    private
-      DBName: String;
-      ds: TSQLite3Dataset;
-      procedure ToApps;
-      procedure ToLocale;
-    public
-      constructor Create;
-      destructor Destroy;
+  private
+    DBName: String;
+    ds: TSQLite3Dataset;
+    procedure ToApps;
+    procedure ToLocale;
+  public
+    constructor Create(useSystemDB: Boolean);
+    destructor Destroy;
 
-      function ContainsAppEntry(appID: String): Boolean;
-      procedure AddApplication(appID, pkgName, groupNames, repoID, iconName, appName, appDesc: String);
-      procedure Finalize;
+    function ContainsAppEntry(appID: String): Boolean;
+    procedure AddApplication(appID, pkgName, groupNames, repoID,
+      iconName, appName, appDesc: String);
+    procedure Finalize;
   end;
 
 implementation
 
 { TAppInstallDB }
 
-constructor TAppInstallDB.Create;
+constructor TAppInstallDB.Create(useSystemDB: Boolean);
 begin
-  DBName := '/var/lib/app-install/fedora.db';
+  if useSystemDB then
+    DBName := '/var/lib/app-install/fedora.db'
+  else
+    DBName := GetEnvironmentVariable('HOME') + '/.appfiles/info/applications.db';
+
   ds := TSQLite3Dataset.Create(nil);
   ds.FileName := DBName;
   //Create initial layout if necessary
@@ -106,7 +111,8 @@ begin
   Result := ds.Locate('application_id', appID, [loCaseInsensitive]);
 end;
 
-procedure TAppInstallDB.AddApplication(appID, pkgName, groupNames, repoID, iconName, appName, appDesc: String);
+procedure TAppInstallDB.AddApplication(appID, pkgName, groupNames,
+  repoID, iconName, appName, appDesc: String);
 begin
   ToApps;
   ds.Append;

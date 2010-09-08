@@ -127,6 +127,8 @@ function FileCopy(Source, dest: String): Boolean;
 function HasConfigMod(fname: String): Boolean;
 //** Search for full application icon path on system
 function GetAppIconPath(icon: String): String;
+//** Create an appID from .desktop-file path
+function GenerateAppID(desktopFile: String): String;
 
 //** Shows system notification box
 procedure ShowPopupNotify(msg: String; urgency: TUrgencyLevel; time: Integer);
@@ -348,6 +350,15 @@ begin
     end;
     Inc(i);
   end;
+end;
+
+function GenerateAppID(desktopFile: String): String;
+begin
+  Result := '';
+  if trim(desktopFile) = '' then exit;
+  Result := ExtractFilePath(desktopFile);
+  Result := StrSubst(StrSubst(Result, '/usr/', ''), 'share/applications/','');
+  Result := ExcludeTrailingPathDelimiter(Result) + StrSubst(ExtractFileName(desktopFile), '.desktop', '');
 end;
 
 function GetLangID: String;
