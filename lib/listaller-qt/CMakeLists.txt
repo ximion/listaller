@@ -17,7 +17,6 @@ set(listaller-qt_HEADERS
 )
 
 set(listaller-qt_INST_HEADERS Listaller-Qt
-   li-types.h
    limanager.h
    lisetup.h
 )

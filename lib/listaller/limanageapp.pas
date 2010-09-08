@@ -519,7 +519,6 @@ begin
     pwarning('Cannot update AppDB without beeing root!');
     exit;
   end;
-  //db.setDatabaseName("/home/daniel/code/os/app-install/share/desktop.db");
   //Search for .desktop files
   tmp := FindAllFiles('/usr/share/applications/', '*.desktop', true);
   xtmp := FindAllFiles('/usr/local/share/applications/', '*.desktop', true);
