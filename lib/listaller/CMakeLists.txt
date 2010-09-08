@@ -9,7 +9,7 @@ pkg_check_modules(PackageKitGLib2 REQUIRED packagekit-glib2>=0.6)
 
 set(llistaller_project liblistaller.lpr)
 
-set(llistaller_base_sources
+set(llistaller_base_sources ${CMAKE_SOURCE_DIR}/src/liversion.inc
 	${llistaller_project}
 	dderesolve.pas
 	depmanage.pas

@@ -245,7 +245,8 @@ begin
 
   pinfo('RunSetup called with ' + FileName);
 
-  action_id := 'org.nlinux.listaller.execute-installation';
+  //Set PackageKit policy for untrusted packages at time (until we update the DBus API)
+  action_id := 'org.freedesktop.packagekit.package-install-untrusted';
   target := dbus_message_get_sender(origMsg);
 
   subject := polkit_system_bus_name_new(PGChar(target));
@@ -510,7 +511,8 @@ begin
 
   pinfo('Removing application called "' + appinfo.Name + '" Job:' + jobID);
 
-  action_id := 'org.nlinux.listaller.remove-application';
+  //Use PackageKit policy
+  action_id := 'org.freedesktop.packagekit.package-remove';
   target := bs.GetMessageSender(origMsg);
 
   subject := polkit_system_bus_name_new(PGChar(target));
@@ -722,7 +724,8 @@ begin
 
   pinfo('Update su application called (Job:' + jobID + ')');
 
-  action_id := 'org.nlinux.listaller.make-su-update';
+  //PackageKit policy for system update
+  action_id := 'org.freedesktop.packagekit.system-update';
   target := bs.GetMessageSender(origMsg);
 
   subject := polkit_system_bus_name_new(PGChar(target));

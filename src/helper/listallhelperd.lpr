@@ -21,7 +21,7 @@ program listallhelperd;
 //NOTE: We do not use a translatable GUI, so please use the -dNoGUI switch
 
 uses
-  CThreads, Classes, SysUtils, CustApp, dbus, DJobs,
+  CThreads, Classes, SysUtils, CustApp, DBus, DJobs,
   Contnrs, SimDBus, LiUtils, SyncObjs, GExt;
 
 type
