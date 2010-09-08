@@ -28,7 +28,7 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="6">
+    <Units Count="7">
       <Unit0>
         <Filename Value="liblistaller.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -59,6 +59,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="softwaredb"/>
       </Unit5>
+      <Unit6>
+        <Filename Value="appinstalldb.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="appinstalldb"/>
+      </Unit6>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

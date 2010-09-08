@@ -23,9 +23,18 @@ interface
 uses
   Classes, GetText, liTypes, liUtils, MTProcs,
   PkTypes, Process, IniFiles, SysUtils, IPKCDef10, strLocale,
-  liDBusProc, LiFileUtil, PackageKit, SoftwareDB;
+  liDBusProc, LiFileUtil, PackageKit, SoftwareDB, AppInstallDB;
 
 type
+  TDesktopData = record
+    Name: String;
+    Categories: String;
+    IconName: String;
+    SDesc: String;
+    Author: String;
+    Version: String;
+  end;
+
   TLiAppManager = class
   private
     SUMode: Boolean;
@@ -55,11 +64,15 @@ type
     statechange_udata: Pointer;
     request_udata: Pointer;
     newapp_udata: Pointer;
+    //** ReadIn .desktop files
+    function ReadDesktopFile(fname: String): TDesktopData;
   public
     constructor Create;
     destructor Destroy; override;
     //** Rescann all apps installed on the system
     procedure RescanEntries;
+    //** Update system AppInstall database
+    procedure UpdateSysAppDB;
     //** Removes an application
     procedure UninstallApp(obj: LiAppInfo);
  {** Checks dependencies of all installed apps
@@ -423,6 +436,83 @@ begin
 
   db.Free;
   blst.Free; //Free blacklist
+end;
+
+//Read information about an app from .desktop file
+function TLiAppManager.ReadDesktopFile(fname: String): TDesktopData;
+var
+  d: TIniFile;
+  data: TDesktopData;
+begin
+  d := TIniFile.Create(fname);
+  Result.Name := '';
+  data.Name := '';
+
+  //Check for apps which should not be displayed
+  if (LowerCase(d.ReadString('Desktop Entry', 'NoDisplay', '')) <> 'true') and
+    (pos('yast', LowerCase(fname)) <= 0) and
+    (LowerCase(d.ReadString('Desktop Entry', 'Hidden', 'false')) <> 'true')
+    // and(pos('system',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
+    and (pos('core', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <=
+    0) and (pos('.hidden', LowerCase(d.ReadString('Desktop Entry',
+    'Categories', ''))) <= 0)
+    // and(pos('base',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
+    and (pos('wine', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <=
+    0) and (pos('wine', LowerCase(d.ReadString('Desktop Entry',
+    'Categories', ''))) <= 0) and
+    (d.ReadString('Desktop Entry', 'X-KDE-ParentApp', '#') = '#') and
+    (pos('screensaver', LowerCase(d.ReadString('Desktop Entry',
+    'Categories', ''))) <= 0) and
+    (pos('setting', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <= 0)
+    // and(pos('utility',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
+    and (d.ReadString('Desktop Entry', 'OnlyShowIn', '') = '') and
+    (d.ReadString('Desktop Entry', 'X-AllowRemove', 'true') = 'true') then
+  begin
+
+    //NOTE: We skip Ubuntu-specific GetText stuff at time
+        { if d.ReadString('Desktop Entry', 'X-Ubuntu-Gettext-Domain', '') <> '' then
+        begin
+          try
+            lp := '/usr/share/locale-langpack/' + GetLangID +
+              '/LC_MESSAGES/' + d.ReadString('Desktop Entry',
+              'X-Ubuntu-Gettext-Domain', 'app-install-data') + '.mo';
+            if not FileExists(lp) then
+              lp := '/usr/share/locale/de/' + GetLangID +
+                '/LC_MESSAGES/' + d.ReadString('Desktop Entry',
+                'X-Ubuntu-Gettext-Domain', 'app-install-data') + '.mo';
+            if FileExists(lp) then
+            begin
+              dt := TMOFile.Create(lp);
+              translate := true;
+            end;
+          finally
+          end;
+        end; }
+
+    data.Categories := d.ReadString('Desktop Entry', 'Categories', '');
+
+    data.Name := d.ReadString('Desktop Entry', 'Name', '<error>');
+    data.SDesc := d.ReadString('Desktop Entry', 'Comment', '');
+    //Listaller-specific extra data
+    data.Author := d.ReadString('Desktop Entry', 'X-Publisher', '');
+    data.Version := d.ReadString('Desktop Entry', 'X-AppVersion', '');
+
+    data.IconName := d.ReadString('Desktop Entry', 'Icon', '');
+  end;
+
+  d.Free;
+  Result := data;
+end;
+
+//Update system AppInstall database
+procedure TLiAppManager.UpdateSysAppDB;
+begin
+  if not IsRoot then
+  begin
+    pwarning('Cannot update AppDB without beeing root!');
+    exit;
+  end;
+  //TODO: Scan system apps and update AppInstall data
 end;
 
 //Uninstall Mojo and LOKI Setups
