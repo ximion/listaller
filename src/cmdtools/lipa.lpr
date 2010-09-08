@@ -212,9 +212,8 @@ begin
     setup.SetUserRequestCall(@OnSetupUserRequest);
 
     //Check Testmode
-    if HasOption('testmode') then Testmode:=true
-    else Testmode:=false;
-    setup.SetTestmode(Testmode);
+    if HasOption('testmode') then setup.Testmode:=true
+    else setup.Testmode:=false;
 
     setup.Initialize(a);
     writeLn('== '+StringReplace(rsInstOf,'%a',setup.GetAppName+' '+setup.GetAppVersion,[rfReplaceAll])+' ==');
@@ -317,7 +316,7 @@ begin
  if HasOption('verbose') then
   for i:=0 to lst.Count-1 do writeLn(lst[i]);
 
- if not Testmode then
+ if not setup.Testmode then
  begin
   writeLn(StringReplace(rsWasInstalled,'%a',setup.GetAppName,[rfReplaceAll]));
   writeLn('Finished.');
