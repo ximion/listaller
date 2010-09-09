@@ -689,47 +689,45 @@ var
   DInfo: TDistroInfo;
 begin
   s := StringReplace(s, '$HOME', GetEnvironmentVariable('HOME'), [rfReplaceAll]);
+  s := StrSubst(s, '$', '');
 
   n := GetSystemArchitecture;
-
-  if not root then
-    root := IsRoot;
 
   DInfo := GetDistro;
 
   if root then
   begin
-    s := StringReplace(s, '$INST', '/opt/appfiles', [rfReplaceAll]);
-    s := StringReplace(s, '$DEP', '/opt/shared', [rfReplaceAll]);
-    s := StringReplace(s, '$SHARE', '/usr/share', [rfReplaceAll]);
-    s := StringReplace(s, '$OPT', '/opt', [rfReplaceAll]);
-    s := StringReplace(s, '$BIN', '/usr/bin', [rfReplaceAll]);
-    s := StringReplace(s, '$SBIN', '/usr/sbin', [rfReplaceAll]);
+    s := StringReplace(s, 'INST', '/opt/appfiles', [rfReplaceAll]);
+    s := StringReplace(s, 'DEP', '/opt/shared', [rfReplaceAll]);
+    s := StringReplace(s, 'SHARE', '/usr/share', [rfReplaceAll]);
+    s := StringReplace(s, 'OPT', '/opt', [rfReplaceAll]);
+    s := StringReplace(s, 'BIN', '/usr/bin', [rfReplaceAll]);
+    s := StringReplace(s, 'SBIN', '/usr/sbin', [rfReplaceAll]);
 
     //Fedora uses lib64 dir.
     if (LowerCase(n) = 'x86_64') and (DInfo.DName = 'Fedora') then
-      s := StringReplace(s, '$LIB', '/usr/lib64', [rfReplaceAll])
+      s := StringReplace(s, 'LIB', '/usr/lib64', [rfReplaceAll])
     else
-      s := StringReplace(s, '$LIB', '/usr/lib', [rfReplaceAll]);
+      s := StringReplace(s, 'LIB', '/usr/lib', [rfReplaceAll]);
 
-    s := StringReplace(s, '$LIB32', '/usr/lib32', [rfReplaceAll]);
+    s := StringReplace(s, 'LIB32', '/usr/lib32', [rfReplaceAll]);
 
-    s := StringReplace(s, '$APP', '/usr/share/applications', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-16', '/usr/share/icons/hicolor/16x16/apps',
+    s := StringReplace(s, 'APP', '/usr/share/applications', [rfReplaceAll]);
+    s := StringReplace(s, 'ICON-16', '/usr/share/icons/hicolor/16x16/apps',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-24', '/usr/share/icons/hicolor/24x24/apps',
+    s := StringReplace(s, 'ICON-24', '/usr/share/icons/hicolor/24x24/apps',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-32', '/usr/share/icons/hicolor/32x32/apps',
+    s := StringReplace(s, 'ICON-32', '/usr/share/icons/hicolor/32x32/apps',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-48', '/usr/share/icons/hicolor/48x48/apps',
+    s := StringReplace(s, 'ICON-48', '/usr/share/icons/hicolor/48x48/apps',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-64', '/usr/share/icons/hicolor/64x64/apps',
+    s := StringReplace(s, 'ICON-64', '/usr/share/icons/hicolor/64x64/apps',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-128', '/usr/share/icons/hicolor/128x128/apps',
+    s := StringReplace(s, 'ICON-128', '/usr/share/icons/hicolor/128x128/apps',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-256', '/usr/share/icons/hicolor/256x256/apps',
+    s := StringReplace(s, 'ICON-256', '/usr/share/icons/hicolor/256x256/apps',
       [rfReplaceAll]);
-    s := StringReplace(s, '$PIX', '/usr/share/pixmaps', [rfReplaceAll]);
+    s := StringReplace(s, 'PIX', '/usr/share/pixmaps', [rfReplaceAll]);
   end
   else
   begin
@@ -771,36 +769,36 @@ begin
         CreateDir(GetXHome(tm) + '/.appfiles/lib');
 
     //SBin and Bin go to the same directory on HOME install
-    s := StringReplace(s, '$BIN', GetXHome(tm) + '/.appfiles/binary', [rfReplaceAll]);
-    s := StringReplace(s, '$SBIN', GetXHome(tm) + '/.appfiles/binary', [rfReplaceAll]);
+    s := StringReplace(s, 'BIN', GetXHome(tm) + '/.appfiles/binary', [rfReplaceAll]);
+    s := StringReplace(s, 'SBIN', GetXHome(tm) + '/.appfiles/binary', [rfReplaceAll]);
 
     if LowerCase(n) = 'i386' then
-      s := StringReplace(s, '$LIB', GetXHome(tm) + '/.appfiles/lib32', [rfReplaceAll])
+      s := StringReplace(s, 'LIB', GetXHome(tm) + '/.appfiles/lib32', [rfReplaceAll])
     else
-      s := StringReplace(s, '$LIB', GetXHome(tm) + '/.appfiles/lib', [rfReplaceAll]);
+      s := StringReplace(s, 'LIB', GetXHome(tm) + '/.appfiles/lib', [rfReplaceAll]);
 
-    s := StringReplace(s, '$LIB32', GetXHome(tm) + '/.appfiles/lib32', [rfReplaceAll]);
+    s := StringReplace(s, 'LIB32', GetXHome(tm) + '/.appfiles/lib32', [rfReplaceAll]);
 
-    s := StringReplace(s, '$DEP', GetXHome(tm) + '/.appfiles', [rfReplaceAll]);
-    s := StringReplace(s, '$INST', GetXHome(tm) + '/.appfiles', [rfReplaceAll]);
-    s := StringReplace(s, '$SHARE', GetXHome(tm) + '/.appfiles', [rfReplaceAll]);
-    s := StringReplace(s, '$OPT', GetXHome(tm) + '/.appfiles', [rfReplaceAll]);
-    s := StringReplace(s, '$APP', GetXHome(tm) + '/.applications', [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-16', GetXHome(tm) + '/.appfiles/icons/16x16',
+    s := StringReplace(s, 'DEP', GetXHome(tm) + '/.appfiles', [rfReplaceAll]);
+    s := StringReplace(s, 'INST', GetXHome(tm) + '/.appfiles', [rfReplaceAll]);
+    s := StringReplace(s, 'SHARE', GetXHome(tm) + '/.appfiles', [rfReplaceAll]);
+    s := StringReplace(s, 'OPT', GetXHome(tm) + '/.appfiles', [rfReplaceAll]);
+    s := StringReplace(s, 'APP', GetXHome(tm) + '/.applications', [rfReplaceAll]);
+    s := StringReplace(s, 'ICON-16', GetXHome(tm) + '/.appfiles/icons/16x16',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-24', GetXHome(tm) + '/.appfiles/icons/24x24',
+    s := StringReplace(s, 'ICON-24', GetXHome(tm) + '/.appfiles/icons/24x24',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-32', GetXHome(tm) + '/.appfiles/icons/32x32',
+    s := StringReplace(s, 'ICON-32', GetXHome(tm) + '/.appfiles/icons/32x32',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-48', GetXHome(tm) + '/.appfiles/icons/48x48',
+    s := StringReplace(s, 'ICON-48', GetXHome(tm) + '/.appfiles/icons/48x48',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-64', GetXHome(tm) + '/.appfiles/icons/64x64',
+    s := StringReplace(s, 'ICON-64', GetXHome(tm) + '/.appfiles/icons/64x64',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-128', GetXHome(tm) + '/.appfiles/icons/128x128',
+    s := StringReplace(s, 'ICON-128', GetXHome(tm) + '/.appfiles/icons/128x128',
       [rfReplaceAll]);
-    s := StringReplace(s, '$ICON-256', GetXHome(tm) + '/.appfiles/icons/256x256',
+    s := StringReplace(s, 'ICON-256', GetXHome(tm) + '/.appfiles/icons/256x256',
       [rfReplaceAll]);
-    s := StringReplace(s, '$PIX', GetXHome(tm) + '/.appfiles/icons/common', [rfReplaceAll]);
+    s := StringReplace(s, 'PIX', GetXHome(tm) + '/.appfiles/icons/common', [rfReplaceAll]);
   end;
   Result := s;
 end;

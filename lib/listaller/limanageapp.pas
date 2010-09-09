@@ -72,8 +72,8 @@ type
     destructor Destroy; override;
     //** Rescann all apps installed on the system
     procedure RescanEntries;
-    //** Update system AppInstall database
-    procedure UpdateSysAppDB;
+    //** Update AppInstall database
+    procedure UpdateAppDB;
     //** Removes an application
     procedure UninstallApp(obj: LiAppInfo);
  {** Checks dependencies of all installed apps
@@ -382,8 +382,6 @@ var
   end;
 
 begin
-  j := 0;
-
   msg(rsLoading);
   blst := TStringList.Create; //Create Blacklist
 
@@ -428,10 +426,6 @@ begin
 
   tmp.Free;
   ini.Free;
-
-  //Check LOKI-success:
-  if j > 100 then
-    msg(rsLOKIError);
 
   msg(rsReady); //Loading list finished!
 
@@ -504,8 +498,8 @@ begin
   Result := data;
 end;
 
-//Update system AppInstall database
-procedure TLiAppManager.UpdateSysAppDB;
+//Update AppInstall database
+procedure TLiAppManager.UpdateAppDB;
 var
   tmp, xtmp: TStringList;
   i: Integer;
@@ -514,7 +508,7 @@ var
   appRmID: String;
   ai: TAppInstallDB;
 begin
-  if not IsRoot then
+  if (sumode) and (not IsRoot) then
   begin
     pwarning('Cannot update AppDB without beeing root!');
     exit;
@@ -526,7 +520,7 @@ begin
     tmp.Add(xtmp[i]);
   xtmp.Free;
 
-  ai := TAppInstallDB.Create(true);
+  ai := TAppInstallDB.Create(SUMode);
   //Update database
   for i := 0 to tmp.Count - 1 do
   begin

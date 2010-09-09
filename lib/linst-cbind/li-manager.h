@@ -35,7 +35,7 @@ void li_mgr_free(LiAppManager mgr);
 
 bool li_mgr_scan_apps(LiAppManager mgr);
 
-bool li_mgr_update_system_appdb(LiAppManager mgr);
+bool li_mgr_update_appdb(LiAppManager mgr);
 
 bool li_mgr_register_status_call(LiAppManager mgr,StatusChangeEvent call,void* user_data);
 

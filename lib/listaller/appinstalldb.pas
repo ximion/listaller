@@ -30,6 +30,7 @@ type
     ds: TSQLite3Dataset;
     procedure ToApps;
     procedure ToLocale;
+    function ValFormat(s: String): String;
   public
     constructor Create(useSystemDB: Boolean);
     destructor Destroy;
@@ -47,9 +48,9 @@ implementation
 constructor TAppInstallDB.Create(useSystemDB: Boolean);
 begin
   if useSystemDB then
-    DBName := '/var/lib/app-install/fedora.db'
+    DBName := '/var/lib/app-install/desktop.db'
   else
-    DBName := GetEnvironmentVariable('HOME') + '/.appfiles/info/applications.db';
+    DBName := SyblToPath('SHARE', false, false) + '/desktop.db';
 
   ds := TSQLite3Dataset.Create(nil);
   ds.FileName := DBName;
@@ -81,6 +82,8 @@ begin
     end;
   end;
   ds.Open; //Put DB in active state
+  ds.Active := true;
+  ds.ApplyUpdates;
 end;
 
 destructor TAppInstallDB.Destroy;
@@ -92,12 +95,16 @@ end;
 
 procedure TAppInstallDB.ToApps;
 begin
-  ds.TableName := 'applications';
+  ds.Close;
+  ds.SQL := 'SELECT * FROM applications';
+  ds.Open;
 end;
 
 procedure TAppInstallDB.ToLocale;
 begin
-  ds.TableName := 'translations';
+  ds.Close;
+  ds.SQL := 'SELECT * FROM translations';
+  ds.Open;
 end;
 
 function TAppInstallDB.ContainsAppEntry(appID: String): Boolean;
@@ -111,18 +118,28 @@ begin
   Result := ds.Locate('application_id', appID, [loCaseInsensitive]);
 end;
 
+function TAppInstallDB.ValFormat(s: String): String;
+begin
+  Result := '''' + StrSubst(StrSubst(s, ',', '\,'), '''', '''''') + '''';
+end;
+
 procedure TAppInstallDB.AddApplication(appID, pkgName, groupNames,
   repoID, iconName, appName, appDesc: String);
+var
+  sql: WideString;
 begin
   ToApps;
-  ds.Append;
-  ds.FieldByName('application_id').AsString := appID;
-  ds.FieldByName('package_name').AsString := pkgName;
-  ds.FieldByName('categories').AsString := groupNames;
-  ds.FieldByName('repo_id').AsString := repoID;
-  ds.FieldByName('icon_name').AsString := iconName;
-  ds.FieldByName('application_name').AsString := appName;
-  ds.FieldByName('application_summary').AsString := appDesc;
+  ds.Edit;
+
+  sql := ValFormat(appID) + ', ' + ValFormat(pkgName) + ', ' +
+    ValFormat(groupNames) + ', ' + ValFormat(repoID) + ',' +
+    ValFormat(iconName) + ',' + ValFormat(appName) + ',' + ValFormat(appDesc);
+
+  sql := 'INSERT INTO applications (application_id, package_name, categories, ' +
+    'repo_id, icon_name, application_name, application_summary) ' +
+    'VALUES (' + sql + ');';
+
+  ds.ExecSQL(sql);
   ds.Post;
 end;
 

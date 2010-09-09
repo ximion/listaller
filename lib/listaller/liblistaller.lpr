@@ -394,12 +394,12 @@ begin
 end;
 
 //** Update AppInstall db by rescanning all data
-function li_mgr_update_system_appdb(mgr: PLiAppManager): Boolean;cdecl;
+function li_mgr_update_appdb(mgr: PLiAppManager): Boolean;cdecl;
 begin
  Result:=false;
  try
   Result:=true;
-  mgr^.UpdateSysAppDB;
+  mgr^.UpdateAppDB;
  finally
   Result:=false;
  end;
@@ -641,7 +641,7 @@ exports
  li_mgr_new,
  li_mgr_free,
  li_mgr_scan_apps,
- li_mgr_update_system_appdb,
+ li_mgr_update_appdb,
  li_mgr_register_status_call,
  li_mgr_register_app_call,
  li_mgr_register_request_call,
