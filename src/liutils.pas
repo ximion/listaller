@@ -123,6 +123,8 @@ function HasSharedMod(fname: String): Boolean;
 function GetELFDepends(f: String; lst: TStringList): Boolean;
 //** Advanced file copy method @returns Success of the command
 function FileCopy(Source, dest: String): Boolean;
+//** Check if pointer is valid
+function CheckPtr(ptr: Pointer;objname: String = ''): Boolean;
 //** Check if file is configuration file
 function HasConfigMod(fname: String): Boolean;
 //** Search for full application icon path on system
@@ -182,6 +184,19 @@ begin
   p1 := Pos('/', url);
   p2 := Length(url);
   Result := ExtractFilePath(Copy(url, P1, P2));
+end;
+
+function CheckPtr(ptr: Pointer;objname: String = ''): Boolean;
+begin
+  if not Assigned(ptr) then
+  begin
+    if objname = '' then
+     perror('Received invalid object pointer!')
+    else
+     perror('Received invalid ´'+objname+'´ pointer!');
+    Result := false;
+  end else
+   Result := true;
 end;
 
 function GetDataFile(s: String): String;

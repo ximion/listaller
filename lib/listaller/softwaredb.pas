@@ -21,7 +21,8 @@ unit softwaredb;
 interface
 
 uses
-  DB, Classes, LiTypes, LiUtils, SysUtils, SQLite3DS, StrLocale;
+  DB, Classes, LiTypes, LiUtils, SysUtils, SQLite3DS, StrLocale,
+  AppInstallDB;
 
 type
 

@@ -132,35 +132,29 @@ end;
 
 procedure TLiAppManager.RegOnStatusChange(call: StatusChangeEvent; data: Pointer);
 begin
-  if Assigned(call) then
+  if CheckPtr(call, 'StatusChangeEvent') then
   begin
     FStatus := call;
     statechange_udata := data;
-  end
-  else
-    perror('Received invalid ´StatusChangeEvent´ pointer!');
+  end;
 end;
 
 procedure TLiAppManager.RegOnRequest(call: UserRequestCall; data: Pointer);
 begin
-  if Assigned(call) then
+  if CheckPtr(call, 'UserRequestCall') then
   begin
     FReq := call;
     request_udata := data;
-  end
-  else
-    perror('Received invalid ´UserRequestCall´ pointer!');
+  end;
 end;
 
 procedure TLiAppManager.RegOnNewApp(call: NewAppEvent; data: Pointer);
 begin
-  if Assigned(call) then
+  if Assigned(call, 'StatusChangeEvent') then
   begin
     FApp := call;
     newapp_udata := data;
-  end
-  else
-    perror('Received invalid ´StatusChangeEvent´ pointer!');
+  end;
 end;
 
 procedure TLiAppManager.Msg(s: String);

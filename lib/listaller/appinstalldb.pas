@@ -120,7 +120,7 @@ end;
 
 function TAppInstallDB.ValFormat(s: String): String;
 begin
-  Result := '''' + StrSubst(StrSubst(s, ',', '\,'), '''', '''''') + '''';
+  Result := '''' + StrSubst(s, '''', '''''') + '''';
 end;
 
 procedure TAppInstallDB.AddApplication(appID, pkgName, groupNames,
