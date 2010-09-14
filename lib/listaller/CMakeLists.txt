@@ -31,6 +31,11 @@ set(llistaller_includes "-Fu${PROJECT_SOURCE_DIR}/src/"
 
 set(pascal_compiler_flags_cmn "-fPIC" "-dNoGUI" "-CX" "-XX")
 
+#Disable Cg flag, if we build for i386
+if (${PASCAL_TARGET_ARCH} MATCHES "[iI]386+")
+ set(pascal_compiler_flags_cmn ${pascal_compiler_flags_cmn} "-Cg-")
+endif()
+
 set(llistaller_build_args ${PASCAL_COMPILER_FLAGS}
 	${pascal_compiler_flags_cmn}
 	"-Fi${CMAKE_CURRENT_BINARY_DIR}"
