@@ -89,5 +89,9 @@ set(PASCAL_COMPILER ${fpc_executable} CACHE INTERNAL "FPC executable")
 set(PASCAL_COMPILER_FLAGS "-MObjFPC" "-Scghi" "-O1" "-gl" "-XX" "-vewnhi" "-l"
 			  ${noexecstack_flags} ${pascal_compiler_flags_cmn} CACHE STRING "Standard FPC compiler flags"
    )
+
+if (REGEX MATCH "[iI]386+")
+ set(PASCAL_COMPILER_FLAGS ${PASCAL_COMPILER_FLAGS} "-Cg-")
+endif()
 			  
 endif()

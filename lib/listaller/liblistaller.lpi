@@ -85,6 +85,9 @@
         <UseAnsiStrings Value="False"/>
       </SyntaxOptions>
     </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
     <Linking>
       <LinkSmart Value="True"/>
       <Options>
@@ -97,7 +100,6 @@
         <UseMsgFile Value="True"/>
       </CompilerMessages>
       <CustomOptions Value="-fPIC
--Cg-
 -dNoGUI
 "/>
       <CompilerPath Value="$(CompPath)"/>
