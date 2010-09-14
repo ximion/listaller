@@ -28,7 +28,7 @@ Possible flags are:
  -DFRONTENDS=ON   | Compile Listaller's frontends (only usable if one GUI toolkit is enabled)
  -DCREATOR=ON     | Build the liCreator application
  -DBUILDTOOLS=ON  | APGCC and stuff to build your application for IPK packaging
- -DVLDD=ON        | Compile VisualLDD dependency explorer (needs installed Qt4)
+ -DVLDD=ON        | Compile VisualLDD dependency explorer (needs Qt4 installed)
 
 === Installation ===
 To install the compiled binaries and required data files, execute

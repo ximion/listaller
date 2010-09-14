@@ -150,7 +150,7 @@ end;
 
 procedure TLiAppManager.RegOnNewApp(call: NewAppEvent; data: Pointer);
 begin
-  if Assigned(call, 'StatusChangeEvent') then
+  if CheckPtr(call, 'StatusChangeEvent') then
   begin
     FApp := call;
     newapp_udata := data;
