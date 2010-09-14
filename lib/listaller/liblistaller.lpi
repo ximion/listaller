@@ -3,6 +3,9 @@
   <ProjectOptions>
     <Version Value="8"/>
     <General>
+      <Flags>
+        <Runnable Value="False"/>
+      </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
@@ -82,9 +85,6 @@
         <UseAnsiStrings Value="False"/>
       </SyntaxOptions>
     </Parsing>
-    <CodeGeneration>
-      <SmartLinkUnit Value="True"/>
-    </CodeGeneration>
     <Linking>
       <LinkSmart Value="True"/>
       <Options>
@@ -97,6 +97,7 @@
         <UseMsgFile Value="True"/>
       </CompilerMessages>
       <CustomOptions Value="-fPIC
+-Cg-
 -dNoGUI
 "/>
       <CompilerPath Value="$(CompPath)"/>
