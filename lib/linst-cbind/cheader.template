@@ -26,6 +26,5 @@
 @BEGIN_DEFINE_ID@
 
 #include<stdio.h>
-#include<iostream>
 @DECL@
 @END_DEFINE_ID@
