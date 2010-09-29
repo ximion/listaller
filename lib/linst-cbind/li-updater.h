@@ -26,7 +26,8 @@
 #ifndef __LI_UPDATER
 #define __LI_UPDATER
 
-#include<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 void* li_updater_new(void);
 
@@ -47,5 +48,6 @@ char *li_updater_updateid_oldversion(LiAppUpdater upd,int uid);
 char *li_updater_updateid_newversion(LiAppUpdater upd,int uid);
 
 bool li_updater_execute_update(LiAppUpdater upd,int uid);
+
 
 #endif /* __LI_UPDATER */

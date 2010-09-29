@@ -26,7 +26,8 @@
 #ifndef __LI_BASICS
 #define __LI_BASICS
 
-#include<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 void* li_new_stringlist(void);
 
@@ -35,5 +36,6 @@ bool li_free_stringlist(StringList lst);
 char *li_stringlist_read_line(StringList lst,int ln);
 
 bool li_stringlist_write_line(StringList lst,int ln,char *val);
+
 
 #endif /* __LI_BASICS */

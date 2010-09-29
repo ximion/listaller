@@ -26,7 +26,8 @@
 #ifndef __LI_MANAGER
 #define __LI_MANAGER
 
-#include<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 void* li_mgr_new(void);
 
@@ -49,5 +50,6 @@ bool li_mgr_sumode(LiAppManager mgr);
 bool li_mgr_remove_app(LiAppManager mgr,LiAppInfo obj);
 
 bool li_mgr_check_apps(LiAppManager mgr,StringList log,bool root);
+
 
 #endif /* __LI_MANAGER */

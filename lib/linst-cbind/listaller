@@ -24,7 +24,9 @@
 
 #define __LISTALLER_H_INSIDE__
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
+#else
+#define bool int
 #endif
 
 #include <li-types.h>
@@ -34,8 +36,8 @@
 #include <li-updater.h>
 
 #ifdef __cplusplus
-}
-#endif 
+} /* closing brace for extern "C" */
+#endif
 #undef __LISTALLER_H_INSIDE__
 
 #endif /* __LISTALLER_H__ */

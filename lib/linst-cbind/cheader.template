@@ -25,6 +25,8 @@
 
 @BEGIN_DEFINE_ID@
 
-#include<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 @DECL@
+
 @END_DEFINE_ID@

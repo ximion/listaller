@@ -26,7 +26,8 @@
 #ifndef __LI_TYPES
 #define __LI_TYPES
 
-#include<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 typedef const void* StringList;
 
@@ -74,14 +75,13 @@ typedef enum {
       scStepMessage
 } LiStatusChange;
 
-struct LiStatusData
-{
+typedef struct {
       char *msg;
       int exprogress;
       int mnprogress;
       LiProcStatus lastresult;
       LiStatusChange change;
-};
+} LiStatusData;
 
 typedef enum {
       gtALL,
@@ -105,8 +105,7 @@ typedef enum {
       ptUnknown
 } PkgType;
 
-struct LiAppInfo
-{
+typedef struct {
       char *Name;
       char *PkName;
       PkgType PkType;
@@ -119,7 +118,7 @@ struct LiAppInfo
       AppCategory Category;
       double InstallDate;
       char *Dependencies;
-};
+} LiAppInfo;
 
 typedef enum {
       psNone,
@@ -137,6 +136,7 @@ typedef void (*TProgressEvent) (int pos,void* user_data);
 typedef void (*NewAppEvent) (char *name,LiAppInfo *obj,void* user_data);
 
 typedef void (*NewUpdateEvent) (char *name,int id,void* user_data);
+
 
 
 #endif /* __LI_TYPES */

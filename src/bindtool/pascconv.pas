@@ -262,9 +262,9 @@ begin
             Delete(h, length(h) - 3, length(h)); //remove "end" from the end
             h := SolveArguments(h); //SolveArguments() works here too!
 
-            r := 'struct ' + el.FullName + #10'{'#10;
+            r := 'typedef struct {'#10;
             h := StrSubst(h, ',', ';'#10'      ');
-            r := r + '      ' + h + ';'#10'};';
+            r := r + '      ' + h + ';'#10'} ' + el.FullName + ';';
             res.Add('');
             res.Add(r);
           end;

@@ -26,7 +26,8 @@
 #ifndef __LI_INSTALLER
 #define __LI_INSTALLER
 
-#include<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 bool li_remove_ipk_installed_app(char *appname,char *appid,StatusChangeEvent statuscall,bool fastmode);
 
@@ -91,5 +92,6 @@ char *li_setup_current_profile_filelist(LiInstallation setup);
 bool li_setup_execute(LiInstallation setup);
 
 void li_setup_exec_by_daemon(LiInstallation setup,bool b);
+
 
 #endif /* __LI_INSTALLER */
