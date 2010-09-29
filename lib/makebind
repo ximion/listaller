@@ -14,6 +14,7 @@ if [ -e $GEN ]; then
   $GEN --pasbind -i $LIBSRC --cmp="Manager" -o $PASBINDDIR/liappmgr.pas
   $GEN --pasbind -i $LIBSRC --cmp="Installer" -o $PASBINDDIR/liinstaller.pas
   $GEN --pasbind -i $LIBSRC --cmp="Updater" -o $PASBINDDIR/liappupdate.pas
+  $GEN --pasbind -i $LIBSRC --cmp="BaseFunctions" -o $PASBINDDIR/libasic.pas
   
   #Generate C headers
   echo "Generating C bindings..."
@@ -21,6 +22,7 @@ if [ -e $GEN ]; then
   $GEN --pastoc -i $PASBINDDIR/liinstaller.pas -o $COUT/li-installer.h --template=$COUT/cheader.template
   $GEN --pastoc -i $PASBINDDIR/liappupdate.pas -o $COUT/li-updater.h --template=$COUT/cheader.template
   $GEN --pastoc -i ../src/litypes.pas -o $COUT/li-types.h --template=$COUT/cheader.template
+  $GEN --pastoc -i $PASBINDDIR/libasic.pas -o $COUT/li-basics.h --template=$COUT/cheader.template
   
   echo "Finished."
 else

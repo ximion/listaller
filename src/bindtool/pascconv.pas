@@ -71,7 +71,7 @@ begin
   //Workarounds
   if h = 'pstringlist' then
   begin
-    Result := 'StringList ';
+    Result := 'StringList';
     exit;
   end;
   //Some listaller types to replace

@@ -27,7 +27,6 @@
 #define __LI_INSTALLER
 
 #include<stdio.h>
-#include<iostream>
 
 bool li_remove_ipk_installed_app(char *appname,char *appid,StatusChangeEvent statuscall,bool fastmode);
 
@@ -67,15 +66,15 @@ char *li_setup_pkgid(LiInstallation setup);
 
 PkgSignatureState li_setup_signature_state(LiInstallation setup);
 
-bool li_setup_long_description(LiInstallation setup,void* list);
+bool li_setup_long_description(LiInstallation setup,StringList list);
 
 char *li_setup_long_description_as_string(LiInstallation setup);
 
 char *li_setup_wizard_image_path(LiInstallation setup);
 
-bool li_setup_license(LiInstallation setup,void* list);
+bool li_setup_license(LiInstallation setup,StringList list);
 
-bool li_setup_profiles_list(LiInstallation setup,void* list);
+bool li_setup_profiles_list(LiInstallation setup,StringList list);
 
 void li_setup_set_profileid(LiInstallation setup,int id);
 

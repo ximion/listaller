@@ -27,7 +27,6 @@
 #define __LI_UPDATER
 
 #include<stdio.h>
-#include<iostream>
 
 void* li_updater_new(void);
 

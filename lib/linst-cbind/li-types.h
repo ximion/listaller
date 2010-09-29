@@ -27,7 +27,6 @@
 #define __LI_TYPES
 
 #include<stdio.h>
-#include<iostream>
 
 typedef const void* StringList;
 

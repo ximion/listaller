@@ -23,31 +23,17 @@
 #error "Only <listaller.h> can be included directly."
 #endif
 
-#ifndef __LI_MANAGER
-#define __LI_MANAGER
+#ifndef __LI_BASICS
+#define __LI_BASICS
 
 #include<stdio.h>
 
-void* li_mgr_new(void);
+void* li_new_stringlist(void);
 
-void li_mgr_free(LiAppManager mgr);
+bool li_free_stringlist(StringList lst);
 
-bool li_mgr_scan_apps(LiAppManager mgr);
+char *li_stringlist_read_line(StringList lst,int ln);
 
-bool li_mgr_update_appdb(LiAppManager mgr);
+bool li_stringlist_write_line(StringList lst,int ln,char *val);
 
-bool li_mgr_register_status_call(LiAppManager mgr,StatusChangeEvent call,void* user_data);
-
-bool li_mgr_register_app_call(LiAppManager mgr,NewAppEvent call,void* user_data);
-
-bool li_mgr_register_request_call(LiAppManager mgr,UserRequestCall call,void* user_data);
-
-void li_mgr_set_sumode(LiAppManager mgr,bool md);
-
-bool li_mgr_sumode(LiAppManager mgr);
-
-bool li_mgr_remove_app(LiAppManager mgr,LiAppInfo obj);
-
-bool li_mgr_check_apps(LiAppManager mgr,StringList log,bool root);
-
-#endif /* __LI_MANAGER */
+#endif /* __LI_BASICS */
