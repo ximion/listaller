@@ -1,5 +1,5 @@
 /*
-    libinstaller-qt - Qt4 wrapper for libListaller
+    listaller-qt - Qt4 wrapper for libListaller
     Copyright (C) 2010 Matthias Klumpp
 
     This library is free software: you can redistribute it and/or modify
