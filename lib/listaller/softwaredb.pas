@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this library. If not, see <http://www.gnu.org/licenses/>.}
-//** Provide easy access to Listaller's software database
+//** Provide intelligent access to all application databases
 unit softwaredb;
 
 {$mode objfpc}
@@ -22,7 +22,7 @@ interface
 
 uses
   DB, Classes, LiTypes, LiUtils, SysUtils, SQLite3DS, StrLocale,
-  AppInstallDB;
+  AppInstallDB, ListallerDB;
 
 type
 

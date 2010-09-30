@@ -47,8 +47,9 @@ implementation
 
 constructor TAppInstallDB.Create(useSystemDB: Boolean);
 begin
+  //FIXME: Load db from settings
   if useSystemDB then
-    DBName := '/var/lib/app-install/desktop.db'
+    DBName := '/usr/share/app-install/desktop.db'
   else
     DBName := SyblToPath('SHARE', false, false) + '/desktop.db';
 
