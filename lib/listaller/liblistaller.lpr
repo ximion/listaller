@@ -400,7 +400,7 @@ begin
  try
   Result:=true;
   mgr^.UpdateAppDB;
- finally
+ except
   Result:=false;
  end;
 end;
