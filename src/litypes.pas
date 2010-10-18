@@ -89,22 +89,26 @@ type
     gtUNKNOWN);
 
   //** Listaller package types
-  PkgType = (ptLinstall, ptDLink, ptContainer, ptUnknown);
+  LiPkgType = (ptNative, ptExtern, ptLinstall, ptDLink, ptContainer, ptUnknown);
+
+  //** Filter for apps
+  LiAppFilter = (fAll, fNative, fIPK, fExtern);
 
   //** Container for information about apps
   LiAppInfo = record
     Name: PChar;
     PkName: PChar;
-    PkType: PkgType;
-    ShortDesc: PChar;
+    PkType: LiPkgType;
+    Summary: PChar;
     Version: PChar;
     Author: PChar;
     IconName: PChar;
-    Profile: PChar;
-    UId: PChar;
-    Category: AppCategory;
+    RemoveId: PChar;
+    Categories: PChar;
     InstallDate: TDateTime;
     Dependencies: PChar;
+    //@DEPRECATED
+    Profile: PChar;
   end;
 
   PLiAppInfo = ^LiAppInfo;

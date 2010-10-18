@@ -453,7 +453,7 @@ begin
   end;
   pkg.Version := GetVersionFromControl(cont);
 
-  if sdb.DepExisting(pkg.PkName, pkg.Version) then
+  if sdb.DepExists(pkg.PkName, pkg.Version) then
   begin
     sdb.Free;
     dc.Free;

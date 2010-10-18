@@ -21,39 +21,68 @@ unit appinstalldb;
 interface
 
 uses
-  DB, Classes, LiUtils, SQLite3, SysUtils, SQLite3DS;
+  DB, Classes, LiUtils, SQLite3, SysUtils, SQLite3DS, LiTypes;
 
 type
   TAppInstallDB = class
   private
     DBName: String;
     ds: TSQLite3Dataset;
+
+    FNewApp: NewAppEvent;
+    onnewapp_udata: Pointer;
     procedure ToApps;
     procedure ToLocale;
     function ValFormat(s: String): String;
+    function GetCurrentAppField: LiAppInfo;
   public
-    constructor Create(useSystemDB: Boolean);
+    constructor Create;
     destructor Destroy;
 
+    //** Open AppInstall database
+    function Load(const rootmode: Boolean): Boolean;
+    //** Get list of installed apps
+    function GetApplicationList(filter: LiAppFilter; blacklist: TStringList = nil): boolean;
+    //** Return true if application exists
     function ContainsAppEntry(appID: String): Boolean;
-    procedure AddApplication(appID, pkgName, groupNames, repoID,
-      iconName, appName, appDesc: String);
+    //** Add application to the data
+    procedure AddApplication(app: LiAppInfo);
+    //** Write changes to disk
     procedure Finalize;
+    //** Register call to on new app found
+    procedure RegOnNewApp(call: NewAppEvent; user_data: Pointer);
+    //** Event: Called if new application was found
+    property OnNewApp: NewAppEvent read FNewApp write FNewApp;
   end;
 
 implementation
 
 { TAppInstallDB }
 
-constructor TAppInstallDB.Create(useSystemDB: Boolean);
+constructor TAppInstallDB.Create;
+begin
+  ds := TSQLite3Dataset.Create(nil);
+end;
+
+procedure TAppInstallDB.RegOnNewApp(call: NewAppEvent; user_data: Pointer);
+begin
+  if Assigned(call) then
+  begin
+    onnewapp_udata := user_data;
+    FNewApp := call;
+  end
+  else
+    perror('Invalid NewAppEvent pointer received!');
+end;
+
+function TAppInstallDB.Load(const rootmode: Boolean): Boolean;
 begin
   //FIXME: Load db from settings
-  if useSystemDB then
+  if rootmode then
     DBName := '/usr/share/app-install/desktop.db'
   else
     DBName := SyblToPath('SHARE', false, false) + '/desktop.db';
 
-  ds := TSQLite3Dataset.Create(nil);
   ds.FileName := DBName;
   //Create initial layout if necessary
   with ds do
@@ -124,17 +153,16 @@ begin
   Result := '''' + StrSubst(s, '''', '''''') + '''';
 end;
 
-procedure TAppInstallDB.AddApplication(appID, pkgName, groupNames,
-  repoID, iconName, appName, appDesc: String);
+procedure TAppInstallDB.AddApplication(app: LiAppInfo);
 var
   sql: WideString;
 begin
   ToApps;
   ds.Edit;
 
-  sql := ValFormat(appID) + ', ' + ValFormat(pkgName) + ', ' +
-    ValFormat(groupNames) + ', ' + ValFormat(repoID) + ',' +
-    ValFormat(iconName) + ',' + ValFormat(appName) + ',' + ValFormat(appDesc);
+  sql := ValFormat(app.PkName) + ', ' + ValFormat(app.RemoveId) + ', ' +
+    ValFormat(app.Categories) + ', ' + ValFormat('installer:local') + ',' +
+    ValFormat(app.IconName) + ',' + ValFormat(app.Name) + ',' + ValFormat(app.Summary);
 
   sql := 'INSERT INTO applications (application_id, package_name, categories, ' +
     'repo_id, icon_name, application_name, application_summary) ' +
@@ -147,6 +175,69 @@ end;
 procedure TAppInstallDB.Finalize;
 begin
   ds.ApplyUpdates;
+end;
+
+function TAppInstallDB.GetCurrentAppField: LiAppInfo;
+var
+  r: LiAppInfo;
+  h: string;
+
+  function _(s: WideString): PChar;
+  begin
+    Result := PChar(s);
+  end;
+
+begin
+  r.Name := _(ds.FieldByName('application_id').AsString);
+  r.PkName := _(ds.FieldByName('package_name').AsString);
+  h := LowerCase(ds.FieldByName('repo_id').AsString);
+  if h = 'installer:local' then
+    r.PkType := ptExtern
+  else
+    r.PkType := ptNative;
+
+  r.Summary := _(ds.FieldByName('application_summary').AsString);
+  r.Version := ''; //AppInstall data does not provide version information...
+  r.Author := ''; //.. and info about the author
+  r.IconName := _(ds.FieldByName('icon_name').AsString);
+  r.Profile := ''; //@DEPRECATED
+
+  r.Categories := _(ds.FieldByName('categories').AsString);
+
+  r.Dependencies := '';
+  Result := r;
+end;
+
+function TAppInstallDB.GetApplicationList(filter: LiAppFilter; blacklist: TStringList = nil): boolean;
+var
+  entry: LiAppInfo;
+  p: ansistring;
+begin
+  Result := false;
+  ToApps;
+
+  ds.Filtered := True;
+  ds.First;
+
+  while not ds.EOF do
+  begin
+    entry := GetCurrentAppField;
+    entry.RemoveId := entry.PkName;
+
+    if Assigned(blacklist) then
+      blacklist.Add(entry.Name);
+
+    if entry.Summary = '' then
+      entry.Summary := 'No description available';
+
+    if (filter = fNative) and (entry.PkType <> ptNative) then
+    else
+    if Assigned(FNewApp) then
+      FNewApp(entry.Name, @entry, onnewapp_udata);
+
+    ds.Next;
+  end;
+  ds.Close;
 end;
 
 end.

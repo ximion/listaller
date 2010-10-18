@@ -32,10 +32,12 @@ const
   LI_CONFIG_DIR = '/etc/lipa/';
   //** Prefix for application database
   LI_APPDB_PREF = 'info/';
+  //** Path to global Listaller package lib dir
+  RootPkgRegDir = LI_CONFIG_DIR + LI_APPDB_PREF;
 
 var
   //** The Listaller package lib directory
-  RegDir: String = '';
+  PkgRegDir: String = '';
 
 type
   //** Urgency levels
@@ -1047,9 +1049,9 @@ end;
 
 initialization
   if IsRoot then
-    RegDir := LI_CONFIG_DIR + LI_APPDB_PREF
+    PkgRegDir := LI_CONFIG_DIR + LI_APPDB_PREF
   else
-    RegDir := SyblToPath('$INST') + '/' + LI_APPDB_PREF;
+    PkgRegDir := SyblToPath('$INST') + '/' + LI_APPDB_PREF;
 
 end.
 

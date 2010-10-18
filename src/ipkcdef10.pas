@@ -34,8 +34,8 @@ type
     function translate(s: String): String;
     procedure WriteEntry(k, s: String);
 
-    procedure WriteType(atype: PkgType);
-    function ReadType: PkgType;
+    procedure WriteType(atype: LiPkgType);
+    function ReadType: LiPkgType;
     procedure WriteName(s: String);
     function ReadName: String;
     procedure WriteVersion(s: String);
@@ -85,7 +85,7 @@ type
     destructor Destroy; override;
 
     property BasePath: String read FBasePath write FBasePath;
-    property SType: PkgType read ReadType write WriteType;
+    property SType: LiPkgType read ReadType write WriteType;
     property AppName: String read ReadName write WriteName;
     property AppVersion: String read ReadVersion write WriteVersion;
     procedure ReadAppLicense(info: TStringList);
@@ -368,7 +368,7 @@ begin
   end;
 end;
 
-procedure TIPKBasic.WriteType(atype: PkgType);
+procedure TIPKBasic.WriteType(atype: LiPkgType);
 var
   h: String;
 begin
@@ -383,7 +383,7 @@ begin
     Text.Add(h);
 end;
 
-function TIPKBasic.ReadType: PkgType;
+function TIPKBasic.ReadType: LiPkgType;
 var
   s: String;
   j: Integer;

@@ -17,6 +17,8 @@ set(llistaller_base_sources ${CMAKE_SOURCE_DIR}/src/liversion.inc
 	lidbusproc.pas
 	limanageapp.pas
 	liupdateapp.pas
+	appinstalldb.pas
+	listallerdb.pas
 	softwaredb.pas
 )
 

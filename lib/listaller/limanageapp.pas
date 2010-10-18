@@ -217,7 +217,6 @@ var
     dt: TMOFile;
     lp: String;
     translate: Boolean; //Used, because Assigned(dt) throws an AV
-    gr: AppCategory;
     //Translate string if possible
     function ldt(s: String): String;
     var
@@ -268,10 +267,10 @@ var
         //Check for Autopackage.org installation
         if pos('apkg-remove', LowerCase(d.ReadString('Desktop Entry',
           'Actions', ''))) > 0 then
-          entry.UId := PChar('!' + d.ReadString('Desktop Action Apkg-Remove',
+          entry.RemoveId := PChar('!' + d.ReadString('Desktop Action Apkg-Remove',
             'Exec', ''))
         else
-          entry.UId := PChar(fname);
+          entry.RemoveId := PChar(fname);
 
         if d.ReadString('Desktop Entry', 'X-Ubuntu-Gettext-Domain', '') <> '' then
         begin
@@ -293,39 +292,6 @@ var
 
         end;
 
-        if (pos('education', LowerCase(
-          d.ReadString('Desktop Entry', 'Categories', ''))) > 0) then
-          gr := gtEDUCATION
-        else if (pos('office', LowerCase(
-            d.ReadString('Desktop Entry', 'Categories', ''))) > 0) then
-            gr := gtOFFICE
-          else if (pos('development', LowerCase(
-              d.ReadString('Desktop Entry', 'Categories', ''))) > 0) then
-              gr := gtDEVELOPMENT
-            else if (pos('graphic', LowerCase(
-                d.ReadString('Desktop Entry', 'Categories', ''))) > 0) then
-                gr := gtGRAPHIC
-              else if (pos('network', LowerCase(
-                  d.ReadString('Desktop Entry', 'Categories', ''))) > 0) then
-                  gr := gtNETWORK
-                else if (pos('game', LowerCase(
-                    d.ReadString('Desktop Entry', 'Categories', ''))) > 0) then
-                    gr := gtGAMES
-                  else if (pos('system', LowerCase(
-                      d.ReadString('Desktop Entry', 'Categories', ''))) > 0) then
-                      gr := gtSYSTEM
-                    else if (pos('audio', LowerCase(
-                        d.ReadString('Desktop Entry', 'Categories', ''))) > 0) then
-                        gr := gtMULTIMEDIA
-                      else if (pos('video', LowerCase(
-                          d.ReadString('Desktop Entry', 'Categories', ''))) > 0) then
-                          gr := gtMULTIMEDIA
-                        else if (pos('utils', LowerCase(
-                            d.ReadString('Desktop Entry', 'Categories', ''))) > 0) then
-                            gr := gtADDITIONAL
-                          else
-                            gr := gtOTHER;
-
         with entry do
         begin
           if d.ValueExists('Desktop Entry', 'Name[' + GetLangID + ']') then
@@ -336,15 +302,15 @@ var
 
           Name := PChar(StringReplace(Name, '&', '&&', [rfReplaceAll]));
 
-          Category := gr;
+          Categories := PChar(d.ReadString('Desktop Entry', 'Categories', ''));
 
           // instLst.Add(Lowercase(d.ReadString('Desktop Entry','Name','<error>')));
 
           if d.ValueExists('Desktop Entry', 'Comment[' + GetLangID + ']') then
-            ShortDesc := PChar(d.ReadString('Desktop Entry', 'Comment[' +
+            Summary := PChar(d.ReadString('Desktop Entry', 'Comment[' +
               GetLangID + ']', ''))
           else
-            ShortDesc := PChar(ldt(d.ReadString('Desktop Entry', 'Comment', '')));
+            Summary := PChar(ldt(d.ReadString('Desktop Entry', 'Comment', '')));
 
           Author := PChar(rsAuthor + ': ' + d.ReadString(
             'Desktop Entry', 'X-Publisher', '<error>'));
@@ -395,7 +361,7 @@ begin
     blst.Delete(0);
   end;
 
-  db.GetApplicationList(blst);
+  db.GetApplicationList(fAll, blst);
 
 
   ini := TIniFile.Create(ConfigDir + 'config.cnf');
@@ -498,24 +464,27 @@ var
   tmp, xtmp: TStringList;
   i: Integer;
   ddata: TDesktopData;
+  data: LiAppInfo;
   appID: String;
   appRmID: String;
-  ai: TAppInstallDB;
+  sdb: TSoftwareDB;
 begin
   if (sumode) and (not IsRoot) then
   begin
     pwarning('Cannot update AppDB without beeing root!');
     exit;
   end;
-  //Search for .desktop files
+  // Search for .desktop files
   tmp := FindAllFiles('/usr/share/applications/', '*.desktop', true);
   xtmp := FindAllFiles('/usr/local/share/applications/', '*.desktop', true);
   for i := 0 to xtmp.Count - 1 do
     tmp.Add(xtmp[i]);
   xtmp.Free;
 
-  ai := TAppInstallDB.Create(SUMode);
-  //Update database
+  sdb := TSoftwareDB.Create;
+  //Always use the global application databases
+  sdb.Load(true);
+  // Update the database
   for i := 0 to tmp.Count - 1 do
   begin
     ddata := ReadDesktopFile(tmp[i]);
@@ -523,18 +492,26 @@ begin
     if ddata.Name = '' then
       Continue;
     //If not already in list, add it
-    if ai.ContainsAppEntry(appID) then
+    if sdb.AppExists(appID) then
       Continue
     else
     begin
+      pdebug('AppID: '+appID);
       appRmId := GenerateAppID(tmp[i]);
-      ai.AddApplication(appID, appRmId, ddata.Categories, 'installer:local',
-        ddata.IconName, ddata.Name, ddata.SDesc);
+      //Build a new AppInfo record
+      data.Name:=PChar(ddata.Name);
+      data.RemoveId:=PChar(appRmId);
+      data.PkName:=PChar(appID);
+      data.PkType:=ptExtern;
+      data.Categories:=PChar(ddata.Categories);
+      data.IconName:=PChar(ddata.IconName);
+      data.Summary:=PChar(ddata.SDesc);
+      sdb.AppAddNew(data);
     end;
   end;
   tmp.Free;
-  ai.Finalize; //Write to disk
-  ai.Free;
+  sdb.Finalize; //Write to disk
+  sdb.Free;
 end;
 
 //Uninstall Mojo and LOKI Setups
@@ -638,15 +615,15 @@ begin
 
   //Needed
   Name := obj.Name;
-  id := obj.UId;
+  id := obj.RemoveId;
 
   if copy(id, 1, 4) <> 'pkg:' then
   begin
     msg(rsReadingAppInfo);
 
-    if not FileExists(obj.UId) then
+    if not FileExists(obj.RemoveId) then
     begin
-      if DirectoryExistsUTF8(RegDir + LowerCase(id)) then
+      if DirectoryExistsUTF8(PkgRegDir + LowerCase(id)) then
       begin
         //Remove IPK app
         UninstallIPKApp(Name, id, FStatus, false);
@@ -666,7 +643,7 @@ begin
       if id[1] = '!' then
       begin
         t := TProcess.Create(nil);
-        t.CommandLine := copy(obj.UId, 2, length(obj.Uid));
+        t.CommandLine := copy(obj.RemoveId, 2, length(obj.RemoveId));
         t.Options := [poUsePipes, poWaitonexit];
         t.Execute;
         t.Free;
@@ -718,7 +695,7 @@ var
   f, g: String;
   buscmd: ListallerBusCommand;
 begin
-  id := obj.UId;
+  id := obj.RemoveId;
   if id = '' then
   begin
     perror('Invalid application info passed: No ID found.');
@@ -781,19 +758,19 @@ begin
         (request(StringReplace(StringReplace(
         StringReplace(rsRMPkg, '%p', f, [rfReplaceAll]), '%a', obj.Name, [rfReplaceAll]),
         '%pl', PChar(g), [rfReplaceAll]), rqWarning) = rqsYes) then
-        obj.UId := PChar('pkg:' + f)
+        obj.RemoveId := PChar('pkg:' + f)
       else
         exit;
     end;
     tmp.Free;
     pdebug('Done. ID is set.');
 
-    //Important: ID needs to be the same as AppInfo.UId
-    id := obj.UId;
+    //Important: ID needs to be the same as AppInfo.RemoveId
+    id := obj.RemoveId;
   end;
 
 
-  pdebug('Application UId is: ' + obj.UId);
+  pdebug('Application UId is: ' + obj.RemoveId);
   if (SUMode) and (not IsRoot) then
   begin
     //Create worker thread for this action
