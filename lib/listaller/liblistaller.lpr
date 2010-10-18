@@ -136,7 +136,7 @@ begin
 end;
 
 //** Installation type
-function li_setup_pkgtype(setup: PLiInstallation): PkgType;cdecl;
+function li_setup_pkgtype(setup: PLiInstallation): LiPkgType;cdecl;
 begin
   if not setup^.PkgOkay then exit;
   Result:=setup^.pType;
@@ -583,10 +583,16 @@ begin
  Result:=upd^.ExecuteUpdate(uid);
 end;
 
-//** Get registration dir
-function li_regdir: PChar;cdecl;
+//** Get current pkg registration dir
+function li_current_regdir: PChar;cdecl;
 begin
- Result:=PChar(RegDir);
+ Result:=PChar(PkgRegDir);
+end;
+
+//** Get global registration dir
+function li_global_regdir: PChar;cdecl;
+begin
+ Result:=PChar(RootPkgRegDir);
 end;
 
 //** Get Listaller version
@@ -664,7 +670,8 @@ exports
  li_updater_execute_update,
 
  //Other functions
- li_regdir,
+ li_current_regdir,
+ li_global_regdir,
  li_remove_ipk_installed_app,
  li_ipk_app_is_installed,
  li_version;

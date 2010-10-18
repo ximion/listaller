@@ -99,25 +99,35 @@ typedef enum {
 } AppCategory;
 
 typedef enum {
+      ptNative,
+      ptExtern,
       ptLinstall,
       ptDLink,
       ptContainer,
       ptUnknown
-} PkgType;
+} LiPkgType;
+
+typedef enum {
+      fAllApps,
+      fAppNative,
+      fAppIPK,
+      fAppExtern,
+      fDeps
+} LiFilter;
 
 typedef struct {
       char *Name;
       char *PkName;
-      PkgType PkType;
-      char *ShortDesc;
+      LiPkgType PkType;
+      char *Summary;
       char *Version;
       char *Author;
       char *IconName;
-      char *Profile;
-      char *UId;
-      AppCategory Category;
+      char *RemoveId;
+      char *Categories;
       double InstallDate;
       char *Dependencies;
+      char *Profile;
 } LiAppInfo;
 
 typedef enum {

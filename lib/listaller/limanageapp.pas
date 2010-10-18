@@ -361,7 +361,7 @@ begin
     blst.Delete(0);
   end;
 
-  db.GetApplicationList(fAll, blst);
+  db.GetApplicationList(fAllApps, blst);
 
 
   ini := TIniFile.Create(ConfigDir + 'config.cnf');
@@ -483,7 +483,7 @@ begin
 
   sdb := TSoftwareDB.Create;
   //Always use the global application databases
-  sdb.Load(true);
+  sdb.Load(SUMode);
   // Update the database
   for i := 0 to tmp.Count - 1 do
   begin
@@ -818,7 +818,7 @@ begin
 
     while not db.EndReached do
     begin
-      app := db.DataField.App;
+      app := db.CurrentDataField.App;
       writeLn(' Checking ' + app.Name);
       deps.Text := app.Dependencies;
       for i := 0 to deps.Count - 1 do
@@ -853,7 +853,7 @@ begin
     end;
     deps.Free;
     pkit.Free;
-    db.Close;
+    db.CloseFilter;
   end
   else
     pdebug('No database found!');
@@ -879,7 +879,7 @@ begin
   end;
   db := TSoftwareDB.Create;
   if db.Load(sumode) then
-    Result := db.AppExisting(aname, aId)
+    Result := db.AppExists(aId)
   else
     Result := false; //No database => no application installed
   db.Free;
@@ -923,7 +923,7 @@ var
   end;
 
 begin
-  p := RegDir + LowerCase(AppID) + '/';
+  p := PkgRegDir + LowerCase(AppID) + '/';
   p := CleanFilePath(p);
 
   mnprog := 0;
@@ -941,13 +941,13 @@ begin
   db.Load;
   msg(rsDBOpened);
 
-  db.OpenFilterAppList;
+  db.OpenFilter(fAllApps);
   while not db.EndReached do
   begin
-    if (db.DataField.App.Name = AppName) and (db.DataField.App.PkName = AppID) then
+    if (db.CurrentDataField.App.Name = AppName) and (db.CurrentDataField.App.PkName = AppID) then
     begin
 
-      if db.DataField.App.PkType = ptDLink then
+      if db.CurrentDataField.App.PkType = ptDLink then
         dlink := true
       else
         dlink := false;
@@ -984,7 +984,7 @@ begin
         begin
           msg(rsRMUnsdDeps);
           tmp2 := TStringList.Create;
-          tmp2.Text := db.DataField.App.Dependencies;
+          tmp2.Text := db.CurrentDataField.App.Dependencies;
 
           if tmp2.Count > -1 then
           begin
@@ -1110,10 +1110,10 @@ begin
 
         if upd <> '#' then
         begin
-          CreateUpdateSourceList(RegDir);
-          if FileExists(RegDir + 'updates.list') then
+          CreateUpdateSourceList(PkgRegDir);
+          if FileExists(PkgRegDir + 'updates.list') then
           begin
-            tmp.LoadFromFile(RegDir + 'updates.list');
+            tmp.LoadFromFile(PkgRegDir + 'updates.list');
             msg('Removing update-source...');
             for i := 1 to tmp.Count - 1 do
               if pos(upd, tmp[i]) > 0 then
@@ -1121,7 +1121,7 @@ begin
                 tmp.Delete(i);
                 break;
               end;
-            tmp.SaveToFile(RegDir + 'updates.list');
+            tmp.SaveToFile(PkgRegDir + 'updates.list');
             tmp.Free;
           end;
         end;
@@ -1136,8 +1136,8 @@ begin
   begin
     msg('Unregistering...');
 
-    db.AppDeleteCurrent;
-    db.Close;
+    db.DeleteCurrentField;
+    db.CloseFilter;
 
     proc := TProcess.Create(nil);
     proc.Options := [poWaitOnExit];

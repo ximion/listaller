@@ -92,7 +92,7 @@ type
   LiPkgType = (ptNative, ptExtern, ptLinstall, ptDLink, ptContainer, ptUnknown);
 
   //** Filter for apps
-  LiAppFilter = (fAll, fNative, fIPK, fExtern);
+  LiFilter = (fAllApps, fAppNative, fAppIPK, fAppExtern, fDeps);
 
   //** Container for information about apps
   LiAppInfo = record

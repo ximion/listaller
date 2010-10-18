@@ -32,7 +32,7 @@ type
   private
     //Basic information about the package and the new application
     IAppName, IAppVersion, IAppCMD, IAuthor, ShDesc: String;
-    ICategory: AppCategory;
+    ICategories: String;
     IDesktopFiles: String;
     PkgName, PkgPath, PkgID: String;
     //Path to a wizard image
@@ -56,7 +56,7 @@ type
     //Overwrite all files? (needed for patches)
     FOverwrite: Boolean;
     //Current setup type
-    pkType: PkgType;
+    pkType: LiPkgType;
     //Disallow-line (every action the package disallows, unformated)
     FDisallow: String;
     //Only set if old package should be removed
@@ -145,7 +145,7 @@ type
     //** ID of the application
     property AppID: String read PkgID;
     //** Listaller package type
-    property pType: PkgType read pkType;
+    property pType: LiPkgType read pkType;
     //** Unformatted disallows string
     property Disallows: String read FDisallow;
     //** All distributions the package supports
@@ -591,6 +591,9 @@ begin
   pkgID := cont.PkName;
   msg('Package idName: ' + pkgID);
 
+  // Get categories
+  ICategories := cont.Categories;
+
   if pkType = ptLinstall then
   begin
     msg(StrSubst(rsPackageTypeIsX, '%s', 'linstall'));
@@ -638,8 +641,6 @@ begin
 
     //Load Description
     ShDesc := cont.SDesc;
-
-    ICategory := cont.Category;
 
     //Load info about supported distributions
     FSupportedDistris := LowerCase(cont.DSupport);
@@ -728,8 +729,6 @@ begin
 
       //DLink packages can only be installed as root!
       SUMode := true;
-
-      ICategory := cont.Category;
 
       IDesktopFiles := cont.Desktopfiles;
 
@@ -1349,12 +1348,12 @@ begin
       Name := PChar(IAppName);
       PkName := PChar(PkgID);
       PkType := pkType;
-      ShortDesc := PChar(ShDesc);
+      Summary := PChar(ShDesc);
       Version := PChar(IAppVersion);
       Author := PChar(IAuthor);
       IconName := PChar(IIconPath);
       Profile := PChar(CurProfile);
-      Category := ICategory;
+      Categories := PChar(ICategories);
     end;
     AppField.Dependencies := PChar(Dependencies.Text);
 

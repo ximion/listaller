@@ -55,7 +55,7 @@ type
     //** Move one entry forward
     procedure NextField;
     //** Close (filter) connection
-    procedure Close;
+    procedure CloseFilter;
     //** Check if application is installed
     function AppExists(appid: string): boolean;
     //** Delete current app
@@ -63,7 +63,7 @@ type
     //** Add a new application
     procedure AppAddNew(app: LiAppInfo);
     //** Update version of app
-    procedure AppUpdateVersion(pkgID: string; newv: string);
+    procedure AppUpdateVersion(appID: string; newv: string);
     //** Add new dependency to databse
     procedure DepAddNew(Name: string; version: string; origin: string;
       depnames: WideString);
@@ -90,6 +90,7 @@ constructor TListallerDB.Create;
 begin
   dsApp := TSQLite3Dataset.Create(nil);
   onnewapp_udata := nil;
+  EOF := true;
 end;
 
 destructor TListallerDB.Destroy;
@@ -305,8 +306,9 @@ begin
   CurrField.App := GetAppField;
 end;
 
-procedure TListallerDB.Close;
+procedure TListallerDB.CloseFilter;
 begin
+  dsApp.Filtered := false;
   dsApp.Close;
 end;
 
@@ -374,7 +376,7 @@ begin
   dsApp.Close;
 end;
 
-procedure TListallerDB.AppUpdateVersion(pkgID: string; newv: string);
+procedure TListallerDB.AppUpdateVersion(appID: string; newv: string);
 begin
   dsApp.TableName := 'applications';
   dsApp.SQL := 'SELECT * FROM applications';
@@ -383,7 +385,7 @@ begin
   dsApp.Edit;
   dsApp.First;
   dsApp.ExecuteDirect('UPDATE applications SET Version = ''' + newv +
-    ''' WHERE PkName = ''' + pkgID + '''');
+    ''' WHERE AppId = ''' + appID + '''');
   dsApp.ApplyUpdates;
   dsApp.Close;
 end;

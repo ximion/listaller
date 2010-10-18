@@ -35,7 +35,8 @@ function li_updater_search_updates(upd: PLiAppUpdater): Boolean;cdecl;external l
 function li_updater_updateid_oldversion(upd: PLiAppUpdater;uid: Longint): PChar;cdecl;external liblistaller;
 function li_updater_updateid_newversion(upd: PLiAppUpdater;uid: Longint): PChar;cdecl;external liblistaller;
 function li_updater_execute_update(upd: PLiAppUpdater;uid: Longint): Boolean;cdecl;external liblistaller;
-function li_regdir: PChar;cdecl;external liblistaller;
+function li_current_regdir: PChar;cdecl;external liblistaller;
+function li_global_regdir: PChar;cdecl;external liblistaller;
 
 {@End:Updater}
 

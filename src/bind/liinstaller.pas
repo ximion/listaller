@@ -76,7 +76,7 @@ procedure li_setup_free(setup: PLiInstallation);cdecl;external liblistaller;
 function li_setup_init(setup: PLiInstallation;pkname: PChar): Boolean;cdecl;external liblistaller;
 function li_setup_register_status_call(setup: PLiInstallation;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
 function li_setup_register_user_request_call(setup: PLiInstallation;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;external liblistaller;
-function li_setup_pkgtype(setup: PLiInstallation): PkgType;cdecl;external liblistaller;
+function li_setup_pkgtype(setup: PLiInstallation): LiPkgType;cdecl;external liblistaller;
 procedure li_setup_set_testmode(setup: PLiInstallation;st: Boolean);cdecl;external liblistaller;
 function li_setup_testmode(setup: PLiInstallation): Boolean;cdecl;external liblistaller;
 procedure li_setup_set_forced(setup: PLiInstallation;str: PChar);cdecl;external liblistaller;

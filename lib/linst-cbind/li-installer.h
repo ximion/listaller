@@ -41,7 +41,7 @@ bool li_setup_register_status_call(LiInstallation setup,StatusChangeEvent call,v
 
 bool li_setup_register_user_request_call(LiInstallation setup,UserRequestCall call,void* user_data);
 
-PkgType li_setup_pkgtype(LiInstallation setup);
+LiPkgType li_setup_pkgtype(LiInstallation setup);
 
 void li_setup_set_testmode(LiInstallation setup,bool st);
 

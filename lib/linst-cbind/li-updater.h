@@ -49,5 +49,7 @@ char *li_updater_updateid_newversion(LiAppUpdater upd,int uid);
 
 bool li_updater_execute_update(LiAppUpdater upd,int uid);
 
+char *li_current_regdir(void);
+
 
 #endif /* __LI_UPDATER */

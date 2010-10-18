@@ -21,13 +21,15 @@ unit appinstalldb;
 interface
 
 uses
-  DB, Classes, LiUtils, SQLite3, SysUtils, SQLite3DS, LiTypes;
+  DB, Classes, LiUtils, SQLite3, SysUtils, SQLite3DS, LiTypes, ListallerDB;
 
 type
   TAppInstallDB = class
   private
     DBName: String;
     ds: TSQLite3Dataset;
+    EOF: Boolean;
+    currField: TLiDBData;
 
     FNewApp: NewAppEvent;
     onnewapp_udata: Pointer;
@@ -42,7 +44,7 @@ type
     //** Open AppInstall database
     function Load(const rootmode: Boolean): Boolean;
     //** Get list of installed apps
-    function GetApplicationList(filter: LiAppFilter; blacklist: TStringList = nil): boolean;
+    function GetApplicationList(filter: LiFilter; blacklist: TStringList = nil): boolean;
     //** Return true if application exists
     function ContainsAppEntry(appID: String): Boolean;
     //** Add application to the data
@@ -51,6 +53,17 @@ type
     procedure Finalize;
     //** Register call to on new app found
     procedure RegOnNewApp(call: NewAppEvent; user_data: Pointer);
+    //** Open filtered applications list (and set pointer to beginning)
+    procedure OpenFilter;
+    //** Move one entry forward
+    procedure NextField;
+    //** Close (filter) connection
+    procedure CloseFilter;
+    //** Delete current app
+    procedure DeleteCurrentApp;
+
+    property EndReached: Boolean read EOF;
+    property CurrentDataField: TLiDBData read CurrField;
     //** Event: Called if new application was found
     property OnNewApp: NewAppEvent read FNewApp write FNewApp;
   end;
@@ -62,6 +75,8 @@ implementation
 constructor TAppInstallDB.Create;
 begin
   ds := TSQLite3Dataset.Create(nil);
+  EOF := true;
+  onnewapp_udata := nil;
 end;
 
 procedure TAppInstallDB.RegOnNewApp(call: NewAppEvent; user_data: Pointer);
@@ -137,6 +152,12 @@ begin
   ds.Open;
 end;
 
+procedure TAppInstallDB.DeleteCurrentApp;
+begin
+  ds.TableName := 'applications';
+  ds.ExecuteDirect('DELETE FROM applications WHERE rowid=' + IntToStr(ds.RecNo));
+end;
+
 function TAppInstallDB.ContainsAppEntry(appID: String): Boolean;
 begin
   ToApps;
@@ -208,7 +229,7 @@ begin
   Result := r;
 end;
 
-function TAppInstallDB.GetApplicationList(filter: LiAppFilter; blacklist: TStringList = nil): boolean;
+function TAppInstallDB.GetApplicationList(filter: LiFilter; blacklist: TStringList = nil): boolean;
 var
   entry: LiAppInfo;
   p: ansistring;
@@ -230,13 +251,35 @@ begin
     if entry.Summary = '' then
       entry.Summary := 'No description available';
 
-    if (filter = fNative) and (entry.PkType <> ptNative) then
+    if (filter = fAppNative) and (entry.PkType <> ptNative) then
     else
     if Assigned(FNewApp) then
       FNewApp(entry.Name, @entry, onnewapp_udata);
 
     ds.Next;
   end;
+  ds.Close;
+end;
+
+procedure TAppInstallDB.OpenFilter;
+begin
+  ToApps;
+  ds.Filtered := True;
+  ds.First;
+  EOF := ds.EOF;
+  CurrField.App := GetCurrentAppField;
+end;
+
+procedure TAppInstallDB.NextField;
+begin
+  ds.Next;
+  EOF := ds.EOF;
+  CurrField.App := GetCurrentAppField;
+end;
+
+procedure TAppInstallDB.CloseFilter;
+begin
+  ds.Filtered := false;
   ds.Close;
 end;
 
