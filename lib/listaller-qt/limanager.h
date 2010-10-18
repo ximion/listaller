@@ -29,12 +29,12 @@ struct Application
 {
   QString name;
   QString pkName;
-  QString shortDesc;
+  QString summary;
   QString version;
   QString author;
   QString iconName;
   QString profile;
-  QString uId;
+  QString removeId;
   double installDate;
   QString dependencies;
 };

@@ -164,10 +164,10 @@ begin
   new := TAppInfoItem.Create;
   new.Name := ai.Name;
   new.Author := ai.Author;
-  new.SDesc := ai.ShortDesc;
-  new.UId := ai.UId;
+  new.SDesc := ai.Summary;
+  new.RemoveId := ai.RemoveId;
   new.Version := ai.Version;
-  new.Category := ai.Category;
+  new.Categories := ai.Categories;
 
   aList.Add(new);
 

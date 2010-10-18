@@ -90,6 +90,10 @@ add_custom_target(writedoc
   "bash" "${CMAKE_SOURCE_DIR}/src/writedoc"
 )
 
+add_custom_target(distclean
+  "make clean"
+)
+
 find_package(PkgConfig REQUIRED)
 find_package(UnixCommands REQUIRED)
 find_package(FPC REQUIRED)
@@ -97,11 +101,12 @@ find_package(FPC REQUIRED)
 include(${CMAKE_SOURCE_DIR}/data/cmake/listaller_build_gui.cmake)
 
 make_directory("${CMAKE_BINARY_DIR}/${PASCAL_TARGET_ARCH}-${PASCAL_TARGET_OS}")
-configure_file("${CMAKE_SOURCE_DIR}/src/liversion.inc.in"
-  "${CMAKE_SOURCE_DIR}/src/liversion.inc"
-  @ONLY
+
+configure_file(${CMAKE_SOURCE_DIR}/src/liversion.inc.in
+	       ${CMAKE_SOURCE_DIR}/src/liversion.inc
+	       @ONLY
 )
-set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/src/liversion.inc)
+# set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/src/liversion.inc)
   
 add_subdirectory(lib)
 add_subdirectory(src)

@@ -183,10 +183,10 @@ end;
 
 procedure TUMnForm.FormCreate(Sender: TObject);
 begin
-  if not DirectoryExists(RegDir) then
+  if not DirectoryExists(PkgRegDir) then
   begin
-    CreateDir(ExtractFilePath(RegDir));
-    CreateDir(RegDir);
+    CreateDir(ExtractFilePath(PkgRegDir));
+    CreateDir(PkgRegDir);
   end;
 
   //Set icons

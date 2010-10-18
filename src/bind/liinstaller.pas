@@ -39,7 +39,7 @@ type
     procedure Initialize(pkname: String);
     procedure SetStatusChangeEvent(call: StatusChangeEvent; const userdata: Pointer = nil);
     procedure SetUserRequestCall(call: UserRequestCall; const userdata: Pointer = nil);
-    function PkType: PkgType;
+    function PkType: LiPkgType;
     function GetDisallows: String;
     function GetSupDistris: String;
     function GetAppName: String;
@@ -133,7 +133,7 @@ begin
   li_setup_register_status_call(@ins, call, userdata);
 end;
 
-function TInstallPack.PkType: PkgType;
+function TInstallPack.PkType: LiPkgType;
 begin
   Result := li_setup_pkgtype(@ins);
 end;

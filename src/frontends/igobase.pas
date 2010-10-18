@@ -453,10 +453,10 @@ var
   testmd: Boolean;
 begin
   testmd := false;
-  if not DirectoryExists(RegDir) then
+  if not DirectoryExists(PkgRegDir) then
   begin
-    CreateDir(ExtractFilePath(RegDir));
-    CreateDir(RegDir);
+    CreateDir(ExtractFilePath(PkgRegDir));
+    CreateDir(PkgRegDir);
   end;
 
   if not FileExists(ParamStr(1)) then
@@ -627,8 +627,8 @@ begin
   NoteBook1.PageIndex := 0;
   NoteBook1.ShowTabs := false;
 
-  if not DirectoryExists(RegDir) then
-    SysUtils.CreateDir(RegDir);
+  if not DirectoryExists(PkgRegDir) then
+    SysUtils.CreateDir(PkgRegDir);
 
   //Load all setup data
 

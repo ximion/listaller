@@ -507,7 +507,7 @@ begin
 
   appinfo.Name := PChar(bs.ReadMessageParamStr);
   bs.MessageIterNext;
-  appinfo.UId := PChar(bs.ReadMessageParamStr);
+  appinfo.RemoveId := PChar(bs.ReadMessageParamStr);
 
   pinfo('Removing application called "' + appinfo.Name + '" Job:' + jobID);
 

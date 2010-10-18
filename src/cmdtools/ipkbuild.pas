@@ -299,7 +299,7 @@ var
   b: Boolean;
   fc: TStringList;
   lh, h, s: String;
-  packtype: PkgType;
+  packtype: LiPkgType;
   pki: TPackInfo;
   sl, files, fsec: TStringList;
   tmpdepends: TStringList; //Contains all autodetected dependencies

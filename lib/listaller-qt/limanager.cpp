@@ -38,7 +38,7 @@ public:
     app.author = ai->Author;
     app.name = ai->Name;
     app.pkName = ai->PkName;
-    app.shortDesc = ai->ShortDesc;
+    app.summary = ai->Summary;
     app.version = ai->Version;
     app.installDate = ai->InstallDate;
     app.iconName = ai->IconName;
@@ -120,7 +120,7 @@ bool AppManager::uninstallApp(Application app)
   };
   
   LiAppInfo ai;
-  ai.UId = local::qStringToChar(app.uId);
+  ai.RemoveId = local::qStringToChar(app.removeId);
   ai.Author = local::qStringToChar(app.author);
   ai.Dependencies = local::qStringToChar(app.dependencies);
   ai.Name = local::qStringToChar(app.name);

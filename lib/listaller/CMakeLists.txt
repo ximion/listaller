@@ -11,6 +11,7 @@ set(llistaller_project liblistaller.lpr)
 
 set(llistaller_base_sources ${CMAKE_SOURCE_DIR}/src/liversion.inc
 	${llistaller_project}
+	${CMAKE_SOURCE_DIR}/src/liversion.inc
 	dderesolve.pas
 	depmanage.pas
 	ipkinstall.pas
@@ -33,7 +34,7 @@ set(llistaller_includes "-Fu${PROJECT_SOURCE_DIR}/src/"
 
 set(pascal_compiler_flags_cmn "-fPIC" "-dNoGUI" "-CX" "-XX")
 
-#Disable Cg flag, if we build for i386
+# Disable Cg flag, if we build for i386
 if (${PASCAL_TARGET_ARCH} MATCHES "[iI]386+")
  set(pascal_compiler_flags_cmn ${pascal_compiler_flags_cmn} "-Cg-")
 endif()

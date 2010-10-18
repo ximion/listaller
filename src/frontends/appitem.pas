@@ -31,7 +31,7 @@ type
    FIconPath: String;
    FSDesc: String;
    FAuthor: String;
-   FCat: AppCategory;
+   FCats: String;
    FVersion: String;
    FUId: String;
   public
@@ -41,10 +41,10 @@ type
    property Name: String read FName write FName;
    property SDesc: String read FSDesc write FSDesc;
    property Author: String read FAuthor write FAuthor;
-   property Category: AppCategory read FCat write FCat;
+   property Categories: String read FCats write FCats;
    property Icon: TBitmap read bmp write bmp;
    property Version: String read FVersion write FVersion;
-   property UId: String read FUId write FUId;
+   property RemoveId: String read FUid write FUId;
    property IconPath: String read FIconPath write FIconPath;
  end;
 

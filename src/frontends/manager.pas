@@ -186,7 +186,7 @@ begin
   //Set the AppInfo of the to-be-removed app
   with uApp do
   begin
-    UId := PChar(item.UId);
+    RemoveId := PChar(item.RemoveId);
     Name := PChar(item.Name);
     Version := PChar(item.Version);
     Author := PChar(item.Author);
@@ -583,8 +583,9 @@ begin
     for i := 0 to currAppList.Count-1 do
     begin
       Application.ProcessMessages;
-      if currAppList.AppItems[i].Category = gt then
-        appResList.AddItem(currAppList.AppItems[i]);
+      //FIXME!
+      {if currAppList.AppItems[i].Categories = gt then
+        appResList.AddItem(currAppList.AppItems[i]);}
     end;
     appResList.Parent := currAppList.Parent;
     appResList.Visible := true;
@@ -907,9 +908,9 @@ begin
       MB_YESNO+  MB_IconWarning) = idYes then
     begin
       uconf := TStringList.Create;
-      uconf.LoadFromFile(RegDir+'updates.list');
+      uconf.LoadFromFile(PkgRegDir+'updates.list');
       uconf.Delete(UListBox.ItemIndex+1);
-      uconf.SaveToFile(RegDir+'updates.list');
+      uconf.SaveToFile(PkgRegDir+'updates.list');
       uconf.Free;
       UListBox.Items.Delete(UListBox.ItemIndex);
       ShowMessage(rsSourceDeleted);
@@ -940,14 +941,14 @@ var
   h: String;
 begin
   uconf := TStringList.Create;
-  uconf.LoadFromFile(RegDir+'updates.list');
+  uconf.LoadFromFile(PkgRegDir+'updates.list');
   h := uconf[UListBox.ItemIndex+1];
   if UListBox.Checked[UListBox.ItemIndex] then
     h[1] := '-'
   else
     h[1] := '#';
   uconf[UListBox.ItemIndex+1] := h;
-  uconf.SaveToFile(RegDir+'updates.list');
+  uconf.SaveToFile(PkgRegDir+'updates.list');
   uconf.Free;
 end;
 
@@ -1053,32 +1054,32 @@ begin
 
   amgr := li_mgr_new; //Create new app manager
 
-  if not DirectoryExists(RegDir) then
-    SysUtils.CreateDir(RegDir);
+  if not DirectoryExists(PkgRegDir) then
+    SysUtils.CreateDir(PkgRegDir);
 
-  uApp.UId := '';
+  uApp.RemoveId := '';
 
   SuApps := IsRoot;
 
   //Set reg-dir
-  RegDir := SyblToPath('$INST')+'/'+LI_APPDB_PREF;
+  PkgRegDir := SyblToPath('$INST')+'/'+LI_APPDB_PREF;
 
 
   li_mgr_set_sumode(@aMgr, SuApps);
 
-  if not DirectoryExists(RegDir) then
-    CreateDir(RegDir);
+  if not DirectoryExists(PkgRegDir) then
+    CreateDir(PkgRegDir);
 
   //Load update source settings
   PageControl1.ActivePageIndex := 0;
 
   tmp := TStringList.Create;
-  if not FileExists(RegDir+'updates.list') then
+  if not FileExists(PkgRegDir+'updates.list') then
   begin
     tmp.Add('Listaller UpdateSources-pk0.8');
-    tmp.SaveToFile(RegDir+'updates.list');
+    tmp.SaveToFile(PkgRegDir+'updates.list');
   end;
-  tmp.LoadFromFile(RegDir+'updates.list');
+  tmp.LoadFromFile(PkgRegDir+'updates.list');
   for i := 1 to tmp.Count-1 do
   begin
     UListBox.items.Add(copy(tmp[i], pos(' (', tmp[i])+2,
