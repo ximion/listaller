@@ -28,14 +28,14 @@ uses
 type
   TAutopackageBackend = class(TLiBackend)
   private
-    dskFileName: string;
+    dskFileName: String;
   public
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
 
-    function Initialize(ai: LiAppInfo): boolean;
-    function CanBeUsed: boolean;
-    function Run: boolean;
+    function Initialize(ai: LiAppInfo): Boolean; override;
+    function CanBeUsed: Boolean; override;
+    function Run: Boolean; override;
   end;
 
 implementation
@@ -52,14 +52,14 @@ begin
   inherited;
 end;
 
-function TAutopackageBackend.Initialize(ai: LiAppInfo): boolean;
+function TAutopackageBackend.Initialize(ai: LiAppInfo): Boolean;
 begin
   dskFileName := GetDesktopFile(ai.removeID);
 
   Result := true;
 end;
 
-function TAutopackageBackend.CanBeUsed: boolean;
+function TAutopackageBackend.CanBeUsed: Boolean;
 var
   d: TIniFile;
 begin
@@ -69,26 +69,26 @@ begin
     Result := false;
   //Check for Autopackage.org installation
   if pos('apkg-remove', LowerCase(d.ReadString('Desktop Entry',
-        'Actions', ''))) > 0 then
-       Result := true;
+    'Actions', ''))) > 0 then
+    Result := true;
   d.Free;
 end;
 
-function TAutopackageBackend.Run: boolean;
+function TAutopackageBackend.Run: Boolean;
 var
   inf: TIniFile;
   p: TProcess;
 begin
   Result := true;
   inf := TIniFile.Create(dskFileName);
-        p := TProcess.Create(nil);
-        p.CommandLine := inf.ReadString('Desktop Entry',
-        'Actions', '');
-        p.Options := [poUsePipes, poWaitonexit];
-        p.Execute;
-        if p.ExitStatus > 0 then Result := false;
-        p.Free;
-        inf.Free;
+  p := TProcess.Create(nil);
+  p.CommandLine := inf.ReadString('Desktop Entry', 'Actions', '');
+  p.Options := [poUsePipes, poWaitonexit];
+  p.Execute;
+  if p.ExitStatus > 0 then
+    Result := false;
+  p.Free;
+  inf.Free;
 end;
 
 end.

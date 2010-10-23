@@ -28,25 +28,25 @@ uses
 type
   TIPKBackend = class(TLiBackend)
   private
-    dskFileName: string;
+    dskFileName: String;
     fastrm: Boolean;
     rmdeps: Boolean;
 
     appInfo: LiAppInfo;
   public
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
 
-    function Initialize(ai: LiAppInfo): boolean;
-    function CanBeUsed: boolean;
-    function Run: boolean;
+    function Initialize(ai: LiAppInfo): Boolean; override;
+    function CanBeUsed: Boolean; override;
+    function Run: Boolean; override;
 
     property FastRemove: Boolean read fastrm write fastrm;
     property RemoveDeps: Boolean read rmdeps write rmdeps;
   end;
 
 //** Helper procedure to create USource file if missing
-procedure CreateUpdateSourceList(path: string);
+procedure CreateUpdateSourceList(path: String);
 
 implementation
 
@@ -62,14 +62,14 @@ begin
   inherited;
 end;
 
-function TIPKBackend.Initialize(ai: LiAppInfo): boolean;
+function TIPKBackend.Initialize(ai: LiAppInfo): Boolean;
 begin
   appInfo := ai;
 
   Result := true;
 end;
 
-function TIPKBackend.CanBeUsed: boolean;
+function TIPKBackend.CanBeUsed: Boolean;
 var
   ldb: TListallerDB; // We use no db abstraction here and query ListallerDB directly
 begin
@@ -80,26 +80,26 @@ begin
   begin
     Result := DirectoryExistsUTF8(PkgRegDir + LowerCase(appInfo.PkName));
     if not Result then
-     //EmitRequest(rsAppRegistBroken, rqError);
-    perror('App registration is broken for #'+appInfo.RemoveId);
+      //EmitRequest(rsAppRegistBroken, rqError);
+      perror('App registration is broken for #' + appInfo.RemoveId);
   end;
   ldb.Free;
 end;
 
-function TIPKBackend.Run: boolean;
+function TIPKBackend.Run: Boolean;
 var
   tmp, tmp2, slist: TStringList;
-  p, f: string;
-  i, j: integer;
-  k: boolean;
-  upd: string;
+  p, f: String;
+  i, j: Integer;
+  k: Boolean;
+  upd: String;
   proc: TProcess;
-  dlink: boolean;
+  dlink: Boolean;
   t: TProcess;
   pkit: TPackageKit;
   db: TSoftwareDB;
-  mnprog: integer;
-  bs: double;
+  mnprog: Integer;
+  bs: Double;
   ipkc: TIPKControl;
 begin
   Result := false;
@@ -118,19 +118,19 @@ begin
   EmitMessage(rsStartingUninstall);
 
   db := TSoftwareDB.Create;
-  db.Load;
+  DB.Load;
 
-  db.OpenFilter(fAppIPK);
-  while not db.EndReached do
+  DB.OpenFilter(fAppIPK);
+  while not DB.EndReached do
   begin
     if (DB.CurrentDataField.App.Name = appInfo.Name) and
       (DB.CurrentDataField.App.removeId = appInfo.removeId) then
     begin
 
       if DB.CurrentDataField.App.PkType = ptDLink then
-        dlink := True
+        dlink := true
       else
-        dlink := False;
+        dlink := false;
 
       bs := 6;
       EmitProgress(4);
@@ -181,8 +181,8 @@ begin
                 //Check if another package requires this package
                 t := TProcess.Create(nil);
                 if pos(')', f) > 0 then
-                  EmitMessage(f + ' # ' + copy(f, pos(' (', f) + 2, length(f) -
-                    pos(' (', f) - 2))
+                  EmitMessage(f + ' # ' + copy(f, pos(' (', f) + 2,
+                    length(f) - pos(' (', f) - 2))
                 else
                   EmitMessage(f);
 
@@ -261,10 +261,10 @@ begin
 
           f := DeleteModifiers(f);
 
-          k := False;
+          k := false;
           for j := 0 to slist.Count - 1 do
             if f = slist[j] then
-              k := True;
+              k := true;
 
           if not k then
             DeleteFile(f);
@@ -307,34 +307,34 @@ begin
 
       end;
 
-    EmitMessage('Unregistering...');
+      EmitMessage('Unregistering...');
 
-    db.DeleteCurrentField;
+      DB.DeleteCurrentField;
 
-    proc := TProcess.Create(nil);
-    proc.Options := [poWaitOnExit];
-    proc.CommandLine := FindBinary('rm') + ' -rf ' + '''' +
-      ExcludeTrailingBackslash(p) + '''';
-    proc.Execute;
-    proc.Free;
+      proc := TProcess.Create(nil);
+      proc.Options := [poWaitOnExit];
+      proc.CommandLine := FindBinary('rm') + ' -rf ' + '''' +
+        ExcludeTrailingBackslash(p) + '''';
+      proc.Execute;
+      proc.Free;
 
-    Inc(mnprog);
-    EmitProgress(round(bs * mnprog));
+      Inc(mnprog);
+      EmitProgress(round(bs * mnprog));
 
-    EmitMessage('Application removed.');
-    EmitMessage('- Finished -');
-    Result := true;
+      EmitMessage('Application removed.');
+      EmitMessage('- Finished -');
+      Result := true;
 
-     break;
+      break;
     end;
-    db.NextField;
+    DB.NextField;
   end;
 
-  db.CloseFilter;
-  db.Free;
+  DB.CloseFilter;
+  DB.Free;
 end;
 
-procedure CreateUpdateSourceList(path: string);
+procedure CreateUpdateSourceList(path: String);
 var
   fi: TStringList;
 begin

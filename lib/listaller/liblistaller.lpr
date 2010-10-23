@@ -22,7 +22,7 @@ library liblistaller;
 
 uses
   CThreads, Classes, LiTypes, SysUtils, LiUtils, IPKInstall, LiDBusProc,
-  LiManageApp, LiUpdateApp, backend_autopackage, backend_ipk, libackend;
+  LiManageApp, LiUpdateApp;
 
 type
    PStringList = ^TStringList;

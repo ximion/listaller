@@ -22,28 +22,29 @@ interface
 
 uses
   Classes, GetText, LiTypes, LiUtils, MTProcs, PkTypes, Process,
-  IniFiles, SysUtils, IPKCDef10, StrLocale, LiDBusProc, LiFileUtil,
-  PackageKit, SoftwareDB, AppInstallDB,
+  IniFiles, SysUtils, StrLocale, LiDBusProc, LiFileUtil,
+  PackageKit, SoftwareDB,
   // Backends
   LiBackend,
   Backend_IPK,
   Backend_Loki,
-  Backend_Autopackage;
+  Backend_Autopackage,
+  Backend_PackageKit;
 
 type
   TDesktopData = record
-    Name: string;
-    Categories: string;
-    IconName: string;
-    SDesc: string;
-    Author: string;
-    Version: string;
-    FName: string;
+    Name: String;
+    Categories: String;
+    IconName: String;
+    SDesc: String;
+    Author: String;
+    Version: String;
+    FName: String;
   end;
 
   TLiAppManager = class
   private
-    SUMode: boolean;
+    SUMode: Boolean;
     FReq: UserRequestCall;
     FApp: NewAppEvent;
     FStatus: StatusChangeEvent;
@@ -51,27 +52,24 @@ type
     //State data
     sdata: LiStatusData; //Contains the current progress
 
-    procedure msg(s: string);
-    function EmitRequest(s: string; ty: LiRqType): LiRqResult;
-    procedure EmitNewApp(s: string; oj: LiAppInfo);
+    procedure msg(s: String);
+    function EmitRequest(s: String; ty: LiRqType): LiRqResult;
+    procedure EmitNewApp(s: String; oj: LiAppInfo);
     procedure EmitStateChange(state: LiProcStatus);
-    procedure EmitPosChange(i: integer);
+    procedure EmitPosChange(i: Integer);
 
-    function IsInList(nm: string; list: TStringList): boolean;
-    //** Catch the PackageKit progress
-    procedure PkitProgress(pos: integer; xd: Pointer);
+    function IsInList(nm: String; list: TStringList): Boolean;
     //** Catch status messages from DBus action
     procedure DBusStatusChange(ty: LiProcStatus; Data: TLiProcData);
     //** Run a backend
     function RunBackend(backend: TLiBackend; ai: LiAppInfo): Boolean;
-    procedure InternalRemoveApp(obj: LiAppInfo);
   protected
     //Some user data for callbacks
     statechange_udata: Pointer;
     request_udata: Pointer;
     newapp_udata: Pointer;
     //** ReadIn .desktop files
-    function ReadDesktopFile(fname: string): TDesktopData;
+    function ReadDesktopFile(fname: String): TDesktopData;
   public
     constructor Create;
     destructor Destroy; override;
@@ -85,18 +83,18 @@ type
     @param report Report of the executed actions
     @param fix True if all found issues should be fixed right now
     @returns True if everything is okay, False if dependencies are missing}
-    function CheckApps(report: TStringList; const fix: boolean = False;
-      const forceroot: boolean = False): boolean;
+    function CheckApps(report: TStringList; const fix: Boolean = false;
+      const forceroot: Boolean = false): Boolean;
     procedure RegOnStatusChange(call: StatusChangeEvent; Data: Pointer);
     procedure RegOnRequest(call: UserRequestCall; Data: Pointer);
     procedure RegOnNewApp(call: NewAppEvent; Data: Pointer);
-    property SuperuserMode: boolean read SUMode write SUMode;
-    function UserRequestRegistered: boolean;
+    property SuperuserMode: Boolean read SUMode write SUMode;
+    function UserRequestRegistered: Boolean;
   end;
 
 //** Checks if package is installed
-function IsPackageInstalled(aName: string = ''; aID: string = '';
-  sumode: boolean = False): boolean;
+function IsPackageInstalled(aName: String = ''; aID: String = '';
+  sumode: Boolean = false): Boolean;
 
 implementation
 
@@ -115,12 +113,12 @@ begin
   inherited;
 end;
 
-function TLiAppManager.UserRequestRegistered: boolean;
+function TLiAppManager.UserRequestRegistered: Boolean;
 begin
   if Assigned(FReq) then
-    Result := True
+    Result := true
   else
-    Result := False;
+    Result := false;
 end;
 
 procedure TLiAppManager.RegOnStatusChange(call: StatusChangeEvent; Data: Pointer);
@@ -150,26 +148,26 @@ begin
   end;
 end;
 
-procedure TLiAppManager.Msg(s: string);
+procedure TLiAppManager.Msg(s: String);
 begin
   sdata.msg := PChar(s);
   if Assigned(FStatus) then
     FStatus(scMessage, sdata, statechange_udata);
 end;
 
-function TLiAppManager.EmitRequest(s: string; ty: LiRqType): LiRqResult;
+function TLiAppManager.EmitRequest(s: String; ty: LiRqType): LiRqResult;
 begin
   if Assigned(FReq) then
     Result := FReq(ty, PChar(s), request_udata);
 end;
 
-procedure TLiAppManager.EmitNewApp(s: string; oj: LiAppInfo);
+procedure TLiAppManager.EmitNewApp(s: String; oj: LiAppInfo);
 begin
   if Assigned(FApp) then
     FApp(PChar(s), @oj, newapp_udata);
 end;
 
-procedure TLiAppManager.EmitPosChange(i: integer);
+procedure TLiAppManager.EmitPosChange(i: Integer);
 begin
   sdata.mnprogress := i;
   if Assigned(FStatus) then
@@ -183,37 +181,31 @@ begin
     FStatus(scStatus, sdata, statechange_udata);
 end;
 
-function TLiAppManager.IsInList(nm: string; list: TStringList): boolean;
+function TLiAppManager.IsInList(nm: String; list: TStringList): Boolean;
 begin
   Result := list.IndexOf(nm) > -1;
-end;
-
-procedure TLiAppManager.PkitProgress(pos: integer; xd: Pointer);
-begin
-  //User defindes pointer xd is always nil here
-  EmitPosChange(pos);
 end;
 
 procedure TLiAppManager.RescanEntries;
 var
   ini: TIniFile;
   tmp, xtmp: TStringList;
-  i, j: integer;
   db: TSoftwareDB;
+  i: Integer;
   blst: TStringList;
 
   //Internal function to process desktop files
-  procedure ProcessDesktopFile(fname: string);
+  procedure ProcessDesktopFile(fname: String);
   var
     d: TIniFile;
     entry: LiAppInfo;
     dt: TMOFile;
-    lp: string;
-    translate: boolean; //Used, because Assigned(dt) throws an AV
+    lp: String;
+    translate: Boolean; //Used, because Assigned(dt) throws an AV
     //Translate string if possible
-    function ldt(s: string): string;
+    function ldt(s: String): String;
     var
-      h: string;
+      h: String;
     begin
       h := s;
       try
@@ -231,7 +223,7 @@ var
 
   begin
     d := TIniFile.Create(fname);
-    translate := False;
+    translate := false;
 
     if (not SUMode) and (d.ReadString('Desktop Entry', 'Exec', '')[1] <> '/') then
     else
@@ -270,7 +262,7 @@ var
           if FileExists(lp) then
           begin
             dt := TMOFile.Create(lp);
-            translate := True;
+            translate := true;
           end;
         finally
         end;
@@ -356,15 +348,15 @@ begin
   //Search for other applications that are installed on this system...
   if SUMode then //Only if user wants to see shared apps
   begin
-    tmp := FindAllFiles('/usr/share/applications/', '*.desktop', True);
-    xtmp := FindAllFiles('/usr/local/share/applications/', '*.desktop', True);
+    tmp := FindAllFiles('/usr/share/applications/', '*.desktop', true);
+    xtmp := FindAllFiles('/usr/local/share/applications/', '*.desktop', true);
     for i := 0 to xtmp.Count - 1 do
       tmp.Add(xtmp[i]);
     xtmp.Free;
   end
   else
     tmp := FindAllFiles(GetEnvironmentVariable('HOME') +
-      '/.local/share/applications', '*.desktop', False);
+      '/.local/share/applications', '*.desktop', false);
 
   for i := 0 to tmp.Count - 1 do
   begin
@@ -381,7 +373,7 @@ begin
 end;
 
 //Read information about an app from .desktop file
-function TLiAppManager.ReadDesktopFile(fname: string): TDesktopData;
+function TLiAppManager.ReadDesktopFile(fname: String): TDesktopData;
 var
   d: TIniFile;
   Data: TDesktopData;
@@ -449,11 +441,11 @@ end;
 procedure TLiAppManager.UpdateAppDB;
 var
   tmp, xtmp: TStringList;
-  i: integer;
+  i: Integer;
   ddata: TDesktopData;
   Data: LiAppInfo;
-  appID: string;
-  appRmID: string;
+  appID: String;
+  appRmID: String;
   sdb: TSoftwareDB;
 begin
   if (sumode) and (not IsRoot) then
@@ -462,8 +454,8 @@ begin
     exit;
   end;
   // Search for .desktop files
-  tmp := FindAllFiles('/usr/share/applications/', '*.desktop', True);
-  xtmp := FindAllFiles('/usr/local/share/applications/', '*.desktop', True);
+  tmp := FindAllFiles('/usr/share/applications/', '*.desktop', true);
+  xtmp := FindAllFiles('/usr/local/share/applications/', '*.desktop', true);
   for i := 0 to xtmp.Count - 1 do
     tmp.Add(xtmp[i]);
   xtmp.Free;
@@ -516,42 +508,6 @@ begin
   end;
 end;
 
-//Can remove Autopackage.org or native package.
-// Only for interal use, called by UninstallApp.
-// This function exists to speed up the removal process.
-procedure TLiAppManager.InternalRemoveApp(obj: LiAppInfo);
-var
-  t: TProcess;
-  pkit: TPackageKit;
-  Name, id: string;
-begin
-  EmitPosChange(0);
-
-  //Needed
-  Name := obj.Name;
-  id := obj.RemoveId;
-
-    EmitPosChange(50);
-    pkit := TPackageKit.Create;
-    pkit.OnProgress := @PkitProgress;
-    Name := copy(id, 5, length(id));
-    msg(StrSubst(rsRMAppC, '%a', Name) + ' ...');
-    pkit.RemovePkg(Name);
-
-    if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
-    begin
-      EmitRequest(rsRmError + #10 + rsEMsg + #10 + pkit.LastErrorMessage, rqError);
-      pkit.Free;
-      exit;
-    end;
-
-    EmitPosChange(100);
-    msg(rsDone);
-    pkit.Free;
-    exit;
-
-end;
-
 function TLiAppManager.RunBackend(backend: TLiBackend; ai: LiAppInfo): Boolean;
 begin
   Result := false;
@@ -573,11 +529,7 @@ end;
 // native or autopackage setup.
 procedure TLiAppManager.UninstallApp(obj: LiAppInfo);
 var
-  id: string;
-  i: integer;
-  pkit: TPackageKit;
-  tmp: TStringList;
-  f, g: string;
+  id: String;
   buscmd: ListallerBusCommand;
 begin
   id := obj.RemoveId;
@@ -587,73 +539,6 @@ begin
     exit;
   end;
   EmitStateChange(prStarted);
-  if (FileExists(id)) and (id[1] = '/') and (copy(id, 1, 4) <> 'pkg:') then
-  begin
-    ShowPKMon();
-
-    msg(rsCallingPackageKitPKMonExecActions);
-    msg(rsDetectingPackage);
-
-    pkit := TPackageKit.Create;
-    pkit.OnProgress := @PkitProgress;
-
-    pkit.PkgNameFromFile(id, False); //!!! ,false for debugging
-    EmitPosChange(20);
-
-    while not pkit.Finished do ;
-
-    if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
-    begin
-      EmitRequest(PAnsiChar(rsPKitProbPkMon + #10 + rsEMsg + #10 +
-        pkit.LastErrorMessage),
-        rqError);
-      pkit.Free;
-      exit;
-    end;
-
-    tmp := TStringList.Create;
-    for i := 0 to pkit.RList.Count - 1 do
-      tmp.Add(pkit.RList[i].PackageId);
-
-    if (tmp.Count > 0) then
-    begin
-      f := tmp[0];
-
-      msg(StrSubst(rsPackageDetected, '%s', f));
-      msg(rsLookingForRevDeps);
-
-      tmp.Clear;
-
-      EmitPosChange(18);
-      pdebug('GetRequires()');
-      pkit.GetRequires(f);
-
-      EmitPosChange(25);
-      g := '';
-
-      for i := 0 to tmp.Count - 1 do
-      begin
-        pdebug(tmp[i]);
-        g := g + #10 + tmp[i];
-      end;
-
-      pdebug('Asking dependency question...');
-      pkit.Free;
-      if (StringReplace(g, ' ', '', [rfReplaceAll]) = '') or
-        (EmitRequest(StringReplace(StringReplace(
-        StringReplace(rsRMPkg, '%p', f, [rfReplaceAll]), '%a', obj.Name, [rfReplaceAll]),
-        '%pl', PChar(g), [rfReplaceAll]), rqWarning) = rqsYes) then
-        obj.RemoveId := PChar('pkg:' + f)
-      else
-        exit;
-    end;
-    tmp.Free;
-    pdebug('Done. ID is set.');
-
-    //Important: ID needs to be the same as AppInfo.RemoveId
-    id := obj.RemoveId;
-  end;
-
 
   pdebug('Application UId is: ' + obj.RemoveId);
   if (SUMode) and (not IsRoot) then
@@ -674,23 +559,23 @@ begin
 
   // Run the backends. PackageKit always goes last, it is the slowest one
   if not RunBackend(TIPKBackend.Create, obj) then
-  if not RunBackend(TLokiBackend.Create, obj) then
-  if not RunBackend(TAutopackageBackend.Create, obj) then
-    InternalRemoveApp(obj);
+    if not RunBackend(TLokiBackend.Create, obj) then
+      if not RunBackend(TAutopackageBackend.Create, obj) then
+        RunBackend(TPackageKitBackend.Create, obj);
 
   EmitStateChange(prFinished);
 end;
 
-function TLiAppManager.CheckApps(report: TStringList; const fix: boolean = False;
-  const forceroot: boolean = False): boolean;
+function TLiAppManager.CheckApps(report: TStringList; const fix: Boolean = false;
+  const forceroot: Boolean = false): Boolean;
 var
   db: TSoftwareDB;
   app: LiAppInfo;
   deps: TStringList;
-  i: integer;
+  i: Integer;
   pkit: TPackageKit;
 begin
-  Result := True;
+  Result := true;
   msg(rsCheckDepsRegisteredApps);
   if forceroot then
     msg(rsYouScanOnlyRootInstalledApps)
@@ -718,7 +603,7 @@ begin
           else
           begin
             report.Add(StrSubst(rsDepXIsNotInstall, '%s', deps[i]));
-            Result := False;
+            Result := false;
             if fix then
             begin
               Write('  Repairing dependency ' + deps[i] + '  ');
@@ -732,7 +617,7 @@ begin
         begin
           EmitRequest(rsPkQueryFailed + #10 + rsEMsg + #10 +
             pkit.LastErrorMessage, rqError);
-          Result := False;
+          Result := false;
           exit;
         end;
       end;
@@ -754,21 +639,21 @@ end;
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-function IsPackageInstalled(aname: string; aid: string; sumode: boolean): boolean;
+function IsPackageInstalled(aname: String; aid: String; sumode: Boolean): Boolean;
 var
   db: TSoftwareDB;
 begin
   if (aname = '') and (aid = '') then
   begin
     pwarning('Empty strings received for IsPackageInstalled() query.');
-    Result := False;
+    Result := false;
     exit;
   end;
   db := TSoftwareDB.Create;
   if DB.Load(sumode) then
     Result := DB.AppExists(aId)
   else
-    Result := False; //No database => no application installed
+    Result := false; //No database => no application installed
   DB.Free;
 end;
 

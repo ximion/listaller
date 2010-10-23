@@ -28,15 +28,15 @@ uses
 type
   TLokiBackend = class(TLiBackend)
   private
-    dskFileName: string;
-    mojo: boolean;
+    dskFileName: String;
+    mojo: Boolean;
   public
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
 
-    function Initialize(ai: LiAppInfo): boolean;
-    function CanBeUsed: boolean;
-    function Run: boolean;
+    function Initialize(ai: LiAppInfo): Boolean; override;
+    function CanBeUsed: Boolean; override;
+    function Run: Boolean; override;
   end;
 
 implementation
@@ -54,44 +54,44 @@ begin
   inherited;
 end;
 
-function TLokiBackend.Initialize(ai: LiAppInfo): boolean;
+function TLokiBackend.Initialize(ai: LiAppInfo): Boolean;
 begin
   dskFileName := GetDesktopFile(ai.removeID);
 
   Result := true;
 end;
 
-function TLokiBackend.CanBeUsed: boolean;
+function TLokiBackend.CanBeUsed: Boolean;
 var
   inf: TIniFile;
 begin
-  Result := True;
+  Result := true;
   inf := TIniFile.Create(dskFileName);
   if not FileExists(dskFileName) then
     Result := false
   else
   if not DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry',
     'Exec', '?'))) then
-    Result := False
+    Result := false
   else if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry', 'Exec', '?')) +
     '.mojosetup') then
-    mojo := True
+    mojo := true
   else if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry',
     'Exec', '?')) + '.manifest') then
-    mojo := False
+    mojo := false
   else
-    Result := False;
+    Result := false;
   inf.Free;
 end;
 
-function TLokiBackend.Run: boolean;
+function TLokiBackend.Run: Boolean;
 var
   inf: TIniFile;
   tmp: TStringList;
   t: TProcess;
-  mandir: string;
+  mandir: String;
 begin
-  Result := True;
+  Result := true;
   pdebug('Mojo/LOKI remover using file ' + dskFileName);
   inf := TIniFile.Create(dskFileName);
 
@@ -104,7 +104,7 @@ begin
     EmitMessage('Mojo manifest found.');
     EmitProgress(40);
     tmp := TStringList.Create;
-    tmp.Assign(FindAllFiles(mandir + '/manifest', '*.xml', False));
+    tmp.Assign(FindAllFiles(mandir + '/manifest', '*.xml', false));
     if tmp.Count <= 0 then
       exit;
     EmitProgress(50);
