@@ -26,9 +26,10 @@ set(llistaller_base_sources ${lisrc}/liversion.inc
 
 set(listaller_libname "${LISTALLER_LIB}.${LIBS_FULL_VERSION}")
 
-set(llistaller_includes "-Fu${PROJECT_SOURCE_DIR}/src/"
-			"-Fu${PROJECT_SOURCE_DIR}/src/bind/"
-			"-Fu${PROJECT_SOURCE_DIR}/src/synapse/"
+set(llistaller_includes "-Fu${lisrc}"
+			"-Fu${lisrc}/bind/"
+			"-Fu${lisrc}/synapse/"
+			"-Fu${lisrc}/backends/"
 			"-Fu/usr/share/fpcsrc/2.4.0/packages/dbus/src/"
 			"-Fu${CMAKE_CURRENT_SOURCE_DIR}"
 			"-Fu.")
