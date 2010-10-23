@@ -31,6 +31,8 @@ type
 
     statechange_udata: Pointer;
   protected
+    sumode: Boolean;
+
     procedure EmitMessage(s: widestring);
     procedure EmitProgress(pos: integer);
   public
@@ -38,6 +40,7 @@ type
     function CanBeUsed: boolean; virtual; abstract;
     function Run: boolean; virtual; abstract;
     procedure SetMessageHandler(status: StatusChangeEvent; udata: Pointer);
+    property RootMode: Boolean read sumode write sumode;
   end;
 
 implementation

@@ -31,7 +31,7 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="10">
+    <Units Count="12">
       <Unit0>
         <Filename Value="liblistaller.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -78,10 +78,20 @@
         <UnitName Value="backend_loki"/>
       </Unit8>
       <Unit9>
-        <Filename Value="libackend.pas"/>
+        <Filename Value="../../src/backends/backend_autopackage.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="backend_autopackage"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="../../src/backends/backend_ipk.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="backend_ipk"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="../../src/backends/libackend.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libackend"/>
-      </Unit9>
+      </Unit11>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

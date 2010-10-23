@@ -21,8 +21,8 @@ library liblistaller;
 //NOTE: We do not use a translatable GUI, so please use the -dNoGUI switch
 
 uses
-  CThreads, Classes, LiTypes, SysUtils, LiUtils,
-  IPKInstall, LiDBusProc, LiManageApp, LiUpdateApp, backend_loki, libackend;
+  CThreads, Classes, LiTypes, SysUtils, LiUtils, IPKInstall, LiDBusProc,
+  LiManageApp, LiUpdateApp, backend_autopackage, backend_ipk, libackend;
 
 type
    PStringList = ^TStringList;

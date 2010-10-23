@@ -24,8 +24,7 @@ uses
   MD5, Distri, Classes, FTPSend, LiTypes, LiUtils, MTProcs,
   PkTypes, Process, RegExpr, BaseUnix, Blcksock, HTTPSend, IniFiles,
   SysUtils, DepManage, IPKCDef10, strLocale, liDBusProc, LiFileUtil,
-  PackageKit,
-  SoftwareDB, LiManageApp, IPKPackage11;
+  PackageKit, SoftwareDB, Backend_IPK, IPKPackage11, ListallerDB;
 
 type
   TLiInstallation = class
@@ -450,6 +449,7 @@ var
   DInfo: TDistroInfo;
   cont: TIPKControl;
   hres: LiRqResult;
+  ldb: TListallerDB;
 
   procedure Emergency_FreeAll();
   begin
@@ -707,9 +707,12 @@ begin
 
     //Only executed to make sure that "RmApp" property is set
 
+    ldb := TListallerDB.Create;
+    ldb.Load(SUMode);
     if not Testmode then
-      if IsPackageInstalled('', pkgID, SUMode) then
+      if ldb.AppExists(pkgID) then
         RmApp := true;
+    ldb.Free;
 
   end
   else //Handle other IPK types
@@ -949,7 +952,7 @@ var
   DInfo: TDistroInfo; // Distribution information
   mnpos: Integer; // Current positions of operation
   max: Double;
-  mgr: TLiAppManager; // Manager to remove old app
+  ipkrm: TIPKBackend; // Acces IPK rmbackend directly to remove old IPK pkg
 
   //Necessary if e.g. file copying fails
   procedure RollbackInstallation;
@@ -1115,11 +1118,15 @@ begin
   if (RmApp) and (not Testmode) then
   begin
     //Uninstall old application
-    mgr := TLiAppManager.Create;
-    mgr.RegOnRequest(FRequest, request_udata);
-    mgr.RegOnStatusChange(FStatusChange, statechange_udata);
-    mgr.UninstallIPKApp(IAppName, pkgID, true);
-    mgr.Free;
+    ipkrm := TIPkBackend.Create;
+    ipkrm.SetMessageHandler(FStatusChange, statechange_udata);
+    ipkrm.RootMode := SUMode;
+    //!!! TODO
+    //ipkrm.Initialize(appInfo);
+  if ipkrm.CanBeUsed then
+  ipkrm.Run;
+  ipkrm.Free;
+
     SetExtraPos(0);
   end;
 

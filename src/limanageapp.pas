@@ -26,7 +26,9 @@ uses
   PackageKit, SoftwareDB, AppInstallDB,
   // Backends
   LiBackend,
-  Backend_Loki;
+  Backend_IPK,
+  Backend_Loki,
+  Backend_Autopackage;
 
 type
   TDesktopData = record
@@ -77,14 +79,6 @@ type
     procedure RescanEntries;
     //** Update AppInstall database
     procedure UpdateAppDB;
-    (** Removes an IPK application (can _only_ remove IPK apps)
-     @param AppName Name of the application, that should be uninstalled
-     @param AppID ID of the application
-     @param fast Does a quick uninstallation if is true (Set to "False" by default)
-     @param RmDeps Remove dependencies if true (Set to "True" by default)
-     *)
-    procedure UninstallIPKApp(AppName, AppID: string; fast: boolean = False;
-      RmDeps: boolean = True);
     //** Removes an application
     procedure UninstallApp(obj: LiAppInfo);
  {** Checks dependencies of all installed apps
@@ -103,9 +97,6 @@ type
 //** Checks if package is installed
 function IsPackageInstalled(aName: string = ''; aID: string = '';
   sumode: boolean = False): boolean;
-
-//** Helper procedure to create USource file if missing
-procedure CreateUpdateSourceList(path: string);
 
 implementation
 
@@ -266,14 +257,6 @@ var
     begin
       msg(rsLoading + '  ' + ExtractFileName(fname));
 
-      //Check for Autopackage.org installation
-      if pos('apkg-remove', LowerCase(d.ReadString('Desktop Entry',
-        'Actions', ''))) > 0 then
-        entry.RemoveId := PChar('!' + d.ReadString('Desktop Action Apkg-Remove',
-          'Exec', ''))
-      else
-        entry.RemoveId := PChar(fname);
-
       if d.ReadString('Desktop Entry', 'X-Ubuntu-Gettext-Domain', '') <> '' then
       begin
         try
@@ -296,6 +279,8 @@ var
 
       with entry do
       begin
+        removeId := PChar(GenerateAppId(fname));
+
         if d.ValueExists('Desktop Entry', 'Name[' + GetLangID + ']') then
           Name := PChar(d.ReadString('Desktop Entry', 'Name[' +
             GetLangID + ']', '<error>'))
@@ -546,48 +531,6 @@ begin
   Name := obj.Name;
   id := obj.RemoveId;
 
-  if copy(id, 1, 4) <> 'pkg:' then
-  begin
-    msg(rsReadingAppInfo);
-
-    if not FileExists(obj.RemoveId) then
-    begin
-      if DirectoryExistsUTF8(PkgRegDir + LowerCase(id)) then
-      begin
-        //Remove IPK app
-        UninstallIPKApp(Name, id, False);
-
-        msg('Finished!');
-        exit;
-      end
-      else
-      begin
-        EmitRequest(rsAppRegistBroken, rqError);
-        exit;
-      end;
-
-    end
-    else
-    begin //Autopackage
-      if id[1] = '!' then
-      begin
-        t := TProcess.Create(nil);
-        t.CommandLine := copy(obj.RemoveId, 2, length(obj.RemoveId));
-        t.Options := [poUsePipes, poWaitonexit];
-        t.Execute;
-        t.Free;
-        exit;
-      end
-      else
-      begin
-        EmitRequest(rsUnableToRemoveApp, rqError);
-        exit;
-      end;
-    end;
-
-  end
-  else
-  begin
     EmitPosChange(50);
     pkit := TPackageKit.Create;
     pkit.OnProgress := @PkitProgress;
@@ -606,7 +549,6 @@ begin
     msg(rsDone);
     pkit.Free;
     exit;
-  end;
 
 end;
 
@@ -615,6 +557,7 @@ begin
   Result := false;
   // Attach status handler
   backend.SetMessageHandler(FStatus, statechange_udata);
+  backend.RootMode := SUMode;
   backend.Initialize(ai);
   if backend.CanBeUsed then
   begin
@@ -622,258 +565,6 @@ begin
     Result := backend.Run;
   end;
   backend.Free;
-end;
-
-procedure TLiAppManager.UninstallIPKApp(AppName, AppID: string; fast: boolean = False;
-  RmDeps: boolean = True);
-var
-  tmp, tmp2, slist: TStringList;
-  p, f: string;
-  i, j: integer;
-  k: boolean;
-  upd: string;
-  proc: TProcess;
-  dlink: boolean;
-  t: TProcess;
-  pkit: TPackageKit;
-  db: TSoftwareDB;
-  mnprog: integer;
-  bs: double;
-  ipkc: TIPKControl;
-begin
-  p := PkgRegDir + LowerCase(AppID) + '/';
-  p := CleanFilePath(p);
-
-  mnprog := 0;
-
-  EmitPosChange(0);
-
-  //Check if an update source was set
-  ipkc := TIPKControl.Create(p + 'application');
-  upd := ipkc.USource;
-  ipkc.Free;
-
-  msg(rsStartingUninstall);
-
-  db := TSoftwareDB.Create;
-  DB.Load;
-  msg(rsDBOpened);
-
-  DB.OpenFilter(fAllApps);
-  while not DB.EndReached do
-  begin
-    if (DB.CurrentDataField.App.Name = AppName) and
-      (DB.CurrentDataField.App.PkName = AppID) then
-    begin
-
-      if DB.CurrentDataField.App.PkType = ptDLink then
-        dlink := True
-      else
-        dlink := False;
-
-      bs := 6;
-      EmitPosChange(4);
-      mnprog := 4;
-
-      if not dlink then
-      begin
-        tmp := TStringList.Create;
-        tmp.LoadFromfile(p + 'files.list');
-        bs := (bs + tmp.Count) / 100;
-      end;
-
-      if not fast then
-      begin
-        if FileExists(p + 'prerm') then
-        begin
-          msg('PreRM-Script found.');
-          t := TProcess.Create(nil);
-          t.Options := [poUsePipes, poWaitonexit];
-          t.CommandLine := FindBinary('chmod') + ' 775 ''' + p + 'prerm''';
-          t.Execute;
-          msg('Executing prerm...');
-          t.CommandLine := '''' + p + 'prerm''';
-          t.Execute;
-          t.Free;
-          msg('Done.');
-        end;
-
-        ///////////////////////////////////////
-        if RmDeps then
-        begin
-          msg(rsRMUnsdDeps);
-          tmp2 := TStringList.Create;
-          tmp2.Text := DB.CurrentDataField.App.Dependencies;
-
-          if tmp2.Count > -1 then
-          begin
-            bs := (bs + tmp2.Count) / 100;
-            for i := 0 to tmp2.Count - 1 do
-            begin
-              f := tmp2[i];
-              //Skip catalog based packages - impossible to detect unneeded dependencies
-              if pos('cat:', f) > 0 then
-                break;
-
-              //Asterisk (*) indicates that package was newly installed by installer
-              if (LowerCase(f) <> 'libc6') and (f[1] <> '*') then
-              begin
-                //Check if another package requires this package
-                t := TProcess.Create(nil);
-                if pos(')', f) > 0 then
-                  msg(f + ' # ' + copy(f, pos(' (', f) + 2, length(f) -
-                    pos(' (', f) - 2))
-                else
-                  msg(f);
-
-                pkit := TPackageKit.Create;
-
-                if pos(')', f) > 0 then
-                  pkit.GetRequires(copy(f, pos(' (', f) + 2, length(f) -
-                    pos(' (', f) - 2))
-                else
-                  pkit.GetRequires(f);
-
-                if pkit.RList.Count <= 1 then
-                begin
-                  if pos(')', f) > 0 then
-                    pkit.RemovePkg(copy(f, pos(' (', f) + 2, length(f) -
-                      pos(' (', f) - 2))
-                  else
-                    pkit.RemovePkg(f);
-                  //GetOutPutTimer.Enabled:=true;
-
-                  msg('Removing ' + f + '...');
-                end;
-
-                pkit.Free;
-              end;
-              Inc(mnprog);
-              EmitPosChange(round(bs * mnprog));
-            end; //End of tmp2-find loop
-
-          end
-          else
-            msg('No installed deps found!');
-
-          tmp2.Free;
-        end; //End of remove-deps request
-      end; //End of "fast"-request
-      //////////////////////////////////////////////////////
-
-      if not dlink then
-      begin
-        slist := TStringList.Create;
-
-
-        //Undo Mime-registration (if necessary)
-        for i := 0 to tmp.Count - 1 do
-        begin
-          if pos('<mime>', tmp[i]) > 0 then
-          begin
-            msg('Uninstalling MIME-Type "' + ExtractFileName(tmp[i]) + '" ...');
-            t := TProcess.Create(nil);
-            if (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i]))) = '.png') or
-              (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i]))) = '.xpm') then
-            begin
-              t.CommandLine :=
-                FindBinary('xdg-icon-resource') + ' uninstall ' +
-                SysUtils.ChangeFileExt(ExtractFileName(DeleteModifiers(tmp[i])), '');
-              t.Execute;
-            end
-            else
-            begin
-              t.CommandLine :=
-                FindBinary('xdg-mime') + ' uninstall ' + DeleteModifiers(
-                f + '/' + ExtractFileName(tmp[i]));
-              t.Execute;
-            end;
-            t.Free;
-          end;
-        end;
-
-        msg('Removing files...');
-        //Uninstall application
-        for i := 0 to tmp.Count - 1 do
-        begin
-
-          f := SyblToPath(tmp[i]);
-
-          f := DeleteModifiers(f);
-
-          k := False;
-          for j := 0 to slist.Count - 1 do
-            if f = slist[j] then
-              k := True;
-
-          if not k then
-            DeleteFile(f);
-
-          Inc(mnprog);
-          EmitPosChange(round(bs * mnprog));
-        end;
-
-        Inc(mnprog);
-        EmitPosChange(round(bs * mnprog));
-
-        msg('Removing empty dirs...');
-        tmp.LoadFromFile(p + 'dirs.list');
-        proc := TProcess.Create(nil);
-        proc.Options := [poWaitOnExit, poStdErrToOutPut, poUsePipes];
-        for i := 0 to tmp.Count - 1 do
-        begin
-          proc.CommandLine := FindBinary('rm') + ' -rf ' + tmp[i];
-          proc.Execute;
-        end;
-        proc.Free;
-
-        if upd <> '#' then
-        begin
-          CreateUpdateSourceList(PkgRegDir);
-          if FileExists(PkgRegDir + 'updates.list') then
-          begin
-            tmp.LoadFromFile(PkgRegDir + 'updates.list');
-            msg('Removing update-source...');
-            for i := 1 to tmp.Count - 1 do
-              if pos(upd, tmp[i]) > 0 then
-              begin
-                tmp.Delete(i);
-                break;
-              end;
-            tmp.SaveToFile(PkgRegDir + 'updates.list');
-            tmp.Free;
-          end;
-        end;
-
-      end;
-
-    end;
-    DB.NextField;
-  end;
-
-  if mnprog > 0 then
-  begin
-    msg('Unregistering...');
-
-    DB.DeleteCurrentField;
-    DB.CloseFilter;
-
-    proc := TProcess.Create(nil);
-    proc.Options := [poWaitOnExit];
-    proc.CommandLine := FindBinary('rm') + ' -rf ' + '''' +
-      ExcludeTrailingBackslash(p) + '''';
-    proc.Execute;
-    proc.Free;
-
-    Inc(mnprog);
-    EmitPosChange(round(bs * mnprog));
-
-    msg('Application removed.');
-    msg('- Finished -');
-  end
-  else
-    msg('Application not found!');
-  DB.Free;
 end;
 
 //Initialize appremove: Detect rdepends if package is native, if package is native, add "pkg:" to
@@ -981,7 +672,10 @@ begin
     exit;
   end;
 
+  // Run the backends. PackageKit always goes last, it is the slowest one
+  if not RunBackend(TIPKBackend.Create, obj) then
   if not RunBackend(TLokiBackend.Create, obj) then
+  if not RunBackend(TAutopackageBackend.Create, obj) then
     InternalRemoveApp(obj);
 
   EmitStateChange(prFinished);
@@ -1076,22 +770,6 @@ begin
   else
     Result := False; //No database => no application installed
   DB.Free;
-end;
-
-/////////////////////////////////////////////////////
-
-procedure CreateUpdateSourceList(path: string);
-var
-  fi: TStringList;
-begin
-  if not FileExists(path + 'updates.list') then
-  begin
-    ForceDirectories(path);
-    fi := TStringList.Create;
-    fi.Add('List of update repositories v.1.0');
-    fi.SaveToFile(path + 'updates.list');
-    fi.Free;
-  end;
 end;
 
 end.

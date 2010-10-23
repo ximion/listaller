@@ -46,7 +46,7 @@ implementation
 constructor TLokiBackend.Create;
 begin
   inherited;
-  mojo := False;
+  mojo := false;
 end;
 
 destructor TLokiBackend.Destroy;
@@ -58,7 +58,7 @@ function TLokiBackend.Initialize(ai: LiAppInfo): boolean;
 begin
   dskFileName := GetDesktopFile(ai.removeID);
 
-  Result := True;
+  Result := true;
 end;
 
 function TLokiBackend.CanBeUsed: boolean;
@@ -66,6 +66,10 @@ var
   inf: TIniFile;
 begin
   Result := True;
+  inf := TIniFile.Create(dskFileName);
+  if not FileExists(dskFileName) then
+    Result := false
+  else
   if not DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry',
     'Exec', '?'))) then
     Result := False
@@ -77,6 +81,7 @@ begin
     mojo := False
   else
     Result := False;
+  inf.Free;
 end;
 
 function TLokiBackend.Run: boolean;
