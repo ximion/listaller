@@ -3,16 +3,16 @@
   Authors:
    Matthias Klumpp
 
-  This library is free software: you can redistribute it and/or modify it under
+  This unit is free software: you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free Software
   Foundation, version 3.
 
-  This library is distributed in the hope that it will be useful, but WITHOUT
+  This unit is distributed in the hope that it will be useful, but WITHOUT
   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
   FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License v3
-  along with this library. If not, see <http://www.gnu.org/licenses/>.}
+  along with this unit. If not, see <http://www.gnu.org/licenses/>.}
 //** Functions to manage applications (install/uninstall, dependency-check)
 unit limanageapp;
 
@@ -21,24 +21,27 @@ unit limanageapp;
 interface
 
 uses
-  Classes, GetText, LiTypes, LiUtils, MTProcs,
-  PkTypes, Process, IniFiles, SysUtils, IPKCDef10, strLocale,
-  liDBusProc, LiFileUtil, PackageKit, SoftwareDB, AppInstallDB;
+  Classes, GetText, LiTypes, LiUtils, MTProcs, PkTypes, Process,
+  IniFiles, SysUtils, IPKCDef10, StrLocale, LiDBusProc, LiFileUtil,
+  PackageKit, SoftwareDB, AppInstallDB,
+  // Backends
+  LiBackend,
+  Backend_Loki;
 
 type
   TDesktopData = record
-    Name: String;
-    Categories: String;
-    IconName: String;
-    SDesc: String;
-    Author: String;
-    Version: String;
-    FName: String;
+    Name: string;
+    Categories: string;
+    IconName: string;
+    SDesc: string;
+    Author: string;
+    Version: string;
+    FName: string;
   end;
 
   TLiAppManager = class
   private
-    SUMode: Boolean;
+    SUMode: boolean;
     FReq: UserRequestCall;
     FApp: NewAppEvent;
     FStatus: StatusChangeEvent;
@@ -46,19 +49,19 @@ type
     //State data
     sdata: LiStatusData; //Contains the current progress
 
-    procedure msg(s: String);
-    function  EmitRequest(s: String; ty: LiRqType): LiRqResult;
-    procedure EmitNewApp(s: String; oj: LiAppInfo);
+    procedure msg(s: string);
+    function EmitRequest(s: string; ty: LiRqType): LiRqResult;
+    procedure EmitNewApp(s: string; oj: LiAppInfo);
     procedure EmitStateChange(state: LiProcStatus);
-    procedure EmitPosChange(i: Integer);
+    procedure EmitPosChange(i: integer);
 
-    function IsInList(nm: String; list: TStringList): Boolean;
-    //** Method that removes MOJO/LOKI installed applications @param dsk Path to the .desktop file of the application
-    function UninstallMojo(dsk: String): Boolean;
+    function IsInList(nm: string; list: TStringList): boolean;
     //** Catch the PackageKit progress
-    procedure PkitProgress(pos: Integer; xd: Pointer);
+    procedure PkitProgress(pos: integer; xd: Pointer);
     //** Catch status messages from DBus action
-    procedure DBusStatusChange(ty: LiProcStatus; data: TLiProcData);
+    procedure DBusStatusChange(ty: LiProcStatus; Data: TLiProcData);
+    //** Run a backend
+    function RunBackend(backend: TLiBackend; ai: LiAppInfo): Boolean;
     procedure InternalRemoveApp(obj: LiAppInfo);
   protected
     //Some user data for callbacks
@@ -66,7 +69,7 @@ type
     request_udata: Pointer;
     newapp_udata: Pointer;
     //** ReadIn .desktop files
-    function ReadDesktopFile(fname: String): TDesktopData;
+    function ReadDesktopFile(fname: string): TDesktopData;
   public
     constructor Create;
     destructor Destroy; override;
@@ -80,28 +83,29 @@ type
      @param fast Does a quick uninstallation if is true (Set to "False" by default)
      @param RmDeps Remove dependencies if true (Set to "True" by default)
      *)
-    procedure UninstallIPKApp(AppName, AppID: String;fast: Boolean = false; RmDeps: Boolean = true);
+    procedure UninstallIPKApp(AppName, AppID: string; fast: boolean = False;
+      RmDeps: boolean = True);
     //** Removes an application
     procedure UninstallApp(obj: LiAppInfo);
  {** Checks dependencies of all installed apps
     @param report Report of the executed actions
     @param fix True if all found issues should be fixed right now
     @returns True if everything is okay, False if dependencies are missing}
-    function CheckApps(report: TStringList; const fix: Boolean = false;
-      const forceroot: Boolean = false): Boolean;
-    procedure RegOnStatusChange(call: StatusChangeEvent; data: Pointer);
-    procedure RegOnRequest(call: UserRequestCall; data: Pointer);
-    procedure RegOnNewApp(call: NewAppEvent; data: Pointer);
-    property SuperuserMode: Boolean read SUMode write SUMode;
-    function UserRequestRegistered: Boolean;
+    function CheckApps(report: TStringList; const fix: boolean = False;
+      const forceroot: boolean = False): boolean;
+    procedure RegOnStatusChange(call: StatusChangeEvent; Data: Pointer);
+    procedure RegOnRequest(call: UserRequestCall; Data: Pointer);
+    procedure RegOnNewApp(call: NewAppEvent; Data: Pointer);
+    property SuperuserMode: boolean read SUMode write SUMode;
+    function UserRequestRegistered: boolean;
   end;
 
 //** Checks if package is installed
-function IsPackageInstalled(aName: String = ''; aID: String = '';
-  sumode: Boolean = false): Boolean;
+function IsPackageInstalled(aName: string = ''; aID: string = '';
+  sumode: boolean = False): boolean;
 
 //** Helper procedure to create USource file if missing
-procedure CreateUpdateSourceList(path: String);
+procedure CreateUpdateSourceList(path: string);
 
 implementation
 
@@ -120,61 +124,61 @@ begin
   inherited;
 end;
 
-function TLiAppManager.UserRequestRegistered: Boolean;
+function TLiAppManager.UserRequestRegistered: boolean;
 begin
   if Assigned(FReq) then
-    Result := true
+    Result := True
   else
-    Result := false;
+    Result := False;
 end;
 
-procedure TLiAppManager.RegOnStatusChange(call: StatusChangeEvent; data: Pointer);
+procedure TLiAppManager.RegOnStatusChange(call: StatusChangeEvent; Data: Pointer);
 begin
   if CheckPtr(call, 'StatusChangeEvent') then
   begin
     FStatus := call;
-    statechange_udata := data;
+    statechange_udata := Data;
   end;
 end;
 
-procedure TLiAppManager.RegOnRequest(call: UserRequestCall; data: Pointer);
+procedure TLiAppManager.RegOnRequest(call: UserRequestCall; Data: Pointer);
 begin
   if CheckPtr(call, 'UserRequestCall') then
   begin
     FReq := call;
-    request_udata := data;
+    request_udata := Data;
   end;
 end;
 
-procedure TLiAppManager.RegOnNewApp(call: NewAppEvent; data: Pointer);
+procedure TLiAppManager.RegOnNewApp(call: NewAppEvent; Data: Pointer);
 begin
   if CheckPtr(call, 'StatusChangeEvent') then
   begin
     FApp := call;
-    newapp_udata := data;
+    newapp_udata := Data;
   end;
 end;
 
-procedure TLiAppManager.Msg(s: String);
+procedure TLiAppManager.Msg(s: string);
 begin
   sdata.msg := PChar(s);
   if Assigned(FStatus) then
     FStatus(scMessage, sdata, statechange_udata);
 end;
 
-function TLiAppManager.EmitRequest(s: String; ty: LiRqType): LiRqResult;
+function TLiAppManager.EmitRequest(s: string; ty: LiRqType): LiRqResult;
 begin
   if Assigned(FReq) then
     Result := FReq(ty, PChar(s), request_udata);
 end;
 
-procedure TLiAppManager.EmitNewApp(s: String; oj: LiAppInfo);
+procedure TLiAppManager.EmitNewApp(s: string; oj: LiAppInfo);
 begin
   if Assigned(FApp) then
     FApp(PChar(s), @oj, newapp_udata);
 end;
 
-procedure TLiAppManager.EmitPosChange(i: Integer);
+procedure TLiAppManager.EmitPosChange(i: integer);
 begin
   sdata.mnprogress := i;
   if Assigned(FStatus) then
@@ -188,12 +192,12 @@ begin
     FStatus(scStatus, sdata, statechange_udata);
 end;
 
-function TLiAppManager.IsInList(nm: String; list: TStringList): Boolean;
+function TLiAppManager.IsInList(nm: string; list: TStringList): boolean;
 begin
   Result := list.IndexOf(nm) > -1;
 end;
 
-procedure TLiAppManager.PkitProgress(pos: Integer; xd: Pointer);
+procedure TLiAppManager.PkitProgress(pos: integer; xd: Pointer);
 begin
   //User defindes pointer xd is always nil here
   EmitPosChange(pos);
@@ -203,22 +207,22 @@ procedure TLiAppManager.RescanEntries;
 var
   ini: TIniFile;
   tmp, xtmp: TStringList;
-  i, j: Integer;
+  i, j: integer;
   db: TSoftwareDB;
   blst: TStringList;
 
   //Internal function to process desktop files
-  procedure ProcessDesktopFile(fname: String);
+  procedure ProcessDesktopFile(fname: string);
   var
     d: TIniFile;
     entry: LiAppInfo;
     dt: TMOFile;
-    lp: String;
-    translate: Boolean; //Used, because Assigned(dt) throws an AV
+    lp: string;
+    translate: boolean; //Used, because Assigned(dt) throws an AV
     //Translate string if possible
-    function ldt(s: String): String;
+    function ldt(s: string): string;
     var
-      h: String;
+      h: string;
     begin
       h := s;
       try
@@ -236,106 +240,106 @@ var
 
   begin
     d := TIniFile.Create(fname);
-    translate := false;
+    translate := False;
 
     if (not SUMode) and (d.ReadString('Desktop Entry', 'Exec', '')[1] <> '/') then
     else
-      if (LowerCase(d.ReadString('Desktop Entry', 'NoDisplay', 'false')) <>
-        'true') and (pos('yast', LowerCase(fname)) <= 0) and
-        (LowerCase(d.ReadString('Desktop Entry', 'Hidden', 'false')) <> 'true') and
-        (not IsInList(d.ReadString('Desktop Entry', 'Name', ''), blst))
-        // and(pos('system',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
-        and (pos('core', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <=
-        0) and (pos('.hidden', LowerCase(d.ReadString('Desktop Entry',
-        'Categories', ''))) <= 0)
-        // and(pos('base',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
-        and (pos('wine', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <=
-        0) and (pos('wine', LowerCase(d.ReadString('Desktop Entry',
-        'Categories', ''))) <= 0) and
-        (d.ReadString('Desktop Entry', 'X-KDE-ParentApp', '#') = '#') and
-        (pos('screensaver', LowerCase(d.ReadString('Desktop Entry',
-        'Categories', ''))) <= 0) and
-        (pos('setting', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <= 0)
-        // and(pos('utility',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
-        and (d.ReadString('Desktop Entry', 'OnlyShowIn', '') = '') and
-        (d.ReadString('Desktop Entry', 'X-AllowRemove', 'true') = 'true') then
+    if (LowerCase(d.ReadString('Desktop Entry', 'NoDisplay', 'false')) <>
+      'true') and (pos('yast', LowerCase(fname)) <= 0) and
+      (LowerCase(d.ReadString('Desktop Entry', 'Hidden', 'false')) <> 'true') and
+      (not IsInList(d.ReadString('Desktop Entry', 'Name', ''), blst))
+      // and(pos('system',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
+      and (pos('core', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <=
+      0) and (pos('.hidden', LowerCase(d.ReadString('Desktop Entry',
+      'Categories', ''))) <= 0)
+      // and(pos('base',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
+      and (pos('wine', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <=
+      0) and (pos('wine', LowerCase(d.ReadString('Desktop Entry',
+      'Categories', ''))) <= 0) and
+      (d.ReadString('Desktop Entry', 'X-KDE-ParentApp', '#') = '#') and
+      (pos('screensaver', LowerCase(d.ReadString('Desktop Entry',
+      'Categories', ''))) <= 0) and
+      (pos('setting', LowerCase(d.ReadString('Desktop Entry', 'Categories', ''))) <= 0)
+      // and(pos('utility',LowerCase(d.ReadString('Desktop Entry','Categories','')))<=0)
+      and (d.ReadString('Desktop Entry', 'OnlyShowIn', '') = '') and
+      (d.ReadString('Desktop Entry', 'X-AllowRemove', 'true') = 'true') then
+    begin
+      msg(rsLoading + '  ' + ExtractFileName(fname));
+
+      //Check for Autopackage.org installation
+      if pos('apkg-remove', LowerCase(d.ReadString('Desktop Entry',
+        'Actions', ''))) > 0 then
+        entry.RemoveId := PChar('!' + d.ReadString('Desktop Action Apkg-Remove',
+          'Exec', ''))
+      else
+        entry.RemoveId := PChar(fname);
+
+      if d.ReadString('Desktop Entry', 'X-Ubuntu-Gettext-Domain', '') <> '' then
       begin
-        msg(rsLoading + '  ' + ExtractFileName(fname));
-
-        //Check for Autopackage.org installation
-        if pos('apkg-remove', LowerCase(d.ReadString('Desktop Entry',
-          'Actions', ''))) > 0 then
-          entry.RemoveId := PChar('!' + d.ReadString('Desktop Action Apkg-Remove',
-            'Exec', ''))
-        else
-          entry.RemoveId := PChar(fname);
-
-        if d.ReadString('Desktop Entry', 'X-Ubuntu-Gettext-Domain', '') <> '' then
-        begin
-          try
-            lp := '/usr/share/locale-langpack/' + GetLangID +
+        try
+          lp := '/usr/share/locale-langpack/' + GetLangID +
+            '/LC_MESSAGES/' + d.ReadString('Desktop Entry',
+            'X-Ubuntu-Gettext-Domain', 'app-install-data') + '.mo';
+          if not FileExists(lp) then
+            lp := '/usr/share/locale/de/' + GetLangID +
               '/LC_MESSAGES/' + d.ReadString('Desktop Entry',
               'X-Ubuntu-Gettext-Domain', 'app-install-data') + '.mo';
-            if not FileExists(lp) then
-              lp := '/usr/share/locale/de/' + GetLangID +
-                '/LC_MESSAGES/' + d.ReadString('Desktop Entry',
-                'X-Ubuntu-Gettext-Domain', 'app-install-data') + '.mo';
-            if FileExists(lp) then
-            begin
-              dt := TMOFile.Create(lp);
-              translate := true;
-            end;
-          finally
-          end;
-
-        end;
-
-        with entry do
-        begin
-          if d.ValueExists('Desktop Entry', 'Name[' + GetLangID + ']') then
-            Name := PChar(d.ReadString('Desktop Entry', 'Name[' +
-              GetLangID + ']', '<error>'))
-          else
-            Name := PChar(ldt(d.ReadString('Desktop Entry', 'Name', '<error>')));
-
-          Name := PChar(StringReplace(Name, '&', '&&', [rfReplaceAll]));
-
-          Categories := PChar(d.ReadString('Desktop Entry', 'Categories', ''));
-
-          // instLst.Add(Lowercase(d.ReadString('Desktop Entry','Name','<error>')));
-
-          if d.ValueExists('Desktop Entry', 'Comment[' + GetLangID + ']') then
-            Summary := PChar(d.ReadString('Desktop Entry', 'Comment[' +
-              GetLangID + ']', ''))
-          else
-            Summary := PChar(ldt(d.ReadString('Desktop Entry', 'Comment', '')));
-
-          Author := PChar(rsAuthor + ': ' + d.ReadString(
-            'Desktop Entry', 'X-Publisher', '<error>'));
-          if Author = rsAuthor + ': ' + '<error>' then
-            Author := '';
-          Version := '';
-          if d.ReadString('Desktop Entry', 'X-AppVersion', '') <> '' then
-            Version := PChar(rsVersion + ': ' +
-              d.ReadString('Desktop Entry', 'X-AppVersion', ''));
-
-          entry.IconName := PChar(
-            GetAppIconPath(d.ReadString('Desktop Entry', 'Icon', '')));
-
-          if not FileExists(entry.IconName) then
+          if FileExists(lp) then
           begin
-            entry.IconName := '';
-            msg(StrSubst(rsCannotLoadIcon, '%a', Name));
+            dt := TMOFile.Create(lp);
+            translate := True;
           end;
+        finally
         end;
-        EmitNewApp(fname, entry);
-        //  if Assigned(dt) then dt.Free;
-        if translate then
-          dt.Free;
 
-      end
-      else
-        msg(StrSubst(rsSkippedX, '%a', ExtractFileName(fname)));
+      end;
+
+      with entry do
+      begin
+        if d.ValueExists('Desktop Entry', 'Name[' + GetLangID + ']') then
+          Name := PChar(d.ReadString('Desktop Entry', 'Name[' +
+            GetLangID + ']', '<error>'))
+        else
+          Name := PChar(ldt(d.ReadString('Desktop Entry', 'Name', '<error>')));
+
+        Name := PChar(StringReplace(Name, '&', '&&', [rfReplaceAll]));
+
+        Categories := PChar(d.ReadString('Desktop Entry', 'Categories', ''));
+
+        // instLst.Add(Lowercase(d.ReadString('Desktop Entry','Name','<error>')));
+
+        if d.ValueExists('Desktop Entry', 'Comment[' + GetLangID + ']') then
+          Summary := PChar(d.ReadString('Desktop Entry', 'Comment[' +
+            GetLangID + ']', ''))
+        else
+          Summary := PChar(ldt(d.ReadString('Desktop Entry', 'Comment', '')));
+
+        Author := PChar(rsAuthor + ': ' + d.ReadString(
+          'Desktop Entry', 'X-Publisher', '<error>'));
+        if Author = rsAuthor + ': ' + '<error>' then
+          Author := '';
+        Version := '';
+        if d.ReadString('Desktop Entry', 'X-AppVersion', '') <> '' then
+          Version := PChar(rsVersion + ': ' +
+            d.ReadString('Desktop Entry', 'X-AppVersion', ''));
+
+        entry.IconName := PChar(
+          GetAppIconPath(d.ReadString('Desktop Entry', 'Icon', '')));
+
+        if not FileExists(entry.IconName) then
+        begin
+          entry.IconName := '';
+          msg(StrSubst(rsCannotLoadIcon, '%a', Name));
+        end;
+      end;
+      EmitNewApp(fname, entry);
+      //  if Assigned(dt) then dt.Free;
+      if translate then
+        dt.Free;
+
+    end
+    else
+      msg(StrSubst(rsSkippedX, '%a', ExtractFileName(fname)));
     d.Free;
   end;
 
@@ -349,8 +353,8 @@ begin
     pdebug('SUMode: Disabled');
 
   db := TSoftwareDB.Create;
-  db.Load(sumode);
-  db.OnNewApp := FApp;
+  DB.Load(sumode);
+  DB.OnNewApp := FApp;
 
   if blst.Count < 4 then
   begin
@@ -359,7 +363,7 @@ begin
     blst.Delete(0);
   end;
 
-  db.GetApplicationList(fAllApps, blst);
+  DB.GetApplicationList(fAllApps, blst);
 
 
   ini := TIniFile.Create(ConfigDir + 'config.cnf');
@@ -367,15 +371,15 @@ begin
   //Search for other applications that are installed on this system...
   if SUMode then //Only if user wants to see shared apps
   begin
-    tmp := FindAllFiles('/usr/share/applications/', '*.desktop', true);
-    xtmp := FindAllFiles('/usr/local/share/applications/', '*.desktop', true);
+    tmp := FindAllFiles('/usr/share/applications/', '*.desktop', True);
+    xtmp := FindAllFiles('/usr/local/share/applications/', '*.desktop', True);
     for i := 0 to xtmp.Count - 1 do
       tmp.Add(xtmp[i]);
     xtmp.Free;
   end
   else
     tmp := FindAllFiles(GetEnvironmentVariable('HOME') +
-      '/.local/share/applications', '*.desktop', false);
+      '/.local/share/applications', '*.desktop', False);
 
   for i := 0 to tmp.Count - 1 do
   begin
@@ -387,19 +391,19 @@ begin
 
   msg(rsReady); //Loading list finished!
 
-  db.Free;
+  DB.Free;
   blst.Free; //Free blacklist
 end;
 
 //Read information about an app from .desktop file
-function TLiAppManager.ReadDesktopFile(fname: String): TDesktopData;
+function TLiAppManager.ReadDesktopFile(fname: string): TDesktopData;
 var
   d: TIniFile;
-  data: TDesktopData;
+  Data: TDesktopData;
 begin
   d := TIniFile.Create(fname);
   Result.Name := '';
-  data.Name := '';
+  Data.Name := '';
 
   //Check for apps which should not be displayed
   if (LowerCase(d.ReadString('Desktop Entry', 'NoDisplay', '')) <> 'true') and
@@ -441,30 +445,30 @@ begin
           end;
         end; }
 
-    data.Categories := d.ReadString('Desktop Entry', 'Categories', '');
+    Data.Categories := d.ReadString('Desktop Entry', 'Categories', '');
 
-    data.Name := d.ReadString('Desktop Entry', 'Name', '<error>');
-    data.SDesc := d.ReadString('Desktop Entry', 'Comment', '');
+    Data.Name := d.ReadString('Desktop Entry', 'Name', '<error>');
+    Data.SDesc := d.ReadString('Desktop Entry', 'Comment', '');
     //Listaller-specific extra data
-    data.Author := d.ReadString('Desktop Entry', 'X-Publisher', '');
-    data.Version := d.ReadString('Desktop Entry', 'X-AppVersion', '');
+    Data.Author := d.ReadString('Desktop Entry', 'X-Publisher', '');
+    Data.Version := d.ReadString('Desktop Entry', 'X-AppVersion', '');
 
-    data.IconName := d.ReadString('Desktop Entry', 'Icon', '');
+    Data.IconName := d.ReadString('Desktop Entry', 'Icon', '');
   end;
 
   d.Free;
-  Result := data;
+  Result := Data;
 end;
 
 //Update AppInstall database
 procedure TLiAppManager.UpdateAppDB;
 var
   tmp, xtmp: TStringList;
-  i: Integer;
+  i: integer;
   ddata: TDesktopData;
-  data: LiAppInfo;
-  appID: String;
-  appRmID: String;
+  Data: LiAppInfo;
+  appID: string;
+  appRmID: string;
   sdb: TSoftwareDB;
 begin
   if (sumode) and (not IsRoot) then
@@ -473,8 +477,8 @@ begin
     exit;
   end;
   // Search for .desktop files
-  tmp := FindAllFiles('/usr/share/applications/', '*.desktop', true);
-  xtmp := FindAllFiles('/usr/local/share/applications/', '*.desktop', true);
+  tmp := FindAllFiles('/usr/share/applications/', '*.desktop', True);
+  xtmp := FindAllFiles('/usr/local/share/applications/', '*.desktop', True);
   for i := 0 to xtmp.Count - 1 do
     tmp.Add(xtmp[i]);
   xtmp.Free;
@@ -494,95 +498,22 @@ begin
       Continue
     else
     begin
-      pdebug('AppID: '+appID);
+      pdebug('AppID: ' + appID);
       appRmId := GenerateAppID(tmp[i]);
       //Build a new AppInfo record
-      data.Name:=PChar(ddata.Name);
-      data.RemoveId:=PChar(appRmId);
-      data.PkName:=PChar(appID);
-      data.PkType:=ptExtern;
-      data.Categories:=PChar(ddata.Categories);
-      data.IconName:=PChar(ddata.IconName);
-      data.Summary:=PChar(ddata.SDesc);
-      sdb.AppAddNew(data);
+      Data.Name := PChar(ddata.Name);
+      Data.RemoveId := PChar(appRmId);
+      Data.PkName := PChar(appID);
+      Data.PkType := ptExtern;
+      Data.Categories := PChar(ddata.Categories);
+      Data.IconName := PChar(ddata.IconName);
+      Data.Summary := PChar(ddata.SDesc);
+      sdb.AppAddNew(Data);
     end;
   end;
   tmp.Free;
   sdb.Finalize; //Write to disk
   sdb.Free;
-end;
-
-//Uninstall Mojo and LOKI Setups
-function TLiAppManager.UninstallMojo(dsk: String): Boolean;
-var
-  inf: TIniFile;
-  tmp: TStringList;
-  t: TProcess;
-  mandir: String;
-begin
-  Result := true;
-  pdebug('MoJo remover: dsk: ' + dsk);
-  msg(rsPkgCouldBeInstalledWithLoki);
-  inf := TIniFile.Create(dsk);
-  if not DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry',
-    'Exec', '?'))) then
-  begin
-    pwarning('Listaller cannot handle this installation!');
-    EmitRequest(rsCannotHandleRM, rqError);
-    inf.Free;
-  end
-  else
-    if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry', 'Exec', '?')) +
-      '.mojosetup') then
-    begin
-      //MOJO
-      mandir := ExtractFilePath(inf.ReadString('Desktop Entry', 'Exec', '?')) +
-        '.mojosetup';
-      inf.Free;
-      msg('Mojo manifest found.');
-      EmitPosChange(40);
-      tmp := TStringList.Create;
-      tmp.Assign(FindAllFiles(mandir + '/manifest', '*.xml', false));
-      if tmp.Count <= 0 then
-        exit;
-      EmitPosChange(50);
-      msg(rsRemovingApp);
-      t := TProcess.Create(nil);
-      t.CommandLine := mandir + '/mojosetup uninstall ' + copy(
-        ExtractFileName(tmp[0]), 1, pos('.', ExtractFileName(tmp[0])) - 1);
-      t.Options := [poUsePipes, poWaitonexit];
-      tmp.Free;
-      EmitPosChange(60);
-      t.Execute;
-      t.Free;
-      EmitPosChange(100);
-    end
-    else
-    //LOKI
-      if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry', 'Exec', '?')) +
-        '.manifest') then
-      begin
-        EmitPosChange(50);
-        msg(rsLOKISetupFound);
-        msg(rsRemovingApp);
-
-        t := TProcess.Create(nil);
-        t.CommandLine := ExtractFilePath(inf.ReadString('Desktop Entry', 'Exec', '?')) +
-          '/uninstall';
-        t.Options := [poUsePipes, poWaitonexit];
-
-        EmitPosChange(60);
-        t.Execute;
-        t.Free;
-        EmitPosChange(100);
-      end
-      else
-      begin
-        Result := false;
-        perror('Listaller cannot handle this installation type!');
-        EmitRequest(rsCannotHandleRM, rqError);
-        inf.Free;
-      end;
 end;
 
 procedure TLiAppManager.DBusStatusChange(ty: LiProcStatus; Data: TLiProcData);
@@ -607,7 +538,7 @@ procedure TLiAppManager.InternalRemoveApp(obj: LiAppInfo);
 var
   t: TProcess;
   pkit: TPackageKit;
-  Name, id: String;
+  Name, id: string;
 begin
   EmitPosChange(0);
 
@@ -624,7 +555,7 @@ begin
       if DirectoryExistsUTF8(PkgRegDir + LowerCase(id)) then
       begin
         //Remove IPK app
-        UninstallIPKApp(Name, id, false);
+        UninstallIPKApp(Name, id, False);
 
         msg('Finished!');
         exit;
@@ -679,20 +610,35 @@ begin
 
 end;
 
-procedure TLiAppManager.UninstallIPKApp(AppName, AppID: String;fast: Boolean = false; RmDeps: Boolean = true);
+function TLiAppManager.RunBackend(backend: TLiBackend; ai: LiAppInfo): Boolean;
+begin
+  Result := false;
+  // Attach status handler
+  backend.SetMessageHandler(FStatus, statechange_udata);
+  backend.Initialize(ai);
+  if backend.CanBeUsed then
+  begin
+    // Use it!
+    Result := backend.Run;
+  end;
+  backend.Free;
+end;
+
+procedure TLiAppManager.UninstallIPKApp(AppName, AppID: string; fast: boolean = False;
+  RmDeps: boolean = True);
 var
   tmp, tmp2, slist: TStringList;
-  p, f: String;
-  i, j: Integer;
-  k: Boolean;
-  upd: String;
+  p, f: string;
+  i, j: integer;
+  k: boolean;
+  upd: string;
   proc: TProcess;
-  dlink: Boolean;
+  dlink: boolean;
   t: TProcess;
   pkit: TPackageKit;
   db: TSoftwareDB;
-  mnprog: Integer;
-  bs: Double;
+  mnprog: integer;
+  bs: double;
   ipkc: TIPKControl;
 begin
   p := PkgRegDir + LowerCase(AppID) + '/';
@@ -710,19 +656,20 @@ begin
   msg(rsStartingUninstall);
 
   db := TSoftwareDB.Create;
-  db.Load;
+  DB.Load;
   msg(rsDBOpened);
 
-  db.OpenFilter(fAllApps);
-  while not db.EndReached do
+  DB.OpenFilter(fAllApps);
+  while not DB.EndReached do
   begin
-    if (db.CurrentDataField.App.Name = AppName) and (db.CurrentDataField.App.PkName = AppID) then
+    if (DB.CurrentDataField.App.Name = AppName) and
+      (DB.CurrentDataField.App.PkName = AppID) then
     begin
 
-      if db.CurrentDataField.App.PkType = ptDLink then
-        dlink := true
+      if DB.CurrentDataField.App.PkType = ptDLink then
+        dlink := True
       else
-        dlink := false;
+        dlink := False;
 
       bs := 6;
       EmitPosChange(4);
@@ -756,7 +703,7 @@ begin
         begin
           msg(rsRMUnsdDeps);
           tmp2 := TStringList.Create;
-          tmp2.Text := db.CurrentDataField.App.Dependencies;
+          tmp2.Text := DB.CurrentDataField.App.Dependencies;
 
           if tmp2.Count > -1 then
           begin
@@ -854,10 +801,10 @@ begin
 
           f := DeleteModifiers(f);
 
-          k := false;
+          k := False;
           for j := 0 to slist.Count - 1 do
             if f = slist[j] then
-              k := true;
+              k := True;
 
           if not k then
             DeleteFile(f);
@@ -901,15 +848,15 @@ begin
       end;
 
     end;
-    db.NextField;
+    DB.NextField;
   end;
 
   if mnprog > 0 then
   begin
     msg('Unregistering...');
 
-    db.DeleteCurrentField;
-    db.CloseFilter;
+    DB.DeleteCurrentField;
+    DB.CloseFilter;
 
     proc := TProcess.Create(nil);
     proc.Options := [poWaitOnExit];
@@ -926,7 +873,7 @@ begin
   end
   else
     msg('Application not found!');
-  db.Free;
+  DB.Free;
 end;
 
 //Initialize appremove: Detect rdepends if package is native, if package is native, add "pkg:" to
@@ -935,11 +882,11 @@ end;
 // native or autopackage setup.
 procedure TLiAppManager.UninstallApp(obj: LiAppInfo);
 var
-  id: String;
-  i: Integer;
+  id: string;
+  i: integer;
   pkit: TPackageKit;
   tmp: TStringList;
-  f, g: String;
+  f, g: string;
   buscmd: ListallerBusCommand;
 begin
   id := obj.RemoveId;
@@ -959,7 +906,7 @@ begin
     pkit := TPackageKit.Create;
     pkit.OnProgress := @PkitProgress;
 
-    pkit.PkgNameFromFile(id, false); //!!! ,false for debugging
+    pkit.PkgNameFromFile(id, False); //!!! ,false for debugging
     EmitPosChange(20);
 
     while not pkit.Finished do ;
@@ -1034,23 +981,22 @@ begin
     exit;
   end;
 
-  if (id[1] = '/') then
-    UninstallMojo(id)
-  else
+  if not RunBackend(TLokiBackend.Create, obj) then
     InternalRemoveApp(obj);
+
   EmitStateChange(prFinished);
 end;
 
-function TLiAppManager.CheckApps(report: TStringList; const fix: Boolean = false;
-  const forceroot: Boolean = false): Boolean;
+function TLiAppManager.CheckApps(report: TStringList; const fix: boolean = False;
+  const forceroot: boolean = False): boolean;
 var
   db: TSoftwareDB;
   app: LiAppInfo;
   deps: TStringList;
-  i: Integer;
+  i: integer;
   pkit: TPackageKit;
 begin
-  Result := true;
+  Result := True;
   msg(rsCheckDepsRegisteredApps);
   if forceroot then
     msg(rsYouScanOnlyRootInstalledApps)
@@ -1058,14 +1004,14 @@ begin
     msg(rsYouScanOnlyLocalInstalledApps);
 
   db := TSoftwareDB.Create;
-  if db.Load(forceroot) then
+  if DB.Load(forceroot) then
   begin
     deps := TStringList.Create;
     pkit := TPackageKit.Create;
 
-    while not db.EndReached do
+    while not DB.EndReached do
     begin
-      app := db.CurrentDataField.App;
+      app := DB.CurrentDataField.App;
       writeLn(' Checking ' + app.Name);
       deps.Text := app.Dependencies;
       for i := 0 to deps.Count - 1 do
@@ -1078,7 +1024,7 @@ begin
           else
           begin
             report.Add(StrSubst(rsDepXIsNotInstall, '%s', deps[i]));
-            Result := false;
+            Result := False;
             if fix then
             begin
               Write('  Repairing dependency ' + deps[i] + '  ');
@@ -1092,19 +1038,19 @@ begin
         begin
           EmitRequest(rsPkQueryFailed + #10 + rsEMsg + #10 +
             pkit.LastErrorMessage, rqError);
-          Result := false;
+          Result := False;
           exit;
         end;
       end;
-      db.NextField;
+      DB.NextField;
     end;
     deps.Free;
     pkit.Free;
-    db.CloseFilter;
+    DB.CloseFilter;
   end
   else
     pdebug('No database found!');
-  db.Free;
+  DB.Free;
   writeLn('Check finished.');
   if not Result then
     writeLn('You have broken dependencies.');
@@ -1114,27 +1060,27 @@ end;
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-function IsPackageInstalled(aname: String; aid: String; sumode: Boolean): Boolean;
+function IsPackageInstalled(aname: string; aid: string; sumode: boolean): boolean;
 var
   db: TSoftwareDB;
 begin
   if (aname = '') and (aid = '') then
   begin
     pwarning('Empty strings received for IsPackageInstalled() query.');
-    Result := false;
+    Result := False;
     exit;
   end;
   db := TSoftwareDB.Create;
-  if db.Load(sumode) then
-    Result := db.AppExists(aId)
+  if DB.Load(sumode) then
+    Result := DB.AppExists(aId)
   else
-    Result := false; //No database => no application installed
-  db.Free;
+    Result := False; //No database => no application installed
+  DB.Free;
 end;
 
 /////////////////////////////////////////////////////
 
-procedure CreateUpdateSourceList(path: String);
+procedure CreateUpdateSourceList(path: string);
 var
   fi: TStringList;
 begin

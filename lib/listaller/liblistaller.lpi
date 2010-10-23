@@ -31,7 +31,7 @@
         <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="8">
+    <Units Count="10">
       <Unit0>
         <Filename Value="liblistaller.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -72,6 +72,16 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="softwaredb"/>
       </Unit7>
+      <Unit8>
+        <Filename Value="../../src/backends/backend_loki.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="backend_loki"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="libackend.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="libackend"/>
+      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -81,7 +91,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../../src/;../../src/bind/;../../src/synapse/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/"/>
+      <OtherUnitFiles Value="../../src/;../../src/bind/;../../src/synapse/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;../../src/backends/"/>
       <UnitOutputDirectory Value="../../build/lib_$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
