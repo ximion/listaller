@@ -29,8 +29,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-bool li_remove_ipk_installed_app(char *appname,char *appid,StatusChangeEvent statuscall,bool fastmode);
-
 void* li_setup_new(void);
 
 void li_setup_free(LiInstallation setup);

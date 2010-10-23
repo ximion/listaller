@@ -940,15 +940,16 @@ var
   i, j: Integer;
   fi, ndirs, s, appfiles: TStringList;
   dest, h, FDir: String; // h is an helper variable - used for various actions
-  dsk: TIniFile; //Desktop files
+  dsk: TIniFile; // Desktop files
   pkg: TLiUnpacker; // IPK decompressor
   setcm: Boolean;
   appField: LiAppInfo;
   proc: TProcess; // Helper process with pipes
-  pkit: TPackageKit; //PackageKit object
-  DInfo: TDistroInfo; //Distribution information
-  mnpos: Integer; //Current positions of operation
+  pkit: TPackageKit; // PackageKit object
+  DInfo: TDistroInfo; // Distribution information
+  mnpos: Integer; // Current positions of operation
   max: Double;
+  mgr: TLiAppManager; // Manager to remove old app
 
   //Necessary if e.g. file copying fails
   procedure RollbackInstallation;
@@ -1114,7 +1115,11 @@ begin
   if (RmApp) and (not Testmode) then
   begin
     //Uninstall old application
-    UnInstallIPKApp(IAppName, pkgID, FStatusChange, true);
+    mgr := TLiAppManager.Create;
+    mgr.RegOnRequest(FRequest, request_udata);
+    mgr.RegOnStatusChange(FStatusChange, statechange_udata);
+    mgr.UninstallIPKApp(IAppName, pkgID, true);
+    mgr.Free;
     SetExtraPos(0);
   end;
 

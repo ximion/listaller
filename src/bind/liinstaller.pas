@@ -70,7 +70,6 @@ function IsIPKAppInstalled(appname: String; appid: String; sumode: Boolean): Boo
 //Import library functions
 {@Begin:Installer}
 
-function li_remove_ipk_installed_app(appname, appid: PChar;statuscall: StatusChangeEvent;fastmode: Boolean): Boolean;cdecl;external liblistaller;
 function li_setup_new: Pointer;cdecl;external liblistaller;
 procedure li_setup_free(setup: PLiInstallation);cdecl;external liblistaller;
 function li_setup_init(setup: PLiInstallation;pkname: PChar): Boolean;cdecl;external liblistaller;

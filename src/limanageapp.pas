@@ -47,10 +47,10 @@ type
     sdata: LiStatusData; //Contains the current progress
 
     procedure msg(s: String);
-    function request(s: String; ty: LiRqType): LiRqResult;
-    procedure newapp(s: String; oj: LiAppInfo);
-    procedure setstate(state: LiProcStatus);
-    procedure setpos(i: Integer);
+    function  EmitRequest(s: String; ty: LiRqType): LiRqResult;
+    procedure EmitNewApp(s: String; oj: LiAppInfo);
+    procedure EmitStateChange(state: LiProcStatus);
+    procedure EmitPosChange(i: Integer);
 
     function IsInList(nm: String; list: TStringList): Boolean;
     //** Method that removes MOJO/LOKI installed applications @param dsk Path to the .desktop file of the application
@@ -74,6 +74,13 @@ type
     procedure RescanEntries;
     //** Update AppInstall database
     procedure UpdateAppDB;
+    (** Removes an IPK application (can _only_ remove IPK apps)
+     @param AppName Name of the application, that should be uninstalled
+     @param AppID ID of the application
+     @param fast Does a quick uninstallation if is true (Set to "False" by default)
+     @param RmDeps Remove dependencies if true (Set to "True" by default)
+     *)
+    procedure UninstallIPKApp(AppName, AppID: String;fast: Boolean = false; RmDeps: Boolean = true);
     //** Removes an application
     procedure UninstallApp(obj: LiAppInfo);
  {** Checks dependencies of all installed apps
@@ -88,15 +95,6 @@ type
     property SuperuserMode: Boolean read SUMode write SUMode;
     function UserRequestRegistered: Boolean;
   end;
-
-{** Removes an IPK application
-     @param AppName Name of the application, that should be uninstalled
-     @param AppID ID of the application
-     @param FStatus Callback to receive the status of the procedure (set to nil if not needed)
-     @param fast Does a quick uninstallation if is true (Set to "False" by default)
-     @param RmDeps Remove dependencies if true (Set to "True" by default)}
-procedure UninstallIPKApp(AppName, AppID: String; FStatus: StatusChangeEvent;
-  fast: Boolean = false; RmDeps: Boolean = true);
 
 //** Checks if package is installed
 function IsPackageInstalled(aName: String = ''; aID: String = '';
@@ -164,26 +162,26 @@ begin
     FStatus(scMessage, sdata, statechange_udata);
 end;
 
-function TLiAppManager.Request(s: String; ty: LiRqType): LiRqResult;
+function TLiAppManager.EmitRequest(s: String; ty: LiRqType): LiRqResult;
 begin
   if Assigned(FReq) then
     Result := FReq(ty, PChar(s), request_udata);
 end;
 
-procedure TLiAppManager.NewApp(s: String; oj: LiAppInfo);
+procedure TLiAppManager.EmitNewApp(s: String; oj: LiAppInfo);
 begin
   if Assigned(FApp) then
     FApp(PChar(s), @oj, newapp_udata);
 end;
 
-procedure TLiAppManager.SetPos(i: Integer);
+procedure TLiAppManager.EmitPosChange(i: Integer);
 begin
   sdata.mnprogress := i;
   if Assigned(FStatus) then
     FStatus(scMnProgress, sdata, statechange_udata);
 end;
 
-procedure TLiAppManager.SetState(state: LiProcStatus);
+procedure TLiAppManager.EmitStateChange(state: LiProcStatus);
 begin
   sdata.lastresult := state;
   if Assigned(FStatus) then
@@ -198,7 +196,7 @@ end;
 procedure TLiAppManager.PkitProgress(pos: Integer; xd: Pointer);
 begin
   //User defindes pointer xd is always nil here
-  setpos(pos);
+  EmitPosChange(pos);
 end;
 
 procedure TLiAppManager.RescanEntries;
@@ -330,7 +328,7 @@ var
             msg(StrSubst(rsCannotLoadIcon, '%a', Name));
           end;
         end;
-        newapp(fname, entry);
+        EmitNewApp(fname, entry);
         //  if Assigned(dt) then dt.Free;
         if translate then
           dt.Free;
@@ -482,7 +480,7 @@ begin
   xtmp.Free;
 
   sdb := TSoftwareDB.Create;
-  //Always use the global application databases
+  //Open the appinstall databases
   sdb.Load(SUMode);
   // Update the database
   for i := 0 to tmp.Count - 1 do
@@ -530,7 +528,7 @@ begin
     'Exec', '?'))) then
   begin
     pwarning('Listaller cannot handle this installation!');
-    request(rsCannotHandleRM, rqError);
+    EmitRequest(rsCannotHandleRM, rqError);
     inf.Free;
   end
   else
@@ -542,29 +540,29 @@ begin
         '.mojosetup';
       inf.Free;
       msg('Mojo manifest found.');
-      setpos(40);
+      EmitPosChange(40);
       tmp := TStringList.Create;
       tmp.Assign(FindAllFiles(mandir + '/manifest', '*.xml', false));
       if tmp.Count <= 0 then
         exit;
-      setpos(50);
+      EmitPosChange(50);
       msg(rsRemovingApp);
       t := TProcess.Create(nil);
       t.CommandLine := mandir + '/mojosetup uninstall ' + copy(
         ExtractFileName(tmp[0]), 1, pos('.', ExtractFileName(tmp[0])) - 1);
       t.Options := [poUsePipes, poWaitonexit];
       tmp.Free;
-      setpos(60);
+      EmitPosChange(60);
       t.Execute;
       t.Free;
-      setpos(100);
+      EmitPosChange(100);
     end
     else
     //LOKI
       if DirectoryExists(ExtractFilePath(inf.ReadString('Desktop Entry', 'Exec', '?')) +
         '.manifest') then
       begin
-        setpos(50);
+        EmitPosChange(50);
         msg(rsLOKISetupFound);
         msg(rsRemovingApp);
 
@@ -573,16 +571,16 @@ begin
           '/uninstall';
         t.Options := [poUsePipes, poWaitonexit];
 
-        setpos(60);
+        EmitPosChange(60);
         t.Execute;
         t.Free;
-        setpos(100);
+        EmitPosChange(100);
       end
       else
       begin
         Result := false;
         perror('Listaller cannot handle this installation type!');
-        request(rsCannotHandleRM, rqError);
+        EmitRequest(rsCannotHandleRM, rqError);
         inf.Free;
       end;
 end;
@@ -590,9 +588,9 @@ end;
 procedure TLiAppManager.DBusStatusChange(ty: LiProcStatus; Data: TLiProcData);
 begin
   case Data.changed of
-    pdMainProgress: setpos(Data.mnprogress);
+    pdMainProgress: EmitPosChange(Data.mnprogress);
     pdInfo: msg(Data.msg);
-    pdError: request(Data.msg, rqError);
+    pdError: EmitRequest(Data.msg, rqError);
     pdStatus:
     begin
       sdata.lastresult := ty;
@@ -611,7 +609,7 @@ var
   pkit: TPackageKit;
   Name, id: String;
 begin
-  setpos(0);
+  EmitPosChange(0);
 
   //Needed
   Name := obj.Name;
@@ -626,14 +624,14 @@ begin
       if DirectoryExistsUTF8(PkgRegDir + LowerCase(id)) then
       begin
         //Remove IPK app
-        UninstallIPKApp(Name, id, FStatus, false);
+        UninstallIPKApp(Name, id, false);
 
         msg('Finished!');
         exit;
       end
       else
       begin
-        request(rsAppRegistBroken, rqError);
+        EmitRequest(rsAppRegistBroken, rqError);
         exit;
       end;
 
@@ -651,7 +649,7 @@ begin
       end
       else
       begin
-        request(rsUnableToRemoveApp, rqError);
+        EmitRequest(rsUnableToRemoveApp, rqError);
         exit;
       end;
     end;
@@ -659,7 +657,7 @@ begin
   end
   else
   begin
-    setpos(50);
+    EmitPosChange(50);
     pkit := TPackageKit.Create;
     pkit.OnProgress := @PkitProgress;
     Name := copy(id, 5, length(id));
@@ -668,12 +666,12 @@ begin
 
     if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
     begin
-      request(rsRmError + #10 + rsEMsg + #10 + pkit.LastErrorMessage, rqError);
+      EmitRequest(rsRmError + #10 + rsEMsg + #10 + pkit.LastErrorMessage, rqError);
       pkit.Free;
       exit;
     end;
 
-    setpos(100);
+    EmitPosChange(100);
     msg(rsDone);
     pkit.Free;
     exit;
@@ -681,214 +679,7 @@ begin
 
 end;
 
-
-//Initialize appremove: Detect rdepends if package is native, if package is native, add "pkg:" to
-// identification string - if not, pkg has to be Loki/Mojo, so intitiate Mojo-Removal. After rdepends and pkg resolve is done,
-// run uninstall as root if necessary. At the end, RemoveAppInternal() is called (if LOKI-Remove was not run) to uninstall
-// native or autopackage setup.
-procedure TLiAppManager.UninstallApp(obj: LiAppInfo);
-var
-  id: String;
-  i: Integer;
-  pkit: TPackageKit;
-  tmp: TStringList;
-  f, g: String;
-  buscmd: ListallerBusCommand;
-begin
-  id := obj.RemoveId;
-  if id = '' then
-  begin
-    perror('Invalid application info passed: No ID found.');
-    exit;
-  end;
-  SetState(prStarted);
-  if (FileExists(id)) and (id[1] = '/') and (copy(id, 1, 4) <> 'pkg:') then
-  begin
-    ShowPKMon();
-
-    msg(rsCallingPackageKitPKMonExecActions);
-    msg(rsDetectingPackage);
-
-    pkit := TPackageKit.Create;
-    pkit.OnProgress := @PkitProgress;
-
-    pkit.PkgNameFromFile(id, false); //!!! ,false for debugging
-    setpos(20);
-
-    while not pkit.Finished do ;
-
-    if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
-    begin
-      request(PAnsiChar(rsPKitProbPkMon + #10 + rsEMsg + #10 +
-        pkit.LastErrorMessage),
-        rqError);
-      pkit.Free;
-      exit;
-    end;
-
-    tmp := TStringList.Create;
-    for i := 0 to pkit.RList.Count - 1 do
-      tmp.Add(pkit.RList[i].PackageId);
-
-    if (tmp.Count > 0) then
-    begin
-      f := tmp[0];
-
-      msg(StrSubst(rsPackageDetected, '%s', f));
-      msg(rsLookingForRevDeps);
-
-      tmp.Clear;
-
-      setpos(18);
-      pdebug('GetRequires()');
-      pkit.GetRequires(f);
-
-      setpos(25);
-      g := '';
-
-      for i := 0 to tmp.Count - 1 do
-      begin
-        pdebug(tmp[i]);
-        g := g + #10 + tmp[i];
-      end;
-
-      pdebug('Asking dependency question...');
-      pkit.Free;
-      if (StringReplace(g, ' ', '', [rfReplaceAll]) = '') or
-        (request(StringReplace(StringReplace(
-        StringReplace(rsRMPkg, '%p', f, [rfReplaceAll]), '%a', obj.Name, [rfReplaceAll]),
-        '%pl', PChar(g), [rfReplaceAll]), rqWarning) = rqsYes) then
-        obj.RemoveId := PChar('pkg:' + f)
-      else
-        exit;
-    end;
-    tmp.Free;
-    pdebug('Done. ID is set.');
-
-    //Important: ID needs to be the same as AppInfo.RemoveId
-    id := obj.RemoveId;
-  end;
-
-
-  pdebug('Application UId is: ' + obj.RemoveId);
-  if (SUMode) and (not IsRoot) then
-  begin
-    //Create worker thread for this action
-    buscmd.cmdtype := lbaUninstallApp;
-    buscmd.appinfo := obj;
-    with TLiDBusAction.Create(buscmd) do
-    begin
-      pdebug('DbusAction::run!');
-      OnStatus := @DBusStatusChange;
-      ExecuteAction;
-      Free;
-      SetState(prFinished);
-    end;
-    exit;
-  end;
-
-  if (id[1] = '/') then
-    UninstallMojo(id)
-  else
-    InternalRemoveApp(obj);
-  SetState(prFinished);
-end;
-
-function TLiAppManager.CheckApps(report: TStringList; const fix: Boolean = false;
-  const forceroot: Boolean = false): Boolean;
-var
-  db: TSoftwareDB;
-  app: LiAppInfo;
-  deps: TStringList;
-  i: Integer;
-  pkit: TPackageKit;
-begin
-  Result := true;
-  msg(rsCheckDepsRegisteredApps);
-  if forceroot then
-    msg(rsYouScanOnlyRootInstalledApps)
-  else
-    msg(rsYouScanOnlyLocalInstalledApps);
-
-  db := TSoftwareDB.Create;
-  if db.Load(forceroot) then
-  begin
-    deps := TStringList.Create;
-    pkit := TPackageKit.Create;
-
-    while not db.EndReached do
-    begin
-      app := db.CurrentDataField.App;
-      writeLn(' Checking ' + app.Name);
-      deps.Text := app.Dependencies;
-      for i := 0 to deps.Count - 1 do
-      begin
-        pkit.ResolveInstalled(deps[i]);
-        if pkit.PkExitStatus = PK_EXIT_ENUM_SUCCESS then
-        begin
-          if pkit.RList.Count > 0 then
-            report.Add(deps[i] + ' found.')
-          else
-          begin
-            report.Add(StrSubst(rsDepXIsNotInstall, '%s', deps[i]));
-            Result := false;
-            if fix then
-            begin
-              Write('  Repairing dependency ' + deps[i] + '  ');
-              pkit.InstallPkg(deps[i]);
-              writeLn(' [OK]');
-              report.Add(StrSubst(rsInstalledDepX, '%s', deps[i]));
-            end;
-          end;
-        end
-        else
-        begin
-          request(rsPkQueryFailed + #10 + rsEMsg + #10 +
-            pkit.LastErrorMessage, rqError);
-          Result := false;
-          exit;
-        end;
-      end;
-      db.NextField;
-    end;
-    deps.Free;
-    pkit.Free;
-    db.CloseFilter;
-  end
-  else
-    pdebug('No database found!');
-  db.Free;
-  writeLn('Check finished.');
-  if not Result then
-    writeLn('You have broken dependencies.');
-end;
-
-/////////////////////////////////////////////////////
-/////////////////////////////////////////////////////
-/////////////////////////////////////////////////////
-
-function IsPackageInstalled(aname: String; aid: String; sumode: Boolean): Boolean;
-var
-  db: TSoftwareDB;
-begin
-  if (aname = '') and (aid = '') then
-  begin
-    pwarning('Empty strings received for IsPackageInstalled() query.');
-    Result := false;
-    exit;
-  end;
-  db := TSoftwareDB.Create;
-  if db.Load(sumode) then
-    Result := db.AppExists(aId)
-  else
-    Result := false; //No database => no application installed
-  db.Free;
-end;
-
-/////////////////////////////////////////////////////
-
-procedure UninstallIPKApp(AppName, AppID: String; FStatus: StatusChangeEvent;
-  fast: Boolean = false; RmDeps: Boolean = true);
+procedure TLiAppManager.UninstallIPKApp(AppName, AppID: String;fast: Boolean = false; RmDeps: Boolean = true);
 var
   tmp, tmp2, slist: TStringList;
   p, f: String;
@@ -903,32 +694,13 @@ var
   mnprog: Integer;
   bs: Double;
   ipkc: TIPKControl;
-
-  sdata: LiStatusData;
-
-  procedure SetPosition(prog: Double);
-  begin
-    sdata.mnprogress := Round(prog);
-    if Assigned(FStatus) then
-      FStatus(scMnProgress, sdata, nil);
-  end;
-
-  procedure msg(s: String);
-  begin
-    sdata.msg := PChar(s);
-    if Assigned(FStatus) then
-      FStatus(scMessage, sdata, nil)
-    else
-      pinfo(s);
-  end;
-
 begin
   p := PkgRegDir + LowerCase(AppID) + '/';
   p := CleanFilePath(p);
 
   mnprog := 0;
 
-  SetPosition(0);
+  EmitPosChange(0);
 
   //Check if an update source was set
   ipkc := TIPKControl.Create(p + 'application');
@@ -953,7 +725,7 @@ begin
         dlink := false;
 
       bs := 6;
-      SetPosition(4);
+      EmitPosChange(4);
       mnprog := 4;
 
       if not dlink then
@@ -1030,7 +802,7 @@ begin
                 pkit.Free;
               end;
               Inc(mnprog);
-              SetPosition(bs * mnprog);
+              EmitPosChange(round(bs * mnprog));
             end; //End of tmp2-find loop
 
           end
@@ -1091,11 +863,11 @@ begin
             DeleteFile(f);
 
           Inc(mnprog);
-          SetPosition(bs * mnprog);
+          EmitPosChange(round(bs * mnprog));
         end;
 
         Inc(mnprog);
-        SetPosition(bs * mnprog);
+        EmitPosChange(round(bs * mnprog));
 
         msg('Removing empty dirs...');
         tmp.LoadFromFile(p + 'dirs.list');
@@ -1147,7 +919,7 @@ begin
     proc.Free;
 
     Inc(mnprog);
-    SetPosition(bs * mnprog);
+    EmitPosChange(round(bs * mnprog));
 
     msg('Application removed.');
     msg('- Finished -');
@@ -1156,6 +928,211 @@ begin
     msg('Application not found!');
   db.Free;
 end;
+
+//Initialize appremove: Detect rdepends if package is native, if package is native, add "pkg:" to
+// identification string - if not, pkg has to be Loki/Mojo, so intitiate Mojo-Removal. After rdepends and pkg resolve is done,
+// run uninstall as root if necessary. At the end, RemoveAppInternal() is called (if LOKI-Remove was not run) to uninstall
+// native or autopackage setup.
+procedure TLiAppManager.UninstallApp(obj: LiAppInfo);
+var
+  id: String;
+  i: Integer;
+  pkit: TPackageKit;
+  tmp: TStringList;
+  f, g: String;
+  buscmd: ListallerBusCommand;
+begin
+  id := obj.RemoveId;
+  if id = '' then
+  begin
+    perror('Invalid application info passed: No ID found.');
+    exit;
+  end;
+  EmitStateChange(prStarted);
+  if (FileExists(id)) and (id[1] = '/') and (copy(id, 1, 4) <> 'pkg:') then
+  begin
+    ShowPKMon();
+
+    msg(rsCallingPackageKitPKMonExecActions);
+    msg(rsDetectingPackage);
+
+    pkit := TPackageKit.Create;
+    pkit.OnProgress := @PkitProgress;
+
+    pkit.PkgNameFromFile(id, false); //!!! ,false for debugging
+    EmitPosChange(20);
+
+    while not pkit.Finished do ;
+
+    if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
+    begin
+      EmitRequest(PAnsiChar(rsPKitProbPkMon + #10 + rsEMsg + #10 +
+        pkit.LastErrorMessage),
+        rqError);
+      pkit.Free;
+      exit;
+    end;
+
+    tmp := TStringList.Create;
+    for i := 0 to pkit.RList.Count - 1 do
+      tmp.Add(pkit.RList[i].PackageId);
+
+    if (tmp.Count > 0) then
+    begin
+      f := tmp[0];
+
+      msg(StrSubst(rsPackageDetected, '%s', f));
+      msg(rsLookingForRevDeps);
+
+      tmp.Clear;
+
+      EmitPosChange(18);
+      pdebug('GetRequires()');
+      pkit.GetRequires(f);
+
+      EmitPosChange(25);
+      g := '';
+
+      for i := 0 to tmp.Count - 1 do
+      begin
+        pdebug(tmp[i]);
+        g := g + #10 + tmp[i];
+      end;
+
+      pdebug('Asking dependency question...');
+      pkit.Free;
+      if (StringReplace(g, ' ', '', [rfReplaceAll]) = '') or
+        (EmitRequest(StringReplace(StringReplace(
+        StringReplace(rsRMPkg, '%p', f, [rfReplaceAll]), '%a', obj.Name, [rfReplaceAll]),
+        '%pl', PChar(g), [rfReplaceAll]), rqWarning) = rqsYes) then
+        obj.RemoveId := PChar('pkg:' + f)
+      else
+        exit;
+    end;
+    tmp.Free;
+    pdebug('Done. ID is set.');
+
+    //Important: ID needs to be the same as AppInfo.RemoveId
+    id := obj.RemoveId;
+  end;
+
+
+  pdebug('Application UId is: ' + obj.RemoveId);
+  if (SUMode) and (not IsRoot) then
+  begin
+    //Create worker thread for this action
+    buscmd.cmdtype := lbaUninstallApp;
+    buscmd.appinfo := obj;
+    with TLiDBusAction.Create(buscmd) do
+    begin
+      pdebug('DbusAction::run!');
+      OnStatus := @DBusStatusChange;
+      ExecuteAction;
+      Free;
+      EmitStateChange(prFinished);
+    end;
+    exit;
+  end;
+
+  if (id[1] = '/') then
+    UninstallMojo(id)
+  else
+    InternalRemoveApp(obj);
+  EmitStateChange(prFinished);
+end;
+
+function TLiAppManager.CheckApps(report: TStringList; const fix: Boolean = false;
+  const forceroot: Boolean = false): Boolean;
+var
+  db: TSoftwareDB;
+  app: LiAppInfo;
+  deps: TStringList;
+  i: Integer;
+  pkit: TPackageKit;
+begin
+  Result := true;
+  msg(rsCheckDepsRegisteredApps);
+  if forceroot then
+    msg(rsYouScanOnlyRootInstalledApps)
+  else
+    msg(rsYouScanOnlyLocalInstalledApps);
+
+  db := TSoftwareDB.Create;
+  if db.Load(forceroot) then
+  begin
+    deps := TStringList.Create;
+    pkit := TPackageKit.Create;
+
+    while not db.EndReached do
+    begin
+      app := db.CurrentDataField.App;
+      writeLn(' Checking ' + app.Name);
+      deps.Text := app.Dependencies;
+      for i := 0 to deps.Count - 1 do
+      begin
+        pkit.ResolveInstalled(deps[i]);
+        if pkit.PkExitStatus = PK_EXIT_ENUM_SUCCESS then
+        begin
+          if pkit.RList.Count > 0 then
+            report.Add(deps[i] + ' found.')
+          else
+          begin
+            report.Add(StrSubst(rsDepXIsNotInstall, '%s', deps[i]));
+            Result := false;
+            if fix then
+            begin
+              Write('  Repairing dependency ' + deps[i] + '  ');
+              pkit.InstallPkg(deps[i]);
+              writeLn(' [OK]');
+              report.Add(StrSubst(rsInstalledDepX, '%s', deps[i]));
+            end;
+          end;
+        end
+        else
+        begin
+          EmitRequest(rsPkQueryFailed + #10 + rsEMsg + #10 +
+            pkit.LastErrorMessage, rqError);
+          Result := false;
+          exit;
+        end;
+      end;
+      db.NextField;
+    end;
+    deps.Free;
+    pkit.Free;
+    db.CloseFilter;
+  end
+  else
+    pdebug('No database found!');
+  db.Free;
+  writeLn('Check finished.');
+  if not Result then
+    writeLn('You have broken dependencies.');
+end;
+
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+
+function IsPackageInstalled(aname: String; aid: String; sumode: Boolean): Boolean;
+var
+  db: TSoftwareDB;
+begin
+  if (aname = '') and (aid = '') then
+  begin
+    pwarning('Empty strings received for IsPackageInstalled() query.');
+    Result := false;
+    exit;
+  end;
+  db := TSoftwareDB.Create;
+  if db.Load(sumode) then
+    Result := db.AppExists(aId)
+  else
+    Result := false; //No database => no application installed
+  db.Free;
+end;
+
+/////////////////////////////////////////////////////
 
 procedure CreateUpdateSourceList(path: String);
 var

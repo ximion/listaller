@@ -21,7 +21,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
-  ExtCtrls, StdCtrls, ComCtrls, Buttons, LiUtils, strLocale, distri;
+  ExtCtrls, StdCtrls, ComCtrls, Buttons, LiUtils, StrLocale, Distri, LiBasic;
 
 type
 
@@ -65,7 +65,7 @@ procedure TFmAbout.FormShow(Sender: TObject);
 begin
    Caption:=rsAboutListaller;
    Image1.Picture.LoadFromFile('/usr/share/pixmaps/listaller.png');
-   Label2.Caption:=rsVersion+': '+LiVersion;
+   Label2.Caption:=rsVersion+': '+li_version;
    Label5.Caption:=rsUseLaunchpadForBugs;
    Label3.Caption:=Format(rsLinDesk,[GetDistro.Desktop]);
    PageControl1.ActivePageIndex:=0;

@@ -38,39 +38,39 @@
         <UnitName Value="liblistaller"/>
       </Unit0>
       <Unit1>
-        <Filename Value="ipkinstall.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="ipkinstall"/>
-      </Unit1>
-      <Unit2>
-        <Filename Value="limanageapp.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="limanageapp"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="lidbusproc.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="lidbusproc"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="liupdateapp.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="liupdateapp"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="softwaredb.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="softwaredb"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="appinstalldb.pas"/>
+        <Filename Value="../../src/appinstalldb.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="appinstalldb"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="listallerdb.pas"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="../../src/dderesolve.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="dderesolve"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../../src/depmanage.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="depmanage"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="../../src/ipkinstall.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ipkinstall"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="../../src/lidbusproc.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="lidbusproc"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="../../src/listallerdb.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerdb"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="../../src/softwaredb.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="softwaredb"/>
       </Unit7>
     </Units>
   </ProjectOptions>

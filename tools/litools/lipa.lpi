@@ -46,7 +46,7 @@
     </Target>
     <SearchPaths>
       <Libraries Value="../../build/"/>
-      <OtherUnitFiles Value="../;../bind/"/>
+      <OtherUnitFiles Value="../../src/;../../src/bind/"/>
       <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>

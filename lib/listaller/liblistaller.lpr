@@ -21,8 +21,8 @@ library liblistaller;
 //NOTE: We do not use a translatable GUI, so please use the -dNoGUI switch
 
 uses
-  CThreads, Classes, LiTypes, IpkInstall, SysUtils, LiUtils,
-  LiManageApp, LiUpdateApp;
+  CThreads, Classes, LiTypes, SysUtils, LiUtils,
+  IPKInstall, LiDBusProc, LiManageApp, LiUpdateApp;
 
 type
    PStringList = ^TStringList;
@@ -72,21 +72,28 @@ begin
   Result := PChar(lst^.Text);
 end;
 
+//** Get current pkg registration dir
+function li_current_regdir: PChar;cdecl;
+begin
+ Result:=PChar(PkgRegDir);
+end;
+
+//** Get global registration dir
+function li_global_regdir: PChar;cdecl;
+begin
+ Result:=PChar(RootPkgRegDir);
+end;
+
+//** Get Listaller version
+function li_version: PChar;cdecl;
+begin
+ Result:=PChar(LiVersion);
+end;
+
 /////////////////////////////////////////////////////////////////////////////////////
 //Installer part
 
 {@Installer}
-
-//** Removes an application that was installed with an IPK package
-function li_remove_ipk_installed_app(appname, appid: PChar;statuscall: StatusChangeEvent;fastmode: Boolean): Boolean;cdecl;
-begin
-Result:=true;
-try
- UninstallIPKApp(appname, appid, statuscall, fastmode, true)
-except
- Result := false;
-end;
-end;
 
 //** Creates a new installation object
 function li_setup_new: Pointer;cdecl;
@@ -397,12 +404,12 @@ end;
 function li_mgr_update_appdb(mgr: PLiAppManager): Boolean;cdecl;
 begin
  Result:=false;
- try
+// try
   Result:=true;
   mgr^.UpdateAppDB;
- except
-  Result:=false;
- end;
+// except
+//  Result:=false;
+// end;
 end;
 
 //** Register call on status change for appmanager
@@ -583,24 +590,6 @@ begin
  Result:=upd^.ExecuteUpdate(uid);
 end;
 
-//** Get current pkg registration dir
-function li_current_regdir: PChar;cdecl;
-begin
- Result:=PChar(PkgRegDir);
-end;
-
-//** Get global registration dir
-function li_global_regdir: PChar;cdecl;
-begin
- Result:=PChar(RootPkgRegDir);
-end;
-
-//** Get Listaller version
-function li_version: PChar;cdecl;
-begin
- Result:=PChar(LiVersion);
-end;
-
 ///////////////////////
 exports
  //Stringlist functions
@@ -672,7 +661,6 @@ exports
  //Other functions
  li_current_regdir,
  li_global_regdir,
- li_remove_ipk_installed_app,
  li_ipk_app_is_installed,
  li_version;
 

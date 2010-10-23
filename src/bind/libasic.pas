@@ -30,6 +30,9 @@ function li_free_stringlist(lst: PStringList): Boolean;cdecl;external liblistall
 function li_stringlist_read_line(lst: PStringList;ln: Integer): PChar;cdecl;external liblistaller;
 function li_stringlist_write_line(lst: PStringList;ln: Integer;val: PChar): Boolean;cdecl;external liblistaller;
 function li_stringlist_to_text(lst: PStringList): PChar;cdecl;external liblistaller;
+function li_current_regdir: PChar;cdecl;external liblistaller;
+function li_global_regdir: PChar;cdecl;external liblistaller;
+function li_version: PChar;cdecl;external liblistaller;
 
 {@End:BaseFunctions}
 

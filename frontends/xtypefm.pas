@@ -21,8 +21,9 @@ unit xtypefm;
 interface
 
 uses
-  Forms, Distri, Buttons, Classes, Dialogs, LCLType, liTypes, liUtils, Process, ComCtrls,
-  Controls, ExtCtrls, Graphics, StdCtrls, SysUtils, strLocale, IconLoader, LResources;
+  Forms, Buttons, Classes, Dialogs, LCLType, LiTypes, Process, ComCtrls,
+  Controls, ExtCtrls, Graphics, StdCtrls, SysUtils, StrLocale, IconLoader, LResources,
+  LiBasic, Distri;
 
 type
 
@@ -47,8 +48,8 @@ type
     procedure FormShow(Sender: TObject);
   private
     { private declarations }
-    FShow: Boolean;
-    FTestMode: Boolean;
+    FShow: boolean;
+    FTestMode: boolean;
     sig: PkgSignatureState;
   public
     { public declarations }
@@ -56,17 +57,17 @@ type
     procedure LeaveLoadingState;
 
     procedure SetSigState(sigstate: PkgSignatureState);
-    property IsTestMode: Boolean read FTestMode;
+    property IsTestMode: boolean read FTestMode;
   end;
 
 // Publish procedure so it can be used by igobase
 //** Receive progress change signal on package initialization
-procedure PkgInitProgressChange(change: LiStatusChange; data: LiStatusData;
+procedure PkgInitProgressChange(change: LiStatusChange; Data: LiStatusData;
   user_data: Pointer); cdecl;
 
 var
   //** True if superuser mode is enabled
-  Superuser: Boolean = false;
+  Superuser: boolean = False;
 
 implementation
 
@@ -78,8 +79,8 @@ uses SigInfoDisp;
 
 procedure TIMdFrm.FormCreate(Sender: TObject);
 begin
-  FShow := false;
-  FTestMode := false;
+  FShow := False;
+  FTestMode := False;
   //Set translation strings
   Caption := rsSelInstMode;
   PkILabel.Caption := rsSpkWarning;
@@ -88,14 +89,14 @@ begin
   btnHome.Caption := rsInstallHome;
   Label1.Caption := rsWantToDoQ;
   PkILabel.Caption := rsSpkWarning;
-  LoadProgress.Visible := false;
+  LoadProgress.Visible := False;
 
   //Show development version warning
-  if (pos('exp', LiVersion)>0)or(pos('dev', LiVersion)>0) then
+  if (pos('exp', li_version) > 0) or (pos('dev', li_version) > 0) then
   begin
     Label2.Caption := rsDevVersion;
-    Label2.Visible := true;
-    Image2.Visible := true;
+    Label2.Visible := True;
+    Image2.Visible := True;
     LoadStockPixmap(STOCK_DIALOG_WARNING, ICON_SIZE_BUTTON, Image2.Picture.Bitmap);
   end
   else
@@ -111,17 +112,17 @@ begin
   begin
     LoadStockPixmap(STOCK_DIALOG_WARNING, ICON_SIZE_MENU,
       PkWarnImg.Picture.Bitmap);
-    PkiLabel.Visible := true;
+    PkiLabel.Visible := True;
   end;
   //Gap between buttons: 150
-  self.ClientWidth := ClientWidth+
-    (btnInstallAll.Width-btnInstallAll.Constraints.MinWidth)  +
-    (btnTest.Width-btnTest.Constraints.MinWidth)+
-    (btnHome.Width-btnHome.Constraints.MinWidth)-150;
+  self.ClientWidth := ClientWidth +
+    (btnInstallAll.Width - btnInstallAll.Constraints.MinWidth) +
+    (btnTest.Width - btnTest.Constraints.MinWidth) +
+    (btnHome.Width - btnHome.Constraints.MinWidth) - 150;
   Application.ProcessMessages;
 end;
 
-procedure PkgInitProgressChange(change: LiStatusChange; data: LiStatusData;
+procedure PkgInitProgressChange(change: LiStatusChange; Data: LiStatusData;
   user_data: Pointer); cdecl;
 begin
   if change = scExProgress then
@@ -135,7 +136,7 @@ procedure TIMdFrm.btnInstallAllClick(Sender: TObject);
 var
   DInfo: TDistroInfo;
 begin
-  Superuser := true;
+  Superuser := True;
   btnHome.Tag := 2;
   Close;
 
@@ -156,7 +157,7 @@ end;
 
 procedure TIMdFrm.btnTestClick(Sender: TObject);
 begin
-  FTestmode := true;
+  FTestmode := True;
   btnHome.Tag := 2;
   Close;
 end;
@@ -169,8 +170,8 @@ begin
 
   if FShow then
   begin
-    FShow := false;
-    if (sig = psNone)or(sig = psUntrusted) then
+    FShow := False;
+    if (sig = psNone) or (sig = psUntrusted) then
     begin
       secInfo := TSigInfoFrm.Create(nil);
       if sig = psNone then
@@ -201,29 +202,29 @@ end;
 
 procedure TIMdFrm.EnterLoadingState;
 begin
-  PkILabel.Visible := false;
-  PkWarnImg.Visible := false;
-  LoadProgress.Visible := true;
-  btnInstallAll.Enabled := false;
-  btnTest.Enabled := false;
-  btnHome.Enabled := false;
+  PkILabel.Visible := False;
+  PkWarnImg.Visible := False;
+  LoadProgress.Visible := True;
+  btnInstallAll.Enabled := False;
+  btnTest.Enabled := False;
+  btnHome.Enabled := False;
   Show;
 end;
 
 procedure TIMdFrm.LeaveLoadingState;
 begin
-  PkILabel.Visible := true;
-  PkWarnImg.Visible := true;
-  LoadProgress.Visible := false;
-  btnInstallAll.Enabled := true;
-  btnTest.Enabled := true;
-  btnHome.Enabled := true;
+  PkILabel.Visible := True;
+  PkWarnImg.Visible := True;
+  LoadProgress.Visible := False;
+  btnInstallAll.Enabled := True;
+  btnTest.Enabled := True;
+  btnHome.Enabled := True;
   Hide;
 end;
 
 procedure TIMdFrm.SetSigState(sigstate: PkgSignatureState);
 begin
-  FShow := true;
+  FShow := True;
   sig := sigstate;
 end;
 

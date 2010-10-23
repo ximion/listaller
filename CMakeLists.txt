@@ -107,10 +107,26 @@ configure_file(${CMAKE_SOURCE_DIR}/src/liversion.inc.in
 	       @ONLY
 )
 # set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/src/liversion.inc)
-  
+
+find_package(Lazbuild REQUIRED)
+
+if(LCL_VERSION LESS "929")
+ message(FATAL_ERROR "LCL should be at least version 0.9.29!")
+endif()
+
 add_subdirectory(lib)
 add_subdirectory(src)
 add_subdirectory(tools)
 add_subdirectory(data)
 add_subdirectory(graphics)
 add_subdirectory(po)
+
+if(QT OR GTK)
+  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/qt4)
+  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/gtk2)
+  
+  if(FRONTENDS)
+    add_subdirectory(frontends)
+  endif(FRONTENDS)
+  
+endif(QT OR GTK)

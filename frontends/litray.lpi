@@ -3,15 +3,12 @@
   <ProjectOptions>
     <Version Value="8"/>
     <General>
-      <Flags>
-        <LRSInOutputDirectory Value="False"/>
-      </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <TargetFileExt Value=""/>
-      <Title Value="Listaller Updater"/>
-      <UseAppBundle Value="False"/>
+      <Title Value="Listaller TrayControl"/>
       <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
       <Icon Value="0"/>
     </General>
     <VersionInfo>
@@ -34,43 +31,35 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="2">
       <Unit0>
-        <Filename Value="liupdate.lpr"/>
+        <Filename Value="litray.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="liupdate"/>
+        <UnitName Value="litray"/>
       </Unit0>
       <Unit1>
-        <Filename Value="updatefrm.pas"/>
+        <Filename Value="linotify.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="UMnForm"/>
+        <ComponentName Value="Form1"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="updatefrm"/>
+        <UnitName Value="linotify"/>
       </Unit1>
-      <Unit2>
-        <Filename Value="updexecfrm.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="UExecFm"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="updexecfrm"/>
-      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="9"/>
     <Target>
-      <Filename Value="../../build/liupdate"/>
+      <Filename Value="../build/litray"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)/"/>
-      <Libraries Value="../../build/"/>
-      <OtherUnitFiles Value="../;../bind/"/>
-      <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
+      <Libraries Value="../build/"/>
+      <OtherUnitFiles Value="../src/;../src/bind/"/>
+      <UnitOutputDirectory Value="../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
-        <CStyleOperator Value="False"/>
         <UseAnsiStrings Value="False"/>
       </SyntaxOptions>
     </Parsing>
@@ -83,7 +72,6 @@
     </Linking>
     <Other>
       <CompilerMessages>
-        <IgnoredMessages idx5024="True"/>
         <UseMsgFile Value="True"/>
       </CompilerMessages>
       <CustomOptions Value="-dUSE_QT_45
@@ -94,7 +82,19 @@
 -XLAatk-1.0=
 -XLAXext="/>
       <CompilerPath Value="$(CompPath)"/>
-      <CreateMakefileOnBuild Value="True"/>
     </Other>
   </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
 </CONFIG>

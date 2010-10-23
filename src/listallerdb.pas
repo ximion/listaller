@@ -150,7 +150,7 @@ begin
 
   with dsApp do
   begin
-    FileName := rd + 'ligeneric.db';
+    FileName := rd + 'software.db';
     if ((rootmode) and (not IsRoot) and (not FileExists(FileName))) then
       Result := False
     else

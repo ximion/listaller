@@ -37,5 +37,11 @@ char *li_stringlist_read_line(StringList lst,int ln);
 
 bool li_stringlist_write_line(StringList lst,int ln,char *val);
 
+char *li_stringlist_to_text(StringList lst);
+
+char *li_current_regdir(void);
+
+char *li_global_regdir(void);
+
 
 #endif /* __LI_BASICS */

@@ -80,7 +80,7 @@
     </Target>
     <SearchPaths>
       <Libraries Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
+      <OtherUnitFiles Value="../../src/;$(LazarusDir)/lcl/units/$(TargetCPU)-$(TargetOS)/"/>
       <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="qt"/>
     </SearchPaths>
@@ -106,6 +106,9 @@
         <ShowHints Value="False"/>
         <ShowSummary Value="True"/>
       </Verbosity>
+      <CompilerMessages>
+        <UseMsgFile Value="True"/>
+      </CompilerMessages>
       <CustomOptions Value="-dQT_NATIVE_DIALOGS
 -XLAXi=
 -XLAgmodule-2.0=

@@ -21,8 +21,8 @@ unit igobase;
 interface
 
 uses
-  Forms, distri, Buttons, Classes, Dialogs,
-  LCLIntf, LCLType, LiTypes, LiUtils, Process, xTypeFm, ComCtrls, Controls, ExtCtrls,
+  Forms, Buttons, Classes, Dialogs, Distri, LiUtils,
+  LCLIntf, LCLType, LiTypes, Process, xTypeFm, ComCtrls, Controls, ExtCtrls,
   FileUtil, Graphics, StdCtrls, SysUtils, LiInstaller, StrLocale, IconLoader, LResources;
 
 type

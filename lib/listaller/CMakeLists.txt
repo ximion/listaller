@@ -9,18 +9,19 @@ pkg_check_modules(PackageKitGLib2 REQUIRED packagekit-glib2>=0.6)
 
 set(llistaller_project liblistaller.lpr)
 
-set(llistaller_base_sources ${CMAKE_SOURCE_DIR}/src/liversion.inc
+set(lisrc ${CMAKE_SOURCE_DIR}/src)
+set(llistaller_base_sources ${lisrc}/liversion.inc
 	${llistaller_project}
-	${CMAKE_SOURCE_DIR}/src/liversion.inc
-	dderesolve.pas
-	depmanage.pas
-	ipkinstall.pas
-	lidbusproc.pas
-	limanageapp.pas
-	liupdateapp.pas
-	appinstalldb.pas
-	listallerdb.pas
-	softwaredb.pas
+	${lisrc}/liversion.inc
+	${lisrc}/dderesolve.pas
+	${lisrc}/depmanage.pas
+	${lisrc}/ipkinstall.pas
+	${lisrc}/lidbusproc.pas
+	${lisrc}/limanageapp.pas
+	${lisrc}/liupdateapp.pas
+	${lisrc}/appinstalldb.pas
+	${lisrc}/listallerdb.pas
+	${lisrc}/softwaredb.pas
 )
 
 set(listaller_libname "${LISTALLER_LIB}.${LIBS_FULL_VERSION}")

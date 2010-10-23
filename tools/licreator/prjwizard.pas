@@ -207,7 +207,7 @@ type
     procedure tvShortDescriptionsKeyDown(Sender: TObject; var Key: word;
       Shift: TShiftState);
   private
-    function CreateScript(aType: PkgType): TIPKScript;
+    function CreateScript(aType: LiPkgType): TIPKScript;
     procedure LoadFilesFromProfile(Profile: TList);
     procedure SaveFilesToProfile(Profile: TList);
     procedure ClearProfile(Profile: TList);
@@ -225,7 +225,7 @@ var
   //** Project wizard main formular
   frmProjectWizard: TfrmProjectWizard;
   //** IPK/IPS type that should be created
-  CreaType: PkgType;
+  CreaType: LiPkgType;
 
 implementation
 
@@ -267,7 +267,7 @@ begin
   end;
 end;
 
-function TfrmProjectWizard.CreateScript(aType: PkgType): TIPKScript;
+function TfrmProjectWizard.CreateScript(aType: LiPkgType): TIPKScript;
 var
   s: String;
   i, j: Integer;
@@ -339,8 +339,9 @@ begin
   //Add the application group type
   s := LowerCase(ComboBox1.Items[ComboBox1.ItemIndex]);
   if s = 'all' then
-    rs.Category := gtALL;
-  if s = 'education' then
+    rs.Categories:= '';
+  //TODO
+  {if s = 'education' then
     rs.Category := gtEDUCATION;
   if s = 'office' then
     rs.Category := gtOFFICE;
@@ -359,7 +360,7 @@ begin
   if s = 'additional' then
     rs.Category := gtADDITIONAL;
   if s = 'other' then
-    rs.Category := gtOTHER;
+    rs.Category := gtOTHER; }
 
   //Set which desktopfiles are used
   if (aType = ptDLink) then

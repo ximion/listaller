@@ -26,17 +26,17 @@ uses
 type
   TPasLibBindGen = class
   private
-    FLibName: String;
-    FName: String;
-    FOutName: String;
+    FLibName: string;
+    FName: string;
+    FOutName: string;
   public
     constructor Create;
     destructor Destroy; override;
 
-    procedure Run(component: String);
-    property LibName: String read FLibName write FLibName;
-    property LibMainSrcFile: String read FName write FName;
-    property BindOutFile: String read FOutName write FOutName;
+    procedure Run(component: string);
+    property LibName: string read FLibName write FLibName;
+    property LibMainSrcFile: string read FName write FName;
+    property BindOutFile: string read FOutName write FOutName;
   end;
 
 implementation
@@ -53,14 +53,14 @@ begin
   inherited;
 end;
 
-procedure TPasLibBindGen.Run(component: String);
+procedure TPasLibBindGen.Run(component: string);
 var
   src: TStringList;
   exported: TStringList;
   res: TStringList;
-  i: Integer;
-  r, h: String;
-  catchNext: Boolean;
+  i: integer;
+  r, h: string;
+  catchNext: boolean;
 begin
   src := TStringList.Create;
   src.LoadFromFile(FName);
@@ -68,15 +68,15 @@ begin
   exported := TStringList.Create;
   for i := src.IndexOf('exports') to src.Count - 1 do
   begin
-    exported.Add(LowerCase(StringReplace(StringReplace(src[i], ' ',
-      '', [rfReplaceAll]), ',', '', [rfReplaceAll])));
+    exported.Add(LowerCase(StrSubst(StrSubst(StrSubst(src[i], ' ', ''), ',', ''),
+      ';', '')));
     if (length(src[i]) > 2) and (LowerCase(src[i][length(src[i])]) = ';') then
       break;
   end;
 
   res := TStringList.Create;
-  catchNext := false;
-  for i := src.IndexOf('{@'+component+'}') + 1 to src.Count - 1 do
+  catchNext := False;
+  for i := src.IndexOf('{@' + component + '}') + 1 to src.Count - 1 do
   begin
     r := '';
     if pos('{@', src[i]) > 0 then
@@ -89,10 +89,10 @@ begin
       res.Add(r);
       r := StringReplace(r, ' ', '', [rfReplaceAll]);
       if r[length(r)] <> ';' then
-        catchNext := true
+        catchNext := True
       else
       begin
-        catchNext := false;
+        catchNext := False;
         res[res.Count - 1] := res[res.Count - 1] + 'external ' + FLibName + ';';
       end;
     end;
@@ -114,7 +114,7 @@ begin
         res.Add(r);
         r := StringReplace(r, ' ', '', [rfReplaceAll]);
         if r[length(r)] <> ';' then
-          catchNext := true
+          catchNext := True
         else
           res[res.Count - 1] := res[res.Count - 1] + 'external ' + FLibName + ';';
       end;
@@ -123,21 +123,22 @@ begin
   exported.Free;
   src.LoadFromFile(FOutName);
 
-  i:=src.IndexOf('{@Begin:'+component+'}')+1;
+  i := src.IndexOf('{@Begin:' + component + '}') + 1;
   repeat
     src.Delete(i);
-    if i > src.Count-1 then
+    if i > src.Count - 1 then
     begin
       writeLn('Invalid output template!');
       writeLn(' Did you forget the "End"-Template?');
       halt(2);
     end;
-  until pos('{@End:'+component+'}', src[i])>0;
+  until pos('{@End:' + component + '}', src[i]) > 0;
 
-  if StringReplace(res[0], ' ', '', [rfReplaceAll]) <> '' then res.Insert(0,'');
+  if StringReplace(res[0], ' ', '', [rfReplaceAll]) <> '' then
+    res.Insert(0, '');
 
-  i:=src.IndexOf('{@Begin:'+component+'}');
-  src.Insert(i+1, res.Text);
+  i := src.IndexOf('{@Begin:' + component + '}');
+  src.Insert(i + 1, res.Text);
   res.Free;
 
   //Write file back
