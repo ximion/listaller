@@ -27,6 +27,7 @@ using namespace Listaller;
 #define _LIMSGREDIRECT
 
 namespace Listaller {
+
 class LiMsgRedirect : public QObject
 {
   Q_OBJECT
@@ -76,8 +77,8 @@ AppManager::AppManager()
   mgr = li_mgr_new();
   
   msgRedir = new LiMsgRedirect();
-  connect(msgRedir, SIGNAL(statusMessage(QString)), this, SLOT(emitStatusMessage(QString)));
-  connect(msgRedir, SIGNAL(newApp(Application)), this, SLOT(emitNewApp(Application)));
+  connect(msgRedir, SIGNAL(statusMessage(QString)), this, SIGNAL(statusMessage(QString)));
+  connect(msgRedir, SIGNAL(newApp(Application)), this, SIGNAL(newApp(Application)));
   
   //Catch status messages
   li_mgr_register_status_call(&mgr, StatusChangeEvent(manager_status_change_cb), msgRedir);
@@ -95,9 +96,14 @@ AppManager::~AppManager()
   delete msgRedir;
 }
 
-bool AppManager::rescanApps()
+void AppManager::loadApps()
 {
-  return li_mgr_scan_apps(&mgr);
+  li_mgr_load_apps(&mgr, fAllApps);
+}
+
+bool AppManager::updateAppDB()
+{
+  return li_mgr_update_appdb(&mgr);
 }
 
 void AppManager::setSuMode(bool b)

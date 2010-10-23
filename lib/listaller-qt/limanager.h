@@ -54,7 +54,8 @@ public:
     AppManager();
     ~AppManager();
     
-    bool rescanApps();
+    void loadApps();
+    bool updateAppDB();
     bool uninstallApp(Application app);
     
     void setSuMode(bool b);
@@ -63,10 +64,6 @@ public:
 signals:
     void newApp(Application app);
     void statusMessage(QString msg);
-
-private slots:
-    void emitStatusMessage(QString s) { emit(statusMessage(s)); };
-    void emitNewApp(Application a) { emit(newApp(a)); };
     
 private:
     const void* mgr;

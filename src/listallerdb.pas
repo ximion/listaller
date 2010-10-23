@@ -34,22 +34,25 @@ type
     dsApp: TSQLite3Dataset;
     FNewApp: NewAppEvent;
     CurrField: TLiDBData;
-    AppDataDir: string;
-    DepDataDir: string;
-    EOF: boolean;
+    AppDataDir: String;
+    DepDataDir: String;
+    EOF: Boolean;
+    loaded: Boolean;
     onnewapp_udata: Pointer;
 
+    procedure ToApps;
+    procedure ToDeps;
     function GetAppField: LiAppInfo;
-    function GetSQLiteVersion: string;
-    function DBOkay: boolean;
+    function GetSQLiteVersion: String;
+    function DBOkay: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
 
     //** Open software database
-    function Load(const rootmode: boolean = False): boolean;
+    function Load(const rootmode: Boolean = false): Boolean;
     //** Get list of installed ipk apps
-    function GetApplicationList(blacklist: TStringList = nil): boolean;
+    function GetApplicationList(blacklist: TStringList = nil): Boolean;
     //** Open filtered applications list (and set pointer to beginning)
     procedure OpenFilterAppList;
     //** Move one entry forward
@@ -57,29 +60,29 @@ type
     //** Close (filter) connection
     procedure CloseFilter;
     //** Check if application is installed
-    function AppExists(appid: string): boolean;
+    function AppExists(appid: String): Boolean;
     //** Delete current app
     procedure AppDeleteCurrent;
     //** Add a new application
     procedure AppAddNew(app: LiAppInfo);
     //** Update version of app
-    procedure AppUpdateVersion(appID: string; newv: string);
+    procedure AppUpdateVersion(appID: String; newv: String);
     //** Add new dependency to databse
-    procedure DepAddNew(Name: string; version: string; origin: string;
-      depnames: WideString);
+    procedure DepAddNew(Name: String; version: String; origin: String;
+      depnames: Widestring);
     //** Check if dependency is already present
-    function DepExists(Name, version: string): boolean;
+    function DepExists(Name, version: String): Boolean;
     //** Register call to on new app found
     procedure RegOnNewApp(call: NewAppEvent; user_data: Pointer);
     //** Write changes to disk
-    function Finalize: boolean;
+    function Finalize: Boolean;
 
 
-    property EndReached: boolean read EOF;
+    property EndReached: Boolean read EOF;
     property DataField: TLiDBData read CurrField;
-    property SQLiteVersion: string read GetSQLiteVersion;
-    property AppConfDir: string read AppDataDir;
-    property DepConfDir: string read DepDataDir;
+    property SQLiteVersion: String read GetSQLiteVersion;
+    property AppConfDir: String read AppDataDir;
+    property DepConfDir: String read DepDataDir;
     //** Event: Called if new application was found
     property OnNewApp: NewAppEvent read FNewApp write FNewApp;
   end;
@@ -91,17 +94,18 @@ begin
   dsApp := TSQLite3Dataset.Create(nil);
   onnewapp_udata := nil;
   EOF := true;
+  loaded := false;
 end;
 
 destructor TListallerDB.Destroy;
 begin
   dsApp.Close; //Close, if opened
-  dsApp.Active := False;
+  dsApp.Active := false;
   dsApp.Free;
   inherited;
 end;
 
-function TListallerDB.GetSQLiteVersion: string;
+function TListallerDB.GetSQLiteVersion: String;
 begin
   Result := dsApp.SqliteVersion;
 end;
@@ -117,20 +121,36 @@ begin
     perror('Invalid NewAppEvent pointer received!');
 end;
 
-function TListallerDB.DBOkay: boolean;
+function TListallerDB.DBOkay: Boolean;
 begin
-  Result := False;
+  Result := false;
   if FileExists(dsApp.FileName) then
     if dsApp.TableExists('applications') then
       if dsApp.TableExists('dependencies') then
-        Result := True;
+        Result := true;
 end;
 
-function TListallerDB.Load(const rootmode: boolean = False): boolean;
-var
-  rd: string;
+procedure TListallerDB.ToApps;
 begin
-  Result := True;
+  dsApp.Close;
+  dsApp.SQL := 'SELECT * FROM applications';
+  dsApp.TableName := 'applications';
+  dsApp.Open;
+end;
+
+procedure TListallerDB.ToDeps;
+begin
+  dsApp.Close;
+  dsApp.SQL := 'SELECT * FROM dependencies';
+  dsApp.TableName := 'dependencies';
+  dsApp.Open;
+end;
+
+function TListallerDB.Load(const rootmode: Boolean = false): Boolean;
+var
+  rd: String;
+begin
+  Result := true;
 
   if rootmode then
     rd := RootPkgRegDir
@@ -144,7 +164,7 @@ begin
   ForceDirectories(DepDataDir);
   if not DirectoryExists(rd) then
   begin
-    Result := False;
+    Result := false;
     exit;
   end;
 
@@ -152,7 +172,7 @@ begin
   begin
     FileName := rd + 'software.db';
     if ((rootmode) and (not IsRoot) and (not FileExists(FileName))) then
-      Result := False
+      Result := false
     else
     begin
       //Create table for Applications
@@ -163,18 +183,18 @@ begin
         with FieldDefs do
         begin
           Clear;
-          Add('Name', ftString, 0, True);
-          Add('PkName', ftString, 0, True);
-          Add('AppId', ftString, 0, True);
-          Add('Type', ftString, 0, True);
-          Add('Description', ftString, 0, False);
-          Add('Version', ftFloat, 0, True);
-          Add('Publisher', ftString, 0, False);
-          Add('IconName', ftString, 0, False);
-          Add('Profile', ftString, 0, False);
-          Add('Category', ftString, 0, True);
-          Add('InstallDate', ftDateTime, 0, False);
-          Add('Dependencies', ftMemo, 0, False);
+          Add('Name', ftString, 0, true);
+          Add('PkName', ftString, 0, true);
+          Add('AppId', ftString, 0, true);
+          Add('Type', ftString, 0, true);
+          Add('Description', ftString, 0, false);
+          Add('Version', ftFloat, 0, true);
+          Add('Publisher', ftString, 0, false);
+          Add('IconName', ftString, 0, false);
+          Add('Profile', ftString, 0, false);
+          Add('Category', ftString, 0, true);
+          Add('InstallDate', ftDateTime, 0, false);
+          Add('Dependencies', ftMemo, 0, false);
         end;
         CreateTable;
       end;
@@ -185,36 +205,35 @@ begin
         with FieldDefs do
         begin
           Clear;
-          Add('Name', ftString, 0, True);
-          Add('Version', ftString, 0, True);
-          Add('Origin', ftString, 0, True);
-          Add('DepNames', ftMemo, 0, True);
-          Add('InstallDate', ftDateTime, 0, False);
+          Add('Name', ftString, 0, true);
+          Add('Version', ftString, 0, true);
+          Add('Origin', ftString, 0, true);
+          Add('DepNames', ftMemo, 0, true);
+          Add('InstallDate', ftDateTime, 0, false);
         end;
         CreateTable;
       end;
-      Active := True;
+      Active := true;
       //ApplyUpdates;
       Open;
     end;
   end;
+  ToApps;
+  loaded := true;
   pinfo(rsDBOpened);
 end;
 
-function TListallerDB.GetApplicationList(blacklist: TStringList = nil): boolean;
+function TListallerDB.GetApplicationList(blacklist: TStringList = nil): Boolean;
 var
   entry: LiAppInfo;
-  p: ansistring;
+  p: Ansistring;
 begin
-  Result := False;
-  dsApp.TableName := 'applications';
+  Result := false;
   if not DBOkay then
     exit;
 
-  dsApp.Close; //First close db
-  dsApp.SQL := 'SELECT * FROM applications';
-  dsApp.Open;
-  dsApp.Filtered := True;
+  ToApps;
+  dsApp.Filtered := true;
   dsApp.First;
 
   while not dsApp.EOF do
@@ -250,15 +269,15 @@ end;
 function TListallerDB.GetAppField: LiAppInfo;
 var
   r: LiAppInfo;
-  h: string;
+  h: String;
 
-  function _(s: WideString): PChar;
+  function _(s: Widestring): PChar;
   begin
     Result := PChar(s);
   end;
 
 begin
-  dsApp.TableName := 'applications';
+  ToApps;
   r.Name := _(dsApp.FieldByName('Name').AsString);
   r.PkName := _(dsApp.FieldByName('PkName').AsString);
   h := LowerCase(dsApp.FieldByName('Type').AsString);
@@ -288,12 +307,9 @@ procedure TListallerDB.OpenFilterAppList;
 begin
   if not DBOkay then
     exit;
-  dsApp.TableName := 'applications';
-  dsApp.Active := True;
-
-  dsApp.SQL := 'SELECT * FROM Applications';
-  dsApp.Open;
-  dsApp.Filtered := True;
+  ToApps;
+  dsApp.Active := true;
+  dsApp.Filtered := true;
   dsApp.First;
   EOF := dsApp.EOF;
   CurrField.App := GetAppField;
@@ -312,27 +328,25 @@ begin
   dsApp.Close;
 end;
 
-function TListallerDB.AppExists(appid: string): boolean;
+function TListallerDB.AppExists(appid: String): Boolean;
 begin
-  Result := False;
+  Result := false;
   if not DBOkay then
     exit;
-  dsApp.TableName := 'applications';
-  dsApp.SQL := 'SELECT * FROM applications';
-  dsApp.Open;
-  dsApp.Filtered := True;
+  ToApps;
+  dsApp.Filtered := true;
   dsApp.First;
 
-  Result := False;
+  Result := false;
   while not dsApp.EOF do
   begin
     if (dsApp.FieldByName('AppId').AsString = appid) then
     begin
-      Result := True;
+      Result := true;
       break;
     end
     else
-      Result := False;
+      Result := false;
     dsApp.Next;
   end;
   dsApp.Close;
@@ -340,18 +354,17 @@ end;
 
 procedure TListallerDB.AppDeleteCurrent;
 begin
-  dsApp.TableName := 'applications';
+  ToApps;
   dsApp.ExecuteDirect('DELETE FROM applications WHERE rowid=' + IntToStr(dsApp.RecNo));
   dsApp.ApplyUpdates;
 end;
 
 procedure TListallerDB.AppAddNew(app: LiAppInfo);
 var
-  g, h: string;
+  g, h: String;
 begin
   //Open database connection
-  dsApp.TableName := 'applications';
-  dsApp.Open;
+  ToApps;
   dsApp.Edit;
 
   if app.PkType = ptLinstall then
@@ -376,12 +389,10 @@ begin
   dsApp.Close;
 end;
 
-procedure TListallerDB.AppUpdateVersion(appID: string; newv: string);
+procedure TListallerDB.AppUpdateVersion(appID: String; newv: String);
 begin
-  dsApp.TableName := 'applications';
-  dsApp.SQL := 'SELECT * FROM applications';
-  dsApp.Open;
-  dsApp.Filtered := True;
+  ToApps;
+  dsApp.Filtered := true;
   dsApp.Edit;
   dsApp.First;
   dsApp.ExecuteDirect('UPDATE applications SET Version = ''' + newv +
@@ -390,12 +401,11 @@ begin
   dsApp.Close;
 end;
 
-procedure TListallerDB.DepAddNew(Name: string; version: string;
-  origin: string; depnames: WideString);
+procedure TListallerDB.DepAddNew(Name: String; version: String;
+  origin: String; depnames: Widestring);
 begin
   //Open database connection
-  dsApp.TableName := 'Dependencies';
-  dsApp.Open;
+  ToDeps;
   dsApp.Edit;
   dsApp.Insert;
   dsApp.ExecuteDirect('INSERT INTO dependencies VALUES (''' + Name +
@@ -407,36 +417,39 @@ begin
   dsApp.Close;
 end;
 
-function TListallerDB.DepExists(Name, version: string): boolean;
+function TListallerDB.DepExists(Name, version: String): Boolean;
 begin
-  Result := False;
+  Result := false;
   if not DBOkay then
     exit;
-  dsApp.TableName := 'dependencies';
-  dsApp.SQL := 'SELECT * FROM dependencies';
-  dsApp.Open;
-  dsApp.Filtered := True;
+  ToDeps;
+  dsApp.Filtered := true;
   dsApp.First;
 
-  Result := False;
+  Result := false;
   while not dsApp.EOF do
   begin
     if (dsApp.FieldByName('Name').AsString = Name) and
       (dsApp.FieldByName('Version').AsString = Version) then
     begin
-      Result := True;
+      Result := true;
       break;
     end
     else
-      Result := False;
+      Result := false;
     dsApp.Next;
   end;
   dsApp.Close;
 end;
 
-function TListallerDB.Finalize: boolean;
+function TListallerDB.Finalize: Boolean;
 begin
-  Result := dsApp.ApplyUpdates;
+  Result := false;
+  if loaded then
+  begin
+    dsApp.Active := true;
+    Result := dsApp.ApplyUpdates;
+  end;
 end;
 
 end.

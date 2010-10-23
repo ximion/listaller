@@ -360,7 +360,7 @@ begin
       appList.ClearList;
 { if appList is TAppListView then appList.Free;
  appList:=CreateNewUserAppList;}
-      li_mgr_scan_apps(@MnFrm.amgr);
+      li_mgr_load_apps(@aMgr, fAllApps);
     end;
   end
   else
@@ -373,7 +373,7 @@ begin
         appListSU.ClearList;
   {if appListSU is TAppListView then appListSU.Free;
  appListSU:=CreateNewSuAppList;}
-        li_mgr_scan_apps(@MnFrm.amgr);
+        li_mgr_load_apps(@aMgr, fAllApps);
       end;
     end;
 end;

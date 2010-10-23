@@ -27,7 +27,7 @@ uses
 
 function li_mgr_new: Pointer;cdecl;external liblistaller;
 procedure li_mgr_free(mgr: PLiAppManager);cdecl;external liblistaller;
-function li_mgr_scan_apps(mgr: PLiAppManager): Boolean;cdecl;external liblistaller;
+procedure li_mgr_load_apps(mgr: PLiAppManager; filter: LiFilter);cdecl;external liblistaller;
 function li_mgr_update_appdb(mgr: PLiAppManager): Boolean;cdecl;external liblistaller;
 function li_mgr_register_status_call(mgr: PLiAppManager;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
 function li_mgr_register_app_call(mgr: PLiAppManager;call: NewAppEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;

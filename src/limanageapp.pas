@@ -77,6 +77,8 @@ type
     procedure RescanEntries;
     //** Update AppInstall database
     procedure UpdateAppDB;
+    //** Load apps which match filter
+    procedure LoadApplications(filter: LiFilter);
     //** Removes an application
     procedure UninstallApp(obj: LiAppInfo);
  {** Checks dependencies of all installed apps
@@ -490,6 +492,17 @@ begin
   end;
   tmp.Free;
   sdb.Finalize; //Write to disk
+  sdb.Free;
+end;
+
+// Load the applications
+procedure TLiAppManager.LoadApplications(filter: LiFilter);
+var sdb: TSoftwareDB;
+begin
+  sdb := TSoftwareDB.Create;
+  sdb.Load(SUMode);
+  sdb.OnNewApp:=FApp;
+  sdb.GetApplicationList(filter, nil);
   sdb.Free;
 end;
 

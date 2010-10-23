@@ -383,21 +383,9 @@ begin
 end;
 
 //** Start loading list of applications
-function li_mgr_scan_apps(mgr: PLiAppManager): Boolean;cdecl;
+procedure li_mgr_load_apps(mgr: PLiAppManager; filter: LiFilter);cdecl;
 begin
- Result:=false;
- try
-  if not mgr^.UserRequestRegistered then
-  begin
-   perror('No user request callback was registered');
-   exit;
-  end;
-
-  Result:=true;
-  mgr^.RescanEntries;
- except
-  Result:=false;
- end;
+  mgr^.LoadApplications(filter);
 end;
 
 //** Update AppInstall db by rescanning all data
@@ -635,8 +623,8 @@ exports
  //Management functions
  li_mgr_new,
  li_mgr_free,
- li_mgr_scan_apps,
  li_mgr_update_appdb,
+ li_mgr_load_apps,
  li_mgr_register_status_call,
  li_mgr_register_app_call,
  li_mgr_register_request_call,

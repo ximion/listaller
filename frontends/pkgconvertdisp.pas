@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Process, ExtCtrls, LiUtils, LCLType, Manager, StrLocale, LiAppMgr;
+  Process, ExtCtrls, LiUtils, LCLType, Manager, StrLocale, LiAppMgr, LiTypes;
 
 type
 
@@ -100,7 +100,7 @@ if Process1.ExitStatus>0 then begin
   if Application.MessageBox(PAnsiChar(rsConvDone),PChar(rsClose+'?'),MB_YESNO)=IDYES then begin
   close;
   Application.ProcessMessages;
-  li_mgr_scan_apps(@MnFrm.amgr);
+  li_mgr_load_apps(@MnFrm.amgr, fAllApps);
   end;end;
 end;
 

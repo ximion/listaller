@@ -16,7 +16,7 @@
 //** Implementation of PackageKit's AppInstall DB specs
 unit appinstalldb;
 
-{$mode objfpc}
+{$mode objfpc}{$H+}
 
 interface
 
@@ -30,6 +30,7 @@ type
     ds: TSQLite3Dataset;
     EOF: Boolean;
     currField: TLiDBData;
+    loaded: Boolean;
 
     FNewApp: NewAppEvent;
     onnewapp_udata: Pointer;
@@ -44,7 +45,7 @@ type
     //** Open AppInstall database
     function Load(const rootmode: Boolean): Boolean;
     //** Get list of installed apps
-    function GetApplicationList(filter: LiFilter; blacklist: TStringList = nil): boolean;
+    function GetApplicationList(filter: LiFilter; blacklist: TStringList = nil): Boolean;
     //** Return true if application exists
     function ContainsAppEntry(appID: String): Boolean;
     //** Add application to the data
@@ -77,6 +78,7 @@ begin
   ds := TSQLite3Dataset.Create(nil);
   EOF := true;
   onnewapp_udata := nil;
+  loaded := false;
 end;
 
 procedure TAppInstallDB.RegOnNewApp(call: NewAppEvent; user_data: Pointer);
@@ -129,6 +131,7 @@ begin
   ds.Open; //Put DB in active state
   ds.Active := true;
   ds.ApplyUpdates;
+  loaded := true;
 end;
 
 destructor TAppInstallDB.Destroy;
@@ -176,14 +179,15 @@ end;
 
 procedure TAppInstallDB.AddApplication(app: LiAppInfo);
 var
-  sql: WideString;
+  sql: Widestring;
 begin
   ToApps;
   ds.Edit;
 
-  sql := ValFormat(app.PkName) + ', ' + ValFormat(app.RemoveId) + ', ' +
-    ValFormat(app.Categories) + ', ' + ValFormat('installer:local') + ',' +
-    ValFormat(app.IconName) + ',' + ValFormat(app.Name) + ',' + ValFormat(app.Summary);
+  sql := ValFormat(app.PkName) + ', ' + ValFormat(app.RemoveId) +
+    ', ' + ValFormat(app.Categories) + ', ' + ValFormat('installer:local') +
+    ',' + ValFormat(app.IconName) + ',' + ValFormat(app.Name) + ',' +
+    ValFormat(app.Summary);
 
   sql := 'INSERT INTO applications (application_id, package_name, categories, ' +
     'repo_id, icon_name, application_name, application_summary) ' +
@@ -195,49 +199,49 @@ end;
 
 procedure TAppInstallDB.Finalize;
 begin
-  ds.ApplyUpdates;
+  if loaded then
+  begin
+    ds.Active := true;
+    ds.ApplyUpdates;
+  end;
 end;
 
 function TAppInstallDB.GetCurrentAppField: LiAppInfo;
 var
   r: LiAppInfo;
-  h: string;
-
-  function _(s: WideString): PChar;
-  begin
-    Result := PChar(s);
-  end;
-
+  h: String;
 begin
-  r.Name := _(ds.FieldByName('application_id').AsString);
-  r.PkName := _(ds.FieldByName('package_name').AsString);
+  r.Name := PChar(ds.FieldByName('application_name').AsString);
+  r.PkName := PChar(ds.FieldByName('package_name').AsString);
   h := LowerCase(ds.FieldByName('repo_id').AsString);
   if h = 'installer:local' then
     r.PkType := ptExtern
   else
     r.PkType := ptNative;
 
-  r.Summary := _(ds.FieldByName('application_summary').AsString);
+  r.Summary := PChar(ds.FieldByName('application_summary').AsString);
   r.Version := ''; //AppInstall data does not provide version information...
   r.Author := ''; //.. and info about the author
-  r.IconName := _(ds.FieldByName('icon_name').AsString);
+  r.IconName := PChar(ds.FieldByName('icon_name').AsString);
+  pdebug(r.IconName);
   r.Profile := ''; //@DEPRECATED
 
-  r.Categories := _(ds.FieldByName('categories').AsString);
+  r.Categories := PChar(ds.FieldByName('categories').AsString);
 
   r.Dependencies := '';
   Result := r;
 end;
 
-function TAppInstallDB.GetApplicationList(filter: LiFilter; blacklist: TStringList = nil): boolean;
+function TAppInstallDB.GetApplicationList(filter: LiFilter;
+  blacklist: TStringList = nil): Boolean;
 var
   entry: LiAppInfo;
-  p: ansistring;
+  p: Ansistring;
 begin
   Result := false;
   ToApps;
 
-  ds.Filtered := True;
+  ds.Filtered := true;
   ds.First;
 
   while not ds.EOF do
@@ -264,7 +268,7 @@ end;
 procedure TAppInstallDB.OpenFilter;
 begin
   ToApps;
-  ds.Filtered := True;
+  ds.Filtered := true;
   ds.First;
   EOF := ds.EOF;
   CurrField.App := GetCurrentAppField;
