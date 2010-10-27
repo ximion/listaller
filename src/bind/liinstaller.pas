@@ -78,7 +78,7 @@ function li_setup_register_user_request_call(setup: PLiInstallation;call: UserRe
 function li_setup_pkgtype(setup: PLiInstallation): LiPkgType;cdecl;external liblistaller;
 procedure li_setup_set_testmode(setup: PLiInstallation;st: Boolean);cdecl;external liblistaller;
 function li_setup_testmode(setup: PLiInstallation): Boolean;cdecl;external liblistaller;
-procedure li_setup_set_forced(setup: PLiInstallation;str: PChar);cdecl;external liblistaller;
+procedure li_setup_set_overrides(setup: PLiInstallation;const str: PChar);cdecl;external liblistaller;
 procedure li_setup_set_sumode(setup: PLiInstallation;b: Boolean);cdecl;external liblistaller;
 function li_setup_sumode(setup: PLiInstallation): Boolean;cdecl;external liblistaller;
 function li_setup_disallows(setup: PLiInstallation): PChar;cdecl;external liblistaller;
@@ -251,7 +251,7 @@ end;
 procedure TInstallPack.SetForced(s: String);
 begin
   ForcedActn := s;
-  li_setup_set_forced(@ins, PChar(s));
+  li_setup_set_overrides(@ins, PChar(s));
 end;
 
 function TInstallPack.GetSignatureState: PkgSignatureState;

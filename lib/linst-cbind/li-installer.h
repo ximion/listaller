@@ -45,7 +45,7 @@ void li_setup_set_testmode(LiInstallation setup,bool st);
 
 bool li_setup_testmode(LiInstallation setup);
 
-void li_setup_set_forced(LiInstallation setup,char *str);
+void li_setup_set_overrides(LiInstallation setup,const char *str);
 
 void li_setup_set_sumode(LiInstallation setup,bool b);
 

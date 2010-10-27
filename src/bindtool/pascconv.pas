@@ -107,20 +107,20 @@ begin
         Result := LowerCase(h) + ' *'
     else
       Result := s;
-    exit;
-  end;
+  end
+  else
   if (h = 'integer') or (h = 'longint') or (h = 'shortint') or (h = 'smallint') then
     Result := 'int'
   else if h[1] = 'g' then
-      Result := h
-    else if h = 'boolean' then
-        Result := 'bool'
-      else if h = 'tdatetime' then
-          Result := 'double'
-        else if h = 'widestring' then
-            Result := 'char *'
-          else
-            Result := s;
+    Result := h
+  else if h = 'boolean' then
+    Result := 'bool'
+  else if h = 'tdatetime' then
+    Result := 'double'
+  else if h = 'widestring' then
+    Result := 'char *'
+  else
+    Result := s;
 end;
 
 { TPtCConverter }
@@ -142,8 +142,20 @@ var
   ty: Boolean;
   i: Integer;
 
+  procedure RemoveSpaces;
+  begin
+    g := StrSubst(g, ' ', '');
+    f := StrSubst(f, ' ', '');
+  end;
+
   procedure UpdateRVal;
   begin
+    if pos('const ', f) > 0 then
+     begin
+       r := r + 'const ';
+       f := StrSubst(f, 'const ', '');
+     end;
+    RemoveSpaces;
     g := SubstTypes(g);
     if pos('*', g) <= 0 then
       r := r + g + ' ' + f
@@ -163,19 +175,18 @@ begin
     if arg[i] = ':' then
       ty := not ty
     else
-      if arg[i] = ';' then
-      begin
-        UpdateRVal();
-        g := '';
-        f := '';
-        ty := not ty;
-      end
+    if arg[i] = ';' then
+    begin
+      UpdateRVal();
+      g := '';
+      f := '';
+      ty := not ty;
+    end
+    else
+      if not ty then
+        f := f + arg[i]
       else
-        if arg[i] <> ' ' then
-          if not ty then
-            f := f + arg[i]
-          else
-            g := g + arg[i];
+        g := g + arg[i];
   end;
   //Add last parameters (no last ; appeared)
   if (g <> '') and (f <> '') then
@@ -215,59 +226,59 @@ begin
     res.Add(r);
   end
   else
-    if pos('enumeration', eltype) > 0 then
-    begin
-      r := 'typedef enum {'#10;
-      h := el.GetDeclaration(true);
-      h := StrSubst(h, #10, '');
-      h := StrSubst(h, ' ', '');
-      h := copy(h, pos('(', h) + 1, length(h));
-      h := copy(h, 1, pos(')', h) - 1);
-      h := StrSubst(h, ',', ','#10'      ');
-      h := '      ' + h;
-      r := r + h + #10 + '} ' + el.FullName + ';';
-      res.Add('');
-      res.Add(r);
-    end
-    else
-      if pos('procedure', eltype) > 0 then
-      begin
-        r := 'typedef void (*' + el.FullName + ') ';
-        ArgumentsToHVar; //Quick & dirty helper function :)
-        r := r + '(' + h + ');';
-        funcdecl.Add('');
-        funcdecl.Add(r);
-      end
-      else
-        if pos('function', eltype) > 0 then
-        begin
-          //Fetch return type
-          h := el.GetDeclaration(false);
-          h := copy(h, pos(')', h) + 1, length(h));
-          h := copy(h, pos(':', h) + 1, length(h));
-          h := StrSubst(h, ' ', '');
-          h := SubstTypes(h);
+  if pos('enumeration', eltype) > 0 then
+  begin
+    r := 'typedef enum {'#10;
+    h := el.GetDeclaration(true);
+    h := StrSubst(h, #10, '');
+    h := StrSubst(h, ' ', '');
+    h := copy(h, pos('(', h) + 1, length(h));
+    h := copy(h, 1, pos(')', h) - 1);
+    h := StrSubst(h, ',', ','#10'      ');
+    h := '      ' + h;
+    r := r + h + #10 + '} ' + el.FullName + ';';
+    res.Add('');
+    res.Add(r);
+  end
+  else
+  if pos('procedure', eltype) > 0 then
+  begin
+    r := 'typedef void (*' + el.FullName + ') ';
+    ArgumentsToHVar; //Quick & dirty helper function :)
+    r := r + '(' + h + ');';
+    funcdecl.Add('');
+    funcdecl.Add(r);
+  end
+  else
+  if pos('function', eltype) > 0 then
+  begin
+    //Fetch return type
+    h := el.GetDeclaration(false);
+    h := copy(h, pos(')', h) + 1, length(h));
+    h := copy(h, pos(':', h) + 1, length(h));
+    h := StrSubst(h, ' ', '');
+    h := SubstTypes(h);
 
-          r := 'typedef ' + h + ' (*' + el.FullName + ') ';
-          ArgumentsToHVar; //Quick & dirty helper function :)
-          r := r + '(' + h + ');';
-          funcdecl.Add('');
-          funcdecl.Add(r);
-        end
-        else
-          if pos('record', eltype) > 0 then
-          begin
-            h := el.GetDeclaration(false);
-            h := copy(h, 7, length(h)); //remove the "record" word
-            Delete(h, length(h) - 3, length(h)); //remove "end" from the end
-            h := SolveArguments(h); //SolveArguments() works here too!
+    r := 'typedef ' + h + ' (*' + el.FullName + ') ';
+    ArgumentsToHVar; //Quick & dirty helper function :)
+    r := r + '(' + h + ');';
+    funcdecl.Add('');
+    funcdecl.Add(r);
+  end
+  else
+  if pos('record', eltype) > 0 then
+  begin
+    h := el.GetDeclaration(false);
+    h := copy(h, 7, length(h)); //remove the "record" word
+    Delete(h, length(h) - 3, length(h)); //remove "end" from the end
+    h := SolveArguments(h); //SolveArguments() works here too!
 
-            r := 'typedef struct {'#10;
-            h := StrSubst(h, ',', ';'#10'      ');
-            r := r + '      ' + h + ';'#10'} ' + el.FullName + ';';
-            res.Add('');
-            res.Add(r);
-          end;
+    r := 'typedef struct {'#10;
+    h := StrSubst(h, ',', ';'#10'      ');
+    r := r + '      ' + h + ';'#10'} ' + el.FullName + ';';
+    res.Add('');
+    res.Add(r);
+  end;
 end;
 
 function TPtCConverter.ConvertToCInfo(fname: String): TStringList;
@@ -328,25 +339,25 @@ begin
           res.Add(x);
         end
         else
-          if element.ElementTypeName = 'procedure' then
+        if element.ElementTypeName = 'procedure' then
+        begin
+          res.Add('');
+          func := element.GetDeclaration(true);
+
+          x := 'void ';
+          x := x + element.Name;
+
+          if pos('(', func) > 0 then
           begin
-            res.Add('');
-            func := element.GetDeclaration(true);
+            h := copy(func, pos('(', func) + 1, length(func));
+            h := copy(h, 1, pos(')', h) - 1);
+            x := x + '(' + SolveArguments(h) + ');';
+          end
+          else
+            x := x + '(void);';
 
-            x := 'void ';
-            x := x + element.Name;
-
-            if pos('(', func) > 0 then
-            begin
-              h := copy(func, pos('(', func) + 1, length(func));
-              h := copy(h, 1, pos(')', h) - 1);
-              x := x + '(' + SolveArguments(h) + ');';
-            end
-            else
-              x := x + '(void);';
-
-            res.Add(x);
-          end;
+          res.Add(x);
+        end;
   end;
   if funcdecl.Count > 2 then
   begin

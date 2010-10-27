@@ -162,7 +162,7 @@ begin
 end;
 
 //** Set actions which should be forced
-procedure li_setup_set_forced(setup: PLiInstallation;str: PChar);cdecl;
+procedure li_setup_set_overrides(setup: PLiInstallation;const str: PChar);cdecl;
 begin
   (*
    Possible strings:
@@ -614,7 +614,7 @@ exports
  li_setup_register_user_request_call,
  li_setup_execute,
  li_setup_dependencies,
- li_setup_set_forced,
+ li_setup_set_overrides,
  li_setup_set_profileid,
  li_setup_set_testmode,
  li_setup_testmode,
