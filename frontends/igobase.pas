@@ -305,10 +305,12 @@ begin
   end;
 end;
 
-function RequestHandling(mtype: LiRqType; msg: PChar; udata: Pointer): LiRqResult; cdecl;
+function MessageHandler(mtype: LI_MESSAGE; const Text: PChar;
+  udata: Pointer): LI_REQUEST_RES; cdecl;
 var
   s: String;
 begin
+  Result := LIRQS_OK;
   //Window title
   if setup.GetAppName = '' then
     s := rsInstallation
@@ -316,9 +318,9 @@ begin
     s := Format(rsInstOf, [setup.GetAppName]);
   //Handle interaction types
   case mtype of
-    rqError:
+    LIM_Error:
     begin
-      Application.MessageBox(msg, 'Error', MB_OK + MB_IconError);
+      Application.MessageBox(Text, 'Error', MB_OK + MB_IconError);
       if Assigned(IWizFrm) then
       begin
         with IWizFrm do
@@ -336,18 +338,17 @@ begin
       else
       begin
         setup.Free;
-        Result := rqsOK;
         halt(6); //Kill application
         exit;
       end;
     end;
-    rqWarning:
+    LIM_Question_AbortContinue:
     begin
-      if Application.MessageBox(PAnsiChar(msg), PAnsiChar(s), MB_YESNO +
-        MB_IconWarning) <> idYes then
+      if Application.MessageBox(Text, PAnsiChar(s), MB_YESNO + MB_IconWarning) <>
+        idYes then
       begin
         ShowMessage(rsINClose);
-        Result := rqsNo;
+        Result := LIRQS_No;
         if Assigned(IWizFrm) then
         begin
           with IWizFrm do
@@ -369,32 +370,42 @@ begin
         end;
       end;
     end;
-    rqQuestion:
+    LIM_Question_YesNo:
     begin
-      if Application.MessageBox(PAnsiChar(msg), PAnsiChar(s), MB_YESNO +
-        MB_IconQuestion) <> idYes then
-        Result := rqsNo
+      if Application.MessageBox(Text, PAnsiChar(s), MB_YESNO + MB_IconQuestion) <>
+        idYes then
+        Result := LIRQS_No
       else
-        Result := rqsYes;
+        Result := LIRQS_Yes;
     end;
-    rqInfo:
+    LIM_Info:
     begin
-      ShowMessage(msg);
-      Result := rqsOK;
+      if not Assigned(DGForm) then
+      begin
+        if Assigned(IWizFrm) then
+          IWizFrm.InfoMemo.Lines.Add(Text);
+        //Necessary to add messages to log, even if it is invisible (to generate report)
+        pinfo(Text);
+      end
+      else
+      begin
+        DGForm.Memo3.Lines.Add(Text);
+        pinfo(Text);
+      end;
     end;
+    LIM_Stage: if Assigned(IWizFrm) then IWizFrm.Label9.Caption := Text;
   end;
 
 end;
 
-procedure StatusChangeCall(change: LiStatusChange; data: LiStatusData;
-  user_data: Pointer); cdecl;
+procedure StatusHandler(status: LI_STATUS; Data: LiStatusData; udata: Pointer); cdecl;
 begin
   if Assigned(IWizFrm) then
     with IWizFrm do
     begin
-      case change of
-        scMnProgress: InsProgress.Position := Data.mnprogress;
-        scExProgress:
+      case status of
+        LIS_Progress: InsProgress.Position := Data.mnprogress;
+        LIS_ExProgress:
         begin
           ExProgress.Position := Data.exprogress;
           if (Data.exprogress = 0) and (ExProgress.Visible = true) then
@@ -402,45 +413,33 @@ begin
           else
             ExProgress.Visible := true;
         end;
-        scMessage:
-        begin //Necessary to add messages to log, even if it is invisible (to generate report)
-          InfoMemo.Lines.Add(Data.msg);
-          pinfo(Data.msg);
-        end;
-        scStepMessage: Label9.Caption := Data.msg;
       end;
     end
 
   else
-    if Assigned(DGForm) then
-      with DGForm do
-      begin
-        case change of
-          scMnProgress: MainProgress.Position := Data.mnprogress;
-          scExProgress:
-          begin
-            DlProgress.Position := Data.exprogress;
-            if (Data.exprogress = 0) and (DlProgress.Visible = true) then
-              DlProgress.Visible := false
-            else
-              DlProgress.Visible := true;
-          end;
-          scMessage:
-          begin //Necessary to add messages to log, even if it is invisible (to generate report)
-            Memo3.Lines.Add(Data.msg);
-            pinfo(Data.msg);
-          end;
-          scStepMessage: ;//Label9.Caption:=data.msg;
-        end;
-      end
-    else
+  if Assigned(DGForm) then
+    with DGForm do
     begin
-      if setup.PkType <> ptContainer then
-      begin
-        pwarning('Listaller Setup tool seems to owns none of the required display forms!');
-        pwarning('This should _never_ happen!');
+      case status of
+        LIS_Progress: MainProgress.Position := Data.mnprogress;
+        LIS_ExProgress:
+        begin
+          DlProgress.Position := Data.exprogress;
+          if (Data.exprogress = 0) and (DlProgress.Visible = true) then
+            DlProgress.Visible := false
+          else
+            DlProgress.Visible := true;
+        end;
       end;
+    end
+  else
+  begin
+    if setup.PkType <> ptContainer then
+    begin
+      pwarning('Listaller Setup tool seems to owns none of the required display forms!');
+      pwarning('This should _never_ happen!');
     end;
+  end;
 
   Application.ProcessMessages;
 end;
@@ -487,9 +486,9 @@ begin
   imForm.EnterLoadingState;
 
   setup := TInstallPack.Create;
-  setup.SetUserRequestCall(@RequestHandling, nil);
+  setup.SetMessageEvent(@MessageHandler, nil);
   //Set status handler for init stage
-  setup.SetStatusChangeEvent(@xtypefm.PkgInitProgressChange, imForm);
+  setup.SetStatusEvent(@xtypefm.PkgInitProgressChange, imForm);
 
   //Set forced actions
   if Application.HasOption('force-architecture') then
@@ -502,7 +501,7 @@ begin
   setup.Initialize(ParamStr(1));
 
   //Now set new status change callback handler
-  setup.SetStatusChangeEvent(@StatusChangeCall, nil);
+  setup.SetStatusEvent(@StatusHandler, nil);
 
   sig := setup.GetSignatureState;
 
@@ -717,7 +716,7 @@ var
   var
     Buffer: String;
     BytesAvailable: DWord;
-    BytesRead: longint;
+    BytesRead: Longint;
   begin
 
     if Process.Running then
@@ -754,8 +753,8 @@ begin
       GetOutputTimer.Enabled := false;
       writeLn('Connection to backend broken.');
       writeLn(rsCannotResolv);
-      ShowMessage(rsCouldntSolve + #13 + StrSubst(rsViewLog,
-        '%p', '/tmp/install-' + setup.GetAppName + '.log') + #13 +  'Code: ' +
+      ShowMessage(rsCouldntSolve + #13 + StrSubst(rsViewLog, '%p',
+        '/tmp/install-' + setup.GetAppName + '.log') + #13 + 'Code: ' +
         IntToStr(Process1.ExitStatus));
       InfoMemo.Lines.SaveTofile('/tmp/install-' + setup.GetAppName + '.log');
       halt;
@@ -776,7 +775,7 @@ begin
   if setup.GetFileList = '' then
   begin
     ShowMessage(rsPKGError + #10'Message: No file information was found for this profile!'
-      +  #10 + rsAppClose);
+      + #10 + rsAppClose);
     Application.Terminate;
     exit;
   end;

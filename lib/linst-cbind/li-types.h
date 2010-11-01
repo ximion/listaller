@@ -126,11 +126,11 @@ typedef enum {
 
 typedef void (*LiStateEvent) (LI_STATUS status,LiStatusData data,void* user_data);
 
-typedef LI_REQUEST_RES (*LiMessageEvent) (LI_MESSAGE mtype,char *text,void* user_data);
+typedef LI_REQUEST_RES (*LiMessageEvent) (LI_MESSAGE mtype,const char *text,void* user_data);
 
 typedef void (*TProgressEvent) (int pos,void* user_data);
 
-typedef void (*LiNewAppEvent) (char *name,LiAppInfo *obj,void* user_data);
+typedef void (*LiNewAppEvent) (const char *name,LiAppInfo *obj,void* user_data);
 
 typedef void (*LiNewUpdateEvent) (char *name,int id,void* user_data);
 

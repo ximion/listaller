@@ -63,7 +63,7 @@ type
   LiStateEvent = procedure(status: LI_STATUS; data: LiStatusData;
     user_data: Pointer); cdecl;
   //** Callback for messages & user requests
-  LiMessageEvent = function(mtype: LI_MESSAGE; text: PChar;
+  LiMessageEvent = function(mtype: LI_MESSAGE; const text: PChar;
                             user_data: Pointer): LI_REQUEST_RES; cdecl;
 
   //** Called if progress was changed; only for internal use
@@ -109,7 +109,7 @@ type
   PLiAppInfo = ^LiAppInfo;
 
   //** Event to catch thrown application records
-  LiNewAppEvent = procedure(name: PChar; obj: PLiAppInfo; user_data: Pointer); cdecl;
+  LiNewAppEvent = procedure(const name: PChar; obj: PLiAppInfo; user_data: Pointer); cdecl;
 
   //** Shows information about new update
   LiNewUpdateEvent = procedure(name: PChar; id: Integer; user_data: Pointer); cdecl;

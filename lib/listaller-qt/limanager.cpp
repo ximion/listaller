@@ -55,20 +55,21 @@ signals:
 #endif // _LIMSGREDIRECT
 
 /* Listaller Callbacks */
-void manager_status_change_cb(LiStatusChange change, LiStatusData data, LiMsgRedirect *rd)
+
+void li_manager_status_change_cb(LI_STATUS status, LiStatusData data, LiMsgRedirect *rd)
 {
-  rd->sendStatusMessage(QString(data.msg));
+  rd->sendStatusMessage(QString(data.text));
 }
 
-void manager_new_app_cb(char *name,LiAppInfo *obj,LiMsgRedirect *rd)
+void li_manager_new_app_cb(char *name,LiAppInfo *obj, LiMsgRedirect *rd)
 {
   rd->sendNewApp(obj);
 }
 
-LiRqResult manager_usr_request_cb(LiRqType mtype,char *msg,LiMsgRedirect *rd)
+LI_REQUEST_RES li_manager_message_cb(LI_MESSAGE mtype, const char *text, void* user_data)
 {
   //Say yes to everything, until we have a nice request handler
-  return rqsYes;
+  return LIRQS_Yes;
 }
 
 /* AppManager Class */
@@ -81,11 +82,11 @@ AppManager::AppManager()
   connect(msgRedir, SIGNAL(newApp(Application)), this, SIGNAL(newApp(Application)));
   
   //Catch status messages
-  li_mgr_register_status_call(&mgr, StatusChangeEvent(manager_status_change_cb), msgRedir);
+  li_mgr_register_status_call(&mgr, LiStateEvent(li_manager_status_change_cb), msgRedir);
   //Catch new apps
-  li_mgr_register_app_call(&mgr, NewAppEvent(manager_new_app_cb), msgRedir);
+  li_mgr_register_app_call(&mgr, LiNewAppEvent(li_manager_new_app_cb), msgRedir);
   
-  li_mgr_register_request_call(&mgr, UserRequestCall(manager_usr_request_cb), msgRedir);
+  li_mgr_register_message_call(&mgr, li_manager_message_cb, msgRedir);
   
   setSuMode(false);
 }

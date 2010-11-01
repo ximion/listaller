@@ -62,8 +62,8 @@ type
 
 // Publish procedure so it can be used by igobase
 //** Receive progress change signal on package initialization
-procedure PkgInitProgressChange(change: LiStatusChange; Data: LiStatusData;
-  user_data: Pointer); cdecl;
+procedure PkgInitProgressChange(status: LI_STATUS; data: LiStatusData;
+    udata: Pointer); cdecl;
 
 var
   //** True if superuser mode is enabled
@@ -122,12 +122,12 @@ begin
   Application.ProcessMessages;
 end;
 
-procedure PkgInitProgressChange(change: LiStatusChange; Data: LiStatusData;
-  user_data: Pointer); cdecl;
+procedure PkgInitProgressChange(status: LI_STATUS; data: LiStatusData;
+    udata: Pointer); cdecl;
 begin
-  if change = scExProgress then
+  if status = LIS_ExProgress then
   begin
-    TIMdFrm(user_data).LoadProgress.Position := Data.exprogress;
+    TIMdFrm(udata).LoadProgress.Position := Data.exprogress;
   end;
   Application.ProcessMessages;
 end;

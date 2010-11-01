@@ -37,8 +37,8 @@ type
     destructor Destroy; override;
 
     procedure Initialize(pkname: String);
-    procedure SetStatusChangeEvent(call: StatusChangeEvent; const userdata: Pointer = nil);
-    procedure SetUserRequestCall(call: UserRequestCall; const userdata: Pointer = nil);
+    procedure SetStatusEvent(call: LiStateEvent; const userdata: Pointer = nil);
+    procedure SetMessageEvent(call: LiMessageEvent; const userdata: Pointer = nil);
     function PkType: LiPkgType;
     function GetDisallows: String;
     function GetSupDistris: String;
@@ -126,7 +126,7 @@ begin
   li_setup_init(@ins, PChar(pkname));
 end;
 
-procedure TInstallPack.SetStatusChangeEvent(call: StatusChangeEvent;
+procedure TInstallPack.SetStatusEvent(call: LiStateEvent;
   const userdata: Pointer = nil);
 begin
   li_setup_register_status_call(@ins, call, userdata);
@@ -212,10 +212,10 @@ begin
   Result := li_setup_current_profile_filelist(@ins);
 end;
 
-procedure TInstallPack.SetUserRequestCall(call: UserRequestCall;
+procedure TInstallPack.SetMessageEvent(call: LiMessageEvent;
   const userdata: Pointer = nil);
 begin
-  li_setup_register_user_request_call(@ins, call, userdata);
+  li_setup_register_message_call(@ins, call, userdata);
 end;
 
 procedure TInstallPack.ReadDeps(lst: TStringList);

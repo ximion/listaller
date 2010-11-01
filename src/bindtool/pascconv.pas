@@ -202,7 +202,7 @@ var
   procedure ArgumentsToHVar;
   begin
     h := StrSubst(el.GetDeclaration(false), #10, '');
-    h := StrSubst(h, ' ', '');
+    //h := StrSubst(h, ' ', '');
     h := copy(h, pos('(', h) + 1, length(h));
     h := copy(h, 1, pos(')', h) - 1);
     h := SolveArguments(h);
