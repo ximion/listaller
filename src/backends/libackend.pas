@@ -17,29 +17,22 @@
 //** Defines backend interface class
 unit libackend;
 
-{$mode objfpc}
+{$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, LiTypes;
+  Classes, SysUtils, LiTypes, LiStatusObj;
 
 type
-  TLiBackend = class
+  TLiBackend = class (TLiStatusObject)
   private
-    FStatus: StatusChangeEvent;
-
-    statechange_udata: Pointer;
   protected
     sumode: Boolean;
-
-    procedure EmitMessage(s: widestring);
-    procedure EmitProgress(pos: integer);
   public
     function Initialize(ai: LiAppInfo): boolean; virtual; abstract;
     function CanBeUsed: boolean; virtual; abstract;
     function Run: boolean; virtual; abstract;
-    procedure SetMessageHandler(status: StatusChangeEvent; udata: Pointer);
     property RootMode: Boolean read sumode write sumode;
   end;
 
@@ -47,29 +40,7 @@ implementation
 
 { TLiBackend }
 
-procedure TLiBackend.SetMessageHandler(status: StatusChangeEvent; udata: Pointer);
-begin
-  FStatus := status;
-  statechange_udata := udata;
-end;
-
-procedure TLiBackend.EmitMessage(s: widestring);
-var
-  sdata: LiStatusData;
-begin
-  sdata.msg := PChar(s);
-  if Assigned(FStatus) then
-    FStatus(scMessage, sdata, statechange_udata);
-end;
-
-procedure TLiBackend.EmitProgress(pos: integer);
-var
-  sdata: LiStatusData;
-begin
-  sdata.mnprogress := pos;
-  if Assigned(FStatus) then
-    FStatus(scMnProgress, sdata, statechange_udata);
-end;
+(* -o- *)
 
 end.
 

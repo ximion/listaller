@@ -24,10 +24,10 @@ uses
   MD5, Distri, Classes, FTPSend, LiTypes, LiUtils, MTProcs,
   PkTypes, Process, RegExpr, BaseUnix, Blcksock, HTTPSend, IniFiles,
   SysUtils, DepManage, IPKCDef10, strLocale, liDBusProc, LiFileUtil,
-  PackageKit, SoftwareDB, Backend_IPK, IPKPackage11, ListallerDB;
+  PackageKit, SoftwareDB, Backend_IPK, IPKPackage11, ListallerDB, LiStatusObj;
 
 type
-  TLiInstallation = class
+  TLiInstallation = class(TLiStatusObject)
   private
     //Basic information about the package and the new application
     IAppName, IAppVersion, IAppCMD, IAuthor, ShDesc: String;
@@ -70,9 +70,6 @@ type
     longdesc: TStringList;
     //Container for license
     license: TStringList;
-    //Progress message relais
-    FStatusChange: StatusChangeEvent;
-    FRequest: UserRequestCall;
     //List of available mo files
     mofiles: TStringList;
     //Data which contains the status of the current action
@@ -110,19 +107,10 @@ type
     //Add update source of the package
     procedure CheckAddUSource(const forceroot: Boolean = false);
     //Catch signals of DBus thread
-    procedure DBusThreadStatusChange(ty: LiProcStatus; Data: TLiProcData);
+    procedure DBusThreadStatusChange(ty: LI_STATUS; Data: TLiProcData);
   protected
-    //User data for callbacks
-    request_udata: Pointer;
-    statechange_udata: Pointer;
     //Check if FTP connection is working
     function CheckFTPConnection(AFTPSend: TFTPSend): Boolean;
-    //Set/Get methods for callbacks indication
-    procedure SetMainPos(pos: Integer);
-    procedure SetExtraPos(pos: Integer);
-    function MakeUsrRequest(msg: String; qtype: LiRqType): LiRqResult;
-    procedure SendStateMsg(msg: String);
-    procedure msg(str: String);
   public
     //** Constructor
     constructor Create;
@@ -181,13 +169,8 @@ type
     property RegisterUpdateSource: Boolean read AddUpdateSource write AddUpdateSource;
     //** Setup is in testmode?
     property TestMode: Boolean read FTestMode write FTestMode;
-    //** Register event to catch status messages
-    procedure RegOnStatusChange(call: StatusChangeEvent; Data: Pointer);
     //** Check if package is okay, if not raise error and return false
     function PkgOkay: Boolean;
-    //Message events
-    procedure RegOnUsrRequest(call: UserRequestCall; Data: Pointer);
-    function UserRequestRegistered: Boolean;
   end;
 
 //Note: The "Testmode" variable is now in LiCommon
@@ -196,74 +179,6 @@ const
   DEPIGNORE_LIST = '/etc/lipa/ignore-deps.list';
 
 implementation
-
-procedure TLiInstallation.RegOnStatusChange(call: StatusChangeEvent; Data: Pointer);
-begin
-  if Assigned(call) then
-  begin
-    FStatusChange := call;
-    statechange_udata := data;
-  end
-  else
-    perror('Received invalid ´StatusChangeEvent´ pointer!');
-end;
-
-procedure TLiInstallation.RegOnUsrRequest(call: UserRequestCall; data: Pointer);
-begin
-  if Assigned(call) then
-  begin
-    FRequest := call;
-    request_udata := Data;
-  end
-  else
-    perror('Received invalid ´UserRequestCall´ pointer!');
-end;
-
-function TLiInstallation.UserRequestRegistered: Boolean;
-begin
-  if Assigned(FRequest) then
-    Result := true
-  else
-    Result := false;
-end;
-
-procedure TLiInstallation.SetMainPos(pos: Integer);
-begin
-  statusdata.mnprogress := pos;
-  if Assigned(FStatusChange) then
-    FStatusChange(scMnProgress, statusdata, statechange_udata);
-end;
-
-procedure TLiInstallation.SetExtraPos(pos: Integer);
-begin
-  statusdata.exprogress := pos;
-  if Assigned(FStatusChange) then
-    FStatusChange(scExProgress, statusdata, statechange_udata);
-end;
-
-function TLiInstallation.MakeUsrRequest(msg: String; qtype: LiRqType): LiRqResult;
-begin
-  if Assigned(FRequest) then
-    Result := FRequest(qtype, PChar(msg), request_udata)
-  else
-    pwarning('No user request handler assigned!');
-end;
-
-procedure TLiInstallation.SendStateMsg(msg: String);
-begin
-  statusdata.msg := PChar(msg);
-  if Assigned(FStatusChange) then
-    FStatusChange(scStepMessage, statusdata, statechange_udata);
-end;
-
-procedure TLiInstallation.msg(str: String);
-begin
-  statusdata.msg := PChar(str);
-  if Assigned(FStatusChange) then
-    FStatusChange(scMessage, statusdata, statechange_udata)
-  else
-    pinfo(str);
-end;
 
 constructor TLiInstallation.Create;
 begin
@@ -291,7 +206,7 @@ begin
   if PkgName <> '' then
     DeleteDirectory(tmpdir + PkgName, false);
   sdb.Free;
-  msg(rsDBConnClosed);
+  EmitInfoMsg(rsDBConnClosed);
   if Assigned(Dependencies) then
     Dependencies.Free;
   license.Free;
@@ -354,7 +269,7 @@ var
   solver: TPackageResolver;
 begin
   Result := true;
-  SetExtraPos(1);
+  EmitExProgress(1);
 
   pdebug('Resolving dependencies.');
   if (Dependencies.Count > 0) then
@@ -390,7 +305,7 @@ begin
       tmp.Free;
     end;
 
-    msg(rsResolvingDynDeps);
+    EmitInfoMsg(rsResolvingDynDeps);
 
     //Resolve all substitution variables in dependency list
     //We use rootmode here cause all distro package install files into /
@@ -416,8 +331,8 @@ begin
           if err <> NONE then
           begin
             depman.Free;
-            MakeUsrRequest(StrSubst(rsDepPkgsNotFound, '%l',
-              solver.DependencyList.Text) + #10 + rsInClose, rqError);
+            EmitError(StrSubst(rsDepPkgsNotFound, '%l',
+              solver.DependencyList.Text) + #10 + rsInClose);
             solver.Free;
             Result := false;
             exit;
@@ -427,8 +342,7 @@ begin
       else
       begin
         //There was a critical error in dependency solver
-        MakeUsrRequest(rsResolveError + #10 + rsEMsg + #10 +
-          solver.ErrorMessage, rqError);
+        EmitError(rsResolveError + #10 + rsEMsg + #10 + solver.ErrorMessage);
         Result := false;
         //No exit here, we can continue
       end;
@@ -448,7 +362,7 @@ var
   i: Integer;
   DInfo: TDistroInfo;
   cont: TIPKControl;
-  hres: LiRqResult;
+  hres: LI_REQUEST_RES;
   ldb: TListallerDB;
 
   procedure Emergency_FreeAll();
@@ -466,7 +380,7 @@ begin
   begin
     pwarning('Do not execute this action with superuser rights! (PolicyKit will handle it!)');
     //Listaller should alsways use PolicyKit to install apps as root
-    if MakeUsrRequest(rsNotExecAsRootPolKit, rqWarning) = rqsNo then
+    if EmitUserRequestAbortContinue(rsNotExecAsRootPolKit) = LIRQS_No then
       exit;
   end;
 
@@ -491,9 +405,9 @@ begin
   Result := true;
 
   sdb.Load;
-  msg('SQLite version: ' + sdb.SQLiteVersion);
+  EmitInfoMsg('SQLite version: ' + sdb.SQLiteVersion);
 
-  msg('Loading IPK package...');
+  EmitInfoMsg('Loading IPK package...');
   //Begin loading package
   RmApp := false;
 
@@ -506,7 +420,7 @@ begin
   if (fpAccess(tmpdir + ExtractFileName(fname), W_OK) > 0) or
     ((DirectoryExists(tmpdir + ExtractFileName(fname))) and (not IsRoot)) then
   begin
-    MakeUsrRequest(rsTmpWriteDenied, rqError);
+    EmitError(rsTmpWriteDenied);
     Emergency_FreeAll();
     Result := false;
     exit;
@@ -519,33 +433,33 @@ begin
       pkg.Prepare;
     except
       on E: Exception do
-        MakeUsrRequest(rsPkgDM + #10 + rsABLoad + #10 + E.Message, rqError);
+        EmitError(rsPkgDM + #10 + rsABLoad + #10 + E.Message);
     end;
   end
   else
-    if not FileExists(CleanFilePath(pkg.WDir + '/ipktar.tar')) then
-    begin
-      try
-        pkg.Prepare;
-      except
-        on E: Exception do
-          MakeUsrRequest(rsPkgDM + #10 + rsABLoad + #10 + E.Message, rqError);
-      end;
+  if not FileExists(CleanFilePath(pkg.WDir + '/ipktar.tar')) then
+  begin
+    try
+      pkg.Prepare;
+    except
+      on E: Exception do
+        EmitError(rsPkgDM + #10 + rsABLoad + #10 + E.Message);
     end;
+  end;
 
   if not daemonm then  //If running as daemon, don't check signature
   begin
     sigState := pkg.CheckSignature;
     case sigState of
-      psNone: msg(rsPackageIsUnsigned);
-      psTrusted: msg(rsPackageHasTrustedSign);
-      psUntrusted: msg(rsPackageSigIsUntrusted);
+      psNone: EmitInfoMsg(rsPackageIsUnsigned);
+      psTrusted: EmitInfoMsg(rsPackageHasTrustedSign);
+      psUntrusted: EmitInfoMsg(rsPackageSigIsUntrusted);
     end;
   end;
 
   if not pkg.UnpackControlFile('arcinfo.pin') then
   begin
-    MakeUsrRequest(rsExtractError + #10 + rsPkgDM + #10 + rsABLoad, rqError);
+    EmitError(rsExtractError + #10 + rsPkgDM + #10 + rsABLoad);
     Emergency_FreeAll();
     Result := false;
     exit;
@@ -565,11 +479,11 @@ begin
   FDisallow := LowerCase(cont.Disallows);
 
   n := GetSystemArchitecture;
-  msg('Package-Archs: ' + cont.Architecture);
+  EmitInfoMsg('Package-Archs: ' + cont.Architecture);
   if (pos(n, LowerCase(cont.Architecture)) <= 0) and
     (LowerCase(cont.Architecture) <> 'all') and (pos('architecture', forces) <= 0) then
   begin
-    MakeUsrRequest(rsInvArchitecture, rqError);
+    EmitError(rsInvArchitecture);
     cont.Free;
     pkg.Free;
     Result := false;
@@ -589,19 +503,19 @@ begin
   // Invalid package ID => package will be rejected
   pkgID := '';
   pkgID := cont.PkName;
-  msg('Package idName: ' + pkgID);
+  EmitInfoMsg('Package idName: ' + pkgID);
 
   // Get categories
   ICategories := cont.Categories;
 
   if pkType = ptLinstall then
   begin
-    msg(StrSubst(rsPackageTypeIsX, '%s', 'linstall'));
+    EmitInfoMsg(StrSubst(rsPackageTypeIsX, '%s', 'linstall'));
 
     if (pos('iofilecheck', FDisallow) > 0) then
     begin
       FOverwrite := true;
-      msg('WARNING: This package will overwrite existing files without request!');
+      EmitInfoMsg('WARNING: This package will overwrite existing files without request!');
     end
     else
       FOverwrite := false;
@@ -613,7 +527,8 @@ begin
 
     for i := 0 to PkProfiles.Count - 1 do
     begin
-      msg(StrSubst(rsFoundInstallProfileX, '%s', PkProfiles[PkProfiles.Count - 1]));
+      EmitInfoMsg(StrSubst(rsFoundInstallProfileX, '%s',
+        PkProfiles[PkProfiles.Count - 1]));
       pkg.UnpackControlFile('pkgdata/fileinfo-' + IntToStr(i) + '.id');
     end;
 
@@ -637,7 +552,7 @@ begin
       IAppCMD := '#';
 
     if IAppCMD <> '#' then
-      msg('Application main exec command is ' + IAppCMD);
+      EmitInfoMsg('Application main exec command is ' + IAppCMD);
 
     //Load Description
     ShDesc := cont.SDesc;
@@ -686,12 +601,11 @@ begin
       Inc(i);
     end;
 
-    msg('Profiles count is ' + IntToStr(PkProfiles.Count));
+    EmitInfoMsg('Profiles count is ' + IntToStr(PkProfiles.Count));
     if PkProfiles.Count < 0 then
     begin
       Emergency_FreeAll();
-      MakeUsrRequest(rsPkgInval + #10'Message: No profiles and no file list found!',
-        rqError);
+      EmitError(rsPkgInval + #10'Message: No profiles and no file list found!');
       PkProfiles.Free;
       Result := false;
       exit;
@@ -716,91 +630,91 @@ begin
 
   end
   else //Handle other IPK types
-    if pkType = ptDLink then
+  if pkType = ptDLink then
+  begin
+    EmitInfoMsg(StrSubst(rsPackageTypeIsX, '%s', 'dlink'));
+
+    cont.ReadAppDescription(longdesc);
+
+    PkgID := cont.PkName;
+    IAppName := cont.AppName;
+    IAppVersion := cont.AppVersion;
+
+    IAuthor := cont.Author;
+    if IAuthor = '' then
+      IAuthor := '#';
+
+    //DLink packages can only be installed as root!
+    SUMode := true;
+
+    IDesktopFiles := cont.Desktopfiles;
+
+    //Load Description
+    ShDesc := cont.SDesc;
+
+    Dependencies := TStringList.Create;
+
+    cont.ReadDependencies('', dependencies);
+    if dependencies.Count > 0 then
+      dependencies.Insert(0, '[detectpkgs]') //Instruction to detect packages first
+    else
     begin
-      msg(StrSubst(rsPackageTypeIsX, '%s', 'dlink'));
-
-      cont.ReadAppDescription(longdesc);
-
-      PkgID := cont.PkName;
-      IAppName := cont.AppName;
-      IAppVersion := cont.AppVersion;
-
-      IAuthor := cont.Author;
-      if IAuthor = '' then
-        IAuthor := '#';
-
-      //DLink packages can only be installed as root!
-      SUMode := true;
-
-      IDesktopFiles := cont.Desktopfiles;
-
-      //Load Description
-      ShDesc := cont.SDesc;
-
-      Dependencies := TStringList.Create;
-
-      cont.ReadDependencies('', dependencies);
-      if dependencies.Count > 0 then
-        dependencies.Insert(0, '[detectpkgs]') //Instruction to detect packages first
-      else
+      cont.ReadDependencies(DInfo.DName, dependencies);
+      if dependencies.Count <= 0 then
       begin
-        cont.ReadDependencies(DInfo.DName, dependencies);
-        if dependencies.Count <= 0 then
+
+        if (pos('norequest', forces) <= 0) then
+          hres := EmitUserRequestAbortContinue(rsInvalidDVersion + #10 + rsUseCompPQ)
+        else
+          hres := LIRQS_Yes;
+
+        if hres = LIRQS_No then
         begin
-
-          if (pos('norequest', forces) <= 0) then
-            hres := MakeUsrRequest(rsInvalidDVersion + #10 + rsUseCompPQ, rqWarning)
-          else
-            hres := rqsYes;
-
-          if hres = rqsNo then
+          EmitError(rsInClose);
+          Dependencies.Free;
+          pkg.Free;
+          PkProfiles.Free;
+          Result := false;
+          exit;
+        end
+        else
+        begin
+          cont.ReadDependencies(DInfo.PackageSystem, dependencies);
+          if dependencies.Count <= 0 then
           begin
-            MakeUsrRequest(rsInClose, rqError);
+            EmitError(rsNoComp + #10 + rsInClose);
             Dependencies.Free;
             pkg.Free;
             PkProfiles.Free;
             Result := false;
             exit;
-          end
-          else
-          begin
-            cont.ReadDependencies(DInfo.PackageSystem, dependencies);
-            if dependencies.Count <= 0 then
-            begin
-              MakeUsrRequest(rsNoComp + #10 + rsInClose, rqError);
-              Dependencies.Free;
-              pkg.Free;
-              PkProfiles.Free;
-              Result := false;
-              exit;
-            end;
           end;
         end;
-
-        //Resolve names
-        for i := 0 to dependencies.Count - 1 do
-          if pos(' (', n) > 0 then
-            Dependencies[i] :=
-              copy(n, pos(' (', n) + 2, length(n) - pos(' (', n) - 2) +
-              ' - ' + copy(n, 1, pos(' (', n) - 1);
-      end;
-      i := 0;
-      while i <= Dependencies.Count - 1 do
-      begin
-        if StringReplace(Dependencies[i], ' ', '', [rfReplaceAll]) = '' then
-          Dependencies.Delete(i);
-        Inc(i);
       end;
 
-    end
-    else
-      if pkType = ptContainer then
-      begin
-        msg(StrSubst(rsPackageTypeIsX, '%s', 'container'));
-        IAppName := ExtractFileName(cont.Binary);
-        //At time we have less intialization of coverIPKs
-      end;
+      //Resolve names
+      for i := 0 to dependencies.Count - 1 do
+        if pos(' (', n) > 0 then
+          Dependencies[i] :=
+            copy(n, pos(' (', n) + 2, length(n) - pos(' (', n) - 2) +
+            ' - ' + copy(n, 1, pos(' (', n) - 1);
+    end;
+    i := 0;
+    while i <= Dependencies.Count - 1 do
+    begin
+      if StringReplace(Dependencies[i], ' ', '', [rfReplaceAll]) = '' then
+        Dependencies.Delete(i);
+      Inc(i);
+    end;
+
+  end
+  else
+  if pkType = ptContainer then
+  begin
+    EmitInfoMsg(StrSubst(rsPackageTypeIsX, '%s', 'container'));
+    IAppName := ExtractFileName(cont.Binary);
+    //At time we have less intialization of coverIPKs
+  end;
 
   //IPK package has been initialized
   pkg.Free;
@@ -829,15 +743,15 @@ begin
   //HTTP
   if Http.DownloadSize > 10 then
   begin
-    SetExtraPos(Round((100 / HTTP.DownloadSize) * HTTP.Document.Size));
+    EmitExProgress(Round((100 / HTTP.DownloadSize) * HTTP.Document.Size));
     exit;
   end
   else
   //FTP
-    if FTP.DSock.RecvCounter > 10 then
-    begin
-      SetExtraPos(Round((100 / ftpfilesize) * FTP.DSock.RecvCounter));
-    end;
+  if FTP.DSock.RecvCounter > 10 then
+  begin
+    EmitExProgress(Round((100 / ftpfilesize) * FTP.DSock.RecvCounter));
+  end;
 end;
 
 function TLiInstallation.CheckFTPConnection(AFtpSend: TFtpSend): Boolean;
@@ -845,16 +759,16 @@ begin
   if AFtpSend.Sock.Socket = not (0) then
     Result := AFtpSend.Login
   else
-    if AFtpSend.NoOp then
-      Result := true
-    else
-      Result := AFtpSend.Login;
+  if AFtpSend.NoOp then
+    Result := true
+  else
+    Result := AFtpSend.Login;
 end;
 
 procedure TLiInstallation.OnPKitProgress(pos: Integer; dp: Pointer);
 begin
   //user_data Pointer is always nil
-  SetExtraPos(pos); //Set position of extra progress to PackageKit transaction progress
+  EmitExProgress(pos); //Set position of extra progress to PackageKit transaction progress
 end;
 
 function TLiInstallation.RunContainerInstallation: Boolean;
@@ -926,14 +840,15 @@ begin
   end;
 end;
 
-procedure TLiInstallation.DBusThreadStatusChange(ty: LiProcStatus; Data: TLiProcData);
+procedure TLiInstallation.DBusThreadStatusChange(ty: LI_STATUS; Data: TLiProcData);
 begin
+  pwarning('DBus status handling needs rethinking. (We''ll use PK for that!');
   case Data.changed of
-    pdMainProgress: SetMainPos(Data.mnprogress);
-    pdExtraProgress: SetExtraPos(Data.exprogress);
-    pdStepMessage: SendStateMsg(Data.msg);
-    pdInfo: msg(Data.msg);
-    pdError: MakeUsrRequest(Data.msg, rqError);
+    pdMainProgress: EmitProgress(Data.mnprogress);
+    pdExtraProgress: EmitExProgress(Data.exprogress);
+    pdStepMessage: EmitStageMsg(Data.msg);
+    pdInfo: EmitInfoMsg(Data.msg);
+    pdError: EmitError(Data.msg);
     pdStatus: pdebug('Thread status changed [finished]');
   end;
 end;
@@ -961,14 +876,14 @@ var
   begin
     for i := 0 to appfiles.Count - 1 do
     begin
-      msg('Removing ' + DeleteModifiers(appfiles[i]) + ' ...');
+      EmitInfoMsg('Removing ' + DeleteModifiers(appfiles[i]) + ' ...');
       DeleteFile(DeleteModifiers(appfiles[i]));
       mnpos := mnpos - 10;
-      SetMainPos(Round(mnpos * max));
+      EmitProgress(Round(mnpos * max));
     end;
     for i := 0 to ndirs.Count - 1 do
     begin
-      msg('Removing ' + ndirs[i]);
+      EmitInfoMsg('Removing ' + ndirs[i]);
       try
         DeleteDirectory(ndirs[i], false);
       except
@@ -1006,13 +921,13 @@ var
 begin
   //Send information which stuff is foced:
   if pos('dependencies', forces) > 0 then
-    msg('Dependencies are forced. Skipping dependency check.');
+    EmitInfoMsg('Dependencies are forced. Skipping dependency check.');
   if pos('architecture', forces) > 0 then
-    msg('Architecture forced. The software might not work on your system architecture.');
+    EmitInfoMsg('Architecture forced. The software might not work on your system architecture.');
 
   if not FileExists(tmpdir + ExtractFileName(PkgName) + '/' + FFileInfo) then
   begin
-    MakeUsrRequest(rsInstFailed, rqError);
+    EmitError(rsInstFailed);
     perror('No file information found!');
     perror('IPK package seems to be broken.');
     Result := false;
@@ -1039,7 +954,7 @@ begin
 
   max := 100 / GetMaxInstSteps;
 
-  SetMainPos(Round(max * mnpos));
+  EmitProgress(Round(max * mnpos));
 
   if Testmode then
   begin
@@ -1058,7 +973,7 @@ begin
       exit;
     end;
 
-  SetExtraPos(0);
+  EmitExProgress(0);
   //Execute programs/scripts
   if ExecA <> '<disabled>' then
   begin
@@ -1079,10 +994,10 @@ begin
       for I := 0 to Dependencies.Count - 1 do
       begin  //Download & install dependencies
 
-        SetExtraPos(0);
+        EmitExProgress(0);
 
-        msg('DepInstall: ' + Dependencies[i] + ' (using PackageKit)');
-        msg('');
+        EmitInfoMsg('DepInstall: ' + Dependencies[i] + ' (using PackageKit)');
+        EmitInfoMsg('');
 
         //pkit.Resolve(Dependencies[i]);
 
@@ -1093,10 +1008,10 @@ begin
           //Check if the package was really installed
           if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
           begin
-            msg('Package ' + Dependencies[i] + ' could not be installed.');
-            MakeUsrRequest(StrSubst(rsInstPkgFailed, '%s', Dependencies[i]) +
+            EmitInfoMsg('Package ' + Dependencies[i] + ' could not be installed.');
+            EmitError(StrSubst(rsInstPkgFailed, '%s', Dependencies[i]) +
               #10 + rsEMsg + #10 + pkit.LastErrorMessage + #10 +
-              StrSubst(rsViewLog, '%p', '/tmp/install-' + IAppName + '.log'), rqError);
+              StrSubst(rsViewLog, '%p', '/tmp/install-' + IAppName + '.log'));
             Result := false;
             Abort_FreeAll();
             exit;
@@ -1107,31 +1022,32 @@ begin
         end;
 
         mnpos := mnpos + 10;
-        SetMainPos(Round(mnpos * max));
+        EmitProgress(Round(mnpos * max));
       end; //End of Dependecies.Count term
     end; //End of dependency-check
 
   pkit.Free;
-  SetExtraPos(0);
+  EmitExProgress(0);
 
   //Delete old application installation if necessary
   if (RmApp) and (not Testmode) then
   begin
     //Uninstall old application
     ipkrm := TIPkBackend.Create;
-    ipkrm.SetMessageHandler(FStatusChange, statechange_udata);
+    ipkrm.RegisterOnMessage(FMessage, message_udata);
+    ipkrm.RegisterOnStatus(FStatus, state_udata);
     ipkrm.RootMode := SUMode;
     //!!! TODO
     //ipkrm.Initialize(appInfo);
-  if ipkrm.CanBeUsed then
-  ipkrm.Run;
-  ipkrm.Free;
+    if ipkrm.CanBeUsed then
+      ipkrm.Run;
+    ipkrm.Free;
 
-    SetExtraPos(0);
+    EmitExProgress(0);
   end;
 
   appfiles := TStringList.Create;
-  SendStateMsg(rsStep2);
+  EmitStageMsg(rsStep2);
   pkg := TLiUnpacker.Create(PkgPath);
 
   ndirs := TStringList.Create;
@@ -1143,7 +1059,7 @@ begin
   //Unpack files directory
   if not pkg.UnpackDataFile('files') then
   begin
-    MakeUsrRequest(rsExtractError, rqError);
+    EmitError(rsExtractError);
     RollbackInstallation;
     Result := false;
     Abort_FreeAll();
@@ -1178,99 +1094,97 @@ begin
 
       end
       else
-        if (fi[i][1] = '.') or (fi[i][1] = '/') then
+      if (fi[i][1] = '.') or (fi[i][1] = '/') then
+      begin
+        //h is now used for the file-path
+        h := DeleteModifiers(fi[i]);
+
+        FDir := pkg.WDir + ExtractFileName(PkgPath) + '/';
+        if not DirectoryExists(FDir) then
+          CreateDir(FDIR);
+
+        EmitInfoMsg('Copy file ' + ExtractFileName(h) + ' to ' + dest + ' ...');
+
+        if fi[i + 1] <> MDPrint(
+          (MD5.MD5File(DeleteModifiers(pkg.WDir + h), 1024))) then
         begin
-          //h is now used for the file-path
-          h := DeleteModifiers(fi[i]);
-
-          FDir := pkg.WDir + ExtractFileName(PkgPath) + '/';
-          if not DirectoryExists(FDir) then
-            CreateDir(FDIR);
-
-          msg('Copy file ' + ExtractFileName(h) + ' to ' + dest + ' ...');
-
-          if fi[i + 1] <> MDPrint(
-            (MD5.MD5File(DeleteModifiers(pkg.WDir + h), 1024))) then
-          begin
-            MakeUsrRequest(rsHashError, rqError);
-            RollbackInstallation;
-            Result := false;
-            Abort_FreeAll();
-            exit;
-          end;
-
-          Inc(j);
-
-          try
-            if FOverwrite then
-              FileCopy(DeleteModifiers(pkg.WDir + h), dest + '/' +
-                ExtractFileName(DeleteModifiers(h)))
-            else
-              if (not FileExists(dest + '/' + ExtractFileName(DeleteModifiers(h)))) then
-                FileCopy(DeleteModifiers(pkg.WDir + h), dest + '/' +
-                  ExtractFileName(DeleteModifiers(h)))
-              else
-              begin
-                MakeUsrRequest(StrSubst(rsCnOverride, '%f', dest +
-                  '/' + ExtractFileName(DeleteModifiers(h))) + #10 +
-                  rsInClose, rqError);
-                RollbackInstallation;
-                Result := false;
-                Abort_FreeAll();
-                exit;
-              end;
-          except
-            //Unable to copy the file
-            MakeUsrRequest(Format(rsCnCopy,
-              [dest + '/' + ExtractFileName(DeleteModifiers(h))]) +
-              #10 + rsInClose, rqError);
-            RollbackInstallation;
-            Result := false;
-            Abort_FreeAll();
-            exit;
-          end;
-
-          if (pos('.desktop', LowerCase(ExtractFileName(h))) > 0) then
-          begin
-            dsk := TIniFile.Create(dest + '/' + ExtractFileName(h));
-            dsk.WriteString('Desktop Entry', 'X-AppVersion', IAppVersion);
-            dsk.WriteString('Desktop Entry', 'X-AllowRemove', 'true');
-            dsk.WriteString('Desktop Entry', 'X-Publisher', IAuthor);
-            if dsk.ValueExists('Desktop Entry', 'Icon') then
-              dsk.WriteString('Desktop Entry', 'Icon', SyblToPath(
-                dsk.ReadString('Desktop Entry', 'Icon', '*'), FTestMode));
-            if dsk.ValueExists('Desktop Entry', 'Exec') then
-              dsk.WriteString('Desktop Entry', 'Exec', SyblToPath(
-                dsk.ReadString('Desktop Entry', 'Exec', '*'), FTestMode));
-            dsk.Free;
-          end;
-
-          if (pos('<setvars>', LowerCase(ExtractFileName(h))) > 0) then
-          begin
-            s := TStringList.Create;
-            s.LoadFromFile(dest + '/' + ExtractFileName(h));
-            for j := 0 to s.Count - 1 do
-              s[j] := SyblToPath(s[j], FTestMode);
-            s.SaveToFile(dest + '/' + ExtractFileName(h));
-            s.Free;
-          end;
-
-
-          appfiles.Add(dest + '/' + ExtractFileName(fi[i]));
-
-          //Delete temp file
-          DeleteFile(DeleteModifiers(pkg.WDir + ExtractFileName(h)));
-
-          //msg('Okay.');
-
-          mnpos := mnpos + 10;
-          SetMainPos(Round(mnpos * max));
-
+          EmitError(rsHashError);
+          RollbackInstallation;
+          Result := false;
+          Abort_FreeAll();
+          exit;
         end;
+
+        Inc(j);
+
+        try
+          if FOverwrite then
+            FileCopy(DeleteModifiers(pkg.WDir + h), dest + '/' +
+              ExtractFileName(DeleteModifiers(h)))
+          else
+          if (not FileExists(dest + '/' + ExtractFileName(DeleteModifiers(h)))) then
+            FileCopy(DeleteModifiers(pkg.WDir + h), dest + '/' +
+              ExtractFileName(DeleteModifiers(h)))
+          else
+          begin
+            EmitError(StrSubst(rsCnOverride, '%f', dest + '/' +
+              ExtractFileName(DeleteModifiers(h))) + #10 + rsInClose);
+            RollbackInstallation;
+            Result := false;
+            Abort_FreeAll();
+            exit;
+          end;
+        except
+          //Unable to copy the file
+          EmitError(Format(rsCnCopy,
+            [dest + '/' + ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
+          RollbackInstallation;
+          Result := false;
+          Abort_FreeAll();
+          exit;
+        end;
+
+        if (pos('.desktop', LowerCase(ExtractFileName(h))) > 0) then
+        begin
+          dsk := TIniFile.Create(dest + '/' + ExtractFileName(h));
+          dsk.WriteString('Desktop Entry', 'X-AppVersion', IAppVersion);
+          dsk.WriteString('Desktop Entry', 'X-AllowRemove', 'true');
+          dsk.WriteString('Desktop Entry', 'X-Publisher', IAuthor);
+          if dsk.ValueExists('Desktop Entry', 'Icon') then
+            dsk.WriteString('Desktop Entry', 'Icon', SyblToPath(
+              dsk.ReadString('Desktop Entry', 'Icon', '*'), FTestMode));
+          if dsk.ValueExists('Desktop Entry', 'Exec') then
+            dsk.WriteString('Desktop Entry', 'Exec', SyblToPath(
+              dsk.ReadString('Desktop Entry', 'Exec', '*'), FTestMode));
+          dsk.Free;
+        end;
+
+        if (pos('<setvars>', LowerCase(ExtractFileName(h))) > 0) then
+        begin
+          s := TStringList.Create;
+          s.LoadFromFile(dest + '/' + ExtractFileName(h));
+          for j := 0 to s.Count - 1 do
+            s[j] := SyblToPath(s[j], FTestMode);
+          s.SaveToFile(dest + '/' + ExtractFileName(h));
+          s.Free;
+        end;
+
+
+        appfiles.Add(dest + '/' + ExtractFileName(fi[i]));
+
+        //Delete temp file
+        DeleteFile(DeleteModifiers(pkg.WDir + ExtractFileName(h)));
+
+        //msg('Okay.');
+
+        mnpos := mnpos + 10;
+        EmitProgress(Round(mnpos * max));
+
+      end;
     end;
   end;
 
-  SendStateMsg(rsStep3);
+  EmitStageMsg(rsStep3);
   //Check if every single file needs its own command to get the required rights
   //(It's faster if only every folder recieves the rights)
   setcm := false;
@@ -1309,7 +1223,7 @@ begin
           end;
 
           //while proc.Running do Application.ProcessMessages;
-          msg(StrSubst(rsRightsAssignedToX, '%a', DeleteModifiers(
+          EmitInfoMsg(StrSubst(rsRightsAssignedToX, '%a', DeleteModifiers(
             ExtractFileName(SyblToPath(fi[i], FTestMode)))));
         end;
       end;
@@ -1324,19 +1238,19 @@ begin
       proc.CommandLine := FindBinary('chmod') + ' 755 -R ' +
         SyblToPath(ndirs[i], FTestMode);
       proc.Execute;
-      msg('Rights assigned to folder ' +
-        ExtractFileName(SyblToPath(ndirs[i], FTestMode)));
+      EmitInfoMsg('Rights assigned to folder ' + ExtractFileName(
+        SyblToPath(ndirs[i], FTestMode)));
     end;
   end; //End setcm
 
   mnpos := mnpos + 6;
-  SetMainPos(Round(mnpos * max));
+  EmitProgress(Round(mnpos * max));
 
   fi.Free;
-  SendStateMsg(rsStep4);
+  EmitStageMsg(rsStep4);
 
   if Testmode then
-    msg(rsTestmodeDNRegister)
+    EmitInfoMsg(rsTestmodeDNRegister)
   else
   begin
     FileCopy(pkg.WDir + '/arcinfo.pin', sdb.AppConfDir + '/application');
@@ -1383,7 +1297,7 @@ begin
       FileCopy(ExecX, sdb.AppConfDir + '/prerm');
 
     mnpos := mnpos + 5;
-    SetMainPos(Round(mnpos * max));
+    EmitProgress(Round(mnpos * max));
     //Execute Program/Script
     if ExecB <> '<disabled>' then
     begin
@@ -1417,11 +1331,11 @@ begin
   pkg.Free;
 
   mnpos := mnpos + 5;
-  SetMainPos(Round(mnpos * max));
+  EmitProgress(Round(mnpos * max));
 
   Result := true;
-  SendStateMsg(rsFinished);
-  SetMainPos(100);
+  EmitStageMsg(rsFinished);
+  EmitProgress(100);
   sleep(400);
 end;
 
@@ -1446,7 +1360,7 @@ var
 begin
   max := 100 / (Dependencies.Count * 4);
   mnpos := 0;
-  SetMainPos(Round(mnpos * max));
+  EmitProgress(Round(mnpos * max));
   HTTP.UserAgent := 'Listaller-GET';
 
 
@@ -1475,34 +1389,34 @@ end;}
   begin
     if pos('://', Dependencies[i]) <= 0 then
     begin
-      msg(StrSubst(rsLookingForX, '%a', Dependencies[i]));
+      EmitInfoMsg(StrSubst(rsLookingForX, '%a', Dependencies[i]));
 
       pkit.ResolveInstalled(Dependencies[i]);
 
       Inc(mnpos);
-      SetMainPos(Round(mnpos * max));
+      EmitProgress(Round(mnpos * max));
 
       if pkit.PkExitStatus = PK_EXIT_ENUM_SUCCESS then
       begin
         if pkit.RList.Count <= 0 then
         begin
-          msg(StrSubst(rsInstallingX, '%a', Dependencies[i]));
+          EmitInfoMsg(StrSubst(rsInstallingX, '%a', Dependencies[i]));
 
           Inc(mnpos);
-          SetMainPos(Round(mnpos * max));
+          EmitProgress(Round(mnpos * max));
 
           pkit.InstallPkg(Dependencies[i]);
 
           Inc(mnpos);
           Inc(mnpos);
-          SetMainPos(Round(mnpos * max));
+          EmitProgress(Round(mnpos * max));
         end;
       end
       else
       begin
-        MakeUsrRequest(rsPkQueryFailed + #10 + rsEMsg + #10 +
-          pkit.LastErrorMessage + #10 + StrSubst(rsViewLog, '%p', '/tmp/install-' +
-          IAppName + '.log'), rqError);
+        EmitError(rsPkQueryFailed + #10 + rsEMsg + #10 +
+          pkit.LastErrorMessage + #10 + StrSubst(rsViewLog, '%p',
+          '/tmp/install-' + IAppName + '.log'));
         Result := false;
         Abort_FreeAll();
         exit;
@@ -1515,17 +1429,17 @@ end;}
       pkg := copy(pkg, 1, pos(')', pkg) - 1);
       fpath := copy(Dependencies[i], 1, pos(' (', Dependencies[i]) - 1);
       pdebug('Looking for ' + pkg);
-      msg(StrSubst(rsLookingForX, '%a', pkg));
+      EmitInfoMsg(StrSubst(rsLookingForX, '%a', pkg));
       pkit.ResolveInstalled(pkg);
 
       Inc(mnpos);
-      SetMainPos(Round(mnpos * max));
+      EmitProgress(Round(mnpos * max));
 
       if pkit.PkExitStatus = PK_EXIT_ENUM_SUCCESS then
       begin
         if pkit.RList.Count <= 0 then
         begin
-          msg(rsDownloadingPkg);
+          EmitInfoMsg(rsDownloadingPkg);
 
           if pos('http://', fpath) > 0 then
           begin
@@ -1535,15 +1449,15 @@ end;}
               HTTP.Document.SaveToFile(tmpdir + ExtractFileName(fpath));
               if HTTP.ResultCode > 210 then
               begin
-                MakeUsrRequest(rsDepDlProblem + #10 + rsECode + ' ' +
-                  IntToStr(HTTP.ResultCode), rqError);
+                EmitError(rsDepDlProblem + #10 + rsECode + ' ' +
+                  IntToStr(HTTP.ResultCode));
                 Result := false;
                 Abort_FreeAll();
                 exit;
               end;
 
             except
-              MakeUsrRequest(rsDepDlProblem, rqError);
+              EmitError(rsDepDlProblem);
               Result := false;
               Abort_FreeAll();
               exit;
@@ -1561,7 +1475,7 @@ end;}
 
                 if not CheckFTPConnection(FTP) then
                 begin
-                  MakeUsrRequest(rsFTPFailed, rqError);
+                  EmitError(rsFTPFailed);
                   Result := false;
                   Abort_FreeAll();
                   exit;
@@ -1569,13 +1483,13 @@ end;}
 
                 ChangeWorkingDir(GetServerPath(fpath));
 
-                SetExtraPos(0);
+                EmitExProgress(0);
 
                 ftpfilesize := FTP.FileSize(ExtractFileName(fpath));
                 RetrieveFile(ExtractFileName(fpath), false);
                 Logout;
               except
-                MakeUsrRequest(rsDepDlProblem, rqError);
+                EmitError(rsDepDlProblem);
                 Result := false;
                 Abort_FreeAll();
                 exit;
@@ -1585,15 +1499,15 @@ end;}
           end;
 
           Inc(mnpos);
-          SetMainPos(Round(mnpos * max));
+          EmitProgress(Round(mnpos * max));
 
-          msg(StrSubst(rsInstallingX, '%a', pkg));
+          EmitInfoMsg(StrSubst(rsInstallingX, '%a', pkg));
           pkit.InstallLocalPkg('/tmp/' + ExtractFileName(fpath));
 
           if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
           begin
-            MakeUsrRequest(StrSubst(rsInstPkgFailed, '%s', pkg) +
-              #10 + rsEMsg + #10 + pkit.LastErrorMessage, rqError);
+            EmitError(StrSubst(rsInstPkgFailed, '%s', pkg) +
+              #10 + rsEMsg + #10 + pkit.LastErrorMessage);
             Result := false;
             Abort_FreeAll();
             exit;
@@ -1601,7 +1515,7 @@ end;}
         end;
 
         Inc(mnpos);
-        SetMainPos(Round(mnpos * max));
+        EmitProgress(Round(mnpos * max));
       end;
     end;
   end;
@@ -1625,7 +1539,7 @@ end;}
     ar.Free;
   end;
 
-  SendStateMsg(rsSuccess);
+  EmitStageMsg(rsSuccess);
 end;
 
 procedure TLiInstallation.CheckAddUSource(const forceroot: Boolean = false);
@@ -1668,8 +1582,8 @@ begin
     AddUpdateSource := false;
     if not found then
     begin
-      if MakeUsrRequest(PAnsiChar(rsAddUpdSrc + #10 + USource + #10 +
-        PAnsiChar(rsQAddUpdSrc)), rqWarning) = rqsYes then
+      if EmitUserRequestAbortContinue(PAnsiChar(rsAddUpdSrc + #10 +
+        USource + #10 + PAnsiChar(rsQAddUpdSrc))) = LIRQS_Yes then
       begin
         AddUpdateSource := true;
       end;
@@ -1685,7 +1599,7 @@ begin
   if (PkgID = '') or (IAppName = '') then
   begin
     pwarning('Package check failed!');
-    MakeUsrRequest(rsUnknownErrorOC + #10 + rsPkgDM + #10 + rsABLoad, rqError);
+    EmitError(rsUnknownErrorOC + #10 + rsPkgDM + #10 + rsABLoad);
     Result := false;
     exit;
   end;
@@ -1707,7 +1621,7 @@ begin
   if tmp.Count > 1 then
   begin
     tmp.Free;
-    MakeUsrRequest(rsOneInstAtTime, rqError);
+    EmitError(rsOneInstAtTime);
     exit;
   end;
   tmp.Free;
@@ -1722,7 +1636,7 @@ begin
       //Set Testmode settings
       if (IAppCMD = '#') and (Testmode) then
       begin
-        MakeUsrRequest(rsActionNotPossiblePkg, rqError);
+        EmitError(rsActionNotPossiblePkg);
         Result := false;
         exit;
       end;
@@ -1735,8 +1649,8 @@ begin
         begin
           cnf := TInifile.Create(ConfigDir + 'config.cnf');
           if cnf.ReadBool('MainConf', 'AutoDepLoad', true) = false then
-            if MakeUsrRequest(StrSubst(rsWDLDep, '%l', Dependencies[i]) +
-              #10 + rsWAllow, rqWarning) = rqsNo then
+            if EmitUserRequestAbortContinue(StrSubst(rsWDLDep, '%l', Dependencies[i]) +
+              #10 + rsWAllow) = LIRQS_No then
             begin
               Result := false;
               exit;
@@ -1812,17 +1726,17 @@ begin
   if pkType = ptLinstall then
     Result := RunNormalInstallation
   else
-    if pkType = ptDLink then
-      Result := RunDLinkInstallation
-    else
-      if pkType = ptContainer then
-        Result := RunContainerInstallation
-      else
-      begin
-        msg(rsCouldNotDetectPkgType);
-        msg('TLiInstallation failure.');
-        Result := false;
-      end;
+  if pkType = ptDLink then
+    Result := RunDLinkInstallation
+  else
+  if pkType = ptContainer then
+    Result := RunContainerInstallation
+  else
+  begin
+    EmitInfoMsg(rsCouldNotDetectPkgType);
+    EmitInfoMsg('TLiInstallation failure.');
+    Result := false;
+  end;
 
   //Free network objects
   HTTP.Sock.OnStatus := nil;

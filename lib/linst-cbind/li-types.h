@@ -38,49 +38,36 @@ typedef const void* LiInstallation;
 typedef const void* LiAppUpdater;
 
 typedef enum {
-      rqError,
-      rqWarning,
-      rqQuestion,
-      rqInfo
-} LiRqType;
+      LIS_None,
+      LIS_Failed,
+      LIS_Authorized,
+      LIS_Blocked,
+      LIS_Finished,
+      LIS_Started,
+      LIS_Progress,
+      LIS_ExProgress
+} LI_STATUS;
 
 typedef enum {
-      rqsYes,
-      rqsNo,
-      rqsOK
-} LiRqResult;
+      LIRQS_Yes,
+      LIRQS_No,
+      LIRQS_OK
+} LI_REQUEST_RES;
 
 typedef enum {
-      mtStep,
-      mtInfo
-} LiMessageType;
-
-typedef enum {
-      prNone,
-      prFailed,
-      prAuthorized,
-      prBlocked,
-      prFinished,
-      prError,
-      prInfo,
-      prStarted
-} LiProcStatus;
-
-typedef enum {
-      scNone,
-      scMnProgress,
-      scExProgress,
-      scStatus,
-      scMessage,
-      scStepMessage
-} LiStatusChange;
+      LIM_None,
+      LIM_Info,
+      LIM_Stage,
+      LIM_Warning,
+      LIM_Error,
+      LIM_Question_YesNo,
+      LIM_Question_AbortContinue
+} LI_MESSAGE;
 
 typedef struct {
-      char *msg;
+      char *text;
       int exprogress;
       int mnprogress;
-      LiProcStatus lastresult;
-      LiStatusChange change;
 } LiStatusData;
 
 typedef enum {
@@ -137,15 +124,15 @@ typedef enum {
 } PkgSignatureState;
 
 
-typedef void (*StatusChangeEvent) (LiStatusChange change,LiStatusData data,void* user_data);
+typedef void (*LiStateEvent) (LI_STATUS status,LiStatusData data,void* user_data);
 
-typedef LiRqResult (*UserRequestCall) (LiRqType mtype,char *msg,void* user_data);
+typedef LI_REQUEST_RES (*LiMessageEvent) (LI_MESSAGE mtype,char *text,void* user_data);
 
 typedef void (*TProgressEvent) (int pos,void* user_data);
 
-typedef void (*NewAppEvent) (char *name,LiAppInfo *obj,void* user_data);
+typedef void (*LiNewAppEvent) (char *name,LiAppInfo *obj,void* user_data);
 
-typedef void (*NewUpdateEvent) (char *name,int id,void* user_data);
+typedef void (*LiNewUpdateEvent) (char *name,int id,void* user_data);
 
 
 

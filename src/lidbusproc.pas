@@ -38,7 +38,7 @@ type
   end;
 
   //** Event for thread signals
-  TLiDAction = procedure(ty: LiProcStatus; Data: TLiProcData) of object;
+  TLiDAction = procedure(ty: LI_STATUS; Data: TLiProcData) of object;
 
   //** Actions Listaller can perform on DBus root interface
   TListallerBusAction = (lbaUninstallApp, lbaInstallPack, lbaUpdateApp);
@@ -60,7 +60,7 @@ type
     FStatus: TLiDAction;
     cmdinfo: ListallerBusCommand;
 
-    status: LiProcStatus;
+    status: LI_STATUS;
     procinfo: TLiProcData;
     done: Boolean;
     procedure SyncProcStatus;
@@ -100,7 +100,7 @@ begin
  {if Assigned(FatalException) then
   raise FatalException; }
 
-  status := prFinished;
+  status := LIS_Finished;
   procinfo.changed := pdStatus;
   SyncProcStatus;
   pdebug('DBus action done.');

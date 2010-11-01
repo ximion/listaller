@@ -23,7 +23,7 @@ interface
 uses
   Classes, GetText, LiTypes, LiUtils, MTProcs, PkTypes, Process,
   IniFiles, SysUtils, StrLocale, LiDBusProc, LiFileUtil,
-  PackageKit, SoftwareDB,
+  PackageKit, SoftwareDB, LiStatusObj,
   // Backends
   LiBackend,
   Backend_IPK,
@@ -42,31 +42,20 @@ type
     FName: String;
   end;
 
-  TLiAppManager = class
+  TLiAppManager = class (TLiStatusObject)
   private
     SUMode: Boolean;
-    FReq: UserRequestCall;
-    FApp: NewAppEvent;
-    FStatus: StatusChangeEvent;
+    FApp: LiNewAppEvent;
 
-    //State data
-    sdata: LiStatusData; //Contains the current progress
-
-    procedure msg(s: String);
-    function EmitRequest(s: String; ty: LiRqType): LiRqResult;
     procedure EmitNewApp(s: String; oj: LiAppInfo);
-    procedure EmitStateChange(state: LiProcStatus);
-    procedure EmitPosChange(i: Integer);
 
     function IsInList(nm: String; list: TStringList): Boolean;
     //** Catch status messages from DBus action
-    procedure DBusStatusChange(ty: LiProcStatus; Data: TLiProcData);
+    procedure DBusStatusChange(ty: LI_STATUS; Data: TLiProcData);
     //** Run a backend
     function RunBackend(backend: TLiBackend; ai: LiAppInfo): Boolean;
   protected
     //Some user data for callbacks
-    statechange_udata: Pointer;
-    request_udata: Pointer;
     newapp_udata: Pointer;
     //** ReadIn .desktop files
     function ReadDesktopFile(fname: String): TDesktopData;
@@ -87,11 +76,8 @@ type
     @returns True if everything is okay, False if dependencies are missing}
     function CheckApps(report: TStringList; const fix: Boolean = false;
       const forceroot: Boolean = false): Boolean;
-    procedure RegOnStatusChange(call: StatusChangeEvent; Data: Pointer);
-    procedure RegOnRequest(call: UserRequestCall; Data: Pointer);
-    procedure RegOnNewApp(call: NewAppEvent; Data: Pointer);
+    procedure RegOnNewApp(call: LiNewAppEvent; udata: Pointer);
     property SuperuserMode: Boolean read SUMode write SUMode;
-    function UserRequestRegistered: Boolean;
   end;
 
 //** Checks if package is installed
@@ -106,8 +92,6 @@ constructor TLiAppManager.Create;
 begin
   inherited Create;
   FApp := nil;
-  FStatus := nil;
-  FReq := nil;
 end;
 
 destructor TLiAppManager.Destroy;
@@ -115,72 +99,19 @@ begin
   inherited;
 end;
 
-function TLiAppManager.UserRequestRegistered: Boolean;
-begin
-  if Assigned(FReq) then
-    Result := true
-  else
-    Result := false;
-end;
-
-procedure TLiAppManager.RegOnStatusChange(call: StatusChangeEvent; Data: Pointer);
-begin
-  if CheckPtr(call, 'StatusChangeEvent') then
-  begin
-    FStatus := call;
-    statechange_udata := Data;
-  end;
-end;
-
-procedure TLiAppManager.RegOnRequest(call: UserRequestCall; Data: Pointer);
-begin
-  if CheckPtr(call, 'UserRequestCall') then
-  begin
-    FReq := call;
-    request_udata := Data;
-  end;
-end;
-
-procedure TLiAppManager.RegOnNewApp(call: NewAppEvent; Data: Pointer);
+procedure TLiAppManager.RegOnNewApp(call: LiNewAppEvent; udata: Pointer);
 begin
   if CheckPtr(call, 'StatusChangeEvent') then
   begin
     FApp := call;
-    newapp_udata := Data;
+    newapp_udata := udata;
   end;
-end;
-
-procedure TLiAppManager.Msg(s: String);
-begin
-  sdata.msg := PChar(s);
-  if Assigned(FStatus) then
-    FStatus(scMessage, sdata, statechange_udata);
-end;
-
-function TLiAppManager.EmitRequest(s: String; ty: LiRqType): LiRqResult;
-begin
-  if Assigned(FReq) then
-    Result := FReq(ty, PChar(s), request_udata);
 end;
 
 procedure TLiAppManager.EmitNewApp(s: String; oj: LiAppInfo);
 begin
   if Assigned(FApp) then
     FApp(PChar(s), @oj, newapp_udata);
-end;
-
-procedure TLiAppManager.EmitPosChange(i: Integer);
-begin
-  sdata.mnprogress := i;
-  if Assigned(FStatus) then
-    FStatus(scMnProgress, sdata, statechange_udata);
-end;
-
-procedure TLiAppManager.EmitStateChange(state: LiProcStatus);
-begin
-  sdata.lastresult := state;
-  if Assigned(FStatus) then
-    FStatus(scStatus, sdata, statechange_udata);
 end;
 
 function TLiAppManager.IsInList(nm: String; list: TStringList): Boolean;
@@ -249,7 +180,7 @@ var
       and (d.ReadString('Desktop Entry', 'OnlyShowIn', '') = '') and
       (d.ReadString('Desktop Entry', 'X-AllowRemove', 'true') = 'true') then
     begin
-      msg(rsLoading + '  ' + ExtractFileName(fname));
+      EmitInfoMsg(rsLoading + '  ' + ExtractFileName(fname));
 
       if d.ReadString('Desktop Entry', 'X-Ubuntu-Gettext-Domain', '') <> '' then
       begin
@@ -308,7 +239,7 @@ var
         if not FileExists(entry.IconName) then
         begin
           entry.IconName := '';
-          msg(StrSubst(rsCannotLoadIcon, '%a', Name));
+          EmitInfoMsg(StrSubst(rsCannotLoadIcon, '%a', Name));
         end;
       end;
       EmitNewApp(fname, entry);
@@ -318,12 +249,12 @@ var
 
     end
     else
-      msg(StrSubst(rsSkippedX, '%a', ExtractFileName(fname)));
+      EmitInfoMsg(StrSubst(rsSkippedX, '%a', ExtractFileName(fname)));
     d.Free;
   end;
 
 begin
-  msg(rsLoading);
+  EmitInfoMsg(rsLoading);
   blst := TStringList.Create; //Create Blacklist
 
   if sumode then
@@ -368,7 +299,7 @@ begin
   tmp.Free;
   ini.Free;
 
-  msg(rsReady); //Loading list finished!
+  EmitInfoMsg(rsReady); //Loading list finished!
 
   DB.Free;
   blst.Free; //Free blacklist
@@ -506,17 +437,16 @@ begin
   sdb.Free;
 end;
 
-procedure TLiAppManager.DBusStatusChange(ty: LiProcStatus; Data: TLiProcData);
+procedure TLiAppManager.DBusStatusChange(ty: LI_STATUS; Data: TLiProcData);
 begin
   case Data.changed of
-    pdMainProgress: EmitPosChange(Data.mnprogress);
-    pdInfo: msg(Data.msg);
-    pdError: EmitRequest(Data.msg, rqError);
+    pdMainProgress: EmitProgress(Data.mnprogress);
+    pdInfo: EmitInfoMsg(Data.msg);
+    pdError: EmitError(Data.msg);
     pdStatus:
     begin
-      sdata.lastresult := ty;
       if Assigned(FStatus) then
-        FStatus(scStatus, sdata, statechange_udata);
+        FStatus(ty, sdata, state_udata);
     end;
   end;
 end;
@@ -525,7 +455,8 @@ function TLiAppManager.RunBackend(backend: TLiBackend; ai: LiAppInfo): Boolean;
 begin
   Result := false;
   // Attach status handler
-  backend.SetMessageHandler(FStatus, statechange_udata);
+  backend.RegisterOnStatus(FStatus, state_udata);
+  backend.RegisterOnMessage(FMessage, message_udata);
   backend.RootMode := SUMode;
   backend.Initialize(ai);
   if backend.CanBeUsed then
@@ -551,7 +482,7 @@ begin
     perror('Invalid application info passed: No ID found.');
     exit;
   end;
-  EmitStateChange(prStarted);
+  EmitStateChange(LIS_Started);
 
   pdebug('Application UId is: ' + obj.RemoveId);
   if (SUMode) and (not IsRoot) then
@@ -565,7 +496,7 @@ begin
       OnStatus := @DBusStatusChange;
       ExecuteAction;
       Free;
-      EmitStateChange(prFinished);
+      EmitStateChange(LIS_Finished);
     end;
     exit;
   end;
@@ -576,7 +507,7 @@ begin
       if not RunBackend(TAutopackageBackend.Create, obj) then
         RunBackend(TPackageKitBackend.Create, obj);
 
-  EmitStateChange(prFinished);
+  EmitStateChange(LIS_Finished);
 end;
 
 function TLiAppManager.CheckApps(report: TStringList; const fix: Boolean = false;
@@ -589,11 +520,11 @@ var
   pkit: TPackageKit;
 begin
   Result := true;
-  msg(rsCheckDepsRegisteredApps);
+  EmitInfoMsg(rsCheckDepsRegisteredApps);
   if forceroot then
-    msg(rsYouScanOnlyRootInstalledApps)
+    EmitInfoMsg(rsYouScanOnlyRootInstalledApps)
   else
-    msg(rsYouScanOnlyLocalInstalledApps);
+    EmitInfoMsg(rsYouScanOnlyLocalInstalledApps);
 
   db := TSoftwareDB.Create;
   if DB.Load(forceroot) then
@@ -628,8 +559,8 @@ begin
         end
         else
         begin
-          EmitRequest(rsPkQueryFailed + #10 + rsEMsg + #10 +
-            pkit.LastErrorMessage, rqError);
+          EmitError(rsPkQueryFailed + #10 + rsEMsg + #10 +
+            pkit.LastErrorMessage);
           Result := false;
           exit;
         end;

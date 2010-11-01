@@ -22,7 +22,7 @@ library liblistaller;
 
 uses
   CThreads, Classes, LiTypes, SysUtils, LiUtils, IPKInstall, LiDBusProc,
-  LiManageApp, LiUpdateApp;
+  LiManageApp, LiUpdateApp, listatusobj;
 
 type
    PStringList = ^TStringList;
@@ -110,33 +110,28 @@ end;
 //** Initializes the setup
 function li_setup_init(setup: PLiInstallation;pkname: PChar): Boolean;cdecl;
 begin
- Result:=true;
- if not setup^.UserRequestRegistered then
- begin
-  pwarning('No user request callback is registered!');
- end;
-
+  Result:=true;
   setup^.Initialize(pkname);
   Result:=setup^.PkgOkay;
 end;
 
 //** Register callback on status change
-function li_setup_register_status_call(setup: PLiInstallation;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;
+function li_setup_register_status_call(setup: PLiInstallation;call: LiStateEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-   setup^.RegOnStatusChange(call,user_data);
+   setup^.RegisterOnStatus(call, user_data);
  except
   Result:=false;
  end;
 end;
 
 //** User request message call
-function li_setup_register_user_request_call(setup: PLiInstallation;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;
+function li_setup_register_message_call(setup: PLiInstallation;call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-  setup^.RegOnUsrRequest(call,user_data);
+  setup^.RegisterOnMessage(call,user_data);
  except
   Result:=false;
  end;
@@ -401,18 +396,18 @@ begin
 end;
 
 //** Register call on status change for appmanager
-function li_mgr_register_status_call(mgr: PLiAppManager;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;
+function li_mgr_register_status_call(mgr: PLiAppManager;call: LiStateEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-  mgr^.RegOnStatusChange(call,user_data);
+  mgr^.RegisterOnStatus(call,user_data);
  except
   Result:=false;
  end;
 end;
 
 //** Register application event to catch found apps
-function li_mgr_register_app_call(mgr: PLiAppManager;call: NewAppEvent;user_data: Pointer): Boolean;cdecl;
+function li_mgr_register_app_call(mgr: PLiAppManager;call: LiNewAppEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result := false;
  Result:=true;
@@ -424,11 +419,11 @@ begin
 end;
 
 //** Register event to recieve user requests
-function li_mgr_register_request_call(mgr: PLiAppManager;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;
+function li_mgr_register_message_call(mgr: PLiAppManager;call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-  mgr^.RegOnRequest(call,user_data);
+  mgr^.RegisterOnMessage(call,user_data);
  except
   Result:=false;
  end;
@@ -449,13 +444,6 @@ end;
 //** Removes the application
 function li_mgr_remove_app(mgr: PLiAppManager;obj: LiAppInfo): Boolean;cdecl;
 begin
- Result:=false;
- if not mgr^.UserRequestRegistered then
- begin
-  perror('You need to register a user request callback!');
-  exit;
- end;
-
  Result:=true;
  try
   mgr^.UninstallApp(obj);
@@ -518,29 +506,29 @@ begin
 end;
 
 //** Register call on status change for updater
-function li_updater_register_status_call(upd: PLiAppUpdater;call: StatusChangeEvent;user_data: Pointer): Boolean;cdecl;
+function li_updater_register_status_call(upd: PLiAppUpdater;call: LiStateEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-  upd^.RegOnStatusChange(call,user_data);
+  upd^.RegisterOnStatus(call,user_data);
  except
   Result:=false;
  end;
 end;
 
 //** Register event to recieve user requests
-function li_updater_register_request_call(upd: PLiAppUpdater;call: UserRequestCall;user_data: Pointer): Boolean;cdecl;
+function li_updater_register_message_call(upd: PLiAppUpdater;call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
-  upd^.RegOnRequest(call,user_data);
+  upd^.RegisterOnMessage(call,user_data);
  except
   Result:=false;
  end;
 end;
 
 //** Register event for new updates
-function li_updater_register_newupdate_call(upd: PLiAppUpdater;call: NewUpdateEvent;user_data: Pointer): Boolean;cdecl;
+function li_updater_register_newupdate_call(upd: PLiAppUpdater;call: LiNewUpdateEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -594,6 +582,7 @@ exports
  li_setup_set_sumode,
  li_setup_sumode,
  li_setup_register_status_call,
+ li_setup_register_message_call,
  li_setup_pkgtype,
  li_setup_disallows,
  li_setup_supported_distros,
@@ -611,7 +600,6 @@ exports
  li_setup_app_exec_command,
  li_setup_signature_state,
  li_setup_current_profile_filelist,
- li_setup_register_user_request_call,
  li_setup_execute,
  li_setup_dependencies,
  li_setup_set_overrides,
@@ -626,8 +614,8 @@ exports
  li_mgr_update_appdb,
  li_mgr_load_apps,
  li_mgr_register_status_call,
+ li_mgr_register_message_call,
  li_mgr_register_app_call,
- li_mgr_register_request_call,
  li_mgr_set_sumode,
  li_mgr_sumode,
  li_mgr_remove_app,
@@ -639,7 +627,7 @@ exports
  li_updater_free,
  li_updater_set_sumode,
  li_updater_register_status_call,
- li_updater_register_request_call,
+ li_updater_register_message_call,
  li_updater_register_newupdate_call,
  li_updater_search_updates,
  li_updater_updateid_newversion,

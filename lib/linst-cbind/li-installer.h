@@ -35,9 +35,9 @@ void li_setup_free(LiInstallation setup);
 
 bool li_setup_init(LiInstallation setup,char *pkname);
 
-bool li_setup_register_status_call(LiInstallation setup,StatusChangeEvent call,void* user_data);
+bool li_setup_register_status_call(LiInstallation setup,LiStateEvent call,void* user_data);
 
-bool li_setup_register_user_request_call(LiInstallation setup,UserRequestCall call,void* user_data);
+bool li_setup_register_message_call(LiInstallation setup,LiMessageEvent call,void* user_data);
 
 LiPkgType li_setup_pkgtype(LiInstallation setup);
 

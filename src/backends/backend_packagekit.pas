@@ -32,7 +32,6 @@ type
     pkg: String;
     pkit: TPackageKit;
     appInfo: LiAppInfo;
-    function EmitRequest(s: String; ty: LiRqType): LiRqResult;
     //** Receive the PackageKit progress
     procedure PkitProgress(pos: Integer; xd: Pointer);
   public
@@ -68,13 +67,6 @@ begin
   Result := true;
 end;
 
-function TPackageKitBackend.EmitRequest(s: String; ty: LiRqType): LiRqResult;
-begin
-  //DUMMY
-  pwarning('Request/Error handling not implemented in backend "PackageKit" (on TODO list :P)');
-  pwarning(' Message was: ' + s);
-end;
-
 procedure TPackageKitBackend.PkitProgress(pos: Integer; xd: Pointer);
 begin
   //User defindes pointer xd is always nil here
@@ -88,8 +80,8 @@ var
   i: Integer;
 begin
   Result := true;
-  EmitMessage(rsCallingPackageKitPKMonExecActions);
-  EmitMessage(rsDetectingPackage);
+  EmitInfoMsg(rsCallingPackageKitPKMonExecActions);
+  EmitInfoMsg(rsDetectingPackage);
 
   pkit.PkgNameFromFile(dskFileName, true);
   EmitProgress(20);
@@ -99,9 +91,8 @@ begin
 
   if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
   begin
-    EmitRequest(PAnsiChar(rsPKitProbPkMon + #10 + rsEMsg + #10 +
-      pkit.LastErrorMessage),
-      rqError);
+    EmitError(PAnsiChar(rsPKitProbPkMon + #10 + rsEMsg + #10 +
+      pkit.LastErrorMessage));
     Result := false;
     exit;
   end;
@@ -114,8 +105,8 @@ begin
   begin
     f := tmp[0];
 
-    EmitMessage(StrSubst(rsPackageDetected, '%s', f));
-    EmitMessage(rsLookingForRevDeps);
+    EmitInfoMsg(StrSubst(rsPackageDetected, '%s', f));
+    EmitInfoMsg(rsLookingForRevDeps);
 
     tmp.Clear;
 
@@ -135,9 +126,9 @@ begin
     pdebug('Asking dependency question...');
     pkit.Free;
     if (StringReplace(g, ' ', '', [rfReplaceAll]) = '') or
-      (EmitRequest(StringReplace(StringReplace(
+      (EmitUserRequestAbortContinue(StringReplace(StringReplace(
       StringReplace(rsRMPkg, '%p', f, [rfReplaceAll]), '%a', appInfo.Name,
-      [rfReplaceAll]), '%pl', PChar(g), [rfReplaceAll]), rqWarning) = rqsYes) then
+      [rfReplaceAll]), '%pl', PChar(g), [rfReplaceAll])) = LIRQS_Yes) then
       Result := true
     else
       Result := false;
@@ -148,18 +139,18 @@ end;
 function TPackageKitBackend.Run: Boolean;
 begin
   EmitProgress(50);
-  EmitMessage(StrSubst(rsRMAppC, '%a', appInfo.Name) + ' ...');
+  EmitInfoMsg(StrSubst(rsRMAppC, '%a', appInfo.Name) + ' ...');
   pkit.RemovePkg(pkg);
 
   if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
   begin
-    EmitRequest(rsRmError + #10 + rsEMsg + #10 + pkit.LastErrorMessage, rqError);
+    EmitError(rsRmError + #10 + rsEMsg + #10 + pkit.LastErrorMessage);
     Result := false;
     exit;
   end;
 
   EmitProgress(100);
-  EmitMessage(rsDone);
+  EmitInfoMsg(rsDone);
 end;
 
 end.

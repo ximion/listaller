@@ -21,7 +21,7 @@ unit listallerdb;
 interface
 
 uses
-  Classes, SysUtils, SQLite3DS, LiUtils, LiTypes, DB, StrLocale;
+  Classes, SysUtils, SQLite3DS, LiUtils, LiTypes, DB, StrLocale, LiStatusObj;
 
 type
   TLiDBData = record
@@ -29,10 +29,10 @@ type
   end;
 
   //** Access to Listaller's IPK app db
-  TListallerDB = class
+  TListallerDB = class (TLiStatusObject)
   private
     dsApp: TSQLite3Dataset;
-    FNewApp: NewAppEvent;
+    FNewApp: LiNewAppEvent;
     CurrField: TLiDBData;
     AppDataDir: String;
     DepDataDir: String;
@@ -73,7 +73,7 @@ type
     //** Check if dependency is already present
     function DepExists(Name, version: String): Boolean;
     //** Register call to on new app found
-    procedure RegOnNewApp(call: NewAppEvent; user_data: Pointer);
+    procedure RegOnNewApp(call: LiNewAppEvent; user_data: Pointer);
     //** Write changes to disk
     function Finalize: Boolean;
 
@@ -84,7 +84,7 @@ type
     property AppConfDir: String read AppDataDir;
     property DepConfDir: String read DepDataDir;
     //** Event: Called if new application was found
-    property OnNewApp: NewAppEvent read FNewApp write FNewApp;
+    property OnNewApp: LiNewAppEvent read FNewApp write FNewApp;
   end;
 
 implementation
@@ -110,7 +110,7 @@ begin
   Result := dsApp.SqliteVersion;
 end;
 
-procedure TListallerDB.RegOnNewApp(call: NewAppEvent; user_data: Pointer);
+procedure TListallerDB.RegOnNewApp(call: LiNewAppEvent; user_data: Pointer);
 begin
   if Assigned(call) then
   begin
@@ -118,7 +118,7 @@ begin
     FNewApp := call;
   end
   else
-    perror('Invalid NewAppEvent pointer received!');
+    perror('Invalid LiNewAppEvent pointer received!');
 end;
 
 function TListallerDB.DBOkay: Boolean;

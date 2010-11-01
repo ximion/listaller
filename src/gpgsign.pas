@@ -22,20 +22,17 @@ interface
 
 uses
   Classes, liTypes, liUtils, LiFileUtil,
-  SysUtils, CallbackProcess;
+  SysUtils, CallbackProcess, LiStatusObj;
 
 type
   //** Class to sign files using GPG
-  TGPGSignWrapper = class
+  TGPGSignWrapper = class (TLiStatusObject)
   private
     CBProcess: TCallBackProcess;
     FFileName: String;
-    status: LiStatusData;
-    FStatusEvent: StatusChangeEvent;
     gpg: String;
 
     procedure OnProcessEvent(pcChannel: TProcessChannel; strData: String);
-    procedure ChangeStatus(ty: LiProcStatus; msg: String);
   public
     constructor Create;
     destructor Destroy; override;
@@ -48,8 +45,6 @@ type
     function Verify(ascFile: String): Boolean;
     //** (Binary) file to sign
     property FileName: String read FFileName write FFileName;
-    //** Get the status of the current action
-    property OnStatus: StatusChangeEvent read FStatusEvent write FStatusEvent;
   end;
 
 //** Check if GPG was found
@@ -65,7 +60,6 @@ begin
   CBProcess := TCallbackProcess.Create;
   CBProcess.CallBackEvent := @OnProcessEvent;
   CBProcess.WaitOnExit := true;
-  status.lastresult := prNone;
   gpg := FindBinary('gpg')+' --no-tty --batch ';
 end;
 
@@ -75,30 +69,16 @@ begin
   inherited;
 end;
 
-procedure TGPGSignWrapper.ChangeStatus(ty: LiProcStatus; msg: String);
-begin
-  status.lastresult := ty;
-  status.msg := PChar(msg);
-  if Assigned(FStatusEvent) then
-  begin
-    FStatusEvent(scMessage, status, nil);
-  end
-  else
-  begin
-    pinfo(status.msg);
-  end;
-end;
-
 procedure TGPGSignWrapper.OnProcessEvent(pcChannel: TProcessChannel; strData: String);
 begin
   if pcChannel = pcStdError then
-    ChangeStatus(prError, strData);
+    EmitError(strData);
   if pcChannel = pcStdOut then
-    ChangeStatus(prInfo, strData);
+    EmitInfoMsg(strData);
   if pcChannel = pcFinished then
-    ChangeStatus(prFinished, strData);
+    EmitStateChange(LIS_finished, strData);
   if pcChannel = pcError then
-    ChangeStatus(prError, strData);
+    EmitError(strData);
 end;
 
 function TGPGSignWrapper.Signfile(ascFile: String): Boolean;
@@ -109,7 +89,7 @@ begin
   if FileExists(ascFile) then
   begin
     Result := false;
-    ChangeStatus(prError, 'File "'+ascFile+'" already exists!');
+    EmitError('File "'+ascFile+'" already exists!');
     exit;
   end;
 

@@ -115,7 +115,7 @@ begin
   upd := ipkc.USource;
   ipkc.Free;
 
-  EmitMessage(rsStartingUninstall);
+  EmitInfoMsg(rsStartingUninstall);
 
   db := TSoftwareDB.Create;
   DB.Load;
@@ -146,22 +146,22 @@ begin
       begin
         if FileExists(p + 'prerm') then
         begin
-          EmitMessage('PreRM-Script found.');
+          EmitInfoMsg('PreRM-Script found.');
           t := TProcess.Create(nil);
           t.Options := [poUsePipes, poWaitonexit];
           t.CommandLine := FindBinary('chmod') + ' 775 ''' + p + 'prerm''';
           t.Execute;
-          EmitMessage('Executing prerm...');
+          EmitInfoMsg('Executing prerm...');
           t.CommandLine := '''' + p + 'prerm''';
           t.Execute;
           t.Free;
-          EmitMessage('Done.');
+          EmitInfoMsg('Done.');
         end;
 
         ///////////////////////////////////////
         if RmDeps then
         begin
-          EmitMessage(rsRMUnsdDeps);
+          EmitInfoMsg(rsRMUnsdDeps);
           tmp2 := TStringList.Create;
           tmp2.Text := DB.CurrentDataField.App.Dependencies;
 
@@ -181,10 +181,10 @@ begin
                 //Check if another package requires this package
                 t := TProcess.Create(nil);
                 if pos(')', f) > 0 then
-                  EmitMessage(f + ' # ' + copy(f, pos(' (', f) + 2,
+                  EmitInfoMsg(f + ' # ' + copy(f, pos(' (', f) + 2,
                     length(f) - pos(' (', f) - 2))
                 else
-                  EmitMessage(f);
+                  EmitInfoMsg(f);
 
                 pkit := TPackageKit.Create;
 
@@ -203,7 +203,7 @@ begin
                     pkit.RemovePkg(f);
                   //GetOutPutTimer.Enabled:=true;
 
-                  EmitMessage('Removing ' + f + '...');
+                  EmitInfoMsg('Removing ' + f + '...');
                 end;
 
                 pkit.Free;
@@ -214,7 +214,7 @@ begin
 
           end
           else
-            EmitMessage('No installed deps found!');
+            EmitInfoMsg('No installed deps found!');
 
           tmp2.Free;
         end; //End of remove-deps request
@@ -231,7 +231,7 @@ begin
         begin
           if pos('<mime>', tmp[i]) > 0 then
           begin
-            EmitMessage('Uninstalling MIME-Type "' + ExtractFileName(tmp[i]) + '" ...');
+            EmitInfoMsg('Uninstalling MIME-Type "' + ExtractFileName(tmp[i]) + '" ...');
             t := TProcess.Create(nil);
             if (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i]))) = '.png') or
               (LowerCase(ExtractFileExt(DeleteModifiers(tmp[i]))) = '.xpm') then
@@ -252,7 +252,7 @@ begin
           end;
         end;
 
-        EmitMessage('Removing files...');
+        EmitInfoMsg('Removing files...');
         //Uninstall application
         for i := 0 to tmp.Count - 1 do
         begin
@@ -276,7 +276,7 @@ begin
         Inc(mnprog);
         EmitProgress(round(bs * mnprog));
 
-        EmitMessage('Removing empty dirs...');
+        EmitInfoMsg('Removing empty dirs...');
         tmp.LoadFromFile(p + 'dirs.list');
         proc := TProcess.Create(nil);
         proc.Options := [poWaitOnExit, poStdErrToOutPut, poUsePipes];
@@ -293,7 +293,7 @@ begin
           if FileExists(PkgRegDir + 'updates.list') then
           begin
             tmp.LoadFromFile(PkgRegDir + 'updates.list');
-            EmitMessage('Removing update-source...');
+            EmitInfoMsg('Removing update-source...');
             for i := 1 to tmp.Count - 1 do
               if pos(upd, tmp[i]) > 0 then
               begin
@@ -307,7 +307,7 @@ begin
 
       end;
 
-      EmitMessage('Unregistering...');
+      EmitInfoMsg('Unregistering...');
 
       DB.DeleteCurrentField;
 
@@ -321,8 +321,8 @@ begin
       Inc(mnprog);
       EmitProgress(round(bs * mnprog));
 
-      EmitMessage('Application removed.');
-      EmitMessage('- Finished -');
+      EmitInfoMsg('Application removed.');
+      EmitInfoMsg('- Finished -');
       Result := true;
 
       break;

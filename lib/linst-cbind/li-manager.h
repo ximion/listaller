@@ -37,11 +37,11 @@ void li_mgr_load_apps(LiAppManager mgr,LiFilter filter);
 
 bool li_mgr_update_appdb(LiAppManager mgr);
 
-bool li_mgr_register_status_call(LiAppManager mgr,StatusChangeEvent call,void* user_data);
+bool li_mgr_register_status_call(LiAppManager mgr,LiStateEvent call,void* user_data);
 
-bool li_mgr_register_app_call(LiAppManager mgr,NewAppEvent call,void* user_data);
+bool li_mgr_register_app_call(LiAppManager mgr,LiNewAppEvent call,void* user_data);
 
-bool li_mgr_register_request_call(LiAppManager mgr,UserRequestCall call,void* user_data);
+bool li_mgr_register_message_call(LiAppManager mgr,LiMessageEvent call,void* user_data);
 
 void li_mgr_set_sumode(LiAppManager mgr,bool md);
 

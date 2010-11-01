@@ -32,7 +32,7 @@ type
     currField: TLiDBData;
     loaded: Boolean;
 
-    FNewApp: NewAppEvent;
+    FNewApp: LiNewAppEvent;
     onnewapp_udata: Pointer;
     procedure ToApps;
     procedure ToLocale;
@@ -53,7 +53,7 @@ type
     //** Write changes to disk
     procedure Finalize;
     //** Register call to on new app found
-    procedure RegOnNewApp(call: NewAppEvent; user_data: Pointer);
+    procedure RegOnNewApp(call: LiNewAppEvent; user_data: Pointer);
     //** Open filtered applications list (and set pointer to beginning)
     procedure OpenFilter;
     //** Move one entry forward
@@ -66,7 +66,7 @@ type
     property EndReached: Boolean read EOF;
     property CurrentDataField: TLiDBData read CurrField;
     //** Event: Called if new application was found
-    property OnNewApp: NewAppEvent read FNewApp write FNewApp;
+    property OnNewApp: LiNewAppEvent read FNewApp write FNewApp;
   end;
 
 implementation
@@ -81,7 +81,7 @@ begin
   loaded := false;
 end;
 
-procedure TAppInstallDB.RegOnNewApp(call: NewAppEvent; user_data: Pointer);
+procedure TAppInstallDB.RegOnNewApp(call: LiNewAppEvent; user_data: Pointer);
 begin
   if Assigned(call) then
   begin

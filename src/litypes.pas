@@ -42,34 +42,29 @@ type
   //** Pointer to AppUpdater
   PLiAppUpdater = Pointer;
 
-  //** Request types
-  LiRqType = (rqError, rqWarning, rqQuestion, rqInfo);
-  //** Request result types
-  LiRqResult = (rqsYes, rqsNo, rqsOK);
-  //** Type of a message (published)
-  LiMessageType = (mtStep, mtInfo);
   //** Status of current job
-  LiProcStatus = (prNone, prFailed, prAuthorized, prBlocked, prFinished,
-    prError, prInfo, prStarted);
+  LI_STATUS = (LIS_None, LIS_Failed, LIS_Authorized, LIS_Blocked, LIS_Finished,
+    LIS_Started, LIS_Progress, LIS_ExProgress);
 
-  //** Things which can be changed
-  LiStatusChange = (scNone, scMnProgress, scExProgress, scStatus,
-    scMessage, scStepMessage);
+  //** Request result types
+  LI_REQUEST_RES = (LIRQS_Yes, LIRQS_No, LIRQS_OK);
+
+  //** Different status
+  LI_MESSAGE = (LIM_None, LIM_Info, LIM_Stage, LIM_Warning, LIM_Error, LIM_Question_YesNo, LIM_Question_AbortContinue);
+
   //** Data assigned to a status change
   LiStatusData = record
-    msg: PChar;
+    text: PChar;
     exprogress: Longint;
     mnprogress: Longint;
-    lastresult: LiProcStatus;
-    change: LiStatusChange;
   end;
 
   //** Callback for change of status
-  StatusChangeEvent = procedure(change: LiStatusChange; data: LiStatusData;
+  LiStateEvent = procedure(status: LI_STATUS; data: LiStatusData;
     user_data: Pointer); cdecl;
-  //** Callback for user request
-  UserRequestCall = function(mtype: LiRqType; msg: PChar;
-    user_data: Pointer): LiRqResult; cdecl;
+  //** Callback for messages & user requests
+  LiMessageEvent = function(mtype: LI_MESSAGE; text: PChar;
+                            user_data: Pointer): LI_REQUEST_RES; cdecl;
 
   //** Called if progress was changed; only for internal use
   TProgressEvent = procedure(pos: Integer; user_data: Pointer) of object;
@@ -114,10 +109,10 @@ type
   PLiAppInfo = ^LiAppInfo;
 
   //** Event to catch thrown application records
-  NewAppEvent = procedure(name: PChar; obj: PLiAppInfo; user_data: Pointer); cdecl;
+  LiNewAppEvent = procedure(name: PChar; obj: PLiAppInfo; user_data: Pointer); cdecl;
 
   //** Shows information about new update
-  NewUpdateEvent = procedure(name: PChar; id: Integer; user_data: Pointer); cdecl;
+  LiNewUpdateEvent = procedure(name: PChar; id: Integer; user_data: Pointer); cdecl;
 
   //** Package signature status
   PkgSignatureState = (psNone, psTrusted, psUntrusted);

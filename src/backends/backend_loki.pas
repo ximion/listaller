@@ -101,14 +101,14 @@ begin
     mandir := ExtractFilePath(inf.ReadString('Desktop Entry', 'Exec', '?')) +
       '.mojosetup';
     inf.Free;
-    EmitMessage('Mojo manifest found.');
+    EmitInfoMsg('Mojo manifest found.');
     EmitProgress(40);
     tmp := TStringList.Create;
     tmp.Assign(FindAllFiles(mandir + '/manifest', '*.xml', false));
     if tmp.Count <= 0 then
       exit;
     EmitProgress(50);
-    EmitMessage(rsRemovingApp);
+    EmitInfoMsg(rsRemovingApp);
     t := TProcess.Create(nil);
     t.CommandLine := mandir + '/mojosetup uninstall ' + copy(
       ExtractFileName(tmp[0]), 1, pos('.', ExtractFileName(tmp[0])) - 1);
@@ -123,8 +123,8 @@ begin
     //LOKI
   begin
     EmitProgress(50);
-    EmitMessage(rsLOKISetupFound);
-    EmitMessage(rsRemovingApp);
+    EmitInfoMsg(rsLOKISetupFound);
+    EmitInfoMsg(rsRemovingApp);
 
     t := TProcess.Create(nil);
     t.CommandLine := ExtractFilePath(inf.ReadString('Desktop Entry', 'Exec', '?')) +

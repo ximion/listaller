@@ -22,7 +22,7 @@ interface
 
 uses
   MD5, Classes, Contnrs, FTPSend, LiTypes, LiUtils, Process,
-  Blcksock, HTTPSend, IniFiles,
+  Blcksock, HTTPSend, IniFiles, LiStatusObj,
   SysUtils, IPKCDef10, StrLocale, LiDBusProc, LiFileUtil, SoftwareDB, IPKPackage11;
 
 type
@@ -40,30 +40,21 @@ type
     destructor Destroy; override;
   end;
 
-  TLiAppUpdater = class
+  TLiAppUpdater = class (TLiStatusObject)
   private
     SUMode: Boolean;
     HTTP: THTTPSend;
     FTP: TFTPSend;
     AppReg: String;
-    FReq: UserRequestCall;
-    FStatus: StatusChangeEvent;
-    FNewUpd: NewUpdateEvent;
-
+    FNewUpd: LiNewUpdateEvent;
     ulist: TObjectList;
-    sdata: LiStatusData;
 
-    procedure SetMnPos(i: Integer);
-    procedure SetExPos(i: Integer);
-    procedure Msg(s: String);
-    procedure StepMsg(s: String);
-    function Request(s: String; ty: LiRqType): LiRqResult;
     procedure NewUpdate(nm: String; id: Integer);
     function ValidUpdateId(uid: Integer): Boolean;
     //Hook on HTTP socket
     procedure HookSock(Sender: TObject; Reason: THookSocketReason; const Value: String);
     //Catch DBus messages
-    procedure DBusStatusChange(ty: LiProcStatus; data: TLiProcData);
+    procedure DBusStatusChange(ty: LI_STATUS; data: TLiProcData);
   protected
     //User data for callbacks
     statechange_udata, request_udata, newupd_udata: Pointer;
@@ -73,9 +64,7 @@ type
 
     function CheckUpdates: Boolean;
     procedure SetSumode(su: Boolean);
-    procedure RegOnStatusChange(call: StatusChangeEvent; data: Pointer);
-    procedure RegOnRequest(call: UserRequestCall; data: Pointer);
-    procedure RegOnNewUpdate(call: NewUpdateEvent; data: Pointer);
+    procedure RegOnNewUpdate(call: LiNewUpdateEvent; data: Pointer);
 
     function UpdateIDGetNewVersion(uid: Integer): String;
     function UpdateIDGetOldVersion(uid: Integer): String;
@@ -129,54 +118,14 @@ begin
   ulist.Clear;
 end;
 
-procedure TLiAppUpdater.RegOnStatusChange(call: StatusChangeEvent; data: Pointer);
-begin
-  if Assigned(call) then
-    begin
-  FStatus := call;
-  statechange_udata := data;
-    end else
-    perror('Received invalid ´StatusChangeEvent´ pointer!');
-end;
-
-procedure TLiAppUpdater.RegOnRequest(call: UserRequestCall; data: Pointer);
-begin
-  if Assigned(call) then
-    begin
-  FReq := call;
-  request_udata := data;
-    end else
-    perror('Received invalid ´UserRequestCall´ pointer!');
-end;
-
-procedure TLiAppUpdater.RegOnNewUpdate(call: NewUpdateEvent; data: Pointer);
+procedure TLiAppUpdater.RegOnNewUpdate(call: LiNewUpdateEvent; data: Pointer);
 begin
   if Assigned(call) then
     begin
   FNewUpd := call;
   newupd_udata := data;
     end else
-    perror('Received invalid ´NewUpdateEvent´ pointer!');
-end;
-
-procedure TLiAppUpdater.Msg(s: String);
-begin
-  sdata.msg := PChar(s);
-  if Assigned(FStatus) then
-    FStatus(scMessage, sdata, statechange_udata);
-end;
-
-procedure TLiAppUpdater.StepMsg(s: String);
-begin
-  sdata.msg := PChar(s);
-  if Assigned(FStatus) then
-    FStatus(scStepMessage, sdata, statechange_udata);
-end;
-
-function TLiAppUpdater.Request(s: String; ty: LiRqType): LiRqResult;
-begin
-  if Assigned(FReq) then
-    Result := FReq(ty, PChar(s), request_udata);
+    perror('Received invalid ´LiNewUpdateEvent´ pointer!');
 end;
 
 procedure TLiAppUpdater.NewUpdate(nm: String; id: Integer);
@@ -185,26 +134,12 @@ begin
     FNewUpd(PChar(nm), id, newupd_udata);
 end;
 
-procedure TLiAppUpdater.SetMnPos(i: Integer);
-begin
-  sdata.mnprogress := i;
-  if Assigned(FStatus) then
-    FStatus(scMnprogress, sdata, statechange_udata);
-end;
-
-procedure TLiAppUpdater.SetExPos(i: Integer);
-begin
-  sdata.exprogress := i;
-  if Assigned(FStatus) then
-    FStatus(scExProgress, sdata, statechange_udata);
-end;
-
 procedure TLiAppUpdater.HookSock(Sender: TObject; Reason: THookSocketReason;
   const Value: String);
 begin
   if HTTP.DownloadSize > 20 then
   begin
-    SetExPos(Round(100 / HTTP.DownloadSize * HTTP.Document.Size));
+    EmitExProgress(Round(100 / HTTP.DownloadSize * HTTP.Document.Size));
   end;
 end;
 
@@ -242,7 +177,7 @@ begin
   h.LoadFromFile(AppReg + 'updates.list');
   if h.Count = 1 then
   begin
-    request(rsNoUpdates, rqInfo);
+    EmitInfoMsg(rsNoUpdates);
     Result := false;
     exit;
   end;
@@ -265,7 +200,7 @@ begin
 
   sdb := TSoftwareDB.Create;
   sdb.Load(sumode);
-  msg('Software database opened.');
+  EmitInfoMsg('Software database opened.');
 
   for k := 0 to sources.Count - 1 do
   begin
@@ -273,7 +208,7 @@ begin
     HTTP.HTTPMethod('GET', sources[k] + '/' + 'source.pin');
     tmp.LoadFromStream(HTTP.Document);
     Inc(progpos);
-    SetMnPos(Round(100 / max * progpos));
+    EmitProgress(Round(100 / max * progpos));
 
     if not DirectoryExists(tmpdir) then
       ForceDirectories(tmpdir);
@@ -332,7 +267,7 @@ begin
       ui.NVersion := control.AppVersion;
       ui.ID := control.PkName;
       Inc(progpos);
-      SetMnPos(Round(100 / max * progpos));
+      EmitProgress(Round(100 / max * progpos));
 
       if ui.files.Count > 0 then
       begin
@@ -351,7 +286,7 @@ begin
   sdb.Free;
 
   if ulist.Count <= 0 then
-    request(rsNoUpdates, rqInfo);
+    EmitInfoMsg(rsNoUpdates);
 end;
 
 function TLiAppUpdater.ValidUpdateId(uid: Integer): Boolean;
@@ -380,18 +315,16 @@ begin
   Result := TUpdateInfo(ulist[uid]).OVersion;
 end;
 
-procedure TLiAppUpdater.DBusStatusChange(ty: LiProcStatus; Data: TLiProcData);
+procedure TLiAppUpdater.DBusStatusChange(ty: LI_STATUS; Data: TLiProcData);
 begin
   case Data.changed of
-    pdMainProgress: SetMnPos(Data.mnprogress);
-    pdExtraProgress: SetExPos(Data.exprogress);
-    pdInfo: msg(Data.msg);
-    pdError: request(Data.msg, rqError);
+    pdMainProgress: EmitProgress(Data.mnprogress);
+    pdExtraProgress: EmitExProgress(Data.exprogress);
+    pdInfo: EmitInfoMsg(Data.msg);
+    pdError: EmitError(Data.msg);
     pdStatus:
     begin
-      sdata.lastresult := ty;
-      if Assigned(FStatus) then
-        FStatus(scStatus, sdata, statechange_udata);
+      EmitStateChange(ty);
     end;
   end;
 end;
@@ -435,7 +368,7 @@ begin
   sdb := TSoftwareDB.Create;
   sdb.Load;
 
-  msg('Begin update of ' + TUpdateInfo(ulist[uid]).AppName);
+  EmitInfoMsg('Begin update of ' + TUpdateInfo(ulist[uid]).AppName);
   xz := TLiUpdateBit.Create;
   files := TUpdateInfo(ulist[uid]).files;
   max := (files.Count div 2);
@@ -443,7 +376,7 @@ begin
   for i := 0 to files.Count - 1 do
     if i mod 2 = 0 then
     begin
-      msg('GET: ' + files[i]);
+      EmitInfoMsg('GET: ' + files[i]);
 
       try
         HTTP.Clear;
@@ -451,22 +384,22 @@ begin
 
         xh := tmp + ExtractFileName(files[i]);
         HTTP.Document.SaveToFile(xh);
-        msg('Install...');
+        EmitInfoMsg('Install...');
         xz.Decompress(xh, DeleteModifiers(files[i + 1]));
 
         DeleteFile(xh);
         //DeleteFile(DeleteModifiers(ulist[j][i+1])+'/'+ExtractFileName(ulist[j][i])); //Delete old File (not always necessary, but sometimes needed)
 
       except
-        request(rsExtractError, rqError);
-        msg(rsUpdConfError);
+        EmitError(rsExtractError);
+        EmitInfoMsg(rsUpdConfError);
         xz.Free;
         exit;
       end;
 
       if (pos('.desktop', LowerCase(ExtractFileName(files[i + 1]))) > 0) then
       begin
-        msg('Writing configuration for ' + ExtractFileName(files[i + 1]));
+        EmitInfoMsg('Writing configuration for ' + ExtractFileName(files[i + 1]));
         dsk := TIniFile.Create(files[i + 1]);
         if dsk.ValueExists('Desktop Entry', 'Icon') then
           dsk.WriteString('Desktop Entry', 'Icon', SyblToPath(
@@ -479,7 +412,7 @@ begin
 
       if (pos(' <setvars>', LowerCase(ExtractFileName(files[i + 1]))) > 0) then
       begin
-        msg('Writing configuration for ' + ExtractFileName(files[i + 1]));
+        EmitInfoMsg('Writing configuration for ' + ExtractFileName(files[i + 1]));
         s := TStringList.Create;
         s.LoadFromFile(files[i + 1]);
         for k := 0 to s.Count - 1 do
@@ -488,8 +421,8 @@ begin
         s.Free;
       end;
 
-      msg('chmod...');
-      msg('Assign rights..');
+      EmitInfoMsg('chmod...');
+      EmitInfoMsg('Assign rights..');
       if pos(' <chmod:', files[i + 1]) > 0 then
       begin
         c.CommandLine := FindBinary('chmod') + ' ' + copy(
@@ -504,10 +437,10 @@ begin
           SyblToPath(files[i + 1])) + '/' + ExtractFileName(files[i]);
         c.Execute;
       end;
-      msg('Finishing...');
+      EmitInfoMsg('Finishing...');
       Inc(prog);
-      SetMnPos(Round((100 / max) * prog));
-      msg('Okay');
+      EmitProgress(Round((100 / max) * prog));
+      EmitInfoMsg('Okay');
     end;
 
   xz.Free;
@@ -520,12 +453,12 @@ begin
 
   ulist.Delete(uid); //Remove update information
 
-  msg(rsCleaningUp);
+  EmitInfoMsg(rsCleaningUp);
   c.Free;
   sdb.Free;
 
   LiFileUtil.DeleteDirectory(tmp, false);
-  StepMsg('Update finished!');
+  EmitStageMsg('Update finished!');
 end;
 
 end.

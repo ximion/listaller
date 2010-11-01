@@ -35,11 +35,11 @@ void li_updater_free(LiAppUpdater upd);
 
 void li_updater_set_sumode(LiAppUpdater upd,bool val);
 
-bool li_updater_register_status_call(LiAppUpdater upd,StatusChangeEvent call,void* user_data);
+bool li_updater_register_status_call(LiAppUpdater upd,LiStateEvent call,void* user_data);
 
-bool li_updater_register_request_call(LiAppUpdater upd,UserRequestCall call,void* user_data);
+bool li_updater_register_message_call(LiAppUpdater upd,LiMessageEvent call,void* user_data);
 
-bool li_updater_register_newupdate_call(LiAppUpdater upd,NewUpdateEvent call,void* user_data);
+bool li_updater_register_newupdate_call(LiAppUpdater upd,LiNewUpdateEvent call,void* user_data);
 
 bool li_updater_search_updates(LiAppUpdater upd);
 
