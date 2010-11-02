@@ -57,8 +57,10 @@ uses updatefrm;
 
 { TUExecFm }
 
-procedure OnEXStatus(change: LiStatusChange; data: LiStatusData;
-  user_data: Pointer); cdecl;
+// TODO: Needs message handling: Add info output to Memo1,
+//       handle stage messages in main callback.
+procedure OnEXStatusChange(status: LI_STATUS; data: LiStatusData;
+    user_data: Pointer); cdecl;
 begin
   Application.ProcessMessages;
   if not Assigned(UExecFm) then
@@ -68,7 +70,7 @@ begin
   end;
   with UExecFm do
   begin
-    case change of
+    {case status of
       scMessage:
       begin
         pinfo(Data.msg);
@@ -76,7 +78,7 @@ begin
       end;
       scStepMessage: ILabel.Caption := Data.msg;
       scMnProgress: ProgressBar2.Position := Data.mnprogress;
-    end;
+    end; }
   end;
   Application.ProcessMessages;
 end;
@@ -99,8 +101,8 @@ begin
   if fstact then
   begin
     fstact := false;
-    li_updater_register_status_call(@UMnForm.updater, @OnEXStatus, nil);
-    li_updater_register_status_call(@UMnForm.updaterSU, @OnEXStatus, nil);
+    li_updater_register_status_call(@UMnForm.updater, @OnEXStatusChange, nil);
+    li_updater_register_status_call(@UMnForm.updaterSU, @OnEXStatusChange, nil);
 
     for i := 0 to UMnForm.UpdListBox.Count - 1 do
       if UMnForm.UpdListBox.Checked[i] then
@@ -121,8 +123,8 @@ begin
         end;
         ProgressBar1.Position := ProgressBar1.Position + 1;
       end;
-    li_updater_register_status_call(@UMnForm.updater, @updatefrm.OnMNStatus, nil);
-    li_updater_register_status_call(@UMnForm.updaterSU, @updatefrm.OnMNStatus, nil);
+    li_updater_register_status_call(@UMnForm.updater, @updatefrm.OnMgrStatusChange, nil);
+    li_updater_register_status_call(@UMnForm.updaterSU, @updatefrm.OnMgrStatusChange, nil);
     UMnForm.UpdListBox.Items.Clear;
     UMnForm.UpdateIDs.Clear;
     Button1.Enabled := true;

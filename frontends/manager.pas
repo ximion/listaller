@@ -167,8 +167,8 @@ var
   SUApps: Boolean = false;
 
 //Published for use in uninstall.pas
-procedure OnMgrStatus(change: LiStatusChange; data: LiStatusData;
-  user_data: Pointer); cdecl;
+function OnMgrMessage(mtype: LI_MESSAGE; const text: PChar;
+                            udata: Pointer): LI_REQUEST_RES; cdecl;
 
 //NOTE:
 //IMPORTANT: RegDir should be moved to libInstaller!
@@ -195,7 +195,7 @@ begin
   RMForm.ShowModal;
 end;
 
-procedure OnNewAppFound(name: PChar; obj: PLiAppInfo; udata: Pointer); cdecl;
+procedure OnNewAppFound(const name: PChar; obj: PLiAppInfo; udata: Pointer); cdecl;
 begin
   with MnFrm do
   begin
@@ -204,39 +204,27 @@ begin
   Application.ProcessMessages;
 end;
 
-procedure OnMgrStatus(change: LiStatusChange; data: LiStatusData;
-  user_data: Pointer); cdecl;
+function OnMgrMessage(mtype: LI_MESSAGE; const text: PChar;
+                            udata: Pointer): LI_REQUEST_RES; cdecl;
 begin
-  case change of
-    scStepmessage: MnFrm.StatusBar1.Panels[0].Text := data.msg;
-    scMessage:
-    begin
-      MnFrm.StatusBar1.Panels[0].Text := Data.msg;
-      //pinfo(data.msg);
-    end;
-  end;
-end;
-
-function OnUserRequest(mtype: LiRqType; msg: PChar; udata: Pointer): LiRqResult; cdecl;
-begin
-  Result := rqsOK;
+  Result := LIRQS_OK;
   case mtype of
-    rqError:
+    LIM_Error:
     begin
-      Application.MessageBox(msg, PChar(rsError), MB_OK+MB_IconError);
-      RMForm.RmProcStatus := prFailed;
+      Application.MessageBox(text, PChar(rsError), MB_OK+MB_IconError);
+      RMForm.RmProcStatus := LIS_Failed;
     end;
-    rqWarning: if Application.MessageBox(msg, PChar(rsWarning),
+    LIM_Question_AbortContinue: if Application.MessageBox(text, PChar(rsWarning),
         MB_YesNo+MB_IconWarning) = idYes then
-        Result := rqsYes
+        Result := LIRQS_Yes
       else
-        Result := rqsNo;
-    rqQuestion: if Application.MessageBox(msg, PChar(rsQuestion),
+        Result := LIRQS_No;
+    LIM_Question_YesNo: if Application.MessageBox(text, PChar(rsQuestion),
         MB_YesNo+MB_IconQuestion) = idYes then
-        Result := rqsYes
+        Result := LIRQS_Yes
       else
-        Result := rqsNo;
-    rqInfo: ShowMessage(msg);
+        Result := LIRQS_No;
+    LIM_Info: pinfo(text);
   end;
 end;
 
@@ -1151,16 +1139,16 @@ begin
  RMForm.ShowModal;
  Application.Terminate;
  halt(0);
-end;     }
+end;}
 
   //Register callback to be notified if new app was found
   li_mgr_register_app_call(@amgr, @OnNewAppFound, nil);
 
-  //Register callback to be notified if a message was thrown
-  li_mgr_register_status_call(@amgr, @OnMgrStatus, nil);
+  //Register callback to be notified if status was changed
+   //li_mgr_register_status_call(@amgr, @OnMgrStatus, nil);
 
-  //Register request call
-  li_mgr_register_request_call(@amgr, @OnUserRequest, nil);
+  //Register message call
+  li_mgr_register_message_call(@amgr, @OnMgrMessage, nil);
 
   Notebook1.ActivePageComponent := InstalledAppsPage;
 

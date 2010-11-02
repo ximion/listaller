@@ -20,7 +20,8 @@ unit uninstall;
 interface
 
 uses
-  Forms, LiAppMgr, Buttons, Classes, Dialogs, LCLType, LiUtils, liTypes, Process, ComCtrls,
+  Forms, LiAppMgr, Buttons, Classes, Dialogs, LCLType, LiUtils, liTypes,
+  Process, ComCtrls,
   Controls, ExtCtrls, FileUtil, Graphics, StdCtrls, SysUtils, StrLocale, LResources;
 
 type
@@ -42,10 +43,10 @@ type
   private
     { private declarations }
     FActiv: Boolean;
-    astatus: LiProcStatus;
+    astatus: LI_STATUS;
   public
     { public declarations }
-    property RmProcStatus: LiProcStatus read astatus write astatus;
+    property RmProcStatus: LI_STATUS read astatus write astatus;
   end;
 
 var
@@ -72,15 +73,22 @@ begin
   RMForm.Memo1.Lines.add(s);
 end;
 
-procedure OnRmStatus(change: LiStatusChange; data: LiStatusData;
+procedure OnRmStatus(status: LI_STATUS; data: LiStatusData;
   user_data: Pointer); cdecl;
 begin
-  case change of
-    scMessage: LogAdd(Data.msg);
-    scMnProgress: RMForm.UProgress.Position := Data.mnprogress;
-    scStatus: RMForm.astatus := Data.lastresult;
+  case status of
+    LIS_Progress: RMForm.UProgress.Position := data.mnprogress;
   end;
+  RMForm.astatus := status;
   Application.ProcessMessages;
+end;
+
+function OnRmMessage(mtype: LI_MESSAGE; const text: PChar;
+                            user_data: Pointer): LI_REQUEST_RES; cdecl;
+begin
+  Result := LIRQS_OK;
+  if mtype = LIM_Info then
+  LogAdd(text);
 end;
 
 procedure TRMForm.FormActivate(Sender: TObject);
@@ -88,7 +96,7 @@ begin
   if FActiv then
   begin
     FActiv := false;
-    if MnFrm.uApp.RemoveId<>'' then
+    if MnFrm.uApp.RemoveId <> '' then
     begin
       Label1.Caption := StrSubst(rsRMAppC, '%a', MnFrm.uApp.Name);
       Caption := StrSubst(rsRMAppC, '%a', '...');
@@ -99,16 +107,16 @@ begin
       begin
         UProgress.Position := 0;
         li_mgr_register_status_call(@MnFrm.amgr, @OnRmStatus, nil);
-        astatus := prNone;
+        astatus := LIS_None;
         BitBtn1.Enabled := false;
         Application.ProcessMessages;
         li_mgr_remove_app(@MnFrm.amgr, MnFrm.uApp);
-        while (astatus<>prFinished)  and (astatus<>prFailed)  and (astatus<>prError) do
+        while (astatus <> LIS_Finished) and (astatus <> LIS_Failed) and (astatus <> LIS_None) do
         begin
           sleep(1);
           Application.ProcessMessages;
         end;
-        li_mgr_register_status_call(@MnFrm.amgr, @manager.OnMgrStatus, nil);
+        li_mgr_register_message_call(@MnFrm.amgr, @manager.OnMgrMessage, nil);
 
         //!!!: Misterious crash appears when executing this code.
         //MnFrm.ReloadAppList(true);
@@ -139,14 +147,14 @@ begin
     Memo1.Visible := false;
     Width := 456;
     Height := 134;
-    DetailsBtn.Caption := rsDetails+' >> ';
+    DetailsBtn.Caption := rsDetails + ' >> ';
   end
   else
   begin
     Memo1.Visible := true;
     Width := 456;
     Height := 294;
-    DetailsBtn.Caption := rsDetails+' << ';
+    DetailsBtn.Caption := rsDetails + ' << ';
   end;
 end;
 

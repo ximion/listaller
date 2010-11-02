@@ -15,9 +15,9 @@ object UExecFm: TUExecFm
   LCLVersion = '0.9.29'
   object ILabel: TLabel
     Left = 8
-    Height = 13
+    Height = 15
     Top = 8
-    Width = 44
+    Width = 49
     Caption = 'Waiting...'
     ParentColor = False
   end

@@ -60,7 +60,7 @@ var
   UMnForm: TUMnForm;
 
 //Published, so update display can access it
-procedure OnMNStatus(change: LiStatusChange; data: LiStatusData;
+procedure OnMgrStatusChange(status: LI_STATUS; Data: LiStatusData;
   user_data: Pointer); cdecl;
 
 implementation
@@ -93,48 +93,44 @@ begin
     end;
 end;
 
-function OnRequest(mtype: LiRqType; msg: PChar; user_data: Pointer): LiRqResult; cdecl;
+function OnMgrMessage(mtype: LI_MESSAGE; const Text: PChar;
+  user_data: Pointer): LI_REQUEST_RES; cdecl;
 begin
+  Result := LIRQS_OK;
   case mtype of
-    rqError:
+    LIM_Error:
     begin
-      Application.MessageBox(msg, 'Error', MB_OK + MB_IconError);
-      Result := rqsOK;
+      Application.MessageBox(Text, 'Error', MB_OK + MB_IconError);
     end;
-    rqWarning:
+    LIM_Question_AbortContinue:
     begin
-      if Application.MessageBox(PAnsiChar(msg), PChar(rsWarning),
-        MB_YESNO + MB_IconWarning) <> idYes then
+      if Application.MessageBox(Text, PChar(rsWarning), MB_YESNO +
+        MB_IconWarning) <> idYes then
       begin
         ShowMessage(rsINClose);
-        Result := rqsNo;
+        Result := LIRQS_No;
       end
       else
-        Result := rqsYes;
+        Result := LIRQS_Yes;
     end;
-    rqQuestion:
+    LIM_Question_YesNo:
     begin
-      if Application.MessageBox(PAnsiChar(msg), PChar(rsQuestion),
-        MB_YESNO + MB_IconQuestion) <> idYes then
-        Result := rqsNo
+      if Application.MessageBox(Text, PChar(rsQuestion), MB_YESNO +
+        MB_IconQuestion) <> idYes then
+        Result := LIRQS_No
       else
-        Result := rqsYes;
+        Result := LIRQS_Yes;
     end;
-    rqInfo:
-    begin
-      ShowMessage(msg);
-      Result := rqsOK;
-    end;
+    LIM_Info: pinfo(Text);
   end;
 end;
 
-procedure OnMNStatus(change: LiStatusChange; data: LiStatusData;
+procedure OnMgrStatusChange(status: LI_STATUS; Data: LiStatusData;
   user_data: Pointer); cdecl;
 begin
   Application.ProcessMessages;
-  case change of
-    scMessage: pinfo(Data.msg);
-    scMnProgress: UMnForm.ProgressBar.Position := Data.mnprogress;
+  case status of
+    LIS_Progress: UMnForm.ProgressBar.Position := data.mnprogress;
   end;
 end;
 
@@ -202,14 +198,14 @@ begin
   //Create normal updater
   updater := li_updater_new;
   li_updater_register_newupdate_call(@updater, @OnNewUpdateFound, nil);
-  li_updater_register_request_call(@updater, @OnRequest, nil);
-  li_updater_register_status_call(@updater, @OnMNStatus, nil);
+  li_updater_register_message_call(@updater, @OnMgrMessage, nil);
+  li_updater_register_status_call(@updater, @OnMgrStatusChange, nil);
   li_updater_set_sumode(@updater, false);
   //Create updater for shared su applications
   updaterSU := li_updater_new;
   li_updater_register_newupdate_call(@updaterSU, @OnNewUpdateFoundSU, nil);
-  li_updater_register_request_call(@updaterSU, @OnRequest, nil);
-  li_updater_register_status_call(@updaterSU, @OnMNStatus, nil);
+  li_updater_register_message_call(@updaterSU, @OnMgrMessage, nil);
+  li_updater_register_status_call(@updaterSU, @OnMgrStatusChange, nil);
   li_updater_set_sumode(@updaterSU, true);
 end;
 
