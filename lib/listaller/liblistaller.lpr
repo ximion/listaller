@@ -108,7 +108,7 @@ begin
 end;
 
 //** Initializes the setup
-function li_setup_init(setup: PLiInstallation;pkname: PChar): Boolean;cdecl;
+function li_setup_init(setup: PLiInstallation; const pkname: PChar): Boolean;cdecl;
 begin
   Result:=true;
   setup^.Initialize(pkname);
@@ -116,7 +116,7 @@ begin
 end;
 
 //** Register callback on status change
-function li_setup_register_status_call(setup: PLiInstallation;call: LiStateEvent;user_data: Pointer): Boolean;cdecl;
+function li_setup_register_status_call(setup: PLiInstallation; call: LiStateEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -127,7 +127,7 @@ begin
 end;
 
 //** User request message call
-function li_setup_register_message_call(setup: PLiInstallation;call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;
+function li_setup_register_message_call(setup: PLiInstallation; call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -157,7 +157,7 @@ begin
 end;
 
 //** Set actions which should be forced
-procedure li_setup_set_overrides(setup: PLiInstallation;const str: PChar);cdecl;
+procedure li_setup_set_overrides(setup: PLiInstallation; const str: PChar);cdecl;
 begin
   (*
    Possible strings:
@@ -168,7 +168,7 @@ begin
 end;
 
 //** Set installation to superuser mode
-procedure li_setup_set_sumode(setup: PLiInstallation;b: Boolean);cdecl;
+procedure li_setup_set_sumode(setup: PLiInstallation; b: Boolean);cdecl;
 begin
  setup^.SuperuserMode:=b;
 end;

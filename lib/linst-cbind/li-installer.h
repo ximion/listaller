@@ -33,7 +33,7 @@ void* li_setup_new(void);
 
 void li_setup_free(LiInstallation setup);
 
-bool li_setup_init(LiInstallation setup,char *pkname);
+bool li_setup_init(LiInstallation setup,const char *pkname);
 
 bool li_setup_register_status_call(LiInstallation setup,LiStateEvent call,void* user_data);
 

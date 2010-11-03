@@ -72,14 +72,14 @@ function IsIPKAppInstalled(appname: String; appid: String; sumode: Boolean): Boo
 
 function li_setup_new: Pointer;cdecl;external liblistaller;
 procedure li_setup_free(setup: PLiInstallation);cdecl;external liblistaller;
-function li_setup_init(setup: PLiInstallation;pkname: PChar): Boolean;cdecl;external liblistaller;
-function li_setup_register_status_call(setup: PLiInstallation;call: LiStateEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
-function li_setup_register_message_call(setup: PLiInstallation;call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
+function li_setup_init(setup: PLiInstallation; const pkname: PChar): Boolean;cdecl;external liblistaller;
+function li_setup_register_status_call(setup: PLiInstallation; call: LiStateEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
+function li_setup_register_message_call(setup: PLiInstallation; call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
 function li_setup_pkgtype(setup: PLiInstallation): LiPkgType;cdecl;external liblistaller;
 procedure li_setup_set_testmode(setup: PLiInstallation;st: Boolean);cdecl;external liblistaller;
 function li_setup_testmode(setup: PLiInstallation): Boolean;cdecl;external liblistaller;
-procedure li_setup_set_overrides(setup: PLiInstallation;const str: PChar);cdecl;external liblistaller;
-procedure li_setup_set_sumode(setup: PLiInstallation;b: Boolean);cdecl;external liblistaller;
+procedure li_setup_set_overrides(setup: PLiInstallation; const str: PChar);cdecl;external liblistaller;
+procedure li_setup_set_sumode(setup: PLiInstallation; b: Boolean);cdecl;external liblistaller;
 function li_setup_sumode(setup: PLiInstallation): Boolean;cdecl;external liblistaller;
 function li_setup_disallows(setup: PLiInstallation): PChar;cdecl;external liblistaller;
 function li_setup_supported_distros(setup: PLiInstallation): PChar;cdecl;external liblistaller;

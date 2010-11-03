@@ -367,14 +367,16 @@ var
 
   procedure Emergency_FreeAll();
   begin
-    if pkg is TLiUnpacker then
-      pkg.Free;
-    if cont is TIPKControl then
-      cont.Free;
+    if Assigned(pkg) then
+      FreeAndNil(pkg);
+    if Assigned(cont) then
+      FreeAndNil(cont);
   end;
 
 begin
   Result := false;
+  pkg := nil;
+  cont := nil;
 
   if (IsRoot) and (not daemonm) then
   begin
