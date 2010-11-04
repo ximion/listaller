@@ -164,7 +164,7 @@ resourcestring
   rsLookingForRevDeps = 'Looking for reverse-dependencies...';
   rsPackageDetected = 'Package detected: %s';
   rsInstallation = 'Installation';
-  rsNoLDSources = 'There are no explicit package sources available for your Linux distribution'#10'Try to install common packages?';
+  rsNoLDSources = 'There are no explicit package sources available for your Linux distribution.'#10'Try to install common packages?';
   rsUseCompPQ = 'Use compatible packages?';
   rsNoComp = 'No compatible packages found!';
   rsActionNotPossiblePkg = 'The selected action is not possible with this package.'#10'Please contact the package maintainer to get more information.';
@@ -176,7 +176,7 @@ resourcestring
   rsLookingForX = 'Looking for %a.';
   rsDownloadingPkg = 'Downloading package...';
   rsInstallingX = 'Installing %a...';
-  rsHashError = 'Hash value doesn''t match!'#10'The package may be modified after creation.'#10'Please obtain a new copy';
+  rsHashError = 'Hash value doesn''t match!'#10'The package may be modified after creation.'#10'Please obtain a new copy!';
   rsInstallationMode = 'Installation mode:';
   rsIModeInstruction = 'Select which parts of the application should be installed.';
   rsMode = 'Mode';
