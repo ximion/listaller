@@ -109,7 +109,7 @@ resourcestring
   rsPackageSigIsUntrusted = 'Package signature is UNTRUSTED!';
   rsOneInstAtTime = 'You cannot install two applications at the same time.' +
     #10'Please finish the first installation, then install this one again.' +
-    #10'(If you do not run two installations, try to remove the temporary installer directory';
+    #10'(If you do not run two installations, try to remove the temporary installer directory.)';
   rsAlreadyInst = 'This application is already installed';
   rsInstallAgain = 'Do you want to install it again?';
   rsWelcomeTo = 'Welcome to the installation of %a';
