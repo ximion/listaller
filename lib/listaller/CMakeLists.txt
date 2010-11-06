@@ -24,7 +24,7 @@ set(llistaller_base_sources ${lisrc}/liversion.inc
 	${lisrc}/softwaredb.pas
 )
 
-set(listaller_libname "${LISTALLER_LIB}.${LIBS_FULL_VERSION}")
+set(listaller_libname "${LISTALLER_LIB}.${LIBS_SOVERSION}")
 
 set(llistaller_includes "-Fu${lisrc}"
 			"-Fu${lisrc}/bind/"

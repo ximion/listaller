@@ -318,30 +318,6 @@ begin
     s := Format(rsInstOf, [setup.GetAppName]);
   //Handle interaction types
   case mtype of
-    LIM_Error:
-    begin
-      Application.MessageBox(Text, 'Error', MB_OK + MB_IconError);
-      if Assigned(IWizFrm) then
-      begin
-        with IWizFrm do
-        begin
-          InfoMemo.Lines.Add(rsInstFailed);
-          InfoMemo.Lines.SaveTofile('/tmp/install-' + setup.GetAppName + '.log');
-          NoteBook1.PageIndex := 6;
-          Label17.Caption := StrSubst(rsCouldNotInstallApp, '%a', setup.GetAppName);
-          SetupFailed := true;
-
-          FinBtn1.Visible := true;
-          AbortBtn1.Visible := false;
-        end;
-      end
-      else
-      begin
-        setup.Free;
-        halt(6); //Kill application
-        exit;
-      end;
-    end;
     LIM_Question_AbortContinue:
     begin
       if Application.MessageBox(Text, PAnsiChar(s), MB_YESNO + MB_IconWarning) <>
@@ -393,26 +369,50 @@ begin
         pinfo(Text);
       end;
     end;
-    LIM_Stage: if Assigned(IWizFrm) then IWizFrm.Label9.Caption := Text;
   end;
 
 end;
 
-procedure StatusHandler(status: LI_STATUS; Data: LiStatusData; udata: Pointer); cdecl;
+procedure StatusHandler(status: LI_STATUS; detail: LiStatusData; udata: Pointer); cdecl;
 begin
   if Assigned(IWizFrm) then
     with IWizFrm do
     begin
       case status of
-        LIS_Progress: InsProgress.Position := Data.mnprogress;
-        LIS_ExProgress:
+        LIS_Progress:
         begin
-          ExProgress.Position := Data.exprogress;
-          if (Data.exprogress = 0) and (ExProgress.Visible = true) then
+          InsProgress.Position := detail.mnprogress;
+          ExProgress.Position := detail.exprogress;
+          if (detail.exprogress = 0) and (ExProgress.Visible = true) then
             ExProgress.Visible := false
           else
             ExProgress.Visible := true;
         end;
+        LIS_Failed:
+    begin
+      Application.MessageBox(detail.text, 'Error', MB_OK + MB_IconError);
+      if Assigned(IWizFrm) then
+      begin
+        with IWizFrm do
+        begin
+          InfoMemo.Lines.Add(rsInstFailed);
+          InfoMemo.Lines.SaveTofile('/tmp/install-' + setup.GetAppName + '.log');
+          NoteBook1.PageIndex := 6;
+          Label17.Caption := StrSubst(rsCouldNotInstallApp, '%a', setup.GetAppName);
+          SetupFailed := true;
+
+          FinBtn1.Visible := true;
+          AbortBtn1.Visible := false;
+        end;
+      end
+      else
+      begin
+        setup.Free;
+        halt(6); //Kill application
+        exit;
+      end;
+    end;
+        LIS_Stage: if Assigned(IWizFrm) then IWizFrm.Label9.Caption := detail.text;
       end;
     end
 
@@ -421,11 +421,11 @@ begin
     with DGForm do
     begin
       case status of
-        LIS_Progress: MainProgress.Position := Data.mnprogress;
-        LIS_ExProgress:
+        LIS_Progress:
         begin
-          DlProgress.Position := Data.exprogress;
-          if (Data.exprogress = 0) and (DlProgress.Visible = true) then
+          MainProgress.Position := detail.mnprogress;
+          DlProgress.Position := detail.exprogress;
+          if (detail.exprogress = 0) and (DlProgress.Visible = true) then
             DlProgress.Visible := false
           else
             DlProgress.Visible := true;

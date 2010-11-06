@@ -41,7 +41,7 @@ if(NOT LIBS_FULL_VERSION)
  message(FATAL_ERROR "Library version not defined. (This should never happen. Do you use the top CMakeLists?)")
 endif()
 
-set_target_properties(listaller-qt PROPERTIES VERSION ${LIBS_FULL_VERSION} SOVERSION ${LIBS_VERSION})
+set_target_properties(listaller-qt PROPERTIES VERSION ${LIBS_FULL_VERSION} SOVERSION ${LIBS_SOVERSION})
 
 target_link_libraries(listaller-qt
     ${KDE4_KDEUI_LIBS}

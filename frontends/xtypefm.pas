@@ -125,9 +125,9 @@ end;
 procedure PkgInitProgressChange(status: LI_STATUS; data: LiStatusData;
     udata: Pointer); cdecl;
 begin
-  if status = LIS_ExProgress then
+  if status = LIS_Progress then
   begin
-    TIMdFrm(udata).LoadProgress.Position := Data.exprogress;
+    TIMdFrm(udata).LoadProgress.Position := data.exprogress;
   end;
   Application.ProcessMessages;
 end;

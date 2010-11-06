@@ -39,13 +39,13 @@ typedef const void* LiAppUpdater;
 
 typedef enum {
       LIS_None,
+      LIS_Stage,
+      LIS_Started,
+      LIS_Progress,
       LIS_Failed,
       LIS_Authorized,
       LIS_Blocked,
-      LIS_Finished,
-      LIS_Started,
-      LIS_Progress,
-      LIS_ExProgress
+      LIS_Finished
 } LI_STATUS;
 
 typedef enum {
@@ -57,9 +57,7 @@ typedef enum {
 typedef enum {
       LIM_None,
       LIM_Info,
-      LIM_Stage,
       LIM_Warning,
-      LIM_Error,
       LIM_Question_YesNo,
       LIM_Question_AbortContinue
 } LI_MESSAGE;
@@ -124,7 +122,7 @@ typedef enum {
 } PkgSignatureState;
 
 
-typedef void (*LiStateEvent) (LI_STATUS status,LiStatusData data,void* user_data);
+typedef void (*LiStateEvent) (LI_STATUS status,LiStatusData details,void* user_data);
 
 typedef LI_REQUEST_RES (*LiMessageEvent) (LI_MESSAGE mtype,const char *text,void* user_data);
 

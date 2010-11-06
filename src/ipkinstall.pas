@@ -23,7 +23,7 @@ interface
 uses
   MD5, Distri, Classes, FTPSend, LiTypes, LiUtils, MTProcs,
   PkTypes, Process, RegExpr, BaseUnix, Blcksock, HTTPSend, IniFiles,
-  SysUtils, DepManage, IPKCDef10, strLocale, liDBusProc, LiFileUtil,
+  SysUtils, DepManage, IPKCDef10, StrLocale, liDBusProc, LiFileUtil,
   PackageKit, SoftwareDB, Backend_IPK, IPKPackage11, ListallerDB, LiStatusObj;
 
 type
@@ -1037,7 +1037,7 @@ begin
     //Uninstall old application
     ipkrm := TIPkBackend.Create;
     ipkrm.RegisterOnMessage(FMessage, message_udata);
-    ipkrm.RegisterOnStatus(FStatus, state_udata);
+    ipkrm.RegisterOnStatus(FStatus, status_udata);
     ipkrm.RootMode := SUMode;
     //!!! TODO
     //ipkrm.Initialize(appInfo);

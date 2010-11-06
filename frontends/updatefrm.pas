@@ -60,7 +60,7 @@ var
   UMnForm: TUMnForm;
 
 //Published, so update display can access it
-procedure OnMgrStatusChange(status: LI_STATUS; Data: LiStatusData;
+procedure OnMgrStatusChange(status: LI_STATUS; sdata: LiStatusData;
   user_data: Pointer); cdecl;
 
 implementation
@@ -98,10 +98,6 @@ function OnMgrMessage(mtype: LI_MESSAGE; const Text: PChar;
 begin
   Result := LIRQS_OK;
   case mtype of
-    LIM_Error:
-    begin
-      Application.MessageBox(Text, 'Error', MB_OK + MB_IconError);
-    end;
     LIM_Question_AbortContinue:
     begin
       if Application.MessageBox(Text, PChar(rsWarning), MB_YESNO +
@@ -125,12 +121,16 @@ begin
   end;
 end;
 
-procedure OnMgrStatusChange(status: LI_STATUS; Data: LiStatusData;
+procedure OnMgrStatusChange(status: LI_STATUS; sdata: LiStatusData;
   user_data: Pointer); cdecl;
 begin
   Application.ProcessMessages;
   case status of
-    LIS_Progress: UMnForm.ProgressBar.Position := data.mnprogress;
+    LIS_Progress: UMnForm.ProgressBar.Position := sdata.mnprogress;
+    LIS_Failed:
+    begin
+      Application.MessageBox(sdata.text, 'Error', MB_OK + MB_IconError);
+    end;
   end;
 end;
 

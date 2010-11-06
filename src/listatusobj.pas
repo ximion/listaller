@@ -32,7 +32,7 @@ type
     FStatus: LiStateEvent;
     FMessage: LiMessageEvent;
     // Callback userdata
-    state_udata: Pointer;
+    status_udata: Pointer;
     message_udata: Pointer;
     //State data
     sdata: LiStatusData;
@@ -60,7 +60,7 @@ implementation
 constructor TLiStatusObject.Create;
 begin
   inherited;
-  state_udata := nil;
+  status_udata := nil;
   message_udata := nil;
 end;
 
@@ -69,7 +69,7 @@ begin
   if CheckPtr(call, 'LiStateEvent') then
   begin
     FStatus := call;
-    state_udata := udata;
+    status_udata := udata;
   end;
 end;
 
@@ -92,18 +92,22 @@ end;
 
 procedure TLiStatusObject.EmitStageMsg(s: String);
 begin
-  if Assigned(FMessage) then
-    FMessage(LIM_Stage, PChar(s), message_udata)
+  sdata.text := PChar(s);
+  if Assigned(FStatus) then
+    FStatus(LIS_Stage, sdata, status_udata)
   else
     pinfo(s);
+  sdata.text := ''; //Zero
 end;
 
 procedure TLiStatusObject.EmitError(msg: String);
 begin
-  if Assigned(FMessage) then
-    FMessage(LIM_Error, PChar(msg), message_udata)
+  sdata.text := PChar(msg);
+  if Assigned(FStatus) then
+    FStatus(LIS_Failed, sdata, status_udata)
   else
     perror(msg);
+  sdata.text := ''; //Zero
 end;
 
 function TLiStatusObject.EmitUserRequestYesNo(s: String): LI_REQUEST_RES;
@@ -134,21 +138,21 @@ procedure TLiStatusObject.EmitProgress(i: Integer);
 begin
   sdata.mnprogress := i;
   if Assigned(FStatus) then
-    FStatus(LIS_Progress, sdata, state_udata);
+    FStatus(LIS_Progress, sdata, status_udata);
 end;
 
 procedure TLiStatusObject.EmitExProgress(i: Integer);
 begin
   sdata.exprogress := i;
   if Assigned(FStatus) then
-    FStatus(LIS_ExProgress, sdata, state_udata);
+    FStatus(LIS_Progress, sdata, status_udata);
 end;
 
 procedure TLiStatusObject.EmitStateChange(state: LI_STATUS; const msg: String = '');
 begin
   sdata.Text := PChar(msg);
   if Assigned(FStatus) then
-    FStatus(state, sdata, state_udata);
+    FStatus(state, sdata, status_udata);
 end;
 
 end.

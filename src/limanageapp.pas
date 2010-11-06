@@ -446,7 +446,7 @@ begin
     pdStatus:
     begin
       if Assigned(FStatus) then
-        FStatus(ty, sdata, state_udata);
+        FStatus(ty, sdata, status_udata);
     end;
   end;
 end;
@@ -455,7 +455,7 @@ function TLiAppManager.RunBackend(backend: TLiBackend; ai: LiAppInfo): Boolean;
 begin
   Result := false;
   // Attach status handler
-  backend.RegisterOnStatus(FStatus, state_udata);
+  backend.RegisterOnStatus(FStatus, status_udata);
   backend.RegisterOnMessage(FMessage, message_udata);
   backend.RootMode := SUMode;
   backend.Initialize(ai);

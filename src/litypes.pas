@@ -43,14 +43,14 @@ type
   PLiAppUpdater = Pointer;
 
   //** Status of current job
-  LI_STATUS = (LIS_None, LIS_Failed, LIS_Authorized, LIS_Blocked, LIS_Finished,
-    LIS_Started, LIS_Progress, LIS_ExProgress);
+  LI_STATUS = (LIS_None, LIS_Stage, LIS_Started, LIS_Progress, LIS_Failed,
+            LIS_Authorized, LIS_Blocked, LIS_Finished);
 
   //** Request result types
   LI_REQUEST_RES = (LIRQS_Yes, LIRQS_No, LIRQS_OK);
 
   //** Different status
-  LI_MESSAGE = (LIM_None, LIM_Info, LIM_Stage, LIM_Warning, LIM_Error, LIM_Question_YesNo, LIM_Question_AbortContinue);
+  LI_MESSAGE = (LIM_None, LIM_Info, LIM_Warning, LIM_Question_YesNo, LIM_Question_AbortContinue);
 
   //** Data assigned to a status change
   LiStatusData = record
@@ -60,7 +60,7 @@ type
   end;
 
   //** Callback for change of status
-  LiStateEvent = procedure(status: LI_STATUS; data: LiStatusData;
+  LiStateEvent = procedure(status: LI_STATUS; details: LiStatusData;
     user_data: Pointer); cdecl;
   //** Callback for messages & user requests
   LiMessageEvent = function(mtype: LI_MESSAGE; const text: PChar;

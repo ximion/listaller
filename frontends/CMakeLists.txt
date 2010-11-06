@@ -56,7 +56,8 @@ add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/${listallmgr_project}-gtk"
 	  MAIN_DEPENDENCY ${listallmgr_gtk_OUT}
 )
 
-add_custom_target(frontendsGTK2 ALL DEPENDS ${listallgo_gtk_OUT}
+add_custom_target(frontendsGTK2 ALL DEPENDS "${PROJECT_BINARY_DIR}/${LISTALLER_LIB}"
+					    ${listallgo_gtk_OUT}
 					    ${listallmgr_gtk_OUT}
 					    ${liupdate_gtk_OUT}
 					    "${CMAKE_BINARY_DIR}/${listallmgr_project}-gtk"
@@ -105,7 +106,8 @@ add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/${listallmgr_project}-qt"
 	  MAIN_DEPENDENCY ${listallmgr_qt_OUT}
 )
 
-add_custom_target(frontendsQt4 ALL DEPENDS ${listallgo_qt_OUT}
+add_custom_target(frontendsQt4 ALL DEPENDS "${PROJECT_BINARY_DIR}/${LISTALLER_LIB}"
+					   ${listallgo_qt_OUT}
 					   ${listallmgr_qt_OUT}
 					   ${liupdate_qt_OUT}
 					   "${CMAKE_BINARY_DIR}/${listallmgr_project}-qt"

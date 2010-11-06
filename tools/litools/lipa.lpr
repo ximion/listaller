@@ -62,7 +62,7 @@ var
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////This will be done if "lipa" is started
 
-  procedure OnSetupStatusChange(status: LI_STATUS; Data: LiStatusData;
+  procedure OnSetupStatusChange(status: LI_STATUS; details: LiStatusData;
     user_data: Pointer); cdecl;
   begin
     case status of
@@ -74,52 +74,60 @@ var
             if xs = 0 then
             begin
               xs := 1;
-              Write(#13' ' + IntToStr(Data.mnprogress) + '%    ');
+              Write(#13' ' + IntToStr(details.mnprogress) + '%    ');
             end
             else
             if xs = 1 then
             begin
               xs := 2;
-              Write(#13' ' + IntToStr(Data.mnprogress) + '%    ');
+              Write(#13' ' + IntToStr(details.mnprogress) + '%    ');
             end
             else
             if xs = 2 then
             begin
               xs := 3;
-              Write(#13' ' + IntToStr(Data.mnprogress) + '%    ');
+              Write(#13' ' + IntToStr(details.mnprogress) + '%    ');
             end
             else
             if xs = 3 then
             begin
               xs := 4;
-              Write(#13' ' + IntToStr(Data.mnprogress) + '%    ');
+              Write(#13' ' + IntToStr(details.mnprogress) + '%    ');
             end
             else
             if xs = 4 then
             begin
               xs := 5;
-              Write(#13' ' + IntToStr(Data.mnprogress) + '%    ');
+              Write(#13' ' + IntToStr(details.mnprogress) + '%    ');
             end
             else
             if xs = 5 then
             begin
               xs := 6;
-              Write(#13' ' + IntToStr(Data.mnprogress) + '%    ');
+              Write(#13' ' + IntToStr(details.mnprogress) + '%    ');
             end
             else
             if xs = 6 then
             begin
               xs := 7;
-              Write(#13' ' + IntToStr(Data.mnprogress) + '%    ');
+              Write(#13' ' + IntToStr(details.mnprogress) + '%    ');
             end
             else
             if xs = 7 then
             begin
               xs := 0;
-              Write(#13' ' + IntToStr(Data.mnprogress) + '%    ');
+              Write(#13' ' + IntToStr(details.mnprogress) + '%    ');
             end;
           end;
         end;
+      LIS_Stage: if not Application.HasOption('verbose') then
+          writeLn(' ' + rsState + ': ' + details.text);
+      LIS_Failed:
+      begin
+        writeLn(' ' + details.text);
+        readln;
+        halt(5);
+      end;
     end;
   end;
 
@@ -149,18 +157,10 @@ var
     case mtype of
       LIM_Info: if not Application.HasOption('verbose') then
           writeLn(' ' + text);
-      LIM_Stage: if not Application.HasOption('verbose') then
-          writeLn(' ' + rsState + ': ' + text);
       LIM_Question_YesNo:
       begin
         writeLn(rsQuestion);
         Result := AskQuestion;
-      end;
-      LIM_Error:
-      begin
-        writeLn(' ' + text);
-        readln;
-        halt(5);
       end;
       LIM_Question_AbortContinue:
       begin

@@ -122,7 +122,7 @@ type
     procedure WarnDistCbChange(Sender: TObject);
     procedure FilterEdtEnter(Sender: TObject);
     procedure FilterEdtExit(Sender: TObject);
-    procedure FilterEdtKeyDown(Sender: TObject; var Key: word; Shift: TShiftState);
+    procedure FilterEdtKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure InstAppButtonClick(Sender: TObject);
@@ -168,7 +168,7 @@ var
 
 //Published for use in uninstall.pas
 function OnMgrMessage(mtype: LI_MESSAGE; const text: PChar;
-                            udata: Pointer): LI_REQUEST_RES; cdecl;
+  udata: Pointer): LI_REQUEST_RES; cdecl;
 
 //NOTE:
 //IMPORTANT: RegDir should be moved to libInstaller!
@@ -195,7 +195,7 @@ begin
   RMForm.ShowModal;
 end;
 
-procedure OnNewAppFound(const name: PChar; obj: PLiAppInfo; udata: Pointer); cdecl;
+procedure OnNewAppFound(const Name: PChar; obj: PLiAppInfo; udata: Pointer); cdecl;
 begin
   with MnFrm do
   begin
@@ -205,26 +205,33 @@ begin
 end;
 
 function OnMgrMessage(mtype: LI_MESSAGE; const text: PChar;
-                            udata: Pointer): LI_REQUEST_RES; cdecl;
+  udata: Pointer): LI_REQUEST_RES; cdecl;
 begin
   Result := LIRQS_OK;
   case mtype of
-    LIM_Error:
-    begin
-      Application.MessageBox(text, PChar(rsError), MB_OK+MB_IconError);
-      RMForm.RmProcStatus := LIS_Failed;
-    end;
-    LIM_Question_AbortContinue: if Application.MessageBox(text, PChar(rsWarning),
-        MB_YesNo+MB_IconWarning) = idYes then
+    LIM_Question_AbortContinue: if Application.MessageBox(text,
+        PChar(rsWarning), MB_YesNo + MB_IconWarning) = idYes then
         Result := LIRQS_Yes
       else
         Result := LIRQS_No;
     LIM_Question_YesNo: if Application.MessageBox(text, PChar(rsQuestion),
-        MB_YesNo+MB_IconQuestion) = idYes then
+        MB_YesNo + MB_IconQuestion) = idYes then
         Result := LIRQS_Yes
       else
         Result := LIRQS_No;
     LIM_Info: pinfo(text);
+  end;
+end;
+
+procedure OnMgrStatus(status: LI_STATUS; detail: LiStatusData;
+  user_data: Pointer); cdecl;
+begin
+  case status of
+    LIS_Failed:
+    begin
+      Application.MessageBox(detail.text, PChar(rsError), MB_OK + MB_IconError);
+      RMForm.RmProcStatus := LIS_Failed;
+    end;
   end;
 end;
 
@@ -302,34 +309,34 @@ begin
 
   with IList do
   begin
-    tm.LoadFromFile(a+'all.png');
+    tm.LoadFromFile(a + 'all.png');
     bmp.canvas.draw(0, 0, tm.Graphic);
     Add(bmp, nil);
-    tm.LoadFromFile(a+'science.png');
+    tm.LoadFromFile(a + 'science.png');
     bmp.canvas.draw(0, 0, tm.Graphic);
     Add(bmp, nil);
-    tm.LoadFromFile(a+'office.png');
+    tm.LoadFromFile(a + 'office.png');
     bmp.canvas.draw(0, 0, tm.Graphic);
     Add(bmp, nil);
-    tm.LoadFromFile(a+'development.png');
+    tm.LoadFromFile(a + 'development.png');
     bmp.canvas.draw(0, 0, tm.Graphic);
     Add(bmp, nil);
-    tm.LoadFromFile(a+'graphics.png');
+    tm.LoadFromFile(a + 'graphics.png');
     bmp.canvas.draw(0, 0, tm.Graphic);
     Add(bmp, nil);
-    tm.LoadFromFile(a+'internet.png');
+    tm.LoadFromFile(a + 'internet.png');
     bmp.canvas.draw(0, 0, tm.Graphic);
     Add(bmp, nil);
-    tm.LoadFromFile(a+'games.png');
+    tm.LoadFromFile(a + 'games.png');
     bmp.canvas.draw(0, 0, tm.Graphic);
     Add(bmp, nil);
-    tm.LoadFromFile(a+'system.png');
+    tm.LoadFromFile(a + 'system.png');
     bmp.canvas.draw(0, 0, tm.Graphic);
     Add(bmp, nil);
-    tm.LoadFromFile(a+'multimedia.png');
+    tm.LoadFromFile(a + 'multimedia.png');
     bmp.canvas.draw(0, 0, tm.Graphic);
     Add(bmp, nil);
-    tm.LoadFromFile(a+'other.png');
+    tm.LoadFromFile(a + 'other.png');
     bmp.canvas.draw(0, 0, tm.Graphic);
     Add(bmp, nil);
   end;
@@ -343,7 +350,7 @@ begin
   begin
     SUApps := false;
     li_mgr_set_sumode(@aMgr, SuApps);
-    if (appList.Count<=0)or(force) then
+    if (appList.Count <= 0) or (force) then
     begin
       appList.ClearList;
 { if appList is TAppListView then appList.Free;
@@ -352,18 +359,18 @@ begin
     end;
   end
   else
-    if currAppList = appListSU then
+  if currAppList = appListSU then
+  begin
+    SUApps := true;
+    li_mgr_set_sumode(@aMgr, SuApps);
+    if (appListSU.Count <= 0) or (force) then
     begin
-      SUApps := true;
-      li_mgr_set_sumode(@aMgr, SuApps);
-      if (appListSU.Count<=0)or(force) then
-      begin
-        appListSU.ClearList;
+      appListSU.ClearList;
   {if appListSU is TAppListView then appListSU.Free;
  appListSU:=CreateNewSuAppList;}
-        li_mgr_load_apps(@aMgr, fAllApps);
-      end;
+      li_mgr_load_apps(@aMgr, fAllApps);
     end;
+  end;
 end;
 
 procedure TMnFrm.appListItemSelect(Sender: TObject; item: TAppInfoItem);
@@ -372,7 +379,7 @@ begin
     AppImage.Picture.LoadFromFile(item.IconPath);
   AppNameLbl.Caption := item.Name;
   AppDescLbl.Caption := item.SDesc;
-  if item.Version<>'' then
+  if item.Version <> '' then
     AppVersionLbl.Caption := item.Version
   else
     AppVersionLbl.Caption := rsVersionUnknown;
@@ -391,27 +398,29 @@ var
 begin
   p := TProcess.Create(nil);
   p.Options := [poUsePipes];
-  p.CommandLine:='';
+  p.CommandLine := '';
   if DInfo.DBase = 'KDE' then
   begin
     if FileExists(FindBinary('kpackagekit')) then
-      p.CommandLine := FindBinary('kpackagekit')+' --settings'
+      p.CommandLine := FindBinary('kpackagekit') + ' --settings'
     else
       p.CommandLine := FindBinary('gpk-repo');
   end
   else
   begin
-    if (DInfo.DName='Ubuntu')or(DInfo.DName='Debian') then
+    if (DInfo.DName = 'Ubuntu') or (DInfo.DName = 'Debian') then
     begin
-      if (FileExists(FindBinary('software-properties-gtk')))
-      and(FileExists(FindBinary('gksu'))) then
-       p.CommandLine := 'gksu --desktop /usr/share/applications/software-properties-gtk.desktop '+FindBinary('gpk-repo')
+      if (FileExists(FindBinary('software-properties-gtk'))) and
+        (FileExists(FindBinary('gksu'))) then
+        p.CommandLine :=
+          'gksu --desktop /usr/share/applications/software-properties-gtk.desktop ' +
+          FindBinary('gpk-repo');
     end;
     if p.CommandLine = '' then
-    if FileExists(FindBinary('gpk-repo')) then
-      p.CommandLine := FindBinary('gpk-repo')
-    else
-      p.CommandLine := FindBinary('kpackagekit');
+      if FileExists(FindBinary('gpk-repo')) then
+        p.CommandLine := FindBinary('gpk-repo')
+      else
+        p.CommandLine := FindBinary('kpackagekit');
   end;
   Notebook1.Enabled := false;
   BtnPanel.Enabled := false;
@@ -441,12 +450,12 @@ begin
   if DInfo.DBase = 'KDE' then
   begin
     if (DInfo.DName = 'Ubuntu') then
-        p.CommandLine := FindBinary('kpackagekit')
+      p.CommandLine := FindBinary('kpackagekit')
     else
-      if FileExists(FindBinary('kpackagekit')) then
-        p.CommandLine := FindBinary('kpackagekit')
-      else
-        p.CommandLine := FindBinary('gpk-application');
+    if FileExists(FindBinary('kpackagekit')) then
+      p.CommandLine := FindBinary('kpackagekit')
+    else
+      p.CommandLine := FindBinary('gpk-application');
   end
   else
   begin
@@ -456,10 +465,10 @@ begin
       else
         p.CommandLine := FindBinary('gpk-application')
     else
-      if FileExists(FindBinary('gpk-application')) then
-        p.CommandLine := FindBinary('gpk-application')
-      else
-        p.CommandLine := FindBinary('kpackagekit');
+    if FileExists(FindBinary('gpk-application')) then
+      p.CommandLine := FindBinary('gpk-application')
+    else
+      p.CommandLine := FindBinary('kpackagekit');
   end;
   if not FileExists(p.CommandLine) then
   begin
@@ -490,7 +499,7 @@ begin
   InstAppButton.Down := false;
   //Now load the configuration
 
-  cnf := TIniFile.Create(ConfigDir+'config.cnf');
+  cnf := TIniFile.Create(ConfigDir + 'config.cnf');
   EnableProxyCb.Checked := cnf.ReadBool('Proxy', 'UseProxy', false);
   Edit1.Text := cnf.ReadString('Proxy', 'Server', '');
   SpinEdit1.Value := cnf.ReadInteger('Proxy', 'Port', 0);
@@ -498,7 +507,7 @@ begin
   cnf.Free;
   if Edit1.Text = '' then
   begin
-    if (mnFrm.DInfo.DBase = 'GNOME')and(FileExists('/usr/bin/gconftool-2')) then
+    if (mnFrm.DInfo.DBase = 'GNOME') and (FileExists('/usr/bin/gconftool-2')) then
     begin
       if CmdResult('gconftool-2 -g /system/http_proxy/use_http_proxy') = 'true' then
         EnableProxyCb.Checked := true
@@ -523,14 +532,14 @@ procedure TMnFrm.Button1Click(Sender: TObject);
 var
   p: TProcess;
 begin
-  if not FileExists(ExtractFilePath(ParamStr(0))+'litray') then
+  if not FileExists(ExtractFilePath(ParamStr(0)) + 'litray') then
   begin
     ShowMessage(rsNotFoundliTray);
     exit;
   end;
   p := TProcess.Create(nil);
   p.Options := [];
-  p.CommandLine := ExtractFilePath(ParamStr(0))+'litray';
+  p.CommandLine := ExtractFilePath(ParamStr(0)) + 'litray';
   p.Execute;
   p.Free;
 end;
@@ -568,7 +577,7 @@ begin
   end
   else
   begin
-    for i := 0 to currAppList.Count-1 do
+    for i := 0 to currAppList.Count - 1 do
     begin
       Application.ProcessMessages;
       //FIXME!
@@ -592,7 +601,7 @@ var
   ini: TIniFile;
 begin
   h := ConfigDir;
-  ini := TIniFile.Create(h+'config.cnf');
+  ini := TIniFile.Create(h + 'config.cnf');
   ini.WriteBool('MainConf', 'AutoDepLoad', (Sender as TCheckBox).Checked);
   ini.Free;
 end;
@@ -603,7 +612,7 @@ var
   ini: TIniFile;
 begin
   h := ConfigDir;
-  ini := TIniFile.Create(h+'config.cnf');
+  ini := TIniFile.Create(h + 'config.cnf');
   ini.WriteBool('MainConf', 'ShowPkMon', (Sender as TCheckBox).Checked);
   ini.Free;
 end;
@@ -636,7 +645,7 @@ begin
     Label5.Enabled := false;
   end;
   p := ConfigDir;
-  cnf := TIniFile.Create(p+'config.cnf');
+  cnf := TIniFile.Create(p + 'config.cnf');
   cnf.WriteBool('Proxy', 'UseProxy', (Sender as TCheckBox).Checked);
   cnf.Free;
 end;
@@ -646,19 +655,22 @@ procedure TMnFrm.FuncListMouseUp(Sender: TObject; Button: TMouseButton;
 var
   item: TListItem;
 begin
-  if FuncList.SelCount = 0 then exit;
-  item := FuncList.GetItemAt(x,y);
+  if FuncList.SelCount = 0 then
+    exit;
+  item := FuncList.GetItemAt(x, y);
   //Required cause SelectItem() event does not work by itself
   if item is TListItem then
-   FuncListSelectItem(Sender, item, true);
+    FuncListSelectItem(Sender, item, true);
 end;
 
 procedure TMnFrm.FuncListSelectItem(Sender: TObject; Item: TListItem;
   Selected: Boolean);
 begin
   //??? Does not work: Event does not call this function. Bug in LCL?
-  if not Selected then exit;
-  case Item.ImageIndex of //We use ImageIndex cause order of buttons my change due localisation
+  if not Selected then
+    exit;
+  case Item.ImageIndex of
+    //We use ImageIndex cause order of buttons my change due localisation
     0: InstAppButtonClick(Sender);
     1: BtnCatClick(Sender);
     2: RepoButtonClick(Sender);
@@ -675,7 +687,7 @@ var
   procedure LogQ;
   begin
     if Application.MessageBox(PAnsiChar(rsViewLogQ), 'ViewLog',
-      MB_YESNO+MB_IconQuestion) = idYes then
+      MB_YESNO + MB_IconQuestion) = idYes then
       ShowMessage(rep.Text);
   end;
 
@@ -687,7 +699,7 @@ var
     if not li_mgr_check_apps(@appcheckmgr, @rep, root) then
     begin
       if Application.MessageBox(PAnsiChar(rsBrokenDepsFixQ), 'FixDeps',
-        MB_YESNO+MB_IconQuestion) = idYes then
+        MB_YESNO + MB_IconQuestion) = idYes then
         li_mgr_fix_apps(@appcheckmgr, @rep, root);
     end;
     Notebook1.Visible := true;
@@ -698,13 +710,13 @@ var
 begin
   root := false;
   if Application.MessageBox(PAnsiChar(rsCheckAppDepsQ), PChar(rsCheckDepsQ),
-    MB_YESNO+MB_IconQuestion) = idYes then
+    MB_YESNO + MB_IconQuestion) = idYes then
   begin
     LeftBar.Enabled := false;
     rep := TStringList.Create;
     appcheckmgr := li_mgr_new; //New appmanager
     if Application.MessageBox(PAnsiChar(rsCheckRootAppsQ), PChar(rsCheckDepsQ),
-      MB_YESNO+MB_IconQuestion) = idYes then
+      MB_YESNO + MB_IconQuestion) = idYes then
     begin
       PerformCheck;
       root := true;
@@ -736,12 +748,12 @@ begin
   if OpenDialog1.Execute then
     if FileExists(OpenDialog1.Filename) then
     begin
-      if (LowerCase(ExtractFileExt(OpenDialog1.FileName)) = '.ipk')  or
+      if (LowerCase(ExtractFileExt(OpenDialog1.FileName)) = '.ipk') or
         (LowerCase(ExtractFileExt(OpenDialog1.FileName)) = '.xz') then
       begin
         p := TProcess.Create(nil);
         p.Options := [];
-        p.CommandLine := ExtractFilePath(Application.ExeName)+'listallgo '+
+        p.CommandLine := ExtractFilePath(Application.ExeName) + 'listallgo ' +
           OpenDialog1.Filename;
         p.Execute;
         MnFrm.Hide;
@@ -759,50 +771,49 @@ begin
             p := TProcess.Create(nil);
             p.Options := [poWaitOnExit, poNewConsole];
             Application.ProcessMessages;
-            p.CommandLine := 'xdg-open '+''''+OpenDialog1.FileName+'''';
+            p.CommandLine := 'xdg-open ' + '''' + OpenDialog1.FileName + '''';
             p.Execute;
             p.Free;
             exit;
           end
           else
-            if Application.MessageBox(PAnsiChar(
-              StrSubst(StrSubst(rsConvertPkg, '%x', 'DEB'),
-              '%y', 'RPM')), PAnsiChar(rsConvertPkgQ),
-              MB_YESNO) = idYes then
+          if Application.MessageBox(PAnsiChar(
+            StrSubst(StrSubst(rsConvertPkg, '%x', 'DEB'), '%y', 'RPM')),
+            PAnsiChar(rsConvertPkgQ), MB_YESNO) = idYes then
+          begin
+            with ConvDisp do
             begin
-              with ConvDisp do
-              begin
-                if not FileExists('/usr/bin/alien') then
-                  if Application.MessageBox(PChar(rsListallerAlien),
-                    PChar(rsInstPkgQ), MB_YESNO) = idYes then
-                  begin
-                    ShowMessage(rsplWait);
-                    pkit := TPackageKit.Create;
-                    pkit.InstallPkg('alien');
-                    while not pkit.Finished do
-                      Application.ProcessMessages;
+              if not FileExists('/usr/bin/alien') then
+                if Application.MessageBox(PChar(rsListallerAlien),
+                  PChar(rsInstPkgQ), MB_YESNO) = idYes then
+                begin
+                  ShowMessage(rsplWait);
+                  pkit := TPackageKit.Create;
+                  pkit.InstallPkg('alien');
+                  while not pkit.Finished do
+                    Application.ProcessMessages;
 
-                    if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
-                    begin
-                      ShowMessage(StrSubst(rsPkgInstFail, '%p',
-                        'alien'));
-                      pkit.Free;
-                      exit;
-                    end;
+                  if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
+                  begin
+                    ShowMessage(StrSubst(rsPkgInstFail, '%p',
+                      'alien'));
                     pkit.Free;
-                  end
-                  else
                     exit;
-                Application.ProcessMessages;
-                Caption := StringReplace(rsConvTitle, '%p', 'DEB', [rfReplaceAll]);
-                Process1.CommandLine :=
-                  'alien --to-rpm -v -i --scripts '+''''+  OpenDialog1.FileName+'''';
-                GetOutPutTimer.Enabled := true;
-                Process1.Execute;
-                ShowModal;
-              end;
-              exit;
+                  end;
+                  pkit.Free;
+                end
+                else
+                  exit;
+              Application.ProcessMessages;
+              Caption := StringReplace(rsConvTitle, '%p', 'DEB', [rfReplaceAll]);
+              Process1.CommandLine :=
+                'alien --to-rpm -v -i --scripts ' + '''' + OpenDialog1.FileName + '''';
+              GetOutPutTimer.Enabled := true;
+              Process1.Execute;
+              ShowModal;
             end;
+            exit;
+          end;
         if (LowerCase(ExtractFileExt(OpenDialog1.FileName)) = '.rpm') then
           if DInfo.PackageSystem = 'RPM' then
           begin
@@ -810,49 +821,49 @@ begin
             p := TProcess.Create(nil);
             p.Options := [poWaitOnExit, poNewConsole];
             Application.ProcessMessages;
-            p.CommandLine := 'xdg-open '+''''+OpenDialog1.FileName+'''';
+            p.CommandLine := 'xdg-open ' + '''' + OpenDialog1.FileName + '''';
             p.Execute;
             p.Free;
             exit;
           end
           else
-            if Application.MessageBox(PAnsiChar(
-              StringReplace(StringReplace(rsConvertPkg, '%x', 'RPM', [rfReplaceAll]),
-              '%y', 'DEB', [rfReplaceAll])), PAnsiChar(rsConvertPkgQ),
-              MB_YESNO) = idYes then
+          if Application.MessageBox(PAnsiChar(
+            StringReplace(StringReplace(rsConvertPkg, '%x', 'RPM', [rfReplaceAll]),
+            '%y', 'DEB', [rfReplaceAll])), PAnsiChar(rsConvertPkgQ),
+            MB_YESNO) = idYes then
+          begin
+            with ConvDisp do
             begin
-              with ConvDisp do
-              begin
 
-                if not FileExists('/usr/bin/alien') then
-                  if Application.MessageBox(PChar(rsListallerAlien),
-                    PChar(rsInstPkgQ), MB_YESNO) = idYes then
+              if not FileExists('/usr/bin/alien') then
+                if Application.MessageBox(PChar(rsListallerAlien),
+                  PChar(rsInstPkgQ), MB_YESNO) = idYes then
+                begin
+                  ShowMessage(rsplWait);
+                  pkit.InstallPkg('alien');
+
+                  if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
                   begin
-                    ShowMessage(rsplWait);
-                    pkit.InstallPkg('alien');
-
-                    if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
-                    begin
-                      ShowMessage(StringReplace(rsPkgInstFail, '%p',
-                        'alien', [rfreplaceAll]));
-                      pkit.Free;
-                      exit;
-                    end;
+                    ShowMessage(StringReplace(rsPkgInstFail, '%p',
+                      'alien', [rfreplaceAll]));
                     pkit.Free;
-                  end
-                  else
                     exit;
+                  end;
+                  pkit.Free;
+                end
+                else
+                  exit;
 
-                Application.ProcessMessages;
-                Caption := StringReplace(rsConvTitle, '%p', 'RPM', [rfReplaceAll]);
-                Process1.CommandLine :=
-                  'alien --to-deb -v -i --scripts '+''''+  OpenDialog1.FileName+'''';
-                GetOutPutTimer.Enabled := true;
-                Process1.Execute;
-                ShowModal;
-              end;
-              exit;
+              Application.ProcessMessages;
+              Caption := StringReplace(rsConvTitle, '%p', 'RPM', [rfReplaceAll]);
+              Process1.CommandLine :=
+                'alien --to-deb -v -i --scripts ' + '''' + OpenDialog1.FileName + '''';
+              GetOutPutTimer.Enabled := true;
+              Process1.Execute;
+              ShowModal;
             end;
+            exit;
+          end;
 
       end;
     end;
@@ -890,15 +901,15 @@ procedure TMnFrm.RmUpdSrcBtnClick(Sender: TObject);
 var
   uconf: TStringList;
 begin
-  if UListBox.ItemIndex>-1 then
+  if UListBox.ItemIndex > -1 then
   begin
     if Application.MessageBox(PChar(rsRmSrcQ), PChar(rsRmSrcQC),
-      MB_YESNO+  MB_IconWarning) = idYes then
+      MB_YESNO + MB_IconWarning) = idYes then
     begin
       uconf := TStringList.Create;
-      uconf.LoadFromFile(PkgRegDir+'updates.list');
-      uconf.Delete(UListBox.ItemIndex+1);
-      uconf.SaveToFile(PkgRegDir+'updates.list');
+      uconf.LoadFromFile(PkgRegDir + 'updates.list');
+      uconf.Delete(UListBox.ItemIndex + 1);
+      uconf.SaveToFile(PkgRegDir + 'updates.list');
       uconf.Free;
       UListBox.Items.Delete(UListBox.ItemIndex);
       ShowMessage(rsSourceDeleted);
@@ -929,14 +940,14 @@ var
   h: String;
 begin
   uconf := TStringList.Create;
-  uconf.LoadFromFile(PkgRegDir+'updates.list');
-  h := uconf[UListBox.ItemIndex+1];
+  uconf.LoadFromFile(PkgRegDir + 'updates.list');
+  h := uconf[UListBox.ItemIndex + 1];
   if UListBox.Checked[UListBox.ItemIndex] then
     h[1] := '-'
   else
     h[1] := '#';
-  uconf[UListBox.ItemIndex+1] := h;
-  uconf.SaveToFile(PkgRegDir+'updates.list');
+  uconf[UListBox.ItemIndex + 1] := h;
+  uconf.SaveToFile(PkgRegDir + 'updates.list');
   uconf.Free;
 end;
 
@@ -949,11 +960,11 @@ procedure TMnFrm.UpdCheckBtnClick(Sender: TObject);
 var
   p: TProcess;
 begin
-  if FileExists(ExtractFilePath(Application.ExeName)+'liupdate') then
+  if FileExists(ExtractFilePath(Application.ExeName) + 'liupdate') then
   begin
     p := TProcess.Create(nil);
     p.Options := [];
-    p.CommandLine := ExtractFilePath(Application.ExeName)+'liupdate';
+    p.CommandLine := ExtractFilePath(Application.ExeName) + 'liupdate';
     p.Execute;
     p.Free;
   end
@@ -967,7 +978,7 @@ var
   ini: TIniFile;
 begin
   h := ConfigDir;
-  ini := TIniFile.Create(h+'config.cnf');
+  ini := TIniFile.Create(h + 'config.cnf');
   ini.WriteBool('MainConf', 'DistroWarning', (Sender as TCheckBox).Checked);
   ini.Free;
 end;
@@ -984,7 +995,7 @@ begin
     FilterEdt.Text := rsFilter;
 end;
 
-procedure TMnFrm.FilterEdtKeyDown(Sender: TObject; var Key: word; Shift: TShiftState);
+procedure TMnFrm.FilterEdtKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 var
   i: Integer;
 begin
@@ -995,8 +1006,8 @@ begin
     CBox.Enabled := false;
     Application.ProcessMessages;
 
-    if ((FilterEdt.Text = ' ')  or (FilterEdt.Text = '*')  or
-      (FilterEdt.Text = rsFilter)  or (FilterEdt.Text = '')) then
+    if ((FilterEdt.Text = ' ') or (FilterEdt.Text = '*') or
+      (FilterEdt.Text = rsFilter) or (FilterEdt.Text = '')) then
     begin
       appResList.ClearList;
       appResList.Visible := false;
@@ -1007,13 +1018,13 @@ begin
       StatusBar1.Panels[0].Text := rsFiltering;
       appResList.ClearList;
       appResList.Parent := currAppList.Parent;
-      for i := 0 to currAppList.Count-1 do
+      for i := 0 to currAppList.Count - 1 do
       begin
         Application.ProcessMessages;
-        if ((pos(LowerCase(FilterEdt.Text), LowerCase(currAppList.AppItems[i].Name))>
-          0)  or (pos(LowerCase(FilterEdt.Text),
-          LowerCase(currAppList.AppItems[i].SDesc))>0))  and
-          (LowerCase(FilterEdt.Text)<>LowerCase(currAppList.AppItems[i].Name)) then
+        if ((pos(LowerCase(FilterEdt.Text), LowerCase(currAppList.AppItems[i].Name)) >
+          0) or (pos(LowerCase(FilterEdt.Text),
+          LowerCase(currAppList.AppItems[i].SDesc)) > 0)) and
+          (LowerCase(FilterEdt.Text) <> LowerCase(currAppList.AppItems[i].Name)) then
         begin
           appResList.AddItem(currAppList.AppItems[i]);
         end;
@@ -1050,7 +1061,7 @@ begin
   SuApps := IsRoot;
 
   //Set reg-dir
-  PkgRegDir := SyblToPath('$INST')+'/'+LI_APPDB_PREF;
+  PkgRegDir := SyblToPath('$INST') + '/' + LI_APPDB_PREF;
 
 
   li_mgr_set_sumode(@aMgr, SuApps);
@@ -1062,18 +1073,18 @@ begin
   PageControl1.ActivePageIndex := 0;
 
   tmp := TStringList.Create;
-  if not FileExists(PkgRegDir+'updates.list') then
+  if not FileExists(PkgRegDir + 'updates.list') then
   begin
     tmp.Add('Listaller UpdateSources-pk0.8');
-    tmp.SaveToFile(PkgRegDir+'updates.list');
+    tmp.SaveToFile(PkgRegDir + 'updates.list');
   end;
-  tmp.LoadFromFile(PkgRegDir+'updates.list');
-  for i := 1 to tmp.Count-1 do
+  tmp.LoadFromFile(PkgRegDir + 'updates.list');
+  for i := 1 to tmp.Count - 1 do
   begin
-    UListBox.items.Add(copy(tmp[i], pos(' (', tmp[i])+2,
-      length(tmp[i])-pos(' (', tmp[i])-2)+  ' ('+copy(tmp[i], 3,
-      pos(' (', tmp[i])-3)+')');
-    UListBox.Checked[UListBox.Items.Count-1] := tmp[i][1] = '-';
+    UListBox.items.Add(copy(tmp[i], pos(' (', tmp[i]) + 2,
+      length(tmp[i]) - pos(' (', tmp[i]) - 2) + ' (' + copy(tmp[i], 3,
+      pos(' (', tmp[i]) - 3) + ')');
+    UListBox.Checked[UListBox.Items.Count - 1] := tmp[i][1] = '-';
   end;
 
   //New applist for user-apps
@@ -1145,7 +1156,7 @@ end;}
   li_mgr_register_app_call(@amgr, @OnNewAppFound, nil);
 
   //Register callback to be notified if status was changed
-   //li_mgr_register_status_call(@amgr, @OnMgrStatus, nil);
+  li_mgr_register_status_call(@amgr, @OnMgrStatus, nil);
 
   //Register message call
   li_mgr_register_message_call(@amgr, @OnMgrMessage, nil);
@@ -1156,7 +1167,7 @@ end;}
   pic := TPicture.Create;
   //Enable some Widgetset-dependent stuff
 
-  { GTK2 special stuff does not work with some new versions of GTK+
+  (* GTK2 special stuff does not work with some new versions of GTK+
   {$IFDEF LCLGtk2}
    LeftBar.Visible := false;
    with ImageList1 do
@@ -1177,22 +1188,22 @@ end;}
    FuncList.Items[3].Caption := rsPackageLists;
    FuncList.ItemIndex := 0;
   {$ELSE}
-  }
-   FuncList.Visible := false;
-   pic.LoadFromFile(GetDataFile('graphics/icon48-appremove.png'));
-   InstAppButton.Glyph.Assign(pic.Bitmap);
-   pic.LoadFromFile(GetDataFile('graphics/icon48-catalog.png'));
-   CatButton.Glyph.Assign(pic.Bitmap);
-   pic.LoadFromFile(GetDataFile('graphics/icon48-repository.png'));
-   RepoButton.Glyph.Assign(pic.Bitmap);
-   pic.LoadFromFile(GetDataFile('graphics/icon48-settings.png'));
-   SettingsButton.Glyph.Assign(pic.Bitmap);
+  *)
+  FuncList.Visible := false;
+  pic.LoadFromFile(GetDataFile('graphics/icon48-appremove.png'));
+  InstAppButton.Glyph.Assign(pic.Bitmap);
+  pic.LoadFromFile(GetDataFile('graphics/icon48-catalog.png'));
+  CatButton.Glyph.Assign(pic.Bitmap);
+  pic.LoadFromFile(GetDataFile('graphics/icon48-repository.png'));
+  RepoButton.Glyph.Assign(pic.Bitmap);
+  pic.LoadFromFile(GetDataFile('graphics/icon48-settings.png'));
+  SettingsButton.Glyph.Assign(pic.Bitmap);
 
-   //Load translation
-   InstAppButton.Caption := rsApplications;//rsInstalledApps;
-   RepoButton.Caption := rsRepositories;
-   SettingsButton.Caption := rsSettings;
-   CatButton.Caption := rsPackageLists;
+  //Load translation
+  InstAppButton.Caption := rsApplications;//rsInstalledApps;
+  RepoButton.Caption := rsRepositories;
+  SettingsButton.Caption := rsSettings;
+  CatButton.Caption := rsPackageLists;
   //{$ENDIF}
   pic.Free;
 
@@ -1206,8 +1217,8 @@ end;}
   MyAppSheet.Caption := rsMyApps;
   SysAppSheet.Caption := rsSharedApps;
   //Translate config page
-  edtUsername.Caption := rsUsername+':';
-  edtPasswd.Caption := rsPassword+':';
+  edtUsername.Caption := rsUsername + ':';
+  edtPasswd.Caption := rsPassword + ':';
   EnableProxyCb.Caption := rsEnableProxy;
   GroupBox1.Caption := rsProxySettings;
   AutoDepLdCb.Caption := rsAutoLoadDep;
@@ -1232,7 +1243,7 @@ procedure TMnFrm.FormDestroy(Sender: TObject);
     cnf: TIniFile;
   begin
     p := ConfigDir;
-    cnf := TIniFile.Create(p+'config.cnf');
+    cnf := TIniFile.Create(p + 'config.cnf');
     cnf.WriteString('Proxy', 'hServer', Edit1.Text);
     cnf.WriteInteger('Proxy', 'hPort', SpinEdit1.Value);
 
