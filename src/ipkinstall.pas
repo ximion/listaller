@@ -90,6 +90,8 @@ type
     daemonm: Boolean;
     //Testmode
     FTestMode: Boolean;
+    // IPK extractor
+    unpkg: TLiUnpacker;
 
     //Set superuser mode correctly
     procedure SetRootMode(b: Boolean);
@@ -191,6 +193,9 @@ begin
   else
     RegDir := SyblToPath('$INST', FTestMode) + '/' + LI_APPDB_PREF;
 
+  pkProfiles := nil;
+  dependencies := nil;
+  unpkg := nil;
   //Create text containers
   license := TStringList.Create;
   longdesc := TStringList.Create;
@@ -206,9 +211,10 @@ begin
   if PkgName <> '' then
     DeleteDirectory(tmpdir + PkgName, false);
   sdb.Free;
-  EmitInfoMsg(rsDBConnClosed);
   if Assigned(Dependencies) then
-    Dependencies.Free;
+    FreeAndNil(Dependencies);
+  if Assigned(unpkg) then
+    FreeAndNil(unpkg);
   license.Free;
   longdesc.Free;
   mofiles.Free;
@@ -357,7 +363,6 @@ end;
 
 function TLiInstallation.Initialize(fname: String): Boolean;
 var
-  pkg: TLiUnpacker;
   n: String;
   i: Integer;
   DInfo: TDistroInfo;
@@ -367,15 +372,18 @@ var
 
   procedure Emergency_FreeAll();
   begin
-    if Assigned(pkg) then
-      FreeAndNil(pkg);
     if Assigned(cont) then
       FreeAndNil(cont);
+    if Assigned(dependencies) then
+       FreeAndNil(dependencies);
+    if Assigned(pkProfiles) then
+          FreeAndNil(pkProfiles);;
   end;
 
 begin
   Result := false;
-  pkg := nil;
+  if Assigned(unpkg) then
+    FreeAndNil(unpkg);
   cont := nil;
 
   if (IsRoot) and (not daemonm) then
@@ -428,21 +436,21 @@ begin
     exit;
   end;
 
-  pkg := TLiUnpacker.Create(fname);
+  unpkg := TLiUnpacker.Create(fname);
   if not SUMode then
   begin
     try
-      pkg.Prepare;
+      unpkg.Prepare;
     except
       on E: Exception do
         EmitError(rsPkgDM + #10 + rsABLoad + #10 + E.Message);
     end;
   end
   else
-  if not FileExists(CleanFilePath(pkg.WDir + '/ipktar.tar')) then
+  if not FileExists(CleanFilePath(unpkg.WDir + '/ipktar.tar')) then
   begin
     try
-      pkg.Prepare;
+      unpkg.Prepare;
     except
       on E: Exception do
         EmitError(rsPkgDM + #10 + rsABLoad + #10 + E.Message);
@@ -451,7 +459,7 @@ begin
 
   if not daemonm then  //If running as daemon, don't check signature
   begin
-    sigState := pkg.CheckSignature;
+    sigState := unpkg.CheckSignature;
     case sigState of
       psNone: EmitInfoMsg(rsPackageIsUnsigned);
       psTrusted: EmitInfoMsg(rsPackageHasTrustedSign);
@@ -459,7 +467,7 @@ begin
     end;
   end;
 
-  if not pkg.UnpackControlFile('arcinfo.pin') then
+  if not unpkg.UnpackControlFile('arcinfo.pin') then
   begin
     EmitError(rsExtractError + #10 + rsPkgDM + #10 + rsABLoad);
     Emergency_FreeAll();
@@ -470,7 +478,7 @@ begin
   PkgName := ExtractFileName(fname);
   PkgPath := fname;
 
-  cont := TIPKControl.Create(pkg.WDir + '/arcinfo.pin'); //Read IPK configuration
+  cont := TIPKControl.Create(unpkg.WDir + '/arcinfo.pin'); //Read IPK configuration
 
   cont.LangCode := GetLangID; //Set language code, so we get localized entries
 
@@ -486,8 +494,7 @@ begin
     (LowerCase(cont.Architecture) <> 'all') and (pos('architecture', forces) <= 0) then
   begin
     EmitError(rsInvArchitecture);
-    cont.Free;
-    pkg.Free;
+    Emergency_FreeAll();
     Result := false;
     exit;
   end;
@@ -495,8 +502,8 @@ begin
   IIconPath := cont.Icon;
   if IIconPath <> '' then
   begin
-    pkg.UnpackControlFile(IIconPath);
-    IIconPath := CleanFilePath(pkg.WDir + IIconPath);
+    unpkg.UnpackControlFile(IIconPath);
+    IIconPath := CleanFilePath(unpkg.WDir + IIconPath);
   end;
 
   //Detect distribution details
@@ -531,7 +538,7 @@ begin
     begin
       EmitInfoMsg(StrSubst(rsFoundInstallProfileX, '%s',
         PkProfiles[PkProfiles.Count - 1]));
-      pkg.UnpackControlFile('pkgdata/fileinfo-' + IntToStr(i) + '.id');
+      unpkg.UnpackControlFile('pkgdata/fileinfo-' + IntToStr(i) + '.id');
     end;
 
     IAppName := cont.AppName;
@@ -566,23 +573,23 @@ begin
     FWizImage := GetDataFile('graphics/wizardimage.png');
     if (FWizImage <> '') and (FWizImage[1] = '/') then
     begin
-      pkg.UnpackControlFile(FWizImage);
-      if FileExists(pkg.WDir + FWizImage) then
-        FWizImage := CleanFilePath(pkg.WDir + FWizImage);
+      unpkg.UnpackControlFile(FWizImage);
+      if FileExists(unpkg.WDir + FWizImage) then
+        FWizImage := CleanFilePath(unpkg.WDir + FWizImage);
     end;
 
-    pkg.UnpackControlFile('preinst');
-    pkg.UnpackControlFile('postinst');
-    pkg.UnpackControlFile('prerm');
+    unpkg.UnpackControlFile('preinst');
+    unpkg.UnpackControlFile('postinst');
+    unpkg.UnpackControlFile('prerm');
     ExecA := '<disabled>';
     ExecB := '<disabled>';
     ExecX := '<disabled>';
-    if FileExists(pkg.WDir + '/preinst') then
-      ExecA := pkg.WDir + '/preinst';
-    if FileExists(pkg.WDir + '/postinst') then
-      ExecB := pkg.WDir + '/postinst';
-    if FileExists(pkg.WDir + '/prerm') then
-      ExecX := pkg.WDir + '/prerm';
+    if FileExists(unpkg.WDir + '/preinst') then
+      ExecA := unpkg.WDir + '/preinst';
+    if FileExists(unpkg.WDir + '/postinst') then
+      ExecB := unpkg.WDir + '/postinst';
+    if FileExists(unpkg.WDir + '/prerm') then
+      ExecX := unpkg.WDir + '/prerm';
 
     //Load Description
     cont.ReadAppDescription(longdesc);
@@ -673,9 +680,7 @@ begin
         if hres = LIRQS_No then
         begin
           EmitError(rsInClose);
-          Dependencies.Free;
-          pkg.Free;
-          PkProfiles.Free;
+          Emergency_FreeAll();
           Result := false;
           exit;
         end
@@ -685,8 +690,7 @@ begin
           if dependencies.Count <= 0 then
           begin
             EmitError(rsNoComp + #10 + rsInClose);
-            Dependencies.Free;
-            pkg.Free;
+            Emergency_FreeAll();
             PkProfiles.Free;
             Result := false;
             exit;
@@ -719,7 +723,6 @@ begin
   end;
 
   //IPK package has been initialized
-  pkg.Free;
   cont.Free;
 end;
 
@@ -731,7 +734,7 @@ begin
   Result := 0;
   j := 0;
   fi := TStringList.Create;
-  fi.LoadFromFile(tmpdir + ExtractFileName(PkgName) + '/' + FFileInfo);
+  fi.LoadFromFile(unpkg.WDir + '/' + FFileInfo);
   for i := 0 to fi.Count - 1 do
     if fi[i][1] <> ')' then
       Inc(j);
@@ -775,7 +778,6 @@ end;
 
 function TLiInstallation.RunContainerInstallation: Boolean;
 var
-  pkg: TLiUnpacker;
   cont: TIPKControl;
   p: TProcess;
   tmp: TStringList;
@@ -785,20 +787,18 @@ begin
 
   Result := true;
   try
-    pkg := TLiUnpacker.Create(PkgPath);
-    cont := TIPKControl.Create(pkg.WDir + '/arcinfo.pin'); //Read IPK configuration
+    cont := TIPKControl.Create(unpkg.WDir + '/arcinfo.pin'); //Read IPK configuration
     cont.LangCode := GetLangID; //Set language code, so we get localized entries
 
-    pkg.UnpackDataFile(cont.Binary);
+    unpkg.UnpackDataFile(cont.Binary);
 
     tmp := TStringList.Create;
     cont.GetInternalFilesSection(tmp);
     for i := 0 to tmp.Count - 1 do
-      pkg.UnpackDataFile(tmp[i]);
+      unpkg.UnpackDataFile(tmp[i]);
 
     tmp.Free;
-    WDir := pkg.WDir;
-    pkg.Free;
+    WDir := unpkg.WDir;
 
     p := TProcess.Create(nil);
 
@@ -861,7 +861,6 @@ var
   fi, ndirs, s, appfiles: TStringList;
   dest, h, FDir: String; // h is an helper variable - used for various actions
   dsk: TIniFile; // Desktop files
-  pkg: TLiUnpacker; // IPK decompressor
   setcm: Boolean;
   appField: LiAppInfo;
   proc: TProcess; // Helper process with pipes
@@ -900,34 +899,39 @@ var
   begin
     try
       if Assigned(fi) then
-        fi.Free;
+        FreeAndNil(fi);
       if Assigned(ndirs) then
-        ndirs.Free;
+        FreeAndNil(ndirs);
       if Assigned(s) then
-        s.Free;
+        FreeAndNil(s);
       if Assigned(appfiles) then
-        appfiles.Free;
+        FreeAndNil(appfiles);
       if Assigned(dsk) then
-        dsk.Free;
-      if Assigned(pkg) then
-        pkg.Free;
+        FreeAndNil(dsk);
       if Assigned(proc) then
-        proc.Free;
+        FreeAndNil(proc);
       if Assigned(pkit) then
-        pkit.Free;
+        FreeAndNil(pkit);
     except
       perror('Error while cleaning up.');
     end;
   end;
 
 begin
-  //Send information which stuff is foced:
+  fi := nil;
+  ndirs := nil;
+  s := nil;
+  appfiles := nil;
+  dsk := nil;
+  proc := nil;
+  pkit := nil;
+  // Send information about forced stuff:
   if pos('dependencies', forces) > 0 then
     EmitInfoMsg('Dependencies are forced. Skipping dependency check.');
   if pos('architecture', forces) > 0 then
     EmitInfoMsg('Architecture forced. The software might not work on your system architecture.');
 
-  if not FileExists(tmpdir + ExtractFileName(PkgName) + '/' + FFileInfo) then
+  if not FileExists(unpkg.WDir + '/' + FFileInfo) then
   begin
     EmitError(rsInstFailed);
     perror('No file information found!');
@@ -938,7 +942,7 @@ begin
   end;
 
   fi := TStringList.Create;
-  fi.LoadFromFile(tmpdir + ExtractFileName(PkgName) + '/' + FFileInfo);
+  fi.LoadFromFile(unpkg.WDir + '/' + FFileInfo);
 
   proc := TProcess.Create(nil);
   proc.Options := [poUsePipes, poStdErrToOutPut];
@@ -1050,7 +1054,6 @@ begin
 
   appfiles := TStringList.Create;
   EmitStageMsg(rsStep2);
-  pkg := TLiUnpacker.Create(PkgPath);
 
   ndirs := TStringList.Create;
   j := 0;
@@ -1059,7 +1062,7 @@ begin
 
 
   //Unpack files directory
-  if not pkg.UnpackDataFile('files') then
+  if not unpkg.UnpackDataFile('files') then
   begin
     EmitError(rsExtractError);
     RollbackInstallation;
@@ -1101,14 +1104,14 @@ begin
         //h is now used for the file-path
         h := DeleteModifiers(fi[i]);
 
-        FDir := pkg.WDir + ExtractFileName(PkgPath) + '/';
+        FDir := unpkg.WDir + ExtractFileName(PkgPath) + '/';
         if not DirectoryExists(FDir) then
           CreateDir(FDIR);
 
         EmitInfoMsg('Copy file ' + ExtractFileName(h) + ' to ' + dest + ' ...');
 
         if fi[i + 1] <> MDPrint(
-          (MD5.MD5File(DeleteModifiers(pkg.WDir + h), 1024))) then
+          (MD5.MD5File(DeleteModifiers(unpkg.WDir + h), 1024))) then
         begin
           EmitError(rsHashError);
           RollbackInstallation;
@@ -1121,11 +1124,11 @@ begin
 
         try
           if FOverwrite then
-            FileCopy(DeleteModifiers(pkg.WDir + h), dest + '/' +
+            FileCopy(DeleteModifiers(unpkg.WDir + h), dest + '/' +
               ExtractFileName(DeleteModifiers(h)))
           else
           if (not FileExists(dest + '/' + ExtractFileName(DeleteModifiers(h)))) then
-            FileCopy(DeleteModifiers(pkg.WDir + h), dest + '/' +
+            FileCopy(DeleteModifiers(unpkg.WDir + h), dest + '/' +
               ExtractFileName(DeleteModifiers(h)))
           else
           begin
@@ -1138,8 +1141,8 @@ begin
           end;
         except
           //Unable to copy the file
-          EmitError(Format(rsCnCopy,
-            [dest + '/' + ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
+          EmitError(Format(rsCnCopy, [dest + '/' +
+            ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
           RollbackInstallation;
           Result := false;
           Abort_FreeAll();
@@ -1175,7 +1178,7 @@ begin
         appfiles.Add(dest + '/' + ExtractFileName(fi[i]));
 
         //Delete temp file
-        DeleteFile(DeleteModifiers(pkg.WDir + ExtractFileName(h)));
+        DeleteFile(DeleteModifiers(unpkg.WDir + ExtractFileName(h)));
 
         //msg('Okay.');
 
@@ -1255,7 +1258,7 @@ begin
     EmitInfoMsg(rsTestmodeDNRegister)
   else
   begin
-    FileCopy(pkg.WDir + '/arcinfo.pin', sdb.AppConfDir + '/application');
+    FileCopy(unpkg.WDir + '/arcinfo.pin', sdb.AppConfDir + '/application');
 
     //Save list of installed files
     appfiles.SaveToFile(sdb.AppConfDir + '/files.list');
@@ -1266,7 +1269,7 @@ begin
       ForceDirectories(sdb.AppConfDir + '/locale/');
       for i := 0 to mofiles.Count - 1 do
       begin
-        FileCopy(pkg.WDir + mofiles[i], sdb.AppConfDir + '/locale/' +
+        FileCopy(unpkg.WDir + mofiles[i], sdb.AppConfDir + '/locale/' +
           ExtractFileName(mofiles[i]));
       end;
     end;
@@ -1330,7 +1333,6 @@ begin
   end;
   ndirs.Free;
   proc.Free;
-  pkg.Free;
 
   mnpos := mnpos + 5;
   EmitProgress(Round(mnpos * max));
