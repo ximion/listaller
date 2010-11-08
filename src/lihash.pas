@@ -22,7 +22,7 @@ unit lihash;
 interface
 
 uses
-  Classes, SysUtils, HashFunc;
+  Classes, SysUtils, HashFunc, LiUtils;
 
 const
   maxBufSize = 1024 * 4;  // Buffersize for File, Stream-Access

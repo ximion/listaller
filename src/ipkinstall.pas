@@ -1121,9 +1121,8 @@ begin
         EmitInfoMsg('Copy file ' + ExtractFileName(h) + ' to ' + dest + ' ...');
 
         pdebug('Filename: ' + h);
-        if hash.HashesEqual(fi[i + 1], DeleteModifiers(unpkg.WDir + h)) then
+        if not hash.HashesEqual(fi[i + 1], DeleteModifiers(unpkg.WDir + h)) then
         begin
-          EmitError(rsHashError);
           RollbackInstallation;
           Result := false;
           Abort_FreeAll();
@@ -1266,6 +1265,9 @@ begin
 
   FreeAndNil(fi);
   EmitStageMsg(rsStep4);
+
+  // Now load the database
+  sdb.Load(sumode);
 
   if Testmode then
     EmitInfoMsg(rsTestmodeDNRegister)

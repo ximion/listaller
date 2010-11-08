@@ -386,11 +386,13 @@ var
       halt(8);
     end;
 
-    //Add information to file control section
+    fname := WDir + h + '/' +
+      ExtractFileName(DeleteModifiers(fname));
+    // Add information to file control section
     fc.Add(hash.HashFromFile(DeleteModifiers(fname)));
-    //ExcludeTrailingBackslash(Files[i+1]));
+    // ExcludeTrailingBackslash(Files[i+1]));
 
-    //Add info to update source info
+    // Add info to update source info
     if not HasSharedMod(fname) then
     begin
       uinfo.Add(fname);

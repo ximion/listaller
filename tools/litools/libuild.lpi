@@ -14,7 +14,8 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="4"/>
-      <StringTable Comments="" CompanyName="" FileDescription="" FileVersion="0.4.0.0" InternalName="" LegalCopyright="" LegalTrademarks="" OriginalFilename="libuild" ProductName="Listaller" ProductVersion="0.4"/>
+      <BuildNr Value="1"/>
+      <StringTable Comments="" CompanyName="" FileDescription="" FileVersion="0.4.0.1" InternalName="" LegalCopyright="" LegalTrademarks="" OriginalFilename="libuild" ProductName="Listaller" ProductVersion="0.4"/>
     </VersionInfo>
     <PublishOptions>
       <Version Value="2"/>
