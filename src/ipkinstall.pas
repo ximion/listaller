@@ -21,7 +21,7 @@ unit ipkinstall;
 interface
 
 uses
-  MD5, Distri, Classes, FTPSend, LiTypes, LiUtils, MTProcs,
+  LiHash, Distri, Classes, FTPSend, LiTypes, LiUtils, MTProcs,
   PkTypes, Process, RegExpr, BaseUnix, Blcksock, HTTPSend, IniFiles,
   SysUtils, DepManage, IPKCDef10, StrLocale, liDBusProc, LiFileUtil,
   PackageKit, SoftwareDB, Backend_IPK, IPKPackage11, ListallerDB, LiStatusObj;
@@ -375,9 +375,10 @@ var
     if Assigned(cont) then
       FreeAndNil(cont);
     if Assigned(dependencies) then
-       FreeAndNil(dependencies);
+      FreeAndNil(dependencies);
     if Assigned(pkProfiles) then
-          FreeAndNil(pkProfiles);;
+      FreeAndNil(pkProfiles);
+    ;
   end;
 
 begin
@@ -870,6 +871,7 @@ var
   mnpos: Integer; // Current positions of operation
   max: Double;
   ipkrm: TIPKBackend; // Acces IPK rmbackend directly to remove old IPK pkg
+  hash: TLiHash; // Validate file hashes
 
   //Necessary if e.g. file copying fails
   procedure RollbackInstallation;
@@ -913,6 +915,8 @@ var
         FreeAndNil(proc);
       if Assigned(pkit) then
         FreeAndNil(pkit);
+      if Assigned(hash) then
+      FreeAndNil(hash);
     except
       perror('Error while cleaning up.');
     end;
@@ -926,6 +930,7 @@ begin
   dsk := nil;
   proc := nil;
   pkit := nil;
+  hash := nil;
   EmitStatusChange(LIS_Started);
   // Send information about forced stuff:
   if pos('dependencies', forces) > 0 then
@@ -1073,6 +1078,9 @@ begin
     exit;
   end;
 
+  // We need the checksum validator now...
+  hash := TLiHash.Create;
+
   for i := 0 to fi.Count - 1 do
   begin
     if (pos(' <' + LowerCase(DInfo.DName) + '-only>', LowerCase(fi[i])) > 0) or
@@ -1112,9 +1120,8 @@ begin
 
         EmitInfoMsg('Copy file ' + ExtractFileName(h) + ' to ' + dest + ' ...');
 
-        pdebug('Filename: '+h);
-        if fi[i + 1] <> MDPrint(
-          (MD5.MD5File(DeleteModifiers(unpkg.WDir + h), 1024))) then
+        pdebug('Filename: ' + h);
+        if hash.HashesEqual(fi[i + 1], DeleteModifiers(unpkg.WDir + h)) then
         begin
           EmitError(rsHashError);
           RollbackInstallation;
@@ -1144,8 +1151,8 @@ begin
           end;
         except
           //Unable to copy the file
-          EmitError(Format(rsCnCopy, [dest + '/' +
-            ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
+          EmitError(Format(rsCnCopy,
+            [dest + '/' + ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
           RollbackInstallation;
           Result := false;
           Abort_FreeAll();
@@ -1191,6 +1198,9 @@ begin
       end;
     end;
   end;
+
+  // Remove hash manager from memory
+  FreeAndNil(hash);
 
   EmitStageMsg(rsStep3);
   //Check if every single file needs its own command to get the required rights

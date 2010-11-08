@@ -28,7 +28,7 @@
         <LaunchingApplication Use="True" PathPlusParams="/usr/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="libuild.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -44,6 +44,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="ipkbuild"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="../../src/lihash.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="lihash"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -67,8 +72,8 @@
       <CompilerMessages>
         <UseMsgFile Value="True"/>
       </CompilerMessages>
-      <CustomOptions Value="-dOpbCompat
--dNoGUI
+      <CustomOptions Value="-dNoGUI
+-dOpbCompat
 "/>
       <CompilerPath Value="$(CompPath)"/>
     </Other>

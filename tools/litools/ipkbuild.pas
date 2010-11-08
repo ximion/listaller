@@ -21,8 +21,8 @@ unit ipkbuild;
 interface
 
 uses
-  MD5, Classes, GPGSign, LiTypes, LiUtils, Process, RegExpr, SysUtils,
-  IPKCDef10, LiFileUtil, IPKPackage11;
+  Classes, GPGSign, LiTypes, LiUtils, Process, RegExpr, SysUtils,
+  IPKCDef10, LiFileUtil, IPKPackage11, LiHash;
 
 type
 
@@ -177,6 +177,7 @@ var
   ubit: TLiUpdateBit;
   h, dir, fn: String;
   script: TStringList;
+  hash: TLiHash;
 begin
   if not FileExists(ChangeFileExt(fname, '') + '_fdata.ulist') then
   begin
@@ -192,6 +193,9 @@ begin
   writeLn('Building update source...');
   writeLn('Please wait!');
   ubit := TLiUpdateBit.Create;
+
+  // To check checksums :)
+  hash := TLiHash.Create;
 
   i := 0;
   while i <= fls.Count - 1 do
@@ -223,12 +227,12 @@ begin
           ForceDirectories(path + '/' + SyblToX(dir));
         h := path + '/' + SyblToX(dir);
 
-        if (i = fls.Count - 1) or (MD5.MDPrint(MD5.MD5File(fn, 1024)) <> fls[i + 1]) then
+        if (i = fls.Count - 1) or (not hash.HashesEqual(fls[i + 1], fn)) then
         begin
           writeln('Writing ' + ExtractFileName(fn) + ' ...');
           ubit.Compress(fn, CleanFilePath(h + '/' + ExtractFileName(fn) + '.xz'));
 
-          fls[i + 1] := MD5.MDPrint(MD5.MD5File(fn, 1024));
+          fls[i + 1] := hash.HashFromFile(fn);
 
         end;
         writeLn('File ' + ExtractFileName(fn) + ' checked out.');
@@ -240,6 +244,7 @@ begin
   end;
 
   ubit.Free;
+  hash.Free;
 
   writeLn('Save configuration...');
 
@@ -311,6 +316,7 @@ var
   ipkpkg: TLiPackager;
   res: Boolean;
   uinfo: TStringList; //Generate update source baseinfo
+  hash: TLiHash;
 
   procedure RaiseCopyError(fname: String);
   begin
@@ -381,14 +387,14 @@ var
     end;
 
     //Add information to file control section
-    fc.Add(MD5.MDPrint(MD5.MD5File(DeleteModifiers(fname), 1024)));
+    fc.Add(hash.HashFromFile(DeleteModifiers(fname)));
     //ExcludeTrailingBackslash(Files[i+1]));
 
     //Add info to update source info
     if not HasSharedMod(fname) then
     begin
       uinfo.Add(fname);
-      uinfo.Add(MD5.MDPrint(MD5.MD5File(DeleteModifiers(fname), 1024)));
+      uinfo.Add(hash.HashFromFile(DeleteModifiers(fname)));
     end;
 
     h := orig;
@@ -544,6 +550,9 @@ begin
           files.Add(fsec[i]);
     end;
 
+    // Create checksum generator
+    hash := TLiHash.create;
+
     i := 0;
     while i < files.Count do
     begin
@@ -613,6 +622,8 @@ begin
   end; //End of file including
   writeLn;
   writeLn;
+  // Not required anymore
+  hash.Free;
   fsec.Free;
 
   packtype := control.SType;
