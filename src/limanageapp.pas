@@ -482,7 +482,7 @@ begin
     perror('Invalid application info passed: No ID found.');
     exit;
   end;
-  EmitStateChange(LIS_Started);
+  EmitStatusChange(LIS_Started);
 
   pdebug('Application UId is: ' + obj.RemoveId);
   if (SUMode) and (not IsRoot) then
@@ -496,7 +496,6 @@ begin
       OnStatus := @DBusStatusChange;
       ExecuteAction;
       Free;
-      EmitStateChange(LIS_Finished);
     end;
     exit;
   end;
@@ -507,7 +506,7 @@ begin
       if not RunBackend(TAutopackageBackend.Create, obj) then
         RunBackend(TPackageKitBackend.Create, obj);
 
-  EmitStateChange(LIS_Finished);
+  EmitStatusChange(LIS_Finished);
 end;
 
 function TLiAppManager.CheckApps(report: TStringList; const fix: Boolean = false;

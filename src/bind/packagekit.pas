@@ -218,7 +218,8 @@ begin
     g_ptr_array_unref(detArr);
   end;
   pk.exitenum := pk_results_get_exit_code(results);
-  pk.lastErrorMsg := pk_error_get_details(pk_results_get_error_code(results));
+  // !!!
+  pk.lastErrorMsg := ''; //pk_error_get_details(pk_results_get_error_code(results));
   g_object_unref(results);
   pk.LoopQuit();
   pk.done := true;

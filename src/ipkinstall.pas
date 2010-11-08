@@ -784,8 +784,8 @@ var
   i: Integer;
   WDir: String;
 begin
-
   Result := true;
+  EmitStatusChange(LIS_Started);
   try
     cont := TIPKControl.Create(unpkg.WDir + '/arcinfo.pin'); //Read IPK configuration
     cont.LangCode := GetLangID; //Set language code, so we get localized entries
@@ -840,6 +840,7 @@ begin
   except
     Result := false;
   end;
+  EmitStatusChange(LIS_Finished);
 end;
 
 procedure TLiInstallation.DBusThreadStatusChange(ty: LI_STATUS; Data: TLiProcData);
@@ -891,8 +892,8 @@ var
         perror('Could not remove directory. Please report this bug.');
       end;
     end;
-    ndirs.Free;
-    appfiles.Free;
+    appfiles.Clear;
+    ndirs.Clear;
   end;
 
   procedure Abort_FreeAll();
@@ -925,6 +926,7 @@ begin
   dsk := nil;
   proc := nil;
   pkit := nil;
+  EmitStatusChange(LIS_Started);
   // Send information about forced stuff:
   if pos('dependencies', forces) > 0 then
     EmitInfoMsg('Dependencies are forced. Skipping dependency check.');
@@ -1032,7 +1034,7 @@ begin
       end; //End of Dependecies.Count term
     end; //End of dependency-check
 
-  pkit.Free;
+  FreeAndNil(pkit);
   EmitExProgress(0);
 
   //Delete old application installation if necessary
@@ -1047,7 +1049,7 @@ begin
     //ipkrm.Initialize(appInfo);
     if ipkrm.CanBeUsed then
       ipkrm.Run;
-    ipkrm.Free;
+    FreeAndNil(ipkrm);
 
     EmitExProgress(0);
   end;
@@ -1110,6 +1112,7 @@ begin
 
         EmitInfoMsg('Copy file ' + ExtractFileName(h) + ' to ' + dest + ' ...');
 
+        pdebug('Filename: '+h);
         if fi[i + 1] <> MDPrint(
           (MD5.MD5File(DeleteModifiers(unpkg.WDir + h), 1024))) then
         begin
@@ -1161,7 +1164,7 @@ begin
           if dsk.ValueExists('Desktop Entry', 'Exec') then
             dsk.WriteString('Desktop Entry', 'Exec', SyblToPath(
               dsk.ReadString('Desktop Entry', 'Exec', '*'), FTestMode));
-          dsk.Free;
+          FreeAndNil(dsk);
         end;
 
         if (pos('<setvars>', LowerCase(ExtractFileName(h))) > 0) then
@@ -1171,7 +1174,7 @@ begin
           for j := 0 to s.Count - 1 do
             s[j] := SyblToPath(s[j], FTestMode);
           s.SaveToFile(dest + '/' + ExtractFileName(h));
-          s.Free;
+          FreeAndNil(s);
         end;
 
 
@@ -1251,7 +1254,7 @@ begin
   mnpos := mnpos + 6;
   EmitProgress(Round(mnpos * max));
 
-  fi.Free;
+  FreeAndNil(fi);
   EmitStageMsg(rsStep4);
 
   if Testmode then
@@ -1262,7 +1265,7 @@ begin
 
     //Save list of installed files
     appfiles.SaveToFile(sdb.AppConfDir + '/files.list');
-    appfiles.Free;
+    FreeAndNil(appfiles);
 
     if mofiles.Count > 0 then
     begin
@@ -1289,7 +1292,7 @@ begin
     AppField.Dependencies := PChar(Dependencies.Text);
 
     sdb.AppAddNew(AppField);
-    sdb.Free;
+    FreeAndNil(sdb);
 
     if length(IIconPath) > 0 then
       if IIconPath[1] = '/' then
@@ -1327,20 +1330,21 @@ begin
         fi.Add('- ' + USource);
         fi.SaveToFile(RegDir + 'updates.list');
       end;
-      fi.Free;
+      FreeAndNil(fi);
     end;
 
   end;
-  ndirs.Free;
-  proc.Free;
+  FreeAndNil(ndirs);
+  FreeAndNil(proc);
 
   mnpos := mnpos + 5;
   EmitProgress(Round(mnpos * max));
 
   Result := true;
-  EmitStageMsg(rsFinished);
   EmitProgress(100);
-  sleep(400);
+  EmitStatusChange(LIS_Finished);
+  EmitStageMsg(rsFinished);
+  sleep(120);
 end;
 
 function TLiInstallation.RunDLinkInstallation: Boolean;
@@ -1362,6 +1366,7 @@ var
   end;
 
 begin
+  EmitStatusChange(LIS_Started);
   max := 100 / (Dependencies.Count * 4);
   mnpos := 0;
   EmitProgress(Round(mnpos * max));
@@ -1544,6 +1549,7 @@ end;}
   end;
 
   EmitStageMsg(rsSuccess);
+  EmitStatusChange(LIS_Finished);
 end;
 
 procedure TLiInstallation.CheckAddUSource(const forceroot: Boolean = false);

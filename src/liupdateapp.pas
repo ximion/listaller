@@ -324,7 +324,7 @@ begin
     pdError: EmitError(Data.msg);
     pdStatus:
     begin
-      EmitStateChange(ty);
+      EmitStatusChange(ty);
     end;
   end;
 end;

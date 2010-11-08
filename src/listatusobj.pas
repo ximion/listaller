@@ -42,7 +42,7 @@ type
     procedure EmitError(msg: String);
     function EmitUserRequestYesNo(s: String): LI_REQUEST_RES;
     function EmitUserRequestAbortContinue(s: String): LI_REQUEST_RES;
-    procedure EmitStateChange(state: LI_STATUS; const msg: String = '');
+    procedure EmitStatusChange(state: LI_STATUS; const msg: String = '');
     procedure EmitProgress(i: Integer);
     procedure EmitExProgress(i: Integer);
   public
@@ -148,7 +148,7 @@ begin
     FStatus(LIS_Progress, sdata, status_udata);
 end;
 
-procedure TLiStatusObject.EmitStateChange(state: LI_STATUS; const msg: String = '');
+procedure TLiStatusObject.EmitStatusChange(state: LI_STATUS; const msg: String = '');
 begin
   sdata.Text := PChar(msg);
   if Assigned(FStatus) then

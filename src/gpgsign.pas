@@ -76,7 +76,7 @@ begin
   if pcChannel = pcStdOut then
     EmitInfoMsg(strData);
   if pcChannel = pcFinished then
-    EmitStateChange(LIS_finished, strData);
+    EmitStatusChange(LIS_Finished, strData);
   if pcChannel = pcError then
     EmitError(strData);
 end;
