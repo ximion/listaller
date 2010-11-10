@@ -21,7 +21,7 @@ unit liutils;
 interface
 
 uses
-  Dos, pwd, Classes, Process, RegExpr, BaseUnix, Crt, IniFiles, SysUtils, StrLocale;
+  Dos, Pwd, Classes, Process, RegExpr, BaseUnix, IniFiles, SysUtils, StrLocale;
 
 const
   //** Version of the Listaller applicationset
@@ -126,7 +126,7 @@ function GetELFDepends(f: String; lst: TStringList): Boolean;
 //** Advanced file copy method @returns Success of the command
 function FileCopy(Source, dest: String): Boolean;
 //** Check if pointer is valid
-function CheckPtr(ptr: Pointer;objname: String = ''): Boolean;
+function CheckPtr(ptr: Pointer; objname: String = ''): Boolean;
 //** Check if file is configuration file
 function HasConfigMod(fname: String): Boolean;
 //** Search for full application icon path on system
@@ -190,17 +190,18 @@ begin
   Result := ExtractFilePath(Copy(url, P1, P2));
 end;
 
-function CheckPtr(ptr: Pointer;objname: String = ''): Boolean;
+function CheckPtr(ptr: Pointer; objname: String = ''): Boolean;
 begin
   if not Assigned(ptr) then
   begin
     if objname = '' then
-     perror('Received invalid object pointer!')
+      perror('Received invalid object pointer!')
     else
-     perror('Received invalid ´'+objname+'´ pointer!');
+      perror('Received invalid ´' + objname + '´ pointer!');
     Result := false;
-  end else
-   Result := true;
+  end
+  else
+    Result := true;
 end;
 
 function GetDataFile(s: String): String;
@@ -211,21 +212,21 @@ begin
     (DirectoryExists(ExtractFilePath(ParamStr(0)) + s)) then
     Result := ExtractFilePath(ParamStr(0)) + s
   else if (FileExists(ExtractFilePath(ParamStr(0)) + '../' + s)) or
-      (DirectoryExists(ExtractFilePath(ParamStr(0)) + '../' + s)) then
-      Result := ExtractFilePath(ParamStr(0)) + '../' + s
+    (DirectoryExists(ExtractFilePath(ParamStr(0)) + '../' + s)) then
+    Result := ExtractFilePath(ParamStr(0)) + '../' + s
+  else
+  if pos('graphics/', s) > 0 then
+  begin
+    D := GetDistro;
+    //Apply graphics branding
+    if FileExists('/usr/share/listaller/branding/' + LowerCase(D.DName) +
+      '/' + s) then
+      Result := '/usr/share/listaller/branding/' + LowerCase(D.DName) + '/' + s
     else
-      if pos('graphics/', s) > 0 then
-      begin
-        D := GetDistro;
-        //Apply graphics branding
-        if FileExists('/usr/share/listaller/branding/' + LowerCase(D.DName) +
-          '/' + s) then
-          Result := '/usr/share/listaller/branding/' + LowerCase(D.DName) + '/' + s
-        else
-          Result := '/usr/share/listaller/' + s;
-      end
-      else
-        Result := '/usr/share/listaller/' + s;
+      Result := '/usr/share/listaller/' + s;
+  end
+  else
+    Result := '/usr/share/listaller/' + s;
 end;
 
 procedure FindDirs(DirList: TStringList; StartDir: String);
@@ -301,19 +302,19 @@ begin
   if FExists('/usr/local/sbin') then
     Result := res
   else if FExists('/usr/local/bin') then
-      Result := res
-    else if FExists('/usr/sbin') then
-        Result := res
-      else if FExists('/usr/bin') then
-          Result := res
-        else if FExists('/sbin') then
-            Result := res
-          else if FExists('/bin') then
-              Result := res
-            else if FExists('/usr/games') then
-                Result := res
-              else
-                Result := Name;
+    Result := res
+  else if FExists('/usr/sbin') then
+    Result := res
+  else if FExists('/usr/bin') then
+    Result := res
+  else if FExists('/sbin') then
+    Result := res
+  else if FExists('/bin') then
+    Result := res
+  else if FExists('/usr/games') then
+    Result := res
+  else
+    Result := Name;
 end;
 
 function GetSystemArchitecture: String;
@@ -341,7 +342,7 @@ end;
 
 function GetDateAsString: String;
 var
-  Year, Month, Day, WDay: word;
+  Year, Month, Day, WDay: Word;
 begin
   Year := 0;
   Month := 0;
@@ -374,19 +375,22 @@ end;
 function GenerateAppID(desktopFile: String): String;
 begin
   Result := '';
-  if trim(desktopFile) = '' then exit;
+  if trim(desktopFile) = '' then
+    exit;
   Result := ExtractFilePath(desktopFile);
-  Result := StrSubst(StrSubst(Result, '/usr/', ''), 'share/applications/','');
-  Result := ExcludeTrailingPathDelimiter(Result) + StrSubst(ExtractFileName(desktopFile), '.desktop', '');
+  Result := StrSubst(StrSubst(Result, '/usr/', ''), 'share/applications/', '');
+  Result := ExcludeTrailingPathDelimiter(Result) +
+    StrSubst(ExtractFileName(desktopFile), '.desktop', '');
 end;
 
 function GetDesktopFile(appID: String): String;
 begin
   Result := '';
-  if trim(appID) = '' then exit;
+  if trim(appID) = '' then
+    exit;
   Result := StrSubst(appID, 'local/', 'local/share/applications/');
   if pos('local/share/applications/', Result) <= 0 then
-   Result := 'share/applications/' + appID;
+    Result := 'share/applications/' + appID;
   Result := '/usr/' + Result;
   Result := Result + '.desktop';
 end;
@@ -490,58 +494,78 @@ begin
   cnf.Free;
 end;
 
-procedure WriteOutput(hstr: String);
-const OutSize=1024;
-  ttyOut=1;
-var i: LongInt;
-  OutBuf : array[0..OutSize-1] of char;
-  OutCnt : longint;
+procedure WriteOut(hstr: String);
+const
+  OutSize = 1024;
+  ttyOut = 1;
+var
+  i: Longint;
+  OutBuf: array[0..OutSize - 1] of Char;
+  OutCnt: Longint;
 
-  procedure ttySendChar(c:char);
-begin
-  if OutCnt<OutSize then
-   begin
-     OutBuf[OutCnt]:=c;
-     inc(OutCnt);
-   end;
-end;
+  procedure ttySendChar(c: Char);
+  begin
+    if OutCnt < OutSize then
+    begin
+      OutBuf[OutCnt] := c;
+      Inc(OutCnt);
+    end;
+  end;
 
   procedure flush();
-begin
-  if OutCnt>0 then
-   begin
-     fpWrite(ttyOut,OutBuf,OutCnt);
-     OutCnt:=0;
-   end;
-end;
+  begin
+    if OutCnt > 0 then
+    begin
+      fpWrite(ttyOut, OutBuf, OutCnt);
+      OutCnt := 0;
+    end;
+  end;
 
 begin
   OutCnt := 0;
-  for i:=1 to length(hstr) do
-   ttySendChar(hstr[i]);
+  for i := 1 to length(hstr) do
+    ttySendChar(hstr[i]);
 
   flush();
 end;
 
+procedure ResetTtyColor;
+begin
+  Write(#27'[' + '0m');
+end;
+
+// Write error message to the console (red)
 procedure perror(msg: String);
 begin
-  writeLn('error: '+msg);
+  Write(#27'[' + '1;31' + 'm');
+  Write('error: ');
+  Write(#27'[' + '0;31' + 'm');
+  writeLn(msg);
+  ResetTtyColor;
 end;
 
+// Output warning to console (yellow)
 procedure pwarning(msg: String);
 begin
-  writeLn('warning: ' + msg);
+  Write(#27'[' + '1;33' + 'm');
+  Write('warning: ');
+  ResetTtyColor;
+  writeLn(msg);
 end;
 
+// Write simple info message to console (standard)
 procedure pinfo(msg: String);
 begin
   writeLn(msg);
 end;
 
+// Write debug message to console (cyan)
 procedure pdebug(msg: String);
 begin
   {$IFNDEF NoDebugMsg}
+  Write(#27'[' + '0;36' + 'm');
   writeLn('debug: ' + msg);
+  ResetTtyColor;
   {$ENDIF}
 end;
 
@@ -550,7 +574,7 @@ var
   t: TProcess;
   Buffer: String;
   BytesAvailable: DWord;
-  BytesRead: longint;
+  BytesRead: Longint;
 begin
   Result := '';
   buffer := '';
@@ -615,9 +639,9 @@ begin
       p.CommandLine := FindBinary('kdesu') + ' -d --comment "' +
         comment + '" -i ' + icon + ' ' + cmd
     else
-      if FileExists(FindBinary('kdesudo')) then
-        p.CommandLine := FindBinary('kdesudo') + ' -d --comment "' +
-          comment + '" -i ' + icon + ' ' + cmd;
+    if FileExists(FindBinary('kdesudo')) then
+      p.CommandLine := FindBinary('kdesudo') + ' -d --comment "' +
+        comment + '" -i ' + icon + ' ' + cmd;
   end
   else
   begin
@@ -625,21 +649,21 @@ begin
       //Fedora uses Consolehelper to run apps as root. So we use "beesu" to make CH work for Listaller
       p.CommandLine := FindBinary('beesu') + ' -l ' + cmd
     else
-      if FileExists(FindBinary('gksudo')) then
-        p.CommandLine := FindBinary('gksudo') + ' --message "' + comment + '" ' + cmd
-      else
-        if FileExists(FindBinary('gksu')) then
-          p.CommandLine := FindBinary('gksu') + ' --message "' + comment + '" ' + cmd
-        else
-          if FileExists(FindBinary('gnomesu')) then
-            p.CommandLine := FindBinary('gnomesu') + ' ' + cmd
-          else
-          begin
-            writeLn('Unable to execute the application as root.'#13'Please do this manually!');
-            p.Free;
-            Result := false;
-            exit;
-          end;
+    if FileExists(FindBinary('gksudo')) then
+      p.CommandLine := FindBinary('gksudo') + ' --message "' + comment + '" ' + cmd
+    else
+    if FileExists(FindBinary('gksu')) then
+      p.CommandLine := FindBinary('gksu') + ' --message "' + comment + '" ' + cmd
+    else
+    if FileExists(FindBinary('gnomesu')) then
+      p.CommandLine := FindBinary('gnomesu') + ' ' + cmd
+    else
+    begin
+      writeLn('Unable to execute the application as root.'#13'Please do this manually!');
+      p.Free;
+      Result := false;
+      exit;
+    end;
   end;
   p.Options := optn;
   p.Execute;
@@ -828,8 +852,8 @@ begin
         CreateDir(GetXHome(tm) + '/.appfiles/lib64');
     end
     else
-      if not DirectoryExists(GetXHome(tm) + '/.appfiles/lib') then
-        CreateDir(GetXHome(tm) + '/.appfiles/lib');
+    if not DirectoryExists(GetXHome(tm) + '/.appfiles/lib') then
+      CreateDir(GetXHome(tm) + '/.appfiles/lib');
 
     //SBin and Bin go to the same directory on HOME install
     s := StringReplace(s, 'BIN', GetXHome(tm) + '/.appfiles/binary', [rfReplaceAll]);
@@ -861,7 +885,8 @@ begin
       [rfReplaceAll]);
     s := StringReplace(s, 'ICON-256', GetXHome(tm) + '/.appfiles/icons/256x256',
       [rfReplaceAll]);
-    s := StringReplace(s, 'PIX', GetXHome(tm) + '/.appfiles/icons/common', [rfReplaceAll]);
+    s := StringReplace(s, 'PIX', GetXHome(tm) + '/.appfiles/icons/common',
+      [rfReplaceAll]);
   end;
   Result := s;
 end;
@@ -928,8 +953,8 @@ end;
 function FileCopy(Source, dest: String): Boolean;
 var
   fSrc, fDst, len: Integer;
-  ct, units, size: longint;
-  buffer: packed array [0..2047] of byte;
+  ct, units, size: Longint;
+  buffer: packed array [0..2047] of Byte;
 begin
   ct := 0;
   Result := false; { Assume that it WONT work }
@@ -1078,19 +1103,19 @@ begin
     exit;
   end
   else
-    if FileExists('/usr/bin/notify-send') then
-    begin
-      case urgency of
-        ulNormal: s := 'normal';
-        ulLow: s := 'low';
-        ulCritical: s := 'critical';
-      end;
-      p.CommandLine := FindBinary('notify-send') + ' --urgency=' +
-        s + ' --expire-time=' + IntToStr(time * 1000) + ' "' + msg + '"';
-      p.Execute;
-      p.Free;
-      exit;
+  if FileExists('/usr/bin/notify-send') then
+  begin
+    case urgency of
+      ulNormal: s := 'normal';
+      ulLow: s := 'low';
+      ulCritical: s := 'critical';
     end;
+    p.CommandLine := FindBinary('notify-send') + ' --urgency=' +
+      s + ' --expire-time=' + IntToStr(time * 1000) + ' "' + msg + '"';
+    p.Execute;
+    p.Free;
+    exit;
+  end;
 end;
 
 initialization
