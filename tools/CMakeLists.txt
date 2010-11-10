@@ -1,5 +1,6 @@
 
 add_subdirectory(litools)
+add_subdirectory(runapp)
 
 if(VLDD)
   add_subdirectory(visual-ldd)

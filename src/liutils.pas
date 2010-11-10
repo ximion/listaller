@@ -21,7 +21,7 @@ unit liutils;
 interface
 
 uses
-  Dos, pwd, Classes, Process, RegExpr, BaseUnix, IniFiles, SysUtils, StrLocale;
+  Dos, pwd, Classes, Process, RegExpr, BaseUnix, Crt, IniFiles, SysUtils, StrLocale;
 
 const
   //** Version of the Listaller applicationset
@@ -490,9 +490,42 @@ begin
   cnf.Free;
 end;
 
+procedure WriteOutput(hstr: String);
+const OutSize=1024;
+  ttyOut=1;
+var i: LongInt;
+  OutBuf : array[0..OutSize-1] of char;
+  OutCnt : longint;
+
+  procedure ttySendChar(c:char);
+begin
+  if OutCnt<OutSize then
+   begin
+     OutBuf[OutCnt]:=c;
+     inc(OutCnt);
+   end;
+end;
+
+  procedure flush();
+begin
+  if OutCnt>0 then
+   begin
+     fpWrite(ttyOut,OutBuf,OutCnt);
+     OutCnt:=0;
+   end;
+end;
+
+begin
+  OutCnt := 0;
+  for i:=1 to length(hstr) do
+   ttySendChar(hstr[i]);
+
+  flush();
+end;
+
 procedure perror(msg: String);
 begin
-  writeLn('error: ' + msg);
+  writeLn('error: '+msg);
 end;
 
 procedure pwarning(msg: String);
