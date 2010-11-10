@@ -16,7 +16,7 @@
 //** Provide intelligent access to all application databases
 unit softwaredb;
 
-{$mode objfpc}
+{$mode objfpc}{$H+}
 
 interface
 

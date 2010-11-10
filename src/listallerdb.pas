@@ -16,7 +16,7 @@
 //** Provide easy access to Listaller's software database
 unit listallerdb;
 
-{$mode objfpc}
+{$mode objfpc}{$H+}
 
 interface
 
@@ -28,12 +28,13 @@ type
     App: LiAppInfo;
   end;
 
-  //** Access to Listaller's IPK app db
-  TListallerDB = class (TLiStatusObject)
+  //** Access to Listaller's internal software db
+  TListallerDB = class(TLiStatusObject)
   private
-    dsApp: TSQLite3Dataset;
+    ds: TSQLite3Dataset;
     FNewApp: LiNewAppEvent;
     CurrField: TLiDBData;
+    DBPath: String;
     AppDataDir: String;
     DepDataDir: String;
     EOF: Boolean;
@@ -91,23 +92,27 @@ implementation
 
 constructor TListallerDB.Create;
 begin
-  dsApp := TSQLite3Dataset.Create(nil);
+  ds := TSQLite3Dataset.Create(nil);
   onnewapp_udata := nil;
   EOF := true;
   loaded := false;
+  DBPath := '';
+  // Default values
+  AppDataDir := CleanFilePath(RootPkgRegDir + '/apps/');
+  DepDataDir := CleanFilePath(RootPkgRegDir + '/deps/');
 end;
 
 destructor TListallerDB.Destroy;
 begin
-  dsApp.Close; //Close, if opened
-  dsApp.Active := false;
-  dsApp.Free;
+  ds.Close; //Close, if opened
+  ds.Active := false;
+  ds.Free;
   inherited;
 end;
 
 function TListallerDB.GetSQLiteVersion: String;
 begin
-  Result := dsApp.SqliteVersion;
+  Result := ds.SqliteVersion;
 end;
 
 procedure TListallerDB.RegOnNewApp(call: LiNewAppEvent; user_data: Pointer);
@@ -124,26 +129,32 @@ end;
 function TListallerDB.DBOkay: Boolean;
 begin
   Result := false;
-  if FileExists(dsApp.FileName) then
-    if dsApp.TableExists('applications') then
-      if dsApp.TableExists('dependencies') then
+  // This should never happen, so raise a (cheap) exception
+  if not loaded then
+    raise Exception.Create('Listaller database was not loaded before!');
+
+  if FileExists(ds.FileName) then
+    if ds.TableExists('applications') then
+      if ds.TableExists('dependencies') then
         Result := true;
 end;
 
 procedure TListallerDB.ToApps;
 begin
-  dsApp.Close;
-  dsApp.SQL := 'SELECT * FROM applications';
-  dsApp.TableName := 'applications';
-  dsApp.Open;
+  DBOkay;
+  ds.Close;
+  ds.SQL := 'SELECT * FROM applications';
+  ds.TableName := 'applications';
+  ds.Open;
 end;
 
 procedure TListallerDB.ToDeps;
 begin
-  dsApp.Close;
-  dsApp.SQL := 'SELECT * FROM dependencies';
-  dsApp.TableName := 'dependencies';
-  dsApp.Open;
+  DBOkay;
+  ds.Close;
+  ds.SQL := 'SELECT * FROM dependencies';
+  ds.TableName := 'dependencies';
+  ds.Open;
 end;
 
 function TListallerDB.Load(const rootmode: Boolean = false): Boolean;
@@ -151,7 +162,7 @@ var
   rd: String;
 begin
   Result := true;
-
+  pdebug('Opening Listaller db...');
   if rootmode then
     rd := RootPkgRegDir
   else
@@ -168,9 +179,11 @@ begin
     exit;
   end;
 
-  with dsApp do
+  DBPath := rd + 'software.db';
+  ds.FileName := DBPath;
+  with ds do
   begin
-    FileName := rd + 'software.db';
+    pdebug('Database filename is' + FileName);
     if ((rootmode) and (not IsRoot) and (not FileExists(FileName))) then
       Result := false
     else
@@ -213,12 +226,9 @@ begin
         end;
         CreateTable;
       end;
-      Active := true;
-      //ApplyUpdates;
-      Open;
     end;
   end;
-  ToApps;
+  ds.Open;
   loaded := true;
   pinfo(rsDBOpened);
 end;
@@ -233,10 +243,10 @@ begin
     exit;
 
   ToApps;
-  dsApp.Filtered := true;
-  dsApp.First;
+  ds.Filtered := true;
+  ds.First;
 
-  while not dsApp.EOF do
+  while not ds.EOF do
   begin
     entry := GetAppField;
     entry.RemoveId := entry.PkName;
@@ -261,9 +271,8 @@ begin
     if Assigned(FNewApp) then
       FNewApp(entry.Name, @entry, onnewapp_udata);
 
-    dsApp.Next;
+    ds.Next;
   end;
-  dsApp.Close;
 end;
 
 function TListallerDB.GetAppField: LiAppInfo;
@@ -278,9 +287,9 @@ var
 
 begin
   ToApps;
-  r.Name := _(dsApp.FieldByName('Name').AsString);
-  r.PkName := _(dsApp.FieldByName('PkName').AsString);
-  h := LowerCase(dsApp.FieldByName('Type').AsString);
+  r.Name := _(ds.FieldByName('Name').AsString);
+  r.PkName := _(ds.FieldByName('PkName').AsString);
+  h := LowerCase(ds.FieldByName('Type').AsString);
   if h = 'linstall' then
     r.PkType := ptLinstall
   else
@@ -290,16 +299,16 @@ begin
   if h = 'container' then
     r.PkType := ptContainer;
 
-  r.Summary := _(dsApp.FieldByName('Description').AsString);
-  r.Version := _(dsApp.FieldByName('Version').AsString);
-  r.Author := _(dsApp.FieldByName('Publisher').AsString);
-  r.IconName := _(dsApp.FieldByName('IconName').AsString);
-  r.Profile := _(dsApp.FieldByName('Profile').AsString);
-  r.RemoveId := _(dsApp.FieldByName('AppId').AsString);
-  r.Categories := _(dsApp.FieldByName('Category').AsString);
+  r.Summary := _(ds.FieldByName('Description').AsString);
+  r.Version := _(ds.FieldByName('Version').AsString);
+  r.Author := _(ds.FieldByName('Publisher').AsString);
+  r.IconName := _(ds.FieldByName('IconName').AsString);
+  r.Profile := _(ds.FieldByName('Profile').AsString);
+  r.RemoveId := _(ds.FieldByName('AppId').AsString);
+  r.Categories := _(ds.FieldByName('Category').AsString);
 
-  r.InstallDate := dsApp.FieldByName('InstallDate').AsDateTime;
-  r.Dependencies := PChar(dsApp.FieldByName('Dependencies').AsWideString);
+  r.InstallDate := ds.FieldByName('InstallDate').AsDateTime;
+  r.Dependencies := PChar(ds.FieldByName('Dependencies').AsWideString);
   Result := r;
 end;
 
@@ -308,64 +317,51 @@ begin
   if not DBOkay then
     exit;
   ToApps;
-  dsApp.Active := true;
-  dsApp.Filtered := true;
-  dsApp.First;
-  EOF := dsApp.EOF;
+  ds.Filtered := true;
+  ds.First;
+  EOF := ds.EOF;
   CurrField.App := GetAppField;
 end;
 
 procedure TListallerDB.NextField;
 begin
-  dsApp.Next;
-  EOF := dsApp.EOF;
+  ds.Next;
+  EOF := ds.EOF;
   CurrField.App := GetAppField;
 end;
 
 procedure TListallerDB.CloseFilter;
 begin
-  dsApp.Filtered := false;
-  dsApp.Close;
+  ds.Filtered := false;
+  ds.Close;
 end;
 
-function TListallerDB.AppExists(appid: String): Boolean;
+function TListallerDB.AppExists(appID: String): Boolean;
 begin
   Result := false;
   if not DBOkay then
     exit;
   ToApps;
-  dsApp.Filtered := true;
-  dsApp.First;
+  appID := Trim(appID);
+  if appID = '' then
+    exit;
 
-  Result := false;
-  while not dsApp.EOF do
-  begin
-    if (dsApp.FieldByName('AppId').AsString = appid) then
-    begin
-      Result := true;
-      break;
-    end
-    else
-      Result := false;
-    dsApp.Next;
-  end;
-  dsApp.Close;
+  Result := ds.Locate('AppId', appID, [loCaseInsensitive]);
 end;
 
 procedure TListallerDB.AppDeleteCurrent;
 begin
   ToApps;
-  dsApp.ExecuteDirect('DELETE FROM applications WHERE rowid=' + IntToStr(dsApp.RecNo));
-  dsApp.ApplyUpdates;
+  ds.ExecuteDirect('DELETE FROM applications WHERE rowid=' + IntToStr(ds.RecNo));
+  ds.ApplyUpdates;
 end;
 
 procedure TListallerDB.AppAddNew(app: LiAppInfo);
 var
   g, h: String;
 begin
-  //Open database connection
   ToApps;
-  dsApp.Edit;
+  ds.Edit;
 
   if app.PkType = ptLinstall then
     h := 'linstall';
@@ -376,29 +372,27 @@ begin
 
   g := app.Categories;
 
-  dsApp.Insert;
-  dsApp.ExecuteDirect('INSERT INTO "applications" VALUES (''' +
-    app.Name + ''', ''' + app.PkName + ''', ''' + app.RemoveId +
-    ''', ''' + h + ''', ''' + app.Summary + ''',''' + app.Version +
-    ''',''' + app.Author + ''',''' + 'icon' + ExtractFileExt(app.IconName) +
-    ''',''' + app.Profile + ''',''' + g + ''',''' + GetDateAsString +
-    ''', ''' + app.Dependencies + ''');');
+  ds.Insert;
+  ds.ExecuteDirect('INSERT INTO "applications" VALUES (''' + app.Name +
+    ''', ''' + app.PkName + ''', ''' + app.RemoveId + ''', ''' + h +
+    ''', ''' + app.Summary + ''',''' + app.Version + ''',''' + app.Author +
+    ''',''' + 'icon' + ExtractFileExt(app.IconName) + ''',''' +
+    app.Profile + ''',''' + g + ''',''' + GetDateAsString + ''', ''' +
+    app.Dependencies + ''');');
 
   //Write changes
-  dsApp.ApplyUpdates;
-  dsApp.Close;
+  ds.ApplyUpdates;
 end;
 
 procedure TListallerDB.AppUpdateVersion(appID: String; newv: String);
 begin
   ToApps;
-  dsApp.Filtered := true;
-  dsApp.Edit;
-  dsApp.First;
-  dsApp.ExecuteDirect('UPDATE applications SET Version = ''' + newv +
+  ds.Filtered := true;
+  ds.Edit;
+  ds.First;
+  ds.ExecuteDirect('UPDATE applications SET Version = ''' + newv +
     ''' WHERE AppId = ''' + appID + '''');
-  dsApp.ApplyUpdates;
-  dsApp.Close;
+  ds.ApplyUpdates;
 end;
 
 procedure TListallerDB.DepAddNew(Name: String; version: String;
@@ -406,15 +400,14 @@ procedure TListallerDB.DepAddNew(Name: String; version: String;
 begin
   //Open database connection
   ToDeps;
-  dsApp.Edit;
-  dsApp.Insert;
-  dsApp.ExecuteDirect('INSERT INTO dependencies VALUES (''' + Name +
+  ds.Edit;
+  ds.Insert;
+  ds.ExecuteDirect('INSERT INTO dependencies VALUES (''' + Name +
     ''', ''' + Version + ''', ''' + origin + ''', ''' + depnames +
     ''', ''' + GetDateAsString + ''');');
 
   //Write changes
-  dsApp.ApplyUpdates;
-  dsApp.Close;
+  ds.ApplyUpdates;
 end;
 
 function TListallerDB.DepExists(Name, version: String): Boolean;
@@ -423,23 +416,22 @@ begin
   if not DBOkay then
     exit;
   ToDeps;
-  dsApp.Filtered := true;
-  dsApp.First;
+  ds.Filtered := true;
+  ds.First;
 
   Result := false;
-  while not dsApp.EOF do
+  while not ds.EOF do
   begin
-    if (dsApp.FieldByName('Name').AsString = Name) and
-      (dsApp.FieldByName('Version').AsString = Version) then
+    if (ds.FieldByName('Name').AsString = Name) and
+      (ds.FieldByName('Version').AsString = Version) then
     begin
       Result := true;
       break;
     end
     else
       Result := false;
-    dsApp.Next;
+    ds.Next;
   end;
-  dsApp.Close;
 end;
 
 function TListallerDB.Finalize: Boolean;
@@ -447,8 +439,8 @@ begin
   Result := false;
   if loaded then
   begin
-    dsApp.Active := true;
-    Result := dsApp.ApplyUpdates;
+    ToApps;
+    Result := ds.ApplyUpdates;
   end;
 end;
 

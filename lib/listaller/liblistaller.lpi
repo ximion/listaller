@@ -1,14 +1,13 @@
 <?xml version="1.0"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="8"/>
+    <Version Value="9"/>
     <General>
       <Flags>
         <Runnable Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <TargetFileExt Value=""/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -17,8 +16,11 @@
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="5"/>
       <BuildNr Value="1750"/>
-      <StringTable Comments="" CompanyName="" FileDescription="Advanced access to Listaller's features" FileVersion="0.5.0.1750" InternalName="libListaller" LegalCopyright="Listaller Project" LegalTrademarks="" OriginalFilename="" ProductName="Listaller" ProductVersion="0.5.0.0"/>
+      <StringTable FileDescription="Advanced access to Listaller's features" InternalName="libListaller" LegalCopyright="Listaller Project" ProductName="Listaller" ProductVersion="0.5.0.0"/>
     </VersionInfo>
+    <BuildModes Count="1">
+      <Item1 Name="default" Default="True"/>
+    </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
       <IgnoreBinaries Value="False"/>
@@ -110,8 +112,8 @@
       <Filename Value="../../build/liblistaller.so.0"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir)/"/>
-      <OtherUnitFiles Value="../../src/;../../src/bind/;../../src/synapse/;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;../../src/backends/"/>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="../../src;../../src/bind;../../src/synapse;/usr/share/fpcsrc/$(FPCVer)/packages/dbus/src/;../../src/backends"/>
       <UnitOutputDirectory Value="../../build/lib_$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
@@ -135,8 +137,7 @@
         <UseMsgFile Value="True"/>
       </CompilerMessages>
       <CustomOptions Value="-fPIC
--dNoGUI
-"/>
+-dNoGUI"/>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>

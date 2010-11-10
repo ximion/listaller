@@ -179,7 +179,6 @@ end;
 function TLiPackager.SignPackage: Boolean;
 var
   sign: TGPGSignWrapper;
-  rs: Integer;
 begin
   Result := false;
   if (not Finalized) then
@@ -290,7 +289,6 @@ function TLiUnpacker.CheckSignature: PkgSignatureState;
 var
   hasSignature: Boolean;
   sign: TGPGSignWrapper;
-  res: Integer;
 begin
   hasSignature := false;
 

@@ -798,6 +798,7 @@ function RegExprSubExpressions (const ARegExpr : string;
   Stack : ^TStackArray; //###0.945
   StackIdx, StackSz : integer;
  begin
+  Modif := 0;
   Result := 0; // no unbalanced brackets found at this very moment
 
   ASubExprs.Clear; // I don't think that adding to non empty list
@@ -1584,6 +1585,7 @@ function TRegExpr.CompileRegExpr (exp : PRegExprChar) : boolean;
   len : cardinal;
   flags : integer;
  begin
+  flags := 0;
   Result := false; // life too dark
 
   regparse := nil; // for correct error handling
@@ -1699,6 +1701,7 @@ function TRegExpr.ParseReg (paren : integer; var flagp : integer) : PRegExprChar
   SavedModifiers : integer;
  begin
   Result := nil;
+  flags := 0;
   flagp := HASWIDTH; // Tentatively.
   parno := 0; // eliminate compiler stupid warning
   SavedModifiers := fCompModifiers;
@@ -1778,6 +1781,7 @@ function TRegExpr.ParseBranch (var flagp : integer) : PRegExprChar;
   ret, chain, latest : PRegExprChar;
   flags : integer;
  begin
+  flags := 0;
   flagp := WORST; // Tentatively.
 
   ret := EmitNode (BRANCH);
@@ -3817,7 +3821,7 @@ function TRegExpr.Replace (AInputStr : RegExprString;
       AReplaceFunc : TRegExprReplaceFunction)
      : RegExprString;
  begin
-  ReplaceEx (AInputStr, AReplaceFunc);
+  Result := ReplaceEx (AInputStr, AReplaceFunc);
  end; { of function TRegExpr.Replace
 --------------------------------------------------------------}
 {$ENDIF}

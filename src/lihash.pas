@@ -34,7 +34,7 @@ type
     digest: T160BitDigest;
   public
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
 
     function HashFromStream(const Stream: TStream; StreamSize: Integer): String;
     function HashFromFile(FName: String): String;
@@ -59,8 +59,8 @@ function TLiHash.HashFromStream(const Stream: TStream; StreamSize: Integer): Str
 var
   Buf: Pointer;
   BufSize: Integer;
-  Size: Integer;
   last: Boolean;
+  Size: Integer;
 begin
   last := false;
   hash.Init(@digest, '');

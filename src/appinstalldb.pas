@@ -94,6 +94,7 @@ end;
 
 function TAppInstallDB.Load(const rootmode: Boolean): Boolean;
 begin
+  Result := false;
   //FIXME: Load db from settings
   if rootmode then
     DBName := '/usr/share/app-install/desktop.db'
@@ -131,6 +132,7 @@ begin
   ds.Open; //Put DB in active state
   ds.Active := true;
   ds.ApplyUpdates;
+  Result := true;
   loaded := true;
 end;
 
@@ -236,7 +238,6 @@ function TAppInstallDB.GetApplicationList(filter: LiFilter;
   blacklist: TStringList = nil): Boolean;
 var
   entry: LiAppInfo;
-  p: Ansistring;
 begin
   Result := false;
   ToApps;

@@ -24,7 +24,7 @@ uses
   LiHash, Distri, Classes, FTPSend, LiTypes, LiUtils, MTProcs,
   PkTypes, Process, RegExpr, BaseUnix, Blcksock, HTTPSend, IniFiles,
   SysUtils, DepManage, IPKCDef10, StrLocale, liDBusProc, LiFileUtil,
-  PackageKit, SoftwareDB, Backend_IPK, IPKPackage11, ListallerDB, LiStatusObj;
+  PackageKit, SoftwareDB, Backend_IPK, IPKPackage11, LiStatusObj;
 
 type
   TLiInstallation = class(TLiStatusObject)
@@ -72,8 +72,6 @@ type
     license: TStringList;
     //List of available mo files
     mofiles: TStringList;
-    //Data which contains the status of the current action
-    StatusData: LiStatusData;
     // True if su mode enabled
     SUMode: Boolean;
     // Path to package registration
@@ -368,7 +366,6 @@ var
   DInfo: TDistroInfo;
   cont: TIPKControl;
   hres: LI_REQUEST_RES;
-  ldb: TListallerDB;
 
   procedure Emergency_FreeAll();
   begin
@@ -415,7 +412,15 @@ begin
   end;
   Result := true;
 
-  sdb.Load;
+  // Now load the database
+  if not sdb.Load(SUMode) then
+  begin
+    EmitError('Loading the software databases failed! (One of them might be corrupted)');
+    Result := false;
+    Emergency_FreeAll();
+    exit;
+  end;
+
   EmitInfoMsg('SQLite version: ' + sdb.SQLiteVersion);
 
   EmitInfoMsg('Loading IPK package...');
@@ -630,13 +635,9 @@ begin
     SetCurProfile(0);
 
     //Only executed to make sure that "RmApp" property is set
-
-    ldb := TListallerDB.Create;
-    ldb.Load(SUMode);
     if not Testmode then
-      if ldb.AppExists(pkgID) then
+      if sdb.AppExists(pkgID) then
         RmApp := true;
-    ldb.Free;
 
   end
   else //Handle other IPK types
@@ -916,7 +917,7 @@ var
       if Assigned(pkit) then
         FreeAndNil(pkit);
       if Assigned(hash) then
-      FreeAndNil(hash);
+        FreeAndNil(hash);
     except
       perror('Error while cleaning up.');
     end;
@@ -1150,8 +1151,8 @@ begin
           end;
         except
           //Unable to copy the file
-          EmitError(Format(rsCnCopy,
-            [dest + '/' + ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
+          EmitError(Format(rsCnCopy, [dest + '/' +
+            ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
           RollbackInstallation;
           Result := false;
           Abort_FreeAll();
@@ -1266,9 +1267,6 @@ begin
   FreeAndNil(fi);
   EmitStageMsg(rsStep4);
 
-  // Now load the database
-  sdb.Load(sumode);
-
   if Testmode then
     EmitInfoMsg(rsTestmodeDNRegister)
   else
@@ -1304,7 +1302,6 @@ begin
     AppField.Dependencies := PChar(Dependencies.Text);
 
     sdb.AppAddNew(AppField);
-    FreeAndNil(sdb);
 
     if length(IIconPath) > 0 then
       if IIconPath[1] = '/' then
