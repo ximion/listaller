@@ -1,25 +1,26 @@
-{ Copyright (C) 2010 Matthias Klumpp
-
-  Authors:
-   Matthias Klumpp
-
-  This program is free software: you can redistribute it and/or modify it under
-  the terms of the GNU General Public License as publishedf by the Free Software
-  Foundation, version 3.
-
-  This program is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License v3
-  along with this library. If not, see <http://www.gnu.org/licenses/>.}
+(* Copyright (C) 2010 Matthias Klumpp
+ *
+ * Authors:
+ * Matthias Klumpp
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as publishedf by the Free Software
+ * Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License v3
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *)
 //** Helper for generating updating/generating Listaller's library bindings
 program bindingtool;
 
 {$mode objfpc}{$H+}
 
 uses
-  Classes, SysUtils, CustApp, PasCConv, LiUtils, PasBind;
+  Classes, SysUtils, CustApp, PasCConv, LiUtils, PasBind, PKPasBind;
 
 type
 
@@ -98,7 +99,7 @@ begin
     end;
   end;
 
-
+  // Create C-Bindings for Listaller from Pascal binding
   if HasOption('pastoc') then
   if (FileExists(GetOptionValue('i', 'in')))and(HasOption('o','out')) then
   begin
@@ -131,6 +132,7 @@ begin
     tmpl.Free;
   end;
 
+  // Create Pascal binding from Pascal source
   if HasOption('pasbind') then
   if (FileExists(GetOptionValue('i', 'in'))) then
   begin
@@ -140,6 +142,13 @@ begin
     plg.LibName:='liblistaller';
     plg.Run(GetOptionValue('c','cmp'));
     plg.Free;
+  end;
+
+  // Generate Pascal binding from PackageKit C Header
+  if HasOption('pkheader') then
+  if (FileExists(GetOptionValue('i', 'in')))and(HasOption('o','out')) then
+  begin
+
   end;
 
   // stop program loop
