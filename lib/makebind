@@ -24,6 +24,8 @@ if [ -e $GEN ]; then
   $GEN --pastoc -i ../src/litypes.pas -o $COUT/li-types.h --template=$COUT/cheader.template
   $GEN --pastoc -i $PASBINDDIR/libasic.pas -o $COUT/li-basics.h --template=$COUT/cheader.template
   
+  sh ./makepkbind
+
   echo "Finished."
 else
  echo "BindingTool was not found!"

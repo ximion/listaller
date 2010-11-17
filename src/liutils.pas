@@ -26,8 +26,9 @@ uses
 const
   //** Version of the Listaller applicationset
   LiVersion = {$I liversion.inc};
+  BaseTmpDir = '/tmp/';
   //** Working directory of Listaller
-  TMPDIR = '/tmp/listaller/'; //Never forget trailing backslash!
+  TmpDir= BaseTmpDir+'listaller/'; //Never forget trailing backslash!
   //** Root configuration directory
   LI_CONFIG_DIR = '/etc/lipa/';
   //** Prefix for application database

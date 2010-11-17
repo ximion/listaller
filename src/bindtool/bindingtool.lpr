@@ -45,9 +45,10 @@ var
   hname: String;
   ccv: TPtCConverter;
   plg: TPasLibBindGen;
+  pkh2pas: TPKHeader2Pas;
 begin
   // quick check parameters
-  ErrorMsg:=CheckOptions('hioc',['help', 'pastoc', 'pasbind', 'template:', 'cmp:']);
+  ErrorMsg:=CheckOptions('hioc',['help', 'pastoc', 'pasbind', 'pkheader', 'template:', 'cmp:']);
   if ErrorMsg<>'' then
   begin
     ShowException(Exception.Create(ErrorMsg));
@@ -148,7 +149,11 @@ begin
   if HasOption('pkheader') then
   if (FileExists(GetOptionValue('i', 'in')))and(HasOption('o','out')) then
   begin
-
+    pkh2pas := TPKHeader2Pas.Create;
+    pkh2pas.InputFile := GetOptionValue('i', 'in');
+    pkh2pas.OutputFile := GetOptionValue('o', 'out');
+    pkh2pas.Execute;
+    pkh2pas.Free;
   end;
 
   // stop program loop

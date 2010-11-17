@@ -65,7 +65,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value=".."/>
+      <OtherUnitFiles Value="..;../bind"/>
       <UnitOutputDirectory Value="../../build/$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>

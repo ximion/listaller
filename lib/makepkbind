@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+#Set paths
+GEN="../build/util/bindingtool"
+PASBINDDIR="../src/bind"
+PKINCLUDE="/usr/include/PackageKit/packagekit-glib2"
+
+#Generate C headers
+echo "Generating Pascal PK bindings..."
+
+$GEN --pkheader -i $PKINCLUDE/pk-enum.h -o $PASBINDDIR/pkenum.inc
+$GEN --pkheader -i $PKINCLUDE/pk-progress.h -o $PASBINDDIR/pkprogress.inc
+$GEN --pkheader -i $PKINCLUDE/pk-client.h -o $PASBINDDIR/pkclient.inc
+ 
+echo "PK bindings finished."
