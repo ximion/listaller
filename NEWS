@@ -8,9 +8,13 @@ Version 0.5
   * visual-ldd: Pulled from Autopackage
   * visual-ldd: Ported to Qt4, updated GUI and added few more features
   * Pulled apbuild from Autopackage
+  * Added PackageKit bindings generator
+  * binreloc: Adjusted for Listaller
+  * qt: Created new Qt bindings
+  * Marked Listaller daemon as obsolete
  
  Specifications:
-  * Updated databse layout to new format
+  * Updated database layout to new format
  
  Bugfixes:
   * Fix invalid dependencies on Fedora
