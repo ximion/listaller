@@ -13,7 +13,7 @@
 
   You should have received a copy of the GNU General Public License v3
   along with this unit. If not, see <http://www.gnu.org/licenses/>.}
-//** Basic PackageKit types / PkPackage lists
+//** Bind elementary PackageKit types and provide TPackageList structure
 unit pktypes;
 
 {$mode objfpc}{$H+}
@@ -33,6 +33,19 @@ type
   PPkClient = Pointer;
   PPkResults = Pointer;
   PPkError = Pointer;
+  PPkDetails = Pointer;
+  //
+  PPkUpdateDetail = Pointer;
+  PPkCategory = Pointer;
+  PPkDistroUpgrade = Pointer;
+  PPkRequireRestart = Pointer;
+  PPkTransactionPast = Pointer;
+  PPkFiles = Pointer;
+  PPkRepoSignatureRequired = Pointer;
+  PPkEulaRequired = Pointer;
+  PPkMediaChangeRequired = Pointer;
+  PPkRepoDetail = Pointer;
+  PPkMessage = Pointer;
 
   {$I pkenum.inc}
   {$I pkprogress.inc}

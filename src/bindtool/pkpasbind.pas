@@ -109,7 +109,13 @@ begin
   tmp.Free;
 
   uText.Insert(0, '');
-  uText.Insert(0, ' // Part of Listaller PackageKit bindings //');
+  uText.Insert(0, '(* Part of Listaller''s PackageKit bindings'#10
+                  + ' *'#10
+                  + ' * (c) 2010 Matthias Klumpp'#10
+                  + ' *'#10
+                  + ' * Licensed under the same license as the original header.'#10
+                  + ' * see copyright notice below for more information.'#10
+                  + ' *)');
   uText.Insert(0, '');
 end;
 
@@ -256,7 +262,38 @@ begin
     begin
       uText.Delete(i);
     end;
+
+  // Fix malformed "end;" statements
   FixEndStatements;
+
+  // Fix orphaned "type" statements
+  i := 0;
+  lasterrpos := -1;
+  while i < uText.Count do
+  begin
+    if LowerCase(trim(uText[i])) = 'type' then
+      begin
+      if lasterrpos > 0 then
+        begin
+        uText.Delete(i);
+        Dec(i);
+        end;
+        lasterrpos := i;
+      end;
+
+      if pos(' = ', uText[i]) > 0 then
+        lasterrpos := -1;
+      if (lasterrpos > 0) and
+      ((LowerCase(copy(trim(uText[i]),1,8)) = 'function') or (LowerCase(copy(trim(uText[i]),1,9)) = 'procedure')) then
+      begin
+        uText.Delete(lasterrpos);
+        lasterrpos := -1;
+      end else
+      Inc(i);
+  end;
+
+  // Type fixes
+  uText.Text := StrSubst(uText.Text, '^Pgchar', 'PPGChar');
 end;
 
 procedure TPKHeader2Pas.RemoveDuplicates;
@@ -297,8 +334,11 @@ begin
   begin
    { if pos(' typesv', LowerCase(uText[i])) > 0 then
       uText.Delete(i)
-    else  }
-    if StrSubst(uText[i], ' ', '') = 'callback_ready:GAsyncReadyCallback;user_data:gpointer);cdecl;externalpklib2;' then
+    else }
+    if  (i+1 < uText.Count-1)
+    and (StrSubst(uText[i], ' ', '') = 'callback_ready:GAsyncReadyCallback;user_data:gpointer);cdecl;externalpklib2;')
+    and (StrSubst(uText[i+1], ' ', '') = 'callback_ready:GAsyncReadyCallback;user_data:gpointer);cdecl;externalpklib2;')
+    then
     uText.Delete(i)
     else
     if LowerCase(StrSubst(uText[i], ' ', '')) = 'const' then

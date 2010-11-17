@@ -31,9 +31,7 @@ type
     user_data: GPointer); cdecl;
 
   //** Pointer to PkClient GObject
-  PPkClient = Pointer;
-  PPkResults = Pointer;
-  PPkError = Pointer;
+  PkProgressCallback = Pointer;
   PPkPackageSack = Pointer;
   PPkPackage = Pointer;
 
@@ -46,6 +44,12 @@ type
     Data: PChar;
   end;
 
+  {$I pkresults.inc}
+  {$I pkclient.inc}
+  {$I pkbitfield.inc}
+  {$I pkpackagesack.inc}
+
+  type
   //** Pointer to TPackageKit object
   PPackageKit = ^TPackageKit;
 
@@ -137,7 +141,6 @@ type
     property Tag: Integer read tagid write tagid;
   end;
 
-  {$I pkclient.inc}
   {$I pkdesktop.inc}
 
 implementation

@@ -1,5 +1,12 @@
 
- // Part of Listaller PackageKit bindings //
+(* Part of Listaller's PackageKit bindings
+ *
+ * (c) 2010 Matthias Klumpp
+ *
+ * Licensed under the same license as the original header.
+ * see copyright notice below for more information.
+ *
+ *)
 
 {$IFDEF FPC}
 {$PACKRECORDS C}

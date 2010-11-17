@@ -1,103 +1,566 @@
-{ Copyright (C) 2010 Matthias Klumpp
 
-  Authors:
-   Matthias Klumpp
+(* Part of Listaller's PackageKit bindings
+ *
+ * (c) 2010 Matthias Klumpp
+ *
+ * Licensed under the same license as the original header.
+ * see copyright notice below for more information.
+ *
+ *)
 
-  This unit is free software: you can redistribute it and/or modify it under
-  the terms of the GNU General Public License as published by the Free Software
-  Foundation, version 3.
-
-  This unit is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License v3
-  along with this unit. If not, see <http://www.gnu.org/licenses/>.}
-// Some PackageKit enums
-
-  //** PackageKit progress types
-  PkProgressType = (PK_PROGRESS_TYPE_PACKAGE_ID,
-    PK_PROGRESS_TYPE_PERCENTAGE,
-    PK_PROGRESS_TYPE_SUBPERCENTAGE,
-    PK_PROGRESS_TYPE_ALLOW_CANCEL,
-    PK_PROGRESS_TYPE_STATUS,
-    PK_PROGRESS_TYPE_ROLE,
-    PK_PROGRESS_TYPE_CALLER_ACTIVE,
-    PK_PROGRESS_TYPE_INVALID);
-
-  //** How the backend exits
-  PkExitEnum = (PK_EXIT_ENUM_UNKNOWN,
-    PK_EXIT_ENUM_SUCCESS,
-    PK_EXIT_ENUM_FAILED,
-    PK_EXIT_ENUM_CANCELLED,
-    PK_EXIT_ENUM_KEY_REQUIRED,
-    PK_EXIT_ENUM_EULA_REQUIRED,
-    PK_EXIT_ENUM_KILLED,  (* when we forced the cancel, but had to SIGKILL *)
-    PK_EXIT_ENUM_MEDIA_CHANGE_REQUIRED,
-    PK_EXIT_ENUM_NEED_UNTRUSTED,
-    PK_EXIT_ENUM_LAST);
-
-  //** Transaction roles
-  PkRoleEnum = (PK_ROLE_ENUM_UNKNOWN,
-    PK_ROLE_ENUM_CANCEL,
-    PK_ROLE_ENUM_GET_DEPENDS,
-    PK_ROLE_ENUM_GET_DETAILS,
-    PK_ROLE_ENUM_GET_FILES,
-    PK_ROLE_ENUM_GET_PACKAGES,
-    PK_ROLE_ENUM_GET_REPO_LIST,
-    PK_ROLE_ENUM_GET_REQUIRES,
-    PK_ROLE_ENUM_GET_UPDATE_DETAIL,
-    PK_ROLE_ENUM_GET_UPDATES,
-    PK_ROLE_ENUM_INSTALL_FILES,
-    PK_ROLE_ENUM_INSTALL_PACKAGES,
-    PK_ROLE_ENUM_INSTALL_SIGNATURE,
-    PK_ROLE_ENUM_REFRESH_CACHE,
-    PK_ROLE_ENUM_REMOVE_PACKAGES,
-    PK_ROLE_ENUM_REPO_ENABLE,
-    PK_ROLE_ENUM_REPO_SET_DATA,
-    PK_ROLE_ENUM_RESOLVE,
-    PK_ROLE_ENUM_ROLLBACK,
-    PK_ROLE_ENUM_SEARCH_DETAILS,
-    PK_ROLE_ENUM_SEARCH_FILE,
-    PK_ROLE_ENUM_SEARCH_GROUP,
-    PK_ROLE_ENUM_SEARCH_NAME,
-    PK_ROLE_ENUM_UPDATE_PACKAGES,
-    PK_ROLE_ENUM_UPDATE_SYSTEM,
-    PK_ROLE_ENUM_WHAT_PROVIDES,
-    PK_ROLE_ENUM_ACCEPT_EULA,
-    PK_ROLE_ENUM_DOWNLOAD_PACKAGES,
-    PK_ROLE_ENUM_GET_DISTRO_UPGRADES,
-    PK_ROLE_ENUM_GET_CATEGORIES,
-    PK_ROLE_ENUM_GET_OLD_TRANSACTIONS,
-    PK_ROLE_ENUM_SIMULATE_INSTALL_FILES,
-    PK_ROLE_ENUM_SIMULATE_INSTALL_PACKAGES,
-    PK_ROLE_ENUM_SIMULATE_REMOVE_PACKAGES,
-    PK_ROLE_ENUM_SIMULATE_UPDATE_PACKAGES,
-    PK_ROLE_ENUM_LAST);
-
-    PkInfoEnum = (PK_INFO_ENUM_UNKNOWN,
-	PK_INFO_ENUM_INSTALLED,
-	PK_INFO_ENUM_AVAILABLE,
-	PK_INFO_ENUM_LOW,
-	PK_INFO_ENUM_ENHANCEMENT,
-	PK_INFO_ENUM_NORMAL,
-	PK_INFO_ENUM_BUGFIX,
-	PK_INFO_ENUM_IMPORTANT,
-	PK_INFO_ENUM_SECURITY,
-	PK_INFO_ENUM_BLOCKED,
-	PK_INFO_ENUM_DOWNLOADING,
-	PK_INFO_ENUM_UPDATING,
-	PK_INFO_ENUM_INSTALLING,
-	PK_INFO_ENUM_REMOVING,
-	PK_INFO_ENUM_CLEANUP,
-	PK_INFO_ENUM_OBSOLETING,
-	PK_INFO_ENUM_COLLECTION_INSTALLED,
-	PK_INFO_ENUM_COLLECTION_AVAILABLE,
-	PK_INFO_ENUM_FINISHED,
-	PK_INFO_ENUM_REINSTALLING,
-	PK_INFO_ENUM_DOWNGRADING,
-	PK_INFO_ENUM_PREPARING,
-	PK_INFO_ENUM_DECOMPRESSING,
-	PK_INFO_ENUM_LAST);
+{$IFDEF FPC}
+{$PACKRECORDS C}
+{$ENDIF}
 
 
+{ -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
+ *
+ * Copyright (C) 2007-2008 Richard Hughes <richard@hughsie.com>
+ *
+ * Licensed under the GNU Lesser General Public License Version 2.1
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
+  }
+{$ifndef __PK_ENUM_H}
+{$define __PK_ENUM_H}
+{ These are compatibility enums so we can break API in the future  }
+(* error 
+#define pk_sig_type_enum_from_text		pk_sig_type_enum_from_string
+in define line 34 *)
+
+    {*
+     * PkEnumMatch:
+     *
+     * Matching an enumerated type to a string
+     * }
+(* Const before type ignored *)
+    type
+
+       PPkEnumMatch = Pointer;
+       PkEnumMatch = record
+            _string : Pgchar;
+         end;
+    {*
+     * PkRoleEnum:
+     *
+     * What we were asked to do, this never changes for the lifetime of the
+     * transaction.
+     * Icons that have to represent the whole "aim" of the transaction will use
+     * these constants
+     * }
+
+       PPkRoleEnum = Pointer;
+       PkRoleEnum = (PK_ROLE_ENUM_UNKNOWN,PK_ROLE_ENUM_CANCEL,
+         PK_ROLE_ENUM_GET_DEPENDS,PK_ROLE_ENUM_GET_DETAILS,
+         PK_ROLE_ENUM_GET_FILES,PK_ROLE_ENUM_GET_PACKAGES,
+         PK_ROLE_ENUM_GET_REPO_LIST,PK_ROLE_ENUM_GET_REQUIRES,
+         PK_ROLE_ENUM_GET_UPDATE_DETAIL,PK_ROLE_ENUM_GET_UPDATES,
+         PK_ROLE_ENUM_INSTALL_FILES,PK_ROLE_ENUM_INSTALL_PACKAGES,
+         PK_ROLE_ENUM_INSTALL_SIGNATURE,PK_ROLE_ENUM_REFRESH_CACHE,
+         PK_ROLE_ENUM_REMOVE_PACKAGES,PK_ROLE_ENUM_REPO_ENABLE,
+         PK_ROLE_ENUM_REPO_SET_DATA,PK_ROLE_ENUM_RESOLVE,
+         PK_ROLE_ENUM_ROLLBACK,PK_ROLE_ENUM_SEARCH_DETAILS,
+         PK_ROLE_ENUM_SEARCH_FILE,PK_ROLE_ENUM_SEARCH_GROUP,
+         PK_ROLE_ENUM_SEARCH_NAME,PK_ROLE_ENUM_UPDATE_PACKAGES,
+         PK_ROLE_ENUM_UPDATE_SYSTEM,PK_ROLE_ENUM_WHAT_PROVIDES,
+         PK_ROLE_ENUM_ACCEPT_EULA,PK_ROLE_ENUM_DOWNLOAD_PACKAGES,
+         PK_ROLE_ENUM_GET_DISTRO_UPGRADES,
+         PK_ROLE_ENUM_GET_CATEGORIES,PK_ROLE_ENUM_GET_OLD_TRANSACTIONS,
+         PK_ROLE_ENUM_SIMULATE_INSTALL_FILES,
+         PK_ROLE_ENUM_SIMULATE_INSTALL_PACKAGES,
+         PK_ROLE_ENUM_SIMULATE_REMOVE_PACKAGES,
+         PK_ROLE_ENUM_SIMULATE_UPDATE_PACKAGES,
+         PK_ROLE_ENUM_LAST);
+    {*
+     * PkStatusEnum:
+     *
+     * What status we are now; this can change for each transaction giving a
+     * status of what sort of thing is happening
+     * Icons that change to represent the current status of the transaction will
+     * use these constants
+     * If you add to these, make sure you add filenames in gpk-watch.c also
+     *
+     * A typical transaction will do:
+     * - schedule task
+     *	WAIT
+     * - run task
+     *	SETUP
+     * - wait for lock
+     *	RUNNING
+     *
+     * This means that backends should run pk_backend_set_status (backend, PK_STATUS_ENUM_RUNNING)
+     * when they are ready to start running the transaction and after a lock has been got.
+     * }
+
+       PPkStatusEnum = Pointer;
+       PkStatusEnum = (PK_STATUS_ENUM_UNKNOWN,PK_STATUS_ENUM_WAIT,
+         PK_STATUS_ENUM_SETUP,PK_STATUS_ENUM_RUNNING,
+         PK_STATUS_ENUM_QUERY,PK_STATUS_ENUM_INFO,
+         PK_STATUS_ENUM_REMOVE,PK_STATUS_ENUM_REFRESH_CACHE,
+         PK_STATUS_ENUM_DOWNLOAD,PK_STATUS_ENUM_INSTALL,
+         PK_STATUS_ENUM_UPDATE,PK_STATUS_ENUM_CLEANUP,
+         PK_STATUS_ENUM_OBSOLETE,PK_STATUS_ENUM_DEP_RESOLVE,
+         PK_STATUS_ENUM_SIG_CHECK,PK_STATUS_ENUM_ROLLBACK,
+         PK_STATUS_ENUM_TEST_COMMIT,PK_STATUS_ENUM_COMMIT,
+         PK_STATUS_ENUM_REQUEST,PK_STATUS_ENUM_FINISHED,
+         PK_STATUS_ENUM_CANCEL,PK_STATUS_ENUM_DOWNLOAD_REPOSITORY,
+         PK_STATUS_ENUM_DOWNLOAD_PACKAGELIST,
+         PK_STATUS_ENUM_DOWNLOAD_FILELIST,
+         PK_STATUS_ENUM_DOWNLOAD_CHANGELOG,
+         PK_STATUS_ENUM_DOWNLOAD_GROUP,PK_STATUS_ENUM_DOWNLOAD_UPDATEINFO,
+         PK_STATUS_ENUM_REPACKAGING,PK_STATUS_ENUM_LOADING_CACHE,
+         PK_STATUS_ENUM_SCAN_APPLICATIONS,
+         PK_STATUS_ENUM_GENERATE_PACKAGE_LIST,
+         PK_STATUS_ENUM_WAITING_FOR_LOCK,PK_STATUS_ENUM_WAITING_FOR_AUTH,
+         PK_STATUS_ENUM_SCAN_PROCESS_LIST,
+         PK_STATUS_ENUM_CHECK_EXECUTABLE_FILES,
+         PK_STATUS_ENUM_CHECK_LIBRARIES,PK_STATUS_ENUM_COPY_FILES,
+         PK_STATUS_ENUM_LAST);
+    {*
+     * PkExitEnum:
+     *
+     * How the backend exited
+     * }
+    { when we forced the cancel, but had to SIGKILL  }
+
+       PPkExitEnum = Pointer;
+       PkExitEnum = (PK_EXIT_ENUM_UNKNOWN,PK_EXIT_ENUM_SUCCESS,
+         PK_EXIT_ENUM_FAILED,PK_EXIT_ENUM_CANCELLED,
+         PK_EXIT_ENUM_KEY_REQUIRED,PK_EXIT_ENUM_EULA_REQUIRED,
+         PK_EXIT_ENUM_KILLED,PK_EXIT_ENUM_MEDIA_CHANGE_REQUIRED,
+         PK_EXIT_ENUM_NEED_UNTRUSTED,PK_EXIT_ENUM_LAST
+         );
+    {*
+     * PkNetworkEnum:
+     * }
+
+       PPkNetworkEnum = Pointer;
+       PkNetworkEnum = (PK_NETWORK_ENUM_UNKNOWN,PK_NETWORK_ENUM_OFFLINE,
+         PK_NETWORK_ENUM_ONLINE,PK_NETWORK_ENUM_WIRED,
+         PK_NETWORK_ENUM_WIFI,PK_NETWORK_ENUM_MOBILE,
+         PK_NETWORK_ENUM_LAST);
+    {*
+     * PkFilterEnum:
+     *
+     * The filter types
+     * }
+
+       PPkFilterEnum = Pointer;
+       PkFilterEnum = (PK_FILTER_ENUM_UNKNOWN,PK_FILTER_ENUM_NONE,
+         PK_FILTER_ENUM_INSTALLED,PK_FILTER_ENUM_NOT_INSTALLED,
+         PK_FILTER_ENUM_DEVELOPMENT,PK_FILTER_ENUM_NOT_DEVELOPMENT,
+         PK_FILTER_ENUM_GUI,PK_FILTER_ENUM_NOT_GUI,
+         PK_FILTER_ENUM_FREE,PK_FILTER_ENUM_NOT_FREE,
+         PK_FILTER_ENUM_VISIBLE,PK_FILTER_ENUM_NOT_VISIBLE,
+         PK_FILTER_ENUM_SUPPORTED,PK_FILTER_ENUM_NOT_SUPPORTED,
+         PK_FILTER_ENUM_BASENAME,PK_FILTER_ENUM_NOT_BASENAME,
+         PK_FILTER_ENUM_NEWEST,PK_FILTER_ENUM_NOT_NEWEST,
+         PK_FILTER_ENUM_ARCH,PK_FILTER_ENUM_NOT_ARCH,
+         PK_FILTER_ENUM_SOURCE,PK_FILTER_ENUM_NOT_SOURCE,
+         PK_FILTER_ENUM_COLLECTIONS,PK_FILTER_ENUM_NOT_COLLECTIONS,
+         PK_FILTER_ENUM_APPLICATION,PK_FILTER_ENUM_NOT_APPLICATION,
+         PK_FILTER_ENUM_LAST);
+    {*
+     * PkRestartEnum:
+     *
+     * What restart we need to after a transaction, ordered by severity
+     * }
+    { a library that is being used by this package has been updated for security  }
+
+       PPkRestartEnum = Pointer;
+       PkRestartEnum = (PK_RESTART_ENUM_UNKNOWN,PK_RESTART_ENUM_NONE,
+         PK_RESTART_ENUM_APPLICATION,PK_RESTART_ENUM_SESSION,
+         PK_RESTART_ENUM_SYSTEM,PK_RESTART_ENUM_SECURITY_SESSION,
+         PK_RESTART_ENUM_SECURITY_SYSTEM,PK_RESTART_ENUM_LAST
+         );
+    {*
+     * PkMessageEnum:
+     *
+     * What message type we need to show
+     * }
+
+       PPkMessageEnum = Pointer;
+       PkMessageEnum = (PK_MESSAGE_ENUM_UNKNOWN,PK_MESSAGE_ENUM_BROKEN_MIRROR,
+         PK_MESSAGE_ENUM_CONNECTION_REFUSED,
+         PK_MESSAGE_ENUM_PARAMETER_INVALID,
+         PK_MESSAGE_ENUM_PRIORITY_INVALID,
+         PK_MESSAGE_ENUM_BACKEND_ERROR,PK_MESSAGE_ENUM_DAEMON_ERROR,
+         PK_MESSAGE_ENUM_CACHE_BEING_REBUILT,
+         PK_MESSAGE_ENUM_UNTRUSTED_PACKAGE,
+         PK_MESSAGE_ENUM_NEWER_PACKAGE_EXISTS,
+         PK_MESSAGE_ENUM_COULD_NOT_FIND_PACKAGE,
+         PK_MESSAGE_ENUM_CONFIG_FILES_CHANGED,
+         PK_MESSAGE_ENUM_PACKAGE_ALREADY_INSTALLED,
+         PK_MESSAGE_ENUM_AUTOREMOVE_IGNORED,
+         PK_MESSAGE_ENUM_REPO_METADATA_DOWNLOAD_FAILED,
+         PK_MESSAGE_ENUM_REPO_FOR_DEVELOPERS_ONLY,
+         PK_MESSAGE_ENUM_OTHER_UPDATES_HELD_BACK,
+         PK_MESSAGE_ENUM_LAST);
+    {*
+     * PkErrorEnum:
+     *
+     * The error type
+     * }
+
+       PPkErrorEnum = Pointer;
+       PkErrorEnum = (PK_ERROR_ENUM_UNKNOWN,PK_ERROR_ENUM_OOM,
+         PK_ERROR_ENUM_NO_NETWORK,PK_ERROR_ENUM_NOT_SUPPORTED,
+         PK_ERROR_ENUM_INTERNAL_ERROR,PK_ERROR_ENUM_GPG_FAILURE,
+         PK_ERROR_ENUM_PACKAGE_ID_INVALID,
+         PK_ERROR_ENUM_PACKAGE_NOT_INSTALLED,
+         PK_ERROR_ENUM_PACKAGE_NOT_FOUND,PK_ERROR_ENUM_PACKAGE_ALREADY_INSTALLED,
+         PK_ERROR_ENUM_PACKAGE_DOWNLOAD_FAILED,
+         PK_ERROR_ENUM_GROUP_NOT_FOUND,PK_ERROR_ENUM_GROUP_LIST_INVALID,
+         PK_ERROR_ENUM_DEP_RESOLUTION_FAILED,
+         PK_ERROR_ENUM_FILTER_INVALID,PK_ERROR_ENUM_CREATE_THREAD_FAILED,
+         PK_ERROR_ENUM_TRANSACTION_ERROR,PK_ERROR_ENUM_TRANSACTION_CANCELLED,
+         PK_ERROR_ENUM_NO_CACHE,PK_ERROR_ENUM_REPO_NOT_FOUND,
+         PK_ERROR_ENUM_CANNOT_REMOVE_SYSTEM_PACKAGE,
+         PK_ERROR_ENUM_PROCESS_KILL,PK_ERROR_ENUM_FAILED_INITIALIZATION,
+         PK_ERROR_ENUM_FAILED_FINALISE,PK_ERROR_ENUM_FAILED_CONFIG_PARSING,
+         PK_ERROR_ENUM_CANNOT_CANCEL,PK_ERROR_ENUM_CANNOT_GET_LOCK,
+         PK_ERROR_ENUM_NO_PACKAGES_TO_UPDATE,
+         PK_ERROR_ENUM_CANNOT_WRITE_REPO_CONFIG,
+         PK_ERROR_ENUM_LOCAL_INSTALL_FAILED,
+         PK_ERROR_ENUM_BAD_GPG_SIGNATURE,PK_ERROR_ENUM_MISSING_GPG_SIGNATURE,
+         PK_ERROR_ENUM_CANNOT_INSTALL_SOURCE_PACKAGE,
+         PK_ERROR_ENUM_REPO_CONFIGURATION_ERROR,
+         PK_ERROR_ENUM_NO_LICENSE_AGREEMENT,
+         PK_ERROR_ENUM_FILE_CONFLICTS,PK_ERROR_ENUM_PACKAGE_CONFLICTS,
+         PK_ERROR_ENUM_REPO_NOT_AVAILABLE,
+         PK_ERROR_ENUM_INVALID_PACKAGE_FILE,
+         PK_ERROR_ENUM_PACKAGE_INSTALL_BLOCKED,
+         PK_ERROR_ENUM_PACKAGE_CORRUPT,PK_ERROR_ENUM_ALL_PACKAGES_ALREADY_INSTALLED,
+         PK_ERROR_ENUM_FILE_NOT_FOUND,PK_ERROR_ENUM_NO_MORE_MIRRORS_TO_TRY,
+         PK_ERROR_ENUM_NO_DISTRO_UPGRADE_DATA,
+         PK_ERROR_ENUM_INCOMPATIBLE_ARCHITECTURE,
+         PK_ERROR_ENUM_NO_SPACE_ON_DEVICE,
+         PK_ERROR_ENUM_MEDIA_CHANGE_REQUIRED,
+         PK_ERROR_ENUM_NOT_AUTHORIZED,PK_ERROR_ENUM_UPDATE_NOT_FOUND,
+         PK_ERROR_ENUM_CANNOT_INSTALL_REPO_UNSIGNED,
+         PK_ERROR_ENUM_CANNOT_UPDATE_REPO_UNSIGNED,
+         PK_ERROR_ENUM_CANNOT_GET_FILELIST,
+         PK_ERROR_ENUM_CANNOT_GET_REQUIRES,
+         PK_ERROR_ENUM_CANNOT_DISABLE_REPOSITORY,
+         PK_ERROR_ENUM_RESTRICTED_DOWNLOAD,
+         PK_ERROR_ENUM_PACKAGE_FAILED_TO_CONFIGURE,
+         PK_ERROR_ENUM_PACKAGE_FAILED_TO_BUILD,
+         PK_ERROR_ENUM_PACKAGE_FAILED_TO_INSTALL,
+         PK_ERROR_ENUM_PACKAGE_FAILED_TO_REMOVE,
+         PK_ERROR_ENUM_UPDATE_FAILED_DUE_TO_RUNNING_PROCESS,
+         PK_ERROR_ENUM_PACKAGE_DATABASE_CHANGED,
+         PK_ERROR_ENUM_PROVIDE_TYPE_NOT_SUPPORTED,
+         PK_ERROR_ENUM_INSTALL_ROOT_INVALID,
+         PK_ERROR_ENUM_LAST);
+    {*
+     * PkGroupEnum:
+     *
+     * The group type
+     * }
+
+       PPkGroupEnum = Pointer;
+       PkGroupEnum = (PK_GROUP_ENUM_UNKNOWN,PK_GROUP_ENUM_ACCESSIBILITY,
+         PK_GROUP_ENUM_ACCESSORIES,PK_GROUP_ENUM_ADMIN_TOOLS,
+         PK_GROUP_ENUM_COMMUNICATION,PK_GROUP_ENUM_DESKTOP_GNOME,
+         PK_GROUP_ENUM_DESKTOP_KDE,PK_GROUP_ENUM_DESKTOP_OTHER,
+         PK_GROUP_ENUM_DESKTOP_XFCE,PK_GROUP_ENUM_EDUCATION,
+         PK_GROUP_ENUM_FONTS,PK_GROUP_ENUM_GAMES,
+         PK_GROUP_ENUM_GRAPHICS,PK_GROUP_ENUM_INTERNET,
+         PK_GROUP_ENUM_LEGACY,PK_GROUP_ENUM_LOCALIZATION,
+         PK_GROUP_ENUM_MAPS,PK_GROUP_ENUM_MULTIMEDIA,
+         PK_GROUP_ENUM_NETWORK,PK_GROUP_ENUM_OFFICE,
+         PK_GROUP_ENUM_OTHER,PK_GROUP_ENUM_POWER_MANAGEMENT,
+         PK_GROUP_ENUM_PROGRAMMING,PK_GROUP_ENUM_PUBLISHING,
+         PK_GROUP_ENUM_REPOS,PK_GROUP_ENUM_SECURITY,
+         PK_GROUP_ENUM_SERVERS,PK_GROUP_ENUM_SYSTEM,
+         PK_GROUP_ENUM_VIRTUALIZATION,PK_GROUP_ENUM_SCIENCE,
+         PK_GROUP_ENUM_DOCUMENTATION,PK_GROUP_ENUM_ELECTRONICS,
+         PK_GROUP_ENUM_COLLECTIONS,PK_GROUP_ENUM_VENDOR,
+         PK_GROUP_ENUM_NEWEST,PK_GROUP_ENUM_LAST
+         );
+    {*
+     * PkUpdateStateEnum:
+     *
+     * What state the update is in
+     * }
+
+       PPkUpdateStateEnum = Pointer;
+       PkUpdateStateEnum = (PK_UPDATE_STATE_ENUM_UNKNOWN,PK_UPDATE_STATE_ENUM_STABLE,
+         PK_UPDATE_STATE_ENUM_UNSTABLE,PK_UPDATE_STATE_ENUM_TESTING,
+         PK_UPDATE_STATE_ENUM_LAST);
+    {*
+     * PkInfoEnum:
+     *
+     * The enumerated types used in Package() - these have to refer to a specific
+     * package action, rather than a general state
+     * }
+
+       PPkInfoEnum = Pointer;
+       PkInfoEnum = (PK_INFO_ENUM_UNKNOWN,PK_INFO_ENUM_INSTALLED,
+         PK_INFO_ENUM_AVAILABLE,PK_INFO_ENUM_LOW,
+         PK_INFO_ENUM_ENHANCEMENT,PK_INFO_ENUM_NORMAL,
+         PK_INFO_ENUM_BUGFIX,PK_INFO_ENUM_IMPORTANT,
+         PK_INFO_ENUM_SECURITY,PK_INFO_ENUM_BLOCKED,
+         PK_INFO_ENUM_DOWNLOADING,PK_INFO_ENUM_UPDATING,
+         PK_INFO_ENUM_INSTALLING,PK_INFO_ENUM_REMOVING,
+         PK_INFO_ENUM_CLEANUP,PK_INFO_ENUM_OBSOLETING,
+         PK_INFO_ENUM_COLLECTION_INSTALLED,
+         PK_INFO_ENUM_COLLECTION_AVAILABLE,
+         PK_INFO_ENUM_FINISHED,PK_INFO_ENUM_REINSTALLING,
+         PK_INFO_ENUM_DOWNGRADING,PK_INFO_ENUM_PREPARING,
+         PK_INFO_ENUM_DECOMPRESSING,PK_INFO_ENUM_LAST
+         );
+    {*
+     * PkDistroUpgradeEnum:
+     *
+     * The distro upgrade status
+     * }
+
+       PPkDistroUpgradeEnum = Pointer;
+       PkDistroUpgradeEnum = (PK_DISTRO_UPGRADE_ENUM_UNKNOWN,PK_DISTRO_UPGRADE_ENUM_STABLE,
+         PK_DISTRO_UPGRADE_ENUM_UNSTABLE,PK_DISTRO_UPGRADE_ENUM_LAST
+         );
+    {*
+     * PkSigTypeEnum:
+     *
+     * The signature type type
+     * }
+
+       PPkSigTypeEnum = Pointer;
+       PkSigTypeEnum = (PK_SIGTYPE_ENUM_UNKNOWN,PK_SIGTYPE_ENUM_GPG,
+         PK_SIGTYPE_ENUM_LAST);
+    {*
+     * PkProvidesEnum:
+     *
+     * The signature type type
+     * }
+
+       PPkProvidesEnum = Pointer;
+       PkProvidesEnum = (PK_PROVIDES_ENUM_UNKNOWN,PK_PROVIDES_ENUM_ANY,
+         PK_PROVIDES_ENUM_MODALIAS,PK_PROVIDES_ENUM_CODEC,
+         PK_PROVIDES_ENUM_MIMETYPE,PK_PROVIDES_ENUM_FONT,
+         PK_PROVIDES_ENUM_HARDWARE_DRIVER,
+         PK_PROVIDES_ENUM_POSTSCRIPT_DRIVER,
+         PK_PROVIDES_ENUM_LAST);
+
+       PPkLicenseEnum = Pointer;
+       PkLicenseEnum = (PK_LICENSE_ENUM_UNKNOWN,PK_LICENSE_ENUM_AAL,
+         PK_LICENSE_ENUM_ADOBE,PK_LICENSE_ENUM_ADSL,
+         PK_LICENSE_ENUM_AFL,PK_LICENSE_ENUM_AGPLV1,
+         PK_LICENSE_ENUM_AMDPLPA,PK_LICENSE_ENUM_AML,
+         PK_LICENSE_ENUM_AMPAS_BSD,PK_LICENSE_ENUM_APSL_2_DOT_0,
+         PK_LICENSE_ENUM_ARL,PK_LICENSE_ENUM_ARPHIC,
+         PK_LICENSE_ENUM_ARTISTIC_2_DOT_0,
+         PK_LICENSE_ENUM_ARTISTIC_CLARIFIED,
+         PK_LICENSE_ENUM_ASL_1_DOT_0,PK_LICENSE_ENUM_ASL_1_DOT_1,
+         PK_LICENSE_ENUM_ASL_2_DOT_0,PK_LICENSE_ENUM_BAEKMUK,
+         PK_LICENSE_ENUM_BEOPEN,PK_LICENSE_ENUM_BITTORRENT,
+         PK_LICENSE_ENUM_BOOST,PK_LICENSE_ENUM_BSD,
+         PK_LICENSE_ENUM_BSD_PROTECTION,PK_LICENSE_ENUM_BSD_WITH_ADVERTISING,
+         PK_LICENSE_ENUM_CATOSL,PK_LICENSE_ENUM_CC0,
+         PK_LICENSE_ENUM_CC_BY,PK_LICENSE_ENUM_CC_BY_SA,
+         PK_LICENSE_ENUM_CDDL,PK_LICENSE_ENUM_CDL,
+         PK_LICENSE_ENUM_CECILL,PK_LICENSE_ENUM_CECILL_B,
+         PK_LICENSE_ENUM_CECILL_C,PK_LICENSE_ENUM_CNRI,
+         PK_LICENSE_ENUM_CONDOR,PK_LICENSE_ENUM_COPYRIGHT_ONLY,
+         PK_LICENSE_ENUM_CPAL,PK_LICENSE_ENUM_CPL,
+         PK_LICENSE_ENUM_CRYSTAL_STACKER,PK_LICENSE_ENUM_DOC,
+         PK_LICENSE_ENUM_DSL,PK_LICENSE_ENUM_DVIPDFM,
+         PK_LICENSE_ENUM_ECL_1_DOT_0,PK_LICENSE_ENUM_ECL_2_DOT_0,
+         PK_LICENSE_ENUM_ECOS,PK_LICENSE_ENUM_EFL_2_DOT_0,
+         PK_LICENSE_ENUM_ENTESSA,PK_LICENSE_ENUM_EPL,
+         PK_LICENSE_ENUM_ERPL,PK_LICENSE_ENUM_EUPL_1_DOT_1,
+         PK_LICENSE_ENUM_EUROSYM,PK_LICENSE_ENUM_EU_DATAGRID,
+         PK_LICENSE_ENUM_FAIR,PK_LICENSE_ENUM_FBSDDL,
+         PK_LICENSE_ENUM_FREE_ART,PK_LICENSE_ENUM_FTL,
+         PK_LICENSE_ENUM_GEOGRATIS,PK_LICENSE_ENUM_GFDL,
+         PK_LICENSE_ENUM_GIFTWARE,PK_LICENSE_ENUM_GL2PS,
+         PK_LICENSE_ENUM_GLIDE,PK_LICENSE_ENUM_GNUPLOT,
+         PK_LICENSE_ENUM_GPLV1,PK_LICENSE_ENUM_GPLV2,
+         PK_LICENSE_ENUM_GPLV2_OR_ARTISTIC,
+         PK_LICENSE_ENUM_GPLV2_PLUS,PK_LICENSE_ENUM_GPLV2_PLUS_OR_ARTISTIC,
+         PK_LICENSE_ENUM_GPLV2_PLUS_WITH_EXCEPTIONS,
+         PK_LICENSE_ENUM_GPLV2_WITH_EXCEPTIONS,
+         PK_LICENSE_ENUM_GPLV3,PK_LICENSE_ENUM_GPLV3_PLUS,
+         PK_LICENSE_ENUM_GPLV3_PLUS_WITH_EXCEPTIONS,
+         PK_LICENSE_ENUM_GPLV3_WITH_EXCEPTIONS,
+         PK_LICENSE_ENUM_GPL_PLUS,PK_LICENSE_ENUM_GPL_PLUS_OR_ARTISTIC,
+         PK_LICENSE_ENUM_GPL_PLUS_WITH_EXCEPTIONS,
+         PK_LICENSE_ENUM_IBM,PK_LICENSE_ENUM_IEEE,
+         PK_LICENSE_ENUM_IJG,PK_LICENSE_ENUM_IMAGEMAGICK,
+         PK_LICENSE_ENUM_IMATIX,PK_LICENSE_ENUM_IMLIB2,
+         PK_LICENSE_ENUM_INTEL_ACPI,PK_LICENSE_ENUM_INTERBASE,
+         PK_LICENSE_ENUM_IPA,PK_LICENSE_ENUM_ISC,
+         PK_LICENSE_ENUM_JABBER,PK_LICENSE_ENUM_JASPER,
+         PK_LICENSE_ENUM_JPYTHON,PK_LICENSE_ENUM_KNUTH,
+         PK_LICENSE_ENUM_LBNL_BSD,PK_LICENSE_ENUM_LDPL,
+         PK_LICENSE_ENUM_LGPLV2,PK_LICENSE_ENUM_LGPLV2_PLUS,
+         PK_LICENSE_ENUM_LGPLV2_PLUS_OR_ARTISTIC,
+         PK_LICENSE_ENUM_LGPLV2_PLUS_WITH_EXCEPTIONS,
+         PK_LICENSE_ENUM_LGPLV2_WITH_EXCEPTIONS,
+         PK_LICENSE_ENUM_LGPLV3,PK_LICENSE_ENUM_LGPLV3_PLUS,
+         PK_LICENSE_ENUM_LGPLV3_PLUS_WITH_EXCEPTIONS,
+         PK_LICENSE_ENUM_LGPLV3_WITH_EXCEPTIONS,
+         PK_LICENSE_ENUM_LIBERATION,PK_LICENSE_ENUM_LIBTIFF,
+         PK_LICENSE_ENUM_LLGPL,PK_LICENSE_ENUM_LOGICA,
+         PK_LICENSE_ENUM_LPL,PK_LICENSE_ENUM_LPPL,
+         PK_LICENSE_ENUM_MECAB_IPADIC,PK_LICENSE_ENUM_MIROS,
+         PK_LICENSE_ENUM_MIT,PK_LICENSE_ENUM_MIT_WITH_ADVERTISING,
+         PK_LICENSE_ENUM_MOD_MACRO,PK_LICENSE_ENUM_MOTOSOTO,
+         PK_LICENSE_ENUM_MPLUS,PK_LICENSE_ENUM_MPLV1_DOT_0,
+         PK_LICENSE_ENUM_MPLV1_DOT_1,PK_LICENSE_ENUM_MS_PL,
+         PK_LICENSE_ENUM_MS_RL,PK_LICENSE_ENUM_NAUMEN,
+         PK_LICENSE_ENUM_NCSA,PK_LICENSE_ENUM_NETCDF,
+         PK_LICENSE_ENUM_NETSCAPE,PK_LICENSE_ENUM_NEWMAT,
+         PK_LICENSE_ENUM_NGPL,PK_LICENSE_ENUM_NOKIA,
+         PK_LICENSE_ENUM_NOSL,PK_LICENSE_ENUM_NOWEB,
+         PK_LICENSE_ENUM_OAL,PK_LICENSE_ENUM_OFL,
+         PK_LICENSE_ENUM_OFSFDL,PK_LICENSE_ENUM_OML,
+         PK_LICENSE_ENUM_OPENLDAP,PK_LICENSE_ENUM_OPENPBS,
+         PK_LICENSE_ENUM_OPENSSL,PK_LICENSE_ENUM_OREILLY,
+         PK_LICENSE_ENUM_OSL_1_DOT_0,PK_LICENSE_ENUM_OSL_1_DOT_1,
+         PK_LICENSE_ENUM_OSL_2_DOT_0,PK_LICENSE_ENUM_OSL_2_DOT_1,
+         PK_LICENSE_ENUM_OSL_3_DOT_0,PK_LICENSE_ENUM_PHORUM,
+         PK_LICENSE_ENUM_PHP,PK_LICENSE_ENUM_PLEXUS,
+         PK_LICENSE_ENUM_POSTGRESQL,PK_LICENSE_ENUM_PSUTILS,
+         PK_LICENSE_ENUM_PTFL,PK_LICENSE_ENUM_PUBLIC_DOMAIN,
+         PK_LICENSE_ENUM_PUBLIC_USE,PK_LICENSE_ENUM_PYTHON,
+         PK_LICENSE_ENUM_QHULL,PK_LICENSE_ENUM_QPL,
+         PK_LICENSE_ENUM_RDISC,PK_LICENSE_ENUM_RICEBSD,
+         PK_LICENSE_ENUM_ROMIO,PK_LICENSE_ENUM_RPSL,
+         PK_LICENSE_ENUM_RUBY,PK_LICENSE_ENUM_SAXPATH,
+         PK_LICENSE_ENUM_SCEA,PK_LICENSE_ENUM_SCRIP,
+         PK_LICENSE_ENUM_SENDMAIL,PK_LICENSE_ENUM_SISSL,
+         PK_LICENSE_ENUM_SLEEPYCAT,PK_LICENSE_ENUM_SLIB,
+         PK_LICENSE_ENUM_SNIA,PK_LICENSE_ENUM_SPL,
+         PK_LICENSE_ENUM_STIX,PK_LICENSE_ENUM_TCL,
+         PK_LICENSE_ENUM_TEEWORLDS,PK_LICENSE_ENUM_TMATE,
+         PK_LICENSE_ENUM_TOSL,PK_LICENSE_ENUM_TPL,
+         PK_LICENSE_ENUM_UCD,PK_LICENSE_ENUM_VIM,
+         PK_LICENSE_ENUM_VNLSL,PK_LICENSE_ENUM_VOSTROM,
+         PK_LICENSE_ENUM_VSL,PK_LICENSE_ENUM_W3C,
+         PK_LICENSE_ENUM_WADALAB,PK_LICENSE_ENUM_WEBMIN,
+         PK_LICENSE_ENUM_WTFPL,PK_LICENSE_ENUM_WXWIDGETS,
+         PK_LICENSE_ENUM_XANO,PK_LICENSE_ENUM_XEROX,
+         PK_LICENSE_ENUM_XINETD,PK_LICENSE_ENUM_XSKAT,
+         PK_LICENSE_ENUM_YPLV1_DOT_1,PK_LICENSE_ENUM_ZEND,
+         PK_LICENSE_ENUM_ZLIB,PK_LICENSE_ENUM_ZLIB_WITH_ACKNOWLEDGEMENT,
+         PK_LICENSE_ENUM_ZPLV1_DOT_0,PK_LICENSE_ENUM_ZPLV2_DOT_0,
+         PK_LICENSE_ENUM_ZPLV2_DOT_1,PK_LICENSE_ENUM_LAST
+         );
+    {*
+     * PkMediaTypeEnum:
+     *
+     * The media type
+     * }
+
+       PPkMediaTypeEnum = Pointer;
+       PkMediaTypeEnum = (PK_MEDIA_TYPE_ENUM_UNKNOWN,PK_MEDIA_TYPE_ENUM_CD,
+         PK_MEDIA_TYPE_ENUM_DVD,PK_MEDIA_TYPE_ENUM_DISC,
+         PK_MEDIA_TYPE_ENUM_LAST);
+    {*
+     * PkAuthorizeEnum:
+     *
+     * The authorization result
+     * }
+
+       PPkAuthorizeEnum = Pointer;
+       PkAuthorizeEnum = (PK_AUTHORIZE_ENUM_UNKNOWN,PK_AUTHORIZE_ENUM_YES,
+         PK_AUTHORIZE_ENUM_NO,PK_AUTHORIZE_ENUM_INTERACTIVE,
+         PK_AUTHORIZE_ENUM_LAST);
+    { general  }
+
+procedure pk_enum_test(user_data:gpointer);cdecl;external pklib2;
+(* Const before type ignored *)
+(* Const before type ignored *)
+(* error 
+							 G_GNUC_WARN_UNUSED_RESULT;
+ in declarator_list *)
+(* Const before type ignored *)
+(* Const before type ignored *)
+(* error 
+							 G_GNUC_WARN_UNUSED_RESULT;
+ in declarator_list *)
+(* Const before type ignored *)
+
+function pk_sig_type_enum_from_string(sig_type:Pgchar):PkSigTypeEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_sig_type_enum_to_string(sig_type:PkSigTypeEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_info_enum_from_string(info:Pgchar):PkInfoEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_info_enum_to_string(info:PkInfoEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_update_state_enum_from_string(update_state:Pgchar):PkUpdateStateEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_update_state_enum_to_string(update_state:PkUpdateStateEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_exit_enum_from_string(exit:Pgchar):PkExitEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_exit_enum_to_string(exit:PkExitEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_network_enum_from_string(network:Pgchar):PkNetworkEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_network_enum_to_string(network:PkNetworkEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_status_enum_from_string(status:Pgchar):PkStatusEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_status_enum_to_string(status:PkStatusEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_role_enum_from_string(role:Pgchar):PkRoleEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_role_enum_to_string(role:PkRoleEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_error_enum_from_string(code:Pgchar):PkErrorEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_error_enum_to_string(code:PkErrorEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_restart_enum_from_string(restart:Pgchar):PkRestartEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_restart_enum_to_string(restart:PkRestartEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_message_enum_from_string(message:Pgchar):PkMessageEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_message_enum_to_string(message:PkMessageEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_group_enum_from_string(group:Pgchar):PkGroupEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_group_enum_to_string(group:PkGroupEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_filter_enum_from_string(filter:Pgchar):PkFilterEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_filter_enum_to_string(filter:PkFilterEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_provides_enum_from_string(provides:Pgchar):PkProvidesEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_provides_enum_to_string(provides:PkProvidesEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_license_enum_from_string(license:Pgchar):PkLicenseEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_license_enum_to_string(license:PkLicenseEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_distro_upgrade_enum_from_string(upgrade:Pgchar):PkDistroUpgradeEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_distro_upgrade_enum_to_string(upgrade:PkDistroUpgradeEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_media_type_enum_from_string(media_type:Pgchar):PkMediaTypeEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_media_type_enum_to_string(media_type:PkMediaTypeEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_authorize_type_enum_from_string(authorize_type:Pgchar):PkAuthorizeEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_authorize_type_enum_to_string(authorize_type:PkAuthorizeEnum):Pgchar;cdecl;external pklib2;
+{$endif}
+    { __PK_ENUM_H  }
