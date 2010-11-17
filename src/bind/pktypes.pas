@@ -23,9 +23,21 @@ interface
 uses
   glib2, Classes, Contnrs;
 
-type
-  {$I pkenum.inc}
+const
+  pklib2 = 'libpackagekit-glib2.so';
 
+type
+  // Define dummy pointers for PK
+  PPkProgress = Pointer;
+  PPkPackage = Pointer;
+  PPkClient = Pointer;
+  PPkResults = Pointer;
+  PPkError = Pointer;
+
+  {$I pkenum.inc}
+  {$I pkprogress.inc}
+
+type
   TPkPackage = class
     Description: String;
     License: String;

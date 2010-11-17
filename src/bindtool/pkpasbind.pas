@@ -21,9 +21,11 @@ unit pkpasbind;
 interface
 
 uses
-  Classes, SysUtils, Process, LiUtils;
+  Classes, SysUtils, Process, LiUtils, Fgl;
 
 type
+  TIntList = specialize TFPGList<Integer>;
+
   TPKHeader2Pas = class
   private
     proc: TProcess;
@@ -31,6 +33,8 @@ type
     infile, outfile: String;
 
     procedure SetInFile(fi: String);
+    procedure FixEndStatements;
+    procedure RemoveExtraTypeDupes;
   protected
     uText: TStringList;
 
@@ -94,17 +98,19 @@ begin
   uText.Clear;
 
   // TMP
-  add := true;
+  add := false;
   for i := 0 to tmp.Count - 1 do
   begin
-    if pos('{ $IFDEF FPC }', tmp[i]) > 0 then
+    if pos('{$IFDEF FPC}', tmp[i]) > 0 then
       add := true;
     if add then
       uText.Add(tmp[i]);
   end;
   tmp.Free;
 
-  uText.Insert(0, '// Part of Listaller PackageKit bindings //');
+  uText.Insert(0, '');
+  uText.Insert(0, ' // Part of Listaller PackageKit bindings //');
+  uText.Insert(0, '');
 end;
 
 procedure TPKHeader2Pas.RemoveCruft;
@@ -157,6 +163,71 @@ begin
   end;
 end;
 
+procedure TPKHeader2Pas.RemoveExtraTypeDupes;
+var
+  i: Integer;
+  done, start: Boolean;
+begin
+  i := 0;
+  done := false;
+  start := false;
+  repeat
+    if pos('Pointers to basic pascal types', uText[i]) > 0 then
+      start := true;
+    if start then
+      uText.Delete(i)
+    else
+      Inc(i);
+    if (start) and (trim(uText[i]) = '') then
+      done := true;
+  until (done) or (uText.Count = 0) or (i = uText.Count - 1);
+
+  i := 0;
+  while i < uText.Count do
+  begin
+    if pos('pgchar=pointer;', StrSubst(LowerCase(uText[i]), ' ', '')) > 0 then
+      uText.Delete(i)
+      else
+    if pos('pgchar=pointer;', StrSubst(LowerCase(uText[i]), ' ', '')) > 0 then
+      uText.Delete(i)
+    else
+      Inc(i);
+  end;
+end;
+
+procedure TPKHeader2Pas.FixEndStatements;
+var
+  ilist: TIntList;
+  i: Integer;
+  inSection: Boolean;
+begin
+  ilist := TIntList.Create;
+  inSection := false;
+  // Check for wrong end statements
+  for i := 0 to uText.Count - 1 do
+  begin
+    if pos('= record', LowerCase(uText[i])) > 0 then
+      inSection := true;
+    if pos(' end;', LowerCase(uText[i])) > 0 then
+    begin
+      ilist.add(i);
+
+      if inSection then
+      begin
+        ilist.Delete(ilist.Count - 1);
+        inSection := false;
+      end;
+    end;
+  end;
+
+  // Now remove wrong end statements
+  for i := 0 to ilist.Count - 1 do
+  begin
+    uText.Delete(ilist[i] - i);
+  end;
+  ilist.Free;
+end;
+
 procedure TPKHeader2Pas.ApplyFixes;
 var
   i: Integer;
@@ -170,6 +241,7 @@ begin
     if pos('(* error', uText[i]) > 0 then
       lasterrpos := i;
   end;
+  RemoveExtraTypeDupes;
 
   // Fix comment-line closing
   for i := lasterrpos to uText.Count - 1 do
@@ -184,6 +256,7 @@ begin
     begin
       uText.Delete(i);
     end;
+  FixEndStatements;
 end;
 
 procedure TPKHeader2Pas.RemoveDuplicates;
@@ -222,11 +295,13 @@ begin
   i := 0;
   while i < uText.Count do
   begin
-    if pos(' end dygd;', uText[i]) > 0 then
+   { if pos(' typesv', LowerCase(uText[i])) > 0 then
       uText.Delete(i)
-    else if pos(' typesv', LowerCase(uText[i])) > 0 then
-      uText.Delete(i)
-    else if LowerCase(StrSubst(uText[i], ' ', '')) = 'const' then
+    else  }
+    if StrSubst(uText[i], ' ', '') = 'callback_ready:GAsyncReadyCallback;user_data:gpointer);cdecl;externalpklib2;' then
+    uText.Delete(i)
+    else
+    if LowerCase(StrSubst(uText[i], ' ', '')) = 'const' then
       uText.Delete(i)
     else
       Inc(i);

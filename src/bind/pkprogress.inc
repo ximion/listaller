@@ -1,10 +1,6 @@
-// Part of Listaller PackageKit bindings //
 
-    Type
-    PPkPackage  = Pointer;
-    PPkProgress  = Pointer;
-    PPkProgressPrivate  = Pointer;
-    PPkProgressType  = Pointer;
+ // Part of Listaller PackageKit bindings //
+
 {$IFDEF FPC}
 {$PACKRECORDS C}
 {$ENDIF}
@@ -67,6 +63,7 @@ function pk_progress_new:PPkProgress;cdecl;external pklib2;
 procedure pk_progress_test(user_data:gpointer);cdecl;external pklib2;
     type
 
+       PPkProgressType = Pointer;
        PkProgressType = (PK_PROGRESS_TYPE_PACKAGE_ID,PK_PROGRESS_TYPE_TRANSACTION_ID,
          PK_PROGRESS_TYPE_PERCENTAGE,PK_PROGRESS_TYPE_SUBPERCENTAGE,
          PK_PROGRESS_TYPE_ALLOW_CANCEL,PK_PROGRESS_TYPE_STATUS,
