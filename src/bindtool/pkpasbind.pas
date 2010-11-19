@@ -155,8 +155,8 @@ begin
       uText.Delete(i)
     else
     //Temp helper classes
-    if (xpos('parent : GObject') > 0) or (xpos('priv : ') > 0) or
-      (xpos('parent_class : GObjectClass;') > 0) or (xpos(': procedure ;') > 0) or
+    if (xpos('parent : ') > 0) or (xpos('priv : ') > 0) or
+      (xpos('parent_class : ') > 0) or (xpos(': procedure ;') > 0) or
       (xpos(': procedure') > 0) then
       uText.Delete(i)
     else if (pos(':guint;', StrSubst(uText[i], ' ', '')) > 0) or

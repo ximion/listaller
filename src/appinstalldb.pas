@@ -21,7 +21,7 @@ unit appinstalldb;
 interface
 
 uses
-  DB, Classes, LiUtils, SQLite3, SysUtils, SQLite3DS, LiTypes, ListallerDB;
+  DB, Classes, LiUtils, SysUtils, SQLite3DS, LiTypes, ListallerDB;
 
 type
   TAppInstallDB = class
@@ -40,7 +40,7 @@ type
     function GetCurrentAppField: LiAppInfo;
   public
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
 
     //** Open AppInstall database
     function Load(const rootmode: Boolean): Boolean;

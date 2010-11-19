@@ -27,13 +27,7 @@ type
   //** The pkBitfield var
   PkBitfield = GUInt64;
 
-  TPkProgressCallback = procedure(progress: Pointer; ptype: PkProgressType;
-    user_data: GPointer); cdecl;
-
-  //** Pointer to PkClient GObject
-  PkProgressCallback = Pointer;
   PPkPackageSack = Pointer;
-  PPkPackage = Pointer;
 
   PPkPackageId = ^PkPackageID;
 
@@ -45,11 +39,21 @@ type
   end;
 
   {$I pkresults.inc}
+  {$I pkprogress.inc}
   {$I pkclient.inc}
   {$I pkbitfield.inc}
+  {$I pkerror.inc}
   {$I pkpackagesack.inc}
+  {$I pkdesktop.inc}
 
-  type
+function pk_status_enum_to_localised_text(status: PkStatusEnum): PGChar;
+  external pklib2;
+
+type
+  //** Simple callback for PK progress
+  TPkProgressCallback = procedure(progress: Pointer; ptype: PkProgressType;
+    user_data: GPointer); cdecl;
+
   //** Pointer to TPackageKit object
   PPackageKit = ^TPackageKit;
 
@@ -141,8 +145,6 @@ type
     property Tag: Integer read tagid write tagid;
   end;
 
-  {$I pkdesktop.inc}
-
 implementation
 
 function PK_CLIENT(o: GPointer): PGTypeInstance;
@@ -165,7 +167,7 @@ var
 begin
   results := pk_client_generic_finish(source_object, res, @error);
 
-  if error<>nil then
+  if error <> nil then
   begin
     g_warning('failed: %s', [error^.message]);
     g_error_free(error);
@@ -174,7 +176,8 @@ begin
   end;
 
   pk := TPackageKit(user_data);
-  if not (pk is TPackageKit) then exit;
+  if not (pk is TPackageKit) then
+    exit;
 
   if results = nil then
   begin
@@ -209,8 +212,8 @@ begin
         pkg := pk_package_sack_find_by_id(sack, PChar(newpkg.PackageId));
         if pkg <> nil then
         begin
-         g_object_get(pkg, 'info', @newpkg.Status, nil);
-         g_object_unref(pkg);
+          g_object_get(pkg, 'info', @newpkg.Status, nil);
+          g_object_unref(pkg);
         end;
 
         pk.pkglist.Add(newpkg);
@@ -236,7 +239,8 @@ var
   percentage: GuInt;
 begin
   pk := TPackageKit(user_data);
-  if not (pk is TPackageKit) then exit;
+  if not (pk is TPackageKit) then
+    exit;
 
   case ptype of
     PK_PROGRESS_TYPE_PACKAGE_ID:
@@ -244,8 +248,8 @@ begin
       if Assigned(pk.RList) then
       begin
         g_object_get(progress, 'package-id', @pid, nil);
-        if (pid<>'') then
-          pk.RList.Add(TPkPackage.Create(copy(pid, 0, pos(';', pid)-1)));
+        if (pid <> '') then
+          pk.RList.Add(TPkPackage.Create(copy(pid, 0, pos(';', pid) - 1)));
       end;
     end;
     PK_PROGRESS_TYPE_PERCENTAGE:
@@ -299,14 +303,14 @@ end;
 procedure TPackageKit.Cancel;
 begin
   if not done then
-  if cancellable <> nil then
-   g_cancellable_cancel(cancellable);
+    if cancellable <> nil then
+      g_cancellable_cancel(cancellable);
 end;
 
 function TPackageKit.IsErrorSet(aError: PGError): Boolean;
 begin
   Result := false;
-  if aError<>nil then
+  if aError <> nil then
   begin
     Result := true;
     lastErrorMsg := aError^.message;
@@ -342,7 +346,7 @@ begin
   finally
     t.Free;
   end;
-  if s.Count>=0 then
+  if s.Count >= 0 then
     Result := s[0]
   else
     Result := '?';
@@ -387,12 +391,12 @@ var
 begin
   if toPublic then
   begin
-   if not done then
-   begin
-     Result := false;
-     exit;
-   end;
-  done := false;
+    if not done then
+    begin
+      Result := false;
+      exit;
+    end;
+    done := false;
   end;
 
   filter := pk_filter_bitfield_from_string(PChar(filt));
@@ -410,10 +414,10 @@ begin
   Result := not IsErrorSet(error);
 
   if Result then
-   if not toPublic then
-    g_main_loop_run(loop)
-   else
-    RunLoop();
+    if not toPublic then
+      g_main_loop_run(loop)
+    else
+      RunLoop();
 end;
 
 function TPackageKit.ResolveInstalled(pkg: String): Boolean;
@@ -443,7 +447,7 @@ begin
   Result := INTERN_Resolve(pkg, 'installed', false);
   if not Result then
     exit;
-  if pkglist.Count<=0 then
+  if pkglist.Count <= 0 then
   begin
     Result := false;
     exit;
@@ -482,7 +486,7 @@ begin
   Result := INTERN_Resolve(pkg, 'none', false);
   if not Result then
     exit;
-  if pkglist.Count<=0 then
+  if pkglist.Count <= 0 then
   begin
     Result := false;
     exit;
@@ -519,7 +523,7 @@ begin
   Result := INTERN_Resolve(pkg, 'none', false);
   if not Result then
     exit;
-  if pkglist.Count<=0 then
+  if pkglist.Count <= 0 then
   begin
     Result := false;
     exit;
@@ -556,7 +560,7 @@ begin
   while not done do ;
   if not Result then
     exit;
-  if pkglist.Count<=0 then
+  if pkglist.Count <= 0 then
   begin
     Result := false;
     exit;
@@ -597,7 +601,7 @@ begin
   //Do not use this for _every_ desktop file.
   //Sometimes it might be better to do a complete search.
   // Using PkDesktop can be set by var desktopfile
-  if (desktopfile = true)and(LowerCase(ExtractFileExt(fname)) = '.desktop') then
+  if (desktopfile = true) and (LowerCase(ExtractFileExt(fname)) = '.desktop') then
   begin
     pkdesk := pk_desktop_new();
     try
@@ -621,7 +625,7 @@ begin
   begin
     pkglist.Clear;
     Result := false;
-    if error<>nil then
+    if error <> nil then
       error := nil;
 
     filter := pk_filter_bitfield_from_string('installed');
@@ -679,25 +683,25 @@ begin
   if DInfo.PackageSystem = 'DEB' then
   begin
     if not FileExists('/usr/bin/apt-file') then
-      begin
-        writeLn('error:');
-        writeLn(' The apt-file utility was not found!');
-        writeLn(' Please install apt-file and run this setup again.');
-        writeLn(' [Emergency halt.]');
-        halt(4);
-      end;
+    begin
+      writeLn('error:');
+      writeLn(' The apt-file utility was not found!');
+      writeLn(' Please install apt-file and run this setup again.');
+      writeLn(' [Emergency halt.]');
+      halt(4);
+    end;
   end;
-    done := false;
-    filter := pk_filter_bitfield_from_string('none');
+  done := false;
+  filter := pk_filter_bitfield_from_string('none');
 
-    pk_client_search_files_async(pkclient, filter, StringToPPchar(fname, 0),
-      cancellable, @OnPkProgress, self, @OnPkActionFinished, self);
+  pk_client_search_files_async(pkclient, filter, StringToPPchar(fname, 0),
+    cancellable, @OnPkProgress, self, @OnPkActionFinished, self);
 
-    Result := true;
-    g_cancellable_set_error_if_cancelled(cancellable, @error);
-    Result := not IsErrorSet(error);
-    if Result then
-      RunLoop();
+  Result := true;
+  g_cancellable_set_error_if_cancelled(cancellable, @error);
+  Result := not IsErrorSet(error);
+  if Result then
+    RunLoop();
 
 
   //Callback processes do not work in this lib, because their threads use Synchronize()

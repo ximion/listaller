@@ -23,8 +23,8 @@ interface
 uses
   LiHash, Distri, Classes, FTPSend, LiTypes, LiUtils, MTProcs,
   PkTypes, Process, RegExpr, BaseUnix, Blcksock, HTTPSend, IniFiles,
-  SysUtils, DepManage, IPKCDef10, StrLocale, liDBusProc, LiFileUtil,
-  PackageKit, SoftwareDB, Backend_IPK, IPKPackage11, LiStatusObj;
+  SysUtils, DepManage, IPKCDef10, StrLocale, LiFileUtil, PackageKit,
+  SoftwareDB, Backend_IPK, IPKPackage11, LiStatusObj, GLib2, GExt;
 
 type
   TLiInstallation = class(TLiStatusObject)
@@ -90,6 +90,8 @@ type
     FTestMode: Boolean;
     // IPK extractor
     unpkg: TLiUnpacker;
+    // A GLib mainloop
+    loop: PGMainLoop;
 
     //Set superuser mode correctly
     procedure SetRootMode(b: Boolean);
@@ -99,18 +101,18 @@ type
     function RunDLinkInstallation: Boolean;
     //Does the container installation
     function RunContainerInstallation: Boolean;
-    //Socket hook for FTPSend and HTTPSend to get progress
+    // Socket hook for FTPSend and HTTPSend to get progress
     procedure NetSockHook(Sender: TObject; Reason: THookSocketReason;
       const Value: String);
-    //Handler for PackageKit progress
+    // Handler for PackageKit progress
     procedure OnPKitProgress(pos: Integer; dp: Pointer);
-    //Add update source of the package
+    // Add update source of the package
     procedure CheckAddUSource(const forceroot: Boolean = false);
-    //Catch signals of DBus thread
-    procedure DBusThreadStatusChange(ty: LI_STATUS; Data: TLiProcData);
   protected
-    //Check if FTP connection is working
+    // Check if FTP connection is working
     function CheckFTPConnection(AFTPSend: TFTPSend): Boolean;
+    // Quit the mainloop
+    procedure QuitLoop;
   public
     //** Constructor
     constructor Create;
@@ -185,6 +187,9 @@ begin
   inherited Create;
   daemonm := false; //Daemon mode has to be set manually by listallerd
   FTestMode := false;
+
+  loop := nil;
+
   sdb := TSoftwareDB.Create;
   if SUMode then
     RegDir := LI_CONFIG_DIR + LI_APPDB_PREF
@@ -261,6 +266,15 @@ begin
   sl.Clear;
   for i := 0 to license.Count - 1 do
     sl.Add(license[i]);
+end;
+
+// Quit a GLib mainloop
+procedure TLiInstallation.QuitLoop();
+begin
+  if not Assigned(loop) then
+    exit;
+  if g_main_loop_is_running(loop) then
+    g_main_loop_quit(loop);
 end;
 
 function TLiInstallation.ResolveDependencies(
@@ -845,7 +859,7 @@ begin
   EmitStatusChange(LIS_Finished);
 end;
 
-procedure TLiInstallation.DBusThreadStatusChange(ty: LI_STATUS; Data: TLiProcData);
+{procedure TLiInstallation.DBusThreadStatusChange(ty: LI_STATUS; Data: TLiProcData);
 begin
   pwarning('DBus status handling needs rethinking. (We''ll use PK for that!');
   case Data.changed of
@@ -856,7 +870,7 @@ begin
     pdError: EmitError(Data.msg);
     pdStatus: pdebug('Thread status changed [finished]');
   end;
-end;
+end;}
 
 function TLiInstallation.RunNormalInstallation: Boolean;
 var
@@ -1151,8 +1165,8 @@ begin
           end;
         except
           //Unable to copy the file
-          EmitError(Format(rsCnCopy, [dest + '/' +
-            ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
+          EmitError(Format(rsCnCopy,
+            [dest + '/' + ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
           RollbackInstallation;
           Result := false;
           Abort_FreeAll();
@@ -1561,6 +1575,103 @@ end;}
   EmitStatusChange(LIS_Finished);
 end;
 
+// Internal methods to catch PK messages
+procedure lisetup_pkprogress_cb(progress: PPkProgress; typ: PkProgressType;
+  install: TLiInstallation);
+var
+  role: PkRoleEnum;
+  percentage: gint;
+  status: PkStatusEnum;
+  text: PGChar;
+begin
+  if (typ = PK_PROGRESS_TYPE_ROLE) then
+  begin
+    g_object_get(progress, 'role', @role, nil);
+    if (role = PK_ROLE_ENUM_UNKNOWN) then
+      exit;
+  end;
+
+  if (typ = PK_PROGRESS_TYPE_PERCENTAGE) then
+  begin
+    g_object_get(progress, 'percentage', @percentage, nil);
+    install.EmitProgress(percentage);
+  end;
+
+  if (typ = PK_PROGRESS_TYPE_STATUS) then
+  begin
+    g_object_get(progress, 'status', @status, nil);
+    if (status = PK_STATUS_ENUM_FINISHED) then
+      exit;
+    // Show the status
+    text := pk_status_enum_to_localised_text(status);
+    install.EmitInfoMsg(text);
+  end;
+
+
+        (* package-id
+  if (type == PK_PROGRESS_TYPE_PACKAGE_ID) {
+    g_object_get (progress,
+            "package-id", &package_id,
+            NULL);
+    if (package_id == NULL)
+      goto out;
+
+    if (!is_console) {
+      /* create printable */
+      printable = pk_package_id_to_printable (package_id);
+
+      /* TRANSLATORS: the package that is being processed */
+      g_print ("%s:\t%s\n", _("Package"), printable);
+      goto out;
+    }
+  }
+        *)
+end;
+
+procedure lisetup_pkfinished_cb(obj: PGObject; res: PGAsyncResult;
+  install: TLiInstallation);
+var
+  error: PGError;
+  results: PPkResults;
+  role: PPkRoleEnum;
+  error_code: PPkError;
+begin
+  error := nil;
+  error_code := nil;
+{  GPtrArray *array;
+  PkPackageSack *sack;
+  PkRestartEnum restart;
+  PkRoleEnum role;}
+
+  results := pk_client_generic_finish(obj, res, @error);
+
+  if error <> nil then
+  begin
+    perror('failed fetching results: ' + error^.message);
+    g_error_free(error);
+    install.EmitError(error^.message);
+    install.QuitLoop();
+    exit;
+  end;
+
+  // get the role
+  g_object_get(G_OBJECT(results), 'role', @role, nil);
+
+  // check error code
+  error_code := pk_results_get_error_code(results);
+
+  if (error_code <> nil) then
+  begin
+    install.EmitError('Error:'#10 + pk_error_get_details(error_code));
+  end;
+
+  if Assigned(error_code) then
+    g_object_unref(error_code);
+
+  install.QuitLoop;
+end;
+
+// Do software installation
 procedure TLiInstallation.CheckAddUSource(const forceroot: Boolean = false);
 var
   fi: TStringList;
@@ -1628,7 +1739,7 @@ function TLiInstallation.DoInstallation: Boolean;
 var
   cnf: TIniFile;
   i: Integer;
-  buscmd: ListallerBusCommand;
+  pkclient: PPkClient;
   tmp: TStringList;
 begin
   Result := false;
@@ -1681,25 +1792,28 @@ begin
   if (pkType <> ptContainer) then
     if (SUMode) and (not IsRoot) then
     begin
-      //Create worker thread for this action
-      buscmd.cmdtype := lbaInstallPack;
-      buscmd.pkgname := PkgPath; //Add path to setup file to DBus request
-      buscmd.overrides := forces;
+      // Query PackageKit daemon to perform the installation
+      pkclient := pk_client_new();
+
+      pk_client_install_files_async(pkclient, false, StringToPPchar(PkgPath, 0),
+        nil, PkProgressCallback(@lisetup_pkprogress_cb),
+        self, GAsyncReadyCallback(@lisetup_pkfinished_cb), self);
+
+      // Run mainloop
+      loop := g_main_loop_new(nil, false);
+      g_main_loop_run(loop);
+
+      g_object_unref(pkclient);
+      g_main_loop_unref(loop);
+      loop := nil;
 
       //Force check of root update source
-      CheckAddUSource(true);
+     { CheckAddUSource(true);
       if pkType = ptLinstall then
         buscmd.addsrc := AddUpdateSource
       else
-        buscmd.addsrc := false;
-
-      with TLiDBusAction.Create(buscmd) do
-      begin
-        OnStatus := @DBusThreadStatusChange;
-        ExecuteAction;
-        Free;
-      end;
-      Result := true; //Transaction submitted
+        buscmd.addsrc := false; }
+      Result := true;
       exit;
     end;
 

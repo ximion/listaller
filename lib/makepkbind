@@ -11,6 +11,7 @@ echo "Generating Pascal PK bindings..."
 
 $GEN --pkheader -i $PKINCLUDE/pk-enum.h -o $PASBINDDIR/pkenum.inc
 $GEN --pkheader -i $PKINCLUDE/pk-progress.h -o $PASBINDDIR/pkprogress.inc
+$GEN --pkheader -i $PKINCLUDE/pk-error.h -o $PASBINDDIR/pkerror.inc
 $GEN --pkheader -i $PKINCLUDE/pk-client.h -o $PASBINDDIR/pkclient.inc
 $GEN --pkheader -i $PKINCLUDE/pk-results.h -o $PASBINDDIR/pkresults.inc
 $GEN --pkheader -i $PKINCLUDE/pk-bitfield.h -o $PASBINDDIR/pkbitfield.inc

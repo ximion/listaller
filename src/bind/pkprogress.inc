@@ -5,7 +5,6 @@
  *
  * Licensed under the same license as the original header.
  * see copyright notice below for more information.
- *
  *)
 
 {$IFDEF FPC}

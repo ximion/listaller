@@ -48,7 +48,6 @@ type
   PPkMessage = Pointer;
 
   {$I pkenum.inc}
-  {$I pkprogress.inc}
 
 type
   TPkPackage = class
