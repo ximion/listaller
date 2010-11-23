@@ -45,7 +45,8 @@ type
     //** Open AppInstall database
     function Load(const rootmode: Boolean): Boolean;
     //** Get list of installed apps
-    function GetApplicationList(filter: LiFilter; blacklist: TStringList = nil): Boolean;
+    function GetApplicationList(filter: LiFilter; filter_text: String;
+      blacklist: TStringList = nil): Boolean;
     //** Return true if application exists
     function ContainsAppEntry(appID: String): Boolean;
     //** Add application to the data
@@ -225,7 +226,6 @@ begin
   r.Version := ''; //AppInstall data does not provide version information...
   r.Author := ''; //.. and info about the author
   r.IconName := PChar(ds.FieldByName('icon_name').AsString);
-  pdebug(r.IconName);
   r.Profile := ''; //@DEPRECATED
 
   r.Categories := PChar(ds.FieldByName('categories').AsString);
@@ -234,7 +234,7 @@ begin
   Result := r;
 end;
 
-function TAppInstallDB.GetApplicationList(filter: LiFilter;
+function TAppInstallDB.GetApplicationList(filter: LiFilter; filter_text: String;
   blacklist: TStringList = nil): Boolean;
 var
   entry: LiAppInfo;
@@ -256,10 +256,16 @@ begin
     if entry.Summary = '' then
       entry.Summary := 'No description available';
 
+    filter_text := trim(filter_text);
+
     if (filter = fAppNative) and (entry.PkType <> ptNative) then
     else
-    if Assigned(FNewApp) then
-      FNewApp(entry.Name, @entry, onnewapp_udata);
+    if (filter = fAppExtern) and (entry.PkType <> ptExtern) then
+    else
+    if ((filter_text = '*') or (filter_text = '')) or
+      (pos(filter_text, entry.Summary) > 0) or (pos(filter_text, entry.Name) > 0) then
+      if Assigned(FNewApp) then
+        FNewApp(entry.Name, @entry, onnewapp_udata);
 
     ds.Next;
   end;

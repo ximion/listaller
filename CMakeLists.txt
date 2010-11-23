@@ -126,7 +126,7 @@ if(QT OR GTK)
   file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/gtk2)
   
   if(FRONTENDS)
-    add_subdirectory(frontends)
+    add_subdirectory(gui)
   endif(FRONTENDS)
   
 endif(QT OR GTK)

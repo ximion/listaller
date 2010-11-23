@@ -97,9 +97,9 @@ AppManager::~AppManager()
   delete msgRedir;
 }
 
-void AppManager::loadApps()
+void AppManager::findApps(const QString filter_text)
 {
-  li_mgr_load_apps(&mgr, fAllApps);
+  li_mgr_find_app(&mgr, fAllApps, qPrintable(filter_text));
 }
 
 bool AppManager::updateAppDB()

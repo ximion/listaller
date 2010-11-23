@@ -33,7 +33,7 @@ void* li_mgr_new(void);
 
 void li_mgr_free(LiAppManager mgr);
 
-void li_mgr_load_apps(LiAppManager mgr,LiFilter filter);
+void li_mgr_find_app(LiAppManager mgr,LiFilter filter,const char *filter_text);
 
 bool li_mgr_update_appdb(LiAppManager mgr);
 

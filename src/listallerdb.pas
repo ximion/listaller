@@ -53,7 +53,7 @@ type
     //** Open software database
     function Load(const rootmode: Boolean = false): Boolean;
     //** Get list of installed ipk apps
-    function GetApplicationList(blacklist: TStringList = nil): Boolean;
+    function GetApplicationList(filter_text: String; blacklist: TStringList = nil): Boolean;
     //** Open filtered applications list (and set pointer to beginning)
     procedure OpenFilterAppList;
     //** Move one entry forward
@@ -233,7 +233,7 @@ begin
   pinfo(rsDBOpened);
 end;
 
-function TListallerDB.GetApplicationList(blacklist: TStringList = nil): Boolean;
+function TListallerDB.GetApplicationList(filter_text: String; blacklist: TStringList = nil): Boolean;
 var
   entry: LiAppInfo;
   p: Ansistring;
@@ -268,6 +268,10 @@ begin
     if FileExists(p + 'icon.png') then
       entry.IconName := PChar(p + 'icon.png');
 
+    filter_text := trim(filter_text);
+
+    if ((filter_text = '*') or (filter_text = '')) or
+      (pos(filter_text, entry.Summary) > 0) or (pos(filter_text, entry.Name) > 0) then
     if Assigned(FNewApp) then
       FNewApp(entry.Name, @entry, onnewapp_udata);
 

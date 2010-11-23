@@ -42,7 +42,7 @@ type
     FName: String;
   end;
 
-  TLiAppManager = class (TLiStatusObject)
+  TLiAppManager = class(TLiStatusObject)
   private
     SUMode: Boolean;
     FApp: LiNewAppEvent;
@@ -63,11 +63,11 @@ type
     constructor Create;
     destructor Destroy; override;
     //** Rescann all apps installed on the system
-    procedure RescanEntries;
+    //procedure RescanEntries;
     //** Update AppInstall database
     procedure UpdateAppDB;
     //** Load apps which match filter
-    procedure LoadApplications(filter: LiFilter);
+    procedure FetchAppList(filter: LiFilter; text: String);
     //** Removes an application
     procedure UninstallApp(obj: LiAppInfo);
  {** Checks dependencies of all installed apps
@@ -119,7 +119,20 @@ begin
   Result := list.IndexOf(nm) > -1;
 end;
 
-procedure TLiAppManager.RescanEntries;
+
+procedure liappmgr_database_new_app(const aname: PChar; obj: PLiAppInfo;
+  limgr: TLiAppManager); cdecl;
+begin
+  if not (limgr is TLiAppManager) then
+  begin
+    perror('Assertion data is TLiManager failed');
+  end
+  else
+  if trim(aname) <> '*' then
+    limgr.EmitNewApp(aname, obj^);
+end;
+
+{procedure TLiAppManager.RescanEntries;
 var
   ini: TIniFile;
   tmp, xtmp: TStringList;
@@ -264,7 +277,7 @@ begin
 
   db := TSoftwareDB.Create;
   DB.Load(sumode);
-  DB.OnNewApp := FApp;
+  DB.OnNewApp := @liappmgr_database_new_app;
 
   if blst.Count < 4 then
   begin
@@ -303,7 +316,7 @@ begin
 
   DB.Free;
   blst.Free; //Free blacklist
-end;
+end;}
 
 //Read information about an app from .desktop file
 function TLiAppManager.ReadDesktopFile(fname: String): TDesktopData;
@@ -427,13 +440,14 @@ begin
 end;
 
 // Load the applications
-procedure TLiAppManager.LoadApplications(filter: LiFilter);
-var sdb: TSoftwareDB;
+procedure TLiAppManager.FetchAppList(filter: LiFilter; text: String);
+var
+  sdb: TSoftwareDB;
 begin
   sdb := TSoftwareDB.Create;
   sdb.Load(SUMode);
-  sdb.OnNewApp:=FApp;
-  sdb.GetApplicationList(filter, nil);
+  sdb.RegOnNewApp(LiNewAppEvent(@liappmgr_database_new_app), self);
+  sdb.GetApplicationList(filter, text, nil);
   sdb.Free;
 end;
 

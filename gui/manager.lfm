@@ -347,7 +347,6 @@ object MnFrm: TMnFrm
         Width = 96
         Anchors = [akLeft]
         Caption = 'Settings'
-        Color = clBtnFace
         Flat = True
         Font.Height = -9
         Font.Name = 'Sans'
@@ -366,7 +365,6 @@ object MnFrm: TMnFrm
         Anchors = [akLeft]
         AutoSize = True
         Caption = 'Installed applications'
-        Color = clBtnFace
         Flat = True
         Font.Height = -9
         Font.Name = 'Sans'
@@ -385,7 +383,6 @@ object MnFrm: TMnFrm
         Width = 96
         Anchors = [akLeft]
         Caption = 'Browse catalog'
-        Color = clBtnFace
         Flat = True
         Font.Height = -9
         Font.Name = 'Sans'
@@ -403,7 +400,6 @@ object MnFrm: TMnFrm
         Width = 96
         Anchors = [akLeft]
         Caption = 'Repositories'
-        Color = clBtnFace
         Flat = True
         Font.Height = -9
         Font.Name = 'Sans'
@@ -910,7 +906,6 @@ object MnFrm: TMnFrm
     ColumnClick = False
     HideSelection = False
     IconOptions.AutoArrange = True
-    ItemIndex = -1
     Items.LazData = {
       900000000400000000000000FFFFFFFFFFFFFFFF0000000016000000496E7374
       616C6C6564206170706C69636174696F6E7301000000FFFFFFFFFFFFFFFF0000

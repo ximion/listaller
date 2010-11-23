@@ -46,9 +46,6 @@ type
   {$I pkpackagesack.inc}
   {$I pkdesktop.inc}
 
-function pk_status_enum_to_localised_text(status: PkStatusEnum): PGChar;
-  external pklib2;
-
 type
   //** Simple callback for PK progress
   TPkProgressCallback = procedure(progress: Pointer; ptype: PkProgressType;

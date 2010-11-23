@@ -377,10 +377,10 @@ begin
  FreeAndNil(mgr^);
 end;
 
-//** Start loading list of applications
-procedure li_mgr_load_apps(mgr: PLiAppManager; filter: LiFilter);cdecl;
+//** Search for apps matching the filter criteria
+procedure li_mgr_find_app(mgr: PLiAppManager; filter: LiFilter; const filter_text: PChar);cdecl;
 begin
-  mgr^.LoadApplications(filter);
+  mgr^.FetchAppList(filter, filter_text);
 end;
 
 //** Update AppInstall db by rescanning all data
@@ -396,7 +396,7 @@ begin
 end;
 
 //** Register call on status change for appmanager
-function li_mgr_register_status_call(mgr: PLiAppManager;call: LiStateEvent;user_data: Pointer): Boolean;cdecl;
+function li_mgr_register_status_call(mgr: PLiAppManager; call: LiStateEvent; user_data: Pointer): Boolean;cdecl;
 begin
  Result:=true;
  try
@@ -407,7 +407,7 @@ begin
 end;
 
 //** Register application event to catch found apps
-function li_mgr_register_app_call(mgr: PLiAppManager;call: LiNewAppEvent;user_data: Pointer): Boolean;cdecl;
+function li_mgr_register_app_call(mgr: PLiAppManager; call: LiNewAppEvent; user_data: Pointer): Boolean;cdecl;
 begin
  Result := false;
  Result:=true;
@@ -612,7 +612,7 @@ exports
  li_mgr_new,
  li_mgr_free,
  li_mgr_update_appdb,
- li_mgr_load_apps,
+ li_mgr_find_app,
  li_mgr_register_status_call,
  li_mgr_register_message_call,
  li_mgr_register_app_call,

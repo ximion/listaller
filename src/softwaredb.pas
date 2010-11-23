@@ -32,7 +32,7 @@ type
     FNewApp: LiNewAppEvent;
     curFilter: LiFilter;
 
-    function GetSQLiteVersion: string;
+    function GetSQLiteVersion: String;
     procedure SetNewAppEvent(event: LiNewAppEvent);
     function GetAppConfDir: String;
     function GetDepConfDir: String;
@@ -43,25 +43,25 @@ type
     destructor Destroy; override;
 
     //** Open software databases
-    function Load(const rootmode: boolean = False): Boolean;
+    function Load(const rootmode: Boolean = false): Boolean;
     //** Make sure everything is written to disk
     procedure Finalize;
     //** Get list of applications
-    function GetApplicationList(filter: LiFilter;
-      blacklist: TStringList = nil): boolean;
+    function GetApplicationList(filter: LiFilter; filter_text: String;
+      blacklist: TStringList = nil): Boolean;
     //** Check if application is installed
-    function AppExists(appid: string): boolean;
+    function AppExists(appid: String): Boolean;
     //** Register a new application
-    function AppAddNew(app: LiAppInfo): boolean;
+    function AppAddNew(app: LiAppInfo): Boolean;
     //** Add new dependency to databse
-    procedure DepAddNew(Name: string; version: string; origin: string;
-      depnames: WideString);
+    procedure DepAddNew(Name: String; version: String; origin: String;
+      depnames: Widestring);
     //** Check if dependency is already present
-    function DepExists(Name, version: string): boolean;
+    function DepExists(Name, version: String): Boolean;
     //** Register call to on new app found
     procedure RegOnNewApp(call: LiNewAppEvent; user_data: Pointer);
     //** Update version of app
-    procedure AppUpdateVersion(appID: string; newv: string);
+    procedure AppUpdateVersion(appID: String; newv: String);
     ////
     //** Open filtered applications list (and set pointer to beginning)
     procedure OpenFilter(filter: LiFilter);
@@ -72,14 +72,14 @@ type
     //** Delete current field
     procedure DeleteCurrentField;
 
-    property EndReached: boolean read IsEOF;
+    property EndReached: Boolean read IsEOF;
     property CurrentDataField: TLiDBData read GetCurrentData;
     //** SQLite3 version used
-    property SQLiteVersion: string read GetSQLiteVersion;
+    property SQLiteVersion: String read GetSQLiteVersion;
     //** Event: Called if new application was found
     property OnNewApp: LiNewAppEvent read FNewApp write SetNewAppEvent;
-    property AppConfDir: string read GetAppConfDir;
-    property DepConfDir: string read GetDepConfDir;
+    property AppConfDir: String read GetAppConfDir;
+    property DepConfDir: String read GetDepConfDir;
   end;
 
 implementation
@@ -105,7 +105,7 @@ begin
   liDB.Finalize;
 end;
 
-function TSoftwareDB.GetSQLiteVersion: string;
+function TSoftwareDB.GetSQLiteVersion: String;
 begin
   Result := liDB.SQLiteVersion;
 end;
@@ -121,12 +121,13 @@ begin
   Result := false;
   if curFilter <> fDeps then
   begin
-  if aiDB.EndReached then
-    liDB.OpenFilterAppList;
-  if aiDB.EndReached and liDB.EndReached then
-    Result := true;
-  end else
-  Result := liDB.EndReached;
+    if aiDB.EndReached then
+      liDB.OpenFilterAppList;
+    if aiDB.EndReached and liDB.EndReached then
+      Result := true;
+  end
+  else
+    Result := liDB.EndReached;
 end;
 
 procedure TSoftwareDB.OpenFilter(filter: LiFilter);
@@ -135,7 +136,8 @@ begin
   if filter = fDeps then
   begin
     //TODO
-  end else
+  end
+  else
   begin
     liDB.OpenFilterAppList;
     aiDB.OpenFilter;
@@ -145,23 +147,23 @@ end;
 procedure TSoftwareDB.NextField;
 begin
   if not aiDB.EndReached then
-  aiDB.DeleteCurrentApp
+    aiDB.DeleteCurrentApp
   else if not liDB.EndReached then
-  liDB.AppDeleteCurrent;
+    liDB.AppDeleteCurrent;
 end;
 
 procedure TSoftwareDB.DeleteCurrentField;
 begin
   liDB.NextField;
   if curFilter <> fDeps then
-  aiDB.NextField;
+    aiDB.NextField;
 end;
 
 procedure TSoftwareDB.CloseFilter;
 begin
   liDB.CloseFilter;
   if curFilter <> fDeps then
-  aiDB.CloseFilter;
+    aiDB.CloseFilter;
 end;
 
 function TSoftwareDB.GetCurrentData: TLiDBData;
@@ -171,7 +173,7 @@ begin
   else if not aiDB.EndReached then
     Result := aiDB.CurrentDataField
   else
-    Result.App.Name:='';
+    Result.App.Name := '';
 end;
 
 procedure TSoftwareDB.RegOnNewApp(call: LiNewAppEvent; user_data: Pointer);
@@ -197,57 +199,58 @@ begin
   Result := liDB.DepConfDir;
 end;
 
-function TSoftwareDB.Load(const rootmode: boolean = False): boolean;
+function TSoftwareDB.Load(const rootmode: Boolean = false): Boolean;
 begin
   Result := aiDB.Load(rootmode);
   if Result then
     Result := liDB.Load(rootmode);
 end;
 
-function TSoftwareDB.GetApplicationList(filter: LiFilter;
-  blacklist: TStringList = nil): boolean;
+function TSoftwareDB.GetApplicationList(filter: LiFilter; filter_text: String;
+  blacklist: TStringList = nil): Boolean;
 begin
   if (filter <> fAppIPK) then
-    Result := aiDB.GetApplicationList(filter, blacklist);
-  if ((filter = fAllApps) or (filter = fAppIPK)) and (Result) and (filter <> fAppNative) then
-    Result := liDB.GetApplicationList(blacklist);
+    Result := aiDB.GetApplicationList(filter, filter_text, blacklist);
+  if ((filter = fAllApps) or (filter = fAppIPK)) and (Result) and
+    (filter <> fAppNative) then
+    Result := liDB.GetApplicationList(filter_text, blacklist);
 end;
 
-function TSoftwareDB.AppExists(appid: string): boolean;
+function TSoftwareDB.AppExists(appid: String): Boolean;
 begin
-  Result := False;
+  Result := false;
   Result := liDB.AppExists(appid);
   if not Result then
     Result := aiDB.ContainsAppEntry(appid);
 end;
 
-function TSoftwareDB.AppAddNew(app: LiAppInfo): boolean;
+function TSoftwareDB.AppAddNew(app: LiAppInfo): Boolean;
 var
   ty: LiPkgType;
 begin
-  Result := True;
+  Result := true;
   ty := app.PkType;
   if (ty = ptNative) or (ty = ptExtern) then
     aiDB.AddApplication(app)
   else if (ty <> ptUnknown) then
     liDB.AppAddNew(app)
   else
-    Result := False;
+    Result := false;
 end;
 
-procedure TSoftwareDB.DepAddNew(Name: string; version: string;
-  origin: string; depnames: WideString);
+procedure TSoftwareDB.DepAddNew(Name: String; version: String;
+  origin: String; depnames: Widestring);
 begin
   // Just forward it to Listaller DB
   liDB.DepAddNew(Name, version, origin, depnames);
 end;
 
-function TSoftwareDB.DepExists(Name, version: string): boolean;
+function TSoftwareDB.DepExists(Name, version: String): Boolean;
 begin
   Result := liDB.DepExists(Name, version);
 end;
 
-procedure TSoftwareDB.AppUpdateVersion(appID: string; newv: string);
+procedure TSoftwareDB.AppUpdateVersion(appID: String; newv: String);
 begin
   liDB.AppUpdateVersion(appID, newv);
 end;

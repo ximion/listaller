@@ -1603,7 +1603,8 @@ begin
     if (status = PK_STATUS_ENUM_FINISHED) then
       exit;
     // Show the status
-    text := pk_status_enum_to_localised_text(status);
+     //text := pk_status_enum_to_localised_text(status);
+     text := '<status_text>';
     install.EmitInfoMsg(text);
   end;
 

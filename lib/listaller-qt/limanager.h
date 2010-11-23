@@ -54,7 +54,7 @@ public:
     AppManager();
     ~AppManager();
     
-    void loadApps();
+    void findApps(const QString filter_text);
     bool updateAppDB();
     bool uninstallApp(Application app);
     
