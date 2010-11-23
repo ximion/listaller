@@ -425,8 +425,8 @@ begin
       appRmId := GenerateAppID(tmp[i]);
       //Build a new AppInfo record
       Data.Name := PChar(ddata.Name);
-      Data.RemoveId := PChar(appRmId);
-      Data.PkName := PChar(appID);
+      Data.AppId := PChar(appRmId);
+      Data.PkName := PChar(GenerateFakePackageName(ddata.Name));
       Data.PkType := ptExtern;
       Data.Categories := PChar(ddata.Categories);
       Data.IconName := PChar(ddata.IconName);
@@ -490,7 +490,7 @@ var
   id: String;
   buscmd: ListallerBusCommand;
 begin
-  id := obj.RemoveId;
+  id := obj.AppID;
   if id = '' then
   begin
     perror('Invalid application info passed: No ID found.');
@@ -498,7 +498,7 @@ begin
   end;
   EmitStatusChange(LIS_Started);
 
-  pdebug('Application UId is: ' + obj.RemoveId);
+  pdebug('Application UId is: ' + obj.AppId);
   if (SUMode) and (not IsRoot) then
   begin
     //Create worker thread for this action

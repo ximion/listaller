@@ -56,7 +56,7 @@ end;
 
 function TLokiBackend.Initialize(ai: LiAppInfo): Boolean;
 begin
-  dskFileName := GetDesktopFile(ai.removeID);
+  dskFileName := GetDesktopFileFromID(ai.AppID);
 
   Result := true;
 end;

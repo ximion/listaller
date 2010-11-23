@@ -187,7 +187,7 @@ begin
   ToApps;
   ds.Edit;
 
-  sql := ValFormat(app.PkName) + ', ' + ValFormat(app.RemoveId) +
+  sql := ValFormat(app.PkName) + ', ' + ValFormat(app.AppId) +
     ', ' + ValFormat(app.Categories) + ', ' + ValFormat('installer:local') +
     ',' + ValFormat(app.IconName) + ',' + ValFormat(app.Name) + ',' +
     ValFormat(app.Summary);
@@ -223,8 +223,8 @@ begin
     r.PkType := ptNative;
 
   r.Summary := PChar(ds.FieldByName('application_summary').AsString);
-  r.Version := ''; //AppInstall data does not provide version information...
-  r.Author := ''; //.. and info about the author
+  r.Version := '0.0'; //AppInstall data does not provide information about a pkg version...
+  r.Author := ''; // ... or about the software author
   r.IconName := PChar(ds.FieldByName('icon_name').AsString);
   r.Profile := ''; //@DEPRECATED
 
@@ -248,7 +248,8 @@ begin
   while not ds.EOF do
   begin
     entry := GetCurrentAppField;
-    entry.RemoveId := entry.PkName;
+    // !!!
+    entry.AppId := entry.PkName;
 
     if Assigned(blacklist) then
       blacklist.Add(entry.Name);

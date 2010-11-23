@@ -53,7 +53,8 @@ type
     //** Open software database
     function Load(const rootmode: Boolean = false): Boolean;
     //** Get list of installed ipk apps
-    function GetApplicationList(filter_text: String; blacklist: TStringList = nil): Boolean;
+    function GetApplicationList(filter_text: String;
+      blacklist: TStringList = nil): Boolean;
     //** Open filtered applications list (and set pointer to beginning)
     procedure OpenFilterAppList;
     //** Move one entry forward
@@ -197,7 +198,6 @@ begin
         begin
           Clear;
           Add('Name', ftString, 0, true);
-          Add('PkName', ftString, 0, true);
           Add('AppId', ftString, 0, true);
           Add('Type', ftString, 0, true);
           Add('Description', ftString, 0, false);
@@ -233,7 +233,8 @@ begin
   pinfo(rsDBOpened);
 end;
 
-function TListallerDB.GetApplicationList(filter_text: String; blacklist: TStringList = nil): Boolean;
+function TListallerDB.GetApplicationList(filter_text: String;
+  blacklist: TStringList = nil): Boolean;
 var
   entry: LiAppInfo;
   p: Ansistring;
@@ -249,7 +250,7 @@ begin
   while not ds.EOF do
   begin
     entry := GetAppField;
-    entry.RemoveId := entry.PkName;
+    entry.PkName := PChar(GenerateFakePackageName(entry.Name));
 
     if Assigned(blacklist) then
       blacklist.Add(entry.Name);
@@ -272,8 +273,8 @@ begin
 
     if ((filter_text = '*') or (filter_text = '')) or
       (pos(filter_text, entry.Summary) > 0) or (pos(filter_text, entry.Name) > 0) then
-    if Assigned(FNewApp) then
-      FNewApp(entry.Name, @entry, onnewapp_udata);
+      if Assigned(FNewApp) then
+        FNewApp(entry.Name, @entry, onnewapp_udata);
 
     ds.Next;
   end;
@@ -308,7 +309,7 @@ begin
   r.Author := _(ds.FieldByName('Publisher').AsString);
   r.IconName := _(ds.FieldByName('IconName').AsString);
   r.Profile := _(ds.FieldByName('Profile').AsString);
-  r.RemoveId := _(ds.FieldByName('AppId').AsString);
+  r.AppId := _(ds.FieldByName('AppId').AsString);
   r.Categories := _(ds.FieldByName('Category').AsString);
 
   r.InstallDate := ds.FieldByName('InstallDate').AsDateTime;
@@ -378,11 +379,10 @@ begin
 
   ds.Insert;
   ds.ExecuteDirect('INSERT INTO "applications" VALUES (''' + app.Name +
-    ''', ''' + app.PkName + ''', ''' + app.RemoveId + ''', ''' + h +
-    ''', ''' + app.Summary + ''',''' + app.Version + ''',''' + app.Author +
-    ''',''' + 'icon' + ExtractFileExt(app.IconName) + ''',''' +
-    app.Profile + ''',''' + g + ''',''' + GetDateAsString + ''', ''' +
-    app.Dependencies + ''');');
+    ''', ''' + app.AppId + ''', ''' + h + ''', ''' + app.Summary +
+    ''',''' + app.Version + ''',''' + app.Author + ''',''' + 'icon' +
+    ExtractFileExt(app.IconName) + ''',''' + app.Profile + ''',''' +
+    g + ''',''' + GetDateAsString + ''', ''' + app.Dependencies + ''');');
 
   //Write changes
   ds.ApplyUpdates;

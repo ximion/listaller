@@ -45,7 +45,8 @@ type
     FOnItemSelect: TAListItemSelect;
     procedure SetVisible(Value: Boolean); override;
   public
-    constructor Create(TheOwner: TComponent; const ownItems: Boolean = true);
+    constructor Create(TheOwner: TComponent); override;
+    constructor Create(TheOwner: TComponent; const ownItems: Boolean);
     destructor Destroy; override;
 
     procedure ItemFromAppInfo(ai: LiAppInfo);
@@ -60,7 +61,12 @@ implementation
 
 { TAppListView }
 
-constructor TAppListView.Create(TheOwner: TComponent; const ownItems: Boolean = true);
+constructor TAppListView.Create(TheOwner: TComponent);
+begin
+  Create(TheOwner, true);
+end;
+
+constructor TAppListView.Create(TheOwner: TComponent; const ownItems: Boolean);
 begin
   inherited Create(TheOwner);
 
@@ -165,7 +171,7 @@ begin
   new.Name := ai.Name;
   new.Author := ai.Author;
   new.SDesc := ai.Summary;
-  new.RemoveId := ai.RemoveId;
+  new.AppId := ai.AppId;
   new.Version := ai.Version;
   new.Categories := ai.Categories;
 

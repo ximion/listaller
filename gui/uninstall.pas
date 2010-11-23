@@ -96,7 +96,7 @@ begin
   if FActiv then
   begin
     FActiv := false;
-    if MnFrm.uApp.RemoveId <> '' then
+    if MnFrm.uApp.AppId <> '' then
     begin
       Label1.Caption := StrSubst(rsRMAppC, '%a', MnFrm.uApp.Name);
       Caption := StrSubst(rsRMAppC, '%a', '...');

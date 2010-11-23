@@ -92,17 +92,17 @@ type
   //** Container for information about apps
   LiAppInfo = record
     Name: PChar;
-    PkName: PChar;
+    AppId: PChar;
     PkType: LiPkgType;
     Summary: PChar;
     Version: PChar;
     Author: PChar;
     IconName: PChar;
-    RemoveId: PChar;
     Categories: PChar;
     InstallDate: TDateTime;
     Dependencies: PChar;
     //@DEPRECATED
+    PkName: PChar;
     Profile: PChar;
   end;
 

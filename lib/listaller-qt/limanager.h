@@ -28,13 +28,12 @@ class LiMsgRedirect;
 struct Application
 {
   QString name;
-  QString pkName;
+  QString appId;
   QString summary;
   QString version;
   QString author;
   QString iconName;
   QString profile;
-  QString removeId;
   double installDate;
   QString dependencies;
 };

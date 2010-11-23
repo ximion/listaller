@@ -134,8 +134,10 @@ function HasConfigMod(fname: String): Boolean;
 function GetAppIconPath(icon: String): String;
 //** Create an appID from .desktop-file path
 function GenerateAppID(desktopFile: String): String;
+//** Build a fake package name for an application
+function GenerateFakePackageName(appName: String): String;
 //** Restore desktop file path from appID
-function GetDesktopFile(appID: String): String;
+function GetDesktopFileFromID(appID: String): String;
 
 //** Shows system notification box
 procedure ShowPopupNotify(msg: String; urgency: TUrgencyLevel; time: Integer);
@@ -384,7 +386,7 @@ begin
     StrSubst(ExtractFileName(desktopFile), '.desktop', '');
 end;
 
-function GetDesktopFile(appID: String): String;
+function GetDesktopFileFromID(appID: String): String;
 begin
   Result := '';
   if trim(appID) = '' then
@@ -394,6 +396,21 @@ begin
     Result := 'share/applications/' + appID;
   Result := '/usr/' + Result;
   Result := Result + '.desktop';
+end;
+
+function GenerateFakePackageName(appName: String): String;
+var s: String;
+procedure subst(a, b: String);
+begin
+  s := StrSubst(s, a, b);
+end;
+
+begin
+  s := LowerCase(appName);
+  subst('/', '');
+  subst(';', '');
+  subst(' ', '-');
+  Result := s;
 end;
 
 function GetLangID: String;

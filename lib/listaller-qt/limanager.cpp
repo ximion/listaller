@@ -38,7 +38,6 @@ public:
     Listaller::Application app;
     app.author = ai->Author;
     app.name = ai->Name;
-    app.pkName = ai->PkName;
     app.summary = ai->Summary;
     app.version = ai->Version;
     app.installDate = ai->InstallDate;
@@ -127,7 +126,7 @@ bool AppManager::uninstallApp(Application app)
   };
   
   LiAppInfo ai;
-  ai.RemoveId = local::qStringToChar(app.removeId);
+  ai.AppId = local::qStringToChar(app.appId);
   ai.Author = local::qStringToChar(app.author);
   ai.Dependencies = local::qStringToChar(app.dependencies);
   ai.Name = local::qStringToChar(app.name);

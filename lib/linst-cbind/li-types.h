@@ -103,12 +103,12 @@ typedef enum {
 typedef struct {
       char *Name;
       char *PkName;
+      char *AppId;
       LiPkgType PkType;
       char *Summary;
       char *Version;
       char *Author;
       char *IconName;
-      char *RemoveId;
       char *Categories;
       double InstallDate;
       char *Dependencies;

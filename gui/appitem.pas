@@ -44,7 +44,7 @@ type
    property Categories: String read FCats write FCats;
    property Icon: TBitmap read bmp write bmp;
    property Version: String read FVersion write FVersion;
-   property RemoveId: String read FUid write FUId;
+   property AppId: String read FUid write FUId;
    property IconPath: String read FIconPath write FIconPath;
  end;
 

@@ -190,7 +190,7 @@ begin
   end;
 
   bus.ReplyMessageAddString(dmsg, obj.Name);
-  bus.ReplyMessageAddString(dmsg, obj.RemoveId);
+  bus.ReplyMessageAddString(dmsg, obj.AppId);
 
   pinfo('Sending AppRemove request...');
   dmsg := bus.SendReplyAndWait(dmsg);

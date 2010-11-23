@@ -186,7 +186,7 @@ begin
   //Set the AppInfo of the to-be-removed app
   with uApp do
   begin
-    RemoveId := PChar(item.RemoveId);
+    AppId := PChar(item.AppId);
     Name := PChar(item.Name);
     Version := PChar(item.Version);
     Author := PChar(item.Author);
@@ -355,7 +355,7 @@ begin
       appList.ClearList;
 { if appList is TAppListView then appList.Free;
  appList:=CreateNewUserAppList;}
-      li_mgr_load_apps(@aMgr, fAppExtern);
+      li_mgr_find_app(@aMgr, fAllApps, '*');
     end;
   end
   else
@@ -368,7 +368,7 @@ begin
       appListSU.ClearList;
   {if appListSU is TAppListView then appListSU.Free;
  appListSU:=CreateNewSuAppList;}
-      li_mgr_load_apps(@aMgr, fAppExtern);
+      li_mgr_find_app(@aMgr, fAllApps, '*');
     end;
   end;
 end;
@@ -1056,7 +1056,7 @@ begin
   if not DirectoryExists(PkgRegDir) then
     SysUtils.CreateDir(PkgRegDir);
 
-  uApp.RemoveId := '';
+  uApp.AppId := '';
 
   SuApps := IsRoot;
 
