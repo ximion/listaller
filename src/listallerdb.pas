@@ -32,7 +32,7 @@ type
   TListallerDB = class(TLiStatusObject)
   private
     ds: TSQLite3Dataset;
-    FNewApp: LiNewAppEvent;
+    FNewApp: LiAppEvent;
     CurrField: TLiDBData;
     DBPath: String;
     AppDataDir: String;
@@ -75,7 +75,7 @@ type
     //** Check if dependency is already present
     function DepExists(Name, version: String): Boolean;
     //** Register call to on new app found
-    procedure RegOnNewApp(call: LiNewAppEvent; user_data: Pointer);
+    procedure RegOnNewApp(call: LiAppEvent; user_data: Pointer);
     //** Write changes to disk
     function Finalize: Boolean;
 
@@ -86,7 +86,7 @@ type
     property AppConfDir: String read AppDataDir;
     property DepConfDir: String read DepDataDir;
     //** Event: Called if new application was found
-    property OnNewApp: LiNewAppEvent read FNewApp write FNewApp;
+    property OnNewApp: LiAppEvent read FNewApp write FNewApp;
   end;
 
 implementation
@@ -116,7 +116,7 @@ begin
   Result := ds.SqliteVersion;
 end;
 
-procedure TListallerDB.RegOnNewApp(call: LiNewAppEvent; user_data: Pointer);
+procedure TListallerDB.RegOnNewApp(call: LiAppEvent; user_data: Pointer);
 begin
   if Assigned(call) then
   begin
@@ -124,7 +124,7 @@ begin
     FNewApp := call;
   end
   else
-    perror('Invalid LiNewAppEvent pointer received!');
+    perror('Invalid LiAppEvent pointer received!');
 end;
 
 function TListallerDB.DBOkay: Boolean;
@@ -274,7 +274,7 @@ begin
     if ((filter_text = '*') or (filter_text = '')) or
       (pos(filter_text, entry.Summary) > 0) or (pos(filter_text, entry.Name) > 0) then
       if Assigned(FNewApp) then
-        FNewApp(entry.Name, @entry, onnewapp_udata);
+        FNewApp(@entry, raID, onnewapp_udata);
 
     ds.Next;
   end;

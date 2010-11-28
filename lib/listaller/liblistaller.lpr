@@ -22,7 +22,7 @@ library liblistaller;
 
 uses
   CThreads, Classes, LiTypes, SysUtils, LiUtils, IPKInstall, LiDBusProc,
-  LiManageApp, LiUpdateApp, listatusobj;
+  LiManageApp, LiUpdateApp;
 
 type
    PStringList = ^TStringList;
@@ -407,7 +407,7 @@ begin
 end;
 
 //** Register application event to catch found apps
-function li_mgr_register_app_call(mgr: PLiAppManager; call: LiNewAppEvent; user_data: Pointer): Boolean;cdecl;
+function li_mgr_register_app_call(mgr: PLiAppManager; call: LiAppEvent; user_data: Pointer): Boolean;cdecl;
 begin
  Result := false;
  Result:=true;

@@ -30,7 +30,7 @@ procedure li_mgr_free(mgr: PLiAppManager);cdecl;external liblistaller;
 procedure li_mgr_find_app(mgr: PLiAppManager; filter: LiFilter; const filter_text: PChar);cdecl;external liblistaller;
 function li_mgr_update_appdb(mgr: PLiAppManager): Boolean;cdecl;external liblistaller;
 function li_mgr_register_status_call(mgr: PLiAppManager; call: LiStateEvent; user_data: Pointer): Boolean;cdecl;external liblistaller;
-function li_mgr_register_app_call(mgr: PLiAppManager; call: LiNewAppEvent; user_data: Pointer): Boolean;cdecl;external liblistaller;
+function li_mgr_register_app_call(mgr: PLiAppManager; call: LiAppEvent; user_data: Pointer): Boolean;cdecl;external liblistaller;
 function li_mgr_register_message_call(mgr: PLiAppManager;call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
 procedure li_mgr_set_sumode(mgr: PLiAppManager;md: Boolean);cdecl;external liblistaller;
 function li_mgr_sumode(mgr: PLiAppManager): Boolean;cdecl;external liblistaller;

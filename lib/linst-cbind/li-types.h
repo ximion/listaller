@@ -102,7 +102,6 @@ typedef enum {
 
 typedef struct {
       char *Name;
-      char *PkName;
       char *AppId;
       LiPkgType PkType;
       char *Summary;
@@ -112,8 +111,14 @@ typedef struct {
       char *Categories;
       double InstallDate;
       char *Dependencies;
+      char *PkName;
       char *Profile;
 } LiAppInfo;
+
+typedef enum {
+      raID,
+      raDETAILS
+} LiResolveAction;
 
 typedef enum {
       psNone,
@@ -128,7 +133,7 @@ typedef LI_REQUEST_RES (*LiMessageEvent) (LI_MESSAGE mtype,const char *text,void
 
 typedef void (*TProgressEvent) (int pos,void* user_data);
 
-typedef void (*LiNewAppEvent) (const char *name,LiAppInfo *obj,void* user_data);
+typedef void (*LiAppEvent) (LiAppInfo *item,LiResolveAction action,void* user_data);
 
 typedef void (*LiNewUpdateEvent) (char *name,int id,void* user_data);
 

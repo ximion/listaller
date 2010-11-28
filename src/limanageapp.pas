@@ -45,9 +45,9 @@ type
   TLiAppManager = class(TLiStatusObject)
   private
     SUMode: Boolean;
-    FApp: LiNewAppEvent;
+    FApp: LiAppEvent;
 
-    procedure EmitNewApp(s: String; oj: LiAppInfo);
+    procedure EmitNewApp(oj: LiAppInfo; action: LiResolveAction);
 
     function IsInList(nm: String; list: TStringList): Boolean;
     //** Catch status messages from DBus action
@@ -76,7 +76,7 @@ type
     @returns True if everything is okay, False if dependencies are missing}
     function CheckApps(report: TStringList; const fix: Boolean = false;
       const forceroot: Boolean = false): Boolean;
-    procedure RegOnNewApp(call: LiNewAppEvent; udata: Pointer);
+    procedure RegOnNewApp(call: LiAppEvent; udata: Pointer);
     property SuperuserMode: Boolean read SUMode write SUMode;
   end;
 
@@ -99,19 +99,19 @@ begin
   inherited;
 end;
 
-procedure TLiAppManager.RegOnNewApp(call: LiNewAppEvent; udata: Pointer);
+procedure TLiAppManager.RegOnNewApp(call: LiAppEvent; udata: Pointer);
 begin
-  if CheckPtr(call, 'StatusChangeEvent') then
+  if CheckPtr(call, 'AppEvent') then
   begin
     FApp := call;
     newapp_udata := udata;
   end;
 end;
 
-procedure TLiAppManager.EmitNewApp(s: String; oj: LiAppInfo);
+procedure TLiAppManager.EmitNewApp(oj: LiAppInfo; action: LiResolveAction);
 begin
   if Assigned(FApp) then
-    FApp(PChar(s), @oj, newapp_udata);
+    FApp(@oj, action, newapp_udata);
 end;
 
 function TLiAppManager.IsInList(nm: String; list: TStringList): Boolean;
@@ -120,16 +120,15 @@ begin
 end;
 
 
-procedure liappmgr_database_new_app(const aname: PChar; obj: PLiAppInfo;
-  limgr: TLiAppManager); cdecl;
+procedure liappmgr_database_new_app(item: PLiAppInfo; action: LiResolveAction; limgr: TLiAppManager); cdecl;
 begin
   if not (limgr is TLiAppManager) then
   begin
     perror('Assertion data is TLiManager failed');
   end
   else
-  if trim(aname) <> '*' then
-    limgr.EmitNewApp(aname, obj^);
+  if trim(item^.Name) <> '*' then
+    limgr.EmitNewApp(item^, raID);
 end;
 
 {procedure TLiAppManager.RescanEntries;
@@ -431,6 +430,9 @@ begin
       Data.Categories := PChar(ddata.Categories);
       Data.IconName := PChar(ddata.IconName);
       Data.Summary := PChar(ddata.SDesc);
+      // Avoid empty summary
+      if trim(Data.summary) = '' then
+        Data.Summary := Data.Name;
       sdb.AppAddNew(Data);
     end;
   end;
@@ -446,7 +448,7 @@ var
 begin
   sdb := TSoftwareDB.Create;
   sdb.Load(SUMode);
-  sdb.RegOnNewApp(LiNewAppEvent(@liappmgr_database_new_app), self);
+  sdb.RegOnNewApp(LiAppEvent(@liappmgr_database_new_app), self);
   sdb.GetApplicationList(filter, text, nil);
   sdb.Free;
 end;

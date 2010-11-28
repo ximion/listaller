@@ -32,7 +32,7 @@ type
     currField: TLiDBData;
     loaded: Boolean;
 
-    FNewApp: LiNewAppEvent;
+    FNewApp: LiAppEvent;
     onnewapp_udata: Pointer;
     procedure ToApps;
     procedure ToLocale;
@@ -54,7 +54,7 @@ type
     //** Write changes to disk
     procedure Finalize;
     //** Register call to on new app found
-    procedure RegOnNewApp(call: LiNewAppEvent; user_data: Pointer);
+    procedure RegOnNewApp(call: LiAppEvent; user_data: Pointer);
     //** Open filtered applications list (and set pointer to beginning)
     procedure OpenFilter;
     //** Move one entry forward
@@ -67,7 +67,7 @@ type
     property EndReached: Boolean read EOF;
     property CurrentDataField: TLiDBData read CurrField;
     //** Event: Called if new application was found
-    property OnNewApp: LiNewAppEvent read FNewApp write FNewApp;
+    property OnNewApp: LiAppEvent read FNewApp write FNewApp;
   end;
 
 implementation
@@ -82,7 +82,7 @@ begin
   loaded := false;
 end;
 
-procedure TAppInstallDB.RegOnNewApp(call: LiNewAppEvent; user_data: Pointer);
+procedure TAppInstallDB.RegOnNewApp(call: LiAppEvent; user_data: Pointer);
 begin
   if Assigned(call) then
   begin
@@ -90,7 +90,7 @@ begin
     FNewApp := call;
   end
   else
-    perror('Invalid NewAppEvent pointer received!');
+    perror('Invalid AppEvent pointer received!');
 end;
 
 function TAppInstallDB.Load(const rootmode: Boolean): Boolean;
@@ -266,7 +266,7 @@ begin
     if ((filter_text = '*') or (filter_text = '')) or
       (pos(filter_text, entry.Summary) > 0) or (pos(filter_text, entry.Name) > 0) then
       if Assigned(FNewApp) then
-        FNewApp(entry.Name, @entry, onnewapp_udata);
+        FNewApp(@entry, raID, onnewapp_udata);
 
     ds.Next;
   end;

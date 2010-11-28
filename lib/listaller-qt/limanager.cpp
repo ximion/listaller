@@ -60,9 +60,9 @@ void li_manager_status_change_cb(LI_STATUS status, LiStatusData data, LiMsgRedir
   rd->sendStatusMessage(QString(data.text));
 }
 
-void li_manager_new_app_cb(char *name,LiAppInfo *obj, LiMsgRedirect *rd)
+void li_manager_new_app_cb(LiAppInfo *item,LiResolveAction action, LiMsgRedirect *rd)
 {
-  rd->sendNewApp(obj);
+  rd->sendNewApp(item);
 }
 
 LI_REQUEST_RES li_manager_message_cb(LI_MESSAGE mtype, const char *text, void* user_data)
@@ -83,7 +83,7 @@ AppManager::AppManager()
   //Catch status messages
   li_mgr_register_status_call(&mgr, LiStateEvent(li_manager_status_change_cb), msgRedir);
   //Catch new apps
-  li_mgr_register_app_call(&mgr, LiNewAppEvent(li_manager_new_app_cb), msgRedir);
+  li_mgr_register_app_call(&mgr, LiAppEvent(li_manager_new_app_cb), msgRedir);
   
   li_mgr_register_message_call(&mgr, li_manager_message_cb, msgRedir);
   

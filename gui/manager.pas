@@ -195,11 +195,11 @@ begin
   RMForm.ShowModal;
 end;
 
-procedure OnNewAppFound(const Name: PChar; obj: PLiAppInfo; udata: Pointer); cdecl;
+procedure OnAppFound(item: PLiAppInfo; action: LiResolveAction; udata: Pointer); cdecl;
 begin
   with MnFrm do
   begin
-    currAppList.ItemFromAppInfo(obj^);
+    currAppList.ItemFromAppInfo(item^);
   end;
   Application.ProcessMessages;
 end;
@@ -1153,7 +1153,7 @@ begin
 end;}
 
   //Register callback to be notified if new app was found
-  li_mgr_register_app_call(@amgr, @OnNewAppFound, nil);
+  li_mgr_register_app_call(@amgr, @OnAppFound, nil);
 
   //Register callback to be notified if status was changed
   li_mgr_register_status_call(@amgr, @OnMgrStatus, nil);

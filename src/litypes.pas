@@ -17,7 +17,7 @@
 unit litypes;
 
 {$MODE objfpc}{$H+}
-//{$packrecords c}
+{$PACKRECORDS C}
 
 interface
 
@@ -108,8 +108,10 @@ type
 
   PLiAppInfo = ^LiAppInfo;
 
+  LiResolveAction = (raID, raDETAILS);
+
   //** Event to catch thrown application records
-  LiNewAppEvent = procedure(const name: PChar; obj: PLiAppInfo; user_data: Pointer); cdecl;
+  LiAppEvent = procedure(item: PLiAppInfo; action: LiResolveAction; user_data: Pointer); cdecl;
 
   //** Shows information about new update
   LiNewUpdateEvent = procedure(name: PChar; id: Integer; user_data: Pointer); cdecl;

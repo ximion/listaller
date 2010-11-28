@@ -29,11 +29,11 @@ type
   private
     aiDB: TAppInstallDB;
     liDB: TListallerDB;
-    FNewApp: LiNewAppEvent;
+    FNewApp: LiAppEvent;
     curFilter: LiFilter;
 
     function GetSQLiteVersion: String;
-    procedure SetNewAppEvent(event: LiNewAppEvent);
+    procedure SetNewAppEvent(event: LiAppEvent);
     function GetAppConfDir: String;
     function GetDepConfDir: String;
     function IsEOF: Boolean;
@@ -59,7 +59,7 @@ type
     //** Check if dependency is already present
     function DepExists(Name, version: String): Boolean;
     //** Register call to on new app found
-    procedure RegOnNewApp(call: LiNewAppEvent; user_data: Pointer);
+    procedure RegOnNewApp(call: LiAppEvent; user_data: Pointer);
     //** Update version of app
     procedure AppUpdateVersion(appID: String; newv: String);
     ////
@@ -77,7 +77,7 @@ type
     //** SQLite3 version used
     property SQLiteVersion: String read GetSQLiteVersion;
     //** Event: Called if new application was found
-    property OnNewApp: LiNewAppEvent read FNewApp write SetNewAppEvent;
+    property OnNewApp: LiAppEvent read FNewApp write SetNewAppEvent;
     property AppConfDir: String read GetAppConfDir;
     property DepConfDir: String read GetDepConfDir;
   end;
@@ -110,7 +110,7 @@ begin
   Result := liDB.SQLiteVersion;
 end;
 
-procedure TSoftwareDB.SetNewAppEvent(event: LiNewAppEvent);
+procedure TSoftwareDB.SetNewAppEvent(event: LiAppEvent);
 begin
   aiDB.OnNewApp := event;
   liDB.OnNewApp := event;
@@ -176,7 +176,7 @@ begin
     Result.App.Name := '';
 end;
 
-procedure TSoftwareDB.RegOnNewApp(call: LiNewAppEvent; user_data: Pointer);
+procedure TSoftwareDB.RegOnNewApp(call: LiAppEvent; user_data: Pointer);
 begin
   if Assigned(call) then
   begin
@@ -184,7 +184,7 @@ begin
     aiDB.RegOnNewApp(call, user_data);
   end
   else
-    perror('Invalid NewAppEvent pointer received!');
+    perror('Invalid AppEvent pointer received!');
 end;
 
 function TSoftwareDB.GetAppConfDir: String;
