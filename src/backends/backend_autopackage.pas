@@ -54,7 +54,7 @@ end;
 
 function TAutopackageBackend.Initialize(ai: LiAppInfo): Boolean;
 begin
-  dskFileName := GetDesktopFileFromID(ai.AppID);
+  dskFileName := GetDesktopFileFromID(ai.ID);
 
   Result := true;
 end;

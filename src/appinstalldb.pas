@@ -187,10 +187,10 @@ begin
   ToApps;
   ds.Edit;
 
-  sql := ValFormat(app.PkName) + ', ' + ValFormat(app.AppId) +
-    ', ' + ValFormat(app.Categories) + ', ' + ValFormat('installer:local') +
-    ',' + ValFormat(app.IconName) + ',' + ValFormat(app.Name) + ',' +
-    ValFormat(app.Summary);
+  sql := ValFormat(GenerateFakePackageName(app.Name)) + ', ' +
+    ValFormat(app.Id) + ', ' + ValFormat(app.Categories) + ', ' +
+    ValFormat('installer:local') + ',' + ValFormat(app.IconName) +
+    ',' + ValFormat(app.Name) + ',' + ValFormat(app.Summary);
 
   sql := 'INSERT INTO applications (application_id, package_name, categories, ' +
     'repo_id, icon_name, application_name, application_summary) ' +
@@ -215,7 +215,7 @@ var
   h: String;
 begin
   r.Name := PChar(ds.FieldByName('application_name').AsString);
-  r.PkName := PChar(ds.FieldByName('package_name').AsString);
+  r.Id := PChar(ds.FieldByName('package_name').AsString);
   h := LowerCase(ds.FieldByName('repo_id').AsString);
   if h = 'installer:local' then
     r.PkType := ptExtern
@@ -226,8 +226,6 @@ begin
   r.Version := '0.0'; //AppInstall data does not provide information about a pkg version...
   r.Author := ''; // ... or about the software author
   r.IconName := PChar(ds.FieldByName('icon_name').AsString);
-  r.Profile := ''; //@DEPRECATED
-
   r.Categories := PChar(ds.FieldByName('categories').AsString);
 
   r.Dependencies := '';
@@ -248,8 +246,6 @@ begin
   while not ds.EOF do
   begin
     entry := GetCurrentAppField;
-    // !!!
-    entry.AppId := entry.PkName;
 
     if Assigned(blacklist) then
       blacklist.Add(entry.Name);
@@ -266,7 +262,7 @@ begin
     if ((filter_text = '*') or (filter_text = '')) or
       (pos(filter_text, entry.Summary) > 0) or (pos(filter_text, entry.Name) > 0) then
       if Assigned(FNewApp) then
-        FNewApp(@entry, raID, onnewapp_udata);
+        FNewApp(@entry, onnewapp_udata);
 
     ds.Next;
   end;

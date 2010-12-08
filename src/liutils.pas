@@ -21,7 +21,7 @@ unit liutils;
 interface
 
 uses
-  Dos, Pwd, Classes, Process, RegExpr, BaseUnix, IniFiles, SysUtils, StrLocale;
+  Dos, Pwd, Classes, Process, RegExpr, BaseUnix, IniFiles, SysUtils, StrLocale, LiTypes;
 
 const
   //** Version of the Listaller applicationset
@@ -136,6 +136,8 @@ function GetAppIconPath(icon: String): String;
 function GenerateAppID(desktopFile: String): String;
 //** Build a fake package name for an application
 function GenerateFakePackageName(appName: String): String;
+//** Build a string to identify the application which can be used in filepaths
+function GetAppIDString(ai: LiAppInfo): String;
 //** Restore desktop file path from appID
 function GetDesktopFileFromID(appID: String): String;
 
@@ -373,6 +375,11 @@ begin
     end;
     Inc(i);
   end;
+end;
+
+function GetAppIDString(ai: LiAppInfo): String;
+begin
+  Result := StrSubst(ai.Id, '/', '');
 end;
 
 function GenerateAppID(desktopFile: String): String;

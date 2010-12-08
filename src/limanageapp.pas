@@ -47,7 +47,7 @@ type
     SUMode: Boolean;
     FApp: LiAppEvent;
 
-    procedure EmitNewApp(oj: LiAppInfo; action: LiResolveAction);
+    procedure EmitNewApp(oj: LiAppInfo);
 
     function IsInList(nm: String; list: TStringList): Boolean;
     //** Catch status messages from DBus action
@@ -108,10 +108,10 @@ begin
   end;
 end;
 
-procedure TLiAppManager.EmitNewApp(oj: LiAppInfo; action: LiResolveAction);
+procedure TLiAppManager.EmitNewApp(oj: LiAppInfo);
 begin
   if Assigned(FApp) then
-    FApp(@oj, action, newapp_udata);
+    FApp(@oj, newapp_udata);
 end;
 
 function TLiAppManager.IsInList(nm: String; list: TStringList): Boolean;
@@ -120,7 +120,7 @@ begin
 end;
 
 
-procedure liappmgr_database_new_app(item: PLiAppInfo; action: LiResolveAction; limgr: TLiAppManager); cdecl;
+procedure liappmgr_database_new_app(item: PLiAppInfo; limgr: TLiAppManager); cdecl;
 begin
   if not (limgr is TLiAppManager) then
   begin
@@ -128,7 +128,7 @@ begin
   end
   else
   if trim(item^.Name) <> '*' then
-    limgr.EmitNewApp(item^, raID);
+    limgr.EmitNewApp(item^);
 end;
 
 {procedure TLiAppManager.RescanEntries;
@@ -424,8 +424,7 @@ begin
       appRmId := GenerateAppID(tmp[i]);
       //Build a new AppInfo record
       Data.Name := PChar(ddata.Name);
-      Data.AppId := PChar(appRmId);
-      Data.PkName := PChar(GenerateFakePackageName(ddata.Name));
+      Data.Id := PChar(appRmId);
       Data.PkType := ptExtern;
       Data.Categories := PChar(ddata.Categories);
       Data.IconName := PChar(ddata.IconName);
@@ -492,7 +491,7 @@ var
   id: String;
   buscmd: ListallerBusCommand;
 begin
-  id := obj.AppID;
+  id := obj.ID;
   if id = '' then
   begin
     perror('Invalid application info passed: No ID found.');
@@ -500,7 +499,7 @@ begin
   end;
   EmitStatusChange(LIS_Started);
 
-  pdebug('Application UId is: ' + obj.AppId);
+  pdebug('Application UId is: ' + obj.Id);
   if (SUMode) and (not IsRoot) then
   begin
     //Create worker thread for this action

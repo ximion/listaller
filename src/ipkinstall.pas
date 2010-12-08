@@ -30,10 +30,10 @@ type
   TLiInstallation = class(TLiStatusObject)
   private
     //Basic information about the package and the new application
-    IAppName, IAppVersion, IAppCMD, IAuthor, ShDesc: String;
-    ICategories: String;
+    IAppCMD: String;
+    appData: LiAppInfo;
     IDesktopFiles: String;
-    PkgName, PkgPath, PkgID: String;
+    PkgName, PkgPath: String;
     //Path to a wizard image
     FWizImage: String;
     //Package database connection
@@ -127,12 +127,8 @@ type
     function GetMaxInstSteps: Integer;
     //** Function to solve all dependencies the package has
     function ResolveDependencies(const fetchFromDebian: Boolean = true): Boolean;
-    //** Name of the application
-    property AppName: String read IAppName;
-    //** Version of the to-be-installed application
-    property AppVersion: String read IAppVersion;
-    //** ID of the application
-    property AppID: String read PkgID;
+    //** Get the AppInfo record of this package
+    property AppInfo: LiAppInfo read appData;
     //** Listaller package type
     property pType: LiPkgType read pkType;
     //** Unformatted disallows string
@@ -418,7 +414,8 @@ begin
     SetRootMode(true);
   end;
 
-  if IAppName <> '' then
+  if (appData.Name <> '')
+  or (appData.Id <> '') then
   begin
     Result := false;
     perror('This Setup was already initialized. You have to create a new setup object to load a second file!');
@@ -530,12 +527,12 @@ begin
   DInfo := GetDistro;
 
   // Invalid package ID => package will be rejected
-  pkgID := '';
-  pkgID := cont.PkName;
-  EmitInfoMsg('Package idName: ' + pkgID);
+  appData.Id := '';
+  appData.Id := PChar(cont.PkName);
+  EmitInfoMsg('Package idName: ' + appData.ID);
 
   // Get categories
-  ICategories := cont.Categories;
+  appData.Categories := PChar(cont.Categories);
 
   if pkType = ptLinstall then
   begin
@@ -561,20 +558,21 @@ begin
       unpkg.UnpackControlFile('pkgdata/fileinfo-' + IntToStr(i) + '.id');
     end;
 
-    IAppName := cont.AppName;
+    appData.Name := PChar(cont.AppName);
 
-    if pkgID = '' then
-      pkgID := IAppName;
+    // Copy PChar!
+    if appData.Id = '' then
+      appData.Id := PChar(appData.Name);
 
-    IAppVersion := cont.AppVersion;
+    appData.Version := PChar(cont.AppVersion);
 
     USource := cont.USource;
     if USource = '' then
       USource := '#';
 
-    IAuthor := cont.Author;
-    if IAuthor = '' then
-      IAuthor := '#';
+    appData.Author := PChar(cont.Author);
+    if appData.Author = '' then
+      appData.Author := '#';
 
     IAppCMD := cont.AppCMD;
     if IAppCMD = '' then
@@ -584,7 +582,7 @@ begin
       EmitInfoMsg('Application main exec command is ' + IAppCMD);
 
     //Load Description
-    ShDesc := cont.SDesc;
+    appData.Summary := PChar(cont.Summary);
 
     //Load info about supported distributions
     FSupportedDistris := LowerCase(cont.DSupport);
@@ -650,7 +648,7 @@ begin
 
     //Only executed to make sure that "RmApp" property is set
     if not Testmode then
-      if sdb.AppExists(pkgID) then
+      if sdb.AppExists(appData.Id) then
         RmApp := true;
 
   end
@@ -661,21 +659,10 @@ begin
 
     cont.ReadAppDescription(longdesc);
 
-    PkgID := cont.PkName;
-    IAppName := cont.AppName;
-    IAppVersion := cont.AppVersion;
-
-    IAuthor := cont.Author;
-    if IAuthor = '' then
-      IAuthor := '#';
-
     //DLink packages can only be installed as root!
     SUMode := true;
 
     IDesktopFiles := cont.Desktopfiles;
-
-    //Load Description
-    ShDesc := cont.SDesc;
 
     Dependencies := TStringList.Create;
 
@@ -734,7 +721,7 @@ begin
   if pkType = ptContainer then
   begin
     EmitInfoMsg(StrSubst(rsPackageTypeIsX, '%s', 'container'));
-    IAppName := ExtractFileName(cont.Binary);
+    appData.Name := PChar(ExtractFileName(cont.Binary));
     //At time we have less intialization of coverIPKs
   end;
 
@@ -879,7 +866,6 @@ var
   dest, h, FDir: String; // h is an helper variable - used for various actions
   dsk: TIniFile; // Desktop files
   setcm: Boolean;
-  appField: LiAppInfo;
   proc: TProcess; // Helper process with pipes
   pkit: TPackageKit; // PackageKit object
   DInfo: TDistroInfo; // Distribution information
@@ -1039,7 +1025,7 @@ begin
             EmitInfoMsg('Package ' + Dependencies[i] + ' could not be installed.');
             EmitError(StrSubst(rsInstPkgFailed, '%s', Dependencies[i]) +
               #10 + rsEMsg + #10 + pkit.LastErrorMessage + #10 +
-              StrSubst(rsViewLog, '%p', '/tmp/install-' + IAppName + '.log'));
+              StrSubst(rsViewLog, '%p', '/tmp/install-' + GetAppIDString(appData) + '.log'));
             Result := false;
             Abort_FreeAll();
             exit;
@@ -1165,8 +1151,8 @@ begin
           end;
         except
           //Unable to copy the file
-          EmitError(Format(rsCnCopy,
-            [dest + '/' + ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
+          EmitError(Format(rsCnCopy, [dest + '/' +
+            ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
           RollbackInstallation;
           Result := false;
           Abort_FreeAll();
@@ -1176,9 +1162,9 @@ begin
         if (pos('.desktop', LowerCase(ExtractFileName(h))) > 0) then
         begin
           dsk := TIniFile.Create(dest + '/' + ExtractFileName(h));
-          dsk.WriteString('Desktop Entry', 'X-AppVersion', IAppVersion);
+          dsk.WriteString('Desktop Entry', 'X-AppVersion', appData.Version);
           dsk.WriteString('Desktop Entry', 'X-AllowRemove', 'true');
-          dsk.WriteString('Desktop Entry', 'X-Publisher', IAuthor);
+          dsk.WriteString('Desktop Entry', 'X-Publisher', appData.Author);
           if dsk.ValueExists('Desktop Entry', 'Icon') then
             dsk.WriteString('Desktop Entry', 'Icon', SyblToPath(
               dsk.ReadString('Desktop Entry', 'Icon', '*'), FTestMode));
@@ -1301,21 +1287,9 @@ begin
       end;
     end;
 
-    with AppField do
-    begin
-      Name := PChar(IAppName);
-      PkName := PChar(PkgID);
-      PkType := pkType;
-      Summary := PChar(ShDesc);
-      Version := PChar(IAppVersion);
-      Author := PChar(IAuthor);
-      IconName := PChar(IIconPath);
-      Profile := PChar(CurProfile);
-      Categories := PChar(ICategories);
-    end;
-    AppField.Dependencies := PChar(Dependencies.Text);
+    appData.Dependencies := PChar(Dependencies.Text);
 
-    sdb.AppAddNew(AppField);
+    sdb.AppAddNew(appData);
 
     if length(IIconPath) > 0 then
       if IIconPath[1] = '/' then
@@ -1448,7 +1422,7 @@ end;}
       begin
         EmitError(rsPkQueryFailed + #10 + rsEMsg + #10 +
           pkit.LastErrorMessage + #10 + StrSubst(rsViewLog, '%p',
-          '/tmp/install-' + IAppName + '.log'));
+          '/tmp/install-' + GetAppIDString(appData) + '.log'));
         Result := false;
         Abort_FreeAll();
         exit;
@@ -1561,8 +1535,8 @@ end;}
         IDesktopFiles, 0, pos(';', IDesktopFiles) - 1))
     else
       ar := TInifile.Create('/usr/share/applications/' + IDesktopFiles);
-    ar.WriteString('Desktop Entry', 'X-AppVersion', IAppVersion);
-    ar.WriteString('Desktop Entry', 'X-Publisher', IAuthor);
+    ar.WriteString('Desktop Entry', 'X-AppVersion', appData.Version);
+    ar.WriteString('Desktop Entry', 'X-Publisher', appData.Author);
     if pos(';', IDesktopFiles) > 0 then
       IDesktopFiles := copy(IDesktopFiles, pos(';', IDesktopFiles) +
         1, length(IDesktopFiles))
@@ -1603,8 +1577,8 @@ begin
     if (status = PK_STATUS_ENUM_FINISHED) then
       exit;
     // Show the status
-     //text := pk_status_enum_to_localised_text(status);
-     text := '<status_text>';
+    //text := pk_status_enum_to_localised_text(status);
+    text := '<status_text>';
     install.EmitInfoMsg(text);
   end;
 
@@ -1727,7 +1701,7 @@ end;
 function TLiInstallation.PkgOkay: Boolean;
 begin
   Result := true;
-  if (PkgID = '') or (IAppName = '') then
+  if (appData.Id = '') or (appData.Name = '') then
   begin
     pwarning('Package check failed!');
     EmitError(rsUnknownErrorOC + #10 + rsPkgDM + #10 + rsABLoad);

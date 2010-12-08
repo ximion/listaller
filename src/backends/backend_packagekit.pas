@@ -62,7 +62,7 @@ end;
 
 function TPackageKitBackend.Initialize(ai: LiAppInfo): Boolean;
 begin
-  dskFileName := GetDesktopFileFromID(ai.AppID);
+  dskFileName := GetDesktopFileFromID(ai.ID);
   appInfo := ai;
   Result := true;
 end;

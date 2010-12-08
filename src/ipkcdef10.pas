@@ -96,7 +96,7 @@ type
     procedure WriteAppDescription(info: TStringList);
     property Icon: string read ReadIcon write WriteIcon;
     property LangCode: string read clang write clang;
-    property SDesc: string read ReadSDesc write WriteSDesc;
+    property Summary: string read ReadSDesc write WriteSDesc;
     property Categories: string read ReadCategories write WriteCategories;
     property Author: string read ReadAuthor write WriteAuthor;
     property Maintainer: string read ReadMaintainer write WriteMaintainer;

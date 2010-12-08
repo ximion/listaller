@@ -60,7 +60,7 @@ void li_manager_status_change_cb(LI_STATUS status, LiStatusData data, LiMsgRedir
   rd->sendStatusMessage(QString(data.text));
 }
 
-void li_manager_new_app_cb(LiAppInfo *item,LiResolveAction action, LiMsgRedirect *rd)
+void li_manager_new_app_cb(LiAppInfo *item, LiMsgRedirect *rd)
 {
   rd->sendNewApp(item);
 }

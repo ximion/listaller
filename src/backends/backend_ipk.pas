@@ -75,13 +75,13 @@ var
 begin
   ldb := TListallerDB.Create;
   ldb.Load(SUMode);
-  Result := ldb.AppExists(appInfo.AppId);
+  Result := ldb.AppExists(appInfo.Id);
   if Result then
   begin
-    Result := DirectoryExistsUTF8(PkgRegDir + LowerCase(appInfo.PkName));
+    Result := DirectoryExistsUTF8(PkgRegDir + LowerCase(GetAppIDString(appInfo)));
     if not Result then
       //EmitRequest(rsAppRegistBroken, rqError);
-      perror('App registration is broken for #' + appInfo.AppId);
+      perror('App registration is broken for #' + appInfo.Id);
   end;
   ldb.Free;
 end;
@@ -103,7 +103,7 @@ var
   ipkc: TIPKControl;
 begin
   Result := false;
-  p := PkgRegDir + LowerCase(appInfo.PkName) + '/';
+  p := PkgRegDir + LowerCase(GetAppIDString(appInfo)) + '/';
   p := CleanFilePath(p);
 
   mnprog := 0;
@@ -124,7 +124,7 @@ begin
   while not DB.EndReached do
   begin
     if (DB.CurrentDataField.App.Name = appInfo.Name) and
-      (DB.CurrentDataField.App.AppId = appInfo.AppId) then
+      (DB.CurrentDataField.App.Id = appInfo.Id) then
     begin
 
       if DB.CurrentDataField.App.PkType = ptDLink then

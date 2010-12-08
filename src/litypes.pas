@@ -92,7 +92,7 @@ type
   //** Container for information about apps
   LiAppInfo = record
     Name: PChar;
-    AppId: PChar;
+    Id: PChar;
     PkType: LiPkgType;
     Summary: PChar;
     Version: PChar;
@@ -101,17 +101,19 @@ type
     Categories: PChar;
     InstallDate: TDateTime;
     Dependencies: PChar;
-    //@DEPRECATED
-    PkName: PChar;
-    Profile: PChar;
+  end;
+
+  LiAppDetails = record
+    dummy: PChar;
   end;
 
   PLiAppInfo = ^LiAppInfo;
 
-  LiResolveAction = (raID, raDETAILS);
+  //** Event to catch thrown application records
+  LiAppEvent = procedure(item: PLiAppInfo; user_data: Pointer); cdecl;
 
   //** Event to catch thrown application records
-  LiAppEvent = procedure(item: PLiAppInfo; action: LiResolveAction; user_data: Pointer); cdecl;
+  LiAppDetailEvent = procedure(item: PLiAppInfo; details: LiAppDetails; user_data: Pointer); cdecl;
 
   //** Shows information about new update
   LiNewUpdateEvent = procedure(name: PChar; id: Integer; user_data: Pointer); cdecl;

@@ -197,17 +197,16 @@ begin
         with FieldDefs do
         begin
           Clear;
-          Add('Name', ftString, 0, true);
-          Add('AppId', ftString, 0, true);
-          Add('Type', ftString, 0, true);
-          Add('Description', ftString, 0, false);
-          Add('Version', ftFloat, 0, true);
-          Add('Publisher', ftString, 0, false);
-          Add('IconName', ftString, 0, false);
-          Add('Profile', ftString, 0, false);
-          Add('Category', ftString, 0, true);
-          Add('InstallDate', ftDateTime, 0, false);
-          Add('Dependencies', ftMemo, 0, false);
+          Add('app_name', ftString, 0, true);
+          Add('app_id', ftString, 0, true);
+          Add('installation_type', ftString, 0, true);
+          Add('app_summary', ftString, 0, false);
+          Add('app_version', ftFloat, 0, true);
+          Add('app_publisher', ftString, 0, false);
+          Add('app_iconname', ftString, 0, false);
+          Add('app_categories', ftString, 0, true);
+          Add('app_timestamp', ftDateTime, 0, false);
+          Add('app_dependencies', ftMemo, 0, false);
         end;
         CreateTable;
       end;
@@ -218,11 +217,11 @@ begin
         with FieldDefs do
         begin
           Clear;
-          Add('Name', ftString, 0, true);
-          Add('Version', ftString, 0, true);
-          Add('Origin', ftString, 0, true);
-          Add('DepNames', ftMemo, 0, true);
-          Add('InstallDate', ftDateTime, 0, false);
+          Add('dep_name', ftString, 0, true);
+          Add('dep_version', ftString, 0, true);
+          Add('dep_origin', ftString, 0, true);
+          Add('dep_dependencies', ftMemo, 0, true);
+          Add('dep_timestamp', ftDateTime, 0, false);
         end;
         CreateTable;
       end;
@@ -250,7 +249,6 @@ begin
   while not ds.EOF do
   begin
     entry := GetAppField;
-    entry.PkName := PChar(GenerateFakePackageName(entry.Name));
 
     if Assigned(blacklist) then
       blacklist.Add(entry.Name);
@@ -259,7 +257,7 @@ begin
     if entry.Author <> '' then
       entry.Author := PChar(rsAuthor + ': ' + entry.Author);
 
-    p := AppDataDir + LowerCase(entry.PkName) + '/';
+    p := AppDataDir + LowerCase(GetAppIDString(entry)) + '/';
 
     //InstLst.Add(LowerCase(dsApp.FieldByName('ID').AsString));
 
@@ -274,7 +272,7 @@ begin
     if ((filter_text = '*') or (filter_text = '')) or
       (pos(filter_text, entry.Summary) > 0) or (pos(filter_text, entry.Name) > 0) then
       if Assigned(FNewApp) then
-        FNewApp(@entry, raID, onnewapp_udata);
+        FNewApp(@entry, onnewapp_udata);
 
     ds.Next;
   end;
@@ -292,9 +290,8 @@ var
 
 begin
   ToApps;
-  r.Name := _(ds.FieldByName('Name').AsString);
-  r.PkName := _(ds.FieldByName('PkName').AsString);
-  h := LowerCase(ds.FieldByName('Type').AsString);
+  r.Name := _(ds.FieldByName('app_name').AsString);
+  h := LowerCase(ds.FieldByName('installation_type').AsString);
   if h = 'linstall' then
     r.PkType := ptLinstall
   else
@@ -304,16 +301,15 @@ begin
   if h = 'container' then
     r.PkType := ptContainer;
 
-  r.Summary := _(ds.FieldByName('Description').AsString);
-  r.Version := _(ds.FieldByName('Version').AsString);
-  r.Author := _(ds.FieldByName('Publisher').AsString);
-  r.IconName := _(ds.FieldByName('IconName').AsString);
-  r.Profile := _(ds.FieldByName('Profile').AsString);
-  r.AppId := _(ds.FieldByName('AppId').AsString);
-  r.Categories := _(ds.FieldByName('Category').AsString);
+  r.Summary := _(ds.FieldByName('app_summary').AsString);
+  r.Version := _(ds.FieldByName('app_version').AsString);
+  r.Author := _(ds.FieldByName('app_publisher').AsString);
+  r.IconName := _(ds.FieldByName('app_iconname').AsString);
+  r.Id := _(ds.FieldByName('app_id').AsString);
+  r.Categories := _(ds.FieldByName('app_categories').AsString);
 
-  r.InstallDate := ds.FieldByName('InstallDate').AsDateTime;
-  r.Dependencies := PChar(ds.FieldByName('Dependencies').AsWideString);
+  r.InstallDate := ds.FieldByName('app_timestamp').AsDateTime;
+  r.Dependencies := PChar(ds.FieldByName('app_dependencies').AsWideString);
   Result := r;
 end;
 
@@ -379,10 +375,10 @@ begin
 
   ds.Insert;
   ds.ExecuteDirect('INSERT INTO "applications" VALUES (''' + app.Name +
-    ''', ''' + app.AppId + ''', ''' + h + ''', ''' + app.Summary +
+    ''', ''' + app.Id + ''', ''' + h + ''', ''' + app.Summary +
     ''',''' + app.Version + ''',''' + app.Author + ''',''' + 'icon' +
-    ExtractFileExt(app.IconName) + ''',''' + app.Profile + ''',''' +
-    g + ''',''' + GetDateAsString + ''', ''' + app.Dependencies + ''');');
+    ExtractFileExt(app.IconName) + ''',''' + g + ''',''' +
+    GetDateAsString + ''', ''' + app.Dependencies + ''');');
 
   //Write changes
   ds.ApplyUpdates;

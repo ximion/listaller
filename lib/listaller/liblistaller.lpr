@@ -203,21 +203,21 @@ end;
 function li_setup_appname(setup: PLiInstallation): PChar;cdecl;
 begin
   // if not setup^.PkgOkay then exit;
-  Result:=PChar(setup^.AppName);
+  Result := setup^.AppInfo.Name;
 end;
 
 //** Read appversion
 function li_setup_appversion(setup: PLiInstallation): PChar;cdecl;
 begin
  // if not setup^.PkgOkay then exit;
-  Result:=PChar(setup^.AppVersion);
+  Result := setup^.AppInfo.Version;
 end;
 
 //** Get package ID
 function li_setup_pkgid(setup: PLiInstallation): PChar;cdecl;
 begin
   if not setup^.PkgOkay then exit;
-  Result:=PChar(setup^.AppID);
+  Result := setup^.AppInfo.ID;
 end;
 
 //** Get trust level of pkg signature
