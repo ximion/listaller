@@ -21,7 +21,7 @@ unit appinstalldb;
 interface
 
 uses
-  DB, Classes, LiUtils, SysUtils, SQLite3DS, LiTypes, ListallerDB;
+  DB, Classes, LiUtils, SysUtils, SQLite3DS, LiTypes, ListallerDB, LiApp;
 
 type
   TAppInstallDB = class
@@ -37,7 +37,7 @@ type
     procedure ToApps;
     procedure ToLocale;
     function ValFormat(s: String): String;
-    function GetCurrentAppField: LiAppInfo;
+    function GetCurrentAppField: TLiAppItem;
   public
     constructor Create;
     destructor Destroy; override;
@@ -50,7 +50,7 @@ type
     //** Return true if application exists
     function ContainsAppEntry(appID: String): Boolean;
     //** Add application to the data
-    procedure AddApplication(app: LiAppInfo);
+    procedure AddApplication(app: TLiAppItem);
     //** Write changes to disk
     procedure Finalize;
     //** Register call to on new app found
@@ -78,6 +78,7 @@ constructor TAppInstallDB.Create;
 begin
   ds := TSQLite3Dataset.Create(nil);
   EOF := true;
+  CurrField.App := nil;
   onnewapp_udata := nil;
   loaded := false;
 end;
@@ -139,6 +140,7 @@ end;
 
 destructor TAppInstallDB.Destroy;
 begin
+  FreeAndNil(CurrField.App);
   Finalize; //Make sure all stuff is written to disk
   ds.Free;
   inherited;
@@ -180,17 +182,17 @@ begin
   Result := '''' + StrSubst(s, '''', '''''') + '''';
 end;
 
-procedure TAppInstallDB.AddApplication(app: LiAppInfo);
+procedure TAppInstallDB.AddApplication(app: TLiAppItem);
 var
   sql: Widestring;
 begin
   ToApps;
   ds.Edit;
 
-  sql := ValFormat(GenerateFakePackageName(app.Name)) + ', ' +
-    ValFormat(app.Id) + ', ' + ValFormat(app.Categories) + ', ' +
-    ValFormat('installer:local') + ',' + ValFormat(app.IconName) +
-    ',' + ValFormat(app.Name) + ',' + ValFormat(app.Summary);
+  sql := ValFormat(GenerateFakePackageName(app.AName)) + ', ' +
+    ValFormat(app.AId) + ', ' + ValFormat(app.Categories) + ', ' +
+    ValFormat('local:%listaller') + ',' + ValFormat(app.IconName) +
+    ',' + ValFormat(app.AName) + ',' + ValFormat(app.Summary);
 
   sql := 'INSERT INTO applications (application_id, package_name, categories, ' +
     'repo_id, icon_name, application_name, application_summary) ' +
@@ -209,13 +211,14 @@ begin
   end;
 end;
 
-function TAppInstallDB.GetCurrentAppField: LiAppInfo;
+function TAppInstallDB.GetCurrentAppField: TLiAppItem;
 var
-  r: LiAppInfo;
+  r: TLiAppItem;
   h: String;
 begin
-  r.Name := PChar(ds.FieldByName('application_name').AsString);
-  r.Id := PChar(ds.FieldByName('package_name').AsString);
+  r := TLiAppItem.Create;
+  r.AName := PChar(ds.FieldByName('application_name').AsString);
+  r.AId := PChar(ds.FieldByName('package_name').AsString);
   h := LowerCase(ds.FieldByName('repo_id').AsString);
   if h = 'installer:local' then
     r.PkType := ptExtern
@@ -235,7 +238,7 @@ end;
 function TAppInstallDB.GetApplicationList(filter: LiFilter; filter_text: String;
   blacklist: TStringList = nil): Boolean;
 var
-  entry: LiAppInfo;
+  entry: TLiAppItem;
 begin
   Result := false;
   ToApps;
@@ -245,10 +248,11 @@ begin
 
   while not ds.EOF do
   begin
+    // Fetch AppItem object
     entry := GetCurrentAppField;
 
     if Assigned(blacklist) then
-      blacklist.Add(entry.Name);
+      blacklist.Add(entry.AName);
 
     if entry.Summary = '' then
       entry.Summary := 'No description available';
@@ -260,7 +264,7 @@ begin
     if (filter = fAppExtern) and (entry.PkType <> ptExtern) then
     else
     if ((filter_text = '*') or (filter_text = '')) or
-      (pos(filter_text, entry.Summary) > 0) or (pos(filter_text, entry.Name) > 0) then
+      (pos(filter_text, entry.Summary) >= 0) or (pos(filter_text, entry.AName) >= 0) then
       if Assigned(FNewApp) then
         FNewApp(@entry, onnewapp_udata);
 
@@ -275,6 +279,7 @@ begin
   ds.Filtered := true;
   ds.First;
   EOF := ds.EOF;
+  FreeAndNil(CurrField.App);
   CurrField.App := GetCurrentAppField;
 end;
 
@@ -282,6 +287,7 @@ procedure TAppInstallDB.NextField;
 begin
   ds.Next;
   EOF := ds.EOF;
+  FreeAndNil(CurrField.App);
   CurrField.App := GetCurrentAppField;
 end;
 

@@ -37,6 +37,8 @@ typedef const void* LiInstallation;
 
 typedef const void* LiAppUpdater;
 
+typedef const void* LiApplication;
+
 typedef enum {
       LIS_None,
       LIS_Stage,
@@ -100,25 +102,6 @@ typedef enum {
       fDeps
 } LiFilter;
 
-typedef struct {
-      char *Name;
-      char *AppId;
-      LiPkgType PkType;
-      char *Summary;
-      char *Version;
-      char *Author;
-      char *IconName;
-      char *Categories;
-      double InstallDate;
-      char *Dependencies;
-      char *PkName;
-      char *Profile;
-} LiAppInfo;
-
-typedef struct {
-      char *dummy;
-} LiAppDetails;
-
 typedef enum {
       psNone,
       psTrusted,
@@ -132,9 +115,7 @@ typedef LI_REQUEST_RES (*LiMessageEvent) (LI_MESSAGE mtype,const char *text,void
 
 typedef void (*TProgressEvent) (int pos,void* user_data);
 
-typedef void (*LiAppEvent) (LiAppInfo *item,void* user_data);
-
-typedef void (*LiAppDetailEvent) (LiAppInfo *item,LiAppDetails details,void* user_data);
+typedef void (*LiAppEvent) (PLiApplication item,void* user_data);
 
 typedef void (*LiNewUpdateEvent) (char *name,int id,void* user_data);
 

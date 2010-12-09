@@ -55,8 +55,6 @@ type
 
 implementation
 
-uses PackageKit;
-
 { TPKHeader2Pas }
 
 constructor TPKHeader2Pas.Create;

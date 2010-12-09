@@ -15,7 +15,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="5"/>
-      <BuildNr Value="1750"/>
+      <BuildNr Value="1751"/>
       <StringTable FileDescription="Advanced access to Listaller's features" InternalName="libListaller" LegalCopyright="Listaller Project" ProductName="Listaller" ProductVersion="0.5.0.0"/>
     </VersionInfo>
     <BuildModes Count="1">
@@ -60,49 +60,49 @@
         <UnitName Value="ipkinstall"/>
       </Unit4>
       <Unit5>
-        <Filename Value="../../src/lidbusproc.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="lidbusproc"/>
-      </Unit5>
-      <Unit6>
         <Filename Value="../../src/listallerdb.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listallerdb"/>
-      </Unit6>
-      <Unit7>
+      </Unit5>
+      <Unit6>
         <Filename Value="../../src/softwaredb.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="softwaredb"/>
-      </Unit7>
-      <Unit8>
+      </Unit6>
+      <Unit7>
         <Filename Value="../../src/backends/backend_loki.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="backend_loki"/>
-      </Unit8>
-      <Unit9>
+      </Unit7>
+      <Unit8>
         <Filename Value="../../src/backends/backend_autopackage.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="backend_autopackage"/>
-      </Unit9>
-      <Unit10>
+      </Unit8>
+      <Unit9>
         <Filename Value="../../src/backends/backend_ipk.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="backend_ipk"/>
-      </Unit10>
-      <Unit11>
+      </Unit9>
+      <Unit10>
         <Filename Value="../../src/backends/libackend.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="libackend"/>
-      </Unit11>
-      <Unit12>
+      </Unit10>
+      <Unit11>
         <Filename Value="../../src/backends/backend_packagekit.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="backend_packagekit"/>
-      </Unit12>
-      <Unit13>
+      </Unit11>
+      <Unit12>
         <Filename Value="../../src/listatusobj.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="listatusobj"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="../../src/liapp.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="liapp"/>
       </Unit13>
     </Units>
   </ProjectOptions>
@@ -117,11 +117,6 @@
       <UnitOutputDirectory Value="../../build/lib_$(TargetCPU)-$(TargetOS)"/>
       <LCLWidgetType Value="nogui"/>
     </SearchPaths>
-    <Parsing>
-      <SyntaxOptions>
-        <UseAnsiStrings Value="False"/>
-      </SyntaxOptions>
-    </Parsing>
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>
     </CodeGeneration>

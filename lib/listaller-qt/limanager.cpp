@@ -40,7 +40,7 @@ public:
     app.name = ai->Name;
     app.summary = ai->Summary;
     app.version = ai->Version;
-    app.installDate = ai->InstallDate;
+    app.timeStamp = ai->InstallDate;
     app.iconName = ai->IconName;
     emit(newApp(app));  
   }
@@ -126,12 +126,11 @@ bool AppManager::uninstallApp(Application app)
   };
   
   LiAppInfo ai;
-  ai.AppId = local::qStringToChar(app.appId);
+  ai.Id = local::qStringToChar(app.id);
   ai.Author = local::qStringToChar(app.author);
   ai.Dependencies = local::qStringToChar(app.dependencies);
   ai.Name = local::qStringToChar(app.name);
   //ai.PkType = local::qStringToChar(app.pkType);
-  ai.Profile = local::qStringToChar(app.profile);
   //TODO: Convert every part of Application to AppInfo
 
   li_mgr_remove_app(&mgr, ai);

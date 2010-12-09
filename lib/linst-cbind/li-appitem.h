@@ -23,27 +23,13 @@
 #error "Only <listaller.h> can be included directly."
 #endif
 
-#ifndef __LI_UPDATER
-#define __LI_UPDATER
+#ifndef __LI_APPITEM
+#define __LI_APPITEM
 
 #include <stdlib.h>
 #include <stdio.h>
 
-void* li_updater_new(void);
-
-void li_updater_set_sumode(LiAppUpdater upd,bool val);
-
-bool li_updater_register_status_call(LiAppUpdater upd,LiStateEvent call,void* user_data);
-
-bool li_updater_register_message_call(LiAppUpdater upd,LiMessageEvent call,void* user_data);
-
-bool li_updater_register_newupdate_call(LiAppUpdater upd,LiNewUpdateEvent call,void* user_data);
-
-bool li_updater_search_updates(LiAppUpdater upd);
-
-char *li_updater_updateid_oldversion(LiAppUpdater upd,int uid);
-
-char *li_updater_updateid_newversion(LiAppUpdater upd,int uid);
+void* li_appitem_new(void);
 
 
-#endif /* __LI_UPDATER */
+#endif /* __LI_APPITEM */

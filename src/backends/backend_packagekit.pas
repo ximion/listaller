@@ -23,7 +23,7 @@ interface
 
 uses
   Classes, SysUtils, LiBackend, LiTypes, LiUtils, IniFiles, StrLocale, Process,
-  PackageKit, PkTypes;
+  PackageKit, PkTypes, LiApp;
 
 type
   TPackageKitBackend = class(TLiBackend)
@@ -31,14 +31,14 @@ type
     dskFileName: String;
     pkg: String;
     pkit: TPackageKit;
-    appInfo: LiAppInfo;
+    appInfo: TLiAppItem;
     //** Receive the PackageKit progress
     procedure PkitProgress(pos: Integer; xd: Pointer);
   public
     constructor Create;
     destructor Destroy; override;
 
-    function Initialize(ai: LiAppInfo): Boolean; override;
+    function Initialize(ai: TLiAppItem): Boolean; override;
     function CanBeUsed: Boolean; override;
     function Run: Boolean; override;
   end;
@@ -60,9 +60,9 @@ begin
   inherited;
 end;
 
-function TPackageKitBackend.Initialize(ai: LiAppInfo): Boolean;
+function TPackageKitBackend.Initialize(ai: TLiAppItem): Boolean;
 begin
-  dskFileName := GetDesktopFileFromID(ai.ID);
+  dskFileName := GetDesktopFileFromID(ai.AID);
   appInfo := ai;
   Result := true;
 end;
@@ -127,7 +127,7 @@ begin
     pkit.Free;
     if (StringReplace(g, ' ', '', [rfReplaceAll]) = '') or
       (EmitUserRequestAbortContinue(StringReplace(StringReplace(
-      StringReplace(rsRMPkg, '%p', f, [rfReplaceAll]), '%a', appInfo.Name,
+      StringReplace(rsRMPkg, '%p', f, [rfReplaceAll]), '%a', appInfo.AName,
       [rfReplaceAll]), '%pl', PChar(g), [rfReplaceAll])) = LIRQS_Yes) then
       Result := true
     else
@@ -139,7 +139,7 @@ end;
 function TPackageKitBackend.Run: Boolean;
 begin
   EmitProgress(50);
-  EmitInfoMsg(StrSubst(rsRMAppC, '%a', appInfo.Name) + ' ...');
+  EmitInfoMsg(StrSubst(rsRMAppC, '%a', appInfo.AName) + ' ...');
   pkit.RemovePkg(pkg);
 
   if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then

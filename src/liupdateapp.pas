@@ -224,7 +224,7 @@ begin
     sdb.OpenFilter(fAllApps);
     while not sdb.EndReached do
     begin
-      if (control.PkName = sdb.CurrentDataField.App.ID) then
+      if (control.PkName = sdb.CurrentDataField.App.AID) then
       begin
         ok := true;
         break;

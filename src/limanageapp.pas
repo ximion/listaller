@@ -23,7 +23,7 @@ interface
 uses
   Classes, GetText, LiTypes, LiUtils, MTProcs, PkTypes, Process,
   IniFiles, SysUtils, StrLocale, LiDBusProc, LiFileUtil,
-  PackageKit, SoftwareDB, LiStatusObj,
+  PackageKit, SoftwareDB, LiStatusObj, LiApp,
   // Backends
   LiBackend,
   Backend_IPK,
@@ -47,13 +47,13 @@ type
     SUMode: Boolean;
     FApp: LiAppEvent;
 
-    procedure EmitNewApp(oj: LiAppInfo);
+    procedure EmitNewApp(oj: TLiAppItem);
 
     function IsInList(nm: String; list: TStringList): Boolean;
     //** Catch status messages from DBus action
     procedure DBusStatusChange(ty: LI_STATUS; Data: TLiProcData);
     //** Run a backend
-    function RunBackend(backend: TLiBackend; ai: LiAppInfo): Boolean;
+    function RunBackend(backend: TLiBackend; ai: TLiAppItem): Boolean;
   protected
     //Some user data for callbacks
     newapp_udata: Pointer;
@@ -69,7 +69,7 @@ type
     //** Load apps which match filter
     procedure FetchAppList(filter: LiFilter; text: String);
     //** Removes an application
-    procedure UninstallApp(obj: LiAppInfo);
+    procedure UninstallApp(obj: TLiAppItem);
  {** Checks dependencies of all installed apps
     @param report Report of the executed actions
     @param fix True if all found issues should be fixed right now
@@ -108,7 +108,7 @@ begin
   end;
 end;
 
-procedure TLiAppManager.EmitNewApp(oj: LiAppInfo);
+procedure TLiAppManager.EmitNewApp(oj: TLiAppItem);
 begin
   if Assigned(FApp) then
     FApp(@oj, newapp_udata);
@@ -120,14 +120,14 @@ begin
 end;
 
 
-procedure liappmgr_database_new_app(item: PLiAppInfo; limgr: TLiAppManager); cdecl;
+procedure liappmgr_database_new_app(item: PLiAppItem; limgr: TLiAppManager); cdecl;
 begin
   if not (limgr is TLiAppManager) then
   begin
     perror('Assertion data is TLiManager failed');
   end
   else
-  if trim(item^.Name) <> '*' then
+  if trim(item^.AName) <> '*' then
     limgr.EmitNewApp(item^);
 end;
 
@@ -388,7 +388,7 @@ var
   tmp, xtmp: TStringList;
   i: Integer;
   ddata: TDesktopData;
-  Data: LiAppInfo;
+  item: TLiAppItem;
   appID: String;
   appRmID: String;
   sdb: TSoftwareDB;
@@ -422,17 +422,17 @@ begin
     begin
       pdebug('AppID: ' + appID);
       appRmId := GenerateAppID(tmp[i]);
-      //Build a new AppInfo record
-      Data.Name := PChar(ddata.Name);
-      Data.Id := PChar(appRmId);
-      Data.PkType := ptExtern;
-      Data.Categories := PChar(ddata.Categories);
-      Data.IconName := PChar(ddata.IconName);
-      Data.Summary := PChar(ddata.SDesc);
-      // Avoid empty summary
-      if trim(Data.summary) = '' then
-        Data.Summary := Data.Name;
-      sdb.AppAddNew(Data);
+      //Build a new AppItem
+      item := TLiAppItem.Create;
+      item.AName := PChar(ddata.Name);
+      item.AId := PChar(appRmId);
+      item.PkType := ptExtern;
+      item.Categories := PChar(ddata.Categories);
+      item.IconName := PChar(ddata.IconName);
+      item.Summary := PChar(ddata.SDesc);
+      sdb.AppAddNew(item);
+      // Dispose item
+      FreeAndNil(item);
     end;
   end;
   tmp.Free;
@@ -466,7 +466,7 @@ begin
   end;
 end;
 
-function TLiAppManager.RunBackend(backend: TLiBackend; ai: LiAppInfo): Boolean;
+function TLiAppManager.RunBackend(backend: TLiBackend; ai: TLiAppItem): Boolean;
 begin
   Result := false;
   // Attach status handler
@@ -486,12 +486,12 @@ end;
 // identification string - if not, pkg has to be Loki/Mojo, so intitiate Mojo-Removal. After rdepends and pkg resolve is done,
 // run uninstall as root if necessary. At the end, RemoveAppInternal() is called (if LOKI-Remove was not run) to uninstall
 // native or autopackage setup.
-procedure TLiAppManager.UninstallApp(obj: LiAppInfo);
+procedure TLiAppManager.UninstallApp(obj: TLiAppItem);
 var
   id: String;
   buscmd: ListallerBusCommand;
 begin
-  id := obj.ID;
+  id := obj.AID;
   if id = '' then
   begin
     perror('Invalid application info passed: No ID found.');
@@ -499,7 +499,7 @@ begin
   end;
   EmitStatusChange(LIS_Started);
 
-  pdebug('Application UId is: ' + obj.Id);
+  pdebug('Application UId is: ' + obj.AId);
   if (SUMode) and (not IsRoot) then
   begin
     //Create worker thread for this action
@@ -528,7 +528,7 @@ function TLiAppManager.CheckApps(report: TStringList; const fix: Boolean = false
   const forceroot: Boolean = false): Boolean;
 var
   db: TSoftwareDB;
-  app: LiAppInfo;
+  app: TLiAppItem;
   deps: TStringList;
   i: Integer;
   pkit: TPackageKit;
@@ -549,7 +549,7 @@ begin
     while not DB.EndReached do
     begin
       app := DB.CurrentDataField.App;
-      writeLn(' Checking ' + app.Name);
+      writeLn(' Checking ' + app.AName);
       deps.Text := app.Dependencies;
       for i := 0 to deps.Count - 1 do
       begin

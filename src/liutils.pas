@@ -1,18 +1,19 @@
-{ Copyright (C) 2008-2010 Matthias Klumpp
-
-  Authors:
-   Matthias Klumpp
-
-  This unit is free software: you can redistribute it and/or modify it under
-  the terms of the GNU General Public License as published by the Free Software
-  Foundation, version 3.
-
-  This unit is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License v3
-  along with this unit. If not, see <http://www.gnu.org/licenses/>.}
+(* Copyright (C) 2008-2010 Matthias Klumpp
+ *
+ * Authors:
+ *  Matthias Klumpp
+ *
+ * This unit is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 3.
+ *
+ * This unit is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License v3
+ * along with this unit. If not, see <http://www.gnu.org/licenses/>.
+ *)
 //** This unit contains basic functions and consts which are used nearly everywhere
 unit liutils;
 
@@ -21,7 +22,7 @@ unit liutils;
 interface
 
 uses
-  Dos, Pwd, Classes, Process, RegExpr, BaseUnix, IniFiles, SysUtils, StrLocale, LiTypes;
+  Dos, Pwd, Classes, Process, RegExpr, BaseUnix, IniFiles, SysUtils, StrLocale;
 
 const
   //** Version of the Listaller applicationset
@@ -132,21 +133,13 @@ function CheckPtr(ptr: Pointer; objname: String = ''): Boolean;
 function HasConfigMod(fname: String): Boolean;
 //** Search for full application icon path on system
 function GetAppIconPath(icon: String): String;
-//** Create an appID from .desktop-file path
-function GenerateAppID(desktopFile: String): String;
-//** Build a fake package name for an application
-function GenerateFakePackageName(appName: String): String;
-//** Build a string to identify the application which can be used in filepaths
-function GetAppIDString(ai: LiAppInfo): String;
-//** Restore desktop file path from appID
-function GetDesktopFileFromID(appID: String): String;
 
 //** Shows system notification box
 procedure ShowPopupNotify(msg: String; urgency: TUrgencyLevel; time: Integer);
 
 implementation
 
-uses distri; //Access to distribution data
+uses Distri; //Access to distribution data
 
 function GetServerName(url: String): String;
 var
@@ -375,49 +368,6 @@ begin
     end;
     Inc(i);
   end;
-end;
-
-function GetAppIDString(ai: LiAppInfo): String;
-begin
-  Result := StrSubst(ai.Id, '/', '');
-end;
-
-function GenerateAppID(desktopFile: String): String;
-begin
-  Result := '';
-  if trim(desktopFile) = '' then
-    exit;
-  Result := ExtractFilePath(desktopFile);
-  Result := StrSubst(StrSubst(Result, '/usr/', ''), 'share/applications/', '');
-  Result := ExcludeTrailingPathDelimiter(Result) +
-    StrSubst(ExtractFileName(desktopFile), '.desktop', '');
-end;
-
-function GetDesktopFileFromID(appID: String): String;
-begin
-  Result := '';
-  if trim(appID) = '' then
-    exit;
-  Result := StrSubst(appID, 'local/', 'local/share/applications/');
-  if pos('local/share/applications/', Result) <= 0 then
-    Result := 'share/applications/' + appID;
-  Result := '/usr/' + Result;
-  Result := Result + '.desktop';
-end;
-
-function GenerateFakePackageName(appName: String): String;
-var s: String;
-procedure subst(a, b: String);
-begin
-  s := StrSubst(s, a, b);
-end;
-
-begin
-  s := LowerCase(appName);
-  subst('/', '');
-  subst(';', '');
-  subst(' ', '-');
-  Result := s;
 end;
 
 function GetLangID: String;

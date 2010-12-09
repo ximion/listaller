@@ -24,14 +24,14 @@ uses
   LiHash, Distri, Classes, FTPSend, LiTypes, LiUtils, MTProcs,
   PkTypes, Process, RegExpr, BaseUnix, Blcksock, HTTPSend, IniFiles,
   SysUtils, DepManage, IPKCDef10, StrLocale, LiFileUtil, PackageKit,
-  SoftwareDB, Backend_IPK, IPKPackage11, LiStatusObj, GLib2, GExt;
+  SoftwareDB, Backend_IPK, IPKPackage11, LiStatusObj, GLib2, GExt, LiApp;
 
 type
   TLiInstallation = class(TLiStatusObject)
   private
     //Basic information about the package and the new application
     IAppCMD: String;
-    appData: LiAppInfo;
+    app: TLiAppItem;
     IDesktopFiles: String;
     PkgName, PkgPath: String;
     //Path to a wizard image
@@ -128,7 +128,7 @@ type
     //** Function to solve all dependencies the package has
     function ResolveDependencies(const fetchFromDebian: Boolean = true): Boolean;
     //** Get the AppInfo record of this package
-    property AppInfo: LiAppInfo read appData;
+    property AppItem: TLiAppItem read app;
     //** Listaller package type
     property pType: LiPkgType read pkType;
     //** Unformatted disallows string
@@ -195,6 +195,7 @@ begin
   pkProfiles := nil;
   dependencies := nil;
   unpkg := nil;
+  app := nil;
   //Create text containers
   license := TStringList.Create;
   longdesc := TStringList.Create;
@@ -217,6 +218,7 @@ begin
   license.Free;
   longdesc.Free;
   mofiles.Free;
+  FreeAndNil(app);
   inherited Destroy;
 end;
 
@@ -385,11 +387,12 @@ var
       FreeAndNil(dependencies);
     if Assigned(pkProfiles) then
       FreeAndNil(pkProfiles);
-    ;
+    FreeAndNil(app);
   end;
 
 begin
   Result := false;
+  app := TLiAppItem.Create;
   if Assigned(unpkg) then
     FreeAndNil(unpkg);
   cont := nil;
@@ -414,8 +417,7 @@ begin
     SetRootMode(true);
   end;
 
-  if (appData.Name <> '')
-  or (appData.Id <> '') then
+  if (app.AName <> '') or (app.AId <> '') then
   begin
     Result := false;
     perror('This Setup was already initialized. You have to create a new setup object to load a second file!');
@@ -527,12 +529,12 @@ begin
   DInfo := GetDistro;
 
   // Invalid package ID => package will be rejected
-  appData.Id := '';
-  appData.Id := PChar(cont.PkName);
-  EmitInfoMsg('Package idName: ' + appData.ID);
+  app.AId := '';
+  app.AId := cont.PkName;
+  EmitInfoMsg('Package idName: ' + app.AID);
 
   // Get categories
-  appData.Categories := PChar(cont.Categories);
+  app.Categories := cont.Categories;
 
   if pkType = ptLinstall then
   begin
@@ -558,21 +560,19 @@ begin
       unpkg.UnpackControlFile('pkgdata/fileinfo-' + IntToStr(i) + '.id');
     end;
 
-    appData.Name := PChar(cont.AppName);
+    app.AName := cont.AppName;
 
     // Copy PChar!
-    if appData.Id = '' then
-      appData.Id := PChar(appData.Name);
+    if app.AId = '' then
+      app.AId := app.AName;
 
-    appData.Version := PChar(cont.AppVersion);
+    app.Version := cont.AppVersion;
 
     USource := cont.USource;
     if USource = '' then
       USource := '#';
 
-    appData.Author := PChar(cont.Author);
-    if appData.Author = '' then
-      appData.Author := '#';
+    app.Author := PChar(cont.Author);
 
     IAppCMD := cont.AppCMD;
     if IAppCMD = '' then
@@ -582,7 +582,7 @@ begin
       EmitInfoMsg('Application main exec command is ' + IAppCMD);
 
     //Load Description
-    appData.Summary := PChar(cont.Summary);
+    app.Summary := cont.Summary;
 
     //Load info about supported distributions
     FSupportedDistris := LowerCase(cont.DSupport);
@@ -648,7 +648,7 @@ begin
 
     //Only executed to make sure that "RmApp" property is set
     if not Testmode then
-      if sdb.AppExists(appData.Id) then
+      if sdb.AppExists(app.AId) then
         RmApp := true;
 
   end
@@ -721,7 +721,7 @@ begin
   if pkType = ptContainer then
   begin
     EmitInfoMsg(StrSubst(rsPackageTypeIsX, '%s', 'container'));
-    appData.Name := PChar(ExtractFileName(cont.Binary));
+    app.AName := ExtractFileName(cont.Binary);
     //At time we have less intialization of coverIPKs
   end;
 
@@ -1025,7 +1025,8 @@ begin
             EmitInfoMsg('Package ' + Dependencies[i] + ' could not be installed.');
             EmitError(StrSubst(rsInstPkgFailed, '%s', Dependencies[i]) +
               #10 + rsEMsg + #10 + pkit.LastErrorMessage + #10 +
-              StrSubst(rsViewLog, '%p', '/tmp/install-' + GetAppIDString(appData) + '.log'));
+              StrSubst(rsViewLog, '%p', '/tmp/install-' +
+              GetAppIDString(app) + '.log'));
             Result := false;
             Abort_FreeAll();
             exit;
@@ -1151,8 +1152,8 @@ begin
           end;
         except
           //Unable to copy the file
-          EmitError(Format(rsCnCopy, [dest + '/' +
-            ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
+          EmitError(Format(rsCnCopy,
+            [dest + '/' + ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
           RollbackInstallation;
           Result := false;
           Abort_FreeAll();
@@ -1162,9 +1163,10 @@ begin
         if (pos('.desktop', LowerCase(ExtractFileName(h))) > 0) then
         begin
           dsk := TIniFile.Create(dest + '/' + ExtractFileName(h));
-          dsk.WriteString('Desktop Entry', 'X-AppVersion', appData.Version);
+          dsk.WriteString('Desktop Entry', 'X-AppVersion', app.Version);
           dsk.WriteString('Desktop Entry', 'X-AllowRemove', 'true');
-          dsk.WriteString('Desktop Entry', 'X-Publisher', appData.Author);
+          dsk.WriteString('Desktop Entry', 'X-Author', app.Author);
+          dsk.WriteString('Desktop Entry', 'X-Publisher', app.Publisher);
           if dsk.ValueExists('Desktop Entry', 'Icon') then
             dsk.WriteString('Desktop Entry', 'Icon', SyblToPath(
               dsk.ReadString('Desktop Entry', 'Icon', '*'), FTestMode));
@@ -1287,9 +1289,9 @@ begin
       end;
     end;
 
-    appData.Dependencies := PChar(Dependencies.Text);
+    app.Dependencies := Dependencies.Text;
 
-    sdb.AppAddNew(appData);
+    sdb.AppAddNew(app);
 
     if length(IIconPath) > 0 then
       if IIconPath[1] = '/' then
@@ -1422,7 +1424,7 @@ end;}
       begin
         EmitError(rsPkQueryFailed + #10 + rsEMsg + #10 +
           pkit.LastErrorMessage + #10 + StrSubst(rsViewLog, '%p',
-          '/tmp/install-' + GetAppIDString(appData) + '.log'));
+          '/tmp/install-' + GetAppIDString(app) + '.log'));
         Result := false;
         Abort_FreeAll();
         exit;
@@ -1535,8 +1537,9 @@ end;}
         IDesktopFiles, 0, pos(';', IDesktopFiles) - 1))
     else
       ar := TInifile.Create('/usr/share/applications/' + IDesktopFiles);
-    ar.WriteString('Desktop Entry', 'X-AppVersion', appData.Version);
-    ar.WriteString('Desktop Entry', 'X-Publisher', appData.Author);
+    ar.WriteString('Desktop Entry', 'X-AppVersion', app.Version);
+    ar.WriteString('Desktop Entry', 'X-Author', app.Author);
+    ar.WriteString('Desktop Entry', 'X-Publisher', app.Publisher);
     if pos(';', IDesktopFiles) > 0 then
       IDesktopFiles := copy(IDesktopFiles, pos(';', IDesktopFiles) +
         1, length(IDesktopFiles))
@@ -1701,7 +1704,7 @@ end;
 function TLiInstallation.PkgOkay: Boolean;
 begin
   Result := true;
-  if (appData.Id = '') or (appData.Name = '') then
+  if (app.AId = '') or (app.AName = '') then
   begin
     pwarning('Package check failed!');
     EmitError(rsUnknownErrorOC + #10 + rsPkgDM + #10 + rsABLoad);

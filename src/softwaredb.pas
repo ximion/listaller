@@ -22,7 +22,7 @@ interface
 
 uses
   DB, Classes, LiTypes, LiUtils, SysUtils, StrLocale,
-  AppInstallDB, ListallerDB;
+  AppInstallDB, ListallerDB, LiApp;
 
 type
   TSoftwareDB = class
@@ -52,7 +52,7 @@ type
     //** Check if application is installed
     function AppExists(appid: String): Boolean;
     //** Register a new application
-    function AppAddNew(app: LiAppInfo): Boolean;
+    function AppAddNew(app: TLiAppItem): Boolean;
     //** Add new dependency to databse
     procedure DepAddNew(Name: String; version: String; origin: String;
       depnames: Widestring);
@@ -173,7 +173,7 @@ begin
   else if not aiDB.EndReached then
     Result := aiDB.CurrentDataField
   else
-    Result.App.Name := '';
+    Result.App := nil;
 end;
 
 procedure TSoftwareDB.RegOnNewApp(call: LiAppEvent; user_data: Pointer);
@@ -224,7 +224,7 @@ begin
     Result := aiDB.ContainsAppEntry(appid);
 end;
 
-function TSoftwareDB.AppAddNew(app: LiAppInfo): Boolean;
+function TSoftwareDB.AppAddNew(app: TLiAppItem): Boolean;
 var
   ty: LiPkgType;
 begin

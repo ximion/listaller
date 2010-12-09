@@ -41,6 +41,8 @@ type
   PLiInstallation = Pointer;
   //** Pointer to AppUpdater
   PLiAppUpdater = Pointer;
+  //** Pointer to application object
+  PLiApplication = Pointer;
 
   //** Status of current job
   LI_STATUS = (LIS_None, LIS_Stage, LIS_Started, LIS_Progress, LIS_Failed,
@@ -89,31 +91,8 @@ type
   //** Filter for apps
   LiFilter = (fAllApps, fAppNative, fAppIPK, fAppExtern, fDeps);
 
-  //** Container for information about apps
-  LiAppInfo = record
-    Name: PChar;
-    Id: PChar;
-    PkType: LiPkgType;
-    Summary: PChar;
-    Version: PChar;
-    Author: PChar;
-    IconName: PChar;
-    Categories: PChar;
-    InstallDate: TDateTime;
-    Dependencies: PChar;
-  end;
-
-  LiAppDetails = record
-    dummy: PChar;
-  end;
-
-  PLiAppInfo = ^LiAppInfo;
-
   //** Event to catch thrown application records
-  LiAppEvent = procedure(item: PLiAppInfo; user_data: Pointer); cdecl;
-
-  //** Event to catch thrown application records
-  LiAppDetailEvent = procedure(item: PLiAppInfo; details: LiAppDetails; user_data: Pointer); cdecl;
+  LiAppEvent = procedure(item: PLiApplication; user_data: Pointer); cdecl;
 
   //** Shows information about new update
   LiNewUpdateEvent = procedure(name: PChar; id: Integer; user_data: Pointer); cdecl;

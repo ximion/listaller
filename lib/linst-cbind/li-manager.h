@@ -31,8 +31,6 @@
 
 void* li_mgr_new(void);
 
-void li_mgr_free(LiAppManager mgr);
-
 void li_mgr_find_app(LiAppManager mgr,LiFilter filter,const char *filter_text);
 
 bool li_mgr_update_appdb(LiAppManager mgr);
@@ -47,7 +45,7 @@ void li_mgr_set_sumode(LiAppManager mgr,bool md);
 
 bool li_mgr_sumode(LiAppManager mgr);
 
-bool li_mgr_remove_app(LiAppManager mgr,LiAppInfo obj);
+bool li_mgr_remove_app(LiAppManager mgr,LiInstallation item);
 
 bool li_mgr_check_apps(LiAppManager mgr,StringList log,bool root);
 

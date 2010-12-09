@@ -43,5 +43,7 @@ char *li_current_regdir(void);
 
 char *li_global_regdir(void);
 
+char *li_version(void);
+
 
 #endif /* __LI_BASICS */

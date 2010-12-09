@@ -21,14 +21,15 @@ library liblistaller;
 //NOTE: We do not use a translatable GUI, so please use the -dNoGUI switch
 
 uses
-  CThreads, Classes, LiTypes, SysUtils, LiUtils, IPKInstall, LiDBusProc,
-  LiManageApp, LiUpdateApp;
+  CThreads, Classes, LiTypes, SysUtils, LiUtils, IPKInstall,
+  LiManageApp, LiUpdateApp, liapp;
 
 type
    PStringList = ^TStringList;
    PLiInstallation = ^TLiInstallation;
    PLiAppManager = ^TLiAppManager;
    PLiAppUpdater = ^TLiAppUpdater;
+   PObject = ^TObject;
 
 //////////////////////////////////////////////////////////////////////////////////////
 //Exported helper functions
@@ -90,6 +91,31 @@ begin
  Result:=PChar(LiVersion);
 end;
 
+//** Free objects
+procedure li_object_free(obj: PObject);cdecl;
+begin
+ if obj = nil then exit;
+ obj^.Free;
+ obj := nil;
+end;
+
+//////////////////////////////////////////////////////////////////////////////////////
+//LiAppItem part
+
+{@AppItem}
+
+// Create new appitem
+function li_appitem_new(): Pointer; cdecl;
+begin
+ Result := TLiAppItem.Create;
+end;
+
+// Fetch application name
+function li_appitem_name(item: PLiAppItem): PChar; cdecl;
+begin
+ Result := StrNew(PChar(item^.AName));
+end;
+
 /////////////////////////////////////////////////////////////////////////////////////
 //Installer part
 
@@ -99,12 +125,6 @@ end;
 function li_setup_new: Pointer;cdecl;
 begin
  Result := TLiInstallation.Create;
-end;
-
-//** Removes an TInstallation object
-procedure li_setup_free(setup: PLiInstallation);cdecl;
-begin
- FReeAndNil(setup^);
 end;
 
 //** Initializes the setup
@@ -199,25 +219,22 @@ begin
   Result:=IsPackageInstalled(appname,appid,sumode);
 end;
 
-//** Readout application name
-function li_setup_appname(setup: PLiInstallation): PChar;cdecl;
+//** Pointer to the AppItem of this package
+function li_setup_appitem(setup: PLiInstallation): PLiAppItem;cdecl;
+var ai: TLiAppItem;
 begin
-  // if not setup^.PkgOkay then exit;
-  Result := setup^.AppInfo.Name;
-end;
-
-//** Read appversion
-function li_setup_appversion(setup: PLiInstallation): PChar;cdecl;
-begin
- // if not setup^.PkgOkay then exit;
-  Result := setup^.AppInfo.Version;
+ if not setup^.PkgOkay then exit;
+ // Copy the AppItem data
+ ai := TLiAppItem.Create;
+ ai.Assign(setup^.AppItem);
+ Result := @ai;
 end;
 
 //** Get package ID
 function li_setup_pkgid(setup: PLiInstallation): PChar;cdecl;
 begin
   if not setup^.PkgOkay then exit;
-  Result := setup^.AppInfo.ID;
+  Result := StrNew(PChar(setup^.AppItem.AId));
 end;
 
 //** Get trust level of pkg signature
@@ -371,12 +388,6 @@ begin
  Result:=TLiAppManager.Create;
 end;
 
-//** Removes an TAppManager object
-procedure li_mgr_free(mgr: PLiAppManager);cdecl;
-begin
- FreeAndNil(mgr^);
-end;
-
 //** Search for apps matching the filter criteria
 procedure li_mgr_find_app(mgr: PLiAppManager; filter: LiFilter; const filter_text: PChar);cdecl;
 begin
@@ -442,11 +453,11 @@ begin
 end;
 
 //** Removes the application
-function li_mgr_remove_app(mgr: PLiAppManager;obj: LiAppInfo): Boolean;cdecl;
+function li_mgr_remove_app(mgr: PLiAppManager; item: PLiAppItem): Boolean;cdecl;
 begin
  Result:=true;
  try
-  mgr^.UninstallApp(obj);
+  mgr^.UninstallApp(item^);
  except
   Result:=false;
  end;
@@ -491,12 +502,6 @@ end;
 function li_updater_new: Pointer;cdecl;
 begin
  Result := TLIAppUpdater.Create;
-end;
-
-//** Removes an TAppUpdater object
-procedure li_updater_free(upd: PLiAppUpdater);cdecl;
-begin
- upd^.Free;
 end;
 
 //** Set superuser mode (or not)
@@ -568,16 +573,19 @@ end;
 
 ///////////////////////
 exports
- //Stringlist functions
+ // Stringlist functions
  li_new_stringlist,
  li_free_stringlist,
  li_stringlist_read_line,
  li_stringlist_write_line,
  li_stringlist_to_text,
 
- //TInstallation related functions
+ // AppItem functions
+ li_appitem_new,
+ li_appitem_name,
+
+ // Installation related functions
  li_setup_new,
- li_setup_free,
  li_setup_init,
  li_setup_set_sumode,
  li_setup_sumode,
@@ -586,8 +594,6 @@ exports
  li_setup_pkgtype,
  li_setup_disallows,
  li_setup_supported_distros,
- li_setup_appname,
- li_setup_appversion,
  li_setup_pkgid,
  li_setup_long_description,
  li_setup_long_description_as_string,
@@ -608,9 +614,8 @@ exports
  li_setup_testmode,
  li_setup_exec_by_daemon,
 
- //Management functions
+ // Management functions
  li_mgr_new,
- li_mgr_free,
  li_mgr_update_appdb,
  li_mgr_find_app,
  li_mgr_register_status_call,
@@ -624,7 +629,6 @@ exports
 
  //Updater functions
  li_updater_new,
- li_updater_free,
  li_updater_set_sumode,
  li_updater_register_status_call,
  li_updater_register_message_call,
@@ -635,6 +639,7 @@ exports
  li_updater_execute_update,
 
  //Other functions
+ li_object_free,
  li_current_regdir,
  li_global_regdir,
  li_ipk_app_is_installed,

@@ -22,7 +22,7 @@ unit libackend;
 interface
 
 uses
-  Classes, SysUtils, LiTypes, LiStatusObj;
+  Classes, SysUtils, LiTypes, LiStatusObj, LiApp;
 
 type
   TLiBackend = class (TLiStatusObject)
@@ -30,7 +30,7 @@ type
   protected
     sumode: Boolean;
   public
-    function Initialize(ai: LiAppInfo): boolean; virtual; abstract;
+    function Initialize(ai: TLiAppItem): boolean; virtual; abstract;
     function CanBeUsed: boolean; virtual; abstract;
     function Run: boolean; virtual; abstract;
     property RootMode: Boolean read sumode write sumode;

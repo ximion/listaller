@@ -21,11 +21,11 @@ unit listallerdb;
 interface
 
 uses
-  Classes, SysUtils, SQLite3DS, LiUtils, LiTypes, DB, StrLocale, LiStatusObj;
+  Classes, SysUtils, SQLite3DS, LiUtils, LiTypes, DB, StrLocale, LiStatusObj, LiApp;
 
 type
   TLiDBData = record
-    App: LiAppInfo;
+    App: TLiAppItem;
   end;
 
   //** Access to Listaller's internal software db
@@ -43,7 +43,7 @@ type
 
     procedure ToApps;
     procedure ToDeps;
-    function GetAppField: LiAppInfo;
+    function GetAppField: TLiAppItem;
     function GetSQLiteVersion: String;
     function DBOkay: Boolean;
   public
@@ -66,7 +66,7 @@ type
     //** Delete current app
     procedure AppDeleteCurrent;
     //** Add a new application
-    procedure AppAddNew(app: LiAppInfo);
+    procedure AppAddNew(app: TLiAppItem);
     //** Update version of app
     procedure AppUpdateVersion(appID: String; newv: String);
     //** Add new dependency to databse
@@ -98,6 +98,7 @@ begin
   EOF := true;
   loaded := false;
   DBPath := '';
+  CurrField.App := nil;
   // Default values
   AppDataDir := CleanFilePath(RootPkgRegDir + '/apps/');
   DepDataDir := CleanFilePath(RootPkgRegDir + '/deps/');
@@ -105,6 +106,7 @@ end;
 
 destructor TListallerDB.Destroy;
 begin
+  FreeAndNil(CurrField.App);
   ds.Close; //Close, if opened
   ds.Active := false;
   ds.Free;
@@ -235,7 +237,7 @@ end;
 function TListallerDB.GetApplicationList(filter_text: String;
   blacklist: TStringList = nil): Boolean;
 var
-  entry: LiAppInfo;
+  entry: TLiAppItem;
   p: Ansistring;
 begin
   Result := false;
@@ -248,10 +250,11 @@ begin
 
   while not ds.EOF do
   begin
+    // Fetch LiApplication object
     entry := GetAppField;
 
     if Assigned(blacklist) then
-      blacklist.Add(entry.Name);
+      blacklist.Add(entry.AName);
 
     entry.Version := PChar(rsVersion + ': ' + entry.Version);
     if entry.Author <> '' then
@@ -270,7 +273,7 @@ begin
     filter_text := trim(filter_text);
 
     if ((filter_text = '*') or (filter_text = '')) or
-      (pos(filter_text, entry.Summary) > 0) or (pos(filter_text, entry.Name) > 0) then
+      (pos(filter_text, entry.Summary) > 0) or (pos(filter_text, entry.AName) > 0) then
       if Assigned(FNewApp) then
         FNewApp(@entry, onnewapp_udata);
 
@@ -278,9 +281,9 @@ begin
   end;
 end;
 
-function TListallerDB.GetAppField: LiAppInfo;
+function TListallerDB.GetAppField: TLiAppItem;
 var
-  r: LiAppInfo;
+  r: TLiAppItem;
   h: String;
 
   function _(s: Widestring): PChar;
@@ -290,7 +293,8 @@ var
 
 begin
   ToApps;
-  r.Name := _(ds.FieldByName('app_name').AsString);
+  r := TLiAppItem.Create;
+  r.AName := _(ds.FieldByName('app_name').AsString);
   h := LowerCase(ds.FieldByName('installation_type').AsString);
   if h = 'linstall' then
     r.PkType := ptLinstall
@@ -305,10 +309,10 @@ begin
   r.Version := _(ds.FieldByName('app_version').AsString);
   r.Author := _(ds.FieldByName('app_publisher').AsString);
   r.IconName := _(ds.FieldByName('app_iconname').AsString);
-  r.Id := _(ds.FieldByName('app_id').AsString);
+  r.AId := _(ds.FieldByName('app_id').AsString);
   r.Categories := _(ds.FieldByName('app_categories').AsString);
 
-  r.InstallDate := ds.FieldByName('app_timestamp').AsDateTime;
+  r.TimeStamp := ds.FieldByName('app_timestamp').AsDateTime;
   r.Dependencies := PChar(ds.FieldByName('app_dependencies').AsWideString);
   Result := r;
 end;
@@ -321,6 +325,8 @@ begin
   ds.Filtered := true;
   ds.First;
   EOF := ds.EOF;
+  // Destroy previous AppItem
+  FreeAndNil(CurrField.App);
   CurrField.App := GetAppField;
 end;
 
@@ -328,6 +334,7 @@ procedure TListallerDB.NextField;
 begin
   ds.Next;
   EOF := ds.EOF;
+  FreeAndNil(CurrField.App);
   CurrField.App := GetAppField;
 end;
 
@@ -347,7 +354,7 @@ begin
   if appID = '' then
     exit;
 
-  Result := ds.Locate('AppId', appID, [loCaseInsensitive]);
+  Result := ds.Locate('app_id', appID, [loCaseInsensitive]);
 end;
 
 procedure TListallerDB.AppDeleteCurrent;
@@ -357,7 +364,7 @@ begin
   ds.ApplyUpdates;
 end;
 
-procedure TListallerDB.AppAddNew(app: LiAppInfo);
+procedure TListallerDB.AppAddNew(app: TLiAppItem);
 var
   g, h: String;
 begin
@@ -374,11 +381,11 @@ begin
   g := app.Categories;
 
   ds.Insert;
-  ds.ExecuteDirect('INSERT INTO "applications" VALUES (''' + app.Name +
-    ''', ''' + app.Id + ''', ''' + h + ''', ''' + app.Summary +
+  ds.ExecuteDirect('INSERT INTO "applications" VALUES (''' + app.AName +
+    ''', ''' + app.AId + ''', ''' + h + ''', ''' + app.Summary +
     ''',''' + app.Version + ''',''' + app.Author + ''',''' + 'icon' +
-    ExtractFileExt(app.IconName) + ''',''' + g + ''',''' +
-    GetDateAsString + ''', ''' + app.Dependencies + ''');');
+    ExtractFileExt(app.IconName) + ''',''' + g + ''',''' + GetDateAsString +
+    ''', ''' + app.Dependencies + ''');');
 
   //Write changes
   ds.ApplyUpdates;

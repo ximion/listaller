@@ -75,6 +75,11 @@ begin
     exit;
   end;
   //Some listaller types to replace
+  if h = 'pliappitem' then
+  begin
+    Result := 'LiInstallation';
+    exit;
+  end;
   if h = 'pliappmanager' then
   begin
     Result := 'LiAppManager';

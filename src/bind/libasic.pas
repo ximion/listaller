@@ -33,6 +33,7 @@ function li_stringlist_to_text(lst: PStringList): PChar;cdecl;external liblistal
 function li_current_regdir: PChar;cdecl;external liblistaller;
 function li_global_regdir: PChar;cdecl;external liblistaller;
 function li_version: PChar;cdecl;external liblistaller;
+procedure li_object_free(obj: PObject);cdecl;external liblistaller;
 
 {@End:BaseFunctions}
 

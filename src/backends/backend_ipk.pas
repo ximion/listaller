@@ -23,7 +23,7 @@ interface
 
 uses
   Classes, SysUtils, LiBackend, LiTypes, LiUtils, IniFiles, StrLocale, Process,
-  LiFileUtil, SoftwareDB, ListallerDB, IPKCDef10, PackageKit;
+  LiFileUtil, SoftwareDB, ListallerDB, IPKCDef10, PackageKit, LiApp;
 
 type
   TIPKBackend = class(TLiBackend)
@@ -32,12 +32,12 @@ type
     fastrm: Boolean;
     rmdeps: Boolean;
 
-    appInfo: LiAppInfo;
+    appInfo: TLiAppItem;
   public
     constructor Create;
     destructor Destroy; override;
 
-    function Initialize(ai: LiAppInfo): Boolean; override;
+    function Initialize(ai: TLiAppItem): Boolean; override;
     function CanBeUsed: Boolean; override;
     function Run: Boolean; override;
 
@@ -62,10 +62,9 @@ begin
   inherited;
 end;
 
-function TIPKBackend.Initialize(ai: LiAppInfo): Boolean;
+function TIPKBackend.Initialize(ai: TLiAppItem): Boolean;
 begin
   appInfo := ai;
-
   Result := true;
 end;
 
@@ -75,13 +74,13 @@ var
 begin
   ldb := TListallerDB.Create;
   ldb.Load(SUMode);
-  Result := ldb.AppExists(appInfo.Id);
+  Result := ldb.AppExists(appInfo.AId);
   if Result then
   begin
     Result := DirectoryExistsUTF8(PkgRegDir + LowerCase(GetAppIDString(appInfo)));
     if not Result then
       //EmitRequest(rsAppRegistBroken, rqError);
-      perror('App registration is broken for #' + appInfo.Id);
+      perror('App registration is broken for #' + appInfo.AId);
   end;
   ldb.Free;
 end;
@@ -123,8 +122,8 @@ begin
   DB.OpenFilter(fAppIPK);
   while not DB.EndReached do
   begin
-    if (DB.CurrentDataField.App.Name = appInfo.Name) and
-      (DB.CurrentDataField.App.Id = appInfo.Id) then
+    if (DB.CurrentDataField.App.AName = appInfo.AName) and
+      (DB.CurrentDataField.App.AId = appInfo.AId) then
     begin
 
       if DB.CurrentDataField.App.PkType = ptDLink then

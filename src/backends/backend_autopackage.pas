@@ -23,7 +23,7 @@ interface
 
 uses
   Classes, SysUtils, LiBackend, LiTypes, LiUtils, IniFiles, StrLocale, Process,
-  LiFileUtil;
+  LiFileUtil, LiApp;
 
 type
   TAutopackageBackend = class(TLiBackend)
@@ -33,7 +33,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    function Initialize(ai: LiAppInfo): Boolean; override;
+    function Initialize(ai: TLiAppItem): Boolean; override;
     function CanBeUsed: Boolean; override;
     function Run: Boolean; override;
   end;
@@ -52,9 +52,9 @@ begin
   inherited;
 end;
 
-function TAutopackageBackend.Initialize(ai: LiAppInfo): Boolean;
+function TAutopackageBackend.Initialize(ai: TLiAppItem): Boolean;
 begin
-  dskFileName := GetDesktopFileFromID(ai.ID);
+  dskFileName := GetDesktopFileFromID(ai.AID);
 
   Result := true;
 end;

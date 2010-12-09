@@ -21,7 +21,7 @@ unit lidbusproc;
 interface
 
 uses
-  Classes, DBus, liUtils, liTypes, SimDBus, SysUtils, strLocale;
+  Classes, DBus, liUtils, liTypes, SimDBus, SysUtils, StrLocale, LiApp;
 
 type
   //** Which detail of the process was changed?
@@ -46,7 +46,7 @@ type
   //** A command Listaller should do on DBus
   ListallerBusCommand = record
     cmdtype: TListallerBusAction;
-    appinfo: LiAppInfo;
+    appinfo: TLiAppItem;
     pkgname: String;
     overrides: String;
     updid: Integer;
@@ -68,7 +68,7 @@ type
     procedure SendProgress(val: Integer; const ty: TLiProcDetail = pdMainProgress);
     procedure SendMessage(msg: String; const ty: TLiProcDetail = pdInfo);
     //** Remove app as root via remote DBus connection
-    procedure UninstallAppAsRoot(obj: LiAppInfo);
+    procedure UninstallAppAsRoot(obj: TLiAppItem);
     //** Execute installation as root using dbus daemon & PolicyKit
     function DoInstallationAsRoot(pkgpath: String; overrides: String;
       addsrc: Boolean): Boolean;
@@ -156,7 +156,7 @@ begin
   SyncProcStatus;
 end;
 
-procedure TLiDBusAction.UninstallAppAsRoot(obj: LiAppInfo);
+procedure TLiDBusAction.UninstallAppAsRoot(obj: TLiAppItem);
 var
   bus: TDBusClient;
   dmsg: PDBusMessage;
@@ -189,8 +189,8 @@ begin
     exit;
   end;
 
-  bus.ReplyMessageAddString(dmsg, obj.Name);
-  bus.ReplyMessageAddString(dmsg, obj.Id);
+  bus.ReplyMessageAddString(dmsg, obj.AName);
+  bus.ReplyMessageAddString(dmsg, obj.AId);
 
   pinfo('Sending AppRemove request...');
   dmsg := bus.SendReplyAndWait(dmsg);
