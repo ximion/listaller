@@ -25,7 +25,7 @@ uses
 
 {@Begin:Manager}
 
-function li_mgr_new: Pointer;cdecl;external liblistaller;
+function li_mgr_new: PLiAppManager;cdecl;external liblistaller;
 procedure li_mgr_find_app(mgr: PLiAppManager; filter: LiFilter; const filter_text: PChar);cdecl;external liblistaller;
 function li_mgr_update_appdb(mgr: PLiAppManager): Boolean;cdecl;external liblistaller;
 function li_mgr_register_status_call(mgr: PLiAppManager; call: LiStateEvent; user_data: Pointer): Boolean;cdecl;external liblistaller;

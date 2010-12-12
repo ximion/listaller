@@ -31,6 +31,7 @@ extern "C" {
 
 #include <li-types.h>
 #include <li-basics.h>
+#include <li-appitem.h>
 #include <li-installer.h>
 #include <li-manager.h>
 #include <li-updater.h>

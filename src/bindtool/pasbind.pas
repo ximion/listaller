@@ -76,7 +76,7 @@ begin
 
   res := TStringList.Create;
   catchNext := False;
-  for i := src.IndexOf('{@' + component + '}') + 1 to src.Count - 1 do
+  for i := src.IndexOf('{@' + component + '}') + 1 to src.Count -1 do
   begin
     r := '';
     if pos('{@', src[i]) > 0 then

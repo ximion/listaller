@@ -28,21 +28,30 @@ using namespace Listaller;
 
 namespace Listaller {
 
+static QString charToStringFree(char *text)
+{
+  QString res;
+  res.fromLatin1(text);
+  free(text);
+  return res;
+}
+
 class LiMsgRedirect : public QObject
 {
   Q_OBJECT
   
 public:
   void sendStatusMessage(QString s){ emit(statusMessage(s)); }
-  void sendNewApp(LiAppInfo *ai){
+  void sendNewApp(LiAppItem *ai){
     Listaller::Application app;
-    app.author = ai->Author;
-    app.name = ai->Name;
-    app.summary = ai->Summary;
-    app.version = ai->Version;
-    app.timeStamp = ai->InstallDate;
-    app.iconName = ai->IconName;
-    emit(newApp(app));  
+    
+    app.name = charToStringFree (li_appitem_name (ai));
+    app.summary = charToStringFree (li_appitem_summary (ai));
+    app.version = charToStringFree (li_appitem_version (ai));
+    app.timeStamp = li_appitem_timestamp (ai);
+    app.iconName = charToStringFree (li_appitem_iconname (ai));
+    app.publisher = charToStringFree (li_appitem_publisher (ai));
+    emit newApp(app);  
   }
   
 signals:
@@ -60,7 +69,7 @@ void li_manager_status_change_cb(LI_STATUS status, LiStatusData data, LiMsgRedir
   rd->sendStatusMessage(QString(data.text));
 }
 
-void li_manager_new_app_cb(LiAppInfo *item, LiMsgRedirect *rd)
+void li_manager_new_app_cb(LiAppItem *item, LiMsgRedirect *rd)
 {
   rd->sendNewApp(item);
 }
@@ -81,39 +90,39 @@ AppManager::AppManager()
   connect(msgRedir, SIGNAL(newApp(Application)), this, SIGNAL(newApp(Application)));
   
   //Catch status messages
-  li_mgr_register_status_call(&mgr, LiStateEvent(li_manager_status_change_cb), msgRedir);
+  li_mgr_register_status_call(mgr, LiStateEvent(li_manager_status_change_cb), msgRedir);
   //Catch new apps
-  li_mgr_register_app_call(&mgr, LiAppEvent(li_manager_new_app_cb), msgRedir);
+  li_mgr_register_app_call(mgr, LiAppEvent(li_manager_new_app_cb), msgRedir);
   
-  li_mgr_register_message_call(&mgr, li_manager_message_cb, msgRedir);
+  li_mgr_register_message_call(mgr, li_manager_message_cb, msgRedir);
   
   setSuMode(false);
 }
 
 AppManager::~AppManager()
 {  
-  li_mgr_free(&mgr);
+  li_object_free(mgr);
   delete msgRedir;
 }
 
 void AppManager::findApps(const QString filter_text)
 {
-  li_mgr_find_app(&mgr, fAllApps, qPrintable(filter_text));
+  li_mgr_find_app(mgr, fAllApps, qPrintable(filter_text));
 }
 
 bool AppManager::updateAppDB()
 {
-  return li_mgr_update_appdb(&mgr);
+  return li_mgr_update_appdb(mgr);
 }
 
 void AppManager::setSuMode(bool b)
 {
-  li_mgr_set_sumode(&mgr, b);
+  li_mgr_set_sumode(mgr, b);
 }
 
 bool AppManager::suMode() const
 {
-  return li_mgr_sumode(&mgr);
+  return li_mgr_sumode(mgr);
 }
 
 bool AppManager::uninstallApp(Application app)
@@ -125,13 +134,13 @@ bool AppManager::uninstallApp(Application app)
      }
   };
   
-  LiAppInfo ai;
-  ai.Id = local::qStringToChar(app.id);
-  ai.Author = local::qStringToChar(app.author);
-  ai.Dependencies = local::qStringToChar(app.dependencies);
+  /*LiAppItem *ai;
+  ai->Id = local::qStringToChar(app.id);
+  ai->Publisher = local::qStringToChar(app.publisher);
+  ai->Dependencies = local::qStringToChar(app.dependencies);
   ai.Name = local::qStringToChar(app.name);
   //ai.PkType = local::qStringToChar(app.pkType);
   //TODO: Convert every part of Application to AppInfo
 
-  li_mgr_remove_app(&mgr, ai);
+  li_mgr_remove_app(&mgr, ai); */
 }

@@ -176,5 +176,16 @@ procedure pk_client_adopt_async(client:PPkClient; transaction_id:Pgchar; cancell
 function pk_client_get_progress_finish(client:PPkClient; res:PGAsyncResult; error:PPGError):PPkProgress;cdecl;external pklib2;
 (* Const before type ignored *)
 procedure pk_client_get_progress_async(client:PPkClient; transaction_id:Pgchar; cancellable:PGCancellable; callback_ready:GAsyncReadyCallback; user_data:gpointer);cdecl;external pklib2;
+    { getters and setters  }
+(* Const before type ignored *)
+procedure pk_client_set_locale(client:PPkClient; locale:Pgchar);cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_client_get_locale(client:PPkClient):Pgchar;cdecl;external pklib2;
+procedure pk_client_set_background(client:PPkClient; background:gboolean);cdecl;external pklib2;
+function pk_client_get_background(client:PPkClient):gboolean;cdecl;external pklib2;
+procedure pk_client_set_interactive(client:PPkClient; interactive:gboolean);cdecl;external pklib2;
+function pk_client_get_interactive(client:PPkClient):gboolean;cdecl;external pklib2;
+function pk_client_get_idle(client:PPkClient):gboolean;cdecl;external pklib2;
+procedure pk_client_set_cache_age(client:PPkClient; cache_age:guint);cdecl;external pklib2;
 {$endif}
     { __PK_CLIENT_H  }

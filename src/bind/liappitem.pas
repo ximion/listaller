@@ -25,8 +25,17 @@ uses
 
 {@Begin:AppItem}
 
-function li_appitem_new(): Pointer; cdecl;external liblistaller;
+function li_appitem_new(): PLiAppItem; cdecl;external liblistaller;
 function li_appitem_name(item: PLiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_id(item: PLiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_version(item: PLiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_summary(item: PLiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_author(item: PLiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_publisher(item: PLiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_iconname(item: PLiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_categories(item: PLiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_timestamp(item: PLiAppItem): Double; cdecl;external liblistaller;
+function li_appitem_dependencies(item: PLiAppItem): PChar; cdecl;external liblistaller;
 
 {@End:AppItem}
 

@@ -31,7 +31,7 @@ struct Application
   QString id;
   QString summary;
   QString version;
-  QString author;
+  QString publisher;
   QString iconName;
   double  timeStamp;
   QString dependencies;
@@ -64,7 +64,7 @@ signals:
     void statusMessage(QString msg);
     
 private:
-    const void* mgr;
+    void* mgr;
     LiMsgRedirect *msgRedir;
 };
 

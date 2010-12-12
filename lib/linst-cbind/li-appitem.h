@@ -29,7 +29,27 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void* li_appitem_new(void);
+LiAppItem *li_appitem_new(void);
+
+char *li_appitem_name(LiAppItem *item);
+
+char *li_appitem_id(LiAppItem *item);
+
+char *li_appitem_version(LiAppItem *item);
+
+char *li_appitem_summary(LiAppItem *item);
+
+char *li_appitem_author(LiAppItem *item);
+
+char *li_appitem_publisher(LiAppItem *item);
+
+char *li_appitem_iconname(LiAppItem *item);
+
+char *li_appitem_categories(LiAppItem *item);
+
+double li_appitem_timestamp(LiAppItem *item);
+
+char *li_appitem_dependencies(LiAppItem *item);
 
 
 #endif /* __LI_APPITEM */

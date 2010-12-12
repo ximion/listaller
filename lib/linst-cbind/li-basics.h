@@ -29,21 +29,23 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void* li_new_stringlist(void);
+StringList *li_stringlist_new(void);
 
-bool li_free_stringlist(StringList lst);
+bool li_free_stringlist(StringList *lst);
 
-char *li_stringlist_read_line(StringList lst,int ln);
+char *li_stringlist_read_line(StringList *lst,int ln);
 
-bool li_stringlist_write_line(StringList lst,int ln,char *val);
+bool li_stringlist_write_line(StringList *lst,int ln,char *val);
 
-char *li_stringlist_to_text(StringList lst);
+char *li_stringlist_to_text(StringList *lst);
 
 char *li_current_regdir(void);
 
 char *li_global_regdir(void);
 
 char *li_version(void);
+
+void li_object_free(void* obj);
 
 
 #endif /* __LI_BASICS */

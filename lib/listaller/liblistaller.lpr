@@ -1,18 +1,19 @@
-{ Copyright (C) 2009-2010 Matthias Klumpp
-
-  Authors:
-   Matthias Klumpp
-
-  This library is free software: you can redistribute it and/or modify it under
-  the terms of the GNU General Public License as published by the Free Software
-  Foundation, version 3.
-
-  This library is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License v3
-  along with this library. If not, see <http://www.gnu.org/licenses/>.}
+(* Copyright (C) 2009-2010 Matthias Klumpp
+ *
+ * Authors:
+ *  Matthias Klumpp
+ *
+ * This library is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 3.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License v3
+ * along with this library. If not, see <http://www.gnu.org/licenses/>.
+ *)
 //** Listaller library for all software management processes
 library liblistaller;
 
@@ -36,9 +37,9 @@ type
 
 {@BaseFunctions}
 
-function li_new_stringlist: Pointer;cdecl;
+function li_stringlist_new: PStringList;cdecl;
 begin
- Result := TStringList.Create;
+ Result := Pointer(TStringList.Create);
 end;
 
 function li_free_stringlist(lst: PStringList): Boolean;cdecl;
@@ -95,8 +96,7 @@ end;
 procedure li_object_free(obj: PObject);cdecl;
 begin
  if obj = nil then exit;
- obj^.Free;
- obj := nil;
+ FreeAndNil(obj);
 end;
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -105,9 +105,9 @@ end;
 {@AppItem}
 
 // Create new appitem
-function li_appitem_new(): Pointer; cdecl;
+function li_appitem_new(): PLiAppItem; cdecl;
 begin
- Result := TLiAppItem.Create;
+ Result := Pointer(TLiAppItem.Create);
 end;
 
 // Fetch application name
@@ -116,15 +116,60 @@ begin
  Result := StrNew(PChar(item^.AName));
 end;
 
+function li_appitem_id(item: PLiAppItem): PChar; cdecl;
+begin
+ Result := StrNew(PChar(item^.AId));
+end;
+
+function li_appitem_version(item: PLiAppItem): PChar; cdecl;
+begin
+ Result := StrNew(PChar(item^.Version));
+end;
+
+function li_appitem_summary(item: PLiAppItem): PChar; cdecl;
+begin
+ Result := StrNew(PChar(item^.Summary));
+end;
+
+function li_appitem_author(item: PLiAppItem): PChar; cdecl;
+begin
+ Result := StrNew(PChar(item^.Author));
+end;
+
+function li_appitem_publisher(item: PLiAppItem): PChar; cdecl;
+begin
+ Result := StrNew(PChar(item^.Publisher));
+end;
+
+function li_appitem_iconname(item: PLiAppItem): PChar; cdecl;
+begin
+ Result := StrNew(PChar(item^.IconName));
+end;
+
+function li_appitem_categories(item: PLiAppItem): PChar; cdecl;
+begin
+ Result := StrNew(PChar(item^.Categories));
+end;
+
+function li_appitem_timestamp(item: PLiAppItem): Double; cdecl;
+begin
+ Result := item^.TimeStamp;
+end;
+
+function li_appitem_dependencies(item: PLiAppItem): PChar; cdecl;
+begin
+ Result := StrNew(PChar(item^.Dependencies));
+end;
+
 /////////////////////////////////////////////////////////////////////////////////////
 //Installer part
 
 {@Installer}
 
 //** Creates a new installation object
-function li_setup_new: Pointer;cdecl;
+function li_setup_new: PLiInstallation; cdecl;
 begin
- Result := TLiInstallation.Create;
+ Result := Pointer(TLiInstallation.Create);
 end;
 
 //** Initializes the setup
@@ -383,9 +428,9 @@ end;
 {@Manager}
 
 //** Creates a new TAppManager object
-function li_mgr_new: Pointer;cdecl;
+function li_mgr_new: PLiAppManager;cdecl;
 begin
- Result:=TLiAppManager.Create;
+ Result := Pointer(TLiAppManager.Create);
 end;
 
 //** Search for apps matching the filter criteria
@@ -420,7 +465,6 @@ end;
 //** Register application event to catch found apps
 function li_mgr_register_app_call(mgr: PLiAppManager; call: LiAppEvent; user_data: Pointer): Boolean;cdecl;
 begin
- Result := false;
  Result:=true;
  try
   mgr^.RegOnNewApp(call, user_data);
@@ -499,9 +543,9 @@ end;
 {@Updater}
 
 //** Creates a new TAppUpdater object
-function li_updater_new: Pointer;cdecl;
+function li_updater_new: PLiAppUpdater;cdecl;
 begin
- Result := TLIAppUpdater.Create;
+ Result := Pointer(TLiAppUpdater.Create);
 end;
 
 //** Set superuser mode (or not)
@@ -574,7 +618,7 @@ end;
 ///////////////////////
 exports
  // Stringlist functions
- li_new_stringlist,
+ li_stringlist_new,
  li_free_stringlist,
  li_stringlist_read_line,
  li_stringlist_write_line,
@@ -583,6 +627,15 @@ exports
  // AppItem functions
  li_appitem_new,
  li_appitem_name,
+ li_appitem_id,
+ li_appitem_version,
+ li_appitem_summary,
+ li_appitem_author,
+ li_appitem_publisher,
+ li_appitem_iconname,
+ li_appitem_categories,
+ li_appitem_timestamp,
+ li_appitem_dependencies,
 
  // Installation related functions
  li_setup_new,
@@ -594,6 +647,7 @@ exports
  li_setup_pkgtype,
  li_setup_disallows,
  li_setup_supported_distros,
+ li_setup_appitem,
  li_setup_pkgid,
  li_setup_long_description,
  li_setup_long_description_as_string,

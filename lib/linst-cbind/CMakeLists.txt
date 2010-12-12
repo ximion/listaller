@@ -1,7 +1,8 @@
-#CMake file for Listaller Library Headers
+# CMake file for Listaller Library Headers
 
 set(llistaller_c_HEADERS listaller
     li-basics.h
+    li-appitem.h
     li-installer.h
     li-manager.h
     li-types.h

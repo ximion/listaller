@@ -25,55 +25,63 @@ using namespace Listaller;
 
 Setup::Setup()
 {
-  setup = li_setup_new();
+  setup = li_setup_new ();
 }
 
 Setup::~Setup()
 {
-  li_setup_free(&setup);
+  li_object_free (setup);
 }
 
 void Setup::initialize(QString pkgName)
 {
-  li_setup_init(&setup, (char*) qPrintable(pkgName));
+  li_setup_init (setup, (char*) qPrintable(pkgName));
 }
 
 void Setup::setSuMode(bool b)
 {
-  li_setup_set_sumode(&setup, b);
+  li_setup_set_sumode (setup, b);
 }
 
 bool Setup::suMode() const
 {
-  return li_setup_sumode(&setup);
+  return li_setup_sumode (setup);
 }
 
 QString Setup::disallows() const
 {
-  return li_setup_disallows(&setup);
+  return li_setup_disallows (setup);
 }
 
 QString Setup::supportedDistributions() const
 {
-  return li_setup_supported_distros(&setup);
+  return li_setup_supported_distros (setup);
 }
 
 QString Setup::appName() const
 {
-  return li_setup_appname(&setup);
+  LiAppItem *ai;
+  ai = li_setup_appitem (setup);
+  QString aname = li_appitem_name(ai);
+  li_object_free(ai);
+  return aname;
 }
 
 QString Setup::appVersion() const
 {
-  return li_setup_appversion(&setup);
+  LiAppItem *ai;
+  ai = li_setup_appitem (setup);
+  QString version = li_appitem_version(ai);
+  li_object_free(ai);
+  return version;
 }
 
 QString Setup::descriptionAsString() const
 {
-  return QString(li_setup_long_description_as_string(&setup));
+  return QString(li_setup_long_description_as_string(setup));
 }
 
 void Setup::setTestmode(bool b)
 {
-  li_setup_set_testmode(&setup, b);
+  li_setup_set_testmode(setup, b);
 }

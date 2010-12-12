@@ -25,7 +25,7 @@ uses
 
 {@Begin:Updater}
 
-function li_updater_new: Pointer;cdecl;external liblistaller;
+function li_updater_new: PLiAppUpdater;cdecl;external liblistaller;
 procedure li_updater_set_sumode(upd: PLiAppUpdater;val: Boolean);cdecl;external liblistaller;
 function li_updater_register_status_call(upd: PLiAppUpdater;call: LiStateEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
 function li_updater_register_message_call(upd: PLiAppUpdater;call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;

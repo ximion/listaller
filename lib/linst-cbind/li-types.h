@@ -29,15 +29,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef const void* StringList;
+typedef void StringList;
 
-typedef const void* LiAppManager;
+typedef void LiAppManager;
 
-typedef const void* LiInstallation;
+typedef void LiInstallation;
 
-typedef const void* LiAppUpdater;
+typedef void LiAppUpdater;
 
-typedef const void* LiApplication;
+typedef void LiAppItem;
 
 typedef enum {
       LIS_None,
@@ -115,7 +115,7 @@ typedef LI_REQUEST_RES (*LiMessageEvent) (LI_MESSAGE mtype,const char *text,void
 
 typedef void (*TProgressEvent) (int pos,void* user_data);
 
-typedef void (*LiAppEvent) (PLiApplication item,void* user_data);
+typedef void (*LiAppEvent) (LiAppItem *item,void* user_data);
 
 typedef void (*LiNewUpdateEvent) (char *name,int id,void* user_data);
 

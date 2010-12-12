@@ -29,25 +29,27 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void* li_mgr_new(void);
+LiAppManager *li_mgr_new(void);
 
-void li_mgr_find_app(LiAppManager mgr,LiFilter filter,const char *filter_text);
+void li_mgr_find_app(LiAppManager *mgr,LiFilter filter,const char *filter_text);
 
-bool li_mgr_update_appdb(LiAppManager mgr);
+bool li_mgr_update_appdb(LiAppManager *mgr);
 
-bool li_mgr_register_status_call(LiAppManager mgr,LiStateEvent call,void* user_data);
+bool li_mgr_register_status_call(LiAppManager *mgr,LiStateEvent call,void* user_data);
 
-bool li_mgr_register_app_call(LiAppManager mgr,LiAppEvent call,void* user_data);
+bool li_mgr_register_app_call(LiAppManager *mgr,LiAppEvent call,void* user_data);
 
-bool li_mgr_register_message_call(LiAppManager mgr,LiMessageEvent call,void* user_data);
+bool li_mgr_register_message_call(LiAppManager *mgr,LiMessageEvent call,void* user_data);
 
-void li_mgr_set_sumode(LiAppManager mgr,bool md);
+void li_mgr_set_sumode(LiAppManager *mgr,bool md);
 
-bool li_mgr_sumode(LiAppManager mgr);
+bool li_mgr_sumode(LiAppManager *mgr);
 
-bool li_mgr_remove_app(LiAppManager mgr,LiInstallation item);
+bool li_mgr_remove_app(LiAppManager *mgr,LiAppItem *item);
 
-bool li_mgr_check_apps(LiAppManager mgr,StringList log,bool root);
+bool li_mgr_check_apps(LiAppManager *mgr,StringList *log,bool root);
+
+bool li_mgr_fix_apps(LiAppManager *mgr,StringList *log,bool root);
 
 
 #endif /* __LI_MANAGER */

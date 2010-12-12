@@ -71,28 +71,33 @@ begin
   //Workarounds
   if h = 'pstringlist' then
   begin
-    Result := 'StringList';
+    Result := 'StringList *';
     exit;
   end;
   //Some listaller types to replace
   if h = 'pliappitem' then
   begin
-    Result := 'LiInstallation';
+    Result := 'LiAppItem *';
     exit;
   end;
   if h = 'pliappmanager' then
   begin
-    Result := 'LiAppManager';
+    Result := 'LiAppManager *';
     exit;
   end;
   if h = 'pliinstallation' then
   begin
-    Result := 'LiInstallation';
+    Result := 'LiInstallation *';
     exit;
   end;
   if h = 'pliappupdater' then
   begin
-    Result := 'LiAppUpdater';
+    Result := 'LiAppUpdater *';
+    exit;
+  end;
+  if h = 'pobject' then
+  begin
+    Result := 'void* ';
     exit;
   end;
 
@@ -117,6 +122,8 @@ begin
   if (h = 'integer') or (h = 'longint') or (h = 'shortint') or (h = 'smallint') then
     Result := 'int'
   else if h[1] = 'g' then
+    Result := h
+  else if h = 'double' then
     Result := h
   else if h = 'boolean' then
     Result := 'bool'
@@ -222,7 +229,7 @@ begin
   if (pos('alias type', eltype) > 0) and (LowerCase(el.GetDeclaration(false)) =
     'pointer') then
   begin
-    r := 'typedef const void* ';
+    r := 'typedef void ';
     h := el.GetDeclaration(true);
     h := copy(h, 1, pos(' ', h) - 1);
     Delete(h, 1, 1);
@@ -313,13 +320,13 @@ begin
     element := (TObject(Decls[I]) as TPasElement);
 
     if not ProcessClassDef(element, res) then
-      if pos('external', LowerCase(src[element.SourceLinenumber])) > 0 then
+      if pos('external', LowerCase(src[element.SourceLinenumber-1])) > 0 then
         if element.ElementTypeName = 'function' then
         begin
           res.Add('');
           func := element.GetDeclaration(true);
 
-          //Extract resturn type
+          //Extract return type
           h := copy(func, pos(')', func) + 1, length(func));
           h := copy(h, pos(':', h) + 1, length(h));
           h := StrSubst(h, ' ', '');

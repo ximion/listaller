@@ -47,7 +47,7 @@ public:
     void setTestmode(bool b);
     
 private:
-    const void* setup;
+    void* setup;
 };
 
 };

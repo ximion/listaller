@@ -29,21 +29,23 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void* li_updater_new(void);
+LiAppUpdater *li_updater_new(void);
 
-void li_updater_set_sumode(LiAppUpdater upd,bool val);
+void li_updater_set_sumode(LiAppUpdater *upd,bool val);
 
-bool li_updater_register_status_call(LiAppUpdater upd,LiStateEvent call,void* user_data);
+bool li_updater_register_status_call(LiAppUpdater *upd,LiStateEvent call,void* user_data);
 
-bool li_updater_register_message_call(LiAppUpdater upd,LiMessageEvent call,void* user_data);
+bool li_updater_register_message_call(LiAppUpdater *upd,LiMessageEvent call,void* user_data);
 
-bool li_updater_register_newupdate_call(LiAppUpdater upd,LiNewUpdateEvent call,void* user_data);
+bool li_updater_register_newupdate_call(LiAppUpdater *upd,LiNewUpdateEvent call,void* user_data);
 
-bool li_updater_search_updates(LiAppUpdater upd);
+bool li_updater_search_updates(LiAppUpdater *upd);
 
-char *li_updater_updateid_oldversion(LiAppUpdater upd,int uid);
+char *li_updater_updateid_oldversion(LiAppUpdater *upd,int uid);
 
-char *li_updater_updateid_newversion(LiAppUpdater upd,int uid);
+char *li_updater_updateid_newversion(LiAppUpdater *upd,int uid);
+
+bool li_updater_execute_update(LiAppUpdater *upd,int uid);
 
 
 #endif /* __LI_UPDATER */

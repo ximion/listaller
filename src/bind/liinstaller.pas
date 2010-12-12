@@ -70,7 +70,7 @@ function IsIPKAppInstalled(appname: String; appid: String; sumode: Boolean): Boo
 //Import library functions
 {@Begin:Installer}
 
-function li_setup_new: Pointer;cdecl;external liblistaller;
+function li_setup_new: PLiInstallation; cdecl;external liblistaller;
 function li_setup_init(setup: PLiInstallation; const pkname: PChar): Boolean;cdecl;external liblistaller;
 function li_setup_register_status_call(setup: PLiInstallation; call: LiStateEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
 function li_setup_register_message_call(setup: PLiInstallation; call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
@@ -83,6 +83,7 @@ function li_setup_sumode(setup: PLiInstallation): Boolean;cdecl;external liblist
 function li_setup_disallows(setup: PLiInstallation): PChar;cdecl;external liblistaller;
 function li_setup_supported_distros(setup: PLiInstallation): PChar;cdecl;external liblistaller;
 function li_ipk_app_is_installed(appname: PChar;appid: PChar;sumode: Boolean): Boolean;cdecl;external liblistaller;
+function li_setup_appitem(setup: PLiInstallation): PLiAppItem;cdecl;external liblistaller;
 function li_setup_pkgid(setup: PLiInstallation): PChar;cdecl;external liblistaller;
 function li_setup_signature_state(setup: PLiInstallation): PkgSignatureState;cdecl;external liblistaller;
 function li_setup_long_description(setup: PLiInstallation; list: PStringList): Boolean;cdecl;external liblistaller;
