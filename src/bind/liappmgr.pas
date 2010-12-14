@@ -25,17 +25,17 @@ uses
 
 {@Begin:Manager}
 
-function li_mgr_new: PLiAppManager;cdecl;external liblistaller;
-procedure li_mgr_find_app(mgr: PLiAppManager; filter: LiFilter; const filter_text: PChar);cdecl;external liblistaller;
-function li_mgr_update_appdb(mgr: PLiAppManager): Boolean;cdecl;external liblistaller;
-function li_mgr_register_status_call(mgr: PLiAppManager; call: LiStateEvent; user_data: Pointer): Boolean;cdecl;external liblistaller;
-function li_mgr_register_app_call(mgr: PLiAppManager; call: LiAppEvent; user_data: Pointer): Boolean;cdecl;external liblistaller;
-function li_mgr_register_message_call(mgr: PLiAppManager;call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
-procedure li_mgr_set_sumode(mgr: PLiAppManager;md: Boolean);cdecl;external liblistaller;
-function li_mgr_sumode(mgr: PLiAppManager): Boolean;cdecl;external liblistaller;
-function li_mgr_remove_app(mgr: PLiAppManager; item: PLiAppItem): Boolean;cdecl;external liblistaller;
-function li_mgr_check_apps(mgr: PLiAppManager;log: PStringList;root: Boolean): Boolean;cdecl;external liblistaller;
-function li_mgr_fix_apps(mgr: PLiAppManager;log: PStringList;root: Boolean): Boolean;cdecl;external liblistaller;
+function li_mgr_new: LiAppManager;cdecl;external liblistaller;
+procedure li_mgr_find_app(mgr: LiAppManager; filter: LiFilter; const filter_text: PChar);cdecl;external liblistaller;
+function li_mgr_update_appdb(mgr: LiAppManager): Boolean;cdecl;external liblistaller;
+function li_mgr_register_status_call(mgr: LiAppManager; call: LiStateEvent; user_data: Pointer): Boolean;cdecl;external liblistaller;
+function li_mgr_register_app_call(mgr: LiAppManager; call: LiAppEvent; user_data: Pointer): Boolean;cdecl;external liblistaller;
+function li_mgr_register_message_call(mgr: LiAppManager;call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
+procedure li_mgr_set_sumode(mgr: LiAppManager;md: Boolean);cdecl;external liblistaller;
+function li_mgr_sumode(mgr: LiAppManager): Boolean;cdecl;external liblistaller;
+function li_mgr_remove_app(mgr: LiAppManager; item: LiAppItem): Boolean;cdecl;external liblistaller;
+function li_mgr_check_apps(mgr: LiAppManager;log: TStringList;root: Boolean): Boolean;cdecl;external liblistaller;
+function li_mgr_fix_apps(mgr: LiAppManager;log: TStringList;root: Boolean): Boolean;cdecl;external liblistaller;
 
 {@End:Manager}
 

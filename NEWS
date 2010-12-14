@@ -1,33 +1,45 @@
-Version 0.5
-~~~~~~~~~~~~~
+Version 0.5b
+~~~~~~~~~~~~~~
  == Still in development ==
+
+ Overview:
+  -- Will follow when 0.5 is released --
  
  Features:
   * New software database handler
   * Use Debian packages as dependency sources
+  * Added PackageKit bindings generator
+  * Marked Listaller daemon as obsolete
+  * Now use Listaller-enabled PackageKit as Listaller deamon
+
+ Toolset:
   * visual-ldd: Pulled from Autopackage
   * visual-ldd: Ported to Qt4, updated GUI and added few more features
   * Pulled apbuild from Autopackage
-  * Added PackageKit bindings generator
   * binreloc: Adjusted for Listaller
-  * qt: Created new Qt bindings
-  * Marked Listaller daemon as obsolete
  
  Specifications:
   * Updated database layout to new format
+ 
+ Bindings:
+  * This release contains major API/ABI breaks, tools depending on
+     liblistaller will need huge adjustements.
+  * pas: Updated Pascal bindings
+  * qt : Created new Qt bindings
+  * c  : Updated C bindings to new version
+  * Created bindingtool, to ensure all bindings are in sync.
  
  Bugfixes:
   * Fix invalid dependencies on Fedora
  
 Version 0.4.10
-~~~~~~~~~~~~~
- == Still in development ==
+~~~~~~~~~~~~~~
  
  Bugfixes: 
   * Compatibility patch for PackageKit > 0.5
 
 Version 0.4b
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
  * licreator: Use the new IPS defs
  * listallmgr: Redesigned interface
  * listallmgr: Revised Qt4 GUI
@@ -54,20 +66,20 @@ Version 0.4b
 
 
 Version 0.3.0a
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
  * First beta release, no changelog created
  * Completely refreshed GUI
  * Some other changes
  * Switch to IPKXML
 
 Version 0.2.00a
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
  * First alpha release, no changelog created
 
 Version 0.1.18
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
  * Test release 2, no changelog created
 
 Version 0.1.16
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
  * Test release 1, no changelog created

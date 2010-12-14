@@ -69,33 +69,33 @@ var
 begin
   h := LowerCase(s);
   //Workarounds
-  if h = 'pstringlist' then
+  if h = 'tstringlist' then
   begin
     Result := 'StringList *';
     exit;
   end;
   //Some listaller types to replace
-  if h = 'pliappitem' then
+  if h = 'liappitem' then
   begin
     Result := 'LiAppItem *';
     exit;
   end;
-  if h = 'pliappmanager' then
+  if h = 'liappmanager' then
   begin
     Result := 'LiAppManager *';
     exit;
   end;
-  if h = 'pliinstallation' then
+  if h = 'liinstallation' then
   begin
     Result := 'LiInstallation *';
     exit;
   end;
-  if h = 'pliappupdater' then
+  if h = 'liappupdater' then
   begin
     Result := 'LiAppUpdater *';
     exit;
   end;
-  if h = 'pobject' then
+  if h = 'tobject' then
   begin
     Result := 'void* ';
     exit;
@@ -232,7 +232,6 @@ begin
     r := 'typedef void ';
     h := el.GetDeclaration(true);
     h := copy(h, 1, pos(' ', h) - 1);
-    Delete(h, 1, 1);
     r := r + h + ';';
     res.Add('');
     res.Add(r);

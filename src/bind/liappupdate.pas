@@ -25,15 +25,15 @@ uses
 
 {@Begin:Updater}
 
-function li_updater_new: PLiAppUpdater;cdecl;external liblistaller;
-procedure li_updater_set_sumode(upd: PLiAppUpdater;val: Boolean);cdecl;external liblistaller;
-function li_updater_register_status_call(upd: PLiAppUpdater;call: LiStateEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
-function li_updater_register_message_call(upd: PLiAppUpdater;call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
-function li_updater_register_newupdate_call(upd: PLiAppUpdater;call: LiNewUpdateEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
-function li_updater_search_updates(upd: PLiAppUpdater): Boolean;cdecl;external liblistaller;
-function li_updater_updateid_oldversion(upd: PLiAppUpdater;uid: Longint): PChar;cdecl;external liblistaller;
-function li_updater_updateid_newversion(upd: PLiAppUpdater;uid: Longint): PChar;cdecl;external liblistaller;
-function li_updater_execute_update(upd: PLiAppUpdater;uid: Longint): Boolean;cdecl;external liblistaller;
+function li_updater_new: LiAppUpdater;cdecl;external liblistaller;
+procedure li_updater_set_sumode(upd: LiAppUpdater;val: Boolean);cdecl;external liblistaller;
+function li_updater_register_status_call(upd: LiAppUpdater;call: LiStateEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
+function li_updater_register_message_call(upd: LiAppUpdater;call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
+function li_updater_register_newupdate_call(upd: LiAppUpdater;call: LiNewUpdateEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
+function li_updater_search_updates(upd: LiAppUpdater): Boolean;cdecl;external liblistaller;
+function li_updater_updateid_oldversion(upd: LiAppUpdater;uid: Longint): PChar;cdecl;external liblistaller;
+function li_updater_updateid_newversion(upd: LiAppUpdater;uid: Longint): PChar;cdecl;external liblistaller;
+function li_updater_execute_update(upd: LiAppUpdater;uid: Longint): Boolean;cdecl;external liblistaller;
 
 {@End:Updater}
 

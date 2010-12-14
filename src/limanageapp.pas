@@ -111,7 +111,7 @@ end;
 procedure TLiAppManager.EmitNewApp(oj: TLiAppItem);
 begin
   if Assigned(FApp) then
-    FApp(@oj, newapp_udata);
+    FApp(oj, newapp_udata);
 end;
 
 function TLiAppManager.IsInList(nm: String; list: TStringList): Boolean;
@@ -120,15 +120,15 @@ begin
 end;
 
 
-procedure liappmgr_database_new_app(item: PLiAppItem; limgr: TLiAppManager); cdecl;
+procedure liappmgr_database_new_app(item: TLiAppItem; limgr: TLiAppManager); cdecl;
 begin
   if not (limgr is TLiAppManager) then
   begin
     perror('Assertion data is TLiManager failed');
   end
   else
-  if trim(item^.AName) <> '*' then
-    limgr.EmitNewApp(item^);
+  if trim(item.AName) <> '*' then
+    limgr.EmitNewApp(item);
 end;
 
 {procedure TLiAppManager.RescanEntries;

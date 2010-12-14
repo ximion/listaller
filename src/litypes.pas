@@ -33,16 +33,16 @@ const
 
 type
   //** Pointer to TStringList
-  PStringList = Pointer;
+  StringList = Pointer;
 
   //** Pointer to an AppManager
-  PLiAppManager = Pointer;
+  LiAppManager = Pointer;
   //** Pointer to Installation
-  PLiInstallation = Pointer;
+  LiInstallation = Pointer;
   //** Pointer to AppUpdater
-  PLiAppUpdater = Pointer;
+  LiAppUpdater = Pointer;
   //** Pointer to application object
-  PLiAppItem = Pointer;
+  LiAppItem = Pointer;
 
   //** Status of current job
   LI_STATUS = (LIS_None, LIS_Stage, LIS_Started, LIS_Progress, LIS_Failed,
@@ -92,7 +92,7 @@ type
   LiFilter = (fAllApps, fAppNative, fAppIPK, fAppExtern, fDeps);
 
   //** Event to catch thrown application records
-  LiAppEvent = procedure(item: PLiAppItem; user_data: Pointer); cdecl;
+  LiAppEvent = procedure(item: LiAppItem; user_data: Pointer); cdecl;
 
   //** Shows information about new update
   LiNewUpdateEvent = procedure(name: PChar; id: Integer; user_data: Pointer); cdecl;

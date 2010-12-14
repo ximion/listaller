@@ -21,7 +21,7 @@ unit pasbind;
 interface
 
 uses
-  Classes, LiUtils, PasTree, PParser, PScanner, SysUtils;
+  Classes, LiUtils, PasTree, PScanner, SysUtils;
 
 type
   TPasLibBindGen = class
@@ -29,6 +29,7 @@ type
     FLibName: string;
     FName: string;
     FOutName: string;
+    function ReplaceTypes(s: String): String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -51,6 +52,14 @@ end;
 destructor TPasLibBindGen.Destroy;
 begin
   inherited;
+end;
+
+function TPasLibBindGen.ReplaceTypes(s: String): String;
+begin
+  Result := StrSubst(s, ': TLiAppItem', ': LiAppItem');
+  Result := StrSubst(Result, ': TLiAppManager', ': LiAppManager');
+  Result := StrSubst(Result, ': TLiInstallation', ': LiInstallation');
+  Result := StrSubst(Result, ': TLiAppUpdater', ': LiAppUpdater');
 end;
 
 procedure TPasLibBindGen.Run(component: string);
@@ -86,7 +95,7 @@ begin
     if catchNext then
     begin
       r := src[i];
-      res.Add(r);
+      res.Add(ReplaceTypes(r));
       r := StringReplace(r, ' ', '', [rfReplaceAll]);
       if r[length(r)] <> ';' then
         catchNext := True
@@ -111,7 +120,7 @@ begin
         Continue;
       if exported.IndexOf(h) > 0 then
       begin
-        res.Add(r);
+        res.Add(ReplaceTypes(r));
         r := StringReplace(r, ' ', '', [rfReplaceAll]);
         if r[length(r)] <> ';' then
           catchNext := True

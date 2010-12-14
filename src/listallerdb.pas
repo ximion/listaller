@@ -275,7 +275,9 @@ begin
     if ((filter_text = '*') or (filter_text = '')) or
       (pos(filter_text, entry.Summary) > 0) or (pos(filter_text, entry.AName) > 0) then
       if Assigned(FNewApp) then
-        FNewApp(@entry, onnewapp_udata);
+        FNewApp(Pointer(entry), onnewapp_udata)
+      else
+        FreeAndNil(FNewApp);
 
     ds.Next;
   end;

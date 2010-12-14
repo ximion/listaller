@@ -25,17 +25,17 @@ uses
 
 {@Begin:AppItem}
 
-function li_appitem_new(): PLiAppItem; cdecl;external liblistaller;
-function li_appitem_name(item: PLiAppItem): PChar; cdecl;external liblistaller;
-function li_appitem_id(item: PLiAppItem): PChar; cdecl;external liblistaller;
-function li_appitem_version(item: PLiAppItem): PChar; cdecl;external liblistaller;
-function li_appitem_summary(item: PLiAppItem): PChar; cdecl;external liblistaller;
-function li_appitem_author(item: PLiAppItem): PChar; cdecl;external liblistaller;
-function li_appitem_publisher(item: PLiAppItem): PChar; cdecl;external liblistaller;
-function li_appitem_iconname(item: PLiAppItem): PChar; cdecl;external liblistaller;
-function li_appitem_categories(item: PLiAppItem): PChar; cdecl;external liblistaller;
-function li_appitem_timestamp(item: PLiAppItem): Double; cdecl;external liblistaller;
-function li_appitem_dependencies(item: PLiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_new(): LiAppItem; cdecl;external liblistaller;
+function li_appitem_name(item: LiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_id(item: LiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_version(item: LiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_summary(item: LiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_author(item: LiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_publisher(item: LiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_iconname(item: LiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_categories(item: LiAppItem): PChar; cdecl;external liblistaller;
+function li_appitem_timestamp(item: LiAppItem): Double; cdecl;external liblistaller;
+function li_appitem_dependencies(item: LiAppItem): PChar; cdecl;external liblistaller;
 
 {@End:AppItem}
 

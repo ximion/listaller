@@ -25,15 +25,15 @@ uses
 
 {@Begin:BaseFunctions}
 
-function li_stringlist_new: PStringList;cdecl;external liblistaller;
-function li_free_stringlist(lst: PStringList): Boolean;cdecl;external liblistaller;
-function li_stringlist_read_line(lst: PStringList;ln: Integer): PChar;cdecl;external liblistaller;
-function li_stringlist_write_line(lst: PStringList;ln: Integer;val: PChar): Boolean;cdecl;external liblistaller;
-function li_stringlist_to_text(lst: PStringList): PChar;cdecl;external liblistaller;
+function li_stringlist_new: TStringList;cdecl;external liblistaller;
+function li_free_stringlist(lst: TStringList): Boolean;cdecl;external liblistaller;
+function li_stringlist_read_line(lst: TStringList;ln: Integer): PChar;cdecl;external liblistaller;
+function li_stringlist_write_line(lst: TStringList;ln: Integer;val: PChar): Boolean;cdecl;external liblistaller;
+function li_stringlist_to_text(lst: TStringList): PChar;cdecl;external liblistaller;
 function li_current_regdir: PChar;cdecl;external liblistaller;
 function li_global_regdir: PChar;cdecl;external liblistaller;
 function li_version: PChar;cdecl;external liblistaller;
-procedure li_object_free(obj: PObject);cdecl;external liblistaller;
+procedure li_object_free(obj: TObject);cdecl;external liblistaller;
 
 {@End:BaseFunctions}
 
