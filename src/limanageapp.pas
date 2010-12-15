@@ -53,7 +53,7 @@ type
     //** Catch status messages from DBus action
     procedure DBusStatusChange(ty: LI_STATUS; Data: TLiProcData);
     //** Run a backend
-    function RunBackend(backend: TLiBackend; ai: TLiAppItem): Boolean;
+    function RunBackend(backend: TLiBackend; appId: String): Boolean;
   protected
     //Some user data for callbacks
     newapp_udata: Pointer;
@@ -69,7 +69,7 @@ type
     //** Load apps which match filter
     procedure FetchAppList(filter: LiFilter; text: String);
     //** Removes an application
-    procedure UninstallApp(obj: TLiAppItem);
+    procedure UninstallApp(appId: String);
  {** Checks dependencies of all installed apps
     @param report Report of the executed actions
     @param fix True if all found issues should be fixed right now
@@ -421,11 +421,9 @@ begin
     else
     begin
       pdebug('AppID: ' + appID);
-      appRmId := GenerateAppID(tmp[i]);
       //Build a new AppItem
       item := TLiAppItem.Create;
       item.AName := PChar(ddata.Name);
-      item.AId := PChar(appRmId);
       item.PkType := ptExtern;
       item.Categories := PChar(ddata.Categories);
       item.IconName := PChar(ddata.IconName);
@@ -466,14 +464,14 @@ begin
   end;
 end;
 
-function TLiAppManager.RunBackend(backend: TLiBackend; ai: TLiAppItem): Boolean;
+function TLiAppManager.RunBackend(backend: TLiBackend; appId: String): Boolean;
 begin
   Result := false;
   // Attach status handler
   backend.RegisterOnStatus(FStatus, status_udata);
   backend.RegisterOnMessage(FMessage, message_udata);
   backend.RootMode := SUMode;
-  backend.Initialize(ai);
+  backend.Initialize(appId);
   if backend.CanBeUsed then
   begin
     // Use it!
@@ -486,12 +484,12 @@ end;
 // identification string - if not, pkg has to be Loki/Mojo, so intitiate Mojo-Removal. After rdepends and pkg resolve is done,
 // run uninstall as root if necessary. At the end, RemoveAppInternal() is called (if LOKI-Remove was not run) to uninstall
 // native or autopackage setup.
-procedure TLiAppManager.UninstallApp(obj: TLiAppItem);
+procedure TLiAppManager.UninstallApp(appId: String);
 var
   id: String;
   buscmd: ListallerBusCommand;
 begin
-  id := obj.AID;
+  id := appId;
   if id = '' then
   begin
     perror('Invalid application info passed: No ID found.');
@@ -499,12 +497,14 @@ begin
   end;
   EmitStatusChange(LIS_Started);
 
-  pdebug('Application UId is: ' + obj.AId);
+  pdebug('Application UId is: ' + id);
+
+  // !!! SUPERUSER STUFF NEEDS REIMPLEMENTATION!
   if (SUMode) and (not IsRoot) then
   begin
     //Create worker thread for this action
     buscmd.cmdtype := lbaUninstallApp;
-    buscmd.appinfo := obj;
+    //buscmd.appinfo := obj;
     with TLiDBusAction.Create(buscmd) do
     begin
       pdebug('DbusAction::run!');
@@ -516,10 +516,10 @@ begin
   end;
 
   // Run the backends. PackageKit always goes last, it is the slowest one
-  if not RunBackend(TIPKBackend.Create, obj) then
-    if not RunBackend(TLokiBackend.Create, obj) then
-      if not RunBackend(TAutopackageBackend.Create, obj) then
-        RunBackend(TPackageKitBackend.Create, obj);
+  if not RunBackend(TIPKBackend.Create, appId) then
+    if not RunBackend(TLokiBackend.Create, appId) then
+      if not RunBackend(TAutopackageBackend.Create, appId) then
+        RunBackend(TPackageKitBackend.Create, appId);
 
   EmitStatusChange(LIS_Finished);
 end;

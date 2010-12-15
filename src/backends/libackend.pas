@@ -30,7 +30,7 @@ type
   protected
     sumode: Boolean;
   public
-    function Initialize(ai: TLiAppItem): boolean; virtual; abstract;
+    function Initialize(appId: String): boolean; virtual; abstract;
     function CanBeUsed: boolean; virtual; abstract;
     function Run: boolean; virtual; abstract;
     property RootMode: Boolean read sumode write sumode;

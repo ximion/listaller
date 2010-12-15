@@ -23,7 +23,7 @@ library liblistaller;
 
 uses
   CThreads, Classes, LiTypes, SysUtils, LiUtils, IPKInstall,
-  LiManageApp, LiUpdateApp, LiApp;
+  LiManageApp, LiUpdateApp, LiApp, GLib2;
 
 //////////////////////////////////////////////////////////////////////////////////////
 //Exported helper functions
@@ -87,11 +87,12 @@ end;
 
 //** Free objects
 procedure li_object_free(obj: TObject);cdecl;
+var cname: String;
 begin
  if obj = nil then exit;
- pwarning('Fake-Free object until SYSTEM_TOBJECT_$__CLEANUPINSTANCE () bug is fixed.');
-
+ cname := obj.ClassName;
  FreeAndNil(obj);
+ pdebug('Destroyed instance of ' + cname);
 end;
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -108,42 +109,42 @@ end;
 // Fetch application name
 function li_appitem_name(item: TLiAppItem): PChar; cdecl;
 begin
- Result := StrNew(PChar(item.AName));
+ Result := g_strdup(PChar(item.AName));
 end;
 
 function li_appitem_id(item: TLiAppItem): PChar; cdecl;
 begin
- Result := StrNew(PChar(item.AId));
+ Result := g_strdup(PChar(item.AId));
 end;
 
 function li_appitem_version(item: TLiAppItem): PChar; cdecl;
 begin
- Result := StrNew(PChar(item.Version));
+ Result := g_strdup(PChar(item.Version));
 end;
 
 function li_appitem_summary(item: TLiAppItem): PChar; cdecl;
 begin
- Result := StrNew(PChar(item.Summary));
+ Result := g_strdup(PChar(item.Summary));
 end;
 
 function li_appitem_author(item: TLiAppItem): PChar; cdecl;
 begin
- Result := StrNew(PChar(item.Author));
+ Result := g_strdup(PChar(item.Author));
 end;
 
 function li_appitem_publisher(item: TLiAppItem): PChar; cdecl;
 begin
- Result := StrNew(PChar(item.Publisher));
+ Result := g_strdup(PChar(item.Publisher));
 end;
 
 function li_appitem_iconname(item: TLiAppItem): PChar; cdecl;
 begin
- Result := StrNew(PChar(item.IconName));
+ Result := g_strdup(PChar(item.IconName));
 end;
 
 function li_appitem_categories(item: TLiAppItem): PChar; cdecl;
 begin
- Result := StrNew(PChar(item.Categories));
+ Result := g_strdup(PChar(item.Categories));
 end;
 
 function li_appitem_timestamp(item: TLiAppItem): Double; cdecl;
@@ -153,7 +154,7 @@ end;
 
 function li_appitem_dependencies(item: TLiAppItem): PChar; cdecl;
 begin
- Result := StrNew(PChar(item.Dependencies));
+ Result := g_strdup(PChar(item.Dependencies));
 end;
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -492,11 +493,11 @@ begin
 end;
 
 //** Removes the application
-function li_mgr_remove_app(mgr: TLiAppManager; item: TLiAppItem): Boolean;cdecl;
+function li_mgr_remove_app(mgr: TLiAppManager; appId: PChar): Boolean;cdecl;
 begin
  Result:=true;
  try
-  mgr.UninstallApp(item);
+  mgr.UninstallApp(appId);
  except
   Result:=false;
  end;

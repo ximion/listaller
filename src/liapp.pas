@@ -26,8 +26,10 @@ uses
 
 type
   PLiAppItem = ^TLiAppItem;
-  TLiAppItem = class (TPersistent)
+
+  TLiAppItem = class(TPersistent)
   private
+    function GetAId: String;
   protected
     FName: String;
     FId: String;
@@ -40,12 +42,20 @@ type
     FCategories: String;
     FInstallDate: TDateTime;
     FDependencies: String;
+    FDesktop: String;
   public
     constructor Create;
     destructor Destroy; override;
 
+    //** Build a fake package name this application
+    function FakePackageName: String;
+    //** Create an appID from .desktop-file path
+    function GenerateAppID: String;
+    //** Generate ID string
+    function AppIDString: String;
+
     property AName: String read FName write FName;
-    property AId: String read FId write FId;
+    property AId: String read GetAId write FId;
     property PkType: LiPkgType read FPkType write FPkType;
     property Summary: String read FSummary write FSummary;
     property Version: String read FVersion write FVersion;
@@ -55,16 +65,13 @@ type
     property Categories: String read FCategories write FCategories;
     property TimeStamp: TDateTime read FInstalldate write FInstallDate;
     property Dependencies: String read FDependencies write FDependencies;
+    property DesktopFile: String read FDesktop write FDesktop;
   end;
 
-//** Build a fake package name for an application
-function GenerateFakePackageName(appName: String): String;
 //** Build a string to identify the application which can be used in filepaths
-function GetAppIDString(ai: TLiAppItem): String;
+function GetAppIDString(ai: String): String;
 //** Restore desktop file path from appID
 function GetDesktopFileFromID(appID: String): String;
-//** Create an appID from .desktop-file path
-function GenerateAppID(desktopFile: String): String;
 
 implementation
 
@@ -82,17 +89,50 @@ begin
   inherited;
 end;
 
-{ Helper functions }
+// Helper functions
 
-function GenerateAppID(desktopFile: String): String;
+function TLiAppItem.FakePackageName: String;
+var
+  s: String;
+
+  procedure subst(a, b: String);
+  begin
+    s := StrSubst(s, a, b);
+  end;
+
+begin
+  s := LowerCase(FName);
+  subst('/', '');
+  subst(';', '');
+  subst(' ', '-');
+  Result := s;
+end;
+
+function TLiAppItem.GenerateAppID: String;
 begin
   Result := '';
-  if trim(desktopFile) = '' then
+  if trim(FDesktop) = '' then
+  begin
+    pwarning('Application ' + FName + ' has no valid .desktop file!');
+    Result := LowerCase(FName + '-' + FVersion);
     exit;
-  Result := ExtractFilePath(desktopFile);
+  end;
+  Result := ExtractFilePath(FDesktop);
   Result := StrSubst(StrSubst(Result, '/usr/', ''), 'share/applications/', '');
   Result := ExcludeTrailingPathDelimiter(Result) +
-    StrSubst(ExtractFileName(desktopFile), '.desktop', '');
+    StrSubst(ExtractFileName(FDesktop), '.desktop', '');
+end;
+
+function TLiAppItem.GetAId: String;
+begin
+  if trim(FId) = '' then
+   FId := GenerateAppId;
+  Result := FId;
+end;
+
+function TLiAppItem.AppIDString: String;
+begin
+  Result := GetAppIDString(FId);
 end;
 
 function GetDesktopFileFromID(appID: String): String;
@@ -107,26 +147,10 @@ begin
   Result := Result + '.desktop';
 end;
 
-function GenerateFakePackageName(appName: String): String;
-var
-  s: String;
 
-  procedure subst(a, b: String);
-  begin
-    s := StrSubst(s, a, b);
-  end;
-
+function GetAppIDString(ai: String): String;
 begin
-  s := LowerCase(appName);
-  subst('/', '');
-  subst(';', '');
-  subst(' ', '-');
-  Result := s;
-end;
-
-function GetAppIDString(ai: LiApp.TLiAppItem): String;
-begin
-  Result := StrSubst(ai.AId, '/', '');
+  Result := StrSubst(ai, '/', '');
 end;
 
 end.

@@ -17,7 +17,7 @@
 //** LOKI/Mojo uninstaller backend
 unit backend_loki;
 
-{$mode objfpc}
+{$mode objfpc}{$H+}
 
 interface
 
@@ -34,7 +34,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    function Initialize(ai: TLiAppItem): Boolean; override;
+    function Initialize(ai: String): Boolean; override;
     function CanBeUsed: Boolean; override;
     function Run: Boolean; override;
   end;
@@ -54,9 +54,9 @@ begin
   inherited;
 end;
 
-function TLokiBackend.Initialize(ai: TLiAppItem): Boolean;
+function TLokiBackend.Initialize(ai: String): Boolean;
 begin
-  dskFileName := GetDesktopFileFromID(ai.AID);
+  dskFileName := GetDesktopFileFromID(ai);
 
   Result := true;
 end;

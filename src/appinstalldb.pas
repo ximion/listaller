@@ -189,7 +189,7 @@ begin
   ToApps;
   ds.Edit;
 
-  sql := ValFormat(GenerateFakePackageName(app.AName)) + ', ' +
+  sql := ValFormat(app.FakePackageName) + ', ' +
     ValFormat(app.AId) + ', ' + ValFormat(app.Categories) + ', ' +
     ValFormat('local:%listaller') + ',' + ValFormat(app.IconName) +
     ',' + ValFormat(app.AName) + ',' + ValFormat(app.Summary);

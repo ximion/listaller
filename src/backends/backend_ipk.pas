@@ -17,7 +17,7 @@
 //** Uninstaller backend for Listaller software
 unit backend_ipk;
 
-{$mode objfpc}
+{$mode objfpc}{$H+}
 
 interface
 
@@ -32,12 +32,12 @@ type
     fastrm: Boolean;
     rmdeps: Boolean;
 
-    appInfo: TLiAppItem;
+    appId: String;
   public
     constructor Create;
     destructor Destroy; override;
 
-    function Initialize(ai: TLiAppItem): Boolean; override;
+    function Initialize(ai: String): Boolean; override;
     function CanBeUsed: Boolean; override;
     function Run: Boolean; override;
 
@@ -62,9 +62,9 @@ begin
   inherited;
 end;
 
-function TIPKBackend.Initialize(ai: TLiAppItem): Boolean;
+function TIPKBackend.Initialize(ai: String): Boolean;
 begin
-  appInfo := ai;
+  appId := ai;
   Result := true;
 end;
 
@@ -74,13 +74,13 @@ var
 begin
   ldb := TListallerDB.Create;
   ldb.Load(SUMode);
-  Result := ldb.AppExists(appInfo.AId);
+  Result := ldb.AppExists(appId);
   if Result then
   begin
-    Result := DirectoryExistsUTF8(PkgRegDir + LowerCase(GetAppIDString(appInfo)));
+    Result := DirectoryExistsUTF8(PkgRegDir + LowerCase(GetAppIDString(appId)));
     if not Result then
       //EmitRequest(rsAppRegistBroken, rqError);
-      perror('App registration is broken for #' + appInfo.AId);
+      perror('App registration is broken for #' + appId);
   end;
   ldb.Free;
 end;
@@ -102,7 +102,7 @@ var
   ipkc: TIPKControl;
 begin
   Result := false;
-  p := PkgRegDir + LowerCase(GetAppIDString(appInfo)) + '/';
+  p := PkgRegDir + LowerCase(GetAppIDString(appId)) + '/';
   p := CleanFilePath(p);
 
   mnprog := 0;
@@ -122,8 +122,7 @@ begin
   DB.OpenFilter(fAppIPK);
   while not DB.EndReached do
   begin
-    if (DB.CurrentDataField.App.AName = appInfo.AName) and
-      (DB.CurrentDataField.App.AId = appInfo.AId) then
+    if (DB.CurrentDataField.App.AId = appId) then
     begin
 
       if DB.CurrentDataField.App.PkType = ptDLink then

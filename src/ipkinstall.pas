@@ -1026,7 +1026,7 @@ begin
             EmitError(StrSubst(rsInstPkgFailed, '%s', Dependencies[i]) +
               #10 + rsEMsg + #10 + pkit.LastErrorMessage + #10 +
               StrSubst(rsViewLog, '%p', '/tmp/install-' +
-              GetAppIDString(app) + '.log'));
+              app.AppIDString + '.log'));
             Result := false;
             Abort_FreeAll();
             exit;
@@ -1152,8 +1152,8 @@ begin
           end;
         except
           //Unable to copy the file
-          EmitError(Format(rsCnCopy,
-            [dest + '/' + ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
+          EmitError(Format(rsCnCopy, [dest + '/' +
+            ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
           RollbackInstallation;
           Result := false;
           Abort_FreeAll();
@@ -1424,7 +1424,7 @@ end;}
       begin
         EmitError(rsPkQueryFailed + #10 + rsEMsg + #10 +
           pkit.LastErrorMessage + #10 + StrSubst(rsViewLog, '%p',
-          '/tmp/install-' + GetAppIDString(app) + '.log'));
+          '/tmp/install-' + app.AppIDString + '.log'));
         Result := false;
         Abort_FreeAll();
         exit;

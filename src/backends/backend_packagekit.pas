@@ -17,7 +17,7 @@
 //** PackageKit appremove backend
 unit backend_packagekit;
 
-{$mode objfpc}
+{$mode objfpc}{$H+}
 
 interface
 
@@ -31,14 +31,15 @@ type
     dskFileName: String;
     pkg: String;
     pkit: TPackageKit;
-    appInfo: TLiAppItem;
+    appId: String;
+
     //** Receive the PackageKit progress
     procedure PkitProgress(pos: Integer; xd: Pointer);
   public
     constructor Create;
     destructor Destroy; override;
 
-    function Initialize(ai: TLiAppItem): Boolean; override;
+    function Initialize(ai: String): Boolean; override;
     function CanBeUsed: Boolean; override;
     function Run: Boolean; override;
   end;
@@ -60,10 +61,10 @@ begin
   inherited;
 end;
 
-function TPackageKitBackend.Initialize(ai: TLiAppItem): Boolean;
+function TPackageKitBackend.Initialize(ai: String): Boolean;
 begin
-  dskFileName := GetDesktopFileFromID(ai.AID);
-  appInfo := ai;
+  dskFileName := GetDesktopFileFromID(ai);
+  appId := ai;
   Result := true;
 end;
 
@@ -127,7 +128,7 @@ begin
     pkit.Free;
     if (StringReplace(g, ' ', '', [rfReplaceAll]) = '') or
       (EmitUserRequestAbortContinue(StringReplace(StringReplace(
-      StringReplace(rsRMPkg, '%p', f, [rfReplaceAll]), '%a', appInfo.AName,
+      StringReplace(rsRMPkg, '%p', f, [rfReplaceAll]), '%a', appId,
       [rfReplaceAll]), '%pl', PChar(g), [rfReplaceAll])) = LIRQS_Yes) then
       Result := true
     else
@@ -139,7 +140,7 @@ end;
 function TPackageKitBackend.Run: Boolean;
 begin
   EmitProgress(50);
-  EmitInfoMsg(StrSubst(rsRMAppC, '%a', appInfo.AName) + ' ...');
+  EmitInfoMsg(StrSubst(rsRMAppC, '%a', appId) + ' ...');
   pkit.RemovePkg(pkg);
 
   if pkit.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then

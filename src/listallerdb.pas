@@ -260,7 +260,7 @@ begin
     if entry.Author <> '' then
       entry.Author := PChar(rsAuthor + ': ' + entry.Author);
 
-    p := AppDataDir + LowerCase(GetAppIDString(entry)) + '/';
+    p := AppDataDir + LowerCase(GetAppIDString(entry.AId)) + '/';
 
     //InstLst.Add(LowerCase(dsApp.FieldByName('ID').AsString));
 
