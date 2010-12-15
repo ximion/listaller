@@ -21,7 +21,7 @@ unit liinstaller;
 interface
 
 uses
-  Classes, LiTypes, SysUtils;
+  Classes, LiTypes, SysUtils, LiBasic, LiApp;
 
 type
   TInstallPack = class
@@ -115,146 +115,152 @@ end;
 
 destructor TInstallPack.Destroy;
 begin
-  li_setup_free(@ins);
+  li_object_free(TObject(ins));
   inherited Destroy;
 end;
 
 procedure TInstallPack.Initialize(pkname: String);
 begin
-  li_setup_init(@ins, PChar(pkname));
+  li_setup_init(ins, PChar(pkname));
 end;
 
 procedure TInstallPack.SetStatusEvent(call: LiStateEvent;
   const userdata: Pointer = nil);
 begin
-  li_setup_register_status_call(@ins, call, userdata);
+  li_setup_register_status_call(ins, call, userdata);
 end;
 
 function TInstallPack.PkType: LiPkgType;
 begin
-  Result := li_setup_pkgtype(@ins);
+  Result := li_setup_pkgtype(ins);
 end;
 
 function TInstallPack.IsTestmode: Boolean;
 begin
-  Result := li_setup_testmode(@ins);
+  Result := li_setup_testmode(ins);
 end;
 
 procedure TInstallPack.SetTestmode(b: Boolean);
 begin
-  li_setup_set_testmode(@ins, b);
+  li_setup_set_testmode(ins, b);
 end;
 
 function TInstallPack.GetDisallows: String;
 begin
-  Result := li_setup_disallows(@ins);
+  Result := li_setup_disallows(ins);
 end;
 
 function TInstallPack.GetSupDistris: String;
 begin
-  Result := li_setup_supported_distros(@ins);
+  Result := li_setup_supported_distros(ins);
 end;
 
 function TInstallPack.GetAppName: String;
+var item: TLiAppItem;
 begin
-  Result := li_setup_appname(@ins);
+  item := TLiAppItem(li_setup_appitem(ins));
+  Result := item.AName;
+  item.Free;
 end;
 
 function TInstallPack.GetAppVersion: String;
+var item: TLiAppItem;
 begin
-  Result := li_setup_appversion(@ins);
+  item := TLiAppItem(li_setup_appitem(ins));
+  Result := item.Version;
+  item.Free;
 end;
 
 function TInstallPack.GetAppID: String;
 begin
-  Result := li_setup_pkgid(@ins);
+  Result := li_setup_pkgid(ins);
 end;
 
 procedure TInstallPack.ReadLongDescription(lst: TStringList);
 begin
-  li_setup_long_description(@ins, @lst);
+  li_setup_long_description(ins, lst);
 end;
 
 function TInstallPack.GetWizardImagePath: String;
 begin
-  Result := li_setup_wizard_image_path(@ins);
+  Result := li_setup_wizard_image_path(ins);
 end;
 
 procedure TInstallPack.ReadLicense(lst: TStringList);
 begin
-  li_setup_license(@ins, @lst);
+  li_setup_license(ins, lst);
 end;
 
 procedure TInstallPack.ReadProfiles(lst: TStringList);
 begin
-  li_setup_profiles_list(@ins, @lst);
+  li_setup_profiles_list(ins, lst);
 end;
 
 function TInstallPack.GetAppIcon: String;
 begin
-  Result := li_setup_appicon(@ins);
+  Result := li_setup_appicon(ins);
 end;
 
 function TInstallPack.GetDesktopFiles: String;
 begin
-  Result := li_setup_desktopfiles(@ins);
+  Result := li_setup_desktopfiles(ins);
 end;
 
 function TInstallPack.GetAppCMD: String;
 begin
-  Result := li_setup_app_exec_command(@ins);
+  Result := li_setup_app_exec_command(ins);
 end;
 
 function TInstallPack.GetFileList: String;
 begin
-  Result := li_setup_current_profile_filelist(@ins);
+  Result := li_setup_current_profile_filelist(ins);
 end;
 
 procedure TInstallPack.SetMessageEvent(call: LiMessageEvent;
   const userdata: Pointer = nil);
 begin
-  li_setup_register_message_call(@ins, call, userdata);
+  li_setup_register_message_call(ins, call, userdata);
 end;
 
 procedure TInstallPack.ReadDeps(lst: TStringList);
 begin
-  li_setup_dependencies(@ins, @lst);
+  li_setup_dependencies(ins, lst);
 end;
 
 function TInstallPack.StartInstallation: Boolean;
 begin
-  Result := li_setup_execute(@ins);
+  Result := li_setup_execute(ins);
 end;
 
 procedure TInstallPack.SetRootMode(b: Boolean);
 begin
-  li_setup_set_sumode(@ins, b);
+  li_setup_set_sumode(ins, b);
 end;
 
 function TInstallPack.IsRootMode: Boolean;
 begin
-  Result := li_setup_sumode(@ins);
+  Result := li_setup_sumode(ins);
 end;
 
 procedure TInstallPack.EnableUSource(b: Boolean);
 begin
-  li_setup_enable_usource_registering(@ins, b);
+  li_setup_enable_usource_registering(ins, b);
 end;
 
 procedure TInstallPack.SetProfileID(i: Integer);
 begin
-  li_setup_set_profileid(@ins, i);
+  li_setup_set_profileid(ins, i);
 end;
 
 procedure TInstallPack.SetForced(s: String);
 begin
   ForcedActn := s;
-  li_setup_set_overrides(@ins, PChar(s));
+  li_setup_set_overrides(ins, PChar(s));
 end;
 
 function TInstallPack.GetSignatureState: PkgSignatureState;
 begin
-  Result := li_setup_signature_state(@ins);
+  Result := li_setup_signature_state(ins);
 end;
 
 function IsIPKAppInstalled(appname: String; appid: String; sumode: Boolean): Boolean;
