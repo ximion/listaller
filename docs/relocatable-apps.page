@@ -2,6 +2,7 @@
 <info>
   <link type="guide" xref="index"/>
 </info>
+
 <title>Guide to Making Relocatable Applications</title>
 
 <section id="problem">
@@ -18,8 +19,117 @@ their full path.</p>
 
 <p>On Linux however, no easy mechanisms exist. There is no function
 equivalent to <code>GetModuleFilename()</code>.
-For executables, you can still find your full location by resolving the symlink <code>/proc/self/exe</code>,
+For executables, you can still find your full location by resolving the symlink <file>/proc/self/exe</file>,
 but that won't work for libraries.</p>
+
+</section>
+
+<section id="solution">
+<title>The solution</title>
+
+<p>This is why we have developed <app>BinReloc</app>.
+BinReloc provides an easy-to-use API that uses dynamic linker and kernel
+ magic to find out the full path of your application or library.</p>
+
+<list>
+ <title>Highlights</title>
+ <item><p>It can be statically included in your project.</p></item>
+ <item><p>It's small, only about 20 KB of C source code (I suspect it's only
+	about 10 KB if you remove all the inline documentation comments).</p></item>
+ <item><p>It has absolutely no dependancies other than libc.</p></item>
+ <item><p>It's <em>public domain</em>, which means you can do anything you want with the code, including relicensing it under a different license.</p></item>
+ <item><p>Portability to other operating systems will not be affected: BinReloc will fallback to hardcoded paths if it's running
+	on an operating system which has no executable relocation features.
+	You can also completely disable BinReloc with one simple macro, making your program behave exactly like
+	when you were using hardcoded paths.</p></item>
+ <item><p>There are two versions of BinReloc: a plain C version, and glib version which even has a glib-style API.</p></item>
+</list>
+
+<note style="tip">
+ <title>Tip for KDE developers</title>
+  <p>As of April 21 2004, BinReloc-like functionality has been added to the KDE-libs, in the
+  <code>KStandardDirs</code> class. If your <em>application</em> uses <code>KStandardDirs</code>
+  to lookup data files, your application will be automatically relocatable, so using BinReloc is not necessary.
+  Libraries however will not benefit from this, and must use BinReloc directly.</p>
+</note>
+
+</section>
+
+<section id="helloworld">
+<title>Hello World!</title>
+
+<p>Let's begin with a BinReloc "Hello World" tutorial. We will use the <em>plain C</em> version of BinReloc.
+The glib version's API is only slightly different from the plain C API, so don't worry about the API differences.
+In this tutorial, our imaginary developer, Joe, will show you everything he does when writing the <app>Hello World</app> program.</p>
+
+<steps>
+ <item><p>Generate BinReloc source files</p>
+	<p>Joe <link href="http://listaller.nlinux.org">downloads the BinReloc SDK</link> from the <em>Listaller Tools</em> section of the download page.
+		He extracts the archive in his home folder. A folder called <file>binreloc-2.0</file> appears.</p>
+	<listing><code><![CDATA[[joe@localhost /home/joe]$ tar xzf binreloc-2.0.tar.gz
+[joe@localhost /home/joe]$ cd binreloc-2.0</div>]]></code>
+	</listing>
+	<p>Joe's Hello World program doesn't use glib, so he wants the plain C version of BinReloc.
+	Joe runs the following commands to generate the BinReloc source files:</p>
+	<listing><code><![CDATA[[joe@localhost /home/joe/binreloc-2.0]$ ./generate.pl normal
+Source code written to 'binreloc.c'
+Header written to 'binreloc.h'
+[joe@localhost /home/joe/binreloc-2.0]$ mkdir ~/helloworld
+[joe@localhost /home/joe/binreloc-2.0]$ mv binreloc.c binreloc.h ~/helloworld/</div>]]></code>
+	</listing>
+ </item>
+ <item><p>Write the program</p>
+	<p>Now that Joe has generated the BinReloc source files, he continues with writing a Hello World program:</p>
+	<listing><code><![CDATA[#include <stdio.h>
+#include "binreloc.h"
+#ifndef NULL
+    #define NULL ((void *) 0)
+#endif
+
+int main () {
+    BrInitError error;
+
+    if (br_init (&error) == 0 &amp;&amp; error != BR_INIT_ERROR_DISABLED) {
+        printf ("Warning: BinReloc failed to initialize (error code %d)\n", error);
+        printf ("Will fallback to hardcoded default path.\n");
+    }
+
+    printf ("The full path of this application is: %s\n", br_find_exe ("default fallback path"));
+    return 0;
+}]]></code>
+</listing>
+ <p>He saves this file as <file>/home/joe/helloworld/hello.c</file>.</p>
+</item>
+
+<item><p>Compile &amp; run</p>
+	<p>Now it is time to compile &amp; run the program:</p>
+	<listing><code><![CDATA[[joe@localhost /home/joe/helloworld]$ gcc -DENABLE_BINRELOC hello.c binreloc.c -o hello
+[joe@localhost /home/joe/helloworld]$ ./hello
+The full path of this application is: /home/example/helloworld/hello]]></code>
+</listing>
+
+<p>Yes, it's this easy!</p>
+
+<note style="tip">
+ <title>How to disable BinReloc</title>
+	<p>The <code>-DENABLE_BINRELOC</code> argument enables BinReloc support. BinReloc is only enabled if this macro is defined.
+		Let's take a look at what happens if the macro is not defined:</p>
+<listing><code><![CDATA[[joe@localhost /home/joe/helloworld]$ gcc hello.c binreloc.c -o hello
+[joe@localhost /home/joe/helloworld]$ ./hello
+The full path of this application is: default fallback path]]></code>
+</listing>
+
+</note>
+</item>
+
+</steps>
+
+</section>
+
+<section id="init">
+<title>Initialization</title>
+
+<p>BinReloc <em>must</em> be initialize by calling one of the BinReloc initialization functions:</p>
 
 </section>
 
