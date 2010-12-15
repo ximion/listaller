@@ -1,0 +1,26 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="relocateapps">
+<info>
+  <link type="guide" xref="index"/>
+</info>
+<title>Guide to Making Relocatable Applications</title>
+
+<section id="problem">
+<title>The problem</title>
+
+<p>Listaller supports relocation. This means that a package can be
+installed to any location, like how Win32 installers let you choose a
+directory.
+However, most applications are not relocatable. The paths where in they
+search for data files are usually hardd at compile time.</p>
+<p>On Win32, applications and libraries are easily relocatable because
+applications and DLLs can use <code>GetModuleFilename()</code> to obtain
+their full path.</p>
+
+<p>On Linux however, no easy mechanisms exist. There is no function
+equivalent to <code>GetModuleFilename()</code>.
+For executables, you can still find your full location by resolving the symlink <code>/proc/self/exe</code>,
+but that won't work for libraries.</p>
+
+</section>
+
+</page>
