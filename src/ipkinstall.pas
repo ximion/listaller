@@ -118,6 +118,8 @@ type
     constructor Create;
     //** Destructor
     destructor Destroy; override;
+    //** Resolve symbols
+    function SetupSyblToPath(str: String): String;
     //** Loads an IPK package @param fname Path to IPK file
     function Initialize(fname: String): Boolean;
   {** Executes the installation
@@ -190,7 +192,7 @@ begin
   if SUMode then
     RegDir := LI_CONFIG_DIR + LI_APPDB_PREF
   else
-    RegDir := SyblToPath('$INST', FTestMode) + '/' + LI_APPDB_PREF;
+    RegDir := SetupSyblToPath('$INST') + '/' + LI_APPDB_PREF;
 
   pkProfiles := nil;
   dependencies := nil;
@@ -222,13 +224,18 @@ begin
   inherited Destroy;
 end;
 
+function TLiInstallation.SetupSyblToPath(str: String): String;
+begin
+  Result := SyblToPath(str, FTestMode, SUMode);
+end;
+
 procedure TLiInstallation.SetRootMode(b: Boolean);
 begin
   SUMode := b;
   if SUMode then
     RegDir := LI_CONFIG_DIR + LI_APPDB_PREF
   else
-    RegDir := SyblToPath('$INST', FTestMode) + '/' + LI_APPDB_PREF;
+    RegDir := SetupSyblToPath('$INST') + '/' + LI_APPDB_PREF;
 end;
 
 procedure TLiInstallation.SetCurProfile(i: Integer);
@@ -326,7 +333,7 @@ begin
     //Resolve all substitution variables in dependency list
     //We use rootmode here cause all distro package install files into /
     for i := 0 to Dependencies.Count - 1 do
-      Dependencies[i] := SyblToPath(Dependencies[i], FTestMode, true);
+      Dependencies[i] := SetupSyblToPath(Dependencies[i]);
 
     solver := TPackageResolver.Create;
     solver.DependencyList := Dependencies;
@@ -392,6 +399,14 @@ var
 
 begin
   Result := false;
+
+  if Assigned(app) then
+  begin
+    Result := false;
+    perror('This Setup was already initialized. You have to create a new setup object to load a second file!');
+    exit;
+  end;
+
   app := TLiAppItem.Create;
   if Assigned(unpkg) then
     FreeAndNil(unpkg);
@@ -417,12 +432,6 @@ begin
     SetRootMode(true);
   end;
 
-  if (app.AName <> '') or (app.AId <> '') then
-  begin
-    Result := false;
-    perror('This Setup was already initialized. You have to create a new setup object to load a second file!');
-    exit;
-  end;
   Result := true;
 
   // Now load the database
@@ -1066,8 +1075,8 @@ begin
 
   ndirs := TStringList.Create;
   j := 0;
-  if not DirectoryExists(SyblToPath('$INST', FTestMode)) then
-    SysUtils.CreateDir(SyblToPath('$INST', FTestMode));
+  if not DirectoryExists(SetupSyblToPath('$INST')) then
+    SysUtils.CreateDir(SetupSyblToPath('$INST'));
 
 
   //Unpack files directory
@@ -1093,7 +1102,7 @@ begin
       if fi[i][1] = '>' then
       begin
         dest := copy(fi[i], 2, length(fi[i]));
-        dest := SyblToPath(dest, FTestMode);
+        dest := SetupSyblToPath(dest);
         if not DirectoryExists(dest) then
         begin
           ForceDirectories(dest);
@@ -1168,11 +1177,11 @@ begin
           dsk.WriteString('Desktop Entry', 'X-Author', app.Author);
           dsk.WriteString('Desktop Entry', 'X-Publisher', app.Publisher);
           if dsk.ValueExists('Desktop Entry', 'Icon') then
-            dsk.WriteString('Desktop Entry', 'Icon', SyblToPath(
-              dsk.ReadString('Desktop Entry', 'Icon', '*'), FTestMode));
+            dsk.WriteString('Desktop Entry', 'Icon', SetupSyblToPath(
+              dsk.ReadString('Desktop Entry', 'Icon', '*')));
           if dsk.ValueExists('Desktop Entry', 'Exec') then
-            dsk.WriteString('Desktop Entry', 'Exec', SyblToPath(
-              dsk.ReadString('Desktop Entry', 'Exec', '*'), FTestMode));
+            dsk.WriteString('Desktop Entry', 'Exec', SetupSyblToPath(
+              dsk.ReadString('Desktop Entry', 'Exec', '*')));
           FreeAndNil(dsk);
         end;
 
@@ -1181,7 +1190,7 @@ begin
           s := TStringList.Create;
           s.LoadFromFile(dest + '/' + ExtractFileName(h));
           for j := 0 to s.Count - 1 do
-            s[j] := SyblToPath(s[j], FTestMode);
+            s[j] := SetupSyblToPath(s[j]);
           s.SaveToFile(dest + '/' + ExtractFileName(h));
           FreeAndNil(s);
         end;
@@ -1222,7 +1231,7 @@ begin
       begin
 
         if fi[i][1] = '>' then
-          dest := SyblToPath(fi[i], FTestMode)
+          dest := SetupSyblToPath(fi[i])
         else
         begin
           h := fi[i];
@@ -1244,7 +1253,7 @@ begin
 
           //while proc.Running do Application.ProcessMessages;
           EmitInfoMsg(StrSubst(rsRightsAssignedToX, '%a', DeleteModifiers(
-            ExtractFileName(SyblToPath(fi[i], FTestMode)))));
+            ExtractFileName(SetupSyblToPath(fi[i])))));
         end;
       end;
     end;
@@ -1256,10 +1265,10 @@ begin
     for i := 0 to ndirs.Count - 1 do
     begin
       proc.CommandLine := FindBinary('chmod') + ' 755 -R ' +
-        SyblToPath(ndirs[i], FTestMode);
+        SetupSyblToPath(ndirs[i]);
       proc.Execute;
       EmitInfoMsg('Rights assigned to folder ' + ExtractFileName(
-        SyblToPath(ndirs[i], FTestMode)));
+        SetupSyblToPath(ndirs[i])));
     end;
   end; //End setcm
 
@@ -1749,7 +1758,7 @@ begin
         exit;
       end;
 
-      IAppCMD := SyblToPath(IAppCMD, FTestMode);
+      IAppCMD := SetupSyblToPath(IAppCMD);
       //Check if the package downloads native pkgs
       for i := 0 to Dependencies.Count - 1 do
         if (pos('http://', Dependencies[i]) > 0) or

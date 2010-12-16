@@ -231,7 +231,7 @@ end;
 //** Set installation to superuser mode
 procedure li_setup_set_sumode(setup: TLiInstallation; b: Boolean);cdecl;
 begin
- setup.SuperuserMode:=b;
+ setup.SuperuserMode := b;
 end;
 
 //** True if installation is set to sumode
