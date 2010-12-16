@@ -24,7 +24,7 @@ uses
   Forms, Menus, Buttons, Classes, Dialogs, LCLType, liTypes,
   LiUtils, Process, CheckLst, ComCtrls, Controls, ExtCtrls,
   Graphics, StdCtrls, SysUtils, StrLocale, IconLoader,
-  LResources, updexecfrm, LiAppUpdate;
+  LResources, updexecfrm, LiAppUpdate, LiBasic;
 
 type
 
@@ -144,8 +144,8 @@ begin
   ProgressBar.Position := 0;
   Application.ProcessMessages;
   BitBtn2.Enabled := false;
-  li_updater_search_updates(@updater);
-  li_updater_search_updates(@updaterSU);
+  li_updater_search_updates(updater);
+  li_updater_search_updates(updaterSU);
   if UpdListBox.Items.Count > 0 then
     BitBtn1.Enabled := true;
   ProgressBar.Position := 100;
@@ -166,13 +166,13 @@ begin
       //Application is superuser app
       id := StringReplace(updateids[UpdListBox.ItemIndex], ' (su', '', [rfReplaceAll]);
       InfoMemo.Lines.Add(StringReplace(rsUpdTo, '%v', '"' +
-        li_updater_updateid_newversion(@updaterSU, StrToInt(id)) + '"', [rfReplaceAll]));
+        li_updater_updateid_newversion(updaterSU, StrToInt(id)) + '"', [rfReplaceAll]));
     end
     else
     begin
       id := updateids[UpdListBox.ItemIndex];
       InfoMemo.Lines.Add(StringReplace(rsUpdTo, '%v', '"' +
-        li_updater_updateid_newversion(@updater, StrToInt(id)) + '"', [rfReplaceAll]));
+        li_updater_updateid_newversion(updater, StrToInt(id)) + '"', [rfReplaceAll]));
     end;
   end;
 end;
@@ -197,23 +197,23 @@ begin
 
   //Create normal updater
   updater := li_updater_new;
-  li_updater_register_newupdate_call(@updater, @OnNewUpdateFound, nil);
-  li_updater_register_message_call(@updater, @OnMgrMessage, nil);
-  li_updater_register_status_call(@updater, @OnMgrStatusChange, nil);
-  li_updater_set_sumode(@updater, false);
+  li_updater_register_newupdate_call(updater, @OnNewUpdateFound, nil);
+  li_updater_register_message_call(updater, @OnMgrMessage, nil);
+  li_updater_register_status_call(updater, @OnMgrStatusChange, nil);
+  li_updater_set_sumode(updater, false);
   //Create updater for shared su applications
   updaterSU := li_updater_new;
-  li_updater_register_newupdate_call(@updaterSU, @OnNewUpdateFoundSU, nil);
-  li_updater_register_message_call(@updaterSU, @OnMgrMessage, nil);
-  li_updater_register_status_call(@updaterSU, @OnMgrStatusChange, nil);
-  li_updater_set_sumode(@updaterSU, true);
+  li_updater_register_newupdate_call(updaterSU, @OnNewUpdateFoundSU, nil);
+  li_updater_register_message_call(updaterSU, @OnMgrMessage, nil);
+  li_updater_register_status_call(updaterSU, @OnMgrStatusChange, nil);
+  li_updater_set_sumode(updaterSU, true);
 end;
 
 procedure TUMnForm.FormDestroy(Sender: TObject);
 begin
   UpdateIDs.Free;
-  li_updater_free(@updater);
-  li_updater_free(@updaterSU);
+  li_object_free(TObject(updater));
+  li_object_free(TObject(updaterSU));
 end;
 
 procedure TUMnForm.FormShow(Sender: TObject);

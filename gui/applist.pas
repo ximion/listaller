@@ -22,13 +22,13 @@ unit applist;
 interface
 
 uses
-  AppItem, Buttons, Classes, LCLType, LiUtils, LiTypes, ComCtrls, Controls,
-  Graphics, StdCtrls, SysUtils, IconLoader;
+  AppItem, Buttons, Classes, LCLType, LiUtils, ComCtrls, Controls,
+  Graphics, StdCtrls, SysUtils, IconLoader, LiApp;
 
 type
   TAListRmButtonClick = procedure(Sender: TObject; Index: Integer;
-    item: TAppInfoItem) of object;
-  TAListItemSelect = procedure(Sender: TObject; item: TAppInfoItem) of object;
+    item: TAppListItem) of object;
+  TAListItemSelect = procedure(Sender: TObject; item: TAppListItem) of object;
 
   TAppListView = class(TCustomListBox)
   private
@@ -49,8 +49,8 @@ type
     constructor Create(TheOwner: TComponent; const ownItems: Boolean);
     destructor Destroy; override;
 
-    procedure ItemFromAppInfo(ai: LiAppInfo);
-    procedure AddItem(item: TAppInfoItem);
+    procedure ItemFromAppInfo(ai: TLiAppItem);
+    procedure AddItem(item: TAppListItem);
     procedure ClearList;
     property OnRmButtonClick: TAListRmButtonClick read FOnRmClick write FOnRmClick;
     property OnItemSelect: TAListItemSelect read FOnItemSelect write FOnItemSelect;
@@ -113,40 +113,41 @@ var
   bmp: TBitmap;
   TopDif: Integer;
 begin
-  if btn.Tag>0 then
-    if ((ItemRect(btn.Tag).Top)>(Top+Height-6))or ((ItemRect(btn.Tag).Top)<(Top+4)) then
+  if btn.Tag > 0 then
+    if ((ItemRect(btn.Tag).Top) > (Top + Height - 6)) or ((ItemRect(btn.Tag).Top) < (Top + 4)) then
       btn.Visible := false;
 
   bmp := TBitmap.Create;
   try
     //bmp.Transparent := True;
-    if (Index>=0) and (Index<Items.Count) then
+    if (Index >= 0) and (Index < Items.Count) then
       bmp.Assign(aList[Index].Icon);
 
     {$IFDEF LCLQt}
-     if odSelected in State then
-       Canvas.Brush.Color := clHighlight
-     else
-       Canvas.Brush.Color := clWhite;
-     Canvas.FillRect(Rect);
+    if odSelected in State then
+      Canvas.Brush.Color := clHighlight
+    else
+      Canvas.Brush.Color := clWhite;
+    Canvas.FillRect(Rect);
     {$ENDIF}
 
     if odSelected in State then
     begin
       // Canvas.Font.Color := clHotLight;
       btn.Visible := true;
-      btn.Top := Rect.Top+6;
-      btn.Left := Width-btn.Width-26;
+      btn.Top := Rect.Top + 6;
+      btn.Left := Width - btn.Width - 26;
       btn.Tag := Index;
     end
     else
       Canvas.Font.Color := clWindowText;
 
     Canvas.Font.Height := 12;
-    Canvas.TextRect(Rect, Rect.Left+bmp.Width+6, Rect.Top+4, aList[Index].Name);
+    Canvas.TextRect(Rect, Rect.Left + bmp.Width + 6, Rect.Top + 4, aList[Index].AppInfo.AName);
     TopDif := (ItemHeight div 2) - (Canvas.TextHeight('A') div 2);
     Canvas.Font.Height := 9;
-    Canvas.TextRect(Rect, Rect.Left+bmp.Width+6, Rect.Top+TopDif+2, aList[Index].SDesc);
+    Canvas.TextRect(Rect, Rect.Left + bmp.Width + 6, Rect.Top + TopDif + 2,
+      aList[Index].AppInfo.Summary);
       {if aList[Index].SDesc<>'' then
        TopDif := TopDif+(Canvas.TextHeight('A') div 2);
       Canvas.TextRect(Rect, Rect.Left+bmp.Width+6+10,Rect.Top+TopDif+2, aList[Index].Version);
@@ -157,9 +158,9 @@ begin
   end;
 end;
 
-procedure TAppListView.ItemFromAppInfo(ai: LiAppInfo);
+procedure TAppListView.ItemFromAppInfo(ai: TLiAppItem);
 var
-  new: TAppInfoItem;
+  new: TAppListItem;
   pic: TPicture;
   bmp: TBitmap;
   rect: TRect;
@@ -167,31 +168,26 @@ const
   size = 48;
 begin
   Items.Add(' ');
-  new := TAppInfoItem.Create;
-  new.Name := ai.Name;
-  new.Author := ai.Author;
-  new.SDesc := ai.Summary;
-  new.AppId := ai.AppId;
-  new.Version := ai.Version;
-  new.Categories := ai.Categories;
+  new := TAppListItem.Create;
+  new.AppInfo.Assign(ai);
 
   aList.Add(new);
 
   pic := TPicture.Create;
   try
     if FileExists(ai.IconName) then
-      new.IconPath := ai.IconName
+      new.AppInfo.IconName := ai.IconName
     else
-      new.IconPath := GetDataFile('graphics/spackage.png');
+      new.AppInfo.IconName := GetDataFile('graphics/spackage.png');
 
 
-    pic.LoadFromFile(new.IconPath);
+    pic.LoadFromFile(new.AppInfo.IconName);
   except
-    writeLn('Error while loading "'+ai.IconName+'"!');
-    new.IconPath := GetDataFile('graphics/spackage.png');
+    writeLn('Error while loading "' + ai.IconName + '"!');
+    new.AppInfo.IconName := GetDataFile('graphics/spackage.png');
   end;
 
-  pic.LoadFromFile(new.IconPath);
+  pic.LoadFromFile(new.AppInfo.IconName);
 
   bmp := TBitmap.Create;
   rect.Top := 0;
@@ -204,8 +200,8 @@ begin
   bmp.Transparent := true;
   bmp.Canvas.FillRect(0, 0, size, size);
   {$IFNDEF LCLQt}
-   bmp.Mask(clNone);
-   bmp.Masked := true;
+  bmp.Mask(clNone);
+  bmp.Masked := true;
   {$ENDIF}
   bmp.Canvas.StretchDraw(rect, pic.Graphic);
   pic.Free;
@@ -225,7 +221,7 @@ begin
     btn.Visible := false;
 end;
 
-procedure TAppListView.AddItem(item: TAppInfoItem);
+procedure TAppListView.AddItem(item: TAppListItem);
 begin
   Items.Add('');
   aList.Add(item);

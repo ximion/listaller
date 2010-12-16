@@ -96,27 +96,27 @@ begin
   if FActiv then
   begin
     FActiv := false;
-    if MnFrm.uApp.AppId <> '' then
+    if trim(MnFrm.uApp.AId) <> '' then
     begin
-      Label1.Caption := StrSubst(rsRMAppC, '%a', MnFrm.uApp.Name);
+      Label1.Caption := StrSubst(rsRMAppC, '%a', MnFrm.uApp.AName);
       Caption := StrSubst(rsRMAppC, '%a', '...');
 
       if Application.MessageBox(PChar(
-        StringReplace(rsRealUninstQ, '%a', MnFrm.uApp.Name, [rfReplaceAll])),
+        StringReplace(rsRealUninstQ, '%a', MnFrm.uApp.AName, [rfReplaceAll])),
         'Uninstall?', MB_YESNO) = idYes then
       begin
         UProgress.Position := 0;
-        li_mgr_register_status_call(@MnFrm.amgr, @OnRmStatus, nil);
+        li_mgr_register_status_call(MnFrm.amgr, @OnRmStatus, nil);
         astatus := LIS_None;
         BitBtn1.Enabled := false;
         Application.ProcessMessages;
-        li_mgr_remove_app(@MnFrm.amgr, MnFrm.uApp);
+        li_mgr_remove_app(MnFrm.amgr, MnFrm.uApp);
         while (astatus <> LIS_Finished) and (astatus <> LIS_Failed) and (astatus <> LIS_None) do
         begin
           sleep(1);
           Application.ProcessMessages;
         end;
-        li_mgr_register_message_call(@MnFrm.amgr, @manager.OnMgrMessage, nil);
+        li_mgr_register_message_call(MnFrm.amgr, @manager.OnMgrMessage, nil);
 
         //!!!: Misterious crash appears when executing this code.
         //MnFrm.ReloadAppList(true);
@@ -125,6 +125,7 @@ begin
       else
         Close;
 
+      FreeAndNil(MnFrm.uApp);
     end
     else
     begin

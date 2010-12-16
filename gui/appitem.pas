@@ -21,102 +21,92 @@ unit appitem;
 interface
 
 uses
-  Classes, SysUtils, LiTypes, Graphics, Contnrs;
+  Classes, SysUtils, Graphics, Contnrs, LiApp;
 
 type
- TAppInfoItem = class
+  TAppListItem = class
   private
-   bmp: TBitmap;
-   FName: String;
-   FIconPath: String;
-   FSDesc: String;
-   FAuthor: String;
-   FCats: String;
-   FVersion: String;
-   FUId: String;
+    bmp: TBitmap;
+    FApp: TLiAppItem;
   public
-   constructor Create;
-   destructor  Destroy;override;
+    constructor Create;
+    destructor Destroy; override;
 
-   property Name: String read FName write FName;
-   property SDesc: String read FSDesc write FSDesc;
-   property Author: String read FAuthor write FAuthor;
-   property Categories: String read FCats write FCats;
-   property Icon: TBitmap read bmp write bmp;
-   property Version: String read FVersion write FVersion;
-   property AppId: String read FUid write FUId;
-   property IconPath: String read FIconPath write FIconPath;
- end;
+    property AppInfo: TLiAppItem read FApp write FApp;
+    property Icon: TBitmap read bmp write bmp;
+  end;
 
- TAppItemList = class(TObjectList)
+  TAppItemList = class(TObjectList)
   protected
-    function getItem(Index: Integer): TAppInfoItem; virtual;
-    procedure setItem(Index: Integer; aItem: TAppInfoItem);virtual;
+    function getItem(Index: Integer): TAppListItem; virtual;
+    procedure setItem(Index: Integer; aItem: TAppListItem); virtual;
   public
-    function Add(aItem: TAppInfoItem): Integer;virtual;
-    function Remove(aItem: TAppInfoItem): Integer;virtual;
-    function IndexOf(aItem: TAppInfoItem): Integer;virtual;
-    procedure Insert(Index: Integer; aItem: TAppInfoItem);virtual;
-    function First: TAppInfoItem;virtual;
-    function Last: TAppInfoItem;virtual;
-    property Items[index: Integer]: TAppInfoItem read getItem write setItem;default;
+    function Add(aItem: TAppListItem): Integer; virtual;
+    function Remove(aItem: TAppListItem): Integer; virtual;
+    function IndexOf(aItem: TAppListItem): Integer; virtual;
+    procedure Insert(Index: Integer; aItem: TAppListItem); virtual;
+    function First: TAppListItem; virtual;
+    function Last: TAppListItem; virtual;
+    property Items[index: Integer]: TAppListItem read getItem write setItem; default;
   end;
 
 implementation
 
-{ TAppInfoItem }
+{ TAppListItem }
 
-constructor TAppInfoItem.Create;
+constructor TAppListItem.Create;
 begin
- bmp:=TBitmap.Create;
+  bmp := TBitmap.Create;
+  FApp := TLiAppItem.Create;
 end;
 
-destructor TAppInfoItem.Destroy;
+destructor TAppListItem.Destroy;
 begin
- bmp.Free;
- inherited;
+  fApp.Free;
+  bmp.Free;
+  inherited;
 end;
 
 { TAppItemList }
 
-function TAppItemList.getItem(Index: Integer): TAppInfoItem;
+function TAppItemList.getItem(Index: Integer): TAppListItem;
 begin
-    Result := TAppInfoItem(inherited Items[Index]);
+  Result := TAppListItem(inherited Items[Index]);
 end;
 
-procedure TAppItemList.setItem(Index: Integer; aItem: TAppInfoItem);
+procedure TAppItemList.setItem(Index: Integer; aItem: TAppListItem);
 begin
- inherited Items[Index] := aItem;
+  inherited Items[Index] := aItem;
 end;
 
-function TAppItemList.Add(aItem: TAppInfoItem): Integer;
+function TAppItemList.Add(aItem: TAppListItem): Integer;
 begin
- Result := inherited Add(aItem);
+  Result := inherited Add(aItem);
 end;
 
-function TAppItemList.First: TAppInfoItem;
+function TAppItemList.First: TAppListItem;
 begin
- Result := TAppInfoItem(inherited First());
+  Result := TAppListItem(inherited First());
 end;
 
-function TAppItemList.IndexOf(aItem: TAppInfoItem): Integer;
+function TAppItemList.IndexOf(aItem: TAppListItem): Integer;
 begin
- Result := inherited IndexOf(aItem);
+  Result := inherited IndexOf(aItem);
 end;
 
-procedure TAppItemList.Insert(Index: Integer; aItem: TAppInfoItem);
+procedure TAppItemList.Insert(Index: Integer; aItem: TAppListItem);
 begin
- inherited Insert(Index, aItem);
+  inherited Insert(Index, aItem);
 end;
 
-function TAppItemList.Last: TAppInfoItem;
+function TAppItemList.Last: TAppListItem;
 begin
- Result := TAppInfoItem(inherited Last());
+  Result := TAppListItem(inherited Last());
 end;
 
-function TAppItemList.Remove(aItem: TAppInfoItem): Integer;
+function TAppItemList.Remove(aItem: TAppListItem): Integer;
 begin
- Result := inherited Remove(aItem);
+  Result := inherited Remove(aItem);
 end;
 
 end.

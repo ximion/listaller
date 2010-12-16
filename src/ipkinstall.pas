@@ -1161,8 +1161,8 @@ begin
           end;
         except
           //Unable to copy the file
-          EmitError(Format(rsCnCopy, [dest + '/' +
-            ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
+          EmitError(Format(rsCnCopy,
+            [dest + '/' + ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
           RollbackInstallation;
           Result := false;
           Abort_FreeAll();

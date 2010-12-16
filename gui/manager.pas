@@ -24,7 +24,8 @@ uses
   Spin, Forms, Menus, LiAppMgr, Distri, AppItem, AppList,
   Buttons, Classes, Dialogs, LCLType, LiTypes, LiUtils, Process, AboutBox,
   CheckLst, ComCtrls, Controls, ExtCtrls, FileUtil, Graphics, IniFiles, StdCtrls,
-  SysUtils, StrLocale, Uninstall, IconLoader, LResources, PackageKit, PkTypes;
+  SysUtils, StrLocale, Uninstall, IconLoader, LResources, PackageKit,
+  PkTypes, LiApp, LiBasic;
 
 type
 
@@ -95,7 +96,7 @@ type
     SpinEdit2: TSpinEdit;
     RepoPage: TPage;
     ConfigPage: TPage;
-    procedure appListItemSelect(Sender: TObject; item: TAppInfoItem);
+    procedure appListItemSelect(Sender: TObject; item: TAppListItem);
     procedure AppViewControlChange(Sender: TObject);
     procedure BitBtn6Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
@@ -132,23 +133,23 @@ type
 
     blst: TStringList;
     //** Selected application item
-    activeRmItem: TAppInfoItem;
+    activeRmItem: TAppListItem;
     //** Visual application list
     appList: TAppListView;
     //** Visual application list for shared apps
     appListSU: TAppListView;
     //** Visual applist for search results
     appResList: TAppListView;
-    procedure UninstallClick(Sender: TObject; Index: Integer; item: TAppInfoItem);
+    procedure UninstallClick(Sender: TObject; Index: Integer; item: TAppListItem);
     function CreateNewUserAppList: TAppListView;
     function CreateNewSuAppList: TAppListView;
   public
     { public declarations }
     DInfo: TDistroInfo;
     //** Information about the application that should be uninstalled
-    uApp: LiAppInfo;
+    uApp: TLiAppItem;
     //** Pointer to our AppManager object
-    amgr: Pointer;
+    aMgr: LiAppManager;
     //** Reference to current active list
     currAppList: TAppListView;
     //** Reload the current application list
@@ -181,25 +182,33 @@ uses pkgconvertdisp;
 
 { TMainForm }
 
-procedure TMnFrm.UninstallClick(Sender: TObject; Index: Integer; item: TAppInfoItem);
+procedure TMnFrm.UninstallClick(Sender: TObject; Index: Integer; item: TAppListItem);
 begin
+  if Assigned(uApp) then
+    FreeAndNil(uApp);
   //Set the AppInfo of the to-be-removed app
-  with uApp do
-  begin
-    AppId := PChar(item.AppId);
-    Name := PChar(item.Name);
-    Version := PChar(item.Version);
-    Author := PChar(item.Author);
-  end;
+  uApp := TLiAppItem.Create;
+  uApp.Assign(item.AppInfo);
   //Start removing by showing the uninstall form
   RMForm.ShowModal;
 end;
 
-procedure OnAppFound(item: PLiAppInfo; action: LiResolveAction; udata: Pointer); cdecl;
+procedure OnAppFound(aItem: LiAppItem; udata: Pointer); cdecl;
+var
+  item: TLiAppItem;
 begin
+  {if (TObject(aItem) is TLiAppItem) then
+    item := TLiAppItem(aItem)
+  else
+  begin
+    perror('Received invalid LiAppItem! [ABORT]');
+    exit;
+  end; }
+  item := TLiAppItem(aItem);
   with MnFrm do
   begin
-    currAppList.ItemFromAppInfo(item^);
+    currAppList.ItemFromAppInfo(item);
+    FreeAndNil(item);
   end;
   Application.ProcessMessages;
 end;
@@ -349,38 +358,38 @@ begin
   if currAppList = appList then
   begin
     SUApps := false;
-    li_mgr_set_sumode(@aMgr, SuApps);
+    li_mgr_set_sumode(aMgr, SuApps);
     if (appList.Count <= 0) or (force) then
     begin
       appList.ClearList;
 { if appList is TAppListView then appList.Free;
  appList:=CreateNewUserAppList;}
-      li_mgr_find_app(@aMgr, fAllApps, '*');
+      li_mgr_find_app(aMgr, fAllApps, '*');
     end;
   end
   else
   if currAppList = appListSU then
   begin
     SUApps := true;
-    li_mgr_set_sumode(@aMgr, SuApps);
+    li_mgr_set_sumode(aMgr, SuApps);
     if (appListSU.Count <= 0) or (force) then
     begin
       appListSU.ClearList;
   {if appListSU is TAppListView then appListSU.Free;
  appListSU:=CreateNewSuAppList;}
-      li_mgr_find_app(@aMgr, fAllApps, '*');
+      li_mgr_find_app(aMgr, fAllApps, '*');
     end;
   end;
 end;
 
-procedure TMnFrm.appListItemSelect(Sender: TObject; item: TAppInfoItem);
+procedure TMnFrm.appListItemSelect(Sender: TObject; item: TAppListItem);
 begin
-  if FileExists(item.IconPath) then
-    AppImage.Picture.LoadFromFile(item.IconPath);
-  AppNameLbl.Caption := item.Name;
-  AppDescLbl.Caption := item.SDesc;
-  if item.Version <> '' then
-    AppVersionLbl.Caption := item.Version
+  if FileExists(item.AppInfo.IconName) then
+    AppImage.Picture.LoadFromFile(item.AppInfo.IconName);
+  AppNameLbl.Caption := item.AppInfo.AName;
+  AppDescLbl.Caption := item.AppInfo.Summary;
+  if item.AppInfo.Version <> '' then
+    AppVersionLbl.Caption := item.AppInfo.Version
   else
     AppVersionLbl.Caption := rsVersionUnknown;
   AppInfoPanel.Visible := true;
@@ -682,7 +691,7 @@ procedure TMnFrm.MenuItem2Click(Sender: TObject);
 var
   rep: TStringList;
   root: Boolean;
-  appcheckmgr: Pointer;
+  appCheckMgr: LiAppManager;
 
   procedure LogQ;
   begin
@@ -696,11 +705,11 @@ var
     Notebook1.Visible := false;
     MBar.Visible := true;
     Application.ProcessMessages;
-    if not li_mgr_check_apps(@appcheckmgr, @rep, root) then
+    if not li_mgr_check_apps(appcheckmgr, rep, root) then
     begin
       if Application.MessageBox(PAnsiChar(rsBrokenDepsFixQ), 'FixDeps',
         MB_YESNO + MB_IconQuestion) = idYes then
-        li_mgr_fix_apps(@appcheckmgr, @rep, root);
+        li_mgr_fix_apps(appcheckmgr, rep, root);
     end;
     Notebook1.Visible := true;
     MBar.Visible := false;
@@ -725,7 +734,7 @@ begin
     else
       PerformCheck;
     LogQ;
-    li_mgr_free(@appcheckmgr);
+    li_object_free(TObject(appcheckmgr));
     rep.Free;
     LeftBar.Enabled := true;
   end;
@@ -753,8 +762,8 @@ begin
       begin
         p := TProcess.Create(nil);
         p.Options := [];
-        p.CommandLine := ExtractFilePath(Application.ExeName) + 'listallgo ' +
-          OpenDialog1.Filename;
+        p.CommandLine := ExtractFilePath(Application.ExeName) +
+          'listallgo ' + OpenDialog1.Filename;
         p.Execute;
         MnFrm.Hide;
         while p.Running do
@@ -1021,10 +1030,12 @@ begin
       for i := 0 to currAppList.Count - 1 do
       begin
         Application.ProcessMessages;
-        if ((pos(LowerCase(FilterEdt.Text), LowerCase(currAppList.AppItems[i].Name)) >
-          0) or (pos(LowerCase(FilterEdt.Text),
-          LowerCase(currAppList.AppItems[i].SDesc)) > 0)) and
-          (LowerCase(FilterEdt.Text) <> LowerCase(currAppList.AppItems[i].Name)) then
+        if ((pos(LowerCase(FilterEdt.Text),
+          LowerCase(currAppList.AppItems[i].AppInfo.AName)) > 0) or
+          (pos(LowerCase(FilterEdt.Text),
+          LowerCase(currAppList.AppItems[i].AppInfo.Summary)) > 0)) and
+          (LowerCase(FilterEdt.Text) <>
+          LowerCase(currAppList.AppItems[i].AppInfo.AName)) then
         begin
           appResList.AddItem(currAppList.AppItems[i]);
         end;
@@ -1056,7 +1067,7 @@ begin
   if not DirectoryExists(PkgRegDir) then
     SysUtils.CreateDir(PkgRegDir);
 
-  uApp.AppId := '';
+  uApp := nil;
 
   SuApps := IsRoot;
 
@@ -1064,7 +1075,7 @@ begin
   PkgRegDir := SyblToPath('$INST') + '/' + LI_APPDB_PREF;
 
 
-  li_mgr_set_sumode(@aMgr, SuApps);
+  li_mgr_set_sumode(aMgr, SuApps);
 
   if not DirectoryExists(PkgRegDir) then
     CreateDir(PkgRegDir);
@@ -1081,9 +1092,8 @@ begin
   tmp.LoadFromFile(PkgRegDir + 'updates.list');
   for i := 1 to tmp.Count - 1 do
   begin
-    UListBox.items.Add(copy(tmp[i], pos(' (', tmp[i]) + 2,
-      length(tmp[i]) - pos(' (', tmp[i]) - 2) + ' (' + copy(tmp[i], 3,
-      pos(' (', tmp[i]) - 3) + ')');
+    UListBox.items.Add(copy(tmp[i], pos(' (', tmp[i]) + 2, length(tmp[i]) -
+      pos(' (', tmp[i]) - 2) + ' (' + copy(tmp[i], 3, pos(' (', tmp[i]) - 3) + ')');
     UListBox.Checked[UListBox.Items.Count - 1] := tmp[i][1] = '-';
   end;
 
@@ -1153,13 +1163,13 @@ begin
 end;}
 
   //Register callback to be notified if new app was found
-  li_mgr_register_app_call(@amgr, @OnAppFound, nil);
+  li_mgr_register_app_call(aMgr, @OnAppFound, nil);
 
   //Register callback to be notified if status was changed
-  li_mgr_register_status_call(@amgr, @OnMgrStatus, nil);
+  li_mgr_register_status_call(aMgr, @OnMgrStatus, nil);
 
   //Register message call
-  li_mgr_register_message_call(@amgr, @OnMgrMessage, nil);
+  li_mgr_register_message_call(aMgr, @OnMgrMessage, nil);
 
   Notebook1.ActivePageComponent := InstalledAppsPage;
 
@@ -1258,7 +1268,9 @@ procedure TMnFrm.FormDestroy(Sender: TObject);
 begin
   //Write configuration which was not applied yet
   WriteConfig();
-  li_mgr_free(@aMgr); //Free appmanager
+  li_object_free(TObject(aMgr)); //Free appmanager
+  if Assigned(uApp) then
+    FreeAndNil(uApp);
   if Assigned(blst) then
     blst.Free;       //Free blacklist
   if Assigned(InstLst) then

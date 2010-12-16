@@ -27,7 +27,7 @@ uses
 type
   PLiAppItem = ^TLiAppItem;
 
-  TLiAppItem = class(TPersistent)
+  TLiAppItem = class
   private
     function GetAId: String;
   protected
@@ -53,7 +53,8 @@ type
     function GenerateAppID: String;
     //** Generate ID string
     function AppIDString: String;
-
+    procedure Assign(ai: TLiAppItem);
+  published
     property AName: String read FName write FName;
     property AId: String read GetAId write FId;
     property PkType: LiPkgType read FPkType write FPkType;
@@ -126,13 +127,29 @@ end;
 function TLiAppItem.GetAId: String;
 begin
   if trim(FId) = '' then
-   FId := GenerateAppId;
+    FId := GenerateAppId;
   Result := FId;
 end;
 
 function TLiAppItem.AppIDString: String;
 begin
   Result := GetAppIDString(FId);
+end;
+
+procedure TLiAppItem.Assign(ai: TLiAppItem);
+begin
+  FName := ai.AName;
+  FId := ai.AId;
+  FPkType := ai.PkType;
+  FSummary := ai.Summary;
+  FVersion := ai.version;
+  FAuthor := ai.Author;
+  FPublisher := ai.Publisher;
+  FIconName := ai.IconName;
+  FCategories := ai.Categories;
+  FInstallDate := ai.TimeStamp;
+  FDependencies := ai.Dependencies;
+  FDesktop := ai.DesktopFile;
 end;
 
 function GetDesktopFileFromID(appID: String): String;
@@ -146,7 +163,6 @@ begin
   Result := '/usr/' + Result;
   Result := Result + '.desktop';
 end;
-
 
 function GetAppIDString(ai: String): String;
 begin
