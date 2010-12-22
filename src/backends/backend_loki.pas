@@ -111,7 +111,7 @@ begin
     EmitInfoMsg(rsRemovingApp);
     t := TProcess.Create(nil);
     t.CommandLine := mandir + '/mojosetup uninstall ' + copy(
-      ExtractFileName(tmp[0]), 1, pos('.', ExtractFileName(tmp[0])) - 1);
+      ExtractFileName(tmp[0]), 1, pos('.', ExtractFileName(tmp[0])) - 1) + ' $@';
     t.Options := [poUsePipes, poWaitonexit];
     tmp.Free;
     EmitProgress(60);

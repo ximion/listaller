@@ -264,7 +264,7 @@ begin
     if (filter = fAppExtern) and (entry.PkType <> ptExtern) then
     else
     if ((filter_text = '*') or (filter_text = '')) or
-      (pos(filter_text, entry.Summary) >= 0) or (pos(filter_text, entry.AName) >= 0) then
+      (pos(filter_text, entry.Summary) > 0) or (pos(filter_text, entry.AName) > 0) then
       if Assigned(FNewApp) then
         FNewApp(Pointer(entry), onnewapp_udata)
       else
