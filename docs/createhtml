@@ -1,9 +1,15 @@
-#!/bin/sh -e
+#!/bin/sh
+set -e
 
 mkdir -p html
-mallard-site-tool cache .
-mallard-site-tool html *.page
-cp img/*.png html/
-mv *.html html/
+cd pages
+mallard-site-tool cache
+mallard-site-tool css
+mallard-site-tool html
+mallard-site-tool media --output=../html/
+mv *.html ../html/
+mv *.css ../html/
 rm *.cache
 rm *.cache.in
+cd ..
+cp img/*.png html/

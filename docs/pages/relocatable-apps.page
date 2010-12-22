@@ -1,4 +1,4 @@
-<page xmlns="http://projectmallard.org/1.0/" type="topic" id="relocateapps">
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="relocatable-apps">
 <info>
   <link type="guide" xref="index"/>
 </info>
@@ -130,6 +130,27 @@ The full path of this application is: default fallback path]]></code>
 <title>Initialization</title>
 
 <p>BinReloc <em>must</em> be initialize by calling one of the BinReloc initialization functions:</p>
+
+<p>If you're using BinReloc in an application, then call <code>br_init()</code>. The definition is:</p>
+	<listing><code><![CDATA[int br_init (BrInitError *error);]]></code>
+</listing>
+	<p>This function returns 1 on success, and 0 if BinReloc failed to initialize.
+	If BinReloc failed to initialize, then the error code will be stored in <code>error</code>.
+	The following error codes are available:</p>
+<listing><code><![CDATA[typedef enum {
+        /* Cannot allocate memory. */
+        BR_INIT_ERROR_NOMEM,
+        /* Unable to open /proc/self/maps; see errno for details. */
+        BR_INIT_ERROR_OPEN_MAPS,
+        /* Unable to read from /proc/self/maps; see errno for details. */
+        BR_INIT_ERROR_READ_MAPS,
+        /* The file format of /proc/self/maps is invalid; kernel bug? */
+        BR_INIT_ERROR_INVALID_MAPS,
+        /* BinReloc is disabled. */
+        BR_INIT_ERROR_DISABLED
+} BrInitError;
+]]></code>
+</listing>
 
 </section>
 
