@@ -86,7 +86,7 @@ type
     gtUNKNOWN);
 
   //** Listaller package types
-  LiPkgType = (ptNative, ptExtern, ptLinstall, ptDLink, ptContainer, ptUnknown);
+  LiPkgType = (ptUnknown, ptNative, ptExtern, ptLinstall, ptDLink, ptContainer);
 
   //** Filter for apps
   LiFilter = (fAllApps, fAppNative, fAppIPK, fAppExtern, fDeps);

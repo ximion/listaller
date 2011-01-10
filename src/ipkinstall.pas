@@ -206,6 +206,7 @@ begin
 
   //Init
   AddUpdateSource := false;
+  EmitStatusChange(LIS_None);
 end;
 
 destructor TLiInstallation.Destroy;
@@ -797,7 +798,6 @@ var
   WDir: String;
 begin
   Result := true;
-  EmitStatusChange(LIS_Started);
   try
     cont := TIPKControl.Create(unpkg.WDir + '/arcinfo.pin'); //Read IPK configuration
     cont.LangCode := GetLangID; //Set language code, so we get localized entries
@@ -852,7 +852,6 @@ begin
   except
     Result := false;
   end;
-  EmitStatusChange(LIS_Finished);
 end;
 
 {procedure TLiInstallation.DBusThreadStatusChange(ty: LI_STATUS; Data: TLiProcData);
@@ -941,7 +940,6 @@ begin
   proc := nil;
   pkit := nil;
   hash := nil;
-  EmitStatusChange(LIS_Started);
   // Send information about forced stuff:
   if pos('dependencies', forces) > 0 then
     EmitInfoMsg('Dependencies are forced. Skipping dependency check.');
@@ -1161,8 +1159,8 @@ begin
           end;
         except
           //Unable to copy the file
-          EmitError(Format(rsCnCopy,
-            [dest + '/' + ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
+          EmitError(Format(rsCnCopy, [dest + '/' +
+            ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
           RollbackInstallation;
           Result := false;
           Abort_FreeAll();
@@ -1350,7 +1348,6 @@ begin
 
   Result := true;
   EmitProgress(100);
-  EmitStatusChange(LIS_Finished);
   EmitStageMsg(rsFinished);
   sleep(120);
 end;
@@ -1374,7 +1371,6 @@ var
   end;
 
 begin
-  EmitStatusChange(LIS_Started);
   max := 100 / (Dependencies.Count * 4);
   mnpos := 0;
   EmitProgress(Round(mnpos * max));
@@ -1558,7 +1554,6 @@ end;}
   end;
 
   EmitStageMsg(rsSuccess);
-  EmitStatusChange(LIS_Finished);
 end;
 
 // Internal methods to catch PK messages
@@ -1817,46 +1812,24 @@ begin
 
   FTP.DSock.Onstatus := @NetSockHook;
 
-{ //??? This needs a better solution - take proxy settings from system settings?
- cnf:=TInifile.Create(ConfigDir+'config.cnf');
- if cnf.ReadBool('Proxy','UseProxy',false) then
- begin
-  //Set HTTP
-  HTTP.ProxyPort:=cnf.ReadString('Proxy','hPort','');
-  HTTP.ProxyHost:=cnf.ReadString('Proxy','hServer','');
-  HTTP.ProxyUser:=cnf.ReadString('Proxy','Username','');
-  HTTP.ProxyPass:=cnf.ReadString('Proxy','Password',''); //The PW is visible in the file! It should be crypted
-
- //??? Not needed
-  //if DInfo.Desktop='GNOME' then
-  //  begin
-  //HTTP.ProxyPass:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_user');
-  //HTTP.ProxyUser:=CmdResult('gconftool-2 -g /system/http_proxy/authentication_password');
-   //end;
-
- //Set FTP
- FTP.ProxyPort:=cnf.ReadString('Proxy','fPort','');
- FTP.ProxyHost:=cnf.ReadString('Proxy','fServer','');
- FTP.ProxyUser:=cnf.ReadString('Proxy','Username','');
- FTP.ProxyPass:=cnf.ReadString('Proxy','Password','');
-
- end;
-  cnf.Free;}
-
-  if pkType = ptLinstall then
-    Result := RunNormalInstallation
-  else
-  if pkType = ptDLink then
-    Result := RunDLinkInstallation
-  else
-  if pkType = ptContainer then
-    Result := RunContainerInstallation
-  else
+  EmitStatusChange(LIS_Started);
+  case pkType of
+    ptLinstall: Result := RunNormalInstallation;
+    ptDLink: Result := RunDLinkInstallation;
+    ptContainer: Result := RunContainerInstallation;
+  end;
+  if pkType = ptUnknown then
   begin
     EmitInfoMsg(rsCouldNotDetectPkgType);
     EmitInfoMsg('TLiInstallation failure.');
     Result := false;
   end;
+
+  // Emit whether actions failed or not
+  if Result then
+    EmitStatusChange(LIS_Finished)
+  else
+    EmitStatusChange(LIS_Failed);
 
   //Free network objects
   HTTP.Sock.OnStatus := nil;
