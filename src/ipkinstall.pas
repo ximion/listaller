@@ -1825,12 +1825,11 @@ begin
     Result := false;
   end;
 
-  // Emit whether actions failed or not
+  // Emit LIS_Successful if there were no errors
   if Result then
-    EmitStatusChange(LIS_Successful)
-  else
-    EmitStatusChange(LIS_Failed);
+    EmitStatusChange(LIS_Successful);
 
+  // We're done.
   EmitStatusChange(LIS_Finished);
 
   //Free network objects
