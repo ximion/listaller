@@ -33,7 +33,7 @@ function li_mgr_register_app_call(mgr: LiAppManager; call: LiAppEvent; user_data
 function li_mgr_register_message_call(mgr: LiAppManager;call: LiMessageEvent;user_data: Pointer): Boolean;cdecl;external liblistaller;
 procedure li_mgr_set_sumode(mgr: LiAppManager;md: Boolean);cdecl;external liblistaller;
 function li_mgr_sumode(mgr: LiAppManager): Boolean;cdecl;external liblistaller;
-function li_mgr_remove_app(mgr: LiAppManager; item: LiAppItem): Boolean;cdecl;external liblistaller;
+function li_mgr_remove_app(mgr: LiAppManager; appId: PChar): Boolean;cdecl;external liblistaller;
 function li_mgr_check_apps(mgr: LiAppManager;log: TStringList;root: Boolean): Boolean;cdecl;external liblistaller;
 function li_mgr_fix_apps(mgr: LiAppManager;log: TStringList;root: Boolean): Boolean;cdecl;external liblistaller;
 

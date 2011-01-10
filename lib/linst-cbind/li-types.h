@@ -41,12 +41,13 @@ typedef void LiAppItem;
 
 typedef enum {
       LIS_None,
-      LIS_Stage,
       LIS_Started,
-      LIS_Progress,
-      LIS_Failed,
+      LIS_Stage,
       LIS_Authorized,
       LIS_Blocked,
+      LIS_Progress,
+      LIS_Failed,
+      LIS_Successful,
       LIS_Finished
 } LI_STATUS;
 
@@ -86,12 +87,12 @@ typedef enum {
 } AppCategory;
 
 typedef enum {
+      ptUnknown,
       ptNative,
       ptExtern,
       ptLinstall,
       ptDLink,
-      ptContainer,
-      ptUnknown
+      ptContainer
 } LiPkgType;
 
 typedef enum {
@@ -117,7 +118,7 @@ typedef void (*TProgressEvent) (int pos,void* user_data);
 
 typedef void (*LiAppEvent) (LiAppItem *item,void* user_data);
 
-typedef void (*LiNewUpdateEvent) (char *name,int id,void* user_data);
+typedef void (*LiNewUpdateEvent) (char *Name,int id,void* user_data);
 
 
 

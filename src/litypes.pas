@@ -28,7 +28,7 @@ const
   //** Name of the Listaller library
   liblistaller = 'liblistaller.so';
 
-  //** Version of Listaller API
+//** Version of Listaller API
   {$DEFINE APIVersion040}
 
 type
@@ -45,14 +45,16 @@ type
   LiAppItem = Pointer;
 
   //** Status of current job
-  LI_STATUS = (LIS_None, LIS_Stage, LIS_Started, LIS_Progress, LIS_Failed,
-            LIS_Authorized, LIS_Blocked, LIS_Finished);
+  LI_STATUS = (LIS_None, LIS_Started, LIS_Stage, LIS_Authorized,
+    LIS_Blocked, LIS_Progress,
+    LIS_Failed, LIS_Successful, LIS_Finished);
 
   //** Request result types
   LI_REQUEST_RES = (LIRQS_Yes, LIRQS_No, LIRQS_OK);
 
   //** Different status
-  LI_MESSAGE = (LIM_None, LIM_Info, LIM_Warning, LIM_Question_YesNo, LIM_Question_AbortContinue);
+  LI_MESSAGE = (LIM_None, LIM_Info, LIM_Warning, LIM_Question_YesNo,
+    LIM_Question_AbortContinue);
 
   //** Data assigned to a status change
   LiStatusData = record
@@ -66,7 +68,7 @@ type
     user_data: Pointer); cdecl;
   //** Callback for messages & user requests
   LiMessageEvent = function(mtype: LI_MESSAGE; const text: PChar;
-                            user_data: Pointer): LI_REQUEST_RES; cdecl;
+    user_data: Pointer): LI_REQUEST_RES; cdecl;
 
   //** Called if progress was changed; only for internal use
   TProgressEvent = procedure(pos: Integer; user_data: Pointer) of object;
@@ -95,7 +97,7 @@ type
   LiAppEvent = procedure(item: LiAppItem; user_data: Pointer); cdecl;
 
   //** Shows information about new update
-  LiNewUpdateEvent = procedure(name: PChar; id: Integer; user_data: Pointer); cdecl;
+  LiNewUpdateEvent = procedure(Name: PChar; id: Integer; user_data: Pointer); cdecl;
 
   //** Package signature status
   PkgSignatureState = (psNone, psTrusted, psUntrusted);

@@ -152,11 +152,9 @@ procedure TLiStatusObject.EmitStatusChange(state: LI_STATUS; const msg: String =
 begin
   sdata.Text := PChar(msg);
   if state = LIS_Started then
-  pdebug('LISTATUS::CHANGED >> LIS_Started!');
+    pdebug('LISTATUS::CHANGED >> LIS_Started!');
   if state = LIS_Finished then
-  pdebug('LISTATUS::CHANGED >> LIS_Finished!');
-  if state = LIS_Failed then
-  pdebug('LISTATUS::CHANGED >> LIS_Failed!');
+    pdebug('LISTATUS::CHANGED >> LIS_Finished!');
   if Assigned(FStatus) then
     FStatus(state, sdata, status_udata);
 end;

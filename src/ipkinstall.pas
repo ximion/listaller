@@ -1827,9 +1827,11 @@ begin
 
   // Emit whether actions failed or not
   if Result then
-    EmitStatusChange(LIS_Finished)
+    EmitStatusChange(LIS_Successful)
   else
     EmitStatusChange(LIS_Failed);
+
+  EmitStatusChange(LIS_Finished);
 
   //Free network objects
   HTTP.Sock.OnStatus := nil;
