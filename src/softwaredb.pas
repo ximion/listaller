@@ -209,6 +209,7 @@ end;
 function TSoftwareDB.GetApplicationList(filter: LiFilter; filter_text: String;
   blacklist: TStringList = nil): Boolean;
 begin
+  pdebug('Database filter_text is: '+filter_text);
   if (filter <> fAppIPK) then
     Result := aiDB.GetApplicationList(filter, filter_text, blacklist);
   if ((filter = fAllApps) or (filter = fAppIPK)) and (Result) and
