@@ -14,7 +14,7 @@
 
 { -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2009 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2009-2010 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU Lesser General Public License Version 2.1
  *
@@ -170,6 +170,9 @@ procedure pk_client_simulate_remove_packages_async(client:PPkClient; package_ids
                 progress_user_data:gpointer; callback_ready:GAsyncReadyCallback; user_data:gpointer);cdecl;external pklib2;
 procedure pk_client_simulate_update_packages_async(client:PPkClient; package_ids:PPgchar; cancellable:PGCancellable; progress_callback:PkProgressCallback; progress_user_data:gpointer; 
                 callback_ready:GAsyncReadyCallback; user_data:gpointer);cdecl;external pklib2;
+(* Const before type ignored *)
+procedure pk_client_upgrade_system_async(client:PPkClient; distro_id:Pgchar; upgrade_kind:PkUpgradeKindEnum; cancellable:PGCancellable; progress_callback:PkProgressCallback; 
+                progress_user_data:gpointer; callback_ready:GAsyncReadyCallback; user_data:gpointer);cdecl;external pklib2;
 (* Const before type ignored *)
 procedure pk_client_adopt_async(client:PPkClient; transaction_id:Pgchar; cancellable:PGCancellable; progress_callback:PkProgressCallback; progress_user_data:gpointer; 
                 callback_ready:GAsyncReadyCallback; user_data:gpointer);cdecl;external pklib2;

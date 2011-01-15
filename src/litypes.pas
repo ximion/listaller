@@ -59,6 +59,7 @@ type
   //** Data assigned to a status change
   LiStatusData = record
     text: PChar;
+    error_code: Integer;
     exprogress: Longint;
     mnprogress: Longint;
   end;

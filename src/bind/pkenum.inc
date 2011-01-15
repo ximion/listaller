@@ -14,7 +14,7 @@
 
 { -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2007-2008 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2007-2010 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU Lesser General Public License Version 2.1
  *
@@ -59,6 +59,7 @@ in define line 34 *)
      * Icons that have to represent the whole "aim" of the transaction will use
      * these constants
      * }
+    { Since: 0.6.11  }
 
        PPkRoleEnum = Pointer;
        PkRoleEnum = (PK_ROLE_ENUM_UNKNOWN,PK_ROLE_ENUM_CANCEL,
@@ -81,7 +82,8 @@ in define line 34 *)
          PK_ROLE_ENUM_SIMULATE_INSTALL_PACKAGES,
          PK_ROLE_ENUM_SIMULATE_REMOVE_PACKAGES,
          PK_ROLE_ENUM_SIMULATE_UPDATE_PACKAGES,
-         PK_ROLE_ENUM_LAST);
+         PK_ROLE_ENUM_UPGRADE_SYSTEM,PK_ROLE_ENUM_LAST
+         );
     {*
      * PkStatusEnum:
      *
@@ -262,6 +264,7 @@ in define line 34 *)
          PK_ERROR_ENUM_PACKAGE_DATABASE_CHANGED,
          PK_ERROR_ENUM_PROVIDE_TYPE_NOT_SUPPORTED,
          PK_ERROR_ENUM_INSTALL_ROOT_INVALID,
+         PK_ERROR_ENUM_CANNOT_FETCH_SOURCES,
          PK_ERROR_ENUM_LAST);
     {*
      * PkGroupEnum:
@@ -479,6 +482,16 @@ in define line 34 *)
        PkAuthorizeEnum = (PK_AUTHORIZE_ENUM_UNKNOWN,PK_AUTHORIZE_ENUM_YES,
          PK_AUTHORIZE_ENUM_NO,PK_AUTHORIZE_ENUM_INTERACTIVE,
          PK_AUTHORIZE_ENUM_LAST);
+    {*
+     * PkUpgradeKindEnum:
+     *
+     * The type of distribution upgrade to perform
+     * }
+
+       PPkUpgradeKindEnum = Pointer;
+       PkUpgradeKindEnum = (PK_UPGRADE_KIND_ENUM_UNKNOWN,PK_UPGRADE_KIND_ENUM_MINIMAL,
+         PK_UPGRADE_KIND_ENUM_DEFAULT,PK_UPGRADE_KIND_ENUM_COMPLETE,
+         PK_UPGRADE_KIND_ENUM_LAST);
     { general  }
 
 procedure pk_enum_test(user_data:gpointer);cdecl;external pklib2;
@@ -561,5 +574,9 @@ function pk_media_type_enum_to_string(media_type:PkMediaTypeEnum):Pgchar;cdecl;e
 function pk_authorize_type_enum_from_string(authorize_type:Pgchar):PkAuthorizeEnum;cdecl;external pklib2;
 (* Const before type ignored *)
 function pk_authorize_type_enum_to_string(authorize_type:PkAuthorizeEnum):Pgchar;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_upgrade_kind_enum_from_string(upgrade_kind:Pgchar):PkUpgradeKindEnum;cdecl;external pklib2;
+(* Const before type ignored *)
+function pk_upgrade_kind_enum_to_string(upgrade_kind:PkUpgradeKindEnum):Pgchar;cdecl;external pklib2;
 {$endif}
     { __PK_ENUM_H  }

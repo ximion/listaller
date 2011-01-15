@@ -42,7 +42,7 @@ type
     procedure EmitError(msg: String);
     function EmitUserRequestYesNo(s: String): LI_REQUEST_RES;
     function EmitUserRequestAbortContinue(s: String): LI_REQUEST_RES;
-    procedure EmitStatusChange(state: LI_STATUS; const msg: String = '');
+    procedure EmitStatusChange(state: LI_STATUS; const msg: String = ''; const errcode: Integer = 0);
     procedure EmitProgress(i: Integer);
     procedure EmitExProgress(i: Integer);
   public
@@ -108,6 +108,9 @@ begin
   else
     perror(msg);
   sdata.text := ''; //Zero
+
+  // Send failed message
+  EmitStatusChange(LIS_Finished, '', 1);
 end;
 
 function TLiStatusObject.EmitUserRequestYesNo(s: String): LI_REQUEST_RES;
@@ -148,9 +151,10 @@ begin
     FStatus(LIS_Progress, sdata, status_udata);
 end;
 
-procedure TLiStatusObject.EmitStatusChange(state: LI_STATUS; const msg: String = '');
+procedure TLiStatusObject.EmitStatusChange(state: LI_STATUS; const msg: String = ''; const errcode: Integer = 0);
 begin
   sdata.Text := PChar(msg);
+  sdata.Error_Code := errcode;
   if state = LIS_Started then
     pdebug('LISTATUS::CHANGED >> LIS_Started!');
   if state = LIS_Finished then

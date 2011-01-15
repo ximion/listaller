@@ -431,8 +431,8 @@ begin
   Result := false;
   while not ds.EOF do
   begin
-    if (ds.FieldByName('Name').AsString = Name) and
-      (ds.FieldByName('Version').AsString = Version) then
+    if (ds.FieldByName('dep_name').AsString = Name) and
+      (ds.FieldByName('dep_version').AsString = Version) then
     begin
       Result := true;
       break;

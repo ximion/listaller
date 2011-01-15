@@ -88,11 +88,11 @@ begin
     Delete(s, length(s) - 1, 1);
 
   repeat
-    while (s[1] <> '[') and (length(s) > 0) do
+    while (length(s) > 0) and (s[1] <> '[') do
     begin
       Delete(s, 1, 2);
     end;
-    if s[1] = '[' then
+    if (length(s) > 0) and (s[1] = '[') then
     begin
       Delete(s, 1, 2);
       pkg.Distro := copy(s, 1, Pos('''', s) - 1);

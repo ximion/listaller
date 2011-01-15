@@ -67,6 +67,7 @@ typedef enum {
 
 typedef struct {
       char *text;
+      int error_code;
       int exprogress;
       int mnprogress;
 } LiStatusData;
