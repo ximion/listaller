@@ -1,0 +1,12 @@
+Listaller tests info file
+=========================
+
+Quick notes about the Listaller testing directory:
+ * These are _not_ automatic unit tests!
+ * Each test has to be compiled manually
+ * Some of the testing stuff requires the Foo test package
+ * Ensure PackageKit is installed and running before performing a test
+ * Most tests are command-line tools, but some have a GUI. Just compile it
+   for the widgetset you like. (LCL makes it possible!)
+ * Some tests might not be up-to-date. Please contact me if they need to be updated!
+ * This directory contains some useful developer stuff too. Just play around a little :P
