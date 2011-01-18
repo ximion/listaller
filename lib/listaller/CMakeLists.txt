@@ -13,15 +13,40 @@ set(lisrc ${CMAKE_SOURCE_DIR}/src)
 set(llistaller_base_sources ${lisrc}/liversion.inc
 	${llistaller_project}
 	${lisrc}/liversion.inc
+	${lisrc}/appinstalldb.pas
+	${lisrc}/callbackprocess.pas
 	${lisrc}/dderesolve.pas
 	${lisrc}/depmanage.pas
+	${lisrc}/distri.pas
+	${lisrc}/gpgsign.pas
+	${lisrc}/hashfunc.pas
+	${lisrc}/iconloader.pas
+	${lisrc}/ipkcdef10.pas
 	${lisrc}/ipkinstall.pas
+	${lisrc}/ipkpackage11.pas
+	${lisrc}/liapp.pas
 	${lisrc}/lidbusproc.pas
+	${lisrc}/lifileutil.inc
+	${lisrc}/lifileutil.pas
+	${lisrc}/lihash.pas
 	${lisrc}/limanageapp.pas
-	${lisrc}/liupdateapp.pas
-	${lisrc}/appinstalldb.pas
 	${lisrc}/listallerdb.pas
+	${lisrc}/listatusobj.pas
+	${lisrc}/litranslator.pas
+	${lisrc}/litypes.pas
+	${lisrc}/litypes.pas.bak
+	${lisrc}/liupdateapp.pas
+	${lisrc}/liutils.pas
+	${lisrc}/liutils.pas.bak
+	${lisrc}/mtpcpu.pas
+	${lisrc}/mtprocs.pas
+	${lisrc}/nglclstrconsts.pas
+	${lisrc}/ngmasks.pas
+	${lisrc}/regexpr.pas
+	${lisrc}/simdbus.pas
 	${lisrc}/softwaredb.pas
+	${lisrc}/strlocale.pas
+	${lisrc}/tararchive.pas
 )
 
 set(listaller_libname "${LISTALLER_LIB}.${LIBS_SOVERSION}")
