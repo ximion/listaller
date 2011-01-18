@@ -28,6 +28,10 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
+#if defined(__APPLE__) && defined(__MACH__)
+#include <sys/param.h>
+#include <mach-o/dyld.h>
+#endif
 /*** INCLUDE END */
 
 /*** ERROR BEGIN */
@@ -60,6 +64,16 @@ _br_find_exe (BrInitError *error)
 	if (error)
 		*error = BR_INIT_ERROR_DISABLED;
 	return NULL;
+#elif defined(sun) || defined(__sun)
+	char *path;
+	path = getexecname();
+	return strdup(path);
+#elif defined(__APPLE__) && defined(__MACH__)
+    char path[MAXPATHLEN+1];
+    uint32_t path_len = MAXPATHLEN;
+    // SPI first appeared in Mac OS X 10.2
+    _NSGetExecutablePath(path, &path_len);
+    return strdup(path);
 #else
 	char *path, *path2, *line, *result;
 	size_t buf_size;
@@ -88,7 +102,11 @@ _br_find_exe (BrInitError *error)
 		return NULL;
 	}
 
+#ifdef __FreeBSD__
+	strncpy (path2, "/proc/self/file", buf_size - 1);
+#else
 	strncpy (path2, "/proc/self/exe", buf_size - 1);
+#endif
 
 	while (1) {
 		int i;
@@ -123,6 +141,45 @@ _br_find_exe (BrInitError *error)
 		strncpy (path, path2, buf_size - 1);
 	}
 
+#if defined(__FreeBSD__)
+{
+    char *name, *start, *end;
+	char *buffer = NULL, *temp;
+	struct stat finfo;
+
+	name = (char*) getprogname();
+    start = end = getenv("PATH");
+
+    while (*end) {
+	 end = strchr (start, ':');
+	 if (!end) end = strchr (start, '\0');
+
+	 /* Resize `buffer' for path component, '/', name and a '\0' */
+	 temp = realloc (buffer, end - start + 1 + strlen (name) + 1);
+	 if (temp) {
+	    buffer = temp;
+
+	    strncpy (buffer, start, end - start);
+	    *(buffer + (end - start)) = '/';
+	    strcpy (buffer + (end - start) + 1, name);
+
+	    if ((stat(buffer, &finfo)==0) && (!S_ISDIR (finfo.st_mode))) {
+	       path = strdup(buffer);
+	       free (buffer);
+	       return path;
+	    }
+	 } /* else... ignore the failure; `buffer' is still valid anyway. */
+
+	 start = end + 1;
+      }
+      /* Path search failed */
+      free (buffer);
+    
+	if (error)
+		*error = BR_INIT_ERROR_DISABLED;
+	return NULL;
+}
+#endif
 
 	/* readlink() or stat() failed; this can happen when the program is
 	 * running in Valgrind 2.2. Read from /proc/self/maps as fallback. */
