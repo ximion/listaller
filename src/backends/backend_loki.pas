@@ -34,7 +34,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    function Initialize(ai: String): Boolean; override;
+    function Initialize(app: TLiAppItem): Boolean; override;
     function CanBeUsed: Boolean; override;
     function Run: Boolean; override;
   end;
@@ -54,9 +54,9 @@ begin
   inherited;
 end;
 
-function TLokiBackend.Initialize(ai: String): Boolean;
+function TLokiBackend.Initialize(app: TLiAppItem): Boolean;
 begin
-  dskFileName := GetDesktopFileFromID(ai);
+  dskFileName := app.DesktopFile;
 
   Result := true;
 end;

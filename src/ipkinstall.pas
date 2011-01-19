@@ -3,7 +3,7 @@
  * Licensed under the GNU General Public License Version 3
  *
  * This unit is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as publishedf by the Free Software
+ * the terms of the GNU General Public License as published by the Free Software
  * Foundation, version 3.
  *
  * This unit is distributed in the hope that it will be useful, but WITHOUT
@@ -1033,7 +1033,7 @@ begin
             EmitError(StrSubst(rsInstPkgFailed, '%s', Dependencies[i]) +
               #10 + rsEMsg + #10 + pkit.LastErrorMessage + #10 +
               StrSubst(rsViewLog, '%p', '/tmp/install-' +
-              app.AppIDString + '.log'));
+              app.AppUniqueStr + '.log'));
             Result := false;
             Abort_FreeAll();
             exit;
@@ -1429,7 +1429,7 @@ end;}
       begin
         EmitError(rsPkQueryFailed + #10 + rsEMsg + #10 +
           pkit.LastErrorMessage + #10 + StrSubst(rsViewLog, '%p',
-          '/tmp/install-' + app.AppIDString + '.log'));
+          '/tmp/install-' + app.AppUniqueStr + '.log'));
         Result := false;
         Abort_FreeAll();
         exit;

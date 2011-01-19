@@ -3,7 +3,7 @@
  * Licensed under the GNU General Public License Version 3
  *
  * This unit is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as publishedf by the Free Software
+ * the terms of the GNU General Public License as published by the Free Software
  * Foundation, version 3.
  *
  * This unit is distributed in the hope that it will be useful, but WITHOUT
@@ -23,8 +23,8 @@ interface
 uses
   Classes, GetText, LiTypes, LiUtils, MTProcs, PkTypes, Process,
   IniFiles, SysUtils, StrLocale, LiFileUtil, PackageKit, SoftwareDB,
-  LiStatusObj, LiApp, {deprecated} LiDBusProc,
-  // Backends
+  LiStatusObj, LiApp,
+  // Uninstaller backends
   LiBackend,
   Backend_IPK,
   Backend_Loki,
@@ -50,10 +50,8 @@ type
     procedure EmitNewApp(oj: TLiAppItem);
 
     function IsInList(nm: String; list: TStringList): Boolean;
-    //** Catch status messages from DBus action
-    procedure DBusStatusChange(ty: LI_STATUS; Data: TLiProcData);
     //** Run a backend
-    function RunBackend(backend: TLiBackend; appId: String): Boolean;
+    function RunBackend(backend: TLiBackend; app: TLiAppItem): Boolean;
   protected
     //Some user data for callbacks
     newapp_udata: Pointer;
@@ -450,28 +448,14 @@ begin
   sdb.Free;
 end;
 
-procedure TLiAppManager.DBusStatusChange(ty: LI_STATUS; Data: TLiProcData);
-begin
-  case Data.changed of
-    pdMainProgress: EmitProgress(Data.mnprogress);
-    pdInfo: EmitInfoMsg(Data.msg);
-    pdError: EmitError(Data.msg);
-    pdStatus:
-    begin
-      if Assigned(FStatus) then
-        FStatus(ty, sdata, status_udata);
-    end;
-  end;
-end;
-
-function TLiAppManager.RunBackend(backend: TLiBackend; appId: String): Boolean;
+function TLiAppManager.RunBackend(backend: TLiBackend; app: TLiAppItem): Boolean;
 begin
   Result := false;
   // Attach status handler
   backend.RegisterOnStatus(FStatus, status_udata);
   backend.RegisterOnMessage(FMessage, message_udata);
   backend.RootMode := SUMode;
-  backend.Initialize(appId);
+  backend.Initialize(app);
   if backend.CanBeUsed then
   begin
     // Use it!
@@ -487,7 +471,6 @@ end;
 procedure TLiAppManager.UninstallApp(appId: String);
 var
   id: String;
-  buscmd: ListallerBusCommand;
 begin
   id := appId;
   if id = '' then
@@ -499,7 +482,7 @@ begin
 
   pdebug('Application UId is: ' + id);
 
-  // !!! SUPERUSER STUFF NEEDS REIMPLEMENTATION!
+  // Check if we need to run as root
   if (SUMode) and (not IsRoot) then
   begin
     //Create worker thread for this action

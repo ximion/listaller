@@ -1,7 +1,6 @@
-(* Copyright (C) 2010 Matthias Klumpp
+(* Copyright (C) 2010-2011 Matthias Klumpp
  *
- * Authors:
- *  Matthias Klumpp
+ * Licensed under the GNU General Public License Version 3
  *
  * This unit is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -25,14 +24,14 @@ uses
   Classes, SysUtils, LiTypes, LiStatusObj, LiApp;
 
 type
-  TLiBackend = class (TLiStatusObject)
+  TLiBackend = class(TLiStatusObject)
   private
   protected
     sumode: Boolean;
   public
-    function Initialize(appId: String): boolean; virtual; abstract;
-    function CanBeUsed: boolean; virtual; abstract;
-    function Run: boolean; virtual; abstract;
+    function Initialize(app: TLiAppItem): Boolean; virtual; abstract;
+    function CanBeUsed: Boolean; virtual; abstract;
+    function Run: Boolean; virtual; abstract;
     property RootMode: Boolean read sumode write sumode;
   end;
 

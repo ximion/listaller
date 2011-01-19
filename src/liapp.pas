@@ -1,7 +1,6 @@
-(* Copyright (C) 2010 Matthias Klumpp
+(* Copyright (C) 2010-2011 Matthias Klumpp
  *
- * Authors:
- *  Matthias Klumpp
+ * Licensed under the GNU General Public License Version 3
  *
  * This unit is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -14,7 +13,7 @@
  * You should have received a copy of the GNU General Public License v3
  * along with this unit. If not, see <http://www.gnu.org/licenses/>.
  *)
-// Defines a Listaller application
+//** Defines the Listaller application item (used to identify applications)
 unit liapp;
 
 {$mode objfpc}{$H+}
@@ -52,7 +51,7 @@ type
     //** Create an appID from .desktop-file path
     function GenerateAppID: String;
     //** Generate ID string
-    function AppIDString: String;
+    function AppUniqueStr: String;
     procedure Assign(ai: TLiAppItem);
   published
     property AName: String read FName write FName;
@@ -131,7 +130,7 @@ begin
   Result := FId;
 end;
 
-function TLiAppItem.AppIDString: String;
+function TLiAppItem.AppUniqueStr: String;
 begin
   Result := GetAppIDString(FId);
 end;

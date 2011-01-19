@@ -1,7 +1,6 @@
-(* Copyright (C) 2010 Matthias Klumpp
+(* Copyright (C) 2010-2011 Matthias Klumpp
  *
- * Authors:
- *  Matthias Klumpp
+ * Licensed under the GNU General Public License Version 3
  *
  * This unit is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -37,7 +36,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    function Initialize(ai: String): Boolean; override;
+    function Initialize(app: TLiAppItem): Boolean; override;
     function CanBeUsed: Boolean; override;
     function Run: Boolean; override;
 
@@ -62,9 +61,9 @@ begin
   inherited;
 end;
 
-function TIPKBackend.Initialize(ai: String): Boolean;
+function TIPKBackend.Initialize(app: TLiAppItem): Boolean;
 begin
-  appId := ai;
+  appId := app.AId;
   Result := true;
 end;
 
