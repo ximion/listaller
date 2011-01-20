@@ -464,6 +464,30 @@ begin
   backend.Free;
 end;
 
+// Invoked when the status of a TPackageKit instance has changed
+procedure pkit_status_change_cb(status: LI_STATUS; details: LiStatusData;
+  udata: Pointer); cdecl;
+var
+  mgr: TLiAppManager;
+begin
+  // Forward PK status data to LiInstallation owner, after applying a few
+  //  modifications.
+  if not (TObject(udata) is TLiAppManager) then
+  begin
+    perror('Received invalid TLiInstallation instance!');
+    exit;
+  end;
+  mgr := TObject(udata) as TLiAppManager;
+
+  if status = LIS_Progress then
+  begin
+    mgr.EmitExProgress(details.mnprogress);
+    exit;
+  end;
+
+  mgr.EmitStatusChange(status, details.text, details.error_code);
+end;
+
 //Initialize appremove: Detect rdepends if package is native, if package is native, add "pkg:" to
 // identification string - if not, pkg has to be Loki/Mojo, so intitiate Mojo-Removal. After rdepends and pkg resolve is done,
 // run uninstall as root if necessary. At the end, RemoveAppInternal() is called (if LOKI-Remove was not run) to uninstall
@@ -487,13 +511,16 @@ begin
 
   pdebug('Application UId is: ' + app.AId);
 
-  // Check if we need to run as root
+  // Check if we need to run via PK daemon
   if (SUMode) and (not IsRoot) then
   begin
     // Call PackageKit to perform this remove action for us
     pkit := TPackageKit.Create;
-    // TODO: Implement the missing bits...
-    pkit.OnProgress := nil;
+    // Connect PK object to LiAppManager callback methods
+    pkit.RegisterOnStatus(@pkit_status_change_cb, self);
+    pkit.RegisterOnMessage(FMessage, message_udata);
+
+    // No remove the app via LI-enabled PK
     if not pkit.RemovePkg(app.AId) then
       pwarning('PK uninstall query failed!');
 

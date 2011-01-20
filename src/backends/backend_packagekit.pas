@@ -31,9 +31,6 @@ type
     pkg: String;
     pkit: TPackageKit;
     appId: String;
-
-    //** Receive the PackageKit progress
-    procedure PkitProgress(pos: Integer; xd: Pointer);
   public
     constructor Create;
     destructor Destroy; override;
@@ -51,7 +48,9 @@ constructor TPackageKitBackend.Create;
 begin
   inherited;
   pkit := TPackageKit.Create;
-  pkit.OnProgress := @PkitProgress;
+  // Connect PK object to inherited callback methods
+  pkit.RegisterOnStatus(FStatus, status_udata);
+  pkit.RegisterOnMessage(FMessage, message_udata);
 end;
 
 destructor TPackageKitBackend.Destroy;
@@ -65,12 +64,6 @@ begin
   dskFileName := app.DesktopFile;
   appId := app.AId;
   Result := true;
-end;
-
-procedure TPackageKitBackend.PkitProgress(pos: Integer; xd: Pointer);
-begin
-  //User defindes pointer xd is always nil here
-  EmitProgress(pos);
 end;
 
 function TPackageKitBackend.CanBeUsed: Boolean;

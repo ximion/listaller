@@ -21,7 +21,7 @@ unit packagekit;
 interface
 
 uses
-  GExt, GLib2, Distri, Classes, LiTypes, LiUtils, Process, SysUtils, Contnrs;
+  GExt, GLib2, Distri, Classes, LiTypes, LiUtils, Process, SysUtils, Contnrs, LiStatusObj;
 
 const
   pklib2 = 'libpackagekit-glib2.so';
@@ -99,15 +99,11 @@ type
     property Items[index: Integer]: TPkPackage read getItem write setItem; default;
   end;
 
-  //** Simple callback for PK progress
-  TPkProgressCallback = procedure(progress: Pointer; ptype: PkProgressType;
-    user_data: GPointer); cdecl;
-
   //** Pointer to TPackageKit object
   PPackageKit = ^TPackageKit;
 
   //** Custom PackageKit wrapper
-  TPackageKit = class
+  TPackageKit = class(TLiStatusObject)
   private
     //True if transaction finished
     done: Boolean;
@@ -127,8 +123,6 @@ type
     cancellable: PGObject;
     //Tag
     tagid: Integer;
-    //Set new progress
-    procedure SetProgress(i: Integer);
     //Function to get PackageKit version from pkcon
     function GetPkVersion: String;
     //Run the main loop if doasync=false
@@ -184,8 +178,6 @@ type
     property LastErrorMessage: String read lastErrorMsg;
     //** Reads the current Packagekit version as string
     property Version: String read GetPkVersion;
-    //** Progress change callback (progress in %)
-    property OnProgress: TProgressEvent read FProg write FProg;
     //** Check if the last transaction has finished (object idle)
     property Finished: Boolean read done;
     //** If true, the instance won't wait until the action completes
@@ -208,8 +200,8 @@ begin
   Result := G_TYPE_CHECK_INSTANCE_CAST(o, pk_client_get_type());
 end;
 
-procedure OnPkActionFinished(source_object: PGObject; res: Pointer;
-  user_data: GPointer); cdecl;
+procedure OnPkActionFinished_CB(source_object: PGObject; res: PGAsyncResult;
+  udata: GPointer); cdecl;
 var
   results: Pointer;
   error: PGError = nil;
@@ -227,11 +219,11 @@ begin
   begin
     g_warning('failed: %s', [error^.message]);
     g_error_free(error);
-    TPackageKit(user_data).ExitEnum := PK_EXIT_ENUM_KILLED;
+    TPackageKit(udata).ExitEnum := PK_EXIT_ENUM_KILLED;
     exit;
   end;
 
-  pk := TPackageKit(user_data);
+  pk := TPackageKit(udata);
   if not (pk is TPackageKit) then
     exit;
 
@@ -287,14 +279,14 @@ begin
   pk.done := true;
 end;
 
-procedure OnPkProgress(progress: Pointer; ptype: PkProgressType;
-  user_data: GPointer); cdecl;
+procedure OnPkProgress_CB(progress: PPkProgress; ptype: PkProgressType;
+  udata: GPointer); cdecl;
 var
   pk: TPackageKit;
   pid: PGChar;
   percentage: GuInt;
 begin
-  pk := TPackageKit(user_data);
+  pk := TPackageKit(udata);
   if not (pk is TPackageKit) then
     exit;
 
@@ -312,9 +304,9 @@ begin
     begin
       g_object_get(progress, 'percentage', @percentage, nil);
       if percentage = 101 then
-        pk.Setprogress(0)
+        pk.EmitProgress(0)
       else
-        pk.SetProgress(percentage);
+        pk.EmitProgress(percentage);
     end;
   end;
 end;
@@ -377,13 +369,6 @@ begin
   end;
 end;
 
-procedure TPackageKit.SetProgress(i: Integer);
-begin
-  prog := i;
-  if Assigned(FProg) then
-    FProg(i, nil);
-end;
-
 function TPackageKit.GetPkVersion: String;
 var
   s: TStringList;
@@ -431,9 +416,9 @@ begin
     begin
       g_object_get(progress, 'percentage', @percentage, nil);
       if percentage = 101 then
-        pk.Setprogress(0)
+        pk.EmitProgress(0)
       else
-        pk.SetProgress(percentage);
+        pk.EmitProgress(percentage);
     end;
   end;
 end;
@@ -459,11 +444,11 @@ begin
   arg := StringToPPchar(Name, 0);
 
   if toPublic then
-    pk_client_resolve_async(pkclient, filter, arg, cancellable, @OnPkProgress,
-      self, @OnPkActionFinished, self)
+    pk_client_resolve_async(pkclient, filter, arg, cancellable, @OnPkProgress_CB,
+      self, @OnPkActionFinished_CB, self)
   else
     pk_client_resolve_async(pkclient, filter, arg, cancellable,
-      @INTERNAL_OnPkProgress, self, @OnPkActionFinished, self);
+      @INTERNAL_OnPkProgress, self, @OnPkActionFinished_CB, self);
 
   Result := true;
   g_cancellable_set_error_if_cancelled(cancellable, @error);
@@ -516,7 +501,7 @@ begin
 
 
   pk_client_get_requires_async(pkclient, filter, arg, true, cancellable,
-    @OnPkProgress, self, @OnPkActionFinished, self);
+    @OnPkProgress_CB, self, @OnPkActionFinished_CB, self);
 
   Result := true;
   g_cancellable_set_error_if_cancelled(cancellable, @error);
@@ -553,7 +538,7 @@ begin
   arg := StringToPPchar(pkg, 0);
 
   pk_client_remove_packages_async(pkclient, arg, true, false,
-    cancellable, @OnPKProgress, self, @OnPkActionFinished, self);
+    cancellable, @OnPKProgress_CB, self, @OnPkActionFinished_CB, self);
 
   Result := true;
   g_cancellable_set_error_if_cancelled(cancellable, @error);
@@ -589,8 +574,8 @@ begin
   pkglist.Clear;
   arg := StringToPPchar(pkg, 0);
 
-  pk_client_install_packages_async(pkclient, false, arg, cancellable, @OnPkProgress,
-    self, @OnPkActionFinished, self);
+  pk_client_install_packages_async(pkclient, false, arg, cancellable, @OnPkProgress_CB,
+    self, @OnPkActionFinished_CB, self);
 
   Result := true;
   g_cancellable_set_error_if_cancelled(cancellable, @error);
@@ -626,8 +611,8 @@ begin
   pkglist.Clear;
   arg := StringToPPchar(pkg, 0);
 
-  pk_client_get_details_async(pkclient, arg, cancellable, @OnPkProgress,
-    self, @OnPkActionFinished, self);
+  pk_client_get_details_async(pkclient, arg, cancellable, @OnPkProgress_CB,
+    self, @OnPkActionFinished_CB, self);
 
   Result := true;
   g_cancellable_set_error_if_cancelled(cancellable, @error);
@@ -687,7 +672,7 @@ begin
     filter := pk_filter_bitfield_from_string('installed');
 
     pk_client_search_files_async(pkclient, filter, StringToPPchar(fname, 0),
-      cancellable, @OnPkProgress, self, @OnPkActionFinished, self);
+      cancellable, @OnPkProgress_CB, self, @OnPkActionFinished_CB, self);
 
     Result := true;
     g_cancellable_set_error_if_cancelled(cancellable, @error);
@@ -712,7 +697,7 @@ begin
   arg := StringToPPchar(fname, 0);
 
   pk_client_install_files_async(pkclient, false, arg, cancellable,
-    @OnPkProgress, self, @OnPkActionFinished, self);
+    @OnPkProgress_CB, self, @OnPkActionFinished_CB, self);
 
   Result := true;
   g_cancellable_set_error_if_cancelled(cancellable, @error);
@@ -751,7 +736,7 @@ begin
   filter := pk_filter_bitfield_from_string('none');
 
   pk_client_search_files_async(pkclient, filter, StringToPPchar(fname, 0),
-    cancellable, @OnPkProgress, self, @OnPkActionFinished, self);
+    cancellable, @OnPkProgress_CB, self, @OnPkActionFinished_CB, self);
 
   Result := true;
   g_cancellable_set_error_if_cancelled(cancellable, @error);

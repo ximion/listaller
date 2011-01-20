@@ -104,8 +104,6 @@ type
     // Socket hook for FTPSend and HTTPSend to get progress
     procedure NetSockHook(Sender: TObject; Reason: THookSocketReason;
       const Value: String);
-    // Handler for PackageKit progress
-    procedure OnPKitProgress(pos: Integer; dp: Pointer);
     // Add update source of the package
     procedure CheckAddUSource(const forceroot: Boolean = false);
   protected
@@ -783,10 +781,28 @@ begin
     Result := AFtpSend.Login;
 end;
 
-procedure TLiInstallation.OnPKitProgress(pos: Integer; dp: Pointer);
+// Invoked when the status of a TPackageKit instance has changed
+procedure OnPKitStatusChange_cb(status: LI_STATUS; details: LiStatusData;
+  udata: Pointer); cdecl;
+var
+  setup: TLiInstallation;
 begin
-  //user_data Pointer is always nil
-  EmitExProgress(pos); //Set position of extra progress to PackageKit transaction progress
+  // Forward PK status data to LiInstallation owner, after applying a few
+  //  modifications.
+  if not (TObject(udata) is TLiInstallation) then
+  begin
+    perror('Received invalid TLiInstallation instance!');
+    exit;
+  end;
+  setup := TObject(udata) as TLiInstallation;
+
+  if status = LIS_Progress then
+  begin
+    setup.EmitExProgress(details.exprogress);
+    exit;
+  end;
+
+  setup.EmitStatusChange(status, details.text, details.error_code);
 end;
 
 function TLiInstallation.RunContainerInstallation: Boolean;
@@ -1007,7 +1023,9 @@ begin
   end;
 
   pkit := TPackageKit.Create;
-  pkit.OnProgress := @OnPKitProgress;
+  // Connect PK object to LiInstallation callback methods
+  pkit.RegisterOnStatus(@OnPKitStatusChange_CB, self);
+  pkit.RegisterOnMessage(FMessage, message_udata);
 
   if pos('dependencies', forces) <= 0 then
     if Dependencies.Count > 0 then
@@ -1159,8 +1177,8 @@ begin
           end;
         except
           //Unable to copy the file
-          EmitError(Format(rsCnCopy,
-            [dest + '/' + ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
+          EmitError(Format(rsCnCopy, [dest + '/' +
+            ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
           RollbackInstallation;
           Result := false;
           Abort_FreeAll();
@@ -1396,7 +1414,9 @@ end;}
   ShowPKMon();
 
   pkit := TPackageKit.Create;
-  pkit.OnProgress := @OnPKitProgress;
+  // Connect PK object to LiInstallation callback methods
+  pkit.RegisterOnStatus(@OnPKitStatusChange_CB, self);
+  pkit.RegisterOnMessage(FMessage, message_udata);
 
   for i := 0 to Dependencies.Count - 1 do
   begin

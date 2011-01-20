@@ -25,7 +25,6 @@ set(llistaller_base_sources ${lisrc}/liversion.inc
 	${lisrc}/ipkinstall.pas
 	${lisrc}/ipkpackage11.pas
 	${lisrc}/liapp.pas
-	${lisrc}/lidbusproc.pas
 	${lisrc}/lifileutil.inc
 	${lisrc}/lifileutil.pas
 	${lisrc}/lihash.pas
