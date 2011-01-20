@@ -68,9 +68,9 @@ object RMForm: TRMForm
     Caption = '<label>'
     ParentColor = False
   end
-  object UProgress: TProgressBar
+  object PbMainprogress: TProgressBar
     Left = 8
-    Height = 32
+    Height = 24
     Top = 32
     Width = 456
     Anchors = [akTop, akLeft, akRight]
@@ -80,7 +80,7 @@ object RMForm: TRMForm
   object Memo1: TMemo
     Left = 8
     Height = 119
-    Top = 104
+    Top = 112
     Width = 456
     Anchors = [akTop, akLeft, akRight, akBottom]
     Lines.Strings = (
@@ -91,10 +91,10 @@ object RMForm: TRMForm
     TabOrder = 1
   end
   object BitBtn1: TBitBtn
-    Left = 423
+    Left = 426
     Height = 30
     Top = 231
-    Width = 41
+    Width = 38
     Anchors = [akRight, akBottom]
     AutoSize = True
     Caption = 'Close'
@@ -106,14 +106,21 @@ object RMForm: TRMForm
   object DetailsBtn: TBitBtn
     Left = 8
     Height = 26
-    Top = 72
-    Width = 64
+    Top = 80
+    Width = 61
     AutoSize = True
     Caption = 'Details >>'
     Constraints.MaxHeight = 26
     Constraints.MinHeight = 26
     OnClick = DetailsBtnClick
     TabOrder = 3
+  end
+  object PbSubProgress: TProgressBar
+    Left = 8
+    Height = 12
+    Top = 64
+    Width = 456
+    TabOrder = 4
   end
   object Process1: TProcess
     Active = False

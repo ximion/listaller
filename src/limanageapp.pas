@@ -485,6 +485,7 @@ begin
     exit;
   end;
 
+  if (status <> LIS_Started) and (status <> LIS_Finished) then
   mgr.EmitStatusChange(status, details.text, details.error_code);
 end;
 
@@ -511,19 +512,21 @@ begin
 
   pdebug('Application UId is: ' + app.AId);
 
-  // Check if we need to run via PK daemon17
+  // Check if we need to run via PK daemon
   if (SUMode) and (not IsRoot) then
   begin
+    EmitInfoMsg('Running via PackageKit daemon...');
     // Call PackageKit to perform this remove action for us
     pkit := TPackageKit.Create;
     // Connect PK object to LiAppManager callback methods
-    pkit.RegisterOnStatus(@pkit_status_change_cb, self);
+    pkit.RegisterOnStatus(FStatus, status_udata);
     pkit.RegisterOnMessage(FMessage, message_udata);
 
     // No remove the app via LI-enabled PK
     if not pkit.RemovePkg(app.AId) then
       pwarning('PK uninstall query failed!');
 
+    EmitInfoMsg('Done.');
     // Don't continue here
     exit;
   end;

@@ -229,6 +229,7 @@ begin
       else
         Result := LIRQS_No;
     LIM_Info: pinfo(text);
+    LIM_Error: Application.MessageBox(text, PChar(rsError), MB_OK + MB_IconError)
   end;
 end;
 
@@ -236,10 +237,10 @@ procedure OnMgrStatus(status: LI_STATUS; detail: LiStatusData;
   user_data: Pointer); cdecl;
 begin
   case status of
-    LIS_Failed:
+    LIS_Finished:
     begin
-      Application.MessageBox(detail.text, PChar(rsError), MB_OK + MB_IconError);
-      RMForm.RmProcStatus := LIS_Failed;
+      if detail.error_code > 0 then
+        RMForm.RmProcStatus := LIS_Failed;
     end;
   end;
 end;
@@ -1030,10 +1031,10 @@ begin
       for i := 0 to currAppList.Count - 1 do
       begin
         Application.ProcessMessages;
-        if ((pos(LowerCase(FilterEdt.Text),
-          LowerCase(currAppList.AppItems[i].AppInfo.AName)) > 0) or
-          (pos(LowerCase(FilterEdt.Text),
-          LowerCase(currAppList.AppItems[i].AppInfo.Summary)) > 0)) and
+        if ((pos(LowerCase(FilterEdt.Text), LowerCase(
+          currAppList.AppItems[i].AppInfo.AName)) > 0) or
+          (pos(LowerCase(FilterEdt.Text), LowerCase(
+          currAppList.AppItems[i].AppInfo.Summary)) > 0)) and
           (LowerCase(FilterEdt.Text) <>
           LowerCase(currAppList.AppItems[i].AppInfo.AName)) then
         begin

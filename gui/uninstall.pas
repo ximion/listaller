@@ -33,7 +33,8 @@ type
     Label1: TLabel;
     Memo1: TMemo;
     Process1: TProcess;
-    UProgress: TProgressBar;
+    PbSubProgress: TProgressBar;
+    PbMainprogress: TProgressBar;
     procedure BitBtn1Click(Sender: TObject);
     procedure DetailsBtnClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -73,22 +74,30 @@ begin
   RMForm.Memo1.Lines.add(s);
 end;
 
-procedure OnRmStatus(status: LI_STATUS; data: LiStatusData;
-  user_data: Pointer); cdecl;
+procedure OnRmStatus(status: LI_STATUS; sdata: LiStatusData; user_data: Pointer); cdecl;
 begin
   case status of
-    LIS_Progress: RMForm.UProgress.Position := data.mnprogress;
+    LIS_Progress:
+    begin
+      RMForm.PbMainProgress.Position := sdata.mnprogress;
+      RMForm.PbSubProgress.Position := sdata.exprogress;
+    end;
+    LIS_Finished: RMForm.Close;
   end;
   RMForm.astatus := status;
   Application.ProcessMessages;
 end;
 
 function OnRmMessage(mtype: LI_MESSAGE; const text: PChar;
-                            user_data: Pointer): LI_REQUEST_RES; cdecl;
+  user_data: Pointer): LI_REQUEST_RES; cdecl;
 begin
   Result := LIRQS_OK;
-  if mtype = LIM_Info then
-  LogAdd(text);
+  case mtype of
+    LIM_Info: LogAdd(text);
+    LIM_Error: begin
+      Application.MessageBox(text, PChar(rsError), MB_IconError+MB_OK);
+    end;
+  end;
 end;
 
 procedure TRMForm.FormActivate(Sender: TObject);
@@ -105,17 +114,13 @@ begin
         StringReplace(rsRealUninstQ, '%a', MnFrm.uApp.AName, [rfReplaceAll])),
         'Uninstall?', MB_YESNO) = idYes then
       begin
-        UProgress.Position := 0;
+        PbMainprogress.Position := 0;
         li_mgr_register_status_call(MnFrm.amgr, @OnRmStatus, nil);
         astatus := LIS_None;
         BitBtn1.Enabled := false;
         Application.ProcessMessages;
         li_mgr_remove_app(MnFrm.amgr, MnFrm.uApp);
-        while (astatus <> LIS_Finished) and (astatus <> LIS_Failed) and (astatus <> LIS_None) do
-        begin
-          sleep(1);
-          Application.ProcessMessages;
-        end;
+        li_mgr_register_status_call(MnFrm.amgr, nil, nil);
         li_mgr_register_message_call(MnFrm.amgr, @manager.OnMgrMessage, nil);
 
         //!!!: Misterious crash appears when executing this code.

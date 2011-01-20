@@ -46,14 +46,13 @@ type
 
   //** Status of current job
   LI_STATUS = (LIS_None, LIS_Started, LIS_Stage, LIS_Authorized,
-    LIS_Blocked, LIS_Progress,
-    LIS_Failed, LIS_Successful, LIS_Finished);
+    LIS_Blocked, LIS_Progress, LIS_Failed, LIS_Finished);
 
   //** Request result types
   LI_REQUEST_RES = (LIRQS_Yes, LIRQS_No, LIRQS_OK);
 
   //** Different status
-  LI_MESSAGE = (LIM_None, LIM_Info, LIM_Warning, LIM_Question_YesNo,
+  LI_MESSAGE = (LIM_None, LIM_Info, LIM_Warning, LIM_Error, LIM_Question_YesNo,
     LIM_Question_AbortContinue);
 
   //** Data assigned to a status change

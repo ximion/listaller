@@ -180,7 +180,8 @@ begin
         if pk.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
         begin
           solver.failed := true;
-          solver.errMsg := pk.LastErrorMessage;
+          // TODO: Adjust to latest TPK API
+          //solver.errMsg := pk.LastErrorMessage;
           g_main_loop_quit(solver.loop);
           Result := false;
           exit;

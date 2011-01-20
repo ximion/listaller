@@ -802,7 +802,8 @@ begin
     exit;
   end;
 
-  setup.EmitStatusChange(status, details.text, details.error_code);
+  if (status <> LIS_Started) and (status <> LIS_Finished) then
+    setup.EmitStatusChange(status, details.text, details.error_code);
 end;
 
 function TLiInstallation.RunContainerInstallation: Boolean;
@@ -1741,7 +1742,7 @@ function TLiInstallation.DoInstallation: Boolean;
 var
   cnf: TIniFile;
   i: Integer;
-  pkclient: PPkClient;
+  pkit: TPackageKit;
   tmp: TStringList;
 begin
   Result := false;
@@ -1794,20 +1795,13 @@ begin
   if (pkType <> ptContainer) then
     if (SUMode) and (not IsRoot) then
     begin
+      EmitInfoMsg('Running via PackageKit daemon...');
       // Query PackageKit daemon to perform the installation
-      pkclient := pk_client_new();
-
-      pk_client_install_files_async(pkclient, false, StringToPPchar(PkgPath, 0),
-        nil, PkProgressCallback(@lisetup_pkprogress_cb),
-        self, GAsyncReadyCallback(@lisetup_pkfinished_cb), self);
-
-      // Run mainloop
-      loop := g_main_loop_new(nil, false);
-      g_main_loop_run(loop);
-
-      g_object_unref(pkclient);
-      g_main_loop_unref(loop);
-      loop := nil;
+      pkit := TPackageKit.Create;
+      pkit.RegisterOnMessage(FMessage, message_udata);
+      pkit.RegisterOnStatus(FStatus, status_udata);
+      if not pkit.InstallPkg(PkgPath) then
+        perror('PK problem: Could not queue transaction!');
 
       //Force check of root update source
      { CheckAddUSource(true);
@@ -1816,6 +1810,7 @@ begin
       else
         buscmd.addsrc := false; }
       Result := true;
+      // Don't continue here
       exit;
     end;
 
@@ -1844,10 +1839,6 @@ begin
     EmitInfoMsg('TLiInstallation failure.');
     Result := false;
   end;
-
-  // Emit LIS_Successful if there were no errors
-  if Result then
-    EmitStatusChange(LIS_Successful);
 
   // We're done.
   EmitStatusChange(LIS_Finished);

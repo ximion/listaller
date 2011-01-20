@@ -38,10 +38,11 @@ type
 
     procedure EmitInfoMsg(s: String);
     procedure EmitStageMsg(s: String);
-    procedure EmitError(msg: String);
+    procedure EmitError(const msg: String; errcode: Integer = 6);
     function EmitUserRequestYesNo(s: String): LI_REQUEST_RES;
     function EmitUserRequestAbortContinue(s: String): LI_REQUEST_RES;
-    procedure EmitStatusChange(state: LI_STATUS; const msg: String = ''; const errcode: Integer = 0);
+    procedure EmitStatusChange(state: LI_STATUS; const msg: String = '';
+      const errcode: Integer = 0);
     procedure EmitProgress(i: Integer);
     procedure EmitExProgress(i: Integer);
   public
@@ -99,17 +100,19 @@ begin
   sdata.text := ''; //Zero
 end;
 
-procedure TLiStatusObject.EmitError(msg: String);
+procedure TLiStatusObject.EmitError(const msg: String; errcode: Integer = 6);
 begin
   sdata.text := PChar(msg);
-  if Assigned(FStatus) then
-    FStatus(LIS_Failed, sdata, status_udata)
+  if Assigned(FMessage) then
+    FMessage(LIM_Error, PChar(msg), message_udata)
   else
     perror(msg);
   sdata.text := ''; //Zero
 
   // Send failed message
-  EmitStatusChange(LIS_Finished, '', 1);
+  if errcode = 0 then
+    errcode := 1;
+  EmitStatusChange(LIS_Finished, '', errcode);
 end;
 
 function TLiStatusObject.EmitUserRequestYesNo(s: String): LI_REQUEST_RES;
@@ -150,14 +153,11 @@ begin
     FStatus(LIS_Progress, sdata, status_udata);
 end;
 
-procedure TLiStatusObject.EmitStatusChange(state: LI_STATUS; const msg: String = ''; const errcode: Integer = 0);
+procedure TLiStatusObject.EmitStatusChange(state: LI_STATUS;
+  const msg: String = ''; const errcode: Integer = 0);
 begin
   sdata.Text := PChar(msg);
   sdata.Error_Code := errcode;
-  if state = LIS_Started then
-    pdebug('LISTATUS::CHANGED >> LIS_Started!');
-  if state = LIS_Finished then
-    pdebug('LISTATUS::CHANGED >> LIS_Finished!');
   if Assigned(FStatus) then
     FStatus(state, sdata, status_udata);
 end;

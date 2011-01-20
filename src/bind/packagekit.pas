@@ -110,12 +110,6 @@ type
     done: Boolean;
     //Catch the exit status
     exitenum: PkExitEnum;
-    //Current progress
-    prog: Integer;
-    //Last error message
-    lastErrorMsg: String;
-    //ProgressChange event
-    FProg: TProgressEvent;
     //List of received package ids
     pkglist: TPackageList;
     //Processes actions asyncronous
@@ -139,6 +133,9 @@ type
     loop: Pointer;
     //** Pointer to a PkClient
     pkclient: PPkClient;
+    //** Obsolete dummy @obsolete: Please remove this soon!
+    LastErrorMessage: String;
+
     constructor Create;
     destructor Destroy; override;
     {** Resolve a package name
@@ -173,16 +170,14 @@ type
     function FindPkgForFile(fname: String): Boolean;
     //** Grab the resulting package list
     property RList: TPackageList read PkgList write PkgList;
-    //** Read finish code
-    property PkExitStatus: PkExitEnum read exitenum;
-    //** Get details about possible failures
-    property LastErrorMessage: String read lastErrorMsg;
     //** Reads the current Packagekit version as string
     property Version: String read GetPkVersion;
     //** Check if the last transaction has finished (object idle)
     property Finished: Boolean read done;
     //** If true, the instance won't wait until the action completes
     property AsyncMode: Boolean read doasync write doasync;
+    //** Read finish code
+    property PkExitStatus: PkExitEnum read exitenum;
     //** Tag
     property Tag: Integer read tagid write tagid;
   end;
@@ -213,6 +208,7 @@ var
   pk: TPackageKit;
   newpkg: TPkPackage;
   sack: PPkPackageSack;
+  error_code: PPkError;
 begin
   results := pk_client_generic_finish(source_object, res, @error);
 
@@ -273,8 +269,11 @@ begin
     g_ptr_array_unref(detArr);
   end;
   pk.exitenum := pk_results_get_exit_code(results);
-  // !!!
-  pk.lastErrorMsg := ''; //pk_error_get_details(pk_results_get_error_code(results));
+  error_code := pk_results_get_error_code(results);
+
+  if (error_code <> nil) then
+  pk.EmitError('Action failed: ' + pk_error_enum_to_string(pk_error_get_code(error_code)), Integer(pk_error_get_code(error_code)));
+
   g_object_unref(results);
   pk.LoopQuit();
   pk.done := true;
@@ -303,6 +302,7 @@ begin
     end;
     PK_PROGRESS_TYPE_PERCENTAGE:
     begin
+      pdebug('PERCENTAGE!');
       g_object_get(progress, 'percentage', @percentage, nil);
       if percentage = 101 then
         pk.EmitProgress(0)
@@ -324,8 +324,8 @@ begin
   loop := g_main_loop_new(nil, false);
   doasync := false;
   pkglist := TPackageList.Create(true);
-  lastErrorMsg := 'No message received!';
   done := true; //TPackageKit is idle
+  LastErrorMessage := 'Obsolete TpackageKit error message!';
 end;
 
 destructor TPackageKit.Destroy;
@@ -357,13 +357,15 @@ begin
 end;
 
 function TPackageKit.IsErrorSet(aError: PGError): Boolean;
+var msg: String;
 begin
   Result := false;
   if aError <> nil then
   begin
     Result := true;
-    lastErrorMsg := aError^.message;
-    g_warning('action failed: %s', [lastErrorMsg]);
+    msg := aError^.message;
+    g_warning('action failed: %s', [msg]);
+    EmitError(msg);
     exitcode := 88;
     done := true;
     g_error_free(aError);
@@ -525,9 +527,11 @@ begin
   done := false;
 
   pkglist.Clear;
+  if pos(';', pkg) <= 0 then
   Result := INTERN_Resolve(pkg, 'none', false);
   if not Result then
     exit;
+
   if pkglist.Count <= 0 then
   begin
     Result := false;
