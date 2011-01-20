@@ -29,6 +29,7 @@ type
   TLiAppItem = class
   private
     function GetAId: String;
+    function GetPkPackageId: String;
   protected
     FName: String;
     FId: String;
@@ -42,6 +43,7 @@ type
     FInstallDate: TDateTime;
     FDependencies: String;
     FDesktop: String;
+    FPkPkgId: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -66,6 +68,7 @@ type
     property TimeStamp: TDateTime read FInstalldate write FInstallDate;
     property Dependencies: String read FDependencies write FDependencies;
     property DesktopFile: String read FDesktop write FDesktop;
+    property PkPackageId: String read GetPkPackageId write FPkPkgId;
   end;
 
 //** Build a string to identify the application which can be used in filepaths
@@ -84,14 +87,13 @@ begin
   FVersion := '?';
   FAuthor := '~';
   FId := '';
+  FPkPkgId := '';
 end;
 
 destructor TLiAppItem.Destroy;
 begin
   inherited;
 end;
-
-// Helper functions
 
 function TLiAppItem.FakePackageName: String;
 var
@@ -151,6 +153,20 @@ begin
   FInstallDate := ai.TimeStamp;
   FDependencies := ai.Dependencies;
   FDesktop := ai.DesktopFile;
+end;
+
+function TLiAppItem.GetPkPackageId: String;
+begin
+  // If PkPackageId is already set, just set it as result and exit
+  // (Allows ID to be set manually)
+  if trim(FPkPkgId) <> '' then
+  begin
+    Result := FPkPkgId;
+    exit;
+  end;
+  // Build valid and unique PackageKit package-id for this application
+  FPkPkgId := AId + ';' + FVersion + ';' + 'any' + ';' + 'local:%listaller';
+  Result := FPkPkgId;
 end;
 
 function GetDesktopFileFromID(appID: String): String;
