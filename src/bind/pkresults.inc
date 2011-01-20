@@ -41,6 +41,7 @@ in define line 48 *)
     { argument types are unknown }
     { return type might be wrong }   
 
+
     { was #define dname(params) para_def_expr }
     { argument types are unknown }
     { return type might be wrong }   
@@ -58,7 +59,6 @@ in define line 48 *)
     { return type might be wrong }   
 
     { was #define dname def_expr }
-        { return type might be wrong }
 
 
     { padding for future expansion  }

@@ -31,6 +31,8 @@
 
 LiAppItem *li_appitem_new(void);
 
+LiAppItem *li_appitem_new_from_appid(char *appID);
+
 char *li_appitem_name(LiAppItem *item);
 
 char *li_appitem_id(LiAppItem *item);

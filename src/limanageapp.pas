@@ -511,7 +511,7 @@ begin
 
   pdebug('Application UId is: ' + app.AId);
 
-  // Check if we need to run via PK daemon
+  // Check if we need to run via PK daemon17
   if (SUMode) and (not IsRoot) then
   begin
     // Call PackageKit to perform this remove action for us

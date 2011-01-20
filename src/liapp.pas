@@ -72,6 +72,8 @@ type
 function GetAppIDString(ai: String): String;
 //** Restore desktop file path from appID
 function GetDesktopFileFromID(appID: String): String;
+//** Create an LiAppItem from an AppID
+function AppItemFromID(appID: String): TLiAppItem;
 
 implementation
 
@@ -166,6 +168,16 @@ end;
 function GetAppIDString(ai: String): String;
 begin
   Result := StrSubst(ai, '/', '');
+end;
+
+function AppItemFromID(appID: String): TLiAppItem;
+var
+  item: TLiAppItem;
+begin
+  // TODO: Extend this to support more features
+  item := TLiAppItem.Create;
+  item.DesktopFile := GetDesktopFileFromID(appID);
+  Result := item;
 end;
 
 end.

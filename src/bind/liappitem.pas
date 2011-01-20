@@ -26,6 +26,7 @@ uses
 {@Begin:AppItem}
 
 function li_appitem_new(): LiAppItem; cdecl;external liblistaller;
+function li_appitem_new_from_appid(appID: PChar): LiAppItem; cdecl;external liblistaller;
 function li_appitem_name(item: LiAppItem): PChar; cdecl;external liblistaller;
 function li_appitem_id(item: LiAppItem): PChar; cdecl;external liblistaller;
 function li_appitem_version(item: LiAppItem): PChar; cdecl;external liblistaller;

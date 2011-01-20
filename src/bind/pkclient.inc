@@ -41,6 +41,7 @@ in define line 39 *)
     { argument types are unknown }
     { return type might be wrong }   
 
+
     { was #define dname(params) para_def_expr }
     { argument types are unknown }
     { return type might be wrong }   
@@ -58,10 +59,8 @@ in define line 39 *)
     { return type might be wrong }   
 
     { was #define dname def_expr }
-        { return type might be wrong }
 
     { was #define dname def_expr }
-        { return type might be wrong }
 
     {*
      * PkClientError:
@@ -78,14 +77,13 @@ in define line 39 *)
       }
     { we define this so we can punt the PkErrorEnums here  }
     type
-
-       PPkClientError = Pointer;
-       PkClientError = (PK_CLIENT_ERROR_FAILED,PK_CLIENT_ERROR_FAILED_AUTH,
-         PK_CLIENT_ERROR_NO_TID,PK_CLIENT_ERROR_ALREADY_TID,
-         PK_CLIENT_ERROR_ROLE_UNKNOWN,PK_CLIENT_ERROR_CANNOT_START_DAEMON,
-         PK_CLIENT_ERROR_INVALID_INPUT,PK_CLIENT_ERROR_INVALID_FILE,
-         PK_CLIENT_ERROR_NOT_SUPPORTED,PK_CLIENT_ERROR_DECLINED_SIMULATION,
-         PK_CLIENT_ERROR_LAST);
+      PPkClientError = Pointer;
+      PkClientError = (PK_CLIENT_ERROR_FAILED,PK_CLIENT_ERROR_FAILED_AUTH,
+        PK_CLIENT_ERROR_NO_TID,PK_CLIENT_ERROR_ALREADY_TID,
+        PK_CLIENT_ERROR_ROLE_UNKNOWN,PK_CLIENT_ERROR_CANNOT_START_DAEMON,
+        PK_CLIENT_ERROR_INVALID_INPUT,PK_CLIENT_ERROR_INVALID_FILE,
+        PK_CLIENT_ERROR_NOT_SUPPORTED,PK_CLIENT_ERROR_DECLINED_SIMULATION,
+        PK_CLIENT_ERROR_LAST);
 
     { signals  }
     { padding for future expansion  }

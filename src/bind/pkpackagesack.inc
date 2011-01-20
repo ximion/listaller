@@ -41,6 +41,7 @@ in define line 36 *)
     { argument types are unknown }
     { return type might be wrong }   
 
+
     { was #define dname(params) para_def_expr }
     { argument types are unknown }
     { return type might be wrong }   
@@ -58,7 +59,6 @@ in define line 36 *)
     { return type might be wrong }   
 
     { was #define dname def_expr }
-        { return type might be wrong }
 
     type
 
@@ -66,18 +66,18 @@ in define line 36 *)
     { padding for future expansion  }
 
 
-       PPkPackageSackSortType = Pointer;
-       PkPackageSackSortType = (PK_PACKAGE_SACK_SORT_TYPE_NAME,PK_PACKAGE_SACK_SORT_TYPE_INFO,
-         PK_PACKAGE_SACK_SORT_TYPE_PACKAGE_ID,
-         PK_PACKAGE_SACK_SORT_TYPE_SUMMARY,
-         PK_PACKAGE_SACK_SORT_TYPE_LAST);
+      PPkPackageSackSortType = Pointer;
+      PkPackageSackSortType = (PK_PACKAGE_SACK_SORT_TYPE_NAME,PK_PACKAGE_SACK_SORT_TYPE_INFO,
+        PK_PACKAGE_SACK_SORT_TYPE_PACKAGE_ID,
+        PK_PACKAGE_SACK_SORT_TYPE_SUMMARY,
+        PK_PACKAGE_SACK_SORT_TYPE_LAST);
 
 function pk_package_sack_get_type:GType;cdecl;external pklib2;
 function pk_package_sack_new:PPkPackageSack;cdecl;external pklib2;
 procedure pk_package_sack_test(user_data:gpointer);cdecl;external pklib2;
     type
 
-       PkPackageSackFilterFunc = function (package:PPkPackage; user_data:gpointer):gboolean;cdecl;
+      PkPackageSackFilterFunc = function (package:PPkPackage; user_data:gpointer):gboolean;cdecl;
     { managing the array  }
 
 procedure pk_package_sack_clear(sack:PPkPackageSack);cdecl;external pklib2;

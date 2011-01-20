@@ -41,6 +41,7 @@ in define line 35 *)
     { argument types are unknown }
     { return type might be wrong }   
 
+
     { was #define dname(params) para_def_expr }
     { argument types are unknown }
     { return type might be wrong }   
@@ -58,7 +59,6 @@ in define line 35 *)
     { return type might be wrong }   
 
     { was #define dname def_expr }
-        { return type might be wrong }
 
 
     { padding for future expansion  }
@@ -68,18 +68,17 @@ function pk_progress_get_type:GType;cdecl;external pklib2;
 function pk_progress_new:PPkProgress;cdecl;external pklib2;
 procedure pk_progress_test(user_data:gpointer);cdecl;external pklib2;
     type
+      PPkProgressType = Pointer;
+      PkProgressType = (PK_PROGRESS_TYPE_PACKAGE_ID,PK_PROGRESS_TYPE_TRANSACTION_ID,
+        PK_PROGRESS_TYPE_PERCENTAGE,PK_PROGRESS_TYPE_SUBPERCENTAGE,
+        PK_PROGRESS_TYPE_ALLOW_CANCEL,PK_PROGRESS_TYPE_STATUS,
+        PK_PROGRESS_TYPE_ROLE,PK_PROGRESS_TYPE_CALLER_ACTIVE,
+        PK_PROGRESS_TYPE_ELAPSED_TIME,PK_PROGRESS_TYPE_REMAINING_TIME,
+        PK_PROGRESS_TYPE_SPEED,PK_PROGRESS_TYPE_UID,
+        PK_PROGRESS_TYPE_PACKAGE,PK_PROGRESS_TYPE_INVALID
+        );
 
-       PPkProgressType = Pointer;
-       PkProgressType = (PK_PROGRESS_TYPE_PACKAGE_ID,PK_PROGRESS_TYPE_TRANSACTION_ID,
-         PK_PROGRESS_TYPE_PERCENTAGE,PK_PROGRESS_TYPE_SUBPERCENTAGE,
-         PK_PROGRESS_TYPE_ALLOW_CANCEL,PK_PROGRESS_TYPE_STATUS,
-         PK_PROGRESS_TYPE_ROLE,PK_PROGRESS_TYPE_CALLER_ACTIVE,
-         PK_PROGRESS_TYPE_ELAPSED_TIME,PK_PROGRESS_TYPE_REMAINING_TIME,
-         PK_PROGRESS_TYPE_SPEED,PK_PROGRESS_TYPE_UID,
-         PK_PROGRESS_TYPE_PACKAGE,PK_PROGRESS_TYPE_INVALID
-         );
-
-       PkProgressCallback = procedure (progress:PPkProgress; _type:PkProgressType; user_data:gpointer);cdecl;
+      PkProgressCallback = procedure (progress:PPkProgress; _type:PkProgressType; user_data:gpointer);cdecl;
 (* Const before type ignored *)
 
 function pk_progress_set_package_id(progress:PPkProgress; package_id:Pgchar):gboolean;cdecl;external pklib2;

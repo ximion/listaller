@@ -45,7 +45,7 @@ void li_mgr_set_sumode(LiAppManager *mgr,bool md);
 
 bool li_mgr_sumode(LiAppManager *mgr);
 
-bool li_mgr_remove_app(LiAppManager *mgr,char *appId);
+bool li_mgr_remove_app(LiAppManager *mgr,LiAppItem *app);
 
 bool li_mgr_check_apps(LiAppManager *mgr,StringList *log,bool root);
 

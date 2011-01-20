@@ -21,7 +21,8 @@ unit packagekit;
 interface
 
 uses
-  GExt, GLib2, Distri, Classes, LiTypes, LiUtils, Process, SysUtils, Contnrs, LiStatusObj;
+  GExt, GLib2, Distri, Classes, LiTypes, LiUtils, Process, SysUtils,
+  Contnrs, LiStatusObj;
 
 const
   pklib2 = 'libpackagekit-glib2.so';
@@ -186,13 +187,13 @@ type
     property Tag: Integer read tagid write tagid;
   end;
 
-  function StrToPkPkgID(s: String): PPChar;
+function StrToPkPkgID(s: String): PPChar;
 
 implementation
 
 function StrToPkPkgID(s: String): PPChar;
 begin
-  Result := StringToPPchar(s, 0)
+  Result := StringToPPchar(s, 0);
 end;
 
 function PK_CLIENT(o: GPointer): PGTypeInstance;

@@ -105,6 +105,11 @@ begin
  Result := TLiAppItem.Create;
 end;
 
+function li_appitem_new_from_appid(appID: PChar): TLiAppItem; cdecl;
+begin
+ Result := AppItemFromID(appID);
+end;
+
 // Fetch application name
 function li_appitem_name(item: TLiAppItem): PChar; cdecl;
 begin
@@ -621,6 +626,7 @@ exports
 
  // AppItem functions
  li_appitem_new,
+ li_appitem_new_from_appid,
  li_appitem_name,
  li_appitem_id,
  li_appitem_version,
