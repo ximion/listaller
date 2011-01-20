@@ -1,4 +1,7 @@
-//Created by Matthias Klumpp, licensed under GPlv3
+(* Created by Matthias Klumpp <matthias@nlinux.org>
+ *
+ * Licensed under GPLv3+
+ *)
 //Unit to test the PackageKit bindings implementation
 unit Unit1;
 
@@ -9,7 +12,7 @@ interface
 uses
   Forms, glib2, Classes, Dialogs,
   ComCtrls, Controls, FileUtil, Graphics, Messages, StdCtrls, SysUtils,
-  Installer, LResources, PackageKit, PkTypes;
+  Installer, LResources, PackageKit;
 
 type
 

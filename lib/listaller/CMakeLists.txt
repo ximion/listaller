@@ -47,6 +47,17 @@ set(llistaller_base_sources ${lisrc}/liversion.inc
 	${lisrc}/softwaredb.pas
 	${lisrc}/strlocale.pas
 	${lisrc}/tararchive.pas
+	${lisrc}/bind/liappitem.pas
+	${lisrc}/bind/packagekit.pas
+	${lisrc}/bind/pkbitfield.inc
+	${lisrc}/bind/pkclient.inc
+	${lisrc}/bind/pkdesktop.inc
+	${lisrc}/bind/pkenum.inc
+	${lisrc}/bind/pkerror.inc
+	${lisrc}/bind/pkpackagesack.inc
+	${lisrc}/bind/pkprogress.inc
+	${lisrc}/bind/pkresults.inc
+	${lisrc}/bind/polkit.pas
 )
 
 set(listaller_libname "${LISTALLER_LIB}.${LIBS_SOVERSION}")

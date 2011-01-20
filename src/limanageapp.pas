@@ -1,4 +1,4 @@
-(* Copyright (C) 2008-2011 Matthias Klumpp
+(* Copyright (C) 2008-2011 Matthias Klumpp <matthias@nlinux.org>
  *
  * Licensed under the GNU General Public License Version 3
  *
@@ -21,7 +21,7 @@ unit limanageapp;
 interface
 
 uses
-  Classes, GetText, LiTypes, LiUtils, MTProcs, PkTypes, Process,
+  Classes, GetText, LiTypes, LiUtils, MTProcs, Process,
   IniFiles, SysUtils, StrLocale, LiFileUtil, PackageKit, SoftwareDB,
   LiStatusObj, LiApp,
   // Uninstaller backends
@@ -67,7 +67,7 @@ type
     //** Load apps which match filter
     procedure FetchAppList(filter: LiFilter; text: String);
     //** Removes an application
-    procedure UninstallApp(appId: String);
+    procedure UninstallApp(app: TLiAppItem);
  {** Checks dependencies of all installed apps
     @param report Report of the executed actions
     @param fix True if all found issues should be fixed right now
@@ -468,41 +468,44 @@ end;
 // identification string - if not, pkg has to be Loki/Mojo, so intitiate Mojo-Removal. After rdepends and pkg resolve is done,
 // run uninstall as root if necessary. At the end, RemoveAppInternal() is called (if LOKI-Remove was not run) to uninstall
 // native or autopackage setup.
-procedure TLiAppManager.UninstallApp(appId: String);
+procedure TLiAppManager.UninstallApp(app: TLiAppItem);
 var
-  id: String;
+  pkit: TPackageKit;
 begin
-  id := appId;
-  if id = '' then
+  if not Assigned(app) then
+  begin
+    perror('Application item was NULL!');
+    exit;
+  end;
+
+  if app.AId = '' then
   begin
     perror('Invalid application info passed: No ID found.');
     exit;
   end;
   EmitStatusChange(LIS_Started);
 
-  pdebug('Application UId is: ' + id);
+  pdebug('Application UId is: ' + app.AId);
 
   // Check if we need to run as root
   if (SUMode) and (not IsRoot) then
   begin
-    //Create worker thread for this action
-    buscmd.cmdtype := lbaUninstallApp;
-    //buscmd.appinfo := obj;
-    with TLiDBusAction.Create(buscmd) do
-    begin
-      pdebug('DbusAction::run!');
-      OnStatus := @DBusStatusChange;
-      ExecuteAction;
-      Free;
-    end;
+    // Call PackageKit to perform this remove action for us
+    pkit := TPackageKit.Create;
+    // TODO: Implement the missing bits...
+    pkit.OnProgress := nil;
+    if not pkit.RemovePkg(app.AId) then
+      pwarning('PK uninstall query failed!');
+
+    // Don't continue here
     exit;
   end;
 
   // Run the backends. PackageKit always goes last, it is the slowest one
-  if not RunBackend(TIPKBackend.Create, appId) then
-    if not RunBackend(TLokiBackend.Create, appId) then
-      if not RunBackend(TAutopackageBackend.Create, appId) then
-        RunBackend(TPackageKitBackend.Create, appId);
+  if not RunBackend(TIPKBackend.Create, app) then
+    if not RunBackend(TLokiBackend.Create, app) then
+      if not RunBackend(TAutopackageBackend.Create, app) then
+        RunBackend(TPackageKitBackend.Create, app);
 
   EmitStatusChange(LIS_Finished);
 end;

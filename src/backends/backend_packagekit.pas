@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LiBackend, LiTypes, LiUtils, IniFiles, StrLocale, Process,
-  PackageKit, PkTypes, LiApp;
+  PackageKit, LiApp;
 
 type
   TPackageKitBackend = class(TLiBackend)

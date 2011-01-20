@@ -22,7 +22,7 @@ interface
 
 uses
   LiHash, Distri, Classes, FTPSend, LiTypes, LiUtils, MTProcs,
-  PkTypes, Process, RegExpr, BaseUnix, Blcksock, HTTPSend, IniFiles,
+  Process, RegExpr, BaseUnix, Blcksock, HTTPSend, IniFiles,
   SysUtils, DepManage, IPKCDef10, StrLocale, LiFileUtil, PackageKit,
   SoftwareDB, Backend_IPK, IPKPackage11, LiStatusObj, GLib2, GExt, LiApp;
 
@@ -1159,8 +1159,8 @@ begin
           end;
         except
           //Unable to copy the file
-          EmitError(Format(rsCnCopy, [dest + '/' +
-            ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
+          EmitError(Format(rsCnCopy,
+            [dest + '/' + ExtractFileName(DeleteModifiers(h))]) + #10 + rsInClose);
           RollbackInstallation;
           Result := false;
           Abort_FreeAll();

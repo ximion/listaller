@@ -492,11 +492,11 @@ begin
 end;
 
 //** Removes the application
-function li_mgr_remove_app(mgr: TLiAppManager; appId: PChar): Boolean;cdecl;
+function li_mgr_remove_app(mgr: TLiAppManager; app: TLiAppItem): Boolean;cdecl;
 begin
  Result:=true;
  try
-  mgr.UninstallApp(appId);
+  mgr.UninstallApp(app);
  except
   Result:=false;
  end;

@@ -3,7 +3,7 @@
 {   Library:          Fundamentals 4.00                                        }
 {   File name:        cDefines.inc                                             }
 {   Home page:        http://fundementals.sourceforge.net                      }
-{   Copyright:        Copyright © 1998-2007, David J Butler                    }
+{   Copyright:        Copyright Â© 1998-2007, David J Butler                    }
 {                     All rights reserved.                                     }
 {                                                                              }
 { Conditionals defined elsewhere:                                              }

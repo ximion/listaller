@@ -21,7 +21,7 @@ unit depmanage;
 interface
 
 uses
-  GLib2, Classes, LiTypes, LiUtils, PkTypes, Process, SysUtils, DDEResolve,
+  GLib2, Classes, LiTypes, LiUtils, Process, SysUtils, DDEResolve,
   PackageKit, SoftwareDB, TarArchive, LiFileUtil;
 
 type
@@ -35,7 +35,7 @@ type
 
   ArchEntry = record
     Name: String;
-    comp: CompressionMethod;
+    Comp: CompressionMethod;
   end;
 
   TDepResolveProgress = procedure(depIndex: Integer; prog: Integer) of object;
@@ -168,33 +168,33 @@ begin
       solver.lastIndex := solver.lastIndex + 1;
     end
     else
-      if pk.Finished then
+    if pk.Finished then
+    begin
+      pdebug('Finished! [ ' + IntToStr(pk.Tag) + ' ]');
+      solver.MakeProgress(pk.Tag, 100);
+
+      //Check if package was found
+      if pk.RList.Count <= 0 then
       begin
-        pdebug('Finished! [ ' + IntToStr(pk.Tag) + ' ]');
-        solver.MakeProgress(pk.Tag, 100);
-
-        //Check if package was found
-        if pk.RList.Count <= 0 then
+        //Package was not found!
+        if pk.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
         begin
-          //Package was not found!
-          if pk.PkExitStatus <> PK_EXIT_ENUM_SUCCESS then
-          begin
-            solver.failed := true;
-            solver.errMsg := pk.LastErrorMessage;
-            g_main_loop_quit(solver.loop);
-            Result := false;
-            exit;
-          end;
-
-        end
-        else
-        begin
-          solver.resList.Add(pk.RList[0].PackageId);
-          solver.DepList.Delete(solver.DepList.IndexOf(solver.tmpDeps[pk.Tag]));
+          solver.failed := true;
+          solver.errMsg := pk.LastErrorMessage;
+          g_main_loop_quit(solver.loop);
+          Result := false;
+          exit;
         end;
-        //Make TpackageKit ready to accept new jobs
-        pk.Tag := -1;
+
+      end
+      else
+      begin
+        solver.resList.Add(pk.RList[0].PackageId);
+        solver.DepList.Delete(solver.DepList.IndexOf(solver.tmpDeps[pk.Tag]));
       end;
+      //Make TpackageKit ready to accept new jobs
+      pk.Tag := -1;
+    end;
   end;
 end;
 
@@ -262,25 +262,25 @@ var
 begin
   i := sl.IndexOf(nm + '.tar');
   if i >= 0 then
-    Result.comp := cmNone
+    Result.Comp := cmNone
   else
   begin
     i := sl.IndexOf(nm + '.tar.gz');
     if i >= 0 then
-      Result.comp := cmGZip
+      Result.Comp := cmGZip
     else
     begin
       i := sl.IndexOf(nm + '.tar.bz2');
       if i >= 0 then
-        Result.comp := cmBZip2
+        Result.Comp := cmBZip2
       else
       begin
         i := sl.IndexOf(nm + '.tar.lzma');
         if i >= 0 then
-          Result.comp := cmLZMA
+          Result.Comp := cmLZMA
         else
         begin
-          Result.comp := cmNONE;
+          Result.Comp := cmNONE;
           exit;
         end;
       end;
@@ -316,7 +316,7 @@ begin
 
   Data := TTarArchive.Create;
   Data.TarArchive := WDir + entry.Name;
-  Data.Compression := entry.comp;
+  Data.Compression := entry.Comp;
   Result := Data;
 end;
 
@@ -377,7 +377,7 @@ begin
   arch := TTarArchive.Create;
   arch.BaseDir := WDir;
   arch.TarArchive := WDir + entry.Name;
-  arch.Compression := entry.comp;
+  arch.Compression := entry.Comp;
   Result := arch.ExtractFile('./control');
   if not FileExists(WDir + 'control') then
     Result := 4;
