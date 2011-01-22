@@ -1800,16 +1800,10 @@ begin
       pkit := TPackageKit.Create;
       pkit.RegisterOnMessage(FMessage, message_udata);
       pkit.RegisterOnStatus(FStatus, status_udata);
-      if not pkit.InstallPkg(PkgPath) then
+      Result := pkit.InstallPkg(PkgPath);
+      if not Result then
         perror('PK problem: Could not queue transaction!');
 
-      //Force check of root update source
-     { CheckAddUSource(true);
-      if pkType = ptLinstall then
-        buscmd.addsrc := AddUpdateSource
-      else
-        buscmd.addsrc := false; }
-      Result := true;
       // Don't continue here
       exit;
     end;
