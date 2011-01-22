@@ -144,6 +144,7 @@ begin
   FName := ai.AName;
   FId := ai.AId;
   FPkType := ai.PkType;
+  FPkPkgId := ai.PkPackageId;
   FSummary := ai.Summary;
   FVersion := ai.version;
   FAuthor := ai.Author;
@@ -156,14 +157,19 @@ begin
 end;
 
 function TLiAppItem.GetPkPackageId: String;
+var ver: String;
 begin
   // If PkPackageId is already set, just set it as result and exit
   // (Allows ID to be set manually)
-  if trim(FPkPkgId) <> '' then
+  if pos(';', FPkPkgId) > 0 then
   begin
-    Result := FPkPkgId;
+    Result := trim(FPkPkgId);
     exit;
   end;
+  ver := FVersion;
+  // Make sure the right version is selected
+  if (FVersion = '0.0') or (FVersion = '?') then
+  ver := '';
   // Build valid and unique PackageKit package-id for this application
   FPkPkgId := AId + ';' + FVersion + ';' + 'any' + ';' + 'local:%listaller';
   Result := FPkPkgId;

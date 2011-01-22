@@ -489,10 +489,10 @@ begin
   mgr.EmitStatusChange(status, details.text, details.error_code);
 end;
 
-//Initialize appremove: Detect rdepends if package is native, if package is native, add "pkg:" to
-// identification string - if not, pkg has to be Loki/Mojo, so intitiate Mojo-Removal. After rdepends and pkg resolve is done,
-// run uninstall as root if necessary. At the end, RemoveAppInternal() is called (if LOKI-Remove was not run) to uninstall
-// native or autopackage setup.
+//: Initialize appremove: Detect rdepends if package is native, if package is native, add "pkg:" to
+//   identification string - if not, pkg has to be Loki/Mojo, so intitiate Mojo-Removal. After rdepends and pkg resolve is done,
+//   run uninstall as root if necessary. At the end, RemoveAppInternal() is called (if LOKI-Remove was not run) to uninstall
+//   native or autopackage setup.
 procedure TLiAppManager.UninstallApp(app: TLiAppItem);
 var
   pkit: TPackageKit;
@@ -523,7 +523,8 @@ begin
     pkit.RegisterOnMessage(FMessage, message_udata);
 
     // No remove the app via LI-enabled PK
-    if not pkit.RemovePkg(app.AId) then
+    pdebug('Application-PackageID is: ' + app.PkPackageID);
+    if not pkit.RemovePkg(app.PkPackageId) then
       pwarning('PK uninstall query failed!');
 
     EmitInfoMsg('Done.');
@@ -537,6 +538,7 @@ begin
       if not RunBackend(TAutopackageBackend.Create, app) then
         RunBackend(TPackageKitBackend.Create, app);
 
+  // Emit that we're finished now!
   EmitStatusChange(LIS_Finished);
 end;
 

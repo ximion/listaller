@@ -272,7 +272,8 @@ begin
   error_code := pk_results_get_error_code(results);
 
   if (error_code <> nil) then
-  pk.EmitError('Action failed: ' + pk_error_enum_to_string(pk_error_get_code(error_code)), Integer(pk_error_get_code(error_code)));
+    pk.EmitError('Action failed: ' + pk_error_enum_to_string(
+      pk_error_get_code(error_code)), Integer(pk_error_get_code(error_code)));
 
   g_object_unref(results);
   pk.LoopQuit();
@@ -357,7 +358,8 @@ begin
 end;
 
 function TPackageKit.IsErrorSet(aError: PGError): Boolean;
-var msg: String;
+var
+  msg: String;
 begin
   Result := false;
   if aError <> nil then
@@ -528,21 +530,24 @@ begin
 
   pkglist.Clear;
   if pos(';', pkg) <= 0 then
-  Result := INTERN_Resolve(pkg, 'none', false);
-  if not Result then
-    exit;
-
-  if pkglist.Count <= 0 then
   begin
-    Result := false;
-    exit;
+    Result := INTERN_Resolve(pkg, 'none', false);
+
+    if not Result then
+      exit;
+
+    if pkglist.Count <= 0 then
+    begin
+      Result := false;
+      exit;
+    end;
+    pkg := pkglist[0].PackageId;
   end;
-  pkg := pkglist[0].PackageId;
   pkglist.Clear;
   done := false;
   arg := StringToPPchar(pkg, 0);
 
-  pk_client_remove_packages_async(pkclient, arg, true, false,
+  pk_client_remove_packages_async(pkclient, arg, false, true,
     cancellable, @OnPKProgress_CB, self, @OnPkActionFinished_CB, self);
 
   Result := true;

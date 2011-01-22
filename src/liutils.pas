@@ -191,6 +191,7 @@ function CheckPtr(ptr: Pointer; objname: String = ''): Boolean;
 begin
   if not Assigned(ptr) then
   begin
+    if ptr <> nil then
     if objname = '' then
       perror('Received invalid object pointer!')
     else

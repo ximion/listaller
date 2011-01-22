@@ -190,7 +190,7 @@ begin
   ds.Edit;
 
   sql := ValFormat(app.FakePackageName) + ', ' +
-    ValFormat(app.AId) + ', ' + ValFormat(app.Categories) + ', ' +
+    ValFormat(app.PkPackageId) + ', ' + ValFormat(app.Categories) + ', ' +
     ValFormat('local:%listaller') + ',' + ValFormat(app.IconName) +
     ',' + ValFormat(app.AName) + ',' + ValFormat(app.Summary);
 
@@ -225,6 +225,7 @@ begin
   else
     r.PkType := ptNative;
 
+  r.PkPackageId := PChar(ds.FieldByName('package_name').AsString) + ';;;' + h;
   r.Summary := PChar(ds.FieldByName('application_summary').AsString);
   r.Version := '0.0'; //AppInstall data does not provide information about a pkg version...
   r.Author := ''; // ... or about the software author
