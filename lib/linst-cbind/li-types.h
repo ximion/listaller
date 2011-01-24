@@ -47,7 +47,6 @@ typedef enum {
       LIS_Blocked,
       LIS_Progress,
       LIS_Failed,
-      LIS_Successful,
       LIS_Finished
 } LI_STATUS;
 
@@ -61,6 +60,7 @@ typedef enum {
       LIM_None,
       LIM_Info,
       LIM_Warning,
+      LIM_Error,
       LIM_Question_YesNo,
       LIM_Question_AbortContinue
 } LI_MESSAGE;
