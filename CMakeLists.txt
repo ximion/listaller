@@ -44,7 +44,7 @@ set(LISTALLER_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MI
 if(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
       message(STATUS "Please do an out-of-tree build:")
       message(STATUS "rm -f CMakeCache.txt && mkdir build && cd build; cmake .. && make")
-      message(FATAL_ERROR "In-tree-build detected!")     
+      message(FATAL_ERROR "In-tree-build detected!")
 endif(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
 if(NOT ${CMAKE_SOURCE_DIR}/build MATCHES ${CMAKE_BINARY_DIR})
       message("Please build only in 'build' subfolder!")
@@ -81,7 +81,7 @@ message(STATUS "Compiling Listaller version ${LISTALLER_VERSION}")
 configure_file("${CMAKE_SOURCE_DIR}/data/cmake/cmake_uninstall.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
   IMMEDIATE @ONLY)
-  
+
 add_custom_target(uninstall
   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
 )
@@ -124,9 +124,9 @@ add_subdirectory(po)
 if(QT OR GTK)
   file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/qt4)
   file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/gtk2)
-  
+
   if(FRONTENDS)
     add_subdirectory(gui)
   endif(FRONTENDS)
-  
+
 endif(QT OR GTK)
