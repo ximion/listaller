@@ -15,6 +15,7 @@
 *.cache
 *.anjuta
 *.kdev4
+.anjuta_sym_db.db
 moc_*
 Makefile
 .directory
