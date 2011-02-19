@@ -57,7 +57,6 @@ OPTION(GTK "Build Listaller's GTK2 modules" OFF)
 OPTION(FRONTENDS "Compile Listaller's frontends" OFF)
 OPTION(CREATOR "Build the liCreator application" OFF)
 OPTION(BUILDTOOLS "APGCC and stuff to build your application" OFF)
-OPTION(VLDD "VisualLDD dependency explorer" OFF)
 ########################################
 
 IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
