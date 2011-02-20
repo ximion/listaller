@@ -1,3 +1,4 @@
+# CMake for lib folder
 
 set(LISTALLER_LIB "liblistaller.so")
 
@@ -5,8 +6,11 @@ set(LIBS_FULL_VERSION "${LISTALLER_VERSION_MAJOR}.${LISTALLER_VERSION_MINOR}.${L
 set(LIBS_VERSION "${LISTALLER_VERSION_MAJOR}.${LISTALLER_VERSION_MINOR}")
 set(LIBS_SOVERSION "${LISTALLER_VERSION_MAJOR}")
 
-add_subdirectory(listaller)
+set(lisrc ${CMAKE_SOURCE_DIR}/src CACHE PATH "Listaller sourcecode dir")
+
+add_subdirectory(ipk)
 add_subdirectory(linst-cbind)
+add_subdirectory(listaller)
 
 if (QT)
   add_subdirectory(listaller-qt)
