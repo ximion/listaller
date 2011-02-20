@@ -1,6 +1,6 @@
 ##
 # This is a helper Macro to parse optional arguments in Macros/Functions
-# It has been taken from the public CMake wiki.  
+# It has been taken from the public CMake wiki.
 # See http://www.cmake.org/Wiki/CMakeMacroParseArguments for documentation and
 # licensing.
 ##

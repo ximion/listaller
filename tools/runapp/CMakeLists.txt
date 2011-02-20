@@ -9,7 +9,7 @@ include(ValaVersion)
 include(ValaPrecompile)
 ensure_vala_version("0.10" MINIMUM)
 
-set(RUNAPP_SOURCES main.vala
+set(RUNAPP_SOURCES runapp.vala
 )
 
 vala_precompile(VALA_C ${RUNAPP_SOURCES}

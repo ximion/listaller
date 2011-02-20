@@ -1,4 +1,4 @@
-/* main.vala
+/* runapp.vala
  *
  * Copyright (C) 2010  Matthias Klumpp
  *
@@ -21,10 +21,10 @@
 
 using GLib;
 
-public class RunAppMain : Object {
+public class RunApp : Object {
 	private string appName;
 
-	public RunAppMain (string aname) {
+	public RunApp (string aname) {
 		appName = aname;
 	}
 
@@ -46,7 +46,7 @@ public class RunAppMain : Object {
 			return 5;
 		}
 
-		var main = new RunAppMain (args[1]);
+		var main = new RunApp (args[1]);
 		main.run ();
 		return 0;
 	}
