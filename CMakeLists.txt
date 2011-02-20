@@ -55,8 +55,6 @@ endif()
 OPTION(QT "Build Listaller's Qt4 modules" OFF)
 OPTION(GTK "Build Listaller's GTK2 modules" OFF)
 OPTION(FRONTENDS "Compile Listaller's frontends" OFF)
-OPTION(CREATOR "Build the liCreator application" OFF)
-OPTION(BUILDTOOLS "APGCC and stuff to build your application" OFF)
 ########################################
 
 IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)

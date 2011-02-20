@@ -4,7 +4,7 @@ Version 0.5b
 
  Overview:
   -- Will follow when 0.5 is released --
- 
+
  Features:
   * New software database handler
   * Use Debian packages as dependency sources
@@ -17,10 +17,10 @@ Version 0.5b
   * visual-ldd: Ported to Qt4, updated GUI and added few more features
   * Pulled apbuild from Autopackage
   * binreloc: Adjusted for Listaller
- 
+
  Specifications:
   * Updated database layout to new format
- 
+
  Bindings:
   * This release contains major API/ABI breaks, tools depending on
      liblistaller will need huge adjustements.
@@ -28,14 +28,14 @@ Version 0.5b
   * qt : Created new Qt bindings
   * c  : Updated C bindings to new version
   * Created bindingtool, to ensure all bindings are in sync.
- 
+
  Bugfixes:
   * Fix invalid dependencies on Fedora
- 
+
 Version 0.4.10
 ~~~~~~~~~~~~~~
- 
- Bugfixes: 
+
+ Bugfixes:
   * Compatibility patch for PackageKit > 0.5
 
 Version 0.4b
