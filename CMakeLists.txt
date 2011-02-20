@@ -27,7 +27,9 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}
 
 add_definitions(${GEE_CFLAGS} ${GEE_CFLAGS_OTHER})
 
-vala_add_executable("buildlist" ${BUILDLIST_SOURCES})
+vala_add_executable("buildlist" ${BUILDLIST_SOURCES}
+				PACKAGES posix gio-2.0 gee-1.0
+)
 
 install(TARGETS buildlist DESTINATION include/apbuild COMPONENT headers)
 install(PROGRAMS apgcc
