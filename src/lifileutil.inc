@@ -16,7 +16,7 @@
  *                                                                           *
  *****************************************************************************
 }
- 
+
 var
   FNeedRTLAnsi: boolean = false;
   FNeedRTLAnsiValid: boolean = false;
@@ -90,7 +90,7 @@ var
 begin
   {$ifdef MSWindows}
   Dst := AllocMem((Length(s) + 1) * SizeOf(Char));
-  if OemToChar(PChar(s), Dst) then 
+  if OemToChar(PChar(s), Dst) then
     Result := StrPas(Dst)
   else
     Result := s;
@@ -495,11 +495,11 @@ function TrimFilename(const AFilename: string): string;
     i:=1;
     while i<=l do begin
       case TheFilename[i] of
-      
+
       PathDelim:
         // check for double path delimiter
         if (i<l) and (TheFilename[i+1]=PathDelim) then exit;
-        
+
       '.':
         if (i=1) or (TheFilename[i-1]=PathDelim) then begin
           // check for . directories
@@ -664,7 +664,7 @@ end;
 {------------------------------------------------------------------------------
   function CompareFileExt(const Filename, Ext: string;
     CaseSensitive: boolean): integer;
-    
+
   Ext can contain a point or not
  ------------------------------------------------------------------------------}
 function CompareFileExt(const Filename, Ext: string;
@@ -935,7 +935,7 @@ begin
 
   {$ELSE}
   if not (FpStat(AFilename,info)=0) then exit;
-  
+
   // permissions
   // file type
   mode:= info.st_mode;
@@ -998,7 +998,7 @@ begin
 
   // size
   Result:=Result+rsSize+IntToStr(info.st_size);
-  
+
   {$ENDIF}
   // date + time
   Result:=Result+rsModified;
@@ -1579,7 +1579,7 @@ end;
 
 function SearchAllFilesInPath(const Filename, BasePath, SearchPath,
   Delimiter: string; Flags: TSearchFileInPathFlags): TStrings;
-  
+
   procedure Add(NewFilename: string);
   var
     i: Integer;
@@ -1594,7 +1594,7 @@ function SearchAllFilesInPath(const Filename, BasePath, SearchPath,
     end;
     Result.Add(NewFilename);
   end;
-  
+
 var
   p, StartPos, l: integer;
   CurPath, Base: string;
@@ -1887,7 +1887,7 @@ var
     finally
       FindCloseUTF8(PathInfo);
     end;
-    
+
     if ASearchSubDirs or (ALevel > 0) then // search recursively in directories
       if FindFirstUTF8(P, faAnyFile, PathInfo) = 0 then
       try
@@ -1895,15 +1895,15 @@ var
           repeat
             if (PathInfo.Name = '.') or (PathInfo.Name = '..') or
               (PathInfo.Name = '') or ((PathInfo.Attr and faDirectory) = 0) then Continue;
-              
+
             FPath := APath;
             FLevel := ALevel;
             FFileInfo := PathInfo;
             DoDirectoryEnter;
             if not FSearching then Break;
-            
+
             DoSearch(AppendPathDelim(APath + PathInfo.Name), Succ(ALevel));
-            
+
           until (FindNextUTF8(PathInfo) <> 0);
         end;
       finally

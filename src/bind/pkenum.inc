@@ -35,7 +35,7 @@
 {$ifndef __PK_ENUM_H}
 {$define __PK_ENUM_H}
 { These are compatibility enums so we can break API in the future  }
-(* error 
+(* error
 #define pk_sig_type_enum_from_text		pk_sig_type_enum_from_string
 in define line 34 *)
 
@@ -487,12 +487,12 @@ in define line 34 *)
 procedure pk_enum_test(user_data:gpointer);cdecl;external pklib2;
 (* Const before type ignored *)
 (* Const before type ignored *)
-(* error 
+(* error
 							 G_GNUC_WARN_UNUSED_RESULT;
  in declarator_list *)
 (* Const before type ignored *)
 (* Const before type ignored *)
-(* error 
+(* error
 							 G_GNUC_WARN_UNUSED_RESULT;
  in declarator_list *)
 (* Const before type ignored *)

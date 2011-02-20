@@ -8,10 +8,11 @@
 #  PASCAL_TARGET_ARCH    - Get FPC's current target architecture
 #  PASCAL_TARGET_OS      - Get FPC's current target os
 #
-# Redistribution and use is allowed according to the terms of the BSD license.
 # Copyright (c) 2010, Matthias Klumpp <matthias@nlinux.org>
 # and others.
 #
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 if (PASCAL_TARGET_ARCH AND PASCAL_COMPILER_FLAGS AND PASCAL_TARGET_ARCH AND PASCAL_TARGET_OS)
 else()
@@ -89,5 +90,5 @@ set(PASCAL_COMPILER ${fpc_executable} CACHE INTERNAL "FPC executable")
 set(PASCAL_COMPILER_FLAGS "-MObjFPC" "-Scghi" "-O1" "-gl" "-XX" "-vewnhi" "-l"
 			  ${noexecstack_flags} ${pascal_compiler_flags_cmn} CACHE STRING "Standard FPC compiler flags"
    )
-			  
+
 endif()

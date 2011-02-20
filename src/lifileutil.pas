@@ -30,7 +30,7 @@ uses
   // We do not use the LCL. LCLStrConsts and Masks are local Listaller versions
   Classes, SysUtils, {$IFDEF NoGUI} NGLCLStrConsts {$ELSE} LCLStrConsts {$ENDIF},
   {$IFDEF NoGUI} NGMasks {$ELSE} Masks {$ENDIF};
-  
+
 {$if defined(Windows) or defined(darwin)}
 {$define CaseInsensitiveFilenames}
 {$endif}
@@ -107,7 +107,7 @@ type
 
 const
   AllDirectoryEntriesMask = '*';
-  
+
 function GetAllFilesMask: string;
 function GetExeExt: string;
 function SearchFileInPath(const Filename, BasePath, SearchPath,

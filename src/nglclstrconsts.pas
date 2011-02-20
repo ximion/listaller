@@ -75,13 +75,13 @@ resourceString
 
   // Select color dialog
   rsSelectcolorTitle    = 'Select color';
-   
+
   // Select font dialog
   rsSelectFontTitle     = 'Select a font';
   rsFindMore = 'Find more';
   rsReplace = 'Replace';
   rsReplaceAll = 'Replace all';
-  
+
   // DBGrid
   rsDeleteRecord = 'Delete record?';
 
@@ -96,7 +96,7 @@ resourceString
   rsPostRecordHint = 'Post';
   rsCancelRecordHint = 'Cancel';
   rsRefreshRecordsHint = 'Refresh';
-  
+
   // gtk interface
   rsWarningUnremovedPaintMessages = ' WARNING: There are %s unremoved LM_'
     +'PAINT/LM_GtkPAINT message links left.';
@@ -211,7 +211,7 @@ resourceString
   // win32 interface
   rsWin32Warning = 'Warning:';
   rsWin32Error = 'Error:';
-  
+
   // StringHashList, LResource, Menus, ExtCtrls, ImgList, Spin
   // StdCtrls, Calendar, CustomTimer, Forms, Grids, LCLProc, Controls, ComCtrls,
   // ExtDlgs, EditBtn, Masks

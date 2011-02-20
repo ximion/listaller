@@ -474,7 +474,7 @@ end;
 
 function WSAGetLastError: Integer;
 begin
-  Result := fpGetErrno; 
+  Result := fpGetErrno;
 end;
 
 function FD_ISSET(Socket: TSocket; var fdset: TFDSet): Boolean;
@@ -831,7 +831,7 @@ begin
     GetProtocolByNumber(SockProtocol, ProtoEnt);
     ServEnt.port := 0;
     GetServiceByName(Port, ProtoEnt.Name, ServEnt);
-    Result := ServEnt.port;  
+    Result := ServEnt.port;
   end;
 end;
 
@@ -846,7 +846,7 @@ begin
   a4[1] := StrToNetAddr(IP);
   if a4[1].s_addr <> INADDR_ANY then
   begin
-//why ResolveAddress need address in HOST order? :-O 
+//why ResolveAddress need address in HOST order? :-O
     n := ResolveAddress(nettohost(a4[1]), a);
     if n > 0 then
       Result := a[1];
