@@ -1,4 +1,4 @@
-/* manager.vala
+/* database.vala
  *
  * Copyright (C) 2010  Matthias Klumpp
  *
@@ -20,13 +20,14 @@
  */
 
 using GLib;
+using Sqlite;
 
-public class LiManager : Object {
-	public LiManager () {
+public class SoftwareDB : Object {
+	public SoftwareDB () {
 	}
 
 	public void test () {
-		SoftwareDB sdb = new SoftwareDB ();
-		sdb.test ();
+		//
 	}
+
 }
