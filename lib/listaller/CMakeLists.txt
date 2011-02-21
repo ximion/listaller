@@ -4,12 +4,14 @@ find_package(Vala REQUIRED)
 include("${VALA_USE_FILE}")
 
 find_package(GLIB2 REQUIRED)
+find_package(Gettext REQUIRED)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 ensure_vala_version("0.10" MINIMUM)
 
-set(LLISTALLER_SOURCES ${lisrc}/manager/manager.vala
+set(LLISTALLER_SOURCES ${lisrc}/manager/config.vala
+	${lisrc}/manager/manager.vala
 	${lisrc}/manager/database.vala
 )
 
@@ -24,6 +26,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}
 		    ${GIO2_INCLUDE_DIR}
 )
 
+#PackageKitGlib-1.0
+#COMPILE_FLAGS --Xcc='--include config.h'
 vala_add_library("listaller" SHARED ${LLISTALLER_SOURCES}
 			     BASE_DIR ${lisrc}
 			     PACKAGES gee-1.0 sqlite3

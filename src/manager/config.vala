@@ -1,4 +1,4 @@
-/* manager.vala
+/* config.vala
  *
  * Copyright (C) 2010  Matthias Klumpp
  *
@@ -21,20 +21,24 @@
 
 using GLib;
 
-public class LiManager : Object {
+public class LiConfig : Object {
 	private bool sumode;
+	const string suconfdir = "/etc/lipa";
 
 	public bool superuserMode {
 		get { return sumode; }
 		set { sumode = value; }
 	}
 
-	public LiManager (bool root) {
+	public LiConfig (bool root) {
 		sumode = root;
 	}
 
-	public void test () {
-		SoftwareDB sdb = new SoftwareDB (false);
-		sdb.open ();
+	public string database_file () {
+		if (sumode) {
+			return suconfdir + "/software.db";
+		} else {
+			return Environment.get_user_config_dir () + "software/software.db";
+		}
 	}
 }

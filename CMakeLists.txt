@@ -92,7 +92,7 @@ add_custom_target(distclean
 )
 
 find_package(PkgConfig REQUIRED)
-find_package(UnixCommands REQUIRED)
+find_package(Gettext REQUIRED)
 find_package(FPC REQUIRED)
 
 include(${CMAKE_SOURCE_DIR}/data/cmake/listaller_build_gui.cmake)
@@ -116,7 +116,9 @@ add_subdirectory(src)
 add_subdirectory(tools)
 add_subdirectory(data)
 add_subdirectory(graphics)
-add_subdirectory(po)
+if (GETTEXT_FOUND AND ENABLE_NLS)
+  add_subdirectory(po)
+endif (GETTEXT_FOUND AND ENABLE_NLS)
 
 if(QT OR GTK)
   file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/qt4)

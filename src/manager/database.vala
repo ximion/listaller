@@ -4,7 +4,7 @@
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -23,11 +23,32 @@ using GLib;
 using Sqlite;
 
 public class SoftwareDB : Object {
-	public SoftwareDB () {
+	private Database db;
+	private LiConfig conf;
+	private bool sumode;
+
+	public SoftwareDB (bool root) {
+		sumode = root;
+		conf = new LiConfig (sumode);
 	}
 
-	public void test () {
-		//
+	public bool open () {
+		string dbname = conf.database_file ();
+		int rc;
+
+		if (!FileUtils.test (dbname, FileTest.IS_REGULAR)) {
+			stderr.printf ("Software database does not exist or is directory\n");
+			return false;
+		}
+
+		rc = Database.open (dbname, out db);
+
+		if (rc != Sqlite.OK) {
+			stderr.printf ("Can't open database: %d, %s\n", rc, db.errmsg ());
+			return false;
+		}
+
+		return true;
 	}
 
 }
