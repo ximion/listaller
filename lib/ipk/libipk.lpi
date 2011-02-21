@@ -8,6 +8,7 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
+      <Title Value="libipk"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -35,9 +36,9 @@
     </RunParams>
     <Units Count="14">
       <Unit0>
-        <Filename Value="liblistaller.lpr"/>
+        <Filename Value="libipk.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="liblistaller"/>
+        <UnitName Value="libipk"/>
       </Unit0>
       <Unit1>
         <Filename Value="../../src/appinstalldb.pas"/>
@@ -109,7 +110,7 @@
   <CompilerOptions>
     <Version Value="9"/>
     <Target>
-      <Filename Value="../../build/liblistaller.so.0"/>
+      <Filename Value="../../build/libipk.so.0"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>

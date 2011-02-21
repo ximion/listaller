@@ -7,7 +7,7 @@ find_package(DBus REQUIRED)
 find_package(PolKit REQUIRED)
 pkg_check_modules(PackageKitGLib2 REQUIRED packagekit-glib2>=0.6)
 
-set(llistaller_project liblistaller.lpr)
+set(llistaller_project libipk.lpr)
 
 set(llistaller_base_sources ${lisrc}/liversion.inc
 	${llistaller_project}
@@ -58,7 +58,7 @@ set(llistaller_base_sources ${lisrc}/liversion.inc
 	${lisrc}/bind/polkit.pas
 )
 
-set(listaller_libname "${LISTALLER_LIB}.${LIBS_SOVERSION}")
+set(listaller_libname "${LIPK_LIB}.${LIBS_SOVERSION}")
 
 set(llistaller_includes "-Fu${lisrc}"
 			"-Fu${lisrc}/bind/"
@@ -88,15 +88,15 @@ add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/${listaller_libname}"
 	MAIN_DEPENDENCY ${llistaller_project}
 	DEPENDS ${llistaller_base_sources}
 )
-add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/${LISTALLER_LIB}.${LIBS_VERSION}"
+add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/${LIPK_LIB}.${LIBS_VERSION}"
 	      COMMAND ln
-	      ARGS -f -s ${listaller_libname} ${LISTALLER_LIB}.${LIBS_VERSION}
+	      ARGS -f -s ${listaller_libname} ${LIPK_LIB}.${LIBS_VERSION}
               MAIN_DEPENDENCY ${llistaller_project}
               WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
 )
-add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/${LISTALLER_LIB}"
+add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/${LIPK_LIB}"
 	      COMMAND ln
-	      ARGS -f -s ${LISTALLER_LIB}.${LIBS_VERSION} ${LISTALLER_LIB}
+	      ARGS -f -s ${LIPK_LIB}.${LIBS_VERSION} ${LIPK_LIB}
               MAIN_DEPENDENCY ${llistaller_project}
               WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
 )
@@ -104,12 +104,12 @@ add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/${LISTALLER_LIB}"
 
 
 add_custom_target(listallerlib ALL DEPENDS "${PROJECT_BINARY_DIR}/${listaller_libname}"
-					   "${PROJECT_BINARY_DIR}/${LISTALLER_LIB}.${LIBS_VERSION}"
-					   "${PROJECT_BINARY_DIR}/${LISTALLER_LIB}"
+					   "${PROJECT_BINARY_DIR}/${LIPK_LIB}.${LIBS_VERSION}"
+					   "${PROJECT_BINARY_DIR}/${LIPK_LIB}"
 )
 
 set(llistaller_lib_parts ${PROJECT_BINARY_DIR}/${listaller_libname}
-	      ${PROJECT_BINARY_DIR}/${LISTALLER_LIB}.${LIBS_VERSION}
-	      ${PROJECT_BINARY_DIR}/${LISTALLER_LIB})
+	      ${PROJECT_BINARY_DIR}/${LIPK_LIB}.${LIBS_VERSION}
+	      ${PROJECT_BINARY_DIR}/${LIPK_LIB})
 
 install(FILES ${llistaller_lib_parts} DESTINATION ${CMAKE_INSTALL_LIBDIR})
