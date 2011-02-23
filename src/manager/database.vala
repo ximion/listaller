@@ -22,6 +22,9 @@
 using GLib;
 using Sqlite;
 
+// Workaround for Vala bug #618931
+private const string _PKG_VERSION2 = PkgConfig.VERSION;
+
 public enum DatabaseStatus {
 	OPENED,
 	LOCKED,

@@ -22,8 +22,8 @@
 using PkgConfig;
 using GLib;
 
-// Required to include config.h as _first_ unit
-private const string inv_4 = PkgConfig.VERSION;
+// Workaround for Vala bug #618931
+private const string _PKG_VERSION1 = PkgConfig.VERSION;
 
 private class LiConfig : Object {
 	private bool sumode;
