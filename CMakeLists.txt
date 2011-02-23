@@ -111,6 +111,8 @@ if(LCL_VERSION LESS "929")
  message(FATAL_ERROR "LCL should be at least version 0.9.29!")
 endif()
 
+configure_file(config.h.in ${CMAKE_BINARY_DIR}/config.h )
+
 add_subdirectory(lib)
 add_subdirectory(src)
 add_subdirectory(tools)

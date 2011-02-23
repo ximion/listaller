@@ -19,9 +19,13 @@
  * 	Matthias Klumpp <matthias@nlinux.org>
  */
 
+using PkgConfig;
 using GLib;
 
-public class LiConfig : Object {
+// Required to include config.h as _first_ unit
+private const string inv_4 = PkgConfig.VERSION;
+
+private class LiConfig : Object {
 	private bool sumode;
 	const string suconfdir = "/etc/lipa";
 
@@ -41,4 +45,21 @@ public class LiConfig : Object {
 			return Environment.get_user_config_dir () + "software/software.db";
 		}
 	}
+
+	public string appregister_dir () {
+		if (sumode) {
+			return suconfdir;
+		} else {
+			return Environment.get_user_config_dir () + "software";
+		}
+	}
+}
+
+int main(string[] args)
+{
+	// Initialize localisation
+	Intl.bindtextdomain (PkgConfig.GETTEXT_PACKAGE, PkgConfig.LOCALEDIR);
+	Intl.bind_textdomain_codeset (PkgConfig.GETTEXT_PACKAGE, "UTF-8");
+	Intl.textdomain (PkgConfig.GETTEXT_PACKAGE);
+	return 0;
 }
