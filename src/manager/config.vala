@@ -39,27 +39,34 @@ private class LiConfig : Object {
 	}
 
 	public string database_file () {
-		if (sumode) {
-			return suconfdir + "/software.db";
-		} else {
-			return Environment.get_user_config_dir () + "software/software.db";
-		}
+		return appregister_dir () + "/software.db";
 	}
 
 	public string appregister_dir () {
+		string regdir;
 		if (sumode) {
-			return suconfdir;
+			regdir = suconfdir;
 		} else {
-			return Environment.get_user_config_dir () + "software";
+			regdir = Environment.get_user_config_dir () + "/software";
 		}
+
+		File d = File.new_for_path (regdir);
+		try {
+			if (!d.query_exists ()) {
+				d.make_directory_with_parents ();
+			}
+		} catch (Error e) {
+			stderr.printf (_("Unable to create application database directory: %s\n").printf (e.message));
+		}
+
+		return regdir;
 	}
 }
 
-int main(string[] args)
+public void li_enable_translation ()
 {
 	// Initialize localisation
 	Intl.bindtextdomain (PkgConfig.GETTEXT_PACKAGE, PkgConfig.LOCALEDIR);
 	Intl.bind_textdomain_codeset (PkgConfig.GETTEXT_PACKAGE, "UTF-8");
 	Intl.textdomain (PkgConfig.GETTEXT_PACKAGE);
-	return 0;
 }
