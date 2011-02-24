@@ -1,6 +1,6 @@
 /* database.vala
  *
- * Copyright (C) 2010  Matthias Klumpp
+ * Copyright (C) 2010-2011  Matthias Klumpp
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -146,6 +146,10 @@ private class SoftwareDB : Object {
 
 	public void close () {
 		// Just delete the lock
+		remove_db_lock ();
+	}
+
+	public void remove_db_lock () {
 		File lfile = File.new_for_path (dblockfile);
 		try {
 			if (lfile.query_exists ()) {
@@ -226,11 +230,18 @@ private class SoftwareDB : Object {
 
 	protected bool update_db_structure () {
 		Sqlite.Statement stmt;
+
+		// Create table to store information about applications
 		int res = db.prepare_v2 ("CREATE TABLE IF NOT EXISTS applications ("
 		+ "id INTEGER PRIMARY KEY, "
 		+ "name TEXT UNIQUE NOT NULL, "
 		+ "version TEXT UNIQUE NOT NULL, "
-		+ "install_time INTEGER"
+		+ "summary TEXT, "
+		+ "author TEXT, "
+		+ "maintainer TEXT, "
+		+ "categories TEXT, "
+		+ "install_time INTEGER, "
+		+ "dependencies TEXT"
 		+ ")", -1, out stmt);
 		assert (res == Sqlite.OK);
 
@@ -240,7 +251,68 @@ private class SoftwareDB : Object {
 			return false;
 		}
 
+		// Table for all the additional stuff fetched during installation (3rd-party libraries etc.)
+		res = db.prepare_v2 ("CREATE TABLE IF NOT EXISTS dependencies ("
+		+ "id INTEGER PRIMARY KEY, "
+		+ "name TEXT UNIQUE NOT NULL, "
+		+ "version TEXT UNIQUE NOT NULL, "
+		+ "storage_path TEXT UNIQUE NOT NULL, "
+		+ "maintainer TEXT, "
+		+ "install_time INTEGER"
+		+ ")", -1, out stmt);
+		assert (res == Sqlite.OK);
+
+		res = stmt.step ();
+		if (res != Sqlite.DONE) {
+			fatal ("create dependencies table", res);
+			return false;
+		}
+
 		return true;
+	}
+
+	public bool add_application (LiAppItem item) {
+		Sqlite.Statement stmt;
+		int res = db.prepare_v2 (
+			"INSERT INTO applications (name, version, summary, author, maintainer, "
+			+ "categories, install_time, dependencies) "
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+				   -1, out stmt);
+			assert (res == Sqlite.OK);
+
+			ulong time_created = now_sec ();
+
+			// Assign values
+			res = stmt.bind_text (1, item.name);
+			assert (res == Sqlite.OK);
+			res = stmt.bind_text (2, item.version);
+			assert (res == Sqlite.OK);
+			res = stmt.bind_text (3, item.summary);
+			assert (res == Sqlite.OK);
+			res = stmt.bind_text (4, item.author);
+			assert (res == Sqlite.OK);
+			res = stmt.bind_text (5, item.maintainer);
+			assert (res == Sqlite.OK);
+			res = stmt.bind_text (6, item.categories);
+			assert (res == Sqlite.OK);
+			res = stmt.bind_int64 (7, item.install_time);
+			assert (res == Sqlite.OK);
+			res = stmt.bind_text (8, item.dependencies);
+			assert (res == Sqlite.OK);
+
+			res = stmt.step();
+			if (res != Sqlite.DONE) {
+				if (res != Sqlite.CONSTRAINT)
+					fatal("add application", res);
+
+				return false;
+			}
+
+			return true;
+	}
+
+	public LiAppItem get_application_by_name (string appName) {
+		return new LiAppItem ("", "");
 	}
 
 }

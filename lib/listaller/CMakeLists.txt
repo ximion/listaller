@@ -12,6 +12,8 @@ pkg_check_modules(GIO2 REQUIRED gio-2.0)
 ensure_vala_version("0.10" MINIMUM)
 
 set(LLISTALLER_SOURCES ${lisrc}/manager/config.vala
+	${lisrc}/manager/util.vala
+	${lisrc}/manager/items.vala
 	${lisrc}/manager/manager.vala
 	${lisrc}/manager/database.vala
 )

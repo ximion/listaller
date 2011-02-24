@@ -1,4 +1,4 @@
-/* unit-tests.vala
+/* util.vala
  *
  * Copyright (C) 2010-2011  Matthias Klumpp
  *
@@ -21,34 +21,16 @@
 
 using GLib;
 
-void msg(string s) {
-	stdout.printf (s + "\n");
+public ulong timeval_to_ms (TimeVal time_val) {
+	return (((ulong) time_val.tv_sec) * 1000) + (((ulong) time_val.tv_usec) / 1000);
 }
 
-void test_software_db () {
-	bool ret = false;
-
-	msg ("Opening new software database connection");
-	SoftwareDB sdb = new SoftwareDB (false);
-	// Do this only in testing environment!
-	sdb.remove_db_lock ();
-	// Open the DB
-	sdb.open ();
-	msg ("Software database is ready now!");
-	msg ("Constructing fake application and adding it to the DB...");
-
-	LiAppItem item = new LiAppItem ("Test", "0.1");
-	ret = sdb.add_application (item);
-	assert (ret == true);
-
-	sdb.close ();
-	msg ("Software database closed.");
+public ulong now_ms () {
+	return timeval_to_ms (TimeVal());
 }
 
-int main (string[] args) {
-	stdout.printf ("=== Running tests ===\n");
-	Test.init (ref args);
-	test_software_db ();
-	Test.run ();
-	return 0;
+public ulong now_sec () {
+	TimeVal time_val = TimeVal ();
+
+	return time_val.tv_sec;
 }
