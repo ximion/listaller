@@ -20,7 +20,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/listaller.pc.in
   ${CMAKE_CURRENT_BINARY_DIR}/listaller.pc
   @ONLY
 )
-  
+
 install(FILES ${llistaller_c_HEADERS}
 	DESTINATION include/listaller
 	COMPONENT headers

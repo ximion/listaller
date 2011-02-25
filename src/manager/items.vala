@@ -71,21 +71,40 @@ public class LiAppItem : Object {
 	}
 
 	public string dependencies {
-		get { return _id; }
-		set { _id = value; }
-	}
-
-	public int id {
 		get { return _dependencies; }
 		set { _dependencies = value; }
 	}
 
+	public int id {
+		get { return _id; }
+		set { _id = value; }
+	}
+
 	public LiAppItem (string aname, string aversion) {
+		this.empty ();
 		name = aname;
 		version = aversion;
+
+	}
+
+	public LiAppItem.empty () {
 		install_time = 0;
 		categories = "all;";
 		id = -1;
+	}
+
+	public string to_string () {
+		return "[ (" + name + ") "
+			+ "(" + version +") "
+			+ "::" + id.to_string () + " "
+			+ "]";
+	}
+
+	public void fast_check () {
+		// Fast sanity checks for AppItem
+		assert (name != null);
+		assert (version != null);
+		assert (id != -1);
 	}
 
 }

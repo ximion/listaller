@@ -33,7 +33,7 @@ include_directories(${CMAKE_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${qt4_include_dir}
-    "${CMAKE_CURRENT_SOURCE_DIR}/../linst-cbind")
+    "${CMAKE_CURRENT_SOURCE_DIR}/../lipk-cbind")
 
 add_library(listaller-qt SHARED ${listaller-qt_SRCS} ${listaller-qt_MOC_SRCS})
 

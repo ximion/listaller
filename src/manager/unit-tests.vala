@@ -25,11 +25,25 @@ void msg(string s) {
 	stdout.printf (s + "\n");
 }
 
+void software_db_status_changed_cb (DatabaseStatus status, string message) {
+
+	if (status == DatabaseStatus.FATAL) {
+		msg (message);
+		assert (status != DatabaseStatus.FATAL);
+	}
+
+	if (status == DatabaseStatus.FAILURE) {
+		msg (message);
+	}
+}
+
 void test_software_db () {
 	bool ret = false;
 
 	msg ("Opening new software database connection");
 	SoftwareDB sdb = new SoftwareDB (false);
+	sdb.status_changed.connect (software_db_status_changed_cb);
+
 	// Do this only in testing environment!
 	sdb.remove_db_lock ();
 	// Open the DB
@@ -37,9 +51,22 @@ void test_software_db () {
 	msg ("Software database is ready now!");
 	msg ("Constructing fake application and adding it to the DB...");
 
+	{
 	LiAppItem item = new LiAppItem ("Test", "0.1");
 	ret = sdb.add_application (item);
 	assert (ret == true);
+
+	// Close & reopen the DB
+	sdb.close ();
+	sdb.open ();
+
+	msg ("Retrieving AppItem from database...");
+	LiAppItem newItem = sdb.get_application_by_name ("Test");
+	assert (newItem != null);
+	assert (newItem.id == 1);
+
+	msg ("Item is: %s".printf (newItem.to_string ()));
+	}
 
 	sdb.close ();
 	msg ("Software database closed.");

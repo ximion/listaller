@@ -9,7 +9,7 @@ set(LIBS_SOVERSION "${LISTALLER_VERSION_MAJOR}")
 set(lisrc ${CMAKE_SOURCE_DIR}/src CACHE PATH "Listaller sourcecode dir")
 
 add_subdirectory(ipk)
-add_subdirectory(linst-cbind)
+add_subdirectory(lipk-cbind)
 add_subdirectory(listaller)
 
 if (QT)

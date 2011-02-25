@@ -4,8 +4,8 @@ set -e
 #Set paths
 GEN="../build/util/bindingtool"
 PASBINDDIR="../src/bind"
-COUT="./linst-cbind"
-LIBSRC="./listaller/liblistaller.lpr"
+COUT="./lipk-cbind"
+LIBSRC="./ipk/libipk.lpr"
 
 if [ -e $GEN ]; then
   #Update Pascal bindings

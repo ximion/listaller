@@ -302,17 +302,92 @@ private class SoftwareDB : Object {
 
 			res = stmt.step();
 			if (res != Sqlite.DONE) {
-				if (res != Sqlite.CONSTRAINT)
+				if (res != Sqlite.CONSTRAINT) {
 					fatal("add application", res);
-
-				return false;
+					return false;
+				}
 			}
 
 			return true;
 	}
 
-	public LiAppItem get_application_by_name (string appName) {
-		return new LiAppItem ("", "");
+	private LiAppItem? retrieve_app_item (Sqlite.Statement stmt) {
+		LiAppItem item = new LiAppItem.empty ();
+
+		item.id = stmt.column_int (0);
+		item.name = stmt.column_text (1);
+		item.version = stmt.column_text (2);
+		item.summary = stmt.column_text (3);
+		item.author = stmt.column_text (4);
+		item.maintainer = stmt.column_text (5);
+		item.categories = stmt.column_text (6);
+		item.install_time = stmt.column_int (7);
+		item.dependencies = stmt.column_text (8);
+
+		return item;
+	}
+
+	public LiAppItem? get_application_by_name (string appName) {
+		Sqlite.Statement stmt;
+		int res = db.prepare_v2 ("SELECT id, name, version, summary, author, maintainer, "
+		+ "categories, install_time, dependencies "
+		+ "FROM applications WHERE name=?", -1, out stmt);
+		assert (res == Sqlite.OK);
+
+		res = stmt.bind_text (1, appName);
+
+		if (stmt.step() != Sqlite.ROW)
+			return null;
+
+		LiAppItem item = retrieve_app_item (stmt);
+
+		// Fast sanity checks
+		item.fast_check ();
+
+		return item;
+	}
+
+	public LiAppItem? get_application_by_id (int appId) {
+		Sqlite.Statement stmt;
+		int res = db.prepare_v2 ("SELECT id, name, version, summary, author, maintainer, "
+		+ "categories, install_time, dependencies "
+		+ "FROM applications WHERE id=?", -1, out stmt);
+		assert (res == Sqlite.OK);
+
+		res = stmt.bind_int (1, appId);
+
+		if (stmt.step() != Sqlite.ROW)
+			return null;
+
+		LiAppItem item = retrieve_app_item (stmt);
+
+		// Fast sanity checks
+		item.fast_check ();
+
+		return item;
+	}
+
+	public LiAppItem? get_application_by_name_version (string appName, string appVersion) {
+		Sqlite.Statement stmt;
+		int res = db.prepare_v2 ("SELECT id, name, version, summary, author, maintainer, "
+		+ "categories, install_time, dependencies "
+		+ "FROM applications WHERE name=? AND version=?", -1, out stmt);
+		assert (res == Sqlite.OK);
+
+		res = stmt.bind_text (1, appName);
+		assert (res == Sqlite.OK);
+		res = stmt.bind_text (2, appVersion);
+		assert (res == Sqlite.OK);
+
+		if (stmt.step() != Sqlite.ROW)
+			return null;
+
+		LiAppItem item = retrieve_app_item (stmt);
+
+		// Fast sanity checks
+		item.fast_check ();
+
+		return item;
 	}
 
 }
