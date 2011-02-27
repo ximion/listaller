@@ -105,7 +105,7 @@ private class SoftwareDB : Object {
 		}
 
 		if (!FileUtils.test (dbname, FileTest.IS_REGULAR)) {
-			stderr.printf (_("Software database does not exist - will be created.\n"));
+			message (_("Software database does not exist - will be created.\n"));
 		}
 
 		rc = Database.open (dbname, out db);
@@ -122,13 +122,13 @@ private class SoftwareDB : Object {
 		try {
 			lfile.create (FileCreateFlags.NONE);
 		} catch (Error e) {
-			stderr.printf ("Error: %s\n", e.message);
+			critical ("Error: %s\n", e.message);
 			return false;
 		}
 
 		// Test for the existence of file
 		if (!lfile.query_exists ()) {
-			stderr.printf ("Unable to create lock file!\n");
+			critical ("Unable to create lock file!\n");
 			return false;
 		}
 
@@ -156,7 +156,7 @@ private class SoftwareDB : Object {
 				lfile.delete ();
 			}
 		} catch (Error e) {
-			stderr.printf (_("CRITICAL: Unable to remove the lock! (Message: %s)\n").printf (e.message));
+			error (_("CRITICAL: Unable to remove the lock! (Message: %s)\n").printf (e.message));
 		}
 	}
 
@@ -214,7 +214,7 @@ private class SoftwareDB : Object {
 
 	protected void fatal (string op, int res) {
 		string msg = "%s: [%d] %s".printf (op, res, db.errmsg());
-		stderr.printf (msg + "\n");
+		error (msg + "\n");
 		// status_changed (DatabaseStatus.FATAL, msg);
 	}
 
@@ -234,13 +234,15 @@ private class SoftwareDB : Object {
 		// Create table to store information about applications
 		int res = db.prepare_v2 ("CREATE TABLE IF NOT EXISTS applications ("
 		+ "id INTEGER PRIMARY KEY, "
-		+ "name TEXT UNIQUE NOT NULL, "
-		+ "version TEXT UNIQUE NOT NULL, "
+		+ "name TEXT NOT NULL, "
+		+ "version TEXT NOT NULL, "
+		+ "appid TEXT UNIQUE NOT NULL,"
 		+ "summary TEXT, "
 		+ "author TEXT, "
 		+ "maintainer TEXT, "
 		+ "categories TEXT, "
 		+ "install_time INTEGER, "
+		+ "origin TEXT NOT NULL, "
 		+ "dependencies TEXT"
 		+ ")", -1, out stmt);
 		assert (res == Sqlite.OK);
@@ -274,9 +276,9 @@ private class SoftwareDB : Object {
 	public bool add_application (LiAppItem item) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 (
-			"INSERT INTO applications (name, version, summary, author, maintainer, "
+			"INSERT INTO applications (name, version, appid, summary, author, maintainer, "
 			+ "categories, install_time, origin, dependencies) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				   -1, out stmt);
 			assert (res == Sqlite.OK);
 
@@ -287,19 +289,21 @@ private class SoftwareDB : Object {
 			assert (res == Sqlite.OK);
 			res = stmt.bind_text (2, item.version);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (3, item.summary);
+			res = stmt.bind_text (3, item.appid);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (4, item.author);
+			res = stmt.bind_text (4, item.summary);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (5, item.maintainer);
+			res = stmt.bind_text (5, item.author);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (6, item.categories);
+			res = stmt.bind_text (6, item.maintainer);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_int64 (7, item.install_time);
+			res = stmt.bind_text (7, item.categories);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (8, item.origin.to_string ());
+			res = stmt.bind_int64 (8, item.install_time);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (9, item.dependencies);
+			res = stmt.bind_text (9, item.origin.to_string ());
+			assert (res == Sqlite.OK);
+			res = stmt.bind_text (10, item.dependencies);
 			assert (res == Sqlite.OK);
 
 			res = stmt.step();
@@ -316,24 +320,25 @@ private class SoftwareDB : Object {
 	private LiAppItem? retrieve_app_item (Sqlite.Statement stmt) {
 		LiAppItem item = new LiAppItem.empty ();
 
-		item.id = stmt.column_int (0);
+		item.dbid = stmt.column_int (0);
 		item.name = stmt.column_text (1);
 		item.version = stmt.column_text (2);
-		item.summary = stmt.column_text (3);
-		item.author = stmt.column_text (4);
-		item.maintainer = stmt.column_text (5);
-		item.categories = stmt.column_text (6);
-		item.install_time = stmt.column_int (7);
-		item.set_origin_from_string (stmt.column_text (8));
-		item.dependencies = stmt.column_text (9);
+		item.appid = stmt.column_text (3);
+		item.summary = stmt.column_text (4);
+		item.author = stmt.column_text (5);
+		item.maintainer = stmt.column_text (6);
+		item.categories = stmt.column_text (7);
+		item.install_time = stmt.column_int (8);
+		item.set_origin_from_string (stmt.column_text (9));
+		item.dependencies = stmt.column_text (10);
 
 		return item;
 	}
 
 	public LiAppItem? get_application_by_name (string appName) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT id, name, version, summary, author, maintainer, "
-		+ "categories, install_time, dependencies "
+		int res = db.prepare_v2 ("SELECT id, name, appid, version, summary, author, maintainer, "
+		+ "categories, install_time, origin, dependencies "
 		+ "FROM applications WHERE name=?", -1, out stmt);
 		assert (res == Sqlite.OK);
 
@@ -350,14 +355,14 @@ private class SoftwareDB : Object {
 		return item;
 	}
 
-	public LiAppItem? get_application_by_id (int appId) {
+	public LiAppItem? get_application_by_dbid (int databaseId) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT id, name, version, summary, author, maintainer, "
-		+ "categories, install_time, dependencies "
+		int res = db.prepare_v2 ("SELECT id, name, version, appid, summary, author, maintainer, "
+		+ "categories, install_time, origin, dependencies "
 		+ "FROM applications WHERE id=?", -1, out stmt);
 		assert (res == Sqlite.OK);
 
-		res = stmt.bind_int (1, appId);
+		res = stmt.bind_int (1, databaseId);
 
 		if (stmt.step() != Sqlite.ROW)
 			return null;
@@ -372,8 +377,8 @@ private class SoftwareDB : Object {
 
 	public LiAppItem? get_application_by_name_version (string appName, string appVersion) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT id, name, version, summary, author, maintainer, "
-		+ "categories, install_time, dependencies "
+		int res = db.prepare_v2 ("SELECT id, name, version, appid, summary, author, maintainer, "
+		+ "categories, install_time, origin, dependencies "
 		+ "FROM applications WHERE name=? AND version=?", -1, out stmt);
 		assert (res == Sqlite.OK);
 

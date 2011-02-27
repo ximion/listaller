@@ -22,7 +22,7 @@
 using GLib;
 
 void msg(string s) {
-	stdout.printf (s + "\n");
+	message (s + "\n");
 }
 
 void software_db_status_changed_cb (DatabaseStatus status, string message) {
@@ -63,7 +63,7 @@ void test_software_db () {
 	msg ("Retrieving AppItem from database...");
 	LiAppItem newItem = sdb.get_application_by_name ("Test");
 	assert (newItem != null);
-	assert (newItem.id == 1);
+	assert (newItem.dbid == 1);
 
 	msg ("Item is: %s".printf (newItem.to_string ()));
 	}

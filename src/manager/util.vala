@@ -34,3 +34,14 @@ public ulong now_sec () {
 
 	return time_val.tv_sec;
 }
+
+public string string_replace (string str, string regex_str, string replace_str) {
+	string res = str;
+	try {
+		var regex = new Regex (regex_str);
+		res = regex.replace (str, -1, 0, replace_str);
+	} catch (RegexError e) {
+		warning ("%s", e.message);
+	}
+	return res;
+}

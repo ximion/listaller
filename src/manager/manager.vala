@@ -37,5 +37,4 @@ public class LiManager : Object {
 		SoftwareDB sdb = new SoftwareDB (false);
 		sdb.open ();
 	}
-
 }
