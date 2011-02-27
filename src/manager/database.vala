@@ -275,7 +275,7 @@ private class SoftwareDB : Object {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 (
 			"INSERT INTO applications (name, version, summary, author, maintainer, "
-			+ "categories, install_time, dependencies) "
+			+ "categories, install_time, origin, dependencies) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 				   -1, out stmt);
 			assert (res == Sqlite.OK);
@@ -297,7 +297,9 @@ private class SoftwareDB : Object {
 			assert (res == Sqlite.OK);
 			res = stmt.bind_int64 (7, item.install_time);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (8, item.dependencies);
+			res = stmt.bind_text (8, item.origin.to_string ());
+			assert (res == Sqlite.OK);
+			res = stmt.bind_text (9, item.dependencies);
 			assert (res == Sqlite.OK);
 
 			res = stmt.step();
@@ -322,7 +324,8 @@ private class SoftwareDB : Object {
 		item.maintainer = stmt.column_text (5);
 		item.categories = stmt.column_text (6);
 		item.install_time = stmt.column_int (7);
-		item.dependencies = stmt.column_text (8);
+		item.set_origin_from_string (stmt.column_text (8));
+		item.dependencies = stmt.column_text (9);
 
 		return item;
 	}

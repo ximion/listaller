@@ -24,6 +24,29 @@ using GLib;
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION4 = PkgConfig.VERSION;
 
+public enum AppOrigin {
+	IPK,
+	NATIVE,
+	UNKNOWN,
+	INVALID;
+
+	public string to_string() {
+		switch (this) {
+			case IPK:
+				return ("package_ipk");
+
+			case NATIVE:
+				return ("package_native");
+
+			case UNKNOWN:
+				return ("unknown");
+
+			default:
+				return ("<fatal:origin-not-found>");
+		}
+	}
+}
+
 public class LiAppItem : Object {
 	private string _name;
 	private string _version;
@@ -33,6 +56,7 @@ public class LiAppItem : Object {
 	private string _categories;
 	private ulong  _install_time;
 	private string _dependencies;
+	private AppOrigin _origin;
 	private int _id;
 
 	public string name {
@@ -70,6 +94,11 @@ public class LiAppItem : Object {
 		set { _install_time = value; }
 	}
 
+	public AppOrigin origin {
+		get { return _origin; }
+		set { _origin = value; }
+	}
+
 	public string dependencies {
 		get { return _dependencies; }
 		set { _dependencies = value; }
@@ -91,6 +120,7 @@ public class LiAppItem : Object {
 		install_time = 0;
 		categories = "all;";
 		id = -1;
+		origin = AppOrigin.UNKNOWN;
 	}
 
 	public string to_string () {
@@ -98,6 +128,26 @@ public class LiAppItem : Object {
 			+ "(" + version +") "
 			+ "::" + id.to_string () + " "
 			+ "]";
+	}
+
+	public void set_origin_from_string(string s) {
+		switch (s) {
+			case ("package_ipk"):
+				origin = AppOrigin.IPK;
+				break;
+
+			case ("package_native"):
+				origin = AppOrigin.NATIVE;
+				break;
+
+			case ("unknown"):
+				origin = AppOrigin.UNKNOWN;
+				break;
+
+			default:
+				origin = AppOrigin.INVALID;
+				break;
+		}
 	}
 
 	public void fast_check () {
