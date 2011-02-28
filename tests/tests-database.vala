@@ -1,4 +1,4 @@
-/* unit-tests.vala
+/* tests-database.vala
  *
  * Copyright (C) 2010-2011  Matthias Klumpp
  *

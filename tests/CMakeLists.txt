@@ -12,7 +12,6 @@ pkg_check_modules(GIO2 REQUIRED gio-2.0)
 ensure_vala_version("0.10" MINIMUM)
 
 set(LIUNITTEST_SOURCES ${LISTALLER_BASE_SOURCES}
-			unit-tests.vala
 			${lisrc}/listaller/manager.vala
 )
 
@@ -30,10 +29,10 @@ include_directories(${CMAKE_BINARY_DIR}
 		    ${SQLITE_INCLUDE_DIR}
 )
 
-vala_add_executable ("li-unit-tests" ${LIUNITTEST_SOURCES}
+vala_add_executable ("li-test-database" ${LIUNITTEST_SOURCES} tests-database.vala
 				     BASE_DIR ${lisrc}
 				     PACKAGES pkgconfig gee-1.0 sqlite3 gio-2.0
 				     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapis
 )
 
-add_test(listaller-main li-unit-tests)
+add_test(database-test li-test-database)
