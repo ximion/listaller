@@ -31,13 +31,13 @@ include_directories(${CMAKE_BINARY_DIR}
 
 list(APPEND VALA_INCLUDE_DIRS ${CMAKE_BINARY_DIR})
 
-#PackageKitGlib-1.0
 vala_add_library("listaller-glib" SHARED ${LISTALLER_GLIB_SOURCES}
 			     BASE_DIR ${lisrc}
 			     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapis
-			     PACKAGES pkgconfig gee-1.0 sqlite3 gio-2.0
+			     PACKAGES pkgconfig gee-1.0 sqlite3 gio-2.0 libarchive gpgme
 			     GENERATE_VAPI listaller.vapi
 			     GENERATE_HEADER listaller.h
+#			     COMPILE_FLAGS --gir=PackageKitGlib-1.0
 )
 
 if(NOT LILIBS_FULL_VERSION)
