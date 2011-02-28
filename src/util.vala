@@ -35,7 +35,7 @@ public ulong now_sec () {
 	return time_val.tv_sec;
 }
 
-public string string_replace (string str, string regex_str, string replace_str) {
+private string string_replace (string str, string regex_str, string replace_str) {
 	string res = str;
 	try {
 		var regex = new Regex (regex_str);
@@ -44,4 +44,22 @@ public string string_replace (string str, string regex_str, string replace_str) 
 		warning ("%s", e.message);
 	}
 	return res;
+}
+
+/*
+ * Count the appearance of string b in a
+ */
+private int count_str (string a, string b) {
+	if (!(b in a))
+		return 0;
+
+	int count = -1;
+	int last_index = 0;
+
+	while (last_index > 0) {
+		count++;
+		last_index = a.index_of (b, last_index);
+	}
+
+	return count;
 }

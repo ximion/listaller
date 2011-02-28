@@ -141,7 +141,8 @@ public class LiAppItem : Object {
 	}
 
 	public LiAppItem.from_desktopfile (string dfile) {
-		// TODO
+		this.empty ();
+		this.load_from_desktop_file (dfile);
 	}
 
 	public string to_string () {
@@ -155,7 +156,6 @@ public class LiAppItem : Object {
 		// Fast sanity checks for AppItem
 		assert (name != null);
 		assert (version != null);
-		assert (dbid != -1);
 		assert (appid != "");
 	}
 
@@ -184,12 +184,13 @@ public class LiAppItem : Object {
 		if (desktop_file.strip () == "") {
 			message (_("Processing application without assigned .desktop file!"));
 			// If no desktop file was found, use application name and version as ID
-			res = name + "-" + version;
+			res = name + ";" + version;
 			res = res.down ();
 			return res;
 		} else {
 			res = desktop_file;
 			res = string_replace (res, "(/usr/|share/applications/|.desktop)", "");
+			res = res + ";" + name + ";" + version;
 			return res;
 		}
 	}
@@ -197,7 +198,39 @@ public class LiAppItem : Object {
 	private string desktop_file_from_appid () {
 		if (appid == "")
 			return "";
+		// Trick to detect if the appid is based on a desktop-file
+		if (count_str (appid, ";") <= 2)
+			return "";
 		return "<?>"; //TODO
+	}
+
+	private string get_desktop_file_string (KeyFile dfile, string keyword) {
+		try {
+			if (dfile.has_key ("Desktop File", keyword)) {
+				return dfile.get_string ("Desktop Entry", keyword);
+			} else {
+				return "";
+			}
+		} catch (Error e) {
+			error (_("Could not load desktop file values: %s").printf (e.message));
+		}
+	}
+
+	public void load_from_desktop_file (string fname) {
+		KeyFile dfile = new KeyFile ();
+		try {
+			dfile.load_from_file (fname, KeyFileFlags.NONE);
+		} catch (Error e) {
+			error (_("Could not open desktop file: %s").printf (e.message));
+		}
+
+		name = get_desktop_file_string (dfile, "Name");
+		version = get_desktop_file_string (dfile, "X-AppVersion");
+		summary = get_desktop_file_string (dfile, "Comment");
+		author = get_desktop_file_string (dfile, "X-Author");
+		categories = get_desktop_file_string (dfile, "Categories");
+
+		desktop_file = fname;
 	}
 
 }

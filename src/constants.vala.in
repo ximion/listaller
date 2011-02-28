@@ -19,4 +19,4 @@
  * 	Matthias Klumpp <matthias@nlinux.org>
  */
 
-private const string LISTALLER_VERSION = "@LISTALLER_VERSION@"
+private const string LISTALLER_VERSION = "@LISTALLER_VERSION@";

@@ -31,6 +31,7 @@ public class LiManager : Object {
 
 	public LiManager (bool root) {
 		sumode = root;
+		debug ("This is Listaller " + LISTALLER_VERSION);
 	}
 
 	public void test () {
