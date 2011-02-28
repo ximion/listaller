@@ -22,9 +22,47 @@
 using GLib;
 using Archive;
 
-private class IPKPackage : Object {
+// Workaround for Vala bug #618931
+private const string _PKG_VERSION6 = PkgConfig.VERSION;
 
-	public IPKPackage () {
-		// TODO
+private class IPKPackage : Object {
+	private string fname;
+	private bool initialized;
+	private string wdir;
+
+	public IPKPackage (string filename) {
+		fname = filename;
+		initialized = false;
+		LiConfig conf = new LiConfig ();
+		wdir = conf.get_unique_tmp_dir ();
+	}
+
+	public bool initialize () {
+		bool ret = true;
+		// Create a new archive object for reading
+		Read archive = new Read ();
+		// A buffer which will hold read data
+		char buf[4096];
+
+		weak Entry e;
+
+		// Disable compression, as IPK main is not compressed
+		archive.support_compression_none ();
+		// IPK packages are GNU-Tar archives
+		archive.support_format_tar ();
+
+		// Open the file, if it fails exit
+		if (archive.open_filename (fname, 4096) != Result.OK)
+			error (_("Could not open IPK file: %s"), archive.error_string ());
+
+
+		while (archive.next_header (out e) == Result.OK) {
+			// Extract control files
+			if (e.pathname() == "control.tar.xz")
+				while (archive.read_data(buf, 4096) != 0)
+					print ("!"); // TODO
+		}
+
+		return ret;
 	}
 }

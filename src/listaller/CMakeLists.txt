@@ -6,10 +6,9 @@ include("${VALA_USE_FILE}")
 find_package(GLIB2 REQUIRED)
 find_package(Gettext REQUIRED)
 find_package(SQLite3 REQUIRED)
+find_package(LibArchive REQUIRED)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
-
-ensure_vala_version("0.10" MINIMUM)
 
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	manager.vala
@@ -19,6 +18,7 @@ link_libraries(${GLIB2_LIBRARIES}
 	       ${GEE_LIBRARIES}
 	       ${GIO2_LIBRARIES}
 	       ${SQLITE_LIBRARIES}
+	       ${LibArchive_LIBRARIES}
 )
 
 include_directories(${CMAKE_BINARY_DIR}
@@ -27,6 +27,7 @@ include_directories(${CMAKE_BINARY_DIR}
 		    ${GEE_INCLUDE_DIR}
 		    ${GIO2_INCLUDE_DIR}
 		    ${SQLITE_INCLUDE_DIR}
+		    ${LibArchive_INCLUDE_DIR}
 )
 
 list(APPEND VALA_INCLUDE_DIRS ${CMAKE_BINARY_DIR})
@@ -34,7 +35,7 @@ list(APPEND VALA_INCLUDE_DIRS ${CMAKE_BINARY_DIR})
 vala_add_library("listaller-glib" SHARED ${LISTALLER_GLIB_SOURCES}
 			     BASE_DIR ${lisrc}
 			     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapis
-			     PACKAGES pkgconfig gee-1.0 sqlite3 gio-2.0 libarchive gpgme
+			     PACKAGES pkgconfig gee-1.0 gio-2.0 sqlite3 libarchive gpgme
 			     GENERATE_VAPI listaller.vapi
 			     GENERATE_HEADER listaller.h
 #			     COMPILE_FLAGS --gir=PackageKitGlib-1.0

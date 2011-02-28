@@ -25,6 +25,8 @@ using GLib;
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION1 = PkgConfig.VERSION;
 
+private bool LI_TESTMODE = false;
+
 private class LiConfig : Object {
 	private bool sumode;
 	const string suconfdir = "/etc/lipa";
@@ -34,7 +36,7 @@ private class LiConfig : Object {
 		set { sumode = value; }
 	}
 
-	public LiConfig (bool root) {
+	public LiConfig (bool root = false) {
 		sumode = root;
 	}
 
@@ -60,6 +62,25 @@ private class LiConfig : Object {
 		}
 
 		return regdir;
+	}
+
+	public string tmp_dir () {
+		string ret;
+		ret = Environment.get_tmp_dir ();
+		return ret;
+	}
+
+	public string get_unique_tmp_dir () {
+		string template = Path.build_filename (tmp_dir (), "listaller-XXXXXX", null);
+
+		string res = DirUtils.mkdtemp (template);
+		if (res == null)
+			res = tmp_dir ();
+		return res;
+	}
+
+	public bool is_testmode () {
+		return LI_TESTMODE;
 	}
 }
 

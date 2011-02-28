@@ -97,6 +97,11 @@ if(TESTS)
 	enable_testing()
 endif(TESTS)
 
+# Validate essential packages
+find_package(Vala REQUIRED)
+include("${VALA_USE_FILE}")
+ensure_vala_version("0.10" MINIMUM)
+
 add_subdirectory(src)
 add_subdirectory(tools)
 add_subdirectory(tests)
