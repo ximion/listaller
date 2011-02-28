@@ -1,3 +1,20 @@
+# CMakeLists for Listaller source
 
-#add_subdirectory(helper)
+set(lisrc ${CMAKE_SOURCE_DIR}/src CACHE INTERNAL "Listaller sourcecode dir")
 
+set(LISTALLER_BASE_SOURCES ${lisrc}/config.vala
+	${lisrc}/util.vala
+	${lisrc}/items.vala
+	${lisrc}/database.vala
+	CACHE INTERNAL "Listaller core source files"
+)
+
+# Variables used later to set library versioning
+set(LILIBS_FULL_VERSION "${LISTALLER_VERSION_MAJOR}.${LISTALLER_VERSION_MINOR}.${LISTALLER_VERSION_PATCH}")
+set(LILIBS_VERSION "${LISTALLER_VERSION_MAJOR}.${LISTALLER_VERSION_MINOR}")
+set(LILIBS_SOVERSION "${LISTALLER_VERSION_MAJOR}")
+
+add_subdirectory (listaller)
+if(QT)
+	add_subdirectory(listaller-qt)
+endif(QT)

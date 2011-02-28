@@ -5,7 +5,7 @@
 # syntax :
 #    ./configure <options> [parameters]
 set -e
-OPTION_SPEC="help,enable-qt,enable-creator,enable-gtk,enable-frontends,enable-all,cmake-options:"
+OPTION_SPEC="help,enable-qt,enable-tests,cmake-options:"
 PARSED_OPTIONS=$(getopt -n "$0" -a -o h --l "$OPTION_SPEC" -- "$@")
 
 eval set -- "$PARSED_OPTIONS"
@@ -23,9 +23,7 @@ while true ; do
 	case "$1" in
 		-h|--help )  usage; exit 0;;
 		--enable-qt )  ENABLE_QT=1; shift; ;;
-		--enable-gtk )  ENABLE_GTK=1; shift; ;;
-		--enable-frontends )  ENABLE_FRONT=1; shift; ;;
-		--enable-all ) ENABLE_QT=1; ENABLE_GTK=1; ENABLE_CREATOR=1; ENABLE_FRONT=1; shift; ;;
+		--enable-tests ) ENABLE_TESTS=1; shift; ;;
 		--cmake-options ) case "$2" in
 			    "") echo "CMake-Options need an argument!"; exit 3 ;;
 			     *) export cmakeoptn=$2 ; shift 2 ;;
@@ -51,14 +49,11 @@ fi
 sed "s#%PREFIX%#$prefix#" Makefile.in > Makefile
 
 CMAKE_OPTIONS=$cmakeoptn
+if [ "$ENABLE_TESTS" = "1" ]; then
+ CMAKE_OPTIONS="$CMAKE_OPTIONS -DTESTS=ON"
+fi
 if [ "$ENABLE_QT" = "1" ]; then
  CMAKE_OPTIONS="$CMAKE_OPTIONS -DQT=ON"
-fi
-if [ "$ENABLE_GTK" = "1" ]; then
- CMAKE_OPTIONS="$CMAKE_OPTIONS -DGTK=ON"
-fi
-if [ "$ENABLE_FRONT" = "1" ]; then
- CMAKE_OPTIONS="$CMAKE_OPTIONS -DFRONTENDS=ON"
 fi
 
 mkdir -p build
@@ -70,27 +65,17 @@ echo
 echo "Summary:"
 echo
 echo "Listaller will be built with the following features:"
-echo " Daemon and library: enabled"
-echo " Command-Line tools: enabled"
+echo " GLib Library:       enabled"
+echo " Command-Line Tools: enabled"
+if [ "$ENABLE_TESTS" = "1" ]; then
+ echo " Unit Tests:         enabled"
+else
+ echo " Unit Tests:         disabled"
+fi
 if [ "$ENABLE_QT" = "1" ]; then
- echo " Qt4 widgetset:      enabled"
+ echo " Qt4 Widgetset:      enabled"
 else
- echo " Qt4 widgetset:      disabled"
-fi
-if [ "$ENABLE_GTK" = "1" ]; then
- echo " GTK2 widgetset:     enabled"
-else
- echo " GTK2 widgetset:     disabled"
-fi
-if [ "$ENABLE_FRONT" = "1" ]; then
- echo " GUI Frontends:      enabled"
-else
- echo " GUI Frontends:      disabled"
-fi
-if [ "$ENABLE_CREATOR" = "1" ]; then
- echo " Setup creator GUI:  enabled"
-else
- echo " Setup creator GUI:  disabled"
+ echo " Qt4 Widgetset:      disabled"
 fi
 echo
 echo "You can now run make"

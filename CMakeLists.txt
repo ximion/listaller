@@ -40,21 +40,16 @@ set(CPACK_PACKAGE_VERSION_MINOR "${LISTALLER_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "${LISTALLER_VERSION_PATCH}${VERSION_SUFFIX}")
 set(LISTALLER_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 
-# Forbid in-tree building & force "build" directory name
+# Forbid in-tree building
 if(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
       message(STATUS "Please do an out-of-tree build:")
       message(STATUS "rm -f CMakeCache.txt && mkdir build && cd build; cmake .. && make")
       message(FATAL_ERROR "In-tree-build detected!")
 endif(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
-if(NOT ${CMAKE_SOURCE_DIR}/build MATCHES ${CMAKE_BINARY_DIR})
-      message("Please build only in 'build' subfolder!")
-      message(FATAL_ERROR "Not in /build!")
-endif()
 
 ########################################
+OPTION(TESTS "Enable Listaller's Unit Tests" OFF)
 OPTION(QT "Build Listaller's Qt4 modules" OFF)
-OPTION(GTK "Build Listaller's GTK2 modules" OFF)
-OPTION(FRONTENDS "Compile Listaller's frontends" OFF)
 ########################################
 
 IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -83,51 +78,30 @@ add_custom_target(uninstall
   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
 )
 
-add_custom_target(writedoc
-  "bash" "${CMAKE_SOURCE_DIR}/src/writedoc"
-)
-
 add_custom_target(distclean
   "make clean"
 )
 
 find_package(PkgConfig REQUIRED)
 find_package(Gettext REQUIRED)
-find_package(FPC REQUIRED)
 
-include(${CMAKE_SOURCE_DIR}/data/cmake/listaller_build_gui.cmake)
-
-make_directory("${CMAKE_BINARY_DIR}/${PASCAL_TARGET_ARCH}-${PASCAL_TARGET_OS}")
-
-configure_file(${CMAKE_SOURCE_DIR}/src/liversion.inc.in
-	       ${CMAKE_SOURCE_DIR}/src/liversion.inc
+configure_file(${CMAKE_SOURCE_DIR}/src/constants.vala.in
+	       ${CMAKE_SOURCE_DIR}/src/constants.vala
 	       @ONLY
 )
 # set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/src/liversion.inc)
 
-find_package(Lazbuild REQUIRED)
+configure_file(config.h.in ${CMAKE_BINARY_DIR}/config.h)
 
-if(LCL_VERSION LESS "929")
- message(FATAL_ERROR "LCL should be at least version 0.9.29!")
-endif()
+if(TESTS)
+	enable_testing()
+endif(TESTS)
 
-configure_file(config.h.in ${CMAKE_BINARY_DIR}/config.h )
-
-add_subdirectory(lib)
 add_subdirectory(src)
 add_subdirectory(tools)
+add_subdirectory(tests)
 add_subdirectory(data)
 add_subdirectory(graphics)
 if (GETTEXT_FOUND AND ENABLE_NLS)
   add_subdirectory(po)
 endif (GETTEXT_FOUND AND ENABLE_NLS)
-
-if(QT OR GTK)
-  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/qt4)
-  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/gtk2)
-
-  if(FRONTENDS)
-    add_subdirectory(gui)
-  endif(FRONTENDS)
-
-endif(QT OR GTK)

@@ -1,9 +1,27 @@
-Version 0.5b
+Version 0.5.1
 ~~~~~~~~~~~~~~
  == Still in development ==
 
  Overview:
-  -- Will follow when 0.5 is released --
+  * Complete rewrite of Listaller in Vala
+
+ Features:
+  * <?>
+
+ Toolset:
+  * <?>
+
+ Specifications:
+  * <?>
+
+ Bindings:
+  * <?>
+
+ Bugfixes:
+  * <?>
+
+Version 0.5b
+~~~~~~~~~~~~~~
 
  Features:
   * New software database handler

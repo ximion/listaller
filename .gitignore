@@ -17,7 +17,7 @@
 *.kdev4
 .anjuta_sym_db.db
 moc_*
+src/constants.vala
 Makefile
 .directory
 build
-src/liversion.inc

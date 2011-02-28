@@ -5,6 +5,12 @@ all:
 install:
 	$(MAKE) -C ./build install
 
+test:
+	$(MAKE) -C ./build test
+
+test-verbose:
+	$(MAKE) -C ./build test ARGS=-V
+
 clean:
 	$(MAKE) -C ./build clean
 
