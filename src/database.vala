@@ -74,7 +74,7 @@ public enum DatabaseStatus {
 
 private class SoftwareDB : Object {
 	private Database db;
-	private LiConfig conf;
+	private LiSettings conf;
 	private bool sumode;
 	private string dblockfile;
 
@@ -82,7 +82,7 @@ private class SoftwareDB : Object {
 
 	public SoftwareDB (bool root) {
 		sumode = root;
-		conf = new LiConfig (sumode);
+		conf = new LiSettings (sumode);
 
 		dblockfile = conf.appregister_dir () + "/lock";
 	}

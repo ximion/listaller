@@ -1,4 +1,4 @@
-/* config.vala
+/* settings.vala
  *
  * Copyright (C) 2009-2011  Matthias Klumpp
  *
@@ -27,7 +27,7 @@ private const string _PKG_VERSION1 = PkgConfig.VERSION;
 
 private bool LI_TESTMODE = false;
 
-private class LiConfig : Object {
+private class LiSettings : Object {
 	private bool sumode;
 	const string suconfdir = "/etc/lipa";
 
@@ -36,7 +36,7 @@ private class LiConfig : Object {
 		set { sumode = value; }
 	}
 
-	public LiConfig (bool root = false) {
+	public LiSettings (bool root = false) {
 		sumode = root;
 	}
 

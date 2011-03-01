@@ -951,13 +951,13 @@ namespace GPG {
 	}
 
 	[CCode (cname = "gpgme_get_protocol_name")]
-	public weak string get_protocol_name(Protocol p);
+	public unowned string get_protocol_name(Protocol p);
 
 	[CCode (cname = "gpgme_pubkey_algo_name")]
-	public weak string get_public_key_algorithm_name(PublicKeyAlgorithm algo);
+	public unowned string get_public_key_algorithm_name(PublicKeyAlgorithm algo);
 
 	[CCode (cname = "gpgme_hash_algo_name")]
-	public weak string get_hash_algorithm_name(HashAlgorithm algo);
+	public unowned string get_hash_algorithm_name(HashAlgorithm algo);
 
 	[CCode (cname = "gpgme_passphrase_cb_t", has_target = false)]
 	public delegate GPGError.ErrorCode passphrase_callback(void* hook, string uid_hint, string passphrase_info, bool prev_was_bad, int fd);
@@ -967,7 +967,7 @@ namespace GPG {
 	 * Always call this function before using gpgme, it initializes some stuff
 	 */
 	[CCode (cname = "gpgme_check_version")]
-	public weak string check_version(string? required_version = null);
+	public unowned string check_version(string? required_version = null);
 
 	/**
 	 * Verify that the engine implementing proto is installed and

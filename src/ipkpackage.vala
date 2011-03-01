@@ -33,7 +33,7 @@ private class IPKPackage : Object {
 	public IPKPackage (string filename) {
 		fname = filename;
 		initialized = false;
-		LiConfig conf = new LiConfig ();
+		LiSettings conf = new LiSettings ();
 		wdir = conf.get_unique_tmp_dir ();
 	}
 
@@ -58,6 +58,7 @@ private class IPKPackage : Object {
 
 		while (archive.next_header (out e) == Result.OK) {
 			// Extract control files
+			message (e.pathname ());
 			if (e.pathname() == "control.tar.xz")
 				while (archive.read_data(buf, 4096) != 0)
 					print ("!"); // TODO
