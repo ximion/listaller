@@ -30,10 +30,19 @@ include_directories(${CMAKE_BINARY_DIR}
 		    ${LibArchive_INCLUDE_DIR}
 )
 
+# Database tests
 vala_add_executable ("li-test-database" ${LIUNITTEST_SOURCES} tests-database.vala
 				     BASE_DIR ${lisrc}
 				     PACKAGES pkgconfig gee-1.0 gio-2.0 sqlite3 libarchive gpgme
 				     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapis
 )
 
+# IPK layout tests
+vala_add_executable ("li-test-ipk" ${LIUNITTEST_SOURCES} tests-ipk.vala
+				     BASE_DIR ${lisrc}
+				     PACKAGES pkgconfig gee-1.0 gio-2.0 sqlite3 libarchive gpgme
+				     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapis
+)
+
 add_test(database-test li-test-database)
+add_test(ipk-test li-test-ipk ${CMAKE_CURRENT_SOURCE_DIR})

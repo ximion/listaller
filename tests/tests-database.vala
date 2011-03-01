@@ -21,7 +21,7 @@
 
 using GLib;
 
-void msg(string s) {
+void msg (string s) {
 	message (s + "\n");
 }
 
@@ -73,7 +73,7 @@ void test_software_db () {
 }
 
 int main (string[] args) {
-	stdout.printf ("=== Running tests ===\n");
+	stdout.printf ("=== Running Database Tests ===\n");
 	Test.init (ref args);
 	test_software_db ();
 	Test.run ();
