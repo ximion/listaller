@@ -29,20 +29,48 @@ public class LiSettings : Object {
 	private bool _sumode;
 	const string suconfdir = "/etc/lipa";
 	private bool _testmode;
+	private bool locked;
 
 	public bool sumode {
 		get { return _sumode; }
-		set { _sumode = value; }
+		set { if (can_change ()) _sumode = value; }
 	}
 
 	public bool testmode {
 		get { return _testmode; }
-		set { _testmode = value; }
+		set { if (can_change ()) _testmode = value; }
 	}
 
 	public LiSettings (bool root = false) {
 		sumode = root;
 		testmode = false;
+		unlock (); // Be unlocked by default
+	}
+
+	/*
+	 * Lock the settings, so no changes can be made anymore
+	 */
+	public void lock () {
+		locked = true;
+	}
+
+	/*
+	 * Allow changing the settings again
+	 */
+	public void unlock () {
+		locked = false;
+	}
+
+	/*
+	 * @returns: True if we can change values
+	 */
+	private bool can_change () {
+		if (locked) {
+			warning ("Tried to write on locked settings object! (Don't try this!)");
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	public string database_file () {
