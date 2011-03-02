@@ -75,14 +75,14 @@ public enum DatabaseStatus {
 private class SoftwareDB : Object {
 	private Database db;
 	private LiSettings conf;
-	private bool sumode;
 	private string dblockfile;
 
 	public signal void status_changed (DatabaseStatus newstatus, string message);
 
-	public SoftwareDB (bool root) {
-		sumode = root;
-		conf = new LiSettings (sumode);
+	public SoftwareDB (LiSettings? settings) {
+		conf = settings;
+		if (conf == null)
+			conf = new LiSettings (false);
 
 		dblockfile = conf.appregister_dir () + "/lock";
 	}

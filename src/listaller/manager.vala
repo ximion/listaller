@@ -23,19 +23,26 @@ using GLib;
 
 public class LiManager : Object {
 	private bool sumode;
+	private LiSettings conf;
 
-	public bool superuserMode {
-		get { return sumode; }
-		set { sumode = value; }
+	public LiSettings settingsSet {
+		get { return conf; }
+		set { conf = value; }
 	}
 
-	public LiManager (bool root) {
-		sumode = root;
+	/*
+	 * @param: settings A valid LiSettings instance, describing basic settings (or null)
+	 */
+	public LiManager (LiSettings? settings) {
+		conf = settings;
+		if (conf == null)
+			conf = new LiSettings (false);
+
 		debug ("This is Listaller " + LISTALLER_VERSION);
 	}
 
 	public void test () {
-		SoftwareDB sdb = new SoftwareDB (false);
+		SoftwareDB sdb = new SoftwareDB (conf);
 		sdb.open ();
 	}
 }

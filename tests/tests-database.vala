@@ -40,8 +40,11 @@ void software_db_status_changed_cb (DatabaseStatus status, string message) {
 void test_software_db () {
 	bool ret = false;
 
+	LiSettings conf = new LiSettings ();
+	conf.testmode = true;
+
 	msg ("Opening new software database connection");
-	SoftwareDB sdb = new SoftwareDB (false);
+	SoftwareDB sdb = new SoftwareDB (conf);
 	sdb.status_changed.connect (software_db_status_changed_cb);
 
 	// Do this only in testing environment!

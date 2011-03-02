@@ -25,19 +25,24 @@ using GLib;
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION1 = PkgConfig.VERSION;
 
-private bool LI_TESTMODE = false;
-
-private class LiSettings : Object {
-	private bool sumode;
+public class LiSettings : Object {
+	private bool _sumode;
 	const string suconfdir = "/etc/lipa";
+	private bool _testmode;
 
-	public bool superuserMode {
-		get { return sumode; }
-		set { sumode = value; }
+	public bool sumode {
+		get { return _sumode; }
+		set { _sumode = value; }
+	}
+
+	public bool testmode {
+		get { return _testmode; }
+		set { _testmode = value; }
 	}
 
 	public LiSettings (bool root = false) {
 		sumode = root;
+		testmode = false;
 	}
 
 	public string database_file () {
@@ -77,10 +82,6 @@ private class LiSettings : Object {
 		if (res == null)
 			res = tmp_dir ();
 		return res;
-	}
-
-	public bool is_testmode () {
-		return LI_TESTMODE;
 	}
 }
 
