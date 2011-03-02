@@ -29,20 +29,27 @@ private class IPKPackage : Object {
 	private string fname;
 	private bool initialized;
 	private string wdir;
+	private bool ipk_valid;
 
 	public IPKPackage (string filename) {
 		fname = filename;
 		initialized = false;
 		LiSettings conf = new LiSettings ();
 		wdir = conf.get_unique_tmp_dir ();
+		ipk_valid = false;
+	}
+
+	public bool is_valid () {
+		return ipk_valid;
 	}
 
 	public bool initialize () {
-		bool ret = true;
+		bool ret = false;
+
 		// Create a new archive object for reading
 		Read archive = new Read ();
 		// A buffer which will hold read data
-		char buf[4096];
+		int buf[4096];
 
 		weak Entry e;
 
@@ -50,6 +57,13 @@ private class IPKPackage : Object {
 		archive.support_compression_none ();
 		// IPK packages are GNU-Tar archives
 		archive.support_format_tar ();
+
+		WriteDisk ext = new WriteDisk ();
+		// Create archive reader for control files
+		Read ctrlar = new Read ();
+		// IPK control files are always XZ compressed
+		ctrlar.support_compression_lzma ();
+		ctrlar.support_format_tar ();
 
 		// Open the file, if it fails exit
 		if (archive.open_filename (fname, 4096) != Result.OK)
@@ -59,11 +73,21 @@ private class IPKPackage : Object {
 		while (archive.next_header (out e) == Result.OK) {
 			// Extract control files
 			message (e.pathname ());
-			if (e.pathname() == "control.tar.xz")
-				while (archive.read_data(buf, 4096) != 0)
-					print ("!"); // TODO
+			if (e.pathname () == "control.tar.xz") {
+				Result r = ext.write_header (e);
+				if (r != Result.OK)
+					critical (_("Error while extracting files: %s"));
+				else {
+					copy_data (archive, ext);
+					r = ext.finish_entry ();
+					if (r != Result.OK)
+						critical (_("Error while extracting files: %s"));
+				}
+			}
 		}
+		archive.close ();
 
+		ipk_valid = ret;
 		return ret;
 	}
 }

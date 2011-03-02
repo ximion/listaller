@@ -29,7 +29,11 @@ public class LiSettings : Object {
 	private bool _sumode;
 	const string suconfdir = "/etc/lipa";
 	private bool _testmode;
-	private bool locked;
+	private bool _locked;
+
+	public bool locked {
+		get { return _locked; }
+	}
 
 	public bool sumode {
 		get { return _sumode; }
@@ -51,14 +55,14 @@ public class LiSettings : Object {
 	 * Lock the settings, so no changes can be made anymore
 	 */
 	public void lock () {
-		locked = true;
+		_locked = true;
 	}
 
 	/*
 	 * Allow changing the settings again
 	 */
 	public void unlock () {
-		locked = false;
+		_locked = false;
 	}
 
 	/*
