@@ -31,10 +31,12 @@ private class IPKPackage : Object {
 	private string wdir;
 	private bool ipk_valid;
 
-	public IPKPackage (string filename) {
+	public IPKPackage (string filename, LiSettings? settings) {
 		fname = filename;
 		initialized = false;
-		LiSettings conf = new LiSettings ();
+		LiSettings conf = settings;
+		if (conf == null)
+			conf = new LiSettings ();
 		wdir = conf.get_unique_tmp_dir ();
 		ipk_valid = false;
 	}
@@ -43,49 +45,73 @@ private class IPKPackage : Object {
 		return ipk_valid;
 	}
 
+	private bool read_control_archive (Read ar) {
+		weak Entry e;
+
+		message ("Here I am!");
+		while (ar.next_header (out e) == Result.OK) {
+			message (e.pathname ());
+		}
+		ar.close ();
+		return true;
+	}
+
+	private Result archive_copy_data (Read ar, Write aw)
+	{
+		Result res;
+		void *buff;
+		size_t size;
+		Posix.off_t offset;
+
+		for (;;) {
+			res = ar.read_data_block (out buff, out size, out offset);
+			if (res == Result.EOF) {
+				return Result.OK;
+			}
+			if (res != Result.OK)
+				return res;
+			if (aw.write_data_block (buff, size, offset) != 0) {
+				error (ar.error_string ());
+				return res;
+			}
+		}
+	}
+
 	public bool initialize () {
 		bool ret = false;
 
 		// Create a new archive object for reading
-		Read archive = new Read ();
+		Read ar = new Read ();
 		// A buffer which will hold read data
-		int buf[4096];
+		char buff[4096];
 
 		weak Entry e;
 
 		// Disable compression, as IPK main is not compressed
-		archive.support_compression_none ();
+		ar.support_compression_none ();
 		// IPK packages are GNU-Tar archives
-		archive.support_format_tar ();
+		ar.support_format_tar ();
 
+		// Create new writer
 		WriteDisk ext = new WriteDisk ();
-		// Create archive reader for control files
-		Read ctrlar = new Read ();
-		// IPK control files are always XZ compressed
-		ctrlar.support_compression_lzma ();
-		ctrlar.support_format_tar ();
+		ext.set_options (0);
 
 		// Open the file, if it fails exit
-		if (archive.open_filename (fname, 4096) != Result.OK)
-			error (_("Could not open IPK file: %s"), archive.error_string ());
+		if (ar.open_filename (fname, 4096) != Result.OK)
+			error (_("Could not open IPK file: %s"), ar.error_string ());
 
 
-		while (archive.next_header (out e) == Result.OK) {
+		while (ar.next_header (out e) == Result.OK) {
 			// Extract control files
-			message (e.pathname ());
 			if (e.pathname () == "control.tar.xz") {
-				Result r = ext.write_header (e);
-				if (r != Result.OK)
-					critical (_("Error while extracting files: %s"));
-				else {
-					copy_data (archive, ext);
-					r = ext.finish_entry ();
-					if (r != Result.OK)
-						critical (_("Error while extracting files: %s"));
-				}
+				ext.write_header (e);
+				archive_copy_data (ar, ext);
+
+				// We found & read the control files, so we can exit the loop now
+				break;
 			}
 		}
-		archive.close ();
+		ar.close ();
 
 		ipk_valid = ret;
 		return ret;

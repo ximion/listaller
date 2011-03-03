@@ -30,9 +30,13 @@ void msg (string s) {
 void test_ipk_package () {
 	bool ret = false;
 
+	// Set up Listaller configuration
+	LiSettings conf = new LiSettings ();
+	conf.testmode = true;
+
 	string ipkfilename = Path.build_filename (datadir, "demo-setup.ipk", null);
 	msg ("Loading IPK package %s".printf (ipkfilename));
-	IPKPackage ipk = new IPKPackage (ipkfilename);
+	IPKPackage ipk = new IPKPackage (ipkfilename, conf);
 	ret = ipk.initialize ();
 	assert (ret == true);
 }
