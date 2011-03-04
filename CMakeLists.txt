@@ -1,5 +1,5 @@
 # CMakeLists for the Listaller Project
-project(listaller)
+project(listaller-core)
 
 cmake_minimum_required(VERSION 2.8.0 FATAL_ERROR)
 
@@ -34,10 +34,6 @@ set(LISTALLER_VERSION_MAJOR  "0")
 set(LISTALLER_VERSION_MINOR  "5")
 set(LISTALLER_VERSION_PATCH  "0")
 set(LISTALLER_VERSION_SUFFIX "${VERSION_SUFFIX}")
-
-set(CPACK_PACKAGE_VERSION_MAJOR "${LISTALLER_VERSION_MAJOR}")
-set(CPACK_PACKAGE_VERSION_MINOR "${LISTALLER_VERSION_MINOR}")
-set(CPACK_PACKAGE_VERSION_PATCH "${LISTALLER_VERSION_PATCH}${VERSION_SUFFIX}")
 set(LISTALLER_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 
 # Forbid in-tree building
@@ -52,10 +48,10 @@ OPTION(TESTS "Enable Listaller's Unit Tests" OFF)
 OPTION(QT "Build Listaller's Qt4 modules" OFF)
 ########################################
 
-IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  SET(CMAKE_INSTALL_PREFIX
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  set(CMAKE_INSTALL_PREFIX
     "/usr" CACHE PATH "Listaller default install prefix" FORCE)
-ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
 set(XDG_APPS_INSTALL_DIR share/applications)
 
@@ -82,22 +78,47 @@ add_custom_target(distclean
   "make clean"
 )
 
-find_package(PkgConfig REQUIRED)
-find_package(Gettext REQUIRED)
 
+# Set up l18n
+find_package (Gettext REQUIRED)
+add_custom_command (OUTPUT ${CMAKE_SOURCE_DIR}/po/listaller.pot
+		COMMAND xgettext -i -s --files-from ${CMAKE_SOURCE_DIR}/po/POTFILES.in
+				-k_ -o ${CMAKE_SOURCE_DIR}/po/listaller.pot --copyright-holder=\"Matthias Klumpp\"
+				--package-name=\"listaller\" --no-wrap
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
+if (${GETTEXT_FOUND} STREQUAL "TRUE")
+        set (HAVE_GETTEXT true)
+        file (GLOB _translations ${CMAKE_SOURCE_DIR}/po/*.po)
+        GETTEXT_CREATE_TRANSLATIONS (${CMAKE_SOURCE_DIR}/po/listaller.pot
+                ALL ${_translations})
+endif (${GETTEXT_FOUND} STREQUAL "TRUE")
+
+# Configure files
 configure_file(${CMAKE_SOURCE_DIR}/src/constants.vala.in
 	       ${CMAKE_SOURCE_DIR}/src/constants.vala
 	       @ONLY
 )
 # set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/src/liversion.inc)
-
 configure_file(config.h.in ${CMAKE_BINARY_DIR}/config.h)
 
+# Enable/disable testing
 if(TESTS)
 	enable_testing()
 endif(TESTS)
 
-# Validate essential packages
+# Set custom C flags
+set (MAINTAINER_CFLAGS "-Werror -Wall -Wcast-align -Wno-uninitialized -Wempty-body -Wformat-security -Winit-self"
+			"-DGETTEXT_PACKAGE=\"listaller\""
+)
+option (DISABLE_MAINTAINER_CFLAGS "Disable maintainer CFlags" OFF)
+if (DISABLE_MAINTAINER_CFLAGS)
+	set (MAINTAINER_CFLAGS "")
+endif (DISABLE_MAINTAINER_CFLAGS)
+
+# Validate Vala version
+find_package(PkgConfig REQUIRED)
 find_package(Vala REQUIRED)
 include("${VALA_USE_FILE}")
 ensure_vala_version("0.10" MINIMUM)

@@ -83,7 +83,7 @@ private class IPKPackage : Object {
 		// Create a new archive object for reading
 		Read ar = new Read ();
 		// A buffer which will hold read data
-		char buff[4096];
+		uint8 buf[4096];
 
 		weak Entry e;
 
@@ -104,8 +104,9 @@ private class IPKPackage : Object {
 		while (ar.next_header (out e) == Result.OK) {
 			// Extract control files
 			if (e.pathname () == "control.tar.xz") {
-				ext.write_header (e);
-				archive_copy_data (ar, ext);
+				var f = FileStream.open (Path.build_filename (wdir, "control.tar.xz"), "w");
+				while (ar.read_data (buf, 4096) != 0)
+					f.write (buf, 4096);
 
 				// We found & read the control files, so we can exit the loop now
 				break;
