@@ -1,6 +1,6 @@
-/* constants.vala!
+/* config.vapi
  *
- * Copyright (C) 2009-2011  Matthias Klumpp
+ * Copyright (C) 2011  Matthias Klumpp
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,5 +18,22 @@
  * Author:
  * 	Matthias Klumpp <matthias@nlinux.org>
  */
+[CCode (prefix = "", lower_case_cprefix = "", cheader_filename = "config.h")]
+namespace Config
+{
+	/* Package information */
+	public const string PACKAGE_NAME;
+	public const string VERSION;
+	public const string PACKAGE_URL;
+	public const string PACKAGE_BUGREPORT;
 
-private const string LISTALLER_VERSION = "@LISTALLER_VERSION@";
+	/* Gettext package */
+	public const string GETTEXT_PACKAGE;
+
+	/* Configured paths */
+	public const string PREFIXDIR;  /* /usr/local */
+	public const string LOCALEDIR;  /* /usr/local/share/locale  */
+	public const string PKGDATADIR; /* /usr/local/share/listaller */
+	public const string PKGLIBDIR;  /* /usr/local/lib/listaller   */
+
+}

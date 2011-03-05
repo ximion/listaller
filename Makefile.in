@@ -11,6 +11,9 @@ test:
 test-verbose:
 	$(MAKE) -C ./build test ARGS=-V
 
+translations:
+	$(MAKE) -C ./build translations
+
 clean:
 	$(MAKE) -C ./build clean
 

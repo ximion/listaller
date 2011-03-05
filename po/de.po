@@ -1,0 +1,69 @@
+#: src/database.vala:159
+#, c-format
+msgid "CRITICAL: Unable to remove the lock! (Message: %s)\n"
+msgstr ""
+
+#: src/database.vala:140
+msgid "Could not create/update software database!\n"
+msgstr ""
+
+#: src/items.vala:215
+#, c-format
+msgid "Could not load desktop file values: %s"
+msgstr ""
+
+#: src/ipkpackage.vala:101
+#, c-format
+msgid "Could not open IPK file: %s"
+msgstr ""
+
+#: src/items.vala:224
+#, c-format
+msgid "Could not open desktop file: %s"
+msgstr ""
+
+#: src/database.vala:61
+msgid "Database action failed"
+msgstr ""
+
+#: src/database.vala:58
+msgid "Database action successful"
+msgstr ""
+
+#: src/database.vala:52
+msgid "Database locked"
+msgstr ""
+
+#: src/database.vala:55
+msgid "Database unlocked"
+msgstr ""
+
+#: src/database.vala:64
+msgid "Fatal database error"
+msgstr ""
+
+#: src/items.vala:185
+msgid "Processing application without assigned .desktop file!"
+msgstr ""
+
+#: src/database.vala:67
+msgid "Software database closed"
+msgstr ""
+
+#: src/database.vala:108
+msgid "Software database does not exist - will be created.\n"
+msgstr ""
+
+#: src/database.vala:70
+#, c-format
+msgid "Software database message (%d)"
+msgstr ""
+
+#: src/database.vala:49
+msgid "Software database opened"
+msgstr ""
+
+#: src/settings.vala:98
+#, c-format
+msgid "Unable to create application database directory: %s\n"
+msgstr ""

@@ -38,7 +38,7 @@ public class LiManager : Object {
 		if (conf == null)
 			conf = new LiSettings (false);
 
-		debug ("This is Listaller " + LISTALLER_VERSION);
+		debug ("This is Listaller " + Config.VERSION);
 	}
 
 	public void test () {

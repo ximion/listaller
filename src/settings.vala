@@ -19,11 +19,11 @@
  * 	Matthias Klumpp <matthias@nlinux.org>
  */
 
-using PkgConfig;
+using Config;
 using GLib;
 
 // Workaround for Vala bug #618931
-private const string _PKG_VERSION1 = PkgConfig.VERSION;
+private const string _PKG_VERSION1 = Config.VERSION;
 
 public class LiSettings : Object {
 	private bool _sumode;
@@ -120,7 +120,7 @@ public class LiSettings : Object {
 public void li_enable_translation ()
 {
 	// Initialize localisation
-	Intl.bindtextdomain (PkgConfig.GETTEXT_PACKAGE, PkgConfig.LOCALEDIR);
-	Intl.bind_textdomain_codeset (PkgConfig.GETTEXT_PACKAGE, "UTF-8");
-	Intl.textdomain (PkgConfig.GETTEXT_PACKAGE);
+	Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
+	Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
+	Intl.textdomain (Config.GETTEXT_PACKAGE);
 }

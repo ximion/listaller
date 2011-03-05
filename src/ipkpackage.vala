@@ -23,7 +23,7 @@ using GLib;
 using Archive;
 
 // Workaround for Vala bug #618931
-private const string _PKG_VERSION6 = PkgConfig.VERSION;
+private const string _PKG_VERSION6 = Config.VERSION;
 
 private class IPKPackage : Object {
 	private string fname;

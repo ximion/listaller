@@ -22,7 +22,7 @@
 using GLib;
 
 // Workaround for Vala bug #618931
-private const string _PKG_VERSION4 = PkgConfig.VERSION;
+private const string _PKG_VERSION4 = Config.VERSION;
 
 public enum AppOrigin {
 	IPK,
