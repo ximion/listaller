@@ -18,6 +18,7 @@
  *
  * Author:
  * 	Julian Andres Klode <jak@jak-linux.org>
+ * 	Matthias Klumpp <matthias@nlinux.org> (some minor updates)
  *
  */
 
@@ -60,7 +61,10 @@ namespace Archive {
 		BZIP2,
 		COMPRESS,
 		PROGRAM,
-		LZMA
+		LZMA,
+		XZ,
+		UU,
+		RPM
 	}
 
 	[CCode (cname="int")]
@@ -137,6 +141,9 @@ namespace Archive {
 		public Result support_compression_lzma ();
 		public Result support_compression_none ();
 		public Result support_compression_program (string command);
+		public Result support_compression_rpm ();
+		public Result support_compression_uu ();
+		public Result support_compression_xz ();
 		public Result support_format_all ();
 		public Result support_format_ar ();
 		public Result support_format_cpio ();

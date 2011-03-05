@@ -48,7 +48,6 @@ private class IPKPackage : Object {
 	private bool read_control_archive (Read ar) {
 		weak Entry e;
 
-		message ("Here I am!");
 		while (ar.next_header (out e) == Result.OK) {
 			message (e.pathname ());
 		}
@@ -56,34 +55,33 @@ private class IPKPackage : Object {
 		return true;
 	}
 
-	private Result archive_copy_data (Read ar, Write aw)
+	private bool archive_copy_data(Read source, Write dest)
 	{
-		Result res;
-		void *buff;
-		size_t size;
-		Posix.off_t offset;
+		char buff[10240];
+		ssize_t readBytes;
 
-		for (;;) {
-			res = ar.read_data_block (out buff, out size, out offset);
-			if (res == Result.EOF) {
-				return Result.OK;
-			}
-			if (res != Result.OK)
-				return res;
-			if (aw.write_data_block (buff, size, offset) != 0) {
-				error (ar.error_string ());
-				return res;
-			}
+		readBytes = source.read_data(buff, 10240);
+		while (readBytes > 0) {
+			dest.write_data(buff, readBytes);
+			/* if (Archive.errno () != Result.OK) {
+				warning ("Error while extracting..." + Archive.error_string () + "(error nb =" + Archive.errno () + ")");
+				return false;
+			} */
+
+			readBytes = source.read_data(buff, 10240);
 		}
+		return true;
 	}
 
 	public bool initialize () {
 		bool ret = false;
 
+		// Change dir to extract to the right path
+		string old_cdir = Environment.get_current_dir ();
+		Posix.chdir (wdir);
+
 		// Create a new archive object for reading
 		Read ar = new Read ();
-		// A buffer which will hold read data
-		uint8 buf[4096];
 
 		weak Entry e;
 
@@ -93,8 +91,7 @@ private class IPKPackage : Object {
 		ar.support_format_tar ();
 
 		// Create new writer
-		WriteDisk ext = new WriteDisk ();
-		ext.set_options (0);
+		WriteDisk writer = new WriteDisk ();
 
 		// Open the file, if it fails exit
 		if (ar.open_filename (fname, 4096) != Result.OK)
@@ -104,17 +101,25 @@ private class IPKPackage : Object {
 		while (ar.next_header (out e) == Result.OK) {
 			// Extract control files
 			if (e.pathname () == "control.tar.xz") {
-				var f = FileStream.open (Path.build_filename (wdir, "control.tar.xz"), "w");
-				while (ar.read_data (buf, 4096) != 0)
-					f.write (buf, 4096);
+				Result header_response = writer.write_header (e);
+				if (header_response == Result.OK) {
+					ret = archive_copy_data(ar, writer);
+				} else {
+					// warning (_("Could not read IPK file: %s"), Archive.error_string ());
+				}
+				if (ret) {
 
-				// We found & read the control files, so we can exit the loop now
+				}
 				break;
 			}
 		}
 		ar.close ();
 
 		ipk_valid = ret;
+
+		// Restore working dir
+		Posix.chdir (old_cdir);
+
 		return ret;
 	}
 }
