@@ -105,13 +105,13 @@ private class SoftwareDB : Object {
 		}
 
 		if (!FileUtils.test (dbname, FileTest.IS_REGULAR)) {
-			message (_("Software database does not exist - will be created.\n"));
+			message (_("Software database does not exist - will be created."));
 		}
 
 		rc = Database.open (dbname, out db);
 
 		if (rc != Sqlite.OK) {
-			string msg = "Can't open database: %d, %s\n".printf (rc, db.errmsg ());
+			string msg = "Can't open database! (Message: %d, %s)".printf (rc, db.errmsg ());
 			stderr.printf (msg);
 			status_changed (DatabaseStatus.FAILURE, msg);
 			return false;
@@ -137,7 +137,7 @@ private class SoftwareDB : Object {
 
 		// Ensure the database is okay and all tables are created
 		if (!update_db_structure ()) {
-			status_changed (DatabaseStatus.FAILURE, _("Could not create/update software database!\n"));
+			status_changed (DatabaseStatus.FAILURE, _("Could not create/update software database!"));
 			return false;
 		}
 
@@ -156,7 +156,7 @@ private class SoftwareDB : Object {
 				lfile.delete ();
 			}
 		} catch (Error e) {
-			error (_("CRITICAL: Unable to remove the lock! (Message: %s)\n").printf (e.message));
+			error (_("CRITICAL: Unable to remove database lock! (Message: %s)").printf (e.message));
 		}
 	}
 

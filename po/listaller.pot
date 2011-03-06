@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: listaller\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2011-03-05 20:12+0100\n"
+        "POT-Creation-Date: 2011-03-06 19:36+0100\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,26 +18,31 @@ msgstr  "Project-Id-Version: listaller\n"
 
 #: src/database.vala:159
 #, c-format
-msgid   "CRITICAL: Unable to remove the lock! (Message: %s)\n"
+msgid   "CRITICAL: Unable to remove database lock! (Message: %s)"
 msgstr  ""
 
 #: src/database.vala:140
-msgid   "Could not create/update software database!\n"
+msgid   "Could not create/update software database!"
 msgstr  ""
 
-#: src/items.vala:215
+#: src/appitems.vala:215
 #, c-format
 msgid   "Could not load desktop file values: %s"
 msgstr  ""
 
-#: src/ipkpackage.vala:101
+#: src/ipkpackage.vala:126
 #, c-format
-msgid   "Could not open IPK file: %s"
+msgid   "Could not open IPK file! Error: %s"
 msgstr  ""
 
-#: src/items.vala:224
+#: src/appitems.vala:224
 #, c-format
 msgid   "Could not open desktop file: %s"
+msgstr  ""
+
+#: src/ipkpackage.vala:136 src/ipkpackage.vala:145
+#, c-format
+msgid   "Could not read IPK control information! Error: %s"
 msgstr  ""
 
 #: src/database.vala:61
@@ -60,7 +65,7 @@ msgstr  ""
 msgid   "Fatal database error"
 msgstr  ""
 
-#: src/items.vala:185
+#: src/appitems.vala:185
 msgid   "Processing application without assigned .desktop file!"
 msgstr  ""
 
@@ -69,7 +74,7 @@ msgid   "Software database closed"
 msgstr  ""
 
 #: src/database.vala:108
-msgid   "Software database does not exist - will be created.\n"
+msgid   "Software database does not exist - will be created."
 msgstr  ""
 
 #: src/database.vala:70
