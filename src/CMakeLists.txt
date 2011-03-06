@@ -3,8 +3,9 @@
 set(lisrc ${CMAKE_SOURCE_DIR}/src CACHE INTERNAL "Listaller sourcecode dir")
 
 set(LISTALLER_BASE_SOURCES ${lisrc}/util.vala
+	${lisrc}/status.vala
 	${lisrc}/settings.vala
-	${lisrc}/items.vala
+	${lisrc}/appitems.vala
 	${lisrc}/database.vala
 	${lisrc}/ipkpackage.vala
 	CACHE INTERNAL "Listaller core source files"

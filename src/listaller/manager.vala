@@ -25,7 +25,11 @@ public class LiManager : Object {
 	private bool sumode;
 	private LiSettings conf;
 
-	public LiSettings settingsSet {
+	public signal void error_code (LiErrorItem error);
+	public signal void progress_changed (int progress, int subprogress);
+	public signal void status_changed (LiStatusItem status);
+
+	public LiSettings settings {
 		get { return conf; }
 		set { conf = value; }
 	}

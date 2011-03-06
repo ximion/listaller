@@ -31,6 +31,9 @@ private class IPKPackage : Object {
 	private string wdir;
 	private bool ipk_valid;
 
+	public signal void error_code (LiErrorItem error);
+	public signal void message (LiMessageItem message);
+
 	public IPKPackage (string filename, LiSettings? settings) {
 		fname = filename;
 		initialized = false;
@@ -45,11 +48,35 @@ private class IPKPackage : Object {
 		return ipk_valid;
 	}
 
+	private void emit_warning (string msg) {
+		// Construct warning message
+		LiMessageItem item = new LiMessageItem(LiMessageType.WARNING);
+		item.details = msg;
+		message (item);
+		warning (msg);
+	}
+
+	private void emit_message (string msg) {
+		// Construct info message
+		LiMessageItem item = new LiMessageItem(LiMessageType.INFO);
+		item.details = msg;
+		message (item);
+		GLib.message (msg);
+	}
+
+	private void emit_error (LiError id, string details) {
+		// Construct error
+		LiErrorItem item = new LiErrorItem(id);
+		item.details = details;
+		error_code (item);
+		critical (details);
+	}
+
 	private bool read_control_archive (Read ar) {
 		weak Entry e;
 
 		while (ar.next_header (out e) == Result.OK) {
-			message (e.pathname ());
+			debug (e.pathname ());
 		}
 		ar.close ();
 		return true;
@@ -64,7 +91,7 @@ private class IPKPackage : Object {
 		while (readBytes > 0) {
 			dest.write_data(buff, readBytes);
 			if (dest.errno () != Result.OK) {
-				warning ("Error while extracting..." + dest.error_string () + "(error nb =" + dest.errno ().to_string () + ")");
+				emit_warning ("Error while extracting..." + dest.error_string () + "(error nb =" + dest.errno ().to_string () + ")");
 				return false;
 			}
 
@@ -95,7 +122,8 @@ private class IPKPackage : Object {
 
 		// Open the file, if it fails exit
 		if (ar.open_filename (fname, 4096) != Result.OK)
-			error (_("Could not open IPK file! Error: %s"), ar.error_string ());
+			emit_error (LiError.IPK_LOADING_FAILED,
+				    _("Could not open IPK file! Error: %s").printf (ar.error_string ()));
 
 
 		while (ar.next_header (out e) == Result.OK) {
@@ -105,7 +133,7 @@ private class IPKPackage : Object {
 				if (header_response == Result.OK) {
 					ret = archive_copy_data(ar, writer);
 				} else {
-					warning (_("Could not read IPK control information! Error: %s"), writer.error_string ());
+					emit_warning (_("Could not read IPK control information! Error: %s").printf (writer.error_string ()));
 				}
 				if (ret) {
 					// Now read all control stuff
