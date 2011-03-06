@@ -1,5 +1,6 @@
 src/database.vala
 src/settings.vala
-src/items.vala
+src/status.vala
+src/appitems.vala
 src/ipkpackage.vala
 src/listaller/manager.vala
