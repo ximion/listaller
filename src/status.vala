@@ -25,6 +25,10 @@ public enum LiError {
 	UNKNOWN,
 	IPK_LOADING_FAILED,
 	UNPACKING_FAILED;
+
+	public string to_string () {
+		return ((int) this).to_string ();
+	}
 }
 
 public enum LiStatus {
@@ -38,6 +42,25 @@ public enum LiMessageType {
 	INFO,
 	WARNING,
 	CRITICAL;
+
+	public string to_string() {
+		switch (this) {
+			case UNKNOWN:
+				return ("msg:UNKNOWN");
+
+			case INFO:
+				return ("msg:INFO");
+
+			case WARNING:
+				return ("msg:WARNING");
+
+			case CRITICAL:
+				return ("msg:CRITICAL");
+
+			default:
+				return ("msg:<?>");
+		}
+	}
 }
 
 public class LiErrorItem : Object {
@@ -58,6 +81,12 @@ public class LiErrorItem : Object {
 		error = type;
 		details = "";
 	}
+
+	public string to_string () {
+		string str;
+		str = "{ [" + error.to_string () + "]=> " + details + " }";
+		return str;
+	}
 }
 
 public class LiMessageItem : Object {
@@ -77,6 +106,12 @@ public class LiMessageItem : Object {
 	public LiMessageItem (LiMessageType type) {
 		mtype = type;
 		details = "";
+	}
+
+	public string to_string () {
+		string str;
+		str = "{ [" + mtype.to_string () + "]=> " + details + " }";
+		return str;
 	}
 }
 

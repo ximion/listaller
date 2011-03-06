@@ -27,6 +27,18 @@ void msg (string s) {
 	message (s + "\n");
 }
 
+void test_ipk_message_cb (LiMessageItem item) {
+	msg ("Received message:");
+	msg (" " + item.to_string ());
+	assert (item.mtype == LiMessageType.INFO);
+}
+
+void test_ipk_error_code_cb (LiErrorItem item) {
+	msg ("Received error:");
+	msg (" " + item.to_string ());
+	error (item.details);
+}
+
 void test_ipk_package () {
 	bool ret = false;
 
@@ -37,6 +49,10 @@ void test_ipk_package () {
 	string ipkfilename = Path.build_filename (datadir, "demo-setup.ipk", null);
 	msg ("Loading IPK package %s".printf (ipkfilename));
 	IPKPackage ipk = new IPKPackage (ipkfilename, conf);
+	// Connect signal handlers
+	ipk.message.connect (test_ipk_message_cb);
+	ipk.error_code.connect (test_ipk_error_code_cb);
+
 	ret = ipk.initialize ();
 	assert (ret == true);
 }
