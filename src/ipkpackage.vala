@@ -63,10 +63,10 @@ private class IPKPackage : Object {
 		readBytes = source.read_data(buff, 10240);
 		while (readBytes > 0) {
 			dest.write_data(buff, readBytes);
-			/* if (Archive.errno () != Result.OK) {
-				warning ("Error while extracting..." + Archive.error_string () + "(error nb =" + Archive.errno () + ")");
+			if (dest.errno () != Result.OK) {
+				warning ("Error while extracting..." + dest.error_string () + "(error nb =" + dest.errno ().to_string () + ")");
 				return false;
-			} */
+			}
 
 			readBytes = source.read_data(buff, 10240);
 		}
@@ -95,7 +95,7 @@ private class IPKPackage : Object {
 
 		// Open the file, if it fails exit
 		if (ar.open_filename (fname, 4096) != Result.OK)
-			error (_("Could not open IPK file: %s"), ar.error_string ());
+			error (_("Could not open IPK file! Error: %s"), ar.error_string ());
 
 
 		while (ar.next_header (out e) == Result.OK) {
@@ -105,10 +105,19 @@ private class IPKPackage : Object {
 				if (header_response == Result.OK) {
 					ret = archive_copy_data(ar, writer);
 				} else {
-					// warning (_("Could not read IPK file: %s"), Archive.error_string ());
+					warning (_("Could not read IPK control information! Error: %s"), writer.error_string ());
 				}
 				if (ret) {
+					// Now read all control stuff
+					Read ctrlar = new Read ();
+					// Control archives are always XZ compressed TARballs
+					ctrlar.support_compression_xz ();
+					ctrlar.support_format_tar ();
+					if (ctrlar.open_filename (Path.build_filename (wdir, "control.tar.xz", null), 4096) != Result.OK)
+						error (_("Could not read IPK control information! Error: %s"), ctrlar.error_string ());
 
+					// Now read the control file
+					read_control_archive (ctrlar);
 				}
 				break;
 			}
