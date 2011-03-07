@@ -55,9 +55,14 @@ void test_ipk_package () {
 
 	ret = ipk.initialize ();
 	assert (ret == true);
+}
 
+void test_ipk_control_file () {
 	IPKCXml ipkc = new IPKCXml ();
 	ipkc.create_new ();
+	ipkc.set_app_name ("Blah");
+
+	ipkc.print_xml ();
 }
 
 int main (string[] args) {
@@ -68,6 +73,7 @@ int main (string[] args) {
 	assert (FileUtils.test (datadir, FileTest.EXISTS) != false);
 
 	Test.init (ref args);
+	test_ipk_control_file ();
 	test_ipk_package ();
 	Test.run ();
 	return 0;

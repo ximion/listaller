@@ -88,13 +88,78 @@ private class IPKCXml : Object {
 
 		Xml.Node* comment = new Xml.Node.comment ("To be continued");
 		root->add_child (comment);
+		return true;
+	}
 
+	public void print_xml () {
 		string xmlstr;
 		// This throws a compiler warning, see bug 547364
 		xdoc->dump_memory (out xmlstr);
 
 		debug (xmlstr);
-		return true;
+	}
+
+	private Xml.Node* root_node () {
+		Xml.Node* root = xdoc->get_root_element ();
+		if ((root == null) || (root->name != "ipkcontrol")) {
+			critical (_("XML file is damaged or XML structure is no valid IPKControl!"));
+			return null;
+		}
+		return root;
+	}
+
+	private Xml.Node* app_node () {
+		Xml.Node* appnd = null;
+		for (Xml.Node* iter = root_node ()->children; iter != null; iter = iter->next) {
+			// Spaces between tags are also nodes, discard them
+			if (iter->type != ElementType.ELEMENT_NODE) {
+				continue;
+			}
+			if (iter->name == "application") {
+				appnd = iter;
+				break;
+			}
+		}
+		if (appnd == null)
+			critical (_("XML file is damaged or XML structure is no valid IPKControl!"));
+		return appnd;
+	}
+
+	private Xml.Node* get_appdata_node (string id) {
+		Xml.Node* res = null;
+		Xml.Node* an = app_node ();
+		assert (an != null);
+
+		for (Xml.Node* iter = an->children; iter != null; iter = iter->next) {
+			// Spaces between tags are also nodes, discard them
+			if (iter->type != ElementType.ELEMENT_NODE) {
+				continue;
+			}
+			if (iter->name == id) {
+				res = iter->get_content ();
+				break;
+			}
+		}
+		// If node was not found, create new one
+		if (res == null)
+			res = an->new_text_child (null, id, "");
+		return res;
+	}
+
+	private string get_node_content (Xml.Node* nd) {
+		string ret = "";
+		ret = nd->get_content ();
+		// TODO: Translate the string
+		return ret;
+	}
+
+	// Setter/Getter methods for XML properties
+	public void set_app_name (string s) {
+		get_appdata_node ("name")->set_content (s);
+	}
+
+	public string get_app_name () {
+		return get_node_content (get_appdata_node ("name"));
 	}
 
 }

@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: listaller\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2011-03-06 19:36+0100\n"
+        "POT-Creation-Date: 2011-03-07 23:48+0100\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,6 +65,11 @@ msgstr  ""
 msgid   "Fatal database error"
 msgstr  ""
 
+#: src/ipkcdef.vala:54
+#, c-format
+msgid   "File %s not found or permission denied!"
+msgstr  ""
+
 #: src/appitems.vala:185
 msgid   "Processing application without assigned .desktop file!"
 msgstr  ""
@@ -89,4 +94,13 @@ msgstr  ""
 #: src/settings.vala:98
 #, c-format
 msgid   "Unable to create application database directory: %s\n"
+msgstr  ""
+
+#: src/ipkcdef.vala:61
+#, c-format
+msgid   "XML file '%s' is damaged."
+msgstr  ""
+
+#: src/ipkcdef.vala:105 src/ipkcdef.vala:124
+msgid   "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr  ""
