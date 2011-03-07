@@ -55,6 +55,9 @@ void test_ipk_package () {
 
 	ret = ipk.initialize ();
 	assert (ret == true);
+
+	IPKCXml ipkc = new IPKCXml ();
+	ipkc.create_new ();
 }
 
 int main (string[] args) {

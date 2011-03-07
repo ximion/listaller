@@ -1,14 +1,21 @@
 # CMakeLists for Listaller source
 
-set(lisrc ${CMAKE_SOURCE_DIR}/src CACHE INTERNAL "Listaller sourcecode dir")
+set(lisrc ${CMAKE_SOURCE_DIR}/src
+	  CACHE INTERNAL "Listaller sourcecode dir"
+)
 
 set(LISTALLER_BASE_SOURCES ${lisrc}/util.vala
 	${lisrc}/status.vala
 	${lisrc}/settings.vala
 	${lisrc}/appitems.vala
 	${lisrc}/database.vala
+	${lisrc}/ipkcdef.vala
 	${lisrc}/ipkpackage.vala
 	CACHE INTERNAL "Listaller core source files"
+)
+
+set(LISTALLER_BASE_VALA_DEPS config gee-1.0 gio-2.0 sqlite3 libarchive gpgme libxml-2.0
+			     CACHE INTERNAL "Essential Vala package dependencies"
 )
 
 # Variables used later to set library versioning

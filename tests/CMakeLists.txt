@@ -19,6 +19,7 @@ link_libraries(${GLIB2_LIBRARIES}
 	       ${GIO2_LIBRARIES}
 	       ${SQLITE_LIBRARIES}
 	       ${LibArchive_LIBRARIES}
+	       ${LIBXML2_LIBRARIES}
 )
 
 include_directories(${CMAKE_BINARY_DIR}
@@ -28,19 +29,20 @@ include_directories(${CMAKE_BINARY_DIR}
 		    ${GIO2_INCLUDE_DIR}
 		    ${SQLITE_INCLUDE_DIR}
 		    ${LibArchive_INCLUDE_DIR}
+		    ${LIBXML2_INCLUDE_DIR}
 )
 
 # Database tests
 vala_add_executable ("li-test-database" ${LIUNITTEST_SOURCES} tests-database.vala
 				     BASE_DIR ${lisrc}
-				     PACKAGES config gee-1.0 gio-2.0 sqlite3 libarchive gpgme
+				     PACKAGES ${LISTALLER_BASE_VALA_DEPS}
 				     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
 )
 
 # IPK layout tests
 vala_add_executable ("li-test-ipk" ${LIUNITTEST_SOURCES} tests-ipk.vala
 				     BASE_DIR ${lisrc}
-				     PACKAGES config gee-1.0 gio-2.0 sqlite3 libarchive gpgme
+				     PACKAGES ${LISTALLER_BASE_VALA_DEPS}
 				     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
 )
 
