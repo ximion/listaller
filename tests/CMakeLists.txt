@@ -25,7 +25,7 @@ link_libraries(${GLIB2_LIBRARIES}
 include_directories(${CMAKE_BINARY_DIR}
 		    ${CMAKE_CURRENT_SOURCE_DIR}
 		    ${GLIB2_INCLUDE_DIR}
-		    ${GEE_INCLUDE_DIR}
+		    ${GEE_INCLUDE_DIRS}
 		    ${GIO2_INCLUDE_DIR}
 		    ${SQLITE_INCLUDE_DIR}
 		    ${LibArchive_INCLUDE_DIR}
