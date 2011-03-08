@@ -10,6 +10,7 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/util.vala
 	${lisrc}/appitems.vala
 	${lisrc}/database.vala
 	${lisrc}/ipkcdef.vala
+	${lisrc}/ipkfilelist.vala
 	${lisrc}/ipkpackage.vala
 	CACHE INTERNAL "Listaller core source files"
 )

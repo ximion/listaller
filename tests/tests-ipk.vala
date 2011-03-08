@@ -20,6 +20,7 @@
  */
 
 using GLib;
+using Gee;
 
 private string datadir;
 
@@ -58,11 +59,26 @@ void test_ipk_package () {
 }
 
 void test_ipk_control_file () {
-	IPKCXml ipkc = new IPKCXml ();
+	IPKControlFile ipkc = new IPKControlFile ();
 	ipkc.create_new ();
-	ipkc.set_app_name ("Blah");
+	ipkc.set_app_name ("echoecho");
+	ipkc.set_pkg_id ("echo-123");
+
+	ArrayList<string> list = new ArrayList<string> ();
+	list.add ("alpha");
+	list.add ("beta");
+	list.add ("gamma");
+	list.add ("delta");
+	ipkc.set_pkg_dependencies (list);
 
 	ipkc.print_xml ();
+
+	assert (ipkc.get_app_name () == "echoecho");
+	assert (ipkc.get_pkg_id () == "echo-123");
+}
+
+void test_ipk_filelist_file () {
+	// TODO
 }
 
 int main (string[] args) {
@@ -74,6 +90,7 @@ int main (string[] args) {
 
 	Test.init (ref args);
 	test_ipk_control_file ();
+	test_ipk_filelist_file ();
 	test_ipk_package ();
 	Test.run ();
 	return 0;

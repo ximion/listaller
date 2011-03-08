@@ -29,7 +29,7 @@ private const string _PKG_VERSION5 = Config.VERSION;
 private class IPKCXml : Object {
 	private int indent = 0;
 	private string fname;
-	private Xml.Doc* xdoc;
+	protected Xml.Doc* xdoc;
 
 	public IPKCXml () {
 		fname = "";
@@ -87,16 +87,7 @@ private class IPKCXml : Object {
 		nd = subnode->new_text_child (null, "id", "test.desktop" );
 		nd->new_prop ("type", "desktop");
 
-		set_pkg_id ("invalid");
-
-		ArrayList<string> list = new ArrayList<string> ();
-		list.add ("alpha");
-		list.add ("beta");
-		list.add ("gamma");
-		list.add ("delta");
-		set_pkg_dependencies (list);
-
-		Xml.Node* comment = new Xml.Node.comment ("To be continued");
+		Xml.Node* comment = new Xml.Node.comment ("IPK control description spec not yet completed!");
 		root->add_child (comment);
 		return true;
 	}
@@ -182,8 +173,19 @@ private class IPKCXml : Object {
 		//delete n;
 	}
 
-	public string get_pkg_dependencies () {
-		return "";
+	public ArrayList<string> get_pkg_dependencies () {
+		Xml.Node* n = get_subnode (pkg_node (), "dependencies");
+		ArrayList<string> depList = new ArrayList<string> ();
+		for (Xml.Node* iter = n->children; iter != null; iter = iter->next) {
+			// Spaces between tags are also nodes, discard them
+			if (iter->type != ElementType.ELEMENT_NODE) {
+				continue;
+			}
+			if (iter->name == "file") {
+				depList.add (iter->get_content ());
+			}
+		}
+		return depList;
 	}
 
 	// Application
@@ -214,4 +216,11 @@ private class IPKCXml : Object {
 		return get_node_content (get_subnode (app_node (), "url"));
 	}
 
+}
+
+private class IPKControlFile : IPKCXml {
+
+	public IPKControlFile () {
+
+	}
 }
