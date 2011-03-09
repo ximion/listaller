@@ -47,7 +47,7 @@ void test_ipk_package () {
 	LiSettings conf = new LiSettings ();
 	conf.testmode = true;
 
-	string ipkfilename = Path.build_filename (datadir, "demo-setup.ipk", null);
+	string ipkfilename = Path.build_filename (datadir, "foobar-testsetup.ipk", null);
 	msg ("Loading IPK package %s".printf (ipkfilename));
 	IPKPackage ipk = new IPKPackage (ipkfilename, conf);
 	// Connect signal handlers
@@ -56,6 +56,7 @@ void test_ipk_package () {
 
 	ret = ipk.initialize ();
 	assert (ret == true);
+	assert (ipk.control.get_app_name () == "FooBar");
 }
 
 void test_ipk_control_file () {
@@ -82,7 +83,7 @@ void test_ipk_filelist_file () {
 	bool ret = false;
 
 	IPKFileList flist = new IPKFileList ();
-	ret = flist.add_file (Path.build_filename (datadir, "demo-setup.ipk", null), "$INST");
+	ret = flist.add_file (Path.build_filename (datadir, "dummy-control.xml", null), "$INST");
 	assert (ret == true);
 	debug (flist.to_string ());
 }

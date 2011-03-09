@@ -56,6 +56,12 @@ private class IPKPackage : Object {
 		_filelist = new IPKFileList ();
 	}
 
+	~IPKPackage () {
+		// Remove workspace
+		// TODO: Make this recursive
+		DirUtils.rmdir (wdir);
+	}
+
 	public bool is_valid () {
 		return ipk_valid;
 	}
@@ -85,18 +91,20 @@ private class IPKPackage : Object {
 	}
 
 	private bool process_control_archive (string arname) {
-		weak Entry e;
 		bool ret = false;
+		weak Entry e;
 
 		// Now read all control stuff
 		Read ar = new Read ();
-		// Control archives are always XZ compressed TARballs
-		ar.support_compression_xz ();
+		// Control archives are always XZ compressed tarballs
 		ar.support_format_tar ();
+		// FIXME: Make compression_xz work
+		ar.support_compression_all ();
 		if (ar.open_filename (arname, 4096) != Result.OK)
 			error (_("Could not read IPK control information! Error: %s"), ar.error_string ());
 
 		while (ar.next_header (out e) == Result.OK) {
+			debug (e.pathname ());
 			switch (e.pathname ()) {
 				case "control.xml":
 					ret = extract_entry_to (ar, e, wdir);
@@ -139,7 +147,7 @@ private class IPKPackage : Object {
 
 		// Change dir to extract to the right path
 		string old_cdir = Environment.get_current_dir ();
-		Posix.chdir (dest);
+		Environment.set_current_dir (dest);
 
 		Result header_response = writer.write_header (e);
 		if (header_response == Result.OK) {
@@ -149,7 +157,7 @@ private class IPKPackage : Object {
 		}
 
 		// Restore working dir
-		Posix.chdir (old_cdir);
+		Environment.set_current_dir (old_cdir);
 
 		return ret;
 	}
@@ -198,7 +206,7 @@ private class IPKPackage : Object {
 				ret = extract_entry_to (ar, e, wdir);
 				if (ret) {
 					// Now read the control file
-					process_control_archive (Path.build_filename (wdir, "control.tar.xz", null));
+					ret = process_control_archive (Path.build_filename (wdir, "control.tar.xz", null));
 				} else {
 					warning (_("Unable to extract IPK metadata!"));
 				}
