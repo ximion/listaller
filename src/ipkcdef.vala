@@ -170,7 +170,6 @@ private class IPKCXml : Object {
 		foreach (string s in list) {
 			n->new_text_child (null, "file", s);
 		}
-		//delete n;
 	}
 
 	public ArrayList<string> get_pkg_dependencies () {

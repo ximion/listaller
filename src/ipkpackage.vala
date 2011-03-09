@@ -27,21 +27,33 @@ private const string _PKG_VERSION6 = Config.VERSION;
 
 private class IPKPackage : Object {
 	private string fname;
-	private bool initialized;
 	private string wdir;
 	private bool ipk_valid;
+	private IPKControlFile _control;
+	private IPKFileList _filelist;
 
 	public signal void error_code (LiErrorItem error);
 	public signal void message (LiMessageItem message);
 
+	public IPKControlFile control {
+		get { return _control; }
+	}
+
+	public IPKFileList filelist {
+		get { return _filelist; }
+	}
+
 	public IPKPackage (string filename, LiSettings? settings) {
 		fname = filename;
-		initialized = false;
+
 		LiSettings conf = settings;
 		if (conf == null)
 			conf = new LiSettings ();
 		wdir = conf.get_unique_tmp_dir ();
+
 		ipk_valid = false;
+		_control = new IPKControlFile ();
+		_filelist = new IPKFileList ();
 	}
 
 	public bool is_valid () {
@@ -72,22 +84,83 @@ private class IPKPackage : Object {
 		critical (details);
 	}
 
-	private bool read_control_archive (Read ar) {
+	private bool process_control_archive (string arname) {
 		weak Entry e;
+		bool ret = false;
+
+		// Now read all control stuff
+		Read ar = new Read ();
+		// Control archives are always XZ compressed TARballs
+		ar.support_compression_xz ();
+		ar.support_format_tar ();
+		if (ar.open_filename (arname, 4096) != Result.OK)
+			error (_("Could not read IPK control information! Error: %s"), ar.error_string ());
 
 		while (ar.next_header (out e) == Result.OK) {
-			debug (e.pathname ());
+			switch (e.pathname ()) {
+				case "control.xml":
+					ret = extract_entry_to (ar, e, wdir);
+					break;
+				case "files.list":
+					ret = extract_entry_to (ar, e, wdir);
+					break;
+			}
 		}
+		// Close & remove tmp archive
 		ar.close ();
-		return true;
+		FileUtils.remove (arname);
+
+		if (!ret)
+			return false;
+
+		// Check if all metadata is available
+		string tmpf = Path.build_filename (wdir, "control.xml", null);
+		ret = false;
+		if (FileUtils.test (tmpf, FileTest.EXISTS)) {
+			ret = control.open (tmpf);
+		}
+		tmpf = Path.build_filename (wdir, "files.list", null);
+		if ((ret) && (FileUtils.test (tmpf, FileTest.EXISTS))) {
+			ret = filelist.open (tmpf);
+		}
+
+		// If everything was successful, the IPK file is valid
+		ipk_valid = ret;
+
+		return ret;
 	}
 
-	private bool archive_copy_data(Read source, Write dest)
+	private bool extract_entry_to (Read ar, Entry e, string dest) {
+		bool ret = false;
+		assert (ar != null);
+
+		// Create new writer
+		WriteDisk writer = new WriteDisk ();
+
+		// Change dir to extract to the right path
+		string old_cdir = Environment.get_current_dir ();
+		Posix.chdir (dest);
+
+		Result header_response = writer.write_header (e);
+		if (header_response == Result.OK) {
+			ret = archive_copy_data (ar, writer);
+		} else {
+			emit_warning (_("Could not extract file! Error: %s").printf (writer.error_string ()));
+		}
+
+		// Restore working dir
+		Posix.chdir (old_cdir);
+
+		return ret;
+	}
+
+	private bool archive_copy_data (Read source, Write dest)
 	{
+		const int size = 10240;
 		char buff[10240];
 		ssize_t readBytes;
 
-		readBytes = source.read_data(buff, 10240);
+		readBytes = source.read_data (buff, size);
 		while (readBytes > 0) {
 			dest.write_data(buff, readBytes);
 			if (dest.errno () != Result.OK) {
@@ -95,17 +168,13 @@ private class IPKPackage : Object {
 				return false;
 			}
 
-			readBytes = source.read_data(buff, 10240);
+			readBytes = source.read_data (buff, size);
 		}
 		return true;
 	}
 
 	public bool initialize () {
 		bool ret = false;
-
-		// Change dir to extract to the right path
-		string old_cdir = Environment.get_current_dir ();
-		Posix.chdir (wdir);
 
 		// Create a new archive object for reading
 		Read ar = new Read ();
@@ -117,9 +186,6 @@ private class IPKPackage : Object {
 		// IPK packages are GNU-Tar archives
 		ar.support_format_tar ();
 
-		// Create new writer
-		WriteDisk writer = new WriteDisk ();
-
 		// Open the file, if it fails exit
 		if (ar.open_filename (fname, 4096) != Result.OK)
 			emit_error (LiError.IPK_LOADING_FAILED,
@@ -129,23 +195,12 @@ private class IPKPackage : Object {
 		while (ar.next_header (out e) == Result.OK) {
 			// Extract control files
 			if (e.pathname () == "control.tar.xz") {
-				Result header_response = writer.write_header (e);
-				if (header_response == Result.OK) {
-					ret = archive_copy_data(ar, writer);
-				} else {
-					emit_warning (_("Could not read IPK control information! Error: %s").printf (writer.error_string ()));
-				}
+				ret = extract_entry_to (ar, e, wdir);
 				if (ret) {
-					// Now read all control stuff
-					Read ctrlar = new Read ();
-					// Control archives are always XZ compressed TARballs
-					ctrlar.support_compression_xz ();
-					ctrlar.support_format_tar ();
-					if (ctrlar.open_filename (Path.build_filename (wdir, "control.tar.xz", null), 4096) != Result.OK)
-						error (_("Could not read IPK control information! Error: %s"), ctrlar.error_string ());
-
 					// Now read the control file
-					read_control_archive (ctrlar);
+					process_control_archive (Path.build_filename (wdir, "control.tar.xz", null));
+				} else {
+					warning (_("Unable to extract IPK metadata!"));
 				}
 				break;
 			}
@@ -153,9 +208,6 @@ private class IPKPackage : Object {
 		ar.close ();
 
 		ipk_valid = ret;
-
-		// Restore working dir
-		Posix.chdir (old_cdir);
 
 		return ret;
 	}
