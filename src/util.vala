@@ -63,3 +63,23 @@ private int count_str (string a, string b) {
 
 	return count;
 }
+
+/*
+ * Calculate checksum for file
+ */
+private string compute_checksum_for_file (string fname, ChecksumType cstype = ChecksumType.SHA1) {
+	Checksum cs;
+	uchar data [1024];
+	size_t size = 0;
+
+	cs = new Checksum (cstype);
+	Posix.FILE input = Posix.FILE.open (fname, "rb" );
+	do {
+		size = Posix.read (input.fileno (), (void*) data, 1024);
+		cs.update (data, size);
+	} while (size == 1024);
+	Posix.close (input.fileno ());
+
+	string sum = cs.get_string ();
+	return sum;
+}

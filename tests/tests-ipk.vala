@@ -79,6 +79,12 @@ void test_ipk_control_file () {
 
 void test_ipk_filelist_file () {
 	// TODO
+	bool ret = false;
+
+	IPKFileList flist = new IPKFileList ();
+	ret = flist.add_file (Path.build_filename (datadir, "demo-setup.ipk", null), "$INST");
+	assert (ret == true);
+	debug (flist.to_string ());
 }
 
 int main (string[] args) {

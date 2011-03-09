@@ -31,6 +31,8 @@ private class IPKFileList : Object {
 
 	public IPKFileList () {
 		text = new LinkedList<string> ();
+		text.add ("# IPK file list");
+		text.add ("");
 	}
 
 	public bool open (string iflfile) {
@@ -57,5 +59,39 @@ private class IPKFileList : Object {
 		}
 
 		return true;
+	}
+
+	private int get_folder_index (string folder, bool create = false) {
+		// Build folder string
+		string s = ">> " + folder;
+		int i = text.index_of (s);
+		// Add folder to filelist, if it does not exist
+		if ((create) && (i < 0)) {
+			text.add (s);
+			i = text.index_of (s);
+		}
+		return i;
+	}
+
+	public bool add_file (string fname, string fdest) {
+		// Get index of destination dir
+		int findex = get_folder_index (fdest, true);
+		findex++;
+
+		string checksum = compute_checksum_for_file (fname);
+		if (checksum == "")
+			return false;
+		text.insert (findex, checksum);
+		text.insert (findex, Path.get_basename (fname));
+
+		return true;
+	}
+
+	public string to_string () {
+		string res = "";
+		foreach (string s in text) {
+			res += s + "\n";
+		}
+		return res;
 	}
 }
