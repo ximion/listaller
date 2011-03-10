@@ -60,7 +60,7 @@ void test_ipk_package () {
 }
 
 void test_ipk_control_file () {
-	IPKControlFile ipkc = new IPKControlFile ();
+	IPKControl ipkc = new IPKControl ();
 	ipkc.create_new ();
 	ipkc.set_app_name ("echoecho");
 	ipkc.set_pkg_id ("echo-123");

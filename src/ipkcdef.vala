@@ -26,7 +26,7 @@ using Gee;
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION5 = Config.VERSION;
 
-private class IPKCXml : Object {
+public class IPKCXml : Object {
 	private int indent = 0;
 	private string fname;
 	protected Xml.Doc* xdoc;
@@ -217,9 +217,9 @@ private class IPKCXml : Object {
 
 }
 
-private class IPKControlFile : IPKCXml {
+public class IPKControl : IPKCXml {
 
-	public IPKControlFile () {
+	public IPKControl () {
 
 	}
 }

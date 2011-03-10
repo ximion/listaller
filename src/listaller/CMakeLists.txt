@@ -13,6 +13,7 @@ pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	manager.vala
+	installer.vala
 )
 
 link_libraries(${GLIB2_LIBRARIES}

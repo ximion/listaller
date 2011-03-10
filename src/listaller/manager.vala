@@ -21,13 +21,16 @@
 
 using GLib;
 
+// Workaround for Vala bug #618931
+private const string _PKG_VERSION9 = Config.VERSION;
+
 public class LiManager : Object {
-	private bool sumode;
 	private LiSettings conf;
 
 	public signal void error_code (LiErrorItem error);
 	public signal void progress_changed (int progress, int subprogress);
 	public signal void status_changed (LiStatusItem status);
+	public signal void message (LiMessageItem message);
 
 	public LiSettings settings {
 		get { return conf; }

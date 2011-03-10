@@ -24,7 +24,8 @@ using GLib;
 public enum LiError {
 	UNKNOWN,
 	IPK_LOADING_FAILED,
-	UNPACKING_FAILED;
+	UNPACKING_FAILED,
+	SETUP_NOT_INITIALIZED;
 
 	public string to_string () {
 		return ((int) this).to_string ();

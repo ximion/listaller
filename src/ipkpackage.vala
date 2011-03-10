@@ -29,13 +29,13 @@ private class IPKPackage : Object {
 	private string fname;
 	private string wdir;
 	private bool ipk_valid;
-	private IPKControlFile _control;
+	private IPKControl _control;
 	private IPKFileList _filelist;
 
 	public signal void error_code (LiErrorItem error);
 	public signal void message (LiMessageItem message);
 
-	public IPKControlFile control {
+	public IPKControl control {
 		get { return _control; }
 	}
 
@@ -52,14 +52,14 @@ private class IPKPackage : Object {
 		wdir = conf.get_unique_tmp_dir ();
 
 		ipk_valid = false;
-		_control = new IPKControlFile ();
+		_control = new IPKControl ();
 		_filelist = new IPKFileList ();
 	}
 
 	~IPKPackage () {
 		// Remove workspace
 		// TODO: Make this recursive
-		DirUtils.rmdir (wdir);
+		DirUtils.remove (wdir);
 	}
 
 	public bool is_valid () {
