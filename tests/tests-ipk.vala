@@ -25,7 +25,7 @@ using Gee;
 private string datadir;
 
 void msg (string s) {
-	message (s + "\n");
+	stdout.printf (s + "\n");
 }
 
 void test_ipk_message_cb (LiMessageItem item) {
@@ -79,13 +79,20 @@ void test_ipk_control_file () {
 }
 
 void test_ipk_filelist_file () {
-	// TODO
+	msg ("Filelist tests.");
 	bool ret = false;
 
 	IPKFileList flist = new IPKFileList ();
-	ret = flist.add_file (Path.build_filename (datadir, "dummy-control.xml", null), "$INST");
+	ret = flist.add_file (Path.build_filename (datadir, "dummy-control.xml", null), "$INST/+junk");
 	assert (ret == true);
-	debug (flist.to_string ());
+	ret = flist.add_file (Path.build_filename (datadir, "ipk", "packicon.png", null), "$INST/+junk");
+	assert (ret == true);
+	ret = flist.add_file (Path.build_filename (datadir, "ipk", "Osmos.desktop", null), "$APP");
+	assert (ret == true);
+
+	string tmpfile = Path.build_filename (datadir, "sample-files.list", null);
+	FileUtils.remove (tmpfile);
+	flist.save (tmpfile);
 }
 
 int main (string[] args) {

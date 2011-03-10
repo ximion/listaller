@@ -74,6 +74,13 @@ private string compute_checksum_for_file (string fname, ChecksumType cstype = Ch
 
 	cs = new Checksum (cstype);
 	Posix.FILE input = Posix.FILE.open (fname, "rb" );
+
+	// Return empty string if we were unable to open the file
+	if (input == null) {
+		return "";
+	}
+
+	// Build the checksum
 	do {
 		size = Posix.read (input.fileno (), (void*) data, 1024);
 		cs.update (data, size);

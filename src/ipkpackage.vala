@@ -29,18 +29,18 @@ private class IPKPackage : Object {
 	private string fname;
 	private string wdir;
 	private bool ipk_valid;
-	private IPKControl _control;
-	private IPKFileList _filelist;
+	private IPKControl ipkc;
+	private IPKFileList ipkf;
 
 	public signal void error_code (LiErrorItem error);
 	public signal void message (LiMessageItem message);
 
 	public IPKControl control {
-		get { return _control; }
+		get { return ipkc; }
 	}
 
 	public IPKFileList filelist {
-		get { return _filelist; }
+		get { return ipkf; }
 	}
 
 	public IPKPackage (string filename, LiSettings? settings) {
@@ -52,8 +52,8 @@ private class IPKPackage : Object {
 		wdir = conf.get_unique_tmp_dir ();
 
 		ipk_valid = false;
-		_control = new IPKControl ();
-		_filelist = new IPKFileList ();
+		ipkc = new IPKControl ();
+		ipkf = new IPKFileList ();
 	}
 
 	~IPKPackage () {
@@ -218,5 +218,14 @@ private class IPKPackage : Object {
 		ipk_valid = ret;
 
 		return ret;
+	}
+
+	public bool install_files () {
+		// This installs all packages and verifies the checksums
+		if (!is_valid ()) {
+			warning (_("Tried to perform action on invalid IPK package."));
+			return false;
+		}
+		return true;
 	}
 }

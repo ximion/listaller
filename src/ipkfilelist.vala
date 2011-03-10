@@ -26,7 +26,6 @@ using Gee;
 private const string _PKG_VERSION7 = Config.VERSION;
 
 private class IPKFileList : Object {
-	private string fname;
 	private LinkedList<string> text;
 
 	public IPKFileList () {
@@ -35,8 +34,7 @@ private class IPKFileList : Object {
 		text.add ("");
 	}
 
-	public bool open (string iflfile) {
-		fname = iflfile;
+	public bool open (string fname) {
 
 		var file = File.new_for_path (fname);
 
@@ -47,7 +45,7 @@ private class IPKFileList : Object {
 
 		text.clear ();
 		try {
-			// Read the IPK file list into our text array
+			// Read the IPK file list into our text list
 			var dis = new DataInputStream (file.read ());
 			string line;
 			// Read lines until end of file (null) is reached
@@ -61,9 +59,39 @@ private class IPKFileList : Object {
 		return true;
 	}
 
+	public bool save (string fname)  {
+		if (FileUtils.test (fname, FileTest.EXISTS)) {
+			warning (_("Could not create file '%s'! File already exists."), fname);
+			return false;
+		}
+		var file = File.new_for_path (fname);
+
+		{
+		var file_stream = file.create (FileCreateFlags.NONE);
+
+		if (!file.query_exists ()) {
+			warning (_("Unable to create file '%s'!"), file.get_path ());
+			return false;
+		}
+
+		try {
+			// Write IPK text list to output stream
+			var dos = new DataOutputStream (file_stream);
+			string line;
+			foreach (string s in text) {
+				dos.put_string (s + "\n");
+			}
+		} catch (Error e) {
+			error ("%s", e.message);
+		}
+		}
+
+		return true;
+	}
+
 	private int get_folder_index (string folder, bool create = false) {
 		// Build folder string
-		string s = ">> " + folder;
+		string s = "> " + folder;
 		int i = text.index_of (s);
 		// Add folder to filelist, if it does not exist
 		if ((create) && (i < 0)) {
