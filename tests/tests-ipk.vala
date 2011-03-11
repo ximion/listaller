@@ -72,7 +72,7 @@ void test_ipk_control_file () {
 	list.add ("delta");
 	ipkc.set_pkg_dependencies (list);
 
-	ipkc.print_xml ();
+	// ipkc.print_xml ();
 
 	assert (ipkc.get_app_name () == "echoecho");
 	assert (ipkc.get_pkg_id () == "echo-123");
@@ -93,6 +93,11 @@ void test_ipk_filelist_file () {
 	string tmpfile = Path.build_filename (datadir, "sample-files.list", null);
 	FileUtils.remove (tmpfile);
 	flist.save (tmpfile);
+
+	ArrayList<IPKFileEntry> lst = flist.get_files ();
+	foreach (IPKFileEntry e in lst) {
+		msg (e.to_string ());
+	}
 }
 
 int main (string[] args) {

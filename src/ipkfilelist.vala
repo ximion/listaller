@@ -25,6 +25,43 @@ using Gee;
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION7 = Config.VERSION;
 
+private class IPKFileEntry : Object {
+	private string _destination;
+	private string _fname;
+	private string _hash;
+
+	public string fname {
+		get { return _fname; }
+		set { _fname = value; }
+	}
+
+	public string destination {
+		get { return _destination; }
+		set { _destination = value; }
+	}
+
+	public string hash {
+		get { return _hash; }
+		set { _hash = value; }
+	}
+
+	public IPKFileEntry () {
+		destination = "";
+		fname = "";
+		hash = "";
+	}
+
+	public string get_full_filename () {
+		string s = Path.build_filename (destination, fname, null);
+		return s;
+	}
+
+	public string to_string () {
+		return "[ (" + fname + ") to (" + destination + ") hash: (" + hash + ") ]";
+	}
+
+}
+
 private class IPKFileList : Object {
 	private LinkedList<string> text;
 
@@ -67,14 +104,13 @@ private class IPKFileList : Object {
 		var file = File.new_for_path (fname);
 
 		{
-		var file_stream = file.create (FileCreateFlags.NONE);
-
-		if (!file.query_exists ()) {
-			warning (_("Unable to create file '%s'!"), file.get_path ());
-			return false;
-		}
-
 		try {
+			var file_stream = file.create (FileCreateFlags.NONE);
+
+			if (!file.query_exists ()) {
+				warning (_("Unable to create file '%s'!"), file.get_path ());
+				return false;
+			}
 			// Write IPK text list to output stream
 			var dos = new DataOutputStream (file_stream);
 			string line;
@@ -113,6 +149,35 @@ private class IPKFileList : Object {
 		text.insert (findex, Path.get_basename (fname));
 
 		return true;
+	}
+
+	public ArrayList<IPKFileEntry> get_files () {
+		string current_dir = "";
+		Iterator<string> it = text.iterator ();
+		ArrayList<IPKFileEntry> flist = new ArrayList<IPKFileEntry> ();
+
+		it.first ();
+		while (it.has_next ()) {
+			// Go to the next entry (entry at position 0 is always the header string)
+			it.next ();
+			string s = it.get ();
+			if (s.length <= 2)
+				continue;
+			if (s.substring (0, 2) == "> ") {
+				current_dir = s.substring (2, s.length - 2);
+				continue;
+			}
+			if (current_dir == "")
+				continue;
+			IPKFileEntry e = new IPKFileEntry ();
+			e.fname = s;
+			if (!it.next ())
+				break;
+			e.hash = it.get ();
+			e.destination = current_dir;
+			flist.add (e);
+		}
+		return flist;
 	}
 
 	public string to_string () {

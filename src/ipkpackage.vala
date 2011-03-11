@@ -20,6 +20,7 @@
  */
 
 using GLib;
+using Gee;
 using Archive;
 
 // Workaround for Vala bug #618931
@@ -39,10 +40,6 @@ private class IPKPackage : Object {
 		get { return ipkc; }
 	}
 
-	public IPKFileList filelist {
-		get { return ipkf; }
-	}
-
 	public IPKPackage (string filename, LiSettings? settings) {
 		fname = filename;
 
@@ -60,10 +57,6 @@ private class IPKPackage : Object {
 		// Remove workspace
 		// TODO: Make this recursive
 		DirUtils.remove (wdir);
-	}
-
-	public bool is_valid () {
-		return ipk_valid;
 	}
 
 	private void emit_warning (string msg) {
@@ -88,6 +81,14 @@ private class IPKPackage : Object {
 		item.details = details;
 		error_code (item);
 		critical (details);
+	}
+
+	public bool is_valid () {
+		return ipk_valid;
+	}
+
+	public ArrayList<IPKFileEntry> get_filelist () {
+		return ipkf.get_files ();
 	}
 
 	private bool process_control_archive (string arname) {
@@ -125,11 +126,11 @@ private class IPKPackage : Object {
 		string tmpf = Path.build_filename (wdir, "control.xml", null);
 		ret = false;
 		if (FileUtils.test (tmpf, FileTest.EXISTS)) {
-			ret = control.open (tmpf);
+			ret = ipkc.open (tmpf);
 		}
 		tmpf = Path.build_filename (wdir, "files.list", null);
 		if ((ret) && (FileUtils.test (tmpf, FileTest.EXISTS))) {
-			ret = filelist.open (tmpf);
+			ret = ipkf.open (tmpf);
 		}
 
 		// If everything was successful, the IPK file is valid
@@ -220,12 +221,14 @@ private class IPKPackage : Object {
 		return ret;
 	}
 
-	public bool install_files () {
-		// This installs all packages and verifies the checksums
+	public bool extract_file (IPKFileEntry fe) {
+		// This extracts a file and verifies it's checksum
 		if (!is_valid ()) {
 			warning (_("Tried to perform action on invalid IPK package."));
 			return false;
 		}
+		assert (fe.hash != "");
+
 		return true;
 	}
 }
