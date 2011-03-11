@@ -9,6 +9,7 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/util.vala
 	${lisrc}/settings.vala
 	${lisrc}/appitems.vala
 	${lisrc}/database.vala
+	${lisrc}/varsolver.vala
 	${lisrc}/ipkcdef.vala
 	${lisrc}/ipkfilelist.vala
 	${lisrc}/ipkpackage.vala

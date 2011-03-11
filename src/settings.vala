@@ -28,6 +28,8 @@ private const string _PKG_VERSION1 = Config.VERSION;
 public class LiSettings : Object {
 	private bool _sumode;
 	const string suconfdir = "/etc/lipa";
+	const string suappdatadir = "/opt/apps";
+	const string sudesktopdir = "/usr/share/applications";
 	private bool _testmode;
 	private bool _locked;
 
@@ -86,7 +88,7 @@ public class LiSettings : Object {
 		if (sumode) {
 			regdir = suconfdir;
 		} else {
-			regdir = Environment.get_user_config_dir () + "/software";
+			regdir = Path.build_filename (Environment.get_user_config_dir (), "software", null);
 		}
 
 		File d = File.new_for_path (regdir);
@@ -95,10 +97,56 @@ public class LiSettings : Object {
 				d.make_directory_with_parents ();
 			}
 		} catch (Error e) {
-			stderr.printf (_("Unable to create application database directory: %s\n").printf (e.message));
+			warning (_("Unable to create application database directory: %s"), e.message);
 		}
 
 		return regdir;
+	}
+
+	public string appdata_dir () {
+		string addir;
+
+		if (sumode) {
+			addir = suappdatadir;
+		} else {
+			addir = Path.build_filename (Environment.get_home_dir (), ".appdata", null);
+		}
+
+		if ((sumode && is_root ()) || (!sumode)) {
+			File d = File.new_for_path (addir);
+			try {
+				if (!d.query_exists ()) {
+					d.make_directory_with_parents ();
+				}
+			} catch (Error e) {
+				warning (_("Unable to create application data directory: %s"), e.message);
+			}
+		}
+
+		return addir;
+	}
+
+	public string desktop_dir () {
+		string dskdir;
+
+		if (sumode) {
+			dskdir = sudesktopdir;
+		} else {
+			dskdir = Path.build_filename (Environment.get_home_dir (), ".local", "share", "applications", null);
+		}
+
+		if ((sumode && is_root ()) || (!sumode)) {
+			File d = File.new_for_path (dskdir);
+			try {
+				if (!d.query_exists ()) {
+					d.make_directory_with_parents ();
+				}
+			} catch (Error e) {
+				warning (_("Unable to create application data directory: %s"), e.message);
+			}
+		}
+
+		return dskdir;
 	}
 
 	public string tmp_dir () {

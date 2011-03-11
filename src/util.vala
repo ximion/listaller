@@ -64,6 +64,13 @@ private int count_str (string a, string b) {
 	return count;
 }
 
+private bool is_root () {
+	if (Posix.getuid () == 0) {
+		return true;
+	} else {
+		return false;
+	}
+}
 /*
  * Calculate checksum for file
  */
