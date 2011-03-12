@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: listaller\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2011-03-07 23:48+0100\n"
+        "POT-Creation-Date: 2011-03-12 22:19+0100\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,8 +21,28 @@ msgstr  "Project-Id-Version: listaller\n"
 msgid   "CRITICAL: Unable to remove database lock! (Message: %s)"
 msgstr  ""
 
+#: src/ipkpackage.vala:283
+#, c-format
+msgid   "Could not create destination directory. Error: %s"
+msgstr  ""
+
+#: src/ipkfilelist.vala:108
+#, c-format
+msgid   "Could not create file '%s'! File already exists."
+msgstr  ""
+
 #: src/database.vala:140
 msgid   "Could not create/update software database!"
+msgstr  ""
+
+#: src/ipkpackage.vala:246
+#, c-format
+msgid   "Could not extract IPK payload! Package might be damaged. Error: %s"
+msgstr  ""
+
+#: src/ipkpackage.vala:160
+#, c-format
+msgid   "Could not extract file! Error: %s"
 msgstr  ""
 
 #: src/appitems.vala:215
@@ -30,7 +50,7 @@ msgstr  ""
 msgid   "Could not load desktop file values: %s"
 msgstr  ""
 
-#: src/ipkpackage.vala:126
+#: src/ipkpackage.vala:202
 #, c-format
 msgid   "Could not open IPK file! Error: %s"
 msgstr  ""
@@ -40,9 +60,23 @@ msgstr  ""
 msgid   "Could not open desktop file: %s"
 msgstr  ""
 
-#: src/ipkpackage.vala:136 src/ipkpackage.vala:145
+#: src/ipkpackage.vala:336
+msgid   "Could not override file $fname, this file already exists!"
+msgstr  ""
+
+#: src/ipkpackage.vala:108
 #, c-format
 msgid   "Could not read IPK control information! Error: %s"
+msgstr  ""
+
+#: src/ipkpackage.vala:269
+#, c-format
+msgid   "Could not read IPK payload container! Package might be damaged. Error: %s"
+msgstr  ""
+
+#: src/ipkpackage.vala:352
+msgid   "Could not validate file $fname. This IPK file might have been modified after creation!\n"
+        "Please obtain a new copy and try again."
 msgstr  ""
 
 #: src/database.vala:61
@@ -65,13 +99,22 @@ msgstr  ""
 msgid   "Fatal database error"
 msgstr  ""
 
-#: src/ipkcdef.vala:54
+#: src/ipkcdef.vala:55
 #, c-format
 msgid   "File %s not found or permission denied!"
 msgstr  ""
 
+#: src/ipkfilelist.vala:86
+#, c-format
+msgid   "File '%s' doesn't exist."
+msgstr  ""
+
 #: src/appitems.vala:185
 msgid   "Processing application without assigned .desktop file!"
+msgstr  ""
+
+#: src/listaller/installer.vala:85
+msgid   "Setup has not been initialized!"
 msgstr  ""
 
 #: src/database.vala:67
@@ -91,16 +134,28 @@ msgstr  ""
 msgid   "Software database opened"
 msgstr  ""
 
-#: src/settings.vala:98
-#, c-format
-msgid   "Unable to create application database directory: %s\n"
+#: src/ipkpackage.vala:293
+msgid   "Tried to perform action on invalid IPK package."
 msgstr  ""
 
-#: src/ipkcdef.vala:61
+#: src/ipkfilelist.vala:118
+#, c-format
+msgid   "Unable to create file '%s'!"
+msgstr  ""
+
+#: src/ipkpackage.vala:244
+msgid   "Unable to extract IPK data!"
+msgstr  ""
+
+#: src/ipkpackage.vala:220
+msgid   "Unable to extract IPK metadata!"
+msgstr  ""
+
+#: src/ipkcdef.vala:62
 #, c-format
 msgid   "XML file '%s' is damaged."
 msgstr  ""
 
-#: src/ipkcdef.vala:105 src/ipkcdef.vala:124
+#: src/ipkcdef.vala:106 src/ipkcdef.vala:115 src/ipkcdef.vala:122
 msgid   "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr  ""

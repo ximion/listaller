@@ -1,7 +1,11 @@
+src/appitems.vala
 src/database.vala
+src/ipkcdef.vala
+src/ipkfilelist.vala
+src/ipkpackage.vala
 src/settings.vala
 src/status.vala
-src/appitems.vala
-src/ipkcdef.vala
-src/ipkpackage.vala
+src/util.vala
+src/varsolver.vala
 src/listaller/manager.vala
+src/listaller/installer.vala

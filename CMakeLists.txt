@@ -81,7 +81,6 @@ add_custom_target(distclean
 #
 find_package (Gettext REQUIRED)
 if (${GETTEXT_FOUND} STREQUAL "TRUE")
-set (HAVE_GETTEXT true)
 	add_custom_command (OUTPUT ${CMAKE_SOURCE_DIR}/po/listaller.pot
 			COMMAND xgettext -i -s --files-from ${CMAKE_SOURCE_DIR}/po/POTFILES.in -k_
 				-o ${CMAKE_SOURCE_DIR}/po/listaller.pot
@@ -89,9 +88,14 @@ set (HAVE_GETTEXT true)
 				--package-name="listaller" --no-wrap
 			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 	)
+	add_custom_target(
+	update_pot
+	DEPENDS ${CMAKE_SOURCE_DIR}/po/listaller.pot
+	)
         file (GLOB _translations ${CMAKE_SOURCE_DIR}/po/*.po)
-        GETTEXT_CREATE_TRANSLATIONS (${CMAKE_SOURCE_DIR}/po/listaller.pot
-                ALL ${_translations})
+        gettext_create_translations (${CMAKE_SOURCE_DIR}/po/listaller.pot
+				     ALL ${_translations}
+	)
 endif (${GETTEXT_FOUND} STREQUAL "TRUE")
 
 #

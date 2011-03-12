@@ -14,6 +14,9 @@ test-verbose:
 translations:
 	$(MAKE) -C ./build translations
 
+update_pot:
+	$(MAKE) -C ./build update_pot
+
 clean:
 	$(MAKE) -C ./build clean
 
