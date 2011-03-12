@@ -42,6 +42,7 @@ void test_ipk_error_code_cb (LiErrorItem item) {
 
 void test_ipk_package () {
 	bool ret = false;
+	msg ("Package tests");
 
 	// Set up Listaller configuration
 	LiSettings conf = new LiSettings ();
@@ -57,9 +58,16 @@ void test_ipk_package () {
 	ret = ipk.initialize ();
 	assert (ret == true);
 	assert (ipk.control.get_app_name () == "FooBar");
+
+	ArrayList<IPKFileEntry> flist = ipk.get_filelist ();
+	foreach (IPKFileEntry e in flist) {
+		bool inst_ok = ipk.install_file (e);
+		assert (inst_ok == true);
+	}
 }
 
 void test_ipk_control_file () {
+	msg ("Controlfile tests");
 	IPKControl ipkc = new IPKControl ();
 	ipkc.create_new ();
 	ipkc.set_app_name ("echoecho");
@@ -85,9 +93,9 @@ void test_ipk_filelist_file () {
 	IPKFileList flist = new IPKFileList ();
 	ret = flist.add_file (Path.build_filename (datadir, "dummy-control.xml", null), "$INST/+junk");
 	assert (ret == true);
-	ret = flist.add_file (Path.build_filename (datadir, "ipk", "packicon.png", null), "$INST/+junk");
+	ret = flist.add_file (Path.build_filename (datadir, "foo-payload", "appdata", "+junk", "packicon.png", null), "$INST/+junk");
 	assert (ret == true);
-	ret = flist.add_file (Path.build_filename (datadir, "ipk", "Osmos.desktop", null), "$APP");
+	ret = flist.add_file (Path.build_filename (datadir, "foo-payload", "desktop", "Osmos.desktop", null), "$APP");
 	assert (ret == true);
 
 	string tmpfile = Path.build_filename (datadir, "sample-files.list", null);

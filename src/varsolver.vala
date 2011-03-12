@@ -53,20 +53,39 @@ private class LiVariable {
 
 }
 private class VarSolver : Object {
+	private LiSettings conf;
 	private HashMap<string, LiVariable> pathMap;
 	delegate string LiConfGetType ();
 
 	public VarSolver () {
-		LiSettings conf = new LiSettings ();
-		conf.sumode = true;
-		string su_appdir = conf.appdata_dir ();
-		conf.sumode = false;
-		string appdir = conf.appdata_dir ();
+		conf = new LiSettings ();
 
 		// Build map of Listaller path variables
 		pathMap = new HashMap<string, LiVariable> ();
-		add_var ("$INST", "inst", appdir, su_appdir);
-		add_var_from_conf ("$APP", "desktop", conf, conf.desktop_dir);
+		add_var_from_conf ("$INST", "appdata", conf.appdata_dir);
+		add_var_from_conf ("$APP", "desktop", conf.desktop_dir);
+		add_var_from_conf ("$DEP", "depend", conf.depdata_dir);
+
+		// Add icon sizes
+		add_icon_var (0);
+		add_icon_var (16);
+		add_icon_var (24);
+		add_icon_var (32);
+		add_icon_var (48);
+		add_icon_var (64);
+		add_icon_var (128);
+		add_icon_var (265);
+	}
+
+	private void add_icon_var (int size) {
+		conf.sumode = false;
+		string s = conf.icon_size_dir (size);
+		conf.sumode = true;
+		if (size == 0) {
+			add_var ("$PIX", "icon/common", s, conf.icon_size_dir (size));
+		} else {
+			add_var ("$ICON-" + size.to_string (), "icon/" + size.to_string (), s, conf.icon_size_dir (size));
+		}
 	}
 
 	private void add_var (string key, string idsubst, string subst, string susubst) {
@@ -78,10 +97,10 @@ private class VarSolver : Object {
 		pathMap.set (v.var, v);
 	}
 
-	private void add_var_from_conf (string key, string idsubst, LiSettings conf, LiConfGetType get) {
+	private void add_var_from_conf (string key, string idsubst, LiConfGetType get) {
 		bool x = conf.sumode;
 		conf.sumode = false;
-		var s = get ();
+		string s = get ();
 		conf.sumode = true;
 		add_var (key, idsubst, s, get ());
 		conf.sumode = x;
@@ -91,6 +110,22 @@ private class VarSolver : Object {
 		string res = s;
 		foreach (var entry in pathMap.entries) {
 			res = string_replace (res, "(\\" + entry.key + ")", entry.value.su_subst);
+		}
+		return res;
+	}
+
+	public string substitute_vars_home (string s) {
+		string res = s;
+		foreach (var entry in pathMap.entries) {
+			res = string_replace (res, "(\\" + entry.key + ")", entry.value.subst);
+		}
+		return res;
+	}
+
+	public string substitute_vars_id (string s) {
+		string res = s;
+		foreach (var entry in pathMap.entries) {
+			res = string_replace (res, "(\\" + entry.key + ")", entry.value.id_subst);
 		}
 		return res;
 	}

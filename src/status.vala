@@ -25,7 +25,12 @@ public enum LiError {
 	UNKNOWN,
 	IPK_LOADING_FAILED,
 	UNPACKING_FAILED,
-	SETUP_NOT_INITIALIZED;
+	SETUP_NOT_INITIALIZED,
+	IPK_INCOMPLETE,
+	IPK_DAMAGED,
+	FILE_EXISTS,
+	HASH_MISSMATCH,
+	FILE_INSTALL_FAILED;
 
 	public string to_string () {
 		return ((int) this).to_string ();

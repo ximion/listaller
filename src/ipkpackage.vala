@@ -27,9 +27,11 @@ using Archive;
 private const string _PKG_VERSION6 = Config.VERSION;
 
 private class IPKPackage : Object {
+	private LiSettings conf;
 	private string fname;
 	private string wdir;
 	private bool ipk_valid;
+	private string data_archive;
 	private IPKControl ipkc;
 	private IPKFileList ipkf;
 
@@ -43,7 +45,7 @@ private class IPKPackage : Object {
 	public IPKPackage (string filename, LiSettings? settings) {
 		fname = filename;
 
-		LiSettings conf = settings;
+		conf = settings;
 		if (conf == null)
 			conf = new LiSettings ();
 		wdir = conf.get_unique_tmp_dir ();
@@ -57,6 +59,7 @@ private class IPKPackage : Object {
 		// Remove workspace
 		// TODO: Make this recursive
 		DirUtils.remove (wdir);
+		Posix.rmdir (wdir);
 	}
 
 	private void emit_warning (string msg) {
@@ -105,7 +108,6 @@ private class IPKPackage : Object {
 			error (_("Could not read IPK control information! Error: %s"), ar.error_string ());
 
 		while (ar.next_header (out e) == Result.OK) {
-			debug (e.pathname ());
 			switch (e.pathname ()) {
 				case "control.xml":
 					ret = extract_entry_to (ar, e, wdir);
@@ -145,6 +147,7 @@ private class IPKPackage : Object {
 
 		// Create new writer
 		WriteDisk writer = new WriteDisk ();
+		writer.set_options (ExtractFlags.SECURE_NODOTDOT | ExtractFlags.NO_OVERWRITE);
 
 		// Change dir to extract to the right path
 		string old_cdir = Environment.get_current_dir ();
@@ -182,9 +185,7 @@ private class IPKPackage : Object {
 		return true;
 	}
 
-	public bool initialize () {
-		bool ret = false;
-
+	private Read open_base_ipk () {
 		// Create a new archive object for reading
 		Read ar = new Read ();
 
@@ -199,8 +200,15 @@ private class IPKPackage : Object {
 		if (ar.open_filename (fname, 4096) != Result.OK)
 			emit_error (LiError.IPK_LOADING_FAILED,
 				    _("Could not open IPK file! Error: %s").printf (ar.error_string ()));
+		return ar;
+	}
 
+	public bool initialize () {
+		bool ret = false;
 
+		Read ar = open_base_ipk ();
+
+		weak Entry e;
 		while (ar.next_header (out e) == Result.OK) {
 			// Extract control files
 			if (e.pathname () == "control.tar.xz") {
@@ -221,7 +229,65 @@ private class IPKPackage : Object {
 		return ret;
 	}
 
-	public bool extract_file (IPKFileEntry fe) {
+	private bool prepare_extracting () {
+		if (FileUtils.test (data_archive, FileTest.EXISTS))
+			return true;
+		bool ret = false;
+
+		Read ar = open_base_ipk ();
+		weak Entry e;
+		while (ar.next_header (out e) == Result.OK) {
+			// Extract payload
+			if (e.pathname () == "data.tar.xz") {
+				ret = extract_entry_to (ar, e, wdir);
+				if (!ret) {
+					warning (_("Unable to extract IPK data!"));
+					emit_error (LiError.IPK_INCOMPLETE,
+						    _("Could not extract IPK payload! Package might be damaged. Error: %s").printf (ar.error_string ()));
+				}
+				break;
+			}
+		}
+		ar.close ();
+
+		data_archive = Path.build_filename (wdir, "data.tar.xz", null);
+
+		return ret;
+	}
+
+	private Read? open_payload_archive () {
+		if (!FileUtils.test (data_archive, FileTest.EXISTS))
+			return null;
+
+		// Open the payload archive
+		Read plar = new Read ();
+		// Data archives are usually XZ compressed tarballs
+		plar.support_format_tar ();
+		plar.support_compression_all ();
+		if (plar.open_filename (data_archive, 4096) != Result.OK) {
+			emit_error (LiError.IPK_DAMAGED,
+				    _("Could not read IPK payload container! Package might be damaged. Error: %s").printf (plar.error_string ()));
+			return null;
+		}
+		return plar;
+	}
+
+	private bool touch_dir (string dirname) {
+		File d = File.new_for_path (dirname);
+		try {
+			if (!d.query_exists ()) {
+				d.make_directory_with_parents ();
+			}
+		} catch (Error e) {
+			emit_error (LiError.FILE_INSTALL_FAILED,
+				    _("Could not create destination directory. Error: %s").printf (e.message));
+			return false;
+		}
+		return true;
+	}
+
+	public bool install_file (IPKFileEntry fe) {
+		bool ret = true;
 		// This extracts a file and verifies it's checksum
 		if (!is_valid ()) {
 			warning (_("Tried to perform action on invalid IPK package."));
@@ -229,6 +295,76 @@ private class IPKPackage : Object {
 		}
 		assert (fe.hash != "");
 
-		return true;
+		// This ensures our IPK package is ready to extract files
+		ret = prepare_extracting ();
+		if (!ret)
+			return ret;
+
+		VarSolver vs = new VarSolver ();
+		string int_path = vs.substitute_vars_id (fe.get_full_filename ());
+
+		Read plar = open_payload_archive ();
+		if (plar == null)
+			return false;
+
+		ret = false;
+		weak Entry e;
+		while (plar.next_header (out e) == Result.OK) {
+			if (e.pathname () == int_path) {
+				ret = true;
+				break;
+			}
+		}
+		if (ret) {
+			string dest;
+			// Set right destination
+			if (conf.sumode) {
+				dest = vs.substitute_vars_su (fe.destination);
+			} else {
+				dest = vs.substitute_vars_home (fe.destination);
+			}
+			// Check for testmode
+			if (conf.testmode) {
+				dest = Path.build_filename (conf.get_unique_install_tmp_dir (), vs.substitute_vars_id (fe.destination), null);
+			}
+			string fname = Path.build_filename (dest, fe.fname, null);
+
+			// Check if file already exists
+			if (FileUtils.test (fname, FileTest.EXISTS)) {
+				// Throw error and exit
+				emit_error (LiError.FILE_EXISTS,
+					    _(@"Could not override file $fname, this file already exists!"));
+				return false;
+			}
+			// Now extract it!
+			touch_dir (dest);
+			ret = extract_entry_to (plar, e, wdir);
+			if (!ret)
+				return ret;
+			// The temporary location where the file has been extracted to
+			string tmp = Path.build_filename (wdir, int_path);
+
+			// Validate new file
+			string new_hash = compute_checksum_for_file (tmp);
+			if (new_hash != fe.hash) {
+				// Very bad, we have a checksum missmatch -> throw error, delete file and exit
+				emit_error (LiError.HASH_MISSMATCH,
+					    _(@"Could not validate file $fname. This IPK file might have been modified after creation!\nPlease obtain a new copy and try again."));
+				// Now remove the corrupt file
+				FileUtils.remove (fname);
+
+				return false;
+			}
+			ret = FileUtils.rename (tmp, fname) == 0;
+			DirUtils.remove (tmp);
+			if (!ret)
+				return ret;
+
+			plar.close ();
+			// If we are here, everything went fine. Mark the file as installed
+			fe.installed = true;
+		}
+
+		return ret;
 	}
 }

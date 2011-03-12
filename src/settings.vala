@@ -28,10 +28,11 @@ private const string _PKG_VERSION1 = Config.VERSION;
 public class LiSettings : Object {
 	private bool _sumode;
 	const string suconfdir = "/etc/lipa";
-	const string suappdatadir = "/opt/apps";
+	const string suinstroot = "/opt";
 	const string sudesktopdir = "/usr/share/applications";
 	private bool _testmode;
 	private bool _locked;
+	private string uinsttmp = "";
 
 	public bool locked {
 		get { return _locked; }
@@ -83,6 +84,19 @@ public class LiSettings : Object {
 		return appregister_dir () + "/software.db";
 	}
 
+	private void touch_dir (string dirname, string warnmsg = "Error: %s") {
+		if ((sumode && is_root ()) || (!sumode)) {
+			File d = File.new_for_path (dirname);
+			try {
+				if (!d.query_exists ()) {
+					d.make_directory_with_parents ();
+				}
+			} catch (Error e) {
+				warning (warnmsg, e.message);
+			}
+		}
+	}
+
 	public string appregister_dir () {
 		string regdir;
 		if (sumode) {
@@ -91,14 +105,7 @@ public class LiSettings : Object {
 			regdir = Path.build_filename (Environment.get_user_config_dir (), "software", null);
 		}
 
-		File d = File.new_for_path (regdir);
-		try {
-			if (!d.query_exists ()) {
-				d.make_directory_with_parents ();
-			}
-		} catch (Error e) {
-			warning (_("Unable to create application database directory: %s"), e.message);
-		}
+		touch_dir (regdir, "Unable to create application database directory: %s");
 
 		return regdir;
 	}
@@ -107,23 +114,79 @@ public class LiSettings : Object {
 		string addir;
 
 		if (sumode) {
-			addir = suappdatadir;
+			addir = Path.build_filename (suinstroot, "apps", null);
 		} else {
-			addir = Path.build_filename (Environment.get_home_dir (), ".appdata", null);
+			addir = Path.build_filename (Environment.get_home_dir (), ".appdata", "apps", null);
 		}
 
-		if ((sumode && is_root ()) || (!sumode)) {
-			File d = File.new_for_path (addir);
-			try {
-				if (!d.query_exists ()) {
-					d.make_directory_with_parents ();
-				}
-			} catch (Error e) {
-				warning (_("Unable to create application data directory: %s"), e.message);
-			}
-		}
+		touch_dir (addir, "Unable to create application data directory: %s");
 
 		return addir;
+	}
+
+	public string depdata_dir () {
+		string depdir;
+
+		if (sumode) {
+			depdir = Path.build_filename (suinstroot, "deps", null);
+		} else {
+			depdir = Path.build_filename (Environment.get_home_dir (), ".appdata", "deps", null);
+		}
+
+		touch_dir (depdir, "Unable to create application data directory: %s");
+
+		return depdir;
+	}
+
+	public string icon_base_dir () {
+		string icodir;
+
+		if (sumode) {
+			icodir = Path.build_filename (suinstroot, "icons", null);
+		} else {
+			icodir = Path.build_filename (Environment.get_home_dir (), ".appdata", "icons", null);
+		}
+
+		touch_dir (icodir, "Unable to create icon directory: %s");
+
+		return icodir;
+	}
+
+	public string icon_size_dir (int size = 0) {
+		string icodir;
+
+		bool size_valid = false;
+		switch (size) {
+			case 16: size_valid = true;
+				break;
+			case 24: size_valid = true;
+				break;
+			case 32: size_valid = true;
+				break;
+			case 48: size_valid = true;
+				break;
+			case 64: size_valid = true;
+				break;
+			case 128: size_valid = true;
+				break;
+			case 265: size_valid = true;
+				break;
+			default: size_valid = false;
+				break;
+		}
+
+		if (!size_valid)
+			size = 0;
+
+		if (size == 0) {
+			icodir = Path.build_filename (icon_base_dir (), "common", null);
+		} else {
+			icodir = Path.build_filename (icon_base_dir (), size.to_string () + "x" + size.to_string (), null);
+		}
+
+		touch_dir (icodir, "Unable to create icon directory: %s");
+
+		return icodir;
 	}
 
 	public string desktop_dir () {
@@ -135,16 +198,7 @@ public class LiSettings : Object {
 			dskdir = Path.build_filename (Environment.get_home_dir (), ".local", "share", "applications", null);
 		}
 
-		if ((sumode && is_root ()) || (!sumode)) {
-			File d = File.new_for_path (dskdir);
-			try {
-				if (!d.query_exists ()) {
-					d.make_directory_with_parents ();
-				}
-			} catch (Error e) {
-				warning (_("Unable to create application data directory: %s"), e.message);
-			}
-		}
+		touch_dir (dskdir, "Unable to create application data directory: %s");
 
 		return dskdir;
 	}
@@ -162,6 +216,19 @@ public class LiSettings : Object {
 		if (res == null)
 			res = tmp_dir ();
 		return res;
+	}
+
+	public string get_unique_install_tmp_dir () {
+		if (uinsttmp != "")
+			return uinsttmp;
+
+		string template = Path.build_filename (tmp_dir (), "litestinstall-XXXXXX", null);
+
+		string res = DirUtils.mkdtemp (template);
+		if (res == null)
+			res = tmp_dir ();
+		uinsttmp = res;
+		return uinsttmp;
 	}
 }
 
