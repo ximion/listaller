@@ -1,13 +1,13 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Matthias Klumpp
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Listaller translation template
+# Copyright (C) 2011 Matthias Klumpp
+# This file is distributed under the same license as the listaller package.
+# Matthias Klumpp <matthias@nlinux.org>, 2011.
 #
 #, fuzzy
 msgid   ""
 msgstr  "Project-Id-Version: listaller\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2011-03-12 22:19+0100\n"
+        "POT-Creation-Date: 2011-03-14 18:37+0100\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,9 +16,8 @@ msgstr  "Project-Id-Version: listaller\n"
         "Content-Type: text/plain; charset=CHARSET\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-#: src/database.vala:159
-#, c-format
-msgid   "CRITICAL: Unable to remove database lock! (Message: %s)"
+#: src/listaller/installer.vala:107
+msgid   "Copying files to their destination"
 msgstr  ""
 
 #: src/ipkpackage.vala:283
@@ -26,7 +25,7 @@ msgstr  ""
 msgid   "Could not create destination directory. Error: %s"
 msgstr  ""
 
-#: src/ipkfilelist.vala:108
+#: src/ipkfilelist.vala:114
 #, c-format
 msgid   "Could not create file '%s'! File already exists."
 msgstr  ""
@@ -60,8 +59,9 @@ msgstr  ""
 msgid   "Could not open desktop file: %s"
 msgstr  ""
 
-#: src/ipkpackage.vala:336
-msgid   "Could not override file $fname, this file already exists!"
+#: src/ipkpackage.vala:313
+#, c-format
+msgid   "Could not override file %s, this file already exists!"
 msgstr  ""
 
 #: src/ipkpackage.vala:108
@@ -74,8 +74,9 @@ msgstr  ""
 msgid   "Could not read IPK payload container! Package might be damaged. Error: %s"
 msgstr  ""
 
-#: src/ipkpackage.vala:352
-msgid   "Could not validate file $fname. This IPK file might have been modified after creation!\n"
+#: src/ipkpackage.vala:329
+#, c-format
+msgid   "Could not validate file %s. This IPK file might have been modified after creation!\n"
         "Please obtain a new copy and try again."
 msgstr  ""
 
@@ -104,25 +105,31 @@ msgstr  ""
 msgid   "File %s not found or permission denied!"
 msgstr  ""
 
-#: src/ipkfilelist.vala:86
+#: src/ipkfilelist.vala:92
 #, c-format
 msgid   "File '%s' doesn't exist."
+msgstr  ""
+
+#: src/listaller/installer.vala:118
+#, c-format
+msgid   "Making '%s' known to your system."
 msgstr  ""
 
 #: src/appitems.vala:185
 msgid   "Processing application without assigned .desktop file!"
 msgstr  ""
 
-#: src/listaller/installer.vala:85
+#: src/listaller/installer.vala:100
+#, c-format
+msgid   "Resolving dependencies of '%s'."
+msgstr  ""
+
+#: src/listaller/installer.vala:93
 msgid   "Setup has not been initialized!"
 msgstr  ""
 
 #: src/database.vala:67
 msgid   "Software database closed"
-msgstr  ""
-
-#: src/database.vala:108
-msgid   "Software database does not exist - will be created."
 msgstr  ""
 
 #: src/database.vala:70
@@ -134,11 +141,11 @@ msgstr  ""
 msgid   "Software database opened"
 msgstr  ""
 
-#: src/ipkpackage.vala:293
+#: src/ipkpackage.vala:349 src/ipkpackage.vala:399
 msgid   "Tried to perform action on invalid IPK package."
 msgstr  ""
 
-#: src/ipkfilelist.vala:118
+#: src/ipkfilelist.vala:124
 #, c-format
 msgid   "Unable to create file '%s'!"
 msgstr  ""
@@ -149,6 +156,11 @@ msgstr  ""
 
 #: src/ipkpackage.vala:220
 msgid   "Unable to extract IPK metadata!"
+msgstr  ""
+
+#: src/database.vala:159
+#, c-format
+msgid   "Unable to remove database lock! (Message: %s)"
 msgstr  ""
 
 #: src/ipkcdef.vala:62
