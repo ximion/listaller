@@ -35,6 +35,10 @@ public class LiSetup : Object {
 	public signal void status_changed (LiStatusItem status);
 	public signal void message (LiMessageItem message);
 
+	public LiSettings settings {
+		get { return conf; }
+	}
+
 	public IPKControl control {
 		get { return ipkp.control; }
 	}
@@ -76,7 +80,11 @@ public class LiSetup : Object {
 	}
 
 	public bool initialize () {
-		return ipkp.initialize ();
+		bool ret = false;
+		ret = ipkp.initialize ();
+		if (ret)
+			initialized = true;
+		return ret;
 	}
 
 	public bool run_installation () {
@@ -85,7 +93,33 @@ public class LiSetup : Object {
 			emit_error (LiError.SETUP_NOT_INITIALIZED, _("Setup has not been initialized!"));
 			return false;
 		}
+		bool ret = true;
 
-		return true;
+		// Emit status message
+		LiStatusItem status1 = new LiStatusItem (LiStatus.RESOLVING_DEPENDENCIES);
+		status1.info = _("Resolving dependencies of '%s'.").printf (ipkp.control.get_app_name ());
+		status_changed (status1);
+
+		// TODO: Resolve dependencies here!
+
+		// Emit status message
+		LiStatusItem status2 = new LiStatusItem (LiStatus.INSTALLING_FILES);
+		status2.info = _("Copying files to their destination");
+		status_changed (status2);
+
+		// Install all files to their destination
+		ret = ipkp.install_all_files ();
+
+		if (!ret)
+			return false;
+
+		// Emit status message
+		LiStatusItem status3 = new LiStatusItem (LiStatus.REGISTERING_APPLICATION);
+		status3.info = _("Making '%s' known to your system.").printf (ipkp.control.get_app_name ());
+		status_changed (status3);
+
+		// TODO: Register package in database
+
+		return ret;
 	}
 }

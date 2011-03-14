@@ -29,6 +29,7 @@ private class IPKFileEntry : Object {
 	private string _destination;
 	private string _fname;
 	private string _hash;
+	private string _fname_installed;
 	private bool _installed;
 
 	public string fname {
@@ -49,6 +50,11 @@ private class IPKFileEntry : Object {
 	public bool installed {
 		get { return _installed; }
 		set { _installed = value; }
+	}
+
+	public string fname_installed {
+		get { return _fname_installed; }
+		set { _fname_installed = value; }
 	}
 
 	public IPKFileEntry () {

@@ -39,8 +39,9 @@ public enum LiError {
 
 public enum LiStatus {
 	UNKNOWN,
-	FINISHED,
-	FAILED;
+	RESOLVING_DEPENDENCIES,
+	INSTALLING_FILES,
+	REGISTERING_APPLICATION;
 }
 
 public enum LiMessageType {
@@ -123,20 +124,20 @@ public class LiMessageItem : Object {
 
 public class LiStatusItem : Object {
 	private LiStatus _stype;
-	private string _details;
+	private string _info;
 
 	public LiStatus status {
 		get { return _stype; }
 		set { _stype = value; }
 	}
 
-	public string details {
-		get { return _details; }
-		set { _details = value; }
+	public string info {
+		get { return _info; }
+		set { _info = value; }
 	}
 
 	public LiStatusItem (LiStatus type) {
 		status = type;
-		details = "";
+		info = "";
 	}
 }

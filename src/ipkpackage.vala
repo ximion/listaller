@@ -286,6 +286,62 @@ private class IPKPackage : Object {
 		return true;
 	}
 
+	private bool extract_file_copy_dest (IPKFileEntry fe, Read plar, Entry e) {
+		bool ret = true;
+		string dest;
+
+		// Varsolver to solve LI variables
+		VarSolver vs = new VarSolver ();
+		string int_path = vs.substitute_vars_id (fe.get_full_filename ());
+
+		// Set right destination
+		if (conf.sumode) {
+			dest = vs.substitute_vars_su (fe.destination);
+		} else {
+			dest = vs.substitute_vars_home (fe.destination);
+		}
+		// Check for testmode
+		if (conf.testmode) {
+			dest = Path.build_filename (conf.get_unique_install_tmp_dir (), vs.substitute_vars_id (fe.destination), null);
+		}
+		string fname = Path.build_filename (dest, fe.fname, null);
+
+		// Check if file already exists
+		if (FileUtils.test (fname, FileTest.EXISTS)) {
+			// Throw error and exit
+			emit_error (LiError.FILE_EXISTS,
+				    _("Could not override file %s, this file already exists!").printf (fname));
+				    return false;
+		}
+		// Now extract it!
+		touch_dir (dest);
+		ret = extract_entry_to (plar, e, wdir);
+		if (!ret)
+			return ret;
+		// The temporary location where the file has been extracted to
+		string tmp = Path.build_filename (wdir, int_path);
+
+		// Validate new file
+		string new_hash = compute_checksum_for_file (tmp);
+		if (new_hash != fe.hash) {
+			// Very bad, we have a checksum missmatch -> throw error, delete file and exit
+			emit_error (LiError.HASH_MISSMATCH,
+				    _("Could not validate file %s. This IPK file might have been modified after creation!\nPlease obtain a new copy and try again.").printf (fname));
+			// Now remove the corrupt file
+			FileUtils.remove (fname);
+
+			return false;
+		}
+		ret = FileUtils.rename (tmp, fname) == 0;
+		DirUtils.remove (tmp);
+		if (!ret) {
+			// If we are here, everything went fine. Mark the file as installed
+			fe.installed = true;
+			fe.fname_installed = fname;
+		}
+		return ret;
+	}
+
 	public bool install_file (IPKFileEntry fe) {
 		bool ret = true;
 		// This extracts a file and verifies it's checksum
@@ -316,54 +372,61 @@ private class IPKPackage : Object {
 			}
 		}
 		if (ret) {
-			string dest;
-			// Set right destination
-			if (conf.sumode) {
-				dest = vs.substitute_vars_su (fe.destination);
-			} else {
-				dest = vs.substitute_vars_home (fe.destination);
-			}
-			// Check for testmode
-			if (conf.testmode) {
-				dest = Path.build_filename (conf.get_unique_install_tmp_dir (), vs.substitute_vars_id (fe.destination), null);
-			}
-			string fname = Path.build_filename (dest, fe.fname, null);
-
-			// Check if file already exists
-			if (FileUtils.test (fname, FileTest.EXISTS)) {
-				// Throw error and exit
-				emit_error (LiError.FILE_EXISTS,
-					    _(@"Could not override file $fname, this file already exists!"));
-				return false;
-			}
-			// Now extract it!
-			touch_dir (dest);
-			ret = extract_entry_to (plar, e, wdir);
-			if (!ret)
-				return ret;
-			// The temporary location where the file has been extracted to
-			string tmp = Path.build_filename (wdir, int_path);
-
-			// Validate new file
-			string new_hash = compute_checksum_for_file (tmp);
-			if (new_hash != fe.hash) {
-				// Very bad, we have a checksum missmatch -> throw error, delete file and exit
-				emit_error (LiError.HASH_MISSMATCH,
-					    _(@"Could not validate file $fname. This IPK file might have been modified after creation!\nPlease obtain a new copy and try again."));
-				// Now remove the corrupt file
-				FileUtils.remove (fname);
-
-				return false;
-			}
-			ret = FileUtils.rename (tmp, fname) == 0;
-			DirUtils.remove (tmp);
-			if (!ret)
-				return ret;
-
-			plar.close ();
-			// If we are here, everything went fine. Mark the file as installed
-			fe.installed = true;
+			ret = extract_file_copy_dest (fe, plar, e);
 		}
+		plar.close ();
+
+		return ret;
+	}
+
+	// Search for IPKFileEntry with the given IPK internal path
+	private IPKFileEntry? get_fe_by_int_path (ArrayList<IPKFileEntry> list, string int_path) {
+		IPKFileEntry re = null;
+		VarSolver vs = new VarSolver ();
+		foreach (IPKFileEntry e in list) {
+			if (vs.substitute_vars_id (e.get_full_filename ()) == int_path) {
+				re = e;
+				break;
+			}
+		}
+		return re;
+	}
+
+	public bool install_all_files () {
+		bool ret = true;
+		// This extracts all files in this package to their destination
+		if (!is_valid ()) {
+			warning (_("Tried to perform action on invalid IPK package."));
+			return false;
+		}
+
+		// This ensures our IPK package is ready to extract files
+		ret = prepare_extracting ();
+		if (!ret)
+			return ret;
+
+		Read plar = open_payload_archive ();
+		if (plar == null)
+			return false;
+
+		// Cache file list
+		ArrayList<IPKFileEntry> flist = ipkf.get_files ();
+
+		ret = false;
+		weak Entry e;
+		IPKFileEntry fe = null;
+		// Now extract & validate all stuff
+		while (plar.next_header (out e) == Result.OK) {
+			fe = get_fe_by_int_path (flist, e.pathname ());
+			if (fe != null) {
+				// File was found, so install it now
+				ret = extract_file_copy_dest (fe, plar, e);
+				// Stop on failure
+				if (!ret)
+					break;
+			}
+		}
+		plar.close ();
 
 		return ret;
 	}

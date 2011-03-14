@@ -105,7 +105,7 @@ private class SoftwareDB : Object {
 		}
 
 		if (!FileUtils.test (dbname, FileTest.IS_REGULAR)) {
-			message (_("Software database does not exist - will be created."));
+			message ("Software database does not exist - will be created.");
 		}
 
 		rc = Database.open (dbname, out db);
@@ -122,13 +122,13 @@ private class SoftwareDB : Object {
 		try {
 			lfile.create (FileCreateFlags.NONE);
 		} catch (Error e) {
-			critical ("Error: %s\n", e.message);
+			critical ("Error: %s", e.message);
 			return false;
 		}
 
 		// Test for the existence of file
 		if (!lfile.query_exists ()) {
-			critical ("Unable to create lock file!\n");
+			critical ("Unable to create lock file!");
 			return false;
 		}
 
@@ -156,7 +156,7 @@ private class SoftwareDB : Object {
 				lfile.delete ();
 			}
 		} catch (Error e) {
-			error (_("CRITICAL: Unable to remove database lock! (Message: %s)").printf (e.message));
+			error (_("Unable to remove database lock! (Message: %s)").printf (e.message));
 		}
 	}
 

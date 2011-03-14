@@ -12,6 +12,7 @@ pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 set(LIUNITTEST_SOURCES ${LISTALLER_BASE_SOURCES}
 			${lisrc}/listaller/manager.vala
+			${lisrc}/listaller/installer.vala
 )
 
 link_libraries(${GLIB2_LIBRARIES}
@@ -38,6 +39,7 @@ vala_add_executable ("li-test-database" ${LIUNITTEST_SOURCES} tests-database.val
 				     PACKAGES ${LISTALLER_BASE_VALA_DEPS}
 				     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
 )
+add_test(database-test li-test-database)
 
 # IPK layout tests
 vala_add_executable ("li-test-ipk" ${LIUNITTEST_SOURCES} tests-ipk.vala
@@ -45,6 +47,12 @@ vala_add_executable ("li-test-ipk" ${LIUNITTEST_SOURCES} tests-ipk.vala
 				     PACKAGES ${LISTALLER_BASE_VALA_DEPS}
 				     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
 )
-
-add_test(database-test li-test-database)
 add_test(ipk-test li-test-ipk ${CMAKE_CURRENT_SOURCE_DIR})
+
+# IPK installer tests
+vala_add_executable ("li-test-installer" ${LIUNITTEST_SOURCES} tests-installer.vala
+				     BASE_DIR ${lisrc}
+				     PACKAGES ${LISTALLER_BASE_VALA_DEPS}
+				     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
+)
+add_test(installer-test li-test-installer ${CMAKE_CURRENT_SOURCE_DIR})
