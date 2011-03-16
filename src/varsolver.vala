@@ -52,6 +52,7 @@ private class LiVariable {
 	}
 
 }
+
 private class VarSolver : Object {
 	private LiSettings conf;
 	private HashMap<string, LiVariable> pathMap;

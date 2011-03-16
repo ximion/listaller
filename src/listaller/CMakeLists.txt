@@ -8,6 +8,7 @@ find_package(Gettext REQUIRED)
 find_package(SQLite3 REQUIRED)
 find_package(LibArchive REQUIRED)
 find_package(LibXml2 REQUIRED)
+find_package(GPGme REQUIRED)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
@@ -22,6 +23,7 @@ link_libraries(${GLIB2_LIBRARIES}
 	       ${SQLITE_LIBRARIES}
 	       ${LibArchive_LIBRARIES}
 	       ${LIBXML2_LIBRARIES}
+	       ${GPGME_VANILLA_LIBRARIES}
 )
 
 include_directories(${CMAKE_BINARY_DIR}
@@ -32,6 +34,7 @@ include_directories(${CMAKE_BINARY_DIR}
 		    ${SQLITE_INCLUDE_DIR}
 		    ${LibArchive_INCLUDE_DIR}
 		    ${LIBXML2_INCLUDE_DIR}
+		    ${GPGME_INCLUDES}
 )
 
 list(APPEND VALA_INCLUDE_DIRS ${CMAKE_BINARY_DIR})
