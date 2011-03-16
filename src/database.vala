@@ -87,6 +87,11 @@ private class SoftwareDB : Object {
 		dblockfile = conf.appregister_dir () + "/lock";
 	}
 
+	~SoftwareDB () {
+		// Make sure DB is always closed when DB is freed
+		close ();
+	}
+
 	public bool database_locked () {
 		if (FileUtils.test (dblockfile, FileTest.IS_REGULAR)) {
 			return true;
@@ -239,7 +244,7 @@ private class SoftwareDB : Object {
 		+ "appid TEXT UNIQUE NOT NULL,"
 		+ "summary TEXT, "
 		+ "author TEXT, "
-		+ "maintainer TEXT, "
+		+ "pkgmaintainer TEXT, "
 		+ "categories TEXT, "
 		+ "install_time INTEGER, "
 		+ "origin TEXT NOT NULL, "
@@ -259,7 +264,7 @@ private class SoftwareDB : Object {
 		+ "name TEXT UNIQUE NOT NULL, "
 		+ "version TEXT UNIQUE NOT NULL, "
 		+ "storage_path TEXT UNIQUE NOT NULL, "
-		+ "maintainer TEXT, "
+		+ "pkgmaintainer TEXT, "
 		+ "install_time INTEGER"
 		+ ")", -1, out stmt);
 		assert (res == Sqlite.OK);
@@ -276,7 +281,7 @@ private class SoftwareDB : Object {
 	public bool add_application (LiAppItem item) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 (
-			"INSERT INTO applications (name, version, appid, summary, author, maintainer, "
+			"INSERT INTO applications (name, version, appid, summary, author, pkgmaintainer, "
 			+ "categories, install_time, origin, dependencies) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				   -1, out stmt);
@@ -295,7 +300,7 @@ private class SoftwareDB : Object {
 			assert (res == Sqlite.OK);
 			res = stmt.bind_text (5, item.author);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (6, item.maintainer);
+			res = stmt.bind_text (6, item.pkgmaintainer);
 			assert (res == Sqlite.OK);
 			res = stmt.bind_text (7, item.categories);
 			assert (res == Sqlite.OK);
@@ -326,7 +331,7 @@ private class SoftwareDB : Object {
 		item.appid = stmt.column_text (3);
 		item.summary = stmt.column_text (4);
 		item.author = stmt.column_text (5);
-		item.maintainer = stmt.column_text (6);
+		item.pkgmaintainer = stmt.column_text (6);
 		item.categories = stmt.column_text (7);
 		item.install_time = stmt.column_int (8);
 		item.set_origin_from_string (stmt.column_text (9));
@@ -337,7 +342,7 @@ private class SoftwareDB : Object {
 
 	public LiAppItem? get_application_by_name (string appName) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT id, name, appid, version, summary, author, maintainer, "
+		int res = db.prepare_v2 ("SELECT id, name, appid, version, summary, author, pkgmaintainer, "
 		+ "categories, install_time, origin, dependencies "
 		+ "FROM applications WHERE name=?", -1, out stmt);
 		assert (res == Sqlite.OK);
@@ -357,7 +362,7 @@ private class SoftwareDB : Object {
 
 	public LiAppItem? get_application_by_dbid (int databaseId) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT id, name, version, appid, summary, author, maintainer, "
+		int res = db.prepare_v2 ("SELECT id, name, version, appid, summary, author, pkgmaintainer, "
 		+ "categories, install_time, origin, dependencies "
 		+ "FROM applications WHERE id=?", -1, out stmt);
 		assert (res == Sqlite.OK);
@@ -377,7 +382,7 @@ private class SoftwareDB : Object {
 
 	public LiAppItem? get_application_by_name_version (string appName, string appVersion) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT id, name, version, appid, summary, author, maintainer, "
+		int res = db.prepare_v2 ("SELECT id, name, version, appid, summary, author, pkgmaintainer, "
 		+ "categories, install_time, origin, dependencies "
 		+ "FROM applications WHERE name=? AND version=?", -1, out stmt);
 		assert (res == Sqlite.OK);

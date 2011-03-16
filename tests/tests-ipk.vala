@@ -80,7 +80,7 @@ void test_ipk_control_file () {
 	list.add ("delta");
 	ipkc.set_pkg_dependencies (list);
 
-	// ipkc.print_xml ();
+	//! ipkc.print_xml ();
 
 	assert (ipkc.get_app_name () == "echoecho");
 	assert (ipkc.get_pkg_id () == "echo-123");

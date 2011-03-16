@@ -110,20 +110,20 @@ public class IPKCXml : Object {
 	}
 
 	private Xml.Node* app_node () {
-		Xml.Node* appnd = get_subnode (root_node (), "application");
+		Xml.Node* appnd = get_xsubnode (root_node (), "application");
 		if (appnd == null)
 			critical (_("XML file is damaged or XML structure is no valid IPKControl!"));
 		return appnd;
 	}
 
 	private Xml.Node* pkg_node () {
-		Xml.Node* pkgnd = get_subnode (root_node (), "package");
+		Xml.Node* pkgnd = get_xsubnode (root_node (), "package");
 		if (pkgnd == null)
 			critical (_("XML file is damaged or XML structure is no valid IPKControl!"));
 		return pkgnd;
 	}
 
-	private Xml.Node* get_subnode (Xml.Node* sn, string id) {
+	private Xml.Node* get_xsubnode (Xml.Node* sn, string id) {
 		Xml.Node* res = null;
 		assert (sn != null);
 
@@ -143,6 +143,22 @@ public class IPKCXml : Object {
 		return res;
 	}
 
+	private Xml.Node* get_xproperty (Xml.Node* nd, string id) {
+		Xml.Node* res = null;
+		assert (nd != null);
+		for (Xml.Attr* prop = nd->properties; prop != null; prop = prop->next) {
+			string attr_name = prop->name;
+			if (attr_name == id) {
+				res = prop->children;
+				break;
+			}
+		}
+		// If no property was found, create new one
+		if (res == null)
+			res = nd->new_prop (id, "")->children;
+		return res;
+	}
+
 	private string get_node_content (Xml.Node* nd) {
 		string ret = "";
 		ret = nd->get_content ();
@@ -153,17 +169,17 @@ public class IPKCXml : Object {
 	// Setter/Getter methods for XML properties
 	// Package itself
 	public void set_pkg_id (string s) {
-		Xml.Node* n = get_subnode (pkg_node (), "id");
+		Xml.Node* n = get_xsubnode (pkg_node (), "id");
 		n->set_content (s);
 	}
 
 	public string get_pkg_id () {
-		return get_node_content (get_subnode (pkg_node (), "id"));
+		return get_node_content (get_xsubnode (pkg_node (), "id"));
 	}
 
 	public void set_pkg_dependencies (ArrayList<string> list) {
 		// Create dependencies node
-		Xml.Node* n = get_subnode (pkg_node (), "dependencies");
+		Xml.Node* n = get_xsubnode (pkg_node (), "dependencies");
 		assert (n != null);
 
 		// Add the dependencies
@@ -173,7 +189,7 @@ public class IPKCXml : Object {
 	}
 
 	public ArrayList<string> get_pkg_dependencies () {
-		Xml.Node* n = get_subnode (pkg_node (), "dependencies");
+		Xml.Node* n = get_xsubnode (pkg_node (), "dependencies");
 		ArrayList<string> depList = new ArrayList<string> ();
 		for (Xml.Node* iter = n->children; iter != null; iter = iter->next) {
 			// Spaces between tags are also nodes, discard them
@@ -189,30 +205,41 @@ public class IPKCXml : Object {
 
 	// Application
 	public void set_app_name (string s) {
-		Xml.Node* n = get_subnode (app_node (), "name");
+		Xml.Node* n = get_xproperty (app_node (), "name");
 		n->set_content (s);
 	}
 
 	public string get_app_name () {
-		return get_node_content (get_subnode (app_node (), "name"));
+		Xml.Node* nd = get_xproperty (app_node (), "name");
+		return nd->get_content ();
+	}
+
+	public void set_app_version (string s) {
+		Xml.Node* n = get_xproperty (app_node (), "version");
+		n->set_content (s);
+	}
+
+	public string get_app_version () {
+		Xml.Node* nd = get_xproperty (app_node (), "version");
+		return nd->get_content ();
 	}
 
 	public void set_app_summary (string s) {
-		Xml.Node* n = get_subnode (app_node (), "summary");
+		Xml.Node* n = get_xsubnode (app_node (), "summary");
 		n->set_content (s);
 	}
 
 	public string get_app_summary () {
-		return get_node_content (get_subnode (app_node (), "summary"));
+		return get_node_content (get_xsubnode (app_node (), "summary"));
 	}
 
 	public void set_app_url (string s) {
-		Xml.Node* n = get_subnode (app_node (), "url");
+		Xml.Node* n = get_xsubnode (app_node (), "url");
 		n->set_content (s);
 	}
 
 	public string get_app_url () {
-		return get_node_content (get_subnode (app_node (), "url"));
+		return get_node_content (get_xsubnode (app_node (), "url"));
 	}
 
 }

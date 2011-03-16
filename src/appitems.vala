@@ -52,10 +52,10 @@ public class LiAppItem : Object {
 	private string _version;
 	private string _summary;
 	private string _author;
-	private string _maintainer;
+	private string _pkgmaintainer;
 	private string _categories;
 	private string _desktop_file;
-	private ulong  _install_time;
+	private int64  _install_time;
 	private string _dependencies;
 	private AppOrigin _origin;
 	private int _dbid;
@@ -81,9 +81,9 @@ public class LiAppItem : Object {
 		set { _author = value; }
 	}
 
-	public string maintainer {
-		get { return _maintainer; }
-		set { _maintainer = value; }
+	public string pkgmaintainer {
+		get { return _pkgmaintainer; }
+		set { _pkgmaintainer = value; }
 	}
 
 	public string categories {
@@ -96,7 +96,7 @@ public class LiAppItem : Object {
 		set { _desktop_file = value; }
 	}
 
-	public ulong install_time {
+	public int64 install_time {
 		get { return _install_time; }
 		set { _install_time = value; }
 	}

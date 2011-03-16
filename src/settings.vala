@@ -104,6 +104,10 @@ public class LiSettings : Object {
 		} else {
 			regdir = Path.build_filename (Environment.get_user_config_dir (), "software", null);
 		}
+		if (testmode) {
+			// Point to our temporary dir
+			regdir = Path.build_filename (get_unique_install_tmp_dir (), "appreg", null);
+		}
 
 		touch_dir (regdir, "Unable to create application database directory: %s");
 
@@ -222,7 +226,7 @@ public class LiSettings : Object {
 		if (uinsttmp != "")
 			return uinsttmp;
 
-		string template = Path.build_filename (tmp_dir (), "litestinstall-XXXXXX", null);
+		string template = Path.build_filename (tmp_dir (), "litest-XXXXXX", null);
 
 		string res = DirUtils.mkdtemp (template);
 		if (res == null)

@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <ipkcontrol version="1.1">
 	<locale lang="de_DE">german.mo</locale>
-	<application>
+	<application name="FooBar" version="1.0">
 		<id type="desktop">foobar.desktop</id>
-		<pkgname>foobar-local</pkgname>
-		<name>FooBar</name>
 		<summary>Foo-ish bar</summary>
 		<keywords>
 			<keyword>test</keyword>
@@ -20,5 +18,14 @@
 			<mimetype>text/html</mimetype>
 		</mimetypes>
 		<url type="homepage">http://example.org</url>
+		<requires>
+			<testlib>
+				<file>blah.so</file>
+				<file>xyz.so</file>
+				<feed>http://zeroinstall-feeds.org/blub.xml</feed>
+				<package distro="Debian">libtest</package>
+				<dpk>dependency.dpk</dpk>
+			</testlib>
+		</requires>
 </application>
 </ipkcontrol>

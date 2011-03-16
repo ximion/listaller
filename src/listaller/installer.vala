@@ -94,6 +94,21 @@ public class LiSetup : Object {
 			return false;
 		}
 		bool ret = true;
+		conf.lock ();
+		SoftwareDB db = new SoftwareDB (conf);
+		// Open & lock database
+		db.open ();
+
+		// Construct LiAppItem
+		LiAppItem aitem = new LiAppItem (ipkp.control.get_app_name (), ipkp.control.get_app_version ());
+		aitem.origin = AppOrigin.IPK;
+		aitem.summary = ipkp.control.get_app_summary ();
+		//aitem.author = ipkp.control.get_app_author ();
+		//aitem.pkgmaintainer = ipkp.control.get_pkg_maintainer ();
+		//aitem.categories = ipkp.control.get_app_categories ();
+		//aitem.desktop_file = ipkp.control.get_app_desktopfile ();
+		aitem.dependencies = "?";
+		aitem.fast_check ();
 
 		// Emit status message
 		LiStatusItem status1 = new LiStatusItem (LiStatus.RESOLVING_DEPENDENCIES);
@@ -118,7 +133,12 @@ public class LiSetup : Object {
 		status3.info = _("Making '%s' known to your system.").printf (ipkp.control.get_app_name ());
 		status_changed (status3);
 
-		// TODO: Register package in database
+		// Set install timestamp
+		DateTime dt = new DateTime.now_local ();
+		aitem.install_time = dt.to_unix ();
+		// Now register the item
+		ret = db.add_application (aitem);
+		conf.unlock ();
 
 		return ret;
 	}
