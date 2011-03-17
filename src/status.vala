@@ -30,7 +30,8 @@ public enum LiError {
 	IPK_DAMAGED,
 	FILE_EXISTS,
 	HASH_MISSMATCH,
-	FILE_INSTALL_FAILED;
+	FILE_INSTALL_FAILED,
+	DATABASE_FAILURE;
 
 	public string to_string () {
 		return ((int) this).to_string ();

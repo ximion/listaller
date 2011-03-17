@@ -95,7 +95,14 @@ public class LiSetup : Object {
 		}
 		bool ret = true;
 		conf.lock ();
+		// Create software DB link and connect status handlers
 		SoftwareDB db = new SoftwareDB (conf);
+		db.error_code.connect ((error) => {
+			this.error_code (error);
+		});
+		db.message.connect ((message) => {
+			this.message (message);
+		});
 		// Open & lock database
 		db.open ();
 

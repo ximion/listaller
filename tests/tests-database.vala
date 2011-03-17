@@ -25,6 +25,14 @@ void msg (string s) {
 	message (s + "\n");
 }
 
+void softwaredb_error_code_cb (LiErrorItem item) {
+	GLib.error (item.error.to_string () + " || " + item.details);
+}
+
+void softwaredb_message_cb (LiMessageItem message) {
+	msg (message.to_string ());
+}
+
 void software_db_status_changed_cb (DatabaseStatus status, string message) {
 
 	if (status == DatabaseStatus.FATAL) {
@@ -45,7 +53,8 @@ void test_software_db () {
 
 	msg ("Opening new software database connection");
 	SoftwareDB sdb = new SoftwareDB (conf);
-	sdb.status_changed.connect (software_db_status_changed_cb);
+	sdb.error_code.connect (softwaredb_error_code_cb);
+	sdb.message.connect (softwaredb_message_cb);
 
 	// Do this only in testing environment!
 	sdb.remove_db_lock ();

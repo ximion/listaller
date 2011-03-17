@@ -77,7 +77,10 @@ private class SoftwareDB : Object {
 	private LiSettings conf;
 	private string dblockfile;
 
-	public signal void status_changed (DatabaseStatus newstatus, string message);
+	public signal void db_status_changed (DatabaseStatus newstatus, string message);
+
+	public signal void error_code (LiErrorItem error);
+	public signal void message (LiMessageItem message);
 
 	public SoftwareDB (LiSettings? settings) {
 		conf = settings;
@@ -100,6 +103,26 @@ private class SoftwareDB : Object {
 		}
 	}
 
+	private void dbstatus_changed (DatabaseStatus dbs, string details) {
+		if ((dbs == DatabaseStatus.FAILURE) ||
+			(dbs == DatabaseStatus.FATAL)) {
+				// Emit error
+				LiErrorItem item = new LiErrorItem(LiError.DATABASE_FAILURE);
+				item.details = details;
+				error_code (item);
+				critical (details);
+			}
+		db_status_changed (dbs, details);
+	}
+
+	private void emit_message (string msg) {
+		// Construct info message
+		LiMessageItem item = new LiMessageItem(LiMessageType.INFO);
+		item.details = msg;
+		message (item);
+		GLib.message (msg);
+	}
+
 	public bool open () {
 		string dbname = conf.database_file ();
 		int rc;
@@ -110,7 +133,7 @@ private class SoftwareDB : Object {
 		}
 
 		if (!FileUtils.test (dbname, FileTest.IS_REGULAR)) {
-			message ("Software database does not exist - will be created.");
+			emit_message ("Software database does not exist - will be created.");
 		}
 
 		rc = Database.open (dbname, out db);
@@ -118,7 +141,7 @@ private class SoftwareDB : Object {
 		if (rc != Sqlite.OK) {
 			string msg = "Can't open database! (Message: %d, %s)".printf (rc, db.errmsg ());
 			stderr.printf (msg);
-			status_changed (DatabaseStatus.FAILURE, msg);
+			dbstatus_changed (DatabaseStatus.FAILURE, msg);
 			return false;
 		}
 
@@ -137,12 +160,12 @@ private class SoftwareDB : Object {
 			return false;
 		}
 
-		status_changed (DatabaseStatus.LOCKED, "");
-		status_changed (DatabaseStatus.OPENED, "");
+		dbstatus_changed (DatabaseStatus.LOCKED, "");
+		dbstatus_changed (DatabaseStatus.OPENED, "");
 
 		// Ensure the database is okay and all tables are created
 		if (!update_db_structure ()) {
-			status_changed (DatabaseStatus.FAILURE, _("Could not create/update software database!"));
+			dbstatus_changed (DatabaseStatus.FAILURE, _("Could not create/update software database!"));
 			return false;
 		}
 
@@ -219,8 +242,7 @@ private class SoftwareDB : Object {
 
 	protected void fatal (string op, int res) {
 		string msg = "%s: [%d] %s".printf (op, res, db.errmsg());
-		error (msg + "\n");
-		// status_changed (DatabaseStatus.FATAL, msg);
+		dbstatus_changed (DatabaseStatus.FATAL, msg);
 	}
 
 	public bool has_table (string table_name) {
@@ -314,7 +336,7 @@ private class SoftwareDB : Object {
 			res = stmt.step();
 			if (res != Sqlite.DONE) {
 				if (res != Sqlite.CONSTRAINT) {
-					fatal("add application", res);
+					fatal ("add application", res);
 					return false;
 				}
 			}
