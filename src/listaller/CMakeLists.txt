@@ -52,4 +52,17 @@ if(NOT LILIBS_FULL_VERSION)
 endif()
 set_target_properties(listaller-glib PROPERTIES VERSION ${LILIBS_FULL_VERSION} SOVERSION ${LILIBS_SOVERSION})
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/listaller-glib.pc.in
+  ${CMAKE_CURRENT_BINARY_DIR}/listaller-glib.pc
+  @ONLY
+)
+
 install(TARGETS listaller-glib DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/listaller-glib.pc
+	DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
+	COMPONENT headers
+)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/listaller.h
+	DESTINATION include/listaller-glib
+	COMPONENT headers
+)
