@@ -1,4 +1,4 @@
-/* items.vala
+/* appitem.vala
  *
  * Copyright (C) 2010-2011  Matthias Klumpp
  *
@@ -20,9 +20,12 @@
  */
 
 using GLib;
+using Listaller;
 
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION4 = Config.VERSION;
+
+namespace Listaller {
 
 public enum AppOrigin {
 	IPK,
@@ -47,7 +50,7 @@ public enum AppOrigin {
 	}
 }
 
-public class LiAppItem : Object {
+public class AppItem : Object {
 	private string _name;
 	private string _version;
 	private string _summary;
@@ -124,14 +127,14 @@ public class LiAppItem : Object {
 		set { _dbid = value; }
 	}
 
-	public LiAppItem (string aname, string aversion) {
+	public AppItem (string aname, string aversion) {
 		this.empty ();
 		name = aname;
 		version = aversion;
 
 	}
 
-	public LiAppItem.empty () {
+	public AppItem.empty () {
 		install_time = 0;
 		categories = "all;";
 		dbid = -1;
@@ -140,7 +143,7 @@ public class LiAppItem : Object {
 		_desktop_file = "";
 	}
 
-	public LiAppItem.from_desktopfile (string dfile) {
+	public AppItem.from_desktopfile (string dfile) {
 		this.empty ();
 		this.load_from_desktop_file (dfile);
 	}
@@ -235,27 +238,4 @@ public class LiAppItem : Object {
 
 }
 
-public class LiDependencyItem : Object {
-	private string _name;
-	private string _version;
-
-	public string name {
-		get { return _name; }
-		set { _name = value; }
-	}
-
-	public string version {
-		get { return _version; }
-		set { _version = value; }
-	}
-
-	public LiDependencyItem (string dname, string dversion) {
-		name = dname;
-		version = dversion;
-	}
-
-	public string get_idstring () {
-		return name + version;
-	}
-
-}
+} // End of namespace

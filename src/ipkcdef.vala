@@ -22,21 +22,24 @@
 using GLib;
 using Xml;
 using Gee;
+using Listaller;
 
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION5 = Config.VERSION;
 
-public class IPKCXml : Object {
+namespace Listaller.IPK {
+
+public class CXml : Object {
 	private int indent = 0;
 	private string fname;
-	protected Xml.Doc* xdoc;
+	private Xml.Doc* xdoc;
 
-	public IPKCXml () {
+	public CXml () {
 		fname = "";
 		xdoc = null;
 	}
 
-	~IPKCXml () {
+	~CXml () {
 		if (xdoc != null)
 			delete xdoc;
 	}
@@ -244,9 +247,11 @@ public class IPKCXml : Object {
 
 }
 
-public class IPKControl : IPKCXml {
+public class Control : CXml {
 
-	public IPKControl () {
+	public Control () {
 
 	}
 }
+
+} // End of namespace

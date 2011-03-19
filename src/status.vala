@@ -20,8 +20,11 @@
  */
 
 using GLib;
+using Listaller;
 
-public enum LiError {
+namespace Listaller {
+
+public enum ErrorEnum {
 	UNKNOWN,
 	IPK_LOADING_FAILED,
 	UNPACKING_FAILED,
@@ -38,14 +41,14 @@ public enum LiError {
 	}
 }
 
-public enum LiStatus {
+public enum StatusEnum {
 	UNKNOWN,
 	RESOLVING_DEPENDENCIES,
 	INSTALLING_FILES,
 	REGISTERING_APPLICATION;
 }
 
-public enum LiMessageType {
+public enum MessageEnum {
 	UNKNOWN,
 	INFO,
 	WARNING,
@@ -71,11 +74,11 @@ public enum LiMessageType {
 	}
 }
 
-public class LiErrorItem : Object {
-	private LiError _etype;
+public class ErrorItem : Object {
+	private ErrorEnum _etype;
 	private string _details;
 
-	public LiError error {
+	public ErrorEnum error {
 		get { return _etype; }
 		set { _etype = value; }
 	}
@@ -85,7 +88,7 @@ public class LiErrorItem : Object {
 		set { _details = value; }
 	}
 
-	public LiErrorItem (LiError type) {
+	public ErrorItem (ErrorEnum type) {
 		error = type;
 		details = "";
 	}
@@ -97,11 +100,11 @@ public class LiErrorItem : Object {
 	}
 }
 
-public class LiMessageItem : Object {
-	private LiMessageType _mtype;
+public class MessageItem : Object {
+	private MessageEnum _mtype;
 	private string _details;
 
-	public LiMessageType mtype {
+	public MessageEnum mtype {
 		get { return _mtype; }
 		set { _mtype = value; }
 	}
@@ -111,7 +114,7 @@ public class LiMessageItem : Object {
 		set { _details = value; }
 	}
 
-	public LiMessageItem (LiMessageType type) {
+	public MessageItem (MessageEnum type) {
 		mtype = type;
 		details = "";
 	}
@@ -123,11 +126,11 @@ public class LiMessageItem : Object {
 	}
 }
 
-public class LiStatusItem : Object {
-	private LiStatus _stype;
+public class StatusItem : Object {
+	private StatusEnum _stype;
 	private string _info;
 
-	public LiStatus status {
+	public StatusEnum status {
 		get { return _stype; }
 		set { _stype = value; }
 	}
@@ -137,8 +140,10 @@ public class LiStatusItem : Object {
 		set { _info = value; }
 	}
 
-	public LiStatusItem (LiStatus type) {
+	public StatusItem (StatusEnum type) {
 		status = type;
 		info = "";
 	}
 }
+
+} // End of namespace

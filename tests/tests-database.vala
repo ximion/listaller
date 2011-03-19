@@ -20,16 +20,17 @@
  */
 
 using GLib;
+using Listaller;
 
 void msg (string s) {
 	message (s + "\n");
 }
 
-void softwaredb_error_code_cb (LiErrorItem item) {
+void softwaredb_error_code_cb (ErrorItem item) {
 	GLib.error (item.error.to_string () + " || " + item.details);
 }
 
-void softwaredb_message_cb (LiMessageItem message) {
+void softwaredb_message_cb (MessageItem message) {
 	msg (message.to_string ());
 }
 
@@ -48,7 +49,7 @@ void software_db_status_changed_cb (DatabaseStatus status, string message) {
 void test_software_db () {
 	bool ret = false;
 
-	LiSettings conf = new LiSettings ();
+	Listaller.Settings conf = new Listaller.Settings ();
 	conf.testmode = true;
 
 	msg ("Opening new software database connection");
@@ -64,7 +65,7 @@ void test_software_db () {
 	msg ("Constructing fake application and adding it to the DB...");
 
 	{
-	LiAppItem item = new LiAppItem ("Test", "0.1");
+	AppItem item = new AppItem ("Test", "0.1");
 	ret = sdb.add_application (item);
 	assert (ret == true);
 
@@ -73,7 +74,7 @@ void test_software_db () {
 	sdb.open ();
 
 	msg ("Retrieving AppItem from database...");
-	LiAppItem newItem = sdb.get_application_by_name ("Test");
+	AppItem newItem = sdb.get_application_by_name ("Test");
 	assert (newItem != null);
 	assert (newItem.dbid == 1);
 
@@ -85,7 +86,7 @@ void test_software_db () {
 }
 
 int main (string[] args) {
-	stdout.printf ("=== Running Database Tests ===\n");
+	msg ("=== Running Database Tests ===");
 	Test.init (ref args);
 	test_software_db ();
 	Test.run ();

@@ -21,9 +21,12 @@
 
 using GLib;
 using Sqlite;
+using Listaller;
 
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION2 = Config.VERSION;
+
+namespace Listaller {
 
 public errordomain DatabaseError {
 	ERROR,
@@ -74,18 +77,18 @@ public enum DatabaseStatus {
 
 private class SoftwareDB : Object {
 	private Database db;
-	private LiSettings conf;
+	private Settings conf;
 	private string dblockfile;
 
 	public signal void db_status_changed (DatabaseStatus newstatus, string message);
 
-	public signal void error_code (LiErrorItem error);
-	public signal void message (LiMessageItem message);
+	public signal void error_code (ErrorItem error);
+	public signal void message (MessageItem message);
 
-	public SoftwareDB (LiSettings? settings) {
+	public SoftwareDB (Settings? settings) {
 		conf = settings;
 		if (conf == null)
-			conf = new LiSettings (false);
+			conf = new Settings (false);
 
 		dblockfile = conf.appregister_dir () + "/lock";
 	}
@@ -107,7 +110,7 @@ private class SoftwareDB : Object {
 		if ((dbs == DatabaseStatus.FAILURE) ||
 			(dbs == DatabaseStatus.FATAL)) {
 				// Emit error
-				LiErrorItem item = new LiErrorItem(LiError.DATABASE_FAILURE);
+				ErrorItem item = new ErrorItem(ErrorEnum.DATABASE_FAILURE);
 				item.details = details;
 				error_code (item);
 				critical (details);
@@ -117,7 +120,7 @@ private class SoftwareDB : Object {
 
 	private void emit_message (string msg) {
 		// Construct info message
-		LiMessageItem item = new LiMessageItem(LiMessageType.INFO);
+		MessageItem item = new MessageItem(MessageEnum.INFO);
 		item.details = msg;
 		message (item);
 		GLib.message (msg);
@@ -300,7 +303,7 @@ private class SoftwareDB : Object {
 		return true;
 	}
 
-	public bool add_application (LiAppItem item) {
+	public bool add_application (AppItem item) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 (
 			"INSERT INTO applications (name, version, appid, summary, author, pkgmaintainer, "
@@ -344,8 +347,8 @@ private class SoftwareDB : Object {
 			return true;
 	}
 
-	private LiAppItem? retrieve_app_item (Sqlite.Statement stmt) {
-		LiAppItem item = new LiAppItem.empty ();
+	private AppItem? retrieve_app_item (Sqlite.Statement stmt) {
+		AppItem item = new AppItem.empty ();
 
 		item.dbid = stmt.column_int (0);
 		item.name = stmt.column_text (1);
@@ -362,7 +365,7 @@ private class SoftwareDB : Object {
 		return item;
 	}
 
-	public LiAppItem? get_application_by_name (string appName) {
+	public AppItem? get_application_by_name (string appName) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT id, name, appid, version, summary, author, pkgmaintainer, "
 		+ "categories, install_time, origin, dependencies "
@@ -374,7 +377,7 @@ private class SoftwareDB : Object {
 		if (stmt.step() != Sqlite.ROW)
 			return null;
 
-		LiAppItem item = retrieve_app_item (stmt);
+		AppItem item = retrieve_app_item (stmt);
 
 		// Fast sanity checks
 		item.fast_check ();
@@ -382,7 +385,7 @@ private class SoftwareDB : Object {
 		return item;
 	}
 
-	public LiAppItem? get_application_by_dbid (int databaseId) {
+	public AppItem? get_application_by_dbid (int databaseId) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT id, name, version, appid, summary, author, pkgmaintainer, "
 		+ "categories, install_time, origin, dependencies "
@@ -394,7 +397,7 @@ private class SoftwareDB : Object {
 		if (stmt.step() != Sqlite.ROW)
 			return null;
 
-		LiAppItem item = retrieve_app_item (stmt);
+		AppItem item = retrieve_app_item (stmt);
 
 		// Fast sanity checks
 		item.fast_check ();
@@ -402,7 +405,7 @@ private class SoftwareDB : Object {
 		return item;
 	}
 
-	public LiAppItem? get_application_by_name_version (string appName, string appVersion) {
+	public AppItem? get_application_by_name_version (string appName, string appVersion) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT id, name, version, appid, summary, author, pkgmaintainer, "
 		+ "categories, install_time, origin, dependencies "
@@ -417,12 +420,13 @@ private class SoftwareDB : Object {
 		if (stmt.step() != Sqlite.ROW)
 			return null;
 
-		LiAppItem item = retrieve_app_item (stmt);
+		AppItem item = retrieve_app_item (stmt);
 
 		// Fast sanity checks
 		item.fast_check ();
 
 		return item;
 	}
-
 }
+
+} // End of namespace

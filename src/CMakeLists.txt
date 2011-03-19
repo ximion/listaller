@@ -7,7 +7,7 @@ set(lisrc ${CMAKE_SOURCE_DIR}/src
 set(LISTALLER_BASE_SOURCES ${lisrc}/util.vala
 	${lisrc}/status.vala
 	${lisrc}/settings.vala
-	${lisrc}/appitems.vala
+	${lisrc}/appitem.vala
 	${lisrc}/database.vala
 	${lisrc}/varsolver.vala
 	${lisrc}/ipkcdef.vala

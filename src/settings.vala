@@ -21,11 +21,14 @@
 
 using Config;
 using GLib;
+using Listaller;
 
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION1 = Config.VERSION;
 
-public class LiSettings : Object {
+namespace Listaller {
+
+public class Settings : Object {
 	private bool _sumode;
 	const string suconfdir = "/etc/lipa";
 	const string suinstroot = "/opt";
@@ -48,7 +51,7 @@ public class LiSettings : Object {
 		set { if (can_change ()) _testmode = value; }
 	}
 
-	public LiSettings (bool root = false) {
+	public Settings (bool root = false) {
 		sumode = root;
 		testmode = false;
 		unlock (); // Be unlocked by default
@@ -235,6 +238,8 @@ public class LiSettings : Object {
 		return uinsttmp;
 	}
 }
+
+} // End of namespace
 
 public void li_enable_translation ()
 {

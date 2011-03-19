@@ -21,11 +21,14 @@
 
 using GLib;
 using Gee;
+using Listaller;
 
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION11 = Config.VERSION;
 
-private class LiVariable {
+namespace Listaller {
+
+private class Variable {
 	private string _var;
 	private string _su_subst;
 	private string _subst;
@@ -54,15 +57,15 @@ private class LiVariable {
 }
 
 private class VarSolver : Object {
-	private LiSettings conf;
-	private HashMap<string, LiVariable> pathMap;
+	private Settings conf;
+	private HashMap<string, Variable> pathMap;
 	delegate string LiConfGetType ();
 
 	public VarSolver () {
-		conf = new LiSettings ();
+		conf = new Settings ();
 
 		// Build map of Listaller path variables
-		pathMap = new HashMap<string, LiVariable> ();
+		pathMap = new HashMap<string, Variable> ();
 		add_var_from_conf ("$INST", "appdata", conf.appdata_dir);
 		add_var_from_conf ("$APP", "desktop", conf.desktop_dir);
 		add_var_from_conf ("$DEP", "depend", conf.depdata_dir);
@@ -90,7 +93,7 @@ private class VarSolver : Object {
 	}
 
 	private void add_var (string key, string idsubst, string subst, string susubst) {
-		LiVariable v = new LiVariable ();
+		Variable v = new Variable ();
 		v.var = key;
 		v.id_subst = idsubst;
 		v.subst = subst;
@@ -198,3 +201,5 @@ class VersionNumber : Object {
 		return originalString;
 	}
 }
+
+} // End of namespace

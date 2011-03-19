@@ -21,9 +21,12 @@
 
 using GLib;
 using GPG;
+using Listaller;
 
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION114 = Config.VERSION;
+
+namespace Listaller {
 
 private class GPGSign : Object {
 
@@ -32,3 +35,5 @@ private class GPGSign : Object {
 		string s = GPG.check_version (null);
 	}
 }
+
+} // End of namespace

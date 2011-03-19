@@ -20,36 +20,41 @@
  */
 
 using GLib;
+using Listaller;
 
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION8 = Config.VERSION;
 
-public class LiSetup : Object {
-	private LiSettings conf;
+[CCode (cheader_filename = "listaller-glib/installer.h")]
+
+namespace Listaller {
+
+public class Setup : Object {
+	private Settings conf;
 	private string fname;
-	private IPKPackage ipkp;
+	private IPK.Package ipkp;
 	private bool initialized;
 
-	public signal void error_code (LiErrorItem error);
+	public signal void error_code (ErrorItem error);
 	public signal void progress_changed (int progress, int subprogress);
-	public signal void status_changed (LiStatusItem status);
-	public signal void message (LiMessageItem message);
+	public signal void status_changed (StatusItem status);
+	public signal void message (MessageItem message);
 
-	public LiSettings settings {
+	public Settings settings {
 		get { return conf; }
 	}
 
-	public IPKControl control {
+	public IPK.Control control {
 		get { return ipkp.control; }
 	}
 
-	public LiSetup (string ipkfilename, LiSettings? settings) {
+	public Setup (string ipkfilename, Settings? settings) {
 		conf = settings;
 		if (conf == null)
-			conf = new LiSettings (false);
+			conf = new Settings (false);
 		fname = ipkfilename;
 		// Set up IPK package instance
-		ipkp = new IPKPackage (fname, settings);
+		ipkp = new IPK.Package (fname, settings);
 		ipkp.error_code.connect ((e) => { this.error_code (e); });
 		ipkp.message.connect ((m) => { this.message (m); });
 		initialized = false;
@@ -57,7 +62,7 @@ public class LiSetup : Object {
 
 	private void emit_warning (string msg) {
 		// Construct warning message
-		LiMessageItem item = new LiMessageItem(LiMessageType.WARNING);
+		MessageItem item = new MessageItem(MessageEnum.WARNING);
 		item.details = msg;
 		message (item);
 		warning (msg);
@@ -65,15 +70,15 @@ public class LiSetup : Object {
 
 	private void emit_message (string msg) {
 		// Construct info message
-		LiMessageItem item = new LiMessageItem(LiMessageType.INFO);
+		MessageItem item = new MessageItem(MessageEnum.INFO);
 		item.details = msg;
 		message (item);
 		GLib.message (msg);
 	}
 
-	private void emit_error (LiError id, string details) {
+	private void emit_error (ErrorEnum id, string details) {
 		// Construct error
-		LiErrorItem item = new LiErrorItem(id);
+		ErrorItem item = new ErrorItem(id);
 		item.details = details;
 		error_code (item);
 		critical (details);
@@ -90,7 +95,7 @@ public class LiSetup : Object {
 	public bool run_installation () {
 		// Check if setup was initialized
 		if (!initialized) {
-			emit_error (LiError.SETUP_NOT_INITIALIZED, _("Setup has not been initialized!"));
+			emit_error (ErrorEnum.SETUP_NOT_INITIALIZED, _("Setup has not been initialized!"));
 			return false;
 		}
 		bool ret = true;
@@ -107,7 +112,7 @@ public class LiSetup : Object {
 		db.open ();
 
 		// Construct LiAppItem
-		LiAppItem aitem = new LiAppItem (ipkp.control.get_app_name (), ipkp.control.get_app_version ());
+		AppItem aitem = new AppItem (ipkp.control.get_app_name (), ipkp.control.get_app_version ());
 		aitem.origin = AppOrigin.IPK;
 		aitem.summary = ipkp.control.get_app_summary ();
 		//aitem.author = ipkp.control.get_app_author ();
@@ -118,14 +123,14 @@ public class LiSetup : Object {
 		aitem.fast_check ();
 
 		// Emit status message
-		LiStatusItem status1 = new LiStatusItem (LiStatus.RESOLVING_DEPENDENCIES);
+		StatusItem status1 = new StatusItem (StatusEnum.RESOLVING_DEPENDENCIES);
 		status1.info = _("Resolving dependencies of '%s'.").printf (ipkp.control.get_app_name ());
 		status_changed (status1);
 
 		// TODO: Resolve dependencies here!
 
 		// Emit status message
-		LiStatusItem status2 = new LiStatusItem (LiStatus.INSTALLING_FILES);
+		StatusItem status2 = new StatusItem (StatusEnum.INSTALLING_FILES);
 		status2.info = _("Copying files to their destination");
 		status_changed (status2);
 
@@ -136,7 +141,7 @@ public class LiSetup : Object {
 			return false;
 
 		// Emit status message
-		LiStatusItem status3 = new LiStatusItem (LiStatus.REGISTERING_APPLICATION);
+		StatusItem status3 = new StatusItem (StatusEnum.REGISTERING_APPLICATION);
 		status3.info = _("Making '%s' known to your system.").printf (ipkp.control.get_app_name ());
 		status_changed (status3);
 
@@ -150,3 +155,5 @@ public class LiSetup : Object {
 		return ret;
 	}
 }
+
+} // End of namespace

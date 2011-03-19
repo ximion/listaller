@@ -21,6 +21,7 @@
 
 using GLib;
 using Gee;
+using Listaller;
 
 private string datadir;
 
@@ -28,13 +29,13 @@ void msg (string s) {
 	stdout.printf (s + "\n");
 }
 
-void test_ipk_message_cb (LiMessageItem item) {
+void test_ipk_message_cb (MessageItem item) {
 	msg ("Received message:");
 	msg (" " + item.to_string ());
-	assert (item.mtype == LiMessageType.INFO);
+	assert (item.mtype == MessageEnum.INFO);
 }
 
-void test_ipk_error_code_cb (LiErrorItem item) {
+void test_ipk_error_code_cb (ErrorItem item) {
 	msg ("Received error:");
 	msg (" " + item.to_string ());
 	error (item.details);
@@ -45,12 +46,12 @@ void test_ipk_package () {
 	msg ("Package tests");
 
 	// Set up Listaller configuration
-	LiSettings conf = new LiSettings ();
+	Listaller.Settings conf = new Listaller.Settings ();
 	conf.testmode = true;
 
 	string ipkfilename = Path.build_filename (datadir, "foobar-testsetup.ipk", null);
 	msg ("Loading IPK package %s".printf (ipkfilename));
-	IPKPackage ipk = new IPKPackage (ipkfilename, conf);
+	IPK.Package ipk = new IPK.Package (ipkfilename, conf);
 	// Connect signal handlers
 	ipk.message.connect (test_ipk_message_cb);
 	ipk.error_code.connect (test_ipk_error_code_cb);
@@ -59,8 +60,8 @@ void test_ipk_package () {
 	assert (ret == true);
 	assert (ipk.control.get_app_name () == "FooBar");
 
-	ArrayList<IPKFileEntry> flist = ipk.get_filelist ();
-	foreach (IPKFileEntry e in flist) {
+	ArrayList<IPK.FileEntry> flist = ipk.get_filelist ();
+	foreach (IPK.FileEntry e in flist) {
 		bool inst_ok = ipk.install_file (e);
 		assert (inst_ok == true);
 	}
@@ -68,7 +69,7 @@ void test_ipk_package () {
 
 void test_ipk_control_file () {
 	msg ("Controlfile tests");
-	IPKControl ipkc = new IPKControl ();
+	IPK.Control ipkc = new IPK.Control ();
 	ipkc.create_new ();
 	ipkc.set_app_name ("echoecho");
 	ipkc.set_pkg_id ("echo-123");
@@ -90,7 +91,7 @@ void test_ipk_filelist_file () {
 	msg ("Filelist tests.");
 	bool ret = false;
 
-	IPKFileList flist = new IPKFileList ();
+	IPK.FileList flist = new IPK.FileList ();
 	ret = flist.add_file (Path.build_filename (datadir, "dummy-control.xml", null), "$INST/+junk");
 	assert (ret == true);
 	ret = flist.add_file (Path.build_filename (datadir, "foo-payload", "appdata", "+junk", "packicon.png", null), "$INST/+junk");
@@ -102,14 +103,14 @@ void test_ipk_filelist_file () {
 	FileUtils.remove (tmpfile);
 	flist.save (tmpfile);
 
-	ArrayList<IPKFileEntry> lst = flist.get_files ();
-	foreach (IPKFileEntry e in lst) {
+	ArrayList<IPK.FileEntry> lst = flist.get_files ();
+	foreach (IPK.FileEntry e in lst) {
 		msg (e.to_string ());
 	}
 }
 
 int main (string[] args) {
-	stdout.printf ("=== Running IPK Tests ===\n");
+	msg ("=== Running IPK Tests ===");
 	datadir = args[1];
 	assert (datadir != null);
 	datadir = Path.build_filename (datadir, "testdata", null);

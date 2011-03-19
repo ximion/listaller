@@ -21,6 +21,7 @@
 
 using GLib;
 using Gee;
+using Listaller;
 
 private string datadir;
 
@@ -28,13 +29,13 @@ void msg (string s) {
 	stdout.printf (s + "\n");
 }
 
-void test_setup_message_cb (LiMessageItem item) {
+void test_setup_message_cb (MessageItem item) {
 	msg ("Received message:");
 	msg (" " + item.to_string ());
-	assert (item.mtype == LiMessageType.INFO);
+	assert (item.mtype == MessageEnum.INFO);
 }
 
-void test_setup_error_code_cb (LiErrorItem item) {
+void test_setup_error_code_cb (ErrorItem item) {
 	msg ("Received error:");
 	msg (" " + item.to_string ());
 	error (item.details);
@@ -45,11 +46,11 @@ void test_install_package () {
 	msg ("Installer tests");
 
 	// Set up Listaller configuration
-	LiSettings conf = new LiSettings ();
+	Listaller.Settings conf = new Listaller.Settings ();
 	conf.testmode = true;
 
 	string ipkfilename = Path.build_filename (datadir, "foobar-testsetup.ipk", null);
-	LiSetup setup = new LiSetup (ipkfilename, conf);
+	Setup setup = new Setup (ipkfilename, conf);
 	ret = setup.initialize ();
 	assert (ret == true);
 
@@ -58,7 +59,7 @@ void test_install_package () {
 }
 
 int main (string[] args) {
-	stdout.printf ("=== Running IPK Installer Tests ===\n");
+	msg ("=== Running IPK Installer Tests ===");
 	datadir = args[1];
 	assert (datadir != null);
 	datadir = Path.build_filename (datadir, "testdata", null);

@@ -21,11 +21,14 @@
 
 using GLib;
 using Gee;
+using Listaller;
 
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION7 = Config.VERSION;
 
-private class IPKFileEntry : Object {
+namespace Listaller.IPK {
+
+private class FileEntry : Object {
 	private string _destination;
 	private string _fname;
 	private string _hash;
@@ -57,7 +60,7 @@ private class IPKFileEntry : Object {
 		set { _fname_installed = value; }
 	}
 
-	public IPKFileEntry () {
+	public FileEntry () {
 		destination = "";
 		fname = "";
 		hash = "";
@@ -75,10 +78,10 @@ private class IPKFileEntry : Object {
 
 }
 
-private class IPKFileList : Object {
+private class FileList : Object {
 	private LinkedList<string> text;
 
-	public IPKFileList () {
+	public FileList () {
 		text = new LinkedList<string> ();
 		text.add ("# IPK file list");
 		text.add ("");
@@ -164,10 +167,10 @@ private class IPKFileList : Object {
 		return true;
 	}
 
-	public ArrayList<IPKFileEntry> get_files () {
+	public ArrayList<FileEntry> get_files () {
 		string current_dir = "";
 		Iterator<string> it = text.iterator ();
-		ArrayList<IPKFileEntry> flist = new ArrayList<IPKFileEntry> ();
+		ArrayList<FileEntry> flist = new ArrayList<FileEntry> ();
 
 		it.first ();
 		while (it.has_next ()) {
@@ -182,7 +185,7 @@ private class IPKFileList : Object {
 			}
 			if (current_dir == "")
 				continue;
-			IPKFileEntry e = new IPKFileEntry ();
+			FileEntry e = new FileEntry ();
 			e.fname = s;
 			if (!it.next ())
 				break;
@@ -201,3 +204,5 @@ private class IPKFileList : Object {
 		return res;
 	}
 }
+
+} // End of namespace

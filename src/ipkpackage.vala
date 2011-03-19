@@ -22,40 +22,43 @@
 using GLib;
 using Gee;
 using Archive;
+using Listaller;
 
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION6 = Config.VERSION;
 
-private class IPKPackage : Object {
-	private LiSettings conf;
+namespace Listaller.IPK {
+
+private class Package : Object {
+	private Settings conf;
 	private string fname;
 	private string wdir;
 	private bool ipk_valid;
 	private string data_archive;
-	private IPKControl ipkc;
-	private IPKFileList ipkf;
+	private IPK.Control ipkc;
+	private IPK.FileList ipkf;
 
-	public signal void error_code (LiErrorItem error);
-	public signal void message (LiMessageItem message);
+	public signal void error_code (ErrorItem error);
+	public signal void message (MessageItem message);
 
-	public IPKControl control {
+	public IPK.Control control {
 		get { return ipkc; }
 	}
 
-	public IPKPackage (string filename, LiSettings? settings) {
+	public Package (string filename, Settings? settings) {
 		fname = filename;
 
 		conf = settings;
 		if (conf == null)
-			conf = new LiSettings ();
+			conf = new Settings ();
 		wdir = conf.get_unique_tmp_dir ();
 
 		ipk_valid = false;
-		ipkc = new IPKControl ();
-		ipkf = new IPKFileList ();
+		ipkc = new IPK.Control ();
+		ipkf = new IPK.FileList ();
 	}
 
-	~IPKPackage () {
+	~Package () {
 		// Remove workspace
 		// TODO: Make this recursive
 		DirUtils.remove (wdir);
@@ -64,7 +67,7 @@ private class IPKPackage : Object {
 
 	private void emit_warning (string msg) {
 		// Construct warning message
-		LiMessageItem item = new LiMessageItem(LiMessageType.WARNING);
+		MessageItem item = new MessageItem(MessageEnum.WARNING);
 		item.details = msg;
 		message (item);
 		warning (msg);
@@ -72,15 +75,15 @@ private class IPKPackage : Object {
 
 	private void emit_message (string msg) {
 		// Construct info message
-		LiMessageItem item = new LiMessageItem(LiMessageType.INFO);
+		MessageItem item = new MessageItem(MessageEnum.INFO);
 		item.details = msg;
 		message (item);
 		GLib.message (msg);
 	}
 
-	private void emit_error (LiError id, string details) {
+	private void emit_error (ErrorEnum id, string details) {
 		// Construct error
-		LiErrorItem item = new LiErrorItem(id);
+		ErrorItem item = new ErrorItem(id);
 		item.details = details;
 		error_code (item);
 		critical (details);
@@ -90,7 +93,7 @@ private class IPKPackage : Object {
 		return ipk_valid;
 	}
 
-	public ArrayList<IPKFileEntry> get_filelist () {
+	public ArrayList<FileEntry> get_filelist () {
 		return ipkf.get_files ();
 	}
 
@@ -198,8 +201,8 @@ private class IPKPackage : Object {
 
 		// Open the file, if it fails exit
 		if (ar.open_filename (fname, 4096) != Result.OK)
-			emit_error (LiError.IPK_LOADING_FAILED,
-				    _("Could not open IPK file! Error: %s").printf (ar.error_string ()));
+			emit_error (ErrorEnum.IPK_LOADING_FAILED,
+				_("Could not open IPK file! Error: %s").printf (ar.error_string ()));
 		return ar;
 	}
 
@@ -242,8 +245,8 @@ private class IPKPackage : Object {
 				ret = extract_entry_to (ar, e, wdir);
 				if (!ret) {
 					warning (_("Unable to extract IPK data!"));
-					emit_error (LiError.IPK_INCOMPLETE,
-						    _("Could not extract IPK payload! Package might be damaged. Error: %s").printf (ar.error_string ()));
+					emit_error (ErrorEnum.IPK_INCOMPLETE,
+						_("Could not extract IPK payload! Package might be damaged. Error: %s").printf (ar.error_string ()));
 				}
 				break;
 			}
@@ -265,8 +268,8 @@ private class IPKPackage : Object {
 		plar.support_format_tar ();
 		plar.support_compression_all ();
 		if (plar.open_filename (data_archive, 4096) != Result.OK) {
-			emit_error (LiError.IPK_DAMAGED,
-				    _("Could not read IPK payload container! Package might be damaged. Error: %s").printf (plar.error_string ()));
+			emit_error (ErrorEnum.IPK_DAMAGED,
+				_("Could not read IPK payload container! Package might be damaged. Error: %s").printf (plar.error_string ()));
 			return null;
 		}
 		return plar;
@@ -279,14 +282,14 @@ private class IPKPackage : Object {
 				d.make_directory_with_parents ();
 			}
 		} catch (Error e) {
-			emit_error (LiError.FILE_INSTALL_FAILED,
-				    _("Could not create destination directory. Error: %s").printf (e.message));
+			emit_error (ErrorEnum.FILE_INSTALL_FAILED,
+				_("Could not create destination directory. Error: %s").printf (e.message));
 			return false;
 		}
 		return true;
 	}
 
-	private bool extract_file_copy_dest (IPKFileEntry fe, Read plar, Entry e) {
+	private bool extract_file_copy_dest (IPK.FileEntry fe, Read plar, Entry e) {
 		bool ret = true;
 		string dest;
 
@@ -309,9 +312,9 @@ private class IPKPackage : Object {
 		// Check if file already exists
 		if (FileUtils.test (fname, FileTest.EXISTS)) {
 			// Throw error and exit
-			emit_error (LiError.FILE_EXISTS,
-				    _("Could not override file %s, this file already exists!").printf (fname));
-				    return false;
+			emit_error (ErrorEnum.FILE_EXISTS,
+				_("Could not override file %s, this file already exists!").printf (fname));
+				return false;
 		}
 		// Now extract it!
 		touch_dir (dest);
@@ -325,8 +328,8 @@ private class IPKPackage : Object {
 		string new_hash = compute_checksum_for_file (tmp);
 		if (new_hash != fe.hash) {
 			// Very bad, we have a checksum missmatch -> throw error, delete file and exit
-			emit_error (LiError.HASH_MISSMATCH,
-				    _("Could not validate file %s. This IPK file might have been modified after creation!\nPlease obtain a new copy and try again.").printf (fname));
+			emit_error (ErrorEnum.HASH_MISSMATCH,
+				_("Could not validate file %s. This IPK file might have been modified after creation!\nPlease obtain a new copy and try again.").printf (fname));
 			// Now remove the corrupt file
 			FileUtils.remove (fname);
 
@@ -342,7 +345,7 @@ private class IPKPackage : Object {
 		return ret;
 	}
 
-	public bool install_file (IPKFileEntry fe) {
+	public bool install_file (IPK.FileEntry fe) {
 		bool ret = true;
 		// This extracts a file and verifies it's checksum
 		if (!is_valid ()) {
@@ -380,10 +383,10 @@ private class IPKPackage : Object {
 	}
 
 	// Search for IPKFileEntry with the given IPK internal path
-	private IPKFileEntry? get_fe_by_int_path (ArrayList<IPKFileEntry> list, string int_path) {
-		IPKFileEntry re = null;
+	private IPK.FileEntry? get_fe_by_int_path (ArrayList<IPK.FileEntry> list, string int_path) {
+		IPK.FileEntry re = null;
 		VarSolver vs = new VarSolver ();
-		foreach (IPKFileEntry e in list) {
+		foreach (IPK.FileEntry e in list) {
 			if (vs.substitute_vars_id (e.get_full_filename ()) == int_path) {
 				re = e;
 				break;
@@ -410,11 +413,11 @@ private class IPKPackage : Object {
 			return false;
 
 		// Cache file list
-		ArrayList<IPKFileEntry> flist = ipkf.get_files ();
+		ArrayList<IPK.FileEntry> flist = ipkf.get_files ();
 
 		ret = false;
 		weak Entry e;
-		IPKFileEntry fe = null;
+		IPK.FileEntry fe = null;
 		// Now extract & validate all stuff
 		while (plar.next_header (out e) == Result.OK) {
 			fe = get_fe_by_int_path (flist, e.pathname ());
@@ -431,3 +434,5 @@ private class IPKPackage : Object {
 		return ret;
 	}
 }
+
+} // End of namespace

@@ -20,19 +20,24 @@
  */
 
 using GLib;
+using Listaller;
 
 // Workaround for Vala bug #618931
 private const string _PKG_VERSION9 = Config.VERSION;
 
-public class LiManager : Object {
-	private LiSettings conf;
+[CCode (cheader_filename = "listaller-glib/manager.h")]
 
-	public signal void error_code (LiErrorItem error);
+namespace Listaller {
+
+public class Manager : Object {
+	private Settings conf;
+
+	public signal void error_code (ErrorItem error);
 	public signal void progress_changed (int progress, int subprogress);
-	public signal void status_changed (LiStatusItem status);
-	public signal void message (LiMessageItem message);
+	public signal void status_changed (StatusItem status);
+	public signal void message (MessageItem message);
 
-	public LiSettings settings {
+	public Settings settings {
 		get { return conf; }
 		set { conf = value; }
 	}
@@ -40,10 +45,10 @@ public class LiManager : Object {
 	/*
 	 * @param: settings A valid LiSettings instance, describing basic settings (or null)
 	 */
-	public LiManager (LiSettings? settings) {
+	public Manager (Settings? settings) {
 		conf = settings;
 		if (conf == null)
-			conf = new LiSettings (false);
+			conf = new Settings (false);
 
 		debug ("This is Listaller " + Config.VERSION);
 	}
@@ -53,3 +58,5 @@ public class LiManager : Object {
 		sdb.open ();
 	}
 }
+
+} // End of namespace
