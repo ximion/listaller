@@ -17,7 +17,18 @@ set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	installer.vala
 )
 
-link_libraries(${GLIB2_LIBRARIES}
+list(APPEND VALA_INCLUDE_DIRS ${CMAKE_BINARY_DIR})
+
+vala_add_library("listaller-glib" SHARED ${LISTALLER_GLIB_SOURCES}
+			     BASE_DIR ${lisrc}
+			     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
+			     PACKAGES ${LISTALLER_BASE_VALA_DEPS} #PackageKitGlib-1.0
+			     GENERATE_VAPI listaller.vapi
+			     GENERATE_HEADER listaller.h
+)
+
+target_link_libraries(listaller-glib
+	       ${GLIB2_LIBRARIES}
 	       ${GEE_LIBRARIES}
 	       ${GIO2_LIBRARIES}
 	       ${SQLITE_LIBRARIES}
@@ -35,16 +46,6 @@ include_directories(${CMAKE_BINARY_DIR}
 		    ${LibArchive_INCLUDE_DIR}
 		    ${LIBXML2_INCLUDE_DIR}
 		    ${GPGME_INCLUDES}
-)
-
-list(APPEND VALA_INCLUDE_DIRS ${CMAKE_BINARY_DIR})
-
-vala_add_library("listaller-glib" SHARED ${LISTALLER_GLIB_SOURCES}
-			     BASE_DIR ${lisrc}
-			     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
-			     PACKAGES ${LISTALLER_BASE_VALA_DEPS} #PackageKitGlib-1.0
-			     GENERATE_VAPI listaller.vapi
-			     GENERATE_HEADER listaller.h
 )
 
 if(NOT LILIBS_FULL_VERSION)

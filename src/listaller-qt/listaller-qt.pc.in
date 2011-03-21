@@ -1,11 +1,11 @@
 prefix=@CMAKE_INSTALL_PREFIX@
-exec_prefix=@CMAKE_INSTALL_PREFIX@
-libdir=@LIB_INSTALL_DIR@
-includedir=@CMAKE_INSTALL_PREFIX@/include/listaller-qt
+exec_prefix=${prefix}
+libdir=${exec_prefix}/@CMAKE_INSTALL_LIBDIR@
+includedir=${prefix}/include/listaller-qt
 
 Name: listaller-qt
 Description: Qt4 bindings to the Listaller library
-Version: 0.4.0
+Version: @LILIBS_FULL_VERSION@
 Requires: QtCore, listaller
 Libs: -L${libdir} -llistaller-qt
 Cflags: -I${includedir}

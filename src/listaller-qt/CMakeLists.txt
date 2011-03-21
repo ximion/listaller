@@ -3,6 +3,8 @@
 find_package(Qt4 REQUIRED)
 include(${QT_USE_FILE})
 find_package(PkgConfig REQUIRED)
+find_package(GLIB2 REQUIRED)
+pkg_check_modules(GEE REQUIRED gee-1.0)
 
 set(listaller-qt_SRCS
     limanager.cpp
@@ -31,7 +33,7 @@ include_directories(${CMAKE_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${qt4_include_dir}
-    "${CMAKE_CURRENT_BINARY_DIR}/../")
+    "${CMAKE_CURRENT_BINARY_DIR}/../listaller")
 
 add_library(listaller-qt SHARED ${listaller-qt_SRCS} ${listaller-qt_MOC_SRCS})
 
@@ -42,17 +44,16 @@ endif()
 set_target_properties(listaller-qt PROPERTIES VERSION ${LILIBS_FULL_VERSION} SOVERSION ${LILIBS_SOVERSION})
 
 target_link_libraries(listaller-qt
-    ${KDE4_KDEUI_LIBS}
-    ${KDE4_KIO_LIBS}
-    "listaller-glib"
+	${GLIB2_LIBRARIES}
+	${GEE_LIBRARIES}
+	${QT_QTCORE_LIBRARY}
+	"listaller-glib"
 )
 
-set(LIB_INSTALL_DIR "\${exec_prefix}/${CMAKE_INSTALL_LIBDIR}"
-  CACHE PATH "Directory where libraries will be installed"
-  FORCE)
-set(RESOURCE_PREFIX "")
-
-configure_file("listaller-qt.pc.in" "listaller-qt.pc" @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/listaller-qt.pc.in
+  ${CMAKE_CURRENT_BINARY_DIR}/listaller-qt.pc
+  @ONLY
+)
 
 install(TARGETS listaller-qt DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/listaller-qt.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig COMPONENT headers)

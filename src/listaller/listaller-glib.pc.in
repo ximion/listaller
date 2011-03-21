@@ -1,10 +1,10 @@
 prefix=@CMAKE_INSTALL_PREFIX@
 exec_prefix=${prefix}
 libdir=${exec_prefix}/@CMAKE_INSTALL_LIBDIR@
-includedir=${prefix}/include
+includedir=${prefix}/include/listaller-glib
 
 Name: listaller-glib
 Description: Access software management features of Listaller
-Version: 0.5.0
+Version: @LILIBS_FULL_VERSION@
 Libs: -L${libdir} -llistaller-glib
 Cflags: -I${includedir}/listaller-glib
