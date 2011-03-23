@@ -291,22 +291,12 @@ private class Package : Object {
 
 	private bool extract_file_copy_dest (IPK.FileEntry fe, Read plar, Entry e) {
 		bool ret = true;
-		string dest;
 
 		// Varsolver to solve LI variables
 		VarSolver vs = new VarSolver ();
 		string int_path = vs.substitute_vars_id (fe.get_full_filename ());
 
-		// Set right destination
-		if (conf.sumode) {
-			dest = vs.substitute_vars_su (fe.destination);
-		} else {
-			dest = vs.substitute_vars_home (fe.destination);
-		}
-		// Check for testmode
-		if (conf.testmode) {
-			dest = Path.build_filename (conf.get_unique_install_tmp_dir (), vs.substitute_vars_id (fe.destination), null);
-		}
+		string dest = vs.substitute_vars_auto (fe.destination, conf);
 		string fname = Path.build_filename (dest, fe.fname, null);
 
 		// Check if file already exists

@@ -133,6 +133,21 @@ private class VarSolver : Object {
 		}
 		return res;
 	}
+
+	public string substitute_vars_auto (string s, Listaller.Settings conf) {
+		string res = s;
+		// Substitute vars by config option
+		if (conf.sumode) {
+			res = substitute_vars_su (s);
+		} else {
+			res = substitute_vars_home (s);
+		}
+		// Check for testmode
+		if (conf.testmode) {
+			res = Path.build_filename (conf.get_unique_install_tmp_dir (), substitute_vars_id (s), null);
+		}
+		return res;
+	}
 }
 
 class VersionNumber : Object {
