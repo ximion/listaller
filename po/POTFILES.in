@@ -1,3 +1,5 @@
+[encoding: UTF-8]
+# Listaller library sources
 src/appitems.vala
 src/database.vala
 src/ipkcdef.vala

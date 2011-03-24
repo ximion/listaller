@@ -44,6 +44,7 @@ endif(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
 ########################################
 OPTION(TESTS "Enable Listaller's Unit Tests" OFF)
 OPTION(QT "Build Listaller's Qt4 modules" OFF)
+OPTION(TOOLS "Build Listaller's non-gui tools" ON)
 ########################################
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
