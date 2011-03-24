@@ -71,6 +71,7 @@ private bool is_root () {
 		return false;
 	}
 }
+
 /*
  * Calculate checksum for file
  */
@@ -96,4 +97,34 @@ private string compute_checksum_for_file (string fname, ChecksumType cstype = Ch
 
 	string sum = cs.get_string ();
 	return sum;
+}
+
+/*
+ * Remove folder like rm -r does
+ */
+private bool delete_dir_recursive (string dirname) {
+	try {
+		if (!FileUtils.test (dirname, FileTest.IS_DIR))
+			return true;
+		File dir = File.new_for_path (dirname);
+		FileEnumerator enr = dir.enumerate_children ("standard::name", FileQueryInfoFlags.NOFOLLOW_SYMLINKS);
+		if (enr != null) {
+			FileInfo info = enr.next_file ();
+			while (info != null) {
+				string path = Path.build_filename (dirname, info.get_name ());
+				if (FileUtils.test (path, FileTest.IS_DIR)) {
+					delete_dir_recursive (path);
+				} else {
+					FileUtils.remove (path);
+				}
+				info = enr.next_file ();
+			}
+			if (FileUtils.test (dirname, FileTest.EXISTS))
+				DirUtils.remove (dirname);
+		}
+	} catch (Error e) {
+		critical ("Could not remove directory: %s", e.message);
+		return false;
+	}
+	return true;
 }

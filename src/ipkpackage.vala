@@ -60,9 +60,7 @@ private class Package : Object {
 
 	~Package () {
 		// Remove workspace
-		// TODO: Make this recursive
-		DirUtils.remove (wdir);
-		Posix.rmdir (wdir);
+		delete_dir_recursive (wdir);
 	}
 
 	private void emit_warning (string msg) {
@@ -326,7 +324,7 @@ private class Package : Object {
 			return false;
 		}
 		ret = FileUtils.rename (tmp, fname) == 0;
-		DirUtils.remove (tmp);
+		delete_dir_recursive (tmp);
 		if (!ret) {
 			// If we are here, everything went fine. Mark the file as installed
 			fe.installed = true;
