@@ -37,7 +37,7 @@ include_directories(${CMAKE_BINARY_DIR}
 )
 
 # Database tests
-vala_add_executable ("li-test-database" ${LIUNITTEST_SOURCES} tests-database.vala
+vala_add_executable (li-test-database ${LIUNITTEST_SOURCES} tests-database.vala
 				     BASE_DIR ${lisrc}
 				     PACKAGES ${LISTALLER_BASE_VALA_DEPS}
 				     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
@@ -45,7 +45,7 @@ vala_add_executable ("li-test-database" ${LIUNITTEST_SOURCES} tests-database.val
 add_test(database-test li-test-database)
 
 # IPK layout tests
-vala_add_executable ("li-test-ipk" ${LIUNITTEST_SOURCES} tests-ipk.vala
+vala_add_executable (li-test-ipk ${LIUNITTEST_SOURCES} tests-ipk.vala
 				     BASE_DIR ${lisrc}
 				     PACKAGES ${LISTALLER_BASE_VALA_DEPS}
 				     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
@@ -53,7 +53,7 @@ vala_add_executable ("li-test-ipk" ${LIUNITTEST_SOURCES} tests-ipk.vala
 add_test(ipk-test li-test-ipk ${CMAKE_CURRENT_SOURCE_DIR})
 
 # IPK installer tests
-vala_add_executable ("li-test-installer" ${LIUNITTEST_SOURCES} tests-installer.vala
+vala_add_executable (li-test-installer ${LIUNITTEST_SOURCES} tests-installer.vala
 				     BASE_DIR ${lisrc}
 				     PACKAGES ${LISTALLER_BASE_VALA_DEPS}
 				     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi

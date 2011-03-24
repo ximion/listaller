@@ -1,6 +1,5 @@
-[encoding: UTF-8]
 # Listaller library sources
-src/appitems.vala
+src/appitem.vala
 src/database.vala
 src/ipkcdef.vala
 src/ipkfilelist.vala
@@ -11,3 +10,6 @@ src/util.vala
 src/varsolver.vala
 src/listaller/manager.vala
 src/listaller/installer.vala
+# Listaller tools
+tools/libuild/main.vala
+tools/libuild/ipkbuilder.vala
