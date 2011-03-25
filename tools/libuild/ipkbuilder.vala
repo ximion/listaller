@@ -30,9 +30,8 @@ private const string _PKG_VERSION14 = Config.VERSION;
 namespace Listaller.IPK {
 
 private class Builder : Object {
-	private string fname;
-	private string wdir;
-	private string data_archive;
+	private string tmpdir;
+	private string srcdir;
 	private IPK.Control ipkc;
 	private IPK.FileList ipkf;
 
@@ -43,16 +42,17 @@ private class Builder : Object {
 		get { return ipkc; }
 	}
 
-	public Builder () {
+	public Builder (string input_dir) {
+		srcdir = input_dir;
+		Listaller.Settings conf = new Listaller.Settings ();
+		tmpdir = conf.get_unique_tmp_dir ("ipkbuild");
 		ipkc = new IPK.Control ();
 		ipkf = new IPK.FileList ();
 	}
 
 	~Builder () {
 		// Remove workspace
-		// TODO: Make this recursive
-		DirUtils.remove (wdir);
-		Posix.rmdir (wdir);
+		delete_dir_recursive (tmpdir);
 	}
 
 	private void emit_warning (string msg) {
@@ -68,7 +68,6 @@ private class Builder : Object {
 		MessageItem item = new MessageItem(MessageEnum.INFO);
 		item.details = msg;
 		message (item);
-		GLib.message (msg);
 	}
 
 	private void emit_error (ErrorEnum id, string details) {

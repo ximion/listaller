@@ -216,8 +216,8 @@ public class Settings : Object {
 		return ret;
 	}
 
-	public string get_unique_tmp_dir () {
-		string template = Path.build_filename (tmp_dir (), "listaller-XXXXXX", null);
+	public string get_unique_tmp_dir (string prefix = "listaller") {
+		string template = Path.build_filename (tmp_dir (), prefix + "-XXXXXX", null);
 
 		string res = DirUtils.mkdtemp (template);
 		if (res == null)
