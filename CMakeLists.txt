@@ -83,10 +83,13 @@ add_custom_target(distclean
 find_package (Gettext REQUIRED)
 if (${GETTEXT_FOUND} STREQUAL "TRUE")
 	add_custom_command (OUTPUT ${CMAKE_SOURCE_DIR}/po/listaller.pot
-			COMMAND xgettext -i -s --files-from ${CMAKE_SOURCE_DIR}/po/POTFILES.in -k_
+			COMMAND xgettext -i -c: -s --files-from ${CMAKE_SOURCE_DIR}/po/POTFILES.in -k_
 				-o ${CMAKE_SOURCE_DIR}/po/listaller.pot
 				--copyright-holder=\""Matthias Klumpp\""
-				--package-name="listaller" --no-wrap
+				--package-name="listaller"
+				--package-version="${LISTALLER_VERSION}"
+				--msgid-bugs-address="listaller@googlegroups.com"
+				--no-wrap --no-location
 			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 	)
 	add_custom_target(
