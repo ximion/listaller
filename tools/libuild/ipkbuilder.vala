@@ -32,21 +32,17 @@ namespace Listaller.IPK {
 private class Builder : Object {
 	private string tmpdir;
 	private string srcdir;
-	private IPK.Control ipkc;
+	private IPK.Script ipks;
 	private IPK.FileList ipkf;
 
-	public signal void error_code (ErrorItem error);
+	public signal void error_message (string details);
 	public signal void message (MessageItem message);
-
-	public IPK.Control control {
-		get { return ipkc; }
-	}
 
 	public Builder (string input_dir) {
 		srcdir = input_dir;
 		Listaller.Settings conf = new Listaller.Settings ();
 		tmpdir = conf.get_unique_tmp_dir ("ipkbuild");
-		ipkc = new IPK.Control ();
+		ipks = new IPK.Script ();
 		ipkf = new IPK.FileList ();
 	}
 
@@ -70,12 +66,36 @@ private class Builder : Object {
 		message (item);
 	}
 
-	private void emit_error (ErrorEnum id, string details) {
-		// Construct error
-		ErrorItem item = new ErrorItem(id);
-		item.details = details;
-		error_code (item);
-		critical (details);
+	private void emit_error (string details) {
+		error_message (details);
+	}
+
+	private bool validate_srcdir (string dir) {
+		// Check if IPK sources are present
+		string tmp = dir;
+		if (FileUtils.test (tmp, FileTest.IS_DIR)) {
+			if (FileUtils.test (Path.build_filename (tmp, "control.xml", null), FileTest.EXISTS)) {
+				// Set current source dir and exit
+				srcdir = tmp;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public bool initialize () {
+		// Check for valid installer source dirs
+		if (!validate_srcdir (Path.build_filename (srcdir, "ipkinstall", null)))
+			if (!validate_srcdir (Path.build_filename (srcdir, "install", null)))
+				if (!validate_srcdir (Path.build_filename (srcdir, "data", "install", null))) {
+					//: IPk buolder could not find IPK source scripts
+					emit_error (_("Could not find IPK source files!"));
+					return false;
+				}
+		bool ret = false;
+
+		ipks.load_from_file (Path.build_filename (srcdir, "control.xml", null));
+		return ret;
 	}
 
 }

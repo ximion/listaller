@@ -23,7 +23,7 @@ using GLib;
 using Listaller;
 
 void msg (string s) {
-	message (s + "\n");
+	stdout.printf (s + "\n");
 }
 
 void softwaredb_error_code_cb (ErrorItem item) {

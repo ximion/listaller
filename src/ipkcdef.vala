@@ -30,9 +30,8 @@ private const string _PKG_VERSION5 = Config.VERSION;
 namespace Listaller.IPK {
 
 public class CXml : Object {
-	private int indent = 0;
 	private string fname;
-	private Xml.Doc* xdoc;
+	protected Xml.Doc* xdoc;
 
 	public CXml () {
 		fname = "";
@@ -251,6 +250,17 @@ public class Control : CXml {
 
 	public Control () {
 
+	}
+}
+
+public class Script : CXml {
+
+	public Script () {
+
+	}
+
+	public bool load_from_file (string fname) {
+		return this.open (fname);
 	}
 }
 

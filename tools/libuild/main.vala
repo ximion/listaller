@@ -55,6 +55,26 @@ public class LiBuild : Object {
 		}
 	}
 
+	private void on_error (string details) {
+		stderr.printf (_("ERROR: %s"), details + "\n");
+		exit_code = 6;
+	}
+
+	private void on_message (MessageItem mitem) {
+		string prefix = "?";
+		switch (mitem.mtype) {
+			case MessageEnum.INFO: prefix = "I";
+				break;
+			case MessageEnum.WARNING: prefix = "W";
+				break;
+			case MessageEnum.CRITICAL: prefix = "C";
+				break;
+			default: prefix = "!?";
+				break;
+		}
+		stdout.printf (" " + prefix + ": %s", mitem.details);
+	}
+
 	public void run () {
 		bool done = false;
 		if (_show_version) {
@@ -67,6 +87,11 @@ public class LiBuild : Object {
 			if (srcdir == "")
 				srcdir = Environment.get_current_dir ();
 			IPK.Builder builder = new IPK.Builder (srcdir);
+			builder.error_message.connect (on_error);
+			builder.message.connect (on_message);
+
+			if (!builder.initialize ())
+				return;
 		}
 	}
 
