@@ -59,3 +59,13 @@ vala_add_executable (li-test-installer ${LIUNITTEST_SOURCES} tests-installer.val
 				     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
 )
 add_test(installer-test li-test-installer ${CMAKE_CURRENT_SOURCE_DIR})
+
+if(TOOLS)
+# LiBuild tests
+vala_add_executable (li-test-libuild ${LIUNITTEST_SOURCES} tests-libuild.vala
+				     BASE_DIR ${lisrc}
+				     PACKAGES ${LISTALLER_BASE_VALA_DEPS}
+				     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
+)
+add_test(libuild-test li-test-libuild ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_BINARY_DIR}/tools/libuild/libuild)
+endif(TOOLS)

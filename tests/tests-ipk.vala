@@ -92,14 +92,14 @@ void test_ipk_filelist_file () {
 	bool ret = false;
 
 	IPK.FileList flist = new IPK.FileList ();
-	ret = flist.add_file (Path.build_filename (datadir, "dummy-control.xml", null), "$INST/+junk");
+	ret = flist.add_file (Path.build_filename (datadir, "ipkinstall", "control.xml", null), "$INST/+junk");
 	assert (ret == true);
 	ret = flist.add_file (Path.build_filename (datadir, "foo-payload", "appdata", "+junk", "packicon.png", null), "$INST/+junk");
 	assert (ret == true);
 	ret = flist.add_file (Path.build_filename (datadir, "foo-payload", "desktop", "Osmos.desktop", null), "$APP");
 	assert (ret == true);
 
-	string tmpfile = Path.build_filename (datadir, "sample-files.list", null);
+	string tmpfile = Path.build_filename (datadir, "ipkinstall", "files-current.list", null);
 	FileUtils.remove (tmpfile);
 	flist.save (tmpfile);
 

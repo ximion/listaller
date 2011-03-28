@@ -72,7 +72,7 @@ public class LiBuild : Object {
 			default: prefix = "!?";
 				break;
 		}
-		stdout.printf (" " + prefix + ": %s", mitem.details);
+		stdout.printf (" " + prefix + ": %s", mitem.details + "\n");
 	}
 
 	public void run () {

@@ -74,7 +74,8 @@ private class Builder : Object {
 		// Check if IPK sources are present
 		string tmp = dir;
 		if (FileUtils.test (tmp, FileTest.IS_DIR)) {
-			if (FileUtils.test (Path.build_filename (tmp, "control.xml", null), FileTest.EXISTS)) {
+			if (FileUtils.test (Path.build_filename (tmp, "control.xml", null), FileTest.EXISTS) &&
+			    FileUtils.test (Path.build_filename (tmp, "files-current.list", null), FileTest.EXISTS)) {
 				// Set current source dir and exit
 				srcdir = tmp;
 				return true;
@@ -94,7 +95,12 @@ private class Builder : Object {
 				}
 		bool ret = false;
 
+		// Load definitions
 		ipks.load_from_file (Path.build_filename (srcdir, "control.xml", null));
+		IPK.FileList flist = new IPK.FileList ();
+		flist.open (Path.build_filename (srcdir, "files-current.list", null));
+
+		//TODO: Build IPK here!
 		return ret;
 	}
 
