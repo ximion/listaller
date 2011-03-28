@@ -99,7 +99,7 @@ void test_ipk_filelist_file () {
 	ret = flist.add_file (Path.build_filename (datadir, "foo-payload", "desktop", "Osmos.desktop", null), "$APP");
 	assert (ret == true);
 
-	string tmpfile = Path.build_filename (datadir, "ipkinstall", "files-current.list", null);
+	string tmpfile = Path.build_filename (datadir, "~files-tmp.list", null);
 	FileUtils.remove (tmpfile);
 	flist.save (tmpfile);
 

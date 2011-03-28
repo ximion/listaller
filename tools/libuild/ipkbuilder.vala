@@ -84,6 +84,61 @@ private class Builder : Object {
 		return false;
 	}
 
+	private bool write_ipk_data (ArrayList<IPK.FileEntry> src, string arch = "") {
+		const int buffsize = 8192;
+		char buff[8192];
+		bool ret = true;
+		if ((arch == null) || (arch == "")) {
+			arch = "all";
+		}
+
+		Write a = new Write ();
+		// Define archive format
+		a.set_compression_xz ();
+		a.set_format_pax_restricted ();
+		// Open output
+		create_dir_parents (Path.build_filename (tmpdir, "data", null));
+		string apath = Path.build_filename (tmpdir, "data", "data-" + arch + ".tar.xz", null);
+		a.open_filename (apath);
+		VarSolver vs = new VarSolver ();
+
+		Entry entry = new Entry ();
+		foreach (IPK.FileEntry fe in src) {
+			// Prepare
+			entry.clear ();
+			// Grab filepath
+			string fname;
+			if (!Path.is_absolute (fe.fname)) {
+				fname = Path.build_filename (srcdir, "..", fe.fname, null);
+			} else {
+				fname = fe.fname;
+			}
+			fe.fname = Path.get_basename (fe.fname);
+			// Fetch file details
+			Posix.Stat st;
+			Posix.stat (fname, out st);
+			if (st.st_size <= 0) {
+				debug ("File %s not found.", fname);
+				ret = false;
+				break;
+			}
+			entry.set_pathname (vs.substitute_vars_id (fe.get_full_filename ()));
+			entry.set_size (st.st_size);
+			entry.set_filetype (0100000); // AE_IFREG
+			entry.set_perm (0644);
+			a.write_header (entry);
+			int fd = Posix.open (fname, Posix.O_RDONLY);
+			ssize_t len = Posix.read (fd, buff, buffsize);
+			while (len > 0) {
+				a.write_data (buff, len);
+				len = Posix.read (fd, buff, buffsize);
+			}
+			Posix.close (fd);
+		}
+		a.close ();
+		return ret;
+	}
+
 	public bool initialize () {
 		// Check for valid installer source dirs
 		if (!validate_srcdir (Path.build_filename (srcdir, "ipkinstall", null)))
@@ -93,14 +148,19 @@ private class Builder : Object {
 					emit_error (_("Could not find IPK source files!"));
 					return false;
 				}
+		return true;
+	}
+
+	public bool build_ipk () {
 		bool ret = false;
 
 		// Load definitions
 		ipks.load_from_file (Path.build_filename (srcdir, "control.xml", null));
-		IPK.FileList flist = new IPK.FileList ();
+		IPK.FileList flist = new IPK.FileList (false);
 		flist.open (Path.build_filename (srcdir, "files-current.list", null));
 
 		//TODO: Build IPK here!
+		ret = write_ipk_data (flist.get_files ());
 		return ret;
 	}
 

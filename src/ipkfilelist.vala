@@ -80,8 +80,10 @@ private class FileEntry : Object {
 
 private class FileList : Object {
 	private LinkedList<string> text;
+	private bool has_hashes;
 
-	public FileList () {
+	public FileList (bool with_hashes = true) {
+		has_hashes = with_hashes;
 		text = new LinkedList<string> ();
 		text.add ("# IPK file list");
 		text.add ("");
@@ -187,9 +189,12 @@ private class FileList : Object {
 				continue;
 			FileEntry e = new FileEntry ();
 			e.fname = s;
-			if (!it.next ())
-				break;
-			e.hash = it.get ();
+			// Only add hash value if list has hashes
+			if (has_hashes) {
+				if (!it.next ())
+					break;
+				e.hash = it.get ();
+			}
 			e.destination = current_dir;
 			flist.add (e);
 		}

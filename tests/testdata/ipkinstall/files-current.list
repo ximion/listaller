@@ -1,10 +1,7 @@
 # IPK file list
 
 > $INST/+junk
-packicon.png
-9c1cf1ff238a4ecc07de7f36d160eaa7df5caf07
-control.xml
-624dadd93065bcead61c1352f996aa9f73854160
+foo-payload/appdata/+junk/packicon.png
+foo-payload/appdata/+junk/dummy-control.xml
 > $APP
-Osmos.desktop
-b73d472b0d1bd2ddfa577f55f055e54c7e47a073
+foo-payload/desktop/Osmos.desktop

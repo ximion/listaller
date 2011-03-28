@@ -203,8 +203,12 @@ namespace Archive {
 		public Result set_compression_bzip2 ();
 		public Result set_compression_compress ();
 		public Result set_compression_gzip ();
+		public Result set_compression_lzma ();
 		public Result set_compression_none ();
-		public Result set_compression_program (string cmd);
+		public Result set_compression_program (string command);
+		public Result set_compression_rpm ();
+		public Result set_compression_uu ();
+		public Result set_compression_xz ();
 		public Result set_format (Format format);
 		public Result set_format_by_name (string name);
 		public Result set_format_ar_bsd ();

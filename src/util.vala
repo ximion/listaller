@@ -136,3 +136,19 @@ private string system_architecture () {
 	Posix.utsname uts = new Posix.utsname ();
 	return uts.machine;
 }
+
+/*
+ * Create directory structure
+ */
+private bool create_dir_parents (string dirname) {
+	File d = File.new_for_path (dirname);
+	try {
+		if (!d.query_exists ()) {
+			d.make_directory_with_parents ();
+		}
+	} catch (Error e) {
+		warning ("Could not create directory: %s", e.message);
+		return false;
+	}
+	return true;
+}

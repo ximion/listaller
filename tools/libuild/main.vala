@@ -90,8 +90,14 @@ public class LiBuild : Object {
 			builder.error_message.connect (on_error);
 			builder.message.connect (on_message);
 
-			if (!builder.initialize ())
+			if (!builder.initialize ()) {
+				exit_code = 3;
 				return;
+			}
+			if (!builder.build_ipk ()) {
+				exit_code = 4;
+				return;
+			}
 		}
 	}
 
