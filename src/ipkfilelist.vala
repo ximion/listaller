@@ -155,12 +155,11 @@ private class FileList : Object {
 		return i;
 	}
 
-	public bool add_file (string fname, string fdest) {
+	private bool add_file_internal (string fname, string fdest, string checksum) {
 		// Get index of destination dir
 		int findex = get_folder_index (fdest, true);
 		findex++;
 
-		string checksum = compute_checksum_for_file (fname);
 		if (checksum == "")
 			return false;
 		text.insert (findex, checksum);
@@ -169,7 +168,12 @@ private class FileList : Object {
 		return true;
 	}
 
-	public ArrayList<FileEntry> get_files () {
+	public bool add_file (string fname, string fdest) {
+		string checksum = compute_checksum_for_file (fname);
+		return add_file_internal (fname, fdest, checksum);
+	}
+
+	public ArrayList<FileEntry> get_files_list () {
 		string current_dir = "";
 		Iterator<string> it = text.iterator ();
 		ArrayList<FileEntry> flist = new ArrayList<FileEntry> ();
@@ -199,6 +203,20 @@ private class FileList : Object {
 			flist.add (e);
 		}
 		return flist;
+	}
+
+	public bool set_files_list (ArrayList<FileEntry> flist) {
+		text.clear ();
+		text.add ("# IPK File List");
+		text.add ("");
+
+		foreach (FileEntry fe in flist) {
+			if (!add_file_internal (fe.fname, fe.destination, fe.hash)) {
+				// warning ("Tried to add invalid IPK FileEntry to file list!");
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public string to_string () {

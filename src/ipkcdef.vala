@@ -262,6 +262,10 @@ public class Script : CXml {
 	public bool load_from_file (string fname) {
 		return this.open (fname);
 	}
+
+	public bool save_to_file (string fname) {
+		return xdoc->save_file (fname) == 0;
+	}
 }
 
 } // End of namespace

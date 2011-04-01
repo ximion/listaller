@@ -92,7 +92,7 @@ private class Package : Object {
 	}
 
 	public ArrayList<FileEntry> get_filelist () {
-		return ipkf.get_files ();
+		return ipkf.get_files_list ();
 	}
 
 	private bool process_control_archive (string arname) {
@@ -113,7 +113,8 @@ private class Package : Object {
 				case "control.xml":
 					ret = extract_entry_to (ar, e, wdir);
 					break;
-				case "files.list":
+				// FIXME: Fix this for mutiple data archives
+				case "files-all.list":
 					ret = extract_entry_to (ar, e, wdir);
 					break;
 			}
@@ -131,7 +132,7 @@ private class Package : Object {
 		if (FileUtils.test (tmpf, FileTest.EXISTS)) {
 			ret = ipkc.open (tmpf);
 		}
-		tmpf = Path.build_filename (wdir, "files.list", null);
+		tmpf = Path.build_filename (wdir, "files-all.list", null);
 		if ((ret) && (FileUtils.test (tmpf, FileTest.EXISTS))) {
 			ret = ipkf.open (tmpf);
 		}
@@ -239,7 +240,8 @@ private class Package : Object {
 		weak Entry e;
 		while (ar.next_header (out e) == Result.OK) {
 			// Extract payload
-			if (e.pathname () == "data.tar.xz") {
+			// FIXME: Handle multiple data archives
+			if (e.pathname () == "data-all.tar.xz") {
 				ret = extract_entry_to (ar, e, wdir);
 				if (!ret) {
 					warning (_("Unable to extract IPK data!"));
@@ -251,7 +253,8 @@ private class Package : Object {
 		}
 		ar.close ();
 
-		data_archive = Path.build_filename (wdir, "data.tar.xz", null);
+		// FIXME: Handle multiple data archives
+		data_archive = Path.build_filename (wdir, "data-all.tar.xz", null);
 
 		return ret;
 	}
@@ -401,7 +404,7 @@ private class Package : Object {
 			return false;
 
 		// Cache file list
-		ArrayList<IPK.FileEntry> flist = ipkf.get_files ();
+		ArrayList<IPK.FileEntry> flist = ipkf.get_files_list ();
 
 		ret = false;
 		weak Entry e;

@@ -32,8 +32,10 @@ namespace Listaller.IPK {
 private class Builder : Object {
 	private string tmpdir;
 	private string srcdir;
+	private string outname;
 	private IPK.Script ipks;
-	private IPK.FileList ipkf;
+	private ArrayList<string> ctrlfiles;
+	private ArrayList<string> datapkgs;
 
 	public signal void error_message (string details);
 	public signal void message (MessageItem message);
@@ -43,7 +45,9 @@ private class Builder : Object {
 		Listaller.Settings conf = new Listaller.Settings ();
 		tmpdir = conf.get_unique_tmp_dir ("ipkbuild");
 		ipks = new IPK.Script ();
-		ipkf = new IPK.FileList ();
+		outname = "";
+		ctrlfiles = new ArrayList<string> ();
+		datapkgs = new ArrayList<string> ();
 	}
 
 	~Builder () {
@@ -84,7 +88,7 @@ private class Builder : Object {
 		return false;
 	}
 
-	private bool write_ipk_data (ArrayList<IPK.FileEntry> src, string arch = "") {
+	private bool write_ipk_file_data (ref ArrayList<IPK.FileEntry> src, string arch = "") {
 		const int buffsize = 8192;
 		char buff[8192];
 		bool ret = true;
@@ -114,6 +118,7 @@ private class Builder : Object {
 				fname = fe.fname;
 			}
 			fe.fname = Path.get_basename (fe.fname);
+			fe.hash = compute_checksum_for_file (fname);
 			// Fetch file details
 			Posix.Stat st;
 			Posix.stat (fname, out st);
@@ -136,7 +141,161 @@ private class Builder : Object {
 			Posix.close (fd);
 		}
 		a.close ();
+		// Add this payload package to data pkg list
+		datapkgs.add (apath);
 		return ret;
+	}
+
+	private bool build_ipk_files_structure (IPK.FileList flist, string arch = "") {
+		bool ret = false;
+		if ((arch == null) || (arch == "")) {
+			arch = "all";
+		}
+		ArrayList<IPK.FileEntry> fileslst = flist.get_files_list ();
+		ret = write_ipk_file_data (ref fileslst, arch);
+		if (!ret) {
+			error_message ("Unable to write IPK payload - do all files exist?");
+			return false;
+		}
+		ret = flist.set_files_list (fileslst);
+		if (!ret) {
+			error_message ("Could not build IPK file list!");
+			return false;
+		}
+		string tmp = Path.build_filename (tmpdir, "control", "files-" + arch + ".list", null);
+		ret = flist.save (tmp);
+		// Add to control file list, if file was created successfully
+		if (ret)
+			ctrlfiles.add (tmp);
+		return ret;
+	}
+
+	private bool write_ipk_control_data () {
+		const int buffsize = 8192;
+		char buff[8192];
+		bool ret = true;
+
+		Write a = new Write ();
+		// Define archive format
+		a.set_compression_xz ();
+		a.set_format_pax_restricted ();
+		// Open output
+		string apath = Path.build_filename (tmpdir, "control", "control.tar.xz", null);
+		a.open_filename (apath);
+
+		Entry entry = new Entry ();
+		foreach (string fname in ctrlfiles) {
+			// Prepare
+			entry.clear ();
+			// Fetch file details
+			Posix.Stat st;
+			Posix.stat (fname, out st);
+			if (st.st_size <= 0) {
+				debug ("File %s not found.", fname);
+				ret = false;
+				break;
+			}
+			entry.set_pathname (Path.get_basename (fname));
+			entry.set_size (st.st_size);
+			entry.set_filetype (0100000); // AE_IFREG
+			entry.set_perm (0644);
+			a.write_header (entry);
+			int fd = Posix.open (fname, Posix.O_RDONLY);
+			ssize_t len = Posix.read (fd, buff, buffsize);
+			while (len > 0) {
+				a.write_data (buff, len);
+				len = Posix.read (fd, buff, buffsize);
+			}
+			Posix.close (fd);
+		}
+		a.close ();
+		return ret;
+	}
+
+	private bool finalize_ipk () {
+		const int buffsize = 8192;
+		char buff[8192];
+		bool ret = true;
+
+		// Set output file name
+		if (outname == "") {
+			string ipkname;
+			ipkname = ipks.get_app_name ().down () + "-" + ipks.get_app_version ().down () + "_install.ipk";
+			outname = Path.build_filename (srcdir, "..", ipkname, null);
+		}
+
+		if (FileUtils.test (outname, FileTest.EXISTS)) {
+			error_message ("Cannot override %s! Delete this package or run libuild with '-o' parameter!".printf (outname));
+			return false;
+		}
+
+		Write a = new Write ();
+		// Define archive format
+		a.set_compression_none ();
+		a.set_format_pax_restricted ();
+		// Open output
+		a.open_filename (outname);
+
+		Entry entry = new Entry ();
+		// Add all data tarballs
+		foreach (string fname in datapkgs) {
+			// Prepare
+			entry.clear ();
+			// Fetch file details
+			Posix.Stat st;
+			Posix.stat (fname, out st);
+			if (st.st_size <= 0) {
+				warning ("File %s not found.", fname);
+				error_message ("Internal error: Unable to find IPK payload archive!");
+				ret = false;
+				break;
+			}
+			entry.set_pathname (Path.get_basename (fname));
+			entry.set_size (st.st_size);
+			entry.set_filetype (0100000); // AE_IFREG
+			entry.set_perm (0644);
+			a.write_header (entry);
+			int fd = Posix.open (fname, Posix.O_RDONLY);
+			ssize_t len = Posix.read (fd, buff, buffsize);
+			while (len > 0) {
+				a.write_data (buff, len);
+				len = Posix.read (fd, buff, buffsize);
+			}
+			Posix.close (fd);
+		}
+		// Add control info
+		string ctrlfile = Path.build_filename (tmpdir, "control", "control.tar.xz", null);
+		entry.clear ();
+		// Fetch file details
+		Posix.Stat st;
+		Posix.stat (ctrlfile, out st);
+		if (st.st_size <= 0) {
+			warning ("File %s not found.", ctrlfile);
+			ret = false;
+			error_message ("Internal error: IPK control info tarball was not found!");
+			return false;
+		}
+ 		entry.set_pathname (Path.get_basename (ctrlfile));
+		entry.set_size (st.st_size);
+		entry.set_filetype (0100000); // AE_IFREG
+		entry.set_perm (0644);
+		a.write_header (entry);
+		int fd = Posix.open (ctrlfile, Posix.O_RDONLY);
+		ssize_t len = Posix.read (fd, buff, buffsize);
+		while (len > 0) {
+			a.write_data (buff, len);
+			len = Posix.read (fd, buff, buffsize);
+		}
+		Posix.close (fd);
+
+		// TODO: Sign package here
+
+		a.close ();
+		return ret;
+	}
+
+	public void set_output_ipk (string fname) {
+		outname = fname;
 	}
 
 	public bool initialize () {
@@ -159,8 +318,22 @@ private class Builder : Object {
 		IPK.FileList flist = new IPK.FileList (false);
 		flist.open (Path.build_filename (srcdir, "files-current.list", null));
 
-		//TODO: Build IPK here!
-		ret = write_ipk_data (flist.get_files ());
+		create_dir_parents (Path.build_filename (tmpdir, "control", null));
+		create_dir_parents (Path.build_filename (tmpdir, "data", null));
+
+		//TODO: Convert IPK script file to IPK control file instead of just copying it
+		string tmp = Path.build_filename (tmpdir, "control", "control.xml", null);
+		ipks.save_to_file (tmp);
+		ctrlfiles.add (tmp);
+
+		ret = build_ipk_files_structure (flist);
+		if (!ret)
+			return false;
+		ret = write_ipk_control_data ();
+		if (!ret)
+			return false;
+		ret = finalize_ipk ();
+
 		return ret;
 	}
 

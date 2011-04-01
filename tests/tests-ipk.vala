@@ -49,7 +49,7 @@ void test_ipk_package () {
 	Listaller.Settings conf = new Listaller.Settings ();
 	conf.testmode = true;
 
-	string ipkfilename = Path.build_filename (datadir, "foobar-testsetup.ipk", null);
+	string ipkfilename = Path.build_filename (datadir, "foobar-1.0_install.ipk", null);
 	msg ("Loading IPK package %s".printf (ipkfilename));
 	IPK.Package ipk = new IPK.Package (ipkfilename, conf);
 	// Connect signal handlers
@@ -99,11 +99,11 @@ void test_ipk_filelist_file () {
 	ret = flist.add_file (Path.build_filename (datadir, "foo-payload", "desktop", "Osmos.desktop", null), "$APP");
 	assert (ret == true);
 
-	string tmpfile = Path.build_filename (datadir, "~files-tmp.list", null);
+	string tmpfile = Path.build_filename (datadir, "files-tmp.list~", null);
 	FileUtils.remove (tmpfile);
 	flist.save (tmpfile);
 
-	ArrayList<IPK.FileEntry> lst = flist.get_files ();
+	ArrayList<IPK.FileEntry> lst = flist.get_files_list ();
 	foreach (IPK.FileEntry e in lst) {
 		msg (e.to_string ());
 	}

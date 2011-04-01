@@ -133,7 +133,7 @@ private bool delete_dir_recursive (string dirname) {
  * Fetch current system architecture
  */
 private string system_architecture () {
-	Posix.utsname uts = new Posix.utsname ();
+	Posix.utsname uts = Posix.utsname ();
 	return uts.machine;
 }
 

@@ -24,6 +24,7 @@ using Gee;
 using Listaller;
 
 string libuild_exec;
+string datadir;
 
 void msg (string s) {
 	stdout.printf (s + "\n");
@@ -33,6 +34,8 @@ void test_libuild_build () {
 	bool ret = false;
 	msg ("LiBuild tests");
 
+	// Cleanup
+	FileUtils.remove (Path.build_filename (datadir, "foobar-1.0_install.ipk", null));
 	// Simple build test
 	try {
 		int exit_status = 0;
@@ -46,7 +49,7 @@ void test_libuild_build () {
 
 int main (string[] args) {
 	msg ("=== Running LiBuild Tests ===");
-	string datadir = args[1];
+	datadir = args[1];
 	assert (datadir != null);
 	libuild_exec = args[2];
 	assert (libuild_exec != null);
