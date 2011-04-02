@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-03-25 23:27+0100\n"
+"POT-Creation-Date: 2011-04-02 19:40+0200\n"
 "PO-Revision-Date: 2011-01-16 02:51+0000\n"
 "Last-Translator: RodolfoRG <rodolforg@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -38,6 +38,10 @@ msgstr ""
 
 #, c-format
 msgid "Could not extract file! Error: %s"
+msgstr ""
+
+#. : IPk builder could not find IPK source scripts
+msgid "Could not find IPK source files!"
 msgstr ""
 
 #, c-format
@@ -82,6 +86,10 @@ msgid "Database locked"
 msgstr ""
 
 msgid "Database unlocked"
+msgstr ""
+
+#, c-format
+msgid "ERROR: %s"
 msgstr ""
 
 #, fuzzy, c-format

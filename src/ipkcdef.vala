@@ -38,7 +38,7 @@ public abstract class CXml : Object {
 		set { _xdoc = value; }
 	}
 
-	public CXml () {
+	internal CXml () {
 		fname = "";
 		xdoc = null;
 	}

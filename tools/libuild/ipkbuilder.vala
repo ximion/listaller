@@ -303,7 +303,7 @@ private class Builder : Object {
 		if (!validate_srcdir (Path.build_filename (srcdir, "ipkinstall", null)))
 			if (!validate_srcdir (Path.build_filename (srcdir, "install", null)))
 				if (!validate_srcdir (Path.build_filename (srcdir, "data", "install", null))) {
-					//: IPk buolder could not find IPK source scripts
+					//: IPk builder could not find IPK source scripts
 					emit_error (_("Could not find IPK source files!"));
 					return false;
 				}

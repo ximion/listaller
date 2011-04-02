@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-03-25 23:27+0100\n"
+"POT-Creation-Date: 2011-04-02 19:40+0200\n"
 "PO-Revision-Date: 2011-03-12 23:30+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -39,6 +39,11 @@ msgstr ""
 #, c-format
 msgid "Could not extract file! Error: %s"
 msgstr ""
+
+#. : IPk builder could not find IPK source scripts
+#, fuzzy
+msgid "Could not find IPK source files!"
+msgstr "Konnte IPK Datei nicht öffnen: %s"
 
 #, c-format
 msgid "Could not load desktop file values: %s"
@@ -86,6 +91,10 @@ msgstr "Datenbank gesperrt"
 
 msgid "Database unlocked"
 msgstr "Datenbank entsperrt"
+
+#, fuzzy, c-format
+msgid "ERROR: %s"
+msgstr "FEHLER in der LCL: "
 
 #, fuzzy, c-format
 msgid "Error initializing: %s"
@@ -629,9 +638,6 @@ msgstr ""
 #~ "Konnte keine GUI-Paketmanager finden.\rBitte installieren sie eine "
 #~ "grafische Oberfläche für PackageKit!"
 
-#~ msgid "Could not open IPK file: %s"
-#~ msgstr "Konnte IPK Datei nicht öffnen: %s"
-
 #~ msgid "Couldn't find Listaller Manager!"
 #~ msgstr "Konnte Listaller Manager nicht finden!"
 
@@ -808,9 +814,6 @@ msgstr ""
 
 #~ msgid "Duplicate menus"
 #~ msgstr "Doppelte Menüs"
-
-#~ msgid "ERROR in LCL: "
-#~ msgstr "FEHLER in der LCL: "
 
 #~ msgid "Edit"
 #~ msgstr "Bearbeiten"
