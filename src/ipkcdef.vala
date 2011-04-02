@@ -29,9 +29,14 @@ private const string _PKG_VERSION5 = Config.VERSION;
 
 namespace Listaller.IPK {
 
-public class CXml : Object {
+public abstract class CXml : Object {
 	private string fname;
-	protected Xml.Doc* xdoc;
+	private Xml.Doc* _xdoc;
+
+	internal Xml.Doc* xdoc {
+		get { return _xdoc; }
+		set { _xdoc = value; }
+	}
 
 	public CXml () {
 		fname = "";
