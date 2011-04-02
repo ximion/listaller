@@ -13,7 +13,7 @@ eval set -- "$PARSED_OPTIONS"
 function usage
 {
   echo "Usage:"
-  echo " ./configure <options> [parameters]"
+  echo " ./prepare <options> [parameters]"
   echo "Use --enable-<option> to enable features for build."
 }
 
