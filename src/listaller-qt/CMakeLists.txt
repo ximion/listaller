@@ -1,4 +1,4 @@
-# CMakeLists for LibListaller-Qt
+# CMakeLists for Listaller-Qt
 
 find_package(Qt4 REQUIRED)
 include(${QT_USE_FILE})
@@ -8,12 +8,12 @@ pkg_check_modules(GEE REQUIRED gee-1.0)
 
 set(listaller-qt_SRCS
     limanager.cpp
-    lisetup.cpp
+#    lisetup.cpp
 )
 
 set(listaller-qt_HEADERS
    limanager.h
-   lisetup.h
+#   lisetup.h
 )
 
 set(listaller-qt_INST_HEADERS Listaller-Qt
@@ -33,7 +33,9 @@ include_directories(${CMAKE_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${qt4_include_dir}
-    "${CMAKE_CURRENT_BINARY_DIR}/../listaller")
+    ${GLIB2_INCLUDE_DIR}
+    ${GEE_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_BINARY_DIR}/..)
 
 add_library(listaller-qt SHARED ${listaller-qt_SRCS} ${listaller-qt_MOC_SRCS})
 

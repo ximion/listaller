@@ -1,6 +1,6 @@
 /*
-    listaller-qt - Qt4 wrapper for libListaller
-    Copyright (C) 2010 Matthias Klumpp
+    listaller-qt - Qt4 wrapper for Listaller
+    Copyright (C) 2010-2011 Matthias Klumpp
 
     This library is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,9 +23,7 @@
 
 namespace Listaller {
 
-class LiMsgRedirect;
-
-struct Application
+struct AppItem
 {
   QString name;
   QString id;
@@ -36,6 +34,8 @@ struct Application
   double  timeStamp;
   QString dependencies;
 };
+
+class AppManagerPriv;
 
 /**
  * The AppManager class allows access to Listaller's application
@@ -52,20 +52,11 @@ public:
     AppManager();
     ~AppManager();
     
-    void findApps(const QString filter_text);
-    bool updateAppDB();
-    bool uninstallApp(Application app);
-    
-    void setSuMode(bool b);
-    bool suMode() const;
-    
-signals:
-    void newApp(Application app);
-    void statusMessage(QString msg);
+    bool sumode ();
+    void setSumode (bool b);    
     
 private:
-    void* mgr;
-    LiMsgRedirect *msgRedir;
+    AppManagerPriv *priv;
 };
 
 };
