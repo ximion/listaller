@@ -23,7 +23,7 @@ vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 			     BASE_DIR ${lisrc}
 			     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
 			     PACKAGES ${LISTALLER_BASE_VALA_DEPS} #PackageKitGlib-1.0
-			     GENERATE_VAPI listaller.vapi
+			     GENERATE_VAPI listaller-${LILIBS_VERSION}.vapi
 			     GENERATE_HEADER listaller.h
 			     OUTPUT_DIR ${CMAKE_BINARY_DIR}/src
 )
@@ -66,5 +66,9 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/listaller-glib.pc
 )
 install(FILES ${CMAKE_BINARY_DIR}/src/listaller.h
 	DESTINATION include/listaller-glib
+	COMPONENT headers
+)
+install(FILES ${CMAKE_BINARY_DIR}/src/listaller-${LILIBS_VERSION}.vapi
+	DESTINATION share/vala/vapi
 	COMPONENT headers
 )
