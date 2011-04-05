@@ -20,32 +20,25 @@
  */
 
 using GLib;
-using Listaller;
 
 // Workaround for Vala bug #618931
-private const string _PKG_VERSION15 = Config.VERSION;
+private const string _PKG_VERSION1 = Config.VERSION;
 
-public class LiBuild : Object {
+public class DepScanCmd : Object {
 	// Cmd options
-	private static string _src_dir = "";
 	private static bool _show_version = false;
-	private static bool _build_mode = false;
 
 	public int exit_code { get; set; }
 
 	private const OptionEntry[] options = {
 		{ "version", 'v', 0, OptionArg.NONE, ref _show_version,
 		N_("Show the application's version"), null },
-		{ "build", 'b', 0, OptionArg.NONE, ref _build_mode,
-		N_("Build IPK package"), null },
-		{ "sourcedir", 's', 0, OptionArg.FILENAME, ref _src_dir,
-			N_("Path to Listaller package source directory"), N_("DIRECTORY") },
 		{ null }
 	};
 
-	public LiBuild (string[] args) {
+	public DepScanCmd (string[] args) {
 		exit_code = 0;
-		var opt_context = new OptionContext ("- build IPK setup packages.");
+		var opt_context = new OptionContext ("- scan software dependencies.");
 		opt_context.set_help_enabled (true);
 		opt_context.add_main_entries (options, null);
 		try {
@@ -60,44 +53,11 @@ public class LiBuild : Object {
 		exit_code = 6;
 	}
 
-	private void on_message (MessageItem mitem) {
-		string prefix = "?";
-		switch (mitem.mtype) {
-			case MessageEnum.INFO: prefix = "I";
-				break;
-			case MessageEnum.WARNING: prefix = "W";
-				break;
-			case MessageEnum.CRITICAL: prefix = "C";
-				break;
-			default: prefix = "!?";
-				break;
-		}
-		stdout.printf (" " + prefix + ": %s", mitem.details + "\n");
-	}
-
 	public void run () {
 		bool done = false;
 		if (_show_version) {
 			stdout.printf ("Listaller bundle version: %s\n", Config.VERSION);
 			return;
-		}
-		if (_build_mode) {
-			// Take directory from options, otherwise use current dir
-			string srcdir = _src_dir;
-			if (srcdir == "")
-				srcdir = Environment.get_current_dir ();
-			IPK.Builder builder = new IPK.Builder (srcdir);
-			builder.error_message.connect (on_error);
-			builder.message.connect (on_message);
-
-			if (!builder.initialize ()) {
-				exit_code = 3;
-				return;
-			}
-			if (!builder.build_ipk ()) {
-				exit_code = 4;
-				return;
-			}
 		}
 	}
 
@@ -108,7 +68,7 @@ public class LiBuild : Object {
 		Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
 		Intl.textdomain(Config.GETTEXT_PACKAGE);
 		// Run the application
-		var main = new LiBuild (args);
+		var main = new DepScanCmd (args);
 		main.run ();
 		int code = main.exit_code;
 		return code;

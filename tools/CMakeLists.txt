@@ -2,5 +2,6 @@
 
 add_subdirectory(runapp)
 if(TOOLS)
+	add_subdirectory(depscan)
 	add_subdirectory(libuild)
 endif(TOOLS)
