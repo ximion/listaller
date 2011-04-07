@@ -59,6 +59,9 @@ public class DepScanCmd : Object {
 			stdout.printf ("Listaller bundle version: %s\n", Config.VERSION);
 			return;
 		}
+		//! This is just for testing!
+		DependencyScanner scan = new DependencyScanner (".");
+		scan.compile_required_files_list ();
 	}
 
 	static int main (string[] args) {
