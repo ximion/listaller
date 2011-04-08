@@ -22,12 +22,8 @@
 using GLib;
 using Gee;
 
-private class DepscanLDD : Object {
+private class DepscanLDD : Object, IDepScanEngine {
 	private ArrayList<string> filedeps;
-
-	public ArrayList<string> required_files {
-		get { return filedeps; }
-	}
 
 	public DepscanLDD () {
 		filedeps = new ArrayList<string> ();
@@ -59,5 +55,9 @@ private class DepscanLDD : Object {
 				filedeps.add (h);
 		}
 		return true;
+	}
+
+	public ArrayList<string> required_files () {
+		return filedeps;
 	}
 }

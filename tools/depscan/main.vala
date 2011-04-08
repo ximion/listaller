@@ -27,12 +27,16 @@ private const string _PKG_VERSION1 = Config.VERSION;
 public class DepScanCmd : Object {
 	// Cmd options
 	private static bool _show_version = false;
+	private static bool _run_recursive = false;
+	private static string _input_path = null;
 
 	public int exit_code { get; set; }
 
 	private const OptionEntry[] options = {
 		{ "version", 'v', 0, OptionArg.NONE, ref _show_version,
-		N_("Show the application's version"), null },
+			N_("Show the application's version"), null },
+		{ "recursive", 'r', 0, OptionArg.NONE, ref _run_recursive,
+			N_("Use recursive mode"), null },
 		{ null }
 	};
 
@@ -44,7 +48,17 @@ public class DepScanCmd : Object {
 		try {
 			opt_context.parse (ref args);
 		} catch (Error e) {
-			message (_("Error initializing: %s"), e.message);
+			stdout.printf (e.message + "\n");
+			stdout.printf (_("Run '%s --help' to see a full list of available command line options.\n"), args[0]);
+			exit_code = 1;
+			return;
+		}
+
+		for (int i = 1; i < args.length; i++) {
+			string arg = args[i];
+			if (_input_path == null) {
+				_input_path = arg;
+			}
 		}
 	}
 
@@ -59,8 +73,14 @@ public class DepScanCmd : Object {
 			stdout.printf ("Listaller bundle version: %s\n", Config.VERSION);
 			return;
 		}
-		//! This is just for testing!
-		DependencyScanner scan = new DependencyScanner (".");
+		if ((_input_path == null) || (_input_path == "")) {
+			stdout.printf (_("No path given!") + "\n");
+			exit_code = 2;
+			return;
+		}
+
+		DependencyScanner scan = new DependencyScanner (_input_path);
+		scan.recursive = _run_recursive;
 		scan.compile_required_files_list ();
 	}
 

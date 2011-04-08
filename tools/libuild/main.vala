@@ -51,7 +51,10 @@ public class LiBuild : Object {
 		try {
 			opt_context.parse (ref args);
 		} catch (Error e) {
-			message (_("Error initializing: %s"), e.message);
+			stdout.printf (e.message + "\n");
+			stdout.printf (_("Run '%s --help' to see a full list of available command line options.\n"), args[0]);
+			exit_code = 1;
+			return;
 		}
 	}
 
