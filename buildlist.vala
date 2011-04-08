@@ -6,7 +6,7 @@ class VersionNumber : Object
 	private int minor    { get; set; } // 0.x.0
 	private int revision { get; set; } // 0.0.x
 	private string originalString;
-	
+
 	public VersionNumber(string version)
 	{
 		originalString = version;
@@ -39,7 +39,7 @@ class VersionNumber : Object
 			Posix.exit(-1);
 		}
 	}
-	
+
 	public bool newerThan(VersionNumber other)
 	{
 		if(major > other.major)
@@ -105,10 +105,10 @@ int main(string[] args)
 		{
 			// The file couldn't be opened, but we don't care
 		}
-		
+
 		var headerFile = new StringBuilder();
 		headerFile.append(firstLine + "\n");
-		
+
 		stdout.printf("Generating %s (glibc %s) .", filename, minimumVersion.getString());
 		stdout.flush();
 
@@ -173,7 +173,7 @@ int main(string[] args)
 				}
 			}
 		}
-		
+
 		headerFile.append("""/* apbuild embedded metadata */
 #define APBUILD_NOTE_METADATA(s)   __asm__(".section .metadata, \"MS\", @note, 1\n\t.string \"" s "\"\n\t.previous\n\t")
 
@@ -191,7 +191,7 @@ APBUILD_NOTE_METADATA("apbuild.version=" APBUILD_VERSION);
 			{
 				continue;
 			}
-			
+
 			var version = symbolMap.get(it.get());
 			string versionToUse = version.getString();
 			if(version.newerThan(minimumVersion))
