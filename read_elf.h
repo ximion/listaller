@@ -35,4 +35,4 @@
 
 extern std::vector <QString> neededLibVector;
 extern std::vector <QString> rpathVector;
-#endif 
+#endif

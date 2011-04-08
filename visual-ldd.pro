@@ -5,7 +5,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += core gui
 
 TARGET = visual-ldd
 TEMPLATE = app
@@ -17,14 +17,13 @@ SOURCES += main.cpp\
     treeitem.cpp \
     treemodel.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS += mainwindow.h \
     read_elf.h \
     treemodel.h \
     treeitem.h
 
-FORMS    += mainwindow.ui
+FORMS += mainwindow.ui
 
-OTHER_FILES +=
 
 RESOURCES += \
     resources.qrc

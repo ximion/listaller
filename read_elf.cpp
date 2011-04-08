@@ -51,7 +51,7 @@ QWidget *global_parent;
 
 #include "elf/alpha.h"
 /*
-   #include "elf/arc.h" 
+   #include "elf/arc.h"
    #include "elf/arm.h"
    #include "elf/avr.h"
    #include "elf/cris.h"
@@ -60,7 +60,7 @@ QWidget *global_parent;
    #include "elf/dlx.h"
    #include "elf/fr30.h"
    #include "elf/frv.h"
-   #include "elf/h8.h"  
+   #include "elf/h8.h"
 */
 #include "elf/hppa.h"
 #include "elf/sparc.h"
