@@ -187,7 +187,7 @@ private class Package : Object {
 		return true;
 	}
 
-	private Read open_base_ipk () {
+	private Read? open_base_ipk () {
 		// Create a new archive object for reading
 		Read ar = new Read ();
 
@@ -199,16 +199,27 @@ private class Package : Object {
 		ar.support_format_tar ();
 
 		// Open the file, if it fails exit
-		if (ar.open_filename (fname, 4096) != Result.OK)
+		if (ar.open_filename (fname, 4096) != Result.OK) {
 			emit_error (ErrorEnum.IPK_LOADING_FAILED,
 				_("Could not open IPK file! Error: %s").printf (ar.error_string ()));
+			return null;
+		}
 		return ar;
 	}
 
 	public bool initialize () {
 		bool ret = false;
 
+		if (!FileUtils.test (fname, FileTest.IS_REGULAR)) {
+			emit_error (ErrorEnum.IPK_LOADING_FAILED,
+				    _("IPK package could not be found!"));
+			return false;
+		}
+
 		Read ar = open_base_ipk ();
+		if (ar == null) {
+			return false;
+		}
 
 		weak Entry e;
 		while (ar.next_header (out e) == Result.OK) {

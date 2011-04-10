@@ -87,7 +87,13 @@ private class DependencyScanner : Object {
 	public bool compile_required_files_list () {
 		requires.clear ();
 		stdout.printf ("Please wait...");
-		ArrayList<string> files = get_file_list (targetdir);
+		ArrayList<string> files;
+		if (FileUtils.test (targetdir, FileTest.IS_REGULAR)) {
+			files = new ArrayList<string> ();
+			files.add (targetdir);
+		} else {
+			files = get_file_list (targetdir);
+		}
 		if (files == null)
 			return false;
 
