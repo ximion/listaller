@@ -1,0 +1,732 @@
+# Danish translation for listaller
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the listaller package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: listaller\n"
+"Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
+"POT-Creation-Date: 2011-04-11 20:26+0200\n"
+"PO-Revision-Date: 2009-06-26 00:13+0000\n"
+"Last-Translator: Jimmy Frydkær Dürr <thewolf40@mailme.dk>\n"
+"Language-Team: Danish <da@li.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-04-11 18:01+0000\n"
+"X-Generator: Launchpad (build 12792)\n"
+
+msgid "Build IPK package"
+msgstr ""
+
+msgid "Copying files to their destination"
+msgstr ""
+
+#, c-format
+msgid "Could not create destination directory. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not create file '%s'! File already exists."
+msgstr ""
+
+msgid "Could not create/update software database!"
+msgstr ""
+
+#, c-format
+msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not extract file! Error: %s"
+msgstr ""
+
+#. : IPk builder could not find IPK source scripts
+msgid "Could not find IPK source files!"
+msgstr ""
+
+#, c-format
+msgid "Could not load desktop file values: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open IPK file! Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open desktop file: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not override file %s, this file already exists!"
+msgstr ""
+
+#, c-format
+msgid "Could not read IPK control information! Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not read IPK payload container! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not validate file %s. This IPK file might have been modified after "
+"creation!\n"
+"Please obtain a new copy and try again."
+msgstr ""
+
+msgid "DIRECTORY"
+msgstr ""
+
+msgid "Database action failed"
+msgstr ""
+
+msgid "Database action successful"
+msgstr ""
+
+msgid "Database locked"
+msgstr ""
+
+msgid "Database unlocked"
+msgstr ""
+
+#, c-format
+msgid "ERROR: %s"
+msgstr ""
+
+msgid "Fatal database error"
+msgstr ""
+
+#, c-format
+msgid "File %s not found or permission denied!"
+msgstr ""
+
+#, c-format
+msgid "File '%s' doesn't exist."
+msgstr ""
+
+msgid "IPK package could not be found!"
+msgstr ""
+
+#, c-format
+msgid "Making '%s' known to your system."
+msgstr ""
+
+msgid "Path to Listaller package source directory"
+msgstr ""
+
+msgid "Processing application without assigned .desktop file!"
+msgstr ""
+
+#, c-format
+msgid "Resolving dependencies of '%s'."
+msgstr ""
+
+#, c-format
+msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
+
+msgid "Setup has not been initialized!"
+msgstr ""
+
+#, fuzzy
+msgid "Show the application's version"
+msgstr "Ingen programmer fundet!"
+
+msgid "Software database closed"
+msgstr ""
+
+#, c-format
+msgid "Software database message (%d)"
+msgstr ""
+
+msgid "Software database opened"
+msgstr ""
+
+msgid "Tried to perform action on invalid IPK package."
+msgstr ""
+
+#, c-format
+msgid "Unable to create file '%s'!"
+msgstr ""
+
+msgid "Unable to extract IPK data!"
+msgstr ""
+
+msgid "Unable to extract IPK metadata!"
+msgstr ""
+
+#, c-format
+msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+#, c-format
+msgid "XML file '%s' is damaged."
+msgstr ""
+
+msgid "XML file is damaged or XML structure is no valid IPKControl!"
+msgstr ""
+
+#~ msgid "%f files will be changed."
+#~ msgstr "%f filer vil blive ændret."
+
+#~ msgid "(This program will download the needed files from the internet)"
+#~ msgstr "Dette program vil hente nødvendige filer fra Internettet)"
+
+#~ msgid "Abort"
+#~ msgstr "Afbryd"
+
+#~ msgid "About"
+#~ msgstr "Om"
+
+#~ msgid "About Listaller"
+#~ msgstr "Om Listaller"
+
+#~ msgid "All"
+#~ msgstr "Alle"
+
+#~ msgid "Application uninstalled successfully!"
+#~ msgstr "Program afinstalleret sussecfuldt!"
+
+#~ msgid "Applying updates..."
+#~ msgstr "Udfører opdateringer..."
+
+#~ msgid "Are you really sure that you want to delete this source?"
+#~ msgstr "Er du helt sikker på du ønsker at slette denne kilde?"
+
+#~ msgid "Authors"
+#~ msgstr "Forfattere"
+
+#~ msgid "Autor"
+#~ msgstr "Forfatter"
+
+#~ msgid "Back"
+#~ msgstr "Tilbage"
+
+#~ msgid "Can't load LOKI-Setup information."
+#~ msgstr "Kan ikke indlæse LOKI-Setup information."
+
+#~ msgid ""
+#~ "Cannot download this package. Please contact the catalogue managers on %h"
+#~ msgstr ""
+#~ "Kan ikke hente denne pakke. Kontakt venligst katalog-håndtererne på %h"
+
+#~ msgid "Category:"
+#~ msgstr "Kategori:"
+
+#~ msgid "Check for updates"
+#~ msgstr "Kontroller for opdateringer"
+
+#~ msgid "Close"
+#~ msgstr "Luk"
+
+#~ msgid "Convert package?"
+#~ msgstr "Konverter pakke?"
+
+#~ msgid "Converting %p package..."
+#~ msgstr "Konverterer %p pakke..."
+
+#~ msgid "Delete source"
+#~ msgstr "Slet kilde"
+
+#~ msgid "Delete source?"
+#~ msgstr "Slet kilde?"
+
+#~ msgid "Dependencies couldn't be solved!"
+#~ msgstr "Afhængigheder kunne ikke løses!"
+
+#~ msgid "Details"
+#~ msgstr "Detaljer"
+
+#~ msgid "Development"
+#~ msgstr "Udvikling"
+
+#~ msgid "Display installation log"
+#~ msgstr "Vis installations-log"
+
+#~ msgid "Display my applications"
+#~ msgstr "Vis mine programmer"
+
+#~ msgid "Display system applications"
+#~ msgstr "Vis system-programmer"
+
+#~ msgid "Do you really want to abort this download?"
+#~ msgstr "Ønsker du virkelig at afbryde denne hentning?"
+
+#~ msgid ""
+#~ "Do you really want to remove \"%p\", containing %a?\n"
+#~ "The following package(s) will be removed also: %pl\n"
+#~ "If you aren't sure that you won't need those packages, press \"No\"!"
+#~ msgstr ""
+#~ "Ønsker du virkelig at fjerne \"%p\", indeholdende %a?\n"
+#~ "Følgende pakke(r) vil også blive fjernet: %pl\n"
+#~ "Hvis du ikke er sikker på at du ikke skal bruge disse pakker, tryk \"Nej\""
+
+#~ msgid "Do you really want to uninstall %a?"
+#~ msgstr "Ønsker du virkelig at afinstallere %a?"
+
+#~ msgid "Do you want confirm this action?"
+#~ msgstr "Ønsker du at godkende denne handling?"
+
+#~ msgid "Do you want to install it again?"
+#~ msgstr "Ønsker du at installere det  igen?"
+
+#~ msgid "Do you want to install it anyway? (This could raise problems)"
+#~ msgstr "Ønsker du at installere alligevel? (Dette kan skabe problemer)"
+
+#~ msgid "Downloading catalogue base information..."
+#~ msgstr "Henter katalog basis-information..."
+
+#~ msgid "Downloading setup package..."
+#~ msgstr "Henter setup-pakke..."
+
+#~ msgid "Education"
+#~ msgstr "Uddannelse"
+
+#~ msgid "Enable Proxy-Server"
+#~ msgstr "Aktivér åroxy-server"
+
+#~ msgid "Error while extracting files!"
+#~ msgstr "Fejl ved udpakning af filer!"
+
+#~ msgid "Error while uninstalling!"
+#~ msgstr "Fejl under afinstallation!"
+
+#~ msgid "Error while unpacking and configuring files."
+#~ msgstr "Fejl ved udpakning og konfiguration af filer."
+
+#~ msgid "Filter:"
+#~ msgstr "Filter:"
+
+#~ msgid "Filtering..."
+#~ msgstr "Filtrerer..."
+
+#~ msgid "Finish"
+#~ msgstr "Færdig"
+
+#~ msgid "Finished"
+#~ msgstr "Faædig"
+
+#~ msgid "Games"
+#~ msgstr "Spil"
+
+#~ msgid "Get dependency from"
+#~ msgstr "Få afhængigheder fra"
+
+#~ msgid "Graphic"
+#~ msgstr "Grafik"
+
+#~ msgid ""
+#~ "Hash doesn't match!\n"
+#~ "The package may be modified after creation.\n"
+#~ "Please obtain a new copy"
+#~ msgstr ""
+#~ "Hash matcher ikke!\n"
+#~ "Pakken kan være modificeret efter oprettelse.\n"
+#~ "Venligst hent en ny kopi"
+
+#~ msgid "I agree with the above terms and conditions"
+#~ msgstr "Jeg er enig i ovenstående betingelser"
+
+#~ msgid "I don't agree"
+#~ msgstr "Jeg er ikke enig"
+
+#~ msgid "Install application for everyone"
+#~ msgstr "Installer program for alle"
+
+#~ msgid "Install into my Home directory"
+#~ msgstr "Installér til min hjemmemappe"
+
+#~ msgid "Install new application"
+#~ msgstr "Installér nyt program"
+
+#~ msgid "Install now"
+#~ msgstr "Installér nu"
+
+#~ msgid "Install package?"
+#~ msgstr "Installér pakke?"
+
+#~ msgid "Install updates"
+#~ msgstr "Installér opdateringer"
+
+#~ msgid "Installation"
+#~ msgstr "Installation"
+
+#~ msgid "Installation aborted."
+#~ msgstr "Installation afbrudt."
+
+#~ msgid "Installation completed!"
+#~ msgstr "Installation færdig!"
+
+#~ msgid "Installation mode:"
+#~ msgstr "Installations-tilstand:"
+
+#~ msgid "Installation of %a"
+#~ msgstr "Installation af %a"
+
+#~ msgid "Installation package is corrupt"
+#~ msgstr "Installations-pakke er korrupt"
+
+#~ msgid "Listaller settings"
+#~ msgstr "Listaller indstilllinger"
+
+#~ msgid ""
+#~ "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
+#~ "installed.\n"
+#~ "Do you want to install \"alien\" now to continue?"
+#~ msgstr ""
+#~ "Listaller bruger \"alien\" til at konvertere fremmede pakker, men "
+#~ "værktøjet er ikke installeret.\n"
+#~ "Ønsker du at installere \"alien\" nu for at fortsætte?"
+
+#~ msgid "Listaller will close now. The package couldn't be installed."
+#~ msgstr "Listaller vil lukke nu. Pakken kunne ikke installeres."
+
+#~ msgid "Load dependencies from included webserver-urls automatically"
+#~ msgstr "Indlæs afhængigheder fra inkluderede web-server-urls automatisk"
+
+#~ msgid "Loading aborted."
+#~ msgstr "Indlæsning afbrudt."
+
+#~ msgid "Loading catalogue page..."
+#~ msgstr "Indlæser katalog side..."
+
+#~ msgid "Loading..."
+#~ msgstr "Indlæser..."
+
+#~ msgid "Main"
+#~ msgstr "Vigtigst"
+
+#~ msgid ""
+#~ "Make sure that you have got this package from a save source and a serious "
+#~ "publisher!"
+#~ msgstr ""
+#~ "Du bør sikre dig at du har pakken fra en sikker kilde og en seriøs "
+#~ "udgiver!"
+
+#~ msgid "Mode"
+#~ msgstr "Tilstand"
+
+#~ msgid "Multimedia"
+#~ msgstr "Multimedie"
+
+#~ msgid "Network"
+#~ msgstr "Netværk"
+
+#~ msgid "Next"
+#~ msgstr "Næste"
+
+#~ msgid "No compatible packages found!"
+#~ msgstr "Ingen kompatible pakker fundet!"
+
+#~ msgid "No information available!"
+#~ msgstr "Ingen information tilgængelig!"
+
+#~ msgid "Office"
+#~ msgstr "Kontor"
+
+#~ msgid "Other"
+#~ msgstr "Andre"
+
+#~ msgid "Package %p could not be installed."
+#~ msgstr "Pakke %p kunne ikke installeres."
+
+#~ msgid "Package was not build for your Linux distribution release."
+#~ msgstr ""
+#~ "Pakke var ikke bygget til denne udgivelse af din Linux distribution."
+
+#~ msgid "Password"
+#~ msgstr "Adgangskode"
+
+#~ msgid "Phase 1/4: Resolving dependencies..."
+#~ msgstr "Fase 1/4: Løser afhængigheder..."
+
+#~ msgid "Phase 2/4: Installing files..."
+#~ msgstr "Fase 2/4: Installerer filer..."
+
+#~ msgid "Phase 3/4: Chmod new files..."
+#~ msgstr "Fase 3/4: Chmod nye filer..."
+
+#~ msgid "Phase 4/4: Registering application..."
+#~ msgstr "Fase 4/4: Registrerer programmet..."
+
+#~ msgid "Please notify the developers on http://launchpad.net/listaller"
+#~ msgstr "Giv venligst udviklerne besked på http://launchpad.net/listaller"
+
+#~ msgid "Please read the following information carefully:"
+#~ msgstr "Læs venligst følgende information omhyggeligt:"
+
+#~ msgid ""
+#~ "Please run \"listallgo\" with path to install-package as first parameter!"
+#~ msgstr ""
+#~ "Kør venligst \"listallgo\" med sti til installations-pakke som første "
+#~ "parameter!"
+
+#~ msgid "Please view the logfile at %p"
+#~ msgstr "Se venligst logfilen i %p"
+
+#~ msgid "Please wait."
+#~ msgstr "Vent venligst."
+
+#~ msgid "Please wait..."
+#~ msgstr "Vent venligst..."
+
+#~ msgid "Press \"Finish\" to close."
+#~ msgstr "Tryk \"Færdig\" for at lukke."
+
+#~ msgid "Press \"Next\" to start the installation!"
+#~ msgstr "Tryk \"Næste\" for at starte installationen!"
+
+#~ msgid ""
+#~ "Problem while connecting PackageKit. Run \"pkmon\" to get further "
+#~ "information."
+#~ msgstr ""
+#~ "Problem med forbindelse af pakke-kit. Kør \"pkmon\" for yderligere "
+#~ "information."
+
+#~ msgid "Problem while downloading the dep-file."
+#~ msgstr "Problem med hentning af .dep-fil."
+
+#~ msgid ""
+#~ "Problem while downloading the packages. Maybe the login on the FTP-Server "
+#~ "failed."
+#~ msgstr "Problem ved hentning af pakken. Login på FTP-server fejlede måske."
+
+#~ msgid "Program description:"
+#~ msgstr "Programbeskrivelse:"
+
+#~ msgid "Proxy-Settings"
+#~ msgstr "Proxy indstillinger"
+
+#~ msgid "Quit"
+#~ msgstr "Afslut"
+
+#~ msgid "Re-install"
+#~ msgstr "Gen-installer"
+
+#~ msgid "Ready."
+#~ msgstr "Klar."
+
+#~ msgid "Really remove?"
+#~ msgstr "Fjern?"
+
+#~ msgid "Running application installation..."
+#~ msgstr "Kører program-installation..."
+
+#~ msgid "Running installation..."
+#~ msgstr "Kører installation..."
+
+#~ msgid "Running under %de (or similar)"
+#~ msgstr "Kører under %de (eller lignende)"
+
+#~ msgid "Select installation mode"
+#~ msgstr "Vælg installations-tilstand"
+
+#~ msgid "Select software you want to download and to install:"
+#~ msgstr "Vælg software du ønsker at hente til installation:"
+
+#~ msgid "Select software-manager mode:"
+#~ msgstr "Vælg software-håndterings tilstand:"
+
+#~ msgid "Select which parts of the application should be installed."
+#~ msgstr "Vælg hvilke dele af programmet som skal installeres."
+
+#~ msgid "Should this source be added to the update sources list?"
+#~ msgstr "Skal denne kilde tilføjes til opdaterings-kilde listen?"
+
+#~ msgid "Show"
+#~ msgstr "Vil"
+
+#~ msgid "Show:"
+#~ msgstr "Vis:"
+
+#~ msgid "Software Manager"
+#~ msgstr "Software håndterer"
+
+#~ msgid "Software catalogue"
+#~ msgstr "Software katalog"
+
+#~ msgid "Software license"
+#~ msgstr "Software licens"
+
+#~ msgid "Start PackageKit monitor before running transactions"
+#~ msgstr "Start pakke-kit overvåger før kørsel af transaktioner"
+
+#~ msgid "Success!"
+#~ msgstr "Succes!"
+
+#~ msgid "System"
+#~ msgstr "System"
+
+#~ msgid "Test application"
+#~ msgstr "Testprogram"
+
+#~ msgid "Test of the application finished."
+#~ msgstr "Test af programmet afsluttet."
+
+#~ msgid "Testmode"
+#~ msgstr "Test-tilstand"
+
+#~ msgid ""
+#~ "The IPK package could be damaged or you haven't enough rights to acces "
+#~ "required files/folders."
+#~ msgstr ""
+#~ "IPK pakken kan være beskadiget eller du har ikke tilstrækkelige "
+#~ "rettigheder for at tilgå de krævede filer/mapper."
+
+#~ msgid "The application %a was installed successfully!"
+#~ msgstr "Programmet %a blev installeret succesfuldt!"
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "Programmet %a blev ikke installeret."
+
+#~ msgid ""
+#~ "The application which this package contains was not built for the current "
+#~ "system architecture."
+#~ msgstr ""
+#~ "Programmet som denne pakke indeholder var ikke bygget til den nuværende "
+#~ "system-arkitektur."
+
+#~ msgid "The application will be updated to version %v"
+#~ msgstr "Programmet vil blive opdateret til version %v"
+
+#~ msgid "The application will close now "
+#~ msgstr "Programmet vil nu lukke "
+
+#~ msgid "The following packages will be downloaded:"
+#~ msgstr "Folgende pakker vil blive hentet:"
+
+#~ msgid "The following update sources are installed:"
+#~ msgstr "Følgende opdaterings-kilder er installeret:"
+
+#~ msgid "The installation tries to add the following update source: "
+#~ msgstr "Installationen prøver at tilføje følgende opdateringskilde: "
+
+#~ msgid "The installer will close now"
+#~ msgstr "Installeren vil nu lukke"
+
+#~ msgid "The package was invalid!"
+#~ msgstr "Pakken var ugyldig!"
+
+#~ msgid ""
+#~ "The selected action is not possible with this package.\n"
+#~ "Please contact the package maintainer to get more information."
+#~ msgstr ""
+#~ "Den valgte handling er ikke mulig med denne pakke.\n"
+#~ "Venligst kontakt pakke-vedligeholderen for at få mere information."
+
+#~ msgid ""
+#~ "There are no sources available for your Linux distribution\n"
+#~ "Try to install common packages?"
+#~ msgstr ""
+#~ "Der er ingen kilder tilgængelig for din Linux Distributuin\n"
+#~ "Prøv at installere almindelige pakker?"
+
+#~ msgid "There are no updates available!"
+#~ msgstr "Der er ingen opdateringer tilgængelige!"
+
+#~ msgid "This application is already installed"
+#~ msgstr "Dette program er allerede installeret"
+
+#~ msgid ""
+#~ "This application is not a MoJo-Installation and no other package-type "
+#~ "Listaller can handle.\n"
+#~ "You have to remove it manually."
+#~ msgstr ""
+#~ "Dette program er ikke en Mojo-installation og ingen anden pakketype "
+#~ "Listaller kan håndtere.\n"
+#~ "Du skal fjerne den manuelt."
+
+#~ msgid "This application wants to download & install a dependency from %l"
+#~ msgstr "Dette program vil hente og installere afhængigheder fra %l"
+
+#~ msgid "This package does not support your Linux distribution."
+#~ msgstr "Denne pakke understøtter ikke din Linux distribution."
+
+#~ msgid ""
+#~ "This package has no valid ID\n"
+#~ "The installer will close."
+#~ msgstr ""
+#~ "Denne pakke har ingen gyldig ID\n"
+#~ "Installeren vil nu lukke."
+
+#~ msgid ""
+#~ "Unable to load the icon of %a. Please notify the developers of Listaller "
+#~ "or this application!"
+#~ msgstr ""
+#~ "Kan ikke indlæse ikonet til %a. Venligst underret udviklerne af Listaller "
+#~ "eller dette program!"
+
+#~ msgid "Unable to overwrite the file %f."
+#~ msgstr "Kan ikke overskrive filen %f."
+
+#~ msgid "Uninstall"
+#~ msgstr "Afinstallér"
+
+#~ msgid "Uninstalling %a"
+#~ msgstr "Afinstallerer %a"
+
+#~ msgid "Uninstalling unused deps..."
+#~ msgstr "Afinstallerer ubrugte deps..."
+
+#~ msgid "Uninstalling..."
+#~ msgstr "Afinstallerer..."
+
+#~ msgid "Update info:"
+#~ msgstr "Opdaterings info:"
+
+#~ msgid "Update sources"
+#~ msgstr "Opdatér kilder"
+
+#~ msgid "Use compatible packages?"
+#~ msgstr "Brug kompatible pakker?"
+
+#~ msgid "Username"
+#~ msgstr "Brugernavn"
+
+#~ msgid "Utilities"
+#~ msgstr "Værktøjer"
+
+#~ msgid "Version"
+#~ msgstr "Version"
+
+#~ msgid "Waiting..."
+#~ msgstr "Venter..."
+
+#~ msgid "Welcome to the installation of %a"
+#~ msgstr "Velkommen til installation af %a"
+
+#~ msgid "Welcome!"
+#~ msgstr "Velkommen!"
+
+#~ msgid "What do you want to do?"
+#~ msgstr "Hvad ønsker du at gøre?"
+
+#~ msgid ""
+#~ "You want to install an %x-Package, but your Linux-Distribution's package "
+#~ "system is %y.\n"
+#~ "This package can be converted using \"alien\", but this will take some "
+#~ "time and eventually the application won't work.\n"
+#~ "Do you want to convert the package now?"
+#~ msgstr ""
+#~ "Du ønsker at installere en %x-pakke, men din Linux-distributions "
+#~ "pakkesysten er %y.\n"
+#~ "Denne pakke kan konverteres ved at bruge \"alien\", men dette vil tage "
+#~ "noget tid og programmet virker måske ikke.\n"
+#~ "Vil du konvertere pakken nu?"
+
+#~ msgid "Your Linux distribution is not supported by Listaller yet!"
+#~ msgstr "Din Linux Distribution er endnu ikke understøttet af Listaller!"
+
+#~ msgid ""
+#~ "Your PackageKit version is %cp. Listaller needs PackageKit %np or higher "
+#~ "to work correctly.\n"
+#~ "Please update PackageKit!"
+#~ msgstr ""
+#~ "Dit pakke-kit version er %cp. Listaller behøver pakke-kit %np eller "
+#~ "højere for at arbejde korrekt.\n"
+#~ "Venligst opdatér Pakke-kit!"

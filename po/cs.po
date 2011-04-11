@@ -1,0 +1,824 @@
+# Czech translation for listaller
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the listaller package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: listaller\n"
+"Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
+"POT-Creation-Date: 2011-04-11 20:26+0200\n"
+"PO-Revision-Date: 2010-10-05 17:09+0000\n"
+"Last-Translator: Konki <pavel.konkol@seznam.cz>\n"
+"Language-Team: Czech <cs@li.org>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-04-11 18:01+0000\n"
+"X-Generator: Launchpad (build 12792)\n"
+
+msgid "Build IPK package"
+msgstr ""
+
+msgid "Copying files to their destination"
+msgstr ""
+
+#, c-format
+msgid "Could not create destination directory. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not create file '%s'! File already exists."
+msgstr ""
+
+msgid "Could not create/update software database!"
+msgstr ""
+
+#, c-format
+msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not extract file! Error: %s"
+msgstr ""
+
+#. : IPk builder could not find IPK source scripts
+msgid "Could not find IPK source files!"
+msgstr ""
+
+#, c-format
+msgid "Could not load desktop file values: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open IPK file! Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open desktop file: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not override file %s, this file already exists!"
+msgstr ""
+
+#, c-format
+msgid "Could not read IPK control information! Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not read IPK payload container! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not validate file %s. This IPK file might have been modified after "
+"creation!\n"
+"Please obtain a new copy and try again."
+msgstr ""
+
+msgid "DIRECTORY"
+msgstr ""
+
+msgid "Database action failed"
+msgstr ""
+
+msgid "Database action successful"
+msgstr ""
+
+msgid "Database locked"
+msgstr ""
+
+msgid "Database unlocked"
+msgstr ""
+
+#, c-format
+msgid "ERROR: %s"
+msgstr ""
+
+msgid "Fatal database error"
+msgstr ""
+
+#, c-format
+msgid "File %s not found or permission denied!"
+msgstr ""
+
+#, c-format
+msgid "File '%s' doesn't exist."
+msgstr ""
+
+msgid "IPK package could not be found!"
+msgstr ""
+
+#, c-format
+msgid "Making '%s' known to your system."
+msgstr ""
+
+msgid "Path to Listaller package source directory"
+msgstr ""
+
+msgid "Processing application without assigned .desktop file!"
+msgstr ""
+
+#, c-format
+msgid "Resolving dependencies of '%s'."
+msgstr ""
+
+#, c-format
+msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
+
+msgid "Setup has not been initialized!"
+msgstr ""
+
+#, fuzzy
+msgid "Show the application's version"
+msgstr "Žádné aplikace nebyly nalezeny!"
+
+msgid "Software database closed"
+msgstr ""
+
+#, c-format
+msgid "Software database message (%d)"
+msgstr ""
+
+msgid "Software database opened"
+msgstr ""
+
+msgid "Tried to perform action on invalid IPK package."
+msgstr ""
+
+#, c-format
+msgid "Unable to create file '%s'!"
+msgstr ""
+
+msgid "Unable to extract IPK data!"
+msgstr ""
+
+msgid "Unable to extract IPK metadata!"
+msgstr ""
+
+#, c-format
+msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+#, c-format
+msgid "XML file '%s' is damaged."
+msgstr ""
+
+msgid "XML file is damaged or XML structure is no valid IPKControl!"
+msgstr ""
+
+#~ msgid "%f files will be changed."
+#~ msgstr "%f soubory budou změněny."
+
+#~ msgid "(This program will download the needed files from the internet)"
+#~ msgstr "(Program si stáhne potřebné soubory z Internetu)"
+
+#~ msgid "Abort"
+#~ msgstr "Přerušit"
+
+#~ msgid "Aborted."
+#~ msgstr "Přerušeno."
+
+#~ msgid "About"
+#~ msgstr "O aplikaci"
+
+#~ msgid "About Listaller"
+#~ msgstr "O aplikaci Listaller"
+
+#~ msgid "All"
+#~ msgstr "Vše"
+
+#~ msgid "Application uninstalled successfully!"
+#~ msgstr "Aplikace byla úspěšně odinstalována!"
+
+#~ msgid "Applying updates..."
+#~ msgstr "Uplatňování aktualizací..."
+
+#~ msgid "Are you really sure that you want to delete this source?"
+#~ msgstr "Jste si jist, že chcete smazat tento zdroj?"
+
+#~ msgid "Authors"
+#~ msgstr "Autoři"
+
+#~ msgid "Autor"
+#~ msgstr "Autor"
+
+#~ msgid "Back"
+#~ msgstr "Zpět"
+
+#~ msgid "Can't load LOKI-Setup information."
+#~ msgstr "Nemohu načíst informace LOKI-Setup"
+
+#~ msgid ""
+#~ "Cannot download this package. Please contact the catalogue managers on %h"
+#~ msgstr ""
+#~ "Nemohu stáhnout tento balík. Prosím kontaktujte správce katalogu - %h"
+
+#~ msgid "Cannot resolve dependencies"
+#~ msgstr "Nelze vyřešít závislosti"
+
+#~ msgid "Category:"
+#~ msgstr "Kategorie:"
+
+#~ msgid "Check applications"
+#~ msgstr "zkontrolovat aplikace"
+
+#~ msgid "Check dependencies?"
+#~ msgstr "Zkontrolovat závislosti?"
+
+#~ msgid "Check for updates"
+#~ msgstr "Zkontrolovat dostupnost aktualizací"
+
+#~ msgid "Close"
+#~ msgstr "Zavřít"
+
+#~ msgid "Commands:"
+#~ msgstr "Příkazy:"
+
+#~ msgid "Convert package?"
+#~ msgstr "Konvertovat balík?"
+
+#~ msgid "Converting %p package..."
+#~ msgstr "Konvertuji balík %p..."
+
+#~ msgid "Delete source"
+#~ msgstr "Smazat zdroj"
+
+#~ msgid "Delete source?"
+#~ msgstr "Smazat zdroj?"
+
+#~ msgid "Dependencies couldn't be solved!"
+#~ msgstr "Nelze vyřešit závislosti!"
+
+#~ msgid "Details"
+#~ msgstr "Detaily"
+
+#~ msgid "Development"
+#~ msgstr "Vývoj"
+
+#~ msgid "Display installation log"
+#~ msgstr "Zobrazit instalační log"
+
+#~ msgid "Display my applications"
+#~ msgstr "Zobrazit mé aplikace"
+
+#~ msgid "Display system applications"
+#~ msgstr "Zobrazit systémové aplikace"
+
+#~ msgid "Do you accept this license [y/n]?"
+#~ msgstr "Přijímáte tuto licenci [y/n]?"
+
+#~ msgid "Do you really want to abort this download?"
+#~ msgstr "Opravdu si přejete přerušit stahování?"
+
+#~ msgid ""
+#~ "Do you really want to remove \"%p\", containing %a?\n"
+#~ "The following package(s) will be removed also: %pl\n"
+#~ "If you aren't sure that you won't need those packages, press \"No\"!"
+#~ msgstr ""
+#~ "Opravdu si přejete odstranit \"%p\", které obsahuje %a?\n"
+#~ "Následující balíky budou odstraněny: %pl\n"
+#~ "Pokud si nejste jist, že tyto balíky potřebujete, stiskněte \"Ne\"!"
+
+#~ msgid ""
+#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
+#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+#~ "those packages, press \"No\"!"
+#~ msgstr ""
+#~ "Opravdu chcete odstranit \"%p\", obsahující %a?\rNásledující balíky budou "
+#~ "automaticky odstraněny: %pl\rPokud si nejste jistě, jestli tyto balíky "
+#~ "potřebujete, stiskněte \"Ne\"!"
+
+#~ msgid "Do you really want to uninstall %a?"
+#~ msgstr "Opravdu si přejete odinstalovat %a?"
+
+#~ msgid "Do you want confirm this action?"
+#~ msgstr "Přejete si tuto akci potvrdit?"
+
+#~ msgid "Do you want to install it again?"
+#~ msgstr "Přejete si ji přeinstalovat?"
+
+#~ msgid "Do you want to install it anyway? (This could raise problems)"
+#~ msgstr ""
+#~ "Přejete si balík i přesto nainstalovat? (Může to způsobit problémy.)"
+
+#~ msgid "Do you want to see detailed information [y/n]?"
+#~ msgstr "Chcete vidět detailní informace [y/n]?"
+
+#~ msgid "Done."
+#~ msgstr "Hotovo."
+
+#~ msgid "Downloading catalogue base information..."
+#~ msgstr "Stahování katalogu informací..."
+
+#~ msgid "Downloading setup package..."
+#~ msgstr "Stahování konfiguračního balíku..."
+
+#~ msgid "Education"
+#~ msgstr "Vzdělání"
+
+#~ msgid "Enable Proxy-Server"
+#~ msgstr "Povolit proxy server"
+
+#~ msgid "Error while extracting files!"
+#~ msgstr "Chyba při rozbalování souborů!"
+
+#~ msgid "Error while uninstalling!"
+#~ msgstr "Chyba při odinstalaci!"
+
+#~ msgid "Error while unpacking and configuring files."
+#~ msgstr "Chyba ři rozbalování a konfiguraci souborů."
+
+#~ msgid "File"
+#~ msgstr "Soubor"
+
+#~ msgid "Filter:"
+#~ msgstr "Filtr:"
+
+#~ msgid "Filtering..."
+#~ msgstr "Filtrování..."
+
+#~ msgid "Finish"
+#~ msgstr "Dokončit"
+
+#~ msgid "Finished"
+#~ msgstr "Hotovo"
+
+#~ msgid "Games"
+#~ msgstr "Hry"
+
+#~ msgid "Get dependency from"
+#~ msgstr "Získat závislosti z"
+
+#~ msgid "Graphic"
+#~ msgstr "Grafika"
+
+#~ msgid ""
+#~ "Hash doesn't match!\n"
+#~ "The package may be modified after creation.\n"
+#~ "Please obtain a new copy"
+#~ msgstr ""
+#~ "Kontrolní součet nesouhlasí!\n"
+#~ "Balík byl po vytvoření nejspíš upraven.\n"
+#~ "Obstarejte si prosím novou kopii"
+
+#~ msgid "I agree with the above terms and conditions"
+#~ msgstr "Souhlasím s výše uvedenými podmínkami"
+
+#~ msgid "I don't agree"
+#~ msgstr "Nesouhlasím"
+
+#~ msgid "Install application for everyone"
+#~ msgstr "Nainstalovat aplikaci pro všechny uživatele"
+
+#~ msgid "Install into my Home directory"
+#~ msgstr "Nainstalovat do domovského adresáře"
+
+#~ msgid "Install new application"
+#~ msgstr "Nainstalovat novou aplikaci"
+
+#~ msgid "Install now"
+#~ msgstr "Nainstalovat nyní"
+
+#~ msgid "Install package?"
+#~ msgstr "Nainstalovat balík?"
+
+#~ msgid "Install updates"
+#~ msgstr "Nainstalovat aktualizace"
+
+#~ msgid "Installation"
+#~ msgstr "Instalace"
+
+#~ msgid "Installation aborted by user."
+#~ msgstr "Instalace byla zrušena uživatelem."
+
+#~ msgid "Installation aborted."
+#~ msgstr "Instalace přerušena"
+
+#~ msgid "Installation completed!"
+#~ msgstr "Instalace dokončena!"
+
+#~ msgid "Installation failed."
+#~ msgstr "Instalace selhala."
+
+#~ msgid "Installation mode:"
+#~ msgstr "Režim instalace:"
+
+#~ msgid "Installation of %a"
+#~ msgstr "Instalace aplikace %a"
+
+#~ msgid "Installation package is corrupt"
+#~ msgstr "Instalační balík je poškozen"
+
+#~ msgid "Listaller settings"
+#~ msgstr "Nastavení"
+
+#~ msgid ""
+#~ "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
+#~ "installed.\n"
+#~ "Do you want to install \"alien\" now to continue?"
+#~ msgstr ""
+#~ "K překonvertování cizích balíků používá Listaller nástroj \"alien\", "
+#~ "který ovšem není nainstalován.\n"
+#~ "Přejete si \"alien\" nainstalovat a pokračovat?"
+
+#~ msgid "Listaller will close now. The package couldn't be installed."
+#~ msgstr "Listaller se nyní ukončí. Tento balík není možné nainstalovat."
+
+#~ msgid "Load dependencies from included webserver-urls automatically"
+#~ msgstr "Načíst závislosti ze specifikovaného serveru automaticky."
+
+#~ msgid "Loading aborted."
+#~ msgstr "Načítání bylo přerušeno."
+
+#~ msgid "Loading catalogue page..."
+#~ msgstr "Načítání strany katalogu..."
+
+#~ msgid "Loading..."
+#~ msgstr "Načítání..."
+
+#~ msgid "Main"
+#~ msgstr "Hlavní"
+
+#~ msgid ""
+#~ "Make sure that you have got this package from a save source and a serious "
+#~ "publisher!"
+#~ msgstr ""
+#~ "Ujistěte se, že jste tento balík získali z bezpečného zdroje a od "
+#~ "důvěryhodného tvůrce!"
+
+#~ msgid "Mode"
+#~ msgstr "Režim"
+
+#~ msgid "Mode number:"
+#~ msgstr "Mód číslo:"
+
+#~ msgid "Multimedia"
+#~ msgstr "Multimédia"
+
+#~ msgid "Network"
+#~ msgstr "Síť"
+
+#~ msgid "Next"
+#~ msgstr "Další"
+
+#~ msgid "No compatible packages found!"
+#~ msgstr "Žádné kompatibilní balíky nebyly nalezeny!"
+
+#~ msgid "No information available!"
+#~ msgstr "Žádné informace nejsou dostupné!"
+
+#~ msgid "Office"
+#~ msgstr "Kancelář"
+
+#~ msgid "Okay"
+#~ msgstr "Budiž"
+
+#~ msgid "Options:"
+#~ msgstr "Volby:"
+
+#~ msgid "Other"
+#~ msgstr "Ostatní"
+
+#~ msgid "Package %p could not be installed."
+#~ msgstr "Balík %p nelze nainstalovat."
+
+#~ msgid "Package is unsigned."
+#~ msgstr "Balíček není podepsaný."
+
+#~ msgid "Package was not build for your Linux distribution release."
+#~ msgstr "Balík nebyl vytvořen pro toto vydání vaší distribuce."
+
+#~ msgid "Password"
+#~ msgstr "Heslo"
+
+#~ msgid "Phase 1/4: Resolving dependencies..."
+#~ msgstr "Fáze 1/4: Řešení závislostí"
+
+#~ msgid "Phase 2/4: Installing files..."
+#~ msgstr "Fáze 2/4: Instalace souborů..."
+
+#~ msgid "Phase 3/4: Chmod new files..."
+#~ msgstr "Fáze 3/4: Nastavení oprávnění souborů..."
+
+#~ msgid "Phase 4/4: Registering application..."
+#~ msgstr "Fáze 4/4: Zanesení aplikace do databáze..."
+
+#~ msgid "Please notify the developers on http://launchpad.net/listaller"
+#~ msgstr "Prosím informujte vývojáře na http://launchpad.net/listaller"
+
+#~ msgid "Please read the following information carefully:"
+#~ msgstr "Následující informace si pozorně přečtěte:"
+
+#~ msgid ""
+#~ "Please run \"listallgo\" with path to install-package as first parameter!"
+#~ msgstr ""
+#~ "Prosím spusťte \"listallgo\" a jako první parametr uveďte cestu k "
+#~ "instalačnímu balíku!"
+
+#~ msgid "Please view the logfile at %p"
+#~ msgstr "Prosím podívejte se do souboru %p"
+
+#~ msgid "Please wait."
+#~ msgstr "Prosím čekejte."
+
+#~ msgid "Please wait..."
+#~ msgstr "Prosím čekejte..."
+
+#~ msgid "Preparing installation (please wait)"
+#~ msgstr "Připravuji instalaci (prosím vyčkejte)"
+
+#~ msgid "Press \"Finish\" to close."
+#~ msgstr "Pro uzavření kliněte na \"Dokončit\"."
+
+#~ msgid "Press \"Next\" to start the installation!"
+#~ msgstr "Prostart aplikace klikněte na \"Další\"!"
+
+#~ msgid ""
+#~ "Problem while connecting PackageKit. Run \"pkmon\" to get further "
+#~ "information."
+#~ msgstr ""
+#~ "Chyba při spojení s PackageKit. Spusťte \"pkmon\" pro více informací."
+
+#~ msgid "Problem while downloading the dep-file."
+#~ msgstr "Chyba při stahování dep-souboru."
+
+#~ msgid ""
+#~ "Problem while downloading the packages. Maybe the login on the FTP-Server "
+#~ "failed."
+#~ msgstr ""
+#~ "Chyba při stahování balíků. Nejspíš selhalo přihlášení na FTP server."
+
+#~ msgid "Program description:"
+#~ msgstr "Popis programu:"
+
+#~ msgid "Proxy-Settings"
+#~ msgstr "Nastavení proxy"
+
+#~ msgid "Quit"
+#~ msgstr "Ukončit"
+
+#~ msgid "Re-install"
+#~ msgstr "Přeinstalovat"
+
+#~ msgid "Ready."
+#~ msgstr "Připraven."
+
+#~ msgid "Really remove?"
+#~ msgstr "Opravdu odstranit?"
+
+#~ msgid "Running application installation..."
+#~ msgstr "Spouštění instalace aplikace..."
+
+#~ msgid "Running installation..."
+#~ msgstr "Spouštím instalaci..."
+
+#~ msgid "Running under %de (or similar)"
+#~ msgstr "Spouštím pod %de (nebo podobné)"
+
+#~ msgid "Select installation mode"
+#~ msgstr "Zvolte instalační režim"
+
+#~ msgid "Select software you want to download and to install:"
+#~ msgstr "Vyberte software, který chcete stáhnout a nainstalovat:"
+
+#~ msgid "Select software-manager mode:"
+#~ msgstr "Vyberte režim správce softwaru:"
+
+#~ msgid "Select which parts of the application should be installed."
+#~ msgstr "Zvolte, které části aplikace se budou instalovat."
+
+#~ msgid "Should this source be added to the update sources list?"
+#~ msgstr "Mám tento zdroj aktualizací přidat?"
+
+#~ msgid "Show"
+#~ msgstr "Zobrazit"
+
+#~ msgid "Show:"
+#~ msgstr "Zobrazit:"
+
+#~ msgid "Software Manager"
+#~ msgstr "Správce softwaru"
+
+#~ msgid "Software catalogue"
+#~ msgstr "Katalog softwaru"
+
+#~ msgid "Software license"
+#~ msgstr "Licence:"
+
+#~ msgid "Some dependencies are missing. Should they be installed now?"
+#~ msgstr "Některé závislosti schází. Měly by se teď nainstalovat?"
+
+#~ msgid "Start PackageKit monitor before running transactions"
+#~ msgstr "Před provedením změn spusťte PackaKit"
+
+#~ msgid "Success!"
+#~ msgstr "Úspěch!"
+
+#~ msgid "System"
+#~ msgstr "Systém"
+
+#~ msgid "Test application"
+#~ msgstr "Otestovat aplikaci"
+
+#~ msgid "Test of the application finished."
+#~ msgstr "Test aplikace byl ukončen"
+
+#~ msgid "Testmode"
+#~ msgstr "Testovací režim"
+
+#~ msgid ""
+#~ "The IPK package could be damaged or you haven't enough rights to acces "
+#~ "required files/folders."
+#~ msgstr ""
+#~ "Balík IPK je nejspíš poškozen nebo nemáte dostatečná oprávnění pro "
+#~ "přístup k potřebný souborům a složkám."
+
+#~ msgid "The application \"%a\" was not installed."
+#~ msgstr "Aplikace \"%a\" nebyla nainstalována."
+
+#~ msgid "The application %a was installed successfully!"
+#~ msgstr "Aplikace %a byla úspěšně nainstalována!"
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "Aplikace %a nebyla nainstalována."
+
+#~ msgid ""
+#~ "The application which this package contains was not built for the current "
+#~ "system architecture."
+#~ msgstr ""
+#~ "Balík obsahující tuto aplikaci nebyl vytvořen pro stávající systémovou "
+#~ "architekturu."
+
+#~ msgid "The application will be updated to version %v"
+#~ msgstr "Aplikace bude aktualizována na verzi %v"
+
+#~ msgid "The application will close now "
+#~ msgstr "Aplikace se nyní ukončí "
+
+#~ msgid "The following packages will be downloaded:"
+#~ msgstr "Následující balíky budou staženy:"
+
+#~ msgid "The following update sources are installed:"
+#~ msgstr "Budou přidány následujcí zdroje pro aktualizace."
+
+#~ msgid "The installation tries to add the following update source: "
+#~ msgstr "Instalátor by chtěl přidat následující zdroj pro aktualizace: "
+
+#~ msgid "The installer will close now"
+#~ msgstr "Instalátor se nyní ukončí"
+
+#~ msgid "The package was invalid!"
+#~ msgstr "Balík byl neplatný!"
+
+#~ msgid ""
+#~ "The selected action is not possible with this package.\n"
+#~ "Please contact the package maintainer to get more information."
+#~ msgstr ""
+#~ "Vybranou akci nelze s tímto balík provést.\n"
+#~ "Pro více informací kontaktujte správce tohoto balíku."
+
+#~ msgid ""
+#~ "There are no sources available for your Linux distribution\n"
+#~ "Try to install common packages?"
+#~ msgstr ""
+#~ "Pro vaši Linuxovou distribuci nejsou k dispozici žádné zdroje\n"
+#~ "Mám se pokusit nainstalovat \"obecný\" balík?"
+
+#~ msgid "There are no updates available!"
+#~ msgstr "Nejsou k dispozici žádné aktualizace!"
+
+#~ msgid "This application is already installed"
+#~ msgstr "Tato aplikace je již nainstalována"
+
+#~ msgid ""
+#~ "This application is not a MoJo-Installation and no other package-type "
+#~ "Listaller can handle.\n"
+#~ "You have to remove it manually."
+#~ msgstr ""
+#~ "Tato aplikace není typu MoJo-Installation - Listaller bohužel neumí "
+#~ "pracovat s jinými typy balíků.\n"
+#~ "Musíte jej odstranit ručně."
+
+#~ msgid "This application wants to download & install a dependency from %l"
+#~ msgstr "Tato aplikace chce stáhnout a nainstalovat závislosti z %l"
+
+#~ msgid "This package does not support your Linux distribution."
+#~ msgstr "Tento balík nepodporuje vaši distribuci."
+
+#~ msgid ""
+#~ "This package has no valid ID\n"
+#~ "The installer will close."
+#~ msgstr ""
+#~ "Balík nemá platný identifikátor\n"
+#~ "Instalátor se nyní ukončí."
+
+#~ msgid "Unable to find %s"
+#~ msgstr "Nelze najít %s"
+
+#~ msgid ""
+#~ "Unable to load the icon of %a. Please notify the developers of Listaller "
+#~ "or this application!"
+#~ msgstr ""
+#~ "Nemohu načíst ikonu aplikace %a.. Informujte vývojáře Listaller nebo této "
+#~ "aplikace!"
+
+#~ msgid "Unable to override the file %f."
+#~ msgstr "Nelze přepsat soubor %f."
+
+#~ msgid "Unable to overwrite the file %f."
+#~ msgstr "Nemohu přepsat soubor %f."
+
+#~ msgid "Uninstall"
+#~ msgstr "Odinstalovat"
+
+#~ msgid "Uninstalling %a"
+#~ msgstr "Odinstalace %a"
+
+#~ msgid "Uninstalling unused deps..."
+#~ msgstr "Odstraňování nepotřebných závislostí..."
+
+#~ msgid "Uninstalling..."
+#~ msgstr "Odinstalace..."
+
+#~ msgid "Unknown error occured!"
+#~ msgstr "Došlo k neznámé chybě!"
+
+#~ msgid "Update info:"
+#~ msgstr "Popis aktualizace:"
+
+#~ msgid "Update sources"
+#~ msgstr "Aktualizovat zdroje"
+
+#~ msgid "Use compatible packages?"
+#~ msgstr "Použít kompatibilní balíky?"
+
+#~ msgid "Username"
+#~ msgstr "Uživatelské jméno"
+
+#~ msgid "Utilities"
+#~ msgstr "Nástroje"
+
+#~ msgid "Version"
+#~ msgstr "Verze"
+
+#~ msgid "Waiting..."
+#~ msgstr "Čekání..."
+
+#~ msgid "Welcome to the installation of %a"
+#~ msgstr "Vítejte u instalace aplikace %a"
+
+#~ msgid "Welcome!"
+#~ msgstr "Vítejte!"
+
+#~ msgid "What do you want to do?"
+#~ msgstr "Co si přejete udělat?"
+
+#~ msgid "You have to enter a number!"
+#~ msgstr "Musíte zadat číslo!"
+
+#~ msgid ""
+#~ "You want to install an %x-Package, but your Linux-Distribution's package "
+#~ "system is %y.\n"
+#~ "This package can be converted using \"alien\", but this will take some "
+#~ "time and eventually the application won't work.\n"
+#~ "Do you want to convert the package now?"
+#~ msgstr ""
+#~ "Snažíte se nainstalovat balík %x, ale vaše distribuce používá balíkovací "
+#~ "systém %y.\n"
+#~ "Balík je možné překonvertovat pomocí nástroje \"alien\", ale zabere to "
+#~ "nějaký čas a je možné, že ani poté nepůjde aplikace nainstalovat.\n"
+#~ "Přejete si balík překonvertovat nyní?"
+
+#~ msgid ""
+#~ "You want to install an %x-Package, but your Linux-Distribution's package "
+#~ "system is %y.\rThis package can be converted using \"alien\", but this "
+#~ "will take some time and eventually the application won't work\rDo you "
+#~ "want to convert the package now?"
+#~ msgstr ""
+#~ "Snažíte se nainstalovat balík typu %x, ale balíkovací systém vaší "
+#~ "distribuce je %y.\rTento balík může být upraven pomocí nástroje \"alien"
+#~ "\", ale může to zabrat více času a je zde možnost, že daná aplikace "
+#~ "nebude vůbec fungovat\rPřejete si balík upravit?"
+
+#~ msgid "Your Linux distribution is not supported by Listaller yet!"
+#~ msgstr "Listaller bohužel nepodporuje vaši distribuci."
+
+#~ msgid ""
+#~ "Your PackageKit version is %cp. Listaller needs PackageKit %np or higher "
+#~ "to work correctly.\n"
+#~ "Please update PackageKit!"
+#~ msgstr ""
+#~ "Vaše verze PackageKit je %cp. Pro správné fungování Listaller potřebuje "
+#~ "PackageKit %np nebo vyšší.\n"
+#~ "Prosím aktualizujte PackageKit!"
+
+#~ msgid "n"
+#~ msgstr "n"
+
+#~ msgid "no"
+#~ msgstr "ne"

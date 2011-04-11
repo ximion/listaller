@@ -7,27 +7,31 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-10 18:40+0200\n"
-"PO-Revision-Date: 2011-03-12 23:30+0000\n"
+"POT-Creation-Date: 2011-04-11 20:26+0200\n"
+"PO-Revision-Date: 2011-03-26 11:23+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-14 17:41+0000\n"
-"X-Generator: Launchpad (build 12582)\n"
+"X-Launchpad-Export-Date: 2011-04-11 18:01+0000\n"
+"X-Generator: Launchpad (build 12792)\n"
+
+#, fuzzy
+msgid "Build IPK package"
+msgstr "IPK-Paket bauen"
 
 msgid "Copying files to their destination"
-msgstr ""
+msgstr "Kopiere Dateien an ihren Zielort."
 
 #, c-format
 msgid "Could not create destination directory. Error: %s"
-msgstr ""
+msgstr "Konnte Zielordner nicht erstellen. Fehler: %s"
 
 #, c-format
 msgid "Could not create file '%s'! File already exists."
-msgstr ""
+msgstr "Konnte Datei '%s' nicht erstellen! Datei existiert bereits."
 
 msgid "Could not create/update software database!"
 msgstr "Konnte Software-Datenbank nicht erstellen/aktualisieren!"
@@ -35,19 +39,20 @@ msgstr "Konnte Software-Datenbank nicht erstellen/aktualisieren!"
 #, c-format
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
 msgstr ""
+"Konnte Inhalt des IPK Paketes nicht extrahieren! Das Paket könnte beschädigt "
+"sein. Fehler: %s"
 
 #, c-format
 msgid "Could not extract file! Error: %s"
-msgstr ""
+msgstr "Konnte Datei nicht extrahieren! Fehler: %s"
 
 #. : IPk builder could not find IPK source scripts
-#, fuzzy
 msgid "Could not find IPK source files!"
-msgstr "Konnte IPK Datei nicht öffnen: %s"
+msgstr ""
 
 #, c-format
 msgid "Could not load desktop file values: %s"
-msgstr ""
+msgstr "Konnte Werte aus Desktop-Datei nicht laden: %s"
 
 #, c-format
 msgid "Could not open IPK file! Error: %s"
@@ -59,7 +64,7 @@ msgstr "Konnte Desktop-Datei nicht öffnen: %s"
 
 #, c-format
 msgid "Could not override file %s, this file already exists!"
-msgstr ""
+msgstr "Konnte Datei %s nicht überschreiben, da sie bereits existiert!"
 
 #, c-format
 msgid "Could not read IPK control information! Error: %s"
@@ -70,21 +75,24 @@ msgid ""
 "Could not read IPK payload container! Package might be damaged. Error: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not validate file %s. This IPK file might have been modified after "
 "creation!\n"
 "Please obtain a new copy and try again."
 msgstr ""
-"Haswert passt nicht!\n"
-"Das Paket könnte nach der Erstellung verändert worden sein.\n"
-"Bitte holen Sie sich eine neue Kopie!"
+"Konnte Datei %s nicht validieren. Diese IPK-Datei könnte nach ihrer "
+"Erstellung verändert worden sein!\n"
+"Besorgen Sie sich eine neue Kopie und versuchen Sie es erneut."
+
+msgid "DIRECTORY"
+msgstr ""
 
 msgid "Database action failed"
 msgstr "Datenbankaktion fehlgeschlagen."
 
 msgid "Database action successful"
-msgstr ""
+msgstr "Datenbankaktion erfolgreich."
 
 msgid "Database locked"
 msgstr "Datenbank gesperrt"
@@ -92,9 +100,9 @@ msgstr "Datenbank gesperrt"
 msgid "Database unlocked"
 msgstr "Datenbank entsperrt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: %s"
-msgstr "FEHLER in der LCL: "
+msgstr ""
 
 msgid "Fatal database error"
 msgstr ""
@@ -105,22 +113,24 @@ msgstr ""
 
 #, c-format
 msgid "File '%s' doesn't exist."
-msgstr ""
+msgstr "Datei '%s' existiert nicht."
 
-#, fuzzy
 msgid "IPK package could not be found!"
-msgstr "Paket %p konnte nicht installiert werden."
+msgstr ""
 
 #, c-format
 msgid "Making '%s' known to your system."
+msgstr "Mache '%s' mit ihrem System bekannt."
+
+msgid "Path to Listaller package source directory"
 msgstr ""
 
 msgid "Processing application without assigned .desktop file!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Resolving dependencies of '%s'."
-msgstr "Löse Abhängigkeiten auf ..."
+msgstr ""
 
 #, c-format
 msgid "Run '%s --help' to see a full list of available command line options.\n"
@@ -128,6 +138,10 @@ msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr ""
+
+#, fuzzy
+msgid "Show the application's version"
+msgstr "Keine Anwendungen gefunden!"
 
 msgid "Software database closed"
 msgstr ""
@@ -152,9 +166,9 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to remove database lock! (Message: %s)"
-msgstr "KRITISCH: Konnte Datenbank-Sperre nicht entfernen! (Nachricht: %s)"
+msgstr ""
 
 #, c-format
 msgid "XML file '%s' is damaged."
@@ -435,9 +449,6 @@ msgstr ""
 #~ msgid "Browser %s%s%s not found."
 #~ msgstr "Browser %s%s%s nicht gefunden."
 
-#~ msgid "Build IPK-package"
-#~ msgstr "IPK-Paket bauen"
-
 #~ msgid "Build ipk-package"
 #~ msgstr "IPK-Paket bauen"
 
@@ -452,6 +463,9 @@ msgstr ""
 
 #~ msgid "Button Text"
 #~ msgstr "Schalter-Text"
+
+#~ msgid "CRITICAL: Unable to remove database lock! (Message: %s)"
+#~ msgstr "KRITISCH: Konnte Datenbank-Sperre nicht entfernen! (Nachricht: %s)"
 
 #~ msgid "Calculator"
 #~ msgstr "Rechner"
@@ -642,6 +656,9 @@ msgstr ""
 #~ "Konnte keine GUI-Paketmanager finden.\rBitte installieren sie eine "
 #~ "grafische Oberfläche für PackageKit!"
 
+#~ msgid "Could not open IPK file: %s"
+#~ msgstr "Konnte IPK Datei nicht öffnen: %s"
+
 #~ msgid "Couldn't find Listaller Manager!"
 #~ msgstr "Konnte Listaller Manager nicht finden!"
 
@@ -819,6 +836,9 @@ msgstr ""
 #~ msgid "Duplicate menus"
 #~ msgstr "Doppelte Menüs"
 
+#~ msgid "ERROR in LCL: "
+#~ msgstr "FEHLER in der LCL: "
+
 #~ msgid "Edit"
 #~ msgstr "Bearbeiten"
 
@@ -857,9 +877,8 @@ msgstr ""
 #~ msgid "Error creating device context for %s.%s"
 #~ msgstr "Fehler beim Erzeugen des Gerätekontexts für %s.%s"
 
-#, fuzzy
 #~ msgid "Error initializing: %s"
-#~ msgstr "Fehler bei der Deinstallation!"
+#~ msgstr "Fehler beim initialisieren: %s"
 
 #~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
 #~ msgstr "Fehler aufgetreten in %s bei %sAdresse %s%s Frame %s"
@@ -878,6 +897,9 @@ msgstr ""
 
 #~ msgid "Error while saving bitmap."
 #~ msgstr "Fehler beim Speichern der Bitmap."
+
+#~ msgid "Error while uninstalling!"
+#~ msgstr "Fehler bei der Deinstallation!"
 
 #~ msgid "Error while unpacking and configuring files."
 #~ msgstr "Fehler beim Entpacken und konfigruieren der Dateien."
@@ -1013,6 +1035,15 @@ msgstr ""
 #~ msgstr ""
 #~ "Der Hashwert passt nicht!\rDas Paket könnte nachträglich verändert worden "
 #~ "sein.\rBitte holen Sie sich eine neue Kopie des Paketes."
+
+#~ msgid ""
+#~ "Hash value doesn't match!\n"
+#~ "The package may be modified after creation.\n"
+#~ "Please obtain a new copy"
+#~ msgstr ""
+#~ "Haswert passt nicht!\n"
+#~ "Das Paket könnte nach der Erstellung verändert worden sein.\n"
+#~ "Bitte holen Sie sich eine neue Kopie!"
 
 #~ msgid "Help"
 #~ msgstr "Hilfe"
@@ -1421,9 +1452,6 @@ msgstr ""
 #~ msgid "No MDI form present."
 #~ msgstr "Kein MDI-Formular vorhanden"
 
-#~ msgid "No applications found!"
-#~ msgstr "Keine Anwendungen gefunden!"
-
 #~ msgid "No compatible packages found!"
 #~ msgstr "Keine kompatiblen Pakete gefunden!"
 
@@ -1490,6 +1518,9 @@ msgstr ""
 
 #~ msgid "Overwrite file ?"
 #~ msgstr "Datei überschreiben?"
+
+#~ msgid "Package %p could not be installed."
+#~ msgstr "Paket %p konnte nicht installiert werden."
 
 #~ msgid "Package build commands:"
 #~ msgstr "Kommandos zum Pakete bauen:"
@@ -1752,6 +1783,9 @@ msgstr ""
 
 #~ msgid "Resolve Listaller path variable"
 #~ msgstr "Listaller Pfadvariable auflösen"
+
+#~ msgid "Resolving dependencies..."
+#~ msgstr "Löse Abhängigkeiten auf ..."
 
 #~ msgid "Resolving dynamic dependencies..."
 #~ msgstr "Löse dynamische Abhängigkeiten auf..."

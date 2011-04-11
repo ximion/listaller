@@ -1,0 +1,1058 @@
+# translation of lclstrconsts.po to
+# Valdas Jankūnas <zmuogs@gmail.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: lclstrconsts\n"
+"Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
+"POT-Creation-Date: 2011-04-11 20:26+0200\n"
+"PO-Revision-Date: 2009-05-06 13:37+0000\n"
+"Last-Translator: Valdas <zmogas@hotmail.com>\n"
+"Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-04-11 18:01+0000\n"
+"X-Generator: Launchpad (build 12792)\n"
+
+msgid "Build IPK package"
+msgstr ""
+
+msgid "Copying files to their destination"
+msgstr ""
+
+#, c-format
+msgid "Could not create destination directory. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not create file '%s'! File already exists."
+msgstr ""
+
+msgid "Could not create/update software database!"
+msgstr ""
+
+#, c-format
+msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not extract file! Error: %s"
+msgstr ""
+
+#. : IPk builder could not find IPK source scripts
+msgid "Could not find IPK source files!"
+msgstr ""
+
+#, c-format
+msgid "Could not load desktop file values: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open IPK file! Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open desktop file: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not override file %s, this file already exists!"
+msgstr ""
+
+#, c-format
+msgid "Could not read IPK control information! Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not read IPK payload container! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not validate file %s. This IPK file might have been modified after "
+"creation!\n"
+"Please obtain a new copy and try again."
+msgstr ""
+
+msgid "DIRECTORY"
+msgstr ""
+
+msgid "Database action failed"
+msgstr ""
+
+msgid "Database action successful"
+msgstr ""
+
+msgid "Database locked"
+msgstr ""
+
+msgid "Database unlocked"
+msgstr ""
+
+#, c-format
+msgid "ERROR: %s"
+msgstr ""
+
+msgid "Fatal database error"
+msgstr ""
+
+#, c-format
+msgid "File %s not found or permission denied!"
+msgstr ""
+
+#, c-format
+msgid "File '%s' doesn't exist."
+msgstr ""
+
+msgid "IPK package could not be found!"
+msgstr ""
+
+#, c-format
+msgid "Making '%s' known to your system."
+msgstr ""
+
+msgid "Path to Listaller package source directory"
+msgstr ""
+
+msgid "Processing application without assigned .desktop file!"
+msgstr ""
+
+#, c-format
+msgid "Resolving dependencies of '%s'."
+msgstr ""
+
+#, c-format
+msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
+
+msgid "Setup has not been initialized!"
+msgstr ""
+
+msgid "Show the application's version"
+msgstr ""
+
+msgid "Software database closed"
+msgstr ""
+
+#, c-format
+msgid "Software database message (%d)"
+msgstr ""
+
+msgid "Software database opened"
+msgstr ""
+
+msgid "Tried to perform action on invalid IPK package."
+msgstr ""
+
+#, c-format
+msgid "Unable to create file '%s'!"
+msgstr ""
+
+msgid "Unable to extract IPK data!"
+msgstr ""
+
+msgid "Unable to extract IPK metadata!"
+msgstr ""
+
+#, c-format
+msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+#, c-format
+msgid "XML file '%s' is damaged."
+msgstr ""
+
+msgid "XML file is damaged or XML structure is no valid IPKControl!"
+msgstr ""
+
+#~ msgid "  modified "
+#~ msgstr "  pakeista "
+
+#~ msgid "  size "
+#~ msgstr "  dydis "
+
+#~ msgid " (at %d,%d, stream offset %.8x)"
+#~ msgstr " (ties %d,%d, srauto poslinkis %.8x)"
+
+#~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
+#~ msgstr ""
+#~ " Perspėjimas: dar liko %d „TimerInfo“ struktūrų, jos bus sunaikintos."
+
+#~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
+#~ msgstr " Perspėjimas: eilėje dar yra %d pranešimų, jie bus pašalinti."
+
+#~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
+#~ msgstr " Perspėjimas: liko %d neatlaisvinti „DC“, išsamiau:"
+
+#~ msgid ""
+#~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
+#~ msgstr " Perspėjimas: liko %d neatlaisvinti „GDIObject“, išsamiau:"
+
+#~ msgid ""
+#~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
+#~ msgstr ""
+#~ " Perspėjimas: liko %s nepašalintos nuorodos į LM_PAINT/LM_GtkPAINT "
+#~ "pranešimus."
+
+#~ msgid "%s Index %d out of bounds 0 .. %d"
+#~ msgstr "%s indeksas %d peržengia ribas 0 .. %d"
+
+#~ msgid "%s is already associated with %s"
+#~ msgstr "%s jau yra asocijuotas su %s"
+
+#~ msgid ""
+#~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill "
+#~ "the program."
+#~ msgstr ""
+#~ "%s%sPaspaude „Tinka“ ignoruosite, tačiau rizikuosite duomenimis."
+#~ "%sPaspaude „Atsisakyti“ sustabdysite programą."
+
+#~ msgid "%s: Already registered"
+#~ msgstr "%s: jau yra registruotas"
+
+#~ msgid "%s: Not registered"
+#~ msgstr "%s: neregistruotas"
+
+#~ msgid "&All"
+#~ msgstr "&Visi"
+
+#~ msgid "&Close"
+#~ msgstr "&Užverti"
+
+#~ msgid "&Directory"
+#~ msgstr "&Aplankas"
+
+#~ msgid "&Help"
+#~ msgstr "Žin&ynas"
+
+#~ msgid "&Ignore"
+#~ msgstr "&Ignoruoti"
+
+#~ msgid "&No"
+#~ msgstr "&Ne"
+
+#~ msgid "&OK"
+#~ msgstr "&Tinka"
+
+#~ msgid "&Retry"
+#~ msgstr "Ka&rtoti"
+
+#~ msgid "&Yes"
+#~ msgstr "&Taip"
+
+#~ msgid "(file not found: \"%s\")"
+#~ msgstr "(failas nerastas: „%s“)"
+
+#~ msgid ""
+#~ "--class classname     Following Xt conventions, the class of a program is "
+#~ "the program name with the initial character capitalized. For example, the "
+#~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
+#~ "program will be set to \"classname\"."
+#~ msgstr ""
+#~ "--class klasės_pavadinimas     Pagal Xt susitarimą, programos klasė yra "
+#~ "programos pavadinimas, kuriame pirmoji raidė yra didžioji. Pavyzdžiui: "
+#~ "GIMP programos klasė yra „Gimp“. Jei --class nurodytas, tai klasės "
+#~ "pavadinimas bus priskirtas „classname“."
+
+#~ msgid ""
+#~ "--display h:s:d       Connect to the specified X server, where \"h\" is "
+#~ "the hostname, \"s\" is the server number (usually 0), and \"d\" is the "
+#~ "display number (typically omitted). If --display is not specified, the "
+#~ "DISPLAY environment variable is used."
+#~ msgstr ""
+#~ "--display h:s:d     Prisijunti prie nurodyto X serverio, čia „h“ yra "
+#~ "hostname, „s“ - serverio numeris (paprastai 0), ir „d“ - ekrano numeris "
+#~ "(dažniausia praleidžiamas). Jei --display nenurodytas, tada naudojamas "
+#~ "DISPLAY aplinkos kintamasis."
+
+#~ msgid ""
+#~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
+#~ "the application."
+#~ msgstr ""
+#~ "--g-fatal-warnings     GTK+ ar GDK sugeneravus perspėjimą arba klaidą, "
+#~ "programa bus sustabdyta."
+
+#~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
+#~ msgstr ""
+#~ "--gdk-debug žymės     Įjungiami nurodyti GDK sekimo/derinimo pranešimai."
+
+#~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
+#~ msgstr ""
+#~ "--gdk-no-debug žymės     Išjungiami nurodyti GDK sekimo/derinimo "
+#~ "pranešimai."
+
+#~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
+#~ msgstr ""
+#~ "--gtk-debug žymės     Įjungiami nurodyti GTK+ sekimo/derinimo pranešimai."
+
+#~ msgid "--gtk-module module   Load the specified module at startup."
+#~ msgstr "--gtk-module modulis     Starto metu įkelti nurodytą modulį."
+
+#~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
+#~ msgstr ""
+#~ "--gtk-no-debug žymės     Išungiami nurodyti GTK+ sekimo/derinimo "
+#~ "pranešimai."
+
+#~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
+#~ msgstr "--lcl-no-transient     Modalinių formų eilę nedaryti trumpalaikę."
+
+#~ msgid ""
+#~ "--name programe       Set program name to \"progname\". If not specified, "
+#~ "program name will be set to ParamStrUTF8(0)."
+#~ msgstr ""
+#~ "--name programa       Programos pavadinimą nustatyti į „programa“. Jei "
+#~ "nenurodyta, tai programos pavadinimas bus nustatytas į ParamStrUTF8(0)."
+
+#~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
+#~ msgstr "--no-xshm     Nenaudoti „X Shared Memory“ plėtinio."
+
+#~ msgid ""
+#~ "--sync                Call XSynchronize (display, True) after the Xserver "
+#~ "connection has been established. This makes debugging X protocol errors "
+#~ "easier, because X request buffering will be disabled and X errors will be "
+#~ "received immediatey after the protocol request that generated the error "
+#~ "has been processed by the X server."
+#~ msgstr ""
+#~ "--sync     Kai XServer ryšys sukurtas, vykdyti „XSynchronize (display, "
+#~ "True)“. Tai padarys lengvesnį X protokolo klaidų derinimą, nes bus "
+#~ "išjungtas X kreipinių buferis ir X serveriui protokolo kreipinio "
+#~ "apdorojimo metu įvykusi klaida bus gauta iškart."
+
+#~ msgid "3D Dark Shadow"
+#~ msgstr "3D tamsumos šešėlis"
+
+#~ msgid "3D Light"
+#~ msgstr "3D šviesuma"
+
+#~ msgid "A control can't have itself as parent"
+#~ msgstr "Valdiklio tėvas negali būti pats valdiklis"
+
+#~ msgid "Abort"
+#~ msgstr "Nutraukti"
+
+#~ msgid "Accept"
+#~ msgstr "Accept"
+
+#~ msgid "Active Border"
+#~ msgstr "Aktyvus rėmelis"
+
+#~ msgid "Active Caption"
+#~ msgstr "Veikiamoji antraštė"
+
+#~ msgid "All files (%s)|%s|%s"
+#~ msgstr "Visi failai (%s)|%s|%s"
+
+#~ msgid "Alt"
+#~ msgstr "Alt"
+
+#~ msgid "Application Workspace"
+#~ msgstr "Programos darbo laukas"
+
+#~ msgid "Backspace"
+#~ msgstr "Backspace"
+
+#~ msgid "Backward"
+#~ msgstr "Atgal"
+
+#~ msgid "Bitmaps"
+#~ msgstr "Bitmap"
+
+#~ msgid "Blank"
+#~ msgstr "Tuščias"
+
+#~ msgid "Browser %s%s%s not executable."
+#~ msgstr "Naršyklė %s%s%s nėra vykdomasis failas."
+
+#~ msgid "Browser %s%s%s not found."
+#~ msgstr "Naršyklė %s%s%s nerasta."
+
+#~ msgid "Button Face"
+#~ msgstr "Mygtuko paviršius"
+
+#~ msgid "Button Highlight"
+#~ msgstr "Mygtuko paryškinimas"
+
+#~ msgid "Button Shadow"
+#~ msgstr "Mygtuko šešėlis"
+
+#~ msgid "Button Text"
+#~ msgstr "Mygtuko tekstas"
+
+#~ msgid "Calculator"
+#~ msgstr "Skaičiuotuvas"
+
+#~ msgid "Can not focus"
+#~ msgstr "Suaktyvinti negalima"
+
+#~ msgctxt "lclstrconsts.ifsvk_cancel"
+#~ msgid "Cancel"
+#~ msgstr "Cancel"
+
+#~ msgctxt "lclstrconsts.rscancelrecordhint"
+#~ msgid "Cancel"
+#~ msgstr "Atsisakyti"
+
+#~ msgctxt "lclstrconsts.rsmbcancel"
+#~ msgid "Cancel"
+#~ msgstr "Atsisakyti"
+
+#~ msgid "Cannot begin update all when canvas only update in progress"
+#~ msgstr "Visko atnaujinti negalima kai atnaujinamas tik „Canvas“"
+
+#~ msgid "Cannot change format of icon image"
+#~ msgstr "Neina pakeisti piktogramos paveikslo formato"
+
+#~ msgid "Cannot change size of icon image"
+#~ msgstr "Neina pakeisti piktogramos paveikslo dydžio"
+
+#~ msgid "Cannot focus a disabled or invisible window"
+#~ msgstr "Neįgalintą arba nematomą langą suaktyvinti negalima"
+
+#~ msgid "Cannot save image while update in progress"
+#~ msgstr "Neina įrašyti paveikslo, nes jis atnaujinamas"
+
+#~ msgid "Canvas does not allow drawing"
+#~ msgstr "Į „Canvas“ negalima piešti"
+
+#~ msgid "Capital"
+#~ msgstr "Caps Lock"
+
+#~ msgid "Caption Text"
+#~ msgstr "Antraštės tekstas"
+
+#~ msgid "Case sensitive"
+#~ msgstr "Paisyti raidžių lygio"
+
+#~ msgid "Clear"
+#~ msgstr "Clear"
+
+#~ msgid "Confirmation"
+#~ msgstr "Patvirtinimas"
+
+#~ msgid "Control"
+#~ msgstr "Ctrl"
+
+#~ msgid "Convert"
+#~ msgstr "Convert"
+
+#~ msgid "Creating gdb catchable error:"
+#~ msgstr "Kuriama GDB aptinkama klaida:"
+
+#~ msgid "Ctrl"
+#~ msgstr "Ctrl"
+
+#~ msgid "Cursor"
+#~ msgstr "Žymeklis"
+
+#~ msgid "Custom"
+#~ msgstr "Naudotojo"
+
+#~ msgid "Custom ..."
+#~ msgstr "Naudotojo…"
+
+#~ msgctxt "lclstrconsts.ifsvk_delete"
+#~ msgid "Delete"
+#~ msgstr "Delete"
+
+#~ msgctxt "lclstrconsts.rsdeleterecordhint"
+#~ msgid "Delete"
+#~ msgstr "Delete"
+
+#~ msgid "Delete record?"
+#~ msgstr "Ištrinti įrašą?"
+
+#~ msgid "Desktop"
+#~ msgstr "Darbalaukis"
+
+#~ msgid "Direction"
+#~ msgstr "Kryptis"
+
+#~ msgid "Directory must exist"
+#~ msgstr "Aplankas turi egzistuoti"
+
+#~ msgid "Docking"
+#~ msgstr "Pritvirtinimas"
+
+#~ msgid "Down"
+#~ msgstr "Down"
+
+#~ msgid "Duplicate icon format."
+#~ msgstr "Piktogramos formatai dubliuojasi."
+
+#~ msgid "Duplicate menus"
+#~ msgstr "Meniu dubliuojasi"
+
+#~ msgid "ERROR in LCL: "
+#~ msgstr "LCL klaida: "
+
+#~ msgid "Edit"
+#~ msgstr "Keisti"
+
+#~ msgid "End"
+#~ msgstr "End"
+
+#~ msgid "Endupdate while no update in progress"
+#~ msgstr "„Endupdate“, tačiau niekas neatnaujinama"
+
+#~ msgctxt "lclstrconsts.rserror"
+#~ msgid "Error"
+#~ msgstr "Klaida"
+
+#~ msgctxt "lclstrconsts.rsmterror"
+#~ msgid "Error"
+#~ msgstr "Klaida"
+
+#~ msgid "Error creating device context for %s.%s"
+#~ msgstr "Įvyko klaida kuriant įrenginio turinį, skirtą %s.%s"
+
+#~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
+#~ msgstr "%s įvyko klaida:%sadresas %s%s, kadras %s"
+
+#~ msgid "Error reading %s%s%s: %s"
+#~ msgstr "Įvyko klaida skaitant %s%s%s: %s"
+
+#~ msgid "Error while executing %s%s%s:%s%s"
+#~ msgstr "Įvyko klaida startuojant %s%s%s:%s%s"
+
+#~ msgid "Error while saving bitmap."
+#~ msgstr "Įrašant rastrinį paveikslą įvyko klaida."
+
+#~ msgid "Error:"
+#~ msgstr "Klaida:"
+
+#~ msgid "Escape"
+#~ msgstr "Esc"
+
+#~ msgid "Exception"
+#~ msgstr "Išimtinė situacija"
+
+#~ msgid "Execute"
+#~ msgstr "Execute"
+
+#~ msgid "File information"
+#~ msgstr "Informacija apie failą"
+
+#~ msgid "File is not writable"
+#~ msgstr "Failas ne rašymui"
+
+#~ msgid "File must exist"
+#~ msgstr "Failas turi egzistuoti"
+
+#~ msgid "Filter:"
+#~ msgstr "Filtras:"
+
+#~ msgid "Final"
+#~ msgstr "Final"
+
+#~ msgid "Find"
+#~ msgstr "Ieškoti"
+
+#~ msgid "Find more"
+#~ msgstr "Ieškoti toliau"
+
+#~ msgid "First"
+#~ msgstr "Pirmasis"
+
+#~ msgid "FixedCols can't be >= ColCount"
+#~ msgstr "„FixedCols“ reikšmė negali būti lygi ar didesnė nei „ColCount“"
+
+#~ msgid "FixedRows can't be >= RowCount"
+#~ msgstr "„FixedRows“ reikšmė negali būti lygi ar didesnė nei „RowCount“"
+
+#~ msgid "Form"
+#~ msgstr "Nuo"
+
+#~ msgid "Form streaming \"%s\" error: %s"
+#~ msgstr "Formą siunčiant srautu „%s“ įvyko klaida: %s"
+
+#~ msgid "Forward"
+#~ msgstr "Pirmyn"
+
+#~ msgid "Gradient Active Caption"
+#~ msgstr "Veikiamosios antraštės gradientas"
+
+#~ msgid "Gradient Inactive Caption"
+#~ msgstr "Įprastos antraštės gradientas"
+
+#~ msgid "Gray Text"
+#~ msgstr "Neveiksnus tekstas"
+
+#~ msgid "Grid file doesn't exists"
+#~ msgstr "Tinklelio failas neegzistuoja"
+
+#~ msgid "Grid index out of range."
+#~ msgstr "Tinklelio indeksas peržengia ribas"
+
+#~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
+#~ msgstr ""
+#~ "„GroupIndex“ negali būti mažesnis už ankstesnių menių punktų „GroupIndex“"
+
+#~ msgid "Hanja"
+#~ msgstr "Hanja"
+
+#~ msgid "Help"
+#~ msgstr "Help"
+
+#~ msgid "Help Context not found"
+#~ msgstr "Žinyno turinys nerastas"
+
+#~ msgid ""
+#~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
+#~ msgstr "Žinyno duomenų bazė %s%s%s nerado žiūriklės %s tipo žinyno lapui."
+
+#~ msgid "Help Database %s%s%s not found"
+#~ msgstr "Žinyno duomenų bazė %s%s%s nerasta."
+
+#~ msgid "Help Database not found"
+#~ msgstr "Žinyno duomenų bazė nerasta"
+
+#~ msgid "Help Error"
+#~ msgstr "Žinyno klaida"
+
+#~ msgid "Help Selector Error"
+#~ msgstr "Žinyno išrinkėjo klaida"
+
+#~ msgid "Help Viewer Error"
+#~ msgstr "Žinyno žiūriklės klaida"
+
+#~ msgid "Help Viewer not found"
+#~ msgstr "Žinyno žiūriklė nerasta"
+
+#~ msgid "Help context %s not found in Database %s%s%s."
+#~ msgstr "Žinyno turinys %s duomenų bazėje %s%s%s nerastas."
+
+#~ msgid "Help context %s not found."
+#~ msgstr "Žinyno turinys %s nerastas."
+
+#~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
+#~ msgstr "Žinyno raktažodis %s%s%s duomenų bazėje %s%s%s nerastas."
+
+#~ msgid "Help keyword %s%s%s not found."
+#~ msgstr "Žinyno raktažodis %s%s%s nerastas."
+
+#~ msgid "Help node %s%s%s has no Help Database"
+#~ msgstr "Žynyno mazgas %s%s%s neturi žinyno duomenų bazės."
+
+#~ msgid "Help not found"
+#~ msgstr "Žinynas nerastas"
+
+#~ msgid "Highlight"
+#~ msgstr "Paryškinimas"
+
+#~ msgid "Highlight Text"
+#~ msgstr "Paryškintas tekstas"
+
+#~ msgid "History:"
+#~ msgstr "Istorija:"
+
+#~ msgid "Home"
+#~ msgstr "Home"
+
+#~ msgid "Hot Light"
+#~ msgstr "Indikatorius"
+
+#~ msgid "Icon"
+#~ msgstr "Piktograma"
+
+#~ msgid "Icon has no current image"
+#~ msgstr "Veikiamoji piktograma neturi paveikslėlio"
+
+#~ msgid "Icon image cannot be empty"
+#~ msgstr "Piktogramos paveikslėlis neturi būti tuščias"
+
+#~ msgid "Icon image must have the same format"
+#~ msgstr "Piktogramos ir naujasis paveikslėliai turi būti to paties formato"
+
+#~ msgid "Icon image must have the same size"
+#~ msgstr "Piktogramos ir naujasis paveikslėliai turi būti to paties dydžio"
+
+#~ msgid "Inactive Border"
+#~ msgstr "Neaktuvus rėmelis"
+
+#~ msgctxt "lclstrconsts.rsinactivecaptioncolorcaption"
+#~ msgid "Inactive Caption"
+#~ msgstr "Neaktyvi antraštė"
+
+#~ msgctxt "lclstrconsts.rsinactivecaptiontext"
+#~ msgid "Inactive Caption"
+#~ msgstr "Neaktyvi antraštė"
+
+#~ msgid "Index Out of range Cell[Col=%d Row=%d]"
+#~ msgstr "Langelio [stulpelis = %d, eilutė = %d] indeksas peržengia ribas"
+
+#~ msgid "Info Background"
+#~ msgstr "Fonas informacijai"
+
+#~ msgid "Info Text"
+#~ msgstr "Informacijos tekstas"
+
+#~ msgid "Information"
+#~ msgstr "Informacija"
+
+#~ msgctxt "lclstrconsts.ifsvk_insert"
+#~ msgid "Insert"
+#~ msgstr "Insert"
+
+#~ msgctxt "lclstrconsts.rsinsertrecordhint"
+#~ msgid "Insert"
+#~ msgstr "Insert"
+
+#~ msgid "Invalid Date : %s"
+#~ msgstr "Klaidinga data: %s"
+
+#~ msgid "Invalid Date: %s. Must be between %s and %s"
+#~ msgstr "Klaidinga data: %s. Ji turi būti tarp %s ir %s"
+
+#~ msgid "Invalid ImageList Index"
+#~ msgstr "Klaidingas„ImageList“ indeksas"
+
+#~ msgid "Invalid action creation"
+#~ msgstr "Klaidingas veiksmo kūrimas"
+
+#~ msgid "Invalid action enumeration"
+#~ msgstr "Klaidinga veiksmo enumeracija"
+
+#~ msgid "Invalid action registration"
+#~ msgstr "Klaidingas veiksmo registravimas"
+
+#~ msgid "Invalid action unregistration"
+#~ msgstr "Klaidingas veiksmo išregravimas"
+
+#~ msgid "Invalid floating point number: %s"
+#~ msgstr "Klaidingas slankaus kablelio skaičius: %s"
+
+#~ msgid "Invalid image size"
+#~ msgstr "Klaidingas paveikslo dydis"
+
+#~ msgid "Invalid integer number: %s"
+#~ msgstr "Klaidingas sveikasis skaičius: %s"
+
+#~ msgid "Invalid property value"
+#~ msgstr "Klaidinga savybės reikšmė"
+
+#~ msgid "Invalid stream format"
+#~ msgstr "Klaidingas srauto formatas"
+
+#~ msgid "Joint Picture Expert Group"
+#~ msgstr "Joint Picture Expert Group"
+
+#~ msgid "Junja"
+#~ msgstr "Junja"
+
+#~ msgid "Kana"
+#~ msgstr "Kana"
+
+#~ msgid "Last"
+#~ msgstr "Paskutinysis"
+
+#~ msgid "Left"
+#~ msgstr "Left"
+
+#~ msgid "List index exceeds bounds (%d)"
+#~ msgstr "Sąrašo indeksas peržengė ribas (%d)"
+
+#~ msgid "List must be empty"
+#~ msgstr "Sąrašas turi būti tuščias"
+
+#~ msgctxt "lclstrconsts.ifsvk_menu"
+#~ msgid "Menu"
+#~ msgstr "Menu"
+
+#~ msgctxt "lclstrconsts.rsmenucolorcaption"
+#~ msgid "Menu"
+#~ msgstr "Menu"
+
+#~ msgid "Menu Bar"
+#~ msgstr "Meniu juosta"
+
+#~ msgid "Menu Highlight"
+#~ msgstr "Paryškintas meniu"
+
+#~ msgid "Menu Text"
+#~ msgstr "Menu tekstas"
+
+#~ msgid "Menu index out of range"
+#~ msgstr "Meniu indeksas peržengia ribas"
+
+#~ msgid "MenuItem is nil"
+#~ msgstr "„MenuItem“ reikšmė yra nil"
+
+#~ msgid "Mode Change"
+#~ msgstr "Mode Change"
+
+#~ msgid "Mouse Button Left"
+#~ msgstr "Kairys peles klavišas"
+
+#~ msgid "Mouse Button Middle"
+#~ msgstr "Vidurinis pelės klavišas"
+
+#~ msgid "Mouse Button Right"
+#~ msgstr "Dešinys pelės klavišas"
+
+#~ msgctxt "lclstrconsts.ifsvk_next"
+#~ msgid "Next"
+#~ msgstr "Next"
+
+#~ msgctxt "lclstrconsts.rsnextrecordhint"
+#~ msgid "Next"
+#~ msgstr "Kitas"
+
+#~ msgid ""
+#~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
+#~ "Viewers"
+#~ msgstr ""
+#~ "Nerasta HTML naršyklė.%sNurodykite kokią nors meniu „Žinynas -> Derinti "
+#~ "žinyną -> Žiūriklės“."
+
+#~ msgid "No MDI form present."
+#~ msgstr "MDI formos nėra."
+
+#~ msgid "No help found for line %d, column %d of %s."
+#~ msgstr "Žinyne nėra duomenų eilutei %d, stulpeliui %d šio %s."
+
+#~ msgid "No help nodes available"
+#~ msgstr "Žinyno nėra"
+
+#~ msgid "No timers available"
+#~ msgstr "Nėra laikmačių"
+
+#~ msgid "No to all"
+#~ msgstr "Visiada ne"
+
+#~ msgid ""
+#~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
+#~ "the programs uses clause."
+#~ msgstr ""
+#~ "Nevaldiklio objektas. Patikrinkite ar modulis „interfaces“ yra paminėtas "
+#~ "programos naudojamų modulių sąraše."
+
+#~ msgid "Nonconvert"
+#~ msgstr "Nonconvert"
+
+#~ msgid "Not a valid grid file"
+#~ msgstr "Klaidingas tinklelio failas"
+
+#~ msgid "Numlock"
+#~ msgstr "Numlock"
+
+#~ msgid "Numpad %d"
+#~ msgstr "Numpad %d"
+
+#~ msgid "OSX Icon Resource"
+#~ msgstr "OSX piktogramos resursas"
+
+#~ msgid "Open existing file"
+#~ msgstr "Atverti egzistuojanti failą"
+
+#~ msgid "Overwrite file ?"
+#~ msgstr "Perrašyti failą?"
+
+#~ msgid "Path must exist"
+#~ msgstr "Kelias turi egzistuoti"
+
+#~ msgid "Pause key"
+#~ msgstr "Pause"
+
+#~ msgid "Pixmap"
+#~ msgstr "Pixmap"
+
+#~ msgid "Portable BitMap"
+#~ msgstr "Portatyvus BitMap"
+
+#~ msgid "Portable GrayMap"
+#~ msgstr "Portatyvus GreyMap"
+
+#~ msgid "Portable Network Graphic"
+#~ msgstr "Portable Network Graphic"
+
+#~ msgid "Portable PixMap"
+#~ msgstr "Portatyvus PixMap"
+
+#~ msgid "Post"
+#~ msgstr "Tolesnis"
+
+#~ msgid "Print"
+#~ msgstr "Print"
+
+#~ msgctxt "lclstrconsts.ifsvk_prior"
+#~ msgid "Prior"
+#~ msgstr "Prior"
+
+#~ msgctxt "lclstrconsts.rspriorrecordhint"
+#~ msgid "Prior"
+#~ msgstr "Ankstesnis"
+
+#~ msgid "Property %s does not exist"
+#~ msgstr "Savybė %s neegzistuoja"
+
+#~ msgid "Refresh"
+#~ msgstr "Atnaujinti"
+
+#~ msgid "Replace"
+#~ msgstr "Pakeisti"
+
+#~ msgid "Replace all"
+#~ msgstr "Pakeisti visus"
+
+#~ msgctxt "lclstrconsts.lislclresourcesnotfound"
+#~ msgid "Resource %s not found"
+#~ msgstr "Resursas %s nerastas"
+
+#~ msgctxt "lclstrconsts.rsresourcenotfound"
+#~ msgid "Resource %s not found"
+#~ msgstr "Resursas %s nerastas"
+
+#~ msgid "Return"
+#~ msgstr "Return"
+
+#~ msgid "Right"
+#~ msgstr "Right"
+
+#~ msgid "Save file as"
+#~ msgstr "Įrašyti failą kaip"
+
+#~ msgid "Scroll"
+#~ msgstr "Scroll"
+
+#~ msgid "ScrollBar"
+#~ msgstr "Slinkies juosta"
+
+#~ msgid "ScrollBar property out of range"
+#~ msgstr "Savybės „ScrollBar“ vertė peržengia ribas"
+
+#~ msgid "Select"
+#~ msgstr "Select"
+
+#~ msgid "Select Directory"
+#~ msgstr "Nurodykit aplanką"
+
+#~ msgid "Select a date"
+#~ msgstr "Nurodykite datą"
+
+#~ msgid "Select a font"
+#~ msgstr "Nurodykit šriftą"
+
+#~ msgid "Select color"
+#~ msgstr "Nurodykit spalvą"
+
+#~ msgid "Shift"
+#~ msgstr "Shift"
+
+#~ msgid "Snapshot"
+#~ msgstr "Snapshot"
+
+#~ msgid "Space key"
+#~ msgstr "Space"
+
+#~ msgid "Sub-menu is not in menu"
+#~ msgstr "Pomeniu nėra įdėtas į menių"
+
+#~ msgid "Tab"
+#~ msgstr "Tab"
+
+#~ msgid "Text"
+#~ msgstr "Tekstas"
+
+#~ msgid "The char set in mask \"%s\" is not valid!"
+#~ msgstr "Klaidinga kaukės „%s“ koduotė!"
+
+#~ msgid "The directory \"%s\" does not exist."
+#~ msgstr "Aplankas „%s“ neegzistuoja."
+
+#~ msgid "The file \"%s\" already exists. Overwrite ?"
+#~ msgstr "Toks failas „%s“ jayu yra. Rašyti ant viršaus?"
+
+#~ msgid "The file \"%s\" does not exist."
+#~ msgstr "Failas „%s“ neegzistuoja."
+
+#~ msgid "The file \"%s\" is not writable."
+#~ msgstr "Failas „%s“ nėra skirtas rašymui."
+
+#~ msgid "The help database %s%s%s was unable to find file %s%s%s."
+#~ msgstr "Žinyno duomenų bazė %s%s%s neranda failo %s%s%s."
+
+#~ msgid "The macro %s in BrowserParams will be replaced by the URL."
+#~ msgstr "Makrokomanda %s naršyklės parametruose bus pakeista URL reikšme."
+
+#~ msgid "The path \"%s\" does not exist."
+#~ msgstr "Kelias „%s“ neegzistuoja."
+
+#~ msgid "There is no viewer for help type %s%s%s"
+#~ msgstr "Nerasta žiūriklė %s%s%s žinyno tipui."
+
+#~ msgid "Unable to find a HTML browser."
+#~ msgstr "Nepavyko rasti HTML naršyklės."
+
+#~ msgid "Unable to load default font"
+#~ msgstr "Nepavyko įkelti numatytą šriftą"
+
+#~ msgid "Unknown"
+#~ msgstr "Nežinomas"
+
+#~ msgid "Unknown Error, please report this bug"
+#~ msgstr "Nežinoma klaida, prašau praneškite kūrėjams apie šią klaidą."
+
+#~ msgid "Unknown picture extension"
+#~ msgstr "Nežinomas paveikslo plėtinys"
+
+#~ msgid "Unsupported bitmap format."
+#~ msgstr "Nepalaikomas rastrinio paveikslo formatas."
+
+#~ msgid "Unsupported clipboard format: %s"
+#~ msgstr "Nepalaikomas iškarpinės formatas: %s"
+
+#~ msgid "Unterminated byte value"
+#~ msgstr "Neužbaigta bitų vertė"
+
+#~ msgid "Unterminated string"
+#~ msgstr "Neužbaigta eilutė"
+
+#~ msgid "Up"
+#~ msgstr "Up"
+
+#~ msgid "Warning"
+#~ msgstr "Perspėjimas"
+
+#~ msgid "Warning:"
+#~ msgstr "Perspėjimas:"
+
+#~ msgid "Whole words only"
+#~ msgstr "Tik visų žodžių"
+
+#~ msgid "Window"
+#~ msgstr "Langas"
+
+#~ msgid "Window Frame"
+#~ msgstr "Lango rėmelis"
+
+#~ msgid "Window Text"
+#~ msgstr "Lango tekstas"
+
+#~ msgid "Wrong token symbol: %s expected but %s found"
+#~ msgstr "Klaidingas leksemos simbolis: tikėtasi %s, tačiau rasta %s"
+
+#~ msgid "Wrong token type: %s expected"
+#~ msgstr "Klaidingas leksemos tipas: tikėtasi %s"
+
+#~ msgid "Wrong token type: %s expected but %s found"
+#~ msgstr "Klaidingas leksemos tipas: tikėtasi %s, tačiau rasta %s"
+
+#~ msgid "Yes to &All"
+#~ msgstr "Vis&ada taip"
+
+#~ msgid "application key"
+#~ msgstr "Programos klavišas"
+
+#~ msgid "invalid Form object stream"
+#~ msgstr "klaidingas formos objekto srautas"
+
+#~ msgid "left windows key"
+#~ msgstr "Kairysis windows klavišas"
+
+#~ msgid "permissions user group size date time"
+#~ msgstr "leidimai naudotojas grupė dydis data laikas"
+
+#~ msgid "right windows key"
+#~ msgstr "Dešinysis windows klavišas"

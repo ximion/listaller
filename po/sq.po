@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.00b\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-10 18:40+0200\n"
+"POT-Creation-Date: 2011-04-11 20:26+0200\n"
 "PO-Revision-Date: 2011-02-22 22:07+0000\n"
 "Last-Translator: truri <Unknown>\n"
 "Language-Team: Albanian\n"
@@ -10,8 +10,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-14 17:41+0000\n"
-"X-Generator: Launchpad (build 12582)\n"
+"X-Launchpad-Export-Date: 2011-04-11 18:00+0000\n"
+"X-Generator: Launchpad (build 12792)\n"
+
+#, fuzzy
+msgid "Build IPK package"
+msgstr "Krijo paketë IPK"
 
 msgid "Copying files to their destination"
 msgstr ""
@@ -64,15 +68,15 @@ msgid ""
 "Could not read IPK payload container! Package might be damaged. Error: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not validate file %s. This IPK file might have been modified after "
 "creation!\n"
 "Please obtain a new copy and try again."
 msgstr ""
-"Vlera e hashit nuk u përputh!\n"
-"Paketa mund të ndryshohet pas krijimit.\n"
-"Ju lutem, merrni një kopje të re."
+
+msgid "DIRECTORY"
+msgstr ""
 
 msgid "Database action failed"
 msgstr ""
@@ -101,20 +105,22 @@ msgstr ""
 msgid "File '%s' doesn't exist."
 msgstr ""
 
-#, fuzzy
 msgid "IPK package could not be found!"
-msgstr "Paketa %p nuk mund të instalohej."
+msgstr ""
 
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
 
+msgid "Path to Listaller package source directory"
+msgstr ""
+
 msgid "Processing application without assigned .desktop file!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Resolving dependencies of '%s'."
-msgstr "Po plotësohen varësitë..."
+msgstr ""
 
 #, c-format
 msgid "Run '%s --help' to see a full list of available command line options.\n"
@@ -122,6 +128,10 @@ msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr ""
+
+#, fuzzy
+msgid "Show the application's version"
+msgstr "Kontrollo zbatimet"
 
 msgid "Software database closed"
 msgstr ""
@@ -202,9 +212,6 @@ msgstr ""
 #~ msgid "Back"
 #~ msgstr "Mbrapsht"
 
-#~ msgid "Build IPK-package"
-#~ msgstr "Krijo paketë IPK"
-
 #~ msgid ""
 #~ "Calling PackageKit... (run \"pkmon\" to monitor the executed actions)"
 #~ msgstr ""
@@ -227,9 +234,6 @@ msgstr ""
 
 #~ msgid "Change package manager settings"
 #~ msgstr "Ndryshoni rregullimet e përgjegjësit të paketave"
-
-#~ msgid "Check applications"
-#~ msgstr "Kontrollo zbatimet"
 
 #~ msgid "Check dependencies?"
 #~ msgstr "Të kontrollohen varësitë?"
@@ -376,15 +380,14 @@ msgstr ""
 #~ msgid "Error"
 #~ msgstr "Gabim"
 
-#, fuzzy
-#~ msgid "Error initializing: %s"
-#~ msgstr "Gabim gjatë çinstalimit!"
-
 #~ msgid "Error while extracting files!"
 #~ msgstr "Gabim gjatë përftimit të kartelave!"
 
 #~ msgid "Error while performing installation:"
 #~ msgstr "Gabim gjatë kryerjes së instalimit:"
+
+#~ msgid "Error while uninstalling!"
+#~ msgstr "Gabim gjatë çinstalimit!"
 
 #~ msgid "Error while unpacking and configuring files."
 #~ msgstr "Gabim gjatë çpaketimit dhe formësimit të kartelave."
@@ -426,6 +429,15 @@ msgstr ""
 
 #~ msgid "Graphic"
 #~ msgstr "Grafikë"
+
+#~ msgid ""
+#~ "Hash value doesn't match!\n"
+#~ "The package may be modified after creation.\n"
+#~ "Please obtain a new copy"
+#~ msgstr ""
+#~ "Vlera e hashit nuk u përputh!\n"
+#~ "Paketa mund të ndryshohet pas krijimit.\n"
+#~ "Ju lutem, merrni një kopje të re."
 
 #~ msgid "I agree with the above terms and conditions"
 #~ msgstr "Pajtohem me termat dhe kushtet e mësipërme"
@@ -579,6 +591,9 @@ msgstr ""
 
 #~ msgid "Other"
 #~ msgstr "Tjetër"
+
+#~ msgid "Package %p could not be installed."
+#~ msgstr "Paketa %p nuk mund të instalohej."
 
 #~ msgid "Package build commands:"
 #~ msgstr "Urdhra krijimi pakete:"
@@ -743,6 +758,9 @@ msgstr ""
 
 #~ msgid "Resolve Listaller path variable"
 #~ msgstr "Përcaktoni ndryshoren e shtegut të Listaller-it"
+
+#~ msgid "Resolving dependencies..."
+#~ msgstr "Po plotësohen varësitë..."
 
 #~ msgid "Resolving dynamic dependencies..."
 #~ msgstr "Plotësim varësishë dinamike..."

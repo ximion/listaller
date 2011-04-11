@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-10 18:40+0200\n"
+"POT-Creation-Date: 2011-04-11 20:26+0200\n"
 "PO-Revision-Date: 2011-01-16 02:51+0000\n"
 "Last-Translator: RodolfoRG <rodolforg@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -15,8 +15,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-14 17:40+0000\n"
-"X-Generator: Launchpad (build 12582)\n"
+"X-Launchpad-Export-Date: 2011-04-11 18:01+0000\n"
+"X-Generator: Launchpad (build 12792)\n"
+
+#, fuzzy
+msgid "Build IPK package"
+msgstr "Construir pacote IPK"
 
 msgid "Copying files to their destination"
 msgstr ""
@@ -76,6 +80,9 @@ msgid ""
 "Please obtain a new copy and try again."
 msgstr ""
 
+msgid "DIRECTORY"
+msgstr ""
+
 msgid "Database action failed"
 msgstr ""
 
@@ -110,12 +117,15 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr ""
 
+msgid "Path to Listaller package source directory"
+msgstr ""
+
 msgid "Processing application without assigned .desktop file!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Resolving dependencies of '%s'."
-msgstr "Resolvendo dependências..."
+msgstr ""
 
 #, c-format
 msgid "Run '%s --help' to see a full list of available command line options.\n"
@@ -123,6 +133,10 @@ msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr ""
+
+#, fuzzy
+msgid "Show the application's version"
+msgstr "Conferir aplicativos"
 
 msgid "Software database closed"
 msgstr ""
@@ -191,9 +205,6 @@ msgstr ""
 #~ msgid "Back"
 #~ msgstr "Voltar"
 
-#~ msgid "Build IPK-package"
-#~ msgstr "Construir pacote IPK"
-
 #~ msgid ""
 #~ "Calling PackageKit... (run \"pkmon\" to monitor the executed actions)"
 #~ msgstr ""
@@ -208,9 +219,6 @@ msgstr ""
 
 #~ msgid "Cannot resolve dependencies"
 #~ msgstr "Não foi possível resolver as dependências"
-
-#~ msgid "Check applications"
-#~ msgstr "Conferir aplicativos"
 
 #~ msgid "Check dependencies?"
 #~ msgstr "Conferir as dependências?"
@@ -307,12 +315,11 @@ msgstr ""
 #~ msgid "Error"
 #~ msgstr "Erro"
 
-#, fuzzy
-#~ msgid "Error initializing: %s"
-#~ msgstr "Erro durante a desinstalação!"
-
 #~ msgid "Error while extracting files!"
 #~ msgstr "Erro durante a extração dos arquivos!"
+
+#~ msgid "Error while uninstalling!"
+#~ msgstr "Erro durante a desinstalação!"
 
 #~ msgid "Error while unpacking and configuring files."
 #~ msgstr "Erro durante o desempacotamento e configuração dos arquivos."
@@ -449,6 +456,9 @@ msgstr ""
 
 #~ msgid "Removing application..."
 #~ msgstr "Removendo o aplicativo..."
+
+#~ msgid "Resolving dependencies..."
+#~ msgstr "Resolvendo dependências..."
 
 #~ msgid "Resolving dynamic dependencies..."
 #~ msgstr "Resolvendo as dependências dinâmicas..."

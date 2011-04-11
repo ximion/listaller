@@ -1,0 +1,847 @@
+# translation of lclstrconsts.po to Slovenský
+# Slavko <slavino@slavino.sk>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: lclstrconsts\n"
+"Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
+"POT-Creation-Date: 2011-04-11 20:26+0200\n"
+"PO-Revision-Date: 2009-05-06 13:38+0000\n"
+"Last-Translator: Slavko <Unknown>\n"
+"Language-Team: Slovenský <sk@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-04-11 18:01+0000\n"
+"X-Generator: Launchpad (build 12792)\n"
+
+msgid "Build IPK package"
+msgstr ""
+
+msgid "Copying files to their destination"
+msgstr ""
+
+#, c-format
+msgid "Could not create destination directory. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not create file '%s'! File already exists."
+msgstr ""
+
+msgid "Could not create/update software database!"
+msgstr ""
+
+#, c-format
+msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not extract file! Error: %s"
+msgstr ""
+
+#. : IPk builder could not find IPK source scripts
+msgid "Could not find IPK source files!"
+msgstr ""
+
+#, c-format
+msgid "Could not load desktop file values: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open IPK file! Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open desktop file: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not override file %s, this file already exists!"
+msgstr ""
+
+#, c-format
+msgid "Could not read IPK control information! Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not read IPK payload container! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not validate file %s. This IPK file might have been modified after "
+"creation!\n"
+"Please obtain a new copy and try again."
+msgstr ""
+
+msgid "DIRECTORY"
+msgstr ""
+
+msgid "Database action failed"
+msgstr ""
+
+msgid "Database action successful"
+msgstr ""
+
+msgid "Database locked"
+msgstr ""
+
+msgid "Database unlocked"
+msgstr ""
+
+#, c-format
+msgid "ERROR: %s"
+msgstr ""
+
+msgid "Fatal database error"
+msgstr ""
+
+#, c-format
+msgid "File %s not found or permission denied!"
+msgstr ""
+
+#, c-format
+msgid "File '%s' doesn't exist."
+msgstr ""
+
+msgid "IPK package could not be found!"
+msgstr ""
+
+#, c-format
+msgid "Making '%s' known to your system."
+msgstr ""
+
+msgid "Path to Listaller package source directory"
+msgstr ""
+
+msgid "Processing application without assigned .desktop file!"
+msgstr ""
+
+#, c-format
+msgid "Resolving dependencies of '%s'."
+msgstr ""
+
+#, c-format
+msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
+
+msgid "Setup has not been initialized!"
+msgstr ""
+
+msgid "Show the application's version"
+msgstr ""
+
+msgid "Software database closed"
+msgstr ""
+
+#, c-format
+msgid "Software database message (%d)"
+msgstr ""
+
+msgid "Software database opened"
+msgstr ""
+
+msgid "Tried to perform action on invalid IPK package."
+msgstr ""
+
+#, c-format
+msgid "Unable to create file '%s'!"
+msgstr ""
+
+msgid "Unable to extract IPK data!"
+msgstr ""
+
+msgid "Unable to extract IPK metadata!"
+msgstr ""
+
+#, c-format
+msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+#, c-format
+msgid "XML file '%s' is damaged."
+msgstr ""
+
+msgid "XML file is damaged or XML structure is no valid IPKControl!"
+msgstr ""
+
+#~ msgid "  modified "
+#~ msgstr "  .. zmenené "
+
+#~ msgid "  size "
+#~ msgstr "  ..veľkosť "
+
+#~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
+#~ msgstr " UPOZORNENIE: Ostáva %d štruktúr TimerInfo, uvoľním ich"
+
+#~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
+#~ msgstr " UPOZORNENIE: Vo fronte ostáva %d správ! Uvoľním ich"
+
+#~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
+#~ msgstr ""
+#~ " UPOZORNENIE: Existuje %d neuvoľnených DCs, detailný výpis nasleduje:"
+
+#~ msgid ""
+#~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
+#~ msgstr ""
+#~ " UPOZORNENIE: Existuje %d neuvoľnených GDIObjects, detailný výpis "
+#~ "nasleduje:"
+
+#~ msgid ""
+#~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
+#~ msgstr " UPOZORNENIE: Ostáva %s neodstránených správ LM_PAINT/LM_GtkPAINT."
+
+#~ msgid "%s Index %d out of bounds 0 .. %d"
+#~ msgstr "%s Index %d presahuje hranicu 0 .. %d"
+
+#~ msgid "%s is already associated with %s"
+#~ msgstr "%s už je priradený k %s"
+
+#~ msgid ""
+#~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill "
+#~ "the program."
+#~ msgstr ""
+#~ "%s%sStlačte OK pre ignorovanie a risk porušenia dát.%sStlačte Zrušiť pre "
+#~ "zabitie programu."
+
+#~ msgid "%s: Already registered"
+#~ msgstr "%s: Už je registrovaný"
+
+#~ msgid "%s: Not registered"
+#~ msgstr "%s: Neregistrovaný"
+
+#~ msgid "&All"
+#~ msgstr "&Všetko"
+
+#~ msgid "&Close"
+#~ msgstr "&Zatvoriť"
+
+#~ msgid "&Directory"
+#~ msgstr "A&dresár"
+
+#~ msgid "&Help"
+#~ msgstr "&Pomoc"
+
+#~ msgid "&Ignore"
+#~ msgstr "&Ignorovať"
+
+#~ msgid "&No"
+#~ msgstr "&Nie"
+
+#~ msgid "&OK"
+#~ msgstr "&OK"
+
+#~ msgid "&Retry"
+#~ msgstr "&Opakovať"
+
+#~ msgid "&Yes"
+#~ msgstr "Án&o"
+
+#~ msgid "(file not found: \"%s\")"
+#~ msgstr "(súbor nenájdený: \"%s\")"
+
+#~ msgid "A control can't have itself as parent"
+#~ msgstr "Prvok nemôže mať sám seba za rodiča"
+
+#~ msgid "Abort"
+#~ msgstr "Prerušiť"
+
+#~ msgid "All files (%s)|%s|%s"
+#~ msgstr "Všetky súbory (%s)|%s|%s"
+
+#~ msgid "Alt"
+#~ msgstr "Alt"
+
+#~ msgid "Backspace"
+#~ msgstr "Backspace"
+
+#~ msgid "Backward"
+#~ msgstr "Spätný"
+
+#~ msgid "Bitmaps"
+#~ msgstr "Bitmapy"
+
+#~ msgid "Blank"
+#~ msgstr "Prázdne"
+
+#~ msgid "Browser %s%s%s not executable."
+#~ msgstr "Prehliadač %s%s%s nie je spustiteľný."
+
+#~ msgid "Browser %s%s%s not found."
+#~ msgstr "Prehliadač %s%s%s nenájdený."
+
+#~ msgid "Calculator"
+#~ msgstr "Kalkulačka"
+
+#~ msgid "Can not focus"
+#~ msgstr "Nemožno zamerať"
+
+#~ msgctxt "lclstrconsts.ifsvk_cancel"
+#~ msgid "Cancel"
+#~ msgstr "Zrušiť"
+
+#~ msgctxt "lclstrconsts.rscancelrecordhint"
+#~ msgid "Cancel"
+#~ msgstr "Zrušiť"
+
+#~ msgctxt "lclstrconsts.rsmbcancel"
+#~ msgid "Cancel"
+#~ msgstr "Zrušiť"
+
+#~ msgid "Cannot begin update all when canvas only update in progress"
+#~ msgstr "Nemožno začať aktualizáciu všetkého, počas aktualizácie len plátna"
+
+#~ msgid "Cannot change format of icon image"
+#~ msgstr "Nemožno zmeniť formát obrázka ikony"
+
+#~ msgid "Cannot change size of icon image"
+#~ msgstr "Nemožno zmeniť veľkosť obrázka ikony"
+
+#~ msgid "Cannot focus a disabled or invisible window"
+#~ msgstr "Nemôžem zamerať vypnuté alebo neviditeľné okno"
+
+#~ msgid "Cannot save image while update in progress"
+#~ msgstr "Nemožno uložiť obrázok počas aktualizácie"
+
+#~ msgid "Canvas does not allow drawing"
+#~ msgstr "Plátno nedovoľuje kreslenie"
+
+#~ msgid "Capital"
+#~ msgstr "Veľkým"
+
+#~ msgid "Case sensitive"
+#~ msgstr "Citlivé na veľkosť"
+
+#~ msgid "Clear"
+#~ msgstr "Vyčistiť"
+
+#~ msgid "Confirmation"
+#~ msgstr "Potvrdenie"
+
+#~ msgid "Control"
+#~ msgstr "Prvok"
+
+#~ msgid "Convert"
+#~ msgstr "Konvertovať"
+
+#~ msgid "Ctrl"
+#~ msgstr "Ctrl"
+
+#~ msgid "Cursor"
+#~ msgstr "Kurzor"
+
+#~ msgid "Custom"
+#~ msgstr "Vlastné"
+
+#~ msgid "Custom ..."
+#~ msgstr "Vlastné ..."
+
+#~ msgctxt "lclstrconsts.ifsvk_delete"
+#~ msgid "Delete"
+#~ msgstr "Zmazať"
+
+#~ msgctxt "lclstrconsts.rsdeleterecordhint"
+#~ msgid "Delete"
+#~ msgstr "Delete"
+
+#~ msgid "Delete record?"
+#~ msgstr "Zmazať záznam?"
+
+#~ msgid "Direction"
+#~ msgstr "Smer"
+
+#~ msgid "Directory must exist"
+#~ msgstr "Adresár musí existovať"
+
+#~ msgid "Docking"
+#~ msgstr "Dokovanie"
+
+#~ msgid "Down"
+#~ msgstr "Dole"
+
+#~ msgid "Duplicate icon format."
+#~ msgstr "Zdvojený formát ikony."
+
+#~ msgid "Duplicate menus"
+#~ msgstr "Duplikované menu"
+
+#~ msgid "ERROR in LCL: "
+#~ msgstr "Chyba v LCL: "
+
+#~ msgid "Edit"
+#~ msgstr "Upraviť"
+
+#~ msgid "End"
+#~ msgstr "End"
+
+#~ msgid "Endupdate while no update in progress"
+#~ msgstr "Koniec aktualizácie, ale aktualizácia nie je vykonávaná"
+
+#~ msgctxt "lclstrconsts.rserror"
+#~ msgid "Error"
+#~ msgstr "Chyba"
+
+#~ msgctxt "lclstrconsts.rsmterror"
+#~ msgid "Error"
+#~ msgstr "Chyba"
+
+#~ msgid "Error creating device context for %s.%s"
+#~ msgstr "Chyba vytvárania kontextu zariadenie pre %s.%s"
+
+#~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
+#~ msgstr "Nastala chyba v %s na %sAdresa %s%s Rámec %s"
+
+#~ msgid "Error reading %s%s%s: %s"
+#~ msgstr "Chyba čítania %s%s%s: %s"
+
+#~ msgid "Error while executing %s%s%s:%s%s"
+#~ msgstr "Chyba·pri·vykonávaní·%s%s%s:%s%s"
+
+#~ msgid "Error while saving bitmap."
+#~ msgstr "Chyba pri ukladaní bitmapy."
+
+#~ msgid "Error:"
+#~ msgstr "Chyba:"
+
+#~ msgid "Escape"
+#~ msgstr "Escape"
+
+#~ msgid "Exception"
+#~ msgstr "Výnimka"
+
+#~ msgid "Execute"
+#~ msgstr "Spustiť"
+
+#~ msgid "File information"
+#~ msgstr "Súborové informácie"
+
+#~ msgid "File is not writable"
+#~ msgstr "Súbor nie je zapisovateľný"
+
+#~ msgid "File must exist"
+#~ msgstr "Súbor musí existovať"
+
+#~ msgid "Filter:"
+#~ msgstr "Filter:"
+
+#~ msgid "Find"
+#~ msgstr "Hľadať"
+
+#~ msgid "Find more"
+#~ msgstr "Hľadať ďalej"
+
+#~ msgid "First"
+#~ msgstr "Prvý"
+
+#~ msgid "FixedCols can't be >= ColCount"
+#~ msgstr "FixedCols nemôže byť >= ColCount"
+
+#~ msgid "FixedRows can't be >= RowCount"
+#~ msgstr "FixedRows nemôže byť >= RowCount"
+
+#~ msgid "Form streaming \"%s\" error: %s"
+#~ msgstr "Chyba streamovania formulára \"%s\": %s"
+
+#~ msgid "Grid file doesn't exists"
+#~ msgstr "Súbor mriežky neexistuje"
+
+#~ msgid "Grid index out of range."
+#~ msgstr "Index mriežky mimo rozsahu."
+
+#~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
+#~ msgstr ""
+#~ "GroupIndex nemmôže byť menší ako GroupIndex predchádzajúcej položky menu"
+
+#~ msgid "Hanja"
+#~ msgstr "Hanja"
+
+#~ msgid "Help"
+#~ msgstr "Pomoc"
+
+#~ msgid "Help Context not found"
+#~ msgstr "Kontextová pomoc nenájdená"
+
+#~ msgid ""
+#~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
+#~ msgstr ""
+#~ "Databáza pomoci %s%s%s nenašla zobrazovač pre stránku pomocníka typu %s"
+
+#~ msgid "Help Database %s%s%s not found"
+#~ msgstr "Databáza pomoci %s%s%s nenájdená"
+
+#~ msgid "Help Database not found"
+#~ msgstr "Databáza·pomoci nenájdená"
+
+#~ msgid "Help Error"
+#~ msgstr "Chyba pomoci"
+
+#~ msgid "Help Selector Error"
+#~ msgstr "Chyba selektora pomoci"
+
+#~ msgid "Help Viewer Error"
+#~ msgstr "Chyba zobrazovača pomoci"
+
+#~ msgid "Help Viewer not found"
+#~ msgstr "Zobrazovač pomoci nenájdený"
+
+#~ msgid "Help context %s not found in Database %s%s%s."
+#~ msgstr "Kontextová pomoc %s nenájdená v databáze %s%s%s."
+
+#~ msgid "Help context %s not found."
+#~ msgstr "Kontextová pomoc %s nenájdená."
+
+#~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
+#~ msgstr "Kľúčové·slovo·pomoci·%s%s%s nenájdené v databáze %s%s%s."
+
+#~ msgid "Help keyword %s%s%s not found."
+#~ msgstr "Kľúčové slovo pomoci %s%s%s nenájdené."
+
+#~ msgid "Help node %s%s%s has no Help Database"
+#~ msgstr "Uzol pomocníka %s%s%s nemá databázu pomocníka"
+
+#~ msgid "Help not found"
+#~ msgstr "Pomoc nenájdená"
+
+#~ msgid "History:"
+#~ msgstr "História:"
+
+#~ msgid "Home"
+#~ msgstr "Home"
+
+#~ msgid "Icon"
+#~ msgstr "Ikona"
+
+#~ msgid "Icon has no current image"
+#~ msgstr "Ikona nemá aktuálny obrázok"
+
+#~ msgid "Icon image cannot be empty"
+#~ msgstr "Obrázok ikony nemôže byť prázdny"
+
+#~ msgid "Icon image must have the same format"
+#~ msgstr "Obrázok ikony musí mať rovnaký formát"
+
+#~ msgid "Icon image must have the same size"
+#~ msgstr "Obrázok ikony musí mať rovnakú veľkosť"
+
+#~ msgid "Index Out of range Cell[Col=%d Row=%d]"
+#~ msgstr "Index mimo rozsahu Bunka[Col=%d Row=%d]"
+
+#~ msgid "Information"
+#~ msgstr "Informácia"
+
+#~ msgctxt "lclstrconsts.ifsvk_insert"
+#~ msgid "Insert"
+#~ msgstr "Insert"
+
+#~ msgctxt "lclstrconsts.rsinsertrecordhint"
+#~ msgid "Insert"
+#~ msgstr "Insert"
+
+#~ msgid "Invalid Date : %s"
+#~ msgstr "Neplatný dátum: %s"
+
+#~ msgid "Invalid Date: %s. Must be between %s and %s"
+#~ msgstr "Neplatný dátum: %s. Musí byť medzi %s a %s"
+
+#~ msgid "Invalid ImageList Index"
+#~ msgstr "Neplatný index ImageList"
+
+#~ msgid "Invalid action creation"
+#~ msgstr "Neplatné akcia vytvorenia"
+
+#~ msgid "Invalid action enumeration"
+#~ msgstr "Neplatné·akcia vymenovania"
+
+#~ msgid "Invalid action registration"
+#~ msgstr "Neplatné·akcia registrácie"
+
+#~ msgid "Invalid action unregistration"
+#~ msgstr "Neplatné·akcia odregistrovania"
+
+#~ msgid "Invalid floating point number: %s"
+#~ msgstr "Neplatné číslo s pohyblivou rádovou čiarkou: %s"
+
+#~ msgid "Invalid image size"
+#~ msgstr "Neplatná veľkosť obrázku"
+
+#~ msgid "Invalid integer number: %s"
+#~ msgstr "Neplatné celé číslo: %s"
+
+#~ msgid "Invalid property value"
+#~ msgstr "Neplatná hodnota vlastnosti"
+
+#~ msgid "Invalid stream format"
+#~ msgstr "Neplatný formát streamu"
+
+#~ msgid "Junja"
+#~ msgstr "Junja"
+
+#~ msgid "Kana"
+#~ msgstr "Kana"
+
+#~ msgid "Last"
+#~ msgstr "Posledný"
+
+#~ msgid "List index exceeds bounds (%d)"
+#~ msgstr "Index zoznamu prekračuje hranice (%d)"
+
+#~ msgid "List must be empty"
+#~ msgstr "Zoznam musí byť prázdny"
+
+#~ msgctxt "lclstrconsts.ifsvk_menu"
+#~ msgid "Menu"
+#~ msgstr "Menu"
+
+#~ msgctxt "lclstrconsts.rsmenucolorcaption"
+#~ msgid "Menu"
+#~ msgstr "Menu"
+
+#~ msgid "Menu index out of range"
+#~ msgstr "Index menu mimo rozsahu"
+
+#~ msgid "MenuItem is nil"
+#~ msgstr "MenuItem je nil"
+
+#~ msgid "Mouse Button Left"
+#~ msgstr "Ľavé tlačítko myši"
+
+#~ msgid "Mouse Button Middle"
+#~ msgstr "Stredné tlačítko·myši"
+
+#~ msgid "Mouse Button Right"
+#~ msgstr "Pravé tlačítko·myši"
+
+#~ msgctxt "lclstrconsts.ifsvk_next"
+#~ msgid "Next"
+#~ msgstr "Ďalej"
+
+#~ msgctxt "lclstrconsts.rsnextrecordhint"
+#~ msgid "Next"
+#~ msgstr "Ďalší"
+
+#~ msgid ""
+#~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
+#~ "Viewers"
+#~ msgstr ""
+#~ "Nebol nájdený prehliadač HTML.%sProsím definujte v Pomoc->Konfigurovať "
+#~ "pomoc->Prehliadače"
+
+#~ msgid "No MDI form present."
+#~ msgstr "Nie je MIDI formulár"
+
+#~ msgid "No help found for line %d, column %d of %s."
+#~ msgstr "Nenájdený pomocník pre riadok %d, stĺpec %d %s."
+
+#~ msgid "No help nodes available"
+#~ msgstr "Nie sú dostupné žiadne uzly pomoci"
+
+#~ msgid "No timers available"
+#~ msgstr "Nie sú dostupné žiadne časovače"
+
+#~ msgid "No to all"
+#~ msgstr "Nie pre všetky"
+
+#~ msgid ""
+#~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
+#~ "the programs uses clause."
+#~ msgstr ""
+#~ "Neexistuje objekt widgetsetu. Prosím skontrolujte, či je jednotka "
+#~ "\"interfaces\" pridaná do klauzuly uses programu."
+
+#~ msgid "Not a valid grid file"
+#~ msgstr "Neplatný súbor mriežky"
+
+#~ msgid "Numlock"
+#~ msgstr "Numlock"
+
+#~ msgid "Numpad %d"
+#~ msgstr "Numerická klávesnica %d"
+
+#~ msgid "Open existing file"
+#~ msgstr "Otvoriť existujúci súbor"
+
+#~ msgid "Overwrite file ?"
+#~ msgstr "Prepísať súbor?"
+
+#~ msgid "Path must exist"
+#~ msgstr "Cesta musí existovať"
+
+#~ msgid "Pause key"
+#~ msgstr "Kláves Pause"
+
+#~ msgid "Pixmap"
+#~ msgstr "Pixmap"
+
+#~ msgid "Portable BitMap"
+#~ msgstr "Portable BitMap"
+
+#~ msgid "Portable GrayMap"
+#~ msgstr "Portable GrayMap"
+
+#~ msgid "Portable Network Graphic"
+#~ msgstr "Portable Network Graphic"
+
+#~ msgid "Portable PixMap"
+#~ msgstr "Portable PixMap"
+
+#~ msgid "Post"
+#~ msgstr "za"
+
+#~ msgid "Print"
+#~ msgstr "Tlačiť"
+
+#~ msgctxt "lclstrconsts.ifsvk_prior"
+#~ msgid "Prior"
+#~ msgstr "Pred"
+
+#~ msgctxt "lclstrconsts.rspriorrecordhint"
+#~ msgid "Prior"
+#~ msgstr "Pred"
+
+#~ msgid "Property %s does not exist"
+#~ msgstr "Vlastnosť %s neexistuje"
+
+#~ msgid "Refresh"
+#~ msgstr "Obnoviť"
+
+#~ msgid "Replace"
+#~ msgstr "Nahradiť"
+
+#~ msgid "Replace all"
+#~ msgstr "Nahradiť všetko"
+
+#~ msgctxt "lclstrconsts.lislclresourcesnotfound"
+#~ msgid "Resource %s not found"
+#~ msgstr "Zdroj %s nenájdený"
+
+#~ msgctxt "lclstrconsts.rsresourcenotfound"
+#~ msgid "Resource %s not found"
+#~ msgstr "Zdroj %s nenájdený"
+
+#~ msgid "Save file as"
+#~ msgstr "Uložiť súbor ako"
+
+#~ msgid "ScrollBar property out of range"
+#~ msgstr "Vlastnosť ScrollBar mimo rozsahu"
+
+#~ msgid "Select"
+#~ msgstr "Vybrať"
+
+#~ msgid "Select Directory"
+#~ msgstr "Výber adresára"
+
+#~ msgid "Select a date"
+#~ msgstr "Výber dátumu"
+
+#~ msgid "Select a font"
+#~ msgstr "Výber fontu"
+
+#~ msgid "Select color"
+#~ msgstr "Výber farby"
+
+#~ msgid "Shift"
+#~ msgstr "Shift"
+
+#~ msgid "Snapshot"
+#~ msgstr "Snímka"
+
+#~ msgid "Space key"
+#~ msgstr "Medzerník"
+
+#~ msgid "Sub-menu is not in menu"
+#~ msgstr "Podmenu nie je v menu"
+
+#~ msgid "Tab"
+#~ msgstr "Tab"
+
+#~ msgid "Text"
+#~ msgstr "Text"
+
+#~ msgid "The char set in mask \"%s\" is not valid!"
+#~ msgstr "Množina znakov v maske \"%s\" nei je platná!"
+
+#~ msgid "The directory \"%s\" does not exist."
+#~ msgstr "Adresár \"%s\" neexistuje."
+
+#~ msgid "The file \"%s\" already exists. Overwrite ?"
+#~ msgstr "Súbor \"%s\" už existuje. Prepísať?"
+
+#~ msgid "The file \"%s\" does not exist."
+#~ msgstr "Súbor \"%s\" neexistuje."
+
+#~ msgid "The file \"%s\" is not writable."
+#~ msgstr "Súbor \"%s\" nie·je·zapisovateľný."
+
+#~ msgid "The help database %s%s%s was unable to find file %s%s%s."
+#~ msgstr "Databáza pomocníka %s%s%s nemohla nájsť súbor %s%s%s."
+
+#~ msgid "The macro %s in BrowserParams will be replaced by the URL."
+#~ msgstr "Makro %s v BrowserParams bude nahradené URL."
+
+#~ msgid "The path \"%s\" does not exist."
+#~ msgstr "Cesta \"%s\" neexistuje."
+
+#~ msgid "There is no viewer for help type %s%s%s"
+#~ msgstr "Nie je zobrazovač pre pomoc typu %s%s%s"
+
+#~ msgid "Unable to find a HTML browser."
+#~ msgstr "nemožno nájsť prehliadač HTML."
+
+#~ msgid "Unable to load default font"
+#~ msgstr "Nemožno načítať predvolený font"
+
+#~ msgid "Unknown"
+#~ msgstr "Neznámy"
+
+#~ msgid "Unknown Error, please report this bug"
+#~ msgstr "Neznáma chyba, prosím ohláste túto chybu"
+
+#~ msgid "Unknown picture extension"
+#~ msgstr "Neznáma prípona obrázku"
+
+#~ msgid "Unsupported bitmap format."
+#~ msgstr "Nepodporovaný formát bitmapy"
+
+#~ msgid "Unsupported clipboard format: %s"
+#~ msgstr "Nepodporovaný formát schránky: %s"
+
+#~ msgid "Unterminated byte value"
+#~ msgstr "Neukončená bytová hodnota"
+
+#~ msgid "Unterminated string"
+#~ msgstr "Neukončený reťazec"
+
+#~ msgid "Warning"
+#~ msgstr "Upozornenie"
+
+#~ msgid "Warning:"
+#~ msgstr "Upozornenie:"
+
+#~ msgid "Whole words only"
+#~ msgstr "Len celé slová"
+
+#~ msgid "Wrong token symbol: %s expected but %s found"
+#~ msgstr "Zlý symbol tokenu: očakávaný bol %s, ale nájdený bol %s"
+
+#~ msgid "Wrong token type: %s expected"
+#~ msgstr "Zlý typ tokenu: očakávaný %s"
+
+#~ msgid "Wrong token type: %s expected but %s found"
+#~ msgstr "Zlý typ tokenu: očakávaný bol %s , ale nájdený bol %s"
+
+#~ msgid "Yes to &All"
+#~ msgstr "Án&o pre všetky"
+
+#~ msgid "invalid Form object stream"
+#~ msgstr "neplatný prúd objektu Form"
+
+#~ msgid "left windows key"
+#~ msgstr "ľavý Win kláves"
+
+#~ msgid "permissions user group size date time"
+#~ msgstr "povolenia používateľ skupina veľkosť dátum čas"
+
+#~ msgid "right windows key"
+#~ msgstr "pravý Win kláves"

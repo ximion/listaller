@@ -1,0 +1,252 @@
+# Asturian translation for listaller
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the listaller package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: listaller\n"
+"Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
+"POT-Creation-Date: 2011-04-11 20:26+0200\n"
+"PO-Revision-Date: 2009-12-07 23:19+0000\n"
+"Last-Translator: Costales <marcos@ubuntu-ast.org>\n"
+"Language-Team: Asturian <ast@li.org>\n"
+"Language: ast\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-04-11 18:01+0000\n"
+"X-Generator: Launchpad (build 12792)\n"
+
+#, fuzzy
+msgid "Build IPK package"
+msgstr "Construir un paquete IPK"
+
+msgid "Copying files to their destination"
+msgstr ""
+
+#, c-format
+msgid "Could not create destination directory. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not create file '%s'! File already exists."
+msgstr ""
+
+msgid "Could not create/update software database!"
+msgstr ""
+
+#, c-format
+msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not extract file! Error: %s"
+msgstr ""
+
+#. : IPk builder could not find IPK source scripts
+msgid "Could not find IPK source files!"
+msgstr ""
+
+#, c-format
+msgid "Could not load desktop file values: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open IPK file! Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open desktop file: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not override file %s, this file already exists!"
+msgstr ""
+
+#, c-format
+msgid "Could not read IPK control information! Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not read IPK payload container! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not validate file %s. This IPK file might have been modified after "
+"creation!\n"
+"Please obtain a new copy and try again."
+msgstr ""
+
+msgid "DIRECTORY"
+msgstr ""
+
+msgid "Database action failed"
+msgstr ""
+
+msgid "Database action successful"
+msgstr ""
+
+msgid "Database locked"
+msgstr ""
+
+msgid "Database unlocked"
+msgstr ""
+
+#, c-format
+msgid "ERROR: %s"
+msgstr ""
+
+msgid "Fatal database error"
+msgstr ""
+
+#, c-format
+msgid "File %s not found or permission denied!"
+msgstr ""
+
+#, c-format
+msgid "File '%s' doesn't exist."
+msgstr ""
+
+msgid "IPK package could not be found!"
+msgstr ""
+
+#, c-format
+msgid "Making '%s' known to your system."
+msgstr ""
+
+msgid "Path to Listaller package source directory"
+msgstr ""
+
+msgid "Processing application without assigned .desktop file!"
+msgstr ""
+
+#, c-format
+msgid "Resolving dependencies of '%s'."
+msgstr ""
+
+#, c-format
+msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
+
+msgid "Setup has not been initialized!"
+msgstr ""
+
+#, fuzzy
+msgid "Show the application's version"
+msgstr "Verificar les aplicaciones."
+
+msgid "Software database closed"
+msgstr ""
+
+#, c-format
+msgid "Software database message (%d)"
+msgstr ""
+
+msgid "Software database opened"
+msgstr ""
+
+msgid "Tried to perform action on invalid IPK package."
+msgstr ""
+
+#, c-format
+msgid "Unable to create file '%s'!"
+msgstr ""
+
+msgid "Unable to extract IPK data!"
+msgstr ""
+
+msgid "Unable to extract IPK metadata!"
+msgstr ""
+
+#, c-format
+msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+#, c-format
+msgid "XML file '%s' is damaged."
+msgstr ""
+
+msgid "XML file is damaged or XML structure is no valid IPKControl!"
+msgstr ""
+
+#~ msgid "An internal error occured"
+#~ msgstr "Hebo un fallu internu"
+
+#~ msgid "Can't find Listaller Manager!"
+#~ msgstr "Imposible atopar l'alministrador de Listaller"
+
+#~ msgid "Can't find updater application!"
+#~ msgstr "¡Imposible atopar l'aplicación d'anovamientu!"
+
+#~ msgid "Cannot resolve dependencies"
+#~ msgstr "Imposible resolver les dependencies."
+
+#~ msgid "Check dependencies?"
+#~ msgstr "¿Verificar les dependencies?"
+
+#~ msgid ""
+#~ "Check if dependencies of all installed applications are available and "
+#~ "working"
+#~ msgstr ""
+#~ "Verificar si les dependencies de toles aplicaciones instalaes tán "
+#~ "disponibles y furrulen."
+
+#~ msgid "Commands:"
+#~ msgstr "Comandos"
+
+#~ msgid "Could not find Listaller TrayIcon Application"
+#~ msgstr "Imposible atopar l'aplicación Listaller Traylcon"
+
+#~ msgid "Create DEB and RPM file from IPS"
+#~ msgstr "Crear un paquete DEB y RPM dende un ficheru IPS"
+
+#~ msgid "Do you accept this license [y/n]?"
+#~ msgstr "¿Aceptes esta llicencia [s/n]?"
+
+#~ msgid "Do you want to check global-installed applications too?"
+#~ msgstr "¿Quier revisar tamién les aplicaciones instalaes globalmente?"
+
+#~ msgid "Do you want to check the applications's dependencies?"
+#~ msgstr "¿Quies verificar les dependencies de l'aplicación?"
+
+#~ msgid "Done."
+#~ msgstr "Fecho."
+
+#~ msgid "Installation aborted."
+#~ msgstr "Instalación encaboxada."
+
+#~ msgid "Installs an IPK package"
+#~ msgstr "Instala un paquete IPK"
+
+#~ msgid "Launch Listaller Manager"
+#~ msgstr "llanzar el xestor de Listaller"
+
+#~ msgid "Options:"
+#~ msgstr "Opciones:"
+
+#~ msgid "Package build commands:"
+#~ msgstr "Comandos de creación del paquete"
+
+#~ msgid "Resolve Listaller path variable"
+#~ msgstr "Resolver variable de ruta de Listaller"
+
+#~ msgid "Runs installation in testmode"
+#~ msgstr "Entamar la instalación en modu test"
+
+#~ msgid "Should lipa fix these problems automatically [y/n]?"
+#~ msgstr "¿Quier que Lipa resuelva automáticamente esos problemes [s/n]?"
+
+#~ msgid "Some dependencies are missing. Should they be installed now?"
+#~ msgstr "Falten delles dependencies.  ¿Quies instalales agora?"
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "Nun s'instaló l'aplicación %a ."
+
+#~ msgid "Unable to find %s"
+#~ msgstr "Imposible atopar %s"
+
+#~ msgid "You have to enter a number!"
+#~ msgstr "¡Tienes qu'introducir un númberu!"

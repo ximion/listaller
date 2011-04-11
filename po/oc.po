@@ -1,0 +1,455 @@
+# Occitan (post 1500) translation for listaller
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# This file is distributed under the same license as the listaller package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: listaller\n"
+"Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
+"POT-Creation-Date: 2011-04-11 20:26+0200\n"
+"PO-Revision-Date: 2010-04-05 21:23+0000\n"
+"Last-Translator: Cédric VALMARY (Tot en òc) <cvalmary@yahoo.fr>\n"
+"Language-Team: Occitan (post 1500) <oc@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-04-11 18:00+0000\n"
+"X-Generator: Launchpad (build 12792)\n"
+
+#, fuzzy
+msgid "Build IPK package"
+msgstr "Construire un paquet IPK"
+
+msgid "Copying files to their destination"
+msgstr ""
+
+#, c-format
+msgid "Could not create destination directory. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not create file '%s'! File already exists."
+msgstr ""
+
+msgid "Could not create/update software database!"
+msgstr ""
+
+#, c-format
+msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not extract file! Error: %s"
+msgstr ""
+
+#. : IPk builder could not find IPK source scripts
+msgid "Could not find IPK source files!"
+msgstr ""
+
+#, c-format
+msgid "Could not load desktop file values: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open IPK file! Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open desktop file: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not override file %s, this file already exists!"
+msgstr ""
+
+#, c-format
+msgid "Could not read IPK control information! Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not read IPK payload container! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not validate file %s. This IPK file might have been modified after "
+"creation!\n"
+"Please obtain a new copy and try again."
+msgstr ""
+
+msgid "DIRECTORY"
+msgstr ""
+
+msgid "Database action failed"
+msgstr ""
+
+msgid "Database action successful"
+msgstr ""
+
+msgid "Database locked"
+msgstr ""
+
+msgid "Database unlocked"
+msgstr ""
+
+#, c-format
+msgid "ERROR: %s"
+msgstr ""
+
+msgid "Fatal database error"
+msgstr ""
+
+#, c-format
+msgid "File %s not found or permission denied!"
+msgstr ""
+
+#, c-format
+msgid "File '%s' doesn't exist."
+msgstr ""
+
+msgid "IPK package could not be found!"
+msgstr ""
+
+#, c-format
+msgid "Making '%s' known to your system."
+msgstr ""
+
+msgid "Path to Listaller package source directory"
+msgstr ""
+
+msgid "Processing application without assigned .desktop file!"
+msgstr ""
+
+#, c-format
+msgid "Resolving dependencies of '%s'."
+msgstr ""
+
+#, c-format
+msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
+
+msgid "Setup has not been initialized!"
+msgstr ""
+
+#, fuzzy
+msgid "Show the application's version"
+msgstr "Verificar las aplicacions"
+
+msgid "Software database closed"
+msgstr ""
+
+#, c-format
+msgid "Software database message (%d)"
+msgstr ""
+
+msgid "Software database opened"
+msgstr ""
+
+msgid "Tried to perform action on invalid IPK package."
+msgstr ""
+
+#, c-format
+msgid "Unable to create file '%s'!"
+msgstr ""
+
+msgid "Unable to extract IPK data!"
+msgstr ""
+
+msgid "Unable to extract IPK metadata!"
+msgstr ""
+
+#, c-format
+msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+#, c-format
+msgid "XML file '%s' is damaged."
+msgstr ""
+
+msgid "XML file is damaged or XML structure is no valid IPKControl!"
+msgstr ""
+
+#~ msgid "Abort"
+#~ msgstr "Abandonar"
+
+#~ msgid "About"
+#~ msgstr "A prepaus"
+
+#~ msgid "About Listaller"
+#~ msgstr "A prepaus de Listaller"
+
+#~ msgid "All"
+#~ msgstr "Tot"
+
+#~ msgid "An internal error occured"
+#~ msgstr "Una error intèrna s'es producha"
+
+#~ msgid "Applications"
+#~ msgstr "Aplicacions"
+
+#~ msgid "Authors"
+#~ msgstr "Autors"
+
+#~ msgid "Autor"
+#~ msgstr "Autor"
+
+#~ msgid "Back"
+#~ msgstr "Retorn"
+
+#~ msgid "Can't find Listaller Manager!"
+#~ msgstr "Pòt pas trobar lo Gestionari Listaller"
+
+#~ msgid "Check for updates"
+#~ msgstr "Recercar de mesas a jorn"
+
+#~ msgid "Cleaning up..."
+#~ msgstr "Netejatge..."
+
+#~ msgid "Close"
+#~ msgstr "Tampar"
+
+#~ msgid "Commands:"
+#~ msgstr "Comandas :"
+
+#~ msgid "Could not find Listaller TrayIcon Application"
+#~ msgstr "Pòt pas trobar l'icòna de notificacion Listaller"
+
+#~ msgid "Create DEB and RPM file from IPS"
+#~ msgstr "Crear un paquet DEB e RPM dempuèi un fichièr IPS"
+
+#~ msgid "Delete source"
+#~ msgstr "Suprimir la font"
+
+#~ msgid "Details"
+#~ msgstr "Detalhs"
+
+#~ msgid "Development"
+#~ msgstr "Desvolopament"
+
+#~ msgid "Do you accept this license [y/n]?"
+#~ msgstr "Acceptatz aquesta licéncia [o/n] ?"
+
+#~ msgid "Done."
+#~ msgstr "Acabat."
+
+#~ msgid "Education"
+#~ msgstr "Educacion"
+
+#~ msgid "Filter..."
+#~ msgstr "Filtrar..."
+
+#~ msgid "Filtering..."
+#~ msgstr "Filtratge..."
+
+#~ msgid "Finish"
+#~ msgstr "Acabar"
+
+#~ msgid "Finished"
+#~ msgstr "Acabat"
+
+#~ msgid "Games"
+#~ msgstr "Jòcs"
+
+#~ msgid "Graphic"
+#~ msgstr "Grafisme"
+
+#~ msgid "Install into my Home directory"
+#~ msgstr "Installar dins mon dorsièr personal"
+
+#~ msgid "Install package"
+#~ msgstr "Installacion paquet"
+
+#~ msgid "Install updates"
+#~ msgstr "Installar las mesas a jorn"
+
+#~ msgid "Installation"
+#~ msgstr "Installacion"
+
+#~ msgid "Installation aborted."
+#~ msgstr "Installacion anullada."
+
+#~ msgid "Installation completed!"
+#~ msgstr "Installacion acabada !"
+
+#~ msgid "Installation failed."
+#~ msgstr "Fracàs de l'installacion"
+
+#~ msgid "Installation mode:"
+#~ msgstr "mòde d'installacion"
+
+#~ msgid "Installation of %a"
+#~ msgstr "Installacion de %a"
+
+#~ msgid "Installed applications"
+#~ msgstr "Aplicacions installadas"
+
+#~ msgid "Installs an IPK package"
+#~ msgstr "Installa un paquet IPK"
+
+#~ msgid "Launch Listaller Manager"
+#~ msgstr "Aviar Listaller Manager"
+
+#~ msgid "Loading aborted."
+#~ msgstr "Cargament interromput ."
+
+#~ msgid "Loading..."
+#~ msgstr "Cargament..."
+
+#~ msgid "Mode"
+#~ msgstr "Mòde"
+
+#~ msgid "Mode number:"
+#~ msgstr "Mòde numerica :"
+
+#~ msgid "Multimedia"
+#~ msgstr "Multimèdia"
+
+#~ msgid "Network"
+#~ msgstr "Ret"
+
+#~ msgid "Office"
+#~ msgstr "Burèu"
+
+#~ msgid "Okay"
+#~ msgstr "D'acòrdi"
+
+#~ msgid "Options:"
+#~ msgstr "Opcions :"
+
+#~ msgid "Other"
+#~ msgstr "Autre"
+
+#~ msgid "Package build commands:"
+#~ msgstr "Comandas de creacion del paquet :"
+
+#~ msgid "Password"
+#~ msgstr "Senhal"
+
+#~ msgid "Please wait."
+#~ msgstr "Esperatz."
+
+#~ msgid "Please wait..."
+#~ msgstr "Esperatz..."
+
+#~ msgid "Press \"Finish\" to close."
+#~ msgstr "Clicatz sus « Acabar » per tampar."
+
+#~ msgid "Print all available log messages"
+#~ msgstr "Estampar totes los messatges del jornal disponibles"
+
+#~ msgid "Program description:"
+#~ msgstr "Descripcion del programa :"
+
+#~ msgid "Proxy-Settings"
+#~ msgstr "Paramètres de proxy"
+
+#~ msgid "Question:"
+#~ msgstr "Question :"
+
+#~ msgid "Quit"
+#~ msgstr "Quitar"
+
+#~ msgid "Re-install"
+#~ msgstr "Reïnstallacion"
+
+#~ msgid "Ready."
+#~ msgstr "Prèst."
+
+#~ msgid "Repositories"
+#~ msgstr "Depauses"
+
+#~ msgid "Running installation..."
+#~ msgstr "Execucion de l'installacion..."
+
+#~ msgid "Runs installation in testmode"
+#~ msgstr "Aviar l'installacion en mòde tèst"
+
+#~ msgid "Security warning"
+#~ msgstr "Alèrta de seguretat"
+
+#~ msgid "Settings"
+#~ msgstr "Configuracion"
+
+#~ msgid "Show"
+#~ msgstr "Afichar"
+
+#~ msgid "Show:"
+#~ msgstr "Afichar :"
+
+#~ msgid "Software Manager"
+#~ msgstr "Gestionari de logicials"
+
+#~ msgid "Software license"
+#~ msgstr "Licéncia del logicial"
+
+#~ msgid "State"
+#~ msgstr "Estat"
+
+#~ msgid "Success!"
+#~ msgstr "Òsca !"
+
+#~ msgid "System"
+#~ msgstr "Sistèma"
+
+#~ msgid "Testmode"
+#~ msgstr "Mòde Tèst"
+
+#~ msgid "Unable to find %s"
+#~ msgstr "Impossible de trobar %s"
+
+#~ msgid "Unable to override the file %f."
+#~ msgstr "Impossible d'espotir lo paquet %f."
+
+#~ msgid "Uninstall"
+#~ msgstr "Desinstallar"
+
+#~ msgid "Uninstalling..."
+#~ msgstr "Desinstallacion..."
+
+#~ msgid "Update repositories"
+#~ msgstr "Mesa a jorn dels depauses"
+
+#~ msgid "Use compatible packages?"
+#~ msgstr "Utilizacion dels paquets compatibles ?"
+
+#~ msgid "Username"
+#~ msgstr "Nom d'utilizaire"
+
+#~ msgid "Utilities"
+#~ msgstr "Utilitaris"
+
+#~ msgid "Version"
+#~ msgstr "Version"
+
+#~ msgid "Waiting..."
+#~ msgstr "En espèra ..."
+
+#~ msgid "Warning!"
+#~ msgstr "Atencion !"
+
+#~ msgid "Welcome to the installation of %a"
+#~ msgstr "Benvengut(da) dins l'installacion de %a"
+
+#~ msgid "Welcome!"
+#~ msgstr "Benvenguda !"
+
+#~ msgid "What do you want to do?"
+#~ msgstr "Qué volètz far ?"
+
+#~ msgid "You have to enter a number!"
+#~ msgstr "Vos cal entrar un nombre !"
+
+#~ msgid "n"
+#~ msgstr "n"
+
+#~ msgid "no"
+#~ msgstr "Non"
+
+#~ msgid "y"
+#~ msgstr "o"
+
+#~ msgid "yes"
+#~ msgstr "òc"

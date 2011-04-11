@@ -41,11 +41,11 @@ endif(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
 #
 # Options
 #
-########################################
-OPTION(TESTS "Enable Listaller's Unit Tests" OFF)
-OPTION(QT "Build Listaller's Qt4 modules" OFF)
-OPTION(TOOLS "Build Listaller's non-gui tools" ON)
-########################################
+option(TESTS "Enable Listaller's Unit Tests" OFF)
+option(QT "Build Listaller's Qt4 modules" OFF)
+option(TOOLS "Build Listaller's non-gui tools" ON)
+option(L18N "Enable localization" ON)
+
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX
@@ -81,26 +81,6 @@ add_custom_target(distclean
 # l18n
 #
 find_package (Gettext REQUIRED)
-if (${GETTEXT_FOUND} STREQUAL "TRUE")
-	add_custom_command (OUTPUT ${CMAKE_SOURCE_DIR}/po/listaller.pot
-			COMMAND xgettext -i -c: -s --files-from ${CMAKE_SOURCE_DIR}/po/POTFILES.in -k_
-				-o ${CMAKE_SOURCE_DIR}/po/listaller.pot
-				--copyright-holder=\""Matthias Klumpp\""
-				--package-name="listaller"
-				--package-version="${LISTALLER_VERSION}"
-				--msgid-bugs-address="listaller@googlegroups.com"
-				--no-wrap --no-location
-			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-	)
-	add_custom_target(
-	update_pot
-	DEPENDS ${CMAKE_SOURCE_DIR}/po/listaller.pot
-	)
-        file (GLOB _translations ${CMAKE_SOURCE_DIR}/po/*.po)
-        gettext_create_translations (${CMAKE_SOURCE_DIR}/po/listaller.pot
-				     ALL ${_translations}
-	)
-endif (${GETTEXT_FOUND} STREQUAL "TRUE")
 
 #
 # Configure files
@@ -150,6 +130,6 @@ add_subdirectory(graphics)
 if(TESTS)
 	add_subdirectory(tests)
 endif(TESTS)
-if (GETTEXT_FOUND AND ENABLE_NLS)
+if (GETTEXT_FOUND AND L18N)
   add_subdirectory(po)
-endif (GETTEXT_FOUND AND ENABLE_NLS)
+endif (GETTEXT_FOUND AND L18N)

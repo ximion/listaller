@@ -1,0 +1,876 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
+"POT-Creation-Date: 2011-04-11 20:26+0200\n"
+"PO-Revision-Date: 2010-04-05 21:07+0000\n"
+"Last-Translator: Matthias Klumpp <Unknown>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-04-11 18:01+0000\n"
+"X-Generator: Launchpad (build 12792)\n"
+
+msgid "Build IPK package"
+msgstr ""
+
+msgid "Copying files to their destination"
+msgstr ""
+
+#, c-format
+msgid "Could not create destination directory. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not create file '%s'! File already exists."
+msgstr ""
+
+msgid "Could not create/update software database!"
+msgstr ""
+
+#, c-format
+msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not extract file! Error: %s"
+msgstr ""
+
+#. : IPk builder could not find IPK source scripts
+msgid "Could not find IPK source files!"
+msgstr ""
+
+#, c-format
+msgid "Could not load desktop file values: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open IPK file! Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open desktop file: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not override file %s, this file already exists!"
+msgstr ""
+
+#, c-format
+msgid "Could not read IPK control information! Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not read IPK payload container! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not validate file %s. This IPK file might have been modified after "
+"creation!\n"
+"Please obtain a new copy and try again."
+msgstr ""
+
+msgid "DIRECTORY"
+msgstr ""
+
+msgid "Database action failed"
+msgstr ""
+
+msgid "Database action successful"
+msgstr ""
+
+msgid "Database locked"
+msgstr ""
+
+msgid "Database unlocked"
+msgstr ""
+
+#, c-format
+msgid "ERROR: %s"
+msgstr ""
+
+msgid "Fatal database error"
+msgstr ""
+
+#, c-format
+msgid "File %s not found or permission denied!"
+msgstr ""
+
+#, c-format
+msgid "File '%s' doesn't exist."
+msgstr ""
+
+msgid "IPK package could not be found!"
+msgstr ""
+
+#, c-format
+msgid "Making '%s' known to your system."
+msgstr ""
+
+msgid "Path to Listaller package source directory"
+msgstr ""
+
+msgid "Processing application without assigned .desktop file!"
+msgstr ""
+
+#, c-format
+msgid "Resolving dependencies of '%s'."
+msgstr ""
+
+#, c-format
+msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
+
+msgid "Setup has not been initialized!"
+msgstr ""
+
+msgid "Show the application's version"
+msgstr ""
+
+msgid "Software database closed"
+msgstr ""
+
+#, c-format
+msgid "Software database message (%d)"
+msgstr ""
+
+msgid "Software database opened"
+msgstr ""
+
+msgid "Tried to perform action on invalid IPK package."
+msgstr ""
+
+#, c-format
+msgid "Unable to create file '%s'!"
+msgstr ""
+
+msgid "Unable to extract IPK data!"
+msgstr ""
+
+msgid "Unable to extract IPK metadata!"
+msgstr ""
+
+#, c-format
+msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+#, c-format
+msgid "XML file '%s' is damaged."
+msgstr ""
+
+msgid "XML file is damaged or XML structure is no valid IPKControl!"
+msgstr ""
+
+#~ msgid "  modified "
+#~ msgstr "  modificat "
+
+#~ msgid "  size "
+#~ msgstr "  mida "
+
+#~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
+#~ msgstr " Avís: s'han perdut %d estructures TimerInfo, les allibero"
+
+#~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
+#~ msgstr " Avís: Hi ha %d missatges perduts a la cua!, els allibero"
+
+#~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
+#~ msgstr ""
+#~ " Avís: hi ha %d DCs no llançats, tot seguit es mostra informació "
+#~ "detallada:"
+
+#~ msgid ""
+#~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
+#~ msgstr ""
+#~ " Avís: Hi ha %d Objectes-GDI no llançats, tot seguit es mostra informació "
+#~ "detallada:"
+
+#~ msgid ""
+#~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
+#~ msgstr ""
+#~ " Avís: S'han deixat %s enllaços a missatge LM_PAINT/LM_GtkPAINT, sense "
+#~ "eliminar"
+
+#~ msgid "%s Index %d out of bounds 0 .. %d"
+#~ msgstr "%s índex %d fora de límits 0-%d"
+
+#~ msgid "%s is already associated with %s"
+#~ msgstr "%s ja està associat amb %s"
+
+#~ msgid ""
+#~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill "
+#~ "the program."
+#~ msgstr ""
+#~ "%s%s%sPolseu Ok per ignorar, tot arriscant de corrompre les dades."
+#~ "%sPolseu Cancel per interrompre el programa"
+
+#~ msgid "%s: Already registered"
+#~ msgstr "Ja enregistrat"
+
+#~ msgid "%s: Not registered"
+#~ msgstr "No enregistrat"
+
+#~ msgid "&All"
+#~ msgstr "&Tot"
+
+#~ msgid "&Close"
+#~ msgstr "Tan&ca"
+
+#~ msgid "&Directory"
+#~ msgstr "&Directori"
+
+#~ msgid "&Help"
+#~ msgstr "&Ajuda"
+
+#~ msgid "&Ignore"
+#~ msgstr "&Ignora"
+
+#~ msgid "&No"
+#~ msgstr "&No"
+
+#~ msgid "&OK"
+#~ msgstr "D'&acord"
+
+#~ msgid "&Retry"
+#~ msgstr "&Torna-ho a provar"
+
+#~ msgid "&Yes"
+#~ msgstr "&Sí"
+
+#~ msgid "(file not found: \"%s\")"
+#~ msgstr "(fitxer no trobat: \"%s\")"
+
+#~ msgid ""
+#~ "--class classname     Following Xt conventions, the class of a program is "
+#~ "the program name with the initial character capitalized. For example, the "
+#~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
+#~ "program will be set to \"classname\"."
+#~ msgstr ""
+#~ "--class classname     Seguint les convencions Xt, la classe d'un programa "
+#~ "és el nom del programa amb el caràcter inicial en majúscula. Per exemple, "
+#~ "el nom de classe (classname) per al gimp és \"Gimp\". Si --class "
+#~ "s'especifica, la classe del programa serà posada com \"classname\"."
+
+#~ msgid ""
+#~ "--display h:s:d       Connect to the specified X server, where \"h\" is "
+#~ "the hostname, \"s\" is the server number (usually 0), and \"d\" is the "
+#~ "display number (typically omitted). If --display is not specified, the "
+#~ "DISPLAY environment variable is used."
+#~ msgstr ""
+#~ "--display h:s:d       Connecta al servidor X especificat, on \"h\" és el "
+#~ "nom del host, \"s\" és el número del servidor (usualment 0), i \"d\" és "
+#~ "el número a mostrar (típicament omès). Si --display no s'ha especificat,"
+#~ "s'usarà l'entorn variable DISPLAY."
+
+#~ msgid ""
+#~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
+#~ "the application."
+#~ msgstr ""
+#~ "--g-fatal-warnings    Els errors i advertències generats per Gtk+/GDK "
+#~ "aturaran l'aplicació."
+
+#~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
+#~ msgstr ""
+#~ "--gdk-debug flags     Engega missatges específics de GDK de traça/"
+#~ "depuració."
+
+#~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
+#~ msgstr ""
+#~ "--gdk-no-debug flags  Tanca els missatges específics GDK de traça/"
+#~ "depuració."
+
+#~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
+#~ msgstr ""
+#~ "--gtk-debug flags     Mostra missatges Gtk+ específics de traça/depuració."
+
+#~ msgid "--gtk-module module   Load the specified module at startup."
+#~ msgstr "--gtk-module module   Carrega el mòdul especificat a l'engegar."
+
+#~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
+#~ msgstr ""
+#~ "--gtk-no-debug flags  Tanca els missatges Gtk+ específics de traça/"
+#~ "depuració."
+
+#~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
+#~ msgstr "--lcl-no-transient   No posis ordre transient per a formes modals."
+
+#~ msgid ""
+#~ "--name programe       Set program name to \"progname\". If not specified, "
+#~ "program name will be set to ParamStrUTF8(0)."
+#~ msgstr ""
+#~ "--name programe       Posa el nom del programa a \"progname\". Si no s'ha "
+#~ "especificat, el nom serà posat a ParamStr(0)."
+
+#~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
+#~ msgstr ""
+#~ "--no-xshm             Desactiva l'ús de l'extensió X de memòria "
+#~ "compartida."
+
+#~ msgid ""
+#~ "--sync                Call XSynchronize (display, True) after the Xserver "
+#~ "connection has been established. This makes debugging X protocol errors "
+#~ "easier, because X request buffering will be disabled and X errors will be "
+#~ "received immediatey after the protocol request that generated the error "
+#~ "has been processed by the X server."
+#~ msgstr ""
+#~ "--sync                Crida XSynchronize (display, True) un cop la "
+#~ "connexió al Xserver ha estat establerta. Això facilita que la depuració "
+#~ "d'errors del protocol X sigui més senzilla, perquè la demanda de memòria "
+#~ "cau X serà desactivad i els errors X seran rebuts immediatament després "
+#~ "que la demanda del protocol que ha generat l'error ha estat processat pel "
+#~ "servidor X."
+
+#~ msgid "A control can't have itself as parent"
+#~ msgstr "Un control no pot cridar-se a ell mateix"
+
+#~ msgid "Abort"
+#~ msgstr "Avorta"
+
+#~ msgid "Accept"
+#~ msgstr "Accepta"
+
+#~ msgid "All files (%s)|%s|%s"
+#~ msgstr "Tots els fitxers (%s)|%s|%s"
+
+#~ msgid "Alt"
+#~ msgstr "Alt"
+
+#~ msgid "Backspace"
+#~ msgstr "Espai enrere"
+
+#~ msgid "Backward"
+#~ msgstr "Enrere"
+
+#~ msgid "Bitmaps"
+#~ msgstr "Mapes de bits"
+
+#~ msgid "Blank"
+#~ msgstr "En blanc"
+
+#~ msgid "Browser %s%s%s not executable."
+#~ msgstr "Navegador %s%s%s no executable."
+
+#~ msgid "Browser %s%s%s not found."
+#~ msgstr "Navegador  %s%s%s no trobat."
+
+#~ msgid "Calculator"
+#~ msgstr "Calculadora"
+
+#~ msgid "Can not focus"
+#~ msgstr "No es pot focalitzar"
+
+#~ msgctxt "lclstrconsts.rsmbcancel"
+#~ msgid "Cancel"
+#~ msgstr "Cancel·la"
+
+#~ msgid "Cannot focus a disabled or invisible window"
+#~ msgstr "No puc accedir a una finestra invisible o tancada"
+
+#~ msgid "Canvas does not allow drawing"
+#~ msgstr "El marc no permet el dibuix"
+
+#~ msgid "Capital"
+#~ msgstr "Majúscula"
+
+#~ msgid "Case sensitive"
+#~ msgstr "Sensible a majúsc-minúsc."
+
+#~ msgid "Clear"
+#~ msgstr "Neteja"
+
+#~ msgid "Confirmation"
+#~ msgstr "Confirmació"
+
+#~ msgid "Control"
+#~ msgstr "Control"
+
+#~ msgid "Convert"
+#~ msgstr "Converteix"
+
+#~ msgid "Creating gdb catchable error:"
+#~ msgstr "Creant un error gdb capturable:"
+
+#~ msgid "Ctrl"
+#~ msgstr "Ctrl"
+
+#~ msgid "Custom"
+#~ msgstr "Personalitza"
+
+#~ msgctxt "lclstrconsts.ifsvk_delete"
+#~ msgid "Delete"
+#~ msgstr "Esborra"
+
+#~ msgctxt "lclstrconsts.rsdeleterecordhint"
+#~ msgid "Delete"
+#~ msgstr "Esborra"
+
+#~ msgid "Direction"
+#~ msgstr "Direcció"
+
+#~ msgid "Directory must exist"
+#~ msgstr "Cal que el directori existeixi"
+
+#~ msgid "Docking"
+#~ msgstr "Fixa"
+
+#~ msgid "Down"
+#~ msgstr "Avall"
+
+#~ msgid "Duplicate menus"
+#~ msgstr "Menús duplicats"
+
+#~ msgid "ERROR in LCL: "
+#~ msgstr "ERROR en LCL "
+
+#~ msgid "End"
+#~ msgstr "Fi"
+
+#~ msgctxt "lclstrconsts.rsmterror"
+#~ msgid "Error"
+#~ msgstr "Error"
+
+#~ msgid "Error creating device context for %s.%s"
+#~ msgstr "Error en crear dispositiu  de context per a %s.%s"
+
+#~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
+#~ msgstr "Error ocorregut en %s a l'%sAdreça %s%s Estructura %s"
+
+#~ msgid "Error reading %s%s%s: %s"
+#~ msgstr "Error en llegir %s%s%s: %s"
+
+#~ msgid "Error while executing %s%s%s:%s%s"
+#~ msgstr "Error en executar  %s%s%s:%s%s"
+
+#~ msgid "Error while saving bitmap."
+#~ msgstr "Error en desar el mapa de bits"
+
+#~ msgid "Error:"
+#~ msgstr "Error:"
+
+#~ msgid "Escape"
+#~ msgstr "Escapa"
+
+#~ msgid "Exception"
+#~ msgstr "Excepció"
+
+#~ msgid "Execute"
+#~ msgstr "Executa"
+
+#~ msgid "File information"
+#~ msgstr "Informació del fitxer"
+
+#~ msgid "File is not writable"
+#~ msgstr "No es pot escriure aquest fitxer"
+
+#~ msgid "File must exist"
+#~ msgstr "El fitxer ha d'existir"
+
+#~ msgid "Filter:"
+#~ msgstr "Filtre:"
+
+#~ msgid "Final"
+#~ msgstr "Final"
+
+#~ msgid "Find"
+#~ msgstr "Busca"
+
+#~ msgid "Find more"
+#~ msgstr "Busca més"
+
+#~ msgid "FixedCols can't be >= ColCount"
+#~ msgstr ""
+#~ "FixedCols (columnes fixades) no poden ser>= ColCount (recompte de "
+#~ "columnes)"
+
+#~ msgid "FixedRows can't be >= RowCount"
+#~ msgstr ""
+#~ "FixedRows (files fixades) no poden ser >= RowCount (recompte de files)"
+
+#~ msgid "Form streaming \"%s\" error: %s"
+#~ msgstr "Formació del corrent \"%s\" amb  error: %s"
+
+#~ msgid "Forward"
+#~ msgstr "Endavant"
+
+#~ msgid "Grid file doesn't exists"
+#~ msgstr "No existeix fitxer de la graella"
+
+#~ msgid "Grid index out of range."
+#~ msgstr "Índex de la graella fora de rang"
+
+#~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
+#~ msgstr ""
+#~ "GroupIndex no pot ser menor que un ítem de menú GroupIndex anterior."
+
+#~ msgid "Hanja"
+#~ msgstr "Hanja"
+
+#~ msgid "Help"
+#~ msgstr "Ajuda"
+
+#~ msgid "Help Context not found"
+#~ msgstr "No trobo ajuda contextual"
+
+#~ msgid ""
+#~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
+#~ msgstr ""
+#~ "La base de dades de l'ajuda %s%s%s no ha trobat un visor per una pàgina "
+#~ "d'ajuda del tipus %s"
+
+#~ msgid "Help Database %s%s%s not found"
+#~ msgstr "Base de dades de l'ajuda %s%s%s no trobada"
+
+#~ msgid "Help Database not found"
+#~ msgstr "Base de dades de l'ajuda no trobada"
+
+#~ msgid "Help Error"
+#~ msgstr "Error d'ajuda"
+
+#~ msgid "Help Selector Error"
+#~ msgstr "Error del selector d'ajuda"
+
+#~ msgid "Help Viewer Error"
+#~ msgstr "Error del visor d'ajuda"
+
+#~ msgid "Help Viewer not found"
+#~ msgstr "Visor d'ajuda no trobat"
+
+#~ msgid "Help context %s not found in Database %s%s%s."
+#~ msgstr "Context d'ajuda %s no trobat en la base de dades %s%s%s."
+
+#~ msgid "Help context %s not found."
+#~ msgstr "Context d'ajuda %s no trobat."
+
+#~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
+#~ msgstr "Paraula clau d'ajuda %s%s%s no trobada en la base de dades %s%s%s."
+
+#~ msgid "Help keyword %s%s%s not found."
+#~ msgstr "Paraula clau d'ajuda %s%s%s no trobada"
+
+#~ msgid "Help node %s%s%s has no Help Database"
+#~ msgstr "El node d'ajuda  %s%s%s no té base de dades d'ajuda"
+
+#~ msgid "Help not found"
+#~ msgstr "Ajuda no trobada"
+
+#~ msgid "History:"
+#~ msgstr "Historial:"
+
+#~ msgid "Home"
+#~ msgstr "Inici"
+
+#~ msgid "Icon"
+#~ msgstr "Icona"
+
+#~ msgid "Index Out of range Cell[Col=%d Row=%d]"
+#~ msgstr "Índex fora de rang Cel·lal[Col=%d Fila=%d]"
+
+#~ msgid "Information"
+#~ msgstr "Informació"
+
+#~ msgctxt "lclstrconsts.ifsvk_insert"
+#~ msgid "Insert"
+#~ msgstr "Insereix"
+
+#~ msgctxt "lclstrconsts.rsinsertrecordhint"
+#~ msgid "Insert"
+#~ msgstr "Insereix"
+
+#~ msgid "Invalid Date : %s"
+#~ msgstr "Data no vàlida: %s"
+
+#~ msgid "Invalid Date: %s. Must be between %s and %s"
+#~ msgstr "Data no vàlida: %s. Cal que estigui entre %s i %s"
+
+#~ msgid "Invalid ImageList Index"
+#~ msgstr "Índex de llista d'imatges no vàlid"
+
+#~ msgid "Invalid action creation"
+#~ msgstr "Creació d'acció no vàlida"
+
+#~ msgid "Invalid action enumeration"
+#~ msgstr "Enumeració d'acció no vàlida"
+
+#~ msgid "Invalid action registration"
+#~ msgstr "Enregistrament d'acció no vàlid"
+
+#~ msgid "Invalid action unregistration"
+#~ msgstr "Acció de desenregistrar invàlida"
+
+#~ msgid "Invalid image size"
+#~ msgstr "Mida de la imatge no vàlida"
+
+#~ msgid "Invalid property value"
+#~ msgstr "Valor de la propietat no vàlid"
+
+#~ msgid "Invalid stream format"
+#~ msgstr "Corrent amb format invàlid"
+
+#~ msgid "Junja"
+#~ msgstr "Junja"
+
+#~ msgid "Kana"
+#~ msgstr "Kana"
+
+#~ msgid "Left"
+#~ msgstr "Esquerra"
+
+#~ msgid "List index exceeds bounds (%d)"
+#~ msgstr "L'índex de la llista excedeix els límits (%d)"
+
+#~ msgid "List must be empty"
+#~ msgstr "Cal que la llista sigui buida"
+
+#~ msgctxt "lclstrconsts.ifsvk_menu"
+#~ msgid "Menu"
+#~ msgstr "Menú"
+
+#~ msgctxt "lclstrconsts.rsmenucolorcaption"
+#~ msgid "Menu"
+#~ msgstr "Menú"
+
+#~ msgid "Menu index out of range"
+#~ msgstr "Índex de menú fora de rang"
+
+#~ msgid "MenuItem is nil"
+#~ msgstr "L'opció  no hi és al menú"
+
+#~ msgid "Mode Change"
+#~ msgstr "Canvi de mode"
+
+#~ msgid "Mouse Button Left"
+#~ msgstr "Botó esquerre del ratolí"
+
+#~ msgid "Mouse Button Middle"
+#~ msgstr "Butó del mig del ratolí"
+
+#~ msgid "Mouse Button Right"
+#~ msgstr "Botó dret del ratolí"
+
+#~ msgctxt "lclstrconsts.ifsvk_next"
+#~ msgid "Next"
+#~ msgstr "Pròxim"
+
+#~ msgctxt "lclstrconsts.rsnextrecordhint"
+#~ msgid "Next"
+#~ msgstr "Pròxim"
+
+#~ msgid ""
+#~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
+#~ "Viewers"
+#~ msgstr ""
+#~ "No s'ha trobat navegador HTML .%sSisplau definiu-ne un en  Ajuda -> "
+#~ "Configura ajuda -> Visors"
+
+#~ msgid "No MDI form present."
+#~ msgstr "No hi ha cap forma MDI present"
+
+#~ msgid "No help found for line %d, column %d of %s."
+#~ msgstr "No s'ha trobat cap ajuda per a la línia %d, columna %d de %s."
+
+#~ msgid "No help nodes available"
+#~ msgstr "No hi ha nodes d'ajuda disponibles"
+
+#~ msgid "No timers available"
+#~ msgstr "No hi ha rellotges disponibles"
+
+#~ msgid "No to all"
+#~ msgstr "No a tot"
+
+#~ msgid ""
+#~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
+#~ "the programs uses clause."
+#~ msgstr ""
+#~ "No hi és com a objecte o dispositiu. Sisplau, comproveu si la unitat "
+#~ "\"interfaces\" (interfícies) fou afegida a la clàusula d'usos del "
+#~ "programa."
+
+#~ msgid "Nonconvert"
+#~ msgstr "No convertible"
+
+#~ msgid "Not a valid grid file"
+#~ msgstr "Fitxer de graella no vàlid"
+
+#~ msgid "Numlock"
+#~ msgstr "Teclat numèric"
+
+#~ msgid "Numpad %d"
+#~ msgstr "Teclat numèric %d"
+
+#~ msgid "Open existing file"
+#~ msgstr "Obre fitxer existent"
+
+#~ msgid "Overwrite file ?"
+#~ msgstr "Sobrescric el fitxer?"
+
+#~ msgid "Path must exist"
+#~ msgstr "El camí ha d'existir"
+
+#~ msgid "Pause key"
+#~ msgstr "Tecla de pausa"
+
+#~ msgid "Pixmap"
+#~ msgstr "Mapa de píxels"
+
+#~ msgid "Portable Network Graphic"
+#~ msgstr "PNG (Portable Network Graphic)"
+
+#~ msgid "Print"
+#~ msgstr "Imprimeix"
+
+#~ msgctxt "lclstrconsts.ifsvk_prior"
+#~ msgid "Prior"
+#~ msgstr "Previ"
+
+#~ msgctxt "lclstrconsts.rspriorrecordhint"
+#~ msgid "Prior"
+#~ msgstr "Previ"
+
+#~ msgid "Property %s does not exist"
+#~ msgstr "La propietat %s  no existeix"
+
+#~ msgid "Replace"
+#~ msgstr "Substitueix"
+
+#~ msgid "Replace all"
+#~ msgstr "Substitueix-ho tot"
+
+#~ msgctxt "lclstrconsts.lislclresourcesnotfound"
+#~ msgid "Resource %s not found"
+#~ msgstr "Recurs %s no trobat"
+
+#~ msgctxt "lclstrconsts.rsresourcenotfound"
+#~ msgid "Resource %s not found"
+#~ msgstr "Recurs %s no trobat"
+
+#~ msgid "Return"
+#~ msgstr "Retorn"
+
+#~ msgid "Right"
+#~ msgstr "Dreta"
+
+#~ msgid "Save file as"
+#~ msgstr "Anomena i desa el fitxer"
+
+#~ msgid "Scroll"
+#~ msgstr "Explora"
+
+#~ msgid "ScrollBar property out of range"
+#~ msgstr "Propietat de la barra de desplaçament fora de mida"
+
+#~ msgid "Select"
+#~ msgstr "Selecciona"
+
+#~ msgid "Select Directory"
+#~ msgstr "Selecciona directori"
+
+#~ msgid "Select a date"
+#~ msgstr "Selecciona una data"
+
+#~ msgid "Select a font"
+#~ msgstr "Selecciona tipus de lletra"
+
+#~ msgid "Select color"
+#~ msgstr "Tria color"
+
+#~ msgid "Shift"
+#~ msgstr "Majúsc."
+
+#~ msgid "Snapshot"
+#~ msgstr "Captura"
+
+#~ msgid "Space key"
+#~ msgstr "Espaiador"
+
+#~ msgid "Sub-menu is not in menu"
+#~ msgstr "El submenú no és al menú"
+
+#~ msgid "Tab"
+#~ msgstr "Tab"
+
+#~ msgid "Text"
+#~ msgstr "Text"
+
+#~ msgid "The char set in mask \"%s\" is not valid!"
+#~ msgstr "El caràcter de la màscara \"%s\" no és vàlid!"
+
+#~ msgid "The directory \"%s\" does not exist."
+#~ msgstr "El directori \"%s\"  no existeix."
+
+#~ msgid "The file \"%s\" already exists. Overwrite ?"
+#~ msgstr "El fitxer \"%s\" ja existeix. El sobrescric ?"
+
+#~ msgid "The file \"%s\" does not exist."
+#~ msgstr "El fitxer \"%s\"  no existeix."
+
+#~ msgid "The file \"%s\" is not writable."
+#~ msgstr "El fitxer \"%s\" no és d'escriptura."
+
+#~ msgid "The help database %s%s%s was unable to find file %s%s%s."
+#~ msgstr ""
+#~ "La base de dades de l'ajuda %s%s%s no ha pogut trobar el fitxer %s%s%s."
+
+#~ msgid "The macro %s in BrowserParams will be replaced by the URL."
+#~ msgstr ""
+#~ "La macro %s en BrowserParams (paràmetres navegador) serà substituïda per "
+#~ "la URL."
+
+#~ msgid "The path \"%s\" does not exist."
+#~ msgstr "El camí \"%s\"  no existeix."
+
+#~ msgid "There is no viewer for help type %s%s%s"
+#~ msgstr "No hi ha cap visor per al tipus d'ajuda %s%s%s"
+
+#~ msgid "Unable to find a HTML browser."
+#~ msgstr "No puc trobar un navegador HTML"
+
+#~ msgid "Unable to load default font"
+#~ msgstr "No puc carregar la font per defecte"
+
+#~ msgid "Unknown"
+#~ msgstr "Desconegut"
+
+#~ msgid "Unknown Error, please report this bug"
+#~ msgstr "Error desconegut. Sisplau reporteu-lo"
+
+#~ msgid "Unknown picture extension"
+#~ msgstr "Extensió d'imatge desconeguda"
+
+#~ msgid "Unsupported bitmap format."
+#~ msgstr "Format de mapa de bits no suportat"
+
+#~ msgid "Unsupported clipboard format: %s"
+#~ msgstr "Format del portaretalls no suportat: %s"
+
+#~ msgid "Up"
+#~ msgstr "Amunt"
+
+#~ msgid "Warning"
+#~ msgstr "Avís"
+
+#~ msgid "Warning:"
+#~ msgstr "Avís:"
+
+#~ msgid "Whole words only"
+#~ msgstr "Només mots sencers"
+
+#~ msgid "Yes to &All"
+#~ msgstr "Sí a &tot"
+
+#~ msgid "application key"
+#~ msgstr "tecla d'aplicació"
+
+#~ msgid "invalid Form object stream"
+#~ msgstr "Corrent d'objecte de forma no vàlid"
+
+#~ msgid "left windows key"
+#~ msgstr "tecla windows esquerra"
+
+#~ msgid "permissions user group size date time"
+#~ msgstr "permisos usuari grup mida dia hora"
+
+#~ msgid "right windows key"
+#~ msgstr "tecla windows dreta"

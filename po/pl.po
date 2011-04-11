@@ -1,0 +1,532 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: lclstrconsts\n"
+"Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
+"POT-Creation-Date: 2011-04-11 20:26+0200\n"
+"PO-Revision-Date: 2009-05-06 13:38+0000\n"
+"Last-Translator: Matthias Klumpp <Unknown>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-04-11 18:01+0000\n"
+"X-Generator: Launchpad (build 12792)\n"
+"X-Poedit-Country: POLAND\n"
+"X-Poedit-Language: Polish\n"
+
+msgid "Build IPK package"
+msgstr ""
+
+msgid "Copying files to their destination"
+msgstr ""
+
+#, c-format
+msgid "Could not create destination directory. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not create file '%s'! File already exists."
+msgstr ""
+
+msgid "Could not create/update software database!"
+msgstr ""
+
+#, c-format
+msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not extract file! Error: %s"
+msgstr ""
+
+#. : IPk builder could not find IPK source scripts
+msgid "Could not find IPK source files!"
+msgstr ""
+
+#, c-format
+msgid "Could not load desktop file values: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open IPK file! Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not open desktop file: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not override file %s, this file already exists!"
+msgstr ""
+
+#, c-format
+msgid "Could not read IPK control information! Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not read IPK payload container! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not validate file %s. This IPK file might have been modified after "
+"creation!\n"
+"Please obtain a new copy and try again."
+msgstr ""
+
+msgid "DIRECTORY"
+msgstr ""
+
+msgid "Database action failed"
+msgstr ""
+
+msgid "Database action successful"
+msgstr ""
+
+msgid "Database locked"
+msgstr ""
+
+msgid "Database unlocked"
+msgstr ""
+
+#, c-format
+msgid "ERROR: %s"
+msgstr ""
+
+msgid "Fatal database error"
+msgstr ""
+
+#, c-format
+msgid "File %s not found or permission denied!"
+msgstr ""
+
+#, c-format
+msgid "File '%s' doesn't exist."
+msgstr ""
+
+msgid "IPK package could not be found!"
+msgstr ""
+
+#, c-format
+msgid "Making '%s' known to your system."
+msgstr ""
+
+msgid "Path to Listaller package source directory"
+msgstr ""
+
+msgid "Processing application without assigned .desktop file!"
+msgstr ""
+
+#, c-format
+msgid "Resolving dependencies of '%s'."
+msgstr ""
+
+#, c-format
+msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
+
+msgid "Setup has not been initialized!"
+msgstr ""
+
+msgid "Show the application's version"
+msgstr ""
+
+msgid "Software database closed"
+msgstr ""
+
+#, c-format
+msgid "Software database message (%d)"
+msgstr ""
+
+msgid "Software database opened"
+msgstr ""
+
+msgid "Tried to perform action on invalid IPK package."
+msgstr ""
+
+#, c-format
+msgid "Unable to create file '%s'!"
+msgstr ""
+
+msgid "Unable to extract IPK data!"
+msgstr ""
+
+msgid "Unable to extract IPK metadata!"
+msgstr ""
+
+#, c-format
+msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+#, c-format
+msgid "XML file '%s' is damaged."
+msgstr ""
+
+msgid "XML file is damaged or XML structure is no valid IPKControl!"
+msgstr ""
+
+#~ msgid "  modified "
+#~ msgstr "  zmodyfikowany "
+
+#~ msgid "  size "
+#~ msgstr "  rozmiar "
+
+#~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
+#~ msgstr " UWAGA: Pozostało %d struktur TimerInfo zostaną usunięte"
+
+#~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
+#~ msgstr " UWAGA: Pozostało %d komunikatów w kolejce! Zostaną usunięte."
+
+#~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
+#~ msgstr " UWAGA: Pozostały %d niezwolnione DC, szczegółowy zrzut poniżej:"
+
+#~ msgid ""
+#~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
+#~ msgstr ""
+#~ " UWAGA: Pozostało %d niezwolnionych GDIObject, szczegółowy zrzut poniżej:"
+
+#~ msgid ""
+#~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
+#~ msgstr ""
+#~ " UWAGA: Pozostały %s nieusunięte dowiązania do LM_PAINT/LM_GtkPAINT."
+
+#~ msgid "%s Index %d out of bounds 0 .. %d"
+#~ msgstr "%s Indeks %d przekracza zakres 0 .. %d"
+
+#~ msgid "%s is already associated with %s"
+#~ msgstr "%s jest już skojarzony z %s"
+
+#~ msgid "&All"
+#~ msgstr "&Wszystkie"
+
+#~ msgid "&Close"
+#~ msgstr "Z&amknij"
+
+#~ msgid "&Help"
+#~ msgstr "P&omoc"
+
+#~ msgid "&Ignore"
+#~ msgstr "&Zignoruj"
+
+#~ msgid "&No"
+#~ msgstr "&Nie"
+
+#~ msgid "&OK"
+#~ msgstr "&OK"
+
+#~ msgid "&Retry"
+#~ msgstr "&Ponów próbę"
+
+#~ msgid "&Yes"
+#~ msgstr "&Tak"
+
+#~ msgid "(file not found: \"%s\")"
+#~ msgstr "(nie znaleziono pliku: \"%s\")"
+
+#~ msgid ""
+#~ "--class classname     Following Xt conventions, the class of a program is "
+#~ "the program name with the initial character capitalized. For example, the "
+#~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
+#~ "program will be set to \"classname\"."
+#~ msgstr ""
+#~ "--class classname     Zgodnie z konwencją Xt klasę programu tworzy jego "
+#~ "nazwa z pierwszą wielką literą. Np. nazwą klasy dla programu gimp jest "
+#~ "\"Gimp\". Jeśli --class jest podane, klasa programu będzie ustawiona na "
+#~ "\"classname\"."
+
+#~ msgid ""
+#~ "--display h:s:d       Connect to the specified X server, where \"h\" is "
+#~ "the hostname, \"s\" is the server number (usually 0), and \"d\" is the "
+#~ "display number (typically omitted). If --display is not specified, the "
+#~ "DISPLAY environment variable is used."
+#~ msgstr ""
+#~ "--display h:s:d       Połącz z podany mserwerem X; \"h\" jest nazwą "
+#~ "hosta, \"s\" jest numerem serwera (zwykle 0), a \"d\" jest numerem ekranu "
+#~ "(zwyle pomijanym). Jeśli --display nie jet podane, użyję zmienna "
+#~ "środowiaka DISPLAY."
+
+#~ msgid ""
+#~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
+#~ "the application."
+#~ msgstr ""
+#~ "--g-fatal-warnings    Ostrzerzenia i błędy Gtk+/GDK zatrzymają aplikację."
+
+#~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
+#~ msgstr ""
+#~ "--gdk-debug flags     Włącz specificzne dla GDK komunikaty śledzenia/"
+#~ "odpluskwiania."
+
+#~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
+#~ msgstr ""
+#~ "--gdk-no-debug flags  Wyłącz specificzne dla GDK komunikaty śledzenia/"
+#~ "odpluskwiania."
+
+#~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
+#~ msgstr ""
+#~ "--gtk-debug flags     Włącz specyficzne dla Gtk+ komunikaty śledzenia/"
+#~ "odpluskwiania."
+
+#~ msgid "--gtk-module module   Load the specified module at startup."
+#~ msgstr "--gtk-module module   Ładuje podany moduł przy starcie."
+
+#~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
+#~ msgstr ""
+#~ "--gtk-no-debug flags  Wyłącz specyficzne dla Gtk+ komunikaty śledzenia/"
+#~ "odpluskwiania."
+
+#~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
+#~ msgstr ""
+#~ "--lcl-no-transient    Nie ustawiaj nietrwałej kolejności dla modalnych "
+#~ "formularzy"
+
+#~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
+#~ msgstr "--no-xshm             Wyłącz używanie X Shared Memory Extension."
+
+#~ msgid ""
+#~ "--sync                Call XSynchronize (display, True) after the Xserver "
+#~ "connection has been established. This makes debugging X protocol errors "
+#~ "easier, because X request buffering will be disabled and X errors will be "
+#~ "received immediatey after the protocol request that generated the error "
+#~ "has been processed by the X server."
+#~ msgstr ""
+#~ "--sync                Wywołaj XSynchronize (display, True) Po połączeniu "
+#~ "z serwerem X. To ułatwia odpluskwianie protokołu X, ponieważ buforowanie "
+#~ "żądań X będzie wyłączonei błędy X będą odbierane natychmiast po "
+#~ "przetworzeniu przez serwer X żądania, które spowodowało błąd."
+
+#~ msgid "A control can't have itself as parent"
+#~ msgstr "Kontrolka nie może być sama swoim rodzicem"
+
+#~ msgid "Abort"
+#~ msgstr "Porzuć"
+
+#~ msgid "All files (%s)|%s|%s"
+#~ msgstr "Wszystkie pliki (%s)|%s|%s"
+
+#~ msgid "Blank"
+#~ msgstr "Pusty"
+
+#~ msgid "Calculator"
+#~ msgstr "Kalkulator"
+
+#~ msgid "Can not focus"
+#~ msgstr "Nie można ustawić ogniska."
+
+#~ msgctxt "lclstrconsts.rsmbcancel"
+#~ msgid "Cancel"
+#~ msgstr "Anuluj"
+
+#~ msgid "Cannot focus a disabled or invisible window"
+#~ msgstr "Nie można ustawić ogniska na wyłączone lub niewidzialne okno"
+
+#~ msgid "Canvas does not allow drawing"
+#~ msgstr "Canvas nie pozwala na rysowanie"
+
+#~ msgid "Confirmation"
+#~ msgstr "Potwierdzenie"
+
+#~ msgid "Convert"
+#~ msgstr "Konwertuj"
+
+#~ msgid "Creating gdb catchable error:"
+#~ msgstr "Błąd przy tworzeniu \"gdb catchable\":"
+
+#~ msgid "Custom"
+#~ msgstr "Inny"
+
+#~ msgid "Directory must exist"
+#~ msgstr "Katalog musi istnieć"
+
+#~ msgid "Duplicate menus"
+#~ msgstr "Zdublowane menu"
+
+#~ msgid "ERROR in LCL: "
+#~ msgstr "BŁĄD w LCL: "
+
+#~ msgctxt "lclstrconsts.rsmterror"
+#~ msgid "Error"
+#~ msgstr "Błąd"
+
+#~ msgid "Error creating device context for %s.%s"
+#~ msgstr "Błąd przy tworzeniu \"device context\" dla %s.%s"
+
+#~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
+#~ msgstr "Błąd w %s przy %sAdres %s%s Ramka %s"
+
+#~ msgid "Error reading %s%s%s: %s"
+#~ msgstr "Błąd odczytu %s%s%s: %s"
+
+#~ msgid "Error:"
+#~ msgstr "Błąd:"
+
+#~ msgid "Exception"
+#~ msgstr "Wyjątek"
+
+#~ msgid "File information"
+#~ msgstr "Informacja o pliku"
+
+#~ msgid "File is not writable"
+#~ msgstr "Plik nie jest zapisywalny"
+
+#~ msgid "File must exist"
+#~ msgstr "Plik musi istnieć"
+
+#~ msgid "FixedCols can't be >= ColCount"
+#~ msgstr "FixedCols nie może być >= ColCount"
+
+#~ msgid "FixedRows can't be >= RowCount"
+#~ msgstr "FixedRows nie może być >= RowCount"
+
+#~ msgid "Form streaming \"%s\" error: %s"
+#~ msgstr "Błąd przy zapisie formularza do strumienia  \"%s\": %s"
+
+#~ msgid "Grid file doesn't exists"
+#~ msgstr "Plik siatki nie istnieje"
+
+#~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
+#~ msgstr "GroupIndex nie może być mniejszy niż poprzedniego elementu menu"
+
+#~ msgid "Help"
+#~ msgstr "Pomoc"
+
+#~ msgid "History:"
+#~ msgstr "Historia:"
+
+#~ msgid "Index Out of range Cell[Col=%d Row=%d]"
+#~ msgstr "Indeks poza zakresem Cell[Col=%d Row=%d]"
+
+#~ msgid "Information"
+#~ msgstr "Informacja"
+
+#~ msgid "Invalid ImageList Index"
+#~ msgstr "Błędny indeks ImageList"
+
+#~ msgid "Invalid action creation"
+#~ msgstr "Błędne tworzenie akcji"
+
+#~ msgid "Invalid action enumeration"
+#~ msgstr "Błędna enumeracja akcji"
+
+#~ msgid "Invalid action registration"
+#~ msgstr "Błędna rejestracja akcji"
+
+#~ msgid "Invalid action unregistration"
+#~ msgstr "Błędne wyrejestrowanie akcji"
+
+#~ msgid "Invalid image size"
+#~ msgstr "Błędny rozmiar obrazka"
+
+#~ msgid "Invalid property value"
+#~ msgstr "Błędna wartość właściwości"
+
+#~ msgid "Invalid stream format"
+#~ msgstr "Błędny format strumienia"
+
+#~ msgid "List index exceeds bounds (%d)"
+#~ msgstr "Indeks listy poza zakresem (%d)"
+
+#~ msgid "List must be empty"
+#~ msgstr "Lista musi być pusta"
+
+#~ msgid "Menu index out of range"
+#~ msgstr "Indeks menu poza zakresem"
+
+#~ msgid "MenuItem is nil"
+#~ msgstr "Element menu ma wartość nil"
+
+#~ msgid "Mouse Button Left"
+#~ msgstr "Lewy przycisk myszy"
+
+#~ msgid "Mouse Button Middle"
+#~ msgstr "Środkowy przycisk myszy"
+
+#~ msgid "Mouse Button Right"
+#~ msgstr "Prawy przycisk myszy"
+
+#~ msgid "No timers available"
+#~ msgstr "Brak dostępnych timerów"
+
+#~ msgid "No to all"
+#~ msgstr "Nie na wszystkie"
+
+#~ msgid "Not a valid grid file"
+#~ msgstr "Nieprawidłowy plik siatki"
+
+#~ msgid "Open existing file"
+#~ msgstr "Otwórz istniejący plik"
+
+#~ msgid "Overwrite file ?"
+#~ msgstr "Chcesz nadpisać plik?"
+
+#~ msgid "Path must exist"
+#~ msgstr "Ścieżka musi istnieć"
+
+#~ msgid "Property %s does not exist"
+#~ msgstr "Właściwość %s nie istnieje"
+
+#~ msgctxt "lclstrconsts.lislclresourcesnotfound"
+#~ msgid "Resource %s not found"
+#~ msgstr "Nie znaleziono zasobu: %s"
+
+#~ msgctxt "lclstrconsts.rsresourcenotfound"
+#~ msgid "Resource %s not found"
+#~ msgstr "Nie znaleziono zasobu: %s"
+
+#~ msgid "Save file as"
+#~ msgstr "Zapisz plik jako"
+
+#~ msgid "ScrollBar property out of range"
+#~ msgstr "Właściwość ScrollBar'u poza zakresem"
+
+#~ msgid "Select Directory"
+#~ msgstr "Wybierz katalog"
+
+#~ msgid "Select a date"
+#~ msgstr "Wybierz datę"
+
+#~ msgid "Select a font"
+#~ msgstr "Wybierz czcionkę"
+
+#~ msgid "Select color"
+#~ msgstr "Wybierz kolor"
+
+#~ msgid "Sub-menu is not in menu"
+#~ msgstr "Podmenu nie jest w menu"
+
+#~ msgid "The directory \"%s\" does not exist."
+#~ msgstr "Katalog \"%s\" nie istnieje."
+
+#~ msgid "The file \"%s\" does not exist."
+#~ msgstr "Plik \"%s\" nie istnieje."
+
+#~ msgid "The file \"%s\" is not writable."
+#~ msgstr "Plik \"%s\" nie jest zapisywalny."
+
+#~ msgid "The path \"%s\" does not exist."
+#~ msgstr "Ścieżka \"%s\" nie istnieje."
+
+#~ msgid "Unable to load default font"
+#~ msgstr "Nie można załadować domyślnej czcionki"
+
+#~ msgid "Unknown picture extension"
+#~ msgstr "Nieznane rozszerzenie pliku obrazka"
+
+#~ msgid "Unsupported bitmap format."
+#~ msgstr "Nieobsługiwany format bitmapy."
+
+#~ msgid "Unsupported clipboard format: %s"
+#~ msgstr "Nieobsługiwany format schowka: %s"
+
+#~ msgid "Warning"
+#~ msgstr "Ostrzeżenie"
+
+#~ msgid "Warning:"
+#~ msgstr "Ostrzeżenie:"
+
+#~ msgid "invalid Form object stream"
+#~ msgstr "błędny strumień obiektu formularza"
+
+#~ msgid "permissions user group size date time"
+#~ msgstr "uprawnienia użytkownik grupa rozmiar data czas"
