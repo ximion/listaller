@@ -44,8 +44,13 @@ public class Setup : Object {
 		get { return conf; }
 	}
 
-	public IPK.Control control {
-		get { return ipkp.control; }
+	public IPK.Control? control {
+		get { if (initialized) {
+				return ipkp.control;
+			} else {
+				return null;
+			}
+		}
 	}
 
 	public Setup (string ipkfilename, Settings? settings) {

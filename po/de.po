@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-02 19:40+0200\n"
+"POT-Creation-Date: 2011-04-10 18:40+0200\n"
 "PO-Revision-Date: 2011-03-12 23:30+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -96,10 +96,6 @@ msgstr "Datenbank entsperrt"
 msgid "ERROR: %s"
 msgstr "FEHLER in der LCL: "
 
-#, fuzzy, c-format
-msgid "Error initializing: %s"
-msgstr "Fehler bei der Deinstallation!"
-
 msgid "Fatal database error"
 msgstr ""
 
@@ -111,6 +107,10 @@ msgstr ""
 msgid "File '%s' doesn't exist."
 msgstr ""
 
+#, fuzzy
+msgid "IPK package could not be found!"
+msgstr "Paket %p konnte nicht installiert werden."
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
@@ -121,6 +121,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Resolving dependencies of '%s'."
 msgstr "Löse Abhängigkeiten auf ..."
+
+#, c-format
+msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr ""
@@ -853,6 +857,10 @@ msgstr ""
 #~ msgid "Error creating device context for %s.%s"
 #~ msgstr "Fehler beim Erzeugen des Gerätekontexts für %s.%s"
 
+#, fuzzy
+#~ msgid "Error initializing: %s"
+#~ msgstr "Fehler bei der Deinstallation!"
+
 #~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
 #~ msgstr "Fehler aufgetreten in %s bei %sAdresse %s%s Frame %s"
 
@@ -1482,9 +1490,6 @@ msgstr ""
 
 #~ msgid "Overwrite file ?"
 #~ msgstr "Datei überschreiben?"
-
-#~ msgid "Package %p could not be installed."
-#~ msgstr "Paket %p konnte nicht installiert werden."
 
 #~ msgid "Package build commands:"
 #~ msgstr "Kommandos zum Pakete bauen:"

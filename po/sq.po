@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.00b\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-02 19:40+0200\n"
+"POT-Creation-Date: 2011-04-10 18:40+0200\n"
 "PO-Revision-Date: 2011-02-22 22:07+0000\n"
 "Last-Translator: truri <Unknown>\n"
 "Language-Team: Albanian\n"
@@ -90,10 +90,6 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Error initializing: %s"
-msgstr "Gabim gjatë çinstalimit!"
-
 msgid "Fatal database error"
 msgstr ""
 
@@ -105,6 +101,10 @@ msgstr ""
 msgid "File '%s' doesn't exist."
 msgstr ""
 
+#, fuzzy
+msgid "IPK package could not be found!"
+msgstr "Paketa %p nuk mund të instalohej."
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
@@ -115,6 +115,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Resolving dependencies of '%s'."
 msgstr "Po plotësohen varësitë..."
+
+#, c-format
+msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr ""
@@ -372,6 +376,10 @@ msgstr ""
 #~ msgid "Error"
 #~ msgstr "Gabim"
 
+#, fuzzy
+#~ msgid "Error initializing: %s"
+#~ msgstr "Gabim gjatë çinstalimit!"
+
 #~ msgid "Error while extracting files!"
 #~ msgstr "Gabim gjatë përftimit të kartelave!"
 
@@ -571,9 +579,6 @@ msgstr ""
 
 #~ msgid "Other"
 #~ msgstr "Tjetër"
-
-#~ msgid "Package %p could not be installed."
-#~ msgstr "Paketa %p nuk mund të instalohej."
 
 #~ msgid "Package build commands:"
 #~ msgstr "Urdhra krijimi pakete:"
