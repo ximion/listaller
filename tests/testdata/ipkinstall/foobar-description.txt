@@ -1,0 +1,9 @@
+Foobar is an application which does absolutely nothing.
+Really, it's completely useless!
+Things you can expect from FooBar:
+ * Does _nothing_
+ * Bad coding style
+ * No shiny graphic effects
+ * Bad user experience
+The only purpose of Foobar is to be the guinea-pig app for
+Listaller demo scripts.

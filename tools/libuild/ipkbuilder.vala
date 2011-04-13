@@ -33,6 +33,7 @@ private class Builder : Object {
 	private string tmpdir;
 	private string srcdir;
 	private string outname;
+	private bool failed = false;
 	private IPK.Script ipks;
 	private ArrayList<string> ctrlfiles;
 	private ArrayList<string> datapkgs;
@@ -72,6 +73,23 @@ private class Builder : Object {
 
 	private void emit_error (string details) {
 		error_message (details);
+		failed = true;
+	}
+
+	private void pkinfo_hint (string msg) {
+		stdout.printf (" H: " + msg);
+	}
+
+	private void pkinfo_info (string msg) {
+		stdout.printf (" I: " + msg);
+	}
+
+	private void pkinfo_warning (string msg) {
+		stdout.printf (" W: " + msg);
+	}
+
+	private void pkinfo_error (string msg) {
+		stdout.printf (" E: " + msg);
 	}
 
 	private bool validate_srcdir (string dir) {
@@ -310,6 +328,32 @@ private class Builder : Object {
 		return true;
 	}
 
+	private string load_text_from_element (string in) {
+		if (in.has_prefix ("file:")) {
+			var file = File.new_for_path (Path.build_filename (srcdir, in.substring (5), null));
+
+			if (!file.query_exists ()) {
+				error_message ("File '%s' doesn't exist.".printf (file.get_path ()));
+				return "";
+			}
+			string text = "";
+			try {
+				var dis = new DataInputStream (file.read ());
+				string line;
+				// Read file and build description
+				while ((line = dis.read_line (null)) != null) {
+					text += "%s\n".printf (line);
+				}
+			} catch (Error e) {
+				error_message ("%s".printf (e.message));
+				return "";
+			}
+			return text;
+		} else {
+			return in;
+		}
+	}
+
 	public bool build_ipk () {
 		bool ret = false;
 
@@ -322,6 +366,9 @@ private class Builder : Object {
 		create_dir_parents (Path.build_filename (tmpdir, "data", null));
 
 		//TODO: Convert IPK script file to IPK control file instead of just copying it
+		ipks.set_app_description (load_text_from_element (ipks.get_app_description ()));
+		if (failed)
+			return false;
 		string tmp = Path.build_filename (tmpdir, "control", "control.xml", null);
 		ipks.save_to_file (tmp);
 		ctrlfiles.add (tmp);

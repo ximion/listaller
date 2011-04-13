@@ -4,6 +4,7 @@
 	<application name="FooBar" version="1.0">
 		<id type="desktop">foobar.desktop</id>
 		<summary>Foo-ish bar</summary>
+		<description>file:foobar-description.txt</description>
 		<keywords>
 			<keyword>test</keyword>
 			<keyword>sample</keyword>
@@ -27,5 +28,5 @@
 				<dpk>dependency.dpk</dpk>
 			</testlib>
 		</requires>
-</application>
+	</application>
 </ipkcontrol>

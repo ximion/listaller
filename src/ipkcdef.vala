@@ -240,6 +240,15 @@ public abstract class CXml : Object {
 		return get_node_content (get_xsubnode (app_node (), "summary"));
 	}
 
+	public void set_app_description (string text) {
+		Xml.Node* n = get_xsubnode (app_node (), "description");
+		n->set_content (text);
+	}
+
+	public string get_app_description () {
+		return get_node_content (get_xsubnode (app_node (), "description"));
+	}
+
 	public void set_app_url (string s) {
 		Xml.Node* n = get_xsubnode (app_node (), "url");
 		n->set_content (s);
