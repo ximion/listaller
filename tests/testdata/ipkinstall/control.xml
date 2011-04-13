@@ -5,6 +5,7 @@
 		<id type="desktop">foobar.desktop</id>
 		<summary>Foo-ish bar</summary>
 		<description>file:foobar-description.txt</description>
+		<license>GPLv3+</license>
 		<keywords>
 			<keyword>test</keyword>
 			<keyword>sample</keyword>

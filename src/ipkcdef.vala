@@ -249,6 +249,15 @@ public abstract class CXml : Object {
 		return get_node_content (get_xsubnode (app_node (), "description"));
 	}
 
+	public virtual void set_app_license (string text) {
+		Xml.Node* n = get_xsubnode (app_node (), "license");
+		n->set_content (text);
+	}
+
+	public virtual string get_app_license () {
+		return get_node_content (get_xsubnode (app_node (), "license"));
+	}
+
 	public void set_app_url (string s) {
 		Xml.Node* n = get_xsubnode (app_node (), "url");
 		n->set_content (s);
@@ -264,6 +273,34 @@ public class Control : CXml {
 
 	public Control () {
 
+	}
+
+	public override void set_app_license (string text) {
+		base.set_app_license (text);
+	}
+
+	private string load_license (string fname) {
+		return "::TODO";
+	}
+
+	public override string get_app_license () {
+		string license = base.get_app_license ();
+		switch (license) {
+			case "GPLv3+": license = load_license ("gpl-3+");
+					break;
+			case "GPLv3": license = load_license ("gpl-3");
+					break;
+			case "GPLv2+": license = load_license ("gpl-2+");
+					break;
+			case "GPLv2": license = load_license ("gpl-2");
+					break;
+			case "LGPLv2": license = load_license ("lgpl-2");
+					break;
+			// To be continued...
+			default: break;
+
+		}
+		return license;
 	}
 }
 
