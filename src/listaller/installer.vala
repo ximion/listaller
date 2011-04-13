@@ -62,7 +62,12 @@ public class Setup : Object {
 		ipkp = new IPK.Package (fname, settings);
 		ipkp.error_code.connect ((e) => { this.error_code (e); });
 		ipkp.message.connect ((m) => { this.message (m); });
+		ipkp.progress_changed.connect (receive_progress_change);
 		initialized = false;
+	}
+
+	private void receive_progress_change (int progress, int subprogress) {
+		progress_changed (progress, subprogress);
 	}
 
 	private void emit_warning (string msg) {
