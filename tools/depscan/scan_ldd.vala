@@ -57,6 +57,10 @@ private class DepscanLDD : Object, IDepScanEngine {
 		return true;
 	}
 
+	public bool can_be_used (string fname) {
+		return FileUtils.test (fname, FileTest.IS_EXECUTABLE);
+	}
+
 	public ArrayList<string> required_files () {
 		return filedeps;
 	}

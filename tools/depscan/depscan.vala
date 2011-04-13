@@ -27,6 +27,7 @@ private const string _PKG_VERSION2 = Config.VERSION;
 
 public interface IDepScanEngine {
 	public abstract ArrayList<string> required_files ();
+	public abstract bool can_be_used (string fname);
 	public abstract bool fetch_required_files (string fname);
 }
 
@@ -64,7 +65,10 @@ private class DependencyScanner : Object {
 					list.add_all (subdir_list);
 				} else {
 					// Presort files here
-					if (FileUtils.test (path, FileTest.IS_EXECUTABLE))
+					bool uncertain = false;
+					string ctype = ContentType.guess (path, null, out uncertain);
+					if ((ContentType.can_be_executable (ctype)) ||
+						FileUtils.test (path, FileTest.IS_EXECUTABLE))
 						list.add (path);
 				}
 			}
@@ -78,6 +82,7 @@ private class DependencyScanner : Object {
 
 	private void scan_engine_process (ArrayList<string> files, IDepScanEngine eng) {
 		foreach (string s in files) {
+			if (eng.can_be_used (s))
 			if (eng.fetch_required_files (s)) {
 				requires.add_all (eng.required_files ());
 			}
