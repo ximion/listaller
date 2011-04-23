@@ -427,7 +427,7 @@ private class Package : Object {
 				// File was found, so install it now
 				ret = extract_file_copy_dest (fe, plar, e);
 				prog++;
-				progress_changed (max/100*prog, 0);
+				progress_changed (100/max*prog, 0);
 				// Stop on failure
 				if (!ret)
 					break;

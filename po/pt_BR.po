@@ -7,34 +7,33 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-11 20:26+0200\n"
-"PO-Revision-Date: 2011-01-16 02:51+0000\n"
-"Last-Translator: RodolfoRG <rodolforg@gmail.com>\n"
+"POT-Creation-Date: 2011-04-23 22:57+0200\n"
+"PO-Revision-Date: 2011-04-19 11:06+0000\n"
+"Last-Translator: Thaynã Moretti <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-11 18:01+0000\n"
-"X-Generator: Launchpad (build 12792)\n"
+"X-Launchpad-Export-Date: 2011-04-23 20:54+0000\n"
+"X-Generator: Launchpad (build 12883)\n"
 
-#, fuzzy
 msgid "Build IPK package"
-msgstr "Construir pacote IPK"
+msgstr "Gerar pacote IPK"
 
 msgid "Copying files to their destination"
-msgstr ""
+msgstr "Copiando arquivos para o seu destino"
 
 #, c-format
 msgid "Could not create destination directory. Error: %s"
-msgstr ""
+msgstr "Não foi possível criar o diretório de destino. Erro: %s"
 
 #, c-format
 msgid "Could not create file '%s'! File already exists."
-msgstr ""
+msgstr "Não foi possível criar o arquivo '%s\"! O arquivo já existe."
 
 msgid "Could not create/update software database!"
-msgstr ""
+msgstr "Não foi possível criar/atualizar o banco de dados do software!"
 
 #, c-format
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
@@ -42,11 +41,11 @@ msgstr ""
 
 #, c-format
 msgid "Could not extract file! Error: %s"
-msgstr ""
+msgstr "Não foi possível extrair o arquivo! Erro: %s"
 
 #. : IPk builder could not find IPK source scripts
 msgid "Could not find IPK source files!"
-msgstr ""
+msgstr "Não foi possível achar os arquivos de origem do IPK!"
 
 #, c-format
 msgid "Could not load desktop file values: %s"
@@ -54,7 +53,7 @@ msgstr ""
 
 #, c-format
 msgid "Could not open IPK file! Error: %s"
-msgstr ""
+msgstr "Não foi possível abrir o IPK! Erro: %s"
 
 #, c-format
 msgid "Could not open desktop file: %s"
@@ -62,7 +61,7 @@ msgstr ""
 
 #, c-format
 msgid "Could not override file %s, this file already exists!"
-msgstr ""
+msgstr "Não foi possível sobrescrever o arquivo %s, o arquivo já existe!"
 
 #, c-format
 msgid "Could not read IPK control information! Error: %s"
@@ -81,7 +80,7 @@ msgid ""
 msgstr ""
 
 msgid "DIRECTORY"
-msgstr ""
+msgstr "DIRETÓRIO"
 
 msgid "Database action failed"
 msgstr ""
@@ -134,9 +133,8 @@ msgstr ""
 msgid "Setup has not been initialized!"
 msgstr ""
 
-#, fuzzy
 msgid "Show the application's version"
-msgstr "Conferir aplicativos"
+msgstr ""
 
 msgid "Software database closed"
 msgstr ""
@@ -205,6 +203,9 @@ msgstr ""
 #~ msgid "Back"
 #~ msgstr "Voltar"
 
+#~ msgid "Build IPK-package"
+#~ msgstr "Construir pacote IPK"
+
 #~ msgid ""
 #~ "Calling PackageKit... (run \"pkmon\" to monitor the executed actions)"
 #~ msgstr ""
@@ -219,6 +220,9 @@ msgstr ""
 
 #~ msgid "Cannot resolve dependencies"
 #~ msgstr "Não foi possível resolver as dependências"
+
+#~ msgid "Check applications"
+#~ msgstr "Conferir aplicativos"
 
 #~ msgid "Check dependencies?"
 #~ msgstr "Conferir as dependências?"

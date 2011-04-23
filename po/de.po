@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-11 20:26+0200\n"
+"POT-Creation-Date: 2011-04-23 22:57+0200\n"
 "PO-Revision-Date: 2011-03-26 11:23+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -15,12 +15,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-11 18:01+0000\n"
-"X-Generator: Launchpad (build 12792)\n"
+"X-Launchpad-Export-Date: 2011-04-23 20:54+0000\n"
+"X-Generator: Launchpad (build 12883)\n"
 
-#, fuzzy
 msgid "Build IPK package"
-msgstr "IPK-Paket bauen"
+msgstr ""
 
 msgid "Copying files to their destination"
 msgstr "Kopiere Dateien an ihren Zielort."
@@ -139,9 +138,8 @@ msgstr ""
 msgid "Setup has not been initialized!"
 msgstr ""
 
-#, fuzzy
 msgid "Show the application's version"
-msgstr "Keine Anwendungen gefunden!"
+msgstr ""
 
 msgid "Software database closed"
 msgstr ""
@@ -448,6 +446,9 @@ msgstr ""
 
 #~ msgid "Browser %s%s%s not found."
 #~ msgstr "Browser %s%s%s nicht gefunden."
+
+#~ msgid "Build IPK-package"
+#~ msgstr "IPK-Paket bauen"
 
 #~ msgid "Build ipk-package"
 #~ msgstr "IPK-Paket bauen"
@@ -1451,6 +1452,9 @@ msgstr ""
 
 #~ msgid "No MDI form present."
 #~ msgstr "Kein MDI-Formular vorhanden"
+
+#~ msgid "No applications found!"
+#~ msgstr "Keine Anwendungen gefunden!"
 
 #~ msgid "No compatible packages found!"
 #~ msgstr "Keine kompatiblen Pakete gefunden!"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-11 20:26+0200\n"
+"POT-Creation-Date: 2011-04-23 22:57+0200\n"
 "PO-Revision-Date: 2011-04-03 14:52+0000\n"
 "Last-Translator: KarimSadeg <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -15,12 +15,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-11 18:00+0000\n"
-"X-Generator: Launchpad (build 12792)\n"
+"X-Launchpad-Export-Date: 2011-04-23 20:54+0000\n"
+"X-Generator: Launchpad (build 12883)\n"
 
-#, fuzzy
 msgid "Build IPK package"
-msgstr "Construire un paquet IPK"
+msgstr ""
 
 msgid "Copying files to their destination"
 msgstr "Copie des fichiers vers leurs destinations en cours"
@@ -137,9 +136,8 @@ msgstr ""
 msgid "Setup has not been initialized!"
 msgstr "L'installateur n'a pas été initialisé !"
 
-#, fuzzy
 msgid "Show the application's version"
-msgstr "Aucune application n'a été trouvé !"
+msgstr ""
 
 msgid "Software database closed"
 msgstr "La base de données du logiciel est fermée"
@@ -400,6 +398,9 @@ msgstr ""
 
 #~ msgid "Browser %s%s%s not found."
 #~ msgstr "Navigateur %s%s%s non trouvé."
+
+#~ msgid "Build IPK-package"
+#~ msgstr "Construire un paquet IPK"
 
 #~ msgid "Calculator"
 #~ msgstr "Calculateur"
@@ -1111,6 +1112,9 @@ msgstr ""
 
 #~ msgid "No MDI form present."
 #~ msgstr "Aucune fiche MDI présente"
+
+#~ msgid "No applications found!"
+#~ msgstr "Aucune application n'a été trouvé !"
 
 #~ msgid "No compatible packages found!"
 #~ msgstr "Aucun paquetage compatible n'a été trouvé !"
