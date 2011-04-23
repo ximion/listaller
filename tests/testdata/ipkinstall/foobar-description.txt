@@ -7,3 +7,6 @@ Things you can expect from FooBar:
  * Bad user experience
 The only purpose of Foobar is to be the guinea-pig app for
 Listaller demo scripts.
+&%?*
+Please use Markdown for formatting!
+

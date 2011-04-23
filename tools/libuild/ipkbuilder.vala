@@ -354,6 +354,8 @@ private class Builder : Object {
 	public bool build_ipk () {
 		bool ret = false;
 
+		IPK.Control ictrl = new IPK.Control ();
+
 		// Load definitions
 		ipks.load_from_file (Path.build_filename (srcdir, "control.xml", null));
 		IPK.FileList flist = new IPK.FileList (false);
@@ -362,12 +364,19 @@ private class Builder : Object {
 		create_dir_parents (Path.build_filename (tmpdir, "control", null));
 		create_dir_parents (Path.build_filename (tmpdir, "data", null));
 
-		//TODO: Convert IPK script file to IPK control file instead of just copying it
-		ipks.set_app_description (load_text_from_element (ipks.get_app_description ()));
+		// Build IPK control file
+		ictrl.create_new ();
+		ictrl.set_app_name (ipks.get_app_name ());
+		ictrl.set_app_version (ipks.get_app_version ());
+		ictrl.set_app_summary (ipks.get_app_summary ());
+		ictrl.set_app_url (ipks.get_app_url ());
+		ictrl.set_app_license (ipks.get_app_license ());;
+
+		ictrl.set_app_description (load_text_from_element (ipks.get_app_description ()));
 		if (failed)
 			return false;
 		string tmp = Path.build_filename (tmpdir, "control", "control.xml", null);
-		ipks.save_to_file (tmp);
+		ictrl.save_to_file (tmp);
 		ctrlfiles.add (tmp);
 
 		ret = build_ipk_files_structure (flist);

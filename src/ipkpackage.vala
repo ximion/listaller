@@ -128,7 +128,7 @@ private class Package : Object {
 		string tmpf = Path.build_filename (wdir, "control.xml", null);
 		ret = false;
 		if (FileUtils.test (tmpf, FileTest.EXISTS)) {
-			ret = ipkc.open (tmpf);
+			ret = ipkc.open_file (tmpf);
 		}
 		tmpf = Path.build_filename (wdir, "files-all.list", null);
 		if ((ret) && (FileUtils.test (tmpf, FileTest.EXISTS))) {

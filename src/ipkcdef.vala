@@ -45,7 +45,7 @@ public abstract class CXml : Object {
 			delete xdoc;
 	}
 
-	public bool open (string path) {
+	protected bool open (string path) {
 		// Already opened?
 		if (xdoc != null) {
 			warning ("You have to close the IPK XML first to reopen a new one!");
@@ -113,21 +113,21 @@ public abstract class CXml : Object {
 		return root;
 	}
 
-	private Xml.Node* app_node () {
+	internal Xml.Node* app_node () {
 		Xml.Node* appnd = get_xsubnode (root_node (), "application");
 		if (appnd == null)
 			critical (_("XML file is damaged or XML structure is no valid IPKControl!"));
 		return appnd;
 	}
 
-	private Xml.Node* pkg_node () {
+	internal Xml.Node* pkg_node () {
 		Xml.Node* pkgnd = get_xsubnode (root_node (), "package");
 		if (pkgnd == null)
 			critical (_("XML file is damaged or XML structure is no valid IPKControl!"));
 		return pkgnd;
 	}
 
-	private Xml.Node* get_xsubnode (Xml.Node* sn, string id) {
+	internal Xml.Node* get_xsubnode (Xml.Node* sn, string id) {
 		Xml.Node* res = null;
 		assert (sn != null);
 
@@ -147,7 +147,7 @@ public abstract class CXml : Object {
 		return res;
 	}
 
-	private Xml.Node* get_xproperty (Xml.Node* nd, string id) {
+	internal Xml.Node* get_xproperty (Xml.Node* nd, string id) {
 		Xml.Node* res = null;
 		assert (nd != null);
 		for (Xml.Attr* prop = nd->properties; prop != null; prop = prop->next) {
@@ -163,7 +163,7 @@ public abstract class CXml : Object {
 		return res;
 	}
 
-	private string get_node_content (Xml.Node* nd) {
+	internal string get_node_content (Xml.Node* nd) {
 		string ret = "";
 		ret = nd->get_content ();
 		// TODO: Translate the string
@@ -237,12 +237,12 @@ public abstract class CXml : Object {
 		return get_node_content (get_xsubnode (app_node (), "summary"));
 	}
 
-	public void set_app_description (string text) {
+	public virtual void set_app_description (string text) {
 		Xml.Node* n = get_xsubnode (app_node (), "description");
 		n->set_content (text);
 	}
 
-	public string get_app_description () {
+	public virtual string get_app_description () {
 		return get_node_content (get_xsubnode (app_node (), "description"));
 	}
 
@@ -272,6 +272,14 @@ public class Control : CXml {
 
 	}
 
+	public bool open_file (string fname) {
+		return this.open (fname);
+	}
+
+	public bool save_to_file (string fname) {
+		return xdoc->save_file (fname) == 0;
+	}
+
 	public override void set_app_license (string text) {
 		base.set_app_license (text);
 	}
@@ -299,6 +307,17 @@ public class Control : CXml {
 		}
 		return license;
 	}
+
+	public override void set_app_description (string text) {
+		Xml.Node *cdata = xdoc->new_cdata_block (text, text.length);
+		Xml.Node *n = get_xsubnode (app_node (), "description");
+		n->add_child (cdata);
+	}
+
+	public override string get_app_description () {
+		return get_node_content (get_xsubnode (app_node (), "description"));
+	}
+
 }
 
 public class Script : CXml {
@@ -314,6 +333,15 @@ public class Script : CXml {
 	public bool save_to_file (string fname) {
 		return xdoc->save_file (fname) == 0;
 	}
+
+	public override void set_app_description (string text) {
+		base.set_app_description (text);
+	}
+
+	public override string get_app_description () {
+		return base.get_app_description ();
+	}
+
 }
 
 } // End of namespace
