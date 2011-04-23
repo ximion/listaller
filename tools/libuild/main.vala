@@ -22,9 +22,6 @@
 using GLib;
 using Listaller;
 
-// Workaround for Vala bug #618931
-private const string _PKG_VERSION15 = Config.VERSION;
-
 public class LiBuild : Object {
 	// Cmd options
 	private static string _src_dir = "";

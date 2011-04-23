@@ -22,9 +22,6 @@
 using GLib;
 using Gee;
 
-// Workaround for Vala bug #618931
-private const string _PKG_VERSION2 = Config.VERSION;
-
 public interface IDepScanEngine {
 	public abstract ArrayList<string> required_files ();
 	public abstract bool can_be_used (string fname);

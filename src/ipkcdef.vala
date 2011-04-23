@@ -24,9 +24,6 @@ using Xml;
 using Gee;
 using Listaller;
 
-// Workaround for Vala bug #618931
-private const string _PKG_VERSION5 = Config.VERSION;
-
 namespace Listaller.IPK {
 
 public abstract class CXml : Object {

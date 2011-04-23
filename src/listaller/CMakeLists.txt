@@ -20,12 +20,12 @@ set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 list(APPEND VALA_INCLUDE_DIRS ${CMAKE_BINARY_DIR})
 
 vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
-			     BASE_DIR ${lisrc}
-			     VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
-			     PACKAGES ${LISTALLER_BASE_VALA_DEPS} #PackageKitGlib-1.0
-			     GENERATE_VAPI listaller-${LILIBS_VERSION}.vapi
-			     GENERATE_HEADER listaller.h
-			     OUTPUT_DIR ${CMAKE_BINARY_DIR}/src
+			BASE_DIR ${lisrc}
+			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
+			PACKAGES ${LISTALLER_BASE_VALA_DEPS} #PackageKitGlib-1.0
+			GENERATE_VAPI listaller-${LILIBS_VERSION}.vapi
+			GENERATE_HEADER listaller.h
+			OUTPUT_DIR ${CMAKE_BINARY_DIR}/src
 )
 
 target_link_libraries(listaller-glib

@@ -23,9 +23,6 @@ using GLib;
 using Sqlite;
 using Listaller;
 
-// Workaround for Vala bug #618931
-private const string _PKG_VERSION2 = Config.VERSION;
-
 namespace Listaller {
 
 public errordomain DatabaseError {

@@ -24,9 +24,6 @@ using Gee;
 using Archive;
 using Listaller;
 
-// Workaround for Vala bug #618931
-private const string _PKG_VERSION14 = Config.VERSION;
-
 namespace Listaller.IPK {
 
 private class Builder : Object {

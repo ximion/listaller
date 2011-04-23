@@ -22,9 +22,6 @@
 using GLib;
 using Listaller;
 
-// Workaround for Vala bug #618931
-private const string _PKG_VERSION16 = Config.VERSION;
-
 namespace Listaller {
 
 private class DependencyManager : Object {

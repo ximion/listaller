@@ -21,9 +21,6 @@
 
 using GLib;
 
-// Workaround for Vala bug #618931
-private const string _PKG_VERSION1 = Config.VERSION;
-
 public class DepScanCmd : Object {
 	// Cmd options
 	private static bool _show_version = false;

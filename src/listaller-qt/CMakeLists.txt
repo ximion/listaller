@@ -23,10 +23,11 @@ set(listaller-qt_INST_HEADERS Listaller-Qt
 
 qt4_wrap_cpp(listaller-qt_MOC_SRCS ${listaller-qt_HEADERS})
 
-ADD_DEFINITIONS(${QT_DEFINITIONS})
-ADD_DEFINITIONS(-DQT_PLUGIN)
-ADD_DEFINITIONS(-DQT_NO_DEBUG)
-ADD_DEFINITIONS(-DQT_SHARED)
+remove_definitions ("--include config.h")
+add_definitions (${QT_DEFINITIONS})
+add_definitions (-DQT_PLUGIN)
+add_definitions (-DQT_NO_DEBUG)
+add_definitions (-DQT_SHARED)
 
 link_directories(${CMAKE_BINARY_DIR})
 include_directories(${CMAKE_SOURCE_DIR}

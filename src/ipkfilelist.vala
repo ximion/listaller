@@ -23,9 +23,6 @@ using GLib;
 using Gee;
 using Listaller;
 
-// Workaround for Vala bug #618931
-private const string _PKG_VERSION7 = Config.VERSION;
-
 namespace Listaller.IPK {
 
 private class FileEntry : Object {

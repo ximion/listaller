@@ -23,9 +23,6 @@ using Config;
 using GLib;
 using Listaller;
 
-// Workaround for Vala bug #618931
-private const string _PKG_VERSION1 = Config.VERSION;
-
 namespace Listaller {
 
 public class Settings : Object {

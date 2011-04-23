@@ -23,9 +23,6 @@ using GLib;
 using Gee;
 using Listaller;
 
-// Workaround for Vala bug #618931
-private const string _PKG_VERSION11 = Config.VERSION;
-
 namespace Listaller {
 
 private class Variable {

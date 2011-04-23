@@ -22,9 +22,6 @@
 using GLib;
 using Listaller;
 
-// Workaround for Vala bug #618931
-private const string _PKG_VERSION8 = Config.VERSION;
-
 [CCode (cheader_filename = "listaller-glib/installer.h")]
 
 namespace Listaller {

@@ -115,6 +115,9 @@ if (DISABLE_MAINTAINER_CFLAGS)
 	set (MAINTAINER_CFLAGS "")
 endif (DISABLE_MAINTAINER_CFLAGS)
 
+# Required to include config.h before all other units
+add_definitions ("--include config.h")
+
 #
 # Validate Vala version
 #

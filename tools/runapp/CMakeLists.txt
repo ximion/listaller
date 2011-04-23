@@ -21,6 +21,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}
 		    ${GIO2_INCLUDE_DIR}
 )
 
+# We don't use localisation here
+remove_definitions ("--include config.h")
 add_definitions(${GEE_CFLAGS} ${GEE_CFLAGS_OTHER})
 
 vala_add_executable(runapp ${RUNAPP_SOURCES})
