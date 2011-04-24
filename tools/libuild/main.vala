@@ -25,6 +25,7 @@ using Listaller;
 public class LiBuild : Object {
 	// Cmd options
 	private static string _src_dir = "";
+	private static string _output_dir = "";
 	private static bool _show_version = false;
 	private static bool _build_mode = false;
 	private static bool _do_autocompile = false;
@@ -38,6 +39,8 @@ public class LiBuild : Object {
 		N_("Build IPK package"), null },
 		{ "sourcedir", 's', 0, OptionArg.FILENAME, ref _src_dir,
 			N_("Path to Listaller package source directory"), N_("DIRECTORY") },
+		{ "outdir", 'o', 0, OptionArg.FILENAME, ref _output_dir,
+			N_("IPK package output directory"), N_("DIRECTORY") },
 		{ "autocompile", 'a', 0, OptionArg.NONE, ref _do_autocompile,
 			N_("Compile software sources automatically"), null },
 		{ null }
@@ -93,6 +96,7 @@ public class LiBuild : Object {
 			IPK.Builder builder = new IPK.Builder (srcdir);
 			builder.error_message.connect (on_error);
 			builder.message.connect (on_message);
+			builder.output_dir = _output_dir;
 
 			if (!builder.initialize ()) {
 				exit_code = 3;

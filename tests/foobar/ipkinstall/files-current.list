@@ -1,7 +1,8 @@
 # IPK file list
 
+:: rootdir=%INSTDIR%
+
 > $INST/+junk
-foo-payload/appdata/+junk/packicon.png
-foo-payload/appdata/+junk/dummy-control.xml
+usr/local/bin/foo
 > $APP
-foo-payload/desktop/Osmos.desktop
+usr/local/share/applications/foobar.desktop

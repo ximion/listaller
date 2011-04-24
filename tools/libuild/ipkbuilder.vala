@@ -30,6 +30,7 @@ private class Builder : Object {
 	private string tmpdir;
 	private string srcdir;
 	private string outname;
+	private string outdir;
 	private bool failed = false;
 	private IPK.Script ipks;
 	private ArrayList<string> ctrlfiles;
@@ -38,11 +39,17 @@ private class Builder : Object {
 	public signal void error_message (string details);
 	public signal void message (MessageItem message);
 
+	public string output_dir {
+		get { return outdir; }
+		set { outdir = value; }
+	}
+
 	public Builder (string input_dir) {
 		srcdir = input_dir;
 		Listaller.Settings conf = new Listaller.Settings ();
 		tmpdir = conf.get_unique_tmp_dir ("ipkbuild");
 		ipks = new IPK.Script ();
+		outdir = "";
 		outname = "";
 		ctrlfiles = new ArrayList<string> ();
 		datapkgs = new ArrayList<string> ();
@@ -89,21 +96,7 @@ private class Builder : Object {
 		stdout.printf (" E: " + msg);
 	}
 
-	private bool validate_srcdir (string dir) {
-		// Check if IPK sources are present
-		string tmp = dir;
-		if (FileUtils.test (tmp, FileTest.IS_DIR)) {
-			if (FileUtils.test (Path.build_filename (tmp, "control.xml", null), FileTest.EXISTS) &&
-			    FileUtils.test (Path.build_filename (tmp, "files-current.list", null), FileTest.EXISTS)) {
-				// Set current source dir and exit
-				srcdir = tmp;
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private bool write_ipk_file_data (ref ArrayList<IPK.FileEntry> src, string arch = "") {
+	private bool write_ipk_file_data (ref ArrayList<IPK.FileEntry> src, string rdir, string arch = "") {
 		const int buffsize = 8192;
 		char buff[8192];
 		bool ret = true;
@@ -128,7 +121,7 @@ private class Builder : Object {
 			// Grab filepath
 			string fname;
 			if (!Path.is_absolute (fe.fname)) {
-				fname = Path.build_filename (srcdir, "..", fe.fname, null);
+				fname = Path.build_filename (rdir, fe.fname, null);
 			} else {
 				fname = fe.fname;
 			}
@@ -167,7 +160,15 @@ private class Builder : Object {
 			arch = "all";
 		}
 		ArrayList<IPK.FileEntry> fileslst = flist.get_files_list ();
-		ret = write_ipk_file_data (ref fileslst, arch);
+
+		// Set the correct install dir
+		if (flist.rootdir == "%INSTDIR%") {
+			flist.rootdir = Path.build_filename (srcdir, "installtarget", null);
+		}
+
+		string rdir = flist.rootdir;
+
+		ret = write_ipk_file_data (ref fileslst, rdir, arch);
 		if (!ret) {
 			error_message ("Unable to write IPK payload - do all files exist?");
 			return false;
@@ -236,7 +237,9 @@ private class Builder : Object {
 		if (outname == "") {
 			string ipkname;
 			ipkname = ipks.get_app_name ().down () + "-" + ipks.get_app_version ().down () + "_install.ipk";
-			outname = Path.build_filename (srcdir, "..", ipkname, null);
+			if (outdir == "")
+				outdir = Path.build_filename (srcdir, "..", null);
+			outname = Path.build_filename (outdir, ipkname, null);
 		}
 
 		if (FileUtils.test (outname, FileTest.EXISTS)) {
@@ -313,15 +316,38 @@ private class Builder : Object {
 		outname = fname;
 	}
 
+	static string? validate_srcdir (string dir) {
+		// Check if IPK sources are present
+		string tmp = dir;
+		if (FileUtils.test (tmp, FileTest.IS_DIR)) {
+			if (FileUtils.test (Path.build_filename (tmp, "control.xml", null), FileTest.EXISTS) &&
+				FileUtils.test (Path.build_filename (tmp, "files-current.list", null), FileTest.EXISTS)) {
+				// Set current source dir and exit
+				return tmp;
+				}
+		}
+		return null;
+	}
+
+	public static string? find_ipk_source_dir (string origdir) {
+		string tmp = validate_srcdir (Path.build_filename (origdir, "ipkinstall", null));
+		if (tmp == null) {
+			tmp = validate_srcdir (Path.build_filename (origdir, "install", null));
+			if (tmp == null) {
+				tmp = validate_srcdir (Path.build_filename (origdir, "data", "install", null));
+			}
+		}
+		return tmp;
+	}
+
 	public bool initialize () {
 		// Check for valid installer source dirs
-		if (!validate_srcdir (Path.build_filename (srcdir, "ipkinstall", null)))
-			if (!validate_srcdir (Path.build_filename (srcdir, "install", null)))
-				if (!validate_srcdir (Path.build_filename (srcdir, "data", "install", null))) {
-					//: IPk builder could not find IPK source scripts
-					emit_error (_("Could not find IPK source files!"));
-					return false;
-				}
+		srcdir = find_ipk_source_dir (srcdir);
+		if (srcdir == null) {
+			//: IPk builder was unable to find IPK source scripts
+			emit_error (_("Could not find IPK source files!"));
+			return false;
+		}
 		return true;
 	}
 

@@ -92,11 +92,13 @@ void test_ipk_filelist_file () {
 	bool ret = false;
 
 	IPK.FileList flist = new IPK.FileList ();
-	ret = flist.add_file (Path.build_filename (datadir, "ipkinstall", "control.xml", null), "$INST/+junk");
+	string foodir = Path.build_filename (datadir, "..", "foobar", null);
+	// Add some files to IPK file list
+	ret = flist.add_file (Path.build_filename (foodir, "autogen.sh", null), "$INST/+junk");
 	assert (ret == true);
-	ret = flist.add_file (Path.build_filename (datadir, "foo-payload", "appdata", "+junk", "packicon.png", null), "$INST/+junk");
+	ret = flist.add_file (Path.build_filename (foodir, "doc", "foo.info", null), "$INST/+junk");
 	assert (ret == true);
-	ret = flist.add_file (Path.build_filename (datadir, "foo-payload", "desktop", "Osmos.desktop", null), "$APP");
+	ret = flist.add_file (Path.build_filename (foodir, "foobar.desktop", null), "$APP");
 	assert (ret == true);
 
 	string tmpfile = Path.build_filename (datadir, "files-tmp.list~", null);

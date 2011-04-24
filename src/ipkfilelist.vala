@@ -78,12 +78,14 @@ private class FileEntry : Object {
 private class FileList : Object {
 	private LinkedList<string> text;
 	private bool has_hashes;
+	public string rootdir { set; get; }
 
 	public FileList (bool with_hashes = true) {
 		has_hashes = with_hashes;
 		text = new LinkedList<string> ();
 		text.add ("# IPK file list");
 		text.add ("");
+		rootdir = Environment.get_current_dir ();
 	}
 
 	public bool open (string fname) {
@@ -106,6 +108,25 @@ private class FileList : Object {
 			}
 		} catch (Error e) {
 			error ("%s", e.message);
+		}
+
+		foreach (string line in text) {
+			// Search for header information
+			if (line.has_prefix ("::")) {
+				// Check for rootdir info
+				int index = line.index_of ("rootdir=");
+				if (index < 1)
+					continue;
+				string[] s = line.split ("=");
+				if (s[1] == null) {
+					warning ("Syntax error in fileinfo file!");
+					continue;
+				}
+				rootdir = s[1].strip ();
+			}
+			// If the fileinfo part starts, we can't define header information
+			if (line.has_prefix (">"))
+				break;
 		}
 
 		return true;

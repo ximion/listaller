@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=Application
-Version=1.0
-Name=Osmos
-Comment=An indie ambient physics game
-Icon=Osmos
-Exec=$INST/osmosdemo/OsmosDemo
-Categories=Game;Simulation

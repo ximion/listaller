@@ -22,4 +22,5 @@ Makefile
 foo/Makefile
 libfoo/Makefile
 doc/Makefile
+ipkinstall/Makefile
 ])

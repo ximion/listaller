@@ -35,6 +35,29 @@ private class AppBuilder : Object {
 
 	}
 
+	private int compile_makefile () {
+		// Check for Makefile
+		if (!FileUtils.test (Path.build_filename (srcdir, "Makefile", null), FileTest.EXISTS))
+			return -1;
+
+		int exit_status = 0;
+		// Make it!
+		Process.spawn_command_line_sync	("make", null, null, out exit_status);
+		if (exit_status != 0)
+			return exit_status;
+		// Install it, if possible
+			string isdir = IPK.Builder.find_ipk_source_dir (srcdir);
+			if (isdir != null) {
+				Process.spawn_command_line_sync	("make install DESTDIR=\"" + Path.build_filename (isdir, "installtarget", null) + "\"",
+				null, null, out exit_status);
+				if (exit_status != 0)
+					return exit_status;
+			} else {
+				message ("Unable to 'make install' software: IPK source dir not found!");
+			}
+		return exit_status;
+	}
+
 	private int compile_automake () {
 		string conff = Path.build_filename (srcdir, "configure", null);
 		bool runconfigure = false;
@@ -52,18 +75,19 @@ private class AppBuilder : Object {
 				runconfigure = true;
 			}
 		}
+		if (!runconfigure)
+			return -1;
+
 		// Now run the configure script
 		int exit_status;
 		Process.spawn_command_line_sync	(conff, null, null, out exit_status);
 		if (exit_status != 0)
 			return exit_status;
-		// Make it!
-		Process.spawn_command_line_sync	("make", null, null, out exit_status);
-		if (exit_status != 0)
-			return exit_status;
+
+		exit_status = compile_makefile ();
 
 		// Done.
-		return 0;
+		return exit_status;
 	}
 
 	public int compile_software () {
@@ -71,7 +95,9 @@ private class AppBuilder : Object {
 		string lastdir = Environment.get_current_dir ();
 		Environment.set_current_dir (srcdir);
 
-		ret = compile_automake ();
+		ret = compile_makefile ();
+		if (ret < 0)
+			ret = compile_automake ();
 
 		Environment.set_current_dir (lastdir);
 		return ret;

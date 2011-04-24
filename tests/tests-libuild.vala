@@ -34,12 +34,31 @@ void test_libuild_build () {
 	bool ret = false;
 	msg ("LiBuild tests");
 
+	string foobar_dir = Path.build_filename (datadir, "..", "foobar", null);
+
 	// Cleanup
 	FileUtils.remove (Path.build_filename (datadir, "foobar-1.0_install.ipk", null));
-	// Simple build test
+	delete_dir_recursive (Path.build_filename (foobar_dir, "ipkinstall", "installtarget", null));
+
+	int exit_status = 0;
+	Environment.set_current_dir (foobar_dir);
+	string cmd = "";
+	// Perform autocompile of FooBar sample app
 	try {
-		int exit_status = 0;
-		Process.spawn_command_line_sync (libuild_exec + " -b", null, null, out exit_status);
+		cmd = libuild_exec + " --autocompile";
+		debug ("Running command: " + cmd);
+		Process.spawn_command_line_sync (cmd, null, null, out exit_status);
+		assert (exit_status == 0);
+	} catch (SpawnError e) {
+		error (e.message);
+	}
+
+	// Now create IPK package for FooBar!
+	try {
+		cmd = libuild_exec + " -b" +" -o" + " " + datadir;
+		debug ("Running command: " + cmd);
+
+		Process.spawn_command_line_sync (cmd, null, null, out exit_status);
 		assert (exit_status == 0);
 	} catch (SpawnError e) {
 		error (e.message);
