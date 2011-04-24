@@ -1,4 +1,4 @@
-SUBDIRS=libfoo foo doc autopackage
+SUBDIRS=libfoo foo doc ipkinstall
 
 desktopdir=$(datadir)/applications
 desktop_DATA=foobar.desktop

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<ipkcontrol version="1.1">
+	<locale lang="de_DE">german.mo</locale>
+	<application name="FooBar" version="1.0">
+		<id type="desktop">foobar.desktop</id>
+		<summary>Foo-ish bar</summary>
+		<description>file:foobar-description.txt</description>
+		<license>GPLv3+</license>
+		<keywords>
+			<keyword>test</keyword>
+			<keyword>sample</keyword>
+			<keyword>blah</keyword>
+		</keywords>
+		<icon type="stock">applications-other</icon>
+		<appcategories>
+			<appcategory>other</appcategory>
+			<appcategory>development</appcategory>
+		</appcategories>
+		<mimetypes>
+			<mimetype>text/html</mimetype>
+		</mimetypes>
+		<url type="homepage">http://example.org</url>
+		<requires>
+			<testlib>
+				<file>blah.so</file>
+				<file>xyz.so</file>
+				<feed>http://zeroinstall-feeds.org/blub.xml</feed>
+				<package distro="Debian">libtest</package>
+				<dpk>dependency.dpk</dpk>
+			</testlib>
+		</requires>
+	</application>
+</ipkcontrol>

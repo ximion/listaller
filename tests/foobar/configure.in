@@ -19,8 +19,6 @@ AM_BINRELOC
 
 AC_OUTPUT([
 Makefile
-autopackage/Makefile
-autopackage/default.apspec
 foo/Makefile
 libfoo/Makefile
 doc/Makefile

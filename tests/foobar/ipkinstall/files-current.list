@@ -1,0 +1,7 @@
+# IPK file list
+
+> $INST/+junk
+foo-payload/appdata/+junk/packicon.png
+foo-payload/appdata/+junk/dummy-control.xml
+> $APP
+foo-payload/desktop/Osmos.desktop
