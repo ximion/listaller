@@ -24,14 +24,14 @@ using Gee;
 
 namespace Listaller.Extra {
 
-private class AppBuilder : Object {
+private class AutoCompiler : Object {
 	private string srcdir;
 
-	public AppBuilder (string source_dir) {
+	public AutoCompiler (string source_dir) {
  		srcdir = source_dir;
 	}
 
-	~AppBuilder () {
+	~AutoCompiler () {
 
 	}
 

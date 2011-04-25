@@ -108,8 +108,8 @@ public class LiBuild : Object {
 			}
 		}
 		if (_do_autocompile) {
-			Extra.AppBuilder ab = new Extra.AppBuilder (srcdir);
-			exit_code = ab.compile_software ();
+			Extra.AutoCompiler acomp = new Extra.AutoCompiler (srcdir);
+			exit_code = acomp.compile_software ();
 			return;
 		}
 	}

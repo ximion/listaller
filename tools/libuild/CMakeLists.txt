@@ -14,7 +14,7 @@ pkg_check_modules(GIO2 REQUIRED gio-2.0)
 set(LIBUILD_SOURCES ${LISTALLER_BASE_SOURCES}
 			main.vala
 			ipkbuilder.vala
-			appbuilder.vala
+			autocompiler.vala
 )
 
 include_directories(${CMAKE_BINARY_DIR}
