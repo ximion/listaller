@@ -20,37 +20,35 @@
 #define LISETUP_H
 
 #include<QtCore>
+#include"litypes.h"
 
 namespace Listaller {
 
-class SetupPriv;
+  class Setup : public QObject
+  {
+    Q_OBJECT
+    
+  public:
+      Setup (QString pkgFileName);
+      ~Setup ();
+      
+      bool initialize ();
+      
+      void setSuMode (bool b);
+      bool suMode () const;
 
-class Setup : public QObject
-{
-  Q_OBJECT
-  
-public:
-    Setup();
-    ~Setup();
-    
-    void initialize(QString pkgName);
-    
-    void setSuMode(bool b);
-    bool suMode() const;
-    
-    
-    QString disallows() const;
-    QString supportedDistributions() const;
-    
-    QString appName() const;
-    QString appVersion() const;
-    QString descriptionAsString() const;
-    
-    void setTestmode(bool b);
-    
-private:
-    SetupPriv *priv;
-};
+      QString descriptionAsString () const;
+      
+      void setTestmode (bool b);
+      bool testmode () const;
+      
+      bool runInstallation ();      
+      
+  private:
+      ListallerSettings *conf;
+      ListallerSetup *setup;
+      ListallerIPKControl *ipkmeta;
+  };
 
 };
 

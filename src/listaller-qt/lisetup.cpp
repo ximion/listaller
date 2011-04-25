@@ -19,69 +19,63 @@
 #include "lisetup.h"
 
 #include<QtCore>
-#include<listaller>
+#include<listaller.h>
 
 using namespace Listaller;
 
-Setup::Setup()
+Setup::Setup (QString pkgFileName)
 {
-  setup = li_setup_new ();
+  conf = listaller_settings_new (false);
+  setup = listaller_setup_new (qPrintable(pkgFileName), conf);
 }
 
-Setup::~Setup()
+Setup::~Setup ()
 {
-  li_object_free (setup);
+  g_object_unref (setup);
+  g_object_unref (conf);
 }
 
-void Setup::initialize(QString pkgName)
+bool Setup::initialize ()
 {
-  li_setup_init (setup, (char*) qPrintable(pkgName));
+  bool ret = false;
+  ret = listaller_setup_initialize (setup);
+  ipkmeta = listaller_setup_get_control (setup);
+  if (ipkmeta == NULL)
+    ret = false;
+
+  return ret;
 }
 
-void Setup::setSuMode(bool b)
+void Setup::setSuMode (bool b)
 {
-  li_setup_set_sumode (setup, b);
+  listaller_settings_set_sumode (conf, b);
 }
 
-bool Setup::suMode() const
+bool Setup::suMode () const
 {
-  return li_setup_sumode (setup);
+  return listaller_settings_get_sumode (conf);
 }
 
-QString Setup::disallows() const
+QString Setup::descriptionAsString () const
 {
-  return li_setup_disallows (setup);
+  gchar *text = listaller_ipk_cxml_get_app_description (&ipkmeta->parent_instance);
+  QString res;
+  res.fromLatin1 (text);
+  g_free (text);
+  return res;
 }
 
-QString Setup::supportedDistributions() const
+void Setup::setTestmode (bool b)
 {
-  return li_setup_supported_distros (setup);
+  listaller_settings_set_testmode (conf, b);
 }
 
-QString Setup::appName() const
+bool Setup::testmode () const
 {
-  LiAppItem *ai;
-  ai = li_setup_appitem (setup);
-  QString aname = li_appitem_name(ai);
-  li_object_free(ai);
-  return aname;
+  return listaller_settings_get_testmode (conf);
 }
 
-QString Setup::appVersion() const
+bool Setup::runInstallation ()
 {
-  LiAppItem *ai;
-  ai = li_setup_appitem (setup);
-  QString version = li_appitem_version(ai);
-  li_object_free(ai);
-  return version;
-}
-
-QString Setup::descriptionAsString() const
-{
-  return QString(li_setup_long_description_as_string(setup));
-}
-
-void Setup::setTestmode(bool b)
-{
-  li_setup_set_testmode(setup, b);
+  return listaller_setup_run_installation (setup);
 }

@@ -13,43 +13,32 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this library.  If not, see <http://www.gnu.org/licenses/>.
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "limanager.h"
+#ifndef LITYPES_H
+#define LITYPES_H
 
-#include <QtCore>
-#include <listaller.h>
-#include <glib.h>
+// Dummy Listaller classes
+typedef struct _ListallerSettings ListallerSettings;
+typedef struct _ListallerManager ListallerManager;
+typedef struct _ListallerSetup ListallerSetup;
+typedef struct _ListallerIPKControl ListallerIPKControl;
 
-using namespace Listaller;
+namespace Listaller {
 
-static QString charToStringFree (char *text)
-{
-  QString res;
-  res.fromLatin1 (text);
-  g_free (text);
-  return res;
+  struct AppItem
+  {
+    QString name;
+    QString id;
+    QString summary;
+    QString version;
+    QString publisher;
+    QString iconName;
+    double  timeStamp;
+    QString dependencies;
+  };
+  
 }
 
-AppManager::AppManager ()
-{
-  conf = listaller_settings_new (false);
-  mgr = listaller_manager_new (conf);
-}
-
-AppManager::~AppManager ()
-{
-  g_object_unref (mgr);
-  g_object_unref (conf);
-}
-
-bool AppManager::sumode ()
-{
-  return listaller_settings_get_sumode (conf);
-}
-
-void AppManager::setSumode (bool b)
-{
-  listaller_settings_set_sumode (conf, b);
-}
+#endif // LITYPES_H

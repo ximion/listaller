@@ -8,15 +8,17 @@ pkg_check_modules(GEE REQUIRED gee-1.0)
 
 set(listaller-qt_SRCS
     limanager.cpp
-#    lisetup.cpp
+    lisetup.cpp
 )
 
 set(listaller-qt_HEADERS
+   litypes.h
    limanager.h
-#   lisetup.h
+   lisetup.h
 )
 
 set(listaller-qt_INST_HEADERS Listaller-Qt
+   litypes.h
    limanager.h
    lisetup.h
 )

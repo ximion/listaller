@@ -20,44 +20,25 @@
 #define LIAPPMANAGER_H
 
 #include<QtCore>
+#include"litypes.h"
 
 namespace Listaller {
 
-struct AppItem
-{
-  QString name;
-  QString id;
-  QString summary;
-  QString version;
-  QString publisher;
-  QString iconName;
-  double  timeStamp;
-  QString dependencies;
-};
-
-class AppManagerPriv;
-
-/**
- * The AppManager class allows access to Listaller's application
- * management function.
- * This class provides all functions the li_mgr functions provide.
- *
- * @short Access to Listaller's app manager
- */
-class AppManager : public QObject
-{
-  Q_OBJECT
-  
-public:
-    AppManager();
-    ~AppManager();
+  class AppManager : public QObject
+  {
+    Q_OBJECT
     
-    bool sumode ();
-    void setSumode (bool b);    
-    
-private:
-    AppManagerPriv *priv;
-};
+  public:
+      AppManager ();
+      ~AppManager ();
+      
+      bool sumode ();
+      void setSumode (bool b);    
+      
+  private:
+      ListallerManager *mgr;
+      ListallerSettings *conf;
+  };
 
 };
 
