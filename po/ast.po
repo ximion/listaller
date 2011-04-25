@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-11 20:26+0200\n"
+"POT-Creation-Date: 2011-04-26 00:38+0200\n"
 "PO-Revision-Date: 2009-12-07 23:19+0000\n"
 "Last-Translator: Costales <marcos@ubuntu-ast.org>\n"
 "Language-Team: Asturian <ast@li.org>\n"
@@ -21,6 +21,9 @@ msgstr ""
 #, fuzzy
 msgid "Build IPK package"
 msgstr "Construir un paquete IPK"
+
+msgid "Compile software sources automatically"
+msgstr ""
 
 msgid "Copying files to their destination"
 msgstr ""
@@ -44,7 +47,7 @@ msgstr ""
 msgid "Could not extract file! Error: %s"
 msgstr ""
 
-#. : IPk builder could not find IPK source scripts
+#. : IPk builder was unable to find IPK source scripts
 msgid "Could not find IPK source files!"
 msgstr ""
 
@@ -113,6 +116,9 @@ msgstr ""
 msgid "IPK package could not be found!"
 msgstr ""
 
+msgid "IPK package output directory"
+msgstr ""
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
@@ -147,6 +153,10 @@ msgstr ""
 
 msgid "Software database opened"
 msgstr ""
+
+#, fuzzy
+msgid "Software installation package"
+msgstr "Instala un paquete IPK"
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -217,9 +227,6 @@ msgstr ""
 
 #~ msgid "Installation aborted."
 #~ msgstr "Instalación encaboxada."
-
-#~ msgid "Installs an IPK package"
-#~ msgstr "Instala un paquete IPK"
 
 #~ msgid "Launch Listaller Manager"
 #~ msgstr "llanzar el xestor de Listaller"

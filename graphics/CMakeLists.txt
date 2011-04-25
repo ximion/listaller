@@ -2,10 +2,10 @@
 
 # Mimetypes
 install(FILES
-	mime-ipk.png
+	package-x-ipk.png
 	mime-ips.png
-	DESTINATION share/pixmaps/)
-	
+	DESTINATION share/icons/hicolor/64x64/mimetypes)
+
 # Graphics for "Distribution Tested" button
 install(FILES
 	libutton/left.png
@@ -19,7 +19,7 @@ install(DIRECTORY libutton/distro
 	FILES_MATCHING PATTERN "*.png"
 )
 
-# Frontend graphics	
+# Frontend graphics
 if(FRONTENDS)
 
   install(FILES
@@ -47,7 +47,7 @@ if(FRONTENDS)
 	  categories/system.png
 	  DESTINATION share/listaller/graphics/categories/
 	  COMPONENT frontends)
-  
+
   install(FILES listaller.png DESTINATION share/pixmaps/)
 
 endif(FRONTENDS)

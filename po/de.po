@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-23 22:57+0200\n"
+"POT-Creation-Date: 2011-04-26 00:38+0200\n"
 "PO-Revision-Date: 2011-03-26 11:23+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -19,6 +19,9 @@ msgstr ""
 "X-Generator: Launchpad (build 12883)\n"
 
 msgid "Build IPK package"
+msgstr ""
+
+msgid "Compile software sources automatically"
 msgstr ""
 
 msgid "Copying files to their destination"
@@ -45,7 +48,7 @@ msgstr ""
 msgid "Could not extract file! Error: %s"
 msgstr "Konnte Datei nicht extrahieren! Fehler: %s"
 
-#. : IPk builder could not find IPK source scripts
+#. : IPk builder was unable to find IPK source scripts
 msgid "Could not find IPK source files!"
 msgstr ""
 
@@ -117,6 +120,9 @@ msgstr "Datei '%s' existiert nicht."
 msgid "IPK package could not be found!"
 msgstr ""
 
+msgid "IPK package output directory"
+msgstr ""
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr "Mache '%s' mit ihrem System bekannt."
@@ -150,6 +156,10 @@ msgstr ""
 
 msgid "Software database opened"
 msgstr ""
+
+#, fuzzy
+msgid "Software installation package"
+msgstr "Installationsmodus wählen"
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -1861,9 +1871,6 @@ msgstr ""
 
 #~ msgid "Select color"
 #~ msgstr "Farbe auswählen"
-
-#~ msgid "Select installation mode"
-#~ msgstr "Installationsmodus wählen"
 
 #~ msgid "Select software you want to download and to install:"
 #~ msgstr ""

@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: listaller\n"
         "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-        "POT-Creation-Date: 2011-04-23 22:57+0200\n"
+        "POT-Creation-Date: 2011-04-26 00:51+0200\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,9 @@ msgstr  "Project-Id-Version: listaller\n"
         "Content-Transfer-Encoding: 8bit\n"
 
 msgid   "Build IPK package"
+msgstr  ""
+
+msgid   "Compile software sources automatically"
 msgstr  ""
 
 msgid   "Copying files to their destination"
@@ -41,7 +44,7 @@ msgstr  ""
 msgid   "Could not extract file! Error: %s"
 msgstr  ""
 
-#. : IPk builder could not find IPK source scripts
+#. : IPk builder was unable to find IPK source scripts
 msgid   "Could not find IPK source files!"
 msgstr  ""
 
@@ -107,6 +110,9 @@ msgstr  ""
 msgid   "IPK package could not be found!"
 msgstr  ""
 
+msgid   "IPK package output directory"
+msgstr  ""
+
 #, c-format
 msgid   "Making '%s' known to your system."
 msgstr  ""
@@ -139,6 +145,9 @@ msgid   "Software database message (%d)"
 msgstr  ""
 
 msgid   "Software database opened"
+msgstr  ""
+
+msgid   "Software installation package"
 msgstr  ""
 
 msgid   "Tried to perform action on invalid IPK package."

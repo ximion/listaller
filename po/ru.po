@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-11 20:26+0200\n"
+"POT-Creation-Date: 2011-04-26 00:38+0200\n"
 "PO-Revision-Date: 2010-09-07 11:00+0000\n"
 "Last-Translator: devcode <brestows@gmail.com>\n"
 "Language-Team: \n"
@@ -16,6 +16,9 @@ msgstr ""
 #, fuzzy
 msgid "Build IPK package"
 msgstr "Создать IPK-пакет"
+
+msgid "Compile software sources automatically"
+msgstr ""
 
 msgid "Copying files to their destination"
 msgstr ""
@@ -39,7 +42,7 @@ msgstr ""
 msgid "Could not extract file! Error: %s"
 msgstr ""
 
-#. : IPk builder could not find IPK source scripts
+#. : IPk builder was unable to find IPK source scripts
 msgid "Could not find IPK source files!"
 msgstr ""
 
@@ -108,6 +111,9 @@ msgstr ""
 msgid "IPK package could not be found!"
 msgstr ""
 
+msgid "IPK package output directory"
+msgstr ""
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
@@ -142,6 +148,10 @@ msgstr ""
 
 msgid "Software database opened"
 msgstr ""
+
+#, fuzzy
+msgid "Software installation package"
+msgstr "Выберите режим установки"
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -1599,9 +1609,6 @@ msgstr ""
 
 #~ msgid "Select color"
 #~ msgstr "Выбрать цвет"
-
-#~ msgid "Select installation mode"
-#~ msgstr "Выберите режим установки"
 
 #~ msgid "Select software you want to download and to install:"
 #~ msgstr "Выберите приложение для скачивания и установки"

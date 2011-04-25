@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-11 20:26+0200\n"
+"POT-Creation-Date: 2011-04-26 00:38+0200\n"
 "PO-Revision-Date: 2009-12-07 23:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -21,6 +21,9 @@ msgstr ""
 #, fuzzy
 msgid "Build IPK package"
 msgstr "בניית חבילת IPK"
+
+msgid "Compile software sources automatically"
+msgstr ""
 
 msgid "Copying files to their destination"
 msgstr ""
@@ -44,7 +47,7 @@ msgstr ""
 msgid "Could not extract file! Error: %s"
 msgstr ""
 
-#. : IPk builder could not find IPK source scripts
+#. : IPk builder was unable to find IPK source scripts
 msgid "Could not find IPK source files!"
 msgstr ""
 
@@ -113,6 +116,9 @@ msgstr ""
 msgid "IPK package could not be found!"
 msgstr ""
 
+msgid "IPK package output directory"
+msgstr ""
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
@@ -147,6 +153,10 @@ msgstr ""
 
 msgid "Software database opened"
 msgstr ""
+
+#, fuzzy
+msgid "Software installation package"
+msgstr "קטלוג התוכנה"
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -504,9 +514,6 @@ msgstr ""
 
 #~ msgid "Show:"
 #~ msgstr "הצג:"
-
-#~ msgid "Software catalogue"
-#~ msgstr "קטלוג התוכנה"
 
 #~ msgid "Software license"
 #~ msgstr "רשיון התוכנה"

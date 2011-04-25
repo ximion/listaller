@@ -17,3 +17,5 @@ src/listaller/installer.vala
 # Listaller tools
 tools/libuild/main.vala
 tools/libuild/ipkbuilder.vala
+# Mimetypes
+data/mime/listaller-ipk.xml.in
