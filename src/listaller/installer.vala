@@ -159,6 +159,15 @@ public class Setup : Object {
 		ret = db.add_application (aitem);
 		conf.unlock ();
 
+		// Emit status message (setup finished)
+		StatusItem status4 = new StatusItem (StatusEnum.INSTALLATION_FINISHED);
+		if (ret) {
+			status4.info = _("Installation completed!");
+		} else {
+			status4.info = _("Installation failed!");
+		}
+		status_changed (status4);
+
 		return ret;
 	}
 }
