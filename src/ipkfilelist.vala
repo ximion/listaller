@@ -223,6 +223,37 @@ private class FileList : Object {
 		return flist;
 	}
 
+	public ArrayList<FileEntry> get_files_list_expanded () {
+		ArrayList<FileEntry> list = get_files_list ();
+		ArrayList<FileEntry> wcEntries = new ArrayList<FileEntry> ();
+
+		foreach (FileEntry fe in list) {
+			if ((fe.fname.index_of ("*") > 0) ||
+				(fe.fname.index_of ("?") > 0)) {
+					wcEntries.add (fe);
+			}
+		}
+
+		foreach (FileEntry fe in wcEntries) {
+			string dir = Path.build_filename (rootdir, Path.get_dirname (fe.fname), null);
+			ArrayList<string> files = find_files (dir, true);
+
+			if (files == null)
+				continue;
+			list.remove (fe);
+
+			foreach (string s in files) {
+				if (PatternSpec.match_simple (Path.build_filename ("*", fe.fname, null), s)) {
+					FileEntry e = new FileEntry ();
+					e.fname = s;
+					e.destination = fe.destination;
+					list.add (e);
+				}
+			}
+		}
+		return list;
+	}
+
 	public bool set_files_list (ArrayList<FileEntry> flist) {
 		text.clear ();
 		text.add ("# IPK File List");

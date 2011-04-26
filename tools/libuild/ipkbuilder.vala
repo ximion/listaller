@@ -160,15 +160,14 @@ private class Builder : Object {
 		if ((arch == null) || (arch == "")) {
 			arch = "all";
 		}
-		ArrayList<IPK.FileEntry> fileslst = flist.get_files_list ();
 
 		// Set the correct install dir
 		if (flist.rootdir == "%INSTDIR%") {
 			flist.rootdir = Path.build_filename (srcdir, "installtarget", null);
 		}
-
 		string rdir = flist.rootdir;
 
+		ArrayList<IPK.FileEntry> fileslst = flist.get_files_list_expanded ();
 		ret = write_ipk_file_data (ref fileslst, rdir, arch);
 		if (!ret) {
 			error_message ("Unable to write IPK payload - do all files exist?");

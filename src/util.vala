@@ -20,6 +20,9 @@
  */
 
 using GLib;
+using Gee;
+
+namespace Listaller {
 
 public ulong timeval_to_ms (TimeVal time_val) {
 	return (((ulong) time_val.tv_sec) * 1000) + (((ulong) time_val.tv_usec) / 1000);
@@ -152,3 +155,35 @@ private bool create_dir_parents (string dirname) {
 	}
 	return true;
 }
+
+private ArrayList<string>? find_files (string dir, bool recursive = false) {
+	ArrayList<string> list = new ArrayList<string> ();
+	try {
+		var directory = File.new_for_path (dir);
+
+		var enumerator = directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_NAME, 0);
+
+		FileInfo file_info;
+		while ((file_info = enumerator.next_file ()) != null) {
+			string path = Path.build_filename (dir, file_info.get_name (), null);
+			if (file_info.get_is_hidden ())
+				continue;
+			if ((!FileUtils.test (path, FileTest.IS_REGULAR)) && (recursive)) {
+				ArrayList<string> subdir_list = find_files (path, recursive);
+				// There was an error, exit
+				if (subdir_list == null)
+					return null;
+				list.add_all (subdir_list);
+			} else {
+				list.add (path);
+			}
+		}
+
+	} catch (Error e) {
+		stderr.printf (_("Error: %s\n"), e.message);
+		return null;
+	}
+	return list;
+}
+
+} // End of namespace
