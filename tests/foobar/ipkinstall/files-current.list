@@ -2,7 +2,14 @@
 
 :: rootdir=%INSTDIR%
 
-> $INST/+junk
+> $INST
 usr/local/bin/foo
+> $INST/config
+usr/local/etc/foo-config
+> $INST/data
+usr/local/share/info/foo.info
+> $LIB_PRIVATE
+usr/local/lib/*.so.*
+usr/local/lib/*.so
 > $APP
 usr/local/share/applications/foobar.desktop

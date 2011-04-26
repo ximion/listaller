@@ -35,6 +35,7 @@ private class Builder : Object {
 	private IPK.Script ipks;
 	private ArrayList<string> ctrlfiles;
 	private ArrayList<string> datapkgs;
+	private string appID;
 
 	public signal void error_message (string details);
 	public signal void message (MessageItem message);
@@ -112,7 +113,7 @@ private class Builder : Object {
 		create_dir_parents (Path.build_filename (tmpdir, "data", null));
 		string apath = Path.build_filename (tmpdir, "data", "data-" + arch + ".tar.xz", null);
 		a.open_filename (apath);
-		VarSolver vs = new VarSolver ();
+		VarSolver vs = new VarSolver (appID);
 
 		Entry entry = new Entry ();
 		foreach (IPK.FileEntry fe in src) {
@@ -389,6 +390,10 @@ private class Builder : Object {
 
 		create_dir_parents (Path.build_filename (tmpdir, "control", null));
 		create_dir_parents (Path.build_filename (tmpdir, "data", null));
+
+		// Create dummy appID
+		// TODO: The whole application-id stuff is still missing!
+		appID = ipks.get_app_name ().down () + "-" + ipks.get_app_version ().down ();
 
 		// Build IPK control file
 		ictrl.create_new ();

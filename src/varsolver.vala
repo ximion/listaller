@@ -56,16 +56,27 @@ private class Variable {
 private class VarSolver : Object {
 	private Settings conf;
 	private HashMap<string, Variable> pathMap;
-	delegate string LiConfGetType ();
+	private delegate string LiConfGetType ();
+	public string appID {get; set; }
 
-	public VarSolver () {
+	public VarSolver (string appIdName = "") {
 		conf = new Settings ();
+		appID = appIdName;
+		if (appID == "")
+			warning ("Using VarSolver without valid application-id!");
 
 		// Build map of Listaller path variables
 		pathMap = new HashMap<string, Variable> ();
-		add_var_from_conf ("$INST", "appdata", conf.appdata_dir);
+		/* Define all Listaller pkg variables */
+		// Application installation directory
+		add_var_from_conf ("$INST", Path.build_filename ("appdata", appID, null), conf.appdata_dir, appID);
+		// Desktop-file directory
 		add_var_from_conf ("$APP", "desktop", conf.desktop_dir);
+		// Generic dependency directory (for published dependencies, like shared libs)
 		add_var_from_conf ("$DEP", "depend", conf.depdata_dir);
+		// Private dependency directory: Used only for private libraries
+		add_var_from_conf ("$LIB_PRIVATE", Path.build_filename ("appdata", appID, "_libs", null),
+				   conf.appdata_dir, Path.build_filename (appID, "_libs", null));
 
 		// Add icon sizes
 		add_icon_var (0);
@@ -98,12 +109,12 @@ private class VarSolver : Object {
 		pathMap.set (v.var, v);
 	}
 
-	private void add_var_from_conf (string key, string idsubst, LiConfGetType get) {
+	private void add_var_from_conf (string key, string idsubst, LiConfGetType get, string appendPath = "") {
 		bool x = conf.sumode;
 		conf.sumode = false;
-		string s = get ();
+		string s = Path.build_filename (get (), appendPath, null);
 		conf.sumode = true;
-		add_var (key, idsubst, s, get ());
+		add_var (key, idsubst, s, Path.build_filename (get (), appendPath, null));
 		conf.sumode = x;
 	}
 
