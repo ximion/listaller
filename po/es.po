@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-26 00:38+0200\n"
+"POT-Creation-Date: 2011-04-26 00:51+0200\n"
 "PO-Revision-Date: 2010-09-19 15:47+0000\n"
 "Last-Translator: Monkey <monkey.libre@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -15,12 +15,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-11 18:00+0000\n"
-"X-Generator: Launchpad (build 12792)\n"
+"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
+"X-Generator: Launchpad (build 12915)\n"
 
-#, fuzzy
 msgid "Build IPK package"
-msgstr "Crear paquete IPK"
+msgstr ""
 
 msgid "Compile software sources automatically"
 msgstr ""
@@ -140,9 +139,8 @@ msgstr ""
 msgid "Setup has not been initialized!"
 msgstr ""
 
-#, fuzzy
 msgid "Show the application's version"
-msgstr "¡No se han encontrado aplicaciones!"
+msgstr ""
 
 msgid "Software database closed"
 msgstr ""
@@ -154,9 +152,8 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
-#, fuzzy
 msgid "Software installation package"
-msgstr "Seleccionar modo de instalación"
+msgstr ""
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -242,6 +239,9 @@ msgstr ""
 
 #~ msgid "Browse catalogue"
 #~ msgstr "Explorar Catálogo"
+
+#~ msgid "Build IPK-package"
+#~ msgstr "Crear paquete IPK"
 
 #~ msgid ""
 #~ "Calling PackageKit... (run \"pkmon\" to monitor the executed actions)"
@@ -732,6 +732,9 @@ msgstr ""
 #~ msgid "Next"
 #~ msgstr "Siguiente"
 
+#~ msgid "No applications found!"
+#~ msgstr "¡No se han encontrado aplicaciones!"
+
 #~ msgid "No compatible packages found!"
 #~ msgstr "¡No se han encontrado paquetes compatibles!"
 
@@ -986,6 +989,9 @@ msgstr ""
 
 #~ msgid "Security warning"
 #~ msgstr "Aviso de seguridad"
+
+#~ msgid "Select installation mode"
+#~ msgstr "Seleccionar modo de instalación"
 
 #~ msgid "Select software you want to download and to install:"
 #~ msgstr "Seleccione software que quiere descargar e instalar:"

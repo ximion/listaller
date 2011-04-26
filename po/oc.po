@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-26 00:38+0200\n"
+"POT-Creation-Date: 2011-04-26 00:51+0200\n"
 "PO-Revision-Date: 2010-04-05 21:23+0000\n"
 "Last-Translator: Cédric VALMARY (Tot en òc) <cvalmary@yahoo.fr>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
@@ -15,12 +15,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-11 18:00+0000\n"
-"X-Generator: Launchpad (build 12792)\n"
+"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
+"X-Generator: Launchpad (build 12915)\n"
 
-#, fuzzy
 msgid "Build IPK package"
-msgstr "Construire un paquet IPK"
+msgstr ""
 
 msgid "Compile software sources automatically"
 msgstr ""
@@ -140,9 +139,8 @@ msgstr ""
 msgid "Setup has not been initialized!"
 msgstr ""
 
-#, fuzzy
 msgid "Show the application's version"
-msgstr "Verificar las aplicacions"
+msgstr ""
 
 msgid "Software database closed"
 msgstr ""
@@ -154,9 +152,8 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
-#, fuzzy
 msgid "Software installation package"
-msgstr "Installacion paquet"
+msgstr ""
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -209,8 +206,14 @@ msgstr ""
 #~ msgid "Back"
 #~ msgstr "Retorn"
 
+#~ msgid "Build IPK-package"
+#~ msgstr "Construire un paquet IPK"
+
 #~ msgid "Can't find Listaller Manager!"
 #~ msgstr "Pòt pas trobar lo Gestionari Listaller"
+
+#~ msgid "Check applications"
+#~ msgstr "Verificar las aplicacions"
 
 #~ msgid "Check for updates"
 #~ msgstr "Recercar de mesas a jorn"
@@ -268,6 +271,9 @@ msgstr ""
 
 #~ msgid "Install into my Home directory"
 #~ msgstr "Installar dins mon dorsièr personal"
+
+#~ msgid "Install package"
+#~ msgstr "Installacion paquet"
 
 #~ msgid "Install updates"
 #~ msgstr "Installar las mesas a jorn"

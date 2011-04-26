@@ -7,22 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-26 00:38+0200\n"
-"PO-Revision-Date: 2011-03-26 11:23+0000\n"
+"POT-Creation-Date: 2011-04-26 00:51+0200\n"
+"PO-Revision-Date: 2011-04-26 16:16+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-23 20:54+0000\n"
-"X-Generator: Launchpad (build 12883)\n"
+"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
+"X-Generator: Launchpad (build 12915)\n"
 
 msgid "Build IPK package"
-msgstr ""
+msgstr "IPK Paket bauen"
 
 msgid "Compile software sources automatically"
-msgstr ""
+msgstr "Software Quellen automatisch kompilieren"
 
 msgid "Copying files to their destination"
 msgstr "Kopiere Dateien an ihren Zielort."
@@ -50,7 +50,7 @@ msgstr "Konnte Datei nicht extrahieren! Fehler: %s"
 
 #. : IPk builder was unable to find IPK source scripts
 msgid "Could not find IPK source files!"
-msgstr ""
+msgstr "Konnte IPK Quelldateien nicht finden!"
 
 #, c-format
 msgid "Could not load desktop file values: %s"
@@ -88,7 +88,7 @@ msgstr ""
 "Besorgen Sie sich eine neue Kopie und versuchen Sie es erneut."
 
 msgid "DIRECTORY"
-msgstr ""
+msgstr "VERZEICHNIS"
 
 msgid "Database action failed"
 msgstr "Datenbankaktion fehlgeschlagen."
@@ -104,7 +104,7 @@ msgstr "Datenbank entsperrt"
 
 #, c-format
 msgid "ERROR: %s"
-msgstr ""
+msgstr "Fehler: %s"
 
 msgid "Fatal database error"
 msgstr ""
@@ -140,12 +140,14 @@ msgstr ""
 #, c-format
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
+"Mit »%s --help« können Sie eine vollständige Liste verfügbarer "
+"Befehlszeilenoptionen anzeigen.\n"
 
 msgid "Setup has not been initialized!"
 msgstr ""
 
 msgid "Show the application's version"
-msgstr ""
+msgstr "Die Version der Anwendung anzeigen"
 
 msgid "Software database closed"
 msgstr ""
@@ -157,9 +159,8 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
-#, fuzzy
 msgid "Software installation package"
-msgstr "Installationsmodus wählen"
+msgstr "Software Installationspaket"
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -180,7 +181,7 @@ msgstr ""
 
 #, c-format
 msgid "XML file '%s' is damaged."
-msgstr ""
+msgstr "XML-datei '%s' ist beschädigt."
 
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr ""
@@ -1871,6 +1872,9 @@ msgstr ""
 
 #~ msgid "Select color"
 #~ msgstr "Farbe auswählen"
+
+#~ msgid "Select installation mode"
+#~ msgstr "Installationsmodus wählen"
 
 #~ msgid "Select software you want to download and to install:"
 #~ msgstr ""

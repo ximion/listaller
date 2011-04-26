@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.00b\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-26 00:38+0200\n"
+"POT-Creation-Date: 2011-04-26 00:51+0200\n"
 "PO-Revision-Date: 2011-02-22 22:07+0000\n"
 "Last-Translator: truri <Unknown>\n"
 "Language-Team: Albanian\n"
@@ -10,12 +10,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-11 18:00+0000\n"
-"X-Generator: Launchpad (build 12792)\n"
+"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
+"X-Generator: Launchpad (build 12915)\n"
 
-#, fuzzy
 msgid "Build IPK package"
-msgstr "Krijo paketë IPK"
+msgstr ""
 
 msgid "Compile software sources automatically"
 msgstr ""
@@ -135,9 +134,8 @@ msgstr ""
 msgid "Setup has not been initialized!"
 msgstr ""
 
-#, fuzzy
 msgid "Show the application's version"
-msgstr "Kontrollo zbatimet"
+msgstr ""
 
 msgid "Software database closed"
 msgstr ""
@@ -149,9 +147,8 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
-#, fuzzy
 msgid "Software installation package"
-msgstr "Përzgjidhni mënyrë instalimi"
+msgstr ""
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -222,6 +219,9 @@ msgstr ""
 #~ msgid "Back"
 #~ msgstr "Mbrapsht"
 
+#~ msgid "Build IPK-package"
+#~ msgstr "Krijo paketë IPK"
+
 #~ msgid ""
 #~ "Calling PackageKit... (run \"pkmon\" to monitor the executed actions)"
 #~ msgstr ""
@@ -244,6 +244,9 @@ msgstr ""
 
 #~ msgid "Change package manager settings"
 #~ msgstr "Ndryshoni rregullimet e përgjegjësit të paketave"
+
+#~ msgid "Check applications"
+#~ msgstr "Kontrollo zbatimet"
 
 #~ msgid "Check dependencies?"
 #~ msgstr "Të kontrollohen varësitë?"
@@ -792,6 +795,9 @@ msgstr ""
 
 #~ msgid "Security warning"
 #~ msgstr "Sinjalizim sigurie"
+
+#~ msgid "Select installation mode"
+#~ msgstr "Përzgjidhni mënyrë instalimi"
 
 #~ msgid "Select the installation mode of this application:"
 #~ msgstr "Përzgjidhni mënyrën e instalimit të këtij zbatimi:"
