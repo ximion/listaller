@@ -1,16 +1,1 @@
 Matthias Klumpp <matthias@nlinux.org>
-
-liCreator: Matthias Klumpp <matthias@nlinux.org>
-	   Thomas Dieffenbach <giantics@gmx.net>
-
-Graphics:  Matthias Klumpp <matthias@nlinux.org>
-	   Dennis Seid <jumcore@yahoo.de>
-
-
-----------
-Listaller uses the following 3rd-party components:
-
-Synapse:  (c) 1999-2002, Lukas Gebauer
-	  Licensed under own, GPL-compatible license
-
-RegExpr:  (c) 1999-2004 Andrey V. Sorokin

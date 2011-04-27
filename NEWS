@@ -3,9 +3,13 @@ Version 0.5.1
  == Still in development ==
 
  Overview:
+  * /!\ Please note: We do NOT provide stable ABI/API in 0.5.x series!
   * Complete rewrite of Listaller in Vala
 
  Features:
+  * Wildcards in file-lists (src)
+  * Switch to XML-based IPK control files
+  * Introduced some new path variables
   * <?>
 
  Toolset:
@@ -15,10 +19,11 @@ Version 0.5.1
   * <?>
 
  Bindings:
+  * Rewrite of Qt binings
   * <?>
 
  Bugfixes:
-  * <?>
+  * None, as this is a complete rewrite of Listaller
 
 Version 0.5b
 ~~~~~~~~~~~~~~

@@ -41,7 +41,7 @@ if [ ! -e "$(pwd)/Makefile.in" ]; then
 fi
 
 CMAKE=$(which cmake)
-if ([ ! -e $CMAKE ]||[ "$CMAKE" == '' ]); then
+if [[ $? -gt 0 ]]; then
   echo "CMake was not found! Please install cmake."
   exit 8
 fi
