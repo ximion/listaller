@@ -316,30 +316,6 @@ private class Builder : Object {
 		outname = fname;
 	}
 
-	static string? validate_srcdir (string dir) {
-		// Check if IPK sources are present
-		string tmp = dir;
-		if (FileUtils.test (tmp, FileTest.IS_DIR)) {
-			if (FileUtils.test (Path.build_filename (tmp, "control.xml", null), FileTest.EXISTS) &&
-				FileUtils.test (Path.build_filename (tmp, "files-current.list", null), FileTest.EXISTS)) {
-				// Set current source dir and exit
-				return tmp;
-				}
-		}
-		return null;
-	}
-
-	public static string? find_ipk_source_dir (string origdir) {
-		string tmp = validate_srcdir (Path.build_filename (origdir, "ipkinstall", null));
-		if (tmp == null) {
-			tmp = validate_srcdir (Path.build_filename (origdir, "install", null));
-			if (tmp == null) {
-				tmp = validate_srcdir (Path.build_filename (origdir, "data", "install", null));
-			}
-		}
-		return tmp;
-	}
-
 	public bool initialize () {
 		// Check for valid installer source dirs
 		srcdir = find_ipk_source_dir (srcdir);

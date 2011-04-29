@@ -26,13 +26,27 @@ namespace Listaller.Extra {
 
 private class AutoCompiler : Object {
 	private string srcdir;
+	private string targetdir;
 
-	public AutoCompiler (string source_dir) {
+	public AutoCompiler (string source_dir, string target_dir = "") {
  		srcdir = source_dir;
+		targetdir = target_dir;
 	}
 
 	~AutoCompiler () {
 
+	}
+
+	private void prinfo (string msg) {
+		stdout.printf (" I:" + " " + msg + "\n");
+	}
+
+	private void prwarning (string msg) {
+		stdout.printf (" W:" + " " + msg + "\n");
+	}
+
+	private void prerror (string msg) {
+		stderr.printf ("[error]" + " " + msg + "\n");
 	}
 
 	private int compile_makefile () {
@@ -46,15 +60,10 @@ private class AutoCompiler : Object {
 		if (exit_status != 0)
 			return exit_status;
 		// Install it, if possible
-			string isdir = IPK.Builder.find_ipk_source_dir (srcdir);
-			if (isdir != null) {
-				Process.spawn_command_line_sync	("make install DESTDIR=\"" + Path.build_filename (isdir, "installtarget", null) + "\"",
-				null, null, out exit_status);
-				if (exit_status != 0)
-					return exit_status;
-			} else {
-				message ("Unable to 'make install' software: IPK source dir not found!");
-			}
+		Process.spawn_command_line_sync	("make install DESTDIR=\"" + targetdir + "\"",
+			null, null, out exit_status);
+		if (exit_status != 0)
+			return exit_status;
 		return exit_status;
 	}
 
@@ -94,6 +103,20 @@ private class AutoCompiler : Object {
 		int ret = -1;
 		string lastdir = Environment.get_current_dir ();
 		Environment.set_current_dir (srcdir);
+
+		if (targetdir == "") {
+			string isdir = IPK.find_ipk_source_dir (srcdir);
+			if (isdir == null) {
+				prerror ("Unable to 'make install' software: IPK source dir not found!");
+				return ret;
+			} else {
+				targetdir = Path.build_filename (isdir, "installtarget", null);
+				if (!Path.is_absolute (targetdir))
+					targetdir = Path.build_filename (Environment.get_current_dir (), targetdir, null);
+			}
+		} else {
+			prwarning (_("Using user-defined install target: %s").printf (targetdir));
+		}
 
 		ret = compile_makefile ();
 		if (ret < 0)
