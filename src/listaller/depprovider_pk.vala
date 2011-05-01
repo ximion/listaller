@@ -26,16 +26,16 @@ using Listaller;
 namespace Listaller.Deps {
 
 private class PackageKit : Provider {
-	[CCode(cheader_filename = "packagekit.h")]
 	private Pk.Client pkit;
 
-	public signal void error_code (ErrorItem error);
-	public signal void message (MessageItem message);
-	public signal void progress_changed (int progress);
+	public PackageKit (ArrayList<IPK.Dependency> dependencies) {
+		base (dependencies);
 
-	public PackageKit () {
 		pkit = new Pk.Client ();
-		//int x = pkdummy;
+	}
+
+	public override bool execute () {
+		return false;
 	}
 
 }

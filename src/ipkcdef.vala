@@ -181,9 +181,9 @@ public abstract class CXml : Object {
 		return get_node_content (get_xsubnode (pkg_node (), "id"));
 	}
 
-	public void set_pkg_dependencies (ArrayList<string> list) {
+	public void set_pkg_file_dependencies (ArrayList<string> list) {
 		// Create dependencies node
-		Xml.Node* n = get_xsubnode (pkg_node (), "dependencies");
+		Xml.Node* n = get_xsubnode (pkg_node (), "requires");
 		assert (n != null);
 
 		// Add the dependencies
@@ -192,8 +192,8 @@ public abstract class CXml : Object {
 		}
 	}
 
-	public ArrayList<string> get_pkg_dependencies () {
-		Xml.Node* n = get_xsubnode (pkg_node (), "dependencies");
+	public ArrayList<string> get_pkg_file_dependencies () {
+		Xml.Node* n = get_xsubnode (pkg_node (), "requires");
 		ArrayList<string> depList = new ArrayList<string> ();
 		for (Xml.Node* iter = n->children; iter != null; iter = iter->next) {
 			// Spaces between tags are also nodes, discard them

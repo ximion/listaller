@@ -26,6 +26,16 @@ using Listaller;
 
 namespace Listaller.IPK {
 
+private class Dependency : Object {
+	public string name {get; set;}
+	public bool satisfied {get; set;}
+
+	public Dependency (string dep_name) {
+		name = dep_name;
+		satisfied = false;
+	}
+}
+
 private class Package : Object {
 	private Settings conf;
 	private string fname;

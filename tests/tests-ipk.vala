@@ -75,11 +75,11 @@ void test_ipk_control_file () {
 	ipkc.set_pkg_id ("echo-123");
 
 	ArrayList<string> list = new ArrayList<string> ();
-	list.add ("alpha");
-	list.add ("beta");
-	list.add ("gamma");
-	list.add ("delta");
-	ipkc.set_pkg_dependencies (list);
+	list.add ("/etc/alpha");
+	list.add ("/usr/lib/libbeta.so");
+	list.add ("$SYS_LIB/gamma.so.4");
+	list.add ("/usr/bin/delta");
+	ipkc.set_pkg_file_dependencies (list);
 
 	//! ipkc.print_xml ();
 
