@@ -30,6 +30,7 @@ private class Variable {
 	private string _su_subst;
 	private string _subst;
 	private string _id_subst;
+	private bool _sysvar;
 
 	public string var {
 		get { return _var; }
@@ -51,6 +52,11 @@ private class Variable {
 		set { _su_subst = value; }
 	}
 
+	public bool system_var {
+		get { return _sysvar; }
+		set { _sysvar = value; }
+	}
+
 }
 
 private class VarSolver : Object {
@@ -58,8 +64,10 @@ private class VarSolver : Object {
 	private HashMap<string, Variable> pathMap;
 	private delegate string LiConfGetType ();
 	public string appID {get; set; }
+	public bool contained_sysvars {get; set;}
 
 	public VarSolver (string appIdName = "") {
+		contained_sysvars = false;
 		conf = new Settings ();
 		appID = appIdName;
 		if (appID == "")
@@ -67,6 +75,7 @@ private class VarSolver : Object {
 
 		// Build map of Listaller path variables
 		pathMap = new HashMap<string, Variable> ();
+
 		/* Define all Listaller pkg variables */
 		// Application installation directory
 		add_var_from_conf ("$INST", Path.build_filename ("appdata", appID, null), conf.appdata_dir, appID);
@@ -77,6 +86,26 @@ private class VarSolver : Object {
 		// Private dependency directory: Used only for private libraries
 		add_var_from_conf ("$LIB_PRIVATE", Path.build_filename ("appdata", appID, "_libs", null),
 				   conf.appdata_dir, Path.build_filename (appID, "_libs", null));
+
+		/*
+		 * System variables
+		 *
+		 * THESE VARS SHOULD NOT BE USED IN INSTALLATIONS!
+		 */
+		Variable v;
+		bool x = conf.sumode;
+		conf.sumode = false;
+
+		v = add_var ("$SYS_LIB", "_sys_lib", Path.build_filename (conf.depdata_dir (), "..", "_syslibs", null), conf.sys_libdir);
+		v.system_var = true;
+		v = add_var ("$SYS_BIN", "_sys_bin", Path.build_filename (conf.depdata_dir (), "..", "_sysbin", null), conf.sys_bindir);
+		v.system_var = true;
+		v = add_var ("$SYS_SHARE", "_sys_lib", Path.build_filename (conf.depdata_dir (), "..", "_sysshare", null), conf.sys_sharedir);
+		v.system_var = true;
+		v = add_var ("$SYS_ETC", "_sys_lib", Path.build_filename (conf.depdata_dir (), "..", "_sysetc", null), conf.sys_etcdir);
+		v.system_var = true;
+
+		conf.sumode = x;
 
 		// Add icon sizes
 		add_icon_var (0);
@@ -100,28 +129,33 @@ private class VarSolver : Object {
 		}
 	}
 
-	private void add_var (string key, string idsubst, string subst, string susubst) {
+	private Variable add_var (string key, string idsubst, string subst, string susubst) {
 		Variable v = new Variable ();
 		v.var = key;
 		v.id_subst = idsubst;
 		v.subst = subst;
 		v.su_subst = susubst;
 		pathMap.set (v.var, v);
+		return v;
 	}
 
-	private void add_var_from_conf (string key, string idsubst, LiConfGetType get, string appendPath = "") {
+	private Variable add_var_from_conf (string key, string idsubst, LiConfGetType get, string appendPath = "") {
 		bool x = conf.sumode;
 		conf.sumode = false;
 		string s = Path.build_filename (get (), appendPath, null);
 		conf.sumode = true;
-		add_var (key, idsubst, s, Path.build_filename (get (), appendPath, null));
+		Variable v = add_var (key, idsubst, s, Path.build_filename (get (), appendPath, null));
 		conf.sumode = x;
+		return v;
 	}
 
 	public string substitute_vars_su (string s) {
+		contained_sysvars = false;
 		string res = s;
 		foreach (var entry in pathMap.entries) {
 			res = string_replace (res, "(\\" + entry.key + ")", entry.value.su_subst);
+			if (entry.value.system_var)
+				contained_sysvars = true;
 		}
 		return res;
 	}
@@ -130,6 +164,8 @@ private class VarSolver : Object {
 		string res = s;
 		foreach (var entry in pathMap.entries) {
 			res = string_replace (res, "(\\" + entry.key + ")", entry.value.subst);
+			if (entry.value.system_var)
+				contained_sysvars = true;
 		}
 		return res;
 	}
@@ -138,6 +174,8 @@ private class VarSolver : Object {
 		string res = s;
 		foreach (var entry in pathMap.entries) {
 			res = string_replace (res, "(\\" + entry.key + ")", entry.value.id_subst);
+			if (entry.value.system_var)
+				contained_sysvars = true;
 		}
 		return res;
 	}

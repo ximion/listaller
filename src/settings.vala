@@ -34,6 +34,12 @@ public class Settings : Object {
 	private bool _locked;
 	private string uinsttmp = "";
 
+	// System directories
+	public const string sys_libdir = "/usr/lib";
+	public const string sys_bindir = "/usr/bin";
+	public const string sys_sharedir = "/usr/share";
+	public const string sys_etcdir = "/etc";
+
 	public bool locked {
 		get { return _locked; }
 	}
