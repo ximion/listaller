@@ -79,7 +79,7 @@ private class Solver : Object {
 		bool ret = false;
 		// Resolve dependencies!
 		foreach (IPK.Dependency dep in deplist) {
-			ret = run_provider (new PackageKit (dep));
+			ret = run_provider (new PkitProvider (dep));
 			if (!ret)
 				break;
 		}

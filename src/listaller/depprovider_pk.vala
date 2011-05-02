@@ -25,23 +25,27 @@ using Listaller;
 
 namespace Listaller.Deps {
 
-private class PackageKit : Provider {
-	private Pk.Client pkit;
+private class PkitProvider : Provider {
+	private PackageKit.Client pkit;
 
-	public PackageKit (IPK.Dependency ipkdep) {
+	public PkitProvider (IPK.Dependency ipkdep) {
 		base (ipkdep);
 
-		pkit = new Pk.Client ();
+		pkit = new PackageKit.Client ();
 	}
 
-	private void pk_progress_cb (Pk.Progress progress, Pk.ProgressType type) {
+	private void pk_progress_cb (PackageKit.Progress progress, PackageKit.ProgressType type) {
+		//
 	}
 
 	private string pkit_pkg_from_file (string fname) {
-		Pk.Bitfield filter = Pk.filter_bitfield_from_string ("installed");
-		string[] files = { fname, null};
-		Pk.Results res = pkit.search_files (filter, files, null, pk_progress_cb);
-		string[] packages = res.get_package_sack ().get_ids ();
+		PackageKit.Bitfield filter = PackageKit.Filter.bitfield_from_string ("installed");
+		string[] files = { fname, null };
+
+		// TODO: Fix PackageKit GIR before this can be used
+		//! PackageKit.Results res = pkit.search_files (filter, files, null, pk_progress_cb);
+		string[] packages = { "?", null };
+		//! packages = res.get_package_sack ().get_ids ();
 
 		stdout.printf (packages[0] + "\n");
 

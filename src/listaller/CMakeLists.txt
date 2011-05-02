@@ -31,10 +31,10 @@ vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 			GENERATE_VAPI listaller-${LILIBS_VERSION}.vapi
 			GENERATE_HEADER listaller.h
 			OUTPUT_DIR ${CMAKE_BINARY_DIR}/src
-			COMPILE_FLAGS --gir=Listaller-${LILIBS_VERSION}.gir --library Listaller-${LILIBS_VERSION}
+			COMPILE_FLAGS --gir=Listaller-${LILIBS_VERSION}.gir
+				--library Listaller-${LILIBS_VERSION}
+				--metadatadir=${CMAKE_SOURCE_DIR}/vapi
 )
-
-# g-ir-compiler --shared-library=listaller-glib Listaller-${LILIBS_VERSION}.gir -o Listaller-${LILIBS_VERSION}.typelib
 
 add_definitions ("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE")
 

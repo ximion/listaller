@@ -72,12 +72,16 @@ function(find_gir id name)
    endif()
   endforeach()
 
+  if (NOT ${id}_GI)
+
   find_file(${id}_GI "${name}.gir" PATHS ${INTROSPECTION_GIRDIR})
 
-  if (ESSENTIAL AND NOT ${${id}_GI})
+  if (ESSENTIAL AND NOT ${id}_GI})
     message(FATAL_ERROR "GIR for ${name} was not found! Please install the introspection data!")
   else (ARGS_REQUIRED)
     set(${id}_FOUND TRUE)
-  endif (ESSENTIAL AND NOT ${${id}_GI})
+  endif (ESSENTIAL AND NOT ${id}_GI})
+
+  endif (NOT ${id}_GI)
 
 endfunction()

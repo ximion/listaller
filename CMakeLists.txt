@@ -124,7 +124,7 @@ add_definitions ("--include config.h")
 find_package(PkgConfig REQUIRED)
 find_package(Vala REQUIRED)
 include(${VALA_USE_FILE})
-ensure_vala_version("0.10" MINIMUM)
+ensure_vala_version("0.12" MINIMUM)
 
 add_subdirectory(src)
 add_subdirectory(tools)
