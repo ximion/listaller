@@ -28,13 +28,31 @@ namespace Listaller.Deps {
 private class PackageKit : Provider {
 	private Pk.Client pkit;
 
-	public PackageKit (ArrayList<IPK.Dependency> dependencies) {
-		base (dependencies);
+	public PackageKit (IPK.Dependency ipkdep) {
+		base (ipkdep);
 
 		pkit = new Pk.Client ();
 	}
 
+	private void pk_progress_cb (Pk.Progress progress, Pk.ProgressType type) {
+	}
+
+	private string pkit_pkg_from_file (string fname) {
+		Pk.Bitfield filter = Pk.filter_bitfield_from_string ("installed");
+		string[] files = { fname, null};
+		Pk.Results res = pkit.search_files (filter, files, null, pk_progress_cb);
+		string[] packages = res.get_package_sack ().get_ids ();
+
+		stdout.printf (packages[0] + "\n");
+
+		return packages[0];
+	}
+
 	public override bool execute () {
+		// PK solver can only handle files...
+		foreach (string s in dep.files) {
+			string pkg = pkit_pkg_from_file (s);
+		}
 		return false;
 	}
 

@@ -154,7 +154,7 @@ namespace Pk {
 		[CCode (cname = "pk_client_search_details_async")]
 		public async void search_details_async (Pk.Bitfield filters, string values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] Pk.ProgressCallback progress_callback);
 		[CCode (cname = "pk_client_search_files")]
-		public Pk.Results search_files (Pk.Bitfield filters, string values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] Pk.ProgressCallback progress_callback) throws GLib.Error;
+		public Pk.Results search_files (Pk.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] Pk.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_client_search_files_async")]
 		public async void search_files_async (Pk.Bitfield filters, string values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] Pk.ProgressCallback progress_callback);
 		[CCode (cname = "pk_client_search_groups")]
@@ -480,7 +480,7 @@ namespace Pk {
 		public bool get_details (GLib.Cancellable? cancellable) throws GLib.Error;
 		[CCode (cname = "pk_package_sack_get_details_async")]
 		public async void get_details_async (GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 2.1)] Pk.ProgressCallback progress_callback);
-		[CCode (cname = "pk_package_sack_get_ids")]
+		[CCode (cname = "pk_package_sack_get_ids", array_length = false, array_null_terminated = true)]
 		public string[] get_ids ();
 		[CCode (cname = "pk_package_sack_get_size")]
 		public uint get_size ();

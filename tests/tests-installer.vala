@@ -54,6 +54,7 @@ void test_install_package () {
 	Setup setup = new Setup (ipkfilename, conf);
 	setup.error_code.connect (test_setup_error_code_cb);
 	setup.message.connect (test_setup_message_cb);
+	setup.unittestmode = true;
 
 	ret = setup.initialize ();
 	assert (ret == true);

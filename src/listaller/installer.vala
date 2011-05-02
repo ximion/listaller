@@ -31,6 +31,7 @@ public class Setup : Object {
 	private string fname;
 	private IPK.Package ipkp;
 	private bool initialized;
+	public bool unittestmode {get; set;}
 
 	public signal void error_code (ErrorItem error);
 	public signal void progress_changed (int progress, int subprogress);
@@ -51,6 +52,7 @@ public class Setup : Object {
 	}
 
 	public Setup (string ipkfilename, Settings? settings) {
+		unittestmode = false;
 		conf = settings;
 		if (conf == null)
 			conf = new Settings (false);
@@ -134,7 +136,23 @@ public class Setup : Object {
 		status1.info = _("Resolving dependencies of '%s'.").printf (ipkp.control.get_app_name ());
 		status_changed (status1);
 
-		// TODO: Resolve dependencies here!
+		// We don't solve dependencies when unit tests are running
+		if (!unittestmode) {
+			Deps.Solver solver = new Deps.Solver (ipkp.control, db);
+			solver.error_code.connect ((error) => {
+				this.error_code (error);
+			});
+			solver.message.connect ((msg) => {
+				this.message (msg);
+			});
+			progress_changed.connect ((p, subp) => {
+				receive_progress_change (p, subp);
+			});
+
+			ret = solver.execute ();
+			if (!ret)
+				return false;
+		}
 
 		// Emit status message
 		StatusItem status2 = new StatusItem (StatusEnum.INSTALLING_FILES);

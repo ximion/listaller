@@ -26,14 +26,14 @@ using Listaller;
 namespace Listaller.Deps {
 
 private abstract class Provider : Object {
-	protected ArrayList<IPK.Dependency> deplist;
+	protected IPK.Dependency dep;
 
 	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
-	public signal void progress_changed (int progress, int subprogress);
+	public signal void progress_changed (int progress);
 
-	public Provider (ArrayList<IPK.Dependency> dependencies) {
-		deplist = dependencies;
+	public Provider (IPK.Dependency dep_data) {
+		dep = dep_data;
 	}
 
 	public void connect_solver (Solver s) {
@@ -43,8 +43,8 @@ private abstract class Provider : Object {
 		message.connect ((msg) => {
 			s.message (msg);
 		});
-		progress_changed.connect ((p, subp) => {
-			s.progress_changed (p, subp);
+		progress_changed.connect ((p) => {
+			s.receive_provider_progress (p);
 		});
 	}
 
@@ -55,14 +55,19 @@ private abstract class Provider : Object {
 
 private class Solver : Object {
 	private ArrayList<IPK.Dependency> deplist;
+	private SoftwareDB lidb;
 
 	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
 	public signal void progress_changed (int progress, int subprogress);
 
-	public Solver (IPK.Control ipk_control) {
-		// TODO: Fetch dependency list from IPK control!
-		deplist = new ArrayList<IPK.Dependency> ();
+	public Solver (IPK.Control ipk_control, SoftwareDB db) {
+		lidb = db;
+		deplist = ipk_control.get_pkg_dependencies ();
+	}
+
+	internal void receive_provider_progress (int p) {
+		// TODO
 	}
 
 	private bool run_provider (Provider p) {
@@ -73,7 +78,11 @@ private class Solver : Object {
 	public bool execute () {
 		bool ret = false;
 		// Resolve dependencies!
-		ret = run_provider (new PackageKit (deplist));
+		foreach (IPK.Dependency dep in deplist) {
+			ret = run_provider (new PackageKit (dep));
+			if (!ret)
+				break;
+		}
 
 		return ret;
 	}
