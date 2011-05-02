@@ -5,4 +5,3 @@ Control.locked#virtual_method skip
 DistroUpgradeEnum name="DistroUpgradeType"
 ErrorEnum name="ErrorType"
 MessageEnum name="MessageType"
-DistroUpgradeEnum name ="DistroUpgradeType"
