@@ -5,7 +5,7 @@ use IPC::Open2;
 if ($ARGV[0] eq '--version') {
 	print "scandeps version 1.0\n";
 	print "Copright (c) 2005 Hongli Lai\n";
-	print "Licensed under the GNU General Public License v2.\n";
+	print "Licensed under the GNU General Public License v3.\n";
 	exit;
 } elsif ($ARGV[0] eq '--help') {
 	print "Usage: scandeps [FILES...]\n";
