@@ -74,17 +74,34 @@ void test_ipk_control_file () {
 	ipkc.set_app_name ("echoecho");
 	ipkc.set_pkg_id ("echo-123");
 
-	ArrayList<string> list = new ArrayList<string> ();
-	list.add ("/etc/alpha");
-	list.add ("/usr/lib/libbeta.so");
-	list.add ("$SYS_LIB/gamma.so.4");
-	list.add ("/usr/bin/delta");
-	ipkc.set_pkg_file_dependencies (list);
+	ArrayList<IPK.Dependency> list = new ArrayList<IPK.Dependency> ();
+	IPK.Dependency d = null;
+	d = new IPK.Dependency ("alpha");
+	d.files.add ("/etc/alpha.conf");
+	list.add (d);
+
+	d = new IPK.Dependency ("beta");
+	d.files.add ("/usr/lib/libbeta.so");
+	list.add (d);
+
+	d = new IPK.Dependency ("gamma");
+	d.files.add ("$SYS_LIB/gamma.so.4");
+	list.add (d);
+
+	d = new IPK.Dependency ("delta");
+	d.files.add ("/usr/bin/delta");
+	list.add (d);
+
+	ipkc.set_pkg_dependencies (list);
 
 	//! ipkc.print_xml ();
 
 	assert (ipkc.get_app_name () == "echoecho");
 	assert (ipkc.get_pkg_id () == "echo-123");
+
+	list = ipkc.get_pkg_dependencies ();
+	assert (list[0].name == "alpha");
+	assert (list[0].files[0] == "/etc/alpha.conf");
 }
 
 void test_ipk_filelist_file () {

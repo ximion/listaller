@@ -26,6 +26,19 @@ using Listaller;
 
 namespace Listaller.IPK {
 
+private class Dependency : Object {
+	public string name {get; set;}
+	public bool satisfied {get; set;}
+	public ArrayList<string> files {get; set;}
+
+	public Dependency (string dep_name) {
+		name = dep_name;
+		satisfied = false;
+
+		files = new ArrayList<string> ();
+	}
+}
+
 public abstract class CXml : Object {
 	private string fname;
 	private Xml.Doc* _xdoc;
@@ -181,28 +194,42 @@ public abstract class CXml : Object {
 		return get_node_content (get_xsubnode (pkg_node (), "id"));
 	}
 
-	public void set_pkg_file_dependencies (ArrayList<string> list) {
+	public void set_pkg_dependencies (ArrayList<Dependency> list) {
 		// Create dependencies node
 		Xml.Node* n = get_xsubnode (pkg_node (), "requires");
 		assert (n != null);
 
 		// Add the dependencies
-		foreach (string s in list) {
-			n->new_text_child (null, "file", s);
+		foreach (Dependency dep in list) {
+			Xml.Node *depnode = n->new_child (null, dep.name);
+
+			foreach (string s in dep.files)
+				depnode->new_text_child (null, "file", s);
 		}
 	}
 
-	public ArrayList<string> get_pkg_file_dependencies () {
+	public ArrayList<Dependency> get_pkg_dependencies () {
 		Xml.Node* n = get_xsubnode (pkg_node (), "requires");
-		ArrayList<string> depList = new ArrayList<string> ();
+		ArrayList<Dependency> depList = new ArrayList<Dependency> ();
 		for (Xml.Node* iter = n->children; iter != null; iter = iter->next) {
 			// Spaces between tags are also nodes, discard them
 			if (iter->type != ElementType.ELEMENT_NODE) {
 				continue;
 			}
-			if (iter->name == "file") {
-				depList.add (iter->get_content ());
+			Dependency dep = new Dependency (iter->name);
+
+			// Fill dependency entry
+			for (Xml.Node* in = iter->children; in != null; in = in->next) {
+				// Spaces between tags are also nodes, discard them
+				if (in->type != ElementType.ELEMENT_NODE) {
+					continue;
+				}
+
+				if (in->name == "file") {
+					dep.files.add (in->get_content ());
+				}
 			}
+			depList.add (dep);
 		}
 		return depList;
 	}
