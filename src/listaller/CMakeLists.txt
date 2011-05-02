@@ -9,9 +9,11 @@ find_package(SQLite3 REQUIRED)
 find_package(LibArchive REQUIRED)
 find_package(LibXml2 REQUIRED)
 find_package(GPGme REQUIRED)
+find_package(GI REQUIRED)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
+find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
 
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	depsolver.vala
@@ -25,7 +27,7 @@ list(APPEND VALA_INCLUDE_DIRS ${CMAKE_BINARY_DIR})
 vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 			BASE_DIR ${lisrc}
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
-			PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2
+			PACKAGES ${LISTALLER_BASE_VALA_DEPS} PackageKitGlib-1.0
 			GENERATE_VAPI listaller-${LILIBS_VERSION}.vapi
 			GENERATE_HEADER listaller.h
 			OUTPUT_DIR ${CMAKE_BINARY_DIR}/src
