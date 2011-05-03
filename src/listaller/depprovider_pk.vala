@@ -42,10 +42,9 @@ private class PkitProvider : Provider {
 		PackageKit.Bitfield filter = PackageKit.Filter.bitfield_from_string ("installed");
 		string[] files = { fname, null };
 
-		// TODO: Fix PackageKit GIR before this can be used
-		//! PackageKit.Results res = pkit.search_files (filter, files, null, pk_progress_cb);
+		PackageKit.Results res = pkit.search_files (filter, files, null, pk_progress_cb);
 		string[] packages = { "?", null };
-		//! packages = res.get_package_sack ().get_ids ();
+		packages = res.get_package_sack ().get_ids ();
 
 		stdout.printf (packages[0] + "\n");
 

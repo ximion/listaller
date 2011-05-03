@@ -87,18 +87,18 @@ namespace PackageKit {
 		public async void repo_enable_async (string repo_id, bool enabled, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
 		public PackageKit.Results repo_set_data (string repo_id, string parameter, string value, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		public async void repo_set_data_async (string repo_id, string parameter, string value, [CCode (pos = 5, array_length_pos = 5.1, delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 4)] GLib.Cancellable? cancellable = null);
-		public PackageKit.Results resolve (PackageKit.Bitfield filters, string packages, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
-		public async void resolve_async (PackageKit.Bitfield filters, string packages, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
+		public PackageKit.Results resolve (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] packages, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
+		public async void resolve_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] packages, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
 		public PackageKit.Results rollback (string transaction_id, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		public async void rollback_async (string transaction_id, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
-		public PackageKit.Results search_details (PackageKit.Bitfield filters, string values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
-		public async void search_details_async (PackageKit.Bitfield filters, string values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
-		public PackageKit.Results search_files (PackageKit.Bitfield filters, string values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
-		public async void search_files_async (PackageKit.Bitfield filters, string values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
-		public PackageKit.Results search_groups (PackageKit.Bitfield filters, string values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
-		public async void search_groups_async (PackageKit.Bitfield filters, string values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
-		public PackageKit.Results search_names (PackageKit.Bitfield filters, string values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
-		public async void search_names_async (PackageKit.Bitfield filters, string values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
+		public PackageKit.Results search_details (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
+		public async void search_details_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
+		public PackageKit.Results search_files (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
+		public async void search_files_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
+		public PackageKit.Results search_groups (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
+		public async void search_groups_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
+		public PackageKit.Results search_names (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
+		public async void search_names_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
 		public void set_background (bool background);
 		public void set_cache_age (uint cache_age);
 		public void set_interactive (bool interactive);
@@ -118,8 +118,8 @@ namespace PackageKit {
 		public async void update_system_async (bool only_trusted, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
 		public PackageKit.Results upgrade_system (string distro_id, PackageKit.UpgradeKind upgrade_kind, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		public async void upgrade_system_async (string distro_id, PackageKit.UpgradeKind upgrade_kind, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
-		public PackageKit.Results what_provides (PackageKit.Bitfield filters, PackageKit.Provides provides, string values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
-		public async void what_provides_async (PackageKit.Bitfield filters, PackageKit.Provides provides, string values, [CCode (pos = 5, array_length_pos = 5.1, delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 4)] GLib.Cancellable? cancellable = null);
+		public PackageKit.Results what_provides (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
+		public async void what_provides_async (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values, [CCode (pos = 5, array_length_pos = 5.1, delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 4)] GLib.Cancellable? cancellable = null);
 		public bool background { get; set; }
 		public uint cache_age { get; set; }
 		public bool idle { get; }
@@ -559,36 +559,36 @@ namespace PackageKit {
 	public class Task : PackageKit.Client {
 		[CCode (has_construct_function = false)]
 		public Task ();
-		public async void download_packages_async (string package_ids, string directory, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
+		public async void download_packages_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, string directory, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
 		[NoWrapper]
 		public virtual void eula_question (uint request, PackageKit.Results results);
 		public PackageKit.Results generic_finish (GLib.AsyncResult res) throws GLib.Error;
 		public async void get_categories_async ([CCode (pos = 2, array_length_pos = 2.1, delegate_target_pos = 2.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 1)] GLib.Cancellable? cancellable = null);
-		public async void get_depends_async (PackageKit.Bitfield filters, string package_ids, bool recursive, [CCode (pos = 5, array_length_pos = 5.1, delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 4)] GLib.Cancellable? cancellable = null);
-		public async void get_details_async (string package_ids, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
-		public async void get_files_async (string package_ids, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
+		public async void get_depends_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] package_ids, bool recursive, [CCode (pos = 5, array_length_pos = 5.1, delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 4)] GLib.Cancellable? cancellable = null);
+		public async void get_details_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
+		public async void get_files_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
 		public bool get_interactive ();
 		public async void get_packages_async (PackageKit.Bitfield filters, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
 		public async void get_repo_list_async (PackageKit.Bitfield filters, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
-		public async void get_requires_async (PackageKit.Bitfield filters, string package_ids, bool recursive, [CCode (pos = 5, array_length_pos = 5.1, delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 4)] GLib.Cancellable? cancellable = null);
+		public async void get_requires_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] package_ids, bool recursive, [CCode (pos = 5, array_length_pos = 5.1, delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 4)] GLib.Cancellable? cancellable = null);
 		public bool get_simulate ();
-		public async void get_update_detail_async (string package_ids, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
+		public async void get_update_detail_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
 		public async void get_updates_async (PackageKit.Bitfield filters, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
 		public async void install_files_async (string files, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
-		public async void install_packages_async (string package_ids, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
+		public async void install_packages_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
 		[NoWrapper]
 		public virtual void key_question (uint request, PackageKit.Results results);
 		[NoWrapper]
 		public virtual void media_change_question (uint request, PackageKit.Results results);
 		public async void refresh_cache_async (bool force, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
-		public async void remove_packages_async (string package_ids, bool allow_deps, bool autoremove, [CCode (pos = 5, array_length_pos = 5.1, delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 4)] GLib.Cancellable? cancellable = null);
+		public async void remove_packages_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, bool allow_deps, bool autoremove, [CCode (pos = 5, array_length_pos = 5.1, delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 4)] GLib.Cancellable? cancellable = null);
 		public async void repo_enable_async (string repo_id, bool enabled, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
 		public async void resolve_async (PackageKit.Bitfield filters, string packages, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
 		public async void rollback_async (string transaction_id, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
-		public async void search_details_async (PackageKit.Bitfield filters, string values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
-		public async void search_files_async (PackageKit.Bitfield filters, string values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
-		public async void search_groups_async (PackageKit.Bitfield filters, string values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
-		public async void search_names_async (PackageKit.Bitfield filters, string values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
+		public async void search_details_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
+		public async void search_files_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
+		public async void search_groups_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
+		public async void search_names_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
 		public void set_interactive (bool interactive);
 		public void set_simulate (bool simulate);
 		[NoWrapper]
@@ -596,11 +596,11 @@ namespace PackageKit {
 		public static void test (void* user_data);
 		[NoWrapper]
 		public virtual void untrusted_question (uint request, PackageKit.Results results);
-		public async void update_packages_async (string package_ids, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
+		public async void update_packages_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, [CCode (pos = 3, array_length_pos = 3.1, delegate_target_pos = 3.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 2)] GLib.Cancellable? cancellable = null);
 		public async void update_system_async ([CCode (pos = 2, array_length_pos = 2.1, delegate_target_pos = 2.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 1)] GLib.Cancellable? cancellable = null);
 		public bool user_accepted (uint request);
 		public bool user_declined (uint request);
-		public async void what_provides_async (PackageKit.Bitfield filters, PackageKit.Provides provides, string values, [CCode (pos = 5, array_length_pos = 5.1, delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 4)] GLib.Cancellable? cancellable = null);
+		public async void what_provides_async (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values, [CCode (pos = 5, array_length_pos = 5.1, delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 4)] GLib.Cancellable? cancellable = null);
 		public bool interactive { get; set; }
 		public bool simulate { get; set; }
 	}
