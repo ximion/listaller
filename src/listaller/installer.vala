@@ -138,15 +138,15 @@ public class Setup : Object {
 
 		// We don't solve dependencies when unit tests are running
 		if (!unittestmode) {
-			Deps.Solver solver = new Deps.Solver (ipkp.control, db);
+			Deps.Solver solver = new Deps.Solver (ipkp.control.get_pkg_dependencies (), db);
 			solver.error_code.connect ((error) => {
 				this.error_code (error);
 			});
 			solver.message.connect ((msg) => {
 				this.message (msg);
 			});
-			progress_changed.connect ((p, subp) => {
-				receive_progress_change (p, subp);
+			progress_changed.connect ((p) => {
+				receive_progress_change (-1, p);
 			});
 
 			ret = solver.execute ();

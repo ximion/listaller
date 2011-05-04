@@ -48,6 +48,22 @@ private abstract class Provider : Object {
 		});
 	}
 
+	protected void emit_warning (string msg) {
+		// Construct warning message
+		MessageItem item = new MessageItem(MessageEnum.WARNING);
+		item.details = msg;
+		message (item);
+		warning (msg);
+	}
+
+	protected void emit_info (string msg) {
+		// Construct info message
+		MessageItem item = new MessageItem(MessageEnum.INFO);
+		item.details = msg;
+		message (item);
+		GLib.message (msg);
+	}
+
 	public virtual bool execute () {
 		return false;
 	}
@@ -56,18 +72,27 @@ private abstract class Provider : Object {
 private class Solver : Object {
 	private ArrayList<IPK.Dependency> deplist;
 	private SoftwareDB lidb;
+	private Listaller.Settings conf;
+	private double oneprog = 0;
+	private int prog = 0;
 
 	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
-	public signal void progress_changed (int progress, int subprogress);
+	public signal void progress_changed (int progress);
 
-	public Solver (IPK.Control ipk_control, SoftwareDB db) {
+	public Solver (ArrayList<IPK.Dependency> dependency_list, SoftwareDB db, Listaller.Settings? settings = null) {
 		lidb = db;
-		deplist = ipk_control.get_pkg_dependencies ();
+		deplist = dependency_list;
+		conf = settings;
+		if (conf == null)
+			conf = new Listaller.Settings ();
 	}
 
 	internal void receive_provider_progress (int p) {
-		// TODO
+		prog += p;
+		int progress = (int) Math.round (oneprog * prog);
+		assert (progress <= 100);
+		progress_changed (progress);
 	}
 
 	private bool run_provider (Provider p) {
@@ -77,6 +102,9 @@ private class Solver : Object {
 
 	public bool execute () {
 		bool ret = false;
+		if (deplist.size == 0)
+			return true;
+		oneprog = 100 / deplist.size * 100;
 		// Resolve dependencies!
 		foreach (IPK.Dependency dep in deplist) {
 			ret = run_provider (new PkitProvider (dep));

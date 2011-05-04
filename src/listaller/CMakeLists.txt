@@ -33,6 +33,7 @@ vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 			OUTPUT_DIR ${CMAKE_BINARY_DIR}/src
 			COMPILE_FLAGS --gir=Listaller-${LILIBS_VERSION}.gir
 				--library Listaller-${LILIBS_VERSION}
+				--thread
 )
 
 add_definitions ("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE")

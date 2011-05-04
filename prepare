@@ -5,7 +5,7 @@
 # syntax :
 #    ./configure <options> [parameters]
 set -e
-OPTION_SPEC="help,enable-qt,enable-tests,cmake-options:"
+OPTION_SPEC="help,enable-qt,enable-tests,enable-test-ds,cmake-options:"
 PARSED_OPTIONS=$(getopt -n "$0" -a -o h --l "$OPTION_SPEC" -- "$@")
 
 eval set -- "$PARSED_OPTIONS"
@@ -24,6 +24,7 @@ while true ; do
 		-h|--help )  usage; exit 0;;
 		--enable-qt )  ENABLE_QT=1; shift; ;;
 		--enable-tests ) ENABLE_TESTS=1; shift; ;;
+		--enable-test-ds ) ENABLE_DS_TEST=1; shift; ;;
 		--cmake-options ) case "$2" in
 			    "") echo "CMake-Options need an argument!"; exit 3 ;;
 			     *) export cmakeoptn=$2 ; shift 2 ;;
@@ -51,6 +52,9 @@ sed "s#%PREFIX%#$prefix#" Makefile.in > Makefile
 CMAKE_OPTIONS=$cmakeoptn
 if [ "$ENABLE_TESTS" = "1" ]; then
  CMAKE_OPTIONS="$CMAKE_OPTIONS -DTESTS=ON"
+fi
+if [ "$ENABLE_DS_TEST" = "1" ]; then
+ CMAKE_OPTIONS="$CMAKE_OPTIONS -DTEST_DEPSOLVER=ON"
 fi
 if [ "$ENABLE_QT" = "1" ]; then
  CMAKE_OPTIONS="$CMAKE_OPTIONS -DQT=ON"

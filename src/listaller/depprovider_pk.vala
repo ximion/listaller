@@ -35,28 +35,63 @@ private class PkitProvider : Provider {
 	}
 
 	private void pk_progress_cb (PackageKit.Progress progress, PackageKit.ProgressType type) {
-		//
+		// TODO
 	}
 
-	private string pkit_pkg_from_file (string fname) {
-		PackageKit.Bitfield filter = PackageKit.Filter.bitfield_from_string ("installed");
+	private PackageKit.Package? pkit_pkg_from_file (string fname) {
+		PackageKit.Bitfield filter = PackageKit.Filter.bitfield_from_string ("none");
 		string[] files = { fname, null };
 
 		PackageKit.Results res = pkit.search_files (filter, files, null, pk_progress_cb);
-		string[] packages = { "?", null };
-		packages = res.get_package_sack ().get_ids ();
+		PackageKit.PackageSack sack = res.get_package_sack ();
+		string[] packages = sack.get_ids ();
 
-		stdout.printf (packages[0] + "\n");
+		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (packages[0] == null) ) {
+			debug (_("PackageKit exit code was: %s").printf (PackageKit.Exit.enum_to_string (res.get_exit_code ())));
+			emit_warning (_("Unable to find native package for %s!").printf (dep.name));
+			return null;
+		}
 
-		return packages[0];
+		PackageKit.Package pkg = sack.find_by_id (packages[0]);
+
+		return pkg;
+	}
+
+	private bool pkit_install_package (PackageKit.Package pkg) {
+		string[] pkids = { pkg.get_id (), null };
+		PackageKit.Results res = pkit.install_packages (true, pkids, null, pk_progress_cb);
+
+		if (res.get_exit_code () == PackageKit.Exit.SUCCESS)
+			return true;
+
+		emit_warning (_("Installation of native package '%s' failed!").printf (pkg.get_id ()) + "\n" +
+				_("PackageKit exit code was: %s").printf (PackageKit.Exit.enum_to_string (res.get_exit_code ())));
+		return false;
 	}
 
 	public override bool execute () {
+		bool ret = true;
 		// PK solver can only handle files...
 		foreach (string s in dep.files) {
-			string pkg = pkit_pkg_from_file (s);
+			PackageKit.Package pkg = pkit_pkg_from_file (s);
+			if (pkg == null) {
+				ret = false;
+				break;
+			}
+			if (pkg.get_info () != PackageKit.Info.INSTALLED) {
+				emit_info (_("Installing native package %s").printf (pkg.get_id ()));
+				ret = pkit_install_package (pkg);
+				if (!ret)
+					break;
+			} else {
+				emit_info (_("Native package %s is already installed.").printf (pkg.get_id ()));
+			}
+			if (ret)
+				dep.meta_info.add ("pkg:" + pkg.get_id ());
 		}
-		return false;
+		if (!ret)
+			dep.meta_info.clear ();
+		return ret;
 	}
 
 }
