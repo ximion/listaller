@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.00b\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-26 00:51+0200\n"
+"POT-Creation-Date: 2011-05-05 23:09+0200\n"
 "PO-Revision-Date: 2011-02-22 22:07+0000\n"
 "Last-Translator: truri <Unknown>\n"
 "Language-Team: Albanian\n"
@@ -13,10 +13,11 @@ msgstr ""
 "X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
 "X-Generator: Launchpad (build 12915)\n"
 
-msgid "Build IPK package"
+#, c-format
+msgid "Application ID %s is invalid!"
 msgstr ""
 
-msgid "Compile software sources automatically"
+msgid "Build IPK package"
 msgstr ""
 
 msgid "Copying files to their destination"
@@ -96,6 +97,10 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Error: %s\n"
+msgstr "Gabim"
+
 msgid "Fatal database error"
 msgstr ""
 
@@ -113,6 +118,13 @@ msgstr ""
 msgid "IPK package output directory"
 msgstr ""
 
+msgid "Installation completed!"
+msgstr "Instalimi u plotësua!"
+
+#, fuzzy
+msgid "Installation failed!"
+msgstr "Instalimi dështoi."
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
@@ -120,7 +132,8 @@ msgstr ""
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-msgid "Processing application without assigned .desktop file!"
+#, c-format
+msgid "Processing application '%s' without assigned .desktop file!"
 msgstr ""
 
 #, c-format
@@ -390,9 +403,6 @@ msgstr ""
 #~ "Që ta xhironi këtë zbatim me privilegje më të thella, jepni fjalëkalimin "
 #~ "tuaj."
 
-#~ msgid "Error"
-#~ msgstr "Gabim"
-
 #~ msgid "Error while extracting files!"
 #~ msgstr "Gabim gjatë përftimit të kartelave!"
 
@@ -487,12 +497,6 @@ msgstr ""
 
 #~ msgid "Installation aborted."
 #~ msgstr "Instalimi u ndërpre."
-
-#~ msgid "Installation completed!"
-#~ msgstr "Instalimi u plotësua!"
-
-#~ msgid "Installation failed."
-#~ msgstr "Instalimi dështoi."
 
 #~ msgid "Installation mode:"
 #~ msgstr "Mënyrë instalimi:"

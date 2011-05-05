@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-26 00:51+0200\n"
+"POT-Creation-Date: 2011-05-05 23:09+0200\n"
 "PO-Revision-Date: 2011-04-03 14:52+0000\n"
 "Last-Translator: KarimSadeg <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -18,10 +18,11 @@ msgstr ""
 "X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
 "X-Generator: Launchpad (build 12915)\n"
 
-msgid "Build IPK package"
-msgstr ""
+#, fuzzy, c-format
+msgid "Application ID %s is invalid!"
+msgstr "L'application %a n'a pas été installée."
 
-msgid "Compile software sources automatically"
+msgid "Build IPK package"
 msgstr ""
 
 msgid "Copying files to their destination"
@@ -104,6 +105,10 @@ msgstr "Base de données déverrouillée"
 msgid "ERROR: %s"
 msgstr "ERREUR : %s"
 
+#, fuzzy, c-format
+msgid "Error: %s\n"
+msgstr "Erreur:"
+
 msgid "Fatal database error"
 msgstr "Erreur fatale de la base de données"
 
@@ -121,6 +126,13 @@ msgstr ""
 msgid "IPK package output directory"
 msgstr ""
 
+msgid "Installation completed!"
+msgstr "Installation achevée !"
+
+#, fuzzy
+msgid "Installation failed!"
+msgstr "L'installation a échoué"
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr "Rendre '%s' connu par votre système."
@@ -128,7 +140,8 @@ msgstr "Rendre '%s' connu par votre système."
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-msgid "Processing application without assigned .desktop file!"
+#, c-format
+msgid "Processing application '%s' without assigned .desktop file!"
 msgstr ""
 
 #, c-format
@@ -725,9 +738,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Erreur lors de la décompression et de la configuration des fichiers."
 
-#~ msgid "Error:"
-#~ msgstr "Erreur:"
-
 #~ msgid "Escape"
 #~ msgstr "Echappement"
 
@@ -940,12 +950,6 @@ msgstr ""
 
 #~ msgid "Installation aborted."
 #~ msgstr "Installation annulée."
-
-#~ msgid "Installation completed!"
-#~ msgstr "Installation achevée !"
-
-#~ msgid "Installation failed."
-#~ msgstr "L'installation a échoué"
 
 #~ msgid "Installation mode:"
 #~ msgstr "Mode d'installation :"
@@ -1518,9 +1522,6 @@ msgstr ""
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "L'application %a a été installée avec succès !"
-
-#~ msgid "The application %a was not installed."
-#~ msgstr "L'application %a n'a pas été installée."
 
 #~ msgid ""
 #~ "The application which this package contains was not built for the current "

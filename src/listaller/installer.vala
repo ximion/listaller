@@ -31,6 +31,7 @@ public class Setup : Object {
 	private string fname;
 	private IPK.Package ipkp;
 	private bool initialized;
+	private int inst_progress;
 	public bool unittestmode {get; set;}
 
 	public signal void error_code (ErrorItem error);
@@ -66,7 +67,9 @@ public class Setup : Object {
 	}
 
 	private void receive_progress_change (int progress, int subprogress) {
-		progress_changed (progress, subprogress);
+		if (progress > 0)
+			inst_progress = progress;
+		progress_changed (inst_progress, subprogress);
 	}
 
 	private void emit_warning (string msg) {
@@ -98,6 +101,7 @@ public class Setup : Object {
 		ret = ipkp.initialize ();
 		if (ret)
 			initialized = true;
+		inst_progress = 0;
 		return ret;
 	}
 
@@ -145,7 +149,7 @@ public class Setup : Object {
 			solver.message.connect ((msg) => {
 				this.message (msg);
 			});
-			progress_changed.connect ((p) => {
+			solver.progress_changed.connect ((p) => {
 				receive_progress_change (-1, p);
 			});
 

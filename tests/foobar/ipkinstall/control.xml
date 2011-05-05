@@ -20,14 +20,16 @@
 			<mimetype>text/html</mimetype>
 		</mimetypes>
 		<url type="homepage">http://example.org</url>
+	</application>
+	<package>
 		<requires>
 			<testlib>
-				<file>blah.so</file>
-				<file>xyz.so</file>
+				<file>/bin/bash</file>
+				<file>/bin/sh</file>
 				<feed>http://zeroinstall-feeds.org/blub.xml</feed>
 				<package distro="Debian">libtest</package>
 				<dpk>dependency.dpk</dpk>
 			</testlib>
 		</requires>
-	</application>
+	</package>
 </ipkcontrol>

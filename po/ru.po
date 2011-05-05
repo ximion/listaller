@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-26 00:51+0200\n"
+"POT-Creation-Date: 2011-05-05 23:09+0200\n"
 "PO-Revision-Date: 2010-09-07 11:00+0000\n"
 "Last-Translator: devcode <brestows@gmail.com>\n"
 "Language-Team: \n"
@@ -13,10 +13,11 @@ msgstr ""
 "X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
 "X-Generator: Launchpad (build 12915)\n"
 
-msgid "Build IPK package"
-msgstr ""
+#, fuzzy, c-format
+msgid "Application ID %s is invalid!"
+msgstr "Приложение %a не установлено."
 
-msgid "Compile software sources automatically"
+msgid "Build IPK package"
 msgstr ""
 
 msgid "Copying files to their destination"
@@ -96,6 +97,10 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Error: %s\n"
+msgstr "Ошибка:"
+
 msgid "Fatal database error"
 msgstr ""
 
@@ -113,6 +118,13 @@ msgstr ""
 msgid "IPK package output directory"
 msgstr ""
 
+msgid "Installation completed!"
+msgstr "Установка завершена!"
+
+#, fuzzy
+msgid "Installation failed!"
+msgstr "Установка не удалась."
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
@@ -120,7 +132,8 @@ msgstr ""
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-msgid "Processing application without assigned .desktop file!"
+#, c-format
+msgid "Processing application '%s' without assigned .desktop file!"
 msgstr ""
 
 #, c-format
@@ -769,9 +782,6 @@ msgstr ""
 #~ msgid "Error while uninstalling!"
 #~ msgstr "Произошла ошибка во время удаления!"
 
-#~ msgid "Error:"
-#~ msgstr "Ошибка:"
-
 #~ msgid "Escape"
 #~ msgstr "Escape"
 
@@ -1045,12 +1055,6 @@ msgstr ""
 
 #~ msgid "Installation aborted."
 #~ msgstr "Установка прервана."
-
-#~ msgid "Installation completed!"
-#~ msgstr "Установка завершена!"
-
-#~ msgid "Installation failed."
-#~ msgstr "Установка не удалась."
 
 #~ msgid "Installation mode:"
 #~ msgstr "Режим установки:"
@@ -1723,9 +1727,6 @@ msgstr ""
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "Приложение %a успешно установлено!"
-
-#~ msgid "The application %a was not installed."
-#~ msgstr "Приложение %a не установлено."
 
 #~ msgid ""
 #~ "The application which this package contains was not built for the current "

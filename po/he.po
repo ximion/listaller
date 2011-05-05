@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-26 00:51+0200\n"
+"POT-Creation-Date: 2011-05-05 23:09+0200\n"
 "PO-Revision-Date: 2009-12-07 23:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -18,10 +18,11 @@ msgstr ""
 "X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
 "X-Generator: Launchpad (build 12915)\n"
 
-msgid "Build IPK package"
-msgstr ""
+#, fuzzy, c-format
+msgid "Application ID %s is invalid!"
+msgstr "היישום %a לא הותקן."
 
-msgid "Compile software sources automatically"
+msgid "Build IPK package"
 msgstr ""
 
 msgid "Copying files to their destination"
@@ -101,6 +102,10 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
+#, c-format
+msgid "Error: %s\n"
+msgstr ""
+
 msgid "Fatal database error"
 msgstr ""
 
@@ -118,6 +123,13 @@ msgstr ""
 msgid "IPK package output directory"
 msgstr ""
 
+msgid "Installation completed!"
+msgstr "ההתקנה הושלמה!"
+
+#, fuzzy
+msgid "Installation failed!"
+msgstr "התקנה נכשלה."
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
@@ -125,7 +137,8 @@ msgstr ""
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-msgid "Processing application without assigned .desktop file!"
+#, c-format
+msgid "Processing application '%s' without assigned .desktop file!"
 msgstr ""
 
 #, c-format
@@ -369,12 +382,6 @@ msgstr ""
 #~ msgid "Installation aborted."
 #~ msgstr "ההתקנה בוטלה."
 
-#~ msgid "Installation completed!"
-#~ msgstr "ההתקנה הושלמה!"
-
-#~ msgid "Installation failed."
-#~ msgstr "התקנה נכשלה."
-
 #~ msgid "Installation of %a"
 #~ msgstr "התקנת %a"
 
@@ -541,9 +548,6 @@ msgstr ""
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "היישום %a הותקן בהצלחה!"
-
-#~ msgid "The application %a was not installed."
-#~ msgstr "היישום %a לא הותקן."
 
 #~ msgid "The application will be updated to version %v"
 #~ msgstr "היישום יעודכן לגירסה %v"

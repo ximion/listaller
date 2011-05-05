@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-26 00:51+0200\n"
+"POT-Creation-Date: 2011-05-05 23:09+0200\n"
 "PO-Revision-Date: 2009-12-07 22:46+0000\n"
 "Last-Translator: Christian Widell <Christian_widell@hotmail.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -18,10 +18,11 @@ msgstr ""
 "X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
 "X-Generator: Launchpad (build 12915)\n"
 
-msgid "Build IPK package"
+#, c-format
+msgid "Application ID %s is invalid!"
 msgstr ""
 
-msgid "Compile software sources automatically"
+msgid "Build IPK package"
 msgstr ""
 
 msgid "Copying files to their destination"
@@ -101,6 +102,10 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
+#, c-format
+msgid "Error: %s\n"
+msgstr ""
+
 msgid "Fatal database error"
 msgstr ""
 
@@ -118,6 +123,12 @@ msgstr ""
 msgid "IPK package output directory"
 msgstr ""
 
+msgid "Installation completed!"
+msgstr ""
+
+msgid "Installation failed!"
+msgstr ""
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
@@ -125,7 +136,8 @@ msgstr ""
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-msgid "Processing application without assigned .desktop file!"
+#, c-format
+msgid "Processing application '%s' without assigned .desktop file!"
 msgstr ""
 
 #, c-format

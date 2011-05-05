@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-26 00:51+0200\n"
+"POT-Creation-Date: 2011-05-05 23:09+0200\n"
 "PO-Revision-Date: 2011-04-26 16:16+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -18,11 +18,12 @@ msgstr ""
 "X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
 "X-Generator: Launchpad (build 12915)\n"
 
+#, fuzzy, c-format
+msgid "Application ID %s is invalid!"
+msgstr "Die Anwendung %a wurde nicht installiert."
+
 msgid "Build IPK package"
 msgstr "IPK Paket bauen"
-
-msgid "Compile software sources automatically"
-msgstr "Software Quellen automatisch kompilieren"
 
 msgid "Copying files to their destination"
 msgstr "Kopiere Dateien an ihren Zielort."
@@ -106,6 +107,10 @@ msgstr "Datenbank entsperrt"
 msgid "ERROR: %s"
 msgstr "Fehler: %s"
 
+#, fuzzy, c-format
+msgid "Error: %s\n"
+msgstr "Fehler:"
+
 msgid "Fatal database error"
 msgstr ""
 
@@ -123,6 +128,13 @@ msgstr ""
 msgid "IPK package output directory"
 msgstr ""
 
+msgid "Installation completed!"
+msgstr "Installation abgeschlossen!"
+
+#, fuzzy
+msgid "Installation failed!"
+msgstr "Installation fehlgeschlagen."
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr "Mache '%s' mit ihrem System bekannt."
@@ -130,7 +142,8 @@ msgstr "Mache '%s' mit ihrem System bekannt."
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-msgid "Processing application without assigned .desktop file!"
+#, c-format
+msgid "Processing application '%s' without assigned .desktop file!"
 msgstr ""
 
 #, c-format
@@ -613,6 +626,9 @@ msgstr ""
 #~ msgid "Commands:"
 #~ msgstr "Kommandos:"
 
+#~ msgid "Compile software sources automatically"
+#~ msgstr "Software Quellen automatisch kompilieren"
+
 #~ msgid "Configure Listaller"
 #~ msgstr "Listaller einstellen"
 
@@ -916,9 +932,6 @@ msgstr ""
 #~ msgid "Error while unpacking and configuring files."
 #~ msgstr "Fehler beim Entpacken und konfigruieren der Dateien."
 
-#~ msgid "Error:"
-#~ msgstr "Fehler:"
-
 #~ msgid "Escape"
 #~ msgstr "Escape"
 
@@ -1201,12 +1214,6 @@ msgstr ""
 
 #~ msgid "Installation aborted."
 #~ msgstr "Installation abgebrochen."
-
-#~ msgid "Installation completed!"
-#~ msgstr "Installation abgeschlossen!"
-
-#~ msgid "Installation failed."
-#~ msgstr "Installation fehlgeschlagen."
 
 #~ msgid "Installation mode:"
 #~ msgstr "Installationsmodus:"
@@ -2020,9 +2027,6 @@ msgstr ""
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "Die Anwendung %a wurde erfolgreich installiert!"
-
-#~ msgid "The application %a was not installed."
-#~ msgstr "Die Anwendung %a wurde nicht installiert."
 
 #~ msgid ""
 #~ "The application which this package contains was not built for the current "

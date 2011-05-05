@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-26 00:51+0200\n"
+"POT-Creation-Date: 2011-05-05 23:09+0200\n"
 "PO-Revision-Date: 2011-04-19 11:06+0000\n"
 "Last-Translator: Thaynã Moretti <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -18,11 +18,12 @@ msgstr ""
 "X-Launchpad-Export-Date: 2011-04-26 16:20+0000\n"
 "X-Generator: Launchpad (build 12915)\n"
 
+#, c-format
+msgid "Application ID %s is invalid!"
+msgstr ""
+
 msgid "Build IPK package"
 msgstr "Gerar pacote IPK"
-
-msgid "Compile software sources automatically"
-msgstr ""
 
 msgid "Copying files to their destination"
 msgstr "Copiando arquivos para o seu destino"
@@ -101,6 +102,10 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Error: %s\n"
+msgstr "Erro"
+
 msgid "Fatal database error"
 msgstr ""
 
@@ -118,6 +123,13 @@ msgstr ""
 msgid "IPK package output directory"
 msgstr ""
 
+msgid "Installation completed!"
+msgstr "Instalação concluída!"
+
+#, fuzzy
+msgid "Installation failed!"
+msgstr "A instalação falhou."
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
@@ -125,7 +137,8 @@ msgstr ""
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-msgid "Processing application without assigned .desktop file!"
+#, c-format
+msgid "Processing application '%s' without assigned .desktop file!"
 msgstr ""
 
 #, c-format
@@ -325,9 +338,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Informe sua senha para executar o aplicativo com privilégios avançados."
 
-#~ msgid "Error"
-#~ msgstr "Erro"
-
 #~ msgid "Error while extracting files!"
 #~ msgstr "Erro durante a extração dos arquivos!"
 
@@ -369,12 +379,6 @@ msgstr ""
 
 #~ msgid "Installation aborted."
 #~ msgstr "Instalação abortada."
-
-#~ msgid "Installation completed!"
-#~ msgstr "Instalação concluída!"
-
-#~ msgid "Installation failed."
-#~ msgstr "A instalação falhou."
 
 #~ msgid "Installation of %a"
 #~ msgstr "Instalação de %a"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-26 00:51+0200\n"
+"POT-Creation-Date: 2011-05-05 23:09+0200\n"
 "PO-Revision-Date: 2010-04-05 21:07+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
@@ -13,10 +13,11 @@ msgstr ""
 "X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
 "X-Generator: Launchpad (build 12915)\n"
 
-msgid "Build IPK package"
+#, c-format
+msgid "Application ID %s is invalid!"
 msgstr ""
 
-msgid "Compile software sources automatically"
+msgid "Build IPK package"
 msgstr ""
 
 msgid "Copying files to their destination"
@@ -96,6 +97,10 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Error: %s\n"
+msgstr "Error:"
+
 msgid "Fatal database error"
 msgstr ""
 
@@ -113,6 +118,12 @@ msgstr ""
 msgid "IPK package output directory"
 msgstr ""
 
+msgid "Installation completed!"
+msgstr ""
+
+msgid "Installation failed!"
+msgstr ""
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
@@ -120,7 +131,8 @@ msgstr ""
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-msgid "Processing application without assigned .desktop file!"
+#, c-format
+msgid "Processing application '%s' without assigned .desktop file!"
 msgstr ""
 
 #, c-format
@@ -455,9 +467,6 @@ msgstr ""
 
 #~ msgid "Error while saving bitmap."
 #~ msgstr "Error en desar el mapa de bits"
-
-#~ msgid "Error:"
-#~ msgstr "Error:"
 
 #~ msgid "Escape"
 #~ msgstr "Escapa"

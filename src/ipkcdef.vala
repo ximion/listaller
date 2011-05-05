@@ -26,13 +26,13 @@ using Listaller;
 
 namespace Listaller.IPK {
 
-private class Dependency : Object {
+public class Dependency : Object {
 	public string name {get; set;}
 	public bool satisfied {get; set;}
 	public ArrayList<string> files {get; set;}
 	public HashSet<string> meta_info {get; set;}
 
-	public Dependency (string dep_name) {
+	internal Dependency (string dep_name) {
 		name = dep_name;
 		satisfied = false;
 
@@ -111,7 +111,7 @@ public abstract class CXml : Object {
 		return true;
 	}
 
-	public void print_xml () {
+	public void test_dump_xml () {
 		string xmlstr;
 		// This throws a compiler warning, see bug 547364
 		xdoc->dump_memory (out xmlstr);

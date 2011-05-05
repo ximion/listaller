@@ -376,11 +376,15 @@ private class Builder : Object {
 		ictrl.set_app_version (ipks.get_app_version ());
 		ictrl.set_app_summary (ipks.get_app_summary ());
 		ictrl.set_app_url (ipks.get_app_url ());
-		ictrl.set_app_license (ipks.get_app_license ());;
+		ictrl.set_app_license (ipks.get_app_license ());
 
 		ictrl.set_app_description (load_text_from_element (ipks.get_app_description ()));
+
+		ictrl.set_pkg_dependencies (ipks.get_pkg_dependencies ());
+
 		if (failed)
 			return false;
+
 		string tmp = Path.build_filename (tmpdir, "control", "control.xml", null);
 		ictrl.save_to_file (tmp);
 		ctrlfiles.add (tmp);

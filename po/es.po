@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-04-26 00:51+0200\n"
+"POT-Creation-Date: 2011-05-05 23:09+0200\n"
 "PO-Revision-Date: 2010-09-19 15:47+0000\n"
 "Last-Translator: Monkey <monkey.libre@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -18,10 +18,11 @@ msgstr ""
 "X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
 "X-Generator: Launchpad (build 12915)\n"
 
-msgid "Build IPK package"
-msgstr ""
+#, fuzzy, c-format
+msgid "Application ID %s is invalid!"
+msgstr "La aplicación %a no ha sido instalada."
 
-msgid "Compile software sources automatically"
+msgid "Build IPK package"
 msgstr ""
 
 msgid "Copying files to their destination"
@@ -101,6 +102,10 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Error: %s\n"
+msgstr "Error"
+
 msgid "Fatal database error"
 msgstr ""
 
@@ -118,6 +123,13 @@ msgstr ""
 msgid "IPK package output directory"
 msgstr ""
 
+msgid "Installation completed!"
+msgstr "¡Instalación completada!"
+
+#, fuzzy
+msgid "Installation failed!"
+msgstr "Instalación fallida."
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
@@ -125,7 +137,8 @@ msgstr ""
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-msgid "Processing application without assigned .desktop file!"
+#, c-format
+msgid "Processing application '%s' without assigned .desktop file!"
 msgstr ""
 
 #, c-format
@@ -475,9 +488,6 @@ msgstr ""
 #~ "Introduce tu contraseña para iniciar la aplicación con privilegios "
 #~ "avanzados."
 
-#~ msgid "Error"
-#~ msgstr "Error"
-
 #~ msgid "Error while extracting files!"
 #~ msgstr "¡Error al extraer los archivos!"
 
@@ -591,12 +601,6 @@ msgstr ""
 
 #~ msgid "Installation aborted."
 #~ msgstr "Instalación abortada."
-
-#~ msgid "Installation completed!"
-#~ msgstr "¡Instalación completada!"
-
-#~ msgid "Installation failed."
-#~ msgstr "Instalación fallida."
 
 #~ msgid "Installation mode:"
 #~ msgstr "Modo de instalación:"
@@ -1116,9 +1120,6 @@ msgstr ""
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "¡La aplicación %a se ha instalado con éxito!"
-
-#~ msgid "The application %a was not installed."
-#~ msgstr "La aplicación %a no ha sido instalada."
 
 #~ msgid ""
 #~ "The application which this package contains was not built for the current "
