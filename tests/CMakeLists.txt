@@ -45,6 +45,14 @@ include_directories(${CMAKE_BINARY_DIR}
 
 add_definitions ("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE")
 
+# Basic tests
+vala_add_executable (li-test-basics ${LIUNITTEST_SOURCES} tests-basics.vala
+				BASE_DIR ${lisrc}
+				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2
+				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
+)
+add_test(basic-test li-test-basics ${CMAKE_CURRENT_SOURCE_DIR})
+
 # Database tests
 vala_add_executable (li-test-database ${LIUNITTEST_SOURCES} tests-database.vala
 				BASE_DIR ${lisrc}

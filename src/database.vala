@@ -263,7 +263,7 @@ private class SoftwareDB : Object {
 		+ "id INTEGER PRIMARY KEY, "
 		+ "name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
-		+ "appid TEXT UNIQUE NOT NULL,"
+		+ "desktop_file TEXT UNIQUE,"
 		+ "summary TEXT, "
 		+ "author TEXT, "
 		+ "pkgmaintainer TEXT, "
@@ -303,7 +303,7 @@ private class SoftwareDB : Object {
 	public bool add_application (AppItem item) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 (
-			"INSERT INTO applications (name, version, appid, summary, author, pkgmaintainer, "
+			"INSERT INTO applications (name, version, desktop_file, summary, author, pkgmaintainer, "
 			+ "categories, install_time, origin, dependencies) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				   -1, out stmt);
@@ -312,17 +312,17 @@ private class SoftwareDB : Object {
 			ulong time_created = now_sec ();
 
 			// Assign values
-			res = stmt.bind_text (1, item.name);
+			res = stmt.bind_text (1, item.full_name);
 			assert (res == Sqlite.OK);
 			res = stmt.bind_text (2, item.version);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (3, item.appid);
+			res = stmt.bind_text (3, item.desktop_file);
 			assert (res == Sqlite.OK);
 			res = stmt.bind_text (4, item.summary);
 			assert (res == Sqlite.OK);
 			res = stmt.bind_text (5, item.author);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (6, item.pkgmaintainer);
+			res = stmt.bind_text (6, item.maintainer);
 			assert (res == Sqlite.OK);
 			res = stmt.bind_text (7, item.categories);
 			assert (res == Sqlite.OK);
@@ -348,12 +348,12 @@ private class SoftwareDB : Object {
 		AppItem item = new AppItem.empty ();
 
 		item.dbid = stmt.column_int (0);
-		item.name = stmt.column_text (1);
+		item.full_name = stmt.column_text (1);
 		item.version = stmt.column_text (2);
-		item.appid = stmt.column_text (3);
+		item.desktop_file = stmt.column_text (3);
 		item.summary = stmt.column_text (4);
 		item.author = stmt.column_text (5);
-		item.pkgmaintainer = stmt.column_text (6);
+		item.maintainer = stmt.column_text (6);
 		item.categories = stmt.column_text (7);
 		item.install_time = stmt.column_int (8);
 		item.set_origin_from_string (stmt.column_text (9));
@@ -364,7 +364,7 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_name (string appName) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT id, name, appid, version, summary, author, pkgmaintainer, "
+		int res = db.prepare_v2 ("SELECT id, name, desktop_file, version, summary, author, pkgmaintainer, "
 		+ "categories, install_time, origin, dependencies "
 		+ "FROM applications WHERE name=?", -1, out stmt);
 		assert (res == Sqlite.OK);
@@ -384,7 +384,7 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_dbid (int databaseId) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT id, name, version, appid, summary, author, pkgmaintainer, "
+		int res = db.prepare_v2 ("SELECT id, name, version, desktop_file, summary, author, pkgmaintainer, "
 		+ "categories, install_time, origin, dependencies "
 		+ "FROM applications WHERE id=?", -1, out stmt);
 		assert (res == Sqlite.OK);
@@ -404,7 +404,7 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_name_version (string appName, string appVersion) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT id, name, version, appid, summary, author, pkgmaintainer, "
+		int res = db.prepare_v2 ("SELECT id, name, version, desktop_file, summary, author, pkgmaintainer, "
 		+ "categories, install_time, origin, dependencies "
 		+ "FROM applications WHERE name=? AND version=?", -1, out stmt);
 		assert (res == Sqlite.OK);

@@ -7,6 +7,6 @@ Terminal=true
 Type=Application
 Categories=Application;Core;
 Icon=package
-X-Publisher=Listaller Project
+X-Packager=Listaller Project
 X-AllowRemove=true
 X-AppVersion=1.0

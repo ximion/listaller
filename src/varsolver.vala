@@ -194,6 +194,17 @@ private class VarSolver : Object {
 		}
 		return res;
 	}
+
+	public string substitute_path_with_vars (string path) {
+		string res = path;
+		foreach (var entry in pathMap.entries) {
+			res = string_replace (res, "(\\" + entry.value.su_subst + ")", entry.key);
+			res = string_replace (res, "(\\" + entry.value.subst + ")", entry.key);
+			if (entry.value.system_var)
+				contained_sysvars = true;
+		}
+		return res;
+	}
 }
 
 class VersionNumber : Object {

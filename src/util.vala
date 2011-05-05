@@ -59,9 +59,9 @@ private int count_str (string a, string b) {
 	int count = -1;
 	int last_index = 0;
 
-	while (last_index > 0) {
+	while (last_index >= 0) {
 		count++;
-		last_index = a.index_of (b, last_index);
+		last_index = a.index_of (b, last_index + 1);
 	}
 
 	return count;
