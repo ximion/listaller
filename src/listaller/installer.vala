@@ -32,6 +32,7 @@ public class Setup : Object {
 	private IPK.Package ipkp;
 	private bool initialized;
 	private int inst_progress;
+	private int full_progress;
 	public bool unittestmode {get; set;}
 
 	public signal void error_code (ErrorItem error);
@@ -62,14 +63,14 @@ public class Setup : Object {
 		ipkp = new IPK.Package (fname, settings);
 		ipkp.error_code.connect ((e) => { this.error_code (e); });
 		ipkp.message.connect ((m) => { this.message (m); });
-		ipkp.progress_changed.connect (receive_progress_change);
+		ipkp.progress_changed.connect (change_progress);
 		initialized = false;
 	}
 
-	private void receive_progress_change (int progress, int subprogress) {
-		if (progress > 0)
-			inst_progress = progress;
-		progress_changed (inst_progress, subprogress);
+	private void change_progress (int progress, int subprogress) {
+		if (progress >= 0)
+			full_progress = (int) Math.round ((inst_progress + progress) / 2);
+		progress_changed (full_progress, subprogress);
 	}
 
 	private void emit_warning (string msg) {
@@ -102,6 +103,7 @@ public class Setup : Object {
 		if (ret)
 			initialized = true;
 		inst_progress = 0;
+		full_progress = 0;
 		return ret;
 	}
 
@@ -135,6 +137,9 @@ public class Setup : Object {
 		aitem.dependencies = "?";
 		aitem.fast_check ();
 
+		inst_progress = 25;
+		change_progress (0, -1);
+
 		// Emit status message
 		StatusItem status1 = new StatusItem (StatusEnum.RESOLVING_DEPENDENCIES);
 		status1.info = _("Resolving dependencies of '%s'.").printf (ipkp.control.get_app_name ());
@@ -150,13 +155,15 @@ public class Setup : Object {
 				this.message (msg);
 			});
 			solver.progress_changed.connect ((p) => {
-				receive_progress_change (-1, p);
+				change_progress (-1, p);
 			});
 
 			ret = solver.execute ();
 			if (!ret)
 				return false;
 		}
+
+		inst_progress = 50;
 
 		// Emit status message
 		StatusItem status2 = new StatusItem (StatusEnum.INSTALLING_FILES);
@@ -169,6 +176,8 @@ public class Setup : Object {
 		if (!ret)
 			return false;
 
+		inst_progress = 75;
+
 		// Emit status message
 		StatusItem status3 = new StatusItem (StatusEnum.REGISTERING_APPLICATION);
 		status3.info = _("Making '%s' known to your system.").printf (ipkp.control.get_app_name ());
@@ -180,6 +189,9 @@ public class Setup : Object {
 		// Now register the item
 		ret = db.add_application (aitem);
 		conf.unlock ();
+
+		inst_progress = 100;
+		change_progress (100, -1);
 
 		// Emit status message (setup finished)
 		StatusItem status4 = new StatusItem (StatusEnum.INSTALLATION_FINISHED);
