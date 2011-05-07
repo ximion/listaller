@@ -43,3 +43,5 @@ target_link_libraries(libuild
 		${LIBXML2_LIBRARIES}
 		${GPGME_VANILLA_LIBRARIES}
 )
+
+install(TARGETS libuild DESTINATION bin)

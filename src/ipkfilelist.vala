@@ -228,8 +228,8 @@ private class FileList : Object {
 		ArrayList<FileEntry> wcEntries = new ArrayList<FileEntry> ();
 
 		foreach (FileEntry fe in list) {
-			if ((fe.fname.index_of ("*") > 0) ||
-				(fe.fname.index_of ("?") > 0)) {
+			if ((fe.fname.index_of ("*") > -1) ||
+				(fe.fname.index_of ("?") > -1)) {
 					wcEntries.add (fe);
 			}
 		}
@@ -243,7 +243,8 @@ private class FileList : Object {
 			list.remove (fe);
 
 			foreach (string s in files) {
-				if (PatternSpec.match_simple (Path.build_filename ("*", fe.fname, null), s)) {
+				string ematch = Path.build_filename ("*", fe.fname, null);
+				if (PatternSpec.match_simple (ematch, s)) {
 					FileEntry e = new FileEntry ();
 					e.fname = s;
 					e.destination = fe.destination;

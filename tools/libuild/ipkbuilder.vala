@@ -164,7 +164,10 @@ private class Builder : Object {
 		// Set the correct install dir
 		if (flist.rootdir == "%INSTDIR%") {
 			flist.rootdir = Path.build_filename (srcdir, "installtarget", null);
-		}
+		} else
+			if (!Path.is_absolute (flist.rootdir))
+				flist.rootdir = Path.build_filename (srcdir, flist.rootdir, null);
+
 		string rdir = flist.rootdir;
 
 		ArrayList<IPK.FileEntry> fileslst = flist.get_files_list_expanded ();
@@ -241,6 +244,8 @@ private class Builder : Object {
 				outdir = Path.build_filename (srcdir, "..", null);
 			outname = Path.build_filename (outdir, ipkname, null);
 		}
+		// Remove spaces in filename
+		outname = string_replace (outname, "( )", "-");
 
 		if (FileUtils.test (outname, FileTest.EXISTS)) {
 			error_message ("Cannot override %s! Delete this package or run libuild with '-o' parameter!".printf (outname));

@@ -32,3 +32,5 @@ target_link_libraries(appcompile
 		${GEE_LIBRARIES}
 		${GIO2_LIBRARIES}
 )
+
+install(TARGETS appcompile DESTINATION bin)
