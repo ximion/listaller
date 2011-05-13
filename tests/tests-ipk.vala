@@ -57,8 +57,9 @@ void test_ipk_package () {
 	ipk.error_code.connect (test_ipk_error_code_cb);
 
 	ret = ipk.initialize ();
+	AppItem app = ipk.control.get_application ();
 	assert (ret == true);
-	assert (ipk.control.get_app_name () == "FooBar");
+	assert (app.full_name == "FooBar");
 
 	ArrayList<IPK.FileEntry> flist = ipk.get_filelist ();
 	foreach (IPK.FileEntry e in flist) {
@@ -71,7 +72,8 @@ void test_ipk_control_file () {
 	msg ("Controlfile tests");
 	IPK.Control ipkc = new IPK.Control ();
 	ipkc.create_new ();
-	ipkc.set_app_name ("echoecho");
+	AppItem a = new AppItem ("echoecho", "123");
+	ipkc.set_application (a);
 	ipkc.set_pkg_id ("echo-123");
 
 	ArrayList<IPK.Dependency> list = new ArrayList<IPK.Dependency> ();
@@ -96,7 +98,8 @@ void test_ipk_control_file () {
 
 	//! ipkc.print_xml ();
 
-	assert (ipkc.get_app_name () == "echoecho");
+	AppItem app = ipkc.get_application ();
+	assert (app.full_name == "echoecho");
 	assert (ipkc.get_pkg_id () == "echo-123");
 
 	list = ipkc.get_pkg_dependencies ();

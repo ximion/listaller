@@ -127,22 +127,21 @@ public class Setup : Object {
 		db.open ();
 
 		// Construct LiAppItem
-		AppItem aitem = new AppItem (ipkp.control.get_app_name (), ipkp.control.get_app_version ());
-		aitem.origin = AppOrigin.IPK;
-		aitem.summary = ipkp.control.get_app_summary ();
+		AppItem app = ipkp.control.get_application ();
+		app.origin = AppOrigin.IPK;
 		//aitem.author = ipkp.control.get_app_author ();
 		//aitem.pkgmaintainer = ipkp.control.get_pkg_maintainer ();
 		//aitem.categories = ipkp.control.get_app_categories ();
 		//aitem.desktop_file = ipkp.control.get_app_desktopfile ();
-		aitem.dependencies = "?";
-		aitem.fast_check ();
+		app.dependencies = "?";
+		app.fast_check ();
 
 		inst_progress = 25;
 		change_progress (0, -1);
 
 		// Emit status message
 		StatusItem status1 = new StatusItem (StatusEnum.RESOLVING_DEPENDENCIES);
-		status1.info = _("Resolving dependencies of '%s'.").printf (ipkp.control.get_app_name ());
+		status1.info = _("Resolving dependencies of '%s'.").printf (app.full_name);
 		status_changed (status1);
 
 		// We don't solve dependencies when unit tests are running
@@ -181,14 +180,14 @@ public class Setup : Object {
 
 		// Emit status message
 		StatusItem status3 = new StatusItem (StatusEnum.REGISTERING_APPLICATION);
-		status3.info = _("Making '%s' known to your system.").printf (ipkp.control.get_app_name ());
+		status3.info = _("Making '%s' known to your system.").printf (app.full_name);
 		status_changed (status3);
 
 		// Set install timestamp
 		DateTime dt = new DateTime.now_local ();
-		aitem.install_time = dt.to_unix ();
+		app.install_time = dt.to_unix ();
 		// Now register the item
-		ret = db.add_application (aitem);
+		ret = db.add_application (app);
 		conf.unlock ();
 
 		inst_progress = 100;

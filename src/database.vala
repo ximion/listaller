@@ -345,7 +345,7 @@ private class SoftwareDB : Object {
 	}
 
 	private AppItem? retrieve_app_item (Sqlite.Statement stmt) {
-		AppItem item = new AppItem.empty ();
+		AppItem item = new AppItem.blank ();
 
 		item.dbid = stmt.column_int (0);
 		item.full_name = stmt.column_text (1);

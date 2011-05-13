@@ -57,14 +57,19 @@ public class AppItem : Object {
 	private string _pkgmaintainer;
 	private string _categories;
 	private string _desktop_file;
+	private string _url;
 	private int64  _install_time;
 	private string _dependencies;
 	private AppOrigin _origin;
 	private int _dbid;
 	private string _app_id;
 
-	public string name {
-		get { return _idname; }
+	public string idname {
+		get {
+			if (_idname.strip () == "")
+				_idname = string_replace (_appname.down (), "( )", "_");
+			return _idname;
+		}
 		set {
 			_idname = value;
 			if (_appname.strip () == "")
@@ -74,11 +79,7 @@ public class AppItem : Object {
 
 	public string full_name {
 		get { return _appname; }
-		set {
-			_appname = value;
-			if (_idname.strip () == "")
-				_idname = string_replace (_appname.down (), "( )", "_");
-		}
+		set { _appname = value; }
 	}
 
 	public string version {
@@ -109,6 +110,11 @@ public class AppItem : Object {
 	public string desktop_file {
 		get { return _desktop_file; }
 		set { _desktop_file = value; }
+	}
+
+	public string url {
+		get { return _url; }
+		set { _url = value; }
 	}
 
 	public int64 install_time {
@@ -143,20 +149,23 @@ public class AppItem : Object {
 		set { _dbid = value; }
 	}
 
-	public AppItem.empty () {
+	public AppItem.blank () {
 		_idname = "";
 		_appname = "";
+		_idname = "";
+		_summary = "";
 		install_time = 0;
 		categories = "all;";
 		dbid = -1;
 		origin = AppOrigin.UNKNOWN;
 		_app_id = "";
 		_desktop_file = "";
+		_url = "";
 		archs = system_architecture ();
 	}
 
 	public AppItem (string afullname, string aversion, string aarchs = "") {
-		this.empty ();
+		this.blank ();
 		full_name = afullname;
 		version = aversion;
 		if (aarchs != "")
@@ -164,19 +173,19 @@ public class AppItem : Object {
 	}
 
 	public AppItem.from_id (string application_id) {
-		this.empty ();
+		this.blank ();
 		_app_id = application_id;
 		update_with_appid ();
 	}
 
 	public AppItem.from_desktopfile (string desktop_filename) {
-		this.empty ();
+		this.blank ();
 		desktop_file = desktop_filename;
 		this.update_with_desktop_file ();
 	}
 
 	public string to_string () {
-		return "[ (" + name + ") "
+		return "[ (" + idname + ") "
 			+ "(" + version +") "
 			+ "! " + appid + " ::" + dbid.to_string () + " "
 			+ "]";
@@ -184,7 +193,8 @@ public class AppItem : Object {
 
 	public void fast_check () {
 		// Fast sanity checks for AppItem
-		assert (name != null);
+		assert (idname != null);
+		assert (full_name != null);
 		assert (version != null);
 		assert (appid != "");
 	}
@@ -225,7 +235,7 @@ public class AppItem : Object {
 		if (desktop_file.strip () == "") {
 			message (_("Processing application '%s' without assigned .desktop file!").printf (full_name));
 			// If no desktop file was found, use application name and version as ID
-			res = name + ";" + version;
+			res = idname + ";" + version;
 			res = res.down ();
 			res = res + ";" + archs + ";~" + origin.to_string ();
 		} else {
@@ -264,7 +274,7 @@ public class AppItem : Object {
 			return;
 
 		string[] blocks = appid.split (";");
-		name = blocks[0];
+		idname = blocks[0];
 		version = blocks[1];
 		archs = blocks[2];
 
@@ -315,8 +325,8 @@ public class AppItem : Object {
 		}
 
 		full_name = get_desktop_file_string (dfile, "Name");
-		if (name == "")
-			name = full_name;
+		if (idname == "")
+			idname = full_name;
 		version = get_desktop_file_string (dfile, "X-AppVersion");
 		summary = get_desktop_file_string (dfile, "Comment");
 		author = get_desktop_file_string (dfile, "X-Author");

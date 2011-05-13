@@ -34,7 +34,7 @@ private class Package : Object {
 	private string data_archive;
 	private IPK.Control ipkc;
 	private IPK.FileList ipkf;
-	private string appID;
+	private AppItem appInfo;
 
 	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
@@ -136,9 +136,8 @@ private class Package : Object {
 			ret = ipkf.open (tmpf);
 		}
 
-		// Generate appID
-		// TODO: Implement the application-id system!
-		appID = ipkc.get_app_name ().down () + "-" + ipkc.get_app_version ().down ();
+		// Fetch application-information as an app-id
+		appInfo = ipkc.get_application ();
 
 		// If everything was successful, the IPK file is valid
 		ipk_valid = ret;
@@ -308,7 +307,7 @@ private class Package : Object {
 		bool ret = true;
 
 		// Varsolver to solve LI variables
-		VarSolver vs = new VarSolver (appID);
+		VarSolver vs = new VarSolver (appInfo.appid);
 		string int_path = vs.substitute_vars_id (fe.get_full_filename ());
 
 		string dest = vs.substitute_vars_auto (fe.destination, conf);
@@ -364,7 +363,7 @@ private class Package : Object {
 		if (!ret)
 			return ret;
 
-		VarSolver vs = new VarSolver (appID);
+		VarSolver vs = new VarSolver (appInfo.appid);
 		string int_path = vs.substitute_vars_id (fe.get_full_filename ());
 
 		Read plar = open_payload_archive ();
@@ -390,7 +389,7 @@ private class Package : Object {
 	// Search for IPKFileEntry with the given IPK internal path
 	private IPK.FileEntry? get_fe_by_int_path (ArrayList<IPK.FileEntry> list, string int_path) {
 		IPK.FileEntry re = null;
-		VarSolver vs = new VarSolver (appID);
+		VarSolver vs = new VarSolver (appInfo.appid);
 		foreach (IPK.FileEntry e in list) {
 			if (vs.substitute_vars_id (e.get_full_filename ()) == int_path) {
 				re = e;

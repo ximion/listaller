@@ -59,7 +59,7 @@ void test_application_ids () {
 	assert (dummy.appid == expected_id);
 
 	AppItem item1 = new AppItem.from_id (expected_id);
-	assert (item1.name == "foobar");
+	assert (item1.idname == "foobar");
 	assert (item1.full_name == "Listaller FooBar");
 	assert (item1.version == "1.0");
 	assert (item1.maintainer == "Listaller Project");
@@ -67,13 +67,13 @@ void test_application_ids () {
 	AppItem item2 = new AppItem ("MyApp", "0.1", "amd64/i686");
 	item2.origin = AppOrigin.IPK;
 	assert (item2.full_name == "MyApp");
-	assert (item2.name == "myapp");
+	assert (item2.idname == "myapp");
 	item2.update_with_desktop_file ();
 	assert (item2.desktop_file == "");
 	assert (item2.appid == "myapp;0.1;amd64/i686;~package_ipk");
 
 	AppItem item3 = new AppItem ("Google Earth", "1.2", "amd64");
-	assert (item3.name == "google_earth");
+	assert (item3.idname == "google_earth");
 }
 
 int main (string[] args) {

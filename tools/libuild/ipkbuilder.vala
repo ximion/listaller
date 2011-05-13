@@ -35,7 +35,7 @@ private class Builder : Object {
 	private IPK.Script ipks;
 	private ArrayList<string> ctrlfiles;
 	private ArrayList<string> datapkgs;
-	private string appID;
+	private AppItem appInfo;
 
 	public signal void error_message (string details);
 	public signal void message (MessageItem message);
@@ -113,7 +113,7 @@ private class Builder : Object {
 		create_dir_parents (Path.build_filename (tmpdir, "data", null));
 		string apath = Path.build_filename (tmpdir, "data", "data-" + arch + ".tar.xz", null);
 		a.open_filename (apath);
-		VarSolver vs = new VarSolver (appID);
+		VarSolver vs = new VarSolver (appInfo.appid);
 
 		Entry entry = new Entry ();
 		foreach (IPK.FileEntry fe in src) {
@@ -239,7 +239,7 @@ private class Builder : Object {
 		// Set output file name
 		if (outname == "") {
 			string ipkname;
-			ipkname = ipks.get_app_name ().down () + "-" + ipks.get_app_version ().down () + "_install.ipk";
+			ipkname = appInfo.idname.down () + "-" + appInfo.version.down () + "_install.ipk";
 			if (outdir == "")
 				outdir = Path.build_filename (srcdir, "..", null);
 			outname = Path.build_filename (outdir, ipkname, null);
@@ -371,18 +371,13 @@ private class Builder : Object {
 		create_dir_parents (Path.build_filename (tmpdir, "control", null));
 		create_dir_parents (Path.build_filename (tmpdir, "data", null));
 
-		// Create dummy appID
-		// TODO: The whole application-id stuff is still missing!
-		appID = ipks.get_app_name ().down () + "-" + ipks.get_app_version ().down ();
+		// Get application-id from IPK source control XML file
+		appInfo = ipks.get_application ();
 
 		// Build IPK control file
 		ictrl.create_new ();
-		ictrl.set_app_name (ipks.get_app_name ());
-		ictrl.set_app_version (ipks.get_app_version ());
-		ictrl.set_app_summary (ipks.get_app_summary ());
-		ictrl.set_app_url (ipks.get_app_url ());
+		ictrl.set_application (appInfo);
 		ictrl.set_app_license (ipks.get_app_license ());
-
 		ictrl.set_app_description (load_text_from_element (ipks.get_app_description ()));
 
 		ictrl.set_pkg_dependencies (ipks.get_pkg_dependencies ());

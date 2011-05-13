@@ -100,11 +100,9 @@ public abstract class CXml : Object {
 		Xml.Node* root = new Xml.Node (null, "ipkcontrol");
 		xdoc->set_root_element (root);
 
-		root->new_prop ("version", "1.1");
+		root->new_prop ("version", "1.1~pre");
 
-		Xml.Node* subnode = root->new_text_child (null, "application", "");
-		nd = subnode->new_text_child (null, "id", "test.desktop" );
-		nd->new_prop ("type", "desktop");
+		root->new_text_child (null, "application", "");
 
 		Xml.Node* comment = new Xml.Node.comment ("IPK control description spec not yet completed!");
 		root->add_child (comment);
@@ -237,33 +235,46 @@ public abstract class CXml : Object {
 	}
 
 	// Application
-	public void set_app_name (string s) {
-		Xml.Node* n = get_xproperty (app_node (), "name");
-		n->set_content (s);
+	protected void set_app_str (string name, string content) {
+		if (content == "")
+			return;
+		Xml.Node* n = get_xsubnode (app_node (), name);
+		n->set_content (content);
 	}
 
-	public string get_app_name () {
-		Xml.Node* nd = get_xproperty (app_node (), "name");
-		return nd->get_content ();
+	protected string get_app_str (string name) {
+		if (name == "")
+			return "";
+		return get_node_content (get_xsubnode (app_node (), name));
 	}
 
-	public void set_app_version (string s) {
-		Xml.Node* n = get_xproperty (app_node (), "version");
-		n->set_content (s);
+	public void set_application (AppItem app) {
+		if (app.desktop_file != "") {
+			Xml.Node* n1;
+			n1 = app_node()->new_text_child (null, "id", app.desktop_file);
+			n1->new_prop ("type", "desktop");
+		}
+		Xml.Node* n2;
+		n2 = app_node()->new_text_child (null, "id", app.appid);
+		n2->new_prop ("type", "appid");
+
+		Xml.Node* n3 = get_xproperty (app_node (), "name");
+		n3->set_content (app.full_name);
+		Xml.Node* n4 = get_xproperty (app_node (), "version");
+		n4->set_content (app.version);
+		set_app_str ("summary", app.summary);
+		set_app_str ("url", app.url);
 	}
 
-	public string get_app_version () {
-		Xml.Node* nd = get_xproperty (app_node (), "version");
-		return nd->get_content ();
-	}
+	public AppItem get_application () {
+		Xml.Node* ndN = get_xproperty (app_node (), "name");
+		Xml.Node* ndV = get_xproperty (app_node (), "version");
+		AppItem app = new AppItem (ndN->get_content (), ndV->get_content ());
 
-	public void set_app_summary (string s) {
-		Xml.Node* n = get_xsubnode (app_node (), "summary");
-		n->set_content (s);
-	}
+		app.summary = get_app_str ("summary");
+		app.url = get_app_str ("url");
 
-	public string get_app_summary () {
-		return get_node_content (get_xsubnode (app_node (), "summary"));
+		return app;
 	}
 
 	public virtual void set_app_description (string text) {
@@ -284,14 +295,6 @@ public abstract class CXml : Object {
 		return get_node_content (get_xsubnode (app_node (), "license"));
 	}
 
-	public void set_app_url (string s) {
-		Xml.Node* n = get_xsubnode (app_node (), "url");
-		n->set_content (s);
-	}
-
-	public string get_app_url () {
-		return get_node_content (get_xsubnode (app_node (), "url"));
-	}
 
 }
 
