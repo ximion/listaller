@@ -25,6 +25,12 @@ using Listaller;
 
 namespace Listaller.Deps {
 
+public enum SolverType {
+	UNKNOWN,
+	FILES,
+	FEEDS;
+}
+
 private abstract class Provider : Object {
 	protected IPK.Dependency dep;
 

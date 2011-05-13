@@ -8,12 +8,10 @@ msgstr ""
 "Language-Team: Zaenal Mutaqin <ade999@gmail.com>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
 "X-Generator: Launchpad (build 12915)\n"
 "X-Poedit-Country: INDONESIA\n"
-"X-Poedit-SourceCharset: iso-8859-1\n"
 
 #, c-format
 msgid "Application ID %s is invalid!"

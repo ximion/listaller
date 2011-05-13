@@ -38,7 +38,7 @@ private class Package : Object {
 
 	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
-	public signal void progress_changed (int progress, int subprogress);
+	public signal void progress_changed (int progress);
 
 	public IPK.Control control {
 		get { return ipkc; }
@@ -420,7 +420,7 @@ private class Package : Object {
 		// Cache file list
 		ArrayList<IPK.FileEntry> flist = ipkf.get_files_list ();
 
-		int max = flist.size;
+		double one = 100d / flist.size;
 		int prog = 0;
 		ret = false;
 		weak Entry e;
@@ -432,8 +432,8 @@ private class Package : Object {
 				// File was found, so install it now
 				ret = extract_file_copy_dest (fe, plar, e);
 				prog++;
-				progress_changed (100/max*prog, 0);
-				// Stop on failure
+				progress_changed ((int) Math.round (one * prog));
+				// Stop on error
 				if (!ret)
 					break;
 			}

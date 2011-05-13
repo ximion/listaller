@@ -63,7 +63,7 @@ public class Setup : Object {
 		ipkp = new IPK.Package (fname, settings);
 		ipkp.error_code.connect ((e) => { this.error_code (e); });
 		ipkp.message.connect ((m) => { this.message (m); });
-		ipkp.progress_changed.connect (change_progress);
+		ipkp.progress_changed.connect ((i) => { change_progress (i, -1); });
 		initialized = false;
 	}
 
@@ -177,6 +177,7 @@ public class Setup : Object {
 			return false;
 
 		inst_progress = 75;
+		change_progress (100, -1);
 
 		// Emit status message
 		StatusItem status3 = new StatusItem (StatusEnum.REGISTERING_APPLICATION);
