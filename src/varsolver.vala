@@ -63,14 +63,19 @@ private class VarSolver : Object {
 	private Settings conf;
 	private HashMap<string, Variable> pathMap;
 	private delegate string LiConfGetType ();
-	public string appID {get; set; }
+	public string appName {get; set; }
 	public bool contained_sysvars {get; set;}
 
 	public VarSolver (string appIdName = "") {
 		contained_sysvars = false;
 		conf = new Settings ();
-		appID = appIdName;
-		if (appID == "")
+		if (appIdName == "") {
+			appName = "";
+		} else {
+			AppItem ai = new AppItem.from_id (appIdName);
+			appName = ai.idname;
+		}
+		if (appName == "")
 			warning ("Using VarSolver without valid application-id!");
 
 		// Build map of Listaller path variables
@@ -78,14 +83,14 @@ private class VarSolver : Object {
 
 		/* Define all Listaller pkg variables */
 		// Application installation directory
-		add_var_from_conf ("$INST", Path.build_filename ("appdata", appID, null), conf.appdata_dir, appID);
+		add_var_from_conf ("$INST", Path.build_filename ("appdata", appName, null), conf.appdata_dir, appName);
 		// Desktop-file directory
 		add_var_from_conf ("$APP", "desktop", conf.desktop_dir);
 		// Generic dependency directory (for published dependencies, like shared libs)
 		add_var_from_conf ("$DEP", "depend", conf.depdata_dir);
 		// Private dependency directory: Used only for private libraries
-		add_var_from_conf ("$LIB_PRIVATE", Path.build_filename ("appdata", appID, "_libs", null),
-				   conf.appdata_dir, Path.build_filename (appID, "_libs", null));
+		add_var_from_conf ("$LIB_PRIVATE", Path.build_filename ("appdata", appName, "_libs", null),
+				   conf.appdata_dir, Path.build_filename (appName, "_libs", null));
 
 		/*
 		 * System variables
