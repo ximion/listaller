@@ -35,7 +35,8 @@ public enum ErrorEnum {
 	HASH_MISSMATCH,
 	FILE_INSTALL_FAILED,
 	COPY_ERROR,
-	DATABASE_FAILURE;
+	DATABASE_FAILURE,
+	DB_OPEN_FAILED;
 
 	public string to_string () {
 		return ((int) this).to_string ();

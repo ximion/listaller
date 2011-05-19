@@ -124,7 +124,10 @@ public class Setup : Object {
 			this.message (message);
 		});
 		// Open & lock database
-		db.open ();
+		if (!db.open ()) {
+			emit_error (ErrorEnum.DB_OPEN_FAILED, _("Could not open the software database, maybe it is locked at time.\nPlease close all other running installations to continue!"));
+			return false;
+		}
 
 		// Construct LiAppItem
 		AppItem app = ipkp.control.get_application ();

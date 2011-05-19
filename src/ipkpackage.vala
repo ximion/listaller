@@ -323,8 +323,11 @@ private class Package : Object {
 		// Now extract it!
 		touch_dir (dest);
 		ret = extract_entry_to (plar, e, wdir);
-		if (!ret)
+		if (!ret) {
+			emit_error (ErrorEnum.IPK_DAMAGED,
+				    _("Unable to extract data file %s. This IPK package might be damaged, please obtain a new copy.").printf (Path.get_basename (e.pathname ())));
 			return ret;
+		}
 		// The temporary location where the file has been extracted to
 		string tmp = Path.build_filename (wdir, int_path);
 
@@ -339,8 +342,12 @@ private class Package : Object {
 
 			return false;
 		}
-		ret = FileUtils.rename (tmp, fname) == 0;
-		int ecode = Posix.errno;
+		string einfo = "";
+		try {
+			ret = move_file (tmp, fname);
+		} catch (Error e) {
+			einfo = e.message;
+		}
 		// Remove dir, if empty
 		DirUtils.remove (Path.get_dirname (tmp));
 		if (ret) {
@@ -349,7 +356,7 @@ private class Package : Object {
 			fe.fname_installed = fname;
 		} else {
 			emit_error (ErrorEnum.COPY_ERROR,
-				    _("Could not copy file %s to its destination. Do you have the necessary rights to perform this action?\nError message was \"%s\".").printf (fname, Posix.strerror (ecode)));
+				    _("Could not copy file %s to its destination. Do you have the necessary rights to perform this action?\nError message was \"%s\".").printf (fname, einfo));
 		}
 		return ret;
 	}
@@ -441,6 +448,11 @@ private class Package : Object {
 				if (!ret)
 					break;
 			}
+		}
+		if ((prog != flist.size) && (ret == true)) {
+			emit_error (ErrorEnum.IPK_INCOMPLETE,
+				    _("Some files of this package could not be installed, because they were not found in the payload data.\nThis IPK package might be damaged, please obtain a new copy!"));
+			ret = false;
 		}
 		plar.close ();
 
