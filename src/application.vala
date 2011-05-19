@@ -1,4 +1,4 @@
-/* appitem.vala
+/* application.vala
  *
  * Copyright (C) 2010-2011  Matthias Klumpp
  *
@@ -233,7 +233,7 @@ public class AppItem : Object {
 		 * origin is the origin of this app, ipkpackage, native-pkg, LOKI etc.
 		 */
 		if (desktop_file.strip () == "") {
-			message (_("Processing application '%s' without assigned .desktop file!").printf (full_name));
+			message (_("We don't know a desktop-file for application '%s'!").printf (full_name));
 			// If no desktop file was found, use application name and version as ID
 			res = idname + ";" + version;
 			res = res.down ();

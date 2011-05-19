@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.9.16\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2010-07-05 22:59+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: 简体中文 <>\n"
@@ -127,16 +127,36 @@ msgstr "安装完成！"
 msgid "Installation failed!"
 msgstr "安装失败"
 
+#, fuzzy, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr "安装失败"
+
+#, fuzzy, c-format
+msgid "Installing native package %s"
+msgstr "安装软件包"
+
 #, c-format
 msgid "Making '%s' known to your system."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Native package %s is already installed."
+msgstr "此程序已安装"
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, c-format
+msgid "PackageKit exit code was: %s"
 msgstr ""
 
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
-msgstr ""
+#, fuzzy
+msgid "Path to the application's source code"
+msgstr "程序测试已完成。"
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
@@ -162,6 +182,10 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
+#, fuzzy
+msgid "Software install prefix"
+msgstr "软件许可"
+
 msgid "Software installation package"
 msgstr ""
 
@@ -178,8 +202,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to find native package for %s!"
+msgstr "无法找到 %s"
+
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format
@@ -789,9 +828,6 @@ msgstr ""
 #~ msgid "Install now"
 #~ msgstr "立即安装"
 
-#~ msgid "Install package"
-#~ msgstr "安装软件包"
-
 #~ msgid "Install package?"
 #~ msgstr "安装软件包？"
 
@@ -1260,9 +1296,6 @@ msgstr ""
 #~ msgid "Software Manager"
 #~ msgstr "软件管理器"
 
-#~ msgid "Software license"
-#~ msgstr "软件许可"
-
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr "缺少一些依赖关系，现在要安装吗？"
 
@@ -1289,9 +1322,6 @@ msgstr ""
 
 #~ msgid "Test application"
 #~ msgstr "测试程序"
-
-#~ msgid "Test of the application finished."
-#~ msgstr "程序测试已完成。"
 
 #~ msgid "Testmode"
 #~ msgstr "测试模式"
@@ -1380,9 +1410,6 @@ msgstr ""
 #~ msgid "There is no viewer for help type %s%s%s"
 #~ msgstr "帮助类型 %s%s%s 没有查看器"
 
-#~ msgid "This application is already installed"
-#~ msgstr "此程序已安装"
-
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
 #~ "Listaller can handle.\n"
@@ -1399,9 +1426,6 @@ msgstr ""
 
 #~ msgid "Unable to copy the file %s."
 #~ msgstr "无法复制文件 %s。"
-
-#~ msgid "Unable to find %s"
-#~ msgstr "无法找到 %s"
 
 #~ msgid "Unable to find a HTML browser."
 #~ msgstr "无法找到 HTML 浏览器"

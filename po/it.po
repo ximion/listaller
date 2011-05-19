@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2010-10-15 12:41+0000\n"
 "Last-Translator: simone.sandri <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -130,16 +130,36 @@ msgstr "Installazione completata."
 msgid "Installation failed!"
 msgstr "Installazione non riuscita."
 
+#, fuzzy, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr "Installazione del pacchetto %s fallita."
+
+#, fuzzy, c-format
+msgid "Installing native package %s"
+msgstr "Installa pacchetto"
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Native package %s is already installed."
+msgstr "Questa applicazione è già installata"
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "PackageKit exit code was: %s"
+msgstr "Il tipo del pacchetto è \"%s\""
+
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
-msgstr ""
+#, fuzzy
+msgid "Path to the application's source code"
+msgstr "Test dell'applicazione completato."
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
@@ -165,6 +185,10 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
+#, fuzzy
+msgid "Software install prefix"
+msgstr "Licenza software"
+
 msgid "Software installation package"
 msgstr ""
 
@@ -181,8 +205,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to find native package for %s!"
+msgstr "Impossibile trovare %s"
+
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format
@@ -424,9 +463,6 @@ msgstr ""
 #~ msgid "Install now"
 #~ msgstr "Installa ora"
 
-#~ msgid "Install package"
-#~ msgstr "Installa pacchetto"
-
 #~ msgid "Install package?"
 #~ msgstr "Installare il pacchetto?"
 
@@ -444,9 +480,6 @@ msgstr ""
 
 #~ msgid "Installation of %a"
 #~ msgstr "Installazione di %a"
-
-#~ msgid "Installation of package %s failed!"
-#~ msgstr "Installazione del pacchetto %s fallita."
 
 #~ msgid "Installation package is corrupt"
 #~ msgstr "Il pacchetto d'installazione è corrotto"
@@ -533,9 +566,6 @@ msgstr ""
 
 #~ msgid "Package is unsigned."
 #~ msgstr "Pacchetto non assegnato."
-
-#~ msgid "Package type is \"%s\""
-#~ msgstr "Il tipo del pacchetto è \"%s\""
 
 #~ msgid "Password"
 #~ msgstr "Password"
@@ -680,9 +710,6 @@ msgstr ""
 #~ msgid "Software Manager"
 #~ msgstr "Gestore Applicazioni"
 
-#~ msgid "Software license"
-#~ msgstr "Licenza software"
-
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr "Mancano alcune dipendenze. Si desidera installarle adesso?"
 
@@ -697,9 +724,6 @@ msgstr ""
 
 #~ msgid "System"
 #~ msgstr "Sistema"
-
-#~ msgid "Test of the application finished."
-#~ msgstr "Test dell'applicazione completato."
 
 #~ msgid "Test-installation of package finished."
 #~ msgstr "Installazione di prova del pacchetto terminata."
@@ -772,9 +796,6 @@ msgstr ""
 #~ msgid "There are no updates available!"
 #~ msgstr "Non ci sono aggiornamenti disponibili!"
 
-#~ msgid "This application is already installed"
-#~ msgstr "Questa applicazione è già installata"
-
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr ""
 #~ "Questa applicazione richiede di scaricare e installare una dipendenza da "
@@ -785,9 +806,6 @@ msgstr ""
 
 #~ msgid "Unable to copy the file %s."
 #~ msgstr "Impossibile copiare il file %s.Q"
-
-#~ msgid "Unable to find %s"
-#~ msgstr "Impossibile trovare %s"
 
 #~ msgid ""
 #~ "Unable to load the icon of %a. Please notify the developers of Listaller "

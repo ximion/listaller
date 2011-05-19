@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2011-04-03 14:52+0000\n"
 "Last-Translator: KarimSadeg <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -133,16 +133,36 @@ msgstr "Installation achevée !"
 msgid "Installation failed!"
 msgstr "L'installation a échoué"
 
+#, fuzzy, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr "L'installation du paquet %s a échoué"
+
+#, fuzzy, c-format
+msgid "Installing native package %s"
+msgstr "Installer le paquetage ?"
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr "Rendre '%s' connu par votre système."
 
+#, fuzzy, c-format
+msgid "Native package %s is already installed."
+msgstr "Cette application est déjà installée"
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "PackageKit exit code was: %s"
+msgstr "Paquet détecté : %s"
+
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
-msgstr ""
+#, fuzzy
+msgid "Path to the application's source code"
+msgstr "Le test de l'application est terminé."
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
@@ -168,6 +188,10 @@ msgstr "Message de la base de données du logiciel (%d)"
 msgid "Software database opened"
 msgstr "La base de données du logiciel est ouverte"
 
+#, fuzzy
+msgid "Software install prefix"
+msgstr "Licence du logiciel"
+
 msgid "Software installation package"
 msgstr ""
 
@@ -184,8 +208,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to find native package for %s!"
+msgstr "Impossible de trouver %s"
+
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format
@@ -936,9 +975,6 @@ msgstr ""
 #~ msgid "Install now"
 #~ msgstr "Installer maintenant"
 
-#~ msgid "Install package?"
-#~ msgstr "Installer le paquetage ?"
-
 #~ msgid "Install updates"
 #~ msgstr "Installer les mises à jour"
 
@@ -956,9 +992,6 @@ msgstr ""
 
 #~ msgid "Installation of %a"
 #~ msgstr "Installation de %a"
-
-#~ msgid "Installation of package %s failed!"
-#~ msgstr "L'installation du paquet %s a échoué"
 
 #~ msgid "Installation package is corrupt"
 #~ msgstr "Le paquetage d'installation est endommagé"
@@ -1192,9 +1225,6 @@ msgstr ""
 
 #~ msgid "Package build commands:"
 #~ msgstr "Commandes de création du paquet :"
-
-#~ msgid "Package detected: %s"
-#~ msgstr "Paquet détecté : %s"
 
 #~ msgid "Package has trusted signature."
 #~ msgstr "La paquet a une signature sûre."
@@ -1466,9 +1496,6 @@ msgstr ""
 #~ msgid "Software database opened."
 #~ msgstr "Base de données du logiciel ouverte"
 
-#~ msgid "Software license"
-#~ msgstr "Licence du logiciel"
-
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr ""
 #~ "Des dépendances ne sont pas satisfaites. Voulez-vous les installer "
@@ -1497,9 +1524,6 @@ msgstr ""
 
 #~ msgid "Test application"
 #~ msgstr "Aplication de test"
-
-#~ msgid "Test of the application finished."
-#~ msgstr "Le test de l'application est terminé."
 
 #~ msgid "Test-installation of package finished."
 #~ msgstr "Install test du paquet terminée."
@@ -1617,9 +1641,6 @@ msgstr ""
 #~ msgid "There is no viewer for help type %s%s%s"
 #~ msgstr "Il n'y a aucune visionneuse pour ce type d'aide %s%s%s"
 
-#~ msgid "This application is already installed"
-#~ msgstr "Cette application est déjà installée"
-
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr ""
 #~ "L'application veut télécharger et installer une dépendance depuis %l"
@@ -1636,9 +1657,6 @@ msgstr ""
 
 #~ msgid "Unable to copy the file %s."
 #~ msgstr "Impossible de copier le fichier %s."
-
-#~ msgid "Unable to find %s"
-#~ msgstr "Impossible de trouver %s"
 
 #~ msgid "Unable to find a HTML browser."
 #~ msgstr "Impossible de trouver un navigateur de HTML."

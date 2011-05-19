@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2010-09-07 11:00+0000\n"
 "Last-Translator: devcode <brestows@gmail.com>\n"
 "Language-Team: \n"
@@ -125,16 +125,36 @@ msgstr "Установка завершена!"
 msgid "Installation failed!"
 msgstr "Установка не удалась."
 
+#, fuzzy, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr "Ошибка установки пакета %s!"
+
+#, fuzzy, c-format
+msgid "Installing native package %s"
+msgstr "Установить пакет"
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Native package %s is already installed."
+msgstr "Программа уже установлена"
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "PackageKit exit code was: %s"
+msgstr "Обнаружен пакет: %s"
+
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
-msgstr ""
+#, fuzzy
+msgid "Path to the application's source code"
+msgstr "Приложения не найдены!"
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
@@ -160,6 +180,10 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
+#, fuzzy
+msgid "Software install prefix"
+msgstr "Лицензия программы"
+
 msgid "Software installation package"
 msgstr ""
 
@@ -176,8 +200,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to find native package for %s!"
+msgstr "Невозможно найти %s"
+
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format
@@ -1038,9 +1077,6 @@ msgstr ""
 #~ msgid "Install now"
 #~ msgstr "Установить сейчас"
 
-#~ msgid "Install package"
-#~ msgstr "Установить пакет"
-
 #~ msgid "Install package?"
 #~ msgstr "Установить пакет?"
 
@@ -1061,9 +1097,6 @@ msgstr ""
 
 #~ msgid "Installation of %a"
 #~ msgstr "Установка %a"
-
-#~ msgid "Installation of package %s failed!"
-#~ msgstr "Ошибка установки пакета %s!"
 
 #~ msgid "Installation package is corrupt"
 #~ msgstr "Установочный пакет повреждён"
@@ -1272,9 +1305,6 @@ msgstr ""
 #~ msgid "No MDI form present."
 #~ msgstr "Отсутствует форма MDI."
 
-#~ msgid "No applications found!"
-#~ msgstr "Приложения не найдены!"
-
 #~ msgid "No compatible packages found!"
 #~ msgstr "Совместимых пакетов не найдено"
 
@@ -1344,9 +1374,6 @@ msgstr ""
 
 #~ msgid "Package build commands:"
 #~ msgstr "Команды сборки пакета:"
-
-#~ msgid "Package detected: %s"
-#~ msgstr "Обнаружен пакет: %s"
 
 #~ msgid "Package has trusted signature."
 #~ msgstr "Пакет имеет доверенную подпись ."
@@ -1673,9 +1700,6 @@ msgstr ""
 #~ msgid "Software database opened."
 #~ msgstr "База данных программного обеспечения открыта."
 
-#~ msgid "Software license"
-#~ msgstr "Лицензия программы"
-
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr ""
 #~ "Пропущены некоторые зависимости. Следует ли их установить прямо сейчас?"
@@ -1813,9 +1837,6 @@ msgstr ""
 #~ msgid "There is no viewer for help type %s%s%s"
 #~ msgstr "Отсутствует программа просмотра для типа справки %s%s%s"
 
-#~ msgid "This application is already installed"
-#~ msgstr "Программа уже установлена"
-
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr "Приложение хочет скачать и установить все зависимые пакеты из %l"
 
@@ -1833,9 +1854,6 @@ msgstr ""
 
 #~ msgid "Unable to copy the file %s."
 #~ msgstr "Невозможно скопировать файл %s."
-
-#~ msgid "Unable to find %s"
-#~ msgstr "Невозможно найти %s"
 
 #~ msgid "Unable to find a HTML browser."
 #~ msgstr "Невозможно найти браузер HTML."

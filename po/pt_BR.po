@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2011-04-19 11:06+0000\n"
 "Last-Translator: Thaynã Moretti <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -130,16 +130,36 @@ msgstr "Instalação concluída!"
 msgid "Installation failed!"
 msgstr "A instalação falhou."
 
+#, fuzzy, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr "O teste de instalação do pacote foi concluído."
+
+#, fuzzy, c-format
+msgid "Installing native package %s"
+msgstr "Instala um pacote IPK"
+
 #, c-format
 msgid "Making '%s' known to your system."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Native package %s is already installed."
+msgstr "Este aplicativo já está instalado"
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, c-format
+msgid "PackageKit exit code was: %s"
 msgstr ""
 
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
-msgstr ""
+#, fuzzy
+msgid "Path to the application's source code"
+msgstr "Você deseja conferir as dependências dos aplicativos?"
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
@@ -165,6 +185,10 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
+#, fuzzy
+msgid "Software install prefix"
+msgstr "Licença do programa:"
+
 msgid "Software installation package"
 msgstr ""
 
@@ -181,8 +205,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to find native package for %s!"
+msgstr "Não é possível localizar %s"
+
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format
@@ -315,9 +354,6 @@ msgstr ""
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "Deseja realmente desinstalar %a?"
 
-#~ msgid "Do you want to check the applications's dependencies?"
-#~ msgstr "Você deseja conferir as dependências dos aplicativos?"
-
 #~ msgid "Do you want to install it again?"
 #~ msgstr "Você deseja instalá-lo novamente?"
 
@@ -382,9 +418,6 @@ msgstr ""
 
 #~ msgid "Installation of %a"
 #~ msgstr "Instalação de %a"
-
-#~ msgid "Installs an IPK package"
-#~ msgstr "Instala um pacote IPK"
 
 #~ msgid "LOKI setup found."
 #~ msgstr "Instalador LOKI encontrado."
@@ -501,9 +534,6 @@ msgstr ""
 #~ msgid "Software database opened."
 #~ msgstr "O banco de dados de softwares foi aberto."
 
-#~ msgid "Software license"
-#~ msgstr "Licença do programa:"
-
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr "Algumas dependências estão faltando. Deseja instalá-las agora?"
 
@@ -512,9 +542,6 @@ msgstr ""
 
 #~ msgid "Starting uninstallation."
 #~ msgstr "Iniciando a desinstalação."
-
-#~ msgid "Test-installation of package finished."
-#~ msgstr "O teste de instalação do pacote foi concluído."
 
 #~ msgid "Testmode"
 #~ msgstr "Modo de teste"
@@ -544,17 +571,11 @@ msgstr ""
 #~ msgid "There are no updates available!"
 #~ msgstr "Não existem atualizações disponíveis!"
 
-#~ msgid "This application is already installed"
-#~ msgstr "Este aplicativo já está instalado"
-
 #~ msgid "This package does not support your Linux distribution."
 #~ msgstr "Este pacote não oferece suporte para sua distribuição Linux."
 
 #~ msgid "Unable to copy the file %s."
 #~ msgstr "Não foi capaz de copiar o arquivo %f."
-
-#~ msgid "Unable to find %s"
-#~ msgstr "Não é possível localizar %s"
 
 #~ msgid "Unable to override the file %f."
 #~ msgstr "Não foi capaz de sobrescrever o arquivo %f."

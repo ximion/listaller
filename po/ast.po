@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2009-12-07 23:19+0000\n"
 "Last-Translator: Costales <marcos@ubuntu-ast.org>\n"
 "Language-Team: Asturian <ast@li.org>\n"
@@ -131,16 +131,36 @@ msgstr "Instalación encaboxada."
 msgid "Installation failed!"
 msgstr "Instalación encaboxada."
 
+#, fuzzy, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr "Instalación encaboxada."
+
+#, fuzzy, c-format
+msgid "Installing native package %s"
+msgstr "Instala un paquete IPK"
+
 #, c-format
 msgid "Making '%s' known to your system."
+msgstr ""
+
+#, c-format
+msgid "Native package %s is already installed."
+msgstr ""
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, c-format
+msgid "PackageKit exit code was: %s"
 msgstr ""
 
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
-msgstr ""
+#, fuzzy
+msgid "Path to the application's source code"
+msgstr "¿Quies verificar les dependencies de l'aplicación?"
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
@@ -166,6 +186,9 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
+msgid "Software install prefix"
+msgstr ""
+
 msgid "Software installation package"
 msgstr ""
 
@@ -182,8 +205,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to find native package for %s!"
+msgstr "Imposible atopar %s"
+
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format
@@ -236,14 +274,8 @@ msgstr ""
 #~ msgid "Do you want to check global-installed applications too?"
 #~ msgstr "¿Quier revisar tamién les aplicaciones instalaes globalmente?"
 
-#~ msgid "Do you want to check the applications's dependencies?"
-#~ msgstr "¿Quies verificar les dependencies de l'aplicación?"
-
 #~ msgid "Done."
 #~ msgstr "Fecho."
-
-#~ msgid "Installs an IPK package"
-#~ msgstr "Instala un paquete IPK"
 
 #~ msgid "Launch Listaller Manager"
 #~ msgstr "llanzar el xestor de Listaller"
@@ -265,9 +297,6 @@ msgstr ""
 
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr "Falten delles dependencies.  ¿Quies instalales agora?"
-
-#~ msgid "Unable to find %s"
-#~ msgstr "Imposible atopar %s"
 
 #~ msgid "You have to enter a number!"
 #~ msgstr "¡Tienes qu'introducir un númberu!"

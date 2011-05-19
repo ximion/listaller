@@ -1,4 +1,4 @@
-/* utils.vala
+/* lbutils.vala
  *
  * Copyright (C) 2011  Matthias Klumpp
  *

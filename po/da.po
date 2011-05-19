@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2009-06-26 00:13+0000\n"
 "Last-Translator: Jimmy Frydkær Dürr <thewolf40@mailme.dk>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -130,16 +130,36 @@ msgstr "Installation færdig!"
 msgid "Installation failed!"
 msgstr "Installation færdig!"
 
+#, fuzzy, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr "Installation færdig!"
+
+#, fuzzy, c-format
+msgid "Installing native package %s"
+msgstr "Installér pakke?"
+
 #, c-format
 msgid "Making '%s' known to your system."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Native package %s is already installed."
+msgstr "Dette program er allerede installeret"
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, c-format
+msgid "PackageKit exit code was: %s"
 msgstr ""
 
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
-msgstr ""
+#, fuzzy
+msgid "Path to the application's source code"
+msgstr "Test af programmet afsluttet."
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
@@ -165,6 +185,10 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
+#, fuzzy
+msgid "Software install prefix"
+msgstr "Software licens"
+
 msgid "Software installation package"
 msgstr ""
 
@@ -182,7 +206,22 @@ msgid "Unable to extract IPK metadata!"
 msgstr ""
 
 #, c-format
+msgid "Unable to find native package for %s!"
+msgstr ""
+
+#, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format
@@ -367,9 +406,6 @@ msgstr ""
 
 #~ msgid "Install now"
 #~ msgstr "Installér nu"
-
-#~ msgid "Install package?"
-#~ msgstr "Installér pakke?"
 
 #~ msgid "Install updates"
 #~ msgstr "Installér opdateringer"
@@ -571,9 +607,6 @@ msgstr ""
 #~ msgid "Software catalogue"
 #~ msgstr "Software katalog"
 
-#~ msgid "Software license"
-#~ msgstr "Software licens"
-
 #~ msgid "Start PackageKit monitor before running transactions"
 #~ msgstr "Start pakke-kit overvåger før kørsel af transaktioner"
 
@@ -585,9 +618,6 @@ msgstr ""
 
 #~ msgid "Test application"
 #~ msgstr "Testprogram"
-
-#~ msgid "Test of the application finished."
-#~ msgstr "Test af programmet afsluttet."
 
 #~ msgid "Testmode"
 #~ msgstr "Test-tilstand"
@@ -646,9 +676,6 @@ msgstr ""
 
 #~ msgid "There are no updates available!"
 #~ msgstr "Der er ingen opdateringer tilgængelige!"
-
-#~ msgid "This application is already installed"
-#~ msgstr "Dette program er allerede installeret"
 
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "

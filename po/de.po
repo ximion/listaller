@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2011-04-26 16:16+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -135,16 +135,36 @@ msgstr "Installation abgeschlossen!"
 msgid "Installation failed!"
 msgstr "Installation fehlgeschlagen."
 
+#, fuzzy, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr "Installation des paketes %s fehlgeschalgen!"
+
+#, fuzzy, c-format
+msgid "Installing native package %s"
+msgstr "Paket installieren"
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr "Mache '%s' mit ihrem System bekannt."
 
+#, fuzzy, c-format
+msgid "Native package %s is already installed."
+msgstr "Diese Anwendung ist schon installiert"
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "PackageKit exit code was: %s"
+msgstr "Paket gefunden: %s"
+
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
-msgstr ""
+#, fuzzy
+msgid "Path to the application's source code"
+msgstr "Die Version der Anwendung anzeigen"
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
@@ -172,6 +192,10 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
+#, fuzzy
+msgid "Software install prefix"
+msgstr "Software Installationspaket"
+
 msgid "Software installation package"
 msgstr "Software Installationspaket"
 
@@ -188,8 +212,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to find native package for %s!"
+msgstr "Konnte liUpdater nicht finden!"
+
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format
@@ -1197,9 +1236,6 @@ msgstr ""
 #~ msgid "Install now"
 #~ msgstr "Installieren"
 
-#~ msgid "Install package"
-#~ msgstr "Paket installieren"
-
 #~ msgid "Install package?"
 #~ msgstr "Paket installieren?"
 
@@ -1220,9 +1256,6 @@ msgstr ""
 
 #~ msgid "Installation of %a"
 #~ msgstr "Installation von %a"
-
-#~ msgid "Installation of package %s failed!"
-#~ msgstr "Installation des paketes %s fehlgeschalgen!"
 
 #~ msgid "Installation package is corrupt"
 #~ msgstr "Installationspaket ist zerstört"
@@ -1549,9 +1582,6 @@ msgstr ""
 
 #~ msgid "Package could be installed with MoJo/LOKI."
 #~ msgstr "Paket könnte mit Moho/LOKI installiert worden sein."
-
-#~ msgid "Package detected: %s"
-#~ msgstr "Paket gefunden: %s"
 
 #~ msgid "Package has trusted signature."
 #~ msgstr "Paket hat vertrauenswürdige Signatur."
@@ -2180,9 +2210,6 @@ msgstr ""
 #~ "Holen Sie sich eine Anleitung zum Entfernen der Anwendung vom "
 #~ "Programmautor."
 
-#~ msgid "This application is already installed"
-#~ msgstr "Diese Anwendung ist schon installiert"
-
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
 #~ "Listaller can handle.\n"
@@ -2237,9 +2264,6 @@ msgstr ""
 
 #~ msgid "Unable to find a HTML browser."
 #~ msgstr "Kann den HTML-Browser nicht finden."
-
-#~ msgid "Unable to find liUpdater!"
-#~ msgstr "Konnte liUpdater nicht finden!"
 
 #~ msgid "Unable to load default font"
 #~ msgstr "Kann Default-Schriftart nicht laden"

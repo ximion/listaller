@@ -27,8 +27,8 @@ namespace Listaller.Deps {
 
 public enum SolverType {
 	UNKNOWN,
-	FILES,
-	FEEDS;
+	FILE,
+	FEED;
 }
 
 private abstract class Provider : Object {

@@ -1,4 +1,4 @@
-/* util.vala
+/* utils.vala
  *
  * Copyright (C) 2010-2011  Matthias Klumpp
  *

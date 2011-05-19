@@ -4,7 +4,7 @@ set(lisrc ${CMAKE_SOURCE_DIR}/src
 	  CACHE INTERNAL "Listaller sourcecode dir"
 )
 
-set(LISTALLER_BASE_SOURCES ${lisrc}/util.vala
+set(LISTALLER_BASE_SOURCES ${lisrc}/utils.vala
 	${lisrc}/status.vala
 	${lisrc}/settings.vala
 	${lisrc}/application.vala

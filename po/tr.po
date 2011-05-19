@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2011-01-24 10:01+0000\n"
 "Last-Translator: Ali KIBICI <Unknown>\n"
 "Language-Team: \n"
@@ -125,16 +125,36 @@ msgstr "Yükleme tamamlandı!"
 msgid "Installation failed!"
 msgstr "Yükleme tamamlandı!"
 
+#, fuzzy, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr "Yükleme tamamlandı!"
+
+#, fuzzy, c-format
+msgid "Installing native package %s"
+msgstr "Paket yüklensin mi?"
+
 #, c-format
 msgid "Making '%s' known to your system."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Native package %s is already installed."
+msgstr "Bu program zaten yüklenmiş."
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, c-format
+msgid "PackageKit exit code was: %s"
 msgstr ""
 
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
-msgstr ""
+#, fuzzy
+msgid "Path to the application's source code"
+msgstr "Uygulamanın testi bitti."
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
@@ -160,6 +180,10 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
+#, fuzzy
+msgid "Software install prefix"
+msgstr "Yazılım lisansı"
+
 msgid "Software installation package"
 msgstr ""
 
@@ -176,8 +200,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to find native package for %s!"
+msgstr "%s bulunamıyor"
+
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format
@@ -791,9 +830,6 @@ msgstr ""
 #~ msgid "Install now"
 #~ msgstr "Şimdi yükle!"
 
-#~ msgid "Install package?"
-#~ msgstr "Paket yüklensin mi?"
-
 #~ msgid "Install updates"
 #~ msgstr "Güncelleştirmeleri yükle"
 
@@ -1215,9 +1251,6 @@ msgstr ""
 #~ msgid "Software catalogue"
 #~ msgstr "Yazılım kataloğu"
 
-#~ msgid "Software license"
-#~ msgstr "Yazılım lisansı"
-
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr "Bazı bağımlılıklar eksik. Şimdi yüklensin mi?"
 
@@ -1241,9 +1274,6 @@ msgstr ""
 
 #~ msgid "Test application"
 #~ msgstr "Uygulamayı test et"
-
-#~ msgid "Test of the application finished."
-#~ msgstr "Uygulamanın testi bitti."
 
 #~ msgid "Testmode"
 #~ msgstr "Test Modu"
@@ -1336,9 +1366,6 @@ msgstr ""
 #~ msgid "There is no viewer for help type %s%s%s"
 #~ msgstr "%s%s%s yardım türü için bir görüntüleyici yok"
 
-#~ msgid "This application is already installed"
-#~ msgstr "Bu program zaten yüklenmiş."
-
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
 #~ "Listaller can handle.\n"
@@ -1361,9 +1388,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Paketin geçerli bir kimliği yok.\n"
 #~ "Yükleyici kapanacak."
-
-#~ msgid "Unable to find %s"
-#~ msgstr "%s bulunamıyor"
 
 #~ msgid "Unable to find a HTML browser."
 #~ msgstr "HTML tarayıcı bulunamıyor."

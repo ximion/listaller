@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2009-12-07 22:05+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German, Low <nds@li.org>\n"
@@ -130,15 +130,34 @@ msgstr "Installation komplett!"
 msgid "Installation failed!"
 msgstr "Installation komplett!"
 
+#, fuzzy, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr "Installation komplett!"
+
+#, c-format
+msgid "Installing native package %s"
+msgstr ""
+
 #, c-format
 msgid "Making '%s' known to your system."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Native package %s is already installed."
+msgstr "Das Programm ist schon instaliert."
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, c-format
+msgid "PackageKit exit code was: %s"
 msgstr ""
 
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
+msgid "Path to the application's source code"
 msgstr ""
 
 #, c-format
@@ -165,6 +184,10 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
+#, fuzzy
+msgid "Software install prefix"
+msgstr "Software Lizenz"
+
 msgid "Software installation package"
 msgstr ""
 
@@ -182,7 +205,22 @@ msgid "Unable to extract IPK metadata!"
 msgstr ""
 
 #, c-format
+msgid "Unable to find native package for %s!"
+msgstr ""
+
+#, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format
@@ -234,17 +272,11 @@ msgstr ""
 #~ msgid "Running installation..."
 #~ msgstr "Laufende installation..."
 
-#~ msgid "Software license"
-#~ msgstr "Software Lizenz"
-
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "Die Anwendung %a wurde erfolgreich installiert!"
 
 #~ msgid "The installer will close now"
 #~ msgstr "Der installer schließt sich nun."
-
-#~ msgid "This application is already installed"
-#~ msgstr "Das Programm ist schon instaliert."
 
 #~ msgid "Welcome!"
 #~ msgstr "Willkamen!"

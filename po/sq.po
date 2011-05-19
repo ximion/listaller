@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.00b\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2011-02-22 22:07+0000\n"
 "Last-Translator: truri <Unknown>\n"
 "Language-Team: Albanian\n"
@@ -125,16 +125,36 @@ msgstr "Instalimi u plotësua!"
 msgid "Installation failed!"
 msgstr "Instalimi dështoi."
 
+#, fuzzy, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr "Instalimi i paketës %s dështoi!"
+
+#, fuzzy, c-format
+msgid "Installing native package %s"
+msgstr "Instalo paketën"
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Native package %s is already installed."
+msgstr "Ky zbatim është tashmë i instaluar"
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "PackageKit exit code was: %s"
+msgstr "U zbulua paketë: %s"
+
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
-msgstr ""
+#, fuzzy
+msgid "Path to the application's source code"
+msgstr "Dëshironi të kontrolloni varësitë e zbatimit?"
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
@@ -160,6 +180,10 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
+#, fuzzy
+msgid "Software install prefix"
+msgstr "Leje Software-i"
+
 msgid "Software installation package"
 msgstr ""
 
@@ -176,8 +200,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to find native package for %s!"
+msgstr "I pazoti të gjejë%s"
+
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format
@@ -368,9 +407,6 @@ msgstr ""
 #~ msgid "Do you want to check global-installed applications too?"
 #~ msgstr "Doni të kontrollohen edhe zbatimet e instaluara për mbarë sistemin?"
 
-#~ msgid "Do you want to check the applications's dependencies?"
-#~ msgstr "Dëshironi të kontrolloni varësitë e zbatimit?"
-
 #~ msgid "Do you want to install it again?"
 #~ msgstr "Doni ta instaloni sërish?"
 
@@ -480,9 +516,6 @@ msgstr ""
 #~ msgid "Install now"
 #~ msgstr "Instaloje tani"
 
-#~ msgid "Install package"
-#~ msgstr "Instalo paketën"
-
 #~ msgid "Install package?"
 #~ msgstr "Të instalohet paketa?"
 
@@ -503,9 +536,6 @@ msgstr ""
 
 #~ msgid "Installation of %a"
 #~ msgstr "Instalimi i %a"
-
-#~ msgid "Installation of package %s failed!"
-#~ msgstr "Instalimi i paketës %s dështoi!"
 
 #~ msgid "Installation package is corrupt"
 #~ msgstr "Paketa e instalimit është e dëmtuar"
@@ -617,9 +647,6 @@ msgstr ""
 
 #~ msgid "Package could be installed with MoJo/LOKI."
 #~ msgstr "Paketa mund të instalohej me MoJo/LOKI."
-
-#~ msgid "Package detected: %s"
-#~ msgstr "U zbulua paketë: %s"
 
 #~ msgid "Package has trusted signature."
 #~ msgstr "Paketa ka nënshkrim të besuar."
@@ -836,9 +863,6 @@ msgstr ""
 #~ msgid "Software database opened."
 #~ msgstr "Baza e të dhënave të software-eve u hap."
 
-#~ msgid "Software license"
-#~ msgstr "Leje Software-i"
-
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr "Disa nga varësitë mungojnë. A do të duhej të instaloheshin tani?"
 
@@ -946,9 +970,6 @@ msgstr ""
 #~ "ndonjë lloji tjetër paketash që mundet ta trajtojë Listaller-i.\n"
 #~ "Merrni udhëzime nga autori i programit reth se si ta hiqni këtë zbatim."
 
-#~ msgid "This application is already installed"
-#~ msgstr "Ky zbatim është tashmë i instaluar"
-
 #~ msgid "This application wants to fetch a dependency from %l"
 #~ msgstr "Ky zbatim dëshiron të sjellë një varësi prej %l"
 
@@ -963,9 +984,6 @@ msgstr ""
 
 #~ msgid "Unable to copy the file %s."
 #~ msgstr "I pazoti të kopjojë kartelën %s."
-
-#~ msgid "Unable to find %s"
-#~ msgstr "I pazoti të gjejë%s"
 
 #~ msgid "Unable to load information about LOKI-Setup."
 #~ msgstr "I pazoti të ngarkojë të dhëna rreth LOKI-Setup-it."

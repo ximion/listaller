@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2009-12-07 22:46+0000\n"
 "Last-Translator: Christian Widell <Christian_widell@hotmail.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -130,14 +130,33 @@ msgid "Installation failed!"
 msgstr ""
 
 #, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr ""
+
+#, c-format
+msgid "Installing native package %s"
+msgstr ""
+
+#, c-format
 msgid "Making '%s' known to your system."
+msgstr ""
+
+#, c-format
+msgid "Native package %s is already installed."
+msgstr ""
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, c-format
+msgid "PackageKit exit code was: %s"
 msgstr ""
 
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
+msgid "Path to the application's source code"
 msgstr ""
 
 #, c-format
@@ -164,6 +183,9 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
+msgid "Software install prefix"
+msgstr ""
+
 msgid "Software installation package"
 msgstr ""
 
@@ -181,7 +203,22 @@ msgid "Unable to extract IPK metadata!"
 msgstr ""
 
 #, c-format
+msgid "Unable to find native package for %s!"
+msgstr ""
+
+#, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2010-04-05 21:23+0000\n"
 "Last-Translator: Cédric VALMARY (Tot en òc) <cvalmary@yahoo.fr>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
@@ -130,15 +130,34 @@ msgstr "Installacion acabada !"
 msgid "Installation failed!"
 msgstr "Fracàs de l'installacion"
 
+#, fuzzy, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr "Fracàs de l'installacion"
+
+#, fuzzy, c-format
+msgid "Installing native package %s"
+msgstr "Installacion paquet"
+
 #, c-format
 msgid "Making '%s' known to your system."
+msgstr ""
+
+#, c-format
+msgid "Native package %s is already installed."
+msgstr ""
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, c-format
+msgid "PackageKit exit code was: %s"
 msgstr ""
 
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
+msgid "Path to the application's source code"
 msgstr ""
 
 #, c-format
@@ -165,6 +184,10 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
+#, fuzzy
+msgid "Software install prefix"
+msgstr "Licéncia del logicial"
+
 msgid "Software installation package"
 msgstr ""
 
@@ -181,8 +204,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to find native package for %s!"
+msgstr "Impossible de trobar %s"
+
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format
@@ -284,9 +322,6 @@ msgstr ""
 
 #~ msgid "Install into my Home directory"
 #~ msgstr "Installar dins mon dorsièr personal"
-
-#~ msgid "Install package"
-#~ msgstr "Installacion paquet"
 
 #~ msgid "Install updates"
 #~ msgstr "Installar las mesas a jorn"
@@ -402,9 +437,6 @@ msgstr ""
 #~ msgid "Software Manager"
 #~ msgstr "Gestionari de logicials"
 
-#~ msgid "Software license"
-#~ msgstr "Licéncia del logicial"
-
 #~ msgid "State"
 #~ msgstr "Estat"
 
@@ -416,9 +448,6 @@ msgstr ""
 
 #~ msgid "Testmode"
 #~ msgstr "Mòde Tèst"
-
-#~ msgid "Unable to find %s"
-#~ msgstr "Impossible de trobar %s"
 
 #~ msgid "Unable to override the file %f."
 #~ msgstr "Impossible d'espotir lo paquet %f."

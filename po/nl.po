@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2009-12-07 22:25+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
@@ -14,7 +14,7 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid "Application ID %s is invalid!"
-msgstr "De applicatie %a is niet geïnstalleerd."
+msgstr "De applicatie %a is niet genstalleerd."
 
 msgid "Build IPK package"
 msgstr ""
@@ -124,15 +124,34 @@ msgstr "Installtie compleet!"
 msgid "Installation failed!"
 msgstr "Installtie compleet!"
 
+#, fuzzy, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr "Installtie compleet!"
+
+#, fuzzy, c-format
+msgid "Installing native package %s"
+msgstr "Installatiepakket is corrupt"
+
 #, c-format
 msgid "Making '%s' known to your system."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Native package %s is already installed."
+msgstr "Deze applicatie is al genstalleerd"
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, c-format
+msgid "PackageKit exit code was: %s"
 msgstr ""
 
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
+msgid "Path to the application's source code"
 msgstr ""
 
 #, c-format
@@ -159,6 +178,10 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
+#, fuzzy
+msgid "Software install prefix"
+msgstr "Softwarelicentie"
+
 msgid "Software installation package"
 msgstr ""
 
@@ -176,7 +199,22 @@ msgid "Unable to extract IPK metadata!"
 msgstr ""
 
 #, c-format
+msgid "Unable to find native package for %s!"
+msgstr ""
+
+#, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format
@@ -359,7 +397,7 @@ msgstr ""
 #~ msgstr "Alt"
 
 #~ msgid "Application uninstalled successfully!"
-#~ msgstr "Applicatie succesvol gedeïnstalleerd."
+#~ msgstr "Applicatie succesvol gedenstalleerd."
 
 #~ msgid "Autor"
 #~ msgstr "Auteur"
@@ -490,7 +528,7 @@ msgstr ""
 #~ "de pakketten niet nodig heeft klik \"Nee\"!"
 
 #~ msgid "Do you really want to uninstall %a?"
-#~ msgstr "Weet je zeker dat je %a wilt deïnstalleren?"
+#~ msgstr "Weet je zeker dat je %a wilt denstalleren?"
 
 #~ msgid "Do you want to install it again?"
 #~ msgstr "Wilt u het opnieuw installeren?"
@@ -542,7 +580,7 @@ msgstr ""
 #~ msgstr "Fout tijdens opslaan van bitmap."
 
 #~ msgid "Error while uninstalling!"
-#~ msgstr "Fout tijdens deïnstalleren!"
+#~ msgstr "Fout tijdens denstalleren!"
 
 #~ msgid "Escape"
 #~ msgstr "Escape"
@@ -578,7 +616,7 @@ msgstr ""
 #~ msgstr "Zoek meer"
 
 #~ msgid "Finish"
-#~ msgstr "Beëindigen"
+#~ msgstr "Beindigen"
 
 #~ msgid "Finished"
 #~ msgstr "Voltooid"
@@ -705,9 +743,6 @@ msgstr ""
 #~ msgid "Installation of %a"
 #~ msgstr "Installeren van %a"
 
-#~ msgid "Installation package is corrupt"
-#~ msgstr "Installatiepakket is corrupt"
-
 #~ msgid "Invalid Date : %s"
 #~ msgstr "Ongeldige datum: %s"
 
@@ -814,7 +849,7 @@ msgstr ""
 #~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
 #~ "Viewers"
 #~ msgstr ""
-#~ "Geen HTML browser gevonden. %sDefiniëer deze alstublieft via Help -> "
+#~ "Geen HTML browser gevonden. %sDefinier deze alstublieft via Help -> "
 #~ "Configureer Help -> Viewers"
 
 #~ msgid "No MDI form present."
@@ -910,7 +945,7 @@ msgstr ""
 #~ msgstr "Portable Network Graphic"
 
 #~ msgid "Press \"Finish\" to close."
-#~ msgstr "Druk op 'Beëindigen' om te sluiten."
+#~ msgstr "Druk op 'Beindigen' om te sluiten."
 
 #~ msgid "Press \"Next\" to start the installation!"
 #~ msgstr "Druk op 'Volgende' om de installatie te starten!"
@@ -1018,9 +1053,6 @@ msgstr ""
 #~ msgid "Software catalogue"
 #~ msgstr "Softwarecatalogus"
 
-#~ msgid "Software license"
-#~ msgstr "Softwarelicentie"
-
 #~ msgid "Space key"
 #~ msgstr "Spatiebar"
 
@@ -1040,10 +1072,10 @@ msgstr ""
 #~ msgstr "Tekst"
 
 #~ msgid "The application %a was installed successfully!"
-#~ msgstr "De applicatie %a is succesvol geïnstalleerd!"
+#~ msgstr "De applicatie %a is succesvol genstalleerd!"
 
 #~ msgid "The application will be updated to version %v"
-#~ msgstr "De applicatie zal worden geüpdate naar versie %v"
+#~ msgstr "De applicatie zal worden gepdate naar versie %v"
 
 #~ msgid "The application will close now "
 #~ msgstr "De applicatie zal nu sluiten "
@@ -1084,9 +1116,6 @@ msgstr ""
 #~ msgid "There is no viewer for help type %s%s%s"
 #~ msgstr "Er is geen viewer voor help type %s%s%s"
 
-#~ msgid "This application is already installed"
-#~ msgstr "Deze applicatie is al geïnstalleerd"
-
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr "Deze applicatie wil een gebiedsdeel downloaden & installeren van %l"
 
@@ -1104,16 +1133,16 @@ msgstr ""
 #~ "ontwikkelaars zijn van Listaller van deze applicatie!"
 
 #~ msgid "Uninstall"
-#~ msgstr "Deïnstalleren"
+#~ msgstr "Denstalleren"
 
 #~ msgid "Uninstalling %a"
-#~ msgstr "Deïnstalleren van %a"
+#~ msgstr "Denstalleren van %a"
 
 #~ msgid "Uninstalling unused deps..."
-#~ msgstr "Deïnstalleren van ongebruikte deps..."
+#~ msgstr "Denstalleren van ongebruikte deps..."
 
 #~ msgid "Uninstalling..."
-#~ msgstr "Deïnstalleren...."
+#~ msgstr "Denstalleren...."
 
 #~ msgid "Unknown"
 #~ msgstr "Onbekend"

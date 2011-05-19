@@ -241,7 +241,7 @@ private class Builder : Object {
 			string ipkname;
 			ipkname = appInfo.idname.down () + "-" + appInfo.version.down () + "_install.ipk";
 			if (outdir == "")
-				outdir = Path.build_filename (srcdir, "..", null);
+				outdir = Path.build_filename (srcdir, "..", "..", null);
 			outname = Path.build_filename (outdir, ipkname, null);
 		}
 		// Remove spaces in filename

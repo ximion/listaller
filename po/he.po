@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-05 23:09+0200\n"
+"POT-Creation-Date: 2011-05-19 16:27+0200\n"
 "PO-Revision-Date: 2009-12-07 23:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -130,16 +130,36 @@ msgstr "ההתקנה הושלמה!"
 msgid "Installation failed!"
 msgstr "התקנה נכשלה."
 
+#, fuzzy, c-format
+msgid "Installation of native package '%s' failed!"
+msgstr "התקנה נכשלה."
+
+#, fuzzy, c-format
+msgid "Installing native package %s"
+msgstr "התקנת החבילה פגומה"
+
 #, c-format
 msgid "Making '%s' known to your system."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Native package %s is already installed."
+msgstr "יישום זה כבר מותקן"
+
+#, c-format
+msgid "No path given!"
+msgstr ""
+
+#, c-format
+msgid "PackageKit exit code was: %s"
 msgstr ""
 
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, c-format
-msgid "Processing application '%s' without assigned .desktop file!"
-msgstr ""
+#, fuzzy
+msgid "Path to the application's source code"
+msgstr "בדיקת היישום הושלמה."
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
@@ -165,6 +185,10 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
+#, fuzzy
+msgid "Software install prefix"
+msgstr "רשיון התוכנה"
+
 msgid "Software installation package"
 msgstr ""
 
@@ -181,8 +205,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to find native package for %s!"
+msgstr "%s לא נמצא"
+
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid "Using user-defined install target: %s"
+msgstr ""
+
+#, c-format
+msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #, c-format
@@ -385,9 +424,6 @@ msgstr ""
 #~ msgid "Installation of %a"
 #~ msgstr "התקנת %a"
 
-#~ msgid "Installation package is corrupt"
-#~ msgstr "התקנת החבילה פגומה"
-
 #~ msgid "Launch Listaller Manager"
 #~ msgstr "טעינת המנהל של Listaller"
 
@@ -525,9 +561,6 @@ msgstr ""
 #~ msgid "Software catalogue"
 #~ msgstr "קטלוג התוכנה"
 
-#~ msgid "Software license"
-#~ msgstr "רשיון התוכנה"
-
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr "כמה מחבילות התלות חסרות. האם להתקין אותן כעת?"
 
@@ -539,9 +572,6 @@ msgstr ""
 
 #~ msgid "System"
 #~ msgstr "מערכת"
-
-#~ msgid "Test of the application finished."
-#~ msgstr "בדיקת היישום הושלמה."
 
 #~ msgid "Testmode"
 #~ msgstr "מצב בדיקה"
@@ -564,17 +594,11 @@ msgstr ""
 #~ msgid "There are no updates available!"
 #~ msgstr "אין עדכונים זמינים!"
 
-#~ msgid "This application is already installed"
-#~ msgstr "יישום זה כבר מותקן"
-
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr "יישום זה מעוניין להוריד ולהתקין תלות מהכתובת %l"
 
 #~ msgid "This package does not support your Linux distribution."
 #~ msgstr "חבילה זו אינה נתמכת על ידי הפצת הלינוקס שלך."
-
-#~ msgid "Unable to find %s"
-#~ msgstr "%s לא נמצא"
 
 #~ msgid ""
 #~ "Unable to load the icon of %a. Please notify the developers of Listaller "

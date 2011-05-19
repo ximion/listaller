@@ -1,21 +1,30 @@
 [encoding: UTF-8]
 # List of source files containing translatable strings.
-# Please keep this file sorted alphabetically.
 #
 # Listaller library sources
-src/appitem.vala
+src/application.vala
 src/database.vala
+src/depman.vala
+src/gpgsign.vala
 src/ipkcdef.vala
 src/ipkfilelist.vala
 src/ipkpackage.vala
 src/settings.vala
 src/status.vala
-src/util.vala
+src/utils.vala
 src/varsolver.vala
 src/listaller/manager.vala
 src/listaller/installer.vala
+src/listaller/depsolver.vala
+src/listaller/depprovider_pk.vala
 # Listaller tools
+tools/runapp/runapp.vala
 tools/libuild/main.vala
 tools/libuild/ipkbuilder.vala
+tools/appcompile/main.vala
+tools/appcompile/autocompiler.vala
+tools/depscan/main.vala
+tools/depscan/depscan.vala
+tools/depscan/scan_ldd.vala
 # Mimetypes
 data/mime/listaller-ipk.xml.in

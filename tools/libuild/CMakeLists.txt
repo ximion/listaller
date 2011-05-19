@@ -13,7 +13,7 @@ pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 set(LIBUILD_SOURCES ${LISTALLER_BASE_SOURCES}
 			main.vala
-			utils.vala
+			lbutils.vala
 			ipkbuilder.vala
 )
 
