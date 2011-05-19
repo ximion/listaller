@@ -340,11 +340,16 @@ private class Package : Object {
 			return false;
 		}
 		ret = FileUtils.rename (tmp, fname) == 0;
-		delete_dir_recursive (tmp);
-		if (!ret) {
+		int ecode = Posix.errno;
+		// Remove dir, if empty
+		DirUtils.remove (Path.get_dirname (tmp));
+		if (ret) {
 			// If we are here, everything went fine. Mark the file as installed
 			fe.installed = true;
 			fe.fname_installed = fname;
+		} else {
+			emit_error (ErrorEnum.COPY_ERROR,
+				    _("Could not copy file %s to its destination. Do you have the necessary rights to perform this action?\nError message was \"%s\".").printf (fname, Posix.strerror (ecode)));
 		}
 		return ret;
 	}

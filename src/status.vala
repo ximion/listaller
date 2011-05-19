@@ -34,6 +34,7 @@ public enum ErrorEnum {
 	FILE_EXISTS,
 	HASH_MISSMATCH,
 	FILE_INSTALL_FAILED,
+	COPY_ERROR,
 	DATABASE_FAILURE;
 
 	public string to_string () {

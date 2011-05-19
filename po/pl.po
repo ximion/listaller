@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lclstrconsts\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-19 16:27+0200\n"
+"POT-Creation-Date: 2011-05-19 21:24+0200\n"
 "PO-Revision-Date: 2009-05-06 13:38+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
@@ -23,6 +23,13 @@ msgid "Build IPK package"
 msgstr ""
 
 msgid "Copying files to their destination"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not copy file %s to its destination. Do you have the necessary rights "
+"to perform this action?\n"
+"Error message was \"%s\"."
 msgstr ""
 
 #, c-format
