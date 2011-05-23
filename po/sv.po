@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-19 21:24+0200\n"
+"POT-Creation-Date: 2011-05-19 22:36+0200\n"
 "PO-Revision-Date: 2009-12-07 22:46+0000\n"
 "Last-Translator: Christian Widell <Christian_widell@hotmail.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -68,6 +68,11 @@ msgstr ""
 
 #, c-format
 msgid "Could not open desktop file: %s"
+msgstr ""
+
+msgid ""
+"Could not open the software database, maybe it is locked at time.\n"
+"Please close all other running installations to continue!"
 msgstr ""
 
 #, c-format
@@ -196,6 +201,12 @@ msgstr ""
 msgid "Software installation package"
 msgstr ""
 
+msgid ""
+"Some files of this package could not be installed, because they were not "
+"found in the payload data.\n"
+"This IPK package might be damaged, please obtain a new copy!"
+msgstr ""
+
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
 
@@ -207,6 +218,12 @@ msgid "Unable to extract IPK data!"
 msgstr ""
 
 msgid "Unable to extract IPK metadata!"
+msgstr ""
+
+#, c-format
+msgid ""
+"Unable to extract data file %s. This IPK package might be damaged, please "
+"obtain a new copy."
 msgstr ""
 
 #, c-format

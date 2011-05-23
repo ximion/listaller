@@ -132,15 +132,17 @@ public class Setup : Object {
 		// Construct LiAppItem
 		AppItem app = ipkp.control.get_application ();
 		app.origin = AppOrigin.IPK;
-		//aitem.author = ipkp.control.get_app_author ();
-		//aitem.pkgmaintainer = ipkp.control.get_pkg_maintainer ();
-		//aitem.categories = ipkp.control.get_app_categories ();
-		//aitem.desktop_file = ipkp.control.get_app_desktopfile ();
 		app.dependencies = "?";
 		app.fast_check ();
 
 		inst_progress = 25;
 		change_progress (0, -1);
+
+		// Check if this application is already installed
+		if (db.get_application_by_id (app) != null) {
+			emit_error (ErrorEnum.ALREADY_INSTALLED, _("This application was already installed. Please remove the existing version to continue!"));
+			return false;
+		}
 
 		// Emit status message
 		StatusItem status1 = new StatusItem (StatusEnum.RESOLVING_DEPENDENCIES);

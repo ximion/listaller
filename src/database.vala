@@ -75,7 +75,9 @@ public enum DatabaseStatus {
 private class SoftwareDB : Object {
 	private Database db;
 	private Settings conf;
+	private bool locked;
 	private string dblockfile;
+	private string apptables;
 
 	public signal void db_status_changed (DatabaseStatus newstatus, string message);
 
@@ -84,6 +86,7 @@ private class SoftwareDB : Object {
 
 	public SoftwareDB (Settings? settings) {
 		conf = settings;
+		locked = false;
 		if (conf == null)
 			conf = new Settings (false);
 
@@ -97,10 +100,11 @@ private class SoftwareDB : Object {
 
 	public bool database_locked () {
 		if (FileUtils.test (dblockfile, FileTest.IS_REGULAR)) {
-			return true;
+			locked = true;
 		} else {
-			return false;
+			locked = false;
 		}
+		return locked;
 	}
 
 	private void dbstatus_changed (DatabaseStatus dbs, string details) {
@@ -129,6 +133,8 @@ private class SoftwareDB : Object {
 
 		// If database is locked, we should not try to read/write on it
 		if (database_locked ()) {
+			// We set locked to false, because this DB is NOT locked (because it can't be opened)
+			locked = false;
 			return false;
 		}
 
@@ -159,6 +165,8 @@ private class SoftwareDB : Object {
 			critical ("Unable to create lock file!");
 			return false;
 		}
+		// DB is now locked
+		locked = true;
 
 		dbstatus_changed (DatabaseStatus.LOCKED, "");
 		dbstatus_changed (DatabaseStatus.OPENED, "");
@@ -178,13 +186,15 @@ private class SoftwareDB : Object {
 	}
 
 	public void remove_db_lock () {
-		File lfile = File.new_for_path (dblockfile);
-		try {
-			if (lfile.query_exists ()) {
-				lfile.delete ();
+		if (locked) {
+			File lfile = File.new_for_path (dblockfile);
+			try {
+				if (lfile.query_exists ()) {
+					lfile.delete ();
+				}
+			} catch (Error e) {
+				error (_("Unable to remove database lock! (Message: %s)").printf (e.message));
 			}
-		} catch (Error e) {
-			error (_("Unable to remove database lock! (Message: %s)").printf (e.message));
 		}
 	}
 
@@ -258,11 +268,15 @@ private class SoftwareDB : Object {
 	protected bool update_db_structure () {
 		Sqlite.Statement stmt;
 
+		apptables = "id, name, version, full_name, desktop_file, summary, author, pkgmaintainer, "
+		+ "categories, install_time, origin, dependencies";
+
 		// Create table to store information about applications
 		int res = db.prepare_v2 ("CREATE TABLE IF NOT EXISTS applications ("
 		+ "id INTEGER PRIMARY KEY, "
-		+ "name TEXT NOT NULL, "
+		+ "name TEXT UNIQUE NOT NULL, "
 		+ "version TEXT NOT NULL, "
+		+ "full_name TEXT NOT NULL, "
 		+ "desktop_file TEXT UNIQUE,"
 		+ "summary TEXT, "
 		+ "author TEXT, "
@@ -303,34 +317,36 @@ private class SoftwareDB : Object {
 	public bool add_application (AppItem item) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 (
-			"INSERT INTO applications (name, version, desktop_file, summary, author, pkgmaintainer, "
+			"INSERT INTO applications (name, version, full_name, desktop_file, summary, author, pkgmaintainer, "
 			+ "categories, install_time, origin, dependencies) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				   -1, out stmt);
 			assert (res == Sqlite.OK);
 
 			ulong time_created = now_sec ();
 
 			// Assign values
-			res = stmt.bind_text (1, item.full_name);
+			res = stmt.bind_text (1, item.idname);
 			assert (res == Sqlite.OK);
 			res = stmt.bind_text (2, item.version);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (3, item.desktop_file);
+			res = stmt.bind_text (3, item.full_name);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (4, item.summary);
+			res = stmt.bind_text (4, item.desktop_file);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (5, item.author);
+			res = stmt.bind_text (5, item.summary);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (6, item.maintainer);
+			res = stmt.bind_text (6, item.author);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (7, item.categories);
+			res = stmt.bind_text (7, item.maintainer);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_int64 (8, item.install_time);
+			res = stmt.bind_text (8, item.categories);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (9, item.origin.to_string ());
+			res = stmt.bind_int64 (9, item.install_time);
 			assert (res == Sqlite.OK);
-			res = stmt.bind_text (10, item.dependencies);
+			res = stmt.bind_text (10, item.origin.to_string ());
+			assert (res == Sqlite.OK);
+			res = stmt.bind_text (11, item.dependencies);
 			assert (res == Sqlite.OK);
 
 			res = stmt.step();
@@ -348,25 +364,24 @@ private class SoftwareDB : Object {
 		AppItem item = new AppItem.blank ();
 
 		item.dbid = stmt.column_int (0);
-		item.full_name = stmt.column_text (1);
+		item.idname = stmt.column_text (1);
 		item.version = stmt.column_text (2);
-		item.desktop_file = stmt.column_text (3);
-		item.summary = stmt.column_text (4);
-		item.author = stmt.column_text (5);
-		item.maintainer = stmt.column_text (6);
-		item.categories = stmt.column_text (7);
-		item.install_time = stmt.column_int (8);
-		item.set_origin_from_string (stmt.column_text (9));
-		item.dependencies = stmt.column_text (10);
+		item.full_name = stmt.column_text (3);
+		item.desktop_file = stmt.column_text (4);
+		item.summary = stmt.column_text (5);
+		item.author = stmt.column_text (6);
+		item.maintainer = stmt.column_text (7);
+		item.categories = stmt.column_text (8);
+		item.install_time = stmt.column_int (9);
+		item.set_origin_from_string (stmt.column_text (10));
+		item.dependencies = stmt.column_text (11);
 
 		return item;
 	}
 
 	public AppItem? get_application_by_name (string appName) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT id, name, desktop_file, version, summary, author, pkgmaintainer, "
-		+ "categories, install_time, origin, dependencies "
-		+ "FROM applications WHERE name=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=?", -1, out stmt);
 		assert (res == Sqlite.OK);
 
 		res = stmt.bind_text (1, appName);
@@ -384,9 +399,7 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_dbid (int databaseId) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT id, name, version, desktop_file, summary, author, pkgmaintainer, "
-		+ "categories, install_time, origin, dependencies "
-		+ "FROM applications WHERE id=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE id=?", -1, out stmt);
 		assert (res == Sqlite.OK);
 
 		res = stmt.bind_int (1, databaseId);
@@ -404,9 +417,7 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_name_version (string appName, string appVersion) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT id, name, version, desktop_file, summary, author, pkgmaintainer, "
-		+ "categories, install_time, origin, dependencies "
-		+ "FROM applications WHERE name=? AND version=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=? AND version=?", -1, out stmt);
 		assert (res == Sqlite.OK);
 
 		res = stmt.bind_text (1, appName);
@@ -423,6 +434,10 @@ private class SoftwareDB : Object {
 		item.fast_check ();
 
 		return item;
+	}
+
+	public AppItem? get_application_by_id (AppItem aid) {
+		return get_application_by_name (aid.idname);
 	}
 }
 

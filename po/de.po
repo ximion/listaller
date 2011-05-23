@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-19 21:24+0200\n"
+"POT-Creation-Date: 2011-05-19 22:36+0200\n"
 "PO-Revision-Date: 2011-04-26 16:16+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -71,6 +71,11 @@ msgstr "Konnte IPK-Datei nicht öffnen! Fehler: %s"
 #, c-format
 msgid "Could not open desktop file: %s"
 msgstr "Konnte Desktop-Datei nicht öffnen: %s"
+
+msgid ""
+"Could not open the software database, maybe it is locked at time.\n"
+"Please close all other running installations to continue!"
+msgstr ""
 
 #, c-format
 msgid "Could not override file %s, this file already exists!"
@@ -206,6 +211,12 @@ msgstr "Software Installationspaket"
 msgid "Software installation package"
 msgstr "Software Installationspaket"
 
+msgid ""
+"Some files of this package could not be installed, because they were not "
+"found in the payload data.\n"
+"This IPK package might be damaged, please obtain a new copy!"
+msgstr ""
+
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
 
@@ -218,6 +229,15 @@ msgstr ""
 
 msgid "Unable to extract IPK metadata!"
 msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Unable to extract data file %s. This IPK package might be damaged, please "
+"obtain a new copy."
+msgstr ""
+"Konnte Datei %s nicht validieren. Diese IPK-Datei könnte nach ihrer "
+"Erstellung verändert worden sein!\n"
+"Besorgen Sie sich eine neue Kopie und versuchen Sie es erneut."
 
 #, fuzzy, c-format
 msgid "Unable to find native package for %s!"

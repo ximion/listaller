@@ -36,7 +36,8 @@ public enum ErrorEnum {
 	FILE_INSTALL_FAILED,
 	COPY_ERROR,
 	DATABASE_FAILURE,
-	DB_OPEN_FAILED;
+	DB_OPEN_FAILED,
+	ALREADY_INSTALLED;
 
 	public string to_string () {
 		return ((int) this).to_string ();
