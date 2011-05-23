@@ -140,6 +140,7 @@ public class Setup : Object {
 
 		// Check if this application is already installed
 		if (db.get_application_by_id (app) != null) {
+			db.close ();
 			emit_error (ErrorEnum.ALREADY_INSTALLED, _("This application was already installed. Please remove the existing version to continue!"));
 			return false;
 		}
@@ -163,8 +164,10 @@ public class Setup : Object {
 			});
 
 			ret = solver.execute ();
-			if (!ret)
+			if (!ret) {
+				db.close ();
 				return false;
+			}
 		}
 
 		inst_progress = 50;
@@ -177,8 +180,10 @@ public class Setup : Object {
 		// Install all files to their destination
 		ret = ipkp.install_all_files ();
 
-		if (!ret)
+		if (!ret) {
+			db.close ();
 			return false;
+		}
 
 		inst_progress = 75;
 		change_progress (100, -1);
@@ -193,6 +198,8 @@ public class Setup : Object {
 		app.install_time = dt.to_unix ();
 		// Now register the item
 		ret = db.add_application (app);
+		db.close ();
+
 		conf.unlock ();
 
 		inst_progress = 100;
@@ -203,6 +210,8 @@ public class Setup : Object {
 		if (ret) {
 			status4.info = _("Installation completed!");
 		} else {
+			// Undo all changes
+			ipkp.rollback_installation ();
 			status4.info = _("Installation failed!");
 		}
 		status_changed (status4);

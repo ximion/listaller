@@ -34,6 +34,7 @@ private class Package : Object {
 	private string data_archive;
 	private IPK.Control ipkc;
 	private IPK.FileList ipkf;
+	private ArrayList<IPK.FileEntry>? fcache;
 	private AppItem appInfo;
 
 	public signal void error_code (ErrorItem error);
@@ -42,6 +43,11 @@ private class Package : Object {
 
 	public IPK.Control control {
 		get { return ipkc; }
+	}
+
+	public ArrayList<IPK.FileEntry>? file_list {
+		get { return fcache; }
+		set { fcache = value; }
 	}
 
 	public Package (string filename, Settings? settings) {
@@ -55,6 +61,7 @@ private class Package : Object {
 		ipk_valid = false;
 		ipkc = new IPK.Control ();
 		ipkf = new IPK.FileList ();
+		fcache = null;
 	}
 
 	~Package () {
@@ -88,10 +95,6 @@ private class Package : Object {
 
 	public bool is_valid () {
 		return ipk_valid;
-	}
-
-	public ArrayList<FileEntry> get_filelist () {
-		return ipkf.get_files_list ();
 	}
 
 	private bool process_control_archive (string arname) {
@@ -134,6 +137,8 @@ private class Package : Object {
 		tmpf = Path.build_filename (wdir, "files-all.list", null);
 		if ((ret) && (FileUtils.test (tmpf, FileTest.EXISTS))) {
 			ret = ipkf.open (tmpf);
+			// Cache list of files
+			fcache = ipkf.get_files_list ();
 		}
 
 		// Fetch application-information as an app-id
@@ -296,6 +301,8 @@ private class Package : Object {
 				d.make_directory_with_parents ();
 			}
 		} catch (Error e) {
+			// Undo changes & emit error
+			rollback_installation ();
 			emit_error (ErrorEnum.FILE_INSTALL_FAILED,
 				_("Could not create destination directory. Error: %s").printf (e.message));
 			return false;
@@ -315,6 +322,7 @@ private class Package : Object {
 
 		// Check if file already exists
 		if (FileUtils.test (fname, FileTest.EXISTS)) {
+			rollback_installation ();
 			// Throw error and exit
 			emit_error (ErrorEnum.FILE_EXISTS,
 				_("Could not override file %s, this file already exists!").printf (fname));
@@ -324,6 +332,7 @@ private class Package : Object {
 		touch_dir (dest);
 		ret = extract_entry_to (plar, e, wdir);
 		if (!ret) {
+			rollback_installation ();
 			emit_error (ErrorEnum.IPK_DAMAGED,
 				    _("Unable to extract data file %s. This IPK package might be damaged, please obtain a new copy.").printf (Path.get_basename (e.pathname ())));
 			return ret;
@@ -334,6 +343,7 @@ private class Package : Object {
 		// Validate new file
 		string new_hash = compute_checksum_for_file (tmp);
 		if (new_hash != fe.hash) {
+			rollback_installation ();
 			// Very bad, we have a checksum missmatch -> throw error, delete file and exit
 			emit_error (ErrorEnum.HASH_MISSMATCH,
 				_("Could not validate file %s. This IPK file might have been modified after creation!\nPlease obtain a new copy and try again.").printf (fname));
@@ -355,6 +365,7 @@ private class Package : Object {
 			fe.installed = true;
 			fe.fname_installed = fname;
 		} else {
+			rollback_installation ();
 			emit_error (ErrorEnum.COPY_ERROR,
 				    _("Could not copy file %s to its destination. Do you have the necessary rights to perform this action?\nError message was \"%s\".").printf (fname, einfo));
 		}
@@ -428,17 +439,14 @@ private class Package : Object {
 		if (plar == null)
 			return false;
 
-		// Cache file list
-		ArrayList<IPK.FileEntry> flist = ipkf.get_files_list ();
-
-		double one = 100d / flist.size;
+		double one = 100d / fcache.size;
 		int prog = 0;
 		ret = false;
 		weak Entry e;
 		IPK.FileEntry fe = null;
 		// Now extract & validate all stuff
 		while (plar.next_header (out e) == Result.OK) {
-			fe = get_fe_by_int_path (flist, e.pathname ());
+			fe = get_fe_by_int_path (fcache, e.pathname ());
 			if (fe != null) {
 				// File was found, so install it now
 				ret = extract_file_copy_dest (fe, plar, e);
@@ -449,7 +457,8 @@ private class Package : Object {
 					break;
 			}
 		}
-		if ((prog != flist.size) && (ret == true)) {
+		if ((prog != fcache.size) && (ret == true)) {
+			rollback_installation ();
 			emit_error (ErrorEnum.IPK_INCOMPLETE,
 				    _("Some files of this package could not be installed, because they were not found in the payload data.\nThis IPK package might be damaged, please obtain a new copy!"));
 			ret = false;
@@ -457,6 +466,20 @@ private class Package : Object {
 		plar.close ();
 
 		return ret;
+	}
+
+	public bool rollback_installation () {
+		// Remove all installed files
+		foreach (IPK.FileEntry fe in fcache) {
+			if (!fe.installed)
+				continue;
+			if (FileUtils.remove (fe.fname_installed) == 0) {
+				fe.installed = false;
+				fe.fname_installed = "";
+				//string dir = Path.get_basedir (fe.fname_installed);
+			}
+		}
+		return true;
 	}
 }
 
