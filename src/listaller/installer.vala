@@ -198,6 +198,11 @@ public class Setup : Object {
 		app.install_time = dt.to_unix ();
 		// Now register the item
 		ret = db.add_application (app);
+		if (!ret) {
+			db.close ();
+			return false;
+		}
+		ret = db.add_application_filelist (app, ipkp.file_list);
 		db.close ();
 
 		conf.unlock ();

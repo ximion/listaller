@@ -20,6 +20,7 @@
  */
 
 using GLib;
+using Gee;
 using Sqlite;
 using Listaller;
 
@@ -78,6 +79,7 @@ private class SoftwareDB : Object {
 	private bool locked;
 	private string dblockfile;
 	private string apptables;
+	private string regdir;
 
 	public signal void db_status_changed (DatabaseStatus newstatus, string message);
 
@@ -91,6 +93,7 @@ private class SoftwareDB : Object {
 			conf = new Settings (false);
 
 		dblockfile = conf.appregister_dir () + "/lock";
+		regdir = Path.build_filename (conf.appregister_dir (), "info", null);
 	}
 
 	~SoftwareDB () {
@@ -167,6 +170,8 @@ private class SoftwareDB : Object {
 		}
 		// DB is now locked
 		locked = true;
+
+		create_dir_parents (regdir);
 
 		dbstatus_changed (DatabaseStatus.LOCKED, "");
 		dbstatus_changed (DatabaseStatus.OPENED, "");
@@ -358,6 +363,58 @@ private class SoftwareDB : Object {
 			}
 
 			return true;
+	}
+
+	public bool add_application_filelist (AppItem aid, ArrayList<IPK.FileEntry> flist) {
+		string metadir = Path.build_filename (regdir, aid.idname, null);
+		create_dir_parents (metadir);
+
+		try {
+			var file = File.new_for_path (Path.build_filename (metadir, "files.list", null));
+			{
+				var file_stream = file.create (FileCreateFlags.NONE);
+
+				if (!file.query_exists ())
+					return false;
+
+				var data_stream = new DataOutputStream (file_stream);
+				data_stream.put_string ("# File list for " + aid.full_name + "\n\n");
+				// Now write file list to file
+				foreach (IPK.FileEntry fe in flist) {
+					if (fe.installed)
+						data_stream.put_string (fe.fname_installed + "\n");
+				}
+			}
+		} catch (Error e) {
+			error (_("Unable to write application file list! Message: %s").printf (e.message));
+			return false;
+		}
+		return true;
+	}
+
+	public ArrayList<string>? get_application_filelist (AppItem app) {
+		string metadir = Path.build_filename (regdir, app.idname, null);
+
+		var file = File.new_for_path (Path.build_filename (metadir, "files.list", null));
+		if (!file.query_exists ()) {
+			return null;
+		}
+
+		ArrayList<string> flist = new ArrayList<string> ();
+		try {
+			var dis = new DataInputStream (file.read ());
+			string line;
+			// Read lines until end of file (null) is reached
+			while ((line = dis.read_line (null)) != null) {
+				if ((!line.has_prefix ("#")) && (line.strip () != "")) {
+					flist.add (line);
+				}
+			}
+		} catch (Error e) {
+			error (_("Unable to fetch application file list! Message: %s").printf (e.message));
+			return null;
+		}
+		return flist;
 	}
 
 	private AppItem? retrieve_app_item (Sqlite.Statement stmt) {
