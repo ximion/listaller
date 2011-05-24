@@ -459,7 +459,7 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_name (string appName) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE full_name=?", -1, out stmt);
 		return_if_fail (check_result (res, "get application (by name)"));
 
 		res = stmt.bind_text (1, appName);
