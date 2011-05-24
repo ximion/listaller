@@ -117,7 +117,6 @@ private class SoftwareDB : Object {
 				ErrorItem item = new ErrorItem(ErrorEnum.DATABASE_FAILURE);
 				item.details = details;
 				error_code (item);
-				critical (details);
 			}
 		db_status_changed (dbs, details);
 	}
@@ -255,17 +254,29 @@ private class SoftwareDB : Object {
 		}
 	}
 
-	protected void fatal (string op, int res) {
-		string msg = "%s: [%d] %s".printf (op, res, db.errmsg());
+	private void fatal (string op, int res) {
+		if (op == "")
+			op = "action";
+		string msg = _("Database problem:") + "\n%s: [%d] %s".printf (op, res, db.errmsg());
 		dbstatus_changed (DatabaseStatus.FATAL, msg);
+	}
+
+	protected bool check_result (int res, string info = "") {
+		try {
+			throw_error (info, res);
+		} catch (Error e) {
+			fatal (info, res);
+			return false;
+		}
+		return true;
 	}
 
 	public bool has_table (string table_name) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("PRAGMA table_info(%s)".printf(table_name), -1, out stmt);
-		assert (res == Sqlite.OK);
+		return_if_fail (check_result (res, "prepare db"));
 
-		res = stmt.step();
+		res = stmt.step ();
 
 		return (res != Sqlite.DONE);
 	}
@@ -291,7 +302,7 @@ private class SoftwareDB : Object {
 		+ "origin TEXT NOT NULL, "
 		+ "dependencies TEXT"
 		+ ")", -1, out stmt);
-		assert (res == Sqlite.OK);
+		return_if_fail (check_result (res, "create applications table"));
 
 		res = stmt.step ();
 		if (res != Sqlite.DONE) {
@@ -308,7 +319,7 @@ private class SoftwareDB : Object {
 		+ "pkgmaintainer TEXT, "
 		+ "install_time INTEGER"
 		+ ")", -1, out stmt);
-		assert (res == Sqlite.OK);
+		return_if_fail (check_result (res, "create dependencies table"));
 
 		res = stmt.step ();
 		if (res != Sqlite.DONE) {
@@ -326,33 +337,43 @@ private class SoftwareDB : Object {
 			+ "categories, install_time, origin, dependencies) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				   -1, out stmt);
-			assert (res == Sqlite.OK);
+			return_if_fail (check_result (res, "add application"));
 
 			ulong time_created = now_sec ();
 
 			// Assign values
 			res = stmt.bind_text (1, item.idname);
-			assert (res == Sqlite.OK);
+			return_if_fail (check_result (res, "assign value"));
+
 			res = stmt.bind_text (2, item.version);
-			assert (res == Sqlite.OK);
+			return_if_fail (check_result (res, "assign value"));
+
 			res = stmt.bind_text (3, item.full_name);
-			assert (res == Sqlite.OK);
+			return_if_fail (check_result (res, "assign value"));
+
 			res = stmt.bind_text (4, item.desktop_file);
-			assert (res == Sqlite.OK);
+			return_if_fail (check_result (res, "assign value"));
+
 			res = stmt.bind_text (5, item.summary);
-			assert (res == Sqlite.OK);
+			return_if_fail (check_result (res, "assign value"));
+
 			res = stmt.bind_text (6, item.author);
-			assert (res == Sqlite.OK);
+			return_if_fail (check_result (res, "assign value"));
+
 			res = stmt.bind_text (7, item.maintainer);
-			assert (res == Sqlite.OK);
+			return_if_fail (check_result (res, "assign value"));
+
 			res = stmt.bind_text (8, item.categories);
-			assert (res == Sqlite.OK);
+			return_if_fail (check_result (res, "assign value"));
+
 			res = stmt.bind_int64 (9, item.install_time);
-			assert (res == Sqlite.OK);
+			return_if_fail (check_result (res, "assign value"));
+
 			res = stmt.bind_text (10, item.origin.to_string ());
-			assert (res == Sqlite.OK);
+			return_if_fail (check_result (res, "assign value"));
+
 			res = stmt.bind_text (11, item.dependencies);
-			assert (res == Sqlite.OK);
+			return_if_fail (check_result (res, "assign value"));
 
 			res = stmt.step();
 			if (res != Sqlite.DONE) {
@@ -439,7 +460,7 @@ private class SoftwareDB : Object {
 	public AppItem? get_application_by_name (string appName) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=?", -1, out stmt);
-		assert (res == Sqlite.OK);
+		return_if_fail (check_result (res, "get application (by name)"));
 
 		res = stmt.bind_text (1, appName);
 
@@ -457,7 +478,7 @@ private class SoftwareDB : Object {
 	public AppItem? get_application_by_dbid (int databaseId) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE id=?", -1, out stmt);
-		assert (res == Sqlite.OK);
+		return_if_fail (check_result (res, "get application (by db_id)"));
 
 		res = stmt.bind_int (1, databaseId);
 
@@ -475,12 +496,12 @@ private class SoftwareDB : Object {
 	public AppItem? get_application_by_name_version (string appName, string appVersion) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=? AND version=?", -1, out stmt);
-		assert (res == Sqlite.OK);
+		return_if_fail (check_result (res, "get application (by name_version)"));
 
 		res = stmt.bind_text (1, appName);
-		assert (res == Sqlite.OK);
+		return_if_fail (check_result (res, "assign value"));
 		res = stmt.bind_text (2, appVersion);
-		assert (res == Sqlite.OK);
+		return_if_fail (check_result (res, "assign value"));
 
 		if (stmt.step() != Sqlite.ROW)
 			return null;
