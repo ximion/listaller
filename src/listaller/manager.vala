@@ -22,12 +22,15 @@
 using GLib;
 using Listaller;
 
-// Workaround for Vala bug #618931
-private const string _PKG_VERSION9 = Config.VERSION;
-
 [CCode (cheader_filename = "listaller-glib/manager.h")]
 
 namespace Listaller {
+
+public enum Filter {
+	NO_FILTER,
+	INSTALLED,
+	AVAILABLE;
+}
 
 public class Manager : Object {
 	private Settings conf;
@@ -36,6 +39,7 @@ public class Manager : Object {
 	public signal void progress_changed (int progress, int subprogress);
 	public signal void status_changed (StatusItem status);
 	public signal void message (MessageItem message);
+	public signal void application (AppItem appid);
 
 	public Settings settings {
 		get { return conf; }
@@ -53,9 +57,8 @@ public class Manager : Object {
 		debug ("This is Listaller " + Config.VERSION);
 	}
 
-	public void test () {
-		SoftwareDB sdb = new SoftwareDB (conf);
-		sdb.open ();
+	public bool find_applications (Filter filter) {
+		return true;
 	}
 }
 
