@@ -94,17 +94,23 @@ public class Manager : Object {
 	public ArrayList<AppItem> find_applications (Filter filter) {
 		db.open ();
 		ArrayList<AppItem> alist = new ArrayList<AppItem> ();
+		double one = 100d / db.get_applications_count ();
 		int i = 1;
 		AppItem capp = null;
 		for (capp = db.get_application_by_dbid (i); capp != null; i++) {
 			application (capp);
 			alist.add (capp);
+			progress_changed ((int) Math.round (one * i));
 		}
 		db.close ();
 		return alist;
 	}
 
 	public bool remove_application (AppItem app) {
+		app.fast_check ();
+		db.open ();
+		ArrayList<string> files = db.get_application_filelist (app);
+		db.close ();
 		return true;
 	}
 }

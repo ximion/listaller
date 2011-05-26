@@ -74,7 +74,7 @@ public enum DatabaseStatus {
 }
 
 private class SoftwareDB : Object {
-	private Database db;
+	private Database *db;
 	private Settings conf;
 	private bool locked;
 	private string dblockfile;
@@ -129,7 +129,7 @@ private class SoftwareDB : Object {
 		GLib.message (msg);
 	}
 
-	public bool open () {
+	private bool open_db () {
 		string dbname = conf.database_file ();
 		int rc;
 
@@ -147,11 +147,28 @@ private class SoftwareDB : Object {
 		rc = Database.open (dbname, out db);
 
 		if (rc != Sqlite.OK) {
-			string msg = "Can't open database! (Message: %d, %s)".printf (rc, db.errmsg ());
+			string msg = "Can't open database! (Message: %d, %s)".printf (rc, db->errmsg ());
 			stderr.printf (msg);
 			dbstatus_changed (DatabaseStatus.FAILURE, msg);
 			return false;
 		}
+
+		create_dir_parents (regdir);
+		dbstatus_changed (DatabaseStatus.OPENED, "");
+
+		// Ensure the database is okay and all tables are created
+		if (!update_db_structure ()) {
+			dbstatus_changed (DatabaseStatus.FAILURE, _("Could not create/update software database!"));
+			return false;
+		}
+
+		return true;
+	}
+
+	public bool open () {
+		bool ret;
+		ret = open_db ();
+		return_if_fail (ret == true);
 
 		// Drop "lock" file
 		File lfile = File.new_for_path (dblockfile);
@@ -169,23 +186,19 @@ private class SoftwareDB : Object {
 		}
 		// DB is now locked
 		locked = true;
-
-		create_dir_parents (regdir);
-
 		dbstatus_changed (DatabaseStatus.LOCKED, "");
-		dbstatus_changed (DatabaseStatus.OPENED, "");
-
-		// Ensure the database is okay and all tables are created
-		if (!update_db_structure ()) {
-			dbstatus_changed (DatabaseStatus.FAILURE, _("Could not create/update software database!"));
-			return false;
-		}
-
 		return true;
 	}
 
+	public bool open_readonly () {
+		bool ret;
+		ret = open_db ();
+		return ret;
+	}
+
 	public void close () {
-		// Just delete the lock
+		delete db;
+		// Delete the lock
 		remove_db_lock ();
 	}
 
@@ -207,7 +220,7 @@ private class SoftwareDB : Object {
 	 * are considered normal results.
 	 */
 	protected void throw_error (string method, int res) throws DatabaseError {
-		string msg = "(%s) [%d] - %s".printf (method, res, db.errmsg());
+		string msg = "(%s) [%d] - %s".printf (method, res, db->errmsg());
 
 		switch (res) {
 			case Sqlite.OK:
@@ -257,7 +270,7 @@ private class SoftwareDB : Object {
 	private void fatal (string op, int res) {
 		if (op == "")
 			op = "action";
-		string msg = _("Database problem:") + "\n%s: [%d] %s".printf (op, res, db.errmsg());
+		string msg = _("Database problem:") + "\n%s: [%d] %s".printf (op, res, db->errmsg());
 		dbstatus_changed (DatabaseStatus.FATAL, msg);
 	}
 
@@ -273,7 +286,7 @@ private class SoftwareDB : Object {
 
 	public bool has_table (string table_name) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("PRAGMA table_info(%s)".printf(table_name), -1, out stmt);
+		int res = db->prepare_v2 ("PRAGMA table_info(%s)".printf(table_name), -1, out stmt);
 		return_if_fail (check_result (res, "prepare db"));
 
 		res = stmt.step ();
@@ -288,7 +301,7 @@ private class SoftwareDB : Object {
 		+ "categories, install_time, origin, dependencies";
 
 		// Create table to store information about applications
-		int res = db.prepare_v2 ("CREATE TABLE IF NOT EXISTS applications ("
+		int res = db->prepare_v2 ("CREATE TABLE IF NOT EXISTS applications ("
 		+ "id INTEGER PRIMARY KEY, "
 		+ "name TEXT UNIQUE NOT NULL, "
 		+ "version TEXT NOT NULL, "
@@ -311,7 +324,7 @@ private class SoftwareDB : Object {
 		}
 
 		// Table for all the additional stuff fetched during installation (3rd-party libraries etc.)
-		res = db.prepare_v2 ("CREATE TABLE IF NOT EXISTS dependencies ("
+		res = db->prepare_v2 ("CREATE TABLE IF NOT EXISTS dependencies ("
 		+ "id INTEGER PRIMARY KEY, "
 		+ "name TEXT UNIQUE NOT NULL, "
 		+ "version TEXT UNIQUE NOT NULL, "
@@ -331,8 +344,12 @@ private class SoftwareDB : Object {
 	}
 
 	public bool add_application (AppItem item) {
+		if (!locked) {
+			fatal ("write to unlocked database!", Sqlite.ERROR);
+			return false;
+		}
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 (
+		int res = db->prepare_v2 (
 			"INSERT INTO applications (name, version, full_name, desktop_file, summary, author, pkgmaintainer, "
 			+ "categories, install_time, origin, dependencies) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -387,6 +404,10 @@ private class SoftwareDB : Object {
 	}
 
 	public bool add_application_filelist (AppItem aid, ArrayList<IPK.FileEntry> flist) {
+		if (!locked) {
+			fatal ("write to readonly database!", Sqlite.ERROR);
+			return false;
+		}
 		string metadir = Path.build_filename (regdir, aid.idname, null);
 		create_dir_parents (metadir);
 
@@ -438,6 +459,17 @@ private class SoftwareDB : Object {
 		return flist;
 	}
 
+	public int get_applications_count () {
+		Sqlite.Statement stmt;
+		int res = db->prepare_v2 ("SELECT Count(*) FROM applications", -1, out stmt);
+		return_if_fail (check_result (res, "get applications count"));
+
+		if (stmt.step() != Sqlite.ROW)
+			return -1;
+		int count = stmt.column_int (0);
+		return count;
+	}
+
 	private AppItem? retrieve_app_item (Sqlite.Statement stmt) {
 		AppItem item = new AppItem.blank ();
 
@@ -459,7 +491,7 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_name (string appName) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE full_name=?", -1, out stmt);
+		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE full_name=?", -1, out stmt);
 		return_if_fail (check_result (res, "get application (by name)"));
 
 		res = stmt.bind_text (1, appName);
@@ -477,7 +509,7 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_dbid (int databaseId) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE id=?", -1, out stmt);
+		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE id=?", -1, out stmt);
 		return_if_fail (check_result (res, "get application (by db_id)"));
 
 		res = stmt.bind_int (1, databaseId);
@@ -495,7 +527,7 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_name_version (string appName, string appVersion) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=? AND version=?", -1, out stmt);
+		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=? AND version=?", -1, out stmt);
 		return_if_fail (check_result (res, "get application (by name_version)"));
 
 		res = stmt.bind_text (1, appName);

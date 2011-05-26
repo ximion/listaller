@@ -81,6 +81,9 @@ void test_software_db () {
 	msg ("Item is: %s".printf (newItem.to_string ()));
 	}
 
+	int count = sdb.get_applications_count ();
+	assert (count == 1);
+
 	sdb.close ();
 	msg ("Software database closed.");
 }
