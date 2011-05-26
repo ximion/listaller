@@ -76,6 +76,12 @@ void test_application_ids () {
 	assert (item3.idname == "google_earth");
 }
 
+void test_utils () {
+	string xpath = fold_user_dir (datadir);
+	xpath = expand_user_dir (xpath);
+	assert (datadir == xpath);
+}
+
 int main (string[] args) {
 	msg ("=== Running Basic Tests ===");
 	datadir = args[1];
@@ -85,6 +91,7 @@ int main (string[] args) {
 	assert (FileUtils.test (datadir, FileTest.EXISTS) != false);
 
 	Test.init (ref args);
+	test_utils ();
 	test_application_ids ();
 	Test.run ();
 	return 0;

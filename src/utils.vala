@@ -223,4 +223,22 @@ private bool dir_is_empty (string dirname) {
 	return n == 0;
 }
 
+private string fold_user_dir (string path) {
+	string udir = Environment.get_home_dir ();
+	if (!path.has_prefix (udir))
+		return path;
+
+	string folded_path = path.replace (udir, "~");
+	return folded_path;
+}
+
+private string expand_user_dir (string path) {
+	if (!path.has_prefix ("~"))
+		return path;
+
+	string full_path = path.substring (1);
+	full_path = Path.build_filename (Environment.get_home_dir (), full_path, null);
+	return full_path;
+}
+
 } // End of namespace
