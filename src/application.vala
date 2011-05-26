@@ -58,6 +58,7 @@ public class AppItem : Object {
 	private string _categories;
 	private string _desktop_file;
 	private string _url;
+	private string _icon_name;
 	private int64  _install_time;
 	private string _dependencies;
 	private AppOrigin _origin;
@@ -112,6 +113,11 @@ public class AppItem : Object {
 		set { _desktop_file = value; }
 	}
 
+	public string icon_name {
+		get { return _icon_name; }
+		set { _icon_name = value; }
+	}
+
 	public string url {
 		get { return _url; }
 		set { _url = value; }
@@ -161,6 +167,7 @@ public class AppItem : Object {
 		_app_id = "";
 		_desktop_file = "";
 		_url = "";
+		_icon_name = "";
 		archs = system_architecture ();
 	}
 
@@ -329,6 +336,7 @@ public class AppItem : Object {
 			idname = full_name;
 		version = get_desktop_file_string (dfile, "X-AppVersion");
 		summary = get_desktop_file_string (dfile, "Comment");
+		icon_name = get_desktop_file_string (dfile, "Icon");
 		author = get_desktop_file_string (dfile, "X-Author");
 		categories = get_desktop_file_string (dfile, "Categories");
 		maintainer = get_desktop_file_string (dfile, "X-Packager");

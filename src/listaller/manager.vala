@@ -104,10 +104,10 @@ public class Manager : Object {
 		return true;
 	}
 
-	public ArrayList<AppItem> find_applications (Filter filter) {
+	public bool find_applications (Filter filter, out ArrayList<AppItem> appList = null) {
 		ArrayList<AppItem> alist = new ArrayList<AppItem> ();
 		if (!open_db (false))
-			return alist;
+			return false;
 
 		double one = 100d / db.get_applications_count ();
 		int i = 1;
@@ -119,7 +119,8 @@ public class Manager : Object {
 			capp = null;
 		}
 		db.close ();
-		return alist;
+		appList = alist;
+		return true;
 	}
 
 	public bool remove_application (AppItem app) {
