@@ -28,7 +28,7 @@ using Listaller;
 namespace Listaller {
 
 public enum Filter {
-	NO_FILTER,
+	NONE,
 	INSTALLED,
 	AVAILABLE;
 }
@@ -63,8 +63,6 @@ public class Manager : Object {
 		db.message.connect ((message) => {
 			this.message (message);
 		});
-
-		debug ("This is Listaller " + Config.VERSION);
 	}
 
 	private void emit_message (string msg) {
@@ -91,9 +89,26 @@ public class Manager : Object {
 		critical (details);
 	}
 
+	private bool open_db (bool writeable = true) {
+		if (writeable) {
+			if (!db.open ()) {
+				emit_error (ErrorEnum.DB_OPEN_FAILED, _("Unable to open software database for reading & writing!"));
+				return false;
+			}
+		} else {
+			if (!db.open_readonly ()) {
+				emit_error (ErrorEnum.DB_OPEN_FAILED, _("Unable to open software database for reading only!"));
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public ArrayList<AppItem> find_applications (Filter filter) {
-		db.open ();
 		ArrayList<AppItem> alist = new ArrayList<AppItem> ();
+		if (!open_db (false))
+			return alist;
+
 		double one = 100d / db.get_applications_count ();
 		int i = 1;
 		AppItem capp = null;
@@ -101,6 +116,7 @@ public class Manager : Object {
 			application (capp);
 			alist.add (capp);
 			progress_changed ((int) Math.round (one * i));
+			capp = null;
 		}
 		db.close ();
 		return alist;
@@ -108,7 +124,7 @@ public class Manager : Object {
 
 	public bool remove_application (AppItem app) {
 		app.fast_check ();
-		db.open ();
+		open_db ();
 		ArrayList<string> files = db.get_application_filelist (app);
 
 		foreach (string fname in files) {

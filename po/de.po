@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-19 22:36+0200\n"
+"POT-Creation-Date: 2011-05-26 17:21+0200\n"
 "PO-Revision-Date: 2011-04-26 16:16+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -90,6 +90,10 @@ msgid ""
 "Could not read IPK payload container! Package might be damaged. Error: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Could not remove file %s!"
+msgstr "Konnte IPK Datei nicht öffnen: %s"
+
 #, c-format
 msgid ""
 "Could not validate file %s. This IPK file might have been modified after "
@@ -110,6 +114,10 @@ msgid "Database action successful"
 msgstr "Datenbankaktion erfolgreich."
 
 msgid "Database locked"
+msgstr "Datenbank gesperrt"
+
+#, fuzzy
+msgid "Database problem:"
 msgstr "Datenbank gesperrt"
 
 msgid "Database unlocked"
@@ -217,6 +225,11 @@ msgid ""
 "This IPK package might be damaged, please obtain a new copy!"
 msgstr ""
 
+msgid ""
+"This application was already installed. Please remove the existing version "
+"to continue!"
+msgstr ""
+
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
 
@@ -240,11 +253,25 @@ msgstr ""
 "Besorgen Sie sich eine neue Kopie und versuchen Sie es erneut."
 
 #, fuzzy, c-format
+msgid "Unable to fetch application file list! Message: %s"
+msgstr "Konnte diese Anwendung nicht entfernen!"
+
+#, fuzzy, c-format
 msgid "Unable to find native package for %s!"
 msgstr "Konnte liUpdater nicht finden!"
 
+msgid "Unable to open software database for reading & writing!"
+msgstr ""
+
+msgid "Unable to open software database for reading only!"
+msgstr ""
+
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+#, c-format
+msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
 msgid "Use recursive mode"
@@ -749,9 +776,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Konnte keine GUI-Paketmanager finden.\rBitte installieren sie eine "
 #~ "grafische Oberfläche für PackageKit!"
-
-#~ msgid "Could not open IPK file: %s"
-#~ msgstr "Konnte IPK Datei nicht öffnen: %s"
 
 #~ msgid "Couldn't find Listaller Manager!"
 #~ msgstr "Konnte Listaller Manager nicht finden!"
@@ -2317,9 +2341,6 @@ msgstr ""
 
 #~ msgid "Unable to overwrite the file %f."
 #~ msgstr "Konnte Datei %f nicht überschreiben."
-
-#~ msgid "Unable to remove this application!"
-#~ msgstr "Konnte diese Anwendung nicht entfernen!"
 
 #~ msgid "Uninstall"
 #~ msgstr "Deinstallieren"

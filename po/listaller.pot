@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: listaller\n"
         "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-        "POT-Creation-Date: 2011-05-19 22:36+0200\n"
+        "POT-Creation-Date: 2011-05-26 17:21+0200\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,6 +83,10 @@ msgid   "Could not read IPK payload container! Package might be damaged. Error: 
 msgstr  ""
 
 #, c-format
+msgid   "Could not remove file %s!"
+msgstr  ""
+
+#, c-format
 msgid   "Could not validate file %s. This IPK file might have been modified after creation!\n"
         "Please obtain a new copy and try again."
 msgstr  ""
@@ -97,6 +101,9 @@ msgid   "Database action successful"
 msgstr  ""
 
 msgid   "Database locked"
+msgstr  ""
+
+msgid   "Database problem:"
 msgstr  ""
 
 msgid   "Database unlocked"
@@ -197,6 +204,9 @@ msgid   "Some files of this package could not be installed, because they were no
         "This IPK package might be damaged, please obtain a new copy!"
 msgstr  ""
 
+msgid   "This application was already installed. Please remove the existing version to continue!"
+msgstr  ""
+
 msgid   "Tried to perform action on invalid IPK package."
 msgstr  ""
 
@@ -215,11 +225,25 @@ msgid   "Unable to extract data file %s. This IPK package might be damaged, plea
 msgstr  ""
 
 #, c-format
+msgid   "Unable to fetch application file list! Message: %s"
+msgstr  ""
+
+#, c-format
 msgid   "Unable to find native package for %s!"
+msgstr  ""
+
+msgid   "Unable to open software database for reading & writing!"
+msgstr  ""
+
+msgid   "Unable to open software database for reading only!"
 msgstr  ""
 
 #, c-format
 msgid   "Unable to remove database lock! (Message: %s)"
+msgstr  ""
+
+#, c-format
+msgid   "Unable to write application file list! Message: %s"
 msgstr  ""
 
 msgid   "Use recursive mode"

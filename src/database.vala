@@ -133,13 +133,6 @@ private class SoftwareDB : Object {
 		string dbname = conf.database_file ();
 		int rc;
 
-		// If database is locked, we should not try to read/write on it
-		if (database_locked ()) {
-			// We set locked to false, because this DB is NOT locked (because it can't be opened)
-			locked = false;
-			return false;
-		}
-
 		if (!FileUtils.test (dbname, FileTest.IS_REGULAR)) {
 			emit_message ("Software database does not exist - will be created.");
 		}
@@ -167,6 +160,14 @@ private class SoftwareDB : Object {
 
 	public bool open () {
 		bool ret;
+
+		// If database is locked, we should not try to write on it
+		if (database_locked ()) {
+			// We set locked to false, because this DB is NOT locked (because it can't be opened)
+			locked = false;
+			return false;
+		}
+
 		ret = open_db ();
 		return_if_fail (ret == true);
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-19 22:36+0200\n"
+"POT-Creation-Date: 2011-05-26 17:21+0200\n"
 "PO-Revision-Date: 2011-04-19 11:06+0000\n"
 "Last-Translator: Thaynã Moretti <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -88,6 +88,10 @@ msgid ""
 "Could not read IPK payload container! Package might be damaged. Error: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Could not remove file %s!"
+msgstr "Não foi possível abrir o IPK! Erro: %s"
+
 #, c-format
 msgid ""
 "Could not validate file %s. This IPK file might have been modified after "
@@ -105,6 +109,9 @@ msgid "Database action successful"
 msgstr ""
 
 msgid "Database locked"
+msgstr ""
+
+msgid "Database problem:"
 msgstr ""
 
 msgid "Database unlocked"
@@ -210,6 +217,11 @@ msgid ""
 "This IPK package might be damaged, please obtain a new copy!"
 msgstr ""
 
+msgid ""
+"This application was already installed. Please remove the existing version "
+"to continue!"
+msgstr ""
+
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
 
@@ -230,11 +242,25 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
+msgid "Unable to fetch application file list! Message: %s"
+msgstr "Não foi capaz de remover este aplicativo!"
+
+#, fuzzy, c-format
 msgid "Unable to find native package for %s!"
 msgstr "Não é possível localizar %s"
 
+msgid "Unable to open software database for reading & writing!"
+msgstr ""
+
+msgid "Unable to open software database for reading only!"
+msgstr ""
+
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+#, c-format
+msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
 msgid "Use recursive mode"
@@ -603,9 +629,6 @@ msgstr ""
 
 #~ msgid "Unable to override the file %f."
 #~ msgstr "Não foi capaz de sobrescrever o arquivo %f."
-
-#~ msgid "Unable to remove this application!"
-#~ msgstr "Não foi capaz de remover este aplicativo!"
 
 #~ msgid "Uninstalling %a"
 #~ msgstr "Desinstalando %a"
