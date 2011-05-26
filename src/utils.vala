@@ -210,4 +210,17 @@ private bool move_file (string source, string destination) throws Error {
 	return true;
 }
 
+private bool dir_is_empty (string dirname) {
+	int n = 0;
+	Posix.DirEnt *d;
+	Posix.Dir dir = Posix.opendir (dirname);
+
+	if (dir == null)
+		return false;
+	while ((d = Posix.readdir (dir)) != null)
+		n++;
+
+	return n == 0;
+}
+
 } // End of namespace

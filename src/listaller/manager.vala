@@ -110,8 +110,26 @@ public class Manager : Object {
 		app.fast_check ();
 		db.open ();
 		ArrayList<string> files = db.get_application_filelist (app);
+
+		foreach (string fname in files) {
+			if (FileUtils.test (fname, FileTest.EXISTS)) {
+				int ret = FileUtils.remove (fname);
+				if (ret != 0) {
+					emit_error (ErrorEnum.REMOVAL_FAILED, _("Could not remove file %s!").printf (fname));
+					db.close ();
+					return false;
+				}
+				string dirn = Path.get_dirname (fname);
+				// Remove directory if it is empty
+				if (dir_is_empty (dirn)) {
+					DirUtils.remove (dirn);
+				}
+			}
+		}
+		bool ret = db.remove_application (app);
 		db.close ();
-		return true;
+
+		return ret;
 	}
 }
 

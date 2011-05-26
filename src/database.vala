@@ -546,6 +546,25 @@ private class SoftwareDB : Object {
 		return item;
 	}
 
+	public bool remove_application (AppItem app) {
+		bool ret = true;
+		string metadir = Path.build_filename (regdir, app.idname, null);
+		Sqlite.Statement stmt;
+		int res = db->prepare_v2 ("DELETE FROM applications WHERE name=?", -1, out stmt);
+		return_if_fail (check_result (res, "delete application"));
+
+		res = stmt.bind_text (1, app.idname);
+		return_if_fail (check_result (res, "delete application"));
+
+		res = stmt.step();
+		return_if_fail (check_result (res, "delete application"));
+
+		ret = delete_dir_recursive (metadir);
+		if (!ret)
+			critical ("Could not remove metadata directory for application-id %s!".printf (app.idname));
+		return ret;
+	}
+
 	public AppItem? get_application_by_id (AppItem aid) {
 		return get_application_by_name (aid.idname);
 	}
