@@ -112,8 +112,8 @@ public abstract class CXml : Object {
 	public void test_dump_xml () {
 		string xmlstr;
 		// This throws a compiler warning, see bug 547364
-		xdoc->dump_memory (out xmlstr);
-
+		xdoc->dump_memory_format (out xmlstr);
+		xmlstr = "\n" + xmlstr + "\n";
 		debug (xmlstr);
 	}
 
@@ -140,7 +140,7 @@ public abstract class CXml : Object {
 		return pkgnd;
 	}
 
-	internal Xml.Node* get_xsubnode (Xml.Node* sn, string id) {
+	internal Xml.Node* get_xsubnode (Xml.Node* sn, string id, string attr = "", string attr_value = "") {
 		Xml.Node* res = null;
 		assert (sn != null);
 
@@ -150,13 +150,23 @@ public abstract class CXml : Object {
 				continue;
 			}
 			if (iter->name == id) {
-				res = iter;
-				break;
+				if (attr != "") {
+					if (get_node_content (get_xproperty (iter, attr)) == attr_value) {
+						res = iter;
+						break;
+					}
+				} else {
+					res = iter;
+					break;
+				}
 			}
 		}
 		// If node was not found, create new one
-		if (res == null)
+		if (res == null) {
 			res = sn->new_text_child (null, id, "");
+			if (attr != "")
+				res->new_prop (attr, attr_value);
+		}
 		return res;
 	}
 
@@ -185,14 +195,6 @@ public abstract class CXml : Object {
 
 	// Setter/Getter methods for XML properties
 	// Package itself
-	public void set_pkg_id (string s) {
-		Xml.Node* n = get_xsubnode (pkg_node (), "id");
-		n->set_content (s);
-	}
-
-	public string get_pkg_id () {
-		return get_node_content (get_xsubnode (pkg_node (), "id"));
-	}
 
 	public void set_pkg_dependencies (ArrayList<Dependency> list) {
 		// Create dependencies node
@@ -248,20 +250,28 @@ public abstract class CXml : Object {
 		return get_node_content (get_xsubnode (app_node (), name));
 	}
 
+	protected void set_app_id (string type, string s) {
+		Xml.Node* n = get_xsubnode (app_node (), "id", "type", type);
+		n->set_content (s);
+	}
+
+	protected string get_app_id (string type) {
+		return get_node_content (get_xsubnode (app_node (), "id", "type", type));
+	}
+
 	public void set_application (AppItem app) {
 		if (app.desktop_file != "") {
 			Xml.Node* n1;
 			n1 = app_node()->new_text_child (null, "id", app.desktop_file);
 			n1->new_prop ("type", "desktop");
 		}
-		Xml.Node* n2;
-		n2 = app_node()->new_text_child (null, "id", app.appid);
-		n2->new_prop ("type", "appid");
+		set_app_id ("idname", app.idname);
+		set_app_id ("desktop", app.desktop_file);
 
-		Xml.Node* n3 = get_xproperty (app_node (), "name");
-		n3->set_content (app.full_name);
-		Xml.Node* n4 = get_xproperty (app_node (), "version");
-		n4->set_content (app.version);
+		Xml.Node* n2 = get_xproperty (app_node (), "name");
+		n2->set_content (app.full_name);
+		Xml.Node* n3 = get_xproperty (app_node (), "version");
+		n3->set_content (app.version);
 		set_app_str ("summary", app.summary);
 		set_app_str ("url", app.url);
 	}
@@ -273,6 +283,8 @@ public abstract class CXml : Object {
 
 		app.summary = get_app_str ("summary");
 		app.url = get_app_str ("url");
+		app.idname = get_app_id ("idname");
+		app.desktop_file = get_app_id ("desktop");
 
 		return app;
 	}
@@ -363,7 +375,8 @@ public class Script : CXml {
 	}
 
 	public bool save_to_file (string fname) {
-		return xdoc->save_file (fname) == 0;
+		xdoc->save_format_file_enc (fname, "UTF-8", true);
+		return true;
 	}
 
 	public override void set_app_description (string text) {

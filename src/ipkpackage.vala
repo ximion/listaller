@@ -314,7 +314,7 @@ private class Package : Object {
 		bool ret = true;
 
 		// Varsolver to solve LI variables
-		VarSolver vs = new VarSolver (appInfo.appid);
+		VarSolver vs = new VarSolver (appInfo.idname);
 		string int_path = vs.substitute_vars_id (fe.get_full_filename ());
 
 		string dest = vs.substitute_vars_auto (fe.destination, conf);
@@ -386,7 +386,7 @@ private class Package : Object {
 		if (!ret)
 			return ret;
 
-		VarSolver vs = new VarSolver (appInfo.appid);
+		VarSolver vs = new VarSolver (appInfo.idname);
 		string int_path = vs.substitute_vars_id (fe.get_full_filename ());
 
 		Read plar = open_payload_archive ();
@@ -412,7 +412,7 @@ private class Package : Object {
 	// Search for IPKFileEntry with the given IPK internal path
 	private IPK.FileEntry? get_fe_by_int_path (ArrayList<IPK.FileEntry> list, string int_path) {
 		IPK.FileEntry re = null;
-		VarSolver vs = new VarSolver (appInfo.appid);
+		VarSolver vs = new VarSolver (appInfo.idname);
 		foreach (IPK.FileEntry e in list) {
 			if (vs.substitute_vars_id (e.get_full_filename ()) == int_path) {
 				re = e;
@@ -460,7 +460,7 @@ private class Package : Object {
 		if ((prog != fcache.size) && (ret == true)) {
 			rollback_installation ();
 			emit_error (ErrorEnum.IPK_INCOMPLETE,
-				    _("Some files of this package could not be installed, because they were not found in the payload data.\nThis IPK package might be damaged, please obtain a new copy!"));
+				    _("Some files of this package could not be installed, because they were not found in payload data.\nThis IPK package might be damaged, please obtain a new copy!"));
 			ret = false;
 		}
 		plar.close ();

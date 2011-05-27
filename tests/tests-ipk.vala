@@ -49,7 +49,7 @@ void test_ipk_package () {
 	Listaller.Settings conf = new Listaller.Settings ();
 	conf.testmode = true;
 
-	string ipkfilename = Path.build_filename (datadir, "foobar-1.0_install.ipk", null);
+	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_install.ipk", null);
 	msg ("Loading IPK package %s".printf (ipkfilename));
 	IPK.Package ipk = new IPK.Package (ipkfilename, conf);
 	// Connect signal handlers
@@ -73,8 +73,9 @@ void test_ipk_control_file () {
 	IPK.Control ipkc = new IPK.Control ();
 	ipkc.create_new ();
 	AppItem a = new AppItem ("echoecho", "123");
+	a.idname = "echo-123";
+	a.desktop_file = "echo.desktop";
 	ipkc.set_application (a);
-	ipkc.set_pkg_id ("echo-123");
 
 	ArrayList<IPK.Dependency> list = new ArrayList<IPK.Dependency> ();
 	IPK.Dependency d = null;
@@ -96,11 +97,12 @@ void test_ipk_control_file () {
 
 	ipkc.set_pkg_dependencies (list);
 
-	//! ipkc.print_xml ();
+	ipkc.test_dump_xml ();
 
 	AppItem app = ipkc.get_application ();
 	assert (app.full_name == "echoecho");
-	assert (ipkc.get_pkg_id () == "echo-123");
+	assert (app.idname == "echo-123");
+	assert (app.desktop_file == "$APP/echo.desktop");
 
 	list = ipkc.get_pkg_dependencies ();
 	assert (list[0].name == "alpha");

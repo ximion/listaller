@@ -69,12 +69,8 @@ private class VarSolver : Object {
 	public VarSolver (string appIdName = "") {
 		contained_sysvars = false;
 		conf = new Settings ();
-		if (appIdName == "") {
-			appName = "";
-		} else {
-			AppItem ai = new AppItem.from_id (appIdName);
-			appName = ai.idname;
-		}
+
+		appName = appIdName;
 		if (appName == "")
 			warning ("Using VarSolver without valid application-id!");
 

@@ -57,6 +57,7 @@ public class AppItem : Object {
 	private string _pkgmaintainer;
 	private string _categories;
 	private string _desktop_file;
+	private string _desktop_file_prefix;
 	private string _url;
 	private string _icon_name;
 	private int64  _install_time;
@@ -64,6 +65,7 @@ public class AppItem : Object {
 	private AppOrigin _origin;
 	private int _dbid;
 	private string _app_id;
+	private Listaller.Settings? _liconf;
 
 	public string idname {
 		get {
@@ -109,7 +111,17 @@ public class AppItem : Object {
 	}
 
 	public string desktop_file {
-		get { return _desktop_file; }
+		get {
+			if (_desktop_file.strip () == "")
+				return "";
+			string dfile = _desktop_file;
+			if ((!dfile.has_prefix ("$")) && (!dfile.has_prefix ("/"))) {
+				// If no exact path has been specified, we assume $APP
+				dfile = Path.build_filename ("$APP", dfile, null);
+			}
+			_desktop_file_prefix = dfile;
+			return _desktop_file_prefix;
+		}
 		set { _desktop_file = value; }
 	}
 
@@ -147,6 +159,10 @@ public class AppItem : Object {
 		get { _app_id = generate_appid (); return _app_id; }
 	}
 
+	public Listaller.Settings lisettings {
+		set { _liconf = value; }
+	}
+
 	/*
 	 * Id the application has in the database
 	 */
@@ -169,6 +185,7 @@ public class AppItem : Object {
 		_url = "";
 		_icon_name = "";
 		archs = system_architecture ();
+		_liconf = null;
 	}
 
 	public AppItem (string afullname, string aversion, string aarchs = "") {
@@ -196,6 +213,13 @@ public class AppItem : Object {
 			+ "(" + version +") "
 			+ "! " + appid + " ::" + dbid.to_string () + " "
 			+ "]";
+	}
+
+	protected Listaller.Settings liconfig () {
+		if (_liconf == null) {
+			return new Listaller.Settings ();
+		}
+		return _liconf;
 	}
 
 	public void fast_check () {
@@ -322,14 +346,31 @@ public class AppItem : Object {
 	public void update_with_desktop_file () {
 		if (desktop_file == "")
 			return;
-		if (!FileUtils.test (desktop_file, FileTest.EXISTS))
+		// Resolve variables in desktop_file path
+		string fname;
+		// Set idname if no idname was specified
+		if (idname == "") {
+			idname = string_replace (Path.get_basename (desktop_file), "(.desktop)", "");
+			debug ("Set app-idname from desktop filename: %s".printf (idname));
+		}
+		/* NOTE: Hopefully nobody will ever try to store a .desktop-file in $INST, because
+		 * this might cause problems with AppItem's which don't have the correct idname specified.
+		 * (Maybe limit this to $APP only?)
+		 */
+		VarSolver vs = new VarSolver (idname);
+		fname = vs.substitute_vars_auto (desktop_file, liconfig ());
+
+		// Check if file exists
+		if (!FileUtils.test (fname, FileTest.EXISTS))
 			return;
+		// Load new values from desktop file
 		KeyFile dfile = new KeyFile ();
 		try {
-			dfile.load_from_file (desktop_file, KeyFileFlags.NONE);
+			dfile.load_from_file (fname, KeyFileFlags.NONE);
 		} catch (Error e) {
 			error (_("Could not open desktop file: %s").printf (e.message));
 		}
+		debug (fname);
 
 		full_name = get_desktop_file_string (dfile, "Name");
 		if (idname == "")

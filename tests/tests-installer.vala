@@ -49,7 +49,7 @@ void test_install_package () {
 	Listaller.Settings conf = new Listaller.Settings ();
 	conf.testmode = true;
 
-	string ipkfilename = Path.build_filename (datadir, "foobar-1.0_install.ipk", null);
+	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_install.ipk", null);
 
 	Setup setup = new Setup (ipkfilename, conf);
 	setup.error_code.connect (test_setup_error_code_cb);

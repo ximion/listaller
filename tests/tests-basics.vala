@@ -68,6 +68,7 @@ void test_application_ids () {
 	item2.origin = AppOrigin.IPK;
 	assert (item2.full_name == "MyApp");
 	assert (item2.idname == "myapp");
+	//item2.desktop_file = Path.build_filename (foobar_dir, "foobar.desktop", null);
 	item2.update_with_desktop_file ();
 	assert (item2.desktop_file == "");
 	assert (item2.appid == "myapp;0.1;amd64/i686;~package_ipk");

@@ -113,7 +113,7 @@ private class Builder : Object {
 		create_dir_parents (Path.build_filename (tmpdir, "data", null));
 		string apath = Path.build_filename (tmpdir, "data", "data-" + arch + ".tar.xz", null);
 		a.open_filename (apath);
-		VarSolver vs = new VarSolver (appInfo.appid);
+		VarSolver vs = new VarSolver (appInfo.idname);
 
 		Entry entry = new Entry ();
 		foreach (IPK.FileEntry fe in src) {
@@ -239,7 +239,8 @@ private class Builder : Object {
 		// Set output file name
 		if (outname == "") {
 			string ipkname;
-			ipkname = appInfo.idname.down () + "-" + appInfo.version.down () + "_install.ipk";
+			string s = string_replace (appInfo.full_name, "( )", "");
+			ipkname = s + "-" + appInfo.version.down () + "_install.ipk";
 			if (outdir == "")
 				outdir = Path.build_filename (srcdir, "..", "..", null);
 			outname = Path.build_filename (outdir, ipkname, null);

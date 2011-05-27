@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
-<ipkcontrol version="1.1">
+<ipkcontrol version="1.1~pre">
 	<locale lang="de_DE">german.mo</locale>
 	<application name="FooBar" version="1.0">
+		<id type="idname">foobar-1</id>
 		<id type="desktop">foobar.desktop</id>
 		<summary>Foo-ish bar</summary>
 		<description>file:foobar-description.txt</description>
