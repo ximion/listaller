@@ -424,8 +424,12 @@ private class SoftwareDB : Object {
 				data_stream.put_string ("# File list for " + aid.full_name + "\n\n");
 				// Now write file list to file
 				foreach (IPK.FileEntry fe in flist) {
-					if (fe.installed)
-						data_stream.put_string (fe.fname_installed + "\n");
+					if (fe.installed) {
+						string fname = fe.fname_installed;
+						if (!conf.sumode)
+							fname = fold_user_dir (fname);
+						data_stream.put_string (fname + "\n");
+					}
 				}
 			}
 		} catch (Error e) {
@@ -450,7 +454,10 @@ private class SoftwareDB : Object {
 			// Read lines until end of file (null) is reached
 			while ((line = dis.read_line (null)) != null) {
 				if ((!line.has_prefix ("#")) && (line.strip () != "")) {
-					flist.add (line);
+					string fname = line;
+					if (!conf.sumode)
+						fname = expand_user_dir (fname);
+					flist.add (fname);
 				}
 			}
 		} catch (Error e) {
