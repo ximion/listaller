@@ -53,7 +53,6 @@ public class AppItem : Object {
 	private string _appname;
 	private string _summary;
 	private string _author;
-	private string _archs;
 	private string _pkgmaintainer;
 	private string _license_name;
 	private string _categories;
@@ -121,14 +120,17 @@ public class AppItem : Object {
 			if (_desktop_file.strip () == "")
 				return "";
 			string dfile = _desktop_file;
-			if ((!dfile.has_prefix ("$")) && (!dfile.has_prefix ("/"))) {
+			// Check if $APP prefix needs to be added
+			if ( (!dfile.has_prefix ("$")) &&
+				(!dfile.has_prefix ("/")) &&
+				(!dfile.has_prefix ("~")) ) {
 				// If no exact path has been specified, we assume $APP
 				dfile = Path.build_filename ("$APP", dfile, null);
 			}
-			_desktop_file_prefix = dfile;
+			_desktop_file_prefix = fold_user_dir (dfile);
 			return _desktop_file_prefix;
 		}
-		set { _desktop_file = value; }
+		set { _desktop_file = fold_user_dir (value); }
 	}
 
 	public string icon_name {
@@ -154,11 +156,6 @@ public class AppItem : Object {
 	public string dependencies {
 		get { return _dependencies; }
 		set { _dependencies = value; }
-	}
-
-	public string archs {
-		get { return _archs; }
-		set { _archs = value; }
 	}
 
 	public string appid {
@@ -190,17 +187,15 @@ public class AppItem : Object {
 		_desktop_file = "";
 		_url = "";
 		_icon_name = "";
-		archs = system_architecture ();
 		_liconf = null;
 		_license_name = "";
 	}
 
-	public AppItem (string afullname, string aversion, string aarchs = "") {
+	public AppItem (string afullname, string aversion, string desktop_filename = "") {
 		this.blank ();
 		full_name = afullname;
 		version = aversion;
-		if (aarchs != "")
-			archs = aarchs;
+		desktop_file = desktop_filename;
 	}
 
 	public AppItem.from_id (string application_id) {
@@ -263,23 +258,21 @@ public class AppItem : Object {
 			return _app_id;
 		// Build a Listaller application-id
 		/* An application ID has the following form:
-		 * idname;version;archs;app_dir~origin
+		 * idname;version;desktop_file;origin
 		 * idname usually is the application's .desktop file name
 		 * version is the application's version
 		 * arch the architecture(s) the app was build for
-		 * app_dir the application meta info dir, e.g. $APP or local/applications
+		 * desktop_file is the application's desktop file
 		 * origin is the origin of this app, ipkpackage, native-pkg, LOKI etc.
 		 */
 		if (desktop_file.strip () == "") {
 			message (_("We don't know a desktop-file for application '%s'!").printf (full_name));
 			// If no desktop file was found, use application name and version as ID
 			res = idname + ";" + version;
-			res = res.down ();
-			res = res + ";" + archs + ";~" + origin.to_string ();
+			res = res + ";" + ";" + origin.to_string ();
 		} else {
-			res = idname + ";" + version + ";" + archs + ";";
-			res += desktop_file;
-			res += "~" + origin.to_string ();
+			res = idname + ";" + version + ";" + desktop_file + ";";
+			res += origin.to_string ();
 		}
 		return res;
 	}
@@ -290,10 +283,6 @@ public class AppItem : Object {
 		if (application_id == "")
 			return false;
 		if (count_str (application_id, ";") != 3) {
-			warning (inv_str);
-			return false;
-		}
-		if (count_str (application_id, "~") != 1) {
 			warning (inv_str);
 			return false;
 		}
@@ -312,13 +301,10 @@ public class AppItem : Object {
 		string[] blocks = appid.split (";");
 		idname = blocks[0];
 		version = blocks[1];
-		archs = blocks[2];
-
+		string dfile = blocks[2];
 		// Set application origin
-		string orig_block = blocks[3];
-		string[] orig = orig_block.split ("~");
-		string? dfile = orig[0];
-		set_origin_from_string (orig[1]);
+		string orig = blocks[3];
+		set_origin_from_string (orig);
 
 		// Rebuild the desktop file
 		if (dfile != null) {
@@ -347,7 +333,7 @@ public class AppItem : Object {
 		// Resolve variables in desktop_file path
 		string fname;
 		// Set idname if no idname was specified
-		if (idname == "") {
+		if (_idname == "") {
 			idname = string_replace (Path.get_basename (desktop_file), "(.desktop)", "");
 			debug ("Set app-idname from desktop filename: %s".printf (idname));
 		}
@@ -356,7 +342,9 @@ public class AppItem : Object {
 		 * (Maybe limit this to $APP only?)
 		 */
 		VarSolver vs = new VarSolver (idname);
-		fname = vs.substitute_vars_auto (desktop_file, liconfig ());
+		fname = expand_user_dir (desktop_file);
+		fname = vs.substitute_vars_auto (fname, liconfig ());
+		debug ("DFILENAME: " + fname);
 
 		// Check if file exists
 		if (!FileUtils.test (fname, FileTest.EXISTS))

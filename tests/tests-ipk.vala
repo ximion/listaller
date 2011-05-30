@@ -97,7 +97,7 @@ void test_ipk_control_file () {
 
 	ipkc.set_pkg_dependencies (list);
 
-	ipkc.test_dump_xml ();
+	//! ipkc.test_dump_xml ();
 
 	AppItem app = ipkc.get_application ();
 	assert (app.full_name == "echoecho");

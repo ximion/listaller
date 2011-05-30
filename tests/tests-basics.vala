@@ -50,11 +50,10 @@ void test_application_ids () {
 	Listaller.Settings conf = new Listaller.Settings ();
 	conf.testmode = true;
 
-	AppItem dummy = new AppItem.from_desktopfile (Path.build_filename (foobar_dir, "foobar.desktop", null));
+	string foobar_dfile = Path.build_filename (foobar_dir, "foobar.desktop", null);
+	AppItem dummy = new AppItem.from_desktopfile (foobar_dfile);
 	msg ("Dummy application id: " + dummy.appid);
-	string expected_id = "foobar;1.0;" + system_architecture () + ";" +
-		string_replace (foobar_dir, "(/usr|share/applications|/home/)", "")
-		+ "~unknown";
+	string expected_id = "foobar;1.0;" + fold_user_dir (foobar_dfile) + ";" + "unknown";
 
 	assert (dummy.appid == expected_id);
 
@@ -64,16 +63,16 @@ void test_application_ids () {
 	assert (item1.version == "1.0");
 	assert (item1.publisher == "Listaller Project");
 
-	AppItem item2 = new AppItem ("MyApp", "0.1", "amd64/i686");
+	AppItem item2 = new AppItem ("MyApp", "0.1");
 	item2.origin = AppOrigin.IPK;
 	assert (item2.full_name == "MyApp");
 	assert (item2.idname == "myapp");
 	//item2.desktop_file = Path.build_filename (foobar_dir, "foobar.desktop", null);
 	item2.update_with_desktop_file ();
 	assert (item2.desktop_file == "");
-	assert (item2.appid == "myapp;0.1;amd64/i686;~package_ipk");
+	assert (item2.appid == "myapp;0.1;;package_ipk");
 
-	AppItem item3 = new AppItem ("Google Earth", "1.2", "amd64");
+	AppItem item3 = new AppItem ("Google Earth", "1.2");
 	assert (item3.idname == "google_earth");
 }
 
