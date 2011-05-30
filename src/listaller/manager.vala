@@ -148,6 +148,11 @@ public class Manager : Object {
 
 		return ret;
 	}
+
+	public bool complete_appitem (AppItem app) {
+		// TODO
+		return true;
+	}
 }
 
 } // End of namespace
