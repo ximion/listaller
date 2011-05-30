@@ -149,9 +149,11 @@ public class Manager : Object {
 		return ret;
 	}
 
-	public bool complete_appitem (AppItem app) {
-		// TODO
-		return true;
+	public AppItem? fetch_appitem (string idname) {
+		open_db (false);
+		AppItem? app = db.get_application_by_idname (idname);
+		db.close ();
+		return app;
 	}
 }
 

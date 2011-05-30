@@ -62,7 +62,7 @@ void test_application_ids () {
 	assert (item1.idname == "foobar");
 	assert (item1.full_name == "Listaller FooBar");
 	assert (item1.version == "1.0");
-	assert (item1.maintainer == "Listaller Project");
+	assert (item1.publisher == "Listaller Project");
 
 	AppItem item2 = new AppItem ("MyApp", "0.1", "amd64/i686");
 	item2.origin = AppOrigin.IPK;

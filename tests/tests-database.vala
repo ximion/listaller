@@ -74,7 +74,7 @@ void test_software_db () {
 	sdb.open ();
 
 	msg ("Retrieving AppItem from database...");
-	AppItem newItem = sdb.get_application_by_name ("Test");
+	AppItem newItem = sdb.get_application_by_idname ("test");
 	assert (newItem != null);
 	assert (newItem.dbid == 1);
 

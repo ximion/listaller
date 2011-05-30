@@ -30,7 +30,7 @@ public enum AppOrigin {
 	UNKNOWN,
 	INVALID;
 
-	public string to_string() {
+	public string to_string () {
 		switch (this) {
 			case IPK:
 				return ("package_ipk");
@@ -55,6 +55,7 @@ public class AppItem : Object {
 	private string _author;
 	private string _archs;
 	private string _pkgmaintainer;
+	private string _license_name;
 	private string _categories;
 	private string _desktop_file;
 	private string _desktop_file_prefix;
@@ -100,9 +101,14 @@ public class AppItem : Object {
 		set { _author = value; }
 	}
 
-	public string maintainer {
+	public string publisher {
 		get { return _pkgmaintainer; }
 		set { _pkgmaintainer = value; }
+	}
+
+	public string license_name {
+		get { return _license_name; }
+		set { _license_name = value; }
 	}
 
 	public string categories {
@@ -186,6 +192,7 @@ public class AppItem : Object {
 		_icon_name = "";
 		archs = system_architecture ();
 		_liconf = null;
+		_license_name = "";
 	}
 
 	public AppItem (string afullname, string aversion, string aarchs = "") {
@@ -370,7 +377,7 @@ public class AppItem : Object {
 		icon_name = get_desktop_file_string (dfile, "Icon");
 		author = get_desktop_file_string (dfile, "X-Author");
 		categories = get_desktop_file_string (dfile, "Categories");
-		maintainer = get_desktop_file_string (dfile, "X-Packager");
+		publisher = get_desktop_file_string (dfile, "X-Publisher");
 	}
 
 }

@@ -298,7 +298,7 @@ private class SoftwareDB : Object {
 	protected bool update_db_structure () {
 		Sqlite.Statement stmt;
 
-		apptables = "id, name, version, full_name, desktop_file, summary, author, pkgmaintainer, "
+		apptables = "id, name, version, full_name, desktop_file, summary, author, publisher, "
 		+ "categories, install_time, origin, dependencies";
 
 		// Create table to store information about applications
@@ -310,7 +310,7 @@ private class SoftwareDB : Object {
 		+ "desktop_file TEXT UNIQUE,"
 		+ "summary TEXT, "
 		+ "author TEXT, "
-		+ "pkgmaintainer TEXT, "
+		+ "publisher TEXT, "
 		+ "categories TEXT, "
 		+ "install_time INTEGER, "
 		+ "origin TEXT NOT NULL, "
@@ -330,7 +330,7 @@ private class SoftwareDB : Object {
 		+ "name TEXT UNIQUE NOT NULL, "
 		+ "version TEXT UNIQUE NOT NULL, "
 		+ "storage_path TEXT UNIQUE NOT NULL, "
-		+ "pkgmaintainer TEXT, "
+		+ "publisher TEXT, "
 		+ "install_time INTEGER"
 		+ ")", -1, out stmt);
 		return_if_fail (check_result (res, "create dependencies table"));
@@ -351,7 +351,7 @@ private class SoftwareDB : Object {
 		}
 		Sqlite.Statement stmt;
 		int res = db->prepare_v2 (
-			"INSERT INTO applications (name, version, full_name, desktop_file, summary, author, pkgmaintainer, "
+			"INSERT INTO applications (name, version, full_name, desktop_file, summary, author, publisher, "
 			+ "categories, install_time, origin, dependencies) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				   -1, out stmt);
@@ -378,7 +378,7 @@ private class SoftwareDB : Object {
 			res = stmt.bind_text (6, item.author);
 			return_if_fail (check_result (res, "assign value"));
 
-			res = stmt.bind_text (7, item.maintainer);
+			res = stmt.bind_text (7, item.publisher);
 			return_if_fail (check_result (res, "assign value"));
 
 			res = stmt.bind_text (8, item.categories);
@@ -488,7 +488,7 @@ private class SoftwareDB : Object {
 		item.desktop_file = stmt.column_text (4);
 		item.summary = stmt.column_text (5);
 		item.author = stmt.column_text (6);
-		item.maintainer = stmt.column_text (7);
+		item.publisher = stmt.column_text (7);
 		item.categories = stmt.column_text (8);
 		item.install_time = stmt.column_int (9);
 		item.set_origin_from_string (stmt.column_text (10));
@@ -497,12 +497,30 @@ private class SoftwareDB : Object {
 		return item;
 	}
 
-	public AppItem? get_application_by_name (string appName) {
+	public AppItem? get_application_by_idname (string appIdName) {
 		Sqlite.Statement stmt;
-		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE full_name=?", -1, out stmt);
+		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=?", -1, out stmt);
 		return_if_fail (check_result (res, "get application (by name)"));
 
-		res = stmt.bind_text (1, appName);
+		res = stmt.bind_text (1, appIdName);
+
+		if (stmt.step() != Sqlite.ROW)
+			return null;
+
+		AppItem item = retrieve_app_item (stmt);
+
+		// Fast sanity checks
+		item.fast_check ();
+
+		return item;
+	}
+
+	public AppItem? get_application_by_fullname (string appFullName) {
+		Sqlite.Statement stmt;
+		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE full_name=?", -1, out stmt);
+		return_if_fail (check_result (res, "get application (by full_name)"));
+
+		res = stmt.bind_text (1, appFullName);
 
 		if (stmt.step() != Sqlite.ROW)
 			return null;
@@ -574,7 +592,7 @@ private class SoftwareDB : Object {
 	}
 
 	public AppItem? get_application_by_id (AppItem aid) {
-		return get_application_by_name (aid.idname);
+		return get_application_by_idname (aid.idname);
 	}
 }
 
