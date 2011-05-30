@@ -270,11 +270,9 @@ public class AppItem : Object {
 			res = res.down ();
 			res = res + ";" + archs + ";~" + origin.to_string ();
 		} else {
-			res = Path.get_basename (desktop_file);
-			res = string_replace (res, "(.desktop)", "");
-			res = res + ";" + version + ";" + archs + ";";
-			res = res + string_replace (Path.get_dirname (desktop_file), "(/usr|share/applications|/home/)", "");
-			res = res + "~" + origin.to_string ();
+			res = idname + ";" + version + ";" + archs + ";";
+			res += desktop_file;
+			res += "~" + origin.to_string ();
 		}
 		return res;
 	}
@@ -317,14 +315,7 @@ public class AppItem : Object {
 
 		// Rebuild the desktop file
 		if (dfile != null) {
-			dfile = Path.build_filename (dfile, blocks[0] + ".desktop", null);
-			// TODO: Add some smart logic here to find the right desktop file
-			if (!Path.is_absolute (dfile)) {
-				// Relative path indicates a installation into $HOME
-				desktop_file = Path.build_filename ("/home", dfile, null);
-			} else {
-				desktop_file = Path.build_filename ("/usr", dfile, null);
-			}
+			desktop_file = dfile;
 			if (!fast)
 				update_with_desktop_file ();
 		}
@@ -370,7 +361,6 @@ public class AppItem : Object {
 		} catch (Error e) {
 			error (_("Could not open desktop file: %s").printf (e.message));
 		}
-		debug (fname);
 
 		full_name = get_desktop_file_string (dfile, "Name");
 		if (idname == "")
