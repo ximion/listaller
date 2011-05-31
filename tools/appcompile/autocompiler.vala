@@ -1,4 +1,4 @@
-/* appbuilder.vala
+/* autocompiler.vala
  *
  * Copyright (C) 2011  Matthias Klumpp
  *
@@ -35,18 +35,6 @@ private class AutoCompiler : Object {
 
 	~AutoCompiler () {
 
-	}
-
-	private void prinfo (string msg) {
-		stdout.printf (" I:" + " " + msg + "\n");
-	}
-
-	private void prwarning (string msg) {
-		stdout.printf (" W:" + " " + msg + "\n");
-	}
-
-	private void prerror (string msg) {
-		stderr.printf ("[error]" + " " + msg + "\n");
 	}
 
 	private int compile_makefile () {
@@ -104,18 +92,10 @@ private class AutoCompiler : Object {
 		string lastdir = Environment.get_current_dir ();
 		Environment.set_current_dir (srcdir);
 
+		targetdir = verify_install_target (targetdir, srcdir);
 		if (targetdir == "") {
-			string isdir = IPK.find_ipk_source_dir (srcdir);
-			if (isdir == null) {
-				prerror ("Unable to 'make install' software: IPK source dir not found!");
-				return ret;
-			} else {
-				targetdir = Path.build_filename (isdir, "installtarget", null);
-				if (!Path.is_absolute (targetdir))
-					targetdir = Path.build_filename (Environment.get_current_dir (), targetdir, null);
-			}
-		} else {
-			prwarning (_("Using user-defined install target: %s").printf (targetdir));
+			prerror ("Unable to proceed: IPK source dir not found!");
+			return 1;
 		}
 
 		ret = compile_makefile ();

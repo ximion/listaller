@@ -10,8 +10,10 @@ pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 set(LIBUILD_SOURCES ${lisrc}/utils.vala
 			../libuild/lbutils.vala
+			acutils.vala
 			main.vala
 			autocompiler.vala
+			autostrip.vala
 )
 
 include_directories(${CMAKE_BINARY_DIR}

@@ -27,6 +27,7 @@ public class AppCompile : Object {
 	private static string _src_dir = "";
 	private static string _target_dir = "";
 	private static bool _show_version = false;
+	private static bool _strip_files = false;
 
 	public int exit_code { get; set; }
 
@@ -37,6 +38,8 @@ public class AppCompile : Object {
 			N_("Path to the application's source code"), N_("DIRECTORY") },
 		{ "target_dir", 'o', 0, OptionArg.FILENAME, ref _target_dir,
 			N_("Software install prefix"), N_("DIRECTORY") },
+		{ "strip", 0, 0, OptionArg.NONE, ref _strip_files,
+			N_("Strip debug infos from files in install-target"), null },
 		{ null }
 	};
 
@@ -65,6 +68,15 @@ public class AppCompile : Object {
 		string srcdir = _src_dir;
 		string targetdir = _target_dir;
 
+		if (srcdir == "")
+			srcdir = Environment.get_current_dir ();
+
+		if (_strip_files) {
+			Extra.AutoStrip strip = new Extra.AutoStrip (srcdir, targetdir);
+			exit_code = strip.strip_binaries ();
+			Extra.prinfo ("Stripped debug information from binaries.");
+			return;
+		}
 		Extra.AutoCompiler acomp = new Extra.AutoCompiler (srcdir, targetdir);
 		exit_code = acomp.compile_software ();
 		return;
