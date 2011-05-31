@@ -137,9 +137,7 @@ private class Builder : Object {
 				break;
 			}
 			entry.set_pathname (vs.substitute_vars_id (fe.get_full_filename ()));
-			entry.set_size (st.st_size);
-			entry.set_filetype (0100000); // AE_IFREG
-			entry.set_perm (0644);
+			entry.copy_stat (st);
 			a.write_header (entry);
 			int fd = Posix.open (fname, Posix.O_RDONLY);
 			ssize_t len = Posix.read (fd, buff, buffsize);
@@ -215,9 +213,7 @@ private class Builder : Object {
 				break;
 			}
 			entry.set_pathname (Path.get_basename (fname));
-			entry.set_size (st.st_size);
-			entry.set_filetype (0100000); // AE_IFREG
-			entry.set_perm (0644);
+			entry.copy_stat (st);
 			a.write_header (entry);
 			int fd = Posix.open (fname, Posix.O_RDONLY);
 			ssize_t len = Posix.read (fd, buff, buffsize);
@@ -275,9 +271,7 @@ private class Builder : Object {
 				break;
 			}
 			entry.set_pathname (Path.get_basename (fname));
-			entry.set_size (st.st_size);
-			entry.set_filetype (0100000); // AE_IFREG
-			entry.set_perm (0644);
+			entry.copy_stat (st);
 			a.write_header (entry);
 			int fd = Posix.open (fname, Posix.O_RDONLY);
 			ssize_t len = Posix.read (fd, buff, buffsize);
@@ -300,9 +294,7 @@ private class Builder : Object {
 			return false;
 		}
  		entry.set_pathname (Path.get_basename (ctrlfile));
-		entry.set_size (st.st_size);
-		entry.set_filetype (0100000); // AE_IFREG
-		entry.set_perm (0644);
+		entry.copy_stat (st);
 		a.write_header (entry);
 		int fd = Posix.open (ctrlfile, Posix.O_RDONLY);
 		ssize_t len = Posix.read (fd, buff, buffsize);

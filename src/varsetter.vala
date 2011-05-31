@@ -56,11 +56,12 @@ private class VarSetter : Object {
 			error (_("Could not open desktop file: %s").printf (e.message));
 		}
 		string value;
+
 		value = get_desktopfile_entry (dfile, "Icon");
 		if (value != "")
 			dfile.set_string ("Desktop Entry", "Icon", vs.substitute_vars_auto (value, conf));
+
 		value = get_desktopfile_entry (dfile, "Exec");
-		debug ("runapp \"" + vs.substitute_vars_auto (value, conf) + "\"");
 		// Process exe filename and append the runapp command
 		if (value != "")
 			dfile.set_string ("Desktop Entry", "Exec", "runapp \"" + vs.substitute_vars_auto (value, conf) + "\"");
