@@ -23,6 +23,7 @@
 		<url type="homepage">http://example.org</url>
 	</application>
 	<package>
+		<architecture>%current%</architecture>
 		<requires>
 			<testlib>
 				<file>/bin/bash</file>

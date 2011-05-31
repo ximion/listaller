@@ -401,8 +401,11 @@ private class Package : Object {
 				break;
 			}
 		}
+		// VarSetter to set LI path vars in files
+		VarSetter vset = new VarSetter (conf, appInfo.idname);
 		if (ret) {
 			ret = extract_file_copy_dest (fe, plar, e);
+			vset.execute (fe.fname_installed);
 		}
 		plar.close ();
 
@@ -443,6 +446,8 @@ private class Package : Object {
 		int prog = 0;
 		ret = false;
 		weak Entry e;
+		// Create new varsetter, so we can set path variables directly in files
+		VarSetter vset = new VarSetter (conf, appInfo.idname);
 		IPK.FileEntry fe = null;
 		// Now extract & validate all stuff
 		while (plar.next_header (out e) == Result.OK) {
@@ -450,6 +455,7 @@ private class Package : Object {
 			if (fe != null) {
 				// File was found, so install it now
 				ret = extract_file_copy_dest (fe, plar, e);
+				vset.execute (fe.fname_installed);
 				prog++;
 				progress_changed ((int) Math.round (one * prog));
 				// Stop on error

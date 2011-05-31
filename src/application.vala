@@ -344,7 +344,6 @@ public class AppItem : Object {
 		VarSolver vs = new VarSolver (idname);
 		fname = expand_user_dir (desktop_file);
 		fname = vs.substitute_vars_auto (fname, liconfig ());
-		debug ("DFILENAME: " + fname);
 
 		// Check if file exists
 		if (!FileUtils.test (fname, FileTest.EXISTS))
