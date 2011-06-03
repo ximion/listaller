@@ -387,7 +387,7 @@ namespace PackageKit {
 		public PackageKit.PackageSack filter (PackageKit.PackageSackFilterFunc filter_cb);
 		public PackageKit.PackageSack filter_by_info (PackageKit.Info info);
 		public PackageKit.Package find_by_id (string package_id);
-		public GLib.GenericArray<void*> get_array ();
+		public GLib.GenericArray<weak void*> get_array ();
 		public bool get_details (GLib.Cancellable? cancellable) throws GLib.Error;
 		public async void get_details_async ([CCode (pos = 2, array_length_pos = 2.1, delegate_target_pos = 2.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 1)] GLib.Cancellable? cancellable = null);
 		[CCode (array_length = false, array_null_terminated = true)]
@@ -404,6 +404,10 @@ namespace PackageKit {
 		public async void resolve_async ([CCode (pos = 2, array_length_pos = 2.1, delegate_target_pos = 2.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 1)] GLib.Cancellable? cancellable = null);
 		public void sort (PackageKit.PackageSackSortType type);
 		public static void test (void* user_data);
+	}
+	[Compact]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public class PackageSackResults {
 	}
 	[CCode (type_id = "pk_progress_get_type ()", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public class Progress : GLib.Object {
@@ -508,23 +512,23 @@ namespace PackageKit {
 		public bool add_require_restart (PackageKit.RequireRestart item);
 		public bool add_transaction (PackageKit.TransactionPast item);
 		public bool add_update_detail (PackageKit.UpdateDetail item);
-		public GLib.GenericArray<void*> get_category_array ();
-		public GLib.GenericArray<void*> get_details_array ();
-		public GLib.GenericArray<void*> get_distro_upgrade_array ();
+		public GLib.GenericArray<weak void*> get_category_array ();
+		public GLib.GenericArray<weak void*> get_details_array ();
+		public GLib.GenericArray<weak void*> get_distro_upgrade_array ();
 		public PackageKit.Error get_error_code ();
-		public GLib.GenericArray<void*> get_eula_required_array ();
+		public GLib.GenericArray<weak void*> get_eula_required_array ();
 		public PackageKit.Exit get_exit_code ();
-		public GLib.GenericArray<void*> get_files_array ();
-		public GLib.GenericArray<void*> get_media_change_required_array ();
-		public GLib.GenericArray<void*> get_message_array ();
-		public GLib.GenericArray<void*> get_package_array ();
+		public GLib.GenericArray<weak void*> get_files_array ();
+		public GLib.GenericArray<weak void*> get_media_change_required_array ();
+		public GLib.GenericArray<weak void*> get_message_array ();
+		public GLib.GenericArray<weak void*> get_package_array ();
 		public PackageKit.PackageSack get_package_sack ();
-		public GLib.GenericArray<void*> get_repo_detail_array ();
-		public GLib.GenericArray<void*> get_repo_signature_required_array ();
-		public GLib.GenericArray<void*> get_require_restart_array ();
+		public GLib.GenericArray<weak void*> get_repo_detail_array ();
+		public GLib.GenericArray<weak void*> get_repo_signature_required_array ();
+		public GLib.GenericArray<weak void*> get_require_restart_array ();
 		public PackageKit.Restart get_require_restart_worst ();
-		public GLib.GenericArray<void*> get_transaction_array ();
-		public GLib.GenericArray<void*> get_update_detail_array ();
+		public GLib.GenericArray<weak void*> get_transaction_array ();
+		public GLib.GenericArray<weak void*> get_update_detail_array ();
 		public bool set_error_code (PackageKit.Error item);
 		public bool set_exit_code (PackageKit.Exit exit_enum);
 		public static void test (void* user_data);
@@ -668,15 +672,11 @@ namespace PackageKit {
 	[SimpleType]
 	[IntegerType (rank = 0)]
 	public struct Bitfield : uint64 {
-		public static void test (void* user_data);
 	}
 	[CCode (type_id = "PK_TYPE_ENUM_MATCH", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public struct EnumMatch {
 		public uint value;
 		public weak global::string string;
-	}
-	[CCode (type_id = "PK_TYPE_PACKAGE_SACK_RESULTS", cheader_filename = "packagekit-glib2/packagekit.h")]
-	public struct PackageSackResults {
 	}
 	[CCode (cprefix = "PK_AUTHORIZE_ENUM_", cname = "PkAuthorizeEnum", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum Authorize {
@@ -684,9 +684,7 @@ namespace PackageKit {
 		YES,
 		NO,
 		INTERACTIVE,
-		LAST;
-		public static PackageKit.Authorize type_enum_from_string (string authorize_type);
-		public static unowned string type_enum_to_string (PackageKit.Authorize authorize_type);
+		LAST
 	}
 	[CCode (cprefix = "PK_CLIENT_ERROR_", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum ClientError {
@@ -796,9 +794,7 @@ namespace PackageKit {
 		MEDIA_CHANGE_REQUIRED,
 		NEED_UNTRUSTED,
 		CANCELLED_PRIORITY,
-		LAST;
-		public static PackageKit.Exit enum_from_string (string exit);
-		public static unowned string enum_to_string (PackageKit.Exit exit);
+		LAST
 	}
 	[CCode (cprefix = "PK_FILTER_ENUM_", cname = "PkFilterEnum", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum Filter {
@@ -828,11 +824,7 @@ namespace PackageKit {
 		NOT_COLLECTIONS,
 		APPLICATION,
 		NOT_APPLICATION,
-		LAST;
-		public static PackageKit.Bitfield bitfield_from_string (string filters);
-		public static string bitfield_to_string (PackageKit.Bitfield filters);
-		public static PackageKit.Filter enum_from_string (string filter);
-		public static unowned string enum_to_string (PackageKit.Filter filter);
+		LAST
 	}
 	[CCode (cprefix = "PK_GROUP_ENUM_", cname = "PkGroupEnum", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum Group {
@@ -871,11 +863,7 @@ namespace PackageKit {
 		COLLECTIONS,
 		VENDOR,
 		NEWEST,
-		LAST;
-		public static PackageKit.Bitfield bitfield_from_string (string groups);
-		public static string bitfield_to_string (PackageKit.Bitfield groups);
-		public static PackageKit.Group enum_from_string (string group);
-		public static unowned string enum_to_string (PackageKit.Group group);
+		LAST
 	}
 	[CCode (cprefix = "PK_INFO_ENUM_", cname = "PkInfoEnum", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum Info {
@@ -902,9 +890,9 @@ namespace PackageKit {
 		DOWNGRADING,
 		PREPARING,
 		DECOMPRESSING,
-		LAST;
-		public static PackageKit.Info enum_from_string (string info);
-		public static unowned string enum_to_string (PackageKit.Info info);
+		UNTRUSTED,
+		TRUSTED,
+		LAST
 	}
 	[CCode (cprefix = "PK_LICENSE_ENUM_", cname = "PkLicenseEnum", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum License {
@@ -1100,9 +1088,7 @@ namespace PackageKit {
 		ZPLV1_DOT_0,
 		ZPLV2_DOT_0,
 		ZPLV2_DOT_1,
-		LAST;
-		public static PackageKit.License enum_from_string (string license);
-		public static unowned string enum_to_string (PackageKit.License license);
+		LAST
 	}
 	[CCode (cprefix = "PK_MEDIA_TYPE_ENUM_", cname = "PkMediaTypeEnum", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum MediaType {
@@ -1110,9 +1096,7 @@ namespace PackageKit {
 		CD,
 		DVD,
 		DISC,
-		LAST;
-		public static PackageKit.MediaType enum_from_string (string media_type);
-		public static unowned string enum_to_string (PackageKit.MediaType media_type);
+		LAST
 	}
 	[CCode (cprefix = "PK_MESSAGE_ENUM_", cname = "PkMessageEnum", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum MessageType {
@@ -1143,9 +1127,7 @@ namespace PackageKit {
 		WIRED,
 		WIFI,
 		MOBILE,
-		LAST;
-		public static PackageKit.Network enum_from_string (string network);
-		public static unowned string enum_to_string (PackageKit.Network network);
+		LAST
 	}
 	[CCode (cprefix = "PK_PACKAGE_SACK_SORT_TYPE_", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum PackageSackSortType {
@@ -1182,9 +1164,7 @@ namespace PackageKit {
 		FONT,
 		HARDWARE_DRIVER,
 		POSTSCRIPT_DRIVER,
-		LAST;
-		public static PackageKit.Provides enum_from_string (string provides);
-		public static unowned string enum_to_string (PackageKit.Provides provides);
+		LAST
 	}
 	[CCode (cprefix = "PK_RESTART_ENUM_", cname = "PkRestartEnum", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum Restart {
@@ -1195,9 +1175,7 @@ namespace PackageKit {
 		SYSTEM,
 		SECURITY_SESSION,
 		SECURITY_SYSTEM,
-		LAST;
-		public static PackageKit.Restart enum_from_string (string restart);
-		public static unowned string enum_to_string (PackageKit.Restart restart);
+		LAST
 	}
 	[CCode (cprefix = "PK_ROLE_ENUM_", cname = "PkRoleEnum", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum Role {
@@ -1237,19 +1215,13 @@ namespace PackageKit {
 		SIMULATE_REMOVE_PACKAGES,
 		SIMULATE_UPDATE_PACKAGES,
 		UPGRADE_SYSTEM,
-		LAST;
-		public static PackageKit.Bitfield bitfield_from_string (string roles);
-		public static string bitfield_to_string (PackageKit.Bitfield roles);
-		public static PackageKit.Role enum_from_string (string role);
-		public static unowned string enum_to_string (PackageKit.Role role);
+		LAST
 	}
 	[CCode (cprefix = "PK_SIGTYPE_ENUM_", cname = "PkSigTypeEnum", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum SigType {
 		UNKNOWN,
 		GPG,
-		LAST;
-		public static PackageKit.SigType enum_from_string (string sig_type);
-		public static unowned string enum_to_string (PackageKit.SigType sig_type);
+		LAST
 	}
 	[CCode (cprefix = "PK_STATUS_ENUM_", cname = "PkStatusEnum", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum Status {
@@ -1290,9 +1262,7 @@ namespace PackageKit {
 		CHECK_EXECUTABLE_FILES,
 		CHECK_LIBRARIES,
 		COPY_FILES,
-		LAST;
-		public static PackageKit.Status enum_from_string (string status);
-		public static unowned string enum_to_string (PackageKit.Status status);
+		LAST
 	}
 	[CCode (cprefix = "PK_UPDATE_STATE_ENUM_", cname = "PkUpdateStateEnum", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum UpdateState {
@@ -1300,9 +1270,7 @@ namespace PackageKit {
 		STABLE,
 		UNSTABLE,
 		TESTING,
-		LAST;
-		public static PackageKit.UpdateState enum_from_string (string update_state);
-		public static unowned string enum_to_string (PackageKit.UpdateState update_state);
+		LAST
 	}
 	[CCode (cprefix = "PK_UPGRADE_KIND_ENUM_", cname = "PkUpgradeKindEnum", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public enum UpgradeKind {
@@ -1310,14 +1278,11 @@ namespace PackageKit {
 		MINIMAL,
 		DEFAULT,
 		COMPLETE,
-		LAST;
-		public static PackageKit.UpgradeKind enum_from_string (string upgrade_kind);
-		public static unowned string enum_to_string (PackageKit.UpgradeKind upgrade_kind);
+		LAST
 	}
 	[CCode (cprefix = "PK_CATALOG_ERROR_", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public errordomain CatalogError {
-		FAILED;
-		public static GLib.Quark quark ();
+		FAILED
 	}
 	[CCode (cprefix = "PK_SERVICE_PACK_ERROR_", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public errordomain ServicePackError {
@@ -1332,8 +1297,7 @@ namespace PackageKit {
 		[CCode (cname = "PK_SERVICE_PACK_ERROR_NOTHING_TO_DO")]
 		NOTHINGTODO,
 		[CCode (cname = "PK_SERVICE_PACK_ERROR_NOT_COMPATIBLE")]
-		NOTCOMPATIBLE;
-		public static GLib.Quark quark ();
+		NOTCOMPATIBLE
 	}
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", instance_pos = 1.9)]
 	public delegate bool PackageSackFilterFunc (PackageKit.Package package);
@@ -1374,6 +1338,14 @@ namespace PackageKit {
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
 	public const string SERVICE_PACK_GROUP_NAME;
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.Authorize authorize_type_enum_from_string (string authorize_type);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string authorize_type_enum_to_string (PackageKit.Authorize authorize_type);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static void bitfield_test (void* user_data);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static GLib.Quark catalog_error_quark ();
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
 	public static void common_test (void* user_data);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
 	public static void debug_add_log_domain (string log_domain);
@@ -1388,11 +1360,39 @@ namespace PackageKit {
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
 	public static void enum_test (void* user_data);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.Exit exit_enum_from_string (string exit);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string exit_enum_to_string (PackageKit.Exit exit);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.Bitfield filter_bitfield_from_string (string filters);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static string filter_bitfield_to_string (PackageKit.Bitfield filters);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.Filter filter_enum_from_string (string filter);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string filter_enum_to_string (PackageKit.Filter filter);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
 	public static string get_distro_id ();
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.Bitfield group_bitfield_from_string (string groups);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static string group_bitfield_to_string (PackageKit.Bitfield groups);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.Group group_enum_from_string (string group);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string group_enum_to_string (PackageKit.Group group);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.Info info_enum_from_string (string info);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string info_enum_to_string (PackageKit.Info info);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
 	public static string iso8601_from_date (GLib.Date date);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
 	public static string iso8601_present ();
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.License license_enum_from_string (string license);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string license_enum_to_string (PackageKit.License license);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
 	public static void marshal_VOID__POINTER_UINT_STRING (GLib.Closure closure, GLib.Value return_value, uint n_param_values, GLib.Value param_values, void* invocation_hint, void* marshal_data);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
@@ -1465,6 +1465,48 @@ namespace PackageKit {
 	public static void marshal_VOID__UINT_UINT (GLib.Closure closure, GLib.Value return_value, uint n_param_values, GLib.Value param_values, void* invocation_hint, void* marshal_data);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
 	public static void marshal_VOID__UINT_UINT_UINT_UINT (GLib.Closure closure, GLib.Value return_value, uint n_param_values, GLib.Value param_values, void* invocation_hint, void* marshal_data);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.MediaType media_type_enum_from_string (string media_type);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string media_type_enum_to_string (PackageKit.MediaType media_type);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.Network network_enum_from_string (string network);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string network_enum_to_string (PackageKit.Network network);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.Provides provides_enum_from_string (string provides);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string provides_enum_to_string (PackageKit.Provides provides);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", array_length = false, array_null_terminated = true)]
-	public static string[] ptr_array_to_strv (GLib.GenericArray<weak void*> array);
+	public static string[] ptr_array_to_strv (GLib.GenericArray<void*> array);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.Restart restart_enum_from_string (string restart);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string restart_enum_to_string (PackageKit.Restart restart);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.Bitfield role_bitfield_from_string (string roles);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static string role_bitfield_to_string (PackageKit.Bitfield roles);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.Role role_enum_from_string (string role);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string role_enum_to_string (PackageKit.Role role);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static GLib.Quark service_pack_error_quark ();
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.SigType sig_type_enum_from_string (string sig_type);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string sig_type_enum_to_string (PackageKit.SigType sig_type);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.Status status_enum_from_string (string status);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string status_enum_to_string (PackageKit.Status status);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.UpdateState update_state_enum_from_string (string update_state);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string update_state_enum_to_string (PackageKit.UpdateState update_state);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static PackageKit.UpgradeKind upgrade_kind_enum_from_string (string upgrade_kind);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	public static unowned string upgrade_kind_enum_to_string (PackageKit.UpgradeKind upgrade_kind);
 }
