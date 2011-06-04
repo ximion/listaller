@@ -27,10 +27,11 @@ using Listaller;
 
 namespace Listaller {
 
-public enum Filter {
-	NONE,
-	INSTALLED,
-	AVAILABLE;
+public enum AppSource {
+	ALL,
+	EXTERN,
+	NATIVEPKG,
+	UNKNOWN;
 }
 
 public class Manager : Object {
@@ -104,7 +105,7 @@ public class Manager : Object {
 		return true;
 	}
 
-	public bool find_applications (Filter filter, out ArrayList<AppItem> appList = null) {
+	public bool find_applications (AppSource filter, out ArrayList<AppItem> appList = null) {
 		ArrayList<AppItem> alist = new ArrayList<AppItem> ();
 		if (!open_db (false))
 			return false;
@@ -117,6 +118,21 @@ public class Manager : Object {
 			alist.add (capp);
 			progress_changed ((int) Math.round (one * i));
 			capp = null;
+		}
+		db.close ();
+		appList = alist;
+		return true;
+	}
+
+	public bool find_applications_by_values (AppSource filter, string[] values, out ArrayList<AppItem> appList = null) {
+		ArrayList<AppItem> alist = new ArrayList<AppItem> ();
+		if (!open_db (false))
+			return false;
+
+		int i = 0;
+		for (string? s = values[i]; s != null; i++) {
+			// TODO: Use database search method
+
 		}
 		db.close ();
 		appList = alist;
@@ -154,6 +170,11 @@ public class Manager : Object {
 		AppItem? app = db.get_application_by_idname (idname);
 		db.close ();
 		return app;
+	}
+
+	public bool scan_applications () {
+		//TODO: Scan for 3rd-party installed apps
+		return true;
 	}
 }
 

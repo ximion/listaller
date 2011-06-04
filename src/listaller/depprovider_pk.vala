@@ -39,7 +39,7 @@ private class PkitProvider : Provider {
 	}
 
 	private PackageKit.Package? pkit_pkg_from_file (string fname) {
-		PackageKit.Bitfield filter = PackageKit.Filter.bitfield_from_string ("none");
+		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("none");
 		string[] files = { fname, null };
 
 		PackageKit.Results res = pkit.search_files (filter, files, null, pk_progress_cb);
@@ -47,7 +47,7 @@ private class PkitProvider : Provider {
 		string[] packages = sack.get_ids ();
 
 		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (packages[0] == null) ) {
-			debug (_("PackageKit exit code was: %s").printf (PackageKit.Exit.enum_to_string (res.get_exit_code ())));
+			debug (_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())));
 			emit_warning (_("Unable to find native package for %s!").printf (dep.name));
 			return null;
 		}
@@ -65,7 +65,7 @@ private class PkitProvider : Provider {
 			return true;
 
 		emit_warning (_("Installation of native package '%s' failed!").printf (pkg.get_id ()) + "\n" +
-				_("PackageKit exit code was: %s").printf (PackageKit.Exit.enum_to_string (res.get_exit_code ())));
+				_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())));
 		return false;
 	}
 
