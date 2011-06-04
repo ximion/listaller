@@ -128,7 +128,8 @@ public class Manager : Object {
 	 *
 	 * @values:
 	 */
-	public bool find_applications_by_values (AppSource filter, [CCode (array_null_terminated = true, array_length = false)] string[] values,
+	public bool find_applications_by_values (AppSource filter,
+						 [CCode (array_null_terminated = true, array_length = false)] string[] values,
 						 out ArrayList<AppItem> appList = null) {
 		if (!open_db (false))
 			return false;
@@ -144,6 +145,13 @@ public class Manager : Object {
 	public bool remove_application (AppItem app) {
 		app.fast_check ();
 		open_db ();
+		// Check if this application exists, if not exit
+		if (db.get_application_by_id (app) == null) {
+			db.close ();
+			emit_error (ErrorEnum.REMOVAL_FAILED, _("Could not uninstall application %s. It is not installed.").printf (app.full_name));
+			return false;
+		}
+		// Remove all files which belong to this application
 		ArrayList<string> files = db.get_application_filelist (app);
 
 		foreach (string fname in files) {

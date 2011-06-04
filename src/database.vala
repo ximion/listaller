@@ -596,9 +596,10 @@ private class SoftwareDB : Object {
 	}
 
 	private bool string_in_app_item (AppItem item, string s) {
-		if (item.full_name.index_of (s) > 0)
+		string str = s.down ();
+		if (item.full_name.down ().index_of (str) > -1)
 			return true;
-		if (item.summary.index_of (s) > 0)
+		if (item.summary.down ().index_of (str) > -1)
 			return true;
 		return false;
 	}
@@ -610,17 +611,19 @@ private class SoftwareDB : Object {
 
 		HashSet<AppItem> tmpList = new HashSet<AppItem> ();
 
-		int i = 0;
-		AppItem tmpApp = null;
-		for (tmpApp = get_application_by_dbid (i); tmpApp != null; i++) {
-			int j = 0;
-			for (string? s = values[j]; s != null; j++) {
+		int i = 1;
+		AppItem tmpApp = get_application_by_dbid (i);
+		while (tmpApp != null) {
+			for (int j = 0; values[j] != null; j++) {
 				if (string_in_app_item (tmpApp, values[j])) {
 					tmpList.add (tmpApp);
 					break;
 				}
 			}
+			i++;
+			tmpApp = get_application_by_dbid (i);
 		}
+
 		resList.add_all (tmpList.read_only_view);
 		return resList;
 	}
