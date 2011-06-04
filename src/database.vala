@@ -594,6 +594,37 @@ private class SoftwareDB : Object {
 	public AppItem? get_application_by_id (AppItem aid) {
 		return get_application_by_idname (aid.idname);
 	}
+
+	private bool string_in_app_item (AppItem item, string s) {
+		if (item.full_name.index_of (s) > 0)
+			return true;
+		if (item.summary.index_of (s) > 0)
+			return true;
+		return false;
+	}
+
+	public ArrayList<AppItem> find_applications ([CCode (array_null_terminated = true, array_length = false)] string[] values) {
+		ArrayList<AppItem> resList = new ArrayList<AppItem> ();
+		if (values[0] == null)
+			return resList;
+
+		HashSet<AppItem> tmpList = new HashSet<AppItem> ();
+
+		int i = 0;
+		AppItem tmpApp = null;
+		for (tmpApp = get_application_by_dbid (i); tmpApp != null; i++) {
+			int j = 0;
+			for (string? s = values[j]; s != null; j++) {
+				if (string_in_app_item (tmpApp, values[j])) {
+					tmpList.add (tmpApp);
+					break;
+				}
+			}
+		}
+		resList.add_all (tmpList.read_only_view);
+		return resList;
+	}
+
 }
 
 } // End of namespace

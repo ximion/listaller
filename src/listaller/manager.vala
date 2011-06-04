@@ -124,18 +124,20 @@ public class Manager : Object {
 		return true;
 	}
 
-	public bool find_applications_by_values (AppSource filter, string[] values, out ArrayList<AppItem> appList = null) {
-		ArrayList<AppItem> alist = new ArrayList<AppItem> ();
+	/* find_applications_by_values: Find applications which match the strings in values
+	 *
+	 * @values:
+	 */
+	public bool find_applications_by_values (AppSource filter, [CCode (array_null_terminated = true, array_length = false)] string[] values,
+						 out ArrayList<AppItem> appList = null) {
 		if (!open_db (false))
 			return false;
 
-		int i = 0;
-		for (string? s = values[i]; s != null; i++) {
-			// TODO: Use database search method
-
-		}
+		ArrayList<AppItem> res = db.find_applications (values);
 		db.close ();
-		appList = alist;
+		// Emit signals for found applications
+		foreach (AppItem app in res)
+			application (app);
 		return true;
 	}
 
