@@ -1,3 +1,8 @@
 #!/bin/sh
 
-xmllint --noout --xinclude --relaxng $(dirname $0)/1.0/mallard-1.0.rng `find . -name '*.page'`
+cd pages
+yelp-check validate *.page
+yelp-check links *.page
+yelp-check status *.page
+cd ..
+#xmllint --noout --xinclude --relaxng $(dirname $0)/1.0/mallard-1.0.rng `find . -name '*.page'`
