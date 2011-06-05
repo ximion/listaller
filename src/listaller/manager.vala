@@ -71,7 +71,6 @@ public class Manager : Object {
 		MessageItem item = new MessageItem(MessageEnum.INFO);
 		item.details = msg;
 		message (item);
-		GLib.message (msg);
 	}
 
 	private void emit_warning (string msg) {
@@ -79,7 +78,7 @@ public class Manager : Object {
 		MessageItem item = new MessageItem(MessageEnum.WARNING);
 		item.details = msg;
 		message (item);
-		warning (msg);
+		stdout.printf ("WARNING: %s\n", msg);
 	}
 
 	private void emit_error (ErrorEnum id, string details) {
@@ -87,7 +86,7 @@ public class Manager : Object {
 		ErrorItem item = new ErrorItem(id);
 		item.details = details;
 		error_code (item);
-		critical (details);
+		stdout.printf ("ERROR: %s\n", details);
 	}
 
 	private bool open_db (bool writeable = true) {
@@ -152,7 +151,11 @@ public class Manager : Object {
 			return false;
 		}
 		// Remove all files which belong to this application
-		ArrayList<string> files = db.get_application_filelist (app);
+		ArrayList<string>? files = db.get_application_filelist (app);
+		if (files == null) {
+			emit_error (ErrorEnum.REMOVAL_FAILED, _("'%s' has no file-list registered. The software database might be broken.").printf (app.full_name));
+			return false;
+		}
 
 		foreach (string fname in files) {
 			if (FileUtils.test (fname, FileTest.EXISTS)) {

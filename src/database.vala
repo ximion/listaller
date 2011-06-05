@@ -176,13 +176,13 @@ private class SoftwareDB : Object {
 		try {
 			lfile.create (FileCreateFlags.NONE);
 		} catch (Error e) {
-			critical ("Error: %s", e.message);
+			stdout.printf ("Error: %s\n", e.message);
 			return false;
 		}
 
 		// Test for the existence of file
 		if (!lfile.query_exists ()) {
-			critical ("Unable to create lock file!");
+			stdout.printf ("Error: Unable to create lock file!");
 			return false;
 		}
 		// DB is now locked
@@ -500,7 +500,7 @@ private class SoftwareDB : Object {
 	public AppItem? get_application_by_idname (string appIdName) {
 		Sqlite.Statement stmt;
 		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=?", -1, out stmt);
-		return_if_fail (check_result (res, "get application (by name)"));
+		return_val_if_fail (check_result (res, "get application (by name)"), null);
 
 		res = stmt.bind_text (1, appIdName);
 
@@ -518,7 +518,7 @@ private class SoftwareDB : Object {
 	public AppItem? get_application_by_fullname (string appFullName) {
 		Sqlite.Statement stmt;
 		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE full_name=?", -1, out stmt);
-		return_if_fail (check_result (res, "get application (by full_name)"));
+		return_val_if_fail (check_result (res, "get application (by full_name)"), null);
 
 		res = stmt.bind_text (1, appFullName);
 
@@ -536,7 +536,7 @@ private class SoftwareDB : Object {
 	public AppItem? get_application_by_dbid (int databaseId) {
 		Sqlite.Statement stmt;
 		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE id=?", -1, out stmt);
-		return_if_fail (check_result (res, "get application (by db_id)"));
+		return_val_if_fail (check_result (res, "get application (by db_id)"), null);
 
 		res = stmt.bind_int (1, databaseId);
 
@@ -554,7 +554,7 @@ private class SoftwareDB : Object {
 	public AppItem? get_application_by_name_version (string appName, string appVersion) {
 		Sqlite.Statement stmt;
 		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=? AND version=?", -1, out stmt);
-		return_if_fail (check_result (res, "get application (by name_version)"));
+		return_val_if_fail (check_result (res, "get application (by name_version)"), null);
 
 		res = stmt.bind_text (1, appName);
 		return_if_fail (check_result (res, "assign value"));
@@ -577,17 +577,17 @@ private class SoftwareDB : Object {
 		string metadir = Path.build_filename (regdir, app.idname, null);
 		Sqlite.Statement stmt;
 		int res = db->prepare_v2 ("DELETE FROM applications WHERE name=?", -1, out stmt);
-		return_if_fail (check_result (res, "delete application"));
+		return_val_if_fail (check_result (res, "delete application"), false);
 
 		res = stmt.bind_text (1, app.idname);
-		return_if_fail (check_result (res, "delete application"));
+		return_val_if_fail (check_result (res, "delete application"), false);
 
 		res = stmt.step();
-		return_if_fail (check_result (res, "delete application"));
+		return_val_if_fail (check_result (res, "delete application"), false);
 
 		ret = delete_dir_recursive (metadir);
 		if (!ret)
-			critical ("Could not remove metadata directory for application-id %s!".printf (app.idname));
+			warning ("Could not remove metadata directory for application-id %s!".printf (app.idname));
 		return ret;
 	}
 

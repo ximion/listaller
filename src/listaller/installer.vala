@@ -73,20 +73,19 @@ public class Setup : Object {
 		progress_changed (full_progress, subprogress);
 	}
 
-	private void emit_warning (string msg) {
-		// Construct warning message
-		MessageItem item = new MessageItem(MessageEnum.WARNING);
-		item.details = msg;
-		message (item);
-		warning (msg);
-	}
-
 	private void emit_message (string msg) {
 		// Construct info message
 		MessageItem item = new MessageItem(MessageEnum.INFO);
 		item.details = msg;
 		message (item);
-		GLib.message (msg);
+	}
+
+	private void emit_warning (string msg) {
+		// Construct warning message
+		MessageItem item = new MessageItem(MessageEnum.WARNING);
+		item.details = msg;
+		message (item);
+		stdout.printf ("WARNING: %s\n", msg);
 	}
 
 	private void emit_error (ErrorEnum id, string details) {
@@ -94,7 +93,7 @@ public class Setup : Object {
 		ErrorItem item = new ErrorItem(id);
 		item.details = details;
 		error_code (item);
-		critical (details);
+		stdout.printf ("ERROR: %s\n", details);
 	}
 
 	public bool initialize () {
