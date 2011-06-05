@@ -106,13 +106,9 @@ public class Setup : Object {
 		return ret;
 	}
 
-	public bool run_installation () {
-		// Check if setup was initialized
-		if (!initialized) {
-			emit_error (ErrorEnum.SETUP_NOT_INITIALIZED, _("Setup has not been initialized!"));
-			return false;
-		}
+	private bool install_application () {
 		bool ret = true;
+
 		conf.lock ();
 		// Create software DB link and connect status handlers
 		SoftwareDB db = new SoftwareDB (conf);
@@ -220,6 +216,57 @@ public class Setup : Object {
 		}
 		status_changed (status4);
 
+		return ret;
+	}
+
+	private void pk_progress_cb (PackageKit.Progress progress, PackageKit.ProgressType type) {
+		if ((type == PackageKit.ProgressType.PERCENTAGE) ||
+			(type == PackageKit.ProgressType.SUBPERCENTAGE)) {
+				change_progress (progress.percentage, progress.subpercentage);
+			}
+	}
+
+	private bool install_superuser () {
+		PackageKit.Client client = new PackageKit.Client ();
+
+		/* PackageKit will handle all Listaller superuser installations.
+		 * Therefore, PackageKit needs to be compiled with Listaller support enabled.
+		 */
+
+		PackageKit.Results? pkres;
+		client.background = false;
+
+		try {
+			pkres = client.install_files (true, { fname, null }, null, pk_progress_cb);
+		} catch (Error e) {
+			emit_error (ErrorEnum.INSTALLATION_FAILED, e.message);
+			return false;
+		}
+
+		if (pkres.get_exit_code () != PackageKit.Exit.SUCCESS) {
+			PackageKit.Error error = pkres.get_error_code ();
+			emit_error (ErrorEnum.INSTALLATION_FAILED, error.get_details ());
+			return false;
+		}
+
+		return true;
+	}
+
+	public bool run_installation () {
+		bool ret = false;
+
+		// Check if setup was initialized
+		if (!initialized) {
+			emit_error (ErrorEnum.SETUP_NOT_INITIALIZED, _("Setup has not been initialized!"));
+			return false;
+		}
+
+		if ((!is_root ()) && (conf.sumode == true)) {
+			ret = install_superuser ();
+			return ret;
+		}
+
+		ret = install_application ();
 		return ret;
 	}
 }
