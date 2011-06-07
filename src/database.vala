@@ -433,7 +433,8 @@ private class SoftwareDB : Object {
 				}
 			}
 		} catch (Error e) {
-			li_error (_("Unable to write application file list! Message: %s").printf (e.message));
+			dbstatus_changed (DatabaseStatus.FATAL,
+					  _("Unable to write application file list! Message: %s").printf (e.message));
 			return false;
 		}
 		return true;
@@ -461,10 +462,60 @@ private class SoftwareDB : Object {
 				}
 			}
 		} catch (Error e) {
-			li_error (_("Unable to fetch application file list! Message: %s").printf (e.message));
+			dbstatus_changed (DatabaseStatus.FATAL,
+					  _("Unable to fetch application file list! Message: %s").printf (e.message));
 			return null;
 		}
 		return flist;
+	}
+
+	public bool add_application_description (AppItem aid, string desc) {
+		if (!locked) {
+			fatal ("write to readonly database!", Sqlite.ERROR);
+			return false;
+		}
+		string metadir = Path.build_filename (regdir, aid.idname, null);
+		create_dir_parents (metadir);
+
+		try {
+			var file = File.new_for_path (Path.build_filename (metadir, "description.txt", null));
+			{
+				var file_stream = file.create (FileCreateFlags.NONE);
+
+				if (!file.query_exists ())
+					return false;
+
+				var data_stream = new DataOutputStream (file_stream);
+				data_stream.put_string (desc + "\n");
+			}
+		} catch (Error e) {
+			li_error (_("Unable to write application description! Message: %s").printf (e.message));
+			return false;
+		}
+		return true;
+	}
+
+	public string get_application_description (AppItem app) {
+		string text = "";
+		string metadir = Path.build_filename (regdir, app.idname, null);
+
+		var file = File.new_for_path (Path.build_filename (metadir, "description.txt", null));
+		if (!file.query_exists ()) {
+			return "";
+		}
+
+		try {
+			var dis = new DataInputStream (file.read ());
+			string line;
+			// Read lines until end of file (null) is reached
+			while ((line = dis.read_line (null)) != null) {
+				text += line + "\n";
+			}
+		} catch (Error e) {
+			li_error (_("Unable to fetch application description! Message: %s").printf (e.message));
+			return "";
+		}
+		return text;
 	}
 
 	public int get_applications_count () {

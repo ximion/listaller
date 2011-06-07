@@ -106,6 +106,12 @@ public class Setup : Object {
 		return ret;
 	}
 
+	public AppItem get_current_application () {
+		if (control == null)
+			return null;
+		return control.get_application ();
+	}
+
 	private bool install_application () {
 		bool ret = true;
 
@@ -198,6 +204,11 @@ public class Setup : Object {
 			return false;
 		}
 		ret = db.add_application_filelist (app, ipkp.file_list);
+		if (!ret) {
+			db.close ();
+			return false;
+		}
+		ret = db.add_application_description (app, control.get_app_description ());
 		db.close ();
 
 		conf.unlock ();
