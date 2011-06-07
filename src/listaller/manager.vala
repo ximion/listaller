@@ -178,6 +178,14 @@ public class Manager : Object {
 		return ret;
 	}
 
+	public string get_app_description (AppItem app) {
+		string desc;
+		open_db (false);
+		desc = db.get_application_description (app);
+		db.close ();
+		return desc;
+	}
+
 	public AppItem? fetch_appitem (string idname) {
 		open_db (false);
 		AppItem? app = db.get_application_by_idname (idname);
