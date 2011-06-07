@@ -85,7 +85,7 @@ public class Setup : Object {
 		MessageItem item = new MessageItem(MessageEnum.WARNING);
 		item.details = msg;
 		message (item);
-		stdout.printf ("WARNING: %s\n", msg);
+		li_warning (msg);
 	}
 
 	private void emit_error (ErrorEnum id, string details) {
@@ -93,7 +93,7 @@ public class Setup : Object {
 		ErrorItem item = new ErrorItem(id);
 		item.details = details;
 		error_code (item);
-		stdout.printf ("ERROR: %s\n", details);
+		li_error (details);
 	}
 
 	public bool initialize () {

@@ -211,7 +211,7 @@ private class SoftwareDB : Object {
 					lfile.delete ();
 				}
 			} catch (Error e) {
-				error (_("Unable to remove database lock! (Message: %s)").printf (e.message));
+				li_error (_("Unable to remove database lock! (Message: %s)").printf (e.message));
 			}
 		}
 	}
@@ -433,7 +433,7 @@ private class SoftwareDB : Object {
 				}
 			}
 		} catch (Error e) {
-			error (_("Unable to write application file list! Message: %s").printf (e.message));
+			li_error (_("Unable to write application file list! Message: %s").printf (e.message));
 			return false;
 		}
 		return true;
@@ -461,7 +461,7 @@ private class SoftwareDB : Object {
 				}
 			}
 		} catch (Error e) {
-			error (_("Unable to fetch application file list! Message: %s").printf (e.message));
+			li_error (_("Unable to fetch application file list! Message: %s").printf (e.message));
 			return null;
 		}
 		return flist;

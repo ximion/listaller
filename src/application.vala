@@ -323,7 +323,8 @@ public class AppItem : Object {
 				return "";
 			}
 		} catch (Error e) {
-			error (_("Could not load desktop file values: %s").printf (e.message));
+			li_error (_("Could not load desktop file values: %s").printf (e.message));
+			return "";
 		}
 	}
 
@@ -353,7 +354,7 @@ public class AppItem : Object {
 		try {
 			dfile.load_from_file (fname, KeyFileFlags.NONE);
 		} catch (Error e) {
-			error (_("Could not open desktop file: %s").printf (e.message));
+			li_error (_("Could not open desktop file: %s").printf (e.message));
 		}
 
 		full_name = get_desktop_file_string (dfile, "Name");

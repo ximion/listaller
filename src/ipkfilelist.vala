@@ -107,7 +107,7 @@ private class FileList : Object {
 				text.add (line);
 			}
 		} catch (Error e) {
-			error ("%s", e.message);
+			li_error ("%s".printf (e.message));
 		}
 
 		foreach (string line in text) {
@@ -154,7 +154,7 @@ private class FileList : Object {
 				dos.put_string (s + "\n");
 			}
 		} catch (Error e) {
-			error ("%s", e.message);
+			li_error ("%s".printf (e.message));
 		}
 		}
 

@@ -53,7 +53,7 @@ private class VarSetter : Object {
 		try {
 			dfile.load_from_file (fname, KeyFileFlags.NONE);
 		} catch (Error e) {
-			error (_("Could not open desktop file: %s").printf (e.message));
+			li_error (_("Could not open desktop file: %s").printf (e.message));
 		}
 		string value;
 
@@ -82,7 +82,7 @@ private class VarSetter : Object {
 				data_stream.put_string (dfile.to_data ());
 			}
 		} catch (Error e) {
-			error (_("Unable to save modified desktop-file! Message: %s").printf (e.message));
+			li_error (_("Unable to save modified desktop-file! Message: %s").printf (e.message));
 			return;
 		}
 	}

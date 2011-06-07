@@ -90,7 +90,7 @@ private class Package : Object {
 		ErrorItem item = new ErrorItem(id);
 		item.details = details;
 		error_code (item);
-		critical (details);
+		li_error (details);
 	}
 
 	public bool is_valid () {
@@ -108,7 +108,8 @@ private class Package : Object {
 		// FIXME: Make compression_xz work
 		ar.support_compression_all ();
 		if (ar.open_filename (arname, 4096) != Result.OK)
-			error (_("Could not read IPK control information! Error: %s"), ar.error_string ());
+			emit_error (ErrorEnum.IPK_DAMAGED,
+				    _("Could not read IPK control information! Error: %s").printf (ar.error_string ()));
 
 		while (ar.next_header (out e) == Result.OK) {
 			switch (e.pathname ()) {
