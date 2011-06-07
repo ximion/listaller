@@ -406,7 +406,8 @@ private class Package : Object {
 		VarSetter vset = new VarSetter (conf, appInfo.idname);
 		if (ret) {
 			ret = extract_file_copy_dest (fe, plar, e);
-			vset.execute (fe.fname_installed);
+			if (ret)
+				vset.execute (fe.fname_installed);
 		}
 		plar.close ();
 
@@ -456,7 +457,8 @@ private class Package : Object {
 			if (fe != null) {
 				// File was found, so install it now
 				ret = extract_file_copy_dest (fe, plar, e);
-				vset.execute (fe.fname_installed);
+				if (ret)
+					vset.execute (fe.fname_installed);
 				prog++;
 				progress_changed ((int) Math.round (one * prog));
 				// Stop on error
