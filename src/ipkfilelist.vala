@@ -25,12 +25,19 @@ using Listaller;
 
 namespace Listaller.IPK {
 
+private enum FileEntryType {
+	UNKNOWN,
+	FILE,
+	DIRECTORY;
+}
+
 private class FileEntry : Object {
 	private string _destination;
 	private string _fname;
 	private string _hash;
 	private string _fname_installed;
 	private bool _installed;
+	private FileEntryType _type;
 
 	public string fname {
 		get { return _fname; }
@@ -57,7 +64,13 @@ private class FileEntry : Object {
 		set { _fname_installed = value; }
 	}
 
+	public FileEntryType entry_type {
+		get { return _type; }
+		set { _type = value; }
+	}
+
 	public FileEntry () {
+		entry_type = FileEntryType.FILE;
 		destination = "";
 		fname = "";
 		hash = "";

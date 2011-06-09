@@ -48,16 +48,17 @@ void run_command (string cmd) {
  * Test the AutoCompile automatic software compiler tool
  */
 void test_autocompile () {
-	msg ("AppCompile tests");
+	//! msg ("AppCompile tests");
 
 	// Cleanup
 	delete_dir_recursive (Path.build_filename (foobar_srcdir, "ipkinstall", "installtarget", null));
 
+	/*!
 	Environment.set_current_dir (foobar_srcdir);
 
 	// Perform autocompile of FooBar sample app
 	string cmd = acomp_exec;
-	run_command (cmd);
+	run_command (cmd); */
 }
 
 /*
@@ -72,7 +73,7 @@ void test_libuild_build () {
 
 	Environment.set_current_dir (foobar_srcdir);
 	// Now create IPK package for FooBar!
-	string cmd = libuild_exec + " -b" +" -o" + " " + datadir;
+	string cmd = "%s %s %s %s".printf (libuild_exec, "-b", "-o", datadir);
 	run_command (cmd);
 }
 

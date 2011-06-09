@@ -21,6 +21,7 @@
 
 using GLib;
 using Listaller;
+using Listaller.Extra;
 
 public class LiBuild : Object {
 	// Cmd options
@@ -60,7 +61,7 @@ public class LiBuild : Object {
 	}
 
 	private void on_error (string details) {
-		stderr.printf (_("ERROR: %s"), details + "\n");
+		stderr.printf (_("error: %s"), details + "\n");
 		exit_code = 6;
 	}
 
@@ -91,6 +92,18 @@ public class LiBuild : Object {
 			srcdir = Environment.get_current_dir ();
 
 		if (_build_mode) {
+			// Prepare the application
+			AppPrepare prep = new AppPrepare (srcdir);
+			prep.error_message.connect (on_error);
+			if (!prep.initialize ()) {
+				exit_code = 3;
+				return;
+			}
+			exit_code = prep.run_compile ();
+			if (exit_code != 0)
+				return;
+
+			// Build the IPK package
 			IPK.Builder builder = new IPK.Builder (srcdir);
 			builder.error_message.connect (on_error);
 			builder.message.connect (on_message);

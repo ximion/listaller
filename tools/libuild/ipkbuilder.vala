@@ -81,22 +81,6 @@ private class Builder : Object {
 		failed = true;
 	}
 
-	private void pkinfo_hint (string msg) {
-		stdout.printf (" H: " + msg);
-	}
-
-	private void pkinfo_info (string msg) {
-		stdout.printf (" I: " + msg);
-	}
-
-	private void pkinfo_warning (string msg) {
-		stdout.printf (" W: " + msg);
-	}
-
-	private void pkinfo_error (string msg) {
-		stdout.printf (" E: " + msg);
-	}
-
 	private bool write_ipk_file_data (ref ArrayList<IPK.FileEntry> src, string rdir, string arch = "") {
 		const int buffsize = 8192;
 		char buff[8192];

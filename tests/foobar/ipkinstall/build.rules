@@ -5,6 +5,6 @@ compile:
 	appcompile
 
 strip:
-	appcompile --strip
+	-appcompile --strip
 
 binary: compile strip

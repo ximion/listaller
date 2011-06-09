@@ -106,7 +106,7 @@ public class Setup : Object {
 		return ret;
 	}
 
-	public AppItem get_current_application () {
+	public AppItem? get_current_application () {
 		if (control == null)
 			return null;
 		return control.get_application ();
