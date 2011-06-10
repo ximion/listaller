@@ -910,7 +910,7 @@ namespace GPG {
 		 * when needed. Returns Error Status Code.
 		 */
 		[CCode (cname = "gpgme_data_new_from_mem")]
-		public static GPGError.ErrorCode create_from_memory(out Data d, char[] buffer, bool copy);
+		public static GPGError.ErrorCode create_from_memory(out Data d, char* buffer, size_t size, bool copy);
 
 		/**
 		 * Destroy the object and return a pointer to its content.
@@ -924,7 +924,7 @@ namespace GPG {
 		 * Return the number of characters read, 0 on EOF and -1 on error.
 		 * If an error occurs, errno is set.
 		 */
-		public ssize_t read(char[] buf);
+		public ssize_t read(void* buf, size_t size);
 
 		/**
 		 * Write up to SIZE bytes from buffer BUFFER to the data object.
