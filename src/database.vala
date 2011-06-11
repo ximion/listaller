@@ -482,7 +482,7 @@ private class SoftwareDB : Object {
 			{
 				var file_stream = file.create (FileCreateFlags.NONE);
 
-				if (!file.query_exists ())
+				if (file.query_exists ())
 					return false;
 
 				var data_stream = new DataOutputStream (file_stream);

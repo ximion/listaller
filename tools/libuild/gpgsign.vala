@@ -62,11 +62,11 @@ private class GPGSign : Object {
 			stderr.printf ("Wrong type of signature created\n");
 			return false;
 		}
-		if (result->signatures->pubkey_algo != PublicKeyAlgorithm.DSA) {
+		/* if (result->signatures->pubkey_algo != PublicKeyAlgorithm.DSA) {
 			stderr.printf ("Wrong pubkey algorithm reported: %i\n",
 				result.signatures->pubkey_algo);
 			return false;
-		}
+		} */
 		if (result->signatures->hash_algo != HashAlgorithm.SHA1) {
 			stderr.printf ("Wrong hash algorithm reported: %i\n",
 				result.signatures->hash_algo);
@@ -77,6 +77,7 @@ private class GPGSign : Object {
 				result.signatures->sig_class);
 			return false;
 		}
+		pkinfo_info ("Signed with fingerprint: %s\n".printf (result->signatures->fpr));
 		return true;
 	}
 
@@ -158,8 +159,6 @@ private class GPGSign : Object {
 		SignResult *result = ctx.op_sign_result ();
 		check_result (result, SigMode.DETACH);
 		signature_out = data_to_string (dout);
-
-		stdout.printf (signature_out);
 
 		return true;
 	}

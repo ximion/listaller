@@ -30,6 +30,7 @@ public class LiBuild : Object {
 	private static bool _show_version = false;
 	private static bool _build_mode = false;
 	private static bool _do_autocompile = false;
+	private static bool _sign_pkg = false;
 
 	public int exit_code { get; set; }
 
@@ -42,6 +43,8 @@ public class LiBuild : Object {
 			N_("Path to Listaller package source directory"), N_("DIRECTORY") },
 		{ "outdir", 'o', 0, OptionArg.FILENAME, ref _output_dir,
 			N_("IPK package output directory"), N_("DIRECTORY") },
+		{ "sign", 'v', 0, OptionArg.NONE, ref _sign_pkg,
+			N_("GPG-Sign the resulting package"), null },
 		{ null }
 	};
 
@@ -108,6 +111,7 @@ public class LiBuild : Object {
 			builder.error_message.connect (on_error);
 			builder.message.connect (on_message);
 			builder.output_dir = _output_dir;
+			builder.sign_package = _sign_pkg;
 
 			if (!builder.initialize ()) {
 				exit_code = 3;

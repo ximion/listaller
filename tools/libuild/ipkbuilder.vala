@@ -45,6 +45,8 @@ private class Builder : Object {
 		set { outdir = value; }
 	}
 
+	public bool sign_package { get; set; }
+
 	public Builder (string input_dir) {
 		srcdir = input_dir;
 		Listaller.Settings conf = new Listaller.Settings ();
@@ -288,7 +290,45 @@ private class Builder : Object {
 		}
 		Posix.close (fd);
 
-		// TODO: Sign package here
+		if (sign_package) {
+			GPGSign gsig = new GPGSign ();
+			string signature;
+			// TODO: Make this work for more data packages
+			gsig.sign_package (ctrlfile, datapkgs.get (0), out signature);
+			string sigfile = Path.build_filename (tmpdir, "_signature", null);
+			try {
+				var file = File.new_for_path (sigfile);
+				{
+					var file_stream = file.create (FileCreateFlags.NONE);
+
+					var data_stream = new DataOutputStream (file_stream);
+					data_stream.put_string (signature);
+				}
+			} catch (Error e) {
+				li_error (_("Unable to write signature file! Message: %s").printf (e.message));
+				return false;
+			}
+
+			// Now add signature to IPK tarball
+			entry.clear ();
+			// Fetch file details
+			Posix.stat (sigfile, out st);
+			if (st.st_size <= 0) {
+				ret = false;
+				error_message ("Internal error: IPK signature was not found!");
+				return false;
+			}
+			entry.set_pathname (Path.get_basename (sigfile));
+			entry.copy_stat (st);
+			a.write_header (entry);
+			fd = Posix.open (sigfile, Posix.O_RDONLY);
+			len = Posix.read (fd, buff, buffsize);
+			while (len > 0) {
+				a.write_data (buff, len);
+				len = Posix.read (fd, buff, buffsize);
+			}
+			Posix.close (fd);
+		}
 
 		a.close ();
 		return ret;
