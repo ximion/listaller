@@ -404,4 +404,7 @@ namespace GPGError {
 		EXFULL,
 		CODE_DIM
 	}
+
+	[CCode (cname = "gpgme_strsource")]
+	public unowned string strsource (ErrorCode err);
 }

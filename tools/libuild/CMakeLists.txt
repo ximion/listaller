@@ -45,19 +45,4 @@ target_link_libraries(libuild
 		${GPGME_VANILLA_LIBRARIES}
 )
 
-vala_add_executable (gpg-test ${LIBUILD_SOURCES} gpg-tests.vala
-				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2
-				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
-)
-
-target_link_libraries(gpg-test
-		${GLIB2_LIBRARIES}
-		${GEE_LIBRARIES}
-		${GIO2_LIBRARIES}
-		${SQLITE_LIBRARIES}
-		${LibArchive_LIBRARIES}
-		${LIBXML2_LIBRARIES}
-		${GPGME_VANILLA_LIBRARIES}
-)
-
 install(TARGETS libuild DESTINATION bin)

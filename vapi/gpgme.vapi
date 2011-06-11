@@ -287,7 +287,7 @@ namespace GPG {
 	 */
 	[CCode (cname = "struct _gpgme_op_sign_result")]
 	public struct SignResult {
-		InvalidKey invalid_signers;
+		InvalidKey* invalid_signers;
 		Signature* signatures;
 	}
 
@@ -337,12 +337,14 @@ namespace GPG {
 	/**
 	 * A Signature
 	 */
-	[CCode (cname = "struct _gpgme_signature")]
+	[CCode (cname = "struct _gpgme_new_signature")]
 	public struct Signature {
 		/**
 		 * The next signature in the list
 		 */
 		Signature *next;
+
+		SigMode type;
 
 		/**
 		 * A summary of the signature status
@@ -413,6 +415,11 @@ namespace GPG {
 		 * The mailbox from the PKA information or null
 		 */
 		string? pka_adress;
+
+		/**
+		 * Crypto backend specific signature class.
+		 */
+		uint sig_class;
 	}
 
 	/**
@@ -931,7 +938,7 @@ namespace GPG {
 		 * Return the number of characters written, or -1 on error.
 		 * If an error occurs, errno is set.
 		 */
-		public ssize_t write(char[] buf);
+		public ssize_t write(void* buf, size_t size);
 
 		/**
 		 * Set the current position from where the next read or write
