@@ -402,7 +402,10 @@ namespace GPGError {
 		EWOULDBLOCK,
 		EXDEV,
 		EXFULL,
-		CODE_DIM
+		CODE_DIM;
+
+		[CCode (cname = "gpgme_strerror")]
+		public unowned string to_string ();
 	}
 
 	[CCode (cname = "gpgme_strsource")]

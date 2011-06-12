@@ -280,6 +280,10 @@ public class Setup : Object {
 		ret = install_application ();
 		return ret;
 	}
+
+	public IPK.PackSecurity get_security_info () {
+		return ipkp.get_security_info ();
+	}
 }
 
 } // End of namespace

@@ -250,6 +250,66 @@ private class Package : Object {
 		return ret;
 	}
 
+	private GPGSignature? get_signature () {
+		bool ret = false;
+		prepare_extracting ();
+
+		Read ar = open_base_ipk ();
+		if (ar == null) {
+			return null;
+		}
+
+		weak Entry e;
+		while (ar.next_header (out e) == Result.OK) {
+			// Extract control files
+			if (e.pathname () == "_signature") {
+				ret = extract_entry_to (ar, e, wdir);
+				if (!ret) {
+					li_warning (_("Unable to extract signature! Maybe package is not signed."));
+				}
+				break;
+			}
+		}
+		ar.close ();
+		if (!ret)
+			return null;
+
+		var file = File.new_for_path (Path.build_filename (wdir, "_signature", null));
+		if (!file.query_exists ()) {
+			return null;
+		}
+
+		string sig_text = "";
+		try {
+			var dis = new DataInputStream (file.read ());
+			string line;
+			// Read lines until end of file (null) is reached
+			while ((line = dis.read_line (null)) != null) {
+				sig_text += line + "\n";
+			}
+		} catch (Error e) {
+			li_error (_("Unable to read package signature! Message: %s").printf (e.message));
+			return null;
+		}
+
+		GPGSignature sig = new GPGSignature (sig_text);
+		sig.verify_package (Path.build_filename (wdir, "control.tar.xz", null), data_archive);
+
+		return sig;
+	}
+
+	public PackSecurity get_security_info () {
+		GPGSignature? sig = get_signature ();
+		PackSecurity sec = new PackSecurity ();
+
+		if (sig == null)
+			return sec;
+		sec.signature_status = sig.sigstatus;
+		sec.signature_validity = sig.validity;
+
+		return sec;
+	}
+
 	private bool prepare_extracting () {
 		if (FileUtils.test (data_archive, FileTest.EXISTS))
 			return true;

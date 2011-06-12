@@ -288,7 +288,7 @@ namespace GPG {
 	[CCode (cname = "struct _gpgme_op_sign_result")]
 	public struct SignResult {
 		InvalidKey* invalid_signers;
-		Signature* signatures;
+		SignatureNew* signatures;
 	}
 
 	/**
@@ -335,10 +335,90 @@ namespace GPG {
 	}
 
 	/**
+	* A Signature
+	*/
+	[CCode (cname = "struct _gpgme_signature")]
+	public struct Signature {
+		/**
+		* The next signature in the list
+		*/
+		Signature *next;
+
+		/**
+		* A summary of the signature status
+		*/
+		Sigsum summary;
+
+		/**
+		* Fingerprint or key ID of the signature
+		*/
+		string fpr;
+
+		/**
+		* The Error status of the signature
+		*/
+		GPGError.ErrorCode status;
+
+		/**
+		* Notation data and policy URLs
+		*/
+		SigNotation notations;
+
+		/**
+		* Signature creation time
+		*/
+		ulong timestamp;
+
+		/**
+		* Signature expiration time or 0
+		*/
+		ulong exp_timestamp;
+
+		/**
+		* Key should not have been used for signing
+		*/
+		bool wrong_key_usage;
+
+		/**
+		* PKA status
+		*/
+		PKAStatus pka_trust;
+
+		/**
+		* Validity has been verified using the chain model
+		*/
+		bool chain_model;
+
+		/**
+		* Validity
+		*/
+		Validity validity;
+
+		/**
+		* Validity reason
+		*/
+		GPGError.ErrorCode validity_reason;
+
+		/**
+		* public key algorithm used to create the signature
+		*/
+		PublicKeyAlgorithm pubkey_algo;
+
+		/**
+		* The hash algorithm used to create the signature
+		*/
+		HashAlgorithm hash_algo;
+
+		/**
+		* The mailbox from the PKA information or null
+		*/
+		string? pka_adress;
+	}
+	/**
 	 * A Signature
 	 */
 	[CCode (cname = "struct _gpgme_new_signature")]
-	public struct Signature {
+	public struct SignatureNew {
 		/**
 		 * The next signature in the list
 		 */
@@ -347,19 +427,9 @@ namespace GPG {
 		SigMode type;
 
 		/**
-		 * A summary of the signature status
-		 */
-		Sigsum summary;
-
-		/**
 		 * Fingerprint or key ID of the signature
 		 */
 		string fpr;
-
-		/**
-		 * The Error status of the signature
-		 */
-		GPGError.ErrorCode status;
 
 		/**
 		 * Notation data and policy URLs
@@ -377,11 +447,6 @@ namespace GPG {
 		ulong exp_timestamp;
 
 		/**
-		 * Key should not have been used for signing
-		 */
-		bool wrong_key_usage;
-
-		/**
 		 * PKA status
 		 */
 		PKAStatus pka_trust;
@@ -390,11 +455,6 @@ namespace GPG {
 		 * Validity has been verified using the chain model
 		 */
 		bool chain_model;
-
-		/**
-		 * Validity
-		 */
-		Validity validity;
 
 		/**
 		 * Validity reason
@@ -410,11 +470,6 @@ namespace GPG {
 		 * The hash algorithm used to create the signature
 		 */
 		HashAlgorithm hash_algo;
-
-		/**
-		 * The mailbox from the PKA information or null
-		 */
-		//string? pka_address;
 
 		/**
 		 * Crypto backend specific signature class.

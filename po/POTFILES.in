@@ -5,7 +5,9 @@
 src/application.vala
 src/database.vala
 src/depman.vala
-src/gpgsign.vala
+src/signature.vala
+src/security.vala
+src/packdetail.vala
 src/ipkcdef.vala
 src/ipkfilelist.vala
 src/ipkpackage.vala
@@ -22,6 +24,9 @@ src/listaller/depprovider_pk.vala
 tools/runapp/runapp.vala
 tools/libuild/main.vala
 tools/libuild/ipkbuilder.vala
+tools/libuild/gpgsign.vala
+tools/libuild/prepare.vala
+tools/libuild/lbutils.vala
 tools/appcompile/main.vala
 tools/appcompile/autocompiler.vala
 tools/depscan/main.vala
