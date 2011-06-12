@@ -96,26 +96,26 @@ private class GPGSign : Object {
 	}
 
 	private string data_to_string (Data dt) {
-		const uint BUF_SIZE = 512;
-		char buf[513];
+		const uint BUF_SIZE = 128;
+		char buf[128];
 		long ret;
 		string res = "";
 
 		ret = dt.seek (0, Posix.SEEK_SET);
-		/*if (ret > 0)
-		 e rror (errno.to_string ());*/
+		if (ret > 0)
+		 error (errno.to_string ());
 		 while ((ret = dt.read (buf, BUF_SIZE)) > 0)
-			 res += ((string) buf).printf (ret, 1);
-		 /*if (ret < 0)
-		  e rror (errno.to_string ());*/
+			 res += (string) buf;
+		 if (ret < 0)
+		  error (errno.to_string ());
 		 return res;
 	}
 
 	private bool read_file_to_data (Data dt, string fname) {
 		dt.set_encoding (DataEncoding.BINARY);
 
-		const int BUFFER_SIZE = 8192;
-		char buff[8192];
+		const int BUFFER_SIZE = 512;
+		char buff[512];
 
 		int fd = Posix.open (fname, Posix.O_RDONLY);
 		ssize_t len = Posix.read (fd, buff, BUFFER_SIZE);

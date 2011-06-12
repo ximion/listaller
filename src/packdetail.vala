@@ -32,6 +32,16 @@ public class PackSecurity : Object {
 
 	internal PackSecurity () {
 	}
+
+	public SecurityLevel get_level () {
+		if (signature_status != SignStatus.VALID)
+			return SecurityLevel.DANGEROUS;
+		if (signature_validity == SignValidity.MARGINAL)
+			return SecurityLevel.NORMAL;
+		if (signature_validity > SignValidity.FULL)
+			return SecurityLevel.HIGH;
+		return SecurityLevel.LOW;
+	}
 }
 
 public class PackDetails : Object {

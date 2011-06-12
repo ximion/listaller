@@ -55,8 +55,8 @@ private class GPGSignature : Object {
 	private bool read_file_to_data (Data dt, string fname) {
 		dt.set_encoding (DataEncoding.BINARY);
 
-		const int BUFFER_SIZE = 8192;
-		char buff[8192];
+		const int BUFFER_SIZE = 512;
+		char buff[512];
 
 		int fd = Posix.open (fname, Posix.O_RDONLY);
 		ssize_t len = Posix.read (fd, buff, BUFFER_SIZE);
@@ -162,6 +162,7 @@ private class GPGSignature : Object {
 		set_sigstatus_from_gpgsigsum (sig->summary);
 		set_sigvalidity_from_gpgvalidity (sig->validity);
 
+		debug (sig->pka_address);
 		if (sig->status != GPGError.ErrorCode.NO_ERROR) {
 			li_warning ("Unexpected signature status: %s\n".printf (sig->status.to_string ()));
 			return false;
@@ -189,6 +190,7 @@ private class GPGSignature : Object {
 
 		/* Checking a valid message.  */
 		err = Data.create (out dt);
+		dt.set_encoding (DataEncoding.BINARY);
 		read_file_to_data (dt, ctrlfname);
 		read_file_to_data (dt, payloadfname);
 		return_if_fail (check_gpg_err (err));

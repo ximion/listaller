@@ -290,6 +290,7 @@ private class Builder : Object {
 		}
 		Posix.close (fd);
 
+		// Sign the IPK package
 		if (sign_package) {
 			GPGSign gsig = new GPGSign ();
 			string signature;

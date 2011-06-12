@@ -412,7 +412,7 @@ namespace GPG {
 		/**
 		* The mailbox from the PKA information or null
 		*/
-		string? pka_adress;
+		string? pka_address;
 	}
 	/**
 	 * A Signature

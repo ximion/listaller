@@ -24,6 +24,36 @@ using Listaller;
 
 namespace Listaller {
 
+public enum SecurityLevel {
+	UNKNOWN,
+	HIGH,
+	NORMAL,
+	LOW,
+	DANGEROUS;
+
+	public string to_string() {
+		switch (this) {
+			case UNKNOWN:
+				return _("Unknown.");
+
+			case HIGH:
+				return _("Should be safe.");
+
+			case NORMAL:
+				return _("Average security.");
+
+			case LOW:
+				return _("Low security.");
+
+			case DANGEROUS:
+				return _("Could be dangerous!");
+
+			default:
+				return ("Security level is: [%d]").printf((int) this);
+		}
+	}
+}
+
 public enum SignStatus {
 	UNKNOWN,
 	VALID,
