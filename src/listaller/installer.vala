@@ -96,6 +96,12 @@ public class Setup : Object {
 		li_error (details);
 	}
 
+	private void emit_status (StatusEnum status, string info) {
+		StatusItem item = new StatusItem (status);
+		item.info = info;
+		status_changed (item);
+	}
+
 	public bool initialize () {
 		bool ret = false;
 		ret = ipkp.initialize ();
@@ -136,6 +142,10 @@ public class Setup : Object {
 		app.dependencies = "?";
 		app.fast_check ();
 
+		// We start now!
+		emit_status (StatusEnum.ACTION_STARTED,
+			     _("Running installation of %s").printf (app.full_name));
+
 		inst_progress = 25;
 		change_progress (0, -1);
 
@@ -147,9 +157,8 @@ public class Setup : Object {
 		}
 
 		// Emit status message
-		StatusItem status1 = new StatusItem (StatusEnum.RESOLVING_DEPENDENCIES);
-		status1.info = _("Resolving dependencies of '%s'.").printf (app.full_name);
-		status_changed (status1);
+		emit_status (StatusEnum.RESOLVING_DEPENDENCIES,
+			     _("Resolving dependencies of '%s'.").printf (app.full_name));
 
 		// We don't solve dependencies when unit tests are running
 		if (!unittestmode) {
@@ -174,9 +183,8 @@ public class Setup : Object {
 		inst_progress = 50;
 
 		// Emit status message
-		StatusItem status2 = new StatusItem (StatusEnum.INSTALLING_FILES);
-		status2.info = _("Copying files to their destination");
-		status_changed (status2);
+		emit_status (StatusEnum.INSTALLING_FILES,
+			     _("Copying files to their destination"));
 
 		// Install all files to their destination
 		ret = ipkp.install_all_files ();
@@ -190,9 +198,8 @@ public class Setup : Object {
 		change_progress (100, -1);
 
 		// Emit status message
-		StatusItem status3 = new StatusItem (StatusEnum.REGISTERING_APPLICATION);
-		status3.info = _("Making '%s' known to your system.").printf (app.full_name);
-		status_changed (status3);
+		emit_status (StatusEnum.REGISTERING_APPLICATION,
+			     _("Making '%s' known to your system.").printf (app.full_name));
 
 		// Set install timestamp
 		DateTime dt = new DateTime.now_local ();
@@ -217,15 +224,15 @@ public class Setup : Object {
 		change_progress (100, -1);
 
 		// Emit status message (setup finished)
-		StatusItem status4 = new StatusItem (StatusEnum.INSTALLATION_FINISHED);
+		StatusItem sitem = new StatusItem (StatusEnum.INSTALLATION_FINISHED);
 		if (ret) {
-			status4.info = _("Installation completed!");
+			sitem.info = _("Installation completed!");
 		} else {
 			// Undo all changes
 			ipkp.rollback_installation ();
-			status4.info = _("Installation failed!");
+			sitem.info = _("Installation failed!");
 		}
-		status_changed (status4);
+		status_changed (sitem);
 
 		return ret;
 	}

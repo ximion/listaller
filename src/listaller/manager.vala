@@ -89,6 +89,12 @@ public class Manager : Object {
 		stdout.printf ("ERROR: %s\n", details);
 	}
 
+	private void emit_status (StatusEnum status, string info) {
+		StatusItem item = new StatusItem (status);
+		item.info = info;
+		status_changed (item);
+	}
+
 	private bool open_db (bool writeable = true) {
 		if (writeable) {
 			if (!db.open ()) {
