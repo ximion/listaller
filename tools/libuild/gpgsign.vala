@@ -42,7 +42,7 @@ private class GPGSign : Object {
 
 	private bool check_gpg_err (GPGError.ErrorCode err) {
 		if (err != GPGError.ErrorCode.NO_ERROR) {
-			stdout.printf ("X: %s".printf (GPGError.strsource (err)));
+			stdout.printf ("X: %s\n".printf (err.to_string ()));
 			return false;
 		}
 		return true;
@@ -143,11 +143,10 @@ private class GPGSign : Object {
 		ctx.set_armor (true);
 
 		Data din;
-		err = Data.create (out din);
+		string comb = concat_binfiles (control_fname, payload_fname);
+		debug (comb);
+		err = Data.create_from_file (out din, comb, true);
 		return_if_fail (check_gpg_err (err));
-
-		read_file_to_data (din, control_fname);
-		read_file_to_data (din, payload_fname);
 
 		// detached signature.
 		din.seek (0, Posix.SEEK_SET);

@@ -263,4 +263,45 @@ private string expand_user_dir (string path) {
 	return full_path;
 }
 
+private string concat_binfiles (string afname, string bfname) {
+	const int BUFFER_SIZE = 512;
+	//TODO: This can be done better, but it's easier to debug
+
+	string ofname = Path.build_filename (afname, "..", "..", "combined.tmp", null);
+	File f = File.new_for_path (ofname);
+	FileOutputStream fo_stream = null;
+
+	try {
+		if (f.query_exists (null))
+			f.delete (null);
+		fo_stream = f.create(FileCreateFlags.REPLACE_DESTINATION, null);
+	}
+	catch(Error e) {
+		li_error ("Cannot create file. %s\n".printf (e.message));
+		return "";
+	}
+
+	var afile = File.new_for_path (afname);
+	var file_stream1 = afile.read ();
+	var data_stream1 = new DataInputStream (file_stream1);
+	data_stream1.set_byte_order (DataStreamByteOrder.LITTLE_ENDIAN);
+
+	var bfile = File.new_for_path (bfname);
+	var file_stream2 = bfile.read ();
+	var data_stream2 = new DataInputStream (file_stream2);
+	data_stream2.set_byte_order (DataStreamByteOrder.LITTLE_ENDIAN);
+
+	// Seek and read the image data chunk
+	uint8[] buffer = new uint8[BUFFER_SIZE];
+	file_stream1.seek (0, SeekType.CUR);
+	while (data_stream1.read (buffer) > 0)
+		fo_stream.write (buffer);
+
+	file_stream2.seek (0, SeekType.CUR);
+	while (data_stream2.read (buffer) > 0)
+		fo_stream.write (buffer);
+
+	return f.get_path ();
+}
+
 } // End of namespace

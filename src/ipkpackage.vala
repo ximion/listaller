@@ -124,7 +124,6 @@ private class Package : Object {
 		}
 		// Close & remove tmp archive
 		ar.close ();
-		FileUtils.remove (arname);
 
 		if (!ret)
 			return false;
@@ -300,6 +299,10 @@ private class Package : Object {
 
 	public PackSecurity get_security_info () {
 		GPGSignature? sig = get_signature ();
+
+		//TODO: Remove control.tar.xz on a 'better' place
+		FileUtils.remove (Path.build_filename (wdir, "control.tar.xz", null));
+
 		PackSecurity sec = new PackSecurity ();
 
 		if (sig == null)

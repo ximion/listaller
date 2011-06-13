@@ -972,7 +972,16 @@ namespace GPG {
 		 * when needed. Returns Error Status Code.
 		 */
 		[CCode (cname = "gpgme_data_new_from_mem")]
-		public static GPGError.ErrorCode create_from_memory(out Data d, char* buffer, size_t size, bool copy);
+		public static GPGError.ErrorCode create_from_memory (out Data d, char* buffer, size_t size, bool copy);
+
+		[CCode (cname = "gpgme_data_new_from_file")]
+		public static GPGError.ErrorCode create_from_file (out Data d, string fname, bool copy);
+
+		[CCode (cname = "gpgme_data_new_from_stream")]
+		public static GPGError.ErrorCode create_from_stream (out Data d, Posix.FILE stream);
+
+		[CCode (cname = "gpgme_data_new_from_fd")]
+		public static GPGError.ErrorCode create_from_fd (out Data d, int fd);
 
 		/**
 		 * Destroy the object and return a pointer to its content.
