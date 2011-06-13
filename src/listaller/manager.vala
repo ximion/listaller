@@ -149,6 +149,11 @@ public class Manager : Object {
 
 	public bool remove_application (AppItem app) {
 		app.fast_check ();
+
+		// Emit that we're starting
+		emit_status (StatusEnum.ACTION_STARTED,
+			     _("Removal of %s started.").printf (app.full_name));
+
 		open_db ();
 		// Check if this application exists, if not exit
 		if (db.get_application_by_id (app) == null) {
@@ -180,6 +185,9 @@ public class Manager : Object {
 		}
 		bool ret = db.remove_application (app);
 		db.close ();
+
+		emit_status (StatusEnum.REMOVAL_FINISHED,
+			     _("Removal of %s finished.").printf (app.full_name));
 
 		return ret;
 	}

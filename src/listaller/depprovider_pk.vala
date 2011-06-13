@@ -42,8 +42,15 @@ private class PkitProvider : Provider {
 		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("none");
 		string[] files = { fname, null };
 
-		PackageKit.Results res = pkit.search_files (filter, files, null, pk_progress_cb);
-		PackageKit.PackageSack sack = res.get_package_sack ();
+		PackageKit.Results res;
+		PackageKit.PackageSack sack;
+		try {
+			res  = pkit.search_files (filter, files, null, pk_progress_cb);
+			sack = res.get_package_sack ();
+		} catch (Error e) {
+			debug (e.message);
+			return null;
+		}
 		string[] packages = sack.get_ids ();
 
 		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (packages[0] == null) ) {
