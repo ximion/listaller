@@ -95,36 +95,33 @@ private class GPGSign : Object {
 			error (errno.to_string ());*/
 	}
 
-	private string data_to_string (Data dt) {
-		const uint BUF_SIZE = 128;
-		char buf[128];
-		long ret;
-		string res = "";
+	private string free_data_to_string (Data *dt) {
+		string sig_data;
+		size_t signature_len;
 
-		ret = dt.seek (0, Posix.SEEK_SET);
-		if (ret > 0)
-		 error (errno.to_string ());
-		 while ((ret = dt.read (buf, BUF_SIZE)) > 0)
-			 res += (string) buf;
-		 if (ret < 0)
-		  error (errno.to_string ());
-		 return res;
+		sig_data = dt->release_and_get_mem (out signature_len);
+		if (sig_data == null) {
+			li_error ("Signature data was NULL!");
+			sig_data = "";
+		}
+		return sig_data;
 	}
 
-	private bool read_file_to_data (Data dt, string fname) {
+	private bool read_file_to_data (string fname, ref Data dt) {
+		const uint BUFFER_SIZE = 512;
 		dt.set_encoding (DataEncoding.BINARY);
 
-		const int BUFFER_SIZE = 512;
-		char buff[512];
+		var file = File.new_for_path (fname);
+		var fs = file.read ();
+		var data_stream = new DataInputStream (fs);
+		data_stream.set_byte_order (DataStreamByteOrder.LITTLE_ENDIAN);
 
-		int fd = Posix.open (fname, Posix.O_RDONLY);
-		ssize_t len = Posix.read (fd, buff, BUFFER_SIZE);
-		while (len > 0) {
-			dt.write (buff, len);
-			len = Posix.read (fd, buff, BUFFER_SIZE);
-		}
-		Posix.close (fd);
-		//return_val_if_fail (check_gpg_err (errno), false);
+		// Seek and read the image data chunk
+		uint8[] buffer = new uint8[BUFFER_SIZE];
+		fs.seek (0, SeekType.CUR);
+		while (data_stream.read (buffer) > 0)
+			dt.write (buffer, BUFFER_SIZE);
+
 		return true;
 	}
 
@@ -144,20 +141,23 @@ private class GPGSign : Object {
 
 		Data din;
 		string comb = concat_binfiles (control_fname, payload_fname);
-		debug (comb);
-		err = Data.create_from_file (out din, comb, true);
+
+		err = Data.create (out din);
 		return_if_fail (check_gpg_err (err));
 
+		read_file_to_data (control_fname, ref din);
+		read_file_to_data (payload_fname, ref din);
+
 		// detached signature.
-		din.seek (0, Posix.SEEK_SET);
-		Data dout;
+		//din.seek (0, Posix.SEEK_SET);
+		Data *dout;
 		err = Data.create (out dout);
 		return_if_fail (check_gpg_err (err));
 		err = ctx.op_sign (din, dout, SigMode.DETACH);
 		return_if_fail (check_gpg_err (err));
 		SignResult *result = ctx.op_sign_result ();
 		check_result (result, SigMode.DETACH);
-		signature_out = data_to_string (dout);
+		signature_out = free_data_to_string (dout);
 
 		return true;
 	}

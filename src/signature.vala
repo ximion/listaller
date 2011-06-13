@@ -52,23 +52,6 @@ private class GPGSignature : Object {
 		return true;
 	}
 
-	private bool read_file_to_data (Data dt, string fname) {
-		dt.set_encoding (DataEncoding.BINARY);
-
-		const int BUFFER_SIZE = 512;
-		char buff[512];
-
-		int fd = Posix.open (fname, Posix.O_RDONLY);
-		ssize_t len = Posix.read (fd, buff, BUFFER_SIZE);
-		while (len > 0) {
-			dt.write (buff, len);
-			len = Posix.read (fd, buff, BUFFER_SIZE);
-		}
-		Posix.close (fd);
-		//return_val_if_fail (check_gpg_err (errno), false);
-		return true;
-	}
-
 	private void set_sigstatus_from_gpgsigsum (Sigsum sum) {
 		switch (sum) {
 			case Sigsum.VALID:
@@ -179,6 +162,24 @@ private class GPGSignature : Object {
 		return true;
 	}
 
+	private bool read_file_to_data (string fname, Data dt) {
+		const uint BUFFER_SIZE = 512;
+		dt.set_encoding (DataEncoding.BINARY);
+
+		var file = File.new_for_path (fname);
+		var fs = file.read ();
+		var data_stream = new DataInputStream (fs);
+		data_stream.set_byte_order (DataStreamByteOrder.LITTLE_ENDIAN);
+
+		// Seek and read the image data chunk
+		uint8[] buffer = new uint8[BUFFER_SIZE];
+		fs.seek (0, SeekType.CUR);
+		while (data_stream.read (buffer) > 0)
+			dt.write (buffer, BUFFER_SIZE);
+
+		return true;
+	}
+
 	public bool verify_package (string ctrlfname, string payloadfname) {
 		Context ctx;
 		GPGError.ErrorCode err;
@@ -191,10 +192,12 @@ private class GPGSignature : Object {
 		string ccf = concat_binfiles (ctrlfname, payloadfname);
 
 		/* Checking a valid message.  */
-		err = Data.create_from_file (out dt, ccf, true);
+		err = Data.create (out dt);
 		dt.set_encoding (DataEncoding.BINARY);
-		read_file_to_data (dt, ctrlfname);
-		read_file_to_data (dt, payloadfname);
+
+		read_file_to_data (ctrlfname, dt);
+		read_file_to_data (payloadfname, dt);
+
 		return_if_fail (check_gpg_err (err));
 
 		err = Data.create_from_memory (out sig, signtext, Posix.strlen (signtext), false);

@@ -422,7 +422,7 @@ namespace GPG {
 		/**
 		 * The next signature in the list
 		 */
-		Signature *next;
+		SignatureNew *next;
 
 		SigMode type;
 

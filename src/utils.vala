@@ -282,23 +282,24 @@ private string concat_binfiles (string afname, string bfname) {
 	}
 
 	var afile = File.new_for_path (afname);
-	var file_stream1 = afile.read ();
-	var data_stream1 = new DataInputStream (file_stream1);
-	data_stream1.set_byte_order (DataStreamByteOrder.LITTLE_ENDIAN);
-
 	var bfile = File.new_for_path (bfname);
-	var file_stream2 = bfile.read ();
-	var data_stream2 = new DataInputStream (file_stream2);
-	data_stream2.set_byte_order (DataStreamByteOrder.LITTLE_ENDIAN);
+
+	var file_stream = afile.read ();
+	var data_stream = new DataInputStream (file_stream);
+	data_stream.set_byte_order (DataStreamByteOrder.LITTLE_ENDIAN);
+
 
 	// Seek and read the image data chunk
 	uint8[] buffer = new uint8[BUFFER_SIZE];
-	file_stream1.seek (0, SeekType.CUR);
-	while (data_stream1.read (buffer) > 0)
+	file_stream.seek (0, SeekType.CUR);
+	while (data_stream.read (buffer) > 0)
 		fo_stream.write (buffer);
 
-	file_stream2.seek (0, SeekType.CUR);
-	while (data_stream2.read (buffer) > 0)
+	file_stream = bfile.read ();
+	data_stream = new DataInputStream (file_stream);
+
+	file_stream.seek (0, SeekType.CUR);
+	while (data_stream.read (buffer) > 0)
 		fo_stream.write (buffer);
 
 	return f.get_path ();
