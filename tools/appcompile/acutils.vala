@@ -1,6 +1,8 @@
 /* acutils.vala
  *
- * Copyright (C) 2011  Matthias Klumpp
+ * Copyright (C) 2011 Matthias Klumpp
+ *
+ * Licensed under the GNU General Public License Version 3+
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,9 +16,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Author:
- * 	Matthias Klumpp <matthias@nlinux.org>
  */
 
 namespace Listaller.Extra {
