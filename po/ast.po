@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-30 03:02+0200\n"
+"POT-Creation-Date: 2011-06-14 15:34+0200\n"
 "PO-Revision-Date: 2009-12-07 23:19+0000\n"
 "Last-Translator: Costales <marcos@ubuntu-ast.org>\n"
 "Language-Team: Asturian <ast@li.org>\n"
@@ -18,14 +18,41 @@ msgstr ""
 "X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
 "X-Generator: Launchpad (build 12915)\n"
 
+#, c-format
+msgid ""
+"'%s' has no file-list registered. The software database might be broken."
+msgstr ""
+
+msgid "A policy was not met."
+msgstr ""
+
+#, fuzzy
+msgid "A system error occured."
+msgstr "Hebo un fallu internu"
+
 #, fuzzy, c-format
 msgid "Application ID %s is invalid!"
 msgstr "Nun s'instaló l'aplicación %a ."
 
+msgid "Available CRL is too old"
+msgstr ""
+
+msgid "Average security."
+msgstr ""
+
 msgid "Build IPK package"
 msgstr ""
 
+msgid "CRL not available."
+msgstr ""
+
+msgid "Can't verify: Key is missing"
+msgstr ""
+
 msgid "Copying files to their destination"
+msgstr ""
+
+msgid "Could be dangerous!"
 msgstr ""
 
 #, c-format
@@ -93,6 +120,10 @@ msgid "Could not remove file %s!"
 msgstr ""
 
 #, c-format
+msgid "Could not uninstall application %s. It is not installed."
+msgstr ""
+
+#, c-format
 msgid ""
 "Could not validate file %s. This IPK file might have been modified after "
 "creation!\n"
@@ -136,6 +167,9 @@ msgstr ""
 msgid "File '%s' doesn't exist."
 msgstr ""
 
+msgid "GPG-Sign the resulting package"
+msgstr ""
+
 msgid "IPK package could not be found!"
 msgstr ""
 
@@ -158,6 +192,9 @@ msgstr "Instalación encaboxada."
 msgid "Installing native package %s"
 msgstr "Instala un paquete IPK"
 
+msgid "Low security."
+msgstr ""
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
@@ -166,8 +203,17 @@ msgstr ""
 msgid "Native package %s is already installed."
 msgstr ""
 
+msgid "Never trust."
+msgstr ""
+
 #, c-format
 msgid "No path given!"
+msgstr ""
+
+msgid "One key has been revoked"
+msgstr ""
+
+msgid "One key has expired"
 msgstr ""
 
 #, c-format
@@ -182,6 +228,14 @@ msgid "Path to the application's source code"
 msgstr "¿Quies verificar les dependencies de l'aplicación?"
 
 #, c-format
+msgid "Removal of %s finished."
+msgstr ""
+
+#, c-format
+msgid "Removal of %s started."
+msgstr ""
+
+#, c-format
 msgid "Resolving dependencies of '%s'."
 msgstr ""
 
@@ -189,10 +243,29 @@ msgstr ""
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Running installation of %s"
+msgstr "Entamar la instalación en modu test"
+
 msgid "Setup has not been initialized!"
 msgstr ""
 
+msgid "Should be safe."
+msgstr ""
+
 msgid "Show the application's version"
+msgstr ""
+
+msgid "Signature has expired"
+msgstr ""
+
+msgid "Signature is bad."
+msgstr ""
+
+msgid "Signature is fully valid"
+msgstr ""
+
+msgid "Signature is good."
 msgstr ""
 
 msgid "Software database closed"
@@ -217,12 +290,27 @@ msgid ""
 "This IPK package might be damaged, please obtain a new copy!"
 msgstr ""
 
+msgid "Status of this signature is unknown or package is not signed."
+msgstr ""
+
+msgid "Strip debug infos from files in install-target"
+msgstr ""
+
 msgid ""
 "This application was already installed. Please remove the existing version "
 "to continue!"
 msgstr ""
 
 msgid "Tried to perform action on invalid IPK package."
+msgstr ""
+
+msgid "Trust if full"
+msgstr ""
+
+msgid "Trust is marginal"
+msgstr ""
+
+msgid "Trust is ultimate."
 msgstr ""
 
 #, c-format
@@ -241,6 +329,13 @@ msgid ""
 "obtain a new copy."
 msgstr ""
 
+msgid "Unable to extract signature! Maybe package is not signed."
+msgstr ""
+
+#, c-format
+msgid "Unable to fetch application description! Message: %s"
+msgstr ""
+
 #, c-format
 msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
@@ -256,18 +351,42 @@ msgid "Unable to open software database for reading only!"
 msgstr ""
 
 #, c-format
+msgid "Unable to read package signature! Message: %s"
+msgstr ""
+
+#, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Unable to save modified desktop-file!"
+msgstr ""
+
+#, c-format
+msgid "Unable to save modified desktop-file! Message: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to write application description! Message: %s"
 msgstr ""
 
 #, c-format
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to write signature file! Message: %s"
+msgstr "Imposible atopar %s"
+
+msgid "Unknown."
+msgstr ""
+
 msgid "Use recursive mode"
 msgstr ""
 
-#, c-format
-msgid "Using user-defined install target: %s"
+msgid "Validity is undefined"
+msgstr ""
+
+msgid "Validity is unknown"
 msgstr ""
 
 #, c-format
@@ -281,8 +400,9 @@ msgstr ""
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr ""
 
-#~ msgid "An internal error occured"
-#~ msgstr "Hebo un fallu internu"
+#, c-format
+msgid "error: %s"
+msgstr ""
 
 #~ msgid "Build IPK-package"
 #~ msgstr "Construir un paquete IPK"
@@ -338,9 +458,6 @@ msgstr ""
 
 #~ msgid "Resolve Listaller path variable"
 #~ msgstr "Resolver variable de ruta de Listaller"
-
-#~ msgid "Runs installation in testmode"
-#~ msgstr "Entamar la instalación en modu test"
 
 #~ msgid "Should lipa fix these problems automatically [y/n]?"
 #~ msgstr "¿Quier que Lipa resuelva automáticamente esos problemes [s/n]?"

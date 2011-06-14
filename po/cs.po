@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-30 03:02+0200\n"
+"POT-Creation-Date: 2011-06-14 15:34+0200\n"
 "PO-Revision-Date: 2010-10-05 17:09+0000\n"
 "Last-Translator: Konki <pavel.konkol@seznam.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -18,14 +18,42 @@ msgstr ""
 "X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
 "X-Generator: Launchpad (build 12915)\n"
 
+#, c-format
+msgid ""
+"'%s' has no file-list registered. The software database might be broken."
+msgstr ""
+
+msgid "A policy was not met."
+msgstr ""
+
+#, fuzzy
+msgid "A system error occured."
+msgstr "Došlo k neznámé chybě!"
+
 #, fuzzy, c-format
 msgid "Application ID %s is invalid!"
 msgstr "Aplikace %a nebyla nainstalována."
 
+msgid "Available CRL is too old"
+msgstr ""
+
+msgid "Average security."
+msgstr ""
+
 msgid "Build IPK package"
 msgstr ""
 
+#, fuzzy
+msgid "CRL not available."
+msgstr "Žádné informace nejsou dostupné!"
+
+msgid "Can't verify: Key is missing"
+msgstr ""
+
 msgid "Copying files to their destination"
+msgstr ""
+
+msgid "Could be dangerous!"
 msgstr ""
 
 #, c-format
@@ -92,6 +120,10 @@ msgstr ""
 msgid "Could not remove file %s!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Could not uninstall application %s. It is not installed."
+msgstr "Aplikace \"%a\" nebyla nainstalována."
+
 #, c-format
 msgid ""
 "Could not validate file %s. This IPK file might have been modified after "
@@ -136,6 +168,9 @@ msgstr ""
 msgid "File '%s' doesn't exist."
 msgstr ""
 
+msgid "GPG-Sign the resulting package"
+msgstr ""
+
 msgid "IPK package could not be found!"
 msgstr ""
 
@@ -157,6 +192,9 @@ msgstr "Instalace selhala."
 msgid "Installing native package %s"
 msgstr "Nainstalovat balík?"
 
+msgid "Low security."
+msgstr ""
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr ""
@@ -165,8 +203,17 @@ msgstr ""
 msgid "Native package %s is already installed."
 msgstr "Tato aplikace je již nainstalována"
 
+msgid "Never trust."
+msgstr ""
+
 #, c-format
 msgid "No path given!"
+msgstr ""
+
+msgid "One key has been revoked"
+msgstr ""
+
+msgid "One key has expired"
 msgstr ""
 
 #, c-format
@@ -181,6 +228,14 @@ msgid "Path to the application's source code"
 msgstr "Test aplikace byl ukončen"
 
 #, c-format
+msgid "Removal of %s finished."
+msgstr ""
+
+#, c-format
+msgid "Removal of %s started."
+msgstr ""
+
+#, c-format
 msgid "Resolving dependencies of '%s'."
 msgstr ""
 
@@ -188,10 +243,29 @@ msgstr ""
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Running installation of %s"
+msgstr "Spouštím instalaci..."
+
 msgid "Setup has not been initialized!"
 msgstr ""
 
+msgid "Should be safe."
+msgstr ""
+
 msgid "Show the application's version"
+msgstr ""
+
+msgid "Signature has expired"
+msgstr ""
+
+msgid "Signature is bad."
+msgstr ""
+
+msgid "Signature is fully valid"
+msgstr ""
+
+msgid "Signature is good."
 msgstr ""
 
 msgid "Software database closed"
@@ -217,12 +291,27 @@ msgid ""
 "This IPK package might be damaged, please obtain a new copy!"
 msgstr ""
 
+msgid "Status of this signature is unknown or package is not signed."
+msgstr ""
+
+msgid "Strip debug infos from files in install-target"
+msgstr ""
+
 msgid ""
 "This application was already installed. Please remove the existing version "
 "to continue!"
 msgstr ""
 
 msgid "Tried to perform action on invalid IPK package."
+msgstr ""
+
+msgid "Trust if full"
+msgstr ""
+
+msgid "Trust is marginal"
+msgstr ""
+
+msgid "Trust is ultimate."
 msgstr ""
 
 #, c-format
@@ -241,6 +330,13 @@ msgid ""
 "obtain a new copy."
 msgstr ""
 
+msgid "Unable to extract signature! Maybe package is not signed."
+msgstr ""
+
+#, c-format
+msgid "Unable to fetch application description! Message: %s"
+msgstr ""
+
 #, c-format
 msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
@@ -256,18 +352,42 @@ msgid "Unable to open software database for reading only!"
 msgstr ""
 
 #, c-format
+msgid "Unable to read package signature! Message: %s"
+msgstr ""
+
+#, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Unable to save modified desktop-file!"
+msgstr ""
+
+#, c-format
+msgid "Unable to save modified desktop-file! Message: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to write application description! Message: %s"
 msgstr ""
 
 #, c-format
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to write signature file! Message: %s"
+msgstr "Nemohu přepsat soubor %f."
+
+msgid "Unknown."
+msgstr ""
+
 msgid "Use recursive mode"
 msgstr ""
 
-#, c-format
-msgid "Using user-defined install target: %s"
+msgid "Validity is undefined"
+msgstr ""
+
+msgid "Validity is unknown"
 msgstr ""
 
 #, c-format
@@ -279,6 +399,10 @@ msgid "XML file '%s' is damaged."
 msgstr ""
 
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
+msgstr ""
+
+#, c-format
+msgid "error: %s"
 msgstr ""
 
 #~ msgid "%f files will be changed."
@@ -573,9 +697,6 @@ msgstr ""
 #~ msgid "No compatible packages found!"
 #~ msgstr "Žádné kompatibilní balíky nebyly nalezeny!"
 
-#~ msgid "No information available!"
-#~ msgstr "Žádné informace nejsou dostupné!"
-
 #~ msgid "Office"
 #~ msgstr "Kancelář"
 
@@ -678,9 +799,6 @@ msgstr ""
 #~ msgid "Running application installation..."
 #~ msgstr "Spouštění instalace aplikace..."
 
-#~ msgid "Running installation..."
-#~ msgstr "Spouštím instalaci..."
-
 #~ msgid "Running under %de (or similar)"
 #~ msgstr "Spouštím pod %de (nebo podobné)"
 
@@ -735,9 +853,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Balík IPK je nejspíš poškozen nebo nemáte dostatečná oprávnění pro "
 #~ "přístup k potřebný souborům a složkám."
-
-#~ msgid "The application \"%a\" was not installed."
-#~ msgstr "Aplikace \"%a\" nebyla nainstalována."
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "Aplikace %a byla úspěšně nainstalována!"
@@ -819,9 +934,6 @@ msgstr ""
 #~ msgid "Unable to override the file %f."
 #~ msgstr "Nelze přepsat soubor %f."
 
-#~ msgid "Unable to overwrite the file %f."
-#~ msgstr "Nemohu přepsat soubor %f."
-
 #~ msgid "Uninstall"
 #~ msgstr "Odinstalovat"
 
@@ -833,9 +945,6 @@ msgstr ""
 
 #~ msgid "Uninstalling..."
 #~ msgstr "Odinstalace..."
-
-#~ msgid "Unknown error occured!"
-#~ msgstr "Došlo k neznámé chybě!"
 
 #~ msgid "Update info:"
 #~ msgstr "Popis aktualizace:"

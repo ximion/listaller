@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-05-30 03:02+0200\n"
+"POT-Creation-Date: 2011-06-14 15:34+0200\n"
 "PO-Revision-Date: 2011-04-03 14:52+0000\n"
 "Last-Translator: KarimSadeg <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -18,15 +18,43 @@ msgstr ""
 "X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
 "X-Generator: Launchpad (build 12915)\n"
 
+#, c-format
+msgid ""
+"'%s' has no file-list registered. The software database might be broken."
+msgstr ""
+
+msgid "A policy was not met."
+msgstr ""
+
+#, fuzzy
+msgid "A system error occured."
+msgstr "Une erreur interne est survenue"
+
 #, fuzzy, c-format
 msgid "Application ID %s is invalid!"
 msgstr "L'application %a n'a pas été installée."
 
+msgid "Available CRL is too old"
+msgstr ""
+
+msgid "Average security."
+msgstr ""
+
 msgid "Build IPK package"
+msgstr ""
+
+#, fuzzy
+msgid "CRL not available."
+msgstr "Pas d'informations disponible !"
+
+msgid "Can't verify: Key is missing"
 msgstr ""
 
 msgid "Copying files to their destination"
 msgstr "Copie des fichiers vers leurs destinations en cours"
+
+msgid "Could be dangerous!"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -92,6 +120,10 @@ msgstr ""
 msgid "Could not remove file %s!"
 msgstr "Impossible d'ouvrir le fichier de bureau : %s"
 
+#, fuzzy, c-format
+msgid "Could not uninstall application %s. It is not installed."
+msgstr "L'application « %a » n'a pas été installée."
+
 #, c-format
 msgid ""
 "Could not validate file %s. This IPK file might have been modified after "
@@ -140,6 +172,9 @@ msgstr "Fichier %s introuvable ou accès refusé !"
 msgid "File '%s' doesn't exist."
 msgstr "Le fichier '%s' n'existe pas."
 
+msgid "GPG-Sign the resulting package"
+msgstr ""
+
 msgid "IPK package could not be found!"
 msgstr ""
 
@@ -161,6 +196,9 @@ msgstr "L'installation du paquet %s a échoué"
 msgid "Installing native package %s"
 msgstr "Installer le paquetage ?"
 
+msgid "Low security."
+msgstr ""
+
 #, c-format
 msgid "Making '%s' known to your system."
 msgstr "Rendre '%s' connu par votre système."
@@ -169,8 +207,17 @@ msgstr "Rendre '%s' connu par votre système."
 msgid "Native package %s is already installed."
 msgstr "Cette application est déjà installée"
 
+msgid "Never trust."
+msgstr ""
+
 #, c-format
 msgid "No path given!"
+msgstr ""
+
+msgid "One key has been revoked"
+msgstr ""
+
+msgid "One key has expired"
 msgstr ""
 
 #, fuzzy, c-format
@@ -185,6 +232,14 @@ msgid "Path to the application's source code"
 msgstr "Le test de l'application est terminé."
 
 #, c-format
+msgid "Removal of %s finished."
+msgstr ""
+
+#, c-format
+msgid "Removal of %s started."
+msgstr ""
+
+#, c-format
 msgid "Resolving dependencies of '%s'."
 msgstr "Résolution des dépendances de '%s'."
 
@@ -192,10 +247,29 @@ msgstr "Résolution des dépendances de '%s'."
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Running installation of %s"
+msgstr "Installation en cours ..."
+
 msgid "Setup has not been initialized!"
 msgstr "L'installateur n'a pas été initialisé !"
 
+msgid "Should be safe."
+msgstr ""
+
 msgid "Show the application's version"
+msgstr ""
+
+msgid "Signature has expired"
+msgstr ""
+
+msgid "Signature is bad."
+msgstr ""
+
+msgid "Signature is fully valid"
+msgstr ""
+
+msgid "Signature is good."
 msgstr ""
 
 msgid "Software database closed"
@@ -225,12 +299,27 @@ msgstr ""
 "modifié après sa création !\n"
 "Réessayer avec une nouvelle copie."
 
+msgid "Status of this signature is unknown or package is not signed."
+msgstr ""
+
+msgid "Strip debug infos from files in install-target"
+msgstr ""
+
 msgid ""
 "This application was already installed. Please remove the existing version "
 "to continue!"
 msgstr ""
 
 msgid "Tried to perform action on invalid IPK package."
+msgstr ""
+
+msgid "Trust if full"
+msgstr ""
+
+msgid "Trust is marginal"
+msgstr ""
+
+msgid "Trust is ultimate."
 msgstr ""
 
 #, c-format
@@ -252,6 +341,13 @@ msgstr ""
 "modifié après sa création !\n"
 "Réessayer avec une nouvelle copie."
 
+msgid "Unable to extract signature! Maybe package is not signed."
+msgstr ""
+
+#, c-format
+msgid "Unable to fetch application description! Message: %s"
+msgstr ""
+
 #, c-format
 msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
@@ -267,18 +363,43 @@ msgid "Unable to open software database for reading only!"
 msgstr ""
 
 #, c-format
+msgid "Unable to read package signature! Message: %s"
+msgstr ""
+
+#, c-format
 msgid "Unable to remove database lock! (Message: %s)"
+msgstr ""
+
+msgid "Unable to save modified desktop-file!"
+msgstr ""
+
+#, c-format
+msgid "Unable to save modified desktop-file! Message: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to write application description! Message: %s"
 msgstr ""
 
 #, c-format
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to write signature file! Message: %s"
+msgstr "Impossible d'écraser le fichier %f."
+
+#, fuzzy
+msgid "Unknown."
+msgstr "Inconnu"
+
 msgid "Use recursive mode"
 msgstr ""
 
-#, c-format
-msgid "Using user-defined install target: %s"
+msgid "Validity is undefined"
+msgstr ""
+
+msgid "Validity is unknown"
 msgstr ""
 
 #, c-format
@@ -291,6 +412,10 @@ msgstr "Le fichier XML '%s' est endommagé."
 
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "error: %s"
+msgstr "Erreur:"
 
 #~ msgid "  modified "
 #~ msgstr "  modifier "
@@ -478,9 +603,6 @@ msgstr ""
 
 #~ msgid "Alt"
 #~ msgstr "Alt"
-
-#~ msgid "An internal error occured"
-#~ msgstr "Une erreur interne est survenue"
 
 #~ msgid "Application uninstalled successfully!"
 #~ msgstr "L'application a été correctement désinstallée !"
@@ -1229,9 +1351,6 @@ msgstr ""
 #~ msgid "No help nodes available"
 #~ msgstr "Aucuns noeuds d'aide disponibles"
 
-#~ msgid "No information available!"
-#~ msgstr "Pas d'informations disponible !"
-
 #~ msgid "No timers available"
 #~ msgstr "Aucun temporisateur disponible"
 
@@ -1477,9 +1596,6 @@ msgstr ""
 #~ msgid "Running application installation..."
 #~ msgstr "Installation de l'application en cours…"
 
-#~ msgid "Running installation..."
-#~ msgstr "Installation en cours ..."
-
 #~ msgid "Runs installation in testmode"
 #~ msgstr "Démarrer l'installation en mode test"
 
@@ -1598,9 +1714,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Le package IPK pourrait être endommagé ou vous n'avez pas assez de droits "
 #~ "d'accès requis pour les fichiers / dossiers."
-
-#~ msgid "The application \"%a\" was not installed."
-#~ msgstr "L'application « %a » n'a pas été installée."
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "L'application %a a été installée avec succès !"
@@ -1732,9 +1845,6 @@ msgstr ""
 #~ msgid "Unable to override the file %f."
 #~ msgstr "Impossible d'écraser le paquet %f."
 
-#~ msgid "Unable to overwrite the file %f."
-#~ msgstr "Impossible d'écraser le fichier %f."
-
 #~ msgid "Uninstall"
 #~ msgstr "Désinstaller"
 
@@ -1746,9 +1856,6 @@ msgstr ""
 
 #~ msgid "Uninstalling..."
 #~ msgstr "Désinstallation en cours..."
-
-#~ msgid "Unknown"
-#~ msgstr "Inconnu"
 
 #~ msgid "Unknown Error, please report this bug"
 #~ msgstr "Erreur inconnue, rapporter ce bogue svp"
