@@ -119,6 +119,7 @@ public class Manager : Object {
 		int i = 1;
 		AppItem capp = null;
 		for (capp = db.get_application_by_dbid (i); capp != null; i++) {
+			capp.shared = conf.sumode;
 			application (capp);
 			alist.add (capp);
 			progress_changed ((int) Math.round (one * i));

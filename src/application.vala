@@ -62,6 +62,7 @@ public class AppItem : Object {
 	private string _icon_name;
 	private int64  _install_time;
 	private string _dependencies;
+	private bool _shared;
 	private AppOrigin _origin;
 	private int _dbid;
 	private string _app_id;
@@ -130,7 +131,20 @@ public class AppItem : Object {
 			_desktop_file_prefix = fold_user_dir (dfile);
 			return _desktop_file_prefix;
 		}
-		set { _desktop_file = fold_user_dir (value); }
+		set {
+			_desktop_file = fold_user_dir (value);
+			// Desktop file in / ==> shared application
+			if (_desktop_file.has_prefix ("/"))
+				shared = true;
+			// Desktop-file in $APP ==> application not shared
+			if (_desktop_file.has_prefix ("$"))
+				shared = false;
+		}
+	}
+
+	public bool shared {
+		get { return _shared; }
+		set { _shared = value; }
 	}
 
 	public string icon_name {
@@ -175,6 +189,7 @@ public class AppItem : Object {
 	}
 
 	public AppItem.blank () {
+		_shared = false;
 		_idname = "";
 		_appname = "";
 		_idname = "";
