@@ -198,7 +198,7 @@ Mon Oct  9 00:57:48 UTC 2006  Taj Morton  <tajmorton@gmail.com>
 
 Sun Sep 24 22:38:50 UTC 2006  Taj Morton  <tajmorton@gmail.com>
 	* apgcc: [rearrangeForAsNeeded()]: Put -lXRender at the end of the
-	  link command. See 
+	  link command. See
 	  http://lists.sunsite.dk/cgi-bin/ezmlm-cgi?21:mss:5187:200609:lkfnloheeaingojmnemi
 	  for details.
 
@@ -213,7 +213,7 @@ Thu Sep  7 19:10:53 UTC 2006  Taj Morton  <tajmorton@gmail.com>
 	  it's dead code.
 
 Tue May 30 01:04:05 2006  Mike Hearn  <mike@plan99.net>
-	
+
 	* relaytool: Add x64 support based on patch by Psyche.
 	  Fix a couple of minor bugs and make the code flow better.
 
@@ -249,7 +249,7 @@ Thu Apr 13 23:56:32 2006  Mike Hearn  <mike@plan99.net>
 2006-01-23 Peter Lund <firefly@diku.dk>
 
 	* Makefile: Use eager notation (`:=') instead of `=' for var assignment. Add $(PROGS)-variable to hold all binary names.
-	
+
 
 2005-12-02  Hongli Lai  <hongli@plan99.net>
 	* apgcc (rearrangeForAsNeeded):
@@ -300,14 +300,14 @@ August 5 2005  Hongli Lai  <hongli@plan99.net>
 2005-08-02  Mike Hearn  <mike@plan99.net>
 	* relaytool: Remove -include flags, if any. This makes relaytool
 	  precompiled-header safe.
-	
+
 2005-07-31  Mike Hearn  <mike@plan99.net>
 	* relaytool.m4, relaytool: Optimization: use -ffunction-sections
 	  and --gc-sections to eliminate unused jump slots
 	* relaytool: Don't break when CFLAGS is set
 	* relaytool: Optimization: only generate jump slots for exported
 	  symbols from the library.
-	
+
 July 30 2005  Hongli Lai  <hongli@plan99.net>
 	* Apbuild/GCC.pm: Commit Joseph's patch: fix $gcc->isLibrary()
 
@@ -335,19 +335,19 @@ May 16th 2005  Vincent Béron <vberon@mecano.gme.usherb.ca>
 	* relaytool: libdl won't ever be supported by relaytool, so skip it.
 	* relaytool: Add a --version option, reorganize a bit the rest of --help.
 	* relaytool: Allow generating a stub file for every library passed in args.
-	* relaytool: Skip generating a stub for libraries for which no functions 
+	* relaytool: Skip generating a stub for libraries for which no functions
 	  are called or no variables used.
 	* relaytool: Use proper quoting.
 	* relaytool: Support old nm versions
 
 May 15th 2005  Vincent Béron <vberon@mecano.gme.usherb.ca>
-	* relaytool: Allow relaytool to understand more than one --relay 
+	* relaytool: Allow relaytool to understand more than one --relay
 	  parameter.
-	* relaytool: Enable (via --minimal-list) relaytool to only 
-	  generate the minimum list of symbols by looking which ones are 
+	* relaytool: Enable (via --minimal-list) relaytool to only
+	  generate the minimum list of symbols by looking which ones are
 	  undefined in .o objects.
 	* relaytool: Use CFLAGS (if available) while compiling the stub file.
-	* relaytool: Use a shell function to do the same thing as 
+	* relaytool: Use a shell function to do the same thing as
 	  readlink -f as the latter isn't always understood by readlink.
 	* relaytool: Fix a typo in PPC C code.
 
@@ -391,10 +391,10 @@ Fri Feb 11 23:49:24 2005  Mike Hearn  <mike@navi.cx>
 2004-06-06  Mike Hearn  <mike@navi.cx>
 	* relaytool: make relaytool jump thunks NX safe by using mmap
 	  rather than malloc.
-	
+
 	* relaytool: Fix ELF scoping of dummy symbols for variable
 	  imports, so the definitions in the imported lib don't get
 	  resolved to the dummies (not all libs are compiled -Bsymbolic)
-	
+
 	* relaytool: support partial maps
-	
+
