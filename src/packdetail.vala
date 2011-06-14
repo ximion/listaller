@@ -28,17 +28,19 @@ public class PackSecurity : Object {
 	private weak Package pack;
 
 	public SignStatus signature_status { get; set; }
+	public bool sig_valid { get; set; }
 	public SignValidity signature_validity { get; set; }
 
 	internal PackSecurity () {
+		sig_valid = false;
 	}
 
 	public SecurityLevel get_level () {
-		if (signature_status != SignStatus.VALID)
+		if (!sig_valid)
 			return SecurityLevel.DANGEROUS;
 		if (signature_validity == SignValidity.MARGINAL)
 			return SecurityLevel.NORMAL;
-		if (signature_validity > SignValidity.FULL)
+		if (signature_validity >= SignValidity.FULL)
 			return SecurityLevel.HIGH;
 		return SecurityLevel.LOW;
 	}

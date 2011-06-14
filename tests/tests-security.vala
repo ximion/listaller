@@ -42,7 +42,7 @@ void test_signing_basic () {
 	GPGSignature sigverify = new GPGSignature (sign_text);
 	sigverify.verify_package (Path.build_filename (datadir, "xfile1.bin", null),
 				  Path.build_filename (datadir, "FooBar-1.0_install.ipk", null));
-	debug (sigverify.validity.to_string ());
+	debug (sigverify.sigstatus.to_string ());
 }
 
 int main (string[] args) {

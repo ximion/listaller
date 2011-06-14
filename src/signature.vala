@@ -30,9 +30,11 @@ private class GPGSignature : Object {
 
 	public SignStatus sigstatus { get; set; }
 	public SignValidity validity { get; set; }
+	public bool sig_valid { get; set; }
 
 	public GPGSignature (string sig) {
 		signtext = sig;
+		sig_valid = false;
 		sigstatus = SignStatus.UNKNOWN;
 		validity = SignValidity.UNKNOWN;
 		init_gpgme (Protocol.OpenPGP);
@@ -145,10 +147,12 @@ private class GPGSignature : Object {
 		set_sigstatus_from_gpgsigsum (sig->summary);
 		set_sigvalidity_from_gpgvalidity (sig->validity);
 
-		debug (sig->pka_address);
 		if (sig->status != GPGError.ErrorCode.NO_ERROR) {
 			li_warning ("Unexpected signature status: %s\n".printf (sig->status.to_string ()));
+			sig_valid = false;
 			return false;
+		} else {
+			sig_valid = true;
 		}
 		if (sig->wrong_key_usage) {
 			li_warning ("Unexpectedly wrong key usage\n");
