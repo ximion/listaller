@@ -36,7 +36,7 @@ public class PackSecurity : Object {
 		if ((signature_status & SignStatus.VALID) == 0)
 			return SecurityLevel.DANGEROUS;
 		if (signature_validity == SignValidity.MARGINAL)
-			return SecurityLevel.NORMAL;
+			return SecurityLevel.MEDIUM;
 		if (signature_validity >= SignValidity.FULL)
 			return SecurityLevel.HIGH;
 		return SecurityLevel.LOW;

@@ -25,10 +25,14 @@ namespace PackageKit {
 		public void set_summary (string summary);
 		[NoAccessorMethod]
 		public string cat_id { owned get; set; }
-		public string icon { get; set; }
-		public string name { get; set; }
-		public string parent_id { get; set; }
-		public string summary { get; set; }
+		[NoAccessorMethod]
+		public string icon { owned get; set; }
+		[NoAccessorMethod]
+		public string name { owned get; set; }
+		[NoAccessorMethod]
+		public string parent_id { owned get; set; }
+		[NoAccessorMethod]
+		public string summary { owned get; set; }
 	}
 	[CCode (type_id = "pk_client_get_type ()", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public class Client : GLib.Object {
@@ -120,11 +124,16 @@ namespace PackageKit {
 		public async void upgrade_system_async (string distro_id, PackageKit.UpgradeKind upgrade_kind, [CCode (pos = 4, array_length_pos = 4.1, delegate_target_pos = 4.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 3)] GLib.Cancellable? cancellable = null);
 		public PackageKit.Results what_provides (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, [CCode (delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		public async void what_provides_async (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values, [CCode (pos = 5, array_length_pos = 5.1, delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 4)] GLib.Cancellable? cancellable = null);
+		[NoAccessorMethod]
 		public bool background { get; set; }
+		[NoAccessorMethod]
 		public uint cache_age { get; set; }
+		[NoAccessorMethod]
 		public bool idle { get; }
+		[NoAccessorMethod]
 		public bool interactive { get; set; }
-		public string locale { get; set; }
+		[NoAccessorMethod]
+		public string locale { owned get; set; }
 	}
 	[CCode (type_id = "pk_client_helper_get_type ()", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public class ClientHelper : GLib.Object {
@@ -236,7 +245,7 @@ namespace PackageKit {
 		[NoAccessorMethod]
 		public uint state { get; set; }
 		[NoAccessorMethod]
-		public string summary { get; set; }
+		public string summary { owned get; set; }
 	}
 	[CCode (type_id = "pk_error_get_type ()", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public class Error : PackageKit.Source {
@@ -249,7 +258,7 @@ namespace PackageKit {
 		[NoAccessorMethod]
 		public uint code { get; set; }
 		[NoAccessorMethod]
-		public string details { get; set; }
+		public string details { owned get; set; }
 	}
 	[CCode (type_id = "pk_eula_required_get_type ()", cheader_filename = "packagekit-glib2/packagekit.h")]
 	public class EulaRequired : PackageKit.Source {
@@ -294,7 +303,7 @@ namespace PackageKit {
 		public unowned string get_details ();
 		public PackageKit.MessageType get_kind ();
 		[NoAccessorMethod]
-		public string details { get; set; }
+		public string details { owned get; set; }
 		[NoAccessorMethod]
 		public uint type { get; set; }
 	}
@@ -348,7 +357,7 @@ namespace PackageKit {
 		[NoAccessorMethod]
 		public uint64 size { get; set; }
 		[NoAccessorMethod]
-		public string summary { get; set; }
+		public string summary { owned get; set; }
 		[NoAccessorMethod]
 		public string update_bugzilla_url { owned get; set; }
 		[NoAccessorMethod]
@@ -512,23 +521,23 @@ namespace PackageKit {
 		public bool add_require_restart (PackageKit.RequireRestart item);
 		public bool add_transaction (PackageKit.TransactionPast item);
 		public bool add_update_detail (PackageKit.UpdateDetail item);
-		public GLib.GenericArray<weak void*> get_category_array ();
-		public GLib.GenericArray<weak void*> get_details_array ();
-		public GLib.GenericArray<weak void*> get_distro_upgrade_array ();
+		public GLib.GenericArray<weak PackageKit.Category> get_category_array ();
+		public GLib.GenericArray<weak PackageKit.Details> get_details_array ();
+		public GLib.GenericArray<weak PackageKit.DistroUpgrade> get_distro_upgrade_array ();
 		public PackageKit.Error get_error_code ();
-		public GLib.GenericArray<weak void*> get_eula_required_array ();
+		public GLib.GenericArray<weak PackageKit.EulaRequired> get_eula_required_array ();
 		public PackageKit.Exit get_exit_code ();
-		public GLib.GenericArray<weak void*> get_files_array ();
-		public GLib.GenericArray<weak void*> get_media_change_required_array ();
-		public GLib.GenericArray<weak void*> get_message_array ();
-		public GLib.GenericArray<weak void*> get_package_array ();
+		public GLib.GenericArray<weak PackageKit.Files> get_files_array ();
+		public GLib.GenericArray<weak PackageKit.MediaChangeRequired> get_media_change_required_array ();
+		public GLib.GenericArray<weak PackageKit.Message> get_message_array ();
+		public GLib.GenericArray<PackageKit.Package> get_package_array ();
 		public PackageKit.PackageSack get_package_sack ();
-		public GLib.GenericArray<weak void*> get_repo_detail_array ();
-		public GLib.GenericArray<weak void*> get_repo_signature_required_array ();
-		public GLib.GenericArray<weak void*> get_require_restart_array ();
+		public GLib.GenericArray<weak PackageKit.RepoDetail> get_repo_detail_array ();
+		public GLib.GenericArray<weak PackageKit.RepoSignatureRequired> get_repo_signature_required_array ();
+		public GLib.GenericArray<weak PackageKit.RequireRestart> get_require_restart_array ();
 		public PackageKit.Restart get_require_restart_worst ();
-		public GLib.GenericArray<weak void*> get_transaction_array ();
-		public GLib.GenericArray<weak void*> get_update_detail_array ();
+		public GLib.GenericArray<weak PackageKit.TransactionPast> get_transaction_array ();
+		public GLib.GenericArray<weak PackageKit.UpdateDetail> get_update_detail_array ();
 		public bool set_error_code (PackageKit.Error item);
 		public bool set_exit_code (PackageKit.Exit exit_enum);
 		public static void test (void* user_data);
@@ -605,7 +614,9 @@ namespace PackageKit {
 		public bool user_accepted (uint request);
 		public bool user_declined (uint request);
 		public async void what_provides_async (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values, [CCode (pos = 5, array_length_pos = 5.1, delegate_target_pos = 5.1)] PackageKit.ProgressCallback progress_callback, [CCode (pos = 4)] GLib.Cancellable? cancellable = null);
+		[NoAccessorMethod]
 		public bool interactive { get; set; }
+		[NoAccessorMethod]
 		public bool simulate { get; set; }
 	}
 	[CCode (type_id = "pk_transaction_list_get_type ()", cheader_filename = "packagekit-glib2/packagekit.h")]

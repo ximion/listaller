@@ -26,7 +26,7 @@ namespace Listaller {
 public enum SecurityLevel {
 	UNKNOWN,
 	HIGH,
-	NORMAL,
+	MEDIUM,
 	LOW,
 	DANGEROUS;
 
@@ -38,8 +38,8 @@ public enum SecurityLevel {
 			case HIGH:
 				return _("Should be safe.");
 
-			case NORMAL:
-				return _("Average security.");
+			case MEDIUM:
+				return _("Medium security.");
 
 			case LOW:
 				return _("Low security.");
