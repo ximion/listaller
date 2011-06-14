@@ -26,21 +26,6 @@ using Listaller;
 
 namespace Listaller.IPK {
 
-public class Dependency : Object {
-	public string name {get; set;}
-	public bool satisfied {get; set;}
-	public ArrayList<string> files {get; set;}
-	public HashSet<string> meta_info {get; set;}
-
-	internal Dependency (string dep_name) {
-		name = dep_name;
-		satisfied = false;
-
-		files = new ArrayList<string> ();
-		meta_info = new HashSet<string> ();
-	}
-}
-
 public abstract class CXml : Object {
 	private string fname;
 	private Xml.Doc* _xdoc;

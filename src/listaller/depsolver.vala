@@ -28,6 +28,7 @@ namespace Listaller.Deps {
 public enum SolverType {
 	UNKNOWN,
 	FILE,
+	PACKAGE,
 	FEED;
 }
 

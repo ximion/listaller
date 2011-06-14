@@ -296,6 +296,7 @@ private class Builder : Object {
 			string signature;
 			// TODO: Make this work for more data packages
 			gsig.sign_package (ctrlfile, datapkgs.get (0), out signature);
+			debug (signature);
 			string sigfile = Path.build_filename (tmpdir, "_signature", null);
 			try {
 				var file = File.new_for_path (sigfile);

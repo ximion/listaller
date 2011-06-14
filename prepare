@@ -25,6 +25,7 @@ while true ; do
 		--enable-qt )  ENABLE_QT=1; shift; ;;
 		--enable-tests ) ENABLE_TESTS=1; shift; ;;
 		--enable-test-ds ) ENABLE_DS_TEST=1; shift; ;;
+		--enable-test-sign ) ENABLE_SIGN_TEST=1; shift; ;;
 		--cmake-options ) case "$2" in
 			    "") echo "CMake-Options need an argument!"; exit 3 ;;
 			     *) export cmakeoptn=$2 ; shift 2 ;;
@@ -55,6 +56,9 @@ if [ "$ENABLE_TESTS" = "1" ]; then
 fi
 if [ "$ENABLE_DS_TEST" = "1" ]; then
  CMAKE_OPTIONS="$CMAKE_OPTIONS -DTEST_DEPSOLVER=ON"
+fi
+if [ "$ENABLE_SIGN_TEST" = "1" ]; then
+ CMAKE_OPTIONS="$CMAKE_OPTIONS -DTEST_SIGN=ON"
 fi
 if [ "$ENABLE_QT" = "1" ]; then
  CMAKE_OPTIONS="$CMAKE_OPTIONS -DQT=ON"
