@@ -53,58 +53,6 @@ private class GPGSignature : Object {
 		return true;
 	}
 
-	private void set_sigstatus_from_gpgsigsum (Sigsum sum) {
-		switch (sum) {
-			case Sigsum.VALID:
-				sigstatus = SignStatus.VALID;
-				break;
-
-			case Sigsum.GREEN:
-				sigstatus = SignStatus.GREEN;
-				break;
-
-			case Sigsum.RED:
-				sigstatus = SignStatus.RED;
-				break;
-
-			case Sigsum.KEY_REVOKED:
-				sigstatus = SignStatus.KEY_REVOKED;
-				break;
-
-			case Sigsum.KEY_EXPIRED:
-				sigstatus = SignStatus.KEY_EXPIRED;
-				break;
-
-			case Sigsum.SIG_EXPIRED:
-				sigstatus = SignStatus.SIG_EXPIRED;
-				break;
-
-			case Sigsum.KEY_MISSING:
-				sigstatus = SignStatus.KEY_MISSING;
-				break;
-
-			case Sigsum.CRL_MISSING:
-				sigstatus = SignStatus.CRL_MISSING;
-				break;
-
-			case Sigsum.CRL_TOO_OLD:
-				sigstatus = SignStatus.CRL_TOO_OLD;
-				break;
-
-			case Sigsum.BAD_POLICY:
-				sigstatus = SignStatus.BAD_POLICY;
-				break;
-
-			case Sigsum.SYS_ERROR:
-				sigstatus = SignStatus.SYS_ERROR;
-				break;
-
-			default:
-				sigstatus = SignStatus.UNKNOWN;
-				break;
-		}
-	}
-
 	private void set_sigvalidity_from_gpgvalidity (Validity val) {
 		switch (val) {
 			case Validity.UNKNOWN:
@@ -143,7 +91,7 @@ private class GPGSignature : Object {
 			li_warning ("Unexpected number of signatures\n");
 			return false;
 		}
-		set_sigstatus_from_gpgsigsum (sig->summary);
+		sigstatus = (SignStatus) sig->summary;
 		set_sigvalidity_from_gpgvalidity (sig->validity);
 
 		if (sig->status != GPGError.ErrorCode.NO_ERROR) {

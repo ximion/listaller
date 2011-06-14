@@ -495,57 +495,57 @@ namespace GPG {
 		/**
 		 * The signature is fully valid
 		 */
-		VALID,
+		VALID       = 0x0001,
 
 		/**
 		 * The signature is good
 		 */
-		GREEN,
+		GREEN       = 0x0002,
 
 		/**
 		 * The signature is bad
 		 */
-		RED,
+		RED         = 0x0004,
 
 		/**
 		 * One key has been revoked
 		 */
-		KEY_REVOKED,
+		KEY_REVOKED = 0x0010,
 
 		/**
 		 * One key has expired
 		 */
-		KEY_EXPIRED,
+		KEY_EXPIRED = 0x0020,
 
 		/**
 		 * The signature has expired
 		 */
-		SIG_EXPIRED,
+		SIG_EXPIRED = 0x0040,
 
 		/**
 		 * Can't verfiy - missing key
 		 */
-		KEY_MISSING,
+		KEY_MISSING = 0x0080,
 
 		/**
 		 * CRL not available
 		 */
-		CRL_MISSING,
+		CRL_MISSING = 0x0100,
 
 		/**
 		 * Available CRL is too old
 		 */
-		CRL_TOO_OLD,
+		CRL_TOO_OLD = 0x0200,
 
 		/**
 		 * A policy was not met
 		 */
-		BAD_POLICY,
+		BAD_POLICY  = 0x0400,
 
 		/**
 		 * A system error occured
 		 */
-		SYS_ERROR
+		SYS_ERROR   = 0x0800;
 	}
 
 	/**

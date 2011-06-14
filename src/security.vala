@@ -54,18 +54,18 @@ public enum SecurityLevel {
 }
 
 public enum SignStatus {
-	UNKNOWN,
-	VALID,
-	GREEN,
-	RED,
-	KEY_REVOKED,
-	KEY_EXPIRED,
-	SIG_EXPIRED,
-	KEY_MISSING,
-	CRL_MISSING,
-	CRL_TOO_OLD,
-	BAD_POLICY,
-	SYS_ERROR;
+	UNKNOWN     = 0x0000,
+	VALID       = 0x0001,
+	GREEN       = 0x0002,
+	RED         = 0x0004,
+	KEY_REVOKED = 0x0010,
+	KEY_EXPIRED = 0x0020,
+	SIG_EXPIRED = 0x0040,
+	KEY_MISSING = 0x0080,
+	CRL_MISSING = 0x0100,
+	CRL_TOO_OLD = 0x0200,
+	BAD_POLICY  = 0x0400,
+	SYS_ERROR   = 0x0800;
 
 	public string to_string() {
 		switch (this) {

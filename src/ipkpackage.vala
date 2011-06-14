@@ -306,7 +306,6 @@ private class Package : Object {
 
 		if (sig == null)
 			return sec;
-		sec.sig_valid = sig.sig_valid;
 		sec.signature_status = sig.sigstatus;
 		sec.signature_validity = sig.validity;
 
