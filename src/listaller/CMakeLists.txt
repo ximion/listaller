@@ -17,7 +17,7 @@ pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
 
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	depsolver.vala
-	depprovider_pk.vala
+	depprovider-pk.vala
 	manager.vala
 	installer.vala
 )

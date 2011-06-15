@@ -16,7 +16,7 @@ pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
 
 set(LIUNITTEST_SOURCES ${LISTALLER_BASE_SOURCES}
 			${lisrc}/listaller/depsolver.vala
-			${lisrc}/listaller/depprovider_pk.vala
+			${lisrc}/listaller/depprovider-pk.vala
 			${lisrc}/listaller/manager.vala
 			${lisrc}/listaller/installer.vala
 )

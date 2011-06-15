@@ -1,4 +1,4 @@
-/* depprovider_pk.vala
+/* depprovider-pk.vala
  *
  * Copyright (C) 2011 Matthias Klumpp <matthias@nlinux.org>
  *
@@ -27,8 +27,8 @@ namespace Listaller.Deps {
 private class PkitProvider : Provider {
 	private PackageKit.Client pkit;
 
-	public PkitProvider (IPK.Dependency ipkdep) {
-		base (ipkdep);
+	public PkitProvider (ArrayList<IPK.Dependency> dep_lst) {
+		base (dep_lst);
 
 		pkit = new PackageKit.Client ();
 	}
@@ -37,7 +37,7 @@ private class PkitProvider : Provider {
 		// TODO
 	}
 
-	private PackageKit.Package? pkit_pkg_from_file (string fname) {
+	private PackageKit.Package? pkit_pkg_from_file (string fname, IPK.Dependency dep) {
 		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("none");
 		string[] files = { fname, null };
 
@@ -77,26 +77,30 @@ private class PkitProvider : Provider {
 
 	public override bool execute () {
 		bool ret = true;
-		// PK solver can only handle files...
-		foreach (string s in dep.files) {
-			PackageKit.Package pkg = pkit_pkg_from_file (s);
-			if (pkg == null) {
-				ret = false;
-				break;
-			}
-			if (pkg.get_info () != PackageKit.Info.INSTALLED) {
-				emit_info (_("Installing native package %s").printf (pkg.get_id ()));
-				ret = pkit_install_package (pkg);
+		foreach (IPK.Dependency dep in dependency_list) {
+			// PK solver can only handle files...
+			if (dep.files.size > 0)
+				foreach (string s in dep.files) {
+					PackageKit.Package pkg = pkit_pkg_from_file (s, dep);
+					if (pkg == null) {
+						ret = false;
+						break;
+					}
+					if (pkg.get_info () != PackageKit.Info.INSTALLED) {
+						emit_info (_("Installing native package %s").printf (pkg.get_id ()));
+						ret = pkit_install_package (pkg);
+						if (!ret)
+							break;
+					} else {
+						emit_info (_("Native package %s is already installed.").printf (pkg.get_id ()));
+					}
+					if (ret)
+						dep.meta_info.add ("pkg:" + pkg.get_id ());
+				}
 				if (!ret)
-					break;
-			} else {
-				emit_info (_("Native package %s is already installed.").printf (pkg.get_id ()));
-			}
-			if (ret)
-				dep.meta_info.add ("pkg:" + pkg.get_id ());
+					dep.meta_info.clear ();
 		}
-		if (!ret)
-			dep.meta_info.clear ();
+
 		return ret;
 	}
 

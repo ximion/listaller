@@ -32,14 +32,18 @@ public enum SolverType {
 }
 
 private abstract class Provider : Object {
-	protected IPK.Dependency dep;
+	protected ArrayList<IPK.Dependency> dependency_list;
 
 	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
 	public signal void progress_changed (int progress);
 
-	public Provider (IPK.Dependency dep_data) {
-		dep = dep_data;
+	public Provider (ArrayList<IPK.Dependency> dependencies) {
+		dependency_list = new ArrayList<IPK.Dependency> ();
+		foreach (IPK.Dependency dep in dependencies) {
+			if (!dep.satisfied)
+				dependency_list.add (dep);
+		}
 	}
 
 	public void connect_solver (Solver s) {
@@ -112,11 +116,9 @@ private class Solver : Object {
 			return true;
 		oneprog = 100 / deplist.size * 100;
 		// Resolve dependencies!
-		foreach (IPK.Dependency dep in deplist) {
-			ret = run_provider (new PkitProvider (dep));
-			if (!ret)
-				break;
-		}
+		ret = run_provider (new PkitProvider (deplist));
+		if (!ret)
+			return false;
 
 		return ret;
 	}

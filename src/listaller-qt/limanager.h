@@ -1,6 +1,4 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
- *
- * listaller-qt - Qt4 wrapper for Listaller
+/* listaller-qt - Qt4 wrapper for Listaller
  * Copyright (C) 2010-2011 Matthias Klumpp <matthias@nlinux.org>
  *
  * Licensed under the GNU Lesser General Public License Version 3+
