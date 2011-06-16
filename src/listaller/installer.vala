@@ -210,11 +210,7 @@ public class Setup : Object {
 			return false;
 		}
 		ret = db.add_application_filelist (app, ipkp.file_list);
-		if (!ret) {
-			db.close ();
-			return false;
-		}
-		ret = db.add_application_description (app, control.get_app_description ());
+		db.add_application_description (app, control.get_app_description ());
 		db.close ();
 
 		conf.unlock ();

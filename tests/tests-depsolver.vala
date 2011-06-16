@@ -71,6 +71,7 @@ void test_packagekit_solver () {
 	// Run it!
 	ret = solver.execute ();
 	assert (ret == true);
+	assert (depMp3Gain.satisfied == true);
 }
 
 int main (string[] args) {
@@ -81,7 +82,9 @@ int main (string[] args) {
 	assert (FileUtils.test (datadir, FileTest.EXISTS) != false);
 
 	Test.init (ref args);
+
 	test_packagekit_solver ();
+
 	Test.run ();
 	return 0;
 }

@@ -5,7 +5,7 @@
 # syntax :
 #    ./configure <options> [parameters]
 set -e
-OPTION_SPEC="help,enable-qt,enable-tests,enable-test-ds,cmake-options:"
+OPTION_SPEC="help,enable-qt,enable-tests,enable-test-ds,enable-test-sign,cmake-options:"
 PARSED_OPTIONS=$(getopt -n "$0" -a -o h --l "$OPTION_SPEC" -- "$@")
 
 eval set -- "$PARSED_OPTIONS"

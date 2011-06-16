@@ -63,42 +63,65 @@ private class PkitProvider : Provider {
 		return pkg;
 	}
 
-	private bool pkit_install_package (PackageKit.Package pkg) {
-		string[] pkids = { pkg.get_id (), null };
+	private bool pkit_install_packages (string[] pkids) {
 		PackageKit.Results res = pkit.install_packages (true, pkids, null, pk_progress_cb);
 
 		if (res.get_exit_code () == PackageKit.Exit.SUCCESS)
 			return true;
 
-		emit_warning (_("Installation of native package '%s' failed!").printf (pkg.get_id ()) + "\n" +
-				_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())));
+		/*emit_warning (_("Installation of native package '%s' failed!").printf (pkg.get_id ()) + "\n" +
+				_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())));*/
 		return false;
 	}
 
 	public override bool execute () {
 		bool ret = true;
 		foreach (IPK.Dependency dep in dependency_list) {
-			// PK solver can only handle files...
-			if (dep.files.size > 0)
-				foreach (string s in dep.files) {
-					PackageKit.Package pkg = pkit_pkg_from_file (s, dep);
-					if (pkg == null) {
-						ret = false;
-						break;
-					}
-					if (pkg.get_info () != PackageKit.Info.INSTALLED) {
-						emit_info (_("Installing native package %s").printf (pkg.get_id ()));
-						ret = pkit_install_package (pkg);
-						if (!ret)
-							break;
-					} else {
-						emit_info (_("Native package %s is already installed.").printf (pkg.get_id ()));
-					}
-					if (ret)
-						dep.meta_info.add ("pkg:" + pkg.get_id ());
+			// Resolve all files to packages
+			if (dep.files.size <= 0)
+				continue;
+
+			foreach (string s in dep.files) {
+				PackageKit.Package pkg = pkit_pkg_from_file (s, dep);
+				if (pkg == null) {
+					ret = false;
+					break;
 				}
-				if (!ret)
-					dep.meta_info.clear ();
+
+				if (ret)
+					if (pkg.get_info () == PackageKit.Info.INSTALLED)
+						dep.meta_info.add ("pkg:" + pkg.get_id ());
+					else
+						dep.meta_info.add ("*pkg:" + pkg.get_id ());
+			}
+			if (!ret)
+				dep.meta_info.clear ();
+		}
+
+		foreach (IPK.Dependency dep in dependency_list) {
+			if (dep.files.size <= 0)
+				continue;
+
+			string[] pkgs = {};
+			foreach (string pkg in dep.meta_info)
+				// *pkg indicates we only install not installed pkgs
+				if (pkg.has_prefix ("*pkg:")) {
+					pkgs += pkg.substring (4);
+				}
+			// null-terminate the array
+			pkgs += null;
+			if (pkgs[0] == null) {
+				dep.satisfied = true;
+				continue;
+			}
+
+			emit_info (_("Installing native packages %s").printf (pkgs));
+			bool ret2 = pkit_install_packages (pkgs);
+			if (!ret2) {
+				ret = false;
+			} else {
+				dep.satisfied = true;
+			}
 		}
 
 		return ret;
