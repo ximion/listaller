@@ -140,8 +140,6 @@ private class GPGSignature : Object {
 		err = Context.Context (out ctx);
 		return_if_fail (check_gpg_err (err));
 
-		string ccf = concat_binfiles (ctrlfname, payloadfname);
-
 		/* Checking a valid message.  */
 		err = Data.create (out dt);
 		dt.set_encoding (DataEncoding.BINARY);

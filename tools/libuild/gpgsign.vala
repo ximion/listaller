@@ -139,8 +139,6 @@ private class GPGSign : Object {
 		ctx.set_armor (true);
 
 		Data din;
-		string comb = concat_binfiles (control_fname, payload_fname);
-
 		err = Data.create (out din);
 		return_if_fail (check_gpg_err (err));
 
