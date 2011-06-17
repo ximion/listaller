@@ -22,9 +22,11 @@ using GLib;
 
 public class RunApp : Object {
 	private string appName;
+	private Listaller.Manager limgr;
 
 	public RunApp (string aname) {
 		appName = aname;
+		limgr = new Listaller.Manager (null);
 	}
 
 	public void run_application (string commandLine) {
@@ -36,6 +38,11 @@ public class RunApp : Object {
 	}
 
 	public void run () {
+		Listaller.AppItem? app = limgr.get_appitem_by_idname (appName);
+		if (app != null) {
+			run_application (app.get_raw_cmd (true));
+			return;
+		}
 		run_application (appName);
 	}
 

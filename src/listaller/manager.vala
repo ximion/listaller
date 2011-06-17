@@ -200,9 +200,16 @@ public class Manager : Object {
 		return desc;
 	}
 
-	public AppItem? fetch_appitem (string idname) {
+	public AppItem? get_appitem_by_idname (string idname) {
 		open_db (false);
 		AppItem? app = db.get_application_by_idname (idname);
+		db.close ();
+		return app;
+	}
+
+	public AppItem? get_appitem_by_fullname (string full_name) {
+		open_db (false);
+		AppItem? app = db.get_application_by_fullname (full_name);
 		db.close ();
 		return app;
 	}
@@ -211,6 +218,7 @@ public class Manager : Object {
 		//TODO: Scan for 3rd-party installed apps
 		return true;
 	}
+
 }
 
 } // End of namespace

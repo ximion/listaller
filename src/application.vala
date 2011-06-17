@@ -384,7 +384,7 @@ public class AppItem : Object {
 		publisher = get_desktop_file_string (dfile, "X-Publisher");
 	}
 
-	public string get_raw_cmd () {
+	public string get_raw_cmd (bool subst_cmd = false) {
 		if (desktop_file == "")
 			return "";
 
@@ -404,6 +404,10 @@ public class AppItem : Object {
 		// To get the raw command, we remove the "runapp" call
 		if (cmd.has_prefix ("runapp ")) {
 			cmd = cmd.substring (7);
+		}
+		if (subst_cmd) {
+			VarSolver vs = new VarSolver (idname);
+			cmd = vs.substitute_vars_auto (cmd, liconf);
 		}
 		return cmd;
 	}
