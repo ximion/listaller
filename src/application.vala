@@ -65,7 +65,7 @@ public class AppItem : Object {
 	private AppOrigin _origin;
 	private int _dbid;
 	private string _app_id;
-	private Listaller.Settings? _liconf;
+	private Listaller.Settings liconf;
 
 	public string idname {
 		get {
@@ -143,7 +143,10 @@ public class AppItem : Object {
 
 	public bool shared {
 		get { return _shared; }
-		set { _shared = value; }
+		set {
+			_shared = value;
+			liconf.sumode = _shared;
+		}
 	}
 
 	public string icon_name {
@@ -175,10 +178,6 @@ public class AppItem : Object {
 		get { _app_id = generate_appid (); return _app_id; }
 	}
 
-	public Listaller.Settings lisettings {
-		set { _liconf = value; }
-	}
-
 	/*
 	 * Id the application has in the database
 	 */
@@ -201,7 +200,7 @@ public class AppItem : Object {
 		_desktop_file = "";
 		_url = "";
 		_icon_name = "";
-		_liconf = null;
+		liconf = new Listaller.Settings (_shared);
 		_license_name = "";
 	}
 
@@ -229,13 +228,6 @@ public class AppItem : Object {
 			+ "(" + version +") "
 			+ "! " + appid + " ::" + dbid.to_string () + " "
 			+ "]";
-	}
-
-	protected Listaller.Settings liconfig () {
-		if (_liconf == null) {
-			return new Listaller.Settings ();
-		}
-		return _liconf;
 	}
 
 	public void fast_check () {
@@ -342,27 +334,37 @@ public class AppItem : Object {
 		}
 	}
 
+	private string get_desktop_filename_expanded () {
+		/* NOTE: Hopefully nobody will ever try to store a .desktop-file in $INST, because
+		 * this might cause problems with AppItem's which don't have the correct idname specified.
+		 * (Maybe limit this to $APP only?)
+		 */
+		// Resolve variables in desktop_file path
+		VarSolver vs = new VarSolver (idname);
+		string fname = expand_user_dir (desktop_file);
+		fname = vs.substitute_vars_auto (fname, liconf);
+
+		// Check if file exists
+		if (!FileUtils.test (fname, FileTest.EXISTS))
+			return "";
+
+		return fname;
+	}
+
 	public void update_with_desktop_file () {
 		if (desktop_file == "")
 			return;
-		// Resolve variables in desktop_file path
-		string fname;
 		// Set idname if no idname was specified
 		if (_idname == "") {
 			idname = string_replace (Path.get_basename (desktop_file), "(.desktop)", "");
 			debug ("Set app-idname from desktop filename: %s".printf (idname));
 		}
-		/* NOTE: Hopefully nobody will ever try to store a .desktop-file in $INST, because
-		 * this might cause problems with AppItem's which don't have the correct idname specified.
-		 * (Maybe limit this to $APP only?)
-		 */
-		VarSolver vs = new VarSolver (idname);
-		fname = expand_user_dir (desktop_file);
-		fname = vs.substitute_vars_auto (fname, liconfig ());
 
-		// Check if file exists
-		if (!FileUtils.test (fname, FileTest.EXISTS))
+		// Get complete .desktop-file path
+		string fname = get_desktop_filename_expanded ();
+		if (fname == "")
 			return;
+
 		// Load new values from desktop file
 		KeyFile dfile = new KeyFile ();
 		try {
@@ -380,6 +382,30 @@ public class AppItem : Object {
 		author = get_desktop_file_string (dfile, "X-Author");
 		categories = get_desktop_file_string (dfile, "Categories");
 		publisher = get_desktop_file_string (dfile, "X-Publisher");
+	}
+
+	public string get_raw_cmd () {
+		if (desktop_file == "")
+			return "";
+
+		string fname = get_desktop_filename_expanded ();
+		if (fname == "")
+			return "";
+
+		// Load new values from desktop file
+		KeyFile dfile = new KeyFile ();
+		try {
+			dfile.load_from_file (fname, KeyFileFlags.NONE);
+		} catch (Error e) {
+			li_error (_("Could not open desktop file: %s").printf (e.message));
+		}
+
+		string cmd = get_desktop_file_string (dfile, "Exec");
+		// To get the raw command, we remove the "runapp" call
+		if (cmd.has_prefix ("runapp ")) {
+			cmd = cmd.substring (7);
+		}
+		return cmd;
 	}
 
 }
