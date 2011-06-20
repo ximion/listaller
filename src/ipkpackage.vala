@@ -22,6 +22,7 @@ using GLib;
 using Gee;
 using Archive;
 using Listaller;
+using Listaller.Utils;
 
 namespace Listaller.IPK {
 

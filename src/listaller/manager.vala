@@ -21,6 +21,7 @@
 using GLib;
 using Gee;
 using Listaller;
+using Listaller.Utils;
 
 [CCode (cheader_filename = "listaller-glib/manager.h")]
 

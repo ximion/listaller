@@ -25,6 +25,29 @@ namespace Listaller {
 
 static bool __debug_errors_fatal = false;
 
+private static void li_info (string msg) {
+	stdout.printf (" I:" + " " + msg + "\n");
+}
+
+private static void li_warning (string msg) {
+	if (__debug_errors_fatal) {
+		warning (msg);
+	} else {
+		stdout.printf (" W:" + " " + msg + "\n");
+	}
+}
+
+private static void li_error (string msg) {
+	if (__debug_errors_fatal) {
+		error (msg);
+	} else {
+		stderr.printf ("[error]" + " " + msg + "\n");
+	}
+}
+
+}
+namespace Listaller.Utils {
+
 public ulong timeval_to_ms (TimeVal time_val) {
 	return (((ulong) time_val.tv_sec) * 1000) + (((ulong) time_val.tv_usec) / 1000);
 }
@@ -73,26 +96,6 @@ private bool is_root () {
 		return true;
 	} else {
 		return false;
-	}
-}
-
-private void li_info (string msg) {
-	stdout.printf (" I:" + " " + msg + "\n");
-}
-
-private void li_warning (string msg) {
-	if (__debug_errors_fatal) {
-		warning (msg);
-	} else {
-		stdout.printf (" W:" + " " + msg + "\n");
-	}
-}
-
-private void li_error (string msg) {
-	if (__debug_errors_fatal) {
-		error (msg);
-	} else {
-		stderr.printf ("[error]" + " " + msg + "\n");
 	}
 }
 
@@ -244,7 +247,7 @@ private bool dir_is_empty (string dirname) {
 	return n == 0;
 }
 
-private string fold_user_dir (string path) {
+public static string fold_user_dir (string path) {
 	string udir = Environment.get_home_dir ();
 	if (!path.has_prefix (udir))
 		return path;
@@ -253,7 +256,7 @@ private string fold_user_dir (string path) {
 	return folded_path;
 }
 
-private string expand_user_dir (string path) {
+public static string expand_user_dir (string path) {
 	if (!path.has_prefix ("~"))
 		return path;
 

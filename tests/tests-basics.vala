@@ -22,6 +22,7 @@
 using GLib;
 using Gee;
 using Listaller;
+using Listaller.Utils;
 
 private string datadir;
 private string foobar_dir;

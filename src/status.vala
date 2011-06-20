@@ -20,6 +20,7 @@
 
 using GLib;
 using Listaller;
+using Listaller.Utils;
 
 namespace Listaller {
 

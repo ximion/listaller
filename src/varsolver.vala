@@ -21,6 +21,7 @@
 using GLib;
 using Gee;
 using Listaller;
+using Listaller.Utils;
 
 namespace Listaller {
 

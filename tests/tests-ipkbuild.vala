@@ -22,6 +22,7 @@
 using GLib;
 using Gee;
 using Listaller;
+using Listaller.Utils;
 
 string libuild_exec;
 string acomp_exec;
