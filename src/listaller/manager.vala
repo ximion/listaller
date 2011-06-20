@@ -150,6 +150,14 @@ public class Manager : Object {
 	public bool remove_application (AppItem app) {
 		app.fast_check ();
 
+		if (app.shared != conf.sumode) {
+			if (app.shared)
+				warning (_("Trying to remove shared application, but AppManager is not in superuser mode!\nSetting AppManager to superuse mode now."));
+			else
+				warning (_("Trying to remove local application, but AppManager is in superuser mode!\nSetting AppManager to local mode now."));
+			conf.sumode = app.shared;
+		}
+
 		// Emit that we're starting
 		emit_status (StatusEnum.ACTION_STARTED,
 			     _("Removal of %s started.").printf (app.full_name));
