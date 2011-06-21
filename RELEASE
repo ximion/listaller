@@ -34,7 +34,7 @@ git tag -s -f -m "Release 0.5.2" LISTALLER_0_5_2 <gpg password>
 git push --tags
 git push
 
-5. run 'git archive --format=tar --prefix=/ LISTALLER_0_5_2 | gzip >listaller-0.5.2.tar.gz'
+5. run 'git archive --format=tar --prefix=Listaller-0.5.2/ LISTALLER_0_5_2^{tree} | gzip > listaller-0.5.2.tar.gz'
 
 6. Upload tarball to Sourceforge
 
