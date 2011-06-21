@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-14 15:34+0200\n"
+"POT-Creation-Date: 2011-06-21 14:07+0200\n"
 "PO-Revision-Date: 2009-06-26 00:13+0000\n"
 "Last-Translator: Jimmy Frydkær Dürr <thewolf40@mailme.dk>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
-"X-Generator: Launchpad (build 12915)\n"
+"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
+"X-Generator: Launchpad (build 13242)\n"
 
 #, c-format
 msgid ""
@@ -29,22 +29,18 @@ msgstr ""
 msgid "A system error occured."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Application ID %s is invalid!"
-msgstr "Programmet %a blev ikke installeret."
-
-msgid "Available CRL is too old"
 msgstr ""
 
-msgid "Average security."
+msgid "Available CRL is too old"
 msgstr ""
 
 msgid "Build IPK package"
 msgstr ""
 
-#, fuzzy
 msgid "CRL not available."
-msgstr "Ingen information tilgængelig!"
+msgstr ""
 
 msgid "Can't verify: Key is missing"
 msgstr ""
@@ -179,17 +175,12 @@ msgstr ""
 msgid "Installation completed!"
 msgstr "Installation færdig!"
 
-#, fuzzy
 msgid "Installation failed!"
-msgstr "Installation færdig!"
+msgstr ""
 
 #, fuzzy, c-format
-msgid "Installation of native package '%s' failed!"
-msgstr "Installation færdig!"
-
-#, fuzzy, c-format
-msgid "Installing native package %s"
-msgstr "Installér pakke?"
+msgid "Installing native packages %s"
+msgstr "Installations-pakke er korrupt"
 
 msgid "Low security."
 msgstr ""
@@ -198,9 +189,8 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Native package %s is already installed."
-msgstr "Dette program er allerede installeret"
+msgid "Medium security."
+msgstr ""
 
 msgid "Never trust."
 msgstr ""
@@ -222,9 +212,8 @@ msgstr ""
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, fuzzy
 msgid "Path to the application's source code"
-msgstr "Test af programmet afsluttet."
+msgstr ""
 
 #, c-format
 msgid "Removal of %s finished."
@@ -242,9 +231,9 @@ msgstr ""
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running installation of %s"
-msgstr "Kører installation..."
+msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr ""
@@ -277,9 +266,8 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
-#, fuzzy
 msgid "Software install prefix"
-msgstr "Software licens"
+msgstr ""
 
 msgid "Software installation package"
 msgstr ""
@@ -311,6 +299,17 @@ msgid "Trust is marginal"
 msgstr ""
 
 msgid "Trust is ultimate."
+msgstr ""
+
+msgid ""
+"Trying to remove local application, but AppManager is in superuser mode!\n"
+"Setting AppManager to local mode now."
+msgstr ""
+
+msgid ""
+"Trying to remove shared application, but AppManager is not in superuser "
+"mode!\n"
+"Setting AppManager to superuse mode now."
 msgstr ""
 
 #, c-format
@@ -373,9 +372,9 @@ msgstr ""
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to write signature file! Message: %s"
-msgstr "Kan ikke overskrive filen %f."
+msgstr ""
 
 msgid "Unknown."
 msgstr ""
@@ -580,6 +579,9 @@ msgstr ""
 #~ msgid "Install now"
 #~ msgstr "Installér nu"
 
+#~ msgid "Install package?"
+#~ msgstr "Installér pakke?"
+
 #~ msgid "Install updates"
 #~ msgstr "Installér opdateringer"
 
@@ -594,9 +596,6 @@ msgstr ""
 
 #~ msgid "Installation of %a"
 #~ msgstr "Installation af %a"
-
-#~ msgid "Installation package is corrupt"
-#~ msgstr "Installations-pakke er korrupt"
 
 #~ msgid "Listaller settings"
 #~ msgstr "Listaller indstilllinger"
@@ -652,6 +651,9 @@ msgstr ""
 
 #~ msgid "No compatible packages found!"
 #~ msgstr "Ingen kompatible pakker fundet!"
+
+#~ msgid "No information available!"
+#~ msgstr "Ingen information tilgængelig!"
 
 #~ msgid "Office"
 #~ msgstr "Kontor"
@@ -744,6 +746,9 @@ msgstr ""
 #~ msgid "Running application installation..."
 #~ msgstr "Kører program-installation..."
 
+#~ msgid "Running installation..."
+#~ msgstr "Kører installation..."
+
 #~ msgid "Running under %de (or similar)"
 #~ msgstr "Kører under %de (eller lignende)"
 
@@ -774,6 +779,9 @@ msgstr ""
 #~ msgid "Software catalogue"
 #~ msgstr "Software katalog"
 
+#~ msgid "Software license"
+#~ msgstr "Software licens"
+
 #~ msgid "Start PackageKit monitor before running transactions"
 #~ msgstr "Start pakke-kit overvåger før kørsel af transaktioner"
 
@@ -785,6 +793,9 @@ msgstr ""
 
 #~ msgid "Test application"
 #~ msgstr "Testprogram"
+
+#~ msgid "Test of the application finished."
+#~ msgstr "Test af programmet afsluttet."
 
 #~ msgid "Testmode"
 #~ msgstr "Test-tilstand"
@@ -798,6 +809,9 @@ msgstr ""
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "Programmet %a blev installeret succesfuldt!"
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "Programmet %a blev ikke installeret."
 
 #~ msgid ""
 #~ "The application which this package contains was not built for the current "
@@ -844,6 +858,9 @@ msgstr ""
 #~ msgid "There are no updates available!"
 #~ msgstr "Der er ingen opdateringer tilgængelige!"
 
+#~ msgid "This application is already installed"
+#~ msgstr "Dette program er allerede installeret"
+
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
 #~ "Listaller can handle.\n"
@@ -872,6 +889,9 @@ msgstr ""
 #~ msgstr ""
 #~ "Kan ikke indlæse ikonet til %a. Venligst underret udviklerne af Listaller "
 #~ "eller dette program!"
+
+#~ msgid "Unable to overwrite the file %f."
+#~ msgstr "Kan ikke overskrive filen %f."
 
 #~ msgid "Uninstall"
 #~ msgstr "Afinstallér"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-14 15:34+0200\n"
+"POT-Creation-Date: 2011-06-21 14:07+0200\n"
 "PO-Revision-Date: 2009-12-07 23:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
-"X-Generator: Launchpad (build 12915)\n"
+"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
+"X-Generator: Launchpad (build 13242)\n"
 
 #, c-format
 msgid ""
@@ -26,26 +26,21 @@ msgstr ""
 msgid "A policy was not met."
 msgstr ""
 
-#, fuzzy
 msgid "A system error occured."
-msgstr "ארעה שגיאה פנימית"
-
-#, fuzzy, c-format
-msgid "Application ID %s is invalid!"
-msgstr "היישום %a לא הותקן."
-
-msgid "Available CRL is too old"
 msgstr ""
 
-msgid "Average security."
+#, c-format
+msgid "Application ID %s is invalid!"
+msgstr ""
+
+msgid "Available CRL is too old"
 msgstr ""
 
 msgid "Build IPK package"
 msgstr ""
 
-#, fuzzy
 msgid "CRL not available."
-msgstr "אין מידע זמין!"
+msgstr ""
 
 msgid "Can't verify: Key is missing"
 msgstr ""
@@ -180,16 +175,11 @@ msgstr ""
 msgid "Installation completed!"
 msgstr "ההתקנה הושלמה!"
 
-#, fuzzy
 msgid "Installation failed!"
-msgstr "התקנה נכשלה."
+msgstr ""
 
 #, fuzzy, c-format
-msgid "Installation of native package '%s' failed!"
-msgstr "התקנה נכשלה."
-
-#, fuzzy, c-format
-msgid "Installing native package %s"
+msgid "Installing native packages %s"
 msgstr "התקנת החבילה פגומה"
 
 msgid "Low security."
@@ -199,9 +189,8 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Native package %s is already installed."
-msgstr "יישום זה כבר מותקן"
+msgid "Medium security."
+msgstr ""
 
 msgid "Never trust."
 msgstr ""
@@ -223,9 +212,8 @@ msgstr ""
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, fuzzy
 msgid "Path to the application's source code"
-msgstr "בדיקת היישום הושלמה."
+msgstr ""
 
 #, c-format
 msgid "Removal of %s finished."
@@ -243,9 +231,9 @@ msgstr ""
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running installation of %s"
-msgstr "מריץ את ההתקנה..."
+msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr ""
@@ -278,9 +266,8 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
-#, fuzzy
 msgid "Software install prefix"
-msgstr "רשיון התוכנה"
+msgstr ""
 
 msgid "Software installation package"
 msgstr ""
@@ -314,6 +301,17 @@ msgstr ""
 msgid "Trust is ultimate."
 msgstr ""
 
+msgid ""
+"Trying to remove local application, but AppManager is in superuser mode!\n"
+"Setting AppManager to local mode now."
+msgstr ""
+
+msgid ""
+"Trying to remove shared application, but AppManager is not in superuser "
+"mode!\n"
+"Setting AppManager to superuse mode now."
+msgstr ""
+
 #, c-format
 msgid "Unable to create file '%s'!"
 msgstr ""
@@ -341,9 +339,9 @@ msgstr ""
 msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for %s!"
-msgstr "%s לא נמצא"
+msgstr ""
 
 msgid "Unable to open software database for reading & writing!"
 msgstr ""
@@ -374,9 +372,9 @@ msgstr ""
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to write signature file! Message: %s"
-msgstr "לא ניתן לשכתב על הקובץ %f."
+msgstr ""
 
 msgid "Unknown."
 msgstr ""
@@ -419,6 +417,9 @@ msgstr ""
 
 #~ msgid "All"
 #~ msgstr "הכול"
+
+#~ msgid "An internal error occured"
+#~ msgstr "ארעה שגיאה פנימית"
 
 #~ msgid "Application uninstalled successfully!"
 #~ msgstr "היישום הוסר בהצלחה!"
@@ -592,6 +593,9 @@ msgstr ""
 #~ msgid "Installation aborted."
 #~ msgstr "ההתקנה בוטלה."
 
+#~ msgid "Installation failed."
+#~ msgstr "התקנה נכשלה."
+
 #~ msgid "Installation of %a"
 #~ msgstr "התקנת %a"
 
@@ -630,6 +634,9 @@ msgstr ""
 
 #~ msgid "No compatible packages found!"
 #~ msgstr "לא נמצאו חבילות תואמות!"
+
+#~ msgid "No information available!"
+#~ msgstr "אין מידע זמין!"
 
 #~ msgid "Office"
 #~ msgstr "משרד"
@@ -711,6 +718,9 @@ msgstr ""
 #~ msgid "Running application installation..."
 #~ msgstr "מריץ התקנת יישום..."
 
+#~ msgid "Running installation..."
+#~ msgstr "מריץ את ההתקנה..."
+
 #~ msgid "Select software you want to download and to install:"
 #~ msgstr "בחר תוכנה שברצונך להוריד ולהתקין:"
 
@@ -726,6 +736,9 @@ msgstr ""
 #~ msgid "Software catalogue"
 #~ msgstr "קטלוג התוכנה"
 
+#~ msgid "Software license"
+#~ msgstr "רשיון התוכנה"
+
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr "כמה מחבילות התלות חסרות. האם להתקין אותן כעת?"
 
@@ -738,11 +751,17 @@ msgstr ""
 #~ msgid "System"
 #~ msgstr "מערכת"
 
+#~ msgid "Test of the application finished."
+#~ msgstr "בדיקת היישום הושלמה."
+
 #~ msgid "Testmode"
 #~ msgstr "מצב בדיקה"
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "היישום %a הותקן בהצלחה!"
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "היישום %a לא הותקן."
 
 #~ msgid "The application will be updated to version %v"
 #~ msgstr "היישום יעודכן לגירסה %v"
@@ -759,11 +778,17 @@ msgstr ""
 #~ msgid "There are no updates available!"
 #~ msgstr "אין עדכונים זמינים!"
 
+#~ msgid "This application is already installed"
+#~ msgstr "יישום זה כבר מותקן"
+
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr "יישום זה מעוניין להוריד ולהתקין תלות מהכתובת %l"
 
 #~ msgid "This package does not support your Linux distribution."
 #~ msgstr "חבילה זו אינה נתמכת על ידי הפצת הלינוקס שלך."
+
+#~ msgid "Unable to find %s"
+#~ msgstr "%s לא נמצא"
 
 #~ msgid ""
 #~ "Unable to load the icon of %a. Please notify the developers of Listaller "
@@ -771,6 +796,9 @@ msgstr ""
 #~ msgstr ""
 #~ "לא ניתן לטעון את הסמל %a. אנא דווח על כך למפתחי Listaller או למפתחי "
 #~ "היישום!"
+
+#~ msgid "Unable to override the file %f."
+#~ msgstr "לא ניתן לשכתב על הקובץ %f."
 
 #~ msgid "Uninstall"
 #~ msgstr "הסרה"

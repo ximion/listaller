@@ -19,7 +19,7 @@ src/varsetter.vala
 src/listaller/manager.vala
 src/listaller/installer.vala
 src/listaller/depsolver.vala
-src/listaller/depprovider_pk.vala
+src/listaller/depprovider-pk.vala
 # Listaller tools
 tools/runapp/runapp.vala
 tools/libuild/main.vala

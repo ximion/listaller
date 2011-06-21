@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-14 15:34+0200\n"
+"POT-Creation-Date: 2011-06-21 14:07+0200\n"
 "PO-Revision-Date: 2010-04-05 21:07+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
-"X-Generator: Launchpad (build 12915)\n"
+"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
+"X-Generator: Launchpad (build 13242)\n"
 
 #, c-format
 msgid ""
@@ -31,15 +31,11 @@ msgstr ""
 msgid "Available CRL is too old"
 msgstr ""
 
-msgid "Average security."
-msgstr ""
-
 msgid "Build IPK package"
 msgstr ""
 
-#, fuzzy
 msgid "CRL not available."
-msgstr "No hi ha rellotges disponibles"
+msgstr ""
 
 msgid "Can't verify: Key is missing"
 msgstr ""
@@ -147,9 +143,9 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error: %s\n"
-msgstr "Error:"
+msgstr ""
 
 msgid "Fatal database error"
 msgstr ""
@@ -178,11 +174,7 @@ msgid "Installation failed!"
 msgstr ""
 
 #, c-format
-msgid "Installation of native package '%s' failed!"
-msgstr ""
-
-#, c-format
-msgid "Installing native package %s"
+msgid "Installing native packages %s"
 msgstr ""
 
 msgid "Low security."
@@ -192,8 +184,7 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr ""
 
-#, c-format
-msgid "Native package %s is already installed."
+msgid "Medium security."
 msgstr ""
 
 msgid "Never trust."
@@ -305,6 +296,17 @@ msgstr ""
 msgid "Trust is ultimate."
 msgstr ""
 
+msgid ""
+"Trying to remove local application, but AppManager is in superuser mode!\n"
+"Setting AppManager to local mode now."
+msgstr ""
+
+msgid ""
+"Trying to remove shared application, but AppManager is not in superuser "
+"mode!\n"
+"Setting AppManager to superuse mode now."
+msgstr ""
+
 #, c-format
 msgid "Unable to create file '%s'!"
 msgstr ""
@@ -369,9 +371,8 @@ msgstr ""
 msgid "Unable to write signature file! Message: %s"
 msgstr ""
 
-#, fuzzy
 msgid "Unknown."
-msgstr "Desconegut"
+msgstr ""
 
 msgid "Use recursive mode"
 msgstr ""
@@ -393,9 +394,9 @@ msgstr ""
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "error: %s"
-msgstr "Error:"
+msgstr ""
 
 #~ msgid "  modified "
 #~ msgstr "  modificat "
@@ -679,6 +680,9 @@ msgstr "Error:"
 #~ msgid "Error while saving bitmap."
 #~ msgstr "Error en desar el mapa de bits"
 
+#~ msgid "Error:"
+#~ msgstr "Error:"
+
 #~ msgid "Escape"
 #~ msgstr "Escapa"
 
@@ -903,6 +907,9 @@ msgstr "Error:"
 #~ msgid "No help nodes available"
 #~ msgstr "No hi ha nodes d'ajuda disponibles"
 
+#~ msgid "No timers available"
+#~ msgstr "No hi ha rellotges disponibles"
+
 #~ msgid "No to all"
 #~ msgstr "No a tot"
 
@@ -1055,6 +1062,9 @@ msgstr "Error:"
 
 #~ msgid "Unable to load default font"
 #~ msgstr "No puc carregar la font per defecte"
+
+#~ msgid "Unknown"
+#~ msgstr "Desconegut"
 
 #~ msgid "Unknown Error, please report this bug"
 #~ msgstr "Error desconegut. Sisplau reporteu-lo"

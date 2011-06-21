@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.9.16\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-14 15:34+0200\n"
+"POT-Creation-Date: 2011-06-21 14:07+0200\n"
 "PO-Revision-Date: 2010-07-05 22:59+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: 简体中文 <>\n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
-"X-Generator: Launchpad (build 12915)\n"
+"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
+"X-Generator: Launchpad (build 13242)\n"
 "X-Poedit-Country: china\n"
 "X-Poedit-Language: chinese\n"
 
@@ -23,26 +23,21 @@ msgstr ""
 msgid "A policy was not met."
 msgstr ""
 
-#, fuzzy
 msgid "A system error occured."
-msgstr "发生了一个内部错误"
-
-#, fuzzy, c-format
-msgid "Application ID %s is invalid!"
-msgstr "程序 %a 未被安装。"
-
-msgid "Available CRL is too old"
 msgstr ""
 
-msgid "Average security."
+#, c-format
+msgid "Application ID %s is invalid!"
+msgstr ""
+
+msgid "Available CRL is too old"
 msgstr ""
 
 msgid "Build IPK package"
 msgstr ""
 
-#, fuzzy
 msgid "CRL not available."
-msgstr "没有可用信息！"
+msgstr ""
 
 msgid "Can't verify: Key is missing"
 msgstr ""
@@ -150,9 +145,9 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error: %s\n"
-msgstr "错误:"
+msgstr ""
 
 msgid "Fatal database error"
 msgstr ""
@@ -177,16 +172,11 @@ msgstr ""
 msgid "Installation completed!"
 msgstr "安装完成！"
 
-#, fuzzy
 msgid "Installation failed!"
-msgstr "安装失败"
+msgstr ""
 
 #, fuzzy, c-format
-msgid "Installation of native package '%s' failed!"
-msgstr "安装失败"
-
-#, fuzzy, c-format
-msgid "Installing native package %s"
+msgid "Installing native packages %s"
 msgstr "安装软件包"
 
 msgid "Low security."
@@ -196,9 +186,8 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Native package %s is already installed."
-msgstr "此程序已安装"
+msgid "Medium security."
+msgstr ""
 
 msgid "Never trust."
 msgstr ""
@@ -220,9 +209,8 @@ msgstr ""
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, fuzzy
 msgid "Path to the application's source code"
-msgstr "程序测试已完成。"
+msgstr ""
 
 #, c-format
 msgid "Removal of %s finished."
@@ -240,9 +228,9 @@ msgstr ""
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running installation of %s"
-msgstr "正在安装..."
+msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr ""
@@ -275,9 +263,8 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
-#, fuzzy
 msgid "Software install prefix"
-msgstr "软件许可"
+msgstr ""
 
 msgid "Software installation package"
 msgstr ""
@@ -311,6 +298,17 @@ msgstr ""
 msgid "Trust is ultimate."
 msgstr ""
 
+msgid ""
+"Trying to remove local application, but AppManager is in superuser mode!\n"
+"Setting AppManager to local mode now."
+msgstr ""
+
+msgid ""
+"Trying to remove shared application, but AppManager is not in superuser "
+"mode!\n"
+"Setting AppManager to superuse mode now."
+msgstr ""
+
 #, c-format
 msgid "Unable to create file '%s'!"
 msgstr ""
@@ -338,9 +336,9 @@ msgstr ""
 msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for %s!"
-msgstr "无法找到 %s"
+msgstr ""
 
 msgid "Unable to open software database for reading & writing!"
 msgstr ""
@@ -371,13 +369,12 @@ msgstr ""
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to write signature file! Message: %s"
-msgstr "无法覆盖文件 %f 。"
+msgstr ""
 
-#, fuzzy
 msgid "Unknown."
-msgstr "未知"
+msgstr ""
 
 msgid "Use recursive mode"
 msgstr ""
@@ -399,9 +396,9 @@ msgstr ""
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "error: %s"
-msgstr "错误:"
+msgstr ""
 
 #~ msgid "  modified "
 #~ msgstr "  已更改 "
@@ -534,6 +531,9 @@ msgstr "错误:"
 
 #~ msgid "All files (%s)|%s|%s"
 #~ msgstr "所有文件 (%s)|%s|%s"
+
+#~ msgid "An internal error occured"
+#~ msgstr "发生了一个内部错误"
 
 #~ msgid "Application uninstalled successfully!"
 #~ msgstr "程序已成功卸载！"
@@ -838,6 +838,9 @@ msgstr "错误:"
 #~ msgid "Error while unpacking and configuring files."
 #~ msgstr "解压和配置文件时发生错误。"
 
+#~ msgid "Error:"
+#~ msgstr "错误:"
+
 #~ msgid "Escape"
 #~ msgstr "溢出"
 
@@ -1012,6 +1015,9 @@ msgstr "错误:"
 #~ msgid "Installation aborted."
 #~ msgstr "安装已取消。"
 
+#~ msgid "Installation failed."
+#~ msgstr "安装失败"
+
 #~ msgid "Installation mode:"
 #~ msgstr "安装模式："
 
@@ -1181,6 +1187,9 @@ msgstr "错误:"
 
 #~ msgid "No help nodes available"
 #~ msgstr "没有有效的帮助节点"
+
+#~ msgid "No information available!"
+#~ msgstr "没有可用信息！"
 
 #~ msgid "No timers available"
 #~ msgstr "无有效计时器"
@@ -1396,6 +1405,9 @@ msgstr "错误:"
 #~ msgid "Running application installation..."
 #~ msgstr "正在进行程序安装..."
 
+#~ msgid "Running installation..."
+#~ msgstr "正在安装..."
+
 #~ msgid "Running under %s."
 #~ msgstr "在 %s 下运行"
 
@@ -1462,6 +1474,9 @@ msgstr "错误:"
 #~ msgid "Software Manager"
 #~ msgstr "软件管理器"
 
+#~ msgid "Software license"
+#~ msgstr "软件许可"
+
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr "缺少一些依赖关系，现在要安装吗？"
 
@@ -1489,6 +1504,9 @@ msgstr "错误:"
 #~ msgid "Test application"
 #~ msgstr "测试程序"
 
+#~ msgid "Test of the application finished."
+#~ msgstr "程序测试已完成。"
+
 #~ msgid "Testmode"
 #~ msgstr "测试模式"
 
@@ -1502,6 +1520,9 @@ msgstr "错误:"
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "应用程序 %a 已成功安装！"
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "程序 %a 未被安装。"
 
 #~ msgid ""
 #~ "The application which this package contains was not built for the current "
@@ -1576,6 +1597,9 @@ msgstr "错误:"
 #~ msgid "There is no viewer for help type %s%s%s"
 #~ msgstr "帮助类型 %s%s%s 没有查看器"
 
+#~ msgid "This application is already installed"
+#~ msgstr "此程序已安装"
+
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
 #~ "Listaller can handle.\n"
@@ -1593,6 +1617,9 @@ msgstr "错误:"
 #~ msgid "Unable to copy the file %s."
 #~ msgstr "无法复制文件 %s。"
 
+#~ msgid "Unable to find %s"
+#~ msgstr "无法找到 %s"
+
 #~ msgid "Unable to find a HTML browser."
 #~ msgstr "无法找到 HTML 浏览器"
 
@@ -1603,6 +1630,9 @@ msgstr "错误:"
 #~ "Unable to load the icon of %a. Please notify the developers of Listaller "
 #~ "or this application!"
 #~ msgstr "无法载入 %a 的图标，请告知 Listaller 或此程序的开发者！"
+
+#~ msgid "Unable to override the file %f."
+#~ msgstr "无法覆盖文件 %f 。"
 
 #~ msgid "Uninstall"
 #~ msgstr "卸载"
@@ -1615,6 +1645,9 @@ msgstr "错误:"
 
 #~ msgid "Uninstalling..."
 #~ msgstr "正在卸载..."
+
+#~ msgid "Unknown"
+#~ msgstr "未知"
 
 #~ msgid "Unknown Error, please report this bug"
 #~ msgstr "未知错误, 请报告这个错误"

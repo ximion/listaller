@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-14 15:34+0200\n"
+"POT-Creation-Date: 2011-06-21 14:07+0200\n"
 "PO-Revision-Date: 2011-04-19 11:06+0000\n"
 "Last-Translator: Thaynã Moretti <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-26 16:20+0000\n"
-"X-Generator: Launchpad (build 12915)\n"
+"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
+"X-Generator: Launchpad (build 13242)\n"
 
 #, c-format
 msgid ""
@@ -26,18 +26,14 @@ msgstr ""
 msgid "A policy was not met."
 msgstr ""
 
-#, fuzzy
 msgid "A system error occured."
-msgstr "Ocorreu um erro interno"
+msgstr ""
 
 #, c-format
 msgid "Application ID %s is invalid!"
 msgstr ""
 
 msgid "Available CRL is too old"
-msgstr ""
-
-msgid "Average security."
 msgstr ""
 
 msgid "Build IPK package"
@@ -115,13 +111,13 @@ msgid ""
 "Could not read IPK payload container! Package might be damaged. Error: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Could not remove file %s!"
-msgstr "Não foi possível abrir o IPK! Erro: %s"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Could not uninstall application %s. It is not installed."
-msgstr "O aplicativo \"%a\" não foi instalado."
+msgstr ""
 
 #, c-format
 msgid ""
@@ -152,9 +148,9 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error: %s\n"
-msgstr "Erro"
+msgstr ""
 
 msgid "Fatal database error"
 msgstr ""
@@ -179,16 +175,11 @@ msgstr ""
 msgid "Installation completed!"
 msgstr "Instalação concluída!"
 
-#, fuzzy
 msgid "Installation failed!"
-msgstr "A instalação falhou."
+msgstr ""
 
 #, fuzzy, c-format
-msgid "Installation of native package '%s' failed!"
-msgstr "O teste de instalação do pacote foi concluído."
-
-#, fuzzy, c-format
-msgid "Installing native package %s"
+msgid "Installing native packages %s"
 msgstr "Instala um pacote IPK"
 
 msgid "Low security."
@@ -198,9 +189,8 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Native package %s is already installed."
-msgstr "Este aplicativo já está instalado"
+msgid "Medium security."
+msgstr ""
 
 msgid "Never trust."
 msgstr ""
@@ -222,9 +212,8 @@ msgstr ""
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, fuzzy
 msgid "Path to the application's source code"
-msgstr "Você deseja conferir as dependências dos aplicativos?"
+msgstr ""
 
 #, c-format
 msgid "Removal of %s finished."
@@ -242,9 +231,9 @@ msgstr ""
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running installation of %s"
-msgstr "Executando a instalação..."
+msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr ""
@@ -277,9 +266,8 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
-#, fuzzy
 msgid "Software install prefix"
-msgstr "Licença do programa:"
+msgstr ""
 
 msgid "Software installation package"
 msgstr ""
@@ -313,6 +301,17 @@ msgstr ""
 msgid "Trust is ultimate."
 msgstr ""
 
+msgid ""
+"Trying to remove local application, but AppManager is in superuser mode!\n"
+"Setting AppManager to local mode now."
+msgstr ""
+
+msgid ""
+"Trying to remove shared application, but AppManager is not in superuser "
+"mode!\n"
+"Setting AppManager to superuse mode now."
+msgstr ""
+
 #, c-format
 msgid "Unable to create file '%s'!"
 msgstr ""
@@ -332,17 +331,17 @@ msgstr ""
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to fetch application description! Message: %s"
-msgstr "Não foi capaz de remover este aplicativo!"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to fetch application file list! Message: %s"
-msgstr "Não foi capaz de remover este aplicativo!"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for %s!"
-msgstr "Não é possível localizar %s"
+msgstr ""
 
 msgid "Unable to open software database for reading & writing!"
 msgstr ""
@@ -350,9 +349,9 @@ msgstr ""
 msgid "Unable to open software database for reading only!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read package signature! Message: %s"
-msgstr "Não foi capaz de remover este aplicativo!"
+msgstr ""
 
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
@@ -361,21 +360,21 @@ msgstr ""
 msgid "Unable to save modified desktop-file!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to save modified desktop-file! Message: %s"
-msgstr "Não foi capaz de remover este aplicativo!"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to write application description! Message: %s"
-msgstr "Não foi capaz de remover este aplicativo!"
+msgstr ""
 
 #, c-format
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to write signature file! Message: %s"
-msgstr "Não foi capaz de remover este aplicativo!"
+msgstr ""
 
 msgid "Unknown."
 msgstr ""
@@ -400,9 +399,9 @@ msgstr ""
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "error: %s"
-msgstr "Erro"
+msgstr ""
 
 #~ msgid "%f files will be changed."
 #~ msgstr "%f arquivos serão alterados."
@@ -418,6 +417,9 @@ msgstr "Erro"
 
 #~ msgid "About Listaller"
 #~ msgstr "Sobre o Listaller"
+
+#~ msgid "An internal error occured"
+#~ msgstr "Ocorreu um erro interno"
 
 #~ msgid "Application was successfully removed!"
 #~ msgstr "O aplicativo foi removido com sucesso!"
@@ -524,6 +526,9 @@ msgstr "Erro"
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "Deseja realmente desinstalar %a?"
 
+#~ msgid "Do you want to check the applications's dependencies?"
+#~ msgstr "Você deseja conferir as dependências dos aplicativos?"
+
 #~ msgid "Do you want to install it again?"
 #~ msgstr "Você deseja instalá-lo novamente?"
 
@@ -543,6 +548,9 @@ msgstr "Erro"
 #~ msgid "Enter your password to run the application with advanced privileges."
 #~ msgstr ""
 #~ "Informe sua senha para executar o aplicativo com privilégios avançados."
+
+#~ msgid "Error"
+#~ msgstr "Erro"
 
 #~ msgid "Error while extracting files!"
 #~ msgstr "Erro durante a extração dos arquivos!"
@@ -585,6 +593,9 @@ msgstr "Erro"
 
 #~ msgid "Installation aborted."
 #~ msgstr "Instalação abortada."
+
+#~ msgid "Installation failed."
+#~ msgstr "A instalação falhou."
 
 #~ msgid "Installation of %a"
 #~ msgstr "Instalação de %a"
@@ -683,6 +694,9 @@ msgstr "Erro"
 #~ msgid "Resolving dynamic dependencies..."
 #~ msgstr "Resolvendo as dependências dinâmicas..."
 
+#~ msgid "Running installation..."
+#~ msgstr "Executando a instalação..."
+
 #~ msgid "Runs installation in testmode"
 #~ msgstr "Executa a instalação em modo de teste"
 
@@ -701,6 +715,9 @@ msgstr "Erro"
 #~ msgid "Software database opened."
 #~ msgstr "O banco de dados de softwares foi aberto."
 
+#~ msgid "Software license"
+#~ msgstr "Licença do programa:"
+
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr "Algumas dependências estão faltando. Deseja instalá-las agora?"
 
@@ -710,11 +727,17 @@ msgstr "Erro"
 #~ msgid "Starting uninstallation."
 #~ msgstr "Iniciando a desinstalação."
 
+#~ msgid "Test-installation of package finished."
+#~ msgstr "O teste de instalação do pacote foi concluído."
+
 #~ msgid "Testmode"
 #~ msgstr "Modo de teste"
 
 #~ msgid "Testmode: Do not register package."
 #~ msgstr "Modo de teste: Não registrar o pacote."
+
+#~ msgid "The application \"%a\" was not installed."
+#~ msgstr "O aplicativo \"%a\" não foi instalado."
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "O aplicativo \"%a\" foi instalado com sucesso!"
@@ -735,14 +758,23 @@ msgstr "Erro"
 #~ msgid "There are no updates available!"
 #~ msgstr "Não existem atualizações disponíveis!"
 
+#~ msgid "This application is already installed"
+#~ msgstr "Este aplicativo já está instalado"
+
 #~ msgid "This package does not support your Linux distribution."
 #~ msgstr "Este pacote não oferece suporte para sua distribuição Linux."
 
 #~ msgid "Unable to copy the file %s."
 #~ msgstr "Não foi capaz de copiar o arquivo %f."
 
+#~ msgid "Unable to find %s"
+#~ msgstr "Não é possível localizar %s"
+
 #~ msgid "Unable to override the file %f."
 #~ msgstr "Não foi capaz de sobrescrever o arquivo %f."
+
+#~ msgid "Unable to remove this application!"
+#~ msgstr "Não foi capaz de remover este aplicativo!"
 
 #~ msgid "Uninstalling %a"
 #~ msgstr "Desinstalando %a"

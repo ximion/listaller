@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-14 15:34+0200\n"
+"POT-Creation-Date: 2011-06-21 14:07+0200\n"
 "PO-Revision-Date: 2010-10-05 17:09+0000\n"
 "Last-Translator: Konki <pavel.konkol@seznam.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
-"X-Generator: Launchpad (build 12915)\n"
+"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
+"X-Generator: Launchpad (build 13242)\n"
 
 #, c-format
 msgid ""
@@ -26,26 +26,21 @@ msgstr ""
 msgid "A policy was not met."
 msgstr ""
 
-#, fuzzy
 msgid "A system error occured."
-msgstr "Došlo k neznámé chybě!"
-
-#, fuzzy, c-format
-msgid "Application ID %s is invalid!"
-msgstr "Aplikace %a nebyla nainstalována."
-
-msgid "Available CRL is too old"
 msgstr ""
 
-msgid "Average security."
+#, c-format
+msgid "Application ID %s is invalid!"
+msgstr ""
+
+msgid "Available CRL is too old"
 msgstr ""
 
 msgid "Build IPK package"
 msgstr ""
 
-#, fuzzy
 msgid "CRL not available."
-msgstr "Žádné informace nejsou dostupné!"
+msgstr ""
 
 msgid "Can't verify: Key is missing"
 msgstr ""
@@ -120,9 +115,9 @@ msgstr ""
 msgid "Could not remove file %s!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Could not uninstall application %s. It is not installed."
-msgstr "Aplikace \"%a\" nebyla nainstalována."
+msgstr ""
 
 #, c-format
 msgid ""
@@ -180,17 +175,12 @@ msgstr ""
 msgid "Installation completed!"
 msgstr "Instalace dokončena!"
 
-#, fuzzy
 msgid "Installation failed!"
-msgstr "Instalace selhala."
+msgstr ""
 
 #, fuzzy, c-format
-msgid "Installation of native package '%s' failed!"
-msgstr "Instalace selhala."
-
-#, fuzzy, c-format
-msgid "Installing native package %s"
-msgstr "Nainstalovat balík?"
+msgid "Installing native packages %s"
+msgstr "Instalační balík je poškozen"
 
 msgid "Low security."
 msgstr ""
@@ -199,9 +189,8 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Native package %s is already installed."
-msgstr "Tato aplikace je již nainstalována"
+msgid "Medium security."
+msgstr ""
 
 msgid "Never trust."
 msgstr ""
@@ -223,9 +212,8 @@ msgstr ""
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, fuzzy
 msgid "Path to the application's source code"
-msgstr "Test aplikace byl ukončen"
+msgstr ""
 
 #, c-format
 msgid "Removal of %s finished."
@@ -243,9 +231,9 @@ msgstr ""
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running installation of %s"
-msgstr "Spouštím instalaci..."
+msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr ""
@@ -278,9 +266,8 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
-#, fuzzy
 msgid "Software install prefix"
-msgstr "Licence:"
+msgstr ""
 
 msgid "Software installation package"
 msgstr ""
@@ -314,6 +301,17 @@ msgstr ""
 msgid "Trust is ultimate."
 msgstr ""
 
+msgid ""
+"Trying to remove local application, but AppManager is in superuser mode!\n"
+"Setting AppManager to local mode now."
+msgstr ""
+
+msgid ""
+"Trying to remove shared application, but AppManager is not in superuser "
+"mode!\n"
+"Setting AppManager to superuse mode now."
+msgstr ""
+
 #, c-format
 msgid "Unable to create file '%s'!"
 msgstr ""
@@ -341,9 +339,9 @@ msgstr ""
 msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for %s!"
-msgstr "Nelze najít %s"
+msgstr ""
 
 msgid "Unable to open software database for reading & writing!"
 msgstr ""
@@ -374,9 +372,9 @@ msgstr ""
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to write signature file! Message: %s"
-msgstr "Nemohu přepsat soubor %f."
+msgstr ""
 
 msgid "Unknown."
 msgstr ""
@@ -618,6 +616,9 @@ msgstr ""
 #~ msgid "Install now"
 #~ msgstr "Nainstalovat nyní"
 
+#~ msgid "Install package?"
+#~ msgstr "Nainstalovat balík?"
+
 #~ msgid "Install updates"
 #~ msgstr "Nainstalovat aktualizace"
 
@@ -630,14 +631,14 @@ msgstr ""
 #~ msgid "Installation aborted."
 #~ msgstr "Instalace přerušena"
 
+#~ msgid "Installation failed."
+#~ msgstr "Instalace selhala."
+
 #~ msgid "Installation mode:"
 #~ msgstr "Režim instalace:"
 
 #~ msgid "Installation of %a"
 #~ msgstr "Instalace aplikace %a"
-
-#~ msgid "Installation package is corrupt"
-#~ msgstr "Instalační balík je poškozen"
 
 #~ msgid "Listaller settings"
 #~ msgstr "Nastavení"
@@ -696,6 +697,9 @@ msgstr ""
 
 #~ msgid "No compatible packages found!"
 #~ msgstr "Žádné kompatibilní balíky nebyly nalezeny!"
+
+#~ msgid "No information available!"
+#~ msgstr "Žádné informace nejsou dostupné!"
 
 #~ msgid "Office"
 #~ msgstr "Kancelář"
@@ -799,6 +803,9 @@ msgstr ""
 #~ msgid "Running application installation..."
 #~ msgstr "Spouštění instalace aplikace..."
 
+#~ msgid "Running installation..."
+#~ msgstr "Spouštím instalaci..."
+
 #~ msgid "Running under %de (or similar)"
 #~ msgstr "Spouštím pod %de (nebo podobné)"
 
@@ -829,6 +836,9 @@ msgstr ""
 #~ msgid "Software catalogue"
 #~ msgstr "Katalog softwaru"
 
+#~ msgid "Software license"
+#~ msgstr "Licence:"
+
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr "Některé závislosti schází. Měly by se teď nainstalovat?"
 
@@ -844,6 +854,9 @@ msgstr ""
 #~ msgid "Test application"
 #~ msgstr "Otestovat aplikaci"
 
+#~ msgid "Test of the application finished."
+#~ msgstr "Test aplikace byl ukončen"
+
 #~ msgid "Testmode"
 #~ msgstr "Testovací režim"
 
@@ -854,8 +867,14 @@ msgstr ""
 #~ "Balík IPK je nejspíš poškozen nebo nemáte dostatečná oprávnění pro "
 #~ "přístup k potřebný souborům a složkám."
 
+#~ msgid "The application \"%a\" was not installed."
+#~ msgstr "Aplikace \"%a\" nebyla nainstalována."
+
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "Aplikace %a byla úspěšně nainstalována!"
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "Aplikace %a nebyla nainstalována."
 
 #~ msgid ""
 #~ "The application which this package contains was not built for the current "
@@ -902,6 +921,9 @@ msgstr ""
 #~ msgid "There are no updates available!"
 #~ msgstr "Nejsou k dispozici žádné aktualizace!"
 
+#~ msgid "This application is already installed"
+#~ msgstr "Tato aplikace je již nainstalována"
+
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
 #~ "Listaller can handle.\n"
@@ -924,6 +946,9 @@ msgstr ""
 #~ "Balík nemá platný identifikátor\n"
 #~ "Instalátor se nyní ukončí."
 
+#~ msgid "Unable to find %s"
+#~ msgstr "Nelze najít %s"
+
 #~ msgid ""
 #~ "Unable to load the icon of %a. Please notify the developers of Listaller "
 #~ "or this application!"
@@ -933,6 +958,9 @@ msgstr ""
 
 #~ msgid "Unable to override the file %f."
 #~ msgstr "Nelze přepsat soubor %f."
+
+#~ msgid "Unable to overwrite the file %f."
+#~ msgstr "Nemohu přepsat soubor %f."
 
 #~ msgid "Uninstall"
 #~ msgstr "Odinstalovat"
@@ -945,6 +973,9 @@ msgstr ""
 
 #~ msgid "Uninstalling..."
 #~ msgstr "Odinstalace..."
+
+#~ msgid "Unknown error occured!"
+#~ msgstr "Došlo k neznámé chybě!"
 
 #~ msgid "Update info:"
 #~ msgstr "Popis aktualizace:"

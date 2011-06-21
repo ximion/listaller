@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: listaller\n"
         "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-        "POT-Creation-Date: 2011-06-14 15:34+0200\n"
+        "POT-Creation-Date: 2011-06-21 14:07+0200\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,9 +31,6 @@ msgid   "Application ID %s is invalid!"
 msgstr  ""
 
 msgid   "Available CRL is too old"
-msgstr  ""
-
-msgid   "Average security."
 msgstr  ""
 
 msgid   "Build IPK package"
@@ -173,11 +170,7 @@ msgid   "Installation failed!"
 msgstr  ""
 
 #, c-format
-msgid   "Installation of native package '%s' failed!"
-msgstr  ""
-
-#, c-format
-msgid   "Installing native package %s"
+msgid   "Installing native packages %s"
 msgstr  ""
 
 msgid   "Low security."
@@ -187,8 +180,7 @@ msgstr  ""
 msgid   "Making '%s' known to your system."
 msgstr  ""
 
-#, c-format
-msgid   "Native package %s is already installed."
+msgid   "Medium security."
 msgstr  ""
 
 msgid   "Never trust."
@@ -294,6 +286,14 @@ msgid   "Trust is marginal"
 msgstr  ""
 
 msgid   "Trust is ultimate."
+msgstr  ""
+
+msgid   "Trying to remove local application, but AppManager is in superuser mode!\n"
+        "Setting AppManager to local mode now."
+msgstr  ""
+
+msgid   "Trying to remove shared application, but AppManager is not in superuser mode!\n"
+        "Setting AppManager to superuse mode now."
 msgstr  ""
 
 #, c-format

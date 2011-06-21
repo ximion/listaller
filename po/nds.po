@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-14 15:34+0200\n"
+"POT-Creation-Date: 2011-06-21 14:07+0200\n"
 "PO-Revision-Date: 2009-12-07 22:05+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German, Low <nds@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
-"X-Generator: Launchpad (build 12915)\n"
+"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
+"X-Generator: Launchpad (build 13242)\n"
 
 #, c-format
 msgid ""
@@ -29,14 +29,11 @@ msgstr ""
 msgid "A system error occured."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Application ID %s is invalid!"
-msgstr "Die Anwendung %a wurde nicht installiert."
-
-msgid "Available CRL is too old"
 msgstr ""
 
-msgid "Average security."
+msgid "Available CRL is too old"
 msgstr ""
 
 msgid "Build IPK package"
@@ -178,16 +175,11 @@ msgstr ""
 msgid "Installation completed!"
 msgstr "Installation komplett!"
 
-#, fuzzy
 msgid "Installation failed!"
-msgstr "Installation komplett!"
-
-#, fuzzy, c-format
-msgid "Installation of native package '%s' failed!"
-msgstr "Installation komplett!"
+msgstr ""
 
 #, c-format
-msgid "Installing native package %s"
+msgid "Installing native packages %s"
 msgstr ""
 
 msgid "Low security."
@@ -197,9 +189,8 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Native package %s is already installed."
-msgstr "Das Programm ist schon instaliert."
+msgid "Medium security."
+msgstr ""
 
 msgid "Never trust."
 msgstr ""
@@ -240,9 +231,9 @@ msgstr ""
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running installation of %s"
-msgstr "Laufende installation..."
+msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr ""
@@ -275,9 +266,8 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
-#, fuzzy
 msgid "Software install prefix"
-msgstr "Software Lizenz"
+msgstr ""
 
 msgid "Software installation package"
 msgstr ""
@@ -309,6 +299,17 @@ msgid "Trust is marginal"
 msgstr ""
 
 msgid "Trust is ultimate."
+msgstr ""
+
+msgid ""
+"Trying to remove local application, but AppManager is in superuser mode!\n"
+"Setting AppManager to local mode now."
+msgstr ""
+
+msgid ""
+"Trying to remove shared application, but AppManager is not in superuser "
+"mode!\n"
+"Setting AppManager to superuse mode now."
 msgstr ""
 
 #, c-format
@@ -441,11 +442,23 @@ msgstr ""
 #~ msgid "Program description:"
 #~ msgstr "Programmbeschreibung"
 
+#~ msgid "Running installation..."
+#~ msgstr "Laufende installation..."
+
+#~ msgid "Software license"
+#~ msgstr "Software Lizenz"
+
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "Die Anwendung %a wurde erfolgreich installiert!"
 
+#~ msgid "The application %a was not installed."
+#~ msgstr "Die Anwendung %a wurde nicht installiert."
+
 #~ msgid "The installer will close now"
 #~ msgstr "Der installer schließt sich nun."
+
+#~ msgid "This application is already installed"
+#~ msgstr "Das Programm ist schon instaliert."
 
 #~ msgid "Welcome!"
 #~ msgstr "Willkamen!"

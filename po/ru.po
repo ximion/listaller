@@ -2,54 +2,51 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-14 15:34+0200\n"
-"PO-Revision-Date: 2010-09-07 11:00+0000\n"
-"Last-Translator: devcode <brestows@gmail.com>\n"
+"POT-Creation-Date: 2011-06-21 14:07+0200\n"
+"PO-Revision-Date: 2011-06-15 19:57+0000\n"
+"Last-Translator: Aleksey Kabanov <Unknown>\n"
 "Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
-"X-Generator: Launchpad (build 12915)\n"
+"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
+"X-Generator: Launchpad (build 13242)\n"
 
 #, c-format
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
+"'%s' не имеет зарегистрированного списка файлов. Возможно, база данных "
+"программ повреждена."
 
 msgid "A policy was not met."
 msgstr ""
 
-#, fuzzy
 msgid "A system error occured."
-msgstr "Произошла ошибка"
+msgstr "Произошла системная ошибка."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Application ID %s is invalid!"
-msgstr "Приложение %a не установлено."
+msgstr "Неправильный идентификатор приложения %s!"
 
 msgid "Available CRL is too old"
-msgstr ""
-
-msgid "Average security."
 msgstr ""
 
 msgid "Build IPK package"
 msgstr ""
 
-#, fuzzy
 msgid "CRL not available."
-msgstr "Нет информации!"
+msgstr ""
 
 msgid "Can't verify: Key is missing"
-msgstr ""
+msgstr "Невозможно проверить: ключ отсутствует"
 
 msgid "Copying files to their destination"
-msgstr ""
+msgstr "Копирование файлов в места назначения"
 
 msgid "Could be dangerous!"
-msgstr ""
+msgstr "Может быть опасно!"
 
 #, c-format
 msgid ""
@@ -57,17 +54,20 @@ msgid ""
 "to perform this action?\n"
 "Error message was \"%s\"."
 msgstr ""
+"Невозможно скопировать файл %s в место его назначения. Есть ли у вас права, "
+"необходимые для выполнения этого действия?\n"
+"Сообщение об ошибке было \"%s\"."
 
 #, c-format
 msgid "Could not create destination directory. Error: %s"
-msgstr ""
+msgstr "Невозможно создать каталог назначения. Ошибка: %s"
 
 #, c-format
 msgid "Could not create file '%s'! File already exists."
-msgstr ""
+msgstr "Невозможно создать файл '%s'! Файл уже существует."
 
 msgid "Could not create/update software database!"
-msgstr ""
+msgstr "Невозможно создать или обновить базу данных программ!"
 
 #, c-format
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
@@ -75,7 +75,7 @@ msgstr ""
 
 #, c-format
 msgid "Could not extract file! Error: %s"
-msgstr ""
+msgstr "Невозможно извлечь файл! Ошибка: %s"
 
 #. : IPk builder was unable to find IPK source scripts
 msgid "Could not find IPK source files!"
@@ -113,11 +113,11 @@ msgstr ""
 
 #, c-format
 msgid "Could not remove file %s!"
-msgstr ""
+msgstr "Невозможно удалить файл %s!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Could not uninstall application %s. It is not installed."
-msgstr "Приложение \"%a\" не было установлено."
+msgstr "Невозможно деинсталлировать приложение %s. Оно не установлено."
 
 #, c-format
 msgid ""
@@ -136,32 +136,32 @@ msgid "Database action successful"
 msgstr ""
 
 msgid "Database locked"
-msgstr ""
+msgstr "База данных заблокирована"
 
 msgid "Database problem:"
-msgstr ""
+msgstr "Проблема с базой данных:"
 
 msgid "Database unlocked"
-msgstr ""
+msgstr "База данных разблокирована"
 
 #, c-format
 msgid "ERROR: %s"
-msgstr ""
+msgstr "ОШИБКА: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error: %s\n"
-msgstr "Ошибка:"
+msgstr "Ошибка: %s\n"
 
 msgid "Fatal database error"
-msgstr ""
+msgstr "Фатальная ошибка базы данных"
 
 #, c-format
 msgid "File %s not found or permission denied!"
-msgstr ""
+msgstr "Файл %s не найден или у вас нет прав доступа к нему!"
 
 #, c-format
 msgid "File '%s' doesn't exist."
-msgstr ""
+msgstr "Файл '%s' не существует."
 
 msgid "GPG-Sign the resulting package"
 msgstr ""
@@ -175,16 +175,11 @@ msgstr ""
 msgid "Installation completed!"
 msgstr "Установка завершена!"
 
-#, fuzzy
 msgid "Installation failed!"
-msgstr "Установка не удалась."
+msgstr "Установка не удалась!"
 
 #, fuzzy, c-format
-msgid "Installation of native package '%s' failed!"
-msgstr "Ошибка установки пакета %s!"
-
-#, fuzzy, c-format
-msgid "Installing native package %s"
+msgid "Installing native packages %s"
 msgstr "Установить пакет"
 
 msgid "Low security."
@@ -194,16 +189,16 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Native package %s is already installed."
-msgstr "Программа уже установлена"
+#, fuzzy
+msgid "Medium security."
+msgstr "Серый"
 
 msgid "Never trust."
 msgstr ""
 
 #, c-format
 msgid "No path given!"
-msgstr ""
+msgstr "Не указан путь!"
 
 msgid "One key has been revoked"
 msgstr ""
@@ -211,45 +206,46 @@ msgstr ""
 msgid "One key has expired"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "PackageKit exit code was: %s"
-msgstr "Обнаружен пакет: %s"
+msgstr ""
 
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, fuzzy
 msgid "Path to the application's source code"
-msgstr "Приложения не найдены!"
+msgstr "Путь к исходному коду приложения"
 
 #, c-format
 msgid "Removal of %s finished."
-msgstr ""
+msgstr "Удаление %s завершено."
 
 #, c-format
 msgid "Removal of %s started."
-msgstr ""
+msgstr "Начато удаление %s."
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
-msgstr ""
+msgstr "Разрешение зависимостей '%s'."
 
 #, c-format
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
+"Запустите '%s --help', чтобы увидеть полный список доступных опций командной "
+"строки.\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running installation of %s"
-msgstr "Идёт установка..."
+msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr ""
 
 msgid "Should be safe."
-msgstr ""
+msgstr "Должно быть безопасным."
 
 msgid "Show the application's version"
-msgstr ""
+msgstr "Показать версию приложения"
 
 msgid "Signature has expired"
 msgstr ""
@@ -264,18 +260,17 @@ msgid "Signature is good."
 msgstr ""
 
 msgid "Software database closed"
-msgstr ""
+msgstr "База данных программ закрыта"
 
 #, c-format
 msgid "Software database message (%d)"
-msgstr ""
+msgstr "Сообщение базы данных программ (%d)"
 
 msgid "Software database opened"
-msgstr ""
+msgstr "База данных программ открыта"
 
-#, fuzzy
 msgid "Software install prefix"
-msgstr "Лицензия программы"
+msgstr ""
 
 msgid "Software installation package"
 msgstr ""
@@ -287,7 +282,7 @@ msgid ""
 msgstr ""
 
 msgid "Status of this signature is unknown or package is not signed."
-msgstr ""
+msgstr "Статус этой подписи неизвестен или пакет не подписан."
 
 msgid "Strip debug infos from files in install-target"
 msgstr ""
@@ -296,6 +291,8 @@ msgid ""
 "This application was already installed. Please remove the existing version "
 "to continue!"
 msgstr ""
+"Это приложение уже было установлено. Пожалуйста, удалите существующую "
+"версию, чтобы продолжить!"
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -309,9 +306,20 @@ msgstr ""
 msgid "Trust is ultimate."
 msgstr ""
 
+msgid ""
+"Trying to remove local application, but AppManager is in superuser mode!\n"
+"Setting AppManager to local mode now."
+msgstr ""
+
+msgid ""
+"Trying to remove shared application, but AppManager is not in superuser "
+"mode!\n"
+"Setting AppManager to superuse mode now."
+msgstr ""
+
 #, c-format
 msgid "Unable to create file '%s'!"
-msgstr ""
+msgstr "Невозможно создать файл '%s'!"
 
 msgid "Unable to extract IPK data!"
 msgstr ""
@@ -326,29 +334,29 @@ msgid ""
 msgstr ""
 
 msgid "Unable to extract signature! Maybe package is not signed."
-msgstr ""
+msgstr "Невозможно извлечь подпись! Возможно, пакет не подписан."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to fetch application description! Message: %s"
-msgstr "Не удаётся удалить это приложение!"
+msgstr "Невозможно получить описание приложения! Сообщение: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to fetch application file list! Message: %s"
-msgstr "Не удаётся удалить это приложение!"
+msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for %s!"
-msgstr "Невозможно найти %s"
+msgstr ""
 
 msgid "Unable to open software database for reading & writing!"
-msgstr ""
+msgstr "Невозможно открыть базу данных программ для чтения и записи!"
 
 msgid "Unable to open software database for reading only!"
-msgstr ""
+msgstr "Невозможно открыть базу данных программ только для чтения!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read package signature! Message: %s"
-msgstr "Не удаётся удалить это приложение!"
+msgstr "Невозможно прочитать подпись пакета! Сообщение: %s"
 
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
@@ -357,28 +365,27 @@ msgstr ""
 msgid "Unable to save modified desktop-file!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to save modified desktop-file! Message: %s"
-msgstr "Не удаётся удалить это приложение!"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to write application description! Message: %s"
-msgstr "Не удаётся удалить это приложение!"
+msgstr ""
 
 #, c-format
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to write signature file! Message: %s"
-msgstr "Не удаётся удалить это приложение!"
+msgstr ""
 
-#, fuzzy
 msgid "Unknown."
-msgstr "Неизвестная"
+msgstr "Неизвестно."
 
 msgid "Use recursive mode"
-msgstr ""
+msgstr "Использовать рекурсивный режим"
 
 msgid "Validity is undefined"
 msgstr ""
@@ -392,14 +399,14 @@ msgstr ""
 
 #, c-format
 msgid "XML file '%s' is damaged."
-msgstr ""
+msgstr "XML-файл '%s' повреждён."
 
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "error: %s"
-msgstr "Ошибка:"
+msgstr "ошибка: %s"
 
 #~ msgid "  modified "
 #~ msgstr "  изменён "
@@ -598,6 +605,9 @@ msgstr "Ошибка:"
 
 #~ msgid "Alt"
 #~ msgstr "Alt"
+
+#~ msgid "An internal error occured"
+#~ msgstr "Произошла ошибка"
 
 #~ msgid "Application Workspace"
 #~ msgstr "Рабочая область приложения"
@@ -993,6 +1003,9 @@ msgstr "Ошибка:"
 #~ msgid "Error while uninstalling!"
 #~ msgstr "Произошла ошибка во время удаления!"
 
+#~ msgid "Error:"
+#~ msgstr "Ошибка:"
+
 #~ msgid "Escape"
 #~ msgstr "Escape"
 
@@ -1264,11 +1277,17 @@ msgstr "Ошибка:"
 #~ msgid "Installation aborted."
 #~ msgstr "Установка прервана."
 
+#~ msgid "Installation failed."
+#~ msgstr "Установка не удалась."
+
 #~ msgid "Installation mode:"
 #~ msgstr "Режим установки:"
 
 #~ msgid "Installation of %a"
 #~ msgstr "Установка %a"
+
+#~ msgid "Installation of package %s failed!"
+#~ msgstr "Ошибка установки пакета %s!"
 
 #~ msgid "Installation package is corrupt"
 #~ msgstr "Установочный пакет повреждён"
@@ -1397,9 +1416,6 @@ msgstr "Ошибка:"
 #~ msgid "Maroon"
 #~ msgstr "Малиновый"
 
-#~ msgid "Medium Gray"
-#~ msgstr "Серый"
-
 #~ msgctxt "lclstrconsts.ifsvk_menu"
 #~ msgid "Menu"
 #~ msgstr "Menu"
@@ -1477,6 +1493,9 @@ msgstr "Ошибка:"
 #~ msgid "No MDI form present."
 #~ msgstr "Отсутствует форма MDI."
 
+#~ msgid "No applications found!"
+#~ msgstr "Приложения не найдены!"
+
 #~ msgid "No compatible packages found!"
 #~ msgstr "Совместимых пакетов не найдено"
 
@@ -1485,6 +1504,9 @@ msgstr "Ошибка:"
 
 #~ msgid "No help nodes available"
 #~ msgstr "Доступные узлы справки отсутствуют"
+
+#~ msgid "No information available!"
+#~ msgstr "Нет информации!"
 
 #~ msgid "No timers available"
 #~ msgstr "Таймеры недоступны"
@@ -1543,6 +1565,9 @@ msgstr "Ошибка:"
 
 #~ msgid "Package build commands:"
 #~ msgstr "Команды сборки пакета:"
+
+#~ msgid "Package detected: %s"
+#~ msgstr "Обнаружен пакет: %s"
 
 #~ msgid "Package has trusted signature."
 #~ msgstr "Пакет имеет доверенную подпись ."
@@ -1777,6 +1802,9 @@ msgstr "Ошибка:"
 #~ msgid "Running application installation..."
 #~ msgstr "Запущена установка приложения..."
 
+#~ msgid "Running installation..."
+#~ msgstr "Идёт установка..."
+
 #~ msgid "Runs installation in testmode"
 #~ msgstr "Запустить установку в тестовом режиме"
 
@@ -1866,6 +1894,9 @@ msgstr "Ошибка:"
 #~ msgid "Software database opened."
 #~ msgstr "База данных программного обеспечения открыта."
 
+#~ msgid "Software license"
+#~ msgstr "Лицензия программы"
+
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr ""
 #~ "Пропущены некоторые зависимости. Следует ли их установить прямо сейчас?"
@@ -1909,11 +1940,17 @@ msgstr "Ошибка:"
 #~ msgid "Text"
 #~ msgstr "Текст"
 
+#~ msgid "The application \"%a\" was not installed."
+#~ msgstr "Приложение \"%a\" не было установлено."
+
 #~ msgid "The application %a could not be installed!"
 #~ msgstr "Приложение %a не может быть установлено!"
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "Приложение %a успешно установлено!"
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "Приложение %a не установлено."
 
 #~ msgid ""
 #~ "The application which this package contains was not built for the current "
@@ -2000,6 +2037,9 @@ msgstr "Ошибка:"
 #~ msgid "There is no viewer for help type %s%s%s"
 #~ msgstr "Отсутствует программа просмотра для типа справки %s%s%s"
 
+#~ msgid "This application is already installed"
+#~ msgstr "Программа уже установлена"
+
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr "Приложение хочет скачать и установить все зависимые пакеты из %l"
 
@@ -2017,6 +2057,9 @@ msgstr "Ошибка:"
 
 #~ msgid "Unable to copy the file %s."
 #~ msgstr "Невозможно скопировать файл %s."
+
+#~ msgid "Unable to find %s"
+#~ msgstr "Невозможно найти %s"
 
 #~ msgid "Unable to find a HTML browser."
 #~ msgstr "Невозможно найти браузер HTML."
@@ -2044,6 +2087,9 @@ msgstr "Ошибка:"
 #~ msgid "Unable to override the file %f."
 #~ msgstr "Невозможно подменить файл %f."
 
+#~ msgid "Unable to remove this application!"
+#~ msgstr "Не удаётся удалить это приложение!"
+
 #~ msgid "Uninstall"
 #~ msgstr "Удалить"
 
@@ -2052,6 +2098,9 @@ msgstr "Ошибка:"
 
 #~ msgid "Uninstalling..."
 #~ msgstr "Удаление..."
+
+#~ msgid "Unknown"
+#~ msgstr "Неизвестная"
 
 #~ msgid "Unknown Error, please report this bug"
 #~ msgstr "Неизвестная ошибка, сообщите о ней разработчикам"

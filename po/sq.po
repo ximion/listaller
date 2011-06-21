@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.00b\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-14 15:34+0200\n"
+"POT-Creation-Date: 2011-06-21 14:07+0200\n"
 "PO-Revision-Date: 2011-02-22 22:07+0000\n"
 "Last-Translator: truri <Unknown>\n"
 "Language-Team: Albanian\n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
-"X-Generator: Launchpad (build 12915)\n"
+"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
+"X-Generator: Launchpad (build 13242)\n"
 
 #, c-format
 msgid ""
@@ -21,18 +21,14 @@ msgstr ""
 msgid "A policy was not met."
 msgstr ""
 
-#, fuzzy
 msgid "A system error occured."
-msgstr "Ndodhi një gabim i brendshëm"
+msgstr ""
 
 #, c-format
 msgid "Application ID %s is invalid!"
 msgstr ""
 
 msgid "Available CRL is too old"
-msgstr ""
-
-msgid "Average security."
 msgstr ""
 
 msgid "Build IPK package"
@@ -114,9 +110,9 @@ msgstr ""
 msgid "Could not remove file %s!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Could not uninstall application %s. It is not installed."
-msgstr "Zbatimi \"%a\" nuk u instalua."
+msgstr ""
 
 #, c-format
 msgid ""
@@ -147,9 +143,9 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error: %s\n"
-msgstr "Gabim"
+msgstr ""
 
 msgid "Fatal database error"
 msgstr ""
@@ -174,16 +170,11 @@ msgstr ""
 msgid "Installation completed!"
 msgstr "Instalimi u plotësua!"
 
-#, fuzzy
 msgid "Installation failed!"
-msgstr "Instalimi dështoi."
+msgstr ""
 
 #, fuzzy, c-format
-msgid "Installation of native package '%s' failed!"
-msgstr "Instalimi i paketës %s dështoi!"
-
-#, fuzzy, c-format
-msgid "Installing native package %s"
+msgid "Installing native packages %s"
 msgstr "Instalo paketën"
 
 msgid "Low security."
@@ -193,9 +184,8 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Native package %s is already installed."
-msgstr "Ky zbatim është tashmë i instaluar"
+msgid "Medium security."
+msgstr ""
 
 msgid "Never trust."
 msgstr ""
@@ -210,16 +200,15 @@ msgstr ""
 msgid "One key has expired"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "PackageKit exit code was: %s"
-msgstr "U zbulua paketë: %s"
+msgstr ""
 
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, fuzzy
 msgid "Path to the application's source code"
-msgstr "Dëshironi të kontrolloni varësitë e zbatimit?"
+msgstr ""
 
 #, c-format
 msgid "Removal of %s finished."
@@ -237,9 +226,9 @@ msgstr ""
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running installation of %s"
-msgstr "Po xhirohet instalimi..."
+msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr ""
@@ -272,9 +261,8 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
-#, fuzzy
 msgid "Software install prefix"
-msgstr "Leje Software-i"
+msgstr ""
 
 msgid "Software installation package"
 msgstr ""
@@ -308,6 +296,17 @@ msgstr ""
 msgid "Trust is ultimate."
 msgstr ""
 
+msgid ""
+"Trying to remove local application, but AppManager is in superuser mode!\n"
+"Setting AppManager to local mode now."
+msgstr ""
+
+msgid ""
+"Trying to remove shared application, but AppManager is not in superuser "
+"mode!\n"
+"Setting AppManager to superuse mode now."
+msgstr ""
+
 #, c-format
 msgid "Unable to create file '%s'!"
 msgstr ""
@@ -327,17 +326,17 @@ msgstr ""
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to fetch application description! Message: %s"
-msgstr "I pazoti të heqë këtë zbatim!"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to fetch application file list! Message: %s"
-msgstr "I pazoti të heqë këtë zbatim!"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for %s!"
-msgstr "I pazoti të gjejë%s"
+msgstr ""
 
 msgid "Unable to open software database for reading & writing!"
 msgstr ""
@@ -345,9 +344,9 @@ msgstr ""
 msgid "Unable to open software database for reading only!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read package signature! Message: %s"
-msgstr "I pazoti të heqë këtë zbatim!"
+msgstr ""
 
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
@@ -356,21 +355,21 @@ msgstr ""
 msgid "Unable to save modified desktop-file!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to save modified desktop-file! Message: %s"
-msgstr "I pazoti të heqë këtë zbatim!"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to write application description! Message: %s"
-msgstr "I pazoti të heqë këtë zbatim!"
+msgstr ""
 
 #, c-format
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to write signature file! Message: %s"
-msgstr "I pazoti të heqë këtë zbatim!"
+msgstr ""
 
 msgid "Unknown."
 msgstr ""
@@ -395,9 +394,9 @@ msgstr ""
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "error: %s"
-msgstr "Gabim"
+msgstr ""
 
 #~ msgid "%f files will be changed."
 #~ msgstr "Do të ndryshohen %f kartela."
@@ -419,6 +418,9 @@ msgstr "Gabim"
 
 #~ msgid "All"
 #~ msgstr "Krejt"
+
+#~ msgid "An internal error occured"
+#~ msgstr "Ndodhi një gabim i brendshëm"
 
 #~ msgid "Application was successfully removed!"
 #~ msgstr "Zbatimi u hoq me sukses!"
@@ -577,6 +579,9 @@ msgstr "Gabim"
 #~ msgid "Do you want to check global-installed applications too?"
 #~ msgstr "Doni të kontrollohen edhe zbatimet e instaluara për mbarë sistemin?"
 
+#~ msgid "Do you want to check the applications's dependencies?"
+#~ msgstr "Dëshironi të kontrolloni varësitë e zbatimit?"
+
 #~ msgid "Do you want to install it again?"
 #~ msgstr "Doni ta instaloni sërish?"
 
@@ -608,6 +613,9 @@ msgstr "Gabim"
 #~ msgstr ""
 #~ "Që ta xhironi këtë zbatim me privilegje më të thella, jepni fjalëkalimin "
 #~ "tuaj."
+
+#~ msgid "Error"
+#~ msgstr "Gabim"
 
 #~ msgid "Error while extracting files!"
 #~ msgstr "Gabim gjatë përftimit të kartelave!"
@@ -701,11 +709,17 @@ msgstr "Gabim"
 #~ msgid "Installation aborted."
 #~ msgstr "Instalimi u ndërpre."
 
+#~ msgid "Installation failed."
+#~ msgstr "Instalimi dështoi."
+
 #~ msgid "Installation mode:"
 #~ msgstr "Mënyrë instalimi:"
 
 #~ msgid "Installation of %a"
 #~ msgstr "Instalimi i %a"
+
+#~ msgid "Installation of package %s failed!"
+#~ msgstr "Instalimi i paketës %s dështoi!"
 
 #~ msgid "Installation package is corrupt"
 #~ msgstr "Paketa e instalimit është e dëmtuar"
@@ -817,6 +831,9 @@ msgstr "Gabim"
 
 #~ msgid "Package could be installed with MoJo/LOKI."
 #~ msgstr "Paketa mund të instalohej me MoJo/LOKI."
+
+#~ msgid "Package detected: %s"
+#~ msgstr "U zbulua paketë: %s"
 
 #~ msgid "Package has trusted signature."
 #~ msgstr "Paketa ka nënshkrim të besuar."
@@ -985,6 +1002,9 @@ msgstr "Gabim"
 #~ msgid "Run binary setup file as root."
 #~ msgstr "Kartelën dyore të rregullimit xhiroje si rrënjë."
 
+#~ msgid "Running installation..."
+#~ msgstr "Po xhirohet instalimi..."
+
 #~ msgid "Running under %s."
 #~ msgstr "Po xhirohet nën %s."
 
@@ -1030,6 +1050,9 @@ msgstr "Gabim"
 #~ msgid "Software database opened."
 #~ msgstr "Baza e të dhënave të software-eve u hap."
 
+#~ msgid "Software license"
+#~ msgstr "Leje Software-i"
+
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr "Disa nga varësitë mungojnë. A do të duhej të instaloheshin tani?"
 
@@ -1059,6 +1082,9 @@ msgstr "Gabim"
 
 #~ msgid "Testmode: Do not register package."
 #~ msgstr "Mënyra provë: Mos e regjistro paketën."
+
+#~ msgid "The application \"%a\" was not installed."
+#~ msgstr "Zbatimi \"%a\" nuk u instalua."
 
 #~ msgid "The application %a could not be installed!"
 #~ msgstr "Zbatimi %a nuk u instalua dot!"
@@ -1134,6 +1160,9 @@ msgstr "Gabim"
 #~ "ndonjë lloji tjetër paketash që mundet ta trajtojë Listaller-i.\n"
 #~ "Merrni udhëzime nga autori i programit reth se si ta hiqni këtë zbatim."
 
+#~ msgid "This application is already installed"
+#~ msgstr "Ky zbatim është tashmë i instaluar"
+
 #~ msgid "This application wants to fetch a dependency from %l"
 #~ msgstr "Ky zbatim dëshiron të sjellë një varësi prej %l"
 
@@ -1149,6 +1178,9 @@ msgstr "Gabim"
 #~ msgid "Unable to copy the file %s."
 #~ msgstr "I pazoti të kopjojë kartelën %s."
 
+#~ msgid "Unable to find %s"
+#~ msgstr "I pazoti të gjejë%s"
+
 #~ msgid "Unable to load information about LOKI-Setup."
 #~ msgstr "I pazoti të ngarkojë të dhëna rreth LOKI-Setup-it."
 
@@ -1161,6 +1193,9 @@ msgstr "Gabim"
 
 #~ msgid "Unable to override the file %f."
 #~ msgstr "I pazoti të anashkalojë kartelën %f"
+
+#~ msgid "Unable to remove this application!"
+#~ msgstr "I pazoti të heqë këtë zbatim!"
 
 #~ msgid "Uninstall"
 #~ msgstr "Çinstaloje"

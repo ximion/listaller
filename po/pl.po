@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lclstrconsts\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-14 15:34+0200\n"
+"POT-Creation-Date: 2011-06-21 14:07+0200\n"
 "PO-Revision-Date: 2009-05-06 13:38+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
-"X-Generator: Launchpad (build 12915)\n"
+"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
+"X-Generator: Launchpad (build 13242)\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
 
@@ -33,15 +33,11 @@ msgstr ""
 msgid "Available CRL is too old"
 msgstr ""
 
-msgid "Average security."
-msgstr ""
-
 msgid "Build IPK package"
 msgstr ""
 
-#, fuzzy
 msgid "CRL not available."
-msgstr "Brak dostępnych timerów"
+msgstr ""
 
 msgid "Can't verify: Key is missing"
 msgstr ""
@@ -149,9 +145,9 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error: %s\n"
-msgstr "Błąd:"
+msgstr ""
 
 msgid "Fatal database error"
 msgstr ""
@@ -180,11 +176,7 @@ msgid "Installation failed!"
 msgstr ""
 
 #, c-format
-msgid "Installation of native package '%s' failed!"
-msgstr ""
-
-#, c-format
-msgid "Installing native package %s"
+msgid "Installing native packages %s"
 msgstr ""
 
 msgid "Low security."
@@ -194,8 +186,7 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr ""
 
-#, c-format
-msgid "Native package %s is already installed."
+msgid "Medium security."
 msgstr ""
 
 msgid "Never trust."
@@ -307,6 +298,17 @@ msgstr ""
 msgid "Trust is ultimate."
 msgstr ""
 
+msgid ""
+"Trying to remove local application, but AppManager is in superuser mode!\n"
+"Setting AppManager to local mode now."
+msgstr ""
+
+msgid ""
+"Trying to remove shared application, but AppManager is not in superuser "
+"mode!\n"
+"Setting AppManager to superuse mode now."
+msgstr ""
+
 #, c-format
 msgid "Unable to create file '%s'!"
 msgstr ""
@@ -394,9 +396,9 @@ msgstr ""
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "error: %s"
-msgstr "Błąd:"
+msgstr ""
 
 #~ msgid "  modified "
 #~ msgstr "  zmodyfikowany "
@@ -589,6 +591,9 @@ msgstr "Błąd:"
 #~ msgid "Error reading %s%s%s: %s"
 #~ msgstr "Błąd odczytu %s%s%s: %s"
 
+#~ msgid "Error:"
+#~ msgstr "Błąd:"
+
 #~ msgid "Exception"
 #~ msgstr "Wyjątek"
 
@@ -672,6 +677,9 @@ msgstr "Błąd:"
 
 #~ msgid "Mouse Button Right"
 #~ msgstr "Prawy przycisk myszy"
+
+#~ msgid "No timers available"
+#~ msgstr "Brak dostępnych timerów"
 
 #~ msgid "No to all"
 #~ msgstr "Nie na wszystkie"

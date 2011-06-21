@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-14 15:34+0200\n"
+"POT-Creation-Date: 2011-06-21 14:07+0200\n"
 "PO-Revision-Date: 2011-04-03 14:52+0000\n"
 "Last-Translator: KarimSadeg <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
-"X-Generator: Launchpad (build 12915)\n"
+"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
+"X-Generator: Launchpad (build 13242)\n"
 
 #, c-format
 msgid ""
@@ -26,26 +26,21 @@ msgstr ""
 msgid "A policy was not met."
 msgstr ""
 
-#, fuzzy
 msgid "A system error occured."
-msgstr "Une erreur interne est survenue"
-
-#, fuzzy, c-format
-msgid "Application ID %s is invalid!"
-msgstr "L'application %a n'a pas été installée."
-
-msgid "Available CRL is too old"
 msgstr ""
 
-msgid "Average security."
+#, c-format
+msgid "Application ID %s is invalid!"
+msgstr ""
+
+msgid "Available CRL is too old"
 msgstr ""
 
 msgid "Build IPK package"
 msgstr ""
 
-#, fuzzy
 msgid "CRL not available."
-msgstr "Pas d'informations disponible !"
+msgstr ""
 
 msgid "Can't verify: Key is missing"
 msgstr ""
@@ -116,13 +111,13 @@ msgid ""
 "Could not read IPK payload container! Package might be damaged. Error: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Could not remove file %s!"
-msgstr "Impossible d'ouvrir le fichier de bureau : %s"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Could not uninstall application %s. It is not installed."
-msgstr "L'application « %a » n'a pas été installée."
+msgstr ""
 
 #, c-format
 msgid ""
@@ -146,9 +141,8 @@ msgstr "Réussite de l'action de la base de données"
 msgid "Database locked"
 msgstr "Base de données verrouillée"
 
-#, fuzzy
 msgid "Database problem:"
-msgstr "Base de données verrouillée"
+msgstr ""
 
 msgid "Database unlocked"
 msgstr "Base de données déverrouillée"
@@ -157,9 +151,9 @@ msgstr "Base de données déverrouillée"
 msgid "ERROR: %s"
 msgstr "ERREUR : %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error: %s\n"
-msgstr "Erreur:"
+msgstr ""
 
 msgid "Fatal database error"
 msgstr "Erreur fatale de la base de données"
@@ -184,17 +178,12 @@ msgstr ""
 msgid "Installation completed!"
 msgstr "Installation achevée !"
 
-#, fuzzy
 msgid "Installation failed!"
-msgstr "L'installation a échoué"
+msgstr ""
 
 #, fuzzy, c-format
-msgid "Installation of native package '%s' failed!"
-msgstr "L'installation du paquet %s a échoué"
-
-#, fuzzy, c-format
-msgid "Installing native package %s"
-msgstr "Installer le paquetage ?"
+msgid "Installing native packages %s"
+msgstr "Le paquetage d'installation est endommagé"
 
 msgid "Low security."
 msgstr ""
@@ -203,9 +192,8 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr "Rendre '%s' connu par votre système."
 
-#, fuzzy, c-format
-msgid "Native package %s is already installed."
-msgstr "Cette application est déjà installée"
+msgid "Medium security."
+msgstr ""
 
 msgid "Never trust."
 msgstr ""
@@ -220,16 +208,15 @@ msgstr ""
 msgid "One key has expired"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "PackageKit exit code was: %s"
-msgstr "Paquet détecté : %s"
+msgstr ""
 
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, fuzzy
 msgid "Path to the application's source code"
-msgstr "Le test de l'application est terminé."
+msgstr ""
 
 #, c-format
 msgid "Removal of %s finished."
@@ -247,9 +234,9 @@ msgstr "Résolution des dépendances de '%s'."
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running installation of %s"
-msgstr "Installation en cours ..."
+msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr "L'installateur n'a pas été initialisé !"
@@ -282,22 +269,17 @@ msgstr "Message de la base de données du logiciel (%d)"
 msgid "Software database opened"
 msgstr "La base de données du logiciel est ouverte"
 
-#, fuzzy
 msgid "Software install prefix"
-msgstr "Licence du logiciel"
+msgstr ""
 
 msgid "Software installation package"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "Some files of this package could not be installed, because they were not "
 "found in payload data.\n"
 "This IPK package might be damaged, please obtain a new copy!"
 msgstr ""
-"Impossible de valider le fichier %s. Il se peut que ce fichier IPK ait été "
-"modifié après sa création !\n"
-"Réessayer avec une nouvelle copie."
 
 msgid "Status of this signature is unknown or package is not signed."
 msgstr ""
@@ -322,6 +304,17 @@ msgstr ""
 msgid "Trust is ultimate."
 msgstr ""
 
+msgid ""
+"Trying to remove local application, but AppManager is in superuser mode!\n"
+"Setting AppManager to local mode now."
+msgstr ""
+
+msgid ""
+"Trying to remove shared application, but AppManager is not in superuser "
+"mode!\n"
+"Setting AppManager to superuse mode now."
+msgstr ""
+
 #, c-format
 msgid "Unable to create file '%s'!"
 msgstr "Impossible de créer le fichier '%s'!"
@@ -332,14 +325,11 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to extract data file %s. This IPK package might be damaged, please "
 "obtain a new copy."
 msgstr ""
-"Impossible de valider le fichier %s. Il se peut que ce fichier IPK ait été "
-"modifié après sa création !\n"
-"Réessayer avec une nouvelle copie."
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
@@ -352,9 +342,9 @@ msgstr ""
 msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for %s!"
-msgstr "Impossible de trouver %s"
+msgstr ""
 
 msgid "Unable to open software database for reading & writing!"
 msgstr ""
@@ -385,13 +375,12 @@ msgstr ""
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to write signature file! Message: %s"
-msgstr "Impossible d'écraser le fichier %f."
+msgstr ""
 
-#, fuzzy
 msgid "Unknown."
-msgstr "Inconnu"
+msgstr ""
 
 msgid "Use recursive mode"
 msgstr ""
@@ -413,9 +402,9 @@ msgstr "Le fichier XML '%s' est endommagé."
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "error: %s"
-msgstr "Erreur:"
+msgstr ""
 
 #~ msgid "  modified "
 #~ msgstr "  modifier "
@@ -603,6 +592,9 @@ msgstr "Erreur:"
 
 #~ msgid "Alt"
 #~ msgstr "Alt"
+
+#~ msgid "An internal error occured"
+#~ msgstr "Une erreur interne est survenue"
 
 #~ msgid "Application uninstalled successfully!"
 #~ msgstr "L'application a été correctement désinstallée !"
@@ -957,6 +949,9 @@ msgstr "Erreur:"
 #~ msgstr ""
 #~ "Erreur lors de la décompression et de la configuration des fichiers."
 
+#~ msgid "Error:"
+#~ msgstr "Erreur:"
+
 #~ msgid "Escape"
 #~ msgstr "Echappement"
 
@@ -1155,6 +1150,9 @@ msgstr "Erreur:"
 #~ msgid "Install now"
 #~ msgstr "Installer maintenant"
 
+#~ msgid "Install package?"
+#~ msgstr "Installer le paquetage ?"
+
 #~ msgid "Install updates"
 #~ msgstr "Installer les mises à jour"
 
@@ -1167,14 +1165,17 @@ msgstr "Erreur:"
 #~ msgid "Installation aborted."
 #~ msgstr "Installation annulée."
 
+#~ msgid "Installation failed."
+#~ msgstr "L'installation a échoué"
+
 #~ msgid "Installation mode:"
 #~ msgstr "Mode d'installation :"
 
 #~ msgid "Installation of %a"
 #~ msgstr "Installation de %a"
 
-#~ msgid "Installation package is corrupt"
-#~ msgstr "Le paquetage d'installation est endommagé"
+#~ msgid "Installation of package %s failed!"
+#~ msgstr "L'installation du paquet %s a échoué"
 
 #~ msgid "Installing %a..."
 #~ msgstr "Installation %a..."
@@ -1351,6 +1352,9 @@ msgstr "Erreur:"
 #~ msgid "No help nodes available"
 #~ msgstr "Aucuns noeuds d'aide disponibles"
 
+#~ msgid "No information available!"
+#~ msgstr "Pas d'informations disponible !"
+
 #~ msgid "No timers available"
 #~ msgstr "Aucun temporisateur disponible"
 
@@ -1402,6 +1406,9 @@ msgstr "Erreur:"
 
 #~ msgid "Package build commands:"
 #~ msgstr "Commandes de création du paquet :"
+
+#~ msgid "Package detected: %s"
+#~ msgstr "Paquet détecté : %s"
 
 #~ msgid "Package has trusted signature."
 #~ msgstr "La paquet a une signature sûre."
@@ -1596,6 +1603,9 @@ msgstr "Erreur:"
 #~ msgid "Running application installation..."
 #~ msgstr "Installation de l'application en cours…"
 
+#~ msgid "Running installation..."
+#~ msgstr "Installation en cours ..."
+
 #~ msgid "Runs installation in testmode"
 #~ msgstr "Démarrer l'installation en mode test"
 
@@ -1670,6 +1680,9 @@ msgstr "Erreur:"
 #~ msgid "Software database opened."
 #~ msgstr "Base de données du logiciel ouverte"
 
+#~ msgid "Software license"
+#~ msgstr "Licence du logiciel"
+
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr ""
 #~ "Des dépendances ne sont pas satisfaites. Voulez-vous les installer "
@@ -1699,6 +1712,9 @@ msgstr "Erreur:"
 #~ msgid "Test application"
 #~ msgstr "Aplication de test"
 
+#~ msgid "Test of the application finished."
+#~ msgstr "Le test de l'application est terminé."
+
 #~ msgid "Test-installation of package finished."
 #~ msgstr "Install test du paquet terminée."
 
@@ -1715,8 +1731,14 @@ msgstr "Erreur:"
 #~ "Le package IPK pourrait être endommagé ou vous n'avez pas assez de droits "
 #~ "d'accès requis pour les fichiers / dossiers."
 
+#~ msgid "The application \"%a\" was not installed."
+#~ msgstr "L'application « %a » n'a pas été installée."
+
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "L'application %a a été installée avec succès !"
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "L'application %a n'a pas été installée."
 
 #~ msgid ""
 #~ "The application which this package contains was not built for the current "
@@ -1812,6 +1834,9 @@ msgstr "Erreur:"
 #~ msgid "There is no viewer for help type %s%s%s"
 #~ msgstr "Il n'y a aucune visionneuse pour ce type d'aide %s%s%s"
 
+#~ msgid "This application is already installed"
+#~ msgstr "Cette application est déjà installée"
+
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr ""
 #~ "L'application veut télécharger et installer une dépendance depuis %l"
@@ -1829,6 +1854,9 @@ msgstr "Erreur:"
 #~ msgid "Unable to copy the file %s."
 #~ msgstr "Impossible de copier le fichier %s."
 
+#~ msgid "Unable to find %s"
+#~ msgstr "Impossible de trouver %s"
+
 #~ msgid "Unable to find a HTML browser."
 #~ msgstr "Impossible de trouver un navigateur de HTML."
 
@@ -1845,6 +1873,9 @@ msgstr "Erreur:"
 #~ msgid "Unable to override the file %f."
 #~ msgstr "Impossible d'écraser le paquet %f."
 
+#~ msgid "Unable to overwrite the file %f."
+#~ msgstr "Impossible d'écraser le fichier %f."
+
 #~ msgid "Uninstall"
 #~ msgstr "Désinstaller"
 
@@ -1856,6 +1887,9 @@ msgstr "Erreur:"
 
 #~ msgid "Uninstalling..."
 #~ msgstr "Désinstallation en cours..."
+
+#~ msgid "Unknown"
+#~ msgstr "Inconnu"
 
 #~ msgid "Unknown Error, please report this bug"
 #~ msgstr "Erreur inconnue, rapporter ce bogue svp"

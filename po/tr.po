@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-14 15:34+0200\n"
+"POT-Creation-Date: 2011-06-21 14:07+0200\n"
 "PO-Revision-Date: 2011-01-24 10:01+0000\n"
 "Last-Translator: Ali KIBICI <Unknown>\n"
 "Language-Team: \n"
@@ -10,8 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-26 16:21+0000\n"
-"X-Generator: Launchpad (build 12915)\n"
+"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
+"X-Generator: Launchpad (build 13242)\n"
 
 #, c-format
 msgid ""
@@ -21,26 +21,21 @@ msgstr ""
 msgid "A policy was not met."
 msgstr ""
 
-#, fuzzy
 msgid "A system error occured."
-msgstr "Bir iç hata oluştu"
-
-#, fuzzy, c-format
-msgid "Application ID %s is invalid!"
-msgstr "%a uygulaması yüklenmedi."
-
-msgid "Available CRL is too old"
 msgstr ""
 
-msgid "Average security."
+#, c-format
+msgid "Application ID %s is invalid!"
+msgstr ""
+
+msgid "Available CRL is too old"
 msgstr ""
 
 msgid "Build IPK package"
 msgstr ""
 
-#, fuzzy
 msgid "CRL not available."
-msgstr "Hakkında bilgi mümkün değil."
+msgstr ""
 
 msgid "Can't verify: Key is missing"
 msgstr ""
@@ -115,9 +110,9 @@ msgstr ""
 msgid "Could not remove file %s!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Could not uninstall application %s. It is not installed."
-msgstr "\"%a\" uygulaması kurulmadı."
+msgstr ""
 
 #, c-format
 msgid ""
@@ -148,9 +143,9 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error: %s\n"
-msgstr "Hata:"
+msgstr ""
 
 msgid "Fatal database error"
 msgstr ""
@@ -175,17 +170,12 @@ msgstr ""
 msgid "Installation completed!"
 msgstr "Yükleme tamamlandı!"
 
-#, fuzzy
 msgid "Installation failed!"
-msgstr "Yükleme tamamlandı!"
+msgstr ""
 
 #, fuzzy, c-format
-msgid "Installation of native package '%s' failed!"
-msgstr "Yükleme tamamlandı!"
-
-#, fuzzy, c-format
-msgid "Installing native package %s"
-msgstr "Paket yüklensin mi?"
+msgid "Installing native packages %s"
+msgstr "Yükleme paketi hasar görmüş."
 
 msgid "Low security."
 msgstr ""
@@ -194,9 +184,8 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Native package %s is already installed."
-msgstr "Bu program zaten yüklenmiş."
+msgid "Medium security."
+msgstr ""
 
 msgid "Never trust."
 msgstr ""
@@ -218,9 +207,8 @@ msgstr ""
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#, fuzzy
 msgid "Path to the application's source code"
-msgstr "Uygulamanın testi bitti."
+msgstr ""
 
 #, c-format
 msgid "Removal of %s finished."
@@ -238,9 +226,9 @@ msgstr ""
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running installation of %s"
-msgstr "Yükleme çalışıyor..."
+msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr ""
@@ -273,9 +261,8 @@ msgstr ""
 msgid "Software database opened"
 msgstr ""
 
-#, fuzzy
 msgid "Software install prefix"
-msgstr "Yazılım lisansı"
+msgstr ""
 
 msgid "Software installation package"
 msgstr ""
@@ -309,6 +296,17 @@ msgstr ""
 msgid "Trust is ultimate."
 msgstr ""
 
+msgid ""
+"Trying to remove local application, but AppManager is in superuser mode!\n"
+"Setting AppManager to local mode now."
+msgstr ""
+
+msgid ""
+"Trying to remove shared application, but AppManager is not in superuser "
+"mode!\n"
+"Setting AppManager to superuse mode now."
+msgstr ""
+
 #, c-format
 msgid "Unable to create file '%s'!"
 msgstr ""
@@ -336,9 +334,9 @@ msgstr ""
 msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for %s!"
-msgstr "%s bulunamıyor"
+msgstr ""
 
 msgid "Unable to open software database for reading & writing!"
 msgstr ""
@@ -369,13 +367,12 @@ msgstr ""
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to write signature file! Message: %s"
-msgstr "%f dosyasının üzerine yazılamadı."
+msgstr ""
 
-#, fuzzy
 msgid "Unknown."
-msgstr "Bilinmeyen"
+msgstr ""
 
 msgid "Use recursive mode"
 msgstr ""
@@ -397,9 +394,9 @@ msgstr ""
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "error: %s"
-msgstr "Hata:"
+msgstr ""
 
 #~ msgid "  modified "
 #~ msgstr "  değiştirilmiş "
@@ -579,6 +576,9 @@ msgstr "Hata:"
 
 #~ msgid "Alt"
 #~ msgstr "Alt"
+
+#~ msgid "An internal error occured"
+#~ msgstr "Bir iç hata oluştu"
 
 #~ msgid "Application uninstalled successfully!"
 #~ msgstr "Uygulama başarıyla kaldırıldı!"
@@ -835,6 +835,9 @@ msgstr "Hata:"
 #~ msgid "Error while unpacking and configuring files."
 #~ msgstr "Dosyakar açılırken ve/veya konfigüre edilirken hata yaşandı."
 
+#~ msgid "Error:"
+#~ msgstr "Hata:"
+
 #~ msgid "Escape"
 #~ msgstr "Çıkış karakteri"
 
@@ -1002,6 +1005,9 @@ msgstr "Hata:"
 #~ msgid "Install now"
 #~ msgstr "Şimdi yükle!"
 
+#~ msgid "Install package?"
+#~ msgstr "Paket yüklensin mi?"
+
 #~ msgid "Install updates"
 #~ msgstr "Güncelleştirmeleri yükle"
 
@@ -1019,9 +1025,6 @@ msgstr "Hata:"
 
 #~ msgid "Installation of %a"
 #~ msgstr "%a Programının Yüklemesi"
-
-#~ msgid "Installation package is corrupt"
-#~ msgstr "Yükleme paketi hasar görmüş."
 
 #~ msgid "Invalid Date : %s"
 #~ msgstr "Geçersiz tarih : %s"
@@ -1174,6 +1177,9 @@ msgstr "Hata:"
 
 #~ msgid "No help nodes available"
 #~ msgstr "Kullanılabilir yardım düğümü yok"
+
+#~ msgid "No information available!"
+#~ msgstr "Hakkında bilgi mümkün değil."
 
 #~ msgid "No timers available"
 #~ msgstr "Kullanılabilir zamanlayıcı yok"
@@ -1357,6 +1363,9 @@ msgstr "Hata:"
 #~ msgid "Running application installation..."
 #~ msgstr "Uygulama yüklemesi çalıştırılıyor..."
 
+#~ msgid "Running installation..."
+#~ msgstr "Yükleme çalışıyor..."
+
 #~ msgid "Running under %de (or similar)"
 #~ msgstr "%de (veya benzeri) altında çalışılıyor"
 
@@ -1417,6 +1426,9 @@ msgstr "Hata:"
 #~ msgid "Software catalogue"
 #~ msgstr "Yazılım kataloğu"
 
+#~ msgid "Software license"
+#~ msgstr "Yazılım lisansı"
+
 #~ msgid "Some dependencies are missing. Should they be installed now?"
 #~ msgstr "Bazı bağımlılıklar eksik. Şimdi yüklensin mi?"
 
@@ -1441,6 +1453,9 @@ msgstr "Hata:"
 #~ msgid "Test application"
 #~ msgstr "Uygulamayı test et"
 
+#~ msgid "Test of the application finished."
+#~ msgstr "Uygulamanın testi bitti."
+
 #~ msgid "Testmode"
 #~ msgstr "Test Modu"
 
@@ -1454,8 +1469,14 @@ msgstr "Hata:"
 #~ "IPH paketi zarar görmüş olabilir ya da gereken dosyalara erişmek için "
 #~ "yetkileriniz yeterli olmayabilir."
 
+#~ msgid "The application \"%a\" was not installed."
+#~ msgstr "\"%a\" uygulaması kurulmadı."
+
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "%a uygulaması başarıyla yüklendi!"
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "%a uygulaması yüklenmedi."
 
 #~ msgid ""
 #~ "The application which this package contains was not built for the current "
@@ -1529,6 +1550,9 @@ msgstr "Hata:"
 #~ msgid "There is no viewer for help type %s%s%s"
 #~ msgstr "%s%s%s yardım türü için bir görüntüleyici yok"
 
+#~ msgid "This application is already installed"
+#~ msgstr "Bu program zaten yüklenmiş."
+
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
 #~ "Listaller can handle.\n"
@@ -1552,6 +1576,9 @@ msgstr "Hata:"
 #~ "Paketin geçerli bir kimliği yok.\n"
 #~ "Yükleyici kapanacak."
 
+#~ msgid "Unable to find %s"
+#~ msgstr "%s bulunamıyor"
+
 #~ msgid "Unable to find a HTML browser."
 #~ msgstr "HTML tarayıcı bulunamıyor."
 
@@ -1565,6 +1592,9 @@ msgstr "Hata:"
 #~ "%a 'nın simgesi yüklenemedi. Lütfen Linstaller'ın yazılım "
 #~ "geliştiricilerini haberdar edin."
 
+#~ msgid "Unable to overwrite the file %f."
+#~ msgstr "%f dosyasının üzerine yazılamadı."
+
 #~ msgid "Uninstall"
 #~ msgstr "Kaldır"
 
@@ -1576,6 +1606,9 @@ msgstr "Hata:"
 
 #~ msgid "Uninstalling..."
 #~ msgstr "Kaldırılıyor..."
+
+#~ msgid "Unknown"
+#~ msgstr "Bilinmeyen"
 
 #~ msgid "Unknown Error, please report this bug"
 #~ msgstr "Bilinmeyen hata, lütfen bu hatayı bildirin"
