@@ -25,14 +25,14 @@ Released: 2011-06-21
  Overview:
   * /!\ Please note: We do NOT provide stable ABI/API in 0.5.x series!
         The 0.5.x series is experimental and may not be used in productive environments.
-  * Complete rewrite of Listaller in Vala
+  * Complete rewrite of Listaller in Vala and C/C++
   * Switched to LGPLv3+ for library parts, everything else stays GPLv3+
 
  Features:
   * Wildcards in file-lists (src)
   * Switch to XML-based IPK control files
   * Introduced some new path variables
-  * Compatibility with PackageKit 0.6 series
+  * Compatible with PackageKit 0.6 series now
   * vldd: Rewrote parts of Visual-LDD
   * binreloc: New Mallard documentation
 
@@ -40,7 +40,7 @@ Released: 2011-06-21
   * Add new LIB_PRIVATE directory variable
 
  Bindings:
-  * Rewrite of Qt binings
+  * Rewrite of Qt bindings
 
  Bugfixes:
   * None, as this is a complete rewrite of Listaller

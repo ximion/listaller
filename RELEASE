@@ -36,7 +36,7 @@ git push
 
 5. run 'git archive --format=tar --prefix=Listaller-0.5.2/ LISTALLER_0_5_2^{tree} | gzip > listaller-0.5.2.tar.gz'
 
-6. Upload tarball to Sourceforge
+6. Upload tarball to Launchpad
 
 7. Do post release version bump in CMakeLists.txt, RELEASE, NEWS
 
@@ -51,5 +51,7 @@ git push
 
 =================================================
 Listaller 0.5.2 released!
+
+Tarballs available here: http://launchpad.net/listaller/+download
 
 =================================================
