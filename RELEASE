@@ -1,0 +1,55 @@
+Listaller Release Notes
+
+1. Write NEWS entries for Listaller in the same format as usual.
+
+git shortlog LISTALLER_0_5_1.. | grep -i -v trivial | grep -v Merge > NEWS.new
+
+--------------------------------------------------------------------------------
+Version 0.5.2
+~~~~~~~~~~~~~~
+Released: 2011-xx-xx
+
+Notes:
+
+Features:
+
+Specifications:
+
+Bindings:
+
+Bugfixes:
+--------------------------------------------------------------------------------
+
+2. Merge translations from Launchpad:
+   Export translations: http://translations.edge.launchpad.net/listaller/master/+export
+   -> Merge them with po/
+   -> run 'make nls-update'
+
+3. Update library version if new ABI or API in CMakeLists.txt
+
+4. Commit changes in Listaller git:
+
+git commit -a -m "Release version 0.5.2"
+git tag -s -f -m "Release 0.5.2" LISTALLER_0_5_2 <gpg password>
+git push --tags
+git push
+
+5. run 'git archive --format=tar --prefix=/ LISTALLER_0_5_2 | gzip >listaller-0.5.2.tar.gz'
+
+6. Upload tarball to Sourceforge
+
+7. Do post release version bump in CMakeLists.txt, RELEASE, NEWS
+
+8. Commit trivial changes:
+
+git commit -a -m "trivial: post release version bump"
+git push
+
+9. Upload new html sources from 'website' repo, if there are any
+
+10. Send an email to listaller@googlegroups.com
+
+=================================================
+Listaller 0.5.2 released!
+
+=================================================
