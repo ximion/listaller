@@ -56,8 +56,8 @@ endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
 set(XDG_APPS_INSTALL_DIR share/applications)
 
-add_definitions(-DCMAKE_INSTALL_PREFIX="\\\"${CMAKE_INSTALL_PREFIX}\\\"")
-add_definitions(-DCMAKE_INSTALL_LIBDIR="\\\"${CMAKE_INSTALL_LIBDIR}\\\"")
+add_definitions(-DCMAKE_INSTALL_PREFIX="\"${CMAKE_INSTALL_PREFIX}\"")
+add_definitions(-DCMAKE_INSTALL_LIBDIR="\"${CMAKE_INSTALL_LIBDIR}\"")
 
 set(CMAKE_INSTALL_LIBDIR lib CACHE PATH "Output directory for libraries")
 set(LISTALLER_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/listaller)
@@ -119,6 +119,9 @@ endif (DISABLE_MAINTAINER_CFLAGS)
 
 # Required to include config.h before all other units
 add_definitions ("--include config.h")
+
+# Required if GPGme was compiled with _FILE_OFFSET_BITS=64
+add_definitions("-D_FILE_OFFSET_BITS=64")
 
 #
 # Validate Vala version
