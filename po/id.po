@@ -2,17 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Lazarus LCL v1.x\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-14 15:34+0200\n"
+"POT-Creation-Date: 2011-06-21 14:07+0200\n"
 "PO-Revision-Date: 2009-05-06 13:37+0000\n"
 "Last-Translator: Zaenal Mutaqin <Unknown>\n"
 "Language-Team: Zaenal Mutaqin <ade999@gmail.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
 "X-Generator: Launchpad (build 13242)\n"
 "X-Poedit-Country: INDONESIA\n"
-"Language: \n"
 
 #, c-format
 msgid ""
@@ -30,9 +30,6 @@ msgid "Application ID %s is invalid!"
 msgstr ""
 
 msgid "Available CRL is too old"
-msgstr ""
-
-msgid "Average security."
 msgstr ""
 
 msgid "Build IPK package"
@@ -178,11 +175,7 @@ msgid "Installation failed!"
 msgstr ""
 
 #, c-format
-msgid "Installation of native package '%s' failed!"
-msgstr ""
-
-#, c-format
-msgid "Installing native package %s"
+msgid "Installing native packages %s"
 msgstr ""
 
 msgid "Low security."
@@ -192,8 +185,7 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr ""
 
-#, c-format
-msgid "Native package %s is already installed."
+msgid "Medium security."
 msgstr ""
 
 msgid "Never trust."
@@ -232,8 +224,7 @@ msgid "Resolving dependencies of '%s'."
 msgstr ""
 
 #, c-format
-msgid ""
-"Run '%s --help' to see a full list of available command line options.\n"
+msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
 #, c-format
@@ -304,6 +295,17 @@ msgid "Trust is marginal"
 msgstr ""
 
 msgid "Trust is ultimate."
+msgstr ""
+
+msgid ""
+"Trying to remove local application, but AppManager is in superuser mode!\n"
+"Setting AppManager to local mode now."
+msgstr ""
+
+msgid ""
+"Trying to remove shared application, but AppManager is not in superuser "
+"mode!\n"
+"Setting AppManager to superuse mode now."
 msgstr ""
 
 #, c-format
@@ -397,167 +399,162 @@ msgstr ""
 msgid "error: %s"
 msgstr ""
 
-#~ msgid "Browser %s%s%s not executable."
-#~ msgstr "Browser %s%s%s bukan eksekutabel."
+#~ msgid "  modified "
+#~ msgstr "  diubah "
 
-#~ msgid "Browser %s%s%s not found."
-#~ msgstr "Browser %s%s%s tidak ditemukan."
+#~ msgid "  size "
+#~ msgstr "  ukuran "
 
-#~ msgid "Error while executing %s%s%s:%s%s"
-#~ msgstr "Kesalahan saat mengeksekusi %s%s%s:%s%s"
+#~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
+#~ msgstr ""
+#~ " PERINGATAN: Ada %d struktur TimerInfo tersisa, Saya akan membebaskannya"
 
-#~ msgid "Unable to find a HTML browser."
-#~ msgstr "Tidak bisa menemukan HTML browser"
+#~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
+#~ msgstr ""
+#~ " PERINGATAN: Ada %d pesan tersisa dalam antrian! Saya akan membebaskannya"
+
+#~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
+#~ msgstr " PERINGATAN: Ada %d DCs tidak dilepas, dump detil sebagai berikut:"
 
 #~ msgid ""
-#~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
-#~ "Viewers"
+#~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
 #~ msgstr ""
-#~ "HTML Browser tidak ditemukan.%sSilahkan definisikan dalam Bantuan -> "
-#~ "Konfigurasi Bantuan -> Peninjau"
+#~ " PERINGATAN: Ada %d GDIObjects tidak dilepas, detil dump sebagai berikut:"
 
-#~ msgid "The help database %s%s%s was unable to find file %s%s%s."
-#~ msgstr "Database bantuan %s%s%s tidak bisa menemukan file %s%s%s."
+#~ msgid ""
+#~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
+#~ msgstr ""
+#~ " PERINGATAN: ada %s tersisa link pesan LM_PAINT/LM_GtkPAINT tidak dihapus."
 
-#~ msgid "The macro %s in BrowserParams will be replaced by the URL."
-#~ msgstr "Makro %s dalam BrowserParams akan diganti dengan URL."
+#~ msgid "%s Index %d out of bounds 0 .. %d"
+#~ msgstr "%s Indeks %d di luar jangkauan 0 .. %d"
 
-#~ msgid "Alt"
-#~ msgstr "Alt"
+#~ msgid "%s is already associated with %s"
+#~ msgstr "%s sudah dikaitkan dengan %s"
 
-#~ msgid "Ctrl"
-#~ msgstr "Ctrl"
+#~ msgid ""
+#~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill "
+#~ "the program."
+#~ msgstr ""
+#~ "%s%sTekan Ok untuk mengabaikan dan resiko kerusakan data.%sTekan Batal "
+#~ "untuk mematikan program"
 
-#~ msgid "Accept"
-#~ msgstr "Terima"
+#~ msgid "%s: Already registered"
+#~ msgstr "%s: Sudah teregistrasi"
 
-#~ msgid "application key"
-#~ msgstr "tombol aplikasi"
+#~ msgid "%s: Not registered"
+#~ msgstr "%s: Tidak teregistrasi"
 
-#~ msgid "Backspace"
-#~ msgstr "Backspace"
+#~ msgid "&All"
+#~ msgstr "&Semua"
 
-#~ msgid "Capital"
-#~ msgstr "Kapital"
+#~ msgid "&Close"
+#~ msgstr "&Tutup"
 
-#~ msgid "Clear"
-#~ msgstr "Clear"
+#~ msgid "&Directory"
+#~ msgstr "&Direktori"
 
-#~ msgid "Control"
-#~ msgstr "Kontrol"
+#~ msgid "&Help"
+#~ msgstr "&Panduan"
 
-#~ msgid "Convert"
-#~ msgstr "Konversi"
+#~ msgid "&Ignore"
+#~ msgstr "&Abaikan"
 
-#~ msgid "Down"
-#~ msgstr "Turun"
+#~ msgid "&No"
+#~ msgstr "&Tidak"
 
-#~ msgid "End"
-#~ msgstr "End"
+#~ msgid "&OK"
+#~ msgstr "&OK"
 
-#~ msgid "Escape"
-#~ msgstr "Escape"
+#~ msgid "&Retry"
+#~ msgstr "&Coba lagi"
 
-#~ msgid "Execute"
-#~ msgstr "Jalankan"
+#~ msgid "&Yes"
+#~ msgstr "&Ya"
 
-#~ msgid "Final"
-#~ msgstr "Final"
+#~ msgid "(file not found: \"%s\")"
+#~ msgstr "(file tidak ditemukan: \"%s\")"
 
-#~ msgid "Hanja"
-#~ msgstr "Hanja"
+#~ msgid ""
+#~ "--class classname     Following Xt conventions, the class of a program is "
+#~ "the program name with the initial character capitalized. For example, the "
+#~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
+#~ "program will be set to \"classname\"."
+#~ msgstr ""
+#~ "--class classname     Mengikuti konvensi Xt, class dari sebuah program "
+#~ "dalam nama program dengan inisial karakter dibesarkan. Sebagai contoh, "
+#~ "classname untuk gimp adalah \"Gimp\". Jika --class ditetapkan, class dari "
+#~ "program akan di set ke \"classname\"."
 
-#~ msgid "Help"
-#~ msgstr "Panduan"
+#~ msgid ""
+#~ "--display h:s:d       Connect to the specified X server, where \"h\" is "
+#~ "the hostname, \"s\" is the server number (usually 0), and \"d\" is the "
+#~ "display number (typically omitted). If --display is not specified, the "
+#~ "DISPLAY environment variable is used."
+#~ msgstr ""
+#~ "--display h:s:d       Sambungkan ke X server tertentu, dimana \"h\" "
+#~ "adalah nama host, \"s\" adalah nomor server (biasanya 0), dan \"d\" "
+#~ "adalah nomor layar (biasanya diabaikan). Jika --display tidak ditetapkan, "
+#~ "variabel lingkungan DISPLAY yang digunakan."
 
-#~ msgid "Home"
-#~ msgstr "Home"
+#~ msgid ""
+#~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
+#~ "the application."
+#~ msgstr ""
+#~ "--g-fatal-warnings    Peringatan dan kesalahan dihasilkan oleh Gtk+/GDK "
+#~ "akan menghentikan aplikasi."
 
-#~ msgid "Junja"
-#~ msgstr "Junja"
+#~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
+#~ msgstr "--gdk-debug flags     Hidupkan pesan khusus GDK trace/debug."
 
-#~ msgid "Kana"
-#~ msgstr "Kana"
+#~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
+#~ msgstr "--gdk-no-debug flags  Matikan pesan khusus GDK trace/debug."
 
-#~ msgid "Mouse Button Left"
-#~ msgstr "Tombol Mouse Kiri"
+#~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
+#~ msgstr "--gtk-debug flags    Hidupkan pesan khusus Gtk+ trace/debug."
 
-#~ msgid "Left"
-#~ msgstr "Left"
+#~ msgid "--gtk-module module   Load the specified module at startup."
+#~ msgstr "--gtk-module module   Ambil modul yang ditetapkan saat startup."
 
-#~ msgid "left windows key"
-#~ msgstr "tombol kiri windows"
+#~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
+#~ msgstr "--gtk-no-debug flags  Matikan pesan khusus Gtk+ trace/debug."
 
-#~ msgid "Mouse Button Middle"
-#~ msgstr "Tombol Mouse Tengah"
+#~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
+#~ msgstr "--lcl-no-transient    Jangan set urutan sementara untuk form modal"
 
-#~ msgctxt "lclstrconsts.ifsvk_menu"
-#~ msgid "Menu"
-#~ msgstr "Menu"
+#~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
+#~ msgstr "--no-xshm             Matikan penggunaan X Shared Memory Extension."
 
-#~ msgid "Mode Change"
-#~ msgstr "Ubah  Mode"
-
-#~ msgid "Nonconvert"
-#~ msgstr "Nonkonversi"
-
-#~ msgid "Numlock"
-#~ msgstr "Numlock"
-
-#~ msgid "Numpad %d"
-#~ msgstr "Numpad %d"
-
-#~ msgid "Pause key"
-#~ msgstr "Tombol pause"
-
-#~ msgid "Print"
-#~ msgstr "Cetak"
-
-#~ msgid "Mouse Button Right"
-#~ msgstr "Tombol Mouse Kanan"
-
-#~ msgid "Return"
-#~ msgstr "Return"
-
-#~ msgid "Right"
-#~ msgstr "Right"
-
-#~ msgid "right windows key"
-#~ msgstr "tombol kanan windows"
-
-#~ msgid "Scroll"
-#~ msgstr "Scroll"
-
-#~ msgid "Select"
-#~ msgstr "Pilih"
-
-#~ msgid "Shift"
-#~ msgstr "Shift"
-
-#~ msgid "Snapshot"
-#~ msgstr "Snapshot"
-
-#~ msgid "Space key"
-#~ msgstr "Tombol Spasi"
-
-#~ msgid "Tab"
-#~ msgstr "Tab"
-
-#~ msgid "Unknown"
-#~ msgstr "Tidak dikenal"
-
-#~ msgid "Up"
-#~ msgstr "Up"
-
-#~ msgctxt "lclstrconsts.lislclresourcesnotfound"
-#~ msgid "Resource %s not found"
-#~ msgstr "Sumber %s tidak ditemukan"
+#~ msgid ""
+#~ "--sync                Call XSynchronize (display, True) after the Xserver "
+#~ "connection has been established. This makes debugging X protocol errors "
+#~ "easier, because X request buffering will be disabled and X errors will be "
+#~ "received immediatey after the protocol request that generated the error "
+#~ "has been processed by the X server."
+#~ msgstr ""
+#~ "--sync                Panggil XSynchronize (layar, Benar) setelah "
+#~ "sambungan Xserver terlaksana. Ini membuat debugging kesalahan protokol X "
+#~ "lebih mudah, karena permintaan penyanggaan X akan dimatikan dan kesalahan "
+#~ "X akan diterima segera setelah permintaan protokol yang kesalahannya "
+#~ "telah dibuat sudah diproses oleh X server."
 
 #~ msgid "A control can't have itself as parent"
 #~ msgstr "Kontrol tidak bisa menjadikan dirinya sebagai induk"
 
+#~ msgid "Abort"
+#~ msgstr "Batal"
+
+#~ msgid "Accept"
+#~ msgstr "Terima"
+
 #~ msgid "All files (%s)|%s|%s"
 #~ msgstr "Semua file (%s)|%s|%s"
+
+#~ msgid "Alt"
+#~ msgstr "Alt"
+
+#~ msgid "Backspace"
+#~ msgstr "Backspace"
 
 #~ msgid "Backward"
 #~ msgstr "Mundur"
@@ -568,23 +565,55 @@ msgstr ""
 #~ msgid "Blank"
 #~ msgstr "Kosong"
 
+#~ msgid "Browser %s%s%s not executable."
+#~ msgstr "Browser %s%s%s bukan eksekutabel."
+
+#~ msgid "Browser %s%s%s not found."
+#~ msgstr "Browser %s%s%s tidak ditemukan."
+
 #~ msgid "Calculator"
 #~ msgstr "Kalkulator"
 
 #~ msgid "Can not focus"
 #~ msgstr "Tidak bisa memfokuskan"
 
+#~ msgctxt "lclstrconsts.rsmbcancel"
+#~ msgid "Cancel"
+#~ msgstr "Batal"
+
+#~ msgid "Cannot focus a disabled or invisible window"
+#~ msgstr ""
+#~ "Tidak bisa memberikan fokus ke jendela yang dimatikan atau tidak nampak"
+
 #~ msgid "Canvas does not allow drawing"
 #~ msgstr "Kanvas tidak membolehkan penggambaran"
+
+#~ msgid "Capital"
+#~ msgstr "Kapital"
 
 #~ msgid "Case sensitive"
 #~ msgstr "Sensitif huruf"
 
+#~ msgid "Clear"
+#~ msgstr "Clear"
+
+#~ msgid "Confirmation"
+#~ msgstr "Konfirmasi"
+
+#~ msgid "Control"
+#~ msgstr "Kontrol"
+
+#~ msgid "Convert"
+#~ msgstr "Konversi"
+
 #~ msgid "Creating gdb catchable error:"
 #~ msgstr "Pembuatan cachable salah:"
 
-#~ msgid "permissions user group size date time"
-#~ msgstr "ukuran waktu tanggal perijinan grup pemakai"
+#~ msgid "Ctrl"
+#~ msgstr "Ctrl"
+
+#~ msgid "Custom"
+#~ msgstr "Kustom"
 
 #~ msgctxt "lclstrconsts.rsdeleterecordhint"
 #~ msgid "Delete"
@@ -593,17 +622,30 @@ msgstr ""
 #~ msgid "Direction"
 #~ msgstr "Arah"
 
-#~ msgid "&Directory"
-#~ msgstr "&Direktori"
+#~ msgid "Directory must exist"
+#~ msgstr "Direktori harus ada"
 
 #~ msgid "Docking"
 #~ msgstr "Docking"
 
-#~ msgid "Error creating device context for %s.%s"
-#~ msgstr "Kesalahan pembuatan konteks device untuk %s.%s"
+#~ msgid "Down"
+#~ msgstr "Turun"
+
+#~ msgid "Duplicate menus"
+#~ msgstr "Duplikasi menu"
 
 #~ msgid "ERROR in LCL: "
 #~ msgstr "KESALAHAN dalam LCL: "
+
+#~ msgid "End"
+#~ msgstr "End"
+
+#~ msgctxt "lclstrconsts.rsmterror"
+#~ msgid "Error"
+#~ msgstr "Salah"
+
+#~ msgid "Error creating device context for %s.%s"
+#~ msgstr "Kesalahan pembuatan konteks device untuk %s.%s"
 
 #~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
 #~ msgstr "Kesalahan terjadi dalam %s at %sAlamat %s%s Frame %s"
@@ -611,56 +653,38 @@ msgstr ""
 #~ msgid "Error reading %s%s%s: %s"
 #~ msgstr "Kesalahan pembacaan %s%s%s: %s"
 
+#~ msgid "Error while executing %s%s%s:%s%s"
+#~ msgstr "Kesalahan saat mengeksekusi %s%s%s:%s%s"
+
 #~ msgid "Error while saving bitmap."
 #~ msgstr "Kesalahan ketika menyimpan bitmap"
+
+#~ msgid "Error:"
+#~ msgstr "Kesalahan:"
+
+#~ msgid "Escape"
+#~ msgstr "Escape"
 
 #~ msgid "Exception"
 #~ msgstr "Kekecualian"
 
-#~ msgid "Directory must exist"
-#~ msgstr "Direktori harus ada"
+#~ msgid "Execute"
+#~ msgstr "Jalankan"
 
-#~ msgid "The directory \"%s\" does not exist."
-#~ msgstr "Directori \"%s\" tidak ada."
-
-#~ msgid "The file \"%s\" already exists. Overwrite ?"
-#~ msgstr "File \"%s\" sudah ada. Timpa saja ?"
-
-#~ msgid "File must exist"
-#~ msgstr "File harus ada"
-
-#~ msgid "The file \"%s\" does not exist."
-#~ msgstr "File \"%s\" tidak ada."
-
-#~ msgid "The file \"%s\" is not writable."
-#~ msgstr "File \"%s\" tidak bisa ditulisi."
+#~ msgid "File information"
+#~ msgstr "Informasi file"
 
 #~ msgid "File is not writable"
 #~ msgstr "File tidak bisa ditulisi"
 
-#~ msgid "Save file as"
-#~ msgstr "Simpan file sebagai"
+#~ msgid "File must exist"
+#~ msgstr "File harus ada"
 
-#~ msgid "Open existing file"
-#~ msgstr "Buka file yang ada"
+#~ msgid "Filter:"
+#~ msgstr "Filter:"
 
-#~ msgid "Overwrite file ?"
-#~ msgstr "Timpa file ?"
-
-#~ msgid "Path must exist"
-#~ msgstr "Path harus ada"
-
-#~ msgid "The path \"%s\" does not exist."
-#~ msgstr "Path \"%s\" tidak ada."
-
-#~ msgid "Select Directory"
-#~ msgstr "Pilih Direktori"
-
-#~ msgid "(file not found: \"%s\")"
-#~ msgstr "(file tidak ditemukan: \"%s\")"
-
-#~ msgid "File information"
-#~ msgstr "Informasi file"
+#~ msgid "Final"
+#~ msgstr "Final"
 
 #~ msgid "Find"
 #~ msgstr "Cari"
@@ -680,19 +704,6 @@ msgstr ""
 #~ msgid "Forward"
 #~ msgstr "Maju"
 
-#~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
-#~ msgstr "--gdk-debug flags     Hidupkan pesan khusus GDK trace/debug."
-
-#~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
-#~ msgstr "--gdk-no-debug flags  Matikan pesan khusus GDK trace/debug."
-
-#~ msgid ""
-#~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
-#~ "the application."
-#~ msgstr ""
-#~ "--g-fatal-warnings    Peringatan dan kesalahan dihasilkan oleh Gtk+/GDK akan "
-#~ "menghentikan aplikasi."
-
 #~ msgid "Grid file doesn't exists"
 #~ msgstr "File grid tidak ada"
 
@@ -702,67 +713,23 @@ msgstr ""
 #~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
 #~ msgstr "GroupIndex tidak bisa kurang dari item GroupIndex menu sebelumnya"
 
-#~ msgid "Filter:"
-#~ msgstr "Filter:"
+#~ msgid "Hanja"
+#~ msgstr "Hanja"
 
-#~ msgid "History:"
-#~ msgstr "Histori:"
-
-#~ msgid ""
-#~ "--class classname     Following Xt conventions, the class of a program is "
-#~ "the program name with the initial character capitalized. For example, the "
-#~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
-#~ "program will be set to \"classname\"."
-#~ msgstr ""
-#~ "--class classname     Mengikuti konvensi Xt, class dari sebuah program dalam "
-#~ "nama program dengan inisial karakter dibesarkan. Sebagai contoh, classname "
-#~ "untuk gimp adalah \"Gimp\". Jika --class ditetapkan, class dari program akan "
-#~ "di set ke \"classname\"."
-
-#~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
-#~ msgstr "--gtk-debug flags    Hidupkan pesan khusus Gtk+ trace/debug."
-
-#~ msgid ""
-#~ "--display h:s:d       Connect to the specified X server, where \"h\" is the "
-#~ "hostname, \"s\" is the server number (usually 0), and \"d\" is the display "
-#~ "number (typically omitted). If --display is not specified, the DISPLAY "
-#~ "environment variable is used."
-#~ msgstr ""
-#~ "--display h:s:d       Sambungkan ke X server tertentu, dimana \"h\" adalah "
-#~ "nama host, \"s\" adalah nomor server (biasanya 0), dan \"d\" adalah nomor "
-#~ "layar (biasanya diabaikan). Jika --display tidak ditetapkan, variabel "
-#~ "lingkungan DISPLAY yang digunakan."
-
-#~ msgid "--gtk-module module   Load the specified module at startup."
-#~ msgstr "--gtk-module module   Ambil modul yang ditetapkan saat startup."
-
-#~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
-#~ msgstr "--gtk-no-debug flags  Matikan pesan khusus Gtk+ trace/debug."
-
-#~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
-#~ msgstr "--lcl-no-transient    Jangan set urutan sementara untuk form modal"
-
-#~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
-#~ msgstr "--no-xshm             Matikan penggunaan X Shared Memory Extension."
-
-#~ msgid ""
-#~ "--sync                Call XSynchronize (display, True) after the Xserver "
-#~ "connection has been established. This makes debugging X protocol errors "
-#~ "easier, because X request buffering will be disabled and X errors will be "
-#~ "received immediatey after the protocol request that generated the error has "
-#~ "been processed by the X server."
-#~ msgstr ""
-#~ "--sync                Panggil XSynchronize (layar, Benar) setelah sambungan "
-#~ "Xserver terlaksana. Ini membuat debugging kesalahan protokol X lebih mudah, "
-#~ "karena permintaan penyanggaan X akan dimatikan dan kesalahan X akan diterima "
-#~ "segera setelah permintaan protokol yang kesalahannya telah dibuat sudah "
-#~ "diproses oleh X server."
-
-#~ msgid "%s: Already registered"
-#~ msgstr "%s: Sudah teregistrasi"
+#~ msgid "Help"
+#~ msgstr "Panduan"
 
 #~ msgid "Help Context not found"
 #~ msgstr "Konteks Bantuan tidak ditemukan"
+
+#~ msgid ""
+#~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
+#~ msgstr ""
+#~ "Database Bantuan %s%s%s tidak ditemukan peninjau untuk halaman bantuan "
+#~ "dari tipe %s"
+
+#~ msgid "Help Database %s%s%s not found"
+#~ msgstr "Database Bantuan %s%s%s tidak ditemukan"
 
 #~ msgid "Help Database not found"
 #~ msgstr "Database Bantuan tidak ditemukan"
@@ -770,47 +737,8 @@ msgstr ""
 #~ msgid "Help Error"
 #~ msgstr "Bantuan Salah"
 
-#~ msgid "Help context %s not found."
-#~ msgstr "Konteks Bantuan %s tidak ditemukan."
-
-#~ msgid "Help context %s not found in Database %s%s%s."
-#~ msgstr "Konteks Bantuan %s tidak ditemukan dalam Database %s%s%s."
-
-#~ msgid ""
-#~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
-#~ msgstr ""
-#~ "Database Bantuan %s%s%s tidak ditemukan peninjau untuk halaman bantuan dari "
-#~ "tipe %s"
-
-#~ msgid "Help Database %s%s%s not found"
-#~ msgstr "Database Bantuan %s%s%s tidak ditemukan"
-
-#~ msgid "Help keyword %s%s%s not found."
-#~ msgstr "Kata kunci Bantuan %s%s%s tidak ditemukan."
-
-#~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
-#~ msgstr "Kata kunci Bantuan %s%s%s tidak ditemukan dalam Database %s%s%s."
-
-#~ msgid "Help node %s%s%s has no Help Database"
-#~ msgstr "Node Bantuan %s%s%s tidak mempunyai Database Bantuan"
-
-#~ msgid "No help found for line %d, column %d of %s."
-#~ msgstr "Tidak ada bantuan ditemukan untuk baris %d, column %d of %s."
-
-#~ msgid "No help nodes available"
-#~ msgstr "Node bantuan tidak tersedia"
-
-#~ msgid "Help not found"
-#~ msgstr "Bantuan tidak ditemukan"
-
-#~ msgid "%s: Not registered"
-#~ msgstr "%s: Tidak teregistrasi"
-
 #~ msgid "Help Selector Error"
 #~ msgstr "Selektor Bantuan Salah"
-
-#~ msgid "There is no viewer for help type %s%s%s"
-#~ msgstr "Tidak ada peninjau untuk tipe bantuan %s%s%s"
 
 #~ msgid "Help Viewer Error"
 #~ msgstr "Peninjau Bantuan Salah"
@@ -818,14 +746,38 @@ msgstr ""
 #~ msgid "Help Viewer not found"
 #~ msgstr "Peninjau Bantuian tidak ditemukan"
 
+#~ msgid "Help context %s not found in Database %s%s%s."
+#~ msgstr "Konteks Bantuan %s tidak ditemukan dalam Database %s%s%s."
+
+#~ msgid "Help context %s not found."
+#~ msgstr "Konteks Bantuan %s tidak ditemukan."
+
+#~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
+#~ msgstr "Kata kunci Bantuan %s%s%s tidak ditemukan dalam Database %s%s%s."
+
+#~ msgid "Help keyword %s%s%s not found."
+#~ msgstr "Kata kunci Bantuan %s%s%s tidak ditemukan."
+
+#~ msgid "Help node %s%s%s has no Help Database"
+#~ msgstr "Node Bantuan %s%s%s tidak mempunyai Database Bantuan"
+
+#~ msgid "Help not found"
+#~ msgstr "Bantuan tidak ditemukan"
+
+#~ msgid "History:"
+#~ msgstr "Histori:"
+
+#~ msgid "Home"
+#~ msgstr "Home"
+
 #~ msgid "Icon"
 #~ msgstr "Ikon"
 
-#~ msgid "%s Index %d out of bounds 0 .. %d"
-#~ msgstr "%s Indeks %d di luar jangkauan 0 .. %d"
-
 #~ msgid "Index Out of range Cell[Col=%d Row=%d]"
 #~ msgstr "Indeks Diluar jangkauan Cell[Kolom=%d Baris=%d]"
+
+#~ msgid "Information"
+#~ msgstr "Informasi"
 
 #~ msgctxt "lclstrconsts.rsinsertrecordhint"
 #~ msgid "Insert"
@@ -837,8 +789,23 @@ msgstr ""
 #~ msgid "Invalid Date: %s. Must be between %s and %s"
 #~ msgstr "Tanggal tidak benar: %s. Harus ada diantara %s dan %s"
 
-#~ msgid "invalid Form object stream"
-#~ msgstr "Aliran Objek Form tidak benar"
+#~ msgid "Invalid ImageList Index"
+#~ msgstr "Indeks ImageList tidak benar"
+
+#~ msgid "Invalid action creation"
+#~ msgstr "Pembuatan action tidak benar"
+
+#~ msgid "Invalid action enumeration"
+#~ msgstr "Enumerasi action tidak benar"
+
+#~ msgid "Invalid action registration"
+#~ msgstr "Registrasi action tidak benar"
+
+#~ msgid "Invalid action unregistration"
+#~ msgstr "Pembatalan registrasi action tidak benar"
+
+#~ msgid "Invalid image size"
+#~ msgstr "Ukuran gambar tidak benar"
 
 #~ msgid "Invalid property value"
 #~ msgstr "Nilai properti tidak benar"
@@ -846,8 +813,14 @@ msgstr ""
 #~ msgid "Invalid stream format"
 #~ msgstr "Format stream tidak benar"
 
-#~ msgid "%s is already associated with %s"
-#~ msgstr "%s sudah dikaitkan dengan %s"
+#~ msgid "Junja"
+#~ msgstr "Junja"
+
+#~ msgid "Kana"
+#~ msgstr "Kana"
+
+#~ msgid "Left"
+#~ msgstr "Left"
 
 #~ msgid "List index exceeds bounds (%d)"
 #~ msgstr "Indeks List melebihi jangkauan (%d)"
@@ -855,82 +828,88 @@ msgstr ""
 #~ msgid "List must be empty"
 #~ msgstr "List harus kosong"
 
-#~ msgid "Abort"
-#~ msgstr "Batal"
-
-#~ msgid "&All"
-#~ msgstr "&Semua"
-
-#~ msgctxt "lclstrconsts.rsmbcancel"
-#~ msgid "Cancel"
-#~ msgstr "Batal"
-
-#~ msgid "&Close"
-#~ msgstr "&Tutup"
-
-#~ msgid "&Help"
-#~ msgstr "&Panduan"
-
-#~ msgid "&Ignore"
-#~ msgstr "&Abaikan"
-
-#~ msgid "&No"
-#~ msgstr "&Tidak"
-
-#~ msgid "No to all"
-#~ msgstr "Tidak untuk semua"
-
-#~ msgid "&OK"
-#~ msgstr "&OK"
-
-#~ msgid "&Retry"
-#~ msgstr "&Coba lagi"
-
-#~ msgid "&Yes"
-#~ msgstr "&Ya"
-
-#~ msgid "Yes to &All"
-#~ msgstr "Ya untuk &Semua"
+#~ msgctxt "lclstrconsts.ifsvk_menu"
+#~ msgid "Menu"
+#~ msgstr "Menu"
 
 #~ msgctxt "lclstrconsts.rsmenucolorcaption"
 #~ msgid "Menu"
 #~ msgstr "Menu"
 
-#~ msgid "  modified "
-#~ msgstr "  diubah "
+#~ msgid "Menu index out of range"
+#~ msgstr "Indeks Menu diluar jangkauan"
 
-#~ msgid "Confirmation"
-#~ msgstr "Konfirmasi"
+#~ msgid "MenuItem is nil"
+#~ msgstr "MenuItem kosong"
 
-#~ msgid "Custom"
-#~ msgstr "Kustom"
+#~ msgid "Mode Change"
+#~ msgstr "Ubah  Mode"
 
-#~ msgctxt "lclstrconsts.rsmterror"
-#~ msgid "Error"
-#~ msgstr "Salah"
+#~ msgid "Mouse Button Left"
+#~ msgstr "Tombol Mouse Kiri"
 
-#~ msgid "Information"
-#~ msgstr "Informasi"
+#~ msgid "Mouse Button Middle"
+#~ msgstr "Tombol Mouse Tengah"
 
-#~ msgid "Warning"
-#~ msgstr "Peringatan"
+#~ msgid "Mouse Button Right"
+#~ msgstr "Tombol Mouse Kanan"
 
 #~ msgctxt "lclstrconsts.rsnextrecordhint"
 #~ msgid "Next"
 #~ msgstr "Berikutnya"
 
-#~ msgid "Not a valid grid file"
-#~ msgstr "Bukan file grid yang benar"
+#~ msgid ""
+#~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
+#~ "Viewers"
+#~ msgstr ""
+#~ "HTML Browser tidak ditemukan.%sSilahkan definisikan dalam Bantuan -> "
+#~ "Konfigurasi Bantuan -> Peninjau"
+
+#~ msgid "No MDI form present."
+#~ msgstr "Tidak ada form MDI"
+
+#~ msgid "No help found for line %d, column %d of %s."
+#~ msgstr "Tidak ada bantuan ditemukan untuk baris %d, column %d of %s."
+
+#~ msgid "No help nodes available"
+#~ msgstr "Node bantuan tidak tersedia"
+
+#~ msgid "No timers available"
+#~ msgstr "Tidak tersedia timer"
+
+#~ msgid "No to all"
+#~ msgstr "Tidak untuk semua"
 
 #~ msgid ""
 #~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
 #~ "the programs uses clause."
 #~ msgstr ""
-#~ "Objek widgetset todal ada. Tolong periksa apakah unit \"interfaces\" sudah "
-#~ "ditambahkan ke klausul uses program."
+#~ "Objek widgetset todal ada. Tolong periksa apakah unit \"interfaces\" "
+#~ "sudah ditambahkan ke klausul uses program."
 
-#~ msgid "Select a date"
-#~ msgstr "Pilih tanggal"
+#~ msgid "Nonconvert"
+#~ msgstr "Nonkonversi"
+
+#~ msgid "Not a valid grid file"
+#~ msgstr "Bukan file grid yang benar"
+
+#~ msgid "Numlock"
+#~ msgstr "Numlock"
+
+#~ msgid "Numpad %d"
+#~ msgstr "Numpad %d"
+
+#~ msgid "Open existing file"
+#~ msgstr "Buka file yang ada"
+
+#~ msgid "Overwrite file ?"
+#~ msgstr "Timpa file ?"
+
+#~ msgid "Path must exist"
+#~ msgstr "Path harus ada"
+
+#~ msgid "Pause key"
+#~ msgstr "Tombol pause"
 
 #~ msgid "Pixmap"
 #~ msgstr "Pixmap"
@@ -938,12 +917,8 @@ msgstr ""
 #~ msgid "Portable Network Graphic"
 #~ msgstr "Portable Network Graphic"
 
-#~ msgid ""
-#~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill the "
-#~ "program."
-#~ msgstr ""
-#~ "%s%sTekan Ok untuk mengabaikan dan resiko kerusakan data.%sTekan Batal untuk "
-#~ "mematikan program"
+#~ msgid "Print"
+#~ msgstr "Cetak"
 
 #~ msgctxt "lclstrconsts.rspriorrecordhint"
 #~ msgid "Prior"
@@ -958,27 +933,97 @@ msgstr ""
 #~ msgid "Replace all"
 #~ msgstr "Ganti semua"
 
+#~ msgctxt "lclstrconsts.lislclresourcesnotfound"
+#~ msgid "Resource %s not found"
+#~ msgstr "Sumber %s tidak ditemukan"
+
 #~ msgctxt "lclstrconsts.rsresourcenotfound"
 #~ msgid "Resource %s not found"
 #~ msgstr "Sumber %s tidak ditemukan"
 
+#~ msgid "Return"
+#~ msgstr "Return"
+
+#~ msgid "Right"
+#~ msgstr "Right"
+
+#~ msgid "Save file as"
+#~ msgstr "Simpan file sebagai"
+
+#~ msgid "Scroll"
+#~ msgstr "Scroll"
+
 #~ msgid "ScrollBar property out of range"
 #~ msgstr "Properti ScrollBar diluar jangkauan"
 
-#~ msgid "Select color"
-#~ msgstr "Pilih warna"
+#~ msgid "Select"
+#~ msgstr "Pilih"
+
+#~ msgid "Select Directory"
+#~ msgstr "Pilih Direktori"
+
+#~ msgid "Select a date"
+#~ msgstr "Pilih tanggal"
 
 #~ msgid "Select a font"
 #~ msgstr "Pilih font"
 
-#~ msgid "  size "
-#~ msgstr "  ukuran "
+#~ msgid "Select color"
+#~ msgstr "Pilih warna"
+
+#~ msgid "Shift"
+#~ msgstr "Shift"
+
+#~ msgid "Snapshot"
+#~ msgstr "Snapshot"
+
+#~ msgid "Space key"
+#~ msgstr "Tombol Spasi"
+
+#~ msgid "Sub-menu is not in menu"
+#~ msgstr "Sub-menu tidak dalam menu"
+
+#~ msgid "Tab"
+#~ msgstr "Tab"
 
 #~ msgid "Text"
 #~ msgstr "Teks"
 
+#~ msgid "The char set in mask \"%s\" is not valid!"
+#~ msgstr "set karakter dalam mask \"%s\" tidak benar!"
+
+#~ msgid "The directory \"%s\" does not exist."
+#~ msgstr "Directori \"%s\" tidak ada."
+
+#~ msgid "The file \"%s\" already exists. Overwrite ?"
+#~ msgstr "File \"%s\" sudah ada. Timpa saja ?"
+
+#~ msgid "The file \"%s\" does not exist."
+#~ msgstr "File \"%s\" tidak ada."
+
+#~ msgid "The file \"%s\" is not writable."
+#~ msgstr "File \"%s\" tidak bisa ditulisi."
+
+#~ msgid "The help database %s%s%s was unable to find file %s%s%s."
+#~ msgstr "Database bantuan %s%s%s tidak bisa menemukan file %s%s%s."
+
+#~ msgid "The macro %s in BrowserParams will be replaced by the URL."
+#~ msgstr "Makro %s dalam BrowserParams akan diganti dengan URL."
+
+#~ msgid "The path \"%s\" does not exist."
+#~ msgstr "Path \"%s\" tidak ada."
+
+#~ msgid "There is no viewer for help type %s%s%s"
+#~ msgstr "Tidak ada peninjau untuk tipe bantuan %s%s%s"
+
+#~ msgid "Unable to find a HTML browser."
+#~ msgstr "Tidak bisa menemukan HTML browser"
+
 #~ msgid "Unable to load default font"
 #~ msgstr "Tidak bisa mengambil font default"
+
+#~ msgid "Unknown"
+#~ msgstr "Tidak dikenal"
 
 #~ msgid "Unknown Error, please report this bug"
 #~ msgstr "Kesalahan Tidak Dikenal, silahkan laporkan bug ini"
@@ -992,75 +1037,32 @@ msgstr ""
 #~ msgid "Unsupported clipboard format: %s"
 #~ msgstr "Format clipboard tidak didukung: %s"
 
-#~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
-#~ msgstr " PERINGATAN: Ada %d DCs tidak dilepas, dump detil sebagai berikut:"
+#~ msgid "Up"
+#~ msgstr "Up"
 
-#~ msgid ""
-#~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
-#~ msgstr ""
-#~ " PERINGATAN: Ada %d GDIObjects tidak dilepas, detil dump sebagai berikut:"
-
-#~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
-#~ msgstr ""
-#~ " PERINGATAN: Ada %d pesan tersisa dalam antrian! Saya akan membebaskannya"
-
-#~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
-#~ msgstr ""
-#~ " PERINGATAN: Ada %d struktur TimerInfo tersisa, Saya akan membebaskannya"
-
-#~ msgid ""
-#~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
-#~ msgstr ""
-#~ " PERINGATAN: ada %s tersisa link pesan LM_PAINT/LM_GtkPAINT tidak dihapus."
-
-#~ msgid "Whole words only"
-#~ msgstr "Hanya seluruh kata"
-
-#~ msgid "Error:"
-#~ msgstr "Kesalahan:"
+#~ msgid "Warning"
+#~ msgstr "Peringatan"
 
 #~ msgid "Warning:"
 #~ msgstr "Peringatan:"
 
-#~ msgid "Cannot focus a disabled or invisible window"
-#~ msgstr ""
-#~ "Tidak bisa memberikan fokus ke jendela yang dimatikan atau tidak nampak"
+#~ msgid "Whole words only"
+#~ msgstr "Hanya seluruh kata"
 
-#~ msgid "Duplicate menus"
-#~ msgstr "Duplikasi menu"
+#~ msgid "Yes to &All"
+#~ msgstr "Ya untuk &Semua"
 
-#~ msgid "Invalid action creation"
-#~ msgstr "Pembuatan action tidak benar"
+#~ msgid "application key"
+#~ msgstr "tombol aplikasi"
 
-#~ msgid "Invalid action enumeration"
-#~ msgstr "Enumerasi action tidak benar"
+#~ msgid "invalid Form object stream"
+#~ msgstr "Aliran Objek Form tidak benar"
 
-#~ msgid "Invalid action registration"
-#~ msgstr "Registrasi action tidak benar"
+#~ msgid "left windows key"
+#~ msgstr "tombol kiri windows"
 
-#~ msgid "Invalid action unregistration"
-#~ msgstr "Pembatalan registrasi action tidak benar"
+#~ msgid "permissions user group size date time"
+#~ msgstr "ukuran waktu tanggal perijinan grup pemakai"
 
-#~ msgid "The char set in mask \"%s\" is not valid!"
-#~ msgstr "set karakter dalam mask \"%s\" tidak benar!"
-
-#~ msgid "Invalid image size"
-#~ msgstr "Ukuran gambar tidak benar"
-
-#~ msgid "Invalid ImageList Index"
-#~ msgstr "Indeks ImageList tidak benar"
-
-#~ msgid "Menu index out of range"
-#~ msgstr "Indeks Menu diluar jangkauan"
-
-#~ msgid "MenuItem is nil"
-#~ msgstr "MenuItem kosong"
-
-#~ msgid "Sub-menu is not in menu"
-#~ msgstr "Sub-menu tidak dalam menu"
-
-#~ msgid "No MDI form present."
-#~ msgstr "Tidak ada form MDI"
-
-#~ msgid "No timers available"
-#~ msgstr "Tidak tersedia timer"
+#~ msgid "right windows key"
+#~ msgstr "tombol kanan windows"
