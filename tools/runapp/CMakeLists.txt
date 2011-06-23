@@ -31,7 +31,7 @@ vala_add_executable(runapp ${RUNAPP_SOURCES}
 			PACKAGES config gee-1.0 gio-2.0 posix listaller-${LILIBS_VERSION}
 			OUTPUT_DIR ${CMAKE_BINARY_DIR}/src
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
-			DEPENDS listaller-glib
 )
+add_dependencies(runapp listaller-glib)
 
 install(TARGETS runapp DESTINATION bin)
