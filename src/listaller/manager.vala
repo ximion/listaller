@@ -163,7 +163,9 @@ public class Manager : Object {
 		emit_status (StatusEnum.ACTION_STARTED,
 			     _("Removal of %s started.").printf (app.full_name));
 
-		open_db ();
+		if (!open_db ())
+			return false;
+
 		// Check if this application exists, if not exit
 		if (db.get_application_by_id (app) == null) {
 			db.close ();
@@ -202,22 +204,22 @@ public class Manager : Object {
 	}
 
 	public string get_app_description (AppItem app) {
+		return_val_if_fail (open_db (false), null);
 		string desc;
-		open_db (false);
 		desc = db.get_application_description (app);
 		db.close ();
 		return desc;
 	}
 
 	public AppItem? get_appitem_by_idname (string idname) {
-		open_db (false);
+		return_val_if_fail (open_db (false), null);
 		AppItem? app = db.get_application_by_idname (idname);
 		db.close ();
 		return app;
 	}
 
 	public AppItem? get_appitem_by_fullname (string full_name) {
-		open_db (false);
+		return_val_if_fail (open_db (false), null);
 		AppItem? app = db.get_application_by_fullname (full_name);
 		db.close ();
 		return app;
