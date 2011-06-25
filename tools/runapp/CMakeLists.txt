@@ -32,6 +32,6 @@ vala_add_executable(runapp ${RUNAPP_SOURCES}
 			OUTPUT_DIR ${CMAKE_BINARY_DIR}/src
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
 )
-add_dependencies(runapp listaller-glib ${CMAKE_BINARY_DIR}/src/listaller-${LILIBS_VERSION}.vapi)
+add_dependencies(runapp_precompile listaller-glib)
 
 install(TARGETS runapp DESTINATION bin)
