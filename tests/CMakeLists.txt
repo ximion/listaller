@@ -15,10 +15,10 @@ pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
 #find_gir(PKGIR "packagekit-glib2" REQUIRED)
 
 set(LIUNITTEST_SOURCES ${LISTALLER_BASE_SOURCES}
-			${lisrc}/listaller/depsolver.vala
-			${lisrc}/listaller/depprovider-pk.vala
-			${lisrc}/listaller/manager.vala
-			${lisrc}/listaller/installer.vala
+			${lisrc}/depsolver.vala
+			${lisrc}/depprovider-pk.vala
+			${lisrc}/manager.vala
+			${lisrc}/installer.vala
 )
 
 link_libraries(${GLIB2_LIBRARIES}

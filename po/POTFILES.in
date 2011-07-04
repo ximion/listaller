@@ -16,10 +16,10 @@ src/status.vala
 src/utils.vala
 src/varsolver.vala
 src/varsetter.vala
-src/listaller/manager.vala
-src/listaller/installer.vala
-src/listaller/depsolver.vala
-src/listaller/depprovider-pk.vala
+src/manager.vala
+src/installer.vala
+src/depsolver.vala
+src/depprovider-pk.vala
 # Listaller tools
 tools/runapp/runapp.vala
 tools/libuild/main.vala
