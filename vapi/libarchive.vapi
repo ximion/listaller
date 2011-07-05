@@ -1,4 +1,4 @@
-/* libarchive.vapi - Bindings for libarchive(3) (version 2).
+/* libarchive.vapi - Bindings for libarchive
  *
  * Copyright (C) 2009 Julian Andres Klode <jak@jak-linux.org>
  *

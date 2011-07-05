@@ -2,7 +2,7 @@
  *
  * Copyright (C) 2010-2011 Matthias Klumpp
  *
- * Licensed under the GNU General Public License Version 3+
+ * Licensed under the GNU General Public License Version 3
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
