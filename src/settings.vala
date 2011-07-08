@@ -27,7 +27,8 @@ namespace Listaller {
 
 public class Settings : Object {
 	private bool _sumode;
-	const string suconfdir = "/etc/lipa";
+	const string confdir = "/etc/listaller";
+	const string sudbdir = "/var/lib/listaller";
 	const string suinstroot = "/opt";
 	const string sudesktopdir = "/usr/share/applications";
 	private bool _testmode;
@@ -106,7 +107,7 @@ public class Settings : Object {
 	public string appregister_dir () {
 		string regdir;
 		if (sumode) {
-			regdir = suconfdir;
+			regdir = sudbdir;
 		} else {
 			regdir = Path.build_filename (Environment.get_user_config_dir (), "software", null);
 		}
