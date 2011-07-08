@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lclstrconsts\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-21 14:07+0200\n"
+"POT-Creation-Date: 2011-07-05 17:46+0200\n"
 "PO-Revision-Date: 2009-05-06 13:38+0000\n"
 "Last-Translator: Slavko <Unknown>\n"
 "Language-Team: Slovenský <sk@li.org>\n"
@@ -394,6 +394,13 @@ msgid "XML file '%s' is damaged."
 msgstr ""
 
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
+msgstr ""
+
+msgid "XML file is no valid ZI feed!"
+msgstr ""
+
+#, c-format
+msgid "ZI XML file '%s' is damaged."
 msgstr ""
 
 #, c-format

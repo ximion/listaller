@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-21 14:07+0200\n"
+"POT-Creation-Date: 2011-07-05 17:46+0200\n"
 "PO-Revision-Date: 2009-12-07 22:05+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German, Low <nds@li.org>\n"
@@ -397,6 +397,13 @@ msgid "XML file '%s' is damaged."
 msgstr ""
 
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
+msgstr ""
+
+msgid "XML file is no valid ZI feed!"
+msgstr ""
+
+#, c-format
+msgid "ZI XML file '%s' is damaged."
 msgstr ""
 
 #, c-format

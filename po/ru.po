@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-06-21 14:07+0200\n"
+"POT-Creation-Date: 2011-07-05 17:46+0200\n"
 "PO-Revision-Date: 2011-06-15 19:57+0000\n"
 "Last-Translator: Aleksey Kabanov <Unknown>\n"
 "Language-Team: \n"
@@ -403,6 +403,13 @@ msgstr "XML-файл '%s' повреждён."
 
 msgid "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr ""
+
+msgid "XML file is no valid ZI feed!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "ZI XML file '%s' is damaged."
+msgstr "XML-файл '%s' повреждён."
 
 #, c-format
 msgid "error: %s"
