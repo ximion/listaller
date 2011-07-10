@@ -126,6 +126,22 @@ private abstract class Feed : Object {
 		return res;
 	}
 
+	protected string get_intf_info_str (string name) {
+		if (name == "")
+			return "";
+		return get_node_content (get_xsubnode (interface_node (), name));
+	}
+
+	public IPK.Dependency get_dependency_info () {
+		IPK.Dependency dep = new IPK.Dependency ();
+
+		dep.name = get_intf_info_str ("name");
+		dep.summary = get_intf_info_str ("summary");
+		dep.architecture = get_xproperty (get_xsubnode (interface_node (), "group"))->get_content ().down ();
+
+		return dep;
+	}
+
 }
 
 } // End of Listaller.ZeroInstall namespace

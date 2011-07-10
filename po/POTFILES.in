@@ -20,7 +20,7 @@ src/manager.vala
 src/installer.vala
 src/depsolver.vala
 src/depprovider-pk.vala
-src/zeroinst/zifeed.vala
+src/zfeed/zifeed.vala
 # Listaller tools
 tools/runapp/runapp.vala
 tools/libuild/main.vala

@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet type='text/xsl' href='interface.xsl'?>
+<interface uri="http://www.nongnu.org/clanbomber/zeroinstall/libpng12-0.xml" xmlns="http://zero-install.sourceforge.net/2004/injector/interface">
+  <name>libpng12-0</name>
+  <summary>PNG library</summary>
+  <description>
+libpng is a library implementing an interface for reading and writing PNG
+(Portable Network Graphics) format files.
+
+This package contains the runtime library files needed to run software using
+libpng.</description>
+  <homepage>http://libpng.org/pub/png/</homepage>
+  <group arch="Linux-i386" stability="stable">
+    <implementation doc-dir="share/doc/libpng12-0" id="sha1new=bf81ead47c7fd746540da4bd90e3f3b5788fda3c" released="2009-06-28" version="1.2.27" version-modifier="-2">
+    <archive extract="usr" href="http://download.savannah.gnu.org/releases-noredirect/clanbomber/zeroinstall/libpng12-0_1.2.27-2+lenny2_i386.tar.lzma" size="153265" type="application/x-lzma-compressed-tar"/>
+  </implementation>
+  </group>
+</interface>
+<!-- Base64 Signature
+iEYEABECAAYFAkpIM7EACgkQIm1hfhsWzNOGNgCgy1XxxN30NxnJB4UYC+MbN9lDsXwAoKM4xtPQ
+0HpycuWh24uPIja0xzP4
+
+-->

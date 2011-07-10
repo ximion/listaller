@@ -27,10 +27,14 @@ namespace Listaller.IPK {
 
 public class Dependency : Object {
 	public string name { get; set; }
+	public string summary { get; set; }
+	
 	public bool satisfied { get; set; }
+	public string architecture { get; set; } // e.g. linux-amd64
+	public HashSet<string> meta_info { get; set; }
+
 	public ArrayList<string> files { get; set; }
 	public string data { get; set; }
-	public HashSet<string> meta_info { get; set; }
 
 	internal Dependency (string dep_name) {
 		name = dep_name;
