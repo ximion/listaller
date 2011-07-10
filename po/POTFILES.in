@@ -26,6 +26,7 @@ tools/runapp/runapp.vala
 tools/libuild/main.vala
 tools/libuild/ipkbuilder.vala
 tools/libuild/gpgsign.vala
+tools/libuild/depfind.vala
 tools/libuild/prepare.vala
 tools/libuild/lbutils.vala
 tools/appcompile/main.vala

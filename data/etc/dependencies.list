@@ -1,0 +1,34 @@
+# List of standard software dependencies
+
+Linux: linux-gate.so.*
+       ld-linux.so.*
+       ld-linux-x86-64.so.*
+       libstdc\+\+.so.*
+       libm.so.*
+       libgcc_s.so.*
+       libc.so.*
+       libpthread.so.*
+       libjemalloc.so
+       libdl.so.*
+       libselinux.so.*
+       linux-vdso.so.*
+
+Xorg: libX11.so.*
+      libXext.so.*
+      libuuid.so.*
+      libxcb.so.*
+      libXau.so.*
+      libXdmcp.so.*
+      libXtst.so.*
+      libXi.so.*
+      libSM.so.*
+      libICE.so.*
+      libXcomposite.so.*
+      libXdamage.so.*
+      libXfixes.so.*
+      libXrender.so.*
+      libXinerama.so.*
+      libXrandr.so.*
+      libXcursor.so.*
+      libXft.so.*
+      libXt.so.*

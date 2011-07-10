@@ -398,7 +398,19 @@ private class Builder : Object {
 		ictrl.set_app_license (ipks.get_app_license ());
 		ictrl.set_app_description (load_text_from_element (ipks.get_app_description ()));
 
-		ictrl.set_pkg_dependencies (ipks.get_pkg_dependencies ());
+		ArrayList<IPK.Dependency> deps = ipks.get_pkg_dependencies ();
+		if (ipks.autosolve_dependencies ()) {
+			DepFind df = new DepFind (Path.build_filename (srcdir, "..", null));
+			ArrayList<IPK.Dependency> list = df.get_dependencies ();
+			foreach (IPK.Dependency d1 in list) {
+				foreach (IPK.Dependency d2 in deps) {
+					if (d1.name == d2.name)
+						list.remove (d1);
+				}
+			}
+			deps.add_all (list);
+		}
+		ictrl.set_pkg_dependencies (deps);
 
 		if (failed)
 			return false;

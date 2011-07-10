@@ -15,6 +15,7 @@ set(LIBUILD_SOURCES ${LISTALLER_BASE_SOURCES}
 			lbutils.vala
 			prepare.vala
 			gpgsign.vala
+			depfind.vala
 			ipkbuilder.vala
 )
 
