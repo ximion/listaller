@@ -39,7 +39,6 @@ libpk_plugin_external_la_CFLAGS = $(PK_PLUGIN_CFLAGS)
  */
 
 #define I_KNOW_THE_PACKAGEKIT_PLUGIN_API_IS_SUBJECT_TO_CHANGE
-#define I_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE
 
 #include <stdlib.h>
 #include <PackageKit/plugin/packagekit-plugin.h>

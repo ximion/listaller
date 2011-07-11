@@ -32,8 +32,6 @@ include_directories(${CMAKE_BINARY_DIR}
 		${PACKAGEKIT_INCLUDE_DIRS}
 )
 
-remove_definitions ("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE")
-
 if(NOT LILIBS_FULL_VERSION)
  message(FATAL_ERROR "Library version not defined. (This should never happen)")
 endif()
