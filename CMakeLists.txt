@@ -121,16 +121,17 @@ endif(TESTS)
 #
 set (MAINTAINER_CFLAGS "-Werror -Wall -Wcast-align -Wno-uninitialized -Wempty-body -Wformat-security -Winit-self"
 )
-option (DISABLE_MAINTAINER_CFLAGS "Disable maintainer CFlags" OFF)
+option (DISABLE_MAINTAINER_CFLAGS "Disable maintainer CFlags" ON)
 if (DISABLE_MAINTAINER_CFLAGS)
 	set (MAINTAINER_CFLAGS "")
 endif (DISABLE_MAINTAINER_CFLAGS)
+add_definitions(${MAINTAINER_CFLAGS})
 
 # Required to include config.h before all other units
 add_definitions ("--include config.h")
 
 # Required if GPGme was compiled with _FILE_OFFSET_BITS=64
-add_definitions("-D_FILE_OFFSET_BITS=64 ${MAINTAINER_CFLAGS}")
+add_definitions("-D_FILE_OFFSET_BITS=64")
 
 #
 # Validate Vala version

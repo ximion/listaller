@@ -448,6 +448,12 @@ pk_plugin_initialize (PkPlugin *plugin)
 	plugin->priv->conf = listaller_settings_new (TRUE);
 	plugin->priv->mgr = listaller_manager_new (plugin->priv->conf);
 	plugin->priv->status = PK_LISTALLER_STATUS_UNKNOWN;
+	
+	g_signal_connect (plugin->priv->mgr, "error-code", (GCallback) listaller_error_code_cb, plugin);
+	g_signal_connect (plugin->priv->mgr, "message", (GCallback) listaller_message_cb, plugin);
+	g_signal_connect (plugin->priv->mgr, "status-changed", (GCallback) listaller_status_change_cb, plugin);
+	g_signal_connect (plugin->priv->mgr, "progress-changed", (GCallback) listaller_progress_change_cb, plugin);
+	g_signal_connect (plugin->priv->mgr, "application", (GCallback) listaller_application_cb, plugin);
 }
 
 /**

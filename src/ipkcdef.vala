@@ -96,7 +96,7 @@ public abstract class CXml : Object {
 
 	public void test_dump_xml () {
 		string xmlstr;
-		// This throws a compiler warning, see bug 547364
+		// This throws a compiler warning, see bug #547364
 		xdoc->dump_memory_format (out xmlstr);
 		xmlstr = "\n" + xmlstr + "\n";
 		debug (xmlstr);
