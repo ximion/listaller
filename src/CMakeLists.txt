@@ -129,3 +129,8 @@ install(FILES ${CMAKE_BINARY_DIR}/src/listaller-${LILIBS_VERSION}.vapi
 	DESTINATION share/vala/vapi
 	COMPONENT headers
 )
+
+#
+# Build Listaller PackageKit PlugIn
+#
+add_subdirectory(pk-plugin)

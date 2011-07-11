@@ -31,9 +31,11 @@ namespace Config
 	public const string GETTEXT_PACKAGE;
 
 	/* Configured paths */
-	public const string PREFIXDIR;  /* /usr/local */
-	public const string LOCALEDIR;  /* /usr/local/share/locale  */
+	public const string PREFIXDIR;  /* /usr/local                 */
+	public const string LOCALEDIR;  /* /usr/local/share/locale    */
+	public const string DATADIR;    /* /usr/local/share           */
 	public const string PKGDATADIR; /* /usr/local/share/listaller */
+	public const string LIBDIR;     /* /usr/local/lib             */
 	public const string PKGLIBDIR;  /* /usr/local/lib/listaller   */
 
 }

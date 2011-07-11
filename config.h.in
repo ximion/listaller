@@ -13,6 +13,7 @@
 #define PKGLIBDIR "@PKGLIBDIR@"
 #define PREFIXDIR "@PREFIXDIR@"
 #define DATADIR "@DATADIR@"
+#define LIBDIR "@LIBDIR@"
 #define BUILDDIR "@BUILDDIR@"
 
 /* Define if the GNU gettext() function is already present or preinstalled. */

@@ -85,12 +85,21 @@ add_custom_target(distclean
 find_package (Gettext REQUIRED)
 
 #
+# Default paths
+#
+set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
+set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
+set(INSTALL_INC_DIR include CACHE PATH "Installation directory for headers")
+set(INSTALL_DATA_DIR share/listaller CACHE PATH "Installation directory for data files")
+
+#
 # Configure files
 #
 set (PREFIXDIR "${CMAKE_INSTALL_PREFIX}")
 set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
 set (PKGDATADIR "${DATADIR}/listaller")
-set (PKGLIBDIR "${CMAKE_INSTALL_PREFIX}/lib/listaller")
+set (LIBDIR "${CMAKE_INSTALL_PREFIX}/${INSTALL_LIB_DIR}")
+set (PKGLIBDIR "${LIBDIR}/listaller")
 set (GETTEXT_PACKAGE "listaller")
 set (LOCALE_DIR "${DATADIR}/locale")
 set (VERSION "${LISTALLER_VERSION}")
