@@ -1,0 +1,83 @@
+%define alphatag                #ALPHATAG#
+
+Summary:   A cross-distribution application management tool
+Name:      listaller
+Version:   #VERSION#
+Release:   0.#BUILD#%{?alphatag}%{?dist}
+License:   GPLv3+ and LGPLv3+
+URL:       http://listaller.nlinux.org/
+Source0:   https://sourceforge.net/projects/listaller/%{name}-%{version}.tar.gz
+
+BuildRequires: gpgme-devel
+BuildRequires: chrpath
+
+%description
+Listaller is a cross-distribution application management and software
+installation tool based on PackageKit.
+
+It provides a meta package format which covers current LOKI and
+Autopackage setups as well as it is providing a very flexible way to
+install software across different distributions needing just one package.
+
+%package devel
+Summary: GLib Libraries and headers for listaller
+Requires: %{name} = %{version}-%{release}
+
+%description devel
+GLib Libraries and headers for listaller.
+
+%prep
+%setup -q -n Listaller-%{version}
+
+%build
+mkdir build
+cd build
+%cmake ..
+make %{?_smp_mflags}
+
+%install
+cd build
+make install DESTDIR=$RPM_BUILD_ROOT
+cd ..
+
+# old versions of cmake are broken
+chrpath --delete $RPM_BUILD_ROOT%{_libdir}/packagekit-plugins/libpk_plugin_listaller.so
+
+%find_lang listaller
+
+%post
+/sbin/ldconfig
+/usr/bin/update-mime-database %{_datadir}/mime &> /dev/null || :
+
+%postun
+/sbin/ldconfig
+/usr/bin/update-mime-database %{_datadir}/mime &> /dev/null || :
+
+%files -f listaller.lang
+%defattr(-,root,root,-)
+%{_bindir}/appcompile
+%{_bindir}/depscan
+%{_bindir}/libuild
+%{_bindir}/runapp
+%{_datadir}/dbus-1/system-services/org.nlinux.Listaller.service
+%{_datadir}/icons/hicolor/32x32/mimetypes/package-x-ipk.png
+%{_datadir}/listaller
+%{_datadir}/mime/packages/listaller-ipk.xml
+%{_datadir}/pixmaps/package-x-ipk.png
+%{_libdir}/liblistaller-glib.so.0
+%{_libdir}/liblistaller-glib.so.0.5.2
+%{_libdir}/packagekit-plugins/libpk_plugin_listaller.so
+%{_sysconfdir}/dbus-1/system.d/org.nlinux.Listaller.conf
+%{_sysconfdir}/listaller
+
+%files devel
+%defattr(-,root,root,-)
+%{_datadir}/vala/vapi/listaller-0.5.vapi
+%{_includedir}/listaller-glib
+%{_libdir}/liblistaller-glib.so
+%{_libdir}/pkgconfig/listaller-glib.pc
+
+%changelog
+* #LONGDATE# Richard Hughes <richard@hughsie.com> #VERSION#-0.#BUILD##ALPHATAG#
+- Update from git
+
