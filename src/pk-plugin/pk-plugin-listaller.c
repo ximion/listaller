@@ -514,7 +514,8 @@ pk_listaller_filter_listaller_packages (gchar ***package_ids)
 	/* find and filter listaller packages */
 	native = g_ptr_array_new_with_free_func (g_free);
 	listaller = g_ptr_array_new_with_free_func (g_free);
-	for (i=0; *package_ids[i] != NULL; i++) {
+	i = 0;
+	while (*package_ids[i] != NULL) {
 		ret = pk_listaller_is_package (*package_ids[i]);
 		if (ret) {
 			g_ptr_array_add (listaller,
@@ -523,6 +524,11 @@ pk_listaller_filter_listaller_packages (gchar ***package_ids)
 			g_ptr_array_add (native,
 					 g_strdup (*package_ids[i]));
 		}
+		i++;
+		/* FIXME: We can't be sure that package_ids is NULL-terminated...
+		 * This is just wrong, needs to be fixed! */
+		if (i >= g_strv_length (*package_ids))
+			break;
 	}
 
 	/* not valid anymore */
