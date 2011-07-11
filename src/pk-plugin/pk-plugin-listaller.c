@@ -311,7 +311,6 @@ pk_listaller_get_details (PkPlugin *plugin, gchar ***package_ids)
 	const gchar *license;
 	const gchar *url;
 	ListallerAppItem *app;
-	PkDetails *item;
 
 	g_debug ("listaller: running get_details ()");
 	pk_listaller_reset (plugin);
@@ -343,6 +342,7 @@ pk_listaller_get_details (PkPlugin *plugin, gchar ***package_ids)
 		plugin->priv->status = PK_LISTALLER_STATUS_FINISHED;
 }
 
+#if 0
 static void listaller_application_cb (GObject *sender, ListallerAppItem *item, PkPlugin *plugin)
 {
 	gchar *package_id;
@@ -360,10 +360,10 @@ static void listaller_application_cb (GObject *sender, ListallerAppItem *item, P
 
 	g_free (package_id);
 }
+#endif
 
 static void listaller_error_code_cb (GObject *sender, ListallerErrorItem *error, PkPlugin *plugin)
 {
-	PkError *item = NULL;
 	g_return_if_fail (error != NULL);
 
 	/* emit */
@@ -420,10 +420,9 @@ static void listaller_status_change_cb (GObject *sender, ListallerStatusItem *st
 
 	g_debug ("listaller: <status-info> %s", listaller_status_item_get_info (status));
 
-	// FIXME
 	/* emit */
-	/* if (pkstatus != PK_STATUS_ENUM_UNKNOWN)
-		g_signal_emit (pkli, signals[SIGNAL_STATUS_CHANGED], 0, pkstatus); */
+	if (pkstatus != PK_STATUS_ENUM_UNKNOWN)
+		pk_backend_set_status (plugin->priv->backend, pkstatus);
 }
 
 /**
@@ -439,7 +438,6 @@ pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 	gboolean ret = FALSE;
 	ListallerSetup *setup;
 	gchar* package_id;
-	PkPackage *pkg = NULL;
 	ListallerAppItem *app = NULL;
 
 	setup = listaller_setup_new (filename, plugin->priv->conf);
@@ -563,12 +561,10 @@ void
 pk_plugin_started (PkPlugin *plugin,
 		   PkTransaction *transaction)
 {
-	gboolean ret;
 	PkRoleEnum role;
 	gchar **values;
 	gchar **package_ids;
 	gchar **full_paths;
-	PkBackend *backend;
 	PkLiStatus listatus;
 
 	/* reset the Listaller fake-backend */
@@ -610,7 +606,9 @@ pk_plugin_started (PkPlugin *plugin,
 
 	listatus = pk_listaller_get_status (plugin);
 	if (listatus == PK_LISTALLER_STATUS_FAILED) {
-		pk_backend_error_code (backend, PK_ERROR_ENUM_INTERNAL_ERROR, "failed to do something");
+		pk_backend_error_code (plugin->priv->backend,
+				       PK_ERROR_ENUM_INTERNAL_ERROR,
+				       "failed to do something");
 		goto out;
 	}
 out:
