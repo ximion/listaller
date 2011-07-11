@@ -22,6 +22,7 @@
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
+#define PK_COMPILATION
 
 #include <glib/gi18n.h>
 #include <glib.h>
@@ -29,6 +30,7 @@
 
 #include <plugin/pk-backend.h>
 #include <packagekit-glib2/packagekit.h>
+#include "listaller.h"
 #include "pk-listaller.h"
 
 #define PK_LISTALLER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PK_TYPE_LISTALLER, PkListallerPrivate))

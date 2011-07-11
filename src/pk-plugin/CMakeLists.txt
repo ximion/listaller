@@ -4,6 +4,7 @@ find_package(GLIB2 REQUIRED)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
+pkg_check_modules(PACKAGEKIT_PLUGIN REQUIRED packagekit-plugin)
 #find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
 
 set(PK_LISTALLER_SOURCES pk-listaller.c
@@ -20,6 +21,7 @@ target_link_libraries(pk_plugin_listaller
 		${GEE_LIBRARIES}
 		${GIO2_LIBRARIES}
 		${PACKAGEKIT_LIBRARIES}
+		${PACKAGEKIT_PLUGIN_LIBRARIES}
 		listaller-glib
 )
 
@@ -30,6 +32,7 @@ include_directories(${CMAKE_BINARY_DIR}
 		${GEE_INCLUDE_DIRS}
 		${GIO2_INCLUDE_DIR}
 		${PACKAGEKIT_INCLUDE_DIRS}
+		${PACKAGEKIT_PLUGIN_INCLUDE_DIRS}
 )
 
 if(NOT LILIBS_FULL_VERSION)
