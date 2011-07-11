@@ -120,7 +120,6 @@ endif(TESTS)
 # Custom C flags
 #
 set (MAINTAINER_CFLAGS "-Werror -Wall -Wcast-align -Wno-uninitialized -Wempty-body -Wformat-security -Winit-self"
-			"-DGETTEXT_PACKAGE=\"listaller\""
 )
 option (DISABLE_MAINTAINER_CFLAGS "Disable maintainer CFlags" OFF)
 if (DISABLE_MAINTAINER_CFLAGS)
@@ -131,7 +130,7 @@ endif (DISABLE_MAINTAINER_CFLAGS)
 add_definitions ("--include config.h")
 
 # Required if GPGme was compiled with _FILE_OFFSET_BITS=64
-add_definitions("-D_FILE_OFFSET_BITS=64")
+add_definitions("-D_FILE_OFFSET_BITS=64 ${MAINTAINER_CFLAGS}")
 
 #
 # Validate Vala version

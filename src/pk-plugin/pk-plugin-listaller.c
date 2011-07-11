@@ -342,7 +342,6 @@ pk_listaller_get_details (PkPlugin *plugin, gchar ***package_ids)
 		plugin->priv->status = PK_LISTALLER_STATUS_FINISHED;
 }
 
-#if 0
 static void listaller_application_cb (GObject *sender, ListallerAppItem *item, PkPlugin *plugin)
 {
 	gchar *package_id;
@@ -354,13 +353,12 @@ static void listaller_application_cb (GObject *sender, ListallerAppItem *item, P
 	}
 	g_debug ("listaller: new app found -> %s", listaller_app_item_get_appid (item));
 
-	/* create a new package object AFTER we emulate the info value */
+	/* emit */
 	pk_backend_package (plugin->priv->backend, PK_INFO_ENUM_INSTALLED, package_id,
 			    listaller_app_item_get_summary (item));
 
 	g_free (package_id);
 }
-#endif
 
 static void listaller_error_code_cb (GObject *sender, ListallerErrorItem *error, PkPlugin *plugin)
 {
