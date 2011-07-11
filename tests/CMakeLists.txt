@@ -9,6 +9,7 @@ find_package(SQLite3 REQUIRED)
 find_package(LibArchive REQUIRED)
 find_package(GPGme REQUIRED)
 find_package(GI REQUIRED)
+find_library(M_LIB m)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
@@ -21,7 +22,8 @@ set(LIUNITTEST_SOURCES ${LISTALLER_BASE_SOURCES}
 			${lisrc}/installer.vala
 )
 
-link_libraries(${GLIB2_LIBRARIES}
+link_libraries(${M_LIB}
+		${GLIB2_LIBRARIES}
 		${GEE_LIBRARIES}
 		${GIO2_LIBRARIES}
 		${SQLITE_LIBRARIES}
