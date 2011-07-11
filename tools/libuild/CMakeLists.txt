@@ -8,6 +8,7 @@ find_package(Gettext REQUIRED)
 find_package(SQLite3 REQUIRED)
 find_package(LibArchive REQUIRED)
 find_package(GPGme REQUIRED)
+find_library(M_LIB m)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
@@ -37,6 +38,7 @@ vala_add_executable (libuild ${LIBUILD_SOURCES} main.vala
 )
 
 target_link_libraries(libuild
+		${M_LIB}
 		${GLIB2_LIBRARIES}
 		${GEE_LIBRARIES}
 		${GIO2_LIBRARIES}
