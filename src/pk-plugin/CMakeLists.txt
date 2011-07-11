@@ -7,14 +7,13 @@ pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
 pkg_check_modules(PACKAGEKIT_PLUGIN REQUIRED packagekit-plugin)
 #find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
 
-set(PK_LISTALLER_SOURCES pk-listaller.c
-		pk-plugin-listaller.c
+set(PK_LISTALLER_SOURCES pk-plugin-listaller.c
 )
 
-set(PK_LISTALLER_HEADERS pk-listaller.h
+set(PK_LISTALLER_HEADERS
 )
 
-add_library(pk_plugin_listaller ${PK_LISTALLER_SOURCES})
+add_library(pk_plugin_listaller MODULE ${PK_LISTALLER_SOURCES})
 
 target_link_libraries(pk_plugin_listaller
 		${M_LIB}
@@ -39,3 +38,8 @@ if(NOT LILIBS_FULL_VERSION)
  message(FATAL_ERROR "Library version not defined. (This should never happen)")
 endif()
 set_target_properties(pk_plugin_listaller PROPERTIES VERSION ${LILIBS_FULL_VERSION} SOVERSION ${LILIBS_SOVERSION})
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libpk_plugin_listaller.so.${LILIBS_FULL_VERSION}
+	DESTINATION ${LIB_INSTALL_DIR}/packagekit-plugins
+	RENAME libpk_plugin_listaller.so
+)
