@@ -530,9 +530,6 @@ pk_plugin_initialize (PkPlugin *plugin)
 	plugin->priv->conf = listaller_settings_new (TRUE);
 	plugin->priv->mgr = listaller_manager_new (plugin->priv->conf);
 	plugin->priv->status = PK_LISTALLER_STATUS_UNKNOWN;
-
-/*	pk_transaction_add_supported_mime_type (transaction,
-						"application/x-installation"); */
 }
 
 /**
@@ -543,6 +540,20 @@ pk_plugin_destroy (PkPlugin *plugin)
 {
 	g_object_unref (plugin->priv->conf);
 	g_object_unref (plugin->priv->mgr);
+}
+
+/**
+ * pk_plugin_transaction_run:
+ */
+void
+pk_plugin_transaction_run (PkPlugin *plugin,
+			   PkTransaction *transaction)
+{
+	/* reference to the current transaction backend */
+	plugin->priv->backend = pk_transaction_get_backend (transaction);
+	
+	pk_transaction_add_supported_mime_type (transaction,
+						"application/x-installation");
 }
 
 /**
@@ -559,9 +570,6 @@ pk_plugin_started (PkPlugin *plugin,
 	gchar **full_paths;
 	PkBackend *backend;
 	PkLiStatus listatus;
-
-	/* reference to the current transaction backend */
-	plugin->priv->backend = pk_transaction_get_backend (transaction);
 
 	/* reset the Listaller fake-backend */
 	pk_listaller_reset (plugin);
