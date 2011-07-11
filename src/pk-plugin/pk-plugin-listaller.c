@@ -369,10 +369,14 @@ pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 	ListallerAppItem *app = NULL;
 
 	setup = listaller_setup_new (filename, plugin->priv->conf);
-	g_signal_connect_object (setup, "error-code", (GCallback) listaller_error_code_cb, plugin, 0);
-	g_signal_connect_object (setup, "message", (GCallback) listaller_message_cb, plugin, 0);
-	g_signal_connect_object (setup, "status-changed", (GCallback) listaller_status_change_cb, plugin, 0);
-	g_signal_connect_object (setup, "progress-changed", (GCallback) listaller_progress_change_cb, plugin, 0);
+	g_signal_connect (setup, "error-code",
+			  G_CALLBACK (listaller_error_code_cb), plugin);
+	g_signal_connect (setup, "message",
+			  G_CALLBACK (listaller_message_cb), plugin);
+	g_signal_connect (setup, "status-changed",
+			  G_CALLBACK (listaller_status_change_cb), plugin);
+	g_signal_connect (setup, "progress-changed",
+			  G_CALLBACK (listaller_progress_change_cb), plugin);
 
 	/* now intialize the new setup */
 	ret = listaller_setup_initialize (setup);
