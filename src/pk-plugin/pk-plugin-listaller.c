@@ -641,6 +641,8 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 		goto out;
 	}
 
+	//TODO: PK_ROLE_ENUM_GET_PACKAGES
+
 	if (role == PK_ROLE_ENUM_GET_DETAILS) {
 		package_ids = pk_transaction_get_package_ids (transaction);
 		data = pk_listaller_filter_listaller_packages (&package_ids);
