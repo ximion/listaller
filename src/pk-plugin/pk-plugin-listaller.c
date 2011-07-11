@@ -97,42 +97,6 @@ pk_listaller_find_applications (PkPlugin *plugin, gchar **values)
 }
 
 /**
- * pk_packages_get_listaller_pkg:
- *
- * Get a Listaller fake package from package-id list and delete its entry
- **/
-static gchar*
-pk_packages_get_listaller_pkg (gchar ***package_ids)
-{
-	guint i;
-	gchar **parts = NULL;
-	GPtrArray *pkarray;
-	gchar *res = NULL;
-
-	pkarray = g_ptr_array_new_with_free_func (g_free);
-	for (i = 0; i < g_strv_length(*package_ids); i++) {
-		// FIXME: *package_ids[i] is sometimes invalid - needs further thinking
-		parts = pk_package_id_split (*package_ids[i]);
-		if (parts == NULL)
-			break;
-		if ((g_str_has_prefix (parts[3], "local:listaller%") == TRUE) && (res == NULL)) {
-			res = g_strdup (*package_ids[i]);
-		} else {
-			g_ptr_array_add (pkarray, g_strdup (*package_ids[i]));
-		}
-		g_strfreev (parts);
-		if (res != NULL)
-			break;
-	}
-
-	g_strfreev (*package_ids);
-	*package_ids = pk_ptr_array_to_strv (pkarray);
-	g_ptr_array_free (pkarray, TRUE);
-
-	return res;
-}
-
-/**
  * pk_packages_get_listaller_file:
  *
  * Get a IPK files from file list and remove it from list
@@ -179,36 +143,6 @@ pk_listaller_contains_listaller_files (gchar **full_paths)
 		}
 	}
 	return ret;
-}
-
-/**
- * pk_listaller_delete_app_ids:
- *
- * Remove package-ids which belong to Listaller
- **/
-void
-pk_listaller_delete_app_ids (PkPlugin *plugin, gchar ***package_ids)
-{
-	gchar *pkid = NULL;
-
-	pkid = pk_packages_get_listaller_pkg (package_ids);
-	while (pkid != NULL) {
-		g_free (pkid);
-		pkid = pk_packages_get_listaller_pkg (package_ids);
-	}
-
-	plugin->priv->status = PK_LISTALLER_STATUS_FINISHED;
-}
-
-/**
- * pk_listaller_get_status:
- *
- * Get Listaller's current fake-backend status
- */
-PkLiStatus
-pk_listaller_get_status (PkPlugin *plugin)
-{
-	return plugin->priv->status;
 }
 
 /**
@@ -275,28 +209,27 @@ pk_listaller_pkid_from_appitem (ListallerAppItem *item)
  * Remove applications which are managed by Listaller.
  **/
 void
-pk_listaller_remove_applications (PkPlugin *plugin, gchar ***package_ids)
+pk_listaller_remove_applications (PkPlugin *plugin, gchar **package_ids)
 {
 	gchar *pkid = NULL;
 	ListallerAppItem *app = NULL;
+	guint i;
 
 	g_debug ("listaller: remove applications");
 
-	pkid = pk_packages_get_listaller_pkg (package_ids);
-	while (pkid != NULL) {
-		app = pk_listaller_appitem_from_pkid (pkid);
+	for (i=0; package_ids[i] != NULL; i++) {
+		app = pk_listaller_appitem_from_pkid (package_ids[i]);
 		if (app == NULL)
 			continue;
 
 		listaller_manager_remove_application (plugin->priv->mgr, app);
 		g_free (pkid);
-		pkid = pk_packages_get_listaller_pkg (package_ids);
 		g_object_unref (app);
 	};
 
 	/* Is there something left to do? */
 	plugin->priv->status = PK_LISTALLER_STATUS_ENTRIES_LEFT;
-	if ((*package_ids == NULL) || (g_strv_length (*package_ids) == 0))
+	if ((package_ids == NULL) || (g_strv_length (package_ids) == 0))
 		plugin->priv->status = PK_LISTALLER_STATUS_FINISHED;		
 }
 
@@ -304,27 +237,26 @@ pk_listaller_remove_applications (PkPlugin *plugin, gchar ***package_ids)
  * pk_listaller_get_details:
  */
 void
-pk_listaller_get_details (PkPlugin *plugin, gchar ***package_ids)
+pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 {
-	gchar *pkid = NULL;
 	gchar *description;
 	const gchar *license;
 	const gchar *url;
 	ListallerAppItem *app;
+	guint i;
 
 	g_debug ("listaller: running get_details ()");
 	pk_listaller_reset (plugin);
 
-	pkid = pk_packages_get_listaller_pkg (package_ids);
-	while (pkid != NULL) {
-		app = pk_listaller_appitem_from_pkid (pkid);
+	for (i=0; package_ids[i] != NULL; i++) {
+		app = pk_listaller_appitem_from_pkid (package_ids[i]);
 
 		description = listaller_manager_get_app_description (plugin->priv->mgr, app);
 		license = listaller_app_item_get_license_name (app);
 		url = listaller_app_item_get_url (app);
 
 		/* emit */
-		pk_backend_details (plugin->priv->backend, pkid,
+		pk_backend_details (plugin->priv->backend, package_ids[i],
 					license,
 					PK_GROUP_ENUM_UNKNOWN,
 					description,
@@ -332,13 +264,11 @@ pk_listaller_get_details (PkPlugin *plugin, gchar ***package_ids)
 					0);
 
 		g_free (description);
-		g_free (pkid);
-		pkid = pk_packages_get_listaller_pkg (package_ids);
 	};
 
 	/* Is there something left to do? */
 	plugin->priv->status = PK_LISTALLER_STATUS_ENTRIES_LEFT;
-	if ((*package_ids == NULL) || (g_strv_length (*package_ids) == 0))
+	if ((package_ids == NULL) || (g_strv_length (package_ids) == 0))
 		plugin->priv->status = PK_LISTALLER_STATUS_FINISHED;
 }
 
@@ -482,25 +412,17 @@ out:
  * Install the IPK packages in file_paths
  **/
 void
-pk_listaller_install_files (PkPlugin *plugin, gchar ***full_paths)
+pk_listaller_install_files (PkPlugin *plugin, gchar **filenames)
 {
 	gboolean ret = FALSE;
-	gchar *ipkpath = NULL;
+	guint i;
 
-	ipkpath = pk_packages_get_listaller_file (full_paths);
-	if (ipkpath != NULL)  {
-		while (ipkpath != NULL) {
-			g_debug ("listaller: Current path is: %s", ipkpath);
+	for (i=0; filenames[i] != NULL; i++) {
 
-			ret = pk_listaller_install_file (plugin, ipkpath);
-			if (!ret)
-				goto out;
-
-			ipkpath = pk_packages_get_listaller_file (full_paths);
-		}
-		/* as we connot install native and Listaller packages at the same time,we
-		 set the "no packages left" mark here */
-		plugin->priv->status = PK_LISTALLER_STATUS_FINISHED;
+		g_debug ("listaller: Current path is: %s", filenames[i]);
+		ret = pk_listaller_install_file (plugin, filenames[i]);
+		if (!ret)
+			goto out;
 	}
 out:
 	if (!ret)
@@ -555,6 +477,125 @@ pk_plugin_transaction_run (PkPlugin *plugin,
 }
 
 /**
+ * pk_listaller_is_package:
+ */
+static gboolean
+pk_listaller_is_package (const gchar *package_id)
+{
+	return (g_strstr_len (package_id, -1,
+			     "local:listaller") != NULL);
+}
+
+/**
+ * pk_listaller_filter_listaller_packages:
+ */
+static gchar **
+pk_listaller_filter_listaller_packages (gchar ***package_ids)
+{
+	gchar **retval = NULL;
+	GPtrArray *native = NULL;
+	GPtrArray *listaller = NULL;
+	guint i;
+	gboolean ret = FALSE;
+
+	/* just do a quick pass as an optimisation for the common case */
+	for (i=0; *package_ids[i] != NULL; i++) {
+		ret = pk_listaller_is_package (*package_ids[i]);
+		if (ret)
+			break;
+	}
+	if (!ret)
+		goto out;
+
+	/* find and filter listaller packages */
+	native = g_ptr_array_new_with_free_func (g_free);
+	listaller = g_ptr_array_new_with_free_func (g_free);
+	for (i=0; *package_ids[i] != NULL; i++) {
+		ret = pk_listaller_is_package (*package_ids[i]);
+		if (ret) {
+			g_ptr_array_add (listaller,
+					 g_strdup (*package_ids[i]));
+		} else {
+			g_ptr_array_add (native,
+					 g_strdup (*package_ids[i]));
+		}
+	}
+
+	/* not valid anymore */
+	g_strfreev (*package_ids);
+
+	/* pickle the arrays */
+	retval = pk_ptr_array_to_strv (listaller);
+	*package_ids = pk_ptr_array_to_strv (native);
+out:
+	if (native != NULL)
+		g_ptr_array_unref (native);
+	if (listaller != NULL)
+		g_ptr_array_unref (listaller);
+	return retval;
+}
+
+/**
+ * pk_listaller_is_file:
+ *
+ * TODO: should really get content type...
+ */
+static gboolean
+pk_listaller_is_file (const gchar *filename)
+{
+	return g_str_has_suffix (filename, ".ipk");
+}
+
+/**
+ * pk_listaller_filter_listaller_files:
+ */
+static gchar **
+pk_listaller_filter_listaller_files (gchar ***files)
+{
+	gchar **retval = NULL;
+	GPtrArray *native = NULL;
+	GPtrArray *listaller = NULL;
+	guint i;
+	gboolean ret = FALSE;
+
+	/* just do a quick pass as an optimisation for the common case */
+	for (i=0; *files[i] != NULL; i++) {
+		ret = pk_listaller_is_file (*files[i]);
+		if (ret)
+			break;
+	}
+	if (!ret)
+		goto out;
+
+	/* find and filter listaller packages */
+	native = g_ptr_array_new_with_free_func (g_free);
+	listaller = g_ptr_array_new_with_free_func (g_free);
+	for (i=0; *files[i] != NULL; i++) {
+		ret = pk_listaller_is_file (*files[i]);
+		if (ret) {
+			g_ptr_array_add (listaller,
+					 g_strdup (*files[i]));
+		} else {
+			g_ptr_array_add (native,
+					 g_strdup (*files[i]));
+		}
+	}
+
+	/* not valid anymore */
+	g_strfreev (*files);
+
+	/* pickle the arrays */
+	retval = pk_ptr_array_to_strv (listaller);
+	*files = pk_ptr_array_to_strv (native);
+out:
+	if (native != NULL)
+		g_ptr_array_unref (native);
+	if (listaller != NULL)
+		g_ptr_array_unref (listaller);
+	return retval;
+}
+
+/**
  * pk_plugin_started:
  */
 void
@@ -564,8 +605,8 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	PkRoleEnum role;
 	gchar **values;
 	gchar **package_ids;
+	gchar **data = NULL;
 	gchar **full_paths;
-	PkLiStatus listatus;
 
 	/* reset the Listaller fake-backend */
 	pk_listaller_reset (plugin);
@@ -582,37 +623,63 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 	if (role == PK_ROLE_ENUM_GET_DETAILS) {
 		package_ids = pk_transaction_get_package_ids (transaction);
-		pk_listaller_get_details (plugin, &package_ids);
+		data = pk_listaller_filter_listaller_packages (&package_ids);
+		if (data != NULL)
+			pk_listaller_get_details (plugin, data);
 		goto out;
 	}
 
-	/* remove Listaller-specific package ids simulate-* actions */
 	if (role == PK_ROLE_ENUM_SIMULATE_REMOVE_PACKAGES ||
 	    role == PK_ROLE_ENUM_SIMULATE_INSTALL_PACKAGES) {
-		pk_listaller_delete_app_ids (plugin, &package_ids);
+
+		/* ignore the return value, we can't sensibly do anything */
+		data = pk_listaller_filter_listaller_packages (&package_ids);
+
+		/* nothing more to process */
+		if (g_strv_length (package_ids) == 0) {
+			pk_backend_set_exit_code (plugin->priv->backend,
+						  PK_EXIT_ENUM_SUCCESS);
+		}
+		goto out;
 	}
 
-	/* handle Listaller transactions before the backend gets initialized */
 	if (role == PK_ROLE_ENUM_INSTALL_FILES) {
 		full_paths = pk_transaction_get_full_paths (transaction);
-		pk_listaller_install_files (plugin, &full_paths);
+		data = pk_listaller_filter_listaller_files (&full_paths);
+
+		if (data != NULL)
+			pk_listaller_install_files (plugin, data);
+
+		/* nothing more to process */
+		if (g_strv_length (full_paths) == 0) {
+			pk_backend_set_exit_code (plugin->priv->backend,
+						  PK_EXIT_ENUM_SUCCESS);
+		}
 		goto out;
 	}
 	if (role == PK_ROLE_ENUM_REMOVE_PACKAGES) {
 		package_ids = pk_transaction_get_package_ids (transaction);
-		pk_listaller_remove_applications (plugin, &package_ids);
+		data = pk_listaller_filter_listaller_packages (&package_ids);
+
+		if (data != NULL)
+			pk_listaller_remove_applications (plugin, data);
+
+		/* nothing more to process */
+		if (g_strv_length (package_ids) == 0) {
+			pk_backend_set_exit_code (plugin->priv->backend,
+						  PK_EXIT_ENUM_SUCCESS);
+		}
 		goto out;
 	}
 
-	listatus = pk_listaller_get_status (plugin);
-	if (listatus == PK_LISTALLER_STATUS_FAILED) {
+	if (plugin->priv->status == PK_LISTALLER_STATUS_FAILED) {
 		pk_backend_error_code (plugin->priv->backend,
 				       PK_ERROR_ENUM_INTERNAL_ERROR,
 				       "failed to do something");
 		goto out;
 	}
 out:
-	return;
+	g_strfreev (data);
 }
 
 /**
