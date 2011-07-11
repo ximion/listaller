@@ -518,8 +518,8 @@ pk_listaller_filter_listaller_packages (gchar ***package_ids)
 	gboolean ret = FALSE;
 
 	/* just do a quick pass as an optimisation for the common case */
-	for (i=0; *package_ids[i] != NULL; i++) {
-		ret = pk_listaller_is_package (*package_ids[i]);
+	for (i=0; (*package_ids)[i] != NULL; i++) {
+		ret = pk_listaller_is_package ((*package_ids)[i]);
 		if (ret)
 			break;
 	}
@@ -529,14 +529,14 @@ pk_listaller_filter_listaller_packages (gchar ***package_ids)
 	/* find and filter listaller packages */
 	native = g_ptr_array_new_with_free_func (g_free);
 	listaller = g_ptr_array_new_with_free_func (g_free);
-	for (i=0; *package_ids[i] != NULL; i++) {
-		ret = pk_listaller_is_package (*package_ids[i]);
+	for (i=0; (*package_ids)[i] != NULL; i++) {
+		ret = pk_listaller_is_package ((*package_ids)[i]);
 		if (ret) {
 			g_ptr_array_add (listaller,
-					 g_strdup (*package_ids[i]));
+					 g_strdup ((*package_ids)[i]));
 		} else {
 			g_ptr_array_add (native,
-					 g_strdup (*package_ids[i]));
+					 g_strdup ((*package_ids)[i]));
 		}
 	}
 
@@ -578,8 +578,8 @@ pk_listaller_filter_listaller_files (gchar ***files)
 	gboolean ret = FALSE;
 
 	/* just do a quick pass as an optimisation for the common case */
-	for (i=0; *files[i] != NULL; i++) {
-		ret = pk_listaller_is_file (*files[i]);
+	for (i=0; (*files)[i] != NULL; i++) {
+		ret = pk_listaller_is_file ((*files)[i]);
 		if (ret)
 			break;
 	}
@@ -589,14 +589,15 @@ pk_listaller_filter_listaller_files (gchar ***files)
 	/* find and filter listaller packages */
 	native = g_ptr_array_new_with_free_func (g_free);
 	listaller = g_ptr_array_new_with_free_func (g_free);
-	for (i=0; *files[i] != NULL; i++) {
-		ret = pk_listaller_is_file (*files[i]);
+
+	for (i=0; (*files)[i] != NULL; i++) {
+		ret = pk_listaller_is_file ((*files)[i]);
 		if (ret) {
 			g_ptr_array_add (listaller,
-					 g_strdup (*files[i]));
+					 g_strdup ((*files)[i]));
 		} else {
 			g_ptr_array_add (native,
-					 g_strdup (*files[i]));
+					 g_strdup ((*files)[i]));
 		}
 	}
 
