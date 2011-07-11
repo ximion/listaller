@@ -26,12 +26,10 @@
 
 #include "pk-listaller.h"
 
-typedef struct {
+struct PkPluginPrivate {
 	ListallerManager	*mgr;
 	ListallerSettings	*conf;
-} PluginPrivate;
-
-static PluginPrivate *priv;
+};
 
 /* include all of pk-listaller.c here */
 
@@ -43,44 +41,44 @@ static PluginPrivate *priv;
  */
 
 /**
- * pk_transaction_plugin_get_description:
+ * pk_plugin_get_description:
  */
 const gchar *
-pk_transaction_plugin_get_description (void)
+pk_plugin_get_description (void)
 {
 	return "An external plugin that compiles outside of PK";
 }
 
 /**
- * pk_transaction_plugin_initialize:
+ * pk_plugin_initialize:
  */
 void
-pk_transaction_plugin_initialize (PkTransaction *transaction)
+pk_plugin_initialize (PkPlugin *plugin)
 {
 	/* create private area */
-	priv = g_new0 (PluginPrivate, 1);
-	priv->conf = listaller_settings_new (TRUE);
-	priv->mgr = listaller_manager_new (priv->conf);
+	plugin->priv = PK_TRANSACTION_PLUGIN_GET_PRIVATE (PkPluginPrivate);
+	plugin->priv->conf = listaller_settings_new (TRUE);
+	plugin->priv->mgr = listaller_manager_new (plugin->priv->conf);
 	pk_transaction_add_supported_mime_type (transaction,
 						"application/x-installation");
 }
 
 /**
- * pk_transaction_plugin_destroy:
+ * pk_plugin_destroy:
  */
 void
-pk_transaction_plugin_destroy (PkTransaction *transaction)
+pk_plugin_destroy (PkPlugin *plugin)
 {
-	g_object_unref (priv->conf);
-	g_object_unref (priv->mgr);
-	g_free (priv);
+	g_object_unref (plugin->priv->conf);
+	g_object_unref (plugin->priv->mgr);
 }
 
 /**
- * pk_transaction_plugin_started:
+ * pk_plugin_transaction_started:
  */
 void
-pk_transaction_plugin_started (PkTransaction *transaction)
+pk_plugin_transaction_started (PkPlugin *plugin,
+			       PkTransaction *transaction)
 {
 	gboolean ret;
 	PkRoleEnum role;
@@ -91,7 +89,7 @@ pk_transaction_plugin_started (PkTransaction *transaction)
 	PkLiStatus listatus;
 
 	/* reset the Listaller fake-backend */
-	pk_listaller_reset (priv->pkli);
+	pk_listaller_reset (plugin->priv->pkli);
 	backend = pk_transaction_get_backend (transaction);
 	pk_backend_set_status (backend, PK_STATUS_ENUM_SETUP);
 
@@ -100,35 +98,35 @@ pk_transaction_plugin_started (PkTransaction *transaction)
 	if (role == PK_ROLE_ENUM_SEARCH_NAME ||
 	    role == PK_ROLE_ENUM_SEARCH_DETAILS) {
 		values = pk_transaction_get_values (transaction);
-		pk_listaller_find_applications (priv->pkli, values);
+		pk_listaller_find_applications (plugin->priv->pkli, values);
 		goto out;
 	}
 
 	if (role == PK_ROLE_ENUM_GET_DETAILS) {
 		package_ids = pk_transaction_get_package_ids (transaction);
-		pk_listaller_get_details (priv->pkli, &package_ids);
+		pk_listaller_get_details (plugin->priv->pkli, &package_ids);
 		goto out;
 	}
 
 	/* remove Listaller-specific package ids simulate-* actions */
 	if (role == PK_ROLE_ENUM_SIMULATE_REMOVE_PACKAGES ||
 	    role == PK_ROLE_ENUM_SIMULATE_INSTALL_PACKAGES) {
-		pk_listaller_delete_app_ids (priv->pkli, &package_ids);
+		pk_listaller_delete_app_ids (plugin->priv->pkli, &package_ids);
 	}
 
 	/* handle Listaller transactions before the backend gets initialized */
 	if (role == PK_ROLE_ENUM_INSTALL_FILES) {
 		full_paths = pk_transaction_get_full_paths (transaction);
-		pk_listaller_install_files (priv->pkli, &full_paths);
+		pk_listaller_install_files (plugin->priv->pkli, &full_paths);
 		goto out;
 	}
 	if (role == PK_ROLE_ENUM_REMOVE_PACKAGES) {
 		package_ids = pk_transaction_get_package_ids (transaction);
-		pk_listaller_remove_applications (priv->pkli, &package_ids);
+		pk_listaller_remove_applications (plugin->priv->pkli, &package_ids);
 		goto out;
 	}
 
-	listatus = pk_listaller_get_status (priv->pkli);
+	listatus = pk_listaller_get_status (plugin->priv->pkli);
 	if (listatus == PK_LISTALLER_STATUS_FAILED) {
 		pk_backend_error_code (backend, PK_ERROR_ENUM_FAILED, "failed to do something");
 		goto out;
@@ -138,11 +136,12 @@ out:
 }
 
 /**
- * pk_transaction_plugin_finished_end:
+ * pk_plugin_transaction_finished_end:
  */
 void
-pk_transaction_plugin_finished_end (PkTransaction *transaction)
+pk_plugin_transaction_finished_end (PkPlugin *plugin,
+				    PkTransaction *transaction)
 {
 	/* update application databases */
-	pk_listaller_scan_applications (priv->pkli);
+	pk_listaller_scan_applications (plugin->priv->pkli);
 }
