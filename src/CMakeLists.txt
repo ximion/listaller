@@ -54,6 +54,7 @@ find_package(LibArchive REQUIRED)
 find_package(LibXml2 REQUIRED)
 find_package(GPGme REQUIRED)
 find_package(GI REQUIRED)
+find_library(M_LIB m)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
@@ -83,6 +84,7 @@ vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 add_definitions ("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE")
 
 target_link_libraries(listaller-glib
+		${M_LIB}
 		${GEE_LIBRARIES}
 		${GIO2_LIBRARIES}
 		${SQLITE_LIBRARIES}
