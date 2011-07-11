@@ -92,8 +92,11 @@ pk_listaller_scan_applications (PkPlugin *plugin)
 void
 pk_listaller_find_applications (PkPlugin *plugin, gchar **values)
 {
-	g_debug ("listaller: searching for applications.");
-	listaller_manager_find_applications_by_values (plugin->priv->mgr, LISTALLER_APP_SOURCE_EXTERN, values, NULL);
+	g_debug ("listaller: searching for applications: %s", values[0]);
+	listaller_manager_find_applications_by_values (plugin->priv->mgr,
+						       LISTALLER_APP_SOURCE_EXTERN,
+						       values,
+						       NULL);
 }
 
 /**
