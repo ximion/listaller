@@ -709,6 +709,13 @@ void
 pk_plugin_transaction_finished_end (PkPlugin *plugin,
 				    PkTransaction *transaction)
 {
+	PkRoleEnum role;
+
 	/* update application databases */
-	pk_listaller_scan_applications (plugin);
+	role = pk_transaction_get_role (transaction);
+	if (role == PK_ROLE_ENUM_INSTALL_FILES ||
+	    role == PK_ROLE_ENUM_REMOVE_PACKAGES ||
+	    role == PK_ROLE_ENUM_REFRESH_CACHE) {
+		pk_listaller_scan_applications (plugin);
+	}
 }
