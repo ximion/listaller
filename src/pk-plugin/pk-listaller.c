@@ -22,14 +22,15 @@
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
-#define PK_COMPILATION
 
 #include <glib/gi18n.h>
 #include <glib.h>
 #include <gmodule.h>
 
-#include <plugin/pk-backend.h>
+#define I_KNOW_THE_PACKAGEKIT_PLUGIN_API_IS_SUBJECT_TO_CHANGE
+
 #include <packagekit-glib2/packagekit.h>
+#include <plugin/packagekit-plugin.h>
 #include "listaller.h"
 #include "pk-listaller.h"
 
