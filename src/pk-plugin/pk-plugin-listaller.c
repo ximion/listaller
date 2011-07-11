@@ -19,25 +19,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-/* COMPILETLY UNTESTED */
-
-/* You need to compile this with the folowing commands:
- * {
-libtool --mode=compile gcc -Wall -Werror -g -O `pkg-config --cflags --libs packagekit-plugin` -c pk-plugin-external.c
-libtool --mode=link gcc -g -O -module -avoid-version -o libpk-plugin-external.la -rpath /home/hughsie/.root/lib/packagekit-plugins pk-plugin-external.lo
-libtool --mode=install cp libpk-plugin-external.la /home/hughsie/.root/lib/packagekit-plugins/libpk-plugin-external.la
- *
- * or, if using automake:
- * {
-plugindir = $(LIBDIR)/packagekit-plugins
-plugin_LTLIBRARIES = libpk_plugin_external.la
-libpk_plugin_external_la_SOURCES = pk-plugin-external.c
-libpk_plugin_external_la_LIBADD = $(PK_PLUGIN_LIBS)
-libpk_plugin_external_la_LDFLAGS = -module -avoid-version
-libpk_plugin_external_la_CFLAGS = $(PK_PLUGIN_CFLAGS)
- * } 
- */
-
 #define I_KNOW_THE_PACKAGEKIT_PLUGIN_API_IS_SUBJECT_TO_CHANGE
 
 #include <stdlib.h>
