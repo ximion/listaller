@@ -87,18 +87,19 @@ find_package (Gettext REQUIRED)
 #
 # Default paths
 #
-set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
-set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
-set(INSTALL_INC_DIR include CACHE PATH "Installation directory for headers")
-set(INSTALL_DATA_DIR share/listaller CACHE PATH "Installation directory for data files")
+set(BIN_INSTALL_DIR bin CACHE PATH "Installation directory for executables")
+set(LIB_INSTALL_DIR lib CACHE PATH "Installation directory for libraries")
+set(INC_INSTALL_DIR include CACHE PATH "Installation directory for headers")
+set(DATA_INSTALL_DIR share/listaller CACHE PATH "Installation directory for data files")
+set(SYSCONF_INSTALL_DIR etc CACHE PATH "Installation directory for system configuration files")
 
 #
 # Configure files
 #
 set (PREFIXDIR "${CMAKE_INSTALL_PREFIX}")
 set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
-set (PKGDATADIR "${DATADIR}/listaller")
-set (LIBDIR "${CMAKE_INSTALL_PREFIX}/${INSTALL_LIB_DIR}")
+set (PKGDATADIR "${DATA_INSTALL_DIR}")
+set (LIBDIR "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
 set (PKGLIBDIR "${LIBDIR}/listaller")
 set (GETTEXT_PACKAGE "listaller")
 set (LOCALE_DIR "${DATADIR}/locale")
