@@ -475,9 +475,17 @@ pk_plugin_transaction_run (PkPlugin *plugin,
 {
 	/* reference to the current transaction backend */
 	plugin->priv->backend = pk_transaction_get_backend (transaction);
-	
-	pk_transaction_add_supported_mime_type (transaction,
-						"application/x-installation");
+}
+
+/**
+ * pk_plugin_transaction_content_types:
+ */
+void
+pk_plugin_transaction_content_types (PkPlugin *plugin,
+				     PkTransaction *transaction)
+{
+	pk_transaction_add_supported_content_type (transaction,
+						   "application/x-installation");
 }
 
 /**
