@@ -38,22 +38,20 @@ typedef enum {
 	PK_LISTALLER_STATUS_FAILED
 } PkLiStatus;
 
-typedef struct {
+struct PkPluginPrivate {
 	ListallerManager	*mgr;
 	ListallerSettings	*conf;
 	PkLiStatus		 status;
 	PkBackend		*backend;
-} LiPluginPrivate;
-
-static LiPluginPrivate *priv;
+};
 
 /**
  * pk_listaller_reset:
  */
 void
-pk_listaller_reset ()
+pk_listaller_reset (PkPlugin *plugin)
 {
-	priv->status = PK_LISTALLER_STATUS_UNKNOWN;
+	plugin->priv->status = PK_LISTALLER_STATUS_UNKNOWN;
 }
 
 /**
@@ -64,12 +62,12 @@ pk_listaller_reset ()
  * Return value: True if successful
  */
 gboolean
-pk_listaller_scan_applications ()
+pk_listaller_scan_applications (PkPlugin *plugin)
 {
 	gboolean res;
 
 	/* run it */
-	res = listaller_manager_scan_applications (priv->mgr);
+	res = listaller_manager_scan_applications (plugin->priv->mgr);
 
 	/* print warning if scan fails */
 	if (!res) {
@@ -79,9 +77,9 @@ pk_listaller_scan_applications ()
 	}
 
 	if (res)
-		priv->status = PK_LISTALLER_STATUS_FINISHED;
+		plugin->priv->status = PK_LISTALLER_STATUS_FINISHED;
 	else
-		priv->status = PK_LISTALLER_STATUS_FAILED;
+		plugin->priv->status = PK_LISTALLER_STATUS_FAILED;
 
 	return res;
 }
@@ -92,10 +90,10 @@ pk_listaller_scan_applications ()
  * Find Listaller apps by name
  */
 void
-pk_listaller_find_applications (gchar **values)
+pk_listaller_find_applications (PkPlugin *plugin, gchar **values)
 {
 	g_debug ("listaller: searching for applications.");
-	listaller_manager_find_applications_by_values (priv->mgr, LISTALLER_APP_SOURCE_EXTERN, values, NULL);
+	listaller_manager_find_applications_by_values (plugin->priv->mgr, LISTALLER_APP_SOURCE_EXTERN, values, NULL);
 }
 
 /**
@@ -189,7 +187,7 @@ pk_listaller_contains_listaller_files (gchar **full_paths)
  * Remove package-ids which belong to Listaller
  **/
 void
-pk_listaller_delete_app_ids (gchar ***package_ids)
+pk_listaller_delete_app_ids (PkPlugin *plugin, gchar ***package_ids)
 {
 	gchar *pkid = NULL;
 
@@ -199,7 +197,7 @@ pk_listaller_delete_app_ids (gchar ***package_ids)
 		pkid = pk_packages_get_listaller_pkg (package_ids);
 	}
 
-	priv->status = PK_LISTALLER_STATUS_FINISHED;
+	plugin->priv->status = PK_LISTALLER_STATUS_FINISHED;
 }
 
 /**
@@ -208,9 +206,9 @@ pk_listaller_delete_app_ids (gchar ***package_ids)
  * Get Listaller's current fake-backend status
  */
 PkLiStatus
-pk_listaller_get_status ()
+pk_listaller_get_status (PkPlugin *plugin)
 {
-	return priv->status;
+	return plugin->priv->status;
 }
 
 /**
@@ -277,7 +275,7 @@ pk_listaller_pkid_from_appitem (ListallerAppItem *item)
  * Remove applications which are managed by Listaller.
  **/
 void
-pk_listaller_remove_applications (gchar ***package_ids)
+pk_listaller_remove_applications (PkPlugin *plugin, gchar ***package_ids)
 {
 	gchar *pkid = NULL;
 	ListallerAppItem *app = NULL;
@@ -290,23 +288,23 @@ pk_listaller_remove_applications (gchar ***package_ids)
 		if (app == NULL)
 			continue;
 
-		listaller_manager_remove_application (priv->mgr, app);
+		listaller_manager_remove_application (plugin->priv->mgr, app);
 		g_free (pkid);
 		pkid = pk_packages_get_listaller_pkg (package_ids);
 		g_object_unref (app);
 	};
 
 	/* Is there something left to do? */
-	priv->status = PK_LISTALLER_STATUS_ENTRIES_LEFT;
+	plugin->priv->status = PK_LISTALLER_STATUS_ENTRIES_LEFT;
 	if ((*package_ids == NULL) || (g_strv_length (*package_ids) == 0))
-		priv->status = PK_LISTALLER_STATUS_FINISHED;		
+		plugin->priv->status = PK_LISTALLER_STATUS_FINISHED;		
 }
 
 /**
  * pk_listaller_get_details:
  */
 void
-pk_listaller_get_details (gchar ***package_ids)
+pk_listaller_get_details (PkPlugin *plugin, gchar ***package_ids)
 {
 	gchar *pkid = NULL;
 	gchar *description;
@@ -316,18 +314,18 @@ pk_listaller_get_details (gchar ***package_ids)
 	PkDetails *item;
 
 	g_debug ("listaller: running get_details ()");
-	pk_listaller_reset ();
+	pk_listaller_reset (plugin);
 
 	pkid = pk_packages_get_listaller_pkg (package_ids);
 	while (pkid != NULL) {
 		app = pk_listaller_appitem_from_pkid (pkid);
 
-		description = listaller_manager_get_app_description (priv->mgr, app);
+		description = listaller_manager_get_app_description (plugin->priv->mgr, app);
 		license = listaller_app_item_get_license_name (app);
 		url = listaller_app_item_get_url (app);
 
 		/* emit */
-		pk_backend_details (priv->backend, pkid,
+		pk_backend_details (plugin->priv->backend, pkid,
 					license,
 					PK_GROUP_ENUM_UNKNOWN,
 					description,
@@ -340,12 +338,12 @@ pk_listaller_get_details (gchar ***package_ids)
 	};
 
 	/* Is there something left to do? */
-	priv->status = PK_LISTALLER_STATUS_ENTRIES_LEFT;
+	plugin->priv->status = PK_LISTALLER_STATUS_ENTRIES_LEFT;
 	if ((*package_ids == NULL) || (g_strv_length (*package_ids) == 0))
-		priv->status = PK_LISTALLER_STATUS_FINISHED;
+		plugin->priv->status = PK_LISTALLER_STATUS_FINISHED;
 }
 
-static void listaller_application_cb (GObject *sender, ListallerAppItem *item, LiPluginPrivate *ppriv)
+static void listaller_application_cb (GObject *sender, ListallerAppItem *item, PkPlugin *plugin)
 {
 	gchar *package_id;
 
@@ -357,23 +355,23 @@ static void listaller_application_cb (GObject *sender, ListallerAppItem *item, L
 	g_debug ("listaller: new app found -> %s", listaller_app_item_get_appid (item));
 
 	/* create a new package object AFTER we emulate the info value */
-	pk_backend_package (ppriv->backend, PK_INFO_ENUM_INSTALLED, package_id,
+	pk_backend_package (plugin->priv->backend, PK_INFO_ENUM_INSTALLED, package_id,
 			    listaller_app_item_get_summary (item));
 
 	g_free (package_id);
 }
 
-static void listaller_error_code_cb (GObject *sender, ListallerErrorItem *error, LiPluginPrivate *ppriv)
+static void listaller_error_code_cb (GObject *sender, ListallerErrorItem *error, PkPlugin *plugin)
 {
 	PkError *item = NULL;
 	g_return_if_fail (error != NULL);
 
 	/* emit */
-	pk_backend_error_code (ppriv->backend, PK_ERROR_ENUM_INTERNAL_ERROR,
+	pk_backend_error_code (plugin->priv->backend, PK_ERROR_ENUM_INTERNAL_ERROR,
 				listaller_error_item_get_details (error));
 }
 
-static void listaller_message_cb (GObject *sender, ListallerMessageItem *message, LiPluginPrivate *ppriv)
+static void listaller_message_cb (GObject *sender, ListallerMessageItem *message, PkPlugin *plugin)
 {
 	ListallerMessageEnum mtype;
 	gchar *text;
@@ -398,14 +396,14 @@ static void listaller_message_cb (GObject *sender, ListallerMessageItem *message
 }
 
 
-static void listaller_progress_change_cb (GObject* sender, gint progress, gint subprogress, LiPluginPrivate *ppriv)
+static void listaller_progress_change_cb (GObject* sender, gint progress, gint subprogress, PkPlugin *plugin)
 {
 	/* emit */
-	pk_backend_set_percentage (ppriv->backend, progress);
-	pk_backend_set_sub_percentage (ppriv->backend, subprogress);
+	pk_backend_set_percentage (plugin->priv->backend, progress);
+	pk_backend_set_sub_percentage (plugin->priv->backend, subprogress);
 }
 
-static void listaller_status_change_cb (GObject *sender, ListallerStatusItem *status, LiPluginPrivate *ppriv)
+static void listaller_status_change_cb (GObject *sender, ListallerStatusItem *status, PkPlugin *plugin)
 {
 	ListallerStatusEnum listatus;
 	PkStatusEnum pkstatus;
@@ -436,7 +434,7 @@ static void listaller_status_change_cb (GObject *sender, ListallerStatusItem *st
  * Return value: True if successful
  **/
 static gboolean
-pk_listaller_install_file (const gchar *filename)
+pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 {
 	gboolean ret = FALSE;
 	ListallerSetup *setup;
@@ -444,11 +442,11 @@ pk_listaller_install_file (const gchar *filename)
 	PkPackage *pkg = NULL;
 	ListallerAppItem *app = NULL;
 
-	setup = listaller_setup_new (filename, priv->conf);
-	g_signal_connect_object (setup, "error-code", (GCallback) listaller_error_code_cb, priv, 0);
-	g_signal_connect_object (setup, "message", (GCallback) listaller_message_cb, priv, 0);
-	g_signal_connect_object (setup, "status-changed", (GCallback) listaller_status_change_cb, priv, 0);
-	g_signal_connect_object (setup, "progress-changed", (GCallback) listaller_progress_change_cb, priv, 0);
+	setup = listaller_setup_new (filename, plugin->priv->conf);
+	g_signal_connect_object (setup, "error-code", (GCallback) listaller_error_code_cb, plugin, 0);
+	g_signal_connect_object (setup, "message", (GCallback) listaller_message_cb, plugin, 0);
+	g_signal_connect_object (setup, "status-changed", (GCallback) listaller_status_change_cb, plugin, 0);
+	g_signal_connect_object (setup, "progress-changed", (GCallback) listaller_progress_change_cb, plugin, 0);
 
 	/* now intialize the new setup */
 	ret = listaller_setup_initialize (setup);
@@ -466,7 +464,7 @@ pk_listaller_install_file (const gchar *filename)
 		g_debug ("listaller: <error> Unable to build package-id from app-id!");
 	} else {
 		/* emit */
-		pk_backend_package (priv->backend, PK_INFO_ENUM_INSTALLED,
+		pk_backend_package (plugin->priv->backend, PK_INFO_ENUM_INSTALLED,
 					package_id,
 					listaller_app_item_get_summary (app));
 		g_free (package_id);
@@ -486,7 +484,7 @@ out:
  * Install the IPK packages in file_paths
  **/
 void
-pk_listaller_install_files (gchar ***full_paths)
+pk_listaller_install_files (PkPlugin *plugin, gchar ***full_paths)
 {
 	gboolean ret = FALSE;
 	gchar *ipkpath = NULL;
@@ -496,7 +494,7 @@ pk_listaller_install_files (gchar ***full_paths)
 		while (ipkpath != NULL) {
 			g_debug ("listaller: Current path is: %s", ipkpath);
 
-			ret = pk_listaller_install_file (ipkpath);
+			ret = pk_listaller_install_file (plugin, ipkpath);
 			if (!ret)
 				goto out;
 
@@ -504,64 +502,55 @@ pk_listaller_install_files (gchar ***full_paths)
 		}
 		/* as we connot install native and Listaller packages at the same time,we
 		 set the "no packages left" mark here */
-		priv->status = PK_LISTALLER_STATUS_FINISHED;
+		plugin->priv->status = PK_LISTALLER_STATUS_FINISHED;
 	}
 out:
 	if (!ret)
-		priv->status = PK_LISTALLER_STATUS_FAILED;
+		plugin->priv->status = PK_LISTALLER_STATUS_FAILED;
 }
 
-/* to emit packages, just do:
- *
- *  PkBackend *backend;
- *  
- *  pk_backend_package (PK_INFO_ENUM_AVAILABLE, "dave;0.0.1;i386;fedora", "Dave");
- */
-
 /**
- * pk_transaction_plugin_get_description:
+ * pk_plugin_get_description:
  */
 const gchar *
-pk_transaction_plugin_get_description (void)
+pk_plugin_get_description (void)
 {
 	// TODO: Think of a better description
 	return "Listaller support for PackageKit";
 }
 
 /**
- * pk_transaction_plugin_initialize:
+ * pk_plugin_initialize:
  */
 void
-pk_transaction_plugin_initialize (PkTransaction *transaction)
+pk_plugin_initialize (PkPlugin *plugin)
 {
 	/* create private area */
-	priv = g_new0 (LiPluginPrivate, 1);
-	priv->conf = listaller_settings_new (TRUE);
-	priv->mgr = listaller_manager_new (priv->conf);
-	priv->status = PK_LISTALLER_STATUS_UNKNOWN;
-	
-	priv->backend = pk_transaction_get_backend (transaction);
+	plugin->priv = PK_TRANSACTION_PLUGIN_GET_PRIVATE (PkPluginPrivate);
+	plugin->priv->conf = listaller_settings_new (TRUE);
+	plugin->priv->mgr = listaller_manager_new (plugin->priv->conf);
+	plugin->priv->status = PK_LISTALLER_STATUS_UNKNOWN;
 
-	pk_transaction_add_supported_mime_type (transaction,
-						"application/x-installation");
+/*	pk_transaction_add_supported_mime_type (transaction,
+						"application/x-installation"); */
 }
 
 /**
- * pk_transaction_plugin_destroy:
+ * pk_plugin_destroy:
  */
 void
-pk_transaction_plugin_destroy (PkTransaction *transaction)
+pk_plugin_destroy (PkPlugin *plugin)
 {
-	g_object_unref (priv->conf);
-	g_object_unref (priv->mgr);
-	g_free (priv);
+	g_object_unref (plugin->priv->conf);
+	g_object_unref (plugin->priv->mgr);
 }
 
 /**
- * pk_transaction_plugin_started:
+ * pk_plugin_started:
  */
 void
-pk_transaction_plugin_started (PkTransaction *transaction)
+pk_plugin_started (PkPlugin *plugin,
+		   PkTransaction *transaction)
 {
 	gboolean ret;
 	PkRoleEnum role;
@@ -571,44 +560,47 @@ pk_transaction_plugin_started (PkTransaction *transaction)
 	PkBackend *backend;
 	PkLiStatus listatus;
 
+	/* reference to the current transaction backend */
+	plugin->priv->backend = pk_transaction_get_backend (transaction);
+
 	/* reset the Listaller fake-backend */
-	pk_listaller_reset ();
-	pk_backend_set_status (priv->backend, PK_STATUS_ENUM_SETUP);
+	pk_listaller_reset (plugin);
+	pk_backend_set_status (plugin->priv->backend, PK_STATUS_ENUM_SETUP);
 
 	/* handle these before the transaction has been run */
 	role = pk_transaction_get_role (transaction);
 	if (role == PK_ROLE_ENUM_SEARCH_NAME ||
 	    role == PK_ROLE_ENUM_SEARCH_DETAILS) {
 		values = pk_transaction_get_values (transaction);
-		pk_listaller_find_applications (values);
+		pk_listaller_find_applications (plugin, values);
 		goto out;
 	}
 
 	if (role == PK_ROLE_ENUM_GET_DETAILS) {
 		package_ids = pk_transaction_get_package_ids (transaction);
-		pk_listaller_get_details (&package_ids);
+		pk_listaller_get_details (plugin, &package_ids);
 		goto out;
 	}
 
 	/* remove Listaller-specific package ids simulate-* actions */
 	if (role == PK_ROLE_ENUM_SIMULATE_REMOVE_PACKAGES ||
 	    role == PK_ROLE_ENUM_SIMULATE_INSTALL_PACKAGES) {
-		pk_listaller_delete_app_ids (&package_ids);
+		pk_listaller_delete_app_ids (plugin, &package_ids);
 	}
 
 	/* handle Listaller transactions before the backend gets initialized */
 	if (role == PK_ROLE_ENUM_INSTALL_FILES) {
 		full_paths = pk_transaction_get_full_paths (transaction);
-		pk_listaller_install_files (&full_paths);
+		pk_listaller_install_files (plugin, &full_paths);
 		goto out;
 	}
 	if (role == PK_ROLE_ENUM_REMOVE_PACKAGES) {
 		package_ids = pk_transaction_get_package_ids (transaction);
-		pk_listaller_remove_applications (&package_ids);
+		pk_listaller_remove_applications (plugin, &package_ids);
 		goto out;
 	}
 
-	listatus = pk_listaller_get_status ();
+	listatus = pk_listaller_get_status (plugin);
 	if (listatus == PK_LISTALLER_STATUS_FAILED) {
 		pk_backend_error_code (backend, PK_ERROR_ENUM_INTERNAL_ERROR, "failed to do something");
 		goto out;
@@ -618,11 +610,12 @@ out:
 }
 
 /**
- * pk_transaction_plugin_finished_end:
+ * pk_plugin_finished_end:
  */
 void
-pk_transaction_plugin_finished_end (PkTransaction *transaction)
+pk_plugin_finished_end (PkPlugin *plugin,
+		        PkTransaction *transaction)
 {
 	/* update application databases */
-	pk_listaller_scan_applications ();
+	pk_listaller_scan_applications (plugin);
 }
