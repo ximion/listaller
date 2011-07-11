@@ -558,8 +558,8 @@ pk_plugin_transaction_run (PkPlugin *plugin,
  * pk_plugin_started:
  */
 void
-pk_plugin_started (PkPlugin *plugin,
-		   PkTransaction *transaction)
+pk_plugin_transaction_started (PkPlugin *plugin,
+			       PkTransaction *transaction)
 {
 	PkRoleEnum role;
 	gchar **values;
@@ -616,11 +616,11 @@ out:
 }
 
 /**
- * pk_plugin_finished_end:
+ * pk_plugin_transaction_finished_end:
  */
 void
-pk_plugin_finished_end (PkPlugin *plugin,
-		        PkTransaction *transaction)
+pk_plugin_transaction_finished_end (PkPlugin *plugin,
+				    PkTransaction *transaction)
 {
 	/* update application databases */
 	pk_listaller_scan_applications (plugin);
