@@ -30,15 +30,15 @@ public class Settings : Object {
 	const string confdir = "/etc/listaller";
 	const string sudbdir = "/var/lib/listaller";
 	const string suinstroot = "/opt";
-	const string sudesktopdir = "/usr/share/applications";
+	const string sudesktopdir = Config.PREFIXDIR + "/share/applications";
 	private bool _testmode;
 	private bool _locked;
 	private string uinsttmp = "";
 
 	// System directories
 	public const string sys_libdir = Config.LIBDIR;
-	public const string sys_bindir = "/usr/bin";
-	public const string sys_sharedir = "/usr/share";
+	public const string sys_bindir = Config.PREFIXDIR + "/bin";
+	public const string sys_sharedir = Config.PREFIXDIR + "/share";
 	public const string sys_etcdir = "/etc";
 
 	public bool locked {
