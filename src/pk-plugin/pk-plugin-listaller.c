@@ -25,23 +25,9 @@
 #include <plugin/packagekit-plugin.h>
 #include "listaller.h"
 
-/**
- * PkListallerStatus:
- *
- * Status of the Listaller fake backend
- **/
-typedef enum {
-	PK_LISTALLER_STATUS_UNKNOWN,
-	PK_LISTALLER_STATUS_ENTRIES_LEFT, /* action successful, but backend entries left */
-	PK_LISTALLER_STATUS_BROKEN,
-	PK_LISTALLER_STATUS_FINISHED, /* action successful, no work left */
-	PK_LISTALLER_STATUS_FAILED
-} PkLiStatus;
-
 struct PkPluginPrivate {
 	ListallerManager	*mgr;
 	ListallerSettings	*conf;
-	PkLiStatus		 status;
 };
 
 /**
@@ -50,7 +36,7 @@ struct PkPluginPrivate {
 void
 pk_listaller_reset (PkPlugin *plugin)
 {
-	plugin->priv->status = PK_LISTALLER_STATUS_UNKNOWN;
+	/* Reset something... (this function meight be redundant now) */
 }
 
 /**
@@ -74,11 +60,6 @@ pk_listaller_scan_applications (PkPlugin *plugin)
 	} else {
 		g_debug ("listaller: application database update finished.");
 	}
-
-	if (res)
-		plugin->priv->status = PK_LISTALLER_STATUS_FINISHED;
-	else
-		plugin->priv->status = PK_LISTALLER_STATUS_FAILED;
 
 	return res;
 }
@@ -225,12 +206,7 @@ pk_listaller_remove_applications (PkPlugin *plugin, gchar **package_ids)
 
 		listaller_manager_remove_application (plugin->priv->mgr, app);
 		g_object_unref (app);
-	};
-
-	/* Is there something left to do? */
-	plugin->priv->status = PK_LISTALLER_STATUS_ENTRIES_LEFT;
-	if ((package_ids == NULL) || (g_strv_length (package_ids) == 0))
-		plugin->priv->status = PK_LISTALLER_STATUS_FINISHED;		
+	};	
 }
 
 /**
@@ -265,11 +241,6 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 
 		g_free (description);
 	};
-
-	/* Is there something left to do? */
-	plugin->priv->status = PK_LISTALLER_STATUS_ENTRIES_LEFT;
-	if ((package_ids == NULL) || (g_strv_length (package_ids) == 0))
-		plugin->priv->status = PK_LISTALLER_STATUS_FINISHED;
 }
 
 static void listaller_application_cb (GObject *sender, ListallerAppItem *item, PkPlugin *plugin)
@@ -424,11 +395,8 @@ pk_listaller_install_files (PkPlugin *plugin, gchar **filenames)
 		g_debug ("listaller: Current path is: %s", filenames[i]);
 		ret = pk_listaller_install_file (plugin, filenames[i]);
 		if (!ret)
-			goto out;
+			break;
 	}
-out:
-	if (!ret)
-		plugin->priv->status = PK_LISTALLER_STATUS_FAILED;
 }
 
 /**
@@ -451,7 +419,6 @@ pk_plugin_initialize (PkPlugin *plugin)
 	plugin->priv = PK_TRANSACTION_PLUGIN_GET_PRIVATE (PkPluginPrivate);
 	plugin->priv->conf = listaller_settings_new (TRUE);
 	plugin->priv->mgr = listaller_manager_new (plugin->priv->conf);
-	plugin->priv->status = PK_LISTALLER_STATUS_UNKNOWN;
 
 	/* tell PK we might be able to handle these */
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_DETAILS);
@@ -694,12 +661,6 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 		goto out;
 	}
 
-	if (plugin->priv->status == PK_LISTALLER_STATUS_FAILED) {
-		pk_backend_error_code (plugin->backend,
-				       PK_ERROR_ENUM_INTERNAL_ERROR,
-				       "failed to do something");
-		goto out;
-	}
 out:
 	g_strfreev (data);
 }
