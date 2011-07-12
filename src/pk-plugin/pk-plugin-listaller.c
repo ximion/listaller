@@ -643,6 +643,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	}
 
 	//TODO: PK_ROLE_ENUM_GET_PACKAGES
+	//TODO: PK_ROLE_ENUM_RESOLVE
 
 	if (role == PK_ROLE_ENUM_GET_DETAILS) {
 		package_ids = pk_transaction_get_package_ids (transaction);
