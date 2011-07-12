@@ -163,7 +163,7 @@ pk_listaller_appitem_from_pkid (const gchar *package_id)
 	parts = pk_package_id_split (package_id);
 	tmp = g_strsplit (parts[3], "%", 2);
 	if (g_strcmp0 (tmp[0], "local:listaller") != 0)
-		return NULL;
+		goto out;
 
 	item = listaller_app_item_new_blank ();
 	listaller_app_item_set_idname (item, parts[0]);
@@ -173,9 +173,9 @@ pk_listaller_appitem_from_pkid (const gchar *package_id)
 
 	g_debug ("listaller: <appid> %s %s %s", parts[0], parts[1], tmp[1]);
 
+out:
 	g_strfreev (tmp);
 	g_strfreev (parts);
-
 	return item;
 }
 
