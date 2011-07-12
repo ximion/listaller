@@ -92,8 +92,11 @@ pk_listaller_scan_applications (PkPlugin *plugin)
 void
 pk_listaller_find_applications (PkPlugin *plugin, gchar **values)
 {
-	g_debug ("listaller: searching for applications.");
-	listaller_manager_find_applications_by_values (plugin->priv->mgr, LISTALLER_APP_SOURCE_EXTERN, values, NULL);
+	g_debug ("listaller: searching for applications: %s", values[0]);
+	listaller_manager_find_applications_by_values (plugin->priv->mgr,
+						       LISTALLER_APP_SOURCE_EXTERN,
+						       values,
+						       NULL);
 }
 
 /**
@@ -369,10 +372,14 @@ pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 	ListallerAppItem *app = NULL;
 
 	setup = listaller_setup_new (filename, plugin->priv->conf);
-	g_signal_connect_object (setup, "error-code", (GCallback) listaller_error_code_cb, plugin, 0);
-	g_signal_connect_object (setup, "message", (GCallback) listaller_message_cb, plugin, 0);
-	g_signal_connect_object (setup, "status-changed", (GCallback) listaller_status_change_cb, plugin, 0);
-	g_signal_connect_object (setup, "progress-changed", (GCallback) listaller_progress_change_cb, plugin, 0);
+	g_signal_connect (setup, "error-code",
+			  G_CALLBACK (listaller_error_code_cb), plugin);
+	g_signal_connect (setup, "message",
+			  G_CALLBACK (listaller_message_cb), plugin);
+	g_signal_connect (setup, "status-changed",
+			  G_CALLBACK (listaller_status_change_cb), plugin);
+	g_signal_connect (setup, "progress-changed",
+			  G_CALLBACK (listaller_progress_change_cb), plugin);
 
 	/* now intialize the new setup */
 	ret = listaller_setup_initialize (setup);
@@ -475,9 +482,17 @@ pk_plugin_transaction_run (PkPlugin *plugin,
 {
 	/* reference to the current transaction backend */
 	plugin->priv->backend = pk_transaction_get_backend (transaction);
-	
-	pk_transaction_add_supported_mime_type (transaction,
-						"application/x-installation");
+}
+
+/**
+ * pk_plugin_transaction_content_types:
+ */
+void
+pk_plugin_transaction_content_types (PkPlugin *plugin,
+				     PkTransaction *transaction)
+{
+	pk_transaction_add_supported_content_type (transaction,
+						   "application/x-installation");
 }
 
 /**
@@ -503,8 +518,8 @@ pk_listaller_filter_listaller_packages (gchar ***package_ids)
 	gboolean ret = FALSE;
 
 	/* just do a quick pass as an optimisation for the common case */
-	for (i=0; *package_ids[i] != NULL; i++) {
-		ret = pk_listaller_is_package (*package_ids[i]);
+	for (i=0; (*package_ids)[i] != NULL; i++) {
+		ret = pk_listaller_is_package ((*package_ids)[i]);
 		if (ret)
 			break;
 	}
@@ -514,21 +529,17 @@ pk_listaller_filter_listaller_packages (gchar ***package_ids)
 	/* find and filter listaller packages */
 	native = g_ptr_array_new_with_free_func (g_free);
 	listaller = g_ptr_array_new_with_free_func (g_free);
-	i = 0;
-	while (*package_ids[i] != NULL) {
-		ret = pk_listaller_is_package (*package_ids[i]);
+
+	/* FIXME: We can't be sure that package_ids is NULL-terminated... */
+	for (i = 0; i < g_strv_length(*package_ids); i++) {
+		ret = pk_listaller_is_package ((*package_ids)[i]);
 		if (ret) {
 			g_ptr_array_add (listaller,
-					 g_strdup (*package_ids[i]));
+					 g_strdup ((*package_ids)[i]));
 		} else {
 			g_ptr_array_add (native,
-					 g_strdup (*package_ids[i]));
+					 g_strdup ((*package_ids)[i]));
 		}
-		i++;
-		/* FIXME: We can't be sure that package_ids is NULL-terminated...
-		 * This is just wrong, needs to be fixed! */
-		if (i >= g_strv_length (*package_ids))
-			break;
 	}
 
 	/* not valid anymore */
@@ -569,8 +580,8 @@ pk_listaller_filter_listaller_files (gchar ***files)
 	gboolean ret = FALSE;
 
 	/* just do a quick pass as an optimisation for the common case */
-	for (i=0; *files[i] != NULL; i++) {
-		ret = pk_listaller_is_file (*files[i]);
+	for (i=0; (*files)[i] != NULL; i++) {
+		ret = pk_listaller_is_file ((*files)[i]);
 		if (ret)
 			break;
 	}
@@ -580,14 +591,15 @@ pk_listaller_filter_listaller_files (gchar ***files)
 	/* find and filter listaller packages */
 	native = g_ptr_array_new_with_free_func (g_free);
 	listaller = g_ptr_array_new_with_free_func (g_free);
-	for (i=0; *files[i] != NULL; i++) {
-		ret = pk_listaller_is_file (*files[i]);
+
+	for (i=0; (*files)[i] != NULL; i++) {
+		ret = pk_listaller_is_file ((*files)[i]);
 		if (ret) {
 			g_ptr_array_add (listaller,
-					 g_strdup (*files[i]));
+					 g_strdup ((*files)[i]));
 		} else {
 			g_ptr_array_add (native,
-					 g_strdup (*files[i]));
+					 g_strdup ((*files)[i]));
 		}
 	}
 
@@ -630,6 +642,8 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 		pk_listaller_find_applications (plugin, values);
 		goto out;
 	}
+
+	//TODO: PK_ROLE_ENUM_GET_PACKAGES
 
 	if (role == PK_ROLE_ENUM_GET_DETAILS) {
 		package_ids = pk_transaction_get_package_ids (transaction);
@@ -699,6 +713,13 @@ void
 pk_plugin_transaction_finished_end (PkPlugin *plugin,
 				    PkTransaction *transaction)
 {
+	PkRoleEnum role;
+
 	/* update application databases */
-	pk_listaller_scan_applications (plugin);
+	role = pk_transaction_get_role (transaction);
+	if (role == PK_ROLE_ENUM_INSTALL_FILES ||
+	    role == PK_ROLE_ENUM_REMOVE_PACKAGES ||
+	    role == PK_ROLE_ENUM_REFRESH_CACHE) {
+		pk_listaller_scan_applications (plugin);
+	}
 }
