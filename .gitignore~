@@ -1,0 +1,13 @@
+*~
+*.patch
+*.cache
+*.anjuta
+*.kdev4
+*.user
+moc_*
+build
+.anjuta_sym_db.db
+.directory
+Makefile
+CMakeCache.txt
+CMakeFiles
