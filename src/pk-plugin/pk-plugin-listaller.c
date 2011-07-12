@@ -214,7 +214,6 @@ pk_listaller_pkid_from_appitem (ListallerAppItem *item)
 void
 pk_listaller_remove_applications (PkPlugin *plugin, gchar **package_ids)
 {
-	gchar *pkid = NULL;
 	ListallerAppItem *app = NULL;
 	guint i;
 
@@ -226,7 +225,6 @@ pk_listaller_remove_applications (PkPlugin *plugin, gchar **package_ids)
 			continue;
 
 		listaller_manager_remove_application (plugin->priv->mgr, app);
-		g_free (pkid);
 		g_object_unref (app);
 	};
 
