@@ -658,6 +658,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	    role == PK_ROLE_ENUM_SIMULATE_INSTALL_PACKAGES) {
 
 		/* ignore the return value, we can't sensibly do anything */
+		package_ids = pk_transaction_get_package_ids (transaction);
 		data = pk_listaller_filter_listaller_packages (transaction,
 							       package_ids);
 
