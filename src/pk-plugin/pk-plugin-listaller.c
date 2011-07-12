@@ -42,7 +42,6 @@ struct PkPluginPrivate {
 	ListallerManager	*mgr;
 	ListallerSettings	*conf;
 	PkLiStatus		 status;
-	PkBackend		*backend;
 };
 
 /**
@@ -257,7 +256,7 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 		url = listaller_app_item_get_url (app);
 
 		/* emit */
-		pk_backend_details (plugin->priv->backend, package_ids[i],
+		pk_backend_details (plugin->backend, package_ids[i],
 					license,
 					PK_GROUP_ENUM_UNKNOWN,
 					description,
@@ -285,7 +284,7 @@ static void listaller_application_cb (GObject *sender, ListallerAppItem *item, P
 	g_debug ("listaller: new app found -> %s", listaller_app_item_get_appid (item));
 
 	/* emit */
-	pk_backend_package (plugin->priv->backend, PK_INFO_ENUM_INSTALLED, package_id,
+	pk_backend_package (plugin->backend, PK_INFO_ENUM_INSTALLED, package_id,
 			    listaller_app_item_get_summary (item));
 
 	g_free (package_id);
@@ -296,7 +295,7 @@ static void listaller_error_code_cb (GObject *sender, ListallerErrorItem *error,
 	g_return_if_fail (error != NULL);
 
 	/* emit */
-	pk_backend_error_code (plugin->priv->backend, PK_ERROR_ENUM_INTERNAL_ERROR,
+	pk_backend_error_code (plugin->backend, PK_ERROR_ENUM_INTERNAL_ERROR,
 				listaller_error_item_get_details (error));
 }
 
@@ -328,8 +327,8 @@ static void listaller_message_cb (GObject *sender, ListallerMessageItem *message
 static void listaller_progress_change_cb (GObject* sender, gint progress, gint subprogress, PkPlugin *plugin)
 {
 	/* emit */
-	pk_backend_set_percentage (plugin->priv->backend, progress);
-	pk_backend_set_sub_percentage (plugin->priv->backend, subprogress);
+	pk_backend_set_percentage (plugin->backend, progress);
+	pk_backend_set_sub_percentage (plugin->backend, subprogress);
 }
 
 static void listaller_status_change_cb (GObject *sender, ListallerStatusItem *status, PkPlugin *plugin)
@@ -351,7 +350,7 @@ static void listaller_status_change_cb (GObject *sender, ListallerStatusItem *st
 
 	/* emit */
 	if (pkstatus != PK_STATUS_ENUM_UNKNOWN)
-		pk_backend_set_status (plugin->priv->backend, pkstatus);
+		pk_backend_set_status (plugin->backend, pkstatus);
 }
 
 /**
@@ -395,7 +394,7 @@ pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 		g_debug ("listaller: <error> Unable to build package-id from app-id!");
 	} else {
 		/* emit */
-		pk_backend_package (plugin->priv->backend, PK_INFO_ENUM_INSTALLED,
+		pk_backend_package (plugin->backend, PK_INFO_ENUM_INSTALLED,
 					package_id,
 					listaller_app_item_get_summary (app));
 		g_free (package_id);
@@ -453,7 +452,12 @@ pk_plugin_initialize (PkPlugin *plugin)
 	plugin->priv->conf = listaller_settings_new (TRUE);
 	plugin->priv->mgr = listaller_manager_new (plugin->priv->conf);
 	plugin->priv->status = PK_LISTALLER_STATUS_UNKNOWN;
-	
+
+	/* tell PK we might be able to handle these */
+	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_DETAILS);
+	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_INSTALL_FILES);
+	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_REMOVE_PACKAGES);
+
 	g_signal_connect (plugin->priv->mgr, "error-code", (GCallback) listaller_error_code_cb, plugin);
 	g_signal_connect (plugin->priv->mgr, "message", (GCallback) listaller_message_cb, plugin);
 	g_signal_connect (plugin->priv->mgr, "status-changed", (GCallback) listaller_status_change_cb, plugin);
@@ -469,17 +473,6 @@ pk_plugin_destroy (PkPlugin *plugin)
 {
 	g_object_unref (plugin->priv->conf);
 	g_object_unref (plugin->priv->mgr);
-}
-
-/**
- * pk_plugin_transaction_run:
- */
-void
-pk_plugin_transaction_run (PkPlugin *plugin,
-			   PkTransaction *transaction)
-{
-	/* reference to the current transaction backend */
-	plugin->priv->backend = pk_transaction_get_backend (transaction);
 }
 
 /**
@@ -631,7 +624,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 	/* reset the Listaller fake-backend */
 	pk_listaller_reset (plugin);
-	pk_backend_set_status (plugin->priv->backend, PK_STATUS_ENUM_SETUP);
+	pk_backend_set_status (plugin->backend, PK_STATUS_ENUM_SETUP);
 
 	/* handle these before the transaction has been run */
 	role = pk_transaction_get_role (transaction);
@@ -664,7 +657,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 		/* nothing more to process */
 		if (g_strv_length (package_ids) == 0) {
-			pk_backend_set_exit_code (plugin->priv->backend,
+			pk_backend_set_exit_code (plugin->backend,
 						  PK_EXIT_ENUM_SUCCESS);
 		}
 		goto out;
@@ -680,7 +673,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 		/* nothing more to process */
 		if (g_strv_length (full_paths) == 0) {
-			pk_backend_set_exit_code (plugin->priv->backend,
+			pk_backend_set_exit_code (plugin->backend,
 						  PK_EXIT_ENUM_SUCCESS);
 		}
 		goto out;
@@ -695,14 +688,14 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 		/* nothing more to process */
 		if (g_strv_length (package_ids) == 0) {
-			pk_backend_set_exit_code (plugin->priv->backend,
+			pk_backend_set_exit_code (plugin->backend,
 						  PK_EXIT_ENUM_SUCCESS);
 		}
 		goto out;
 	}
 
 	if (plugin->priv->status == PK_LISTALLER_STATUS_FAILED) {
-		pk_backend_error_code (plugin->priv->backend,
+		pk_backend_error_code (plugin->backend,
 				       PK_ERROR_ENUM_INTERNAL_ERROR,
 				       "failed to do something");
 		goto out;
