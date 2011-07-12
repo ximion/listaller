@@ -507,17 +507,19 @@ pk_listaller_is_package (const gchar *package_id)
  * pk_listaller_filter_listaller_packages:
  */
 static gchar **
-pk_listaller_filter_listaller_packages (gchar ***package_ids)
+pk_listaller_filter_listaller_packages (PkTransaction *transaction,
+					gchar **package_ids)
 {
-	gchar **retval = NULL;
-	GPtrArray *native = NULL;
-	GPtrArray *listaller = NULL;
-	guint i;
 	gboolean ret = FALSE;
+	gchar **package_ids_new = NULL;
+	gchar **retval = NULL;
+	GPtrArray *listaller = NULL;
+	GPtrArray *native = NULL;
+	guint i;
 
 	/* just do a quick pass as an optimisation for the common case */
-	for (i=0; (*package_ids)[i] != NULL; i++) {
-		ret = pk_listaller_is_package ((*package_ids)[i]);
+	for (i=0; package_ids[i] != NULL; i++) {
+		ret = pk_listaller_is_package (package_ids[i]);
 		if (ret)
 			break;
 	}
@@ -528,24 +530,23 @@ pk_listaller_filter_listaller_packages (gchar ***package_ids)
 	native = g_ptr_array_new_with_free_func (g_free);
 	listaller = g_ptr_array_new_with_free_func (g_free);
 
-	for (i=0; (*package_ids)[i] != NULL; i++) {
-		ret = pk_listaller_is_package ((*package_ids)[i]);
+	for (i=0; package_ids[i] != NULL; i++) {
+		ret = pk_listaller_is_package (package_ids[i]);
 		if (ret) {
 			g_ptr_array_add (listaller,
-					 g_strdup ((*package_ids)[i]));
+					 g_strdup (package_ids[i]));
 		} else {
 			g_ptr_array_add (native,
-					 g_strdup ((*package_ids)[i]));
+					 g_strdup (package_ids[i]));
 		}
 	}
 
-	/* not valid anymore */
-	g_strfreev (*package_ids);
-
 	/* pickle the arrays */
 	retval = pk_ptr_array_to_strv (listaller);
-	*package_ids = pk_ptr_array_to_strv (native);
+	package_ids_new = pk_ptr_array_to_strv (native);
+	pk_transaction_set_package_ids (transaction, package_ids_new);
 out:
+	g_strfreev (package_ids_new);
 	if (native != NULL)
 		g_ptr_array_unref (native);
 	if (listaller != NULL)
@@ -568,8 +569,10 @@ pk_listaller_is_file (const gchar *filename)
  * pk_listaller_filter_listaller_files:
  */
 static gchar **
-pk_listaller_filter_listaller_files (gchar ***files)
+pk_listaller_filter_listaller_files (PkTransaction *transaction,
+				     gchar **files)
 {
+	gchar **files_new = NULL;
 	gchar **retval = NULL;
 	GPtrArray *native = NULL;
 	GPtrArray *listaller = NULL;
@@ -577,8 +580,8 @@ pk_listaller_filter_listaller_files (gchar ***files)
 	gboolean ret = FALSE;
 
 	/* just do a quick pass as an optimisation for the common case */
-	for (i=0; (*files)[i] != NULL; i++) {
-		ret = pk_listaller_is_file ((*files)[i]);
+	for (i=0; files[i] != NULL; i++) {
+		ret = pk_listaller_is_file (files[i]);
 		if (ret)
 			break;
 	}
@@ -589,24 +592,23 @@ pk_listaller_filter_listaller_files (gchar ***files)
 	native = g_ptr_array_new_with_free_func (g_free);
 	listaller = g_ptr_array_new_with_free_func (g_free);
 
-	for (i=0; (*files)[i] != NULL; i++) {
-		ret = pk_listaller_is_file ((*files)[i]);
+	for (i=0; files[i] != NULL; i++) {
+		ret = pk_listaller_is_file (files[i]);
 		if (ret) {
 			g_ptr_array_add (listaller,
-					 g_strdup ((*files)[i]));
+					 g_strdup (files[i]));
 		} else {
 			g_ptr_array_add (native,
-					 g_strdup ((*files)[i]));
+					 g_strdup (files[i]));
 		}
 	}
 
-	/* not valid anymore */
-	g_strfreev (*files);
-
 	/* pickle the arrays */
 	retval = pk_ptr_array_to_strv (listaller);
-	*files = pk_ptr_array_to_strv (native);
+	files_new = pk_ptr_array_to_strv (native);
+	pk_transaction_set_full_paths (transaction, files_new);
 out:
+	g_strfreev (files_new);
 	if (native != NULL)
 		g_ptr_array_unref (native);
 	if (listaller != NULL)
@@ -645,7 +647,8 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 	if (role == PK_ROLE_ENUM_GET_DETAILS) {
 		package_ids = pk_transaction_get_package_ids (transaction);
-		data = pk_listaller_filter_listaller_packages (&package_ids);
+		data = pk_listaller_filter_listaller_packages (transaction,
+							       package_ids);
 		if (data != NULL)
 			pk_listaller_get_details (plugin, data);
 		goto out;
@@ -655,7 +658,8 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	    role == PK_ROLE_ENUM_SIMULATE_INSTALL_PACKAGES) {
 
 		/* ignore the return value, we can't sensibly do anything */
-		data = pk_listaller_filter_listaller_packages (&package_ids);
+		data = pk_listaller_filter_listaller_packages (transaction,
+							       package_ids);
 
 		/* nothing more to process */
 		if (g_strv_length (package_ids) == 0) {
@@ -667,7 +671,8 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 	if (role == PK_ROLE_ENUM_INSTALL_FILES) {
 		full_paths = pk_transaction_get_full_paths (transaction);
-		data = pk_listaller_filter_listaller_files (&full_paths);
+		data = pk_listaller_filter_listaller_files (transaction,
+							    full_paths);
 
 		if (data != NULL)
 			pk_listaller_install_files (plugin, data);
@@ -681,7 +686,8 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	}
 	if (role == PK_ROLE_ENUM_REMOVE_PACKAGES) {
 		package_ids = pk_transaction_get_package_ids (transaction);
-		data = pk_listaller_filter_listaller_packages (&package_ids);
+		data = pk_listaller_filter_listaller_packages (transaction,
+							       package_ids);
 
 		if (data != NULL)
 			pk_listaller_remove_applications (plugin, data);
