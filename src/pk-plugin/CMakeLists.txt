@@ -34,8 +34,8 @@ include_directories(${CMAKE_BINARY_DIR}
 		${PACKAGEKIT_PLUGIN_INCLUDE_DIRS}
 )
 
-add_definitions("-Werror")
-add_definitions("-DG_LOG_DOMAIN=\"PkListaller\"")
+remove_definitions("-DG_LOG_DOMAIN=\"Listaller\"")
+add_definitions("-Werror -DG_LOG_DOMAIN=\"PkListaller\"")
 
 if(NOT LILIBS_FULL_VERSION)
  message(FATAL_ERROR "Library version not defined. (This should never happen)")

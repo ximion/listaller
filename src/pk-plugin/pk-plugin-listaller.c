@@ -530,8 +530,7 @@ pk_listaller_filter_listaller_packages (gchar ***package_ids)
 	native = g_ptr_array_new_with_free_func (g_free);
 	listaller = g_ptr_array_new_with_free_func (g_free);
 
-	/* FIXME: We can't be sure that package_ids is NULL-terminated... */
-	for (i = 0; i < g_strv_length(*package_ids); i++) {
+	for (i=0; (*package_ids)[i] != NULL; i++) {
 		ret = pk_listaller_is_package ((*package_ids)[i]);
 		if (ret) {
 			g_ptr_array_add (listaller,
