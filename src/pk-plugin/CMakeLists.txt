@@ -35,7 +35,8 @@ include_directories(${CMAKE_BINARY_DIR}
 )
 
 remove_definitions("-DG_LOG_DOMAIN=\"Listaller\"")
-add_definitions("-Werror -DG_LOG_DOMAIN=\"PkListaller\"")
+add_definitions("-Werror -g")
+add_definitions("-DG_LOG_DOMAIN=\"PkListaller\"")
 
 if(NOT LILIBS_FULL_VERSION)
  message(FATAL_ERROR "Library version not defined. (This should never happen)")

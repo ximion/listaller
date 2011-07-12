@@ -133,9 +133,6 @@ add_definitions ("--include config.h")
 # Required if GPGme was compiled with _FILE_OFFSET_BITS=64
 add_definitions("-D_FILE_OFFSET_BITS=64")
 
-# Other stuff
-add_definitions("-DG_LOG_DOMAIN=\"Listaller\"")
-
 #
 # Validate Vala version
 #

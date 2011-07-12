@@ -83,6 +83,9 @@ vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 
 add_definitions ("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE")
 
+# Add log domain
+add_definitions("-DG_LOG_DOMAIN=\"Listaller\"")
+
 target_link_libraries(listaller-glib
 		${M_LIB}
 		${GEE_LIBRARIES}
