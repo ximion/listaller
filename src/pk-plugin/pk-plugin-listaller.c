@@ -644,6 +644,11 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 							       package_ids);
 		if (data != NULL)
 			pk_listaller_get_details (plugin, data);
+
+		/* nothing more to process */
+		package_ids = pk_transaction_get_package_ids (transaction);
+		if (g_strv_length (package_ids) == 0)
+			pk_backend_finished (plugin->backend);
 		goto out;
 	}
 
@@ -656,10 +661,9 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 							       package_ids);
 
 		/* nothing more to process */
-		if (g_strv_length (package_ids) == 0) {
-			pk_backend_set_exit_code (plugin->backend,
-						  PK_EXIT_ENUM_SUCCESS);
-		}
+		package_ids = pk_transaction_get_package_ids (transaction);
+		if (g_strv_length (package_ids) == 0)
+			pk_backend_finished (plugin->backend);
 		goto out;
 	}
 
@@ -672,10 +676,9 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 			pk_listaller_install_files (plugin, data);
 
 		/* nothing more to process */
-		if (g_strv_length (full_paths) == 0) {
-			pk_backend_set_exit_code (plugin->backend,
-						  PK_EXIT_ENUM_SUCCESS);
-		}
+		full_paths = pk_transaction_get_full_paths (transaction);
+		if (g_strv_length (full_paths) == 0)
+			pk_backend_finished (plugin->backend);
 		goto out;
 	}
 	if (role == PK_ROLE_ENUM_REMOVE_PACKAGES) {
@@ -687,10 +690,9 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 			pk_listaller_remove_applications (plugin, data);
 
 		/* nothing more to process */
-		if (g_strv_length (package_ids) == 0) {
-			pk_backend_set_exit_code (plugin->backend,
-						  PK_EXIT_ENUM_SUCCESS);
-		}
+		package_ids = pk_transaction_get_package_ids (transaction);
+		if (g_strv_length (package_ids) == 0)
+			pk_backend_finished (plugin->backend);
 		goto out;
 	}
 
