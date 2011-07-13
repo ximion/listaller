@@ -30,15 +30,42 @@ private class DepFind : Object {
 	public DepFind (string indir) {
 		input_dir = indir;
 	}
-	
-	public ArrayList<IPK.Dependency> get_dependencies () {
-		ArrayList<IPK.Dependency> deplist = new ArrayList<IPK.Dependency> ();
-		
-		IPK.Dependency test = new IPK.Dependency ("test123");
-		deplist.add (test);
-		
+
+	public ArrayList<string>? get_dependency_list () {
+		string output;
+
+		string[] cmd = { "depscan", "-r", "--simpletext", "." };
+		try {
+			Process.spawn_sync (input_dir, cmd, null,
+					SpawnFlags.SEARCH_PATH, null, out output, null, null);
+		} catch (Error e) {
+			error ("Unable to scan dependencies: %s", e.message);
+			return null;
+		}
+		output = output.escape ("\n").replace ("\\r", "");
+		string[] deps = output.split ("\n");
+		ArrayList<string> deplist = new ArrayList<string> ();
+		for (uint i = 0; i < deps.length; i++)
+			if ((deps[i] != null) && (deps[i] != "")) {
+				deplist.add (deps[i]);
+			}
 		return deplist;
 	}
-}
+
+	public ArrayList<IPK.Dependency> get_dependencies () {
+		ArrayList<IPK.Dependency> deplist = new ArrayList<IPK.Dependency> ();
+
+		pkinfo_info ("Scanning for dependencies...");
+		ArrayList<string> files = get_dependency_list ();
+		foreach (string s in files) {
+			IPK.Dependency dep = new IPK.Dependency (s.replace (".so", ""));
+			dep.files.add (s);
+
+			deplist.add (dep);
+		}
+
+		return deplist;
+	}
+	}
 
 } // End of namespace

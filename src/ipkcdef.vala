@@ -371,7 +371,7 @@ public class Script : CXml {
 	public override string get_app_description () {
 		return base.get_app_description ();
 	}
-	
+
 	public bool autosolve_dependencies () {
 		Xml.Node* n = get_xsubnode (pkg_node (), "requires");
 		if (get_node_content (get_xproperty (n, "find")) == "auto")

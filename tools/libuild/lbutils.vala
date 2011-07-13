@@ -48,17 +48,17 @@ namespace Listaller.IPK {
 } // End of namespace
 
 private void pkinfo_hint (string msg) {
-	stdout.printf (" H: %s".printf (msg));
+	stdout.printf (" H: %s\n".printf (msg));
 }
 
 private void pkinfo_info (string msg) {
-	stdout.printf (" I: %s".printf (msg));
+	stdout.printf (" I: %s\n".printf (msg));
 }
 
 private void pkinfo_warning (string msg) {
-	stdout.printf (" W: %s".printf (msg));
+	stdout.printf (" W: %s\n".printf (msg));
 }
 
 private void pkinfo_error (string msg) {
-	stdout.printf (" E: %s".printf (msg));
+	stdout.printf (" E: %s\n".printf (msg));
 }

@@ -22,17 +22,20 @@ using GLib;
 
 public class DepScanCmd : Object {
 	// Cmd options
-	private static bool _show_version = false;
-	private static bool _run_recursive = false;
-	private static string _input_path = null;
+	private static bool o_show_version = false;
+	private static bool o_run_recursive = false;
+	private static bool o_simpletext = false;
+	private static string o_input_path = null;
 
 	public int exit_code { get; set; }
 
 	private const OptionEntry[] options = {
-		{ "version", 'v', 0, OptionArg.NONE, ref _show_version,
+		{ "version", 'v', 0, OptionArg.NONE, ref o_show_version,
 			N_("Show the application's version"), null },
-		{ "recursive", 'r', 0, OptionArg.NONE, ref _run_recursive,
+		{ "recursive", 'r', 0, OptionArg.NONE, ref o_run_recursive,
 			N_("Use recursive mode"), null },
+		{ "simpletext", 0, 0, OptionArg.NONE, ref o_simpletext,
+			N_("Print machine-readable simple text"), null },
 		{ null }
 	};
 
@@ -52,8 +55,8 @@ public class DepScanCmd : Object {
 
 		for (int i = 1; i < args.length; i++) {
 			string arg = args[i];
-			if (_input_path == null) {
-				_input_path = arg;
+			if (o_input_path == null) {
+				o_input_path = arg;
 			}
 		}
 	}
@@ -65,18 +68,18 @@ public class DepScanCmd : Object {
 
 	public void run () {
 		bool done = false;
-		if (_show_version) {
+		if (o_show_version) {
 			stdout.printf ("Listaller bundle version: %s\n", Config.VERSION);
 			return;
 		}
-		if ((_input_path == null) || (_input_path == "")) {
+		if ((o_input_path == null) || (o_input_path == "")) {
 			stdout.printf (_("No path given!") + "\n");
 			exit_code = 2;
 			return;
 		}
 
-		DependencyScanner scan = new DependencyScanner (_input_path);
-		scan.recursive = _run_recursive;
+		DependencyScanner scan = new DependencyScanner (o_input_path, o_simpletext);
+		scan.recursive = o_run_recursive;
 		scan.compile_required_files_list ();
 	}
 

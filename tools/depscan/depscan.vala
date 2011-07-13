@@ -30,14 +30,16 @@ public interface IDepScanEngine {
 private class DependencyScanner : Object {
 	private string targetdir;
 	private HashSet<string> requires;
+	private bool mtext;
 	public bool recursive { get; set; }
 
 	public HashSet<string> required_files {
 		get { return requires; }
 	}
 
-	public DependencyScanner (string target_dir) {
+	public DependencyScanner (string target_dir, bool simple_text = false) {
 		targetdir = target_dir;
+		mtext = simple_text;
 		requires = new HashSet<string> ();
 	}
 
@@ -87,7 +89,8 @@ private class DependencyScanner : Object {
 
 	public bool compile_required_files_list () {
 		requires.clear ();
-		stdout.printf ("Please wait...");
+		if (!mtext)
+			stdout.printf ("Please wait...\n");
 		ArrayList<string> files;
 		if (FileUtils.test (targetdir, FileTest.IS_REGULAR)) {
 			files = new ArrayList<string> ();

@@ -42,7 +42,7 @@ public class LiBuild : Object {
 			N_("Path to Listaller package source directory"), N_("DIRECTORY") },
 		{ "outdir", 'o', 0, OptionArg.FILENAME, ref _output_dir,
 			N_("IPK package output directory"), N_("DIRECTORY") },
-		{ "sign", 'v', 0, OptionArg.NONE, ref _sign_pkg,
+		{ "sign", 0, 0, OptionArg.NONE, ref _sign_pkg,
 			N_("GPG-Sign the resulting package"), null },
 		{ null }
 	};
