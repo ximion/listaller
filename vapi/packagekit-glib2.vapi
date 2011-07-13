@@ -353,7 +353,7 @@ namespace PackageKit {
 		[NoAccessorMethod]
 		public string license { owned get; set; }
 		[NoAccessorMethod]
-		public string package_id { owned get; set; }
+		public string package_id { owned get; }
 		[NoAccessorMethod]
 		public uint64 size { get; set; }
 		[NoAccessorMethod]
@@ -1175,6 +1175,7 @@ namespace PackageKit {
 		FONT,
 		HARDWARE_DRIVER,
 		POSTSCRIPT_DRIVER,
+		PLASMA_SERVICE,
 		LAST
 	}
 	[CCode (cprefix = "PK_RESTART_ENUM_", cname = "PkRestartEnum", cheader_filename = "packagekit-glib2/packagekit.h")]
