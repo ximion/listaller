@@ -214,6 +214,10 @@ public class Settings : Object {
 		return dskdir;
 	}
 
+	public string conf_dir () {
+		return confdir;
+	}
+
 	public string tmp_dir () {
 		string ret;
 		ret = Environment.get_tmp_dir ();

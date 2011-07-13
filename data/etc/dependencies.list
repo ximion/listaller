@@ -3,7 +3,7 @@
 Linux: linux-gate.so.*
        ld-linux.so.*
        ld-linux-x86-64.so.*
-       libstdc\+\+.so.*
+       libstdc++.so.*
        libm.so.*
        libgcc_s.so.*
        libc.so.*
@@ -32,3 +32,9 @@ Xorg: libX11.so.*
       libXcursor.so.*
       libXft.so.*
       libXt.so.*
+
+ZLib: libz.so.*
+
+OggVorbis: libvorbis.so.*
+           libvorbisfile.so.*
+           libogg.so.*

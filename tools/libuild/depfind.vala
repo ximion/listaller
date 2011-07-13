@@ -56,13 +56,37 @@ private class DepFind : Object {
 		ArrayList<IPK.Dependency> deplist = new ArrayList<IPK.Dependency> ();
 
 		pkinfo_info ("Scanning for dependencies...");
+		DepInfo dinfo = new DepInfo ();
+
+		// TODO: There are way too much foreach () loops here (and in DepInfo) - maybe there is a smarter
+		//	and faster way to do this...
+
 		ArrayList<string> files = get_dependency_list ();
 		foreach (string s in files) {
-			string dep_name = Utils.string_replace (s, "(\\.so|\\+|\\.)", "");
+			IPK.Dependency dtmp = dinfo.get_dep_template_for_file (s);
+			string dep_name = "";
+			if (dtmp != null)
+				dep_name = dtmp.name;
+			else
+				dep_name = Utils.string_replace (s, "(\\.so|\\+|\\.)", "");
+
 			if (dep_name.strip () == "") {
 				debug ("dep_name would be empty for %s!", s);
 				continue;
 			}
+
+			bool done = false;
+			foreach (IPK.Dependency d in deplist) {
+				if (d.name == dep_name) {
+					d.files.add (s.strip ());
+					done = true;
+					break;
+				}
+			}
+			if (done)
+				continue;
+
+			// If we are here, we need to create a new dependency object
 			IPK.Dependency dep = new IPK.Dependency (dep_name);
 			dep.files.add (s);
 
