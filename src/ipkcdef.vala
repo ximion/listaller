@@ -194,6 +194,13 @@ public abstract class CXml : Object {
 		foreach (Dependency dep in list) {
 			Xml.Node *depnode = n->new_child (null, dep.name);
 
+			// If we have a feed-url for this, add it
+			if (dep.feed_url != "") {
+				Xml.Node *fn = get_xproperty (depnode, "feed");
+				fn->set_content (dep.feed_url);
+			}
+
+			// Add the file-list
 			foreach (string s in dep.files)
 				depnode->new_text_child (null, "file", s);
 		}
@@ -208,6 +215,10 @@ public abstract class CXml : Object {
 				continue;
 			}
 			Dependency dep = new Dependency (iter->name);
+
+			string s = get_xproperty (iter, "feed")->get_content ();
+			if (s.strip () != "")
+				dep.feed_url = s;
 
 			// Fill dependency entry
 			for (Xml.Node* in = iter->children; in != null; in = in->next) {
@@ -384,7 +395,7 @@ public class Script : CXml {
 		return base.get_app_description ();
 	}
 
-	public bool autosolve_dependencies () {
+	public bool get_autosolve_dependencies () {
 		Xml.Node* n = get_xsubnode (pkg_node (), "requires");
 		if (get_node_content (get_xproperty (n, "find")) == "auto")
 			return true;

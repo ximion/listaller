@@ -62,3 +62,12 @@ private void pkinfo_warning (string msg) {
 private void pkinfo_error (string msg) {
 	stdout.printf (" E: %s\n".printf (msg));
 }
+
+private static void pkbuild_action (string msg, bool header = false) {
+	string prefix = "~";
+	if (header)
+		prefix = "=>";
+	else
+		prefix = " ->";
+	stdout.printf (" " + prefix + " " + msg + "\n");
+}

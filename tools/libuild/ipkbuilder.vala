@@ -340,6 +340,7 @@ private class Builder : Object {
 	}
 
 	public bool initialize () {
+		pkbuild_action ("Initializing...");
 		// Check for valid installer source dirs
 		srcdir = find_ipk_source_dir (srcdir);
 		if (srcdir == null) {
@@ -379,6 +380,8 @@ private class Builder : Object {
 	public bool build_ipk () {
 		bool ret = false;
 
+		pkbuild_action ("Building IPK control file.");
+
 		IPK.Control ictrl = new IPK.Control ();
 
 		// Load definitions
@@ -399,7 +402,7 @@ private class Builder : Object {
 		ictrl.set_app_description (load_text_from_element (ipks.get_app_description ()));
 
 		ArrayList<IPK.Dependency> deps = ipks.get_pkg_dependencies ();
-		if (ipks.autosolve_dependencies ()) {
+		if (ipks.get_autosolve_dependencies ()) {
 			DepFind df = new DepFind (Path.build_filename (srcdir, "..", null));
 			ArrayList<IPK.Dependency> list = df.get_dependencies ();
 			foreach (IPK.Dependency d1 in list) {
@@ -421,6 +424,8 @@ private class Builder : Object {
 		ictrl.save_to_file (tmp);
 		ctrlfiles.add (tmp);
 
+		pkbuild_action ("Generating package...");
+
 		ret = build_ipk_files_structure (flist);
 		if (!ret)
 			return false;
@@ -428,6 +433,8 @@ private class Builder : Object {
 		if (!ret)
 			return false;
 		ret = finalize_ipk ();
+
+		pkbuild_action ("Done.");
 
 		return ret;
 	}

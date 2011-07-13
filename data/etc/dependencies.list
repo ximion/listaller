@@ -1,22 +1,29 @@
 # List of standard software dependencies
 
 Name: Linux
-IsDefault: true
+Standard: true
 Files: linux-gate.so.*
        ld-linux.so.*
-       ld-linux-x86-64.so.*
-       libstdc++.so.*
-       libm.so.*
-       libgcc_s.so.*
-       libc.so.*
-       libpthread.so.*
-       libjemalloc.so
-       libdl.so.*
+       ld-linux-*
        libselinux.so.*
        linux-vdso.so.*
 
+Name: LibC-6
+Standard: true
+Files: libc.so.*
+       libpthread.so.*
+       libjemalloc.so
+       libm.so.*
+       librt.so.*
+       libdl.so.*
+
+Name: LibGCC
+Standard: true
+Files: libgcc_s.so.*
+       libstdc++.so.*
+
 Name: Xorg
-IsDefault: true
+Standard: true
 Files: libX11.so.*
        libXext.so.*
        libuuid.so.*
@@ -38,10 +45,23 @@ Files: libX11.so.*
        libXt.so.*
        libfreetype.so.*
 
+Name: MesaGL
+Standard: true
+Files: libGL.so.*
+       libGLU.so.*
+
 Name: ZLib
 Files: libz.so.*
 
-Name: OggVorbis
+Name: Ogg
+Feed: http://services.sugarlabs.org/libogg
+Files: libogg.so.*
+
+Name: Vorbis
+Feed: http://services.sugarlabs.org/libvorbis
 Files: libvorbis.so.*
        libvorbisfile.so.*
-       libogg.so.*
+       libvorbisenc.so.*
+
+Name: OpenAL
+Files: libopenal.so.*

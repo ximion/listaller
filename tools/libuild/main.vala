@@ -101,11 +101,13 @@ public class LiBuild : Object {
 				exit_code = 3;
 				return;
 			}
+			pkbuild_action ("Compiling/preparing sources", true);
 			exit_code = prep.run_compile ();
 			if (exit_code != 0)
 				return;
 
 			// Build the IPK package
+			pkbuild_action ("Building package", true);
 			IPK.Builder builder = new IPK.Builder (srcdir);
 			builder.error_message.connect (on_error);
 			builder.message.connect (on_message);

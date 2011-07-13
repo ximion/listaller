@@ -65,6 +65,16 @@ private class DepInfo : Object {
 					dep.name = line.substring (line.index_of (":") + 1).strip ();
 					continue;
 				}
+				if (line.down ().has_prefix ("feed:")) {
+					dep.feed_url = line.substring (line.index_of (":") + 1).strip ();
+					continue;
+				}
+				if (line.down ().has_prefix ("standard:")) {
+					string s = line.substring (line.index_of (":") + 1).strip ();
+					if (s.down () == "true")
+						dep.is_standardlib = true;
+					continue;
+				}
 				if (line.down ().has_prefix ("files:")) {
 					string s = line.substring (line.index_of (":") + 1).strip ();
 					if (s != "")

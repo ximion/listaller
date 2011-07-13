@@ -55,7 +55,7 @@ private class DepFind : Object {
 	public ArrayList<IPK.Dependency> get_dependencies () {
 		ArrayList<IPK.Dependency> deplist = new ArrayList<IPK.Dependency> ();
 
-		pkinfo_info ("Scanning for dependencies...");
+		pkbuild_action ("Scanning for dependencies...");
 		DepInfo dinfo = new DepInfo ();
 
 		// TODO: There are way too much foreach () loops here (and in DepInfo) - maybe there is a smarter
@@ -88,9 +88,30 @@ private class DepFind : Object {
 
 			// If we are here, we need to create a new dependency object
 			IPK.Dependency dep = new IPK.Dependency (dep_name);
+			if (dtmp != null) {
+				dep.version = dtmp.version;
+				dep.feed_url = dtmp.feed_url;
+				dep.is_standardlib = dtmp.is_standardlib;
+			}
 			dep.files.add (s);
 
 			deplist.add (dep);
+		}
+
+		// Remove default dependencies
+		uint i = 0;
+		while (i < deplist.size) {
+			IPK.Dependency dep = deplist.get ((int) i);
+			if (dep.is_standardlib) {
+				deplist.remove (dep);
+				continue;
+			}
+			if (PatternSpec.match_simple ("libnvidia-*", dep.name)) {
+				deplist.remove (dep);
+				continue;
+			}
+
+			i++;
 		}
 
 		return deplist;
