@@ -100,6 +100,22 @@ void test_zfeeds () {
 	assert (feed.package_url != "");
 }
 
+int comp_ver (string a, string b) {
+	int i = compare_versions (a, b);
+	debug ("Comparing versions: %s and %s => [%i]", a, b, i);
+	return i;
+}
+
+void test_versions () {
+	assert (comp_ver ("6", "8") == -1);
+	assert (comp_ver ("0.6.12b-d", "0.6.12a") == 1);
+	assert (comp_ver ("7.4", "7.4") == 0);
+	assert (comp_ver ("ab.d", "ab.f") == -1);
+	assert (comp_ver ("0.6.16", "0.6.14") == 1);
+
+	assert (comp_ver ("3.0.rc2", "3.0.0") == 1);
+}
+
 int main (string[] args) {
 	msg ("=== Running Basic Tests ===");
 	datadir = args[1];
@@ -111,6 +127,7 @@ int main (string[] args) {
 	Test.init (ref args);
 	test_utils ();
 	test_application_ids ();
+	test_versions ();
 	test_zfeeds ();
 	Test.run ();
 	return 0;

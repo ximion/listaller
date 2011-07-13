@@ -20,7 +20,8 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/utils.vala
 	${lisrc}/security.vala
 	${lisrc}/ipkpackage.vala
 	${lisrc}/packdetail.vala
-	${lisrc}/depman.vala
+	${lisrc}/depinfo.vala
+	${lisrc}/version.vala
 	CACHE INTERNAL "Listaller core source files"
 )
 
@@ -62,7 +63,6 @@ pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
 
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	zfeed/zfeed.vala
-	depinfo.vala
 	depsolver.vala
 	depprovider-pk.vala
 	manager.vala

@@ -13,7 +13,6 @@ pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 set(LIBUILD_SOURCES ${LISTALLER_BASE_SOURCES}
-			${lisrc}/depinfo.vala
 			lbutils.vala
 			prepare.vala
 			gpgsign.vala
