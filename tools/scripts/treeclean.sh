@@ -7,9 +7,7 @@ for arg; do
   esac;
 done
 
-if [ "$ALL" == "1" ]; then
- rm -f Makefile
-fi
+rm -f Makefile
 
 if [ -d ./build ] ;then
  rm -rf ./build

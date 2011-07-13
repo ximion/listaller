@@ -19,7 +19,8 @@ link_libraries(${GLIB2_LIBRARIES}
 	       ${GIO2_LIBRARIES}
 )
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}
+include_directories(${CMAKE_BINARY_DIR}
+		    ${CMAKE_CURRENT_SOURCE_DIR}
 		    ${GLIB2_INCLUDE_DIR}
 		    ${GEE_INCLUDE_DIR}
 		    ${GIO2_INCLUDE_DIR}
