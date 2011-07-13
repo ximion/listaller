@@ -16,6 +16,8 @@ pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
 #find_gir(PKGIR "packagekit-glib2" REQUIRED)
 
 set(LIUNITTEST_SOURCES ${LISTALLER_BASE_SOURCES}
+			${lisrc}/zfeed/zfeed.vala
+			${lisrc}/depinfo.vala
 			${lisrc}/depsolver.vala
 			${lisrc}/depprovider-pk.vala
 			${lisrc}/manager.vala

@@ -1,4 +1,4 @@
-/* zifeed.vala
+/* zfeed.vala
  *
  * Copyright (C) 2011 Matthias Klumpp <matthias@nlinux.org>
  *
@@ -24,20 +24,23 @@ using Gee;
 using Listaller;
 using Listaller.Utils;
 
-namespace Listaller.ZeroInstall {
+namespace Listaller.Deps {
 
-private abstract class Feed : Object {
+private class Feed : Object {
 	private string fname;
 	private Xml.Doc* _xdoc;
+
+	public string package_url { get; set; }
 
 	internal Xml.Doc* xdoc {
 		get { return _xdoc; }
 		set { _xdoc = value; }
 	}
 
-	internal Feed () {
+	public Feed () {
 		fname = "";
 		xdoc = null;
+		package_url = "";
 	}
 
 	~Feed () {
@@ -45,7 +48,7 @@ private abstract class Feed : Object {
 			delete xdoc;
 	}
 
-	protected bool open (string path) {
+	public bool open (string path) {
 		// Already opened?
 		if (xdoc != null) {
 			warning ("This ZI feed has already been opened!");
@@ -91,7 +94,7 @@ private abstract class Feed : Object {
 			}
 			if (iter->name == id) {
 				if (attr != "") {
-					if (get_node_content (get_xproperty (iter, attr)) == attr_value) {
+					if (get_xproperty (iter, attr)->get_content () == attr_value) {
 						res = iter;
 						break;
 					}
@@ -129,19 +132,47 @@ private abstract class Feed : Object {
 	protected string get_intf_info_str (string name) {
 		if (name == "")
 			return "";
-		return get_node_content (get_xsubnode (interface_node (), name));
+		return get_xsubnode (interface_node (), name)->get_content ();
 	}
 
-	public IPK.Dependency get_dependency_info () {
-		IPK.Dependency dep = new IPK.Dependency ();
-
+	public void update_dependency_data (ref IPK.Dependency dep) {
 		dep.name = get_intf_info_str ("name");
 		dep.summary = get_intf_info_str ("summary");
-		dep.architecture = get_xproperty (get_xsubnode (interface_node (), "group"))->get_content ().down ();
+		dep.description = get_intf_info_str ("description");
+		dep.homepage = get_intf_info_str ("homepage");
+	}
 
-		return dep;
+	public bool search_matching_dependency () {
+		Xml.Node *impl = null;
+
+		// Find implementation which matches the current system
+		for (Xml.Node* iter = interface_node()->children; iter != null; iter = iter->next) {
+			// Spaces between tags are also nodes, discard them
+			if (iter->type != ElementType.ELEMENT_NODE) {
+				continue;
+			}
+			if (iter->name == "implementation") {
+				string arch = get_xproperty (iter, "arch")->get_content ().down ();
+				if (PatternSpec.match_simple (arch, "*-i?86"))
+					arch = "%s-%s".printf (arch.substring (0, arch.index_of ("-")), system_machine ());
+				else
+					arch = system_architecture ();
+				if (get_xproperty (iter, "arch")->get_content ().down () == arch.down ()) {
+					impl = iter;
+					break;
+				}
+			}
+		}
+		if (impl == null)
+			return false;
+
+		package_url = get_xproperty (get_xsubnode (impl, "archive"), "href")->get_content ();
+		if (package_url.strip () == "")
+			return false;
+
+		return true;
 	}
 
 }
 
-} // End of Listaller.ZeroInstall namespace
+} // End of Listaller.Deps namespace

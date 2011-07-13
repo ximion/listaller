@@ -84,6 +84,22 @@ void test_utils () {
 	assert (datadir == xpath);
 }
 
+void test_zfeeds () {
+	Deps.Feed feed = new Deps.Feed ();
+	feed.open (Path.build_filename (datadir, "libogg.xml", null));
+
+	IPK.Dependency dep = new IPK.Dependency ("test");
+	feed.update_dependency_data (ref dep);
+
+	assert (dep.name == "libogg");
+	assert (dep.homepage == "http://xiph.org/ogg/");
+
+	bool ret = feed.search_matching_dependency ();
+	assert (ret == true);
+
+	assert (feed.package_url != "");
+}
+
 int main (string[] args) {
 	msg ("=== Running Basic Tests ===");
 	datadir = args[1];
@@ -95,6 +111,7 @@ int main (string[] args) {
 	Test.init (ref args);
 	test_utils ();
 	test_application_ids ();
+	test_zfeeds ();
 	Test.run ();
 	return 0;
 }

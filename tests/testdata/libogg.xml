@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet type='text/xsl' href='/interface.xsl'?>
+<interface uri="http://services.sugarlabs.org/libogg"
+           xmlns="http://zero-install.sourceforge.net/2004/injector/interface"
+           xmlns:compile="http://zero-install.sourceforge.net/2006/namespaces/0compile"
+           xmlns:sugar="http://download.sugarlabs.org/services/saccharin/namespaces/0sugar">
+    <name>libogg</name>
+    <summary>The Ogg bitstream file format library</summary>
+    <description>The Ogg bitstream file format library</description>
+    <homepage>http://xiph.org/ogg/</homepage>
+    <sugar:sibling interface="http://services.sugarlabs.org/libogg/devel"/>
+    <package-implementation package="libogg0" distributions="RPM"/>
+    <package-implementation package="libogg" distributions="RPM"/>
+    <package-implementation package="libogg0" distributions="Debian"/>
+    <package-implementation package="media-libs/libogg" distributions="Gentoo"/>
+    <implementation id="sha1new=386b162ff78c65fda2515e8298d55e2b6d5d714c"
+                    version="1.1.4-1"
+                    released="2010-03-22"
+                    arch="Linux-i486"
+                    license="BSD"
+                    stability="packaged">
+        <environment name="LD_LIBRARY_PATH" mode="prepend" insert="lib"/>
+        <archive href="http://download.sugarlabs.org/services/libogg/libogg-1.1.4-1-Linux-i486.tar.bz2" size="10265"/>
+    </implementation>
+    <implementation id="sha1new=3779875ec2e82c303b03268e031c70d5a161a23d"
+                    version="1.1.4-1"
+                    released="2010-03-22"
+                    arch="Linux-x86_64"
+                    license="BSD"
+                    stability="packaged">
+        <environment name="LD_LIBRARY_PATH" mode="prepend" insert="lib"/>
+        <archive href="http://download.sugarlabs.org/services/libogg/libogg-1.1.4-1-Linux-x86_64.tar.bz2" size="11090"/>
+    </implementation>
+    <implementation id="sha1new=2703f50f0cf326c8ad4308f0a830b1d0fc46cfb3"
+                    version="1.1.4-1"
+                    released="2010-03-22"
+                    arch="*-src"
+                    license="BSD"
+                    stability="stable"
+                    compile:command='"$SRCDIR"/configure CFLAGS="$CFLAGS" --prefix="$DISTDIR" --disable-static &amp;&amp; make &amp;&amp; make install-strip'>
+        <environment name="LD_LIBRARY_PATH" mode="prepend" insert="lib"/>
+        <environment name="PKG_CONFIG_PATH" mode="prepend" insert="lib/pkgconfig"/>
+        <requires interface="http://services.sugarlabs.org/gcc-c">
+        </requires>
+        <requires interface="http://services.sugarlabs.org/make">
+        </requires>
+        <archive href="http://downloads.xiph.org/releases/ogg/libogg-1.1.4.tar.gz" size="439365" extract="libogg-1.1.4"/>
+    </implementation>
+</interface>
+<!-- Base64 Signature
+iQEcBAABAgAGBQJMDtPnAAoJEHI8xbS2hpuB4DQH/RmUD9HOxrpAFWzMnFDLTdAikZGNJBgnixQr
+Zfndn3UgE7f2DEkKaW7G8RU+FMH1DDTmw+HCB0A4Ul3hdgXrOF5k2NewvskEzqGifnsaTXa2XU4f
+GNi5U0gDlknXJ9s/1V7JKGoOHW81ayoGBPLUY3A2L4uH8pUG6pMtkyQ9WeQzcaRj/g5w+NSutfIW
+7h9is7SA9BF7Wq+cBgPXnv0pzTMgDj95JSYeO+1RAKbkvFqjDyewvDDIanbqUseBrl7W62dvIK0+
++gQK4lBF/5NdCP4cOmQLxVTZSjBZTe2J3/yfw6YJAs9fnNsZ/iH8W1TFzkWsZzNn4EzkqyIo8NP5
+YiE=
+
+-->

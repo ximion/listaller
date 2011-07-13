@@ -18,9 +18,10 @@ src/varsolver.vala
 src/varsetter.vala
 src/manager.vala
 src/installer.vala
+src/depinfo.vala
 src/depsolver.vala
 src/depprovider-pk.vala
-src/zfeed/zifeed.vala
+src/zfeed/zfeed.vala
 # Listaller tools
 tools/runapp/runapp.vala
 tools/libuild/main.vala

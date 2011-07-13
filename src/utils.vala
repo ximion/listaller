@@ -161,6 +161,16 @@ private bool delete_dir_recursive (string dirname) {
  */
 private string system_architecture () {
 	Posix.utsname uts = Posix.utsname ();
+	return "%s-%s".printf (uts.sysname.down (), uts.machine);
+}
+
+private string system_os () {
+	Posix.utsname uts = Posix.utsname ();
+	return uts.sysname.down ();
+}
+
+private string system_machine () {
+	Posix.utsname uts = Posix.utsname ();
 	return uts.machine;
 }
 

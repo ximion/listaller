@@ -23,38 +23,6 @@ using Gee;
 using Listaller;
 using Listaller.Utils;
 
-namespace Listaller.IPK {
-
-public class Dependency : Object {
-	public string name { get; set; }
-	public string summary { get; set; }
-	public string version { get; set; }
-
-	public bool satisfied { get; set; }
-	public string architecture { get; set; } // e.g. linux-amd64
-	public HashSet<string> meta_info { get; set; }
-
-	public string feed_url { get; set; }
-	public ArrayList<string> files { get; set; }
-	public string data { get; set; }
-
-	public bool is_standardlib { get; set; }
-
-	internal Dependency (string dep_name) {
-		name = dep_name;
-		satisfied = false;
-		is_standardlib = false;
-
-		files = new ArrayList<string> ();
-		meta_info = new HashSet<string> ();
-		data = "";
-		feed_url = "";
-		version = "0";
-	}
-}
-
-} // Endof namespace: Listaller.IPK
-
 namespace Listaller {
 
 private class DependencyManager : Object {
