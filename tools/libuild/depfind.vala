@@ -58,7 +58,12 @@ private class DepFind : Object {
 		pkinfo_info ("Scanning for dependencies...");
 		ArrayList<string> files = get_dependency_list ();
 		foreach (string s in files) {
-			IPK.Dependency dep = new IPK.Dependency (s.replace (".so", ""));
+			string dep_name = Utils.string_replace (s, "(\\.so|\\+|\\.)", "");
+			if (dep_name.strip () == "") {
+				debug ("dep_name would be empty for %s!", s);
+				continue;
+			}
+			IPK.Dependency dep = new IPK.Dependency (dep_name);
 			dep.files.add (s);
 
 			deplist.add (dep);
