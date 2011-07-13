@@ -204,6 +204,7 @@ public class Setup : Object {
 		// Set install timestamp
 		DateTime dt = new DateTime.now_local ();
 		app.install_time = dt.to_unix ();
+		app.description = control.get_app_description ();
 		// Now register the item
 		ret = db.add_application (app);
 		if (!ret) {
@@ -211,7 +212,6 @@ public class Setup : Object {
 			return false;
 		}
 		ret = db.add_application_filelist (app, ipkp.file_list);
-		db.add_application_description (app, control.get_app_description ());
 		db.close ();
 
 		conf.unlock ();

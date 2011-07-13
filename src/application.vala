@@ -52,6 +52,7 @@ public class AppItem : Object {
 	private string _version;
 	private string _appname;
 	private string _summary;
+	private string _description;
 	private string _author;
 	private string _pkgmaintainer;
 	private string _license_name;
@@ -94,6 +95,11 @@ public class AppItem : Object {
 	public string summary {
 		get { return _summary; }
 		set { _summary = value; }
+	}
+
+	public string description {
+		get { return _description; }
+		set { _description = value; }
 	}
 
 	public string author {
@@ -193,6 +199,7 @@ public class AppItem : Object {
 		_appname = "";
 		_idname = "";
 		_summary = "";
+		_description = "";
 		install_time = 0;
 		categories = "all;";
 		dbid = -1;

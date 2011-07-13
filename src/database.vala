@@ -298,8 +298,8 @@ private class SoftwareDB : Object {
 	protected bool update_db_structure () {
 		Sqlite.Statement stmt;
 
-		apptables = "id, name, version, full_name, desktop_file, summary, author, publisher, "
-		+ "categories, install_time, origin, dependencies";
+		apptables = "id, name, version, full_name, desktop_file, author, publisher, categories, "
+			+ "description, install_time, origin, dependencies";
 
 		// Create table to store information about applications
 		int res = db->prepare_v2 ("CREATE TABLE IF NOT EXISTS applications ("
@@ -308,10 +308,10 @@ private class SoftwareDB : Object {
 		+ "version TEXT NOT NULL, "
 		+ "full_name TEXT NOT NULL, "
 		+ "desktop_file TEXT UNIQUE,"
-		+ "summary TEXT, "
 		+ "author TEXT, "
 		+ "publisher TEXT, "
 		+ "categories TEXT, "
+		+ "description TEXT, "
 		+ "install_time INTEGER, "
 		+ "origin TEXT NOT NULL, "
 		+ "dependencies TEXT"
@@ -351,8 +351,8 @@ private class SoftwareDB : Object {
 		}
 		Sqlite.Statement stmt;
 		int res = db->prepare_v2 (
-			"INSERT INTO applications (name, version, full_name, desktop_file, summary, author, publisher, "
-			+ "categories, install_time, origin, dependencies) "
+			"INSERT INTO applications (name, version, full_name, desktop_file, author, publisher, categories, "
+			+ "description, install_time, origin, dependencies) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				   -1, out stmt);
 			return_if_fail (check_result (res, "add application"));
@@ -372,16 +372,16 @@ private class SoftwareDB : Object {
 			res = stmt.bind_text (4, item.desktop_file);
 			return_if_fail (check_result (res, "assign value"));
 
-			res = stmt.bind_text (5, item.summary);
+			res = stmt.bind_text (5, item.author);
 			return_if_fail (check_result (res, "assign value"));
 
-			res = stmt.bind_text (6, item.author);
+			res = stmt.bind_text (6, item.publisher);
 			return_if_fail (check_result (res, "assign value"));
 
-			res = stmt.bind_text (7, item.publisher);
+			res = stmt.bind_text (7, item.categories);
 			return_if_fail (check_result (res, "assign value"));
 
-			res = stmt.bind_text (8, item.categories);
+			res = stmt.bind_text (8, "%s\n\n%s".printf (item.summary, item.description));
 			return_if_fail (check_result (res, "assign value"));
 
 			res = stmt.bind_int64 (9, item.install_time);
@@ -469,55 +469,6 @@ private class SoftwareDB : Object {
 		return flist;
 	}
 
-	public bool add_application_description (AppItem aid, string desc) {
-		if (!locked) {
-			fatal ("write to readonly database!", Sqlite.ERROR);
-			return false;
-		}
-		string metadir = Path.build_filename (regdir, aid.idname, null);
-		create_dir_parents (metadir);
-
-		try {
-			var file = File.new_for_path (Path.build_filename (metadir, "description.txt", null));
-			{
-				var file_stream = file.create (FileCreateFlags.NONE);
-
-				if (file.query_exists ())
-					return false;
-
-				var data_stream = new DataOutputStream (file_stream);
-				data_stream.put_string (desc + "\n");
-			}
-		} catch (Error e) {
-			li_error (_("Unable to write application description! Message: %s").printf (e.message));
-			return false;
-		}
-		return true;
-	}
-
-	public string get_application_description (AppItem app) {
-		string text = "";
-		string metadir = Path.build_filename (regdir, app.idname, null);
-
-		var file = File.new_for_path (Path.build_filename (metadir, "description.txt", null));
-		if (!file.query_exists ()) {
-			return "";
-		}
-
-		try {
-			var dis = new DataInputStream (file.read ());
-			string line;
-			// Read lines until end of file (null) is reached
-			while ((line = dis.read_line (null)) != null) {
-				text += line + "\n";
-			}
-		} catch (Error e) {
-			li_error (_("Unable to fetch application description! Message: %s").printf (e.message));
-			return "";
-		}
-		return text;
-	}
-
 	public int get_applications_count () {
 		Sqlite.Statement stmt;
 		int res = db->prepare_v2 ("SELECT Count(*) FROM applications", -1, out stmt);
@@ -537,10 +488,20 @@ private class SoftwareDB : Object {
 		item.version = stmt.column_text (2);
 		item.full_name = stmt.column_text (3);
 		item.desktop_file = stmt.column_text (4);
-		item.summary = stmt.column_text (5);
-		item.author = stmt.column_text (6);
-		item.publisher = stmt.column_text (7);
-		item.categories = stmt.column_text (8);
+		item.author = stmt.column_text (5);
+		item.publisher = stmt.column_text (6);
+		item.categories = stmt.column_text (7);
+
+		string s = stmt.column_text (8);
+		string[] desc = s.split ("\n\n", 2);
+		if (desc[0] != null) {
+			item.summary = desc[0];
+			if (desc[1] != null)
+				item.description = desc[1];
+		} else {
+			item.summary = s;
+		}
+
 		item.install_time = stmt.column_int (9);
 		item.set_origin_from_string (stmt.column_text (10));
 		item.dependencies = stmt.column_text (11);
@@ -651,6 +612,8 @@ private class SoftwareDB : Object {
 		if (item.full_name.down ().index_of (str) > -1)
 			return true;
 		if (item.summary.down ().index_of (str) > -1)
+			return true;
+		if (item.description.down ().index_of (str) > -1)
 			return true;
 		return false;
 	}

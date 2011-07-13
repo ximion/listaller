@@ -203,14 +203,6 @@ public class Manager : Object {
 		return ret;
 	}
 
-	public string get_app_description (AppItem app) {
-		return_val_if_fail (open_db (false), null);
-		string desc;
-		desc = db.get_application_description (app);
-		db.close ();
-		return desc;
-	}
-
 	public AppItem? get_appitem_by_idname (string idname) {
 		return_val_if_fail (open_db (false), null);
 		AppItem? app = db.get_application_by_idname (idname);

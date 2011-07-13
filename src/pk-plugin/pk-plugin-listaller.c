@@ -206,7 +206,7 @@ pk_listaller_remove_applications (PkPlugin *plugin, gchar **package_ids)
 
 		listaller_manager_remove_application (plugin->priv->mgr, app);
 		g_object_unref (app);
-	};	
+	};
 }
 
 /**
@@ -215,7 +215,7 @@ pk_listaller_remove_applications (PkPlugin *plugin, gchar **package_ids)
 void
 pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 {
-	gchar *description;
+	const gchar *description;
 	const gchar *license;
 	const gchar *url;
 	ListallerAppItem *app;
@@ -227,7 +227,7 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 	for (i=0; package_ids[i] != NULL; i++) {
 		app = pk_listaller_appitem_from_pkid (package_ids[i]);
 
-		description = listaller_manager_get_app_description (plugin->priv->mgr, app);
+		description = listaller_app_item_get_description (app);
 		license = listaller_app_item_get_license_name (app);
 		url = listaller_app_item_get_url (app);
 
@@ -238,8 +238,6 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 					description,
 					url,
 					0);
-
-		g_free (description);
 	};
 }
 
