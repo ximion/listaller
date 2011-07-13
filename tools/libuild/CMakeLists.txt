@@ -13,10 +13,10 @@ pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 set(LIBUILD_SOURCES ${LISTALLER_BASE_SOURCES}
+			${lisrc}/depinfo.vala
 			lbutils.vala
 			prepare.vala
 			gpgsign.vala
-			depinfo.vala
 			depfind.vala
 			ipkbuilder.vala
 )
@@ -32,7 +32,7 @@ include_directories(${CMAKE_BINARY_DIR}
 		    ${GPGME_INCLUDES}
 )
 
-# Database tests
+# Listaller build tool
 vala_add_executable (libuild ${LIBUILD_SOURCES} main.vala
 			PACKAGES ${LISTALLER_BASE_VALA_DEPS}
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi

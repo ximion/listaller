@@ -1,21 +1,21 @@
 /* depinfo.vala
  *
- * Copyright (C) 2011 Matthias Klumpp
+ * Copyright (C) 2011 Matthias Klumpp <matthias@nlinux.org>
  *
- * Licensed under the GNU General Public License Version 3
+ * Licensed under the GNU Lesser General Public License Version 3
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * This library is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 using GLib;
@@ -26,6 +26,12 @@ namespace Listaller {
 
 private class DepInfo : Object {
 	private ArrayList<IPK.Dependency> dlist;
+
+	enum DepInfoBlock {
+		UNKNOWN,
+		NAME,
+		FILES;
+	}
 
 	public DepInfo () {
 		Listaller.Settings conf = new Listaller.Settings (true);
@@ -41,20 +47,36 @@ private class DepInfo : Object {
 			var dis = new DataInputStream (file.read ());
 			string line;
 			IPK.Dependency? dep = null;
+			DepInfoBlock mode = DepInfoBlock.UNKNOWN;
+
 			// Read lines until end of file (null) is reached
 			while ((line = dis.read_line (null)) != null) {
-				if ((line == "") || (line.has_prefix ("#")))
+				if (line.has_prefix ("#"))
 					continue;
-				if (line.substring (0, 1) != " ") {
-					if (dep != null)
+
+				if (line.strip () == "") {
+					if ((dep != null) && (dep.name != ""))
 						dlist.add (dep);
-					dep = new IPK.Dependency (line.substring (0, line.index_of (":")).strip ());
+					dep = new IPK.Dependency ("");
+					mode = DepInfoBlock.UNKNOWN;
+					continue;
+				}
+				if (line.down ().has_prefix ("name:")) {
+					dep.name = line.substring (line.index_of (":") + 1).strip ();
+					continue;
+				}
+				if (line.down ().has_prefix ("files:")) {
 					string s = line.substring (line.index_of (":") + 1).strip ();
 					if (s != "")
 						dep.files.add (s);
+					mode = DepInfoBlock.FILES;
 					continue;
 				}
-				dep.files.add (line.strip ());
+				if (line.substring (0, 1) == " ") {
+					if (mode == DepInfoBlock.FILES)
+						dep.files.add (line.strip ());
+
+				}
 			}
 			if (dep != null)
 				dlist.add (dep);

@@ -61,6 +61,7 @@ pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
 #find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
 
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
+	depinfo.vala
 	depsolver.vala
 	depprovider-pk.vala
 	manager.vala
@@ -81,7 +82,7 @@ vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 				--thread
 )
 
-add_definitions ("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE")
+add_definitions("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE")
 
 # Add log domain
 add_definitions("-DG_LOG_DOMAIN=\"Listaller\"")

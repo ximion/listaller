@@ -24,6 +24,10 @@ using Gee;
 using Listaller;
 using Listaller.Utils;
 
+// We need this to produce formatted output
+private static extern int xmlThrDefIndentTreeOutput (int val);
+private static extern int xmlThrDefKeepBlanksDefaultValue (int val);
+
 namespace Listaller.IPK {
 
 public abstract class CXml : Object {
@@ -306,7 +310,11 @@ public class Control : CXml {
 	}
 
 	public bool save_to_file (string fname) {
-		return xdoc->save_file (fname) == 0;
+//#if FORMATTED_XML
+		xmlThrDefKeepBlanksDefaultValue (1);
+		xmlThrDefIndentTreeOutput (1);
+//#endif
+		return xdoc->save_format_file (fname, 1) == 0;
 	}
 
 	public override void set_app_license (string text) {
@@ -360,7 +368,11 @@ public class Script : CXml {
 	}
 
 	public bool save_to_file (string fname) {
-		xdoc->save_format_file_enc (fname, "UTF-8", true);
+//#if FORMATTED_XML
+		xmlThrDefKeepBlanksDefaultValue (1);
+		xmlThrDefIndentTreeOutput (1);
+//#endif
+		xdoc->save_format_file (fname, 1);
 		return true;
 	}
 
