@@ -59,7 +59,6 @@ chrpath --delete $RPM_BUILD_ROOT%{_libdir}/packagekit-plugins/libpk_plugin_lista
 %{_bindir}/depscan
 %{_bindir}/libuild
 %{_bindir}/runapp
-%{_datadir}/dbus-1/system-services/org.nlinux.Listaller.service
 %{_datadir}/icons/hicolor/32x32/mimetypes/package-x-ipk.png
 %{_datadir}/listaller
 %{_datadir}/mime/packages/listaller-ipk.xml
@@ -67,7 +66,6 @@ chrpath --delete $RPM_BUILD_ROOT%{_libdir}/packagekit-plugins/libpk_plugin_lista
 %{_libdir}/liblistaller-glib.so.0
 %{_libdir}/liblistaller-glib.so.0.5.2
 %{_libdir}/packagekit-plugins/libpk_plugin_listaller.so
-%{_sysconfdir}/dbus-1/system.d/org.nlinux.Listaller.conf
 %{_sysconfdir}/listaller
 
 %files devel
