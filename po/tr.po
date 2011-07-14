@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-05 17:46+0200\n"
+"POT-Creation-Date: 2011-07-14 19:12+0200\n"
 "PO-Revision-Date: 2011-01-24 10:01+0000\n"
 "Last-Translator: Ali KIBICI <Unknown>\n"
 "Language-Team: \n"
@@ -17,6 +17,14 @@ msgstr ""
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
+
+#, fuzzy, c-format
+msgid "A higher version '%s' of this application has already been installed."
+msgstr "Bu uygulamanın hangi kısmının yüklenmedini istediğinizi seçiniz."
+
+#, fuzzy, c-format
+msgid "A lower version '%s' of this application has already been installed."
+msgstr "Bu program zaten yüklenmiş."
 
 msgid "A policy was not met."
 msgstr ""
@@ -210,6 +218,12 @@ msgstr ""
 msgid "Path to the application's source code"
 msgstr ""
 
+msgid "Please remove the existing version to continue!"
+msgstr ""
+
+msgid "Print machine-readable simple text"
+msgstr ""
+
 #, c-format
 msgid "Removal of %s finished."
 msgstr ""
@@ -279,10 +293,9 @@ msgstr ""
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-msgid ""
-"This application was already installed. Please remove the existing version "
-"to continue!"
-msgstr ""
+#, fuzzy
+msgid "This application has already been installed."
+msgstr "Bu program zaten yüklenmiş."
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -327,11 +340,11 @@ msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
 
 #, c-format
-msgid "Unable to fetch application description! Message: %s"
+msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
 
 #, c-format
-msgid "Unable to fetch application file list! Message: %s"
+msgid "Unable to fetch dependency information list: %s"
 msgstr ""
 
 #, c-format
@@ -357,10 +370,6 @@ msgstr ""
 
 #, c-format
 msgid "Unable to save modified desktop-file! Message: %s"
-msgstr ""
-
-#, c-format
-msgid "Unable to write application description! Message: %s"
 msgstr ""
 
 #, c-format
@@ -760,15 +769,6 @@ msgstr ""
 #~ "Şu paketler de beraberinde kaldırılacak: %pl\n"
 #~ "Eğer bu paketlere ihtiyacınız olup olmayacağına emin değilseniz \"Hayır\" "
 #~ "seçeneğine basın."
-
-#~ msgid ""
-#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
-#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
-#~ "those packages, press \"No\"!"
-#~ msgstr ""
-#~ "İçerisinde %a bulunduran %p'yi gerçekten silmek istiyor musunuz?\rBu "
-#~ "paketler de silinecek: %pl\rBu paketlere gerek duymadığınızdan emin "
-#~ "değilseniz, lütfen \"HAYIR\" a basın!"
 
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "%a uygulamasını gerçekten kaldırmak istiyor musunuz?"
@@ -1409,9 +1409,6 @@ msgstr ""
 #~ msgid "Select software-manager mode:"
 #~ msgstr "Uygulama yöneticisi modunu seçin:"
 
-#~ msgid "Select which parts of the application should be installed."
-#~ msgstr "Bu uygulamanın hangi kısmının yüklenmedini istediğinizi seçiniz."
-
 #~ msgid "Shift"
 #~ msgstr "Üstkarakter"
 
@@ -1557,9 +1554,6 @@ msgstr ""
 #~ msgid "There is no viewer for help type %s%s%s"
 #~ msgstr "%s%s%s yardım türü için bir görüntüleyici yok"
 
-#~ msgid "This application is already installed"
-#~ msgstr "Bu program zaten yüklenmiş."
-
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
 #~ "Listaller can handle.\n"
@@ -1689,17 +1683,6 @@ msgstr ""
 #~ "Bu paket \"Alien\" kullanılarak çevirilebilir, ancak bu zaman alır ve "
 #~ "çevirilen halin çalışmama ihtimali vardır.\n"
 #~ "Paketi şimdi çevirmek istiyor musunuz?"
-
-#~ msgid ""
-#~ "You want to install an %x-Package, but your Linux-Distribution's package "
-#~ "system is %y.\rThis package can be converted using \"alien\", but this "
-#~ "will take some time and eventually the application won't work\rDo you "
-#~ "want to convert the package now?"
-#~ msgstr ""
-#~ "Bir %x-Paketi yüklemek istiyorsunuz, fakat sizin Linux-Dağıtımınızın "
-#~ "sistemi %y\rBu paket \"alien\" kullanılarak dönüştürülebilir, fakat bu "
-#~ "biraz zaman alır ve neticede uygulama çalışmayacaktır\rPaketi şimdi "
-#~ "dönüştürmek istiyor musunuz?"
 
 #~ msgid "Your Linux distribution is not supported by Listaller yet!"
 #~ msgstr "Linux sürümünüz Linstaller tarafından henüz desteklenmiyor."

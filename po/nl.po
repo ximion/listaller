@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-05 17:46+0200\n"
+"POT-Creation-Date: 2011-07-14 19:12+0200\n"
 "PO-Revision-Date: 2011-05-20 03:19+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
@@ -17,6 +17,14 @@ msgstr ""
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
+
+#, fuzzy, c-format
+msgid "A higher version '%s' of this application has already been installed."
+msgstr "Deze applicatie is al geïnstalleerd"
+
+#, fuzzy, c-format
+msgid "A lower version '%s' of this application has already been installed."
+msgstr "Deze applicatie is al geïnstalleerd"
 
 msgid "A policy was not met."
 msgstr ""
@@ -210,6 +218,12 @@ msgstr ""
 msgid "Path to the application's source code"
 msgstr ""
 
+msgid "Please remove the existing version to continue!"
+msgstr ""
+
+msgid "Print machine-readable simple text"
+msgstr ""
+
 #, c-format
 msgid "Removal of %s finished."
 msgstr ""
@@ -279,10 +293,9 @@ msgstr ""
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-msgid ""
-"This application was already installed. Please remove the existing version "
-"to continue!"
-msgstr ""
+#, fuzzy
+msgid "This application has already been installed."
+msgstr "Deze applicatie is al geïnstalleerd"
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -327,11 +340,11 @@ msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
 
 #, c-format
-msgid "Unable to fetch application description! Message: %s"
+msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
 
 #, c-format
-msgid "Unable to fetch application file list! Message: %s"
+msgid "Unable to fetch dependency information list: %s"
 msgstr ""
 
 #, c-format
@@ -357,10 +370,6 @@ msgstr ""
 
 #, c-format
 msgid "Unable to save modified desktop-file! Message: %s"
-msgstr ""
-
-#, c-format
-msgid "Unable to write application description! Message: %s"
 msgstr ""
 
 #, c-format
@@ -1296,9 +1305,6 @@ msgstr ""
 
 #~ msgid "There is no viewer for help type %s%s%s"
 #~ msgstr "Er is geen viewer voor help type %s%s%s"
-
-#~ msgid "This application is already installed"
-#~ msgstr "Deze applicatie is al geïnstalleerd"
 
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr "Deze applicatie wil een gebiedsdeel downloaden & installeren van %l"

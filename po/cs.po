@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-05 17:46+0200\n"
+"POT-Creation-Date: 2011-07-14 19:12+0200\n"
 "PO-Revision-Date: 2010-10-05 17:09+0000\n"
 "Last-Translator: Konki <pavel.konkol@seznam.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -22,6 +22,14 @@ msgstr ""
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
+
+#, fuzzy, c-format
+msgid "A higher version '%s' of this application has already been installed."
+msgstr "Zvolte, které části aplikace se budou instalovat."
+
+#, fuzzy, c-format
+msgid "A lower version '%s' of this application has already been installed."
+msgstr "Tato aplikace je již nainstalována"
 
 msgid "A policy was not met."
 msgstr ""
@@ -215,6 +223,12 @@ msgstr ""
 msgid "Path to the application's source code"
 msgstr ""
 
+msgid "Please remove the existing version to continue!"
+msgstr ""
+
+msgid "Print machine-readable simple text"
+msgstr ""
+
 #, c-format
 msgid "Removal of %s finished."
 msgstr ""
@@ -284,10 +298,9 @@ msgstr ""
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-msgid ""
-"This application was already installed. Please remove the existing version "
-"to continue!"
-msgstr ""
+#, fuzzy
+msgid "This application has already been installed."
+msgstr "Tato aplikace je již nainstalována"
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -332,11 +345,11 @@ msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
 
 #, c-format
-msgid "Unable to fetch application description! Message: %s"
+msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
 
 #, c-format
-msgid "Unable to fetch application file list! Message: %s"
+msgid "Unable to fetch dependency information list: %s"
 msgstr ""
 
 #, c-format
@@ -362,10 +375,6 @@ msgstr ""
 
 #, c-format
 msgid "Unable to save modified desktop-file! Message: %s"
-msgstr ""
-
-#, c-format
-msgid "Unable to write application description! Message: %s"
 msgstr ""
 
 #, c-format
@@ -522,15 +531,6 @@ msgstr ""
 #~ "Opravdu si přejete odstranit \"%p\", které obsahuje %a?\n"
 #~ "Následující balíky budou odstraněny: %pl\n"
 #~ "Pokud si nejste jist, že tyto balíky potřebujete, stiskněte \"Ne\"!"
-
-#~ msgid ""
-#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
-#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
-#~ "those packages, press \"No\"!"
-#~ msgstr ""
-#~ "Opravdu chcete odstranit \"%p\", obsahující %a?\rNásledující balíky budou "
-#~ "automaticky odstraněny: %pl\rPokud si nejste jistě, jestli tyto balíky "
-#~ "potřebujete, stiskněte \"Ne\"!"
 
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "Opravdu si přejete odinstalovat %a?"
@@ -825,9 +825,6 @@ msgstr ""
 #~ msgid "Select software-manager mode:"
 #~ msgstr "Vyberte režim správce softwaru:"
 
-#~ msgid "Select which parts of the application should be installed."
-#~ msgstr "Zvolte, které části aplikace se budou instalovat."
-
 #~ msgid "Should this source be added to the update sources list?"
 #~ msgstr "Mám tento zdroj aktualizací přidat?"
 
@@ -928,9 +925,6 @@ msgstr ""
 #~ msgid "There are no updates available!"
 #~ msgstr "Nejsou k dispozici žádné aktualizace!"
 
-#~ msgid "This application is already installed"
-#~ msgstr "Tato aplikace je již nainstalována"
-
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
 #~ "Listaller can handle.\n"
@@ -1029,17 +1023,6 @@ msgstr ""
 #~ "Balík je možné překonvertovat pomocí nástroje \"alien\", ale zabere to "
 #~ "nějaký čas a je možné, že ani poté nepůjde aplikace nainstalovat.\n"
 #~ "Přejete si balík překonvertovat nyní?"
-
-#~ msgid ""
-#~ "You want to install an %x-Package, but your Linux-Distribution's package "
-#~ "system is %y.\rThis package can be converted using \"alien\", but this "
-#~ "will take some time and eventually the application won't work\rDo you "
-#~ "want to convert the package now?"
-#~ msgstr ""
-#~ "Snažíte se nainstalovat balík typu %x, ale balíkovací systém vaší "
-#~ "distribuce je %y.\rTento balík může být upraven pomocí nástroje \"alien"
-#~ "\", ale může to zabrat více času a je zde možnost, že daná aplikace "
-#~ "nebude vůbec fungovat\rPřejete si balík upravit?"
 
 #~ msgid "Your Linux distribution is not supported by Listaller yet!"
 #~ msgstr "Listaller bohužel nepodporuje vaši distribuci."

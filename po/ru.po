@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-05 17:46+0200\n"
+"POT-Creation-Date: 2011-07-14 19:12+0200\n"
 "PO-Revision-Date: 2011-06-15 19:57+0000\n"
 "Last-Translator: Aleksey Kabanov <Unknown>\n"
 "Language-Team: \n"
@@ -19,6 +19,14 @@ msgid ""
 msgstr ""
 "'%s' не имеет зарегистрированного списка файлов. Возможно, база данных "
 "программ повреждена."
+
+#, fuzzy, c-format
+msgid "A higher version '%s' of this application has already been installed."
+msgstr "Выберите какие части приложения необходимо установить."
+
+#, fuzzy, c-format
+msgid "A lower version '%s' of this application has already been installed."
+msgstr "Программа уже установлена"
 
 msgid "A policy was not met."
 msgstr ""
@@ -216,6 +224,15 @@ msgstr ""
 msgid "Path to the application's source code"
 msgstr "Путь к исходному коду приложения"
 
+#, fuzzy
+msgid "Please remove the existing version to continue!"
+msgstr ""
+"Это приложение уже было установлено. Пожалуйста, удалите существующую "
+"версию, чтобы продолжить!"
+
+msgid "Print machine-readable simple text"
+msgstr ""
+
 #, c-format
 msgid "Removal of %s finished."
 msgstr "Удаление %s завершено."
@@ -287,12 +304,9 @@ msgstr "Статус этой подписи неизвестен или пак�
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-msgid ""
-"This application was already installed. Please remove the existing version "
-"to continue!"
-msgstr ""
-"Это приложение уже было установлено. Пожалуйста, удалите существующую "
-"версию, чтобы продолжить!"
+#, fuzzy
+msgid "This application has already been installed."
+msgstr "Программа уже установлена"
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -337,11 +351,11 @@ msgid "Unable to extract signature! Maybe package is not signed."
 msgstr "Невозможно извлечь подпись! Возможно, пакет не подписан."
 
 #, c-format
-msgid "Unable to fetch application description! Message: %s"
-msgstr "Невозможно получить описание приложения! Сообщение: %s"
-
-#, c-format
 msgid "Unable to fetch application file list! Message: %s"
+msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
+
+#, fuzzy, c-format
+msgid "Unable to fetch dependency information list: %s"
 msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
 
 #, c-format
@@ -367,10 +381,6 @@ msgstr ""
 
 #, c-format
 msgid "Unable to save modified desktop-file! Message: %s"
-msgstr ""
-
-#, c-format
-msgid "Unable to write application description! Message: %s"
 msgstr ""
 
 #, c-format
@@ -894,15 +904,6 @@ msgstr "ошибка: %s"
 
 #~ msgid "Do you really want to abort this download?"
 #~ msgstr "Вы действительно хотите прервать эту закачку?"
-
-#~ msgid ""
-#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
-#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
-#~ "those packages, press \"No\"!"
-#~ msgstr ""
-#~ "Вы действительно хотите удалить \"%р\", содержащий %a?\rСледующий(е) пакет"
-#~ "(ы) будет(ут) удален(ы): %PL\rЕсли вы не уверены, что вам не нужны будут "
-#~ "пакеты, нажмите \"Нет\"!"
 
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "Вы действительно хотите удалить %a?"
@@ -1854,9 +1855,6 @@ msgstr "ошибка: %s"
 #~ msgid "Select the installation mode of this application:"
 #~ msgstr "Выберите режим установки для этого приложения:"
 
-#~ msgid "Select which parts of the application should be installed."
-#~ msgstr "Выберите какие части приложения необходимо установить."
-
 #~ msgid "Settings"
 #~ msgstr "Настройки"
 
@@ -2044,9 +2042,6 @@ msgstr "ошибка: %s"
 #~ msgid "There is no viewer for help type %s%s%s"
 #~ msgstr "Отсутствует программа просмотра для типа справки %s%s%s"
 
-#~ msgid "This application is already installed"
-#~ msgstr "Программа уже установлена"
-
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr "Приложение хочет скачать и установить все зависимые пакеты из %l"
 
@@ -2064,6 +2059,9 @@ msgstr "ошибка: %s"
 
 #~ msgid "Unable to copy the file %s."
 #~ msgstr "Невозможно скопировать файл %s."
+
+#~ msgid "Unable to fetch application description! Message: %s"
+#~ msgstr "Невозможно получить описание приложения! Сообщение: %s"
 
 #~ msgid "Unable to find %s"
 #~ msgstr "Невозможно найти %s"

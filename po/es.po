@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-05 17:46+0200\n"
+"POT-Creation-Date: 2011-07-14 19:12+0200\n"
 "PO-Revision-Date: 2010-09-19 15:47+0000\n"
 "Last-Translator: Monkey <monkey.libre@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -22,6 +22,14 @@ msgstr ""
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
+
+#, fuzzy, c-format
+msgid "A higher version '%s' of this application has already been installed."
+msgstr "Selecciona qué partes de la aplicación han de instalarse."
+
+#, fuzzy, c-format
+msgid "A lower version '%s' of this application has already been installed."
+msgstr "Esta aplicación ya está instalada"
 
 msgid "A policy was not met."
 msgstr ""
@@ -215,6 +223,12 @@ msgstr ""
 msgid "Path to the application's source code"
 msgstr ""
 
+msgid "Please remove the existing version to continue!"
+msgstr ""
+
+msgid "Print machine-readable simple text"
+msgstr ""
+
 #, c-format
 msgid "Removal of %s finished."
 msgstr ""
@@ -284,10 +298,9 @@ msgstr ""
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-msgid ""
-"This application was already installed. Please remove the existing version "
-"to continue!"
-msgstr ""
+#, fuzzy
+msgid "This application has already been installed."
+msgstr "Esta aplicación ya está instalada"
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -332,11 +345,11 @@ msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
 
 #, c-format
-msgid "Unable to fetch application description! Message: %s"
+msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
 
 #, c-format
-msgid "Unable to fetch application file list! Message: %s"
+msgid "Unable to fetch dependency information list: %s"
 msgstr ""
 
 #, c-format
@@ -362,10 +375,6 @@ msgstr ""
 
 #, c-format
 msgid "Unable to save modified desktop-file! Message: %s"
-msgstr ""
-
-#, c-format
-msgid "Unable to write application description! Message: %s"
 msgstr ""
 
 #, c-format
@@ -640,15 +649,6 @@ msgstr ""
 #~ "¿Realmente quiere eliminar «%p», que contiene %a?\n"
 #~ "También se eliminarán los siguientes paquetes: %pl\n"
 #~ "Si no está seguro de si necesita esos paquetes, pulse «No»."
-
-#~ msgid ""
-#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
-#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
-#~ "those packages, press \"No\"!"
-#~ msgstr ""
-#~ "¿Realmente desea borrar \"%p\", conteniendo %a?\rLos siguientes paquetes "
-#~ "también serán borrados: %pl\r¡Si no está seguro de necesitar estos "
-#~ "paquetes en el futuro, presione \"No\"!"
 
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "¿De verdad quiere desinstalar %a?"
@@ -1227,9 +1227,6 @@ msgstr ""
 #~ msgid "Select the installation mode of this application:"
 #~ msgstr "Seleccione el modo de instalación de esta aplicación:"
 
-#~ msgid "Select which parts of the application should be installed."
-#~ msgstr "Selecciona qué partes de la aplicación han de instalarse."
-
 #~ msgid "Settings"
 #~ msgstr "Preferencias"
 
@@ -1451,9 +1448,6 @@ msgstr ""
 #~ "Obtenga las instrucciones sobre cómo eliminar esta aplicación del autor "
 #~ "del programa."
 
-#~ msgid "This application is already installed"
-#~ msgstr "Esta aplicación ya está instalada"
-
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
 #~ "Listaller can handle.\n"
@@ -1636,17 +1630,6 @@ msgstr ""
 #~ "Este paquete puede convertirse usando \"alien\", pero esto tardará un "
 #~ "rato y puede que su aplicación no funcione.\n"
 #~ "¿Quiere convertir el paquete ahora?"
-
-#~ msgid ""
-#~ "You want to install an %x-Package, but your Linux-Distribution's package "
-#~ "system is %y.\rThis package can be converted using \"alien\", but this "
-#~ "will take some time and eventually the application won't work\rDo you "
-#~ "want to convert the package now?"
-#~ msgstr ""
-#~ "Desea instalar un %x-Paquete, pero el paquete para su distribución Linux "
-#~ "es %y.\rEste paquete puede ser convertido usando \"alien\", pero esto "
-#~ "tomará algún tiempo y eventualmente la aplicación no podría trabajar.\r"
-#~ "¿Desea convertir el paquete ahora?"
 
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-distribution's package "

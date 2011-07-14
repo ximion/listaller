@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-05 17:46+0200\n"
+"POT-Creation-Date: 2011-07-14 19:12+0200\n"
 "PO-Revision-Date: 2011-06-14 21:00+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -24,6 +24,14 @@ msgid ""
 msgstr ""
 "Für '%s' ist keine Dateiliste registriert. Die Software-Datenbank ist "
 "eventuell beschädigt."
+
+#, fuzzy, c-format
+msgid "A higher version '%s' of this application has already been installed."
+msgstr "Wählen Sie, welche Teile der Anwendung installiert werden sollen."
+
+#, fuzzy, c-format
+msgid "A lower version '%s' of this application has already been installed."
+msgstr "Diese Anwendung ist schon installiert"
 
 msgid "A policy was not met."
 msgstr "Eine der Regelungen wurde nicht erfüllt."
@@ -230,6 +238,12 @@ msgstr ""
 msgid "Path to the application's source code"
 msgstr ""
 
+msgid "Please remove the existing version to continue!"
+msgstr ""
+
+msgid "Print machine-readable simple text"
+msgstr ""
+
 #, c-format
 msgid "Removal of %s finished."
 msgstr ""
@@ -301,10 +315,9 @@ msgstr ""
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-msgid ""
-"This application was already installed. Please remove the existing version "
-"to continue!"
-msgstr ""
+#, fuzzy
+msgid "This application has already been installed."
+msgstr "Diese Anwendung ist schon installiert"
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -349,11 +362,11 @@ msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
 
 #, c-format
-msgid "Unable to fetch application description! Message: %s"
+msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
 
 #, c-format
-msgid "Unable to fetch application file list! Message: %s"
+msgid "Unable to fetch dependency information list: %s"
 msgstr ""
 
 #, c-format
@@ -379,10 +392,6 @@ msgstr ""
 
 #, c-format
 msgid "Unable to save modified desktop-file! Message: %s"
-msgstr ""
-
-#, c-format
-msgid "Unable to write application description! Message: %s"
 msgstr ""
 
 #, c-format
@@ -905,13 +914,6 @@ msgstr ""
 #~ "Konnte keinen benutzbaren GUI Paketmanager finden.\n"
 #~ "Installieren sie eine PackageKit-GUI!"
 
-#~ msgid ""
-#~ "Could not find usable GUI package manager.\rPlease install a PackageKit-"
-#~ "GUI!"
-#~ msgstr ""
-#~ "Konnte keine GUI-Paketmanager finden.\rBitte installieren sie eine "
-#~ "grafische Oberfläche für PackageKit!"
-
 #~ msgid "Could not open IPK file: %s"
 #~ msgstr "Konnte IPK Datei nicht öffnen: %s"
 
@@ -1023,15 +1025,6 @@ msgstr ""
 #~ "Die folgenden Pakete werden ebenfalls entfernt: %pl\n"
 #~ "Wenn Sie nicht sicher sind, ob Sie diese Pakete noch benötigen, wählen "
 #~ "Sie \"Nein\"!"
-
-#~ msgid ""
-#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
-#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
-#~ "those packages, press \"No\"!"
-#~ msgstr ""
-#~ "Möchten Sie wirklich \"%p\", welches %a enthält entfernen?\rDie folgenden "
-#~ "Pakete werden auch entfernt: %pl\rWenn Sie nicht sicher sind, ob Sie die "
-#~ "Pakete noch brauchen, klicken Sie \"Nein\"!"
 
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "Möchten Sie %a wirklich deinstallieren?"
@@ -1284,13 +1277,6 @@ msgstr ""
 #~ "Die Hashwerte passen nicht!\n"
 #~ "Das Paket könnte nach der erstellung verändert worden sein.\n"
 #~ "Bitte holen Sie sich eine neue Kopie."
-
-#~ msgid ""
-#~ "Hash doesn't match!\rThe package may be modified after creation.\rPlease "
-#~ "obtain a new copy"
-#~ msgstr ""
-#~ "Der Hashwert passt nicht!\rDas Paket könnte nachträglich verändert worden "
-#~ "sein.\rBitte holen Sie sich eine neue Kopie des Paketes."
 
 #~ msgid ""
 #~ "Hash value doesn't match!\n"
@@ -1567,14 +1553,6 @@ msgstr ""
 #~ "Listaller benutzt \"alien\" um unbekannte Pakete umzuwandeln, das "
 #~ "Werkzeug ist jedoch nicht installiert.\n"
 #~ "Möchten Sie \"alien\" installieren und fortfahren?"
-
-#~ msgid ""
-#~ "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
-#~ "installed\rDo you want to install \"alien\" now to continue?"
-#~ msgstr ""
-#~ "Listaller benutzt \"alien\" um unbekannte Pakete umzuwandeln. Dieses Tool "
-#~ "ist jedoch nicht installiert.\rMöchten Sie \"alien\" installieren um "
-#~ "fortzufahren?"
 
 #~ msgid ""
 #~ "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
@@ -2124,9 +2102,6 @@ msgstr ""
 #~ msgid "Select the installation mode of this application:"
 #~ msgstr "Wählen Sie den Installationsmodus dieser Anwendung:"
 
-#~ msgid "Select which parts of the application should be installed."
-#~ msgstr "Wählen Sie, welche Teile der Anwendung installiert werden sollen."
-
 #~ msgid "Settings"
 #~ msgstr "Einstellungen"
 
@@ -2347,13 +2322,6 @@ msgstr ""
 #~ "Die gewählte Aktion ist mit diesem Paket nicht möglich.\n"
 #~ "Bitte kontaktieren Sie den Paketersteller für mehr Informationen."
 
-#~ msgid ""
-#~ "The selected action is not possible with this package.\rPlease contact "
-#~ "the package maintainer to get more information."
-#~ msgstr ""
-#~ "Die gewählte Aktion ist mit diesem Paket nicht möglich.\rKontaktieren Sie "
-#~ "den Paket-Maintainer für mehr Informationen."
-
 #~ msgid "The software provides the following update source:"
 #~ msgstr "Die Software bietet folgende Updatequelle an:"
 
@@ -2378,13 +2346,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Es sind keine Quellen für Ihre Linux-Distribution verfügbar.\n"
 #~ "Soll versucht werden, allgemeine Pakete zu installieren?"
-
-#~ msgid ""
-#~ "There are no sources available for your Linux distribution\rTry to "
-#~ "install common packages?"
-#~ msgstr ""
-#~ "Es sind keine Quellen für Ihre Linux Distribution verfügbar."
-#~ "\rAllgemeingültige Pakete installieren?"
 
 #~ msgid "There are no updates available!"
 #~ msgstr "Es sind keine Updates verfügbar!"
@@ -2414,9 +2375,6 @@ msgstr ""
 #~ "Holen Sie sich eine Anleitung zum Entfernen der Anwendung vom "
 #~ "Programmautor."
 
-#~ msgid "This application is already installed"
-#~ msgstr "Diese Anwendung ist schon installiert"
-
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
 #~ "Listaller can handle.\n"
@@ -2425,13 +2383,6 @@ msgstr ""
 #~ "Diese Anwendung ist keine MoJo-Installation und kein anderer Pakettyp, "
 #~ "mit dem Listaller umgehen kann.\n"
 #~ "Sie müssen sie manuell entfernen."
-
-#~ msgid ""
-#~ "This application is not a MoJo-Installation and no other package-type "
-#~ "Listaller can handle.\rYou have to remove it manually."
-#~ msgstr ""
-#~ "Diese Anwendung ist keine MoJo-Installation und kein anderer Pakettyp mit "
-#~ "dem Listaller umgehen kann.\rSie müssen sie manuell entfernen."
 
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr ""
@@ -2453,9 +2404,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Dieses Paket hat keine gültige ID.\n"
 #~ "Der Installer wird geschlossen."
-
-#~ msgid "This package has no valid ID\rThe installer will close."
-#~ msgstr "Dieses Paket hat keine gültige ID."
 
 #~ msgid "This package is not signed!"
 #~ msgstr "Dieses Paket ist nicht signiert!"
@@ -2707,18 +2655,6 @@ msgstr ""
 #~ "Möchten Sie das paket jetzt umwandeln?"
 
 #~ msgid ""
-#~ "You want to install an %x-Package, but your Linux-Distribution's package "
-#~ "system is %y.\rThis package can be converted using \"alien\", but this "
-#~ "will take some time and eventually the application won't work\rDo you "
-#~ "want to convert the package now?"
-#~ msgstr ""
-#~ "Sie möchten ein %x-Paket installieren, aber das Paketmanagementsystem "
-#~ "ihrer Distribution basiert auf %y.\rDieses Paket kann mit \"alien\" "
-#~ "umgewandeltt werden, dies wird jedoch einige Zeit benötigen und die "
-#~ "installierte Anwendung wird eventuell nicht funktionieren.\rMöchten Sie "
-#~ "das Paket jetzt umwandeln?"
-
-#~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-distribution's package "
 #~ "management system is based on %y.\n"
 #~ "This package can be converted into a compatible format using \"alien\", "
@@ -2773,13 +2709,6 @@ msgstr ""
 #~ "Ihre PackageKit version ist %cp. Der Listaller benötigt PackageKit %np "
 #~ "oder größer um korrekt zu funktionieren.\n"
 #~ "Bitte aktualisieren Sie PackageKit!"
-
-#~ msgid ""
-#~ "Your PackageKit version is %cp. Listaller needs PackageKit %np or higher "
-#~ "to work correctly.\rPlease update PackageKit!"
-#~ msgstr ""
-#~ "Ihre PackageKit version ist %cp. Listaller benötogt PackageKit %np oder "
-#~ "größer um korrekt zu funktionieren.\rBitte aktualisieren Sie PackageKit."
 
 #~ msgid "application key"
 #~ msgstr "Programmtaste"
