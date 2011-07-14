@@ -35,7 +35,6 @@ vala_add_executable("buildlist" ${BUILDLIST_SOURCES}
 install(TARGETS buildlist DESTINATION include/apbuild COMPONENT headers)
 install(PROGRAMS apgcc
 		 apg++
-		 scandeps
 		 make-icons
 		 relaytool
 	DESTINATION bin

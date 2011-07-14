@@ -1,5 +1,4 @@
 #!/bin/sh
-
 #
 # This script generates a directory and an automake fragment from an SVG
 # file. It's useful when you have an SVG and want to pre-render icons of

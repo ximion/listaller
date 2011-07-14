@@ -25,61 +25,6 @@ using Listaller.Utils;
 
 namespace Listaller.Deps {
 
-public enum SolverType {
-	UNKNOWN,
-	FILE,
-	PACKAGE,
-	FEED;
-}
-
-private abstract class Provider : Object {
-	protected ArrayList<IPK.Dependency> dependency_list;
-
-	public signal void error_code (ErrorItem error);
-	public signal void message (MessageItem message);
-	public signal void progress_changed (int progress);
-
-	public Provider (ArrayList<IPK.Dependency> dependencies) {
-		dependency_list = new ArrayList<IPK.Dependency> ();
-		foreach (IPK.Dependency dep in dependencies) {
-			if (!dep.satisfied)
-				dependency_list.add (dep);
-		}
-	}
-
-	public void connect_solver (Solver s) {
-		error_code.connect ((error) => {
-			s.error_code (error);
-		});
-		message.connect ((msg) => {
-			s.message (msg);
-		});
-		progress_changed.connect ((p) => {
-			s.receive_provider_progress (p);
-		});
-	}
-
-	protected void emit_warning (string msg) {
-		// Construct warning message
-		MessageItem item = new MessageItem(MessageEnum.WARNING);
-		item.details = msg;
-		message (item);
-		warning (msg);
-	}
-
-	protected void emit_info (string msg) {
-		// Construct info message
-		MessageItem item = new MessageItem(MessageEnum.INFO);
-		item.details = msg;
-		message (item);
-		GLib.message (msg);
-	}
-
-	public virtual bool execute () {
-		return false;
-	}
-}
-
 private class Solver : Object {
 	private ArrayList<IPK.Dependency> deplist;
 	private SoftwareDB lidb;
@@ -106,23 +51,10 @@ private class Solver : Object {
 		progress_changed (progress);
 	}
 
-	private bool run_provider (Provider p) {
-		p.connect_solver (this);
-		return p.execute ();
-	}
-
 	public bool execute () {
-		bool ret = false;
-		if (deplist.size == 0)
-			return true;
-		oneprog = 100 / deplist.size * 100;
-		// Resolve dependencies!
-		ret = run_provider (new PkitProvider (deplist));
-		if (!ret)
-			return false;
-
-		return ret;
+		return true;
 	}
+
 
 }
 

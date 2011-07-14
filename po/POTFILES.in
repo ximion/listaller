@@ -4,7 +4,6 @@
 # Listaller library sources
 src/application.vala
 src/database.vala
-src/depman.vala
 src/signature.vala
 src/security.vala
 src/packdetail.vala
@@ -20,8 +19,9 @@ src/manager.vala
 src/installer.vala
 src/depinfo.vala
 src/depsolver.vala
-src/depprovider-pk.vala
-src/zfeed/zfeed.vala
+src/depmanager.vala
+src/pkit-installer.vala
+src/zfeed.vala
 # Listaller tools
 tools/runapp/runapp.vala
 tools/libuild/main.vala

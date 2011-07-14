@@ -1,4 +1,4 @@
-/* depprovider-pk.vala
+/* pkit-installer.vala
  *
  * Copyright (C) 2011 Matthias Klumpp <matthias@nlinux.org>
  *
@@ -25,13 +25,33 @@ using Listaller.Utils;
 
 namespace Listaller.Deps {
 
-private class PkitProvider : Provider {
+private class PkitProvider : Object {
 	private PackageKit.Client pkit;
+	private ArrayList<IPK.Dependency> dependency_list;
+
+	public signal void error_code (ErrorItem error);
+	public signal void message (MessageItem message);
+	public signal void progress_changed (int progress);
 
 	public PkitProvider (ArrayList<IPK.Dependency> dep_lst) {
-		base (dep_lst);
-
 		pkit = new PackageKit.Client ();
+		dependency_list = dep_lst;
+	}
+
+	protected void emit_warning (string msg) {
+		// Construct warning message
+		MessageItem item = new MessageItem(MessageEnum.WARNING);
+		item.details = msg;
+		message (item);
+		warning (msg);
+	}
+
+	protected void emit_info (string msg) {
+		// Construct info message
+		MessageItem item = new MessageItem(MessageEnum.INFO);
+		item.details = msg;
+		message (item);
+		GLib.message (msg);
 	}
 
 	private void pk_progress_cb (PackageKit.Progress progress, PackageKit.ProgressType type) {
@@ -75,7 +95,7 @@ private class PkitProvider : Provider {
 		return false;
 	}
 
-	public override bool execute () {
+	public bool execute () {
 		bool ret = true;
 		foreach (IPK.Dependency dep in dependency_list) {
 			// Resolve all files to packages

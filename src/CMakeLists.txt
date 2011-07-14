@@ -62,9 +62,10 @@ pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
 #find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
 
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
-	zfeed/zfeed.vala
+	zfeed.vala
+	depmanager.vala
 	depsolver.vala
-	depprovider-pk.vala
+	pkit-installer.vala
 	manager.vala
 	installer.vala
 )

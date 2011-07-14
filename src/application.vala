@@ -420,6 +420,14 @@ public class AppItem : Object {
 		return cmd;
 	}
 
+	/*  1 == bversion is higher
+	 *  0 == equal
+	 * -1 == this version is higher
+	 */
+	public int compare_version_with (string bversion) {
+		return compare_versions (bversion, _version);
+	}
+
 }
 
 } // End of namespace

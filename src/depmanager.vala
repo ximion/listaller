@@ -23,18 +23,30 @@ using Gee;
 using Listaller;
 using Listaller.Utils;
 
-namespace Listaller {
+namespace Listaller.Deps {
 
-private class DependencyManager : Object {
+private class Manager : Object {
 	private SoftwareDB db;
 	private Listaller.Settings conf;
 
-	public DependencyManager (SoftwareDB lidb, Listaller.Settings? liconf = null) {
+	public signal void error_code (ErrorItem error);
+	public signal void message (MessageItem message);
+	public signal void progress_changed (int progress);
+
+	public Manager (SoftwareDB lidb, Listaller.Settings? liconf = null) {
 		db = lidb;
 		conf = liconf;
 		if (conf == null)
 			conf = new Listaller.Settings ();
 	}
+
+	public bool install_dependency (IPK.Dependency dep, bool force_feedinstall = false) {
+		if ((force_feedinstall) && (dep.feed_url == ""))
+			return false;
+
+		return true;
+	}
+
 }
 
 } // End of namespace

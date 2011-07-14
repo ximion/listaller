@@ -150,9 +150,19 @@ public class Setup : Object {
 		change_progress (0, -1);
 
 		// Check if this application is already installed
-		if (db.get_application_by_id (app) != null) {
+		AppItem? dbapp = db.get_application_by_id (app);
+		if (dbapp != null) {
 			db.close ();
-			emit_error (ErrorEnum.ALREADY_INSTALLED, _("This application was already installed. Please remove the existing version to continue!"));
+			string text = "";
+			int i = app.compare_version_with (dbapp.version);
+			if (i < 0)
+				// TODO: If we have a lower version, offer upgrade!
+				text = _("A lower version '%s' of this application has already been installed.").printf (dbapp.version);
+			else if (i > 0)
+				text = _("A higher version '%s' of this application has already been installed.").printf (dbapp.version);
+			else
+				text = _("This application has already been installed.");
+			emit_error (ErrorEnum.ALREADY_INSTALLED, "%s %s".printf (text, _("Please remove the existing version to continue!")));
 			return false;
 		}
 
