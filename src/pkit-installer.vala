@@ -40,7 +40,7 @@ private class PkInstaller : Object {
 
 	private void emit_warning (string msg) {
 		// Construct warning message
-		MessageItem item = new MessageItem(MessageEnum.WARNING);
+		MessageItem item = new MessageItem (MessageEnum.WARNING);
 		item.details = msg;
 		message (item);
 		li_warning (msg);
@@ -48,7 +48,7 @@ private class PkInstaller : Object {
 
 	private void emit_info (string msg) {
 		// Construct info message
-		MessageItem item = new MessageItem(MessageEnum.INFO);
+		MessageItem item = new MessageItem (MessageEnum.INFO);
 		item.details = msg;
 		message (item);
 		GLib.message (msg);
@@ -56,7 +56,7 @@ private class PkInstaller : Object {
 
 	private void set_error (ErrorEnum id, string details) {
 		// Construct error
-		ErrorItem item = new ErrorItem(id);
+		ErrorItem item = new ErrorItem (id);
 		item.details = details;
 		last_error = item;
 		debug ("PkInstaller: %s", details);
@@ -83,7 +83,7 @@ private class PkInstaller : Object {
 		string[] packages = sack.get_ids ();
 
 		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (packages[0] == null) ) {
-			set_error (0, "%s\n%s".printf (_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())),
+			set_error (ErrorEnum.UNKNOWN, "%s\n%s".printf (_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())),
 						       _("Unable to find native package for '%s'!").printf (dep.name)));
 			return null;
 		}

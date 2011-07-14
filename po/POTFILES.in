@@ -21,6 +21,7 @@ src/depinfo.vala
 src/depsolver.vala
 src/depmanager.vala
 src/pkit-installer.vala
+src/feed-installer.vala
 src/zfeed.vala
 # Listaller tools
 tools/runapp/runapp.vala

@@ -78,7 +78,7 @@ public class Manager : Object {
 		MessageItem item = new MessageItem(MessageEnum.WARNING);
 		item.details = msg;
 		message (item);
-		stdout.printf ("WARNING: %s\n", msg);
+		li_warning (msg);
 	}
 
 	private void emit_error (ErrorEnum id, string details) {
@@ -86,7 +86,7 @@ public class Manager : Object {
 		ErrorItem item = new ErrorItem(id);
 		item.details = details;
 		error_code (item);
-		stdout.printf ("ERROR: %s\n", details);
+		li_error (details);
 	}
 
 	private void emit_status (StatusEnum status, string info) {
