@@ -58,9 +58,10 @@ private class PkitProvider : Object {
 		// TODO
 	}
 
-	private PackageKit.Package? pkit_pkg_from_file (string fname, IPK.Dependency dep) {
+	private PackageKit.PackageSack? pkit_pkgs_from_depfiles (IPK.Dependency dep) {
 		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("none");
-		string[] files = { fname, null };
+
+		string[] files = array_list_to_strv (dep.files);
 
 		PackageKit.Results res;
 		PackageKit.PackageSack sack;
@@ -79,9 +80,7 @@ private class PkitProvider : Object {
 			return null;
 		}
 
-		PackageKit.Package pkg = sack.find_by_id (packages[0]);
-
-		return pkg;
+		return sack;
 	}
 
 	private bool pkit_install_packages (string[] pkids) {
@@ -99,22 +98,34 @@ private class PkitProvider : Object {
 		bool ret = true;
 		foreach (IPK.Dependency dep in dependency_list) {
 			// Resolve all files to packages
+
 			if (dep.files.size <= 0)
 				continue;
 
-			foreach (string s in dep.files) {
-				PackageKit.Package pkg = pkit_pkg_from_file (s, dep);
-				if (pkg == null) {
-					ret = false;
-					break;
-				}
 
-				if (ret)
-					if (pkg.get_info () == PackageKit.Info.INSTALLED)
-						dep.meta_info.add ("pkg:" + pkg.get_id ());
-					else
-						dep.meta_info.add ("*pkg:" + pkg.get_id ());
+
+			PackageKit.PackageSack? sack = pkit_pkgs_from_depfiles (dep);
+
+			string[] packages = sack.get_ids ();
+			if (sack == null) {
+				// There was an error...
+				ret = false;
+				break;
 			}
+
+			// TODO: Handle all packages
+			PackageKit.Package? pkg = sack.find_by_id (packages[0]);
+			if (pkg == null) {
+				ret = false;
+				break;
+			}
+			if (ret)
+				if (pkg.get_info () == PackageKit.Info.INSTALLED)
+					dep.meta_info.add ("pkg:" + pkg.get_id ());
+				else
+					dep.meta_info.add ("*pkg:" + pkg.get_id ());
+
+
 			if (!ret)
 				dep.meta_info.clear ();
 		}

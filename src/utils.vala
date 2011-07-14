@@ -220,6 +220,18 @@ private ArrayList<string>? find_files (string dir, bool recursive = false) {
 	return list;
 }
 
+/* convert ArrayList to zero-terminated string array */
+private string[]? array_list_to_strv (ArrayList<string> list) {
+	// if the list is empty, return null
+	if (list.size == 0)
+		return null;
+	string[] strv = {};
+	foreach (string s in list)
+		strv += s;
+	strv += null;
+	return strv;
+}
+
 private bool move_file (string source, string destination) throws Error {
 	try {
 		var file = File.new_for_path (source);
