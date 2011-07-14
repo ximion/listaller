@@ -101,8 +101,8 @@ class VersionNumber : Object {
  */
 public int compare_versions (string a, string b) {
 	char oldch1, oldch2;
-	char[strlen (a) + 1] abuf = {};
-	char[strlen (b) + 1] bbuf = {};
+	char[strlen (a) + 1] abuf = { 0 };
+	char[strlen (b) + 1] bbuf = { 0 };
 	char *str1 = abuf;
 	char *str2 = bbuf;
 	char *one;

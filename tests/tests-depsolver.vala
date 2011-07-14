@@ -74,6 +74,48 @@ void test_packagekit_solver () {
 	assert (depMp3Gain.satisfied == true);
 }
 
+void test_packagekit_installer () {
+	msg ("PackageKit dependency installer test");
+	bool ret = false;
+
+	// Build simple mp3gain dependency
+	ArrayList<IPK.Dependency> deplist = new ArrayList<IPK.Dependency> ();
+	IPK.Dependency depMp3Gain = new IPK.Dependency ("Mp3Gain");
+	depMp3Gain.files.add ("/usr/bin/mp3gain");
+
+	Deps.PkInstaller pkit = new Deps.PkInstaller ();
+	pkit.message.connect (test_solver_message_cb);
+	ret = pkit.install_dependency (ref depMp3Gain);
+
+	if (!ret) {
+		debug (pkit.last_error.details);
+		assert (ret == true);
+	}
+	assert (depMp3Gain.satisfied == true);
+
+	// Now something more advanced
+	IPK.Dependency crazy = new IPK.Dependency ("CrazyStuff");
+	crazy.files.add ("/bin/bash");
+	crazy.files.add ("libpackagekit-glib2.so");
+	crazy.files.add ("libc6.so");
+	ret = pkit.install_dependency (ref crazy);
+	if (!ret) {
+		debug (pkit.last_error.details);
+		//! assert (ret == true);
+	}
+	//! assert (crazy.satisfied == true);
+
+	// Now something which fails
+	IPK.Dependency fail = new IPK.Dependency ("Fail");
+	fail.files.add ("/run/chicken");
+	ret = pkit.install_dependency (ref fail);
+	if (!ret) {
+		debug (pkit.last_error.details);
+		assert (ret == false);
+	}
+	assert (fail.satisfied == false);
+}
+
 int main (string[] args) {
 	msg ("=== Running Dependency Solver Tests ===");
 	datadir = args[1];
@@ -83,7 +125,8 @@ int main (string[] args) {
 
 	Test.init (ref args);
 
-	test_packagekit_solver ();
+	test_packagekit_installer ();
+	//! test_packagekit_solver ();
 
 	Test.run ();
 	return 0;

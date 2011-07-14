@@ -84,7 +84,7 @@ private class PkInstaller : Object {
 
 		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (packages[0] == null) ) {
 			set_error (0, "%s\n%s".printf (_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())),
-						       _("Unable to find native package for %s!").printf (dep.name)));
+						       _("Unable to find native package for '%s'!").printf (dep.name)));
 			return null;
 		}
 
@@ -102,9 +102,14 @@ private class PkInstaller : Object {
 		return false;
 	}
 
+	public void reset () {
+		last_error = null;
+		pkit = new PackageKit.Client ();
+	}
+
 	public bool install_dependency (ref IPK.Dependency dep) {
 		bool ret = true;
-		last_error = null;
+		reset ();
 
 		// If there are no files, consider this dependency as "installed"
 		if (dep.files.size <= 0) {
@@ -113,10 +118,10 @@ private class PkInstaller : Object {
 		}
 
 		PackageKit.PackageSack? sack = pkit_pkgs_from_depfiles (dep);
-
-		string[] packages = sack.get_ids ();
 		if (sack == null)
 			return false;
+
+		string[] packages = sack.get_ids ();
 
 		for (uint i = 0; packages[i] != null; i++) {
 			PackageKit.Package? pkg = sack.find_by_id (packages[i]);
@@ -135,6 +140,10 @@ private class PkInstaller : Object {
 			return false;
 		}
 
+		// Just to be sure...
+		if (last_error != null)
+			return false;
+
 		/* This should never happen - if PK did not find a dependency, pkit_pkgs_from_depfiles ()
 		 * returns null already */
 		if (dep.meta_info.size <= 0)
@@ -143,10 +152,11 @@ private class PkInstaller : Object {
 		string[] pkgs = {};
 		/* Now install every not-yet-installed package. The asterisk (*pkg) indicates
 		 * that this package needs to be installed */
-		foreach (string pkg in dep.meta_info)
+		foreach (string pkg in dep.meta_info) {
 			if (pkg.has_prefix ("*pkg:")) {
 				pkgs += pkg.substring (4);
 			}
+		}
 		// null-terminate the array
 		pkgs += null;
 
