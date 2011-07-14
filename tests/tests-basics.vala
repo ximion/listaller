@@ -113,7 +113,7 @@ void test_versions () {
 	assert (comp_ver ("ab.d", "ab.f") == -1);
 	assert (comp_ver ("0.6.16", "0.6.14") == 1);
 
-	assert (comp_ver ("3.0.rc2", "3.0.0") == 1);
+	assert (comp_ver ("3.0.rc2", "3.0.0") == -1);
 }
 
 int main (string[] args) {
