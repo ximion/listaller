@@ -221,6 +221,7 @@ private ArrayList<string>? find_files (string dir, bool recursive = false) {
 }
 
 /* convert ArrayList to zero-terminated string array */
+[CCode (array_length = false, array_null_terminated = true)]
 private string[]? array_list_to_strv (ArrayList<string> list) {
 	// if the list is empty, return null
 	if (list.size == 0)
@@ -230,6 +231,18 @@ private string[]? array_list_to_strv (ArrayList<string> list) {
 		strv += s;
 	strv += null;
 	return strv;
+}
+
+private ArrayList<string>? strv_to_array_list ([CCode (array_length = false, array_null_terminated = true)]
+						string[]? strv) {
+	if (strv == null)
+		return null;
+	ArrayList<string> list = new ArrayList<string> ();
+
+	for (uint i = 0; strv[i] != null; i++) {
+		list.add (strv[i]);
+	}
+	return list;
 }
 
 private bool move_file (string source, string destination) throws Error {

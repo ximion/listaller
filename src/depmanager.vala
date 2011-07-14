@@ -25,7 +25,7 @@ using Listaller.Utils;
 
 namespace Listaller.Deps {
 
-private class Manager : Object {
+private class DepManager : Object {
 	private SoftwareDB db;
 	private Listaller.Settings conf;
 
@@ -33,18 +33,29 @@ private class Manager : Object {
 	public signal void message (MessageItem message);
 	public signal void progress_changed (int progress);
 
-	public Manager (SoftwareDB lidb, Listaller.Settings? liconf = null) {
+	public DepManager (SoftwareDB lidb, Listaller.Settings? liconf = null) {
 		db = lidb;
 		conf = liconf;
 		if (conf == null)
 			conf = new Listaller.Settings ();
 	}
 
-	public bool install_dependency (IPK.Dependency dep, bool force_feedinstall = false) {
+	public bool install_dependency (ref IPK.Dependency dep, bool force_feedinstall = false) {
 		if ((force_feedinstall) && (dep.feed_url == ""))
 			return false;
 
-		return true;
+		bool ret = false;
+		ErrorItem? error = null;
+
+		// First try the PackageKit dependency provider
+		PkInstaller pkit = new PkInstaller ();
+		pkit.message.connect ( (m) => { this.message (m); } );
+		ret = pkit.install_dependency (ref dep);
+
+		if (!ret)
+			error = pkit.last_error;
+
+		return ret;
 	}
 
 }

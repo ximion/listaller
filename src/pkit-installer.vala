@@ -25,33 +25,41 @@ using Listaller.Utils;
 
 namespace Listaller.Deps {
 
-private class PkitProvider : Object {
+private class PkInstaller : Object {
 	private PackageKit.Client pkit;
-	private ArrayList<IPK.Dependency> dependency_list;
 
-	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
 	public signal void progress_changed (int progress);
 
-	public PkitProvider (ArrayList<IPK.Dependency> dep_lst) {
+	public ErrorItem? last_error { get; set; }
+
+	public PkInstaller () {
 		pkit = new PackageKit.Client ();
-		dependency_list = dep_lst;
+		last_error = null;
 	}
 
-	protected void emit_warning (string msg) {
+	private void emit_warning (string msg) {
 		// Construct warning message
 		MessageItem item = new MessageItem(MessageEnum.WARNING);
 		item.details = msg;
 		message (item);
-		warning (msg);
+		li_warning (msg);
 	}
 
-	protected void emit_info (string msg) {
+	private void emit_info (string msg) {
 		// Construct info message
 		MessageItem item = new MessageItem(MessageEnum.INFO);
 		item.details = msg;
 		message (item);
 		GLib.message (msg);
+	}
+
+	private void set_error (ErrorEnum id, string details) {
+		// Construct error
+		ErrorItem item = new ErrorItem(id);
+		item.details = details;
+		last_error = item;
+		debug ("PkInstaller: %s", details);
 	}
 
 	private void pk_progress_cb (PackageKit.Progress progress, PackageKit.ProgressType type) {
@@ -75,8 +83,8 @@ private class PkitProvider : Object {
 		string[] packages = sack.get_ids ();
 
 		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (packages[0] == null) ) {
-			debug (_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())));
-			emit_warning (_("Unable to find native package for %s!").printf (dep.name));
+			set_error (0, "%s\n%s".printf (_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())),
+						       _("Unable to find native package for %s!").printf (dep.name)));
 			return null;
 		}
 
@@ -94,67 +102,66 @@ private class PkitProvider : Object {
 		return false;
 	}
 
-	public bool execute () {
+	public bool install_dependency (ref IPK.Dependency dep) {
 		bool ret = true;
-		foreach (IPK.Dependency dep in dependency_list) {
-			// Resolve all files to packages
+		last_error = null;
 
-			if (dep.files.size <= 0)
-				continue;
+		// If there are no files, consider this dependency as "installed"
+		if (dep.files.size <= 0) {
+			li_warning ("Dependency %s has no files assigned!".printf (dep.name));
+			return true;
+		}
 
+		PackageKit.PackageSack? sack = pkit_pkgs_from_depfiles (dep);
 
+		string[] packages = sack.get_ids ();
+		if (sack == null)
+			return false;
 
-			PackageKit.PackageSack? sack = pkit_pkgs_from_depfiles (dep);
-
-			string[] packages = sack.get_ids ();
-			if (sack == null) {
-				// There was an error...
-				ret = false;
-				break;
-			}
-
-			// TODO: Handle all packages
-			PackageKit.Package? pkg = sack.find_by_id (packages[0]);
+		for (uint i = 0; packages[i] != null; i++) {
+			PackageKit.Package? pkg = sack.find_by_id (packages[i]);
 			if (pkg == null) {
 				ret = false;
 				break;
 			}
-			if (ret)
-				if (pkg.get_info () == PackageKit.Info.INSTALLED)
-					dep.meta_info.add ("pkg:" + pkg.get_id ());
-				else
-					dep.meta_info.add ("*pkg:" + pkg.get_id ());
 
-
-			if (!ret)
-				dep.meta_info.clear ();
+			if (pkg.get_info () == PackageKit.Info.INSTALLED)
+				dep.meta_info.add ("pkg:" + pkg.get_id ());
+			else
+				dep.meta_info.add ("*pkg:" + pkg.get_id ());
+		}
+		if (!ret) {
+			dep.meta_info.clear ();
+			return false;
 		}
 
-		foreach (IPK.Dependency dep in dependency_list) {
-			if (dep.files.size <= 0)
-				continue;
+		/* This should never happen - if PK did not find a dependency, pkit_pkgs_from_depfiles ()
+		 * returns null already */
+		if (dep.meta_info.size <= 0)
+			return false;
 
-			string[] pkgs = {};
-			foreach (string pkg in dep.meta_info)
-				// *pkg indicates we only install not installed pkgs
-				if (pkg.has_prefix ("*pkg:")) {
-					pkgs += pkg.substring (4);
-				}
-			// null-terminate the array
-			pkgs += null;
-			if (pkgs[0] == null) {
-				dep.satisfied = true;
-				continue;
+		string[] pkgs = {};
+		/* Now install every not-yet-installed package. The asterisk (*pkg) indicates
+		 * that this package needs to be installed */
+		foreach (string pkg in dep.meta_info)
+			if (pkg.has_prefix ("*pkg:")) {
+				pkgs += pkg.substring (4);
 			}
+		// null-terminate the array
+		pkgs += null;
 
-			emit_info (_("Installing native packages %s").printf (pkgs));
-			bool ret2 = pkit_install_packages (pkgs);
-			if (!ret2) {
-				ret = false;
-			} else {
-				dep.satisfied = true;
-			}
+		/* If no elements need to be installed and everything is already there,
+		 * the dependency is satisfied and we can leave. */
+		if (pkgs[0] == null) {
+			dep.satisfied = true;
+			return true;
 		}
+
+		// Now do the installing
+		emit_info (_("Installing native packages %s").printf (pkgs));
+		ret = pkit_install_packages (pkgs);
+		if (ret)
+			dep.satisfied = true;
 
 		return ret;
 	}
