@@ -95,22 +95,22 @@ add_test(ipkbuild-test li-test-ipkbuild ${CMAKE_CURRENT_SOURCE_DIR}
 endif(TOOLS)
 
 # Dependency solver tests
-if(TEST_DEPSOLVER)
 vala_add_executable (li-test-depsolver ${LIUNITTEST_SOURCES} tests-depsolver.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
 )
-add_test(depsolver-test li-test-depsolver ${CMAKE_CURRENT_SOURCE_DIR})
+if(TEST_DEPSOLVER)
+	add_test(depsolver-test li-test-depsolver ${CMAKE_CURRENT_SOURCE_DIR})
 endif(TEST_DEPSOLVER)
 
 # Tests of package security (GPG signing etc.)
-if(TEST_SIGN)
 vala_add_executable (li-test-security ${LIUNITTEST_SOURCES} ../tools/libuild/lbutils.vala
 							../tools/libuild/gpgsign.vala tests-security.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
 )
-add_test(security-test li-test-security ${CMAKE_CURRENT_SOURCE_DIR})
-endif(TEST_SIGN)
+if(TEST_SECURITY)
+	add_test(security-test li-test-security ${CMAKE_CURRENT_SOURCE_DIR})
+endif(TEST_SECURITY)

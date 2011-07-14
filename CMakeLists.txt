@@ -47,7 +47,7 @@ option(APBUILD "Build the APBuild tool" OFF)
 option(L18N "Enable localization" ON)
 option(TESTS "Enable Listaller's Unit Tests" OFF)
 option(TEST_DEPSOLVER "Test Listaller's dependency solver" OFF)
-option(TEST_SIGN "Enable Listaller signing tests" ON)
+option(TEST_SECURITY "Enable Listaller signing/security tests" ON)
 
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
