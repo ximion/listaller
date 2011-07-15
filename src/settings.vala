@@ -21,7 +21,6 @@
 using Config;
 using GLib;
 using Listaller;
-using Listaller.Utils;
 
 namespace Listaller {
 
@@ -92,7 +91,7 @@ public class Settings : Object {
 	}
 
 	private void touch_dir (string dirname, string warnmsg = "Error: %s") {
-		if ((sumode && is_root ()) || (!sumode)) {
+		if ((sumode && Utils.is_root ()) || (!sumode)) {
 			File d = File.new_for_path (dirname);
 			try {
 				if (!d.query_exists ()) {
@@ -129,6 +128,10 @@ public class Settings : Object {
 		} else {
 			addir = Path.build_filename (Environment.get_home_dir (), ".appdata", "apps", null);
 		}
+		if (testmode) {
+			// Point to our temporary dir
+			addir = Path.build_filename (get_unique_install_tmp_dir (), "apps", null);
+		}
 
 		touch_dir (addir, "Unable to create application data directory: %s");
 
@@ -143,6 +146,10 @@ public class Settings : Object {
 		} else {
 			depdir = Path.build_filename (Environment.get_home_dir (), ".appdata", "deps", null);
 		}
+		if (testmode) {
+			// Point to our temporary dir
+			depdir = Path.build_filename (get_unique_install_tmp_dir (), "deps", null);
+		}
 
 		touch_dir (depdir, "Unable to create application data directory: %s");
 
@@ -156,6 +163,10 @@ public class Settings : Object {
 			icodir = Path.build_filename (suinstroot, "icons", null);
 		} else {
 			icodir = Path.build_filename (Environment.get_home_dir (), ".appdata", "icons", null);
+		}
+		if (testmode) {
+			// Point to our temporary dir
+			icodir = Path.build_filename (get_unique_install_tmp_dir (), "icons", null);
 		}
 
 		touch_dir (icodir, "Unable to create icon directory: %s");
@@ -207,6 +218,10 @@ public class Settings : Object {
 			dskdir = sudesktopdir;
 		} else {
 			dskdir = Path.build_filename (Environment.get_home_dir (), ".local", "share", "applications", null);
+		}
+		if (testmode) {
+			// Point to our temporary dir
+			dskdir = Path.build_filename (get_unique_install_tmp_dir (), "app-desktop", null);
 		}
 
 		touch_dir (dskdir, "Unable to create application data directory: %s");
