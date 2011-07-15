@@ -52,6 +52,13 @@ public class Dependency : Object {
 		feed_url = "";
 		version = "0";
 	}
+
+	public string get_id () {
+		// Form unique dependency-id
+		string id = "%s-%s".printf (name, version);
+		id = id.down ().replace (" ", "_");
+		return id;
+	}
 }
 
 } // Endof namespace: Listaller.IPK

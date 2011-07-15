@@ -24,6 +24,7 @@ using Gee;
 using Listaller;
 
 private string datadir;
+private Listaller.Settings conf;
 
 void msg (string s) {
 	stdout.printf (s + "\n");
@@ -44,10 +45,6 @@ void test_solver_error_code_cb (ErrorItem item) {
 void test_packagekit_solver () {
 	bool ret = false;
 	msg ("Dependency solver tests");
-
-	// Set up Listaller configuration
-	Listaller.Settings conf = new Listaller.Settings ();
-	conf.testmode = true;
 
 	SoftwareDB sdb = new SoftwareDB (conf);
 	sdb.error_code.connect (test_solver_error_code_cb);
@@ -83,7 +80,7 @@ void test_packagekit_installer () {
 	IPK.Dependency depMp3Gain = new IPK.Dependency ("Mp3Gain");
 	depMp3Gain.files.add ("/usr/bin/mp3gain");
 
-	Deps.PkInstaller pkit = new Deps.PkInstaller ();
+	Deps.PkInstaller pkit = new Deps.PkInstaller (conf);
 	pkit.message.connect (test_solver_message_cb);
 	ret = pkit.install_dependency (ref depMp3Gain);
 
@@ -116,6 +113,19 @@ void test_packagekit_installer () {
 	assert (fail.satisfied == false);
 }
 
+void test_feed_installer () {
+	Deps.FeedInstaller finst = new Deps.FeedInstaller (conf);
+
+	IPK.Dependency test1 = new IPK.Dependency ("Test:1");
+	test1.feed_url = "http://services.sugarlabs.org/libvorbis";
+
+	bool ret;
+	ret = finst.install_dependency (ref test1);
+	assert (ret == true);
+	assert (test1.name == "libvorbis");
+
+}
+
 int main (string[] args) {
 	msg ("=== Running Dependency Solver Tests ===");
 	datadir = args[1];
@@ -125,7 +135,12 @@ int main (string[] args) {
 
 	Test.init (ref args);
 
-	test_packagekit_installer ();
+	// Set up Listaller configuration
+	conf = new Listaller.Settings ();
+	conf.testmode = true;
+
+	test_feed_installer ();
+	//! test_packagekit_installer ();
 	//! test_packagekit_solver ();
 
 	Test.run ();

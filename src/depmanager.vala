@@ -66,7 +66,7 @@ private class DepManager : Object {
 
 		// First try the PackageKit dependency provider, if feedinstall is not forced
 		if (!force_feedinstall) {
-			PkInstaller pkinst = new PkInstaller ();
+			PkInstaller pkinst = new PkInstaller (conf);
 			pkinst.message.connect ( (m) => { this.message (m); } );
 			ret = pkinst.install_dependency (ref dep);
 
@@ -84,7 +84,7 @@ private class DepManager : Object {
 		}
 
 		// Now try to install from dependency-feed
-		FeedInstaller finst = new FeedInstaller ();
+		FeedInstaller finst = new FeedInstaller (conf);
 		finst.message.connect ( (m) => { this.message (m); } );
 		ret = finst.install_dependency (ref dep);
 		if (!ret) {

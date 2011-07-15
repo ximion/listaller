@@ -175,8 +175,7 @@ private class Package : Object {
 		return ret;
 	}
 
-	private bool archive_copy_data (Read source, Write dest)
-	{
+	private bool archive_copy_data (Read source, Write dest) {
 		const int size = 10240;
 		char buff[10240];
 		ssize_t readBytes;
@@ -188,7 +187,6 @@ private class Package : Object {
 				emit_warning ("Error while extracting..." + dest.error_string () + "(error nb =" + dest.errno ().to_string () + ")");
 				return false;
 			}
-
 			readBytes = source.read_data (buff, size);
 		}
 		return true;
@@ -358,22 +356,6 @@ private class Package : Object {
 		return plar;
 	}
 
-	private bool touch_dir (string dirname) {
-		File d = File.new_for_path (dirname);
-		try {
-			if (!d.query_exists ()) {
-				d.make_directory_with_parents ();
-			}
-		} catch (Error e) {
-			// Undo changes & emit error
-			rollback_installation ();
-			emit_error (ErrorEnum.FILE_INSTALL_FAILED,
-				_("Could not create destination directory. Error: %s").printf (e.message));
-			return false;
-		}
-		return true;
-	}
-
 	private bool extract_file_copy_dest (IPK.FileEntry fe, Read plar, Entry e) {
 		bool ret = true;
 
@@ -393,7 +375,16 @@ private class Package : Object {
 				return false;
 		}
 		// Now extract it!
-		touch_dir (dest);
+		string msg;
+		ret = touch_dir (dest);
+		if (!ret) {
+			// Undo changes & emit error
+			rollback_installation ();
+			emit_error (ErrorEnum.FILE_INSTALL_FAILED,
+				_("Unable to create destination directory."));
+			return false;
+		}
+
 		ret = extract_entry_to (plar, e, wdir);
 		if (!ret) {
 			rollback_installation ();
@@ -445,7 +436,7 @@ private class Package : Object {
 		}
 		assert (fe.hash != "");
 
-		// This ensures our IPK package is ready to extract files
+		// Make sure that our IPK package is ready to extract files
 		ret = prepare_extracting ();
 		if (!ret)
 			return ret;

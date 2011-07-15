@@ -26,6 +26,7 @@ using Listaller.Utils;
 namespace Listaller.Deps {
 
 private class PkInstaller : Object {
+	private Listaller.Settings conf;
 	private PackageKit.Client pkit;
 
 	public signal void message (MessageItem message);
@@ -33,9 +34,10 @@ private class PkInstaller : Object {
 
 	public ErrorItem? last_error { get; set; }
 
-	public PkInstaller () {
+	public PkInstaller (Listaller.Settings liconf) {
 		pkit = new PackageKit.Client ();
 		last_error = null;
+		conf = liconf;
 	}
 
 	private void emit_warning (string msg) {

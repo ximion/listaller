@@ -42,6 +42,7 @@ public enum ErrorEnum {
 	INSTALLATION_FAILED,
 	DEPENDENCY_MISSING,
 	DEPENDENCY_INSTALL_FAILED,
+	NETWORK_ERROR,
 	INVALID;
 
 	public string to_string () {
