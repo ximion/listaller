@@ -547,12 +547,12 @@ private class SoftwareDB : Object {
 		return item;
 	}
 
-	public AppItem? get_application_by_dbid (int databaseId) {
+	public AppItem? get_application_by_dbid (uint databaseId) {
 		Sqlite.Statement stmt;
 		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE id=?", -1, out stmt);
 		return_val_if_fail (check_result (res, "get application (by db_id)"), null);
 
-		res = stmt.bind_int (1, databaseId);
+		res = stmt.bind_int (1, (int) databaseId);
 
 		if (stmt.step() != Sqlite.ROW)
 			return null;

@@ -116,15 +116,19 @@ public class Manager : Object {
 			return false;
 
 		double one = 100d / db.get_applications_count ();
-		int i = 1;
-		AppItem capp = null;
-		for (capp = db.get_application_by_dbid (i); capp != null; i++) {
+
+		uint i = 1;
+		AppItem? capp = db.get_application_by_dbid (i);
+		while (capp != null) {
 			capp.shared = conf.sumode;
 			application (capp);
 			alist.add (capp);
 			progress_changed ((int) Math.round (one * i));
-			capp = null;
+
+			i++;
+			capp = db.get_application_by_dbid (i);
 		}
+
 		db.close ();
 		appList = alist;
 		return true;
