@@ -57,7 +57,8 @@ private class DepManager : Object {
 					text));
 	}
 
-	public bool install_dependency (ref IPK.Dependency dep, bool force_feedinstall = false) {
+	private bool install_dependency_internal (PkInstaller pkinst, FeedInstaller finst,
+						ref IPK.Dependency dep, bool force_feedinstall = false) {
 		if ((force_feedinstall) && (dep.feed_url == ""))
 			return false;
 
@@ -66,20 +67,24 @@ private class DepManager : Object {
 
 		// TODO: Use util-linux "whereis" utility to find shared stuff faster
 
-		// First try the PackageKit dependency provider, if feedinstall is not forced
-		if (!force_feedinstall) {
-			PkInstaller pkinst = new PkInstaller (conf);
-			pkinst.message.connect ( (m) => { this.message (m); } );
-			ret = pkinst.search_dep_packages (ref dep);
+		// Try to find native distribution packages for this dependency
+		ret = pkinst.search_dep_packages (ref dep);
+		if (!ret)
+			error = pkinst.last_error;
+
+		// Finish if the dependency is already satisfied
+		if (dep.satisfied)
+			return true;
+
+		/* Now try the PackageKit dependency provider, if feedinstall is not forced
+		 * and the previous package dependency searching was successful */
+		if ((!force_feedinstall) && (ret)) {
+			ret = pkinst.install_dependency (ref dep);
 			if (!ret)
 				error = pkinst.last_error;
-			else if (!dep.satisfied) {
-				ret = pkinst.install_dependency (ref dep);
-				if (!ret)
-					error = pkinst.last_error;
-			}
 		}
-		// Finish if the dependency is already satisfied
+
+		// Finish if the dependency is satisfied
 		if (dep.satisfied)
 			return true;
 
@@ -90,8 +95,6 @@ private class DepManager : Object {
 		}
 
 		// Now try to install from dependency-feed
-		FeedInstaller finst = new FeedInstaller (conf);
-		finst.message.connect ( (m) => { this.message (m); } );
 		ret = finst.install_dependency (ref dep);
 		if (!ret) {
 			error = finst.last_error;
@@ -99,6 +102,17 @@ private class DepManager : Object {
 			return false;
 		}
 
+		return ret;
+	}
+
+	public bool install_dependency (ref IPK.Dependency dep, bool force_feedinstall = false) {
+		PkInstaller pkinst = new PkInstaller (conf);
+		pkinst.message.connect ( (m) => { this.message (m); } );
+
+		FeedInstaller finst = new FeedInstaller (conf);
+		finst.message.connect ( (m) => { this.message (m); } );
+
+		bool ret = install_dependency_internal (pkinst, finst, ref dep, force_feedinstall);
 		return ret;
 	}
 
