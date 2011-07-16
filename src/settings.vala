@@ -25,14 +25,21 @@ using Listaller;
 namespace Listaller {
 
 public class Settings : Object {
-	private bool _sumode;
+
 	const string confdir = "/etc/listaller";
 	const string sudbdir = "/var/lib/listaller";
 	const string suinstroot = "/opt";
 	const string sudesktopdir = Config.PREFIXDIR + "/share/applications";
+	private string[] library_paths = { Config.PREFIXDIR + "/lib",
+					   Config.PREFIXDIR + "/lib64",
+					   "/lib",
+					   null };
+
+	private bool _sumode;
 	private bool _testmode;
 	private bool _locked;
 	private string uinsttmp = "";
+
 
 	// System directories
 	public const string sys_libdir = Config.LIBDIR;
@@ -88,6 +95,11 @@ public class Settings : Object {
 
 	public string database_file () {
 		return appregister_dir () + "/software.db";
+	}
+
+	[CCode (array_length = false, array_null_terminated = true)]
+	public string[] get_lib_paths () {
+		return library_paths;
 	}
 
 	private void touch_dir (string dirname, string warnmsg = "Error: %s") {

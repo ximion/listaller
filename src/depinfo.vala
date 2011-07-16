@@ -61,7 +61,7 @@ public class Dependency : Object {
 	}
 }
 
-} // Endof namespace: Listaller.IPK
+} // End of namespace: Listaller.IPK
 
 namespace Listaller {
 
@@ -151,4 +151,4 @@ private class DepInfo : Object {
 
 }
 
-} // End of namespace
+} // End of namespace: Listaller

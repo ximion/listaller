@@ -64,14 +64,20 @@ private class DepManager : Object {
 		bool ret = false;
 		ErrorItem? error = null;
 
+		// TODO: Use util-linux "whereis" utility to find shared stuff faster
+
 		// First try the PackageKit dependency provider, if feedinstall is not forced
 		if (!force_feedinstall) {
 			PkInstaller pkinst = new PkInstaller (conf);
 			pkinst.message.connect ( (m) => { this.message (m); } );
-			ret = pkinst.install_dependency (ref dep);
-
+			ret = pkinst.search_dep_packages (ref dep);
 			if (!ret)
 				error = pkinst.last_error;
+			else if (!dep.satisfied) {
+				ret = pkinst.install_dependency (ref dep);
+				if (!ret)
+					error = pkinst.last_error;
+			}
 		}
 		// Finish if the dependency is already satisfied
 		if (dep.satisfied)

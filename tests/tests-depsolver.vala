@@ -71,6 +71,20 @@ void test_packagekit_solver () {
 	assert (depMp3Gain.satisfied == true);
 }
 
+void search_install_pkdep (Deps.PkInstaller pkit, ref IPK.Dependency dep) {
+	bool ret;
+	ret = pkit.search_dep_packages (ref dep);
+	if (!ret) {
+		debug (pkit.last_error.details);
+		assert (ret == true);
+	}
+	ret = pkit.install_dependency (ref dep);
+	if (!ret) {
+		debug (pkit.last_error.details);
+		assert (ret == true);
+	}
+}
+
 void test_packagekit_installer () {
 	msg ("PackageKit dependency installer test");
 	bool ret = false;
@@ -82,12 +96,8 @@ void test_packagekit_installer () {
 
 	Deps.PkInstaller pkit = new Deps.PkInstaller (conf);
 	pkit.message.connect (test_solver_message_cb);
-	ret = pkit.install_dependency (ref depMp3Gain);
 
-	if (!ret) {
-		debug (pkit.last_error.details);
-		assert (ret == true);
-	}
+	search_install_pkdep (pkit, ref depMp3Gain);
 	assert (depMp3Gain.satisfied == true);
 
 	// Now something more advanced
@@ -95,17 +105,14 @@ void test_packagekit_installer () {
 	crazy.files.add ("/bin/bash");
 	crazy.files.add ("libpackagekit-glib2.so");
 	crazy.files.add ("libc6.so");
-	ret = pkit.install_dependency (ref crazy);
-	if (!ret) {
-		debug (pkit.last_error.details);
-		//! assert (ret == true);
-	}
-	//! assert (crazy.satisfied == true);
+
+	search_install_pkdep (pkit, ref crazy);
+	assert (crazy.satisfied == true);
 
 	// Now something which fails
 	IPK.Dependency fail = new IPK.Dependency ("Fail");
 	fail.files.add ("/run/chicken");
-	ret = pkit.install_dependency (ref fail);
+	ret = pkit.search_dep_packages (ref fail);
 	if (!ret) {
 		debug (pkit.last_error.details);
 		assert (ret == false);

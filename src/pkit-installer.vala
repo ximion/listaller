@@ -109,7 +109,8 @@ private class PkInstaller : Object {
 		pkit = new PackageKit.Client ();
 	}
 
-	public bool install_dependency (ref IPK.Dependency dep) {
+	/* This method searches for dependency packages & stores them in dep.meta_info */
+	public bool search_dep_packages (ref IPK.Dependency dep) {
 		bool ret = true;
 		reset ();
 
@@ -141,10 +142,29 @@ private class PkInstaller : Object {
 			dep.meta_info.clear ();
 			return false;
 		}
+		/* Check if there are native packages which need to be installed.
+		 * If not, the dependency is already satified. */
+		dep.satisfied = true;
+		foreach (string pkg in dep.meta_info) {
+			if (pkg.has_prefix ("*pkg:")) {
+				dep.satisfied = false;
+				break;
+			}
+		}
 
+		return ret;
+	}
+
+	/* This method install a dependency if necessary */
+	public bool install_dependency (ref IPK.Dependency dep) {
+		bool ret = true;
 		// Just to be sure...
 		if (last_error != null)
 			return false;
+
+		// return if dependency is already satified
+		if (dep.satisfied)
+			return true;
 
 		/* This should never happen - if PK did not find a dependency, pkit_pkgs_from_depfiles ()
 		 * returns null already */
@@ -175,7 +195,7 @@ private class PkInstaller : Object {
 		if (ret)
 			dep.satisfied = true;
 
-		return ret;
+		return true;
 	}
 
 }
