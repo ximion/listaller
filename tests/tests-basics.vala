@@ -93,7 +93,10 @@ void test_zfeeds () {
 
 	assert (dep.full_name == "libogg");
 	assert (dep.homepage == "http://xiph.org/ogg/");
-	assert (dep.idname == "libogg-1.1.4-1");
+	/* Info: It is "libogg-0", because the version is set through "search_matching_dependency ()",
+	 * which we don't call here because the libogg feed does not provide implementations
+	 * for every platform out there. (This is a default-test, which should not fail, usually.) */
+	assert (dep.idname == "libogg-0");
 
 	bool ret = feed.search_matching_dependency ();
 	assert (ret == true);
