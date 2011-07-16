@@ -54,15 +54,38 @@ void test_dependency_manager () {
 	// Open the DB
 	sdb.open ();
 
+	bool ret;
 	Deps.DepManager depman = new Deps.DepManager (sdb);
 
+	// Test 1
 	IPK.Dependency test1 = new IPK.Dependency ("Test:1");
 	test1.feed_url = "http://services.sugarlabs.org/libgee";
 
-	depman.install_dependency (ref test1);
+	ret = depman.install_dependency (ref test1);
+	assert (ret == true);
 	assert (test1.satisfied == true);
 	assert (test1.full_name == "libgee");
 
+	// Test 2
+	IPK.Dependency test2 = new IPK.Dependency ("Test:2");
+	test2.feed_url = "http://services.sugarlabs.org/libvorbis";
+
+	ret = depman.install_dependency (ref test2);
+	/* We already installed this in a previous test, but did no proper
+	 * registration. So this has to fail because unknown files would be overwritten.
+	 */
+	assert (ret == false);
+	assert (test2.satisfied == false);
+	assert (test2.full_name == "libvorbis");
+
+	// Test 3
+	// Look if dependency of test1 is still available :-P
+	test1.satisfied = false;
+	test1.full_name = "";
+	ret = depman.install_dependency (ref test1);
+	assert (ret == true);
+	assert (test1.satisfied == true);
+	assert (test1.full_name == "libgee");
 }
 
 void search_install_pkdep (Deps.PkInstaller pkit, ref IPK.Dependency dep) {

@@ -538,10 +538,11 @@ private class SoftwareDB : Object {
 		if (stmt.step() != Sqlite.ROW)
 			return null;
 
-		AppItem item = retrieve_app_item (stmt);
+		AppItem? item = retrieve_app_item (stmt);
 
 		// Fast sanity checks
-		item.fast_check ();
+		if (item != null)
+			item.fast_check ();
 
 		return item;
 	}
@@ -556,10 +557,11 @@ private class SoftwareDB : Object {
 		if (stmt.step() != Sqlite.ROW)
 			return null;
 
-		AppItem item = retrieve_app_item (stmt);
+		AppItem? item = retrieve_app_item (stmt);
 
 		// Fast sanity checks
-		item.fast_check ();
+		if (item != null)
+			item.fast_check ();
 
 		return item;
 	}
@@ -574,10 +576,11 @@ private class SoftwareDB : Object {
 		if (stmt.step() != Sqlite.ROW)
 			return null;
 
-		AppItem item = retrieve_app_item (stmt);
+		AppItem? item = retrieve_app_item (stmt);
 
 		// Fast sanity checks
-		item.fast_check ();
+		if (item != null)
+			item.fast_check ();
 
 		return item;
 	}
@@ -595,10 +598,11 @@ private class SoftwareDB : Object {
 		if (stmt.step() != Sqlite.ROW)
 			return null;
 
-		AppItem item = retrieve_app_item (stmt);
+		AppItem? item = retrieve_app_item (stmt);
 
 		// Fast sanity checks
-		item.fast_check ();
+		if (item != null)
+			item.fast_check ();
 
 		return item;
 	}
@@ -737,6 +741,23 @@ private class SoftwareDB : Object {
 		dep.author = stmt.column_text (6);
 		dep.install_time = stmt.column_int (7);
 		dep.environment = stmt.column_text (8);
+		// It's in the db, so this dependency is certainly satisfied
+		dep.satisfied = true;
+
+		return dep;
+	}
+
+	public IPK.Dependency? get_dependency_by_id (string depIdName) {
+		Sqlite.Statement stmt;
+		int res = db->prepare_v2 ("SELECT " + deptables + " FROM dependencies WHERE name=?", -1, out stmt);
+		return_val_if_fail (check_result (res, "get dependency (by id)"), null);
+
+		res = stmt.bind_text (1, depIdName);
+
+		if (stmt.step() != Sqlite.ROW)
+			return null;
+
+		IPK.Dependency? dep = retrieve_dependency (stmt);
 
 		return dep;
 	}

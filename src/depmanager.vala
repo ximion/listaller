@@ -62,6 +62,15 @@ private class DepManager : Object {
 
 	private bool install_dependency_internal (PkInstaller pkinst, FeedInstaller finst,
 						ref IPK.Dependency dep, bool force_feedinstall = false) {
+		// First of all, check if the dependency is already there
+		IPK.Dependency? dbDep = db.get_dependency_by_id (dep.idname);
+		if (dbDep != null) {
+			debug ("Dependency with id [%s] is already installed :)", dep.idname);
+			dep = dbDep;
+			return true;
+		}
+
+		// If we force feed-install and don't have a feed... This just can't work.
 		if ((force_feedinstall) && (dep.feed_url == ""))
 			return false;
 
