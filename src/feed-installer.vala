@@ -179,7 +179,7 @@ private class FeedInstaller : Object {
 		bool ret = true;
 
 		// Target dependency subdirectory
-		string dest = Path.build_filename (conf.depdata_dir (), dep.get_id (), null);
+		string dest = dep.storage_path;
 		// Target filename
 		string fname = Path.build_filename (dest, e.pathname (), null);
 
@@ -264,11 +264,15 @@ private class FeedInstaller : Object {
 		if (!ret)
 			return false;
 
+		// Set the dependency storage path (installation target dir)
+		dep.storage_path = Path.build_filename (conf.depdata_dir (), dep.get_id (), null);
+
 		// Install the archive to the correct dependency dir
 		ret = install_archive (package_file, dep);
 		// Exit if there was an error
 		if (!ret)
 			return false;
+		dep.satisfied = true;
 
 		return ret;
 	}

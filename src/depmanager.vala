@@ -33,11 +33,14 @@ private class DepManager : Object {
 	public signal void message (MessageItem message);
 	public signal void progress_changed (int progress);
 
-	public DepManager (SoftwareDB lidb, Listaller.Settings? liconf = null) {
+	public DepManager (SoftwareDB lidb) {
 		db = lidb;
-		conf = liconf;
-		if (conf == null)
+		conf = lidb.get_liconf ();
+		// This should never happen!
+		if (conf == null) {
+			error ("Listaller config was NULL in DepManager constructor!");
 			conf = new Listaller.Settings ();
+		}
 	}
 
 	private void emit_error (ErrorEnum id, string details) {

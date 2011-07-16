@@ -166,6 +166,11 @@ private class PkInstaller : Object {
 		if (dep.satisfied)
 			return true;
 
+		/* Exit if we have no meta-info: No package can be installed, dependency is not satisfied.
+		 * (we might do a feed-install instead */
+		if (dep.meta_info.size == 0)
+			return false;
+
 		/* This should never happen - if PK did not find a dependency, pkit_pkgs_from_depfiles ()
 		 * returns null already */
 		if (dep.meta_info.size <= 0)

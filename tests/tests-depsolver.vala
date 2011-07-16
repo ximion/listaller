@@ -42,9 +42,8 @@ void test_solver_error_code_cb (ErrorItem item) {
 	error (item.details);
 }
 
-void test_packagekit_solver () {
-	bool ret = false;
-	msg ("Dependency solver tests");
+void test_dependency_manager () {
+	msg ("Dependency manager tests");
 
 	SoftwareDB sdb = new SoftwareDB (conf);
 	sdb.error_code.connect (test_solver_error_code_cb);
@@ -55,20 +54,15 @@ void test_packagekit_solver () {
 	// Open the DB
 	sdb.open ();
 
-	ArrayList<IPK.Dependency> deplist = new ArrayList<IPK.Dependency> ();
-	IPK.Dependency depMp3Gain = new IPK.Dependency ("Mp3Gain");
-	depMp3Gain.files.add ("/usr/bin/mp3gain");
+	Deps.DepManager depman = new Deps.DepManager (sdb);
 
-	deplist.add (depMp3Gain);
+	IPK.Dependency test1 = new IPK.Dependency ("Test:1");
+	test1.feed_url = "http://services.sugarlabs.org/libgee";
 
-	Deps.Solver solver = new Deps.Solver (deplist, sdb, conf);
-	solver.error_code.connect (test_solver_error_code_cb);
-	solver.message.connect (test_solver_message_cb);
+	depman.install_dependency (ref test1);
+	assert (test1.satisfied == true);
+	assert (test1.name == "libgee");
 
-	// Run it!
-	ret = solver.execute ();
-	assert (ret == true);
-	assert (depMp3Gain.satisfied == true);
 }
 
 void search_install_pkdep (Deps.PkInstaller pkit, ref IPK.Dependency dep) {
@@ -121,6 +115,7 @@ void test_packagekit_installer () {
 }
 
 void test_feed_installer () {
+	msg ("ZI Feed installer tests");
 	Deps.FeedInstaller finst = new Deps.FeedInstaller (conf);
 
 	IPK.Dependency test1 = new IPK.Dependency ("Test:1");
@@ -148,7 +143,7 @@ int main (string[] args) {
 
 	test_feed_installer ();
 	//! test_packagekit_installer ();
-	//! test_packagekit_solver ();
+	test_dependency_manager ();
 
 	Test.run ();
 	return 0;

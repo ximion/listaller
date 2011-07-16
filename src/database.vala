@@ -102,6 +102,10 @@ private class SoftwareDB : Object {
 		close ();
 	}
 
+	public Settings get_liconf () {
+		return conf;
+	}
+
 	public bool database_locked () {
 		if (FileUtils.test (dblockfile, FileTest.IS_REGULAR)) {
 			locked = true;
