@@ -29,28 +29,39 @@ public class Dependency : Object {
 	public string summary { get; set; }
 	public string description { get; set; }
 	public string homepage { get; set; }
+	public string author { get; set; }
 	public string version { get; set; }
 
 	public bool satisfied { get; set; }
 	public string architecture { get; set; } // e.g. linux-amd64
 	public HashSet<string> meta_info { get; set; }
+	public bool is_standardlib { get; set; }
 
 	public string feed_url { get; set; }
 	public ArrayList<string> files { get; set; }
-	public string data { get; set; }
 
-	public bool is_standardlib { get; set; }
+	public int64 install_time { get; set; }
+	public string storage_path { get; set; }
+	public string environment { get; set; }
 
-	internal Dependency (string dep_name) {
-		name = dep_name;
+	internal Dependency.blank () {
 		satisfied = false;
 		is_standardlib = false;
 
 		files = new ArrayList<string> ();
 		meta_info = new HashSet<string> ();
-		data = "";
 		feed_url = "";
 		version = "0";
+		name = "";
+		storage_path = "";
+		install_time = -1;
+		environment = "";
+		author = "";
+	}
+
+	internal Dependency (string dep_name) {
+		this.blank ();
+		name = dep_name;
 	}
 
 	public string get_id () {
@@ -147,6 +158,15 @@ private class DepInfo : Object {
 			}
 		}
 		return null;
+	}
+
+	public void update_dependency_with_system_data (ref IPK.Dependency dep) {
+		foreach (IPK.Dependency sydep in dlist) {
+			if (sydep.name == dep.name) {
+				dep = sydep;
+				break;
+			}
+		}
 	}
 
 }

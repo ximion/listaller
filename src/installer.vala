@@ -211,9 +211,6 @@ public class Setup : Object {
 		emit_status (StatusEnum.REGISTERING_APPLICATION,
 			     _("Making '%s' known to your system.").printf (app.full_name));
 
-		// Set install timestamp
-		DateTime dt = new DateTime.now_local ();
-		app.install_time = dt.to_unix ();
 		app.description = control.get_app_description ();
 		// Now register the item
 		ret = db.add_application (app);

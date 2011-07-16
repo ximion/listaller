@@ -79,6 +79,7 @@ private class SoftwareDB : Object {
 	private bool locked;
 	private string dblockfile;
 	private string apptables;
+	private string deptables;
 	private string regdir;
 
 	public signal void db_status_changed (DatabaseStatus newstatus, string message);
@@ -298,10 +299,12 @@ private class SoftwareDB : Object {
 	protected bool update_db_structure () {
 		Sqlite.Statement stmt;
 
-		apptables = "id, name, version, full_name, desktop_file, author, publisher, categories, "
-			+ "description, install_time, origin, dependencies";
+		/*
+		 * Create table to store information about applications
+		 */
+		apptables = "id, name, version, full_name, desktop_file, author, publisher, categories, " +
+			"description, install_time, origin, dependencies";
 
-		// Create table to store information about applications
 		int res = db->prepare_v2 ("CREATE TABLE IF NOT EXISTS applications ("
 		+ "id INTEGER PRIMARY KEY, "
 		+ "name TEXT UNIQUE NOT NULL, "
@@ -324,16 +327,22 @@ private class SoftwareDB : Object {
 			return false;
 		}
 
-		// Table for all the additional stuff fetched during installation (3rd-party libraries etc.)
+		/*
+		 * Table for all the additional stuff fetched during installation (3rd-party libraries etc.)
+		 */
+		deptables = "id, name, version, description, homepage, author, install_time, " +
+			"storage_path, environment";
+
 		res = db->prepare_v2 ("CREATE TABLE IF NOT EXISTS dependencies ("
 		+ "id INTEGER PRIMARY KEY, "
 		+ "name TEXT UNIQUE NOT NULL, "
 		+ "version TEXT NOT NULL, "
 		+ "description TEXT, "
 		+ "homepage TEXT, "
+		+ "author TEXT, "
+		+ "install_time INTEGER, "
 		+ "storage_path TEXT UNIQUE NOT NULL, "
-		+ "publisher TEXT, "
-		+ "install_time INTEGER"
+		+ "environment TEXT"
 		+ ")", -1, out stmt);
 		return_if_fail (check_result (res, "create dependencies table"));
 
@@ -345,6 +354,8 @@ private class SoftwareDB : Object {
 
 		return true;
 	}
+
+	/* Application stuff */
 
 	public bool add_application (AppItem item) {
 		if (!locked) {
@@ -359,7 +370,9 @@ private class SoftwareDB : Object {
 				   -1, out stmt);
 			return_if_fail (check_result (res, "add application"));
 
-			ulong time_created = now_sec ();
+			// Set install timestamp
+			DateTime dt = new DateTime.now_local ();
+			item.install_time = dt.to_unix ();
 
 			// Assign values
 			res = stmt.bind_text (1, item.idname);
@@ -642,6 +655,86 @@ private class SoftwareDB : Object {
 
 		resList.add_all (tmpList.read_only_view);
 		return resList;
+	}
+
+	/* Dependency stuff */
+
+	public bool add_dependency (IPK.Dependency dep) {
+		if (!locked) {
+			fatal ("write to unlocked database!", Sqlite.ERROR);
+			return false;
+		}
+		Sqlite.Statement stmt;
+		int res = db->prepare_v2 (
+			"INSERT INTO dependencies (name, version, description, homepage, author, install_time, " +
+			"storage_path, environment) "
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+				   -1, out stmt);
+			return_if_fail (check_result (res, "add application"));
+
+			// Set install timestamp
+			DateTime dt = new DateTime.now_local ();
+			dep.install_time = dt.to_unix ();
+
+			// Assign values
+			res = stmt.bind_text (1, dep.name);
+			return_if_fail (check_result (res, "assign value"));
+
+			res = stmt.bind_text (2, dep.version);
+			return_if_fail (check_result (res, "assign value"));
+
+			res = stmt.bind_text (3, "%s\n\n%s".printf (dep.summary, dep.description));
+			return_if_fail (check_result (res, "assign value"));
+
+			res = stmt.bind_text (4, dep.homepage);
+			return_if_fail (check_result (res, "assign value"));
+
+			res = stmt.bind_text (5, dep.author);
+			return_if_fail (check_result (res, "assign value"));
+
+			res = stmt.bind_int64 (6, dep.install_time);
+			return_if_fail (check_result (res, "assign value"));
+
+			res = stmt.bind_text (7, dep.storage_path);
+			return_if_fail (check_result (res, "assign value"));
+
+			res = stmt.bind_text (8, dep.environment);
+			return_if_fail (check_result (res, "assign value"));
+
+			res = stmt.step();
+			if (res != Sqlite.DONE) {
+				if (res != Sqlite.CONSTRAINT) {
+					fatal ("add dependency", res);
+					return false;
+				}
+			}
+
+			return true;
+	}
+
+	private IPK.Dependency? retrieve_dependency (Sqlite.Statement stmt) {
+		IPK.Dependency dep = new IPK.Dependency.blank ();
+
+		dep.name = stmt.column_text (1);
+		dep.version = stmt.column_text (2);
+
+		string s = stmt.column_text (3);
+		string[] desc = s.split ("\n\n", 2);
+		if (desc[0] != null) {
+			dep.summary = desc[0];
+			if (desc[1] != null)
+				dep.description = desc[1];
+		} else {
+			dep.summary = s;
+		}
+
+		dep.homepage = stmt.column_text (4);
+		dep.author = stmt.column_text (5);
+		dep.install_time = stmt.column_int (6);
+		dep.storage_path = stmt.column_text (7);
+		dep.environment = stmt.column_text (8);
+
+		return dep;
 	}
 
 }

@@ -102,6 +102,9 @@ private class DepManager : Object {
 			return false;
 		}
 
+		if (ret)
+			db.add_dependency (dep);
+
 		return ret;
 	}
 
@@ -112,7 +115,30 @@ private class DepManager : Object {
 		FeedInstaller finst = new FeedInstaller (conf);
 		finst.message.connect ( (m) => { this.message (m); } );
 
+		// If we have a system standard-lib (a minimal distribution dependency), consider it as installed
+		if (dep.is_standardlib)
+			return true;
+
 		bool ret = install_dependency_internal (pkinst, finst, ref dep, force_feedinstall);
+		return ret;
+	}
+
+	public bool install_dependencies (ArrayList<IPK.Dependency> depList, bool force_feedinstall = false) {
+		PkInstaller pkinst = new PkInstaller (conf);
+		pkinst.message.connect ( (m) => { this.message (m); } );
+
+		FeedInstaller finst = new FeedInstaller (conf);
+		finst.message.connect ( (m) => { this.message (m); } );
+
+		bool ret = true;
+		foreach (IPK.Dependency dep in depList) {
+			// If this is a default lib, just continue
+			if (dep.is_standardlib)
+				continue;
+			ret = install_dependency_internal (pkinst, finst, ref dep, force_feedinstall);
+			if (!ret)
+				break;
+		}
 		return ret;
 	}
 
