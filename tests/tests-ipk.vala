@@ -105,7 +105,7 @@ void test_ipk_control_file () {
 	assert (app.desktop_file == "$APP/echo.desktop");
 
 	list = ipkc.get_pkg_dependencies ();
-	assert (list[0].name == "alpha");
+	assert (list[0].full_name == "alpha");
 	assert (list[0].files[0] == "/etc/alpha.conf");
 }
 

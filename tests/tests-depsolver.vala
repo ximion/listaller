@@ -61,7 +61,7 @@ void test_dependency_manager () {
 
 	depman.install_dependency (ref test1);
 	assert (test1.satisfied == true);
-	assert (test1.name == "libgee");
+	assert (test1.full_name == "libgee");
 
 }
 
@@ -124,7 +124,7 @@ void test_feed_installer () {
 	bool ret;
 	ret = finst.install_dependency (ref test1);
 	assert (ret == true);
-	assert (test1.name == "libvorbis");
+	assert (test1.full_name == "libvorbis");
 
 }
 

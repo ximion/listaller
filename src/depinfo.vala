@@ -25,7 +25,7 @@ using Listaller;
 namespace Listaller.IPK {
 
 public class Dependency : Object {
-	public string name { get; set; }
+	public string full_name { get; set; }
 	public string summary { get; set; }
 	public string description { get; set; }
 	public string homepage { get; set; }
@@ -41,8 +41,22 @@ public class Dependency : Object {
 	public ArrayList<string> files { get; set; }
 
 	public int64 install_time { get; set; }
-	public string storage_path { get; set; }
 	public string environment { get; set; }
+
+	private string _idname;
+	public string idname {
+		get {
+			if (_idname != "")
+				return _idname;
+			// Form unique dependency-id, if not already set
+			_idname = "%s-%s".printf (full_name, version);
+			_idname = _idname.down ().replace (" ", "_");
+			return _idname;
+		}
+		set {
+			_idname = value;
+		}
+	}
 
 	internal Dependency.blank () {
 		satisfied = false;
@@ -52,23 +66,26 @@ public class Dependency : Object {
 		meta_info = new HashSet<string> ();
 		feed_url = "";
 		version = "0";
-		name = "";
-		storage_path = "";
+		idname = "";
 		install_time = -1;
 		environment = "";
 		author = "";
+		full_name = "";
 	}
 
-	internal Dependency (string dep_name) {
+	internal Dependency (string depIdName, string depFullName = "", string depVersion = "0") {
 		this.blank ();
-		name = dep_name;
+		idname = depIdName;
+		if (depFullName == "")
+			full_name = idname;
+		else
+			full_name = depFullName;
+		version = depVersion;
 	}
 
-	public string get_id () {
-		// Form unique dependency-id
-		string id = "%s-%s".printf (name, version);
-		id = id.down ().replace (" ", "_");
-		return id;
+	public void regenerate_depid () {
+		_idname = "";
+		_idname = idname;
 	}
 }
 
@@ -107,14 +124,18 @@ private class DepInfo : Object {
 					continue;
 
 				if (line.strip () == "") {
-					if ((dep != null) && (dep.name != ""))
+					if ((dep != null) && (dep.full_name != ""))
 						dlist.add (dep);
 					dep = new IPK.Dependency ("");
 					mode = DepInfoBlock.UNKNOWN;
 					continue;
 				}
 				if (line.down ().has_prefix ("name:")) {
-					dep.name = line.substring (line.index_of (":") + 1).strip ();
+					dep.full_name = line.substring (line.index_of (":") + 1).strip ();
+					continue;
+				}
+				if (line.down ().has_prefix ("id:")) {
+					dep.idname = line.substring (line.index_of (":") + 1).strip ();
 					continue;
 				}
 				if (line.down ().has_prefix ("feed:")) {
@@ -160,11 +181,18 @@ private class DepInfo : Object {
 		return null;
 	}
 
-	public void update_dependency_with_system_data (ref IPK.Dependency dep) {
+	public void update_dependency_with_system_data (ref IPK.Dependency dep, bool pedantic = false) {
 		foreach (IPK.Dependency sydep in dlist) {
-			if (sydep.name == dep.name) {
-				dep = sydep;
-				break;
+			if (pedantic) {
+				if (sydep.idname == dep.idname) {
+					dep = sydep;
+					break;
+				}
+			} else {
+				if (sydep.full_name == dep.full_name) {
+					dep = sydep;
+					break;
+				}
 			}
 		}
 	}

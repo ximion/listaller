@@ -86,7 +86,7 @@ private class PkInstaller : Object {
 
 		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (packages[0] == null) ) {
 			set_error (ErrorEnum.UNKNOWN, "%s\n%s".printf (_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())),
-						       _("Unable to find native package for '%s'!").printf (dep.name)));
+						       _("Unable to find native package for '%s'!").printf (dep.full_name)));
 			return null;
 		}
 
@@ -116,7 +116,7 @@ private class PkInstaller : Object {
 
 		// If there are no files, consider this dependency as "installed"
 		if (dep.files.size <= 0) {
-			li_warning ("Dependency %s has no files assigned!".printf (dep.name));
+			li_warning ("Dependency %s has no files assigned!".printf (dep.full_name));
 			return true;
 		}
 

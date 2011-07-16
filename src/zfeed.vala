@@ -31,6 +31,7 @@ private class Feed : Object {
 	private Xml.Doc* _xdoc;
 
 	public string package_url { get; set; }
+	public string impl_version { get; set; }
 
 	internal Xml.Doc* xdoc {
 		get { return _xdoc; }
@@ -41,6 +42,7 @@ private class Feed : Object {
 		fname = "";
 		xdoc = null;
 		package_url = "";
+		impl_version ="0";
 	}
 
 	~Feed () {
@@ -136,10 +138,13 @@ private class Feed : Object {
 	}
 
 	public void update_dependency_data (ref IPK.Dependency dep) {
-		dep.name = get_intf_info_str ("name");
+		dep.full_name = get_intf_info_str ("name");
+		dep.version = impl_version;
 		dep.summary = get_intf_info_str ("summary");
 		dep.description = get_intf_info_str ("description");
 		dep.homepage = get_intf_info_str ("homepage");
+		// Execute this to rebuild dep-id (*very* important for unique dependency-ids!)
+		dep.regenerate_depid ();
 	}
 
 	public bool search_matching_dependency () {
@@ -166,6 +171,8 @@ private class Feed : Object {
 		if (impl == null)
 			return false;
 
+		// Set dependency version from dependency implementation
+		impl_version = get_xproperty (impl, "version")->get_content ();
 		package_url = get_xproperty (get_xsubnode (impl, "archive"), "href")->get_content ();
 		if (package_url.strip () == "")
 			return false;

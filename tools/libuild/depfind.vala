@@ -66,7 +66,7 @@ private class DepFind : Object {
 			IPK.Dependency dtmp = dinfo.get_dep_template_for_file (s);
 			string dep_name = "";
 			if (dtmp != null)
-				dep_name = dtmp.name;
+				dep_name = dtmp.full_name;
 			else
 				dep_name = Utils.string_replace (s, "(\\.so|\\+|\\.)", "");
 
@@ -77,7 +77,7 @@ private class DepFind : Object {
 
 			bool done = false;
 			foreach (IPK.Dependency d in deplist) {
-				if (d.name == dep_name) {
+				if (d.full_name == dep_name) {
 					d.files.add (s.strip ());
 					done = true;
 					break;
@@ -89,6 +89,7 @@ private class DepFind : Object {
 			// If we are here, we need to create a new dependency object
 			IPK.Dependency dep = new IPK.Dependency (dep_name);
 			if (dtmp != null) {
+				dep.idname = dtmp.idname;
 				dep.version = dtmp.version;
 				dep.feed_url = dtmp.feed_url;
 				dep.is_standardlib = dtmp.is_standardlib;
@@ -106,7 +107,7 @@ private class DepFind : Object {
 				deplist.remove (dep);
 				continue;
 			}
-			if (PatternSpec.match_simple ("libnvidia-*", dep.name)) {
+			if (PatternSpec.match_simple ("libnvidia-*", dep.full_name)) {
 				deplist.remove (dep);
 				continue;
 			}

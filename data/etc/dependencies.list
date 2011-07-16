@@ -9,6 +9,7 @@ Files: linux-gate.so.*
        linux-vdso.so.*
 
 Name: LibC-6
+ID: libc6
 Standard: true
 Files: libc.so.*
        libpthread.so.*
@@ -18,11 +19,13 @@ Files: libc.so.*
        libdl.so.*
 
 Name: LibGCC
+ID: libgcc
 Standard: true
 Files: libgcc_s.so.*
        libstdc++.so.*
 
 Name: Xorg
+ID: xorg
 Standard: true
 Files: libX11.so.*
        libXext.so.*
@@ -46,18 +49,22 @@ Files: libX11.so.*
        libfreetype.so.*
 
 Name: MesaGL
+ID: mesagl
 Standard: true
 Files: libGL.so.*
        libGLU.so.*
 
 Name: ZLib
+ID: zlib
 Files: libz.so.*
 
 Name: Ogg
+ID: libogg
 Feed: http://services.sugarlabs.org/libogg
 Files: libogg.so.*
 
 Name: Vorbis
+ID: libvorbis
 Feed: http://services.sugarlabs.org/libvorbis
 Files: libvorbis.so.*
        libvorbisfile.so.*

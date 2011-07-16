@@ -56,7 +56,7 @@ private class DepManager : Object {
 		if (inst_error != null)
 			text = "\n\n%s".printf (inst_error.details);
 		emit_error (ErrorEnum.DEPENDENCY_MISSING, "%s%s".printf (
-					_("Unable to find valid candidate to satisfy dependency '%s'!").printf (dep.name),
+					_("Unable to find valid candidate to satisfy dependency '%s'!").printf (dep.full_name),
 					text));
 	}
 

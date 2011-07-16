@@ -334,18 +334,18 @@ private class SoftwareDB : Object {
 		/*
 		 * Table for all the additional stuff fetched during installation (3rd-party libraries etc.)
 		 */
-		deptables = "id, name, version, description, homepage, author, install_time, " +
-			"storage_path, environment";
+		deptables = "id, name, full_name, version, description, homepage, author, " +
+			"install_time, environment";
 
 		res = db->prepare_v2 ("CREATE TABLE IF NOT EXISTS dependencies ("
 		+ "id INTEGER PRIMARY KEY, "
 		+ "name TEXT UNIQUE NOT NULL, "
+		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
 		+ "description TEXT, "
 		+ "homepage TEXT, "
 		+ "author TEXT, "
 		+ "install_time INTEGER, "
-		+ "storage_path TEXT UNIQUE NOT NULL, "
 		+ "environment TEXT"
 		+ ")", -1, out stmt);
 		return_if_fail (check_result (res, "create dependencies table"));
@@ -670,8 +670,8 @@ private class SoftwareDB : Object {
 		}
 		Sqlite.Statement stmt;
 		int res = db->prepare_v2 (
-			"INSERT INTO dependencies (name, version, description, homepage, author, install_time, " +
-			"storage_path, environment) "
+			"INSERT INTO dependencies (name, full_name, version, description, homepage, author, " +
+			"install_time, environment) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 				   -1, out stmt);
 			return_if_fail (check_result (res, "add application"));
@@ -681,25 +681,25 @@ private class SoftwareDB : Object {
 			dep.install_time = dt.to_unix ();
 
 			// Assign values
-			res = stmt.bind_text (1, dep.name);
+			res = stmt.bind_text (1, dep.idname);
 			return_if_fail (check_result (res, "assign value"));
 
-			res = stmt.bind_text (2, dep.version);
+			res = stmt.bind_text (2, dep.full_name);
 			return_if_fail (check_result (res, "assign value"));
 
-			res = stmt.bind_text (3, "%s\n\n%s".printf (dep.summary, dep.description));
+			res = stmt.bind_text (3, dep.version);
 			return_if_fail (check_result (res, "assign value"));
 
-			res = stmt.bind_text (4, dep.homepage);
+			res = stmt.bind_text (4, "%s\n\n%s".printf (dep.summary, dep.description));
 			return_if_fail (check_result (res, "assign value"));
 
-			res = stmt.bind_text (5, dep.author);
+			res = stmt.bind_text (5, dep.homepage);
 			return_if_fail (check_result (res, "assign value"));
 
-			res = stmt.bind_int64 (6, dep.install_time);
+			res = stmt.bind_text (6, dep.author);
 			return_if_fail (check_result (res, "assign value"));
 
-			res = stmt.bind_text (7, dep.storage_path);
+			res = stmt.bind_int64 (7, dep.install_time);
 			return_if_fail (check_result (res, "assign value"));
 
 			res = stmt.bind_text (8, dep.environment);
@@ -719,10 +719,11 @@ private class SoftwareDB : Object {
 	private IPK.Dependency? retrieve_dependency (Sqlite.Statement stmt) {
 		IPK.Dependency dep = new IPK.Dependency.blank ();
 
-		dep.name = stmt.column_text (1);
-		dep.version = stmt.column_text (2);
+		dep.idname = stmt.column_text (1);
+		dep.full_name = stmt.column_text (2);
+		dep.version = stmt.column_text (3);
 
-		string s = stmt.column_text (3);
+		string s = stmt.column_text (4);
 		string[] desc = s.split ("\n\n", 2);
 		if (desc[0] != null) {
 			dep.summary = desc[0];
@@ -732,10 +733,9 @@ private class SoftwareDB : Object {
 			dep.summary = s;
 		}
 
-		dep.homepage = stmt.column_text (4);
-		dep.author = stmt.column_text (5);
-		dep.install_time = stmt.column_int (6);
-		dep.storage_path = stmt.column_text (7);
+		dep.homepage = stmt.column_text (5);
+		dep.author = stmt.column_text (6);
+		dep.install_time = stmt.column_int (7);
 		dep.environment = stmt.column_text (8);
 
 		return dep;

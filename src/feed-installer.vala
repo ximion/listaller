@@ -178,8 +178,8 @@ private class FeedInstaller : Object {
 	private bool extract_depfile (Archive.Read ar, Archive.Entry e, IPK.Dependency dep) {
 		bool ret = true;
 
-		// Target dependency subdirectory
-		string dest = dep.storage_path;
+		// Target dependency subdirectory (from DEP installation-var)
+		string dest = autosubst_instvars ("$DEP", dep.idname, conf);
 		// Target filename
 		string fname = Path.build_filename (dest, e.pathname (), null);
 
@@ -199,7 +199,7 @@ private class FeedInstaller : Object {
 			// TODO
 			//! rollback_extraction ();
 			set_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
-				   _("Unable to extract file '%s' for dependency '%s'!").printf (Path.get_basename (fname), dep.name));
+				   _("Unable to extract file '%s' for dependency '%s'!").printf (Path.get_basename (fname), dep.full_name));
 			return false;
 		}
 
@@ -247,25 +247,23 @@ private class FeedInstaller : Object {
 		feed = new Feed ();
 		feed.open (feed_file);
 
-		// First, update this dependency information with fresh data from the (ZI) feed
-		feed.update_dependency_data (ref dep);
-
 		// Search for dependency which matches the current architecture
 		ret = feed.search_matching_dependency ();
 		if (!ret) {
 			set_error (ErrorEnum.DEPENDENCY_MISSING,
-				   _("Unable to find a matching implementation of '%s' for your system/architecture.").printf (dep.name));
+				   _("Unable to find a matching implementation of '%s' for your system/architecture.").printf (dep.full_name));
 			return false;
 		}
+
+		/* Update this dependency information with fresh data from the (ZI) feed
+		 * This is *very* important to get a sane dependency-id! */
+		feed.update_dependency_data (ref dep);
 
 		string package_file = Path.build_filename (tmpdir, Path.get_basename (feed.package_url), null);
 		ret = download_file_sync (feed.package_url, package_file);
 		// Again, exit if download failed
 		if (!ret)
 			return false;
-
-		// Set the dependency storage path (installation target dir)
-		dep.storage_path = Path.build_filename (conf.depdata_dir (), dep.get_id (), null);
 
 		// Install the archive to the correct dependency dir
 		ret = install_archive (package_file, dep);

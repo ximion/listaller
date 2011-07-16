@@ -63,30 +63,30 @@ private class VarSolver : Object {
 	private Settings conf;
 	private HashMap<string, Variable> pathMap;
 	private delegate string LiConfGetType ();
-	public string appName {get; set; }
+	public string swName {get; set; }
 	public bool contained_sysvars {get; set;}
 
-	public VarSolver (string appIdName = "") {
+	public VarSolver (string softwareIdName = "") {
 		contained_sysvars = false;
 		conf = new Settings ();
 
-		appName = appIdName;
-		if (appName == "")
-			warning ("Using VarSolver without valid application-id!");
+		swName = softwareIdName;
+		if (swName == "")
+			warning ("Using VarSolver without valid application- or dependency ID!");
 
 		// Build map of Listaller path variables
 		pathMap = new HashMap<string, Variable> ();
 
 		/* Define all Listaller pkg variables */
 		// Application installation directory
-		add_var_from_conf ("$INST", Path.build_filename ("appdata", appName, null), conf.appdata_dir, appName);
+		add_var_from_conf ("$INST", Path.build_filename ("appdata", swName, null), conf.appdata_dir, swName);
 		// Desktop-file directory
 		add_var_from_conf ("$APP", "desktop", conf.desktop_dir);
 		// Generic dependency directory (for published dependencies, like shared libs)
-		add_var_from_conf ("$DEP", "depend", conf.depdata_dir);
+		add_var_from_conf ("$DEP", Path.build_filename ("depend", swName, null), conf.depdata_dir, swName);
 		// Private dependency directory: Used only for private libraries
-		add_var_from_conf ("$LIB_PRIVATE", Path.build_filename ("appdata", appName, "_libs", null),
-				   conf.appdata_dir, Path.build_filename (appName, "_libs", null));
+		add_var_from_conf ("$LIB_PRIVATE", Path.build_filename ("appdata", swName, "_libs", null),
+				   conf.appdata_dir, Path.build_filename (swName, "_libs", null));
 
 		/*
 		 * System variables
@@ -206,6 +206,14 @@ private class VarSolver : Object {
 		}
 		return res;
 	}
+}
+
+private string autosubst_instvars (string varstr, string swName, Settings? liconf = null) {
+	VarSolver vs = new VarSolver (swName);
+	Settings? conf = liconf;
+	if (conf == null)
+		conf = new Settings (false);
+ 	return vs.substitute_vars_auto (varstr, conf);
 }
 
 } // End of namespace

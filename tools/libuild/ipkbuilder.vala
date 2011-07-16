@@ -407,7 +407,7 @@ private class Builder : Object {
 			ArrayList<IPK.Dependency> list = df.get_dependencies ();
 			foreach (IPK.Dependency d1 in list) {
 				foreach (IPK.Dependency d2 in deps) {
-					if (d1.name == d2.name) {
+					if (d1.full_name == d2.full_name) {
 						list.remove (d1);
 						break;
 					}

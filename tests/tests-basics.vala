@@ -91,8 +91,9 @@ void test_zfeeds () {
 	IPK.Dependency dep = new IPK.Dependency ("test");
 	feed.update_dependency_data (ref dep);
 
-	assert (dep.name == "libogg");
+	assert (dep.full_name == "libogg");
 	assert (dep.homepage == "http://xiph.org/ogg/");
+	assert (dep.idname == "libogg-1.1.4-1");
 
 	bool ret = feed.search_matching_dependency ();
 	assert (ret == true);

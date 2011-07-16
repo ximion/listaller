@@ -192,7 +192,7 @@ public abstract class CXml : Object {
 
 		// Add the dependencies
 		foreach (Dependency dep in list) {
-			Xml.Node *depnode = n->new_child (null, dep.name);
+			Xml.Node *depnode = n->new_child (null, dep.idname);
 
 			// If we have a feed-url for this, add it
 			if (dep.feed_url != "") {
