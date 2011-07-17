@@ -109,7 +109,7 @@ public abstract class CXml : Object {
 	private Xml.Node* root_node () {
 		Xml.Node* root = xdoc->get_root_element ();
 		if ((root == null) || (root->name != "ipkcontrol")) {
-			critical (_("XML file is damaged or XML structure is no valid IPKControl!"));
+			error (_("XML file is damaged or XML structure is no valid IPKControl!"));
 			return null;
 		}
 		return root;
@@ -118,14 +118,14 @@ public abstract class CXml : Object {
 	internal Xml.Node* app_node () {
 		Xml.Node* appnd = get_xsubnode (root_node (), "application");
 		if (appnd == null)
-			critical (_("XML file is damaged or XML structure is no valid IPKControl!"));
+			error (_("XML file is damaged or XML structure is no valid IPKControl!"));
 		return appnd;
 	}
 
 	internal Xml.Node* pkg_node () {
 		Xml.Node* pkgnd = get_xsubnode (root_node (), "package");
 		if (pkgnd == null)
-			critical (_("XML file is damaged or XML structure is no valid IPKControl!"));
+			error (_("XML file is damaged or XML structure is no valid IPKControl!"));
 		return pkgnd;
 	}
 

@@ -71,4 +71,5 @@ Files: libvorbis.so.*
        libvorbisenc.so.*
 
 Name: OpenAL
+ID: openal
 Files: libopenal.so.*

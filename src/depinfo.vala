@@ -25,7 +25,19 @@ using Listaller;
 namespace Listaller.IPK {
 
 public class Dependency : Object {
-	public string full_name { get; set; }
+	private string _full_name;
+	public string full_name {
+		get {
+			if (_full_name == "")
+				_full_name = idname;
+			if (_full_name == "")
+				return "empty";
+			return _full_name;
+		}
+		set {
+			_full_name = value;
+		}
+	}
 	public string summary { get; set; }
 	public string description { get; set; }
 	public string homepage { get; set; }
@@ -84,6 +96,10 @@ public class Dependency : Object {
 	}
 
 	public void regenerate_depid () {
+		if (full_name == "empty") {
+			warning ("Dependency full_name is empty! Something is going wrong here...");
+			full_name = "empty";
+		}
 		_idname = "";
 		_idname = idname;
 	}
