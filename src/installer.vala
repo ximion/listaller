@@ -170,9 +170,10 @@ public class Setup : Object {
 		emit_status (StatusEnum.RESOLVING_DEPENDENCIES,
 			     _("Resolving dependencies of '%s'.").printf (app.full_name));
 
+		Gee.ArrayList<IPK.Dependency> pkgDeps = ipkp.control.get_pkg_dependencies ();
 		// We don't solve dependencies when unit tests are running
 		if (!unittestmode) {
-			Deps.Solver solver = new Deps.Solver (db, ipkp.control.get_pkg_dependencies ());
+			Deps.Solver solver = new Deps.Solver (db, pkgDeps);
 			solver.error_code.connect ((error) => {
 				this.error_code (error);
 			});
@@ -214,6 +215,11 @@ public class Setup : Object {
 		app.description = control.get_app_description ();
 		// Now register the item
 		ret = db.add_application (app);
+		if (!ret) {
+			db.close ();
+			return false;
+		}
+		ret = db.set_application_dependencies (app.idname, pkgDeps);
 		if (!ret) {
 			db.close ();
 			return false;

@@ -1,15 +1,13 @@
 .\" Process this file with
 .\" groff -man -Tascii foo.1
 .\"
-.TH PATCHELF 1 "JUNE 2011" LISTALLER "User Manuals"
+.TH LIBUILD 1 "JUNE 2011" LISTALLER "User Manuals"
 .SH NAME
 libuild - Build Listaller IPK packages
 
 .SH SYNOPSIS
 .B libuild
-.I OPTION
-.B
-.I FILE
+.I OPTIONS
 .B
 
 .SH DESCRIPTION
@@ -19,14 +17,23 @@ from software sources or binary files using a package recipe.
 
 .SH OPTIONS
 
-The single option given operates on a given FILE, editing in place.
+.IP "-b --build"
+Build IPK package in the current working directory.
 
-.IP "--sign"
-Sign the resulting package
+.IP "-s --sourcedir" "DIRECTORY"
+Set the IPK package source directory.
+
+.IP "-o --outdir" "DIRECTORY"
+Set an output path were the resulting package should be stored.
+
+.IP --sign
+Sign the resulting package with your GNUPG key.
 
 .IP --version
-Shows the version of libuild.
+Display version number of libuild
 
 .SH AUTHOR
-Matthias Klumpp <matthias@nlinux.org>
+Matthias Klumpp
 
+.SH "COPYRIGHT"
+\(co 2009-2011 Matthias Klumpp <matthias@nlinux.org>
