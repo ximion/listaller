@@ -129,10 +129,16 @@ private class PkInstaller : Object {
 				Process.spawn_command_line_sync ("whereis " + s, out stdout, null, null);
 				debug ("DepFind: %s, => { %s }", s, stdout);
 				string[] files = stdout.split (" ");
-				if (files.length <= 0) {
+				if (files.length > 0) {
+					if ((files[1] == "") || (files[1] == null)) {
+						ret = false;
+						break;
+					}
+				} else {
 					ret = false;
 					break;
 				}
+
 			} catch (Error e) {
 				debug ("WhereIs in PkInstall: %s", e.message);
 				ret = false;
@@ -141,6 +147,9 @@ private class PkInstaller : Object {
 			stdout = "";
 		}
 		if (ret) {
+			dep.meta_info.clear ();
+			foreach (string s in dep.files)
+				dep.meta_info.add ("file:" + s);
 			dep.satisfied = true;
 			return true;
 		}
