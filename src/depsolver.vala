@@ -27,32 +27,29 @@ namespace Listaller.Deps {
 
 private class Solver : Object {
 	private ArrayList<IPK.Dependency> deplist;
-	private SoftwareDB lidb;
+	private SoftwareDB db;
 	private Listaller.Settings conf;
-	private double oneprog = 0;
-	private int prog = 0;
+	private DepManager depman;
 
 	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
 	public signal void progress_changed (int progress);
 
-	public Solver (ArrayList<IPK.Dependency> dependency_list, SoftwareDB db, Listaller.Settings? settings = null) {
-		lidb = db;
+	public Solver (SoftwareDB lidb, ArrayList<IPK.Dependency> dependency_list) {
+		db = lidb;
 		deplist = dependency_list;
-		conf = settings;
-		if (conf == null)
-			conf = new Listaller.Settings ();
-	}
+		conf = db.get_liconf ();
 
-	internal void receive_provider_progress (int p) {
-		prog += p;
-		int progress = (int) Math.round (oneprog * prog);
-		assert (progress <= 100);
-		progress_changed (progress);
+		depman = new DepManager (db);
+		depman.error_code.connect ( (error) => { this.error_code (error); });
+		depman.message.connect ( (msg) => { this.message (msg); });
+		depman.progress_changed.connect ( (prog) => { this.progress_changed (prog); });
 	}
 
 	public bool execute () {
-		return true;
+		// We don't do any solving here at time... We just install the dependencies
+		bool ret = depman.install_dependencies (deplist);
+		return ret;
 	}
 
 

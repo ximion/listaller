@@ -25,6 +25,7 @@ using Listaller;
 
 private string datadir;
 private Listaller.Settings conf;
+private SoftwareDB sdb;
 
 void msg (string s) {
 	stdout.printf (s + "\n");
@@ -44,15 +45,6 @@ void test_solver_error_code_cb (ErrorItem item) {
 
 void test_dependency_manager () {
 	msg ("Dependency manager tests");
-
-	SoftwareDB sdb = new SoftwareDB (conf);
-	sdb.error_code.connect (test_solver_error_code_cb);
-	sdb.message.connect (test_solver_message_cb);
-
-	// Do this only in testing environment!
-	sdb.remove_db_lock ();
-	// Open the DB
-	sdb.open ();
 
 	bool ret;
 	Deps.DepManager depman = new Deps.DepManager (sdb);
@@ -145,10 +137,36 @@ void test_feed_installer () {
 	test1.feed_url = "http://services.sugarlabs.org/libvorbis";
 
 	bool ret;
-	ret = finst.install_dependency (ref test1);
+	ret = finst.install_dependency (sdb, ref test1);
 	assert (ret == true);
 	assert (test1.full_name == "libvorbis");
 
+}
+
+void test_depsolver () {
+	ArrayList<IPK.Dependency> deplist = new ArrayList<IPK.Dependency> ();
+
+	// Create a set of dependencies
+	IPK.Dependency dep1 = new IPK.Dependency ("Gee");
+	dep1.feed_url = "http://services.sugarlabs.org/libgee";
+	deplist.add (dep1);
+
+	IPK.Dependency dep2 = new IPK.Dependency ("SDLMixer1.2");
+	dep2.feed_url = "http://repo.roscidus.com/lib_rsl/sdl-mixer1.2";
+	deplist.add (dep2);
+
+	IPK.Dependency dep3 = new IPK.Dependency ("Mp3Gain");
+	dep3.files.add ("/usr/bin/mp3gain");
+	deplist.add (dep3);
+
+	IPK.Dependency dep4 = new IPK.Dependency ("LibXml2");
+	dep4.feed_url = "http://services.sugarlabs.org/libxml2";
+	deplist.add (dep4);
+
+	bool ret;
+	Deps.Solver slv = new Deps.Solver (sdb, deplist);
+	ret = slv.execute ();
+	assert (ret == true);
 }
 
 int main (string[] args) {
@@ -160,13 +178,23 @@ int main (string[] args) {
 
 	Test.init (ref args);
 
-	// Set up Listaller configuration
+	// Set up Listaller configuration & database
 	conf = new Listaller.Settings ();
 	conf.testmode = true;
+
+	sdb = new SoftwareDB (conf);
+	sdb.error_code.connect (test_solver_error_code_cb);
+	sdb.message.connect (test_solver_message_cb);
+
+	// Do this only in testing environment!
+	sdb.remove_db_lock ();
+	// Open the DB
+	sdb.open ();
 
 	test_feed_installer ();
 	//! test_packagekit_installer ();
 	test_dependency_manager ();
+	test_depsolver ();
 
 	Test.run ();
 	return 0;

@@ -195,7 +195,7 @@ private class FeedInstaller : Object {
 		// Now extract it!
 		touch_dir (dest);
 		ret = extract_entry_to (ar, e, dest);
-		if (!ret) {
+		if ((!ret) && (Path.get_basename (fname) != ".")) {
 			// TODO
 			//! rollback_extraction ();
 			set_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
@@ -231,7 +231,7 @@ private class FeedInstaller : Object {
 		return ret;
 	}
 
-	public bool install_dependency (ref IPK.Dependency dep) {
+	public bool install_dependency (SoftwareDB db, ref IPK.Dependency dep) {
 		if (dep.feed_url == "")
 			return false;
 
@@ -258,6 +258,14 @@ private class FeedInstaller : Object {
 		/* Update this dependency information with fresh data from the (ZI) feed
 		 * This is *very* important to get a sane dependency-id! */
 		feed.update_dependency_data (ref dep);
+
+		// Now check if a dependency with the new dependency-id is already installed
+		IPK.Dependency? dbDep = db.get_dependency_by_id (dep.idname);
+		if (dbDep != null) {
+			debug ("Dependency with id [%s] is already installed :)", dep.idname);
+			dep = dbDep;
+			return true;
+		}
 
 		string package_file = Path.build_filename (tmpdir, Path.get_basename (feed.package_url), null);
 		ret = download_file_sync (feed.package_url, package_file);

@@ -172,7 +172,7 @@ public class Setup : Object {
 
 		// We don't solve dependencies when unit tests are running
 		if (!unittestmode) {
-			Deps.Solver solver = new Deps.Solver (ipkp.control.get_pkg_dependencies (), db);
+			Deps.Solver solver = new Deps.Solver (db, ipkp.control.get_pkg_dependencies ());
 			solver.error_code.connect ((error) => {
 				this.error_code (error);
 			});

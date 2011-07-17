@@ -1,4 +1,4 @@
-/* depman.vala
+/* depmanager.vala
  *
  * Copyright (C) 2011 Matthias Klumpp <matthias@nlinux.org>
  *
@@ -42,6 +42,15 @@ private class DepManager : Object {
 			conf = new Listaller.Settings ();
 		}
 	}
+
+	#if 0
+	internal void receive_provider_progress (int p) {
+		prog += p;
+		int progress = (int) Math.round (oneprog * prog);
+		assert (progress <= 100);
+		progress_changed (progress);
+	}
+	#endif
 
 	private void emit_error (ErrorEnum id, string details) {
 		// Construct error
@@ -107,7 +116,7 @@ private class DepManager : Object {
 		}
 
 		// Now try to install from dependency-feed
-		ret = finst.install_dependency (ref dep);
+		ret = finst.install_dependency (db, ref dep);
 		if (!ret) {
 			error = finst.last_error;
 			emit_depmissing_error (error, dep);
