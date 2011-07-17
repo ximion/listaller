@@ -30,38 +30,48 @@ private class AutoCompiler : Object {
 	public AutoCompiler (string source_dir, string target_dir = "") {
  		srcdir = source_dir;
 		targetdir = target_dir;
+		if (!Path.is_absolute (targetdir))
+			targetdir = Path.build_filename (Environment.get_current_dir (), targetdir, null);
 	}
 
 	~AutoCompiler () {
 
 	}
 
-	private int compile_makefile () {
+	private int compile_makefile (string dir = "") {
 		// Check for Makefile
-		if (!FileUtils.test (Path.build_filename (srcdir, "Makefile", null), FileTest.EXISTS))
+		if ((!FileUtils.test (Path.build_filename (Environment.get_current_dir (), "Makefile", null), FileTest.EXISTS)) &&
+		    (!FileUtils.test (Path.build_filename (dir, "Makefile", null), FileTest.EXISTS)))
 			return -1;
 
 		int exit_status = 0;
+		string cmd = "make";
+		if (dir != "")
+			cmd = "make -C %s".printf (dir);
 		// Make it!
-		Process.spawn_command_line_sync	("make", null, null, out exit_status);
+		Process.spawn_command_line_sync	(cmd + " all", null, null, out exit_status);
 		if (exit_status != 0)
-			return exit_status;
+			return 1;
 		// Install it, if possible
-		Process.spawn_command_line_sync	("make install DESTDIR=\"" + targetdir + "\"",
+		Process.spawn_command_line_sync	(cmd + " install DESTDIR=\"" + targetdir + "\"",
 			null, null, out exit_status);
 		if (exit_status != 0)
-			return exit_status;
+			return 1;
 		return exit_status;
 	}
 
-	private int compile_automake () {
+	private int compile_automake (string args) {
 		string conff = Path.build_filename (srcdir, "configure", null);
 		bool runconfigure = false;
 		if (FileUtils.test (conff, FileTest.EXISTS)) {
 			runconfigure = true;
 		}
 		if (!runconfigure) {
-			string agenf = Path.build_filename (srcdir, "autogen.sh", null);
+			string cmd = "autogen.sh";
+			if (args != "")
+				cmd = "%s %s".printf (cmd, args);
+
+			string agenf = Path.build_filename (srcdir, cmd, null);
 			if (FileUtils.test (agenf, FileTest.EXISTS)) {
 				// Create AM configure script
 				int exit_status;
@@ -86,7 +96,40 @@ private class AutoCompiler : Object {
 		return exit_status;
 	}
 
-	public int compile_software () {
+	private int compile_cmake (string args) {
+		// Check if we can use cmake...
+		if (!FileUtils.test (Path.build_filename (srcdir, "CMakeLists.txt", null), FileTest.EXISTS)) {
+			return -1;
+		}
+		string builddir = Path.build_filename (srcdir, "build_%s".printf (Utils.system_architecture ()), null);
+		Utils.touch_dir (builddir);
+		string lastdir = Environment.get_current_dir ();
+		Environment.set_current_dir (builddir);
+
+		int exit_status = 0;
+		string cmd;
+		string a = args;
+		if (a != "")
+			a += " ";
+
+		a += "-DCMAKE_VERBOSE_MAKEFILE=ON";
+		cmd = "cmake %s ..".printf (a);
+
+		Process.spawn_command_line_sync	(cmd, null, null, out exit_status);
+		if (exit_status != 0)
+			return 1;
+		Environment.set_current_dir (lastdir);
+
+		exit_status = compile_makefile (builddir);
+		if (exit_status < 0)
+			exit_status = 1;
+
+
+		// Done.
+		return exit_status;
+	}
+
+	public int compile_software (string args = "") {
 		int ret = -1;
 		string lastdir = Environment.get_current_dir ();
 		Environment.set_current_dir (srcdir);
@@ -99,7 +142,12 @@ private class AutoCompiler : Object {
 
 		ret = compile_makefile ();
 		if (ret < 0)
-			ret = compile_automake ();
+			ret = compile_automake (args);
+		if (ret < 0)
+			ret = compile_cmake (args);
+
+		if (ret < 0)
+			ret = 6;
 
 		Environment.set_current_dir (lastdir);
 		return ret;

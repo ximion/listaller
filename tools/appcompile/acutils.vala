@@ -45,6 +45,7 @@ namespace Listaller.Extra {
 			}
 		} else {
 			prwarning (_("Using user-defined install target: %s").printf (insttarget));
+			ret = insttarget;
 		}
 		return ret;
 	}

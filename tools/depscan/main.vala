@@ -53,7 +53,7 @@ public class DepScanCmd : Object {
 			return;
 		}
 
-		for (int i = 1; i < args.length; i++) {
+		for (uint i = 1; i < args.length; i++) {
 			string arg = args[i];
 			if (o_input_path == null) {
 				o_input_path = arg;

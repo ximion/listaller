@@ -27,6 +27,7 @@ public class AppCompile : Object {
 	private static string _target_dir = "";
 	private static bool _show_version = false;
 	private static bool _strip_files = false;
+	private string cmp_arguments = "";
 
 	public int exit_code { get; set; }
 
@@ -47,6 +48,17 @@ public class AppCompile : Object {
 		var opt_context = new OptionContext ("- compile software automatically.");
 		opt_context.set_help_enabled (true);
 		opt_context.add_main_entries (options, null);
+
+		bool b = false;
+		for (uint i = 0; i < args.length; i++) {
+			string arg = args[i];
+			if (b)
+				cmp_arguments += " " + arg;
+			if (arg == "--")
+				b = true;
+		}
+		cmp_arguments.chug ();
+
 		try {
 			opt_context.parse (ref args);
 		} catch (Error e) {
@@ -77,7 +89,7 @@ public class AppCompile : Object {
 			return;
 		}
 		Extra.AutoCompiler acomp = new Extra.AutoCompiler (srcdir, targetdir);
-		exit_code = acomp.compile_software ();
+		exit_code = acomp.compile_software (cmp_arguments);
 		return;
 	}
 
