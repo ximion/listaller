@@ -29,7 +29,7 @@ public class Dependency : Object {
 	public string full_name {
 		get {
 			if (_full_name == "")
-				_full_name = idname;
+				_full_name = _idname;
 			if (_full_name == "")
 				return "empty";
 			return _full_name;
@@ -82,7 +82,7 @@ public class Dependency : Object {
 		install_time = -1;
 		environment = "";
 		author = "";
-		full_name = "";
+		_full_name = "";
 	}
 
 	internal Dependency (string depIdName, string depFullName = "", string depVersion = "0") {
@@ -96,9 +96,9 @@ public class Dependency : Object {
 	}
 
 	public void regenerate_depid () {
-		if (full_name == "empty") {
+		if (_full_name == "empty") {
 			warning ("Dependency full_name is empty! Something is going wrong here...");
-			full_name = "empty";
+			_full_name = "empty";
 		}
 		_idname = "";
 		_idname = idname;
@@ -205,7 +205,8 @@ private class DepInfo : Object {
 					break;
 				}
 			} else {
-				if (sydep.full_name == dep.full_name) {
+				if ((sydep.full_name == dep.full_name) ||
+				    (sydep.idname == dep.idname)) {
 					dep = sydep;
 					break;
 				}

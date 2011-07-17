@@ -86,8 +86,6 @@ private class DepManager : Object {
 		bool ret = false;
 		ErrorItem? error = null;
 
-		// TODO: Use util-linux "whereis" utility to find shared stuff faster
-
 		// Try to find native distribution packages for this dependency
 		ret = pkinst.search_dep_packages (ref dep);
 		if (!ret)
@@ -136,6 +134,9 @@ private class DepManager : Object {
 		FeedInstaller finst = new FeedInstaller (conf);
 		finst.message.connect ( (m) => { this.message (m); } );
 
+		var di = new DepInfo ();
+		di.update_dependency_with_system_data (ref dep);
+
 		// If we have a system standard-lib (a minimal distribution dependency), consider it as installed
 		if (dep.is_standardlib)
 			return true;
@@ -151,8 +152,10 @@ private class DepManager : Object {
 		FeedInstaller finst = new FeedInstaller (conf);
 		finst.message.connect ( (m) => { this.message (m); } );
 
+		var di = new DepInfo ();
 		bool ret = true;
 		foreach (IPK.Dependency dep in depList) {
+			di.update_dependency_with_system_data (ref dep);
 			// If this is a default lib, just continue
 			if (dep.is_standardlib)
 				continue;

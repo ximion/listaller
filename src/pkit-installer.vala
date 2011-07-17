@@ -120,6 +120,31 @@ private class PkInstaller : Object {
 			return true;
 		}
 
+		/* Search files using "whereis" before calling PackageKit to do this
+		 * (this is a huge speed improvement) */
+		ret = true;
+		string? stdout;
+		foreach (string s in dep.files) {
+			try {
+				Process.spawn_command_line_sync ("whereis " + s, out stdout, null, null);
+				debug ("DepFind: %s, => { %s }", s, stdout);
+				string[] files = stdout.split (" ");
+				if (files.length <= 0) {
+					ret = false;
+					break;
+				}
+			} catch (Error e) {
+				debug ("WhereIs in PkInstall: %s", e.message);
+				ret = false;
+				break;
+			}
+			stdout = "";
+		}
+		if (ret) {
+			dep.satisfied = true;
+			return true;
+		}
+
 		PackageKit.PackageSack? sack = pkit_pkgs_from_depfiles (dep);
 		if (sack == null)
 			return false;

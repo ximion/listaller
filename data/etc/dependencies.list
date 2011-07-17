@@ -56,6 +56,7 @@ Files: libGL.so.*
 
 Name: ZLib
 ID: zlib
+Standard: true
 Files: libz.so.*
 
 Name: Ogg
