@@ -260,7 +260,7 @@ private class FileList : Object {
 				if (PatternSpec.match_simple (ematch, s)) {
 					FileEntry e = new FileEntry ();
 					e.fname = s;
-					e.destination = fe.destination;
+					e.destination = Path.build_filename (fe.destination, Path.get_dirname (s).replace (dir, ""), null);
 					list.add (e);
 				}
 			}
