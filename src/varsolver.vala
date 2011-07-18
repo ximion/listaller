@@ -206,6 +206,75 @@ private class VarSolver : Object {
 		}
 		return res;
 	}
+
+	private string find_icon_imagefile (string fname) {
+		string img = fname;
+		if (FileUtils.test (img, FileTest.EXISTS))
+			return img;
+		if (FileUtils.test (img + ".png", FileTest.EXISTS))
+			return img + ".png";
+		if (FileUtils.test (img + ".xpm", FileTest.EXISTS))
+			return img + ".xpm";
+		if (FileUtils.test (img + ".svg", FileTest.EXISTS))
+			return img + ".svg";
+		return "";
+	}
+	private string find_liappicon (string icon_name, int size, Settings liconf) {
+		string v;
+		if (size == 0)
+			v = "$PIX";
+		else
+			v = "$ICON-%i".printf (size);
+		string fname = Path.build_filename (substitute_vars_auto (v, liconf), icon_name, null);
+		fname = find_icon_imagefile (fname);
+		if (fname != "") {
+			return fname;
+		}
+		return "";
+	}
+
+	public string find_icon_in_ivarpaths (string icon_name, Settings? liconf = null) {
+		Settings? conf = liconf;
+		if (conf == null)
+			conf = new Settings (false);
+		string fname;
+		fname = find_liappicon (icon_name, 0, conf);
+		if (fname != "")
+			return fname;
+		fname = find_liappicon (icon_name, 64, conf);
+		if (fname != "")
+			return fname;
+		fname = find_liappicon (icon_name, 48, conf);
+		if (fname != "")
+			return fname;
+		fname = find_liappicon (icon_name, 128, conf);
+		if (fname != "")
+			return fname;
+		fname = find_liappicon (icon_name, 265, conf);
+		if (fname != "")
+			return fname;
+		fname = find_liappicon (icon_name, 32, conf);
+		if (fname != "")
+			return fname;
+		fname = find_liappicon (icon_name, 24, conf);
+		if (fname != "")
+			return fname;
+		fname = find_liappicon (icon_name, 16, conf);
+		if (fname != "")
+			return fname;
+		return icon_name;
+	}
+
+	public string find_exe_in_varpath (string exe_name, Settings? liconf = null) {
+		Settings? conf = liconf;
+		if (conf == null)
+			conf = new Settings (false);
+		string fname = Path.build_filename (substitute_vars_auto ("$INST", conf), exe_name, null);
+		if (FileUtils.test (fname, FileTest.EXISTS)) {
+			return fname;
+		}
+		return exe_name;
+	}
 }
 
 private string autosubst_instvars (string varstr, string swName, Settings? liconf = null) {

@@ -58,13 +58,21 @@ private class VarSetter : Object {
 		string value;
 
 		value = get_desktopfile_entry (dfile, "Icon");
-		if (value != "")
-			dfile.set_string ("Desktop Entry", "Icon", vs.substitute_vars_auto (value, conf));
+		if (value != "") {
+			if (value.has_prefix ("$"))
+				dfile.set_string ("Desktop Entry", "Icon", vs.substitute_vars_auto (value, conf));
+			else
+				dfile.set_string ("Desktop Entry", "Icon", vs.find_icon_in_ivarpaths (value, conf));
+		}
 
 		value = get_desktopfile_entry (dfile, "Exec");
 		// Process exe filename and append the runapp command
-		if (value != "")
-			dfile.set_string ("Desktop Entry", "Exec", "runapp \"" + vs.substitute_vars_auto (value, conf) + "\"");
+		if (value != "") {
+			if (value.has_prefix ("$"))
+				dfile.set_string ("Desktop Entry", "Exec", "runapp \"" + vs.substitute_vars_auto (value, conf) + "\"");
+			else
+				dfile.set_string ("Desktop Entry", "Exec", "runapp \"" + vs.find_exe_in_varpath (value, conf) + "\"");
+		}
 
 		// Now save the modified file
 		FileUtils.remove (fname);
