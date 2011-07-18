@@ -226,7 +226,6 @@ public class Setup : Object {
 		}
 		ret = db.add_application_filelist (app, ipkp.file_list);
 		db.close ();
-
 		conf.unlock ();
 
 		inst_progress = 100;

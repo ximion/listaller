@@ -667,7 +667,7 @@ private class SoftwareDB : Object {
 
 	public bool set_application_dependencies (string appName, ArrayList<IPK.Dependency> deps) {
 		Sqlite.Statement stmt;
-		int res = db->prepare_v2 ("UPDATE applications SET dependencies = ? WHERE name = ?", -1, out stmt);
+		int res = db->prepare_v2 ("UPDATE applications SET dependencies=? WHERE name=?", -1, out stmt);
 		return_val_if_fail (check_result (res, "update application deps (by name)"), null);
 
 		string depstr = "";
@@ -678,7 +678,7 @@ private class SoftwareDB : Object {
 		return_if_fail (check_result (res, "assign value"));
 		res = stmt.bind_text (2, appName);
 
-		if (stmt.step() != Sqlite.ROW)
+		if (stmt.step() != Sqlite.DONE)
 			return false;
 
 		return true;

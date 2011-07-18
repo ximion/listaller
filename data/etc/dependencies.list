@@ -1,4 +1,5 @@
 # List of standard software dependencies
+# @distributors: Please do not patch this file! Modify "dependencies.list" instead!
 
 Name: Linux
 Standard: true
@@ -17,6 +18,7 @@ Files: libc.so.*
        libm.so.*
        librt.so.*
        libdl.so.*
+       libresolv.so.*
 
 Name: LibGCC
 ID: libgcc
@@ -74,3 +76,23 @@ Files: libvorbis.so.*
 Name: OpenAL
 ID: openal
 Files: libopenal.so.*
+
+Name: LibTiff
+ID: libtiff4
+Standard: true
+Files: libtiff.so.4
+
+Name: LibIDN
+ID: libidn11
+Standard: true
+Files: libidn.so.11
+
+Name: LibTASN1
+ID: libtasn1-3
+Standard: true
+Files: libtasn1.so.3
+
+Name: Curl3-gnutls
+ID: libcurl3-gnutls
+Files: libcurl-gnutls.so.3
+       libcurl-gnutls.so.4
