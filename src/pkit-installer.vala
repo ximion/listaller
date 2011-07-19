@@ -146,6 +146,13 @@ private class PkInstaller : Object {
 			}
 			stdout = "";
 		}
+		/* We don't solve dependencies when unit tests are running.
+		 * Consider everything as satisfied. */
+		if (!unittestmode) {
+			dep.satisfied = true;
+			return true;
+		}
+
 		if (ret) {
 			dep.meta_info.clear ();
 			foreach (string s in dep.files)

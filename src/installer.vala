@@ -171,24 +171,22 @@ public class Setup : Object {
 			     _("Resolving dependencies of '%s'.").printf (app.full_name));
 
 		Gee.ArrayList<IPK.Dependency> pkgDeps = ipkp.control.get_pkg_dependencies ();
-		// We don't solve dependencies when unit tests are running
-		if (!unittestmode) {
-			Deps.Solver solver = new Deps.Solver (db, pkgDeps);
-			solver.error_code.connect ((error) => {
-				this.error_code (error);
-			});
-			solver.message.connect ((msg) => {
-				this.message (msg);
-			});
-			solver.progress_changed.connect ((p) => {
-				change_progress (-1, p);
-			});
 
-			ret = solver.execute ();
-			if (!ret) {
-				db.close ();
-				return false;
-			}
+		Deps.Solver solver = new Deps.Solver (db, pkgDeps);
+		solver.error_code.connect ((error) => {
+			this.error_code (error);
+		});
+		solver.message.connect ((msg) => {
+			this.message (msg);
+		});
+		solver.progress_changed.connect ((p) => {
+			change_progress (-1, p);
+		});
+
+		ret = solver.execute ();
+		if (!ret) {
+			db.close ();
+			return false;
 		}
 
 		inst_progress = 50;
