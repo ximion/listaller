@@ -150,7 +150,6 @@ public class Setup : Object {
 		// Check if this application is already installed
 		AppItem? dbapp = db.get_application_by_id (app);
 		if (dbapp != null) {
-			db.close ();
 			string text = "";
 			int i = app.compare_version_with (dbapp.version);
 			if (i < 0)
@@ -183,7 +182,6 @@ public class Setup : Object {
 
 		ret = solver.execute ();
 		if (!ret) {
-			db.close ();
 			return false;
 		}
 
@@ -197,7 +195,6 @@ public class Setup : Object {
 		ret = ipkp.install_all_files ();
 
 		if (!ret) {
-			db.close ();
 			return false;
 		}
 
@@ -212,16 +209,13 @@ public class Setup : Object {
 		// Now register the item
 		ret = db.add_application (app);
 		if (!ret) {
-			db.close ();
 			return false;
 		}
 		ret = db.set_application_dependencies (app.idname, pkgDeps);
 		if (!ret) {
-			db.close ();
 			return false;
 		}
 		ret = db.add_application_filelist (app, ipkp.file_list);
-		db.close ();
 		conf.unlock ();
 
 		inst_progress = 100;

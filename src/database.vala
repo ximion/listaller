@@ -74,7 +74,7 @@ public enum DatabaseStatus {
 }
 
 private class SoftwareDB : Object {
-	private Database *db;
+	private Database db;
 	private Settings conf;
 	private bool locked;
 	private string dblockfile;
@@ -98,8 +98,8 @@ private class SoftwareDB : Object {
 	}
 
 	~SoftwareDB () {
-		// Make sure DB is always closed when DB is freed
-		close ();
+		// Delete the lock
+		remove_db_lock ();
 	}
 
 	public Settings get_liconf () {
@@ -145,7 +145,7 @@ private class SoftwareDB : Object {
 		rc = Database.open (dbname, out db);
 
 		if (rc != Sqlite.OK) {
-			string msg = "Can't open database! (Message: %d, %s)".printf (rc, db->errmsg ());
+			string msg = "Can't open database! (Message: %d, %s)".printf (rc, db.errmsg ());
 			stderr.printf (msg);
 			dbstatus_changed (DatabaseStatus.FAILURE, msg);
 			return false;
@@ -202,12 +202,6 @@ private class SoftwareDB : Object {
 		return ret;
 	}
 
-	public void close () {
-		delete db;
-		// Delete the lock
-		remove_db_lock ();
-	}
-
 	public void remove_db_lock () {
 		if (locked) {
 			File lfile = File.new_for_path (dblockfile);
@@ -226,7 +220,7 @@ private class SoftwareDB : Object {
 	 * are considered normal results.
 	 */
 	protected void throw_error (string method, int res) throws DatabaseError {
-		string msg = "(%s) [%d] - %s".printf (method, res, db->errmsg());
+		string msg = "(%s) [%d] - %s".printf (method, res, db.errmsg());
 
 		switch (res) {
 			case Sqlite.OK:
@@ -276,7 +270,7 @@ private class SoftwareDB : Object {
 	private void fatal (string op, int res) {
 		if (op == "")
 			op = "action";
-		string msg = _("Database problem:") + "\n%s: [%d] %s".printf (op, res, db->errmsg());
+		string msg = _("Database problem:") + "\n%s: [%d] %s".printf (op, res, db.errmsg());
 		dbstatus_changed (DatabaseStatus.FATAL, msg);
 	}
 
@@ -292,7 +286,7 @@ private class SoftwareDB : Object {
 
 	public bool has_table (string table_name) {
 		Sqlite.Statement stmt;
-		int res = db->prepare_v2 ("PRAGMA table_info(%s)".printf(table_name), -1, out stmt);
+		int res = db.prepare_v2 ("PRAGMA table_info(%s)".printf(table_name), -1, out stmt);
 		return_if_fail (check_result (res, "prepare db"));
 
 		res = stmt.step ();
@@ -309,7 +303,7 @@ private class SoftwareDB : Object {
 		apptables = "id, name, version, full_name, desktop_file, author, publisher, categories, " +
 			"description, install_time, origin, dependencies";
 
-		int res = db->prepare_v2 ("CREATE TABLE IF NOT EXISTS applications ("
+		int res = db.prepare_v2 ("CREATE TABLE IF NOT EXISTS applications ("
 		+ "id INTEGER PRIMARY KEY, "
 		+ "name TEXT UNIQUE NOT NULL, "
 		+ "version TEXT NOT NULL, "
@@ -337,7 +331,7 @@ private class SoftwareDB : Object {
 		deptables = "id, name, full_name, version, description, homepage, author, " +
 			"install_time, environment";
 
-		res = db->prepare_v2 ("CREATE TABLE IF NOT EXISTS dependencies ("
+		res = db.prepare_v2 ("CREATE TABLE IF NOT EXISTS dependencies ("
 		+ "id INTEGER PRIMARY KEY, "
 		+ "name TEXT UNIQUE NOT NULL, "
 		+ "full_name TEXT NOT NULL, "
@@ -367,7 +361,7 @@ private class SoftwareDB : Object {
 			return false;
 		}
 		Sqlite.Statement stmt;
-		int res = db->prepare_v2 (
+		int res = db.prepare_v2 (
 			"INSERT INTO applications (name, version, full_name, desktop_file, author, publisher, categories, "
 			+ "description, install_time, origin, dependencies) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -490,7 +484,7 @@ private class SoftwareDB : Object {
 
 	public int get_applications_count () {
 		Sqlite.Statement stmt;
-		int res = db->prepare_v2 ("SELECT Count(*) FROM applications", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT Count(*) FROM applications", -1, out stmt);
 		return_if_fail (check_result (res, "get applications count"));
 
 		if (stmt.step() != Sqlite.ROW)
@@ -530,7 +524,7 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_idname (string appIdName) {
 		Sqlite.Statement stmt;
-		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=?", -1, out stmt);
 		return_val_if_fail (check_result (res, "get application (by name)"), null);
 
 		res = stmt.bind_text (1, appIdName);
@@ -549,7 +543,7 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_fullname (string appFullName) {
 		Sqlite.Statement stmt;
-		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE full_name=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE full_name=?", -1, out stmt);
 		return_val_if_fail (check_result (res, "get application (by full_name)"), null);
 
 		res = stmt.bind_text (1, appFullName);
@@ -568,7 +562,7 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_dbid (uint databaseId) {
 		Sqlite.Statement stmt;
-		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE id=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE id=?", -1, out stmt);
 		return_val_if_fail (check_result (res, "get application (by db_id)"), null);
 
 		res = stmt.bind_int (1, (int) databaseId);
@@ -587,7 +581,7 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_name_version (string appName, string appVersion) {
 		Sqlite.Statement stmt;
-		int res = db->prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=? AND version=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=? AND version=?", -1, out stmt);
 		return_val_if_fail (check_result (res, "get application (by name_version)"), null);
 
 		res = stmt.bind_text (1, appName);
@@ -611,7 +605,7 @@ private class SoftwareDB : Object {
 		bool ret = true;
 		string metadir = Path.build_filename (regdir, app.idname, null);
 		Sqlite.Statement stmt;
-		int res = db->prepare_v2 ("DELETE FROM applications WHERE name=?", -1, out stmt);
+		int res = db.prepare_v2 ("DELETE FROM applications WHERE name=?", -1, out stmt);
 		return_val_if_fail (check_result (res, "delete application"), false);
 
 		res = stmt.bind_text (1, app.idname);
@@ -667,7 +661,7 @@ private class SoftwareDB : Object {
 
 	public bool set_application_dependencies (string appName, ArrayList<IPK.Dependency> deps) {
 		Sqlite.Statement stmt;
-		int res = db->prepare_v2 ("UPDATE applications SET dependencies=? WHERE name=?", -1, out stmt);
+		int res = db.prepare_v2 ("UPDATE applications SET dependencies=? WHERE name=?", -1, out stmt);
 		return_val_if_fail (check_result (res, "update application deps (by name)"), null);
 
 		string depstr = "";
@@ -692,7 +686,7 @@ private class SoftwareDB : Object {
 			return false;
 		}
 		Sqlite.Statement stmt;
-		int res = db->prepare_v2 (
+		int res = db.prepare_v2 (
 			"INSERT INTO dependencies (name, full_name, version, description, homepage, author, " +
 			"install_time, environment) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
@@ -768,7 +762,7 @@ private class SoftwareDB : Object {
 
 	public IPK.Dependency? get_dependency_by_id (string depIdName) {
 		Sqlite.Statement stmt;
-		int res = db->prepare_v2 ("SELECT " + deptables + " FROM dependencies WHERE name=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT " + deptables + " FROM dependencies WHERE name=?", -1, out stmt);
 		return_val_if_fail (check_result (res, "get dependency (by id)"), null);
 
 		res = stmt.bind_text (1, depIdName);

@@ -395,6 +395,7 @@ private class Package : Object {
 		// The temporary location where the file has been extracted to
 		string tmp = Path.build_filename (wdir, int_path);
 
+		debug ("Install file: %s", tmp);
 		// Validate new file
 		string new_hash = compute_checksum_for_file (tmp);
 		if (new_hash != fe.hash) {

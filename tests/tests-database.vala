@@ -70,7 +70,6 @@ void test_software_db () {
 	assert (ret == true);
 
 	// Close & reopen the DB
-	sdb.close ();
 	sdb.open ();
 
 	msg ("Retrieving AppItem from database...");
@@ -84,7 +83,6 @@ void test_software_db () {
 	int count = sdb.get_applications_count ();
 	assert (count == 1);
 
-	sdb.close ();
 	msg ("Software database closed.");
 }
 

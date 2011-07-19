@@ -129,7 +129,6 @@ public class Manager : Object {
 			capp = db.get_application_by_dbid (i);
 		}
 
-		db.close ();
 		appList = alist;
 		return true;
 	}
@@ -145,7 +144,6 @@ public class Manager : Object {
 			return false;
 
 		ArrayList<AppItem> res = db.find_applications (values);
-		db.close ();
 		// Emit signals for found applications
 		foreach (AppItem app in res)
 			application (app);
@@ -172,7 +170,6 @@ public class Manager : Object {
 
 		// Check if this application exists, if not exit
 		if (db.get_application_by_id (app) == null) {
-			db.close ();
 			emit_error (ErrorEnum.REMOVAL_FAILED, _("Could not uninstall application %s. It is not installed.").printf (app.full_name));
 			return false;
 		}
@@ -188,7 +185,6 @@ public class Manager : Object {
 				int ret = FileUtils.remove (fname);
 				if (ret != 0) {
 					emit_error (ErrorEnum.REMOVAL_FAILED, _("Could not remove file %s!").printf (fname));
-					db.close ();
 					return false;
 				}
 				string dirn = Path.get_dirname (fname);
@@ -199,7 +195,6 @@ public class Manager : Object {
 			}
 		}
 		bool ret = db.remove_application (app);
-		db.close ();
 
 		emit_status (StatusEnum.REMOVAL_FINISHED,
 			     _("Removal of %s finished.").printf (app.full_name));
@@ -210,14 +205,12 @@ public class Manager : Object {
 	public AppItem? get_appitem_by_idname (string idname) {
 		return_val_if_fail (open_db (false), null);
 		AppItem? app = db.get_application_by_idname (idname);
-		db.close ();
 		return app;
 	}
 
 	public AppItem? get_appitem_by_fullname (string full_name) {
 		return_val_if_fail (open_db (false), null);
 		AppItem? app = db.get_application_by_fullname (full_name);
-		db.close ();
 		return app;
 	}
 
