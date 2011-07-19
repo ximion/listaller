@@ -71,12 +71,12 @@ private class PkInstaller : Object {
 	private PackageKit.PackageSack? pkit_pkgs_from_depfiles (IPK.Dependency dep) {
 		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("none");
 
-		string[] files = array_list_to_strv (dep.files);
+		string[] libs = array_list_to_strv (dep.files);
 
 		PackageKit.Results res;
 		PackageKit.PackageSack sack;
 		try {
-			res  = pkit.search_files (filter, files, null, pk_progress_cb);
+			res  = pkit.what_provides (filter, PackageKit.Provides.LIBRARY, libs, null, pk_progress_cb);
 			sack = res.get_package_sack ();
 		} catch (Error e) {
 			debug (e.message);
@@ -123,40 +123,25 @@ private class PkInstaller : Object {
 		/* Search files using "whereis" before calling PackageKit to do this
 		 * (this is a huge speed improvement) */
 		ret = true;
-		string? stdout;
 		foreach (string s in dep.files) {
-			try {
-				Process.spawn_command_line_sync ("whereis " + s, out stdout, null, null);
-				debug ("DepFind: %s, => { %s }", s, stdout);
-				string[] files = stdout.split (" ");
-				if (files.length > 0) {
-					if ((files[1] == "") || (files[1] == null)) {
-						ret = false;
-						break;
-					}
-				} else {
-					ret = false;
-					break;
-				}
-
-			} catch (Error e) {
-				debug ("WhereIs in PkInstall: %s", e.message);
-				ret = false;
+			if (s.has_suffix (".*"))
+				s = s.replace (".*", "");
+			ret = find_library (s, conf);
+			if (!ret)
 				break;
-			}
-			stdout = "";
-		}
-		/* We don't solve dependencies when unit tests are running.
-		 * Consider everything as satisfied. */
-		if (!unittestmode) {
-			dep.satisfied = true;
-			return true;
 		}
 
 		if (ret) {
 			dep.meta_info.clear ();
 			foreach (string s in dep.files)
 				dep.meta_info.add ("file:" + s);
+			dep.satisfied = true;
+			return true;
+		}
+
+		/* We don't solve dependencies when unit tests are running.
+		 * Consider everything as satisfied. */
+		if (__unittestmode) {
 			dep.satisfied = true;
 			return true;
 		}

@@ -30,10 +30,9 @@ public class Settings : Object {
 	const string sudbdir = "/var/lib/listaller";
 	const string suinstroot = "/opt";
 	const string sudesktopdir = Config.PREFIXDIR + "/share/applications";
-	private string[] library_paths = { Config.PREFIXDIR + "/lib",
+	private string[] lib_paths = { Config.PREFIXDIR + "/lib",
 					   Config.PREFIXDIR + "/lib64",
-					   "/lib",
-					   null };
+					   "/lib"};
 
 	private bool _sumode;
 	private bool _testmode;
@@ -64,6 +63,14 @@ public class Settings : Object {
 	public Settings (bool root = false) {
 		sumode = root;
 		testmode = false;
+
+		// Append some Debian-specific multiarch paths
+		string tripel = "%s-%s-gnu".printf (Utils.system_machine (), Utils.system_os ());
+		lib_paths += Path.build_filename ("/lib", tripel);
+		lib_paths += Path.build_filename ("/usr", "lib", tripel);
+		// null-terminate paths list
+		lib_paths += null;
+
 		unlock (); // Be unlocked by default
 	}
 
@@ -98,8 +105,8 @@ public class Settings : Object {
 	}
 
 	[CCode (array_length = false, array_null_terminated = true)]
-	public string[] get_lib_paths () {
-		return library_paths;
+	public string[] library_paths () {
+		return lib_paths;
 	}
 
 	private void touch_dir (string dirname, string warnmsg = "Error: %s") {
@@ -272,6 +279,20 @@ public class Settings : Object {
 		uinsttmp = res;
 		return uinsttmp;
 	}
+}
+
+private bool find_library (string libname, Settings conf) {
+	Posix.Stat? s = null;
+	string[] paths = conf.library_paths ();
+	for (uint i = 0; paths[i] != null; i++) {
+		s = null;
+		string path = Path.build_filename (paths[i], libname);
+		Posix.stat (path, out s);
+		if (s.st_size != 0)
+			return true;
+	}
+
+	return false;
 }
 
 } // End of namespace

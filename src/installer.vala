@@ -33,7 +33,6 @@ public class Setup : Object {
 	private bool initialized;
 	private int inst_progress;
 	private int full_progress;
-	public bool unittestmode {get; set;}
 
 	public signal void error_code (ErrorItem error);
 	public signal void progress_changed (int progress, int subprogress);
@@ -54,7 +53,6 @@ public class Setup : Object {
 	}
 
 	public Setup (string ipkfilename, Settings? settings) {
-		unittestmode = false;
 		conf = settings;
 		if (conf == null)
 			conf = new Settings (false);

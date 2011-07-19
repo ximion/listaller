@@ -24,6 +24,7 @@ using Gee;
 namespace Listaller {
 
 static bool __debug_errors_fatal = false;
+static bool __unittestmode = false;
 
 private static void li_info (string msg) {
 	stdout.printf (" I:" + " " + msg + "\n");
@@ -117,7 +118,7 @@ private bool is_root () {
  */
 private string compute_checksum_for_file (string fname, ChecksumType cstype = ChecksumType.SHA1) {
 	Checksum cs;
-	uchar data [1024];
+	uchar data [4096];
 	size_t size = 0;
 
 	cs = new Checksum (cstype);
@@ -130,9 +131,9 @@ private string compute_checksum_for_file (string fname, ChecksumType cstype = Ch
 
 	// Build the checksum
 	do {
-		size = Posix.read (input.fileno (), (void*) data, 1024);
+		size = Posix.read (input.fileno (), (void*) data, 4096);
 		cs.update (data, size);
-	} while (size == 1024);
+	} while (size == 4096);
 	Posix.close (input.fileno ());
 
 	string sum = cs.get_string ();
