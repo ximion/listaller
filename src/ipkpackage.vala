@@ -36,6 +36,7 @@ private class Package : Object {
 	private IPK.FileList ipkf;
 	private ArrayList<IPK.FileEntry>? fcache;
 	private AppItem appInfo;
+	private const int DEFAULT_BLOCK_SIZE = 65536;
 
 	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
@@ -107,9 +108,11 @@ private class Package : Object {
 		ar.support_format_tar ();
 		// FIXME: Make compression_xz work
 		ar.support_compression_all ();
-		if (ar.open_filename (arname, 4096) != Result.OK)
+		if (ar.open_filename (arname, 4096) != Result.OK) {
 			emit_error (ErrorEnum.IPK_DAMAGED,
 				    _("Could not read IPK control information! Error: %s").printf (ar.error_string ()));
+			return false;
+		}
 
 		while (ar.next_header (out e) == Result.OK) {
 			switch (e.pathname ()) {
@@ -119,6 +122,9 @@ private class Package : Object {
 				// FIXME: Fix this for mutiple data archives
 				case "files-all.list":
 					ret = extract_entry_to (ar, e, wdir);
+					break;
+				default:
+					ar.read_data_skip ();
 					break;
 			}
 		}
@@ -150,47 +156,194 @@ private class Package : Object {
 		return ret;
 	}
 
-	private bool extract_entry_to (Read ar, Entry e, string dest) {
-		bool ret = false;
-		assert (ar != null);
+	private bool install_entry_and_validate (IPK.FileEntry fe, Read plar, Entry e, ChecksumType cstype = ChecksumType.SHA1) {
+		bool ret = true;
+		assert (plar != null);
 
-		// Create new writer
-		WriteDisk writer = new WriteDisk ();
-		writer.set_options (ExtractFlags.SECURE_NODOTDOT | ExtractFlags.NO_OVERWRITE);
+		// Some preparation
 
-		// Change dir to extract to the right path
-		string old_cdir = Environment.get_current_dir ();
-		Environment.set_current_dir (dest);
+		// Varsolver to solve LI variables
+		VarSolver vs = new VarSolver (appInfo.idname);
+		string int_path = vs.substitute_vars_id (fe.get_full_filename ());
 
-		Result header_response = writer.write_header (e);
-		if (header_response == Result.OK) {
-			ret = archive_copy_data (ar, writer);
-		} else {
-			emit_warning (_("Could not extract file! Error: %s").printf (writer.error_string ()));
+		string dest = vs.substitute_vars_auto (fe.destination, conf);
+		string fname = Path.build_filename (dest, fe.fname, null);
+		string fname_tmp = fname + ".listaller-new";
+
+		// Check if file already exists
+		if (FileUtils.test (fname, FileTest.EXISTS)) {
+			rollback_installation ();
+			// Throw error and exit
+			emit_error (ErrorEnum.FILE_EXISTS,
+				_("Could not override file %s, this file already exists!").printf (fname));
+			return false;
 		}
 
-		// Restore working dir
-		Environment.set_current_dir (old_cdir);
+		string msg;
+		ret = touch_dir (dest);
+		if (!ret) {
+			// Undo changes & emit error
+			rollback_installation ();
+			emit_error (ErrorEnum.FILE_INSTALL_FAILED,
+				_("Unable to create destination directory."));
+			return false;
+		}
+
+		// Now extract everything
+
+		void *buff;
+		size_t size, bytes_to_write;
+		ssize_t bytes_written, total_written;
+		Posix.off_t offset;
+		Posix.off_t output_offset;
+		Result r;
+
+		total_written = 0;
+		output_offset = 0;
+
+		var cs = new Checksum (cstype);
+
+		// File descriptor for tmp file
+		int fd = Posix.open (fname_tmp, Posix.O_CREAT | Posix.O_WRONLY | Posix.O_TRUNC,
+	                         Posix.S_IRUSR | Posix.S_IWUSR | Posix.S_IRGRP | Posix.S_IROTH);
+		if (fd < 0) {
+			emit_error (ErrorEnum.FILE_INSTALL_FAILED,
+				_("Unable to extract file. %s").printf (strerror (errno)));
+			return false;
+		}
+
+		while ((r = plar.read_data_block(out buff, out size, out offset)) == Result.OK) {
+			char *p = buff;
+			if (offset > output_offset) {
+				Posix.lseek(fd, offset - output_offset, Posix.SEEK_CUR);
+				output_offset = offset;
+			}
+			while (size > 0) {
+				bytes_to_write = size;
+				if (bytes_to_write > DEFAULT_BLOCK_SIZE)
+					bytes_to_write = DEFAULT_BLOCK_SIZE;
+
+				bytes_written = Posix.write (fd, p, bytes_to_write);
+				cs.update ((uchar[]) p, bytes_to_write);
+
+				if (bytes_written < 0) {
+					emit_warning (_("Could not extract file %s! Error: %s").printf (fname, plar.error_string ()));
+					FileUtils.remove (fname_tmp);
+					rollback_installation ();
+					emit_error (ErrorEnum.IPK_DAMAGED,
+						_("Unable to extract data file %s. This IPK package might be damaged, please obtain a new copy.").printf (Path.get_basename (e.pathname ())));
+					return false;
+				}
+				output_offset += bytes_written;
+				total_written += bytes_written;
+				p += bytes_written;
+				size -= bytes_written;
+			}
+		}
+		if (Posix.close (fd) != 0)
+			li_warning ("Closing file desriptor failed. %s".printf (strerror (errno)));
+
+		if ((r != Result.OK) && (r != Result.EOF)) {
+			FileUtils.remove (fname_tmp);
+			emit_error (ErrorEnum.IPK_DAMAGED,
+						_("Unable to extract data file %s. Message: %s").printf (Path.get_basename (e.pathname ()), strerror (errno)));
+			return false;
+		}
+
+		// Check the checksums
+		string sum = cs.get_string ();
+		if (sum != fe.hash) {
+			debug ("Checksum conflict: %s [vs] %s", sum, fe.hash);
+			rollback_installation ();
+			// Now remove the corrupt file
+			FileUtils.remove (fname_tmp);
+			// Very bad, we have a checksum missmatch -> throw error, delete file and exit
+			emit_error (ErrorEnum.HASH_MISSMATCH,
+				_("Validation of file %s failed! This IPK file might have been modified after creation.\nPlease obtain a new copy and try again.").printf (fname));
+			return false;
+		}
+
+		string einfo = "";
+		try {
+			ret = move_file (fname_tmp, fname);
+		} catch (Error e) {
+			einfo = e.message;
+		}
+
+		if (ret) {
+			// If we are here, everything went fine. Mark the file as installed
+			fe.installed = true;
+			fe.fname_installed = fname;
+		} else {
+			rollback_installation ();
+			emit_error (ErrorEnum.COPY_ERROR,
+				    _("Could not copy file %s to its destination. Do you have the necessary rights to perform this action?\nError message was \"%s\".").printf (fname, einfo));
+		}
 
 		return ret;
 	}
 
-	private bool archive_copy_data (Read source, Write dest) {
-		const int size = 10240;
-		char buff[10240];
-		ssize_t readBytes;
+	private bool extract_entry_to (Read ar, Entry e, string dest) {
+		bool ret = false;
+		assert (ar != null);
 
-		readBytes = source.read_data (buff, size);
-		while (readBytes > 0) {
-			dest.write_data(buff, readBytes);
-			if (dest.errno () != Result.OK) {
-				emit_warning ("Error while extracting..." + dest.error_string () + "(error nb =" + dest.errno ().to_string () + ")");
-				return false;
-			}
-			readBytes = source.read_data (buff, size);
+		// Build target filename
+		string fname = Path.build_filename (dest, Path.get_basename (e.pathname ()));
+
+		if (FileUtils.test (fname, FileTest.EXISTS)) {
+			emit_error (ErrorEnum.FILE_EXISTS,
+				_("Could not override file %s, this file already exists!").printf (fname));
+			return false;
 		}
-		return true;
+
+		void *buff;
+		size_t size, bytes_to_write;
+		ssize_t bytes_written, total_written;
+		Posix.off_t offset;
+		Posix.off_t output_offset;
+		Result r;
+
+		total_written = 0;
+		output_offset = 0;
+
+		int fd = Posix.open (fname, Posix.O_CREAT | Posix.O_WRONLY | Posix.O_TRUNC,
+	                         Posix.S_IRUSR | Posix.S_IWUSR | Posix.S_IRGRP | Posix.S_IROTH);
+		if (fd < 0) {
+			emit_error (ErrorEnum.FILE_INSTALL_FAILED,
+				_("Unable to extract file. %s").printf (strerror (errno)));
+			return false;
+		}
+
+		ret = true;
+		while ((r = ar.read_data_block(out buff, out size, out offset)) == Result.OK) {
+			char *p = buff;
+			if (offset > output_offset) {
+				Posix.lseek(fd, offset - output_offset, Posix.SEEK_CUR);
+				output_offset = offset;
+			}
+			while (size > 0) {
+				bytes_to_write = size;
+				if (bytes_to_write > DEFAULT_BLOCK_SIZE)
+					bytes_to_write = DEFAULT_BLOCK_SIZE;
+				bytes_written = Posix.write (fd, p, bytes_to_write);
+				if (bytes_written < 0) {
+					emit_error (ErrorEnum.FILE_INSTALL_FAILED,
+						_("Unable to extract file. %s").printf (strerror (errno)));
+					ret = false;
+					break;
+				}
+				output_offset += bytes_written;
+				total_written += bytes_written;
+				p += bytes_written;
+				size -= bytes_written;
+			}
+		}
+		if (Posix.close (fd) != 0)
+			li_warning ("Closing file desriptor failed. %s".printf (strerror (errno)));
+
+		return ret;
 	}
+
 
 	private Read? open_base_ipk () {
 		// Create a new archive object for reading
@@ -238,6 +391,8 @@ private class Package : Object {
 					warning (_("Unable to extract IPK metadata!"));
 				}
 				break;
+			} else {
+				ar.read_data_skip ();
 			}
 		}
 		ar.close ();
@@ -265,6 +420,8 @@ private class Package : Object {
 					li_warning (_("Unable to extract signature! Maybe package is not signed."));
 				}
 				break;
+			} else {
+				ar.read_data_skip ();
 			}
 		}
 		ar.close ();
@@ -299,7 +456,7 @@ private class Package : Object {
 		GPGSignature? sig = get_signature ();
 
 		//TODO: Remove control.tar.xz on a 'better' place
-		FileUtils.remove (Path.build_filename (wdir, "control.tar.xz", null));
+		 //FileUtils.remove (Path.build_filename (wdir, "control.tar.xz", null));
 
 		PackSecurity sec = new PackSecurity ();
 
@@ -329,6 +486,8 @@ private class Package : Object {
 						_("Could not extract IPK payload! Package might be damaged. Error: %s").printf (ar.error_string ()));
 				}
 				break;
+			} else {
+				ar.read_data_skip ();
 			}
 		}
 		ar.close ();
@@ -354,78 +513,6 @@ private class Package : Object {
 			return null;
 		}
 		return plar;
-	}
-
-	private bool extract_file_copy_dest (IPK.FileEntry fe, Read plar, Entry e) {
-		bool ret = true;
-
-		// Varsolver to solve LI variables
-		VarSolver vs = new VarSolver (appInfo.idname);
-		string int_path = vs.substitute_vars_id (fe.get_full_filename ());
-
-		string dest = vs.substitute_vars_auto (fe.destination, conf);
-		string fname = Path.build_filename (dest, fe.fname, null);
-
-		// Check if file already exists
-		if (FileUtils.test (fname, FileTest.EXISTS)) {
-			rollback_installation ();
-			// Throw error and exit
-			emit_error (ErrorEnum.FILE_EXISTS,
-				_("Could not override file %s, this file already exists!").printf (fname));
-				return false;
-		}
-		// Now extract it!
-		string msg;
-		ret = touch_dir (dest);
-		if (!ret) {
-			// Undo changes & emit error
-			rollback_installation ();
-			emit_error (ErrorEnum.FILE_INSTALL_FAILED,
-				_("Unable to create destination directory."));
-			return false;
-		}
-
-		ret = extract_entry_to (plar, e, wdir);
-		if (!ret) {
-			rollback_installation ();
-			emit_error (ErrorEnum.IPK_DAMAGED,
-				    _("Unable to extract data file %s. This IPK package might be damaged, please obtain a new copy.").printf (Path.get_basename (e.pathname ())));
-			return ret;
-		}
-		// The temporary location where the file has been extracted to
-		string tmp = Path.build_filename (wdir, int_path);
-
-		debug ("Install file: %s", tmp);
-		// Validate new file
-		string new_hash = compute_checksum_for_file (tmp);
-		if (new_hash != fe.hash) {
-			rollback_installation ();
-			// Very bad, we have a checksum missmatch -> throw error, delete file and exit
-			emit_error (ErrorEnum.HASH_MISSMATCH,
-				_("Could not validate file %s. This IPK file might have been modified after creation!\nPlease obtain a new copy and try again.").printf (fname));
-			// Now remove the corrupt file
-			FileUtils.remove (fname);
-
-			return false;
-		}
-		string einfo = "";
-		try {
-			ret = move_file (tmp, fname);
-		} catch (Error e) {
-			einfo = e.message;
-		}
-		// Remove dir, if empty
-		DirUtils.remove (Path.get_dirname (tmp));
-		if (ret) {
-			// If we are here, everything went fine. Mark the file as installed
-			fe.installed = true;
-			fe.fname_installed = fname;
-		} else {
-			rollback_installation ();
-			emit_error (ErrorEnum.COPY_ERROR,
-				    _("Could not copy file %s to its destination. Do you have the necessary rights to perform this action?\nError message was \"%s\".").printf (fname, einfo));
-		}
-		return ret;
 	}
 
 	public bool install_file (IPK.FileEntry fe) {
@@ -460,7 +547,7 @@ private class Package : Object {
 		// VarSetter to set LI path vars in files
 		VarSetter vset = new VarSetter (conf, appInfo.idname);
 		if (ret) {
-			ret = extract_file_copy_dest (fe, plar, e);
+			ret = install_entry_and_validate (fe, plar, e);
 			if (ret)
 				vset.execute (fe.fname_installed);
 		}
@@ -511,7 +598,7 @@ private class Package : Object {
 			fe = get_fe_by_int_path (fcache, e.pathname ());
 			if (fe != null) {
 				// File was found, so install it now
-				ret = extract_file_copy_dest (fe, plar, e);
+				ret = install_entry_and_validate (fe, plar, e);
 				if (ret)
 					vset.execute (fe.fname_installed);
 				prog++;
