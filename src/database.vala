@@ -417,7 +417,7 @@ private class SoftwareDB : Object {
 			return true;
 	}
 
-	public bool add_application_filelist (AppItem aid, ArrayList<IPK.FileEntry> flist) {
+	public bool add_application_filelist (AppItem aid, Collection<IPK.FileEntry> flist) {
 		if (!locked) {
 			fatal ("write to readonly database!", Sqlite.ERROR);
 			return false;

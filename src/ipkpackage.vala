@@ -34,7 +34,7 @@ private class Package : Object {
 	private string data_archive;
 	private IPK.Control ipkc;
 	private IPK.FileList ipkf;
-	private ArrayList<IPK.FileEntry>? fcache;
+	private HashMap<string, IPK.FileEntry>? fcache;
 	private AppItem appInfo;
 	private const int DEFAULT_BLOCK_SIZE = 65536;
 
@@ -44,11 +44,6 @@ private class Package : Object {
 
 	public IPK.Control control {
 		get { return ipkc; }
-	}
-
-	public ArrayList<IPK.FileEntry>? file_list {
-		get { return fcache; }
-		set { fcache = value; }
 	}
 
 	public Package (string filename, Settings? settings) {
@@ -92,6 +87,12 @@ private class Package : Object {
 		item.details = details;
 		error_code (item);
 		li_error (details);
+	}
+
+	public Collection<IPK.FileEntry>? get_file_entries () {
+		if (fcache == null)
+			return null;
+		return fcache.values;
 	}
 
 	public bool is_valid () {
@@ -140,15 +141,21 @@ private class Package : Object {
 		if (FileUtils.test (tmpf, FileTest.EXISTS)) {
 			ret = ipkc.open_file (tmpf);
 		}
+
+		// Fetch application-information as an app-id
+		appInfo = ipkc.get_application ();
+
 		tmpf = Path.build_filename (wdir, "files-all.list", null);
 		if ((ret) && (FileUtils.test (tmpf, FileTest.EXISTS))) {
 			ret = ipkf.open (tmpf);
 			// Cache list of files
-			fcache = ipkf.get_files_list ();
+			var list = ipkf.get_files_list ();
+			fcache = new HashMap<string, IPK.FileEntry> ();
+			VarSolver vs = new VarSolver (appInfo.idname);
+			foreach (IPK.FileEntry fe in list) {
+				fcache.set (vs.substitute_vars_id (fe.get_full_filename ()), fe);
+			}
 		}
-
-		// Fetch application-information as an app-id
-		appInfo = ipkc.get_application ();
 
 		// If everything was successful, the IPK file is valid
 		ipk_valid = ret;
@@ -156,15 +163,11 @@ private class Package : Object {
 		return ret;
 	}
 
-	private bool install_entry_and_validate (IPK.FileEntry fe, Read plar, Entry e, ChecksumType cstype = ChecksumType.SHA1) {
+	private bool install_entry_and_validate (IPK.FileEntry fe, Read plar, Entry e, VarSolver vs, ChecksumType cstype = ChecksumType.SHA1) {
 		bool ret = true;
 		assert (plar != null);
 
 		// Some preparation
-
-		// Varsolver to solve LI variables
-		VarSolver vs = new VarSolver (appInfo.idname);
-		string int_path = vs.substitute_vars_id (fe.get_full_filename ());
 
 		string dest = vs.substitute_vars_auto (fe.destination, conf);
 		string fname = Path.build_filename (dest, fe.fname, null);
@@ -550,26 +553,13 @@ private class Package : Object {
 		// VarSetter to set LI path vars in files
 		VarSetter vset = new VarSetter (conf, appInfo.idname);
 		if (ret) {
-			ret = install_entry_and_validate (fe, plar, e);
+			ret = install_entry_and_validate (fe, plar, e, vs);
 			if (ret)
 				vset.execute (fe.fname_installed);
 		}
 		plar.close ();
 
 		return ret;
-	}
-
-	// Search for IPKFileEntry with the given IPK internal path
-	private IPK.FileEntry? get_fe_by_int_path (ArrayList<IPK.FileEntry> list, string int_path) {
-		IPK.FileEntry re = null;
-		VarSolver vs = new VarSolver (appInfo.idname);
-		foreach (IPK.FileEntry e in list) {
-			if (vs.substitute_vars_id (e.get_full_filename ()) == int_path) {
-				re = e;
-				break;
-			}
-		}
-		return re;
 	}
 
 	public bool install_all_files () {
@@ -596,12 +586,13 @@ private class Package : Object {
 		// Create new varsetter, so we can set path variables directly in files
 		VarSetter vset = new VarSetter (conf, appInfo.idname);
 		IPK.FileEntry fe = null;
+		VarSolver vs = new VarSolver (appInfo.idname);
 		// Now extract & validate all stuff
 		while (plar.next_header (out e) == Result.OK) {
-			fe = get_fe_by_int_path (fcache, e.pathname ());
+			fe = fcache.get (e.pathname ());
 			if (fe != null) {
 				// File was found, so install it now
-				ret = install_entry_and_validate (fe, plar, e);
+				ret = install_entry_and_validate (fe, plar, e, vs);
 				prog++;
 				progress_changed ((int) Math.round (one * prog));
 				// Stop on error
@@ -617,7 +608,7 @@ private class Package : Object {
 		}
 
 		// Set variables in external files
-		foreach (IPK.FileEntry f in fcache) {
+		foreach (IPK.FileEntry f in get_file_entries ()) {
 			vset.execute (f.fname_installed);
 		}
 
@@ -628,7 +619,7 @@ private class Package : Object {
 
 	public bool rollback_installation () {
 		// Remove all installed files
-		foreach (IPK.FileEntry fe in fcache) {
+		foreach (IPK.FileEntry fe in get_file_entries ()) {
 			if (!fe.installed)
 				continue;
 			if (FileUtils.remove (fe.fname_installed) == 0) {

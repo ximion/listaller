@@ -61,7 +61,7 @@ void test_ipk_package () {
 	assert (ret == true);
 	assert (app.full_name == "FooBar");
 
-	ArrayList<IPK.FileEntry> flist = ipk.file_list;
+	Collection<IPK.FileEntry> flist = ipk.get_file_entries ();
 	foreach (IPK.FileEntry e in flist) {
 		bool inst_ok = ipk.install_file (e);
 		assert (inst_ok == true);

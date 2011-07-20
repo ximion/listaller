@@ -215,7 +215,7 @@ public class Setup : Object {
 		if (!ret) {
 			return false;
 		}
-		ret = db.add_application_filelist (app, ipkp.file_list);
+		ret = db.add_application_filelist (app, ipkp.get_file_entries ());
 		conf.unlock ();
 
 		inst_progress = 100;
