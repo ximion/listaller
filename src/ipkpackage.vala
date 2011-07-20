@@ -242,6 +242,8 @@ private class Package : Object {
 		}
 		if (Posix.close (fd) != 0)
 			li_warning ("Closing file desriptor failed. %s".printf (strerror (errno)));
+		// Set permissions
+		Posix.chmod (fname_tmp, e.mode ());
 
 		if ((r != Result.OK) && (r != Result.EOF)) {
 			FileUtils.remove (fname_tmp);
@@ -340,6 +342,7 @@ private class Package : Object {
 		}
 		if (Posix.close (fd) != 0)
 			li_warning ("Closing file desriptor failed. %s".printf (strerror (errno)));
+		Posix.chmod (fname, e.mode ());
 
 		return ret;
 	}
