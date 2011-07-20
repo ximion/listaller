@@ -8,6 +8,7 @@ set(VERSION_SUFFIX "-dev")
 
 # Detect Git revision (if present)
 if(VERSION_SUFFIX MATCHES "-dev")
+	set(CMAKE_BUILD_TYPE "Debug")
 	if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
 		find_package(Git)
 		if(GIT_EXECUTABLE)
