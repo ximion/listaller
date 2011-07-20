@@ -164,10 +164,10 @@ private class DepInfo : Object {
 						dep.is_standardlib = true;
 					continue;
 				}
-				if (line.down ().has_prefix ("files:")) {
+				if (line.down ().has_prefix ("libraries:")) {
 					string s = line.substring (line.index_of (":") + 1).strip ();
 					if (s != "")
-						dep.files.add (s);
+						dep.files.add ("lib:" + s);
 					mode = DepInfoBlock.FILES;
 					continue;
 				}

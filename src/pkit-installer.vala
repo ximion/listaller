@@ -71,7 +71,14 @@ private class PkInstaller : Object {
 	private PackageKit.PackageSack? pkit_pkgs_from_depfiles (IPK.Dependency dep) {
 		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("none");
 
-		string[] libs = array_list_to_strv (dep.files);
+		// We only resolve libraries at time
+		// TODO: Resolve other dependencies too
+		string[] libs = {};
+		foreach (string s in dep.files) {
+			if (s.has_prefix ("lib:"))
+				libs += s.substring (4);
+		}
+		libs += null;
 
 		PackageKit.Results res;
 		PackageKit.PackageSack sack;
@@ -124,17 +131,21 @@ private class PkInstaller : Object {
 		 * (this is a huge speed improvement) */
 		ret = true;
 		foreach (string s in dep.files) {
-			if (s.has_suffix (".*"))
-				s = s.replace (".*", "");
-			ret = find_library (s, conf);
-			if (!ret)
-				break;
+			if (s.has_prefix ("lib:")) {
+				if (s.has_suffix (".*"))
+					s = s.replace (".*", "");
+				//! debug (s.substring (4));
+				ret = find_library (s.substring (4), conf);
+				if (!ret)
+					break;
+			}
 		}
 
 		if (ret) {
 			dep.meta_info.clear ();
 			foreach (string s in dep.files)
-				dep.meta_info.add ("file:" + s);
+				if (s.has_prefix ("lib:"))
+					dep.meta_info.add (s);
 			dep.satisfied = true;
 			return true;
 		}

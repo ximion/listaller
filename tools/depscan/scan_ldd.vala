@@ -51,7 +51,7 @@ private class DepscanLDD : Object, IDepScanEngine {
 				continue;
 			h = dep[0].strip ();
 			if (!h.contains ("("))
-				filedeps.add (h);
+				filedeps.add ("%s%s".printf ("lib:", h));
 		}
 		return true;
 	}

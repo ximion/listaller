@@ -63,40 +63,42 @@ private class DepFind : Object {
 
 		ArrayList<string> files = get_dependency_list ();
 		foreach (string s in files) {
-			IPK.Dependency dtmp = dinfo.get_dep_template_for_file (s);
-			string dep_name = "";
-			if (dtmp != null)
-				dep_name = dtmp.full_name;
-			else
-				dep_name = Utils.string_replace (s, "(\\.so|\\+|\\.)", "");
+			if (s.has_prefix ("lib:")) {
+				IPK.Dependency dtmp = dinfo.get_dep_template_for_file (s.substring (4));
+				string dep_name = "";
+				if (dtmp != null)
+					dep_name = dtmp.full_name;
+				else
+					dep_name = Utils.string_replace (s.substring (4), "(\\.so|\\+|\\.)", "");
 
-			if (dep_name.strip () == "") {
-				debug ("dep_name would be empty for %s!", s);
-				continue;
-			}
-
-			bool done = false;
-			foreach (IPK.Dependency d in deplist) {
-				if (d.full_name == dep_name) {
-					d.files.add (s.strip ());
-					done = true;
-					break;
+				if (dep_name.strip () == "") {
+					debug ("dep_name would be empty for %s!", s);
+					continue;
 				}
-			}
-			if (done)
-				continue;
 
-			// If we are here, we need to create a new dependency object
-			IPK.Dependency dep = new IPK.Dependency (dep_name);
-			if (dtmp != null) {
-				dep.idname = dtmp.idname;
-				dep.version = dtmp.version;
-				dep.feed_url = dtmp.feed_url;
-				dep.is_standardlib = dtmp.is_standardlib;
-			}
-			dep.files.add (s);
+				bool done = false;
+				foreach (IPK.Dependency d in deplist) {
+					if (d.full_name == dep_name) {
+						d.files.add (s.strip ());
+						done = true;
+						break;
+					}
+				}
+				if (done)
+					continue;
 
-			deplist.add (dep);
+				// If we are here, we need to create a new dependency object
+				IPK.Dependency dep = new IPK.Dependency (dep_name);
+				if (dtmp != null) {
+					dep.idname = dtmp.idname;
+					dep.version = dtmp.version;
+					dep.feed_url = dtmp.feed_url;
+					dep.is_standardlib = dtmp.is_standardlib;
+				}
+				dep.files.add (s);
+
+				deplist.add (dep);
+			}
 		}
 
 		// Remove default dependencies
