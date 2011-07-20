@@ -179,10 +179,12 @@ private class SoftwareDB : Object {
 
 	private bool open_db () {
 		string dbname = conf.database_file ();
+		bool create_db = false;
 		int rc;
 
 		if (!FileUtils.test (dbname, FileTest.IS_REGULAR)) {
 			emit_message ("Software database does not exist - will be created.");
+			create_db = true;
 		}
 
 		rc = Database.open_v2 (dbname, out db);
@@ -207,7 +209,7 @@ private class SoftwareDB : Object {
 		dbstatus_changed (DatabaseStatus.OPENED, "");
 
 		// Ensure the database is okay and all tables are created
-		if (!update_db_structure ()) {
+		if ((create_db) && (!update_db_structure ())) {
 			dbstatus_changed (DatabaseStatus.FAILURE, _("Could not create/update software database!"));
 			return false;
 		}
@@ -350,21 +352,15 @@ private class SoftwareDB : Object {
 	protected bool update_db_structure () {
 		Sqlite.Statement stmt;
 
+		int res = db.exec (DATABASE);
 		try {
-			int res = db.prepare_v2 (DATABASE, -1, out stmt);
-			db_assert (res, "create database tables");
-
-			res = stmt.step ();
-			if (res != Sqlite.DONE) {
-				dbstatus_changed (DatabaseStatus.FAILURE,
-					  _("Unable to create/update database tables: %s").printf (db.errmsg ()));
-				return false;
-			}
-			// db_assert (db.exec ("PRAGMA user_version = %d".printf (SUPPORTED_VERSION)));
+			db_assert (res);
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
+			dbstatus_changed (DatabaseStatus.FAILURE,
+				  _("Unable to create/update database tables: %s").printf (db.errmsg ()));
 			return false;
 		}
+		// db_assert (db.exec ("PRAGMA user_version = %d".printf (SUPPORTED_VERSION)));
 
 		return true;
 	}
@@ -535,7 +531,11 @@ private class SoftwareDB : Object {
 				   "prepare find app by idname statement");
 
 			db_assert (stmt.bind_text (1, appIdName), "bind value");
-			db_assert (stmt.step (), "execute");
+
+			int res = stmt.step ();
+			db_assert (res, "execute");
+			if (res != Sqlite.ROW)
+				return null;
 		} catch (Error e) {
 			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 			return null;
@@ -557,7 +557,11 @@ private class SoftwareDB : Object {
 		try {
 			db_assert (res, "get application (by full_name)");
 			db_assert (stmt.bind_text (1, appFullName), "bind value");
-			db_assert (stmt.step (), "execute");
+
+			res = stmt.step ();
+			db_assert (res, "execute");
+			if (res != Sqlite.ROW)
+				return null;
 		} catch (Error e) {
 			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 			return null;
@@ -579,7 +583,11 @@ private class SoftwareDB : Object {
 		try {
 			db_assert (res, "get application (by database-id)");
 			db_assert (stmt.bind_int64 (1, databaseId), "bind value");
-			db_assert (stmt.step (), "execute");
+
+			res = stmt.step ();
+			db_assert (res, "execute");
+			if (res != Sqlite.ROW)
+				return null;
 		} catch (Error e) {
 			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 			return null;
@@ -601,7 +609,11 @@ private class SoftwareDB : Object {
 			db_assert (res, "get application (by full_name and version)");
 			db_assert (stmt.bind_text (1, appName), "bind value");
 			db_assert (stmt.bind_text (2, appVersion), "bind value");
-			db_assert (stmt.step (), "execute");
+
+			res = stmt.step ();
+			db_assert (res, "execute");
+			if (res != Sqlite.ROW)
+				return null;
 		} catch (Error e) {
 			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 			return null;
@@ -780,7 +792,9 @@ private class SoftwareDB : Object {
 			db_assert (res, "get dependency (by id)");
 			db_assert (stmt.bind_text (1, depIdName), "bind text");
 
-			db_assert (stmt.step ());
+			db_assert (res, "execute");
+			if (res != Sqlite.ROW)
+				return null;
 		} catch (Error e) {
 			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 			return null;

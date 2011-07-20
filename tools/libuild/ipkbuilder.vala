@@ -147,7 +147,7 @@ private class Builder : Object {
 
 		// Set the correct install dir
 		if (flist.rootdir == "%INSTDIR%") {
-			flist.rootdir = Path.build_filename (srcdir, "installtarget", null);
+			flist.rootdir = Path.build_filename (srcdir, "inst_target", null);
 		} else
 			if (!Path.is_absolute (flist.rootdir))
 				flist.rootdir = Path.build_filename (srcdir, flist.rootdir, null);

@@ -30,7 +30,7 @@ private class AutoCompiler : Object {
 	public AutoCompiler (string source_dir, string target_dir = "") {
  		srcdir = source_dir;
 		targetdir = target_dir;
-		if (!Path.is_absolute (targetdir))
+		if ((targetdir != "") && (!Path.is_absolute (targetdir)))
 			targetdir = Path.build_filename (Environment.get_current_dir (), targetdir, null);
 	}
 

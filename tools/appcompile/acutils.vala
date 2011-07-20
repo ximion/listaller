@@ -37,9 +37,10 @@ namespace Listaller.Extra {
 		if (insttarget == "") {
 			string isdir = IPK.find_ipk_source_dir (srcdir);
 			if (isdir == null) {
+				li_warning ("IPK source dir not found!");
 				return "";
 			} else {
-				ret = Path.build_filename (isdir, "installtarget", null);
+				ret = Path.build_filename (isdir, "inst_target", null);
 				if (!Path.is_absolute (ret))
 					ret = Path.build_filename (Environment.get_current_dir (), ret, null);
 			}
