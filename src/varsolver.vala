@@ -211,12 +211,15 @@ private class VarSolver : Object {
 		string img = fname;
 		if (FileUtils.test (img, FileTest.EXISTS))
 			return img;
-		if (FileUtils.test (img + ".png", FileTest.EXISTS))
-			return img + ".png";
-		if (FileUtils.test (img + ".xpm", FileTest.EXISTS))
-			return img + ".xpm";
-		if (FileUtils.test (img + ".svg", FileTest.EXISTS))
-			return img + ".svg";
+		img = fname + ".png";
+		if (FileUtils.test (img, FileTest.EXISTS))
+			return img;
+		img = fname + ".xpm";
+		if (FileUtils.test (img, FileTest.EXISTS))
+			return img;
+		img = fname + ".svg";
+		if (FileUtils.test (img, FileTest.EXISTS))
+			return img;
 		return "";
 	}
 	private string find_liappicon (string icon_name, int size, Settings liconf) {

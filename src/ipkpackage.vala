@@ -599,8 +599,6 @@ private class Package : Object {
 			if (fe != null) {
 				// File was found, so install it now
 				ret = install_entry_and_validate (fe, plar, e);
-				if (ret)
-					vset.execute (fe.fname_installed);
 				prog++;
 				progress_changed ((int) Math.round (one * prog));
 				// Stop on error
@@ -614,6 +612,12 @@ private class Package : Object {
 				    _("Some files of this package could not be installed, because they were not found in payload data.\nThis IPK package might be damaged, please obtain a new copy!"));
 			ret = false;
 		}
+
+		// Set variables in external files
+		foreach (IPK.FileEntry f in fcache) {
+			vset.execute (f.fname_installed);
+		}
+
 		plar.close ();
 
 		return ret;
