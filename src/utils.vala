@@ -297,6 +297,8 @@ private bool dir_is_empty (string dirname) {
 }
 
 public static string fold_user_dir (string path) {
+	if ((path == null) || (path == ""))
+		return "";
 	string udir = Environment.get_home_dir ();
 	if (!path.has_prefix (udir))
 		return path;

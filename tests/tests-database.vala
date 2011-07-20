@@ -36,13 +36,11 @@ void softwaredb_message_cb (MessageItem message) {
 
 void software_db_status_changed_cb (DatabaseStatus status, string message) {
 
-	if (status == DatabaseStatus.FATAL) {
-		msg (message);
-		assert (status != DatabaseStatus.FATAL);
-	}
-
 	if (status == DatabaseStatus.FAILURE) {
 		msg (message);
+		assert (status != DatabaseStatus.FAILURE);
+	} else {
+		msg ("DB status change message: %s".printf (message));
 	}
 }
 

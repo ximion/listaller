@@ -26,6 +26,54 @@ using Listaller.Utils;
 
 namespace Listaller {
 
+private const string DATABASE = ""
+		+ "CREATE TABLE IF NOT EXISTS applications ("
+		+ "id INTEGER PRIMARY KEY, "
+		+ "name TEXT UNIQUE NOT NULL, "
+		+ "version TEXT NOT NULL, "
+		+ "full_name TEXT NOT NULL, "
+		+ "desktop_file TEXT UNIQUE,"
+		+ "author TEXT, "
+		+ "publisher TEXT, "
+		+ "categories TEXT, "
+		+ "description TEXT, "
+		+ "install_time INTEGER, "
+		+ "origin TEXT NOT NULL, "
+		+ "dependencies TEXT"
+		+ "); "
+		+ "CREATE TABLE IF NOT EXISTS dependencies ("
+		+ "id INTEGER PRIMARY KEY, "
+		+ "name TEXT UNIQUE NOT NULL, "
+		+ "full_name TEXT NOT NULL, "
+		+ "version TEXT NOT NULL, "
+		+ "description TEXT, "
+		+ "homepage TEXT, "
+		+ "author TEXT, "
+		+ "install_time INTEGER, "
+		+ "environment TEXT"
+		+ ");" +
+		"";
+
+private const string appcols = "id, name, version, full_name, desktop_file, author, publisher, categories, " +
+			"description, install_time, origin, dependencies";
+private const string depcols = "id, name, full_name, version, description, homepage, author, " +
+			"install_time, environment";
+
+private enum AppRow {
+	DBID = 0,
+	IDNAME = 1,
+	VERSION = 2,
+	FULLNAME = 3,
+	DESKTOPFILE = 4,
+	AUTHOR = 5,
+	PUBLISHER = 6,
+	CATEGORIES = 7,
+	DESCRIPTION = 8,
+	INSTTIME = 9,
+	ORIGIN = 10,
+	DEPS = 11;
+}
+
 public errordomain DatabaseError {
 	ERROR,
 	BACKING,
@@ -41,7 +89,6 @@ public enum DatabaseStatus {
 	UNLOCKED,
 	SUCCESS,
 	FAILURE,
-	FATAL,
 	CLOSED;
 
 	public string to_string() {
@@ -61,9 +108,6 @@ public enum DatabaseStatus {
 			case FAILURE:
 				return _("Database action failed");
 
-			case FATAL:
-				return _("Fatal database error");
-
 			case CLOSED:
 				return _("Software database closed");
 
@@ -78,9 +122,9 @@ private class SoftwareDB : Object {
 	private Settings conf;
 	private bool locked;
 	private string dblockfile;
-	private string apptables;
-	private string deptables;
 	private string regdir;
+
+	private Sqlite.Statement insert_app;
 
 	public signal void db_status_changed (DatabaseStatus newstatus, string message);
 
@@ -116,13 +160,12 @@ private class SoftwareDB : Object {
 	}
 
 	private void dbstatus_changed (DatabaseStatus dbs, string details) {
-		if ((dbs == DatabaseStatus.FAILURE) ||
-			(dbs == DatabaseStatus.FATAL)) {
-				// Emit error
-				ErrorItem item = new ErrorItem(ErrorEnum.DATABASE_FAILURE);
-				item.details = details;
-				error_code (item);
-			}
+		if (dbs == DatabaseStatus.FAILURE) {
+			// Emit error
+			ErrorItem item = new ErrorItem(ErrorEnum.DATABASE_FAILURE);
+			item.details = details;
+			error_code (item);
+		}
 		db_status_changed (dbs, details);
 	}
 
@@ -142,13 +185,22 @@ private class SoftwareDB : Object {
 			emit_message ("Software database does not exist - will be created.");
 		}
 
-		rc = Database.open (dbname, out db);
+		rc = Database.open_v2 (dbname, out db);
 
 		if (rc != Sqlite.OK) {
 			string msg = "Can't open database! (Message: %d, %s)".printf (rc, db.errmsg ());
 			stderr.printf (msg);
 			dbstatus_changed (DatabaseStatus.FAILURE, msg);
 			return false;
+		}
+
+		try {
+			db_assert (db.exec("PRAGMA synchronous = OFF"));
+			db_assert (db.exec("PRAGMA temp_store = MEMORY"));
+			db_assert (db.exec("PRAGMA journal_mode = MEMORY"));
+			db_assert (db.exec("PRAGMA count_changes = OFF"));
+		} catch (Error e) {
+			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 		}
 
 		create_dir_parents (regdir);
@@ -158,6 +210,17 @@ private class SoftwareDB : Object {
 		if (!update_db_structure ()) {
 			dbstatus_changed (DatabaseStatus.FAILURE, _("Could not create/update software database!"));
 			return false;
+		}
+
+		// Prepare statements
+
+		try {
+			db_assert (db.prepare_v2 ("INSERT INTO applications (name, version, full_name, desktop_file, author, publisher, categories, "
+				+ "description, install_time, origin, dependencies) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					-1, out insert_app), "prepare insert into app statement");
+		} catch (Error e) {
+			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 		}
 
 		return true;
@@ -219,10 +282,12 @@ private class SoftwareDB : Object {
 	 * This method will throw an error on an SQLite return code unless it's OK, DONE, or ROW, which
 	 * are considered normal results.
 	 */
-	protected void throw_error (string method, int res) throws DatabaseError {
-		string msg = "(%s) [%d] - %s".printf (method, res, db.errmsg());
+	protected void db_assert (int result, string action_name = "") throws DatabaseError {
+		if (action_name == "")
+			action_name = "generic action";
+		string msg = _("Database action '%s' failed: %s").printf (action_name, db.errmsg ());
 
-		switch (res) {
+		switch (result) {
 			case Sqlite.OK:
 			case Sqlite.DONE:
 			case Sqlite.ROW:
@@ -267,27 +332,15 @@ private class SoftwareDB : Object {
 		}
 	}
 
-	private void fatal (string op, int res) {
-		if (op == "")
-			op = "action";
-		string msg = _("Database problem:") + "\n%s: [%d] %s".printf (op, res, db.errmsg());
-		dbstatus_changed (DatabaseStatus.FATAL, msg);
-	}
-
-	protected bool check_result (int res, string info = "") {
-		try {
-			throw_error (info, res);
-		} catch (Error e) {
-			fatal (info, res);
-			return false;
-		}
-		return true;
-	}
-
 	public bool has_table (string table_name) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("PRAGMA table_info(%s)".printf(table_name), -1, out stmt);
-		return_if_fail (check_result (res, "prepare db"));
+
+		try {
+			db_assert (res, "prepare db");
+		} catch (Error e) {
+			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
+		}
 
 		res = stmt.step ();
 
@@ -297,56 +350,19 @@ private class SoftwareDB : Object {
 	protected bool update_db_structure () {
 		Sqlite.Statement stmt;
 
-		/*
-		 * Create table to store information about applications
-		 */
-		apptables = "id, name, version, full_name, desktop_file, author, publisher, categories, " +
-			"description, install_time, origin, dependencies";
+		try {
+			int res = db.prepare_v2 (DATABASE, -1, out stmt);
+			db_assert (res, "create database tables");
 
-		int res = db.prepare_v2 ("CREATE TABLE IF NOT EXISTS applications ("
-		+ "id INTEGER PRIMARY KEY, "
-		+ "name TEXT UNIQUE NOT NULL, "
-		+ "version TEXT NOT NULL, "
-		+ "full_name TEXT NOT NULL, "
-		+ "desktop_file TEXT UNIQUE,"
-		+ "author TEXT, "
-		+ "publisher TEXT, "
-		+ "categories TEXT, "
-		+ "description TEXT, "
-		+ "install_time INTEGER, "
-		+ "origin TEXT NOT NULL, "
-		+ "dependencies TEXT"
-		+ ")", -1, out stmt);
-		return_if_fail (check_result (res, "create applications table"));
-
-		res = stmt.step ();
-		if (res != Sqlite.DONE) {
-			fatal ("create applications table", res);
-			return false;
-		}
-
-		/*
-		 * Table for all the additional stuff fetched during installation (3rd-party libraries etc.)
-		 */
-		deptables = "id, name, full_name, version, description, homepage, author, " +
-			"install_time, environment";
-
-		res = db.prepare_v2 ("CREATE TABLE IF NOT EXISTS dependencies ("
-		+ "id INTEGER PRIMARY KEY, "
-		+ "name TEXT UNIQUE NOT NULL, "
-		+ "full_name TEXT NOT NULL, "
-		+ "version TEXT NOT NULL, "
-		+ "description TEXT, "
-		+ "homepage TEXT, "
-		+ "author TEXT, "
-		+ "install_time INTEGER, "
-		+ "environment TEXT"
-		+ ")", -1, out stmt);
-		return_if_fail (check_result (res, "create dependencies table"));
-
-		res = stmt.step ();
-		if (res != Sqlite.DONE) {
-			fatal ("create dependencies table", res);
+			res = stmt.step ();
+			if (res != Sqlite.DONE) {
+				dbstatus_changed (DatabaseStatus.FAILURE,
+					  _("Unable to create/update database tables: %s").printf (db.errmsg ()));
+				return false;
+			}
+			// db_assert (db.exec ("PRAGMA user_version = %d".printf (SUPPORTED_VERSION)));
+		} catch (Error e) {
+			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 			return false;
 		}
 
@@ -357,69 +373,54 @@ private class SoftwareDB : Object {
 
 	public bool add_application (AppItem item) {
 		if (!locked) {
-			fatal ("write to unlocked database!", Sqlite.ERROR);
+			dbstatus_changed (DatabaseStatus.FAILURE,
+					  _("Tried to write on unlocked (readonly) database! (This should not happen)"));
 			return false;
 		}
-		Sqlite.Statement stmt;
-		int res = db.prepare_v2 (
-			"INSERT INTO applications (name, version, full_name, desktop_file, author, publisher, categories, "
-			+ "description, install_time, origin, dependencies) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-				   -1, out stmt);
-			return_if_fail (check_result (res, "add application"));
 
-			// Set install timestamp
-			DateTime dt = new DateTime.now_local ();
-			item.install_time = dt.to_unix ();
+		// Set install timestamp
+		DateTime dt = new DateTime.now_local ();
+		item.install_time = dt.to_unix ();
 
-			// Assign values
-			res = stmt.bind_text (1, item.idname);
-			return_if_fail (check_result (res, "assign value"));
+		// Assign values
+		try {
+			db_assert (insert_app.bind_text (AppRow.IDNAME, item.idname), "assign value");
 
-			res = stmt.bind_text (2, item.version);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (insert_app.bind_text (AppRow.VERSION, item.version), "assign value");
 
-			res = stmt.bind_text (3, item.full_name);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (insert_app.bind_text (AppRow.FULLNAME, item.full_name), "assign value");
 
-			res = stmt.bind_text (4, item.desktop_file);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (insert_app.bind_text (AppRow.DESKTOPFILE, item.desktop_file), "assign value");
 
-			res = stmt.bind_text (5, item.author);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (insert_app.bind_text (AppRow.AUTHOR, item.author), "assign value");
 
-			res = stmt.bind_text (6, item.publisher);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (insert_app.bind_text (AppRow.PUBLISHER, item.publisher), "assign value");
 
-			res = stmt.bind_text (7, item.categories);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (insert_app.bind_text (AppRow.CATEGORIES, item.categories), "assign value");
 
-			res = stmt.bind_text (8, "%s\n\n%s".printf (item.summary, item.description));
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (insert_app.bind_text (AppRow.DESCRIPTION, "%s\n\n%s".printf (item.summary, item.description)), "assign value");
 
-			res = stmt.bind_int64 (9, item.install_time);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (insert_app.bind_int64 (AppRow.INSTTIME, item.install_time), "assign value");
 
-			res = stmt.bind_text (10, item.origin.to_string ());
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (insert_app.bind_text (AppRow.ORIGIN, item.origin.to_string ()), "assign value");
 
-			res = stmt.bind_text (11, item.dependencies);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (insert_app.bind_text (AppRow.DEPS, item.dependencies), "assign value");
 
-			res = stmt.step();
-			if (res != Sqlite.DONE) {
-				if (res != Sqlite.CONSTRAINT) {
-					fatal ("add application", res);
-					return false;
-				}
-			}
+			db_assert (insert_app.step (), "execute app insert");
 
-			return true;
+			db_assert (insert_app.reset (), "reset statement");
+		} catch (Error e) {
+			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
+			return false;
+		}
+
+		return true;
 	}
 
 	public bool add_application_filelist (AppItem aid, Collection<IPK.FileEntry> flist) {
 		if (!locked) {
-			fatal ("write to readonly database!", Sqlite.ERROR);
+			dbstatus_changed (DatabaseStatus.FAILURE,
+					  _("Tried to write on unlocked (readonly) database! (This should not happen)"));
 			return false;
 		}
 		string metadir = Path.build_filename (regdir, aid.idname, null);
@@ -446,7 +447,7 @@ private class SoftwareDB : Object {
 				}
 			}
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FATAL,
+			dbstatus_changed (DatabaseStatus.FAILURE,
 					  _("Unable to write application file list! Message: %s").printf (e.message));
 			return false;
 		}
@@ -475,7 +476,7 @@ private class SoftwareDB : Object {
 				}
 			}
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FATAL,
+			dbstatus_changed (DatabaseStatus.FAILURE,
 					  _("Unable to fetch application file list! Message: %s").printf (e.message));
 			return null;
 		}
@@ -485,10 +486,15 @@ private class SoftwareDB : Object {
 	public int get_applications_count () {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT Count(*) FROM applications", -1, out stmt);
-		return_if_fail (check_result (res, "get applications count"));
 
-		if (stmt.step() != Sqlite.ROW)
+		try {
+			db_assert (res, "get applications count");
+			db_assert (stmt.step ());
+		} catch (Error e) {
+			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 			return -1;
+		}
+
 		int count = stmt.column_int (0);
 		return count;
 	}
@@ -496,16 +502,16 @@ private class SoftwareDB : Object {
 	private AppItem? retrieve_app_item (Sqlite.Statement stmt) {
 		AppItem item = new AppItem.blank ();
 
-		item.dbid = stmt.column_int (0);
-		item.idname = stmt.column_text (1);
-		item.version = stmt.column_text (2);
-		item.full_name = stmt.column_text (3);
-		item.desktop_file = stmt.column_text (4);
-		item.author = stmt.column_text (5);
-		item.publisher = stmt.column_text (6);
-		item.categories = stmt.column_text (7);
+		item.dbid = stmt.column_int (AppRow.DBID);
+		item.idname = stmt.column_text (AppRow.IDNAME);
+		item.version = stmt.column_text (AppRow.VERSION);
+		item.full_name = stmt.column_text (AppRow.FULLNAME);
+		item.desktop_file = stmt.column_text (AppRow.DESKTOPFILE);
+		item.author = stmt.column_text (AppRow.AUTHOR);
+		item.publisher = stmt.column_text (AppRow.PUBLISHER);
+		item.categories = stmt.column_text (AppRow.CATEGORIES);
 
-		string s = stmt.column_text (8);
+		string s = stmt.column_text (AppRow.DESCRIPTION);
 		string[] desc = s.split ("\n\n", 2);
 		if (desc[0] != null) {
 			item.summary = desc[0];
@@ -515,22 +521,25 @@ private class SoftwareDB : Object {
 			item.summary = s;
 		}
 
-		item.install_time = stmt.column_int (9);
-		item.set_origin_from_string (stmt.column_text (10));
-		item.dependencies = stmt.column_text (11);
+		item.install_time = stmt.column_int (AppRow.INSTTIME);
+		item.set_origin_from_string (stmt.column_text (AppRow.ORIGIN));
+		item.dependencies = stmt.column_text (AppRow.DEPS);
 
 		return item;
 	}
 
 	public AppItem? get_application_by_idname (string appIdName) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=?", -1, out stmt);
-		return_val_if_fail (check_result (res, "get application (by name)"), null);
+		try {
+			db_assert (db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE name=?", -1, out stmt),
+				   "prepare find app by idname statement");
 
-		res = stmt.bind_text (1, appIdName);
-
-		if (stmt.step() != Sqlite.ROW)
+			db_assert (stmt.bind_text (1, appIdName), "bind value");
+			db_assert (stmt.step (), "execute");
+		} catch (Error e) {
+			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 			return null;
+		}
 
 		AppItem? item = retrieve_app_item (stmt);
 
@@ -543,13 +552,16 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_fullname (string appFullName) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE full_name=?", -1, out stmt);
-		return_val_if_fail (check_result (res, "get application (by full_name)"), null);
+		int res = db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE full_name=?", -1, out stmt);
 
-		res = stmt.bind_text (1, appFullName);
-
-		if (stmt.step() != Sqlite.ROW)
+		try {
+			db_assert (res, "get application (by full_name)");
+			db_assert (stmt.bind_text (1, appFullName), "bind value");
+			db_assert (stmt.step (), "execute");
+		} catch (Error e) {
+			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 			return null;
+		}
 
 		AppItem? item = retrieve_app_item (stmt);
 
@@ -562,13 +574,16 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_dbid (uint databaseId) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE id=?", -1, out stmt);
-		return_val_if_fail (check_result (res, "get application (by db_id)"), null);
+		int res = db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE id=?", -1, out stmt);
 
-		res = stmt.bind_int (1, (int) databaseId);
-
-		if (stmt.step() != Sqlite.ROW)
+		try {
+			db_assert (res, "get application (by database-id)");
+			db_assert (stmt.bind_int64 (1, databaseId), "bind value");
+			db_assert (stmt.step (), "execute");
+		} catch (Error e) {
+			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 			return null;
+		}
 
 		AppItem? item = retrieve_app_item (stmt);
 
@@ -581,16 +596,16 @@ private class SoftwareDB : Object {
 
 	public AppItem? get_application_by_name_version (string appName, string appVersion) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + apptables + " FROM applications WHERE name=? AND version=?", -1, out stmt);
-		return_val_if_fail (check_result (res, "get application (by name_version)"), null);
-
-		res = stmt.bind_text (1, appName);
-		return_if_fail (check_result (res, "assign value"));
-		res = stmt.bind_text (2, appVersion);
-		return_if_fail (check_result (res, "assign value"));
-
-		if (stmt.step() != Sqlite.ROW)
+		int res = db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE name=? AND version=?", -1, out stmt);
+		try {
+			db_assert (res, "get application (by full_name and version)");
+			db_assert (stmt.bind_text (1, appName), "bind value");
+			db_assert (stmt.bind_text (2, appVersion), "bind value");
+			db_assert (stmt.step (), "execute");
+		} catch (Error e) {
+			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 			return null;
+		}
 
 		AppItem? item = retrieve_app_item (stmt);
 
@@ -606,13 +621,15 @@ private class SoftwareDB : Object {
 		string metadir = Path.build_filename (regdir, app.idname, null);
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("DELETE FROM applications WHERE name=?", -1, out stmt);
-		return_val_if_fail (check_result (res, "delete application"), false);
 
-		res = stmt.bind_text (1, app.idname);
-		return_val_if_fail (check_result (res, "delete application"), false);
-
-		res = stmt.step();
-		return_val_if_fail (check_result (res, "delete application"), false);
+		try {
+			db_assert (res, "delete application (prepare statement)");
+			db_assert (stmt.bind_text (1, app.idname), "bind text");
+			db_assert (stmt.step(), "execute action");
+		} catch (Error e) {
+			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
+			return false;
+		}
 
 		ret = delete_dir_recursive (metadir);
 		if (!ret)
@@ -662,18 +679,20 @@ private class SoftwareDB : Object {
 	public bool set_application_dependencies (string appName, ArrayList<IPK.Dependency> deps) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("UPDATE applications SET dependencies=? WHERE name=?", -1, out stmt);
-		return_val_if_fail (check_result (res, "update application deps (by name)"), null);
 
 		string depstr = "";
 		foreach (IPK.Dependency d in deps)
 			depstr = d.idname + "\n";
 
-		res = stmt.bind_text (1, depstr);
-		return_if_fail (check_result (res, "assign value"));
-		res = stmt.bind_text (2, appName);
-
-		if (stmt.step() != Sqlite.DONE)
+		try {
+			db_assert (res, "update application deps (by name)");
+			db_assert (stmt.bind_text (1, depstr), "bind text value");
+			db_assert (stmt.bind_text (2, appName), "bind text value");
+			db_assert (stmt.step ());
+		} catch (Error e) {
+			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 			return false;
+		}
 
 		return true;
 	}
@@ -682,7 +701,8 @@ private class SoftwareDB : Object {
 
 	public bool add_dependency (IPK.Dependency dep) {
 		if (!locked) {
-			fatal ("write to unlocked database!", Sqlite.ERROR);
+			dbstatus_changed (DatabaseStatus.FAILURE,
+					  _("Tried to write on unlocked (readonly) database! (This should not happen)"));
 			return false;
 		}
 		Sqlite.Statement stmt;
@@ -691,46 +711,38 @@ private class SoftwareDB : Object {
 			"install_time, environment) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 				   -1, out stmt);
-			return_if_fail (check_result (res, "add application"));
 
-			// Set install timestamp
-			DateTime dt = new DateTime.now_local ();
-			dep.install_time = dt.to_unix ();
+		// Set install timestamp
+		DateTime dt = new DateTime.now_local ();
+		dep.install_time = dt.to_unix ();
+
+		try {
+			db_assert (res, "add application");
 
 			// Assign values
-			res = stmt.bind_text (1, dep.idname);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (stmt.bind_text (1, dep.idname), "bind value");
 
-			res = stmt.bind_text (2, dep.full_name);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (stmt.bind_text (2, dep.full_name), "bind value");
 
-			res = stmt.bind_text (3, dep.version);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (stmt.bind_text (3, dep.version), "bind value");
 
-			res = stmt.bind_text (4, "%s\n\n%s".printf (dep.summary, dep.description));
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (stmt.bind_text (4, "%s\n\n%s".printf (dep.summary, dep.description)), "bind value");
 
-			res = stmt.bind_text (5, dep.homepage);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (stmt.bind_text (5, dep.homepage), "bind value");
 
-			res = stmt.bind_text (6, dep.author);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (stmt.bind_text (6, dep.author), "bind value");
 
-			res = stmt.bind_int64 (7, dep.install_time);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (stmt.bind_int64 (7, dep.install_time), "bind value");
 
-			res = stmt.bind_text (8, dep.environment);
-			return_if_fail (check_result (res, "assign value"));
+			db_assert (stmt.bind_text (8, dep.environment), "bind value");
 
-			res = stmt.step();
-			if (res != Sqlite.DONE) {
-				if (res != Sqlite.CONSTRAINT) {
-					fatal ("add dependency", res);
-					return false;
-				}
-			}
+			db_assert (stmt.step (), "add dependency");
+		} catch (Error e) {
+			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
+			return false;
+		}
 
-			return true;
+		return true;
 	}
 
 	private IPK.Dependency? retrieve_dependency (Sqlite.Statement stmt) {
@@ -762,13 +774,17 @@ private class SoftwareDB : Object {
 
 	public IPK.Dependency? get_dependency_by_id (string depIdName) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + deptables + " FROM dependencies WHERE name=?", -1, out stmt);
-		return_val_if_fail (check_result (res, "get dependency (by id)"), null);
+		int res = db.prepare_v2 ("SELECT " + depcols + " FROM dependencies WHERE name=?", -1, out stmt);
 
-		res = stmt.bind_text (1, depIdName);
+		try {
+			db_assert (res, "get dependency (by id)");
+			db_assert (stmt.bind_text (1, depIdName), "bind text");
 
-		if (stmt.step() != Sqlite.ROW)
+			db_assert (stmt.step ());
+		} catch (Error e) {
+			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
 			return null;
+		}
 
 		IPK.Dependency? dep = retrieve_dependency (stmt);
 
