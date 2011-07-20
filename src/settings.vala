@@ -68,6 +68,7 @@ public class Settings : Object {
 		string tripel = "%s-%s-gnu".printf (Utils.system_machine (), Utils.system_os ());
 		lib_paths += Path.build_filename ("/lib", tripel);
 		lib_paths += Path.build_filename ("/usr", "lib", tripel);
+		lib_paths += Path.build_filename ("/usr", "lib", tripel, "mesa");
 		// null-terminate paths list
 		lib_paths += null;
 
