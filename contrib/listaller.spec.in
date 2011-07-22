@@ -12,7 +12,7 @@ BuildRequires: gpgme-devel
 BuildRequires: chrpath
 
 %description
-Listaller is a cross-distribution application management and software
+Listaller is a distro-agnostic application management and software
 installation tool based on PackageKit.
 
 It provides a meta package format which covers current LOKI and
