@@ -1,4 +1,4 @@
-/* depmanager.vala
+/* depmanager.vala - Install & remove software dependencies
  *
  * Copyright (C) 2011 Matthias Klumpp <matthias@nlinux.org>
  *
@@ -40,6 +40,9 @@ private class DepManager : Object {
 		if (conf == null) {
 			error ("Listaller config was NULL in DepManager constructor!");
 			conf = new Listaller.Settings ();
+		}
+		if (!db.database_locked ()) {
+			critical ("Dependency manager received a read-only database! This won't work if write actions have to be performed!");
 		}
 	}
 

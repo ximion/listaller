@@ -121,15 +121,15 @@ public class Setup : Object {
 
 		conf.lock ();
 		// Create software DB link and connect status handlers
-		SoftwareDB db = new SoftwareDB (conf);
+		SoftwareDB db = new SoftwareDB (conf, is_root ());
 		db.error_code.connect ((error) => {
 			this.error_code (error);
 		});
 		db.message.connect ((message) => {
 			this.message (message);
 		});
-		// Open & lock database
-		if (!db.open ()) {
+		// Open & lock database (we need write access here!)
+		if (!db.open_write ()) {
 			emit_error (ErrorEnum.DB_OPEN_FAILED, _("Could not open the software database, maybe it is locked at time.\nPlease close all other running installations to continue!"));
 			return false;
 		}

@@ -27,16 +27,8 @@ using Listaller.Utils;
 
 namespace Listaller {
 
-public enum AppSource {
-	ALL,
-	EXTERN,
-	NATIVEPKG,
-	UNKNOWN;
-}
-
 public class Manager : Object {
 	private Settings conf;
-	private SoftwareDB db;
 
 	public signal void error_code (ErrorItem error);
 	public signal void progress_changed (int progress);
@@ -56,14 +48,6 @@ public class Manager : Object {
 		conf = settings;
 		if (conf == null)
 			conf = new Settings (false);
-
-		db = new SoftwareDB (conf);
-		db.error_code.connect ((error) => {
-			this.error_code (error);
-		});
-		db.message.connect ((message) => {
-			this.message (message);
-		});
 	}
 
 	private void emit_message (string msg) {
@@ -95,14 +79,21 @@ public class Manager : Object {
 		status_changed (item);
 	}
 
-	private bool open_db (bool writeable = true) {
+	private bool init_db (out SoftwareDB sdb, bool writeable = true) {
+		SoftwareDB db = new SoftwareDB (conf, true);
+		db.error_code.connect ( (e) => { this.error_code (e); } );
+		db.message.connect ( (m) => { this.message (m); } );
+		db.application.connect ( (a) => { this.application (a); } );
+		db.progress_changed.connect ( (p) => { this.progress_changed (p); } );
+
+		sdb = db;
 		if (writeable) {
-			if (!db.open ()) {
+			if (!db.open_write ()) {
 				emit_error (ErrorEnum.DB_OPEN_FAILED, _("Unable to open software database for reading & writing!"));
 				return false;
 			}
 		} else {
-			if (!db.open_readonly ()) {
+			if (!db.open_read ()) {
 				emit_error (ErrorEnum.DB_OPEN_FAILED, _("Unable to open software database for reading only!"));
 				return false;
 			}
@@ -111,26 +102,11 @@ public class Manager : Object {
 	}
 
 	public bool find_applications (AppSource filter, out ArrayList<AppItem> appList = null) {
-		ArrayList<AppItem> alist = new ArrayList<AppItem> ();
-		if (!open_db (false))
+		SoftwareDB db;
+		if (!init_db (out db, false))
 			return false;
 
-		double one = 100d / db.get_applications_count ();
-
-		uint i = 1;
-		AppItem? capp = db.get_application_by_dbid (i);
-		while (capp != null) {
-			capp.shared = conf.sumode;
-			application (capp);
-			alist.add (capp);
-			progress_changed ((int) Math.round (one * i));
-
-			i++;
-			capp = db.get_application_by_dbid (i);
-		}
-
-		appList = alist;
-		return true;
+		return db.find_all_applications (filter, out appList);
 	}
 
 	/* find_applications_by_values: Find applications which match the strings in values
@@ -140,7 +116,8 @@ public class Manager : Object {
 	public bool find_applications_by_values (AppSource filter,
 						 [CCode (array_null_terminated = true, array_length = false)] string[] values,
 						 out ArrayList<AppItem> appList = null) {
-		if (!open_db (false))
+		SoftwareDB db;
+		if (!init_db (out db, false))
 			return false;
 
 		ArrayList<AppItem> res = db.find_applications (values);
@@ -165,7 +142,8 @@ public class Manager : Object {
 		emit_status (StatusEnum.ACTION_STARTED,
 			     _("Removal of %s started.").printf (app.full_name));
 
-		if (!open_db ())
+		SoftwareDB db;
+		if (!init_db (out db))
 			return false;
 
 		// Check if this application exists, if not exit
@@ -203,13 +181,19 @@ public class Manager : Object {
 	}
 
 	public AppItem? get_appitem_by_idname (string idname) {
-		return_val_if_fail (open_db (false), null);
+		SoftwareDB db;
+		if (!init_db (out db, false))
+			return null;
+
 		AppItem? app = db.get_application_by_idname (idname);
 		return app;
 	}
 
 	public AppItem? get_appitem_by_fullname (string full_name) {
-		return_val_if_fail (open_db (false), null);
+		SoftwareDB db;
+		if (!init_db (out db, false))
+			return null;
+
 		AppItem? app = db.get_application_by_fullname (full_name);
 		return app;
 	}

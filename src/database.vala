@@ -1,4 +1,4 @@
-/* database.vala
+/* database.vala - Easy-to-use interface to Listaller's software database(s)
  *
  * Copyright (C) 2010-2011 Matthias Klumpp <matthias@nlinux.org>
  *
@@ -20,153 +20,62 @@
 
 using GLib;
 using Gee;
-using Sqlite;
 using Listaller;
 using Listaller.Utils;
 
 namespace Listaller {
 
-private const string DATABASE = ""
-		+ "CREATE TABLE IF NOT EXISTS applications ("
-		+ "id INTEGER PRIMARY KEY, "
-		+ "name TEXT UNIQUE NOT NULL, "
-		+ "version TEXT NOT NULL, "
-		+ "full_name TEXT NOT NULL, "
-		+ "desktop_file TEXT UNIQUE,"
-		+ "author TEXT, "
-		+ "publisher TEXT, "
-		+ "categories TEXT, "
-		+ "description TEXT, "
-		+ "install_time INTEGER, "
-		+ "origin TEXT NOT NULL, "
-		+ "dependencies TEXT"
-		+ "); "
-		+ "CREATE TABLE IF NOT EXISTS dependencies ("
-		+ "id INTEGER PRIMARY KEY, "
-		+ "name TEXT UNIQUE NOT NULL, "
-		+ "full_name TEXT NOT NULL, "
-		+ "version TEXT NOT NULL, "
-		+ "description TEXT, "
-		+ "homepage TEXT, "
-		+ "author TEXT, "
-		+ "install_time INTEGER, "
-		+ "environment TEXT"
-		+ ");" +
-		"";
-
-private const string appcols = "id, name, version, full_name, desktop_file, author, publisher, categories, " +
-			"description, install_time, origin, dependencies";
-private const string depcols = "id, name, full_name, version, description, homepage, author, " +
-			"install_time, environment";
-
-private enum AppRow {
-	DBID = 0,
-	IDNAME = 1,
-	VERSION = 2,
-	FULLNAME = 3,
-	DESKTOPFILE = 4,
-	AUTHOR = 5,
-	PUBLISHER = 6,
-	CATEGORIES = 7,
-	DESCRIPTION = 8,
-	INSTTIME = 9,
-	ORIGIN = 10,
-	DEPS = 11;
-}
-
-public errordomain DatabaseError {
-	ERROR,
-	BACKING,
-	MEMORY,
-	ABORT,
-	LIMITS,
-	TYPESPEC
-}
-
-public enum DatabaseStatus {
-	OPENED,
-	LOCKED,
-	UNLOCKED,
-	SUCCESS,
-	FAILURE,
-	CLOSED;
-
-	public string to_string() {
-		switch (this) {
-			case OPENED:
-				return _("Software database opened");
-
-			case LOCKED:
-				return _("Database locked");
-
-			case UNLOCKED:
-				return _("Database unlocked");
-
-			case SUCCESS:
-				return _("Database action successful");
-
-			case FAILURE:
-				return _("Database action failed");
-
-			case CLOSED:
-				return _("Software database closed");
-
-			default:
-				return _("Software database message (%d)").printf((int) this);
-		}
-	}
+public enum AppSource {
+	ALL,
+	EXTERN,
+	NATIVEPKG,
+	UNKNOWN;
 }
 
 private class SoftwareDB : Object {
-	private Database db;
+	private InternalDB? db_shared;
+	private InternalDB? db_priv;
 	private Settings conf;
-	private bool locked;
-	private string dblockfile;
-	private string regdir;
-
-	private Sqlite.Statement insert_app;
-
-	public signal void db_status_changed (DatabaseStatus newstatus, string message);
 
 	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
+	public signal void application (AppItem appid);
+	public signal void progress_changed (int progress);
 
-	public SoftwareDB (Settings? settings) {
-		conf = settings;
-		locked = false;
-		if (conf == null)
-			conf = new Settings (false);
+	public SoftwareDB (Settings liconf, bool include_shared = true) {
+		db_shared = null;
+		db_priv = null;
+		conf = liconf;
 
-		dblockfile = conf.appregister_dir () + "/lock";
-		regdir = Path.build_filename (conf.appregister_dir (), "info", null);
-	}
+		if (include_shared) {
+			db_shared = new InternalDB (true, conf);
 
-	~SoftwareDB () {
-		// Delete the lock
-		remove_db_lock ();
-	}
-
-	public Settings get_liconf () {
-		return conf;
-	}
-
-	public bool database_locked () {
-		if (FileUtils.test (dblockfile, FileTest.IS_REGULAR)) {
-			locked = true;
+			/* If we open a shared DB and have root-access, don't open the
+			 * private database. It makes no sense someone is working as root
+			 * and installing private stuff into root's home-dir */
+			if (!is_root ()) {
+				db_priv = new InternalDB (false, conf);
+			}
 		} else {
-			locked = false;
+			// If we only want to open the personal DB, don't touch the shared one
+			db_priv = new InternalDB (false, conf);
 		}
-		return locked;
+
+		if (db_priv != null) {
+			db_priv.message.connect ( (m) => { this.message (m); } );
+			db_priv.error_code.connect ( (e) => { this.error_code (e); } );
+		}
+		if (db_shared != null) {
+			db_shared.message.connect ( (m) => { this.message (m); } );
+			db_shared.error_code.connect ( (e) => { this.error_code (e); } );
+		}
 	}
 
-	private void dbstatus_changed (DatabaseStatus dbs, string details) {
-		if (dbs == DatabaseStatus.FAILURE) {
-			// Emit error
-			ErrorItem item = new ErrorItem(ErrorEnum.DATABASE_FAILURE);
-			item.details = details;
-			error_code (item);
-		}
-		db_status_changed (dbs, details);
+	private void emit_dberror (string details) {
+		// Emit error
+		ErrorItem item = new ErrorItem(ErrorEnum.DATABASE_FAILURE);
+		item.details = details;
+		error_code (item);
 	}
 
 	private void emit_message (string msg) {
@@ -177,634 +86,283 @@ private class SoftwareDB : Object {
 		GLib.message (msg);
 	}
 
-	private bool open_db () {
-		string dbname = conf.database_file ();
-		bool create_db = false;
-		int rc;
-
-		if (!FileUtils.test (dbname, FileTest.IS_REGULAR)) {
-			emit_message ("Software database does not exist - will be created.");
-			create_db = true;
+	private bool shared_db_canbeused (bool error = false) {
+		bool ret = true;
+		if (db_shared == null) {
+			ret = false;
 		}
 
-		rc = Database.open_v2 (dbname, out db);
+		/* If shared db does not exist AND we don't have root-access, opening the db will fail.
+		 * (so we check for this case here, just to be sure) */
+		if (ret)
+			if ((!is_root ()) && (!FileUtils.test (db_shared.get_database_name (), FileTest.EXISTS))) {
+				db_shared = null;
+				ret = false;
+			}
 
-		if (rc != Sqlite.OK) {
-			string msg = "Can't open database! (Message: %d, %s)".printf (rc, db.errmsg ());
-			stderr.printf (msg);
-			dbstatus_changed (DatabaseStatus.FAILURE, msg);
-			return false;
-		}
+		if ((!ret) && (error))
+			emit_dberror (_("Tried to perform action on shared software database, but the database is not opened! (maybe a permission problem?)"));
 
-		try {
-			db_assert (db.exec("PRAGMA synchronous = OFF"));
-			db_assert (db.exec("PRAGMA temp_store = MEMORY"));
-			db_assert (db.exec("PRAGMA journal_mode = MEMORY"));
-			db_assert (db.exec("PRAGMA count_changes = OFF"));
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-		}
-
-		create_dir_parents (regdir);
-		dbstatus_changed (DatabaseStatus.OPENED, "");
-
-		// Ensure the database is okay and all tables are created
-		if ((create_db) && (!update_db_structure ())) {
-			dbstatus_changed (DatabaseStatus.FAILURE, _("Could not create/update software database!"));
-			return false;
-		}
-
-		// Prepare statements
-
-		try {
-			db_assert (db.prepare_v2 ("INSERT INTO applications (name, version, full_name, desktop_file, author, publisher, categories, "
-				+ "description, install_time, origin, dependencies) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-					-1, out insert_app), "prepare insert into app statement");
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-		}
-
-		return true;
-	}
-
-	public bool open () {
-		bool ret;
-
-		// If database is locked, we should not try to write on it
-		if (database_locked ()) {
-			// We set locked to false, because this DB is NOT locked (because it can't be opened)
-			locked = false;
-			return false;
-		}
-
-		ret = open_db ();
-		return_if_fail (ret == true);
-
-		// Drop "lock" file
-		File lfile = File.new_for_path (dblockfile);
-		try {
-			lfile.create (FileCreateFlags.NONE);
-		} catch (Error e) {
-			stdout.printf ("Error: %s\n", e.message);
-			return false;
-		}
-
-		// Test for the existence of file
-		if (!lfile.query_exists ()) {
-			stdout.printf ("Error: Unable to create lock file!");
-			return false;
-		}
-		// DB is now locked
-		locked = true;
-		dbstatus_changed (DatabaseStatus.LOCKED, "");
-		return true;
-	}
-
-	public bool open_readonly () {
-		bool ret;
-		ret = open_db ();
 		return ret;
 	}
 
-	public void remove_db_lock () {
-		if (locked) {
-			File lfile = File.new_for_path (dblockfile);
-			try {
-				if (lfile.query_exists ()) {
-					lfile.delete ();
-				}
-			} catch (Error e) {
-				li_error (_("Unable to remove database lock! (Message: %s)").printf (e.message));
+	private bool private_db_canbeused (bool error = false) {
+		if (db_priv == null) {
+			if (error)
+				emit_dberror (_("Tried to perform action on private software database, but the database is not opened! (this should never happen!)"));
+			return false;
+		}
+
+		return true;
+	}
+
+	public Settings get_liconf () {
+		return conf;
+	}
+
+	public bool open_read () {
+		bool ret = true;
+		if (db_priv != null)
+			ret = db_priv.open_r ();
+		if (!ret)
+			return false;
+		ret = false;
+		if (db_shared != null) {
+			if (shared_db_canbeused ()) {
+				ret = db_shared.open_r ();
+			} else {
+				return false;
 			}
 		}
+		return ret;
 	}
 
-	/*
-	 * This method will throw an error on an SQLite return code unless it's OK, DONE, or ROW, which
-	 * are considered normal results.
-	 */
-	protected void db_assert (int result, string action_name = "") throws DatabaseError {
-		if (action_name == "")
-			action_name = "generic action";
-		string msg = _("Database action '%s' failed: %s").printf (action_name, db.errmsg ());
-
-		switch (result) {
-			case Sqlite.OK:
-			case Sqlite.DONE:
-			case Sqlite.ROW:
-				return;
-
-			case Sqlite.PERM:
-			case Sqlite.BUSY:
-			case Sqlite.READONLY:
-			case Sqlite.IOERR:
-			case Sqlite.CORRUPT:
-			case Sqlite.CANTOPEN:
-			case Sqlite.NOLFS:
-			case Sqlite.AUTH:
-			case Sqlite.FORMAT:
-			case Sqlite.NOTADB:
-				throw new DatabaseError.BACKING (msg);
-
-			case Sqlite.NOMEM:
-				throw new DatabaseError.MEMORY (msg);
-
-			case Sqlite.ABORT:
-			case Sqlite.LOCKED:
-			case Sqlite.INTERRUPT:
-				throw new DatabaseError.ABORT (msg);
-
-			case Sqlite.FULL:
-			case Sqlite.EMPTY:
-			case Sqlite.TOOBIG:
-			case Sqlite.CONSTRAINT:
-			case Sqlite.RANGE:
-				throw new DatabaseError.LIMITS (msg);
-
-			case Sqlite.SCHEMA:
-			case Sqlite.MISMATCH:
-				throw new DatabaseError.TYPESPEC (msg);
-
-			case Sqlite.ERROR:
-			case Sqlite.INTERNAL:
-			case Sqlite.MISUSE:
-			default:
-				throw new DatabaseError.ERROR (msg);
-		}
-	}
-
-	public bool has_table (string table_name) {
-		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("PRAGMA table_info(%s)".printf(table_name), -1, out stmt);
-
-		try {
-			db_assert (res, "prepare db");
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-		}
-
-		res = stmt.step ();
-
-		return (res != Sqlite.DONE);
-	}
-
-	protected bool update_db_structure () {
-		Sqlite.Statement stmt;
-
-		int res = db.exec (DATABASE);
-		try {
-			db_assert (res);
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE,
-				  _("Unable to create/update database tables: %s").printf (db.errmsg ()));
+	public bool open_write () {
+		bool ret = true;
+		if (db_priv != null)
+			ret = db_priv.open_rw ();
+		if (!ret)
 			return false;
-		}
-		// db_assert (db.exec ("PRAGMA user_version = %d".printf (SUPPORTED_VERSION)));
-
-		return true;
-	}
-
-	/* Application stuff */
-
-	public bool add_application (AppItem item) {
-		if (!locked) {
-			dbstatus_changed (DatabaseStatus.FAILURE,
-					  _("Tried to write on unlocked (readonly) database! (This should not happen)"));
-			return false;
-		}
-
-		// Set install timestamp
-		DateTime dt = new DateTime.now_local ();
-		item.install_time = dt.to_unix ();
-
-		// Assign values
-		try {
-			db_assert (insert_app.bind_text (AppRow.IDNAME, item.idname), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.VERSION, item.version), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.FULLNAME, item.full_name), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.DESKTOPFILE, item.desktop_file), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.AUTHOR, item.author), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.PUBLISHER, item.publisher), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.CATEGORIES, item.categories), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.DESCRIPTION, "%s\n\n%s".printf (item.summary, item.description)), "assign value");
-
-			db_assert (insert_app.bind_int64 (AppRow.INSTTIME, item.install_time), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.ORIGIN, item.origin.to_string ()), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.DEPS, item.dependencies), "assign value");
-
-			db_assert (insert_app.step (), "execute app insert");
-
-			db_assert (insert_app.reset (), "reset statement");
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return false;
-		}
-
-		return true;
-	}
-
-	public bool add_application_filelist (AppItem aid, Collection<IPK.FileEntry> flist) {
-		if (!locked) {
-			dbstatus_changed (DatabaseStatus.FAILURE,
-					  _("Tried to write on unlocked (readonly) database! (This should not happen)"));
-			return false;
-		}
-		string metadir = Path.build_filename (regdir, aid.idname, null);
-		create_dir_parents (metadir);
-
-		try {
-			var file = File.new_for_path (Path.build_filename (metadir, "files.list", null));
-			{
-				var file_stream = file.create (FileCreateFlags.NONE);
-
-				if (!file.query_exists ())
-					return false;
-
-				var data_stream = new DataOutputStream (file_stream);
-				data_stream.put_string ("# File list for " + aid.full_name + "\n\n");
-				// Now write file list to file
-				foreach (IPK.FileEntry fe in flist) {
-					if (fe.installed) {
-						string fname = fe.fname_installed;
-						if (!conf.sumode)
-							fname = fold_user_dir (fname);
-						data_stream.put_string (fname + "\n");
-					}
-				}
+		ret = false;
+		if (db_shared != null) {
+			if (shared_db_canbeused ()) {
+				ret = db_shared.open_rw ();
+			} else {
+				return false;
 			}
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE,
-					  _("Unable to write application file list! Message: %s").printf (e.message));
-			return false;
 		}
-		return true;
+		return ret;
+	}
+
+	public bool database_locked () {
+		bool ret = false;
+		if (shared_db_canbeused ())
+			ret = db_shared.database_locked ();
+		if (ret)
+			return true;
+		if (private_db_canbeused ())
+			ret = db_priv.database_locked ();
+		return ret;
+	}
+
+	public bool add_application (AppItem app) {
+		if (app.shared) {
+			if (shared_db_canbeused (true))
+				return db_shared.add_application (app);
+			else
+				return false;
+		} else {
+			if (private_db_canbeused (true))
+				return db_priv.add_application (app);
+			else
+				return false;
+		}
+	}
+
+	public bool add_application_filelist (AppItem app, Collection<IPK.FileEntry> flist) {
+		if (app.shared) {
+			if (shared_db_canbeused (true))
+				return db_shared.add_application_filelist (app, flist);
+			else
+				return false;
+		} else {
+			if (private_db_canbeused (true))
+				return db_priv.add_application_filelist (app, flist);
+			else
+				return false;
+		}
 	}
 
 	public ArrayList<string>? get_application_filelist (AppItem app) {
-		string metadir = Path.build_filename (regdir, app.idname, null);
-
-		var file = File.new_for_path (Path.build_filename (metadir, "files.list", null));
-		if (!file.query_exists ()) {
-			return null;
+		if (app.shared) {
+			if (shared_db_canbeused (true))
+				return db_shared.get_application_filelist (app);
+			else
+				return null;
+		} else {
+			if (private_db_canbeused (true))
+				return db_priv.get_application_filelist (app);
+			else
+				return null;
 		}
-
-		ArrayList<string> flist = new ArrayList<string> ();
-		try {
-			var dis = new DataInputStream (file.read ());
-			string line;
-			// Read lines until end of file (null) is reached
-			while ((line = dis.read_line (null)) != null) {
-				if ((!line.has_prefix ("#")) && (line.strip () != "")) {
-					string fname = line;
-					if (!conf.sumode)
-						fname = expand_user_dir (fname);
-					flist.add (fname);
-				}
-			}
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE,
-					  _("Unable to fetch application file list! Message: %s").printf (e.message));
-			return null;
-		}
-		return flist;
 	}
 
 	public int get_applications_count () {
-		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT Count(*) FROM applications", -1, out stmt);
+		int cnt = 0;
+		if (shared_db_canbeused ())
+			cnt += db_shared.get_applications_count ();
+		if (private_db_canbeused ())
+			cnt += db_priv.get_applications_count ();
 
-		try {
-			db_assert (res, "get applications count");
-			db_assert (stmt.step ());
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return -1;
-		}
-
-		int count = stmt.column_int (0);
-		return count;
-	}
-
-	private AppItem? retrieve_app_item (Sqlite.Statement stmt) {
-		AppItem item = new AppItem.blank ();
-
-		item.dbid = stmt.column_int (AppRow.DBID);
-		item.idname = stmt.column_text (AppRow.IDNAME);
-		item.version = stmt.column_text (AppRow.VERSION);
-		item.full_name = stmt.column_text (AppRow.FULLNAME);
-		item.desktop_file = stmt.column_text (AppRow.DESKTOPFILE);
-		item.author = stmt.column_text (AppRow.AUTHOR);
-		item.publisher = stmt.column_text (AppRow.PUBLISHER);
-		item.categories = stmt.column_text (AppRow.CATEGORIES);
-
-		string s = stmt.column_text (AppRow.DESCRIPTION);
-		string[] desc = s.split ("\n\n", 2);
-		if (desc[0] != null) {
-			item.summary = desc[0];
-			if (desc[1] != null)
-				item.description = desc[1];
-		} else {
-			item.summary = s;
-		}
-
-		item.install_time = stmt.column_int (AppRow.INSTTIME);
-		item.set_origin_from_string (stmt.column_text (AppRow.ORIGIN));
-		item.dependencies = stmt.column_text (AppRow.DEPS);
-
-		return item;
+		return cnt;
 	}
 
 	public AppItem? get_application_by_idname (string appIdName) {
-		Sqlite.Statement stmt;
-		try {
-			db_assert (db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE name=?", -1, out stmt),
-				   "prepare find app by idname statement");
+		AppItem? app = null;
 
-			db_assert (stmt.bind_text (1, appIdName), "bind value");
+		if (shared_db_canbeused ())
+			app = db_shared.get_application_by_idname (appIdName);
 
-			int res = stmt.step ();
-			db_assert (res, "execute");
-			if (res != Sqlite.ROW)
+		if (app == null)
+			if (private_db_canbeused ())
+				app = db_priv.get_application_by_idname (appIdName);
+
+		return app;
+	}
+
+	public AppItem? get_application_by_id (AppItem app) {
+		if (app.shared) {
+			if (shared_db_canbeused (true))
+				return db_shared.get_application_by_idname (app.idname);
+			else
 				return null;
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return null;
+		} else {
+			if (private_db_canbeused (true))
+				return db_priv.get_application_by_idname (app.idname);
+			else
+				return null;
 		}
-
-		AppItem? item = retrieve_app_item (stmt);
-
-		// Fast sanity checks
-		if (item != null)
-			item.fast_check ();
-
-		return item;
 	}
 
 	public AppItem? get_application_by_fullname (string appFullName) {
-		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE full_name=?", -1, out stmt);
+		AppItem? app = null;
+		if (shared_db_canbeused ())
+			app = db_shared.get_application_by_fullname (appFullName);
 
-		try {
-			db_assert (res, "get application (by full_name)");
-			db_assert (stmt.bind_text (1, appFullName), "bind value");
+		if (app == null)
+			if (private_db_canbeused ())
+				app = db_priv.get_application_by_fullname (appFullName);
 
-			res = stmt.step ();
-			db_assert (res, "execute");
-			if (res != Sqlite.ROW)
-				return null;
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return null;
-		}
-
-		AppItem? item = retrieve_app_item (stmt);
-
-		// Fast sanity checks
-		if (item != null)
-			item.fast_check ();
-
-		return item;
-	}
-
-	public AppItem? get_application_by_dbid (uint databaseId) {
-		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE id=?", -1, out stmt);
-
-		try {
-			db_assert (res, "get application (by database-id)");
-			db_assert (stmt.bind_int64 (1, databaseId), "bind value");
-
-			res = stmt.step ();
-			db_assert (res, "execute");
-			if (res != Sqlite.ROW)
-				return null;
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return null;
-		}
-
-		AppItem? item = retrieve_app_item (stmt);
-
-		// Fast sanity checks
-		if (item != null)
-			item.fast_check ();
-
-		return item;
-	}
-
-	public AppItem? get_application_by_name_version (string appName, string appVersion) {
-		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE name=? AND version=?", -1, out stmt);
-		try {
-			db_assert (res, "get application (by full_name and version)");
-			db_assert (stmt.bind_text (1, appName), "bind value");
-			db_assert (stmt.bind_text (2, appVersion), "bind value");
-
-			res = stmt.step ();
-			db_assert (res, "execute");
-			if (res != Sqlite.ROW)
-				return null;
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return null;
-		}
-
-		AppItem? item = retrieve_app_item (stmt);
-
-		// Fast sanity checks
-		if (item != null)
-			item.fast_check ();
-
-		return item;
+		return app;
 	}
 
 	public bool remove_application (AppItem app) {
-		bool ret = true;
-		string metadir = Path.build_filename (regdir, app.idname, null);
-		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("DELETE FROM applications WHERE name=?", -1, out stmt);
-
-		try {
-			db_assert (res, "delete application (prepare statement)");
-			db_assert (stmt.bind_text (1, app.idname), "bind text");
-			db_assert (stmt.step(), "execute action");
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return false;
+		if (app.shared) {
+			if (shared_db_canbeused (true))
+				return db_shared.remove_application (app);
+			else
+				return false;
+		} else {
+			if (private_db_canbeused (true))
+				return db_priv.remove_application (app);
+			else
+				return false;
 		}
-
-		ret = delete_dir_recursive (metadir);
-		if (!ret)
-			warning ("Could not remove metadata directory for application-id %s!".printf (app.idname));
-		return ret;
-	}
-
-	public AppItem? get_application_by_id (AppItem aid) {
-		return get_application_by_idname (aid.idname);
-	}
-
-	private bool string_in_app_item (AppItem item, string s) {
-		string str = s.down ();
-		if (item.full_name.down ().index_of (str) > -1)
-			return true;
-		if (item.summary.down ().index_of (str) > -1)
-			return true;
-		if (item.description.down ().index_of (str) > -1)
-			return true;
-		return false;
 	}
 
 	public ArrayList<AppItem> find_applications ([CCode (array_null_terminated = true, array_length = false)] string[] values) {
-		ArrayList<AppItem> resList = new ArrayList<AppItem> ();
-		if (values[0] == null)
-			return resList;
-
-		HashSet<AppItem> tmpList = new HashSet<AppItem> ();
-
-		int i = 1;
-		AppItem tmpApp = get_application_by_dbid (i);
-		while (tmpApp != null) {
-			for (int j = 0; values[j] != null; j++) {
-				if (string_in_app_item (tmpApp, values[j])) {
-					tmpList.add (tmpApp);
-					break;
-				}
-			}
-			i++;
-			tmpApp = get_application_by_dbid (i);
+		var list = new ArrayList<AppItem> ();
+		if (shared_db_canbeused ()) {
+			var tmp = db_shared.find_applications (values);
+			list.add_all (tmp);
+		}
+		if (private_db_canbeused ()) {
+			var tmp = db_priv.find_applications (values);
+			list.add_all (tmp);
 		}
 
-		resList.add_all (tmpList.read_only_view);
-		return resList;
+		return list;
+	}
+
+	public void _internal_process_dbapps (InternalDB db, double one, ref ArrayList<AppItem> appList) {
+		uint i = 1;
+		AppItem? capp = db_priv.get_application_by_dbid (i);
+		while (capp != null) {
+			application (capp);
+			appList.add (capp);
+			progress_changed ((int) Math.round (one * i));
+
+			i++;
+			capp = db.get_application_by_dbid (i);
+		}
+	}
+
+	public bool find_all_applications (AppSource filter, out ArrayList<AppItem> appList = null) {
+		ArrayList<AppItem> alist = new ArrayList<AppItem> ();
+
+		double one = 100d / get_applications_count ();
+
+		if (private_db_canbeused ()) {
+			_internal_process_dbapps (db_priv, one, ref appList);
+		}
+		if (shared_db_canbeused ()) {
+			_internal_process_dbapps (db_shared, one, ref appList);
+		}
+		appList = alist;
+
+		return true;
 	}
 
 	public bool set_application_dependencies (string appName, ArrayList<IPK.Dependency> deps) {
-		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("UPDATE applications SET dependencies=? WHERE name=?", -1, out stmt);
-
-		string depstr = "";
-		foreach (IPK.Dependency d in deps)
-			depstr = d.idname + "\n";
-
-		try {
-			db_assert (res, "update application deps (by name)");
-			db_assert (stmt.bind_text (1, depstr), "bind text value");
-			db_assert (stmt.bind_text (2, appName), "bind text value");
-			db_assert (stmt.step ());
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return false;
+		if (is_root ()) {
+			if (shared_db_canbeused (true))
+				return db_shared.set_application_dependencies (appName, deps);
+			else
+				return false;
+		} else {
+			if (private_db_canbeused (true))
+				return db_priv.set_application_dependencies (appName, deps);
+			else
+				return false;
 		}
-
-		return true;
 	}
 
 	/* Dependency stuff */
 
 	public bool add_dependency (IPK.Dependency dep) {
-		if (!locked) {
-			dbstatus_changed (DatabaseStatus.FAILURE,
-					  _("Tried to write on unlocked (readonly) database! (This should not happen)"));
-			return false;
-		}
-		Sqlite.Statement stmt;
-		int res = db.prepare_v2 (
-			"INSERT INTO dependencies (name, full_name, version, description, homepage, author, " +
-			"install_time, environment) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-				   -1, out stmt);
-
-		// Set install timestamp
-		DateTime dt = new DateTime.now_local ();
-		dep.install_time = dt.to_unix ();
-
-		try {
-			db_assert (res, "add application");
-
-			// Assign values
-			db_assert (stmt.bind_text (1, dep.idname), "bind value");
-
-			db_assert (stmt.bind_text (2, dep.full_name), "bind value");
-
-			db_assert (stmt.bind_text (3, dep.version), "bind value");
-
-			db_assert (stmt.bind_text (4, "%s\n\n%s".printf (dep.summary, dep.description)), "bind value");
-
-			db_assert (stmt.bind_text (5, dep.homepage), "bind value");
-
-			db_assert (stmt.bind_text (6, dep.author), "bind value");
-
-			db_assert (stmt.bind_int64 (7, dep.install_time), "bind value");
-
-			db_assert (stmt.bind_text (8, dep.environment), "bind value");
-
-			db_assert (stmt.step (), "add dependency");
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return false;
-		}
-
-		return true;
-	}
-
-	private IPK.Dependency? retrieve_dependency (Sqlite.Statement stmt) {
-		IPK.Dependency dep = new IPK.Dependency.blank ();
-
-		dep.idname = stmt.column_text (1);
-		dep.full_name = stmt.column_text (2);
-		dep.version = stmt.column_text (3);
-
-		string s = stmt.column_text (4);
-		string[] desc = s.split ("\n\n", 2);
-		if (desc[0] != null) {
-			dep.summary = desc[0];
-			if (desc[1] != null)
-				dep.description = desc[1];
+		if (is_root ()) {
+			if (shared_db_canbeused (true))
+				return db_shared.add_dependency (dep);
+			else
+				return false;
 		} else {
-			dep.summary = s;
+			if (private_db_canbeused (true))
+				return db_priv.add_dependency (dep);
+			else
+				return false;
 		}
-
-		dep.homepage = stmt.column_text (5);
-		dep.author = stmt.column_text (6);
-		dep.install_time = stmt.column_int (7);
-		dep.environment = stmt.column_text (8);
-		// It's in the db, so this dependency is certainly satisfied
-		dep.satisfied = true;
-
-		return dep;
 	}
 
 	public IPK.Dependency? get_dependency_by_id (string depIdName) {
-		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + depcols + " FROM dependencies WHERE name=?", -1, out stmt);
+		IPK.Dependency? dep = null;
+		if (shared_db_canbeused ())
+			dep = db_shared.get_dependency_by_id (depIdName);
 
-		try {
-			db_assert (res, "get dependency (by id)");
-			db_assert (stmt.bind_text (1, depIdName), "bind text");
-
-			db_assert (res, "execute");
-			if (res != Sqlite.ROW)
-				return null;
-		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return null;
-		}
-
-		IPK.Dependency? dep = retrieve_dependency (stmt);
-
+		if (dep == null)
+			if (private_db_canbeused ())
+				dep = db_priv.get_dependency_by_id (depIdName);
 		return dep;
 	}
 
+	/* Testing stuff */
+
+	public void _remove_db_lock () {
+		if (shared_db_canbeused ())
+			db_shared._remove_db_lock ();
+		if (private_db_canbeused ())
+			db_priv._remove_db_lock ();
+	}
 }
 
 } // End of namespace
+

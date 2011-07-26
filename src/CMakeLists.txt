@@ -11,6 +11,7 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/utils.vala
 	${lisrc}/status.vala
 	${lisrc}/settings.vala
 	${lisrc}/application.vala
+	${lisrc}/database-int.vala
 	${lisrc}/database.vala
 	${lisrc}/varsolver.vala
 	${lisrc}/varsetter.vala

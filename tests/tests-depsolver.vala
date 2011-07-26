@@ -187,9 +187,9 @@ int main (string[] args) {
 	sdb.message.connect (test_solver_message_cb);
 
 	// Do this only in testing environment!
-	sdb.remove_db_lock ();
+	sdb._remove_db_lock ();
 	// Open the DB
-	sdb.open ();
+	sdb.open_write ();
 
 	test_feed_installer ();
 	//! test_packagekit_installer ();

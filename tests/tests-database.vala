@@ -56,9 +56,9 @@ void test_software_db () {
 	sdb.message.connect (softwaredb_message_cb);
 
 	// Do this only in testing environment!
-	sdb.remove_db_lock ();
+	sdb._remove_db_lock ();
 	// Open the DB
-	sdb.open ();
+	sdb.open_write ();
 	msg ("Software database is ready now!");
 	msg ("Constructing fake application and adding it to the DB...");
 
@@ -68,7 +68,7 @@ void test_software_db () {
 	assert (ret == true);
 
 	// Close & reopen the DB
-	sdb.open ();
+	sdb.open_read ();
 
 	msg ("Retrieving AppItem from database...");
 	AppItem newItem = sdb.get_application_by_idname ("test");

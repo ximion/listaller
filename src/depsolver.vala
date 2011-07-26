@@ -52,6 +52,10 @@ private class Solver : Object {
 		return ret;
 	}
 
+	public ArrayList<IPK.Dependency> get_direct_dependencies () {
+		return deplist;
+	}
+
 
 }
 
