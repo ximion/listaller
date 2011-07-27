@@ -132,20 +132,17 @@ private class InternalDB : Object {
 	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
 
-	public InternalDB (bool sumode, Settings conf) {
-		bool _x_old_setting = conf.sumode;
-		conf.sumode = sumode;
-
+	public InternalDB (bool sumode) {
+		// Create internal dummy configuration to fetch required data
+		var tmpConf = new Listaller.Settings (sumode);
 		// File indication the database is locked (UGLY solution, we need something better, later)
-		dblockfile = conf.appregister_dir () + "/lock";
+		dblockfile = tmpConf.appregister_dir () + "/lock";
 		// Path with additional data (e.g. the file-list or icons) which is not stored in the SQLite DB
-		regdir = Path.build_filename (conf.appregister_dir (), "info", null);
+		regdir = Path.build_filename (tmpConf.appregister_dir (), "info", null);
 		// The database filename
-		dbname = conf.database_file ();
-		// If we fetch data from the "shared" or "private" application database
+		dbname = tmpConf.database_file ();
+		// Whether we fetch data from the "shared" or "private" application database
 		shared_db = sumode;
-
-		conf.sumode = _x_old_setting;
 	}
 
 	~InternalDB () {

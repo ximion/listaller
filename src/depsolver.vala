@@ -55,6 +55,7 @@ private class Solver : Object {
 		ErrorItem? error = null;
 		var di = new DepInfo ();
 		var pksolv = new PkResolver (conf);
+		intDeplist.clear ();
 
 		foreach (IPK.Dependency idep in ipkDeplist) {
 			/* Update package dependencies with system data (which might add some additional information here, provided
@@ -75,14 +76,14 @@ private class Solver : Object {
 			ret = pksolv.search_dep_packages (ref idep);
 			if (!ret)
 				error = pksolv.last_error;
+
+			// TODO: Build the correct list
+			intDeplist.add (idep);
 		}
 
 		if (error != null)
 			error_code (error);
 
-		// TODO: Add the correct list
-		if (ret)
-			intDeplist.add_all (ipkDeplist);
 		return ret;
 	}
 

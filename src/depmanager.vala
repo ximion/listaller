@@ -160,13 +160,12 @@ private class DepManager : Object {
 		FeedInstaller finst = new FeedInstaller (conf);
 		finst.message.connect ( (m) => { this.message (m); } );
 
-		var di = new DepInfo ();
 		bool ret = true;
 		foreach (IPK.Dependency dep in depList) {
-			di.update_dependency_with_system_data (ref dep);
 			// If this is a default lib, just continue
 			if (dep.is_standardlib)
 				continue;
+
 			ret = install_dependency_internal (pkinst, finst, ref dep, force_feedinstall);
 			if (!ret)
 				break;

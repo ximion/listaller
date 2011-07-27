@@ -45,20 +45,21 @@ private class SoftwareDB : Object {
 	public SoftwareDB (Settings liconf, bool include_shared = true) {
 		db_shared = null;
 		db_priv = null;
+		// We just store the settings, so other objects can fetch them
 		conf = liconf;
 
 		if (include_shared) {
-			db_shared = new InternalDB (true, conf);
+			db_shared = new InternalDB (true);
 
 			/* If we open a shared DB and have root-access, don't open the
 			 * private database. It makes no sense someone is working as root
 			 * and installing private stuff into root's home-dir */
 			if (!is_root ()) {
-				db_priv = new InternalDB (false, conf);
+				db_priv = new InternalDB (false);
 			}
 		} else {
 			// If we only want to open the personal DB, don't touch the shared one
-			db_priv = new InternalDB (false, conf);
+			db_priv = new InternalDB (false);
 		}
 
 		if (db_priv != null) {

@@ -123,14 +123,13 @@ private class PkResolver : Object {
 			return true;
 		}
 
-		/* Search files using "whereis" before calling PackageKit to do this
+		/* Search files using "find_library" before calling PackageKit to do this
 		 * (this is a huge speed improvement) */
 		ret = true;
 		foreach (string s in dep.files) {
 			if (s.has_prefix ("lib:")) {
 				if (s.has_suffix (".*"))
 					s = s.replace (".*", "");
-				//! debug (s.substring (4));
 				ret = find_library (s.substring (4), conf);
 				if (!ret)
 					break;
