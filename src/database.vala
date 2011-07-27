@@ -126,9 +126,10 @@ private class SoftwareDB : Object {
 			ret = db_priv.open_r ();
 		if (db_shared != null) {
 			if (shared_db_canbeused ()) {
-				ret = db_shared.open_r ();
-			} else {
-				ret = false;
+				if (!ret)
+					ret = db_shared.open_r ();
+				else
+					db_shared.open_r ();
 			}
 		}
 		return ret;
@@ -140,9 +141,10 @@ private class SoftwareDB : Object {
 			ret = db_priv.open_rw ();
 		if (db_shared != null) {
 			if (shared_db_canbeused ()) {
-				ret = db_shared.open_rw ();
-			} else {
-				ret = false;
+				if (!ret)
+					ret = db_shared.open_rw ();
+				else
+					db_shared.open_rw ();
 			}
 		}
 		return ret;
@@ -280,7 +282,7 @@ private class SoftwareDB : Object {
 
 	public void _internal_process_dbapps (InternalDB db, double one, ref ArrayList<AppItem> appList) {
 		uint i = 1;
-		AppItem? capp = db_priv.get_application_by_dbid (i);
+		AppItem? capp = db.get_application_by_dbid (i);
 		while (capp != null) {
 			application (capp);
 			appList.add (capp);
@@ -297,10 +299,10 @@ private class SoftwareDB : Object {
 		double one = 100d / get_applications_count ();
 
 		if (private_db_canbeused ()) {
-			_internal_process_dbapps (db_priv, one, ref appList);
+			_internal_process_dbapps (db_priv, one, ref alist);
 		}
 		if (shared_db_canbeused ()) {
-			_internal_process_dbapps (db_shared, one, ref appList);
+			_internal_process_dbapps (db_shared, one, ref alist);
 		}
 		appList = alist;
 

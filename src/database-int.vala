@@ -133,6 +133,9 @@ private class InternalDB : Object {
 	public signal void message (MessageItem message);
 
 	public InternalDB (bool sumode, Settings conf) {
+		bool _x_old_setting = conf.sumode;
+		conf.sumode = sumode;
+
 		// File indication the database is locked (UGLY solution, we need something better, later)
 		dblockfile = conf.appregister_dir () + "/lock";
 		// Path with additional data (e.g. the file-list or icons) which is not stored in the SQLite DB
@@ -141,6 +144,8 @@ private class InternalDB : Object {
 		dbname = conf.database_file ();
 		// If we fetch data from the "shared" or "private" application database
 		shared_db = sumode;
+
+		conf.sumode = _x_old_setting;
 	}
 
 	~InternalDB () {
