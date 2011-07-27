@@ -26,11 +26,12 @@
 		<architecture>%current%</architecture>
 		<requires>
 			<testlib>
-				<file>/bin/bash</file>
-				<file>/bin/sh</file>
+				<bash>
+					<lib>/bin/bash</lib>
+					<lib>/bin/sh</lib>
+				</bash>
 				<feed>http://zeroinstall-feeds.org/blub.xml</feed>
 				<package distro="Debian">libtest</package>
-				<dpk>dependency.dpk</dpk>
 			</testlib>
 		</requires>
 	</package>

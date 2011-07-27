@@ -124,14 +124,11 @@ private class SoftwareDB : Object {
 		bool ret = true;
 		if (db_priv != null)
 			ret = db_priv.open_r ();
-		if (!ret)
-			return false;
-		ret = false;
 		if (db_shared != null) {
 			if (shared_db_canbeused ()) {
 				ret = db_shared.open_r ();
 			} else {
-				return false;
+				ret = false;
 			}
 		}
 		return ret;
@@ -141,14 +138,11 @@ private class SoftwareDB : Object {
 		bool ret = true;
 		if (db_priv != null)
 			ret = db_priv.open_rw ();
-		if (!ret)
-			return false;
-		ret = false;
 		if (db_shared != null) {
 			if (shared_db_canbeused ()) {
 				ret = db_shared.open_rw ();
 			} else {
-				return false;
+				ret = false;
 			}
 		}
 		return ret;

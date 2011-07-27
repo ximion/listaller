@@ -106,7 +106,7 @@ void test_ipk_control_file () {
 
 	list = ipkc.get_pkg_dependencies ();
 	assert (list[0].full_name == "alpha");
-	assert (list[0].files[0] == "/etc/alpha.conf");
+	assert (list[0].files[0] == "file:/etc/alpha.conf");
 }
 
 void test_ipk_filelist_file () {

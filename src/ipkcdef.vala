@@ -241,6 +241,7 @@ public abstract class CXml : Object {
 				}
 				if (in->name == "file") {
 					li_warning ("Dependency %s depends on a file (%s), which is not supported at time.".printf (dep.idname, in->get_content ()));
+					dep.files.add ("file:" + in->get_content ());
 				}
 			}
 			depList.add (dep);

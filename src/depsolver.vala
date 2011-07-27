@@ -1,4 +1,4 @@
-/* depsolver.vala
+/* depsolver.vala - Solve IPK dependencies to a set of internal dependenciesmatthia
  *
  * Copyright (C) 2011 Matthias Klumpp <matthias@nlinux.org>
  *
