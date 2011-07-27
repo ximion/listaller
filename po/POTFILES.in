@@ -21,6 +21,7 @@ src/installer.vala
 src/depinfo.vala
 src/depsolver.vala
 src/depmanager.vala
+src/pkit-resolver.vala
 src/pkit-installer.vala
 src/feed-installer.vala
 src/zfeed.vala

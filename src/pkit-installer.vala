@@ -1,4 +1,4 @@
-/* pkit-installer.vala
+/* pkit-installer.vala - Install native packages using PackageKit
  *
  * Copyright (C) 2011 Matthias Klumpp <matthias@nlinux.org>
  *
@@ -68,38 +68,6 @@ private class PkInstaller : Object {
 		// TODO
 	}
 
-	private PackageKit.PackageSack? pkit_pkgs_from_depfiles (IPK.Dependency dep) {
-		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("none");
-
-		// We only resolve libraries at time
-		// TODO: Resolve other dependencies too
-		string[] libs = {};
-		foreach (string s in dep.files) {
-			if (s.has_prefix ("lib:"))
-				libs += s.substring (4);
-		}
-		libs += null;
-
-		PackageKit.Results res;
-		PackageKit.PackageSack sack;
-		try {
-			res  = pkit.what_provides (filter, PackageKit.Provides.LIBRARY, libs, null, pk_progress_cb);
-			sack = res.get_package_sack ();
-		} catch (Error e) {
-			debug (e.message);
-			return null;
-		}
-		string[] packages = sack.get_ids ();
-
-		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (packages[0] == null) ) {
-			set_error (ErrorEnum.UNKNOWN, "%s\n%s".printf (_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())),
-						       _("Unable to find native package for '%s'!").printf (dep.full_name)));
-			return null;
-		}
-
-		return sack;
-	}
-
 	private bool pkit_install_packages (string[] pkids) {
 		PackageKit.Results res = pkit.install_packages (true, pkids, null, pk_progress_cb);
 
@@ -114,82 +82,6 @@ private class PkInstaller : Object {
 	public void reset () {
 		last_error = null;
 		pkit = new PackageKit.Client ();
-	}
-
-	/* This method searches for dependency packages & stores them in dep.meta_info */
-	public bool search_dep_packages (ref IPK.Dependency dep) {
-		bool ret = true;
-		reset ();
-
-		// If there are no files, consider this dependency as "installed"
-		if (dep.files.size <= 0) {
-			li_warning ("Dependency %s has no files assigned!".printf (dep.full_name));
-			return true;
-		}
-
-		/* Search files using "whereis" before calling PackageKit to do this
-		 * (this is a huge speed improvement) */
-		ret = true;
-		foreach (string s in dep.files) {
-			if (s.has_prefix ("lib:")) {
-				if (s.has_suffix (".*"))
-					s = s.replace (".*", "");
-				//! debug (s.substring (4));
-				ret = find_library (s.substring (4), conf);
-				if (!ret)
-					break;
-			}
-		}
-
-		if (ret) {
-			dep.meta_info.clear ();
-			foreach (string s in dep.files)
-				if (s.has_prefix ("lib:"))
-					dep.meta_info.add (s);
-			dep.satisfied = true;
-			return true;
-		}
-
-		/* We don't solve dependencies when unit tests are running.
-		 * Consider everything as satisfied. */
-		if (__unittestmode) {
-			dep.satisfied = true;
-			return true;
-		}
-
-		PackageKit.PackageSack? sack = pkit_pkgs_from_depfiles (dep);
-		if (sack == null)
-			return false;
-
-		string[] packages = sack.get_ids ();
-
-		for (uint i = 0; packages[i] != null; i++) {
-			PackageKit.Package? pkg = sack.find_by_id (packages[i]);
-			if (pkg == null) {
-				ret = false;
-				break;
-			}
-
-			if (pkg.get_info () == PackageKit.Info.INSTALLED)
-				dep.meta_info.add ("pkg:" + pkg.get_id ());
-			else
-				dep.meta_info.add ("*pkg:" + pkg.get_id ());
-		}
-		if (!ret) {
-			dep.meta_info.clear ();
-			return false;
-		}
-		/* Check if there are native packages which need to be installed.
-		 * If not, the dependency is already satified. */
-		dep.satisfied = true;
-		foreach (string pkg in dep.meta_info) {
-			if (pkg.has_prefix ("*pkg:")) {
-				dep.satisfied = false;
-				break;
-			}
-		}
-
-		return ret;
 	}
 
 	/* This method install a dependency if necessary */

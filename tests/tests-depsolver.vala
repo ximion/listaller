@@ -80,16 +80,16 @@ void test_dependency_manager () {
 	assert (test1.full_name == "libgee");
 }
 
-void search_install_pkdep (Deps.PkInstaller pkit, ref IPK.Dependency dep) {
+void search_install_pkdep (Deps.PkInstaller pkinst, Deps.PkResolver pksolv, ref IPK.Dependency dep) {
 	bool ret;
-	ret = pkit.search_dep_packages (ref dep);
+	ret = pksolv.search_dep_packages (ref dep);
 	if (!ret) {
-		debug (pkit.last_error.details);
+		debug (pksolv.last_error.details);
 		assert (ret == true);
 	}
-	ret = pkit.install_dependency (ref dep);
+	ret = pkinst.install_dependency (ref dep);
 	if (!ret) {
-		debug (pkit.last_error.details);
+		debug (pkinst.last_error.details);
 		assert (ret == true);
 	}
 }
@@ -104,9 +104,10 @@ void test_packagekit_installer () {
 	depMp3Gain.files.add ("/usr/bin/mp3gain");
 
 	Deps.PkInstaller pkit = new Deps.PkInstaller (conf);
+	Deps.PkResolver pkslv = new Deps.PkResolver (conf);
 	pkit.message.connect (test_solver_message_cb);
 
-	search_install_pkdep (pkit, ref depMp3Gain);
+	search_install_pkdep (pkit, pkslv, ref depMp3Gain);
 	assert (depMp3Gain.satisfied == true);
 
 	// Now something more advanced
@@ -115,13 +116,13 @@ void test_packagekit_installer () {
 	crazy.files.add ("libpackagekit-glib2.so");
 	crazy.files.add ("libc6.so");
 
-	search_install_pkdep (pkit, ref crazy);
+	search_install_pkdep (pkit, pkslv, ref crazy);
 	assert (crazy.satisfied == true);
 
 	// Now something which fails
 	IPK.Dependency fail = new IPK.Dependency ("Fail");
 	fail.files.add ("/run/chicken");
-	ret = pkit.search_dep_packages (ref fail);
+	ret = pkslv.search_dep_packages (ref fail);
 	if (!ret) {
 		debug (pkit.last_error.details);
 		assert (ret == false);

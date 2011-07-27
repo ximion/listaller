@@ -19,6 +19,7 @@ set(LIUNITTEST_SOURCES ${LISTALLER_BASE_SOURCES}
 			${lisrc}/zfeed.vala
 			${lisrc}/depmanager.vala
 			${lisrc}/depsolver.vala
+			${lisrc}/pkit-resolver.vala
 			${lisrc}/pkit-installer.vala
 			${lisrc}/feed-installer.vala
 			${lisrc}/manager.vala

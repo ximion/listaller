@@ -26,7 +26,7 @@ using Listaller.Utils;
 namespace Listaller.Deps {
 
 private class Solver : Object {
-	private ArrayList<IPK.Dependency> deplist;
+	private ArrayList<IPK.Dependency> ipkDeplist;
 	private SoftwareDB db;
 	private Listaller.Settings conf;
 	private DepManager depman;
@@ -37,7 +37,7 @@ private class Solver : Object {
 
 	public Solver (SoftwareDB lidb, ArrayList<IPK.Dependency> dependency_list) {
 		db = lidb;
-		deplist = dependency_list;
+		ipkDeplist = dependency_list;
 		conf = db.get_liconf ();
 
 		depman = new DepManager (db);
@@ -47,13 +47,25 @@ private class Solver : Object {
 	}
 
 	public bool execute () {
-		// We don't do any solving here at time... We just install the dependencies
-		bool ret = depman.install_dependencies (deplist);
+		ErrorItem? error = null;
+		var di = new DepInfo ();
+		var pksolv = new PkResolver (conf);
+		foreach (IPK.Dependency idep in ipkDeplist) {
+			/* Update package dependencies with system data (which might add some additional information here, provided
+			 * by the distributor */
+			di.update_dependency_with_system_data (ref idep);
+
+			// Try to find native distribution packages for this dependency
+			bool ret = pksolv.search_dep_packages (ref idep);
+			if (!ret)
+				error = pksolv.last_error;
+		}
+		bool ret = depman.install_dependencies (ipkDeplist);
 		return ret;
 	}
 
-	public ArrayList<IPK.Dependency> get_direct_dependencies () {
-		return deplist;
+	public ArrayList<IPK.Dependency> get_package_dependencies () {
+		return ipkDeplist;
 	}
 
 

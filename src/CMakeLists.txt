@@ -66,6 +66,7 @@ set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	zfeed.vala
 	depmanager.vala
 	depsolver.vala
+	pkit-resolver.vala
 	pkit-installer.vala
 	feed-installer.vala
 	manager.vala

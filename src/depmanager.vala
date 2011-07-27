@@ -89,11 +89,6 @@ private class DepManager : Object {
 		bool ret = false;
 		ErrorItem? error = null;
 
-		// Try to find native distribution packages for this dependency
-		ret = pkinst.search_dep_packages (ref dep);
-		if (!ret)
-			error = pkinst.last_error;
-
 		// Finish if the dependency is already satisfied
 		if (dep.satisfied)
 			return true;
@@ -136,9 +131,6 @@ private class DepManager : Object {
 
 		FeedInstaller finst = new FeedInstaller (conf);
 		finst.message.connect ( (m) => { this.message (m); } );
-
-		var di = new DepInfo ();
-		di.update_dependency_with_system_data (ref dep);
 
 		// If we have a system standard-lib (a minimal distribution dependency), consider it as installed
 		if (dep.is_standardlib)
