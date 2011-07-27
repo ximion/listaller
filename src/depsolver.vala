@@ -27,7 +27,7 @@ namespace Listaller.Deps {
 
 private class Solver : Object {
 	private ArrayList<IPK.Dependency> ipkDeplist;
-	private SoftwareDB db;
+	private ArrayList<IPK.Dependency> intDeplist;
 	private Listaller.Settings conf;
 	private DepManager depman;
 
@@ -35,32 +35,54 @@ private class Solver : Object {
 	public signal void message (MessageItem message);
 	public signal void progress_changed (int progress);
 
-	public Solver (SoftwareDB lidb, ArrayList<IPK.Dependency> dependency_list) {
-		db = lidb;
+	public Solver (DepManager dman, ArrayList<IPK.Dependency> dependency_list, bool connect_to_depmanager = false) {
 		ipkDeplist = dependency_list;
-		conf = db.get_liconf ();
+		intDeplist = new ArrayList<IPK.Dependency> ();
 
-		depman = new DepManager (db);
-		depman.error_code.connect ( (error) => { this.error_code (error); });
-		depman.message.connect ( (msg) => { this.message (msg); });
-		depman.progress_changed.connect ( (prog) => { this.progress_changed (prog); });
+		depman = dman;
+		conf = depman.get_sdb ().get_liconf ();
+
+		if (connect_to_depmanager) {
+			// Connect solver signals to dependency manager signals
+			this.error_code.connect ( (error) => { depman.error_code (error); });
+			this.message.connect ( (msg) => { depman.message (msg); });
+			this.progress_changed.connect ( (prog) => { depman.progress_changed (prog); });
+		}
 	}
 
 	public bool execute () {
+		bool ret = false;
 		ErrorItem? error = null;
 		var di = new DepInfo ();
 		var pksolv = new PkResolver (conf);
+
 		foreach (IPK.Dependency idep in ipkDeplist) {
 			/* Update package dependencies with system data (which might add some additional information here, provided
 			 * by the distributor */
 			di.update_dependency_with_system_data (ref idep);
 
+			if (idep.is_standardlib) {
+				// If we have a system standard-lib, always consider it as installed
+				idep.satisfied = true;
+				continue;
+			}
+
+			// If dependency is already installed, skip it & update it from db
+			if (depman.dependency_is_installed (ref idep))
+				continue;
+
 			// Try to find native distribution packages for this dependency
-			bool ret = pksolv.search_dep_packages (ref idep);
+			ret = pksolv.search_dep_packages (ref idep);
 			if (!ret)
 				error = pksolv.last_error;
 		}
-		bool ret = depman.install_dependencies (ipkDeplist);
+
+		if (error != null)
+			error_code (error);
+
+		// TODO: Add the correct list
+		if (ret)
+			intDeplist.add_all (ipkDeplist);
 		return ret;
 	}
 
@@ -68,6 +90,11 @@ private class Solver : Object {
 		return ipkDeplist;
 	}
 
+	/* Get a list of exact (matching this system) dependencies, which are direct dependencies of the application.
+	 * (And not dependencies of other dependencies, we don't support this at time */
+	public ArrayList<IPK.Dependency> get_exact_direct_dependencies () {
+		return intDeplist;
+	}
 
 }
 

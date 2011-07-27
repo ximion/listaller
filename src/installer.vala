@@ -169,19 +169,32 @@ public class Setup : Object {
 
 		Gee.ArrayList<IPK.Dependency> pkgDeps = ipkp.control.get_pkg_dependencies ();
 
-		Deps.Solver solver = new Deps.Solver (db, pkgDeps);
-		solver.error_code.connect ((error) => {
+		// Construct new dependency manager
+		Deps.DepManager depman = new Deps.DepManager (db);
+		depman.error_code.connect ((error) => {
 			this.error_code (error);
 		});
-		solver.message.connect ((msg) => {
+		depman.message.connect ((msg) => {
 			this.message (msg);
 		});
-		solver.progress_changed.connect ((p) => {
+		depman.progress_changed.connect ((p) => {
 			change_progress (-1, p);
 		});
 
-		ret = solver.execute ();
+		// Create new DepSolver, connect it to current dependency manager and pass the package dependencies to it
+		Deps.Solver dsolver = new Deps.Solver (depman, pkgDeps, true);
+
+		// Run the solver!
+		ret = dsolver.execute ();
 		if (!ret) {
+			// If we were not able to solve everything, stop installation (error code has already been emitted)
+			return false;
+		}
+
+		// Now, after the solving we can install possibly missing dependencies
+		ret = depman.install_dependencies (dsolver.get_exact_direct_dependencies ());
+		if (!ret) {
+			// If dependency installation failed, exit
 			return false;
 		}
 

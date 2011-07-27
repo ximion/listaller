@@ -165,7 +165,11 @@ void test_depsolver () {
 	deplist.add (dep4);
 
 	bool ret;
-	Deps.Solver slv = new Deps.Solver (sdb, deplist);
+	Deps.DepManager depman = new Deps.DepManager (sdb);
+	depman.error_code.connect (test_solver_error_code_cb);
+	depman.message.connect (test_solver_message_cb);
+	Deps.Solver slv = new Deps.Solver (depman, deplist, true);
+
 	ret = slv.execute ();
 	assert (ret == true);
 }
