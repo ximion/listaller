@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-14 19:12+0200\n"
+"POT-Creation-Date: 2011-07-29 01:11+0200\n"
 "PO-Revision-Date: 2011-04-19 11:06+0000\n"
 "Last-Translator: Thaynã Moretti <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -53,6 +53,9 @@ msgstr ""
 msgid "Can't verify: Key is missing"
 msgstr ""
 
+msgid "Cannot query file size, continuing with an unknown size."
+msgstr ""
+
 msgid "Copying files to their destination"
 msgstr "Copiando arquivos para o seu destino"
 
@@ -67,10 +70,6 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "Could not create destination directory. Error: %s"
-msgstr "Não foi possível criar o diretório de destino. Erro: %s"
-
-#, c-format
 msgid "Could not create file '%s'! File already exists."
 msgstr "Não foi possível criar o arquivo '%s\"! O arquivo já existe."
 
@@ -80,6 +79,10 @@ msgstr "Não foi possível criar/atualizar o banco de dados do software!"
 #, c-format
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Could not extract file %s! Error: %s"
+msgstr "Não foi possível extrair o arquivo! Erro: %s"
 
 #, c-format
 msgid "Could not extract file! Error: %s"
@@ -120,6 +123,11 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid ""
+"Could not read dependency archive! Archive might be damaged. Message: %s"
+msgstr ""
+
+#, c-format
 msgid "Could not remove file %s!"
 msgstr ""
 
@@ -127,15 +135,12 @@ msgstr ""
 msgid "Could not uninstall application %s. It is not installed."
 msgstr ""
 
-#, c-format
-msgid ""
-"Could not validate file %s. This IPK file might have been modified after "
-"creation!\n"
-"Please obtain a new copy and try again."
-msgstr ""
-
 msgid "DIRECTORY"
 msgstr "DIRETÓRIO"
+
+#, fuzzy, c-format
+msgid "Database action '%s' failed: %s"
+msgstr "A conexão com o banco de dados foi fechada."
 
 msgid "Database action failed"
 msgstr ""
@@ -144,9 +149,6 @@ msgid "Database action successful"
 msgstr ""
 
 msgid "Database locked"
-msgstr ""
-
-msgid "Database problem:"
 msgstr ""
 
 msgid "Database unlocked"
@@ -158,9 +160,6 @@ msgstr ""
 
 #, c-format
 msgid "Error: %s\n"
-msgstr ""
-
-msgid "Fatal database error"
 msgstr ""
 
 #, c-format
@@ -305,6 +304,20 @@ msgstr "Este aplicativo já está instalado"
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
 
+msgid ""
+"Tried to perform action on private software database, but the database is "
+"not opened! (this should never happen!)"
+msgstr ""
+
+msgid ""
+"Tried to perform action on shared software database, but the database is not "
+"opened! (maybe a permission problem?)"
+msgstr ""
+
+msgid ""
+"Tried to write on unlocked (readonly) database! (This should not happen)"
+msgstr ""
+
 msgid "Trust if full"
 msgstr ""
 
@@ -325,8 +338,20 @@ msgid ""
 "Setting AppManager to superuse mode now."
 msgstr ""
 
+#, fuzzy
+msgid "Unable to create destination directory."
+msgstr "Não foi possível criar o diretório de destino. Erro: %s"
+
 #, c-format
 msgid "Unable to create file '%s'!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to create/update database tables: %s"
+msgstr "Não foi possível criar/atualizar o banco de dados do software!"
+
+#, c-format
+msgid "Unable to download feed %s. Message: %s"
 msgstr ""
 
 msgid "Unable to extract IPK data!"
@@ -335,11 +360,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to extract data file %s. Message: %s"
+msgstr "Não foi capaz de copiar o arquivo %f."
+
 #, c-format
 msgid ""
 "Unable to extract data file %s. This IPK package might be damaged, please "
 "obtain a new copy."
 msgstr ""
+
+#, c-format
+msgid "Unable to extract file '%s' for dependency '%s'!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to extract file. %s"
+msgstr "Não foi capaz de copiar o arquivo %f."
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
@@ -353,7 +390,17 @@ msgid "Unable to fetch dependency information list: %s"
 msgstr ""
 
 #, c-format
-msgid "Unable to find native package for %s!"
+msgid ""
+"Unable to find a matching implementation of '%s' for your system/"
+"architecture."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to find native package for '%s'!"
+msgstr "Instala um pacote IPK"
+
+#, c-format
+msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr ""
 
 msgid "Unable to open software database for reading & writing!"
@@ -389,6 +436,13 @@ msgid "Unknown."
 msgstr ""
 
 msgid "Use recursive mode"
+msgstr ""
+
+#, c-format
+msgid ""
+"Validation of file %s failed! This IPK file might have been modified after "
+"creation.\n"
+"Please obtain a new copy and try again."
 msgstr ""
 
 msgid "Validity is undefined"
@@ -511,9 +565,6 @@ msgstr ""
 
 #~ msgid "Create/Update update-repository"
 #~ msgstr "Criar/atualizar update-repository"
-
-#~ msgid "Database connection closed."
-#~ msgstr "A conexão com o banco de dados foi fechada."
 
 #~ msgid "Delete source?"
 #~ msgstr "Excluir fonte?"
@@ -776,9 +827,6 @@ msgstr ""
 
 #~ msgid "This package does not support your Linux distribution."
 #~ msgstr "Este pacote não oferece suporte para sua distribuição Linux."
-
-#~ msgid "Unable to copy the file %s."
-#~ msgstr "Não foi capaz de copiar o arquivo %f."
 
 #~ msgid "Unable to find %s"
 #~ msgstr "Não é possível localizar %s"

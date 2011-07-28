@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-14 19:12+0200\n"
+"POT-Creation-Date: 2011-07-29 01:11+0200\n"
 "PO-Revision-Date: 2011-06-15 19:57+0000\n"
 "Last-Translator: Aleksey Kabanov <Unknown>\n"
 "Language-Team: \n"
@@ -50,6 +50,9 @@ msgstr ""
 msgid "Can't verify: Key is missing"
 msgstr "Невозможно проверить: ключ отсутствует"
 
+msgid "Cannot query file size, continuing with an unknown size."
+msgstr ""
+
 msgid "Copying files to their destination"
 msgstr "Копирование файлов в места назначения"
 
@@ -67,10 +70,6 @@ msgstr ""
 "Сообщение об ошибке было \"%s\"."
 
 #, c-format
-msgid "Could not create destination directory. Error: %s"
-msgstr "Невозможно создать каталог назначения. Ошибка: %s"
-
-#, c-format
 msgid "Could not create file '%s'! File already exists."
 msgstr "Невозможно создать файл '%s'! Файл уже существует."
 
@@ -80,6 +79,10 @@ msgstr "Невозможно создать или обновить базу д�
 #, c-format
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Could not extract file %s! Error: %s"
+msgstr "Невозможно извлечь файл! Ошибка: %s"
 
 #, c-format
 msgid "Could not extract file! Error: %s"
@@ -120,6 +123,11 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid ""
+"Could not read dependency archive! Archive might be damaged. Message: %s"
+msgstr ""
+
+#, c-format
 msgid "Could not remove file %s!"
 msgstr "Невозможно удалить файл %s!"
 
@@ -127,15 +135,12 @@ msgstr "Невозможно удалить файл %s!"
 msgid "Could not uninstall application %s. It is not installed."
 msgstr "Невозможно деинсталлировать приложение %s. Оно не установлено."
 
-#, c-format
-msgid ""
-"Could not validate file %s. This IPK file might have been modified after "
-"creation!\n"
-"Please obtain a new copy and try again."
-msgstr ""
-
 msgid "DIRECTORY"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Database action '%s' failed: %s"
+msgstr "Соединение с базой данных закрыто."
 
 msgid "Database action failed"
 msgstr ""
@@ -145,9 +150,6 @@ msgstr ""
 
 msgid "Database locked"
 msgstr "База данных заблокирована"
-
-msgid "Database problem:"
-msgstr "Проблема с базой данных:"
 
 msgid "Database unlocked"
 msgstr "База данных разблокирована"
@@ -159,9 +161,6 @@ msgstr "ОШИБКА: %s"
 #, c-format
 msgid "Error: %s\n"
 msgstr "Ошибка: %s\n"
-
-msgid "Fatal database error"
-msgstr "Фатальная ошибка базы данных"
 
 #, c-format
 msgid "File %s not found or permission denied!"
@@ -311,6 +310,20 @@ msgstr "Программа уже установлена"
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
 
+msgid ""
+"Tried to perform action on private software database, but the database is "
+"not opened! (this should never happen!)"
+msgstr ""
+
+msgid ""
+"Tried to perform action on shared software database, but the database is not "
+"opened! (maybe a permission problem?)"
+msgstr ""
+
+msgid ""
+"Tried to write on unlocked (readonly) database! (This should not happen)"
+msgstr ""
+
 msgid "Trust if full"
 msgstr ""
 
@@ -331,9 +344,21 @@ msgid ""
 "Setting AppManager to superuse mode now."
 msgstr ""
 
+#, fuzzy
+msgid "Unable to create destination directory."
+msgstr "Невозможно создать каталог назначения. Ошибка: %s"
+
 #, c-format
 msgid "Unable to create file '%s'!"
 msgstr "Невозможно создать файл '%s'!"
+
+#, fuzzy, c-format
+msgid "Unable to create/update database tables: %s"
+msgstr "Невозможно создать файл '%s'!"
+
+#, fuzzy, c-format
+msgid "Unable to download feed %s. Message: %s"
+msgstr "Невозможно прочитать подпись пакета! Сообщение: %s"
 
 msgid "Unable to extract IPK data!"
 msgstr ""
@@ -341,11 +366,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to extract data file %s. Message: %s"
+msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
+
 #, c-format
 msgid ""
 "Unable to extract data file %s. This IPK package might be damaged, please "
 "obtain a new copy."
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to extract file '%s' for dependency '%s'!"
+msgstr "Невозможно создать файл '%s'!"
+
+#, fuzzy, c-format
+msgid "Unable to extract file. %s"
+msgstr "Невозможно создать файл '%s'!"
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr "Невозможно извлечь подпись! Возможно, пакет не подписан."
@@ -359,7 +396,17 @@ msgid "Unable to fetch dependency information list: %s"
 msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
 
 #, c-format
-msgid "Unable to find native package for %s!"
+msgid ""
+"Unable to find a matching implementation of '%s' for your system/"
+"architecture."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to find native package for '%s'!"
+msgstr "Установить пакет"
+
+#, c-format
+msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr ""
 
 msgid "Unable to open software database for reading & writing!"
@@ -396,6 +443,16 @@ msgstr "Неизвестно."
 
 msgid "Use recursive mode"
 msgstr "Использовать рекурсивный режим"
+
+#, fuzzy, c-format
+msgid ""
+"Validation of file %s failed! This IPK file might have been modified after "
+"creation.\n"
+"Please obtain a new copy and try again."
+msgstr ""
+"Хеш-значения не совпадают!\n"
+"Возможно пакет был изменён после создания.\n"
+"Пожалуйста, получите новую копию"
 
 msgid "Validity is undefined"
 msgstr ""
@@ -843,8 +900,8 @@ msgstr "ошибка: %s"
 #~ msgid "Custom ..."
 #~ msgstr "Пользовательский ..."
 
-#~ msgid "Database connection closed."
-#~ msgstr "Соединение с базой данных закрыто."
+#~ msgid "Database problem:"
+#~ msgstr "Проблема с базой данных:"
 
 #~ msgid "Default"
 #~ msgstr "По умолчанию"
@@ -1029,6 +1086,9 @@ msgstr "ошибка: %s"
 #~ msgid "Executing application main executable..."
 #~ msgstr "Выполнение основного исполняемого файла приложения"
 
+#~ msgid "Fatal database error"
+#~ msgstr "Фатальная ошибка базы данных"
+
 #~ msgid "File"
 #~ msgstr "Файл"
 
@@ -1130,15 +1190,6 @@ msgstr "ошибка: %s"
 
 #~ msgid "Hanja"
 #~ msgstr "Ханчча"
-
-#~ msgid ""
-#~ "Hash value doesn't match!\n"
-#~ "The package may be modified after creation.\n"
-#~ "Please obtain a new copy"
-#~ msgstr ""
-#~ "Хеш-значения не совпадают!\n"
-#~ "Возможно пакет был изменён после создания.\n"
-#~ "Пожалуйста, получите новую копию"
 
 #~ msgid "Help"
 #~ msgstr "Справка"

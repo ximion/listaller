@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-14 19:12+0200\n"
+"POT-Creation-Date: 2011-07-29 01:11+0200\n"
 "PO-Revision-Date: 2011-04-26 21:51+0000\n"
 "Last-Translator: simone.sandri <lexluxsox@hotmail.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -53,6 +53,9 @@ msgstr ""
 msgid "Can't verify: Key is missing"
 msgstr ""
 
+msgid "Cannot query file size, continuing with an unknown size."
+msgstr ""
+
 msgid "Copying files to their destination"
 msgstr ""
 
@@ -67,10 +70,6 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "Could not create destination directory. Error: %s"
-msgstr ""
-
-#, c-format
 msgid "Could not create file '%s'! File already exists."
 msgstr ""
 
@@ -80,6 +79,10 @@ msgstr ""
 #, c-format
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Could not extract file %s! Error: %s"
+msgstr "Impossibile estrarre il file ! Errore: %s"
 
 #, c-format
 msgid "Could not extract file! Error: %s"
@@ -120,6 +123,11 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid ""
+"Could not read dependency archive! Archive might be damaged. Message: %s"
+msgstr ""
+
+#, c-format
 msgid "Could not remove file %s!"
 msgstr ""
 
@@ -127,15 +135,12 @@ msgstr ""
 msgid "Could not uninstall application %s. It is not installed."
 msgstr ""
 
-#, c-format
-msgid ""
-"Could not validate file %s. This IPK file might have been modified after "
-"creation!\n"
-"Please obtain a new copy and try again."
-msgstr ""
-
 msgid "DIRECTORY"
 msgstr "CARTELLA"
+
+#, fuzzy, c-format
+msgid "Database action '%s' failed: %s"
+msgstr "La connessione al database è stata chiusa."
 
 msgid "Database action failed"
 msgstr ""
@@ -144,9 +149,6 @@ msgid "Database action successful"
 msgstr ""
 
 msgid "Database locked"
-msgstr ""
-
-msgid "Database problem:"
 msgstr ""
 
 msgid "Database unlocked"
@@ -159,9 +161,6 @@ msgstr "ERRORE: %s"
 #, c-format
 msgid "Error: %s\n"
 msgstr ""
-
-msgid "Fatal database error"
-msgstr "Errore fatale database"
 
 #, c-format
 msgid "File %s not found or permission denied!"
@@ -305,6 +304,20 @@ msgstr "Questa applicazione è già installata"
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
 
+msgid ""
+"Tried to perform action on private software database, but the database is "
+"not opened! (this should never happen!)"
+msgstr ""
+
+msgid ""
+"Tried to perform action on shared software database, but the database is not "
+"opened! (maybe a permission problem?)"
+msgstr ""
+
+msgid ""
+"Tried to write on unlocked (readonly) database! (This should not happen)"
+msgstr ""
+
 msgid "Trust if full"
 msgstr ""
 
@@ -325,9 +338,20 @@ msgid ""
 "Setting AppManager to superuse mode now."
 msgstr ""
 
+msgid "Unable to create destination directory."
+msgstr ""
+
 #, c-format
 msgid "Unable to create file '%s'!"
 msgstr "Impossibile creare il file '%s'!"
+
+#, fuzzy, c-format
+msgid "Unable to create/update database tables: %s"
+msgstr "Impossibile creare il file '%s'!"
+
+#, c-format
+msgid "Unable to download feed %s. Message: %s"
+msgstr ""
 
 msgid "Unable to extract IPK data!"
 msgstr ""
@@ -335,11 +359,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to extract data file %s. Message: %s"
+msgstr "Impossibile copiare il file %s.Q"
+
 #, c-format
 msgid ""
 "Unable to extract data file %s. This IPK package might be damaged, please "
 "obtain a new copy."
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to extract file '%s' for dependency '%s'!"
+msgstr "Impossibile creare il file '%s'!"
+
+#, fuzzy, c-format
+msgid "Unable to extract file. %s"
+msgstr "Impossibile creare il file '%s'!"
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
@@ -353,7 +389,17 @@ msgid "Unable to fetch dependency information list: %s"
 msgstr ""
 
 #, c-format
-msgid "Unable to find native package for %s!"
+msgid ""
+"Unable to find a matching implementation of '%s' for your system/"
+"architecture."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to find native package for '%s'!"
+msgstr "Installa pacchetto"
+
+#, c-format
+msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr ""
 
 msgid "Unable to open software database for reading & writing!"
@@ -390,6 +436,16 @@ msgstr ""
 
 msgid "Use recursive mode"
 msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Validation of file %s failed! This IPK file might have been modified after "
+"creation.\n"
+"Please obtain a new copy and try again."
+msgstr ""
+"Gli hash non corrispondono!\n"
+"Il pacchetto potrebbe essere stato modificato dopo la sua creazione.\n"
+"Ne è necessaria una nuova copia"
 
 msgid "Validity is undefined"
 msgstr ""
@@ -513,9 +569,6 @@ msgstr ""
 #~ msgid "Create DEB and RPM file from IPS"
 #~ msgstr "Creazione file DEB e RPM da IPS"
 
-#~ msgid "Database connection closed."
-#~ msgstr "La connessione al database è stata chiusa."
-
 #~ msgid "Dependencies couldn't be solved!"
 #~ msgstr "Non è stato possibile soddisfare le dipendenze."
 
@@ -596,6 +649,9 @@ msgstr ""
 #~ msgid "Executing application for testing..."
 #~ msgstr "È in corso l'esecuzione dell'applicazione per test..."
 
+#~ msgid "Fatal database error"
+#~ msgstr "Errore fatale database"
+
 #~ msgid "File"
 #~ msgstr "Documento"
 
@@ -616,15 +672,6 @@ msgstr ""
 
 #~ msgid "Graphic"
 #~ msgstr "Grafica"
-
-#~ msgid ""
-#~ "Hash doesn't match!\n"
-#~ "The package may be modified after creation.\n"
-#~ "Please obtain a new copy"
-#~ msgstr ""
-#~ "Gli hash non corrispondono!\n"
-#~ "Il pacchetto potrebbe essere stato modificato dopo la sua creazione.\n"
-#~ "Ne è necessaria una nuova copia"
 
 #~ msgid ""
 #~ "Hash value doesn't match!\n"
@@ -1009,9 +1056,6 @@ msgstr ""
 
 #~ msgid "This application wants to fetch a dependency from %l"
 #~ msgstr "L'applicazione sta tentando di recuperare una dipendenza da %l"
-
-#~ msgid "Unable to copy the file %s."
-#~ msgstr "Impossibile copiare il file %s.Q"
 
 #~ msgid "Unable to find %s"
 #~ msgstr "Impossibile trovare %s"

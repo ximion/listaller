@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-14 19:12+0200\n"
+"POT-Creation-Date: 2011-07-29 01:11+0200\n"
 "PO-Revision-Date: 2011-06-14 21:00+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -55,6 +55,9 @@ msgstr "CRL nicht verfügbar."
 msgid "Can't verify: Key is missing"
 msgstr ""
 
+msgid "Cannot query file size, continuing with an unknown size."
+msgstr ""
+
 msgid "Copying files to their destination"
 msgstr "Kopiere Dateien an ihren Zielort."
 
@@ -72,10 +75,6 @@ msgstr ""
 "Fehlermeldung war \"%s\"."
 
 #, c-format
-msgid "Could not create destination directory. Error: %s"
-msgstr "Konnte Zielordner nicht erstellen. Fehler: %s"
-
-#, c-format
 msgid "Could not create file '%s'! File already exists."
 msgstr "Konnte Datei '%s' nicht erstellen! Datei existiert bereits."
 
@@ -87,6 +86,10 @@ msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
 msgstr ""
 "Konnte Inhalt des IPK Paketes nicht extrahieren! Das Paket könnte beschädigt "
 "sein. Fehler: %s"
+
+#, fuzzy, c-format
+msgid "Could not extract file %s! Error: %s"
+msgstr "Konnte Datei nicht extrahieren! Fehler: %s"
 
 #, c-format
 msgid "Could not extract file! Error: %s"
@@ -130,6 +133,13 @@ msgstr ""
 "Konnte IPK Inhalt-Container nicht laden! Das Paket könnte beschädigt sein. "
 "Fehler: %s"
 
+#, fuzzy, c-format
+msgid ""
+"Could not read dependency archive! Archive might be damaged. Message: %s"
+msgstr ""
+"Konnte IPK Inhalt-Container nicht laden! Das Paket könnte beschädigt sein. "
+"Fehler: %s"
+
 #, c-format
 msgid "Could not remove file %s!"
 msgstr "Konnte Datei '%s' nicht entfernen."
@@ -138,18 +148,12 @@ msgstr "Konnte Datei '%s' nicht entfernen."
 msgid "Could not uninstall application %s. It is not installed."
 msgstr ""
 
-#, c-format
-msgid ""
-"Could not validate file %s. This IPK file might have been modified after "
-"creation!\n"
-"Please obtain a new copy and try again."
-msgstr ""
-"Konnte Datei %s nicht validieren. Diese IPK-Datei könnte nach ihrer "
-"Erstellung verändert worden sein!\n"
-"Besorgen Sie sich eine neue Kopie und versuchen Sie es erneut."
-
 msgid "DIRECTORY"
 msgstr "VERZEICHNIS"
+
+#, fuzzy, c-format
+msgid "Database action '%s' failed: %s"
+msgstr "Datenbankaktion fehlgeschlagen."
 
 msgid "Database action failed"
 msgstr "Datenbankaktion fehlgeschlagen."
@@ -159,9 +163,6 @@ msgstr "Datenbankaktion erfolgreich."
 
 msgid "Database locked"
 msgstr "Datenbank gesperrt"
-
-msgid "Database problem:"
-msgstr ""
 
 msgid "Database unlocked"
 msgstr "Datenbank entsperrt"
@@ -173,9 +174,6 @@ msgstr "Fehler: %s"
 #, c-format
 msgid "Error: %s\n"
 msgstr "Fehler: %s\n"
-
-msgid "Fatal database error"
-msgstr "Fataler Datenbankfehler"
 
 #, c-format
 msgid "File %s not found or permission denied!"
@@ -322,6 +320,20 @@ msgstr "Diese Anwendung ist schon installiert"
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
 
+msgid ""
+"Tried to perform action on private software database, but the database is "
+"not opened! (this should never happen!)"
+msgstr ""
+
+msgid ""
+"Tried to perform action on shared software database, but the database is not "
+"opened! (maybe a permission problem?)"
+msgstr ""
+
+msgid ""
+"Tried to write on unlocked (readonly) database! (This should not happen)"
+msgstr ""
+
 msgid "Trust if full"
 msgstr ""
 
@@ -342,8 +354,20 @@ msgid ""
 "Setting AppManager to superuse mode now."
 msgstr ""
 
+#, fuzzy
+msgid "Unable to create destination directory."
+msgstr "Konnte Zielordner nicht erstellen. Fehler: %s"
+
 #, c-format
 msgid "Unable to create file '%s'!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to create/update database tables: %s"
+msgstr "KRITISCH: Konnte Datenbank-Sperre nicht entfernen! (Nachricht: %s)"
+
+#, c-format
+msgid "Unable to download feed %s. Message: %s"
 msgstr ""
 
 msgid "Unable to extract IPK data!"
@@ -352,11 +376,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr "Konnte IPK metadaten nicht extrahieren!"
 
+#, fuzzy, c-format
+msgid "Unable to extract data file %s. Message: %s"
+msgstr "Konnte Datei %s nicht kopieren."
+
 #, c-format
 msgid ""
 "Unable to extract data file %s. This IPK package might be damaged, please "
 "obtain a new copy."
 msgstr ""
+
+#, c-format
+msgid "Unable to extract file '%s' for dependency '%s'!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to extract file. %s"
+msgstr "Konnte Datei %s nicht kopieren."
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
@@ -370,7 +406,17 @@ msgid "Unable to fetch dependency information list: %s"
 msgstr ""
 
 #, c-format
-msgid "Unable to find native package for %s!"
+msgid ""
+"Unable to find a matching implementation of '%s' for your system/"
+"architecture."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to find native package for '%s'!"
+msgstr "Paket installieren"
+
+#, c-format
+msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr ""
 
 msgid "Unable to open software database for reading & writing!"
@@ -407,6 +453,16 @@ msgstr ""
 
 msgid "Use recursive mode"
 msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Validation of file %s failed! This IPK file might have been modified after "
+"creation.\n"
+"Please obtain a new copy and try again."
+msgstr ""
+"Konnte Datei %s nicht validieren. Diese IPK-Datei könnte nach ihrer "
+"Erstellung verändert worden sein!\n"
+"Besorgen Sie sich eine neue Kopie und versuchen Sie es erneut."
 
 msgid "Validity is undefined"
 msgstr ""
@@ -725,9 +781,6 @@ msgstr ""
 
 #~ msgid "Button Text"
 #~ msgstr "Schalter-Text"
-
-#~ msgid "CRITICAL: Unable to remove database lock! (Message: %s)"
-#~ msgstr "KRITISCH: Konnte Datenbank-Sperre nicht entfernen! (Nachricht: %s)"
 
 #~ msgid "Calculator"
 #~ msgstr "Rechner"
@@ -1173,6 +1226,9 @@ msgstr ""
 
 #~ msgid "Executing application main executable..."
 #~ msgstr "Führe anwendung aus..."
+
+#~ msgid "Fatal database error"
+#~ msgstr "Fataler Datenbankfehler"
 
 #~ msgid "File"
 #~ msgstr "Datei"
@@ -2410,9 +2466,6 @@ msgstr ""
 
 #~ msgid "This package is untrusted!"
 #~ msgstr "Dieses Paket ist nicht vertrauenswürdig!"
-
-#~ msgid "Unable to copy the file %s."
-#~ msgstr "Konnte Datei %s nicht kopieren."
 
 #~ msgid "Unable to find %s"
 #~ msgstr "Konnte %s nicht finden"

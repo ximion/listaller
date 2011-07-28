@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.00b\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-14 19:12+0200\n"
+"POT-Creation-Date: 2011-07-29 01:11+0200\n"
 "PO-Revision-Date: 2011-02-22 22:07+0000\n"
 "Last-Translator: truri <Unknown>\n"
 "Language-Team: Albanian\n"
@@ -48,6 +48,9 @@ msgstr ""
 msgid "Can't verify: Key is missing"
 msgstr ""
 
+msgid "Cannot query file size, continuing with an unknown size."
+msgstr ""
+
 msgid "Copying files to their destination"
 msgstr ""
 
@@ -62,10 +65,6 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "Could not create destination directory. Error: %s"
-msgstr ""
-
-#, c-format
 msgid "Could not create file '%s'! File already exists."
 msgstr ""
 
@@ -74,6 +73,10 @@ msgstr ""
 
 #, c-format
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not extract file %s! Error: %s"
 msgstr ""
 
 #, c-format
@@ -115,6 +118,11 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid ""
+"Could not read dependency archive! Archive might be damaged. Message: %s"
+msgstr ""
+
+#, c-format
 msgid "Could not remove file %s!"
 msgstr ""
 
@@ -122,15 +130,12 @@ msgstr ""
 msgid "Could not uninstall application %s. It is not installed."
 msgstr ""
 
-#, c-format
-msgid ""
-"Could not validate file %s. This IPK file might have been modified after "
-"creation!\n"
-"Please obtain a new copy and try again."
-msgstr ""
-
 msgid "DIRECTORY"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Database action '%s' failed: %s"
+msgstr "Lidhja me bazën e të dhënave u ndërpre."
 
 msgid "Database action failed"
 msgstr ""
@@ -139,9 +144,6 @@ msgid "Database action successful"
 msgstr ""
 
 msgid "Database locked"
-msgstr ""
-
-msgid "Database problem:"
 msgstr ""
 
 msgid "Database unlocked"
@@ -153,9 +155,6 @@ msgstr ""
 
 #, c-format
 msgid "Error: %s\n"
-msgstr ""
-
-msgid "Fatal database error"
 msgstr ""
 
 #, c-format
@@ -300,6 +299,20 @@ msgstr "Ky zbatim është tashmë i instaluar"
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
 
+msgid ""
+"Tried to perform action on private software database, but the database is "
+"not opened! (this should never happen!)"
+msgstr ""
+
+msgid ""
+"Tried to perform action on shared software database, but the database is not "
+"opened! (maybe a permission problem?)"
+msgstr ""
+
+msgid ""
+"Tried to write on unlocked (readonly) database! (This should not happen)"
+msgstr ""
+
 msgid "Trust if full"
 msgstr ""
 
@@ -320,8 +333,19 @@ msgid ""
 "Setting AppManager to superuse mode now."
 msgstr ""
 
+msgid "Unable to create destination directory."
+msgstr ""
+
 #, c-format
 msgid "Unable to create file '%s'!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to create/update database tables: %s"
+msgstr "I pazoti të kopjojë kartelën %s."
+
+#, c-format
+msgid "Unable to download feed %s. Message: %s"
 msgstr ""
 
 msgid "Unable to extract IPK data!"
@@ -330,11 +354,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to extract data file %s. Message: %s"
+msgstr "I pazoti të kopjojë kartelën %s."
+
 #, c-format
 msgid ""
 "Unable to extract data file %s. This IPK package might be damaged, please "
 "obtain a new copy."
 msgstr ""
+
+#, c-format
+msgid "Unable to extract file '%s' for dependency '%s'!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to extract file. %s"
+msgstr "I pazoti të kopjojë kartelën %s."
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
@@ -348,7 +384,17 @@ msgid "Unable to fetch dependency information list: %s"
 msgstr ""
 
 #, c-format
-msgid "Unable to find native package for %s!"
+msgid ""
+"Unable to find a matching implementation of '%s' for your system/"
+"architecture."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to find native package for '%s'!"
+msgstr "Instalo paketën"
+
+#, c-format
+msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr ""
 
 msgid "Unable to open software database for reading & writing!"
@@ -385,6 +431,16 @@ msgstr ""
 
 msgid "Use recursive mode"
 msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Validation of file %s failed! This IPK file might have been modified after "
+"creation.\n"
+"Please obtain a new copy and try again."
+msgstr ""
+"Vlera e hashit nuk u përputh!\n"
+"Paketa mund të ndryshohet pas krijimit.\n"
+"Ju lutem, merrni një kopje të re."
 
 msgid "Validity is undefined"
 msgstr ""
@@ -547,9 +603,6 @@ msgstr ""
 #~ msgid "Create/Update update-repository"
 #~ msgstr "Krijo/Përditëso depo përditësimi"
 
-#~ msgid "Database connection closed."
-#~ msgstr "Lidhja me bazën e të dhënave u ndërpre."
-
 #~ msgid "Delete source"
 #~ msgstr "Fshije burimin"
 
@@ -682,15 +735,6 @@ msgstr ""
 
 #~ msgid "Graphic"
 #~ msgstr "Grafikë"
-
-#~ msgid ""
-#~ "Hash value doesn't match!\n"
-#~ "The package may be modified after creation.\n"
-#~ "Please obtain a new copy"
-#~ msgstr ""
-#~ "Vlera e hashit nuk u përputh!\n"
-#~ "Paketa mund të ndryshohet pas krijimit.\n"
-#~ "Ju lutem, merrni një kopje të re."
 
 #~ msgid "I agree with the above terms and conditions"
 #~ msgstr "Pajtohem me termat dhe kushtet e mësipërme"
@@ -1184,9 +1228,6 @@ msgstr ""
 
 #~ msgid "This package is untrusted!"
 #~ msgstr "Kjo paketë nuk është e besuar!"
-
-#~ msgid "Unable to copy the file %s."
-#~ msgstr "I pazoti të kopjojë kartelën %s."
 
 #~ msgid "Unable to find %s"
 #~ msgstr "I pazoti të gjejë%s"

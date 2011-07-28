@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-14 19:12+0200\n"
+"POT-Creation-Date: 2011-07-29 01:11+0200\n"
 "PO-Revision-Date: 2011-01-24 10:01+0000\n"
 "Last-Translator: Ali KIBICI <Unknown>\n"
 "Language-Team: \n"
@@ -48,6 +48,9 @@ msgstr ""
 msgid "Can't verify: Key is missing"
 msgstr ""
 
+msgid "Cannot query file size, continuing with an unknown size."
+msgstr ""
+
 msgid "Copying files to their destination"
 msgstr ""
 
@@ -62,10 +65,6 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "Could not create destination directory. Error: %s"
-msgstr ""
-
-#, c-format
 msgid "Could not create file '%s'! File already exists."
 msgstr ""
 
@@ -74,6 +73,10 @@ msgstr ""
 
 #, c-format
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
+msgstr ""
+
+#, c-format
+msgid "Could not extract file %s! Error: %s"
 msgstr ""
 
 #, c-format
@@ -115,6 +118,11 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid ""
+"Could not read dependency archive! Archive might be damaged. Message: %s"
+msgstr ""
+
+#, c-format
 msgid "Could not remove file %s!"
 msgstr ""
 
@@ -122,14 +130,11 @@ msgstr ""
 msgid "Could not uninstall application %s. It is not installed."
 msgstr ""
 
-#, c-format
-msgid ""
-"Could not validate file %s. This IPK file might have been modified after "
-"creation!\n"
-"Please obtain a new copy and try again."
+msgid "DIRECTORY"
 msgstr ""
 
-msgid "DIRECTORY"
+#, c-format
+msgid "Database action '%s' failed: %s"
 msgstr ""
 
 msgid "Database action failed"
@@ -141,9 +146,6 @@ msgstr ""
 msgid "Database locked"
 msgstr ""
 
-msgid "Database problem:"
-msgstr ""
-
 msgid "Database unlocked"
 msgstr ""
 
@@ -153,9 +155,6 @@ msgstr ""
 
 #, c-format
 msgid "Error: %s\n"
-msgstr ""
-
-msgid "Fatal database error"
 msgstr ""
 
 #, c-format
@@ -300,6 +299,20 @@ msgstr "Bu program zaten yüklenmiş."
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
 
+msgid ""
+"Tried to perform action on private software database, but the database is "
+"not opened! (this should never happen!)"
+msgstr ""
+
+msgid ""
+"Tried to perform action on shared software database, but the database is not "
+"opened! (maybe a permission problem?)"
+msgstr ""
+
+msgid ""
+"Tried to write on unlocked (readonly) database! (This should not happen)"
+msgstr ""
+
 msgid "Trust if full"
 msgstr ""
 
@@ -320,8 +333,19 @@ msgid ""
 "Setting AppManager to superuse mode now."
 msgstr ""
 
+msgid "Unable to create destination directory."
+msgstr ""
+
 #, c-format
 msgid "Unable to create file '%s'!"
+msgstr ""
+
+#, c-format
+msgid "Unable to create/update database tables: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to download feed %s. Message: %s"
 msgstr ""
 
 msgid "Unable to extract IPK data!"
@@ -330,11 +354,23 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to extract data file %s. Message: %s"
+msgstr "%f dosyasının üzerine yazılamadı."
+
 #, c-format
 msgid ""
 "Unable to extract data file %s. This IPK package might be damaged, please "
 "obtain a new copy."
 msgstr ""
+
+#, c-format
+msgid "Unable to extract file '%s' for dependency '%s'!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to extract file. %s"
+msgstr "%s bulunamıyor"
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
@@ -348,7 +384,17 @@ msgid "Unable to fetch dependency information list: %s"
 msgstr ""
 
 #, c-format
-msgid "Unable to find native package for %s!"
+msgid ""
+"Unable to find a matching implementation of '%s' for your system/"
+"architecture."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to find native package for '%s'!"
+msgstr "Yükleme paketi hasar görmüş."
+
+#, c-format
+msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr ""
 
 msgid "Unable to open software database for reading & writing!"
@@ -385,6 +431,16 @@ msgstr ""
 
 msgid "Use recursive mode"
 msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Validation of file %s failed! This IPK file might have been modified after "
+"creation.\n"
+"Please obtain a new copy and try again."
+msgstr ""
+"Hash kodu uyuşmadı.\n"
+"Oluşturulmasından sonra paket değişmiş olabilir.\n"
+"Lütfen yeni bir kopya edinin."
 
 msgid "Validity is undefined"
 msgstr ""
@@ -917,15 +973,6 @@ msgstr ""
 
 #~ msgid "Hanja"
 #~ msgstr "Hanja"
-
-#~ msgid ""
-#~ "Hash doesn't match!\n"
-#~ "The package may be modified after creation.\n"
-#~ "Please obtain a new copy"
-#~ msgstr ""
-#~ "Hash kodu uyuşmadı.\n"
-#~ "Oluşturulmasından sonra paket değişmiş olabilir.\n"
-#~ "Lütfen yeni bir kopya edinin."
 
 #~ msgid "Help"
 #~ msgstr "Yardım"
@@ -1577,9 +1624,6 @@ msgstr ""
 #~ "Paketin geçerli bir kimliği yok.\n"
 #~ "Yükleyici kapanacak."
 
-#~ msgid "Unable to find %s"
-#~ msgstr "%s bulunamıyor"
-
 #~ msgid "Unable to find a HTML browser."
 #~ msgstr "HTML tarayıcı bulunamıyor."
 
@@ -1592,9 +1636,6 @@ msgstr ""
 #~ msgstr ""
 #~ "%a 'nın simgesi yüklenemedi. Lütfen Linstaller'ın yazılım "
 #~ "geliştiricilerini haberdar edin."
-
-#~ msgid "Unable to overwrite the file %f."
-#~ msgstr "%f dosyasının üzerine yazılamadı."
 
 #~ msgid "Uninstall"
 #~ msgstr "Kaldır"
