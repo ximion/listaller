@@ -70,7 +70,7 @@ private class PkResolver : Object {
 		// We only resolve libraries at time
 		// TODO: Resolve other dependencies too
 		string[] libs = {};
-		foreach (string s in dep.files) {
+		foreach (string s in dep.components) {
 			if (s.has_prefix ("lib:"))
 				libs += s.substring (4);
 		}
@@ -118,15 +118,15 @@ private class PkResolver : Object {
 		reset ();
 
 		// If there are no files, consider this dependency as "installed"
-		if (dep.files.size <= 0) {
-			li_warning ("Dependency %s has no files assigned!".printf (dep.full_name));
+		if (dep.components.size <= 0) {
+			li_warning ("Dependency %s has no components assigned!".printf (dep.full_name));
 			return true;
 		}
 
 		/* Search files using "find_library" before calling PackageKit to do this
 		 * (this is a huge speed improvement) */
 		ret = true;
-		foreach (string s in dep.files) {
+		foreach (string s in dep.components) {
 			if (s.has_prefix ("lib:")) {
 				if (s.has_suffix (".*"))
 					s = s.replace (".*", "");
@@ -138,7 +138,7 @@ private class PkResolver : Object {
 
 		if (ret) {
 			dep.meta_info.clear ();
-			foreach (string s in dep.files)
+			foreach (string s in dep.components)
 				if (s.has_prefix ("lib:"))
 					dep.meta_info.add (s);
 			dep.satisfied = true;

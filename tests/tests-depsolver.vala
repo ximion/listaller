@@ -101,7 +101,7 @@ void test_packagekit_installer () {
 	// Build simple mp3gain dependency
 	ArrayList<IPK.Dependency> deplist = new ArrayList<IPK.Dependency> ();
 	IPK.Dependency depMp3Gain = new IPK.Dependency ("Mp3Gain");
-	depMp3Gain.files.add ("/usr/bin/mp3gain");
+	depMp3Gain.add_component ("/usr/bin/mp3gain", IPK.ComponentType.BINARY);
 
 	Deps.PkInstaller pkit = new Deps.PkInstaller (conf);
 	Deps.PkResolver pkslv = new Deps.PkResolver (conf);
@@ -112,16 +112,16 @@ void test_packagekit_installer () {
 
 	// Now something more advanced
 	IPK.Dependency crazy = new IPK.Dependency ("CrazyStuff");
-	crazy.files.add ("/bin/bash");
-	crazy.files.add ("libpackagekit-glib2.so");
-	crazy.files.add ("libc6.so");
+	crazy.add_component ("/bin/bash", IPK.ComponentType.BINARY);
+	crazy.add_component ("libpackagekit-glib2.so", IPK.ComponentType.SHLIB);
+	crazy.add_component ("libc6.so", IPK.ComponentType.SHLIB);
 
 	search_install_pkdep (pkit, pkslv, ref crazy);
 	assert (crazy.satisfied == true);
 
 	// Now something which fails
 	IPK.Dependency fail = new IPK.Dependency ("Fail");
-	fail.files.add ("/run/chicken");
+	fail.add_component ("/run/chicken", IPK.ComponentType.UNKNOWN);
 	ret = pkslv.search_dep_packages (ref fail);
 	if (!ret) {
 		debug (pkit.last_error.details);
@@ -157,7 +157,7 @@ void test_depsolver () {
 	deplist.add (dep2);
 
 	IPK.Dependency dep3 = new IPK.Dependency ("Mp3Gain");
-	dep3.files.add ("/usr/bin/mp3gain");
+	dep3.add_component ("/usr/bin/mp3gain", IPK.ComponentType.BINARY);
 	deplist.add (dep3);
 
 	IPK.Dependency dep4 = new IPK.Dependency ("LibXml2");

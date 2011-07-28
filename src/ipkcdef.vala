@@ -201,7 +201,7 @@ public abstract class CXml : Object {
 			}
 
 			// Add the file-list
-			foreach (string s in dep.files) {
+			foreach (string s in dep.components) {
 				if (s.has_prefix ("lib:"))
 					depnode->new_text_child (null, "lib", s.substring (4));
 				else if (s.has_prefix ("python:"))
@@ -234,14 +234,14 @@ public abstract class CXml : Object {
 				}
 
 				if (in->name == "lib") {
-					dep.files.add ("lib:" + in->get_content ());
+					dep.components.add ("lib:" + in->get_content ());
 				}
 				if (in->name == "python") {
-					dep.files.add ("python:" + in->get_content ());
+					dep.components.add ("python:" + in->get_content ());
 				}
 				if (in->name == "file") {
 					li_warning ("Dependency %s depends on a file (%s), which is not supported at time.".printf (dep.idname, in->get_content ()));
-					dep.files.add ("file:" + in->get_content ());
+					dep.components.add ("file:" + in->get_content ());
 				}
 			}
 			depList.add (dep);

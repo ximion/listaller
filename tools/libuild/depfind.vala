@@ -64,7 +64,7 @@ private class DepFind : Object {
 		ArrayList<string> files = get_dependency_list ();
 		foreach (string s in files) {
 			if (s.has_prefix ("lib:")) {
-				IPK.Dependency dtmp = dinfo.get_dep_template_for_file (s.substring (4));
+				IPK.Dependency dtmp = dinfo.get_dep_template_for_component (s);
 				string dep_name = "";
 				if (dtmp != null)
 					dep_name = dtmp.full_name;
@@ -79,7 +79,7 @@ private class DepFind : Object {
 				bool done = false;
 				foreach (IPK.Dependency d in deplist) {
 					if (d.full_name == dep_name) {
-						d.files.add (s.strip ());
+						d.components.add (s.strip ());
 						done = true;
 						break;
 					}
@@ -95,7 +95,7 @@ private class DepFind : Object {
 					dep.feed_url = dtmp.feed_url;
 					dep.is_standardlib = dtmp.is_standardlib;
 				}
-				dep.files.add (s);
+				dep.components.add (s);
 
 				deplist.add (dep);
 			}

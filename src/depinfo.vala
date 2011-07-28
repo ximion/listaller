@@ -1,4 +1,4 @@
-/* depinfo.vala
+/* depinfo.vala - (Fetch) information about software dependencies
  *
  * Copyright (C) 2011 Matthias Klumpp <matthias@nlinux.org>
  *
@@ -24,6 +24,13 @@ using Listaller;
 
 namespace Listaller.IPK {
 
+public enum ComponentType {
+	SHLIB,
+	BINARY,
+	PYTHON,
+	UNKNOWN;
+}
+
 public class Dependency : Object {
 	private string _full_name;
 	public string full_name {
@@ -47,10 +54,10 @@ public class Dependency : Object {
 	public bool satisfied { get; set; }
 	public string architecture { get; set; } // e.g. linux-amd64
 	public HashSet<string> meta_info { get; set; }
-	public bool is_standardlib { get; set; }
+	public bool is_standardlib { get; set; } // Whether this dependency is always satisfied (by default)
 
 	public string feed_url { get; set; }
-	public ArrayList<string> files { get; set; }
+	public ArrayList<string> components { get; set; } // Parts of this dependency (e.g. shlibs, python modules, files, etc.)
 
 	public int64 install_time { get; set; }
 	public string environment { get; set; }
@@ -74,7 +81,7 @@ public class Dependency : Object {
 		satisfied = false;
 		is_standardlib = false;
 
-		files = new ArrayList<string> ();
+		components = new ArrayList<string> ();
 		meta_info = new HashSet<string> ();
 		feed_url = "";
 		version = "0";
@@ -102,6 +109,22 @@ public class Dependency : Object {
 		}
 		_idname = "";
 		_idname = idname;
+	}
+
+	public void add_component (string cname, ComponentType tp) {
+		string idstr = "";
+		switch (tp) {
+			case ComponentType.SHLIB: idstr = "lib:%s";
+						  break;
+			case ComponentType.BINARY: idstr = "bin:%s";
+						  break;
+			case ComponentType.PYTHON: idstr = "python:%s";
+						  break;
+			default: idstr = "file:%s";
+				 break;
+		}
+		idstr = idstr.printf (cname);
+		components.add (idstr);
 	}
 }
 
@@ -167,13 +190,13 @@ private class DepInfo : Object {
 				if (line.down ().has_prefix ("libraries:")) {
 					string s = line.substring (line.index_of (":") + 1).strip ();
 					if (s != "")
-						dep.files.add ("lib:" + s);
+						dep.components.add ("lib:" + s);
 					mode = DepInfoBlock.FILES;
 					continue;
 				}
 				if (line.substring (0, 1) == " ") {
 					if (mode == DepInfoBlock.FILES)
-						dep.files.add (line.strip ());
+						dep.components.add (line.strip ());
 
 				}
 			}
@@ -185,12 +208,12 @@ private class DepInfo : Object {
 		}
 	}
 
-	public IPK.Dependency? get_dep_template_for_file (string fname) {
+	public IPK.Dependency? get_dep_template_for_component (string cname) {
 		foreach (IPK.Dependency dep in dlist) {
-			foreach (string s in dep.files) {
-				if (fname == s)
+			foreach (string s in dep.components) {
+				if (cname == s)
 					return dep;
-				if (PatternSpec.match_simple (s, fname))
+				if (PatternSpec.match_simple (s, cname))
 					return dep;
 			}
 		}
