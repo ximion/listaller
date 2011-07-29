@@ -62,7 +62,6 @@ void test_software_db () {
 	msg ("Software database is ready now!");
 	msg ("Constructing fake application and adding it to the DB...");
 
-	{
 	AppItem item = new AppItem ("Test", "0.1");
 	ret = sdb.add_application (item);
 	assert (ret == true);
@@ -76,7 +75,6 @@ void test_software_db () {
 	assert (newItem.dbid == 1);
 
 	msg ("Item is: %s".printf (newItem.to_string ()));
-	}
 
 	int count = sdb.get_applications_count ();
 	assert (count == 1);

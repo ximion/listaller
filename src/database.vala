@@ -49,17 +49,17 @@ private class SoftwareDB : Object {
 		conf = liconf;
 
 		if (include_shared) {
-			db_shared = new InternalDB (true);
+			db_shared = new InternalDB (true, conf.testmode);
 
 			/* If we open a shared DB and have root-access, don't open the
 			 * private database. It makes no sense someone is working as root
 			 * and installing private stuff into root's home-dir */
 			if (!is_root ()) {
-				db_priv = new InternalDB (false);
+				db_priv = new InternalDB (false, conf.testmode);
 			}
 		} else {
 			// If we only want to open the personal DB, don't touch the shared one
-			db_priv = new InternalDB (false);
+			db_priv = new InternalDB (false, conf.testmode);
 		}
 
 		if (db_priv != null) {
@@ -123,31 +123,28 @@ private class SoftwareDB : Object {
 
 	public bool open_read () {
 		bool ret = true;
-		if (db_priv != null)
+		if (private_db_canbeused ())
 			ret = db_priv.open_r ();
-		if (db_shared != null) {
-			if (shared_db_canbeused ()) {
-				if (!ret)
-					ret = db_shared.open_r ();
-				else
-					db_shared.open_r ();
-			}
+		if (shared_db_canbeused ()) {
+			if (!ret)
+				ret = db_shared.open_r ();
+			else
+				db_shared.open_r ();
 		}
 		return ret;
 	}
 
 	public bool open_write () {
 		bool ret = true;
-		if (db_priv != null)
+		if (private_db_canbeused ())
 			ret = db_priv.open_rw ();
-		if (db_shared != null) {
-			if (shared_db_canbeused ()) {
-				if (!ret)
-					ret = db_shared.open_rw ();
-				else
-					db_shared.open_rw ();
-			}
+		if (shared_db_canbeused ()) {
+			if (!ret)
+				ret = db_shared.open_rw ();
+			else
+				db_shared.open_rw ();
 		}
+
 		return ret;
 	}
 

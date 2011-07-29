@@ -132,9 +132,11 @@ private class InternalDB : Object {
 	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
 
-	public InternalDB (bool sumode) {
+	public InternalDB (bool sumode, bool _testmode = false) {
 		// Create internal dummy configuration to fetch required data
 		var tmpConf = new Listaller.Settings (sumode);
+		tmpConf.testmode = _testmode;
+
 		// File indication the database is locked (UGLY solution, we need something better, later)
 		dblockfile = tmpConf.appregister_dir () + "/lock";
 		// Path with additional data (e.g. the file-list or icons) which is not stored in the SQLite DB
