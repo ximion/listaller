@@ -156,8 +156,7 @@ public class Dependency : Object {
 	}
 
 	public ComponentType component_get_type (string cidname) {
-		string tpid = cidname.substring (0, cidname.index_of (":") - 1).strip ();
-		debug (tpid);
+		string tpid = cidname.substring (0, cidname.index_of (":")).strip ();
 		ComponentType tp = ComponentType.UNKNOWN;
 		switch (tpid) {
 			case "lib": tp = ComponentType.SHLIB;
@@ -165,6 +164,8 @@ public class Dependency : Object {
 			case "bin": tp = ComponentType.BINARY;
 				    break;
 			case "python": tp = ComponentType.PYTHON;
+				    break;
+			case "file": tp = ComponentType.FILE;
 				    break;
 			default: tp = ComponentType.UNKNOWN;
 				    break;

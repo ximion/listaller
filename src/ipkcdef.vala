@@ -243,7 +243,7 @@ public abstract class CXml : Object {
 				}
 				if (in->name == "file") {
 					li_warning ("Dependency %s depends on a file (%s), which is not supported at time.".printf (dep.idname, in->get_content ()));
-					dep.add_component ("file:" + in->get_content (), Deps.ComponentType.FILE);
+					dep.add_component (in->get_content (), Deps.ComponentType.FILE);
 				}
 			}
 			depList.add (dep);
