@@ -21,15 +21,21 @@
 using GLib;
 using Gee;
 using Listaller;
+using Listaller.Deps;
 
-namespace Listaller.IPK {
+namespace Listaller.Deps {
 
 public enum ComponentType {
 	SHLIB,
 	BINARY,
 	PYTHON,
+	FILE,
 	UNKNOWN;
 }
+
+}
+
+namespace Listaller.IPK {
 
 public class Dependency : Object {
 	private string _full_name;
@@ -57,7 +63,7 @@ public class Dependency : Object {
 	public bool is_standardlib { get; set; } // Whether this dependency is always satisfied (by default)
 
 	public string feed_url { get; set; }
-	public ArrayList<string> components { get; set; } // Parts of this dependency (e.g. shlibs, python modules, files, etc.)
+	private HashSet<string> components { get; set; } // Parts of this dependency (e.g. shlibs, python modules, files, etc.)
 
 	public int64 install_time { get; set; }
 	public string environment { get; set; }
@@ -77,11 +83,17 @@ public class Dependency : Object {
 		}
 	}
 
+	public HashSet<string> raw_complist {
+		get {
+			return components;
+		}
+	}
+
 	internal Dependency.blank () {
 		satisfied = false;
 		is_standardlib = false;
 
-		components = new ArrayList<string> ();
+		components = new HashSet<string> ();
 		meta_info = new HashSet<string> ();
 		feed_url = "";
 		version = "0";
@@ -111,7 +123,7 @@ public class Dependency : Object {
 		_idname = idname;
 	}
 
-	public void add_component (string cname, ComponentType tp) {
+	private string get_component_type_idstr (ComponentType tp) {
 		string idstr = "";
 		switch (tp) {
 			case ComponentType.SHLIB: idstr = "lib:%s";
@@ -123,8 +135,41 @@ public class Dependency : Object {
 			default: idstr = "file:%s";
 				 break;
 		}
-		idstr = idstr.printf (cname);
-		components.add (idstr);
+		return idstr;
+	}
+
+	public void add_component (string cname, ComponentType tp) {
+		string str = get_component_type_idstr (tp).printf (cname);
+		components.add (str);
+	}
+
+	public bool has_component (string cname, ComponentType tp) {
+		return components.contains (get_component_type_idstr (tp).printf (cname));
+	}
+
+	public bool has_components () {
+		return components.size > 0;
+	}
+
+	public string component_get_name (string cidname) {
+		return cidname.substring (cidname.index_of (":") + 1).strip ();
+	}
+
+	public ComponentType component_get_type (string cidname) {
+		string tpid = cidname.substring (0, cidname.index_of (":") - 1).strip ();
+		debug (tpid);
+		ComponentType tp = ComponentType.UNKNOWN;
+		switch (tpid) {
+			case "lib": tp = ComponentType.SHLIB;
+				    break;
+			case "bin": tp = ComponentType.BINARY;
+				    break;
+			case "python": tp = ComponentType.PYTHON;
+				    break;
+			default: tp = ComponentType.UNKNOWN;
+				    break;
+		}
+		return tp;
 	}
 }
 
@@ -190,13 +235,13 @@ private class DepInfo : Object {
 				if (line.down ().has_prefix ("libraries:")) {
 					string s = line.substring (line.index_of (":") + 1).strip ();
 					if (s != "")
-						dep.components.add ("lib:" + s);
+						dep.add_component (s, ComponentType.SHLIB);
 					mode = DepInfoBlock.FILES;
 					continue;
 				}
 				if (line.substring (0, 1) == " ") {
 					if (mode == DepInfoBlock.FILES)
-						dep.components.add (line.strip ());
+						dep.add_component (line.strip (), ComponentType.SHLIB);
 
 				}
 			}
@@ -208,12 +253,12 @@ private class DepInfo : Object {
 		}
 	}
 
-	public IPK.Dependency? get_dep_template_for_component (string cname) {
+	public IPK.Dependency? get_dep_template_for_component (string cidname) {
 		foreach (IPK.Dependency dep in dlist) {
-			foreach (string s in dep.components) {
-				if (cname == s)
+			foreach (string s in dep.raw_complist) {
+				if (cidname == s)
 					return dep;
-				if (PatternSpec.match_simple (s, cname))
+				if (PatternSpec.match_simple (s, cidname))
 					return dep;
 			}
 		}

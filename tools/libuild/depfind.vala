@@ -1,4 +1,4 @@
-/* depfind.vala
+/* depfind.vala - Search & group dependencies using the "depscan" tool
  *
  * Copyright (C) 2011 Matthias Klumpp
  *
@@ -79,7 +79,7 @@ private class DepFind : Object {
 				bool done = false;
 				foreach (IPK.Dependency d in deplist) {
 					if (d.full_name == dep_name) {
-						d.components.add (s.strip ());
+						d.add_component (s.strip (), Deps.ComponentType.SHLIB);
 						done = true;
 						break;
 					}
@@ -95,7 +95,7 @@ private class DepFind : Object {
 					dep.feed_url = dtmp.feed_url;
 					dep.is_standardlib = dtmp.is_standardlib;
 				}
-				dep.components.add (s);
+				dep.add_component (s, Deps.ComponentType.SHLIB);
 
 				deplist.add (dep);
 			}

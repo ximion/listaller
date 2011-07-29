@@ -80,19 +80,19 @@ void test_ipk_control_file () {
 	ArrayList<IPK.Dependency> list = new ArrayList<IPK.Dependency> ();
 	IPK.Dependency d = null;
 	d = new IPK.Dependency ("alpha");
-	d.components.add ("/etc/alpha.conf");
+	d.add_component ("/etc/alpha.conf", Deps.ComponentType.FILE);
 	list.add (d);
 
 	d = new IPK.Dependency ("beta");
-	d.components.add ("/usr/lib/libbeta.so");
+	d.add_component ("/usr/lib/libbeta.so", Deps.ComponentType.SHLIB);
 	list.add (d);
 
 	d = new IPK.Dependency ("gamma");
-	d.components.add ("$SYS_LIB/gamma.so.4");
+	d.add_component ("$SYS_LIB/gamma.so.4", Deps.ComponentType.SHLIB);
 	list.add (d);
 
 	d = new IPK.Dependency ("delta");
-	d.components.add ("/usr/bin/delta");
+	d.add_component ("/usr/bin/delta", Deps.ComponentType.FILE);
 	list.add (d);
 
 	ipkc.set_pkg_dependencies (list);
@@ -106,7 +106,7 @@ void test_ipk_control_file () {
 
 	list = ipkc.get_pkg_dependencies ();
 	assert (list[0].full_name == "alpha");
-	assert (list[0].components[0] == "file:/etc/alpha.conf");
+	assert (list[0].has_component ("/etc/alpha.conf", Deps.ComponentType.FILE) == true);
 }
 
 void test_ipk_filelist_file () {

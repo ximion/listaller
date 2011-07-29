@@ -70,9 +70,9 @@ private class PkResolver : Object {
 		// We only resolve libraries at time
 		// TODO: Resolve other dependencies too
 		string[] libs = {};
-		foreach (string s in dep.components) {
-			if (s.has_prefix ("lib:"))
-				libs += s.substring (4);
+		foreach (string s in dep.raw_complist) {
+			if (dep.component_get_type (s) == Deps.ComponentType.SHLIB)
+				libs += dep.component_get_name (s);
 		}
 		libs += null;
 
@@ -118,7 +118,7 @@ private class PkResolver : Object {
 		reset ();
 
 		// If there are no files, consider this dependency as "installed"
-		if (dep.components.size <= 0) {
+		if (dep.has_components ()) {
 			li_warning ("Dependency %s has no components assigned!".printf (dep.full_name));
 			return true;
 		}
@@ -126,11 +126,12 @@ private class PkResolver : Object {
 		/* Search files using "find_library" before calling PackageKit to do this
 		 * (this is a huge speed improvement) */
 		ret = true;
-		foreach (string s in dep.components) {
-			if (s.has_prefix ("lib:")) {
+		foreach (string cmp in dep.raw_complist) {
+			if (dep.component_get_type (cmp) == Deps.ComponentType.SHLIB) {
+				string s = dep.component_get_name (cmp);
 				if (s.has_suffix (".*"))
 					s = s.replace (".*", "");
-				ret = find_library (s.substring (4), conf);
+				ret = find_library (s, conf);
 				if (!ret)
 					break;
 			}
@@ -138,8 +139,8 @@ private class PkResolver : Object {
 
 		if (ret) {
 			dep.meta_info.clear ();
-			foreach (string s in dep.components)
-				if (s.has_prefix ("lib:"))
+			foreach (string s in dep.raw_complist)
+				if (dep.component_get_type (s) == Deps.ComponentType.SHLIB)
 					dep.meta_info.add (s);
 			dep.satisfied = true;
 			return true;

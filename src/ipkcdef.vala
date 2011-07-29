@@ -201,13 +201,15 @@ public abstract class CXml : Object {
 			}
 
 			// Add the file-list
-			foreach (string s in dep.components) {
-				if (s.has_prefix ("lib:"))
-					depnode->new_text_child (null, "lib", s.substring (4));
-				else if (s.has_prefix ("python:"))
-					depnode->new_text_child (null, "python", s.substring (7));
+			foreach (string s in dep.raw_complist) {
+				Deps.ComponentType dct = dep.component_get_type (s);
+				string cname = dep.component_get_name (s);
+				if (dct == Deps.ComponentType.SHLIB)
+					depnode->new_text_child (null, "lib", cname);
+				else if (dct == Deps.ComponentType.PYTHON)
+					depnode->new_text_child (null, "python", cname);
 				else
-					depnode->new_text_child (null, "file", s);
+					depnode->new_text_child (null, "file", cname);
 			}
 		}
 	}
@@ -234,14 +236,14 @@ public abstract class CXml : Object {
 				}
 
 				if (in->name == "lib") {
-					dep.components.add ("lib:" + in->get_content ());
+					dep.add_component (in->get_content (), Deps.ComponentType.SHLIB);
 				}
 				if (in->name == "python") {
-					dep.components.add ("python:" + in->get_content ());
+					dep.add_component (in->get_content (), Deps.ComponentType.PYTHON);
 				}
 				if (in->name == "file") {
 					li_warning ("Dependency %s depends on a file (%s), which is not supported at time.".printf (dep.idname, in->get_content ()));
-					dep.components.add ("file:" + in->get_content ());
+					dep.add_component ("file:" + in->get_content (), Deps.ComponentType.FILE);
 				}
 			}
 			depList.add (dep);
