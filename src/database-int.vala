@@ -797,6 +797,7 @@ private class InternalDB : Object {
 			db_assert (res, "get dependency (by id)");
 			db_assert (stmt.bind_text (1, depIdName), "bind text");
 
+			res = stmt.step ();
 			db_assert (res, "execute");
 			if (res != Sqlite.ROW)
 				return null;
@@ -806,7 +807,6 @@ private class InternalDB : Object {
 		}
 
 		IPK.Dependency? dep = retrieve_dependency (stmt);
-
 		return dep;
 	}
 
