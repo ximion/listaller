@@ -93,6 +93,17 @@ private class GPGSign : Object {
 		/*if (ret < 0)
 			error (errno.to_string ());*/
 	}
+	
+	private static GPGError.ErrorCode simple_passphrase_cb (void* hook, string uid_hint, string passphrase_info, bool prev_was_bad, int fd) {
+		// IMPORTANT: This method of requesting a passwird is very ugly, replace it with something better soon!
+		if (!prev_was_bad)
+			stdout.printf ("Please enter your password:\n");
+		else
+			stdout.printf ("Okay, and now enter the correct password:");
+		string? pass = "%s\n".printf (stdin.read_line ());
+		Posix.write (fd, pass, pass.size ());
+		return GPGError.ErrorCode.NO_ERROR;
+	}
 
 	private string free_data_to_string (Data *dt) {
 		string sig_data;
@@ -132,8 +143,8 @@ private class GPGSign : Object {
 		return_if_fail (check_gpg_err (err));
 
 		string? agent_info = Environment.get_variable ("GPG_AGENT_INFO");
-		/*if (!(agent_info && strchr (agent_info, ':')))
-		 gpgme_set_pa*ssphrase_cb (ctx, passphrase_cb, NULL);*/
+		if (!((agent_info != null) && (agent_info.index_of_char (':') > 0)))
+			ctx.set_passphrase_cb (simple_passphrase_cb);
 
 		ctx.set_textmode (true);
 		ctx.set_armor (true);
@@ -151,7 +162,7 @@ private class GPGSign : Object {
 		err = Data.create (out dout);
 		return_if_fail (check_gpg_err (err));
 		err = ctx.op_sign (din, dout, SigMode.DETACH);
-		return_if_fail (check_gpg_err (err));
+		// return_if_fail (check_gpg_err (err));
 		SignResult *result = ctx.op_sign_result ();
 		check_result (result, SigMode.DETACH);
 		signature_out = free_data_to_string (dout);
@@ -167,8 +178,8 @@ private class GPGSign : Object {
 		return_if_fail (check_gpg_err (err));
 
 		string? agent_info = Environment.get_variable ("GPG_AGENT_INFO");
-		/*if (!(agent_info && strchr (agent_info, ':')))
-			gpgme_set_passphrase_cb (ctx, passphrase_cb, NULL);*/
+		if (!((agent_info != null) && (agent_info.index_of_char (':') > 0)))
+			ctx.set_passphrase_cb (simple_passphrase_cb);
 
 		ctx.set_textmode (true);
 		ctx.set_armor (true);
