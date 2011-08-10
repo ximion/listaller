@@ -51,7 +51,7 @@ private class Solver : Object {
 	}
 
 	public bool execute () {
-		bool ret = false;
+		bool ret = true;
 		ErrorItem? error = null;
 		var di = new DepInfo ();
 		var pksolv = new PkResolver (conf);
