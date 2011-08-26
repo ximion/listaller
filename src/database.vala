@@ -350,6 +350,7 @@ private class SoftwareDB : Object {
 
 	/* Testing stuff */
 
+	// DO NOT USE THIS!
 	public void _remove_db_lock () {
 		if (shared_db_canbeused ())
 			db_shared._remove_db_lock ();

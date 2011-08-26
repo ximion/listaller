@@ -1,7 +1,7 @@
 # CMakeLists for the Listaller Project
 project(listaller-core)
 
-cmake_minimum_required(VERSION 2.8.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8.5 FATAL_ERROR)
 
 #UNSET THIS VARIABLE AT RELEASE TIME
 set(VERSION_SUFFIX "-dev")
@@ -62,7 +62,7 @@ set(XDG_APPS_INSTALL_DIR share/applications)
 add_definitions(-DCMAKE_INSTALL_PREFIX="\"${CMAKE_INSTALL_PREFIX}\"")
 add_definitions(-DCMAKE_INSTALL_LIBDIR="\"${CMAKE_INSTALL_LIBDIR}\"")
 
-set(CMAKE_INSTALL_LIBDIR lib CACHE PATH "Output directory for libraries")
+set(CMAKE_INSTALL_LIBDIR "lib/${CMAKE_LIBRARY_ARCHITECTURE}" CACHE PATH "Output directory for libraries")
 set(LISTALLER_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/listaller)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/data/cmake/)
