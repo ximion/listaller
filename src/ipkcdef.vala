@@ -204,7 +204,7 @@ public abstract class CXml : Object {
 			foreach (string s in dep.raw_complist) {
 				Deps.ComponentType dct = dep.component_get_type (s);
 				string cname = dep.component_get_name (s);
-				if (dct == Deps.ComponentType.SHLIB)
+				if (dct == Deps.ComponentType.SHARED_LIB)
 					depnode->new_text_child (null, "lib", cname);
 				else if (dct == Deps.ComponentType.PYTHON)
 					depnode->new_text_child (null, "python", cname);
@@ -236,7 +236,7 @@ public abstract class CXml : Object {
 				}
 
 				if (in->name == "lib") {
-					dep.add_component (in->get_content (), Deps.ComponentType.SHLIB);
+					dep.add_component (in->get_content (), Deps.ComponentType.SHARED_LIB);
 				}
 				if (in->name == "python") {
 					dep.add_component (in->get_content (), Deps.ComponentType.PYTHON);

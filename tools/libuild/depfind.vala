@@ -79,7 +79,7 @@ private class DepFind : Object {
 				bool done = false;
 				foreach (IPK.Dependency d in deplist) {
 					if (d.full_name == dep_name) {
-						d.add_component (s.strip (), Deps.ComponentType.SHLIB);
+						d.add_component (s.strip (), Deps.ComponentType.SHARED_LIB);
 						done = true;
 						break;
 					}
@@ -95,7 +95,7 @@ private class DepFind : Object {
 					dep.feed_url = dtmp.feed_url;
 					dep.is_standardlib = dtmp.is_standardlib;
 				}
-				dep.add_component (s, Deps.ComponentType.SHLIB);
+				dep.add_component (s, Deps.ComponentType.SHARED_LIB);
 
 				deplist.add (dep);
 			}

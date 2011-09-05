@@ -64,14 +64,18 @@ private class PkResolver : Object {
 		debug ("PkResolver: <error> %s", details);
 	}
 
+	private void pkit_progress_cb (PackageKit.Progress progress, PackageKit.ProgressType type) {
+		// TODO
+	}
+
 	private PackageKit.PackageSack? pkit_pkgs_from_depfiles (IPK.Dependency dep) {
-		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("none");
+		PackageKit.Bitfield filter = PackageKit.Filter.bitfield_from_string ("none");
 
 		// We only resolve libraries at time
 		// TODO: Resolve other dependencies too
 		string[] libs = {};
 		foreach (string s in dep.raw_complist) {
-			if (dep.component_get_type (s) == Deps.ComponentType.SHLIB)
+			if (dep.component_get_type (s) == Deps.ComponentType.SHARED_LIB)
 				libs += dep.component_get_name (s);
 		}
 		libs += null;
@@ -79,7 +83,7 @@ private class PkResolver : Object {
 		PackageKit.Results res;
 		PackageKit.PackageSack sack;
 		try {
-			res  = pkit.what_provides (filter, PackageKit.Provides.LIBRARY, libs, null, null);
+			res  = pkit.what_provides (filter, PackageKit.Provides.SHARED_LIB, libs, null, null);
 			sack = res.get_package_sack ();
 		} catch (Error e) {
 			debug (e.message);
@@ -88,7 +92,7 @@ private class PkResolver : Object {
 		string[] packages = sack.get_ids ();
 
 		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (packages[0] == null) ) {
-			set_error (ErrorEnum.UNKNOWN, "%s\n%s".printf (_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())),
+			set_error (ErrorEnum.UNKNOWN, "%s\n%s".printf (_("PackageKit exit code was: %s").printf (PackageKit.Exit.enum_to_string (res.get_exit_code ())),
 						       _("Unable to find native package for '%s'!").printf (dep.full_name)));
 			return null;
 		}
@@ -97,7 +101,7 @@ private class PkResolver : Object {
 	}
 
 	private bool pkit_install_packages (string[] pkids) {
-		PackageKit.Results res = pkit.install_packages (true, pkids, null, null);
+		PackageKit.Results res = pkit.install_packages (true, pkids, null, pkit_progress_cb);
 
 		if (res.get_exit_code () == PackageKit.Exit.SUCCESS)
 			return true;
@@ -127,7 +131,7 @@ private class PkResolver : Object {
 		 * (this is a huge speed improvement) */
 		ret = true;
 		foreach (string cmp in dep.raw_complist) {
-			if (dep.component_get_type (cmp) == Deps.ComponentType.SHLIB) {
+			if (dep.component_get_type (cmp) == Deps.ComponentType.SHARED_LIB) {
 				string s = dep.component_get_name (cmp);
 				if (s.has_suffix (".*"))
 					s = s.replace (".*", "");
@@ -140,7 +144,7 @@ private class PkResolver : Object {
 		if (ret) {
 			dep.meta_info.clear ();
 			foreach (string s in dep.raw_complist)
-				if (dep.component_get_type (s) == Deps.ComponentType.SHLIB)
+				if (dep.component_get_type (s) == Deps.ComponentType.SHARED_LIB)
 					dep.meta_info.add (s);
 			dep.satisfied = true;
 			return true;

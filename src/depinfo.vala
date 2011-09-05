@@ -26,7 +26,7 @@ using Listaller.Deps;
 namespace Listaller.Deps {
 
 public enum ComponentType {
-	SHLIB,
+	SHARED_LIB,
 	BINARY,
 	PYTHON,
 	FILE,
@@ -126,7 +126,7 @@ public class Dependency : Object {
 	private string get_component_type_idstr (ComponentType tp) {
 		string idstr = "";
 		switch (tp) {
-			case ComponentType.SHLIB: idstr = "lib:%s";
+			case ComponentType.SHARED_LIB: idstr = "lib:%s";
 						  break;
 			case ComponentType.BINARY: idstr = "bin:%s";
 						  break;
@@ -159,7 +159,7 @@ public class Dependency : Object {
 		string tpid = cidname.substring (0, cidname.index_of (":")).strip ();
 		ComponentType tp = ComponentType.UNKNOWN;
 		switch (tpid) {
-			case "lib": tp = ComponentType.SHLIB;
+			case "lib": tp = ComponentType.SHARED_LIB;
 				    break;
 			case "bin": tp = ComponentType.BINARY;
 				    break;
@@ -236,13 +236,13 @@ private class DepInfo : Object {
 				if (line.down ().has_prefix ("libraries:")) {
 					string s = line.substring (line.index_of (":") + 1).strip ();
 					if (s != "")
-						dep.add_component (s, ComponentType.SHLIB);
+						dep.add_component (s, ComponentType.SHARED_LIB);
 					mode = DepInfoBlock.FILES;
 					continue;
 				}
 				if (line.substring (0, 1) == " ") {
 					if (mode == DepInfoBlock.FILES)
-						dep.add_component (line.strip (), ComponentType.SHLIB);
+						dep.add_component (line.strip (), ComponentType.SHARED_LIB);
 
 				}
 			}

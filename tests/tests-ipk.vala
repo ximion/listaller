@@ -84,11 +84,11 @@ void test_ipk_control_file () {
 	list.add (d);
 
 	d = new IPK.Dependency ("beta");
-	d.add_component ("/usr/lib/libbeta.so", Deps.ComponentType.SHLIB);
+	d.add_component ("/usr/lib/libbeta.so", Deps.ComponentType.SHARED_LIB);
 	list.add (d);
 
 	d = new IPK.Dependency ("gamma");
-	d.add_component ("$SYS_LIB/gamma.so.4", Deps.ComponentType.SHLIB);
+	d.add_component ("$SYS_LIB/gamma.so.4", Deps.ComponentType.SHARED_LIB);
 	list.add (d);
 
 	d = new IPK.Dependency ("delta");

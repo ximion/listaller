@@ -113,8 +113,8 @@ void test_packagekit_installer () {
 	// Now something more advanced
 	IPK.Dependency crazy = new IPK.Dependency ("CrazyStuff");
 	crazy.add_component ("/bin/bash", Deps.ComponentType.BINARY);
-	crazy.add_component ("libpackagekit-glib2.so", Deps.ComponentType.SHLIB);
-	crazy.add_component ("libc6.so", Deps.ComponentType.SHLIB);
+	crazy.add_component ("libpackagekit-glib2.so", Deps.ComponentType.SHARED_LIB);
+	crazy.add_component ("libc6.so", Deps.ComponentType.SHARED_LIB);
 
 	search_install_pkdep (pkit, pkslv, ref crazy);
 	assert (crazy.satisfied == true);
