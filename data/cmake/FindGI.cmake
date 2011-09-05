@@ -12,7 +12,7 @@
 # INTROSPECTION_LIBS
 #
 # Copyright (C) 2010, Pino Toscano, <pino@kde.org>
-#		2011, Matthias Klumpp <matthias@nlinux.org>
+#		2011, Matthias Klumpp <matthias@tenstral.net>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.

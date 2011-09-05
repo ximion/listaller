@@ -1,6 +1,6 @@
 /* depinfo.vala - (Fetch) information about software dependencies
  *
- * Copyright (C) 2011 Matthias Klumpp <matthias@nlinux.org>
+ * Copyright (C) 2011 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *

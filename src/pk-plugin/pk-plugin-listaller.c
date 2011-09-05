@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2010-2011 Matthias Klumpp <matthias@nlinux.org>
+ * Copyright (C) 2010-2011 Matthias Klumpp <matthias@tenstral.net>
  *                    2011 Richard Hughes <richard@hughsie.com>
  * Licensed under the GNU Lesser General Public License Version 3
  *

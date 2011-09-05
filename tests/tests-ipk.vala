@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author:
- * 	Matthias Klumpp <matthias@nlinux.org>
+ * 	Matthias Klumpp <matthias@tenstral.net>
  */
 
 using GLib;

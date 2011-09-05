@@ -1,6 +1,6 @@
 # Valgrind suppressions file for Listaller modules
 #
-# Started by Matthias Klumpp <matthias@nlinux.org> 2010-03-24
+# Started by Matthias Klumpp <matthias@tenstral.net> 2010-03-24
 
 {
    FPSYSCALL-Leak

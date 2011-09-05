@@ -18,7 +18,7 @@
  *
  * Author:
  * 	Julian Andres Klode <jak@jak-linux.org>
- * 	Matthias Klumpp <matthias@nlinux.org> (some minor updates)
+ * 	Matthias Klumpp <matthias@tenstral.net> (some minor updates)
  *
  */
 

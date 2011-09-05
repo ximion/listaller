@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author:
- * 	Matthias Klumpp <matthias@nlinux.org>
+ * 	Matthias Klumpp <matthias@tenstral.net>
  */
 [CCode (prefix = "", lower_case_cprefix = "", cheader_filename = "config.h")]
 namespace Config
