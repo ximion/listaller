@@ -6,7 +6,7 @@ Version:   #VERSION#
 Release:   0.#BUILD#%{?alphatag}%{?dist}
 License:   GPLv3+ and LGPLv3+
 URL:       http://listaller.nlinux.org/
-Source0:   https://sourceforge.net/projects/listaller/%{name}-%{version}.tar.gz
+Source0:   http://launchpad.net/listaller/0.5/%{version}/+download/%{name}-%{version}.tar.gz
 
 BuildRequires: gpgme-devel
 BuildRequires: chrpath
