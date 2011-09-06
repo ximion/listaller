@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-29 01:11+0200\n"
+"POT-Creation-Date: 2011-09-06 22:46+0200\n"
 "PO-Revision-Date: 2011-04-03 14:52+0000\n"
 "Last-Translator: KarimSadeg <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -15,21 +15,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
-"X-Generator: Launchpad (build 13242)\n"
+"X-Launchpad-Export-Date: 2011-09-06 20:40+0000\n"
+"X-Generator: Launchpad (build 13861)\n"
 
 #, c-format
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "A higher version '%s' of this application has already been installed."
-msgstr "Choisissez les parties de l'application à installer."
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "A lower version '%s' of this application has already been installed."
-msgstr "Cette application est déjà installée"
+msgstr ""
 
 msgid "A policy was not met."
 msgstr ""
@@ -80,9 +80,9 @@ msgstr "Impossible de créer/mettre à jour la base de donnée du logiciel !"
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Could not extract file %s! Error: %s"
-msgstr "Impossible d'extraire le fichier ! Erreur : %s"
+msgstr ""
 
 #, c-format
 msgid "Could not extract file! Error: %s"
@@ -138,9 +138,9 @@ msgstr ""
 msgid "DIRECTORY"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Database action '%s' failed: %s"
-msgstr "Erreur de l'action de la base de données"
+msgstr ""
 
 msgid "Database action failed"
 msgstr "Erreur de l'action de la base de données"
@@ -185,9 +185,9 @@ msgstr "Installation achevée !"
 msgid "Installation failed!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installing native packages %s"
-msgstr "Le paquetage d'installation est endommagé"
+msgstr ""
 
 msgid "Low security."
 msgstr ""
@@ -297,9 +297,8 @@ msgstr ""
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-#, fuzzy
 msgid "This application has already been installed."
-msgstr "Cette application est déjà installée"
+msgstr ""
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -338,17 +337,16 @@ msgid ""
 "Setting AppManager to superuse mode now."
 msgstr ""
 
-#, fuzzy
 msgid "Unable to create destination directory."
-msgstr "Impossible de créer le répertoire de destination. Erreur : %s"
+msgstr ""
 
 #, c-format
 msgid "Unable to create file '%s'!"
 msgstr "Impossible de créer le fichier '%s'!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create/update database tables: %s"
-msgstr "Impossible de créer le fichier '%s'!"
+msgstr ""
 
 #, c-format
 msgid "Unable to download feed %s. Message: %s"
@@ -360,9 +358,9 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract data file %s. Message: %s"
-msgstr "Impossible de copier le fichier %s."
+msgstr ""
 
 #, c-format
 msgid ""
@@ -370,13 +368,13 @@ msgid ""
 "obtain a new copy."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract file '%s' for dependency '%s'!"
-msgstr "Impossible de créer le fichier '%s'!"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract file. %s"
-msgstr "Impossible de créer le fichier '%s'!"
+msgstr ""
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
@@ -395,9 +393,9 @@ msgid ""
 "architecture."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for '%s'!"
-msgstr "Le paquetage d'installation est endommagé"
+msgstr ""
 
 #, c-format
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
@@ -438,15 +436,12 @@ msgstr ""
 msgid "Use recursive mode"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Validation of file %s failed! This IPK file might have been modified after "
 "creation.\n"
 "Please obtain a new copy and try again."
 msgstr ""
-"Impossible de valider le fichier %s. Il se peut que ce fichier IPK ait été "
-"modifié après sa création !\n"
-"Réessayer avec une nouvelle copie."
 
 msgid "Validity is undefined"
 msgstr ""
@@ -468,182 +463,23 @@ msgstr ""
 msgid "XML file is no valid ZI feed!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "ZI XML file '%s' is damaged."
-msgstr "Le fichier XML '%s' est endommagé."
+msgstr ""
 
 #, c-format
 msgid "error: %s"
 msgstr ""
 
-#~ msgid "  modified "
-#~ msgstr "  modifier "
-
-#~ msgid "  size "
-#~ msgstr "  taille "
-
-#~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
-#~ msgstr ""
-#~ " ATTENTION : Il y a %d structures TimerInfo, elles seront supprimés."
-
-#~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
-#~ msgstr ""
-#~ " ATTENTION : il y a %d messages en file d'attente ! Ils seront supprimés."
-
-#~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
-#~ msgstr " ATTENTION : Il y a %d DCs non libres, en voici le détail :"
-
-#~ msgid ""
-#~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
-#~ msgstr " ATTENTION : Il y a %d GDIObjects non libres, en voici le détail :"
-
-#~ msgid ""
-#~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
-#~ msgstr ""
-#~ " ATTENTION :  Il y a %s non enlevé LM_PAINT/LM_GtkPAINT liens de message."
-
 #~ msgid "%f files will be changed."
 #~ msgstr "%f fichiers seront modifiés"
-
-#~ msgid "%s Index %d out of bounds 0 .. %d"
-#~ msgstr "%s Index %d hors des limites 0 .. %d"
-
-#~ msgid "%s is already associated with %s"
-#~ msgstr "%s est déjà associé avec %s"
-
-#~ msgid ""
-#~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill "
-#~ "the program."
-#~ msgstr ""
-#~ "%s%s Pressez OK pour ignorer et risquer des données corruption.%s Pressez "
-#~ "Annuler pour fermer le programme."
-
-#~ msgid "%s: Already registered"
-#~ msgstr "%s : Déjà enregistré"
-
-#~ msgid "%s: Not registered"
-#~ msgstr "%s : Non enregistré"
-
-#~ msgid "&All"
-#~ msgstr "&Tout"
-
-#~ msgid "&Close"
-#~ msgstr "&Fermer"
-
-#~ msgid "&Directory"
-#~ msgstr "&Répertoire"
-
-#~ msgid "&Help"
-#~ msgstr "&Aide"
-
-#~ msgid "&Ignore"
-#~ msgstr "&Ignorer"
-
-#~ msgid "&No"
-#~ msgstr "&Non"
-
-#~ msgid "&OK"
-#~ msgstr "&OK"
-
-#~ msgid "&Retry"
-#~ msgstr "Réessayer"
-
-#~ msgid "&Yes"
-#~ msgstr "&Oui"
 
 #~ msgid "(This program will download the needed files from the internet)"
 #~ msgstr ""
 #~ "(Ce programme va télécharger les fichiers nécessaires depuis l'Internet)"
 
-#~ msgid "(file not found: \"%s\")"
-#~ msgstr "(Fichier \"%s\" non trouvé)"
-
-#~ msgid ""
-#~ "--class classname     Following Xt conventions, the class of a program is "
-#~ "the program name with the initial character capitalized. For example, the "
-#~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
-#~ "program will be set to \"classname\"."
-#~ msgstr ""
-#~ "--class classname     Suivre la convention Xt, la classe d'un programme "
-#~ "est le nom de programme avec le caractère initial en majuscule. Par "
-#~ "exemple, le nom de classe pour gimp est \"Gimp\". Si --class est "
-#~ "indiquée, la classe du programme sera réglé sur \"classname\"."
-
-#~ msgid ""
-#~ "--display h:s:d       Connect to the specified X server, where \"h\" is "
-#~ "the hostname, \"s\" is the server number (usually 0), and \"d\" is the "
-#~ "display number (typically omitted). If --display is not specified, the "
-#~ "DISPLAY environment variable is used."
-#~ msgstr ""
-#~ "--display h:s:d       Se connecter à X serveur, où \"h\" est le nom "
-#~ "d'hôte, \"s\" est le nombre de serveur (habituellement 0), et \"d\" est "
-#~ "le nombre d'affichage (typiquement omis). Si --l'affichage n'est pas "
-#~ "indiqué, la variable d'environnement DISPLAY est employé."
-
-#~ msgid ""
-#~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
-#~ "the application."
-#~ msgstr ""
-#~ "--g-fatal-warnings    Les avertissements et les erreurs produits par Gtk+/"
-#~ "GDK stopperont l'application."
-
-#~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
-#~ msgstr ""
-#~ "--gdk-debug flags     Activer les messages spécifique GDK+ trace/debug."
-
-#~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
-#~ msgstr ""
-#~ "--gdk-no-debug flags  Arrêter les messages spécifique GDK+ trace/debug."
-
-#~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
-#~ msgstr ""
-#~ "--gtk-debug flags     Activer les messages spécifique Gtk+ trace/debug."
-
-#~ msgid "--gtk-module module   Load the specified module at startup."
-#~ msgstr "--gtk-module module   Charger le module indiqué au démarrage."
-
-#~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
-#~ msgstr ""
-#~ "--gtk-no-debug flags  Arrêter les messages spécifique Gtk+ trace/debug."
-
-#~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
-#~ msgstr ""
-#~ "--lcl-no-transient    Ne mettez pas d'ordre transitoire pour les formes "
-#~ "modales"
-
-#~ msgid ""
-#~ "--name programe       Set program name to \"progname\". If not specified, "
-#~ "program name will be set to ParamStrUTF8(0)."
-#~ msgstr ""
-#~ "--name programme       Ensemble pour le nom du programme \"progname\". Si "
-#~ "non spécifiée, le nom du programme sera fixée à ParamStrUTF8 (0)."
-
-#~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
-#~ msgstr ""
-#~ "--no-xshm             Désactive l'utilisation de la mémoire étendu "
-#~ "partagée par X."
-
-#~ msgid ""
-#~ "--sync                Call XSynchronize (display, True) after the Xserver "
-#~ "connection has been established. This makes debugging X protocol errors "
-#~ "easier, because X request buffering will be disabled and X errors will be "
-#~ "received immediatey after the protocol request that generated the error "
-#~ "has been processed by the X server."
-#~ msgstr ""
-#~ "--sync                Appel XSynchronize (affichage, Vrai) après que le "
-#~ "raccordement au serveur X ait été établi. Ceci rend le déboguage des "
-#~ "erreurs du protocole X plus faciles, parce que les demandes de buffer par "
-#~ "X sont désactivé et les erreurs de X seront reçu immédiatement après la "
-#~ "demande de protocole qui a produit l'erreur traité par le serveur X."
-
-#~ msgid "A control can't have itself as parent"
-#~ msgstr "Un contrôle ne peut pas être son propre parent"
-
 #~ msgid "Abort"
 #~ msgstr "Abandonner"
-
-#~ msgid "Aborted."
-#~ msgstr "Annulé."
 
 #~ msgid "About"
 #~ msgstr "À propos"
@@ -651,20 +487,8 @@ msgstr ""
 #~ msgid "About Listaller"
 #~ msgstr "À propos de Listaller"
 
-#~ msgid "Accept"
-#~ msgstr "Accepter"
-
 #~ msgid "All"
 #~ msgstr "Tout"
-
-#~ msgid "All files (%s)|%s|%s"
-#~ msgstr "Tous les fichiers (%s)|%s|%s"
-
-#~ msgid "Alt"
-#~ msgstr "Alt"
-
-#~ msgid "An internal error occured"
-#~ msgstr "Une erreur interne est survenue"
 
 #~ msgid "Application uninstalled successfully!"
 #~ msgstr "L'application a été correctement désinstallée !"
@@ -684,54 +508,8 @@ msgstr ""
 #~ msgid "Back"
 #~ msgstr "Précédent"
 
-#~ msgid "Backspace"
-#~ msgstr "Retour arriére"
-
-#~ msgid "Backward"
-#~ msgstr "Arrière"
-
-#~ msgid "Bitmaps"
-#~ msgstr "Images"
-
-#~ msgid "Blank"
-#~ msgstr "Blanc"
-
-#~ msgid "Browser %s%s%s not executable."
-#~ msgstr "Navigateur %s%s%s non exécutable."
-
-#~ msgid "Browser %s%s%s not found."
-#~ msgstr "Navigateur %s%s%s non trouvé."
-
-#~ msgid "Build IPK-package"
-#~ msgstr "Construire un paquet IPK"
-
-#~ msgid "Calculator"
-#~ msgstr "Calculateur"
-
-#~ msgid "Can not focus"
-#~ msgstr "Impossible de focaliser"
-
-#~ msgid "Can't find Listaller Manager!"
-#~ msgstr "Ne peut pas trouver le Gestionnaire Listaller"
-
-#~ msgid "Can't find update-tool!"
-#~ msgstr "Outil de mise à jour introuvable !"
-
-#~ msgid "Can't find updater application!"
-#~ msgstr "Impossible de trouver l'application de mise à jour !"
-
 #~ msgid "Can't load LOKI-Setup information."
 #~ msgstr "Impossible de charger les informations de LOKI-Setup."
-
-#~ msgctxt "lclstrconsts.rsmbcancel"
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "Cannot change format of icon image"
-#~ msgstr "Impossible de modifier le format d'image de l'icône"
-
-#~ msgid "Cannot change size of icon image"
-#~ msgstr "Impossible de modifier la taille d'image de l'icône"
 
 #~ msgid ""
 #~ "Cannot download this package. Please contact the catalogue managers on %h"
@@ -739,119 +517,20 @@ msgstr ""
 #~ "Ce paquetage ne se télécharge pas. Merci de contacter les responsables du "
 #~ "catalogue sur %h"
 
-#~ msgid "Cannot focus a disabled or invisible window"
-#~ msgstr "Impossible de focaliser une fenêtre invisible ou désactive"
-
-#~ msgid "Cannot resolve dependencies"
-#~ msgstr "Impossible de résoudre les dépendances."
-
-#~ msgid "Canvas does not allow drawing"
-#~ msgstr "Dessin sur le Canvas non autorisé"
-
-#~ msgid "Capital"
-#~ msgstr "Majuscule"
-
-#~ msgid "Case sensitive"
-#~ msgstr "Respecter la casse"
-
 #~ msgid "Category:"
 #~ msgstr "Catégorie :"
-
-#~ msgid "Check applications"
-#~ msgstr "Vérifier les applications"
-
-#~ msgid "Check dependencies?"
-#~ msgstr "Vérification des dépendances ?"
 
 #~ msgid "Check for updates"
 #~ msgstr "Vérification des mises à jour"
 
-#~ msgid ""
-#~ "Check if dependencies of all installed applications are available and "
-#~ "working"
-#~ msgstr ""
-#~ "Vérifier si les dépendances de tous les paquets installés sont "
-#~ "disponibles et fonctionnent"
-
-#~ msgid "Check if dependencies of all installed applications are available."
-#~ msgstr ""
-#~ "Vérifier si les dépendances de tous les logiciels installés sont "
-#~ "disponibles"
-
-#~ msgid "Cleaning up..."
-#~ msgstr "Nettoyage…"
-
-#~ msgid "Clear"
-#~ msgstr "Effacer"
-
 #~ msgid "Close"
 #~ msgstr "Fermer"
-
-#~ msgid "Code:"
-#~ msgstr "Code:"
-
-#~ msgid "Commands:"
-#~ msgstr "Commandes :"
-
-#~ msgid "Confirmation"
-#~ msgstr "Confirmation"
-
-#~ msgid "Control"
-#~ msgstr "Contrôle"
-
-#~ msgid ""
-#~ "Conversion done. Do you want to close this window now?\n"
-#~ "Press \"No\" if you want to check the output."
-#~ msgstr ""
-#~ "Conversion terminée. Voulez-vous fermer cette fenêtre immédiatement?\n"
-#~ "Cliquez sur « Non » si vous souhaitez vérifier la sortie."
-
-#~ msgid "Convert"
-#~ msgstr "Convertir"
 
 #~ msgid "Convert package?"
 #~ msgstr "Convertir le paquetage ?"
 
 #~ msgid "Converting %p package..."
 #~ msgstr "Conversion du paquetage %p..."
-
-#~ msgid "Could not detect package type!"
-#~ msgstr "Impossible de déterminer le type de paquet !"
-
-#~ msgid "Could not find Listaller TrayIcon Application"
-#~ msgstr "Ne peut pas trouver l'icone de notification Listaller"
-
-#~ msgid "Could not find main executable of this application!"
-#~ msgstr ""
-#~ "Impossible de trouver l'exécutable principale de cette application !"
-
-#~ msgid "Create DEB and RPM file from IPS"
-#~ msgstr "Créer un paquet DEB et RPM depuis un fichier IPS"
-
-#~ msgid "Create/Update update-repository"
-#~ msgstr "Créer / Mettre à jour le dépot de mises à jour"
-
-#~ msgid "Creating gdb catchable error:"
-#~ msgstr "Créer une erreur d'arret de gdb :"
-
-#~ msgid "Ctrl"
-#~ msgstr "Ctrl"
-
-#~ msgid "Cursor"
-#~ msgstr "Curseur"
-
-#~ msgid "Custom"
-#~ msgstr "Personnalisé"
-
-#~ msgid "Database connection closed."
-#~ msgstr "Connection à la base de donnée interrompue."
-
-#~ msgctxt "lclstrconsts.rsdeleterecordhint"
-#~ msgid "Delete"
-#~ msgstr "Supprimer"
-
-#~ msgid "Delete record?"
-#~ msgstr "Supprimer l'enregistrement ?"
 
 #~ msgid "Delete source"
 #~ msgstr "Supprimer la source"
@@ -868,12 +547,6 @@ msgstr ""
 #~ msgid "Development"
 #~ msgstr "Développement"
 
-#~ msgid "Direction"
-#~ msgstr "Direction"
-
-#~ msgid "Directory must exist"
-#~ msgstr "Le répertoire doit exister"
-
 #~ msgid "Display installation log"
 #~ msgstr "Afficher les comptes-rendus d'installation"
 
@@ -882,9 +555,6 @@ msgstr ""
 
 #~ msgid "Display system applications"
 #~ msgstr "Afficher les applications système"
-
-#~ msgid "Do you accept this license [y/n]?"
-#~ msgstr "Acceptez-vous cette licence [o/n] ?"
 
 #~ msgid "Do you really want to abort this download?"
 #~ msgstr "Voulez-vous vraiment arrêter ce téléchargement ?"
@@ -899,62 +569,33 @@ msgstr ""
 #~ "Si vous n'êtes pas sûr de l'inutilité de ce(s) paquetage(s), pressez \"Non"
 #~ "\" !"
 
+#~ msgid ""
+#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
+#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+#~ "those packages, press \"No\"!"
+#~ msgstr ""
+#~ "Voulez-vous vraimentsupprimer \"%p\", qui contient %a ?\rLes paquets "
+#~ "suivant seront aussi supprimés :%pl\rSi vous n'êtes pas sûr que vous "
+#~ "n'aurez pas besoin de ces paquets, cliquez sur \"Non\" !"
+
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "Voulez-vous vraiment désinstaller %a ?"
 
 #~ msgid "Do you want confirm this action?"
 #~ msgstr "Souhaitez-vous confirmer cette action ?"
 
-#~ msgid "Do you want to check global-installed applications too?"
-#~ msgstr "Voulez-vous vérifier aussi les application installées globalement ?"
-
-#~ msgid "Do you want to check the applications's dependencies?"
-#~ msgstr "Voulez-vous vérifier les dépendances de l'application ?"
-
 #~ msgid "Do you want to install it again?"
 #~ msgstr "Voulez-vous la réinstaller ?"
-
-#~ msgid "Do you want to install it anyway? (This could cause problems)"
-#~ msgstr ""
-#~ "Voulez-vous l'installer tout de même ? (Cela pourrait causer des "
-#~ "problèmes)"
 
 #~ msgid "Do you want to install it anyway? (This could raise problems)"
 #~ msgstr ""
 #~ "Voulez-vous l'installer n'importe où ? (Ceci peut créer des problèmes)"
 
-#~ msgid "Do you want to see detailed information [y/n]?"
-#~ msgstr "Souhaitez-vous voir les informations détaillées [o/n] ?"
-
-#~ msgid "Do you want to view the logfile?"
-#~ msgstr "Voulez vous voir le journal ?"
-
-#~ msgid "Docking"
-#~ msgstr "Amarrage"
-
-#~ msgid "Done."
-#~ msgstr "Effectué."
-
-#~ msgid "Down"
-#~ msgstr "Bas"
-
 #~ msgid "Downloading catalogue base information..."
 #~ msgstr "Téléchargement des informations de base du catalogue…"
 
-#~ msgid "Downloading package..."
-#~ msgstr "Téléchargement du paquet..."
-
 #~ msgid "Downloading setup package..."
 #~ msgstr "Téléchargement des paquetages d'installation..."
-
-#~ msgid "Duplicate icon format."
-#~ msgstr "Format icône Dupliquer."
-
-#~ msgid "Duplicate menus"
-#~ msgstr "Doublons de Menus"
-
-#~ msgid "ERROR in LCL: "
-#~ msgstr "ERREUR dans LCL : "
 
 #~ msgid "Education"
 #~ msgstr "Éducation"
@@ -962,46 +603,8 @@ msgstr ""
 #~ msgid "Enable Proxy-Server"
 #~ msgstr "Activer le serveur de proxy"
 
-#~ msgid "End"
-#~ msgstr "Fin"
-
-#~ msgid "Enter your password to install the application for everyone."
-#~ msgstr ""
-#~ "Entrez votre mot-de-passe pour installer l'application pour tous les "
-#~ "utilisateurs."
-
-#~ msgid "Enter your password to run the application with advanced privileges."
-#~ msgstr ""
-#~ "Entrez votre mot-de-passe pour démarrer l'application avec les privilèges "
-#~ "administrateur."
-
-#~ msgctxt "lclstrconsts.rsmterror"
-#~ msgid "Error"
-#~ msgstr "Erreur"
-
-#~ msgid "Error creating device context for %s.%s"
-#~ msgstr "Erreur en écrant le contexte de dispositif pour %s.%s"
-
-#~ msgid "Error initializing: %s"
-#~ msgstr "Erreur d'initialisation : %s"
-
-#~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
-#~ msgstr "Une erreur s'est produite dans %s  %s l'adresse %s%s page %s"
-
-#~ msgid "Error reading %s%s%s: %s"
-#~ msgstr "Erreur de lecture %s%s%s: %s"
-
-#~ msgid "Error while executing %s%s%s:%s%s"
-#~ msgstr "Erreur en exécutant %s%s%s : %s%s"
-
 #~ msgid "Error while extracting files!"
 #~ msgstr "Erreur lors de l'extraction des fichiers !"
-
-#~ msgid "Error while performing installation:"
-#~ msgstr "Erreur durant l'installation :"
-
-#~ msgid "Error while saving bitmap."
-#~ msgstr "Erreur en sauvegardent l'image."
 
 #~ msgid "Error while uninstalling!"
 #~ msgstr "Erreur lors de la désinstallation !"
@@ -1010,77 +613,17 @@ msgstr ""
 #~ msgstr ""
 #~ "Erreur lors de la décompression et de la configuration des fichiers."
 
-#~ msgid "Error:"
-#~ msgstr "Erreur:"
-
-#~ msgid "Escape"
-#~ msgstr "Echappement"
-
-#~ msgid "Exception"
-#~ msgstr "Exception"
-
-#~ msgid "Execute"
-#~ msgstr "Exécuter"
-
-#~ msgid "Executing application for testing..."
-#~ msgstr "Exécution de l'application pour tester..."
-
-#~ msgid "Executing application main executable..."
-#~ msgstr "Executer l'executable principal de l'application"
-
-#~ msgid "Fatal database error"
-#~ msgstr "Erreur fatale de la base de données"
-
-#~ msgid "File"
-#~ msgstr "Fichier"
-
-#~ msgid "File information"
-#~ msgstr "Informations fichier"
-
-#~ msgid "File is not writable"
-#~ msgstr "Fichier protégé en écriture"
-
-#~ msgid "File must exist"
-#~ msgstr "Le fichier doit exister"
-
 #~ msgid "Filter:"
 #~ msgstr "Filtre :"
 
 #~ msgid "Filtering..."
 #~ msgstr "Filtrage..."
 
-#~ msgid "Final"
-#~ msgstr "Final"
-
-#~ msgid "Find"
-#~ msgstr "Chercher"
-
-#~ msgid "Find more"
-#~ msgstr "Chercher encore"
-
 #~ msgid "Finish"
 #~ msgstr "Terminé"
 
 #~ msgid "Finished"
 #~ msgstr "Terminé"
-
-#~ msgid "FixedCols can't be >= ColCount"
-#~ msgstr "FixedCols ne peut pas être supérieur  ColCount"
-
-#~ msgid "FixedRows can't be >= RowCount"
-#~ msgstr "FixedRows ne peut pas être supérieur  RowCount"
-
-#~ msgid "Form streaming \"%s\" error: %s"
-#~ msgstr "Dans le flux de fiche \"%s\" : erreur %s"
-
-#~ msgid "Forward"
-#~ msgstr "Avant"
-
-#~ msgid ""
-#~ "Found no package with the necessary library \"%l\" for your distribution."
-#~ msgstr ""
-#~ "Aucun paquet n'a été trouvé avec la libraire \"%l\" nécessaire pour votre "
-#~ "distribution."
 
 #~ msgid "Games"
 #~ msgstr "Jeux"
@@ -1091,20 +634,6 @@ msgstr ""
 #~ msgid "Graphic"
 #~ msgstr "Graphisme"
 
-#~ msgid "Grid file doesn't exists"
-#~ msgstr "Le fichier Grid n'existe pas"
-
-#~ msgid "Grid index out of range."
-#~ msgstr "Index de grille hors limite."
-
-#~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
-#~ msgstr ""
-#~ "GroupIndex ne peut pas être inférieur au GroupIndex des éléments "
-#~ "précédents"
-
-#~ msgid "Hanja"
-#~ msgstr "Hanja"
-
 #~ msgid ""
 #~ "Hash doesn't match!\n"
 #~ "The package may be modified after creation.\n"
@@ -1114,93 +643,11 @@ msgstr ""
 #~ "Le paquetage a peut-être été modifié après la création.\n"
 #~ "Merci d'en récupérer une autre copie"
 
-#~ msgid "Help"
-#~ msgstr "Aide"
-
-#~ msgid "Help Context not found"
-#~ msgstr "Contexte d'aide non trouvé"
-
-#~ msgid ""
-#~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
-#~ msgstr ""
-#~ "La base de données d'aide %s%s%s n'a pas trouvé une visionneuse pour une "
-#~ "page d'aide du type %s"
-
-#~ msgid "Help Database %s%s%s not found"
-#~ msgstr "Base de données d'aide %s%s%s non trouvée"
-
-#~ msgid "Help Database not found"
-#~ msgstr "Base de données d'aide non trouvée"
-
-#~ msgid "Help Error"
-#~ msgstr "Erreur d'aide"
-
-#~ msgid "Help Selector Error"
-#~ msgstr "Erreur de sélecteur d'aide"
-
-#~ msgid "Help Viewer Error"
-#~ msgstr "Erreur de visionneuse d'aide"
-
-#~ msgid "Help Viewer not found"
-#~ msgstr "Visionneuse d'aide non trouvée"
-
-#~ msgid "Help context %s not found in Database %s%s%s."
-#~ msgstr "Contexte d'aide %s non trouvé dans la base de données %s%s%s."
-
-#~ msgid "Help context %s not found."
-#~ msgstr "Contexte d'aide %s non trouvé."
-
-#~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
-#~ msgstr "Mot-clé d'aide %s%s%s non trouvé dans la base de données %s%s%s."
-
-#~ msgid "Help keyword %s%s%s not found."
-#~ msgstr "Mot-clé d'aide %s%s%s non trouvé."
-
-#~ msgid "Help node %s%s%s has no Help Database"
-#~ msgstr "Le noeud d'aide %s%s%s n'a aucune base de données"
-
-#~ msgid "Help not found"
-#~ msgstr "Aide non trouvé"
-
-#~ msgid "History:"
-#~ msgstr "Historique"
-
-#~ msgid "Home"
-#~ msgstr "Maison"
-
 #~ msgid "I agree with the above terms and conditions"
 #~ msgstr "J'accepte les termes et conditions ci-dessus"
 
 #~ msgid "I don't agree"
 #~ msgstr "Je ne suis pas d'accord"
-
-#~ msgid "I know the risk"
-#~ msgstr "Je connais les risques"
-
-#~ msgid "Icon"
-#~ msgstr "Icône"
-
-#~ msgid "Icon has no current image"
-#~ msgstr "L'icône n'a pas d'image"
-
-#~ msgid "Icon image cannot be empty"
-#~ msgstr "L'image icône ne peut pas être vide"
-
-#~ msgid "Icon image must have the same format"
-#~ msgstr "L'image d'icône doit avoir le même format"
-
-#~ msgid "Icon image must have the same size"
-#~ msgstr "L'image d'icône doit avoir la même taille"
-
-#~ msgid "Index Out of range Cell[Col=%d Row=%d]"
-#~ msgstr "Index hors limites Cell[Col=%d Row=%d]"
-
-#~ msgid "Information"
-#~ msgstr "Information"
-
-#~ msgctxt "lclstrconsts.rsinsertrecordhint"
-#~ msgid "Insert"
-#~ msgstr "Insérer"
 
 #~ msgid "Install application for everyone"
 #~ msgstr "Installer cette application pour tous"
@@ -1223,14 +670,8 @@ msgstr ""
 #~ msgid "Installation"
 #~ msgstr "Installation"
 
-#~ msgid "Installation aborted by user."
-#~ msgstr "Installation annulée par l'utilisateur."
-
 #~ msgid "Installation aborted."
 #~ msgstr "Installation annulée."
-
-#~ msgid "Installation failed."
-#~ msgstr "L'installation a échoué"
 
 #~ msgid "Installation mode:"
 #~ msgstr "Mode d'installation :"
@@ -1238,74 +679,8 @@ msgstr ""
 #~ msgid "Installation of %a"
 #~ msgstr "Installation de %a"
 
-#~ msgid "Installation of package %s failed!"
-#~ msgstr "L'installation du paquet %s a échoué"
-
-#~ msgid "Installing %a..."
-#~ msgstr "Installation %a..."
-
-#~ msgid "Installs an IPK package"
-#~ msgstr "Installe un paquet IPK"
-
-#~ msgid "Invalid Date : %s"
-#~ msgstr "Date invalide : %s"
-
-#~ msgid "Invalid Date: %s. Must be between %s and %s"
-#~ msgstr "Date invalide : %s. Doit être entre %s et %s"
-
-#~ msgid "Invalid ImageList Index"
-#~ msgstr "Index de liste d'images non valide"
-
-#~ msgid "Invalid action creation"
-#~ msgstr "Création d'action non valide"
-
-#~ msgid "Invalid action enumeration"
-#~ msgstr "Enumration d'action non valide"
-
-#~ msgid "Invalid action registration"
-#~ msgstr "Référencement d'action non valide"
-
-#~ msgid "Invalid action unregistration"
-#~ msgstr "Déréférencement d'action non valide"
-
-#~ msgid "Invalid floating point number: %s"
-#~ msgstr "Nombre à virgule flottante non valide : %s"
-
-#~ msgid "Invalid image size"
-#~ msgstr "Taille d'image non valide"
-
-#~ msgid "Invalid integer number: %s"
-#~ msgstr "Nombre entier non valide : %s"
-
-#~ msgid "Invalid property value"
-#~ msgstr "Valeur de propriété incorrecte"
-
-#~ msgid "Invalid stream format"
-#~ msgstr "Format de flux incorrecte"
-
-#~ msgid "Joint Picture Expert Group"
-#~ msgstr "Joint Picture Expert Group"
-
-#~ msgid "Junja"
-#~ msgstr "Junja"
-
-#~ msgid "Kana"
-#~ msgstr "Kana"
-
-#~ msgid "Launch Listaller Manager"
-#~ msgstr "Lancer Listaller Manager"
-
-#~ msgid "Left"
-#~ msgstr "Gauche"
-
-#~ msgid "List index exceeds bounds (%d)"
-#~ msgstr "Index de liste hors limites (%d)"
-
-#~ msgid "List must be empty"
-#~ msgstr "La liste doit être vide"
-
-#~ msgid "Listaller command-line tool to handle IPK-packages"
-#~ msgstr "Listaller outil ligne de commande pour manipuler les paquets IPK -"
+#~ msgid "Installation package is corrupt"
+#~ msgstr "Le paquetage d'installation est endommagé"
 
 #~ msgid "Listaller settings"
 #~ msgstr "Paramètres de Listaller"
@@ -1336,9 +711,6 @@ msgstr ""
 #~ msgid "Loading..."
 #~ msgstr "Chargement..."
 
-#~ msgid "Looking for %a."
-#~ msgstr "Recherche de %a."
-
 #~ msgid "Main"
 #~ msgstr "Principal"
 
@@ -1349,37 +721,8 @@ msgstr ""
 #~ "Assurez-vous d'avoir ce paquetage d'un source sure et d'un éditeur "
 #~ "sérieux !"
 
-#~ msgctxt "lclstrconsts.ifsvk_menu"
-#~ msgid "Menu"
-#~ msgstr "Menu"
-
-#~ msgctxt "lclstrconsts.rsmenucolorcaption"
-#~ msgid "Menu"
-#~ msgstr "Menu"
-
-#~ msgid "Menu index out of range"
-#~ msgstr "Index de menu hors limites"
-
-#~ msgid "MenuItem is nil"
-#~ msgstr "MenuItem n'est pas assigné (nil)"
-
 #~ msgid "Mode"
 #~ msgstr "Mode"
-
-#~ msgid "Mode Change"
-#~ msgstr "Changement de mode"
-
-#~ msgid "Mode number:"
-#~ msgstr "Mode numérique:"
-
-#~ msgid "Mouse Button Left"
-#~ msgstr "Bouton gauche de la souris"
-
-#~ msgid "Mouse Button Middle"
-#~ msgstr "Bouton central de la souris"
-
-#~ msgid "Mouse Button Right"
-#~ msgstr "Bouton droit de la souris"
 
 #~ msgid "Multimedia"
 #~ msgstr "Multimédia"
@@ -1390,113 +733,29 @@ msgstr ""
 #~ msgid "Next"
 #~ msgstr "Suivant"
 
-#~ msgctxt "lclstrconsts.rsnextrecordhint"
-#~ msgid "Next"
-#~ msgstr "Suivant"
-
-#~ msgid ""
-#~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
-#~ "Viewers"
-#~ msgstr ""
-#~ "Aucun navigateur HTML trouvé. %s définissés en un dans Aide->Configurer "
-#~ "l'aide->Visionneuses"
-
-#~ msgid "No MDI form present."
-#~ msgstr "Aucune fiche MDI présente"
-
 #~ msgid "No applications found!"
 #~ msgstr "Aucune application n'a été trouvé !"
 
 #~ msgid "No compatible packages found!"
 #~ msgstr "Aucun paquetage compatible n'a été trouvé !"
 
-#~ msgid "No help found for line %d, column %d of %s."
-#~ msgstr "Aucune aide trouvé pour la ligne %d, colonne %d de %s."
-
-#~ msgid "No help nodes available"
-#~ msgstr "Aucuns noeuds d'aide disponibles"
-
 #~ msgid "No information available!"
 #~ msgstr "Pas d'informations disponible !"
-
-#~ msgid "No timers available"
-#~ msgstr "Aucun temporisateur disponible"
-
-#~ msgid "No to all"
-#~ msgstr "Non pour tout"
-
-#~ msgid ""
-#~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
-#~ "the programs uses clause."
-#~ msgstr ""
-#~ "Aucun objet widgetset. Vérifier si l'unité \"interfaces\" est ajouté à la "
-#~ "clause uses du programme."
-
-#~ msgid "Nonconvert"
-#~ msgstr "Non converti"
-
-#~ msgid "Not a valid grid file"
-#~ msgstr "N'est pas un fichier de grille correct"
-
-#~ msgid "Numlock"
-#~ msgstr "Verr num."
-
-#~ msgid "Numpad %d"
-#~ msgstr "%d pav num."
-
-#~ msgid "OSX Icon Resource"
-#~ msgstr "Osx icône ressource"
 
 #~ msgid "Office"
 #~ msgstr "Bureautique"
 
-#~ msgid "Okay"
-#~ msgstr "Ok"
-
-#~ msgid "Open existing file"
-#~ msgstr "Ouvrir un fichier existant"
-
-#~ msgid "Options:"
-#~ msgstr "Options :"
-
 #~ msgid "Other"
 #~ msgstr "Autres"
 
-#~ msgid "Overwrite file ?"
-#~ msgstr "Ecraser le fichier ?"
-
 #~ msgid "Package %p could not be installed."
 #~ msgstr "Le paquetage %p ne peux être installé."
-
-#~ msgid "Package build commands:"
-#~ msgstr "Commandes de création du paquet :"
-
-#~ msgid "Package detected: %s"
-#~ msgstr "Paquet détecté : %s"
-
-#~ msgid "Package has trusted signature."
-#~ msgstr "La paquet a une signature sûre."
-
-#~ msgid "Package is unsigned."
-#~ msgstr "Le paquet n'est pas signé."
-
-#~ msgid "Package signature is UNTRUSTED!"
-#~ msgstr "Le paquet a une signature NON SÛRE !"
-
-#~ msgid "Package type is \"%s\""
-#~ msgstr "Le type de paquet est \"%s\""
 
 #~ msgid "Package was not build for your Linux distribution release."
 #~ msgstr "Ce Paquet n'a pas été construit pour  votre distribution linux"
 
 #~ msgid "Password"
 #~ msgstr "Mot de passe"
-
-#~ msgid "Path must exist"
-#~ msgstr "Le chemin doit exister"
-
-#~ msgid "Pause key"
-#~ msgstr "Touche Pause"
 
 #~ msgid "Phase 1/4: Resolving dependencies..."
 #~ msgstr "Phase 1/4 : Résolution des dépendances"
@@ -1509,21 +768,6 @@ msgstr ""
 
 #~ msgid "Phase 4/4: Registering application..."
 #~ msgstr "Phase 4/4 : Enregistrement de l'application"
-
-#~ msgid "Pixmap"
-#~ msgstr "Pixmap"
-
-#~ msgid ""
-#~ "Please do not execute this action with superuser rights!\n"
-#~ "(PolicyKit will ask for authorization if privileges are required.)\n"
-#~ "Do you want to force Listaller to execute all with superuser permission?"
-#~ msgstr ""
-#~ "Veuillez ne pas exécuter cette action avec les droits super-"
-#~ "utilisateur !\n"
-#~ "(PolicyKit vous demandera l'autorisation si des droits sont "
-#~ "nécéssaires.)\n"
-#~ "Voulez-vous forcer Listaller à tout exécuter avec les droits super-"
-#~ "utilisateur ?"
 
 #~ msgid "Please notify the developers on http://launchpad.net/listaller"
 #~ msgstr ""
@@ -1538,15 +782,6 @@ msgstr ""
 #~ "Merci d'exécuter \"listallgo\" avec le chemin vers le package a installer "
 #~ "en tant que premier paramètre!"
 
-#~ msgid ""
-#~ "Please run \"listallgo\" with path to setup-package as first parameter!"
-#~ msgstr ""
-#~ "Veuillez lancer « lisallgo » avec le chemin vers setup-package en tant "
-#~ "que premier paramètre !"
-
-#~ msgid "Please select a number shown in the list!"
-#~ msgstr "Choisissez s'il vous plait un numéro de la liste !"
-
 #~ msgid "Please view the logfile at %p"
 #~ msgstr "Veuillez consulter le compte-rendu à la ligne %p"
 
@@ -1556,36 +791,11 @@ msgstr ""
 #~ msgid "Please wait..."
 #~ msgstr "Veuillez patienter..."
 
-#~ msgid "Portable BitMap"
-#~ msgstr "Portable BitMap"
-
-#~ msgid "Portable GrayMap"
-#~ msgstr "Portable GrayMap"
-
-#~ msgid "Portable Network Graphic"
-#~ msgstr "Portable Network Graphic"
-
-#~ msgid "Portable PixMap"
-#~ msgstr "Portable PixMap"
-
-#~ msgid "Preparing installation (please wait)"
-#~ msgstr "Préparation de l'installation (patientez s'il-vous-plaît)"
-
 #~ msgid "Press \"Finish\" to close."
 #~ msgstr "Cliquez sur « Terminé » pour fermer."
 
 #~ msgid "Press \"Next\" to start the installation!"
 #~ msgstr "Cliquez sur \"Suivant\" pour démarrer l'installation !"
-
-#~ msgid "Print"
-#~ msgstr "Imprimer"
-
-#~ msgid "Print all available log messages"
-#~ msgstr "Imprimer tous les messages du journal disponibles"
-
-#~ msgctxt "lclstrconsts.rspriorrecordhint"
-#~ msgid "Prior"
-#~ msgstr "Précédent"
 
 #~ msgid ""
 #~ "Problem while connecting PackageKit. Run \"pkmon\" to get further "
@@ -1597,9 +807,6 @@ msgstr ""
 #~ msgid "Problem while downloading the dep-file."
 #~ msgstr "Problème lors du téléchargement du fichier DEP"
 
-#~ msgid "Problem while downloading the dependency."
-#~ msgstr "Problème durant le téléchargement de la dépendance."
-
 #~ msgid ""
 #~ "Problem while downloading the packages. Maybe the login on the FTP-Server "
 #~ "failed."
@@ -1607,18 +814,8 @@ msgstr ""
 #~ "Problème lors du téléchargement des paquets. Peut-être la connexion au "
 #~ "serveur-FTP est-elle défaillante."
 
-#~ msgid ""
-#~ "Problem while downloading the required packages. Could not create working "
-#~ "FTP connection."
-#~ msgstr ""
-#~ "Problème lors du téléchargement des paquets requis. Impossible de créer "
-#~ "une connexion FTP fonctionnelle."
-
 #~ msgid "Program description:"
 #~ msgstr "Description du programme :"
-
-#~ msgid "Property %s does not exist"
-#~ msgstr "La propriété %s n'existe pas"
 
 #~ msgid "Proxy-Settings"
 #~ msgstr "Paramètres de proxy"
@@ -1635,70 +832,11 @@ msgstr ""
 #~ msgid "Really remove?"
 #~ msgstr "Voulez-vous vraiment enlever l’élément ?"
 
-#~ msgid "Replace"
-#~ msgstr "Remplacer"
-
-#~ msgid "Replace all"
-#~ msgstr "Remplacer tous"
-
-#~ msgid "Resolve Listaller path variable"
-#~ msgstr "Résoudre la variable d'environnement chemin Listaller"
-
-#~ msgid "Resolving dynamic dependencies..."
-#~ msgstr "Résolution des dépendances dynamiques..."
-
-#~ msgctxt "lclstrconsts.lislclresourcesnotfound"
-#~ msgid "Resource %s not found"
-#~ msgstr "Ressource %s non trouve"
-
-#~ msgctxt "lclstrconsts.rsresourcenotfound"
-#~ msgid "Resource %s not found"
-#~ msgstr "Ressource %s non trouve"
-
-#~ msgid "Return"
-#~ msgstr "Retour"
-
-#~ msgid "Right"
-#~ msgstr "Droite"
-
-#~ msgid "Rights assigned to %a."
-#~ msgstr "Droits assignés à %a"
-
 #~ msgid "Running application installation..."
 #~ msgstr "Installation de l'application en cours…"
 
 #~ msgid "Running installation..."
 #~ msgstr "Installation en cours ..."
-
-#~ msgid "Runs installation in testmode"
-#~ msgstr "Démarrer l'installation en mode test"
-
-#~ msgid "Save file as"
-#~ msgstr "Enregistrer le fichier sous"
-
-#~ msgid "Scroll"
-#~ msgstr "Défilement"
-
-#~ msgid "ScrollBar property out of range"
-#~ msgstr "Propriété ScrollBar hors limites"
-
-#~ msgid "Security warning"
-#~ msgstr "Alerte de sécurité"
-
-#~ msgid "Select"
-#~ msgstr "Sélectionner"
-
-#~ msgid "Select Directory"
-#~ msgstr "Choisir un répertoire"
-
-#~ msgid "Select a date"
-#~ msgstr "Choisir une date"
-
-#~ msgid "Select a font"
-#~ msgstr "Choisir une police"
-
-#~ msgid "Select color"
-#~ msgstr "Choisir une couleur"
 
 #~ msgid "Select installation mode"
 #~ msgstr "Sélectionner le mode d'installation"
@@ -1709,14 +847,8 @@ msgstr ""
 #~ msgid "Select software-manager mode:"
 #~ msgstr "Choisissez le mode de fonctionnement du gestionnaire de logiciels :"
 
-#~ msgid "Select the installation mode of this application:"
-#~ msgstr "Choisissez le type d'installation de cette application :"
-
-#~ msgid "Shift"
-#~ msgstr "Maj"
-
-#~ msgid "Should lipa fix these problems automatically [y/n]?"
-#~ msgstr "Lipa doit-il résoudre ces problèmes automatiquement [o/n] ?"
+#~ msgid "Select which parts of the application should be installed."
+#~ msgstr "Choisissez les parties de l'application à installer."
 
 #~ msgid "Should this source be added to the update sources list?"
 #~ msgstr ""
@@ -1729,37 +861,17 @@ msgstr ""
 #~ msgid "Show:"
 #~ msgstr "Afficher :"
 
-#~ msgid "Snapshot"
-#~ msgstr "Capture d'écran"
-
 #~ msgid "Software Manager"
 #~ msgstr "Gestionnaire de logiciels"
 
 #~ msgid "Software catalogue"
 #~ msgstr "Catalogue logiciel"
 
-#~ msgid "Software database opened."
-#~ msgstr "Base de données du logiciel ouverte"
-
 #~ msgid "Software license"
 #~ msgstr "Licence du logiciel"
 
-#~ msgid "Some dependencies are missing. Should they be installed now?"
-#~ msgstr ""
-#~ "Des dépendances ne sont pas satisfaites. Voulez-vous les installer "
-#~ "maintenant ?"
-
-#~ msgid "Space key"
-#~ msgstr "Barre d'espace"
-
 #~ msgid "Start PackageKit monitor before running transactions"
 #~ msgstr "Démarrer le superviseur PackageKit avant de lancer les transactions"
-
-#~ msgid "State"
-#~ msgstr "État"
-
-#~ msgid "Sub-menu is not in menu"
-#~ msgstr "Le sous-menu n'est pas dans le menu"
 
 #~ msgid "Success!"
 #~ msgstr "Achevé avec succès !"
@@ -1767,23 +879,14 @@ msgstr ""
 #~ msgid "System"
 #~ msgstr "Système"
 
-#~ msgid "Tab"
-#~ msgstr "Étiquette"
-
 #~ msgid "Test application"
 #~ msgstr "Aplication de test"
 
 #~ msgid "Test of the application finished."
 #~ msgstr "Le test de l'application est terminé."
 
-#~ msgid "Test-installation of package finished."
-#~ msgstr "Install test du paquet terminée."
-
 #~ msgid "Testmode"
 #~ msgstr "Mode Test"
-
-#~ msgid "Text"
-#~ msgstr "Texte"
 
 #~ msgid ""
 #~ "The IPK package could be damaged or you haven't enough rights to acces "
@@ -1791,9 +894,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Le package IPK pourrait être endommagé ou vous n'avez pas assez de droits "
 #~ "d'accès requis pour les fichiers / dossiers."
-
-#~ msgid "The application \"%a\" was not installed."
-#~ msgstr "L'application « %a » n'a pas été installée."
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "L'application %a a été installée avec succès !"
@@ -1814,38 +914,11 @@ msgstr ""
 #~ msgid "The application will close now "
 #~ msgstr "L'application va maintenant s'arrêter "
 
-#~ msgid "The application will close now."
-#~ msgstr "L'application va à présent fermé."
-
-#~ msgid "The char set in mask \"%s\" is not valid!"
-#~ msgstr "Le caractère placer dans le masque \"%s\" n'est pas valide !"
-
-#~ msgid "The directory \"%s\" does not exist."
-#~ msgstr "Le répertoire \"%s\" n'existe pas."
-
-#~ msgid "The file \"%f\" does not exists!"
-#~ msgstr "Le fichier \"%f\" n'existe pas !"
-
-#~ msgid "The file \"%s\" already exists. Overwrite ?"
-#~ msgstr "Le fichier \"%s\" existe déjà. Ecraser ?"
-
-#~ msgid "The file \"%s\" does not exist."
-#~ msgstr "Le fichier \"%s\" n'existe pas"
-
-#~ msgid "The file \"%s\" is not writable."
-#~ msgstr "Le fichier \"%s\" est en lecture seule"
-
-#~ msgid "The following dependencies will be downloaded:"
-#~ msgstr "Les dépendances suivantes seront téléchargées :"
-
 #~ msgid "The following packages will be downloaded:"
 #~ msgstr "Les paquets suivants seront téléchargés :"
 
 #~ msgid "The following update sources are installed:"
 #~ msgstr "Les mises à jour de sources suivantes seront installées :"
-
-#~ msgid "The help database %s%s%s was unable to find file %s%s%s."
-#~ msgstr "La base de données d'aide %s%s%s ne trouve pas le fichier %s%s%s."
 
 #~ msgid "The installation tries to add the following update source: "
 #~ msgstr "L'installation essaie d'ajouter la source mise à jour suivante : "
@@ -1853,21 +926,8 @@ msgstr ""
 #~ msgid "The installer will close now"
 #~ msgstr "L'installateur va maintenant se fermer"
 
-#~ msgid "The macro %s in BrowserParams will be replaced by the URL."
-#~ msgstr "La macro %s dans BrowserParams sera remplacé par l'URL."
-
-#~ msgid ""
-#~ "The package may be damaged or you haven't enough permissions to execute "
-#~ "this action!"
-#~ msgstr ""
-#~ "Ce paquet pourrait être abimé ou vous n'avez pas assez de droits pour "
-#~ "exécuter cette action !"
-
 #~ msgid "The package was invalid!"
 #~ msgstr "Le paquet n'est pas valide !"
-
-#~ msgid "The path \"%s\" does not exist."
-#~ msgstr "Le répertoire \"%s\" n'existe pas"
 
 #~ msgid ""
 #~ "The selected action is not possible with this package.\n"
@@ -1875,12 +935,6 @@ msgstr ""
 #~ msgstr ""
 #~ "L'action sélectionnée n'est pas possible avec ce paquetage.\n"
 #~ "Merci d'en contacter le responsable pour obtenir plus d'informations."
-
-#~ msgid "The software provides the following update source:"
-#~ msgstr "Le logiciel fournit les sources de mise à jour suivantes :"
-
-#~ msgid "The submitted package is invalid!"
-#~ msgstr "Le paquet soumis est invalide !"
 
 #~ msgid ""
 #~ "There are no sources available for your Linux distribution\n"
@@ -1892,8 +946,8 @@ msgstr ""
 #~ msgid "There are no updates available!"
 #~ msgstr "Il n'y a pas de mise à jour disponible !"
 
-#~ msgid "There is no viewer for help type %s%s%s"
-#~ msgstr "Il n'y a aucune visionneuse pour ce type d'aide %s%s%s"
+#~ msgid "This application is already installed"
+#~ msgstr "Cette application est déjà installée"
 
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr ""
@@ -1909,24 +963,12 @@ msgstr ""
 #~ "Ce paquet n'a pas d'ID\n"
 #~ "Le programme d'installation va s'arrêter."
 
-#~ msgid "Unable to find %s"
-#~ msgstr "Impossible de trouver %s"
-
-#~ msgid "Unable to find a HTML browser."
-#~ msgstr "Impossible de trouver un navigateur de HTML."
-
-#~ msgid "Unable to load default font"
-#~ msgstr "Impossible de charger la police par défaut"
-
 #~ msgid ""
 #~ "Unable to load the icon of %a. Please notify the developers of Listaller "
 #~ "or this application!"
 #~ msgstr ""
 #~ "Impossible de charger l'icône de %a. Merci de le signaler aux "
 #~ "développeurs de Listaller ou de l'application concernée !"
-
-#~ msgid "Unable to override the file %f."
-#~ msgstr "Impossible d'écraser le paquet %f."
 
 #~ msgid "Unable to overwrite the file %f."
 #~ msgstr "Impossible d'écraser le fichier %f."
@@ -1942,30 +984,6 @@ msgstr ""
 
 #~ msgid "Uninstalling..."
 #~ msgstr "Désinstallation en cours..."
-
-#~ msgid "Unknown"
-#~ msgstr "Inconnu"
-
-#~ msgid "Unknown Error, please report this bug"
-#~ msgstr "Erreur inconnue, rapporter ce bogue svp"
-
-#~ msgid "Unknown error occured!"
-#~ msgstr "Une erreur inconnue est survenue !"
-
-#~ msgid "Unknown picture extension"
-#~ msgstr "Type d'image inconnu"
-
-#~ msgid "Unsupported bitmap format."
-#~ msgstr "Format de bitmap non supporté."
-
-#~ msgid "Unsupported clipboard format: %s"
-#~ msgstr "Format %s de presse-papiers non supporté"
-
-#~ msgid "Unterminated string"
-#~ msgstr "Chaîne non terminé"
-
-#~ msgid "Up"
-#~ msgstr "Haut"
 
 #~ msgid "Update info:"
 #~ msgstr "Informations sur la mise à jour :"
@@ -1988,12 +1006,6 @@ msgstr ""
 #~ msgid "Waiting..."
 #~ msgstr "En attente..."
 
-#~ msgid "Warning"
-#~ msgstr "Avertissement"
-
-#~ msgid "Warning:"
-#~ msgstr "Attention :"
-
 #~ msgid "Welcome to the installation of %a"
 #~ msgstr "Bienvenue dans l'installation de %a"
 
@@ -2002,29 +1014,6 @@ msgstr ""
 
 #~ msgid "What do you want to do?"
 #~ msgstr "Que voulez-vous faire ?"
-
-#~ msgid "Whole words only"
-#~ msgstr "Mots entiers seulement"
-
-#~ msgid "Yes to &All"
-#~ msgstr "Oui à &tous"
-
-#~ msgid "Yes/No?:"
-#~ msgstr "Oui/Non ? :"
-
-#~ msgid ""
-#~ "You cannot install two applications at the same time.\n"
-#~ "Please finish the first installation, then install this one again.\n"
-#~ "(If you do not run two installations, try to remove the temporary "
-#~ "installer directory"
-#~ msgstr ""
-#~ "Vous ne pouvez pas installé deux applications en même temps.\n"
-#~ "Veuillez finir la première installation, puis installez celle-ci.\n"
-#~ "(Si vous n'avez pas lancé deux installations, essayez de supprimer le "
-#~ "répertoire temporaire de l'installateur"
-
-#~ msgid "You have to enter a number!"
-#~ msgstr "Vous devez entrer un nombre !"
 
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "
@@ -2039,6 +1028,17 @@ msgstr ""
 #~ "prendrait quelques minutes et l'application pourrait ne pas fonctionner.\n"
 #~ "Voulez-vous convertir le paquetage ?"
 
+#~ msgid ""
+#~ "You want to install an %x-Package, but your Linux-Distribution's package "
+#~ "system is %y.\rThis package can be converted using \"alien\", but this "
+#~ "will take some time and eventually the application won't work\rDo you "
+#~ "want to convert the package now?"
+#~ msgstr ""
+#~ "Vous voulez installer un paquet %x mais le système de paquets de votre "
+#~ "distribution Linuxt %y.\rCe paquet peut être converti en utilisant \"alien"
+#~ "\" mais ceci prendra un certain temps et l'applicationpourrait ne pas "
+#~ "fonctionner\rVoulez-vous convertir le paquet maintenant ?"
+
 #~ msgid "Your Linux distribution is not supported by Listaller yet!"
 #~ msgstr ""
 #~ "Votre distribution de Linux n'est pas encore prise en charge par "
@@ -2051,24 +1051,3 @@ msgstr ""
 #~ msgstr ""
 #~ "Votre version de PackageKit est %cp. Listaller a besoin de PackageKit "
 #~ "dans sa version %np ou supérieure pour fonctionner correctement."
-
-#~ msgid "application key"
-#~ msgstr "Touche Application"
-
-#~ msgid "invalid Form object stream"
-#~ msgstr "Flux d'objet fiche invalide"
-
-#~ msgid "left windows key"
-#~ msgstr "Touche Windows gauche"
-
-#~ msgid "n"
-#~ msgstr "n"
-
-#~ msgid "no"
-#~ msgstr "non"
-
-#~ msgid "permissions user group size date time"
-#~ msgstr "permission utilisateur groupe taille date heure"
-
-#~ msgid "right windows key"
-#~ msgstr "Touche Windows droite"

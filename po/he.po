@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-29 01:11+0200\n"
+"POT-Creation-Date: 2011-09-06 22:46+0200\n"
 "PO-Revision-Date: 2009-12-07 23:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -15,21 +15,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
-"X-Generator: Launchpad (build 13242)\n"
+"X-Launchpad-Export-Date: 2011-09-06 20:40+0000\n"
+"X-Generator: Launchpad (build 13861)\n"
 
 #, c-format
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "A higher version '%s' of this application has already been installed."
-msgstr "יישום זה כבר מותקן"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "A lower version '%s' of this application has already been installed."
-msgstr "יישום זה כבר מותקן"
+msgstr ""
 
 msgid "A policy was not met."
 msgstr ""
@@ -185,9 +185,9 @@ msgstr "ההתקנה הושלמה!"
 msgid "Installation failed!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installing native packages %s"
-msgstr "התקנת החבילה פגומה"
+msgstr ""
 
 msgid "Low security."
 msgstr ""
@@ -297,9 +297,8 @@ msgstr ""
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-#, fuzzy
 msgid "This application has already been installed."
-msgstr "יישום זה כבר מותקן"
+msgstr ""
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -373,9 +372,9 @@ msgstr ""
 msgid "Unable to extract file '%s' for dependency '%s'!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract file. %s"
-msgstr "לא ניתן לשכתב על הקובץ %f."
+msgstr ""
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
@@ -394,9 +393,9 @@ msgid ""
 "architecture."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for '%s'!"
-msgstr "התקנת החבילה פגומה"
+msgstr ""
 
 #, c-format
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
@@ -481,14 +480,8 @@ msgstr ""
 #~ msgid "Abort"
 #~ msgstr "בטל"
 
-#~ msgid "Aborted."
-#~ msgstr "בוטל."
-
 #~ msgid "All"
 #~ msgstr "הכול"
-
-#~ msgid "An internal error occured"
-#~ msgstr "ארעה שגיאה פנימית"
 
 #~ msgid "Application uninstalled successfully!"
 #~ msgstr "היישום הוסר בהצלחה!"
@@ -499,12 +492,6 @@ msgstr ""
 #~ msgid "Back"
 #~ msgstr "הקודם"
 
-#~ msgid "Build IPK-package"
-#~ msgstr "בניית חבילת IPK"
-
-#~ msgid "Can't find updater application!"
-#~ msgstr "לא ניתן למצוא את יישום העדכון!"
-
 #~ msgid "Can't load LOKI-Setup information."
 #~ msgstr "לא ניתן לטעון את נתוני ה־LOKI של ההתקנה."
 
@@ -512,38 +499,20 @@ msgstr ""
 #~ "Cannot download this package. Please contact the catalogue managers on %h"
 #~ msgstr "לא ניתן להוריד חבילה זו. אנא צור קשר עם מנהלי הקטלוג דרך %h"
 
-#~ msgid "Cannot resolve dependencies"
-#~ msgstr "לא ניתן לפתור את חבילות התלות"
-
 #~ msgid "Category:"
 #~ msgstr "קטגוריה:"
-
-#~ msgid "Check applications"
-#~ msgstr "בדיקת יישומים"
-
-#~ msgid "Check dependencies?"
-#~ msgstr "לבדוק תלות?"
 
 #~ msgid "Check for updates"
 #~ msgstr "בדוק אחר עדכונים"
 
-#~ msgid "Cleaning up..."
-#~ msgstr "מנקה ומסדר..."
-
 #~ msgid "Close"
 #~ msgstr "סגור"
-
-#~ msgid "Commands:"
-#~ msgstr "פקודות:"
 
 #~ msgid "Convert package?"
 #~ msgstr "להמיר חבילה?"
 
 #~ msgid "Converting %p package..."
 #~ msgstr "ממיר את החבילה %p..."
-
-#~ msgid "Create DEB and RPM file from IPS"
-#~ msgstr "יצירת קובץ DEB ו־RPM מה־IPS"
 
 #~ msgid "Delete source"
 #~ msgstr "מחק מקור"
@@ -560,11 +529,16 @@ msgstr ""
 #~ msgid "Display installation log"
 #~ msgstr "הצג את רישום ההתקנה"
 
-#~ msgid "Do you accept this license [y/n]?"
-#~ msgstr "האם תנאי הרישוי מוסכמים עליך [y/n]?"
-
 #~ msgid "Do you really want to abort this download?"
 #~ msgstr "האם אתה בטוח שברצונך לבטל הורדה זו?"
+
+#~ msgid ""
+#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
+#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+#~ "those packages, press \"No\"!"
+#~ msgstr ""
+#~ "האם אתה בטוח שברצונך להסיר את \"%p\", המכילה את %a?\rהחבילה/ות הבאה/ות "
+#~ "יוסרו גם כן: %pl\rאם אינך בטוח שלא תזדקק לחבילות אלו, לחץ על \"לא\"!"
 
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "אם אתה בטוח שברצונך להסיר את %a?"
@@ -572,23 +546,8 @@ msgstr ""
 #~ msgid "Do you want confirm this action?"
 #~ msgstr "האם ברצונך לאשר פעולה זו?"
 
-#~ msgid "Do you want to check global-installed applications too?"
-#~ msgstr "האם לבדוק את היישומים המותקנים באופן גלובלי גם כן?"
-
-#~ msgid "Do you want to check the applications's dependencies?"
-#~ msgstr "האם לבדוק באילו חבילות תלוי היישום?"
-
 #~ msgid "Do you want to install it again?"
 #~ msgstr "האם ברצונך להתקין זאת שוב?"
-
-#~ msgid "Do you want to see detailed information [y/n]?"
-#~ msgstr "האם ברצונך לצפות במידע מפורט [y/n]?"
-
-#~ msgid "Do you want to view the logfile?"
-#~ msgstr "האם ברצונך לצפות בקובץ הדוח?"
-
-#~ msgid "Done."
-#~ msgstr "הושלם."
 
 #~ msgid "Downloading catalogue base information..."
 #~ msgstr "מוריד את נתוני הבסיס של הקטלוג..."
@@ -599,21 +558,11 @@ msgstr ""
 #~ msgid "Enable Proxy-Server"
 #~ msgstr "אפשר שרת מתווך"
 
-#~ msgid "Enter your password to install the application for everyone."
-#~ msgstr "יש להזין את הסיסמה שלך כדי להתקין את היישום עבור כולם."
-
-#~ msgid "Enter your password to run the application with advanced privileges."
-#~ msgstr ""
-#~ "יש להזין את הסיסמה האישית שלך כדי להפעיל את היישום עם הרשאות מתקדמות."
-
 #~ msgid "Error while extracting files!"
 #~ msgstr "שגיאה בעת חילוץ הקבצים!"
 
 #~ msgid "Error while uninstalling!"
 #~ msgstr "שגיאה בעת ההסרה!"
-
-#~ msgid "Executing application for testing..."
-#~ msgstr "היישום מופעל לצרכי בדיקה..."
 
 #~ msgid "Filter:"
 #~ msgstr "מסנן:"
@@ -654,14 +603,11 @@ msgstr ""
 #~ msgid "Installation aborted."
 #~ msgstr "ההתקנה בוטלה."
 
-#~ msgid "Installation failed."
-#~ msgstr "התקנה נכשלה."
-
 #~ msgid "Installation of %a"
 #~ msgstr "התקנת %a"
 
-#~ msgid "Launch Listaller Manager"
-#~ msgstr "טעינת המנהל של Listaller"
+#~ msgid "Installation package is corrupt"
+#~ msgstr "התקנת החבילה פגומה"
 
 #~ msgid "Listaller settings"
 #~ msgstr "הגדרות Listaller"
@@ -681,9 +627,6 @@ msgstr ""
 #~ msgid "Main"
 #~ msgstr "ראשי"
 
-#~ msgid "Mode number:"
-#~ msgstr "מצב מספר:"
-
 #~ msgid "Multimedia"
 #~ msgstr "מולטימדיה"
 
@@ -701,15 +644,6 @@ msgstr ""
 
 #~ msgid "Office"
 #~ msgstr "משרד"
-
-#~ msgid "Okay"
-#~ msgstr "אישור"
-
-#~ msgid "Opening database..."
-#~ msgstr "מסד הנתונים נפתח..."
-
-#~ msgid "Options:"
-#~ msgstr "אפשרויות:"
 
 #~ msgid "Other"
 #~ msgstr "אחר"
@@ -735,17 +669,11 @@ msgstr ""
 #~ msgid "Please read the following information carefully:"
 #~ msgstr "אנא קרא את הנתונים הבאים בקפידה:"
 
-#~ msgid "Please select a number shown in the list!"
-#~ msgstr "יש לחבור מספר המופיע ברשימה!"
-
 #~ msgid "Please view the logfile at %p"
 #~ msgstr "אנא עיין בקובץ הרישום %p"
 
 #~ msgid "Please wait."
 #~ msgstr "אנא המתן."
-
-#~ msgid "Preparing installation (please wait)"
-#~ msgstr "ההתקנה בהליכי הכנה (נא להמתין)"
 
 #~ msgid "Press \"Finish\" to close."
 #~ msgstr "לחץ על \"סיום\" לסגירה."
@@ -785,9 +713,6 @@ msgstr ""
 #~ msgid "Select software you want to download and to install:"
 #~ msgstr "בחר תוכנה שברצונך להוריד ולהתקין:"
 
-#~ msgid "Select the installation mode of this application:"
-#~ msgstr "יש לבחור את מצב ההתקנה של יישום זה:"
-
 #~ msgid "Show"
 #~ msgstr "הצג"
 
@@ -799,12 +724,6 @@ msgstr ""
 
 #~ msgid "Software license"
 #~ msgstr "רשיון התוכנה"
-
-#~ msgid "Some dependencies are missing. Should they be installed now?"
-#~ msgstr "כמה מחבילות התלות חסרות. האם להתקין אותן כעת?"
-
-#~ msgid "State"
-#~ msgstr "מצב"
 
 #~ msgid "Success!"
 #~ msgstr "הצלחה!"
@@ -839,14 +758,14 @@ msgstr ""
 #~ msgid "There are no updates available!"
 #~ msgstr "אין עדכונים זמינים!"
 
+#~ msgid "This application is already installed"
+#~ msgstr "יישום זה כבר מותקן"
+
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr "יישום זה מעוניין להוריד ולהתקין תלות מהכתובת %l"
 
 #~ msgid "This package does not support your Linux distribution."
 #~ msgstr "חבילה זו אינה נתמכת על ידי הפצת הלינוקס שלך."
-
-#~ msgid "Unable to find %s"
-#~ msgstr "%s לא נמצא"
 
 #~ msgid ""
 #~ "Unable to load the icon of %a. Please notify the developers of Listaller "
@@ -891,11 +810,15 @@ msgstr ""
 #~ msgid "Welcome!"
 #~ msgstr "ברוכים הבאים!"
 
-#~ msgid "You have to enter a number!"
-#~ msgstr "עליך להזין מספר!"
+#~ msgid ""
+#~ "You want to install an %x-Package, but your Linux-Distribution's package "
+#~ "system is %y.\rThis package can be converted using \"alien\", but this "
+#~ "will take some time and eventually the application won't work\rDo you "
+#~ "want to convert the package now?"
+#~ msgstr ""
+#~ "האם ברצונך להתקין חבילת %x, אך מערכת החבילות של הפצת הלינוקס שלך הינה %y."
+#~ "\rניתן להמיר חבילה זו באמצעות \"alien\", אך פעולה זו עלולה לארוך זמן מה "
+#~ "ולבסוף היישום עלול לא לעבוד\rהאם ברצונך להמיר את החבילה כעת?"
 
 #~ msgid "Your Linux distribution is not supported by Listaller yet!"
 #~ msgstr "הפצת הלינוקס שלך אינה נתמכת על ידי Listaller עדיין!"
-
-#~ msgid "n"
-#~ msgstr "n"

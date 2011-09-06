@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-29 01:11+0200\n"
+"POT-Creation-Date: 2011-09-06 22:46+0200\n"
 "PO-Revision-Date: 2011-04-19 11:06+0000\n"
 "Last-Translator: Thaynã Moretti <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -15,21 +15,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
-"X-Generator: Launchpad (build 13242)\n"
+"X-Launchpad-Export-Date: 2011-09-06 20:40+0000\n"
+"X-Generator: Launchpad (build 13861)\n"
 
 #, c-format
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "A higher version '%s' of this application has already been installed."
-msgstr "Este aplicativo já está instalado"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "A lower version '%s' of this application has already been installed."
-msgstr "Este aplicativo já está instalado"
+msgstr ""
 
 msgid "A policy was not met."
 msgstr ""
@@ -80,9 +80,9 @@ msgstr "Não foi possível criar/atualizar o banco de dados do software!"
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Could not extract file %s! Error: %s"
-msgstr "Não foi possível extrair o arquivo! Erro: %s"
+msgstr ""
 
 #, c-format
 msgid "Could not extract file! Error: %s"
@@ -138,9 +138,9 @@ msgstr ""
 msgid "DIRECTORY"
 msgstr "DIRETÓRIO"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Database action '%s' failed: %s"
-msgstr "A conexão com o banco de dados foi fechada."
+msgstr ""
 
 msgid "Database action failed"
 msgstr ""
@@ -185,9 +185,9 @@ msgstr "Instalação concluída!"
 msgid "Installation failed!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installing native packages %s"
-msgstr "Instala um pacote IPK"
+msgstr ""
 
 msgid "Low security."
 msgstr ""
@@ -297,9 +297,8 @@ msgstr ""
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-#, fuzzy
 msgid "This application has already been installed."
-msgstr "Este aplicativo já está instalado"
+msgstr ""
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -338,17 +337,16 @@ msgid ""
 "Setting AppManager to superuse mode now."
 msgstr ""
 
-#, fuzzy
 msgid "Unable to create destination directory."
-msgstr "Não foi possível criar o diretório de destino. Erro: %s"
+msgstr ""
 
 #, c-format
 msgid "Unable to create file '%s'!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create/update database tables: %s"
-msgstr "Não foi possível criar/atualizar o banco de dados do software!"
+msgstr ""
 
 #, c-format
 msgid "Unable to download feed %s. Message: %s"
@@ -360,9 +358,9 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract data file %s. Message: %s"
-msgstr "Não foi capaz de copiar o arquivo %f."
+msgstr ""
 
 #, c-format
 msgid ""
@@ -374,9 +372,9 @@ msgstr ""
 msgid "Unable to extract file '%s' for dependency '%s'!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract file. %s"
-msgstr "Não foi capaz de copiar o arquivo %f."
+msgstr ""
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
@@ -395,9 +393,9 @@ msgid ""
 "architecture."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for '%s'!"
-msgstr "Instala um pacote IPK"
+msgstr ""
 
 #, c-format
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
@@ -479,20 +477,11 @@ msgstr ""
 #~ msgid "Abort"
 #~ msgstr "Abortar"
 
-#~ msgid "Aborted."
-#~ msgstr "Abortado."
-
 #~ msgid "About"
 #~ msgstr "Sobre"
 
 #~ msgid "About Listaller"
 #~ msgstr "Sobre o Listaller"
-
-#~ msgid "An internal error occured"
-#~ msgstr "Ocorreu um erro interno"
-
-#~ msgid "Application was successfully removed!"
-#~ msgstr "O aplicativo foi removido com sucesso!"
 
 #~ msgid "Applying updates..."
 #~ msgstr "Aplicando as atualizações..."
@@ -506,118 +495,20 @@ msgstr ""
 #~ msgid "Back"
 #~ msgstr "Voltar"
 
-#~ msgid "Build IPK-package"
-#~ msgstr "Construir pacote IPK"
-
-#~ msgid ""
-#~ "Calling PackageKit... (run \"pkmon\" to monitor the executed actions)"
-#~ msgstr ""
-#~ "Chamando PackageKit... (execute \"pkmon\" para monitorar as ações "
-#~ "executadas)"
-
-#~ msgid "Can't find Listaller Manager!"
-#~ msgstr "Não é possível localizar o Gerenciador Listaller!"
-
-#~ msgid "Can't find update-tool!"
-#~ msgstr "Não foi possível localizar update-tool!"
-
-#~ msgid "Cannot resolve dependencies"
-#~ msgstr "Não foi possível resolver as dependências"
-
-#~ msgid "Check applications"
-#~ msgstr "Conferir aplicativos"
-
-#~ msgid "Check dependencies?"
-#~ msgstr "Conferir as dependências?"
-
 #~ msgid "Check for updates"
 #~ msgstr "Verificar por atualizações"
-
-#~ msgid "Check if dependencies of all installed applications are available."
-#~ msgstr ""
-#~ "Verifica se as dependências de todos os aplicativos instalados estão "
-#~ "disponíveis."
-
-#~ msgid "Checking dependencies of all registered applications..."
-#~ msgstr "Conferindo as dependências de todos os aplicativos registrados..."
-
-#~ msgid "Cleaning up..."
-#~ msgstr "Limpando..."
-
-#~ msgid "Commands:"
-#~ msgstr "Comandos:"
-
-#~ msgid ""
-#~ "Conversion done. Do you want to close this window now?\n"
-#~ "Press \"No\" if you want to check the output."
-#~ msgstr ""
-#~ "Conversão concluída. Você deseja fechar esta janela agora?\n"
-#~ "Pressione \"Não\" caso queira verificar a saída."
-
-#~ msgid "Could not find Listaller TrayIcon Application"
-#~ msgstr "Não foi possível localizar o Aplicativo de Notificação do Listaller"
-
-#~ msgid "Could not find main executable of this application!"
-#~ msgstr "Não foi possível localizar o executável principal deste aplicativo!"
-
-#~ msgid "Create DEB and RPM file from IPS"
-#~ msgstr "Cria um arquivo DEB ou RPM a partir do IPS"
-
-#~ msgid "Create/Update update-repository"
-#~ msgstr "Criar/atualizar update-repository"
 
 #~ msgid "Delete source?"
 #~ msgstr "Excluir fonte?"
 
-#~ msgid "Dependency \"%s\" is not installed!"
-#~ msgstr "A dependência \"%s\" não está instalada!"
-
-#~ msgid "Detecting package..."
-#~ msgstr "Detectando o pacote..."
-
 #~ msgid "Display installation log"
 #~ msgstr "Exibir o registro da instalação"
-
-#~ msgid "Do you accept this license [y/n]?"
-#~ msgstr "Você aceita esta licença? [s/n]"
-
-#~ msgid ""
-#~ "Do you really want to remove \"%p\", containing %a?\n"
-#~ "The following package(s) will be removed also: %pl\n"
-#~ "If you're not sure if you need those packages, press \"No\"!"
-#~ msgstr ""
-#~ "Deseja realmente remover \"%p\", que contém %a?\n"
-#~ "O(s) seguinte(s) pacote(s) serão removidos também: %pl\n"
-#~ "Se você não tem certeza se precisa desses pacotes, pressione \"Não\"!"
 
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "Deseja realmente desinstalar %a?"
 
-#~ msgid "Do you want to check the applications's dependencies?"
-#~ msgstr "Você deseja conferir as dependências dos aplicativos?"
-
 #~ msgid "Do you want to install it again?"
 #~ msgstr "Você deseja instalá-lo novamente?"
-
-#~ msgid "Do you want to see detailed information [y/n]?"
-#~ msgstr "Deseja ver informações detalhadas? [s/n]"
-
-#~ msgid "Do you want to view the logfile?"
-#~ msgstr "Deseja ver o arquivo de registro?"
-
-#~ msgid "Done."
-#~ msgstr "Concluído."
-
-#~ msgid "Enter your password to install the application for everyone."
-#~ msgstr ""
-#~ "Informe sua senha para instalar o aplicativo para todos os usuários."
-
-#~ msgid "Enter your password to run the application with advanced privileges."
-#~ msgstr ""
-#~ "Informe sua senha para executar o aplicativo com privilégios avançados."
-
-#~ msgid "Error"
-#~ msgstr "Erro"
 
 #~ msgid "Error while extracting files!"
 #~ msgstr "Erro durante a extração dos arquivos!"
@@ -628,20 +519,8 @@ msgstr ""
 #~ msgid "Error while unpacking and configuring files."
 #~ msgstr "Erro durante o desempacotamento e configuração dos arquivos."
 
-#~ msgid "Executing application main executable..."
-#~ msgstr "Executando o arquivo executável principal do aplicativo..."
-
-#~ msgid "File"
-#~ msgstr "Arquivo"
-
 #~ msgid "Finished"
 #~ msgstr "Finalizado"
-
-#~ msgid ""
-#~ "Found no package with the necessary library \"%l\" for your distribution."
-#~ msgstr ""
-#~ "Não foi localizado um pacote com a biblioteca \"%l\" necessária para a "
-#~ "sua distribuição."
 
 #~ msgid "I agree with the above terms and conditions"
 #~ msgstr "Concordo com os termos e condições acima"
@@ -655,53 +534,17 @@ msgstr ""
 #~ msgid "Install updates"
 #~ msgstr "Instalar as atualizações"
 
-#~ msgid "Installation aborted by user."
-#~ msgstr "Instalação abortada pelo usuário."
-
 #~ msgid "Installation aborted."
 #~ msgstr "Instalação abortada."
 
-#~ msgid "Installation failed."
-#~ msgstr "A instalação falhou."
-
 #~ msgid "Installation of %a"
 #~ msgstr "Instalação de %a"
-
-#~ msgid "LOKI setup found."
-#~ msgstr "Instalador LOKI encontrado."
-
-#~ msgid "Launch Listaller Manager"
-#~ msgstr "Lançar o Gerenciador Listaller"
-
-#~ msgid "List of translators:\n"
-#~ msgstr "Lista de tradutores:\n"
 
 #~ msgid "Loading aborted."
 #~ msgstr "Carregamento abortado."
 
 #~ msgid "Next"
 #~ msgstr "Próximo"
-
-#~ msgid "Okay"
-#~ msgstr "Ok"
-
-#~ msgid "Options:"
-#~ msgstr "Opções:"
-
-#~ msgid "Package build commands:"
-#~ msgstr "Comandos de construção do pacote:"
-
-#~ msgid "Package could be installed with MoJo/LOKI."
-#~ msgstr "O pacote poderia ser instalado com MoJo/LOKI."
-
-#~ msgid "Package has trusted signature."
-#~ msgstr "O pacote tem uma assinatura confiável."
-
-#~ msgid "Package is unsigned."
-#~ msgstr "O pacote não é assinado."
-
-#~ msgid "Package signature is UNTRUSTED!"
-#~ msgstr "A assinatura do pacote NÃO É CONFIÁVEL!"
 
 #~ msgid "Phase 2/4: Installing files..."
 #~ msgstr "Fase 2/4: Instalando os arquivos..."
@@ -719,17 +562,8 @@ msgstr ""
 #~ msgid "Please read the following information carefully:"
 #~ msgstr "Por favor, leia as seguintes informações com atenção:"
 
-#~ msgid "Please select a number shown in the list!"
-#~ msgstr "Por favor, selecione um número mostrado na lista!"
-
-#~ msgid "Please select an item from the list!"
-#~ msgstr "Por favor, selecione um item da lista!"
-
 #~ msgid "Please wait."
 #~ msgstr "Por favor, aguarde."
-
-#~ msgid "Preparing installation (please wait)"
-#~ msgstr "Preparando a instalação (aguarde, por favor)"
 
 #~ msgid "Press \"Finish\" to close."
 #~ msgstr "Pressione \"Finalizar\" para fechar."
@@ -737,14 +571,8 @@ msgstr ""
 #~ msgid "Press \"Next\" to start the installation!"
 #~ msgstr "Pressione \"Próximo\" para iniciar a instalação"
 
-#~ msgid "Print all available log messages"
-#~ msgstr "Emite todas as mensagens de registro disponíveis"
-
 #~ msgid "Program description:"
 #~ msgstr "Descrição do programa:"
-
-#~ msgid "Question:"
-#~ msgstr "Pergunta:"
 
 #~ msgid "Quit"
 #~ msgstr "Sair"
@@ -752,59 +580,17 @@ msgstr ""
 #~ msgid "Really remove?"
 #~ msgstr "Deseja realmente remover?"
 
-#~ msgid "Removing application..."
-#~ msgstr "Removendo o aplicativo..."
-
-#~ msgid "Resolving dependencies..."
-#~ msgstr "Resolvendo dependências..."
-
-#~ msgid "Resolving dynamic dependencies..."
-#~ msgstr "Resolvendo as dependências dinâmicas..."
-
 #~ msgid "Running installation..."
 #~ msgstr "Executando a instalação..."
-
-#~ msgid "Runs installation in testmode"
-#~ msgstr "Executa a instalação em modo de teste"
-
-#~ msgid "Security warning"
-#~ msgstr "Alerta de segurança"
-
-#~ msgid "Select the installation mode of this application:"
-#~ msgstr "Selecione o modo de instalação deste aplicativo:"
-
-#~ msgid "Should lipa fix these problems automatically [y/n]?"
-#~ msgstr "O lipa deve consertar esses problemas automaticamente? [s/n]"
 
 #~ msgid "Show"
 #~ msgstr "Exibir"
 
-#~ msgid "Software database opened."
-#~ msgstr "O banco de dados de softwares foi aberto."
-
 #~ msgid "Software license"
 #~ msgstr "Licença do programa:"
 
-#~ msgid "Some dependencies are missing. Should they be installed now?"
-#~ msgstr "Algumas dependências estão faltando. Deseja instalá-las agora?"
-
-#~ msgid "Source was removed."
-#~ msgstr "A fonte foi removida."
-
-#~ msgid "Starting uninstallation."
-#~ msgstr "Iniciando a desinstalação."
-
-#~ msgid "Test-installation of package finished."
-#~ msgstr "O teste de instalação do pacote foi concluído."
-
 #~ msgid "Testmode"
 #~ msgstr "Modo de teste"
-
-#~ msgid "Testmode: Do not register package."
-#~ msgstr "Modo de teste: Não registrar o pacote."
-
-#~ msgid "The application \"%a\" was not installed."
-#~ msgstr "O aplicativo \"%a\" não foi instalado."
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "O aplicativo \"%a\" foi instalado com sucesso!"
@@ -815,39 +601,20 @@ msgstr ""
 #~ msgid "The installer will close now"
 #~ msgstr "O instalador irá se fechar agora"
 
-#~ msgid ""
-#~ "The package may be damaged or you haven't enough permissions to execute "
-#~ "this action!"
-#~ msgstr ""
-#~ "O pacote pode estar danificado ou você não tem permissões suficientes "
-#~ "para executar esta ação!"
-
 #~ msgid "There are no updates available!"
 #~ msgstr "Não existem atualizações disponíveis!"
+
+#~ msgid "This application is already installed"
+#~ msgstr "Este aplicativo já está instalado"
 
 #~ msgid "This package does not support your Linux distribution."
 #~ msgstr "Este pacote não oferece suporte para sua distribuição Linux."
 
-#~ msgid "Unable to find %s"
-#~ msgstr "Não é possível localizar %s"
-
-#~ msgid "Unable to override the file %f."
-#~ msgstr "Não foi capaz de sobrescrever o arquivo %f."
-
-#~ msgid "Unable to remove this application!"
-#~ msgstr "Não foi capaz de remover este aplicativo!"
-
 #~ msgid "Uninstalling %a"
 #~ msgstr "Desinstalando %a"
 
-#~ msgid "Uninstalling unused dependencies..."
-#~ msgstr "Desinstalando dependências não utilizadas..."
-
 #~ msgid "Uninstalling..."
 #~ msgstr "Desinstalando..."
-
-#~ msgid "Unknown error occured!"
-#~ msgstr "Ocorreu um erro desconhecido!"
 
 #~ msgid "Update info:"
 #~ msgstr "Informações sobre a atualização:"
@@ -855,43 +622,11 @@ msgstr ""
 #~ msgid "Waiting..."
 #~ msgstr "Aguardando..."
 
-#~ msgid "Warning!"
-#~ msgstr "Atenção!"
-
 #~ msgid "Welcome to the installation of %a"
 #~ msgstr "Bem-vindo à instalação de %a"
 
 #~ msgid "Welcome!"
 #~ msgstr "Bem-vindo!"
 
-#~ msgid "Yes/No?:"
-#~ msgstr "Sim/Não?:"
-
-#~ msgid ""
-#~ "You cannot install two applications at the same time.\n"
-#~ "Please finish the first installation, then install this one again.\n"
-#~ "(If you do not run two installations, try to remove the temporary "
-#~ "installer directory"
-#~ msgstr ""
-#~ "Você não pode instalar dois aplicativos ao mesmo tempo.\n"
-#~ "Por favor, conclua a primeira instalação para então instalar este.\n"
-#~ "Se você não estiver executando duas instalações, tente excluir o "
-#~ "diretório temporário do instalador."
-
-#~ msgid "You have to enter a number!"
-#~ msgstr "Você tem que informar um número!"
-
 #~ msgid "Your Linux distribution is not supported by Listaller yet!"
 #~ msgstr "Ainda não há suporte para sua distribuição Linux!"
-
-#~ msgid "n"
-#~ msgstr "n"
-
-#~ msgid "no"
-#~ msgstr "não"
-
-#~ msgid "y"
-#~ msgstr "s"
-
-#~ msgid "yes"
-#~ msgstr "sim"

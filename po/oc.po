@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-29 01:11+0200\n"
+"POT-Creation-Date: 2011-09-06 22:46+0200\n"
 "PO-Revision-Date: 2010-04-05 21:23+0000\n"
 "Last-Translator: Cédric VALMARY (Tot en òc) <cvalmary@yahoo.fr>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
-"X-Generator: Launchpad (build 13242)\n"
+"X-Launchpad-Export-Date: 2011-09-06 20:41+0000\n"
+"X-Generator: Launchpad (build 13861)\n"
 
 #, c-format
 msgid ""
@@ -185,9 +185,9 @@ msgstr "Installacion acabada !"
 msgid "Installation failed!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installing native packages %s"
-msgstr "Installacion paquet"
+msgstr ""
 
 msgid "Low security."
 msgstr ""
@@ -372,9 +372,9 @@ msgstr ""
 msgid "Unable to extract file '%s' for dependency '%s'!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract file. %s"
-msgstr "Impossible d'espotir lo paquet %f."
+msgstr ""
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
@@ -393,9 +393,9 @@ msgid ""
 "architecture."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for '%s'!"
-msgstr "Installacion paquet"
+msgstr ""
 
 #, c-format
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
@@ -483,12 +483,6 @@ msgstr ""
 #~ msgid "All"
 #~ msgstr "Tot"
 
-#~ msgid "An internal error occured"
-#~ msgstr "Una error intèrna s'es producha"
-
-#~ msgid "Applications"
-#~ msgstr "Aplicacions"
-
 #~ msgid "Authors"
 #~ msgstr "Autors"
 
@@ -498,32 +492,11 @@ msgstr ""
 #~ msgid "Back"
 #~ msgstr "Retorn"
 
-#~ msgid "Build IPK-package"
-#~ msgstr "Construire un paquet IPK"
-
-#~ msgid "Can't find Listaller Manager!"
-#~ msgstr "Pòt pas trobar lo Gestionari Listaller"
-
-#~ msgid "Check applications"
-#~ msgstr "Verificar las aplicacions"
-
 #~ msgid "Check for updates"
 #~ msgstr "Recercar de mesas a jorn"
 
-#~ msgid "Cleaning up..."
-#~ msgstr "Netejatge..."
-
 #~ msgid "Close"
 #~ msgstr "Tampar"
-
-#~ msgid "Commands:"
-#~ msgstr "Comandas :"
-
-#~ msgid "Could not find Listaller TrayIcon Application"
-#~ msgstr "Pòt pas trobar l'icòna de notificacion Listaller"
-
-#~ msgid "Create DEB and RPM file from IPS"
-#~ msgstr "Crear un paquet DEB e RPM dempuèi un fichièr IPS"
 
 #~ msgid "Delete source"
 #~ msgstr "Suprimir la font"
@@ -534,17 +507,8 @@ msgstr ""
 #~ msgid "Development"
 #~ msgstr "Desvolopament"
 
-#~ msgid "Do you accept this license [y/n]?"
-#~ msgstr "Acceptatz aquesta licéncia [o/n] ?"
-
-#~ msgid "Done."
-#~ msgstr "Acabat."
-
 #~ msgid "Education"
 #~ msgstr "Educacion"
-
-#~ msgid "Filter..."
-#~ msgstr "Filtrar..."
 
 #~ msgid "Filtering..."
 #~ msgstr "Filtratge..."
@@ -573,23 +537,11 @@ msgstr ""
 #~ msgid "Installation aborted."
 #~ msgstr "Installacion anullada."
 
-#~ msgid "Installation failed."
-#~ msgstr "Fracàs de l'installacion"
-
 #~ msgid "Installation mode:"
 #~ msgstr "mòde d'installacion"
 
 #~ msgid "Installation of %a"
 #~ msgstr "Installacion de %a"
-
-#~ msgid "Installed applications"
-#~ msgstr "Aplicacions installadas"
-
-#~ msgid "Installs an IPK package"
-#~ msgstr "Installa un paquet IPK"
-
-#~ msgid "Launch Listaller Manager"
-#~ msgstr "Aviar Listaller Manager"
 
 #~ msgid "Loading aborted."
 #~ msgstr "Cargament interromput ."
@@ -600,9 +552,6 @@ msgstr ""
 #~ msgid "Mode"
 #~ msgstr "Mòde"
 
-#~ msgid "Mode number:"
-#~ msgstr "Mòde numerica :"
-
 #~ msgid "Multimedia"
 #~ msgstr "Multimèdia"
 
@@ -612,17 +561,8 @@ msgstr ""
 #~ msgid "Office"
 #~ msgstr "Burèu"
 
-#~ msgid "Okay"
-#~ msgstr "D'acòrdi"
-
-#~ msgid "Options:"
-#~ msgstr "Opcions :"
-
 #~ msgid "Other"
 #~ msgstr "Autre"
-
-#~ msgid "Package build commands:"
-#~ msgstr "Comandas de creacion del paquet :"
 
 #~ msgid "Password"
 #~ msgstr "Senhal"
@@ -636,17 +576,11 @@ msgstr ""
 #~ msgid "Press \"Finish\" to close."
 #~ msgstr "Clicatz sus « Acabar » per tampar."
 
-#~ msgid "Print all available log messages"
-#~ msgstr "Estampar totes los messatges del jornal disponibles"
-
 #~ msgid "Program description:"
 #~ msgstr "Descripcion del programa :"
 
 #~ msgid "Proxy-Settings"
 #~ msgstr "Paramètres de proxy"
-
-#~ msgid "Question:"
-#~ msgstr "Question :"
 
 #~ msgid "Quit"
 #~ msgstr "Quitar"
@@ -657,20 +591,8 @@ msgstr ""
 #~ msgid "Ready."
 #~ msgstr "Prèst."
 
-#~ msgid "Repositories"
-#~ msgstr "Depauses"
-
 #~ msgid "Running installation..."
 #~ msgstr "Execucion de l'installacion..."
-
-#~ msgid "Runs installation in testmode"
-#~ msgstr "Aviar l'installacion en mòde tèst"
-
-#~ msgid "Security warning"
-#~ msgstr "Alèrta de seguretat"
-
-#~ msgid "Settings"
-#~ msgstr "Configuracion"
 
 #~ msgid "Show"
 #~ msgstr "Afichar"
@@ -684,9 +606,6 @@ msgstr ""
 #~ msgid "Software license"
 #~ msgstr "Licéncia del logicial"
 
-#~ msgid "State"
-#~ msgstr "Estat"
-
 #~ msgid "Success!"
 #~ msgstr "Òsca !"
 
@@ -696,17 +615,11 @@ msgstr ""
 #~ msgid "Testmode"
 #~ msgstr "Mòde Tèst"
 
-#~ msgid "Unable to find %s"
-#~ msgstr "Impossible de trobar %s"
-
 #~ msgid "Uninstall"
 #~ msgstr "Desinstallar"
 
 #~ msgid "Uninstalling..."
 #~ msgstr "Desinstallacion..."
-
-#~ msgid "Update repositories"
-#~ msgstr "Mesa a jorn dels depauses"
 
 #~ msgid "Use compatible packages?"
 #~ msgstr "Utilizacion dels paquets compatibles ?"
@@ -723,9 +636,6 @@ msgstr ""
 #~ msgid "Waiting..."
 #~ msgstr "En espèra ..."
 
-#~ msgid "Warning!"
-#~ msgstr "Atencion !"
-
 #~ msgid "Welcome to the installation of %a"
 #~ msgstr "Benvengut(da) dins l'installacion de %a"
 
@@ -734,18 +644,3 @@ msgstr ""
 
 #~ msgid "What do you want to do?"
 #~ msgstr "Qué volètz far ?"
-
-#~ msgid "You have to enter a number!"
-#~ msgstr "Vos cal entrar un nombre !"
-
-#~ msgid "n"
-#~ msgstr "n"
-
-#~ msgid "no"
-#~ msgstr "Non"
-
-#~ msgid "y"
-#~ msgstr "o"
-
-#~ msgid "yes"
-#~ msgstr "òc"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.00b\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-29 01:11+0200\n"
+"POT-Creation-Date: 2011-09-06 22:46+0200\n"
 "PO-Revision-Date: 2011-02-22 22:07+0000\n"
 "Last-Translator: truri <Unknown>\n"
 "Language-Team: Albanian\n"
@@ -10,21 +10,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
-"X-Generator: Launchpad (build 13242)\n"
+"X-Launchpad-Export-Date: 2011-09-06 20:40+0000\n"
+"X-Generator: Launchpad (build 13861)\n"
 
 #, c-format
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "A higher version '%s' of this application has already been installed."
-msgstr "Përzgjidhni cilat pjesë të zbatimit duhen instaluar."
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "A lower version '%s' of this application has already been installed."
-msgstr "Ky zbatim është tashmë i instaluar"
+msgstr ""
 
 msgid "A policy was not met."
 msgstr ""
@@ -133,9 +133,9 @@ msgstr ""
 msgid "DIRECTORY"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Database action '%s' failed: %s"
-msgstr "Lidhja me bazën e të dhënave u ndërpre."
+msgstr ""
 
 msgid "Database action failed"
 msgstr ""
@@ -180,9 +180,9 @@ msgstr "Instalimi u plotësua!"
 msgid "Installation failed!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installing native packages %s"
-msgstr "Instalo paketën"
+msgstr ""
 
 msgid "Low security."
 msgstr ""
@@ -292,9 +292,8 @@ msgstr ""
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-#, fuzzy
 msgid "This application has already been installed."
-msgstr "Ky zbatim është tashmë i instaluar"
+msgstr ""
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -340,9 +339,9 @@ msgstr ""
 msgid "Unable to create file '%s'!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create/update database tables: %s"
-msgstr "I pazoti të kopjojë kartelën %s."
+msgstr ""
 
 #, c-format
 msgid "Unable to download feed %s. Message: %s"
@@ -354,9 +353,9 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract data file %s. Message: %s"
-msgstr "I pazoti të kopjojë kartelën %s."
+msgstr ""
 
 #, c-format
 msgid ""
@@ -368,9 +367,9 @@ msgstr ""
 msgid "Unable to extract file '%s' for dependency '%s'!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract file. %s"
-msgstr "I pazoti të kopjojë kartelën %s."
+msgstr ""
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
@@ -389,9 +388,9 @@ msgid ""
 "architecture."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for '%s'!"
-msgstr "Instalo paketën"
+msgstr ""
 
 #, c-format
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
@@ -432,15 +431,12 @@ msgstr ""
 msgid "Use recursive mode"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Validation of file %s failed! This IPK file might have been modified after "
 "creation.\n"
 "Please obtain a new copy and try again."
 msgstr ""
-"Vlera e hashit nuk u përputh!\n"
-"Paketa mund të ndryshohet pas krijimit.\n"
-"Ju lutem, merrni një kopje të re."
 
 msgid "Validity is undefined"
 msgstr ""
@@ -479,9 +475,6 @@ msgstr ""
 #~ msgid "Abort"
 #~ msgstr "Ndërprite"
 
-#~ msgid "Aborted."
-#~ msgstr "U ndërpre."
-
 #~ msgid "About"
 #~ msgstr "Rreth"
 
@@ -490,15 +483,6 @@ msgstr ""
 
 #~ msgid "All"
 #~ msgstr "Krejt"
-
-#~ msgid "An internal error occured"
-#~ msgstr "Ndodhi një gabim i brendshëm"
-
-#~ msgid "Application was successfully removed!"
-#~ msgstr "Zbatimi u hoq me sukses!"
-
-#~ msgid "Applications"
-#~ msgstr "Zbatime"
 
 #~ msgid "Applying updates..."
 #~ msgstr "Po zbatohen përditësimet..."
@@ -515,93 +499,17 @@ msgstr ""
 #~ msgid "Back"
 #~ msgstr "Mbrapsht"
 
-#~ msgid "Build IPK-package"
-#~ msgstr "Krijo paketë IPK"
-
-#~ msgid ""
-#~ "Calling PackageKit... (run \"pkmon\" to monitor the executed actions)"
-#~ msgstr ""
-#~ "Po thirret PackageKit... (për mbikëqyrjen e veprimeve të përmbushura "
-#~ "xhironi \"pkmon\")"
-
-#~ msgid "Can't find Listaller Manager!"
-#~ msgstr "Nuk gjendet dot Administratori i Listaller-it!"
-
-#~ msgid "Can't find update-tool!"
-#~ msgstr "Nuk gjen dot mjet përditësimi!"
-
-#~ msgid "Cannot access the Listaller Update tool. Maybe it is not installed?"
-#~ msgstr ""
-#~ "Nuk hyj dot te mjeti i Listaller-it për Përditësimet. Mos vallë nuk është "
-#~ "instaluar?"
-
-#~ msgid "Cannot resolve dependencies"
-#~ msgstr "Nuk i plotëson dot varësitë"
-
-#~ msgid "Change package manager settings"
-#~ msgstr "Ndryshoni rregullimet e përgjegjësit të paketave"
-
-#~ msgid "Check applications"
-#~ msgstr "Kontrollo zbatimet"
-
-#~ msgid "Check dependencies?"
-#~ msgstr "Të kontrollohen varësitë?"
-
 #~ msgid "Check for updates"
 #~ msgstr "Kontrollo për përditësime"
 
-#~ msgid "Check if dependencies of all installed applications are available."
-#~ msgstr "Kontrollo nëse i ka krejt varësitë e zbatimeve të instaluara."
-
-#~ msgid "Checking dependencies of all registered applications..."
-#~ msgstr "Po kontrollohen varësitë për krejt zbatimet e regjistruara..."
-
-#~ msgid "Cleaning up..."
-#~ msgstr "Po pastrohet..."
-
 #~ msgid "Close"
 #~ msgstr "Mbylle"
-
-#~ msgid "Code:"
-#~ msgstr "Kod:"
-
-#~ msgid "Commands:"
-#~ msgstr "Urdhra:"
-
-#~ msgid ""
-#~ "Conversion done. Do you want to close this window now?\n"
-#~ "Press \"No\" if you want to check the output."
-#~ msgstr ""
-#~ "Shndërrimi u bë. Doni të mbyllet kjo dritare tani?\n"
-#~ "Shtypni \"Jo\", nëse doni të kontrolloni përfundimin."
 
 #~ msgid "Convert package?"
 #~ msgstr "Të shndërrohet paketa?"
 
 #~ msgid "Converting %p package..."
 #~ msgstr "Po shndërrohet paketa %p..."
-
-#~ msgid "Could not detect package type!"
-#~ msgstr "Nuk zbuloi dot llojin e paketës!"
-
-#~ msgid "Could not find Listaller TrayIcon Application"
-#~ msgstr "Nuk u gjet dot Zbatimi Listaller TrayIcon"
-
-#~ msgid "Could not find main executable of this application!"
-#~ msgstr "Nuk gjeti dot të ekzekutueshmin kryesor të këtij zbatimi!"
-
-#~ msgid ""
-#~ "Could not find usable GUI package manager.\n"
-#~ "Please install a PackageKit-GUI!"
-#~ msgstr ""
-#~ "Nuk gjeti dot përgjegjës GUI paketash të përdorshëm.\n"
-#~ "Ju lutem, instaloni një PackageKit-GUI!"
-
-#~ msgid "Create DEB and RPM file from IPS"
-#~ msgstr "Krijo prej IPS-je kartela DEB dhe RPM"
-
-#~ msgid "Create/Update update-repository"
-#~ msgstr "Krijo/Përditëso depo përditësimi"
 
 #~ msgid "Delete source"
 #~ msgstr "Fshije burimin"
@@ -612,14 +520,8 @@ msgstr ""
 #~ msgid "Dependencies couldn't be solved!"
 #~ msgstr "Nuk u plotësuan do varësitë!"
 
-#~ msgid "Dependency \"%s\" is not installed!"
-#~ msgstr "Varësia \"%s\" nuk është e instaluar!"
-
 #~ msgid "Details"
 #~ msgstr "Hollësi"
-
-#~ msgid "Detecting package..."
-#~ msgstr "Po zbulohet paketa..."
 
 #~ msgid "Development"
 #~ msgstr "Zhvillim"
@@ -627,47 +529,11 @@ msgstr ""
 #~ msgid "Display installation log"
 #~ msgstr "Shfaq regjistrim instalimi"
 
-#~ msgid "Do you accept this license [y/n]?"
-#~ msgstr "E pranoni këtë leje [y/n]?"
-
-#~ msgid ""
-#~ "Do you really want to remove \"%p\", containing %a?\n"
-#~ "The following package(s) will be removed also: %pl\n"
-#~ "If you're not sure if you need those packages, press \"No\"!"
-#~ msgstr ""
-#~ "Doni vërtet të hiqet \"%p\", që përmban %a?\n"
-#~ "Me të do të hiqen gjithashtu paketa(t) vijuese: %pl\n"
-#~ "Nëse nuk jeni i sigurt në ju duhe a jo këto paketa, shtypni \"Jo\"!"
-
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "Doni vërtet të çinstalohet %a?"
 
-#~ msgid "Do you want confirm this download of external files?"
-#~ msgstr "Dëshironi të ripohoni këtë shkarkim kartelash të jashtme?"
-
-#~ msgid "Do you want to check global-installed applications too?"
-#~ msgstr "Doni të kontrollohen edhe zbatimet e instaluara për mbarë sistemin?"
-
-#~ msgid "Do you want to check the applications's dependencies?"
-#~ msgstr "Dëshironi të kontrolloni varësitë e zbatimit?"
-
 #~ msgid "Do you want to install it again?"
 #~ msgstr "Doni ta instaloni sërish?"
-
-#~ msgid "Do you want to install it anyway? (This could cause problems)"
-#~ msgstr "Doni të instalohet sido qoftë? (Kjo mund të shkaktojë probleme)"
-
-#~ msgid "Do you want to see detailed information [y/n]?"
-#~ msgstr "Dëshironi të shihni të dhëna të hollësishme [y/n]?"
-
-#~ msgid "Do you want to view the logfile?"
-#~ msgstr "Dëshironi të shihni kartelën e regjistrimit?"
-
-#~ msgid "Done."
-#~ msgstr "U bë."
-
-#~ msgid "Downloading package..."
-#~ msgstr "Po shkarkohet paketë..."
 
 #~ msgid "Education"
 #~ msgstr "Edukim"
@@ -675,40 +541,14 @@ msgstr ""
 #~ msgid "Enable Proxy-Server"
 #~ msgstr "Aktivizo Shërbyesin Ndërmjetës"
 
-#~ msgid "Enter your password to install the application for everyone."
-#~ msgstr "Jepni fjalëkalimin tuaj që të instalohet zbatimi për gjithkënd."
-
-#~ msgid "Enter your password to run the application with advanced privileges."
-#~ msgstr ""
-#~ "Që ta xhironi këtë zbatim me privilegje më të thella, jepni fjalëkalimin "
-#~ "tuaj."
-
-#~ msgid "Error"
-#~ msgstr "Gabim"
-
 #~ msgid "Error while extracting files!"
 #~ msgstr "Gabim gjatë përftimit të kartelave!"
-
-#~ msgid "Error while performing installation:"
-#~ msgstr "Gabim gjatë kryerjes së instalimit:"
 
 #~ msgid "Error while uninstalling!"
 #~ msgstr "Gabim gjatë çinstalimit!"
 
 #~ msgid "Error while unpacking and configuring files."
 #~ msgstr "Gabim gjatë çpaketimit dhe formësimit të kartelave."
-
-#~ msgid "Execute the new application"
-#~ msgstr "Xhiroje zbatimin e ri"
-
-#~ msgid "Executing application main executable..."
-#~ msgstr "Po ekzekutohet  i ekzekutueshmi kryesor i zbatimit..."
-
-#~ msgid "File"
-#~ msgstr "Kartelë"
-
-#~ msgid "Filter..."
-#~ msgstr "Filtër..."
 
 #~ msgid "Filtering..."
 #~ msgstr "Filtrim..."
@@ -718,14 +558,6 @@ msgstr ""
 
 #~ msgid "Finished"
 #~ msgstr "U përfundua"
-
-#~ msgid "Found installation profile %s."
-#~ msgstr "U gjet profili i instalimit %s."
-
-#~ msgid ""
-#~ "Found no package with the necessary library \"%l\" for your distribution."
-#~ msgstr ""
-#~ "Nuk u gjet paketë me librarinë e nevojshme \"%l\" për shpërndarjen tuaj."
 
 #~ msgid "Games"
 #~ msgstr "Lojra"
@@ -741,9 +573,6 @@ msgstr ""
 
 #~ msgid "I don't agree"
 #~ msgstr "Nuk pajtohem"
-
-#~ msgid "I know the risk"
-#~ msgstr "I njoh rreziqet"
 
 #~ msgid "Install application for everyone"
 #~ msgstr "Instaloje zbatimin për gjithkënd"
@@ -763,14 +592,8 @@ msgstr ""
 #~ msgid "Installation"
 #~ msgstr "instalim"
 
-#~ msgid "Installation aborted by user."
-#~ msgstr "Instalimi y ndërpre nga përdoruesi."
-
 #~ msgid "Installation aborted."
 #~ msgstr "Instalimi u ndërpre."
-
-#~ msgid "Installation failed."
-#~ msgstr "Instalimi dështoi."
 
 #~ msgid "Installation mode:"
 #~ msgstr "Mënyrë instalimi:"
@@ -778,49 +601,8 @@ msgstr ""
 #~ msgid "Installation of %a"
 #~ msgstr "Instalimi i %a"
 
-#~ msgid "Installation of package %s failed!"
-#~ msgstr "Instalimi i paketës %s dështoi!"
-
 #~ msgid "Installation package is corrupt"
 #~ msgstr "Paketa e instalimit është e dëmtuar"
-
-#~ msgid "Installed applications"
-#~ msgstr "Zbatime të instaluara"
-
-#~ msgid "Installed dependency %s"
-#~ msgstr "U instalua varësia %s"
-
-#~ msgid "Installing %a..."
-#~ msgstr "Po instalohet %a..."
-
-#~ msgid "Installs an IPK package"
-#~ msgstr "Instalon një paketë IPK"
-
-#~ msgid "LOKI setup found."
-#~ msgstr "U gjet rregullim i Loki-t."
-
-#~ msgid "Launch Listaller Manager"
-#~ msgstr "Nis Administratorin e Listaller-it"
-
-#~ msgid "List of translators:\n"
-#~ msgstr "Listë përkthyesish:\n"
-
-#~ msgid "Listaller cannot write into its temporary directory: Access denied!"
-#~ msgstr ""
-#~ "Listaller-i nuk mund të shkruajë te drejtoria e vet e përkohshme: Hyrje e "
-#~ "mohuar!"
-
-#~ msgid "Listaller command-line tool to handle IPK-packages"
-#~ msgstr "Mjet rresht urdhërash Listaller-i për të trajtuar paketa IPK"
-
-#~ msgid ""
-#~ "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
-#~ "installed\n"
-#~ "Do you want to install \"alien\" now to continue?"
-#~ msgstr ""
-#~ "Për shndërrimin e paketave të huaja për të Listaller-i përdor \"alien\", "
-#~ "por mjeti nuk është i instaluar.\n"
-#~ "Doni ta instaloni tani \"alien\"-in që të vazhdohet?"
 
 #~ msgid "Listaller will close now. The package couldn't be installed."
 #~ msgstr "Listaller-i tani do të mbyllet. Paketa nuk u instalua dot."
@@ -834,30 +616,14 @@ msgstr ""
 #~ msgid "Loading..."
 #~ msgstr "Po ngarkohet..."
 
-#~ msgid "Looking for %a."
-#~ msgstr "Po shihet për %a."
-
 #~ msgid "Main"
 #~ msgstr "Kryesore"
-
-#~ msgid ""
-#~ "Make sure that you got this package from a save source and from a serious "
-#~ "publisher!"
-#~ msgstr ""
-#~ "Sigurohuni që e morët këtë paketë nga një burimi të sigurt dhe prej një "
-#~ "botuesi serioz!"
 
 #~ msgid "Mode"
 #~ msgstr "Mënyrë"
 
-#~ msgid "Mode number:"
-#~ msgstr "Numër mënyre:"
-
 #~ msgid "Multimedia"
 #~ msgstr "Multimedia"
-
-#~ msgid "My apps"
-#~ msgstr "Zbatimet e mia"
 
 #~ msgid "Network"
 #~ msgstr "Rrjet"
@@ -871,44 +637,11 @@ msgstr ""
 #~ msgid "Office"
 #~ msgstr "Zyrë"
 
-#~ msgid "Okay"
-#~ msgstr "Në rregull"
-
-#~ msgid "Open your distribution's package catalog"
-#~ msgstr "Hapni katalogun e paketave të shpërndarjes suaj"
-
-#~ msgid "Options:"
-#~ msgstr "Mundësi:"
-
 #~ msgid "Other"
 #~ msgstr "Tjetër"
 
 #~ msgid "Package %p could not be installed."
 #~ msgstr "Paketa %p nuk mund të instalohej."
-
-#~ msgid "Package build commands:"
-#~ msgstr "Urdhra krijimi pakete:"
-
-#~ msgid "Package could be installed with MoJo/LOKI."
-#~ msgstr "Paketa mund të instalohej me MoJo/LOKI."
-
-#~ msgid "Package detected: %s"
-#~ msgstr "U zbulua paketë: %s"
-
-#~ msgid "Package has trusted signature."
-#~ msgstr "Paketa ka nënshkrim të besuar."
-
-#~ msgid "Package is unsigned."
-#~ msgstr "Paketa është e panënshkruar>"
-
-#~ msgid "Package lists"
-#~ msgstr "Lista paketash"
-
-#~ msgid "Package signature is UNTRUSTED!"
-#~ msgstr "Nënshkrimi i paketës NUK ËSHTË I BESUAR!"
-
-#~ msgid "Package type is \"%s\""
-#~ msgstr "Paketa është e llojit \"%s\""
 
 #~ msgid "Package was not build for your Linux distribution release."
 #~ msgstr "Paketa nuk qe krijuar për këtë version të shpërndarjes suaj Linux."
@@ -928,56 +661,11 @@ msgstr ""
 #~ msgid "Phase 4/4: Registering application..."
 #~ msgstr "Faza 4/4: Regjistrimi i zbatimit..."
 
-#~ msgid ""
-#~ "Please do not execute this action with superuser rights!\n"
-#~ "(PolicyKit will ask for authorization if privileges are required.)\n"
-#~ "Do you want to force Listaller to execute all with superuser permission?"
-#~ msgstr ""
-#~ "Ju lutem, mos e kryeni këtë veprim me të drejta superpërdoruesi!\n"
-#~ "(PolicyKit do t'ju kërkojë autorizim, nëse lypen privilegje.)\n"
-#~ "Doni të detyrohet Listaller-i të ekzekutojë gjithçka me leje "
-#~ "superpërdoruesi?"
-
-#~ msgid ""
-#~ "Please install this package only if you got it from a \n"
-#~ "trusted source. There is a serious risk that the software in this "
-#~ "package\n"
-#~ "damages your system. (The package could also contain malware)\n"
-#~ "Be careful with this package, especially if you install it system-wide\n"
-#~ "with superuser rights.\n"
-#~ msgstr ""
-#~ "Ju lutem, instalojeni këtë paketë vetëm nëse e morët\n"
-#~ "prej një burimi të besueshëm. Ka një rrezik serioz që software-i në këtë "
-#~ "paketë\n"
-#~ "të dëmtojë sistemin tuaj. (Paketa mundet të përmbajë edhe \"malware\")\n"
-#~ "Bëni kujdes me këtë paketë, veçanërisht nëse e instaloni për gjithë "
-#~ "sistemin,\n"
-#~ "me të drejta superpërdoruesi.\n"
-
 #~ msgid "Please notify the developers on http://launchpad.net/listaller"
 #~ msgstr "Ju lutem, njoftoni zhvilluesit te http://launchpad.net/listaller"
 
 #~ msgid "Please read the following information carefully:"
 #~ msgstr "Ju lutem, lexojeni me kujdes informacionin vijues:"
-
-#~ msgid ""
-#~ "Please run \"listallgo\" with path to setup-package as first parameter!"
-#~ msgstr ""
-#~ "Ju lutem, xhironi \"listallgo\" me shtegun për te setup-package si "
-#~ "parametër të parë!"
-
-#~ msgid "Please select a number shown in the list!"
-#~ msgstr "Ju lutem, përzgjidhni një nga numrat e shfaqur në listë!"
-
-#~ msgid "Please select an item from the list!"
-#~ msgstr "Ju lutem, përzgjidhni nga lista një objekt!"
-
-#~ msgid ""
-#~ "Please use https://bugs.launchpad.net/listaller\n"
-#~ "for bug reports."
-#~ msgstr ""
-#~ "Ju lutem, për njoftim të metash përdorni\n"
-#~ "https://bugs.launchpad.net/listaller."
 
 #~ msgid "Please view the logfile at %p"
 #~ msgstr "Ju lutem, shiheni kartelën e regjistrimit te %p"
@@ -988,34 +676,11 @@ msgstr ""
 #~ msgid "Please wait..."
 #~ msgstr "Ju lutem, prisni..."
 
-#~ msgid "Preparing installation (please wait)"
-#~ msgstr "Po përgatitet instalimi (ju lutem, prisni)"
-
 #~ msgid "Press \"Finish\" to close."
 #~ msgstr "Shtypni \"Përfundoje\" që të mbyllet."
 
 #~ msgid "Press \"Next\" to start the installation!"
 #~ msgstr "Shtypni \"Pasues\" që të fillojë instalimi!"
-
-#~ msgid "Print all available log messages"
-#~ msgstr "Shtyp krejt mesazhet e regjistrimit"
-
-#~ msgid ""
-#~ "Problem while communicating with PackageKit. Run \"pkmon\" to get further "
-#~ "information."
-#~ msgstr ""
-#~ "Problem gjatë komunikimit me PackageKit. Për të marrë informacion të "
-#~ "mëtejshëm, xhironi \"pkmon\"."
-
-#~ msgid "Problem while downloading the dependency."
-#~ msgstr "Problem gjatë shkarkimit të varësisë."
-
-#~ msgid ""
-#~ "Problem while downloading the required packages. Could not create working "
-#~ "FTP connection."
-#~ msgstr ""
-#~ "Problem gjatë shkarkimit të paketave të domosdoshme. Nuk u krijua dot "
-#~ "lidhje FTP funksionale."
 
 #~ msgid "Program description:"
 #~ msgstr "Përshkrim i programit:"
@@ -1023,17 +688,11 @@ msgstr ""
 #~ msgid "Proxy-Settings"
 #~ msgstr "Rregullime ndërmjetësi"
 
-#~ msgid "Question:"
-#~ msgstr "Pyetje:"
-
 #~ msgid "Quit"
 #~ msgstr "Dil"
 
 #~ msgid "Re-install"
 #~ msgstr "Ri-instaloje"
-
-#~ msgid "Reading application information..."
-#~ msgstr "Po lexohen të dhëna zbatimi..."
 
 #~ msgid "Ready."
 #~ msgstr "Gati."
@@ -1041,56 +700,14 @@ msgstr ""
 #~ msgid "Really remove?"
 #~ msgstr "Të hiqet vërtet?"
 
-#~ msgid "Removing application..."
-#~ msgstr "Po hiqet zbatimi..."
-
-#~ msgid "Repositories"
-#~ msgstr "Depo"
-
-#~ msgid "Resolve Listaller path variable"
-#~ msgstr "Përcaktoni ndryshoren e shtegut të Listaller-it"
-
-#~ msgid "Resolving dependencies..."
-#~ msgstr "Po plotësohen varësitë..."
-
-#~ msgid "Resolving dynamic dependencies..."
-#~ msgstr "Plotësim varësishë dinamike..."
-
-#~ msgid "Rights assigned to %a."
-#~ msgstr "U dhanë të drejta për %a."
-
-#~ msgid "Run binary setup file as root."
-#~ msgstr "Kartelën dyore të rregullimit xhiroje si rrënjë."
-
 #~ msgid "Running installation..."
 #~ msgstr "Po xhirohet instalimi..."
-
-#~ msgid "Running under %s."
-#~ msgstr "Po xhirohet nën %s."
-
-#~ msgid "Runs installation in testmode"
-#~ msgstr "Xhiron instalimin në mënyrën provë"
-
-#~ msgid "Security warning"
-#~ msgstr "Sinjalizim sigurie"
 
 #~ msgid "Select installation mode"
 #~ msgstr "Përzgjidhni mënyrë instalimi"
 
-#~ msgid "Select the installation mode of this application:"
-#~ msgstr "Përzgjidhni mënyrën e instalimit të këtij zbatimi:"
-
-#~ msgid "Settings"
-#~ msgstr "Rregullime"
-
-#~ msgid "Shared apps"
-#~ msgstr "Aplikacionet të ndara"
-
-#~ msgid "Should lipa fix these problems automatically [y/n]?"
-#~ msgstr "Mos duhet që lipa t'i ndreqë këto probleme vetvetiu [y/n]?"
-
-#~ msgid "Should this repository be registered to get software updates?"
-#~ msgstr "A duhet regjistruar kjo depo për marrje përditësimesh software-i?"
+#~ msgid "Select which parts of the application should be installed."
+#~ msgstr "Përzgjidhni cilat pjesë të zbatimit duhen instaluar."
 
 #~ msgid "Show"
 #~ msgstr "Shfaq"
@@ -1098,32 +715,14 @@ msgstr ""
 #~ msgid "Show:"
 #~ msgstr "Shfaq:"
 
-#~ msgid "Skipped %a"
-#~ msgstr "U anashkalua %a"
-
 #~ msgid "Software Manager"
 #~ msgstr "Përgjegjës Software-esh"
-
-#~ msgid "Software database opened."
-#~ msgstr "Baza e të dhënave të software-eve u hap."
 
 #~ msgid "Software license"
 #~ msgstr "Leje Software-i"
 
-#~ msgid "Some dependencies are missing. Should they be installed now?"
-#~ msgstr "Disa nga varësitë mungojnë. A do të duhej të instaloheshin tani?"
-
-#~ msgid "Source was removed."
-#~ msgstr "Burimi u hoq."
-
 #~ msgid "Start PackageKit monitor before running transactions"
 #~ msgstr "Nise mbikëqyrësin PackageKit përpara se kryhen transaksionet"
-
-#~ msgid "Starting uninstallation."
-#~ msgstr "Po fillohet çinstalimi."
-
-#~ msgid "State"
-#~ msgstr "Gjendje"
 
 #~ msgid "Success!"
 #~ msgstr "Sukses!"
@@ -1131,20 +730,8 @@ msgstr ""
 #~ msgid "System"
 #~ msgstr "Sistem"
 
-#~ msgid "Test-installation of package finished."
-#~ msgstr "Instalimi provë i paketës përfundoi."
-
 #~ msgid "Testmode"
 #~ msgstr "Testmodë"
-
-#~ msgid "Testmode: Do not register package."
-#~ msgstr "Mënyra provë: Mos e regjistro paketën."
-
-#~ msgid "The application \"%a\" was not installed."
-#~ msgstr "Zbatimi \"%a\" nuk u instalua."
-
-#~ msgid "The application %a could not be installed!"
-#~ msgstr "Zbatimi %a nuk u instalua dot!"
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "Zbatimi %a u instalua me sukses!"
@@ -1159,30 +746,8 @@ msgstr ""
 #~ msgid "The application will be updated to version %v"
 #~ msgstr "Zbatimi do të përditësohet me versionin %v"
 
-#~ msgid "The application will close now."
-#~ msgstr "Zbatimi tani do të mbyllet."
-
-#~ msgid "The file \"%f\" does not exists!"
-#~ msgstr "Kartela \"%f\" nuk ekziston!"
-
-#~ msgid "The following dependencies will be downloaded:"
-#~ msgstr "Do të shkarkohen varësitë vijuese:"
-
-#~ msgid "The following update repositories are installed:"
-#~ msgstr "Janë të instaluara depot vijuese të përditësimeve:"
-
 #~ msgid "The installer will close now"
 #~ msgstr "Instaluesi tani do të mbyllet"
-
-#~ msgid ""
-#~ "The package may be damaged or you haven't enough permissions to execute "
-#~ "this action!"
-#~ msgstr ""
-#~ "Paketa mund të jetë e dëmtuar ose nuk keni leje të majftueshme për "
-#~ "kryerjen e këtij veprimi!"
-
-#~ msgid "The registration of this package is broken!"
-#~ msgstr "Regjistrimi i kësaj pakete është i dëmtuar!"
 
 #~ msgid ""
 #~ "The selected action is not possible with this package.\n"
@@ -1191,62 +756,14 @@ msgstr ""
 #~ "Veprimi i përzgjedhur nuk është i mundur mbi këtë paketë.\n"
 #~ "Ju lutem, lidhuni me mirëmbajtësin e paketës që të keni më tepër të dhëna."
 
-#~ msgid "The software provides the following update source:"
-#~ msgstr "\"Software\"-i ofron burimet vijuese për përditësime:"
-
-#~ msgid "The submitted package is invalid!"
-#~ msgstr "Paketa e parashtruar është e pavlefshme!"
-
-#~ msgid ""
-#~ "There are no explicit package sources available for your Linux "
-#~ "distribution\n"
-#~ "Try to install common packages?"
-#~ msgstr ""
-#~ "Nuk ka burime eksplicite paketash për shpërndarjen tuaj Linux.\n"
-#~ "Të provohet instalimi i paketave të zakonshme?"
-
 #~ msgid "There are no updates available!"
 #~ msgstr "Nuk ka përditësime të passhme!"
 
-#~ msgid ""
-#~ "This application does not look like a MoJo-Installation and it is not "
-#~ "installed via any other package-type Listaller can handle.\n"
-#~ "Get instructions how to remove this application from the program author."
-#~ msgstr ""
-#~ "Ky zbatim nuk duket si instalim me MoJo dhe nuk është instaluar përmes "
-#~ "ndonjë lloji tjetër paketash që mundet ta trajtojë Listaller-i.\n"
-#~ "Merrni udhëzime nga autori i programit reth se si ta hiqni këtë zbatim."
-
-#~ msgid "This application wants to fetch a dependency from %l"
-#~ msgstr "Ky zbatim dëshiron të sjellë një varësi prej %l"
+#~ msgid "This application is already installed"
+#~ msgstr "Ky zbatim është tashmë i instaluar"
 
 #~ msgid "This package does not support your Linux distribution."
 #~ msgstr "Kjo paketë nuk e mbulon shpërndarjen tuaj Linux."
-
-#~ msgid "This package is not signed!"
-#~ msgstr "Kjo paketë nuk është e nënshkruar!"
-
-#~ msgid "This package is untrusted!"
-#~ msgstr "Kjo paketë nuk është e besuar!"
-
-#~ msgid "Unable to find %s"
-#~ msgstr "I pazoti të gjejë%s"
-
-#~ msgid "Unable to load information about LOKI-Setup."
-#~ msgstr "I pazoti të ngarkojë të dhëna rreth LOKI-Setup-it."
-
-#~ msgid ""
-#~ "Unable to load the icon of %a. Please notify the developers of Listaller "
-#~ "or of this application!"
-#~ msgstr ""
-#~ "I pazoti të ngarkojë ikonën e %a. Ju lutem, njoftoni zhvilluesit e "
-#~ "Listaller-it ose të këtij zbatimi!"
-
-#~ msgid "Unable to override the file %f."
-#~ msgstr "I pazoti të anashkalojë kartelën %f"
-
-#~ msgid "Unable to remove this application!"
-#~ msgstr "I pazoti të heqë këtë zbatim!"
 
 #~ msgid "Uninstall"
 #~ msgstr "Çinstaloje"
@@ -1254,20 +771,11 @@ msgstr ""
 #~ msgid "Uninstalling %a"
 #~ msgstr "Po çinstalohet %a"
 
-#~ msgid "Uninstalling unused dependencies..."
-#~ msgstr "Po çinstalohen varësi të papërdorura..."
-
 #~ msgid "Uninstalling..."
 #~ msgstr "Po çinstalohet..."
 
-#~ msgid "Unknown error occured!"
-#~ msgstr "Ndodhi një gabim i panjohur!"
-
 #~ msgid "Update info:"
 #~ msgstr "Të dhëna përditësimi:"
-
-#~ msgid "Update repositories"
-#~ msgstr "Përditëso Depot"
 
 #~ msgid "Use compatible packages?"
 #~ msgstr "Të përdoren paketa të përputhshme?"
@@ -1281,14 +789,8 @@ msgstr ""
 #~ msgid "Version"
 #~ msgstr "Version"
 
-#~ msgid "Version: unknown"
-#~ msgstr "Version: i panjohur"
-
 #~ msgid "Waiting..."
 #~ msgstr "Po pritet..."
-
-#~ msgid "Warning!"
-#~ msgstr "Kujdes!"
 
 #~ msgid "Welcome to the installation of %a"
 #~ msgstr "Mirë se vini te instalimi i %a"
@@ -1299,68 +801,5 @@ msgstr ""
 #~ msgid "What do you want to do?"
 #~ msgstr "Ç'doni të bëni në vazhdim?"
 
-#~ msgid "Yes/No?:"
-#~ msgstr "Po/Jo?:"
-
-#~ msgid "You are scanning only the ROOT installed applications."
-#~ msgstr "Po kontrolloni vetëm zbatimet e instaluara nga RRËNJA."
-
-#~ msgid "You are scanning your local installed applications."
-#~ msgstr "Po kaloni nën kontroll zbatimet tuaja të instaluara lokalisht."
-
-#~ msgid ""
-#~ "You cannot install two applications at the same time.\n"
-#~ "Please finish the first installation, then install this one again.\n"
-#~ "(If you do not run two installations, try to remove the temporary "
-#~ "installer directory"
-#~ msgstr ""
-#~ "Nuk mund të instaloni dy zbatime në të njëjtën kohë.\n"
-#~ "Ju lutem, përfundoni instalimin e parë, mandej vazhdoni me të dytin.\n"
-#~ "(Nëse nuk po xhironi njëherësh dy instalime, provoni të hiqni drejtorinë "
-#~ "e përkohshme të instaluesit.)"
-
-#~ msgid "You have to enter a number!"
-#~ msgstr "Duhet të jepni një numër!"
-
-#~ msgid ""
-#~ "You have to install the \"libuild\" tool before you can build packages!"
-#~ msgstr ""
-#~ "Duhet të instaloni mjetin \"libuild\" përpara se të mund të krijoni "
-#~ "paketa!"
-
-#~ msgid ""
-#~ "You use a development version of Listaller!\n"
-#~ "This version is not tested and may cause problems!"
-#~ msgstr ""
-#~ "Po përdorni një version zhvillimi të Listaller-it!\n"
-#~ "Ky version nuk është provuar dhe mund të shkaktojë probleme!"
-
-#~ msgid ""
-#~ "You want to install an %x-Package, but your Linux-distribution's package "
-#~ "management system is based on %y.\n"
-#~ "This package can be converted into a compatible format using \"alien\", "
-#~ "but this will take some time and eventually the installed application "
-#~ "won't work properly\n"
-#~ "Do you want to convert the package now?"
-#~ msgstr ""
-#~ "Dëshironi të instaloni një Paketë %x, por sistemi i administrimit të "
-#~ "paketave te shpërndarjes suaj Linux bazohet te %y.\n"
-#~ "Kjo paketë mund të shndërrohet në një format të përputhshëm duke përdorur "
-#~ "\"alien\"-in, por kjko do të hante ca kohë dhe së fundi zbatimi i "
-#~ "instaluar nuk do të punojë si duhet.\n"
-#~ "Doni ta shndërroni paketën tani?"
-
 #~ msgid "Your Linux distribution is not supported by Listaller yet!"
 #~ msgstr "Shpërndarja juaj Linux nuk mbulohet ende nga Listaller-i!"
-
-#~ msgid "n"
-#~ msgstr "n"
-
-#~ msgid "no"
-#~ msgstr "jo"
-
-#~ msgid "y"
-#~ msgstr "y"
-
-#~ msgid "yes"
-#~ msgstr "po"

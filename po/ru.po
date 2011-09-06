@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-29 01:11+0200\n"
-"PO-Revision-Date: 2011-06-15 19:57+0000\n"
-"Last-Translator: Aleksey Kabanov <Unknown>\n"
+"POT-Creation-Date: 2011-09-06 22:46+0200\n"
+"PO-Revision-Date: 2011-08-10 16:49+0000\n"
+"Last-Translator: SomeOneBrick <Unknown>\n"
 "Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
-"X-Generator: Launchpad (build 13242)\n"
+"X-Launchpad-Export-Date: 2011-09-06 20:41+0000\n"
+"X-Generator: Launchpad (build 13861)\n"
 
 #, c-format
 msgid ""
@@ -20,16 +20,16 @@ msgstr ""
 "'%s' не имеет зарегистрированного списка файлов. Возможно, база данных "
 "программ повреждена."
 
-#, fuzzy, c-format
+#, c-format
 msgid "A higher version '%s' of this application has already been installed."
-msgstr "Выберите какие части приложения необходимо установить."
+msgstr "Более высокая версия '%s' этого приложения была установлена."
 
-#, fuzzy, c-format
+#, c-format
 msgid "A lower version '%s' of this application has already been installed."
-msgstr "Программа уже установлена"
+msgstr "Более низкая версия '%s' этого приложения была установлена."
 
 msgid "A policy was not met."
-msgstr ""
+msgstr "Правило не подходит."
 
 msgid "A system error occured."
 msgstr "Произошла системная ошибка."
@@ -39,19 +39,20 @@ msgid "Application ID %s is invalid!"
 msgstr "Неправильный идентификатор приложения %s!"
 
 msgid "Available CRL is too old"
-msgstr ""
+msgstr "Доступный CRL устарел"
 
 msgid "Build IPK package"
-msgstr ""
+msgstr "Построение пакета IPK"
 
 msgid "CRL not available."
-msgstr ""
+msgstr "CRL недоступен."
 
 msgid "Can't verify: Key is missing"
 msgstr "Невозможно проверить: ключ отсутствует"
 
 msgid "Cannot query file size, continuing with an unknown size."
 msgstr ""
+"Нет возможности запросить размер файла, продолжаем с неизвестным размером."
 
 msgid "Copying files to their destination"
 msgstr "Копирование файлов в места назначения"
@@ -78,11 +79,11 @@ msgstr "Невозможно создать или обновить базу д�
 
 #, c-format
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
-msgstr ""
+msgstr "Нет возможности распаковать IPK! Пакет может быть повреждён. Ошибка %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Could not extract file %s! Error: %s"
-msgstr "Невозможно извлечь файл! Ошибка: %s"
+msgstr "Нет возможности распаковать файл %s! Ошибка %s"
 
 #, c-format
 msgid "Could not extract file! Error: %s"
@@ -90,42 +91,49 @@ msgstr "Невозможно извлечь файл! Ошибка: %s"
 
 #. : IPk builder was unable to find IPK source scripts
 msgid "Could not find IPK source files!"
-msgstr ""
+msgstr "Исходные файлы IPK не найдены!"
 
 #, c-format
 msgid "Could not load desktop file values: %s"
-msgstr ""
+msgstr "Нет возможности загрузить файл значений рабочего стола: %s"
 
 #, c-format
 msgid "Could not open IPK file! Error: %s"
-msgstr ""
+msgstr "Нет возможности открыть файл IPK! Ошибка %s"
 
 #, c-format
 msgid "Could not open desktop file: %s"
-msgstr ""
+msgstr "Нет возможности открыть файл рабочего стола: %s"
 
 msgid ""
 "Could not open the software database, maybe it is locked at time.\n"
 "Please close all other running installations to continue!"
 msgstr ""
+"Нет возможности открыть базу данных софта. Возможно, в данный момент она "
+"закрыта.\n"
+"Закройте прочие запущенные установщики, чтобы продолжить."
 
 #, c-format
 msgid "Could not override file %s, this file already exists!"
-msgstr ""
+msgstr "Нет возможности перезаписать файл %s: он уже существует!"
 
 #, c-format
 msgid "Could not read IPK control information! Error: %s"
-msgstr ""
+msgstr "Нет возможности прочитать контрольную информацию IPK! Ошибка %s"
 
 #, c-format
 msgid ""
 "Could not read IPK payload container! Package might be damaged. Error: %s"
 msgstr ""
+"Нет возможности прочитать загруженный IPK контейнер! Пакет может быть "
+"повреждён. Ошибка %s"
 
 #, c-format
 msgid ""
 "Could not read dependency archive! Archive might be damaged. Message: %s"
 msgstr ""
+"Нет возможности прочитать архив зависимостей! Архив может быть повреждён. "
+"Сообщение: %s"
 
 #, c-format
 msgid "Could not remove file %s!"
@@ -136,17 +144,17 @@ msgid "Could not uninstall application %s. It is not installed."
 msgstr "Невозможно деинсталлировать приложение %s. Оно не установлено."
 
 msgid "DIRECTORY"
-msgstr ""
+msgstr "КАТАЛОГ"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Database action '%s' failed: %s"
-msgstr "Соединение с базой данных закрыто."
+msgstr "Действие базы данных '%s' прервано: %s"
 
 msgid "Database action failed"
-msgstr ""
+msgstr "Действие базы данных прервано"
 
 msgid "Database action successful"
-msgstr ""
+msgstr "Действие базы данных выполнено удачно"
 
 msgid "Database locked"
 msgstr "База данных заблокирована"
@@ -171,13 +179,13 @@ msgid "File '%s' doesn't exist."
 msgstr "Файл '%s' не существует."
 
 msgid "GPG-Sign the resulting package"
-msgstr ""
+msgstr "Пакет результатов подписки GPG"
 
 msgid "IPK package could not be found!"
-msgstr ""
+msgstr "Пакет IPK не может быть найден!"
 
 msgid "IPK package output directory"
-msgstr ""
+msgstr "Каталог вывода пакета IPK"
 
 msgid "Installation completed!"
 msgstr "Установка завершена!"
@@ -185,52 +193,48 @@ msgstr "Установка завершена!"
 msgid "Installation failed!"
 msgstr "Установка не удалась!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installing native packages %s"
-msgstr "Установить пакет"
+msgstr "Установка родных пакетов %s"
 
 msgid "Low security."
-msgstr ""
+msgstr "Низкая безопасность"
 
 #, c-format
 msgid "Making '%s' known to your system."
-msgstr ""
+msgstr "Преобразование '%s' в формат, известный вашей системе."
 
-#, fuzzy
 msgid "Medium security."
-msgstr "Серый"
+msgstr "Средняя безопасность"
 
 msgid "Never trust."
-msgstr ""
+msgstr "Недоверенные."
 
 #, c-format
 msgid "No path given!"
 msgstr "Не указан путь!"
 
 msgid "One key has been revoked"
-msgstr ""
+msgstr "Один ключ был отозван"
 
 msgid "One key has expired"
-msgstr ""
+msgstr "Истёк срок действия ключа"
 
 #, c-format
 msgid "PackageKit exit code was: %s"
-msgstr ""
+msgstr "Закрылся PackageKit по причине %s"
 
 msgid "Path to Listaller package source directory"
-msgstr ""
+msgstr "Путь к директории с исходниками Listaller"
 
 msgid "Path to the application's source code"
 msgstr "Путь к исходному коду приложения"
 
-#, fuzzy
 msgid "Please remove the existing version to continue!"
-msgstr ""
-"Это приложение уже было установлено. Пожалуйста, удалите существующую "
-"версию, чтобы продолжить!"
+msgstr "Пожалуйста, удалите имеющуюся версию, чтобы продолжить!"
 
 msgid "Print machine-readable simple text"
-msgstr ""
+msgstr "Показать распознаваемый машиной обычный текст"
 
 #, c-format
 msgid "Removal of %s finished."
@@ -252,10 +256,10 @@ msgstr ""
 
 #, c-format
 msgid "Running installation of %s"
-msgstr ""
+msgstr "Запуск установки %s"
 
 msgid "Setup has not been initialized!"
-msgstr ""
+msgstr "Программа установки не инициализирована!"
 
 msgid "Should be safe."
 msgstr "Должно быть безопасным."
@@ -264,16 +268,16 @@ msgid "Show the application's version"
 msgstr "Показать версию приложения"
 
 msgid "Signature has expired"
-msgstr ""
+msgstr "Подпись истекла"
 
 msgid "Signature is bad."
-msgstr ""
+msgstr "Неверная подпись."
 
 msgid "Signature is fully valid"
-msgstr ""
+msgstr "Подпись полностью достоверна"
 
 msgid "Signature is good."
-msgstr ""
+msgstr "Подпись достоверна."
 
 msgid "Software database closed"
 msgstr "База данных программ закрыта"
@@ -286,16 +290,19 @@ msgid "Software database opened"
 msgstr "База данных программ открыта"
 
 msgid "Software install prefix"
-msgstr ""
+msgstr "Префикс установки софта"
 
 msgid "Software installation package"
-msgstr ""
+msgstr "Пакет установки программ"
 
 msgid ""
 "Some files of this package could not be installed, because they were not "
 "found in payload data.\n"
 "This IPK package might be damaged, please obtain a new copy!"
 msgstr ""
+"Некоторые файлы этого пакета не могут быть установлены потому что они не "
+"были найдены в загрузках.\n"
+"Этот пакет IPK может быть повреждён, приобретите новую копию!"
 
 msgid "Status of this signature is unknown or package is not signed."
 msgstr "Статус этой подписи неизвестен или пакет не подписан."
@@ -303,26 +310,31 @@ msgstr "Статус этой подписи неизвестен или пак�
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-#, fuzzy
 msgid "This application has already been installed."
-msgstr "Программа уже установлена"
+msgstr "Это приложение уже было установлено."
 
 msgid "Tried to perform action on invalid IPK package."
-msgstr ""
+msgstr "Попытка совершить действие на недействительном пакете IPK."
 
 msgid ""
 "Tried to perform action on private software database, but the database is "
 "not opened! (this should never happen!)"
 msgstr ""
+"Попытка выполнить действие на приватной базе данных ПО, но база данных не "
+"открыта! (этого не может быть)"
 
 msgid ""
 "Tried to perform action on shared software database, but the database is not "
 "opened! (maybe a permission problem?)"
 msgstr ""
+"Попытка совершить действие на общей базе данных софта, но база данных не "
+"открыта! (быть может, проблема с правами доступа?)"
 
 msgid ""
 "Tried to write on unlocked (readonly) database! (This should not happen)"
 msgstr ""
+"Попытка писать в разблокированную (только для чтения) базу данных! (этого не "
+"может быть)"
 
 msgid "Trust if full"
 msgstr ""
@@ -337,52 +349,59 @@ msgid ""
 "Trying to remove local application, but AppManager is in superuser mode!\n"
 "Setting AppManager to local mode now."
 msgstr ""
+"При попытке удалить локальное приложение обнаружена ошибка: AppManager "
+"запущен в режиме суперпользователя!\n"
+"Настройте AppManager на режим локального пользователя."
 
 msgid ""
 "Trying to remove shared application, but AppManager is not in superuser "
 "mode!\n"
 "Setting AppManager to superuse mode now."
 msgstr ""
+"При попытке удалить общее приложение обнаружена ошибка: AppManager запущен "
+"не в режиме суперпользователя!\n"
+"Настройте AppManager на режим суперпользователя."
 
-#, fuzzy
 msgid "Unable to create destination directory."
-msgstr "Невозможно создать каталог назначения. Ошибка: %s"
+msgstr "Нет возможности создать целевую директорию."
 
 #, c-format
 msgid "Unable to create file '%s'!"
 msgstr "Невозможно создать файл '%s'!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create/update database tables: %s"
-msgstr "Невозможно создать файл '%s'!"
+msgstr "Нет возможности создать/обновить таблицу базы данных: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to download feed %s. Message: %s"
-msgstr "Невозможно прочитать подпись пакета! Сообщение: %s"
+msgstr ""
 
 msgid "Unable to extract IPK data!"
-msgstr ""
+msgstr "Нет возможности распаковать данные IPK!"
 
 msgid "Unable to extract IPK metadata!"
-msgstr ""
+msgstr "Нет возможности распаковать метаданные IPK!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract data file %s. Message: %s"
-msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
+msgstr "Нет возможности распаковать файл данных %s. Сообщение: %s"
 
 #, c-format
 msgid ""
 "Unable to extract data file %s. This IPK package might be damaged, please "
 "obtain a new copy."
 msgstr ""
+"Нет возможности распаковать файл данных %s. Этот пакет IPK может быть "
+"повреждён. Приобретите новую копию."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract file '%s' for dependency '%s'!"
-msgstr "Невозможно создать файл '%s'!"
+msgstr "Нет возможности распаковать файл '%s' для зависимости '%s'!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract file. %s"
-msgstr "Невозможно создать файл '%s'!"
+msgstr "Нет возможности распаковать файл. %s"
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr "Невозможно извлечь подпись! Возможно, пакет не подписан."
@@ -391,23 +410,25 @@ msgstr "Невозможно извлечь подпись! Возможно, п
 msgid "Unable to fetch application file list! Message: %s"
 msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to fetch dependency information list: %s"
-msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
+msgstr "Нет возможности получить информацию о списке зависимостей: %s"
 
 #, c-format
 msgid ""
 "Unable to find a matching implementation of '%s' for your system/"
 "architecture."
 msgstr ""
+"Нет возможности найти соответствующий '%s' для вашей системы/архитектуры."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for '%s'!"
-msgstr "Установить пакет"
+msgstr "Нет возможности найти родные пакеты для '%s'!"
 
 #, c-format
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr ""
+"Нет возможности найти подходящий пакет для удовлетворения зависимости '%s'!"
 
 msgid "Unable to open software database for reading & writing!"
 msgstr "Невозможно открыть базу данных программ для чтения и записи!"
@@ -421,7 +442,7 @@ msgstr "Невозможно прочитать подпись пакета! С�
 
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
-msgstr ""
+msgstr "Нет возможности убрать блокировку базы данных! (Сообщение: %s)"
 
 msgid "Unable to save modified desktop-file!"
 msgstr ""
@@ -444,15 +465,12 @@ msgstr "Неизвестно."
 msgid "Use recursive mode"
 msgstr "Использовать рекурсивный режим"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Validation of file %s failed! This IPK file might have been modified after "
 "creation.\n"
 "Please obtain a new copy and try again."
 msgstr ""
-"Хеш-значения не совпадают!\n"
-"Возможно пакет был изменён после создания.\n"
-"Пожалуйста, получите новую копию"
 
 msgid "Validity is undefined"
 msgstr ""
@@ -474,187 +492,22 @@ msgstr ""
 msgid "XML file is no valid ZI feed!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "ZI XML file '%s' is damaged."
-msgstr "XML-файл '%s' повреждён."
+msgstr ""
 
 #, c-format
 msgid "error: %s"
 msgstr "ошибка: %s"
 
-#~ msgid "  modified "
-#~ msgstr "  изменён "
-
-#~ msgid "  size "
-#~ msgstr "  размер "
-
-#~ msgid " (at %d,%d, stream offset %.8x)"
-#~ msgstr " (на %d,%d, смещение потока %.8x)"
-
-#~ msgid " WARNING: There are %d TimerInfo structures left, I'll free them"
-#~ msgstr " ВНИМАНИЕ: Осталось %d структур TimerInfo, они будут освобождены"
-
-#~ msgid " WARNING: There are %d messages left in the queue! I'll free them"
-#~ msgstr " ВНИМАНИЕ: В очереди осталось %d сообщений! Они будут удалены"
-
-#~ msgid " WARNING: There are %d unreleased DCs, a detailed dump follows:"
-#~ msgstr ""
-#~ " ВНИМАНИЕ: Найдено %d неосвобождённых контекстов устройств, список см. "
-#~ "ниже:"
-
-#~ msgid ""
-#~ " WARNING: There are %d unreleased GDIObjects, a detailed dump follows:"
-#~ msgstr " ВНИМАНИЕ: Найдено %d неосвобождённых GDIObject, список см. ниже:"
-
-#~ msgid ""
-#~ " WARNING: There are %s unremoved LM_PAINT/LM_GtkPAINT message links left."
-#~ msgstr ""
-#~ " ВНИМАНИЕ: Найдено %s неудалённых ссылок на сообщение LM_PAINT/"
-#~ "LM_GtkPAINT."
-
 #~ msgid "%f files will be changed."
 #~ msgstr "%f файлы будут изменены."
-
-#~ msgid "%s Index %d out of bounds 0 .. %d"
-#~ msgstr "%s Индекс %d вне диапазона 0 .. %d"
-
-#~ msgid "%s is already associated with %s"
-#~ msgstr "%s уже сопоставлено с %s"
-
-#~ msgid ""
-#~ "%s%sPress Ok to ignore and risk data corruption.%sPress Cancel to kill "
-#~ "the program."
-#~ msgstr ""
-#~ "%s%sНажмите 'Ok' чтобы игнорировать и подвергнуться риску повреждения "
-#~ "данных.%sНажмите 'Отмена' для закрытия программы."
-
-#~ msgid "%s: Already registered"
-#~ msgstr "%s: Уже зарегистрирован"
-
-#~ msgid "%s: Not registered"
-#~ msgstr "%s: Не зарегистрирован"
-
-#~ msgid "&All"
-#~ msgstr "&Все"
-
-#~ msgid "&Close"
-#~ msgstr "&Закрыть"
-
-#~ msgid "&Directory"
-#~ msgstr "&Каталог"
-
-#~ msgid "&Help"
-#~ msgstr "&Справка"
-
-#~ msgid "&Ignore"
-#~ msgstr "&Пропуск"
-
-#~ msgid "&No"
-#~ msgstr "&Нет"
-
-#~ msgid "&OK"
-#~ msgstr "&ОК"
-
-#~ msgid "&Retry"
-#~ msgstr "&Повтор"
-
-#~ msgid "&Yes"
-#~ msgstr "&Да"
 
 #~ msgid "(This program will download the needed files from the internet)"
 #~ msgstr "(Эта программа скачает необходимые файлы из интернета)"
 
-#~ msgid "(file not found: \"%s\")"
-#~ msgstr "(файл не найден: \"%s\")"
-
-#~ msgid ""
-#~ "--class classname     Following Xt conventions, the class of a program is "
-#~ "the program name with the initial character capitalized. For example, the "
-#~ "classname for gimp is \"Gimp\". If --class is specified, the class of the "
-#~ "program will be set to \"classname\"."
-#~ msgstr ""
-#~ "--class classname      Следуя соглашениям Xt, класс программы - это имя "
-#~ "программы с прописным первым символом. Например, имя класса для gimp - "
-#~ "\"Gimp\". Если задан --class, класс программы будет установлен в "
-#~ "\"classname\"."
-
-#~ msgid ""
-#~ "--display h:s:d       Connect to the specified X server, where \"h\" is "
-#~ "the hostname, \"s\" is the server number (usually 0), and \"d\" is the "
-#~ "display number (typically omitted). If --display is not specified, the "
-#~ "DISPLAY environment variable is used."
-#~ msgstr ""
-#~ "--display h:s:d       Связаться с указанным X-сервером, где \"h\" - имя "
-#~ "хост-машины, \"s\" - номер сервера (обычно 0), и \"d\" - номер дисплея "
-#~ "(обычно опускают). Если не задан --display, используется переменная "
-#~ "окружения DISPLAY."
-
-#~ msgid ""
-#~ "--g-fatal-warnings    Warnings and errors generated by Gtk+/GDK will halt "
-#~ "the application."
-#~ msgstr ""
-#~ "--g-fatal-warnings    Замечания и ошибки, выдаваемые Gtk+/GDK, остановят "
-#~ "приложение."
-
-#~ msgid "--gdk-debug flags     Turn on specific GDK trace/debug messages."
-#~ msgstr "--gdk-debug flags     Включить указанные отладочные сообщения GDK."
-
-#~ msgid "--gdk-no-debug flags  Turn off specific GDK trace/debug messages."
-#~ msgstr "--gdk-no-debug flags  Выключить указанные отладочные сообщения GDK."
-
-#~ msgid "--gtk-debug flags     Turn on specific Gtk+ trace/debug messages."
-#~ msgstr "--gtk-debug flags     Включить указанные отладочные сообщения Gtk+."
-
-#~ msgid "--gtk-module module   Load the specified module at startup."
-#~ msgstr "--gtk-module модуль   Загрузить указанный модуль при запуске."
-
-#~ msgid "--gtk-no-debug flags  Turn off specific Gtk+ trace/debug messages."
-#~ msgstr ""
-#~ "--gtk-no-debug flags  Выключить указанные отладочные сообщения Gtk+."
-
-#~ msgid "--lcl-no-transient    Do not set transient order for modal forms"
-#~ msgstr ""
-#~ "--lcl-no-transient    Не устанавливать временный порядок модальных форм"
-
-#~ msgid ""
-#~ "--name programe       Set program name to \"progname\". If not specified, "
-#~ "program name will be set to ParamStrUTF8(0)."
-#~ msgstr ""
-#~ "--name имяпрог       Установить имя программы в \"имяпрог\". Если не "
-#~ "указано, имя программы будет установлено в ParamStrUTF8(0)."
-
-#~ msgid "--no-xshm             Disable use of the X Shared Memory Extension."
-#~ msgstr ""
-#~ "--no-xshm             Запрет использования расширений X по разделяемой "
-#~ "памяти."
-
-#~ msgid ""
-#~ "--sync                Call XSynchronize (display, True) after the Xserver "
-#~ "connection has been established. This makes debugging X protocol errors "
-#~ "easier, because X request buffering will be disabled and X errors will be "
-#~ "received immediatey after the protocol request that generated the error "
-#~ "has been processed by the X server."
-#~ msgstr ""
-#~ "--sync                Вызов XSynchronize (display, True) после "
-#~ "установлени соединения с Xserver'ом. Это облегчает отладку ошибок "
-#~ "протокола X, т.к. запросы буферизации X будут отключены, и ошибки X будут "
-#~ "получены сразу после запроса протокола, который вызвал эту ошибку, "
-#~ "обработанную сервером X."
-
-#~ msgid "3D Dark Shadow"
-#~ msgstr "Затенённая часть объекта 3D"
-
-#~ msgid "3D Light"
-#~ msgstr "Освещённая часть объекта 3D"
-
-#~ msgid "A control can't have itself as parent"
-#~ msgstr "Элемент управления не может быть сам себе потомком"
-
 #~ msgid "Abort"
 #~ msgstr "Прервать"
-
-#~ msgid "Aborted."
-#~ msgstr "Отменено."
 
 #~ msgid "About"
 #~ msgstr "О программе"
@@ -662,41 +515,11 @@ msgstr "ошибка: %s"
 #~ msgid "About Listaller"
 #~ msgstr "О Listaller"
 
-#~ msgid "Accept"
-#~ msgstr "Accept"
-
-#~ msgid "Active Border"
-#~ msgstr "Граница активного окна"
-
-#~ msgid "Active Caption"
-#~ msgstr "Заголовок активного окна"
-
 #~ msgid "All"
 #~ msgstr "Все"
 
-#~ msgid "All files (%s)|%s|%s"
-#~ msgstr "Все файлы (%s)|%s|%s"
-
-#~ msgid "Alt"
-#~ msgstr "Alt"
-
-#~ msgid "An internal error occured"
-#~ msgstr "Произошла ошибка"
-
-#~ msgid "Application Workspace"
-#~ msgstr "Рабочая область приложения"
-
 #~ msgid "Application uninstalled successfully!"
 #~ msgstr "Удаление приложения успешно завершено!"
-
-#~ msgid "Application was successfully removed!"
-#~ msgstr "Приложение было полностью удалено!"
-
-#~ msgid "Applications"
-#~ msgstr "Приложения"
-
-#~ msgid "Aqua"
-#~ msgstr "Морской волны"
 
 #~ msgid "Are you really sure that you want to delete this source?"
 #~ msgstr "Вы действительно хотите удалить этот источник?"
@@ -710,212 +533,29 @@ msgstr "ошибка: %s"
 #~ msgid "Back"
 #~ msgstr "Назад"
 
-#~ msgid "Backspace"
-#~ msgstr "Забой"
-
-#~ msgid "Backward"
-#~ msgstr "Назад"
-
-#~ msgid "Bitmaps"
-#~ msgstr "Точечные рисунки"
-
-#~ msgid "Black"
-#~ msgstr "Чёрный"
-
-#~ msgid "Blank"
-#~ msgstr "Пустой"
-
-#~ msgid "Blue"
-#~ msgstr "Синий"
-
-#~ msgid "Browser %s%s%s not executable."
-#~ msgstr "Браузер %s%s%s не является исполнимым файлом."
-
-#~ msgid "Browser %s%s%s not found."
-#~ msgstr "Браузер %s%s%s не найден."
-
-#~ msgid "Build IPK-package"
-#~ msgstr "Создать IPK-пакет"
-
-#~ msgid "Button Face"
-#~ msgstr "Лицевая часть кнопки"
-
-#~ msgid "Button Highlight"
-#~ msgstr "Освещаемая сторона кнопки"
-
-#~ msgid "Button Shadow"
-#~ msgstr "Затенённая сторона кнопки"
-
-#~ msgid "Button Text"
-#~ msgstr "Текст кнопки"
-
-#~ msgid "Calculator"
-#~ msgstr "Калькулятор"
-
-#~ msgid "Can not focus"
-#~ msgstr "Не могу принять фокус"
-
-#~ msgid "Can't find Listaller Manager!"
-#~ msgstr "Невозможно найти диспетчер Listaller!"
-
-#~ msgid "Can't find update-tool!"
-#~ msgstr "Невозможно найти инструмент обновления!"
-
 #~ msgid "Can't load LOKI-Setup information."
 #~ msgstr "Не удается загрузить LOKI-Setup информацию."
 
-#~ msgctxt "lclstrconsts.ifsvk_cancel"
-#~ msgid "Cancel"
-#~ msgstr "Cancel"
-
-#~ msgctxt "lclstrconsts.rscancelrecordhint"
-#~ msgid "Cancel"
-#~ msgstr "Отмена"
-
-#~ msgctxt "lclstrconsts.rsmbcancel"
-#~ msgid "Cancel"
-#~ msgstr "Отмена"
-
-#~ msgid "Cannot access the Listaller Update tool. Maybe it is not installed?"
+#~ msgid ""
+#~ "Cannot download this package. Please contact the catalogue managers on %h"
 #~ msgstr ""
-#~ "Не удается получить доступ к Listaller Update. Может быть, он еще не "
-#~ "установлен?"
-
-#~ msgid "Cannot begin update all when canvas only update in progress"
-#~ msgstr "Невозможно начать обновление всех во время обновления канвы"
-
-#~ msgid "Cannot change format of icon image"
-#~ msgstr "Невозможно изменить формат изображения значка"
-
-#~ msgid "Cannot change size of icon image"
-#~ msgstr "Невозможно изменить размер изображения значка"
-
-#~ msgid "Cannot focus a disabled or invisible window"
-#~ msgstr "Нельзя дать фокус отключённому или невидимому окну"
-
-#~ msgid "Cannot resolve dependencies"
-#~ msgstr "Не могу разрешить зависимости"
-
-#~ msgid "Cannot save image while update in progress"
-#~ msgstr "Невозможно сохранить изображение во время обновления"
-
-#~ msgid "Canvas does not allow drawing"
-#~ msgstr "Канва не поддерживает рисования"
-
-#~ msgid "Capital"
-#~ msgstr "CapsLock"
-
-#~ msgid "Caption Text"
-#~ msgstr "Текст заголовка"
-
-#~ msgid "Case sensitive"
-#~ msgstr "С учётом регистра"
+#~ "Нет возможности загрузить этот пакет. Согласуйтесь с менеджером каталогов "
+#~ "на %h"
 
 #~ msgid "Category:"
 #~ msgstr "Категория:"
 
-#~ msgid "Change package manager settings"
-#~ msgstr "Изменение настроек менеджера пакетов"
-
-#~ msgid "Check applications"
-#~ msgstr "Проверка приложений"
-
-#~ msgid "Check dependencies?"
-#~ msgstr "Проверить зависимости?"
-
 #~ msgid "Check for updates"
 #~ msgstr "Проверить наличие обновлений"
 
-#~ msgid "Check if dependencies of all installed applications are available."
-#~ msgstr ""
-#~ "Убедитесь, в том, что доступны все зависимости для установленных программ."
-
-#~ msgid "Cleaning up..."
-#~ msgstr "Очистка..."
-
-#~ msgid "Clear"
-#~ msgstr "Clear"
-
 #~ msgid "Close"
 #~ msgstr "Закрыть"
-
-#~ msgid "Code:"
-#~ msgstr "Код:"
-
-#~ msgid "Commands:"
-#~ msgstr "Команды:"
-
-#~ msgid "Confirmation"
-#~ msgstr "Подтверждение"
-
-#~ msgid "Control"
-#~ msgstr "Элемент управления"
-
-#~ msgid ""
-#~ "Conversion done. Do you want to close this window now?\n"
-#~ "Press \"No\" if you want to check the output."
-#~ msgstr ""
-#~ "Преобразование завершено. Вы хотите закрыть это окно немедленно?\n"
-#~ "Нажмите \"Нет\", если хотите проверить вывод."
-
-#~ msgid "Convert"
-#~ msgstr "Преобразовать"
 
 #~ msgid "Convert package?"
 #~ msgstr "Преобразовать пакет?"
 
 #~ msgid "Converting %p package..."
-#~ msgstr "Конвертирование %p пакета..."
-
-#~ msgid "Could not detect package type!"
-#~ msgstr "Невозможно определить тип пакета!"
-
-#~ msgid "Could not find Listaller TrayIcon Application"
-#~ msgstr "Невозможно найти приложение значка панели задач Listaller"
-
-#~ msgid "Could not find main executable of this application!"
-#~ msgstr "Невозможно найти основной исполняемый файл этого приложения!"
-
-#~ msgid "Cream"
-#~ msgstr "Кремовый"
-
-#~ msgid "Create DEB and RPM file from IPS"
-#~ msgstr "Создать файлы DEB и RPM из IPS"
-
-#~ msgid "Create/Update update-repository"
-#~ msgstr "Создать/обновить репозиторий обновлений"
-
-#~ msgid "Creating gdb catchable error:"
-#~ msgstr "Создание ошибки, захватываемой GDB:"
-
-#~ msgid "Ctrl"
-#~ msgstr "Ctrl"
-
-#~ msgid "Cursor"
-#~ msgstr "Курсор"
-
-#~ msgid "Custom"
-#~ msgstr "Пользовательский"
-
-#~ msgid "Custom ..."
-#~ msgstr "Пользовательский ..."
-
-#~ msgid "Database problem:"
-#~ msgstr "Проблема с базой данных:"
-
-#~ msgid "Default"
-#~ msgstr "По умолчанию"
-
-#~ msgctxt "lclstrconsts.ifsvk_delete"
-#~ msgid "Delete"
-#~ msgstr "Delete"
-
-#~ msgctxt "lclstrconsts.rsdeleterecordhint"
-#~ msgid "Delete"
-#~ msgstr "Удалить"
-
-#~ msgid "Delete record?"
-#~ msgstr "Удалить запись?"
+#~ msgstr "Конвертирование пакета %p..."
 
 #~ msgid "Delete source"
 #~ msgstr "Удалить источник"
@@ -926,26 +566,11 @@ msgstr "ошибка: %s"
 #~ msgid "Dependencies couldn't be solved!"
 #~ msgstr "Зависимости не могут быть решены!"
 
-#~ msgid "Dependency \"%s\" is not installed!"
-#~ msgstr "Зависимость %s не установлена!"
-
-#~ msgid "Desktop"
-#~ msgstr "Рабочий стол"
-
 #~ msgid "Details"
 #~ msgstr "Подробности"
 
-#~ msgid "Detecting package..."
-#~ msgstr "Удаление пакета..."
-
 #~ msgid "Development"
 #~ msgstr "Средства разработки"
-
-#~ msgid "Direction"
-#~ msgstr "Направление"
-
-#~ msgid "Directory must exist"
-#~ msgstr "Каталог должен существовать"
 
 #~ msgid "Display installation log"
 #~ msgstr "Показать журнал установки"
@@ -956,61 +581,26 @@ msgstr "ошибка: %s"
 #~ msgid "Display system applications"
 #~ msgstr "Показать системные приложения"
 
-#~ msgid "Do you accept this license [y/n]?"
-#~ msgstr "Принимаете эту лицензию [y/n]?"
-
 #~ msgid "Do you really want to abort this download?"
 #~ msgstr "Вы действительно хотите прервать эту закачку?"
+
+#~ msgid ""
+#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
+#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+#~ "those packages, press \"No\"!"
+#~ msgstr ""
+#~ "Вы действительно хотите удалить \"%р\", содержащий %a?\rСледующие пакеты "
+#~ "будут удалены: %PL\rЕсли вы не уверены, что вам не будут нужны эти "
+#~ "пакеты, нажмите \"Нет\"!"
 
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "Вы действительно хотите удалить %a?"
 
-#~ msgid "Do you want confirm this download of external files?"
-#~ msgstr "Вы действительно хотите разрешить загрузку внешних файлов?"
-
-#~ msgid "Do you want to check global-installed applications too?"
-#~ msgstr ""
-#~ "Вы действительно хотите также проверить общие установленные программы?"
-
-#~ msgid "Do you want to check the applications's dependencies?"
-#~ msgstr "Хотите проверить зависимости приложений?"
-
 #~ msgid "Do you want to install it again?"
 #~ msgstr "Хотите установить снова?"
 
-#~ msgid "Do you want to install it anyway? (This could cause problems)"
-#~ msgstr ""
-#~ "Вы действительно хотите установить его? (Это может привести к проблеммам)"
-
-#~ msgid "Do you want to see detailed information [y/n]?"
-#~ msgstr "Вы действительно хотите увидеть подробные сведения [д/н]?"
-
-#~ msgid "Do you want to view the logfile?"
-#~ msgstr "Вы действительно хотите открыть файл событий?"
-
-#~ msgid "Docking"
-#~ msgstr "Стыковка"
-
-#~ msgid "Done."
-#~ msgstr "Выполнено."
-
-#~ msgid "Down"
-#~ msgstr "Стрелка вниз"
-
-#~ msgid "Downloading package..."
-#~ msgstr "Загрузка пакета..."
-
-#~ msgid "Duplicate icon format."
-#~ msgstr "Формат значков дублируется."
-
-#~ msgid "Duplicate menus"
-#~ msgstr "Повторяющиеся меню"
-
-#~ msgid "ERROR in LCL: "
-#~ msgstr "ОШИБКА в LCL: "
-
-#~ msgid "Edit"
-#~ msgstr "Редактировать"
+#~ msgid "Downloading catalogue base information..."
+#~ msgstr "Загрузка информации о базе каталогов..."
 
 #~ msgid "Education"
 #~ msgstr "Обучение"
@@ -1018,91 +608,11 @@ msgstr "ошибка: %s"
 #~ msgid "Enable Proxy-Server"
 #~ msgstr "Включить Прокси-Сервер"
 
-#~ msgid "End"
-#~ msgstr "Конец"
-
-#~ msgid "Endupdate while no update in progress"
-#~ msgstr "Команда Endupdate, хотя обновления не производилось"
-
-#~ msgid "Enter your password to install the application for everyone."
-#~ msgstr ""
-#~ "Введите пароль для того, чтобы установить это приложение для всех "
-#~ "пользователей."
-
-#~ msgid "Enter your password to run the application with advanced privileges."
-#~ msgstr ""
-#~ "Введите ваш пароль, если хотите выполнить программу с особыми правами."
-
-#~ msgid "Error"
-#~ msgstr "Ошибка"
-
-#~ msgctxt "lclstrconsts.rserror"
-#~ msgid "Error"
-#~ msgstr "Ошибка"
-
-#~ msgctxt "lclstrconsts.rsmterror"
-#~ msgid "Error"
-#~ msgstr "Ошибка"
-
-#~ msgid "Error creating device context for %s.%s"
-#~ msgstr "Ошибка создания контекста устройства для %s.%s"
-
-#~ msgid "Error occurred in %s at %sAddress %s%s Frame %s"
-#~ msgstr "Произошла ошибка в %s по %s адресу %s%s фрейм %s"
-
-#~ msgid "Error reading %s%s%s: %s"
-#~ msgstr "Ошибка чтения %s%s%s: %s"
-
-#~ msgid "Error while executing %s%s%s:%s%s"
-#~ msgstr "Ошибка при выполнении %s%s%s:%s%s"
-
 #~ msgid "Error while extracting files!"
 #~ msgstr "Ошибка при распаковке файлов!"
 
-#~ msgid "Error while performing installation:"
-#~ msgstr "Произошла ошибка во время установки:"
-
-#~ msgid "Error while saving bitmap."
-#~ msgstr "Ошибка при сохранении точечного рисунка (bitmap)."
-
 #~ msgid "Error while uninstalling!"
 #~ msgstr "Произошла ошибка во время удаления!"
-
-#~ msgid "Error:"
-#~ msgstr "Ошибка:"
-
-#~ msgid "Escape"
-#~ msgstr "Escape"
-
-#~ msgid "Exception"
-#~ msgstr "Исключение"
-
-#~ msgid "Execute"
-#~ msgstr "Выполнить"
-
-#~ msgid "Execute the new application"
-#~ msgstr "Запустить новое приложение"
-
-#~ msgid "Executing application main executable..."
-#~ msgstr "Выполнение основного исполняемого файла приложения"
-
-#~ msgid "Fatal database error"
-#~ msgstr "Фатальная ошибка базы данных"
-
-#~ msgid "File"
-#~ msgstr "Файл"
-
-#~ msgid "File information"
-#~ msgstr "Информация о файле"
-
-#~ msgid "File is not writable"
-#~ msgstr "Файл не доступен для записи"
-
-#~ msgid "File must exist"
-#~ msgstr "Файл должен существовать"
-
-#~ msgid "Filter..."
-#~ msgstr "Фильтр..."
 
 #~ msgid "Filter:"
 #~ msgstr "Фильтр:"
@@ -1110,49 +620,11 @@ msgstr "ошибка: %s"
 #~ msgid "Filtering..."
 #~ msgstr "Фильтрация..."
 
-#~ msgid "Final"
-#~ msgstr "Итоговый"
-
-#~ msgid "Find"
-#~ msgstr "Найти"
-
-#~ msgid "Find more"
-#~ msgstr "Найти далее"
-
 #~ msgid "Finish"
 #~ msgstr "Готово"
 
 #~ msgid "Finished"
-#~ msgstr "Завершено"
-
-#~ msgid "First"
-#~ msgstr "Первая"
-
-#~ msgid "FixedCols can't be >= ColCount"
-#~ msgstr "FixedCols не может быть >= ColCount"
-
-#~ msgid "FixedRows can't be >= RowCount"
-#~ msgstr "FixedRows не может быть >= RowCount"
-
-#~ msgid "Form"
-#~ msgstr "Форма"
-
-#~ msgid "Form streaming \"%s\" error: %s"
-#~ msgstr "Ошибка потоков \"%s\" форм: %s"
-
-#~ msgid "Forward"
-#~ msgstr "Вперёд"
-
-#~ msgid "Found installation profile %s."
-#~ msgstr "Найден профиль установки %s."
-
-#~ msgid ""
-#~ "Found no package with the necessary library \"%l\" for your distribution."
-#~ msgstr ""
-#~ "Пакет с необходимой библиотекой \"%l\" для вашего дистрибутива не найден."
-
-#~ msgid "Fuchsia"
-#~ msgstr "Розовый"
+#~ msgstr "Готово"
 
 #~ msgid "Games"
 #~ msgstr "Игры"
@@ -1160,154 +632,14 @@ msgstr "ошибка: %s"
 #~ msgid "Get dependency from"
 #~ msgstr "Получить зависимость от"
 
-#~ msgid "Gradient Active Caption"
-#~ msgstr "Градиент активного заголовка"
-
-#~ msgid "Gradient Inactive Caption"
-#~ msgstr "Градиент неактивного заголовка"
-
 #~ msgid "Graphic"
 #~ msgstr "Графика"
 
-#~ msgid "Gray"
-#~ msgstr "Тёмно-серый"
-
-#~ msgid "Gray Text"
-#~ msgstr "Серый текст"
-
-#~ msgid "Green"
-#~ msgstr "Тёмно-зелёный"
-
-#~ msgid "Grid file doesn't exists"
-#~ msgstr "Файл сетки не существует"
-
-#~ msgid "Grid index out of range."
-#~ msgstr "Индекс Grid'а вне диапазона допустимых значений."
-
-#~ msgid "GroupIndex cannot be less than a previous menu item's GroupIndex"
-#~ msgstr ""
-#~ "GroupIndex не может быть меньше GroupIndex для предыдущего элемента меню"
-
-#~ msgid "Hanja"
-#~ msgstr "Ханчча"
-
-#~ msgid "Help"
-#~ msgstr "Справка"
-
-#~ msgid "Help Context not found"
-#~ msgstr "Контекст справки не найден"
-
-#~ msgid ""
-#~ "Help Database %s%s%s did not found a viewer for a help page of type %s"
-#~ msgstr ""
-#~ "База данных справки %s%s%s не нашла программу просмотра для страницы "
-#~ "справки типа %s"
-
-#~ msgid "Help Database %s%s%s not found"
-#~ msgstr "База данных справки %s%s%s не найдена"
-
-#~ msgid "Help Database not found"
-#~ msgstr "База данных справки не найдена"
-
-#~ msgid "Help Error"
-#~ msgstr "Ошибка справки"
-
-#~ msgid "Help Selector Error"
-#~ msgstr "Ошибка переключателя справки"
-
-#~ msgid "Help Viewer Error"
-#~ msgstr "Ошибка программы просмотра справки"
-
-#~ msgid "Help Viewer not found"
-#~ msgstr "Программа просмотра справки не найдена"
-
-#~ msgid "Help context %s not found in Database %s%s%s."
-#~ msgstr "Контекст справки %s не найден в базе данных %s%s%s."
-
-#~ msgid "Help context %s not found."
-#~ msgstr "Контекст справки %s не найден."
-
-#~ msgid "Help keyword %s%s%s not found in Database %s%s%s."
-#~ msgstr "Ключевое слово справки %s%s%s не найдено в базе данных %s%s%s."
-
-#~ msgid "Help keyword %s%s%s not found."
-#~ msgstr "Ключевое слово справки %s%s%s не найдено."
-
-#~ msgid "Help node %s%s%s has no Help Database"
-#~ msgstr "Узел справки %s%s%s не имеет соответствующей базы данных"
-
-#~ msgid "Help not found"
-#~ msgstr "Справка не найдена"
-
-#~ msgid "Highlight"
-#~ msgstr "Выделенное"
-
-#~ msgid "Highlight Text"
-#~ msgstr "Текст выделенного"
-
-#~ msgid "History:"
-#~ msgstr "История:"
-
-#~ msgid "Home"
-#~ msgstr "Home"
-
-#~ msgid "Hot Light"
-#~ msgstr "Выделение"
-
 #~ msgid "I agree with the above terms and conditions"
-#~ msgstr "Я соглашаюсь с вышеприведёнными положениями и условиями"
+#~ msgstr "Я согласен с условиями, приведёными выше"
 
 #~ msgid "I don't agree"
 #~ msgstr "Я не согласен"
-
-#~ msgid "I know the risk"
-#~ msgstr "Я осознаю риск"
-
-#~ msgid "Icon"
-#~ msgstr "Значок"
-
-#~ msgid "Icon has no current image"
-#~ msgstr "Значок не имеет текущего изображения"
-
-#~ msgid "Icon image cannot be empty"
-#~ msgstr "Изображение значка не может быть пустым"
-
-#~ msgid "Icon image must have the same format"
-#~ msgstr "Изображение значка должно иметь тот же формат"
-
-#~ msgid "Icon image must have the same size"
-#~ msgstr "Изображение значка должно иметь тот же размер"
-
-#~ msgid "Inactive Border"
-#~ msgstr "Граница неактивного окна"
-
-#~ msgctxt "lclstrconsts.rsinactivecaptioncolorcaption"
-#~ msgid "Inactive Caption"
-#~ msgstr "Заголовок неактивного окна"
-
-#~ msgctxt "lclstrconsts.rsinactivecaptiontext"
-#~ msgid "Inactive Caption"
-#~ msgstr "Заголовок неактивного окна"
-
-#~ msgid "Index Out of range Cell[Col=%d Row=%d]"
-#~ msgstr "Индекс вне диапазона Cell[Col=%d Row=%d]"
-
-#~ msgid "Info Background"
-#~ msgstr "Фон сообщения"
-
-#~ msgid "Info Text"
-#~ msgstr "Текст сообщения"
-
-#~ msgid "Information"
-#~ msgstr "Сведения"
-
-#~ msgctxt "lclstrconsts.ifsvk_insert"
-#~ msgid "Insert"
-#~ msgstr "Insert"
-
-#~ msgctxt "lclstrconsts.rsinsertrecordhint"
-#~ msgid "Insert"
-#~ msgstr "Вставить"
 
 #~ msgid "Install application for everyone"
 #~ msgstr "Установить приложение для всех пользователей"
@@ -1330,14 +662,8 @@ msgstr "ошибка: %s"
 #~ msgid "Installation"
 #~ msgstr "Установка"
 
-#~ msgid "Installation aborted by user."
-#~ msgstr "Установка прервана пользователем."
-
 #~ msgid "Installation aborted."
 #~ msgstr "Установка прервана."
-
-#~ msgid "Installation failed."
-#~ msgstr "Установка не удалась."
 
 #~ msgid "Installation mode:"
 #~ msgstr "Режим установки:"
@@ -1345,108 +671,11 @@ msgstr "ошибка: %s"
 #~ msgid "Installation of %a"
 #~ msgstr "Установка %a"
 
-#~ msgid "Installation of package %s failed!"
-#~ msgstr "Ошибка установки пакета %s!"
-
 #~ msgid "Installation package is corrupt"
 #~ msgstr "Установочный пакет повреждён"
 
-#~ msgid "Installed applications"
-#~ msgstr "Установленные приложения"
-
-#~ msgid "Installed dependency %s"
-#~ msgstr "Установлена зависимость %s"
-
-#~ msgid "Installing %a..."
-#~ msgstr "Установка %a..."
-
-#~ msgid "Installs an IPK package"
-#~ msgstr "Устанавливает пакет IPK"
-
-#~ msgid "Invalid Date : %s"
-#~ msgstr "Неверная дата: %s"
-
-#~ msgid "Invalid Date: %s. Must be between %s and %s"
-#~ msgstr "Неверная дата: %s. Должна быть между %s and %s"
-
-#~ msgid "Invalid ImageList Index"
-#~ msgstr "Неправильный индекс ImageList"
-
-#~ msgid "Invalid action creation"
-#~ msgstr "Неправильное создание действия"
-
-#~ msgid "Invalid action enumeration"
-#~ msgstr "Неправильное перечисление действий"
-
-#~ msgid "Invalid action registration"
-#~ msgstr "Неправильная регистрация действия"
-
-#~ msgid "Invalid action unregistration"
-#~ msgstr "Неправильная разрегистрация действия"
-
-#~ msgid "Invalid floating point number: %s"
-#~ msgstr "Неверное число с плавающей точкой: %s"
-
-#~ msgid "Invalid image size"
-#~ msgstr "Неправильный размер рисунка"
-
-#~ msgid "Invalid integer number: %s"
-#~ msgstr "Неверное целое число: %s"
-
-#~ msgid "Invalid property value"
-#~ msgstr "Неправильное значение свойства"
-
-#~ msgid "Invalid stream format"
-#~ msgstr "Неправильный формат потока"
-
-#~ msgid "Joint Picture Expert Group"
-#~ msgstr "Joint Picture Expert Group"
-
-#~ msgid "Junja"
-#~ msgstr "Джанджа"
-
-#~ msgid "Kana"
-#~ msgstr "Кана"
-
-#~ msgid "Last"
-#~ msgstr "Последняя"
-
-#~ msgid "Launch Listaller Manager"
-#~ msgstr "Запустить диспетчер Listaller"
-
-#~ msgid "Left"
-#~ msgstr "Стрелка влево"
-
-#~ msgid "Lime"
-#~ msgstr "Зелёный"
-
-#~ msgid "List index exceeds bounds (%d)"
-#~ msgstr "Индекс списка вне диапазона (%d)"
-
-#~ msgid "List must be empty"
-#~ msgstr "Список должен быть пуст"
-
-#~ msgid "List of translators:\n"
-#~ msgstr "Список переводчиков\n"
-
-#~ msgid "Listaller cannot write into its temporary directory: Access denied!"
-#~ msgstr ""
-#~ "Listaller, запись во временный каталог невозможна: Отказано в доступе!"
-
-#~ msgid "Listaller command-line tool to handle IPK-packages"
-#~ msgstr "Инструмент командной строки Listaller для обработки пакетов IPK"
-
 #~ msgid "Listaller settings"
 #~ msgstr "Настройки Listaller"
-
-#~ msgid ""
-#~ "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
-#~ "installed\n"
-#~ "Do you want to install \"alien\" now to continue?"
-#~ msgstr ""
-#~ "Listaller использует \"alien\" для преобразования пакетов, но приложение "
-#~ "не установлено\n"
-#~ "Установить \"alien\" сейчас, чтобы продолжить?"
 
 #~ msgid "Listaller will close now. The package couldn't be installed."
 #~ msgstr "Listaller будет закрыт. Приложение не может быть установлено."
@@ -1461,96 +690,22 @@ msgstr "ошибка: %s"
 #~ msgstr "Загрузка страницы каталога..."
 
 #~ msgid "Loading..."
-#~ msgstr "Загружается..."
-
-#~ msgid "Looking for %a."
-#~ msgstr "Ищите %a"
-
-#~ msgid "Looking for reverse-dependencies..."
-#~ msgstr "Поиск обратных зависимостей:"
+#~ msgstr "Загрузка…"
 
 #~ msgid "Main"
 #~ msgstr "Главная"
 
-#~ msgid "Maroon"
-#~ msgstr "Малиновый"
-
-#~ msgctxt "lclstrconsts.ifsvk_menu"
-#~ msgid "Menu"
-#~ msgstr "Menu"
-
-#~ msgctxt "lclstrconsts.rsmenucolorcaption"
-#~ msgid "Menu"
-#~ msgstr "Меню"
-
-#~ msgid "Menu Bar"
-#~ msgstr "Панель меню"
-
-#~ msgid "Menu Highlight"
-#~ msgstr "Выделенный пункт меню"
-
-#~ msgid "Menu Text"
-#~ msgstr "Текст меню"
-
-#~ msgid "Menu index out of range"
-#~ msgstr "Индекс меню вне диапазона"
-
-#~ msgid "MenuItem is nil"
-#~ msgstr "MenuItem указывает на нуль"
-
 #~ msgid "Mode"
 #~ msgstr "Режим"
 
-#~ msgid "Mode Change"
-#~ msgstr "Изменение режима"
-
-#~ msgid "Mode number:"
-#~ msgstr "Номер режима:"
-
-#~ msgid "Money Green"
-#~ msgstr "Светло-зелёный"
-
-#~ msgid "Mouse Button Left"
-#~ msgstr "Левая клавиша мыши"
-
-#~ msgid "Mouse Button Middle"
-#~ msgstr "Средняя клавиша мыши"
-
-#~ msgid "Mouse Button Right"
-#~ msgstr "Правая клавиша мыши"
-
 #~ msgid "Multimedia"
 #~ msgstr "Мультимедиа"
-
-#~ msgid "My apps"
-#~ msgstr "Мои приложения"
-
-#~ msgid "Navy"
-#~ msgstr "Тёмно-синий"
 
 #~ msgid "Network"
 #~ msgstr "Сеть"
 
 #~ msgid "Next"
-#~ msgstr "Дальше"
-
-#~ msgctxt "lclstrconsts.ifsvk_next"
-#~ msgid "Next"
-#~ msgstr "Next"
-
-#~ msgctxt "lclstrconsts.rsnextrecordhint"
-#~ msgid "Next"
-#~ msgstr "Следующая"
-
-#~ msgid ""
-#~ "No HTML Browser found.%sPlease define one in Help -> Configure Help -> "
-#~ "Viewers"
-#~ msgstr ""
-#~ "Не найдена программа просмотра справки.%sЗадайте её в меню Справка -> "
-#~ "Параметры справки -> Программы просмотра"
-
-#~ msgid "No MDI form present."
-#~ msgstr "Отсутствует форма MDI."
+#~ msgstr "Вперёд"
 
 #~ msgid "No applications found!"
 #~ msgstr "Приложения не найдены!"
@@ -1558,90 +713,17 @@ msgstr "ошибка: %s"
 #~ msgid "No compatible packages found!"
 #~ msgstr "Совместимых пакетов не найдено"
 
-#~ msgid "No help found for line %d, column %d of %s."
-#~ msgstr "Не найдено справки для строки %d, столбца %d из %s."
-
-#~ msgid "No help nodes available"
-#~ msgstr "Доступные узлы справки отсутствуют"
-
 #~ msgid "No information available!"
-#~ msgstr "Нет информации!"
-
-#~ msgid "No timers available"
-#~ msgstr "Таймеры недоступны"
-
-#~ msgid "No to all"
-#~ msgstr "Нет для всех"
-
-#~ msgid ""
-#~ "No widgetset object. Please check if the unit \"interfaces\" was added to "
-#~ "the programs uses clause."
-#~ msgstr ""
-#~ "Отсутствует объект библиотеки виджетов. Проверьте, что модуль \"interfaces"
-#~ "\" был добавлен в выражение uses программы."
-
-#~ msgid "Nonconvert"
-#~ msgstr "Не преобразовывать"
-
-#~ msgid "None"
-#~ msgstr "Нет"
-
-#~ msgid "Not a valid grid file"
-#~ msgstr "Неверный файл сетки"
-
-#~ msgid "Numlock"
-#~ msgstr "Numlock"
-
-#~ msgid "Numpad %d"
-#~ msgstr "Numpad %d"
-
-#~ msgid "OSX Icon Resource"
-#~ msgstr "Ресурс значков OSX"
+#~ msgstr "Нет доступной информации!"
 
 #~ msgid "Office"
 #~ msgstr "Офис"
 
-#~ msgid "Okay"
-#~ msgstr "ОК"
-
-#~ msgid "Olive"
-#~ msgstr "Оливковый"
-
-#~ msgid "Open existing file"
-#~ msgstr "Открыть существующий файл"
-
-#~ msgid "Options:"
-#~ msgstr "Параметры:"
-
 #~ msgid "Other"
 #~ msgstr "Другое"
 
-#~ msgid "Overwrite file ?"
-#~ msgstr "Перезаписать файл?"
-
 #~ msgid "Package %p could not be installed."
 #~ msgstr "Пакет %p не может быть установлен."
-
-#~ msgid "Package build commands:"
-#~ msgstr "Команды сборки пакета:"
-
-#~ msgid "Package detected: %s"
-#~ msgstr "Обнаружен пакет: %s"
-
-#~ msgid "Package has trusted signature."
-#~ msgstr "Пакет имеет доверенную подпись ."
-
-#~ msgid "Package is unsigned."
-#~ msgstr "Пакет не подписан."
-
-#~ msgid "Package lists"
-#~ msgstr "Список пакетов"
-
-#~ msgid "Package signature is UNTRUSTED!"
-#~ msgstr "Пакет имеет НЕ ДОВЕРЕННУЮ подпись!"
-
-#~ msgid "Package type is \"%s\""
-#~ msgstr "Тип пакета \"%s\""
 
 #~ msgid "Package was not build for your Linux distribution release."
 #~ msgstr "Пакет не был создан для вашего дистрибутива Linux."
@@ -1649,50 +731,17 @@ msgstr "ошибка: %s"
 #~ msgid "Password"
 #~ msgstr "Пароль"
 
-#~ msgid "Path must exist"
-#~ msgstr "Путь должен существовать"
-
-#~ msgid "Pause key"
-#~ msgstr "Клавиша Pause"
-
 #~ msgid "Phase 1/4: Resolving dependencies..."
 #~ msgstr "Шаг 1/4: Разрешение зависимостей..."
 
 #~ msgid "Phase 2/4: Installing files..."
-#~ msgstr "Этап 2/4: установка файлов..."
+#~ msgstr "Этап 2/4: Установка файлов..."
 
 #~ msgid "Phase 3/4: Chmod new files..."
 #~ msgstr "Шаг 3/4: Chmod новых файлов..."
 
 #~ msgid "Phase 4/4: Registering application..."
-#~ msgstr "Этап 4/4: регистрация приложения..."
-
-#~ msgid "Pixmap"
-#~ msgstr "Pixmap"
-
-#~ msgid ""
-#~ "Please do not execute this action with superuser rights!\n"
-#~ "(PolicyKit will ask for authorization if privileges are required.)\n"
-#~ "Do you want to force Listaller to execute all with superuser permission?"
-#~ msgstr ""
-#~ "Пожалуйста, не выполняйте это действие с правами супер пользователя!\n"
-#~ "(PolicyKit запросит у вас авторизацию, если будут необходимы особые "
-#~ "права.)\n"
-#~ "Do you want to force Listaller to execute all with superuser permission?"
-
-#~ msgid ""
-#~ "Please install this package only if you got it from a \n"
-#~ "trusted source. There is a serious risk that the software in this "
-#~ "package\n"
-#~ "damages your system. (The package could also contain malware)\n"
-#~ "Be careful with this package, especially if you install it system-wide\n"
-#~ "with superuser rights.\n"
-#~ msgstr ""
-#~ "Пожалуйста, установите этот пакет только если вы получил его из "
-#~ "доверенного источника. Есть достаточный риск, что этот пакет повредит "
-#~ "вашу систему. (Пакет также может содержать вредоносное ПО)\n"
-#~ "Будьте осторожны с этим пакетом, в особенности если вы устанавливаете его "
-#~ "с особыми права.\n"
+#~ msgstr "Этап 4/4: Регистрация приложения..."
 
 #~ msgid "Please notify the developers on http://launchpad.net/listaller"
 #~ msgstr ""
@@ -1700,25 +749,6 @@ msgstr "ошибка: %s"
 
 #~ msgid "Please read the following information carefully:"
 #~ msgstr "Пожалуйста, внимательно прочтите следующую информацию:"
-
-#~ msgid ""
-#~ "Please run \"listallgo\" with path to setup-package as first parameter!"
-#~ msgstr ""
-#~ "Пожалуйста, выполните \"listallgo\" с размещением setup-package как "
-#~ "первым параметром!"
-
-#~ msgid "Please select a number shown in the list!"
-#~ msgstr "Пожалуйста, выберите номер показываемый в списке!"
-
-#~ msgid "Please select an item from the list!"
-#~ msgstr "Пожалуйста выберите пункт из списка!"
-
-#~ msgid ""
-#~ "Please use https://bugs.launchpad.net/listaller\n"
-#~ "for bug reports."
-#~ msgstr ""
-#~ "Пожалуйста используйте https://bugs.launchpad.net/listaller\n"
-#~ "для уведомления об ошибках."
 
 #~ msgid "Please view the logfile at %p"
 #~ msgstr "Пожалуйста, откройте файл событий в %p"
@@ -1729,49 +759,14 @@ msgstr "ошибка: %s"
 #~ msgid "Please wait..."
 #~ msgstr "Пожалуйста подождите..."
 
-#~ msgid "Portable BitMap"
-#~ msgstr "Portable BitMap"
-
-#~ msgid "Portable GrayMap"
-#~ msgstr "Portable GrayMap"
-
-#~ msgid "Portable Network Graphic"
-#~ msgstr "Portable Network Graphic"
-
-#~ msgid "Portable PixMap"
-#~ msgstr "Portable PixMap"
-
-#~ msgid "Post"
-#~ msgstr "Отправить"
-
-#~ msgid "Preparing installation (please wait)"
-#~ msgstr "Подготовка к установке (пожалуйста, ждите)"
-
 #~ msgid "Press \"Finish\" to close."
 #~ msgstr "Нажмите \"Готово\" для закрытия."
 
 #~ msgid "Press \"Next\" to start the installation!"
 #~ msgstr "Нажмите \"Далее\" для начала установки!"
 
-#~ msgid "Print"
-#~ msgstr "Печать"
-
-#~ msgid "Print all available log messages"
-#~ msgstr "Распечатать весь доступный вывод log"
-
-#~ msgctxt "lclstrconsts.ifsvk_prior"
-#~ msgid "Prior"
-#~ msgstr "Prior"
-
-#~ msgctxt "lclstrconsts.rspriorrecordhint"
-#~ msgid "Prior"
-#~ msgstr "Предыдущая"
-
 #~ msgid "Problem while downloading the dep-file."
 #~ msgstr "Проблема при загрузке dep файла."
-
-#~ msgid "Problem while downloading the dependency."
-#~ msgstr "Проблема при загрузке зависимости."
 
 #~ msgid ""
 #~ "Problem while downloading the packages. Maybe the login on the FTP-Server "
@@ -1780,27 +775,11 @@ msgstr "ошибка: %s"
 #~ "Проблемы во время загрузки пакетов. Возможно не удалось войти на FTP-"
 #~ "сервер"
 
-#~ msgid ""
-#~ "Problem while downloading the required packages. Could not create working "
-#~ "FTP connection."
-#~ msgstr ""
-#~ "Проблема при загрузке необходимых пакетов. Невозможно создать рабочее "
-#~ "соединение FTP."
-
 #~ msgid "Program description:"
 #~ msgstr "Описание программы:"
 
-#~ msgid "Property %s does not exist"
-#~ msgstr "Свойство %s не существует"
-
 #~ msgid "Proxy-Settings"
 #~ msgstr "Настройки прокси-сервера"
-
-#~ msgid "Purple"
-#~ msgstr "Лиловый"
-
-#~ msgid "Question:"
-#~ msgstr "Вопрос:"
 
 #~ msgid "Quit"
 #~ msgstr "Выйти"
@@ -1814,88 +793,11 @@ msgstr "ошибка: %s"
 #~ msgid "Really remove?"
 #~ msgstr "Точно удалить?"
 
-#~ msgid "Red"
-#~ msgstr "Красный"
-
-#~ msgid "Refresh"
-#~ msgstr "Обновить"
-
-#~ msgid "Removing application..."
-#~ msgstr "Удаление приложения..."
-
-#~ msgid "Replace"
-#~ msgstr "Заменить"
-
-#~ msgid "Replace all"
-#~ msgstr "Заменить всё"
-
-#~ msgid "Repositories"
-#~ msgstr "Репозитории"
-
-#~ msgid "Resolving dependencies..."
-#~ msgstr "Разрешение зависимостей..."
-
-#~ msgid "Resolving dynamic dependencies..."
-#~ msgstr "Решение динамических зависимостей..."
-
-#~ msgctxt "lclstrconsts.lislclresourcesnotfound"
-#~ msgid "Resource %s not found"
-#~ msgstr "Ресурс %s не найден"
-
-#~ msgctxt "lclstrconsts.rsresourcenotfound"
-#~ msgid "Resource %s not found"
-#~ msgstr "Ресурс %s не найден"
-
-#~ msgid "Return"
-#~ msgstr "Ввод"
-
-#~ msgid "Right"
-#~ msgstr "Стрелка вправо"
-
-#~ msgid "Rights assigned to %a."
-#~ msgstr "Права назначены %a."
-
-#~ msgid "Run binary setup file as root."
-#~ msgstr "Выполнить установку двоичного файла от имени root."
-
 #~ msgid "Running application installation..."
-#~ msgstr "Запущена установка приложения..."
+#~ msgstr "Запуск установки приложения..."
 
 #~ msgid "Running installation..."
 #~ msgstr "Идёт установка..."
-
-#~ msgid "Runs installation in testmode"
-#~ msgstr "Запустить установку в тестовом режиме"
-
-#~ msgid "Save file as"
-#~ msgstr "Сохранить файл как"
-
-#~ msgid "Scroll"
-#~ msgstr "Scroll"
-
-#~ msgid "ScrollBar"
-#~ msgstr "Полоса прокрутки"
-
-#~ msgid "ScrollBar property out of range"
-#~ msgstr "свойство ScrollBar вне диапазона"
-
-#~ msgid "Security warning"
-#~ msgstr "Предупреждение безопасности"
-
-#~ msgid "Select"
-#~ msgstr "Выбрать"
-
-#~ msgid "Select Directory"
-#~ msgstr "Выберите каталог"
-
-#~ msgid "Select a date"
-#~ msgstr "Выберите дату"
-
-#~ msgid "Select a font"
-#~ msgstr "Выбрать шрифт"
-
-#~ msgid "Select color"
-#~ msgstr "Выбрать цвет"
 
 #~ msgid "Select installation mode"
 #~ msgstr "Выберите режим установки"
@@ -1903,25 +805,8 @@ msgstr "ошибка: %s"
 #~ msgid "Select software you want to download and to install:"
 #~ msgstr "Выберите приложение для скачивания и установки"
 
-#~ msgid "Select the installation mode of this application:"
-#~ msgstr "Выберите режим установки для этого приложения:"
-
-#~ msgid "Settings"
-#~ msgstr "Настройки"
-
-#~ msgid "Shared apps"
-#~ msgstr "Общие приложения"
-
-#~ msgid "Shift"
-#~ msgstr "Shift"
-
-#~ msgid "Should lipa fix these problems automatically [y/n]?"
-#~ msgstr "Выполнять ли исправление этих проблем автоматически [д/н]?"
-
-#~ msgid "Should this repository be registered to get software updates?"
-#~ msgstr ""
-#~ "Должен ли быть зарегистрировать этот репозиторий для получения обновлений "
-#~ "программного обеспечения?"
+#~ msgid "Select which parts of the application should be installed."
+#~ msgstr "Выберите какие части приложения необходимо установить."
 
 #~ msgid "Show"
 #~ msgstr "Показать"
@@ -1929,45 +814,14 @@ msgstr "ошибка: %s"
 #~ msgid "Show:"
 #~ msgstr "Показать:"
 
-#~ msgid "Silver"
-#~ msgstr "Серебристый"
-
-#~ msgid "Skipped %a"
-#~ msgstr "Пропущенные %a"
-
-#~ msgid "Sky Blue"
-#~ msgstr "Голубой"
-
-#~ msgid "Snapshot"
-#~ msgstr "Snapshot"
-
 #~ msgid "Software Manager"
 #~ msgstr "Менеджер программного обеспечения"
 
 #~ msgid "Software catalogue"
 #~ msgstr "Каталог программ"
 
-#~ msgid "Software database opened."
-#~ msgstr "База данных программного обеспечения открыта."
-
 #~ msgid "Software license"
 #~ msgstr "Лицензия программы"
-
-#~ msgid "Some dependencies are missing. Should they be installed now?"
-#~ msgstr ""
-#~ "Пропущены некоторые зависимости. Следует ли их установить прямо сейчас?"
-
-#~ msgid "Source was removed."
-#~ msgstr "Источник был удалён."
-
-#~ msgid "Space key"
-#~ msgstr "Пробел"
-
-#~ msgid "State"
-#~ msgstr "Состояние"
-
-#~ msgid "Sub-menu is not in menu"
-#~ msgstr "Подменю не в меню"
 
 #~ msgid "Success!"
 #~ msgstr "Успешно!"
@@ -1975,32 +829,8 @@ msgstr "ошибка: %s"
 #~ msgid "System"
 #~ msgstr "Системные"
 
-#~ msgid "Tab"
-#~ msgstr "Tab"
-
-#~ msgid "Teal"
-#~ msgstr "Бирюзовый"
-
-#~ msgid "Test setup && software"
-#~ msgstr "Тест установки программы"
-
-#~ msgid "Test-installation of package finished."
-#~ msgstr "Тестовая установка пакета завершена."
-
 #~ msgid "Testmode"
 #~ msgstr "Тестовый режим"
-
-#~ msgid "Testmode: Do not register package."
-#~ msgstr "Тестовый режим: Не регистрировать пакет."
-
-#~ msgid "Text"
-#~ msgstr "Текст"
-
-#~ msgid "The application \"%a\" was not installed."
-#~ msgstr "Приложение \"%a\" не было установлено."
-
-#~ msgid "The application %a could not be installed!"
-#~ msgstr "Приложение %a не может быть установлено!"
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "Приложение %a успешно установлено!"
@@ -2021,50 +851,11 @@ msgstr "ошибка: %s"
 #~ msgid "The application will close now "
 #~ msgstr "Приложение будет закрыто прямо сейчас "
 
-#~ msgid "The application will close now."
-#~ msgstr "Приложение будет закрыто немедленно."
-
-#~ msgid "The char set in mask \"%s\" is not valid!"
-#~ msgstr "Набор символов в маске \"%s\" неверен!"
-
-#~ msgid "The directory \"%s\" does not exist."
-#~ msgstr "Каталог \"%s\" не существует."
-
-#~ msgid "The file \"%f\" does not exists!"
-#~ msgstr "Файл \"%f\" не найден"
-
-#~ msgid "The file \"%s\" already exists. Overwrite ?"
-#~ msgstr "Файл \"%s\" уже существует. Перезаписать?"
-
-#~ msgid "The file \"%s\" does not exist."
-#~ msgstr "Файл \"%s\" не существует"
-
-#~ msgid "The file \"%s\" is not writable."
-#~ msgstr "Файл \"%s\" не доступен для записи."
-
-#~ msgid "The following dependencies will be downloaded:"
-#~ msgstr "Будут загружены следующие зависимости:"
-
-#~ msgid "The following update repositories are installed:"
-#~ msgstr "Установлены следующие репозитории обновлений:"
-
-#~ msgid "The help database %s%s%s was unable to find file %s%s%s."
-#~ msgstr "База данных справки %s%s%s не смогла найти файл %s%s%s."
-
 #~ msgid "The installer will close now"
 #~ msgstr "Установка сейчас будет закрыта."
 
-#~ msgid "The macro %s in BrowserParams will be replaced by the URL."
-#~ msgstr "Макрос %s в BrowserParams будет заменён на URL."
-
-#~ msgid ""
-#~ "The package may be damaged or you haven't enough permissions to execute "
-#~ "this action!"
-#~ msgstr ""
-#~ "Пакет может быть повреждён или недостаточно прав для его выполнения!"
-
-#~ msgid "The path \"%s\" does not exist."
-#~ msgstr "Путь \"%s\" не существует."
+#~ msgid "The package was invalid!"
+#~ msgstr "Пакет повреждён!"
 
 #~ msgid ""
 #~ "The selected action is not possible with this package.\n"
@@ -2073,78 +864,24 @@ msgstr "ошибка: %s"
 #~ "Выбранное действие не возможно с данным пакетом.\n"
 #~ "Свяжитесь с автором для получения дополнительной информации."
 
-#~ msgid "The software provides the following update source:"
-#~ msgstr "Программа предоставляет следующий источник обновления:"
-
-#~ msgid "The submitted package is invalid!"
-#~ msgstr "Неправильный подтверждённый пакет!"
-
-#~ msgid ""
-#~ "There are no explicit package sources available for your Linux "
-#~ "distribution\n"
-#~ "Try to install common packages?"
-#~ msgstr ""
-#~ "Для вашего дистрибутива отсутствуют источники пакетов\n"
-#~ "Установить общие пакеты?"
-
 #~ msgid "There are no updates available!"
 #~ msgstr "Нет доступных обновлений!"
 
-#~ msgid "There is no viewer for help type %s%s%s"
-#~ msgstr "Отсутствует программа просмотра для типа справки %s%s%s"
+#~ msgid "This application is already installed"
+#~ msgstr "Программа уже установлена"
 
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr "Приложение хочет скачать и установить все зависимые пакеты из %l"
 
-#~ msgid "This application wants to fetch a dependency from %l"
-#~ msgstr "Приложение хочет получить зависимость из %l"
-
 #~ msgid "This package does not support your Linux distribution."
 #~ msgstr "Этот пакет не поддерживается вашим Linux дистрибутивом."
-
-#~ msgid "This package is not signed!"
-#~ msgstr "Данный пакет не подписан!"
-
-#~ msgid "This package is untrusted!"
-#~ msgstr "Данный пакет является ненадёжным"
-
-#~ msgid "Unable to copy the file %s."
-#~ msgstr "Невозможно скопировать файл %s."
-
-#~ msgid "Unable to fetch application description! Message: %s"
-#~ msgstr "Невозможно получить описание приложения! Сообщение: %s"
-
-#~ msgid "Unable to find %s"
-#~ msgstr "Невозможно найти %s"
-
-#~ msgid "Unable to find a HTML browser."
-#~ msgstr "Невозможно найти браузер HTML."
-
-#~ msgid "Unable to load default font"
-#~ msgstr "Не могу загрузить шрифт по умолчанию"
-
-#~ msgid "Unable to load information about LOKI-Setup."
-#~ msgstr "Не удаётся загрузить информацию о LOKI-Setup"
-
-#~ msgid ""
-#~ "Unable to load the icon of %a. Please notify the developers of Listaller "
-#~ "or of this application!"
-#~ msgstr ""
-#~ "Не удается загрузить икону %a. Пожалуйста, сообщите разработчикам "
-#~ "Listaller или этого приложения!"
 
 #~ msgid ""
 #~ "Unable to load the icon of %a. Please notify the developers of Listaller "
 #~ "or this application!"
 #~ msgstr ""
-#~ "Невозможно загрузить икону %a. Пожалуйста, сообщите об этом разработчикам "
-#~ "Listaller!"
-
-#~ msgid "Unable to override the file %f."
-#~ msgstr "Невозможно подменить файл %f."
-
-#~ msgid "Unable to remove this application!"
-#~ msgstr "Не удаётся удалить это приложение!"
+#~ "Невозможно загрузить иконку %a. Пожалуйста, свяжитесь с разработчиками "
+#~ "Listaller, либо этого приложения!"
 
 #~ msgid "Uninstall"
 #~ msgstr "Удалить"
@@ -2152,41 +889,14 @@ msgstr "ошибка: %s"
 #~ msgid "Uninstalling %a"
 #~ msgstr "Удаление %a"
 
+#~ msgid "Uninstalling unused deps..."
+#~ msgstr "Удаление неиспользуемых зависимостей..."
+
 #~ msgid "Uninstalling..."
 #~ msgstr "Удаление..."
 
-#~ msgid "Unknown"
-#~ msgstr "Неизвестная"
-
-#~ msgid "Unknown Error, please report this bug"
-#~ msgstr "Неизвестная ошибка, сообщите о ней разработчикам"
-
-#~ msgid "Unknown error occured!"
-#~ msgstr "Обнаружена неизвестная ошибка!"
-
-#~ msgid "Unknown picture extension"
-#~ msgstr "Неизвестное расширение файла изображения"
-
-#~ msgid "Unsupported bitmap format."
-#~ msgstr "Неподдерживаемый тип точечного рисунка."
-
-#~ msgid "Unsupported clipboard format: %s"
-#~ msgstr "Неподдерживаемый формат буфера обмена: %s"
-
-#~ msgid "Unterminated byte value"
-#~ msgstr "Незавершённое значение байта"
-
-#~ msgid "Unterminated string"
-#~ msgstr "Незавершённая строка"
-
-#~ msgid "Up"
-#~ msgstr "Стрелка вверх"
-
 #~ msgid "Update info:"
-#~ msgstr "Обновление информации:"
-
-#~ msgid "Update repositories"
-#~ msgstr "Обновить репозитории"
+#~ msgstr "Информация об обновлении:"
 
 #~ msgid "Update sources"
 #~ msgstr "Обновить источники"
@@ -2203,20 +913,8 @@ msgstr "ошибка: %s"
 #~ msgid "Version"
 #~ msgstr "Версия"
 
-#~ msgid "Version: unknown"
-#~ msgstr "Версия: неизвестна"
-
 #~ msgid "Waiting..."
 #~ msgstr "Ожидание..."
-
-#~ msgid "Warning"
-#~ msgstr "Предупреждение"
-
-#~ msgid "Warning!"
-#~ msgstr "Внимание!"
-
-#~ msgid "Warning:"
-#~ msgstr "Предупреждение:"
 
 #~ msgid "Welcome to the installation of %a"
 #~ msgstr "Добро пожаловать в программу установки %a"
@@ -2227,94 +925,16 @@ msgstr "ошибка: %s"
 #~ msgid "What do you want to do?"
 #~ msgstr "Что вы хотите сделать?"
 
-#~ msgid "White"
-#~ msgstr "Белый"
-
-#~ msgid "Whole words only"
-#~ msgstr "Только целые слова"
-
-#~ msgid "Window"
-#~ msgstr "Окно"
-
-#~ msgid "Window Frame"
-#~ msgstr "Граница окна"
-
-#~ msgid "Window Text"
-#~ msgstr "Текст окна"
-
-#~ msgid "Wrong token symbol: %s expected but %s found"
-#~ msgstr "Неверный символ лексемы: ожидался %s, но найден %s"
-
-#~ msgid "Wrong token type: %s expected"
-#~ msgstr "Неверный тип лексемы: ожидался %s"
-
-#~ msgid "Wrong token type: %s expected but %s found"
-#~ msgstr "Неверный тип лексемы: ожидался %s, но найден %s"
-
-#~ msgid "Yellow"
-#~ msgstr "Жёлтый"
-
-#~ msgid "Yes to &All"
-#~ msgstr "Да для &всех"
-
-#~ msgid "Yes/No?:"
-#~ msgstr "Да/Нет?:"
-
 #~ msgid ""
-#~ "You cannot install two applications at the same time.\n"
-#~ "Please finish the first installation, then install this one again.\n"
-#~ "(If you do not run two installations, try to remove the temporary "
-#~ "installer directory"
+#~ "You want to install an %x-Package, but your Linux-Distribution's package "
+#~ "system is %y.\rThis package can be converted using \"alien\", but this "
+#~ "will take some time and eventually the application won't work\rDo you "
+#~ "want to convert the package now?"
 #~ msgstr ""
-#~ "Вы не можете установить два приложения в одно и тоже время.\n"
-#~ "Пожалуйста, завершите установку, затем повторите установку снова.\n"
-#~ "(Если вы не запускаете две установки, попробуйте удалить временный "
-#~ "каталог установщика"
-
-#~ msgid "You have missing dependencies. Should they be installed now?"
-#~ msgstr ""
-#~ "Имеются пропущенные зависимости пакетов. Установить их прямо сейчас?"
-
-#~ msgid "You have to enter a number!"
-#~ msgstr "Вам необходимо ввести номер!"
-
-#~ msgid ""
-#~ "You have to install the \"libuild\" tool before you can build packages!"
-#~ msgstr "Вы должны установить \"libuild\", прежде чем собирать пакеты!"
-
-#~ msgid ""
-#~ "You use a development version of Listaller!\n"
-#~ "This version is not tested and may cause problems!"
-#~ msgstr ""
-#~ "Вы используете версию Listaller для разработчиков!\n"
-#~ "Эта версия не тестируется и может содержать ошибки в работе!"
+#~ "Вы желаете установить пакет %x, но система пакетов вашего дистрибутива %y."
+#~ "\rЭтот пакет может быть преобразован, используя \"alien\", но это может "
+#~ "потребовать некоторое время и приложение может работать некорректно, либо "
+#~ "вообще не работать.\rХотите ли вы преобразовать пакет?"
 
 #~ msgid "Your Linux distribution is not supported by Listaller yet!"
-#~ msgstr "Ваш дистрибутив еще не поддерживается Listaller !"
-
-#~ msgid "application key"
-#~ msgstr "клавиша application"
-
-#~ msgid "invalid Form object stream"
-#~ msgstr "неправильный поток объекта формы"
-
-#~ msgid "left windows key"
-#~ msgstr "левая клавиша windows"
-
-#~ msgid "n"
-#~ msgstr "n"
-
-#~ msgid "no"
-#~ msgstr "нет"
-
-#~ msgid "permissions user group size date time"
-#~ msgstr "права пользователь группа размер дата время"
-
-#~ msgid "right windows key"
-#~ msgstr "правая клавиша windows"
-
-#~ msgid "y"
-#~ msgstr "y"
-
-#~ msgid "yes"
-#~ msgstr "Да"
+#~ msgstr "Ваш дистрибутив ещё не поддерживается Listaller!"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-29 01:11+0200\n"
+"POT-Creation-Date: 2011-09-06 22:46+0200\n"
 "PO-Revision-Date: 2010-09-19 15:47+0000\n"
 "Last-Translator: Monkey <monkey.libre@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -15,21 +15,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
-"X-Generator: Launchpad (build 13242)\n"
+"X-Launchpad-Export-Date: 2011-09-06 20:40+0000\n"
+"X-Generator: Launchpad (build 13861)\n"
 
 #, c-format
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "A higher version '%s' of this application has already been installed."
-msgstr "Selecciona qué partes de la aplicación han de instalarse."
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "A lower version '%s' of this application has already been installed."
-msgstr "Esta aplicación ya está instalada"
+msgstr ""
 
 msgid "A policy was not met."
 msgstr ""
@@ -138,9 +138,9 @@ msgstr ""
 msgid "DIRECTORY"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Database action '%s' failed: %s"
-msgstr "Conexión con base de datos cerrada."
+msgstr ""
 
 msgid "Database action failed"
 msgstr ""
@@ -185,9 +185,9 @@ msgstr "¡Instalación completada!"
 msgid "Installation failed!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installing native packages %s"
-msgstr "Instalar paquete"
+msgstr ""
 
 msgid "Low security."
 msgstr ""
@@ -297,9 +297,8 @@ msgstr ""
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-#, fuzzy
 msgid "This application has already been installed."
-msgstr "Esta aplicación ya está instalada"
+msgstr ""
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -345,9 +344,9 @@ msgstr ""
 msgid "Unable to create file '%s'!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create/update database tables: %s"
-msgstr "No se pudo copiar el archivo %s."
+msgstr ""
 
 #, c-format
 msgid "Unable to download feed %s. Message: %s"
@@ -359,9 +358,9 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract data file %s. Message: %s"
-msgstr "No se pudo copiar el archivo %s."
+msgstr ""
 
 #, c-format
 msgid ""
@@ -373,9 +372,9 @@ msgstr ""
 msgid "Unable to extract file '%s' for dependency '%s'!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract file. %s"
-msgstr "No se pudo copiar el archivo %s."
+msgstr ""
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
@@ -394,9 +393,9 @@ msgid ""
 "architecture."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for '%s'!"
-msgstr "Instalar paquete"
+msgstr ""
 
 #, c-format
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
@@ -437,15 +436,12 @@ msgstr ""
 msgid "Use recursive mode"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Validation of file %s failed! This IPK file might have been modified after "
 "creation.\n"
 "Please obtain a new copy and try again."
 msgstr ""
-"¡Los hashes no coinciden!\n"
-"Este paquete puede haber sido modificado después de su creación.\n"
-"Por favor, obtenga una nueva copia"
 
 msgid "Validity is undefined"
 msgstr ""
@@ -484,9 +480,6 @@ msgstr ""
 #~ msgid "Abort"
 #~ msgstr "Abortar"
 
-#~ msgid "Aborted."
-#~ msgstr "Abortado."
-
 #~ msgid "About"
 #~ msgstr "Acerca de"
 
@@ -496,17 +489,8 @@ msgstr ""
 #~ msgid "All"
 #~ msgstr "Todos"
 
-#~ msgid "An internal error occured"
-#~ msgstr "Ocurrió un error interno"
-
 #~ msgid "Application uninstalled successfully!"
 #~ msgstr "¡Aplicación desintalada con éxito!"
-
-#~ msgid "Application was successfully removed!"
-#~ msgstr "La aplicación se ha eliminado con éxito."
-
-#~ msgid "Applications"
-#~ msgstr "Aplicaciones"
 
 #~ msgid "Applying updates..."
 #~ msgstr "Aplicando actualizaciones..."
@@ -523,47 +507,8 @@ msgstr ""
 #~ msgid "Back"
 #~ msgstr "Atrás"
 
-#~ msgid ""
-#~ "Browse\n"
-#~ "catalog"
-#~ msgstr ""
-#~ "Explorar\n"
-#~ "catalogo"
-
-#~ msgid "Browse Listaller's software catalog"
-#~ msgstr "Explorar el catálogo de software de Listaller"
-
-#~ msgid "Browse catalogue"
-#~ msgstr "Explorar Catálogo"
-
-#~ msgid "Build IPK-package"
-#~ msgstr "Crear paquete IPK"
-
-#~ msgid ""
-#~ "Calling PackageKit... (run \"pkmon\" to monitor the executed actions)"
-#~ msgstr ""
-#~ "Llamando a PackageKit... (ejecute «pkmon» para monitorizar las acciones "
-#~ "ejecutadas)"
-
-#~ msgid "Can't find Listaller Manager!"
-#~ msgstr "¡No se puede encontrar el Administrador de Listaller!"
-
-#~ msgid "Can't find update-tool!"
-#~ msgstr "No se encuentra la herramienta de actualización."
-
-#~ msgid "Can't find updater application!"
-#~ msgstr "¡No se pudo encontrar la aplicación de actualización!"
-
 #~ msgid "Can't load LOKI-Setup information."
 #~ msgstr "No se puede cargar la información de las preferencias de LOKI."
-
-#~ msgid "Cannot access the Listaller Update tool. Maybe it is not installed?"
-#~ msgstr ""
-#~ "No se puede acceder a la herramienta de actualización de Listaller. "
-#~ "¿Puede ser que no esté instalada?"
-
-#~ msgid "Cannot access the liUpdate tool. Maybe it is not installed?"
-#~ msgstr "No se pudo acceder a la herramienta liUpdate. ¿Estará instalada?"
 
 #~ msgid ""
 #~ "Cannot download this package. Please contact the catalogue managers on %h"
@@ -571,83 +516,20 @@ msgstr ""
 #~ "No se puede descargar este paquete. Por favor, contacte con los gestores "
 #~ "del catálogo en %h"
 
-#~ msgid "Cannot resolve dependencies"
-#~ msgstr "No puede resolver las dependencias"
-
 #~ msgid "Category:"
 #~ msgstr "Categoría:"
-
-#~ msgid "Change package manager settings"
-#~ msgstr "Cambiar las preferencias del administrador de paquetes"
-
-#~ msgid "Check applications"
-#~ msgstr "Comprobar aplicaciones"
-
-#~ msgid "Check dependencies?"
-#~ msgstr "¿Comprobar dependencias?"
 
 #~ msgid "Check for updates"
 #~ msgstr "Comprobar si hay actualizaciones"
 
-#~ msgid ""
-#~ "Check if dependencies of all installed applications are available and "
-#~ "working"
-#~ msgstr ""
-#~ "Comprobando que las dependencias de las aplicaciones instaladas estén "
-#~ "disponibles y funcionen"
-
-#~ msgid "Check if dependencies of all installed applications are available."
-#~ msgstr ""
-#~ "Marque si están disponibles las dependencias de todas las aplicaciones "
-#~ "instaladas."
-
-#~ msgid "Checking dependencies of all registered applications..."
-#~ msgstr "Comprobando dependencias de todas las aplicaciones registradas..."
-
-#~ msgid "Cleaning up..."
-#~ msgstr "Limpiando..."
-
 #~ msgid "Close"
 #~ msgstr "Cerrar"
-
-#~ msgid "Code:"
-#~ msgstr "Código:"
-
-#~ msgid "Commands:"
-#~ msgstr "Órdenes:"
-
-#~ msgid ""
-#~ "Conversion done. Do you want to close this window now?\n"
-#~ "Press \"No\" if you want to check the output."
-#~ msgstr "Conversión completada. ¿Deseas cerrar esta ventana?"
 
 #~ msgid "Convert package?"
 #~ msgstr "¿Convertir paquete?"
 
 #~ msgid "Converting %p package..."
 #~ msgstr "Convirtiendo el paquete %p..."
-
-#~ msgid "Could not detect package type!"
-#~ msgstr "No se puede detectar el tipo del paquete."
-
-#~ msgid "Could not find Listaller TrayIcon Application"
-#~ msgstr "No se pudo encontrar la aplicación de icono de bandeja de Listaller"
-
-#~ msgid "Could not find main executable of this application!"
-#~ msgstr "No se puede encontrar el ejecutable principal de esta aplicación."
-
-#~ msgid ""
-#~ "Could not find usable GUI package manager.\n"
-#~ "Please install a PackageKit-GUI!"
-#~ msgstr ""
-#~ "No se encontró un gestor de paquetes gráfico.\n"
-#~ "Por favor instale una IGU para PackageKit."
-
-#~ msgid "Create DEB and RPM file from IPS"
-#~ msgstr "Crear archivo DEB y RPM desde un IPS"
-
-#~ msgid "Create/Update update-repository"
-#~ msgstr "Crear/Actualizar repositorio de actualizaciones"
 
 #~ msgid "Delete source"
 #~ msgstr "Eliminar origen"
@@ -658,14 +540,8 @@ msgstr ""
 #~ msgid "Dependencies couldn't be solved!"
 #~ msgstr "¡Las dependencian no se pudieron resolver!"
 
-#~ msgid "Dependency \"%s\" is not installed!"
-#~ msgstr "La dependencia «%s» no está instalada."
-
 #~ msgid "Details"
 #~ msgstr "Detalles"
-
-#~ msgid "Detecting package..."
-#~ msgstr "Detectando paquete..."
 
 #~ msgid "Development"
 #~ msgstr "Desarrollo"
@@ -678,9 +554,6 @@ msgstr ""
 
 #~ msgid "Display system applications"
 #~ msgstr "Mostrar aplicaciones de sistema"
-
-#~ msgid "Do you accept this license [y/n]?"
-#~ msgstr "¿Acepta esta licencia (y/n)?"
 
 #~ msgid "Do you really want to abort this download?"
 #~ msgstr "¿De verdad quiere abortar esta descarga?"
@@ -695,13 +568,13 @@ msgstr ""
 #~ "¡Si no está seguro de que no necesite estos paquetes, pulse \"No\"!"
 
 #~ msgid ""
-#~ "Do you really want to remove \"%p\", containing %a?\n"
-#~ "The following package(s) will be removed also: %pl\n"
-#~ "If you're not sure if you need those packages, press \"No\"!"
+#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
+#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+#~ "those packages, press \"No\"!"
 #~ msgstr ""
-#~ "¿Realmente quiere eliminar «%p», que contiene %a?\n"
-#~ "También se eliminarán los siguientes paquetes: %pl\n"
-#~ "Si no está seguro de si necesita esos paquetes, pulse «No»."
+#~ "¿Realmente desea borrar \"%p\", conteniendo %a?\rLos siguientes paquetes "
+#~ "también serán borrados: %pl\r¡Si no está seguro de necesitar estos "
+#~ "paquetes en el futuro, presione \"No\"!"
 
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "¿De verdad quiere desinstalar %a?"
@@ -709,38 +582,14 @@ msgstr ""
 #~ msgid "Do you want confirm this action?"
 #~ msgstr "¿Quiere confirmar esta acción?"
 
-#~ msgid "Do you want confirm this download of external files?"
-#~ msgstr "¿Quiere confirmar esta descarga de archivos externos?"
-
-#~ msgid "Do you want to check global-installed applications too?"
-#~ msgstr "¿Desea revisar también las aplicaciones instaladas globalmente?"
-
-#~ msgid "Do you want to check the applications's dependencies?"
-#~ msgstr "¿Quiere comprobar las dependencias de la aplicación?"
-
 #~ msgid "Do you want to install it again?"
 #~ msgstr "¿Quiere instalarlo otra vez?"
-
-#~ msgid "Do you want to install it anyway? (This could cause problems)"
-#~ msgstr "¿Quiere instalarlo de todas maneras? (Esto puede causar problemas)."
 
 #~ msgid "Do you want to install it anyway? (This could raise problems)"
 #~ msgstr "¿Lo quiere instalar de todas formas? (Puede generar problemas)"
 
-#~ msgid "Do you want to see detailed information [y/n]?"
-#~ msgstr "¿Deseas ver información detallada [y/n]?"
-
-#~ msgid "Do you want to view the logfile?"
-#~ msgstr "¿Desea ver el archivo de registro?"
-
-#~ msgid "Done."
-#~ msgstr "Hecho."
-
 #~ msgid "Downloading catalogue base information..."
 #~ msgstr "Descargando información base del catálogo..."
-
-#~ msgid "Downloading package..."
-#~ msgstr "Descargando paquete..."
 
 #~ msgid "Downloading setup package..."
 #~ msgstr "Descargando paquete de configuración..."
@@ -751,43 +600,14 @@ msgstr ""
 #~ msgid "Enable Proxy-Server"
 #~ msgstr "Activar servidor proxy"
 
-#~ msgid "Enter your password to install the application for everyone."
-#~ msgstr "Introduce tu password para instalar la aplicación para todos."
-
-#~ msgid "Enter your password to run the application with advanced privileges."
-#~ msgstr ""
-#~ "Introduce tu contraseña para iniciar la aplicación con privilegios "
-#~ "avanzados."
-
-#~ msgid "Error"
-#~ msgstr "Error"
-
 #~ msgid "Error while extracting files!"
 #~ msgstr "¡Error al extraer los archivos!"
-
-#~ msgid "Error while performing installation:"
-#~ msgstr "Error durante la instalación:"
 
 #~ msgid "Error while uninstalling!"
 #~ msgstr "¡Error al desinstalar!"
 
 #~ msgid "Error while unpacking and configuring files."
 #~ msgstr "Error al desempaquetar y configurar archivos."
-
-#~ msgid "Execute the new application"
-#~ msgstr "Ejecutar la nueva aplicación"
-
-#~ msgid "Executing application for testing..."
-#~ msgstr "Ejecutando la aplicación para probar..."
-
-#~ msgid "Executing application main executable..."
-#~ msgstr "Ejecutando el ejecutable principal de la aplicación..."
-
-#~ msgid "File"
-#~ msgstr "Archivo"
-
-#~ msgid "Filter..."
-#~ msgstr "Filtrar..."
 
 #~ msgid "Filter:"
 #~ msgstr "Filtro:"
@@ -801,15 +621,6 @@ msgstr ""
 #~ msgid "Finished"
 #~ msgstr "Finalizado"
 
-#~ msgid "Found installation profile %s."
-#~ msgstr "Perfil de instalación %s encontrado."
-
-#~ msgid ""
-#~ "Found no package with the necessary library \"%l\" for your distribution."
-#~ msgstr ""
-#~ "No se ha encontrado el paquete con la biblioteca \"%s\" necesaria para su "
-#~ "distribución."
-
 #~ msgid "Games"
 #~ msgstr "Juegos"
 
@@ -820,22 +631,19 @@ msgstr ""
 #~ msgstr "Gráficos"
 
 #~ msgid ""
-#~ "Hash value doesn't match!\n"
+#~ "Hash doesn't match!\n"
 #~ "The package may be modified after creation.\n"
 #~ "Please obtain a new copy"
 #~ msgstr ""
-#~ "Los valores «hash» no concuerdan.\n"
-#~ "El paquete puede haber sido modificado después de su creación.\n"
-#~ "Obtenga una nueva copia."
+#~ "¡Los hashes no coinciden!\n"
+#~ "Este paquete puede haber sido modificado después de su creación.\n"
+#~ "Por favor, obtenga una nueva copia"
 
 #~ msgid "I agree with the above terms and conditions"
 #~ msgstr "Estoy de acuerdo con los términos y condiciones de arriba"
 
 #~ msgid "I don't agree"
 #~ msgstr "No estoy de acuerdo"
-
-#~ msgid "I know the risk"
-#~ msgstr "Comprendo los riesgos"
 
 #~ msgid "Install application for everyone"
 #~ msgstr "Instalar aplicación para todo el mundo"
@@ -858,14 +666,8 @@ msgstr ""
 #~ msgid "Installation"
 #~ msgstr "Instalación"
 
-#~ msgid "Installation aborted by user."
-#~ msgstr "Instalación abortada por el usuario."
-
 #~ msgid "Installation aborted."
 #~ msgstr "Instalación abortada."
-
-#~ msgid "Installation failed."
-#~ msgstr "Instalación fallida."
 
 #~ msgid "Installation mode:"
 #~ msgstr "Modo de instalación:"
@@ -873,59 +675,11 @@ msgstr ""
 #~ msgid "Installation of %a"
 #~ msgstr "Instalación de %a"
 
-#~ msgid "Installation of package %s failed!"
-#~ msgstr "Ha fallado la instalación del paquete %s"
-
 #~ msgid "Installation package is corrupt"
 #~ msgstr "El paquete de instalación está corrupto"
 
-#~ msgid ""
-#~ "Installed\n"
-#~ "applications"
-#~ msgstr ""
-#~ "Aplicaciones\n"
-#~ "instaladas"
-
-#~ msgid "Installed applications"
-#~ msgstr "Aplicaciones instaladas"
-
-#~ msgid "Installed dependency %s"
-#~ msgstr "Dependencia instalada %s"
-
-#~ msgid "Installing %a..."
-#~ msgstr "Instalando %a..."
-
-#~ msgid "Installs an IPK package"
-#~ msgstr "Instala un paquete IPK"
-
-#~ msgid "LOKI setup found."
-#~ msgstr "Configuración de LOKI encontrada."
-
-#~ msgid "Launch Listaller Manager"
-#~ msgstr "Lanzar gestor de Listaller"
-
-#~ msgid "List of translators:\n"
-#~ msgstr "Lista de traductores:\n"
-
-#~ msgid "Listaller cannot write into its temporary directory: Access denied!"
-#~ msgstr ""
-#~ "Listaller no puede escribir en su directorio temporal: acceso denegado."
-
-#~ msgid "Listaller command-line tool to handle IPK-packages"
-#~ msgstr ""
-#~ "Herramienta de línea de órdenes de Listaller para gestionar paquetes IPK"
-
 #~ msgid "Listaller settings"
 #~ msgstr "Preferencias de Listaller"
-
-#~ msgid ""
-#~ "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
-#~ "installed\n"
-#~ "Do you want to install \"alien\" now to continue?"
-#~ msgstr ""
-#~ "Listaller usa \"alien\" para convertir paquetes en otros formatos, pero "
-#~ "esta herramienta no está instalada\n"
-#~ "¿Quiere instalar \"alien\" ahora para continuar?"
 
 #~ msgid ""
 #~ "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
@@ -953,28 +707,8 @@ msgstr ""
 #~ msgid "Loading..."
 #~ msgstr "Cargando..."
 
-#~ msgid "Looking for %a."
-#~ msgstr "Buscando %a."
-
-#~ msgid "Looking for reverse-dependencies..."
-#~ msgstr "Buscando dependencias inversas..."
-
 #~ msgid "Main"
 #~ msgstr "Principal"
-
-#~ msgid ""
-#~ "Make sure that you got this package from a save source and a serious "
-#~ "publisher!"
-#~ msgstr ""
-#~ "Asegúrese de que ha obtenido este paquete de un origen seguro y de una "
-#~ "institución seria."
-
-#~ msgid ""
-#~ "Make sure that you got this package from a save source and from a serious "
-#~ "publisher!"
-#~ msgstr ""
-#~ "Asegúrese de que ha obtenido este paquete de una fuente segura y de un "
-#~ "intermediario serio."
 
 #~ msgid ""
 #~ "Make sure that you have got this package from a save source and a serious "
@@ -986,14 +720,8 @@ msgstr ""
 #~ msgid "Mode"
 #~ msgstr "Modo"
 
-#~ msgid "Mode number:"
-#~ msgstr "Número de modo:"
-
 #~ msgid "Multimedia"
 #~ msgstr "Multimedia"
-
-#~ msgid "My apps"
-#~ msgstr "Mis aplicaciones"
 
 #~ msgid "Network"
 #~ msgstr "Redes"
@@ -1013,50 +741,11 @@ msgstr ""
 #~ msgid "Office"
 #~ msgstr "Oficina"
 
-#~ msgid "Okay"
-#~ msgstr "Aceptar"
-
-#~ msgid "Open your distribution's package catalog"
-#~ msgstr "Abrir el catálogo de paquetes de su distribución"
-
-#~ msgid "Opening database..."
-#~ msgstr "Abriendo base de datos"
-
-#~ msgid "Opening software database..."
-#~ msgstr "Abriendo la base de datos de programas..."
-
-#~ msgid "Options:"
-#~ msgstr "Opciones:"
-
 #~ msgid "Other"
 #~ msgstr "Otros"
 
 #~ msgid "Package %p could not be installed."
 #~ msgstr "El paquete %p no se ha podido instalar."
-
-#~ msgid "Package build commands:"
-#~ msgstr "Órdenes de creación de paquetes:"
-
-#~ msgid "Package could be installed with MoJo/LOKI."
-#~ msgstr "El paquete puede instalarse con MoJo/LOKI."
-
-#~ msgid "Package detected: %s"
-#~ msgstr "Paquete detectado: %s"
-
-#~ msgid "Package has trusted signature."
-#~ msgstr "El paquete tiene una firma segura."
-
-#~ msgid "Package is unsigned."
-#~ msgstr "El paquete no tiene firma."
-
-#~ msgid "Package lists"
-#~ msgstr "Listas de paquetes"
-
-#~ msgid "Package signature is UNTRUSTED!"
-#~ msgstr "La firma de este paquete no es fiable."
-
-#~ msgid "Package type is \"%s\""
-#~ msgstr "El tipo del paquete es «%s»"
 
 #~ msgid "Package was not build for your Linux distribution release."
 #~ msgstr ""
@@ -1077,31 +766,6 @@ msgstr ""
 #~ msgid "Phase 4/4: Registering application..."
 #~ msgstr "Fase 4/4: registrando aplicación..."
 
-#~ msgid ""
-#~ "Please do not execute this action with superuser rights!\n"
-#~ "(PolicyKit will ask for authorization if privileges are required.)\n"
-#~ "Do you want to force Listaller to execute all with superuser permission?"
-#~ msgstr ""
-#~ "No ejecute esta acción con permisos de superusuario.\n"
-#~ "PolicyKit le pedirá su autorización si se requieren privilegios.\n"
-#~ "¿Quiere forzar a Listaller para que se ejecute con permisos de "
-#~ "superusuario?"
-
-#~ msgid ""
-#~ "Please install this package only if you got it from a \n"
-#~ "trusted source. There is a serious risk that the software in this "
-#~ "package\n"
-#~ "damages your system. (The package could also contain malware)\n"
-#~ "Be careful with this package, especially if you install it system-wide\n"
-#~ "with superuser rights.\n"
-#~ msgstr ""
-#~ "Instale este paquete sólo si lo ha obtenido de una \n"
-#~ "fuente segura. Hay un grave peligro de que el software de este paquete\n"
-#~ "dañe su sistema. (El paquete también puede contener malware).\n"
-#~ "Tenga cuidado con este paquete, especialmente si lo instala en el sistema "
-#~ "con\n"
-#~ "permisos de superusuario.\n"
-
 #~ msgid "Please notify the developers on http://launchpad.net/listaller"
 #~ msgstr ""
 #~ "Por favor, avise a los desarrolladores en http://launchpad.net/listaller"
@@ -1115,25 +779,6 @@ msgstr ""
 #~ "¡Por favor, ejecute \"listallgo\" con la ruta de install-package como "
 #~ "primer parámetro!"
 
-#~ msgid ""
-#~ "Please run \"listallgo\" with path to setup-package as first parameter!"
-#~ msgstr ""
-#~ "Ejecute «listallgo» con la ruta al paquete de preferencias como primer "
-#~ "parámetro."
-
-#~ msgid "Please select a number shown in the list!"
-#~ msgstr "¡Por favor seleccione un número mostrado en la lista!"
-
-#~ msgid "Please select an item from the list!"
-#~ msgstr "¡Por favor seleccione un elemento de la lista!"
-
-#~ msgid ""
-#~ "Please use https://bugs.launchpad.net/listaller\n"
-#~ "for bug reports."
-#~ msgstr ""
-#~ "Por favor use https://bugs.launchpad.net/listaller\n"
-#~ "fara informar fallos."
-
 #~ msgid "Please view the logfile at %p"
 #~ msgstr "Por favor, vea el archivo de registro en %p"
 
@@ -1143,24 +788,11 @@ msgstr ""
 #~ msgid "Please wait..."
 #~ msgstr "Por favor, espere..."
 
-#~ msgid "Preparing installation (please wait)"
-#~ msgstr "Preparando instalación (por favor, espere)"
-
 #~ msgid "Press \"Finish\" to close."
 #~ msgstr "Pulse \"Finalizar\" para cerrar."
 
 #~ msgid "Press \"Next\" to start the installation!"
 #~ msgstr "¡Pulse \"siguiente\" para empezar la instalación!"
-
-#~ msgid "Print all available log messages"
-#~ msgstr "Mostrar todos los mensajes de registro disponibles"
-
-#~ msgid ""
-#~ "Problem while communicating with PackageKit. Run \"pkmon\" to get further "
-#~ "information."
-#~ msgstr ""
-#~ "Hubo un problema al comunicarse con PackageKit. Ejecute «pkmon» para "
-#~ "obtener más información."
 
 #~ msgid ""
 #~ "Problem while connecting PackageKit. Run \"pkmon\" to get further "
@@ -1172,16 +804,6 @@ msgstr ""
 #~ msgid "Problem while downloading the dep-file."
 #~ msgstr "Hubo un problema al descargar el archivo dep."
 
-#~ msgid "Problem while downloading the dependency."
-#~ msgstr "Ha ocurrido un problema al descargar la dependencia."
-
-#~ msgid ""
-#~ "Problem while downloading the packages. Could not create working FTP "
-#~ "connection."
-#~ msgstr ""
-#~ "Hubo un problema al descargar los paquetes. No se pudo establecer una "
-#~ "conexión FTP funcional."
-
 #~ msgid ""
 #~ "Problem while downloading the packages. Maybe the login on the FTP-Server "
 #~ "failed."
@@ -1189,21 +811,11 @@ msgstr ""
 #~ "Hubo un problema descargando los paquetes. Quizás ha fallado la "
 #~ "autenticación en el servidor FTP."
 
-#~ msgid ""
-#~ "Problem while downloading the required packages. Could not create working "
-#~ "FTP connection."
-#~ msgstr ""
-#~ "Ha ocurrido un problema al descargar los paquetes necesarios. No se ha "
-#~ "podido crear una conexión FTP."
-
 #~ msgid "Program description:"
 #~ msgstr "Descripción del programa:"
 
 #~ msgid "Proxy-Settings"
 #~ msgstr "Preferencias del proxy"
-
-#~ msgid "Question:"
-#~ msgstr "Pregunta:"
 
 #~ msgid "Quit"
 #~ msgstr "Salir"
@@ -1211,35 +823,11 @@ msgstr ""
 #~ msgid "Re-install"
 #~ msgstr "Reinstalar"
 
-#~ msgid "Reading application information..."
-#~ msgstr "Leyendo información de la aplicación..."
-
 #~ msgid "Ready."
 #~ msgstr "Preparado."
 
 #~ msgid "Really remove?"
 #~ msgstr "¿De verdad quiere eliminarlo?"
-
-#~ msgid "Removing application..."
-#~ msgstr "Eliminando la aplicación..."
-
-#~ msgid "Repositories"
-#~ msgstr "Repositorios"
-
-#~ msgid "Resolve Listaller path variable"
-#~ msgstr "Resolver variable de ruta de Listaller"
-
-#~ msgid "Resolving dependencies..."
-#~ msgstr "Resolviendo las dependencias..."
-
-#~ msgid "Resolving dynamic dependencies..."
-#~ msgstr "Resolviendo dependencias dinámicas..."
-
-#~ msgid "Rights assigned to %a."
-#~ msgstr "Permisos asignados a %a."
-
-#~ msgid "Run binary setup file as root."
-#~ msgstr "Ejecutar archivo binario de preferencias como superusuario."
 
 #~ msgid "Running application installation..."
 #~ msgstr "Ejecutando la instalación de la aplicación..."
@@ -1250,15 +838,6 @@ msgstr ""
 #~ msgid "Running under %de (or similar)"
 #~ msgstr "Ejecutando bajo %de (o similar)"
 
-#~ msgid "Running under %s."
-#~ msgstr "Ejecutando bajo %s."
-
-#~ msgid "Runs installation in testmode"
-#~ msgstr "Iniciar instalación en modo texto"
-
-#~ msgid "Security warning"
-#~ msgstr "Aviso de seguridad"
-
 #~ msgid "Select installation mode"
 #~ msgstr "Seleccionar modo de instalación"
 
@@ -1268,22 +847,8 @@ msgstr ""
 #~ msgid "Select software-manager mode:"
 #~ msgstr "Seleccionar modo del gestor de software:"
 
-#~ msgid "Select the installation mode of this application:"
-#~ msgstr "Seleccione el modo de instalación de esta aplicación:"
-
-#~ msgid "Settings"
-#~ msgstr "Preferencias"
-
-#~ msgid "Shared apps"
-#~ msgstr "Aplicaciones compartidas"
-
-#~ msgid "Should lipa fix these problems automatically [y/n]?"
-#~ msgstr "¿Debe lipa solucionar estos problemas automáticamente [s/n]?"
-
-#~ msgid "Should this repository be registered to get software updates?"
-#~ msgstr ""
-#~ "¿Ha de registrarse este repositorio para obtener actualizaciones de "
-#~ "software?"
+#~ msgid "Select which parts of the application should be installed."
+#~ msgstr "Selecciona qué partes de la aplicación han de instalarse."
 
 #~ msgid "Should this source be added to the update sources list?"
 #~ msgstr ""
@@ -1296,45 +861,17 @@ msgstr ""
 #~ msgid "Show:"
 #~ msgstr "Mostrar:"
 
-#~ msgid "Skipped %a"
-#~ msgstr "%a omitido"
-
 #~ msgid "Software Manager"
 #~ msgstr "Gestor de software"
 
 #~ msgid "Software catalogue"
 #~ msgstr "Catálogo de software"
 
-#~ msgid "Software database opened."
-#~ msgstr "Base de datos de software abierta."
-
 #~ msgid "Software license"
 #~ msgstr "Licencia del software"
 
-#~ msgid "Some dependencies are missing. Should they be installed now?"
-#~ msgstr "Faltan algunas dependencias. ¿Deberían instalarse ahora?"
-
-#~ msgid "Source was removed."
-#~ msgstr "La fuente fue eliminada."
-
-#~ msgid "Start Listaller tray icon application (e.g. to check dependencies)"
-#~ msgstr ""
-#~ "Iniciar aplicación de icono de bandeja de Listaller (por ejemplo, para "
-#~ "comprobar dependencias)."
-
-#~ msgid "Start Listaller tray icon application (to check dependencies)"
-#~ msgstr ""
-#~ "Iniciar aplicación de icono de Listaller en bandeja (para comprobar "
-#~ "dependencias)"
-
 #~ msgid "Start PackageKit monitor before running transactions"
 #~ msgstr "Iniciar monitor de PackageKit antes de ejecutar transacciones"
-
-#~ msgid "Starting uninstallation."
-#~ msgstr "Iniciando desinstalación."
-
-#~ msgid "State"
-#~ msgstr "Estado"
 
 #~ msgid "Success!"
 #~ msgstr "¡Éxito!"
@@ -1348,17 +885,8 @@ msgstr ""
 #~ msgid "Test of the application finished."
 #~ msgstr "Prueba de la aplicación finalizada."
 
-#~ msgid "Test setup && software"
-#~ msgstr "Comprobar preferencias y software"
-
-#~ msgid "Test-installation of package finished."
-#~ msgstr "Ha terminado la instalación de prueba del paquete."
-
 #~ msgid "Testmode"
 #~ msgstr "Modo de prueba"
-
-#~ msgid "Testmode: Do not register package."
-#~ msgstr "Modo de pruebas: no registra el paquete."
 
 #~ msgid ""
 #~ "The IPK package could be damaged or you haven't enough rights to acces "
@@ -1366,19 +894,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Puede que el paquete IPK esté dañado o no tenga suficientes permisos para "
 #~ "acceder a los archivos/carpetas requeridos."
-
-#~ msgid ""
-#~ "The IPK package could be damaged or you haven't enough rights to access "
-#~ "required files/folders."
-#~ msgstr ""
-#~ "El paquete IPK está dañado o no tiene suficientes permisos para acceder a "
-#~ "los archivos/carpetas requeridos."
-
-#~ msgid "The application \"%a\" was not installed."
-#~ msgstr "La aplicación «%a» no se ha instalado."
-
-#~ msgid "The application %a could not be installed!"
-#~ msgstr "La aplicación %a no se ha podido instalar."
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "¡La aplicación %a se ha instalado con éxito!"
@@ -1399,26 +914,11 @@ msgstr ""
 #~ msgid "The application will close now "
 #~ msgstr "La aplicación se cerrará ahora "
 
-#~ msgid "The application will close now."
-#~ msgstr "Ahora se cerrará la aplicación."
-
-#~ msgid "The file \"%f\" does not exists!"
-#~ msgstr "¡El archivo \"%f\" no existe!"
-
-#~ msgid "The following dependencies will be downloaded:"
-#~ msgstr "Se descargarán las siguientes dependencias:"
-
 #~ msgid "The following packages will be downloaded:"
 #~ msgstr "Se descargarán los siguientes paquetes"
 
-#~ msgid "The following update repositories are installed:"
-#~ msgstr "Los siguientes repositorios de actualización están instalados:"
-
 #~ msgid "The following update sources are installed:"
 #~ msgstr "Los siguientes orígenes de actualizaciones están instalados."
-
-#~ msgid "The installation contains the following update source: "
-#~ msgstr "La instalación contiene el siguiente origen de actualización: "
 
 #~ msgid "The installation tries to add the following update source: "
 #~ msgstr ""
@@ -1427,18 +927,8 @@ msgstr ""
 #~ msgid "The installer will close now"
 #~ msgstr "El instalador se cerrará ahora"
 
-#~ msgid ""
-#~ "The package may be damaged or you haven't enough permissions to execute "
-#~ "this action!"
-#~ msgstr ""
-#~ "El paquete puede estar dañado, o bien no tiene usted permisos suficientes "
-#~ "para ejecutar esta acción."
-
 #~ msgid "The package was invalid!"
 #~ msgstr "¡El paquete no era válido!"
-
-#~ msgid "The registration of this package is broken!"
-#~ msgstr "El registro de este paquete está roto."
 
 #~ msgid ""
 #~ "The selected action is not possible with this package.\n"
@@ -1447,20 +937,6 @@ msgstr ""
 #~ "La acción seleccionada no es posible con este paquete.\n"
 #~ "Por favor, contacte con el mantenedor del paquete para obtener más "
 #~ "información."
-
-#~ msgid "The software provides the following update source:"
-#~ msgstr "El software proporciona el siguiente origen de actualización:"
-
-#~ msgid "The submitted package is invalid!"
-#~ msgstr "El paquete enviado no es válido."
-
-#~ msgid ""
-#~ "There are no explicit package sources available for your Linux "
-#~ "distribution\n"
-#~ "Try to install common packages?"
-#~ msgstr ""
-#~ "No hay orígenes de paquetes explícitos para su distribución de Linux\n"
-#~ "¿Quiere intentar instalar los paquetes comunes?"
 
 #~ msgid ""
 #~ "There are no sources available for your Linux distribution\n"
@@ -1472,25 +948,8 @@ msgstr ""
 #~ msgid "There are no updates available!"
 #~ msgstr "¡No hay actualizaciones disponibles!"
 
-#~ msgid ""
-#~ "This application does not look like a MoJo-Installation and it is not "
-#~ "installed via an other package-type Listaller can handle.\n"
-#~ "Get instructions how to remove this application from the program author."
-#~ msgstr ""
-#~ "Esta aplicación no parece una instalación Mojo y no se ha instalado por "
-#~ "medio de otro tipo de paquete con el que Listaller pueda trabajar. "
-#~ "Obtenga las instrucciones sobre cómo eliminar esta aplicación del autor "
-#~ "del programa."
-
-#~ msgid ""
-#~ "This application does not look like a MoJo-Installation and it is not "
-#~ "installed via any other package-type Listaller can handle.\n"
-#~ "Get instructions how to remove this application from the program author."
-#~ msgstr ""
-#~ "Esta aplicación no parece ser una instalación Mojo y no está instalada "
-#~ "mediante algún tipo de paquete que Listaller pueda gestionar.\n"
-#~ "Obtenga las instrucciones sobre cómo eliminar esta aplicación del autor "
-#~ "del programa."
+#~ msgid "This application is already installed"
+#~ msgstr "Esta aplicación ya está instalada"
 
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
@@ -1504,9 +963,6 @@ msgstr ""
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr "Esta aplicación quiere descargarse e instalar una dependencia de %l"
 
-#~ msgid "This application wants to fetch a dependency from %l"
-#~ msgstr "Esta aplicación quiere obtener una dependencia de %l"
-
 #~ msgid "This package does not support your Linux distribution."
 #~ msgstr "Este paquete no soporta su distribución de Linux."
 
@@ -1517,25 +973,6 @@ msgstr ""
 #~ "Este paquete no tiene un ID válido\n"
 #~ "El instalador se cerrará."
 
-#~ msgid "This package is not signed!"
-#~ msgstr "¡Este paquete no está firmado!"
-
-#~ msgid "This package is untrusted!"
-#~ msgstr "Este paquete no es seguro."
-
-#~ msgid "Unable to find %s"
-#~ msgstr "No se pudo encontrar %s"
-
-#~ msgid "Unable to load information about LOKI-Setup."
-#~ msgstr "No se ha podido cargar la información sobre LOKI-Setup."
-
-#~ msgid ""
-#~ "Unable to load the icon of %a. Please notify the developers of Listaller "
-#~ "or of this application!"
-#~ msgstr ""
-#~ "No se ha podido cargar el icono de %a. Notifíquelo a los desarrolladores "
-#~ "de Listaller o de esta aplicación."
-
 #~ msgid ""
 #~ "Unable to load the icon of %a. Please notify the developers of Listaller "
 #~ "or this application!"
@@ -1543,14 +980,8 @@ msgstr ""
 #~ "No se pudo cargar el icono de %a. Por favor, informe a los "
 #~ "desarrolladores de Listaller o de esta aplicación."
 
-#~ msgid "Unable to override the file %f."
-#~ msgstr "Imposible sobrescribir el archivo %f."
-
 #~ msgid "Unable to overwrite the file %f."
 #~ msgstr "No se puede sobrescribir el archivo %f."
-
-#~ msgid "Unable to remove this application!"
-#~ msgstr "No se ha podido eliminar esta aplicación."
 
 #~ msgid "Uninstall"
 #~ msgstr "Desinstalar"
@@ -1558,23 +989,14 @@ msgstr ""
 #~ msgid "Uninstalling %a"
 #~ msgstr "Desinstalando %a"
 
-#~ msgid "Uninstalling unused dependencies..."
-#~ msgstr "Desinstalando dependencias sin usar..."
-
 #~ msgid "Uninstalling unused deps..."
 #~ msgstr "Desinstalando dependencias no usadas..."
 
 #~ msgid "Uninstalling..."
 #~ msgstr "Desinstalando..."
 
-#~ msgid "Unknown error occured!"
-#~ msgstr "Ha ocurrido un error desconocido"
-
 #~ msgid "Update info:"
 #~ msgstr "Información de actualización:"
-
-#~ msgid "Update repositories"
-#~ msgstr "Actualizar repositorios"
 
 #~ msgid "Update sources"
 #~ msgstr "Actualizar orígenes"
@@ -1591,14 +1013,8 @@ msgstr ""
 #~ msgid "Version"
 #~ msgstr "Versión"
 
-#~ msgid "Version: unknown"
-#~ msgstr "Versión: desconocida"
-
 #~ msgid "Waiting..."
 #~ msgstr "Esperando..."
-
-#~ msgid "Warning!"
-#~ msgstr "¡Atención!"
 
 #~ msgid "Welcome to the installation of %a"
 #~ msgstr "Bienvenido a la instalación de %a"
@@ -1608,56 +1024,6 @@ msgstr ""
 
 #~ msgid "What do you want to do?"
 #~ msgstr "¿Qué quiere hacer?"
-
-#~ msgid "Yes/No?:"
-#~ msgstr "¿Si/no?"
-
-#~ msgid "You are scanning only the ROOT installed applications."
-#~ msgstr ""
-#~ "Está explorando sólo las aplicaciones instaladas por el administrador."
-
-#~ msgid "You are scanning your local installed applications."
-#~ msgstr "Está explorando sólo sus aplicaciones locales instaladas."
-
-#~ msgid ""
-#~ "You cannot install two applications at the same time.\n"
-#~ "Please finish the first installation, then install this one again.\n"
-#~ "(If you do not run two installations, try to remove the temporary "
-#~ "installer directory"
-#~ msgstr ""
-#~ "No puede instalar dos aplicaciones a la vez.\n"
-#~ "Termine la primera instalación y después, instale ésta.\n"
-#~ "Si no está ejecutando dos instalaciones, intente eliminar el directorio "
-#~ "temporal del instalador."
-
-#~ msgid "You have missing dependencies. Should they be installed now?"
-#~ msgstr "Le faltan dependencias. ¿Quiere instalarlas ahora?"
-
-#~ msgid "You have to enter a number!"
-#~ msgstr "¡Debe introducir un número!"
-
-#~ msgid ""
-#~ "You have to install the \"libuild\" tool before you can build packages!"
-#~ msgstr "Ha de instalar la herramienta «libuild» para compilar paquetes."
-
-#~ msgid ""
-#~ "You have to install the liBuild package before you can build packages!"
-#~ msgstr ""
-#~ "¡Debe instalar el paquete liBuild antes de poder construir paquetes!"
-
-#~ msgid ""
-#~ "You use a development version of Listaller!\n"
-#~ "This version is not tested and may cause problems!"
-#~ msgstr ""
-#~ "Está usando una versión en desarrollo de Listaller\n"
-#~ "Esta versión no está probada y puede causar problemas."
-
-#~ msgid ""
-#~ "You use a development version of Listaller!\n"
-#~ "This version is untested, be careful about what you do!"
-#~ msgstr ""
-#~ "Usa una versión en desarrollo de Listaller.\n"
-#~ "Esta versión no está probada, sea cuidadoso con lo que hace."
 
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "
@@ -1673,32 +1039,15 @@ msgstr ""
 #~ "¿Quiere convertir el paquete ahora?"
 
 #~ msgid ""
-#~ "You want to install an %x-Package, but your Linux-distribution's package "
-#~ "management system is based on %y.\n"
-#~ "This package can be converted into a compatible format using \"alien\", "
-#~ "but this will take some time and eventually the installed application "
-#~ "won't work properly\n"
-#~ "Do you want to convert the package now?"
+#~ "You want to install an %x-Package, but your Linux-Distribution's package "
+#~ "system is %y.\rThis package can be converted using \"alien\", but this "
+#~ "will take some time and eventually the application won't work\rDo you "
+#~ "want to convert the package now?"
 #~ msgstr ""
-#~ "Usted quiere instalar un paquete %s, pero el sistema de gestión de "
-#~ "paquete de su distribución de Linux está basado en %y.\n"
-#~ "Este paquete puede convertirse a un formato compatible usando «alien», "
-#~ "pero esto tardará un tiempo adicional y además puede que la aplicación "
-#~ "instalada no funcione adecuadamente\n"
-#~ "¿Quiere convertir el paquete ahora?"
-
-#~ msgid ""
-#~ "You want to install an %x-Package, but your Linux-distribution's package "
-#~ "system is %y.\n"
-#~ "This package can be converted using \"alien\", but this will take some "
-#~ "time and eventually the installed application won't work\n"
-#~ "Do you want to convert the package now?"
-#~ msgstr ""
-#~ "Quiere instalar un paquete %s, pero el sistema de paquetes de su "
-#~ "distribución de Linux es %y.\n"
-#~ "Este paquete puede convertirse usando \"alien\", pero esto tardará algún "
-#~ "rato y puede que la aplicación instalada no funcione\n"
-#~ "¿Quiere convertir este paquete ahora?"
+#~ "Desea instalar un %x-Paquete, pero el paquete para su distribución Linux "
+#~ "es %y.\rEste paquete puede ser convertido usando \"alien\", pero esto "
+#~ "tomará algún tiempo y eventualmente la aplicación no podría trabajar.\r"
+#~ "¿Desea convertir el paquete ahora?"
 
 #~ msgid "Your Linux distribution is not supported by Listaller yet!"
 #~ msgstr "¡Su distribución de Linux no está soportada por Listaller todavía!"
@@ -1711,15 +1060,3 @@ msgstr ""
 #~ "Su versión de PackageKit es %cp. Listaller necesita PackageKit %np o "
 #~ "superior para funcionar correctamente.\n"
 #~ "¡Por favor, actualice su versión de PackageKit!"
-
-#~ msgid "n"
-#~ msgstr "n"
-
-#~ msgid "no"
-#~ msgstr "no"
-
-#~ msgid "y"
-#~ msgstr "s"
-
-#~ msgid "yes"
-#~ msgstr "Si"

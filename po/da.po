@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-29 01:11+0200\n"
+"POT-Creation-Date: 2011-09-06 22:46+0200\n"
 "PO-Revision-Date: 2009-06-26 00:13+0000\n"
 "Last-Translator: Jimmy Frydkær Dürr <thewolf40@mailme.dk>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -15,21 +15,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
-"X-Generator: Launchpad (build 13242)\n"
+"X-Launchpad-Export-Date: 2011-09-06 20:41+0000\n"
+"X-Generator: Launchpad (build 13861)\n"
 
 #, c-format
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "A higher version '%s' of this application has already been installed."
-msgstr "Vælg hvilke dele af programmet som skal installeres."
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "A lower version '%s' of this application has already been installed."
-msgstr "Dette program er allerede installeret"
+msgstr ""
 
 msgid "A policy was not met."
 msgstr ""
@@ -185,9 +185,9 @@ msgstr "Installation færdig!"
 msgid "Installation failed!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installing native packages %s"
-msgstr "Installations-pakke er korrupt"
+msgstr ""
 
 msgid "Low security."
 msgstr ""
@@ -297,9 +297,8 @@ msgstr ""
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-#, fuzzy
 msgid "This application has already been installed."
-msgstr "Dette program er allerede installeret"
+msgstr ""
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -359,9 +358,9 @@ msgstr ""
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract data file %s. Message: %s"
-msgstr "Kan ikke overskrive filen %f."
+msgstr ""
 
 #, c-format
 msgid ""
@@ -373,9 +372,9 @@ msgstr ""
 msgid "Unable to extract file '%s' for dependency '%s'!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract file. %s"
-msgstr "Kan ikke overskrive filen %f."
+msgstr ""
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
@@ -394,9 +393,9 @@ msgid ""
 "architecture."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for '%s'!"
-msgstr "Installations-pakke er korrupt"
+msgstr ""
 
 #, c-format
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
@@ -437,15 +436,12 @@ msgstr ""
 msgid "Use recursive mode"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Validation of file %s failed! This IPK file might have been modified after "
 "creation.\n"
 "Please obtain a new copy and try again."
 msgstr ""
-"Hash matcher ikke!\n"
-"Pakken kan være modificeret efter oprettelse.\n"
-"Venligst hent en ny kopi"
 
 msgid "Validity is undefined"
 msgstr ""
@@ -624,6 +620,15 @@ msgstr ""
 #~ msgid "Graphic"
 #~ msgstr "Grafik"
 
+#~ msgid ""
+#~ "Hash doesn't match!\n"
+#~ "The package may be modified after creation.\n"
+#~ "Please obtain a new copy"
+#~ msgstr ""
+#~ "Hash matcher ikke!\n"
+#~ "Pakken kan være modificeret efter oprettelse.\n"
+#~ "Venligst hent en ny kopi"
+
 #~ msgid "I agree with the above terms and conditions"
 #~ msgstr "Jeg er enig i ovenstående betingelser"
 
@@ -659,6 +664,9 @@ msgstr ""
 
 #~ msgid "Installation of %a"
 #~ msgstr "Installation af %a"
+
+#~ msgid "Installation package is corrupt"
+#~ msgstr "Installations-pakke er korrupt"
 
 #~ msgid "Listaller settings"
 #~ msgstr "Listaller indstilllinger"
@@ -824,6 +832,9 @@ msgstr ""
 #~ msgid "Select software-manager mode:"
 #~ msgstr "Vælg software-håndterings tilstand:"
 
+#~ msgid "Select which parts of the application should be installed."
+#~ msgstr "Vælg hvilke dele af programmet som skal installeres."
+
 #~ msgid "Should this source be added to the update sources list?"
 #~ msgstr "Skal denne kilde tilføjes til opdaterings-kilde listen?"
 
@@ -918,6 +929,9 @@ msgstr ""
 #~ msgid "There are no updates available!"
 #~ msgstr "Der er ingen opdateringer tilgængelige!"
 
+#~ msgid "This application is already installed"
+#~ msgstr "Dette program er allerede installeret"
+
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
 #~ "Listaller can handle.\n"
@@ -946,6 +960,9 @@ msgstr ""
 #~ msgstr ""
 #~ "Kan ikke indlæse ikonet til %a. Venligst underret udviklerne af Listaller "
 #~ "eller dette program!"
+
+#~ msgid "Unable to overwrite the file %f."
+#~ msgstr "Kan ikke overskrive filen %f."
 
 #~ msgid "Uninstall"
 #~ msgstr "Afinstallér"

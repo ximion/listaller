@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-07-29 01:11+0200\n"
+"POT-Creation-Date: 2011-09-06 22:46+0200\n"
 "PO-Revision-Date: 2009-12-07 23:19+0000\n"
-"Last-Translator: Costales <marcos@ubuntu-ast.org>\n"
+"Last-Translator: Costales <costales.marcos@gmail.com>\n"
 "Language-Team: Asturian <ast@li.org>\n"
 "Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-21 12:04+0000\n"
-"X-Generator: Launchpad (build 13242)\n"
+"X-Launchpad-Export-Date: 2011-09-06 20:40+0000\n"
+"X-Generator: Launchpad (build 13861)\n"
 
 #, c-format
 msgid ""
@@ -185,9 +185,9 @@ msgstr ""
 msgid "Installation failed!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installing native packages %s"
-msgstr "Instala un paquete IPK"
+msgstr ""
 
 msgid "Low security."
 msgstr ""
@@ -297,9 +297,8 @@ msgstr ""
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-#, fuzzy
 msgid "This application has already been installed."
-msgstr "Nun s'instaló l'aplicación %a ."
+msgstr ""
 
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
@@ -373,9 +372,9 @@ msgstr ""
 msgid "Unable to extract file '%s' for dependency '%s'!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to extract file. %s"
-msgstr "Imposible atopar %s"
+msgstr ""
 
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
@@ -394,9 +393,9 @@ msgid ""
 "architecture."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to find native package for '%s'!"
-msgstr "Instala un paquete IPK"
+msgstr ""
 
 #, c-format
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
@@ -472,78 +471,8 @@ msgstr ""
 msgid "error: %s"
 msgstr ""
 
-#~ msgid "An internal error occured"
-#~ msgstr "Hebo un fallu internu"
-
-#~ msgid "Build IPK-package"
-#~ msgstr "Construir un paquete IPK"
-
-#~ msgid "Can't find Listaller Manager!"
-#~ msgstr "Imposible atopar l'alministrador de Listaller"
-
-#~ msgid "Can't find updater application!"
-#~ msgstr "¡Imposible atopar l'aplicación d'anovamientu!"
-
-#~ msgid "Cannot resolve dependencies"
-#~ msgstr "Imposible resolver les dependencies."
-
-#~ msgid "Check applications"
-#~ msgstr "Verificar les aplicaciones."
-
-#~ msgid "Check dependencies?"
-#~ msgstr "¿Verificar les dependencies?"
-
-#~ msgid ""
-#~ "Check if dependencies of all installed applications are available and "
-#~ "working"
-#~ msgstr ""
-#~ "Verificar si les dependencies de toles aplicaciones instalaes tán "
-#~ "disponibles y furrulen."
-
-#~ msgid "Commands:"
-#~ msgstr "Comandos"
-
-#~ msgid "Could not find Listaller TrayIcon Application"
-#~ msgstr "Imposible atopar l'aplicación Listaller Traylcon"
-
-#~ msgid "Create DEB and RPM file from IPS"
-#~ msgstr "Crear un paquete DEB y RPM dende un ficheru IPS"
-
-#~ msgid "Do you accept this license [y/n]?"
-#~ msgstr "¿Aceptes esta llicencia [s/n]?"
-
-#~ msgid "Do you want to check global-installed applications too?"
-#~ msgstr "¿Quier revisar tamién les aplicaciones instalaes globalmente?"
-
-#~ msgid "Do you want to check the applications's dependencies?"
-#~ msgstr "¿Quies verificar les dependencies de l'aplicación?"
-
-#~ msgid "Done."
-#~ msgstr "Fecho."
-
 #~ msgid "Installation aborted."
 #~ msgstr "Instalación encaboxada."
 
-#~ msgid "Launch Listaller Manager"
-#~ msgstr "llanzar el xestor de Listaller"
-
-#~ msgid "Options:"
-#~ msgstr "Opciones:"
-
-#~ msgid "Package build commands:"
-#~ msgstr "Comandos de creación del paquete"
-
-#~ msgid "Resolve Listaller path variable"
-#~ msgstr "Resolver variable de ruta de Listaller"
-
-#~ msgid "Runs installation in testmode"
-#~ msgstr "Entamar la instalación en modu test"
-
-#~ msgid "Should lipa fix these problems automatically [y/n]?"
-#~ msgstr "¿Quier que Lipa resuelva automáticamente esos problemes [s/n]?"
-
-#~ msgid "Some dependencies are missing. Should they be installed now?"
-#~ msgstr "Falten delles dependencies.  ¿Quies instalales agora?"
-
-#~ msgid "You have to enter a number!"
-#~ msgstr "¡Tienes qu'introducir un númberu!"
+#~ msgid "The application %a was not installed."
+#~ msgstr "Nun s'instaló l'aplicación %a ."
