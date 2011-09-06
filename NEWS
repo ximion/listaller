@@ -1,22 +1,80 @@
 Version 0.5.2
 ~~~~~~~~~~~~~~
- == Still in development ==
+Released: 2011-08-06
 
  Notes:
-  * /!\ Please note: We do NOT provide stable ABI/API in 0.5.x series!
-        The 0.5.x series is experimental and may not be used in productive environments.
+  * /!\ Please note: We do NOT provide stable API/ABI in the 0.5.x series!
+        The 0.5.x series is experimental and should not be used in productive environments.
 
  Features:
-  * <?>
+  * Added BinReloc to Listaller core again (Matthias Klumpp)
+  * binreloc: Experimental support for *BSD (Anders F. Björklund)
+  * Include the APBuild tool (Matthias Klumpp)
+  * apbuild: Using new libgee API for accessing keys of a HashMap. (Jan Niklas Hasse)
+  * First bits of automatic dependency detection (Matthias Klumpp)
+  * Add options to change default libdir (Matthias Klumpp)
+  * Add Listaller PackageKit PlugIn (Matthias Klumpp)
+  * Add possibility to specify libdir prefix in ./prepare (Matthias Klumpp)
+  * Improved libuild dependency detection (Matthias Klumpp)
+  * Cleanup: Remove listallerd data files (Matthias Klumpp)
+  * Provide feeds for some dependencies & sort out standard deps (Matthias Klumpp)
+  * Store long description in main database (Matthias Klumpp)
+  * Improved dependency feed handling (Matthias Klumpp)
+  * Compare package versions if same package is already installed (Matthias Klumpp)
+  * Use PackageKit for dependency installing (Matthias Klumpp)
+  * Implement basic feed-dependency downloading & extracting (Matthias Klumpp)
+  * Always prefer native distribution packages (Matthias Klumpp)
+  * Add methods to register dependencies in database (Matthias Klumpp)
+  * Check the database if dependency is already installed (Matthias Klumpp)
+  * Install a few manpages (Matthias Klumpp)
+  * Include the patchelf utility, but disable it (Matthias Klumpp)
+  * appcompile: Support CMake & arguments (Matthias Klumpp)
+  * Various improvements to make dependency search faster (Matthias Klumpp)
+  * Automagically update .desktop file paths, even if no var is set (Matthias Klumpp)
+  * Use own stat()-based mechanism to look for libraries. (Matthias Klumpp)
+  * Automatically close the software-database (Matthias Klumpp)
+  * Add /usr/lib/$arch-$os-gnu/mesa to list of valid library paths (Matthias Klumpp)
+  * Apply a set of installation speed-improvements (Matthias Klumpp)
+  * Create new PkResolver to perform resolve actions for native pkgs (Matthias Klumpp)
+  * Apply parts of the dependency-component handling, important stuff is still
+     missing in PackageKit. (Matthias Klumpp)
+  * Some preparations for direct PkBackend usage (Matthias Klumpp)
+  * Added ugly method to request GPG passwords (Matthias Klumpp)
+  * Make cmake install LIBDIR multiarch-aware (Matthias Klumpp)
+  * Add a Fedora spec file template that builds listaller (Richard Hughes)
+  * Fix up some warnings in the PK plugin (Richard Hughes)
+  * plugin: Use the correct function names to fix PackageKit (Richard Hughes)
+  * plugin: Split the lists once and early for speed (Richard Hughes)
+  * plugin: Correctly connect ListallerManager object with callbacks (Matthias Klumpp)
+  * plugin: Set a log domain so the packagekitd daemon knows what's printing messages (Richard Hughes)
+  * plugin: Only rescan the application list after modifying roles (Richard Hughes)
 
  Specifications:
-  * <?>
-
- Bindings:
-  * <?>
+  * Updated dependency-extra list format (is now RFC822-style) (Matthias Klumpp)
+  * Use type-specific dependencies instead of dependencies on "files" (Matthias Klumpp)
+  * Move state information to /var/lib (Matthias Klumpp)
+  * Implement a dependency-id (Matthias Klumpp)
 
  Bugfixes:
-  * <?>
+  * Remove internal libc ELF headers from vLDD (Matthias Klumpp)
+  * Depend runapp on listaller-glib, allows parallel builds (Matthias Klumpp)
+  * Remove \r's from nl translation (Matthias Klumpp)
+  * Compile with _FILE_OFFSET_BITS=64 (Matthias Klumpp)
+  * Fix uninstaller error handling (Matthias Klumpp)
+  * Adjust to new PackageKit 0.7 API (Matthias Klumpp)
+  * Register IPK mime type again (Matthias Klumpp)
+  * Use PREFIXDIR in Listaller settings (Matthias Klumpp)
+  * Fix database application listing (Matthias Klumpp)
+  * Bugfix: Installation fails if there are no dependencies defined (Matthias Klumpp)
+  * Build in Debug mode by default (for development versions) (Matthias Klumpp)
+  * Process variables _after_ everything was installed (Matthias Klumpp)
+  * Consider all dependencies as satisfied when in testmode (Matthias Klumpp)
+  * Fix deadlock when application is registered (Matthias Klumpp)
+  * libuild: Fix installing all files into one directory (Matthias Klumpp)
+  * Display warning if dependency idname or full_name is empty (Matthias Klumpp)
+  * plugin: Fix sigsegv on loading applist (Matthias Klumpp)
+  * plugin: Fix pointer deferencing to make package and files removal work (Richard Hughes)
+  * plugin: Ensure the transaction gets properly finished if listaller can handle all the ids (Richard Hughes)
 
 Version 0.5.1
 ~~~~~~~~~~~~~~
