@@ -153,7 +153,8 @@ private class InternalDB : Object {
 	}
 
 	public bool database_locked () {
-		if (FileUtils.test (dblockfile, FileTest.IS_REGULAR)) {
+		if ((FileUtils.test (dblockfile, FileTest.EXISTS)) &&
+		    (FileUtils.test (dblockfile, FileTest.IS_REGULAR))) {
 			locked = true;
 		} else {
 			locked = false;

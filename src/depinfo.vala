@@ -151,11 +151,11 @@ public class Dependency : Object {
 		return components.size > 0;
 	}
 
-	public string component_get_name (string cidname) {
+	public static string component_get_name (string cidname) {
 		return cidname.substring (cidname.index_of (":") + 1).strip ();
 	}
 
-	public ComponentType component_get_type (string cidname) {
+	public static ComponentType component_get_type (string cidname) {
 		string tpid = cidname.substring (0, cidname.index_of (":")).strip ();
 		ComponentType tp = ComponentType.UNKNOWN;
 		switch (tpid) {
