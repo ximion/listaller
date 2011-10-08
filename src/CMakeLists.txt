@@ -59,7 +59,7 @@ find_package(GI REQUIRED)
 find_library(M_LIB m)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
-pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2-0.7.1)
+pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2-0.7.2)
 #find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
 
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
@@ -82,6 +82,7 @@ vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 			PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 packagekit-plugin
 			GENERATE_VAPI listaller-${LILIBS_VERSION}.vapi
 			GENERATE_HEADER listaller.h
+			GENERATE_INTERNAL_HEADER listaller_internal.h
 			OUTPUT_DIR ${CMAKE_BINARY_DIR}/src
 			COMPILE_FLAGS --gir=Listaller-${LILIBS_VERSION}.gir
 				--library Listaller-${LILIBS_VERSION}

@@ -30,15 +30,15 @@ namespace Listaller {
  * be used if the user is root (because PK is a root-daemon, if PkBackend is set and we're a unprivileged
  * user, something is going wrong or someone did a foolish thing.
  */
-private PkPlugin.Backend pkit_native_backend = null;
+private PkPlugin.Backend pkit_native_backend;
 
-public void set_pkit_backend (void* backend) {
+internal void set_pkit_backend (PkPlugin.Backend backend) {
 	if (!Utils.is_root ()) {
 		error ("Tried to set a PackageKit native backend, but application does not run as root (and therefore can not " +
 			"have been called from packagekitd) This should NEVER happen, maybe someone is using the API wrong.");
 		return;
 	}
-	pkit_native_backend = backend as PkPlugin.Backend;
+	pkit_native_backend = backend;
 }
 
 private PkPlugin.Backend? get_pk_backend () {

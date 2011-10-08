@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <packagekit-glib2/packagekit.h>
 #include <plugin/packagekit-plugin.h>
-#include "listaller.h"
+#include "listaller_internal.h"
 
 struct PkPluginPrivate {
 	ListallerManager	*mgr;
