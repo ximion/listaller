@@ -46,32 +46,6 @@ private static void li_error (string msg) {
 	}
 }
 
-/* This stuff is defined to be able to use the PackageKit PkBackend directly in Listaller.
- * It allows us to call the native backend instead of invoking a new PackageKit native transaction,
- * which can never work if there already is a PackageKit Listaller transaction. (it would come to
- * a deadlock then)
- * The PkBackend reference is set by Listaller's PK plugin.and should _only_ be set by it. It can only
- * be used if the user is root (because PK is a root-daemon, if PkBackend is set and we're a unprivileged
- * user, something is going wrong or someone did a foolish thing.
- */
-private class PkBackend { }
-private PkBackend pkit_native_backend = null;
-
-private void set_pkit_backend (void* backend) {
-	if (!Utils.is_root ()) {
-		error ("Tried to set a PackageKit native backend, but application does not run as root (and therefore can not " +
-			"have been called from packagekitd) This should NEVER happen, maybe someone is using the API wrong.");
-		return;
-	}
-	pkit_native_backend = backend as PkBackend;
-}
-
-private PkBackend? get_pk_backend () {
-	if (!Utils.is_root ())
-		return null;
-	return pkit_native_backend;
-}
-
 }
 
 namespace Listaller.Utils {

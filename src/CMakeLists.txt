@@ -66,6 +66,7 @@ set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	zfeed.vala
 	depmanager.vala
 	depsolver.vala
+	pkbackend-glue.vala
 	pkit-resolver.vala
 	pkit-installer.vala
 	feed-installer.vala
@@ -78,7 +79,7 @@ list(APPEND VALA_INCLUDE_DIRS ${CMAKE_BINARY_DIR})
 vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 			BASE_DIR ${lisrc}
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
-			PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2
+			PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 packagekit-plugin
 			GENERATE_VAPI listaller-${LILIBS_VERSION}.vapi
 			GENERATE_HEADER listaller.h
 			OUTPUT_DIR ${CMAKE_BINARY_DIR}/src
@@ -87,7 +88,9 @@ vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 				--thread
 )
 
-add_definitions("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE")
+add_definitions("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE"
+	"-DI_KNOW_THE_PACKAGEKIT_PLUGIN_API_IS_SUBJECT_TO_CHANGE"
+)
 
 # Add log domain
 add_definitions("-DG_LOG_DOMAIN=\"Listaller\"")

@@ -18,8 +18,6 @@
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#define I_KNOW_THE_PACKAGEKIT_PLUGIN_API_IS_SUBJECT_TO_CHANGE
-
 #include <stdlib.h>
 #include <packagekit-glib2/packagekit.h>
 #include <plugin/packagekit-plugin.h>
