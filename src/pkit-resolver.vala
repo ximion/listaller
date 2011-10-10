@@ -69,7 +69,7 @@ private class PkResolver : Object {
 	}
 
 	private PackageKit.PackageSack? pkit_pkgs_from_depfiles (IPK.Dependency dep) {
-		PackageKit.Bitfield filter = PackageKit.Filter.bitfield_from_string ("none");
+		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("none");
 
 		// We only resolve libraries at time
 		// TODO: Resolve other dependencies too
@@ -92,7 +92,7 @@ private class PkResolver : Object {
 		string[] packages = sack.get_ids ();
 
 		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (packages[0] == null) ) {
-			set_error (ErrorEnum.UNKNOWN, "%s\n%s".printf (_("PackageKit exit code was: %s").printf (PackageKit.Exit.enum_to_string (res.get_exit_code ())),
+			set_error (ErrorEnum.UNKNOWN, "%s\n%s".printf (_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())),
 						       _("Unable to find native package for '%s'!").printf (dep.full_name)));
 			return null;
 		}

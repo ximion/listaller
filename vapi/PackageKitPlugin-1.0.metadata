@@ -1,7 +1,3 @@
 // Metadata for PackageKit GIR
 
 PackageKitPlugin name="PkPlugin"
-Control.locked#virtual_method skip
-DistroUpgradeEnum name="DistroUpgradeType"
-ErrorEnum name="ErrorType"
-MessageEnum name="MessageType"
