@@ -128,8 +128,6 @@ private class InternalDB : Object {
 
 	private Sqlite.Statement insert_app;
 
-	public signal void db_status_changed (DatabaseStatus newstatus, string message);
-	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
 
 	public InternalDB (bool sumode, bool _testmode = false) {
@@ -162,16 +160,6 @@ private class InternalDB : Object {
 		return locked;
 	}
 
-	private void dbstatus_changed (DatabaseStatus dbs, string details) {
-		if (dbs == DatabaseStatus.FAILURE) {
-			// Emit error
-			ErrorItem item = new ErrorItem(ErrorEnum.DATABASE_FAILURE);
-			item.details = details;
-			error_code (item);
-		}
-		db_status_changed (dbs, details);
-	}
-
 	private void emit_message (string msg) {
 		// Construct info message
 		MessageItem item = new MessageItem(MessageEnum.INFO);
@@ -184,7 +172,7 @@ private class InternalDB : Object {
 		return dbname;
 	}
 
-	private bool open_db () {
+	private bool open_db () throws DatabaseError {
 		bool create_db = false;
 		int rc;
 
@@ -197,17 +185,14 @@ private class InternalDB : Object {
 		if (rc != Sqlite.OK) {
 			string msg = "Can't open database! (Message: %d, %s)".printf (rc, db.errmsg ());
 			stderr.printf (msg);
-			dbstatus_changed (DatabaseStatus.FAILURE, msg);
-			return false;
+			throw new DatabaseError.ERROR (msg);
 		}
 
 		create_dir_parents (regdir);
-		dbstatus_changed (DatabaseStatus.OPENED, "");
 
 		// Ensure the database is okay and all tables are created
 		if ((create_db) && (!update_db_tables ())) {
-			dbstatus_changed (DatabaseStatus.FAILURE, _("Could not create/update software database!"));
-			return false;
+			throw new DatabaseError.ERROR (_("Could not create/update software database!"));
 		}
 
 		// Prepare statements
@@ -218,7 +203,7 @@ private class InternalDB : Object {
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_app), "prepare insert into app statement");
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
+			throw new DatabaseError.ERROR (e.message);
 		}
 
 		return true;
@@ -253,7 +238,6 @@ private class InternalDB : Object {
 		}
 		// DB is now locked
 		locked = true;
-		dbstatus_changed (DatabaseStatus.LOCKED, "");
 		return true;
 	}
 
@@ -334,14 +318,14 @@ private class InternalDB : Object {
 		}
 	}
 
-	protected bool has_table (string table_name) {
+	protected bool has_table (string table_name) throws DatabaseError {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("PRAGMA table_info(%s)".printf(table_name), -1, out stmt);
 
 		try {
 			db_assert (res, "prepare db");
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
+			throw new DatabaseError.ERROR (e.message);
 		}
 
 		res = stmt.step ();
@@ -349,16 +333,14 @@ private class InternalDB : Object {
 		return (res != Sqlite.DONE);
 	}
 
-	protected bool update_db_tables () {
+	protected bool update_db_tables () throws DatabaseError {
 		Sqlite.Statement stmt;
 
 		int res = db.exec (DATABASE);
 		try {
 			db_assert (res);
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE,
-				  _("Unable to create/update database tables: %s").printf (db.errmsg ()));
-			return false;
+			throw new DatabaseError.ERROR (_("Unable to create/update database tables: %s").printf (db.errmsg ()));
 		}
 		try {
 			db_assert (db.exec ("PRAGMA synchronous = OFF"));
@@ -366,7 +348,7 @@ private class InternalDB : Object {
 			db_assert (db.exec ("PRAGMA journal_mode = MEMORY"));
 			db_assert (db.exec ("PRAGMA count_changes = OFF"));
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
+			throw new DatabaseError.ERROR (e.message);
 		}
 
 		// db_assert (db.exec ("PRAGMA user_version = %d".printf (SUPPORTED_VERSION)));
@@ -376,11 +358,9 @@ private class InternalDB : Object {
 
 	/* Application stuff */
 
-	public bool add_application (AppItem item) {
+	public bool add_application (AppItem item) throws DatabaseError {
 		if (!locked) {
-			dbstatus_changed (DatabaseStatus.FAILURE,
-					  _("Tried to write on unlocked (readonly) database! (This should not happen)"));
-			return false;
+			throw new DatabaseError.ERROR (_("Tried to write on unlocked (readonly) database! (This should not happen)"));
 		}
 
 		// Set install timestamp
@@ -415,8 +395,7 @@ private class InternalDB : Object {
 
 			db_assert (insert_app.reset (), "reset statement");
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return false;
+			throw new DatabaseError.ERROR (e.message);
 		}
 
 		return true;
@@ -424,9 +403,7 @@ private class InternalDB : Object {
 
 	public bool add_application_filelist (AppItem aid, Collection<IPK.FileEntry> flist) {
 		if (!locked) {
-			dbstatus_changed (DatabaseStatus.FAILURE,
-					  _("Tried to write on unlocked (readonly) database! (This should not happen)"));
-			return false;
+			throw new DatabaseError.ERROR (_("Tried to write on unlocked (readonly) database! (This should not happen)"));
 		}
 		string metadir = Path.build_filename (regdir, aid.idname, null);
 		create_dir_parents (metadir);
@@ -452,14 +429,12 @@ private class InternalDB : Object {
 				}
 			}
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE,
-					  _("Unable to write application file list! Message: %s").printf (e.message));
-			return false;
+			throw new DatabaseError.ERROR (_("Unable to write application file list! Message: %s").printf (e.message));
 		}
 		return true;
 	}
 
-	public ArrayList<string>? get_application_filelist (AppItem app) {
+	public ArrayList<string>? get_application_filelist (AppItem app) throws DatabaseError {
 		string metadir = Path.build_filename (regdir, app.idname, null);
 
 		var file = File.new_for_path (Path.build_filename (metadir, "files.list", null));
@@ -481,14 +456,12 @@ private class InternalDB : Object {
 				}
 			}
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE,
-					  _("Unable to fetch application file list! Message: %s").printf (e.message));
-			return null;
+			throw new DatabaseError.ERROR (_("Unable to fetch application file list! Message: %s").printf (e.message));
 		}
 		return flist;
 	}
 
-	public int get_applications_count () {
+	public int get_applications_count () throws DatabaseError {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT Count(*) FROM applications", -1, out stmt);
 
@@ -496,8 +469,7 @@ private class InternalDB : Object {
 			db_assert (res, "get applications count");
 			db_assert (stmt.step ());
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return -1;
+			throw new DatabaseError.ERROR (e.message);
 		}
 
 		int count = stmt.column_int (0);
@@ -534,7 +506,7 @@ private class InternalDB : Object {
 		return item;
 	}
 
-	public AppItem? get_application_by_idname (string appIdName) {
+	public AppItem? get_application_by_idname (string appIdName) throws DatabaseError {
 		Sqlite.Statement stmt;
 		try {
 			db_assert (db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE name=?", -1, out stmt),
@@ -547,8 +519,7 @@ private class InternalDB : Object {
 			if (res != Sqlite.ROW)
 				return null;
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return null;
+			throw new DatabaseError.ERROR (e.message);
 		}
 
 		AppItem? item = retrieve_app_item (stmt);
@@ -560,7 +531,7 @@ private class InternalDB : Object {
 		return item;
 	}
 
-	public AppItem? get_application_by_fullname (string appFullName) {
+	public AppItem? get_application_by_fullname (string appFullName) throws DatabaseError {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE full_name=?", -1, out stmt);
 
@@ -573,8 +544,7 @@ private class InternalDB : Object {
 			if (res != Sqlite.ROW)
 				return null;
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return null;
+			throw new DatabaseError.ERROR (e.message);
 		}
 
 		AppItem? item = retrieve_app_item (stmt);
@@ -586,7 +556,7 @@ private class InternalDB : Object {
 		return item;
 	}
 
-	public AppItem? get_application_by_dbid (uint databaseId) {
+	public AppItem? get_application_by_dbid (uint databaseId) throws DatabaseError {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE id=?", -1, out stmt);
 
@@ -599,8 +569,7 @@ private class InternalDB : Object {
 			if (res != Sqlite.ROW)
 				return null;
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return null;
+			throw new DatabaseError.ERROR (e.message);
 		}
 
 		AppItem? item = retrieve_app_item (stmt);
@@ -612,7 +581,7 @@ private class InternalDB : Object {
 		return item;
 	}
 
-	public AppItem? get_application_by_name_version (string appName, string appVersion) {
+	public AppItem? get_application_by_name_version (string appName, string appVersion) throws DatabaseError {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE name=? AND version=?", -1, out stmt);
 		try {
@@ -625,8 +594,7 @@ private class InternalDB : Object {
 			if (res != Sqlite.ROW)
 				return null;
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return null;
+			throw new DatabaseError.ERROR (e.message);
 		}
 
 		AppItem? item = retrieve_app_item (stmt);
@@ -638,7 +606,7 @@ private class InternalDB : Object {
 		return item;
 	}
 
-	public bool remove_application (AppItem app) {
+	public bool remove_application (AppItem app) throws DatabaseError {
 		bool ret = true;
 		string metadir = Path.build_filename (regdir, app.idname, null);
 		Sqlite.Statement stmt;
@@ -649,8 +617,7 @@ private class InternalDB : Object {
 			db_assert (stmt.bind_text (1, app.idname), "bind text");
 			db_assert (stmt.step(), "execute action");
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return false;
+			throw new DatabaseError.ERROR (e.message);
 		}
 
 		ret = delete_dir_recursive (metadir);
@@ -694,7 +661,7 @@ private class InternalDB : Object {
 		return resList;
 	}
 
-	public bool set_application_dependencies (string appName, ArrayList<IPK.Dependency> deps) {
+	public bool set_application_dependencies (string appName, ArrayList<IPK.Dependency> deps) throws DatabaseError {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("UPDATE applications SET dependencies=? WHERE name=?", -1, out stmt);
 
@@ -708,8 +675,7 @@ private class InternalDB : Object {
 			db_assert (stmt.bind_text (2, appName), "bind text value");
 			db_assert (stmt.step ());
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return false;
+			throw new DatabaseError.ERROR (e.message);
 		}
 
 		return true;
@@ -717,11 +683,9 @@ private class InternalDB : Object {
 
 	/* Dependency stuff */
 
-	public bool add_dependency (IPK.Dependency dep) {
+	public bool add_dependency (IPK.Dependency dep) throws DatabaseError {
 		if (!locked) {
-			dbstatus_changed (DatabaseStatus.FAILURE,
-					  _("Tried to write on unlocked (readonly) database! (This should not happen)"));
-			return false;
+			throw new DatabaseError.ERROR (_("Tried to write on unlocked (readonly) database! (This should not happen)"));
 		}
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 (
@@ -756,8 +720,7 @@ private class InternalDB : Object {
 
 			db_assert (stmt.step (), "add dependency");
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return false;
+			throw new DatabaseError.ERROR (e.message);
 		}
 
 		return true;
@@ -803,8 +766,7 @@ private class InternalDB : Object {
 			if (res != Sqlite.ROW)
 				return null;
 		} catch (Error e) {
-			dbstatus_changed (DatabaseStatus.FAILURE, e.message);
-			return null;
+			throw new DatabaseError.ERROR (e.message);
 		}
 
 		IPK.Dependency? dep = retrieve_dependency (stmt);

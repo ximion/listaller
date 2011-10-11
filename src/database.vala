@@ -62,14 +62,11 @@ private class SoftwareDB : Object {
 			db_priv = new InternalDB (false, conf.testmode);
 		}
 
-		if (db_priv != null) {
+		// Forward messages of the internal DBs to this meta-db
+		if (db_priv != null)
 			db_priv.message.connect ( (m) => { this.message (m); } );
-			db_priv.error_code.connect ( (e) => { this.error_code (e); } );
-		}
-		if (db_shared != null) {
+		if (db_shared != null)
 			db_shared.message.connect ( (m) => { this.message (m); } );
-			db_shared.error_code.connect ( (e) => { this.error_code (e); } );
-		}
 	}
 
 	private void emit_dberror (string details) {
@@ -122,20 +119,26 @@ private class SoftwareDB : Object {
 	}
 
 	public bool open_read () {
-		bool ret = true;
-		if (private_db_canbeused ())
-			ret = db_priv.open_r ();
-		if (shared_db_canbeused ()) {
-			if (!ret)
-				ret = db_shared.open_r ();
-			else
-				db_shared.open_r ();
+		bool ret = false;
+		try {
+			if (private_db_canbeused ())
+				ret = db_priv.open_r ();
+			if (shared_db_canbeused ()) {
+				if (!ret)
+					ret = db_shared.open_r ();
+				else
+					db_shared.open_r ();
+			}
+		} catch (Error e) {
+			emit_dberror (_("Unable to open database for read-only: %s").printf (e.message));
+			ret = false;
 		}
 		return ret;
 	}
 
 	public bool open_write () {
-		bool ret = true;
+		bool ret = false;
+		try {
 		if (private_db_canbeused ())
 			ret = db_priv.open_rw ();
 		if (shared_db_canbeused ()) {
@@ -144,7 +147,10 @@ private class SoftwareDB : Object {
 			else
 				db_shared.open_rw ();
 		}
-
+		} catch (Error e) {
+			emit_dberror (_("Unable to open database for writing: %s").printf (e.message));
+			ret = false;
+		}
 		return ret;
 	}
 
@@ -160,119 +166,170 @@ private class SoftwareDB : Object {
 	}
 
 	public bool add_application (AppItem app) {
+		bool ret;
+		try {
 		if (app.shared) {
 			if (shared_db_canbeused (true))
-				return db_shared.add_application (app);
+				ret = db_shared.add_application (app);
 			else
 				return false;
 		} else {
 			if (private_db_canbeused (true))
-				return db_priv.add_application (app);
+				ret = db_priv.add_application (app);
 			else
 				return false;
 		}
+		} catch (Error e) {
+			emit_dberror (_("Unable to add application to database: %s").printf (e.message));
+			ret = false;
+		}
+		return ret;
 	}
 
 	public bool add_application_filelist (AppItem app, Collection<IPK.FileEntry> flist) {
-		if (app.shared) {
-			if (shared_db_canbeused (true))
-				return db_shared.add_application_filelist (app, flist);
-			else
-				return false;
-		} else {
-			if (private_db_canbeused (true))
-				return db_priv.add_application_filelist (app, flist);
-			else
-				return false;
+		bool ret;
+		try {
+			if (app.shared) {
+				if (shared_db_canbeused (true))
+					ret = db_shared.add_application_filelist (app, flist);
+				else
+					return false;
+			} else {
+				if (private_db_canbeused (true))
+					ret = db_priv.add_application_filelist (app, flist);
+				else
+					return false;
+			}
+		} catch (Error e) {
+			emit_dberror (_("Unable to add application file list to database: %s").printf (e.message));
+			ret = false;
 		}
+		return ret;
 	}
 
 	public ArrayList<string>? get_application_filelist (AppItem app) {
-		if (app.shared) {
-			if (shared_db_canbeused (true))
-				return db_shared.get_application_filelist (app);
-			else
-				return null;
-		} else {
-			if (private_db_canbeused (true))
-				return db_priv.get_application_filelist (app);
-			else
-				return null;
+		ArrayList<string>? res;
+		try {
+			if (app.shared) {
+				if (shared_db_canbeused (true))
+					res = db_shared.get_application_filelist (app);
+				else
+					return null;
+			} else {
+				if (private_db_canbeused (true))
+					res = db_priv.get_application_filelist (app);
+				else
+					return null;
+			}
+		} catch (Error e) {
+			emit_dberror (_("Unable to fetch application file list: %s").printf (e.message));
+			res = null;
 		}
+		return res;
 	}
 
 	public int get_applications_count () {
 		int cnt = 0;
-		if (shared_db_canbeused ())
-			cnt += db_shared.get_applications_count ();
-		if (private_db_canbeused ())
-			cnt += db_priv.get_applications_count ();
-
+		try {
+			if (shared_db_canbeused ())
+				cnt += db_shared.get_applications_count ();
+			if (private_db_canbeused ())
+				cnt += db_priv.get_applications_count ();
+		} catch (Error e) {
+			emit_dberror (_("Unable to count applications: %s").printf (e.message));
+		}
 		return cnt;
 	}
 
 	public AppItem? get_application_by_idname (string appIdName) {
 		AppItem? app = null;
 
-		if (shared_db_canbeused ())
-			app = db_shared.get_application_by_idname (appIdName);
+		try {
+			if (shared_db_canbeused ())
+				app = db_shared.get_application_by_idname (appIdName);
 
-		if (app == null)
-			if (private_db_canbeused ())
-				app = db_priv.get_application_by_idname (appIdName);
+			if (app == null)
+				if (private_db_canbeused ())
+					app = db_priv.get_application_by_idname (appIdName);
+		} catch (Error e) {
+			emit_dberror (_("Unable to fetch application by id: %s").printf (e.message));
+		}
 
 		return app;
 	}
 
 	public AppItem? get_application_by_id (AppItem app) {
-		if (app.shared) {
-			if (shared_db_canbeused (true))
-				return db_shared.get_application_by_idname (app.idname);
-			else
-				return null;
-		} else {
-			if (private_db_canbeused (true))
-				return db_priv.get_application_by_idname (app.idname);
-			else
-				return null;
+		AppItem? resApp;
+		try  {
+			if (app.shared) {
+				if (shared_db_canbeused (true))
+					resApp = db_shared.get_application_by_idname (app.idname);
+				else
+					return null;
+			} else {
+				if (private_db_canbeused (true))
+					resApp = db_priv.get_application_by_idname (app.idname);
+				else
+					return null;
+			}
+		} catch (Error e) {
+			emit_dberror (_("Unable to fetch application by id: %s").printf (e.message));
+			resApp = null;
 		}
+		return resApp;
 	}
 
 	public AppItem? get_application_by_fullname (string appFullName) {
 		AppItem? app = null;
-		if (shared_db_canbeused ())
-			app = db_shared.get_application_by_fullname (appFullName);
+		try {
+			if (shared_db_canbeused ())
+				app = db_shared.get_application_by_fullname (appFullName);
 
-		if (app == null)
-			if (private_db_canbeused ())
-				app = db_priv.get_application_by_fullname (appFullName);
+			if (app == null)
+				if (private_db_canbeused ())
+					app = db_priv.get_application_by_fullname (appFullName);
+		} catch (Error e) {
+			emit_dberror (_("Unable to fetch application by name: %s").printf (e.message));
+		}
 
 		return app;
 	}
 
 	public bool remove_application (AppItem app) {
+		bool ret;
+		try {
 		if (app.shared) {
 			if (shared_db_canbeused (true))
-				return db_shared.remove_application (app);
+				ret = db_shared.remove_application (app);
 			else
 				return false;
 		} else {
 			if (private_db_canbeused (true))
-				return db_priv.remove_application (app);
+				ret = db_priv.remove_application (app);
 			else
 				return false;
 		}
+		} catch (Error e) {
+			emit_dberror (_("Unable to remove application from database: %s").printf (e.message));
+			ret = false;
+		}
+		return ret;
 	}
 
 	public ArrayList<AppItem> find_applications ([CCode (array_null_terminated = true, array_length = false)] string[] values) {
 		var list = new ArrayList<AppItem> ();
-		if (shared_db_canbeused ()) {
-			var tmp = db_shared.find_applications (values);
-			list.add_all (tmp);
-		}
-		if (private_db_canbeused ()) {
-			var tmp = db_priv.find_applications (values);
-			list.add_all (tmp);
+
+		try {
+			if (shared_db_canbeused ()) {
+				var tmp = db_shared.find_applications (values);
+				list.add_all (tmp);
+			}
+			if (private_db_canbeused ()) {
+				var tmp = db_priv.find_applications (values);
+				list.add_all (tmp);
+			}
+		} catch (Error e) {
+			emit_dberror (_("Unable to search application database: %s").printf (e.message));
 		}
 
 		return list;
