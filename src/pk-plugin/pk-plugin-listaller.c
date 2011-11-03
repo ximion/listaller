@@ -34,7 +34,7 @@ struct PkPluginPrivate {
 void
 pk_listaller_reset (PkPlugin *plugin)
 {
-	/* Reset something... (this function meight be redundant now) */
+	/* Reset something... (this function might be redundant now :P) */
 }
 
 /**
@@ -419,6 +419,7 @@ pk_plugin_initialize (PkPlugin *plugin)
 	/* tell PK we might be able to handle these */
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_DETAILS);
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_INSTALL_FILES);
+	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_SIMULATE_INSTALL_FILES);
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_REMOVE_PACKAGES);
 
 	g_signal_connect (plugin->priv->mgr, "error-code", (GCallback) listaller_error_code_cb, plugin);
@@ -513,7 +514,7 @@ out:
 /**
  * pk_listaller_is_file:
  *
- * TODO: should really get content type...
+ * TODO: should get content type (instead of just checking file extension)...
  */
 static gboolean
 pk_listaller_is_file (const gchar *filename)
@@ -576,7 +577,7 @@ out:
  * pk_plugin_started:
  */
 void
-pk_plugin_transaction_started (PkPlugin *plugin,
+pk_plugin_transaction_run (PkPlugin *plugin,
 			       PkTransaction *transaction)
 {
 	PkRoleEnum role;
@@ -611,7 +612,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 		/* nothing more to process */
 		package_ids = pk_transaction_get_package_ids (transaction);
 		if (g_strv_length (package_ids) == 0)
-			pk_backend_finished (plugin->backend);
+			pk_backend_set_exit_code (plugin->backend, PK_EXIT_ENUM_SKIP_TRANSACTION);
 		goto out;
 	}
 
@@ -626,7 +627,19 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 		/* nothing more to process */
 		package_ids = pk_transaction_get_package_ids (transaction);
 		if (g_strv_length (package_ids) == 0)
-			pk_backend_finished (plugin->backend);
+			pk_backend_set_exit_code (plugin->backend, PK_EXIT_ENUM_SKIP_TRANSACTION);
+		goto out;
+	}
+
+	if (role == PK_ROLE_ENUM_SIMULATE_INSTALL_FILES) {
+		full_paths = pk_transaction_get_full_paths (transaction);
+		data = pk_listaller_filter_listaller_files (transaction,
+							    full_paths);
+
+		/* We have Listaller packages, so skip this! */
+		/* FIXME: This needs to be smarter - backend needs to Simulate() with remaining pkgs */
+		if (data != NULL)
+			pk_backend_set_exit_code (plugin->backend, PK_EXIT_ENUM_SKIP_TRANSACTION);
 		goto out;
 	}
 
@@ -641,7 +654,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 		/* nothing more to process */
 		full_paths = pk_transaction_get_full_paths (transaction);
 		if (g_strv_length (full_paths) == 0)
-			pk_backend_finished (plugin->backend);
+			pk_backend_set_exit_code (plugin->backend, PK_EXIT_ENUM_SKIP_TRANSACTION);
 		goto out;
 	}
 	if (role == PK_ROLE_ENUM_REMOVE_PACKAGES) {
@@ -655,7 +668,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 		/* nothing more to process */
 		package_ids = pk_transaction_get_package_ids (transaction);
 		if (g_strv_length (package_ids) == 0)
-			pk_backend_finished (plugin->backend);
+			pk_backend_set_exit_code (plugin->backend, PK_EXIT_ENUM_SKIP_TRANSACTION);
 		goto out;
 	}
 

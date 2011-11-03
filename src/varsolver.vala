@@ -72,7 +72,7 @@ private class VarSolver : Object {
 
 		swName = softwareIdName;
 		if (swName == "")
-			warning ("Using VarSolver without valid application- or dependency ID!");
+			warning ("Using VarSolver without valid application-id or resource-id!");
 
 		// Build map of Listaller path variables
 		pathMap = new HashMap<string, Variable> ();

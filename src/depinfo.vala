@@ -37,7 +37,8 @@ public enum ComponentType {
 
 namespace Listaller.IPK {
 
-public class Dependency : Object {
+/* A shared resource */
+public class Dependency: Object {
 	private string _full_name;
 	public string full_name {
 		get {
