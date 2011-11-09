@@ -34,7 +34,23 @@ struct PkPluginPrivate {
 void
 pk_listaller_reset (PkPlugin *plugin)
 {
-	/* Reset something... (this function might be redundant now :P) */
+	/* reset the native backend */
+	pk_backend_reset (plugin->backend);
+}
+
+/**
+ * pk_listaller_native_backend_skip:
+ */
+static void
+pk_listaller_native_backend_skip (PkPlugin *plugin)
+{
+	PkExitEnum exit;
+	exit = pk_backend_get_exit_code (plugin->backend);
+
+	/* only skip transaction if we don't have an error already */
+	if (!pk_backend_get_is_error_set (plugin->backend)) {
+		pk_backend_set_exit_code (plugin->backend, PK_EXIT_ENUM_SKIP_TRANSACTION);
+	}
 }
 
 /**
@@ -261,6 +277,10 @@ static void listaller_error_code_cb (GObject *sender, ListallerErrorItem *error,
 {
 	g_return_if_fail (error != NULL);
 
+	/* don't try to set errors twice */
+	if (pk_backend_get_is_error_set (plugin->backend))
+		return;
+
 	/* emit */
 	pk_backend_error_code (plugin->backend, PK_ERROR_ENUM_INTERNAL_ERROR,
 				listaller_error_item_get_details (error));
@@ -345,6 +365,8 @@ pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 	g_signal_connect (setup, "progress-changed",
 			  G_CALLBACK (listaller_progress_change_cb), plugin);
 
+	pk_listaller_reset (plugin);
+
 	/* now intialize the new setup */
 	ret = listaller_setup_initialize (setup);
 	if (!ret)
@@ -359,7 +381,7 @@ pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 	package_id = pk_listaller_pkid_from_appitem (app);
 	if (package_id == NULL) {
 		g_debug ("listaller: <error> Unable to build package-id from app-id!");
-	} else {
+	} else if (!pk_backend_get_is_error_set (plugin->backend)) {
 		/* emit */
 		pk_backend_package (plugin->backend, PK_INFO_ENUM_INSTALLED,
 					package_id,
@@ -577,7 +599,7 @@ out:
  * pk_plugin_started:
  */
 void
-pk_plugin_transaction_run (PkPlugin *plugin,
+pk_plugin_transaction_started (PkPlugin *plugin,
 			       PkTransaction *transaction)
 {
 	PkRoleEnum role;
@@ -612,7 +634,7 @@ pk_plugin_transaction_run (PkPlugin *plugin,
 		/* nothing more to process */
 		package_ids = pk_transaction_get_package_ids (transaction);
 		if (g_strv_length (package_ids) == 0)
-			pk_backend_set_exit_code (plugin->backend, PK_EXIT_ENUM_SKIP_TRANSACTION);
+			pk_listaller_native_backend_skip (plugin);
 		goto out;
 	}
 
@@ -627,7 +649,7 @@ pk_plugin_transaction_run (PkPlugin *plugin,
 		/* nothing more to process */
 		package_ids = pk_transaction_get_package_ids (transaction);
 		if (g_strv_length (package_ids) == 0)
-			pk_backend_set_exit_code (plugin->backend, PK_EXIT_ENUM_SKIP_TRANSACTION);
+			pk_listaller_native_backend_skip (plugin);
 		goto out;
 	}
 
@@ -639,7 +661,7 @@ pk_plugin_transaction_run (PkPlugin *plugin,
 		/* We have Listaller packages, so skip this! */
 		/* FIXME: This needs to be smarter - backend needs to Simulate() with remaining pkgs */
 		if (data != NULL)
-			pk_backend_set_exit_code (plugin->backend, PK_EXIT_ENUM_SKIP_TRANSACTION);
+			pk_listaller_native_backend_skip (plugin);
 		goto out;
 	}
 
@@ -648,13 +670,14 @@ pk_plugin_transaction_run (PkPlugin *plugin,
 		data = pk_listaller_filter_listaller_files (transaction,
 							    full_paths);
 
-		if (data != NULL)
+		if (data != NULL) {
 			pk_listaller_install_files (plugin, data);
+		}
 
 		/* nothing more to process */
 		full_paths = pk_transaction_get_full_paths (transaction);
 		if (g_strv_length (full_paths) == 0)
-			pk_backend_set_exit_code (plugin->backend, PK_EXIT_ENUM_SKIP_TRANSACTION);
+			pk_listaller_native_backend_skip (plugin);
 		goto out;
 	}
 	if (role == PK_ROLE_ENUM_REMOVE_PACKAGES) {
@@ -668,7 +691,7 @@ pk_plugin_transaction_run (PkPlugin *plugin,
 		/* nothing more to process */
 		package_ids = pk_transaction_get_package_ids (transaction);
 		if (g_strv_length (package_ids) == 0)
-			pk_backend_set_exit_code (plugin->backend, PK_EXIT_ENUM_SKIP_TRANSACTION);
+			pk_listaller_native_backend_skip (plugin);
 		goto out;
 	}
 
