@@ -89,12 +89,37 @@ private class DepManager : Object {
 		if ((force_feedinstall) && (dep.feed_url == ""))
 			return false;
 
-		bool ret = false;
+		bool ret = true;
 		ErrorItem? error = null;
 
 		// Finish if the dependency is already satisfied
 		if (dep.satisfied)
 			return true;
+
+		/* Search files using "find_library" before calling PackageKit to do this
+		 * (this is a huge speed improvement)
+		 * This only works for library dependencies!
+		 */
+		foreach (string cmp in dep.raw_complist) {
+			if (dep.component_get_type (cmp) == Deps.ComponentType.SHARED_LIB) {
+				string s = dep.component_get_name (cmp);
+				if (s.has_suffix (".*"))
+					s = s.replace (".*", "");
+				ret = find_library (s, conf);
+				if (!ret)
+					break;
+			}
+		}
+
+		if (ret) {
+			dep.meta_info.clear ();
+			foreach (string s in dep.raw_complist)
+				if (dep.component_get_type (s) == Deps.ComponentType.SHARED_LIB)
+					dep.meta_info.add (s);
+			dep.satisfied = true;
+			return true;
+		}
+
 
 		/* Now try the PackageKit dependency provider, if feedinstall is not forced
 		 * and the previous package dependency searching was successful */

@@ -178,7 +178,7 @@ private class Package : Object {
 			rollback_installation ();
 			// Throw error and exit
 			emit_error (ErrorEnum.FILE_EXISTS,
-				_("Could not override file %s, this file already exists!").printf (fname));
+				_("Could not override file %s! Maybe the software database is damaged or this package is broken!").printf (fname));
 			return false;
 		}
 
@@ -608,9 +608,10 @@ private class Package : Object {
 		}
 
 		// Set variables in external files
-		foreach (IPK.FileEntry f in get_file_entries ()) {
-			vset.execute (f.fname_installed);
-		}
+		if (ret)
+			foreach (IPK.FileEntry f in get_file_entries ()) {
+				vset.execute (f.fname_installed);
+			}
 
 		plar.close ();
 

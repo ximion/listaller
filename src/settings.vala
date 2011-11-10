@@ -282,7 +282,7 @@ public class Settings : Object {
 	}
 }
 
-private bool find_library (string libname, Settings conf) {
+private bool find_library (string libname, Listaller.Settings conf) {
 	Posix.Stat? s = null;
 	string[] paths = conf.library_paths ();
 	for (uint i = 0; paths[i] != null; i++) {
