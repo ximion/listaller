@@ -262,12 +262,12 @@ private class SoftwareDB : Object {
 		AppItem? resApp;
 		try  {
 			if (app.shared) {
-				if (shared_db_canbeused (true))
+				if (shared_db_canbeused ())
 					resApp = db_shared.get_application_by_idname (app.idname);
 				else
 					return null;
 			} else {
-				if (private_db_canbeused (true))
+				if (private_db_canbeused ())
 					resApp = db_priv.get_application_by_idname (app.idname);
 				else
 					return null;

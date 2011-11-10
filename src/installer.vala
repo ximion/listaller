@@ -139,6 +139,9 @@ public class Setup : Object {
 		app.origin = AppOrigin.IPK;
 		app.dependencies = "?";
 		app.fast_check ();
+		// This is required to only check the shared db for this application
+		if (is_root ())
+			app.shared = true;
 
 		// We start now!
 		emit_status (StatusEnum.ACTION_STARTED,
