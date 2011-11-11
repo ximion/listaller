@@ -59,7 +59,7 @@ find_package(GI REQUIRED)
 find_library(M_LIB m)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
-pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2-0.7.2)
+pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2-0.7.1)
 #find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
 
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
