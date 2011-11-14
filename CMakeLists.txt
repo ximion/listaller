@@ -142,7 +142,7 @@ add_definitions("-D_FILE_OFFSET_BITS=64")
 find_package(PkgConfig REQUIRED)
 find_package(Vala REQUIRED)
 include(${VALA_USE_FILE})
-ensure_vala_version("0.12" MINIMUM)
+ensure_vala_version("0.14" MINIMUM)
 
 add_subdirectory(src)
 add_subdirectory(tools)
