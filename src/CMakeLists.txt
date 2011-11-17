@@ -65,7 +65,6 @@ pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.7.1)
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	zfeed.vala
 	depmanager.vala
-	depsolver.vala
 	pkbackend-glue.vala
 	pkit-resolver.vala
 	pkit-installer.vala

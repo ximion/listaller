@@ -18,7 +18,6 @@ pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
 set(LIUNITTEST_SOURCES ${LISTALLER_BASE_SOURCES}
 			${lisrc}/zfeed.vala
 			${lisrc}/depmanager.vala
-			${lisrc}/depsolver.vala
 			${lisrc}/pkit-resolver.vala
 			${lisrc}/pkit-installer.vala
 			${lisrc}/feed-installer.vala
@@ -97,14 +96,14 @@ add_test(ipkbuild-test li-test-ipkbuild ${CMAKE_CURRENT_SOURCE_DIR}
 endif(TOOLS)
 
 # Dependency solver tests
-vala_add_executable (li-test-depsolver ${LIUNITTEST_SOURCES} tests-depsolver.vala
+vala_add_executable (li-test-depmanager ${LIUNITTEST_SOURCES} tests-depmanager.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
 )
-if(TEST_DEPSOLVER)
-	add_test(depsolver-test li-test-depsolver ${CMAKE_CURRENT_SOURCE_DIR})
-endif(TEST_DEPSOLVER)
+if(TEST_DEPMANAGER)
+	add_test(depmanager-test li-test-depmanager ${CMAKE_CURRENT_SOURCE_DIR})
+endif(TEST_DEPMANAGER)
 
 # Tests of package security (GPG signing etc.)
 vala_add_executable (li-test-security ${LIUNITTEST_SOURCES} ../tools/libuild/lbutils.vala

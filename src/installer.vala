@@ -184,18 +184,8 @@ public class Setup : Object {
 			change_progress (-1, p);
 		});
 
-		// Create new DepSolver, connect it to current dependency manager and pass the package dependencies to it
-		Deps.Solver dsolver = new Deps.Solver (depman, pkgDeps, true);
-
-		// Run the solver!
-		ret = dsolver.execute ();
-		if (!ret) {
-			// If we were not able to solve everything, stop installation (error code has already been emitted)
-			return false;
-		}
-
-		// Now, after the solving we can install possibly missing dependencies
-		ret = depman.install_dependencies (dsolver.get_exact_direct_dependencies ());
+		// Install possibly missing dependencies
+		ret = depman.install_dependencies (pkgDeps);
 		if (!ret) {
 			// If dependency installation failed, exit
 			return false;

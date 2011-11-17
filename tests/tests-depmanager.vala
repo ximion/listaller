@@ -1,4 +1,4 @@
-/* tests-depsolver.vala
+/* tests-depmanager.vala
  *
  * Copyright (C) 2011  Matthias Klumpp
  *
@@ -168,9 +168,8 @@ void test_depsolver () {
 	Deps.DepManager depman = new Deps.DepManager (sdb);
 	depman.error_code.connect (test_solver_error_code_cb);
 	depman.message.connect (test_solver_message_cb);
-	Deps.Solver slv = new Deps.Solver (depman, deplist, true);
 
-	ret = slv.execute ();
+	ret = depman.dependencies_installable (deplist);
 	assert (ret == true);
 }
 

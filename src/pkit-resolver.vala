@@ -75,6 +75,7 @@ private class PkResolver : Object {
 		// TODO: Resolve other dependencies too
 		string[] libs = {};
 		foreach (string s in dep.raw_complist) {
+			debug (s);
 			if (dep.component_get_type (s) == Deps.ComponentType.SHARED_LIB)
 				libs += dep.component_get_name (s);
 		}
@@ -122,8 +123,10 @@ private class PkResolver : Object {
 		reset ();
 
 		// If there are no files, consider this dependency as "installed"
-		if (dep.has_components ()) {
+		// This is usually an ERROR and might indicate a broken package
+		if (!dep.has_components ()) {
 			li_warning ("Dependency %s has no components assigned!".printf (dep.full_name));
+			dep.satisfied = true;
 			return true;
 		}
 
