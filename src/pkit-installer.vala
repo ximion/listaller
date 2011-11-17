@@ -95,20 +95,16 @@ private class PkInstaller : Object {
 		if (dep.satisfied)
 			return true;
 
-		/* Exit if we have no meta-info: No package can be installed, dependency is not satisfied.
+		/* Exit if we have no install-data: No package can be installed, dependency is not satisfied.
 		 * (we might do a feed-install instead */
-		if (dep.meta_info.size == 0)
+		if (!dep.has_installdata ())
 			return false;
 
-		/* This should never happen - if PK did not find a dependency, pkit_pkgs_from_depfiles ()
-		 * returns null already */
-		if (dep.meta_info.size <= 0)
-			return false;
 
 		string[] pkgs = {};
 		/* Now install every not-yet-installed package. The asterisk (*pkg) indicates
 		 * that this package needs to be installed */
-		foreach (string pkg in dep.meta_info) {
+		foreach (string pkg in dep.get_installdata ()) {
 			if (pkg.has_prefix ("*pkg:")) {
 				pkgs += pkg.substring (4);
 			}

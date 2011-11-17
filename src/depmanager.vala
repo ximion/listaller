@@ -117,12 +117,12 @@ private class DepManager : Object {
 			}
 		}
 
-		// If all libraries were found, add them to meta_info and exit
+		// If all libraries were found, add them to installdata and exit
 		if (ret) {
-			dep.meta_info.clear ();
+			dep.clear_installdata ();
 			foreach (string s in dep.raw_complist)
 				if (dep.component_get_type (s) == Deps.ComponentType.SHARED_LIB)
-					dep.meta_info.add (s);
+					dep.add_install_comp (s);
 			dep.satisfied = true;
 			return true;
 		}
@@ -170,7 +170,7 @@ private class DepManager : Object {
 		ErrorItem? error = null;
 		/* Now try the PackageKit dependency provider, if feedinstall is not forced
 		 * and the previous package dependency searching was successful */
-		if ((!force_feedinstall) && (dep.meta_info.size > 0)) {
+		if ((!force_feedinstall) && (dep.has_installdata ())) {
 			ret = pkinst.install_dependency (ref dep);
 			if (!ret)
 				error = pkinst.last_error;

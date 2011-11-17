@@ -278,6 +278,9 @@ private class FeedInstaller : Object {
 		// Exit if there was an error
 		if (!ret)
 			return false;
+
+		// Yes! Feed installation completed, we can set this as satisfied!
+		dep.add_install_comp ("feed:%s".printf (dep.feed_url));
 		dep.satisfied = true;
 
 		return ret;

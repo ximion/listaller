@@ -117,7 +117,7 @@ private class PkResolver : Object {
 		pkit = new PackageKit.Client ();
 	}
 
-	/* This method searches for dependency packages & stores them in dep.meta_info */
+	/* This method searches for dependency packages & stores them in dep.install_data */
 	public bool search_dep_packages (ref IPK.Dependency dep) {
 		bool ret = true;
 		reset ();
@@ -151,18 +151,18 @@ private class PkResolver : Object {
 			}
 
 			if (pkg.get_info () == PackageKit.Info.INSTALLED)
-				dep.meta_info.add ("pkg:" + pkg.get_id ());
+				dep.add_install_comp ("pkg:" + pkg.get_id ());
 			else
-				dep.meta_info.add ("*pkg:" + pkg.get_id ());
+				dep.add_install_comp ("*pkg:" + pkg.get_id ());
 		}
 		if (!ret) {
-			dep.meta_info.clear ();
+			dep.clear_installdata ();
 			return false;
 		}
 		/* Check if there are native packages which need to be installed.
 		 * If not, the dependency is already satified. */
 		dep.satisfied = true;
-		foreach (string pkg in dep.meta_info) {
+		foreach (string pkg in dep.get_installdata ()) {
 			if (pkg.has_prefix ("*pkg:")) {
 				dep.satisfied = false;
 				break;

@@ -58,9 +58,20 @@ public class Dependency: Object {
 	public string author { get; set; }
 	public string version { get; set; }
 
-	public bool satisfied { get; set; }
+	private bool _satisfied;
+	public bool satisfied {
+		get {
+			return _satisfied;
+		}
+		set {
+			if ((idname != "") && (!is_standardlib) && (!has_installdata ())) {
+				warning ("Trying to set dependency %s to 'satisfied', although it is not a standardlib and it does not have installdata!", idname);
+			}
+			_satisfied = value;
+		}
+	}
 	public string architecture { get; set; } // e.g. linux-amd64
-	public HashSet<string> meta_info { get; set; }
+	private HashSet<string> install_data { get; set; } // The stuff stored as "real" dependency in software DB
 	public bool is_standardlib { get; set; } // Whether this dependency is always satisfied (by default)
 
 	public string feed_url { get; set; }
@@ -91,11 +102,12 @@ public class Dependency: Object {
 	}
 
 	internal Dependency.blank () {
-		satisfied = false;
+		components = new HashSet<string> ();
+		install_data = new HashSet<string> ();
+
+		_satisfied = false;
 		is_standardlib = false;
 
-		components = new HashSet<string> ();
-		meta_info = new HashSet<string> ();
 		feed_url = "";
 		version = "0";
 		idname = "";
@@ -113,6 +125,37 @@ public class Dependency: Object {
 		else
 			full_name = depFullName;
 		version = depVersion;
+	}
+
+	internal bool add_install_comp (string sinstcomp) {
+		if (sinstcomp.index_of (":") <= 0)
+			warning ("Invalid install data set! This should never happen! (Data was %s)", sinstcomp);
+		return install_data.add (sinstcomp);
+	}
+
+	internal void clear_installdata () {
+		install_data.clear ();
+	}
+
+	internal void set_installdata_from_string (string str) {
+		debug ("::TODO");
+	}
+
+	public HashSet<string> get_installdata () {
+		return install_data;
+	}
+
+	public string get_installdata_as_string () {
+		string res = "";
+		foreach (string s in install_data)
+			res += s + "\n";
+		return res;
+	}
+
+	public bool has_installdata () {
+		if (install_data == null)
+			return false;
+		return install_data.size > 0;
 	}
 
 	public void regenerate_depid () {

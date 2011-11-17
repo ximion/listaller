@@ -50,6 +50,7 @@ private const string DATABASE = ""
 		+ "homepage TEXT, "
 		+ "author TEXT, "
 		+ "install_time INTEGER, "
+		+ "components TEXT NOT NULL,"
 		+ "environment TEXT"
 		+ ");" +
 		"";
@@ -57,7 +58,7 @@ private const string DATABASE = ""
 private const string appcols = "id, name, version, full_name, desktop_file, author, publisher, categories, " +
 			"description, install_time, origin, dependencies";
 private const string depcols = "id, name, full_name, version, description, homepage, author, " +
-			"install_time, environment";
+			"install_time, components, environment";
 
 private enum AppRow {
 	DBID = 0,
@@ -690,7 +691,7 @@ private class InternalDB : Object {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 (
 			"INSERT INTO dependencies (name, full_name, version, description, homepage, author, " +
-			"install_time, environment) "
+			"install_time, components, environment) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 				   -1, out stmt);
 
@@ -699,7 +700,7 @@ private class InternalDB : Object {
 		dep.install_time = dt.to_unix ();
 
 		try {
-			db_assert (res, "add application");
+			db_assert (res, "add dependency");
 
 			// Assign values
 			db_assert (stmt.bind_text (1, dep.idname), "bind value");
@@ -716,7 +717,9 @@ private class InternalDB : Object {
 
 			db_assert (stmt.bind_int64 (7, dep.install_time), "bind value");
 
-			db_assert (stmt.bind_text (8, dep.environment), "bind value");
+			db_assert (stmt.bind_text (8, dep.get_installdata_as_string ()), "bind value");
+
+			db_assert (stmt.bind_text (9, dep.environment), "bind value");
 
 			db_assert (stmt.step (), "add dependency");
 		} catch (Error e) {
@@ -746,7 +749,8 @@ private class InternalDB : Object {
 		dep.homepage = stmt.column_text (5);
 		dep.author = stmt.column_text (6);
 		dep.install_time = stmt.column_int (7);
-		dep.environment = stmt.column_text (8);
+		dep.set_installdata_from_string (stmt.column_text (8));
+		dep.environment = stmt.column_text (9);
 		// It's in the db, so this dependency is certainly satisfied
 		dep.satisfied = true;
 
