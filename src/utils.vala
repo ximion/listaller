@@ -260,6 +260,18 @@ private ArrayList<string>? strv_to_array_list ([CCode (array_length = false, arr
 	return list;
 }
 
+private string strv_to_string ([CCode (array_length = false, array_null_terminated = true)] string[]? strv) {
+	if (strv == null)
+		return "";
+
+	string res = "";
+	for (uint i = 0; strv[i] != null; i++) {
+		res += strv[i] + "\n";
+	}
+
+	return res;
+}
+
 private bool move_file (string source, string destination) throws Error {
 	try {
 		var file = File.new_for_path (source);

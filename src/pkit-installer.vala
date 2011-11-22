@@ -106,7 +106,7 @@ private class PkInstaller : Object {
 		 * that this package needs to be installed */
 		foreach (string pkg in dep.get_installdata ()) {
 			if (pkg.has_prefix ("*pkg:")) {
-				pkgs += pkg.substring (4);
+				pkgs += pkg.substring (5);
 			}
 		}
 		// null-terminate the array
@@ -120,7 +120,7 @@ private class PkInstaller : Object {
 		}
 
 		// Now do the installing
-		emit_info (_("Installing native packages %s").printf (pkgs));
+		emit_info (_("Installing native packages: %s").printf (strv_to_string (pkgs)));
 		ret = pkit_install_packages (pkgs);
 		if (ret)
 			dep.satisfied = true;
