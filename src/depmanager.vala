@@ -188,9 +188,6 @@ private class DepManager : Object {
 			return false;
 		}
 
-		if (ret)
-			db.add_dependency (dep);
-
 		return ret;
 	}
 
@@ -221,6 +218,10 @@ private class DepManager : Object {
 		}
 
 		bool ret = install_dependency_internal (pkinst, finst, ref dep, force_feedinstall);
+
+		if ((ret) && (dep.satisfied))
+			db.add_dependency (dep);
+
 		return ret;
 	}
 
@@ -252,6 +253,9 @@ private class DepManager : Object {
 				continue;
 
 			ret = install_dependency_internal (pkinst, finst, ref dep, force_feedinstall);
+			if ((ret) && (dep.satisfied))
+				db.add_dependency (dep);
+
 			if (!ret)
 				break;
 		}

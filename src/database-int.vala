@@ -668,7 +668,7 @@ private class InternalDB : Object {
 
 		string depstr = "";
 		foreach (IPK.Dependency d in deps)
-			depstr = d.idname + "\n";
+			depstr += d.idname + "\n";
 
 		try {
 			db_assert (res, "update application deps (by name)");

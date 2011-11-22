@@ -212,15 +212,19 @@ public class Setup : Object {
 			     _("Making '%s' known to your system.").printf (app.full_name));
 
 		app.description = control.get_app_description ();
+
 		// Now register the item
 		ret = db.add_application (app);
 		if (!ret) {
 			return false;
 		}
+
+		// Link the dependency idNames to this application
 		ret = db.set_application_dependencies (app.idname, pkgDeps);
 		if (!ret) {
 			return false;
 		}
+
 		ret = db.add_application_filelist (app, ipkp.get_file_entries ());
 		conf.unlock ();
 
