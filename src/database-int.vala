@@ -692,7 +692,7 @@ private class InternalDB : Object {
 		int res = db.prepare_v2 (
 			"INSERT INTO dependencies (name, full_name, version, description, homepage, author, " +
 			"install_time, components, environment) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				   -1, out stmt);
 
 		// Set install timestamp

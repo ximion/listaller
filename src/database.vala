@@ -298,17 +298,17 @@ private class SoftwareDB : Object {
 	public bool remove_application (AppItem app) {
 		bool ret;
 		try {
-		if (app.shared) {
-			if (shared_db_canbeused (true))
-				ret = db_shared.remove_application (app);
-			else
-				return false;
-		} else {
-			if (private_db_canbeused (true))
-				ret = db_priv.remove_application (app);
-			else
-				return false;
-		}
+			if (app.shared) {
+				if (shared_db_canbeused (true))
+					ret = db_shared.remove_application (app);
+				else
+					return false;
+			} else {
+				if (private_db_canbeused (true))
+					ret = db_priv.remove_application (app);
+				else
+					return false;
+			}
 		} catch (Error e) {
 			emit_dberror (_("Unable to remove application from database: %s").printf (e.message));
 			ret = false;
@@ -381,17 +381,24 @@ private class SoftwareDB : Object {
 	/* Dependency stuff */
 
 	public bool add_dependency (IPK.Dependency dep) {
-		if (is_root ()) {
-			if (shared_db_canbeused (true))
-				return db_shared.add_dependency (dep);
-			else
-				return false;
-		} else {
-			if (private_db_canbeused (true))
-				return db_priv.add_dependency (dep);
-			else
-				return false;
+		bool ret = false;
+		try {
+			if (is_root ()) {
+				if (shared_db_canbeused (true))
+					ret = db_shared.add_dependency (dep);
+				else
+					return false;
+			} else {
+				if (private_db_canbeused (true))
+					ret = db_priv.add_dependency (dep);
+				else
+					return false;
+			}
+		} catch (Error e) {
+			emit_dberror (_("Unable to add a dependency to database: %s").printf (e.message));
+			return false;
 		}
+		return ret;
 	}
 
 	public IPK.Dependency? get_dependency_by_id (string depIdName) {
