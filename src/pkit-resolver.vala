@@ -27,7 +27,8 @@ namespace Listaller.Deps {
 
 private class PkResolver : Object {
 	private Listaller.Settings conf;
-	private PackageKit.Client pkit;
+	private PackageKit.Client? pkclient;
+	private PkPlugin.Backend? pkbackend;
 
 	public signal void message (MessageItem message);
 	public signal void progress_changed (int progress);
@@ -35,9 +36,21 @@ private class PkResolver : Object {
 	public ErrorItem? last_error { get; set; }
 
 	public PkResolver (Listaller.Settings liconf) {
-		pkit = new PackageKit.Client ();
 		last_error = null;
 		conf = liconf;
+
+		pkbackend = null;
+		pkclient = null;
+		if (is_root ()) {
+			// Access to the native PackageKit backend
+			pkbackend = get_pk_backend ();
+			if (pkbackend == null) {
+				// We don't have a PK backend! This must not happen, if we run as root.
+				var msg = _("Could not obtain a PkBackend instance. Maybe the Listaller-PkPlugin is not installed or broken?");
+				set_error (ErrorEnum.UNKNOWN, msg);
+				critical (msg);
+			}
+		}
 	}
 
 	private void emit_warning (string msg) {
@@ -84,7 +97,7 @@ private class PkResolver : Object {
 		PackageKit.Results res;
 		PackageKit.PackageSack sack;
 		try {
-			res  = pkit.what_provides (filter, PackageKit.Provides.SHARED_LIB, libs, null, null);
+			res  = pkclient.what_provides (filter, PackageKit.Provides.SHARED_LIB, libs, null, null);
 			sack = res.get_package_sack ();
 		} catch (Error e) {
 			debug (e.message);
@@ -101,20 +114,13 @@ private class PkResolver : Object {
 		return sack;
 	}
 
-	private bool pkit_install_packages (string[] pkids) {
-		PackageKit.Results res = pkit.install_packages (true, pkids, null, pkit_progress_cb);
-
-		if (res.get_exit_code () == PackageKit.Exit.SUCCESS)
-			return true;
-
-		/*emit_warning (_("Installation of native package '%s' failed!").printf (pkg.get_id ()) + "\n" +
-				_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())));*/
-		return false;
-	}
-
-	public void reset () {
+	private void reset () {
 		last_error = null;
-		pkit = new PackageKit.Client ();
+		if (pkbackend == null)
+			pkclient = new PackageKit.Client ();
+		else
+			debug ("::TODO");
+			//debug ("Using PK native backend: %s", pkbackend.get_author ());
 	}
 
 	/* This method searches for dependency packages & stores them in dep.install_data */

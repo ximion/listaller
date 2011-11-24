@@ -621,6 +621,9 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 		goto out;
 	}
 
+	/* register the plugin with Listaller */
+	listaller_set_pkit_backend (plugin->backend);
+
 	//TODO: PK_ROLE_ENUM_GET_PACKAGES
 	//TODO: PK_ROLE_ENUM_RESOLVE
 

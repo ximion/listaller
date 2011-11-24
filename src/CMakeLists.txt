@@ -57,9 +57,10 @@ find_package(LibXml2 REQUIRED)
 find_package(GPGme REQUIRED)
 find_package(GI REQUIRED)
 find_library(M_LIB m)
-pkg_check_modules(GEE REQUIRED gee-1.0)
-pkg_check_modules(GIO2 REQUIRED gio-2.0)
+pkg_check_modules(GEE REQUIRED gee>=1.0)
+pkg_check_modules(GIO2 REQUIRED gio>=2.0)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.7.1)
+pkg_check_modules(PACKAGEKIT_PLUGIN REQUIRED packagekit-plugin)
 #find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
 
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
@@ -104,6 +105,7 @@ target_link_libraries(listaller-glib
 		${LIBXML2_LIBRARIES}
 		${GPGME_VANILLA_LIBRARIES}
 		${PACKAGEKIT_LIBRARIES}
+		${PACKAGEKIT_PLUGIN_LIBRARIES}
 )
 
 include_directories(${CMAKE_BINARY_DIR}
@@ -116,6 +118,7 @@ include_directories(${CMAKE_BINARY_DIR}
 		${LIBXML2_INCLUDE_DIR}
 		${GPGME_INCLUDES}
 		${PACKAGEKIT_INCLUDE_DIRS}
+		${PACKAGEKIT_PLUGIN_INCLUDE_DIRS}
 )
 
 if(NOT LILIBS_FULL_VERSION)
