@@ -12,8 +12,8 @@ find_package(GI REQUIRED)
 find_library(M_LIB m)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
-pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2 packagekit-plugin)
-#find_gir(PKGIR "packagekit-glib2 packagekit-plugin" REQUIRED)
+pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
+#find_gir(PKGIR "packagekit-glib2" REQUIRED)
 
 set(LIUNITTEST_SOURCES ${LISTALLER_BASE_SOURCES}
 			${lisrc}/zfeed.vala

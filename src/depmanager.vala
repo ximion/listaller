@@ -217,10 +217,13 @@ private class DepManager : Object {
 			return true;
 		}
 
-		bool ret = install_dependency_internal (pkinst, finst, ref dep, force_feedinstall);
+		bool ret = true;
+		if (!dependency_is_installed (ref dep)) {
+			ret = install_dependency_internal (pkinst, finst, ref dep, force_feedinstall);
 
-		if ((ret) && (dep.satisfied))
-			db.add_dependency (dep);
+			if ((ret) && (dep.satisfied))
+				db.add_dependency (dep);
+		}
 
 		return ret;
 	}
@@ -252,9 +255,12 @@ private class DepManager : Object {
 			if (dep.is_standardlib)
 				continue;
 
-			ret = install_dependency_internal (pkinst, finst, ref dep, force_feedinstall);
-			if ((ret) && (dep.satisfied))
-				db.add_dependency (dep);
+			ret = true;
+			if (!dependency_is_installed (ref dep)) {
+				ret = install_dependency_internal (pkinst, finst, ref dep, force_feedinstall);
+				if ((ret) && (dep.satisfied))
+					db.add_dependency (dep);
+			}
 
 			if (!ret)
 				break;
