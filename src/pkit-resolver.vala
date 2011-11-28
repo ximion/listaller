@@ -96,13 +96,23 @@ private class PkResolver : Object {
 
 		PackageKit.Results res;
 		PackageKit.PackageSack sack;
-		try {
-			res  = pkclient.what_provides (filter, PackageKit.Provides.SHARED_LIB, libs, null, null);
-			sack = res.get_package_sack ();
-		} catch (Error e) {
-			debug (e.message);
-			return null;
+
+		if (pkbproxy == null) {
+			try {
+				res  = pkclient.what_provides (filter, PackageKit.Provides.SHARED_LIB, libs, null, null);
+			} catch (Error e) {
+				debug (e.message);
+				return null;
+			}
+		} else {
+			res = pkbproxy.run_what_provides (filter, PackageKit.Provides.SHARED_LIB, libs);
+			if (res == null)
+				return null;
 		}
+
+		sack = res.get_package_sack ();
+		if (sack == null)
+			return null;
 		string[] packages = sack.get_ids ();
 
 		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (packages[0] == null) ) {

@@ -35,10 +35,14 @@ internal class PkBackendProxy : Object {
 	public signal void packages ();
 
 	// Used by Listaller
-	public signal string resolve_requested (string[] pkgs);
+	public signal PackageKit.Results? request_whatprovides (uint filters, uint provides, [CCode (array_length = false, array_null_terminated = true)] string[] values);
 
 	internal PkBackendProxy () {
 
+	}
+
+	public PackageKit.Results? run_what_provides (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values) {
+		return request_whatprovides ((uint) filters, (uint) provides, values);
 	}
 
 }

@@ -419,70 +419,6 @@ pk_listaller_install_files (PkPlugin *plugin, gchar **filenames)
 }
 
 /**
- * pk_plugin_get_description:
- */
-const gchar *
-pk_plugin_get_description (void)
-{
-	// TODO: Think of a better description
-	return "Listaller support for PackageKit";
-}
-
-/**
- * pk_plugin_initialize:
- */
-void
-pk_plugin_initialize (PkPlugin *plugin)
-{
-	/* create private area */
-	plugin->priv = PK_TRANSACTION_PLUGIN_GET_PRIVATE (PkPluginPrivate);
-	plugin->priv->conf = listaller_settings_new (TRUE);
-	plugin->priv->mgr = listaller_manager_new (plugin->priv->conf);
-
-	/* tell PK we might be able to handle these */
-	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_DETAILS);
-	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_INSTALL_FILES);
-	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_SIMULATE_INSTALL_FILES);
-	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_REMOVE_PACKAGES);
-
-	g_signal_connect (plugin->priv->mgr, "error-code", (GCallback) listaller_error_code_cb, plugin);
-	g_signal_connect (plugin->priv->mgr, "message", (GCallback) listaller_message_cb, plugin);
-	g_signal_connect (plugin->priv->mgr, "status-changed", (GCallback) listaller_status_change_cb, plugin);
-	g_signal_connect (plugin->priv->mgr, "progress-changed", (GCallback) listaller_progress_change_cb, plugin);
-	g_signal_connect (plugin->priv->mgr, "application", (GCallback) listaller_application_cb, plugin);
-
-	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
-	plugin->priv->pkbproxy = listaller_pk_backend_proxy_new ();
-
-	//TODO: Connect the proxy object
-
-	listaller_set_backend_proxy (plugin->priv->pkbproxy);
-}
-
-/**
- * pk_plugin_destroy:
- */
-void
-pk_plugin_destroy (PkPlugin *plugin)
-{
-	listaller_set_backend_proxy (NULL);
-	g_object_unref (plugin->priv->pkbproxy);
-	g_object_unref (plugin->priv->conf);
-	g_object_unref (plugin->priv->mgr);
-}
-
-/**
- * pk_plugin_transaction_content_types:
- */
-void
-pk_plugin_transaction_content_types (PkPlugin *plugin,
-				     PkTransaction *transaction)
-{
-	pk_transaction_add_supported_content_type (transaction,
-						   "application/x-installation");
-}
-
-/**
  * pk_listaller_is_package:
  */
 static gboolean
@@ -725,4 +661,76 @@ pk_plugin_transaction_finished_end (PkPlugin *plugin,
 	    role == PK_ROLE_ENUM_REFRESH_CACHE) {
 		pk_listaller_scan_applications (plugin);
 	}
+}
+
+/**
+ * pk_plugin_get_description:
+ */
+const gchar *
+pk_plugin_get_description (void)
+{
+	// TODO: Think of a better description
+	return "Listaller support for PackageKit";
+}
+
+PkResults *
+pkbackend_request_whatprovides (PkBitfield filters, PkProvidesEnum provides, gchar** search, PkPlugin *plugin)
+{
+	/* query the native backend for a package provinding X */
+	pk_backend_what_provides (plugin->backend, filters, provides, search);
+	return NULL;
+}
+
+/**
+ * pk_plugin_initialize:
+ */
+void
+pk_plugin_initialize (PkPlugin *plugin)
+{
+	/* create private area */
+	plugin->priv = PK_TRANSACTION_PLUGIN_GET_PRIVATE (PkPluginPrivate);
+	plugin->priv->conf = listaller_settings_new (TRUE);
+	plugin->priv->mgr = listaller_manager_new (plugin->priv->conf);
+
+	/* tell PK we might be able to handle these */
+	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_DETAILS);
+	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_INSTALL_FILES);
+	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_SIMULATE_INSTALL_FILES);
+	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_REMOVE_PACKAGES);
+
+	g_signal_connect (plugin->priv->mgr, "error-code", (GCallback) listaller_error_code_cb, plugin);
+	g_signal_connect (plugin->priv->mgr, "message", (GCallback) listaller_message_cb, plugin);
+	g_signal_connect (plugin->priv->mgr, "status-changed", (GCallback) listaller_status_change_cb, plugin);
+	g_signal_connect (plugin->priv->mgr, "progress-changed", (GCallback) listaller_progress_change_cb, plugin);
+	g_signal_connect (plugin->priv->mgr, "application", (GCallback) listaller_application_cb, plugin);
+
+	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
+	plugin->priv->pkbproxy = listaller_pk_backend_proxy_new ();
+
+	g_signal_connect (plugin->priv->pkbproxy, "request-whatprovides", (GCallback) pkbackend_request_whatprovides, plugin);
+
+	listaller_set_backend_proxy (plugin->priv->pkbproxy);
+}
+
+/**
+ * pk_plugin_destroy:
+ */
+void
+pk_plugin_destroy (PkPlugin *plugin)
+{
+	listaller_set_backend_proxy (NULL);
+	g_object_unref (plugin->priv->pkbproxy);
+	g_object_unref (plugin->priv->conf);
+	g_object_unref (plugin->priv->mgr);
+}
+
+/**
+ * pk_plugin_transaction_content_types:
+ */
+void
+pk_plugin_transaction_content_types (PkPlugin *plugin,
+				     PkTransaction *transaction)
+{
+	pk_transaction_add_supported_content_type (transaction,
+						   "application/x-installation");
 }
