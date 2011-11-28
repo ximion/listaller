@@ -28,7 +28,7 @@ namespace Listaller.Deps {
 private class PkResolver : Object {
 	private Listaller.Settings conf;
 	private PackageKit.Client? pkclient;
-	private PkPlugin.Backend? pkbackend;
+	private PkBackendProxy? pkbproxy;
 
 	public signal void message (MessageItem message);
 	public signal void progress_changed (int progress);
@@ -39,14 +39,14 @@ private class PkResolver : Object {
 		last_error = null;
 		conf = liconf;
 
-		pkbackend = null;
+		pkbproxy = null;
 		pkclient = null;
 		if (is_root ()) {
 			// Access to the native PackageKit backend
-			pkbackend = get_pk_backend ();
-			if (pkbackend == null) {
+			pkbproxy = get_pk_backend ();
+			if (pkbproxy == null) {
 				// We don't have a PK backend! This must not happen, if we run as root.
-				var msg = _("Could not obtain a PkBackend instance. Maybe the Listaller-PkPlugin is not installed or broken?");
+				var msg = _("Could not obtain a PkBackendProxy instance. Maybe the Listaller-PkPlugin is not installed or broken?");
 				set_error (ErrorEnum.UNKNOWN, msg);
 				critical (msg);
 			}
@@ -116,7 +116,7 @@ private class PkResolver : Object {
 
 	private void reset () {
 		last_error = null;
-		if (pkbackend == null)
+		if (pkbproxy == null)
 			pkclient = new PackageKit.Client ();
 		else
 			debug ("::TODO");

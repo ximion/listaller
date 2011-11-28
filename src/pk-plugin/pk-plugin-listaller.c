@@ -26,6 +26,7 @@
 struct PkPluginPrivate {
 	ListallerManager	*mgr;
 	ListallerSettings	*conf;
+	ListallerPkBackendProxy *pkbproxy;
 };
 
 /**
@@ -449,6 +450,13 @@ pk_plugin_initialize (PkPlugin *plugin)
 	g_signal_connect (plugin->priv->mgr, "status-changed", (GCallback) listaller_status_change_cb, plugin);
 	g_signal_connect (plugin->priv->mgr, "progress-changed", (GCallback) listaller_progress_change_cb, plugin);
 	g_signal_connect (plugin->priv->mgr, "application", (GCallback) listaller_application_cb, plugin);
+
+	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
+	plugin->priv->pkbproxy = listaller_pk_backend_proxy_new ();
+
+	//TODO: Connect the proxy object
+
+	listaller_set_backend_proxy (plugin->priv->pkbproxy);
 }
 
 /**
@@ -457,6 +465,8 @@ pk_plugin_initialize (PkPlugin *plugin)
 void
 pk_plugin_destroy (PkPlugin *plugin)
 {
+	listaller_set_backend_proxy (NULL);
+	g_object_unref (plugin->priv->pkbproxy);
 	g_object_unref (plugin->priv->conf);
 	g_object_unref (plugin->priv->mgr);
 }
@@ -620,9 +630,6 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 		pk_listaller_find_applications (plugin, values);
 		goto out;
 	}
-
-	/* register the plugin with Listaller */
-	listaller_set_pkit_backend (plugin->backend);
 
 	//TODO: PK_ROLE_ENUM_GET_PACKAGES
 	//TODO: PK_ROLE_ENUM_RESOLVE

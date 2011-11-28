@@ -22,29 +22,40 @@ using GLib;
 
 namespace Listaller {
 
-/* This stuff is defined to be able to use the PackageKit PkBackend directly in Listaller.
- * It allows us to call the native backend instead of invoking a new PackageKit native transaction,
- * which can never work if there already is a PackageKit Listaller transaction. (it would come to
- * a deadlock then)
- * The PkBackend reference is set by Listaller's PK plugin.and should _only_ be set by it. It can only
- * be used if the user is root (because PK is a root-daemon, if PkBackend is set and we're a unprivileged
- * user, something is going wrong or someone did a foolish thing.
+/* This unit defines a class which acts as a proxy between the Listaller software manager
+ * and a PackageKit native backend, forwarding all signals to the backend.
+ * The proxy object is create by Listaller's PkPlugin, and should _only_ be set if Listaller
+ * is doing a shared installation. (as root)
  */
-private PkPlugin.Backend pkit_native_backend;
+private PkBackendProxy? pkit_backend_proxy;
 
-internal void set_pkit_backend (PkPlugin.Backend backend) {
+internal class PkBackendProxy : Object {
+	// Used by the PkPlugin
+	public signal void error_message ();
+	public signal void packages ();
+
+	// Used by Listaller
+	public signal string resolve_requested (string[] pkgs);
+
+	internal PkBackendProxy () {
+
+	}
+
+}
+
+internal void set_backend_proxy (PkBackendProxy? pkbproxy) {
 	if (!Utils.is_root ()) {
-		error ("Tried to set a PackageKit native backend, but application does not run as root (and therefore can not " +
+		error ("Tried to set a PackageKit native backend proxy, but application does not run as root (and therefore can not " +
 			"have been called from packagekitd) This should NEVER happen, maybe someone is using the API wrong.");
 		return;
 	}
-	pkit_native_backend = backend;
+	pkit_backend_proxy = pkbproxy;
 }
 
-private PkPlugin.Backend? get_pk_backend () {
+private PkBackendProxy? get_pk_backend () {
 	if (!Utils.is_root ())
 		return null;
-	return pkit_native_backend;
+	return pkit_backend_proxy;
 }
 
 } // End of LI namespace

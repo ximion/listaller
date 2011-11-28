@@ -79,7 +79,7 @@ list(APPEND VALA_INCLUDE_DIRS ${CMAKE_BINARY_DIR})
 vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 			BASE_DIR ${lisrc}
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
-			PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 packagekit-plugin
+			PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2
 			GENERATE_VAPI listaller-${LILIBS_VERSION}.vapi
 			GENERATE_HEADER listaller.h
 			GENERATE_INTERNAL_HEADER listaller_internal.h
