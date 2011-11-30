@@ -673,10 +673,16 @@ pk_plugin_get_description (void)
 	return "Listaller support for PackageKit";
 }
 
-PkResults *
-pkbackend_request_whatprovides (PkBitfield filters, PkProvidesEnum provides, gchar** search, PkPlugin *plugin)
+static PkResults *
+pkbackend_request_whatprovides (ListallerPkBackendProxy *sender, PkBitfield filters, PkProvidesEnum provides, gchar** search, PkPlugin *plugin)
 {
 	/* query the native backend for a package provinding X */
+	/* if (plugin == NULL)
+		g_debug ("<liplugin-dbg> PLUGIN was NULL!");
+	if (plugin->backend == NULL)
+		g_debug ("<liplugin-dbg> BACKEND was NULL!"); */
+
+	// TODO
 	pk_backend_what_provides (plugin->backend, filters, provides, search);
 	return NULL;
 }
@@ -707,7 +713,7 @@ pk_plugin_initialize (PkPlugin *plugin)
 	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
 	plugin->priv->pkbproxy = listaller_pk_backend_proxy_new ();
 
-	g_signal_connect (plugin->priv->pkbproxy, "request-whatprovides", (GCallback) pkbackend_request_whatprovides, plugin);
+	g_signal_connect_object (plugin->priv->pkbproxy, "request-whatprovides", (GCallback) pkbackend_request_whatprovides, plugin, 0);
 
 	listaller_set_backend_proxy (plugin->priv->pkbproxy);
 }
