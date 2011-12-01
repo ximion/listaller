@@ -106,8 +106,10 @@ private class PkResolver : Object {
 			}
 		} else {
 			res = pkbproxy.run_what_provides (filter, PackageKit.Provides.SHARED_LIB, libs);
-			if (res == null)
+			if (res == null) {
+				debug ("Native backend PkResults was NULL!");
 				return null;
+			}
 		}
 
 		sack = res.get_package_sack ();
@@ -128,9 +130,6 @@ private class PkResolver : Object {
 		last_error = null;
 		if (pkbproxy == null)
 			pkclient = new PackageKit.Client ();
-		else
-			debug ("::TODO");
-			//debug ("Using PK native backend: %s", pkbackend.get_author ());
 	}
 
 	/* This method searches for dependency packages & stores them in dep.install_data */

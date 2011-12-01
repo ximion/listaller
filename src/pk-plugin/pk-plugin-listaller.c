@@ -26,17 +26,22 @@
 struct PkPluginPrivate {
 	ListallerManager	*mgr;
 	ListallerSettings	*conf;
-	ListallerPkBackendProxy *pkbproxy;
+	PkResults		*backend_results;
+	GMainLoop		*loop;
 };
 
 /**
- * pk_listaller_reset:
+ * pk_listaller_plugin_reset:
  */
 void
-pk_listaller_reset (PkPlugin *plugin)
+pk_listaller_plugin_reset (PkPlugin *plugin)
 {
 	/* reset the native backend */
 	pk_backend_reset (plugin->backend);
+
+	/* recreate PkResults object */
+	g_object_unref (plugin->priv->backend_results);
+	plugin->priv->backend_results = pk_results_new ();
 }
 
 /**
@@ -237,7 +242,7 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 	guint i;
 
 	g_debug ("listaller: running get_details ()");
-	pk_listaller_reset (plugin);
+	pk_backend_reset (plugin->backend);
 
 	for (i=0; package_ids[i] != NULL; i++) {
 		app = pk_listaller_appitem_from_pkid (package_ids[i]);
@@ -312,7 +317,7 @@ static void listaller_message_cb (GObject *sender, ListallerMessageItem *message
 }
 
 
-static void listaller_progress_change_cb (GObject* sender, gint progress, gint subprogress, PkPlugin *plugin)
+static void listaller_progress_change_cb (GObject *sender, gint progress, gint subprogress, PkPlugin *plugin)
 {
 	/* emit */
 	pk_backend_set_percentage (plugin->backend, progress);
@@ -365,8 +370,6 @@ pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 			  G_CALLBACK (listaller_status_change_cb), plugin);
 	g_signal_connect (setup, "progress-changed",
 			  G_CALLBACK (listaller_progress_change_cb), plugin);
-
-	pk_listaller_reset (plugin);
 
 	/* now intialize the new setup */
 	ret = listaller_setup_initialize (setup);
@@ -542,7 +545,79 @@ out:
 }
 
 /**
+ * pk_plugin_package_cb:
+ **/
+static void
+pk_plugin_package_cb (PkBackend *backend,
+		      PkPackage *package,
+		      PkPlugin *plugin)
+{
+	pk_results_add_package (plugin->priv->backend_results, package);
+}
+
+/**
+ * pk_plugin_finished_cb:
+ **/
+static void
+pk_plugin_finished_cb (PkBackend *backend,
+		       PkExitEnum exit_enum,
+		       PkPlugin *plugin)
+{
+	if (!g_main_loop_is_running (plugin->priv->loop))
+		return;
+	if (exit_enum != PK_EXIT_ENUM_SUCCESS) {
+		g_warning ("%s failed with exit code: %s",
+			   pk_role_enum_to_string (pk_backend_get_role (backend)),
+			   pk_exit_enum_to_string (exit_enum));
+	}
+
+	/* save exit code */
+	pk_results_set_exit_code (plugin->priv->backend_results, exit_enum);
+
+	/* quit the loop */
+	g_main_loop_quit (plugin->priv->loop);
+}
+
+/**
+ * pkbackend_request_whatprovides:
+ *
+ * Helper method for a Listaller native PkBackend proxy to do a what-provides request.
+ **/
+static PkResults *
+pk_backend_request_whatprovides (GObject *sender,
+				PkBitfield filters,
+				PkProvidesEnum provides,
+				gchar** search,
+				PkPlugin *plugin)
+{
+	PkResults *results;
+
+	/* query the native backend for a package provinding X */
+	if (plugin == NULL)
+		g_debug ("<liplugin-dbg> PLUGIN was NULL!");
+	if (plugin->backend == NULL)
+		g_debug ("<liplugin-dbg> BACKEND was NULL!");
+
+	g_debug ("Running what-provides on native backend!");
+
+	/* reset the plugin data */
+	pk_listaller_plugin_reset (plugin);
+
+	/* query the native backend */
+	pk_backend_what_provides (plugin->backend, filters, provides, search);
+
+	/* wait for finished */
+	g_main_loop_run (plugin->priv->loop);
+
+	results = plugin->priv->backend_results;
+	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
+	return results;
+}
+
+/**
  * pk_plugin_started:
+ *
+ * Hook for the beginning of a new PkTransaction (where it is not completely set-up)
  */
 void
 pk_plugin_transaction_started (PkPlugin *plugin,
@@ -554,9 +629,24 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	gchar **data = NULL;
 	gchar **full_paths;
 
-	/* reset the Listaller fake-backend */
-	pk_listaller_reset (plugin);
+	ListallerPkBackendProxy *pkbproxy;
+	guint finished_id = 0;
+	guint package_id = 0;
+
+	/* reset the native-backend */
+	pk_backend_reset (plugin->backend);
 	pk_backend_set_status (plugin->backend, PK_STATUS_ENUM_SETUP);
+
+	/* reconnect backend signals to Listaller PkPlugin */
+	finished_id = g_signal_connect (plugin->backend, "finished",
+					G_CALLBACK (pk_plugin_finished_cb), plugin);
+	package_id = g_signal_connect (plugin->backend, "package",
+				       G_CALLBACK (pk_plugin_package_cb), plugin);
+
+	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
+	pkbproxy = listaller_pk_backend_proxy_new ();
+	g_signal_connect (pkbproxy, "request-whatprovides", (GCallback) pk_backend_request_whatprovides, g_object_ref (plugin));
+	listaller_set_backend_proxy (pkbproxy);
 
 	/* handle these before the transaction has been run */
 	role = pk_transaction_get_role (transaction);
@@ -643,10 +733,22 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 out:
 	g_strfreev (data);
+
+	/* remove the backend proxy */
+	listaller_set_backend_proxy (NULL);
+	g_object_unref (pkbproxy);
+
+	/* disconnect the native backend */
+	if (package_id > 0)
+		g_signal_handler_disconnect (plugin->backend, package_id);
+	if (finished_id > 0)
+		g_signal_handler_disconnect (plugin->backend, finished_id);
 }
 
 /**
  * pk_plugin_transaction_finished_end:
+ *
+ * Hook for the end of a PkTransaction
  */
 void
 pk_plugin_transaction_finished_end (PkPlugin *plugin,
@@ -673,20 +775,6 @@ pk_plugin_get_description (void)
 	return "Listaller support for PackageKit";
 }
 
-static PkResults *
-pkbackend_request_whatprovides (ListallerPkBackendProxy *sender, PkBitfield filters, PkProvidesEnum provides, gchar** search, PkPlugin *plugin)
-{
-	/* query the native backend for a package provinding X */
-	/* if (plugin == NULL)
-		g_debug ("<liplugin-dbg> PLUGIN was NULL!");
-	if (plugin->backend == NULL)
-		g_debug ("<liplugin-dbg> BACKEND was NULL!"); */
-
-	// TODO
-	pk_backend_what_provides (plugin->backend, filters, provides, search);
-	return NULL;
-}
-
 /**
  * pk_plugin_initialize:
  */
@@ -697,6 +785,7 @@ pk_plugin_initialize (PkPlugin *plugin)
 	plugin->priv = PK_TRANSACTION_PLUGIN_GET_PRIVATE (PkPluginPrivate);
 	plugin->priv->conf = listaller_settings_new (TRUE);
 	plugin->priv->mgr = listaller_manager_new (plugin->priv->conf);
+	plugin->priv->backend_results = pk_results_new ();
 
 	/* tell PK we might be able to handle these */
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_DETAILS);
@@ -704,18 +793,12 @@ pk_plugin_initialize (PkPlugin *plugin)
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_SIMULATE_INSTALL_FILES);
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_REMOVE_PACKAGES);
 
+	/* connect Listaller manager signals */
 	g_signal_connect (plugin->priv->mgr, "error-code", (GCallback) listaller_error_code_cb, plugin);
 	g_signal_connect (plugin->priv->mgr, "message", (GCallback) listaller_message_cb, plugin);
 	g_signal_connect (plugin->priv->mgr, "status-changed", (GCallback) listaller_status_change_cb, plugin);
 	g_signal_connect (plugin->priv->mgr, "progress-changed", (GCallback) listaller_progress_change_cb, plugin);
 	g_signal_connect (plugin->priv->mgr, "application", (GCallback) listaller_application_cb, plugin);
-
-	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
-	plugin->priv->pkbproxy = listaller_pk_backend_proxy_new ();
-
-	g_signal_connect_object (plugin->priv->pkbproxy, "request-whatprovides", (GCallback) pkbackend_request_whatprovides, plugin, 0);
-
-	listaller_set_backend_proxy (plugin->priv->pkbproxy);
 }
 
 /**
@@ -724,10 +807,9 @@ pk_plugin_initialize (PkPlugin *plugin)
 void
 pk_plugin_destroy (PkPlugin *plugin)
 {
-	listaller_set_backend_proxy (NULL);
-	g_object_unref (plugin->priv->pkbproxy);
 	g_object_unref (plugin->priv->conf);
 	g_object_unref (plugin->priv->mgr);
+	g_object_unref (plugin->priv->backend_results);
 }
 
 /**

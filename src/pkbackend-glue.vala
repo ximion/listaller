@@ -62,4 +62,13 @@ private PkBackendProxy? get_pk_backend () {
 	return pkit_backend_proxy;
 }
 
+#if 0
+private void test_dummy () {
+	var pkbp = new PkBackendProxy ();
+	string simple_text = "Hello World!";
+	pkbp.request_whatprovides.connect ( () => { debug (simple_text); return null; } );
+}
+#endif
+
+
 } // End of LI namespace
