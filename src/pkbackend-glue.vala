@@ -30,6 +30,9 @@ namespace Listaller {
 private PkBackendProxy? pkit_backend_proxy;
 
 internal class PkBackendProxy : Object {
+	// Workaround for strance plugin behavior
+	public void* plugin { get; set; }
+
 	// Used by the PkPlugin
 	public signal void error_message ();
 	public signal void packages ();
@@ -62,13 +65,13 @@ private PkBackendProxy? get_pk_backend () {
 	return pkit_backend_proxy;
 }
 
-#if 0
 private void test_dummy () {
 	var pkbp = new PkBackendProxy ();
 	string simple_text = "Hello World!";
-	pkbp.request_whatprovides.connect ( () => { debug (simple_text); return null; } );
+	pkbp.request_whatprovides.connect ( () => { debug (simple_text); return new PackageKit.Results (); } );
+	PackageKit.Results? pkres = pkbp.request_whatprovides (0, 0, null);
+	pkres.get_package_sack ();
 }
-#endif
 
 
 } // End of LI namespace

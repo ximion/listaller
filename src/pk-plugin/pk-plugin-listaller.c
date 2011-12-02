@@ -584,13 +584,17 @@ pk_plugin_finished_cb (PkBackend *backend,
  * Helper method for a Listaller native PkBackend proxy to do a what-provides request.
  **/
 static PkResults *
-pk_backend_request_whatprovides (GObject *sender,
+pk_backend_request_whatprovides (ListallerPkBackendProxy *sender,
 				PkBitfield filters,
 				PkProvidesEnum provides,
 				gchar** search,
-				PkPlugin *plugin)
+				gpointer self)
 {
 	PkResults *results;
+	PkPlugin *plugin;
+
+	/* workaround */
+	plugin = listaller_pk_backend_proxy_get_plugin (sender);
 
 	/* query the native backend for a package provinding X */
 	if (plugin == NULL)
@@ -611,7 +615,7 @@ pk_backend_request_whatprovides (GObject *sender,
 
 	results = plugin->priv->backend_results;
 	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
-	return results;
+	return g_object_ref (results);
 }
 
 /**
@@ -645,6 +649,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
 	pkbproxy = listaller_pk_backend_proxy_new ();
+	listaller_pk_backend_proxy_set_plugin (pkbproxy, plugin);
 	g_signal_connect (pkbproxy, "request-whatprovides", (GCallback) pk_backend_request_whatprovides, g_object_ref (plugin));
 	listaller_set_backend_proxy (pkbproxy);
 
@@ -785,6 +790,7 @@ pk_plugin_initialize (PkPlugin *plugin)
 	plugin->priv = PK_TRANSACTION_PLUGIN_GET_PRIVATE (PkPluginPrivate);
 	plugin->priv->conf = listaller_settings_new (TRUE);
 	plugin->priv->mgr = listaller_manager_new (plugin->priv->conf);
+	plugin->priv->loop = g_main_loop_new (NULL, FALSE);
 	plugin->priv->backend_results = pk_results_new ();
 
 	/* tell PK we might be able to handle these */
@@ -807,6 +813,7 @@ pk_plugin_initialize (PkPlugin *plugin)
 void
 pk_plugin_destroy (PkPlugin *plugin)
 {
+	g_main_loop_unref (plugin->priv->loop);
 	g_object_unref (plugin->priv->conf);
 	g_object_unref (plugin->priv->mgr);
 	g_object_unref (plugin->priv->backend_results);
