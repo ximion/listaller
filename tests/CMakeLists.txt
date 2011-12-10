@@ -12,6 +12,7 @@ find_package(GI REQUIRED)
 find_library(M_LIB m)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
+pkg_check_modules(REDLAND_RDF REQUIRED lrdf>=0.4)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
 #find_gir(PKGIR "packagekit-glib2" REQUIRED)
 
@@ -26,6 +27,9 @@ set(LIUNITTEST_SOURCES ${LISTALLER_BASE_SOURCES}
 			${lisrc}/installer.vala
 )
 
+# Workaround for linking issue
+list (APPEND REDLAND_RDF_LIBRARIES rdf)
+
 link_libraries(${M_LIB}
 		${GLIB2_LIBRARIES}
 		${GEE_LIBRARIES}
@@ -35,6 +39,7 @@ link_libraries(${M_LIB}
 		${LIBXML2_LIBRARIES}
 		${GPGME_VANILLA_LIBRARIES}
 		${PACKAGEKIT_LIBRARIES}
+		${REDLAND_RDF_LIBRARIES}
 )
 
 include_directories(${CMAKE_BINARY_DIR}
@@ -47,6 +52,7 @@ include_directories(${CMAKE_BINARY_DIR}
 		${LIBXML2_INCLUDE_DIR}
 		${GPGME_INCLUDES}
 		${PACKAGEKIT_INCLUDE_DIRS}
+		${REDLAND_RDF_INCLUDE_DIRS}
 )
 
 add_definitions ("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE")

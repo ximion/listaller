@@ -206,6 +206,8 @@ namespace PkPlugin {
 		public bool thread_create (PkPlugin.BackendThreadFunc func);
 		[CCode (cname = "pk_backend_thread_finished")]
 		public void thread_finished ();
+		[CCode (cname = "pk_backend_transaction_reset")]
+		public void transaction_reset ();
 		[CCode (cname = "pk_backend_transaction_start")]
 		public void transaction_start ();
 		[CCode (cname = "pk_backend_transaction_stop")]
@@ -248,34 +250,34 @@ namespace PkPlugin {
 		public uint uid { get; }
 		public signal void allow_cancel (bool object);
 		[HasEmitter]
-		public signal void category (void* object);
+		public signal void category (void* parent_id);
 		public signal void change_transaction_data (string object);
 		[HasEmitter]
-		public signal void details (void* object);
+		public signal void details (void* package_id);
 		[HasEmitter]
-		public signal void distro_upgrade (void* object);
+		public signal void distro_upgrade (void* type);
 		public signal void error_code (void* object);
 		[HasEmitter]
-		public signal void eula_required (void* object);
+		public signal void eula_required (void* eula_id);
 		[HasEmitter]
-		public signal void files (void* object);
+		public signal void files (void* package_id);
 		[HasEmitter]
 		public signal void finished (uint object);
 		public signal void item_progress (string object, uint p0);
 		[HasEmitter]
-		public signal void media_change_required (void* object);
+		public signal void media_change_required (void* media_type);
 		public signal void message (void* object);
 		[HasEmitter]
-		public signal void package (void* object);
+		public signal void package (void* info);
 		[HasEmitter]
-		public signal void repo_detail (void* object);
+		public signal void repo_detail (void* repo_id);
 		[HasEmitter]
-		public signal void repo_signature_required (void* object);
+		public signal void repo_signature_required (void* package_id);
 		[HasEmitter]
-		public signal void require_restart (void* object);
+		public signal void require_restart (void* restart);
 		public signal void status_changed (uint object);
 		[HasEmitter]
-		public signal void update_detail (void* object);
+		public signal void update_detail (void* package_id);
 	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", type_id = "pk_conf_get_type ()")]
 	public class Conf : GLib.Object {
@@ -332,7 +334,56 @@ namespace PkPlugin {
 		public static unowned string state_to_string (PkPlugin.TransactionState state);
 		public signal void finished ();
 	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h")]
+	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_type_id = false)]
+	public struct BackendDesc {
+		public weak string description;
+		public weak string author;
+		public weak global::initialize initialize;
+		public weak global::destroy destroy;
+		public weak global::get_groups get_groups;
+		public weak global::get_filters get_filters;
+		public weak global::get_roles get_roles;
+		public weak global::get_mime_types get_mime_types;
+		public weak global::cancel cancel;
+		public weak global::download_packages download_packages;
+		public weak global::get_categories get_categories;
+		public weak global::get_depends get_depends;
+		public weak global::get_details get_details;
+		public weak global::get_distro_upgrades get_distro_upgrades;
+		public weak global::get_files get_files;
+		public weak global::get_packages get_packages;
+		public weak global::get_repo_list get_repo_list;
+		public weak global::get_requires get_requires;
+		public weak global::get_update_detail get_update_detail;
+		public weak global::get_updates get_updates;
+		public weak global::install_files install_files;
+		public weak global::install_packages install_packages;
+		public weak global::install_signature install_signature;
+		public weak global::refresh_cache refresh_cache;
+		public weak global::remove_packages remove_packages;
+		public weak global::repo_enable repo_enable;
+		public weak global::repo_set_data repo_set_data;
+		public weak global::resolve resolve;
+		public weak global::rollback rollback;
+		public weak global::search_details search_details;
+		public weak global::search_files search_files;
+		public weak global::search_groups search_groups;
+		public weak global::search_names search_names;
+		public weak global::update_packages update_packages;
+		public weak global::update_system update_system;
+		public weak global::what_provides what_provides;
+		public weak global::simulate_install_files simulate_install_files;
+		public weak global::simulate_install_packages simulate_install_packages;
+		public weak global::simulate_remove_packages simulate_remove_packages;
+		public weak global::simulate_update_packages simulate_update_packages;
+		public weak global::transaction_start transaction_start;
+		public weak global::transaction_stop transaction_stop;
+		public weak global::upgrade_system upgrade_system;
+		public weak global::transaction_reset transaction_reset;
+		[CCode (array_length = false, array_null_terminated = true)]
+		public weak void*[] padding;
+	}
+	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_type_id = false)]
 	public struct Plugin {
 		public weak PkPlugin.Backend backend;
 		[CCode (cname = "pk_plugin_destroy")]
@@ -352,29 +403,45 @@ namespace PkPlugin {
 		[CCode (cname = "pk_plugin_transaction_started")]
 		public void transaction_started (PkPlugin.Transaction transaction);
 	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cprefix = "PK_PLUGIN_PHASE_")]
+	[CCode (cheader_filename = "plugin/packagekit-plugin.h")]
 	public enum PluginPhase {
+		[CCode (cname = "PK_PLUGIN_PHASE_INIT")]
 		INIT,
+		[CCode (cname = "PK_PLUGIN_PHASE_TRANSACTION_CONTENT_TYPES")]
 		TRANSACTION_CONTENT_TYPES,
+		[CCode (cname = "PK_PLUGIN_PHASE_TRANSACTION_RUN")]
 		TRANSACTION_RUN,
+		[CCode (cname = "PK_PLUGIN_PHASE_TRANSACTION_STARTED")]
 		TRANSACTION_STARTED,
+		[CCode (cname = "PK_PLUGIN_PHASE_TRANSACTION_FINISHED_START")]
 		TRANSACTION_FINISHED_START,
+		[CCode (cname = "PK_PLUGIN_PHASE_TRANSACTION_FINISHED_RESULTS")]
 		TRANSACTION_FINISHED_RESULTS,
+		[CCode (cname = "PK_PLUGIN_PHASE_TRANSACTION_FINISHED_END")]
 		TRANSACTION_FINISHED_END,
+		[CCode (cname = "PK_PLUGIN_PHASE_DESTROY")]
 		DESTROY,
+		[CCode (cname = "PK_PLUGIN_PHASE_UNKNOWN")]
 		UNKNOWN
 	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cprefix = "PK_TRANSACTION_STATE_")]
+	[CCode (cheader_filename = "plugin/packagekit-plugin.h")]
 	public enum TransactionState {
+		[CCode (cname = "PK_TRANSACTION_STATE_NEW")]
 		NEW,
+		[CCode (cname = "PK_TRANSACTION_STATE_WAITING_FOR_AUTH")]
 		WAITING_FOR_AUTH,
+		[CCode (cname = "PK_TRANSACTION_STATE_COMMITTED")]
 		COMMITTED,
+		[CCode (cname = "PK_TRANSACTION_STATE_READY")]
 		READY,
+		[CCode (cname = "PK_TRANSACTION_STATE_RUNNING")]
 		RUNNING,
+		[CCode (cname = "PK_TRANSACTION_STATE_FINISHED")]
 		FINISHED,
+		[CCode (cname = "PK_TRANSACTION_STATE_UNKNOWN")]
 		UNKNOWN
 	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cprefix = "PK_TRANSACTION_ERROR_")]
+	[CCode (cheader_filename = "plugin/packagekit-plugin.h")]
 	public errordomain TransactionError {
 		[CCode (cname = "PK_TRANSACTION_ERROR_DENIED")]
 		PERMISSIONDENIED,
