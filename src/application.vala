@@ -59,7 +59,7 @@ public class AppItem : Object {
 	private string _categories;
 	private string _desktop_file;
 	private string _desktop_file_prefix;
-	private string _url;
+	private string _website;
 	private string _icon_name;
 	private int64  _install_time;
 	private string _dependencies;
@@ -161,9 +161,9 @@ public class AppItem : Object {
 		set { _icon_name = value; }
 	}
 
-	public string url {
-		get { return _url; }
-		set { _url = value; }
+	public string website {
+		get { return _website; }
+		set { _website = value; }
 	}
 
 	public int64 install_time {
@@ -206,7 +206,7 @@ public class AppItem : Object {
 		origin = AppOrigin.UNKNOWN;
 		_app_id = "";
 		_desktop_file = "";
-		_url = "";
+		_website = "";
 		_icon_name = "";
 		liconf = new Listaller.Settings (_shared);
 		_license_name = "";

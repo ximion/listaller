@@ -249,7 +249,7 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 
 		description = listaller_app_item_get_description (app);
 		license = listaller_app_item_get_license_name (app);
-		url = listaller_app_item_get_url (app);
+		url = listaller_app_item_get_website (app);
 
 		/* emit */
 		pk_backend_details (plugin->backend, package_ids[i],

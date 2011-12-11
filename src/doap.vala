@@ -22,6 +22,12 @@ using GLib;
 
 namespace Listaller {
 
+private errordomain RdfError {
+	NO_RESULTS,
+	INVALID_PATH,
+	INVALID_QUERY;
+}
+
 private class RDFQuery : Object {
 	private RDF.Storage storage;
 	private RDF.World world;
@@ -51,9 +57,9 @@ private class RDFQuery : Object {
 		model.add_statements (stream);
 	}
 
-	public RDF.QueryResults? query (string query_str, string query_language = "") {
+	public RDF.QueryResults? query (string query_str, string query_language = "") throws RdfError {
 		if (query_str == "")
-			return null;
+			throw new RdfError.INVALID_QUERY ("Query string was empty!");
 		if (query_language == "")
 			query_language = SPARQL;
 
@@ -79,7 +85,26 @@ private class DoapData : Object {
 		path = fname;
 	}
 
-	public AppItem? get_project () {
+	public string get_doap_url () {
+		return path;
+	}
+
+	private string node_str_value_by_name (RDF.QueryResults results, string name) {
+		RDF.Node? n = results.get_binding_value_by_name (name);
+
+		if (n == null)
+			return "";
+
+		RDF.Uri? uri = n.get_literal_value_datatype_uri ();
+		string suri = "NULL";
+		if (uri != null)
+			suri = uri.to_string ();
+		debug ("Node datatype: %s", suri);
+
+		return n.get_literal_value_as_latin1 ();
+	}
+
+	public AppItem? get_project () throws RdfError {
 		string querystring = """
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX doap: <http://usefulinc.com/ns/doap#>
@@ -99,11 +124,20 @@ WHERE {
     OPTIONAL { ?project doap:wiki ?wiki }
 }
 """;
-		RDF.QueryResults? results = querier.query (querystring);
-		RDF.Node? n = results.get_binding_value_by_name ("description");
-		debug ("DOAP Project Desc Is: %s", n.get_literal_value_as_latin1 ());
+		RDF.QueryResults? qres = querier.query (querystring);
+		if (qres == null)
+			throw new RdfError.NO_RESULTS (_("Query returned no results. Maybe this DOAP data is broken?"));
 
-		return null;
+		// Create a new AppItem to store project metadata
+		AppItem app = new AppItem.blank ();
+
+		app.full_name = node_str_value_by_name (qres, "name");
+		app.idname = node_str_value_by_name (qres, "shortname");
+		app.description = node_str_value_by_name (qres, "description");
+		app.summary = node_str_value_by_name (qres, "shortdesc");
+		app.website = node_str_value_by_name (qres, "homepage");
+
+		return app;
 	}
 
 }

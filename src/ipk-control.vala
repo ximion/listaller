@@ -288,7 +288,7 @@ public abstract class CXml : Object {
 		Xml.Node* n3 = get_xproperty (app_node (), "version");
 		n3->set_content (app.version);
 		set_app_str ("summary", app.summary);
-		set_app_str ("url", app.url);
+		set_app_str ("url", app.website);
 	}
 
 	public AppItem get_application () {
@@ -297,7 +297,7 @@ public abstract class CXml : Object {
 		AppItem app = new AppItem (ndN->get_content (), ndV->get_content ());
 
 		app.summary = get_app_str ("summary");
-		app.url = get_app_str ("url");
+		app.website = get_app_str ("url");
 		app.idname = get_app_id ("idname");
 		app.desktop_file = get_app_id ("desktop");
 
@@ -323,6 +323,62 @@ public abstract class CXml : Object {
 	}
 
 
+}
+
+public class ControlData : Object {
+	private DoapData doap;
+	protected string ctrlDir;
+
+	public ControlData () {
+		doap = new DoapData ();
+		ctrlDir = "";
+	}
+
+	private string find_doap_data (string dir) {
+		string doapFile = "";
+		try {
+			var directory = File.new_for_path (dir);
+			var enumerator = directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_NAME, 0);
+
+			FileInfo file_info;
+			while ((file_info = enumerator.next_file ()) != null) {
+				string path = Path.build_filename (dir, file_info.get_name (), null);
+				if (file_info.get_is_hidden ())
+					continue;
+
+				if (path.down ().has_suffix (".doap"))
+					doapFile = path;
+			}
+
+		} catch (GLib.Error e) {
+			stderr.printf (_("Error: %s\n"), e.message);
+			return "";
+		}
+		return doapFile;
+	}
+
+	public bool open (string dir) {
+		if (doap.get_doap_url () != "")
+			return false;
+
+		string doapFile = find_doap_data (dir);
+		if (doapFile == "") {
+			debug ("No valid DOAP data found in directory %s - Can't open control files.", dir);
+			return false;
+		}
+
+		doap.add_file (doapFile);
+		ctrlDir = dir;
+
+		// TODO: Load all other data too
+
+		return true;
+	}
+
+	public AppItem get_application () {
+		AppItem item = doap.get_project ();
+		return item;
+	}
 }
 
 public class Control : CXml {

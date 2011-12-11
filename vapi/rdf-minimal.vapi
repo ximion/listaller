@@ -61,6 +61,7 @@ namespace RDF {
 	public class Uri {
 		[CCode (cname="librdf_new_uri")]
 		public Uri (World world, string uri_string);
+		public string to_string ();
 
 	}
 
@@ -105,6 +106,8 @@ namespace RDF {
 		[CCode (cname="librdf_new_node")]
 		public Node (World world);
 		public string get_literal_value_as_latin1 ();
+		public Uri get_literal_value_datatype_uri ();
+		public string get_literal_value_language ();
 	}
 
 }

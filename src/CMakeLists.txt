@@ -16,11 +16,11 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/utils.vala
 	${lisrc}/varsolver.vala
 	${lisrc}/varsetter.vala
 	${lisrc}/doap.vala
-	${lisrc}/ipkcdef.vala
-	${lisrc}/ipkfilelist.vala
+	${lisrc}/ipk-control.vala
+	${lisrc}/ipk-filelist.vala
 	${lisrc}/signature.vala
 	${lisrc}/security.vala
-	${lisrc}/ipkpackage.vala
+	${lisrc}/ipk-package.vala
 	${lisrc}/packdetail.vala
 	${lisrc}/depinfo.vala
 	${lisrc}/version.vala
@@ -88,6 +88,7 @@ vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 			OUTPUT_DIR ${CMAKE_BINARY_DIR}/src
 			COMPILE_FLAGS --gir=Listaller-${LILIBS_VERSION}.gir
 				--library Listaller-${LILIBS_VERSION}
+				--internal-vapi=listaller_internal.vapi
 				--thread
 )
 

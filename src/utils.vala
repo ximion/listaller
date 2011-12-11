@@ -117,7 +117,7 @@ private bool is_root () {
 /*
  * Calculate checksum for file
  */
-private string compute_checksum_for_file (string fname, ChecksumType cstype = ChecksumType.SHA1) {
+private string compute_checksum_for_file (string fname, ChecksumType cstype = GLib.ChecksumType.SHA1) {
 	Checksum cs;
 	uchar data [4096];
 	size_t size = 0;
