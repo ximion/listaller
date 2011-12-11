@@ -327,10 +327,12 @@ public abstract class CXml : Object {
 
 public class ControlData : Object {
 	private DoapData doap;
+	private MetaFile depData;
 	protected string ctrlDir;
 
 	public ControlData () {
 		doap = new DoapData ();
+		depData = new MetaFile ();
 		ctrlDir = "";
 	}
 
@@ -378,6 +380,34 @@ public class ControlData : Object {
 	public AppItem get_application () {
 		AppItem item = doap.get_project ();
 		return item;
+	}
+
+	public void set_pkg_dependencies (ArrayList<Dependency> list) {
+		// Add the dependencies
+		foreach (Dependency dep in list) {
+			depData.reset ();
+
+			depData.add_value ("Name", dep.full_name);
+			depData.add_value ("ID", dep.idname);
+			// If we have a feed-url for this, add it
+			if (dep.feed_url != "")
+				depData.add_value ("Feed", dep.feed_url);
+
+			// TODO
+			#if 0
+			// Add the file-list
+			foreach (string s in dep.raw_complist) {
+				Deps.ComponentType dct = dep.component_get_type (s);
+				string cname = dep.component_get_name (s);
+				if (dct == Deps.ComponentType.SHARED_LIB)
+					depnode->new_text_child (null, "lib", cname);
+				else if (dct == Deps.ComponentType.PYTHON)
+					depnode->new_text_child (null, "python", cname);
+				else
+					depnode->new_text_child (null, "file", cname);
+			}
+			#endif
+		}
 	}
 }
 

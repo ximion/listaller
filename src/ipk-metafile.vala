@@ -29,19 +29,17 @@ private class MetaFile : Object {
 	private int current_block_id;
 
 	public MetaFile () {
-		content = null;
+		content = new ArrayList<string> ();
 	}
 
 	public bool open_file (string fname, bool strip_comments = true) {
-		if (content != null)
+		if (content.size != 0)
 			return false;
 
 		var file = File.new_for_path (fname);
 		if (!file.query_exists ()) {
 			return false;
 		}
-
-		content = new ArrayList<string> ();
 
 		try {
 			string line;
@@ -124,7 +122,7 @@ private class MetaFile : Object {
 		return res;
 	}
 
-	public bool add_value (string field, string value) {
+	public bool add_value (string field, string value, bool openNewBlock = false) {
 		if (field == "")
 			return false;
 
@@ -143,6 +141,8 @@ private class MetaFile : Object {
 				}
 				content.add ("");
 			}
+			if (openNewBlock)
+				current_block_id = content.size;
 		} else {
 			// Insert into existing field
 			var iter = content.list_iterator ();
