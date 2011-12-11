@@ -120,6 +120,12 @@ void test_versions () {
 	assert (comp_ver ("3.0.rc2", "3.0.0") == -1);
 }
 
+void test_doap () {
+	DoapData doda = new DoapData ();
+	doda.add_file (Path.build_filename (datadir, "doap.doap"));
+	doda.get_project ();
+}
+
 int main (string[] args) {
 	msg ("=== Running Basic Tests ===");
 	datadir = args[1];
@@ -132,6 +138,7 @@ int main (string[] args) {
 	test_utils ();
 	test_application_ids ();
 	test_versions ();
+	test_doap ();
 	test_zfeeds ();
 	Test.run ();
 	return 0;

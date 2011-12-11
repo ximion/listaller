@@ -22,10 +22,89 @@
 namespace RDF {
 
 	[Compact]
-	[CCode (cname="struct librdf_storage", free_function="librdf_free_storage")]
+	[CCode (cname="struct librdf_storage", free_function="librdf_free_storage", cprefix="librdf_storage_")]
 	public class Storage {
 		[CCode (cname="librdf_new_storage")]
-		public Storage (int world, string storage_name, string name, string options_str);
+		public Storage (World world, string storage_name, string name, string options_str);
+	}
+
+	[Compact]
+	[CCode (cname="struct librdf_world", free_function="librdf_free_world", cprefix="librdf_world_")]
+	public class World {
+		[CCode (cname="librdf_new_world")]
+		public World ();
+		public void open ();
+		public void init_mutex ();
+	}
+
+	[Compact]
+	[CCode (cname="struct librdf_model", free_function="librdf_free_model", cprefix="librdf_model_")]
+	public class Model {
+		[CCode (cname="librdf_new_model")]
+		public Model (World world, Storage storage, string options_str);
+		public int add_statement (Statement stmt);
+		public int add_statements (Stream statement_stream);
+
+	}
+
+	[Compact]
+	[CCode (cname="struct librdf_parser", free_function="librdf_free_parser", cprefix="librdf_parser_")]
+	public class Parser {
+		[CCode (cname="librdf_new_parser")]
+		public Parser (World world, string name, string mime_type, Uri type_uri);
+		public Stream parse_as_stream (Uri uri, Uri base_uri);
+
+	}
+
+	[Compact]
+	[CCode (cname="struct librdf_uri", free_function="librdf_free_uri", cprefix="librdf_uri_")]
+	public class Uri {
+		[CCode (cname="librdf_new_uri")]
+		public Uri (World world, string uri_string);
+
+	}
+
+	[Compact]
+	[CCode (cname="struct librdf_stream", free_function="librdf_free_stream", cprefix="librdf_stream_")]
+	public class Stream {
+		/* [CCode (cname="librdf_new_stream")]
+		public Stream (World world, void* context, int (*is_end_method)(void*), int (*next_method)(void*), void* (*get_method)(void*, int), void (*finished_method)(void*));
+		*/
+	}
+
+	[Compact]
+	[CCode (cname="struct librdf_statement", free_function="librdf_free_statement", cprefix="librdf_statement_")]
+	public class Statement {
+
+	}
+
+	[Compact]
+	[CCode (cname="struct librdf_query", free_function="librdf_free_query", cprefix="librdf_query_")]
+	public class Query {
+		[CCode (cname="librdf_new_query")]
+		public Query (World world, string name, Uri uri, string query_string, Uri base_uri);
+		public QueryResults execute(Model model);
+
+	}
+
+	[Compact]
+	[CCode (cname="struct librdf_query_results", free_function="librdf_free_query_results", cprefix="librdf_query_results_")]
+	public class QueryResults {
+		public int get_count ();
+		public bool next ();
+		public bool finished ();
+		public Node get_binding_value (int offset);
+		public Node get_binding_name (int offset);
+		public Node get_binding_value_by_name (string name);
+
+	}
+
+	[Compact]
+	[CCode (cname="struct librdf_node", free_function="librdf_free_node", cprefix="librdf_node_")]
+	public class Node {
+		[CCode (cname="librdf_new_node")]
+		public Node (World world);
+		public string get_literal_value_as_latin1 ();
 	}
 
 }
