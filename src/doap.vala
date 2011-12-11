@@ -99,7 +99,13 @@ private class DoapData : Object {
 		string suri = "NULL";
 		if (uri != null)
 			suri = uri.to_string ();
-		debug ("Node datatype: %s", suri);
+		debug ("Node datatype ('%s'): %s", name, suri);
+
+		if (n.is_resource ())
+			return n.to_string ();
+
+		if (!n.is_literal ())
+			return "";
 
 		return n.get_literal_value_as_latin1 ();
 	}
@@ -110,7 +116,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX doap: <http://usefulinc.com/ns/doap#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 SELECT ?name, ?shortname, $description, ?shortdesc,
-       ?homepage, ?bug, ?download, ?wiki, ?created
+       ?homepage, ?bug, ?download, ?wiki, ?created, ?license
 WHERE {
     ?project rdf:type doap:Project .
     ?project doap:homepage ?homepage .
@@ -122,6 +128,7 @@ WHERE {
     OPTIONAL { ?project doap:bug-database ?bug }
     OPTIONAL { ?project doap:download-page ?download }
     OPTIONAL { ?project doap:wiki ?wiki }
+    OPTIONAL { ?project doap:license ?license }
 }
 """;
 		RDF.QueryResults? qres = querier.query (querystring);
@@ -136,6 +143,9 @@ WHERE {
 		app.description = node_str_value_by_name (qres, "description");
 		app.summary = node_str_value_by_name (qres, "shortdesc");
 		app.website = node_str_value_by_name (qres, "homepage");
+		string license = node_str_value_by_name (qres, "license");
+
+		// TODO: Fetch all useful data from doap file
 
 		return app;
 	}

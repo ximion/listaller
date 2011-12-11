@@ -105,9 +105,13 @@ namespace RDF {
 	public class Node {
 		[CCode (cname="librdf_new_node")]
 		public Node (World world);
+		public string to_string ();
 		public string get_literal_value_as_latin1 ();
 		public Uri get_literal_value_datatype_uri ();
 		public string get_literal_value_language ();
+		public bool is_literal ();
+		public bool is_blank ();
+		public bool is_resource ();
 	}
 
 }
