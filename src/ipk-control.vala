@@ -1,4 +1,4 @@
-/* ipkcdef.vala
+/* ipk-control.vala - Describes data controlling the IPK setup process
  *
  * Copyright (C) 2010-2011 Matthias Klumpp <matthias@tenstral.net>
  *

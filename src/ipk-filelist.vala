@@ -1,4 +1,4 @@
-/* ipkfilelist.vala
+/* ipk-filelist.vala - The IPK-style list of files
  *
  * Copyright (C) 2011 Matthias Klumpp <matthias@tenstral.net>
  *

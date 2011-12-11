@@ -17,6 +17,7 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/utils.vala
 	${lisrc}/varsetter.vala
 	${lisrc}/doap.vala
 	${lisrc}/ipk-control.vala
+	${lisrc}/ipk-metafile.vala
 	${lisrc}/ipk-filelist.vala
 	${lisrc}/signature.vala
 	${lisrc}/security.vala

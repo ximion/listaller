@@ -1,4 +1,4 @@
-/* ipkpackage.vala
+/* ipk-package.vala - Definition of an IPK setup package
  *
  * Copyright (C) 2011 Matthias Klumpp <matthias@tenstral.net>
  *
