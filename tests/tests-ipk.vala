@@ -68,14 +68,15 @@ void test_ipk_package () {
 	}
 }
 
+//FIXME
 void test_ipk_control_file () {
 	msg ("Controlfile tests");
-	IPK.Control ipkc = new IPK.Control ();
-	ipkc.create_new ();
+	IPK.PackControl ipkc = new IPK.PackControl ();
+	//! ipkc.create_new ();
 	AppItem a = new AppItem ("echoecho", "123");
 	a.idname = "echo-123";
 	a.desktop_file = "echo.desktop";
-	ipkc.set_application (a);
+	//! ipkc.set_application (a);
 
 	ArrayList<IPK.Dependency> list = new ArrayList<IPK.Dependency> ();
 	IPK.Dependency d = null;
@@ -95,7 +96,7 @@ void test_ipk_control_file () {
 	d.add_component ("/usr/bin/delta", Deps.ComponentType.FILE);
 	list.add (d);
 
-	ipkc.set_pkg_dependencies (list);
+	ipkc.set_dependencies (list);
 
 	//! ipkc.test_dump_xml ();
 
@@ -104,7 +105,7 @@ void test_ipk_control_file () {
 	assert (app.idname == "echo-123");
 	assert (app.desktop_file == "$APP/echo.desktop");
 
-	list = ipkc.get_pkg_dependencies ();
+	list = ipkc.get_dependencies ();
 	assert (list[0].full_name == "alpha");
 	assert (list[0].has_component ("/etc/alpha.conf", Deps.ComponentType.FILE) == true);
 }

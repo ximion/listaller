@@ -29,6 +29,7 @@ public enum ComponentType {
 	SHARED_LIB,
 	BINARY,
 	PYTHON,
+	PYTHON_2,
 	FILE,
 	UNKNOWN;
 }
@@ -193,6 +194,15 @@ public class Dependency: Object {
 
 	public bool has_components () {
 		return components.size > 0;
+	}
+
+	internal string get_components_by_type_as_str (ComponentType tp) {
+		string res = "";
+		foreach (string s in components) {
+			if (component_get_type (s) == tp)
+				res += component_get_name (s) + "\n";
+		}
+		return res;
 	}
 
 	public static string component_get_name (string cidname) {

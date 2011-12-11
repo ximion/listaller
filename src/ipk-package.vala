@@ -32,7 +32,7 @@ private class Package : Object {
 	private string wdir;
 	private bool ipk_valid;
 	private string data_archive;
-	private IPK.Control ipkc;
+	private IPK.PackControl ipkc;
 	private IPK.FileList ipkf;
 	private HashMap<string, IPK.FileEntry>? fcache;
 	private AppItem appInfo;
@@ -42,7 +42,7 @@ private class Package : Object {
 	public signal void message (MessageItem message);
 	public signal void progress_changed (int progress);
 
-	public IPK.Control control {
+	public IPK.PackControl control {
 		get { return ipkc; }
 	}
 
@@ -55,7 +55,7 @@ private class Package : Object {
 		wdir = conf.get_unique_tmp_dir ();
 
 		ipk_valid = false;
-		ipkc = new IPK.Control ();
+		ipkc = new IPK.PackControl ();
 		ipkf = new IPK.FileList ();
 		fcache = null;
 	}
@@ -139,7 +139,7 @@ private class Package : Object {
 		string tmpf = Path.build_filename (wdir, "control.xml", null);
 		ret = false;
 		if (FileUtils.test (tmpf, FileTest.EXISTS)) {
-			ret = ipkc.open_file (tmpf);
+			ret = ipkc.open_control (tmpf, "", "::1.0");
 		}
 
 		// Fetch application-information as an app-id

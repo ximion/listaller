@@ -51,7 +51,7 @@ namespace RDF {
 	[CCode (cname="struct librdf_parser", free_function="librdf_free_parser", cprefix="librdf_parser_")]
 	public class Parser {
 		[CCode (cname="librdf_new_parser")]
-		public Parser (World world, string name, string mime_type, Uri type_uri);
+		public Parser (World world, string name, string mime_type, Uri? type_uri);
 		public Stream parse_as_stream (Uri uri, Uri base_uri);
 
 	}
@@ -83,7 +83,7 @@ namespace RDF {
 	[CCode (cname="struct librdf_query", free_function="librdf_free_query", cprefix="librdf_query_")]
 	public class Query {
 		[CCode (cname="librdf_new_query")]
-		public Query (World world, string name, Uri uri, string query_string, Uri base_uri);
+		public Query (World world, string name, Uri? uri, string query_string, Uri base_uri);
 		public QueryResults execute(Model model);
 
 	}

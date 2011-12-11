@@ -59,7 +59,8 @@ bool Setup::suMode () const
 
 QString Setup::descriptionAsString () const
 {
-  gchar *text = listaller_ipk_cxml_get_app_description (&ipkmeta->parent_instance);
+	//FIXME: This is broken at time
+  gchar *text = ""; //listaller_ipk_cxml_get_app_description (&ipkmeta->parent_instance);
   QString res;
   res.fromLatin1 (text);
   g_free (text);

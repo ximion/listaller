@@ -24,357 +24,26 @@ using Gee;
 using Listaller;
 using Listaller.Utils;
 
-// We need this to produce formatted output
-private static extern int xmlThrDefIndentTreeOutput (int val);
-private static extern int xmlThrDefKeepBlanksDefaultValue (int val);
-
 namespace Listaller.IPK {
 
-public abstract class CXml : Object {
-	private string fname;
-	private Xml.Doc* _xdoc;
+public abstract class Control : Object {
+	internal DoapData doap;
+	internal MetaFile depData;
 
-	internal Xml.Doc* xdoc {
-		get { return _xdoc; }
-		set { _xdoc = value; }
-	}
-
-	internal CXml () {
-		fname = "";
-		xdoc = null;
-	}
-
-	~CXml () {
-		if (xdoc != null)
-			delete xdoc;
-	}
-
-	protected bool open (string path) {
-		// Already opened?
-		if (xdoc != null) {
-			warning ("You have to close the IPK XML first to reopen a new one!");
-			return false;
-		}
-		fname = path;
-
-		// Parse the document from path
-		xdoc = Parser.parse_file (fname);
-		if (xdoc == null) {
-			warning (_("File %s not found or permission denied!"), path);
-			return false;
-		}
-
-		// Get the root node
-		Xml.Node* root = xdoc->get_root_element ();
-		if ((root == null) || (root->name != "ipkcontrol")) {
-			warning (_("XML file '%s' is damaged."), path);
-			return false;
-		}
-
-		// If we got here, everything is fine
-		return true;
-	}
-
-	public bool create_new () {
-		// Already opened?
-		if (xdoc != null) {
-			warning ("You have to close the IPK XML first to create a new one!");
-			return false;
-		}
-
-		// Helber node
-		Xml.Node* nd;
-
-		xdoc = new Doc ("1.0");
-		Xml.Node* root = new Xml.Node (null, "ipkcontrol");
-		xdoc->set_root_element (root);
-
-		root->new_prop ("version", "1.1~pre");
-
-		root->new_text_child (null, "application", "");
-
-		Xml.Node* comment = new Xml.Node.comment ("IPK control description spec not yet completed!");
-		root->add_child (comment);
-		return true;
-	}
-
-	public void test_dump_xml () {
-		string xmlstr;
-		// This throws a compiler warning, see bug #547364
-		xdoc->dump_memory_format (out xmlstr);
-		xmlstr = "\n" + xmlstr + "\n";
-		debug (xmlstr);
-	}
-
-	private Xml.Node* root_node () {
-		Xml.Node* root = xdoc->get_root_element ();
-		if ((root == null) || (root->name != "ipkcontrol")) {
-			error (_("XML file is damaged or XML structure is no valid IPKControl!"));
-			return null;
-		}
-		return root;
-	}
-
-	internal Xml.Node* app_node () {
-		Xml.Node* appnd = get_xsubnode (root_node (), "application");
-		if (appnd == null)
-			error (_("XML file is damaged or XML structure is no valid IPKControl!"));
-		return appnd;
-	}
-
-	internal Xml.Node* pkg_node () {
-		Xml.Node* pkgnd = get_xsubnode (root_node (), "package");
-		if (pkgnd == null)
-			error (_("XML file is damaged or XML structure is no valid IPKControl!"));
-		return pkgnd;
-	}
-
-	internal Xml.Node* get_xsubnode (Xml.Node* sn, string id, string attr = "", string attr_value = "") {
-		Xml.Node* res = null;
-		assert (sn != null);
-
-		for (Xml.Node* iter = sn->children; iter != null; iter = iter->next) {
-			// Spaces between tags are also nodes, discard them
-			if (iter->type != ElementType.ELEMENT_NODE) {
-				continue;
-			}
-			if (iter->name == id) {
-				if (attr != "") {
-					if (get_node_content (get_xproperty (iter, attr)) == attr_value) {
-						res = iter;
-						break;
-					}
-				} else {
-					res = iter;
-					break;
-				}
-			}
-		}
-		// If node was not found, create new one
-		if (res == null) {
-			res = sn->new_text_child (null, id, "");
-			if (attr != "")
-				res->new_prop (attr, attr_value);
-		}
-		return res;
-	}
-
-	internal Xml.Node* get_xproperty (Xml.Node* nd, string id) {
-		Xml.Node* res = null;
-		assert (nd != null);
-		for (Xml.Attr* prop = nd->properties; prop != null; prop = prop->next) {
-			string attr_name = prop->name;
-			if (attr_name == id) {
-				res = prop->children;
-				break;
-			}
-		}
-		// If no property was found, create new one
-		if (res == null)
-			res = nd->new_prop (id, "")->children;
-		return res;
-	}
-
-	internal string get_node_content (Xml.Node* nd) {
-		string ret = "";
-		ret = nd->get_content ();
-		// TODO: Translate the string
-		return ret;
-	}
-
-	// Setter/Getter methods for XML properties
-	// Package itself
-
-	public void set_pkg_dependencies (ArrayList<Dependency> list) {
-		// Create dependencies node
-		Xml.Node* n = get_xsubnode (pkg_node (), "requires");
-		assert (n != null);
-
-		// Add the dependencies
-		foreach (Dependency dep in list) {
-			Xml.Node *depnode = n->new_child (null, dep.idname);
-
-			// If we have a feed-url for this, add it
-			if (dep.feed_url != "") {
-				Xml.Node *fn = get_xproperty (depnode, "feed");
-				fn->set_content (dep.feed_url);
-			}
-
-			// Add the file-list
-			foreach (string s in dep.raw_complist) {
-				Deps.ComponentType dct = dep.component_get_type (s);
-				string cname = dep.component_get_name (s);
-				if (dct == Deps.ComponentType.SHARED_LIB)
-					depnode->new_text_child (null, "lib", cname);
-				else if (dct == Deps.ComponentType.PYTHON)
-					depnode->new_text_child (null, "python", cname);
-				else
-					depnode->new_text_child (null, "file", cname);
-			}
-		}
-	}
-
-	public ArrayList<Dependency> get_pkg_dependencies () {
-		Xml.Node* n = get_xsubnode (pkg_node (), "requires");
-		ArrayList<Dependency> depList = new ArrayList<Dependency> ();
-		for (Xml.Node* iter = n->children; iter != null; iter = iter->next) {
-			// Spaces between tags are also nodes, discard them
-			if (iter->type != ElementType.ELEMENT_NODE) {
-				continue;
-			}
-			Dependency dep = new Dependency (iter->name);
-
-			string s = get_xproperty (iter, "feed")->get_content ();
-			if (s.strip () != "")
-				dep.feed_url = s;
-
-			// Fill dependency entry
-			for (Xml.Node* in = iter->children; in != null; in = in->next) {
-				// Spaces between tags are also nodes, discard them
-				if (in->type != ElementType.ELEMENT_NODE) {
-					continue;
-				}
-
-				if (in->name == "lib") {
-					dep.add_component (in->get_content (), Deps.ComponentType.SHARED_LIB);
-				}
-				if (in->name == "python") {
-					dep.add_component (in->get_content (), Deps.ComponentType.PYTHON);
-				}
-				if (in->name == "file") {
-					li_warning ("Resource %s depends on a file (%s), which is not supported at time.".printf (dep.idname, in->get_content ()));
-					dep.add_component (in->get_content (), Deps.ComponentType.FILE);
-				}
-			}
-			depList.add (dep);
-		}
-		return depList;
-	}
-
-	// Application
-	protected void set_app_str (string name, string content) {
-		if (content == "")
-			return;
-		Xml.Node* n = get_xsubnode (app_node (), name);
-		n->set_content (content);
-	}
-
-	protected string get_app_str (string name) {
-		if (name == "")
-			return "";
-		return get_node_content (get_xsubnode (app_node (), name));
-	}
-
-	protected void set_app_id (string type, string s) {
-		Xml.Node* n = get_xsubnode (app_node (), "id", "type", type);
-		n->set_content (s);
-	}
-
-	protected string get_app_id (string type) {
-		return get_node_content (get_xsubnode (app_node (), "id", "type", type));
-	}
-
-	public void set_application (AppItem app) {
-		if (app.desktop_file != "") {
-			Xml.Node* n1;
-			n1 = app_node()->new_text_child (null, "id", app.desktop_file);
-			n1->new_prop ("type", "desktop");
-		}
-		set_app_id ("idname", app.idname);
-		set_app_id ("desktop", app.desktop_file);
-
-		Xml.Node* n2 = get_xproperty (app_node (), "name");
-		n2->set_content (app.full_name);
-		Xml.Node* n3 = get_xproperty (app_node (), "version");
-		n3->set_content (app.version);
-		set_app_str ("summary", app.summary);
-		set_app_str ("url", app.website);
-	}
-
-	public AppItem get_application () {
-		Xml.Node* ndN = get_xproperty (app_node (), "name");
-		Xml.Node* ndV = get_xproperty (app_node (), "version");
-		AppItem app = new AppItem (ndN->get_content (), ndV->get_content ());
-
-		app.summary = get_app_str ("summary");
-		app.website = get_app_str ("url");
-		app.idname = get_app_id ("idname");
-		app.desktop_file = get_app_id ("desktop");
-
-		return app;
-	}
-
-	public virtual void set_app_description (string text) {
-		Xml.Node* n = get_xsubnode (app_node (), "description");
-		n->set_content (text);
-	}
-
-	public virtual string get_app_description () {
-		return get_node_content (get_xsubnode (app_node (), "description"));
-	}
-
-	public virtual void set_app_license (string text) {
-		Xml.Node* n = get_xsubnode (app_node (), "license");
-		n->set_content (text);
-	}
-
-	public virtual string get_app_license () {
-		return get_node_content (get_xsubnode (app_node (), "license"));
-	}
-
-
-}
-
-public class ControlData : Object {
-	private DoapData doap;
-	private MetaFile depData;
-	protected string ctrlDir;
-
-	public ControlData () {
+	internal Control () {
 		doap = new DoapData ();
 		depData = new MetaFile ();
-		ctrlDir = "";
 	}
 
-	private string find_doap_data (string dir) {
-		string doapFile = "";
-		try {
-			var directory = File.new_for_path (dir);
-			var enumerator = directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_NAME, 0);
-
-			FileInfo file_info;
-			while ((file_info = enumerator.next_file ()) != null) {
-				string path = Path.build_filename (dir, file_info.get_name (), null);
-				if (file_info.get_is_hidden ())
-					continue;
-
-				if (path.down ().has_suffix (".doap"))
-					doapFile = path;
-			}
-
-		} catch (GLib.Error e) {
-			stderr.printf (_("Error: %s\n"), e.message);
-			return "";
-		}
-		return doapFile;
-	}
-
-	public bool open (string dir) {
+	protected bool open_doap (string fname) {
 		if (doap.get_doap_url () != "")
 			return false;
-
-		string doapFile = find_doap_data (dir);
-		if (doapFile == "") {
-			debug ("No valid DOAP data found in directory %s - Can't open control files.", dir);
-			return false;
-		}
-
-		doap.add_file (doapFile);
-		ctrlDir = dir;
-
-		// TODO: Load all other data too
-
+		doap.add_file (fname);
 		return true;
+	}
+
+	protected bool open_depinfo (string depMetaFile) {
+		return depData.open_file (depMetaFile);
 	}
 
 	public AppItem get_application () {
@@ -382,7 +51,7 @@ public class ControlData : Object {
 		return item;
 	}
 
-	public void set_pkg_dependencies (ArrayList<Dependency> list) {
+	public void set_dependencies (ArrayList<Dependency> list) {
 		// Add the dependencies
 		foreach (Dependency dep in list) {
 			depData.reset ();
@@ -392,43 +61,87 @@ public class ControlData : Object {
 			// If we have a feed-url for this, add it
 			if (dep.feed_url != "")
 				depData.add_value ("Feed", dep.feed_url);
-
-			// TODO
-			#if 0
-			// Add the file-list
-			foreach (string s in dep.raw_complist) {
-				Deps.ComponentType dct = dep.component_get_type (s);
-				string cname = dep.component_get_name (s);
-				if (dct == Deps.ComponentType.SHARED_LIB)
-					depnode->new_text_child (null, "lib", cname);
-				else if (dct == Deps.ComponentType.PYTHON)
-					depnode->new_text_child (null, "python", cname);
-				else
-					depnode->new_text_child (null, "file", cname);
-			}
-			#endif
+			depData.add_value ("Libraries", dep.get_components_by_type_as_str (Deps.ComponentType.SHARED_LIB));
+			depData.add_value ("Binaries", dep.get_components_by_type_as_str (Deps.ComponentType.BINARY));
+			depData.add_value ("Python", dep.get_components_by_type_as_str (Deps.ComponentType.PYTHON));
+			depData.add_value ("Python2", dep.get_components_by_type_as_str (Deps.ComponentType.PYTHON_2));
+			depData.add_value ("Files", dep.get_components_by_type_as_str (Deps.ComponentType.FILE));
 		}
+	}
+
+	private void add_components_to_dep (Dependency dep, Deps.ComponentType ty, string list) {
+		if (list.strip () == "")
+			return;
+		// We don't like file dependencies
+		if (ty == Deps.ComponentType.FILE)
+			li_warning ("Resource %s depends on a file (%s), which is not supported at time.".printf (dep.idname, list));
+		if (list.index_of ("\n") <= 0) {
+			dep.add_component (list, ty);
+			return;
+		}
+
+		string[] comp = list.split ("\n");
+		for (int i = 0; i < comp.length; i++) {
+			string s = comp[i].strip ();
+			if (s != "")
+				dep.add_component (s, ty);
+		}
+
+	}
+
+	public ArrayList<Dependency> get_dependencies () {
+		ArrayList<Dependency> depList = new ArrayList<Dependency> ();
+		depData.reset ();
+
+		while (depData.open_block_by_field ("id")) {
+			Dependency dep = new Dependency (depData.get_value ("id"));
+
+			string s = depData.get_value ("feed");
+			if (s.strip () != "")
+				dep.feed_url = s;
+			add_components_to_dep (dep, Deps.ComponentType.SHARED_LIB, depData.get_value ("libraries"));
+			add_components_to_dep (dep, Deps.ComponentType.BINARY, depData.get_value ("binaries"));
+			add_components_to_dep (dep, Deps.ComponentType.PYTHON, depData.get_value ("python"));
+			add_components_to_dep (dep, Deps.ComponentType.PYTHON_2, depData.get_value ("python2"));
+			add_components_to_dep (dep, Deps.ComponentType.FILE, depData.get_value ("files"));
+			depList.add (dep);
+		}
+		return depList;
 	}
 }
 
-public class Control : CXml {
+public class PackControl : Control {
+	private string ipkVersion;
 
-	public Control () {
-
+	public PackControl () {
+		ipkVersion = "1.0";
 	}
 
-	public bool open_file (string fname) {
-		return this.open (fname);
+	public bool open_control (string fDoap, string fDeps, string fIpkV) {
+		bool ret;
+		ret = this.open_doap (fDoap);
+		if (!ret)
+			return false;
+		ret = this.open_depinfo (fDeps);
+		if (!ret)
+			return false;
+		return true;
 	}
 
-	public bool save_to_file (string fname) {
-//#if FORMATTED_XML
-		xmlThrDefKeepBlanksDefaultValue (1);
-		xmlThrDefIndentTreeOutput (1);
-//#endif
-		return xdoc->save_format_file (fname, 1) == 0;
+	public bool save_to_dir (string dirPath) {
+		bool ret;
+		ret = depData.save_to_file (Path.build_filename (dirPath, "dependencies.list", null));
+		return ret;
 	}
 
+	[CCode (array_length = false, array_null_terminated = true)]
+	public string[] get_files () {
+		string[] res;
+		res = { "dependencies.list", null };
+		return res;
+	}
+
+#if 0
 	public override void set_app_license (string text) {
 		base.set_app_license (text);
 	}
@@ -466,41 +179,76 @@ public class Control : CXml {
 	public override string get_app_description () {
 		return get_node_content (get_xsubnode (app_node (), "description"));
 	}
+#endif
 
 }
 
-public class Script : CXml {
+public class ControlDir : Control {
+	private string ctrlDir;
 
-	public Script () {
-
+	public ControlDir () {
+		ctrlDir = "";
 	}
 
-	public bool load_from_file (string fname) {
-		return this.open (fname);
+	private string find_doap_data (string dir) {
+		string doapFile = "";
+		try {
+			var directory = File.new_for_path (dir);
+			var enumerator = directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_NAME, 0);
+
+			FileInfo file_info;
+			while ((file_info = enumerator.next_file ()) != null) {
+				string path = Path.build_filename (dir, file_info.get_name (), null);
+				if (file_info.get_is_hidden ())
+					continue;
+
+				if (path.down ().has_suffix (".doap"))
+					doapFile = path;
+			}
+
+		} catch (GLib.Error e) {
+			stderr.printf (_("Error: %s\n"), e.message);
+			return "";
+		}
+		return doapFile;
 	}
 
-	public bool save_to_file (string fname) {
-//#if FORMATTED_XML
-		xmlThrDefKeepBlanksDefaultValue (1);
-		xmlThrDefIndentTreeOutput (1);
-//#endif
-		xdoc->save_format_file (fname, 1);
+	public bool open_dir (string dir) {
+		if (ctrlDir != "")
+			return false;
+
+		string doapFile = find_doap_data (dir);
+		if (doapFile == "") {
+			debug ("No valid DOAP data found in directory %s - Can't open control files.", dir);
+			return false;
+		}
+
+		bool ret = this.open_doap (doapFile);
+		if (!ret)
+			return false;
+		ctrlDir = dir;
+
+		string depInfoFileName = Path.build_filename (ctrlDir, "dependencies.list", null);
+		if (FileUtils.test (depInfoFileName, FileTest.EXISTS)) {
+			this.open_depinfo (depInfoFileName);
+		}
 		return true;
 	}
 
-	public override void set_app_description (string text) {
-		base.set_app_description (text);
-	}
-
-	public override string get_app_description () {
-		return base.get_app_description ();
+	public bool save_control () {
+		bool ret;
+		ret = depData.save_to_file (Path.build_filename (ctrlDir, "dependencies.list", null));
+		return ret;
 	}
 
 	public bool get_autosolve_dependencies () {
+		/*
 		Xml.Node* n = get_xsubnode (pkg_node (), "requires");
 		if (get_node_content (get_xproperty (n, "find")) == "auto")
 			return true;
 		return false;
+		*/
+		return true;
 	}
 
 }

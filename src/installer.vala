@@ -170,7 +170,7 @@ public class Setup : Object {
 		emit_status (StatusEnum.RESOLVING_DEPENDENCIES,
 			     _("Resolving dependencies of '%s'.").printf (app.full_name));
 
-		Gee.ArrayList<IPK.Dependency> pkgDeps = ipkp.control.get_pkg_dependencies ();
+		Gee.ArrayList<IPK.Dependency> pkgDeps = ipkp.control.get_dependencies ();
 
 		// Construct new dependency manager
 		Deps.DepManager depman = new Deps.DepManager (db);
@@ -210,8 +210,6 @@ public class Setup : Object {
 		// Emit status message
 		emit_status (StatusEnum.REGISTERING_APPLICATION,
 			     _("Making '%s' known to your system.").printf (app.full_name));
-
-		app.description = control.get_app_description ();
 
 		// Now register the item
 		ret = db.add_application (app);

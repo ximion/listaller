@@ -26,7 +26,7 @@ namespace Listaller.IPK {
 
 private class MetaFile : Object {
 	private ArrayList<string>? content;
-	private int current_block_id;
+	private int currentBlockId;
 
 	public MetaFile () {
 		content = new ArrayList<string> ();
@@ -60,6 +60,26 @@ private class MetaFile : Object {
 		return true;
 	}
 
+	public bool save_to_file (string fname, bool overrideExisting = false) {
+		var file = File.new_for_path (fname);
+		if ( (!overrideExisting) && (file.query_exists ()))
+			return false;
+
+		try {
+			var file_stream = file.create (FileCreateFlags.NONE);
+			var data_stream = new DataOutputStream (file_stream);
+
+			// Write contents of this metalist to file
+			foreach (string line in content) {
+					data_stream.put_string (line + "\n");
+			}
+		} catch (Error e) {
+			li_warning (_("Unable to write meta information! Message: %s").printf (e.message));
+			return false;
+		}
+		return true;
+	}
+
 	private bool is_empty (string line) {
 		string s = line.down ().strip ();
 		if ((s == "") || (s.has_prefix ("#")))
@@ -76,11 +96,11 @@ private class MetaFile : Object {
 			string line = iter.get ();
 			if ((line.down ().has_prefix (field.down () + ":")) &&
 			(line.substring (line.index_of (":") + 1).strip ().down () == value.down ())) {
-				current_block_id = iter.index ();
+				currentBlockId = iter.index ();
 				while (iter.has_previous ()) {
 					line = iter.get ();
 					if (is_empty (line)) {
-						current_block_id = iter.index () + 1;
+						currentBlockId = iter.index () + 1;
 						return true;
 					}
 					iter.previous ();
@@ -88,6 +108,40 @@ private class MetaFile : Object {
 				break;
 			}
 			iter.next ();
+		}
+		return false;
+	}
+
+	public bool open_block_by_field (string field, bool resetIndex = false) {
+		if (resetIndex)
+			reset ();
+		var iter = content.list_iterator ();
+
+		bool start = false;
+		if (currentBlockId < 0)
+			start = true;
+		for (iter.first (); iter.has_next (); iter.next ()) {
+			if (iter.index () < currentBlockId)
+				continue;
+
+			string line = iter.get ();
+			if (is_empty (line))
+				start = true;
+			if (!start)
+				continue;
+
+			if (line.down ().has_prefix (field.down () + ":")) {
+				currentBlockId = iter.index ();
+				while (iter.has_previous ()) {
+					line = iter.get ();
+					if (is_empty (line)) {
+						currentBlockId = iter.index () + 1;
+						return true;
+					}
+					iter.previous ();
+				}
+				break;
+			}
 		}
 		return false;
 	}
@@ -100,7 +154,7 @@ private class MetaFile : Object {
 		iter.first ();
 
 		while (iter.has_next ()) {
-			if (iter.index () < current_block_id) {
+			if (iter.index () < currentBlockId) {
 				iter.next ();
 				continue;
 			}
@@ -125,11 +179,13 @@ private class MetaFile : Object {
 	public bool add_value (string field, string value, bool openNewBlock = false) {
 		if (field == "")
 			return false;
+		if (value == "")
+			return true;
 
 		// Prepare the value
 		string[] newValue = value.split ("\n");
 
-		if (current_block_id == 0) {
+		if (currentBlockId < 0) {
 			// Create a new field
 			if (newValue.length == 1) {
 				content.add ("%s: %s".printf (field, newValue[0]));
@@ -142,7 +198,7 @@ private class MetaFile : Object {
 				content.add ("");
 			}
 			if (openNewBlock)
-				current_block_id = content.size;
+				currentBlockId = content.size;
 		} else {
 			// Insert into existing field
 			var iter = content.list_iterator ();
@@ -150,7 +206,7 @@ private class MetaFile : Object {
 			int location = -1;
 
 			while (iter.has_next ()) {
-				if (iter.index () < current_block_id) {
+				if (iter.index () < currentBlockId) {
 					iter.next ();
 					continue;
 				}
@@ -185,7 +241,7 @@ private class MetaFile : Object {
 	}
 
 	public void reset () {
-		current_block_id = 0;
+		currentBlockId = -1;
 	}
 
 }

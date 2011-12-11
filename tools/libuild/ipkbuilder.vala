@@ -32,7 +32,7 @@ private class Builder : Object {
 	private string outname;
 	private string outdir;
 	private bool failed = false;
-	private IPK.Script ipks;
+	private IPK.ControlDir ipkCDir;
 	private ArrayList<string> ctrlfiles;
 	private ArrayList<string> datapkgs;
 	private AppItem appInfo;
@@ -51,7 +51,7 @@ private class Builder : Object {
 		srcdir = input_dir;
 		Listaller.Settings conf = new Listaller.Settings ();
 		tmpdir = conf.get_unique_tmp_dir ("ipkbuild");
-		ipks = new IPK.Script ();
+		ipkCDir = new IPK.ControlDir ();
 		outdir = "";
 		outname = "";
 		ctrlfiles = new ArrayList<string> ();
@@ -344,7 +344,7 @@ private class Builder : Object {
 		// Check for valid installer source dirs
 		srcdir = find_ipk_source_dir (srcdir);
 		if (srcdir == null) {
-			//: IPk builder was unable to find IPK source scripts
+			// IPK builder was unable to find IPK source scripts
 			emit_error (_("Could not find IPK source files!"));
 			return false;
 		}
@@ -382,10 +382,10 @@ private class Builder : Object {
 
 		pkbuild_action ("Building IPK control file.");
 
-		IPK.Control ictrl = new IPK.Control ();
+		IPK.PackControl ictrl = new IPK.PackControl ();
 
 		// Load definitions
-		ipks.load_from_file (Path.build_filename (srcdir, "control.xml", null));
+		ipkCDir.open_dir (srcdir);
 		IPK.FileList flist = new IPK.FileList (false);
 		flist.open (Path.build_filename (srcdir, "files-current.list", null));
 
@@ -393,16 +393,19 @@ private class Builder : Object {
 		create_dir_parents (Path.build_filename (tmpdir, "data", null));
 
 		// Get application-id from IPK source control XML file
-		appInfo = ipks.get_application ();
+		appInfo = ipkCDir.get_application ();
 
 		// Build IPK control file
+		//FIXME
+		/*
 		ictrl.create_new ();
 		ictrl.set_application (appInfo);
-		ictrl.set_app_license (ipks.get_app_license ());
-		ictrl.set_app_description (load_text_from_element (ipks.get_app_description ()));
+		ictrl.set_app_license (ipkCDir.get_app_license ());
+		ictrl.set_app_description (load_text_from_element (ipkCDir.get_app_description ()));
+		*/
 
-		ArrayList<IPK.Dependency> deps = ipks.get_pkg_dependencies ();
-		if (ipks.get_autosolve_dependencies ()) {
+		ArrayList<IPK.Dependency> deps = ipkCDir.get_dependencies ();
+		if (ipkCDir.get_autosolve_dependencies ()) {
 			DepFind df = new DepFind (Path.build_filename (srcdir, "..", null));
 			ArrayList<IPK.Dependency> list = df.get_dependencies ();
 			foreach (IPK.Dependency d1 in list) {
@@ -415,14 +418,18 @@ private class Builder : Object {
 			}
 			deps.add_all (list);
 		}
-		ictrl.set_pkg_dependencies (deps);
+		ictrl.set_dependencies (deps);
 
 		if (failed)
 			return false;
 
-		string tmp = Path.build_filename (tmpdir, "control", "control.xml", null);
-		ictrl.save_to_file (tmp);
-		ctrlfiles.add (tmp);
+		string tmp = Path.build_filename (tmpdir, "control", null);
+		ictrl.save_to_dir (tmp);
+		// Get the files this control data consists of
+		string[] files = ictrl.get_files ();
+		for (int i = 0; files[i] != null; i++) {
+			ctrlfiles.add (files[i]);
+		}
 
 		pkbuild_action ("Generating package...");
 
