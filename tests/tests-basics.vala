@@ -126,6 +126,22 @@ void test_doap () {
 	doda.get_project ();
 }
 
+void test_metafile () {
+	var mf = new IPK.MetaFile ();
+	bool ret;
+
+	ret = mf.open_file (Path.build_filename (datadir, "test-requirements.list"));
+	assert (ret == true);
+	mf.open_block_by_value ("name", "vorbis");
+	string value = mf.get_value ("libraries");
+	assert (value == "libvorbis.so.*\nlibvorbisfile.so.*\nlibvorbisenc.so.*");
+
+	ret = mf.open_block_by_value ("id", "mesagl");
+	assert (ret == true);
+	mf.add_value ("Test", "Blahfvlshfikdj");
+	mf.add_value ("Test2", "hgdufjhbudj\nhugdvh ushda743\nsuhfusdha7wdwe");
+}
+
 int main (string[] args) {
 	msg ("=== Running Basic Tests ===");
 	datadir = args[1];
@@ -138,6 +154,7 @@ int main (string[] args) {
 	test_utils ();
 	test_application_ids ();
 	test_versions ();
+	test_metafile ();
 	test_doap ();
 	test_zfeeds ();
 	Test.run ();

@@ -1,0 +1,59 @@
+# A test-list of software dependencies
+
+Name: LibGCC
+ID: libgcc
+Standard: true
+Libraries: libgcc_s.so.*
+           libstdc++.so.*
+
+Name: Xorg
+ID: xorg
+Standard: true
+Libraries: libX11.so.*
+           libXext.so.*
+           libuuid.so.*
+           libxcb.so.*
+           libXau.so.*
+           libXdmcp.so.*
+           libXtst.so.*
+           libXi.so.*
+           libSM.so.*
+           libICE.so.*
+           libXcomposite.so.*
+           libXdamage.so.*
+           libXfixes.so.*
+           libXrender.so.*
+           libXinerama.so.*
+           libXrandr.so.*
+           libXcursor.so.*
+           libXft.so.*
+           libXt.so.*
+           libfreetype.so.*
+
+Name: MesaGL
+ID: mesagl
+Standard: true
+Libraries: libGL.so.*
+           libGLU.so.*
+
+Name: ZLib
+ID: zlib
+Standard: true
+Libraries: libz.so.*
+# a buggy comment
+
+Name: Ogg
+ID: libogg
+Feed: http://services.sugarlabs.org/libogg
+Libraries: libogg.so.*
+
+Name: Vorbis
+ID: libvorbis
+Feed: http://services.sugarlabs.org/libvorbis
+Libraries: libvorbis.so.*
+           libvorbisfile.so.*
+           libvorbisenc.so.*
+
+Name: OpenAL
+ID: openal
+Libraries: libopenal.so.*
