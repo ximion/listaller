@@ -350,6 +350,23 @@ private string? load_file_to_string (string fname) throws IOError {
 	return res;
 }
 
+private bool save_string_to_file (string fname, string data, bool overrideExisting = false) throws IOError {
+	var file = File.new_for_path (fname);
+	if ( (!overrideExisting) && (file.query_exists ()))
+		return false;
+
+	try {
+		var file_stream = file.create (FileCreateFlags.NONE);
+		var data_stream = new DataOutputStream (file_stream);
+
+		data_stream.put_string (data);
+
+	} catch (IOError e) {
+		throw e;
+	}
+	return true;
+}
+
 private string concat_binfiles (string afname, string bfname) {
 	const int BUFFER_SIZE = 512;
 	//TODO: This can be done better, but it's easier to debug

@@ -44,6 +44,7 @@ namespace RDF {
 		public Model (World world, Storage storage, string options_str);
 		public int add_statement (Statement stmt);
 		public int add_statements (Stream statement_stream);
+		public int size ();
 
 	}
 

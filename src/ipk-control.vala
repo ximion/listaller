@@ -35,7 +35,12 @@ public abstract class Control : Object {
 		depData = new MetaFile ();
 	}
 
-	protected bool open_doap (string fname) {
+	protected bool open_doap (string data) {
+		doap.add_data (data);
+		return true;
+	}
+
+	protected bool open_doap_file (string fname) {
 		if (doap.get_doap_url () != "")
 			return false;
 		doap.add_file (fname);
@@ -112,6 +117,8 @@ public abstract class Control : Object {
 
 public class PackControl : Control {
 	private string ipkVersion;
+	private string doapData;
+	private string appName;
 
 	public PackControl () {
 		ipkVersion = "1.0";
@@ -119,18 +126,23 @@ public class PackControl : Control {
 
 	public bool open_control (string fDoap, string fDeps, string fIpkV) {
 		bool ret;
-		ret = this.open_doap (fDoap);
+		doapData = load_file_to_string (fDoap);
+		ret = this.open_doap (doapData);
 		if (!ret)
 			return false;
 		ret = this.open_depinfo (fDeps);
 		if (!ret)
 			return false;
+		appName = this.get_application ().idname;
 		return true;
 	}
 
 	public bool save_to_dir (string dirPath) {
 		bool ret;
 		ret = depData.save_to_file (Path.build_filename (dirPath, "dependencies.list", null));
+		if (!ret)
+			return false;
+		ret = save_string_to_file (Path.build_filename (dirPath, appName + ".doap", null), doapData);
 		return ret;
 	}
 
