@@ -57,9 +57,10 @@ void test_ipk_package () {
 	ipk.error_code.connect (test_ipk_error_code_cb);
 
 	ret = ipk.initialize ();
-	AppItem app = ipk.control.get_application ();
 	assert (ret == true);
-	assert (app.full_name == "FooBar");
+
+	AppItem app = ipk.control.get_application ();
+	assert (app.full_name == "Foo Bar");
 
 	Collection<IPK.FileEntry> flist = ipk.get_file_entries ();
 	foreach (IPK.FileEntry e in flist) {

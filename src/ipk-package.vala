@@ -114,19 +114,27 @@ private class Package : Object {
 				    _("Could not read IPK control information! Error: %s").printf (ar.error_string ()));
 			return false;
 		}
+		string doapFileName = "";
 
 		while (ar.next_header (out e) == Result.OK) {
-			switch (e.pathname ()) {
-				case "control.xml":
+			string pName = e.pathname ();
+			if (pName.has_suffix (".doap")) {
 					ret = extract_entry_to (ar, e, wdir);
-					break;
-				// FIXME: Fix this for mutiple data archives
-				case "files-all.list":
-					ret = extract_entry_to (ar, e, wdir);
-					break;
-				default:
-					ar.read_data_skip ();
-					break;
+					if (ret)
+						doapFileName = pName;
+			} else {
+				switch (pName) {
+					// FIXME: Fix this for mutiple data archives
+					case "files-all.list":
+						ret = extract_entry_to (ar, e, wdir);
+						break;
+					case "dependencies.list":
+						ret = extract_entry_to (ar, e, wdir);
+						break;
+					default:
+						ar.read_data_skip ();
+						break;
+				}
 			}
 		}
 		// Close & remove tmp archive
@@ -134,12 +142,14 @@ private class Package : Object {
 
 		if (!ret)
 			return false;
+		if (doapFileName == "")
+			return false;
 
 		// Check if all metadata is available
-		string tmpf = Path.build_filename (wdir, "control.xml", null);
+		string tmpf = Path.build_filename (wdir, doapFileName, null);
 		ret = false;
 		if (FileUtils.test (tmpf, FileTest.EXISTS)) {
-			ret = ipkc.open_control (tmpf, "", "::1.0");
+			ret = ipkc.open_control (tmpf, Path.build_filename (wdir, "dependencies.list", null), "::1.0");
 		}
 
 		// Fetch application-information as an app-id
