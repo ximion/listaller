@@ -22,7 +22,7 @@ using GLib;
 
 namespace Listaller {
 
-private errordomain RdfError {
+protected errordomain RdfError {
 	NO_RESULTS,
 	INVALID_PATH,
 	INVALID_QUERY;
@@ -37,11 +37,10 @@ private class RDFQuery : Object {
 
 	static const string SPARQL = "sparql";
 
-	public RDFQuery () {
-		string parserName;
+	public RDFQuery (string? parserName = null) {
 		world = new RDF.World ();
 		storage = new RDF.Storage (world, "hashes", "doap_q", "new='yes',hash-type='memory',dir='.'");
-		parser = new RDF.Parser (world, "guess", null, null);
+		parser = new RDF.Parser (world, parserName, null, null);
 		model = new RDF.Model (world, storage, "");
 	}
 
@@ -61,7 +60,6 @@ private class RDFQuery : Object {
 	public void add_location_str (string data, string baseUrl) {
 		debug ("Adding new RDF info from string");
 
-		debug (data);
 		RDF.Stream stream = parser.parse_string_as_stream (data, new RDF.Uri (world, baseUrl));
 		model.add_statements (stream);
 	}
@@ -79,7 +77,7 @@ private class RDFQuery : Object {
 	}
 }
 
-private class DoapData : Object {
+protected class DoapData : Object {
 	private RDFQuery querier;
 	private string path;
 

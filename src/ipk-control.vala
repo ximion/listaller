@@ -29,10 +29,12 @@ namespace Listaller.IPK {
 public abstract class Control : Object {
 	internal DoapData doap;
 	internal MetaFile depData;
+	protected AppItem? appItem;
 
 	internal Control () {
 		doap = new DoapData ();
 		depData = new MetaFile ();
+		appItem = null;
 	}
 
 	protected bool open_doap (string data) {
@@ -52,7 +54,11 @@ public abstract class Control : Object {
 	}
 
 	public AppItem get_application () {
-		AppItem item = doap.get_project ();
+		if (appItem != null)
+			return appItem;
+		AppItem? item = doap.get_project ();
+		if (item != null)
+			appItem = item;
 		return item;
 	}
 
@@ -118,7 +124,6 @@ public abstract class Control : Object {
 public class PackControl : Control {
 	private string ipkVersion;
 	private string doapData;
-	private string appName;
 
 	public PackControl () {
 		ipkVersion = "1.0";
@@ -133,8 +138,34 @@ public class PackControl : Control {
 		ret = this.open_depinfo (fDeps);
 		if (!ret)
 			return false;
-		appName = this.get_application ().idname;
+
+		return cache_appitem ();
+	}
+
+	private bool cache_appitem () {
+		// Cache application entry
+		this.get_application ();
+		if (this.appItem.idname == "") {
+			error ("Listaller AppItem did not have a valid id-name!");
+			appItem = null;
+			return false;
+		}
 		return true;
+	}
+
+	public bool create_new (string? newDoapData, string IpkV) {
+		if ((newDoapData == null) || (newDoapData == "")) {
+			li_error ("Error while processing DOAP data: Data was NULL!");
+			return false;
+		}
+
+		doapData = newDoapData;
+		doap = new DoapData ();
+		depData.clear ();
+		bool ret = this.open_doap (doapData);
+		if (ret)
+			ret = cache_appitem ();
+		return ret;
 	}
 
 	public bool save_to_dir (string dirPath) {
@@ -142,14 +173,18 @@ public class PackControl : Control {
 		ret = depData.save_to_file (Path.build_filename (dirPath, "dependencies.list", null));
 		if (!ret)
 			return false;
-		ret = save_string_to_file (Path.build_filename (dirPath, appName + ".doap", null), doapData);
+		ret = save_string_to_file (Path.build_filename (dirPath, this.appItem.idname + ".doap", null), doapData);
+
 		return ret;
 	}
 
 	[CCode (array_length = false, array_null_terminated = true)]
 	public string[] get_files () {
 		string[] res;
-		res = { "dependencies.list", null };
+		res = { "dependencies.list" };
+		res += this.appItem.idname + ".doap";
+		res += null;
+
 		return res;
 	}
 
@@ -197,9 +232,11 @@ public class PackControl : Control {
 
 public class ControlDir : Control {
 	private string ctrlDir;
+	private string doapFile;
 
 	public ControlDir () {
 		ctrlDir = "";
+		doapFile = "";
 	}
 
 	private string find_doap_data (string dir) {
@@ -229,13 +266,13 @@ public class ControlDir : Control {
 		if (ctrlDir != "")
 			return false;
 
-		string doapFile = find_doap_data (dir);
+		doapFile = find_doap_data (dir);
 		if (doapFile == "") {
 			debug ("No valid DOAP data found in directory %s - Can't open control files.", dir);
 			return false;
 		}
 
-		bool ret = this.open_doap (doapFile);
+		bool ret = this.open_doap_file (doapFile);
 		if (!ret)
 			return false;
 		ctrlDir = dir;
@@ -245,6 +282,14 @@ public class ControlDir : Control {
 			this.open_depinfo (depInfoFileName);
 		}
 		return true;
+	}
+
+	public string? get_doap_data () {
+		if (doapFile == "")
+			return null;
+
+		string doap = load_file_to_string (doapFile);
+		return doap;
 	}
 
 	public bool save_control () {

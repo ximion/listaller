@@ -25,11 +25,11 @@ using Listaller;
 namespace Listaller.IPK {
 
 private class MetaFile : Object {
-	private ArrayList<string>? content;
+	private LinkedList<string>? content;
 	private int currentBlockId;
 
 	public MetaFile () {
-		content = new ArrayList<string> ();
+		content = new LinkedList<string> ();
 	}
 
 	public bool open_file (string fname, bool strip_comments = true) {
@@ -61,6 +61,9 @@ private class MetaFile : Object {
 	}
 
 	public bool save_to_file (string fname, bool overrideExisting = false) {
+		if (content.last ().strip () == "")
+			content.remove_at (content.size - 1);
+
 		var file = File.new_for_path (fname);
 		if ( (!overrideExisting) && (file.query_exists ()))
 			return false;
@@ -182,23 +185,26 @@ private class MetaFile : Object {
 		if (value == "")
 			return true;
 
+
 		// Prepare the value
 		string[] newValue = value.split ("\n");
+
+		if (openNewBlock)
+			currentBlockId = -1;
 
 		if (currentBlockId < 0) {
 			// Create a new field
 			if (newValue.length == 1) {
-				content.add ("%s: %s".printf (field, newValue[0]));
 				content.add ("");
+				content.add ("%s: %s".printf (field, newValue[0]));
 			} else {
+				content.add ("");
 				content.add ("%s: %s".printf (field, newValue[0]));
 				for (int i = 1; i < newValue.length; i++) {
 					content.add (" " + newValue[i]);
 				}
-				content.add ("");
 			}
-			if (openNewBlock)
-				currentBlockId = content.size;
+			currentBlockId = content.size;
 		} else {
 			// Insert into existing field
 			var iter = content.list_iterator ();
@@ -238,6 +244,11 @@ private class MetaFile : Object {
 		foreach (string s in content) {
 			stdout.printf (s + "\n");
 		}
+	}
+
+	public void clear () {
+		reset ();
+		content.clear ();
 	}
 
 	public void reset () {

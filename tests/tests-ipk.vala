@@ -68,7 +68,8 @@ void test_ipk_package () {
 	}
 }
 
-//FIXME
+/*
+NOTE: This is an old IPK-Control read/write test
 void test_ipk_control_file () {
 	msg ("Controlfile tests");
 	IPK.PackControl ipkc = new IPK.PackControl ();
@@ -109,6 +110,22 @@ void test_ipk_control_file () {
 	assert (list[0].full_name == "alpha");
 	assert (list[0].has_component ("/etc/alpha.conf", Deps.ComponentType.FILE) == true);
 }
+*/
+
+void test_ipk_packcontrol () {
+	msg ("IPK PackControl tests");
+	string ctrlDir = Path.build_filename (datadir, "..", "foobar", "ipkinstall", null);
+
+	IPK.PackControl ipkc = new IPK.PackControl ();
+
+	bool ret;
+	ret = ipkc.open_control (Path.build_filename (ctrlDir, "foobar.doap", null), Path.build_filename (ctrlDir, "files-current.list", null), "::TODO");
+	assert (ret);
+
+	AppItem app = ipkc.get_application ();
+	assert (app.full_name == "Foo Bar");
+	assert (app.idname == "foobar");
+}
 
 void test_ipk_filelist_file () {
 	msg ("Filelist tests.");
@@ -142,7 +159,7 @@ int main (string[] args) {
 	assert (FileUtils.test (datadir, FileTest.EXISTS) != false);
 
 	Test.init (ref args);
-	test_ipk_control_file ();
+	test_ipk_packcontrol ();
 	test_ipk_filelist_file ();
 	test_ipk_package ();
 	Test.run ();

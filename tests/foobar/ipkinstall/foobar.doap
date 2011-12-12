@@ -14,10 +14,13 @@ Listaller demo scripts.
 
 Please use Markdown for formatting!
 </description>
+
  <homepage rdf:resource="http://listaller.tenstral.net/stuff/foobar"/>
  <download-page rdf:resource="http://listaller.tenstral.net/stuff/foobar"/>
+
  <programming-language>C</programming-language>
  <license rdf:resource="http://usefulinc.com/doap/licenses/lgpl"/>
+
  <maintainer>
   <foaf:Person>
      <foaf:name>Matthias Klumpp</foaf:name>

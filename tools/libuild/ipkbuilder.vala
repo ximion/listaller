@@ -395,14 +395,8 @@ private class Builder : Object {
 		// Get application-id from IPK source control XML file
 		appInfo = ipkCDir.get_application ();
 
-		// Build IPK control file
-		//FIXME
-		/*
-		ictrl.create_new ();
-		ictrl.set_application (appInfo);
-		ictrl.set_app_license (ipkCDir.get_app_license ());
-		ictrl.set_app_description (load_text_from_element (ipkCDir.get_app_description ()));
-		*/
+		// Build IPK control directory
+		ictrl.create_new (ipkCDir.get_doap_data (), "::TODO");
 
 		ArrayList<IPK.Dependency> deps = ipkCDir.get_dependencies ();
 		if (ipkCDir.get_autosolve_dependencies ()) {
@@ -425,10 +419,11 @@ private class Builder : Object {
 
 		string tmp = Path.build_filename (tmpdir, "control", null);
 		ictrl.save_to_dir (tmp);
+
 		// Get the files this control data consists of
 		string[] files = ictrl.get_files ();
 		for (int i = 0; files[i] != null; i++) {
-			ctrlfiles.add (files[i]);
+			ctrlfiles.add (Path.build_filename (tmp, files[i], null));
 		}
 
 		pkbuild_action ("Generating package...");
