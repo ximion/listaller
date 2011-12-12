@@ -65,7 +65,7 @@ public class Dependency: Object {
 			return _satisfied;
 		}
 		set {
-			if ((idname != "") && (!is_standardlib) && (!has_installdata ())) {
+			if ((idname != "") && (!is_standardlib) && (!has_installdata ()) && (feed_url == "")) {
 				warning ("Trying to set dependency %s to 'satisfied', although it is not a standardlib and it does not have installdata!", idname);
 			}
 			_satisfied = value;
