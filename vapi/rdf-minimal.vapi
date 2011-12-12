@@ -18,18 +18,18 @@
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-[CCode (cprefix="lrdf_", lower_case_cprefix="librdf_", cheader_filename = "lrdf.h")]
+[CCode (cprefix="librdf_", lower_case_cprefix="librdf_", cheader_filename = "librdf.h")]
 namespace RDF {
 
 	[Compact]
-	[CCode (cname="struct librdf_storage", free_function="librdf_free_storage", cprefix="librdf_storage_")]
+	[CCode (cname="librdf_storage", free_function="librdf_free_storage", cprefix="librdf_storage_")]
 	public class Storage {
 		[CCode (cname="librdf_new_storage")]
 		public Storage (World world, string storage_name, string name, string options_str);
 	}
 
 	[Compact]
-	[CCode (cname="struct librdf_world", free_function="librdf_free_world", cprefix="librdf_world_")]
+	[CCode (cname="librdf_world", free_function="librdf_free_world", cprefix="librdf_world_")]
 	public class World {
 		[CCode (cname="librdf_new_world")]
 		public World ();
@@ -38,7 +38,7 @@ namespace RDF {
 	}
 
 	[Compact]
-	[CCode (cname="struct librdf_model", free_function="librdf_free_model", cprefix="librdf_model_")]
+	[CCode (cname="librdf_model", free_function="librdf_free_model", cprefix="librdf_model_")]
 	public class Model {
 		[CCode (cname="librdf_new_model")]
 		public Model (World world, Storage storage, string options_str);
@@ -49,7 +49,7 @@ namespace RDF {
 	}
 
 	[Compact]
-	[CCode (cname="struct librdf_parser", free_function="librdf_free_parser", cprefix="librdf_parser_")]
+	[CCode (cname="librdf_parser", free_function="librdf_free_parser", cprefix="librdf_parser_")]
 	public class Parser {
 		[CCode (cname="librdf_new_parser")]
 		public Parser (World world, string? name, string? mime_type, Uri? type_uri);
@@ -59,7 +59,7 @@ namespace RDF {
 	}
 
 	[Compact]
-	[CCode (cname="struct librdf_uri", free_function="librdf_free_uri", cprefix="librdf_uri_")]
+	[CCode (cname="librdf_uri", free_function="librdf_free_uri", cprefix="librdf_uri_")]
 	public class Uri {
 		[CCode (cname="librdf_new_uri")]
 		public Uri (World world, string uri_string);
@@ -68,7 +68,7 @@ namespace RDF {
 	}
 
 	[Compact]
-	[CCode (cname="struct librdf_stream", free_function="librdf_free_stream", cprefix="librdf_stream_")]
+	[CCode (cname="librdf_stream", free_function="librdf_free_stream", cprefix="librdf_stream_")]
 	public class Stream {
 		/* [CCode (cname="librdf_new_stream")]
 		public Stream (World world, void* context, int (*is_end_method)(void*), int (*next_method)(void*), void* (*get_method)(void*, int), void (*finished_method)(void*));
@@ -76,13 +76,13 @@ namespace RDF {
 	}
 
 	[Compact]
-	[CCode (cname="struct librdf_statement", free_function="librdf_free_statement", cprefix="librdf_statement_")]
+	[CCode (cname="librdf_statement", free_function="librdf_free_statement", cprefix="librdf_statement_")]
 	public class Statement {
 
 	}
 
 	[Compact]
-	[CCode (cname="struct librdf_query", free_function="librdf_free_query", cprefix="librdf_query_")]
+	[CCode (cname="librdf_query", free_function="librdf_free_query", cprefix="librdf_query_")]
 	public class Query {
 		[CCode (cname="librdf_new_query")]
 		public Query (World world, string name, Uri? uri, string query_string, Uri base_uri);
@@ -91,7 +91,7 @@ namespace RDF {
 	}
 
 	[Compact]
-	[CCode (cname="struct librdf_query_results", free_function="librdf_free_query_results", cprefix="librdf_query_results_")]
+	[CCode (cname="librdf_query_results", free_function="librdf_free_query_results", cprefix="librdf_query_results_")]
 	public class QueryResults {
 		public int get_count ();
 		public bool next ();
@@ -103,7 +103,7 @@ namespace RDF {
 	}
 
 	[Compact]
-	[CCode (cname="struct librdf_node", free_function="librdf_free_node", cprefix="librdf_node_")]
+	[CCode (cname="librdf_node", free_function="librdf_free_node", cprefix="librdf_node_")]
 	public class Node {
 		[CCode (cname="librdf_new_node")]
 		public Node (World world);

@@ -61,7 +61,7 @@ find_package(GI REQUIRED)
 find_library(M_LIB m)
 pkg_check_modules(GEE REQUIRED gee-1.0>=0.6)
 pkg_check_modules(GIO2 REQUIRED gio-2.0>=2.26)
-pkg_check_modules(REDLAND_RDF REQUIRED lrdf>=0.4)
+pkg_check_modules(REDLAND REQUIRED redland>=0.4)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.7.1)
 pkg_check_modules(PACKAGEKIT_PLUGIN REQUIRED packagekit-plugin)
 #find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
@@ -100,9 +100,6 @@ add_definitions("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE"
 # Add log domain
 add_definitions("-DG_LOG_DOMAIN=\"Listaller\"")
 
-# Workaround for linking issue
-list (APPEND REDLAND_RDF_LIBRARIES rdf)
-
 target_link_libraries(listaller-glib
 		${M_LIB}
 		${GEE_LIBRARIES}
@@ -111,7 +108,7 @@ target_link_libraries(listaller-glib
 		${LibArchive_LIBRARIES}
 		${LIBXML2_LIBRARIES}
 		${GPGME_VANILLA_LIBRARIES}
-		${REDLAND_RDF_LIBRARIES}
+		${REDLAND_LIBRARIES}
 		${PACKAGEKIT_LIBRARIES}
 		${PACKAGEKIT_PLUGIN_LIBRARIES}
 )
@@ -125,7 +122,7 @@ include_directories(${CMAKE_BINARY_DIR}
 		${LibArchive_INCLUDE_DIR}
 		${LIBXML2_INCLUDE_DIR}
 		${GPGME_INCLUDES}
-		${REDLAND_RDF_INCLUDE_DIRS}
+		${REDLAND_INCLUDE_DIRS}
 		${PACKAGEKIT_INCLUDE_DIRS}
 		${PACKAGEKIT_PLUGIN_INCLUDE_DIRS}
 )
