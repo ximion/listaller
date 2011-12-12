@@ -96,10 +96,16 @@ namespace RDF {
 		public int get_count ();
 		public bool next ();
 		public bool finished ();
+		public int get_bindings_count ();
+
 		public Node get_binding_value (int offset);
-		public Node get_binding_name (int offset);
+		public string get_binding_name (int offset);
 		public Node get_binding_value_by_name (string name);
 
+		public bool is_bindings ();
+		public bool is_boolean ();
+		public bool is_graph ();
+		public bool is_syntax ();
 	}
 
 	[Compact]

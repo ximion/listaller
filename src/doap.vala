@@ -77,6 +77,13 @@ private class RDFQuery : Object {
 	}
 }
 
+private const string doapQueryHead = """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX doap: <http://usefulinc.com/ns/doap#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+""";
+
 protected class DoapData : Object {
 	private RDFQuery querier;
 	private string path;
@@ -121,11 +128,48 @@ protected class DoapData : Object {
 		return n.get_literal_value_as_latin1 ();
 	}
 
+	private string get_newest_release_version () throws RdfError {
+		string querystring = doapQueryHead + """
+SELECT ?name, ?revision, ?created, ?description
+WHERE {
+      ?project rdf:type doap:Project .
+      ?project doap:release ?release .
+      ?release doap:name ?name .
+      ?release doap:revision ?revision .
+      ?release doap:created ?created
+      OPTIONAL { ?release dc:description ?description }
+}
+ORDER BY DESC(?created)
+""";
+		RDF.QueryResults? qres = querier.query (querystring);
+		if (qres == null)
+			throw new RdfError.NO_RESULTS (_("Query returned no results. Maybe there's no release defined?"));
+
+		string version = "";
+		if (qres.is_bindings ()) {
+			do {
+				version = node_str_value_by_name (qres, "revision");
+
+				// This code can be used to fetch more information about this version
+				/* for (int i = 0; i < qres.get_bindings_count (); i++) {
+					if (qres.get_binding_name (i) == "revision") {
+						var n = qres.get_binding_value (i);
+					if (n != null)
+						version = n.get_literal_value_as_latin1 ();
+					}
+
+				} */
+
+				qres.next ();
+			} while ((!qres.finished ()) && (version == ""));
+		}
+		debug ("Version is %s", version);
+
+		return version;
+	}
+
 	public AppItem? get_project () throws RdfError {
-		string querystring = """
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX doap: <http://usefulinc.com/ns/doap#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+		string querystring = doapQueryHead + """
 SELECT ?name, ?shortname, $description, ?shortdesc,
        ?homepage, ?bug, ?download, ?wiki, ?created, ?license
 WHERE {
@@ -155,6 +199,12 @@ WHERE {
 		app.summary = node_str_value_by_name (qres, "shortdesc");
 		app.website = node_str_value_by_name (qres, "homepage");
 		string license = node_str_value_by_name (qres, "license");
+
+		try {
+			app.version = get_newest_release_version ();
+		} catch (Error e) {
+			li_error ("Could not fetch version from DOAP! (%s)".printf (e.message));
+		}
 
 		// TODO: Fetch all useful data from doap file
 

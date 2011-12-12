@@ -29,4 +29,13 @@ Please use Markdown for formatting!
   </foaf:Person>
  </maintainer>
 
+ <!-- the first release of FooBar -->
+ <release>
+  <Version>
+   <name>unstable</name>
+   <created>2011-12-12</created>
+   <revision>1.0</revision>
+  </Version>
+ </release>
+
 </Project>
