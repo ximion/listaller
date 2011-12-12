@@ -38,9 +38,10 @@ private class RDFQuery : Object {
 	static const string SPARQL = "sparql";
 
 	public RDFQuery () {
+		string parserName;
 		world = new RDF.World ();
 		storage = new RDF.Storage (world, "hashes", "doap_q", "new='yes',hash-type='memory',dir='.'");
-		parser = new RDF.Parser (world, "", "", null);
+		parser = new RDF.Parser (world, "guess", null, null);
 		model = new RDF.Model (world, storage, "");
 	}
 
@@ -54,6 +55,14 @@ private class RDFQuery : Object {
 
 		var duri = new RDF.Uri (world, dpath);
 		RDF.Stream stream = parser.parse_as_stream (duri, duri);
+		model.add_statements (stream);
+	}
+
+	public void add_location_str (string data, string baseUrl) {
+		debug ("Adding new RDF info from string");
+
+		debug (data);
+		RDF.Stream stream = parser.parse_string_as_stream (data, new RDF.Uri (world, baseUrl));
 		model.add_statements (stream);
 	}
 
@@ -83,6 +92,10 @@ private class DoapData : Object {
 	public void add_file (string fname) {
 		querier.add_location (fname);
 		path = fname;
+	}
+
+	public void add_data (string data) {
+		querier.add_location_str (data, "http://usefulinc.com/ns/doap#");
 	}
 
 	public string get_doap_url () {

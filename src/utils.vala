@@ -329,6 +329,27 @@ public static string expand_user_dir (string path) {
 	return full_path;
 }
 
+private string? load_file_to_string (string fname) throws IOError {
+	var file = File.new_for_path (fname);
+	if (!file.query_exists ()) {
+		return null;
+	}
+
+	string res = "";
+	try {
+		string line;
+		var dis = new DataInputStream (file.read ());
+		// Read lines until end of file (null) is reached
+		while ((line = dis.read_line (null)) != null) {
+			res += line + "\n";
+		}
+
+	} catch (IOError e) {
+		throw e;
+	}
+	return res;
+}
+
 private string concat_binfiles (string afname, string bfname) {
 	const int BUFFER_SIZE = 512;
 	//TODO: This can be done better, but it's easier to debug

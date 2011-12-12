@@ -51,8 +51,9 @@ namespace RDF {
 	[CCode (cname="struct librdf_parser", free_function="librdf_free_parser", cprefix="librdf_parser_")]
 	public class Parser {
 		[CCode (cname="librdf_new_parser")]
-		public Parser (World world, string name, string mime_type, Uri? type_uri);
+		public Parser (World world, string? name, string? mime_type, Uri? type_uri);
 		public Stream parse_as_stream (Uri uri, Uri base_uri);
+		public Stream parse_string_as_stream ([CCode(type="const unsigned char *")] string str, Uri? base_uri);
 
 	}
 

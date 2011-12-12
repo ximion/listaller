@@ -122,7 +122,9 @@ void test_versions () {
 
 void test_doap () {
 	DoapData doda = new DoapData ();
-	doda.add_file (Path.build_filename (datadir, "doap.doap"));
+	string dd = load_file_to_string (Path.build_filename (datadir, "doap.doap"));
+	doda.add_data (dd);
+	//doda.add_file (Path.build_filename (datadir, "doap.doap"));
 	doda.get_project ();
 }
 
