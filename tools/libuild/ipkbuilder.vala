@@ -385,7 +385,15 @@ private class Builder : Object {
 		IPK.PackControl ictrl = new IPK.PackControl ();
 
 		// Load definitions
-		ipkCDir.open_dir (srcdir);
+		try {
+			ret = ipkCDir.open_dir (srcdir);
+		} catch (Error e) {
+			li_error (_("Unable to build package: %s").printf (e.message));
+			return false;
+		}
+		if (!ret)
+			return false;
+
 		IPK.FileList flist = new IPK.FileList (false);
 		flist.open (Path.build_filename (srcdir, "files-current.list", null));
 

@@ -26,6 +26,14 @@ using Listaller.Utils;
 
 namespace Listaller.IPK {
 
+public errordomain ControlDataError {
+	NO_DOAP,
+	DOAP_INVALID,
+	DEPLIST_INVALID,
+	INTERNAL,
+	UNKNOWN;
+}
+
 public abstract class Control : Object {
 	internal DoapData doap;
 	internal MetaFile depData;
@@ -262,15 +270,13 @@ public class ControlDir : Control {
 		return doapFile;
 	}
 
-	public bool open_dir (string dir) {
+	public bool open_dir (string dir) throws ControlDataError {
 		if (ctrlDir != "")
 			return false;
 
 		doapFile = find_doap_data (dir);
-		if (doapFile == "") {
-			debug ("No valid DOAP data found in directory %s - Can't open control files.", dir);
-			return false;
-		}
+		if (doapFile == "")
+			throw new ControlDataError.NO_DOAP (_("No valid DOAP data found in directory %s - Can't open control files.").printf (dir));
 
 		bool ret = this.open_doap_file (doapFile);
 		if (!ret)
