@@ -201,7 +201,8 @@ private class MetaFile : Object {
 				content.add ("");
 				content.add ("%s: %s".printf (field, newValue[0]));
 				for (int i = 1; i < newValue.length; i++) {
-					content.add (" " + newValue[i]);
+					if ((newValue[i] != null) && (newValue[i].strip () != ""))
+						content.add (" " + newValue[i]);
 				}
 			}
 			currentBlockId = content.size;
@@ -232,7 +233,8 @@ private class MetaFile : Object {
 				content.insert (location, "%s: %s".printf (field, newValue[0]));
 				location++;
 				for (int i = 1; i < newValue.length; i++) {
-					content.insert (location, " " + newValue[i]);
+					if ((newValue[i] != null) && (newValue[i].strip () != ""))
+						content.insert (location, " " + newValue[i]);
 					location++;
 				}
 			}

@@ -1,2 +1,1 @@
-EXTRA_DIST= control.xml files-current.list
-
+EXTRA_DIST= foobar.doap pkoptions files-current.list
