@@ -1837,6 +1837,10 @@ namespace PackageKit {
 	public static unowned string group_enum_to_string (PackageKit.Group group);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_info_enum_from_string")]
 	public static PackageKit.Info info_enum_from_string (string info);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_info_enum_to_localised_past")]
+	public static unowned string info_enum_to_localised_past (PackageKit.Info info);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_info_enum_to_localised_present")]
+	public static unowned string info_enum_to_localised_present (PackageKit.Info info);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_info_enum_to_string")]
 	public static unowned string info_enum_to_string (PackageKit.Info info);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_iso8601_from_date")]
@@ -1939,6 +1943,8 @@ namespace PackageKit {
 	public static string role_bitfield_to_string (PackageKit.Bitfield roles);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_role_enum_from_string")]
 	public static PackageKit.Role role_enum_from_string (string role);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_role_enum_to_localised_present")]
+	public static unowned string role_enum_to_localised_present (PackageKit.Role role);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_role_enum_to_string")]
 	public static unowned string role_enum_to_string (PackageKit.Role role);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_service_pack_error_quark")]
@@ -1949,6 +1955,8 @@ namespace PackageKit {
 	public static unowned string sig_type_enum_to_string (PackageKit.SigType sig_type);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_status_enum_from_string")]
 	public static PackageKit.Status status_enum_from_string (string status);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_status_enum_to_localised_text")]
+	public static unowned string status_enum_to_localised_text (PackageKit.Status status);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_status_enum_to_string")]
 	public static unowned string status_enum_to_string (PackageKit.Status status);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_update_state_enum_from_string")]
