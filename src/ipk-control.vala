@@ -196,6 +196,10 @@ public class PackControl : Control {
 		return res;
 	}
 
+	public string get_license_text () {
+		return "::TODO";
+	}
+
 #if 0
 	public override void set_app_license (string text) {
 		base.set_app_license (text);

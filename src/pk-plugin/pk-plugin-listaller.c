@@ -236,7 +236,7 @@ void
 pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 {
 	const gchar *description;
-	const gchar *license;
+	ListallerAppLicense license;
 	const gchar *url;
 	ListallerAppItem *app;
 	guint i;
@@ -248,12 +248,12 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 		app = pk_listaller_appitem_from_pkid (package_ids[i]);
 
 		description = listaller_app_item_get_description (app);
-		license = listaller_app_item_get_license_name (app);
+		listaller_app_item_get_license (app, &license);
 		url = listaller_app_item_get_website (app);
 
 		/* emit */
 		pk_backend_details (plugin->backend, package_ids[i],
-					license,
+					license.name,
 					PK_GROUP_ENUM_UNKNOWN,
 					description,
 					url,

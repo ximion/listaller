@@ -63,7 +63,15 @@ namespace RDF {
 	public class Uri {
 		[CCode (cname="librdf_new_uri")]
 		public Uri (World world, string uri_string);
+		[CCode (cname="librdf_new_uri_from_uri")]
+		public Uri.from_uri (Uri old_uri);
+
+		[CCode(type="const unsigned char *")]
+		public unowned string as_string ();
+		[CCode(type="const unsigned char *")]
 		public string to_string ();
+		public string to_filename ();
+		public bool is_file_uri ();
 
 	}
 
@@ -117,6 +125,7 @@ namespace RDF {
 		public string get_literal_value_as_latin1 ();
 		public Uri get_literal_value_datatype_uri ();
 		public string get_literal_value_language ();
+		public unowned Uri? get_uri ();
 		public bool is_literal ();
 		public bool is_blank ();
 		public bool is_resource ();

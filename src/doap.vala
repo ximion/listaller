@@ -116,11 +116,16 @@ protected class DoapData : Object {
 		RDF.Uri? uri = n.get_literal_value_datatype_uri ();
 		string suri = "NULL";
 		if (uri != null)
-			suri = uri.to_string ();
-		debug ("Node datatype ('%s'): %s", name, suri);
+			suri = uri.as_string ();
+		//! debug ("Node datatype ('%s'): %s", name, suri);
 
-		if (n.is_resource ())
-			return n.to_string ();
+		if (n.is_resource ()) {
+			RDF.Uri? vUri = new RDF.Uri.from_uri (n.get_uri ());
+			string? s = vUri.as_string ();
+			if (s == null)
+				s = "";
+			return s;
+		}
 
 		if (!n.is_literal ())
 			return "";
@@ -198,7 +203,12 @@ WHERE {
 		app.description = node_str_value_by_name (qres, "description");
 		app.summary = node_str_value_by_name (qres, "shortdesc");
 		app.website = node_str_value_by_name (qres, "homepage");
-		string license = node_str_value_by_name (qres, "license");
+		//TODO: Handle license name and text!
+		AppLicense license = AppLicense () {
+			name = node_str_value_by_name (qres, "license"),
+			text = ""
+		};
+		app.license = license;
 
 		try {
 			app.version = get_newest_release_version ();

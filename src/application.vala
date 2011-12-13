@@ -47,6 +47,11 @@ public enum AppOrigin {
 	}
 }
 
+public struct AppLicense {
+	public string name;
+	public string text;
+}
+
 public class AppItem : Object {
 	private string _idname;
 	private string _version;
@@ -55,7 +60,7 @@ public class AppItem : Object {
 	private string _description;
 	private string _author;
 	private string _pkgmaintainer;
-	private string _license_name;
+	private AppLicense _license;
 	private string _categories;
 	private string _desktop_file;
 	private string _desktop_file_prefix;
@@ -112,9 +117,9 @@ public class AppItem : Object {
 		set { _pkgmaintainer = value; }
 	}
 
-	public string license_name {
-		get { return _license_name; }
-		set { _license_name = value; }
+	public AppLicense license {
+		get { return _license; }
+		set { _license = value; }
 	}
 
 	public string categories {
@@ -209,7 +214,10 @@ public class AppItem : Object {
 		_website = "";
 		_icon_name = "";
 		liconf = new Listaller.Settings (_shared);
-		_license_name = "";
+		_license = AppLicense () {
+			name = "",
+			text = ""
+		};
 	}
 
 	public AppItem (string afullname, string aversion, string desktop_filename = "") {
