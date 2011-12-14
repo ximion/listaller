@@ -203,12 +203,7 @@ WHERE {
 		app.description = node_str_value_by_name (qres, "description");
 		app.summary = node_str_value_by_name (qres, "shortdesc");
 		app.website = node_str_value_by_name (qres, "homepage");
-		//TODO: Handle license name and text!
-		AppLicense license = AppLicense () {
-			name = node_str_value_by_name (qres, "license"),
-			text = ""
-		};
-		app.license = license;
+		app.set_license_from_name (node_str_value_by_name (qres, "license"));
 
 		try {
 			app.version = get_newest_release_version ();

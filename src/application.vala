@@ -246,6 +246,53 @@ public class AppItem : Object {
 			+ "]";
 	}
 
+	private void set_license_info (string lName, string lText) {
+		_license = AppLicense () {
+			name = lName,
+			text = lText
+		};
+	}
+
+	public void set_license_from_name (string? name) {
+		if ((name == null) || (name.strip () == ""))
+			return;
+		string licenseName, licenseText = "";
+		string lID = name.strip ();
+		// First handle the DOAP names
+		switch (lID.down ()) {
+			case ("http://usefulinc.com/doap/licenses/gpl"):
+				licenseName = "GPL";
+				break;
+			case ("http://usefulinc.com/doap/licenses/lgpl"):
+				licenseName = "LGPL";
+				break;
+			case ("http://usefulinc.com/doap/licenses/mpl"):
+				licenseName = "MPL";
+				break;
+
+			default:
+				licenseName = lID;
+				break;
+		}
+		// Now check if we have a copy of this license stored somewhere (works for Debian at time)
+		string licenseDir = "/usr/share/common-licenses";
+		if (FileUtils.test (Path.build_filename (licenseDir, licenseName, null), FileTest.EXISTS)) {
+			licenseText = load_file_to_string (Path.build_filename (licenseDir, licenseName, null));
+		}
+		if (licenseText != "") {
+			set_license_info (licenseName, licenseText);
+			return;
+		}
+
+		// TODO: Parse other licenses and download them from the net or fetch them from local dir, if necessary
+
+		set_license_info (licenseName, licenseText);
+	}
+
+	public void get_license_text () {
+		set_license_from_name (_license.name);
+	}
+
 	public void fast_check () {
 		// Fast sanity checks for AppItem
 		assert (idname != null);
