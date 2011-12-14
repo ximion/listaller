@@ -286,6 +286,9 @@ public class AppItem : Object {
 
 		// TODO: Parse other licenses and download them from the net or fetch them from local dir, if necessary
 
+		if (licenseText == "")
+			licenseText = licenseName;
+
 		set_license_info (licenseName, licenseText);
 	}
 

@@ -95,11 +95,12 @@ private class MetaFile : Object {
 		var iter = content.list_iterator ();
 		iter.first ();
 
-		while (iter.has_next ()) {
+		do {
 			string line = iter.get ();
 			if ((line.down ().has_prefix (field.down () + ":")) &&
 			(line.substring (line.index_of (":") + 1).strip ().down () == value.down ())) {
 				currentBlockId = iter.index ();
+
 				while (iter.has_previous ()) {
 					line = iter.get ();
 					if (is_empty (line)) {
@@ -108,10 +109,9 @@ private class MetaFile : Object {
 					}
 					iter.previous ();
 				}
-				break;
+				return true;
 			}
-			iter.next ();
-		}
+		} while (iter.next ());
 		return false;
 	}
 
@@ -123,7 +123,10 @@ private class MetaFile : Object {
 		bool start = false;
 		if (currentBlockId < 0)
 			start = true;
-		for (iter.first (); iter.has_next (); iter.next ()) {
+
+		if (!iter.first ())
+			return false;
+		do {
 			if (iter.index () < currentBlockId)
 				continue;
 
@@ -134,7 +137,8 @@ private class MetaFile : Object {
 				continue;
 
 			if (line.down ().has_prefix (field.down () + ":")) {
-				currentBlockId = iter.index ();
+				currentBlockId = iter.index () - 1;
+
 				while (iter.has_previous ()) {
 					line = iter.get ();
 					if (is_empty (line)) {
@@ -143,39 +147,43 @@ private class MetaFile : Object {
 					}
 					iter.previous ();
 				}
-				break;
+				return true;
 			}
-		}
+		} while (iter.next ());
 		return false;
 	}
 
 	public string get_value (string field) {
 		string res = "";
 		bool addToBlock = false;
-
 		var iter = content.list_iterator ();
-		iter.first ();
 
-		while (iter.has_next ()) {
-			if (iter.index () < currentBlockId) {
-				iter.next ();
+		if (!iter.first ())
+			return "";
+		do {
+			if (iter.index () < currentBlockId)
 				continue;
-			}
 
 			string line = iter.get ();
+			//! debug ("Field: %s :: Line: %s", field, line);
 			if (is_empty (line))
 				break;
 
-			if ((addToBlock) && (line.substring (0, 1) == " ")) {
-				res += "\n" + line.strip ();
+			if (addToBlock) {
+				if (line.substring (0, 1) == " ") {
+					res += "\n" + line.strip ();
+				} else {
+					break;
+				}
 			}
 
 			if (line.down ().has_prefix (field.down () + ":")) {
 				res = line.substring (line.index_of (":") + 1).strip ();
 				addToBlock = true;
 			}
-			iter.next ();
-		}
+
+		} while (iter.next ());
+
 		return res;
 	}
 

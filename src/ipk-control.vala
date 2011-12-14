@@ -114,6 +114,7 @@ public abstract class Control : Object {
 
 		while (depData.open_block_by_field ("id")) {
 			Dependency dep = new Dependency (depData.get_value ("id"));
+			dep.full_name = depData.get_value ("name");
 
 			string s = depData.get_value ("feed");
 			if (s.strip () != "")
