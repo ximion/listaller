@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-09-06 22:46+0200\n"
+"POT-Creation-Date: 2011-12-14 00:55+0100\n"
 "PO-Revision-Date: 2011-07-18 23:35+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -103,6 +103,11 @@ msgstr "Konnte IPK Quelldateien nicht finden!"
 msgid "Could not load desktop file values: %s"
 msgstr "Konnte Werte aus Desktop-Datei nicht laden: %s"
 
+msgid ""
+"Could not obtain a PkBackendProxy instance. Maybe the Listaller-PkPlugin is "
+"not installed or broken?"
+msgstr ""
+
 #, c-format
 msgid "Could not open IPK file! Error: %s"
 msgstr "Konnte IPK-Datei nicht öffnen! Fehler: %s"
@@ -117,6 +122,12 @@ msgid ""
 msgstr ""
 "Kontte Software-Datenbank nicht öffnen, sie ist eventuell gesperrt.\n"
 "Bitte schließen Sie alle anderen laufenden Installationen, um fortzufahren."
+
+#, c-format
+msgid ""
+"Could not override file %s! Maybe the software database is damaged or this "
+"package is broken!"
+msgstr ""
 
 #, c-format
 msgid "Could not override file %s, this file already exists!"
@@ -196,9 +207,9 @@ msgstr "Installation abgeschlossen!"
 msgid "Installation failed!"
 msgstr "Installation fehlgeschlagen!"
 
-#, c-format
-msgid "Installing native packages %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "Installing native packages: %s"
+msgstr "Installationspaket ist zerstört"
 
 msgid "Low security."
 msgstr "Geringe Sicherheit"
@@ -216,6 +227,10 @@ msgstr "Nicht vertrauenswürdig."
 #, c-format
 msgid "No path given!"
 msgstr "Kein Pfad angegeben!"
+
+#, c-format
+msgid "No valid DOAP data found in directory %s - Can't open control files."
+msgstr ""
 
 msgid "One key has been revoked"
 msgstr ""
@@ -237,6 +252,12 @@ msgid "Please remove the existing version to continue!"
 msgstr ""
 
 msgid "Print machine-readable simple text"
+msgstr ""
+
+msgid "Query returned no results. Maybe there's no release defined?"
+msgstr ""
+
+msgid "Query returned no results. Maybe this DOAP data is broken?"
 msgstr ""
 
 #, c-format
@@ -351,6 +372,26 @@ msgid ""
 "Setting AppManager to superuse mode now."
 msgstr ""
 
+#, c-format
+msgid "Unable to add a dependency to database: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to add application file list to database: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to add application to database: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to build package: %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to count applications: %s"
+msgstr "Neue Anwendung installieren"
+
 msgid "Unable to create destination directory."
 msgstr ""
 
@@ -393,9 +434,21 @@ msgstr ""
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to fetch application by id: %s"
+msgstr "Test der Anwendung abgeschlossen."
+
+#, c-format
+msgid "Unable to fetch application by name: %s"
+msgstr ""
+
 #, c-format
 msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to fetch application file list: %s"
+msgstr "Test der Anwendung abgeschlossen."
 
 #, c-format
 msgid "Unable to fetch dependency information list: %s"
@@ -415,6 +468,18 @@ msgstr ""
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr ""
 
+#, c-format
+msgid "Unable to get meta-information list: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to open database for read-only: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to open database for writing: %s"
+msgstr ""
+
 msgid "Unable to open software database for reading & writing!"
 msgstr ""
 
@@ -423,6 +488,10 @@ msgstr ""
 
 #, c-format
 msgid "Unable to read package signature! Message: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to remove application from database: %s"
 msgstr ""
 
 #, c-format
@@ -437,7 +506,15 @@ msgid "Unable to save modified desktop-file! Message: %s"
 msgstr ""
 
 #, c-format
+msgid "Unable to search application database: %s"
+msgstr ""
+
+#, c-format
 msgid "Unable to write application file list! Message: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to write meta information! Message: %s"
 msgstr ""
 
 #, c-format
@@ -466,13 +543,6 @@ msgstr ""
 #, c-format
 msgid "We don't know a desktop-file for application '%s'!"
 msgstr "Die Desktop-Datei für die Anwendung '%s' ist unbekannt!"
-
-#, c-format
-msgid "XML file '%s' is damaged."
-msgstr "XML-datei '%s' ist beschädigt."
-
-msgid "XML file is damaged or XML structure is no valid IPKControl!"
-msgstr ""
 
 msgid "XML file is no valid ZI feed!"
 msgstr ""
@@ -667,9 +737,6 @@ msgstr "Fehler: %s"
 #~ msgid "Install into my Home directory"
 #~ msgstr "In den Home-Ordner installieren"
 
-#~ msgid "Install new application"
-#~ msgstr "Neue Anwendung installieren"
-
 #~ msgid "Install now"
 #~ msgstr "Installieren"
 
@@ -690,9 +757,6 @@ msgstr "Fehler: %s"
 
 #~ msgid "Installation of %a"
 #~ msgstr "Installation von %a"
-
-#~ msgid "Installation package is corrupt"
-#~ msgstr "Installationspaket ist zerstört"
 
 #~ msgid "Listaller settings"
 #~ msgstr "Listaller Einstellungen"
@@ -898,9 +962,6 @@ msgstr "Fehler: %s"
 #~ msgid "Test application"
 #~ msgstr "Anwendung testen"
 
-#~ msgid "Test of the application finished."
-#~ msgstr "Test der Anwendung abgeschlossen."
-
 #~ msgid "Testmode"
 #~ msgstr "Testmodus"
 
@@ -1041,6 +1102,9 @@ msgstr "Fehler: %s"
 
 #~ msgid "What do you want to do?"
 #~ msgstr "Was möchten Sie tun?"
+
+#~ msgid "XML file '%s' is damaged."
+#~ msgstr "XML-datei '%s' ist beschädigt."
 
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "

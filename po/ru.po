@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-09-06 22:46+0200\n"
+"POT-Creation-Date: 2011-12-14 00:55+0100\n"
 "PO-Revision-Date: 2011-08-10 16:49+0000\n"
 "Last-Translator: SomeOneBrick <Unknown>\n"
 "Language-Team: \n"
@@ -97,6 +97,11 @@ msgstr "Исходные файлы IPK не найдены!"
 msgid "Could not load desktop file values: %s"
 msgstr "Нет возможности загрузить файл значений рабочего стола: %s"
 
+msgid ""
+"Could not obtain a PkBackendProxy instance. Maybe the Listaller-PkPlugin is "
+"not installed or broken?"
+msgstr ""
+
 #, c-format
 msgid "Could not open IPK file! Error: %s"
 msgstr "Нет возможности открыть файл IPK! Ошибка %s"
@@ -112,6 +117,12 @@ msgstr ""
 "Нет возможности открыть базу данных софта. Возможно, в данный момент она "
 "закрыта.\n"
 "Закройте прочие запущенные установщики, чтобы продолжить."
+
+#, c-format
+msgid ""
+"Could not override file %s! Maybe the software database is damaged or this "
+"package is broken!"
+msgstr ""
 
 #, c-format
 msgid "Could not override file %s, this file already exists!"
@@ -193,8 +204,8 @@ msgstr "Установка завершена!"
 msgid "Installation failed!"
 msgstr "Установка не удалась!"
 
-#, c-format
-msgid "Installing native packages %s"
+#, fuzzy, c-format
+msgid "Installing native packages: %s"
 msgstr "Установка родных пакетов %s"
 
 msgid "Low security."
@@ -213,6 +224,10 @@ msgstr "Недоверенные."
 #, c-format
 msgid "No path given!"
 msgstr "Не указан путь!"
+
+#, c-format
+msgid "No valid DOAP data found in directory %s - Can't open control files."
+msgstr ""
 
 msgid "One key has been revoked"
 msgstr "Один ключ был отозван"
@@ -235,6 +250,12 @@ msgstr "Пожалуйста, удалите имеющуюся версию, ч
 
 msgid "Print machine-readable simple text"
 msgstr "Показать распознаваемый машиной обычный текст"
+
+msgid "Query returned no results. Maybe there's no release defined?"
+msgstr ""
+
+msgid "Query returned no results. Maybe this DOAP data is broken?"
+msgstr ""
 
 #, c-format
 msgid "Removal of %s finished."
@@ -362,6 +383,26 @@ msgstr ""
 "не в режиме суперпользователя!\n"
 "Настройте AppManager на режим суперпользователя."
 
+#, fuzzy, c-format
+msgid "Unable to add a dependency to database: %s"
+msgstr "Нет возможности получить информацию о списке зависимостей: %s"
+
+#, fuzzy, c-format
+msgid "Unable to add application file list to database: %s"
+msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
+
+#, fuzzy, c-format
+msgid "Unable to add application to database: %s"
+msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
+
+#, fuzzy, c-format
+msgid "Unable to build package: %s"
+msgstr "Нет возможности найти родные пакеты для '%s'!"
+
+#, fuzzy, c-format
+msgid "Unable to count applications: %s"
+msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
+
 msgid "Unable to create destination directory."
 msgstr "Нет возможности создать целевую директорию."
 
@@ -406,8 +447,20 @@ msgstr "Нет возможности распаковать файл. %s"
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr "Невозможно извлечь подпись! Возможно, пакет не подписан."
 
+#, fuzzy, c-format
+msgid "Unable to fetch application by id: %s"
+msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
+
+#, fuzzy, c-format
+msgid "Unable to fetch application by name: %s"
+msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
+
 #, c-format
 msgid "Unable to fetch application file list! Message: %s"
+msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
+
+#, fuzzy, c-format
+msgid "Unable to fetch application file list: %s"
 msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
 
 #, c-format
@@ -430,6 +483,18 @@ msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr ""
 "Нет возможности найти подходящий пакет для удовлетворения зависимости '%s'!"
 
+#, fuzzy, c-format
+msgid "Unable to get meta-information list: %s"
+msgstr "Нет возможности получить информацию о списке зависимостей: %s"
+
+#, fuzzy, c-format
+msgid "Unable to open database for read-only: %s"
+msgstr "Невозможно открыть базу данных программ только для чтения!"
+
+#, fuzzy, c-format
+msgid "Unable to open database for writing: %s"
+msgstr "Невозможно открыть базу данных программ для чтения и записи!"
+
 msgid "Unable to open software database for reading & writing!"
 msgstr "Невозможно открыть базу данных программ для чтения и записи!"
 
@@ -439,6 +504,10 @@ msgstr "Невозможно открыть базу данных програм
 #, c-format
 msgid "Unable to read package signature! Message: %s"
 msgstr "Невозможно прочитать подпись пакета! Сообщение: %s"
+
+#, fuzzy, c-format
+msgid "Unable to remove application from database: %s"
+msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
 
 #, c-format
 msgid "Unable to remove database lock! (Message: %s)"
@@ -451,9 +520,17 @@ msgstr ""
 msgid "Unable to save modified desktop-file! Message: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to search application database: %s"
+msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
+
 #, c-format
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to write meta information! Message: %s"
+msgstr "Невозможно прочитать подпись пакета! Сообщение: %s"
 
 #, c-format
 msgid "Unable to write signature file! Message: %s"
@@ -480,13 +557,6 @@ msgstr ""
 
 #, c-format
 msgid "We don't know a desktop-file for application '%s'!"
-msgstr ""
-
-#, c-format
-msgid "XML file '%s' is damaged."
-msgstr "XML-файл '%s' повреждён."
-
-msgid "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr ""
 
 msgid "XML file is no valid ZI feed!"
@@ -924,6 +994,9 @@ msgstr "ошибка: %s"
 
 #~ msgid "What do you want to do?"
 #~ msgstr "Что вы хотите сделать?"
+
+#~ msgid "XML file '%s' is damaged."
+#~ msgstr "XML-файл '%s' повреждён."
 
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "

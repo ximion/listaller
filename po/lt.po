@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lclstrconsts\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-09-06 22:46+0200\n"
+"POT-Creation-Date: 2011-12-14 00:55+0100\n"
 "PO-Revision-Date: 2009-05-06 13:37+0000\n"
 "Last-Translator: Valdas <zmogas@hotmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -93,6 +93,11 @@ msgstr ""
 msgid "Could not load desktop file values: %s"
 msgstr ""
 
+msgid ""
+"Could not obtain a PkBackendProxy instance. Maybe the Listaller-PkPlugin is "
+"not installed or broken?"
+msgstr ""
+
 #, c-format
 msgid "Could not open IPK file! Error: %s"
 msgstr ""
@@ -104,6 +109,12 @@ msgstr ""
 msgid ""
 "Could not open the software database, maybe it is locked at time.\n"
 "Please close all other running installations to continue!"
+msgstr ""
+
+#, c-format
+msgid ""
+"Could not override file %s! Maybe the software database is damaged or this "
+"package is broken!"
 msgstr ""
 
 #, c-format
@@ -183,7 +194,7 @@ msgid "Installation failed!"
 msgstr ""
 
 #, c-format
-msgid "Installing native packages %s"
+msgid "Installing native packages: %s"
 msgstr ""
 
 msgid "Low security."
@@ -201,6 +212,10 @@ msgstr ""
 
 #, c-format
 msgid "No path given!"
+msgstr ""
+
+#, c-format
+msgid "No valid DOAP data found in directory %s - Can't open control files."
 msgstr ""
 
 msgid "One key has been revoked"
@@ -223,6 +238,12 @@ msgid "Please remove the existing version to continue!"
 msgstr ""
 
 msgid "Print machine-readable simple text"
+msgstr ""
+
+msgid "Query returned no results. Maybe there's no release defined?"
+msgstr ""
+
+msgid "Query returned no results. Maybe this DOAP data is broken?"
 msgstr ""
 
 #, c-format
@@ -334,6 +355,26 @@ msgid ""
 "Setting AppManager to superuse mode now."
 msgstr ""
 
+#, c-format
+msgid "Unable to add a dependency to database: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to add application file list to database: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to add application to database: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to build package: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to count applications: %s"
+msgstr ""
+
 msgid "Unable to create destination directory."
 msgstr ""
 
@@ -377,7 +418,19 @@ msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
 
 #, c-format
+msgid "Unable to fetch application by id: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to fetch application by name: %s"
+msgstr ""
+
+#, c-format
 msgid "Unable to fetch application file list! Message: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to fetch application file list: %s"
 msgstr ""
 
 #, c-format
@@ -398,6 +451,18 @@ msgstr ""
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr ""
 
+#, c-format
+msgid "Unable to get meta-information list: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to open database for read-only: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to open database for writing: %s"
+msgstr ""
+
 msgid "Unable to open software database for reading & writing!"
 msgstr ""
 
@@ -406,6 +471,10 @@ msgstr ""
 
 #, c-format
 msgid "Unable to read package signature! Message: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to remove application from database: %s"
 msgstr ""
 
 #, c-format
@@ -420,7 +489,15 @@ msgid "Unable to save modified desktop-file! Message: %s"
 msgstr ""
 
 #, c-format
+msgid "Unable to search application database: %s"
+msgstr ""
+
+#, c-format
 msgid "Unable to write application file list! Message: %s"
+msgstr ""
+
+#, c-format
+msgid "Unable to write meta information! Message: %s"
 msgstr ""
 
 #, c-format
@@ -448,13 +525,6 @@ msgstr ""
 
 #, c-format
 msgid "We don't know a desktop-file for application '%s'!"
-msgstr ""
-
-#, c-format
-msgid "XML file '%s' is damaged."
-msgstr ""
-
-msgid "XML file is damaged or XML structure is no valid IPKControl!"
 msgstr ""
 
 msgid "XML file is no valid ZI feed!"
