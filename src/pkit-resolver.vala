@@ -94,8 +94,8 @@ private class PkResolver : Object {
 		}
 		libs += null;
 
-		PackageKit.Results res;
-		PackageKit.PackageSack sack;
+		PackageKit.Results? res;
+		PackageKit.PackageSack? sack;
 
 		if (pkbproxy == null) {
 			try {

@@ -30,8 +30,9 @@ namespace Listaller {
 private PkBackendProxy? pkit_backend_proxy;
 
 internal class PkBackendProxy : Object {
-	// Workaround for strance plugin behavior
+	// Workaround for strange plugin behavior
 	public void* plugin { get; set; }
+	public PackageKit.Results results { get; set; }
 
 	// Used by the PkPlugin
 	public signal void error_message ();
@@ -44,8 +45,10 @@ internal class PkBackendProxy : Object {
 
 	}
 
-	public PackageKit.Results? run_what_provides (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values) {
-		return request_whatprovides ((uint) filters, (uint) provides, values);
+	public PackageKit.Results? run_what_provides (PackageKit.Bitfield filters, PackageKit.Provides provides, string[] values) {
+		results = null;
+		request_whatprovides ((uint) filters, (uint) provides, values);
+		return results;
 	}
 
 }
