@@ -31,7 +31,6 @@ private PkBackendProxy? pkit_backend_proxy;
 
 internal class PkBackendProxy : Object {
 	// Workaround for strange plugin behavior
-	public void* plugin { get; set; }
 	public PackageKit.Results results { get; set; }
 
 	// Used by the PkPlugin
@@ -39,13 +38,13 @@ internal class PkBackendProxy : Object {
 	public signal void packages ();
 
 	// Used by Listaller
-	public signal PackageKit.Results? request_whatprovides (uint filters, uint provides, [CCode (array_length = false, array_null_terminated = true)] string[] values);
+	public signal void request_whatprovides (uint filters, uint provides, [CCode (array_length = false, array_null_terminated = true)] string[] values);
 
-	internal PkBackendProxy () {
+	public PkBackendProxy () {
 
 	}
 
-	public PackageKit.Results? run_what_provides (PackageKit.Bitfield filters, PackageKit.Provides provides, string[] values) {
+	public PackageKit.Results? run_what_provides (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values) {
 		results = null;
 		request_whatprovides ((uint) filters, (uint) provides, values);
 		return results;
@@ -68,13 +67,19 @@ private PkBackendProxy? get_pk_backend () {
 	return pkit_backend_proxy;
 }
 
+#if 0
+private PackageKit.Results? dummytest_return_cb (uint filters, uint provides, [CCode (array_length = false, array_null_terminated = true)] string[] values) {
+	debug (simple_text);
+	return new PackageKit.Results ();
+}
+
 private void test_dummy () {
 	var pkbp = new PkBackendProxy ();
-	string simple_text = "Hello World!";
-	pkbp.request_whatprovides.connect ( () => { debug (simple_text); return new PackageKit.Results (); } );
+	pkbp.request_whatprovides.connect (dummytest_return_cb);
 	PackageKit.Results? pkres = pkbp.request_whatprovides (0, 0, null);
 	pkres.get_package_sack ();
 }
+#endif
 
 
 } // End of LI namespace

@@ -583,18 +583,15 @@ pk_plugin_finished_cb (PkBackend *backend,
  *
  * Helper method for a Listaller native PkBackend proxy to do a what-provides request.
  **/
-static PkResults *
+static void
 pk_backend_request_whatprovides_cb (ListallerPkBackendProxy *sender,
 				PkBitfield filters,
 				PkProvidesEnum provides,
 				gchar** search,
-				gpointer self)
+				GObject *i_dont_know_why_this_is_here,
+				PkPlugin *plugin)
 {
-	PkResults *results;
-	PkPlugin *plugin;
-
-	/* workaround */
-	plugin = listaller_pk_backend_proxy_get_plugin (sender);
+	PkResults *result;
 
 	/* query the native backend for a package provinding X */
 	if (plugin == NULL)
@@ -613,11 +610,9 @@ pk_backend_request_whatprovides_cb (ListallerPkBackendProxy *sender,
 	/* wait for finished */
 	g_main_loop_run (plugin->priv->loop);
 
-	results = plugin->priv->backend_results;
-	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
-	listaller_pk_backend_proxy_set_results (sender, g_object_ref (results));
-
-	return g_object_ref (results);
+	result = plugin->priv->backend_results;
+	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (result)));
+	listaller_pk_backend_proxy_set_results (sender, result);
 }
 
 /**
@@ -653,7 +648,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	pkbproxy = listaller_pk_backend_proxy_new ();
 	listaller_pk_backend_proxy_set_plugin (pkbproxy, plugin);
 	g_signal_connect (pkbproxy, "request-whatprovides",
-			  (GCallback) pk_backend_request_whatprovides_cb, plugin);
+			  G_CALLBACK (pk_backend_request_whatprovides_cb), plugin);
 	listaller_set_backend_proxy (pkbproxy);
 
 	/* handle these before the transaction has been run */
@@ -803,11 +798,11 @@ pk_plugin_initialize (PkPlugin *plugin)
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_REMOVE_PACKAGES);
 
 	/* connect Listaller manager signals */
-	g_signal_connect (plugin->priv->mgr, "error-code", (GCallback) listaller_error_code_cb, plugin);
-	g_signal_connect (plugin->priv->mgr, "message", (GCallback) listaller_message_cb, plugin);
-	g_signal_connect (plugin->priv->mgr, "status-changed", (GCallback) listaller_status_change_cb, plugin);
-	g_signal_connect (plugin->priv->mgr, "progress-changed", (GCallback) listaller_progress_change_cb, plugin);
-	g_signal_connect (plugin->priv->mgr, "application", (GCallback) listaller_application_cb, plugin);
+	g_signal_connect (plugin->priv->mgr, "error-code", G_CALLBACK (listaller_error_code_cb), plugin);
+	g_signal_connect (plugin->priv->mgr, "message", G_CALLBACK (listaller_message_cb), plugin);
+	g_signal_connect (plugin->priv->mgr, "status-changed", G_CALLBACK (listaller_status_change_cb), plugin);
+	g_signal_connect (plugin->priv->mgr, "progress-changed", G_CALLBACK (listaller_progress_change_cb), plugin);
+	g_signal_connect (plugin->priv->mgr, "application", G_CALLBACK (listaller_application_cb), plugin);
 }
 
 /**

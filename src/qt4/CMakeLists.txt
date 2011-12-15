@@ -38,7 +38,8 @@ include_directories(${CMAKE_SOURCE_DIR}
     ${qt4_include_dir}
     ${GLIB2_INCLUDE_DIR}
     ${GEE_INCLUDE_DIRS}
-    ${CMAKE_CURRENT_BINARY_DIR}/..)
+    ${CMAKE_CURRENT_BINARY_DIR}/..
+)
 
 add_library(listaller-qt SHARED ${listaller-qt_SRCS} ${listaller-qt_MOC_SRCS})
 
