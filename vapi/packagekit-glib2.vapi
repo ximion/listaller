@@ -950,793 +950,444 @@ namespace PackageKit {
 	[SimpleType]
 	public struct Bitfield : uint64 {
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", has_type_id = false)]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
 	public struct EnumMatch {
 		public uint value;
 		public weak global::string string;
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkAuthorizeEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkAuthorizeEnum", cprefix = "PK_AUTHORIZE_ENUM_")]
 	[GIR (name = "AuthorizeEnum")]
 	public enum Authorize {
-		[CCode (cname = "PK_AUTHORIZE_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_AUTHORIZE_ENUM_YES")]
 		YES,
-		[CCode (cname = "PK_AUTHORIZE_ENUM_NO")]
 		NO,
-		[CCode (cname = "PK_AUTHORIZE_ENUM_INTERACTIVE")]
 		INTERACTIVE,
-		[CCode (cname = "PK_AUTHORIZE_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cprefix = "PK_CLIENT_ERROR_")]
 	public enum ClientError {
-		[CCode (cname = "PK_CLIENT_ERROR_FAILED")]
 		FAILED,
-		[CCode (cname = "PK_CLIENT_ERROR_FAILED_AUTH")]
 		FAILED_AUTH,
-		[CCode (cname = "PK_CLIENT_ERROR_NO_TID")]
 		NO_TID,
-		[CCode (cname = "PK_CLIENT_ERROR_ALREADY_TID")]
 		ALREADY_TID,
-		[CCode (cname = "PK_CLIENT_ERROR_ROLE_UNKNOWN")]
 		ROLE_UNKNOWN,
-		[CCode (cname = "PK_CLIENT_ERROR_CANNOT_START_DAEMON")]
 		CANNOT_START_DAEMON,
-		[CCode (cname = "PK_CLIENT_ERROR_INVALID_INPUT")]
 		INVALID_INPUT,
-		[CCode (cname = "PK_CLIENT_ERROR_INVALID_FILE")]
 		INVALID_FILE,
-		[CCode (cname = "PK_CLIENT_ERROR_NOT_SUPPORTED")]
 		NOT_SUPPORTED,
-		[CCode (cname = "PK_CLIENT_ERROR_DECLINED_SIMULATION")]
 		DECLINED_SIMULATION,
-		[CCode (cname = "PK_CLIENT_ERROR_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cprefix = "PK_CONTROL_ERROR_")]
 	public enum ControlError {
-		[CCode (cname = "PK_CONTROL_ERROR_FAILED")]
 		FAILED,
-		[CCode (cname = "PK_CONTROL_ERROR_CANNOT_START_DAEMON")]
 		CANNOT_START_DAEMON
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkDistroUpgradeEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkDistroUpgradeEnum", cprefix = "PK_DISTRO_UPGRADE_ENUM_")]
 	[GIR (name = "DistroUpgradeEnum")]
 	public enum DistroUpgradeType {
-		[CCode (cname = "PK_DISTRO_UPGRADE_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_DISTRO_UPGRADE_ENUM_STABLE")]
 		STABLE,
-		[CCode (cname = "PK_DISTRO_UPGRADE_ENUM_UNSTABLE")]
 		UNSTABLE,
-		[CCode (cname = "PK_DISTRO_UPGRADE_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkErrorEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkErrorEnum", cprefix = "PK_ERROR_ENUM_")]
 	[GIR (name = "ErrorEnum")]
 	public enum ErrorType {
-		[CCode (cname = "PK_ERROR_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_ERROR_ENUM_OOM")]
 		OOM,
-		[CCode (cname = "PK_ERROR_ENUM_NO_NETWORK")]
 		NO_NETWORK,
-		[CCode (cname = "PK_ERROR_ENUM_NOT_SUPPORTED")]
 		NOT_SUPPORTED,
-		[CCode (cname = "PK_ERROR_ENUM_INTERNAL_ERROR")]
 		INTERNAL_ERROR,
-		[CCode (cname = "PK_ERROR_ENUM_GPG_FAILURE")]
 		GPG_FAILURE,
-		[CCode (cname = "PK_ERROR_ENUM_PACKAGE_ID_INVALID")]
 		PACKAGE_ID_INVALID,
-		[CCode (cname = "PK_ERROR_ENUM_PACKAGE_NOT_INSTALLED")]
 		PACKAGE_NOT_INSTALLED,
-		[CCode (cname = "PK_ERROR_ENUM_PACKAGE_NOT_FOUND")]
 		PACKAGE_NOT_FOUND,
-		[CCode (cname = "PK_ERROR_ENUM_PACKAGE_ALREADY_INSTALLED")]
 		PACKAGE_ALREADY_INSTALLED,
-		[CCode (cname = "PK_ERROR_ENUM_PACKAGE_DOWNLOAD_FAILED")]
 		PACKAGE_DOWNLOAD_FAILED,
-		[CCode (cname = "PK_ERROR_ENUM_GROUP_NOT_FOUND")]
 		GROUP_NOT_FOUND,
-		[CCode (cname = "PK_ERROR_ENUM_GROUP_LIST_INVALID")]
 		GROUP_LIST_INVALID,
-		[CCode (cname = "PK_ERROR_ENUM_DEP_RESOLUTION_FAILED")]
 		DEP_RESOLUTION_FAILED,
-		[CCode (cname = "PK_ERROR_ENUM_FILTER_INVALID")]
 		FILTER_INVALID,
-		[CCode (cname = "PK_ERROR_ENUM_CREATE_THREAD_FAILED")]
 		CREATE_THREAD_FAILED,
-		[CCode (cname = "PK_ERROR_ENUM_TRANSACTION_ERROR")]
 		TRANSACTION_ERROR,
-		[CCode (cname = "PK_ERROR_ENUM_TRANSACTION_CANCELLED")]
 		TRANSACTION_CANCELLED,
-		[CCode (cname = "PK_ERROR_ENUM_NO_CACHE")]
 		NO_CACHE,
-		[CCode (cname = "PK_ERROR_ENUM_REPO_NOT_FOUND")]
 		REPO_NOT_FOUND,
-		[CCode (cname = "PK_ERROR_ENUM_CANNOT_REMOVE_SYSTEM_PACKAGE")]
 		CANNOT_REMOVE_SYSTEM_PACKAGE,
-		[CCode (cname = "PK_ERROR_ENUM_PROCESS_KILL")]
 		PROCESS_KILL,
-		[CCode (cname = "PK_ERROR_ENUM_FAILED_INITIALIZATION")]
 		FAILED_INITIALIZATION,
-		[CCode (cname = "PK_ERROR_ENUM_FAILED_FINALISE")]
 		FAILED_FINALISE,
-		[CCode (cname = "PK_ERROR_ENUM_FAILED_CONFIG_PARSING")]
 		FAILED_CONFIG_PARSING,
-		[CCode (cname = "PK_ERROR_ENUM_CANNOT_CANCEL")]
 		CANNOT_CANCEL,
-		[CCode (cname = "PK_ERROR_ENUM_CANNOT_GET_LOCK")]
 		CANNOT_GET_LOCK,
-		[CCode (cname = "PK_ERROR_ENUM_NO_PACKAGES_TO_UPDATE")]
 		NO_PACKAGES_TO_UPDATE,
-		[CCode (cname = "PK_ERROR_ENUM_CANNOT_WRITE_REPO_CONFIG")]
 		CANNOT_WRITE_REPO_CONFIG,
-		[CCode (cname = "PK_ERROR_ENUM_LOCAL_INSTALL_FAILED")]
 		LOCAL_INSTALL_FAILED,
-		[CCode (cname = "PK_ERROR_ENUM_BAD_GPG_SIGNATURE")]
 		BAD_GPG_SIGNATURE,
-		[CCode (cname = "PK_ERROR_ENUM_MISSING_GPG_SIGNATURE")]
 		MISSING_GPG_SIGNATURE,
-		[CCode (cname = "PK_ERROR_ENUM_CANNOT_INSTALL_SOURCE_PACKAGE")]
 		CANNOT_INSTALL_SOURCE_PACKAGE,
-		[CCode (cname = "PK_ERROR_ENUM_REPO_CONFIGURATION_ERROR")]
 		REPO_CONFIGURATION_ERROR,
-		[CCode (cname = "PK_ERROR_ENUM_NO_LICENSE_AGREEMENT")]
 		NO_LICENSE_AGREEMENT,
-		[CCode (cname = "PK_ERROR_ENUM_FILE_CONFLICTS")]
 		FILE_CONFLICTS,
-		[CCode (cname = "PK_ERROR_ENUM_PACKAGE_CONFLICTS")]
 		PACKAGE_CONFLICTS,
-		[CCode (cname = "PK_ERROR_ENUM_REPO_NOT_AVAILABLE")]
 		REPO_NOT_AVAILABLE,
-		[CCode (cname = "PK_ERROR_ENUM_INVALID_PACKAGE_FILE")]
 		INVALID_PACKAGE_FILE,
-		[CCode (cname = "PK_ERROR_ENUM_PACKAGE_INSTALL_BLOCKED")]
 		PACKAGE_INSTALL_BLOCKED,
-		[CCode (cname = "PK_ERROR_ENUM_PACKAGE_CORRUPT")]
 		PACKAGE_CORRUPT,
-		[CCode (cname = "PK_ERROR_ENUM_ALL_PACKAGES_ALREADY_INSTALLED")]
 		ALL_PACKAGES_ALREADY_INSTALLED,
-		[CCode (cname = "PK_ERROR_ENUM_FILE_NOT_FOUND")]
 		FILE_NOT_FOUND,
-		[CCode (cname = "PK_ERROR_ENUM_NO_MORE_MIRRORS_TO_TRY")]
 		NO_MORE_MIRRORS_TO_TRY,
-		[CCode (cname = "PK_ERROR_ENUM_NO_DISTRO_UPGRADE_DATA")]
 		NO_DISTRO_UPGRADE_DATA,
-		[CCode (cname = "PK_ERROR_ENUM_INCOMPATIBLE_ARCHITECTURE")]
 		INCOMPATIBLE_ARCHITECTURE,
-		[CCode (cname = "PK_ERROR_ENUM_NO_SPACE_ON_DEVICE")]
 		NO_SPACE_ON_DEVICE,
-		[CCode (cname = "PK_ERROR_ENUM_MEDIA_CHANGE_REQUIRED")]
 		MEDIA_CHANGE_REQUIRED,
-		[CCode (cname = "PK_ERROR_ENUM_NOT_AUTHORIZED")]
 		NOT_AUTHORIZED,
-		[CCode (cname = "PK_ERROR_ENUM_UPDATE_NOT_FOUND")]
 		UPDATE_NOT_FOUND,
-		[CCode (cname = "PK_ERROR_ENUM_CANNOT_INSTALL_REPO_UNSIGNED")]
 		CANNOT_INSTALL_REPO_UNSIGNED,
-		[CCode (cname = "PK_ERROR_ENUM_CANNOT_UPDATE_REPO_UNSIGNED")]
 		CANNOT_UPDATE_REPO_UNSIGNED,
-		[CCode (cname = "PK_ERROR_ENUM_CANNOT_GET_FILELIST")]
 		CANNOT_GET_FILELIST,
-		[CCode (cname = "PK_ERROR_ENUM_CANNOT_GET_REQUIRES")]
 		CANNOT_GET_REQUIRES,
-		[CCode (cname = "PK_ERROR_ENUM_CANNOT_DISABLE_REPOSITORY")]
 		CANNOT_DISABLE_REPOSITORY,
-		[CCode (cname = "PK_ERROR_ENUM_RESTRICTED_DOWNLOAD")]
 		RESTRICTED_DOWNLOAD,
-		[CCode (cname = "PK_ERROR_ENUM_PACKAGE_FAILED_TO_CONFIGURE")]
 		PACKAGE_FAILED_TO_CONFIGURE,
-		[CCode (cname = "PK_ERROR_ENUM_PACKAGE_FAILED_TO_BUILD")]
 		PACKAGE_FAILED_TO_BUILD,
-		[CCode (cname = "PK_ERROR_ENUM_PACKAGE_FAILED_TO_INSTALL")]
 		PACKAGE_FAILED_TO_INSTALL,
-		[CCode (cname = "PK_ERROR_ENUM_PACKAGE_FAILED_TO_REMOVE")]
 		PACKAGE_FAILED_TO_REMOVE,
-		[CCode (cname = "PK_ERROR_ENUM_UPDATE_FAILED_DUE_TO_RUNNING_PROCESS")]
 		UPDATE_FAILED_DUE_TO_RUNNING_PROCESS,
-		[CCode (cname = "PK_ERROR_ENUM_PACKAGE_DATABASE_CHANGED")]
 		PACKAGE_DATABASE_CHANGED,
-		[CCode (cname = "PK_ERROR_ENUM_PROVIDE_TYPE_NOT_SUPPORTED")]
 		PROVIDE_TYPE_NOT_SUPPORTED,
-		[CCode (cname = "PK_ERROR_ENUM_INSTALL_ROOT_INVALID")]
 		INSTALL_ROOT_INVALID,
-		[CCode (cname = "PK_ERROR_ENUM_CANNOT_FETCH_SOURCES")]
 		CANNOT_FETCH_SOURCES,
-		[CCode (cname = "PK_ERROR_ENUM_CANCELLED_PRIORITY")]
 		CANCELLED_PRIORITY,
-		[CCode (cname = "PK_ERROR_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkExitEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkExitEnum", cprefix = "PK_EXIT_ENUM_")]
 	[GIR (name = "ExitEnum")]
 	public enum Exit {
-		[CCode (cname = "PK_EXIT_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_EXIT_ENUM_SUCCESS")]
 		SUCCESS,
-		[CCode (cname = "PK_EXIT_ENUM_FAILED")]
 		FAILED,
-		[CCode (cname = "PK_EXIT_ENUM_CANCELLED")]
 		CANCELLED,
-		[CCode (cname = "PK_EXIT_ENUM_KEY_REQUIRED")]
 		KEY_REQUIRED,
-		[CCode (cname = "PK_EXIT_ENUM_EULA_REQUIRED")]
 		EULA_REQUIRED,
-		[CCode (cname = "PK_EXIT_ENUM_KILLED")]
 		KILLED,
-		[CCode (cname = "PK_EXIT_ENUM_MEDIA_CHANGE_REQUIRED")]
 		MEDIA_CHANGE_REQUIRED,
-		[CCode (cname = "PK_EXIT_ENUM_NEED_UNTRUSTED")]
 		NEED_UNTRUSTED,
-		[CCode (cname = "PK_EXIT_ENUM_CANCELLED_PRIORITY")]
 		CANCELLED_PRIORITY,
-		[CCode (cname = "PK_EXIT_ENUM_SKIP_TRANSACTION")]
 		SKIP_TRANSACTION,
-		[CCode (cname = "PK_EXIT_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkFilterEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkFilterEnum", cprefix = "PK_FILTER_ENUM_")]
 	[GIR (name = "FilterEnum")]
 	public enum Filter {
-		[CCode (cname = "PK_FILTER_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_FILTER_ENUM_NONE")]
 		NONE,
-		[CCode (cname = "PK_FILTER_ENUM_INSTALLED")]
 		INSTALLED,
-		[CCode (cname = "PK_FILTER_ENUM_NOT_INSTALLED")]
 		NOT_INSTALLED,
-		[CCode (cname = "PK_FILTER_ENUM_DEVELOPMENT")]
 		DEVELOPMENT,
-		[CCode (cname = "PK_FILTER_ENUM_NOT_DEVELOPMENT")]
 		NOT_DEVELOPMENT,
-		[CCode (cname = "PK_FILTER_ENUM_GUI")]
 		GUI,
-		[CCode (cname = "PK_FILTER_ENUM_NOT_GUI")]
 		NOT_GUI,
-		[CCode (cname = "PK_FILTER_ENUM_FREE")]
 		FREE,
-		[CCode (cname = "PK_FILTER_ENUM_NOT_FREE")]
 		NOT_FREE,
-		[CCode (cname = "PK_FILTER_ENUM_VISIBLE")]
 		VISIBLE,
-		[CCode (cname = "PK_FILTER_ENUM_NOT_VISIBLE")]
 		NOT_VISIBLE,
-		[CCode (cname = "PK_FILTER_ENUM_SUPPORTED")]
 		SUPPORTED,
-		[CCode (cname = "PK_FILTER_ENUM_NOT_SUPPORTED")]
 		NOT_SUPPORTED,
-		[CCode (cname = "PK_FILTER_ENUM_BASENAME")]
 		BASENAME,
-		[CCode (cname = "PK_FILTER_ENUM_NOT_BASENAME")]
 		NOT_BASENAME,
-		[CCode (cname = "PK_FILTER_ENUM_NEWEST")]
 		NEWEST,
-		[CCode (cname = "PK_FILTER_ENUM_NOT_NEWEST")]
 		NOT_NEWEST,
-		[CCode (cname = "PK_FILTER_ENUM_ARCH")]
 		ARCH,
-		[CCode (cname = "PK_FILTER_ENUM_NOT_ARCH")]
 		NOT_ARCH,
-		[CCode (cname = "PK_FILTER_ENUM_SOURCE")]
 		SOURCE,
-		[CCode (cname = "PK_FILTER_ENUM_NOT_SOURCE")]
 		NOT_SOURCE,
-		[CCode (cname = "PK_FILTER_ENUM_COLLECTIONS")]
 		COLLECTIONS,
-		[CCode (cname = "PK_FILTER_ENUM_NOT_COLLECTIONS")]
 		NOT_COLLECTIONS,
-		[CCode (cname = "PK_FILTER_ENUM_APPLICATION")]
 		APPLICATION,
-		[CCode (cname = "PK_FILTER_ENUM_NOT_APPLICATION")]
 		NOT_APPLICATION,
-		[CCode (cname = "PK_FILTER_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkGroupEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkGroupEnum", cprefix = "PK_GROUP_ENUM_")]
 	[GIR (name = "GroupEnum")]
 	public enum Group {
-		[CCode (cname = "PK_GROUP_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_GROUP_ENUM_ACCESSIBILITY")]
 		ACCESSIBILITY,
-		[CCode (cname = "PK_GROUP_ENUM_ACCESSORIES")]
 		ACCESSORIES,
-		[CCode (cname = "PK_GROUP_ENUM_ADMIN_TOOLS")]
 		ADMIN_TOOLS,
-		[CCode (cname = "PK_GROUP_ENUM_COMMUNICATION")]
 		COMMUNICATION,
-		[CCode (cname = "PK_GROUP_ENUM_DESKTOP_GNOME")]
 		DESKTOP_GNOME,
-		[CCode (cname = "PK_GROUP_ENUM_DESKTOP_KDE")]
 		DESKTOP_KDE,
-		[CCode (cname = "PK_GROUP_ENUM_DESKTOP_OTHER")]
 		DESKTOP_OTHER,
-		[CCode (cname = "PK_GROUP_ENUM_DESKTOP_XFCE")]
 		DESKTOP_XFCE,
-		[CCode (cname = "PK_GROUP_ENUM_EDUCATION")]
 		EDUCATION,
-		[CCode (cname = "PK_GROUP_ENUM_FONTS")]
 		FONTS,
-		[CCode (cname = "PK_GROUP_ENUM_GAMES")]
 		GAMES,
-		[CCode (cname = "PK_GROUP_ENUM_GRAPHICS")]
 		GRAPHICS,
-		[CCode (cname = "PK_GROUP_ENUM_INTERNET")]
 		INTERNET,
-		[CCode (cname = "PK_GROUP_ENUM_LEGACY")]
 		LEGACY,
-		[CCode (cname = "PK_GROUP_ENUM_LOCALIZATION")]
 		LOCALIZATION,
-		[CCode (cname = "PK_GROUP_ENUM_MAPS")]
 		MAPS,
-		[CCode (cname = "PK_GROUP_ENUM_MULTIMEDIA")]
 		MULTIMEDIA,
-		[CCode (cname = "PK_GROUP_ENUM_NETWORK")]
 		NETWORK,
-		[CCode (cname = "PK_GROUP_ENUM_OFFICE")]
 		OFFICE,
-		[CCode (cname = "PK_GROUP_ENUM_OTHER")]
 		OTHER,
-		[CCode (cname = "PK_GROUP_ENUM_POWER_MANAGEMENT")]
 		POWER_MANAGEMENT,
-		[CCode (cname = "PK_GROUP_ENUM_PROGRAMMING")]
 		PROGRAMMING,
-		[CCode (cname = "PK_GROUP_ENUM_PUBLISHING")]
 		PUBLISHING,
-		[CCode (cname = "PK_GROUP_ENUM_REPOS")]
 		REPOS,
-		[CCode (cname = "PK_GROUP_ENUM_SECURITY")]
 		SECURITY,
-		[CCode (cname = "PK_GROUP_ENUM_SERVERS")]
 		SERVERS,
-		[CCode (cname = "PK_GROUP_ENUM_SYSTEM")]
 		SYSTEM,
-		[CCode (cname = "PK_GROUP_ENUM_VIRTUALIZATION")]
 		VIRTUALIZATION,
-		[CCode (cname = "PK_GROUP_ENUM_SCIENCE")]
 		SCIENCE,
-		[CCode (cname = "PK_GROUP_ENUM_DOCUMENTATION")]
 		DOCUMENTATION,
-		[CCode (cname = "PK_GROUP_ENUM_ELECTRONICS")]
 		ELECTRONICS,
-		[CCode (cname = "PK_GROUP_ENUM_COLLECTIONS")]
 		COLLECTIONS,
-		[CCode (cname = "PK_GROUP_ENUM_VENDOR")]
 		VENDOR,
-		[CCode (cname = "PK_GROUP_ENUM_NEWEST")]
 		NEWEST,
-		[CCode (cname = "PK_GROUP_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkInfoEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkInfoEnum", cprefix = "PK_INFO_ENUM_")]
 	[GIR (name = "InfoEnum")]
 	public enum Info {
-		[CCode (cname = "PK_INFO_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_INFO_ENUM_INSTALLED")]
 		INSTALLED,
-		[CCode (cname = "PK_INFO_ENUM_AVAILABLE")]
 		AVAILABLE,
-		[CCode (cname = "PK_INFO_ENUM_LOW")]
 		LOW,
-		[CCode (cname = "PK_INFO_ENUM_ENHANCEMENT")]
 		ENHANCEMENT,
-		[CCode (cname = "PK_INFO_ENUM_NORMAL")]
 		NORMAL,
-		[CCode (cname = "PK_INFO_ENUM_BUGFIX")]
 		BUGFIX,
-		[CCode (cname = "PK_INFO_ENUM_IMPORTANT")]
 		IMPORTANT,
-		[CCode (cname = "PK_INFO_ENUM_SECURITY")]
 		SECURITY,
-		[CCode (cname = "PK_INFO_ENUM_BLOCKED")]
 		BLOCKED,
-		[CCode (cname = "PK_INFO_ENUM_DOWNLOADING")]
 		DOWNLOADING,
-		[CCode (cname = "PK_INFO_ENUM_UPDATING")]
 		UPDATING,
-		[CCode (cname = "PK_INFO_ENUM_INSTALLING")]
 		INSTALLING,
-		[CCode (cname = "PK_INFO_ENUM_REMOVING")]
 		REMOVING,
-		[CCode (cname = "PK_INFO_ENUM_CLEANUP")]
 		CLEANUP,
-		[CCode (cname = "PK_INFO_ENUM_OBSOLETING")]
 		OBSOLETING,
-		[CCode (cname = "PK_INFO_ENUM_COLLECTION_INSTALLED")]
 		COLLECTION_INSTALLED,
-		[CCode (cname = "PK_INFO_ENUM_COLLECTION_AVAILABLE")]
 		COLLECTION_AVAILABLE,
-		[CCode (cname = "PK_INFO_ENUM_FINISHED")]
 		FINISHED,
-		[CCode (cname = "PK_INFO_ENUM_REINSTALLING")]
 		REINSTALLING,
-		[CCode (cname = "PK_INFO_ENUM_DOWNGRADING")]
 		DOWNGRADING,
-		[CCode (cname = "PK_INFO_ENUM_PREPARING")]
 		PREPARING,
-		[CCode (cname = "PK_INFO_ENUM_DECOMPRESSING")]
 		DECOMPRESSING,
-		[CCode (cname = "PK_INFO_ENUM_UNTRUSTED")]
 		UNTRUSTED,
-		[CCode (cname = "PK_INFO_ENUM_TRUSTED")]
 		TRUSTED,
-		[CCode (cname = "PK_INFO_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkMediaTypeEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkMediaTypeEnum", cprefix = "PK_MEDIA_TYPE_ENUM_")]
 	[GIR (name = "MediaTypeEnum")]
 	public enum MediaType {
-		[CCode (cname = "PK_MEDIA_TYPE_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_MEDIA_TYPE_ENUM_CD")]
 		CD,
-		[CCode (cname = "PK_MEDIA_TYPE_ENUM_DVD")]
 		DVD,
-		[CCode (cname = "PK_MEDIA_TYPE_ENUM_DISC")]
 		DISC,
-		[CCode (cname = "PK_MEDIA_TYPE_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkMessageEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkMessageEnum", cprefix = "PK_MESSAGE_ENUM_")]
 	[GIR (name = "MessageEnum")]
 	public enum MessageType {
-		[CCode (cname = "PK_MESSAGE_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_MESSAGE_ENUM_BROKEN_MIRROR")]
 		BROKEN_MIRROR,
-		[CCode (cname = "PK_MESSAGE_ENUM_CONNECTION_REFUSED")]
 		CONNECTION_REFUSED,
-		[CCode (cname = "PK_MESSAGE_ENUM_PARAMETER_INVALID")]
 		PARAMETER_INVALID,
-		[CCode (cname = "PK_MESSAGE_ENUM_PRIORITY_INVALID")]
 		PRIORITY_INVALID,
-		[CCode (cname = "PK_MESSAGE_ENUM_BACKEND_ERROR")]
 		BACKEND_ERROR,
-		[CCode (cname = "PK_MESSAGE_ENUM_DAEMON_ERROR")]
 		DAEMON_ERROR,
-		[CCode (cname = "PK_MESSAGE_ENUM_CACHE_BEING_REBUILT")]
 		CACHE_BEING_REBUILT,
-		[CCode (cname = "PK_MESSAGE_ENUM_UNTRUSTED_PACKAGE")]
 		UNTRUSTED_PACKAGE,
-		[CCode (cname = "PK_MESSAGE_ENUM_NEWER_PACKAGE_EXISTS")]
 		NEWER_PACKAGE_EXISTS,
-		[CCode (cname = "PK_MESSAGE_ENUM_COULD_NOT_FIND_PACKAGE")]
 		COULD_NOT_FIND_PACKAGE,
-		[CCode (cname = "PK_MESSAGE_ENUM_CONFIG_FILES_CHANGED")]
 		CONFIG_FILES_CHANGED,
-		[CCode (cname = "PK_MESSAGE_ENUM_PACKAGE_ALREADY_INSTALLED")]
 		PACKAGE_ALREADY_INSTALLED,
-		[CCode (cname = "PK_MESSAGE_ENUM_AUTOREMOVE_IGNORED")]
 		AUTOREMOVE_IGNORED,
-		[CCode (cname = "PK_MESSAGE_ENUM_REPO_METADATA_DOWNLOAD_FAILED")]
 		REPO_METADATA_DOWNLOAD_FAILED,
-		[CCode (cname = "PK_MESSAGE_ENUM_REPO_FOR_DEVELOPERS_ONLY")]
 		REPO_FOR_DEVELOPERS_ONLY,
-		[CCode (cname = "PK_MESSAGE_ENUM_OTHER_UPDATES_HELD_BACK")]
 		OTHER_UPDATES_HELD_BACK,
-		[CCode (cname = "PK_MESSAGE_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkNetworkEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkNetworkEnum", cprefix = "PK_NETWORK_ENUM_")]
 	[GIR (name = "NetworkEnum")]
 	public enum Network {
-		[CCode (cname = "PK_NETWORK_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_NETWORK_ENUM_OFFLINE")]
 		OFFLINE,
-		[CCode (cname = "PK_NETWORK_ENUM_ONLINE")]
 		ONLINE,
-		[CCode (cname = "PK_NETWORK_ENUM_WIRED")]
 		WIRED,
-		[CCode (cname = "PK_NETWORK_ENUM_WIFI")]
 		WIFI,
-		[CCode (cname = "PK_NETWORK_ENUM_MOBILE")]
 		MOBILE,
-		[CCode (cname = "PK_NETWORK_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cprefix = "PK_PACKAGE_SACK_SORT_TYPE_")]
 	public enum PackageSackSortType {
-		[CCode (cname = "PK_PACKAGE_SACK_SORT_TYPE_NAME")]
 		NAME,
-		[CCode (cname = "PK_PACKAGE_SACK_SORT_TYPE_INFO")]
 		INFO,
-		[CCode (cname = "PK_PACKAGE_SACK_SORT_TYPE_PACKAGE_ID")]
 		PACKAGE_ID,
-		[CCode (cname = "PK_PACKAGE_SACK_SORT_TYPE_SUMMARY")]
 		SUMMARY,
-		[CCode (cname = "PK_PACKAGE_SACK_SORT_TYPE_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cprefix = "PK_PROGRESS_TYPE_")]
 	public enum ProgressType {
-		[CCode (cname = "PK_PROGRESS_TYPE_PACKAGE_ID")]
 		PACKAGE_ID,
-		[CCode (cname = "PK_PROGRESS_TYPE_TRANSACTION_ID")]
 		TRANSACTION_ID,
-		[CCode (cname = "PK_PROGRESS_TYPE_PERCENTAGE")]
 		PERCENTAGE,
-		[CCode (cname = "PK_PROGRESS_TYPE_SUBPERCENTAGE")]
 		SUBPERCENTAGE,
-		[CCode (cname = "PK_PROGRESS_TYPE_ALLOW_CANCEL")]
 		ALLOW_CANCEL,
-		[CCode (cname = "PK_PROGRESS_TYPE_STATUS")]
 		STATUS,
-		[CCode (cname = "PK_PROGRESS_TYPE_ROLE")]
 		ROLE,
-		[CCode (cname = "PK_PROGRESS_TYPE_CALLER_ACTIVE")]
 		CALLER_ACTIVE,
-		[CCode (cname = "PK_PROGRESS_TYPE_ELAPSED_TIME")]
 		ELAPSED_TIME,
-		[CCode (cname = "PK_PROGRESS_TYPE_REMAINING_TIME")]
 		REMAINING_TIME,
-		[CCode (cname = "PK_PROGRESS_TYPE_SPEED")]
 		SPEED,
-		[CCode (cname = "PK_PROGRESS_TYPE_UID")]
 		UID,
-		[CCode (cname = "PK_PROGRESS_TYPE_PACKAGE")]
 		PACKAGE,
-		[CCode (cname = "PK_PROGRESS_TYPE_ITEM_PROGRESS")]
 		ITEM_PROGRESS,
-		[CCode (cname = "PK_PROGRESS_TYPE_INVALID")]
 		INVALID
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkProvidesEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkProvidesEnum", cprefix = "PK_PROVIDES_ENUM_")]
 	[GIR (name = "ProvidesEnum")]
 	public enum Provides {
-		[CCode (cname = "PK_PROVIDES_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_PROVIDES_ENUM_ANY")]
 		ANY,
-		[CCode (cname = "PK_PROVIDES_ENUM_MODALIAS")]
 		MODALIAS,
-		[CCode (cname = "PK_PROVIDES_ENUM_CODEC")]
 		CODEC,
-		[CCode (cname = "PK_PROVIDES_ENUM_MIMETYPE")]
 		MIMETYPE,
-		[CCode (cname = "PK_PROVIDES_ENUM_FONT")]
 		FONT,
-		[CCode (cname = "PK_PROVIDES_ENUM_HARDWARE_DRIVER")]
 		HARDWARE_DRIVER,
-		[CCode (cname = "PK_PROVIDES_ENUM_POSTSCRIPT_DRIVER")]
 		POSTSCRIPT_DRIVER,
-		[CCode (cname = "PK_PROVIDES_ENUM_PLASMA_SERVICE")]
 		PLASMA_SERVICE,
-		[CCode (cname = "PK_PROVIDES_ENUM_SHARED_LIB")]
 		SHARED_LIB,
-		[CCode (cname = "PK_PROVIDES_ENUM_PYTHON")]
 		PYTHON,
-		[CCode (cname = "PK_PROVIDES_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkRestartEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkRestartEnum", cprefix = "PK_RESTART_ENUM_")]
 	[GIR (name = "RestartEnum")]
 	public enum Restart {
-		[CCode (cname = "PK_RESTART_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_RESTART_ENUM_NONE")]
 		NONE,
-		[CCode (cname = "PK_RESTART_ENUM_APPLICATION")]
 		APPLICATION,
-		[CCode (cname = "PK_RESTART_ENUM_SESSION")]
 		SESSION,
-		[CCode (cname = "PK_RESTART_ENUM_SYSTEM")]
 		SYSTEM,
-		[CCode (cname = "PK_RESTART_ENUM_SECURITY_SESSION")]
 		SECURITY_SESSION,
-		[CCode (cname = "PK_RESTART_ENUM_SECURITY_SYSTEM")]
 		SECURITY_SYSTEM,
-		[CCode (cname = "PK_RESTART_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkRoleEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkRoleEnum", cprefix = "PK_ROLE_ENUM_")]
 	[GIR (name = "RoleEnum")]
 	public enum Role {
-		[CCode (cname = "PK_ROLE_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_ROLE_ENUM_CANCEL")]
 		CANCEL,
-		[CCode (cname = "PK_ROLE_ENUM_GET_DEPENDS")]
 		GET_DEPENDS,
-		[CCode (cname = "PK_ROLE_ENUM_GET_DETAILS")]
 		GET_DETAILS,
-		[CCode (cname = "PK_ROLE_ENUM_GET_FILES")]
 		GET_FILES,
-		[CCode (cname = "PK_ROLE_ENUM_GET_PACKAGES")]
 		GET_PACKAGES,
-		[CCode (cname = "PK_ROLE_ENUM_GET_REPO_LIST")]
 		GET_REPO_LIST,
-		[CCode (cname = "PK_ROLE_ENUM_GET_REQUIRES")]
 		GET_REQUIRES,
-		[CCode (cname = "PK_ROLE_ENUM_GET_UPDATE_DETAIL")]
 		GET_UPDATE_DETAIL,
-		[CCode (cname = "PK_ROLE_ENUM_GET_UPDATES")]
 		GET_UPDATES,
-		[CCode (cname = "PK_ROLE_ENUM_INSTALL_FILES")]
 		INSTALL_FILES,
-		[CCode (cname = "PK_ROLE_ENUM_INSTALL_PACKAGES")]
 		INSTALL_PACKAGES,
-		[CCode (cname = "PK_ROLE_ENUM_INSTALL_SIGNATURE")]
 		INSTALL_SIGNATURE,
-		[CCode (cname = "PK_ROLE_ENUM_REFRESH_CACHE")]
 		REFRESH_CACHE,
-		[CCode (cname = "PK_ROLE_ENUM_REMOVE_PACKAGES")]
 		REMOVE_PACKAGES,
-		[CCode (cname = "PK_ROLE_ENUM_REPO_ENABLE")]
 		REPO_ENABLE,
-		[CCode (cname = "PK_ROLE_ENUM_REPO_SET_DATA")]
 		REPO_SET_DATA,
-		[CCode (cname = "PK_ROLE_ENUM_RESOLVE")]
 		RESOLVE,
-		[CCode (cname = "PK_ROLE_ENUM_ROLLBACK")]
 		ROLLBACK,
-		[CCode (cname = "PK_ROLE_ENUM_SEARCH_DETAILS")]
 		SEARCH_DETAILS,
-		[CCode (cname = "PK_ROLE_ENUM_SEARCH_FILE")]
 		SEARCH_FILE,
-		[CCode (cname = "PK_ROLE_ENUM_SEARCH_GROUP")]
 		SEARCH_GROUP,
-		[CCode (cname = "PK_ROLE_ENUM_SEARCH_NAME")]
 		SEARCH_NAME,
-		[CCode (cname = "PK_ROLE_ENUM_UPDATE_PACKAGES")]
 		UPDATE_PACKAGES,
-		[CCode (cname = "PK_ROLE_ENUM_UPDATE_SYSTEM")]
 		UPDATE_SYSTEM,
-		[CCode (cname = "PK_ROLE_ENUM_WHAT_PROVIDES")]
 		WHAT_PROVIDES,
-		[CCode (cname = "PK_ROLE_ENUM_ACCEPT_EULA")]
 		ACCEPT_EULA,
-		[CCode (cname = "PK_ROLE_ENUM_DOWNLOAD_PACKAGES")]
 		DOWNLOAD_PACKAGES,
-		[CCode (cname = "PK_ROLE_ENUM_GET_DISTRO_UPGRADES")]
 		GET_DISTRO_UPGRADES,
-		[CCode (cname = "PK_ROLE_ENUM_GET_CATEGORIES")]
 		GET_CATEGORIES,
-		[CCode (cname = "PK_ROLE_ENUM_GET_OLD_TRANSACTIONS")]
 		GET_OLD_TRANSACTIONS,
-		[CCode (cname = "PK_ROLE_ENUM_SIMULATE_INSTALL_FILES")]
 		SIMULATE_INSTALL_FILES,
-		[CCode (cname = "PK_ROLE_ENUM_SIMULATE_INSTALL_PACKAGES")]
 		SIMULATE_INSTALL_PACKAGES,
-		[CCode (cname = "PK_ROLE_ENUM_SIMULATE_REMOVE_PACKAGES")]
 		SIMULATE_REMOVE_PACKAGES,
-		[CCode (cname = "PK_ROLE_ENUM_SIMULATE_UPDATE_PACKAGES")]
 		SIMULATE_UPDATE_PACKAGES,
-		[CCode (cname = "PK_ROLE_ENUM_UPGRADE_SYSTEM")]
 		UPGRADE_SYSTEM,
-		[CCode (cname = "PK_ROLE_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkSigTypeEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkSigTypeEnum", cprefix = "PK_SIGTYPE_ENUM_")]
 	[GIR (name = "SigTypeEnum")]
 	public enum SigType {
-		[CCode (cname = "PK_SIGTYPE_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_SIGTYPE_ENUM_GPG")]
 		GPG,
-		[CCode (cname = "PK_SIGTYPE_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkStatusEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkStatusEnum", cprefix = "PK_STATUS_ENUM_")]
 	[GIR (name = "StatusEnum")]
 	public enum Status {
-		[CCode (cname = "PK_STATUS_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_STATUS_ENUM_WAIT")]
 		WAIT,
-		[CCode (cname = "PK_STATUS_ENUM_SETUP")]
 		SETUP,
-		[CCode (cname = "PK_STATUS_ENUM_RUNNING")]
 		RUNNING,
-		[CCode (cname = "PK_STATUS_ENUM_QUERY")]
 		QUERY,
-		[CCode (cname = "PK_STATUS_ENUM_INFO")]
 		INFO,
-		[CCode (cname = "PK_STATUS_ENUM_REMOVE")]
 		REMOVE,
-		[CCode (cname = "PK_STATUS_ENUM_REFRESH_CACHE")]
 		REFRESH_CACHE,
-		[CCode (cname = "PK_STATUS_ENUM_DOWNLOAD")]
 		DOWNLOAD,
-		[CCode (cname = "PK_STATUS_ENUM_INSTALL")]
 		INSTALL,
-		[CCode (cname = "PK_STATUS_ENUM_UPDATE")]
 		UPDATE,
-		[CCode (cname = "PK_STATUS_ENUM_CLEANUP")]
 		CLEANUP,
-		[CCode (cname = "PK_STATUS_ENUM_OBSOLETE")]
 		OBSOLETE,
-		[CCode (cname = "PK_STATUS_ENUM_DEP_RESOLVE")]
 		DEP_RESOLVE,
-		[CCode (cname = "PK_STATUS_ENUM_SIG_CHECK")]
 		SIG_CHECK,
-		[CCode (cname = "PK_STATUS_ENUM_ROLLBACK")]
 		ROLLBACK,
-		[CCode (cname = "PK_STATUS_ENUM_TEST_COMMIT")]
 		TEST_COMMIT,
-		[CCode (cname = "PK_STATUS_ENUM_COMMIT")]
 		COMMIT,
-		[CCode (cname = "PK_STATUS_ENUM_REQUEST")]
 		REQUEST,
-		[CCode (cname = "PK_STATUS_ENUM_FINISHED")]
 		FINISHED,
-		[CCode (cname = "PK_STATUS_ENUM_CANCEL")]
 		CANCEL,
-		[CCode (cname = "PK_STATUS_ENUM_DOWNLOAD_REPOSITORY")]
 		DOWNLOAD_REPOSITORY,
-		[CCode (cname = "PK_STATUS_ENUM_DOWNLOAD_PACKAGELIST")]
 		DOWNLOAD_PACKAGELIST,
-		[CCode (cname = "PK_STATUS_ENUM_DOWNLOAD_FILELIST")]
 		DOWNLOAD_FILELIST,
-		[CCode (cname = "PK_STATUS_ENUM_DOWNLOAD_CHANGELOG")]
 		DOWNLOAD_CHANGELOG,
-		[CCode (cname = "PK_STATUS_ENUM_DOWNLOAD_GROUP")]
 		DOWNLOAD_GROUP,
-		[CCode (cname = "PK_STATUS_ENUM_DOWNLOAD_UPDATEINFO")]
 		DOWNLOAD_UPDATEINFO,
-		[CCode (cname = "PK_STATUS_ENUM_REPACKAGING")]
 		REPACKAGING,
-		[CCode (cname = "PK_STATUS_ENUM_LOADING_CACHE")]
 		LOADING_CACHE,
-		[CCode (cname = "PK_STATUS_ENUM_SCAN_APPLICATIONS")]
 		SCAN_APPLICATIONS,
-		[CCode (cname = "PK_STATUS_ENUM_GENERATE_PACKAGE_LIST")]
 		GENERATE_PACKAGE_LIST,
-		[CCode (cname = "PK_STATUS_ENUM_WAITING_FOR_LOCK")]
 		WAITING_FOR_LOCK,
-		[CCode (cname = "PK_STATUS_ENUM_WAITING_FOR_AUTH")]
 		WAITING_FOR_AUTH,
-		[CCode (cname = "PK_STATUS_ENUM_SCAN_PROCESS_LIST")]
 		SCAN_PROCESS_LIST,
-		[CCode (cname = "PK_STATUS_ENUM_CHECK_EXECUTABLE_FILES")]
 		CHECK_EXECUTABLE_FILES,
-		[CCode (cname = "PK_STATUS_ENUM_CHECK_LIBRARIES")]
 		CHECK_LIBRARIES,
-		[CCode (cname = "PK_STATUS_ENUM_COPY_FILES")]
 		COPY_FILES,
-		[CCode (cname = "PK_STATUS_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkUpdateStateEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkUpdateStateEnum", cprefix = "PK_UPDATE_STATE_ENUM_")]
 	[GIR (name = "UpdateStateEnum")]
 	public enum UpdateState {
-		[CCode (cname = "PK_UPDATE_STATE_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_UPDATE_STATE_ENUM_STABLE")]
 		STABLE,
-		[CCode (cname = "PK_UPDATE_STATE_ENUM_UNSTABLE")]
 		UNSTABLE,
-		[CCode (cname = "PK_UPDATE_STATE_ENUM_TESTING")]
 		TESTING,
-		[CCode (cname = "PK_UPDATE_STATE_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkUpgradeKindEnum")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkUpgradeKindEnum", cprefix = "PK_UPGRADE_KIND_ENUM_")]
 	[GIR (name = "UpgradeKindEnum")]
 	public enum UpgradeKind {
-		[CCode (cname = "PK_UPGRADE_KIND_ENUM_UNKNOWN")]
 		UNKNOWN,
-		[CCode (cname = "PK_UPGRADE_KIND_ENUM_MINIMAL")]
 		MINIMAL,
-		[CCode (cname = "PK_UPGRADE_KIND_ENUM_DEFAULT")]
 		DEFAULT,
-		[CCode (cname = "PK_UPGRADE_KIND_ENUM_COMPLETE")]
 		COMPLETE,
-		[CCode (cname = "PK_UPGRADE_KIND_ENUM_LAST")]
 		LAST
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cprefix = "PK_CATALOG_ERROR_")]
 	public errordomain CatalogError {
-		[CCode (cname = "PK_CATALOG_ERROR_FAILED")]
 		FAILED
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cprefix = "PK_SERVICE_PACK_ERROR_")]
 	public errordomain ServicePackError {
 		[CCode (cname = "PK_SERVICE_PACK_ERROR_FAILED_SETUP")]
 		FAILEDSETUP,

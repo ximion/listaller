@@ -250,34 +250,34 @@ namespace PkPlugin {
 		public uint uid { get; }
 		public signal void allow_cancel (bool object);
 		[HasEmitter]
-		public signal void category (void* parent_id);
+		public signal void category (void* object);
 		public signal void change_transaction_data (string object);
 		[HasEmitter]
-		public signal void details (void* package_id);
+		public signal void details (void* object);
 		[HasEmitter]
-		public signal void distro_upgrade (void* type);
+		public signal void distro_upgrade (void* object);
 		public signal void error_code (void* object);
 		[HasEmitter]
-		public signal void eula_required (void* eula_id);
+		public signal void eula_required (void* object);
 		[HasEmitter]
-		public signal void files (void* package_id);
+		public signal void files (void* object);
 		[HasEmitter]
 		public signal void finished (uint object);
 		public signal void item_progress (string object, uint p0);
 		[HasEmitter]
-		public signal void media_change_required (void* media_type);
+		public signal void media_change_required (void* object);
 		public signal void message (void* object);
 		[HasEmitter]
-		public signal void package (void* info);
+		public signal void package (void* object);
 		[HasEmitter]
-		public signal void repo_detail (void* repo_id);
+		public signal void repo_detail (void* object);
 		[HasEmitter]
-		public signal void repo_signature_required (void* package_id);
+		public signal void repo_signature_required (void* object);
 		[HasEmitter]
-		public signal void require_restart (void* restart);
+		public signal void require_restart (void* object);
 		public signal void status_changed (uint object);
 		[HasEmitter]
-		public signal void update_detail (void* package_id);
+		public signal void update_detail (void* object);
 	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", type_id = "pk_conf_get_type ()")]
 	public class Conf : GLib.Object {
@@ -334,7 +334,7 @@ namespace PkPlugin {
 		public static unowned string state_to_string (PkPlugin.TransactionState state);
 		public signal void finished ();
 	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_type_id = false)]
+	[CCode (cheader_filename = "plugin/packagekit-plugin.h")]
 	public struct BackendDesc {
 		public weak string description;
 		public weak string author;
@@ -383,7 +383,7 @@ namespace PkPlugin {
 		[CCode (array_length = false, array_null_terminated = true)]
 		public weak void*[] padding;
 	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_type_id = false)]
+	[CCode (cheader_filename = "plugin/packagekit-plugin.h")]
 	public struct Plugin {
 		public weak PkPlugin.Backend backend;
 		[CCode (cname = "pk_plugin_destroy")]
@@ -403,45 +403,29 @@ namespace PkPlugin {
 		[CCode (cname = "pk_plugin_transaction_started")]
 		public void transaction_started (PkPlugin.Transaction transaction);
 	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h")]
+	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cprefix = "PK_PLUGIN_PHASE_")]
 	public enum PluginPhase {
-		[CCode (cname = "PK_PLUGIN_PHASE_INIT")]
 		INIT,
-		[CCode (cname = "PK_PLUGIN_PHASE_TRANSACTION_CONTENT_TYPES")]
 		TRANSACTION_CONTENT_TYPES,
-		[CCode (cname = "PK_PLUGIN_PHASE_TRANSACTION_RUN")]
 		TRANSACTION_RUN,
-		[CCode (cname = "PK_PLUGIN_PHASE_TRANSACTION_STARTED")]
 		TRANSACTION_STARTED,
-		[CCode (cname = "PK_PLUGIN_PHASE_TRANSACTION_FINISHED_START")]
 		TRANSACTION_FINISHED_START,
-		[CCode (cname = "PK_PLUGIN_PHASE_TRANSACTION_FINISHED_RESULTS")]
 		TRANSACTION_FINISHED_RESULTS,
-		[CCode (cname = "PK_PLUGIN_PHASE_TRANSACTION_FINISHED_END")]
 		TRANSACTION_FINISHED_END,
-		[CCode (cname = "PK_PLUGIN_PHASE_DESTROY")]
 		DESTROY,
-		[CCode (cname = "PK_PLUGIN_PHASE_UNKNOWN")]
 		UNKNOWN
 	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h")]
+	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cprefix = "PK_TRANSACTION_STATE_")]
 	public enum TransactionState {
-		[CCode (cname = "PK_TRANSACTION_STATE_NEW")]
 		NEW,
-		[CCode (cname = "PK_TRANSACTION_STATE_WAITING_FOR_AUTH")]
 		WAITING_FOR_AUTH,
-		[CCode (cname = "PK_TRANSACTION_STATE_COMMITTED")]
 		COMMITTED,
-		[CCode (cname = "PK_TRANSACTION_STATE_READY")]
 		READY,
-		[CCode (cname = "PK_TRANSACTION_STATE_RUNNING")]
 		RUNNING,
-		[CCode (cname = "PK_TRANSACTION_STATE_FINISHED")]
 		FINISHED,
-		[CCode (cname = "PK_TRANSACTION_STATE_UNKNOWN")]
 		UNKNOWN
 	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h")]
+	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cprefix = "PK_TRANSACTION_ERROR_")]
 	public errordomain TransactionError {
 		[CCode (cname = "PK_TRANSACTION_ERROR_DENIED")]
 		PERMISSIONDENIED,
