@@ -69,9 +69,16 @@ private class PkInstaller : Object {
 	}
 
 	private bool pkit_install_packages (string[] pkids) {
-		PackageKit.Results res = pkit.install_packages (true, pkids, null, pk_progress_cb);
+		PackageKit.Results res = null;
+		try {
+			res = pkit.install_packages (true, pkids, null, pk_progress_cb);
+		} catch (Error e) {
+			set_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
+				   _("Installation of native packages failed with message: %s").printf (e.message));
+			return false;
+		}
 
-		if (res.get_exit_code () == PackageKit.Exit.SUCCESS)
+		if ((res != null) && (res.get_exit_code () == PackageKit.Exit.SUCCESS))
 			return true;
 
 		/*emit_warning (_("Installation of native package '%s' failed!").printf (pkg.get_id ()) + "\n" +

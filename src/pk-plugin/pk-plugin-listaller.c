@@ -646,7 +646,6 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
 	pkbproxy = listaller_pk_backend_proxy_new ();
-	listaller_pk_backend_proxy_set_plugin (pkbproxy, plugin);
 	g_signal_connect (pkbproxy, "request-whatprovides",
 			  G_CALLBACK (pk_backend_request_whatprovides_cb), plugin);
 	listaller_set_backend_proxy (pkbproxy);
