@@ -583,15 +583,13 @@ pk_plugin_finished_cb (PkBackend *backend,
  *
  * Helper method for a Listaller native PkBackend proxy to do a what-provides request.
  **/
-static void
-pk_backend_request_whatprovides_cb (ListallerPkBackendProxy *sender,
-				PkBitfield filters,
+static PkResults*
+pk_backend_request_whatprovides_cb (PkBitfield filters,
 				PkProvidesEnum provides,
 				gchar** search,
-				GObject *i_dont_know_why_this_is_here,
 				PkPlugin *plugin)
 {
-	PkResults *result;
+	PkResults *results;
 
 	/* query the native backend for a package provinding X */
 	if (plugin == NULL)
@@ -610,9 +608,10 @@ pk_backend_request_whatprovides_cb (ListallerPkBackendProxy *sender,
 	/* wait for finished */
 	g_main_loop_run (plugin->priv->loop);
 
-	result = plugin->priv->backend_results;
-	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (result)));
-	listaller_pk_backend_proxy_set_results (sender, result);
+	results = plugin->priv->backend_results;
+	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
+
+	return results;
 }
 
 /**
@@ -646,8 +645,9 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
 	pkbproxy = listaller_pk_backend_proxy_new ();
-	g_signal_connect (pkbproxy, "request-whatprovides",
-			  G_CALLBACK (pk_backend_request_whatprovides_cb), plugin);
+	listaller_pk_backend_proxy_set_what_provides (pkbproxy,
+						      (ListallerPkBackendProxyWhatProvidesCB) pk_backend_request_whatprovides_cb,
+						      plugin);
 	listaller_set_backend_proxy (pkbproxy);
 
 	/* handle these before the transaction has been run */

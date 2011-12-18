@@ -30,24 +30,24 @@ namespace Listaller {
 private PkBackendProxy? pkit_backend_proxy;
 
 internal class PkBackendProxy : Object {
-	// Workaround for strange plugin behavior
-	public PackageKit.Results results { get; set; }
+	public delegate PackageKit.Results? WhatProvidesCB (PackageKit.Bitfield filters,
+							   PackageKit.Provides provides,
+							   [CCode (array_length = false, array_null_terminated = true)] string[] values);
 
-	// Used by the PkPlugin
-	public signal void error_message ();
-	public signal void packages ();
-
-	// Used by Listaller
-	public signal void request_whatprovides (uint filters, uint provides, [CCode (array_length = false, array_null_terminated = true)] string[] values);
+	private WhatProvidesCB pk_whatprovides;
 
 	public PkBackendProxy () {
+		pk_whatprovides = null;
+	}
 
+	public void set_what_provides (WhatProvidesCB call) {
+		pk_whatprovides = call;
 	}
 
 	public PackageKit.Results? run_what_provides (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values) {
-		results = null;
-		request_whatprovides ((uint) filters, (uint) provides, values);
-		return results;
+		if (pk_whatprovides == null)
+			return null;
+		return pk_whatprovides (filters, provides, values);
 	}
 
 }
@@ -68,15 +68,16 @@ private PkBackendProxy? get_pk_backend () {
 }
 
 #if 0
-private PackageKit.Results? dummytest_return_cb (uint filters, uint provides, [CCode (array_length = false, array_null_terminated = true)] string[] values) {
-	debug (simple_text);
-	return new PackageKit.Results ();
+private PackageKit.Results? what_provides_cb (PackageKit.Bitfield filters,
+						PackageKit.Provides provides,
+						[CCode (array_length = false, array_null_terminated = true)] string[] values) {
+	return null;
 }
 
 private void test_dummy () {
 	var pkbp = new PkBackendProxy ();
-	pkbp.request_whatprovides.connect (dummytest_return_cb);
-	PackageKit.Results? pkres = pkbp.request_whatprovides (0, 0, null);
+	pkbp.set_what_provides (what_provides_cb);
+	PackageKit.Results? pkres = pkbp.run_what_provides (0, 0, null);
 	pkres.get_package_sack ();
 }
 #endif
