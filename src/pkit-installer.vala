@@ -27,7 +27,8 @@ namespace Listaller.Deps {
 
 private class PkInstaller : Object {
 	private Listaller.Settings conf;
-	private PackageKit.Client pkit;
+	private PackageKit.Client pkclient;
+	private PkBackendProxy? pkbproxy;
 
 	public signal void message (MessageItem message);
 	public signal void progress_changed (int progress);
@@ -35,9 +36,20 @@ private class PkInstaller : Object {
 	public ErrorItem? last_error { get; set; }
 
 	public PkInstaller (Listaller.Settings liconf) {
-		pkit = new PackageKit.Client ();
+		pkclient = new PackageKit.Client ();
 		last_error = null;
 		conf = liconf;
+
+		if (is_root ()) {
+			// Access to the native PackageKit backend
+			pkbproxy = get_pk_backend ();
+			if (pkbproxy == null) {
+				// We don't have a PK backend! This must not happen, if we run as root.
+				var msg = _("Could not obtain a PkBackendProxy instance. Maybe the Listaller-PkPlugin is not installed or broken?");
+				set_error (ErrorEnum.UNKNOWN, msg);
+				critical (msg);
+			}
+		}
 	}
 
 	private void emit_warning (string msg) {
@@ -69,26 +81,49 @@ private class PkInstaller : Object {
 	}
 
 	private bool pkit_install_packages (string[] pkids) {
-		PackageKit.Results res = null;
-		try {
-			res = pkit.install_packages (true, pkids, null, pk_progress_cb);
-		} catch (Error e) {
+		PackageKit.Results? res = null;
+		PackageKit.Error? pkerror = null;
+
+		if (pkbproxy == null) {
+			try {
+				res = pkclient.install_packages (true, pkids, null, pk_progress_cb);
+			} catch (Error e) {
+				set_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
+					_("Installation of native packages failed with message: %s").printf (e.message));
+				return false;
+			}
+		} else {
+			// If we need to use the native backend plugin proxy
+			res = pkbproxy.run_install_packages (true, pkids);
+			if (res == null) {
+				debug ("Native backend PkResults was NULL!");
+				return false;
+			}
+		}
+		if (res == null)
+			return false;
+
+		pkerror = res.get_error_code ();
+		if (pkerror != null) {
 			set_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
-				   _("Installation of native packages failed with message: %s").printf (e.message));
+					_("Installation of native packages failed with message: %s").printf (pkerror.get_details ()));
 			return false;
 		}
 
 		if ((res != null) && (res.get_exit_code () == PackageKit.Exit.SUCCESS))
 			return true;
 
+		warning ("An unknown error occurred while trying to install a native package!");
 		/*emit_warning (_("Installation of native package '%s' failed!").printf (pkg.get_id ()) + "\n" +
 				_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())));*/
+
 		return false;
 	}
 
 	public void reset () {
 		last_error = null;
-		pkit = new PackageKit.Client ();
+		if (pkbproxy == null)
+			pkclient = new PackageKit.Client ();
 	}
 
 	/* This method install a dependency if necessary */
@@ -129,10 +164,12 @@ private class PkInstaller : Object {
 		// Now do the installing
 		emit_info (_("Installing native packages: %s").printf (strv_to_string (pkgs)));
 		ret = pkit_install_packages (pkgs);
-		if (ret)
+		if (ret) {
 			dep.satisfied = true;
+			return true;
+		}
 
-		return true;
+		return false;
 	}
 
 }

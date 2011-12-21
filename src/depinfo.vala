@@ -196,6 +196,10 @@ public class Dependency: Object {
 		return components.size > 0;
 	}
 
+	public bool has_feed () {
+		return feed_url != "";
+	}
+
 	internal string get_components_by_type_as_str (ComponentType tp) {
 		string res = "";
 		foreach (string s in components) {

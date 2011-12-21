@@ -183,7 +183,8 @@ private class DepManager : Object {
 		// Now try to install from dependency-feed
 		ret = finst.install_dependency (db, ref dep);
 		if (!ret) {
-			error = finst.last_error;
+			if (dep.has_feed ())
+				error = finst.last_error;
 			emit_depmissing_error (error, dep);
 			return false;
 		}

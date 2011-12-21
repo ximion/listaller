@@ -30,11 +30,14 @@ namespace Listaller {
 private PkBackendProxy? pkit_backend_proxy;
 
 internal class PkBackendProxy : Object {
-	public delegate PackageKit.Results? WhatProvidesCB (PackageKit.Bitfield filters,
+	public delegate unowned PackageKit.Results? WhatProvidesCB (PackageKit.Bitfield filters,
 							   PackageKit.Provides provides,
-							   [CCode (array_length = false, array_null_terminated = true)] string[] values);
+							   [CCode (array_length = false, array_null_terminated = true)] string[] search);
+	public delegate unowned PackageKit.Results? InstallPackagesCB (bool only_trusted,
+								[CCode (array_length = false, array_null_terminated = true)] string[] packages);
 
 	private WhatProvidesCB pk_whatprovides;
+	private InstallPackagesCB pk_installpackages;
 
 	public PkBackendProxy () {
 		pk_whatprovides = null;
@@ -44,10 +47,20 @@ internal class PkBackendProxy : Object {
 		pk_whatprovides = call;
 	}
 
-	public PackageKit.Results? run_what_provides (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values) {
+	public void set_install_packages (InstallPackagesCB call) {
+		pk_installpackages = call;
+	}
+
+	public unowned PackageKit.Results? run_what_provides (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values) {
 		if (pk_whatprovides == null)
 			return null;
 		return pk_whatprovides (filters, provides, values);
+	}
+
+	public unowned PackageKit.Results? run_install_packages (bool only_trusted, [CCode (array_length = false, array_null_terminated = true)] string[] packages) {
+		if (pk_installpackages == null)
+			return null;
+		return pk_installpackages (only_trusted, packages);
 	}
 
 }
@@ -68,19 +81,14 @@ private PkBackendProxy? get_pk_backend () {
 }
 
 #if 0
-private PackageKit.Results? what_provides_cb (PackageKit.Bitfield filters,
-						PackageKit.Provides provides,
-						[CCode (array_length = false, array_null_terminated = true)] string[] values) {
-	return null;
-}
-
 private void test_dummy () {
 	var pkbp = new PkBackendProxy ();
-	pkbp.set_what_provides (what_provides_cb);
+	string test = "Hello!";
+	int miniint = 42;
+	pkbp.set_what_provides ( () => { debug ("%i", miniint); return null; } );
 	PackageKit.Results? pkres = pkbp.run_what_provides (0, 0, null);
 	pkres.get_package_sack ();
 }
 #endif
-
 
 } // End of LI namespace

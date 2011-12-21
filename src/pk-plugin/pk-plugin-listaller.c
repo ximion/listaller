@@ -24,11 +24,19 @@
 #include "listaller_internal.h"
 
 struct PkPluginPrivate {
+	PkTransaction		*current_transaction;
 	ListallerManager	*mgr;
 	ListallerSettings	*conf;
 	PkResults		*backend_results;
 	GMainLoop		*loop;
 };
+
+typedef struct {
+	guint finished_id;
+	guint package_id;
+	guint error_code_id;
+	PkBitfield transaction_connections;
+} PkPluginSignalData;
 
 /**
  * pk_listaller_plugin_reset:
@@ -545,10 +553,10 @@ out:
 }
 
 /**
- * pk_plugin_package_cb:
+ * pk_plugin_backend_package_cb:
  **/
 static void
-pk_plugin_package_cb (PkBackend *backend,
+pk_plugin_backend_package_cb (PkBackend *backend,
 		      PkPackage *package,
 		      PkPlugin *plugin)
 {
@@ -556,10 +564,10 @@ pk_plugin_package_cb (PkBackend *backend,
 }
 
 /**
- * pk_plugin_finished_cb:
+ * pk_plugin_backend_finished_cb:
  **/
 static void
-pk_plugin_finished_cb (PkBackend *backend,
+pk_plugin_backend_finished_cb (PkBackend *backend,
 		       PkExitEnum exit_enum,
 		       PkPlugin *plugin)
 {
@@ -579,7 +587,83 @@ pk_plugin_finished_cb (PkBackend *backend,
 }
 
 /**
- * pkbackend_request_whatprovides_cb:
+ * pk_plugin_backend_error_code_cb:
+ **/
+static void
+pk_plugin_backend_error_code_cb (PkBackend *backend,
+				PkError *item,
+				PkPlugin *plugin)
+{
+	gchar *details;
+	PkErrorEnum code;
+
+	/* get data */
+	g_object_get (item,
+		      "code", &code,
+		      "details", &details,
+		      NULL);
+
+	/* add to results */
+	pk_results_set_error_code (plugin->priv->backend_results, item);
+	g_debug ("Native backend failed with detail error message: %s", details);
+
+	g_free (details);
+}
+
+/**
+ * pk_plugin_prepare_backend_call:
+ *
+ **/
+static PkPluginSignalData*
+pk_plugin_prepare_backend_call (PkPlugin *plugin)
+{
+	PkPluginSignalData *siginfo;
+
+	siginfo = g_slice_new (PkPluginSignalData);
+
+	/* connect backend signals to Listaller PkPlugin */
+	siginfo->finished_id = g_signal_connect (plugin->backend, "finished",
+					G_CALLBACK (pk_plugin_backend_finished_cb), plugin);
+	siginfo->package_id = g_signal_connect (plugin->backend, "package",
+				       G_CALLBACK (pk_plugin_backend_package_cb), plugin);
+	siginfo->error_code_id = g_signal_connect (plugin->backend, "error-code",
+				       G_CALLBACK (pk_plugin_backend_error_code_cb), plugin);
+
+	/* don't forward some events to the transaction, only Listaller should see them */
+	siginfo->transaction_connections = pk_bitfield_from_enums (
+		PK_BACKEND_SIGNAL_ERROR_CODE,
+		PK_BACKEND_SIGNAL_PACKAGE,
+		PK_BACKEND_SIGNAL_FINISHED,
+		-1);
+	pk_transaction_disconnect_backend_signals (plugin->priv->current_transaction, siginfo->transaction_connections);
+
+	return siginfo;
+}
+
+/**
+ * pk_plugin_restore_backend:
+ *
+ **/
+static void
+pk_plugin_restore_backend (PkPlugin *plugin, PkPluginSignalData *siginfo)
+{
+	/* disconnect the native backend */
+	if (siginfo->package_id > 0)
+		g_signal_handler_disconnect (plugin->backend, siginfo->package_id);
+	if (siginfo->error_code_id > 0)
+		g_signal_handler_disconnect (plugin->backend, siginfo->error_code_id);
+	if (siginfo->finished_id > 0)
+		g_signal_handler_disconnect (plugin->backend, siginfo->finished_id);
+
+	/* connect backend again */
+	pk_transaction_connect_backend_signals (plugin->priv->current_transaction, siginfo->transaction_connections);
+	pk_backend_reset (plugin->backend);
+
+	g_slice_free (PkPluginSignalData, siginfo);
+}
+
+/**
+ * pk_backend_request_whatprovides_cb:
  *
  * Helper method for a Listaller native PkBackend proxy to do a what-provides request.
  **/
@@ -590,17 +674,17 @@ pk_backend_request_whatprovides_cb (PkBitfield filters,
 				PkPlugin *plugin)
 {
 	PkResults *results;
+	PkPluginSignalData *backend_siginfo;
 
 	/* query the native backend for a package provinding X */
 	if (plugin == NULL)
 		g_debug ("<liplugin-dbg> PLUGIN was NULL!");
-	if (plugin->backend == NULL)
-		g_debug ("<liplugin-dbg> BACKEND was NULL!");
 
 	g_debug ("Running what-provides on native backend!");
 
-	/* reset the plugin data */
+	/* prepare for native backend call */
 	pk_listaller_plugin_reset (plugin);
+	backend_siginfo = pk_plugin_prepare_backend_call (plugin);
 
 	/* query the native backend */
 	pk_backend_what_provides (plugin->backend, filters, provides, search);
@@ -609,6 +693,41 @@ pk_backend_request_whatprovides_cb (PkBitfield filters,
 	g_main_loop_run (plugin->priv->loop);
 
 	results = plugin->priv->backend_results;
+	pk_plugin_restore_backend (plugin, backend_siginfo);
+
+	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
+
+	return results;
+}
+
+/**
+ * pk_backend_request_installpackages_cb:
+ *
+ * Helper method for a Listaller native PkBackend proxy to do a install-packages request.
+ **/
+static PkResults*
+pk_backend_request_installpackages_cb (gboolean only_trusted,
+					gchar **package_ids,
+					PkPlugin *plugin)
+{
+	PkResults *results;
+	PkPluginSignalData *backend_siginfo;
+
+	g_debug ("Running install-packages on native backend!");
+
+	/* prepare the backend */
+	pk_listaller_plugin_reset (plugin);
+	backend_siginfo = pk_plugin_prepare_backend_call (plugin);
+
+	/* query the native backend */
+	pk_backend_install_packages (plugin->backend, only_trusted, package_ids);
+
+	/* wait for finished */
+	g_main_loop_run (plugin->priv->loop);
+
+	results = plugin->priv->backend_results;
+	pk_plugin_restore_backend (plugin, backend_siginfo);
+
 	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
 
 	return results;
@@ -630,24 +749,22 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	gchar **full_paths;
 
 	ListallerPkBackendProxy *pkbproxy;
-	guint finished_id = 0;
-	guint package_id = 0;
 
 	/* reset the native-backend */
 	pk_backend_reset (plugin->backend);
 	pk_backend_set_status (plugin->backend, PK_STATUS_ENUM_SETUP);
 
-	/* reconnect backend signals to Listaller PkPlugin */
-	finished_id = g_signal_connect (plugin->backend, "finished",
-					G_CALLBACK (pk_plugin_finished_cb), plugin);
-	package_id = g_signal_connect (plugin->backend, "package",
-				       G_CALLBACK (pk_plugin_package_cb), plugin);
+	/* set the transaction */
+	plugin->priv->current_transaction = transaction;
 
 	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
 	pkbproxy = listaller_pk_backend_proxy_new ();
 	listaller_pk_backend_proxy_set_what_provides (pkbproxy,
 						      (ListallerPkBackendProxyWhatProvidesCB) pk_backend_request_whatprovides_cb,
 						      plugin);
+	listaller_pk_backend_proxy_set_install_packages (pkbproxy,
+							 (ListallerPkBackendProxyInstallPackagesCB) pk_backend_request_installpackages_cb,
+							 plugin);
 	listaller_set_backend_proxy (pkbproxy);
 
 	/* handle these before the transaction has been run */
@@ -739,12 +856,7 @@ out:
 	/* remove the backend proxy */
 	listaller_set_backend_proxy (NULL);
 	g_object_unref (pkbproxy);
-
-	/* disconnect the native backend */
-	if (package_id > 0)
-		g_signal_handler_disconnect (plugin->backend, package_id);
-	if (finished_id > 0)
-		g_signal_handler_disconnect (plugin->backend, finished_id);
+	plugin->priv->current_transaction = NULL;
 }
 
 /**
