@@ -7,10 +7,10 @@ pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
 pkg_check_modules(PACKAGEKIT_PLUGIN REQUIRED packagekit-plugin)
 #find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
 
-set(PK_LISTALLER_SOURCES pk-plugin-listaller.c
-)
-
-set(PK_LISTALLER_HEADERS
+set(PK_LISTALLER_SOURCES
+	li-plugin-utils.h
+	li-plugin-utils.c
+	pk-plugin-listaller.c
 )
 
 add_library(pk_plugin_listaller MODULE ${PK_LISTALLER_SOURCES})
