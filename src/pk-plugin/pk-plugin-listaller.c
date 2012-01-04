@@ -38,7 +38,6 @@ typedef struct {
 	guint finished_id;
 	guint package_id;
 	guint error_code_id;
-	PkBitfield transaction_connections;
 } PkPluginSignalData;
 
 /**
@@ -393,6 +392,7 @@ static PkPluginSignalData*
 pk_plugin_prepare_backend_call (PkPlugin *plugin)
 {
 	PkPluginSignalData *siginfo;
+	PkBitfield	    backend_signals;
 
 	siginfo = g_slice_new (PkPluginSignalData);
 
@@ -405,12 +405,11 @@ pk_plugin_prepare_backend_call (PkPlugin *plugin)
 				       G_CALLBACK (pk_plugin_backend_error_code_cb), plugin);
 
 	/* don't forward some events to the transaction, only Listaller should see them */
-	siginfo->transaction_connections = pk_bitfield_from_enums (
-		PK_BACKEND_SIGNAL_ERROR_CODE,
-		PK_BACKEND_SIGNAL_PACKAGE,
-		PK_BACKEND_SIGNAL_FINISHED,
-		-1);
-	pk_transaction_disconnect_backend_signals (plugin->priv->current_transaction, siginfo->transaction_connections);
+	backend_signals = PK_TRANSACTION_ALL_BACKEND_SIGNALS;
+	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_ERROR_CODE);
+	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_PACKAGE);
+	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_FINISHED);
+	pk_transaction_set_signals (plugin->priv->current_transaction, backend_signals);
 
 	return siginfo;
 }
@@ -431,7 +430,7 @@ pk_plugin_restore_backend (PkPlugin *plugin, PkPluginSignalData *siginfo)
 		g_signal_handler_disconnect (plugin->backend, siginfo->finished_id);
 
 	/* connect backend again */
-	pk_transaction_connect_backend_signals (plugin->priv->current_transaction, siginfo->transaction_connections);
+	pk_transaction_connect_backend_signals (plugin->priv->current_transaction, PK_TRANSACTION_ALL_BACKEND_SIGNALS);
 	pk_backend_reset (plugin->backend);
 
 	g_slice_free (PkPluginSignalData, siginfo);
