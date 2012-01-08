@@ -26,6 +26,7 @@ namespace Listaller.Extra {
 private class AppPrepare : Object {
 	private string srcdir;
 	private string indir;
+	private string buildfile;
 	private bool failed = false;
 
 	public signal void error_message (string details);
@@ -33,6 +34,8 @@ private class AppPrepare : Object {
 	public AppPrepare (string input_dir) {
 		indir = input_dir;
 		srcdir = indir;
+
+		buildfile = Path.build_filename (srcdir, "build.rules", null);
 	}
 
 	private void emit_error (string details) {
@@ -52,9 +55,6 @@ private class AppPrepare : Object {
 	}
 
 	protected int run_target (string tname) {
-		string buildfile;
-		buildfile = Path.build_filename (srcdir, "build.rules", null);
-
 		int exit_status = 0;
 		try {
 			string cmd = "make -f %s %s".printf (buildfile, tname);
@@ -66,10 +66,24 @@ private class AppPrepare : Object {
 		return exit_status;
 	}
 
+	protected bool has_target (string tname) {
+		if (!FileUtils.test (buildfile, FileTest.EXISTS))
+			return false;
+
+		string tmp = Utils.load_file_to_string (buildfile);
+		string[] content = tmp.split("\n");
+		foreach (string line in content) {
+			if (line.has_prefix (tname + ":"))
+				return true;
+		}
+		return false;
+	}
+
 	public int run_compile () {
 		string lastdir = Environment.get_current_dir ();
-		int code;
-		code = run_target ("binary");
+		int code = 0;
+		if (has_target ("binary"))
+			code = run_target ("binary");
 		Environment.set_current_dir (lastdir);
 		return code;
 	}

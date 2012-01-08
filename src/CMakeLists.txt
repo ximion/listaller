@@ -89,9 +89,22 @@ vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 			OUTPUT_DIR ${CMAKE_BINARY_DIR}/src
 			COMPILE_FLAGS --gir=Listaller-${LILIBS_VERSION}.gir
 				--library Listaller-${LILIBS_VERSION}
-				--internal-vapi=listaller_internal.vapi
+				--internal-vapi=listaller_internal.vapi.orig
 				--thread
 )
+
+find_program (SED_TOOL NAMES sed)
+if (NOT SED_TOOL)
+	message (FATAL_ERROR "Unable to find sed")
+endif (NOT SED_TOOL)
+
+# Workaround to fix Listaller header filename in internal vapi
+add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/listaller_internal.vapi
+	COMMAND ${SED_TOOL}  "'s/\"listaller.h\"/\"listaller_internal.h\"/'" ${CMAKE_CURRENT_BINARY_DIR}/listaller_internal.vapi.orig ">" ${CMAKE_CURRENT_BINARY_DIR}/listaller_internal.vapi
+	DEPENDS listaller-glib_precompile ${CMAKE_CURRENT_BINARY_DIR}/listaller_internal.vapi.orig
+)
+add_custom_target(header_internal_fix DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/listaller_internal.vapi)
+add_dependencies (listaller-glib header_internal_fix)
 
 add_definitions("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE"
 	"-DI_KNOW_THE_PACKAGEKIT_PLUGIN_API_IS_SUBJECT_TO_CHANGE"
