@@ -229,7 +229,7 @@ private ArrayList<string>? find_files (string dir, bool recursive = false) {
 		}
 
 	} catch (Error e) {
-		stderr.printf (_("Error: %s\n"), e.message);
+		stderr.printf (_("Error while finding files in directiry %s: %s\n"), dir, e.message);
 		return null;
 	}
 	return list;

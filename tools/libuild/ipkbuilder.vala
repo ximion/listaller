@@ -26,6 +26,11 @@ using Listaller.Utils;
 
 namespace Listaller.IPK {
 
+private errordomain BuildError {
+	INTERNAL_ERROR,
+	FILE_NOT_FOUND;
+}
+
 private class Builder : Object {
 	private string tmpdir;
 	private string srcdir;
@@ -134,6 +139,7 @@ private class Builder : Object {
 			Posix.close (fd);
 		}
 		a.close ();
+
 		// Add this payload package to data pkg list
 		datapkgs.add (apath);
 		return ret;
@@ -213,6 +219,13 @@ private class Builder : Object {
 		return ret;
 	}
 
+	private string delete_chars (string str, string[] invalid_chars) {
+		var res = str;
+		foreach (string s in invalid_chars)
+			res = res.replace (s, "");
+		return res;
+	}
+
 	private bool finalize_ipk () {
 		const int buffsize = 8192;
 		char buff[8192];
@@ -221,14 +234,13 @@ private class Builder : Object {
 		// Set output file name
 		if (outname == "") {
 			string ipkname;
-			string s = string_replace (appInfo.full_name, "( )", "");
+			// Delete invalid chars from filename
+			string s = delete_chars (appInfo.full_name, {"(", ")", "[", "]", "#", " "});
 			ipkname = s + "-" + appInfo.version.down () + "_install.ipk";
 			if (outdir == "")
 				outdir = Path.build_filename (srcdir, "..", "..", null);
 			outname = Path.build_filename (outdir, ipkname, null);
 		}
-		// Remove spaces in filename
-		outname = string_replace (outname, "( )", "-");
 
 		if (FileUtils.test (outname, FileTest.EXISTS)) {
 			error_message ("Cannot override %s! Delete this package or run libuild with '-o' parameter!".printf (outname));

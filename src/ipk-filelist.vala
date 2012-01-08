@@ -216,6 +216,8 @@ private class FileList : Object {
 			string s = it.get ();
 			if (s.length <= 2)
 				continue;
+			if (s.has_prefix ("#"))
+				continue;
 			if (s.substring (0, 2) == "> ") {
 				current_dir = s.substring (2, s.length - 2);
 				continue;
@@ -251,9 +253,9 @@ private class FileList : Object {
 			string dir = Path.build_filename (rootdir, Path.get_dirname (fe.fname), null);
 			ArrayList<string> files = find_files (dir, true);
 
+			list.remove (fe);
 			if (files == null)
 				continue;
-			list.remove (fe);
 
 			foreach (string s in files) {
 				string ematch = Path.build_filename ("*", fe.fname, null);
