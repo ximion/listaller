@@ -16,12 +16,12 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/utils.vala
 	${lisrc}/varsolver.vala
 	${lisrc}/varsetter.vala
 	${lisrc}/doap.vala
-	${lisrc}/ipk-control.vala
 	${lisrc}/ipk-metafile.vala
 	${lisrc}/ipk-filelist.vala
+	${lisrc}/ipk-control.vala
+	${lisrc}/ipk-package.vala
 	${lisrc}/signature.vala
 	${lisrc}/security.vala
-	${lisrc}/ipk-package.vala
 	${lisrc}/packdetail.vala
 	${lisrc}/depinfo.vala
 	${lisrc}/version.vala

@@ -128,7 +128,7 @@ public class Settings : Object {
 		if (sumode) {
 			regdir = sudbdir;
 		} else {
-			regdir = Path.build_filename (Environment.get_user_config_dir (), "software", null);
+			regdir = Path.build_filename (Environment.get_user_data_dir (), "software", null);
 		}
 		if (testmode) {
 			// Point to our temporary dir

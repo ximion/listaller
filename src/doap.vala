@@ -84,7 +84,7 @@ PREFIX doap: <http://usefulinc.com/ns/doap#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 """;
 
-protected class DoapData : Object {
+private class DoapData : Object {
 	private RDFQuery querier;
 	private string path;
 
