@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-12-14 00:55+0100\n"
+"POT-Creation-Date: 2012-01-08 22:50+0100\n"
 "PO-Revision-Date: 2011-04-26 21:51+0000\n"
 "Last-Translator: simone.sandri <lexluxsox@hotmail.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -170,6 +170,10 @@ msgid "ERROR: %s"
 msgstr "ERRORE: %s"
 
 #, c-format
+msgid "Error while finding files in directory %s: %s\n"
+msgstr ""
+
+#, c-format
 msgid "Error: %s\n"
 msgstr ""
 
@@ -195,6 +199,10 @@ msgstr "Installazione completata."
 
 msgid "Installation failed!"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Installation of native packages failed with message: %s"
+msgstr "Il pacchetto d'installazione è corrotto"
 
 #, fuzzy, c-format
 msgid "Installing native packages: %s"

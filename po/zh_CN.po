@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.9.16\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-12-14 00:55+0100\n"
+"POT-Creation-Date: 2012-01-08 22:50+0100\n"
 "PO-Revision-Date: 2010-07-05 22:59+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: 简体中文 <>\n"
@@ -167,6 +167,10 @@ msgid "ERROR: %s"
 msgstr ""
 
 #, c-format
+msgid "Error while finding files in directory %s: %s\n"
+msgstr ""
+
+#, c-format
 msgid "Error: %s\n"
 msgstr ""
 
@@ -192,6 +196,10 @@ msgstr "安装完成！"
 
 msgid "Installation failed!"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Installation of native packages failed with message: %s"
+msgstr "安装包已损坏"
 
 #, fuzzy, c-format
 msgid "Installing native packages: %s"

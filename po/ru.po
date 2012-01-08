@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2011-12-14 00:55+0100\n"
+"POT-Creation-Date: 2012-01-08 22:50+0100\n"
 "PO-Revision-Date: 2011-08-10 16:49+0000\n"
 "Last-Translator: SomeOneBrick <Unknown>\n"
 "Language-Team: \n"
@@ -178,6 +178,10 @@ msgid "ERROR: %s"
 msgstr "ОШИБКА: %s"
 
 #, c-format
+msgid "Error while finding files in directory %s: %s\n"
+msgstr ""
+
+#, c-format
 msgid "Error: %s\n"
 msgstr "Ошибка: %s\n"
 
@@ -203,6 +207,10 @@ msgstr "Установка завершена!"
 
 msgid "Installation failed!"
 msgstr "Установка не удалась!"
+
+#, fuzzy, c-format
+msgid "Installation of native packages failed with message: %s"
+msgstr "Установка родных пакетов %s"
 
 #, fuzzy, c-format
 msgid "Installing native packages: %s"
