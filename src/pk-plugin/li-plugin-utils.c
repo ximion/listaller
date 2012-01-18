@@ -217,7 +217,7 @@ pk_transaction_filter_listaller_files (PkTransaction *transaction,
 
 	/* just do a quick pass as an optimisation for the common case */
 	for (i=0; files[i] != NULL; i++) {
-		ret = pk_listaller_is_file (files[i]);
+		ret = pk_listaller_is_setup_file (files[i]);
 		if (ret)
 			break;
 	}
@@ -229,7 +229,7 @@ pk_transaction_filter_listaller_files (PkTransaction *transaction,
 	listaller = g_ptr_array_new_with_free_func (g_free);
 
 	for (i=0; files[i] != NULL; i++) {
-		ret = pk_listaller_is_file (files[i]);
+		ret = pk_listaller_is_setup_file (files[i]);
 		if (ret) {
 			g_ptr_array_add (listaller,
 					 g_strdup (files[i]));

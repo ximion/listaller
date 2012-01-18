@@ -430,7 +430,7 @@ pk_plugin_restore_backend (PkPlugin *plugin, PkPluginSignalData *siginfo)
 		g_signal_handler_disconnect (plugin->backend, siginfo->finished_id);
 
 	/* connect backend again */
-	pk_transaction_connect_backend_signals (plugin->priv->current_transaction, PK_TRANSACTION_ALL_BACKEND_SIGNALS);
+	pk_transaction_set_signals (plugin->priv->current_transaction, PK_TRANSACTION_ALL_BACKEND_SIGNALS);
 	pk_backend_reset (plugin->backend);
 
 	g_slice_free (PkPluginSignalData, siginfo);
