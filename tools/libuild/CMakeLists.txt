@@ -1,4 +1,5 @@
 # CMakeLists for Listaller package builder tool
+project(listaller-libuild)
 
 find_package(Vala REQUIRED)
 include("${VALA_USE_FILE}")

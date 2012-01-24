@@ -1,4 +1,5 @@
 # CMakeLists for Dependency Scanner Tool
+project(listaller-depscan)
 
 find_package(Vala REQUIRED)
 include("${VALA_USE_FILE}")

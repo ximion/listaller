@@ -1,5 +1,5 @@
 # CMakeLists for the Listaller Project
-project(listaller-core)
+project(listaller)
 
 cmake_minimum_required(VERSION 2.8.5 FATAL_ERROR)
 

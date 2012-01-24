@@ -1,4 +1,5 @@
 # CMakeLists for RunApp tool
+project(listaller-runapp)
 
 find_package(Vala REQUIRED)
 include("${VALA_USE_FILE}")
