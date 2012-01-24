@@ -35,7 +35,6 @@ set(LISTALLER_BASE_VALA_DEPS config gee-1.0 gio-2.0 sqlite3 libarchive gpgme lib
 # Variables used later to set library versioning
 set(LILIBS_FULL_VERSION "${LISTALLER_VERSION_MAJOR}.${LISTALLER_VERSION_MINOR}.${LISTALLER_VERSION_PATCH}")
 set(LILIBS_VERSION "${LISTALLER_VERSION_MAJOR}.${LISTALLER_VERSION_MINOR}" CACHE INTERNAL "int: LiLibs version")
-set(LILIBS_SOVERSION "${LISTALLER_VERSION_MAJOR}")
 
 #
 # Build Qt4 library if flag is set
@@ -143,7 +142,7 @@ include_directories(${CMAKE_BINARY_DIR}
 if(NOT LILIBS_FULL_VERSION)
  message(FATAL_ERROR "Library version not defined. (This should never happen)")
 endif()
-set_target_properties(listaller-glib PROPERTIES VERSION ${LILIBS_FULL_VERSION} SOVERSION ${LILIBS_SOVERSION})
+set_target_properties(listaller-glib PROPERTIES VERSION ${LILIBS_FULL_VERSION} SOVERSION ${LISTALLER_API_LEVEL})
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/listaller-glib.pc.in
   ${CMAKE_CURRENT_BINARY_DIR}/listaller-glib.pc

@@ -47,7 +47,7 @@ if(NOT LILIBS_FULL_VERSION)
  message(FATAL_ERROR "Library version not defined. (This should never happen)")
 endif()
 
-set_target_properties(listaller-qt PROPERTIES VERSION ${LILIBS_FULL_VERSION} SOVERSION ${LILIBS_SOVERSION})
+set_target_properties(listaller-qt PROPERTIES VERSION ${LILIBS_FULL_VERSION} SOVERSION ${LISTALLER_API_LEVEL})
 
 target_link_libraries(listaller-qt
 	${GLIB2_LIBRARIES}

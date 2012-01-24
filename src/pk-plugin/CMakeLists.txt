@@ -41,7 +41,7 @@ add_definitions("-DG_LOG_DOMAIN=\"PkListaller\"")
 if(NOT LILIBS_FULL_VERSION)
  message(FATAL_ERROR "Library version not defined. (This should never happen)")
 endif()
-# set_target_properties(pk_plugin_listaller PROPERTIES VERSION ${LILIBS_FULL_VERSION} SOVERSION ${LILIBS_SOVERSION})
+# set_target_properties(pk_plugin_listaller PROPERTIES VERSION ${LILIBS_FULL_VERSION} SOVERSION ${LISTALLER_API_LEVEL})
 
 #install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libpk_plugin_listaller.so.${LILIBS_FULL_VERSION}
 #	DESTINATION ${LIB_INSTALL_DIR}/packagekit-plugins
