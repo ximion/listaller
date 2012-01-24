@@ -1,22 +1,34 @@
 Version 0.5.3
 ~~~~~~~~~~~~~~
- == Still in development ==
+Released: 2012-01-24
 
 Notes:
   * /!\ Please note: We do NOT provide stable API/ABI in the 0.5.x series!
-        The 0.5.x series is experimental and should not be used in productive environments.
+        The 0.5.x series is experimental, we might change the specs at every time.
+  * We now require at least PackageKit 0.7.2 to build
 
 Features:
-  * <?>
+  * Improve database error handling (Matthias Klumpp)
+  * Fix Pk dependency installer and remove DepSolver (not needed) (Matthias Klumpp)
+  * Make use of IPK1.0 draft now (Matthias Klumpp)
+  * builder: Work with new DOAP descriptions (Matthias Klumpp)
+  * libuild: Don't search control.xml anymore, use pkoptions instead. (Matthias Klumpp)
+  * Fetch license texts automatically (Debian-only at time) (Matthias Klumpp)
+  * Speed up building with tests enabled (Matthias Klumpp)
+  * Save software registry in user data dir (Matthias Klumpp)
 
 Specifications:
-  * <?>
-
-Bindings:
-  * <?>
+  * Use DOAP for application information in IPK (Matthias Klumpp)
 
 Bugfixes:
-  * <?>
+  * Check if DB lock file exists - solves access warning when running as user (Matthias Klumpp)
+  * Make use of new PK backend exit type to skip native pkg-manager (Matthias Klumpp)
+  * Don't fail the installation if private_db cannot be opened as root (Matthias Klumpp)
+  * Fix PK daemon crash if trying to install a native pkg (Matthias Klumpp)
+  * Don't try to build package without app information (Matthias Klumpp)
+  * plugin: Fix crash on proxy request (Matthias Klumpp)
+  * Adjust to new PackageKit plugin API (Matthias Klumpp)
+  * libuild: Fix some minor builder issues (Matthias Klumpp)
 
 Version 0.5.2
 ~~~~~~~~~~~~~~

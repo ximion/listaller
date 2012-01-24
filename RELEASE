@@ -15,8 +15,6 @@ Features:
 
 Specifications:
 
-Bindings:
-
 Bugfixes:
 --------------------------------------------------------------------------------
 
@@ -24,6 +22,7 @@ Bugfixes:
    Export translations: http://translations.edge.launchpad.net/listaller/master/+export
    -> Merge them with po/
    -> run 'make nls-update'
+   Commit translations
 
 3. Update library version if new ABI or API in CMakeLists.txt
 
