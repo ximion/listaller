@@ -105,6 +105,17 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/listaller_internal.vapi
 add_custom_target(header_internal_fix DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/listaller_internal.vapi)
 add_dependencies (listaller-glib header_internal_fix)
 
+# Compile the introspection data
+add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/Listaller-${LILIBS_VERSION}.typelib
+	COMMAND ${INTROSPECTION_COMPILER}  "--shared-library=listaller-glib" "--includedir=."
+					"${CMAKE_CURRENT_BINARY_DIR}/Listaller-${LILIBS_VERSION}.gir"
+					"-o" "${CMAKE_CURRENT_BINARY_DIR}/Listaller-${LILIBS_VERSION}.typelib"
+	DEPENDS listaller-glib_precompile ${CMAKE_CURRENT_BINARY_DIR}/Listaller-${LILIBS_VERSION}.gir
+)
+add_custom_target(compile-gir DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Listaller-${LILIBS_VERSION}.typelib)
+#FIXME: GIR does not compile at time, so we disable this
+# add_dependencies (listaller-glib compile-gir)
+
 add_definitions("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE"
 	"-DI_KNOW_THE_PACKAGEKIT_PLUGIN_API_IS_SUBJECT_TO_CHANGE"
 )
