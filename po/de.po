@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-01-08 22:50+0100\n"
-"PO-Revision-Date: 2011-07-18 23:35+0000\n"
+"POT-Creation-Date: 2012-01-24 10:54+0100\n"
+"PO-Revision-Date: 2012-01-08 23:29+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-09-06 20:40+0000\n"
-"X-Generator: Launchpad (build 13861)\n"
+"X-Launchpad-Export-Date: 2012-01-24 09:48+0000\n"
+"X-Generator: Launchpad (build 14713)\n"
 
 #, c-format
 msgid ""
@@ -211,13 +211,13 @@ msgstr "Installation abgeschlossen!"
 msgid "Installation failed!"
 msgstr "Installation fehlgeschlagen!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installation of native packages failed with message: %s"
-msgstr "Installationspaket ist zerstört"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installing native packages: %s"
-msgstr "Installationspaket ist zerstört"
+msgstr ""
 
 msgid "Low security."
 msgstr "Geringe Sicherheit"
@@ -396,9 +396,9 @@ msgstr ""
 msgid "Unable to build package: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to count applications: %s"
-msgstr "Neue Anwendung installieren"
+msgstr ""
 
 msgid "Unable to create destination directory."
 msgstr ""
@@ -442,9 +442,9 @@ msgstr ""
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to fetch application by id: %s"
-msgstr "Test der Anwendung abgeschlossen."
+msgstr ""
 
 #, c-format
 msgid "Unable to fetch application by name: %s"
@@ -454,9 +454,9 @@ msgstr ""
 msgid "Unable to fetch application file list! Message: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to fetch application file list: %s"
-msgstr "Test der Anwendung abgeschlossen."
+msgstr ""
 
 #, c-format
 msgid "Unable to fetch dependency information list: %s"
@@ -745,6 +745,9 @@ msgstr "Fehler: %s"
 #~ msgid "Install into my Home directory"
 #~ msgstr "In den Home-Ordner installieren"
 
+#~ msgid "Install new application"
+#~ msgstr "Neue Anwendung installieren"
+
 #~ msgid "Install now"
 #~ msgstr "Installieren"
 
@@ -765,6 +768,9 @@ msgstr "Fehler: %s"
 
 #~ msgid "Installation of %a"
 #~ msgstr "Installation von %a"
+
+#~ msgid "Installation package is corrupt"
+#~ msgstr "Installationspaket ist zerstört"
 
 #~ msgid "Listaller settings"
 #~ msgstr "Listaller Einstellungen"
@@ -970,6 +976,9 @@ msgstr "Fehler: %s"
 #~ msgid "Test application"
 #~ msgstr "Anwendung testen"
 
+#~ msgid "Test of the application finished."
+#~ msgstr "Test der Anwendung abgeschlossen."
+
 #~ msgid "Testmode"
 #~ msgstr "Testmodus"
 
@@ -1110,9 +1119,6 @@ msgstr "Fehler: %s"
 
 #~ msgid "What do you want to do?"
 #~ msgstr "Was möchten Sie tun?"
-
-#~ msgid "XML file '%s' is damaged."
-#~ msgstr "XML-datei '%s' ist beschädigt."
 
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "

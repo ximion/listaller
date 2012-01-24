@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-01-08 22:50+0100\n"
-"PO-Revision-Date: 2009-12-07 22:46+0000\n"
-"Last-Translator: Christian Widell <Christian_widell@hotmail.com>\n"
+"POT-Creation-Date: 2012-01-24 10:54+0100\n"
+"PO-Revision-Date: 2011-09-12 05:12+0000\n"
+"Last-Translator: Patrik Kullman <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-09-06 20:40+0000\n"
-"X-Generator: Launchpad (build 13861)\n"
+"X-Launchpad-Export-Date: 2012-01-24 09:48+0000\n"
+"X-Generator: Launchpad (build 14713)\n"
 
 #, c-format
 msgid ""
@@ -32,10 +32,10 @@ msgid "A lower version '%s' of this application has already been installed."
 msgstr ""
 
 msgid "A policy was not met."
-msgstr ""
+msgstr "En princip följdes inte."
 
 msgid "A system error occured."
-msgstr ""
+msgstr "Ett systemfel inträffade."
 
 #, c-format
 msgid "Application ID %s is invalid!"
@@ -48,7 +48,7 @@ msgid "Build IPK package"
 msgstr ""
 
 msgid "CRL not available."
-msgstr ""
+msgstr "CRL Inte tillgänglig."
 
 msgid "Can't verify: Key is missing"
 msgstr ""
@@ -60,7 +60,7 @@ msgid "Copying files to their destination"
 msgstr ""
 
 msgid "Could be dangerous!"
-msgstr ""
+msgstr "Kan vara farligt!"
 
 #, c-format
 msgid ""
@@ -71,10 +71,10 @@ msgstr ""
 
 #, c-format
 msgid "Could not create file '%s'! File already exists."
-msgstr ""
+msgstr "Kunde inte skapa fil '%s'! Filen finns redan."
 
 msgid "Could not create/update software database!"
-msgstr ""
+msgstr "Kunde inte skapa/uppdatera mjukvarudatabasen!"
 
 #, c-format
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
@@ -82,11 +82,11 @@ msgstr ""
 
 #, c-format
 msgid "Could not extract file %s! Error: %s"
-msgstr ""
+msgstr "Kunde inte extrahera fil %s! Fel: %s"
 
 #, c-format
 msgid "Could not extract file! Error: %s"
-msgstr ""
+msgstr "Kunde inte extrahera fil! Fel: %s"
 
 #. : IPk builder was unable to find IPK source scripts
 msgid "Could not find IPK source files!"
@@ -140,34 +140,34 @@ msgstr ""
 
 #, c-format
 msgid "Could not remove file %s!"
-msgstr ""
+msgstr "Kunde inte ta bort fil %s!"
 
 #, c-format
 msgid "Could not uninstall application %s. It is not installed."
-msgstr ""
+msgstr "Kunde inte avinstallera applikation %s. Den är inte installerad."
 
 msgid "DIRECTORY"
-msgstr ""
+msgstr "KATALOG"
 
 #, c-format
 msgid "Database action '%s' failed: %s"
-msgstr ""
+msgstr "Databasåtgärd '%s' misslyckades: %s"
 
 msgid "Database action failed"
-msgstr ""
+msgstr "Databasåtgärd misslyckades"
 
 msgid "Database action successful"
-msgstr ""
+msgstr "Databasåtgärd lyckad"
 
 msgid "Database locked"
-msgstr ""
+msgstr "Databas låst"
 
 msgid "Database unlocked"
-msgstr ""
+msgstr "Databas upplåst"
 
 #, c-format
 msgid "ERROR: %s"
-msgstr ""
+msgstr "FEL: %s"
 
 #, c-format
 msgid "Error while finding files in directory %s: %s\n"
@@ -175,15 +175,15 @@ msgstr ""
 
 #, c-format
 msgid "Error: %s\n"
-msgstr ""
+msgstr "Fel: %s\n"
 
 #, c-format
 msgid "File %s not found or permission denied!"
-msgstr ""
+msgstr "Fil %s hittades inte eller åtkomst nekad!"
 
 #, c-format
 msgid "File '%s' doesn't exist."
-msgstr ""
+msgstr "Fil '%s' finns inte."
 
 msgid "GPG-Sign the resulting package"
 msgstr ""
@@ -195,10 +195,10 @@ msgid "IPK package output directory"
 msgstr ""
 
 msgid "Installation completed!"
-msgstr ""
+msgstr "Installation klar!"
 
 msgid "Installation failed!"
-msgstr ""
+msgstr "Installation misslyckades!"
 
 #, c-format
 msgid "Installation of native packages failed with message: %s"
@@ -209,7 +209,7 @@ msgid "Installing native packages: %s"
 msgstr ""
 
 msgid "Low security."
-msgstr ""
+msgstr "Låg säkerhet."
 
 #, c-format
 msgid "Making '%s' known to your system."
@@ -223,7 +223,7 @@ msgstr ""
 
 #, c-format
 msgid "No path given!"
-msgstr ""
+msgstr "1Ingen sökväg angiven!"
 
 #, c-format
 msgid "No valid DOAP data found in directory %s - Can't open control files."
@@ -243,10 +243,10 @@ msgid "Path to Listaller package source directory"
 msgstr ""
 
 msgid "Path to the application's source code"
-msgstr ""
+msgstr "Sökväg till applikationens källkod"
 
 msgid "Please remove the existing version to continue!"
-msgstr ""
+msgstr "Ta bort befintlig version för att fortsätta!"
 
 msgid "Print machine-readable simple text"
 msgstr ""
@@ -259,11 +259,11 @@ msgstr ""
 
 #, c-format
 msgid "Removal of %s finished."
-msgstr ""
+msgstr "Borttagning av %s klar."
 
 #, c-format
 msgid "Removal of %s started."
-msgstr ""
+msgstr "Borttagning av %s påbörjad."
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
@@ -272,6 +272,8 @@ msgstr ""
 #, c-format
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
+"Kör \"%s --help\" för att se hela listan över tillgängliga "
+"kommandoradsflaggor.\n"
 
 #, c-format
 msgid "Running installation of %s"
@@ -284,7 +286,7 @@ msgid "Should be safe."
 msgstr ""
 
 msgid "Show the application's version"
-msgstr ""
+msgstr "Visa programmets versionsnummer"
 
 msgid "Signature has expired"
 msgstr ""
@@ -391,7 +393,7 @@ msgstr ""
 
 #, c-format
 msgid "Unable to create file '%s'!"
-msgstr ""
+msgstr "Kunde inte skapa fil '%s'!"
 
 #, c-format
 msgid "Unable to create/update database tables: %s"
@@ -549,23 +551,246 @@ msgstr ""
 msgid "error: %s"
 msgstr ""
 
+#~ msgid "%f files will be changed."
+#~ msgstr "%f filer kommer att ändras."
+
 #~ msgid "Abort"
 #~ msgstr "Avbryt"
+
+#~ msgid "All"
+#~ msgstr "Allt"
+
+#~ msgid "Application uninstalled successfully!"
+#~ msgstr "Applikationens avinstallation lyckades!"
 
 #~ msgid "Back"
 #~ msgstr "Bakåt"
 
+#~ msgid "Category:"
+#~ msgstr "Kategori:"
+
+#~ msgid "Check for updates"
+#~ msgstr "Sök efter uppdateringar"
+
+#~ msgid "Close"
+#~ msgstr "Stäng"
+
+#~ msgid "Convert package?"
+#~ msgstr "Konvertera paket?"
+
+#~ msgid "Converting %p package..."
+#~ msgstr "Konverterar %p-paket..."
+
+#~ msgid "Delete source"
+#~ msgstr "Ta bort källa"
+
+#~ msgid "Details"
+#~ msgstr "Detaljer"
+
+#~ msgid "Development"
+#~ msgstr "Utveckling"
+
+#~ msgid "Display installation log"
+#~ msgstr "Visa installationslogg"
+
+#~ msgid "Do you really want to abort this download?"
+#~ msgstr "Vill du verkligen avbryta denna nerladdning?"
+
+#~ msgid "Do you really want to uninstall %a?"
+#~ msgstr "Vill du verkligen avinstallera %a?"
+
+#~ msgid "Education"
+#~ msgstr "Utbildning"
+
+#~ msgid "Enable Proxy-Server"
+#~ msgstr "Aktivera Proxy-server"
+
+#~ msgid "Error while extracting files!"
+#~ msgstr "Fel vid uppackning av filer"
+
+#~ msgid "Error while uninstalling!"
+#~ msgstr "Fel vid avinstallation!"
+
+#~ msgid "Filter:"
+#~ msgstr "Filter:"
+
+#~ msgid "Filtering..."
+#~ msgstr "Filtrerar..."
+
 #~ msgid "Finish"
 #~ msgstr "Avsluta"
+
+#~ msgid "Finished"
+#~ msgstr "Slutförd"
+
+#~ msgid "Games"
+#~ msgstr "Spel"
+
+#~ msgid "Graphic"
+#~ msgstr "Grafik"
+
+#~ msgid "I agree with the above terms and conditions"
+#~ msgstr "Jag samtycker med ovanstående villkor"
+
+#~ msgid "I don't agree"
+#~ msgstr "Jag samtycker inte"
+
+#~ msgid "Install new application"
+#~ msgstr "Installera ny applikation"
 
 #~ msgid "Install now"
 #~ msgstr "Installera nu"
 
+#~ msgid "Install updates"
+#~ msgstr "Installera uppdateringar"
+
+#~ msgid "Installation"
+#~ msgstr "Installation"
+
+#~ msgid "Installation aborted."
+#~ msgstr "Installation avbruten."
+
+#~ msgid "Installation of %a"
+#~ msgstr "Installation av %a"
+
+#~ msgid "Loading..."
+#~ msgstr "Laddar..."
+
+#~ msgid "Multimedia"
+#~ msgstr "Multimedia"
+
+#~ msgid "Network"
+#~ msgstr "Nätverk"
+
 #~ msgid "Next"
 #~ msgstr "Nästa"
+
+#~ msgid "No information available!"
+#~ msgstr "Ingen information tillgänglig!"
+
+#~ msgid "Office"
+#~ msgstr "Kontor"
+
+#~ msgid "Other"
+#~ msgstr "Övrigt"
+
+#~ msgid "Password"
+#~ msgstr "Lösenord"
+
+#~ msgid "Phase 1/4: Resolving dependencies..."
+#~ msgstr "Fas 1/4: Löser beroenden..."
+
+#~ msgid "Phase 2/4: Installing files..."
+#~ msgstr "Fas 2/4: Installerar filer..."
+
+#~ msgid "Phase 3/4: Chmod new files..."
+#~ msgstr "Fas 3/4: Filrättigheter för nya filer..."
+
+#~ msgid "Phase 4/4: Registering application..."
+#~ msgstr "Fas 4/4: Registrerar applikation..."
+
+#~ msgid "Please read the following information carefully:"
+#~ msgstr "Läs följande information noggrant:"
+
+#~ msgid "Please wait."
+#~ msgstr "Var god vänta."
+
+#~ msgid "Press \"Finish\" to close."
+#~ msgstr "Tryck på \"Avsluta\" för att stänga."
+
+#~ msgid "Press \"Next\" to start the installation!"
+#~ msgstr "Tryck på \"Nästa\" för att starta installationen!"
 
 #~ msgid "Program description:"
 #~ msgstr "Programbeskrivning:"
 
+#~ msgid "Proxy-Settings"
+#~ msgstr "Proxy-inställningar"
+
+#~ msgid "Quit"
+#~ msgstr "Avsluta"
+
+#~ msgid "Ready."
+#~ msgstr "Redo."
+
+#~ msgid "Really remove?"
+#~ msgstr "Är du säker på att du vill ta bort?"
+
+#~ msgid "Running installation..."
+#~ msgstr "Kör installation..."
+
+#~ msgid "Select software you want to download and to install:"
+#~ msgstr "Välj vilken mjukvara du vill ladda ner och installera:"
+
+#~ msgid "Show"
+#~ msgstr "Visa"
+
+#~ msgid "Show:"
+#~ msgstr "Visa:"
+
+#~ msgid "Software license"
+#~ msgstr "Mjukvarulicens"
+
+#~ msgid "Success!"
+#~ msgstr "Lyckades!"
+
+#~ msgid "System"
+#~ msgstr "System"
+
+#~ msgid "The application %a was installed successfully!"
+#~ msgstr "Installationen av applikation %a lyckades!"
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "Applikationen %a installerades inte."
+
+#~ msgid "The application will be updated to version %v"
+#~ msgstr "Applikationen kommera att uppdateras till version %v"
+
+#~ msgid "The installer will close now"
+#~ msgstr "Installatören kommer nu att stänga"
+
+#~ msgid "There are no updates available!"
+#~ msgstr "Den finns inga tillgängliga uppdateringar!"
+
+#~ msgid "This application is already installed"
+#~ msgstr "Applikationen är redan installerad"
+
+#~ msgid ""
+#~ "Unable to load the icon of %a. Please notify the developers of Listaller "
+#~ "or this application!"
+#~ msgstr ""
+#~ "Kan inte ladda ikonen för %a. Vänligen informera utvecklarna av Listaller "
+#~ "eller denna applikation!"
+
+#~ msgid "Uninstall"
+#~ msgstr "Avinstallera"
+
+#~ msgid "Uninstalling %a"
+#~ msgstr "Avinstallerar %a"
+
+#~ msgid "Uninstalling..."
+#~ msgstr "Avinstallerar..."
+
+#~ msgid "Update info:"
+#~ msgstr "Uppdateringsinformation:"
+
+#~ msgid "Update sources"
+#~ msgstr "Uppdateringskällor"
+
+#~ msgid "Username"
+#~ msgstr "Användarnamn"
+
+#~ msgid "Version"
+#~ msgstr "Version"
+
+#~ msgid "Waiting..."
+#~ msgstr "Väntar..."
+
+#~ msgid "Welcome to the installation of %a"
+#~ msgstr "Välkommen till installationen av %a"
+
 #~ msgid "Welcome!"
 #~ msgstr "Välkommen!"
+
+#~ msgid "Your Linux distribution is not supported by Listaller yet!"
+#~ msgstr "Din Linux-distribution stöds inte av Listaller än!"
