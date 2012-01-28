@@ -129,11 +129,11 @@ private class Builder : Object {
 				if (j != s.length)
 					fname_dest = s.substring (j + i + 1);
 				else
-					fname_dest = fname_orig;
+					fname_dest = Path.get_basename (fname_orig);
 
 			} else {
 				fname_orig = fe.fname;
-				fname_dest = fname_orig;
+				fname_dest = Path.get_basename (fname_orig);
 			}
 
 			if (fname_dest.index_of ("/") > 0) {
@@ -267,7 +267,7 @@ private class Builder : Object {
 			string s = delete_chars (appInfo.full_name, {"(", ")", "[", "]", "#", " "});
 			ipkname = s + "-" + appInfo.version.down () + "_install.ipk";
 			if (outdir == "")
-				outdir = Path.build_filename (srcdir, "..", "..", null);
+				outdir = real_path (Path.build_filename (srcdir, "..", "..", null));
 			outname = Path.build_filename (outdir, ipkname, null);
 		}
 
@@ -449,7 +449,7 @@ private class Builder : Object {
 
 		ArrayList<IPK.Dependency> deps = ipkCDir.get_dependencies ();
 		if (ipkCDir.get_autosolve_dependencies ()) {
-			DepFind df = new DepFind (Path.build_filename (srcdir, "..", null));
+			DepFind df = new DepFind (real_path (Path.build_filename (srcdir, "..", null)));
 			ArrayList<IPK.Dependency> list = df.get_dependencies ();
 			foreach (IPK.Dependency d1 in list) {
 				foreach (IPK.Dependency d2 in deps) {

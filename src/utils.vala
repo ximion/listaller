@@ -1,6 +1,6 @@
 /* utils.vala
  *
- * Copyright (C) 2010-2011 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2010-2012 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
@@ -329,6 +329,105 @@ private string expand_user_dir (string path) {
 	return full_path;
 }
 
+private bool string_is_valid (string str) {
+	return (str != null) && (str != "");
+}
+
+private static bool ends_with_dir_separator (string s) {
+		return Path.is_dir_separator (s.get_char (s.length - 1));
+}
+
+/* ported from glibc */
+private static string __realpath (string name) {
+	string rpath;
+
+	// start of path component
+	weak string start;
+	// end of path component
+	weak string end;
+
+	if (!Path.is_absolute (name)) {
+		// relative path
+		rpath = Environment.get_current_dir ();
+
+		start = end = name;
+	} else {
+		// set start after root
+		start = end = Path.skip_root (name);
+
+		// extract root
+		rpath = name.substring (0, (int) ((char*) start - (char*) name));
+	}
+
+	long root_len = (long) ((char*) Path.skip_root (rpath) - (char*) rpath);
+
+	for (; start.get_char () != 0; start = end) {
+		// skip sequence of multiple path-separators
+		while (Path.is_dir_separator (start.get_char ())) {
+			start = start.next_char ();
+		}
+
+		// find end of path component
+		long len = 0;
+		for (end = start; end.get_char () != 0 && !Path.is_dir_separator (end.get_char ()); end = end.next_char ()) {
+			len++;
+		}
+
+		if (len == 0) {
+			break;
+		} else if (len == 1 && start.get_char () == '.') {
+			// do nothing
+		} else if (len == 2 && start.has_prefix ("..")) {
+			// back up to previous component, ignore if at root already
+			if (rpath.length > root_len) {
+				do {
+					rpath = rpath.substring (0, rpath.length - 1);
+				} while (!ends_with_dir_separator (rpath));
+			}
+		} else {
+			if (!ends_with_dir_separator (rpath)) {
+				rpath += Path.DIR_SEPARATOR_S;
+			}
+
+			rpath += start.substring (0, len);
+		}
+	}
+
+	if (rpath.length > root_len && ends_with_dir_separator (rpath)) {
+		rpath = rpath.substring (0, rpath.length - 1);
+	}
+
+	if (Path.DIR_SEPARATOR != '/') {
+		// don't use backslashes internally,
+		// to avoid problems in #include directives
+		string[] components = rpath.split ("\\");
+		rpath = string.joinv ("/", components);
+	}
+
+	return rpath;
+}
+
+/**
+ * real_path:
+ *
+ * Resolves paths like ../../Desktop/foobar.ipk to /home/matthias/Desktop/foobar.ipk
+ * TODO: We should use canonicalize_filename() in gio/glocalfile.c as realpath()
+ * is crap.
+ **/
+private string real_path (string path)
+{
+	string temp;
+
+	// don't trust realpath one little bit
+	if (!string_is_valid (path))
+		return null;
+
+	temp = __realpath (path);
+	if (temp != null)
+		return temp;
+	return path;
+}
+
 private string? load_file_to_string (string fname) throws IOError {
 	var file = File.new_for_path (fname);
 	if (!file.query_exists ()) {
@@ -371,7 +470,7 @@ private string concat_binfiles (string afname, string bfname) {
 	const int BUFFER_SIZE = 512;
 	//TODO: This can be done better, but it's easier to debug
 
-	string ofname = Path.build_filename (afname, "..", "..", "combined.tmp", null);
+	string ofname = real_path (Path.build_filename (afname, "..", "..", "combined.tmp", null));
 	File f = File.new_for_path (ofname);
 	FileOutputStream fo_stream = null;
 

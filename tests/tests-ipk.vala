@@ -115,7 +115,7 @@ void test_ipk_control_file () {
 
 void test_ipk_packcontrol () {
 	msg ("IPK PackControl tests");
-	string ctrlDir = Path.build_filename (datadir, "..", "foobar", "ipkinstall", null);
+	string ctrlDir = Utils.real_path (Path.build_filename (datadir, "..", "foobar", "ipkinstall", null));
 
 	IPK.PackControl ipkc = new IPK.PackControl ();
 
@@ -133,7 +133,7 @@ void test_ipk_filelist_file () {
 	bool ret = false;
 
 	IPK.FileList flist = new IPK.FileList ();
-	string foodir = Path.build_filename (datadir, "..", "foobar", null);
+	string foodir = Utils.real_path (Path.build_filename (datadir, "..", "foobar", null));
 	// Add some files to IPK file list
 	ret = flist.add_file (Path.build_filename (foodir, "autogen.sh", null), "$INST/+junk");
 	assert (ret == true);

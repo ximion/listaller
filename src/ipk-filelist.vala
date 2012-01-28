@@ -1,6 +1,6 @@
 /* ipk-filelist.vala - The IPK-style list of files
  *
- * Copyright (C) 2011 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
@@ -261,7 +261,6 @@ private class FileList : Object {
 				continue;
 
 			foreach (string s in files) {
-				debug (s);
 				string ematch = Path.build_filename ("*", fe.fname, null);
 				if (PatternSpec.match_simple (ematch, s)) {
 					FileEntry e = new FileEntry ();

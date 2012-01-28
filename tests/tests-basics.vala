@@ -82,6 +82,12 @@ void test_utils () {
 	string xpath = fold_user_dir (datadir);
 	xpath = expand_user_dir (xpath);
 	assert (datadir == xpath);
+
+	string s;
+	s = real_path ("/usr/share/../bin/test");
+	assert (s == "/usr/bin/test");
+	s = real_path ("/usr/share/./listaller/data/../files");
+	assert (s == "/usr/share/listaller/files");
 }
 
 void test_zfeeds () {

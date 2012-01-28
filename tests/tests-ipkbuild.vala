@@ -89,7 +89,7 @@ int main (string[] args) {
 
 	datadir = Path.build_filename (datadir, "testdata", null);
 	assert (FileUtils.test (datadir, FileTest.EXISTS) != false);
-	foobar_srcdir = Path.build_filename (datadir, "..", "foobar", null);
+	foobar_srcdir = real_path (Path.build_filename (datadir, "..", "foobar", null));
 	assert (FileUtils.test (foobar_srcdir, FileTest.EXISTS) != false);
 
 	string curdir = Environment.get_current_dir ();
