@@ -36,7 +36,6 @@ private class FileEntry : Object {
 	private string _fname;
 	private string _hash;
 	private string _fname_installed;
-	private bool _installed;
 	private FileEntryType _type;
 
 	public string fname {
@@ -54,11 +53,6 @@ private class FileEntry : Object {
 		set { _hash = value; }
 	}
 
-	public bool installed {
-		get { return _installed; }
-		set { _installed = value; }
-	}
-
 	public string fname_installed {
 		get { return _fname_installed; }
 		set { _fname_installed = value; }
@@ -74,12 +68,17 @@ private class FileEntry : Object {
 		destination = "";
 		fname = "";
 		hash = "";
-		installed = false;
 	}
 
 	public string get_full_filename () {
 		string s = Path.build_filename (destination, fname, null);
 		return s;
+	}
+
+	public bool is_installed () {
+		if ((fname_installed == null) || (fname_installed == ""))
+			return false;
+		return true;
 	}
 
 	public string to_string () {
@@ -245,19 +244,24 @@ private class FileList : Object {
 		foreach (FileEntry fe in list) {
 			if ((fe.fname.index_of ("*") > -1) ||
 				(fe.fname.index_of ("?") > -1)) {
-					wcEntries.add (fe);
+					var s = fe.fname;
+					if ((s.index_of (" ") > -1) && (s.last_index_of ("'") != s.length))
+						warning ("Malformed file listing line - you cannot use wildcards in file-renaming lines! (Line was: %s)", s);
+					else
+						wcEntries.add (fe);
 			}
 		}
 
 		foreach (FileEntry fe in wcEntries) {
 			string dir = Path.build_filename (rootdir, Path.get_dirname (fe.fname), null);
-			ArrayList<string> files = find_files (dir, true);
+			HashSet<string> files = find_files (dir, true);
 
 			list.remove (fe);
 			if (files == null)
 				continue;
 
 			foreach (string s in files) {
+				debug (s);
 				string ematch = Path.build_filename ("*", fe.fname, null);
 				if (PatternSpec.match_simple (ematch, s)) {
 					FileEntry e = new FileEntry ();

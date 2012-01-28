@@ -421,7 +421,7 @@ private class InternalDB : Object {
 				data_stream.put_string ("# File list for " + aid.full_name + "\n\n");
 				// Now write file list to file
 				foreach (IPK.FileEntry fe in flist) {
-					if (fe.installed) {
+					if (fe.is_installed ()) {
 						string fname = fe.fname_installed;
 						if (!shared_db)
 							fname = fold_user_dir (fname);

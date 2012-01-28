@@ -287,7 +287,6 @@ private class Package : Object {
 
 		if (ret) {
 			// If we are here, everything went fine. Mark the file as installed
-			fe.installed = true;
 			fe.fname_installed = fname;
 		} else {
 			rollback_installation ();
@@ -631,10 +630,9 @@ private class Package : Object {
 	public bool rollback_installation () {
 		// Remove all installed files
 		foreach (IPK.FileEntry fe in get_file_entries ()) {
-			if (!fe.installed)
+			if (!fe.is_installed ())
 				continue;
 			if (FileUtils.remove (fe.fname_installed) == 0) {
-				fe.installed = false;
 				fe.fname_installed = "";
 				//string dir = Path.get_basedir (fe.fname_installed);
 			}

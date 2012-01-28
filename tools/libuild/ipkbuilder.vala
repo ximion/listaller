@@ -1,6 +1,6 @@
 /* ipkbuilder.vala
  *
- * Copyright (C) 2011 Matthias Klumpp
+ * Copyright (C) 2011-2012 Matthias Klumpp
  *
  * Licensed under the GNU General Public License Version 3
  *
@@ -111,26 +111,55 @@ private class Builder : Object {
 			// Prepare
 			entry.clear ();
 			// Grab filepath
-			string fname;
-			if (!Path.is_absolute (fe.fname)) {
-				fname = Path.build_filename (rdir, fe.fname, null);
+			string fname_orig;
+			string fname_dest;
+
+			// Check if we need to change the name of this file
+			if (fe.fname.index_of (" ") > 0) {
+				int i = 0;
+				int j = 0;
+				var s = fe.fname;
+				if (s.has_prefix ("'")) {
+					i = 1;
+					j = s.last_index_of ("'") - 1;
+				} else {
+					j = s.last_index_of (" ");
+				}
+				fname_orig = s.substring (i, j);
+				if (j != s.length)
+					fname_dest = s.substring (j + i + 1);
+				else
+					fname_dest = fname_orig;
+
 			} else {
-				fname = fe.fname;
+				fname_orig = fe.fname;
+				fname_dest = fname_orig;
 			}
-			fe.fname = Path.get_basename (fe.fname);
-			fe.hash = compute_checksum_for_file (fname);
+
+			if (fname_dest.index_of ("/") > 0) {
+				emit_error (_("Malformed line in file listing: %s").printf (fe.fname));
+				return false;
+			}
+
+			if (!Path.is_absolute (fname_orig)) {
+				fname_orig = Path.build_filename (rdir, fname_orig, null);
+			}
+
+			fe.fname = Path.get_basename (fname_dest);
+			fe.hash = compute_checksum_for_file (fname_orig);
+
 			// Fetch file details
 			Posix.Stat st;
-			Posix.stat (fname, out st);
+			Posix.stat (fname_orig, out st);
 			if (st.st_size <= 0) {
-				debug ("File %s not found.", fname);
+				debug ("File %s not found.", fname_orig);
 				ret = false;
 				break;
 			}
 			entry.set_pathname (vs.substitute_vars_id (fe.get_full_filename ()));
 			entry.copy_stat (st);
 			a.write_header (entry);
-			int fd = Posix.open (fname, Posix.O_RDONLY);
+			int fd = Posix.open (fname_orig, Posix.O_RDONLY);
 			ssize_t len = Posix.read (fd, buff, buffsize);
 			while (len > 0) {
 				a.write_data (buff, len);

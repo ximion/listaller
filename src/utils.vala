@@ -205,8 +205,8 @@ private bool create_dir_parents (string dirname) {
 	return true;
 }
 
-private ArrayList<string>? find_files (string dir, bool recursive = false) {
-	ArrayList<string> list = new ArrayList<string> ();
+private HashSet<string>? find_files (string dir, bool recursive = false) {
+	var list = new HashSet<string> ();
 	try {
 		var directory = File.new_for_path (dir);
 
@@ -218,7 +218,7 @@ private ArrayList<string>? find_files (string dir, bool recursive = false) {
 			if (file_info.get_is_hidden ())
 				continue;
 			if ((!FileUtils.test (path, FileTest.IS_REGULAR)) && (recursive)) {
-				ArrayList<string> subdir_list = find_files (path, recursive);
+				HashSet<string> subdir_list = find_files (path, recursive);
 				// There was an error, exit
 				if (subdir_list == null)
 					return null;

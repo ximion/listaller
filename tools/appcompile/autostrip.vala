@@ -48,7 +48,7 @@ namespace Listaller.Extra {
 				return 1;
 			}
 
-			ArrayList<string> files = find_files (targetdir, true);
+			var files = find_files (targetdir, true);
 			foreach (string fname in files) {
 				if (FileUtils.test (fname, FileTest.IS_EXECUTABLE)) {
 					// TODO: Check if file is binary or text

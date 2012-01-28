@@ -1,6 +1,6 @@
 /* lbutils.vala
  *
- * Copyright (C) 2011 Matthias Klumpp
+ * Copyright (C) 2012 Matthias Klumpp
  *
  * Licensed under the GNU General Public License Version 3
  *
