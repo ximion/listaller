@@ -428,6 +428,23 @@ private string real_path (string path)
 	return path;
 }
 
+public static string li_build_filename (string first_element, ...) {
+	string path = first_element;
+
+	var l = va_list ();
+	while (true) {
+		string? val = l.arg ();
+		if (val == null) {
+			break;  // end of the list
+		}
+		path = Path.build_filename (path, val, null);
+	}
+
+	path = real_path (path);
+
+	return path;
+}
+
 private string? load_file_to_string (string fname) throws IOError {
 	var file = File.new_for_path (fname);
 	if (!file.query_exists ()) {

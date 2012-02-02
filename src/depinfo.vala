@@ -66,7 +66,7 @@ public class Dependency: Object {
 		}
 		set {
 			if ((idname != "") && (!is_standardlib) && (!has_installdata ()) && (feed_url == "")) {
-				warning ("Trying to set dependency %s to 'satisfied', although it is not a standardlib and it does not have installdata!", idname);
+				warning ("Trying to set dependency %s to 'satisfied', although it is not a standardlib. (Reason: No install-data found!) - This usually is a packaging bug.", idname);
 			}
 			_satisfied = value;
 		}

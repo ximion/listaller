@@ -1,6 +1,6 @@
 /* tests-basics.vala
  *
- * Copyright (C) 2011  Matthias Klumpp
+ * Copyright (C) 2011-2012 Matthias Klumpp
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,6 +88,9 @@ void test_utils () {
 	assert (s == "/usr/bin/test");
 	s = real_path ("/usr/share/./listaller/data/../files");
 	assert (s == "/usr/share/listaller/files");
+
+	s = li_build_filename ("/usr/bin/", "..", "share", "listaller", ".", "test");
+	assert (s == "/usr/share/listaller/test");
 }
 
 void test_zfeeds () {

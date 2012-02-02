@@ -1,6 +1,6 @@
 /* ipk-package.vala - Definition of an IPK setup package
  *
- * Copyright (C) 2011 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
