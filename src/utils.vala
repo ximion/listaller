@@ -208,7 +208,7 @@ private bool create_dir_parents (string dirname) {
 private HashSet<string>? find_files (string dir, bool recursive = false) {
 	var list = new HashSet<string> ();
 	try {
-		var directory = File.new_for_path (dir);
+		var directory = File.new_for_path (real_path (dir));
 
 		var enumerator = directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_NAME, 0);
 

@@ -121,12 +121,14 @@ private class VarSolver : Object {
 
 	private void add_icon_var (int size) {
 		conf.sumode = false;
-		string s = conf.icon_size_dir (size);
+		string i_privdir = conf.icon_size_dir (size);
 		conf.sumode = true;
+		var i_sudir = conf.icon_size_dir (size);
+
 		if (size == 0) {
-			add_var ("$PIX", "icon/common", s, conf.icon_size_dir (size));
+			add_var ("$PIX", "icon/common", i_privdir, i_sudir);
 		} else {
-			add_var ("$ICON-" + size.to_string (), "icon/" + size.to_string (), s, conf.icon_size_dir (size));
+			add_var ("$ICON-" + size.to_string (), "icon/" + size.to_string (), i_privdir, i_sudir);
 		}
 	}
 
@@ -158,6 +160,11 @@ private class VarSolver : Object {
 			if (entry.value.system_var)
 				contained_sysvars = true;
 		}
+		if (res.has_prefix ("$")) {
+			// We have a unknown variable - emit a warning and send file to the appdata directory
+			li_warning ("Package uses custom variable - please don't do that!");
+			res = Path.build_filename (pathMap.get ("$INST").su_subst, res.substring (1));
+		}
 		return res;
 	}
 
@@ -168,16 +175,27 @@ private class VarSolver : Object {
 			if (entry.value.system_var)
 				contained_sysvars = true;
 		}
+		if (res.has_prefix ("$")) {
+			// We have a unknown variable - emit a warning and send file to the appdata directory
+			li_warning ("Package uses custom variable - please don't do that!");
+			res = Path.build_filename (pathMap.get ("$INST").subst, res.substring (1));
+		}
 		return res;
 	}
 
 	public string substitute_vars_id (string s) {
 		string res = s;
 		foreach (var entry in pathMap.entries) {
-			res = string_replace (res, "(\\" + entry.key + ")", entry.value.id_subst);
+			res = res.replace (entry.key, entry.value.id_subst);
 			if (entry.value.system_var)
 				contained_sysvars = true;
 		}
+		if (res.has_prefix ("$")) {
+			// We have a unknown var... this should not happen.
+			li_warning ("Package uses custom variable - please don't do that!");
+			res = res.substring (1);
+		}
+
 		return res;
 	}
 

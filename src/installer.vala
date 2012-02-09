@@ -1,6 +1,6 @@
 /* installer.vala
  *
- * Copyright (C) 2010-2011 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2010-2012 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
@@ -214,6 +214,7 @@ public class Setup : Object {
 		// Now register the item
 		ret = db.add_application (app);
 		if (!ret) {
+			ipkp.rollback_installation ();
 			return false;
 		}
 

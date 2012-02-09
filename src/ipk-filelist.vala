@@ -254,6 +254,9 @@ private class FileList : Object {
 
 		foreach (FileEntry fe in wcEntries) {
 			string dir = Path.build_filename (rootdir, Path.get_dirname (fe.fname), null);
+			// rootdir might contain relative paths...
+			dir = real_path (dir);
+
 			HashSet<string> files = find_files (dir, true);
 
 			list.remove (fe);
@@ -263,6 +266,9 @@ private class FileList : Object {
 			foreach (string s in files) {
 				string ematch = Path.build_filename ("*", fe.fname, null);
 				if (PatternSpec.match_simple (ematch, s)) {
+					debug ("S is: %s", s);
+					debug ("dir is: %s", dir);
+					debug ("fe.dest is %s", fe.destination);
 					FileEntry e = new FileEntry ();
 					e.fname = s;
 					e.destination = Path.build_filename (fe.destination, Path.get_dirname (s).replace (dir, ""), null);

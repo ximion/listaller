@@ -156,6 +156,7 @@ private class Builder : Object {
 				ret = false;
 				break;
 			}
+
 			entry.set_pathname (vs.substitute_vars_id (fe.get_full_filename ()));
 			entry.copy_stat (st);
 			a.write_header (entry);
