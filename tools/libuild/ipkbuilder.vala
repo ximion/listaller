@@ -196,16 +196,16 @@ private class Builder : Object {
 			error_message ("Unable to write IPK payload - do all files exist?");
 			return false;
 		}
-		ret = flist.set_files_list (fileslst);
-		if (!ret) {
-			error_message ("Could not build IPK file list!");
-			return false;
-		}
+		flist.set_files_list (fileslst);
 		string tmp = Path.build_filename (tmpdir, "control", "files-" + arch + ".list", null);
 		ret = flist.save (tmp);
+		if (!ret) {
+			error_message ("Could not compile IPK file list!");
+			return false;
+		}
 		// Add to control file list, if file was created successfully
-		if (ret)
-			ctrlfiles.add (tmp);
+		ctrlfiles.add (tmp);
+
 		return ret;
 	}
 

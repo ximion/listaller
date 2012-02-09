@@ -88,20 +88,35 @@ private class FileEntry : Object {
 }
 
 private class FileList : Object {
-	private LinkedList<string> text;
+	private HashSet<FileEntry> list;
 	private bool has_hashes;
 	public string rootdir { set; get; }
 
 	public FileList (bool with_hashes = true) {
 		has_hashes = with_hashes;
-		text = new LinkedList<string> ();
-		text.add ("# IPK file list");
-		text.add ("");
+		list = new HashSet<FileEntry> ((HashFunc) fileentry_hash_func, (EqualFunc) fileentry_equal_func);
+
 		rootdir = Environment.get_current_dir ();
 	}
 
-	public bool open (string fname) {
+	[CCode (has_target = false)]
+	private static uint fileentry_hash_func (FileEntry fe) {
+		string str = fe.fname + fe.destination;
+		uint hash = str_hash (str);
+		debug ("%s", str);
+		debug ("%u", hash);
+		return hash;
+	}
 
+	[CCode (has_target = false)]
+	private static bool fileentry_equal_func (FileEntry a, FileEntry b) {
+		debug ("a.fname:%s\nb.fname:%s\na.dest:%s\nb.dest:%s", a.fname, b.fname, a.destination, b.destination);
+		if ((a.fname == b.fname) && (a.destination == b.destination))
+			return true;
+		return false;
+	}
+
+	public bool open (string fname) {
 		var file = File.new_for_path (fname);
 
 		if (!file.query_exists ()) {
@@ -109,7 +124,7 @@ private class FileList : Object {
 			return false;
 		}
 
-		text.clear ();
+		var text = new ArrayList<string> ();
 		try {
 			// Read the IPK file list into our text list
 			var dis = new DataInputStream (file.read ());
@@ -141,72 +156,10 @@ private class FileList : Object {
 				break;
 		}
 
-		return true;
-	}
-
-	public bool save (string fname)  {
-		if (FileUtils.test (fname, FileTest.EXISTS)) {
-			warning (_("Could not create file '%s'! File already exists."), fname);
-			return false;
-		}
-		var file = File.new_for_path (fname);
-
-		{
-		try {
-			var file_stream = file.create (FileCreateFlags.NONE);
-
-			if (!file.query_exists ()) {
-				warning (_("Unable to create file '%s'!"), file.get_path ());
-				return false;
-			}
-			// Write IPK text list to output stream
-			var dos = new DataOutputStream (file_stream);
-			string line;
-			foreach (string s in text) {
-				dos.put_string (s + "\n");
-			}
-		} catch (Error e) {
-			li_error ("%s".printf (e.message));
-		}
-		}
-
-		return true;
-	}
-
-	private int get_folder_index (string folder, bool create = false) {
-		// Build folder string
-		string s = "> " + folder;
-		int i = text.index_of (s);
-		// Add folder to filelist, if it does not exist
-		if ((create) && (i < 0)) {
-			text.add (s);
-			i = text.index_of (s);
-		}
-		return i;
-	}
-
-	private bool add_file_internal (string fname, string fdest, string checksum) {
-		// Get index of destination dir
-		int findex = get_folder_index (fdest, true);
-		findex++;
-
-		if (checksum == "")
-			return false;
-		text.insert (findex, checksum);
-		text.insert (findex, Path.get_basename (fname));
-
-		return true;
-	}
-
-	public bool add_file (string fname, string fdest) {
-		string checksum = compute_checksum_for_file (fname);
-		return add_file_internal (fname, fdest, checksum);
-	}
-
-	public ArrayList<FileEntry> get_files_list () {
 		string current_dir = "";
 		Iterator<string> it = text.iterator ();
-		ArrayList<FileEntry> flist = new ArrayList<FileEntry> ();
+		// clear the internal list
+		list.clear ();
 
 		it.first ();
 		while (it.has_next ()) {
@@ -232,16 +185,105 @@ private class FileList : Object {
 				e.hash = it.get ();
 			}
 			e.destination = current_dir;
-			flist.add (e);
+			list.add (e);
 		}
-		return flist;
+
+		return true;
+	}
+
+	public bool save (string fname)  {
+		if (FileUtils.test (fname, FileTest.EXISTS)) {
+			warning (_("Could not create file '%s'! File already exists."), fname);
+			return false;
+		}
+		var file = File.new_for_path (fname);
+
+		var text = to_stringlist ();
+		if (text == null)
+			return false;
+
+		{
+		try {
+			var file_stream = file.create (FileCreateFlags.NONE);
+
+			if (!file.query_exists ()) {
+				warning (_("Unable to create file '%s'!"), file.get_path ());
+				return false;
+			}
+			// Write IPK text list to output stream
+			var dos = new DataOutputStream (file_stream);
+			string line;
+			foreach (string s in text) {
+				dos.put_string (s + "\n");
+			}
+		} catch (Error e) {
+			li_error ("%s".printf (e.message));
+		}
+		}
+
+		return true;
+	}
+
+	private int textlist_get_folder_index (ArrayList<string> text, string folder, bool create = false) {
+		// Build folder string
+		string s = "> " + folder;
+		int i = text.index_of (s);
+		// Add folder to filelist, if it does not exist
+		if ((create) && (i < 0)) {
+			text.add (s);
+			i = text.index_of (s);
+		}
+		return i;
+	}
+
+	private bool textlist_add_file (ArrayList<string> text, string fname, string fdest, string checksum) {
+		// Get index of destination dir
+		int findex = textlist_get_folder_index (text, fdest, true);
+		findex++;
+
+		if (checksum == "")
+			return false;
+		text.insert (findex, checksum);
+		text.insert (findex, Path.get_basename (fname));
+
+		return true;
+	}
+
+	private ArrayList<string>? to_stringlist () {
+		var text = new ArrayList<string> ();
+		text.add ("# IPK file list");
+		text.add ("");
+
+		foreach (FileEntry fe in list) {
+			if (!textlist_add_file (text, fe.fname, fe.destination, fe.hash))
+				return null;
+		}
+		return text;
+	}
+
+	public bool add_file (string fname, string fdest) {
+		string checksum = compute_checksum_for_file (fname);
+		if (checksum == "")
+			return false;
+
+		var fe = new FileEntry ();
+		fe.fname = fname;
+		fe.destination = fdest;
+		fe.hash = checksum;
+		list.add (fe);
+		return true;
+	}
+
+	public HashSet<FileEntry> get_files_list () {
+		return list;
 	}
 
 	public ArrayList<FileEntry> get_files_list_expanded () {
-		ArrayList<FileEntry> list = get_files_list ();
+		var resList = new ArrayList<FileEntry> ();
 		ArrayList<FileEntry> wcEntries = new ArrayList<FileEntry> ();
 
-		foreach (FileEntry fe in list) {
+		resList.add_all (list);
+		foreach (FileEntry fe in resList) {
 			if ((fe.fname.index_of ("*") > -1) ||
 				(fe.fname.index_of ("?") > -1)) {
 					var s = fe.fname;
@@ -259,43 +301,36 @@ private class FileList : Object {
 
 			HashSet<string> files = find_files (dir, true);
 
-			list.remove (fe);
+			resList.remove (fe);
 			if (files == null)
 				continue;
 
 			foreach (string s in files) {
 				string ematch = Path.build_filename ("*", fe.fname, null);
 				if (PatternSpec.match_simple (ematch, s)) {
-					debug ("S is: %s", s);
-					debug ("dir is: %s", dir);
-					debug ("fe.dest is %s", fe.destination);
 					FileEntry e = new FileEntry ();
 					e.fname = s;
 					e.destination = Path.build_filename (fe.destination, Path.get_dirname (s).replace (dir, ""), null);
-					list.add (e);
+					resList.add (e);
 				}
 			}
 		}
-		return list;
+		return resList;
 	}
 
-	public bool set_files_list (ArrayList<FileEntry> flist) {
-		text.clear ();
-		text.add ("# IPK File List");
-		text.add ("");
-
-		foreach (FileEntry fe in flist) {
-			if (!add_file_internal (fe.fname, fe.destination, fe.hash)) {
-				// warning ("Tried to add invalid IPK FileEntry to file list!");
-				return false;
-			}
-		}
-		return true;
+	public void set_files_list (ArrayList<FileEntry> flist) {
+		list.clear ();
+		foreach (FileEntry fe in flist)
+			list.add (fe);
 	}
 
 	public string to_string () {
 		string res = "";
-		foreach (string s in text) {
+		var strlist = to_stringlist ();
+		if (strlist == null)
+			return "<empty>";
+
+		foreach (string s in strlist) {
 			res += s + "\n";
 		}
 		return res;
