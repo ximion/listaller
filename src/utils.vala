@@ -224,7 +224,7 @@ private HashSet<string>? find_files (string dir, bool recursive = false) {
 					return null;
 				list.add_all (subdir_list);
 			} else {
-				list.add (path);
+				list.add (real_path (path));
 			}
 		}
 
