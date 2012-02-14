@@ -246,6 +246,7 @@ public class PackControl : Control {
 public class ControlDir : Control {
 	private string ctrlDir;
 	private string doapFile;
+	private MetaFile? packSetting;
 
 	public ControlDir () {
 		ctrlDir = "";
@@ -279,6 +280,15 @@ public class ControlDir : Control {
 		if (ctrlDir != "")
 			return false;
 
+		string pksFname = Path.build_filename (dir, "pkoptions", null);
+		if (!FileUtils.test (pksFname, FileTest.EXISTS))
+			return false;
+		packSetting = new MetaFile ();
+		if (!packSetting.open_file (pksFname)) {
+			packSetting = null;
+			return false;
+		}
+
 		doapFile = find_doap_data (dir);
 		if (doapFile == "")
 			throw new ControlDataError.NO_DOAP (_("No valid DOAP data found in directory %s - Can't open control files.").printf (dir));
@@ -293,6 +303,21 @@ public class ControlDir : Control {
 			this.open_depinfo (depInfoFileName);
 		}
 		return true;
+	}
+
+	public string get_files_rootdir () {
+		string s = packSetting.get_value ("filesroot", false);
+
+		if (s == "")
+			s = Environment.get_current_dir ();
+		return s;
+	}
+
+	public bool auto_dependency_search () {
+		string s = packSetting.get_value ("AutoFindDeps", false);
+		if (s.down () == "true")
+			return true;
+		return false;
 	}
 
 	public string? get_doap_data () {

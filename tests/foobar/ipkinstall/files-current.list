@@ -1,7 +1,5 @@
 # IPK file list
 
-:: rootdir=%INSTDIR%
-
 > $INST
 usr/local/bin/foo
 > $INST/config

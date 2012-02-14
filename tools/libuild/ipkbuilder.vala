@@ -182,16 +182,19 @@ private class Builder : Object {
 		}
 
 		// Set the correct install dir
-		if (flist.rootdir == "%INSTDIR%") {
+		string rootdir = ipkCDir.get_files_rootdir ();
+
+		if (rootdir == "%INSTDIR%") {
 			flist.rootdir = Path.build_filename (srcdir, "inst_target", null);
 		} else
-			if (!Path.is_absolute (flist.rootdir))
-				flist.rootdir = Path.build_filename (srcdir, flist.rootdir, null);
-
-		string rdir = flist.rootdir;
+			if (!Path.is_absolute (rootdir))
+				flist.rootdir = real_path (Path.build_filename (srcdir, rootdir, null));
+		/* Just a shortcut to the root dir. It is important that our FileList
+		 * knows the right file-root path to resolve filenames. */
+		rootdir = flist.rootdir;
 
 		ArrayList<IPK.FileEntry> fileslst = flist.get_files_list_expanded ();
-		ret = write_ipk_file_data (ref fileslst, rdir, arch);
+		ret = write_ipk_file_data (ref fileslst, rootdir, arch);
 		if (!ret) {
 			error_message ("Unable to write IPK payload - do all files exist?");
 			return false;

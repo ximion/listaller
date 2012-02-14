@@ -87,6 +87,23 @@ private class FileEntry : Object {
 
 }
 
+[CCode (has_target = false)]
+private static uint fileentry_hash_func (FileEntry fe) {
+	string str = fe.fname + fe.destination;
+	return str_hash (str);
+}
+
+[CCode (has_target = false)]
+private static bool fileentry_equal_func (FileEntry a, FileEntry b) {
+	if ((a.fname == b.fname) && (a.destination == b.destination))
+		return true;
+	return false;
+}
+
+private HashSet<FileEntry> new_fileentry_hashset () {
+	return new HashSet<FileEntry> ((HashFunc) fileentry_hash_func, (EqualFunc) fileentry_equal_func);
+}
+
 private class FileList : Object {
 	private HashSet<FileEntry> list;
 	private bool has_hashes;
@@ -94,26 +111,9 @@ private class FileList : Object {
 
 	public FileList (bool with_hashes = true) {
 		has_hashes = with_hashes;
-		list = new HashSet<FileEntry> ((HashFunc) fileentry_hash_func, (EqualFunc) fileentry_equal_func);
+		list = new_fileentry_hashset ();
 
 		rootdir = Environment.get_current_dir ();
-	}
-
-	[CCode (has_target = false)]
-	private static uint fileentry_hash_func (FileEntry fe) {
-		string str = fe.fname + fe.destination;
-		uint hash = str_hash (str);
-		debug ("%s", str);
-		debug ("%u", hash);
-		return hash;
-	}
-
-	[CCode (has_target = false)]
-	private static bool fileentry_equal_func (FileEntry a, FileEntry b) {
-		debug ("a.fname:%s\nb.fname:%s\na.dest:%s\nb.dest:%s", a.fname, b.fname, a.destination, b.destination);
-		if ((a.fname == b.fname) && (a.destination == b.destination))
-			return true;
-		return false;
 	}
 
 	public bool open (string fname) {
@@ -135,25 +135,6 @@ private class FileList : Object {
 			}
 		} catch (Error e) {
 			li_error ("%s".printf (e.message));
-		}
-
-		foreach (string line in text) {
-			// Search for header information
-			if (line.has_prefix ("::")) {
-				// Check for rootdir info
-				int index = line.index_of ("rootdir=");
-				if (index < 1)
-					continue;
-				string[] s = line.split ("=");
-				if (s[1] == null) {
-					warning ("Syntax error in fileinfo file!");
-					continue;
-				}
-				rootdir = s[1].strip ();
-			}
-			// If the fileinfo part starts, we can't define header information
-			if (line.has_prefix (">"))
-				break;
 		}
 
 		string current_dir = "";

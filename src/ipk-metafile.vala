@@ -153,7 +153,7 @@ private class MetaFile : Object {
 		return false;
 	}
 
-	public string get_value (string field) {
+	public string get_value (string field, bool respectOpenedBlock = true) {
 		string res = "";
 		bool addToBlock = false;
 		var iter = content.list_iterator ();
@@ -165,9 +165,10 @@ private class MetaFile : Object {
 				continue;
 
 			string line = iter.get ();
-			//! debug ("Field: %s :: Line: %s", field, line);
-			if (is_empty (line))
-				break;
+
+			if (respectOpenedBlock)
+				if (is_empty (line))
+					break;
 
 			if (addToBlock) {
 				if (line.substring (0, 1) == " ") {
