@@ -146,7 +146,7 @@ void test_ipk_filelist_file () {
 	FileUtils.remove (tmpfile);
 	flist.save (tmpfile);
 
-	ArrayList<IPK.FileEntry> lst = flist.get_files_list ();
+	HashSet<IPK.FileEntry> lst = flist.get_files_list ();
 	foreach (IPK.FileEntry e in lst) {
 		msg (e.to_string ());
 	}
