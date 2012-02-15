@@ -61,8 +61,14 @@ private class MetaFile : Object {
 	}
 
 	public bool save_to_file (string fname, bool overrideExisting = false) {
-		if (content.last ().strip () == "")
-			content.remove_at (content.size - 1);
+		if (content.size > 0) {
+			if (content.last ().strip () == "")
+				content.remove_at (content.size - 1);
+		} else {
+			/* Create an empty file to prevent other modules from crashing
+			 * if "save_to_file" does not result in a file existing */
+			content.add ("");
+		}
 
 		var file = File.new_for_path (fname);
 		if ( (!overrideExisting) && (file.query_exists ()))
@@ -194,20 +200,20 @@ private class MetaFile : Object {
 		if (value == "")
 			return true;
 
-
 		// Prepare the value
 		string[] newValue = value.split ("\n");
 
-		if (openNewBlock)
+		if ((openNewBlock) || (content.size <= 0))
 			currentBlockId = -1;
 
 		if (currentBlockId < 0) {
 			// Create a new field
-			if (newValue.length == 1) {
+			if (content.size > 0)
 				content.add ("");
+
+			if (newValue.length == 1) {
 				content.add ("%s: %s".printf (field, newValue[0]));
 			} else {
-				content.add ("");
 				content.add ("%s: %s".printf (field, newValue[0]));
 				for (int i = 1; i < newValue.length; i++) {
 					if ((newValue[i] != null) && (newValue[i].strip () != ""))

@@ -1,6 +1,6 @@
 /* ipk-control.vala - Describes data controlling the IPK setup process
  *
- * Copyright (C) 2010-2011 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2010-2012 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
@@ -147,7 +147,7 @@ public class PackControl : Control {
 		ret = this.open_depinfo (fDeps);
 		if (!ret)
 			return false;
-
+		ipkVersion = fIpkV;
 		return cache_appitem ();
 	}
 
@@ -162,7 +162,7 @@ public class PackControl : Control {
 		return true;
 	}
 
-	public bool create_new (string? newDoapData, string IpkV) {
+	public bool create_new (string? newDoapData, string ipkV) {
 		if ((newDoapData == null) || (newDoapData == "")) {
 			li_error ("Error while processing DOAP data: Data was NULL!");
 			return false;
@@ -174,6 +174,8 @@ public class PackControl : Control {
 		bool ret = this.open_doap (doapData);
 		if (ret)
 			ret = cache_appitem ();
+		if (ret)
+			ipkVersion = ipkV;
 		return ret;
 	}
 
@@ -184,13 +186,17 @@ public class PackControl : Control {
 			return false;
 		ret = save_string_to_file (Path.build_filename (dirPath, this.appItem.idname + ".doap", null), doapData);
 
+		MetaFile packC = new MetaFile ();
+		packC.add_value ("Version", ipkVersion);
+		packC.save_to_file (Path.build_filename (dirPath, "pksetting", null));
+
 		return ret;
 	}
 
 	[CCode (array_length = false, array_null_terminated = true)]
 	public string[] get_files () {
 		string[] res;
-		res = { "dependencies.list" };
+		res = { "dependencies.list", "pksetting" };
 		res += this.appItem.idname + ".doap";
 		res += null;
 
@@ -306,10 +312,18 @@ public class ControlDir : Control {
 	}
 
 	public string get_files_rootdir () {
-		string s = packSetting.get_value ("filesroot", false);
-
+		string s = packSetting.get_value ("FilesRoot", false);
 		if (s == "")
 			s = Environment.get_current_dir ();
+
+		return s;
+	}
+
+	public string get_ipk_version () {
+		string s = packSetting.get_value ("Version", false);
+		if (s == "")
+			s = "1.0";
+
 		return s;
 	}
 
@@ -332,16 +346,6 @@ public class ControlDir : Control {
 		bool ret;
 		ret = depData.save_to_file (Path.build_filename (ctrlDir, "dependencies.list", null));
 		return ret;
-	}
-
-	public bool get_autosolve_dependencies () {
-		/*
-		Xml.Node* n = get_xsubnode (pkg_node (), "requires");
-		if (get_node_content (get_xproperty (n, "find")) == "auto")
-			return true;
-		return false;
-		*/
-		return true;
 	}
 
 }

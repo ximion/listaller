@@ -36,6 +36,7 @@ private class Builder : Object {
 	private string srcdir;
 	private string outname;
 	private string outdir;
+	private string ipkVersion;
 	private bool failed = false;
 	private IPK.ControlDir ipkCDir;
 	private ArrayList<string> ctrlfiles;
@@ -61,6 +62,7 @@ private class Builder : Object {
 		outname = "";
 		ctrlfiles = new ArrayList<string> ();
 		datapkgs = new ArrayList<string> ();
+		ipkVersion = "1.0";
 	}
 
 	~Builder () {
@@ -439,6 +441,9 @@ private class Builder : Object {
 		if (!ret)
 			return false;
 
+		// Set IPK package version
+		ipkVersion = ipkCDir.get_ipk_version ();
+
 		IPK.FileList flist = new IPK.FileList (false);
 		flist.open (Path.build_filename (srcdir, "files-current.list", null));
 
@@ -449,10 +454,10 @@ private class Builder : Object {
 		appInfo = ipkCDir.get_application ();
 
 		// Build IPK control directory
-		ictrl.create_new (ipkCDir.get_doap_data (), "::TODO");
+		ictrl.create_new (ipkCDir.get_doap_data (), ipkVersion);
 
 		ArrayList<IPK.Dependency> deps = ipkCDir.get_dependencies ();
-		if (ipkCDir.get_autosolve_dependencies ()) {
+		if (ipkCDir.auto_dependency_search ()) {
 			DepFind df = new DepFind (real_path (Path.build_filename (srcdir, "..", null)));
 			ArrayList<IPK.Dependency> list = df.get_dependencies ();
 			foreach (IPK.Dependency d1 in list) {
