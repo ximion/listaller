@@ -286,12 +286,18 @@ public class Setup : Object {
 			return false;
 		}
 
+		// Initialize console message system
+		init_limessage ();
+
 		if ((!is_root ()) && (conf.sumode == true)) {
 			ret = install_superuser ();
+			finish_limessage ();
 			return ret;
 		}
 
 		ret = install_application ();
+		finish_limessage ();
+
 		return ret;
 	}
 
