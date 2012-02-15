@@ -28,8 +28,10 @@ public class Settings : Object {
 
 	const string confdir = "/etc/listaller";
 	const string sudbdir = "/var/lib/listaller";
-	const string suinstroot = "/opt";
-	const string sudesktopdir = Config.PREFIXDIR + "/share/applications";
+	const string su_instroot = "/opt";
+	const string su_desktopdir = Config.PREFIXDIR + "/share/applications";
+	const string su_icondir = "/usr/share/icons/hicolor";
+	const string su_pixdir = "/usr/share/pixmaps";
 	private string[] lib_paths = { Config.PREFIXDIR + "/lib",
 					   Config.PREFIXDIR + "/lib64",
 					   "/lib"};
@@ -144,7 +146,7 @@ public class Settings : Object {
 		string addir;
 
 		if (sumode) {
-			addir = Path.build_filename (suinstroot, "apps", null);
+			addir = Path.build_filename (su_instroot, "apps", null);
 		} else {
 			addir = Path.build_filename (Environment.get_home_dir (), ".appdata", "apps", null);
 		}
@@ -162,7 +164,7 @@ public class Settings : Object {
 		string depdir;
 
 		if (sumode) {
-			depdir = Path.build_filename (suinstroot, "deps", null);
+			depdir = Path.build_filename (su_instroot, "deps", null);
 		} else {
 			depdir = Path.build_filename (Environment.get_home_dir (), ".appdata", "deps", null);
 		}
@@ -180,9 +182,9 @@ public class Settings : Object {
 		string icodir;
 
 		if (sumode) {
-			icodir = Path.build_filename (suinstroot, "icons", null);
+			icodir = su_icondir;
 		} else {
-			icodir = Path.build_filename (Environment.get_home_dir (), ".appdata", "icons", null);
+			icodir = Path.build_filename (Environment.get_user_data_dir (), "icons", "hicolor", null);
 		}
 		if (testmode) {
 			// Point to our temporary dir
@@ -221,9 +223,12 @@ public class Settings : Object {
 			size = 0;
 
 		if (size == 0) {
-			icodir = Path.build_filename (icon_base_dir (), "common", null);
+			if (sumode)
+				icodir = su_pixdir;
+			else
+				icodir = Path.build_filename (Environment.get_user_data_dir (), "icons", null);
 		} else {
-			icodir = Path.build_filename (icon_base_dir (), size.to_string () + "x" + size.to_string (), null);
+			icodir = Path.build_filename (icon_base_dir (), size.to_string () + "x" + size.to_string (), "apps", null);
 		}
 
 		touch_dir (icodir, "Unable to create icon directory: %s");
@@ -235,7 +240,7 @@ public class Settings : Object {
 		string dskdir;
 
 		if (sumode) {
-			dskdir = sudesktopdir;
+			dskdir = su_desktopdir;
 		} else {
 			dskdir = Path.build_filename (Environment.get_home_dir (), ".local", "share", "applications", null);
 		}
