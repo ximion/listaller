@@ -172,9 +172,12 @@ private class MetaFile : Object {
 
 			string line = iter.get ();
 
-			if (respectOpenedBlock)
-				if (is_empty (line))
+			if (is_empty (line))
+				if (respectOpenedBlock)
 					break;
+				else
+					continue;
+
 
 			if (addToBlock) {
 				if (line.substring (0, 1) == " ") {
