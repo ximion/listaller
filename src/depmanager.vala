@@ -1,6 +1,6 @@
 /* depmanager.vala - Install & remove software dependencies
  *
- * Copyright (C) 2011 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
@@ -22,8 +22,9 @@ using GLib;
 using Gee;
 using Listaller;
 using Listaller.Utils;
+using Listaller.Dep;
 
-namespace Listaller.Deps {
+namespace Listaller {
 
 private class DepManager : Object {
 	private SoftwareDB db;
@@ -103,8 +104,9 @@ private class DepManager : Object {
 		 * (this is a huge speed improvement)
 		 * This only works for library dependencies!
 		 */
+		ret = false;
 		foreach (string cmp in dep.raw_complist) {
-			if (dep.component_get_type (cmp) == Deps.ComponentType.SHARED_LIB) {
+			if (dep.component_get_type (cmp) == ComponentType.SHARED_LIB) {
 				string s = dep.component_get_name (cmp);
 				if (s.has_suffix (".*"))
 					s = s.replace (".*", "");
@@ -121,8 +123,8 @@ private class DepManager : Object {
 		if (ret) {
 			dep.clear_installdata ();
 			foreach (string s in dep.raw_complist)
-				if (dep.component_get_type (s) == Deps.ComponentType.SHARED_LIB)
-					dep.add_install_comp (s);
+				if (dep.component_get_type (s) == ComponentType.SHARED_LIB)
+					dep.add_installed_comp (s);
 			dep.satisfied = true;
 			return true;
 		}
@@ -148,7 +150,7 @@ private class DepManager : Object {
 		if (dep.satisfied)
 			return true;
 
-		return ret;
+		return true;
 	}
 
 	private bool install_dependency_internal (PkInstaller pkinst, FeedInstaller finst,
@@ -168,6 +170,7 @@ private class DepManager : Object {
 			return true;
 
 		ErrorItem? error = null;
+
 		/* Now try the PackageKit dependency provider, if feedinstall is not forced
 		 * and the previous package dependency searching was successful */
 		if ((!force_feedinstall) && (dep.has_installdata ())) {

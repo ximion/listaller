@@ -80,20 +80,21 @@ public abstract class Control : Object {
 			// If we have a feed-url for this, add it
 			if (dep.feed_url != "")
 				depData.add_value ("Feed", dep.feed_url);
-			depData.add_value ("Libraries", dep.get_components_by_type_as_str (Deps.ComponentType.SHARED_LIB));
-			depData.add_value ("Binaries", dep.get_components_by_type_as_str (Deps.ComponentType.BINARY));
-			depData.add_value ("Python", dep.get_components_by_type_as_str (Deps.ComponentType.PYTHON));
-			depData.add_value ("Python2", dep.get_components_by_type_as_str (Deps.ComponentType.PYTHON_2));
-			depData.add_value ("Files", dep.get_components_by_type_as_str (Deps.ComponentType.FILE));
+			depData.add_value ("Libraries", dep.get_components_by_type_as_str (Dep.ComponentType.SHARED_LIB));
+			depData.add_value ("Binaries", dep.get_components_by_type_as_str (Dep.ComponentType.BINARY));
+			depData.add_value ("Python", dep.get_components_by_type_as_str (Dep.ComponentType.PYTHON));
+			depData.add_value ("Python2", dep.get_components_by_type_as_str (Dep.ComponentType.PYTHON_2));
+			depData.add_value ("Files", dep.get_components_by_type_as_str (Dep.ComponentType.FILE));
 		}
 	}
 
-	private void add_components_to_dep (Dependency dep, Deps.ComponentType ty, string list) {
+	private void add_components_to_dep (Dependency dep, Dep.ComponentType ty, string list) {
 		if (list.strip () == "")
 			return;
 		// We don't like file dependencies
-		if (ty == Deps.ComponentType.FILE)
+		if (ty == Dep.ComponentType.FILE)
 			li_warning ("Resource %s depends on a file (%s), which is not supported at time.".printf (dep.idname, list));
+
 		if (list.index_of ("\n") <= 0) {
 			dep.add_component (list, ty);
 			return;
@@ -119,11 +120,11 @@ public abstract class Control : Object {
 			string s = depData.get_value ("feed");
 			if (s.strip () != "")
 				dep.feed_url = s;
-			add_components_to_dep (dep, Deps.ComponentType.SHARED_LIB, depData.get_value ("libraries"));
-			add_components_to_dep (dep, Deps.ComponentType.BINARY, depData.get_value ("binaries"));
-			add_components_to_dep (dep, Deps.ComponentType.PYTHON, depData.get_value ("python"));
-			add_components_to_dep (dep, Deps.ComponentType.PYTHON_2, depData.get_value ("python2"));
-			add_components_to_dep (dep, Deps.ComponentType.FILE, depData.get_value ("files"));
+			add_components_to_dep (dep, Dep.ComponentType.SHARED_LIB, depData.get_value ("libraries"));
+			add_components_to_dep (dep, Dep.ComponentType.BINARY, depData.get_value ("binaries"));
+			add_components_to_dep (dep, Dep.ComponentType.PYTHON, depData.get_value ("python"));
+			add_components_to_dep (dep, Dep.ComponentType.PYTHON_2, depData.get_value ("python2"));
+			add_components_to_dep (dep, Dep.ComponentType.FILE, depData.get_value ("files"));
 			depList.add (dep);
 		}
 		return depList;

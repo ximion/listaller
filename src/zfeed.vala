@@ -1,6 +1,6 @@
 /* zfeed.vala
  *
- * Copyright (C) 2011 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
@@ -24,7 +24,7 @@ using Gee;
 using Listaller;
 using Listaller.Utils;
 
-namespace Listaller.Deps {
+namespace Listaller.Dep {
 
 private class Feed : Object {
 	private string fname;

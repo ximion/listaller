@@ -94,7 +94,7 @@ void test_utils () {
 }
 
 void test_zfeeds () {
-	Deps.Feed feed = new Deps.Feed ();
+	Dep.Feed feed = new Dep.Feed ();
 	feed.open (Path.build_filename (datadir, "libogg.xml", null));
 
 	IPK.Dependency dep = new IPK.Dependency ("test");

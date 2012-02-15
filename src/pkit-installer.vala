@@ -23,7 +23,7 @@ using Gee;
 using Listaller;
 using Listaller.Utils;
 
-namespace Listaller.Deps {
+namespace Listaller.Dep {
 
 private class PkInstaller : Object {
 	private Listaller.Settings conf;
@@ -142,6 +142,12 @@ private class PkInstaller : Object {
 		if (!dep.has_installdata ())
 			return false;
 
+		/* We don't install dependencies via PK when unit tests are running.
+		 * Consider everything as satisfied. (unittests can modify this, of course) */
+		if (__unittestmode) {
+			dep.satisfied = true;
+			return true;
+		}
 
 		string[] pkgs = {};
 		/* Now install every not-yet-installed package. The asterisk (*pkg) indicates

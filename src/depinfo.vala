@@ -21,9 +21,9 @@
 using GLib;
 using Gee;
 using Listaller;
-using Listaller.Deps;
+using Listaller.Dep;
 
-namespace Listaller.Deps {
+namespace Listaller.Dep {
 
 public enum ComponentType {
 	SHARED_LIB,
@@ -65,7 +65,11 @@ public class Dependency: Object {
 			return _satisfied;
 		}
 		set {
-			if ((idname != "") && (!is_standardlib) && (!has_installdata ()) && (feed_url == "")) {
+			if ((!__unittestmode) &&
+			    (idname != "") &&
+			    (!is_standardlib) &&
+			    (!has_installdata ()) &&
+			    (feed_url == "")) {
 				warning ("Trying to set dependency %s to 'satisfied', although it is not a standardlib. (Reason: No install-data found!) - This usually is a packaging bug.", idname);
 			}
 			_satisfied = value;
@@ -73,7 +77,7 @@ public class Dependency: Object {
 	}
 	public string architecture { get; set; } // e.g. linux-amd64
 	private HashSet<string> install_data { get; set; } // The stuff stored as "real" dependency in software DB
-	public bool is_standardlib { get; set; } // Whether this dependency is always satisfied (by default)
+	public bool is_standardlib { get; set; } // Whether this dependency is always satisfied (by default), set by the distributor
 
 	public string feed_url { get; set; }
 	private HashSet<string> components { get; set; } // Parts of this dependency (e.g. shlibs, python modules, files, etc.)
@@ -128,7 +132,7 @@ public class Dependency: Object {
 		version = depVersion;
 	}
 
-	internal bool add_install_comp (string sinstcomp) {
+	internal bool add_installed_comp (string sinstcomp) {
 		if (sinstcomp.index_of (":") <= 0)
 			warning ("Invalid install data set! This should never happen! (Data was %s)", sinstcomp);
 		return install_data.add (sinstcomp);
@@ -138,8 +142,30 @@ public class Dependency: Object {
 		install_data.clear ();
 	}
 
+	private bool _add_cmpstr_save (string line) {
+		string[] cmp = line.split (":", 2);
+		if (cmp.length != 2) {
+			critical ("Installdata string is invalid! (Error at: %s) %i", line, cmp.length);
+			return false;
+		}
+		add_installed_comp ("%s%s".printf (cmp[0], cmp[1]));
+		return true;
+	}
+
 	internal void set_installdata_from_string (string str) {
-		debug ("::TODO");
+		if (str.index_of ("\n") <= 0) {
+			_add_cmpstr_save (str);
+			return;
+		}
+
+		string[]? lines = str.split ("\n");
+		if (lines == null)
+			return;
+		foreach (string s in lines) {
+			if (s != "")
+				if (!_add_cmpstr_save (s))
+					return;
+		}
 	}
 
 	public HashSet<string> get_installdata () {

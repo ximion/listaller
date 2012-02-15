@@ -273,6 +273,12 @@ public class Settings : Object {
 		return res;
 	}
 
+	internal void invalidate_tmp_dir () {
+		if (uinsttmp.has_prefix ("/tmp"))
+			Utils.delete_dir_recursive (uinsttmp);
+		uinsttmp = "";
+	}
+
 	public string get_unique_install_tmp_dir () {
 		if (uinsttmp != "")
 			return uinsttmp;

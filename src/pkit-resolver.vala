@@ -1,6 +1,6 @@
 /* pkit-resolver.vala - Resolving universal dependencies to native distro packages
  *
- * Copyright (C) 2011 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
@@ -23,7 +23,7 @@ using Gee;
 using Listaller;
 using Listaller.Utils;
 
-namespace Listaller.Deps {
+namespace Listaller.Dep {
 
 private class PkResolver : Object {
 	private Listaller.Settings conf;
@@ -89,7 +89,7 @@ private class PkResolver : Object {
 		string[] libs = {};
 		foreach (string s in dep.raw_complist) {
 			debug (s);
-			if (dep.component_get_type (s) == Deps.ComponentType.SHARED_LIB)
+			if (dep.component_get_type (s) == Dep.ComponentType.SHARED_LIB)
 				libs += dep.component_get_name (s);
 		}
 		libs += null;
@@ -140,14 +140,7 @@ private class PkResolver : Object {
 		// If there are no files, consider this dependency as "installed"
 		// This is usually an ERROR and might indicate a broken package
 		if (!dep.has_components ()) {
-			li_warning ("Dependency %s has no components assigned!".printf (dep.full_name));
-			dep.satisfied = true;
-			return true;
-		}
-
-		/* We don't solve dependencies when unit tests are running.
-		 * Consider everything as satisfied. */
-		if (__unittestmode) {
+			li_error ("Dependency %s has no components assigned!".printf (dep.full_name));
 			dep.satisfied = true;
 			return true;
 		}
@@ -156,7 +149,10 @@ private class PkResolver : Object {
 		if (sack == null)
 			return false;
 
-		string[] packages = sack.get_ids ();
+		string[]? packages = sack.get_ids ();
+
+		if (packages == null)
+			ret = false;
 
 		for (uint i = 0; packages[i] != null; i++) {
 			PackageKit.Package? pkg = sack.find_by_id (packages[i]);
@@ -166,14 +162,15 @@ private class PkResolver : Object {
 			}
 
 			if (pkg.get_info () == PackageKit.Info.INSTALLED)
-				dep.add_install_comp ("pkg:" + pkg.get_id ());
+				dep.add_installed_comp ("pkg:" + pkg.get_id ());
 			else
-				dep.add_install_comp ("*pkg:" + pkg.get_id ());
+				dep.add_installed_comp ("*pkg:" + pkg.get_id ());
 		}
 		if (!ret) {
 			dep.clear_installdata ();
 			return false;
 		}
+
 		/* Check if there are native packages which need to be installed.
 		 * If not, the dependency is already satified. */
 		dep.satisfied = true;

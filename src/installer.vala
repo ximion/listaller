@@ -173,7 +173,7 @@ public class Setup : Object {
 		Gee.ArrayList<IPK.Dependency> pkgDeps = ipkp.control.get_dependencies ();
 
 		// Construct new dependency manager
-		Deps.DepManager depman = new Deps.DepManager (db);
+		DepManager depman = new DepManager (db);
 		depman.error_code.connect ((error) => {
 			this.error_code (error);
 		});

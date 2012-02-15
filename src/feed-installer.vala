@@ -1,6 +1,6 @@
 /* feed-installer.vala
  *
- * Copyright (C) 2011 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
@@ -23,7 +23,7 @@ using Gee;
 using Listaller;
 using Listaller.Utils;
 
-namespace Listaller.Deps {
+namespace Listaller.Dep {
 
 private class FeedInstaller : Object {
 	private Feed? feed;
@@ -280,7 +280,7 @@ private class FeedInstaller : Object {
 			return false;
 
 		// Yes! Feed installation completed, we can set this as satisfied!
-		dep.add_install_comp ("feed:%s".printf (dep.feed_url));
+		dep.add_installed_comp ("feed:%s".printf (dep.feed_url));
 		dep.satisfied = true;
 
 		return ret;

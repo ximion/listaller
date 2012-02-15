@@ -47,20 +47,25 @@ void test_dependency_manager () {
 	msg ("Dependency manager tests");
 
 	bool ret;
-	Deps.DepManager depman = new Deps.DepManager (sdb);
+	DepManager depman = new DepManager (sdb);
 
 	// Test 1
-	IPK.Dependency test1 = new IPK.Dependency ("Test:1");
+	IPK.Dependency test1 = new IPK.Dependency ("Test:1.gee");
 	test1.feed_url = "http://services.sugarlabs.org/libgee";
+	//test1.add_component ("libgee.so.2", Dep.ComponentType.SHARED_LIB);
+	test1.add_component ("bladada.so.2", Dep.ComponentType.SHARED_LIB);
 
 	ret = depman.install_dependency (ref test1);
 	assert (ret == true);
 	assert (test1.satisfied == true);
+	debug (test1.full_name);
 	assert (test1.full_name == "libgee");
 
 	// Test 2
-	IPK.Dependency test2 = new IPK.Dependency ("Test:2");
+	IPK.Dependency test2 = new IPK.Dependency ("Test:2.vorbis");
 	test2.feed_url = "http://services.sugarlabs.org/libvorbis";
+	//test2.add_component ("libvorbis.so.0", Dep.ComponentType.SHARED_LIB);
+	test2.add_component ("nobis.so.0", Dep.ComponentType.SHARED_LIB);
 
 	ret = depman.install_dependency (ref test2);
 	/* We already installed this in a previous test, but did no proper
@@ -80,7 +85,7 @@ void test_dependency_manager () {
 	assert (test1.full_name == "libgee");
 }
 
-void search_install_pkdep (Deps.PkInstaller pkinst, Deps.PkResolver pksolv, ref IPK.Dependency dep) {
+void search_install_pkdep (Dep.PkInstaller pkinst, Dep.PkResolver pksolv, ref IPK.Dependency dep) {
 	bool ret;
 	ret = pksolv.search_dep_packages (ref dep);
 	if (!ret) {
@@ -101,10 +106,10 @@ void test_packagekit_installer () {
 	// Build simple mp3gain dependency
 	ArrayList<IPK.Dependency> deplist = new ArrayList<IPK.Dependency> ();
 	IPK.Dependency depMp3Gain = new IPK.Dependency ("Mp3Gain");
-	depMp3Gain.add_component ("/usr/bin/mp3gain", Deps.ComponentType.BINARY);
+	depMp3Gain.add_component ("/usr/bin/mp3gain", Dep.ComponentType.BINARY);
 
-	Deps.PkInstaller pkit = new Deps.PkInstaller (conf);
-	Deps.PkResolver pkslv = new Deps.PkResolver (conf);
+	Dep.PkInstaller pkit = new Dep.PkInstaller (conf);
+	Dep.PkResolver pkslv = new Dep.PkResolver (conf);
 	pkit.message.connect (test_solver_message_cb);
 
 	search_install_pkdep (pkit, pkslv, ref depMp3Gain);
@@ -112,16 +117,16 @@ void test_packagekit_installer () {
 
 	// Now something more advanced
 	IPK.Dependency crazy = new IPK.Dependency ("CrazyStuff");
-	crazy.add_component ("/bin/bash", Deps.ComponentType.BINARY);
-	crazy.add_component ("libpackagekit-glib2.so", Deps.ComponentType.SHARED_LIB);
-	crazy.add_component ("libc6.so", Deps.ComponentType.SHARED_LIB);
+	crazy.add_component ("/bin/bash", Dep.ComponentType.BINARY);
+	crazy.add_component ("libpackagekit-glib2.so", Dep.ComponentType.SHARED_LIB);
+	crazy.add_component ("libc6.so", Dep.ComponentType.SHARED_LIB);
 
 	search_install_pkdep (pkit, pkslv, ref crazy);
 	assert (crazy.satisfied == true);
 
 	// Now something which fails
 	IPK.Dependency fail = new IPK.Dependency ("Fail");
-	fail.add_component ("/run/chicken", Deps.ComponentType.UNKNOWN);
+	fail.add_component ("/run/chicken", Dep.ComponentType.UNKNOWN);
 	ret = pkslv.search_dep_packages (ref fail);
 	if (!ret) {
 		debug (pkit.last_error.details);
@@ -132,9 +137,9 @@ void test_packagekit_installer () {
 
 void test_feed_installer () {
 	msg ("ZI Feed installer tests");
-	Deps.FeedInstaller finst = new Deps.FeedInstaller (conf);
+	Dep.FeedInstaller finst = new Dep.FeedInstaller (conf);
 
-	IPK.Dependency test1 = new IPK.Dependency ("Test:1");
+	IPK.Dependency test1 = new IPK.Dependency ("feedTest:1.vorb");
 	test1.feed_url = "http://services.sugarlabs.org/libvorbis";
 
 	bool ret;
@@ -142,9 +147,12 @@ void test_feed_installer () {
 	assert (ret == true);
 	assert (test1.full_name == "libvorbis");
 
+	// Other tests might want to install the same stuff, so avoid conflicts.
+	//conf.invalidate_tmp_dir ();
 }
 
 void test_depsolver () {
+	msg ("Dependency solver tests");
 	ArrayList<IPK.Dependency> deplist = new ArrayList<IPK.Dependency> ();
 
 	// Create a set of dependencies
@@ -157,7 +165,8 @@ void test_depsolver () {
 	deplist.add (dep2);
 
 	IPK.Dependency dep3 = new IPK.Dependency ("Mp3Gain");
-	dep3.add_component ("/usr/bin/mp3gain", Deps.ComponentType.BINARY);
+	dep3.add_component ("/usr/bin/mp3gain", Dep.ComponentType.BINARY);
+	dep3.is_standardlib = true;
 	deplist.add (dep3);
 
 	IPK.Dependency dep4 = new IPK.Dependency ("LibXml2");
@@ -165,7 +174,7 @@ void test_depsolver () {
 	deplist.add (dep4);
 
 	bool ret;
-	Deps.DepManager depman = new Deps.DepManager (sdb);
+	DepManager depman = new DepManager (sdb);
 	depman.error_code.connect (test_solver_error_code_cb);
 	depman.message.connect (test_solver_message_cb);
 
