@@ -599,7 +599,7 @@ private class Package : Object {
 		// Now extract & validate all stuff
 		while (plar.next_header (out e) == Result.OK) {
 			fe = fcache.get (e.pathname ());
-			if (fe != null) {
+			if ((fe != null) && (!fe.is_installed ())) {
 				// File was found, so install it now
 				ret = install_entry_and_validate (fe, plar, e, vs);
 				prog++;
