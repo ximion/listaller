@@ -74,11 +74,15 @@ void test_libuild_build () {
 
 	Environment.set_current_dir (foobar_srcdir);
 	// Now create IPK package for FooBar!
-	string cmd = "%s %s %s %s".printf (libuild_exec, "-b", "-o", datadir);
+	string cmd = "%s %s %s %s %s".printf (libuild_exec, "-b", "--verbose", "-o", datadir);
 	run_command (cmd);
 }
 
 int main (string[] args) {
+	set_console_mode (true);
+	set_verbose_mode (true);
+	add_log_domain ("LiTest");
+
 	msg ("=== Running LiBuild Tests ===");
 	datadir = args[1];
 	assert (datadir != null);

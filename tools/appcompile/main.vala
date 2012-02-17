@@ -23,23 +23,26 @@ using Listaller;
 
 public class AppCompile : Object {
 	// Cmd options
-	private static string _src_dir = "";
-	private static string _target_dir = "";
-	private static bool _show_version = false;
-	private static bool _strip_files = false;
+	private static string o_src_dir = "";
+	private static string o_target_dir = "";
+	private static bool o_show_version = false;
+	private static bool o_strip_files = false;
+	private static bool o_verbose_mode;
 	private string cmp_arguments = "";
 
 	public int exit_code { get; set; }
 
 	private const OptionEntry[] options = {
-		{ "version", 'v', 0, OptionArg.NONE, ref _show_version,
+		{ "version", 'v', 0, OptionArg.NONE, ref o_show_version,
 		N_("Show the application's version"), null },
-		{ "sourcedir", 's', 0, OptionArg.FILENAME, ref _src_dir,
+		{ "sourcedir", 's', 0, OptionArg.FILENAME, ref o_src_dir,
 			N_("Path to the application's source code"), N_("DIRECTORY") },
-		{ "target_dir", 'o', 0, OptionArg.FILENAME, ref _target_dir,
+		{ "target_dir", 'o', 0, OptionArg.FILENAME, ref o_target_dir,
 			N_("Software install prefix"), N_("DIRECTORY") },
-		{ "strip", 0, 0, OptionArg.NONE, ref _strip_files,
+		{ "strip", 0, 0, OptionArg.NONE, ref o_strip_files,
 			N_("Strip debug infos from files in install-target"), null },
+		{ "verbose", 0, 0, OptionArg.NONE, ref o_verbose_mode,
+			N_("Enable verbose mode"), null },
 		{ null }
 	};
 
@@ -71,18 +74,18 @@ public class AppCompile : Object {
 
 	public void run () {
 		bool done = false;
-		if (_show_version) {
+		if (o_show_version) {
 			stdout.printf ("Listaller bundle version: %s\n", Config.VERSION);
 			return;
 		}
 		// Take directory from options, otherwise use current dir
-		string srcdir = _src_dir;
-		string targetdir = _target_dir;
+		string srcdir = o_src_dir;
+		string targetdir = o_target_dir;
 
 		if (srcdir == "")
 			srcdir = Environment.get_current_dir ();
 
-		if (_strip_files) {
+		if (o_strip_files) {
 			Extra.AutoStrip strip = new Extra.AutoStrip (srcdir, targetdir);
 			exit_code = strip.strip_binaries ();
 			Extra.prinfo ("Stripped debug information from binaries.");
@@ -99,8 +102,14 @@ public class AppCompile : Object {
 		Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
 		Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
 		Intl.textdomain(Config.GETTEXT_PACKAGE);
-		// Run the application
+
+		// Set everything up...
 		var main = new AppCompile (args);
+		set_console_mode (true);
+		set_verbose_mode (o_verbose_mode);
+		add_log_domain ("AppCompile");
+
+		// Now run the application!
 		main.run ();
 		int code = main.exit_code;
 		return code;

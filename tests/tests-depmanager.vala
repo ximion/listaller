@@ -183,6 +183,10 @@ void test_depsolver () {
 }
 
 int main (string[] args) {
+	set_console_mode (true);
+	set_verbose_mode (true);
+	add_log_domain ("LiTest");
+
 	msg ("=== Running Dependency Solver Tests ===");
 	datadir = args[1];
 	assert (datadir != null);

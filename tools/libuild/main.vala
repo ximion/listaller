@@ -24,26 +24,29 @@ using Listaller.Extra;
 
 public class LiBuild : Object {
 	// Cmd options
-	private static string _src_dir = "";
-	private static string _output_dir = "";
-	private static bool _show_version = false;
-	private static bool _build_mode = false;
-	private static bool _do_autocompile = false;
-	private static bool _sign_pkg = false;
+	private static string o_src_dir = "";
+	private static string o_output_dir = "";
+	private static bool o_show_version = false;
+	private static bool o_build_mode = false;
+	private static bool o_do_autocompile = false;
+	private static bool o_sign_pkg = false;
+	private static bool o_verbose_mode = false;
 
 	public int exit_code { get; set; }
 
 	private const OptionEntry[] options = {
-		{ "version", 'v', 0, OptionArg.NONE, ref _show_version,
+		{ "version", 'v', 0, OptionArg.NONE, ref o_show_version,
 		N_("Show the application's version"), null },
-		{ "build", 'b', 0, OptionArg.NONE, ref _build_mode,
+		{ "build", 'b', 0, OptionArg.NONE, ref o_build_mode,
 		N_("Build IPK package"), null },
-		{ "sourcedir", 's', 0, OptionArg.FILENAME, ref _src_dir,
+		{ "sourcedir", 's', 0, OptionArg.FILENAME, ref o_src_dir,
 			N_("Path to Listaller package source directory"), N_("DIRECTORY") },
-		{ "outdir", 'o', 0, OptionArg.FILENAME, ref _output_dir,
+		{ "outdir", 'o', 0, OptionArg.FILENAME, ref o_output_dir,
 			N_("IPK package output directory"), N_("DIRECTORY") },
-		{ "sign", 0, 0, OptionArg.NONE, ref _sign_pkg,
+		{ "sign", 0, 0, OptionArg.NONE, ref o_sign_pkg,
 			N_("GPG-Sign the resulting package"), null },
+		{ "verbose", 0, 0, OptionArg.NONE, ref o_verbose_mode,
+			N_("Activate verbose mode"), null },
 		{ null }
 	};
 
@@ -84,16 +87,16 @@ public class LiBuild : Object {
 
 	public void run () {
 		bool done = false;
-		if (_show_version) {
+		if (o_show_version) {
 			stdout.printf ("Listaller bundle version: %s\n", Config.VERSION);
 			return;
 		}
 		// Take directory from options, otherwise use current dir
-		string srcdir = _src_dir;
+		string srcdir = o_src_dir;
 		if (srcdir == "")
 			srcdir = Environment.get_current_dir ();
 
-		if (_build_mode) {
+		if (o_build_mode) {
 			// Prepare the application
 			AppPrepare prep = new AppPrepare (srcdir);
 			prep.error_message.connect (on_error);
@@ -111,8 +114,8 @@ public class LiBuild : Object {
 			IPK.Builder builder = new IPK.Builder (srcdir);
 			builder.error_message.connect (on_error);
 			builder.message.connect (on_message);
-			builder.output_dir = _output_dir;
-			builder.sign_package = _sign_pkg;
+			builder.output_dir = o_output_dir;
+			builder.sign_package = o_sign_pkg;
 
 			if (!builder.initialize ()) {
 				exit_code = 3;
@@ -131,8 +134,13 @@ public class LiBuild : Object {
 		Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
 		Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
 		Intl.textdomain(Config.GETTEXT_PACKAGE);
-		// Run the application
+
 		var main = new LiBuild (args);
+		set_console_mode (true);
+		set_verbose_mode (o_verbose_mode);
+		add_log_domain ("LiBuild");
+
+		// Run the application
 		main.run ();
 		int code = main.exit_code;
 		return code;

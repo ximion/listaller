@@ -10,6 +10,7 @@ pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 set(LIBUILD_SOURCES ${lisrc}/utils.vala
+			${lisrc}/logging.vala
 			../libuild/lbutils.vala
 			acutils.vala
 			main.vala

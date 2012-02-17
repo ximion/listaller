@@ -25,6 +25,7 @@ public class DepScanCmd : Object {
 	private static bool o_show_version = false;
 	private static bool o_run_recursive = false;
 	private static bool o_simpletext = false;
+	private static bool o_verbose_mode = false;
 	private static string o_input_path = null;
 
 	public int exit_code { get; set; }
@@ -36,6 +37,8 @@ public class DepScanCmd : Object {
 			N_("Use recursive mode"), null },
 		{ "simpletext", 0, 0, OptionArg.NONE, ref o_simpletext,
 			N_("Print machine-readable simple text"), null },
+		{ "verbose", 'r', 0, OptionArg.NONE, ref o_verbose_mode,
+			N_("Activate verbose mode"), null },
 		{ null }
 	};
 
@@ -89,8 +92,13 @@ public class DepScanCmd : Object {
 		Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
 		Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
 		Intl.textdomain(Config.GETTEXT_PACKAGE);
-		// Run the application
+
 		var main = new DepScanCmd (args);
+		Listaller.set_console_mode (true);
+		Listaller.set_verbose_mode (o_verbose_mode);
+		Listaller.add_log_domain ("DepScan");
+
+		// Run the application
 		main.run ();
 		int code = main.exit_code;
 		return code;

@@ -20,71 +20,7 @@
 
 using GLib;
 using Gee;
-
-namespace Listaller {
-
-private static bool __debug_errors_fatal = false;
-private static bool __unittestmode = false;
-
-private static HashSet<string>? _limessages = null;
-
-private static void init_limessage () {
-	finish_limessage ();
-	_limessages = new HashSet<string> ();
-}
-
-private static void finish_limessage () {
-	//lock (_limessages) {
-		if (_limessages == null)
-			return;
-		foreach (string s in _limessages) {
-			if (!s.has_prefix ("[error]"))
-				stdout.printf (s + "\n");
-			else
-				stderr.printf (s + "\n");
-		}
-		_limessages = null;
-	//}
-}
-
-private static void li_info (string msg, bool showImmediately = false) {
-	string str = " I:" + " " + msg;
-	//lock (_limessages) {
-		if (_limessages == null)
-			stdout.printf (str + "\n");
-		else
-			_limessages.add (str);
-	//}
-}
-
-private static void li_warning (string msg, bool showImmediately = false) {
-	string str = " W:" + " " + msg;
-	if (__debug_errors_fatal)
-		warning (msg);
-
-	//lock (_limessages) {
-		if (_limessages == null)
-			stdout.printf (str + "\n");
-		else
-			_limessages.add (str);
-	//}
-}
-
-private static void li_error (string msg, bool showImmediately = false) {
-	string str = "[error]" + " " + msg;
-	if (__debug_errors_fatal)
-		error (msg);
-
-	//lock (_limessages) {
-		if (_limessages == null)
-			stderr.printf (str + "\n");
-		else
-			_limessages.add (str);
-	//}
-
-}
-
-}
+using Listaller;
 
 namespace Listaller.Utils {
 

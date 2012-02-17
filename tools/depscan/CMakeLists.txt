@@ -9,6 +9,7 @@ pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 set(RUNAPP_SOURCES ${lisrc}/utils.vala
+		   ${lisrc}/logging.vala
 		   main.vala
 		   depscan.vala
 		   scan_ldd.vala
