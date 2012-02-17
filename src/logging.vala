@@ -79,8 +79,8 @@ private static void li_log_handler_cb (string? log_domain, LogLevelFlags log_lev
 	    log_level == LogLevelFlags.LEVEL_ERROR) {
 		stdout.printf ("%c[%dm%s\n%c[%dm", 0x1B, CONSOLE_RED, message, 0x1B, CONSOLE_RESET);
 	} else {
-		// debug in blue
-		stdout.printf ("%c[%dm%s\n%c[%dm", 0x1B, CONSOLE_WHITE, message, 0x1B, CONSOLE_RESET);
+		// debug in standard colour
+		stdout.printf ("%c[%dm%s\n%c[%dm", 0x1B, CONSOLE_RESET, message, 0x1B, CONSOLE_RESET);
 	}
 }
 

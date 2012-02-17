@@ -31,7 +31,7 @@ protected errordomain RdfError {
 private class RDFQuery : Object {
 	private RDF.Storage storage;
 	private RDF.World world;
-	private RDF.Parser parser;
+	private RDF.Parser *parser;
 	private RDF.Model model;
 	private string dpath;
 
@@ -44,6 +44,12 @@ private class RDFQuery : Object {
 		model = new RDF.Model (world, storage, "");
 	}
 
+	~RDFQuery () {
+		// We handle the parser manually to work around a bug with newer libRDF versions
+		if (parser != null)
+			delete parser;
+	}
+
 	public void add_location (string location) {
 		if (location.has_prefix ("/"))
 			dpath = "file://" + location;
@@ -53,14 +59,14 @@ private class RDFQuery : Object {
 		debug ("Adding new RDF info from %s", dpath);
 
 		var duri = new RDF.Uri (world, dpath);
-		RDF.Stream stream = parser.parse_as_stream (duri, duri);
+		RDF.Stream stream = parser->parse_as_stream (duri, duri);
 		model.add_statements (stream);
 	}
 
 	public void add_location_str (string data, string baseUrl) {
 		debug ("Adding new RDF info from string");
 
-		RDF.Stream stream = parser.parse_string_as_stream (data, new RDF.Uri (world, baseUrl));
+		RDF.Stream stream = parser->parse_string_as_stream (data, new RDF.Uri (world, baseUrl));
 		model.add_statements (stream);
 	}
 
