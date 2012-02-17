@@ -35,6 +35,9 @@ include_directories(${CMAKE_BINARY_DIR}
 		    ${REDLAND_INCLUDE_DIRS}
 )
 
+# Add log domain
+add_definitions("-DG_LOG_DOMAIN=\"Builder\"")
+
 # Listaller build tool
 vala_add_executable (libuild ${LIBUILD_SOURCES} main.vala
 			PACKAGES ${LISTALLER_BASE_VALA_DEPS}

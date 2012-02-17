@@ -59,7 +59,7 @@ private static void li_log_handler_cb (string? log_domain, LogLevelFlags log_lev
 		return;
 	}
 
-	/* time in green */
+	// time in green
 	stdout.printf ("%c[%dm%s\t", 0x1B, CONSOLE_GREEN, str_time);
 
 	// log domain in either white/black or cyan
