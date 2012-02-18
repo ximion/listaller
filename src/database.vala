@@ -32,17 +32,15 @@ public enum AppSource {
 	UNKNOWN;
 }
 
-private class SoftwareDB : Object {
+private class SoftwareDB : MsgObject {
 	private InternalDB? db_shared;
 	private InternalDB? db_priv;
 	private Settings conf;
 
-	public signal void error_code (ErrorItem error);
-	public signal void message (MessageItem message);
 	public signal void application (AppItem appid);
-	public signal void progress_changed (int progress);
 
 	public SoftwareDB (Settings liconf, bool include_shared = true) {
+		base ();
 		db_shared = null;
 		db_priv = null;
 		// We just store the settings, so other objects can fetch them
@@ -70,18 +68,8 @@ private class SoftwareDB : Object {
 	}
 
 	private void emit_dberror (string details) {
-		// Emit error
-		ErrorItem item = new ErrorItem(ErrorEnum.DATABASE_FAILURE);
-		item.details = details;
-		error_code (item);
-	}
-
-	private void emit_message (string msg) {
-		// Construct info message
-		MessageItem item = new MessageItem(MessageEnum.INFO);
-		item.details = msg;
-		message (item);
-		GLib.message (msg);
+		// Emit a database error
+		emit_error (ErrorEnum.DATABASE_FAILURE, details);
 	}
 
 	private bool shared_db_canbeused (bool error = false) {
@@ -341,7 +329,7 @@ private class SoftwareDB : Object {
 		while (capp != null) {
 			application (capp);
 			appList.add (capp);
-			progress_changed ((int) Math.round (one * i));
+			change_main_progress ((int) Math.round (one * i));
 
 			i++;
 			capp = db.get_application_by_dbid (i);

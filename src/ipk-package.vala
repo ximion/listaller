@@ -26,7 +26,7 @@ using Listaller.Utils;
 
 namespace Listaller.IPK {
 
-private class Package : Object {
+private class Package : MsgObject {
 	private Settings conf;
 	private string fname;
 	private string wdir;
@@ -37,10 +37,6 @@ private class Package : Object {
 	private HashMap<string, IPK.FileEntry>? fcache;
 	private AppItem appInfo;
 	private const int DEFAULT_BLOCK_SIZE = 65536;
-
-	public signal void error_code (ErrorItem error);
-	public signal void message (MessageItem message);
-	public signal void progress_changed (int progress);
 
 	public IPK.PackControl control {
 		get { return ipkc; }
@@ -63,30 +59,6 @@ private class Package : Object {
 	~Package () {
 		// Remove workspace
 		delete_dir_recursive (wdir);
-	}
-
-	private void emit_warning (string msg) {
-		// Construct warning message
-		MessageItem item = new MessageItem(MessageEnum.WARNING);
-		item.details = msg;
-		message (item);
-		warning (msg);
-	}
-
-	private void emit_message (string msg) {
-		// Construct info message
-		MessageItem item = new MessageItem(MessageEnum.INFO);
-		item.details = msg;
-		message (item);
-		GLib.message (msg);
-	}
-
-	private void emit_error (ErrorEnum id, string details) {
-		// Construct error
-		ErrorItem item = new ErrorItem(id);
-		item.details = details;
-		error_code (item);
-		li_error (details);
 	}
 
 	public Collection<IPK.FileEntry>? get_file_entries () {
@@ -603,7 +575,7 @@ private class Package : Object {
 				// File was found, so install it now
 				ret = install_entry_and_validate (fe, plar, e, vs);
 				prog++;
-				progress_changed ((int) Math.round (one * prog));
+				change_main_progress ((int) Math.round (one * prog));
 				// Stop on error
 				if (!ret)
 					break;

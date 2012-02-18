@@ -25,13 +25,10 @@ using Listaller.Utils;
 
 namespace Listaller.Dep {
 
-private class FeedInstaller : Object {
+private class FeedInstaller : MsgObject {
 	private Feed? feed;
 	private Listaller.Settings conf;
 	private string tmpdir;
-
-	public signal void message (MessageItem message);
-	public signal void progress_changed (int progress);
 
 	public ErrorItem? last_error { get; set; }
 
@@ -48,21 +45,7 @@ private class FeedInstaller : Object {
 		delete_dir_recursive (tmpdir);
 	}
 
-	private void emit_warning (string msg) {
-		// Construct warning message
-		MessageItem item = new MessageItem (MessageEnum.WARNING);
-		item.details = msg;
-		message (item);
-		li_warning (msg);
-	}
-
-	private void emit_info (string msg) {
-		// Construct info message
-		MessageItem item = new MessageItem (MessageEnum.INFO);
-		item.details = msg;
-		message (item);
-		GLib.message (msg);
-	}
+	private new void emit_error (ErrorEnum id, string details) { }
 
 	private void set_error (ErrorEnum id, string details) {
 		// Construct error

@@ -27,13 +27,10 @@ using Listaller.Utils;
 
 namespace Listaller {
 
-public class Manager : Object {
+public class Manager : MsgObject {
 	private Settings conf;
 
-	public signal void error_code (ErrorItem error);
-	public signal void progress_changed (int progress);
 	public signal void status_changed (StatusItem status);
-	public signal void message (MessageItem message);
 	public signal void application (AppItem appid);
 
 	public Settings settings {
@@ -45,32 +42,10 @@ public class Manager : Object {
 	 * @param: settings A valid LiSettings instance, describing basic settings (or null)
 	 */
 	public Manager (Settings? settings) {
+		base ();
 		conf = settings;
 		if (conf == null)
 			conf = new Settings (false);
-	}
-
-	private void emit_message (string msg) {
-		// Construct info message
-		MessageItem item = new MessageItem(MessageEnum.INFO);
-		item.details = msg;
-		message (item);
-	}
-
-	private void emit_warning (string msg) {
-		// Construct warning message
-		MessageItem item = new MessageItem(MessageEnum.WARNING);
-		item.details = msg;
-		message (item);
-		li_warning (msg);
-	}
-
-	private void emit_error (ErrorEnum id, string details) {
-		// Construct error
-		ErrorItem item = new ErrorItem(id);
-		item.details = details;
-		error_code (item);
-		li_error (details);
 	}
 
 	private void emit_status (StatusEnum status, string info) {
@@ -81,10 +56,9 @@ public class Manager : Object {
 
 	private bool init_db (out SoftwareDB sdb, bool writeable = true) {
 		SoftwareDB db = new SoftwareDB (conf, true);
-		db.error_code.connect ( (e) => { this.error_code (e); } );
-		db.message.connect ( (m) => { this.message (m); } );
+		// Connect the database events with this application manager
+		connect_with_object (db, ObjConnectFlags.NONE);
 		db.application.connect ( (a) => { this.application (a); } );
-		db.progress_changed.connect ( (p) => { this.progress_changed (p); } );
 
 		sdb = db;
 		if (writeable) {

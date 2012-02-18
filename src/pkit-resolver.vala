@@ -25,17 +25,16 @@ using Listaller.Utils;
 
 namespace Listaller.Dep {
 
-private class PkResolver : Object {
+private class PkResolver : MsgObject {
 	private Listaller.Settings conf;
 	private PackageKit.Client? pkclient;
 	private PkBackendProxy? pkbproxy;
 
-	public signal void message (MessageItem message);
-	public signal void progress_changed (int progress);
-
 	public ErrorItem? last_error { get; set; }
 
 	public PkResolver (Listaller.Settings liconf) {
+		base ();
+		set_error_hint_str ("PkResolver");
 		last_error = null;
 		conf = liconf;
 
@@ -53,21 +52,7 @@ private class PkResolver : Object {
 		}
 	}
 
-	private void emit_warning (string msg) {
-		// Construct warning message
-		MessageItem item = new MessageItem (MessageEnum.WARNING);
-		item.details = msg;
-		message (item);
-		li_warning (msg);
-	}
-
-	private void emit_info (string msg) {
-		// Construct info message
-		MessageItem item = new MessageItem (MessageEnum.INFO);
-		item.details = msg;
-		message (item);
-		GLib.message (msg);
-	}
+	private new void emit_error (ErrorItem item) { }
 
 	private void set_error (ErrorEnum id, string details) {
 		// Construct error

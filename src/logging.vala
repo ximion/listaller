@@ -36,6 +36,14 @@ private static const int DEBUG_LOG_DOMAIN_LENGTH = 20;
 
 extern static const string? G_LOG_DOMAIN;
 
+namespace Listaller {
+
+private static bool __debug_errors_fatal = false;
+private static bool verbose_mode = false;
+private static bool _console = true;
+
+} // End of namespace: Listaller
+
 private static void li_log_handler_cb (string? log_domain, LogLevelFlags log_level, string message) {
 	var str_time_buf = new char[255];
 	uint len;
@@ -109,9 +117,6 @@ private static void finish_limessage () {
 	//}
 }
 
-private static bool __debug_errors_fatal = false;
-private static bool __unittestmode = false;
-
 private static void li_info (string msg, bool showImmediately = false) {
 	string str = " I:" + " " + msg;
 	//lock (_limessages) {
@@ -136,23 +141,19 @@ private static void li_warning (string msg, bool showImmediately = false) {
 }
 
 private static void li_error (string msg, bool showImmediately = false) {
-	string str = "[error]" + " " + msg;
 	if (__debug_errors_fatal)
 		error (msg);
 
 	//lock (_limessages) {
 		if (_limessages == null)
-			stderr.printf ("%c[%dm%s\n%c[%dm", 0x1B, CONSOLE_RED, str, 0x1B, CONSOLE_RESET);
+			stderr.printf ("%c[%dm%s%c[%dm %s\n", 0x1B, CONSOLE_RED, "[error]:", 0x1B, CONSOLE_RESET, msg);
 		else
-			_limessages.add (str);
+			_limessages.add ("[error]: %s".printf (msg));
 	//}
 
 }
 
 namespace Listaller {
-
-private static bool verbose_mode = false;
-private static bool _console = true;
 
 void set_verbose_mode (bool enabled) {
 	verbose_mode = enabled;

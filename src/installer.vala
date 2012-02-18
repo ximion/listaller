@@ -26,7 +26,7 @@ using Listaller.Utils;
 
 namespace Listaller {
 
-public class Setup : Object {
+public class Setup : MsgObject {
 	private Settings conf;
 	private string fname;
 	private IPK.Package ipkp;
@@ -34,10 +34,7 @@ public class Setup : Object {
 	private int inst_progress;
 	private int full_progress;
 
-	public signal void error_code (ErrorItem error);
-	public signal void progress_changed (int progress, int subprogress);
 	public signal void status_changed (StatusItem status);
-	public signal void message (MessageItem message);
 
 	public Settings settings {
 		get { return conf; }
@@ -53,45 +50,22 @@ public class Setup : Object {
 	}
 
 	public Setup (string ipkfilename, Settings? settings) {
+		base ();
 		conf = settings;
 		if (conf == null)
 			conf = new Settings (false);
 		fname = ipkfilename;
-		// Set up IPK package instance
+		// Set up IPK package instance and connect it with this setup
 		ipkp = new IPK.Package (fname, settings);
-		ipkp.error_code.connect ((e) => { this.error_code (e); });
-		ipkp.message.connect ((m) => { this.message (m); });
-		ipkp.progress_changed.connect ((i) => { change_progress (i, -1); });
+		connect_with_object (ipkp, ObjConnectFlags.PROGRESS_TO_SUBPROGRESS);
+
 		initialized = false;
 	}
 
-	private void change_progress (int progress, int subprogress) {
+	private new void change_progress (int progress, int sub_progress) {
 		if (progress >= 0)
 			full_progress = (int) Math.round ((inst_progress + progress) / 2);
-		progress_changed (full_progress, subprogress);
-	}
-
-	private void emit_message (string msg) {
-		// Construct info message
-		MessageItem item = new MessageItem(MessageEnum.INFO);
-		item.details = msg;
-		message (item);
-	}
-
-	private void emit_warning (string msg) {
-		// Construct warning message
-		MessageItem item = new MessageItem(MessageEnum.WARNING);
-		item.details = msg;
-		message (item);
-		li_warning (msg);
-	}
-
-	private void emit_error (ErrorEnum id, string details) {
-		// Construct error
-		ErrorItem item = new ErrorItem(id);
-		item.details = details;
-		error_code (item);
-		li_error (details);
+		progress_changed (full_progress, sub_progress);
 	}
 
 	private void emit_status (StatusEnum status, string info) {
@@ -174,15 +148,8 @@ public class Setup : Object {
 
 		// Construct new dependency manager
 		DepManager depman = new DepManager (db);
-		depman.error_code.connect ((error) => {
-			this.error_code (error);
-		});
-		depman.message.connect ((msg) => {
-			this.message (msg);
-		});
-		depman.progress_changed.connect ((p) => {
-			change_progress (-1, p);
-		});
+		// Forward DependencyManager events to setup. Send DepMan progress as subprogress
+		connect_with_object (depman, ObjConnectFlags.PROGRESS_TO_SUBPROGRESS);
 
 		// Install possibly missing dependencies
 		ret = depman.install_dependencies (pkgDeps);

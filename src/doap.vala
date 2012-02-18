@@ -56,7 +56,7 @@ private class RDFQuery : Object {
 		else
 			dpath = location;
 
-		debug ("Adding new RDF info from %s", dpath);
+		debug ("Adding new RDF info from path %s", dpath);
 
 		var duri = new RDF.Uri (world, dpath);
 		RDF.Stream stream = parser->parse_as_stream (duri, duri);
@@ -174,7 +174,6 @@ ORDER BY DESC(?created)
 				qres.next ();
 			} while ((!qres.finished ()) && (version == ""));
 		}
-		debug ("Version is %s", version);
 
 		return version;
 	}

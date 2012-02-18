@@ -22,6 +22,8 @@ using GLib;
 using Gee;
 using Listaller;
 
+private static bool __unittestmode = false;
+
 namespace Listaller.Utils {
 
 private ulong timeval_to_ms (TimeVal time_val) {

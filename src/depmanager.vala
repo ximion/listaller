@@ -26,15 +26,12 @@ using Listaller.Dep;
 
 namespace Listaller {
 
-private class DepManager : Object {
+private class DepManager : MsgObject {
 	private SoftwareDB db;
 	private Listaller.Settings conf;
 
-	public signal void error_code (ErrorItem error);
-	public signal void message (MessageItem message);
-	public signal void progress_changed (int progress);
-
 	public DepManager (SoftwareDB lidb) {
+		base ();
 		db = lidb;
 		conf = lidb.get_liconf ();
 		// This should never happen!
@@ -59,14 +56,6 @@ private class DepManager : Object {
 		progress_changed (progress);
 	}
 	#endif
-
-	private void emit_error (ErrorEnum id, string details) {
-		// Construct error
-		ErrorItem item = new ErrorItem(id);
-		item.details = details;
-		error_code (item);
-		li_error (details);
-	}
 
 	private void emit_depmissing_error (ErrorItem? inst_error, IPK.Dependency dep) {
 		string text = "";
@@ -135,8 +124,7 @@ private class DepManager : Object {
 
 		// Try if we can find native packages providing the dependency
 		var pksolv = new PkResolver (conf);
-		pksolv.message.connect ( (m) => { this.message (m); } );
-		// TODO: Forward progress_changed
+		connect_with_object (pksolv, ObjConnectFlags.PROGRESS_TO_SUBPROGRESS);
 
 		ret = pksolv.search_dep_packages (ref dep);
 
