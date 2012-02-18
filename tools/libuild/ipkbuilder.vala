@@ -475,6 +475,9 @@ private class Builder : Object {
 		if (failed)
 			return false;
 
+		// Set package setting information
+		ictrl.set_architectures (ipkCDir.get_architectures ());
+
 		string tmp = Path.build_filename (tmpdir, "control", null);
 		ictrl.save_to_dir (tmp);
 

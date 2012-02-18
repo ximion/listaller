@@ -37,11 +37,13 @@ public errordomain ControlDataError {
 public abstract class Control : Object {
 	internal DoapData doap;
 	internal MetaFile depData;
+	internal MetaFile packSetting;
 	protected AppItem? appItem;
 
 	internal Control () {
 		doap = new DoapData ();
 		depData = new MetaFile ();
+		packSetting = new MetaFile ();
 		appItem = null;
 	}
 
@@ -59,6 +61,37 @@ public abstract class Control : Object {
 
 	protected bool open_depinfo (string depMetaFile) {
 		return depData.open_file (depMetaFile);
+	}
+
+	protected bool open_packsetting (string pksFName) {
+		packSetting.clear ();
+		if (!packSetting.open_file (pksFName))
+			return false;
+		return true;
+	}
+
+	public string get_ipk_version () {
+		string s = packSetting.get_value ("Version", false);
+		if (s == "")
+			s = "1.0";
+
+		return s;
+	}
+
+	public void set_ipk_version (string ipkV) {
+		packSetting.add_value ("Version", ipkV);
+	}
+
+	public string get_architectures () {
+		string s = packSetting.get_value ("Architectures", false);
+		if (s == "")
+			s = "all";
+
+		return s;
+	}
+
+	public void set_architectures (string archs) {
+		packSetting.add_value ("Architectures", archs);
 	}
 
 	public AppItem get_application () {
@@ -148,7 +181,10 @@ public class PackControl : Control {
 		ret = this.open_depinfo (fDeps);
 		if (!ret)
 			return false;
+
 		ipkVersion = fIpkV;
+		set_ipk_version (ipkVersion);
+
 		return cache_appitem ();
 	}
 
@@ -175,8 +211,11 @@ public class PackControl : Control {
 		bool ret = this.open_doap (doapData);
 		if (ret)
 			ret = cache_appitem ();
-		if (ret)
+		if (ret) {
 			ipkVersion = ipkV;
+			set_ipk_version (ipkVersion);
+		}
+
 		return ret;
 	}
 
@@ -187,9 +226,7 @@ public class PackControl : Control {
 			return false;
 		ret = save_string_to_file (Path.build_filename (dirPath, this.appItem.idname + ".doap", null), doapData);
 
-		MetaFile packC = new MetaFile ();
-		packC.add_value ("Version", ipkVersion);
-		packC.save_to_file (Path.build_filename (dirPath, "pksetting", null));
+		packSetting.save_to_file (Path.build_filename (dirPath, "pksetting", null));
 
 		return ret;
 	}
@@ -253,7 +290,6 @@ public class PackControl : Control {
 public class ControlDir : Control {
 	private string ctrlDir;
 	private string doapFile;
-	private MetaFile? packSetting;
 
 	public ControlDir () {
 		ctrlDir = "";
@@ -287,14 +323,12 @@ public class ControlDir : Control {
 		if (ctrlDir != "")
 			return false;
 
-		string pksFname = Path.build_filename (dir, "pkoptions", null);
-		if (!FileUtils.test (pksFname, FileTest.EXISTS))
+		string pksFName = Path.build_filename (dir, "pkoptions", null);
+		if (!FileUtils.test (pksFName, FileTest.EXISTS))
 			return false;
-		packSetting = new MetaFile ();
-		if (!packSetting.open_file (pksFname)) {
-			packSetting = null;
+		if (!open_packsetting (pksFName))
 			return false;
-		}
+
 
 		doapFile = find_doap_data (dir);
 		if (doapFile == "")
@@ -316,14 +350,6 @@ public class ControlDir : Control {
 		string s = packSetting.get_value ("FilesRoot", false);
 		if (s == "")
 			s = Environment.get_current_dir ();
-
-		return s;
-	}
-
-	public string get_ipk_version () {
-		string s = packSetting.get_value ("Version", false);
-		if (s == "")
-			s = "1.0";
 
 		return s;
 	}
