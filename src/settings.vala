@@ -43,10 +43,10 @@ public class Settings : Object {
 
 
 	// System directories
-	public const string sys_libdir = Config.LIBDIR;
-	public const string sys_bindir = Config.PREFIXDIR + "/bin";
-	public const string sys_sharedir = Config.PREFIXDIR + "/share";
-	public const string sys_etcdir = "/etc";
+	internal const string sys_libdir = Config.LIBDIR;
+	internal const string sys_bindir = Config.PREFIXDIR + "/bin";
+	internal const string sys_sharedir = Config.PREFIXDIR + "/share";
+	internal const string sys_etcdir = "/etc";
 
 	public bool locked {
 		get { return _locked; }
