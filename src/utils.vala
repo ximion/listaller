@@ -205,7 +205,7 @@ private HashSet<string>? find_files (string dir, bool recursive = false) {
 		}
 
 	} catch (Error e) {
-		stderr.printf (_("Error while finding files in directory %s: %s\n"), dir, e.message);
+		stderr.printf (_("Error while finding files in directory %s: %s") + "\n", dir, e.message);
 		return null;
 	}
 	return list;
