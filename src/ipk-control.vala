@@ -121,27 +121,6 @@ public abstract class Control : Object {
 		}
 	}
 
-	private void add_components_to_dep (Dependency dep, Dep.ComponentType ty, string list) {
-		if (list.strip () == "")
-			return;
-		// We don't like file dependencies
-		if (ty == Dep.ComponentType.FILE)
-			li_warning ("Resource %s depends on a file (%s), which is not supported at time.".printf (dep.idname, list));
-
-		if (list.index_of ("\n") <= 0) {
-			dep.add_component (list, ty);
-			return;
-		}
-
-		string[] comp = list.split ("\n");
-		for (int i = 0; i < comp.length; i++) {
-			string s = comp[i].strip ();
-			if (s != "")
-				dep.add_component (s, ty);
-		}
-
-	}
-
 	public ArrayList<Dependency> get_dependencies () {
 		ArrayList<Dependency> depList = new ArrayList<Dependency> ();
 		depData.reset ();
@@ -153,11 +132,11 @@ public abstract class Control : Object {
 			string s = depData.get_value ("feed");
 			if (s.strip () != "")
 				dep.feed_url = s;
-			add_components_to_dep (dep, Dep.ComponentType.SHARED_LIB, depData.get_value ("libraries"));
-			add_components_to_dep (dep, Dep.ComponentType.BINARY, depData.get_value ("binaries"));
-			add_components_to_dep (dep, Dep.ComponentType.PYTHON, depData.get_value ("python"));
-			add_components_to_dep (dep, Dep.ComponentType.PYTHON_2, depData.get_value ("python2"));
-			add_components_to_dep (dep, Dep.ComponentType.FILE, depData.get_value ("files"));
+			dep.add_component_list (Dep.ComponentType.SHARED_LIB, depData.get_value ("libraries"));
+			dep.add_component_list (Dep.ComponentType.BINARY, depData.get_value ("binaries"));
+			dep.add_component_list (Dep.ComponentType.PYTHON, depData.get_value ("python"));
+			dep.add_component_list (Dep.ComponentType.PYTHON_2, depData.get_value ("python2"));
+			dep.add_component_list (Dep.ComponentType.FILE, depData.get_value ("files"));
 			depList.add (dep);
 		}
 		return depList;

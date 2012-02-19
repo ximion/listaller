@@ -214,6 +214,27 @@ public class Dependency: Object {
 		components.add (str);
 	}
 
+	public void add_component_list (Dep.ComponentType ty, string list) {
+		if (list.strip () == "")
+			return;
+		// We don't like file dependencies
+		if (ty == ComponentType.FILE)
+			li_warning ("Resource %s depends on a file (%s), which is not supported at time.".printf (idname, list));
+
+		if (list.index_of ("\n") <= 0) {
+			add_component (list, ty);
+			return;
+		}
+
+		string[] comp = list.split ("\n");
+		for (int i = 0; i < comp.length; i++) {
+			string s = comp[i].strip ();
+			if (s != "")
+				add_component (s, ty);
+		}
+
+	}
+
 	public bool has_component (string cname, ComponentType tp) {
 		return components.contains (get_component_type_idstr (tp).printf (cname));
 	}
@@ -262,7 +283,7 @@ public class Dependency: Object {
 
 namespace Listaller {
 
-private class DepInfo : Object {
+private class GlobalDepInfo : Object {
 	private ArrayList<IPK.Dependency> dlist;
 
 	enum DepInfoBlock {
@@ -271,7 +292,7 @@ private class DepInfo : Object {
 		FILES;
 	}
 
-	public DepInfo () {
+	public GlobalDepInfo () {
 		Listaller.Settings conf = new Listaller.Settings (true);
 		string fname_default = Path.build_filename (conf.conf_dir (), "default-dependencies.list", null);
 		string fname_distro = Path.build_filename (conf.conf_dir (), "dependencies.list", null);
@@ -296,11 +317,11 @@ private class DepInfo : Object {
 			dep.feed_url = metaF.get_value ("Feed");
 			if (metaF.get_value ("Standard") == "true")
 				dep.is_standardlib = true;
-			var libText = metaF.get_value ("Libraries");
-			var libs = libText.split ("\n");
-			foreach (string lib in libs) {
-				dep.add_component (lib.strip (), ComponentType.SHARED_LIB);
-			}
+			dep.add_component_list (Dep.ComponentType.SHARED_LIB, metaF.get_value ("Libraries"));
+			dep.add_component_list (Dep.ComponentType.BINARY, metaF.get_value ("Binaries"));
+			dep.add_component_list (Dep.ComponentType.PYTHON, metaF.get_value ("Python"));
+			dep.add_component_list (Dep.ComponentType.PYTHON_2, metaF.get_value ("Python2"));
+			dep.add_component_list (Dep.ComponentType.FILE, metaF.get_value ("Files"));
 
 		} while (metaF.block_next ());
 	}

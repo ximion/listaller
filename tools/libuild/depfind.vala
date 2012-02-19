@@ -56,7 +56,7 @@ private class DepFind : Object {
 		ArrayList<IPK.Dependency> deplist = new ArrayList<IPK.Dependency> ();
 
 		pkbuild_action ("Scanning for dependencies...");
-		DepInfo dinfo = new DepInfo ();
+		var dinfo = new GlobalDepInfo ();
 
 		// TODO: There are way too much foreach () loops here (and in DepInfo) - maybe there is a smarter
 		//	and faster way to do this...

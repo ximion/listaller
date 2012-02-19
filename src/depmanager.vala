@@ -200,7 +200,7 @@ private class DepManager : MsgObject {
 		FeedInstaller finst = new FeedInstaller (conf);
 		finst.message.connect ( (m) => { this.message (m); } );
 
-		var di = new DepInfo ();
+		var di = new GlobalDepInfo ();
 		di.update_dependency_with_system_data (ref dep);
 
 		// If we have a system standard-lib (a minimal distribution dependency), consider it as installed
@@ -228,7 +228,7 @@ private class DepManager : MsgObject {
 		finst.message.connect ( (m) => { this.message (m); } );
 
 		// Update dependencies with distributor's system data
-		var di = new DepInfo ();
+		var di = new GlobalDepInfo ();
 		foreach (IPK.Dependency idep in depList) {
 			/* Update package dependencies with system data (which might add some additional information here, provided
 			 * by the distributor */
@@ -262,7 +262,7 @@ private class DepManager : MsgObject {
 
 	internal bool dependencies_installable (ArrayList<IPK.Dependency> depList, bool force_feedinstall = false) {
 		// Update dependencies with distributor's system data
-		var di = new DepInfo ();
+		var di = new GlobalDepInfo ();
 		foreach (IPK.Dependency idep in depList) {
 			/* Update package dependencies with system data (which might add some additional information here, provided
 			 * by the distributor */
