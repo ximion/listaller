@@ -266,6 +266,10 @@ private class Package : MsgObject {
 				    _("Could not copy file %s to its destination. Do you have the necessary rights to perform this action?\nError message was \"%s\".").printf (fname, einfo));
 		}
 
+		// Store a/the .desktop file, if one is found
+		if ((fe.destination == "$APP") && (fe.fname.has_suffix (".desktop")))
+			appInfo.desktop_file = fe.get_full_filename ();
+
 		return ret;
 	}
 
