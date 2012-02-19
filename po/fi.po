@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-01-24 10:54+0100\n"
+"POT-Creation-Date: 2012-02-19 18:36+0100\n"
 "PO-Revision-Date: 2009-05-06 13:36+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,6 +30,9 @@ msgid "A policy was not met."
 msgstr ""
 
 msgid "A system error occured."
+msgstr ""
+
+msgid "Activate verbose mode"
 msgstr ""
 
 #, c-format
@@ -164,6 +167,9 @@ msgstr ""
 msgid "ERROR: %s"
 msgstr ""
 
+msgid "Enable verbose mode"
+msgstr ""
+
 #, c-format
 msgid "Error while finding files in directory %s: %s\n"
 msgstr ""
@@ -210,6 +216,10 @@ msgstr ""
 msgid "Making '%s' known to your system."
 msgstr ""
 
+#, c-format
+msgid "Malformed line in file listing: %s"
+msgstr ""
+
 msgid "Medium security."
 msgstr ""
 
@@ -228,6 +238,9 @@ msgid "One key has been revoked"
 msgstr ""
 
 msgid "One key has expired"
+msgstr ""
+
+msgid "Package uses custom variables - please don't do that!"
 msgstr ""
 
 #, c-format
@@ -437,10 +450,6 @@ msgstr ""
 
 #, c-format
 msgid "Unable to fetch application file list: %s"
-msgstr ""
-
-#, c-format
-msgid "Unable to fetch dependency information list: %s"
 msgstr ""
 
 #, c-format

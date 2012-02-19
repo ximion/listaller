@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-01-24 10:54+0100\n"
+"POT-Creation-Date: 2012-02-19 18:36+0100\n"
 "PO-Revision-Date: 2012-01-08 23:29+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -38,6 +38,9 @@ msgstr "Eine der Regelungen wurde nicht erfüllt."
 
 msgid "A system error occured."
 msgstr "Ein Systemfehler ist aufgetreten."
+
+msgid "Activate verbose mode"
+msgstr ""
 
 #, c-format
 msgid "Application ID %s is invalid!"
@@ -180,6 +183,9 @@ msgstr "Datenbank entsperrt"
 msgid "ERROR: %s"
 msgstr "Fehler: %s"
 
+msgid "Enable verbose mode"
+msgstr ""
+
 #, c-format
 msgid "Error while finding files in directory %s: %s\n"
 msgstr ""
@@ -226,6 +232,10 @@ msgstr "Geringe Sicherheit"
 msgid "Making '%s' known to your system."
 msgstr "Mache '%s' mit ihrem System bekannt."
 
+#, c-format
+msgid "Malformed line in file listing: %s"
+msgstr ""
+
 msgid "Medium security."
 msgstr "Mittlere Sicherheit"
 
@@ -244,6 +254,9 @@ msgid "One key has been revoked"
 msgstr ""
 
 msgid "One key has expired"
+msgstr ""
+
+msgid "Package uses custom variables - please don't do that!"
 msgstr ""
 
 #, c-format
@@ -456,10 +469,6 @@ msgstr ""
 
 #, c-format
 msgid "Unable to fetch application file list: %s"
-msgstr ""
-
-#, c-format
-msgid "Unable to fetch dependency information list: %s"
 msgstr ""
 
 #, c-format
