@@ -49,7 +49,7 @@ public abstract class MsgObject : Object {
 		error_hint_str = "";
 	}
 
-	internal void emit_message (string msg) {
+	internal virtual void emit_message (string msg) {
 		// Construct info message
 		MessageItem item = new MessageItem(MessageEnum.INFO);
 		item.details = msg;
@@ -57,7 +57,7 @@ public abstract class MsgObject : Object {
 		message (item);
 	}
 
-	internal void emit_warning (string msg) {
+	internal virtual void emit_warning (string msg) {
 		// Construct warning message
 		MessageItem item = new MessageItem(MessageEnum.WARNING);
 		item.details = msg;
@@ -65,7 +65,7 @@ public abstract class MsgObject : Object {
 		li_warning (msg);
 	}
 
-	internal void emit_error (ErrorEnum id, string details) {
+	internal virtual void emit_error (ErrorEnum id, string details) {
 		// Construct error
 		ErrorItem item = new ErrorItem(id);
 		item.details = details;
@@ -76,18 +76,23 @@ public abstract class MsgObject : Object {
 			li_error ("[%s]:%s".printf (error_hint_str, details));
 	}
 
-	internal void change_progress (int progress, int sub_progress) {
-		prog = progress;
+	internal virtual void change_progress (int progress, int sub_progress) {
+		if (progress >= prog)
+			prog = progress;
+		else
+			li_warning ("Progress cannot go down!");
 		prog_sub = sub_progress;
-		progress_changed (progress, sub_progress);
+
+		//! debug ("Progress changed: %i | %i", progress, sub_progress);
+		progress_changed (prog, prog_sub);
 	}
 
-	internal void change_main_progress (int progress) {
-		change_progress (progress, prog_sub);
+	internal void change_main_progress (int new_progress) {
+		change_progress (new_progress, prog_sub);
 	}
 
-	internal void change_sub_progress (int sub_progress) {
-		change_progress (prog, sub_progress);
+	internal void change_sub_progress (int new_sub_progress) {
+		change_progress (prog, new_sub_progress);
 	}
 
 	protected void set_error_hint_str (string str) {
@@ -108,7 +113,7 @@ public abstract class MsgObject : Object {
 		if (!(ObjConnectFlags.IGNORE_PROGRESS in flags)) {
 			if (ObjConnectFlags.PROGRESS_TO_SUBPROGRESS in flags) {
 				other.progress_changed.connect ((pA, pB) => {
-					change_progress (-1, pB);
+					change_progress (prog, pA);
 				});
 			} else {
 				other.progress_changed.connect ((pA, pB) => {
@@ -118,6 +123,9 @@ public abstract class MsgObject : Object {
 		}
 	}
 
+	protected void connect_with_object_all (MsgObject other) {
+		connect_with_object (other, ObjConnectFlags.NONE);
+	}
 
 }
 

@@ -57,14 +57,15 @@ public class Setup : MsgObject {
 		fname = ipkfilename;
 		// Set up IPK package instance and connect it with this setup
 		ipkp = new IPK.Package (fname, settings);
-		connect_with_object (ipkp, ObjConnectFlags.PROGRESS_TO_SUBPROGRESS);
+		connect_with_object_all (ipkp);
 
 		initialized = false;
 	}
 
-	private new void change_progress (int progress, int sub_progress) {
+	internal override void change_progress (int progress, int sub_progress) {
 		if (progress >= 0)
 			full_progress = (int) Math.round ((inst_progress + progress) / 2);
+
 		progress_changed (full_progress, sub_progress);
 	}
 
@@ -96,12 +97,8 @@ public class Setup : MsgObject {
 		conf.lock ();
 		// Create software DB link and connect status handlers
 		SoftwareDB db = new SoftwareDB (conf, is_root ());
-		db.error_code.connect ((error) => {
-			this.error_code (error);
-		});
-		db.message.connect ((message) => {
-			this.message (message);
-		});
+		connect_with_object_all (db);
+
 		// Open & lock database (we need write access here!)
 		if (!db.open_write ()) {
 			emit_error (ErrorEnum.DB_OPEN_FAILED, _("Could not open the software database, maybe it is locked at time.\nPlease close all other running installations to continue!"));
@@ -149,7 +146,7 @@ public class Setup : MsgObject {
 		// Construct new dependency manager
 		DepManager depman = new DepManager (db);
 		// Forward DependencyManager events to setup. Send DepMan progress as subprogress
-		connect_with_object (depman, ObjConnectFlags.PROGRESS_TO_SUBPROGRESS);
+		connect_with_object (depman, ObjConnectFlags.IGNORE_PROGRESS);
 
 		// Install possibly missing dependencies
 		ret = depman.install_dependencies (pkgDeps);

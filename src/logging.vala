@@ -121,7 +121,7 @@ private static void li_info (string msg, bool showImmediately = false) {
 	string str = " I:" + " " + msg;
 	//lock (_limessages) {
 		if (_limessages == null)
-			stdout.printf (str + "\n");
+			log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_INFO, str);
 		else
 			_limessages.add (str);
 	//}
@@ -134,7 +134,7 @@ private static void li_warning (string msg, bool showImmediately = false) {
 
 	//lock (_limessages) {
 		if (_limessages == null)
-			stdout.printf (str + "\n");
+			log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_MESSAGE, str);
 		else
 			_limessages.add (str);
 	//}
