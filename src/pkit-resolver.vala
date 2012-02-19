@@ -67,7 +67,7 @@ private class PkResolver : MsgObject {
 	}
 
 	private PackageKit.PackageSack? pkit_pkgs_from_depfiles (IPK.Dependency dep) {
-		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("none");
+		PackageKit.Bitfield filter = PackageKit.Filter.ARCH;
 
 		// We only resolve libraries at time
 		// TODO: Resolve other dependencies too
@@ -145,6 +145,8 @@ private class PkResolver : MsgObject {
 				ret = false;
 				break;
 			}
+
+			debug ("Found native package: %s", pkg.get_id ());
 
 			if (pkg.get_info () == PackageKit.Info.INSTALLED)
 				dep.add_installed_comp ("pkg:" + pkg.get_id ());

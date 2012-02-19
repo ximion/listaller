@@ -254,34 +254,34 @@ namespace PkPlugin {
 		public uint uid { get; }
 		public signal void allow_cancel (bool object);
 		[HasEmitter]
-		public signal void category (void* object);
+		public signal void category (void* parent_id);
 		public signal void change_transaction_data (string object);
 		[HasEmitter]
-		public signal void details (void* object);
+		public signal void details (void* package_id);
 		[HasEmitter]
-		public signal void distro_upgrade (void* object);
+		public signal void distro_upgrade (void* type);
 		public signal void error_code (void* object);
 		[HasEmitter]
-		public signal void eula_required (void* object);
+		public signal void eula_required (void* eula_id);
 		[HasEmitter]
-		public signal void files (void* object);
+		public signal void files (void* package_id);
 		[HasEmitter]
 		public signal void finished (uint object);
 		public signal void item_progress (string object, uint p0);
 		[HasEmitter]
-		public signal void media_change_required (void* object);
+		public signal void media_change_required (void* media_type);
 		public signal void message (void* object);
 		[HasEmitter]
-		public signal void package (void* object);
+		public signal void package (void* info);
 		[HasEmitter]
-		public signal void repo_detail (void* object);
+		public signal void repo_detail (void* repo_id);
 		[HasEmitter]
-		public signal void repo_signature_required (void* object);
+		public signal void repo_signature_required (void* package_id);
 		[HasEmitter]
-		public signal void require_restart (void* object);
+		public signal void require_restart (void* restart);
 		public signal void status_changed (uint object);
 		[HasEmitter]
-		public signal void update_detail (void* object);
+		public signal void update_detail (void* package_id);
 	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", type_id = "pk_conf_get_type ()")]
 	public class Conf : GLib.Object {
@@ -340,7 +340,7 @@ namespace PkPlugin {
 		public static unowned string state_to_string (PkPlugin.TransactionState state);
 		public signal void finished ();
 	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h")]
+	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_type_id = false)]
 	public struct BackendDesc {
 		public weak string description;
 		public weak string author;
@@ -391,7 +391,7 @@ namespace PkPlugin {
 		[CCode (array_length = false, array_null_terminated = true)]
 		public weak void*[] padding;
 	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h")]
+	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_type_id = false)]
 	public struct Plugin {
 		public weak PkPlugin.Backend backend;
 		[CCode (cname = "pk_plugin_destroy")]

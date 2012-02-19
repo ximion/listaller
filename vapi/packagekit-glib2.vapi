@@ -960,7 +960,7 @@ namespace PackageKit {
 	[SimpleType]
 	public struct Bitfield : uint64 {
 	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", has_type_id = false)]
 	public struct EnumMatch {
 		public uint value;
 		public weak global::string string;
@@ -1271,6 +1271,7 @@ namespace PackageKit {
 		PLASMA_SERVICE,
 		SHARED_LIB,
 		PYTHON,
+		LANGUAGE_SUPPORT,
 		LAST
 	}
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkRestartEnum", cprefix = "PK_RESTART_ENUM_")]
