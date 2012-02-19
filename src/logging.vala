@@ -155,15 +155,15 @@ private static void li_error (string msg, bool showImmediately = false) {
 
 namespace Listaller {
 
-void set_verbose_mode (bool enabled) {
+public void set_verbose_mode (bool enabled) {
 	verbose_mode = enabled;
 }
 
-void set_console_mode (bool enabled) {
+public void set_console_mode (bool enabled) {
 	_console = enabled;
 }
 
-void add_log_domain (string log_domain)
+public void add_log_domain (string log_domain)
 {
 	if (verbose_mode) {
 		Log.set_fatal_mask (log_domain, LogLevelFlags.LEVEL_ERROR | LogLevelFlags.LEVEL_CRITICAL);

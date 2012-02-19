@@ -148,7 +148,7 @@ public class Dependency: Object {
 			critical ("Installdata string is invalid! (Error at: %s) %i", line, cmp.length);
 			return false;
 		}
-		add_installed_comp ("%s%s".printf (cmp[0], cmp[1]));
+		add_installed_comp ("%s:%s".printf (cmp[0], cmp[1]));
 		return true;
 	}
 
