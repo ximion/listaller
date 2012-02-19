@@ -73,7 +73,6 @@ private class PkResolver : MsgObject {
 		// TODO: Resolve other dependencies too
 		string[] libs = {};
 		foreach (string s in dep.raw_complist) {
-			debug (s);
 			if (dep.component_get_type (s) == Dep.ComponentType.SHARED_LIB)
 				libs += dep.component_get_name (s);
 		}

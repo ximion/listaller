@@ -57,17 +57,16 @@ private class VarSetter : Object {
 		}
 		string value;
 
-		// The system should be able to find an icon automatically, so we shouldn't need this hint anymore
-		// (can be removed later)
-		/*
 		value = get_desktopfile_entry (dfile, "Icon");
 		if (value != "") {
 			if (value.has_prefix ("$"))
 				dfile.set_string ("Desktop Entry", "Icon", vs.substitute_vars_auto (value, conf));
-			else
+
+			// The system should be able to find an icon automatically, so we shouldn't need this hint anymore
+			/* else
 				dfile.set_string ("Desktop Entry", "Icon", vs.find_icon_in_ivarpaths (value, conf));
+			*/
 		}
-		*/
 
 		value = get_desktopfile_entry (dfile, "Exec");
 		// Process exe filename and append the runapp command
