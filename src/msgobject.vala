@@ -100,7 +100,7 @@ public abstract class MsgObject : Object {
 	}
 
 	protected void connect_with_object (MsgObject other, ObjConnectFlags flags) {
-		if (ObjConnectFlags.IGNORE_ERROR_CODE in flags) {
+		if (!(ObjConnectFlags.IGNORE_ERROR_CODE in flags)) {
 			other.error_code.connect ((error) => {
 				this.error_code (error);
 			});

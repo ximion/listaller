@@ -67,7 +67,7 @@ private class PkResolver : MsgObject {
 	}
 
 	private PackageKit.PackageSack? pkit_pkgs_from_depfiles (IPK.Dependency dep) {
-		PackageKit.Bitfield filter = PackageKit.Filter.ARCH;
+		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("arch;");
 
 		// We only resolve libraries at time
 		// TODO: Resolve other dependencies too
@@ -102,8 +102,9 @@ private class PkResolver : MsgObject {
 		string[] packages = sack.get_ids ();
 
 		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (packages[0] == null) ) {
-			set_error (ErrorEnum.UNKNOWN, "%s\n%s".printf (_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())),
-						       _("Unable to find native package for '%s'!").printf (dep.full_name)));
+			set_error (ErrorEnum.UNKNOWN, "%s\n%s".printf (_("Unable to find native package for '%s'!").printf (dep.full_name),
+				_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())))
+			);
 			return null;
 		}
 
@@ -138,15 +139,24 @@ private class PkResolver : MsgObject {
 		if (packages == null)
 			ret = false;
 
+		ret = false;
 		for (uint i = 0; packages[i] != null; i++) {
 			PackageKit.Package? pkg = sack.find_by_id (packages[i]);
+
 			if (pkg == null) {
 				ret = false;
 				break;
 			}
+			// Skip packages which don't match the arch requirements
+			/*var arch = pkg.get_arch ();
+			debug ("Package architecture: %s", arch);
+			if ((arch != "all") && (arch != Utils.system_machine ()))
+				continue;
+			*/
 
 			debug ("Found native package: %s", pkg.get_id ());
 
+			ret = true;
 			if (pkg.get_info () == PackageKit.Info.INSTALLED)
 				dep.add_installed_comp ("pkg:" + pkg.get_id ());
 			else
