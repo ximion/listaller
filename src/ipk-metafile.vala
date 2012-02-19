@@ -32,10 +32,7 @@ private class MetaFile : Object {
 		content = new LinkedList<string> ();
 	}
 
-	public bool open_file (string fname, bool strip_comments = true) {
-		if (content.size != 0)
-			return false;
-
+	private bool add_data_from_file (string fname, bool strip_comments = true) {
 		var file = File.new_for_path (fname);
 		if (!file.query_exists ()) {
 			return false;
@@ -58,6 +55,22 @@ private class MetaFile : Object {
 			return false;
 		}
 		return true;
+	}
+
+	public bool open_file (string fname, bool strip_comments = true) {
+		if (content.size != 0)
+			return false;
+
+		return add_data_from_file (fname, strip_comments);
+	}
+
+	public bool open_file_add_data (string fname, bool strip_comments = true) {
+		content.add ("");
+		var ret = add_data_from_file (fname, strip_comments);
+		if (!ret)
+			content.remove_at (content.size);
+
+		return ret;
 	}
 
 	public bool save_to_file (string fname, bool overrideExisting = false) {
@@ -156,6 +169,67 @@ private class MetaFile : Object {
 				return true;
 			}
 		} while (iter.next ());
+		return false;
+	}
+
+	public bool open_block_first () {
+		reset ();
+		var iter = content.list_iterator ();
+
+		bool start = false;
+
+		if (!iter.first ())
+			return false;
+		do {
+			string line = iter.get ();
+			if (is_empty (line))
+				start = true;
+			if (!start)
+				continue;
+
+			currentBlockId = iter.index () - 1;
+
+			while (iter.has_previous ()) {
+				line = iter.get ();
+				if (is_empty (line)) {
+					currentBlockId = iter.index () + 1;
+					return true;
+				}
+				iter.previous ();
+			}
+			return true;
+		} while (iter.next ());
+
+		return false;
+	}
+
+	public bool block_next () {
+		var iter = content.list_iterator ();
+
+		if (!iter.first ())
+			return false;
+		do {
+			if (iter.index () < currentBlockId)
+				continue;
+
+			string line = iter.get ();
+
+			if (is_empty (line)) {
+				currentBlockId = iter.index () -1;
+				while (iter.has_next ()) {
+					line = iter.get ();
+					if (is_empty (line)) {
+						currentBlockId = iter.index () + 1;
+						if (iter.index () == content.size)
+							return false;
+						return true;
+					}
+					iter.next ();
+				}
+			}
+
+		} while (iter.next ());
+
 		return false;
 	}
 

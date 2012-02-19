@@ -273,69 +273,36 @@ private class DepInfo : Object {
 
 	public DepInfo () {
 		Listaller.Settings conf = new Listaller.Settings (true);
-		string fname = Path.build_filename (conf.conf_dir (), "dependencies.list", null);
+		string fname_default = Path.build_filename (conf.conf_dir (), "default-dependencies.list", null);
+		string fname_distro = Path.build_filename (conf.conf_dir (), "dependencies.list", null);
 
 		dlist = new ArrayList<IPK.Dependency> ();
-		var file = File.new_for_path (fname);
-		if (!file.query_exists ()) {
+
+		if (!FileUtils.test (fname_default, FileTest.EXISTS))
 			return;
-		}
 
-		try {
-			var dis = new DataInputStream (file.read ());
-			string line;
-			IPK.Dependency? dep = null;
-			DepInfoBlock mode = DepInfoBlock.UNKNOWN;
+		var metaF = new IPK.MetaFile ();
+		metaF.open_file (fname_default);
+		if (FileUtils.test (fname_distro, FileTest.EXISTS))
+			metaF.open_file_add_data (fname_distro);
 
-			// Read lines until end of file (null) is reached
-			while ((line = dis.read_line (null)) != null) {
-				if (line.has_prefix ("#"))
-					continue;
+		IPK.Dependency? dep = null;
 
-				if (line.strip () == "") {
-					if ((dep != null) && (dep.full_name != ""))
-						dlist.add (dep);
-					dep = new IPK.Dependency ("");
-					mode = DepInfoBlock.UNKNOWN;
-					continue;
-				}
-				if (line.down ().has_prefix ("name:")) {
-					dep.full_name = line.substring (line.index_of (":") + 1).strip ();
-					continue;
-				}
-				if (line.down ().has_prefix ("id:")) {
-					dep.idname = line.substring (line.index_of (":") + 1).strip ();
-					continue;
-				}
-				if (line.down ().has_prefix ("feed:")) {
-					dep.feed_url = line.substring (line.index_of (":") + 1).strip ();
-					continue;
-				}
-				if (line.down ().has_prefix ("standard:")) {
-					string s = line.substring (line.index_of (":") + 1).strip ();
-					if (s.down () == "true")
-						dep.is_standardlib = true;
-					continue;
-				}
-				if (line.down ().has_prefix ("libraries:")) {
-					string s = line.substring (line.index_of (":") + 1).strip ();
-					if (s != "")
-						dep.add_component (s, ComponentType.SHARED_LIB);
-					mode = DepInfoBlock.FILES;
-					continue;
-				}
-				if (line.substring (0, 1) == " ") {
-					if (mode == DepInfoBlock.FILES)
-						dep.add_component (line.strip (), ComponentType.SHARED_LIB);
-
-				}
+		metaF.open_block_first ();
+		do {
+			dep = new IPK.Dependency ("");
+			dep.full_name = metaF.get_value ("Name");
+			dep.idname = metaF.get_value ("ID");
+			dep.feed_url = metaF.get_value ("Feed");
+			if (metaF.get_value ("Standard") == "true")
+				dep.is_standardlib = true;
+			var libText = metaF.get_value ("Libraries");
+			var libs = libText.split ("\n");
+			foreach (string lib in libs) {
+				dep.add_component (lib.strip (), ComponentType.SHARED_LIB);
 			}
-			if (dep != null)
-				dlist.add (dep);
-		} catch (Error e) {
-			li_error (_("Unable to fetch dependency information list: %s").printf (e.message));
-			return;
-		}
+
+		} while (metaF.block_next ());
 	}
 
 	public IPK.Dependency? get_dep_template_for_component (string cidname) {
