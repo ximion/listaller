@@ -144,12 +144,16 @@ public class AppItem : Object {
 		}
 		set {
 			_desktop_file = fold_user_dir (value);
-			// Desktop file in / ==> shared application
-			if (_desktop_file.has_prefix ("/"))
-				shared = true;
-			// Desktop-file in $APP ==> application not shared
-			if (_desktop_file.has_prefix ("$"))
-				shared = false;
+
+			// Only do autodetection if we not already have a shared application
+			if (!shared) {
+				// Desktop file in / ==> shared application
+				if (_desktop_file.has_prefix ("/"))
+					shared = true;
+				// Desktop-file in $APP ==> application not shared
+				if (_desktop_file.has_prefix ("$"))
+					shared = false;
+			}
 		}
 	}
 

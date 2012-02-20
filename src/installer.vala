@@ -175,6 +175,11 @@ public class Setup : MsgObject {
 		emit_status (StatusEnum.REGISTERING_APPLICATION,
 			     _("Making '%s' known to your system.").printf (app.full_name));
 
+		// We don't trust the IPKpackage: App might have changed, so set again if this
+		// is a shared app.
+		if (is_root ())
+			app.shared = true;
+
 		// Now register the item
 		ret = db.add_application (app);
 		if (!ret) {
@@ -216,6 +221,7 @@ public class Setup : MsgObject {
 	}
 
 	private bool install_superuser () {
+		bool ret = true;
 		PackageKit.Client client = new PackageKit.Client ();
 
 		/* PackageKit will handle all Listaller superuser installations.
@@ -238,7 +244,21 @@ public class Setup : MsgObject {
 			return false;
 		}
 
-		return true;
+		inst_progress = 100;
+		change_progress (100, -1);
+
+		// Emit status message (setup finished)
+		StatusItem sitem = new StatusItem (StatusEnum.INSTALLATION_FINISHED);
+		if (ret) {
+			sitem.info = _("Installation completed!");
+		} else {
+			// Undo all changes
+			ipkp.rollback_installation ();
+			sitem.info = _("Installation failed!");
+		}
+		status_changed (sitem);
+
+		return ret;
 	}
 
 	public bool run_installation () {

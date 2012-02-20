@@ -688,6 +688,10 @@ pk_plugin_initialize (PkPlugin *plugin)
 	g_signal_connect (plugin->priv->mgr, "status-changed", G_CALLBACK (listaller_status_change_cb), plugin);
 	g_signal_connect (plugin->priv->mgr, "progress-changed", G_CALLBACK (listaller_progress_change_cb), plugin);
 	g_signal_connect (plugin->priv->mgr, "application", G_CALLBACK (listaller_application_cb), plugin);
+
+	/* We want verbose mode! */
+	listaller_set_verbose_mode (TRUE);
+	listaller_add_log_domain ("PkListaller");
 }
 
 /**
