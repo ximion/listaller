@@ -1,6 +1,6 @@
-/* gpgsign.vala
+/* gpgsign.vala - Sign IPK package with a GPK key
  *
- * Copyright (C) 2011 Matthias Klumpp
+ * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU General Public License Version 3
  *
@@ -93,7 +93,7 @@ private class GPGSign : Object {
 		/*if (ret < 0)
 			error (errno.to_string ());*/
 	}
-	
+
 	private static GPGError.ErrorCode simple_passphrase_cb (void* hook, string uid_hint, string passphrase_info, bool prev_was_bad, int fd) {
 		// IMPORTANT: This method of requesting a passwird is very ugly, replace it with something better soon!
 		if (!prev_was_bad)

@@ -1,6 +1,6 @@
 /* database.vala - Easy-to-use interface to Listaller's software database(s)
  *
- * Copyright (C) 2010-2011 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2010-2012 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
