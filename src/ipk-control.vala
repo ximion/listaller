@@ -162,15 +162,19 @@ public abstract class Control : Object {
 public class PackControl : Control {
 	private string ipkVersion;
 	private string doapData;
-	private bool hasLicenseText;
 
 	public PackControl () {
 		ipkVersion = "1.0";
-		hasLicenseText = false;
 	}
 
-	public bool open_control (string fDoap, string fDeps) {
+	public bool open_control (string fPackSetting, string fDoap, string fDeps) {
 		bool ret;
+		ret = open_packsetting (fPackSetting);
+		if (!ret) {
+			debug ("Unable to load pksetting... Temporary file was: %s", fPackSetting);
+			return false;
+		}
+
 		doapData = load_file_to_string (fDoap);
 		ret = this.open_doap (doapData);
 		if (!ret)

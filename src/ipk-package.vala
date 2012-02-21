@@ -127,7 +127,9 @@ private class Package : MsgObject {
 		string tmpf = Path.build_filename (wdir, doapFileName, null);
 		ret = false;
 		if (FileUtils.test (tmpf, FileTest.EXISTS)) {
-			ret = ipkc.open_control (tmpf, Path.build_filename (wdir, "dependencies.list", null));
+			ret = ipkc.open_control (Path.build_filename (wdir, "pksetting", null),
+						 tmpf,
+						 Path.build_filename (wdir, "dependencies.list", null));
 		}
 
 		// Set license text, if we have any. (This fubction returns false if file doesn't exists)

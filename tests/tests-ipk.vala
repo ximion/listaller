@@ -120,7 +120,9 @@ void test_ipk_packcontrol () {
 	IPK.PackControl ipkc = new IPK.PackControl ();
 
 	bool ret;
-	ret = ipkc.open_control (Path.build_filename (ctrlDir, "foobar.doap", null), Path.build_filename (ctrlDir, "files-current.list", null));
+	ret = ipkc.open_control (Path.build_filename (ctrlDir, "pksetting", null),
+				 Path.build_filename (ctrlDir, "foobar.doap", null),
+				 Path.build_filename (ctrlDir, "files-current.list", null));
 	assert (ret);
 
 	AppItem app = ipkc.get_application ();
