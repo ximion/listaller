@@ -141,17 +141,35 @@ public abstract class Control : Object {
 		}
 		return depList;
 	}
+
+	public bool set_license_text_from_file (string fname) {
+		if (!FileUtils.test (fname, FileTest.EXISTS))
+			return false;
+
+		string? license_text = load_file_to_string (fname);
+		if (license_text == null)
+			return false;
+		get_application ();
+		appItem.set_license_text (license_text);
+		return true;
+	}
+
+	public void set_license_text (string txt) {
+		appItem.set_license_text (txt);
+	}
 }
 
 public class PackControl : Control {
 	private string ipkVersion;
 	private string doapData;
+	private bool hasLicenseText;
 
 	public PackControl () {
 		ipkVersion = "1.0";
+		hasLicenseText = false;
 	}
 
-	public bool open_control (string fDoap, string fDeps, string fIpkV) {
+	public bool open_control (string fDoap, string fDeps) {
 		bool ret;
 		doapData = load_file_to_string (fDoap);
 		ret = this.open_doap (doapData);
@@ -161,8 +179,7 @@ public class PackControl : Control {
 		if (!ret)
 			return false;
 
-		ipkVersion = fIpkV;
-		set_ipk_version (ipkVersion);
+		ipkVersion = "1.0";
 
 		return cache_appitem ();
 	}
@@ -198,12 +215,22 @@ public class PackControl : Control {
 		return ret;
 	}
 
+	private bool has_license_text () {
+		return (appItem.license.text != "") && (appItem.license.name != appItem.license.text);
+	}
+
 	public bool save_to_dir (string dirPath) {
 		bool ret;
 		ret = depData.save_to_file (Path.build_filename (dirPath, "dependencies.list", null));
 		if (!ret)
 			return false;
+
 		ret = save_string_to_file (Path.build_filename (dirPath, this.appItem.idname + ".doap", null), doapData);
+		if (!ret)
+			return false;
+
+		if (has_license_text ())
+			ret = save_string_to_file (Path.build_filename (dirPath, "license.txt", null), appItem.license.text);
 
 		packSetting.save_to_file (Path.build_filename (dirPath, "pksetting", null));
 
@@ -215,23 +242,15 @@ public class PackControl : Control {
 		string[] res;
 		res = { "dependencies.list", "pksetting" };
 		res += this.appItem.idname + ".doap";
+		// Add license text
+		if (has_license_text ())
+			res += "license.txt";
 		res += null;
 
 		return res;
 	}
 
-	public string get_license_text () {
-		return "::TODO";
-	}
-
 #if 0
-	public override void set_app_license (string text) {
-		base.set_app_license (text);
-	}
-
-	private string load_license (string fname) {
-		return "::TODO";
-	}
 
 	public override string get_app_license () {
 		string license = base.get_app_license ();
@@ -318,10 +337,17 @@ public class ControlDir : Control {
 			return false;
 		ctrlDir = dir;
 
-		string depInfoFileName = Path.build_filename (ctrlDir, "dependencies.list", null);
-		if (FileUtils.test (depInfoFileName, FileTest.EXISTS)) {
-			this.open_depinfo (depInfoFileName);
+		string depInfoFName = Path.build_filename (ctrlDir, "dependencies.list", null);
+		if (FileUtils.test (depInfoFName, FileTest.EXISTS)) {
+			this.open_depinfo (depInfoFName);
 		}
+
+		// Open license text, if there is any...
+		string licenseTxtFName = Path.build_filename (ctrlDir, "license.txt", null);
+		if (FileUtils.test (licenseTxtFName, FileTest.EXISTS)) {
+			this.set_license_text_from_file (licenseTxtFName);
+		}
+
 		return true;
 	}
 

@@ -257,7 +257,15 @@ public class AppItem : Object {
 		};
 	}
 
-	public void set_license_from_name (string? name) {
+	public void set_license_name (string lName) {
+		set_license_info (lName, _license.text);
+	}
+
+	public void set_license_text (string lText) {
+		set_license_info (_license.name, lText);
+	}
+
+	public void set_license_from_doap_name (string? name) {
 		if ((name == null) || (name.strip () == ""))
 			return;
 		string licenseName, licenseText = "";
@@ -294,10 +302,6 @@ public class AppItem : Object {
 			licenseText = licenseName;
 
 		set_license_info (licenseName, licenseText);
-	}
-
-	public void get_license_text () {
-		set_license_from_name (_license.name);
 	}
 
 	public void fast_check () {

@@ -96,11 +96,17 @@ private class Package : MsgObject {
 						doapFileName = pName;
 			} else {
 				switch (pName) {
+					case "pksetting":
+						ret = extract_entry_to (ar, e, wdir);
+						break;
 					// FIXME: Fix this for mutiple data archives
 					case "files-all.list":
 						ret = extract_entry_to (ar, e, wdir);
 						break;
 					case "dependencies.list":
+						ret = extract_entry_to (ar, e, wdir);
+						break;
+					case "license.txt":
 						ret = extract_entry_to (ar, e, wdir);
 						break;
 					default:
@@ -121,8 +127,11 @@ private class Package : MsgObject {
 		string tmpf = Path.build_filename (wdir, doapFileName, null);
 		ret = false;
 		if (FileUtils.test (tmpf, FileTest.EXISTS)) {
-			ret = ipkc.open_control (tmpf, Path.build_filename (wdir, "dependencies.list", null), "::1.0");
+			ret = ipkc.open_control (tmpf, Path.build_filename (wdir, "dependencies.list", null));
 		}
+
+		// Set license text, if we have any. (This fubction returns false if file doesn't exists)
+		ipkc.set_license_text_from_file (Path.build_filename (wdir, "license.txt", null));
 
 		// Fetch application-information as an app-id
 		appInfo = ipkc.get_application ();

@@ -290,12 +290,18 @@ private class FileList : Object {
 				string ematch = Path.build_filename ("*", fe.fname, null);
 				if (PatternSpec.match_simple (ematch, s)) {
 					FileEntry e = new FileEntry ();
+
+					// Create secure filenames, so Listaller doesn't try to rename files with spaces in their name
+					if (s.index_of (" ") > 0)
+						s = "'%s'".printf (s);
+
 					e.fname = s;
 					e.destination = Path.build_filename (fe.destination, Path.get_dirname (s).replace (dir, ""), null);
 					resList.add (e);
 				}
 			}
 		}
+
 		return resList;
 	}
 

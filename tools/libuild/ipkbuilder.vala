@@ -477,7 +477,9 @@ private class Builder : Object {
 
 		// Set package setting information
 		ictrl.set_architectures (ipkCDir.get_architectures ());
-		// ...
+
+		// Set license...
+		ictrl.set_license_text (ipkCDir.get_application ().license.text);
 
 		string tmp = Path.build_filename (tmpdir, "control", null);
 		ictrl.save_to_dir (tmp);
