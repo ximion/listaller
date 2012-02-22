@@ -128,7 +128,7 @@ private class Builder : Object {
 					j = s.last_index_of (" ");
 				}
 				fname_orig = s.substring (i, j);
-				if (j != s.length)
+				if ((j + 2) != s.length)
 					fname_dest = s.substring (j + i + 1);
 				else
 					fname_dest = Path.get_basename (fname_orig);
@@ -146,6 +146,9 @@ private class Builder : Object {
 			if (!Path.is_absolute (fname_orig)) {
 				fname_orig = Path.build_filename (rdir, fname_orig, null);
 			}
+
+			if (fname_dest == "")
+				error ("Destination filename was empty for file '%s'! This should never happen and might be a bug in Listaller!", fname_orig);
 
 			fe.fname = Path.get_basename (fname_dest);
 			fe.hash = compute_checksum_for_file (fname_orig);

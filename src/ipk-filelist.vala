@@ -292,10 +292,11 @@ private class FileList : Object {
 					FileEntry e = new FileEntry ();
 
 					// Create secure filenames, so Listaller doesn't try to rename files with spaces in their name
-					if (s.index_of (" ") > 0)
-						s = "'%s'".printf (s);
+					var fs = s;
+					if (fs.index_of (" ") > 0)
+						fs = "'%s'".printf (fs);
 
-					e.fname = s;
+					e.fname = fs;
 					e.destination = Path.build_filename (fe.destination, Path.get_dirname (s).replace (dir, ""), null);
 					resList.add (e);
 				}

@@ -597,16 +597,18 @@ private class Package : MsgObject {
 			}
 		}
 		if ((prog != fcache.size) && (ret == true)) {
-			rollback_installation ();
-			emit_error (ErrorEnum.IPK_INCOMPLETE,
-				    _("Some files of this package could not be installed, because they were not found in payload data.\nThis IPK package might be damaged, please obtain a new copy!"));
-
 			// Check which files might be missing...
 			string missingFiles = "";
 			foreach (FileEntry dFe in get_file_entries ())
 				if (!dFe.is_installed ())
-					missingFiles = "%s\n".printf (dFe.get_full_filename ());
+					missingFiles = "%s | %s\n".printf (dFe.get_full_filename (), dFe.fname_installed);
 			debug ("Some files weren't found in payload! List of missing files: %s", missingFiles);
+
+			// Now roll back the installation.
+			rollback_installation ();
+
+			emit_error (ErrorEnum.IPK_INCOMPLETE,
+				    _("Some files of this package could not be installed, because they were not found in payload data.\nThis IPK package might be damaged, please obtain a new copy!"));
 
 			ret = false;
 		}
