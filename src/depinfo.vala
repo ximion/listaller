@@ -337,6 +337,10 @@ private class DepInfoGenerator : Object {
 		return ret;
 	}
 
+	public void add_dependencies (ArrayList<IPK.Dependency> deps) {
+		dlist.add_all (deps);
+	}
+
 	public IPK.Dependency? get_dep_template_for_component (string cidname) {
 		foreach (IPK.Dependency dep in dlist) {
 			foreach (string s in dep.raw_complist) {

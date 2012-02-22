@@ -52,12 +52,13 @@ private class DepFind : Object {
 		return deplist;
 	}
 
-	public HashSet<IPK.Dependency> get_dependencies () {
+	public HashSet<IPK.Dependency> get_dependencies (ArrayList<IPK.Dependency>? deps = null) {
 		pkbuild_action ("Scanning for dependencies...");
 		var dinfo = new DepInfoGenerator ();
 
-		// TODO: There are way too much foreach () loops here (and in DepInfo) - maybe there is a smarter
-		//	and faster way to do this...
+		// Add more template dependencies to genrator
+		if (deps != null)
+			dinfo.add_dependencies (deps);
 
 		ArrayList<string> files = get_dependency_list ();
 		var deplist = dinfo.get_dependency_list_for_components (files);
