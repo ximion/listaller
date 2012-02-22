@@ -279,11 +279,28 @@ public class Dependency: Object {
 	}
 }
 
+[CCode (has_target = false)]
+private static uint dependency_hash_func (Dependency dep) {
+	string str = dep.idname;
+	return str_hash (str);
+}
+
+[CCode (has_target = false)]
+private static bool dependency_equal_func (Dependency a, Dependency b) {
+	if (a.idname == b.idname)
+		return true;
+	return false;
+}
+
+private HashSet<Dependency> dependency_hashset_new () {
+	return new HashSet<Dependency> ((HashFunc) dependency_hash_func, (EqualFunc) dependency_equal_func);
+}
+
 } // End of namespace: Listaller.IPK
 
 namespace Listaller {
 
-private class GlobalDepInfo : Object {
+private class DepInfoGenerator : Object {
 	private ArrayList<IPK.Dependency> dlist;
 
 	enum DepInfoBlock {
@@ -292,7 +309,8 @@ private class GlobalDepInfo : Object {
 		FILES;
 	}
 
-	public GlobalDepInfo () {
+	public DepInfoGenerator () {
+		// Load the default components
 		Listaller.Settings conf = new Listaller.Settings (true);
 		string fname_default = Path.build_filename (conf.conf_dir (), "default-dependencies.list", null);
 		string fname_distro = Path.build_filename (conf.conf_dir (), "dependencies.list", null);
@@ -307,23 +325,16 @@ private class GlobalDepInfo : Object {
 		if (FileUtils.test (fname_distro, FileTest.EXISTS))
 			metaF.open_file_add_data (fname_distro);
 
-		IPK.Dependency? dep = null;
+		add_dependencies_from_metafile (metaF);
+	}
 
-		metaF.open_block_first ();
-		do {
-			dep = new IPK.Dependency ("");
-			dep.full_name = metaF.get_value ("Name");
-			dep.idname = metaF.get_value ("ID");
-			dep.feed_url = metaF.get_value ("Feed");
-			if (metaF.get_value ("Standard") == "true")
-				dep.is_standardlib = true;
-			dep.add_component_list (Dep.ComponentType.SHARED_LIB, metaF.get_value ("Libraries"));
-			dep.add_component_list (Dep.ComponentType.BINARY, metaF.get_value ("Binaries"));
-			dep.add_component_list (Dep.ComponentType.PYTHON, metaF.get_value ("Python"));
-			dep.add_component_list (Dep.ComponentType.PYTHON_2, metaF.get_value ("Python2"));
-			dep.add_component_list (Dep.ComponentType.FILE, metaF.get_value ("Files"));
+	public bool add_dependencies_from_file (string fname) {
+		var metaF = new IPK.MetaFile ();
+		var ret = metaF.open_file (fname);
 
-		} while (metaF.block_next ());
+		if (ret)
+			add_dependencies_from_metafile (metaF);
+		return ret;
 	}
 
 	public IPK.Dependency? get_dep_template_for_component (string cidname) {
@@ -336,6 +347,27 @@ private class GlobalDepInfo : Object {
 			}
 		}
 		return null;
+	}
+
+	private void add_dependencies_from_metafile (IPK.MetaFile metaF) {
+		IPK.Dependency? dep = null;
+
+		metaF.open_block_first ();
+		do {
+			dep = new IPK.Dependency ("");
+			dep.full_name = metaF.get_value ("Name");
+			dep.idname = metaF.get_value ("ID");
+			dep.feed_url = metaF.get_value ("Feed");
+			if (metaF.get_value ("Standard") == "true")
+				dep.is_standardlib = true;
+			dep.add_component_list (ComponentType.SHARED_LIB, metaF.get_value ("Libraries"));
+			dep.add_component_list (ComponentType.BINARY, metaF.get_value ("Binaries"));
+			dep.add_component_list (ComponentType.PYTHON, metaF.get_value ("Python"));
+			dep.add_component_list (ComponentType.PYTHON_2, metaF.get_value ("Python2"));
+			dep.add_component_list (ComponentType.FILE, metaF.get_value ("Files"));
+			dlist.add (dep);
+
+		} while (metaF.block_next ());
 	}
 
 	public void update_dependency_with_system_data (ref IPK.Dependency dep, bool pedantic = false) {
@@ -353,6 +385,39 @@ private class GlobalDepInfo : Object {
 				}
 			}
 		}
+	}
+
+	public HashSet<IPK.Dependency> get_dependency_list_for_components (ArrayList<string> comp) {
+		var depList = IPK.dependency_hashset_new ();
+
+		foreach (string s in comp) {
+			if (IPK.Dependency.component_get_type (s) != ComponentType.UNKNOWN) {
+				IPK.Dependency dtmp = get_dep_template_for_component (s);
+				string dep_name = "";
+				if (dtmp != null)
+					dep_name = dtmp.full_name;
+				else
+					dep_name = Utils.string_replace (s.substring (4), "(\\.so|\\+|\\.)", "");
+
+				if (dep_name.strip () == "") {
+					debug ("dep_name would be empty for %s! (ignoring it)", s);
+					continue;
+				}
+
+				IPK.Dependency dep = null;
+				if (dtmp == null) {
+					// If we are here, we need to create a new dependency object
+					dep = new IPK.Dependency (dep_name);
+					dep.add_component (IPK.Dependency.component_get_name (s.strip ()), IPK.Dependency.component_get_type (s));
+				} else {
+					dep = dtmp;
+				}
+
+				depList.add (dep);
+			}
+		}
+
+		return depList;
 	}
 
 }

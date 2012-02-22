@@ -52,56 +52,20 @@ private class DepFind : Object {
 		return deplist;
 	}
 
-	public ArrayList<IPK.Dependency> get_dependencies () {
-		ArrayList<IPK.Dependency> deplist = new ArrayList<IPK.Dependency> ();
-
+	public HashSet<IPK.Dependency> get_dependencies () {
 		pkbuild_action ("Scanning for dependencies...");
-		var dinfo = new GlobalDepInfo ();
+		var dinfo = new DepInfoGenerator ();
 
 		// TODO: There are way too much foreach () loops here (and in DepInfo) - maybe there is a smarter
 		//	and faster way to do this...
 
 		ArrayList<string> files = get_dependency_list ();
-		foreach (string s in files) {
-			if (s.has_prefix ("lib:")) {
-				IPK.Dependency dtmp = dinfo.get_dep_template_for_component (s);
-				string dep_name = "";
-				if (dtmp != null)
-					dep_name = dtmp.full_name;
-				else
-					dep_name = Utils.string_replace (s.substring (4), "(\\.so|\\+|\\.)", "");
+		var deplist = dinfo.get_dependency_list_for_components (files);
 
-				if (dep_name.strip () == "") {
-					debug ("dep_name would be empty for %s!", s);
-					continue;
-				}
-
-				bool done = false;
-				foreach (IPK.Dependency d in deplist) {
-					if (d.full_name == dep_name) {
-						d.add_component (IPK.Dependency.component_get_name (s.strip ()), IPK.Dependency.component_get_type (s));
-						done = true;
-						break;
-					}
-				}
-				if (done)
-					continue;
-
-				// If we are here, we need to create a new dependency object
-				IPK.Dependency dep = new IPK.Dependency (dep_name);
-				if (dtmp != null) {
-					dep.idname = dtmp.idname;
-					dep.version = dtmp.version;
-					dep.feed_url = dtmp.feed_url;
-					dep.is_standardlib = dtmp.is_standardlib;
-				}
-				dep.add_component (IPK.Dependency.component_get_name (s.strip ()), IPK.Dependency.component_get_type (s));
-
-				deplist.add (dep);
-			}
-		}
 
 		// Remove default dependencies
+		//! Disabled at time, we want complete IPK package deps
+		/*
 		uint i = 0;
 		while (i < deplist.size) {
 			IPK.Dependency dep = deplist.get ((int) i);
@@ -116,6 +80,7 @@ private class DepFind : Object {
 
 			i++;
 		}
+		*/
 
 		return deplist;
 	}

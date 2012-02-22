@@ -459,7 +459,7 @@ private class Builder : Object {
 		ArrayList<IPK.Dependency> deps = ipkCDir.get_dependencies ();
 		if (ipkCDir.auto_dependency_search ()) {
 			DepFind df = new DepFind (real_path (Path.build_filename (srcdir, "..", null)));
-			ArrayList<IPK.Dependency> list = df.get_dependencies ();
+			var list = df.get_dependencies ();
 			foreach (IPK.Dependency d1 in list) {
 				foreach (IPK.Dependency d2 in deps) {
 					if (d1.full_name == d2.full_name) {

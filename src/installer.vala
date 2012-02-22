@@ -149,7 +149,7 @@ public class Setup : MsgObject {
 		connect_with_object (depman, ObjConnectFlags.IGNORE_PROGRESS);
 
 		// Install possibly missing dependencies
-		ret = depman.install_dependencies (pkgDeps);
+		ret = depman.install_dependencies (ref pkgDeps);
 		if (!ret) {
 			// If dependency installation failed, exit
 			return false;

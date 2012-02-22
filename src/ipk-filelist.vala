@@ -100,7 +100,7 @@ private static bool fileentry_equal_func (FileEntry a, FileEntry b) {
 	return false;
 }
 
-private HashSet<FileEntry> new_fileentry_hashset () {
+private HashSet<FileEntry> fileentry_hashset_new () {
 	return new HashSet<FileEntry> ((HashFunc) fileentry_hash_func, (EqualFunc) fileentry_equal_func);
 }
 
@@ -111,7 +111,7 @@ private class FileList : Object {
 
 	public FileList (bool with_hashes = true) {
 		has_hashes = with_hashes;
-		list = new_fileentry_hashset ();
+		list = fileentry_hashset_new ();
 
 		rootdir = Environment.get_current_dir ();
 	}

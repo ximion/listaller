@@ -2,6 +2,7 @@
 # @distributors: Please do not apply patches to this file! Modify "dependencies.list" instead!
 
 Name: Linux
+ID: linux
 Standard: true
 Libraries: linux-gate.so.*
            ld-linux.so.*
@@ -14,7 +15,6 @@ ID: libc6
 Standard: true
 Libraries: libc.so.*
            libpthread.so.*
-           libjemalloc.so
            libm.so.*
            librt.so.*
            libdl.so.*

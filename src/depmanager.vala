@@ -101,7 +101,7 @@ private class DepManager : MsgObject {
 					s = s.replace (".*", "");
 				ret = find_library (s, conf);
 				if (!ret) {
-					debug ("Library not found:" + s);
+					debug ("Library not found: %s", s);
 				}
 				if (!ret)
 					break;
@@ -193,6 +193,25 @@ private class DepManager : MsgObject {
 		return false;
 	}
 
+	private void preprocess_dependency_list (ref ArrayList<IPK.Dependency> depList) {
+		var newDepList = new ArrayList<IPK.Dependency> ();
+		// Update dependencies with distributor's system data
+		var di = new DepInfoGenerator ();
+		foreach (IPK.Dependency idep in depList) {
+			/* Update package dependencies with system data (which might add some additional information here, provided
+			 * by the distributor */
+			di.update_dependency_with_system_data (ref idep);
+
+			if (idep.is_standardlib) {
+				// If we have a system standard-lib, always consider it as installed
+				idep.satisfied = true;
+				continue;
+			}
+			newDepList.add (idep);
+		}
+		depList = newDepList;
+	}
+
 	public bool install_dependency (ref IPK.Dependency dep, bool force_feedinstall = false) {
 		PkInstaller pkinst = new PkInstaller (conf);
 		pkinst.message.connect ( (m) => { this.message (m); } );
@@ -200,7 +219,7 @@ private class DepManager : MsgObject {
 		FeedInstaller finst = new FeedInstaller (conf);
 		finst.message.connect ( (m) => { this.message (m); } );
 
-		var di = new GlobalDepInfo ();
+		var di = new DepInfoGenerator ();
 		di.update_dependency_with_system_data (ref dep);
 
 		// If we have a system standard-lib (a minimal distribution dependency), consider it as installed
@@ -220,29 +239,21 @@ private class DepManager : MsgObject {
 		return ret;
 	}
 
-	public bool install_dependencies (ArrayList<IPK.Dependency> depList, bool force_feedinstall = false) {
+	public bool install_dependencies (ref ArrayList<IPK.Dependency> depList, bool force_feedinstall = false) {
 		PkInstaller pkinst = new PkInstaller (conf);
 		pkinst.message.connect ( (m) => { this.message (m); } );
 
 		FeedInstaller finst = new FeedInstaller (conf);
 		finst.message.connect ( (m) => { this.message (m); } );
 
-		// Update dependencies with distributor's system data
-		var di = new GlobalDepInfo ();
-		foreach (IPK.Dependency idep in depList) {
-			/* Update package dependencies with system data (which might add some additional information here, provided
-			 * by the distributor */
-			di.update_dependency_with_system_data (ref idep);
-
-			if (idep.is_standardlib) {
-				// If we have a system standard-lib, always consider it as installed
-				idep.satisfied = true;
-				continue;
-			}
-		}
+		preprocess_dependency_list (ref depList);
 
 		bool ret = true;
 		foreach (IPK.Dependency dep in depList) {
+			debug ("Prepared dependency %s, satisfied: %i, stdlib: %i", dep.idname,
+										(int) dep.satisfied,
+										(int) dep.is_standardlib);
+
 			// If this is a default lib, just continue
 			if (dep.is_standardlib)
 				continue;
@@ -260,20 +271,8 @@ private class DepManager : MsgObject {
 		return ret;
 	}
 
-	internal bool dependencies_installable (ArrayList<IPK.Dependency> depList, bool force_feedinstall = false) {
-		// Update dependencies with distributor's system data
-		var di = new GlobalDepInfo ();
-		foreach (IPK.Dependency idep in depList) {
-			/* Update package dependencies with system data (which might add some additional information here, provided
-			 * by the distributor */
-			di.update_dependency_with_system_data (ref idep);
-
-			if (idep.is_standardlib) {
-				// If we have a system standard-lib, always consider it as installed
-				idep.satisfied = true;
-				continue;
-			}
-		}
+	internal bool dependencies_installable (ref ArrayList<IPK.Dependency> depList, bool force_feedinstall = false) {
+		preprocess_dependency_list (ref depList);
 
 		bool ret = true;
 		foreach (IPK.Dependency dep in depList) {
