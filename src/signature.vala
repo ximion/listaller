@@ -48,7 +48,7 @@ private class GPGSignature : Object {
 
 	private bool check_gpg_err (GPGError.ErrorCode err) {
 		if (err != GPGError.ErrorCode.NO_ERROR) {
-			stdout.printf ("X: %s".printf (GPGError.strsource (err)));
+			debug ("GPGError: %s", GPGError.strsource (err));
 			return false;
 		}
 		return true;
@@ -88,27 +88,28 @@ private class GPGSignature : Object {
 
 	private bool process_sig_result (VerifyResult *result) {
 		Signature *sig = result->signatures;
+
 		if ((sig == null) || (sig->next != null)) {
-			li_warning ("Unexpected number of signatures\n");
+			warning ("Unexpected number of signatures!");
 			return false;
 		}
 		sigstatus = (SignStatus) sig->summary;
 		set_sigvalidity_from_gpgvalidity (sig->validity);
 
 		if (sig->status != GPGError.ErrorCode.NO_ERROR) {
-			li_warning ("Unexpected signature status: %s\n".printf (sig->status.to_string ()));
+			warning ("Unexpected signature status: %s", sig->status.to_string ());
 			sig_valid = false;
 			return false;
 		} else {
 			sig_valid = true;
 		}
 		if (sig->wrong_key_usage) {
-			li_warning ("Unexpectedly wrong key usage\n");
+			warning ("Unexpectedly wrong key usage");
 			return false;
 		}
 
 		if (sig->validity_reason != GPGError.ErrorCode.NO_ERROR) {
-			li_error ("Unexpected validity reason: %s\n".printf (sig->validity_reason.to_string ()));
+			li_error ("Unexpected validity reason: %s".printf (sig->validity_reason.to_string ()));
 			return false;
 		}
 		return true;
@@ -132,7 +133,7 @@ private class GPGSignature : Object {
 		return true;
 	}
 
-	public bool verify_package (string ctrlfname, string payloadfname) {
+	private bool verify_package_internal (string ctrlfname, string payloadfname) {
 		Context ctx;
 		GPGError.ErrorCode err;
 		Data sig, dt;
@@ -158,8 +159,19 @@ private class GPGSignature : Object {
 		result = ctx.op_verify_result ();
 
 		process_sig_result (result);
-		debug ("Signature checked!");
+		debug ("Signature checked.");
 		return true;
+	}
+
+	public bool verify_package (string ctrlfname, string payloadfname) {
+		bool ret;
+		ret = verify_package_internal (ctrlfname, payloadfname);
+		if (!ret) {
+			debug ("Signature is broken!");
+			validity = SignValidity.NEVER;
+			sigstatus = SignStatus.RED;
+		}
+		return ret;
 	}
 }
 

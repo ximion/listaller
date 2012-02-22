@@ -45,7 +45,7 @@ public enum SecurityLevel {
 				return _("Low security.");
 
 			case DANGEROUS:
-				return _("Could be dangerous!");
+				return _("This package could be dangerous!");
 
 			default:
 				return ("Security level is: [%d]").printf((int) this);
@@ -145,4 +145,29 @@ public enum SignValidity {
 	}
 }
 
-} // End of namespace
+} // End of namespace Listaller
+
+namespace Listaller.IPK {
+
+public class PackSecurity : Object {
+	private weak Package pack;
+
+	public SignStatus signature_status { get; set; }
+	public SignValidity signature_validity { get; set; }
+
+	internal PackSecurity () {
+	}
+
+	public SecurityLevel get_level () {
+		debug ("SigStatus: %s | SigValidity: %s", signature_status.to_string (), signature_validity.to_string ());
+		if (signature_status >= SignStatus.RED)
+			return SecurityLevel.DANGEROUS;
+		if (signature_validity == SignValidity.MARGINAL)
+			return SecurityLevel.MEDIUM;
+		if (signature_validity >= SignValidity.FULL)
+			return SecurityLevel.HIGH;
+		return SecurityLevel.LOW;
+	}
+}
+
+} // End of namespace Listaller.IPK

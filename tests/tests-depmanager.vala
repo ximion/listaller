@@ -178,7 +178,7 @@ void test_depsolver () {
 	depman.error_code.connect (test_solver_error_code_cb);
 	depman.message.connect (test_solver_message_cb);
 
-	ret = depman.dependencies_installable (deplist);
+	ret = depman.dependencies_installable (ref deplist);
 	assert (ret == true);
 }
 
