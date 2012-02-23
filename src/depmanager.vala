@@ -287,6 +287,10 @@ private class DepManager : MsgObject {
 		return ret;
 	}
 
+	public string get_absolute_library_paths (IPK.Dependency dep) {
+		return "";
+	}
+
 }
 
 } // End of namespace

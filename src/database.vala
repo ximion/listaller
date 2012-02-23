@@ -32,17 +32,28 @@ public enum AppSource {
 	UNKNOWN;
 }
 
+private enum ForceDB {
+	NONE,
+	PRIVATE,
+	SHARED;
+}
+
 private class SoftwareDB : MsgObject {
 	private InternalDB? db_shared;
 	private InternalDB? db_priv;
 	private Settings conf;
 
+	public ForceDB force_db { get; set; }
+
 	public signal void application (AppItem appid);
 
 	public SoftwareDB (Settings liconf, bool include_shared = true) {
 		base ();
+
 		db_shared = null;
 		db_priv = null;
+		force_db = ForceDB.NONE;
+
 		// We just store the settings, so other objects can fetch them
 		conf = liconf;
 
@@ -78,6 +89,9 @@ private class SoftwareDB : MsgObject {
 			ret = false;
 		}
 
+		if (force_db == ForceDB.PRIVATE)
+			return false;
+
 		/* If shared db does not exist AND we don't have root-access, opening the db will fail.
 		 * (so we check for this case here, just to be sure) */
 		if (ret)
@@ -93,6 +107,9 @@ private class SoftwareDB : MsgObject {
 	}
 
 	private bool private_db_canbeused (bool error = false) {
+		if (force_db == ForceDB.SHARED)
+			return false;
+
 		if (db_priv == null) {
 			if (error)
 				emit_dberror (_("Tried to perform action on private software database, but the database is not opened! (this should never happen!)"));

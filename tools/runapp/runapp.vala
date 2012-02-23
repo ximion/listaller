@@ -19,42 +19,114 @@
  */
 
 using GLib;
+using Config;
+using Listaller;
 
 public class RunApp : Object {
-	private string appName;
-	private Listaller.Manager limgr;
+	private Manager limgr;
 
-	public RunApp (string aname) {
-		appName = aname;
-		limgr = new Listaller.Manager (null);
+	public RunApp () {
+		limgr = new Manager (null);
 	}
 
-	public void run_application (string commandLine) {
+	public int run_application (string commandLine, string ld_env) {
+		int exit_status;
 		try {
-			Process.spawn_command_line_sync (commandLine);
+			debug ("LD_PATH env is: %s", ld_env);
+			Process.spawn_command_line_sync (commandLine, null, null, out exit_status);
 		} catch (Error e) {
 			stderr.printf ("Could not run: %s\n", e.message);
+		}
+		return exit_status;
+	}
+
+	public int execute (string appName) {
+		if (appName == "")
+			return 4;
+
+		Listaller.AppItem? app = limgr.get_appitem_by_idname (appName);
+
+		if (app != null) {
+			string ld_env = limgr.get_app_ld_environment (app);
+			return run_application (app.get_raw_cmd (true), ld_env);
+		}
+
+		return run_application (appName, "");
+	}
+
+}
+
+public class CmdApp : Object {
+	private static bool o_show_version = false;
+	private static bool o_verbose_mode = false;
+	private string o_appname;
+
+	public int exit_code { set; get; }
+
+	private const OptionEntry[] options = {
+		{ "version", 'v', 0, OptionArg.NONE, ref o_show_version,
+		N_("Show the application's version"), null },
+		{ "verbose", 0, 0, OptionArg.NONE, ref o_verbose_mode,
+			N_("Activate verbose mode"), null },
+		{ null }
+	};
+
+	public CmdApp (string[] args) {
+		exit_code = 0;
+		o_appname = null;
+		var opt_context = new OptionContext ("- run applications.");
+		opt_context.set_help_enabled (true);
+		opt_context.add_main_entries (options, null);
+		try {
+			opt_context.parse (ref args);
+		} catch (Error e) {
+			stdout.printf (e.message + "\n");
+			stdout.printf (_("Run '%s --help' to see a full list of available command line options.\n"), args[0]);
+			exit_code = 1;
+			return;
+		}
+
+		for (uint i = 1; i < args.length; i++) {
+			string arg = args[i];
+			if (o_appname == null) {
+				o_appname = arg;
+			}
+		}
+
+		if (o_appname == null) {
+			stderr.printf (_("No application specified!") + "\n");
+			exit_code = 4;
 		}
 	}
 
 	public void run () {
-		Listaller.AppItem? app = limgr.get_appitem_by_idname (appName);
-		if (app != null) {
-			run_application (app.get_raw_cmd (true));
+		if (exit_code != 0)
+			return;
+
+		if (o_show_version) {
+			stdout.printf ("Part of Listaller version: %s\n", Config.VERSION);
 			return;
 		}
-		run_application (appName);
+
+		var runApp = new RunApp ();
+		exit_code = runApp.execute (o_appname);
 	}
 
 	static int main (string[] args) {
-		if (args[1] == null) {
-			stderr.printf ("No application specified!\n");
-			return 5;
-		}
+		// Bind Listaller locale
+		Intl.setlocale(LocaleCategory.ALL,"");
+		Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
+		Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
+		Intl.textdomain(Config.GETTEXT_PACKAGE);
 
-		var main = new RunApp (args[1]);
+		var main = new CmdApp (args);
+		set_console_mode (true);
+		set_verbose_mode (o_verbose_mode);
+		add_log_domain ("RunApp");
+
+		// Run the application
 		main.run ();
-		return 0;
+		int code = main.exit_code;
+		return code;
 	}
-
 }

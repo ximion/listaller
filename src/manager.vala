@@ -163,6 +163,47 @@ public class Manager : MsgObject {
 		return app;
 	}
 
+	public string get_app_ld_environment (AppItem app) {
+		if (app.dbid < 0) {
+			debug ("AppItem database id was < 0! Application was maybe not retrieved from software DB and therefore lacks the required data.");
+			debug ("Setting empty environment...");
+			return "";
+		}
+
+		SoftwareDB db;
+		if (!init_db (out db, false)) {
+			debug ("Unable to open DB, app environment will be empty!");
+			return "";
+		}
+
+		// We only want to fetch dependencies from the correct database, so limit DB usage
+		if (app.shared)
+			db.force_db = ForceDB.SHARED;
+		else
+			db.force_db = ForceDB.PRIVATE;
+
+		// A new DepManager for the resolving...
+		DepManager depMan = new DepManager (db);
+
+		string[] depStr = app.dependencies.split ("\n");
+
+		string paths = "";
+		IPK.Dependency? dep = null;
+		foreach (string s in depStr) {
+			dep = db.get_dependency_by_id (s);
+			if (dep == null) {
+				debug ("Dependency not found in database: %s", s);
+				continue;
+			}
+			// Now get paths for library, if possible (if dependency is a library)
+			string p = depMan.get_absolute_library_paths (dep);
+			if (p != "")
+				paths = "%s;%s".printf (paths, p);
+		}
+
+		return paths;
+	}
+
 	public AppItem? get_appitem_by_fullname (string full_name) {
 		SoftwareDB db;
 		if (!init_db (out db, false))

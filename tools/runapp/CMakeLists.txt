@@ -15,11 +15,9 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}
 		    ${GLIB2_INCLUDE_DIR}
 		    ${GEE_INCLUDE_DIRS}
 		    ${GIO2_INCLUDE_DIR}
+		    ${CMAKE_BINARY_DIR}
 		    ${CMAKE_BINARY_DIR}/src
 )
-
-# We don't use localisation here
-remove_definitions ("--include config.h")
 
 vala_add_executable(runapp ${RUNAPP_SOURCES}
 			PACKAGES config gee-1.0 gio-2.0 posix listaller-${LILIBS_VERSION}
