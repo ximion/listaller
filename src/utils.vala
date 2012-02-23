@@ -150,7 +150,7 @@ private bool delete_dir_recursive (string dirname) {
 /*
  * Fetch current system architecture
  */
-private string system_architecture () {
+private string system_osname_arch () {
 	Posix.utsname uts = Posix.utsname ();
 	return "%s-%s".printf (uts.sysname.down (), uts.machine);
 }
@@ -163,6 +163,19 @@ private string system_os () {
 private string system_machine () {
 	Posix.utsname uts = Posix.utsname ();
 	return uts.machine;
+}
+
+private string system_osname_arch_generic () {
+	return "%s-%s".printf (system_os (), system_arch_generic ());
+}
+
+private string system_arch_generic () {
+	string arch = system_machine ();
+	if (PatternSpec.match_simple ("i?86", arch))
+		arch = "i386";
+	if (arch == "x86_64")
+		arch = "amd64";
+	return arch;
 }
 
 /*

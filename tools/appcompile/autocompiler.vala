@@ -101,7 +101,7 @@ private class AutoCompiler : Object {
 		if (!FileUtils.test (Path.build_filename (srcdir, "CMakeLists.txt", null), FileTest.EXISTS)) {
 			return -1;
 		}
-		string builddir = Path.build_filename (srcdir, "build_%s".printf (Utils.system_architecture ()), null);
+		string builddir = Path.build_filename (srcdir, "build_%s".printf (Utils.system_osname_arch_generic ()), null);
 		Utils.touch_dir (builddir);
 		string lastdir = Environment.get_current_dir ();
 		Environment.set_current_dir (builddir);

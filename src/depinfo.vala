@@ -75,7 +75,7 @@ public class Dependency: Object {
 			_satisfied = value;
 		}
 	}
-	public string architecture { get; set; } // e.g. linux-amd64
+	public string architecture { get; set; } // e.g. amd64
 	private HashSet<string> install_data { get; set; } // The stuff stored as "real" dependency in software DB
 	public bool is_standardlib { get; set; } // Whether this dependency is always satisfied (by default), set by the distributor
 
@@ -120,6 +120,7 @@ public class Dependency: Object {
 		environment = "";
 		author = "";
 		_full_name = "";
+		architecture = Utils.system_arch_generic ();
 	}
 
 	internal Dependency (string depIdName, string depFullName = "", string depVersion = "0") {
