@@ -192,7 +192,7 @@ pk_listaller_get_filelist (PkPlugin *plugin, gchar **package_ids)
 
 		filelist = listaller_manager_get_application_filelist_as_string (plugin->priv->mgr, app);
 		if (filelist == NULL)
-			filelist = "";
+			filelist = "ERROR while fetching list of files. (Please report this issue)";
 
 		/* emit */
 		pk_backend_files (plugin->backend, package_ids[i], filelist);

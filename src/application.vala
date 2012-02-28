@@ -127,6 +127,8 @@ public class AppItem : Object {
 		set { _categories = value; }
 	}
 
+	public int size_installed { get; set; } // Installed size of this application in KiB
+
 	public string desktop_file {
 		get {
 			if (_desktop_file.strip () == "")

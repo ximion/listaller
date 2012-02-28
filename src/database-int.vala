@@ -30,16 +30,18 @@ private const string DATABASE = ""
 		+ "CREATE TABLE IF NOT EXISTS applications ("
 		+ "id INTEGER PRIMARY KEY, "
 		+ "name TEXT UNIQUE NOT NULL, "
-		+ "version TEXT NOT NULL, "
 		+ "full_name TEXT NOT NULL, "
+		+ "version TEXT NOT NULL, "
 		+ "desktop_file TEXT,"
 		+ "author TEXT, "
 		+ "publisher TEXT, "
 		+ "categories TEXT, "
 		+ "description TEXT, "
+		+ "homepage TEXT, "
+		+ "architecture TEXT NOT NULL, "
 		+ "install_time INTEGER, "
-		+ "origin TEXT NOT NULL, "
-		+ "dependencies TEXT"
+		+ "dependencies TEXT, "
+		+ "origin TEXT NOT NULL"
 		+ "); "
 		+ "CREATE TABLE IF NOT EXISTS dependencies ("
 		+ "id INTEGER PRIMARY KEY, "
@@ -47,32 +49,49 @@ private const string DATABASE = ""
 		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
 		+ "description TEXT, "
-		+ "homepage TEXT, "
 		+ "author TEXT, "
+		+ "homepage TEXT, "
+		+ "architecture TEXT NOT NULL, "
 		+ "install_time INTEGER, "
 		+ "components TEXT NOT NULL,"
 		+ "environment TEXT"
 		+ ");" +
 		"";
 
-private const string appcols = "id, name, version, full_name, desktop_file, author, publisher, categories, " +
-			"description, install_time, origin, dependencies";
-private const string depcols = "id, name, full_name, version, description, homepage, author, " +
+private const string appcols = "id, name, full_name, version, desktop_file, author, publisher, categories, " +
+			"description, homepage, architecture, install_time, dependencies, origin";
+private const string depcols = "id, name, full_name, version, description, author, homepage, architecture, " +
 			"install_time, components, environment";
 
 private enum AppRow {
 	DBID = 0,
 	IDNAME = 1,
-	VERSION = 2,
-	FULLNAME = 3,
+	FULLNAME = 2,
+	VERSION = 3,
 	DESKTOPFILE = 4,
 	AUTHOR = 5,
 	PUBLISHER = 6,
 	CATEGORIES = 7,
 	DESCRIPTION = 8,
-	INSTTIME = 9,
-	ORIGIN = 10,
-	DEPS = 11;
+	HOMEPAGE = 9,
+	ARCHITECTURE = 10,
+	INST_TIME = 11,
+	DEPS = 12,
+	ORIGIN = 13;
+}
+
+private enum DepRow {
+	DBID = 0,
+	IDNAME = 1,
+	FULLNAME = 2,
+	VERSION = 3,
+	DESCRIPTION = 4,
+	AUTHOR = 5,
+	HOMEPAGE = 6,
+	ARCHITECTURE = 7,
+	INST_TIME = 8,
+	COMPONENTS = 9,
+	ENVIRONMENT = 10;
 }
 
 public errordomain DatabaseError {
@@ -199,9 +218,9 @@ private class InternalDB : Object {
 		// Prepare statements
 
 		try {
-			db_assert (db.prepare_v2 ("INSERT INTO applications (name, version, full_name, desktop_file, author, publisher, categories, "
-				+ "description, install_time, origin, dependencies) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			db_assert (db.prepare_v2 ("INSERT INTO applications (name, full_name, version, desktop_file, author, publisher, categories, " +
+			"description, homepage, architecture, install_time, dependencies, origin) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_app), "prepare insert into app statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -386,7 +405,12 @@ private class InternalDB : Object {
 
 			db_assert (insert_app.bind_text (AppRow.DESCRIPTION, "%s\n\n%s".printf (item.summary, item.description)), "assign value");
 
-			db_assert (insert_app.bind_int64 (AppRow.INSTTIME, item.install_time), "assign value");
+			db_assert (insert_app.bind_text (AppRow.HOMEPAGE, item.website), "assign value");
+
+			//TODO: Handle arch field
+			db_assert (insert_app.bind_text (AppRow.ARCHITECTURE, "current"), "assign value");
+
+			db_assert (insert_app.bind_int64 (AppRow.INST_TIME, item.install_time), "assign value");
 
 			db_assert (insert_app.bind_text (AppRow.ORIGIN, item.origin.to_string ()), "assign value");
 
@@ -482,12 +506,13 @@ private class InternalDB : Object {
 
 		item.dbid = stmt.column_int (AppRow.DBID);
 		item.idname = stmt.column_text (AppRow.IDNAME);
-		item.version = stmt.column_text (AppRow.VERSION);
 		item.full_name = stmt.column_text (AppRow.FULLNAME);
+		item.version = stmt.column_text (AppRow.VERSION);
 		item.desktop_file = stmt.column_text (AppRow.DESKTOPFILE);
 		item.author = stmt.column_text (AppRow.AUTHOR);
 		item.publisher = stmt.column_text (AppRow.PUBLISHER);
 		item.categories = stmt.column_text (AppRow.CATEGORIES);
+		item.website = stmt.column_text (AppRow.HOMEPAGE);
 
 		string s = stmt.column_text (AppRow.DESCRIPTION);
 		string[] desc = s.split ("\n\n", 2);
@@ -499,7 +524,7 @@ private class InternalDB : Object {
 			item.summary = s;
 		}
 
-		item.install_time = stmt.column_int (AppRow.INSTTIME);
+		item.install_time = stmt.column_int (AppRow.INST_TIME);
 		item.set_origin_from_string (stmt.column_text (AppRow.ORIGIN));
 		item.dependencies = stmt.column_text (AppRow.DEPS);
 		item.shared = shared_db;
@@ -690,9 +715,9 @@ private class InternalDB : Object {
 		}
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 (
-			"INSERT INTO dependencies (name, full_name, version, description, homepage, author, " +
+			"INSERT INTO dependencies (name, full_name, version, description, author, homepage, architecture, " +
 			"install_time, components, environment) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				   -1, out stmt);
 
 		// Set install timestamp
@@ -703,23 +728,25 @@ private class InternalDB : Object {
 			db_assert (res, "add dependency");
 
 			// Assign values
-			db_assert (stmt.bind_text (1, dep.idname), "bind value");
+			db_assert (stmt.bind_text (DepRow.IDNAME, dep.idname), "bind value");
 
-			db_assert (stmt.bind_text (2, dep.full_name), "bind value");
+			db_assert (stmt.bind_text (DepRow.FULLNAME, dep.full_name), "bind value");
 
-			db_assert (stmt.bind_text (3, dep.version), "bind value");
+			db_assert (stmt.bind_text (DepRow.VERSION, dep.version), "bind value");
 
-			db_assert (stmt.bind_text (4, "%s\n\n%s".printf (dep.summary, dep.description)), "bind value");
+			db_assert (stmt.bind_text (DepRow.DESCRIPTION, "%s\n\n%s".printf (dep.summary, dep.description)), "bind value");
 
-			db_assert (stmt.bind_text (5, dep.homepage), "bind value");
+			db_assert (stmt.bind_text (DepRow.HOMEPAGE, dep.homepage), "bind value");
 
-			db_assert (stmt.bind_text (6, dep.author), "bind value");
+			db_assert (stmt.bind_text (DepRow.AUTHOR, dep.author), "bind value");
 
-			db_assert (stmt.bind_int64 (7, dep.install_time), "bind value");
+			db_assert (stmt.bind_int64 (DepRow.INST_TIME, dep.install_time), "bind value");
 
-			db_assert (stmt.bind_text (8, dep.get_installdata_as_string ()), "bind value");
+			db_assert (stmt.bind_text (DepRow.ARCHITECTURE, dep.architecture), "bind value");
 
-			db_assert (stmt.bind_text (9, dep.environment), "bind value");
+			db_assert (stmt.bind_text (DepRow.COMPONENTS, dep.get_installdata_as_string ()), "bind value");
+
+			db_assert (stmt.bind_text (DepRow.ENVIRONMENT, dep.environment), "bind value");
 
 			db_assert (stmt.step (), "add dependency");
 		} catch (Error e) {
@@ -732,11 +759,11 @@ private class InternalDB : Object {
 	private IPK.Dependency? retrieve_dependency (Sqlite.Statement stmt) {
 		IPK.Dependency dep = new IPK.Dependency.blank ();
 
-		dep.idname = stmt.column_text (1);
-		dep.full_name = stmt.column_text (2);
-		dep.version = stmt.column_text (3);
+		dep.idname = stmt.column_text (DepRow.IDNAME);
+		dep.full_name = stmt.column_text (DepRow.FULLNAME);
+		dep.version = stmt.column_text (DepRow.VERSION);
 
-		string s = stmt.column_text (4);
+		string s = stmt.column_text (DepRow.DESCRIPTION);
 		string[] desc = s.split ("\n\n", 2);
 		if (desc[0] != null) {
 			dep.summary = desc[0];
@@ -746,11 +773,12 @@ private class InternalDB : Object {
 			dep.summary = s;
 		}
 
-		dep.homepage = stmt.column_text (5);
-		dep.author = stmt.column_text (6);
-		dep.install_time = stmt.column_int (7);
-		dep.set_installdata_from_string (stmt.column_text (8));
-		dep.environment = stmt.column_text (9);
+		dep.homepage = stmt.column_text (DepRow.HOMEPAGE);
+		dep.author = stmt.column_text (DepRow.AUTHOR);
+		dep.install_time = stmt.column_int (DepRow.INST_TIME);
+		dep.architecture = stmt.column_text (DepRow.ARCHITECTURE);
+		dep.set_installdata_from_string (stmt.column_text (DepRow.COMPONENTS));
+		dep.environment = stmt.column_text (DepRow.ENVIRONMENT);
 		// It's in the db, so this dependency is certainly satisfied
 		dep.satisfied = true;
 
