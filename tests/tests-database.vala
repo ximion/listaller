@@ -27,7 +27,7 @@ void msg (string s) {
 }
 
 void softwaredb_error_code_cb (ErrorItem item) {
-	GLib.error (item.error.to_string () + " || " + item.details);
+	GLib.error ("DBError: %s", item.details);
 }
 
 void softwaredb_message_cb (MessageItem message) {

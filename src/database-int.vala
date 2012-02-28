@@ -100,7 +100,8 @@ public errordomain DatabaseError {
 	MEMORY,
 	ABORT,
 	LIMITS,
-	TYPESPEC
+	TYPESPEC,
+	LOCKED
 }
 
 public enum DatabaseStatus {
@@ -141,7 +142,6 @@ private class InternalDB : Object {
 	private Database db;
 
 	private bool locked;
-	private string dblockfile;
 	private string regdir;
 	private string dbname;
 	private bool shared_db;
@@ -155,8 +155,6 @@ private class InternalDB : Object {
 		var tmpConf = new Listaller.Settings (sumode);
 		tmpConf.testmode = _testmode;
 
-		// File indication the database is locked (UGLY solution, we need something better, later)
-		dblockfile = tmpConf.appregister_dir () + "/lock";
 		// Path with additional data (e.g. the file-list or icons) which is not stored in the SQLite DB
 		regdir = Path.build_filename (tmpConf.appregister_dir (), "info", null);
 		// The database filename
@@ -171,8 +169,15 @@ private class InternalDB : Object {
 	}
 
 	public bool database_locked () {
-		if ((FileUtils.test (dblockfile, FileTest.EXISTS)) &&
-		    (FileUtils.test (dblockfile, FileTest.IS_REGULAR))) {
+		// If no DB is found, it can't be locked, right?
+		if (!FileUtils.test (dbname, FileTest.IS_REGULAR)) {
+			locked = false;
+			return locked;
+		}
+
+		Database tmpDB;
+		int rc = Database.open_v2 (dbname, out db);
+		if (rc == Sqlite.BUSY) {
 			locked = true;
 		} else {
 			locked = false;
@@ -202,6 +207,10 @@ private class InternalDB : Object {
 		}
 
 		rc = Database.open_v2 (dbname, out db);
+		if (rc == Sqlite.BUSY) {
+			locked = true;
+			throw new DatabaseError.LOCKED (_("Tried to access locked database! This shouldn't happen."));
+		}
 		if (rc != Sqlite.OK) {
 			string msg = "Can't open database! (Message: %d, %s)".printf (rc, db.errmsg ());
 			stderr.printf (msg);
@@ -221,7 +230,7 @@ private class InternalDB : Object {
 			db_assert (db.prepare_v2 ("INSERT INTO applications (name, full_name, version, desktop_file, author, publisher, categories, " +
 			"description, homepage, architecture, install_time, dependencies, origin) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-					-1, out insert_app), "prepare insert into app statement");
+					-1, out insert_app), "prepare app insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
 		}
@@ -229,7 +238,7 @@ private class InternalDB : Object {
 		return true;
 	}
 
-	public bool open_rw () {
+	public bool open_rw () throws DatabaseError {
 		bool ret;
 
 		// If database is locked, we should not try to write on it
@@ -242,20 +251,14 @@ private class InternalDB : Object {
 		ret = open_db ();
 		return_if_fail (ret == true);
 
-		// Drop "lock" file
-		File lfile = File.new_for_path (dblockfile);
+		// Lock the database
 		try {
-			lfile.create (FileCreateFlags.NONE);
+			db_assert (db.exec ("PRAGMA locking_mode = RESERVED"));
 		} catch (Error e) {
-			stdout.printf ("Error: %s\n", e.message);
-			return false;
+			throw e;
 		}
 
-		// Test for the existence of file
-		if (!lfile.query_exists ()) {
-			stdout.printf ("Error: Unable to create lock file!");
-			return false;
-		}
+
 		// DB is now locked
 		locked = true;
 		return true;
@@ -267,16 +270,18 @@ private class InternalDB : Object {
 		return ret;
 	}
 
-	protected void remove_db_lock () {
+	protected void remove_db_lock () throws DatabaseError {
+		if (db == null)
+			return;
+
 		if (locked) {
-			File lfile = File.new_for_path (dblockfile);
+			// Set db locking back to normal
 			try {
-				if (lfile.query_exists ()) {
-					lfile.delete ();
-				}
+				db_assert (db.exec ("PRAGMA locking_mode = NORMAL"));
 			} catch (Error e) {
-				li_error (_("Unable to remove database lock! (Message: %s)").printf (e.message));
+				throw e;
 			}
+			locked = false;
 		}
 	}
 
@@ -301,6 +306,7 @@ private class InternalDB : Object {
 
 			case Sqlite.PERM:
 			case Sqlite.BUSY:
+				throw new DatabaseError.LOCKED (_("Tried to access locked database! This shouldn't happen. Message: %s").printf (msg));
 			case Sqlite.READONLY:
 			case Sqlite.IOERR:
 			case Sqlite.CORRUPT:
@@ -360,7 +366,8 @@ private class InternalDB : Object {
 		try {
 			db_assert (res);
 		} catch (Error e) {
-			throw new DatabaseError.ERROR (_("Unable to create/update database tables: %s").printf (db.errmsg ()));
+			warning (_("Unable to create/update database tables: %s").printf (db.errmsg ()));
+			return false;
 		}
 		try {
 			db_assert (db.exec ("PRAGMA synchronous = OFF"));
@@ -368,7 +375,8 @@ private class InternalDB : Object {
 			db_assert (db.exec ("PRAGMA journal_mode = MEMORY"));
 			db_assert (db.exec ("PRAGMA count_changes = OFF"));
 		} catch (Error e) {
-			throw new DatabaseError.ERROR (e.message);
+			warning (e.message);
+			return false;
 		}
 
 		// db_assert (db.exec ("PRAGMA user_version = %d".printf (SUPPORTED_VERSION)));

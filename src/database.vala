@@ -144,22 +144,22 @@ private class SoftwareDB : MsgObject {
 	public bool open_write () {
 		bool ret = false;
 		try {
-		if (private_db_canbeused ())
-			ret = db_priv.open_rw ();
-		if (shared_db_canbeused ()) {
-			// We can only have write access to shared DB if we're root
-			if (is_root ()) {
-				if (!ret)
-					ret = db_shared.open_rw ();
-				else
-					db_shared.open_rw ();
-			} else {
-				if (!ret)
-					ret = db_shared.open_r ();
-				else
-					db_shared.open_r ();
+			if (private_db_canbeused ())
+				ret = db_priv.open_rw ();
+			if (shared_db_canbeused ()) {
+				// We can only have write access to shared DB if we're root
+				if (is_root ()) {
+					if (!ret)
+						ret = db_shared.open_rw ();
+					else
+						db_shared.open_rw ();
+				} else {
+					if (!ret)
+						ret = db_shared.open_r ();
+					else
+						db_shared.open_r ();
+				}
 			}
-		}
 		} catch (Error e) {
 			emit_dberror (_("Unable to open database for writing: %s").printf (e.message));
 			ret = false;
