@@ -161,7 +161,7 @@ private class Feed : Object {
 				if (PatternSpec.match_simple (arch, "*-i?86"))
 					arch = "%s-%s".printf (arch.substring (0, arch.index_of ("-")), system_machine ());
 				else
-					arch = system_osname_arch_generic ();
+					arch = system_osname_arch ();
 				if (get_xproperty (iter, "arch")->get_content ().down () == arch.down ()) {
 					impl = iter;
 					break;

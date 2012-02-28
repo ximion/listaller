@@ -1,4 +1,4 @@
-/* depmanager.vala - Install & remove software dependencies
+/* depmanager.vala - Perform tasks related to software dependency management
  *
  * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *

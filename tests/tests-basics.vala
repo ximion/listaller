@@ -150,7 +150,10 @@ void test_metafile () {
 	ret = mf.open_block_by_value ("id", "mesagl");
 	assert (ret == true);
 	mf.add_value ("Test", "Blahfvlshfikdj");
-	mf.add_value ("Test2", "hgdufjhbudj\nhugdvh ushda743\nsuhfusdha7wdwe");
+	ret = mf.add_value ("Test2", "hgdufjhbudj\nhugdvh ushda743\nsuhfusdha7wdwe");
+	assert (ret == true);
+	var val = mf.get_value ("Test2");
+	assert (val == "hgdufjhbudj\nhugdvh ushda743\nsuhfusdha7wdwe");
 }
 
 int main (string[] args) {

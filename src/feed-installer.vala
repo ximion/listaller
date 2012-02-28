@@ -69,7 +69,7 @@ private class FeedInstaller : MsgObject {
 					FileQueryInfoFlags.NONE, 0);
 				size = (int64) info.get_attribute_uint64 (FILE_ATTRIBUTE_STANDARD_SIZE);
 			} catch (IOError e_query) {
-				li_warning (_("Cannot query file size, continuing with an unknown size."));
+				warning ("Cannot query file size, continuing with an unknown size.");
 			}
 
 			FileInputStream input = yield remote.read_async ();

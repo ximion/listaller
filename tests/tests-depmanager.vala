@@ -144,6 +144,9 @@ void test_feed_installer () {
 
 	bool ret;
 	ret = finst.install_dependency (sdb, ref test1);
+	if (finst.last_error != null) {
+		error (finst.last_error.details);
+	}
 	assert (ret == true);
 	assert (test1.full_name == "libvorbis");
 
