@@ -163,6 +163,52 @@ public class Manager : MsgObject {
 		return app;
 	}
 
+	public bool refresh_appitem (ref AppItem item) {
+		SoftwareDB db;
+		if (!init_db (out db, false))
+			return false;
+
+		// We only want to fetch dependencies from the correct database, so limit DB usage
+		if (item.shared)
+			db.force_db = ForceDB.SHARED;
+		else
+			db.force_db = ForceDB.PRIVATE;
+
+		var tmpItem = db.get_application_by_idname (item.idname);
+		if (tmpItem == null)
+			return false;
+		item = tmpItem;
+
+		return true;
+	}
+
+	public string? get_application_filelist_as_string (AppItem app) {
+		app.fast_check ();
+
+		SoftwareDB db;
+		if (!init_db (out db))
+			return null;
+
+		// Check if this application exists, if not exit
+		if (db.get_application_by_id (app) == null) {
+			warning ("Unable to get file-list for application %s - app is not installed!", app.idname);
+			return null;
+		}
+
+		// Remove all files which belong to this application
+		ArrayList<string>? files = db.get_application_filelist (app);
+		if (files == null) {
+			critical ("Couldn't retrieve file-list for application %s! All apps should have a filelist, this should never happen!", app.idname);
+			return null;
+		}
+
+		string res = "";
+		foreach (string s in files)
+			res += "%s\n".printf (s);
+
+		return res;
+	}
+
 	public string get_app_ld_environment (AppItem app) {
 		if (app.dbid < 0) {
 			debug ("AppItem database id was < 0! Application was maybe not retrieved from software DB and therefore lacks the required data.");

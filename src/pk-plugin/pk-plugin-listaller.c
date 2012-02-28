@@ -152,9 +152,14 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 	for (i=0; package_ids[i] != NULL; i++) {
 		app = pk_listaller_appitem_from_pkid (package_ids[i]);
 
+		/* update AppItem with database data */
+		listaller_manager_refresh_appitem (plugin->priv->mgr, &app);
+
 		description = listaller_app_item_get_description (app);
 		listaller_app_item_get_license (app, &license);
 		url = listaller_app_item_get_website (app);
+
+		//TODO: Fetch size of installed application too
 
 		/* emit */
 		pk_backend_details (plugin->backend, package_ids[i],
@@ -163,6 +168,34 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 					description,
 					url,
 					0);
+	};
+}
+
+/**
+ * pk_listaller_get_filelist:
+ */
+void
+pk_listaller_get_filelist (PkPlugin *plugin, gchar **package_ids)
+{
+	const gchar *filelist;
+	ListallerAppItem *app;
+	guint i;
+
+	g_debug ("listaller: running get_filelist ()");
+	pk_backend_reset (plugin->backend);
+
+	for (i=0; package_ids[i] != NULL; i++) {
+		app = pk_listaller_appitem_from_pkid (package_ids[i]);
+
+		/* update AppItem with database data */
+		listaller_manager_refresh_appitem (plugin->priv->mgr, &app);
+
+		filelist = listaller_manager_get_application_filelist_as_string (plugin->priv->mgr, app);
+		if (filelist == NULL)
+			filelist = "";
+
+		/* emit */
+		pk_backend_files (plugin->backend, package_ids[i], filelist);
 	};
 }
 
@@ -567,6 +600,20 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 		goto out;
 	}
 
+	if (role == PK_ROLE_ENUM_GET_FILES) {
+		package_ids = pk_transaction_get_package_ids (transaction);
+		data = pk_transaction_filter_listaller_packages (transaction,
+							       package_ids);
+		if (data != NULL)
+			pk_listaller_get_filelist (plugin, data);
+
+		/* nothing more to process */
+		package_ids = pk_transaction_get_package_ids (transaction);
+		if (g_strv_length (package_ids) == 0)
+			pk_plugin_skip_native_backend (plugin);
+		goto out;
+	}
+
 	if (role == PK_ROLE_ENUM_SIMULATE_REMOVE_PACKAGES ||
 	    role == PK_ROLE_ENUM_SIMULATE_INSTALL_PACKAGES) {
 
@@ -678,6 +725,7 @@ pk_plugin_initialize (PkPlugin *plugin)
 
 	/* tell PK we might be able to handle these */
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_DETAILS);
+	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_FILES);
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_INSTALL_FILES);
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_SIMULATE_INSTALL_FILES);
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_REMOVE_PACKAGES);
