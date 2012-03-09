@@ -393,8 +393,8 @@ private class InternalDB : Object {
 	/* Application stuff */
 
 	public bool add_application (AppItem item) throws DatabaseError {
-		if (!locked) {
-			throw new DatabaseError.ERROR (_("Tried to write on unlocked (readonly) database! (This should not happen)"));
+		if (!database_writeable ()) {
+			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
 		}
 
 		// Set install timestamp
@@ -441,8 +441,8 @@ private class InternalDB : Object {
 	}
 
 	public bool add_application_filelist (AppItem aid, Collection<IPK.FileEntry> flist) {
-		if (!locked) {
-			throw new DatabaseError.ERROR (_("Tried to write on unlocked (readonly) database! (This should not happen)"));
+		if (!database_writeable ()) {
+			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should not happen)"));
 		}
 		string metadir = Path.build_filename (regdir, aid.idname, null);
 		create_dir_parents (metadir);
@@ -724,8 +724,8 @@ private class InternalDB : Object {
 	/* Dependency stuff */
 
 	public bool add_dependency (IPK.Dependency dep) throws DatabaseError {
-		if (!locked) {
-			throw new DatabaseError.ERROR (_("Tried to write on unlocked (readonly) database! (This should not happen)"));
+		if (!database_writeable ()) {
+			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
 		}
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 (
