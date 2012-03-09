@@ -43,11 +43,11 @@ void test_solver_error_code_cb (ErrorItem item) {
 	error (item.details);
 }
 
-void test_dependency_manager () {
-	msg ("Dependency manager tests");
+void test_dependency_installer () {
+	msg ("Dependency installer tests");
 
 	bool ret;
-	DepManager depman = new DepManager (sdb);
+	DepInstaller depinst = new DepInstaller (sdb);
 
 	// Test 1
 	IPK.Dependency test1 = new IPK.Dependency ("Test:1.gee");
@@ -55,7 +55,7 @@ void test_dependency_manager () {
 	//test1.add_component ("libgee.so.2", Dep.ComponentType.SHARED_LIB);
 	test1.add_component ("bladada.so.2", Dep.ComponentType.SHARED_LIB);
 
-	ret = depman.install_dependency (ref test1);
+	ret = depinst.install_dependency (ref test1);
 	assert (ret == true);
 	assert (test1.satisfied == true);
 	debug (test1.full_name);
@@ -67,7 +67,8 @@ void test_dependency_manager () {
 	//test2.add_component ("libvorbis.so.0", Dep.ComponentType.SHARED_LIB);
 	test2.add_component ("nobis.so.0", Dep.ComponentType.SHARED_LIB);
 
-	ret = depman.install_dependency (ref test2);
+	ret = depinst.install_dependency (ref test2);
+
 	/* We already installed this in a previous test, but did no proper
 	 * registration. So this has to fail because unknown files would be overwritten.
 	 */
@@ -79,7 +80,7 @@ void test_dependency_manager () {
 	// Look if dependency of test1 is still available :-P
 	test1.satisfied = false;
 	test1.full_name = "";
-	ret = depman.install_dependency (ref test1);
+	ret = depinst.install_dependency (ref test1);
 	assert (ret == true);
 	assert (test1.satisfied == true);
 	assert (test1.full_name == "libgee");
@@ -177,11 +178,11 @@ void test_depsolver () {
 	deplist.add (dep4);
 
 	bool ret;
-	DepManager depman = new DepManager (sdb);
-	depman.error_code.connect (test_solver_error_code_cb);
-	depman.message.connect (test_solver_message_cb);
+	DepInstaller depinst = new DepInstaller (sdb);
+	depinst.error_code.connect (test_solver_error_code_cb);
+	depinst.message.connect (test_solver_message_cb);
 
-	ret = depman.dependencies_installable (ref deplist);
+	ret = depinst.dependencies_installable (ref deplist);
 	assert (ret == true);
 }
 
@@ -206,14 +207,12 @@ int main (string[] args) {
 	sdb.error_code.connect (test_solver_error_code_cb);
 	sdb.message.connect (test_solver_message_cb);
 
-	// Do this only in testing environment!
-	sdb._remove_db_lock ();
 	// Open the DB
 	sdb.open_write ();
 
 	test_feed_installer ();
 	//! test_packagekit_installer ();
-	test_dependency_manager ();
+	test_dependency_installer ();
 	test_depsolver ();
 
 	Test.run ();

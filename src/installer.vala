@@ -144,12 +144,12 @@ public class Setup : MsgObject {
 		Gee.ArrayList<IPK.Dependency> pkgDeps = ipkp.control.get_dependencies ();
 
 		// Construct new dependency manager
-		DepManager depman = new DepManager (db);
+		DepInstaller depinst = new DepInstaller (db);
 		// Forward DependencyManager events to setup. Send DepMan progress as subprogress
-		connect_with_object (depman, ObjConnectFlags.IGNORE_PROGRESS);
+		connect_with_object (depinst, ObjConnectFlags.IGNORE_PROGRESS);
 
 		// Install possibly missing dependencies
-		ret = depman.install_dependencies (ref pkgDeps);
+		ret = depinst.install_dependencies (ref pkgDeps);
 		if (!ret) {
 			// If dependency installation failed, exit
 			return false;

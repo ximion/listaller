@@ -145,6 +145,7 @@ private class InternalDB : Object {
 	private string regdir;
 	private string dbname;
 	private bool shared_db;
+	private bool writeable;
 
 	private Sqlite.Statement insert_app;
 
@@ -161,6 +162,7 @@ private class InternalDB : Object {
 		dbname = tmpConf.database_file ();
 		// Whether we fetch data from the "shared" or "private" application database
 		shared_db = sumode;
+		writeable = false;
 	}
 
 	~InternalDB () {
@@ -183,6 +185,10 @@ private class InternalDB : Object {
 			locked = false;
 		}
 		return locked;
+	}
+
+	public bool database_writeable () {
+		return (!database_locked ()) && (writeable);
 	}
 
 	private void emit_message (string msg) {
@@ -261,12 +267,16 @@ private class InternalDB : Object {
 
 		// DB is now locked
 		locked = true;
+		// ... and writeable
+		writeable = true;
+
 		return true;
 	}
 
 	public bool open_r () {
 		bool ret;
 		ret = open_db ();
+
 		return ret;
 	}
 
@@ -283,10 +293,6 @@ private class InternalDB : Object {
 			}
 			locked = false;
 		}
-	}
-
-	public void _remove_db_lock () {
-		remove_db_lock ();
 	}
 
 	/*

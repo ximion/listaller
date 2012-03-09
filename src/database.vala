@@ -175,6 +175,19 @@ private class SoftwareDB : MsgObject {
 			return true;
 		if (private_db_canbeused ())
 			ret = db_priv.database_locked ();
+
+		return ret;
+	}
+
+	public bool database_writeable () {
+		bool ret = false;
+		if (shared_db_canbeused ())
+			ret = db_shared.database_writeable ();
+		if (ret)
+			return true;
+		if (private_db_canbeused ())
+			ret = db_priv.database_writeable ();
+
 		return ret;
 	}
 
@@ -423,16 +436,6 @@ private class SoftwareDB : MsgObject {
 			if (private_db_canbeused ())
 				dep = db_priv.get_dependency_by_id (depIdName);
 		return dep;
-	}
-
-	/* Testing stuff */
-
-	// DO NOT USE THIS!
-	public void _remove_db_lock () {
-		if (shared_db_canbeused ())
-			db_shared._remove_db_lock ();
-		if (private_db_canbeused ())
-			db_priv._remove_db_lock ();
 	}
 }
 

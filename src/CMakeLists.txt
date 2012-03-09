@@ -13,7 +13,7 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/logging.vala
 	${lisrc}/msgobject.vala
 	${lisrc}/settings.vala
 	${lisrc}/application.vala
-	${lisrc}/database-int.vala
+	${lisrc}/database-internal.vala
 	${lisrc}/database.vala
 	${lisrc}/varsolver.vala
 	${lisrc}/varsetter.vala

@@ -55,8 +55,6 @@ void test_software_db () {
 	sdb.error_code.connect (softwaredb_error_code_cb);
 	sdb.message.connect (softwaredb_message_cb);
 
-	// Do this only in testing environment!
-	sdb._remove_db_lock ();
 	// Open the DB
 	sdb.open_write ();
 	msg ("Software database is ready now!");
