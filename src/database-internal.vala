@@ -55,7 +55,7 @@ private const string DATABASE = ""
 		+ "install_time INTEGER, "
 		+ "components TEXT NOT NULL,"
 		+ "environment TEXT,"
-		+ "dependencies TEXT,"
+		+ "dependencies TEXT"
 		+ ");" +
 		"";
 
@@ -247,7 +247,7 @@ private class InternalDB : Object {
 		// InsertDep statement
 		try {
 			db_assert (db.prepare_v2 ("INSERT INTO dependencies (" + depcols + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_dep), "prepare dependency insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -796,6 +796,8 @@ private class InternalDB : Object {
 			db_assert (insert_dep.bind_text (DepRow.COMPONENTS, dep.get_installdata_as_string ()), "bind value");
 
 			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT, dep.environment), "bind value");
+
+			db_assert (insert_dep.bind_text (DepRow.DEPENDENCIES, ""), "bind value");
 
 			db_assert (insert_dep.step (), "add dependency");
 
