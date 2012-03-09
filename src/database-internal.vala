@@ -54,14 +54,15 @@ private const string DATABASE = ""
 		+ "architecture TEXT NOT NULL, "
 		+ "install_time INTEGER, "
 		+ "components TEXT NOT NULL,"
-		+ "environment TEXT"
+		+ "environment TEXT,"
+		+ "dependencies TEXT,"
 		+ ");" +
 		"";
 
 private const string appcols = "name, full_name, version, desktop_file, author, publisher, categories, " +
 			"description, homepage, architecture, install_time, dependencies, origin";
 private const string depcols = "name, full_name, version, description, author, homepage, architecture, " +
-			"install_time, components, environment";
+			"install_time, components, environment, dependencies";
 
 private enum AppRow {
 	DBID = 0,
@@ -91,7 +92,8 @@ private enum DepRow {
 	ARCHITECTURE = 7,
 	INST_TIME = 8,
 	COMPONENTS = 9,
-	ENVIRONMENT = 10;
+	ENVIRONMENT = 10,
+	DEPENDENCIES = 11;
 }
 
 public errordomain DatabaseError {
