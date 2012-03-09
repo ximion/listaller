@@ -1,4 +1,4 @@
-/* depmanager.vala - Perform tasks related to software dependency management
+/* dep-manager.vala - Perform tasks related to software dependency management
  *
  * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -38,9 +38,6 @@ private class DepManager : MsgObject {
 		if (conf == null) {
 			error ("Listaller config was NULL in DepManager constructor!");
 			conf = new Listaller.Settings ();
-		}
-		if (!db.database_locked ()) {
-			critical ("Dependency manager received a read-only database! This won't work if write actions have to be performed!");
 		}
 	}
 

@@ -1,4 +1,4 @@
-/* depinstaller.vala - Perform everything required for dependency solving & installing
+/* dep-installer.vala - Perform everything required for dependency solving & installing
  *
  * Copyright (C) 2012 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -28,9 +28,27 @@ namespace Listaller {
 
 private class DepInstaller : MsgObject {
 	private SoftwareDB db;
+	private DepManager depman;
 	private Listaller.Settings conf;
 
-	// TODO
+	public DepInstaller (SoftwareDB lidb) {
+		base ();
+		db = lidb;
+		conf = lidb.get_liconf ();
+
+		// This should never happen!
+		if (conf == null) {
+			error ("Listaller config was NULL in DepManager constructor!");
+			conf = new Listaller.Settings ();
+		}
+		if (!db.database_locked ()) {
+			critical ("Dependency installer received a read-only database! This won't work if write actions have to be performed!");
+		}
+
+		// Create a new dependency manager to fetch information about installed dependencies
+		depman = new DepManager (db);
+		depman.connect_with_object_all (this);
+	}
 
 }
 
