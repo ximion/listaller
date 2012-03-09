@@ -175,7 +175,6 @@ private class Package : MsgObject {
 			return false;
 		}
 
-		string msg;
 		ret = touch_dir (dest);
 		if (!ret) {
 			// Undo changes & emit error
@@ -350,8 +349,6 @@ private class Package : MsgObject {
 	private Read? open_base_ipk () {
 		// Create a new archive object for reading
 		Read ar = new Read ();
-
-		weak Entry e;
 
 		// Disable compression, as IPK main is not compressed
 		ar.support_compression_none ();

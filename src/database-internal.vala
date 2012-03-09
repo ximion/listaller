@@ -1,4 +1,4 @@
-/* database-int.vala - The Listaller application & dependency information storage
+/* database-internal.vala - The Listaller application & dependency information storage
  *
  * Copyright (C) 2010-2012 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -58,9 +58,9 @@ private const string DATABASE = ""
 		+ ");" +
 		"";
 
-private const string appcols = "id, name, full_name, version, desktop_file, author, publisher, categories, " +
+private const string appcols = "name, full_name, version, desktop_file, author, publisher, categories, " +
 			"description, homepage, architecture, install_time, dependencies, origin";
-private const string depcols = "id, name, full_name, version, description, author, homepage, architecture, " +
+private const string depcols = "name, full_name, version, description, author, homepage, architecture, " +
 			"install_time, components, environment";
 
 private enum AppRow {
@@ -148,6 +148,7 @@ private class InternalDB : Object {
 	private bool writeable;
 
 	private Sqlite.Statement insert_app;
+	private Sqlite.Statement insert_dep;
 
 	public signal void message (MessageItem message);
 
@@ -232,11 +233,20 @@ private class InternalDB : Object {
 
 		// Prepare statements
 
+		// InsterApp statement
 		try {
-			db_assert (db.prepare_v2 ("INSERT INTO applications (name, full_name, version, desktop_file, author, publisher, categories, " +
-			"description, homepage, architecture, install_time, dependencies, origin) "
+			db_assert (db.prepare_v2 ("INSERT INTO applications (" + appcols + ") "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_app), "prepare app insert statement");
+		} catch (Error e) {
+			throw new DatabaseError.ERROR (e.message);
+		}
+
+		// InsertDep statement
+		try {
+			db_assert (db.prepare_v2 ("INSERT INTO dependencies (" + depcols + ") "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					-1, out insert_dep), "prepare dependency insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
 		}
@@ -273,9 +283,13 @@ private class InternalDB : Object {
 		return true;
 	}
 
-	public bool open_r () {
+	public bool open_r () throws DatabaseError {
 		bool ret;
-		ret = open_db ();
+		try {
+			ret = open_db ();
+		} catch (DatabaseError e) {
+			throw e;
+		}
 
 		return ret;
 	}
@@ -549,7 +563,7 @@ private class InternalDB : Object {
 	public AppItem? get_application_by_idname (string appIdName) throws DatabaseError {
 		Sqlite.Statement stmt;
 		try {
-			db_assert (db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE name=?", -1, out stmt),
+			db_assert (db.prepare_v2 ("SELECT * FROM applications WHERE name=?", -1, out stmt),
 				   "prepare find app by idname statement");
 
 			db_assert (stmt.bind_text (1, appIdName), "bind value");
@@ -573,7 +587,7 @@ private class InternalDB : Object {
 
 	public AppItem? get_application_by_fullname (string appFullName) throws DatabaseError {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE full_name=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT * FROM applications WHERE full_name=?", -1, out stmt);
 
 		try {
 			db_assert (res, "get application (by full_name)");
@@ -598,7 +612,7 @@ private class InternalDB : Object {
 
 	public AppItem? get_application_by_dbid (uint databaseId) throws DatabaseError {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE id=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT * FROM applications WHERE id=?", -1, out stmt);
 
 		try {
 			db_assert (res, "get application (by database-id)");
@@ -623,7 +637,7 @@ private class InternalDB : Object {
 
 	public AppItem? get_application_by_name_version (string appName, string appVersion) throws DatabaseError {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + appcols + " FROM applications WHERE name=? AND version=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT * FROM applications WHERE name=? AND version=?", -1, out stmt);
 		try {
 			db_assert (res, "get application (by full_name and version)");
 			db_assert (stmt.bind_text (1, appName), "bind value");
@@ -684,20 +698,47 @@ private class InternalDB : Object {
 
 		HashSet<AppItem> tmpList = new HashSet<AppItem> ();
 
-		int i = 1;
-		AppItem tmpApp = get_application_by_dbid (i);
-		while (tmpApp != null) {
-			for (int j = 0; values[j] != null; j++) {
-				if (string_in_app_item (tmpApp, values[j])) {
-					tmpList.add (tmpApp);
-					break;
+		Sqlite.Statement stmt;
+		try {
+			db_assert (db.prepare_v2 ("SELECT * FROM applications", -1, out stmt),
+				   "prepare list all applications statement");
+
+			int rc = 0;
+			do {
+				rc = stmt.step();
+				switch (rc) {
+					case Sqlite.DONE:
+						break;
+					case Sqlite.ROW:
+						// Fetch a new AppItem
+						AppItem? tmpApp = retrieve_app_item (stmt);
+						// Fast sanity checks
+						if (tmpApp != null)
+							tmpApp.fast_check ();
+						else
+							throw new DatabaseError.ERROR ("Unable to retrieve an application from database! DB might be in an inconstistent state!");
+
+						// Now check if app matches our criteroa
+						for (int j = 0; values[j] != null; j++) {
+							if (string_in_app_item (tmpApp, values[j])) {
+								tmpList.add (tmpApp);
+								break;
+							}
+						}
+
+						break;
+					default:
+						db_assert (rc, "execute");
+						break;
 				}
-			}
-			i++;
-			tmpApp = get_application_by_dbid (i);
+			} while (rc == Sqlite.ROW);
+
+		} catch (Error e) {
+			throw new DatabaseError.ERROR (e.message);
 		}
 
 		resList.add_all (tmpList.read_only_view);
+
 		return resList;
 	}
 
@@ -727,42 +768,36 @@ private class InternalDB : Object {
 		if (!database_writeable ()) {
 			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
 		}
-		Sqlite.Statement stmt;
-		int res = db.prepare_v2 (
-			"INSERT INTO dependencies (name, full_name, version, description, author, homepage, architecture, " +
-			"install_time, components, environment) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-				   -1, out stmt);
 
 		// Set install timestamp
 		DateTime dt = new DateTime.now_local ();
 		dep.install_time = dt.to_unix ();
 
 		try {
-			db_assert (res, "add dependency");
-
 			// Assign values
-			db_assert (stmt.bind_text (DepRow.IDNAME, dep.idname), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.IDNAME, dep.idname), "bind value");
 
-			db_assert (stmt.bind_text (DepRow.FULLNAME, dep.full_name), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.FULLNAME, dep.full_name), "bind value");
 
-			db_assert (stmt.bind_text (DepRow.VERSION, dep.version), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.VERSION, dep.version), "bind value");
 
-			db_assert (stmt.bind_text (DepRow.DESCRIPTION, "%s\n\n%s".printf (dep.summary, dep.description)), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.DESCRIPTION, "%s\n\n%s".printf (dep.summary, dep.description)), "bind value");
 
-			db_assert (stmt.bind_text (DepRow.HOMEPAGE, dep.homepage), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.HOMEPAGE, dep.homepage), "bind value");
 
-			db_assert (stmt.bind_text (DepRow.AUTHOR, dep.author), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.AUTHOR, dep.author), "bind value");
 
-			db_assert (stmt.bind_int64 (DepRow.INST_TIME, dep.install_time), "bind value");
+			db_assert (insert_dep.bind_int64 (DepRow.INST_TIME, dep.install_time), "bind value");
 
-			db_assert (stmt.bind_text (DepRow.ARCHITECTURE, dep.architecture), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ARCHITECTURE, dep.architecture), "bind value");
 
-			db_assert (stmt.bind_text (DepRow.COMPONENTS, dep.get_installdata_as_string ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.COMPONENTS, dep.get_installdata_as_string ()), "bind value");
 
-			db_assert (stmt.bind_text (DepRow.ENVIRONMENT, dep.environment), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT, dep.environment), "bind value");
 
-			db_assert (stmt.step (), "add dependency");
+			db_assert (insert_dep.step (), "add dependency");
+
+			db_assert (insert_dep.reset (), "reset insert_dep statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
 		}
@@ -801,7 +836,7 @@ private class InternalDB : Object {
 
 	public IPK.Dependency? get_dependency_by_id (string depIdName) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT " + depcols + " FROM dependencies WHERE name=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT * FROM dependencies WHERE name=?", -1, out stmt);
 
 		try {
 			db_assert (res, "get dependency (by id)");
