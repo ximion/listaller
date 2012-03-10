@@ -81,13 +81,14 @@ void test_software_db () {
 }
 
 int main (string[] args) {
+	msg ("=== Running Database Tests ===");
+	Test.init (ref args);
 	set_console_mode (true);
 	set_verbose_mode (true);
 	add_log_domain ("LiTest");
 
-	msg ("=== Running Database Tests ===");
-	Test.init (ref args);
 	test_software_db ();
+
 	Test.run ();
 	return 0;
 }

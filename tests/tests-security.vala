@@ -46,10 +46,6 @@ void test_signing_basic () {
 }
 
 int main (string[] args) {
-	set_console_mode (true);
-	set_verbose_mode (true);
-	add_log_domain ("LiTest");
-
 	msg ("=== Running Security Tests ===");
 	datadir = args[1];
 	assert (datadir != null);
@@ -58,6 +54,9 @@ int main (string[] args) {
 	assert (FileUtils.test (datadir, FileTest.EXISTS) != false);
 
 	Test.init (ref args);
+	set_console_mode (true);
+	set_verbose_mode (true);
+	add_log_domain ("LiTest");
 
 	test_signing_basic ();
 

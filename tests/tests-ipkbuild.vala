@@ -79,10 +79,6 @@ void test_libuild_build () {
 }
 
 int main (string[] args) {
-	set_console_mode (true);
-	set_verbose_mode (true);
-	add_log_domain ("LiTest");
-
 	msg ("=== Running LiBuild Tests ===");
 	datadir = args[1];
 	assert (datadir != null);
@@ -98,7 +94,11 @@ int main (string[] args) {
 
 	string curdir = Environment.get_current_dir ();
 	Environment.set_current_dir (datadir);
+
 	Test.init (ref args);
+	set_console_mode (true);
+	set_verbose_mode (true);
+	add_log_domain ("LiTest");
 
 	test_autocompile ();
 	Environment.set_current_dir (datadir);
