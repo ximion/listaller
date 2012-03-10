@@ -84,6 +84,10 @@ private class DepManager : MsgObject {
 			return "";
 
 		string depInstallDir = Path.build_filename (conf.depdata_dir (), dep.idname, null);
+		// If directory is non-existent, we don't need to continue here. Maybe we have a system library/package installed.'
+		if (!FileUtils.test (depInstallDir, FileTest.EXISTS))
+			return "";
+
 		string? resDir = find_dir_containing_file (depInstallDir, "*.so", true);
 		if (resDir == null) {
 			warning ("Could not find shared libraries for dependency '%s'. this might be an error.", dep.idname);
