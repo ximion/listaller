@@ -864,6 +864,26 @@ private class InternalDB : Object {
 		return dep;
 	}
 
+	public bool set_dependency_environment (string depIdName, string env) throws DatabaseError {
+		Sqlite.Statement stmt;
+		int res = db.prepare_v2 ("UPDATE dependencies SET environment=? WHERE name=?", -1, out stmt);
+
+		try {
+			db_assert (res, "get dependency (by id)");
+			db_assert (stmt.bind_text (1, env), "bind text");
+			db_assert (stmt.bind_text (2, depIdName), "bind text");
+
+			res = stmt.step ();
+			db_assert (res, "execute");
+			if (res != Sqlite.DONE)
+				return false;
+		} catch (Error e) {
+			throw new DatabaseError.ERROR (e.message);
+		}
+
+		return true;
+	}
+
 }
 
 } // End of namespace

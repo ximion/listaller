@@ -437,6 +437,18 @@ private class SoftwareDB : MsgObject {
 				dep = db_priv.get_dependency_by_id (depIdName);
 		return dep;
 	}
+
+	public bool set_dependency_environment (string depIdName, string env) {
+		bool ret = false;
+		if (shared_db_canbeused ())
+			ret = db_shared.set_dependency_environment (depIdName, env);
+
+		if (!ret)
+			if (private_db_canbeused ())
+				ret = db_priv.set_dependency_environment (depIdName, env);
+
+		return ret;
+	}
 }
 
 } // End of namespace

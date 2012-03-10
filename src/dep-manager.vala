@@ -60,6 +60,18 @@ private class DepManager : MsgObject {
 		if (!dep.has_components ())
 			return "";
 
+		if (dep.environment != "") {
+			string str = dep.environment;
+			if (str.index_of ("LD_LIBRARY_PATH=\"") >= 0) {
+				string res;
+				int i = str.index_of ("_PATH=\"") + 7;
+				int j = str.index_of ("\"", i + 1);
+				res = str.slice (i, j);
+				if (res.strip () != "")
+					return res;
+			}
+		}
+
 		bool contains_libs = false;
 		foreach (string comp in dep.raw_complist) {
 			if (IPK.Dependency.component_get_type (comp) == ComponentType.SHARED_LIB) {
@@ -77,6 +89,8 @@ private class DepManager : MsgObject {
 			warning ("Could not find shared libraries for dependency '%s'. this might be an error.", dep.idname);
 			return "";
 		}
+
+		db.set_dependency_environment (dep.idname, "LD_LIBRARY_PATH=\"%s\"".printf (resDir));
 
 		return resDir;
 	}

@@ -95,8 +95,15 @@ void test_dependency_manager () {
 	assert (testA != null);
 
 	string path = depman.get_absolute_library_path (testA);
+	string expectedPath = Path.build_filename (conf.depdata_dir (), testA.idname, "lib", null);
 	debug (path);
-	assert (path == Path.build_filename (conf.depdata_dir (), testA.idname, "lib", null));
+	assert (path == expectedPath);
+
+	// We do the whole thing again to check if storing this info in the database worked.
+	testA = depman.dependency_from_idname ("libgee-0.5.0-8");
+	path = depman.get_absolute_library_path (testA);
+	debug (path);
+	assert (path == expectedPath);
 }
 
 void search_install_pkdep (Dep.PkInstaller pkinst, Dep.PkResolver pksolv, ref IPK.Dependency dep) {
