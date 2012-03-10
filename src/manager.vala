@@ -229,20 +229,17 @@ public class Manager : MsgObject {
 			db.force_db = ForceDB.PRIVATE;
 
 		// A new DepManager for the resolving...
-		DepManager depMan = new DepManager (db);
+		DepManager depman = new DepManager (db);
 
 		string[] depStr = app.dependencies.split ("\n");
 
 		string paths = "";
-		IPK.Dependency? dep = null;
-		foreach (string s in depStr) {
-			dep = db.get_dependency_by_id (s);
-			if (dep == null) {
-				debug ("Dependency not found in database: %s", s);
-				continue;
-			}
+
+		HashSet<IPK.Dependency> depList = depman.dependencies_from_idlist (depStr);
+
+		foreach (IPK.Dependency dep in depList) {
 			// Now get paths for library, if possible (if dependency is a library)
-			string p = depMan.get_absolute_library_paths (dep);
+			string p = depman.get_absolute_library_path (dep);
 			if (p != "")
 				paths = "%s;%s".printf (paths, p);
 		}

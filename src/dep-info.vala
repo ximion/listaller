@@ -1,4 +1,4 @@
-/* depinfo.vala - Handle information about software dependencies
+/* dep-info.vala - Handle information about software dependencies
  *
  * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -38,7 +38,7 @@ public enum ComponentType {
 
 namespace Listaller.IPK {
 
-/* A shared resource */
+/* A shared resource / external requirement */
 public class Dependency: Object {
 	private string _full_name;
 	public string full_name {
@@ -99,6 +99,8 @@ public class Dependency: Object {
 			_idname = value;
 		}
 	}
+
+	private bool private { get; set; } // If this dependency is installed in user's $HOME or not
 
 	public HashSet<string> raw_complist {
 		get {
@@ -277,6 +279,10 @@ public class Dependency: Object {
 				    break;
 		}
 		return tp;
+	}
+
+	public string get_install_dir_for_setting (Listaller.Settings conf) {
+		return Path.build_filename (conf.depdata_dir (), idname, null);
 	}
 }
 

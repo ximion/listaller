@@ -55,10 +55,56 @@ private class DepManager : MsgObject {
 		return false;
 	}
 
-	public string get_absolute_library_paths (IPK.Dependency dep) {
-		return "";
+	public string get_absolute_library_path (IPK.Dependency dep) {
+		#if 0
+		// No components => no libraries
+		if (!dep.has_components ())
+			return "";
+
+		bool contains_libs = false;
+		foreach (string comp in dep.raw_complist) {
+			if (IPK.Dependency.component_get_type (comp) == ComponentType.SHARED_LIB) {
+				contains_libs = true;
+				break;
+			}
+		}
+		// No shared libs => no library paths
+		if (!contains_libs)
+			return "";
+		#endif
+
+		string depInstallDir = Path.build_filename (conf.depdata_dir (), dep.idname, null);
+		string? resDir = find_dir_containing_file (depInstallDir, "*.so", true);
+		if (resDir == null) {
+			warning ("Could not find shared libraries for dependency '%s'. this might be an error.", dep.idname);
+			return "";
+		}
+
+		return resDir;
 	}
 
+	public IPK.Dependency? dependency_from_idname (string depIdName) {
+		IPK.Dependency? dep = db.get_dependency_by_id (depIdName);
+		if (dep == null)
+			debug ("Dependency not found in database: %s", depIdName);
+
+		return dep;
+	}
+
+	public HashSet<IPK.Dependency> dependencies_from_idlist (string[] dep_ids) {
+		HashSet<IPK.Dependency> resList = IPK.dependency_hashset_new ();
+		IPK.Dependency? dep = null;
+		foreach (string s in dep_ids) {
+			dep = db.get_dependency_by_id (s);
+			if (dep == null) {
+				debug ("Dependency not found in database: %s", s);
+				continue;
+			}
+			resList.add (dep);
+		}
+
+		return resList;
+	}
 }
 
 } // End of namespace

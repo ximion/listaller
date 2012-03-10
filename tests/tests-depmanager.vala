@@ -86,6 +86,19 @@ void test_dependency_installer () {
 	assert (test1.full_name == "libgee");
 }
 
+void test_dependency_manager () {
+	msg ("Dependency manager tests");
+
+	DepManager depman = new DepManager (sdb);
+
+	IPK.Dependency testA = depman.dependency_from_idname ("libgee-0.5.0-8");
+	assert (testA != null);
+
+	string path = depman.get_absolute_library_path (testA);
+	debug (path);
+	assert (path == Path.build_filename (conf.depdata_dir (), testA.idname, "lib", null));
+}
+
 void search_install_pkdep (Dep.PkInstaller pkinst, Dep.PkResolver pksolv, ref IPK.Dependency dep) {
 	bool ret;
 	ret = pksolv.search_dep_packages (ref dep);
@@ -187,10 +200,6 @@ void test_depsolver () {
 }
 
 int main (string[] args) {
-	set_console_mode (true);
-	set_verbose_mode (true);
-	add_log_domain ("LiTest");
-
 	msg ("=== Running Dependency Solver Tests ===");
 	datadir = args[1];
 	assert (datadir != null);
@@ -198,6 +207,9 @@ int main (string[] args) {
 	assert (FileUtils.test (datadir, FileTest.EXISTS) != false);
 
 	Test.init (ref args);
+	set_console_mode (true);
+	set_verbose_mode (true);
+	add_log_domain ("LiTest");
 
 	// Set up Listaller configuration & database
 	conf = new Listaller.Settings ();
@@ -213,6 +225,7 @@ int main (string[] args) {
 	test_feed_installer ();
 	//! test_packagekit_installer ();
 	test_dependency_installer ();
+	test_dependency_manager ();
 	test_depsolver ();
 
 	Test.run ();

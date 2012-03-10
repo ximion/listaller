@@ -224,6 +224,35 @@ private HashSet<string>? find_files (string dir, bool recursive = false) {
 	return list;
 }
 
+private string? find_dir_containing_file (string dir, string pattern, bool recursive = false) {
+	try {
+		var directory = File.new_for_path (real_path (dir));
+
+		var enumerator = directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_NAME, 0);
+
+		FileInfo file_info;
+		while ((file_info = enumerator.next_file ()) != null) {
+			string path = Path.build_filename (dir, file_info.get_name (), null);
+			if (file_info.get_is_hidden ())
+				continue;
+			if ((!FileUtils.test (path, FileTest.IS_REGULAR)) && (recursive)) {
+				string? resDir = find_dir_containing_file (path, pattern, recursive);
+				// A directory was found, exit
+				if (resDir != null)
+					return resDir;
+			} else {
+				if (PatternSpec.match_simple (pattern, file_info.get_name ()))
+					return dir;
+			}
+		}
+
+	} catch (Error e) {
+		stderr.printf (_("Error while finding files in directory %s: %s") + "\n", dir, e.message);
+		return null;
+	}
+	return null;
+}
+
 /* convert ArrayList to zero-terminated string array */
 [CCode (array_length = false, array_null_terminated = true)]
 private string[]? array_list_to_strv (ArrayList<string> list) {

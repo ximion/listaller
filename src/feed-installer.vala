@@ -162,7 +162,7 @@ private class FeedInstaller : MsgObject {
 		bool ret = true;
 
 		// Target dependency subdirectory (from DEP installation-var)
-		string dest = autosubst_instvars ("$DEP", dep.idname, conf);
+		string dest = dep.get_install_dir_for_setting (conf);
 		// Target filename
 		string fname = Path.build_filename (dest, e.pathname (), null);
 
