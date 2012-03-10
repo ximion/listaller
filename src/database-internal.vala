@@ -53,8 +53,9 @@ private const string DATABASE = ""
 		+ "homepage TEXT, "
 		+ "architecture TEXT NOT NULL, "
 		+ "install_time INTEGER, "
-		+ "components TEXT NOT NULL,"
-		+ "environment TEXT,"
+		+ "provided_by TEXT NOT NULL, "
+		+ "components TEXT NOT NULL, "
+		+ "environment TEXT, "
 		+ "dependencies TEXT"
 		+ ");" +
 		"";
@@ -62,7 +63,7 @@ private const string DATABASE = ""
 private const string appcols = "name, full_name, version, desktop_file, author, publisher, categories, " +
 			"description, homepage, architecture, install_time, dependencies, origin";
 private const string depcols = "name, full_name, version, description, author, homepage, architecture, " +
-			"install_time, components, environment, dependencies";
+			"install_time, provided_by, components, environment, dependencies";
 
 private enum AppRow {
 	DBID = 0,
@@ -91,9 +92,10 @@ private enum DepRow {
 	HOMEPAGE = 6,
 	ARCHITECTURE = 7,
 	INST_TIME = 8,
-	COMPONENTS = 9,
-	ENVIRONMENT = 10,
-	DEPENDENCIES = 11;
+	PROVIDED_BY = 9,
+	COMPONENTS = 10,
+	ENVIRONMENT = 11,
+	DEPENDENCIES = 12;
 }
 
 public errordomain DatabaseError {
@@ -247,7 +249,7 @@ private class InternalDB : Object {
 		// InsertDep statement
 		try {
 			db_assert (db.prepare_v2 ("INSERT INTO dependencies (" + depcols + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_dep), "prepare dependency insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -793,7 +795,9 @@ private class InternalDB : Object {
 
 			db_assert (insert_dep.bind_text (DepRow.ARCHITECTURE, dep.architecture), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.COMPONENTS, dep.get_installdata_as_string ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.PROVIDED_BY, dep.get_installdata_as_string ()), "bind value");
+
+			db_assert (insert_dep.bind_text (DepRow.COMPONENTS, dep.get_componentdata_as_string ()), "bind value");
 
 			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT, dep.environment), "bind value");
 
@@ -830,9 +834,11 @@ private class InternalDB : Object {
 		dep.author = stmt.column_text (DepRow.AUTHOR);
 		dep.install_time = stmt.column_int (DepRow.INST_TIME);
 		dep.architecture = stmt.column_text (DepRow.ARCHITECTURE);
-		dep.set_installdata_from_string (stmt.column_text (DepRow.COMPONENTS));
+		dep.set_componentdata_from_string (stmt.column_text (DepRow.COMPONENTS));
+		dep.set_installdata_from_string (stmt.column_text (DepRow.PROVIDED_BY));
 		dep.environment = stmt.column_text (DepRow.ENVIRONMENT);
-		// It's in the db, so this dependency is certainly satisfied
+
+		// Because dep is in the database already, it has to be satisfied
 		dep.satisfied = true;
 
 		return dep;
@@ -861,4 +867,3 @@ private class InternalDB : Object {
 }
 
 } // End of namespace
-

@@ -145,7 +145,7 @@ public class Dependency: Object {
 		install_data.clear ();
 	}
 
-	private bool _add_cmpstr_save (string line) {
+	private bool _add_cmpstr_instdata_save (string line) {
 		string[] cmp = line.split (":", 2);
 		if (cmp.length != 2) {
 			critical ("Installdata string is invalid! (Error at: %s) %i", line, cmp.length);
@@ -155,9 +155,19 @@ public class Dependency: Object {
 		return true;
 	}
 
+	private bool _add_componentstr_save (string line) {
+		string[] cmp = line.split (":", 2);
+		if (cmp.length != 2) {
+			critical ("Component string is invalid! (Error at: %s) %i", line, cmp.length);
+			return false;
+		}
+		components.add ("%s:%s".printf (cmp[0], cmp[1]));
+		return true;
+	}
+
 	internal void set_installdata_from_string (string str) {
 		if (str.index_of ("\n") <= 0) {
-			_add_cmpstr_save (str);
+			_add_cmpstr_instdata_save (str);
 			return;
 		}
 
@@ -166,9 +176,32 @@ public class Dependency: Object {
 			return;
 		foreach (string s in lines) {
 			if (s != "")
-				if (!_add_cmpstr_save (s))
+				if (!_add_cmpstr_instdata_save (s))
 					return;
 		}
+	}
+
+	internal void set_componentdata_from_string (string str) {
+		if (str.index_of ("\n") <= 0) {
+			_add_componentstr_save (str);
+			return;
+		}
+
+		string[]? lines = str.split ("\n");
+		if (lines == null)
+			return;
+		foreach (string s in lines) {
+			if (s != "")
+				if (!_add_componentstr_save (s))
+					return;
+		}
+	}
+
+	internal string get_componentdata_as_string () {
+		string res = "";
+		foreach (string s in raw_complist)
+			res += s + "\n";
+		return res;
 	}
 
 	public HashSet<string> get_installdata () {

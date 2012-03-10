@@ -56,7 +56,6 @@ private class DepManager : MsgObject {
 	}
 
 	public string get_absolute_library_path (IPK.Dependency dep) {
-		#if 0
 		// No components => no libraries
 		if (!dep.has_components ())
 			return "";
@@ -71,7 +70,6 @@ private class DepManager : MsgObject {
 		// No shared libs => no library paths
 		if (!contains_libs)
 			return "";
-		#endif
 
 		string depInstallDir = Path.build_filename (conf.depdata_dir (), dep.idname, null);
 		string? resDir = find_dir_containing_file (depInstallDir, "*.so", true);
