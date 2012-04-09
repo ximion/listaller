@@ -30,14 +30,32 @@ void msg (string s) {
 	stdout.printf (s + "\n");
 }
 
-void test_signing_basic () {
+void test_sign_basic () {
+	GPGSign gsig = new GPGSign ();
+
+	string sign_text;
+	gsig.sign_package (Path.build_filename (datadir, "xfile1.bin", null), null, out sign_text);
+
+	msg ("=========BASIC============\n");
+	msg (sign_text);
+	msg ("=========BASIC============");
+
+	GPGSignature sigverify = new GPGSignature (sign_text);
+	sigverify._verify_package_test (Path.build_filename (datadir, "xfile1.bin", null));
+
+	debug (sigverify.sigstatus.to_string ());
+}
+
+void test_sign_package () {
 	GPGSign gsig = new GPGSign ();
 
 	string sign_text;
 	gsig.sign_package (Path.build_filename (datadir, "xfile1.bin", null),
 			   Path.build_filename (datadir, "FooBar-1.0_install.ipk", null), out sign_text);
 
-	debug (sign_text);
+	msg ("============PACKAGE============");
+	msg (sign_text);
+	msg ("============PACKAGE============");
 
 	GPGSignature sigverify = new GPGSignature (sign_text);
 	sigverify.verify_package (Path.build_filename (datadir, "xfile1.bin", null),
@@ -53,12 +71,15 @@ int main (string[] args) {
 	datadir = Path.build_filename (datadir, "testdata", null);
 	assert (FileUtils.test (datadir, FileTest.EXISTS) != false);
 
+	__unittestmode = true;
+
 	Test.init (ref args);
 	set_console_mode (true);
 	set_verbose_mode (true);
 	add_log_domain ("LiTest");
 
-	test_signing_basic ();
+	test_sign_basic ();
+	test_sign_package ();
 
 	Test.run ();
 	return 0;

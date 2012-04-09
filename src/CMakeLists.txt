@@ -22,6 +22,7 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/logging.vala
 	${lisrc}/ipk-filelist.vala
 	${lisrc}/ipk-control.vala
 	${lisrc}/ipk-package.vala
+	${lisrc}/gpg-basic.vala
 	${lisrc}/signature.vala
 	${lisrc}/security.vala
 	${lisrc}/dep-info.vala

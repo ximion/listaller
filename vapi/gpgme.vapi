@@ -382,7 +382,7 @@ namespace GPG {
 		/**
 		* PKA status
 		*/
-		PKAStatus pka_trust;
+		uint pka_trust;
 
 		/**
 		* Validity has been verified using the chain model
@@ -848,7 +848,7 @@ namespace GPG {
 		 */
 		public void get_passphrase_cb(out passphrase_callback cb, out void* hook_value);
 
-		public GPGError.ErrorCode set_locale(int category, string val);
+		public static GPGError.ErrorCode set_locale(Context ctx, int category, string val);
 
 		/**
 		 * Get information about the configured engines. The returned data is valid
@@ -922,7 +922,7 @@ namespace GPG {
 		/**
 		 * Verify that SIG is a valid signature for SIGNED_TEXT.
 		 */
-		public GPGError.ErrorCode op_verify(Data sig, Data signed_text, Data? plaintext);
+		public GPGError.ErrorCode op_verify(Data sig, Data? signed_text, Data? plaintext);
 
 		/**
 		 * Retrieve a pointer to the result of the encrypt operation

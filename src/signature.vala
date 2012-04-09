@@ -25,7 +25,7 @@ using Listaller.Utils;
 
 namespace Listaller {
 
-private class GPGSignature : Object {
+private class GPGSignature : GPGBasic {
 	private string signtext;
 
 	public SignStatus sigstatus { get; set; }
@@ -33,25 +33,12 @@ private class GPGSignature : Object {
 	public bool sig_valid { get; set; }
 
 	public GPGSignature (string sig) {
+		base (Protocol.OpenPGP);
+
 		signtext = sig;
 		sig_valid = false;
 		sigstatus = SignStatus.UNKNOWN;
 		validity = SignValidity.UNKNOWN;
-		init_gpgme (Protocol.OpenPGP);
-	}
-
-	private void init_gpgme (Protocol proto) {
-		GPG.check_version (null);
-		Intl.setlocale (LocaleCategory.ALL, "");
-		/* Context.set_locale (null, LocaleCategory.CTYPE, Intl.setlocale (LocaleCategory.CTYPE, null)); */
-	}
-
-	private bool check_gpg_err (GPGError.ErrorCode err) {
-		if (err != GPGError.ErrorCode.NO_ERROR) {
-			debug ("GPGError: %s", GPGError.strsource (err));
-			return false;
-		}
-		return true;
 	}
 
 	private void set_sigvalidity_from_gpgvalidity (Validity val) {
@@ -99,7 +86,6 @@ private class GPGSignature : Object {
 		if (sig->status != GPGError.ErrorCode.NO_ERROR) {
 			warning ("Unexpected signature status: %s", sig->status.to_string ());
 			sig_valid = false;
-			return false;
 		} else {
 			sig_valid = true;
 		}
@@ -115,50 +101,61 @@ private class GPGSignature : Object {
 		return true;
 	}
 
-	private bool read_file_to_data (string fname, Data dt) {
-		const uint BUFFER_SIZE = 512;
-		dt.set_encoding (DataEncoding.BINARY);
-
-		var file = File.new_for_path (fname);
-		var fs = file.read ();
-		var data_stream = new DataInputStream (fs);
-		data_stream.set_byte_order (DataStreamByteOrder.LITTLE_ENDIAN);
-
-		// Seek and read the image data chunk
-		uint8[] buffer = new uint8[BUFFER_SIZE];
-		fs.seek (0, SeekType.CUR);
-		while (data_stream.read (buffer) > 0)
-			dt.write (buffer, BUFFER_SIZE);
-
-		return true;
-	}
-
-	private bool verify_package_internal (string ctrlfname, string payloadfname) {
+	private bool verify_package_internal (string ctrlfname, string? payloadfname) {
 		Context ctx;
 		GPGError.ErrorCode err;
 		Data sig, dt;
 		VerifyResult *result;
+		bool ret;
 
 		err = Context.Context (out ctx);
 		return_if_fail (check_gpg_err (err));
 
-		/* Checking a valid message.  */
+		ctx.set_textmode (true);
+		ctx.set_armor (true);
+
 		err = Data.create (out dt);
-		dt.set_encoding (DataEncoding.BINARY);
-
-		read_file_to_data (ctrlfname, dt);
-		read_file_to_data (payloadfname, dt);
-
 		return_if_fail (check_gpg_err (err));
 
-		err = Data.create_from_memory (out sig, signtext, Posix.strlen (signtext), false);
+		ret = read_file_to_data (ctrlfname, ref dt);
+		if (!ret)
+			return false;
+		ret = read_file_to_data (payloadfname, ref dt);
+		if ((!ret) && (!__unittestmode))
+			return false;
+
+		//err = Data.create_from_memory (out sig, signtext, signtext.length, false);
+		err = Data.create (out sig);
+		read_string_to_data (signtext, ref sig);
 		return_if_fail (check_gpg_err (err));
+
+		sig.seek (0, Posix.SEEK_SET);
+		dt.seek (0, Posix.SEEK_SET);
 
 		err = ctx.op_verify (sig, dt, null);
 		return_if_fail (check_gpg_err (err));
 		result = ctx.op_verify_result ();
 
+		// FIXME: The whole GPGMe code is not working peroperly...
+		// This codeblock is for debugging
+		Signature *s = result->signatures;
+while (s != null) {
+        stdout.printf("summary=%d\n", s->summary);
+        stdout.printf("fpr=%s\n", s->fpr);
+        stdout.printf("status=%d\n", s->status);
+        stdout.printf("timestamp=%lu\n", s->timestamp);
+        stdout.printf("wrong_key_usage=%u\n", (uint) s->wrong_key_usage);
+        stdout.printf("pka_trust=%u\n", s->pka_trust);
+        stdout.printf("chain_model=%u\n", (uint) s->chain_model);
+        stdout.printf("validity=%d\n", s->validity);
+        stdout.printf("validity_reason=%d\n", s->validity_reason);
+        stdout.printf("key=%d\n", s->pubkey_algo);
+        stdout.printf("hash=%d\n", s->hash_algo);
+        s = s->next;
+    }
+
 		process_sig_result (result);
+
 		debug ("Signature checked.");
 		return true;
 	}
@@ -166,6 +163,17 @@ private class GPGSignature : Object {
 	public bool verify_package (string ctrlfname, string payloadfname) {
 		bool ret;
 		ret = verify_package_internal (ctrlfname, payloadfname);
+		if (!ret) {
+			debug ("Signature is broken!");
+			validity = SignValidity.NEVER;
+			sigstatus = SignStatus.RED;
+		}
+		return ret;
+	}
+
+	internal bool _verify_package_test (string fname) {
+		bool ret;
+		ret = verify_package_internal (fname, null);
 		if (!ret) {
 			debug ("Signature is broken!");
 			validity = SignValidity.NEVER;

@@ -22,7 +22,7 @@ using GLib;
 using Gee;
 using Listaller;
 
-private static bool __unittestmode = false;
+internal static bool __unittestmode = false;
 
 namespace Listaller.Utils {
 

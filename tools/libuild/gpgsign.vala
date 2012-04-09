@@ -24,27 +24,10 @@ using Listaller;
 
 namespace Listaller {
 
-private class GPGSign : Object {
+private class GPGSign : GPGBasic {
 
 	public GPGSign () {
-		init_gpgme (Protocol.OpenPGP);
-	}
-
-	private void init_gpgme (Protocol proto) {
-		GPG.check_version (null);
-		Intl.setlocale (LocaleCategory.ALL, "");
-		/* Context.set_locale (null, LocaleCategory.CTYPE, Intl.setlocale (LocaleCategory.CTYPE, null));
-
-		GPGError.ErrorCode err = GPG.check_version (proto);
-		return_if_fail (check_gpg_err (err)); */
-	}
-
-	private bool check_gpg_err (GPGError.ErrorCode err) {
-		if (err != GPGError.ErrorCode.NO_ERROR) {
-			stdout.printf ("X: %s\n".printf (err.to_string ()));
-			return false;
-		}
-		return true;
+		base (Protocol.OpenPGP);
 	}
 
 	private bool check_result (SignResult *result, SigMode type) {
@@ -80,20 +63,6 @@ private class GPGSign : Object {
 		return true;
 	}
 
-	private void _dbg_print_data (Data dh)	{
-		const uint BUF_SIZE = 512;
-		char buf[513];
-		long ret;
-
-		ret = dh.seek (0, Posix.SEEK_SET);
-		/*if (ret > 0)
-			error (errno.to_string ());*/
-		while ((ret = dh.read (buf, BUF_SIZE)) > 0)
-			stdout.printf ((string) buf, ret, 1);
-		/*if (ret < 0)
-			error (errno.to_string ());*/
-	}
-
 	private static GPGError.ErrorCode simple_passphrase_cb (void* hook, string uid_hint, string passphrase_info, bool prev_was_bad, int fd) {
 		// IMPORTANT: This method of requesting a passwird is very ugly, replace it with something better soon!
 		if (!prev_was_bad)
@@ -105,38 +74,9 @@ private class GPGSign : Object {
 		return GPGError.ErrorCode.NO_ERROR;
 	}
 
-	private string free_data_to_string (Data *dt) {
-		string sig_data;
-		size_t signature_len;
-
-		sig_data = dt->release_and_get_mem (out signature_len);
-		if (sig_data == null) {
-			li_error ("Signature data was NULL!");
-			sig_data = "";
-		}
-		return sig_data;
-	}
-
-	private bool read_file_to_data (string fname, ref Data dt) {
-		const uint BUFFER_SIZE = 512;
-		dt.set_encoding (DataEncoding.BINARY);
-
-		var file = File.new_for_path (fname);
-		var fs = file.read ();
-		var data_stream = new DataInputStream (fs);
-		data_stream.set_byte_order (DataStreamByteOrder.LITTLE_ENDIAN);
-
-		// Seek and read the image data chunk
-		uint8[] buffer = new uint8[BUFFER_SIZE];
-		fs.seek (0, SeekType.CUR);
-		while (data_stream.read (buffer) > 0)
-			dt.write (buffer, BUFFER_SIZE);
-
-		return true;
-	}
-
-	public bool sign_package (string control_fname, string payload_fname, out string signature_out) {
+	public bool sign_package (string control_fname, string? payload_fname, out string signature_out) {
 		GPGError.ErrorCode err;
+		bool ret;
 
 		Context ctx;
 		err = Context.Context (out ctx);
@@ -153,11 +93,15 @@ private class GPGSign : Object {
 		err = Data.create (out din);
 		return_if_fail (check_gpg_err (err));
 
-		read_file_to_data (control_fname, ref din);
-		read_file_to_data (payload_fname, ref din);
+		ret = read_file_to_data (control_fname, ref din);
+		if (!ret)
+			return false;
+		ret = read_file_to_data (payload_fname, ref din);
+		if ((!ret) && (!__unittestmode))
+			return false;
 
 		// detached signature.
-		//din.seek (0, Posix.SEEK_SET);
+		din.seek (0, Posix.SEEK_SET);
 		Data *dout;
 		err = Data.create (out dout);
 		return_if_fail (check_gpg_err (err));
