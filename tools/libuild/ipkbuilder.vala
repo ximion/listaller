@@ -481,6 +481,9 @@ private class Builder : Object {
 		// Set package setting information
 		ictrl.set_architectures (ipkCDir.get_architectures ());
 
+		// Set information about replaced native packages
+		ictrl.set_replaces (ipkCDir.get_replaces ());
+
 		// Set license...
 		ictrl.set_license_text (ipkCDir.get_application ().license.text);
 

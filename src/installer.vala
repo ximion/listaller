@@ -34,6 +34,9 @@ public class Setup : MsgObject {
 	private int inst_progress;
 	private int full_progress;
 
+	// Holds information about native packages this installation could replace
+	private string? pkgReplaces;
+
 	public signal void status_changed (StatusItem status);
 
 	public Settings settings {
@@ -51,9 +54,11 @@ public class Setup : MsgObject {
 
 	public Setup (string ipkfilename, Settings? settings) {
 		base ();
+		pkgReplaces = null;
 		conf = settings;
 		if (conf == null)
 			conf = new Settings (false);
+
 		fname = ipkfilename;
 		// Set up IPK package instance and connect it with this setup
 		ipkp = new IPK.Package (fname, settings);
@@ -136,6 +141,11 @@ public class Setup : MsgObject {
 			emit_error (ErrorEnum.ALREADY_INSTALLED, "%s %s".printf (text, _("Please remove the existing version to continue!")));
 			return false;
 		}
+
+		if (pkgReplaces == null) {
+			get_replaced_native_packs ();
+		}
+		app.replaces = pkgReplaces;
 
 		// Emit status message
 		emit_status (StatusEnum.RESOLVING_DEPENDENCIES,
@@ -259,6 +269,34 @@ public class Setup : MsgObject {
 		status_changed (sitem);
 
 		return ret;
+	}
+
+	public string? get_replaced_native_packs () {
+		// No superuser-mode -> No need to replace system packages
+		if (!conf.sumode)
+			return null;
+		AppItem? app = get_current_application ();
+
+		if ((app == null) || (app.replaces == ""))
+			return null;
+
+		string[] list = app.replaces.split ("\n");
+
+		var pkslv = new Dep.PkResolver (conf);
+		string res = "";
+		foreach (string id in list) {
+			string? pkid = pkslv.package_name_for_file (id);
+			if (pkid == null)
+				continue;
+			res = "%s%s\n".printf (res, pkid);
+		}
+
+		if (res == "")
+			return null;
+
+		pkgReplaces = res;
+
+		return res;
 	}
 
 	public bool run_installation () {

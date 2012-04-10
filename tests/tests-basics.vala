@@ -156,6 +156,13 @@ void test_metafile () {
 	assert (val == "hgdufjhbudj\nhugdvh ushda743\nsuhfusdha7wdwe");
 }
 
+void test_playground () {
+	Listaller.Settings conf = new Listaller.Settings ();
+	conf.testmode = true;
+
+	// Just try something!
+}
+
 int main (string[] args) {
 	msg ("=== Running Basic Tests ===");
 	datadir = args[1];
@@ -175,6 +182,8 @@ int main (string[] args) {
 	test_metafile ();
 	test_doap ();
 	test_zfeeds ();
+	test_playground ();
+
 	Test.run ();
 	return 0;
 }

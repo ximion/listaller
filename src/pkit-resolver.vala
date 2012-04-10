@@ -25,6 +25,10 @@ using Listaller.Utils;
 
 namespace Listaller.Dep {
 
+private errordomain PkError {
+	TRANSACTION_FAILED;
+}
+
 private class PkResolver : MsgObject {
 	private Listaller.Settings conf;
 	private PackageKit.Client? pkclient;
@@ -50,6 +54,7 @@ private class PkResolver : MsgObject {
 				critical (msg);
 			}
 		}
+		reset ();
 	}
 
 	private new void emit_error (ErrorItem item) { }
@@ -178,6 +183,45 @@ private class PkResolver : MsgObject {
 		}
 
 		return ret;
+	}
+
+	public string? package_name_for_file (string fname) throws PkError {
+		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("installed;");
+
+		PackageKit.Results? res = null;
+		PackageKit.PackageSack? sack;
+
+		if (pkbproxy == null) {
+			try {
+				res  = pkclient.search_files (filter, {fname, null}, null, null);
+			} catch (Error e) {
+				debug (e.message);
+				return null;
+			}
+		} else {
+			debug ("::TODO");
+			/*
+			res = pkbproxy.run_search_files (filter, {fname, null});
+			if (res == null) {
+				debug ("Native backend PkResults was NULL!");
+				return null;
+			}
+			*/
+		}
+
+		if (res == null)
+			return null;
+
+		sack = res.get_package_sack ();
+		if (sack == null)
+			return null;
+		string[] packages = sack.get_ids ();
+
+		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS)) {
+			throw new PkError.TRANSACTION_FAILED (_("PackageKit transaction failed!\nExit message was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())));
+		}
+
+		return packages[0];
 	}
 
 }
