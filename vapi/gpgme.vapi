@@ -1008,7 +1008,7 @@ namespace GPG {
 		 * Set the current position from where the next read or write
 		 * starts in the data object to OFFSET, relativ to WHENCE.
 		 */
-		public long seek(long offset, int whence=0);
+		public Posix.off_t seek(long offset, int whence=0);
 
 		/**
 		 * Get the encoding attribute of the buffer

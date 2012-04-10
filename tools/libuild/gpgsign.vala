@@ -109,7 +109,8 @@ private class GPGSign : GPGBasic {
 		// return_if_fail (check_gpg_err (err));
 		SignResult *result = ctx.op_sign_result ();
 		check_result (result, SigMode.DETACH);
-		signature_out = free_data_to_string (dout);
+
+		signature_out = free_data_to_string (&dout);
 
 		return true;
 	}

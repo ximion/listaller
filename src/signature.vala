@@ -81,23 +81,31 @@ private class GPGSignature : GPGBasic {
 			return false;
 		}
 		sigstatus = (SignStatus) sig->summary;
-		set_sigvalidity_from_gpgvalidity (sig->validity);
+
+		//if ((sig->summary & Sigsum.VALID) > 0)
+
+		//set_sigvalidity_from_gpgvalidity (sig->validity);
 
 		if (sig->status != GPGError.ErrorCode.NO_ERROR) {
 			warning ("Unexpected signature status: %s", sig->status.to_string ());
 			sig_valid = false;
 		} else {
+			validity = SignValidity.FULL;
 			sig_valid = true;
 		}
 		if (sig->wrong_key_usage) {
+			validity = SignValidity.MARGINAL;
 			warning ("Unexpectedly wrong key usage");
 			return false;
 		}
 
 		if (sig->validity_reason != GPGError.ErrorCode.NO_ERROR) {
+			validity = SignValidity.MARGINAL;
 			li_error ("Unexpected validity reason: %s".printf (sig->validity_reason.to_string ()));
 			return false;
 		}
+
+
 		return true;
 	}
 
@@ -109,9 +117,10 @@ private class GPGSignature : GPGBasic {
 		bool ret;
 
 		err = Context.Context (out ctx);
+		ctx.set_protocol (Protocol.OpenPGP);
+
 		return_if_fail (check_gpg_err (err));
 
-		ctx.set_textmode (true);
 		ctx.set_armor (true);
 
 		err = Data.create (out dt);
@@ -133,26 +142,29 @@ private class GPGSignature : GPGBasic {
 		dt.seek (0, Posix.SEEK_SET);
 
 		err = ctx.op_verify (sig, dt, null);
-		return_if_fail (check_gpg_err (err));
+		if (!check_gpg_err (err))
+			return false;
 		result = ctx.op_verify_result ();
 
-		// FIXME: The whole GPGMe code is not working peroperly...
-		// This codeblock is for debugging
-		Signature *s = result->signatures;
-while (s != null) {
-        stdout.printf("summary=%d\n", s->summary);
-        stdout.printf("fpr=%s\n", s->fpr);
-        stdout.printf("status=%d\n", s->status);
-        stdout.printf("timestamp=%lu\n", s->timestamp);
-        stdout.printf("wrong_key_usage=%u\n", (uint) s->wrong_key_usage);
-        stdout.printf("pka_trust=%u\n", s->pka_trust);
-        stdout.printf("chain_model=%u\n", (uint) s->chain_model);
-        stdout.printf("validity=%d\n", s->validity);
-        stdout.printf("validity_reason=%d\n", s->validity_reason);
-        stdout.printf("key=%d\n", s->pubkey_algo);
-        stdout.printf("hash=%d\n", s->hash_algo);
-        s = s->next;
-    }
+		// FIXME: The whole GPGMe code is not working properly...
+		// This codeblock is useful to debug the issue
+		if (__unittestmode) {
+			Signature *s = result->signatures;
+			while (s != null) {
+				stdout.printf("SigSum: %i\n", (int) s->summary);
+				stdout.printf("fpr=%s\n", s->fpr);
+				stdout.printf("status=%d\n", s->status);
+				stdout.printf("timestamp=%lu\n", s->timestamp);
+				stdout.printf("wrong_key_usage=%u\n", (uint) s->wrong_key_usage);
+				stdout.printf("pka_trust=%u\n", s->pka_trust);
+				stdout.printf("chain_model=%u\n", (uint) s->chain_model);
+				stdout.printf("validity=%d\n", s->validity);
+				stdout.printf("validity_reason=%d\n", s->validity_reason);
+				stdout.printf("key=%d\n", s->pubkey_algo);
+				stdout.printf("hash=%d\n", s->hash_algo);
+				s = s->next;
+			}
+		}
 
 		process_sig_result (result);
 

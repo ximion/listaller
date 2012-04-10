@@ -44,17 +44,17 @@ internal abstract class GPGBasic : Object {
 
 	protected bool check_gpg_err (GPGError.ErrorCode err) {
 		if (err != GPGError.ErrorCode.NO_ERROR) {
-			debug ("GPGError: %s", err.to_string ());
+			warning ("GPGError: %s", err.to_string ());
 			return false;
 		}
 		return true;
 	}
 
-	protected string free_data_to_string (Data *dt) {
+	protected string free_data_to_string (Data **dt) {
 		string sig_data;
 		size_t signature_len;
 
-		sig_data = dt->release_and_get_mem (out signature_len);
+		sig_data = (*dt)->release_and_get_mem (out signature_len);
 		if (sig_data == null) {
 			li_error ("Signature data was NULL!");
 			sig_data = "";
@@ -65,7 +65,7 @@ internal abstract class GPGBasic : Object {
 	protected void _dbg_print_data (Data dh) {
 		const uint BUF_SIZE = 512;
 		char buf[513];
-		long ret;
+		Posix.off_t ret;
 
 		stdout.printf ("## GPGMe DataObj data: BEGIN\n");
 
@@ -75,6 +75,28 @@ internal abstract class GPGBasic : Object {
 			stdout.printf ((string) buf, ret, 1);
 
 		stdout.printf ("\n## GPGMe DataObj data: END\n");
+	}
+
+	protected bool _dbg_save_data (Data dh, string fname, bool overrideExisting = false) throws IOError {
+		var file = File.new_for_path (fname);
+		if ( (!overrideExisting) && (file.query_exists ()))
+			return false;
+
+		int fd = Posix.open (fname, Posix.O_CREAT | Posix.O_WRONLY | Posix.O_TRUNC,
+	                         Posix.S_IRUSR | Posix.S_IWUSR | Posix.S_IRGRP | Posix.S_IROTH);
+
+		const uint BUF_SIZE = 512;
+		uint8 buf[513];
+
+		dh.seek (0, Posix.SEEK_SET);
+		ssize_t len = dh.read (buf, BUF_SIZE);
+		while (len > 0) {
+			Posix.write (fd, buf, len);
+			len = dh.read (buf, BUF_SIZE);
+		}
+		Posix.close (fd);
+
+		return true;
 	}
 
 	private int gpgme_data_write_all (Data data, void* buffer, size_t len) {
