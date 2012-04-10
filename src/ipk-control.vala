@@ -94,12 +94,23 @@ public abstract class Control : Object {
 		packSetting.add_value ("Architectures", archs);
 	}
 
+	public string get_replaces () {
+		string s = packSetting.get_value ("Replaces", false);
+		return s;
+	}
+
+	public void set_replaces (string repList) {
+		packSetting.add_value ("Replaces", repList);
+	}
+
 	public AppItem get_application () {
 		if (appItem != null)
 			return appItem;
 		AppItem? item = doap.get_project ();
 		if (item != null)
 			appItem = item;
+		item.replaces = get_replaces ();
+
 		return item;
 	}
 

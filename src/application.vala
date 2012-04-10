@@ -182,6 +182,8 @@ public class AppItem : Object {
 		set { _install_time = value; }
 	}
 
+	public string replaces { get; set; }
+
 	public AppOrigin origin {
 		get { return _origin; }
 		set { _origin = value; }

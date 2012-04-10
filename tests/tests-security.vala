@@ -27,7 +27,7 @@ private string datadir;
 private string foobar_dir;
 
 void msg (string s) {
-	stdout.printf (s + "\n");
+	stdout.printf ("%s\n", s);
 }
 
 void test_sign_basic () {
