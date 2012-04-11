@@ -1,4 +1,4 @@
-/* pkit-resolver.vala - Resolving universal dependencies to native distro packages
+/* pkit-tasks.vala - Perform tasks on native package-db using PackageKit
  *
  * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -29,21 +29,26 @@ private errordomain PkError {
 	TRANSACTION_FAILED;
 }
 
-private class PkResolver : MsgObject {
-	private Listaller.Settings conf;
-	private PackageKit.Client? pkclient;
-	private PkBackendProxy? pkbproxy;
+/**
+ * Abstract class which defines basic things needed by Listaller
+ * to access bother PackageKit via DBus when running as user and
+ * PackageKit internal API when running as root (and as plugin)
+ */
+private abstract class PkListallerTask : MsgObject {
+	protected Listaller.Settings conf;
+	protected PackageKit.Task? pktask;
+	protected PkBackendProxy? pkbproxy;
 
 	public ErrorItem? last_error { get; set; }
 
-	public PkResolver (Listaller.Settings liconf) {
+	private new void emit_error (ErrorItem item) { }
+
+	public PkListallerTask (Listaller.Settings liconf) {
 		base ();
-		set_error_hint_str ("PkResolver");
-		last_error = null;
 		conf = liconf;
 
 		pkbproxy = null;
-		pkclient = null;
+		pktask = null;
 		if (is_root ()) {
 			// Access to the native PackageKit backend
 			pkbproxy = get_pk_backend ();
@@ -54,17 +59,29 @@ private class PkResolver : MsgObject {
 				critical (msg);
 			}
 		}
-		reset ();
 	}
 
-	private new void emit_error (ErrorItem item) { }
+	protected void reset () {
+		last_error = null;
+		if (pkbproxy == null)
+			pktask = new PackageKit.Task ();
+	}
 
-	private void set_error (ErrorEnum id, string details) {
+	protected void set_error (ErrorEnum id, string details) {
 		// Construct error
 		ErrorItem item = new ErrorItem (id);
 		item.details = details;
 		last_error = item;
 		debug ("PkResolver: <error> %s", details);
+	}
+}
+
+private class PkResolver : PkListallerTask {
+
+	public PkResolver (Listaller.Settings liconf) {
+		base (liconf);
+		set_error_hint_str ("PkResolver");
+		reset ();
 	}
 
 	private void pkit_progress_cb (PackageKit.Progress progress, PackageKit.ProgressType type) {
@@ -88,7 +105,7 @@ private class PkResolver : MsgObject {
 
 		if (pkbproxy == null) {
 			try {
-				res  = pkclient.what_provides (filter, PackageKit.Provides.SHARED_LIB, libs, null, null);
+				res  = pktask.what_provides (filter, PackageKit.Provides.SHARED_LIB, libs, null, null);
 			} catch (Error e) {
 				debug (e.message);
 				return null;
@@ -114,12 +131,6 @@ private class PkResolver : MsgObject {
 		}
 
 		return sack;
-	}
-
-	private void reset () {
-		last_error = null;
-		if (pkbproxy == null)
-			pkclient = new PackageKit.Client ();
 	}
 
 	/* This method searches for dependency packages & stores them in dep.install_data */
@@ -185,6 +196,13 @@ private class PkResolver : MsgObject {
 		return ret;
 	}
 
+	/**
+	 * Get package-name (PK package-id) for filename
+	 *
+	 * @param fname The filename to search for
+	 *
+	 * @return Resolved package-id or NULL, if none was found
+	 */
 	public string? package_name_for_file (string fname) throws PkError {
 		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("installed;");
 
@@ -193,7 +211,7 @@ private class PkResolver : MsgObject {
 
 		if (pkbproxy == null) {
 			try {
-				res  = pkclient.search_files (filter, {fname, null}, null, null);
+				res  = pktask.search_files (filter, {fname, null}, null, null);
 			} catch (Error e) {
 				debug (e.message);
 				return null;
@@ -222,6 +240,113 @@ private class PkResolver : MsgObject {
 		}
 
 		return packages[0];
+	}
+
+}
+
+private class PkInstaller : PkListallerTask {
+
+	public PkInstaller (Listaller.Settings liconf) {
+		base (liconf);
+		set_error_hint_str ("PkInstaller");
+
+		reset ();
+	}
+
+	private void pk_progress_cb (PackageKit.Progress progress, PackageKit.ProgressType type) {
+		// TODO
+	}
+
+	private bool pkit_install_packages (string[] pkids) {
+		PackageKit.Results? res = null;
+		PackageKit.Error? pkerror = null;
+
+		if (pkbproxy == null) {
+			try {
+				res = pktask.install_packages (true, pkids, null, pk_progress_cb);
+			} catch (Error e) {
+				set_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
+					_("Installation of native packages failed with message: %s").printf (e.message));
+				return false;
+			}
+		} else {
+			// If we need to use the native backend plugin proxy
+			res = pkbproxy.run_install_packages (true, pkids);
+			if (res == null) {
+				debug ("Native backend PkResults was NULL!");
+				return false;
+			}
+		}
+		if (res == null)
+			return false;
+
+		pkerror = res.get_error_code ();
+		if (pkerror != null) {
+			set_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
+					_("Installation of native packages failed with message: %s").printf (pkerror.get_details ()));
+			return false;
+		}
+
+		if ((res != null) && (res.get_exit_code () == PackageKit.Exit.SUCCESS))
+			return true;
+
+		warning ("An unknown error occurred while trying to install a native package!");
+		/*emit_warning (_("Installation of native package '%s' failed!").printf (pkg.get_id ()) + "\n" +
+				_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())));*/
+
+		return false;
+	}
+
+	/* This method install a dependency if necessary */
+	public bool install_dependency (ref IPK.Dependency dep) {
+		bool ret = true;
+		// Just to be sure...
+		if (last_error != null)
+			return false;
+
+		// return if dependency is already satified
+		if (dep.satisfied)
+			return true;
+
+		/* Exit if we have no install-data: No package can be installed, dependency is not satisfied.
+		 * (we might do a feed-install instead */
+		if (!dep.has_installdata ())
+			return false;
+
+		/* We don't install dependencies via PK when unit tests are running.
+		 * Consider everything as satisfied. (unittests can modify this, of course) */
+		if (__unittestmode) {
+			dep.satisfied = true;
+			return true;
+		}
+
+		string[] pkgs = {};
+		/* Now install every not-yet-installed package. The asterisk (*pkg) indicates
+		 * that this package needs to be installed */
+		foreach (string pkg in dep.get_installdata ()) {
+			if (pkg.has_prefix ("*pkg:")) {
+				pkgs += pkg.substring (5);
+			}
+		}
+		// null-terminate the array
+		pkgs += null;
+
+		/* If no elements need to be installed and everything is already there,
+		 * the dependency is satisfied and we can leave. */
+		if (pkgs[0] == null) {
+			dep.satisfied = true;
+			return true;
+		}
+
+		// Now do the installing
+		emit_message (_("Installing native packages: %s").printf (strv_to_string (pkgs)));
+		ret = pkit_install_packages (pkgs);
+		if (ret) {
+			dep.satisfied = true;
+			return true;
+		}
+
+		return false;
 	}
 
 }

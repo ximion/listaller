@@ -72,8 +72,7 @@ set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	dep-manager.vala
 	dep-installer.vala
 	pkbackend-glue.vala
-	pkit-resolver.vala
-	pkit-installer.vala
+	pkit-tasks.vala
 	feed-installer.vala
 	manager.vala
 	installer.vala

@@ -232,17 +232,17 @@ public class Setup : MsgObject {
 
 	private bool install_superuser () {
 		bool ret = true;
-		PackageKit.Client client = new PackageKit.Client ();
+		PackageKit.Task pktask = new PackageKit.Task ();
 
 		/* PackageKit will handle all Listaller superuser installations.
 		 * Therefore, PackageKit needs to be compiled with Listaller support enabled.
 		 */
 
 		PackageKit.Results? pkres;
-		client.background = false;
+		pktask.background = false;
 
 		try {
-			pkres = client.install_files (true, { fname, null }, null, pk_progress_cb);
+			pkres = pktask.install_files (true, { fname, null }, null, pk_progress_cb);
 		} catch (Error e) {
 			emit_error (ErrorEnum.INSTALLATION_FAILED, e.message);
 			return false;
