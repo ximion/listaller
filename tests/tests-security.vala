@@ -50,8 +50,10 @@ void test_sign_package () {
 	GPGSign gsig = new GPGSign ();
 
 	string sign_text;
+	var payload = new ArrayList<string> ();
+	payload.add (Path.build_filename (datadir, "FooBar-1.0_install.ipk", null));
 	gsig.sign_package (Path.build_filename (datadir, "xfile1.bin", null),
-			   Path.build_filename (datadir, "FooBar-1.0_install.ipk", null), out sign_text);
+			   payload, out sign_text);
 
 	msg ("============PACKAGE============");
 	msg (sign_text);

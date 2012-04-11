@@ -74,7 +74,7 @@ private class GPGSign : GPGBasic {
 		return GPGError.ErrorCode.NO_ERROR;
 	}
 
-	public bool sign_package (string control_fname, string? payload_fname, out string signature_out) {
+	public bool sign_package (string control_fname, Gee.AbstractList<string>? payload_files, out string signature_out) {
 		GPGError.ErrorCode err;
 		bool ret;
 
@@ -97,9 +97,13 @@ private class GPGSign : GPGBasic {
 		ret = read_file_to_data (control_fname, ref din);
 		if (!ret)
 			return false;
-		ret = read_file_to_data (payload_fname, ref din);
-		if ((!ret) && (!__unittestmode))
-			return false;
+		if (payload_files != null) {
+			foreach (string fname in payload_files) {
+				ret = read_file_to_data (fname, ref din);
+				if (!ret)
+					return false;
+			}
+		}
 
 		// detached signature.
 		din.seek (0, Posix.SEEK_SET);
