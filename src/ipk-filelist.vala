@@ -104,13 +104,22 @@ private HashSet<FileEntry> fileentry_hashset_new () {
 	return new HashSet<FileEntry> ((HashFunc) fileentry_hash_func, (EqualFunc) fileentry_equal_func);
 }
 
+/**
+ * Represents a list of files
+ *
+ * List of files as stored in IPK files.
+ */
 private class FileList : Object {
 	private HashSet<FileEntry> list;
 	private bool has_hashes;
 	public string rootdir { set; get; }
 
+	/** Simple comment to identify the file-list */
+	public string comment { set; get; }
+
 	public FileList (bool with_hashes = true) {
 		has_hashes = with_hashes;
+		comment = "IPK file list";
 		list = fileentry_hashset_new ();
 
 		rootdir = Environment.get_current_dir ();
@@ -240,7 +249,7 @@ private class FileList : Object {
 
 	private ArrayList<string>? to_stringlist () {
 		var text = new ArrayList<string> ();
-		text.add ("# IPK file list");
+		text.add ("# %s".printf (comment));
 		text.add ("");
 
 		foreach (FileEntry fe in list) {

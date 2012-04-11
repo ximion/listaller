@@ -447,8 +447,13 @@ private class Builder : Object {
 		// Set IPK package version
 		ipkVersion = ipkCDir.get_ipk_version ();
 
-		IPK.FileList flist = new IPK.FileList (false);
-		flist.open (Path.build_filename (srcdir, "files-current.list", null));
+		HashSet<string>? flistFiles = Utils.find_files_matching (srcdir, "files-*.list", false);
+
+		if (flistFiles.size == 0) {
+			error_message ("Could not find file listings in IPK source dir!");
+			return false;
+		}
+
 
 		create_dir_parents (Path.build_filename (tmpdir, "control", null));
 		create_dir_parents (Path.build_filename (tmpdir, "data", null));
@@ -479,7 +484,7 @@ private class Builder : Object {
 			return false;
 
 		// Set package setting information
-		ictrl.set_architectures (ipkCDir.get_architectures ());
+		 //! ictrl.set_architectures (ipkCDir.get_architectures ());
 
 		// Set information about replaced native packages
 		ictrl.set_replaces (ipkCDir.get_replaces ());
@@ -487,6 +492,42 @@ private class Builder : Object {
 		// Set license...
 		ictrl.set_license_text (ipkCDir.get_application ().license.text);
 
+		pkbuild_action ("Generating package...");
+
+		IPK.FileList flist = new IPK.FileList (false);
+		string archs = "";
+		foreach (string flistFile in flistFiles) {
+			debug ("Processing file-list: %s", flistFile);
+			if (!flistFile.has_suffix (".list")) {
+				debug ("Skipped file-list: %s", flistFile);
+				continue;
+			}
+			flist.open (flistFile);
+
+			string arch = Path.get_basename (flistFile);
+			arch = arch.substring (6, arch.last_index_of (".") - 6);
+
+			if (arch == "current")
+				arch = system_machine ();
+			if (arch != "all")
+				archs = "%s%s\n".printf (archs, arch);
+
+			pkbuild_action ("Creating payload for architecture: %s".printf (arch));
+			// Add comment to IPK file-list
+			flist.comment = "IPK file-listing for architecture %s".printf (arch);
+
+			ret = build_ipk_files_structure (flist, arch);
+			if (!ret)
+				return false;
+		}
+
+		// No arch set, so all files have to be arch-independent
+		if (archs == "")
+			archs = "all";
+		// We only set architectures we have install-files for
+		ictrl.set_architectures (archs);
+
+		// Finalize control data
 		string tmp = Path.build_filename (tmpdir, "control", null);
 		ictrl.save_to_dir (tmp);
 
@@ -496,11 +537,6 @@ private class Builder : Object {
 			ctrlfiles.add (Path.build_filename (tmp, files[i], null));
 		}
 
-		pkbuild_action ("Generating package...");
-
-		ret = build_ipk_files_structure (flist);
-		if (!ret)
-			return false;
 		ret = write_ipk_control_data ();
 		if (!ret)
 			return false;

@@ -166,16 +166,18 @@ private string system_machine () {
 }
 
 private string system_osname_arch_generic () {
-	return "%s-%s".printf (system_os (), system_arch_generic ());
+	return "%s-%s".printf (system_os (), arch_generic (system_machine ()));
 }
 
-private string system_arch_generic () {
-	string arch = system_machine ();
+private string arch_generic (string arch) {
+	string res = arch;
+
 	if (PatternSpec.match_simple ("i?86", arch))
-		arch = "i386";
+		res = "ix86";
 	if (arch == "x86_64")
-		arch = "amd64";
-	return arch;
+		res = "amd64";
+
+	return res;
 }
 
 /*
@@ -194,7 +196,7 @@ private bool create_dir_parents (string dirname) {
 	return true;
 }
 
-private HashSet<string>? find_files (string dir, bool recursive = false) {
+private HashSet<string>? find_files_matching (string dir, string pattern, bool recursive = false) {
 	var list = new HashSet<string> ();
 	try {
 		var directory = File.new_for_path (real_path (dir));
@@ -204,15 +206,21 @@ private HashSet<string>? find_files (string dir, bool recursive = false) {
 		FileInfo file_info;
 		while ((file_info = enumerator.next_file ()) != null) {
 			string path = Path.build_filename (dir, file_info.get_name (), null);
+
 			if (file_info.get_is_hidden ())
 				continue;
 			if ((!FileUtils.test (path, FileTest.IS_REGULAR)) && (recursive)) {
-				HashSet<string> subdir_list = find_files (path, recursive);
+				HashSet<string> subdir_list = find_files_matching (path, pattern, recursive);
 				// There was an error, exit
 				if (subdir_list == null)
 					return null;
 				list.add_all (subdir_list);
 			} else {
+				if (pattern != "") {
+					string fname = file_info.get_name ();
+					if (!PatternSpec.match_simple (pattern, fname))
+						continue;
+				}
 				list.add (real_path (path));
 			}
 		}
@@ -222,6 +230,10 @@ private HashSet<string>? find_files (string dir, bool recursive = false) {
 		return null;
 	}
 	return list;
+}
+
+private HashSet<string>? find_files (string dir, bool recursive = false) {
+	return find_files_matching (dir, "", recursive);
 }
 
 private string? find_dir_containing_file (string dir, string pattern, bool recursive = false) {

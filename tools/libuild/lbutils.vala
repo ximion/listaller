@@ -25,8 +25,7 @@ namespace Listaller.IPK {
 		// Check if IPK sources are present
 		string tmp = dir;
 		if (FileUtils.test (tmp, FileTest.IS_DIR)) {
-			if (FileUtils.test (Path.build_filename (tmp, "pkoptions", null), FileTest.EXISTS) &&
-				FileUtils.test (Path.build_filename (tmp, "files-current.list", null), FileTest.EXISTS)) {
+			if (FileUtils.test (Path.build_filename (tmp, "pkoptions", null), FileTest.EXISTS)) {
 				// Set current source dir and exit
 				return tmp;
 				}

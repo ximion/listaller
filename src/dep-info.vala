@@ -122,7 +122,7 @@ public class Dependency: Object {
 		environment = "";
 		author = "";
 		_full_name = "";
-		architecture = Utils.system_arch_generic ();
+		architecture = Utils.system_machine ();
 	}
 
 	internal Dependency (string depIdName, string depFullName = "", string depVersion = "0") {
