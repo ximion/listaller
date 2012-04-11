@@ -24,6 +24,11 @@ using Listaller;
 
 namespace Listaller {
 
+/**
+ * Provides Listaller's settings
+ *
+ * Provides settings for all other classes.
+ */
 public class Settings : Object {
 
 	const string confdir = "/etc/listaller";

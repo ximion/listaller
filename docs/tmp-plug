@@ -6,9 +6,9 @@
     if FileExists('/var/packages/'+SR.Name+'/environment.'+FLang) then
     xtmp.LoadFromFile('/var/packages/'+SR.Name+'/environment.'+FLang) else
     xtmp.LoadFromFile('/var/packages/'+SR.Name+'/environment.en');
-    
+
     Application.ProcessMessages;
-    
+
       for i:=0 to xtmp.Count-1 do
       if (pos('export DISPLAYNAME="',xtmp[i])>0)
       and ((copy(xtmp[i],pos('"',xtmp[i])+1,length(xtmp[i])-pos('"',xtmp[i])-1))<>n) then begin
@@ -63,4 +63,4 @@
      AList[ListLength-1].SetPositions;
       end;
     end;
-until FindNext(SR)<>0; } 
+until FindNext(SR)<>0; }

@@ -26,6 +26,13 @@ using Listaller.Utils;
 
 namespace Listaller {
 
+/**
+ * Performs the installation of an IPK package
+ *
+ * This class handles all stuff required to install an
+ * application.
+ * All methods are syncronous right now.
+ */
 public class Setup : MsgObject {
 	private Settings conf;
 	private string fname;

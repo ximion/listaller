@@ -27,6 +27,13 @@ using Listaller.Utils;
 
 namespace Listaller {
 
+/**
+ * Allows managing installed applications
+ *
+ * This class allows managing installed applications as
+ * well as performing maintainance tasks to keep applications
+ * running.
+ */
 public class Manager : MsgObject {
 	private Settings conf;
 

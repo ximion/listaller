@@ -30,7 +30,10 @@ protected enum ObjConnectFlags {
 	IGNORE_ERROR_CODE;
 }
 
-/* Base class for all Listaller types which
+/**
+ * Providing basic message handling
+ *
+ * Base class for all Listaller classes which
  * want to send messages between each other.
  * (Used e.g. for GUI stuff and in the public API)
  */

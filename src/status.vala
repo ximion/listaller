@@ -88,6 +88,9 @@ public enum MessageEnum {
 	}
 }
 
+/**
+ * Return type describing an error
+ */
 public class ErrorItem : Object {
 	private ErrorEnum _etype;
 	private string _details;
@@ -114,6 +117,9 @@ public class ErrorItem : Object {
 	}
 }
 
+/**
+ * Return type describing a message
+ */
 public class MessageItem : Object {
 	private MessageEnum _mtype;
 	private string _details;
@@ -140,6 +146,9 @@ public class MessageItem : Object {
 	}
 }
 
+/**
+ * Return type describing a status change
+ */
 public class StatusItem : Object {
 	private StatusEnum _stype;
 	private string _info;

@@ -24,6 +24,13 @@ using Listaller.Utils;
 
 namespace Listaller {
 
+/**
+ * Origin of the AppItem object
+ *
+ * Could be from an IPK package, from a native or
+ * unknown source. In most cases, you don't care
+ * about the origin of an application
+ */
 public enum AppOrigin {
 	IPK,
 	NATIVE,
@@ -47,11 +54,22 @@ public enum AppOrigin {
 	}
 }
 
+/**
+ * License name and text pair
+ *
+ * Describes a software license
+ */
 public struct AppLicense {
 	public string name;
 	public string text;
 }
 
+/**
+ * Application entry
+ *
+ * Objects of this class contain information about
+ * an application
+ */
 public class AppItem : Object {
 	private string _idname;
 	private string _version;
