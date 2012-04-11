@@ -271,6 +271,18 @@ public class Setup : MsgObject {
 		return ret;
 	}
 
+	/**
+	 * Check if there are native packages providing the same functionality
+	 *
+	 * Software packages can declare a "replaces" element, showing which native componants
+	 * become obsolete if their 3rd-party app gets installed. E.g. Firefox could declare
+	 * a replacement of "/usr/bin/firefox", so the user gets hinted to maybe remove the native
+	 * package. This feature is optional, and Listaller won't perform any removal actions!
+	 * This function will fail if the user did not request a shared installation.
+	 *
+	 * @return List of replaces package-ids, separated by newlines or NULL if no
+	 * replacement was declared.
+	 */
 	public string? get_replaced_native_packs () {
 		// No superuser-mode -> No need to replace system packages
 		if (!conf.sumode)
@@ -299,6 +311,11 @@ public class Setup : MsgObject {
 		return res;
 	}
 
+	/**
+	 * Execute software installation
+	 *
+	 * @return Success of the operation (if FALSE, an error was emitted)
+	 */
 	public bool run_installation () {
 		bool ret = false;
 
