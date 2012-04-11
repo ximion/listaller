@@ -117,6 +117,16 @@ private class FileList : Object {
 	}
 
 	public bool open (string fname) {
+		bool ret;
+
+		// clear the internal list
+		list.clear ();
+		ret = data_append_listfile (fname);
+
+		return ret;
+	}
+
+	public bool data_append_listfile (string fname) {
 		var file = File.new_for_path (fname);
 
 		if (!file.query_exists ()) {
@@ -139,8 +149,6 @@ private class FileList : Object {
 
 		string current_dir = "";
 		Iterator<string> it = text.iterator ();
-		// clear the internal list
-		list.clear ();
 
 		it.first ();
 		while (it.has_next ()) {
