@@ -54,18 +54,14 @@ public enum SecurityLevel {
 }
 
 public enum SignStatus {
-	UNKNOWN     = 0x0000,
-	VALID       = 0x0001,
-	GREEN       = 0x0002,
-	RED         = 0x0004,
-	KEY_REVOKED = 0x0010,
-	KEY_EXPIRED = 0x0020,
-	SIG_EXPIRED = 0x0040,
-	KEY_MISSING = 0x0080,
-	CRL_MISSING = 0x0100,
-	CRL_TOO_OLD = 0x0200,
-	BAD_POLICY  = 0x0400,
-	SYS_ERROR   = 0x0800;
+	UNKNOWN,
+	VALID,
+	KEY_EXPIRED,
+	CERT_REVOKED,
+	SIG_EXPIRED,
+	BAD,
+	NO_PUBKEY;
+
 
 	public string to_string() {
 		switch (this) {
@@ -75,35 +71,20 @@ public enum SignStatus {
 			case VALID:
 				return _("Signature is fully valid");
 
-			case GREEN:
-				return _("Signature is good.");
-
-			case RED:
-				return _("Signature is bad.");
-
-			case KEY_REVOKED:
-				return _("One key has been revoked");
-
 			case KEY_EXPIRED:
 				return _("One key has expired");
+
+			case CERT_REVOKED:
+				return _("One key has been revoked");
 
 			case SIG_EXPIRED:
 				return _("Signature has expired");
 
-			case KEY_MISSING:
-				return _("Can't verify: Key is missing");
+			case BAD:
+				return _("Signature is bad");
 
-			case CRL_MISSING:
-				return _("CRL not available.");
-
-			case CRL_TOO_OLD:
-				return _("Available CRL is too old");
-
- 			case BAD_POLICY:
-				return _("A policy was not met.");
-
-			case SYS_ERROR:
-				return _("A system error occured.");
+			case NO_PUBKEY:
+				return _("Pubkey is missing");
 
 			default:
 				return ("Signature status is: [%d]").printf((int) this);
@@ -111,7 +92,7 @@ public enum SignStatus {
 	}
 }
 
-public enum SignValidity {
+public enum SignTrust {
 	UNKNOWN,
 	UNDEFINED,
 	NEVER,
@@ -153,19 +134,27 @@ public class PackSecurity : Object {
 	private weak Package pack;
 
 	public SignStatus signature_status { get; set; }
-	public SignValidity signature_validity { get; set; }
+	public SignTrust signature_trustlevel { get; set; }
 
 	internal PackSecurity () {
 	}
 
 	public SecurityLevel get_level () {
-		debug ("SigStatus: %s | SigValidity: %s", signature_status.to_string (), signature_validity.to_string ());
-		if (signature_status >= SignStatus.RED)
+		debug ("SigStatus: %s | SigValidity: %s", signature_status.to_string (), signature_trustlevel.to_string ());
+
+		// No valid or no signature: We can't ensure anything, so flag this package as 'dangerous'
+		if (signature_status != SignStatus.VALID)
 			return SecurityLevel.DANGEROUS;
-		if (signature_validity == SignValidity.MARGINAL)
+
+		// Marginal trust for medium trust level
+		if (signature_trustlevel == SignTrust.MARGINAL)
 			return SecurityLevel.MEDIUM;
-		if (signature_validity >= SignValidity.FULL)
+
+		// Full & ultimate trust will allow a high trust level for this package
+		if ((signature_trustlevel >= SignTrust.FULL) ||
+		    (signature_trustlevel >= SignTrust.ULTIMATE))
 			return SecurityLevel.HIGH;
+
 		return SecurityLevel.LOW;
 	}
 }

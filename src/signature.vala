@@ -29,7 +29,7 @@ private class GPGSignature : GPGBasic {
 	private string signtext;
 
 	public SignStatus sigstatus { get; set; }
-	public SignValidity validity { get; set; }
+	public SignTrust trust_level { get; set; }
 	public bool sig_valid { get; set; }
 
 	public GPGSignature (string sig) {
@@ -38,9 +38,10 @@ private class GPGSignature : GPGBasic {
 		signtext = sig;
 		sig_valid = false;
 		sigstatus = SignStatus.UNKNOWN;
-		validity = SignValidity.UNKNOWN;
+		trust_level = SignTrust.UNKNOWN;
 	}
 
+	/*
 	private void set_sigvalidity_from_gpgvalidity (Validity val) {
 		switch (val) {
 			case Validity.UNKNOWN:
@@ -72,6 +73,7 @@ private class GPGSignature : GPGBasic {
 				break;
 		}
 	}
+	*/
 
 	private bool process_sig_result (VerifyResult *result) {
 		Signature *sig = result->signatures;
@@ -80,31 +82,53 @@ private class GPGSignature : GPGBasic {
 			warning ("Unexpected number of signatures!");
 			return false;
 		}
-		sigstatus = (SignStatus) sig->summary;
+		//sig_summary = sig->summary;
+		var sig_estatus = (GPGError.ErrorCode) sig->status;
 
-		//if ((sig->summary & Sigsum.VALID) > 0)
+		switch (sig_estatus) {
+			case GPGError.ErrorCode.NO_ERROR:
+				sigstatus = SignStatus.VALID;
+				break;
+			case GPGError.ErrorCode.KEY_EXPIRED:
+				sigstatus = SignStatus.KEY_EXPIRED;
+				break;
+			case GPGError.ErrorCode.CERT_REVOKED:
+				sigstatus = SignStatus.CERT_REVOKED;
+				break;
+			case GPGError.ErrorCode.SIG_EXPIRED:
+				time_t t = (time_t) sig->exp_timestamp;
+				var time = new DateTime.from_unix_utc (t);
 
-		//set_sigvalidity_from_gpgvalidity (sig->validity);
+				warning ("Expired signature (since %s)", time.format ("%Y-%m-%d"));
+				sigstatus = SignStatus.SIG_EXPIRED;
+				break;
+			case GPGError.ErrorCode.BAD_SIGNATURE:
+				sigstatus = SignStatus.BAD;
+				break;
+			case GPGError.ErrorCode.NO_PUBKEY:
+				sigstatus = SignStatus.NO_PUBKEY;
+				break;
+			default:
+				sigstatus = SignStatus.UNKNOWN;
+				warning ("Got unknown return status while processing signature: %s", sig_estatus.to_string ());
+				break;
+		}
 
 		if (sig->status != GPGError.ErrorCode.NO_ERROR) {
 			warning ("Unexpected signature status: %s", sig->status.to_string ());
 			sig_valid = false;
 		} else {
-			validity = SignValidity.FULL;
 			sig_valid = true;
 		}
 		if (sig->wrong_key_usage) {
-			validity = SignValidity.MARGINAL;
 			warning ("Unexpectedly wrong key usage");
 			return false;
 		}
 
 		if (sig->validity_reason != GPGError.ErrorCode.NO_ERROR) {
-			validity = SignValidity.MARGINAL;
 			li_error ("Unexpected validity reason: %s".printf (sig->validity_reason.to_string ()));
 			return false;
 		}
-
 
 		return true;
 	}
@@ -146,15 +170,23 @@ private class GPGSignature : GPGBasic {
 			return false;
 		result = ctx.op_verify_result ();
 
+		if (result == null) {
+			critical ("Error communicating with libgpgme: no result record!");
+			return false;
+		}
+
 		// FIXME: The whole GPGMe code is not working properly...
 		// This codeblock is useful to debug the issue
 		if (__unittestmode) {
 			Signature *s = result->signatures;
 			while (s != null) {
+				var t = s->timestamp;
+				var time = new DateTime.from_unix_utc (t);
+
 				stdout.printf("SigSum: %i\n", (int) s->summary);
 				stdout.printf("fpr=%s\n", s->fpr);
 				stdout.printf("status=%d\n", s->status);
-				stdout.printf("timestamp=%lu\n", s->timestamp);
+				stdout.printf("timestamp=%s\n", time.format ("%Y-%m-%d"));
 				stdout.printf("wrong_key_usage=%u\n", (uint) s->wrong_key_usage);
 				stdout.printf("pka_trust=%u\n", s->pka_trust);
 				stdout.printf("chain_model=%u\n", (uint) s->chain_model);
@@ -162,6 +194,10 @@ private class GPGSignature : GPGBasic {
 				stdout.printf("validity_reason=%d\n", s->validity_reason);
 				stdout.printf("key=%d\n", s->pubkey_algo);
 				stdout.printf("hash=%d\n", s->hash_algo);
+				SigNotation *r;
+				for (r = s->notations; r != null; r = r->next) {
+					stdout.printf("notation.name=%s\n", r->name);
+				}
 				s = s->next;
 			}
 		}
@@ -177,8 +213,8 @@ private class GPGSignature : GPGBasic {
 		ret = verify_package_internal (ctrlfname, payloadfname);
 		if (!ret) {
 			debug ("Signature is broken!");
-			validity = SignValidity.NEVER;
-			sigstatus = SignStatus.RED;
+			trust_level = SignTrust.NEVER;
+			sigstatus = SignStatus.BAD;
 		}
 		return ret;
 	}
@@ -188,8 +224,8 @@ private class GPGSignature : GPGBasic {
 		ret = verify_package_internal (fname, null);
 		if (!ret) {
 			debug ("Signature is broken!");
-			validity = SignValidity.NEVER;
-			sigstatus = SignStatus.RED;
+			trust_level = SignTrust.NEVER;
+			sigstatus = SignStatus.BAD;
 		}
 		return ret;
 	}

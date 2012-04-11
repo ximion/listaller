@@ -462,7 +462,7 @@ private class Package : MsgObject {
 		if (sig == null)
 			return sec;
 		sec.signature_status = sig.sigstatus;
-		sec.signature_validity = sig.validity;
+		sec.signature_trustlevel = sig.trust_level;
 
 		return sec;
 	}

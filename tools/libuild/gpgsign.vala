@@ -80,6 +80,7 @@ private class GPGSign : GPGBasic {
 
 		Context ctx;
 		err = Context.Context (out ctx);
+		ctx.set_protocol (Protocol.OpenPGP);
 		return_if_fail (check_gpg_err (err));
 
 		string? agent_info = Environment.get_variable ("GPG_AGENT_INFO");

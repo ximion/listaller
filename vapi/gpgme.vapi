@@ -245,7 +245,7 @@ namespace GPG {
 		 */
 		uint sig_class;
 
-		SigNotation notations;
+		SigNotation *notations;
 	}
 
 	/**
@@ -362,7 +362,7 @@ namespace GPG {
 		/**
 		* Notation data and policy URLs
 		*/
-		SigNotation notations;
+		SigNotation *notations;
 
 		/**
 		* Signature creation time
@@ -434,7 +434,7 @@ namespace GPG {
 		/**
 		 * Notation data and policy URLs
 		 */
-		SigNotation notations;
+		SigNotation *notations;
 
 		/**
 		 * Signature creation time
