@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lclstrconsts\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-04-12 03:00+0200\n"
-"PO-Revision-Date: 2009-05-06 13:38+0000\n"
-"Last-Translator: Matthias Klumpp <Unknown>\n"
+"POT-Creation-Date: 2012-04-13 00:55+0200\n"
+"PO-Revision-Date: 2012-03-31 09:57+0000\n"
+"Last-Translator: Antoni Kudelski <antekk@linux.pl>\n"
 "Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-01-24 09:48+0000\n"
-"X-Generator: Launchpad (build 14713)\n"
+"X-Launchpad-Export-Date: 2012-04-12 22:52+0000\n"
+"X-Generator: Launchpad (build 15070)\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
 
@@ -22,24 +22,24 @@ msgstr ""
 
 #, c-format
 msgid "A higher version '%s' of this application has already been installed."
-msgstr ""
+msgstr "Nowsza wersja '%s' tej aplikacji została już zainstalowana."
 
 #, c-format
 msgid "A lower version '%s' of this application has already been installed."
-msgstr ""
+msgstr "Starsza wersja '%s' tej aplikacji została już zainstalowana."
 
 msgid "Activate verbose mode"
-msgstr ""
+msgstr "Aktywuj więcej komunikatów"
 
 #, c-format
 msgid "Application ID %s is invalid!"
-msgstr ""
+msgstr "ID Aplikacji %s jest nieważna!"
 
 msgid "Build IPK package"
-msgstr ""
+msgstr "Zbuduj pakiet IPK"
 
 msgid "Copying files to their destination"
-msgstr ""
+msgstr "Kopiowanie plików do miejsca przeznaczenia"
 
 #, c-format
 msgid ""
@@ -50,10 +50,10 @@ msgstr ""
 
 #, c-format
 msgid "Could not create file '%s'! File already exists."
-msgstr ""
+msgstr "Nie można utworzyć pliku '%s'! Plik już istnieje."
 
 msgid "Could not create/update software database!"
-msgstr ""
+msgstr "Nie można utworzyć/zaktualizować bazy oprogramowania!"
 
 #, c-format
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
@@ -61,15 +61,15 @@ msgstr ""
 
 #, c-format
 msgid "Could not extract file %s! Error: %s"
-msgstr ""
+msgstr "Nie można wypakować pliku %s! Błąd: %s"
 
 #, c-format
 msgid "Could not extract file! Error: %s"
-msgstr ""
+msgstr "Nie można wypakować pliku! Błąd: %s"
 
 #. : IPk builder was unable to find IPK source scripts
 msgid "Could not find IPK source files!"
-msgstr ""
+msgstr "Nie można znaleźć plików źródłowych IPK!"
 
 #, c-format
 msgid "Could not load desktop file values: %s"
@@ -82,7 +82,7 @@ msgstr ""
 
 #, c-format
 msgid "Could not open IPK file! Error: %s"
-msgstr ""
+msgstr "Nie można otworzyć pliku IPK! Błąd %s"
 
 #, c-format
 msgid "Could not open desktop file: %s"
@@ -92,6 +92,9 @@ msgid ""
 "Could not open the software database, maybe it is locked at time.\n"
 "Please close all other running installations to continue!"
 msgstr ""
+"Nie można otworzyć bazy danych oprogramowanie, może jest zablokowana na ten "
+"czas.\n"
+"Proszę zamknąć wszystkie inne działające instalacje, aby kontynuować!"
 
 #, c-format
 msgid ""
@@ -101,7 +104,7 @@ msgstr ""
 
 #, c-format
 msgid "Could not override file %s, this file already exists!"
-msgstr ""
+msgstr "Nie można nadpisać pliku %s, ten plik już istnieje!"
 
 #, c-format
 msgid "Could not read IPK control information! Error: %s"
@@ -119,79 +122,79 @@ msgstr ""
 
 #, c-format
 msgid "Could not remove file %s!"
-msgstr ""
+msgstr "Nie można usunąć pliku %s!"
 
 #, c-format
 msgid "Could not uninstall application %s. It is not installed."
-msgstr ""
+msgstr "Nie można odinstalować %s aplikacji. Nie jest zainstalowana."
 
 msgid "DIRECTORY"
-msgstr ""
+msgstr "KATALOG"
 
 #, c-format
 msgid "Database action '%s' failed: %s"
-msgstr ""
+msgstr "Działanie bazy danych '%s' nie powiodło się: %s"
 
 msgid "Database action failed"
-msgstr ""
+msgstr "Działanie bazy danych nie powiodło się"
 
 msgid "Database action successful"
-msgstr ""
+msgstr "Działanie bazy danych powiodło się"
 
 msgid "Database locked"
-msgstr ""
+msgstr "Baza danych zablokowana"
 
 msgid "Database unlocked"
-msgstr ""
+msgstr "Baza danych odblokowana"
 
 #, c-format
 msgid "ERROR: %s"
-msgstr ""
+msgstr "BŁĄD: %s"
 
 msgid "Enable verbose mode"
-msgstr ""
+msgstr "Wyświetla więcej komunikatów"
 
 #, c-format
 msgid "Error while finding files in directory %s: %s"
-msgstr ""
+msgstr "Błąd podczas znajdowania plików w katalogu %s:%s"
 
 #, c-format
 msgid "Error: %s\n"
-msgstr ""
+msgstr "Błąd: %s\n"
 
 #, c-format
 msgid "File %s not found or permission denied!"
-msgstr ""
+msgstr "Plik %s nie został znaleziony lub brak dostępu!"
 
 #, c-format
 msgid "File '%s' doesn't exist."
-msgstr ""
+msgstr "Plik '%s' nie istnieje."
 
 msgid "GPG-Sign the resulting package"
 msgstr ""
 
 msgid "IPK package could not be found!"
-msgstr ""
+msgstr "Nie można odszukać pakietu IPK."
 
 msgid "IPK package output directory"
 msgstr ""
 
 msgid "Installation completed!"
-msgstr ""
+msgstr "Instalacja zakończona!"
 
 msgid "Installation failed!"
-msgstr ""
+msgstr "Instalacja nie powiodła się!"
 
 #, c-format
 msgid "Installation of native packages failed with message: %s"
-msgstr ""
+msgstr "Instalacja rodzimych pakietów nie powiodła się z komunikatem: %s"
 
 #, c-format
 msgid "Installing native packages: %s"
-msgstr ""
+msgstr "Instalacja rodzimych pakietów: %s"
 
 msgid "Low security."
-msgstr ""
+msgstr "Niski poziom zabezpieczeń."
 
 #, c-format
 msgid "Making '%s' known to your system."
@@ -202,10 +205,10 @@ msgid "Malformed line in file listing: %s"
 msgstr ""
 
 msgid "Medium security."
-msgstr ""
+msgstr "Średni poziom zabezpieczeń."
 
 msgid "Never trust."
-msgstr ""
+msgstr "Nigdy nie ufaj."
 
 #, c-format
 msgid "No application specified!"
@@ -213,7 +216,7 @@ msgstr ""
 
 #, c-format
 msgid "No path given!"
-msgstr ""
+msgstr "Nie podano ścieżki!"
 
 msgid ""
 "No payload data archive has been registered! This might be a bug in this "
@@ -225,10 +228,10 @@ msgid "No valid DOAP data found in directory %s - Can't open control files."
 msgstr ""
 
 msgid "One key has been revoked"
-msgstr ""
+msgstr "Jeden klucz został unieważniony"
 
 msgid "One key has expired"
-msgstr ""
+msgstr "Jeden klucz wygasł"
 
 msgid ""
 "Package uses custom variables - usually this is not intentional, please "
@@ -237,7 +240,7 @@ msgstr ""
 
 #, c-format
 msgid "PackageKit exit code was: %s"
-msgstr ""
+msgstr "Kod zakończenia PackageKit był: %s"
 
 #, c-format
 msgid ""
@@ -249,10 +252,10 @@ msgid "Path to Listaller package source directory"
 msgstr ""
 
 msgid "Path to the application's source code"
-msgstr ""
+msgstr "Ścieżka do kodu źródłowego aplikacji"
 
 msgid "Please remove the existing version to continue!"
-msgstr ""
+msgstr "Proszę usunąć istniejącą wersję, aby kontynuować!"
 
 msgid "Print machine-readable simple text"
 msgstr ""
@@ -261,64 +264,64 @@ msgid "Pubkey is missing"
 msgstr ""
 
 msgid "Query returned no results. Maybe there's no release defined?"
-msgstr ""
+msgstr "Zapytanie nie zwróciło wyników. Może nie zdefiniowano wersji?"
 
 msgid "Query returned no results. Maybe this DOAP data is broken?"
-msgstr ""
+msgstr "Zapytanie nie zwróciło wyników. Może to dane DOAP są uszkodzone?"
 
 #, c-format
 msgid "Removal of %s finished."
-msgstr ""
+msgstr "Usuwanie %s zakończone."
 
 #, c-format
 msgid "Removal of %s started."
-msgstr ""
+msgstr "Usuwanie %s uruchomione."
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
-msgstr ""
+msgstr "Rozwiązywanie zależności z '%s'."
 
 #, c-format
 msgid "Run '%s --help' to see a full list of available command line options.\n"
-msgstr ""
+msgstr "Uruchom \"%s --help\" aby wyświetlić pełną listę dostępnych opcji.\n"
 
 #, c-format
 msgid "Running installation of %s"
-msgstr ""
+msgstr "Uruchomienie instalacji %s"
 
 msgid "Setup has not been initialized!"
-msgstr ""
+msgstr "Ustawienia nie zostały zainicjowane!"
 
 msgid "Should be safe."
-msgstr ""
+msgstr "Powinno być bezpieczne."
 
 msgid "Show the application's version"
-msgstr ""
+msgstr "Wyświetl wersję programu"
 
 msgid "Signature has expired"
-msgstr ""
+msgstr "Podpis wygasł"
 
 msgid "Signature is bad"
 msgstr ""
 
 msgid "Signature is fully valid"
-msgstr ""
+msgstr "Podpis jest ważny i akutalny"
 
 msgid "Software database closed"
-msgstr ""
+msgstr "Baza danych oprogramowania zamknięta"
 
 #, c-format
 msgid "Software database message (%d)"
-msgstr ""
+msgstr "Komunikat bazy danych oprogramowania (%d)"
 
 msgid "Software database opened"
-msgstr ""
+msgstr "Baza danych oprogramowania otwarta"
 
 msgid "Software install prefix"
 msgstr ""
 
 msgid "Software installation package"
-msgstr ""
+msgstr "Pakiet instalacyjny oprogramowania"
 
 msgid ""
 "Some files of this package could not be installed, because they were not "
@@ -327,13 +330,13 @@ msgid ""
 msgstr ""
 
 msgid "Status of this signature is unknown or package is not signed."
-msgstr ""
+msgstr "Status tego podpisu jest nieznany lub pakiet nie jest podpisany."
 
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
 msgid "This application has already been installed."
-msgstr ""
+msgstr "Ta aplikacja została już zainstalowana."
 
 #, c-format
 msgid ""
@@ -352,17 +355,21 @@ msgid "Tried to access locked database! This shouldn't happen. Message: %s"
 msgstr ""
 
 msgid "Tried to perform action on invalid IPK package."
-msgstr ""
+msgstr "Próba wykonania działania na nieprawidłowym pakiecie IPK."
 
 msgid ""
 "Tried to perform action on private software database, but the database is "
 "not opened! (this should never happen!)"
 msgstr ""
+"Próba wykonania działania na prywatnej bazie danych oprogramowania, lecz "
+"baza danych nie jest otwarta! (to nie powinno się nigdy wydarzyć!)"
 
 msgid ""
 "Tried to perform action on shared software database, but the database is not "
 "opened! (maybe a permission problem?)"
 msgstr ""
+"Próba wykonania działania na udostępnionej bazie danych oprogramowania, lecz "
+"baza danych nie jest otwarta! (może to problem z pozwoleniem?)"
 
 msgid "Tried to write on readonly database! (This should never happen)"
 msgstr ""
@@ -371,13 +378,13 @@ msgid "Tried to write on readonly database! (This should not happen)"
 msgstr ""
 
 msgid "Trust if full"
-msgstr ""
+msgstr "Zaufanie jest całkowite"
 
 msgid "Trust is marginal"
-msgstr ""
+msgstr "Zaufanie jest marginalne"
 
 msgid "Trust is ultimate."
-msgstr ""
+msgstr "Zaufanie jest najwyższe."
 
 msgid ""
 "Trying to remove local application, but AppManager is in superuser mode!\n"
@@ -392,48 +399,48 @@ msgstr ""
 
 #, c-format
 msgid "Unable to add a dependency to database: %s"
-msgstr ""
+msgstr "Nie można dodać zależność do bazy danych: %s"
 
 #, c-format
 msgid "Unable to add application file list to database: %s"
-msgstr ""
+msgstr "Nie można dodać listy plików aplikacji do bazy danych: %s"
 
 #, c-format
 msgid "Unable to add application to database: %s"
-msgstr ""
+msgstr "Nie można dodać aplikacji do bazy danych: %s"
 
 #, c-format
 msgid "Unable to build package: %s"
-msgstr ""
+msgstr "Nie można zbudować pakietu: % s"
 
 #, c-format
 msgid "Unable to count applications: %s"
-msgstr ""
+msgstr "Nie można policzyć aplikacji: %s"
 
 msgid "Unable to create destination directory."
-msgstr ""
+msgstr "Nie można utworzyć katalogu docelowego."
 
 #, c-format
 msgid "Unable to create file '%s'!"
-msgstr ""
+msgstr "Nie można utworzyć pliku '%s'!"
 
 #, c-format
 msgid "Unable to create/update database tables: %s"
-msgstr ""
+msgstr "Nie można utworzyć/zaktualizować tabeli bazy danych: %s"
 
 #, c-format
 msgid "Unable to download feed %s. Message: %s"
 msgstr ""
 
 msgid "Unable to extract IPK data!"
-msgstr ""
+msgstr "Nie można wypakować danych IPK!"
 
 msgid "Unable to extract IPK metadata!"
-msgstr ""
+msgstr "Nie można wypakować metadanych IPK!"
 
 #, c-format
 msgid "Unable to extract data file %s. Message: %s"
-msgstr ""
+msgstr "Nie można wypakować danych pliku %s. Wiadomość: %s"
 
 #, c-format
 msgid ""
@@ -443,14 +450,14 @@ msgstr ""
 
 #, c-format
 msgid "Unable to extract file '%s' for dependency '%s'!"
-msgstr ""
+msgstr "Nie można wypakować pliku '%s' dla zależności '%s'!"
 
 #, c-format
 msgid "Unable to extract file. %s"
-msgstr ""
+msgstr "Nie można wypakować pliku. %s"
 
 msgid "Unable to extract signature! Maybe package is not signed."
-msgstr ""
+msgstr "Nie można wypakować podpisu. Być może pakiet nie został podpisany."
 
 #, c-format
 msgid "Unable to fetch application by id: %s"
@@ -481,43 +488,44 @@ msgstr ""
 #, c-format
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr ""
+"Nie można znaleźć poprawnego kandydata do zaspokojenia zależności '%s'!"
 
 #, c-format
 msgid "Unable to get meta-information list: %s"
-msgstr ""
+msgstr "Nie można uzyskać listy meta-informacji: %s"
 
 #, c-format
 msgid "Unable to open database for read-only: %s"
-msgstr ""
+msgstr "Nie można otworzyć bazy danych tylko dla odtyczu: %s"
 
 #, c-format
 msgid "Unable to open database for writing: %s"
-msgstr ""
+msgstr "Nie można otworzyć bazy danych do zapisu: %s"
 
 msgid "Unable to open software database for reading & writing!"
-msgstr ""
+msgstr "Nie można otworzyć bazy danych oprogramowania dla odczytu & zapisu!"
 
 msgid "Unable to open software database for reading only!"
-msgstr ""
+msgstr "Nie można otworzyć bazy danych oprogramowania tylko dla odczytu!"
 
 #, c-format
 msgid "Unable to read package signature! Message: %s"
-msgstr ""
+msgstr "Nie można odczytać podpisu paczki!  Wiadomość: %s"
 
 #, c-format
 msgid "Unable to remove application from database: %s"
-msgstr ""
+msgstr "Nie można usunąć aplikacji z bazy danych: %s"
 
 msgid "Unable to save modified desktop-file!"
-msgstr ""
+msgstr "Nie można zapisać zmodyfikowanego pliku-desktop!"
 
 #, c-format
 msgid "Unable to save modified desktop-file! Message: %s"
-msgstr ""
+msgstr "Nie można zapisać zmodyfikowanego pliku-desktop! Wiadomość: %s"
 
 #, c-format
 msgid "Unable to search application database: %s"
-msgstr ""
+msgstr "Nie można przeszukać bazy danych aplikacji: %s"
 
 #, c-format
 msgid "Unable to write application file list! Message: %s"
@@ -525,14 +533,14 @@ msgstr ""
 
 #, c-format
 msgid "Unable to write meta information! Message: %s"
-msgstr ""
+msgstr "Nie można zapisać meta informacji! Wiadomość: %s"
 
 #, c-format
 msgid "Unable to write signature file! Message: %s"
-msgstr ""
+msgstr "Nie można zapisać podpisu pliku ! Wiadomość: %s"
 
 msgid "Unknown."
-msgstr ""
+msgstr "Nieznany."
 
 msgid "Use recursive mode"
 msgstr ""
@@ -545,25 +553,58 @@ msgid ""
 msgstr ""
 
 msgid "Validity is undefined"
-msgstr ""
+msgstr "Ważność jest niezdefiniowana"
 
 msgid "Validity is unknown"
-msgstr ""
+msgstr "Ważność jest nieznana"
 
 #, c-format
 msgid "We don't know a desktop-file for application '%s'!"
-msgstr ""
+msgstr "Nie znamy pliku-desktop dla aplikacji '%s'!"
 
 msgid "XML file is no valid ZI feed!"
 msgstr ""
 
 #, c-format
 msgid "ZI XML file '%s' is damaged."
-msgstr ""
+msgstr "Plik ZI XML '%s' jest uszkodzony."
 
 #, c-format
 msgid "error: %s"
-msgstr ""
+msgstr "błąd: %s"
+
+#~ msgid "A policy was not met."
+#~ msgstr "Polityka nie została spełniona."
+
+#~ msgid "A system error occured."
+#~ msgstr "Wystąpił błąd systemowy."
 
 #~ msgid "Abort"
 #~ msgstr "Porzuć"
+
+#~ msgid "Available CRL is too old"
+#~ msgstr "Dostępny CRL jest zbyt stary"
+
+#~ msgid "CRL not available."
+#~ msgstr "CRL niedostępne."
+
+#~ msgid "Can't verify: Key is missing"
+#~ msgstr "Nie można zweryfikować: brakuje klucza"
+
+#~ msgid "Could be dangerous!"
+#~ msgstr "Może być niebezpieczne!"
+
+#~ msgid "Signature is bad."
+#~ msgstr "Podpis jest zły."
+
+#~ msgid "Signature is good."
+#~ msgstr "Podpis jest dobry."
+
+#~ msgid ""
+#~ "Tried to write on unlocked (readonly) database! (This should not happen)"
+#~ msgstr ""
+#~ "Próba nadpisania na odblokowanej (tylko do odczytu) bazie danych! (To nie "
+#~ "powinno się zdarzyć)"
+
+#~ msgid "Unable to remove database lock! (Message: %s)"
+#~ msgstr "Nie można usunąć blokady bazy danych (Wiadomość: %s)"
