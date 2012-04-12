@@ -110,7 +110,7 @@ private class GPGSignature : GPGBasic {
 				break;
 			default:
 				sigstatus = SignStatus.UNKNOWN;
-				warning ("Got unknown return status while processing signature: %s", sig_estatus.to_string ());
+				warning ("Got unknown return status while processing signature: %s | %d", sig_estatus.to_string (), sig_estatus);
 				break;
 		}
 
@@ -133,7 +133,7 @@ private class GPGSignature : GPGBasic {
 		return true;
 	}
 
-	private bool verify_package_internal (string ctrlfname, string? payloadfname) {
+	private bool verify_package_internal (string ctrlfname, string[]? payload_files) {
 		Context ctx;
 		GPGError.ErrorCode err;
 		Data sig, dt;
@@ -153,9 +153,14 @@ private class GPGSignature : GPGBasic {
 		ret = read_file_to_data (ctrlfname, ref dt);
 		if (!ret)
 			return false;
-		ret = read_file_to_data (payloadfname, ref dt);
-		if ((!ret) && (!__unittestmode))
-			return false;
+		// NULL-check only needed for unit-tests!
+		if (payload_files != null) {
+			foreach (string fname in payload_files) {
+				ret = read_file_to_data (fname, ref dt);
+				if ((!ret) && (!__unittestmode))
+					return false;
+			}
+		}
 
 		//err = Data.create_from_memory (out sig, signtext, signtext.length, false);
 		err = Data.create (out sig);
@@ -203,14 +208,14 @@ private class GPGSignature : GPGBasic {
 		}
 
 		process_sig_result (result);
-
 		debug ("Signature checked.");
+
 		return true;
 	}
 
-	public bool verify_package (string ctrlfname, string payloadfname) {
+	public bool verify_package (string ctrlfname, string[] payload_files) {
 		bool ret;
-		ret = verify_package_internal (ctrlfname, payloadfname);
+		ret = verify_package_internal (ctrlfname, payload_files);
 		if (!ret) {
 			debug ("Signature is broken!");
 			trust_level = SignTrust.NEVER;

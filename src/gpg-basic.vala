@@ -130,7 +130,13 @@ internal abstract class GPGBasic : Object {
 		//dt.set_encoding (DataEncoding.BINARY);
 
 		var file = File.new_for_path (fname);
-		var fs = file.read ();
+		FileInputStream fs;
+		try {
+			fs = file.read ();
+		} catch (Error e) {
+			warning ("Unable to read file %s: %s", fname, e.message);
+			return false;
+		}
 
 		// Seek and read the image data chunk
 		uint8[] buffer = new uint8[BUFFER_SIZE];

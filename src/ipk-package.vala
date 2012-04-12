@@ -31,12 +31,14 @@ private class Package : MsgObject {
 	private string fname;
 	private string wdir;
 	private bool ipk_valid;
-	private string data_archive;
+	private string[] data_archives_available;
+	private string[] data_archives;
 	private IPK.PackControl ipkc;
 	private IPK.FileList ipkf;
 	private HashMap<string, IPK.FileEntry>? fcache;
 	private AppItem appInfo;
 	private const int DEFAULT_BLOCK_SIZE = 65536;
+	private string ipk_selected_arch_;
 
 	public IPK.PackControl control {
 		get { return ipkc; }
@@ -44,6 +46,7 @@ private class Package : MsgObject {
 
 	public Package (string filename, Settings? settings) {
 		fname = filename;
+		ipk_selected_arch_ = "";
 
 		conf = settings;
 		if (conf == null)
@@ -87,6 +90,8 @@ private class Package : MsgObject {
 			return false;
 		}
 		string doapFileName = "";
+		ipk_selected_arch_ = "";
+		string archFListName = "";
 
 		while (ar.next_header (out e) == Result.OK) {
 			string pName = e.pathname ();
@@ -95,11 +100,11 @@ private class Package : MsgObject {
 					if (ret)
 						doapFileName = pName;
 			} else {
+
 				switch (pName) {
 					case "pksetting":
 						ret = extract_entry_to (ar, e, wdir);
 						break;
-					// FIXME: Fix this for mutiple data archives
 					case "files-all.list":
 						ret = extract_entry_to (ar, e, wdir);
 						break;
@@ -110,6 +115,16 @@ private class Package : MsgObject {
 						ret = extract_entry_to (ar, e, wdir);
 						break;
 					default:
+						if (pName.has_prefix ("files-")) {
+							string arch = pName.substring (6, pName.last_index_of (".") - 6);
+							ipk_selected_arch_ = arch;
+							arch = arch_generic (arch);
+							if (arch == arch_generic (system_machine ())) {
+								ret = extract_entry_to (ar, e, wdir);
+								archFListName = pName;
+								break;
+							}
+						}
 						ar.read_data_skip ();
 						break;
 				}
@@ -132,22 +147,37 @@ private class Package : MsgObject {
 						 Path.build_filename (wdir, "dependencies.list", null));
 		}
 
+		// Check if architecture is supported
+		string supportedArchs = ipkc.get_architectures ();
+		if (supportedArchs.index_of (system_machine ()) <= 0) {
+			emit_error (ErrorEnum.WRONG_ARCHITECTURE,
+				_("This package can't be installed on your system architecture (%s)!\nPlease get a package which was built for your machine.").printf (system_machine ()));
+			return false;
+		}
+
 		// Set license text, if we have any. (This fubction returns false if file doesn't exists)
 		ipkc.set_license_text_from_file (Path.build_filename (wdir, "license.txt", null));
 
 		// Fetch application-information as an app-id
 		appInfo = ipkc.get_application ();
 
+		// Load arch-independent file-list
 		tmpf = Path.build_filename (wdir, "files-all.list", null);
 		if ((ret) && (FileUtils.test (tmpf, FileTest.EXISTS))) {
-			ret = ipkf.open (tmpf);
-			// Cache list of files
-			var list = ipkf.get_files_list ();
-			fcache = new HashMap<string, IPK.FileEntry> ();
-			VarSolver vs = new VarSolver (appInfo.idname);
-			foreach (IPK.FileEntry fe in list) {
-				fcache.set (vs.substitute_vars_id (fe.get_full_filename ()), fe);
-			}
+			ret = ipkf.data_append_listfile (tmpf);
+		}
+		if (archFListName != "") {
+			tmpf = Path.build_filename (wdir, archFListName, null);
+			if (FileUtils.test (tmpf, FileTest.EXISTS))
+				ret = ipkf.data_append_listfile (tmpf);
+		}
+
+		// Cache list of files
+		var list = ipkf.get_files_list ();
+		fcache = new HashMap<string, IPK.FileEntry> ();
+		VarSolver vs = new VarSolver (appInfo.idname);
+		foreach (IPK.FileEntry fe in list) {
+			fcache.set (vs.substitute_vars_id (fe.get_full_filename ()), fe);
 		}
 
 		// If everything was successful, the IPK file is valid
@@ -446,7 +476,13 @@ private class Package : MsgObject {
 		}
 
 		GPGSignature sig = new GPGSignature (sig_text);
-		sig.verify_package (Path.build_filename (wdir, "control.tar.xz", null), data_archive);
+
+		string[] data_archives_tmp = {};
+		foreach (string fname in data_archives_available) {
+			data_archives_tmp += Path.build_filename (wdir, fname, null);
+		}
+
+		sig.verify_package (Path.build_filename (wdir, "control.tar.xz", null), data_archives_tmp);
 
 		return sig;
 	}
@@ -468,37 +504,52 @@ private class Package : MsgObject {
 	}
 
 	private bool prepare_extracting () {
-		if (FileUtils.test (data_archive, FileTest.EXISTS))
-			return true;
+		foreach (string fname in data_archives_available) {
+			if (FileUtils.test (Path.build_filename (wdir, fname, null), FileTest.EXISTS))
+				return true;
+		}
+
 		bool ret = false;
 
 		Read ar = open_base_ipk ();
+		data_archives_available = {};
+
 		weak Entry e;
 		while (ar.next_header (out e) == Result.OK) {
+			// Determine name of arch-dependent part
 			// Extract payload
-			// FIXME: Handle multiple data archives
-			if (e.pathname () == "data-all.tar.xz") {
+			if (e.pathname ().has_prefix ("data-")) {
+				data_archives_available += e.pathname ();
 				ret = extract_entry_to (ar, e, wdir);
 				if (!ret) {
 					warning (_("Unable to extract IPK data!"));
 					emit_error (ErrorEnum.IPK_INCOMPLETE,
 						_("Could not extract IPK payload! Package might be damaged. Error: %s").printf (ar.error_string ()));
 				}
-				break;
+				continue;
 			} else {
 				ar.read_data_skip ();
 			}
 		}
 		ar.close ();
 
-		// FIXME: Handle multiple data archives
-		data_archive = Path.build_filename (wdir, "data-all.tar.xz", null);
+		// Only add data-archives we need to extract here
+		string archDataFName = "";
+		if (ipk_selected_arch_ != "")
+			archDataFName = "data-%s.tar.xz".printf (ipk_selected_arch_);
+
+		data_archives = {};
+		foreach (string s in data_archives_available) {
+			debug ("Processing archive: %s", s);
+			if ((s == "data-all.tar.xz") || (s == archDataFName))
+				data_archives += Path.build_filename (wdir, s, null);
+		}
 
 		return ret;
 	}
 
-	private Read? open_payload_archive () {
-		if (!FileUtils.test (data_archive, FileTest.EXISTS))
+	private Read? open_payload_archive (string ar_fname) {
+		if (!FileUtils.test (ar_fname, FileTest.EXISTS))
 			return null;
 
 		// Open the payload archive
@@ -506,7 +557,7 @@ private class Package : MsgObject {
 		// Data archives are usually XZ compressed tarballs
 		plar.support_format_tar ();
 		plar.support_compression_all ();
-		if (plar.open_filename (data_archive, 4096) != Result.OK) {
+		if (plar.open_filename (ar_fname, 4096) != Result.OK) {
 			emit_error (ErrorEnum.IPK_DAMAGED,
 				_("Could not read IPK payload container! Package might be damaged. Error: %s").printf (plar.error_string ()));
 			return null;
@@ -514,6 +565,38 @@ private class Package : MsgObject {
 		return plar;
 	}
 
+	/** Internal helper method for install_file() */
+	private bool install_file_arc_internal (Read plar, FileEntry fe) {
+		VarSolver vs = new VarSolver (appInfo.idname);
+		string int_path = vs.substitute_vars_id (fe.get_full_filename ());
+
+		if (plar == null)
+			return false;
+
+		bool ret = false;
+		weak Entry e;
+		while (plar.next_header (out e) == Result.OK) {
+			if (e.pathname () == int_path) {
+				ret = true;
+				break;
+			}
+		}
+		if (ret) {
+			ret = install_entry_and_validate (fe, plar, e, vs);
+		}
+
+		plar.close ();
+
+		return ret;
+	}
+
+	/**
+	 * Install selected file of this package to it's' destination
+	 *
+	 * @param fe The FileEntry to extract
+	 *
+	 * @return TRUE if no error was sent
+	 */
 	public bool install_file (IPK.FileEntry fe) {
 		bool ret = true;
 		// This extracts a file and verifies it's checksum
@@ -528,56 +611,38 @@ private class Package : MsgObject {
 		if (!ret)
 			return ret;
 
-		VarSolver vs = new VarSolver (appInfo.idname);
-		string int_path = vs.substitute_vars_id (fe.get_full_filename ());
-
-		Read plar = open_payload_archive ();
-		if (plar == null)
+		// Install all enabled data-archives
+		if (data_archives.length <= 0) {
+			// No data archives, we can't install anything! :(
+			emit_error (ErrorEnum.INTERNAL,
+				    _("No payload data archive has been registered! This might be a bug in this application, please report the issue!"));
 			return false;
-
-		ret = false;
-		weak Entry e;
-		while (plar.next_header (out e) == Result.OK) {
-			if (e.pathname () == int_path) {
-				ret = true;
-				break;
-			}
 		}
+
+		// Go through all data archives and seek the to-be-installed file
+		foreach (string ar_fname in data_archives) {
+			Read plar = open_payload_archive (ar_fname);
+			ret = install_file_arc_internal (plar, fe);
+			if (!ret)
+				return false;
+		}
+
 		// VarSetter to set LI path vars in files
 		VarSetter vset = new VarSetter (conf, appInfo.idname);
-		if (ret) {
-			ret = install_entry_and_validate (fe, plar, e, vs);
-			if (ret)
-				vset.execute (fe.fname_installed);
-		}
-		plar.close ();
+		if (ret)
+			vset.execute (fe.fname_installed);
 
 		return ret;
 	}
 
-	public bool install_all_files () {
-		bool ret = true;
-		// This extracts all files in this package to their destination
-		if (!is_valid ()) {
-			warning (_("Tried to perform action on invalid IPK package."));
-			return false;
-		}
-
-		// This ensures our IPK package is ready to extract files
-		ret = prepare_extracting ();
-		if (!ret)
-			return ret;
-
-		Read plar = open_payload_archive ();
+	/** Internal helper method for install_all_files() */
+	private bool install_all_files_arc_internal (Read plar, double one, ref int prog) {
 		if (plar == null)
 			return false;
 
-		double one = 100d / fcache.size;
-		int prog = 0;
-		ret = false;
+		bool ret = false;
 		weak Entry e;
-		// Create new varsetter, so we can set path variables directly in files
-		VarSetter vset = new VarSetter (conf, appInfo.idname);
+
 		IPK.FileEntry fe = null;
 		VarSolver vs = new VarSolver (appInfo.idname);
 		// Now extract & validate all stuff
@@ -593,6 +658,56 @@ private class Package : MsgObject {
 					break;
 			}
 		}
+
+		plar.close ();
+
+		return ret;
+	}
+
+	/**
+	 * Install all files of this package to their destination
+	 *
+	 * @return TRUE if no error was sent
+	 */
+	public bool install_all_files () {
+		bool ret = true;
+		// This extracts all files in this package to their destination
+		if (!is_valid ()) {
+			warning (_("Tried to perform action on invalid IPK package."));
+			return false;
+		}
+
+		// This ensures our IPK package is ready to extract files
+		ret = prepare_extracting ();
+		if (!ret)
+			return ret;
+
+		// Install all enabled data-archives
+		if (data_archives.length <= 0) {
+			// No data archives, we can't install anything! :(
+			emit_error (ErrorEnum.INTERNAL,
+				    _("No payload data archive has been registered! This might be a bug in this application, please report the issue!"));
+			return false;
+		}
+
+		double one = 100d / fcache.size;
+		int prog = 0;
+		foreach (string ar_fname in data_archives) {
+			debug ("Installing from archive: %s", ar_fname);
+			Read plar = open_payload_archive (ar_fname);
+			ret = install_all_files_arc_internal (plar, one, ref prog);
+			if (!ret)
+				return false;
+		}
+
+		// Create new varsetter, so we can set path variables directly in files
+		VarSetter vset = new VarSetter (conf, appInfo.idname);
+		// Set variables in external files
+		if (ret)
+			foreach (IPK.FileEntry f in get_file_entries ()) {
+				vset.execute (f.fname_installed);
+			}
+
 		if ((prog != fcache.size) && (ret == true)) {
 			// Check which files might be missing...
 			string missingFiles = "";
@@ -609,14 +724,6 @@ private class Package : MsgObject {
 
 			ret = false;
 		}
-
-		// Set variables in external files
-		if (ret)
-			foreach (IPK.FileEntry f in get_file_entries ()) {
-				vset.execute (f.fname_installed);
-			}
-
-		plar.close ();
 
 		return ret;
 	}
