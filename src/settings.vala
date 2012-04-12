@@ -24,6 +24,9 @@ using Listaller;
 
 namespace Listaller {
 
+private static const string tmpdir = "/var/tmp";
+private static const string tmpdir_small = "/tmp";
+
 /**
  * Provides Listaller's settings
  *
@@ -265,7 +268,8 @@ public class Settings : Object {
 
 	public string tmp_dir () {
 		string ret;
-		ret = Environment.get_tmp_dir ();
+		//! ret = Environment.get_tmp_dir ();
+		ret = tmpdir;
 		return ret;
 	}
 
@@ -279,7 +283,7 @@ public class Settings : Object {
 	}
 
 	internal void invalidate_tmp_dir () {
-		if (uinsttmp.has_prefix ("/tmp"))
+		if (uinsttmp.has_prefix (tmpdir))
 			Utils.delete_dir_recursive (uinsttmp);
 		uinsttmp = "";
 	}
