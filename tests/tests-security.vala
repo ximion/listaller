@@ -30,40 +30,39 @@ void msg (string s) {
 	stdout.printf ("%s\n", s);
 }
 
-void test_sign_basic () {
+void test_sign_working () {
 	GPGSign gsig = new GPGSign ();
 
 	string sign_text;
-	gsig.sign_package (Path.build_filename (datadir, "xfile1.bin", null), null, out sign_text);
+	gsig.sign_package (Path.build_filename (datadir, "xfile1.bin", null), out sign_text);
 
-	msg ("=========BASIC============\n");
+	msg ("=========WORKING============\n");
 	msg (sign_text);
-	msg ("=========BASIC============");
+	msg ("=========WORKING============");
 
 	GPGSignature sigverify = new GPGSignature (sign_text);
-	sigverify._verify_package_test (Path.build_filename (datadir, "xfile1.bin", null));
+	sigverify.verify_package (Path.build_filename (datadir, "xfile1.bin", null));
 
 	debug (sigverify.sigstatus.to_string ());
+	assert (sigverify.sigstatus == SignStatus.VALID);
 }
 
-void test_sign_package () {
+void test_sign_failing () {
 	GPGSign gsig = new GPGSign ();
 
 	string sign_text;
-	var payload = new ArrayList<string> ();
-	payload.add (Path.build_filename (datadir, "FooBar-1.0_install.ipk", null));
-	gsig.sign_package (Path.build_filename (datadir, "xfile1.bin", null),
-			   payload, out sign_text);
+	gsig.sign_package (Path.build_filename (datadir, "FooBar-1.0_install.ipk", null), out sign_text);
 
-	msg ("============PACKAGE============");
+	msg ("============FAILING============");
 	msg (sign_text);
-	msg ("============PACKAGE============");
+	msg ("============FAILING============");
 
 	// We just use some random binary stuff here instaled of a "real" IPK package
 	GPGSignature sigverify = new GPGSignature (sign_text);
-	sigverify.verify_package (Path.build_filename (datadir, "xfile1.bin", null),
-				  { Path.build_filename (datadir, "FooBar-1.0_install.ipk", null) });
+	sigverify.verify_package (Path.build_filename (datadir, "xfile1.bin", null));
+
 	debug (sigverify.sigstatus.to_string ());
+	assert (sigverify.sigstatus == SignStatus.BAD);
 }
 
 int main (string[] args) {
@@ -81,8 +80,8 @@ int main (string[] args) {
 	set_verbose_mode (true);
 	add_log_domain ("LiTest");
 
-	test_sign_basic ();
-	test_sign_package ();
+	test_sign_working ();
+	test_sign_failing ();
 
 	Test.run ();
 	return 0;

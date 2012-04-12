@@ -354,19 +354,23 @@ public class AppItem : Object {
 		}
 	}
 
+	/** Build a Listaller application-id
+	 *
+	 * An application ID has the following form:
+	 * idname;version;desktop_file;origin
+	 * idname usually is the application's .desktop file name
+	 * version is the application's version
+	 * arch the architecture(s) the app was build for
+	 * desktop_file is the application's desktop file
+	 * origin is the origin of this app, ipkpackage, native-pkg, LOKI etc.
+	 *
+	 * @return a valid application-id
+	 */
 	private string generate_appid () {
 		string res = "";
 		if (validate_appid (_app_id))
 			return _app_id;
-		// Build a Listaller application-id
-		/* An application ID has the following form:
-		 * idname;version;desktop_file;origin
-		 * idname usually is the application's .desktop file name
-		 * version is the application's version
-		 * arch the architecture(s) the app was build for
-		 * desktop_file is the application's desktop file
-		 * origin is the origin of this app, ipkpackage, native-pkg, LOKI etc.
-		 */
+
 		if (desktop_file.strip () == "") {
 			message (_("We don't know a desktop-file for application '%s'!").printf (full_name));
 			// If no desktop file was found, use application name and version as ID

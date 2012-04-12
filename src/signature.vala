@@ -85,41 +85,41 @@ private class GPGSignature : GPGBasic {
 		//sig_summary = sig->summary;
 		var sig_estatus = (GPGError.ErrorCode) sig->status;
 
-		switch (sig_estatus) {
-			case GPGError.ErrorCode.NO_ERROR:
-				sigstatus = SignStatus.VALID;
-				break;
-			case GPGError.ErrorCode.KEY_EXPIRED:
-				sigstatus = SignStatus.KEY_EXPIRED;
-				break;
-			case GPGError.ErrorCode.CERT_REVOKED:
-				sigstatus = SignStatus.CERT_REVOKED;
-				break;
-			case GPGError.ErrorCode.SIG_EXPIRED:
-				time_t t = (time_t) sig->exp_timestamp;
-				var time = new DateTime.from_unix_utc (t);
+		if (sig_estatus == GPGError.ErrorCode.NO_ERROR) {
+			sigstatus = SignStatus.VALID;
+			sig_valid = true;
+		} else if ((sig_estatus & GPGError.ErrorCode.BAD_SIGNATURE) > 0) {
+			sigstatus = SignStatus.BAD;
+		} else if ((sig_estatus & GPGError.ErrorCode.KEY_EXPIRED) > 0) {
+			sigstatus = SignStatus.KEY_EXPIRED;
+		} else if ((sig_estatus & GPGError.ErrorCode.CERT_REVOKED) > 0) {
+			sigstatus = SignStatus.CERT_REVOKED;
+		} else if ((sig_estatus & GPGError.ErrorCode.SIG_EXPIRED) > 0) {
+			time_t t = (time_t) sig->exp_timestamp;
+			var time = new DateTime.from_unix_utc (t);
 
-				warning ("Expired signature (since %s)", time.format ("%Y-%m-%d"));
-				sigstatus = SignStatus.SIG_EXPIRED;
-				break;
-			case GPGError.ErrorCode.BAD_SIGNATURE:
-				sigstatus = SignStatus.BAD;
-				break;
-			case GPGError.ErrorCode.NO_PUBKEY:
-				sigstatus = SignStatus.NO_PUBKEY;
-				break;
-			default:
-				sigstatus = SignStatus.UNKNOWN;
-				warning ("Got unknown return status while processing signature: %s | %d", sig_estatus.to_string (), sig_estatus);
-				break;
+			warning ("Expired signature (since %s)", time.format ("%Y-%m-%d"));
+			sigstatus = SignStatus.SIG_EXPIRED;
+		} else if ((sig_estatus & GPGError.ErrorCode.NO_PUBKEY) > 0) {
+			sigstatus = SignStatus.NO_PUBKEY;
+		} else {
+			sigstatus = SignStatus.UNKNOWN;
+			string msg = "Got unknown return status while processing signature: %s | %d".printf (sig_estatus.to_string (), sig_estatus);
+			if (__unittestmode)
+				li_warning (msg);
+			else
+				warning (msg);
 		}
 
 		if (sig->status != GPGError.ErrorCode.NO_ERROR) {
-			warning ("Unexpected signature status: %s", sig->status.to_string ());
+			string msg = "Unexpected signature status: %s".printf (sig->status.to_string ());
+			if (__unittestmode)
+				li_warning (msg);
+			else
+				warning (msg);
 			sig_valid = false;
-		} else {
-			sig_valid = true;
 		}
+
 		if (sig->wrong_key_usage) {
 			warning ("Unexpectedly wrong key usage");
 			return false;
@@ -133,7 +133,7 @@ private class GPGSignature : GPGBasic {
 		return true;
 	}
 
-	private bool verify_package_internal (string ctrlfname, string[]? payload_files) {
+	private bool verify_package_internal (string ctrl_fname) {
 		Context ctx;
 		GPGError.ErrorCode err;
 		Data sig, dt;
@@ -150,17 +150,9 @@ private class GPGSignature : GPGBasic {
 		err = Data.create (out dt);
 		return_if_fail (check_gpg_err (err));
 
-		ret = read_file_to_data (ctrlfname, ref dt);
+		ret = read_file_to_data (ctrl_fname, ref dt);
 		if (!ret)
 			return false;
-		// NULL-check only needed for unit-tests!
-		if (payload_files != null) {
-			foreach (string fname in payload_files) {
-				ret = read_file_to_data (fname, ref dt);
-				if ((!ret) && (!__unittestmode))
-					return false;
-			}
-		}
 
 		//err = Data.create_from_memory (out sig, signtext, signtext.length, false);
 		err = Data.create (out sig);
@@ -213,9 +205,9 @@ private class GPGSignature : GPGBasic {
 		return true;
 	}
 
-	public bool verify_package (string ctrlfname, string[] payload_files) {
+	public bool verify_package (string ctrl_fname) {
 		bool ret;
-		ret = verify_package_internal (ctrlfname, payload_files);
+		ret = verify_package_internal (ctrl_fname);
 		if (!ret) {
 			debug ("Signature is broken!");
 			trust_level = SignTrust.NEVER;
@@ -224,16 +216,6 @@ private class GPGSignature : GPGBasic {
 		return ret;
 	}
 
-	internal bool _verify_package_test (string fname) {
-		bool ret;
-		ret = verify_package_internal (fname, null);
-		if (!ret) {
-			debug ("Signature is broken!");
-			trust_level = SignTrust.NEVER;
-			sigstatus = SignStatus.BAD;
-		}
-		return ret;
-	}
 }
 
 } // End of namespace

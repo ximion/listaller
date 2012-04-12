@@ -31,7 +31,6 @@ private class Package : MsgObject {
 	private string fname;
 	private string wdir;
 	private bool ipk_valid;
-	private string[] data_archives_available;
 	private string[] data_archives;
 	private IPK.PackControl ipkc;
 	private IPK.FileList ipkf;
@@ -476,13 +475,7 @@ private class Package : MsgObject {
 		}
 
 		GPGSignature sig = new GPGSignature (sig_text);
-
-		string[] data_archives_tmp = {};
-		foreach (string fname in data_archives_available) {
-			data_archives_tmp += Path.build_filename (wdir, fname, null);
-		}
-
-		sig.verify_package (Path.build_filename (wdir, "control.tar.xz", null), data_archives_tmp);
+		sig.verify_package (Path.build_filename (wdir, "control.tar.xz", null));
 
 		return sig;
 	}
@@ -504,22 +497,29 @@ private class Package : MsgObject {
 	}
 
 	private bool prepare_extracting () {
-		foreach (string fname in data_archives_available) {
+		bool ret = false;
+
+		foreach (string fname in data_archives) {
 			if (FileUtils.test (Path.build_filename (wdir, fname, null), FileTest.EXISTS))
 				return true;
 		}
-
-		bool ret = false;
+		ret = false;
 
 		Read ar = open_base_ipk ();
-		data_archives_available = {};
+		string[] data_archives_tmp = {};
+
+		// Only extract data-archives for arch-indep and the current architecture
+		string archDataFName = "";
+		if (ipk_selected_arch_ != "")
+			archDataFName = "data-%s.tar.xz".printf (ipk_selected_arch_);
 
 		weak Entry e;
 		while (ar.next_header (out e) == Result.OK) {
 			// Determine name of arch-dependent part
 			// Extract payload
-			if (e.pathname ().has_prefix ("data-")) {
-				data_archives_available += e.pathname ();
+			string s = e.pathname ();
+			if ((s == "data-all.tar.xz") || (s == archDataFName)) {
+				data_archives_tmp += e.pathname ();
 				ret = extract_entry_to (ar, e, wdir);
 				if (!ret) {
 					warning (_("Unable to extract IPK data!"));
@@ -533,13 +533,8 @@ private class Package : MsgObject {
 		}
 		ar.close ();
 
-		// Only add data-archives we need to extract here
-		string archDataFName = "";
-		if (ipk_selected_arch_ != "")
-			archDataFName = "data-%s.tar.xz".printf (ipk_selected_arch_);
-
 		data_archives = {};
-		foreach (string s in data_archives_available) {
+		foreach (string s in data_archives_tmp) {
 			debug ("Processing archive: %s", s);
 			if ((s == "data-all.tar.xz") || (s == archDataFName))
 				data_archives += Path.build_filename (wdir, s, null);
