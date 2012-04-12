@@ -148,7 +148,8 @@ private class Package : MsgObject {
 
 		// Check if architecture is supported
 		string supportedArchs = ipkc.get_architectures ();
-		if (supportedArchs.index_of (system_machine ()) <= 0) {
+		debug ("Package supported archs: %s\nCurrent machine: %s", supportedArchs, system_machine ());
+		if (supportedArchs.index_of (system_machine ()) < 0) {
 			emit_error (ErrorEnum.WRONG_ARCHITECTURE,
 				_("This package can't be installed on your system architecture (%s)!\nPlease get a package which was built for your machine.").printf (system_machine ()));
 			return false;
@@ -500,7 +501,7 @@ private class Package : MsgObject {
 		bool ret = false;
 
 		foreach (string fname in data_archives) {
-			if (FileUtils.test (Path.build_filename (wdir, fname, null), FileTest.EXISTS))
+			if (FileUtils.test (fname, FileTest.EXISTS))
 				return true;
 		}
 		ret = false;

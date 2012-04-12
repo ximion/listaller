@@ -166,7 +166,7 @@ public class Dependency: Object {
 	}
 
 	internal void set_installdata_from_string (string str) {
-		if (str.index_of ("\n") <= 0) {
+		if (str.index_of ("\n") < 0) {
 			_add_cmpstr_instdata_save (str);
 			return;
 		}
@@ -182,7 +182,7 @@ public class Dependency: Object {
 	}
 
 	internal void set_componentdata_from_string (string str) {
-		if (str.index_of ("\n") <= 0) {
+		if (str.index_of ("\n") < 0) {
 			_add_componentstr_save (str);
 			return;
 		}
