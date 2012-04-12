@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-02-19 18:36+0100\n"
+"POT-Creation-Date: 2012-04-12 03:00+0200\n"
 "PO-Revision-Date: 2012-01-08 23:28+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
@@ -28,12 +28,6 @@ msgstr "Более высокая версия '%s' этого приложен�
 msgid "A lower version '%s' of this application has already been installed."
 msgstr "Более низкая версия '%s' этого приложения была установлена."
 
-msgid "A policy was not met."
-msgstr "Правило не подходит."
-
-msgid "A system error occured."
-msgstr "Произошла системная ошибка."
-
 msgid "Activate verbose mode"
 msgstr ""
 
@@ -41,27 +35,11 @@ msgstr ""
 msgid "Application ID %s is invalid!"
 msgstr "Неправильный идентификатор приложения %s!"
 
-msgid "Available CRL is too old"
-msgstr "Доступный CRL устарел"
-
 msgid "Build IPK package"
 msgstr "Построение пакета IPK"
 
-msgid "CRL not available."
-msgstr "CRL недоступен."
-
-msgid "Can't verify: Key is missing"
-msgstr "Невозможно проверить: ключ отсутствует"
-
-msgid "Cannot query file size, continuing with an unknown size."
-msgstr ""
-"Нет возможности запросить размер файла, продолжаем с неизвестным размером."
-
 msgid "Copying files to their destination"
 msgstr "Копирование файлов в места назначения"
-
-msgid "Could be dangerous!"
-msgstr "Может быть опасно!"
 
 #, c-format
 msgid ""
@@ -184,7 +162,7 @@ msgid "Enable verbose mode"
 msgstr ""
 
 #, c-format
-msgid "Error while finding files in directory %s: %s\n"
+msgid "Error while finding files in directory %s: %s"
 msgstr ""
 
 #, c-format
@@ -239,9 +217,18 @@ msgstr "Средняя безопасность"
 msgid "Never trust."
 msgstr "Недоверенные."
 
+#, fuzzy, c-format
+msgid "No application specified!"
+msgstr "Приложения не найдены!"
+
 #, c-format
 msgid "No path given!"
 msgstr "Не указан путь!"
+
+msgid ""
+"No payload data archive has been registered! This might be a bug in this "
+"application, please report the issue!"
+msgstr ""
 
 #, c-format
 msgid "No valid DOAP data found in directory %s - Can't open control files."
@@ -253,11 +240,19 @@ msgstr "Один ключ был отозван"
 msgid "One key has expired"
 msgstr "Истёк срок действия ключа"
 
-msgid "Package uses custom variables - please don't do that!"
+msgid ""
+"Package uses custom variables - usually this is not intentional, please "
+"contact the package author!"
 msgstr ""
 
 #, c-format
 msgid "PackageKit exit code was: %s"
+msgstr "Закрылся PackageKit по причине %s"
+
+#, fuzzy, c-format
+msgid ""
+"PackageKit transaction failed!\n"
+"Exit message was: %s"
 msgstr "Закрылся PackageKit по причине %s"
 
 msgid "Path to Listaller package source directory"
@@ -271,6 +266,9 @@ msgstr "Пожалуйста, удалите имеющуюся версию, ч
 
 msgid "Print machine-readable simple text"
 msgstr "Показать распознаваемый машиной обычный текст"
+
+msgid "Pubkey is missing"
+msgstr ""
 
 msgid "Query returned no results. Maybe there's no release defined?"
 msgstr ""
@@ -312,14 +310,12 @@ msgstr "Показать версию приложения"
 msgid "Signature has expired"
 msgstr "Подпись истекла"
 
-msgid "Signature is bad."
+#, fuzzy
+msgid "Signature is bad"
 msgstr "Неверная подпись."
 
 msgid "Signature is fully valid"
 msgstr "Подпись полностью достоверна"
-
-msgid "Signature is good."
-msgstr "Подпись достоверна."
 
 msgid "Software database closed"
 msgstr "База данных программ закрыта"
@@ -355,6 +351,28 @@ msgstr ""
 msgid "This application has already been installed."
 msgstr "Это приложение уже было установлено."
 
+#, c-format
+msgid ""
+"This package can't be installed on your system architecture (%s)!\n"
+"Please get a package which was built for your machine."
+msgstr ""
+
+#, fuzzy
+msgid "This package could be dangerous!"
+msgstr "Может быть опасно!"
+
+#, fuzzy
+msgid "Tried to access locked database! This shouldn't happen."
+msgstr ""
+"Попытка писать в разблокированную (только для чтения) базу данных! (этого не "
+"может быть)"
+
+#, fuzzy, c-format
+msgid "Tried to access locked database! This shouldn't happen. Message: %s"
+msgstr ""
+"Попытка писать в разблокированную (только для чтения) базу данных! (этого не "
+"может быть)"
+
 msgid "Tried to perform action on invalid IPK package."
 msgstr "Попытка совершить действие на недействительном пакете IPK."
 
@@ -372,8 +390,14 @@ msgstr ""
 "Попытка совершить действие на общей базе данных софта, но база данных не "
 "открыта! (быть может, проблема с правами доступа?)"
 
-msgid ""
-"Tried to write on unlocked (readonly) database! (This should not happen)"
+#, fuzzy
+msgid "Tried to write on readonly database! (This should never happen)"
+msgstr ""
+"Попытка писать в разблокированную (только для чтения) базу данных! (этого не "
+"может быть)"
+
+#, fuzzy
+msgid "Tried to write on readonly database! (This should not happen)"
 msgstr ""
 "Попытка писать в разблокированную (только для чтения) базу данных! (этого не "
 "может быть)"
@@ -526,10 +550,6 @@ msgstr "Невозможно прочитать подпись пакета! С�
 msgid "Unable to remove application from database: %s"
 msgstr ""
 
-#, c-format
-msgid "Unable to remove database lock! (Message: %s)"
-msgstr "Нет возможности убрать блокировку базы данных! (Сообщение: %s)"
-
 msgid "Unable to save modified desktop-file!"
 msgstr ""
 
@@ -593,6 +613,12 @@ msgstr "ошибка: %s"
 #~ msgid "(This program will download the needed files from the internet)"
 #~ msgstr "(Эта программа скачает необходимые файлы из интернета)"
 
+#~ msgid "A policy was not met."
+#~ msgstr "Правило не подходит."
+
+#~ msgid "A system error occured."
+#~ msgstr "Произошла системная ошибка."
+
 #~ msgid "Abort"
 #~ msgstr "Прервать"
 
@@ -617,17 +643,30 @@ msgstr "ошибка: %s"
 #~ msgid "Autor"
 #~ msgstr "Автор"
 
+#~ msgid "Available CRL is too old"
+#~ msgstr "Доступный CRL устарел"
+
 #~ msgid "Back"
 #~ msgstr "Назад"
 
+#~ msgid "CRL not available."
+#~ msgstr "CRL недоступен."
+
 #~ msgid "Can't load LOKI-Setup information."
 #~ msgstr "Не удается загрузить LOKI-Setup информацию."
+
+#~ msgid "Can't verify: Key is missing"
+#~ msgstr "Невозможно проверить: ключ отсутствует"
 
 #~ msgid ""
 #~ "Cannot download this package. Please contact the catalogue managers on %h"
 #~ msgstr ""
 #~ "Нет возможности загрузить этот пакет. Согласуйтесь с менеджером каталогов "
 #~ "на %h"
+
+#~ msgid "Cannot query file size, continuing with an unknown size."
+#~ msgstr ""
+#~ "Нет возможности запросить размер файла, продолжаем с неизвестным размером."
 
 #~ msgid "Category:"
 #~ msgstr "Категория:"
@@ -794,9 +833,6 @@ msgstr "ошибка: %s"
 #~ msgid "Next"
 #~ msgstr "Вперёд"
 
-#~ msgid "No applications found!"
-#~ msgstr "Приложения не найдены!"
-
 #~ msgid "No compatible packages found!"
 #~ msgstr "Совместимых пакетов не найдено"
 
@@ -901,6 +937,9 @@ msgstr "ошибка: %s"
 #~ msgid "Show:"
 #~ msgstr "Показать:"
 
+#~ msgid "Signature is good."
+#~ msgstr "Подпись достоверна."
+
 #~ msgid "Software Manager"
 #~ msgstr "Менеджер программного обеспечения"
 
@@ -972,6 +1011,9 @@ msgstr "ошибка: %s"
 #~ msgstr ""
 #~ "Невозможно загрузить иконку %a. Пожалуйста, свяжитесь с разработчиками "
 #~ "Listaller, либо этого приложения!"
+
+#~ msgid "Unable to remove database lock! (Message: %s)"
+#~ msgstr "Нет возможности убрать блокировку базы данных! (Сообщение: %s)"
 
 #~ msgid "Uninstall"
 #~ msgstr "Удалить"

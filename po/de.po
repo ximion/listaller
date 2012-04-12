@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-02-19 18:36+0100\n"
+"POT-Creation-Date: 2012-04-12 03:00+0200\n"
 "PO-Revision-Date: 2012-01-08 23:29+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -33,12 +33,6 @@ msgstr "Die neuere Version '%s' dieser Anwendung ist bereits installiert."
 msgid "A lower version '%s' of this application has already been installed."
 msgstr "Die ältere Version '%s' dieser Anwendung ist bereits installiert."
 
-msgid "A policy was not met."
-msgstr "Eine der Regelungen wurde nicht erfüllt."
-
-msgid "A system error occured."
-msgstr "Ein Systemfehler ist aufgetreten."
-
 msgid "Activate verbose mode"
 msgstr ""
 
@@ -46,26 +40,11 @@ msgstr ""
 msgid "Application ID %s is invalid!"
 msgstr "Anwendungs-ID %s ist ungültig!"
 
-msgid "Available CRL is too old"
-msgstr "Das verfügbare CLR ist zu alt."
-
 msgid "Build IPK package"
 msgstr "IPK Paket bauen"
 
-msgid "CRL not available."
-msgstr "CRL nicht verfügbar."
-
-msgid "Can't verify: Key is missing"
-msgstr "Verifizierung nicht möglich: Schlüssel fehlt"
-
-msgid "Cannot query file size, continuing with an unknown size."
-msgstr ""
-
 msgid "Copying files to their destination"
 msgstr "Kopiere Dateien an ihren Zielort."
-
-msgid "Could be dangerous!"
-msgstr "Könnte gefährlich sein!"
 
 #, c-format
 msgid ""
@@ -187,7 +166,7 @@ msgid "Enable verbose mode"
 msgstr ""
 
 #, c-format
-msgid "Error while finding files in directory %s: %s\n"
+msgid "Error while finding files in directory %s: %s"
 msgstr ""
 
 #, c-format
@@ -242,9 +221,18 @@ msgstr "Mittlere Sicherheit"
 msgid "Never trust."
 msgstr "Nicht vertrauenswürdig."
 
+#, fuzzy, c-format
+msgid "No application specified!"
+msgstr "Keine Anwendungen gefunden!"
+
 #, c-format
 msgid "No path given!"
 msgstr "Kein Pfad angegeben!"
+
+msgid ""
+"No payload data archive has been registered! This might be a bug in this "
+"application, please report the issue!"
+msgstr ""
 
 #, c-format
 msgid "No valid DOAP data found in directory %s - Can't open control files."
@@ -256,11 +244,19 @@ msgstr ""
 msgid "One key has expired"
 msgstr ""
 
-msgid "Package uses custom variables - please don't do that!"
+msgid ""
+"Package uses custom variables - usually this is not intentional, please "
+"contact the package author!"
 msgstr ""
 
 #, c-format
 msgid "PackageKit exit code was: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"PackageKit transaction failed!\n"
+"Exit message was: %s"
 msgstr ""
 
 msgid "Path to Listaller package source directory"
@@ -273,6 +269,9 @@ msgid "Please remove the existing version to continue!"
 msgstr ""
 
 msgid "Print machine-readable simple text"
+msgstr ""
+
+msgid "Pubkey is missing"
 msgstr ""
 
 msgid "Query returned no results. Maybe there's no release defined?"
@@ -315,14 +314,12 @@ msgstr "Die Version der Anwendung anzeigen"
 msgid "Signature has expired"
 msgstr "Signatur ist abgelaufen."
 
-msgid "Signature is bad."
+#, fuzzy
+msgid "Signature is bad"
 msgstr "Signatur ist schlecht."
 
 msgid "Signature is fully valid"
 msgstr "Signatur ist voll gültig."
-
-msgid "Signature is good."
-msgstr "Signatur ist gut."
 
 msgid "Software database closed"
 msgstr "Softwaredatenbank geschlossen."
@@ -356,6 +353,23 @@ msgstr ""
 msgid "This application has already been installed."
 msgstr ""
 
+#, c-format
+msgid ""
+"This package can't be installed on your system architecture (%s)!\n"
+"Please get a package which was built for your machine."
+msgstr ""
+
+#, fuzzy
+msgid "This package could be dangerous!"
+msgstr "Könnte gefährlich sein!"
+
+msgid "Tried to access locked database! This shouldn't happen."
+msgstr ""
+
+#, c-format
+msgid "Tried to access locked database! This shouldn't happen. Message: %s"
+msgstr ""
+
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
 
@@ -369,8 +383,10 @@ msgid ""
 "opened! (maybe a permission problem?)"
 msgstr ""
 
-msgid ""
-"Tried to write on unlocked (readonly) database! (This should not happen)"
+msgid "Tried to write on readonly database! (This should never happen)"
+msgstr ""
+
+msgid "Tried to write on readonly database! (This should not happen)"
 msgstr ""
 
 msgid "Trust if full"
@@ -511,10 +527,6 @@ msgstr ""
 msgid "Unable to remove application from database: %s"
 msgstr ""
 
-#, c-format
-msgid "Unable to remove database lock! (Message: %s)"
-msgstr ""
-
 msgid "Unable to save modified desktop-file!"
 msgstr ""
 
@@ -578,6 +590,12 @@ msgstr "Fehler: %s"
 #~ msgid "(This program will download the needed files from the internet)"
 #~ msgstr "(Dieses Programm wird die nötigen Dateien aus dem Internet laden)"
 
+#~ msgid "A policy was not met."
+#~ msgstr "Eine der Regelungen wurde nicht erfüllt."
+
+#~ msgid "A system error occured."
+#~ msgstr "Ein Systemfehler ist aufgetreten."
+
 #~ msgid "Abort"
 #~ msgstr "Abbrechen"
 
@@ -605,11 +623,20 @@ msgstr "Fehler: %s"
 #~ msgid "Autor"
 #~ msgstr "Autor"
 
+#~ msgid "Available CRL is too old"
+#~ msgstr "Das verfügbare CLR ist zu alt."
+
 #~ msgid "Back"
 #~ msgstr "Zurück"
 
+#~ msgid "CRL not available."
+#~ msgstr "CRL nicht verfügbar."
+
 #~ msgid "Can't load LOKI-Setup information."
 #~ msgstr "Konnte LOKI-Setup informationen nicht laden."
+
+#~ msgid "Can't verify: Key is missing"
+#~ msgstr "Verifizierung nicht möglich: Schlüssel fehlt"
 
 #~ msgid ""
 #~ "Cannot download this package. Please contact the catalogue managers on %h"
@@ -831,9 +858,6 @@ msgstr "Fehler: %s"
 #~ msgid "Next"
 #~ msgstr "Weiter"
 
-#~ msgid "No applications found!"
-#~ msgstr "Keine Anwendungen gefunden!"
-
 #~ msgid "No compatible packages found!"
 #~ msgstr "Keine kompatiblen Pakete gefunden!"
 
@@ -963,6 +987,9 @@ msgstr "Fehler: %s"
 
 #~ msgid "Show:"
 #~ msgstr "Zeige:"
+
+#~ msgid "Signature is good."
+#~ msgstr "Signatur ist gut."
 
 #~ msgid "Software Manager"
 #~ msgstr "Software Manager"

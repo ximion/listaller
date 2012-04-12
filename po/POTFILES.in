@@ -2,12 +2,13 @@
 # List of source files containing translatable strings.
 #
 # Listaller library sources
+src/logging.vala
 src/application.vala
 src/database.vala
-src/database-int.vala
+src/database-internal.vala
+src/gpg-basic.vala
 src/signature.vala
 src/security.vala
-src/packdetail.vala
 src/doap.vala
 src/ipk-metafile.vala
 src/ipk-control.vala
@@ -20,10 +21,10 @@ src/varsolver.vala
 src/varsetter.vala
 src/manager.vala
 src/installer.vala
-src/depinfo.vala
-src/depmanager.vala
-src/pkit-resolver.vala
-src/pkit-installer.vala
+src/dep-info.vala
+src/dep-manager.vala
+src/dep-installer.vala
+src/pkit-tasks.vala
 src/feed-installer.vala
 src/zfeed.vala
 # Listaller tools

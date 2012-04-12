@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Lazarus LCL v1.x\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-02-19 18:36+0100\n"
+"POT-Creation-Date: 2012-04-12 03:00+0200\n"
 "PO-Revision-Date: 2009-05-06 13:37+0000\n"
 "Last-Translator: Zaenal Mutaqin <Unknown>\n"
 "Language-Team: Zaenal Mutaqin <ade999@gmail.com>\n"
@@ -27,12 +27,6 @@ msgstr ""
 msgid "A lower version '%s' of this application has already been installed."
 msgstr ""
 
-msgid "A policy was not met."
-msgstr ""
-
-msgid "A system error occured."
-msgstr ""
-
 msgid "Activate verbose mode"
 msgstr ""
 
@@ -40,25 +34,10 @@ msgstr ""
 msgid "Application ID %s is invalid!"
 msgstr ""
 
-msgid "Available CRL is too old"
-msgstr ""
-
 msgid "Build IPK package"
 msgstr ""
 
-msgid "CRL not available."
-msgstr ""
-
-msgid "Can't verify: Key is missing"
-msgstr ""
-
-msgid "Cannot query file size, continuing with an unknown size."
-msgstr ""
-
 msgid "Copying files to their destination"
-msgstr ""
-
-msgid "Could be dangerous!"
 msgstr ""
 
 #, c-format
@@ -172,7 +151,7 @@ msgid "Enable verbose mode"
 msgstr ""
 
 #, c-format
-msgid "Error while finding files in directory %s: %s\n"
+msgid "Error while finding files in directory %s: %s"
 msgstr ""
 
 #, c-format
@@ -228,7 +207,16 @@ msgid "Never trust."
 msgstr ""
 
 #, c-format
+msgid "No application specified!"
+msgstr ""
+
+#, c-format
 msgid "No path given!"
+msgstr ""
+
+msgid ""
+"No payload data archive has been registered! This might be a bug in this "
+"application, please report the issue!"
 msgstr ""
 
 #, c-format
@@ -241,11 +229,19 @@ msgstr ""
 msgid "One key has expired"
 msgstr ""
 
-msgid "Package uses custom variables - please don't do that!"
+msgid ""
+"Package uses custom variables - usually this is not intentional, please "
+"contact the package author!"
 msgstr ""
 
 #, c-format
 msgid "PackageKit exit code was: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"PackageKit transaction failed!\n"
+"Exit message was: %s"
 msgstr ""
 
 msgid "Path to Listaller package source directory"
@@ -258,6 +254,9 @@ msgid "Please remove the existing version to continue!"
 msgstr ""
 
 msgid "Print machine-readable simple text"
+msgstr ""
+
+msgid "Pubkey is missing"
 msgstr ""
 
 msgid "Query returned no results. Maybe there's no release defined?"
@@ -298,13 +297,10 @@ msgstr ""
 msgid "Signature has expired"
 msgstr ""
 
-msgid "Signature is bad."
+msgid "Signature is bad"
 msgstr ""
 
 msgid "Signature is fully valid"
-msgstr ""
-
-msgid "Signature is good."
 msgstr ""
 
 msgid "Software database closed"
@@ -338,6 +334,22 @@ msgstr ""
 msgid "This application has already been installed."
 msgstr ""
 
+#, c-format
+msgid ""
+"This package can't be installed on your system architecture (%s)!\n"
+"Please get a package which was built for your machine."
+msgstr ""
+
+msgid "This package could be dangerous!"
+msgstr ""
+
+msgid "Tried to access locked database! This shouldn't happen."
+msgstr ""
+
+#, c-format
+msgid "Tried to access locked database! This shouldn't happen. Message: %s"
+msgstr ""
+
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
 
@@ -351,8 +363,10 @@ msgid ""
 "opened! (maybe a permission problem?)"
 msgstr ""
 
-msgid ""
-"Tried to write on unlocked (readonly) database! (This should not happen)"
+msgid "Tried to write on readonly database! (This should never happen)"
+msgstr ""
+
+msgid "Tried to write on readonly database! (This should not happen)"
 msgstr ""
 
 msgid "Trust if full"
@@ -491,10 +505,6 @@ msgstr ""
 
 #, c-format
 msgid "Unable to remove application from database: %s"
-msgstr ""
-
-#, c-format
-msgid "Unable to remove database lock! (Message: %s)"
 msgstr ""
 
 msgid "Unable to save modified desktop-file!"
