@@ -691,6 +691,8 @@ private class InternalDB : Object {
 
 	private bool string_in_app_item (AppItem item, string s) {
 		string str = s.down ();
+		if (item.idname.down ().index_of (str) > -1)
+			return true;
 		if (item.full_name.down ().index_of (str) > -1)
 			return true;
 		if (item.summary.down ().index_of (str) > -1)
