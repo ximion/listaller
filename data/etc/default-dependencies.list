@@ -56,6 +56,12 @@ Standard: true
 Libraries: libGL.so.*
            libGLU.so.*
 
+Name: GLVendor
+ID: gl-vendor
+Standard: true
+Libraries: libnvidia-tls.so.*
+           libnvidia-glcore.so.*
+
 Name: ZLib
 ID: zlib
 Standard: true
