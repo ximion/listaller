@@ -42,7 +42,9 @@ set(LILIBS_VERSION "${LISTALLER_VERSION_MAJOR}.${LISTALLER_VERSION_MINOR}" CACHE
 # Build Qt4 library if flag is set
 #
 if(QT)
-	add_subdirectory(qt4)
+	message ("The Qt4 interface is outdated and needs to be rewritten.")
+	message ("The rewrite was planned for a later release, if a Qt interface is still useful.")
+	#add_subdirectory(qt4)
 endif(QT)
 
 #
