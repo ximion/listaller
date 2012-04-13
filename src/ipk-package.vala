@@ -149,7 +149,8 @@ private class Package : MsgObject {
 		// Check if architecture is supported
 		string supportedArchs = ipkc.get_architectures ();
 		debug ("Package supported archs: %s\nCurrent machine: %s", supportedArchs, system_machine ());
-		if (supportedArchs.index_of (system_machine ()) < 0) {
+		if ((supportedArchs.index_of (system_machine ()) < 0) &&
+		    (supportedArchs.normalize ().down () != "all")) {
 			emit_error (ErrorEnum.WRONG_ARCHITECTURE,
 				_("This package can't be installed on your system architecture (%s)!\nPlease get a package which was built for your machine.").printf (system_machine ()));
 			return false;
