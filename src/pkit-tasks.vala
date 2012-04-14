@@ -23,6 +23,23 @@ using Gee;
 using Listaller;
 using Listaller.Utils;
 
+namespace Listaller {
+
+/**
+ * Generate a PackageKit package-id for this application
+ */
+public string app_item_build_pk_package_id (AppItem app) {
+	string data;
+	string package_id;
+	data = "local:listaller%" + app.desktop_file;
+
+	package_id = PackageKit.Package.id_build (app.idname, app.version, "current", data);
+
+	return package_id;
+}
+
+} // End of namespace: Listaller
+
 namespace Listaller.Dep {
 
 private errordomain PkError {

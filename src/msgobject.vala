@@ -80,7 +80,7 @@ public abstract class MsgObject : Object {
 	}
 
 	internal virtual void change_progress (int progress, int sub_progress) {
-		if (progress >= prog)
+		if ((progress >= prog) || (sub_progress < -1))
 			prog = progress;
 		else
 			li_warning ("Progress cannot go down!");

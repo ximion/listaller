@@ -216,8 +216,8 @@ public class AppItem : Object {
 		get { _app_id = generate_appid (); return _app_id; }
 	}
 
-	/*
-	 * Id the application has in the database
+	/**
+	 * Id number of this application in software database
 	 */
 	public int dbid {
 		get { return _dbid; }

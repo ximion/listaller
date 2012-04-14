@@ -1,4 +1,4 @@
-/* manager.vala
+/* manager.vala - Manage installed applications (remove them / maintain their dependencies)
  *
  * Copyright (C) 2010-2012 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -108,17 +108,7 @@ public class Manager : MsgObject {
 		return true;
 	}
 
-	public bool remove_application (AppItem app) {
-		app.fast_check ();
-
-		if (app.shared != conf.sumode) {
-			if (app.shared)
-				warning (_("Trying to remove shared application, but AppManager is not in superuser mode!\nSetting AppManager to superuse mode now."));
-			else
-				warning (_("Trying to remove local application, but AppManager is in superuser mode!\nSetting AppManager to local mode now."));
-			conf.sumode = app.shared;
-		}
-
+	private bool remove_application_internal (AppItem app) {
 		// Emit that we're starting
 		emit_status (StatusEnum.ACTION_STARTED,
 			     _("Removal of %s started.").printf (app.full_name));
@@ -157,6 +147,76 @@ public class Manager : MsgObject {
 
 		emit_status (StatusEnum.REMOVAL_FINISHED,
 			     _("Removal of %s finished.").printf (app.full_name));
+
+		return ret;
+	}
+
+	private void pk_progress_cb (PackageKit.Progress progress, PackageKit.ProgressType type) {
+		if ((type == PackageKit.ProgressType.PERCENTAGE) ||
+			(type == PackageKit.ProgressType.SUBPERCENTAGE)) {
+				change_progress (progress.percentage, progress.subpercentage);
+			}
+	}
+
+	private bool remove_shared_application_internal (AppItem app) {
+		bool ret = true;
+		PackageKit.Task pktask = new PackageKit.Task ();
+
+		/* PackageKit will handle all Listaller superuser uninstallations.
+		 * Therefore, PackageKit needs to be compiled with Listaller support enabled.
+		 */
+
+		PackageKit.Results? pkres;
+		pktask.background = false;
+
+		string pklipackage = app_item_build_pk_package_id (app);
+		change_progress (0, -1);
+
+		try {
+			pkres = pktask.remove_packages ({ pklipackage, null }, false, true, null, pk_progress_cb);
+		} catch (Error e) {
+			emit_error (ErrorEnum.REMOVAL_FAILED, e.message);
+			return false;
+		}
+
+		if (pkres.get_exit_code () != PackageKit.Exit.SUCCESS) {
+			PackageKit.Error error = pkres.get_error_code ();
+			emit_error (ErrorEnum.REMOVAL_FAILED, error.get_details ());
+			return false;
+		}
+
+		change_progress (100, -1);
+
+		// Emit status message (setup finished)
+		emit_status (StatusEnum.REMOVAL_FINISHED,
+			     _("Removal of %s finished.").printf (app.full_name));
+
+		return ret;
+
+	}
+
+	public bool remove_application (AppItem app) {
+		app.fast_check ();
+
+		bool sumode_old = conf.sumode;
+		if (app.shared != conf.sumode) {
+			if (app.shared)
+				debug (_("Trying to remove shared application, but AppManager is not in superuser mode!\nSetting AppManager to superuse mode now."));
+			else
+				debug (_("Trying to remove local application, but AppManager is in superuser mode!\nSetting AppManager to local mode now."));
+			conf.sumode = app.shared;
+		}
+
+		bool ret;
+		if ((app.shared) && (!is_root ())) {
+			// Call PackageKit if we aren't root and want to remove a shared application
+			ret = remove_shared_application_internal (app);
+		} else {
+			// Try normal app removal
+			ret = remove_application_internal (app);
+		}
+
+		conf.sumode = sumode_old;
 
 		return ret;
 	}

@@ -104,27 +104,16 @@ out:
  * pk_listaller_pkid_from_appitem:
  *
  * Generate a PackageKit package-id from a Listaller AppItem.
- * Return value: The generated package ID or NULL
+ * Return value: The resulting package ID or NULL
  **/
 gchar*
 pk_listaller_pkid_from_appitem (ListallerAppItem *item)
 {
-	const gchar *appid;
-	const gchar *version;
-	const gchar *desktop_file;
-	gchar *data;
 	gchar *package_id;
 	g_return_val_if_fail (LISTALLER_IS_APP_ITEM (item), NULL);
 
-	appid = listaller_app_item_get_idname (item);
-	version = listaller_app_item_get_version (item);
-	desktop_file = listaller_app_item_get_desktop_file (item);
+	package_id = listaller_app_item_build_pk_package_id (item);
 
-	data = g_strconcat ("local:listaller%", desktop_file, NULL);
-
-	package_id = pk_package_id_build (appid, version, "current", data);
-
-	g_free (data);
 	return package_id;
 }
 
