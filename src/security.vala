@@ -115,7 +115,7 @@ public enum SignTrust {
 				return _("Trust is marginal");
 
 			case FULL:
-				return _("Trust if full");
+				return _("Trust is full");
 
 			case ULTIMATE:
 				return _("Trust is ultimate.");
