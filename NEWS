@@ -1,6 +1,23 @@
-Version 0.5.4
+Version 0.5.5
 ~~~~~~~~~~~~~~
  == Still in development ==
+
+Notes:
+  * /!\ Please note: We do NOT provide stable API/ABI in the 0.5.x series!
+        The 0.5.x series is experimental, we might change the specs at every time.
+
+Features:
+  * ~
+
+Specifications:
+  * ~
+
+Bugfixes:
+  * ~
+
+Version 0.5.4
+~~~~~~~~~~~~~~
+Released: 2012-04-16
 
 Notes:
   * /!\ Please note: We do NOT provide stable API/ABI in the 0.5.x series!
