@@ -64,8 +64,6 @@ namespace PackageKit {
 		public PackageKit.Results download_packages ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, string directory, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_client_download_packages_async")]
 		public async void download_packages_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, string directory, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
-		[CCode (cname = "pk_client_error_quark")]
-		public static GLib.Quark error_quark ();
 		[CCode (cname = "pk_client_generic_finish")]
 		public PackageKit.Results generic_finish (GLib.AsyncResult res) throws GLib.Error;
 		[CCode (cname = "pk_client_get_background")]
@@ -256,8 +254,6 @@ namespace PackageKit {
 		public async PackageKit.Authorize can_authorize_async (string action_id, GLib.Cancellable? cancellable) throws GLib.Error;
 		[NoWrapper]
 		public virtual void connection_changed (bool connected);
-		[CCode (cname = "pk_control_error_quark")]
-		public static GLib.Quark error_quark ();
 		[CCode (cname = "pk_control_get_daemon_state_async")]
 		public async string get_daemon_state_async (GLib.Cancellable? cancellable) throws GLib.Error;
 		[CCode (cname = "pk_control_get_network_state_async")]
@@ -332,11 +328,11 @@ namespace PackageKit {
 		[CCode (cname = "pk_desktop_new", has_construct_function = false)]
 		public Desktop ();
 		[CCode (cname = "pk_desktop_get_files_for_package")]
-		public GLib.GenericArray<void*> get_files_for_package (string package) throws GLib.Error;
+		public GLib.GenericArray<weak void*> get_files_for_package (string package) throws GLib.Error;
 		[CCode (cname = "pk_desktop_get_package_for_file")]
 		public string get_package_for_file (string filename) throws GLib.Error;
 		[CCode (cname = "pk_desktop_get_shown_for_package")]
-		public GLib.GenericArray<void*> get_shown_for_package (string package) throws GLib.Error;
+		public GLib.GenericArray<weak void*> get_shown_for_package (string package) throws GLib.Error;
 		[CCode (cname = "pk_desktop_open_database")]
 		public bool open_database () throws GLib.Error;
 		[CCode (cname = "pk_desktop_test")]
@@ -363,10 +359,6 @@ namespace PackageKit {
 	public class DistroUpgrade : PackageKit.Source {
 		[CCode (cname = "pk_distro_upgrade_new", has_construct_function = false)]
 		public DistroUpgrade ();
-		[CCode (cname = "pk_distro_upgrade_enum_from_string")]
-		public static PackageKit.DistroUpgradeType enum_from_string (string upgrade);
-		[CCode (cname = "pk_distro_upgrade_enum_to_string")]
-		public static unowned string enum_to_string (PackageKit.DistroUpgradeType upgrade);
 		[CCode (cname = "pk_distro_upgrade_get_id")]
 		public unowned string get_id ();
 		[CCode (cname = "pk_distro_upgrade_get_state")]
@@ -384,10 +376,6 @@ namespace PackageKit {
 	public class Error : PackageKit.Source {
 		[CCode (cname = "pk_error_new", has_construct_function = false)]
 		public Error ();
-		[CCode (cname = "pk_error_enum_from_string")]
-		public static PackageKit.ErrorType enum_from_string (string code);
-		[CCode (cname = "pk_error_enum_to_string")]
-		public static unowned string enum_to_string (PackageKit.ErrorType code);
 		[CCode (cname = "pk_error_get_code")]
 		public PackageKit.ErrorType get_code ();
 		[CCode (cname = "pk_error_get_details")]
@@ -435,10 +423,6 @@ namespace PackageKit {
 	public class Message : PackageKit.Source {
 		[CCode (cname = "pk_message_new", has_construct_function = false)]
 		public Message ();
-		[CCode (cname = "pk_message_enum_from_string")]
-		public static PackageKit.MessageType enum_from_string (string message);
-		[CCode (cname = "pk_message_enum_to_string")]
-		public static unowned string enum_to_string (PackageKit.MessageType message);
 		[CCode (cname = "pk_message_get_details")]
 		public unowned string get_details ();
 		[CCode (cname = "pk_message_get_kind")]
@@ -756,7 +740,7 @@ namespace PackageKit {
 		[CCode (cname = "pk_results_get_message_array")]
 		public GLib.GenericArray<weak PackageKit.Message> get_message_array ();
 		[CCode (cname = "pk_results_get_package_array")]
-		public GLib.GenericArray<PackageKit.Package> get_package_array ();
+		public GLib.GenericArray<weak PackageKit.Package> get_package_array ();
 		[CCode (cname = "pk_results_get_package_sack")]
 		public PackageKit.PackageSack get_package_sack ();
 		[CCode (cname = "pk_results_get_repo_detail_array")]
@@ -816,60 +800,104 @@ namespace PackageKit {
 		public Task ();
 		[CCode (cname = "pk_task_download_packages_async")]
 		public async void download_packages_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, string directory, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_download_packages_sync")]
+		public PackageKit.Results download_packages_sync ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, string directory, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[NoWrapper]
 		public virtual void eula_question (uint request, PackageKit.Results results);
 		[CCode (cname = "pk_task_generic_finish")]
 		public PackageKit.Results generic_finish (GLib.AsyncResult res) throws GLib.Error;
 		[CCode (cname = "pk_task_get_categories_async")]
 		public async void get_categories_async (GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_get_categories_sync")]
+		public PackageKit.Results get_categories_sync (GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_get_depends_async")]
 		public async void get_depends_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] package_ids, bool recursive, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_get_depends_sync")]
+		public PackageKit.Results get_depends_sync (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] package_ids, bool recursive, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_get_details_async")]
 		public async void get_details_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_get_details_sync")]
+		public PackageKit.Results get_details_sync ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_get_files_async")]
 		public async void get_files_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_get_files_sync")]
+		public PackageKit.Results get_files_sync ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_get_interactive")]
 		public bool get_interactive ();
 		[CCode (cname = "pk_task_get_packages_async")]
 		public async void get_packages_async (PackageKit.Bitfield filters, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_get_packages_sync")]
+		public PackageKit.Results get_packages_sync (PackageKit.Bitfield filters, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_get_repo_list_async")]
 		public async void get_repo_list_async (PackageKit.Bitfield filters, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_get_repo_list_sync")]
+		public PackageKit.Results get_repo_list_sync (PackageKit.Bitfield filters, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_get_requires_async")]
 		public async void get_requires_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] package_ids, bool recursive, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_get_requires_sync")]
+		public PackageKit.Results get_requires_sync (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] package_ids, bool recursive, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_get_simulate")]
 		public bool get_simulate ();
 		[CCode (cname = "pk_task_get_update_detail_async")]
 		public async void get_update_detail_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_get_update_detail_sync")]
+		public PackageKit.Results get_update_detail_sync ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_get_updates_async")]
 		public async void get_updates_async (PackageKit.Bitfield filters, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_get_updates_sync")]
+		public PackageKit.Results get_updates_sync (PackageKit.Bitfield filters, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_install_files_async")]
 		public async void install_files_async ([CCode (array_length = false, array_null_terminated = true)] string[] files, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_install_files_sync")]
+		public PackageKit.Results install_files_sync ([CCode (array_length = false, array_null_terminated = true)] string[] files, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_install_packages_async")]
 		public async void install_packages_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_install_packages_sync")]
+		public PackageKit.Results install_packages_sync ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[NoWrapper]
 		public virtual void key_question (uint request, PackageKit.Results results);
 		[NoWrapper]
 		public virtual void media_change_question (uint request, PackageKit.Results results);
 		[CCode (cname = "pk_task_refresh_cache_async")]
 		public async void refresh_cache_async (bool force, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_refresh_cache_sync")]
+		public PackageKit.Results refresh_cache_sync (bool force, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_remove_packages_async")]
 		public async void remove_packages_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, bool allow_deps, bool autoremove, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_remove_packages_sync")]
+		public PackageKit.Results remove_packages_sync ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, bool allow_deps, bool autoremove, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_repair_system_async")]
 		public async void repair_system_async (GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_repair_system_sync")]
+		public PackageKit.Results repair_system_sync (GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_repo_enable_async")]
 		public async void repo_enable_async (string repo_id, bool enabled, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_repo_enable_sync")]
+		public PackageKit.Results repo_enable_sync (string repo_id, bool enabled, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_resolve_async")]
 		public async void resolve_async (PackageKit.Bitfield filters, string packages, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_resolve_sync")]
+		public PackageKit.Results resolve_sync (PackageKit.Bitfield filters, string packages, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_rollback_async")]
 		public async void rollback_async (string transaction_id, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_rollback_sync")]
+		public PackageKit.Results rollback_sync (string transaction_id, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_search_details_async")]
 		public async void search_details_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_search_details_sync")]
+		public PackageKit.Results search_details_sync (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_search_files_async")]
 		public async void search_files_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_search_files_sync")]
+		public PackageKit.Results search_files_sync (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_search_groups_async")]
 		public async void search_groups_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_search_groups_sync")]
+		public PackageKit.Results search_groups_sync (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_search_names_async")]
 		public async void search_names_async (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_search_names_sync")]
+		public PackageKit.Results search_names_sync (PackageKit.Bitfield filters, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_set_interactive")]
 		public void set_interactive (bool interactive);
 		[CCode (cname = "pk_task_set_simulate")]
@@ -882,14 +910,20 @@ namespace PackageKit {
 		public virtual void untrusted_question (uint request, PackageKit.Results results);
 		[CCode (cname = "pk_task_update_packages_async")]
 		public async void update_packages_async ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_update_packages_sync")]
+		public PackageKit.Results update_packages_sync ([CCode (array_length = false, array_null_terminated = true)] string[] package_ids, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_update_system_async")]
 		public async void update_system_async (GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_update_system_sync")]
+		public PackageKit.Results update_system_sync (GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[CCode (cname = "pk_task_user_accepted")]
 		public bool user_accepted (uint request);
 		[CCode (cname = "pk_task_user_declined")]
 		public bool user_declined (uint request);
 		[CCode (cname = "pk_task_what_provides_async")]
 		public async void what_provides_async (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback);
+		[CCode (cname = "pk_task_what_provides_sync")]
+		public PackageKit.Results what_provides_sync (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values, GLib.Cancellable? cancellable, PackageKit.ProgressCallback progress_callback) throws GLib.Error;
 		[NoAccessorMethod]
 		public bool interactive { get; set; }
 		[NoAccessorMethod]
@@ -973,25 +1007,6 @@ namespace PackageKit {
 		NO,
 		INTERACTIVE,
 		LAST
-	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cprefix = "PK_CLIENT_ERROR_")]
-	public enum ClientError {
-		FAILED,
-		FAILED_AUTH,
-		NO_TID,
-		ALREADY_TID,
-		ROLE_UNKNOWN,
-		CANNOT_START_DAEMON,
-		INVALID_INPUT,
-		INVALID_FILE,
-		NOT_SUPPORTED,
-		DECLINED_SIMULATION,
-		LAST
-	}
-	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cprefix = "PK_CONTROL_ERROR_")]
-	public enum ControlError {
-		FAILED,
-		CANNOT_START_DAEMON
 	}
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkDistroUpgradeEnum", cprefix = "PK_DISTRO_UPGRADE_ENUM_")]
 	[GIR (name = "DistroUpgradeEnum")]
@@ -1400,20 +1415,33 @@ namespace PackageKit {
 	public errordomain CatalogError {
 		FAILED
 	}
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cprefix = "PK_CLIENT_ERROR_")]
+	public errordomain ClientError {
+		FAILED,
+		FAILED_AUTH,
+		NO_TID,
+		ALREADY_TID,
+		ROLE_UNKNOWN,
+		CANNOT_START_DAEMON,
+		INVALID_INPUT,
+		INVALID_FILE,
+		NOT_SUPPORTED,
+		DECLINED_SIMULATION,
+		LAST
+	}
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cprefix = "PK_CONTROL_ERROR_")]
+	public errordomain ControlError {
+		FAILED,
+		CANNOT_START_DAEMON
+	}
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cprefix = "PK_SERVICE_PACK_ERROR_")]
 	public errordomain ServicePackError {
-		[CCode (cname = "PK_SERVICE_PACK_ERROR_FAILED_SETUP")]
-		FAILEDSETUP,
-		[CCode (cname = "PK_SERVICE_PACK_ERROR_FAILED_DOWNLOAD")]
-		FAILEDDOWNLOAD,
-		[CCode (cname = "PK_SERVICE_PACK_ERROR_FAILED_EXTRACTION")]
-		FAILEDEXTRACTION,
-		[CCode (cname = "PK_SERVICE_PACK_ERROR_FAILED_CREATE")]
-		FAILEDCREATE,
-		[CCode (cname = "PK_SERVICE_PACK_ERROR_NOTHING_TO_DO")]
-		NOTHINGTODO,
-		[CCode (cname = "PK_SERVICE_PACK_ERROR_NOT_COMPATIBLE")]
-		NOTCOMPATIBLE
+		FAILED_SETUP,
+		FAILED_DOWNLOAD,
+		FAILED_EXTRACTION,
+		FAILED_CREATE,
+		NOTHING_TO_DO,
+		NOT_COMPATIBLE
 	}
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", instance_pos = 1.9)]
 	public delegate bool PackageSackFilterFunc (PackageKit.Package package);
@@ -1463,20 +1491,32 @@ namespace PackageKit {
 	public static void bitfield_test (void* user_data);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_catalog_error_quark")]
 	public static GLib.Quark catalog_error_quark ();
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_client_error_quark")]
+	public static GLib.Quark client_error_quark ();
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_common_test")]
 	public static void common_test (void* user_data);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_control_error_quark")]
+	public static GLib.Quark control_error_quark ();
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_debug_add_log_domain")]
 	public static void debug_add_log_domain (string log_domain);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_debug_is_verbose")]
 	public static bool debug_is_verbose ();
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_debug_set_verbose")]
 	public static void debug_set_verbose (bool verbose);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_distro_upgrade_enum_from_string")]
+	public static PackageKit.DistroUpgradeType distro_upgrade_enum_from_string (string upgrade);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_distro_upgrade_enum_to_string")]
+	public static unowned string distro_upgrade_enum_to_string (PackageKit.DistroUpgradeType upgrade);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_enum_find_string")]
 	public static unowned string enum_find_string (PackageKit.EnumMatch table, uint value);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_enum_find_value")]
 	public static uint enum_find_value (PackageKit.EnumMatch table, string string);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_enum_test")]
 	public static void enum_test (void* user_data);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_error_enum_from_string")]
+	public static PackageKit.ErrorType error_enum_from_string (string code);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_error_enum_to_string")]
+	public static unowned string error_enum_to_string (PackageKit.ErrorType code);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_exit_enum_from_string")]
 	public static PackageKit.Exit exit_enum_from_string (string exit);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_exit_enum_to_string")]
@@ -1587,6 +1627,10 @@ namespace PackageKit {
 	public static PackageKit.MediaType media_type_enum_from_string (string media_type);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_media_type_enum_to_string")]
 	public static unowned string media_type_enum_to_string (PackageKit.MediaType media_type);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_message_enum_from_string")]
+	public static PackageKit.MessageType message_enum_from_string (string message);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_message_enum_to_string")]
+	public static unowned string message_enum_to_string (PackageKit.MessageType message);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_network_enum_from_string")]
 	public static PackageKit.Network network_enum_from_string (string network);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_network_enum_to_string")]
