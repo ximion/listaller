@@ -5,15 +5,60 @@ Version 0.5.4
 Notes:
   * /!\ Please note: We do NOT provide stable API/ABI in the 0.5.x series!
         The 0.5.x series is experimental, we might change the specs at every time.
+  * Libuild will now create multiarch IPKs by default
 
 Features:
-  * <?>
+  * Add possibility to change filenames in file listings
+  * Wrote new logging system
+  * Autodetect desktop-file for applications
+  * Allow distributors to override dependency data
+  * Allow packages to ship a license text
+  * Add manual dependencies to generator to update automatic deps
+  * Establish generic naming of x86 architectures
+  * Make runapp tool handle LDPATH
+  * pkplugin: Emit app description & list of files
+  * Update database layout to support arch field
+  * Use SQLite locking mechanism instead of custom ones
+  * Find libraries provided by local dependency installations
+  * Always store dependency component and provided-by data in database
+  * Cache dependency environment info in database
+  * Rework GPGSignature facilities
+  * Make use of PkTasks intf and centralize PackageKit access classes
+  * Bring back source-code documentation
+  * Add possibility to append new listdata to FileList
+  * libuild: Create multiarch IPKs by default
+  * Only sign the control-part of IPK, should be enough for security
+  * Use /var/tmp by default
+  * Remove the Qt4 library: Not up-to-date anymore
+  * Make Nvidia GL libs a default dependency
+  * Allow manager to remove shared applications
 
 Specifications:
-  * <?>
+  * Use system icon paths to store icondata
+  * Add "pksetting" to IPK packages to modify their behavior
+  * Always add 'Architectures' field to IPK setting
+  * Support all component types in global dependency info data
+  * Allow application to define "replaces" relation with existing apps
 
 Bugfixes:
-  * <?>
+  * Canonicalize filepaths when possible
+  * Don't include files in list twice
+  * Fix problems with bad substitution vars and install path issues
+  * Rewrite of FileList internals (make list faster & more efficient)
+  * Never try to install a file twice
+  * Fix testsuite
+  * Don't crash with newer libRDF versions
+  * Set correct dependency information & don't crash if desktop file isn't set
+  * Only allow write access to shared db if we're root
+  * Fix error handling in PkResolver
+  * Handle installation of shared apps properly
+  * Fix Listaller dependency info generator
+  * Don't produce garbage IPKs if filenames contain spaces
+  * Really mark package as dangerous if signature is broken
+  * Check if database is writable, not if it is locked
+  * tests: Make sure we are verbose when running tests
+  * Allow arch:all packages
+  * Search strings in app idnames too
 
 Version 0.5.3
 ~~~~~~~~~~~~~~

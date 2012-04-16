@@ -19,7 +19,7 @@ Bugfixes:
 --------------------------------------------------------------------------------
 
 2. Merge translations from Launchpad:
-   Export translations: http://translations.edge.launchpad.net/listaller/master/+export
+   Export translations: http://translations.launchpad.net/listaller/master/+export
    -> Merge them with po/
    -> run 'make nls-update'
    Commit translations

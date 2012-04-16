@@ -4,11 +4,12 @@ project(listaller)
 cmake_minimum_required(VERSION 2.8.6 FATAL_ERROR)
 
 #UNSET THIS VARIABLE AT RELEASE TIME
-set(VERSION_SUFFIX "-dev")
+#set(VERSION_SUFFIX "-dev")
+
+set(CMAKE_BUILD_TYPE "Debug")
 
 # Detect Git revision (if present)
 if(VERSION_SUFFIX MATCHES "-dev")
-	set(CMAKE_BUILD_TYPE "Debug")
 	if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.git)
 		find_package(Git)
 		if(GIT_EXECUTABLE)
