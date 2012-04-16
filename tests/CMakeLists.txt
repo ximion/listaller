@@ -42,7 +42,6 @@ include_directories(${CMAKE_BINARY_DIR}
 
 add_definitions ("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE")
 add_definitions ("-DI_KNOW_THE_PACKAGEKIT_PLUGIN_API_IS_SUBJECT_TO_CHANGE")
-add_definitions ("-D_FILE_OFFSET_BITS=64")
 
 # Basic tests
 vala_add_executable (li-test-basics ${LIUNITTEST_SOURCES} tests-basics.vala

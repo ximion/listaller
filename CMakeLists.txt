@@ -1,7 +1,7 @@
 # CMakeLists for the Listaller Project
 project(listaller)
 
-cmake_minimum_required(VERSION 2.8.5 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8.6 FATAL_ERROR)
 
 #UNSET THIS VARIABLE AT RELEASE TIME
 set(VERSION_SUFFIX "-dev")
