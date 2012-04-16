@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lclstrconsts\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-04-13 00:55+0200\n"
-"PO-Revision-Date: 2012-03-31 09:57+0000\n"
+"POT-Creation-Date: 2012-04-16 13:57+0200\n"
+"PO-Revision-Date: 2012-04-13 02:33+0000\n"
 "Last-Translator: Antoni Kudelski <antekk@linux.pl>\n"
 "Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-12 22:52+0000\n"
-"X-Generator: Launchpad (build 15070)\n"
+"X-Launchpad-Export-Date: 2012-04-16 11:52+0000\n"
+"X-Generator: Launchpad (build 15099)\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
 
@@ -377,8 +377,8 @@ msgstr ""
 msgid "Tried to write on readonly database! (This should not happen)"
 msgstr ""
 
-msgid "Trust if full"
-msgstr "Zaufanie jest całkowite"
+msgid "Trust is full"
+msgstr ""
 
 msgid "Trust is marginal"
 msgstr "Zaufanie jest marginalne"
@@ -573,38 +573,5 @@ msgstr "Plik ZI XML '%s' jest uszkodzony."
 msgid "error: %s"
 msgstr "błąd: %s"
 
-#~ msgid "A policy was not met."
-#~ msgstr "Polityka nie została spełniona."
-
-#~ msgid "A system error occured."
-#~ msgstr "Wystąpił błąd systemowy."
-
 #~ msgid "Abort"
 #~ msgstr "Porzuć"
-
-#~ msgid "Available CRL is too old"
-#~ msgstr "Dostępny CRL jest zbyt stary"
-
-#~ msgid "CRL not available."
-#~ msgstr "CRL niedostępne."
-
-#~ msgid "Can't verify: Key is missing"
-#~ msgstr "Nie można zweryfikować: brakuje klucza"
-
-#~ msgid "Could be dangerous!"
-#~ msgstr "Może być niebezpieczne!"
-
-#~ msgid "Signature is bad."
-#~ msgstr "Podpis jest zły."
-
-#~ msgid "Signature is good."
-#~ msgstr "Podpis jest dobry."
-
-#~ msgid ""
-#~ "Tried to write on unlocked (readonly) database! (This should not happen)"
-#~ msgstr ""
-#~ "Próba nadpisania na odblokowanej (tylko do odczytu) bazie danych! (To nie "
-#~ "powinno się zdarzyć)"
-
-#~ msgid "Unable to remove database lock! (Message: %s)"
-#~ msgstr "Nie można usunąć blokady bazy danych (Wiadomość: %s)"

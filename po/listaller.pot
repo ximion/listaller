@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: listaller\n"
         "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-        "POT-Creation-Date: 2012-04-13 00:55+0200\n"
+        "POT-Creation-Date: 2012-04-16 13:57+0200\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -349,7 +349,7 @@ msgstr  ""
 msgid   "Tried to write on readonly database! (This should not happen)"
 msgstr  ""
 
-msgid   "Trust if full"
+msgid   "Trust is full"
 msgstr  ""
 
 msgid   "Trust is marginal"

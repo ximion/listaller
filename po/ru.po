@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-04-13 00:55+0200\n"
-"PO-Revision-Date: 2012-04-12 14:12+0000\n"
+"POT-Creation-Date: 2012-04-16 13:57+0200\n"
+"PO-Revision-Date: 2012-04-13 02:32+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-12 22:52+0000\n"
-"X-Generator: Launchpad (build 15070)\n"
+"X-Launchpad-Export-Date: 2012-04-16 11:52+0000\n"
+"X-Generator: Launchpad (build 15099)\n"
 
 #, c-format
 msgid ""
@@ -389,7 +389,7 @@ msgstr ""
 msgid "Tried to write on readonly database! (This should not happen)"
 msgstr ""
 
-msgid "Trust if full"
+msgid "Trust is full"
 msgstr ""
 
 msgid "Trust is marginal"
@@ -600,12 +600,6 @@ msgstr "ошибка: %s"
 #~ msgid "(This program will download the needed files from the internet)"
 #~ msgstr "(Эта программа скачает необходимые файлы из интернета)"
 
-#~ msgid "A policy was not met."
-#~ msgstr "Правило не подходит."
-
-#~ msgid "A system error occured."
-#~ msgstr "Произошла системная ошибка."
-
 #~ msgid "Abort"
 #~ msgstr "Прервать"
 
@@ -630,30 +624,17 @@ msgstr "ошибка: %s"
 #~ msgid "Autor"
 #~ msgstr "Автор"
 
-#~ msgid "Available CRL is too old"
-#~ msgstr "Доступный CRL устарел"
-
 #~ msgid "Back"
 #~ msgstr "Назад"
 
-#~ msgid "CRL not available."
-#~ msgstr "CRL недоступен."
-
 #~ msgid "Can't load LOKI-Setup information."
 #~ msgstr "Не удается загрузить LOKI-Setup информацию."
-
-#~ msgid "Can't verify: Key is missing"
-#~ msgstr "Невозможно проверить: ключ отсутствует"
 
 #~ msgid ""
 #~ "Cannot download this package. Please contact the catalogue managers on %h"
 #~ msgstr ""
 #~ "Нет возможности загрузить этот пакет. Согласуйтесь с менеджером каталогов "
 #~ "на %h"
-
-#~ msgid "Cannot query file size, continuing with an unknown size."
-#~ msgstr ""
-#~ "Нет возможности запросить размер файла, продолжаем с неизвестным размером."
 
 #~ msgid "Category:"
 #~ msgstr "Категория:"
@@ -669,9 +650,6 @@ msgstr "ошибка: %s"
 
 #~ msgid "Converting %p package..."
 #~ msgstr "Конвертирование пакета %p..."
-
-#~ msgid "Could be dangerous!"
-#~ msgstr "Может быть опасно!"
 
 #~ msgid "Delete source"
 #~ msgstr "Удалить источник"
@@ -930,12 +908,6 @@ msgstr "ошибка: %s"
 #~ msgid "Show:"
 #~ msgstr "Показать:"
 
-#~ msgid "Signature is bad."
-#~ msgstr "Неверная подпись."
-
-#~ msgid "Signature is good."
-#~ msgstr "Подпись достоверна."
-
 #~ msgid "Software Manager"
 #~ msgstr "Менеджер программного обеспечения"
 
@@ -999,23 +971,11 @@ msgstr "ошибка: %s"
 #~ msgstr "Этот пакет не поддерживается вашим Linux дистрибутивом."
 
 #~ msgid ""
-#~ "Tried to write on unlocked (readonly) database! (This should not happen)"
-#~ msgstr ""
-#~ "Попытка писать в разблокированную (только для чтения) базу данных! (этого "
-#~ "не может быть)"
-
-#~ msgid "Unable to fetch dependency information list: %s"
-#~ msgstr "Нет возможности получить информацию о списке зависимостей: %s"
-
-#~ msgid ""
 #~ "Unable to load the icon of %a. Please notify the developers of Listaller "
 #~ "or this application!"
 #~ msgstr ""
 #~ "Невозможно загрузить иконку %a. Пожалуйста, свяжитесь с разработчиками "
 #~ "Listaller, либо этого приложения!"
-
-#~ msgid "Unable to remove database lock! (Message: %s)"
-#~ msgstr "Нет возможности убрать блокировку базы данных! (Сообщение: %s)"
 
 #~ msgid "Uninstall"
 #~ msgstr "Удалить"
