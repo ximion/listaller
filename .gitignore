@@ -9,7 +9,6 @@
 *.rst
 *.user
 *.pc
-*.patch
 *.cache
 *.anjuta
 *.kdev4
