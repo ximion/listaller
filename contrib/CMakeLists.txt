@@ -1,7 +1,7 @@
 
 add_subdirectory(binreloc)
-if (APBUILD)
-	add_subdirectory(apbuild)
+if (LIXBUILD)
+	add_subdirectory(lixbuild)
 endif (APBUILD)
 if (PATCHELF)
 	add_subdirectory(patchelf)

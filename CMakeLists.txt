@@ -47,7 +47,7 @@ endif(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
 #
 option(QT "Build Listaller's Qt4 modules" OFF)
 option(TOOLS "Build Listaller's non-gui tools" ON)
-option(APBUILD "Build the APBuild tool" OFF)
+option(LIXBUILD "Build the LIXBuild tools" OFF)
 option(PATCHELF "Build patchelf utility" OFF)
 option(L18N "Enable localization" ON)
 option(TESTS "Enable Listaller's Unit Tests" OFF)
