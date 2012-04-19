@@ -12,12 +12,17 @@ BuildRequires: gpgme-devel
 BuildRequires: chrpath
 
 %description
-Listaller is a distro-agnostic application management and software
-installation tool based on PackageKit.
+Listaller is a distro-agnostic 3rd-party application installer
+with close integration into PackageKit.
+The project uses GPG-signed installation packages, which can
+be installed for all users (as root) or only for one user
+without needing superuser-rights.
 
-It provides a meta package format which covers current LOKI and
-Autopackage setups as well as it is providing a very flexible way to
-install software across different distributions needing just one package.
+Dependencies are resolved automatically using PackageKit.
+Listaller applications can be installed and removed using any
+PackageKit frontend available, without needing extra tools,
+however some specialized UIs are available and integrated with
+existing package-management tools.
 
 %package devel
 Summary: GLib Libraries and headers for listaller
@@ -57,17 +62,20 @@ chrpath --delete $RPM_BUILD_ROOT%{_libdir}/packagekit-plugins/libpk_plugin_lista
 %defattr(-,root,root,-)
 %{_bindir}/appcompile
 %{_bindir}/depscan
-%{_bindir}/libuild
+%{_bindir}/lipkgen
 %{_bindir}/runapp
 %{_datadir}/icons/hicolor/32x32/mimetypes/package-x-ipk.png
 %{_datadir}/listaller
 %{_datadir}/mime/packages/listaller-ipk.xml
 %{_datadir}/pixmaps/package-x-ipk.png
 %{_libdir}/liblistaller-glib.so.0
-%{_libdir}/liblistaller-glib.so.0.5.2
+%{_libdir}/liblistaller-glib.so.0.5.5
 %{_libdir}/packagekit-plugins/libpk_plugin_listaller.so
 %{_sysconfdir}/listaller
-%{_mandir}/man1/libuild.1.gz
+%{_mandir}/man1/runapp.1.gz
+%{_mandir}/man1/lipkgen.1.gz
+%{_mandir}/man1/appcompile.1.gz
+%{_mandir}/man1/depscan.1.gz
 
 %files devel
 %defattr(-,root,root,-)
