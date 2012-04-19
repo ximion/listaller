@@ -13,7 +13,8 @@ endif()
 
 if(APBUILD)
 	set(manpages ${manpages}
-		"apgcc.1"
+		"ligcc.1"
+		"lig++.1"
 	)
 endif()
 

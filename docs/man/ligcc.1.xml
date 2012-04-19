@@ -6,7 +6,7 @@
   <!ENTITY date        "<date>20 April,2012</date>">
   <!-- SECTION should be 1-8, maybe w/ subsection other parameters are
        allowed: see man(7), man(1). -->
-  <!ENTITY package     "apgcc">
+  <!ENTITY package     "ligcc">
   <!ENTITY gnu         "<acronym>GNU</acronym>">
   <!ENTITY gpl         "&gnu; <acronym>GPL</acronym>">
 ]>
@@ -60,12 +60,12 @@
 					libfoo uses libpng internally, but your app does not. Yet the pkg-config file for
 					libfoo specifies "-lfoo -lpng" is linker parameters.
 					And tadaa - you now have a bogus dependancy on libpng!
-					Apgcc automatically removes the -lpng for you if your app doesn't use libpng directly.</para></listitem>
+					LiGCC automatically removes the -lpng for you if your app doesn't use libpng directly.</para></listitem>
 
 				<listitem><para>Add $ORIGIN/../lib to the binary's library search path. $ORIGIN is the directory in which the binary exists.
 					This ensures that your binary can find library dependencies which are placed in the 'lib' folder under the
 					same prefix. You might want to install custom libraries into /lib.
-					If you set $APBUILD_PROJECTNAME, apgcc will also add $ORIGIN/../lib/$APBUILD_PROJECTNAME to the library search path.</para></listitem>
+					If you set $APBUILD_PROJECTNAME, ligcc will also add $ORIGIN/../lib/$APBUILD_PROJECTNAME to the library search path.</para></listitem>
 			</itemizedlist>
 
 		</para>
@@ -74,7 +74,7 @@
        <refsect1>
 	       <title>Options</title>
 	       <para>See the manpage of gcc(1) for more information about possible options.</para>
-	       <para>There are also several environment variables available to modify apgcc's behavior check the documentation for
+	       <para>There are also several environment variables available to modify ligcc's behavior check the documentation for
 		       more information.</para>
 	</refsect1>
 
