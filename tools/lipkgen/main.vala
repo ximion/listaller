@@ -1,4 +1,4 @@
-/* main.vala
+/* main.vala -- Main file for lipkgen
  *
  * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -22,7 +22,7 @@ using GLib;
 using Listaller;
 using Listaller.Extra;
 
-public class LiBuild : Object {
+public class Lipkgen : Object {
 	// Cmd options
 	private static string o_src_dir = "";
 	private static string o_output_dir = "";
@@ -50,7 +50,7 @@ public class LiBuild : Object {
 		{ null }
 	};
 
-	public LiBuild (string[] args) {
+	public Lipkgen (string[] args) {
 		exit_code = 0;
 		var opt_context = new OptionContext ("- build IPK setup packages.");
 		opt_context.set_help_enabled (true);
@@ -135,10 +135,10 @@ public class LiBuild : Object {
 		Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
 		Intl.textdomain(Config.GETTEXT_PACKAGE);
 
-		var main = new LiBuild (args);
+		var main = new Lipkgen (args);
 		set_console_mode (true);
 		set_verbose_mode (o_verbose_mode);
-		add_log_domain ("LiBuild");
+		add_log_domain ("lipkgen");
 
 		// Run the application
 		main.run ();

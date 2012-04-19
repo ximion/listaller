@@ -1,4 +1,4 @@
-/* lbutils.vala
+/* lpkgutils.vala -- Helper routines for LiPkGen
  *
  * Copyright (C) 2012 Matthias Klumpp
  *
@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* Utils for liBuild */
 
 namespace Listaller.IPK {
 

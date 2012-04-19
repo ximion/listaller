@@ -24,7 +24,7 @@ using Gee;
 using Listaller;
 using Listaller.Utils;
 
-string libuild_exec;
+string lipkgen_exec;
 string acomp_exec;
 
 string foobar_srcdir;
@@ -65,16 +65,16 @@ void test_autocompile () {
 /*
  * Test the LiBuild IPK package builder tool
  */
-void test_libuild_build () {
+void test_lipkgen_build () {
 	bool ret = false;
-	msg ("LiBuild tests");
+	msg ("Lipkgen tests");
 
 	// Cleanup
 	FileUtils.remove (Path.build_filename (datadir, "FooBar-1.0_install.ipk", null));
 
 	Environment.set_current_dir (foobar_srcdir);
 	// Now create IPK package for FooBar!
-	string cmd = "%s %s %s %s %s".printf (libuild_exec, "-b", "--verbose", "-o", datadir);
+	string cmd = "%s %s %s %s %s".printf (lipkgen_exec, "-b", "--verbose", "-o", datadir);
 	run_command (cmd);
 }
 
@@ -82,9 +82,9 @@ int main (string[] args) {
 	msg ("=== Running LiBuild Tests ===");
 	datadir = args[1];
 	assert (datadir != null);
-	acomp_exec = libuild_exec = args[2];
-	libuild_exec = args[3];
-	assert (libuild_exec != null);
+	acomp_exec = lipkgen_exec = args[2];
+	lipkgen_exec = args[3];
+	assert (lipkgen_exec != null);
 	assert (acomp_exec != null);
 
 	datadir = Path.build_filename (datadir, "testdata", null);
@@ -102,7 +102,7 @@ int main (string[] args) {
 
 	test_autocompile ();
 	Environment.set_current_dir (datadir);
-	test_libuild_build ();
+	test_lipkgen_build ();
 
 	Test.run ();
 	Environment.set_current_dir (curdir);

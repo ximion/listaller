@@ -1,4 +1,4 @@
-/* ipkbuilder.vala
+/* ipkbuilder.vala -- Build IPK packages
  *
  * Copyright (C) 2011-2012 Matthias Klumpp
  *
@@ -281,7 +281,7 @@ private class Builder : Object {
 		}
 
 		if (FileUtils.test (outname, FileTest.EXISTS)) {
-			error_message ("Cannot override %s! Delete this package or run libuild with '-o' parameter!".printf (outname));
+			error_message ("Cannot override %s! Delete this package or run lipkgen with '-o' parameter!".printf (outname));
 			return false;
 		}
 

@@ -6,7 +6,7 @@
   <!ENTITY date        "<date>1 June,2011</date>">
   <!-- SECTION should be 1-8, maybe w/ subsection other parameters are
        allowed: see man(7), man(1). -->
-  <!ENTITY package     "libuild">
+  <!ENTITY package     "lipkgen">
   <!ENTITY gnu         "<acronym>GNU</acronym>">
   <!ENTITY gpl         "&gnu; <acronym>GPL</acronym>">
 ]>
@@ -23,7 +23,7 @@
 	</refentryinfo>
 
 	<refmeta>
-		<refentrytitle>libuild</refentrytitle>
+		<refentrytitle>lipkgen</refentrytitle>
 		<manvolnum>1</manvolnum>
 	</refmeta>
 	<refnamediv>

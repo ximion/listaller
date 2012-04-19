@@ -76,7 +76,7 @@ vala_add_executable (li-test-installer ${LIUNITTEST_SOURCES} tests-installer.val
 add_test(installer-test li-test-installer ${CMAKE_CURRENT_SOURCE_DIR})
 
 if(TOOLS)
-# LiBuild tests
+# Lipkgen tests
 vala_add_executable (li-test-ipkbuild ${LIUNITTEST_SOURCES} tests-ipkbuild.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
@@ -84,7 +84,7 @@ vala_add_executable (li-test-ipkbuild ${LIUNITTEST_SOURCES} tests-ipkbuild.vala
 )
 add_test(ipkbuild-test li-test-ipkbuild ${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_BINARY_DIR}/tools/appcompile/appcompile
-	${CMAKE_BINARY_DIR}/tools/libuild/libuild
+	${CMAKE_BINARY_DIR}/tools/lipkgen/lipkgen
 )
 endif(TOOLS)
 
@@ -99,8 +99,8 @@ if(TEST_DEPMANAGER)
 endif(TEST_DEPMANAGER)
 
 # Tests of package security (GPG signing etc.)
-vala_add_executable (li-test-security ${LIUNITTEST_SOURCES} ../tools/libuild/lbutils.vala
-							../tools/libuild/gpgsign.vala tests-security.vala
+vala_add_executable (li-test-security ${LIUNITTEST_SOURCES} ../tools/lipkgen/lpkgutils.vala
+							../tools/lipkgen/gpgsign.vala tests-security.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src

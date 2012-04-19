@@ -5,7 +5,7 @@ include (${CMAKE_SOURCE_DIR}/data/cmake/documentation.cmake)
 set(manpages "runapp.1")
 if(TOOLS)
 	set(manpages ${manpages}
-		"libuild.1"
+		"lipkgen.1"
 		"appcompile.1"
 		"depscan.1"
 	)
