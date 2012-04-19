@@ -92,7 +92,7 @@ if (run("$appath/buildlist", $headerPath, $minimumGlibc) != 0) {
 }
 
 # Special constants
-our @linking = ('-Wl,--enable-new-dtags,--rpath,${ORIGIN}/../lib,--rpath,${ORIGIN}/../lib/autopackage');
+our @linking = ('-Wl,--enable-new-dtags,--rpath,${ORIGIN}/../lib');
 our @include = ("-I$appath", '-include', "$headerPath/apsymbols.h", "-DAPBUILD_VERSION=\"$APBUILD_VERSION\"");
 our $extraTypes = $Apbuild::GCC::extraTypes;
 our $srcTypes = $Apbuild::GCC::srcTypes;
@@ -259,7 +259,7 @@ if ($situation eq 'compile') {
         # Compile each source file to an object file.
         # Force GCC to compile C/C++ source files with older glibc symbols.
         debug "\@files: is @files\n";
-        foreach my $file (@files) 
+        foreach my $file (@files)
 	{
 		compileSource($file, \@ARGV);
 	}
@@ -367,7 +367,7 @@ if ($situation eq 'compile') {
 			"                            to statically link to (like: popt z). You can also\n" .
 			"                            explicitly specify a filename to the static library.\n" .
 			"                            Example: popt=/usr/lib/libpopt.a\n" .
-			"  APBUILD_STATIC_X=1        Force static linking of some X extension libraries\n" . 
+			"  APBUILD_STATIC_X=1        Force static linking of some X extension libraries\n" .
 			"                            Don't use this unless you know what you're doing.\n" .
 			"  APBUILD_DISABLE_BOGUS_DETECTOR=1   Disable the automatic bogus dependancy\n" .
 			"                            detector. This is useful when linking to libraries\n" .
@@ -384,8 +384,8 @@ if ($situation eq 'compile') {
 			"                            header search path. The compiler will search this\n" .
 			"                            directory first, before searching any other\n" .
 			"                            directory. This is useful in combination with the\n" .
-			"                            older GTK headers package (see the autopackage\n" .
-			"                            website). You can specify multiple directories,\n" .
+			"                            older GTK headers package.\n" .
+			"                            You can specify multiple directories,\n" .
 			"                            seperated by a ':', just like the \$PATH environment\n" .
 			"                            variable.\n" .
 			"  APBUILD_NO_RPATH          Do not add rpath entries during linking.\n" .
@@ -479,7 +479,7 @@ sub removeLibraries {
 #   libtool can put us in this configuration.
 
 # TODO: correctly handle static libraries.
-# apg++ ... -L/usr/lib -Wl,-Bstatic -lphysfs -Wl,-Bdynamic 
+# apg++ ... -L/usr/lib -Wl,-Bstatic -lphysfs -Wl,-Bdynamic
 # -> /usr/lib/gcc-lib/i686-pc-linux-gnu/3.3.5/../../../../i686-pc-linux-gnu/bin/ld: cannot find -lphysfs-1.0
 sub translateLibNames {
 	my (@args, @searchPaths);
@@ -806,7 +806,7 @@ sub forceStatic {
 			my ($lib, $file) = split /=/, $_, 2;
 			$file = searchLib("lib$lib.a", \@searchPaths) if (!defined $file);
 			$staticList{$lib} = $file if (defined $file);
-			
+
 			if (defined $file) {
 				# find the DT_NEEDED entries that this library-to-be-made-static
 				# has so that final linking works (the deps need to be added after the static lib so the bogus stripper doesn't remove them)
@@ -829,7 +829,7 @@ sub forceStatic {
 			}
 		}
 	}
-	
+
 	push (@_, @static_deps);
 
 	# Modify linker options for static linking
@@ -844,10 +844,10 @@ sub forceStatic {
 				# static library
 				push @args, $staticList{$libname};
 				$linkedToStaticX = 1 if ($xlibs{$libname});
-				
+
 				if ($libname eq "Xcursor") {
 					# With some versions of X11 (on Slack 11,
-					# xorg 6.9.0, anyway), Xcursor links against Xfixes. 
+					# xorg 6.9.0, anyway), Xcursor links against Xfixes.
 					# If we switch Xcursor to being linked statically,
 					# force linking of Xfixes too so we don't get
 					# undefined symbol errors from Xcursor.
