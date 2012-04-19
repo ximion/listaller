@@ -1,8 +1,8 @@
 # Various gcc-related functions
-package Apbuild::GCC;
+package LixBuild::GCC;
 
 use strict;
-use Apbuild::Utils;
+use LixBuild::Utils;
 use IPC::Open3;
 
 
@@ -25,10 +25,10 @@ our $srcTypes = "$cTypes|$cxxTypes";
 ######## Methods ########
 
 ##
-# Apbuild::GCC->new(gcc_command)
+# LixBuild::GCC->new(gcc_command)
 # gcc_command: The command for invoking GCC.
 #
-# Create a new Apbuild:GCC object.
+# Create a new LixBuild:GCC object.
 sub new {
 	my ($class, $gcc) = @_;
 	my %self;
@@ -72,8 +72,8 @@ sub capabilities {
 	my @stat = stat $gcc_file;
 	my $gcc_mtime = $stat[9];
 	my $home = homeDir();
-	if (-f "$home/.apbuild") {
-		parseDataFile("$home/.apbuild", \%cache);
+	if (-f "$home/.lixbuild") {
+		parseDataFile("$home/.lixbuild", \%cache);
 		if ($cache{version} != 2) {
 			# Cache file version incompatible; delete cache
 			%cache = ();
@@ -171,7 +171,7 @@ sub capabilities {
 			$cache{"hash_style_$gcc_file"} = 0;
 		}
 	}
-	
+
 	if (exists $cache{"stack_protector_$gcc_file"}) {
 		$capabilities{stack_protector} = $cache{"stack_protector_$gcc_file"};
 	} else {
@@ -225,7 +225,7 @@ sub capabilities {
 	}
 
 	$cache{version} = 2;
-	writeDataFile("$home/.apbuild", \%cache);
+	writeDataFile("$home/.lixbuild", \%cache);
 	return %capabilities;
 }
 
@@ -233,7 +233,7 @@ sub capabilities {
 ##
 # $gcc->command()
 #
-# Returns the GCC command associated with this Apbuild::GCC object.
+# Returns the GCC command associated with this LixBuild::GCC object.
 sub command {
 	my ($self) = @_;
 	return $self->{gcc};

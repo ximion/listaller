@@ -1,4 +1,4 @@
-# CMakeLists for BuildTools
+# CMakeLists for LI-XBuildTools
 
 find_package(Vala REQUIRED)
 include("${VALA_USE_FILE}")
@@ -32,18 +32,17 @@ vala_add_executable(buildlist ${BUILDLIST_SOURCES}
 				PACKAGES posix glib-2.0 gio-2.0 gee-1.0
 )
 
-install(TARGETS buildlist DESTINATION bin COMPONENT buildtools)
-install(PROGRAMS apgcc
-		 apg++
-		 make-icons
+install(TARGETS buildlist DESTINATION include/lixbuild COMPONENT buildtools)
+install(PROGRAMS ligcc
+		 lig++
 		 relaytool
 	DESTINATION bin
 	COMPONENT buildtools
 )
-install(FILES Apbuild/GCC.pm
-	      Apbuild/Utils.pm
-	DESTINATION share/apbuild/Apbuild
+install(FILES LixBuild/GCC.pm
+	      LixBuild/Utils.pm
+	DESTINATION share/listaller/LixBuild
 	COMPONENT buildtools
 )
-install(FILES ctype.h DESTINATION include/apbuild COMPONENT headers)
+install(FILES ctype.h DESTINATION include/lixbuild COMPONENT headers)
 install(FILES relaytool.m4 DESTINATION share/aclocal COMPONENT headers)

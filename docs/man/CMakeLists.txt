@@ -11,4 +11,10 @@ if(TOOLS)
 	)
 endif()
 
+if(APBUILD)
+	set(manpages ${manpages}
+		"apgcc.1"
+	)
+endif()
+
 add_xml_manpages(doc-man "${manpages}" "" "")

@@ -1,3 +1,24 @@
+/* buildlist.vala -- Generate apsymbols.h file
+ *
+ * Copyright (C) 2009-2010 Jan Niklas Hasse <jhasse@gmail.com>
+ * Copyright (C) 2010-2012 Matthias Klumpp <matthias@tenstral.net>
+ *
+ * Licensed under the GNU General Public License Version 3
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 using GLib;
 
 class VersionNumber : Object
@@ -174,14 +195,14 @@ int main(string[] args)
 			}
 		}
 
-		headerFile.append("""/* apbuild embedded metadata */
-#define APBUILD_NOTE_METADATA(s)   __asm__(".section .metadata, \"MS\", @note, 1\n\t.string \"" s "\"\n\t.previous\n\t")
+		headerFile.append("""/* lixbuild embedded metadata */
+#define LIXBUILD_NOTE_METADATA(s)   __asm__(".section .metadata, \"MS\", @note, 1\n\t.string \"" s "\"\n\t.previous\n\t")
 
-#ifdef APBUILD_VERSION
-APBUILD_NOTE_METADATA("apbuild.version=" APBUILD_VERSION);
+#ifdef LIXBUILD_VERSION
+LIXBUILD_NOTE_METADATA("lixbuild.version=" LIXBUILD_VERSION);
 #endif
 
-/* apbuild generated symbol exclusion list */
+/* lixbuild generated symbol exclusion list */
 """);
 		var it = symbolMap.keys.iterator();
 		while(it.next())

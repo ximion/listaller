@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# apbuild - a GCC wrapper for creating portable binaries
+# ligcc - a GCC wrapper for creating portable binaries
 # Copyright (c) 2003,2004,2005 Hongli Lai
 # Distributed under the GNU General Public License
 
@@ -8,16 +8,16 @@ use strict;
 use FindBin qw($RealBin);
 use File::Spec;
 use lib $RealBin;
-use lib "$RealBin/../share/apbuild";
+use lib "$RealBin/../share/listaller";
 use IPC::Open2;
 use POSIX;
 use Cwd;
 
-use Apbuild::GCC;
-use Apbuild::Utils;
+use LixBuild::GCC;
+use LixBuild::Utils;
 
 # Don't forget to bump the version in Makefile too.
-our $APBUILD_VERSION = "2.1.0";
+our $LIXBUILD_VERSION = "2.1.0";
 
 
 ######## Initialization ########
@@ -31,61 +31,61 @@ our $APBUILD_VERSION = "2.1.0";
 #   $gxx2 is g++ 3.4, and it might not be set.
 #   Double compiling is only enabled if both are set.
 #
-# Note that $APBUILD_CXX_MODE is an internal environment variable
+# Note that $LIXBUILD_CXX_MODE is an internal environment variable
 # which should not be set by the user.
 our ($gcc, $gxx2);
 
-if ($ENV{APBUILD_CXX_MODE}) {
+if ($ENV{LIXBUILD_CXX_MODE}) {
 	# C++ support; user can:
-	# - Not set APBUILD_CXX1/2 at all -> use g++ as default, and don't double compile C++ sources.
-	# - Set APBUILD_CXX1 and APBUILD_CXX2 -> enable double compiling.
-	# - Set only APBUILD_CXX1 -> don't double compile.
-	# - Set only APBUILD_CXX2 -> use 'g++' as default for APBUILD_CXX1, and enable double compiling.
+	# - Not set LIXBUILD_CXX1/2 at all -> use g++ as default, and don't double compile C++ sources.
+	# - Set LIXBUILD_CXX1 and LIXBUILD_CXX2 -> enable double compiling.
+	# - Set only LIXBUILD_CXX1 -> don't double compile.
+	# - Set only LIXBUILD_CXX2 -> use 'g++' as default for LIXBUILD_CXX1, and enable double compiling.
 
-	if (empty($ENV{APBUILD_CXX1}) && empty($ENV{APBUILD_CXX2})) {
-		$gcc = new Apbuild::GCC('g++');
+	if (empty($ENV{LIXBUILD_CXX1}) && empty($ENV{LIXBUILD_CXX2})) {
+		$gcc = new LixBuild::GCC('g++');
 
-	} elsif (!empty($ENV{APBUILD_CXX1}) && !empty($ENV{APBUILD_CXX2})) {
-		$gcc = new Apbuild::GCC($ENV{APBUILD_CXX1});
-		$gxx2 = new Apbuild::GCC($ENV{APBUILD_CXX2});
+	} elsif (!empty($ENV{LIXBUILD_CXX1}) && !empty($ENV{LIXBUILD_CXX2})) {
+		$gcc = new LixBuild::GCC($ENV{LIXBUILD_CXX1});
+		$gxx2 = new LixBuild::GCC($ENV{LIXBUILD_CXX2});
 
-	} elsif (!empty($ENV{APBUILD_CXX1})) {
-		$gcc = new Apbuild::GCC($ENV{APBUILD_CXX1});
+	} elsif (!empty($ENV{LIXBUILD_CXX1})) {
+		$gcc = new LixBuild::GCC($ENV{LIXBUILD_CXX1});
 
-	} elsif (!empty($ENV{APBUILD_CXX2})) {
-		$gcc = new Apbuild::GCC('g++');
-		$gxx2 = new Apbuild::GCC($ENV{APBUILD_CXX2});
+	} elsif (!empty($ENV{LIXBUILD_CXX2})) {
+		$gcc = new LixBuild::GCC('g++');
+		$gxx2 = new LixBuild::GCC($ENV{LIXBUILD_CXX2});
 	}
 
 } else {
 	my $gcc_command = 'gcc';
-	$gcc_command = $ENV{APBUILD_CC} if (!empty($ENV{APBUILD_CC}));
-	$gcc = new Apbuild::GCC($gcc_command);
+	$gcc_command = $ENV{LIXBUILD_CC} if (!empty($ENV{LIXBUILD_CC}));
+	$gcc = new LixBuild::GCC($gcc_command);
 }
 
 
 our $appath;
-our $libgcc = $ENV{APBUILD_STATIC_LIBGCC} ? '-static-libgcc' : '-shared-libgcc';
+our $libgcc = $ENV{LIXBUILD_STATIC_LIBGCC} ? '-static-libgcc' : '-shared-libgcc';
 
-# Find out where apgcc is located and determine the buildlist executable
-# path relative to the apgcc script location.
-$appath = $ENV{APBUILD_PATH} if (!empty($ENV{APBUILD_PATH}));
+# Find out where ligcc is located and determine the buildlist executable
+# path relative to the ligcc script location.
+$appath = $ENV{LIXBUILD_PATH} if (!empty($ENV{LIXBUILD_PATH}));
 if (!defined $appath) {
 	$appath = $FindBin::Bin;
 	$appath =~ s/\/*$//g;
 	$appath =~ s/^(.*)\/.*?$/$1/;
-	$appath .= '/include/apbuild';
+	$appath .= '/include/lixbuild';
 	if (! -f "$appath/buildlist" && -f "$FindBin::Bin/buildlist") {
 		$appath = $FindBin::Bin;
 	}
 }
 
 # Build the apsymbols.h header file
-my $headerPath = "$ENV{HOME}/.config/apbuild";
+my $headerPath = "$ENV{HOME}/.config/lixbuild";
 run('mkdir', '-p', $headerPath);
 my $minimumGlibc = "2.7.0";
-if (!empty($ENV{APBUILD_MINIMUM_GLIBC})) {
-	$minimumGlibc = $ENV{APBUILD_MINIMUM_GLIBC};
+if (!empty($ENV{LIXBUILD_MINIMUM_GLIBC})) {
+	$minimumGlibc = $ENV{LIXBUILD_MINIMUM_GLIBC};
 }
 if (run("$appath/buildlist", $headerPath, $minimumGlibc) != 0) {
 	exit 1;
@@ -93,17 +93,17 @@ if (run("$appath/buildlist", $headerPath, $minimumGlibc) != 0) {
 
 # Special constants
 our @linking = ('-Wl,--enable-new-dtags,--rpath,${ORIGIN}/../lib');
-our @include = ("-I$appath", '-include', "$headerPath/apsymbols.h", "-DAPBUILD_VERSION=\"$APBUILD_VERSION\"");
-our $extraTypes = $Apbuild::GCC::extraTypes;
-our $srcTypes = $Apbuild::GCC::srcTypes;
+our @include = ("-I$appath", '-include', "$headerPath/apsymbols.h", "-DLIXBUILD_VERSION=\"$LIXBUILD_VERSION\"");
+our $extraTypes = $LixBuild::GCC::extraTypes;
+our $srcTypes = $LixBuild::GCC::srcTypes;
 
 
-@linking = () if ($ENV{APBUILD_NO_RPATH});
-if (!empty($ENV{APBUILD_INCLUDE})) {
-	foreach my $dir (split /:+/, $ENV{APBUILD_INCLUDE}) {
+@linking = () if ($ENV{LIXBUILD_NO_RPATH});
+if (!empty($ENV{LIXBUILD_INCLUDE})) {
+	foreach my $dir (split /:+/, $ENV{LIXBUILD_INCLUDE}) {
 		if ($dir =~ /=/) {
 			# allow people to force changing a path with oldpath=newpath, e.g.,:
-			# $echo $APBUILD_INCLUDE
+			# $echo $LIXBUILD_INCLUDE
 			# /opt/kde/include=/home/taj/kde-headers/kde-3.3.2/kde/include
 			# would change -I/opt/kde/include to my KDE 3.3 headers.
 			# this works around problems where the order of the include
@@ -124,7 +124,7 @@ if (!empty($ENV{APBUILD_INCLUDE})) {
 	}
 }
 
-# Include the apbuild include folder, and all folders inside that folder.
+# Include the lixbuild include folder, and all folders inside that folder.
 if (opendir D, $appath) {
 	foreach my $dir (readdir D) {
 		if ($dir !~ /^\./ && -d "$appath/$dir") {
@@ -134,8 +134,8 @@ if (opendir D, $appath) {
 	closedir D;
 }
 
-if (!empty($ENV{APBUILD_PROJECTNAME})) {
-	push @linking, '-Wl,--rpath,${ORIGIN}/../lib/' . $ENV{APBUILD_PROJECTNAME};
+if (!empty($ENV{LIXBUILD_PROJECTNAME})) {
+	push @linking, '-Wl,--rpath,${ORIGIN}/../lib/' . $ENV{LIXBUILD_PROJECTNAME};
 }
 
 
@@ -161,7 +161,7 @@ if ($capabilities{stack_protector}) {
 
 if ($capabilities{fortify_source}) {
 	# Some distros (e.g. Ubuntu 8.10) activate a bufferoverflow protection
-	# which is only available since glibc 2.3.4. Apbuild removes all symbols
+	# which is only available since glibc 2.3.4. LixBuild removes all symbols
 	# newer then 2.3, so this can't be used.
 	push @include, "-U_FORTIFY_SOURCE";
 }
@@ -174,10 +174,10 @@ push @linking, $libgcc if ($capabilities{libgcc});
 ############# Detect compilation situation #############
 
 our $situation = $gcc->situation(\@ARGV);
-if ($ENV{APBUILD_CXX_MODE}) {
+if ($ENV{LIXBUILD_CXX_MODE}) {
 	debug "apg++ @ARGV\n";
 } else {
-	debug "apgcc @ARGV\n";
+	debug "ligcc @ARGV\n";
 }
 debug "Situation: $situation\n";
 
@@ -356,31 +356,31 @@ if ($situation eq 'compile') {
 } else {
 	my $ret = run($gcc->command, @ARGV);
 	if (defined $ARGV[0] && $ARGV[0] eq '--help') {
-		print	"\napbuild environment variables:\n";
-		print	"  APBUILD_PATH=path         Specifies the include path for APBuild\n" .
-			"                            (like: /usr/local/include/apbuild)\n" .
-			"  APBUILD_DEBUG=1           Enable debugging messages\n" .
-			"  APBUILD_BOGUS_DEPS=deps   Specify a list of whitespace-seperated bogus\n" .
+		print	"\nlixbuild environment variables:\n";
+		print	"  LIXBUILD_PATH=path         Specifies the include path for LI-XBuild\n" .
+			"                            (like: /usr/local/include/lixbuild)\n" .
+			"  LIXBUILD_DEBUG=1           Enable debugging messages\n" .
+			"  LIXBUILD_BOGUS_DEPS=deps   Specify a list of whitespace-seperated bogus\n" .
 			"                            library dependancies (like: X11 ICE png). These\n" .
 			"                            libraries will not be linked.\n" .
-			"  APBUILD_STATIC=deps       Specify a list of whitespace-seperated libraries\n" .
+			"  LIXBUILD_STATIC=deps       Specify a list of whitespace-seperated libraries\n" .
 			"                            to statically link to (like: popt z). You can also\n" .
 			"                            explicitly specify a filename to the static library.\n" .
 			"                            Example: popt=/usr/lib/libpopt.a\n" .
-			"  APBUILD_STATIC_X=1        Force static linking of some X extension libraries\n" .
+			"  LIXBUILD_STATIC_X=1        Force static linking of some X extension libraries\n" .
 			"                            Don't use this unless you know what you're doing.\n" .
-			"  APBUILD_DISABLE_BOGUS_DETECTOR=1   Disable the automatic bogus dependancy\n" .
+			"  LIXBUILD_DISABLE_BOGUS_DETECTOR=1   Disable the automatic bogus dependancy\n" .
 			"                            detector. This is useful when linking to libraries\n" .
 			"                            don't have correct DT_NEEDED entries, like GTK 1.2.\n" .
-			"  APBUILD_NOT_BOGUS=deps    If you want to use the automatic bogus dependancy\n" .
+			"  LIXBUILD_NOT_BOGUS=deps    If you want to use the automatic bogus dependancy\n" .
 			"                            dectector anyway, then you can specify a list of\n" .
 			"                            dependancies here that are not bogus.\n" .
-			"  APBUILD_STATIC_LIBGCC=1   Link all binaries with -static-libgcc. See the gcc\n" .
+			"  LIXBUILD_STATIC_LIBGCC=1   Link all binaries with -static-libgcc. See the gcc\n" .
 			"                            info page for more info about this option.\n" .
-			"  APBUILD_PROJECTNAME       If non-empty, apbuild will add\n" .
-			"                            \$ORIGIN/../lib/\$APBUILD_PROJECTNAME to the library\n" .
+			"  LIXBUILD_PROJECTNAME       If non-empty, lixbuild will add\n" .
+			"                            \$ORIGIN/../lib/\$LIXBUILD_PROJECTNAME to the library\n" .
 			"                            search path.\n" .
-			"  APBUILD_INCLUDE           Prepend the specified directory to the compiler's\n" .
+			"  LIXBUILD_INCLUDE           Prepend the specified directory to the compiler's\n" .
 			"                            header search path. The compiler will search this\n" .
 			"                            directory first, before searching any other\n" .
 			"                            directory. This is useful in combination with the\n" .
@@ -388,17 +388,17 @@ if ($situation eq 'compile') {
 			"                            You can specify multiple directories,\n" .
 			"                            seperated by a ':', just like the \$PATH environment\n" .
 			"                            variable.\n" .
-			"  APBUILD_NO_RPATH          Do not add rpath entries during linking.\n" .
-			"  APBUILD_CC                Use the specified C compiler. Default value: gcc\n" .
-			"  APBUILD_CXX1,APBUILD_CXX2 Use the specified C++ compiler. Default value: g++\n" .
+			"  LIXBUILD_NO_RPATH          Do not add rpath entries during linking.\n" .
+			"  LIXBUILD_CC                Use the specified C compiler. Default value: gcc\n" .
+			"  LIXBUILD_CXX1,LIXBUILD_CXX2 Use the specified C++ compiler. Default value: g++\n" .
 			"                            Set both variables to enable double compiling. The\n" .
 			"                            first should be set to the g++ 3.2 compiler and the\n" .
 			"                            second should be set to the g++ 3.4 (or newer)\n" .
 			"                            compiler.\n" .
-			"  APBUILD_RESOLVE_LIBPATH   A whitespace-separated list of regular expressions which\n" .
+			"  LIXBUILD_RESOLVE_LIBPATH   A whitespace-separated list of regular expressions which\n" .
 			"                            specify the libraries whose path must be resolved into\n" .
 			"                            an absolute path.\n" .
-			"  APBUILD_MINIMUM_GLIBC     Specifies the minimum glibc version your binaries will\n" .
+			"  LIXBUILD_MINIMUM_GLIBC     Specifies the minimum glibc version your binaries will\n" .
 			"                            be compatible with.\n";
 	}
 	exit $ret;
@@ -413,7 +413,7 @@ sub modifyLinkerOptions {
 
 	# Remove manually specified bogus library dependancies
 	my @bogusDeps;
-	@bogusDeps = split / +/, $ENV{APBUILD_BOGUS_DEPS} if (!empty($ENV{APBUILD_BOGUS_DEPS}));
+	@bogusDeps = split / +/, $ENV{LIXBUILD_BOGUS_DEPS} if (!empty($ENV{LIXBUILD_BOGUS_DEPS}));
 
 	# We call removeLibraries() twice because it may detect
 	# some dependancies after we've resolved the library names
@@ -514,8 +514,8 @@ sub translateLibNames {
 		} elsif (/^-l(.+)/ || /--library=(.+)/) {
 			my $libname = $1;
 
-			# Resolve libname if explicitely asked to, through APBUILD_RESOLVE_LIBPATH.
-			my @libtosolve = split / +/, $ENV{APBUILD_RESOLVE_LIBPATH} if (!empty($ENV{APBUILD_RESOLVE_LIBPATH}));
+			# Resolve libname if explicitely asked to, through LIXBUILD_RESOLVE_LIBPATH.
+			my @libtosolve = split / +/, $ENV{LIXBUILD_RESOLVE_LIBPATH} if (!empty($ENV{LIXBUILD_RESOLVE_LIBPATH}));
 			foreach (@libtosolve) {
 				my $regexp = $_;
 				if ($libname =~ /($regexp)/) {
@@ -544,7 +544,7 @@ sub translateLibNames {
 		} elsif ($_ eq '-pthread') {
 			$_[0] = "-lpthread";
 
-		} elsif ($ENV{APBUILD_CXX_MODE} && /\/?libstdc\+\+\.so(.[56])?/) {
+		} elsif ($ENV{LIXBUILD_CXX_MODE} && /\/?libstdc\+\+\.so(.[56])?/) {
 			# drop this in double compile mode as it can cause issues
 			# in single-compile mode leave it alone, otherwise, libtool can break
 			# ^^^ That used to be true
@@ -650,7 +650,7 @@ sub manipulateDeps {
 	my @deps;
 	my @argv;
 
-	if ($ENV{APBUILD_DISABLE_BOGUS_DETECTOR}) {
+	if ($ENV{LIXBUILD_DISABLE_BOGUS_DETECTOR}) {
 		@argv = @_;
 		goto FINAL;
 	}
@@ -736,8 +736,8 @@ sub manipulateDeps {
 	FINAL: {
 		# Don't strip dependancies that are explicitly marked as not bogus
 		my %notBogus;
-		if (!empty($ENV{APBUILD_NOT_BOGUS})) {
-			foreach (split / +/, $ENV{APBUILD_NOT_BOGUS}) {
+		if (!empty($ENV{LIXBUILD_NOT_BOGUS})) {
+			foreach (split / +/, $ENV{LIXBUILD_NOT_BOGUS}) {
 				$notBogus{$_} = 1;
 			}
 		}
@@ -782,17 +782,17 @@ sub extractSymbols {
 }
 
 
-# Force static linking against libraries in $APBUILD_STATIC and certain X libraries.
+# Force static linking against libraries in $LIXBUILD_STATIC and certain X libraries.
 sub forceStatic {
 	my (%xlibs, %staticList, $X11linked, $linkedToStaticX);
 	my (@args, @searchPaths);
 
 	# Create a list of libraries that we want to statically link
 	$gcc->getSearchPaths(\@_, \@searchPaths);
-	if (defined $ENV{'APBUILD_NO_STATIC_X'}) {
-		warn "WARNING: APBUILD_NO_STATIC_X is no longer used because it became the default behaviour.\n";
+	if (defined $ENV{'LIXBUILD_NO_STATIC_X'}) {
+		warn "WARNING: LIXBUILD_NO_STATIC_X is no longer used because it became the default behaviour.\n";
 	}
-	if (defined $ENV{'APBUILD_STATIC_X'} && $ENV{'APBUILD_STATIC_X'} eq "1") {
+	if (defined $ENV{'LIXBUILD_STATIC_X'} && $ENV{'LIXBUILD_STATIC_X'} eq "1") {
 		foreach (qw(Xrender Xcursor Xfixes Xi Xinerama Xrandr Xv Xxf86dga Xxf86misc Xxf86vm)) {
 			my $file = searchLib("lib$_.a", \@searchPaths);
 			$staticList{$_} = $file if (defined $file);
@@ -801,8 +801,8 @@ sub forceStatic {
 	}
 
 	my @static_deps;
-	if (!empty($ENV{APBUILD_STATIC})) {
-		foreach (split / +/, $ENV{APBUILD_STATIC}) {
+	if (!empty($ENV{LIXBUILD_STATIC})) {
+		foreach (split / +/, $ENV{LIXBUILD_STATIC}) {
 			my ($lib, $file) = split /=/, $_, 2;
 			$file = searchLib("lib$lib.a", \@searchPaths) if (!defined $file);
 			$staticList{$lib} = $file if (defined $file);
