@@ -1,7 +1,7 @@
-# CMakeLists for Manpages
+# CMakeLists for manual page docs
 
 include (${CMAKE_SOURCE_DIR}/data/cmake/documentation.cmake)
 
 set(manpages "libuild.1")
 
-add_manpages(doc-man "${manpages}" "")
+add_xml_manpages(doc-man "${manpages}" "" "")

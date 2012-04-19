@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" [
+
+  <!-- Please adjust the date whenever revising the manpage. -->
+  <!ENTITY date        "<date>1 June,2011</date>">
+  <!-- SECTION should be 1-8, maybe w/ subsection other parameters are
+       allowed: see man(7), man(1). -->
+  <!ENTITY package     "libuild">
+  <!ENTITY gnu         "<acronym>GNU</acronym>">
+  <!ENTITY gpl         "&gnu; <acronym>GPL</acronym>">
+]>
+
+<refentry>
+	<refentryinfo>
+	<title>Listaller Project</title>
+	<copyright>
+		<year>2009-2012</year>
+		<holder>Matthias Klumpp</holder>
+	</copyright>
+	<productname>Listaller Project</productname>
+	&date;
+	</refentryinfo>
+
+	<refmeta>
+		<refentrytitle>libuild</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+	<refnamediv>
+		<refname>&package;</refname>
+		<refpurpose>Listaller package builder</refpurpose>
+	</refnamediv>
+
+       <refsynopsisdiv>
+	       <cmdsynopsis>
+		       <command>&package;</command>
+		       <group choice="req">
+			       <option>-b</option>
+		       </group>
+		       <group choice="opt">
+			       <option>OPTIONS</option>
+		       </group>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			This manual page documents briefly the <command>&package;</command> command.
+		</para>
+		<para>
+			<command>&package;</command> is a simple tool to build IPK application packages directly
+			from software sources or binary files using a package recipe.
+		</para>
+	</refsect1>
+
+       <refsect1>
+	       <title>Options</title>
+	       <variablelist>
+
+		<varlistentry>
+			<term><option>-b</option></term>
+			<term><option>--build</option></term>
+			<listitem>
+				<para>Build IPK package using the IPK source files in the ipkinstall folder in current directory.</para>
+			</listitem>
+		</varlistentry>
+
+		<varlistentry>
+			<term><option>-s</option></term>
+			<term><option>--sourcedir=<replaceable>DIRECTORY</replaceable></option></term>
+			<listitem>
+				<para>Set the IPK package source directory.</para>
+			</listitem>
+		</varlistentry>
+
+		<varlistentry>
+			<term><option>-o</option></term>
+			<term><option>--outdir=<replaceable>DIRECTORY</replaceable></option></term>
+			<listitem>
+				<para>Set an output path were the resulting package should be saved.</para>
+			</listitem>
+		</varlistentry>
+
+		<varlistentry>
+			<term><option>--sign</option></term>
+			<listitem>
+				<para>Sign the resulting package with your GPG key.</para>
+			</listitem>
+		</varlistentry>
+
+		<varlistentry>
+			<term><option>--version</option></term>
+			<listitem>
+				<para>Display version number of &package;</para>
+			</listitem>
+		</varlistentry>
+
+		</variablelist>
+	</refsect1>
+
+	<refsect1>
+		<title>See Also</title>
+		<para>lipa (1).</para>
+		<para>
+			Additional documentation can be found on http://listaller.tenstral.net.
+		</para>
+	</refsect1>
+<refsect1>
+<title>AUTHOR</title>
+<para>This manual page was written by Matthias Klumpp <email>matthias@tenstral.net</email>.
+</para>
+</refsect1>
+</refentry>

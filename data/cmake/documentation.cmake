@@ -1,5 +1,5 @@
 # Copyright (C) 2009 Julian Andres Klode <jak@debian.org>.
-# Licensed under the same terms as APT; i.e. GPL 3 or later.
+# Licensed under GPLv3 or later.
 
 macro(add_debiandoc target sourcefiles installdest)
 	foreach(file ${sourcefiles})
@@ -85,7 +85,7 @@ macro(add_xml_manpages target manpages translations entities)
 
 	add_custom_target(${target} ALL DEPENDS ${commands})
 	# Sort the list of the translations.
-	list(SORT nls-cmd)
+	#list(SORT nls-cmd)
 	add_custom_target(nls-${target} ALL DEPENDS ${nls-cmd})
 endmacro(add_xml_manpages manpages)
 

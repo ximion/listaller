@@ -5,7 +5,7 @@ include("${VALA_USE_FILE}")
 
 find_package(GLIB2 REQUIRED)
 find_package(Gettext REQUIRED)
-find_package(GPGme REQUIRED)
+find_package(GPGMe REQUIRED)
 find_package(GI REQUIRED)
 find_library(M_LIB m)
 pkg_check_modules(GEE REQUIRED gee-1.0)
