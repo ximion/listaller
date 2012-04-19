@@ -1,4 +1,4 @@
-# CMakeLists for LI-XBuildTools
+# CMakeLists for LI-BuildTools
 
 find_package(Vala REQUIRED)
 include("${VALA_USE_FILE}")
@@ -7,9 +7,7 @@ find_package(GLIB2 REQUIRED)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
-ensure_vala_version("0.10" MINIMUM)
-
-
+ensure_vala_version("0.12" MINIMUM)
 
 set(BUILDLIST_SOURCES buildlist.vala
 )
@@ -32,17 +30,17 @@ vala_add_executable(buildlist ${BUILDLIST_SOURCES}
 				PACKAGES posix glib-2.0 gio-2.0 gee-1.0
 )
 
-install(TARGETS buildlist DESTINATION include/lixbuild COMPONENT buildtools)
+install(TARGETS buildlist DESTINATION include/libuild COMPONENT buildtools)
 install(PROGRAMS ligcc
 		 lig++
 		 relaytool
 	DESTINATION bin
 	COMPONENT buildtools
 )
-install(FILES LixBuild/GCC.pm
-	      LixBuild/Utils.pm
-	DESTINATION share/listaller/LixBuild
+install(FILES LiBuild/GCC.pm
+	      LiBuild/Utils.pm
+	DESTINATION share/listaller/LiBuild
 	COMPONENT buildtools
 )
-install(FILES ctype.h DESTINATION include/lixbuild COMPONENT headers)
+install(FILES ctype.h DESTINATION include/libuild COMPONENT headers)
 install(FILES relaytool.m4 DESTINATION share/aclocal COMPONENT headers)

@@ -1,8 +1,8 @@
 
 add_subdirectory(binreloc)
-if (LIXBUILD)
-	add_subdirectory(lixbuild)
-endif (LIXBUILD)
+if (LIBUILD)
+	add_subdirectory(libuild)
+endif (LIBUILD)
 if (PATCHELF)
 	add_subdirectory(patchelf)
 endif (PATCHELF)

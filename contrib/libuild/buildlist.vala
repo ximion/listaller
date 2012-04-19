@@ -195,14 +195,14 @@ int main(string[] args)
 			}
 		}
 
-		headerFile.append("""/* lixbuild embedded metadata */
-#define LIXBUILD_NOTE_METADATA(s)   __asm__(".section .metadata, \"MS\", @note, 1\n\t.string \"" s "\"\n\t.previous\n\t")
+		headerFile.append("""/* libuild embedded metadata */
+#define LIBUILD_NOTE_METADATA(s)   __asm__(".section .metadata, \"MS\", @note, 1\n\t.string \"" s "\"\n\t.previous\n\t")
 
-#ifdef LIXBUILD_VERSION
-LIXBUILD_NOTE_METADATA("lixbuild.version=" LIXBUILD_VERSION);
+#ifdef LIBUILD_VERSION
+LIBUILD_NOTE_METADATA("libuild.version=" LIBUILD_VERSION);
 #endif
 
-/* lixbuild generated symbol exclusion list */
+/* libuild generated symbol exclusion list */
 """);
 		var it = symbolMap.keys.iterator();
 		while(it.next())

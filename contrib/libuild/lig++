@@ -5,6 +5,6 @@ use strict;
 use FindBin;
 
 my $apgcc = "$FindBin::Bin/ligcc";
-$ENV{LIXBUILD_CXX_MODE} = 1;
+$ENV{LIBUILD_CXX_MODE} = 1;
 my $a = do $apgcc;
 die $@ if ($@);

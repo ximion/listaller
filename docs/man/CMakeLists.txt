@@ -11,7 +11,7 @@ if(TOOLS)
 	)
 endif()
 
-if(APBUILD)
+if(LIBUILD)
 	set(manpages ${manpages}
 		"ligcc.1"
 		"lig++.1"

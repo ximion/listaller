@@ -47,13 +47,12 @@ endif(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
 #
 option(QT "Build Listaller's Qt4 modules" OFF)
 option(TOOLS "Build Listaller's non-gui tools" ON)
-option(LIXBUILD "Build the LIXBuild tools" OFF)
+option(LIBUILD "Build the LIBuild tools" OFF)
 option(PATCHELF "Build patchelf utility" OFF)
 option(L18N "Enable localization" ON)
 option(TESTS "Enable Listaller's Unit Tests" OFF)
 option(TEST_DEPMANAGER "Test Listaller's dependency solver" OFF)
 option(TEST_SECURITY "Enable Listaller signing/security tests" ON)
-
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX
