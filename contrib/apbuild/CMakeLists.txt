@@ -42,7 +42,7 @@ install(PROGRAMS apgcc
 )
 install(FILES Apbuild/GCC.pm
 	      Apbuild/Utils.pm
-	DESTINATION share/apbuild
+	DESTINATION share/apbuild/Apbuild
 	COMPONENT buildtools
 )
 install(FILES ctype.h DESTINATION include/apbuild COMPONENT headers)

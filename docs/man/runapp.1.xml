@@ -3,10 +3,10 @@
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" [
 
   <!-- Please adjust the date whenever revising the manpage. -->
-  <!ENTITY date        "<date>1 June,2011</date>">
+  <!ENTITY date        "<date>18 April,2012</date>">
   <!-- SECTION should be 1-8, maybe w/ subsection other parameters are
        allowed: see man(7), man(1). -->
-  <!ENTITY package     "libuild">
+  <!ENTITY package     "runapp">
   <!ENTITY gnu         "<acronym>GNU</acronym>">
   <!ENTITY gpl         "&gnu; <acronym>GPL</acronym>">
 ]>
@@ -23,22 +23,19 @@
 	</refentryinfo>
 
 	<refmeta>
-		<refentrytitle>libuild</refentrytitle>
+		<refentrytitle>runapp</refentrytitle>
 		<manvolnum>1</manvolnum>
 	</refmeta>
 	<refnamediv>
 		<refname>&package;</refname>
-		<refpurpose>Listaller package builder</refpurpose>
+		<refpurpose>Run an application</refpurpose>
 	</refnamediv>
 
        <refsynopsisdiv>
 	       <cmdsynopsis>
 		       <command>&package;</command>
 		       <group choice="req">
-			       <option>-b</option>
-		       </group>
-		       <group choice="opt">
-			       <option>OPTION ...</option>
+			       <option>APPNAME</option>
 		       </group>
 		</cmdsynopsis>
 	</refsynopsisdiv>
@@ -49,45 +46,16 @@
 			This manual page documents briefly the <command>&package;</command> command.
 		</para>
 		<para>
-			<command>&package;</command> is a simple tool to build IPK application packages directly
-			from software sources or binary files using a package recipe.
+			<command>&package;</command> runs applications installed using Listaller. It will set
+			the application environment, initiate a sanbox and do everything else needed to run the application.
+			&package; can also execute every other application found on the system, even those which were not
+			installed using Listaller.
 		</para>
 	</refsect1>
 
        <refsect1>
 	       <title>Options</title>
 	       <variablelist>
-
-		<varlistentry>
-			<term><option>-b</option></term>
-			<term><option>--build</option></term>
-			<listitem>
-				<para>Build IPK package using the IPK source files in the ipkinstall folder in current directory.</para>
-			</listitem>
-		</varlistentry>
-
-		<varlistentry>
-			<term><option>-s</option></term>
-			<term><option>--sourcedir=<replaceable>DIRECTORY</replaceable></option></term>
-			<listitem>
-				<para>Set the IPK package source directory.</para>
-			</listitem>
-		</varlistentry>
-
-		<varlistentry>
-			<term><option>-o</option></term>
-			<term><option>--outdir=<replaceable>DIRECTORY</replaceable></option></term>
-			<listitem>
-				<para>Set an output path were the resulting package should be saved.</para>
-			</listitem>
-		</varlistentry>
-
-		<varlistentry>
-			<term><option>--sign</option></term>
-			<listitem>
-				<para>Sign the resulting package with your GPG key.</para>
-			</listitem>
-		</varlistentry>
 
 		<varlistentry>
 			<term><option>--version</option></term>
@@ -108,7 +76,7 @@
 
 	<refsect1>
 		<title>See Also</title>
-		<para>runapp (1), lipa(1).</para>
+		<para>libuild (1).</para>
 		<para>
 			Additional documentation can be found on http://listaller.tenstral.net.
 		</para>
