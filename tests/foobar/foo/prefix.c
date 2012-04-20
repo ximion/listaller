@@ -2,8 +2,8 @@
  * BinReloc - a library for creating relocatable executables
  * Written by: Mike Hearn <mike@theoretic.com>
  *             Hongli Lai <h.lai@chello.nl>
- * http://autopackage.org/
- * 
+ * http://listaller.tenstral.net/
+ *
  * This source code is public domain. You can relicense this code
  * under whatever license you want.
  */

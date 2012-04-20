@@ -6,7 +6,7 @@ libraries.
 
 The problem
 -----------
-The Autopackage project (http://autopackage.org) supports relocation. This
+The Listaller project (http://listaller.tenstral.net) supports relocation. This
 means that a package can be installed to any location, like how Win32
 installers let you choose a directory.
 However, most applications are not relocatable. The paths where in they
@@ -30,4 +30,4 @@ that uses all kinds of dynamic linker and kernel magic to find out the
 full path of your executable or library. BinReloc is meant to be
 included in your project and adds no dependancies that you don't want.
 
-Please go to http://autopackage.org/docs/binreloc/ for a complete guide.
+Please go to http://listaller.tenstral.net/docs/binreloc/ for a complete guide.
