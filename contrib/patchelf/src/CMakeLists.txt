@@ -1,6 +1,6 @@
 # CMakeLists for Patchelf
 
-set(PATCHELF_SOURCES elf.h patchelf.cc
+set(PATCHELF_SOURCES patchelf.cc
 )
 
 include_directories(${CMAKE_BINARY_DIR}
