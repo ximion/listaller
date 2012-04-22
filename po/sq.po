@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.00b\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-04-16 13:57+0200\n"
+"POT-Creation-Date: 2012-04-22 23:05+0200\n"
 "PO-Revision-Date: 2011-02-22 22:07+0000\n"
 "Last-Translator: truri <Unknown>\n"
 "Language-Team: Albanian\n"
@@ -174,6 +174,10 @@ msgstr ""
 msgid "IPK package output directory"
 msgstr ""
 
+#, fuzzy
+msgid "Install an IPK package"
+msgstr "Të instalohet paketa?"
+
 msgid "Installation completed!"
 msgstr "Instalimi u plotësua!"
 
@@ -186,6 +190,12 @@ msgstr ""
 
 #, c-format
 msgid "Installing native packages: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Listaller command-line tool: No command specified.\n"
+"Run '%s --help' to see a list of available commands."
 msgstr ""
 
 msgid "Low security."
@@ -679,9 +689,6 @@ msgstr ""
 
 #~ msgid "Install now"
 #~ msgstr "Instaloje tani"
-
-#~ msgid "Install package?"
-#~ msgstr "Të instalohet paketa?"
 
 #~ msgid "Install updates"
 #~ msgstr "Instaloji përditësimet"

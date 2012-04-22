@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lclstrconsts\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-04-16 13:57+0200\n"
+"POT-Creation-Date: 2012-04-22 23:05+0200\n"
 "PO-Revision-Date: 2012-04-13 02:33+0000\n"
 "Last-Translator: Antoni Kudelski <antekk@linux.pl>\n"
 "Language-Team: \n"
@@ -179,6 +179,10 @@ msgstr "Nie można odszukać pakietu IPK."
 msgid "IPK package output directory"
 msgstr ""
 
+#, fuzzy
+msgid "Install an IPK package"
+msgstr "Zbuduj pakiet IPK"
+
 msgid "Installation completed!"
 msgstr "Instalacja zakończona!"
 
@@ -192,6 +196,12 @@ msgstr "Instalacja rodzimych pakietów nie powiodła się z komunikatem: %s"
 #, c-format
 msgid "Installing native packages: %s"
 msgstr "Instalacja rodzimych pakietów: %s"
+
+#, fuzzy, c-format
+msgid ""
+"Listaller command-line tool: No command specified.\n"
+"Run '%s --help' to see a list of available commands."
+msgstr "Uruchom \"%s --help\" aby wyświetlić pełną listę dostępnych opcji.\n"
 
 msgid "Low security."
 msgstr "Niski poziom zabezpieczeń."

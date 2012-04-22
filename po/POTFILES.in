@@ -29,12 +29,14 @@ src/feed-installer.vala
 src/zfeed.vala
 # Listaller tools
 tools/runapp/runapp.vala
-tools/libuild/main.vala
-tools/libuild/ipkbuilder.vala
-tools/libuild/gpgsign.vala
-tools/libuild/depfind.vala
-tools/libuild/prepare.vala
-tools/libuild/lbutils.vala
+tools/lipa/main.vala
+tools/lipa/lipa.vala
+tools/lipkgen/main.vala
+tools/lipkgen/ipkbuilder.vala
+tools/lipkgen/gpgsign.vala
+tools/lipkgen/depfind.vala
+tools/lipkgen/prepare.vala
+tools/lipkgen/lpkgutils.vala
 tools/appcompile/main.vala
 tools/appcompile/autocompiler.vala
 tools/depscan/main.vala

@@ -26,6 +26,8 @@ public class CmdApp : Object {
 	private static bool o_show_version = false;
 	private static bool o_verbose_mode = false;
 
+	private static bool o_mode_install = false;
+
 	public int exit_code { set; get; }
 
 	private const OptionEntry[] options = {
@@ -33,6 +35,8 @@ public class CmdApp : Object {
 		N_("Show the application's version"), null },
 		{ "verbose", 0, 0, OptionArg.NONE, ref o_verbose_mode,
 			N_("Activate verbose mode"), null },
+		{ "install", 'i', 0, OptionArg.NONE, ref o_mode_install,
+		N_("Install an IPK package"), null },
 		{ null }
 	};
 
