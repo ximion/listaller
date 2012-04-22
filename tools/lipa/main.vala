@@ -22,11 +22,24 @@ using GLib;
 using Config;
 using Listaller;
 
+private static const int CONSOLE_RESET   = 0;
+private static const int CONSOLE_BLACK   = 30;
+private static const int CONSOLE_RED     = 31;
+private static const int CONSOLE_GREEN   = 32;
+private static const int CONSOLE_YELLOW  = 33;
+private static const int CONSOLE_BLUE    = 34;
+private static const int CONSOLE_MAGENTA = 35;
+private static const int CONSOLE_CYAN    = 36;
+private static const int CONSOLE_WHITE   = 37;
+
 public class CmdApp : Object {
 	private static bool o_show_version = false;
 	private static bool o_verbose_mode = false;
 
 	private static bool o_mode_install = false;
+	private static bool o_mode_remove = false;
+
+	private string[] args;
 
 	public int exit_code { set; get; }
 
@@ -40,25 +53,32 @@ public class CmdApp : Object {
 		{ null }
 	};
 
-	public CmdApp (string[] args) {
+	private void print_nocommand_msg () {
+		stdout.printf (_("Listaller command-line tool: No command specified.\nRun '%s --help' to see a list of available commands.").printf (args[0]) + "\n");
+	}
+
+	public CmdApp (string[] arguments) {
 		exit_code = 0;
 		var opt_context = new OptionContext ("- Listaller command-line tool.");
 		opt_context.set_help_enabled (true);
 		opt_context.add_main_entries (options, null);
+
 		try {
-			opt_context.parse (ref args);
+			opt_context.parse (ref arguments);
 		} catch (Error e) {
 			stdout.printf (e.message + "\n");
-			stdout.printf (_("Run '%s --help' to see a full list of available command line options.\n"), args[0]);
+			stdout.printf (_("Run '%s --help' to see a full list of available command line options.\n"), arguments[0]);
 			exit_code = 1;
 			return;
 		}
+		args = arguments;
 
 		if (args.length <= 1) {
-			stdout.printf (_("Listaller command-line tool: No command specified.\nRun '%s --help' to see a list of available commands.").printf (args[0]) + "\n");
+			print_nocommand_msg ();
 			exit_code = 0;
 			return;
 		}
+
 	}
 
 	public void run () {
@@ -71,7 +91,29 @@ public class CmdApp : Object {
 		}
 
 		var lipa = new Lipa ();
-		exit_code = lipa.execute ();
+
+		string? value = null;
+		if (args.length > 1)
+			value = args[1];
+
+		if (o_mode_install) {
+			if (value == null) {
+				stderr.printf ("Missing parameter for 'install' action: No IPK package specified.");
+				exit_code = 4;
+				return;
+			}
+
+			lipa.install_package (value);
+
+		} else if (o_mode_remove) {
+
+		} else {
+			print_nocommand_msg ();
+			exit_code = 0;
+			return;
+		}
+
+		exit_code = lipa.error_code;
 	}
 
 	static int main (string[] args) {
