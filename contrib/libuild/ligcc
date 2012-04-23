@@ -789,9 +789,6 @@ sub forceStatic {
 
 	# Create a list of libraries that we want to statically link
 	$gcc->getSearchPaths(\@_, \@searchPaths);
-	if (defined $ENV{'LIBUILD_NO_STATIC_X'}) {
-		warn "WARNING: LIBUILD_NO_STATIC_X is no longer used because it became the default behaviour.\n";
-	}
 	if (defined $ENV{'LIBUILD_STATIC_X'} && $ENV{'LIBUILD_STATIC_X'} eq "1") {
 		foreach (qw(Xrender Xcursor Xfixes Xi Xinerama Xrandr Xv Xxf86dga Xxf86misc Xxf86vm)) {
 			my $file = searchLib("lib$_.a", \@searchPaths);
