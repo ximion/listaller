@@ -9,6 +9,7 @@ pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 set(LIPA_SOURCES main.vala
+		../toolshared.vala
 		lipa.vala
 )
 
@@ -25,7 +26,7 @@ vala_add_executable(lipa ${LIPA_SOURCES}
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
 )
 
-add_dependencies(lipa_precompile listaller-glib)
+add_dependencies(lipa_precompile listaller-glib tools-shared)
 add_dependencies(lipa_precompile ${CMAKE_BINARY_DIR}/src/listaller-${LILIBS_VERSION}.vapi)
 
 target_link_libraries(lipa

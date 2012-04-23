@@ -21,7 +21,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}
 
 vala_add_executable(runapp ${RUNAPP_SOURCES}
 			PACKAGES config gee-1.0 gio-2.0 posix listaller-${LILIBS_VERSION}
-			OUTPUT_DIR ${CMAKE_BINARY_DIR}/src
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
 )
 

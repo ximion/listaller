@@ -76,13 +76,22 @@ public class Lipa : Object {
 		}
 
 		AppItem appID = ipkmeta.get_application ();
-		stdout.printf ("%c", 0x0D);
+		stdout.printf ("%c", 0xD);
 		stdout.printf ("==== %s ====\n\n", _("Installation of %s").printf (appID.full_name));
 
-		// TODO: Accept license & show description
-		//! appID.description;
-		//! appID.license.text;
-
+		stdout.printf ("%s\n\n%s\n", _("Description:"), appID.description);
+		string[] licenseLines = appID.license.text.split ("\n");
+		if (licenseLines.length > 1) {
+			stdout.printf ("%s\n\n", _("License:"));
+			for (int i = 0; i < licenseLines.length; i++) {
+				stdout.printf ("%s\n", licenseLines[i]);
+				if ((i % 2) == 1) {
+					//! stdout.printf (" <<< Press ENTER to continue! >>>");
+					do {} while (stdin.getc () != 0xA);
+				}
+			}
+			console_get_prompt ("Do you accept these terms and conditions?", false, true);
+		}
 
 		// Display security info
 		IPK.PackSecurity sec = inst.get_security_info ();
