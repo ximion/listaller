@@ -41,6 +41,8 @@ public class CmdApp : Object {
 
 	private string[] args;
 
+	private static Lipa lipa;
+
 	public int exit_code { set; get; }
 
 	private const OptionEntry[] options = {
@@ -81,6 +83,14 @@ public class CmdApp : Object {
 
 	}
 
+	[CCode (has_target = false)]
+	public static void handle_SIGINT(int sig_num ){
+		//stdout.write(STDOUT_FILENO, buffer, strlen(buffer));
+		stdout.printf ("Terminating...\n");
+		lipa.terminate_action ();
+		Posix.exit(0);
+	}
+
 	public void run () {
 		if (exit_code != 0)
 			return;
@@ -90,11 +100,18 @@ public class CmdApp : Object {
 			return;
 		}
 
-		var lipa = new Lipa ();
+		lipa = new Lipa ();
 
 		string? value = null;
 		if (args.length > 1)
 			value = args[1];
+
+		// Set up signal handler for termination
+		Posix.sigaction_t handler = Posix.sigaction_t ();
+		handler.sa_handler = handle_SIGINT;
+		handler.sa_flags = 0;
+		Posix.sigemptyset(handler.sa_mask);
+		Posix.sigaction(Posix.SIGINT, handler, null);
 
 		if (o_mode_install) {
 			if (value == null) {

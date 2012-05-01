@@ -22,13 +22,23 @@ using GLib;
 using Config;
 using Listaller;
 
+public enum LipaRole {
+	NONE,
+	INSTALLATION,
+	REMOVAL;
+}
+
 public class Lipa : Object {
 	private Listaller.Settings liconf;
 
+        public LipaRole role { get; set; }
 	public int error_code { get; set; }
+
+	private Setup inst;
 
 	public Lipa () {
 		error_code = 0;
+		role = LipaRole.NONE;
 		liconf = new Listaller.Settings ();
 	}
 
@@ -57,7 +67,9 @@ public class Lipa : Object {
 		bool ret;
 		stdout.printf ("Preparing... Please wait!");
 
-		Setup inst = new Setup (ipkfname, liconf);
+		role = LipaRole.INSTALLATION;
+
+		inst = new Setup (ipkfname, liconf);
 		inst.message.connect (setup_message);
 		inst.status_changed.connect (setup_status_changed);
 		inst.progress_changed.connect (setup_progress_changed);
@@ -86,8 +98,14 @@ public class Lipa : Object {
 			for (int i = 0; i < licenseLines.length; i++) {
 				stdout.printf ("%s\n", licenseLines[i]);
 				if ((i % 2) == 1) {
-					//! stdout.printf (" <<< Press ENTER to continue! >>>");
-					do {} while (stdin.getc () != 0xA);
+					Posix.FILE? tty = console_get_tty ();
+					tty.printf (" <<< Press ENTER to continue! >>>\r");
+					tty.flush ();
+					// FIXME: For some reason, old console content gets not overridden
+					tty.printf ("                                 \r");
+					console_wait_for_enter (tty);
+					//tty.printf ("                                 \r");
+					tty.flush ();
 				}
 			}
 			console_get_prompt ("Do you accept these terms and conditions?", false, true);
@@ -102,6 +120,16 @@ public class Lipa : Object {
 			stdout.printf ("%s %c[%dm%s\n%c[%dm", _("Security is:"), 0x1B, CONSOLE_YELLOW, "MEDIUM", 0x1B, CONSOLE_RESET);
 		else if (secLev <= SecurityLevel.LOW)
 			stdout.printf ("%s %c[%dm%s\n%c[%dm", _("Security is:"), 0x1B, CONSOLE_RED, "LOW", 0x1B, CONSOLE_RESET);
+	}
+
+	public void terminate_action () {
+		switch (role) {
+			case LipaRole.INSTALLATION:
+				inst.kill_installation_process ();
+				inst = null;
+				break;
+			default: break;
+		}
 	}
 
 }

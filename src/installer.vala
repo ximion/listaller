@@ -230,6 +230,14 @@ public class Setup : MsgObject {
 		return ret;
 	}
 
+	public void kill_installation_process () {
+		if (ipkp != null) {
+			// FIXME: We don't support this properly at time!'
+			critical ("Aborting an installation! You should not do that!");
+			ipkp.rollback_installation ();
+		}
+	}
+
 	private void pk_progress_cb (PackageKit.Progress progress, PackageKit.ProgressType type) {
 		if ((type == PackageKit.ProgressType.PERCENTAGE) ||
 			(type == PackageKit.ProgressType.SUBPERCENTAGE)) {

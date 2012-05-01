@@ -64,6 +64,12 @@ private bool touch_dir (string dirname) {
 		return true;
 }
 
+private bool str_empty (string str) {
+	if ((str == "") || (str == null))
+		return true;
+	return false;
+}
+
 /*
  * Count the appearance of string b in a
  */
