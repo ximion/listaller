@@ -538,6 +538,8 @@ namespace PackageKit {
 		public bool add_package (PackageKit.Package package);
 		[CCode (cname = "pk_package_sack_add_package_by_id")]
 		public bool add_package_by_id (string package_id) throws GLib.Error;
+		[CCode (cname = "pk_package_sack_add_packages_from_file")]
+		public bool add_packages_from_file (GLib.File file) throws GLib.Error;
 		[NoWrapper]
 		public virtual void changed ();
 		[CCode (cname = "pk_package_sack_clear")]
@@ -549,7 +551,7 @@ namespace PackageKit {
 		[CCode (cname = "pk_package_sack_find_by_id")]
 		public PackageKit.Package find_by_id (string package_id);
 		[CCode (cname = "pk_package_sack_get_array")]
-		public GLib.GenericArray<weak void*> get_array ();
+		public GLib.GenericArray<weak PackageKit.Package> get_array ();
 		[CCode (cname = "pk_package_sack_get_details")]
 		public bool get_details (GLib.Cancellable? cancellable) throws GLib.Error;
 		[CCode (cname = "pk_package_sack_get_details_async")]
@@ -1085,6 +1087,7 @@ namespace PackageKit {
 		INSTALL_ROOT_INVALID,
 		CANNOT_FETCH_SOURCES,
 		CANCELLED_PRIORITY,
+		UNFINISHED_TRANSACTION,
 		LAST
 	}
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkExitEnum", cprefix = "PK_EXIT_ENUM_")]
@@ -1101,6 +1104,7 @@ namespace PackageKit {
 		NEED_UNTRUSTED,
 		CANCELLED_PRIORITY,
 		SKIP_TRANSACTION,
+		REPAIR_REQUIRED,
 		LAST
 	}
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "PkFilterEnum", cprefix = "PK_FILTER_ENUM_")]

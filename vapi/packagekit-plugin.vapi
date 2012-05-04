@@ -12,6 +12,8 @@ namespace PkPlugin {
 		public static unowned string bool_to_string (bool value);
 		[CCode (cname = "pk_backend_cancel")]
 		public void cancel ();
+		[CCode (cname = "pk_backend_close")]
+		public bool close ();
 		[CCode (cname = "pk_backend_destroy")]
 		public void destroy ();
 		[CCode (cname = "pk_backend_download_packages")]
@@ -116,10 +118,10 @@ namespace PkPlugin {
 		public bool is_implemented (PackageKit.Role role);
 		[CCode (cname = "pk_backend_is_online")]
 		public bool is_online ();
-		[CCode (cname = "pk_backend_lock")]
-		public bool @lock ();
 		[CCode (cname = "pk_backend_not_implemented_yet")]
 		public bool not_implemented_yet (string method);
+		[CCode (cname = "pk_backend_open")]
+		public bool open ();
 		[CCode (cname = "pk_backend_refresh_cache")]
 		public void refresh_cache (bool force);
 		[CCode (cname = "pk_backend_remove_packages")]
@@ -216,8 +218,6 @@ namespace PkPlugin {
 		public void transaction_start ();
 		[CCode (cname = "pk_backend_transaction_stop")]
 		public void transaction_stop ();
-		[CCode (cname = "pk_backend_unlock")]
-		public bool unlock ();
 		[CCode (cname = "pk_backend_update_packages")]
 		public void update_packages (bool only_trusted, string package_ids);
 		[CCode (cname = "pk_backend_update_system")]
