@@ -10,6 +10,7 @@ pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 set(LIPA_SOURCES main.vala
 		../toolshared.vala
+		../console-progress-bar.vala
 		lipa.vala
 )
 

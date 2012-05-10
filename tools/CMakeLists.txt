@@ -1,6 +1,8 @@
 # CMakeLists for Listaller Tools Directory
 
-set(LI_TOOLS_SHARED_SOURCES toolshared.vala)
+set(LI_TOOLS_SHARED_SOURCES toolshared.vala
+			console-progress-bar.vala
+)
 
 vala_precompile(tools-shared LI_TOOLS_SHARED_C ${LI_TOOLS_SHARED_SOURCES}
 			PACKAGES config gee-1.0 gio-2.0 posix listaller-${LILIBS_VERSION}

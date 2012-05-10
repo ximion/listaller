@@ -1,4 +1,4 @@
-/* lipa.vala -- Listaller command-line tool, main class
+/* toolshared.vala -- Functions which are useful for all Listaller cmdline programs
  *
  * Copyright (C) 2010-2012 Matthias Klumpp
  *
@@ -22,6 +22,39 @@ using GLib;
 using Posix;
 
 public static extern unowned char* ctermid (char *__s);
+
+/**
+* cmd_strpad:
+* @data: the input string
+* @length: the desired length of the output string, with padding
+*
+* Returns the text padded to a length with spaces. If the string is
+* longer than length then a longer string is returned.
+*
+* Return value: The padded string
+**/
+public string cmd_strpad (string? data, uint length) {
+	int size;
+	uint data_len;
+	string text;
+	string padding;
+
+	if (data == null)
+		return string.nfill (length, ' ');
+
+	// ITS4: ignore, only used for formatting
+	data_len = data.length;
+
+	// calculate
+	size = (int) (length - data_len);
+	if (size <= 0)
+		return data;
+
+	padding = string.nfill (size, ' ');
+	text = "%s%s".printf (data, padding);
+
+	return text;
+}
 
 private string? console_get_tty_name () {
 	string? tty_name;
