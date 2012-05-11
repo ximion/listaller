@@ -41,7 +41,7 @@ public class CmdApp : Object {
 
 	private string[] args;
 
-	private static Lipa lipa;
+	private static LipaModule lipa;
 
 	public int exit_code { set; get; }
 
@@ -81,13 +81,15 @@ public class CmdApp : Object {
 			return;
 		}
 
+		lipa = null;
 	}
 
 	[CCode (has_target = false)]
 	public static void handle_SIGINT(int sig_num ){
 		//stdout.write(STDOUT_FILENO, buffer, strlen(buffer));
 		stdout.printf ("Terminating...\n");
-		lipa.terminate_action ();
+		if (lipa != null)
+			lipa.terminate_action ();
 		Posix.exit(0);
 	}
 
@@ -99,8 +101,6 @@ public class CmdApp : Object {
 			stdout.printf ("Part of Listaller version: %s\n", Config.VERSION);
 			return;
 		}
-
-		lipa = new Lipa ();
 
 		string? value = null;
 		if (args.length > 1)
@@ -120,7 +120,10 @@ public class CmdApp : Object {
 				return;
 			}
 
-			lipa.install_package (value);
+			var lipaInstall = new LipaInstaller ();
+			lipa = lipaInstall;
+
+			lipaInstall.install_package (value);
 
 		} else if (o_mode_remove) {
 

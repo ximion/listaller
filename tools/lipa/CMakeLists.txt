@@ -11,7 +11,8 @@ pkg_check_modules(GIO2 REQUIRED gio-2.0)
 set(LIPA_SOURCES main.vala
 		../toolshared.vala
 		../console-progress-bar.vala
-		lipa.vala
+		lipa-module.vala
+		lipa-installer.vala
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}

@@ -67,7 +67,7 @@ public class CmdProgressBar : Object {
 		// restore cursor
 		print ("%c8", 0x1B);
 		section = (uint) ((float) size / (float) 100.0 * (float) pvalue);
-		print ("[");
+		print (" [");
 
 		int i;
 		for (i=0; i < section; i++)
@@ -99,7 +99,7 @@ public class CmdProgressBar : Object {
 				pulse_state.position--;
 		}
 
-		print ("[");
+		print (" [");
 		int i;
 		for (i=0; i<(int) pulse_state.position-1; i++)
 			print (" ");

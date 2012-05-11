@@ -1,4 +1,4 @@
-/* lipa.vala -- Listaller command-line tool, main class
+/* lipa-installer.vala -- Application setup handling in Listaller command-line tool
  *
  * Copyright (C) 2010-2012 Matthias Klumpp
  *
@@ -22,26 +22,11 @@ using GLib;
 using Config;
 using Listaller;
 
-public enum LipaRole {
-	NONE,
-	INSTALLATION,
-	REMOVAL;
-}
-
-public class Lipa : Object {
-	private Listaller.Settings liconf;
-
-        public LipaRole role { get; set; }
-	public int error_code { get; set; }
-
+public class LipaInstaller : LipaModule {
 	private Setup inst;
-	private CmdProgressBar progress_bar;
 
-	public Lipa () {
-		error_code = 0;
-		role = LipaRole.NONE;
-		liconf = new Listaller.Settings ();
-		progress_bar = new CmdProgressBar ();
+	public LipaInstaller () {
+		base ();
 	}
 
 	public void setup_error_code (ErrorItem error) {
@@ -58,6 +43,7 @@ public class Lipa : Object {
 
 	public void setup_status_changed (StatusItem status) {
 		if (status.status == StatusEnum.INSTALLATION_FINISHED) {
+			progress_bar.end ();
 			stdout.printf ("Installation completed!\n");
 		}
 	}
@@ -69,8 +55,6 @@ public class Lipa : Object {
 	public void install_package (string ipkfname) {
 		bool ret;
 		stdout.printf ("Preparing... Please wait!");
-
-		role = LipaRole.INSTALLATION;
 
 		inst = new Setup (ipkfname, liconf);
 		inst.message.connect (setup_message);
@@ -147,15 +131,14 @@ public class Lipa : Object {
 			print ("Installation of %s failed!", app.full_name);
 			error_code = 3;
 		}
+
+		inst = null;
 	}
 
-	public void terminate_action () {
-		switch (role) {
-			case LipaRole.INSTALLATION:
-				inst.kill_installation_process ();
-				inst = null;
-				break;
-			default: break;
+	public override void terminate_action () {
+		if (inst != null) {
+			inst.kill_installation_process ();
+			inst = null;
 		}
 	}
 
