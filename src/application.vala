@@ -372,7 +372,7 @@ public class AppItem : Object {
 			return _app_id;
 
 		if (desktop_file.strip () == "") {
-			message (_("We don't know a desktop-file for application '%s'!").printf (full_name));
+			debug (_("We don't know a desktop-file for application '%s'!").printf (full_name));
 			// If no desktop file was found, use application name and version as ID
 			res = idname + ";" + version;
 			res = res + ";" + ";" + origin.to_string ();

@@ -35,11 +35,13 @@ public class Lipa : Object {
 	public int error_code { get; set; }
 
 	private Setup inst;
+	private CmdProgressBar progress_bar;
 
 	public Lipa () {
 		error_code = 0;
 		role = LipaRole.NONE;
 		liconf = new Listaller.Settings ();
+		progress_bar = new CmdProgressBar ();
 	}
 
 	public void setup_error_code (ErrorItem error) {
@@ -48,8 +50,9 @@ public class Lipa : Object {
 	}
 
 	public void setup_progress_changed (int progress, int sub_progress) {
-		stdout.printf ("%c8", 0x1B);
-		stdout.printf ("[%i]   ", progress);
+		progress_bar.set_percentage (progress);
+		//stdout.printf ("%c8", 0x1B);
+		//stdout.printf ("[%i]   ", progress);
 		// TODO: Show sub-progress
 	}
 
@@ -120,6 +123,30 @@ public class Lipa : Object {
 			stdout.printf ("%s %c[%dm%s\n%c[%dm", _("Security is:"), 0x1B, CONSOLE_YELLOW, "MEDIUM", 0x1B, CONSOLE_RESET);
 		else if (secLev <= SecurityLevel.LOW)
 			stdout.printf ("%s %c[%dm%s\n%c[%dm", _("Security is:"), 0x1B, CONSOLE_RED, "LOW", 0x1B, CONSOLE_RESET);
+
+		// Make sure color is reset...
+		print ("%c[%dm", 0x1B, CONSOLE_RESET);
+
+		AppItem? app = inst.get_current_application ();
+		if (app == null)
+			error ("Did not receive valid application information!");
+
+		ret = console_get_prompt ("Do you want to install %s now?".printf (app.full_name), true);
+		// If user doesn't want to install the application, exit
+		if (!ret)
+			return;
+
+		progress_bar.start ("Installing");
+		// Go!
+		ret = inst.run_installation ();
+		progress_bar.end ();
+
+		if (ret) {
+			print ("Installation of %s completed successfully!\n", app.full_name);
+		} else {
+			print ("Installation of %s failed!", app.full_name);
+			error_code = 3;
+		}
 	}
 
 	public void terminate_action () {
