@@ -37,7 +37,7 @@ GLib Libraries and headers for listaller.
 %build
 mkdir build
 cd build
-%cmake ..
+%cmake -DTOOLS=ON -DLIBUILD=ON ..
 make %{?_smp_mflags}
 
 %install
@@ -73,6 +73,7 @@ chrpath --delete $RPM_BUILD_ROOT%{_libdir}/packagekit-plugins/libpk_plugin_lista
 %{_libdir}/packagekit-plugins/libpk_plugin_listaller.so
 %{_sysconfdir}/listaller
 %{_mandir}/man1/runapp.1.gz
+%{_mandir}/man1/lipa.1.gz
 %{_mandir}/man1/lipkgen.1.gz
 %{_mandir}/man1/appcompile.1.gz
 %{_mandir}/man1/depscan.1.gz
