@@ -2,7 +2,10 @@
 
 include (${CMAKE_SOURCE_DIR}/data/cmake/documentation.cmake)
 
-set(manpages "runapp.1")
+set(manpages "runapp.1"
+	"lipa.1"
+)
+
 if(TOOLS)
 	set(manpages ${manpages}
 		"lipkgen.1"
