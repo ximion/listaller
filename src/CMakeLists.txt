@@ -54,7 +54,7 @@ endif(QT)
 find_package(Vala REQUIRED)
 include("${VALA_USE_FILE}")
 
-find_package(GLIB2 REQUIRED)
+find_package(GLIB2 2.23 REQUIRED)
 find_package(Gettext REQUIRED)
 find_package(SQLite3 REQUIRED)
 find_package(LibArchive REQUIRED)
