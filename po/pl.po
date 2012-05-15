@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lclstrconsts\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-04-22 23:05+0200\n"
+"POT-Creation-Date: 2012-05-15 11:21+0200\n"
 "PO-Revision-Date: 2012-04-13 02:33+0000\n"
 "Last-Translator: Antoni Kudelski <antekk@linux.pl>\n"
 "Language-Team: \n"
@@ -70,6 +70,10 @@ msgstr "Nie można wypakować pliku! Błąd: %s"
 #. : IPk builder was unable to find IPK source scripts
 msgid "Could not find IPK source files!"
 msgstr "Nie można znaleźć plików źródłowych IPK!"
+
+#, c-format
+msgid "Could not find application which matches '%s'!\n"
+msgstr ""
 
 #, c-format
 msgid "Could not load desktop file values: %s"
@@ -147,6 +151,9 @@ msgstr "Baza danych zablokowana"
 msgid "Database unlocked"
 msgstr "Baza danych odblokowana"
 
+msgid "Description:"
+msgstr ""
+
 #, c-format
 msgid "ERROR: %s"
 msgstr "BŁĄD: %s"
@@ -173,6 +180,9 @@ msgstr "Plik '%s' nie istnieje."
 msgid "GPG-Sign the resulting package"
 msgstr ""
 
+msgid "INSTALLED"
+msgstr ""
+
 msgid "IPK package could not be found!"
 msgstr "Nie można odszukać pakietu IPK."
 
@@ -189,13 +199,24 @@ msgstr "Instalacja zakończona!"
 msgid "Installation failed!"
 msgstr "Instalacja nie powiodła się!"
 
+#, fuzzy, c-format
+msgid "Installation of %s"
+msgstr "Uruchomienie instalacji %s"
+
 #, c-format
 msgid "Installation of native packages failed with message: %s"
 msgstr "Instalacja rodzimych pakietów nie powiodła się z komunikatem: %s"
 
+#, fuzzy
+msgid "Installing"
+msgstr "Instalacja nie powiodła się!"
+
 #, c-format
 msgid "Installing native packages: %s"
 msgstr "Instalacja rodzimych pakietów: %s"
+
+msgid "License:"
+msgstr ""
 
 #, fuzzy, c-format
 msgid ""
@@ -216,6 +237,15 @@ msgstr ""
 
 msgid "Medium security."
 msgstr "Średni poziom zabezpieczeń."
+
+#, c-format
+msgid "Missing parameter for 'install' action: No IPK package specified.\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"Missing parameter for 'remove' action: No application-id or name specified.\n"
+msgstr ""
 
 msgid "Never trust."
 msgstr "Nigdy nie ufaj."
@@ -280,12 +310,27 @@ msgid "Query returned no results. Maybe this DOAP data is broken?"
 msgstr "Zapytanie nie zwróciło wyników. Może to dane DOAP są uszkodzone?"
 
 #, c-format
+msgid "Removal of %s completed successfully!\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Removal of %s failed!"
+msgstr "Usuwanie %s zakończone."
+
+#, c-format
 msgid "Removal of %s finished."
 msgstr "Usuwanie %s zakończone."
 
 #, c-format
 msgid "Removal of %s started."
 msgstr "Usuwanie %s uruchomione."
+
+#, fuzzy
+msgid "Remove an application installed using Listaller"
+msgstr "Ta aplikacja została już zainstalowana."
+
+msgid "Removing"
+msgstr ""
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
@@ -298,6 +343,9 @@ msgstr "Uruchom \"%s --help\" aby wyświetlić pełną listę dostępnych opcji.
 #, c-format
 msgid "Running installation of %s"
 msgstr "Uruchomienie instalacji %s"
+
+msgid "Security is:"
+msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr "Ustawienia nie zostały zainicjowane!"
@@ -582,6 +630,12 @@ msgstr "Plik ZI XML '%s' jest uszkodzony."
 #, c-format
 msgid "error: %s"
 msgstr "błąd: %s"
+
+msgid "personal"
+msgstr ""
+
+msgid "shared"
+msgstr ""
 
 #~ msgid "Abort"
 #~ msgstr "Porzuć"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-04-22 23:05+0200\n"
+"POT-Creation-Date: 2012-05-15 11:21+0200\n"
 "PO-Revision-Date: 2012-04-13 02:32+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
@@ -73,6 +73,10 @@ msgstr "Невозможно извлечь файл! Ошибка: %s"
 #. : IPk builder was unable to find IPK source scripts
 msgid "Could not find IPK source files!"
 msgstr "Исходные файлы IPK не найдены!"
+
+#, c-format
+msgid "Could not find application which matches '%s'!\n"
+msgstr ""
 
 #, c-format
 msgid "Could not load desktop file values: %s"
@@ -154,6 +158,10 @@ msgstr "База данных заблокирована"
 msgid "Database unlocked"
 msgstr "База данных разблокирована"
 
+#, fuzzy
+msgid "Description:"
+msgstr "Описание программы:"
+
 #, c-format
 msgid "ERROR: %s"
 msgstr "ОШИБКА: %s"
@@ -180,6 +188,9 @@ msgstr "Файл '%s' не существует."
 msgid "GPG-Sign the resulting package"
 msgstr "Пакет результатов подписки GPG"
 
+msgid "INSTALLED"
+msgstr ""
+
 msgid "IPK package could not be found!"
 msgstr "Пакет IPK не может быть найден!"
 
@@ -196,12 +207,23 @@ msgstr "Установка завершена!"
 msgid "Installation failed!"
 msgstr "Установка не удалась!"
 
+#, fuzzy, c-format
+msgid "Installation of %s"
+msgstr "Установка %a"
+
 #, c-format
 msgid "Installation of native packages failed with message: %s"
 msgstr ""
 
+#, fuzzy
+msgid "Installing"
+msgstr "Установка"
+
 #, c-format
 msgid "Installing native packages: %s"
+msgstr ""
+
+msgid "License:"
 msgstr ""
 
 #, fuzzy, c-format
@@ -225,6 +247,15 @@ msgstr ""
 
 msgid "Medium security."
 msgstr "Средняя безопасность"
+
+#, c-format
+msgid "Missing parameter for 'install' action: No IPK package specified.\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"Missing parameter for 'remove' action: No application-id or name specified.\n"
+msgstr ""
 
 msgid "Never trust."
 msgstr "Недоверенные."
@@ -289,12 +320,27 @@ msgid "Query returned no results. Maybe this DOAP data is broken?"
 msgstr ""
 
 #, c-format
+msgid "Removal of %s completed successfully!\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Removal of %s failed!"
+msgstr "Удаление %s завершено."
+
+#, c-format
 msgid "Removal of %s finished."
 msgstr "Удаление %s завершено."
 
 #, c-format
 msgid "Removal of %s started."
 msgstr "Начато удаление %s."
+
+#, fuzzy
+msgid "Remove an application installed using Listaller"
+msgstr "Программа уже установлена"
+
+msgid "Removing"
+msgstr ""
 
 #, c-format
 msgid "Resolving dependencies of '%s'."
@@ -309,6 +355,9 @@ msgstr ""
 #, c-format
 msgid "Running installation of %s"
 msgstr "Запуск установки %s"
+
+msgid "Security is:"
+msgstr ""
 
 msgid "Setup has not been initialized!"
 msgstr "Программа установки не инициализирована!"
@@ -606,6 +655,12 @@ msgstr ""
 msgid "error: %s"
 msgstr "ошибка: %s"
 
+msgid "personal"
+msgstr ""
+
+msgid "shared"
+msgstr ""
+
 #~ msgid "%f files will be changed."
 #~ msgstr "%f файлы будут изменены."
 
@@ -762,17 +817,11 @@ msgstr "ошибка: %s"
 #~ msgid "Install updates"
 #~ msgstr "Установить обновления"
 
-#~ msgid "Installation"
-#~ msgstr "Установка"
-
 #~ msgid "Installation aborted."
 #~ msgstr "Установка прервана."
 
 #~ msgid "Installation mode:"
 #~ msgstr "Режим установки:"
-
-#~ msgid "Installation of %a"
-#~ msgstr "Установка %a"
 
 #~ msgid "Installation package is corrupt"
 #~ msgstr "Установочный пакет повреждён"
@@ -878,9 +927,6 @@ msgstr "ошибка: %s"
 #~ "Проблемы во время загрузки пакетов. Возможно не удалось войти на FTP-"
 #~ "сервер"
 
-#~ msgid "Program description:"
-#~ msgstr "Описание программы:"
-
 #~ msgid "Proxy-Settings"
 #~ msgstr "Настройки прокси-сервера"
 
@@ -969,9 +1015,6 @@ msgstr "ошибка: %s"
 
 #~ msgid "There are no updates available!"
 #~ msgstr "Нет доступных обновлений!"
-
-#~ msgid "This application is already installed"
-#~ msgstr "Программа уже установлена"
 
 #~ msgid "This application wants to download & install a dependency from %l"
 #~ msgstr "Приложение хочет скачать и установить все зависимые пакеты из %l"

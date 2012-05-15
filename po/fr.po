@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-04-22 23:05+0200\n"
+"POT-Creation-Date: 2012-05-15 11:21+0200\n"
 "PO-Revision-Date: 2012-01-08 23:28+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -73,6 +73,10 @@ msgstr "Impossible d'extraire le fichier ! Erreur : %s"
 #. : IPk builder was unable to find IPK source scripts
 msgid "Could not find IPK source files!"
 msgstr "Impossible de trouver les fichiers source de IPK !"
+
+#, c-format
+msgid "Could not find application which matches '%s'!\n"
+msgstr ""
 
 #, c-format
 msgid "Could not load desktop file values: %s"
@@ -147,6 +151,10 @@ msgstr "Base de données verrouillée"
 msgid "Database unlocked"
 msgstr "Base de données déverrouillée"
 
+#, fuzzy
+msgid "Description:"
+msgstr "Description du programme :"
+
 #, c-format
 msgid "ERROR: %s"
 msgstr "ERREUR : %s"
@@ -173,6 +181,9 @@ msgstr "Le fichier '%s' n'existe pas."
 msgid "GPG-Sign the resulting package"
 msgstr ""
 
+msgid "INSTALLED"
+msgstr ""
+
 msgid "IPK package could not be found!"
 msgstr ""
 
@@ -189,12 +200,23 @@ msgstr "Installation achevée !"
 msgid "Installation failed!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Installation of %s"
+msgstr "Installation de %a"
+
 #, c-format
 msgid "Installation of native packages failed with message: %s"
 msgstr ""
 
+#, fuzzy
+msgid "Installing"
+msgstr "Installation"
+
 #, c-format
 msgid "Installing native packages: %s"
+msgstr ""
+
+msgid "License:"
 msgstr ""
 
 #, c-format
@@ -215,6 +237,15 @@ msgid "Malformed line in file listing: %s"
 msgstr ""
 
 msgid "Medium security."
+msgstr ""
+
+#, c-format
+msgid "Missing parameter for 'install' action: No IPK package specified.\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"Missing parameter for 'remove' action: No application-id or name specified.\n"
 msgstr ""
 
 msgid "Never trust."
@@ -280,11 +311,26 @@ msgid "Query returned no results. Maybe this DOAP data is broken?"
 msgstr ""
 
 #, c-format
+msgid "Removal of %s completed successfully!\n"
+msgstr ""
+
+#, c-format
+msgid "Removal of %s failed!"
+msgstr ""
+
+#, c-format
 msgid "Removal of %s finished."
 msgstr ""
 
 #, c-format
 msgid "Removal of %s started."
+msgstr ""
+
+#, fuzzy
+msgid "Remove an application installed using Listaller"
+msgstr "Cette application est déjà installée"
+
+msgid "Removing"
 msgstr ""
 
 #, c-format
@@ -297,6 +343,9 @@ msgstr ""
 
 #, c-format
 msgid "Running installation of %s"
+msgstr ""
+
+msgid "Security is:"
 msgstr ""
 
 msgid "Setup has not been initialized!"
@@ -578,6 +627,12 @@ msgstr ""
 msgid "error: %s"
 msgstr ""
 
+msgid "personal"
+msgstr ""
+
+msgid "shared"
+msgstr ""
+
 #~ msgid "%f files will be changed."
 #~ msgstr "%f fichiers seront modifiés"
 
@@ -771,17 +826,11 @@ msgstr ""
 #~ msgid "Install updates"
 #~ msgstr "Installer les mises à jour"
 
-#~ msgid "Installation"
-#~ msgstr "Installation"
-
 #~ msgid "Installation aborted."
 #~ msgstr "Installation annulée."
 
 #~ msgid "Installation mode:"
 #~ msgstr "Mode d'installation :"
-
-#~ msgid "Installation of %a"
-#~ msgstr "Installation de %a"
 
 #~ msgid "Installation package is corrupt"
 #~ msgstr "Le paquetage d'installation est endommagé"
@@ -918,9 +967,6 @@ msgstr ""
 #~ "Problème lors du téléchargement des paquets. Peut-être la connexion au "
 #~ "serveur-FTP est-elle défaillante."
 
-#~ msgid "Program description:"
-#~ msgstr "Description du programme :"
-
 #~ msgid "Proxy-Settings"
 #~ msgstr "Paramètres de proxy"
 
@@ -1052,9 +1098,6 @@ msgstr ""
 
 #~ msgid "There are no updates available!"
 #~ msgstr "Il n'y a pas de mise à jour disponible !"
-
-#~ msgid "This application is already installed"
-#~ msgstr "Cette application est déjà installée"
 
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "

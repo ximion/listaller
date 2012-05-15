@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.00b\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-04-22 23:05+0200\n"
+"POT-Creation-Date: 2012-05-15 11:21+0200\n"
 "PO-Revision-Date: 2011-02-22 22:07+0000\n"
 "Last-Translator: truri <Unknown>\n"
 "Language-Team: Albanian\n"
@@ -67,6 +67,10 @@ msgstr ""
 
 #. : IPk builder was unable to find IPK source scripts
 msgid "Could not find IPK source files!"
+msgstr ""
+
+#, c-format
+msgid "Could not find application which matches '%s'!\n"
 msgstr ""
 
 #, c-format
@@ -142,6 +146,10 @@ msgstr ""
 msgid "Database unlocked"
 msgstr ""
 
+#, fuzzy
+msgid "Description:"
+msgstr "Përshkrim i programit:"
+
 #, c-format
 msgid "ERROR: %s"
 msgstr ""
@@ -168,6 +176,9 @@ msgstr ""
 msgid "GPG-Sign the resulting package"
 msgstr ""
 
+msgid "INSTALLED"
+msgstr ""
+
 msgid "IPK package could not be found!"
 msgstr ""
 
@@ -184,12 +195,23 @@ msgstr "Instalimi u plotësua!"
 msgid "Installation failed!"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Installation of %s"
+msgstr "Instalimi i %a"
+
 #, c-format
 msgid "Installation of native packages failed with message: %s"
 msgstr ""
 
+#, fuzzy
+msgid "Installing"
+msgstr "instalim"
+
 #, c-format
 msgid "Installing native packages: %s"
+msgstr ""
+
+msgid "License:"
 msgstr ""
 
 #, c-format
@@ -210,6 +232,15 @@ msgid "Malformed line in file listing: %s"
 msgstr ""
 
 msgid "Medium security."
+msgstr ""
+
+#, c-format
+msgid "Missing parameter for 'install' action: No IPK package specified.\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"Missing parameter for 'remove' action: No application-id or name specified.\n"
 msgstr ""
 
 msgid "Never trust."
@@ -275,11 +306,26 @@ msgid "Query returned no results. Maybe this DOAP data is broken?"
 msgstr ""
 
 #, c-format
+msgid "Removal of %s completed successfully!\n"
+msgstr ""
+
+#, c-format
+msgid "Removal of %s failed!"
+msgstr ""
+
+#, c-format
 msgid "Removal of %s finished."
 msgstr ""
 
 #, c-format
 msgid "Removal of %s started."
+msgstr ""
+
+#, fuzzy
+msgid "Remove an application installed using Listaller"
+msgstr "Ky zbatim është tashmë i instaluar"
+
+msgid "Removing"
 msgstr ""
 
 #, c-format
@@ -292,6 +338,9 @@ msgstr ""
 
 #, c-format
 msgid "Running installation of %s"
+msgstr ""
+
+msgid "Security is:"
 msgstr ""
 
 msgid "Setup has not been initialized!"
@@ -573,6 +622,12 @@ msgstr ""
 msgid "error: %s"
 msgstr ""
 
+msgid "personal"
+msgstr ""
+
+msgid "shared"
+msgstr ""
+
 #~ msgid "%f files will be changed."
 #~ msgstr "Do të ndryshohen %f kartela."
 
@@ -693,17 +748,11 @@ msgstr ""
 #~ msgid "Install updates"
 #~ msgstr "Instaloji përditësimet"
 
-#~ msgid "Installation"
-#~ msgstr "instalim"
-
 #~ msgid "Installation aborted."
 #~ msgstr "Instalimi u ndërpre."
 
 #~ msgid "Installation mode:"
 #~ msgstr "Mënyrë instalimi:"
-
-#~ msgid "Installation of %a"
-#~ msgstr "Instalimi i %a"
 
 #~ msgid "Installation package is corrupt"
 #~ msgstr "Paketa e instalimit është e dëmtuar"
@@ -786,9 +835,6 @@ msgstr ""
 #~ msgid "Press \"Next\" to start the installation!"
 #~ msgstr "Shtypni \"Pasues\" që të fillojë instalimi!"
 
-#~ msgid "Program description:"
-#~ msgstr "Përshkrim i programit:"
-
 #~ msgid "Proxy-Settings"
 #~ msgstr "Rregullime ndërmjetësi"
 
@@ -862,9 +908,6 @@ msgstr ""
 
 #~ msgid "There are no updates available!"
 #~ msgstr "Nuk ka përditësime të passhme!"
-
-#~ msgid "This application is already installed"
-#~ msgstr "Ky zbatim është tashmë i instaluar"
 
 #~ msgid "This package does not support your Linux distribution."
 #~ msgstr "Kjo paketë nuk e mbulon shpërndarjen tuaj Linux."
