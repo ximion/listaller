@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-05-15 11:21+0200\n"
+"POT-Creation-Date: 2012-05-15 13:47+0200\n"
 "PO-Revision-Date: 2012-04-13 02:33+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -155,6 +155,18 @@ msgstr "Databas upplåst"
 msgid "Description:"
 msgstr "Programbeskrivning:"
 
+#, fuzzy
+msgid "Do you accept these terms and conditions?"
+msgstr "Jag samtycker med ovanstående villkor"
+
+#, fuzzy, c-format
+msgid "Do you want to install %s now?"
+msgstr "Vill du verkligen avinstallera %a?"
+
+#, fuzzy, c-format
+msgid "Do you want to remove %s now?"
+msgstr "Vill du verkligen avbryta denna nerladdning?"
+
 #, c-format
 msgid "ERROR: %s"
 msgstr "FEL: %s"
@@ -218,6 +230,14 @@ msgstr ""
 
 msgid "License:"
 msgstr ""
+
+#, fuzzy
+msgid "List all installed applications"
+msgstr "Installera ny applikation"
+
+#, fuzzy
+msgid "List installed Listaller applications"
+msgstr "Installera ny applikation"
 
 #, fuzzy, c-format
 msgid ""
@@ -679,12 +699,6 @@ msgstr ""
 #~ msgid "Display installation log"
 #~ msgstr "Visa installationslogg"
 
-#~ msgid "Do you really want to abort this download?"
-#~ msgstr "Vill du verkligen avbryta denna nerladdning?"
-
-#~ msgid "Do you really want to uninstall %a?"
-#~ msgstr "Vill du verkligen avinstallera %a?"
-
 #~ msgid "Education"
 #~ msgstr "Utbildning"
 
@@ -715,14 +729,8 @@ msgstr ""
 #~ msgid "Graphic"
 #~ msgstr "Grafik"
 
-#~ msgid "I agree with the above terms and conditions"
-#~ msgstr "Jag samtycker med ovanstående villkor"
-
 #~ msgid "I don't agree"
 #~ msgstr "Jag samtycker inte"
-
-#~ msgid "Install new application"
-#~ msgstr "Installera ny applikation"
 
 #~ msgid "Install now"
 #~ msgstr "Installera nu"

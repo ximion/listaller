@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-05-15 11:21+0200\n"
+"POT-Creation-Date: 2012-05-15 13:47+0200\n"
 "PO-Revision-Date: 2009-06-26 00:13+0000\n"
 "Last-Translator: Jimmy Frydkær Dürr <thewolf40@mailme.dk>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -155,6 +155,18 @@ msgstr ""
 msgid "Description:"
 msgstr "Programbeskrivelse:"
 
+#, fuzzy
+msgid "Do you accept these terms and conditions?"
+msgstr "Jeg er enig i ovenstående betingelser"
+
+#, fuzzy, c-format
+msgid "Do you want to install %s now?"
+msgstr "Ønsker du at installere det  igen?"
+
+#, fuzzy, c-format
+msgid "Do you want to remove %s now?"
+msgstr "Ønsker du at godkende denne handling?"
+
 #, c-format
 msgid "ERROR: %s"
 msgstr ""
@@ -218,6 +230,14 @@ msgstr ""
 
 msgid "License:"
 msgstr ""
+
+#, fuzzy
+msgid "List all installed applications"
+msgstr "Installér nyt program"
+
+#, fuzzy
+msgid "List installed Listaller applications"
+msgstr "Installér nyt program"
 
 #, c-format
 msgid ""
@@ -731,12 +751,6 @@ msgstr ""
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "Ønsker du virkelig at afinstallere %a?"
 
-#~ msgid "Do you want confirm this action?"
-#~ msgstr "Ønsker du at godkende denne handling?"
-
-#~ msgid "Do you want to install it again?"
-#~ msgstr "Ønsker du at installere det  igen?"
-
 #~ msgid "Do you want to install it anyway? (This could raise problems)"
 #~ msgstr "Ønsker du at installere alligevel? (Dette kan skabe problemer)"
 
@@ -791,9 +805,6 @@ msgstr ""
 #~ "Pakken kan være modificeret efter oprettelse.\n"
 #~ "Venligst hent en ny kopi"
 
-#~ msgid "I agree with the above terms and conditions"
-#~ msgstr "Jeg er enig i ovenstående betingelser"
-
 #~ msgid "I don't agree"
 #~ msgstr "Jeg er ikke enig"
 
@@ -802,9 +813,6 @@ msgstr ""
 
 #~ msgid "Install into my Home directory"
 #~ msgstr "Installér til min hjemmemappe"
-
-#~ msgid "Install new application"
-#~ msgstr "Installér nyt program"
 
 #~ msgid "Install now"
 #~ msgstr "Installér nu"

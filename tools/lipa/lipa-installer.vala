@@ -24,6 +24,7 @@ using Listaller;
 
 public class LipaInstaller : LipaModule {
 	private Setup inst;
+	private bool setup_running = false;
 
 	public LipaInstaller () {
 		base ();
@@ -44,7 +45,10 @@ public class LipaInstaller : LipaModule {
 	public void setup_status_changed (StatusItem status) {
 		if (status.status == StatusEnum.INSTALLATION_FINISHED) {
 			progress_bar.end ();
-			stdout.printf ("Installation completed!\n");
+			print ("Installation completed!\n");
+			setup_running = false;
+		} else if (status.status == StatusEnum.ACTION_STARTED) {
+			setup_running = true;
 		}
 	}
 
@@ -54,7 +58,7 @@ public class LipaInstaller : LipaModule {
 
 	public void install_package (string ipkfname) {
 		bool ret;
-		stdout.printf ("Preparing... Please wait!");
+		print ("Preparing... Please wait!");
 
 		inst = new Setup (ipkfname, liconf);
 		inst.message.connect (setup_message);
@@ -75,38 +79,39 @@ public class LipaInstaller : LipaModule {
 		}
 
 		AppItem appID = ipkmeta.get_application ();
-		stdout.printf ("%c", 0xD);
-		stdout.printf ("==== %s ====\n\n", _("Installation of %s").printf (appID.full_name));
+		print ("%c8", 0x1B);
+		print ("==== %s ====\n\n", _("Installation of %s").printf (appID.full_name));
 
-		stdout.printf ("%s\n\n%s\n", _("Description:"), appID.description);
+		print ("%s\n\n%s\n", _("Description:"), appID.description);
 		string[] licenseLines = appID.license.text.split ("\n");
+
+		// save cursor in new position
+		print ("%c7", 0x1B);
+
 		if (licenseLines.length > 1) {
-			stdout.printf ("%s\n\n", _("License:"));
+			print ("%s\n\n", _("License:"));
 			for (int i = 0; i < licenseLines.length; i++) {
-				stdout.printf ("%s\n", licenseLines[i]);
+				print ("%s\n", licenseLines[i]);
 				if ((i % 2) == 1) {
 					Posix.FILE? tty = console_get_tty ();
-					tty.printf (" <<< Press ENTER to continue! >>>\r");
-					tty.flush ();
-					// FIXME: For some reason, old console content gets not overridden
-					tty.printf ("                                 \r");
+					// TODO: Text does not get erasted for some reason...
+					// => Implement this properly!
+					//print (" <<< Press ENTER to continue! >>>\r");
 					console_wait_for_enter (tty);
-					//tty.printf ("                                 \r");
-					tty.flush ();
 				}
 			}
-			console_get_prompt ("Do you accept these terms and conditions?", false, true);
+			console_get_prompt (_("Do you accept these terms and conditions?"), false, true);
 		}
 
 		// Display security info
 		IPK.PackSecurity sec = inst.get_security_info ();
 		SecurityLevel secLev = sec.get_level ();
 		if (secLev == SecurityLevel.HIGH)
-			stdout.printf ("%s %c[%dm%s\n%c[%dm", _("Security is:"), 0x1B, CONSOLE_GREEN, "HIGH", 0x1B, CONSOLE_RESET);
+			print ("%s %c[%dm%s\n%c[%dm", _("Security is:"), 0x1B, CONSOLE_GREEN, "HIGH", 0x1B, CONSOLE_RESET);
 		else if (secLev == SecurityLevel.MEDIUM)
-			stdout.printf ("%s %c[%dm%s\n%c[%dm", _("Security is:"), 0x1B, CONSOLE_YELLOW, "MEDIUM", 0x1B, CONSOLE_RESET);
+			print ("%s %c[%dm%s\n%c[%dm", _("Security is:"), 0x1B, CONSOLE_YELLOW, "MEDIUM", 0x1B, CONSOLE_RESET);
 		else if (secLev <= SecurityLevel.LOW)
-			stdout.printf ("%s %c[%dm%s\n%c[%dm", _("Security is:"), 0x1B, CONSOLE_RED, "LOW", 0x1B, CONSOLE_RESET);
+			print ("%s %c[%dm%s\n%c[%dm", _("Security is:"), 0x1B, CONSOLE_RED, "LOW", 0x1B, CONSOLE_RESET);
 
 		// Make sure color is reset...
 		print ("%c[%dm", 0x1B, CONSOLE_RESET);
@@ -115,7 +120,7 @@ public class LipaInstaller : LipaModule {
 		if (app == null)
 			error ("Did not receive valid application information!");
 
-		ret = console_get_prompt ("Do you want to install %s now?".printf (app.full_name), true);
+		ret = console_get_prompt (_("Do you want to install %s now?").printf (app.full_name), true);
 		// If user doesn't want to install the application, exit
 		if (!ret)
 			return;
@@ -137,7 +142,8 @@ public class LipaInstaller : LipaModule {
 
 	public override void terminate_action () {
 		if (inst != null) {
-			inst.kill_installation_process ();
+			if (setup_running)
+				inst.kill_installation_process ();
 			inst = null;
 		}
 	}

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-05-15 11:21+0200\n"
+"POT-Creation-Date: 2012-05-15 13:47+0200\n"
 "PO-Revision-Date: 2011-05-20 03:19+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
@@ -150,6 +150,18 @@ msgstr ""
 msgid "Description:"
 msgstr "Programma omschrijving:"
 
+#, fuzzy
+msgid "Do you accept these terms and conditions?"
+msgstr "Ik ga akkoord met de bovenstaande termen en condities"
+
+#, fuzzy, c-format
+msgid "Do you want to install %s now?"
+msgstr "Wilt u het opnieuw installeren?"
+
+#, fuzzy, c-format
+msgid "Do you want to remove %s now?"
+msgstr "Wilt u het opnieuw installeren?"
+
 #, c-format
 msgid "ERROR: %s"
 msgstr ""
@@ -213,6 +225,14 @@ msgstr ""
 
 msgid "License:"
 msgstr ""
+
+#, fuzzy
+msgid "List all installed applications"
+msgstr "Installeer nieuwe applicatie"
+
+#, fuzzy
+msgid "List installed Listaller applications"
+msgstr "Installeer nieuwe applicatie"
 
 #, c-format
 msgid ""
@@ -703,9 +723,6 @@ msgstr ""
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "Weet je zeker dat je %a wilt denstalleren?"
 
-#~ msgid "Do you want to install it again?"
-#~ msgstr "Wilt u het opnieuw installeren?"
-
 #~ msgid "Downloading catalogue base information..."
 #~ msgstr "Downloaden van catalogusbasis informatie..."
 
@@ -739,14 +756,8 @@ msgstr ""
 #~ msgid "Graphic"
 #~ msgstr "Afbeelding"
 
-#~ msgid "I agree with the above terms and conditions"
-#~ msgstr "Ik ga akkoord met de bovenstaande termen en condities"
-
 #~ msgid "I don't agree"
 #~ msgstr "Ik ga niet akkoord"
-
-#~ msgid "Install new application"
-#~ msgstr "Installeer nieuwe applicatie"
 
 #~ msgid "Install now"
 #~ msgstr "Nu installeren"

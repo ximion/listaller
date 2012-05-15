@@ -171,12 +171,12 @@ public bool console_get_prompt (string question, bool defaultyes, bool forceansw
 
 	while (!valid) {
 		str = console_readline_unbuffered (prompt);
-		debug ("Str is: %s", str);
+
 		if ((!forceanswer) && (str == null))
 			str = "";
 		else if (str == null)
 			break;
-		debug ("Strlength: %d", str.length);
+
 		if (str.length == 0) {
 			if (defaultyes) {
 				valid = true;

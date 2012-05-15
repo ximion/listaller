@@ -84,7 +84,7 @@ public class LipaManager : LipaModule {
 			app = appList[0];
 			print_appitem (app);
 		}
-		ret = console_get_prompt ("Do you want to remove %s now?".printf (app.full_name), true);
+		ret = console_get_prompt (_("Do you want to remove %s now?").printf (app.full_name), true);
 		// If user doesn't want to remove the application, exit
 		if (!ret)
 			return;
