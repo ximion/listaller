@@ -594,7 +594,7 @@ private class InternalDB : Object {
 		return item;
 	}
 
-	public AppItem? get_application_by_fullname (string appFullName) throws DatabaseError {
+	public ArrayList<AppItem>? get_applications_by_fullname (string appFullName) throws DatabaseError {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT * FROM applications WHERE full_name=?", -1, out stmt);
 
@@ -610,13 +610,33 @@ private class InternalDB : Object {
 			throw new DatabaseError.ERROR (e.message);
 		}
 
-		AppItem? item = retrieve_app_item (stmt);
+		ArrayList<AppItem>? itemList = null;
+		do {
+			res = stmt.step ();
+			switch (res) {
+				case Sqlite.DONE:
+					break;
+				case Sqlite.ROW:
+					// Check if we have the container ready
+					if (itemList == null)
+						itemList = new ArrayList<AppItem> ();
 
-		// Fast sanity checks
-		if (item != null)
-			item.fast_check ();
+					// Fetch a new AppItem
+					AppItem? tmpApp = retrieve_app_item (stmt);
+					// Fast sanity checks
+					if (tmpApp != null)
+						tmpApp.fast_check ();
+					else
+						throw new DatabaseError.ERROR ("Unable to retrieve an application from database! DB might be in an inconstistent state!");
+					itemList.add (tmpApp);
+					break;
+				default:
+					db_assert (res, "execute");
+					break;
+			}
+		} while (res == Sqlite.ROW);
 
-		return item;
+		return itemList;
 	}
 
 	public AppItem? get_application_by_dbid (uint databaseId) throws DatabaseError {

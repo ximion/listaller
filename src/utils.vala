@@ -450,7 +450,7 @@ private static string __realpath (string name) {
  * TODO: We should use canonicalize_filename() in gio/glocalfile.c as realpath()
  * is crap.
  **/
-private string real_path (string path)
+private string? real_path (string path)
 {
 	string temp;
 

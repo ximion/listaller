@@ -69,6 +69,14 @@
 		</varlistentry>
 
 		<varlistentry>
+			<term><option>-r</option></term>
+			<term><option>--remove <replaceable>APPIDENTIFIER</replaceable></option></term>
+			<listitem>
+				<para>Remove an application which mathes the given name or application-id.</para>
+			</listitem>
+		</varlistentry>
+
+		<varlistentry>
 			<term><option>--version</option></term>
 			<listitem>
 				<para>Display version number of &package;</para>

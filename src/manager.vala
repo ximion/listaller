@@ -90,7 +90,7 @@ public class Manager : MsgObject {
 		return db.find_all_applications (filter, out appList);
 	}
 
-	/* find_applications_by_values: Find applications which match the strings in values
+	/** Find applications which match the strings in values
 	 *
 	 * @values:
 	 */
@@ -106,6 +106,24 @@ public class Manager : MsgObject {
 		foreach (AppItem app in res)
 			application (app);
 		return true;
+	}
+
+	public ArrayList<AppItem>? get_applications_by_fullname (string full_name) {
+		SoftwareDB db;
+		if (!init_db (out db, false))
+			return null;
+
+		var appList = db.get_applications_by_fullname (full_name);
+		return appList;
+	}
+
+	public AppItem? get_application_by_idname (string idname) {
+		SoftwareDB db;
+		if (!init_db (out db, false))
+			return null;
+
+		AppItem? app = db.get_application_by_idname (idname);
+		return app;
 	}
 
 	private bool remove_application_internal (AppItem app) {
@@ -221,15 +239,6 @@ public class Manager : MsgObject {
 		return ret;
 	}
 
-	public AppItem? get_appitem_by_idname (string idname) {
-		SoftwareDB db;
-		if (!init_db (out db, false))
-			return null;
-
-		AppItem? app = db.get_application_by_idname (idname);
-		return app;
-	}
-
 	public bool refresh_appitem (ref AppItem item) {
 		SoftwareDB db;
 		if (!init_db (out db, false))
@@ -312,15 +321,6 @@ public class Manager : MsgObject {
 		}
 
 		return paths;
-	}
-
-	public AppItem? get_appitem_by_fullname (string full_name) {
-		SoftwareDB db;
-		if (!init_db (out db, false))
-			return null;
-
-		AppItem? app = db.get_application_by_fullname (full_name);
-		return app;
 	}
 
 	public bool scan_applications () {

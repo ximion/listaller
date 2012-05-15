@@ -44,7 +44,7 @@ public class RunApp : Object {
 		if (appName == "")
 			return 4;
 
-		Listaller.AppItem? app = limgr.get_appitem_by_idname (appName);
+		Listaller.AppItem? app = limgr.get_application_by_idname (appName);
 
 		if (app != null) {
 			string ld_env = limgr.get_app_ld_environment (app);

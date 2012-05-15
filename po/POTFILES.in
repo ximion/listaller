@@ -28,9 +28,13 @@ src/pkit-tasks.vala
 src/feed-installer.vala
 src/zfeed.vala
 # Listaller tools
+tools/toolshared.vala
+tools/console-progress-bar.vala
 tools/runapp/runapp.vala
 tools/lipa/main.vala
-tools/lipa/lipa.vala
+tools/lipa/lipa-module.vala
+tools/lipa/lipa-installer.vala
+tools/lipa/lipa-manager.vala
 tools/lipkgen/main.vala
 tools/lipkgen/ipkbuilder.vala
 tools/lipkgen/gpgsign.vala

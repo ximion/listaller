@@ -52,6 +52,8 @@ public class CmdApp : Object {
 			N_("Activate verbose mode"), null },
 		{ "install", 'i', 0, OptionArg.NONE, ref o_mode_install,
 		N_("Install an IPK package"), null },
+		{ "remove", 'r', 0, OptionArg.NONE, ref o_mode_remove,
+		N_("Remove an application installed using Listaller"), null },
 		{ null }
 	};
 
@@ -74,12 +76,6 @@ public class CmdApp : Object {
 			return;
 		}
 		args = arguments;
-
-		if (args.length <= 1) {
-			print_nocommand_msg ();
-			exit_code = 0;
-			return;
-		}
 
 		lipa = null;
 	}
@@ -115,7 +111,7 @@ public class CmdApp : Object {
 
 		if (o_mode_install) {
 			if (value == null) {
-				stderr.printf ("Missing parameter for 'install' action: No IPK package specified.");
+				stderr.printf (_("Missing parameter for 'install' action: No IPK package specified.\n"));
 				exit_code = 4;
 				return;
 			}
@@ -126,7 +122,16 @@ public class CmdApp : Object {
 			lipaInstall.install_package (value);
 
 		} else if (o_mode_remove) {
+			if (value == null) {
+				stderr.printf (_("Missing parameter for 'remove' action: No application-id or name specified.\n"));
+				exit_code = 4;
+				return;
+			}
 
+			var lipaManager = new LipaManager ();
+			lipa = lipaManager;
+
+			lipaManager.remove_application (value);
 		} else {
 			print_nocommand_msg ();
 			exit_code = 0;

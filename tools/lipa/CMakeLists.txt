@@ -13,6 +13,7 @@ set(LIPA_SOURCES main.vala
 		../console-progress-bar.vala
 		lipa-module.vala
 		lipa-installer.vala
+		lipa-manager.vala
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}

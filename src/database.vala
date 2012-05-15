@@ -305,20 +305,20 @@ private class SoftwareDB : MsgObject {
 		return resApp;
 	}
 
-	public AppItem? get_application_by_fullname (string appFullName) {
-		AppItem? app = null;
+	public ArrayList<AppItem>? get_applications_by_fullname (string appFullName) {
+		ArrayList<AppItem>? appList = null;
 		try {
 			if (shared_db_canbeused ())
-				app = db_shared.get_application_by_fullname (appFullName);
+				appList = db_shared.get_applications_by_fullname (appFullName);
 
-			if (app == null)
+			if (appList == null)
 				if (private_db_canbeused ())
-					app = db_priv.get_application_by_fullname (appFullName);
+					appList = db_priv.get_applications_by_fullname (appFullName);
 		} catch (Error e) {
 			emit_dberror (_("Unable to fetch application by name: %s").printf (e.message));
 		}
 
-		return app;
+		return appList;
 	}
 
 	public bool remove_application (AppItem app) {

@@ -120,7 +120,7 @@ public class LipaInstaller : LipaModule {
 		if (!ret)
 			return;
 
-		progress_bar.start ("Installing");
+		progress_bar.start (_("Installing"));
 		// Go!
 		ret = inst.run_installation ();
 		progress_bar.end ();
