@@ -383,6 +383,9 @@ private class SoftwareDB : MsgObject {
 			_internal_process_dbapps (db_priv, one, ref alist);
 		}
 		if (shared_db_canbeused ()) {
+			// TODO: A nicer solution is needed here...
+			// We set this to 0 to not get the "Progress cannot go down" message
+			change_main_progress (0);
 			_internal_process_dbapps (db_shared, one, ref alist);
 		}
 		appList = alist;

@@ -77,6 +77,16 @@
 		</varlistentry>
 
 		<varlistentry>
+			<term><option>-l</option></term>
+			<term><option>--list-apps</option></term>
+			<term><option>--all</option></term>
+			<listitem>
+				<para>List applications installed using Listaller.</para>
+				<para>To include all other applications too, the <option>--all</option> flag can be appended.</para>
+			</listitem>
+		</varlistentry>
+
+		<varlistentry>
 			<term><option>--version</option></term>
 			<listitem>
 				<para>Display version number of &package;</para>

@@ -29,6 +29,8 @@ namespace Listaller {
  */
 private PkBackendProxy? pkit_backend_proxy;
 
+private static bool packagekit_daemon_caller = false;
+
 internal class PkBackendProxy : Object {
 	public delegate unowned PackageKit.Results? WhatProvidesCB (PackageKit.Bitfield filters,
 							   PackageKit.Provides provides,
@@ -72,6 +74,7 @@ internal void set_backend_proxy (PkBackendProxy? pkbproxy) {
 		return;
 	}
 	pkit_backend_proxy = pkbproxy;
+	packagekit_daemon_caller = true;
 }
 
 private PkBackendProxy? get_pk_backend () {

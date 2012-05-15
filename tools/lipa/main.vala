@@ -39,6 +39,9 @@ public class CmdApp : Object {
 	private static bool o_mode_install = false;
 	private static bool o_mode_remove = false;
 
+	private static bool o_mode_list = false;
+	private static bool o_mode_list__all = false;
+
 	private string[] args;
 
 	private static LipaModule lipa;
@@ -54,6 +57,10 @@ public class CmdApp : Object {
 		N_("Install an IPK package"), null },
 		{ "remove", 'r', 0, OptionArg.NONE, ref o_mode_remove,
 		N_("Remove an application installed using Listaller"), null },
+		{ "list-apps", 'l', 0, OptionArg.NONE, ref o_mode_list,
+		N_("List installed Listaller applications"), null },
+		{ "all", 0, 0, OptionArg.NONE, ref o_mode_list__all,
+		N_("List all installed applications"), null },
 		{ null }
 	};
 
@@ -132,6 +139,11 @@ public class CmdApp : Object {
 			lipa = lipaManager;
 
 			lipaManager.remove_application (value);
+		} else if (o_mode_list) {
+			var lipaManager = new LipaManager ();
+			lipa = lipaManager;
+
+			lipaManager.list_applications (o_mode_list__all);
 		} else {
 			print_nocommand_msg ();
 			exit_code = 0;

@@ -36,7 +36,7 @@ public abstract class LipaModule : Object {
 
 	public LipaModule () {
 		error_code = 0;
-		liconf = new Listaller.Settings ();
+		liconf = new Listaller.Settings (is_root ());
 		progress_bar = new CmdProgressBar ();
 	}
 

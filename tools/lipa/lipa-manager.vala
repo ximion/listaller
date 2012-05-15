@@ -24,9 +24,11 @@ using Listaller;
 
 public class LipaManager : LipaModule {
 	private Manager mgr;
+	private bool show_progress;
 
 	public LipaManager () {
 		base ();
+		show_progress = true;
 
 		mgr = new Manager (liconf);
 		mgr.message.connect (manager_message);
@@ -46,7 +48,8 @@ public class LipaManager : LipaModule {
 	}
 
 	private void manager_progress_changed (int progress) {
-		progress_bar.set_percentage (progress);
+		if (show_progress)
+			progress_bar.set_percentage (progress);
 	}
 
 	private void print_appitem (AppItem app) {
@@ -98,6 +101,16 @@ public class LipaManager : LipaModule {
 			print (_("Removal of %s failed!"), app.full_name);
 			error_code = 3;
 		}
+	}
+
+	public void list_applications (bool all = false) {
+		AppSource filter = AppSource.EXTERN;
+		if (all)
+			filter = AppSource.ALL;
+
+		show_progress = false;
+		mgr.find_applications (filter);
+		show_progress = true;
 	}
 
 	public override void terminate_action () {

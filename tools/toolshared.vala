@@ -204,3 +204,11 @@ public bool console_get_prompt (string question, bool defaultyes, bool forceansw
 
 	return ret;
 }
+
+public bool is_root () {
+	if (Posix.getuid () == 0) {
+		return true;
+	} else {
+		return false;
+	}
+}

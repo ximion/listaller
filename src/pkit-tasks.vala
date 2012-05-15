@@ -66,7 +66,7 @@ private abstract class PkListallerTask : MsgObject {
 
 		pkbproxy = null;
 		pktask = null;
-		if (is_root ()) {
+		if (packagekit_daemon_caller) {
 			// Access to the native PackageKit backend
 			pkbproxy = get_pk_backend ();
 			if (pkbproxy == null) {
