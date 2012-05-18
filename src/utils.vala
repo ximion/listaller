@@ -166,6 +166,11 @@ private string system_os () {
 	return uts.sysname.down ();
 }
 
+private string system_os_full () {
+	Posix.utsname uts = Posix.utsname ();
+	return uts.sysname;
+}
+
 private string system_machine () {
 	Posix.utsname uts = Posix.utsname ();
 	return uts.machine;

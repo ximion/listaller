@@ -103,7 +103,7 @@ public class Setup : MsgObject {
 		return control.get_application ();
 	}
 
-	private bool install_application () {
+	private bool install_app_normal () {
 		bool ret = true;
 
 		conf.lock ();
@@ -245,7 +245,7 @@ public class Setup : MsgObject {
 			}
 	}
 
-	private bool install_superuser () {
+	private bool install_app_shared () {
 		bool ret = true;
 		PackageKit.Task pktask = new PackageKit.Task ();
 
@@ -340,16 +340,25 @@ public class Setup : MsgObject {
 			return false;
 		}
 
+		// We only support Linux right now, most apps won't work when installed
+		// on other *nix systems (FreeBSD). If someone wants to implement support
+		// for other OSes properly, I'm happy to accept patches.
+		if (system_os () != "linux") {
+			emit_error (ErrorEnum.WRONG_ARCHITECTURE,
+				_("The installer will only work with the %s operating system, but you use '%s'.\nSetup can not continue, sorry.").printf ("Linux", system_os_full ()));
+			return false;
+		}
+
 		// Initialize console message system
 		init_limessage ();
 
 		if ((!is_root ()) && (conf.sumode == true)) {
-			ret = install_superuser ();
+			ret = install_app_shared ();
 			finish_limessage ();
 			return ret;
 		}
 
-		ret = install_application ();
+		ret = install_app_normal ();
 		finish_limessage ();
 
 		return ret;
