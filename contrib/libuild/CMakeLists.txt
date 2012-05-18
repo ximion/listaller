@@ -30,7 +30,7 @@ vala_add_executable(buildlist ${BUILDLIST_SOURCES}
 				PACKAGES posix glib-2.0 gio-2.0 gee-1.0
 )
 
-install(TARGETS buildlist DESTINATION include/libuild COMPONENT buildtools)
+install(TARGETS buildlist DESTINATION lib/listaller COMPONENT buildtools)
 install(PROGRAMS ligcc
 		 lig++
 		 relaytool

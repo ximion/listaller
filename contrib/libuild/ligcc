@@ -74,7 +74,7 @@ if (!defined $appath) {
 	$appath = $FindBin::Bin;
 	$appath =~ s/\/*$//g;
 	$appath =~ s/^(.*)\/.*?$/$1/;
-	$appath .= '/include/libuild';
+	$appath .= '/lib/listaller';
 	if (! -f "$appath/buildlist" && -f "$FindBin::Bin/buildlist") {
 		$appath = $FindBin::Bin;
 	}
