@@ -271,12 +271,15 @@ private class SoftwareDB : MsgObject {
 		AppItem? app = null;
 
 		try {
-			if (shared_db_canbeused ())
-				app = db_shared.get_application_by_idname (appIdName);
+			// It is important that we prefer the personal over the shared database!
+			// (so command-line tools allow removing the personal app first)
+			if (private_db_canbeused ())
+					app = db_priv.get_application_by_idname (appIdName);
 
 			if (app == null)
-				if (private_db_canbeused ())
-					app = db_priv.get_application_by_idname (appIdName);
+				if (shared_db_canbeused ())
+					app = db_shared.get_application_by_idname (appIdName);
+
 		} catch (Error e) {
 			emit_dberror (_("Unable to fetch application by id: %s").printf (e.message));
 		}

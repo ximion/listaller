@@ -52,14 +52,18 @@ public class LipaManager : LipaModule {
 			progress_bar.set_percentage (progress);
 	}
 
-	private void print_appitem (AppItem app) {
+	private string app_ownership_str (AppItem app) {
 		string str_ownership;
 		if (!app.shared)
 			str_ownership = _("personal");
 		else
 			str_ownership = _("shared");
 
-		stdout.printf ("[%s|%s] %s -- %s\n", _("INSTALLED"), str_ownership, app.full_name, app.summary);
+		return str_ownership;
+	}
+
+	private void print_appitem (AppItem app) {
+		stdout.printf ("[%s|%s] %s -- %s\n", _("INSTALLED"), app_ownership_str (app), app.full_name, app.summary);
 	}
 
 	private void manager_new_application (AppItem app) {
@@ -84,7 +88,8 @@ public class LipaManager : LipaModule {
 			app = appList[0];
 			print_appitem (app);
 		}
-		ret = console_get_prompt (_("Do you want to remove %s now?").printf (app.full_name), true);
+
+		ret = console_get_prompt (_("Do you want to remove %s (%s) now?").printf (app.full_name, app_ownership_str (app)), true);
 		// If user doesn't want to remove the application, exit
 		if (!ret)
 			return;
