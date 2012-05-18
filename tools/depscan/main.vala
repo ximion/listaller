@@ -72,7 +72,7 @@ public class DepScanCmd : Object {
 	public void run () {
 		bool done = false;
 		if (o_show_version) {
-			stdout.printf ("Listaller bundle version: %s\n", Config.VERSION);
+			stdout.printf ("depscan helper, version: %s\n", Config.VERSION);
 			return;
 		}
 		if ((o_input_path == null) || (o_input_path == "")) {

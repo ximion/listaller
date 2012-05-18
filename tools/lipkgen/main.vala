@@ -88,7 +88,7 @@ public class Lipkgen : Object {
 	public void run () {
 		bool done = false;
 		if (o_show_version) {
-			stdout.printf ("Listaller bundle version: %s\n", Config.VERSION);
+			stdout.printf ("lipkgen tool, part of Listaller version: %s\n", Listaller.get_full_version_info_str ());
 			return;
 		}
 		// Take directory from options, otherwise use current dir

@@ -75,7 +75,7 @@ public class AppCompile : Object {
 	public void run () {
 		bool done = false;
 		if (o_show_version) {
-			stdout.printf ("Listaller bundle version: %s\n", Config.VERSION);
+			stdout.printf ("appcompile helper, version: %s\n", Config.VERSION);
 			return;
 		}
 		// Take directory from options, otherwise use current dir

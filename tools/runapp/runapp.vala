@@ -92,11 +92,6 @@ public class CmdApp : Object {
 				o_appname = arg;
 			}
 		}
-
-		if (o_appname == null) {
-			stderr.printf (_("No application specified!") + "\n");
-			exit_code = 4;
-		}
 	}
 
 	public void run () {
@@ -104,7 +99,13 @@ public class CmdApp : Object {
 			return;
 
 		if (o_show_version) {
-			stdout.printf ("Part of Listaller version: %s\n", Config.VERSION);
+			stdout.printf ("runapp tool, part of Listaller version: %s\n", Listaller.get_full_version_info_str ());
+			return;
+		}
+
+		if (o_appname == null) {
+			stderr.printf (_("No application specified!") + "\n");
+			exit_code = 4;
 			return;
 		}
 

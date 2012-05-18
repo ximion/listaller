@@ -25,6 +25,52 @@ using Listaller.Utils;
 
 namespace Listaller {
 
+/**
+ * Get string describing Listaller's version number.
+ *
+ * @returns: Listaller version string
+ */
+public string get_version_info_str () {
+	return Config.VERSION;
+}
+
+/**
+ * Get string describing Listaller's version number.
+ * This function will return a more detailed description
+ * of Listaller's version and the OS it's running on.
+ *
+ * @returns: detailed Listaller version string
+ */
+public string get_full_version_info_str () {
+	string vstr;
+	string os_release = "";
+
+	var f = File.new_for_path ("/etc/os-release");
+	if (f.query_exists ()) {
+		 try {
+			var dis = new DataInputStream (f.read ());
+			string line;
+			while ((line = dis.read_line (null)) != null) {
+				string[] data = line.split ("=", 2);
+				if ((data.length == 2) && (data[0] == "PRETTY_NAME")) {
+					string d = data[1];
+					if (d.has_prefix ("\""))
+						os_release = d.substring (1, d.length - 2);
+					else
+						os_release = d;
+					break;
+				}
+			}
+		} catch (Error e) { }
+	}
+	if (os_release == "")
+		os_release = "unknown/unsupported distribution";
+
+	vstr = "%s (on %s)".printf (Config.VERSION, os_release);
+
+	return vstr;
+}
+
 class VersionNumber : Object {
 	private int major;    // x.0.0
 	private int minor;    // 0.x.0
@@ -92,8 +138,9 @@ class VersionNumber : Object {
 	}
 }
 
-/* compare alpha and numeric segments of two versions
- * return 1: a is newer than b
+/** compare alpha and numeric segments of two versions
+ *
+ * @returns: 1: a is newer than b
  *        0: a and b are the same version
  *       -1: b is newer than a
  *

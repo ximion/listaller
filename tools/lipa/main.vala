@@ -101,7 +101,7 @@ public class CmdApp : Object {
 			return;
 
 		if (o_show_version) {
-			stdout.printf ("Part of Listaller version: %s\n", Config.VERSION);
+			stdout.printf ("lipa tool, part of Listaller version: %s\n", Listaller.get_full_version_info_str ());
 			return;
 		}
 
