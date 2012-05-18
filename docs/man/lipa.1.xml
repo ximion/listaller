@@ -52,7 +52,7 @@
 			<command>&package;</command> is a simple tool to control Listaller directly from
 			command-line interface. It allows modifying basic settings, installing new applications,
 			removing applications, requesting information about Listaller's database state
-			and performing other maintainance tasks.
+			and performing other maintenance tasks.
 		</para>
 	</refsect1>
 
