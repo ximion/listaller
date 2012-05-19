@@ -5,7 +5,7 @@
 # syntax :
 #    ./configure <options> [parameters]
 set -e
-OPTION_SPEC="help,enable-qt,enable-tests,enable-test-depman,enable-test-sign,prefix:,libdir:,cmake-options:"
+OPTION_SPEC="help,enable-qt,enable-libuild,enable-tests,enable-test-depman,enable-test-security,prefix:,libdir:,cmake-options:"
 PARSED_OPTIONS=$(getopt -n "$0" -a -o h --l "$OPTION_SPEC" -- "$@")
 
 eval set -- "$PARSED_OPTIONS"
@@ -23,9 +23,10 @@ while true ; do
 	case "$1" in
 		-h|--help )  usage; exit 0;;
 		--enable-qt )  ENABLE_QT=1; shift; ;;
+		--enable-libuild )  ENABLE_LIBUILD=1; shift; ;;
 		--enable-tests ) ENABLE_TESTS=1; shift; ;;
 		--enable-test-depman ) ENABLE_DMAN_TEST=1; shift; ;;
-		--enable-test-sign ) ENABLE_SIGN_TEST=1; shift; ;;
+		--enable-test-security ) ENABLE_SEC_TEST=1; shift; ;;
 		--prefix ) case "$2" in
 			    "") echo "prefix parameter needs an argument!"; exit 3 ;;
 			     *) export prefix=$2 ; shift 2 ;;
@@ -59,14 +60,17 @@ fi
 sed "s#%PREFIX%#$prefix#" Makefile.in > Makefile
 
 CMAKE_OPTIONS=$cmakeoptn
+if [ "$ENABLE_LIBUILD" = "1" ]; then
+ CMAKE_OPTIONS="$CMAKE_OPTIONS -DLIBUILD=ON"
+fi
 if [ "$ENABLE_TESTS" = "1" ]; then
  CMAKE_OPTIONS="$CMAKE_OPTIONS -DTESTS=ON"
 fi
 if [ "$ENABLE_DMAN_TEST" = "1" ]; then
  CMAKE_OPTIONS="$CMAKE_OPTIONS -DTEST_DEPMANAGER=ON"
 fi
-if [ "$ENABLE_SIGN_TEST" = "1" ]; then
- CMAKE_OPTIONS="$CMAKE_OPTIONS -DTEST_SIGN=ON"
+if [ "$ENABLE_SEC_TEST" = "1" ]; then
+ CMAKE_OPTIONS="$CMAKE_OPTIONS -DTEST_SECURITY=ON"
 fi
 if [ "$ENABLE_QT" = "1" ]; then
  CMAKE_OPTIONS="$CMAKE_OPTIONS -DQT=ON"
