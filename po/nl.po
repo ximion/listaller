@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-05-21 17:08+0200\n"
+"POT-Creation-Date: 2012-05-19 23:25+0000\n"
 "PO-Revision-Date: 2011-05-20 03:19+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-16 11:52+0000\n"
-"X-Generator: Launchpad (build 15099)\n"
+"X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
+"X-Generator: Launchpad (build 15275)\n"
+"Language: \n"
 
 #, c-format
 msgid ""
@@ -146,21 +146,19 @@ msgstr ""
 msgid "Database unlocked"
 msgstr ""
 
-#, fuzzy
 msgid "Description:"
-msgstr "Programma omschrijving:"
+msgstr ""
 
-#, fuzzy
 msgid "Do you accept these terms and conditions?"
-msgstr "Ik ga akkoord met de bovenstaande termen en condities"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Do you want to install %s now?"
-msgstr "Wilt u het opnieuw installeren?"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Do you want to remove %s (%s) now?"
-msgstr "Wilt u het opnieuw installeren?"
+msgstr ""
 
 #, c-format
 msgid "ERROR: %s"
@@ -197,9 +195,8 @@ msgstr ""
 msgid "IPK package output directory"
 msgstr ""
 
-#, fuzzy
 msgid "Install an IPK package"
-msgstr "Installatiepakket is corrupt"
+msgstr ""
 
 msgid "Installation completed!"
 msgstr "Installtie compleet!"
@@ -207,17 +204,16 @@ msgstr "Installtie compleet!"
 msgid "Installation failed!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installation of %s"
-msgstr "Installeren van %a"
+msgstr ""
 
 #, c-format
 msgid "Installation of native packages failed with message: %s"
 msgstr ""
 
-#, fuzzy
 msgid "Installing"
-msgstr "Installatie"
+msgstr ""
 
 #, c-format
 msgid "Installing native packages: %s"
@@ -226,13 +222,11 @@ msgstr ""
 msgid "License:"
 msgstr ""
 
-#, fuzzy
 msgid "List all installed applications"
-msgstr "Installeer nieuwe applicatie"
+msgstr ""
 
-#, fuzzy
 msgid "List installed Listaller applications"
-msgstr "Installeer nieuwe applicatie"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -341,9 +335,8 @@ msgstr ""
 msgid "Removal of %s started."
 msgstr ""
 
-#, fuzzy
 msgid "Remove an application installed using Listaller"
-msgstr "Deze applicatie is al geïnstalleerd"
+msgstr ""
 
 msgid "Removing"
 msgstr ""
@@ -353,7 +346,8 @@ msgid "Resolving dependencies of '%s'."
 msgstr ""
 
 #, c-format
-msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgid ""
+"Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
 #, c-format
@@ -554,8 +548,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"Unable to find a matching implementation of '%s' for your system/"
-"architecture."
+"Unable to find a matching implementation of '%s' for your "
+"system/architecture."
 msgstr ""
 
 #, c-format
@@ -655,167 +649,96 @@ msgstr ""
 msgid "shared"
 msgstr ""
 
-#~ msgid "%f files will be changed."
-#~ msgstr "%f bestanden zullen gewijzigd worden."
+#~ msgid "Program description:"
+#~ msgstr "Programma omschrijving:"
 
-#~ msgid "(This program will download the needed files from the internet)"
-#~ msgstr "(Dit programma zal de nodige bestanden downloaden van het internet)"
+#~ msgid "Press \"Next\" to start the installation!"
+#~ msgstr "Druk op 'Volgende' om de installatie te starten!"
 
-#~ msgid "Abort"
-#~ msgstr "Afbreken"
+#~ msgid "Please read the following information carefully:"
+#~ msgstr "Lees alstublieft de volgende informatie zorgvuldig door:"
 
-#~ msgid "All"
-#~ msgstr "Alles"
-
-#~ msgid "Application uninstalled successfully!"
-#~ msgstr "Applicatie succesvol gedenstalleerd."
-
-#~ msgid "Autor"
-#~ msgstr "Auteur"
-
-#~ msgid "Back"
-#~ msgstr "Terug"
-
-#~ msgid "Can't load LOKI-Setup information."
-#~ msgstr "Kan LOKI-Setupinformatie niet laden"
-
-#~ msgid ""
-#~ "Cannot download this package. Please contact the catalogue managers on %h"
-#~ msgstr ""
-#~ "Kan dit pakket niet downloaden. Neem alstublieft contact op met de "
-#~ "catalogusmanagers op %h"
-
-#~ msgid "Category:"
-#~ msgstr "Categorie:"
-
-#~ msgid "Check for updates"
-#~ msgstr "Updates zoeken"
-
-#~ msgid "Close"
-#~ msgstr "Sluiten"
-
-#~ msgid "Convert package?"
-#~ msgstr "Converteer het pakket?"
-
-#~ msgid "Converting %p package..."
-#~ msgstr "Converteren van %p pakket..."
-
-#~ msgid "Delete source"
-#~ msgstr "Verwijder bron"
-
-#~ msgid "Dependencies couldn't be solved!"
-#~ msgstr "Gebiedsdelen konden niet opgelost worden!"
-
-#~ msgid "Details"
-#~ msgstr "Details"
-
-#~ msgid "Development"
-#~ msgstr "Ontwikkeling"
-
-#~ msgid "Display installation log"
-#~ msgstr "Laat installeerlog zien"
-
-#~ msgid "Do you really want to abort this download?"
-#~ msgstr "Wil je deze download echt afbreken?"
-
-#~ msgid ""
-#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
-#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
-#~ "those packages, press \"No\"!"
-#~ msgstr ""
-#~ "Weet u zeker dat u \"%p\" wilt verwijderen, het bevat %a?\rDe volgende "
-#~ "pakketten zullen ook verwijderd worden: %pl\rAls u niet zeker bent of u "
-#~ "de pakketten niet nodig heeft klik \"Nee\"!"
-
-#~ msgid "Do you really want to uninstall %a?"
-#~ msgstr "Weet je zeker dat je %a wilt denstalleren?"
-
-#~ msgid "Downloading catalogue base information..."
-#~ msgstr "Downloaden van catalogusbasis informatie..."
-
-#~ msgid "Education"
-#~ msgstr "Educatie"
-
-#~ msgid "Enable Proxy-Server"
-#~ msgstr "Schakel Proxyserver in"
-
-#~ msgid "Error while extracting files!"
-#~ msgstr "Error tijdens het uitpakken van bestanden!"
-
-#~ msgid "Error while uninstalling!"
-#~ msgstr "Fout tijdens denstalleren!"
-
-#~ msgid "Filter:"
-#~ msgstr "Filter:"
-
-#~ msgid "Filtering..."
-#~ msgstr "Filteren..."
-
-#~ msgid "Finish"
-#~ msgstr "Beindigen"
-
-#~ msgid "Finished"
-#~ msgstr "Voltooid"
-
-#~ msgid "Games"
-#~ msgstr "Spellen"
-
-#~ msgid "Graphic"
-#~ msgstr "Afbeelding"
-
-#~ msgid "I don't agree"
-#~ msgstr "Ik ga niet akkoord"
-
-#~ msgid "Install now"
-#~ msgstr "Nu installeren"
-
-#~ msgid "Install updates"
-#~ msgstr "Installeren van updates"
+#~ msgid "Software license"
+#~ msgstr "Softwarelicentie"
 
 #~ msgid "Installation aborted."
 #~ msgstr "Installatie afgebroken."
 
-#~ msgid "Listaller settings"
-#~ msgstr "Listaller instellingen"
+#~ msgid "The application %a was not installed."
+#~ msgstr "De applicatie %a is niet geïnstalleerd."
 
-#~ msgid "Load dependencies from included webserver-urls automatically"
-#~ msgstr "Laad gebiedsdelen van ingeneste webserver-urls automatisch"
+#~ msgid "Install now"
+#~ msgstr "Nu installeren"
 
-#~ msgid "Loading aborted."
-#~ msgstr "Laden geannuleerd"
+#~ msgid "Welcome!"
+#~ msgstr "Welkom!"
 
-#~ msgid "Loading catalogue page..."
-#~ msgstr "Laden van cataloguspagina..."
+#~ msgid "Please wait."
+#~ msgstr "Een ogenblik geduld."
 
-#~ msgid "Loading..."
-#~ msgstr "Bezig met laden..."
-
-#~ msgid "Main"
-#~ msgstr "Algemeen"
-
-#~ msgid "Multimedia"
-#~ msgstr "Multimedia"
-
-#~ msgid "Network"
-#~ msgstr "Netwerk"
+#~ msgid "Running installation..."
+#~ msgstr "Installatie bezig..."
 
 #~ msgid "Next"
 #~ msgstr "Volgende"
 
-#~ msgid "No compatible packages found!"
-#~ msgstr "Geen compatibele pakketten gevonden!"
+#~ msgid "Display installation log"
+#~ msgstr "Laat installeerlog zien"
 
-#~ msgid "No information available!"
-#~ msgstr "Geen informatie beschikbaar!"
+#~ msgid "Back"
+#~ msgstr "Terug"
 
-#~ msgid "Office"
-#~ msgstr "Kantoor"
+#~ msgid "Error while extracting files!"
+#~ msgstr "Error tijdens het uitpakken van bestanden!"
 
-#~ msgid "Other"
-#~ msgstr "Overige"
+#~ msgid "This application is already installed"
+#~ msgstr "Deze applicatie is al geïnstalleerd"
 
-#~ msgid "Password"
-#~ msgstr "Wachtwoord"
+#~ msgid "Loading aborted."
+#~ msgstr "Laden geannuleerd"
+
+#~ msgid "The installer will close now"
+#~ msgstr "De installer zal nu sluiten"
+
+#~ msgid "Please notify the developers on http://launchpad.net/listaller"
+#~ msgstr ""
+#~ "Merk alstublieft de ontwikkelaars op, via http://launchpad.net/listaller"
+
+#~ msgid "Your Linux distribution is not supported by Listaller yet!"
+#~ msgstr "Uw Linux distributie is nog niet ondersteund door Linstaller!"
+
+#~ msgid "I agree with the above terms and conditions"
+#~ msgstr "Ik ga akkoord met de bovenstaande termen en condities"
+
+#~ msgid "I don't agree"
+#~ msgstr "Ik ga niet akkoord"
+
+#~ msgid "Welcome to the installation of %a"
+#~ msgstr "Welkom bij de installatie van %a"
+
+#~ msgid "Do you want to install it again?"
+#~ msgstr "Wilt u het opnieuw installeren?"
+
+#~ msgid "The package was invalid!"
+#~ msgstr "Het pakket is ongeldig!"
+
+#~ msgid "Installation of %a"
+#~ msgstr "Installeren van %a"
+
+#~ msgid "Please view the logfile at %p"
+#~ msgstr "Bekijk alstublieft het logbestand op %p"
+
+#~ msgid "Dependencies couldn't be solved!"
+#~ msgstr "Gebiedsdelen konden niet opgelost worden!"
+
+#~ msgid "Installation package is corrupt"
+#~ msgstr "Installatiepakket is corrupt"
+
+#~ msgid "This application wants to download & install a dependency from %l"
+#~ msgstr "Deze applicatie wil een gebiedsdeel downloaden & installeren van %l"
+
+#~ msgid "The application will close now "
+#~ msgstr "De applicatie zal nu sluiten "
 
 #~ msgid "Phase 1/4: Resolving dependencies..."
 #~ msgstr "Stap 1/4: Oplossen van gebiedsdelen"
@@ -829,104 +752,237 @@ msgstr ""
 #~ msgid "Phase 4/4: Registering application..."
 #~ msgstr "Stap 4/4: Registreren van applicatie..."
 
-#~ msgid "Please notify the developers on http://launchpad.net/listaller"
-#~ msgstr ""
-#~ "Merk alstublieft de ontwikkelaars op, via http://launchpad.net/listaller"
+#~ msgid "Finished"
+#~ msgstr "Voltooid"
 
-#~ msgid "Please read the following information carefully:"
-#~ msgstr "Lees alstublieft de volgende informatie zorgvuldig door:"
+#~ msgid "Details"
+#~ msgstr "Details"
 
-#~ msgid "Please view the logfile at %p"
-#~ msgstr "Bekijk alstublieft het logbestand op %p"
+#~ msgid "Installation"
+#~ msgstr "Installatie"
 
-#~ msgid "Please wait."
-#~ msgstr "Een ogenblik geduld."
+#~ msgid "Use compatible packages?"
+#~ msgstr "Gebruik maken van compatibele pakketten?"
 
-#~ msgid "Press \"Finish\" to close."
-#~ msgstr "Druk op 'Beindigen' om te sluiten."
+#~ msgid "Main"
+#~ msgstr "Algemeen"
 
-#~ msgid "Press \"Next\" to start the installation!"
-#~ msgstr "Druk op 'Volgende' om de installatie te starten!"
-
-#~ msgid "Problem while downloading the dep-file."
-#~ msgstr "Probleem tijdens het downloaden van het dep-bestand."
+#~ msgid "Success!"
+#~ msgstr "Gelukt!"
 
 #~ msgid ""
 #~ "Problem while downloading the packages. Maybe the login on the FTP-Server "
 #~ "failed."
 #~ msgstr ""
-#~ "Probleem tijdens het downloaden van de pakketten. Misschien een loginfout "
-#~ "op de FTP-Server."
+#~ "Probleem tijdens het downloaden van de pakketten. Misschien een loginfout op "
+#~ "de FTP-Server."
 
-#~ msgid "Proxy-Settings"
-#~ msgstr "Proxyinstellingen"
+#~ msgid "Problem while downloading the dep-file."
+#~ msgstr "Probleem tijdens het downloaden van het dep-bestand."
 
-#~ msgid "Quit"
-#~ msgstr "Afsluiten"
+#~ msgid "(This program will download the needed files from the internet)"
+#~ msgstr "(Dit programma zal de nodige bestanden downloaden van het internet)"
 
-#~ msgid "Ready."
-#~ msgstr "Gereed."
+#~ msgid "Install new application"
+#~ msgstr "Installeer nieuwe applicatie"
 
-#~ msgid "Really remove?"
-#~ msgstr "Werkelijk verwijderen?"
+#~ msgid "Update sources"
+#~ msgstr "Updaten van bronnen"
 
-#~ msgid "Running application installation..."
-#~ msgstr "Uitvoeren van applicatie installatie..."
+#~ msgid "Close"
+#~ msgstr "Sluiten"
 
-#~ msgid "Running installation..."
-#~ msgstr "Installatie bezig..."
+#~ msgid "Delete source"
+#~ msgstr "Verwijder bron"
 
-#~ msgid "Select software you want to download and to install:"
-#~ msgstr "Selecteer de software die je wil downloaden en installeren:"
+#~ msgid "No compatible packages found!"
+#~ msgstr "Geen compatibele pakketten gevonden!"
 
-#~ msgid "Show"
-#~ msgstr "Weergeven"
-
-#~ msgid "Show:"
-#~ msgstr "Toon:"
+#~ msgid "Listaller settings"
+#~ msgstr "Listaller instellingen"
 
 #~ msgid "Software catalogue"
 #~ msgstr "Softwarecatalogus"
 
-#~ msgid "Software license"
-#~ msgstr "Softwarelicentie"
+#~ msgid "Show:"
+#~ msgstr "Toon:"
 
-#~ msgid "Success!"
-#~ msgstr "Gelukt!"
+#~ msgid "Multimedia"
+#~ msgstr "Multimedia"
 
-#~ msgid "System"
-#~ msgstr "Systeem"
+#~ msgid "All"
+#~ msgstr "Alles"
 
-#~ msgid "The application %a was installed successfully!"
-#~ msgstr "De applicatie %a is succesvol genstalleerd!"
+#~ msgid "Office"
+#~ msgstr "Kantoor"
 
-#~ msgid "The application %a was not installed."
-#~ msgstr "De applicatie %a is niet geïnstalleerd."
+#~ msgid "Education"
+#~ msgstr "Educatie"
 
-#~ msgid "The application will be updated to version %v"
-#~ msgstr "De applicatie zal worden gepdate naar versie %v"
+#~ msgid "Graphic"
+#~ msgstr "Afbeelding"
 
-#~ msgid "The application will close now "
-#~ msgstr "De applicatie zal nu sluiten "
+#~ msgid "Development"
+#~ msgstr "Ontwikkeling"
 
-#~ msgid "The installer will close now"
-#~ msgstr "De installer zal nu sluiten"
+#~ msgid "Games"
+#~ msgstr "Spellen"
 
-#~ msgid "The package was invalid!"
-#~ msgstr "Het pakket is ongeldig!"
+#~ msgid "Network"
+#~ msgstr "Netwerk"
+
+#~ msgid "Load dependencies from included webserver-urls automatically"
+#~ msgstr "Laad gebiedsdelen van ingeneste webserver-urls automatisch"
+
+#~ msgid ""
+#~ "Unable to load the icon of %a. Please notify the developers of Listaller or "
+#~ "this application!"
+#~ msgstr ""
+#~ "Niet in staat om het icoon van %a te laden. Kijk alstublieft na wie de "
+#~ "ontwikkelaars zijn van Listaller van deze applicatie!"
+
+#~ msgid "Version"
+#~ msgstr "Versie"
+
+#~ msgid "Autor"
+#~ msgstr "Auteur"
+
+#~ msgid "Other"
+#~ msgstr "Overige"
+
+#~ msgid "Proxy-Settings"
+#~ msgstr "Proxyinstellingen"
+
+#~ msgid "Enable Proxy-Server"
+#~ msgstr "Schakel Proxyserver in"
+
+#~ msgid "Username"
+#~ msgstr "Gebruikersnaam"
+
+#~ msgid "Password"
+#~ msgstr "Wachtwoord"
+
+#~ msgid "Can't load LOKI-Setup information."
+#~ msgstr "Kan LOKI-Setupinformatie niet laden"
+
+#~ msgid "Converting %p package..."
+#~ msgstr "Converteren van %p pakket..."
+
+#~ msgid "Convert package?"
+#~ msgstr "Converteer het pakket?"
+
+#~ msgid ""
+#~ "You want to install an %x-Package, but your Linux-Distribution's package "
+#~ "system is %y.\rThis package can be converted using \"alien\", but this will "
+#~ "take some time and eventually the application won't work\rDo you want to "
+#~ "convert the package now?"
+#~ msgstr ""
+#~ "U wilt een %x-Pakket installeren, maar je Linux-Distributie's pakketsysteem "
+#~ "is %y.\rDit pakket kan geconverteerd worden door gebruik te maken van "
+#~ "\"alien\", maar dit kan lang duren en uiteindelijk zal de applicatie niet "
+#~ "werken.\rWilt u het pakket nu converteren?"
+
+#~ msgid "Ready."
+#~ msgstr "Gereed."
+
+#~ msgid "Category:"
+#~ msgstr "Categorie:"
+
+#~ msgid "Loading..."
+#~ msgstr "Bezig met laden..."
+
+#~ msgid "Filtering..."
+#~ msgstr "Filteren..."
+
+#~ msgid "No information available!"
+#~ msgstr "Geen informatie beschikbaar!"
+
+#~ msgid "Select software you want to download and to install:"
+#~ msgstr "Selecteer de software die je wil downloaden en installeren:"
+
+#~ msgid "Do you really want to abort this download?"
+#~ msgstr "Wil je deze download echt afbreken?"
+
+#~ msgid "Downloading catalogue base information..."
+#~ msgstr "Downloaden van catalogusbasis informatie..."
+
+#~ msgid ""
+#~ "Cannot download this package. Please contact the catalogue managers on %h"
+#~ msgstr ""
+#~ "Kan dit pakket niet downloaden. Neem alstublieft contact op met de "
+#~ "catalogusmanagers op %h"
+
+#~ msgid "Running application installation..."
+#~ msgstr "Uitvoeren van applicatie installatie..."
+
+#~ msgid "Loading catalogue page..."
+#~ msgstr "Laden van cataloguspagina..."
 
 #~ msgid "There are no updates available!"
 #~ msgstr "Er zijn geen updates beschikbaar!"
 
-#~ msgid "This application wants to download & install a dependency from %l"
-#~ msgstr "Deze applicatie wil een gebiedsdeel downloaden & installeren van %l"
+#~ msgid "%f files will be changed."
+#~ msgstr "%f bestanden zullen gewijzigd worden."
+
+#~ msgid "Update info:"
+#~ msgstr "Update info:"
 
 #~ msgid ""
-#~ "Unable to load the icon of %a. Please notify the developers of Listaller "
-#~ "or this application!"
+#~ "Do you really want to remove \"%p\", containing %a?\rThe following "
+#~ "package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+#~ "those packages, press \"No\"!"
 #~ msgstr ""
-#~ "Niet in staat om het icoon van %a te laden. Kijk alstublieft na wie de "
-#~ "ontwikkelaars zijn van Listaller van deze applicatie!"
+#~ "Weet u zeker dat u \"%p\" wilt verwijderen, het bevat %a?\rDe volgende "
+#~ "pakketten zullen ook verwijderd worden: %pl\rAls u niet zeker bent of u de "
+#~ "pakketten niet nodig heeft klik \"Nee\"!"
+
+#~ msgid "Waiting..."
+#~ msgstr "Wachten..."
+
+#~ msgid "Really remove?"
+#~ msgstr "Werkelijk verwijderen?"
+
+#~ msgid "Check for updates"
+#~ msgstr "Updates zoeken"
+
+#~ msgid "Quit"
+#~ msgstr "Afsluiten"
+
+#~ msgid "Install updates"
+#~ msgstr "Installeren van updates"
+
+#~ msgid "Show"
+#~ msgstr "Weergeven"
+
+#~ msgid "Filter:"
+#~ msgstr "Filter:"
+
+#~ msgid "Abort"
+#~ msgstr "Afbreken"
+
+#~ msgid "System"
+#~ msgstr "Systeem"
+
+#~ msgid "Application uninstalled successfully!"
+#~ msgstr "Applicatie succesvol gedenstalleerd."
+
+#~ msgid "Do you really want to uninstall %a?"
+#~ msgstr "Weet je zeker dat je %a wilt denstalleren?"
+
+#~ msgid "Error while uninstalling!"
+#~ msgstr "Fout tijdens denstalleren!"
+
+#~ msgid "Finish"
+#~ msgstr "Beindigen"
+
+#~ msgid "Press \"Finish\" to close."
+#~ msgstr "Druk op 'Beindigen' om te sluiten."
+
+#~ msgid "The application %a was installed successfully!"
+#~ msgstr "De applicatie %a is succesvol genstalleerd!"
+
+#~ msgid "The application will be updated to version %v"
+#~ msgstr "De applicatie zal worden gepdate naar versie %v"
 
 #~ msgid "Uninstall"
 #~ msgstr "Denstalleren"
@@ -939,41 +995,3 @@ msgstr ""
 
 #~ msgid "Uninstalling..."
 #~ msgstr "Denstalleren...."
-
-#~ msgid "Update info:"
-#~ msgstr "Update info:"
-
-#~ msgid "Update sources"
-#~ msgstr "Updaten van bronnen"
-
-#~ msgid "Use compatible packages?"
-#~ msgstr "Gebruik maken van compatibele pakketten?"
-
-#~ msgid "Username"
-#~ msgstr "Gebruikersnaam"
-
-#~ msgid "Version"
-#~ msgstr "Versie"
-
-#~ msgid "Waiting..."
-#~ msgstr "Wachten..."
-
-#~ msgid "Welcome to the installation of %a"
-#~ msgstr "Welkom bij de installatie van %a"
-
-#~ msgid "Welcome!"
-#~ msgstr "Welkom!"
-
-#~ msgid ""
-#~ "You want to install an %x-Package, but your Linux-Distribution's package "
-#~ "system is %y.\rThis package can be converted using \"alien\", but this "
-#~ "will take some time and eventually the application won't work\rDo you "
-#~ "want to convert the package now?"
-#~ msgstr ""
-#~ "U wilt een %x-Pakket installeren, maar je Linux-Distributie's "
-#~ "pakketsysteem is %y.\rDit pakket kan geconverteerd worden door gebruik te "
-#~ "maken van \"alien\", maar dit kan lang duren en uiteindelijk zal de "
-#~ "applicatie niet werken.\rWilt u het pakket nu converteren?"
-
-#~ msgid "Your Linux distribution is not supported by Listaller yet!"
-#~ msgstr "Uw Linux distributie is nog niet ondersteund door Linstaller!"

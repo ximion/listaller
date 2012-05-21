@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-05-21 17:08+0200\n"
+"POT-Creation-Date: 2012-05-19 23:25+0000\n"
 "PO-Revision-Date: 2012-04-13 02:32+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-16 11:52+0000\n"
-"X-Generator: Launchpad (build 15099)\n"
+"X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
+"X-Generator: Launchpad (build 15275)\n"
+"Language: \n"
 
 #, c-format
 msgid ""
@@ -60,7 +60,8 @@ msgstr "Невозможно создать или обновить базу д�
 
 #, c-format
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
-msgstr "Нет возможности распаковать IPK! Пакет может быть повреждён. Ошибка %s"
+msgstr ""
+"Нет возможности распаковать IPK! Пакет может быть повреждён. Ошибка %s"
 
 #, c-format
 msgid "Could not extract file %s! Error: %s"
@@ -158,21 +159,19 @@ msgstr "База данных заблокирована"
 msgid "Database unlocked"
 msgstr "База данных разблокирована"
 
-#, fuzzy
 msgid "Description:"
-msgstr "Описание программы:"
+msgstr ""
 
-#, fuzzy
 msgid "Do you accept these terms and conditions?"
-msgstr "Я согласен с условиями, приведёными выше"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Do you want to install %s now?"
-msgstr "Хотите установить снова?"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Do you want to remove %s (%s) now?"
-msgstr "Хотите установить снова?"
+msgstr ""
 
 #, c-format
 msgid "ERROR: %s"
@@ -209,9 +208,8 @@ msgstr "Пакет IPK не может быть найден!"
 msgid "IPK package output directory"
 msgstr "Каталог вывода пакета IPK"
 
-#, fuzzy
 msgid "Install an IPK package"
-msgstr "Установить пакет?"
+msgstr ""
 
 msgid "Installation completed!"
 msgstr "Установка завершена!"
@@ -219,17 +217,16 @@ msgstr "Установка завершена!"
 msgid "Installation failed!"
 msgstr "Установка не удалась!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installation of %s"
-msgstr "Установка %a"
+msgstr ""
 
 #, c-format
 msgid "Installation of native packages failed with message: %s"
 msgstr ""
 
-#, fuzzy
 msgid "Installing"
-msgstr "Установка"
+msgstr ""
 
 #, c-format
 msgid "Installing native packages: %s"
@@ -238,21 +235,17 @@ msgstr ""
 msgid "License:"
 msgstr ""
 
-#, fuzzy
 msgid "List all installed applications"
-msgstr "Установить новую программу"
+msgstr ""
 
-#, fuzzy
 msgid "List installed Listaller applications"
-msgstr "Установить новую программу"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Listaller command-line tool: No command specified.\n"
 "Run '%s --help' to see a list of available commands."
 msgstr ""
-"Запустите '%s --help', чтобы увидеть полный список доступных опций командной "
-"строки.\n"
 
 msgid "Low security."
 msgstr "Низкая безопасность"
@@ -343,9 +336,9 @@ msgstr ""
 msgid "Removal of %s completed successfully!\n"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Removal of %s failed!"
-msgstr "Удаление %s завершено."
+msgstr ""
 
 #, c-format
 msgid "Removal of %s finished."
@@ -355,9 +348,8 @@ msgstr "Удаление %s завершено."
 msgid "Removal of %s started."
 msgstr "Начато удаление %s."
 
-#, fuzzy
 msgid "Remove an application installed using Listaller"
-msgstr "Программа уже установлена"
+msgstr ""
 
 msgid "Removing"
 msgstr ""
@@ -367,7 +359,8 @@ msgid "Resolving dependencies of '%s'."
 msgstr "Разрешение зависимостей '%s'."
 
 #, c-format
-msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgid ""
+"Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 "Запустите '%s --help', чтобы увидеть полный список доступных опций командной "
 "строки.\n"
@@ -585,8 +578,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"Unable to find a matching implementation of '%s' for your system/"
-"architecture."
+"Unable to find a matching implementation of '%s' for your "
+"system/architecture."
 msgstr ""
 "Нет возможности найти соответствующий '%s' для вашей системы/архитектуры."
 
@@ -688,322 +681,258 @@ msgstr ""
 msgid "shared"
 msgstr ""
 
-#~ msgid "%f files will be changed."
-#~ msgstr "%f файлы будут изменены."
-
-#~ msgid "(This program will download the needed files from the internet)"
-#~ msgstr "(Эта программа скачает необходимые файлы из интернета)"
-
-#~ msgid "Abort"
-#~ msgstr "Прервать"
-
-#~ msgid "About"
-#~ msgstr "О программе"
-
-#~ msgid "About Listaller"
-#~ msgstr "О Listaller"
-
-#~ msgid "All"
-#~ msgstr "Все"
-
-#~ msgid "Application uninstalled successfully!"
-#~ msgstr "Удаление приложения успешно завершено!"
-
-#~ msgid "Are you really sure that you want to delete this source?"
-#~ msgstr "Вы действительно хотите удалить этот источник?"
-
-#~ msgid "Authors"
-#~ msgstr "Авторы"
-
-#~ msgid "Autor"
-#~ msgstr "Автор"
-
-#~ msgid "Back"
-#~ msgstr "Назад"
-
-#~ msgid "Can't load LOKI-Setup information."
-#~ msgstr "Не удается загрузить LOKI-Setup информацию."
-
-#~ msgid ""
-#~ "Cannot download this package. Please contact the catalogue managers on %h"
-#~ msgstr ""
-#~ "Нет возможности загрузить этот пакет. Согласуйтесь с менеджером каталогов "
-#~ "на %h"
-
-#~ msgid "Category:"
-#~ msgstr "Категория:"
-
-#~ msgid "Check for updates"
-#~ msgstr "Проверить наличие обновлений"
-
-#~ msgid "Close"
-#~ msgstr "Закрыть"
-
-#~ msgid "Convert package?"
-#~ msgstr "Преобразовать пакет?"
-
-#~ msgid "Converting %p package..."
-#~ msgstr "Конвертирование пакета %p..."
-
-#~ msgid "Delete source"
-#~ msgstr "Удалить источник"
-
-#~ msgid "Delete source?"
-#~ msgstr "Удалить источник?"
-
-#~ msgid "Dependencies couldn't be solved!"
-#~ msgstr "Зависимости не могут быть решены!"
-
-#~ msgid "Details"
-#~ msgstr "Подробности"
-
-#~ msgid "Development"
-#~ msgstr "Средства разработки"
-
-#~ msgid "Display installation log"
-#~ msgstr "Показать журнал установки"
-
-#~ msgid "Display my applications"
-#~ msgstr "Показать мои приложения"
-
-#~ msgid "Display system applications"
-#~ msgstr "Показать системные приложения"
-
-#~ msgid "Do you really want to abort this download?"
-#~ msgstr "Вы действительно хотите прервать эту закачку?"
-
-#~ msgid ""
-#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
-#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
-#~ "those packages, press \"No\"!"
-#~ msgstr ""
-#~ "Вы действительно хотите удалить \"%р\", содержащий %a?\rСледующие пакеты "
-#~ "будут удалены: %PL\rЕсли вы не уверены, что вам не будут нужны эти "
-#~ "пакеты, нажмите \"Нет\"!"
-
-#~ msgid "Do you really want to uninstall %a?"
-#~ msgstr "Вы действительно хотите удалить %a?"
-
-#~ msgid "Downloading catalogue base information..."
-#~ msgstr "Загрузка информации о базе каталогов..."
-
-#~ msgid "Education"
-#~ msgstr "Обучение"
-
-#~ msgid "Enable Proxy-Server"
-#~ msgstr "Включить Прокси-Сервер"
-
 #~ msgid "Error while extracting files!"
 #~ msgstr "Ошибка при распаковке файлов!"
-
-#~ msgid "Error while uninstalling!"
-#~ msgstr "Произошла ошибка во время удаления!"
-
-#~ msgid "Filter:"
-#~ msgstr "Фильтр:"
-
-#~ msgid "Filtering..."
-#~ msgstr "Фильтрация..."
-
-#~ msgid "Finish"
-#~ msgstr "Готово"
-
-#~ msgid "Finished"
-#~ msgstr "Готово"
-
-#~ msgid "Games"
-#~ msgstr "Игры"
-
-#~ msgid "Get dependency from"
-#~ msgstr "Получить зависимость от"
-
-#~ msgid "Graphic"
-#~ msgstr "Графика"
-
-#~ msgid "I don't agree"
-#~ msgstr "Я не согласен"
-
-#~ msgid "Install application for everyone"
-#~ msgstr "Установить приложение для всех пользователей"
-
-#~ msgid "Install into my Home directory"
-#~ msgstr "Установить в мой домашний каталог"
-
-#~ msgid "Install now"
-#~ msgstr "Установить сейчас"
-
-#~ msgid "Install updates"
-#~ msgstr "Установить обновления"
-
-#~ msgid "Installation aborted."
-#~ msgstr "Установка прервана."
-
-#~ msgid "Installation mode:"
-#~ msgstr "Режим установки:"
-
-#~ msgid "Installation package is corrupt"
-#~ msgstr "Установочный пакет повреждён"
-
-#~ msgid "Listaller settings"
-#~ msgstr "Настройки Listaller"
-
-#~ msgid "Listaller will close now. The package couldn't be installed."
-#~ msgstr "Listaller будет закрыт. Приложение не может быть установлено."
-
-#~ msgid "Load dependencies from included webserver-urls automatically"
-#~ msgstr "Автоматическая загрузка зависимостей из подключенных web-серверов"
-
-#~ msgid "Loading aborted."
-#~ msgstr "Загрузка прервана."
-
-#~ msgid "Loading catalogue page..."
-#~ msgstr "Загрузка страницы каталога..."
-
-#~ msgid "Loading..."
-#~ msgstr "Загрузка…"
-
-#~ msgid "Main"
-#~ msgstr "Главная"
-
-#~ msgid "Mode"
-#~ msgstr "Режим"
-
-#~ msgid "Multimedia"
-#~ msgstr "Мультимедиа"
-
-#~ msgid "Network"
-#~ msgstr "Сеть"
-
-#~ msgid "Next"
-#~ msgstr "Вперёд"
-
-#~ msgid "No applications found!"
-#~ msgstr "Приложения не найдены!"
-
-#~ msgid "No compatible packages found!"
-#~ msgstr "Совместимых пакетов не найдено"
-
-#~ msgid "No information available!"
-#~ msgstr "Нет доступной информации!"
-
-#~ msgid "Office"
-#~ msgstr "Офис"
-
-#~ msgid "Other"
-#~ msgstr "Другое"
-
-#~ msgid "Package %p could not be installed."
-#~ msgstr "Пакет %p не может быть установлен."
-
-#~ msgid "Package was not build for your Linux distribution release."
-#~ msgstr "Пакет не был создан для вашего дистрибутива Linux."
-
-#~ msgid "Password"
-#~ msgstr "Пароль"
-
-#~ msgid "Phase 1/4: Resolving dependencies..."
-#~ msgstr "Шаг 1/4: Разрешение зависимостей..."
-
-#~ msgid "Phase 2/4: Installing files..."
-#~ msgstr "Этап 2/4: Установка файлов..."
-
-#~ msgid "Phase 3/4: Chmod new files..."
-#~ msgstr "Шаг 3/4: Chmod новых файлов..."
-
-#~ msgid "Phase 4/4: Registering application..."
-#~ msgstr "Этап 4/4: Регистрация приложения..."
-
-#~ msgid "Please notify the developers on http://launchpad.net/listaller"
-#~ msgstr ""
-#~ "Пожалуйста, оповестите разработчиков на http://launchpad.net/listaller"
-
-#~ msgid "Please read the following information carefully:"
-#~ msgstr "Пожалуйста, внимательно прочтите следующую информацию:"
-
-#~ msgid "Please view the logfile at %p"
-#~ msgstr "Пожалуйста, откройте файл событий в %p"
-
-#~ msgid "Please wait."
-#~ msgstr "Пожалуйста подождите."
-
-#~ msgid "Please wait..."
-#~ msgstr "Пожалуйста подождите..."
-
-#~ msgid "Press \"Finish\" to close."
-#~ msgstr "Нажмите \"Готово\" для закрытия."
-
-#~ msgid "Press \"Next\" to start the installation!"
-#~ msgstr "Нажмите \"Далее\" для начала установки!"
-
-#~ msgid "Problem while downloading the dep-file."
-#~ msgstr "Проблема при загрузке dep файла."
-
-#~ msgid ""
-#~ "Problem while downloading the packages. Maybe the login on the FTP-Server "
-#~ "failed."
-#~ msgstr ""
-#~ "Проблемы во время загрузки пакетов. Возможно не удалось войти на FTP-"
-#~ "сервер"
-
-#~ msgid "Proxy-Settings"
-#~ msgstr "Настройки прокси-сервера"
-
-#~ msgid "Quit"
-#~ msgstr "Выйти"
-
-#~ msgid "Re-install"
-#~ msgstr "Переустановить"
-
-#~ msgid "Ready."
-#~ msgstr "Готово."
-
-#~ msgid "Really remove?"
-#~ msgstr "Точно удалить?"
-
-#~ msgid "Running application installation..."
-#~ msgstr "Запуск установки приложения..."
-
-#~ msgid "Running installation..."
-#~ msgstr "Идёт установка..."
-
-#~ msgid "Select installation mode"
-#~ msgstr "Выберите режим установки"
-
-#~ msgid "Select software you want to download and to install:"
-#~ msgstr "Выберите приложение для скачивания и установки"
-
-#~ msgid "Select which parts of the application should be installed."
-#~ msgstr "Выберите какие части приложения необходимо установить."
-
-#~ msgid "Show"
-#~ msgstr "Показать"
-
-#~ msgid "Show:"
-#~ msgstr "Показать:"
-
-#~ msgid "Software Manager"
-#~ msgstr "Менеджер программного обеспечения"
-
-#~ msgid "Software catalogue"
-#~ msgstr "Каталог программ"
-
-#~ msgid "Software license"
-#~ msgstr "Лицензия программы"
 
 #~ msgid "Success!"
 #~ msgstr "Успешно!"
 
+#~ msgid "(This program will download the needed files from the internet)"
+#~ msgstr "(Эта программа скачает необходимые файлы из интернета)"
+
+#~ msgid "Update sources"
+#~ msgstr "Обновить источники"
+
+#~ msgid "Install new application"
+#~ msgstr "Установить новую программу"
+
+#~ msgid "Close"
+#~ msgstr "Закрыть"
+
+#~ msgid "Delete source"
+#~ msgstr "Удалить источник"
+
+#~ msgid "Software catalogue"
+#~ msgstr "Каталог программ"
+
+#~ msgid "Multimedia"
+#~ msgstr "Мультимедиа"
+
 #~ msgid "System"
 #~ msgstr "Системные"
 
-#~ msgid "Testmode"
-#~ msgstr "Тестовый режим"
+#~ msgid "All"
+#~ msgstr "Все"
+
+#~ msgid "Office"
+#~ msgstr "Офис"
+
+#~ msgid "Education"
+#~ msgstr "Обучение"
+
+#~ msgid "Development"
+#~ msgstr "Средства разработки"
+
+#~ msgid "Games"
+#~ msgstr "Игры"
+
+#~ msgid "Network"
+#~ msgstr "Сеть"
+
+#~ msgid "Version"
+#~ msgstr "Версия"
+
+#~ msgid "Autor"
+#~ msgstr "Автор"
+
+#~ msgid "Username"
+#~ msgstr "Имя пользователя"
+
+#~ msgid "Password"
+#~ msgstr "Пароль"
+
+#~ msgid "Category:"
+#~ msgstr "Категория:"
+
+#~ msgid "There are no updates available!"
+#~ msgstr "Нет доступных обновлений!"
+
+#~ msgid "Waiting..."
+#~ msgstr "Ожидание..."
+
+#~ msgid "Check for updates"
+#~ msgstr "Проверить наличие обновлений"
+
+#~ msgid "Quit"
+#~ msgstr "Выйти"
+
+#~ msgid "Show"
+#~ msgstr "Показать"
+
+#~ msgid "Please read the following information carefully:"
+#~ msgstr "Пожалуйста, внимательно прочтите следующую информацию:"
+
+#~ msgid "Filter:"
+#~ msgstr "Фильтр:"
+
+#~ msgid "Abort"
+#~ msgstr "Прервать"
+
+#~ msgid "Installation aborted."
+#~ msgstr "Установка прервана."
 
 #~ msgid "The application %a was installed successfully!"
 #~ msgstr "Приложение %a успешно установлено!"
 
 #~ msgid "The application %a was not installed."
 #~ msgstr "Приложение %a не установлено."
+
+#~ msgid "Program description:"
+#~ msgstr "Описание программы:"
+
+#~ msgid "Software license"
+#~ msgstr "Лицензия программы"
+
+#~ msgid "Welcome!"
+#~ msgstr "Добро пожаловать!"
+
+#~ msgid "Press \"Next\" to start the installation!"
+#~ msgstr "Нажмите \"Далее\" для начала установки!"
+
+#~ msgid "Please wait."
+#~ msgstr "Пожалуйста подождите."
+
+#~ msgid "Install now"
+#~ msgstr "Установить сейчас"
+
+#~ msgid "Press \"Finish\" to close."
+#~ msgstr "Нажмите \"Готово\" для закрытия."
+
+#~ msgid "Finish"
+#~ msgstr "Готово"
+
+#~ msgid "The installer will close now"
+#~ msgstr "Установка сейчас будет закрыта."
+
+#~ msgid "Display installation log"
+#~ msgstr "Показать журнал установки"
+
+#~ msgid "Back"
+#~ msgstr "Назад"
+
+#~ msgid "This package does not support your Linux distribution."
+#~ msgstr "Этот пакет не поддерживается вашим Linux дистрибутивом."
+
+#~ msgid "I don't agree"
+#~ msgstr "Я не согласен"
+
+#~ msgid "Loading aborted."
+#~ msgstr "Загрузка прервана."
+
+#~ msgid "What do you want to do?"
+#~ msgstr "Что вы хотите сделать?"
+
+#~ msgid "Display system applications"
+#~ msgstr "Показать системные приложения"
+
+#~ msgid "Display my applications"
+#~ msgstr "Показать мои приложения"
+
+#~ msgid "This application is already installed"
+#~ msgstr "Программа уже установлена"
+
+#~ msgid "Running installation..."
+#~ msgstr "Идёт установка..."
+
+#~ msgid "Do you want to install it again?"
+#~ msgstr "Хотите установить снова?"
+
+#~ msgid "Installation"
+#~ msgstr "Установка"
+
+#~ msgid "Installation package is corrupt"
+#~ msgstr "Установочный пакет повреждён"
+
+#~ msgid "Install into my Home directory"
+#~ msgstr "Установить в мой домашний каталог"
+
+#~ msgid "Re-install"
+#~ msgstr "Переустановить"
+
+#~ msgid "Select installation mode"
+#~ msgstr "Выберите режим установки"
+
+#~ msgid "Install package?"
+#~ msgstr "Установить пакет?"
+
+#~ msgid "Uninstall"
+#~ msgstr "Удалить"
+
+#~ msgid "Install updates"
+#~ msgstr "Установить обновления"
+
+#~ msgid "Do you really want to uninstall %a?"
+#~ msgstr "Вы действительно хотите удалить %a?"
+
+#~ msgid "Application uninstalled successfully!"
+#~ msgstr "Удаление приложения успешно завершено!"
+
+#~ msgid "Error while uninstalling!"
+#~ msgstr "Произошла ошибка во время удаления!"
+
+#~ msgid "Select software you want to download and to install:"
+#~ msgstr "Выберите приложение для скачивания и установки"
+
+#~ msgid "Uninstalling..."
+#~ msgstr "Удаление..."
+
+#~ msgid "Uninstalling %a"
+#~ msgstr "Удаление %a"
+
+#~ msgid "Show:"
+#~ msgstr "Показать:"
+
+#~ msgid "Proxy-Settings"
+#~ msgstr "Настройки прокси-сервера"
+
+#~ msgid "Installation of %a"
+#~ msgstr "Установка %a"
+
+#~ msgid "This application wants to download & install a dependency from %l"
+#~ msgstr "Приложение хочет скачать и установить все зависимые пакеты из %l"
+
+#~ msgid "Install application for everyone"
+#~ msgstr "Установить приложение для всех пользователей"
+
+#~ msgid "Really remove?"
+#~ msgstr "Точно удалить?"
+
+#~ msgid "Are you really sure that you want to delete this source?"
+#~ msgstr "Вы действительно хотите удалить этот источник?"
+
+#~ msgid "Do you really want to abort this download?"
+#~ msgstr "Вы действительно хотите прервать эту закачку?"
+
+#~ msgid "The application will close now "
+#~ msgstr "Приложение будет закрыто прямо сейчас "
+
+#~ msgid "No applications found!"
+#~ msgstr "Приложения не найдены!"
+
+#~ msgid "The application will be updated to version %v"
+#~ msgstr "Это приложение будет обновлено до версии %v"
+
+#~ msgid "Please notify the developers on http://launchpad.net/listaller"
+#~ msgstr ""
+#~ "Пожалуйста, оповестите разработчиков на http://launchpad.net/listaller"
+
+#~ msgid "Testmode"
+#~ msgstr "Тестовый режим"
+
+#~ msgid "Welcome to the installation of %a"
+#~ msgstr "Добро пожаловать в программу установки %a"
+
+#~ msgid "Phase 3/4: Chmod new files..."
+#~ msgstr "Шаг 3/4: Chmod новых файлов..."
+
+#~ msgid "Phase 1/4: Resolving dependencies..."
+#~ msgstr "Шаг 1/4: Разрешение зависимостей..."
+
+#~ msgid "Dependencies couldn't be solved!"
+#~ msgstr "Зависимости не могут быть решены!"
+
+#~ msgid "Please view the logfile at %p"
+#~ msgstr "Пожалуйста, откройте файл событий в %p"
 
 #~ msgid ""
 #~ "The application which this package contains was not built for the current "
@@ -1012,17 +941,17 @@ msgstr ""
 #~ "Приложение, которое содержит этот пакет, не было создано для текущей "
 #~ "системной архитектуры."
 
-#~ msgid "The application will be updated to version %v"
-#~ msgstr "Это приложение будет обновлено до версии %v"
+#~ msgid "Main"
+#~ msgstr "Главная"
 
-#~ msgid "The application will close now "
-#~ msgstr "Приложение будет закрыто прямо сейчас "
+#~ msgid "Package was not build for your Linux distribution release."
+#~ msgstr "Пакет не был создан для вашего дистрибутива Linux."
 
-#~ msgid "The installer will close now"
-#~ msgstr "Установка сейчас будет закрыта."
+#~ msgid "Use compatible packages?"
+#~ msgstr "Использовать совместимые пакеты?"
 
-#~ msgid "The package was invalid!"
-#~ msgstr "Пакет повреждён!"
+#~ msgid "No compatible packages found!"
+#~ msgstr "Совместимых пакетов не найдено"
 
 #~ msgid ""
 #~ "The selected action is not possible with this package.\n"
@@ -1031,74 +960,161 @@ msgstr ""
 #~ "Выбранное действие не возможно с данным пакетом.\n"
 #~ "Свяжитесь с автором для получения дополнительной информации."
 
-#~ msgid "There are no updates available!"
-#~ msgstr "Нет доступных обновлений!"
+#~ msgid "Details"
+#~ msgstr "Подробности"
 
-#~ msgid "This application wants to download & install a dependency from %l"
-#~ msgstr "Приложение хочет скачать и установить все зависимые пакеты из %l"
+#~ msgid "Listaller will close now. The package couldn't be installed."
+#~ msgstr "Listaller будет закрыт. Приложение не может быть установлено."
 
-#~ msgid "This package does not support your Linux distribution."
-#~ msgstr "Этот пакет не поддерживается вашим Linux дистрибутивом."
+#~ msgid "Please wait..."
+#~ msgstr "Пожалуйста подождите..."
 
-#~ msgid ""
-#~ "Unable to load the icon of %a. Please notify the developers of Listaller "
-#~ "or this application!"
-#~ msgstr ""
-#~ "Невозможно загрузить иконку %a. Пожалуйста, свяжитесь с разработчиками "
-#~ "Listaller, либо этого приложения!"
+#~ msgid "Mode"
+#~ msgstr "Режим"
 
-#~ msgid "Uninstall"
-#~ msgstr "Удалить"
+#~ msgid "Installation mode:"
+#~ msgstr "Режим установки:"
 
-#~ msgid "Uninstalling %a"
-#~ msgstr "Удаление %a"
-
-#~ msgid "Uninstalling unused deps..."
-#~ msgstr "Удаление неиспользуемых зависимостей..."
-
-#~ msgid "Uninstalling..."
-#~ msgstr "Удаление..."
-
-#~ msgid "Update info:"
-#~ msgstr "Информация об обновлении:"
-
-#~ msgid "Update sources"
-#~ msgstr "Обновить источники"
-
-#~ msgid "Use compatible packages?"
-#~ msgstr "Использовать совместимые пакеты?"
-
-#~ msgid "Username"
-#~ msgstr "Имя пользователя"
+#~ msgid "Software Manager"
+#~ msgstr "Менеджер программного обеспечения"
 
 #~ msgid "Utilities"
 #~ msgstr "Утилиты"
 
-#~ msgid "Version"
-#~ msgstr "Версия"
+#~ msgid "Other"
+#~ msgstr "Другое"
 
-#~ msgid "Waiting..."
-#~ msgstr "Ожидание..."
+#~ msgid "Graphic"
+#~ msgstr "Графика"
 
-#~ msgid "Welcome to the installation of %a"
-#~ msgstr "Добро пожаловать в программу установки %a"
+#~ msgid "Convert package?"
+#~ msgstr "Преобразовать пакет?"
 
-#~ msgid "Welcome!"
-#~ msgstr "Добро пожаловать!"
+#~ msgid "Ready."
+#~ msgstr "Готово."
 
-#~ msgid "What do you want to do?"
-#~ msgstr "Что вы хотите сделать?"
+#~ msgid "Get dependency from"
+#~ msgstr "Получить зависимость от"
+
+#~ msgid "Select which parts of the application should be installed."
+#~ msgstr "Выберите какие части приложения необходимо установить."
+
+#~ msgid "Filtering..."
+#~ msgstr "Фильтрация..."
+
+#~ msgid "Enable Proxy-Server"
+#~ msgstr "Включить Прокси-Сервер"
+
+#~ msgid "Package %p could not be installed."
+#~ msgstr "Пакет %p не может быть установлен."
+
+#~ msgid "About Listaller"
+#~ msgstr "О Listaller"
+
+#~ msgid "Authors"
+#~ msgstr "Авторы"
+
+#~ msgid "About"
+#~ msgstr "О программе"
+
+#~ msgid "Delete source?"
+#~ msgstr "Удалить источник?"
+
+#~ msgid "%f files will be changed."
+#~ msgstr "%f файлы будут изменены."
+
+#~ msgid "Load dependencies from included webserver-urls automatically"
+#~ msgstr "Автоматическая загрузка зависимостей из подключенных web-серверов"
+
+#~ msgid ""
+#~ "Problem while downloading the packages. Maybe the login on the FTP-Server "
+#~ "failed."
+#~ msgstr ""
+#~ "Проблемы во время загрузки пакетов. Возможно не удалось войти на FTP-сервер"
+
+#~ msgid "Problem while downloading the dep-file."
+#~ msgstr "Проблема при загрузке dep файла."
+
+#~ msgid "Listaller settings"
+#~ msgstr "Настройки Listaller"
+
+#~ msgid "Can't load LOKI-Setup information."
+#~ msgstr "Не удается загрузить LOKI-Setup информацию."
+
+#~ msgid "Loading catalogue page..."
+#~ msgstr "Загрузка страницы каталога..."
+
+#~ msgid "Uninstalling unused deps..."
+#~ msgstr "Удаление неиспользуемых зависимостей..."
+
+#~ msgid ""
+#~ "Cannot download this package. Please contact the catalogue managers on %h"
+#~ msgstr ""
+#~ "Нет возможности загрузить этот пакет. Согласуйтесь с менеджером каталогов на "
+#~ "%h"
+
+#~ msgid "Downloading catalogue base information..."
+#~ msgstr "Загрузка информации о базе каталогов..."
 
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "
-#~ "system is %y.\rThis package can be converted using \"alien\", but this "
-#~ "will take some time and eventually the application won't work\rDo you "
-#~ "want to convert the package now?"
+#~ "system is %y.\rThis package can be converted using \"alien\", but this will "
+#~ "take some time and eventually the application won't work\rDo you want to "
+#~ "convert the package now?"
 #~ msgstr ""
-#~ "Вы желаете установить пакет %x, но система пакетов вашего дистрибутива %y."
-#~ "\rЭтот пакет может быть преобразован, используя \"alien\", но это может "
+#~ "Вы желаете установить пакет %x, но система пакетов вашего дистрибутива "
+#~ "%y.\rЭтот пакет может быть преобразован, используя \"alien\", но это может "
 #~ "потребовать некоторое время и приложение может работать некорректно, либо "
 #~ "вообще не работать.\rХотите ли вы преобразовать пакет?"
 
+#~ msgid "Next"
+#~ msgstr "Вперёд"
+
 #~ msgid "Your Linux distribution is not supported by Listaller yet!"
 #~ msgstr "Ваш дистрибутив ещё не поддерживается Listaller!"
+
+#~ msgid "I agree with the above terms and conditions"
+#~ msgstr "Я согласен с условиями, приведёными выше"
+
+#~ msgid "The package was invalid!"
+#~ msgstr "Пакет повреждён!"
+
+#~ msgid "Finished"
+#~ msgstr "Готово"
+
+#~ msgid "Phase 4/4: Registering application..."
+#~ msgstr "Этап 4/4: Регистрация приложения..."
+
+#~ msgid "Phase 2/4: Installing files..."
+#~ msgstr "Этап 2/4: Установка файлов..."
+
+#~ msgid ""
+#~ "Unable to load the icon of %a. Please notify the developers of Listaller or "
+#~ "this application!"
+#~ msgstr ""
+#~ "Невозможно загрузить иконку %a. Пожалуйста, свяжитесь с разработчиками "
+#~ "Listaller, либо этого приложения!"
+
+#~ msgid "Loading..."
+#~ msgstr "Загрузка…"
+
+#~ msgid "Converting %p package..."
+#~ msgstr "Конвертирование пакета %p..."
+
+#~ msgid "No information available!"
+#~ msgstr "Нет доступной информации!"
+
+#~ msgid "Running application installation..."
+#~ msgstr "Запуск установки приложения..."
+
+#~ msgid ""
+#~ "Do you really want to remove \"%p\", containing %a?\rThe following "
+#~ "package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+#~ "those packages, press \"No\"!"
+#~ msgstr ""
+#~ "Вы действительно хотите удалить \"%р\", содержащий %a?\rСледующие пакеты "
+#~ "будут удалены: %PL\rЕсли вы не уверены, что вам не будут нужны эти пакеты, "
+#~ "нажмите \"Нет\"!"
+
+#~ msgid "Update info:"
+#~ msgstr "Информация об обновлении:"

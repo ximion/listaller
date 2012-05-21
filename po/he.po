@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-05-21 17:08+0200\n"
+"POT-Creation-Date: 2012-05-19 23:25+0000\n"
 "PO-Revision-Date: 2009-12-07 23:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
-"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-16 11:52+0000\n"
-"X-Generator: Launchpad (build 15099)\n"
+"X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
+"X-Generator: Launchpad (build 15275)\n"
+"Language: he\n"
 
 #, c-format
 msgid ""
@@ -151,21 +151,19 @@ msgstr ""
 msgid "Database unlocked"
 msgstr ""
 
-#, fuzzy
 msgid "Description:"
-msgstr "תיאור התוכנה:"
+msgstr ""
 
-#, fuzzy
 msgid "Do you accept these terms and conditions?"
-msgstr "אני מסכים לתנאים הבאים"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Do you want to install %s now?"
-msgstr "האם ברצונך להתקין זאת שוב?"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Do you want to remove %s (%s) now?"
-msgstr "האם ברצונך לאשר פעולה זו?"
+msgstr ""
 
 #, c-format
 msgid "ERROR: %s"
@@ -202,9 +200,8 @@ msgstr ""
 msgid "IPK package output directory"
 msgstr ""
 
-#, fuzzy
 msgid "Install an IPK package"
-msgstr "התקנת החבילה פגומה"
+msgstr ""
 
 msgid "Installation completed!"
 msgstr "ההתקנה הושלמה!"
@@ -212,17 +209,16 @@ msgstr "ההתקנה הושלמה!"
 msgid "Installation failed!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installation of %s"
-msgstr "התקנת %a"
+msgstr ""
 
 #, c-format
 msgid "Installation of native packages failed with message: %s"
 msgstr ""
 
-#, fuzzy
 msgid "Installing"
-msgstr "התקנה"
+msgstr ""
 
 #, c-format
 msgid "Installing native packages: %s"
@@ -231,13 +227,11 @@ msgstr ""
 msgid "License:"
 msgstr ""
 
-#, fuzzy
 msgid "List all installed applications"
-msgstr "התקן יישום חדש"
+msgstr ""
 
-#, fuzzy
 msgid "List installed Listaller applications"
-msgstr "התקן יישום חדש"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -346,9 +340,8 @@ msgstr ""
 msgid "Removal of %s started."
 msgstr ""
 
-#, fuzzy
 msgid "Remove an application installed using Listaller"
-msgstr "יישום זה כבר מותקן"
+msgstr ""
 
 msgid "Removing"
 msgstr ""
@@ -358,7 +351,8 @@ msgid "Resolving dependencies of '%s'."
 msgstr ""
 
 #, c-format
-msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgid ""
+"Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
 #, c-format
@@ -559,8 +553,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"Unable to find a matching implementation of '%s' for your system/"
-"architecture."
+"Unable to find a matching implementation of '%s' for your "
+"system/architecture."
 msgstr ""
 
 #, c-format
@@ -660,167 +654,107 @@ msgstr ""
 msgid "shared"
 msgstr ""
 
-#~ msgid "%f files will be changed."
-#~ msgstr "%f קבצים ישונו."
+#~ msgid "Please read the following information carefully:"
+#~ msgstr "אנא קרא את הנתונים הבאים בקפידה:"
 
-#~ msgid "(This program will download the needed files from the internet)"
-#~ msgstr "(תוכנית זו תוריד את הקבצים הנחוצים מהאינטרנט)"
+#~ msgid "Program description:"
+#~ msgstr "תיאור התוכנה:"
 
-#~ msgid "Abort"
-#~ msgstr "בטל"
+#~ msgid "Press \"Next\" to start the installation!"
+#~ msgstr "לחץ על \"הבא\" כדי להתחיל בהתקנה!"
 
-#~ msgid "All"
-#~ msgstr "הכול"
-
-#~ msgid "Application uninstalled successfully!"
-#~ msgstr "היישום הוסר בהצלחה!"
-
-#~ msgid "Autor"
-#~ msgstr "יוצר"
-
-#~ msgid "Back"
-#~ msgstr "הקודם"
-
-#~ msgid "Can't load LOKI-Setup information."
-#~ msgstr "לא ניתן לטעון את נתוני ה־LOKI של ההתקנה."
-
-#~ msgid ""
-#~ "Cannot download this package. Please contact the catalogue managers on %h"
-#~ msgstr "לא ניתן להוריד חבילה זו. אנא צור קשר עם מנהלי הקטלוג דרך %h"
-
-#~ msgid "Category:"
-#~ msgstr "קטגוריה:"
-
-#~ msgid "Check for updates"
-#~ msgstr "בדוק אחר עדכונים"
-
-#~ msgid "Close"
-#~ msgstr "סגור"
-
-#~ msgid "Convert package?"
-#~ msgstr "להמיר חבילה?"
-
-#~ msgid "Converting %p package..."
-#~ msgstr "ממיר את החבילה %p..."
-
-#~ msgid "Delete source"
-#~ msgstr "מחק מקור"
-
-#~ msgid "Dependencies couldn't be solved!"
-#~ msgstr "לא ניתן לפתור את התלויות!"
-
-#~ msgid "Details"
-#~ msgstr "פרטים"
-
-#~ msgid "Development"
-#~ msgstr "פיתוח"
-
-#~ msgid "Display installation log"
-#~ msgstr "הצג את רישום ההתקנה"
-
-#~ msgid "Do you really want to abort this download?"
-#~ msgstr "האם אתה בטוח שברצונך לבטל הורדה זו?"
-
-#~ msgid ""
-#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
-#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
-#~ "those packages, press \"No\"!"
-#~ msgstr ""
-#~ "האם אתה בטוח שברצונך להסיר את \"%p\", המכילה את %a?\rהחבילה/ות הבאה/ות "
-#~ "יוסרו גם כן: %pl\rאם אינך בטוח שלא תזדקק לחבילות אלו, לחץ על \"לא\"!"
-
-#~ msgid "Do you really want to uninstall %a?"
-#~ msgstr "אם אתה בטוח שברצונך להסיר את %a?"
-
-#~ msgid "Downloading catalogue base information..."
-#~ msgstr "מוריד את נתוני הבסיס של הקטלוג..."
-
-#~ msgid "Education"
-#~ msgstr "לימוד"
-
-#~ msgid "Enable Proxy-Server"
-#~ msgstr "אפשר שרת מתווך"
-
-#~ msgid "Error while extracting files!"
-#~ msgstr "שגיאה בעת חילוץ הקבצים!"
-
-#~ msgid "Error while uninstalling!"
-#~ msgstr "שגיאה בעת ההסרה!"
-
-#~ msgid "Filter:"
-#~ msgstr "מסנן:"
-
-#~ msgid "Filtering..."
-#~ msgstr "מסנן..."
-
-#~ msgid "Finish"
-#~ msgstr "סיום"
-
-#~ msgid "Finished"
-#~ msgstr "הסתיים"
-
-#~ msgid "Games"
-#~ msgstr "משחקים"
-
-#~ msgid "Graphic"
-#~ msgstr "גרפיקה"
-
-#~ msgid "I don't agree"
-#~ msgstr "אינני מסכים"
-
-#~ msgid "Install now"
-#~ msgstr "התקן כעת"
-
-#~ msgid "Install updates"
-#~ msgstr "התקן עדכונים"
+#~ msgid "Software license"
+#~ msgstr "רשיון התוכנה"
 
 #~ msgid "Installation aborted."
 #~ msgstr "ההתקנה בוטלה."
 
-#~ msgid "Listaller settings"
-#~ msgstr "הגדרות Listaller"
+#~ msgid "The application %a was not installed."
+#~ msgstr "היישום %a לא הותקן."
 
-#~ msgid "Load dependencies from included webserver-urls automatically"
-#~ msgstr "טען תלויות מכתובות השרת אוטומטית"
+#~ msgid "The application %a was installed successfully!"
+#~ msgstr "היישום %a הותקן בהצלחה!"
 
-#~ msgid "Loading aborted."
-#~ msgstr "הטעינה בוטלה."
+#~ msgid "Install now"
+#~ msgstr "התקן כעת"
 
-#~ msgid "Loading catalogue page..."
-#~ msgstr "טוען את עמוד הקטלוג..."
+#~ msgid "Welcome!"
+#~ msgstr "ברוכים הבאים!"
 
-#~ msgid "Loading..."
-#~ msgstr "טוען..."
+#~ msgid "Finish"
+#~ msgstr "סיום"
 
-#~ msgid "Main"
-#~ msgstr "ראשי"
+#~ msgid "Press \"Finish\" to close."
+#~ msgstr "לחץ על \"סיום\" לסגירה."
 
-#~ msgid "Multimedia"
-#~ msgstr "מולטימדיה"
+#~ msgid "Please wait."
+#~ msgstr "אנא המתן."
 
-#~ msgid "Network"
-#~ msgstr "רשת"
+#~ msgid "Running installation..."
+#~ msgstr "מריץ את ההתקנה..."
 
 #~ msgid "Next"
 #~ msgstr "הבא"
 
-#~ msgid "No compatible packages found!"
-#~ msgstr "לא נמצאו חבילות תואמות!"
+#~ msgid "Display installation log"
+#~ msgstr "הצג את רישום ההתקנה"
 
-#~ msgid "No information available!"
-#~ msgstr "אין מידע זמין!"
+#~ msgid "Back"
+#~ msgstr "הקודם"
 
-#~ msgid "Office"
-#~ msgstr "משרד"
+#~ msgid "Error while extracting files!"
+#~ msgstr "שגיאה בעת חילוץ הקבצים!"
 
-#~ msgid "Other"
-#~ msgstr "אחר"
+#~ msgid "This application is already installed"
+#~ msgstr "יישום זה כבר מותקן"
 
-#~ msgid "Password"
-#~ msgstr "סיסמה"
+#~ msgid "Loading aborted."
+#~ msgstr "הטעינה בוטלה."
+
+#~ msgid "Your Linux distribution is not supported by Listaller yet!"
+#~ msgstr "הפצת הלינוקס שלך אינה נתמכת על ידי Listaller עדיין!"
+
+#~ msgid "The installer will close now"
+#~ msgstr "תוכנית ההתקנה תסגר כעת"
+
+#~ msgid "Please notify the developers on http://launchpad.net/listaller"
+#~ msgstr "אנא דווח למפתחים בכתובת http://launchpad.net/listaller"
+
+#~ msgid "I agree with the above terms and conditions"
+#~ msgstr "אני מסכים לתנאים הבאים"
+
+#~ msgid "I don't agree"
+#~ msgstr "אינני מסכים"
+
+#~ msgid "Welcome to the installation of %a"
+#~ msgstr "ברוכים הבאים להתקנת %a"
+
+#~ msgid "Do you want to install it again?"
+#~ msgstr "האם ברצונך להתקין זאת שוב?"
+
+#~ msgid "The package was invalid!"
+#~ msgstr "החבילה הינה פגומה!"
+
+#~ msgid "Installation of %a"
+#~ msgstr "התקנת %a"
+
+#~ msgid "Please view the logfile at %p"
+#~ msgstr "אנא עיין בקובץ הרישום %p"
+
+#~ msgid "Dependencies couldn't be solved!"
+#~ msgstr "לא ניתן לפתור את התלויות!"
+
+#~ msgid "This application wants to download & install a dependency from %l"
+#~ msgstr "יישום זה מעוניין להוריד ולהתקין תלות מהכתובת %l"
 
 #~ msgid "Phase 1/4: Resolving dependencies..."
 #~ msgstr "שלב 1/4: פותר תלויות..."
+
+#~ msgid "Installation package is corrupt"
+#~ msgstr "התקנת החבילה פגומה"
+
+#~ msgid "The application will close now "
+#~ msgstr "היישום יסגר כעת "
 
 #~ msgid "Phase 2/4: Installing files..."
 #~ msgstr "שלב 2/4: מתקין קבצים..."
@@ -831,156 +765,242 @@ msgstr ""
 #~ msgid "Phase 4/4: Registering application..."
 #~ msgstr "שלב 4/4: רושם את התוכנה..."
 
-#~ msgid "Please notify the developers on http://launchpad.net/listaller"
-#~ msgstr "אנא דווח למפתחים בכתובת http://launchpad.net/listaller"
+#~ msgid "Finished"
+#~ msgstr "הסתיים"
 
-#~ msgid "Please read the following information carefully:"
-#~ msgstr "אנא קרא את הנתונים הבאים בקפידה:"
+#~ msgid "Details"
+#~ msgstr "פרטים"
 
-#~ msgid "Please view the logfile at %p"
-#~ msgstr "אנא עיין בקובץ הרישום %p"
+#~ msgid "Installation"
+#~ msgstr "התקנה"
 
-#~ msgid "Please wait."
-#~ msgstr "אנא המתן."
-
-#~ msgid "Press \"Finish\" to close."
-#~ msgstr "לחץ על \"סיום\" לסגירה."
-
-#~ msgid "Press \"Next\" to start the installation!"
-#~ msgstr "לחץ על \"הבא\" כדי להתחיל בהתקנה!"
-
-#~ msgid "Problem while downloading the dep-file."
-#~ msgstr "שגיאה בעת הורדת קובץ ה־dep."
+#~ msgid "Use compatible packages?"
+#~ msgstr "להשתמש בחבילות תואמות?"
 
 #~ msgid ""
 #~ "Problem while downloading the packages. Maybe the login on the FTP-Server "
 #~ "failed."
 #~ msgstr "נתגלתה בעיה בעת הורדת החבילות. ייתכן והחיבור לשרת ה־FTP נכשל."
 
-#~ msgid "Proxy-Settings"
-#~ msgstr "הגדרות המתווך"
-
-#~ msgid "Quit"
-#~ msgstr "יציאה"
-
-#~ msgid "Ready."
-#~ msgstr "מוכן."
-
-#~ msgid "Really remove?"
-#~ msgstr "באמת להסיר?"
-
-#~ msgid "Running application installation..."
-#~ msgstr "מריץ התקנת יישום..."
-
-#~ msgid "Running installation..."
-#~ msgstr "מריץ את ההתקנה..."
-
-#~ msgid "Select software you want to download and to install:"
-#~ msgstr "בחר תוכנה שברצונך להוריד ולהתקין:"
-
-#~ msgid "Show"
-#~ msgstr "הצג"
-
-#~ msgid "Show:"
-#~ msgstr "הצג:"
-
-#~ msgid "Software catalogue"
-#~ msgstr "קטלוג התוכנה"
-
-#~ msgid "Software license"
-#~ msgstr "רשיון התוכנה"
+#~ msgid "Main"
+#~ msgstr "ראשי"
 
 #~ msgid "Success!"
 #~ msgstr "הצלחה!"
 
-#~ msgid "System"
-#~ msgstr "מערכת"
+#~ msgid "Problem while downloading the dep-file."
+#~ msgstr "שגיאה בעת הורדת קובץ ה־dep."
 
-#~ msgid "Test of the application finished."
-#~ msgstr "בדיקת היישום הושלמה."
+#~ msgid "(This program will download the needed files from the internet)"
+#~ msgstr "(תוכנית זו תוריד את הקבצים הנחוצים מהאינטרנט)"
 
-#~ msgid "Testmode"
-#~ msgstr "מצב בדיקה"
-
-#~ msgid "The application %a was installed successfully!"
-#~ msgstr "היישום %a הותקן בהצלחה!"
-
-#~ msgid "The application %a was not installed."
-#~ msgstr "היישום %a לא הותקן."
-
-#~ msgid "The application will be updated to version %v"
-#~ msgstr "היישום יעודכן לגירסה %v"
-
-#~ msgid "The application will close now "
-#~ msgstr "היישום יסגר כעת "
-
-#~ msgid "The installer will close now"
-#~ msgstr "תוכנית ההתקנה תסגר כעת"
-
-#~ msgid "The package was invalid!"
-#~ msgstr "החבילה הינה פגומה!"
-
-#~ msgid "There are no updates available!"
-#~ msgstr "אין עדכונים זמינים!"
-
-#~ msgid "This application wants to download & install a dependency from %l"
-#~ msgstr "יישום זה מעוניין להוריד ולהתקין תלות מהכתובת %l"
-
-#~ msgid "This package does not support your Linux distribution."
-#~ msgstr "חבילה זו אינה נתמכת על ידי הפצת הלינוקס שלך."
-
-#~ msgid ""
-#~ "Unable to load the icon of %a. Please notify the developers of Listaller "
-#~ "or this application!"
-#~ msgstr ""
-#~ "לא ניתן לטעון את הסמל %a. אנא דווח על כך למפתחי Listaller או למפתחי "
-#~ "היישום!"
-
-#~ msgid "Uninstall"
-#~ msgstr "הסרה"
-
-#~ msgid "Uninstalling %a"
-#~ msgstr "מסיר את %a"
-
-#~ msgid "Uninstalling unused deps..."
-#~ msgstr "מתקין קבצי dep שאינם בשימוש..."
-
-#~ msgid "Uninstalling..."
-#~ msgstr "מסיר..."
-
-#~ msgid "Update info:"
-#~ msgstr "נתוני העדכון:"
+#~ msgid "Install new application"
+#~ msgstr "התקן יישום חדש"
 
 #~ msgid "Update sources"
 #~ msgstr "עדכן מקורות"
 
-#~ msgid "Use compatible packages?"
-#~ msgstr "להשתמש בחבילות תואמות?"
+#~ msgid "Close"
+#~ msgstr "סגור"
 
-#~ msgid "Username"
-#~ msgstr "שם המשתמש"
+#~ msgid "Delete source"
+#~ msgstr "מחק מקור"
+
+#~ msgid "Uninstall"
+#~ msgstr "הסרה"
+
+#~ msgid "No compatible packages found!"
+#~ msgstr "לא נמצאו חבילות תואמות!"
+
+#~ msgid "Listaller settings"
+#~ msgstr "הגדרות Listaller"
+
+#~ msgid "Software catalogue"
+#~ msgstr "קטלוג התוכנה"
+
+#~ msgid "Show:"
+#~ msgstr "הצג:"
+
+#~ msgid "Multimedia"
+#~ msgstr "מולטימדיה"
+
+#~ msgid "System"
+#~ msgstr "מערכת"
+
+#~ msgid "All"
+#~ msgstr "הכול"
+
+#~ msgid "Office"
+#~ msgstr "משרד"
+
+#~ msgid "Education"
+#~ msgstr "לימוד"
+
+#~ msgid "Graphic"
+#~ msgstr "גרפיקה"
+
+#~ msgid "Development"
+#~ msgstr "פיתוח"
+
+#~ msgid "Games"
+#~ msgstr "משחקים"
+
+#~ msgid "Network"
+#~ msgstr "רשת"
+
+#~ msgid "Can't load LOKI-Setup information."
+#~ msgstr "לא ניתן לטעון את נתוני ה־LOKI של ההתקנה."
+
+#~ msgid ""
+#~ "Unable to load the icon of %a. Please notify the developers of Listaller or "
+#~ "this application!"
+#~ msgstr ""
+#~ "לא ניתן לטעון את הסמל %a. אנא דווח על כך למפתחי Listaller או למפתחי היישום!"
 
 #~ msgid "Version"
 #~ msgstr "גירסה"
 
+#~ msgid "Autor"
+#~ msgstr "יוצר"
+
+#~ msgid "Other"
+#~ msgstr "אחר"
+
+#~ msgid "Proxy-Settings"
+#~ msgstr "הגדרות המתווך"
+
+#~ msgid "Enable Proxy-Server"
+#~ msgstr "אפשר שרת מתווך"
+
+#~ msgid "Username"
+#~ msgstr "שם המשתמש"
+
+#~ msgid "Password"
+#~ msgstr "סיסמה"
+
+#~ msgid "Load dependencies from included webserver-urls automatically"
+#~ msgstr "טען תלויות מכתובות השרת אוטומטית"
+
+#~ msgid "Converting %p package..."
+#~ msgstr "ממיר את החבילה %p..."
+
+#~ msgid "Convert package?"
+#~ msgstr "להמיר חבילה?"
+
+#~ msgid "Ready."
+#~ msgstr "מוכן."
+
+#~ msgid "Category:"
+#~ msgstr "קטגוריה:"
+
+#~ msgid "Loading..."
+#~ msgstr "טוען..."
+
+#~ msgid "Filter:"
+#~ msgstr "מסנן:"
+
+#~ msgid "Filtering..."
+#~ msgstr "מסנן..."
+
+#~ msgid "No information available!"
+#~ msgstr "אין מידע זמין!"
+
+#~ msgid "Select software you want to download and to install:"
+#~ msgstr "בחר תוכנה שברצונך להוריד ולהתקין:"
+
+#~ msgid "Do you really want to uninstall %a?"
+#~ msgstr "אם אתה בטוח שברצונך להסיר את %a?"
+
+#~ msgid "Application uninstalled successfully!"
+#~ msgstr "היישום הוסר בהצלחה!"
+
+#~ msgid "Error while uninstalling!"
+#~ msgstr "שגיאה בעת ההסרה!"
+
+#~ msgid ""
+#~ "Cannot download this package. Please contact the catalogue managers on %h"
+#~ msgstr "לא ניתן להוריד חבילה זו. אנא צור קשר עם מנהלי הקטלוג דרך %h"
+
+#~ msgid "Running application installation..."
+#~ msgstr "מריץ התקנת יישום..."
+
+#~ msgid "Downloading catalogue base information..."
+#~ msgstr "מוריד את נתוני הבסיס של הקטלוג..."
+
+#~ msgid "Do you really want to abort this download?"
+#~ msgstr "האם אתה בטוח שברצונך לבטל הורדה זו?"
+
+#~ msgid "Loading catalogue page..."
+#~ msgstr "טוען את עמוד הקטלוג..."
+
+#~ msgid "The application will be updated to version %v"
+#~ msgstr "היישום יעודכן לגירסה %v"
+
+#~ msgid "There are no updates available!"
+#~ msgstr "אין עדכונים זמינים!"
+
+#~ msgid "Uninstalling %a"
+#~ msgstr "מסיר את %a"
+
+#~ msgid "%f files will be changed."
+#~ msgstr "%f קבצים ישונו."
+
+#~ msgid "Update info:"
+#~ msgstr "נתוני העדכון:"
+
+#~ msgid ""
+#~ "Do you really want to remove \"%p\", containing %a?\rThe following "
+#~ "package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+#~ "those packages, press \"No\"!"
+#~ msgstr ""
+#~ "האם אתה בטוח שברצונך להסיר את \"%p\", המכילה את %a?\rהחבילה/ות הבאה/ות יוסרו "
+#~ "גם כן: %pl\rאם אינך בטוח שלא תזדקק לחבילות אלו, לחץ על \"לא\"!"
+
+#~ msgid "Uninstalling..."
+#~ msgstr "מסיר..."
+
 #~ msgid "Waiting..."
 #~ msgstr "ממתין..."
 
-#~ msgid "Welcome to the installation of %a"
-#~ msgstr "ברוכים הבאים להתקנת %a"
+#~ msgid "Really remove?"
+#~ msgstr "באמת להסיר?"
 
-#~ msgid "Welcome!"
-#~ msgstr "ברוכים הבאים!"
+#~ msgid "Uninstalling unused deps..."
+#~ msgstr "מתקין קבצי dep שאינם בשימוש..."
+
+#~ msgid "Check for updates"
+#~ msgstr "בדוק אחר עדכונים"
+
+#~ msgid "Quit"
+#~ msgstr "יציאה"
+
+#~ msgid "Install updates"
+#~ msgstr "התקן עדכונים"
+
+#~ msgid "Show"
+#~ msgstr "הצג"
+
+#~ msgid "Abort"
+#~ msgstr "בטל"
 
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "
-#~ "system is %y.\rThis package can be converted using \"alien\", but this "
-#~ "will take some time and eventually the application won't work\rDo you "
-#~ "want to convert the package now?"
+#~ "system is %y.\rThis package can be converted using \"alien\", but this will "
+#~ "take some time and eventually the application won't work\rDo you want to "
+#~ "convert the package now?"
 #~ msgstr ""
-#~ "האם ברצונך להתקין חבילת %x, אך מערכת החבילות של הפצת הלינוקס שלך הינה %y."
-#~ "\rניתן להמיר חבילה זו באמצעות \"alien\", אך פעולה זו עלולה לארוך זמן מה "
+#~ "האם ברצונך להתקין חבילת %x, אך מערכת החבילות של הפצת הלינוקס שלך הינה "
+#~ "%y.\rניתן להמיר חבילה זו באמצעות \"alien\", אך פעולה זו עלולה לארוך זמן מה "
 #~ "ולבסוף היישום עלול לא לעבוד\rהאם ברצונך להמיר את החבילה כעת?"
 
-#~ msgid "Your Linux distribution is not supported by Listaller yet!"
-#~ msgstr "הפצת הלינוקס שלך אינה נתמכת על ידי Listaller עדיין!"
+#~ msgid "Testmode"
+#~ msgstr "מצב בדיקה"
+
+#~ msgid "This package does not support your Linux distribution."
+#~ msgstr "חבילה זו אינה נתמכת על ידי הפצת הלינוקס שלך."
+
+#~ msgid "Test of the application finished."
+#~ msgstr "בדיקת היישום הושלמה."
+
+#~ msgid "Do you want confirm this action?"
+#~ msgstr "האם ברצונך לאשר פעולה זו?"

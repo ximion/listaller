@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-05-21 17:08+0200\n"
+"POT-Creation-Date: 2012-05-19 23:25+0000\n"
 "PO-Revision-Date: 2012-01-08 23:28+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-16 11:52+0000\n"
-"X-Generator: Launchpad (build 15099)\n"
+"X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
+"X-Generator: Launchpad (build 15275)\n"
+"Language: \n"
 
 #, c-format
 msgid ""
@@ -146,21 +146,19 @@ msgstr ""
 msgid "Database unlocked"
 msgstr ""
 
-#, fuzzy
 msgid "Description:"
-msgstr "Program açıklaması:"
+msgstr ""
 
-#, fuzzy
 msgid "Do you accept these terms and conditions?"
-msgstr "Yukarıdaki şartları kabul ediyorum."
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Do you want to install %s now?"
-msgstr "Tekrar yüklemek ister misiniz?"
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Do you want to remove %s (%s) now?"
-msgstr "Bu hareketi onaylamak istiyor musunuz?"
+msgstr ""
 
 #, c-format
 msgid "ERROR: %s"
@@ -197,9 +195,8 @@ msgstr ""
 msgid "IPK package output directory"
 msgstr ""
 
-#, fuzzy
 msgid "Install an IPK package"
-msgstr "Paket yüklensin mi?"
+msgstr ""
 
 msgid "Installation completed!"
 msgstr "Yükleme tamamlandı!"
@@ -207,17 +204,16 @@ msgstr "Yükleme tamamlandı!"
 msgid "Installation failed!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installation of %s"
-msgstr "%a Programının Yüklemesi"
+msgstr ""
 
 #, c-format
 msgid "Installation of native packages failed with message: %s"
 msgstr ""
 
-#, fuzzy
 msgid "Installing"
-msgstr "Yükleme"
+msgstr ""
 
 #, c-format
 msgid "Installing native packages: %s"
@@ -226,13 +222,11 @@ msgstr ""
 msgid "License:"
 msgstr ""
 
-#, fuzzy
 msgid "List all installed applications"
-msgstr "Yeni uygulama yükle"
+msgstr ""
 
-#, fuzzy
 msgid "List installed Listaller applications"
-msgstr "Yeni uygulama yükle"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -341,9 +335,8 @@ msgstr ""
 msgid "Removal of %s started."
 msgstr ""
 
-#, fuzzy
 msgid "Remove an application installed using Listaller"
-msgstr "Bu program zaten yüklenmiş."
+msgstr ""
 
 msgid "Removing"
 msgstr ""
@@ -353,7 +346,8 @@ msgid "Resolving dependencies of '%s'."
 msgstr ""
 
 #, c-format
-msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgid ""
+"Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
 #, c-format
@@ -554,8 +548,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"Unable to find a matching implementation of '%s' for your system/"
-"architecture."
+"Unable to find a matching implementation of '%s' for your "
+"system/architecture."
 msgstr ""
 
 #, c-format
@@ -655,44 +649,438 @@ msgstr ""
 msgid "shared"
 msgstr ""
 
-#~ msgid "%f files will be changed."
-#~ msgstr "%f dosyaları değiştirilecek."
+#~ msgid "Filter:"
+#~ msgstr "Süzgeç:"
 
-#~ msgid "(This program will download the needed files from the internet)"
-#~ msgstr "(Bu program, gereken dosyaları internetten yükleyecek.)"
+#~ msgid "Welcome!"
+#~ msgstr "Hoşgeldiniz!"
 
-#~ msgid "Abort"
-#~ msgstr "İptal et"
+#~ msgid "Press \"Next\" to start the installation!"
+#~ msgstr "Yüklemeye başlamak için \"İleri\" butonuna basınız!"
 
-#~ msgid "About"
-#~ msgstr "Hakkında"
+#~ msgid "Please read the following information carefully:"
+#~ msgstr "Lütfen aşağıdaki bilgiyi dikkatle okuyun:"
 
-#~ msgid "About Listaller"
-#~ msgstr "Linstaller Hakkında"
+#~ msgid ""
+#~ "Please run \"listallgo\" with path to install-package as first parameter!"
+#~ msgstr ""
+#~ "Lütfen yükleme için ilk değişken olarak \"listallgo\" dosya dizinini "
+#~ "çalıştırın!"
 
-#~ msgid "All"
-#~ msgstr "Tümü"
+#~ msgid "Running installation..."
+#~ msgstr "Yükleme çalışıyor..."
 
-#~ msgid "Application uninstalled successfully!"
-#~ msgstr "Uygulama başarıyla kaldırıldı!"
+#~ msgid "Finish"
+#~ msgstr "Bitir"
 
-#~ msgid "Applying updates..."
-#~ msgstr "Güncelleştirmeler uygulanıyor..."
+#~ msgid "Next"
+#~ msgstr "İleri"
 
-#~ msgid "Are you really sure that you want to delete this source?"
-#~ msgstr "Bu kaynağı silmek istediğinizden kesinlikle emin misiniz?"
-
-#~ msgid "Authors"
-#~ msgstr "Yazarlar"
-
-#~ msgid "Autor"
-#~ msgstr "Yazar"
+#~ msgid "Display installation log"
+#~ msgstr "Yükleme kayıtlarını göster"
 
 #~ msgid "Back"
 #~ msgstr "Geri"
 
+#~ msgid "I agree with the above terms and conditions"
+#~ msgstr "Yukarıdaki şartları kabul ediyorum."
+
+#~ msgid "This application is already installed"
+#~ msgstr "Bu program zaten yüklenmiş."
+
+#~ msgid "Please notify the developers on http://launchpad.net/listaller"
+#~ msgstr ""
+#~ "Lütfen http://launchpad.net/linstaller adresi üzerinden yazılım "
+#~ "geliştiricilerimizi haberdar ediniz."
+
+#~ msgid "Error while extracting files!"
+#~ msgstr "Dosyalar çıkartırken hata yaşandı!"
+
+#~ msgid ""
+#~ "The IPK package could be damaged or you haven't enough rights to acces "
+#~ "required files/folders."
+#~ msgstr ""
+#~ "IPH paketi zarar görmüş olabilir ya da gereken dosyalara erişmek için "
+#~ "yetkileriniz yeterli olmayabilir."
+
+#~ msgid "Unable to overwrite the file %f."
+#~ msgstr "%f dosyasının üzerine yazılamadı."
+
+#~ msgid "The installer will close now"
+#~ msgstr "Yükleyici şimdi kapanacak."
+
+#~ msgid "This package does not support your Linux distribution."
+#~ msgstr "Bu paket, Linux sürümünüzü desteklemiyor."
+
+#~ msgid "Your Linux distribution is not supported by Listaller yet!"
+#~ msgstr "Linux sürümünüz Linstaller tarafından henüz desteklenmiyor."
+
+#~ msgid "I don't agree"
+#~ msgstr "Katılmıyorum"
+
+#~ msgid "Loading aborted."
+#~ msgstr "Yükleme iptal edildi."
+
+#~ msgid "Testmode"
+#~ msgstr "Test Modu"
+
+#~ msgid "Test of the application finished."
+#~ msgstr "Uygulamanın testi bitti."
+
+#~ msgid "Do you want to install it again?"
+#~ msgstr "Tekrar yüklemek ister misiniz?"
+
+#~ msgid "Welcome to the installation of %a"
+#~ msgstr "%a programının yüklemesine hoşgeldiniz."
+
+#~ msgid "Installation of %a"
+#~ msgstr "%a Programının Yüklemesi"
+
+#~ msgid "The application will close now "
+#~ msgstr "Uygulama şimdi kapanacak. "
+
+#~ msgid "The package was invalid!"
+#~ msgstr "Paket geçersiz!"
+
+#~ msgid "Installation package is corrupt"
+#~ msgstr "Yükleme paketi hasar görmüş."
+
+#~ msgid "Please view the logfile at %p"
+#~ msgstr "Lütfen kayıtlara göz atınız. ( %p )"
+
+#~ msgid "Dependencies couldn't be solved!"
+#~ msgstr "Bağımlılıklar çözülemedi."
+
+#~ msgid "The installation tries to add the following update source: "
+#~ msgstr "Uygulama aşağıdaki güncelleme kaynaklarını eklemek istiyor: "
+
+#~ msgid "Should this source be added to the update sources list?"
+#~ msgstr "Bu kaynak güncelleme kaynaklarının arasına eklenmeli mi?"
+
+#~ msgid "Phase 3/4: Chmod new files..."
+#~ msgstr "Adım 3/4: Yeni dosyaların izinleri atanıyor..."
+
+#~ msgid "Finished"
+#~ msgstr "Bitti"
+
+#~ msgid "Phase 4/4: Registering application..."
+#~ msgstr "Adım 4/4: Program kaydı yapılıyor..."
+
+#~ msgid "Phase 1/4: Resolving dependencies..."
+#~ msgstr "Adım 1/4: Bağımlılıklar çözümleniyor..."
+
+#~ msgid "Do you want confirm this action?"
+#~ msgstr "Bu hareketi onaylamak istiyor musunuz?"
+
+#~ msgid "This application wants to download & install a dependency from %l"
+#~ msgstr ""
+#~ "Uygulama %l adresinden yeni bir bağımlılık indirip, yüklemek istiyor."
+
+#~ msgid "Phase 2/4: Installing files..."
+#~ msgstr "Adım 2/4: Dosyalar yükleniyor..."
+
+#~ msgid "Listaller will close now. The package couldn't be installed."
+#~ msgstr "Linstaller şimdi kapanacak. Paket yüklenemedi."
+
+#~ msgid ""
+#~ "The application which this package contains was not built for the current "
+#~ "system architecture."
+#~ msgstr ""
+#~ "Bu paketin içerdiği uygulama, şu anki sistem mimarisine uygun tasarlanmamış."
+
+#~ msgid "(This program will download the needed files from the internet)"
+#~ msgstr "(Bu program, gereken dosyaları internetten yükleyecek.)"
+
+#~ msgid "Do you want to install it anyway? (This could raise problems)"
+#~ msgstr ""
+#~ "Herşeye rağmen yüklemek istediğinize emin misiniz? (Bu sorunlara yol "
+#~ "açabilir!)"
+
+#~ msgid "Success!"
+#~ msgstr "Zafer!"
+
+#~ msgid "Main"
+#~ msgstr "Temel"
+
+#~ msgid "Details"
+#~ msgstr "Detaylar"
+
+#~ msgid "Package was not build for your Linux distribution release."
+#~ msgstr "Bu paket sisteminizde yüklü olan Linux dağıtımı için tasarlanmamış."
+
+#~ msgid ""
+#~ "Problem while downloading the packages. Maybe the login on the FTP-Server "
+#~ "failed."
+#~ msgstr ""
+#~ "Paketler internetten indirilirken sorun yaşandı. Belki FTP Sunucusuna "
+#~ "yapılan oturum açma denemesi başarısız olmuş olabilir."
+
+#~ msgid ""
+#~ "There are no sources available for your Linux distribution\n"
+#~ "Try to install common packages?"
+#~ msgstr ""
+#~ "Sisteminizdeki Linux dağırımı için uygun kaynak(lar) bulunmuyor.\n"
+#~ "Ortak paketlerin yüklenmesi denensin mi?"
+
+#~ msgid "Installation"
+#~ msgstr "Yükleme"
+
+#~ msgid "Use compatible packages?"
+#~ msgstr "Uyumlu paketler kullanılsın mı?"
+
+#~ msgid ""
+#~ "The selected action is not possible with this package.\n"
+#~ "Please contact the package maintainer to get more information."
+#~ msgstr ""
+#~ "Seçilmiş hareket bu paketle mümkün değil.\n"
+#~ "Daha fazla bilgi için lütfen paket sağlayıcısından bilgi alın."
+
+#~ msgid ""
+#~ "This package has no valid ID\n"
+#~ "The installer will close."
+#~ msgstr ""
+#~ "Paketin geçerli bir kimliği yok.\n"
+#~ "Yükleyici kapanacak."
+
+#~ msgid "Re-install"
+#~ msgstr "Tekrar yükle."
+
+#~ msgid "Problem while downloading the dep-file."
+#~ msgstr "Bağımlılık dosyası indirilirken sorun yaşandı."
+
+#~ msgid "Please wait..."
+#~ msgstr "Lütfen Bekleyiniz..."
+
+#~ msgid "Get dependency from"
+#~ msgstr "Bağımlılıkları şuradan al"
+
+#~ msgid "The following packages will be downloaded:"
+#~ msgstr "Aşağıdaki paketler yüklenecek:"
+
+#~ msgid ""
+#~ "Hash doesn't match!\n"
+#~ "The package may be modified after creation.\n"
+#~ "Please obtain a new copy"
+#~ msgstr ""
+#~ "Hash kodu uyuşmadı.\n"
+#~ "Oluşturulmasından sonra paket değişmiş olabilir.\n"
+#~ "Lütfen yeni bir kopya edinin."
+
+#~ msgid "No compatible packages found!"
+#~ msgstr "Uyumlu paket(ler) bulunamadı!"
+
+#~ msgid "Install into my Home directory"
+#~ msgstr "Ev dizinime yükle."
+
+#~ msgid ""
+#~ "Make sure that you have got this package from a save source and a serious "
+#~ "publisher!"
+#~ msgstr ""
+#~ "Bu programı güvenli bir kaynaktan ve/veya ciddi bir yayımcıdan aldığınıza "
+#~ "emin olun!"
+
+#~ msgid "Install application for everyone"
+#~ msgstr "Uygulamayı herkes için yükle."
+
+#~ msgid "Select installation mode"
+#~ msgstr "Yükleme modunu seç"
+
+#~ msgid "Mode"
+#~ msgstr "Mod:"
+
+#~ msgid "Select which parts of the application should be installed."
+#~ msgstr "Bu uygulamanın hangi kısmının yüklenmedini istediğinizi seçiniz."
+
+#~ msgid "Installation mode:"
+#~ msgstr "Yükleme modu:"
+
+#~ msgid ""
+#~ "Your PackageKit version is %cp. Listaller needs PackageKit %np or higher to "
+#~ "work correctly.\n"
+#~ "Please update PackageKit!"
+#~ msgstr ""
+#~ "PackageKit versiyonunuz %cp. Linstaller ise düzgün çalışabilmek için "
+#~ "PackageKit %np versiyonuna ihtiyaç duyuyor.\n"
+#~ "Lütfen PackageKit'i güncelleştirin."
+
+#~ msgid "What do you want to do?"
+#~ msgstr "Ne yapmak istiyorsunuz?"
+
+#~ msgid "Test application"
+#~ msgstr "Uygulamayı test et"
+
+#~ msgid "Delete source"
+#~ msgstr "Kaynağı sil"
+
+#~ msgid "The following update sources are installed:"
+#~ msgstr "Aşağıdaki güncelleme kaynakları yüklendi:"
+
+#~ msgid "Update sources"
+#~ msgstr "Güncelleme kaynakları"
+
+#~ msgid "Close"
+#~ msgstr "Kapat"
+
+#~ msgid "Show:"
+#~ msgstr "Göster:"
+
+#~ msgid "Software Manager"
+#~ msgstr "Yazılım Yöneticisi"
+
+#~ msgid "Install new application"
+#~ msgstr "Yeni uygulama yükle"
+
+#~ msgid "Uninstall"
+#~ msgstr "Kaldır"
+
+#~ msgid "Software catalogue"
+#~ msgstr "Yazılım kataloğu"
+
+#~ msgid "Listaller settings"
+#~ msgstr "Linstaller Ayarları"
+
+#~ msgid "Development"
+#~ msgstr "Yazılım Geliştirme"
+
+#~ msgid "System"
+#~ msgstr "Sistem"
+
+#~ msgid "Network"
+#~ msgstr "Ağ"
+
+#~ msgid "Games"
+#~ msgstr "Oyunlar"
+
+#~ msgid "Utilities"
+#~ msgstr "Araçlar"
+
+#~ msgid "Graphic"
+#~ msgstr "Grafik"
+
+#~ msgid "All"
+#~ msgstr "Tümü"
+
+#~ msgid "Office"
+#~ msgstr "Ofis"
+
+#~ msgid "Education"
+#~ msgstr "Eğitim"
+
+#~ msgid "Multimedia"
+#~ msgstr "Çoklu Ortam"
+
+#~ msgid "Other"
+#~ msgstr "Diğer"
+
+#~ msgid "Version"
+#~ msgstr "Versiyon / Sürüm"
+
+#~ msgid "Autor"
+#~ msgstr "Yazar"
+
+#~ msgid "Username"
+#~ msgstr "Kullanıcı Adı"
+
+#~ msgid "Password"
+#~ msgstr "Şifre"
+
+#~ msgid "Load dependencies from included webserver-urls automatically"
+#~ msgstr "İçerilen URL'lerden bağımlılıkları otomatik olarak yükle."
+
+#~ msgid ""
+#~ "Unable to load the icon of %a. Please notify the developers of Listaller or "
+#~ "this application!"
+#~ msgstr ""
+#~ "%a 'nın simgesi yüklenemedi. Lütfen Linstaller'ın yazılım geliştiricilerini "
+#~ "haberdar edin."
+
 #~ msgid "Can't load LOKI-Setup information."
 #~ msgstr "LOKI-Ayar bilgileri yüklenemiyor."
+
+#~ msgid "Enable Proxy-Server"
+#~ msgstr "Vekil Sunucuları (Proxy) Akrtive Et"
+
+#~ msgid "Proxy-Settings"
+#~ msgstr "Vekil Sunucu (Proxy) Ayarları"
+
+#~ msgid "Loading..."
+#~ msgstr "Yükleniyor..."
+
+#~ msgid "Select software-manager mode:"
+#~ msgstr "Uygulama yöneticisi modunu seçin:"
+
+#~ msgid "Display system applications"
+#~ msgstr "Sistem uygulamalarını göster"
+
+#~ msgid "Display my applications"
+#~ msgstr "Benim uygulamalarımı göster"
+
+#~ msgid "Filtering..."
+#~ msgstr "Süzülüyor..."
+
+#~ msgid "Converting %p package..."
+#~ msgstr "%p Paketi çevriliyor."
+
+#~ msgid "Convert package?"
+#~ msgstr "Paket çevrilsin mi?"
+
+#~ msgid ""
+#~ "You want to install an %x-Package, but your Linux-Distribution's package "
+#~ "system is %y.\n"
+#~ "This package can be converted using \"alien\", but this will take some time "
+#~ "and eventually the application won't work.\n"
+#~ "Do you want to convert the package now?"
+#~ msgstr ""
+#~ "Bir %x-Paketi yüklemek istiyorsunuz ancak Linux dağıtımcınızın sistemi %y.\n"
+#~ "Bu paket \"Alien\" kullanılarak çevirilebilir, ancak bu zaman alır ve "
+#~ "çevirilen halin çalışmama ihtimali vardır.\n"
+#~ "Paketi şimdi çevirmek istiyor musunuz?"
+
+#~ msgid "Ready."
+#~ msgstr "Hazır."
+
+#~ msgid "Delete source?"
+#~ msgstr "Kaynak silinsin mi?"
+
+#~ msgid "Install package?"
+#~ msgstr "Paket yüklensin mi?"
+
+#~ msgid "Package %p could not be installed."
+#~ msgstr "%p paketi yüklenemedi."
+
+#~ msgid ""
+#~ "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
+#~ "installed.\n"
+#~ "Do you want to install \"alien\" now to continue?"
+#~ msgstr ""
+#~ "Linstaller paketleri çevirmek için \"alien\" kullanır, ancak bu araç henüz "
+#~ "yüklenmemiş.\n"
+#~ "Devam etmek için \"alien\" yüklensin mi?"
+
+#~ msgid "Start PackageKit monitor before running transactions"
+#~ msgstr "İşlemden önce PackageKit monitörünü başlat."
+
+#~ msgid "About Listaller"
+#~ msgstr "Linstaller Hakkında"
+
+#~ msgid ""
+#~ "Problem while connecting PackageKit. Run \"pkmon\" to get further "
+#~ "information."
+#~ msgstr ""
+#~ "PackageKit bağlanırken sorun oluştu. Daha fazla bilgi için \"pkmon\" "
+#~ "sistemini çalıştırın."
+
+#~ msgid "Authors"
+#~ msgstr "Yazarlar"
+
+#~ msgid "About"
+#~ msgstr "Hakkında"
+
+#~ msgid "Are you really sure that you want to delete this source?"
+#~ msgstr "Bu kaynağı silmek istediğinizden kesinlikle emin misiniz?"
+
+#~ msgid "Do you really want to abort this download?"
+#~ msgstr "Bu yüklemeyi gerçekten iptal etmek istiyor musunuz?"
 
 #~ msgid ""
 #~ "Cannot download this package. Please contact the catalogue managers on %h"
@@ -700,47 +1088,47 @@ msgstr ""
 #~ "Bu paket indirilemiyor. Lütfen %h adresindeki katalog ve menejerlerle "
 #~ "görüşün."
 
+#~ msgid "Running application installation..."
+#~ msgstr "Uygulama yüklemesi çalıştırılıyor..."
+
+#~ msgid "Downloading catalogue base information..."
+#~ msgstr "Katalog baz bilgisi indiriliyor..."
+
+#~ msgid "Loading catalogue page..."
+#~ msgstr "Katalog sayfası yükleniyor..."
+
+#~ msgid "No applications found!"
+#~ msgstr "Uygulama bulunmadı!"
+
+#~ msgid "Select software you want to download and to install:"
+#~ msgstr "İndirip, yüklemek istediğiniz uygulamayı seçiniz:"
+
 #~ msgid "Category:"
 #~ msgstr "Kategori:"
 
-#~ msgid "Check for updates"
-#~ msgstr "Güncelleştirmeler için kontrol et"
+#~ msgid "Downloading setup package..."
+#~ msgstr "Yükleme paketi indiriliyor."
 
-#~ msgid "Close"
-#~ msgstr "Kapat"
+#~ msgid "No information available!"
+#~ msgstr "Hakkında bilgi mümkün değil."
 
-#~ msgid "Convert package?"
-#~ msgstr "Paket çevrilsin mi?"
+#~ msgid "Uninstalling unused deps..."
+#~ msgstr "Kullanılmayan bağımlılıklar kaldırılıyor..."
 
-#~ msgid "Converting %p package..."
-#~ msgstr "%p Paketi çevriliyor."
+#~ msgid "Do you really want to uninstall %a?"
+#~ msgstr "%a uygulamasını gerçekten kaldırmak istiyor musunuz?"
 
-#~ msgid "Delete source"
-#~ msgstr "Kaynağı sil"
+#~ msgid "Application uninstalled successfully!"
+#~ msgstr "Uygulama başarıyla kaldırıldı!"
 
-#~ msgid "Delete source?"
-#~ msgstr "Kaynak silinsin mi?"
+#~ msgid "Error while uninstalling!"
+#~ msgstr "Uygulama kaldırılırken bir hata yaşandı!"
 
-#~ msgid "Dependencies couldn't be solved!"
-#~ msgstr "Bağımlılıklar çözülemedi."
+#~ msgid "Waiting..."
+#~ msgstr "Bekleniyor..."
 
-#~ msgid "Details"
-#~ msgstr "Detaylar"
-
-#~ msgid "Development"
-#~ msgstr "Yazılım Geliştirme"
-
-#~ msgid "Display installation log"
-#~ msgstr "Yükleme kayıtlarını göster"
-
-#~ msgid "Display my applications"
-#~ msgstr "Benim uygulamalarımı göster"
-
-#~ msgid "Display system applications"
-#~ msgstr "Sistem uygulamalarını göster"
-
-#~ msgid "Do you really want to abort this download?"
-#~ msgstr "Bu yüklemeyi gerçekten iptal etmek istiyor musunuz?"
+#~ msgid "Really remove?"
+#~ msgstr "Gerçekten kaldırılsın?"
 
 #~ msgid ""
 #~ "Do you really want to remove \"%p\", containing %a?\n"
@@ -752,358 +1140,8 @@ msgstr ""
 #~ "Eğer bu paketlere ihtiyacınız olup olmayacağına emin değilseniz \"Hayır\" "
 #~ "seçeneğine basın."
 
-#~ msgid ""
-#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
-#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
-#~ "those packages, press \"No\"!"
-#~ msgstr ""
-#~ "İçerisinde %a bulunduran %p'yi gerçekten silmek istiyor musunuz?\rBu "
-#~ "paketler de silinecek: %pl\rBu paketlere gerek duymadığınızdan emin "
-#~ "değilseniz, lütfen \"HAYIR\" a basın!"
-
-#~ msgid "Do you really want to uninstall %a?"
-#~ msgstr "%a uygulamasını gerçekten kaldırmak istiyor musunuz?"
-
-#~ msgid "Do you want to install it anyway? (This could raise problems)"
-#~ msgstr ""
-#~ "Herşeye rağmen yüklemek istediğinize emin misiniz? (Bu sorunlara yol "
-#~ "açabilir!)"
-
-#~ msgid "Downloading catalogue base information..."
-#~ msgstr "Katalog baz bilgisi indiriliyor..."
-
-#~ msgid "Downloading setup package..."
-#~ msgstr "Yükleme paketi indiriliyor."
-
-#~ msgid "Education"
-#~ msgstr "Eğitim"
-
-#~ msgid "Enable Proxy-Server"
-#~ msgstr "Vekil Sunucuları (Proxy) Akrtive Et"
-
-#~ msgid "Error while extracting files!"
-#~ msgstr "Dosyalar çıkartırken hata yaşandı!"
-
-#~ msgid "Error while uninstalling!"
-#~ msgstr "Uygulama kaldırılırken bir hata yaşandı!"
-
-#~ msgid "Error while unpacking and configuring files."
-#~ msgstr "Dosyakar açılırken ve/veya konfigüre edilirken hata yaşandı."
-
-#~ msgid "Filter:"
-#~ msgstr "Süzgeç:"
-
-#~ msgid "Filtering..."
-#~ msgstr "Süzülüyor..."
-
-#~ msgid "Finish"
-#~ msgstr "Bitir"
-
-#~ msgid "Finished"
-#~ msgstr "Bitti"
-
-#~ msgid "Games"
-#~ msgstr "Oyunlar"
-
-#~ msgid "Get dependency from"
-#~ msgstr "Bağımlılıkları şuradan al"
-
-#~ msgid "Graphic"
-#~ msgstr "Grafik"
-
-#~ msgid ""
-#~ "Hash doesn't match!\n"
-#~ "The package may be modified after creation.\n"
-#~ "Please obtain a new copy"
-#~ msgstr ""
-#~ "Hash kodu uyuşmadı.\n"
-#~ "Oluşturulmasından sonra paket değişmiş olabilir.\n"
-#~ "Lütfen yeni bir kopya edinin."
-
-#~ msgid "I don't agree"
-#~ msgstr "Katılmıyorum"
-
-#~ msgid "Install application for everyone"
-#~ msgstr "Uygulamayı herkes için yükle."
-
-#~ msgid "Install into my Home directory"
-#~ msgstr "Ev dizinime yükle."
-
-#~ msgid "Install now"
-#~ msgstr "Şimdi yükle!"
-
-#~ msgid "Install updates"
-#~ msgstr "Güncelleştirmeleri yükle"
-
-#~ msgid "Installation aborted."
-#~ msgstr "Yükleme iptal edildi."
-
-#~ msgid "Installation mode:"
-#~ msgstr "Yükleme modu:"
-
-#~ msgid "Installation package is corrupt"
-#~ msgstr "Yükleme paketi hasar görmüş."
-
-#~ msgid "Listaller settings"
-#~ msgstr "Linstaller Ayarları"
-
-#~ msgid ""
-#~ "Listaller uses \"alien\" to convert foreign packages, but the tool is not "
-#~ "installed.\n"
-#~ "Do you want to install \"alien\" now to continue?"
-#~ msgstr ""
-#~ "Linstaller paketleri çevirmek için \"alien\" kullanır, ancak bu araç "
-#~ "henüz yüklenmemiş.\n"
-#~ "Devam etmek için \"alien\" yüklensin mi?"
-
-#~ msgid "Listaller will close now. The package couldn't be installed."
-#~ msgstr "Linstaller şimdi kapanacak. Paket yüklenemedi."
-
-#~ msgid "Load dependencies from included webserver-urls automatically"
-#~ msgstr "İçerilen URL'lerden bağımlılıkları otomatik olarak yükle."
-
-#~ msgid "Loading aborted."
-#~ msgstr "Yükleme iptal edildi."
-
-#~ msgid "Loading catalogue page..."
-#~ msgstr "Katalog sayfası yükleniyor..."
-
-#~ msgid "Loading..."
-#~ msgstr "Yükleniyor..."
-
-#~ msgid "Main"
-#~ msgstr "Temel"
-
-#~ msgid ""
-#~ "Make sure that you have got this package from a save source and a serious "
-#~ "publisher!"
-#~ msgstr ""
-#~ "Bu programı güvenli bir kaynaktan ve/veya ciddi bir yayımcıdan aldığınıza "
-#~ "emin olun!"
-
-#~ msgid "Mode"
-#~ msgstr "Mod:"
-
-#~ msgid "Multimedia"
-#~ msgstr "Çoklu Ortam"
-
-#~ msgid "Network"
-#~ msgstr "Ağ"
-
-#~ msgid "Next"
-#~ msgstr "İleri"
-
-#~ msgid "No applications found!"
-#~ msgstr "Uygulama bulunmadı!"
-
-#~ msgid "No compatible packages found!"
-#~ msgstr "Uyumlu paket(ler) bulunamadı!"
-
-#~ msgid "No information available!"
-#~ msgstr "Hakkında bilgi mümkün değil."
-
-#~ msgid "Office"
-#~ msgstr "Ofis"
-
-#~ msgid "Other"
-#~ msgstr "Diğer"
-
-#~ msgid "Package %p could not be installed."
-#~ msgstr "%p paketi yüklenemedi."
-
-#~ msgid "Package was not build for your Linux distribution release."
-#~ msgstr "Bu paket sisteminizde yüklü olan Linux dağıtımı için tasarlanmamış."
-
-#~ msgid "Password"
-#~ msgstr "Şifre"
-
-#~ msgid "Phase 1/4: Resolving dependencies..."
-#~ msgstr "Adım 1/4: Bağımlılıklar çözümleniyor..."
-
-#~ msgid "Phase 2/4: Installing files..."
-#~ msgstr "Adım 2/4: Dosyalar yükleniyor..."
-
-#~ msgid "Phase 3/4: Chmod new files..."
-#~ msgstr "Adım 3/4: Yeni dosyaların izinleri atanıyor..."
-
-#~ msgid "Phase 4/4: Registering application..."
-#~ msgstr "Adım 4/4: Program kaydı yapılıyor..."
-
-#~ msgid "Please notify the developers on http://launchpad.net/listaller"
-#~ msgstr ""
-#~ "Lütfen http://launchpad.net/linstaller adresi üzerinden yazılım "
-#~ "geliştiricilerimizi haberdar ediniz."
-
-#~ msgid "Please read the following information carefully:"
-#~ msgstr "Lütfen aşağıdaki bilgiyi dikkatle okuyun:"
-
-#~ msgid ""
-#~ "Please run \"listallgo\" with path to install-package as first parameter!"
-#~ msgstr ""
-#~ "Lütfen yükleme için ilk değişken olarak \"listallgo\" dosya dizinini "
-#~ "çalıştırın!"
-
-#~ msgid "Please view the logfile at %p"
-#~ msgstr "Lütfen kayıtlara göz atınız. ( %p )"
-
-#~ msgid "Please wait."
-#~ msgstr "Lütfen bekleyin."
-
-#~ msgid "Please wait..."
-#~ msgstr "Lütfen Bekleyiniz..."
-
-#~ msgid "Press \"Finish\" to close."
-#~ msgstr "Kapatmak için \"Bitir\"e basın."
-
-#~ msgid "Press \"Next\" to start the installation!"
-#~ msgstr "Yüklemeye başlamak için \"İleri\" butonuna basınız!"
-
-#~ msgid ""
-#~ "Problem while connecting PackageKit. Run \"pkmon\" to get further "
-#~ "information."
-#~ msgstr ""
-#~ "PackageKit bağlanırken sorun oluştu. Daha fazla bilgi için \"pkmon\" "
-#~ "sistemini çalıştırın."
-
-#~ msgid "Problem while downloading the dep-file."
-#~ msgstr "Bağımlılık dosyası indirilirken sorun yaşandı."
-
-#~ msgid ""
-#~ "Problem while downloading the packages. Maybe the login on the FTP-Server "
-#~ "failed."
-#~ msgstr ""
-#~ "Paketler internetten indirilirken sorun yaşandı. Belki FTP Sunucusuna "
-#~ "yapılan oturum açma denemesi başarısız olmuş olabilir."
-
-#~ msgid "Proxy-Settings"
-#~ msgstr "Vekil Sunucu (Proxy) Ayarları"
-
-#~ msgid "Quit"
-#~ msgstr "Çık"
-
-#~ msgid "Re-install"
-#~ msgstr "Tekrar yükle."
-
-#~ msgid "Ready."
-#~ msgstr "Hazır."
-
-#~ msgid "Really remove?"
-#~ msgstr "Gerçekten kaldırılsın?"
-
-#~ msgid "Running application installation..."
-#~ msgstr "Uygulama yüklemesi çalıştırılıyor..."
-
-#~ msgid "Running installation..."
-#~ msgstr "Yükleme çalışıyor..."
-
-#~ msgid "Running under %de (or similar)"
-#~ msgstr "%de (veya benzeri) altında çalışılıyor"
-
-#~ msgid "Select installation mode"
-#~ msgstr "Yükleme modunu seç"
-
-#~ msgid "Select software you want to download and to install:"
-#~ msgstr "İndirip, yüklemek istediğiniz uygulamayı seçiniz:"
-
-#~ msgid "Select software-manager mode:"
-#~ msgstr "Uygulama yöneticisi modunu seçin:"
-
-#~ msgid "Select which parts of the application should be installed."
-#~ msgstr "Bu uygulamanın hangi kısmının yüklenmedini istediğinizi seçiniz."
-
-#~ msgid "Should this source be added to the update sources list?"
-#~ msgstr "Bu kaynak güncelleme kaynaklarının arasına eklenmeli mi?"
-
-#~ msgid "Show"
-#~ msgstr "Göster"
-
-#~ msgid "Show:"
-#~ msgstr "Göster:"
-
-#~ msgid "Software Manager"
-#~ msgstr "Yazılım Yöneticisi"
-
-#~ msgid "Software catalogue"
-#~ msgstr "Yazılım kataloğu"
-
-#~ msgid "Software license"
-#~ msgstr "Yazılım lisansı"
-
-#~ msgid "Start PackageKit monitor before running transactions"
-#~ msgstr "İşlemden önce PackageKit monitörünü başlat."
-
-#~ msgid "Success!"
-#~ msgstr "Zafer!"
-
-#~ msgid "System"
-#~ msgstr "Sistem"
-
-#~ msgid "Test application"
-#~ msgstr "Uygulamayı test et"
-
-#~ msgid "Test of the application finished."
-#~ msgstr "Uygulamanın testi bitti."
-
-#~ msgid "Testmode"
-#~ msgstr "Test Modu"
-
-#~ msgid ""
-#~ "The IPK package could be damaged or you haven't enough rights to acces "
-#~ "required files/folders."
-#~ msgstr ""
-#~ "IPH paketi zarar görmüş olabilir ya da gereken dosyalara erişmek için "
-#~ "yetkileriniz yeterli olmayabilir."
-
-#~ msgid "The application %a was installed successfully!"
-#~ msgstr "%a uygulaması başarıyla yüklendi!"
-
-#~ msgid "The application %a was not installed."
-#~ msgstr "%a uygulaması yüklenmedi."
-
-#~ msgid ""
-#~ "The application which this package contains was not built for the current "
-#~ "system architecture."
-#~ msgstr ""
-#~ "Bu paketin içerdiği uygulama, şu anki sistem mimarisine uygun "
-#~ "tasarlanmamış."
-
-#~ msgid "The application will be updated to version %v"
-#~ msgstr "Uygulama %v versiyonuna yükseltilecek."
-
-#~ msgid "The application will close now "
-#~ msgstr "Uygulama şimdi kapanacak. "
-
-#~ msgid "The following packages will be downloaded:"
-#~ msgstr "Aşağıdaki paketler yüklenecek:"
-
-#~ msgid "The following update sources are installed:"
-#~ msgstr "Aşağıdaki güncelleme kaynakları yüklendi:"
-
-#~ msgid "The installation tries to add the following update source: "
-#~ msgstr "Uygulama aşağıdaki güncelleme kaynaklarını eklemek istiyor: "
-
-#~ msgid "The installer will close now"
-#~ msgstr "Yükleyici şimdi kapanacak."
-
-#~ msgid "The package was invalid!"
-#~ msgstr "Paket geçersiz!"
-
-#~ msgid ""
-#~ "The selected action is not possible with this package.\n"
-#~ "Please contact the package maintainer to get more information."
-#~ msgstr ""
-#~ "Seçilmiş hareket bu paketle mümkün değil.\n"
-#~ "Daha fazla bilgi için lütfen paket sağlayıcısından bilgi alın."
-
-#~ msgid ""
-#~ "There are no sources available for your Linux distribution\n"
-#~ "Try to install common packages?"
-#~ msgstr ""
-#~ "Sisteminizdeki Linux dağırımı için uygun kaynak(lar) bulunmuyor.\n"
-#~ "Ortak paketlerin yüklenmesi denensin mi?"
-
-#~ msgid "There are no updates available!"
-#~ msgstr "Mümkün bir güncelleştirme bulunmuyor!"
+#~ msgid "Uninstalling..."
+#~ msgstr "Kaldırılıyor..."
 
 #~ msgid ""
 #~ "This application is not a MoJo-Installation and no other package-type "
@@ -1114,104 +1152,85 @@ msgstr ""
 #~ "çıkamaz.\n"
 #~ "Bu uygulamayı manuel olarak kaldırmalısınız."
 
-#~ msgid "This application wants to download & install a dependency from %l"
-#~ msgstr ""
-#~ "Uygulama %l adresinden yeni bir bağımlılık indirip, yüklemek istiyor."
+#~ msgid "Applying updates..."
+#~ msgstr "Güncelleştirmeler uygulanıyor..."
 
-#~ msgid "This package does not support your Linux distribution."
-#~ msgstr "Bu paket, Linux sürümünüzü desteklemiyor."
+#~ msgid "Show"
+#~ msgstr "Göster"
 
-#~ msgid ""
-#~ "This package has no valid ID\n"
-#~ "The installer will close."
-#~ msgstr ""
-#~ "Paketin geçerli bir kimliği yok.\n"
-#~ "Yükleyici kapanacak."
+#~ msgid "Check for updates"
+#~ msgstr "Güncelleştirmeler için kontrol et"
 
-#~ msgid ""
-#~ "Unable to load the icon of %a. Please notify the developers of Listaller "
-#~ "or this application!"
-#~ msgstr ""
-#~ "%a 'nın simgesi yüklenemedi. Lütfen Linstaller'ın yazılım "
-#~ "geliştiricilerini haberdar edin."
+#~ msgid "Quit"
+#~ msgstr "Çık"
 
-#~ msgid "Unable to overwrite the file %f."
-#~ msgstr "%f dosyasının üzerine yazılamadı."
+#~ msgid "The application will be updated to version %v"
+#~ msgstr "Uygulama %v versiyonuna yükseltilecek."
 
-#~ msgid "Uninstall"
-#~ msgstr "Kaldır"
-
-#~ msgid "Uninstalling %a"
-#~ msgstr "%a Kaldırılıyor"
-
-#~ msgid "Uninstalling unused deps..."
-#~ msgstr "Kullanılmayan bağımlılıklar kaldırılıyor..."
-
-#~ msgid "Uninstalling..."
-#~ msgstr "Kaldırılıyor..."
+#~ msgid "Install updates"
+#~ msgstr "Güncelleştirmeleri yükle"
 
 #~ msgid "Update info:"
 #~ msgstr "Güncelleştirme bilgisi:"
 
-#~ msgid "Update sources"
-#~ msgstr "Güncelleme kaynakları"
+#~ msgid "There are no updates available!"
+#~ msgstr "Mümkün bir güncelleştirme bulunmuyor!"
 
-#~ msgid "Use compatible packages?"
-#~ msgstr "Uyumlu paketler kullanılsın mı?"
+#~ msgid "Running under %de (or similar)"
+#~ msgstr "%de (veya benzeri) altında çalışılıyor"
 
-#~ msgid "Username"
-#~ msgstr "Kullanıcı Adı"
+#~ msgid "%f files will be changed."
+#~ msgstr "%f dosyaları değiştirilecek."
 
-#~ msgid "Utilities"
-#~ msgstr "Araçlar"
+#~ msgid "Error while unpacking and configuring files."
+#~ msgstr "Dosyakar açılırken ve/veya konfigüre edilirken hata yaşandı."
 
-#~ msgid "Version"
-#~ msgstr "Versiyon / Sürüm"
+#~ msgid "Uninstalling %a"
+#~ msgstr "%a Kaldırılıyor"
 
-#~ msgid "Waiting..."
-#~ msgstr "Bekleniyor..."
+#~ msgid "Program description:"
+#~ msgstr "Program açıklaması:"
 
-#~ msgid "Welcome to the installation of %a"
-#~ msgstr "%a programının yüklemesine hoşgeldiniz."
+#~ msgid "Software license"
+#~ msgstr "Yazılım lisansı"
 
-#~ msgid "Welcome!"
-#~ msgstr "Hoşgeldiniz!"
+#~ msgid "Installation aborted."
+#~ msgstr "Yükleme iptal edildi."
 
-#~ msgid "What do you want to do?"
-#~ msgstr "Ne yapmak istiyorsunuz?"
+#~ msgid "The application %a was installed successfully!"
+#~ msgstr "%a uygulaması başarıyla yüklendi!"
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "%a uygulaması yüklenmedi."
+
+#~ msgid "Install now"
+#~ msgstr "Şimdi yükle!"
+
+#~ msgid "Please wait."
+#~ msgstr "Lütfen bekleyin."
+
+#~ msgid "Press \"Finish\" to close."
+#~ msgstr "Kapatmak için \"Bitir\"e basın."
+
+#~ msgid "Abort"
+#~ msgstr "İptal et"
 
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "
-#~ "system is %y.\n"
-#~ "This package can be converted using \"alien\", but this will take some "
-#~ "time and eventually the application won't work.\n"
-#~ "Do you want to convert the package now?"
+#~ "system is %y.\rThis package can be converted using \"alien\", but this will "
+#~ "take some time and eventually the application won't work\rDo you want to "
+#~ "convert the package now?"
 #~ msgstr ""
-#~ "Bir %x-Paketi yüklemek istiyorsunuz ancak Linux dağıtımcınızın sistemi "
-#~ "%y.\n"
-#~ "Bu paket \"Alien\" kullanılarak çevirilebilir, ancak bu zaman alır ve "
-#~ "çevirilen halin çalışmama ihtimali vardır.\n"
-#~ "Paketi şimdi çevirmek istiyor musunuz?"
+#~ "Bir %x-Paketi yüklemek istiyorsunuz, fakat sizin Linux-Dağıtımınızın sistemi "
+#~ "%y\rBu paket \"alien\" kullanılarak dönüştürülebilir, fakat bu biraz zaman "
+#~ "alır ve neticede uygulama çalışmayacaktır\rPaketi şimdi dönüştürmek istiyor "
+#~ "musunuz?"
 
 #~ msgid ""
-#~ "You want to install an %x-Package, but your Linux-Distribution's package "
-#~ "system is %y.\rThis package can be converted using \"alien\", but this "
-#~ "will take some time and eventually the application won't work\rDo you "
-#~ "want to convert the package now?"
+#~ "Do you really want to remove \"%p\", containing %a?\rThe following "
+#~ "package(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+#~ "those packages, press \"No\"!"
 #~ msgstr ""
-#~ "Bir %x-Paketi yüklemek istiyorsunuz, fakat sizin Linux-Dağıtımınızın "
-#~ "sistemi %y\rBu paket \"alien\" kullanılarak dönüştürülebilir, fakat bu "
-#~ "biraz zaman alır ve neticede uygulama çalışmayacaktır\rPaketi şimdi "
-#~ "dönüştürmek istiyor musunuz?"
-
-#~ msgid "Your Linux distribution is not supported by Listaller yet!"
-#~ msgstr "Linux sürümünüz Linstaller tarafından henüz desteklenmiyor."
-
-#~ msgid ""
-#~ "Your PackageKit version is %cp. Listaller needs PackageKit %np or higher "
-#~ "to work correctly.\n"
-#~ "Please update PackageKit!"
-#~ msgstr ""
-#~ "PackageKit versiyonunuz %cp. Linstaller ise düzgün çalışabilmek için "
-#~ "PackageKit %np versiyonuna ihtiyaç duyuyor.\n"
-#~ "Lütfen PackageKit'i güncelleştirin."
+#~ "İçerisinde %a bulunduran %p'yi gerçekten silmek istiyor musunuz?\rBu "
+#~ "paketler de silinecek: %pl\rBu paketlere gerek duymadığınızdan emin "
+#~ "değilseniz, lütfen \"HAYIR\" a basın!"

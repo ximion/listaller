@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-05-21 17:08+0200\n"
+"POT-Creation-Date: 2012-05-19 23:25+0000\n"
 "PO-Revision-Date: 2009-12-07 22:05+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German, Low <nds@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-04-16 11:52+0000\n"
-"X-Generator: Launchpad (build 15099)\n"
+"X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
+"X-Generator: Launchpad (build 15275)\n"
+"Language: \n"
 
 #, c-format
 msgid ""
@@ -151,9 +151,8 @@ msgstr ""
 msgid "Database unlocked"
 msgstr ""
 
-#, fuzzy
 msgid "Description:"
-msgstr "Programmbeschreibung"
+msgstr ""
 
 msgid "Do you accept these terms and conditions?"
 msgstr ""
@@ -210,17 +209,16 @@ msgstr "Installation komplett!"
 msgid "Installation failed!"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Installation of %s"
-msgstr "Installation abgebrochen."
+msgstr ""
 
 #, c-format
 msgid "Installation of native packages failed with message: %s"
 msgstr ""
 
-#, fuzzy
 msgid "Installing"
-msgstr "Jetzt installieren"
+msgstr ""
 
 #, c-format
 msgid "Installing native packages: %s"
@@ -342,9 +340,8 @@ msgstr ""
 msgid "Removal of %s started."
 msgstr ""
 
-#, fuzzy
 msgid "Remove an application installed using Listaller"
-msgstr "Das Programm ist schon instaliert."
+msgstr ""
 
 msgid "Removing"
 msgstr ""
@@ -354,7 +351,8 @@ msgid "Resolving dependencies of '%s'."
 msgstr ""
 
 #, c-format
-msgid "Run '%s --help' to see a full list of available command line options.\n"
+msgid ""
+"Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
 #, c-format
@@ -555,8 +553,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"Unable to find a matching implementation of '%s' for your system/"
-"architecture."
+"Unable to find a matching implementation of '%s' for your "
+"system/architecture."
 msgstr ""
 
 #, c-format
@@ -656,54 +654,66 @@ msgstr ""
 msgid "shared"
 msgstr ""
 
+#~ msgid "Program description:"
+#~ msgstr "Programmbeschreibung"
+
+#~ msgid "Press \"Next\" to start the installation!"
+#~ msgstr "Drücke \"Start\" um die Installation zu starten!"
+
+#~ msgid "Please read the following information carefully:"
+#~ msgstr "Bitte lesen sie die folgenden Informationen aufmerksam durch:"
+
+#~ msgid "Installation aborted."
+#~ msgstr "Installation abgebrochen."
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "Die Anwendung %a wurde nicht installiert."
+
+#~ msgid "The application %a was installed successfully!"
+#~ msgstr "Die Anwendung %a wurde erfolgreich installiert!"
+
+#~ msgid "Install now"
+#~ msgstr "Jetzt installieren"
+
+#~ msgid "Software license"
+#~ msgstr "Software Lizenz"
+
+#~ msgid "Press \"Finish\" to close."
+#~ msgstr "Drücken sie \"Fertig\" um zu schließen."
+
+#~ msgid "Please wait."
+#~ msgstr "Bitte warten."
+
+#~ msgid "Running installation..."
+#~ msgstr "Laufende installation..."
+
+#~ msgid "Display installation log"
+#~ msgstr "Zeige installation Log"
+
+#~ msgid "This application is already installed"
+#~ msgstr "Das Programm ist schon instaliert."
+
+#~ msgid "Loading aborted."
+#~ msgstr "Laden abgebrochen."
+
+#~ msgid "The installer will close now"
+#~ msgstr "Der installer schließt sich nun."
+
+#~ msgid "Your Linux distribution is not supported by Listaller yet!"
+#~ msgstr ""
+#~ "Im moment ist deine Linux Distribution nicht unterstützt bei Listaller!"
+
+#~ msgid "Welcome!"
+#~ msgstr "Willkamen!"
+
+#~ msgid "Finish"
+#~ msgstr "Fardig maken"
+
+#~ msgid "Next"
+#~ msgstr "Nächste"
+
 #~ msgid "Abort"
 #~ msgstr "Afbreken"
 
 #~ msgid "Back"
 #~ msgstr "Torüch"
-
-#~ msgid "Display installation log"
-#~ msgstr "Zeige installation Log"
-
-#~ msgid "Finish"
-#~ msgstr "Fardig maken"
-
-#~ msgid "Loading aborted."
-#~ msgstr "Laden abgebrochen."
-
-#~ msgid "Next"
-#~ msgstr "Nächste"
-
-#~ msgid "Please read the following information carefully:"
-#~ msgstr "Bitte lesen sie die folgenden Informationen aufmerksam durch:"
-
-#~ msgid "Please wait."
-#~ msgstr "Bitte warten."
-
-#~ msgid "Press \"Finish\" to close."
-#~ msgstr "Drücken sie \"Fertig\" um zu schließen."
-
-#~ msgid "Press \"Next\" to start the installation!"
-#~ msgstr "Drücke \"Start\" um die Installation zu starten!"
-
-#~ msgid "Running installation..."
-#~ msgstr "Laufende installation..."
-
-#~ msgid "Software license"
-#~ msgstr "Software Lizenz"
-
-#~ msgid "The application %a was installed successfully!"
-#~ msgstr "Die Anwendung %a wurde erfolgreich installiert!"
-
-#~ msgid "The application %a was not installed."
-#~ msgstr "Die Anwendung %a wurde nicht installiert."
-
-#~ msgid "The installer will close now"
-#~ msgstr "Der installer schließt sich nun."
-
-#~ msgid "Welcome!"
-#~ msgstr "Willkamen!"
-
-#~ msgid "Your Linux distribution is not supported by Listaller yet!"
-#~ msgstr ""
-#~ "Im moment ist deine Linux Distribution nicht unterstützt bei Listaller!"
