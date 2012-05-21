@@ -18,6 +18,7 @@ if(LIBUILD)
 	set(manpages ${manpages}
 		"ligcc.1"
 		"lig++.1"
+		"relaytool.1"
 	)
 endif()
 
