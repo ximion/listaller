@@ -1,19 +1,37 @@
 Version 0.5.5
 ~~~~~~~~~~~~~~
- == Still in development ==
+Released: 2012-05-20
 
 Notes:
   * /!\ Please note: We do NOT provide stable API/ABI in the 0.5.x series!
-        The 0.5.x series is experimental, we might change the specs at every time.
+        The 0.5.x series is experimental, we might change the specs at any time.
 
 Features:
-  * ~
+  * Rewrote groff manpages in XML
+  * Add manual pages for all Listaller binaries
+  * Rename libuild to lipkgen to avoid name collisions
+  * Updated RPM specfile template
+  * Add lipa command-line tool again to control Listaller
+    via a command-line interface.
+  * ligcc: Remove NO_STATIC_X option, it is default now
+  * lipa: Clean-up stuff on CTRL+C
+  * Show a progress-bar in text terminals
+  * Exclusively use /etc/os-release introduced by systemd to check distro info
+  * Moved license files to toplevel
+  * Show a message that we don't support other OSes than Linux (yet)
+  * Install into multiarch-paths by default
 
 Specifications:
-  * ~
+  * Add some (old and new) concept graphics
 
 Bugfixes:
-  * ~
+  * Update PK API file
+  * ligcc: Fix linker paths
+  * Install binreloc too, if libuild is enabled
+  * Don't ship a separate copy of elf.h
+  * Always prefer personal over shared apps in db queries
+  * Move buildlist helper to a better, more FHS-compliant location
+  * Correctly set listaller library dependency line
 
 Version 0.5.4
 ~~~~~~~~~~~~~~
@@ -21,7 +39,7 @@ Released: 2012-04-16
 
 Notes:
   * /!\ Please note: We do NOT provide stable API/ABI in the 0.5.x series!
-        The 0.5.x series is experimental, we might change the specs at every time.
+        The 0.5.x series is experimental, we might change the specs at any time.
   * Libuild will now create multiarch IPKs by default
 
 Features:
@@ -83,7 +101,7 @@ Released: 2012-01-24
 
 Notes:
   * /!\ Please note: We do NOT provide stable API/ABI in the 0.5.x series!
-        The 0.5.x series is experimental, we might change the specs at every time.
+        The 0.5.x series is experimental, we might change the specs at any time.
   * We now require at least PackageKit 0.7.2 to build
 
 Features:
