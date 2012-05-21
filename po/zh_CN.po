@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.9.16\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-05-15 13:47+0200\n"
+"POT-Creation-Date: 2012-05-21 17:08+0200\n"
 "PO-Revision-Date: 2010-07-05 22:59+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: 简体中文 <>\n"
@@ -161,7 +161,7 @@ msgid "Do you want to install %s now?"
 msgstr "您想再次安装它吗？"
 
 #, fuzzy, c-format
-msgid "Do you want to remove %s now?"
+msgid "Do you want to remove %s (%s) now?"
 msgstr "您是否确认此操作？"
 
 #, c-format
@@ -409,6 +409,13 @@ msgid "Status of this signature is unknown or package is not signed."
 msgstr ""
 
 msgid "Strip debug infos from files in install-target"
+msgstr ""
+
+#, c-format
+msgid ""
+"The installer will only work with the %s operating system, but you use "
+"'%s'.\n"
+"Setup can not continue, sorry."
 msgstr ""
 
 msgid "This application has already been installed."
