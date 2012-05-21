@@ -90,9 +90,13 @@ public class Manager : MsgObject {
 		return db.find_all_applications (filter, out appList);
 	}
 
-	/** Find applications which match the strings in values
+	/**
+	 * Find applications which match the strings in values
 	 *
-	 * @values:
+	 * @param filter Filter, which is applied on the results
+	 * @param values Null-terminated list of strings to search for
+	 * @param appList ArrayList of AppItems to store the result, or NULL
+	 *                (all applications are also emitted in the "application" signal)
 	 */
 	public bool find_applications_by_values (AppSource filter,
 						 [CCode (array_null_terminated = true, array_length = false)] string[] values,
@@ -105,6 +109,7 @@ public class Manager : MsgObject {
 		// Emit signals for found applications
 		foreach (AppItem app in res)
 			application (app);
+
 		return true;
 	}
 

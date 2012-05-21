@@ -28,7 +28,7 @@ namespace Listaller {
 /**
  * Get string describing Listaller's version number.
  *
- * @returns: Listaller version string
+ * @return Listaller version string
  */
 public string get_version_info_str () {
 	return Config.VERSION;
@@ -39,7 +39,7 @@ public string get_version_info_str () {
  * This function will return a more detailed description
  * of Listaller's version and the OS it's running on.
  *
- * @returns: detailed Listaller version string
+ * @return detailed Listaller version string
  */
 public string get_full_version_info_str () {
 	string vstr;
@@ -138,15 +138,15 @@ class VersionNumber : Object {
 	}
 }
 
-/** compare alpha and numeric segments of two versions
+/**
+ * compare alpha and numeric segments of two versions
  *
- * @returns: 1: a is newer than b
- *        0: a and b are the same version
- *       -1: b is newer than a
- *
- * NOTE: This algorithm is used by RPM too [GPLv2]
+ * @return 1: a is newer than b
+ *         0: a and b are the same version
+ *        -1: b is newer than a
  */
 public int compare_versions (string a, string b) {
+	/** NOTE: This algorithm is used by RPM too [GPLv2] */
 	char oldch1, oldch2;
 	char[strlen (a) + 1] abuf = { 0 };
 	char[strlen (b) + 1] bbuf = { 0 };
