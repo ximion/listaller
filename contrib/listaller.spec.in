@@ -14,15 +14,10 @@ BuildRequires: chrpath
 %description
 Listaller is a distro-agnostic 3rd-party application installer
 with close integration into PackageKit.
-The project uses GPG-signed installation packages, which can
-be installed for all users (as root) or only for one user
-without needing superuser-rights.
-
+The project uses GPG-signed software packages.
 Dependencies are resolved automatically using PackageKit.
 Listaller applications can be installed and removed using any
-PackageKit frontend available, without needing extra tools,
-however some specialized UIs are available and integrated with
-existing package-management tools.
+PackageKit frontend available, without needing extra tools.
 
 %package devel
 Summary: GLib Libraries and headers for listaller
