@@ -1,0 +1,1 @@
+/usr/bin/gcc     CMakeFiles/buildlist.dir/buildlist.c.o  -o buildlist -rdynamic -lglib-2.0 -lgee -lgobject-2.0 -lgthread-2.0 -lrt -lglib-2.0 -lgio-2.0 -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lrt -lglib-2.0 -lglib-2.0 -lgee -lgobject-2.0 -lgio-2.0 -lgmodule-2.0 
