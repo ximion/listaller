@@ -1,82 +1,29 @@
-Listaller 0.5b:dev
+Listaller 0.5.x
 
 === Compiling instructions ===
 
-To compile Listaller, please read the file "DEPENDENCIES" first and make sure that you have all
-needed libraries installed. The continue.
+To compile Listaller, make sure that you have all required libraries (development files!) installed.
+Then continue.
 
-First cd to the source directory and execute
-./configure
-The configure script will set up the required makefiles for the project.
-You can pass the following options to the script:
-
---enable-gtk      | Enables the GTK+ frontent
---enable-qt       | Enables building of the Qt frontend
---enable-creator  | Enables the IPK setup creator GUI
---enable-all      | Enables building of GTK+ and Qt frontends and GTK+ and Qt version of liCreator
---prefix=<prefix> | Set an installation prefix
-
-After configuring, you type "make all" to build the enabled modules.
-The compiled bianries are stored in subdirectories of /build.
-
-Alternatively you can use the CMake build system directly:
+You should use CMake directly to build Listaller:
 mkdir build
 cd build
 cmake .. <flags>
 Possible flags are:
- -DQT=ON          | Build Listaller's Qt4 modules (Qt4 interface & frontends)
- -DGTK=ON         | Build Listaller's GTK2 modules (Frontends)
- -DFRONTENDS=ON   | Compile Listaller's frontends (only usable if one GUI toolkit is enabled)
- -DCREATOR=ON     | Build the liCreator application
- -DBUILDTOOLS=ON  | APGCC and stuff to build your application for IPK packaging
- -DVLDD=ON        | Compile VisualLDD dependency explorer (needs Qt4 installed)
+ -DTOOLS=OFF -- Disable building of Listaller's command-line tools (libuild/lipa/etc.)
+ -DLIBUILD=ON -- Build the LIBuild facilities
+ -DPATCHELF=ON -- Build patchelf utility (we don't use this at time, so you usually don't want to enable it)
+ -DVISUAL_LDD=ON -- Build the Visual-LDD utility (you need Qt4 for that)
+ -DTESTS=ON -- Enable Listaller's basic Unit Tests
+ -DTEST_DEPMANAGER=ON -- Enable test for Listaller's dependency solver
+ -DTEST_SECURITY=ON -- Enable Listaller signing/security tests
+
+As an alternative, you can also use the prepare script:
+First cd to the source directory and execute
+./prepare <flags>
+Flags are for example "--enable-tests" to enable tests. Check the script for more parameters.
 
 === Installation ===
 
 To install the compiled binaries and required data files, execute
 "make install" with superuser rights.
-
-=== Build dependencies ===
-
-Listaller needs the following modules to compile for Qt4, GTK2 and NoX:
-
- * Lazarus >=0.9.30
- * FPC Compiler >= 2.4.0
- * GLib 2.0 development files
- * libQt4Pas [Qt-only]
- * Qt4 core libraries >= 4.5 [Qt-only]
- * GTK2 >= 2.18 [GTK+-only]
- * SQLite3
- * PackageKit >= 0.5.6
- * PackageKit GLib2 module
- * GNU Gettext
- * DBus
- * PolicyKit (GLib-GObject)
-
-=== Dependencies ===
-
-Listaller needs the following libraries and tools to run:
-
-General:
- * xdg-utils (freedesktop.org utils)
- * lsb-release (LSB release information)
-
-GTK2 version:
- * libc6
- * libglib2.0-0
- * libgtk2.0-0
- * libpango1.0-0
- * packagekit >=0.4.6
- * libsqlite3-0
- * libx11-6
- * gksu
- * gnome-packagekit [optional]
-
-Qt4 version:
- * libc6
- * libsqlite3-0
- * kdesudo
- * packagekit >=0.4.6
- * libqt4pas
- * kde-icons-oxygen
- * kpackagekit [optional]
