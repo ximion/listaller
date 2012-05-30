@@ -291,8 +291,9 @@ public class Manager : MsgObject {
 	}
 
 	public string get_app_ld_environment (AppItem app) {
-		if (app.dbid < 0) {
-			debug ("AppItem database id was < 0! Application was maybe not retrieved from software DB and therefore lacks the required data.");
+		string[] depStr = app.dependencies.split ("\n");
+		if (depStr.length <= 0) {
+			debug ("No dependencies set! Application was maybe not retrieved from software DB and therefore lacks the required data.");
 			debug ("Setting empty environment...");
 			return "";
 		}
@@ -309,10 +310,8 @@ public class Manager : MsgObject {
 		else
 			db.force_db = ForceDB.PRIVATE;
 
-		// A new DepManager for the resolving...
+		// A new DepManager to resolve environment
 		DepManager depman = new DepManager (db);
-
-		string[] depStr = app.dependencies.split ("\n");
 
 		string paths = "";
 

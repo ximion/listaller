@@ -7,7 +7,7 @@ find_package(GLIB2 REQUIRED)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
-ensure_vala_version("0.12" MINIMUM)
+ensure_vala_version("0.14" MINIMUM)
 
 set(BUILDLIST_SOURCES buildlist.vala
 )

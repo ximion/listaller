@@ -289,22 +289,7 @@ private class SoftwareDB : MsgObject {
 
 	public AppItem? get_application_by_id (AppItem app) {
 		AppItem? resApp;
-		try  {
-			if (app.shared) {
-				if (shared_db_canbeused ())
-					resApp = db_shared.get_application_by_idname (app.idname);
-				else
-					return null;
-			} else {
-				if (private_db_canbeused ())
-					resApp = db_priv.get_application_by_idname (app.idname);
-				else
-					return null;
-			}
-		} catch (Error e) {
-			emit_dberror (_("Unable to fetch application by id: %s").printf (e.message));
-			resApp = null;
-		}
+		resApp = get_application_by_idname (app.idname);
 		return resApp;
 	}
 
@@ -364,16 +349,12 @@ private class SoftwareDB : MsgObject {
 		return list;
 	}
 
-	public void _internal_process_dbapps (InternalDB db, double one, ref ArrayList<AppItem> appList) {
+	public void _internal_emit_dbapps (double one, ref ArrayList<AppItem> appList) {
 		uint i = 1;
-		AppItem? capp = db.get_application_by_dbid (i);
-		while (capp != null) {
-			application (capp);
-			appList.add (capp);
+		foreach (AppItem app in appList) {
+			application (app);
 			change_main_progress ((int) Math.round (one * i));
-
 			i++;
-			capp = db.get_application_by_dbid (i);
 		}
 	}
 
@@ -383,14 +364,17 @@ private class SoftwareDB : MsgObject {
 		double one = 100d / get_applications_count ();
 
 		if (private_db_canbeused ()) {
-			_internal_process_dbapps (db_priv, one, ref alist);
+			alist = db_priv.get_applications_all ();
 		}
 		if (shared_db_canbeused ()) {
-			// TODO: A nicer solution is needed here...
-			// We set this to 0 to not get the "Progress cannot go down" message
-			change_main_progress (0);
-			_internal_process_dbapps (db_shared, one, ref alist);
+			if (alist == null)
+				alist = db_shared.get_applications_all ();
+			else
+				alist.add_all (db_shared.get_applications_all ());
 		}
+		if (alist == null)
+			return false;
+		_internal_emit_dbapps (one, ref alist);
 		appList = alist;
 
 		return true;

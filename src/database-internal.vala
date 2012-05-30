@@ -28,8 +28,7 @@ namespace Listaller {
 
 private const string DATABASE = ""
 		+ "CREATE TABLE IF NOT EXISTS applications ("
-		+ "id INTEGER PRIMARY KEY, "
-		+ "name TEXT UNIQUE NOT NULL, "
+		+ "name TEXT PRIMARY KEY, "
 		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
 		+ "desktop_file TEXT,"
@@ -45,8 +44,7 @@ private const string DATABASE = ""
 		+ "origin TEXT NOT NULL"
 		+ "); "
 		+ "CREATE TABLE IF NOT EXISTS dependencies ("
-		+ "id INTEGER PRIMARY KEY, "
-		+ "name TEXT UNIQUE NOT NULL, "
+		+ "name TEXT PRIMARY KEY, "
 		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
 		+ "description TEXT, "
@@ -67,37 +65,35 @@ private const string depcols = "name, full_name, version, description, author, h
 			"install_time, provided_by, components, environment, dependencies";
 
 private enum AppRow {
-	DBID = 0,
-	IDNAME = 1,
-	FULLNAME = 2,
-	VERSION = 3,
-	DESKTOPFILE = 4,
-	AUTHOR = 5,
-	PUBLISHER = 6,
-	CATEGORIES = 7,
-	DESCRIPTION = 8,
-	HOMEPAGE = 9,
-	ARCHITECTURE = 10,
-	INST_TIME = 11,
-	DEPS = 12,
-	REPLACES = 13,
-	ORIGIN = 14;
+	IDNAME = 0,
+	FULLNAME = 1,
+	VERSION = 2,
+	DESKTOPFILE = 3,
+	AUTHOR = 4,
+	PUBLISHER = 5,
+	CATEGORIES = 6,
+	DESCRIPTION = 7,
+	HOMEPAGE = 8,
+	ARCHITECTURE = 9,
+	INST_TIME = 10,
+	DEPS = 11,
+	REPLACES = 12,
+	ORIGIN = 13;
 }
 
 private enum DepRow {
-	DBID = 0,
-	IDNAME = 1,
-	FULLNAME = 2,
-	VERSION = 3,
-	DESCRIPTION = 4,
-	AUTHOR = 5,
-	HOMEPAGE = 6,
-	ARCHITECTURE = 7,
-	INST_TIME = 8,
-	PROVIDED_BY = 9,
-	COMPONENTS = 10,
-	ENVIRONMENT = 11,
-	DEPENDENCIES = 12;
+	IDNAME = 0,
+	FULLNAME = 1,
+	VERSION = 2,
+	DESCRIPTION = 3,
+	AUTHOR = 4,
+	HOMEPAGE = 5,
+	ARCHITECTURE = 6,
+	INST_TIME = 7,
+	PROVIDED_BY = 8,
+	COMPONENTS = 9,
+	ENVIRONMENT = 10,
+	DEPENDENCIES = 11;
 }
 
 public errordomain DatabaseError {
@@ -239,7 +235,7 @@ private class InternalDB : Object {
 
 		// Prepare statements
 
-		// InsterApp statement
+		// InsertApp statement
 		try {
 			db_assert (db.prepare_v2 ("INSERT INTO applications (" + appcols + ") "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -423,34 +419,34 @@ private class InternalDB : Object {
 
 		// Assign values
 		try {
-			db_assert (insert_app.bind_text (AppRow.IDNAME, item.idname), "assign value");
+			db_assert (insert_app.bind_text (AppRow.IDNAME +1, item.idname), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.VERSION, item.version), "assign value");
+			db_assert (insert_app.bind_text (AppRow.VERSION +1, item.version), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.FULLNAME, item.full_name), "assign value");
+			db_assert (insert_app.bind_text (AppRow.FULLNAME +1, item.full_name), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.DESKTOPFILE, item.desktop_file), "assign value");
+			db_assert (insert_app.bind_text (AppRow.DESKTOPFILE +1, item.desktop_file), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.AUTHOR, item.author), "assign value");
+			db_assert (insert_app.bind_text (AppRow.AUTHOR +1, item.author), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.PUBLISHER, item.publisher), "assign value");
+			db_assert (insert_app.bind_text (AppRow.PUBLISHER +1, item.publisher), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.CATEGORIES, item.categories), "assign value");
+			db_assert (insert_app.bind_text (AppRow.CATEGORIES +1, item.categories), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.DESCRIPTION, "%s\n\n%s".printf (item.summary, item.description)), "assign value");
+			db_assert (insert_app.bind_text (AppRow.DESCRIPTION +1, "%s\n\n%s".printf (item.summary, item.description)), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.HOMEPAGE, item.website), "assign value");
+			db_assert (insert_app.bind_text (AppRow.HOMEPAGE +1, item.website), "assign value");
 
 			//TODO: Handle arch field
-			db_assert (insert_app.bind_text (AppRow.ARCHITECTURE, "current"), "assign value");
+			db_assert (insert_app.bind_text (AppRow.ARCHITECTURE +1, "current"), "assign value");
 
-			db_assert (insert_app.bind_int64 (AppRow.INST_TIME, item.install_time), "assign value");
+			db_assert (insert_app.bind_int64 (AppRow.INST_TIME +1, item.install_time), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.ORIGIN, item.origin.to_string ()), "assign value");
+			db_assert (insert_app.bind_text (AppRow.ORIGIN +1, item.origin.to_string ()), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.DEPS, item.dependencies), "assign value");
+			db_assert (insert_app.bind_text (AppRow.DEPS +1, item.dependencies), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.REPLACES, item.replaces), "assign value");
+			db_assert (insert_app.bind_text (AppRow.REPLACES +1, item.replaces), "assign value");
 
 			db_assert (insert_app.step (), "execute app insert");
 
@@ -540,7 +536,6 @@ private class InternalDB : Object {
 	private AppItem? retrieve_app_item (Sqlite.Statement stmt) {
 		AppItem item = new AppItem.blank ();
 
-		item.dbid = stmt.column_int (AppRow.DBID);
 		item.idname = stmt.column_text (AppRow.IDNAME);
 		item.full_name = stmt.column_text (AppRow.FULLNAME);
 		item.version = stmt.column_text (AppRow.VERSION);
@@ -639,13 +634,12 @@ private class InternalDB : Object {
 		return itemList;
 	}
 
-	public AppItem? get_application_by_dbid (uint databaseId) throws DatabaseError {
+	public ArrayList<AppItem>? get_applications_all () throws DatabaseError {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT * FROM applications WHERE id=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT * FROM applications", -1, out stmt);
 
 		try {
-			db_assert (res, "get application (by database-id)");
-			db_assert (stmt.bind_int64 (1, databaseId), "bind value");
+			db_assert (res, "get application (by full_name)");
 
 			res = stmt.step ();
 			db_assert (res, "execute");
@@ -655,13 +649,33 @@ private class InternalDB : Object {
 			throw new DatabaseError.ERROR (e.message);
 		}
 
-		AppItem? item = retrieve_app_item (stmt);
+		ArrayList<AppItem>? itemList = null;
+		do {
+			res = stmt.step ();
+			switch (res) {
+				case Sqlite.DONE:
+					break;
+				case Sqlite.ROW:
+					// Check if we have the container ready
+					if (itemList == null)
+						itemList = new ArrayList<AppItem> ();
 
-		// Fast sanity checks
-		if (item != null)
-			item.fast_check ();
+					// Fetch a new AppItem
+					AppItem? tmpApp = retrieve_app_item (stmt);
+					// Fast sanity checks
+					if (tmpApp != null)
+						tmpApp.fast_check ();
+					else
+						throw new DatabaseError.ERROR ("Unable to retrieve an application from database! DB might be in an inconstistent state!");
+					itemList.add (tmpApp);
+					break;
+				default:
+					db_assert (res, "execute");
+					break;
+			}
+		} while (res == Sqlite.ROW);
 
-		return item;
+		return itemList;
 	}
 
 	public AppItem? get_application_by_name_version (string appName, string appVersion) throws DatabaseError {
@@ -806,29 +820,29 @@ private class InternalDB : Object {
 
 		try {
 			// Assign values
-			db_assert (insert_dep.bind_text (DepRow.IDNAME, dep.idname), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.IDNAME +1, dep.idname), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.FULLNAME, dep.full_name), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.FULLNAME +1, dep.full_name), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.VERSION, dep.version), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.VERSION +1, dep.version), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.DESCRIPTION, "%s\n\n%s".printf (dep.summary, dep.description)), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.DESCRIPTION +1, "%s\n\n%s".printf (dep.summary, dep.description)), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.HOMEPAGE, dep.homepage), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.HOMEPAGE +1, dep.homepage), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.AUTHOR, dep.author), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.AUTHOR +1, dep.author), "bind value");
 
-			db_assert (insert_dep.bind_int64 (DepRow.INST_TIME, dep.install_time), "bind value");
+			db_assert (insert_dep.bind_int64 (DepRow.INST_TIME +1, dep.install_time), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ARCHITECTURE, dep.architecture), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ARCHITECTURE +1, dep.architecture), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.PROVIDED_BY, dep.get_installdata_as_string ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.PROVIDED_BY +1, dep.get_installdata_as_string ()), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.COMPONENTS, dep.get_componentdata_as_string ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.COMPONENTS +1, dep.get_componentdata_as_string ()), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT, dep.environment), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT +1, dep.environment), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.DEPENDENCIES, ""), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.DEPENDENCIES +1, ""), "bind value");
 
 			db_assert (insert_dep.step (), "add dependency");
 

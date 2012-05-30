@@ -88,10 +88,12 @@ public class AppItem : Object {
 	private string _dependencies;
 	private bool _shared;
 	private AppOrigin _origin;
-	private int _dbid;
 	private string _app_id;
 	private Listaller.Settings liconf;
 
+	/**
+	 * Application identifier
+	 * */
 	public string idname {
 		get {
 			if (_idname.strip () == "")
@@ -216,14 +218,6 @@ public class AppItem : Object {
 		get { _app_id = generate_appid (); return _app_id; }
 	}
 
-	/**
-	 * Id number of this application in software database
-	 */
-	public int dbid {
-		get { return _dbid; }
-		set { _dbid = value; }
-	}
-
 	public AppItem.blank () {
 		_shared = false;
 		_idname = "";
@@ -233,7 +227,6 @@ public class AppItem : Object {
 		_description = "";
 		install_time = 0;
 		categories = "all;";
-		dbid = -1;
 		origin = AppOrigin.UNKNOWN;
 		_app_id = "";
 		_desktop_file = "";
@@ -268,7 +261,7 @@ public class AppItem : Object {
 	public string to_string () {
 		return "[ (" + idname + ") "
 			+ "(" + version +") "
-			+ "! " + appid + " ::" + dbid.to_string () + " "
+			+ "! " + appid + " :: (" + full_name + ") "
 			+ "]";
 	}
 
@@ -334,7 +327,9 @@ public class AppItem : Object {
 		assert (appid != "");
 	}
 
-	public void set_origin_from_string (string s) {
+	public void set_origin_from_string (string? s) {
+		if (s == null)
+			s = "";
 		switch (s) {
 			case ("package_ipk"):
 				origin = AppOrigin.IPK;

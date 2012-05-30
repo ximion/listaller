@@ -1,4 +1,4 @@
-/* settings.vala
+/* settings.vala -- Store global settings which affect all Listaller modules
  *
  * Copyright (C) 2009-2012 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -112,7 +112,7 @@ public class Settings : Object {
 	}
 
 	public string database_file () {
-		return appregister_dir () + "/software.db";
+		return appregister_dir () + "/installed.db";
 	}
 
 	[CCode (array_length = false, array_null_terminated = true)]

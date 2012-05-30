@@ -350,7 +350,7 @@ private bool dir_is_empty (string dirname) {
 	return n == 0;
 }
 
-private string fold_user_dir (string path) {
+private string fold_user_dir (string? path) {
 	if ((path == null) || (path == ""))
 		return "";
 	string udir = Environment.get_home_dir ();
