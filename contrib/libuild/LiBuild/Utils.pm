@@ -1,4 +1,4 @@
-package LixBuild::Utils;
+package LiBuild::Utils;
 
 use strict;
 use warnings;
@@ -17,10 +17,10 @@ our $debugOpened = 0;
 ##
 # debug(message)
 #
-# If the environment variable $LIXBUILD_DEBUG is set to 1,
+# If the environment variable $LIBUILD_DEBUG is set to 1,
 # then print a debugging message to /dev/tty (not stdout or stderr).
 sub debug {
-	return if (empty($ENV{LIXBUILD_DEBUG}) || !$ENV{LIXBUILD_DEBUG});
+	return if (empty($ENV{LIBUILD_DEBUG}) || !$ENV{LIBUILD_DEBUG});
 
 	if (!$debugOpened) {
 		if (open DEBUG, '>/dev/tty') {
