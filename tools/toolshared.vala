@@ -107,10 +107,10 @@ public string? console_readline_unbuffered (string prompt)
 	//! setbuf (tty, null);
 
 	// taken from polkitagenttextlistener.c
-	tcgetattr (tty.fileno (), out ts);
+	Posix.tcgetattr (tty.fileno (), out ts);
 	ots = ts;
 	ts.c_lflag &= ~(ECHONL);
-	tcsetattr (tty.fileno (), TCSAFLUSH, ts);
+	Posix.tcsetattr (tty.fileno (), TCSAFLUSH, ts);
 
 	str = "";
 	while (true) {
@@ -126,7 +126,7 @@ public string? console_readline_unbuffered (string prompt)
 			str = "%s%c".printf (str, (char) c);
 		}
 	}
-	tcsetattr (tty.fileno (), TCSAFLUSH, ots);
+	Posix.tcsetattr (tty.fileno (), TCSAFLUSH, ots);
 	tty.putc ('\n');
 
 	if (str == "")
