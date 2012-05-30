@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-05-19 23:25+0000\n"
+"POT-Creation-Date: 2012-05-21 17:08+0200\n"
 "PO-Revision-Date: 2011-04-26 21:51+0000\n"
 "Last-Translator: simone.sandri <lexluxsox@hotmail.it>\n"
 "Language-Team: Italian <it@li.org>\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
 "X-Generator: Launchpad (build 15275)\n"
-"Language: it\n"
 
 #, c-format
 msgid ""
@@ -351,8 +351,7 @@ msgid "Resolving dependencies of '%s'."
 msgstr ""
 
 #, c-format
-msgid ""
-"Run '%s --help' to see a full list of available command line options.\n"
+msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
 #, c-format
@@ -553,8 +552,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"Unable to find a matching implementation of '%s' for your "
-"system/architecture."
+"Unable to find a matching implementation of '%s' for your system/"
+"architecture."
 msgstr ""
 
 #, c-format
@@ -654,178 +653,104 @@ msgstr ""
 msgid "shared"
 msgstr ""
 
-#~ msgid "The application %a was not installed."
-#~ msgstr "L'applicazione %a non è stata installata."
-
-#~ msgid "Welcome!"
-#~ msgstr "Benvenuto!"
-
-#~ msgid "The application %a was installed successfully!"
-#~ msgstr "L'applicazione %a è stata installata con successo."
-
-#~ msgid "Program description:"
-#~ msgstr "Descrizione del programma:"
-
-#~ msgid "Software license"
-#~ msgstr "Licenza software"
-
-#~ msgid "Please wait."
-#~ msgstr "Attendere prego."
-
-#~ msgid "Please read the following information carefully:"
-#~ msgstr "Si prega di leggere con attenzione le seguenti informazioni:"
-
-#~ msgid "Running installation..."
-#~ msgstr "Esecuzione dell'installazione in corso..,."
-
-#~ msgid "Display installation log"
-#~ msgstr "Visualizza il log di installazione"
-
-#~ msgid "I don't agree"
-#~ msgstr "Non accetto"
-
-#~ msgid "I agree with the above terms and conditions"
-#~ msgstr "Accetto termini e condizioni mostrati sopra"
-
-#~ msgid "This application is already installed"
-#~ msgstr "Questa applicazione è già installata"
-
-#~ msgid "Do you want to install it again?"
-#~ msgstr "Installare l'applicazione ancora una volta?"
-
-#~ msgid "Please notify the developers on http://launchpad.net/listaller"
-#~ msgstr ""
-#~ "Si prega di avvertire gli sviluppatori su http://launchpad.net/listaller"
-
-#~ msgid "Error while extracting files!"
-#~ msgstr "Errore durante l'estrazione dei file."
-
-#~ msgid "Phase 1/4: Resolving dependencies..."
-#~ msgstr "Fase 1/4: Risoluzione delle dipendenze in corso..."
-
-#~ msgid "Test of the application finished."
-#~ msgstr "Test dell'applicazione completato."
-
-#~ msgid "The application will close now "
-#~ msgstr "L'applicazione verrà chiusa ora "
-
-#~ msgid "This application wants to download & install a dependency from %l"
-#~ msgstr ""
-#~ "Questa applicazione richiede di scaricare e installare una dipendenza da %l"
-
-#~ msgid "Dependencies couldn't be solved!"
-#~ msgstr "Non è stato possibile soddisfare le dipendenze."
-
-#~ msgid "Installation package is corrupt"
-#~ msgstr "Il pacchetto d'installazione è corrotto"
-
-#~ msgid "Please view the logfile at %p"
-#~ msgstr "Consultare il file di log alla locazione %p"
-
-#~ msgid ""
-#~ "The application which this package contains was not built for the current "
-#~ "system architecture."
-#~ msgstr ""
-#~ "L'applicazione contenuta in questo pacchetto non è adeguata per la corrente "
-#~ "architettura di sistema."
-
-#~ msgid "Do you want to install it anyway? (This could raise problems)"
-#~ msgstr "Installarlo comunque? (Questo potrebbe portare dei problemi)"
-
-#~ msgid "Phase 3/4: Chmod new files..."
-#~ msgstr "Fase 3/4: Esecuzione di chmod sui nuovi file..."
-
-#~ msgid "Phase 4/4: Registering application..."
-#~ msgstr "Fase 4/4: Registrazione dell'applicazione in corso..."
-
-#~ msgid "Do you want confirm this action?"
-#~ msgstr "Confermare questa azione?"
-
-#~ msgid "Phase 2/4: Installing files..."
-#~ msgstr "Fase 2/4: Installazione dei file in corso..."
-
-#~ msgid "Listaller will close now. The package couldn't be installed."
-#~ msgstr ""
-#~ "Listaller verrà chiuso ora. Non è stato possibile installare il pacchetto."
-
-#~ msgid "Installation aborted."
-#~ msgstr "Installazione interrotta."
-
-#~ msgid "Finish"
-#~ msgstr "Fine"
-
-#~ msgid "Next"
-#~ msgstr "Avanti"
-
-#~ msgid "Back"
-#~ msgstr "Indietro"
-
-#~ msgid "Abort"
-#~ msgstr "Annulla"
-
-#~ msgid "Install now"
-#~ msgstr "Installa ora"
-
-#~ msgid "Testmode"
-#~ msgstr "Modalità di test"
-
-#~ msgid "Installation of %a"
-#~ msgstr "Installazione di %a"
-
-#~ msgid "Loading aborted."
-#~ msgstr "Caricamento interrotto."
-
-#~ msgid "The package was invalid!"
-#~ msgstr "Pacchetto non valido."
+#~ msgid "%f files will be changed."
+#~ msgstr "Il documento %f è stato modificato."
 
 #~ msgid "(This program will download the needed files from the internet)"
 #~ msgstr "(Questo programma scaricherà da internet i file necessari)"
 
-#~ msgid "Finished"
-#~ msgstr "Completato"
+#~ msgid "Abort"
+#~ msgstr "Annulla"
+
+#~ msgid "About"
+#~ msgstr "Informazioni"
+
+#~ msgid "About Listaller"
+#~ msgstr "Informazioni su Listaller"
+
+#~ msgid "All"
+#~ msgstr "Tutto"
+
+#~ msgid "Applying updates..."
+#~ msgstr "Sto applicando gli aggiornamenti..."
+
+#~ msgid "Authors"
+#~ msgstr "Autori"
+
+#~ msgid "Autor"
+#~ msgstr "Autore"
+
+#~ msgid "Back"
+#~ msgstr "Indietro"
+
+#~ msgid "Category:"
+#~ msgstr "Categoria:"
+
+#~ msgid "Check for updates"
+#~ msgstr "Controlla se ci sono aggiornamenti"
+
+#~ msgid "Close"
+#~ msgstr "Chiudi"
+
+#~ msgid "Convert package?"
+#~ msgstr "Convertire il pacchetto?"
+
+#~ msgid "Converting %p package..."
+#~ msgstr "Conversione del pacchetto %p in corso..."
+
+#~ msgid "Dependencies couldn't be solved!"
+#~ msgstr "Non è stato possibile soddisfare le dipendenze."
 
 #~ msgid "Details"
 #~ msgstr "Dettagli"
 
-#~ msgid "Should this source be added to the update sources list?"
-#~ msgstr "Aggiungere questa fonte all'elenco delle fonti per l'aggiornamento?"
+#~ msgid "Development"
+#~ msgstr "Sviluppo"
 
-#~ msgid ""
-#~ "There are no sources available for your Linux distribution\n"
-#~ "Try to install common packages?"
-#~ msgstr ""
-#~ "Non ci sono fonti disponibili per la distribuzione Linux attualmente in uso\n"
-#~ "Tentare l'installazione dei pacchetti comuni?"
+#~ msgid "Display installation log"
+#~ msgstr "Visualizza il log di installazione"
 
-#~ msgid "Use compatible packages?"
-#~ msgstr "Usare pacchetti compatibili?"
+#~ msgid "Display system applications"
+#~ msgstr "Mostra applicazioni di sistema"
 
-#~ msgid "No compatible packages found!"
-#~ msgstr "Non sono stati trovati pacchetti compatibili."
+#~ msgid "Do you really want to uninstall %a?"
+#~ msgstr "Sei sicuro di voler disinstallare %a?"
 
-#~ msgid "Installation"
-#~ msgstr "Installazione"
+#~ msgid "Do you want confirm this action?"
+#~ msgstr "Confermare questa azione?"
 
-#~ msgid "Re-install"
-#~ msgstr "Re-installa"
+#~ msgid "Do you want to install it again?"
+#~ msgstr "Installare l'applicazione ancora una volta?"
 
-#~ msgid "The following packages will be downloaded:"
-#~ msgstr "I seguenti pacchetti saranno scaricati:"
+#~ msgid "Do you want to install it anyway? (This could raise problems)"
+#~ msgstr "Installarlo comunque? (Questo potrebbe portare dei problemi)"
 
-#~ msgid "Please wait..."
-#~ msgstr "Attendere..."
+#~ msgid "Education"
+#~ msgstr "Formazione"
 
-#~ msgid "What do you want to do?"
-#~ msgstr "Come si vuole procedere?"
+#~ msgid "Enable Proxy-Server"
+#~ msgstr "Abilita server proxy"
 
-#~ msgid "Mode"
-#~ msgstr "Modalità"
+#~ msgid "Error while extracting files!"
+#~ msgstr "Errore durante l'estrazione dei file."
 
-#~ msgid "Select which parts of the application should be installed."
-#~ msgstr "Selezionare le parti dell'applicazione da installare."
+#~ msgid "Error while uninstalling!"
+#~ msgstr "Errore durante la disinstallazione!"
 
-#~ msgid "Installation mode:"
-#~ msgstr "Modalità installazione:"
+#~ msgid "Filtering..."
+#~ msgstr "Sto filtrando..."
+
+#~ msgid "Finish"
+#~ msgstr "Fine"
+
+#~ msgid "Finished"
+#~ msgstr "Completato"
+
+#~ msgid "Games"
+#~ msgstr "Giochi"
+
+#~ msgid "Graphic"
+#~ msgstr "Grafica"
 
 #~ msgid ""
 #~ "Hash doesn't match!\n"
@@ -836,126 +761,11 @@ msgstr ""
 #~ "Il pacchetto potrebbe essere stato modificato dopo la sua creazione.\n"
 #~ "Ne è necessaria una nuova copia"
 
-#~ msgid "Close"
-#~ msgstr "Chiudi"
+#~ msgid "I agree with the above terms and conditions"
+#~ msgstr "Accetto termini e condizioni mostrati sopra"
 
-#~ msgid "Software Manager"
-#~ msgstr "Gestore Applicazioni"
-
-#~ msgid "Network"
-#~ msgstr "Rete"
-
-#~ msgid "Games"
-#~ msgstr "Giochi"
-
-#~ msgid "Graphic"
-#~ msgstr "Grafica"
-
-#~ msgid "Development"
-#~ msgstr "Sviluppo"
-
-#~ msgid "Uninstall"
-#~ msgstr "Disinstalla"
-
-#~ msgid "Show:"
-#~ msgstr "Visualizza:"
-
-#~ msgid "Office"
-#~ msgstr "Ufficio"
-
-#~ msgid "Education"
-#~ msgstr "Formazione"
-
-#~ msgid "System"
-#~ msgstr "Sistema"
-
-#~ msgid "Multimedia"
-#~ msgstr "Multimedia"
-
-#~ msgid "Utilities"
-#~ msgstr "Utilità"
-
-#~ msgid "Other"
-#~ msgstr "Altro"
-
-#~ msgid "Version"
-#~ msgstr "Versione"
-
-#~ msgid "Autor"
-#~ msgstr "Autore"
-
-#~ msgid "Username"
-#~ msgstr "Nome utente"
-
-#~ msgid "Password"
-#~ msgstr "Password"
-
-#~ msgid "Enable Proxy-Server"
-#~ msgstr "Abilita server proxy"
-
-#~ msgid "Proxy-Settings"
-#~ msgstr "Impostazioni proxy"
-
-#~ msgid "Loading..."
-#~ msgstr "Caricamento in corso..."
-
-#~ msgid "Converting %p package..."
-#~ msgstr "Conversione del pacchetto %p in corso..."
-
-#~ msgid "Convert package?"
-#~ msgstr "Convertire il pacchetto?"
-
-#~ msgid "Ready."
-#~ msgstr "Pronto."
-
-#~ msgid ""
-#~ "Unable to load the icon of %a. Please notify the developers of Listaller or "
-#~ "this application!"
-#~ msgstr ""
-#~ "Impossibile caricare l'icona di %a. Si prega di avvertire gli sviluppatori "
-#~ "di Listaller o di questa applicazione."
-
-#~ msgid "Display system applications"
-#~ msgstr "Mostra applicazioni di sistema"
-
-#~ msgid "Install package?"
-#~ msgstr "Installare il pacchetto?"
-
-#~ msgid "Package %p could not be installed."
-#~ msgstr "Impossibile installare il pacchetto %p."
-
-#~ msgid "About Listaller"
-#~ msgstr "Informazioni su Listaller"
-
-#~ msgid "Authors"
-#~ msgstr "Autori"
-
-#~ msgid "About"
-#~ msgstr "Informazioni"
-
-#~ msgid "Category:"
-#~ msgstr "Categoria:"
-
-#~ msgid "Success!"
-#~ msgstr "Riuscito."
-
-#~ msgid "Press \"Next\" to start the installation!"
-#~ msgstr "Premi \"Avanti\" per avviare l'installazione!"
-
-#~ msgid "Press \"Finish\" to close."
-#~ msgstr "Premi \"Fine\" per chiudere."
-
-#~ msgid "Your Linux distribution is not supported by Listaller yet!"
-#~ msgstr "La tua distribuzione Linux non è ancora supportata da Listaller!"
-
-#~ msgid "The installer will close now"
-#~ msgstr "L'installatore verrà chiuso ora"
-
-#~ msgid "Welcome to the installation of %a"
-#~ msgstr "Benvenuto all'installazione di %a"
-
-#~ msgid "Main"
-#~ msgstr "Principale"
+#~ msgid "I don't agree"
+#~ msgstr "Non accetto"
 
 #~ msgid "Install application for everyone"
 #~ msgstr "Installa l'applicazione per tutti gli utenti"
@@ -963,50 +773,241 @@ msgstr ""
 #~ msgid "Install into my Home directory"
 #~ msgstr "Installa nella mia cartella Home"
 
-#~ msgid "Select installation mode"
-#~ msgstr "Seleziona la modalità d'installazione"
+#~ msgid "Install now"
+#~ msgstr "Installa ora"
 
-#~ msgid "All"
-#~ msgstr "Tutto"
+#~ msgid "Install package?"
+#~ msgstr "Installare il pacchetto?"
 
-#~ msgid "Filtering..."
-#~ msgstr "Sto filtrando..."
+#~ msgid "Installation"
+#~ msgstr "Installazione"
 
-#~ msgid "Do you really want to uninstall %a?"
-#~ msgstr "Sei sicuro di voler disinstallare %a?"
+#~ msgid "Installation aborted."
+#~ msgstr "Installazione interrotta."
 
-#~ msgid "Error while uninstalling!"
-#~ msgstr "Errore durante la disinstallazione!"
+#~ msgid "Installation mode:"
+#~ msgstr "Modalità installazione:"
 
-#~ msgid "Uninstalling..."
-#~ msgstr "Sto disinstallando..."
+#~ msgid "Installation of %a"
+#~ msgstr "Installazione di %a"
 
-#~ msgid "Waiting..."
-#~ msgstr "In attesa..."
+#~ msgid "Installation package is corrupt"
+#~ msgstr "Il pacchetto d'installazione è corrotto"
 
-#~ msgid "Really remove?"
-#~ msgstr "Vuoi davvero rimuoverlo?"
+#~ msgid "Listaller will close now. The package couldn't be installed."
+#~ msgstr ""
+#~ "Listaller verrà chiuso ora. Non è stato possibile installare il pacchetto."
 
-#~ msgid "There are no updates available!"
-#~ msgstr "Non ci sono aggiornamenti disponibili!"
+#~ msgid "Loading aborted."
+#~ msgstr "Caricamento interrotto."
 
-#~ msgid "Uninstalling %a"
-#~ msgstr "Sto disinstallando %a"
+#~ msgid "Loading..."
+#~ msgstr "Caricamento in corso..."
 
-#~ msgid "Applying updates..."
-#~ msgstr "Sto applicando gli aggiornamenti..."
+#~ msgid "Main"
+#~ msgstr "Principale"
+
+#~ msgid "Mode"
+#~ msgstr "Modalità"
+
+#~ msgid "Multimedia"
+#~ msgstr "Multimedia"
+
+#~ msgid "Network"
+#~ msgstr "Rete"
+
+#~ msgid "Next"
+#~ msgstr "Avanti"
+
+#~ msgid "No compatible packages found!"
+#~ msgstr "Non sono stati trovati pacchetti compatibili."
+
+#~ msgid "Office"
+#~ msgstr "Ufficio"
+
+#~ msgid "Other"
+#~ msgstr "Altro"
+
+#~ msgid "Package %p could not be installed."
+#~ msgstr "Impossibile installare il pacchetto %p."
+
+#~ msgid "Password"
+#~ msgstr "Password"
+
+#~ msgid "Phase 1/4: Resolving dependencies..."
+#~ msgstr "Fase 1/4: Risoluzione delle dipendenze in corso..."
+
+#~ msgid "Phase 2/4: Installing files..."
+#~ msgstr "Fase 2/4: Installazione dei file in corso..."
+
+#~ msgid "Phase 3/4: Chmod new files..."
+#~ msgstr "Fase 3/4: Esecuzione di chmod sui nuovi file..."
+
+#~ msgid "Phase 4/4: Registering application..."
+#~ msgstr "Fase 4/4: Registrazione dell'applicazione in corso..."
+
+#~ msgid "Please notify the developers on http://launchpad.net/listaller"
+#~ msgstr ""
+#~ "Si prega di avvertire gli sviluppatori su http://launchpad.net/listaller"
+
+#~ msgid "Please read the following information carefully:"
+#~ msgstr "Si prega di leggere con attenzione le seguenti informazioni:"
+
+#~ msgid "Please view the logfile at %p"
+#~ msgstr "Consultare il file di log alla locazione %p"
+
+#~ msgid "Please wait."
+#~ msgstr "Attendere prego."
+
+#~ msgid "Please wait..."
+#~ msgstr "Attendere..."
+
+#~ msgid "Press \"Finish\" to close."
+#~ msgstr "Premi \"Fine\" per chiudere."
+
+#~ msgid "Press \"Next\" to start the installation!"
+#~ msgstr "Premi \"Avanti\" per avviare l'installazione!"
+
+#~ msgid "Program description:"
+#~ msgstr "Descrizione del programma:"
+
+#~ msgid "Proxy-Settings"
+#~ msgstr "Impostazioni proxy"
 
 #~ msgid "Quit"
 #~ msgstr "Esci"
 
+#~ msgid "Re-install"
+#~ msgstr "Re-installa"
+
+#~ msgid "Ready."
+#~ msgstr "Pronto."
+
+#~ msgid "Really remove?"
+#~ msgstr "Vuoi davvero rimuoverlo?"
+
+#~ msgid "Running installation..."
+#~ msgstr "Esecuzione dell'installazione in corso..,."
+
+#~ msgid "Select installation mode"
+#~ msgstr "Seleziona la modalità d'installazione"
+
+#~ msgid "Select which parts of the application should be installed."
+#~ msgstr "Selezionare le parti dell'applicazione da installare."
+
+#~ msgid "Should this source be added to the update sources list?"
+#~ msgstr "Aggiungere questa fonte all'elenco delle fonti per l'aggiornamento?"
+
 #~ msgid "Show"
 #~ msgstr "Mostra"
 
-#~ msgid "Check for updates"
-#~ msgstr "Controlla se ci sono aggiornamenti"
+#~ msgid "Show:"
+#~ msgstr "Visualizza:"
+
+#~ msgid "Software Manager"
+#~ msgstr "Gestore Applicazioni"
+
+#~ msgid "Software license"
+#~ msgstr "Licenza software"
+
+#~ msgid "Success!"
+#~ msgstr "Riuscito."
+
+#~ msgid "System"
+#~ msgstr "Sistema"
+
+#~ msgid "Test of the application finished."
+#~ msgstr "Test dell'applicazione completato."
+
+#~ msgid "Testmode"
+#~ msgstr "Modalità di test"
+
+#~ msgid "The application %a was installed successfully!"
+#~ msgstr "L'applicazione %a è stata installata con successo."
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "L'applicazione %a non è stata installata."
+
+#~ msgid ""
+#~ "The application which this package contains was not built for the current "
+#~ "system architecture."
+#~ msgstr ""
+#~ "L'applicazione contenuta in questo pacchetto non è adeguata per la "
+#~ "corrente architettura di sistema."
 
 #~ msgid "The application will be updated to version %v"
 #~ msgstr "L'applicazione verrà aggiornata alla versione %v"
 
-#~ msgid "%f files will be changed."
-#~ msgstr "Il documento %f è stato modificato."
+#~ msgid "The application will close now "
+#~ msgstr "L'applicazione verrà chiusa ora "
+
+#~ msgid "The following packages will be downloaded:"
+#~ msgstr "I seguenti pacchetti saranno scaricati:"
+
+#~ msgid "The installer will close now"
+#~ msgstr "L'installatore verrà chiuso ora"
+
+#~ msgid "The package was invalid!"
+#~ msgstr "Pacchetto non valido."
+
+#~ msgid ""
+#~ "There are no sources available for your Linux distribution\n"
+#~ "Try to install common packages?"
+#~ msgstr ""
+#~ "Non ci sono fonti disponibili per la distribuzione Linux attualmente in "
+#~ "uso\n"
+#~ "Tentare l'installazione dei pacchetti comuni?"
+
+#~ msgid "There are no updates available!"
+#~ msgstr "Non ci sono aggiornamenti disponibili!"
+
+#~ msgid "This application is already installed"
+#~ msgstr "Questa applicazione è già installata"
+
+#~ msgid "This application wants to download & install a dependency from %l"
+#~ msgstr ""
+#~ "Questa applicazione richiede di scaricare e installare una dipendenza da "
+#~ "%l"
+
+#~ msgid ""
+#~ "Unable to load the icon of %a. Please notify the developers of Listaller "
+#~ "or this application!"
+#~ msgstr ""
+#~ "Impossibile caricare l'icona di %a. Si prega di avvertire gli "
+#~ "sviluppatori di Listaller o di questa applicazione."
+
+#~ msgid "Uninstall"
+#~ msgstr "Disinstalla"
+
+#~ msgid "Uninstalling %a"
+#~ msgstr "Sto disinstallando %a"
+
+#~ msgid "Uninstalling..."
+#~ msgstr "Sto disinstallando..."
+
+#~ msgid "Use compatible packages?"
+#~ msgstr "Usare pacchetti compatibili?"
+
+#~ msgid "Username"
+#~ msgstr "Nome utente"
+
+#~ msgid "Utilities"
+#~ msgstr "Utilità"
+
+#~ msgid "Version"
+#~ msgstr "Versione"
+
+#~ msgid "Waiting..."
+#~ msgstr "In attesa..."
+
+#~ msgid "Welcome to the installation of %a"
+#~ msgstr "Benvenuto all'installazione di %a"
+
+#~ msgid "Welcome!"
+#~ msgstr "Benvenuto!"
+
+#~ msgid "What do you want to do?"
+#~ msgstr "Come si vuole procedere?"
+
+#~ msgid "Your Linux distribution is not supported by Listaller yet!"
+#~ msgstr "La tua distribuzione Linux non è ancora supportata da Listaller!"

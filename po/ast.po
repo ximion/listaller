@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-05-19 23:25+0000\n"
+"POT-Creation-Date: 2012-05-21 17:08+0200\n"
 "PO-Revision-Date: 2009-12-07 23:19+0000\n"
 "Last-Translator: Costales <costales.marcos@gmail.com>\n"
 "Language-Team: Asturian <ast@li.org>\n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
 "X-Generator: Launchpad (build 15275)\n"
-"Language: ast\n"
 
 #, c-format
 msgid ""
@@ -351,8 +351,7 @@ msgid "Resolving dependencies of '%s'."
 msgstr ""
 
 #, c-format
-msgid ""
-"Run '%s --help' to see a full list of available command line options.\n"
+msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
 #, c-format
@@ -553,8 +552,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"Unable to find a matching implementation of '%s' for your "
-"system/architecture."
+"Unable to find a matching implementation of '%s' for your system/"
+"architecture."
 msgstr ""
 
 #, c-format
@@ -654,8 +653,8 @@ msgstr ""
 msgid "shared"
 msgstr ""
 
-#~ msgid "The application %a was not installed."
-#~ msgstr "Nun s'instaló l'aplicación %a ."
-
 #~ msgid "Installation aborted."
 #~ msgstr "Instalación encaboxada."
+
+#~ msgid "The application %a was not installed."
+#~ msgstr "Nun s'instaló l'aplicación %a ."

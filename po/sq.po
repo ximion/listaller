@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.00b\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-05-19 23:25+0000\n"
+"POT-Creation-Date: 2012-05-21 17:08+0200\n"
 "PO-Revision-Date: 2011-02-22 22:07+0000\n"
 "Last-Translator: truri <Unknown>\n"
 "Language-Team: Albanian\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
 "X-Generator: Launchpad (build 15275)\n"
-"Language: \n"
 
 #, c-format
 msgid ""
@@ -346,8 +346,7 @@ msgid "Resolving dependencies of '%s'."
 msgstr ""
 
 #, c-format
-msgid ""
-"Run '%s --help' to see a full list of available command line options.\n"
+msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
 #, c-format
@@ -548,8 +547,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"Unable to find a matching implementation of '%s' for your "
-"system/architecture."
+"Unable to find a matching implementation of '%s' for your system/"
+"architecture."
 msgstr ""
 
 #, c-format
@@ -649,53 +648,107 @@ msgstr ""
 msgid "shared"
 msgstr ""
 
-#~ msgid "Installation aborted."
-#~ msgstr "Instalimi u ndërpre."
+#~ msgid "%f files will be changed."
+#~ msgstr "Do të ndryshohen %f kartela."
 
-#~ msgid "The application %a was installed successfully!"
-#~ msgstr "Zbatimi %a u instalua me sukses!"
-
-#~ msgid "Install now"
-#~ msgstr "Instaloje tani"
-
-#~ msgid "Welcome!"
-#~ msgstr "Mirë se vini!"
-
-#~ msgid "Press \"Next\" to start the installation!"
-#~ msgstr "Shtypni \"Pasues\" që të fillojë instalimi!"
-
-#~ msgid "Program description:"
-#~ msgstr "Përshkrim i programit:"
-
-#~ msgid "Software license"
-#~ msgstr "Leje Software-i"
-
-#~ msgid "Please read the following information carefully:"
-#~ msgstr "Ju lutem, lexojeni me kujdes informacionin vijues:"
-
-#~ msgid "Running installation..."
-#~ msgstr "Po xhirohet instalimi..."
-
-#~ msgid "Please wait."
-#~ msgstr "Ju lutem, prisni."
-
-#~ msgid "Press \"Finish\" to close."
-#~ msgstr "Shtypni \"Përfundoje\" që të mbyllet."
-
-#~ msgid "Finish"
-#~ msgstr "Përfundoje"
+#~ msgid "(This program will download the needed files from the internet)"
+#~ msgstr "(Ky program do të shkarkojë kartelat e domosdoshme prej Internetit)"
 
 #~ msgid "Abort"
 #~ msgstr "Ndërprite"
 
+#~ msgid "About"
+#~ msgstr "Rreth"
+
+#~ msgid "About Listaller"
+#~ msgstr "Rreth Listaller-it"
+
+#~ msgid "All"
+#~ msgstr "Krejt"
+
+#~ msgid "Applying updates..."
+#~ msgstr "Po zbatohen përditësimet..."
+
+#~ msgid "Are you really sure that you want to delete this source?"
+#~ msgstr "Jeni i sigurt se doni të fshihet ky burim?"
+
+#~ msgid "Authors"
+#~ msgstr "Autorë"
+
+#~ msgid "Autor"
+#~ msgstr "Autor"
+
 #~ msgid "Back"
 #~ msgstr "Mbrapsht"
 
-#~ msgid "Next"
-#~ msgstr "Pasuesi"
+#~ msgid "Check for updates"
+#~ msgstr "Kontrollo për përditësime"
+
+#~ msgid "Close"
+#~ msgstr "Mbylle"
+
+#~ msgid "Convert package?"
+#~ msgstr "Të shndërrohet paketa?"
+
+#~ msgid "Converting %p package..."
+#~ msgstr "Po shndërrohet paketa %p..."
+
+#~ msgid "Delete source"
+#~ msgstr "Fshije burimin"
+
+#~ msgid "Delete source?"
+#~ msgstr "Të fshihet burimi?"
+
+#~ msgid "Dependencies couldn't be solved!"
+#~ msgstr "Nuk u plotësuan do varësitë!"
+
+#~ msgid "Details"
+#~ msgstr "Hollësi"
+
+#~ msgid "Development"
+#~ msgstr "Zhvillim"
 
 #~ msgid "Display installation log"
 #~ msgstr "Shfaq regjistrim instalimi"
+
+#~ msgid "Do you really want to uninstall %a?"
+#~ msgstr "Doni vërtet të çinstalohet %a?"
+
+#~ msgid "Do you want to install it again?"
+#~ msgstr "Doni ta instaloni sërish?"
+
+#~ msgid "Education"
+#~ msgstr "Edukim"
+
+#~ msgid "Enable Proxy-Server"
+#~ msgstr "Aktivizo Shërbyesin Ndërmjetës"
+
+#~ msgid "Error while extracting files!"
+#~ msgstr "Gabim gjatë përftimit të kartelave!"
+
+#~ msgid "Error while uninstalling!"
+#~ msgstr "Gabim gjatë çinstalimit!"
+
+#~ msgid "Error while unpacking and configuring files."
+#~ msgstr "Gabim gjatë çpaketimit dhe formësimit të kartelave."
+
+#~ msgid "Filtering..."
+#~ msgstr "Filtrim..."
+
+#~ msgid "Finish"
+#~ msgstr "Përfundoje"
+
+#~ msgid "Finished"
+#~ msgstr "U përfundua"
+
+#~ msgid "Games"
+#~ msgstr "Lojra"
+
+#~ msgid "Get dependency from"
+#~ msgstr "Varësitë merri prej"
+
+#~ msgid "Graphic"
+#~ msgstr "Grafikë"
 
 #~ msgid "I agree with the above terms and conditions"
 #~ msgstr "Pajtohem me termat dhe kushtet e mësipërme"
@@ -703,50 +756,83 @@ msgstr ""
 #~ msgid "I don't agree"
 #~ msgstr "Nuk pajtohem"
 
-#~ msgid "Your Linux distribution is not supported by Listaller yet!"
-#~ msgstr "Shpërndarja juaj Linux nuk mbulohet ende nga Listaller-i!"
+#~ msgid "Install application for everyone"
+#~ msgstr "Instaloje zbatimin për gjithkënd"
 
-#~ msgid "This package does not support your Linux distribution."
-#~ msgstr "Kjo paketë nuk e mbulon shpërndarjen tuaj Linux."
+#~ msgid "Install into my Home directory"
+#~ msgstr "Instaloje te drejtoria ime Shtëpi"
 
-#~ msgid "The installer will close now"
-#~ msgstr "Instaluesi tani do të mbyllet"
+#~ msgid "Install now"
+#~ msgstr "Instaloje tani"
 
-#~ msgid "Please notify the developers on http://launchpad.net/listaller"
-#~ msgstr "Ju lutem, njoftoni zhvilluesit te http://launchpad.net/listaller"
+#~ msgid "Install package?"
+#~ msgstr "Të instalohet paketa?"
 
-#~ msgid "Error while extracting files!"
-#~ msgstr "Gabim gjatë përftimit të kartelave!"
+#~ msgid "Install updates"
+#~ msgstr "Instaloji përditësimet"
 
-#~ msgid "Loading aborted."
-#~ msgstr "Ngarkimi u ndërpre."
+#~ msgid "Installation"
+#~ msgstr "instalim"
 
-#~ msgid "This application is already installed"
-#~ msgstr "Ky zbatim është tashmë i instaluar"
+#~ msgid "Installation aborted."
+#~ msgstr "Instalimi u ndërpre."
 
-#~ msgid "Do you want to install it again?"
-#~ msgstr "Doni ta instaloni sërish?"
-
-#~ msgid "Welcome to the installation of %a"
-#~ msgstr "Mirë se vini te instalimi i %a"
+#~ msgid "Installation mode:"
+#~ msgstr "Mënyrë instalimi:"
 
 #~ msgid "Installation of %a"
 #~ msgstr "Instalimi i %a"
 
-#~ msgid "Dependencies couldn't be solved!"
-#~ msgstr "Nuk u plotësuan do varësitë!"
-
-#~ msgid "Please view the logfile at %p"
-#~ msgstr "Ju lutem, shiheni kartelën e regjistrimit te %p"
-
 #~ msgid "Installation package is corrupt"
 #~ msgstr "Paketa e instalimit është e dëmtuar"
 
-#~ msgid "Phase 1/4: Resolving dependencies..."
-#~ msgstr "Faza 1/4: Plotësim varësish..."
-
 #~ msgid "Listaller will close now. The package couldn't be installed."
 #~ msgstr "Listaller-i tani do të mbyllet. Paketa nuk u instalua dot."
+
+#~ msgid "Load dependencies from included webserver-urls automatically"
+#~ msgstr "Varësitë ngarkoji vetvetiu prej url-të e dhëna për shërbyesa web"
+
+#~ msgid "Loading aborted."
+#~ msgstr "Ngarkimi u ndërpre."
+
+#~ msgid "Loading..."
+#~ msgstr "Po ngarkohet..."
+
+#~ msgid "Main"
+#~ msgstr "Kryesore"
+
+#~ msgid "Mode"
+#~ msgstr "Mënyrë"
+
+#~ msgid "Multimedia"
+#~ msgstr "Multimedia"
+
+#~ msgid "Network"
+#~ msgstr "Rrjet"
+
+#~ msgid "Next"
+#~ msgstr "Pasuesi"
+
+#~ msgid "No compatible packages found!"
+#~ msgstr "Nuk u gjetën paketa të përputhshme!"
+
+#~ msgid "Office"
+#~ msgstr "Zyrë"
+
+#~ msgid "Other"
+#~ msgstr "Tjetër"
+
+#~ msgid "Package %p could not be installed."
+#~ msgstr "Paketa %p nuk mund të instalohej."
+
+#~ msgid "Package was not build for your Linux distribution release."
+#~ msgstr "Paketa nuk qe krijuar për këtë version të shpërndarjes suaj Linux."
+
+#~ msgid "Password"
+#~ msgstr "Fjalëkalim"
+
+#~ msgid "Phase 1/4: Resolving dependencies..."
+#~ msgstr "Faza 1/4: Plotësim varësish..."
 
 #~ msgid "Phase 2/4: Installing files..."
 #~ msgstr "Faza 2/4: Instalim kartelash..."
@@ -757,8 +843,80 @@ msgstr ""
 #~ msgid "Phase 4/4: Registering application..."
 #~ msgstr "Faza 4/4: Regjistrimi i zbatimit..."
 
-#~ msgid "Finished"
-#~ msgstr "U përfundua"
+#~ msgid "Please notify the developers on http://launchpad.net/listaller"
+#~ msgstr "Ju lutem, njoftoni zhvilluesit te http://launchpad.net/listaller"
+
+#~ msgid "Please read the following information carefully:"
+#~ msgstr "Ju lutem, lexojeni me kujdes informacionin vijues:"
+
+#~ msgid "Please view the logfile at %p"
+#~ msgstr "Ju lutem, shiheni kartelën e regjistrimit te %p"
+
+#~ msgid "Please wait."
+#~ msgstr "Ju lutem, prisni."
+
+#~ msgid "Please wait..."
+#~ msgstr "Ju lutem, prisni..."
+
+#~ msgid "Press \"Finish\" to close."
+#~ msgstr "Shtypni \"Përfundoje\" që të mbyllet."
+
+#~ msgid "Press \"Next\" to start the installation!"
+#~ msgstr "Shtypni \"Pasues\" që të fillojë instalimi!"
+
+#~ msgid "Program description:"
+#~ msgstr "Përshkrim i programit:"
+
+#~ msgid "Proxy-Settings"
+#~ msgstr "Rregullime ndërmjetësi"
+
+#~ msgid "Quit"
+#~ msgstr "Dil"
+
+#~ msgid "Re-install"
+#~ msgstr "Ri-instaloje"
+
+#~ msgid "Ready."
+#~ msgstr "Gati."
+
+#~ msgid "Really remove?"
+#~ msgstr "Të hiqet vërtet?"
+
+#~ msgid "Running installation..."
+#~ msgstr "Po xhirohet instalimi..."
+
+#~ msgid "Select installation mode"
+#~ msgstr "Përzgjidhni mënyrë instalimi"
+
+#~ msgid "Select which parts of the application should be installed."
+#~ msgstr "Përzgjidhni cilat pjesë të zbatimit duhen instaluar."
+
+#~ msgid "Show"
+#~ msgstr "Shfaq"
+
+#~ msgid "Show:"
+#~ msgstr "Shfaq:"
+
+#~ msgid "Software Manager"
+#~ msgstr "Përgjegjës Software-esh"
+
+#~ msgid "Software license"
+#~ msgstr "Leje Software-i"
+
+#~ msgid "Start PackageKit monitor before running transactions"
+#~ msgstr "Nise mbikëqyrësin PackageKit përpara se kryhen transaksionet"
+
+#~ msgid "Success!"
+#~ msgstr "Sukses!"
+
+#~ msgid "System"
+#~ msgstr "Sistem"
+
+#~ msgid "Testmode"
+#~ msgstr "Testmodë"
+
+#~ msgid "The application %a was installed successfully!"
+#~ msgstr "Zbatimi %a u instalua me sukses!"
 
 #~ msgid ""
 #~ "The application which this package contains was not built for the current "
@@ -767,29 +925,11 @@ msgstr ""
 #~ "Zbatimi që përmban kjo paketë nuk qe krijuar për arkitekturën e sistemit "
 #~ "tuaj të tanishëm."
 
-#~ msgid "(This program will download the needed files from the internet)"
-#~ msgstr "(Ky program do të shkarkojë kartelat e domosdoshme prej Internetit)"
+#~ msgid "The application will be updated to version %v"
+#~ msgstr "Zbatimi do të përditësohet me versionin %v"
 
-#~ msgid "Package was not build for your Linux distribution release."
-#~ msgstr "Paketa nuk qe krijuar për këtë version të shpërndarjes suaj Linux."
-
-#~ msgid "Success!"
-#~ msgstr "Sukses!"
-
-#~ msgid "Main"
-#~ msgstr "Kryesore"
-
-#~ msgid "Details"
-#~ msgstr "Hollësi"
-
-#~ msgid "Installation"
-#~ msgstr "instalim"
-
-#~ msgid "Use compatible packages?"
-#~ msgstr "Të përdoren paketa të përputhshme?"
-
-#~ msgid "No compatible packages found!"
-#~ msgstr "Nuk u gjetën paketa të përputhshme!"
+#~ msgid "The installer will close now"
+#~ msgstr "Instaluesi tani do të mbyllet"
 
 #~ msgid ""
 #~ "The selected action is not possible with this package.\n"
@@ -798,191 +938,50 @@ msgstr ""
 #~ "Veprimi i përzgjedhur nuk është i mundur mbi këtë paketë.\n"
 #~ "Ju lutem, lidhuni me mirëmbajtësin e paketës që të keni më tepër të dhëna."
 
-#~ msgid "Re-install"
-#~ msgstr "Ri-instaloje"
+#~ msgid "There are no updates available!"
+#~ msgstr "Nuk ka përditësime të passhme!"
 
-#~ msgid "Get dependency from"
-#~ msgstr "Varësitë merri prej"
+#~ msgid "This application is already installed"
+#~ msgstr "Ky zbatim është tashmë i instaluar"
 
-#~ msgid "Please wait..."
-#~ msgstr "Ju lutem, prisni..."
-
-#~ msgid "Installation mode:"
-#~ msgstr "Mënyrë instalimi:"
-
-#~ msgid "Select which parts of the application should be installed."
-#~ msgstr "Përzgjidhni cilat pjesë të zbatimit duhen instaluar."
-
-#~ msgid "Mode"
-#~ msgstr "Mënyrë"
-
-#~ msgid "What do you want to do?"
-#~ msgstr "Ç'doni të bëni në vazhdim?"
-
-#~ msgid "Install application for everyone"
-#~ msgstr "Instaloje zbatimin për gjithkënd"
-
-#~ msgid "Install into my Home directory"
-#~ msgstr "Instaloje te drejtoria ime Shtëpi"
-
-#~ msgid "Select installation mode"
-#~ msgstr "Përzgjidhni mënyrë instalimi"
-
-#~ msgid "Software Manager"
-#~ msgstr "Përgjegjës Software-esh"
-
-#~ msgid "Close"
-#~ msgstr "Mbylle"
-
-#~ msgid "Delete source"
-#~ msgstr "Fshije burimin"
+#~ msgid "This package does not support your Linux distribution."
+#~ msgstr "Kjo paketë nuk e mbulon shpërndarjen tuaj Linux."
 
 #~ msgid "Uninstall"
 #~ msgstr "Çinstaloje"
 
-#~ msgid "Show:"
-#~ msgstr "Shfaq:"
-
-#~ msgid "All"
-#~ msgstr "Krejt"
-
-#~ msgid "Education"
-#~ msgstr "Edukim"
-
-#~ msgid "Office"
-#~ msgstr "Zyrë"
-
-#~ msgid "Development"
-#~ msgstr "Zhvillim"
-
-#~ msgid "Graphic"
-#~ msgstr "Grafikë"
-
-#~ msgid "Network"
-#~ msgstr "Rrjet"
-
-#~ msgid "Games"
-#~ msgstr "Lojra"
-
-#~ msgid "System"
-#~ msgstr "Sistem"
-
-#~ msgid "Multimedia"
-#~ msgstr "Multimedia"
-
-#~ msgid "Utilities"
-#~ msgstr "Të dobishme"
-
-#~ msgid "Other"
-#~ msgstr "Tjetër"
-
-#~ msgid "Version"
-#~ msgstr "Version"
-
-#~ msgid "Autor"
-#~ msgstr "Autor"
-
-#~ msgid "Username"
-#~ msgstr "Emër përdoruesi"
-
-#~ msgid "Password"
-#~ msgstr "Fjalëkalim"
-
-#~ msgid "Proxy-Settings"
-#~ msgstr "Rregullime ndërmjetësi"
-
-#~ msgid "Enable Proxy-Server"
-#~ msgstr "Aktivizo Shërbyesin Ndërmjetës"
-
-#~ msgid "Load dependencies from included webserver-urls automatically"
-#~ msgstr "Varësitë ngarkoji vetvetiu prej url-të e dhëna për shërbyesa web"
-
-#~ msgid "Ready."
-#~ msgstr "Gati."
-
-#~ msgid "Convert package?"
-#~ msgstr "Të shndërrohet paketa?"
-
-#~ msgid "Converting %p package..."
-#~ msgstr "Po shndërrohet paketa %p..."
-
-#~ msgid "Filtering..."
-#~ msgstr "Filtrim..."
-
-#~ msgid "Loading..."
-#~ msgstr "Po ngarkohet..."
-
-#~ msgid "Install package?"
-#~ msgstr "Të instalohet paketa?"
-
-#~ msgid "Package %p could not be installed."
-#~ msgstr "Paketa %p nuk mund të instalohej."
-
-#~ msgid "Start PackageKit monitor before running transactions"
-#~ msgstr "Nise mbikëqyrësin PackageKit përpara se kryhen transaksionet"
-
-#~ msgid "About Listaller"
-#~ msgstr "Rreth Listaller-it"
-
-#~ msgid "About"
-#~ msgstr "Rreth"
-
-#~ msgid "Authors"
-#~ msgstr "Autorë"
-
-#~ msgid "Are you really sure that you want to delete this source?"
-#~ msgstr "Jeni i sigurt se doni të fshihet ky burim?"
-
-#~ msgid "Delete source?"
-#~ msgstr "Të fshihet burimi?"
-
-#~ msgid "Do you really want to uninstall %a?"
-#~ msgstr "Doni vërtet të çinstalohet %a?"
-
-#~ msgid "Error while uninstalling!"
-#~ msgstr "Gabim gjatë çinstalimit!"
+#~ msgid "Uninstalling %a"
+#~ msgstr "Po çinstalohet %a"
 
 #~ msgid "Uninstalling..."
 #~ msgstr "Po çinstalohet..."
 
-#~ msgid "Really remove?"
-#~ msgstr "Të hiqet vërtet?"
+#~ msgid "Update info:"
+#~ msgstr "Të dhëna përditësimi:"
+
+#~ msgid "Use compatible packages?"
+#~ msgstr "Të përdoren paketa të përputhshme?"
+
+#~ msgid "Username"
+#~ msgstr "Emër përdoruesi"
+
+#~ msgid "Utilities"
+#~ msgstr "Të dobishme"
+
+#~ msgid "Version"
+#~ msgstr "Version"
 
 #~ msgid "Waiting..."
 #~ msgstr "Po pritet..."
 
-#~ msgid "Uninstalling %a"
-#~ msgstr "Po çinstalohet %a"
+#~ msgid "Welcome to the installation of %a"
+#~ msgstr "Mirë se vini te instalimi i %a"
 
-#~ msgid "There are no updates available!"
-#~ msgstr "Nuk ka përditësime të passhme!"
+#~ msgid "Welcome!"
+#~ msgstr "Mirë se vini!"
 
-#~ msgid "Update info:"
-#~ msgstr "Të dhëna përditësimi:"
+#~ msgid "What do you want to do?"
+#~ msgstr "Ç'doni të bëni në vazhdim?"
 
-#~ msgid "%f files will be changed."
-#~ msgstr "Do të ndryshohen %f kartela."
-
-#~ msgid "The application will be updated to version %v"
-#~ msgstr "Zbatimi do të përditësohet me versionin %v"
-
-#~ msgid "Check for updates"
-#~ msgstr "Kontrollo për përditësime"
-
-#~ msgid "Install updates"
-#~ msgstr "Instaloji përditësimet"
-
-#~ msgid "Show"
-#~ msgstr "Shfaq"
-
-#~ msgid "Quit"
-#~ msgstr "Dil"
-
-#~ msgid "Applying updates..."
-#~ msgstr "Po zbatohen përditësimet..."
-
-#~ msgid "Error while unpacking and configuring files."
-#~ msgstr "Gabim gjatë çpaketimit dhe formësimit të kartelave."
-
-#~ msgid "Testmode"
-#~ msgstr "Testmodë"
+#~ msgid "Your Linux distribution is not supported by Listaller yet!"
+#~ msgstr "Shpërndarja juaj Linux nuk mbulohet ende nga Listaller-i!"
