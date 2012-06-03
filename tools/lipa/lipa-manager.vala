@@ -39,7 +39,11 @@ public class LipaManager : LipaModule {
 	}
 
 	private void manager_error_code (ErrorItem error) {
-		stderr.printf (error.details);
+		// End progress-bar, if it is shown
+		show_progress = false;
+		progress_bar.end ();
+
+		stderr.printf ("%s\n", error.details);
 		error_code = (int) error.error;
 	}
 
@@ -97,13 +101,16 @@ public class LipaManager : LipaModule {
 		progress_bar.start (_("Removing"));
 		// Go!
 		ret = mgr.remove_application (app);
-		progress_bar.set_percentage (100);
-		progress_bar.end ();
+		// On success, set everything to done
+		if (ret) {
+			progress_bar.set_percentage (100);
+			progress_bar.end ();
+		}
 
 		if (ret) {
-			print (_("Removal of %s completed successfully!\n"), app.full_name);
+			stdout.printf ("%s\n", _("Removal of %s completed successfully!").printf (app.full_name));
 		} else {
-			print (_("Removal of %s failed!"), app.full_name);
+			stdout.printf ("%s\n", _("Removal of %s failed!").printf (app.full_name));
 			error_code = 3;
 		}
 	}

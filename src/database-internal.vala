@@ -27,7 +27,7 @@ using Listaller.Utils;
 namespace Listaller {
 
 private const string DATABASE = ""
-		+ "CREATE TABLE IF NOT EXISTS applications ("
+		+ "CREATE TABLE applications ("
 		+ "name TEXT PRIMARY KEY, "
 		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
@@ -43,7 +43,7 @@ private const string DATABASE = ""
 		+ "replaces TEXT, "
 		+ "origin TEXT NOT NULL"
 		+ "); "
-		+ "CREATE TABLE IF NOT EXISTS dependencies ("
+		+ "CREATE TABLE dependencies ("
 		+ "name TEXT PRIMARY KEY, "
 		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
@@ -199,7 +199,7 @@ private class InternalDB : Object {
 		MessageItem item = new MessageItem(MessageEnum.INFO);
 		item.details = msg;
 		message (item);
-		GLib.message (msg);
+		debug (msg);
 	}
 
 	public string get_database_name () {
@@ -229,8 +229,8 @@ private class InternalDB : Object {
 		create_dir_parents (regdir);
 
 		// Ensure the database is okay and all tables are created
-		if ((create_db) && (!update_db_tables ())) {
-			throw new DatabaseError.ERROR (_("Could not create/update software database!"));
+		if ((create_db) && (!create_database ())) {
+			throw new DatabaseError.ERROR (_("Could not create software database!"));
 		}
 
 		// Prepare statements
@@ -381,14 +381,14 @@ private class InternalDB : Object {
 		return (res != Sqlite.DONE);
 	}
 
-	protected bool update_db_tables () throws DatabaseError {
+	protected bool create_database () throws DatabaseError {
 		Sqlite.Statement stmt;
 
 		int res = db.exec (DATABASE);
 		try {
 			db_assert (res);
 		} catch (Error e) {
-			warning (_("Unable to create/update database tables: %s").printf (db.errmsg ()));
+			critical (_("Unable to create database tables: %s").printf (db.errmsg ()));
 			return false;
 		}
 		try {
@@ -398,6 +398,25 @@ private class InternalDB : Object {
 			db_assert (db.exec ("PRAGMA count_changes = OFF"));
 		} catch (Error e) {
 			warning (e.message);
+			return false;
+		}
+
+		/* create database config */
+		res = db.exec ("CREATE TABLE config (" +
+				"data TEXT primary key," +
+				"value INTEGER);");
+		try {
+			db_assert (res);
+		} catch (Error e) {
+			critical (_("Unable to create database config table: %s").printf (db.errmsg ()));
+			return false;
+		}
+
+		res = db.exec ("INSERT INTO config (data, value) VALUES ('dbversion', 0);");
+		try {
+			db_assert (res);
+		} catch (Error e) {
+			critical (_("Can't create dbversion: %s").printf (db.errmsg ()));
 			return false;
 		}
 
@@ -607,7 +626,6 @@ private class InternalDB : Object {
 
 		ArrayList<AppItem>? itemList = null;
 		do {
-			res = stmt.step ();
 			switch (res) {
 				case Sqlite.DONE:
 					break;
@@ -629,6 +647,7 @@ private class InternalDB : Object {
 					db_assert (res, "execute");
 					break;
 			}
+			res = stmt.step ();
 		} while (res == Sqlite.ROW);
 
 		return itemList;
@@ -639,7 +658,7 @@ private class InternalDB : Object {
 		int res = db.prepare_v2 ("SELECT * FROM applications", -1, out stmt);
 
 		try {
-			db_assert (res, "get application (by full_name)");
+			db_assert (res, "get all applications");
 
 			res = stmt.step ();
 			db_assert (res, "execute");
@@ -651,7 +670,6 @@ private class InternalDB : Object {
 
 		ArrayList<AppItem>? itemList = null;
 		do {
-			res = stmt.step ();
 			switch (res) {
 				case Sqlite.DONE:
 					break;
@@ -667,12 +685,14 @@ private class InternalDB : Object {
 						tmpApp.fast_check ();
 					else
 						throw new DatabaseError.ERROR ("Unable to retrieve an application from database! DB might be in an inconstistent state!");
+
 					itemList.add (tmpApp);
 					break;
 				default:
 					db_assert (res, "execute");
 					break;
 			}
+			res = stmt.step ();
 		} while (res == Sqlite.ROW);
 
 		return itemList;
