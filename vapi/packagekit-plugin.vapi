@@ -7,281 +7,49 @@ namespace PkPlugin {
 		[CCode (cname = "pk_backend_new", has_construct_function = false)]
 		public Backend ();
 		[CCode (cname = "pk_backend_accept_eula")]
-		public bool accept_eula (string eula_id);
+		public void accept_eula (string eula_id);
 		[CCode (cname = "pk_backend_bool_to_string")]
 		public static unowned string bool_to_string (bool value);
-		[CCode (cname = "pk_backend_cancel")]
-		public void cancel ();
-		[CCode (cname = "pk_backend_close")]
-		public bool close ();
 		[CCode (cname = "pk_backend_destroy")]
 		public void destroy ();
-		[CCode (cname = "pk_backend_download_packages")]
-		public void download_packages (string package_ids, string directory);
 		[CCode (cname = "pk_backend_get_accepted_eula_string")]
 		public string get_accepted_eula_string ();
-		[CCode (cname = "pk_backend_get_allow_cancel")]
-		public bool get_allow_cancel ();
-		[CCode (cname = "pk_backend_get_array")]
-		public unowned GLib.GenericArray<void*> get_array (string key);
 		[CCode (cname = "pk_backend_get_author")]
-		public string get_author ();
-		[CCode (cname = "pk_backend_get_bool")]
-		public bool get_bool (string key);
-		[CCode (cname = "pk_backend_get_cache_age")]
-		public uint get_cache_age ();
-		[CCode (cname = "pk_backend_get_categories")]
-		public void get_categories ();
-		[CCode (cname = "pk_backend_get_depends")]
-		public void get_depends (PackageKit.Bitfield filters, string package_ids, bool recursive);
+		public unowned string get_author ();
 		[CCode (cname = "pk_backend_get_description")]
-		public string get_description ();
-		[CCode (cname = "pk_backend_get_details")]
-		public void get_details (string package_ids);
-		[CCode (cname = "pk_backend_get_distro_upgrades")]
-		public void get_distro_upgrades ();
-		[CCode (cname = "pk_backend_get_exit_code")]
-		public PackageKit.Exit get_exit_code ();
-		[CCode (cname = "pk_backend_get_files")]
-		public void get_files (string package_ids);
+		public unowned string get_description ();
 		[CCode (cname = "pk_backend_get_filters")]
 		public PackageKit.Bitfield get_filters ();
-		[CCode (cname = "pk_backend_get_frontend_socket")]
-		public string get_frontend_socket ();
 		[CCode (cname = "pk_backend_get_groups")]
 		public PackageKit.Bitfield get_groups ();
-		[CCode (cname = "pk_backend_get_is_error_set")]
-		public bool get_is_error_set ();
-		[CCode (cname = "pk_backend_get_is_finished")]
-		public bool get_is_finished ();
-		[CCode (cname = "pk_backend_get_keep_environment")]
-		public bool get_keep_environment ();
-		[CCode (cname = "pk_backend_get_locale")]
-		public string get_locale ();
-		[CCode (cname = "pk_backend_get_mime_types")]
-		public string get_mime_types ();
+		[CCode (array_length = false, array_null_terminated = true, cname = "pk_backend_get_mime_types")]
+		public string[] get_mime_types ();
 		[CCode (cname = "pk_backend_get_name")]
-		public string get_name ();
-		[CCode (cname = "pk_backend_get_no_proxy")]
-		public string get_no_proxy ();
-		[CCode (cname = "pk_backend_get_pac")]
-		public string get_pac ();
-		[CCode (cname = "pk_backend_get_packages")]
-		public void get_packages (PackageKit.Bitfield filters);
-		[CCode (cname = "pk_backend_get_pointer")]
-		public void* get_pointer (string key);
-		[CCode (cname = "pk_backend_get_proxy_ftp")]
-		public string get_proxy_ftp ();
-		[CCode (cname = "pk_backend_get_proxy_http")]
-		public string get_proxy_http ();
-		[CCode (cname = "pk_backend_get_proxy_https")]
-		public string get_proxy_https ();
-		[CCode (cname = "pk_backend_get_proxy_socks")]
-		public string get_proxy_socks ();
-		[CCode (cname = "pk_backend_get_repo_list")]
-		public void get_repo_list (PackageKit.Bitfield filters);
-		[CCode (cname = "pk_backend_get_requires")]
-		public void get_requires (PackageKit.Bitfield filters, string package_ids, bool recursive);
-		[CCode (cname = "pk_backend_get_role")]
-		public PackageKit.Role get_role ();
+		public unowned string get_name ();
 		[CCode (cname = "pk_backend_get_roles")]
 		public PackageKit.Bitfield get_roles ();
-		[CCode (cname = "pk_backend_get_root")]
-		public unowned string get_root ();
-		[CCode (cname = "pk_backend_get_runtime")]
-		public uint get_runtime ();
-		[CCode (cname = "pk_backend_get_string")]
-		public unowned string get_string (string key);
-		[CCode (array_length = false, array_null_terminated = true, cname = "pk_backend_get_strv")]
-		public unowned string[] get_strv (string key);
-		[CCode (cname = "pk_backend_get_uint")]
-		public uint get_uint (string key);
-		[CCode (cname = "pk_backend_get_update_detail")]
-		public void get_update_detail (string package_ids);
-		[CCode (cname = "pk_backend_get_updates")]
-		public void get_updates (PackageKit.Bitfield filters);
-		[CCode (cname = "pk_backend_has_set_error_code")]
-		public bool has_set_error_code ();
+		[CCode (cname = "pk_backend_get_simultaneous_mode")]
+		public bool get_simultaneous_mode ();
 		[CCode (cname = "pk_backend_implement")]
 		public void implement (PackageKit.Role role);
 		[CCode (cname = "pk_backend_initialize")]
 		public void initialize ();
-		[CCode (cname = "pk_backend_install_files")]
-		public void install_files (bool only_trusted, string full_paths);
-		[CCode (cname = "pk_backend_install_packages")]
-		public void install_packages (bool only_trusted, string package_ids);
-		[CCode (cname = "pk_backend_install_signature")]
-		public void install_signature (PackageKit.SigType type, string key_id, string package_id);
 		[CCode (cname = "pk_backend_is_eula_valid")]
 		public bool is_eula_valid (string eula_id);
 		[CCode (cname = "pk_backend_is_implemented")]
 		public bool is_implemented (PackageKit.Role role);
 		[CCode (cname = "pk_backend_is_online")]
 		public bool is_online ();
-		[CCode (cname = "pk_backend_not_implemented_yet")]
-		public bool not_implemented_yet (string method);
-		[CCode (cname = "pk_backend_open")]
-		public bool open ();
-		[CCode (cname = "pk_backend_refresh_cache")]
-		public void refresh_cache (bool force);
-		[CCode (cname = "pk_backend_remove_packages")]
-		public void remove_packages (string package_ids, bool allow_deps, bool autoremove);
-		[CCode (cname = "pk_backend_repair_system")]
-		public void repair_system (bool only_trusted);
-		[CCode (cname = "pk_backend_repo_enable")]
-		public void repo_enable (string repo_id, bool enabled);
+		[CCode (cname = "pk_backend_load")]
+		public bool load () throws GLib.Error;
 		[CCode (cname = "pk_backend_repo_list_changed")]
 		public bool repo_list_changed ();
-		[CCode (cname = "pk_backend_repo_set_data")]
-		public void repo_set_data (string repo_id, string parameter, string value);
-		[CCode (cname = "pk_backend_reset")]
-		public bool reset ();
-		[CCode (cname = "pk_backend_resolve")]
-		public void resolve (PackageKit.Bitfield filters, string packages);
-		[CCode (cname = "pk_backend_rollback")]
-		public void rollback (string transaction_id);
-		[CCode (cname = "pk_backend_search_details")]
-		public void search_details (PackageKit.Bitfield filters, string search);
-		[CCode (cname = "pk_backend_search_files")]
-		public void search_files (PackageKit.Bitfield filters, string search);
-		[CCode (cname = "pk_backend_search_groups")]
-		public void search_groups (PackageKit.Bitfield filters, string search);
-		[CCode (cname = "pk_backend_search_names")]
-		public void search_names (PackageKit.Bitfield filters, string search);
-		[CCode (cname = "pk_backend_set_allow_cancel")]
-		public bool set_allow_cancel (bool allow_cancel);
-		[CCode (cname = "pk_backend_set_array")]
-		public bool set_array (string key, GLib.GenericArray<void*> data);
-		[CCode (cname = "pk_backend_set_bool")]
-		public bool set_bool (string key, bool data);
-		[CCode (cname = "pk_backend_set_cache_age")]
-		public void set_cache_age (uint cache_age);
-		[CCode (cname = "pk_backend_set_cmdline")]
-		public bool set_cmdline (string cmdline);
-		[CCode (cname = "pk_backend_set_exit_code")]
-		public bool set_exit_code (PackageKit.Exit exit);
-		[CCode (cname = "pk_backend_set_frontend_socket")]
-		public bool set_frontend_socket (string frontend_socket);
-		[CCode (cname = "pk_backend_set_item_progress")]
-		public bool set_item_progress (string package_id, uint percentage);
-		[CCode (cname = "pk_backend_set_keep_environment")]
-		public bool set_keep_environment (bool keep_environment);
-		[CCode (cname = "pk_backend_set_locale")]
-		public bool set_locale (string code);
-		[CCode (cname = "pk_backend_set_name")]
-		public bool set_name (string name) throws GLib.Error;
-		[CCode (cname = "pk_backend_set_percentage")]
-		public bool set_percentage (uint percentage);
-		[CCode (cname = "pk_backend_set_pointer")]
-		public bool set_pointer (string key, void* data);
-		[CCode (cname = "pk_backend_set_proxy")]
-		public bool set_proxy (string proxy_http, string proxy_https, string proxy_ftp, string proxy_socks, string no_proxy, string pac);
-		[CCode (cname = "pk_backend_set_role")]
-		public bool set_role (PackageKit.Role role);
-		[CCode (cname = "pk_backend_set_root")]
-		public bool set_root (string root);
 		[CCode (cname = "pk_backend_set_simultaneous_mode")]
-		public bool set_simultaneous_mode (bool simultaneous);
-		[CCode (cname = "pk_backend_set_speed")]
-		public bool set_speed (uint speed);
-		[CCode (cname = "pk_backend_set_status")]
-		public bool set_status (PackageKit.Status status);
-		[CCode (cname = "pk_backend_set_string")]
-		public bool set_string (string key, string data);
-		[CCode (cname = "pk_backend_set_strv")]
-		public bool set_strv (string key, string data);
-		[CCode (cname = "pk_backend_set_sub_percentage")]
-		public bool set_sub_percentage (uint percentage);
-		[CCode (cname = "pk_backend_set_transaction_data")]
-		public bool set_transaction_data (string data);
-		[CCode (cname = "pk_backend_set_uid")]
-		public bool set_uid (uint uid);
-		[CCode (cname = "pk_backend_set_uint")]
-		public bool set_uint (string key, uint data);
-		[CCode (cname = "pk_backend_simulate_install_files")]
-		public void simulate_install_files (string full_paths);
-		[CCode (cname = "pk_backend_simulate_install_packages")]
-		public void simulate_install_packages (string package_ids);
-		[CCode (cname = "pk_backend_simulate_remove_packages")]
-		public void simulate_remove_packages (string package_ids, bool autoremove);
-		[CCode (cname = "pk_backend_simulate_repair_system")]
-		public void simulate_repair_system ();
-		[CCode (cname = "pk_backend_simulate_update_packages")]
-		public void simulate_update_packages (string package_ids);
-		[CCode (cname = "pk_backend_thread_create")]
-		public bool thread_create (PkPlugin.BackendThreadFunc func);
-		[CCode (cname = "pk_backend_thread_finished")]
-		public void thread_finished ();
-		[CCode (cname = "pk_backend_transaction_reset")]
-		public void transaction_reset ();
-		[CCode (cname = "pk_backend_transaction_start")]
-		public void transaction_start ();
-		[CCode (cname = "pk_backend_transaction_stop")]
-		public void transaction_stop ();
-		[CCode (cname = "pk_backend_update_packages")]
-		public void update_packages (bool only_trusted, string package_ids);
-		[CCode (cname = "pk_backend_update_system")]
-		public void update_system (bool only_trusted);
-		[CCode (cname = "pk_backend_upgrade_system")]
-		public void upgrade_system (string distro_id, PackageKit.UpgradeKind upgrade_kind);
-		[CCode (cname = "pk_backend_use_background")]
-		public bool use_background ();
+		public void set_simultaneous_mode (bool simultaneous);
+		[CCode (cname = "pk_backend_unload")]
+		public bool unload ();
 		[CCode (cname = "pk_backend_watch_file")]
 		public bool watch_file (string filename, PkPlugin.BackendFileChanged func);
-		[CCode (cname = "pk_backend_what_provides")]
-		public void what_provides (PackageKit.Bitfield filters, PackageKit.Provides provides, string search);
-		[NoAccessorMethod]
-		public uint background { get; set; }
-		[NoAccessorMethod]
-		public string cmdline { owned get; }
-		[NoAccessorMethod]
-		public uint interactive { get; set; }
-		[NoAccessorMethod]
-		public uint percentage { get; set; }
-		[NoAccessorMethod]
-		public uint remaining { get; set; }
-		[NoAccessorMethod]
-		public uint role { get; set; }
-		[NoAccessorMethod]
-		public uint speed { get; set; }
-		[NoAccessorMethod]
-		public uint status { get; set; }
-		[NoAccessorMethod]
-		public uint subpercentage { get; set; }
-		[NoAccessorMethod]
-		public string transaction_id { owned get; set; }
-		[NoAccessorMethod]
-		public uint uid { get; }
-		public signal void allow_cancel (bool object);
-		[HasEmitter]
-		public signal void category (void* parent_id);
-		public signal void change_transaction_data (string object);
-		[HasEmitter]
-		public signal void details (void* package_id);
-		[HasEmitter]
-		public signal void distro_upgrade (void* type);
-		public signal void error_code (void* object);
-		[HasEmitter]
-		public signal void eula_required (void* eula_id);
-		[HasEmitter]
-		public signal void files (void* package_id);
-		[HasEmitter]
-		public signal void finished (uint object);
-		public signal void item_progress (string object, uint p0);
-		[HasEmitter]
-		public signal void media_change_required (void* media_type);
-		public signal void message (void* object);
-		[HasEmitter]
-		public signal void package (void* info);
-		[HasEmitter]
-		public signal void repo_detail (void* repo_id);
-		[HasEmitter]
-		public signal void repo_signature_required (void* package_id);
-		[HasEmitter]
-		public signal void require_restart (void* restart);
-		public signal void status_changed (uint object);
-		[HasEmitter]
-		public signal void update_detail (void* package_id);
 	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", type_id = "pk_conf_get_type ()")]
 	public class Conf : GLib.Object {
@@ -297,6 +65,10 @@ namespace PkPlugin {
 		public string get_string (string key);
 		[CCode (array_length = false, array_null_terminated = true, cname = "pk_conf_get_strv")]
 		public unowned string[] get_strv (string key);
+		[CCode (cname = "pk_conf_set_bool")]
+		public void set_bool (string key, bool value);
+		[CCode (cname = "pk_conf_set_string")]
+		public void set_string (string key, string value);
 	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", type_id = "pk_transaction_get_type ()")]
 	public class Transaction : GLib.Object {
@@ -320,76 +92,33 @@ namespace PkPlugin {
 		public PkPlugin.TransactionState get_state ();
 		[CCode (cname = "pk_transaction_get_tid")]
 		public unowned string get_tid ();
+		[CCode (cname = "pk_transaction_get_transaction_flags")]
+		public PackageKit.Bitfield get_transaction_flags ();
 		[CCode (cname = "pk_transaction_get_uid")]
 		public uint get_uid ();
 		[CCode (array_length = false, array_null_terminated = true, cname = "pk_transaction_get_values")]
 		public unowned string[] get_values ();
+		[CCode (cname = "pk_transaction_is_exclusive")]
+		public bool is_exclusive ();
+		[CCode (cname = "pk_transaction_reset_after_lock_error")]
+		public void reset_after_lock_error ();
 		[CCode (cname = "pk_transaction_run")]
 		public bool run ();
+		[CCode (cname = "pk_transaction_set_backend")]
+		public void set_backend (PkPlugin.Backend backend);
 		[CCode (cname = "pk_transaction_set_full_paths")]
 		public void set_full_paths (string full_paths);
 		[CCode (cname = "pk_transaction_set_package_ids")]
 		public void set_package_ids (string package_ids);
 		[CCode (cname = "pk_transaction_set_plugins")]
 		public void set_plugins (GLib.GenericArray<void*> plugins);
-		[CCode (cname = "pk_transaction_set_signals")]
-		public void set_signals (PackageKit.Bitfield backend_signals);
 		[CCode (cname = "pk_transaction_set_state")]
 		public bool set_state (PkPlugin.TransactionState state);
+		[CCode (cname = "pk_transaction_set_supported_roles")]
+		public void set_supported_roles (GLib.GenericArray<void*> plugins);
 		[CCode (cname = "pk_transaction_state_to_string")]
 		public static unowned string state_to_string (PkPlugin.TransactionState state);
 		public signal void finished ();
-	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_type_id = false)]
-	public struct BackendDesc {
-		public weak string description;
-		public weak string author;
-		public weak global::initialize initialize;
-		public weak global::destroy destroy;
-		public weak global::get_groups get_groups;
-		public weak global::get_filters get_filters;
-		public weak global::get_roles get_roles;
-		public weak global::get_mime_types get_mime_types;
-		public weak global::cancel cancel;
-		public weak global::download_packages download_packages;
-		public weak global::get_categories get_categories;
-		public weak global::get_depends get_depends;
-		public weak global::get_details get_details;
-		public weak global::get_distro_upgrades get_distro_upgrades;
-		public weak global::get_files get_files;
-		public weak global::get_packages get_packages;
-		public weak global::get_repo_list get_repo_list;
-		public weak global::get_requires get_requires;
-		public weak global::get_update_detail get_update_detail;
-		public weak global::get_updates get_updates;
-		public weak global::install_files install_files;
-		public weak global::install_packages install_packages;
-		public weak global::install_signature install_signature;
-		public weak global::refresh_cache refresh_cache;
-		public weak global::remove_packages remove_packages;
-		public weak global::repo_enable repo_enable;
-		public weak global::repo_set_data repo_set_data;
-		public weak global::resolve resolve;
-		public weak global::rollback rollback;
-		public weak global::search_details search_details;
-		public weak global::search_files search_files;
-		public weak global::search_groups search_groups;
-		public weak global::search_names search_names;
-		public weak global::update_packages update_packages;
-		public weak global::update_system update_system;
-		public weak global::what_provides what_provides;
-		public weak global::simulate_install_files simulate_install_files;
-		public weak global::simulate_install_packages simulate_install_packages;
-		public weak global::simulate_remove_packages simulate_remove_packages;
-		public weak global::simulate_update_packages simulate_update_packages;
-		public weak global::transaction_start transaction_start;
-		public weak global::transaction_stop transaction_stop;
-		public weak global::upgrade_system upgrade_system;
-		public weak global::transaction_reset transaction_reset;
-		public weak global::repair_system repair_system;
-		public weak global::simulate_repair_system simulate_repair_system;
-		[CCode (array_length = false, array_null_terminated = true)]
-		public weak void*[] padding;
 	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_type_id = false)]
 	public struct Plugin {
@@ -398,6 +127,8 @@ namespace PkPlugin {
 		public void destroy ();
 		[CCode (cname = "pk_plugin_initialize")]
 		public void initialize ();
+		[CCode (cname = "pk_plugin_state_changed")]
+		public void state_changed ();
 		[CCode (cname = "pk_plugin_transaction_content_types")]
 		public void transaction_content_types (PkPlugin.Transaction transaction);
 		[CCode (cname = "pk_plugin_transaction_finished_end")]
@@ -411,30 +142,6 @@ namespace PkPlugin {
 		[CCode (cname = "pk_plugin_transaction_started")]
 		public void transaction_started (PkPlugin.Transaction transaction);
 	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cprefix = "PK_BACKEND_SIGNAL_")]
-	public enum BackendSignal {
-		ALLOW_CANCEL,
-		DETAILS,
-		ERROR_CODE,
-		DISTRO_UPGRADE,
-		FINISHED,
-		MESSAGE,
-		PACKAGE,
-		ITEM_PROGRESS,
-		FILES,
-		NOTIFY_PERCENTAGE,
-		NOTIFY_SUBPERCENTAGE,
-		NOTIFY_REMAINING,
-		NOTIFY_SPEED,
-		REPO_DETAIL,
-		REPO_SIGNATURE_REQUIRED,
-		EULA_REQUIRED,
-		MEDIA_CHANGE_REQUIRED,
-		REQUIRE_RESTART,
-		STATUS_CHANGED,
-		UPDATE_DETAIL,
-		CATEGORY
-	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cprefix = "PK_PLUGIN_PHASE_")]
 	public enum PluginPhase {
 		INIT,
@@ -445,6 +152,7 @@ namespace PkPlugin {
 		TRANSACTION_FINISHED_RESULTS,
 		TRANSACTION_FINISHED_END,
 		DESTROY,
+		STATE_CHANGED,
 		UNKNOWN
 	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cprefix = "PK_TRANSACTION_STATE_")]
@@ -506,10 +214,6 @@ namespace PkPlugin {
 	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_target = false)]
 	public delegate void BackendFileChanged (PkPlugin.Backend backend, void* data);
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_target = false)]
-	public delegate string BackendGetCompatStringFunc (PkPlugin.Backend backend);
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_target = false)]
-	public delegate bool BackendThreadFunc (PkPlugin.Backend backend);
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_target = false)]
 	public delegate void PluginFunc (PkPlugin.Plugin plugin);
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_target = false)]
