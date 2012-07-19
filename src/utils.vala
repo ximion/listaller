@@ -64,7 +64,7 @@ private bool touch_dir (string dirname) {
 		return true;
 }
 
-private bool str_empty (string str) {
+private bool str_empty (string? str) {
 	if ((str == "") || (str == null))
 		return true;
 	return false;
@@ -212,7 +212,7 @@ private HashSet<string>? find_files_matching (string dir, string pattern, bool r
 	try {
 		var directory = File.new_for_path (real_path (dir));
 
-		var enumerator = directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_NAME, 0);
+		var enumerator = directory.enumerate_children (FileAttribute.STANDARD_NAME, 0);
 
 		FileInfo file_info;
 		while ((file_info = enumerator.next_file ()) != null) {
@@ -251,7 +251,7 @@ private string? find_dir_containing_file (string dir, string pattern, bool recur
 	try {
 		var directory = File.new_for_path (real_path (dir));
 
-		var enumerator = directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_NAME, 0);
+		var enumerator = directory.enumerate_children (FileAttribute.STANDARD_NAME, 0);
 
 		FileInfo file_info;
 		while ((file_info = enumerator.next_file ()) != null) {
