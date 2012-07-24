@@ -86,6 +86,9 @@ public class Lipkgen : Object {
 	}
 
 	public void run () {
+		if (exit_code > 0)
+			return;
+
 		bool done = false;
 		if (o_show_version) {
 			stdout.printf ("lipkgen tool, part of Listaller version: %s\n", Listaller.get_full_version_info_str ());
