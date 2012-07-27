@@ -38,7 +38,7 @@ protected enum ObjConnectFlags {
  * (Used e.g. for GUI stuff and in the public API)
  */
 public abstract class MsgObject : Object {
-	private int prog;
+	private int progress_main;
 	private string error_hint_str;
 
 	public signal void error_code (ErrorItem error);
@@ -47,8 +47,7 @@ public abstract class MsgObject : Object {
 	public signal void item_progress_changed (string id, int progress);
 
 	public MsgObject () {
-		prog = -1;
-		prog_sub = -1;
+		progress_main = -1;
 		error_hint_str = "";
 	}
 
@@ -80,13 +79,13 @@ public abstract class MsgObject : Object {
 	}
 
 	internal virtual void change_progress (int progress) {
-		if ((progress == 0) || (progress >= prog))
-			prog = progress;
+		if ((progress == 0) || (progress >= progress_main))
+			progress_main = progress;
 		else
 			li_warning ("Progress cannot go down!");
 
 		//! debug ("Progress changed: %i", progress);
-		progress_changed (prog);
+		progress_changed (progress_main);
 	}
 
 	internal virtual void change_item_progress (string id, int progress) {
