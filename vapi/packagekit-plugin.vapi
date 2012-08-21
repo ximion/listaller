@@ -102,6 +102,8 @@ namespace PkPlugin {
 		public void start_job (PkPlugin.BackendJob job);
 		[CCode (cname = "pk_backend_stop_job")]
 		public void stop_job (PkPlugin.BackendJob job);
+		[CCode (cname = "pk_backend_supports_parallelization")]
+		public bool supports_parallelization ();
 		[CCode (cname = "pk_backend_unload")]
 		public bool unload ();
 		[CCode (cname = "pk_backend_update_packages")]
@@ -171,6 +173,8 @@ namespace PkPlugin {
 		public PackageKit.Role get_role ();
 		[CCode (cname = "pk_backend_job_get_runtime")]
 		public uint get_runtime ();
+		[CCode (cname = "pk_backend_job_get_started")]
+		public bool get_started ();
 		[CCode (cname = "pk_backend_job_get_transaction_flags")]
 		public PackageKit.Bitfield get_transaction_flags ();
 		[CCode (cname = "pk_backend_job_get_uid")]
@@ -229,6 +233,8 @@ namespace PkPlugin {
 		public void set_role (PackageKit.Role role);
 		[CCode (cname = "pk_backend_job_set_speed")]
 		public void set_speed (uint speed);
+		[CCode (cname = "pk_backend_job_set_started")]
+		public void set_started (bool started);
 		[CCode (cname = "pk_backend_job_set_status")]
 		public void set_status (PackageKit.Status status);
 		[CCode (cname = "pk_backend_job_set_transaction_flags")]
@@ -297,6 +303,10 @@ namespace PkPlugin {
 		public unowned string[] get_values ();
 		[CCode (cname = "pk_transaction_is_exclusive")]
 		public bool is_exclusive ();
+		[CCode (cname = "pk_transaction_is_finished_with_lock_required")]
+		public bool is_finished_with_lock_required ();
+		[CCode (cname = "pk_transaction_make_exclusive")]
+		public void make_exclusive ();
 		[CCode (cname = "pk_transaction_reset_after_lock_error")]
 		public void reset_after_lock_error ();
 		[CCode (cname = "pk_transaction_run")]
@@ -315,6 +325,8 @@ namespace PkPlugin {
 		public bool set_state (PkPlugin.TransactionState state);
 		[CCode (cname = "pk_transaction_set_supported_roles")]
 		public void set_supported_roles (GLib.GenericArray<void*> plugins);
+		[CCode (cname = "pk_transaction_skip_auth_checks")]
+		public void skip_auth_checks (bool skip_checks);
 		[CCode (cname = "pk_transaction_state_to_string")]
 		public static unowned string state_to_string (PkPlugin.TransactionState state);
 		public signal void finished ();
