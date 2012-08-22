@@ -82,19 +82,19 @@ public class LipaInstaller : LipaModule {
 		}
 
 		AppItem appID = ipkmeta.get_application ();
-		print ("%c8", 0x1B);
+		//print ("%c8", 0x1B);
 		print ("==== %s ====\n\n", _("Installation of %s").printf (appID.full_name));
 
 		print ("%s\n\n%s\n", _("Description:"), appID.description);
 		string[] licenseLines = appID.license.text.split ("\n");
 
 		// save cursor in new position
-		print ("%c7", 0x1B);
+		//print ("%c7", 0x1B);
 
 		if (licenseLines.length > 1) {
 			print ("%s\n\n", _("License:"));
 			for (int i = 0; i < licenseLines.length; i++) {
-				print ("%s\n", licenseLines[i]);
+				print ("%s\r\r", licenseLines[i]);
 				if ((i % 2) == 1) {
 					Posix.FILE? tty = console_get_tty ();
 					// TODO: Text does not get erasted for some reason...
