@@ -145,6 +145,12 @@ public class Lipkgen : Object {
 
 		// Run the application
 		main.run ();
+
+		// Display final report
+		Report report = Report.get_instance ();
+		if (!report.is_empty ())
+			stdout.printf ("\nLipkgen Final Report:\n%s\n", report.to_string ());
+
 		int code = main.exit_code;
 		return code;
 	}

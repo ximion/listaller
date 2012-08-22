@@ -59,7 +59,7 @@ private class GPGSign : GPGBasic {
 				result.signatures->sig_class);
 			return false;
 		}
-		pkinfo_info ("Signed with fingerprint: %s\n".printf (result->signatures->fpr));
+		Report.log_info ("Signed with fingerprint: %s\n".printf (result->signatures->fpr));
 		return true;
 	}
 
