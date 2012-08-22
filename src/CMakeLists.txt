@@ -10,7 +10,7 @@ set(lisrc ${CMAKE_SOURCE_DIR}/src
 set(LISTALLER_BASE_SOURCES ${lisrc}/logging.vala
 	${lisrc}/utils.vala
 	${lisrc}/status.vala
-	${lisrc}/msgobject.vala
+	${lisrc}/message-object.vala
 	${lisrc}/settings.vala
 	${lisrc}/application.vala
 	${lisrc}/database-internal.vala

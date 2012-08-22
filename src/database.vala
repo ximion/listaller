@@ -38,7 +38,7 @@ private enum ForceDB {
 	SHARED;
 }
 
-private class SoftwareDB : MsgObject {
+private class SoftwareDB : MessageObject {
 	private InternalDB? db_shared;
 	private InternalDB? db_priv;
 	private Settings conf;
@@ -353,7 +353,7 @@ private class SoftwareDB : MsgObject {
 		uint i = 1;
 		foreach (AppItem app in appList) {
 			application (app);
-			change_main_progress ((int) Math.round (one * i));
+			change_progress ((int) Math.round (one * i));
 			i++;
 		}
 	}

@@ -26,7 +26,7 @@ using Listaller.Dep;
 
 namespace Listaller {
 
-private class DepManager : MsgObject {
+private class DepManager : MessageObject {
 	private SoftwareDB db;
 	private Listaller.Settings conf;
 

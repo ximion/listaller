@@ -34,7 +34,7 @@ namespace Listaller {
  * well as performing maintainance tasks to keep applications
  * running.
  */
-public class Manager : MsgObject {
+public class Manager : MessageObject {
 	private Settings conf;
 
 	public signal void status_changed (StatusItem status);
@@ -175,10 +175,10 @@ public class Manager : MsgObject {
 	}
 
 	private void pk_progress_cb (PackageKit.Progress progress, PackageKit.ProgressType type) {
-		if ((type == PackageKit.ProgressType.PERCENTAGE) ||
-			(type == PackageKit.ProgressType.SUBPERCENTAGE)) {
-				change_progress (progress.percentage, progress.subpercentage);
-			}
+		if (type == PackageKit.ProgressType.PERCENTAGE)
+			change_progress (progress.percentage);
+		if (type == PackageKit.ProgressType.ITEM_PROGRESS)
+			change_item_progress (progress.item_progress.package_id, progress.item_progress.percentage);
 	}
 
 	private bool remove_shared_application_internal (AppItem app) {
@@ -193,10 +193,10 @@ public class Manager : MsgObject {
 		pktask.background = false;
 
 		string pklipackage = app_item_build_pk_package_id (app);
-		change_progress (0, -1);
+		change_progress (0);
 
 		try {
-			pkres = pktask.remove_packages ({ pklipackage, null }, false, true, null, pk_progress_cb);
+			pkres = pktask.remove_packages_sync ({ pklipackage, null }, false, true, null, pk_progress_cb);
 		} catch (Error e) {
 			emit_error (ErrorEnum.REMOVAL_FAILED, e.message);
 			return false;
@@ -208,7 +208,7 @@ public class Manager : MsgObject {
 			return false;
 		}
 
-		change_progress (100, -1);
+		change_progress (100);
 
 		// Emit status message (setup finished)
 		emit_status (StatusEnum.REMOVAL_FINISHED,

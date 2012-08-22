@@ -25,7 +25,7 @@ using Listaller.Utils;
 
 namespace Listaller.Dep {
 
-private class FeedInstaller : MsgObject {
+private class FeedInstaller : MessageObject {
 	private Feed? feed;
 	private Listaller.Settings conf;
 	private string tmpdir;
@@ -65,9 +65,9 @@ private class FeedInstaller : MsgObject {
 
 			int64 size = 0;
 			try {
-				FileInfo info = yield remote.query_info_async (FILE_ATTRIBUTE_STANDARD_SIZE,
+				FileInfo info = yield remote.query_info_async (FileAttribute.STANDARD_SIZE,
 					FileQueryInfoFlags.NONE, 0);
-				size = (int64) info.get_attribute_uint64 (FILE_ATTRIBUTE_STANDARD_SIZE);
+				size = (int64) info.get_attribute_uint64 (FileAttribute.STANDARD_SIZE);
 			} catch (IOError e_query) {
 				warning ("Cannot query file size, continuing with an unknown size.");
 			}

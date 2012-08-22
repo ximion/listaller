@@ -1,4 +1,4 @@
-/* msgobject.vala
+/* message-object.vala
  *
  * Copyright (C) 2010-2012 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -37,16 +37,16 @@ protected enum ObjConnectFlags {
  * want to send messages between each other.
  * (Used e.g. for GUI stuff and in the public API)
  */
-public abstract class MsgObject : Object {
+public abstract class MessageObject : Object {
 	private int progress_main;
 	private string error_hint_str;
 
 	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
 	public signal void progress_changed (int progress);
-	public signal void item_progress_changed (string id, int progress);
+	public signal void item_progress_changed (string id, uint progress);
 
-	public MsgObject () {
+	public MessageObject () {
 		progress_main = -1;
 		error_hint_str = "";
 	}
@@ -88,7 +88,7 @@ public abstract class MsgObject : Object {
 		progress_changed (progress_main);
 	}
 
-	internal virtual void change_item_progress (string id, int progress) {
+	internal virtual void change_item_progress (string id, uint progress) {
 		item_progress_changed (id, progress);
 	}
 
@@ -96,7 +96,7 @@ public abstract class MsgObject : Object {
 		error_hint_str = str;
 	}
 
-	protected void connect_with_object (MsgObject other_obj, ObjConnectFlags flags) {
+	protected void connect_with_object (MessageObject other_obj, ObjConnectFlags flags) {
 		if (!(ObjConnectFlags.IGNORE_ERROR_CODE in flags)) {
 			other_obj.error_code.connect ((error) => {
 				this.error_code (error);
@@ -114,7 +114,7 @@ public abstract class MsgObject : Object {
 		}
 	}
 
-	protected void connect_with_object_all (MsgObject other_obj) {
+	protected void connect_with_object_all (MessageObject other_obj) {
 		connect_with_object (other_obj, ObjConnectFlags.NONE);
 	}
 

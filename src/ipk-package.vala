@@ -26,7 +26,7 @@ using Listaller.Utils;
 
 namespace Listaller.IPK {
 
-private class Package : MsgObject {
+private class Package : MessageObject {
 	private Settings conf;
 	private string fname;
 	private string wdir;
@@ -649,7 +649,7 @@ private class Package : MsgObject {
 				// File was found, so install it now
 				ret = install_entry_and_validate (fe, plar, e, vs);
 				prog++;
-				change_main_progress ((int) Math.round (one * prog));
+				change_progress ((int) Math.round (one * prog));
 				// Stop on error
 				if (!ret)
 					break;

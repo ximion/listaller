@@ -51,7 +51,7 @@ private errordomain PkError {
  * to access bother PackageKit via DBus when running as user and
  * PackageKit internal API when running as root (and as plugin)
  */
-private abstract class PkListallerTask : MsgObject {
+private abstract class PkListallerTask : MessageObject {
 	protected Listaller.Settings conf;
 	protected PackageKit.Task? pktask;
 	protected PkBackendProxy? pkbproxy;
@@ -280,7 +280,10 @@ private class PkInstaller : PkListallerTask {
 
 		if (pkbproxy == null) {
 			try {
-				res = pktask.install_packages (true, pkids, null, pk_progress_cb);
+				res = pktask.install_packages (PackageKit.TransactionFlag.NONE,
+								pkids,
+								null,
+								pk_progress_cb);
 			} catch (Error e) {
 				set_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
 					_("Installation of native packages failed with message: %s").printf (e.message));

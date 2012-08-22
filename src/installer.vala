@@ -33,7 +33,7 @@ namespace Listaller {
  * application.
  * All methods are syncronous right now.
  */
-public class Setup : MsgObject {
+public class Setup : MessageObject {
 	private Settings conf;
 	private string fname;
 	private IPK.Package ipkp;
@@ -74,11 +74,11 @@ public class Setup : MsgObject {
 		initialized = false;
 	}
 
-	internal override void change_progress (int progress, int sub_progress) {
+	internal override void change_progress (int progress) {
 		if (progress >= 0)
 			full_progress = (int) Math.round ((inst_progress + progress) / 2);
 
-		progress_changed (full_progress, sub_progress);
+		progress_changed (full_progress);
 	}
 
 	private void emit_status (StatusEnum status, string info) {
@@ -131,7 +131,7 @@ public class Setup : MsgObject {
 			     _("Running installation of %s").printf (app.full_name));
 
 		inst_progress = 25;
-		change_progress (0, -1);
+		change_progress (0);
 
 		// Check if this application is already installed
 		AppItem? dbapp = db.get_application_by_id (app);
@@ -186,7 +186,7 @@ public class Setup : MsgObject {
 		}
 
 		inst_progress = 75;
-		change_progress (100, -1);
+		change_progress (100);
 
 		// Emit status message
 		emit_status (StatusEnum.REGISTERING_APPLICATION,
@@ -214,7 +214,7 @@ public class Setup : MsgObject {
 		conf.unlock ();
 
 		inst_progress = 100;
-		change_progress (100, -1);
+		change_progress (100);
 
 		// Emit status message (setup finished)
 		StatusItem sitem = new StatusItem (StatusEnum.INSTALLATION_FINISHED);
@@ -239,10 +239,10 @@ public class Setup : MsgObject {
 	}
 
 	private void pk_progress_cb (PackageKit.Progress progress, PackageKit.ProgressType type) {
-		if ((type == PackageKit.ProgressType.PERCENTAGE) ||
-			(type == PackageKit.ProgressType.SUBPERCENTAGE)) {
-				change_progress (progress.percentage, progress.subpercentage);
-			}
+		if (type == PackageKit.ProgressType.PERCENTAGE)
+			change_progress (progress.percentage);
+		if (type == PackageKit.ProgressType.ITEM_PROGRESS)
+			change_item_progress (progress.item_progress.package_id, progress.item_progress.percentage);
 	}
 
 	private bool install_app_shared () {
@@ -257,7 +257,7 @@ public class Setup : MsgObject {
 		pktask.background = false;
 
 		try {
-			pkres = pktask.install_files (true, { fname, null }, null, pk_progress_cb);
+			pkres = pktask.install_files (PackageKit.TransactionFlag.NONE, { fname, null }, null, pk_progress_cb);
 		} catch (Error e) {
 			emit_error (ErrorEnum.INSTALLATION_FAILED, e.message);
 			return false;
@@ -270,7 +270,7 @@ public class Setup : MsgObject {
 		}
 
 		inst_progress = 100;
-		change_progress (100, -1);
+		change_progress (100);
 
 		// Emit status message (setup finished)
 		StatusItem sitem = new StatusItem (StatusEnum.INSTALLATION_FINISHED);
