@@ -38,12 +38,11 @@ public class LipaInstaller : LipaModule {
 		error_code = (int) error.error;
 	}
 
-	public void setup_progress_changed (int progress, int sub_progress) {
+	public void setup_progress_changed (int progress) {
 		if (setup_running)
 			progress_bar.set_percentage (progress);
-		//stdout.printf ("%c8", 0x1B);
-		//stdout.printf ("[%i]   ", progress);
-		// TODO: Show sub-progress
+
+		// TODO: Show item-progress too
 	}
 
 	public void setup_status_changed (StatusItem status) {
