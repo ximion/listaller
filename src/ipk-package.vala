@@ -27,7 +27,7 @@ using Listaller.Utils;
 namespace Listaller.IPK {
 
 private class Package : MessageObject {
-	private Settings conf;
+	private Config conf;
 	private string fname;
 	private string wdir;
 	private bool ipk_valid;
@@ -43,13 +43,13 @@ private class Package : MessageObject {
 		get { return ipkc; }
 	}
 
-	public Package (string filename, Settings? settings) {
+	public Package (string filename, Config? settings) {
 		fname = filename;
 		ipk_selected_arch_ = "";
 
 		conf = settings;
 		if (conf == null)
-			conf = new Settings ();
+			conf = new Listaller.Config ();
 		wdir = conf.get_unique_tmp_dir ();
 
 		ipk_valid = false;

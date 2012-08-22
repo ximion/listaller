@@ -29,7 +29,7 @@ namespace Listaller {
 private class DepInstaller : MessageObject {
 	private SoftwareDB db;
 	private DepManager depman;
-	private Listaller.Settings conf;
+	private Listaller.Config conf;
 
 	public DepInstaller (SoftwareDB lidb) {
 		base ();
@@ -39,7 +39,7 @@ private class DepInstaller : MessageObject {
 		// This should never happen!
 		if (conf == null) {
 			error ("Listaller config was NULL in DepManager constructor!");
-			conf = new Listaller.Settings ();
+			conf = new Listaller.Config ();
 		}
 		if (!db.database_writeable ()) {
 			critical ("Dependency installer received a read-only database! This won't work if write actions have to be performed!");

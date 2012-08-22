@@ -55,7 +55,7 @@ private class Builder : Object {
 
 	public Builder (string input_dir) {
 		srcdir = input_dir;
-		Listaller.Settings conf = new Listaller.Settings ();
+		Listaller.Config conf = new Listaller.Config ();
 		tmpdir = conf.get_unique_tmp_dir ("ipkbuild");
 		ipkCDir = new IPK.ControlDir ();
 		outdir = "";

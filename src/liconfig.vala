@@ -1,4 +1,4 @@
-/* settings.vala -- Store global settings which affect all Listaller modules
+/* liconfig.vala -- Store global settings which affect all Listaller modules
  *
  * Copyright (C) 2009-2012 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -18,7 +18,7 @@
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using Config;
+using PkgConfig;
 using GLib;
 using Listaller;
 
@@ -32,16 +32,16 @@ private static const string tmpdir_small = "/tmp";
  *
  * Provides settings for all other classes.
  */
-public class Settings : Object {
+public class Config : Object {
 
 	const string confdir = "/etc/listaller";
 	const string sudbdir = "/var/lib/listaller";
 	const string su_instroot = "/opt";
-	const string su_desktopdir = Config.PREFIXDIR + "/share/applications";
+	const string su_desktopdir = PkgConfig.PREFIXDIR + "/share/applications";
 	const string su_icondir = "/usr/share/icons/hicolor";
 	const string su_pixdir = "/usr/share/pixmaps";
-	private string[] lib_paths = { Config.PREFIXDIR + "/lib",
-					   Config.PREFIXDIR + "/lib64",
+	private string[] lib_paths = { PkgConfig.PREFIXDIR + "/lib",
+					   PkgConfig.PREFIXDIR + "/lib64",
 					   "/lib"};
 
 	private bool _sumode;
@@ -51,9 +51,9 @@ public class Settings : Object {
 
 
 	// System directories
-	internal const string sys_libdir = Config.LIBDIR;
-	internal const string sys_bindir = Config.PREFIXDIR + "/bin";
-	internal const string sys_sharedir = Config.PREFIXDIR + "/share";
+	internal const string sys_libdir = PkgConfig.LIBDIR;
+	internal const string sys_bindir = PkgConfig.PREFIXDIR + "/bin";
+	internal const string sys_sharedir = PkgConfig.PREFIXDIR + "/share";
 	internal const string sys_etcdir = "/etc";
 
 	public bool locked {
@@ -70,7 +70,7 @@ public class Settings : Object {
 		set { if (can_change ()) _testmode = value; }
 	}
 
-	public Settings (bool root = false) {
+	public Config (bool root = false) {
 		sumode = root;
 		testmode = false;
 
@@ -302,7 +302,7 @@ public class Settings : Object {
 	}
 }
 
-private bool find_library (string libname, Listaller.Settings conf) {
+private bool find_library (string libname, Listaller.Config conf) {
 	Posix.Stat? s = null;
 	string[] paths = conf.library_paths ();
 	for (uint i = 0; paths[i] != null; i++) {
@@ -321,7 +321,7 @@ private bool find_library (string libname, Listaller.Settings conf) {
 public void li_enable_translation ()
 {
 	// Initialize localisation
-	Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
-	Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
-	Intl.textdomain (Config.GETTEXT_PACKAGE);
+	Intl.bindtextdomain (PkgConfig.GETTEXT_PACKAGE, PkgConfig.LOCALEDIR);
+	Intl.bind_textdomain_codeset (PkgConfig.GETTEXT_PACKAGE, "UTF-8");
+	Intl.textdomain (PkgConfig.GETTEXT_PACKAGE);
 }

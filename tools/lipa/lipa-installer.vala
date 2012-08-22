@@ -19,7 +19,6 @@
  */
 
 using GLib;
-using Config;
 using Listaller;
 
 public class LipaInstaller : LipaModule {

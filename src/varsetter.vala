@@ -25,10 +25,10 @@ using Listaller.Utils;
 namespace Listaller {
 
 private class VarSetter : Object {
-	private Listaller.Settings conf;
+	private Listaller.Config conf;
 	private VarSolver vs;
 
-	public VarSetter (Listaller.Settings liconfig, string appIdName) {
+	public VarSetter (Listaller.Config liconfig, string appIdName) {
 		conf = liconfig;
 		vs = new VarSolver (appIdName);
 	}

@@ -19,7 +19,7 @@
  * 	Matthias Klumpp <matthias@tenstral.net>
  */
 [CCode (prefix = "", lower_case_cprefix = "", cheader_filename = "config.h")]
-namespace Config
+namespace PkgConfig
 {
 	/* Package information */
 	public const string PACKAGE_NAME;

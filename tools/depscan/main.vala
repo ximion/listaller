@@ -72,7 +72,7 @@ public class DepScanCmd : Object {
 	public void run () {
 		bool done = false;
 		if (o_show_version) {
-			stdout.printf ("depscan helper, version: %s\n", Config.VERSION);
+			stdout.printf ("depscan helper, version: %s\n", PkgConfig.VERSION);
 			return;
 		}
 		if ((o_input_path == null) || (o_input_path == "")) {
@@ -89,9 +89,9 @@ public class DepScanCmd : Object {
 	static int main (string[] args) {
 		// Bind Listaller locale
 		Intl.setlocale(LocaleCategory.ALL,"");
-		Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
-		Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
-		Intl.textdomain(Config.GETTEXT_PACKAGE);
+		Intl.bindtextdomain(PkgConfig.GETTEXT_PACKAGE, PkgConfig.LOCALEDIR);
+		Intl.bind_textdomain_codeset(PkgConfig.GETTEXT_PACKAGE, "UTF-8");
+		Intl.textdomain(PkgConfig.GETTEXT_PACKAGE);
 
 		var main = new DepScanCmd (args);
 		Listaller.set_console_mode (true);

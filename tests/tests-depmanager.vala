@@ -24,7 +24,7 @@ using Gee;
 using Listaller;
 
 private string datadir;
-private Listaller.Settings conf;
+private Listaller.Config conf;
 private SoftwareDB sdb;
 
 void msg (string s) {
@@ -219,7 +219,7 @@ int main (string[] args) {
 	add_log_domain ("LiTest");
 
 	// Set up Listaller configuration & database
-	conf = new Listaller.Settings ();
+	conf = new Listaller.Config ();
 	conf.testmode = true;
 
 	sdb = new SoftwareDB (conf);

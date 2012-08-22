@@ -48,7 +48,7 @@ void test_application_ids () {
 	msg ("Testing app-ids");
 
 	// Set up Listaller configuration
-	Listaller.Settings conf = new Listaller.Settings ();
+	Listaller.Config conf = new Listaller.Config ();
 	conf.testmode = true;
 
 	string foobar_dfile = Path.build_filename (foobar_dir, "foobar.desktop", null);
@@ -157,7 +157,7 @@ void test_metafile () {
 }
 
 void test_playground () {
-	Listaller.Settings conf = new Listaller.Settings ();
+	Listaller.Config conf = new Listaller.Config ();
 	conf.testmode = true;
 
 	// Just try something!

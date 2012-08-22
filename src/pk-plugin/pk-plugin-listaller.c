@@ -29,7 +29,7 @@
 struct PkPluginPrivate {
 	PkTransaction		*current_transaction;
 	ListallerManager	*mgr;
-	ListallerSettings	*conf;
+	ListallerConfig		*conf;
 	PkResults		*backend_results;
 	GMainLoop		*loop;
 };
@@ -712,7 +712,7 @@ pk_plugin_initialize (PkPlugin *plugin)
 {
 	/* create private area */
 	plugin->priv = PK_TRANSACTION_PLUGIN_GET_PRIVATE (PkPluginPrivate);
-	plugin->priv->conf = listaller_settings_new (TRUE);
+	plugin->priv->conf = listaller_config_new (TRUE);
 	plugin->priv->mgr = listaller_manager_new (plugin->priv->conf);
 	plugin->priv->loop = g_main_loop_new (NULL, FALSE);
 	plugin->priv->backend_results = pk_results_new ();

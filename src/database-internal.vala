@@ -156,7 +156,7 @@ private class InternalDB : Object {
 
 	public InternalDB (bool sumode, bool _testmode = false) {
 		// Create internal dummy configuration to fetch required data
-		var tmpConf = new Listaller.Settings (sumode);
+		var tmpConf = new Listaller.Config (sumode);
 		tmpConf.testmode = _testmode;
 
 		// Path with additional data (e.g. the file-list or icons) which is not stored in the SQLite DB

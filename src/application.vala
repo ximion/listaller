@@ -89,7 +89,7 @@ public class AppItem : Object {
 	private bool _shared;
 	private AppOrigin _origin;
 	private string _app_id;
-	private Listaller.Settings liconf;
+	private Listaller.Config liconf;
 
 	/**
 	 * Application identifier
@@ -232,7 +232,7 @@ public class AppItem : Object {
 		_desktop_file = "";
 		_website = "";
 		_icon_name = "";
-		liconf = new Listaller.Settings (_shared);
+		liconf = new Listaller.Config (_shared);
 		_license = AppLicense () {
 			name = "",
 			text = ""

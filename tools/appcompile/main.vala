@@ -75,7 +75,7 @@ public class AppCompile : Object {
 	public void run () {
 		bool done = false;
 		if (o_show_version) {
-			stdout.printf ("appcompile helper, version: %s\n", Config.VERSION);
+			stdout.printf ("appcompile helper, version: %s\n", PkgConfig.VERSION);
 			return;
 		}
 		// Take directory from options, otherwise use current dir
@@ -104,9 +104,9 @@ public class AppCompile : Object {
 	static int main (string[] args) {
 		// Bind Listaller locale
 		Intl.setlocale(LocaleCategory.ALL,"");
-		Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
-		Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
-		Intl.textdomain(Config.GETTEXT_PACKAGE);
+		Intl.bindtextdomain(PkgConfig.GETTEXT_PACKAGE, PkgConfig.LOCALEDIR);
+		Intl.bind_textdomain_codeset(PkgConfig.GETTEXT_PACKAGE, "UTF-8");
+		Intl.textdomain(PkgConfig.GETTEXT_PACKAGE);
 
 		// Set everything up...
 		var main = new AppCompile (args);

@@ -28,7 +28,7 @@ namespace Listaller {
 
 private class DepManager : MessageObject {
 	private SoftwareDB db;
-	private Listaller.Settings conf;
+	private Listaller.Config conf;
 
 	public DepManager (SoftwareDB lidb) {
 		base ();
@@ -37,7 +37,7 @@ private class DepManager : MessageObject {
 		// This should never happen!
 		if (conf == null) {
 			error ("Listaller config was NULL in DepManager constructor!");
-			conf = new Listaller.Settings ();
+			conf = new Listaller.Config ();
 		}
 	}
 

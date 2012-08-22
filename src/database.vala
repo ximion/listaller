@@ -41,13 +41,13 @@ private enum ForceDB {
 private class SoftwareDB : MessageObject {
 	private InternalDB? db_shared;
 	private InternalDB? db_priv;
-	private Settings conf;
+	private Config conf;
 
 	public ForceDB force_db { get; set; }
 
 	public signal void application (AppItem appid);
 
-	public SoftwareDB (Settings liconf, bool include_shared = true) {
+	public SoftwareDB (Listaller.Config liconf, bool include_shared = true) {
 		base ();
 
 		db_shared = null;
@@ -119,7 +119,7 @@ private class SoftwareDB : MessageObject {
 		return true;
 	}
 
-	public Settings get_liconf () {
+	public Listaller.Config get_liconf () {
 		return conf;
 	}
 

@@ -52,7 +52,7 @@ private errordomain PkError {
  * PackageKit internal API when running as root (and as plugin)
  */
 private abstract class PkListallerTask : MessageObject {
-	protected Listaller.Settings conf;
+	protected Listaller.Config conf;
 	protected PackageKit.Task? pktask;
 	protected PkBackendProxy? pkbproxy;
 
@@ -60,7 +60,7 @@ private abstract class PkListallerTask : MessageObject {
 
 	private new void emit_error (ErrorItem item) { }
 
-	public PkListallerTask (Listaller.Settings liconf) {
+	public PkListallerTask (Listaller.Config liconf) {
 		base ();
 		conf = liconf;
 
@@ -95,7 +95,7 @@ private abstract class PkListallerTask : MessageObject {
 
 private class PkResolver : PkListallerTask {
 
-	public PkResolver (Listaller.Settings liconf) {
+	public PkResolver (Listaller.Config liconf) {
 		base (liconf);
 		set_error_hint_str ("PkResolver");
 		reset ();
@@ -263,7 +263,7 @@ private class PkResolver : PkListallerTask {
 
 private class PkInstaller : PkListallerTask {
 
-	public PkInstaller (Listaller.Settings liconf) {
+	public PkInstaller (Listaller.Config liconf) {
 		base (liconf);
 		set_error_hint_str ("PkInstaller");
 

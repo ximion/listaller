@@ -34,7 +34,7 @@ namespace Listaller {
  * All methods are syncronous right now.
  */
 public class Setup : MessageObject {
-	private Settings conf;
+	private Config conf;
 	private string fname;
 	private IPK.Package ipkp;
 	private bool initialized;
@@ -46,7 +46,7 @@ public class Setup : MessageObject {
 
 	public signal void status_changed (StatusItem status);
 
-	public Settings settings {
+	public Listaller.Config settings {
 		get { return conf; }
 	}
 
@@ -59,12 +59,12 @@ public class Setup : MessageObject {
 		}
 	}
 
-	public Setup (string ipkfilename, Settings? settings) {
+	public Setup (string ipkfilename, Config? settings) {
 		base ();
 		pkgReplaces = null;
 		conf = settings;
 		if (conf == null)
-			conf = new Settings (false);
+			conf = new Listaller.Config(false);
 
 		fname = ipkfilename;
 		// Set up IPK package instance and connect it with this setup

@@ -19,7 +19,6 @@
  */
 
 using GLib;
-using Config;
 using Listaller;
 
 private static const int CONSOLE_RESET   = 0;
@@ -156,9 +155,9 @@ public class CmdApp : Object {
 	static int main (string[] args) {
 		// Bind Listaller locale
 		Intl.setlocale(LocaleCategory.ALL,"");
-		Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
-		Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
-		Intl.textdomain(Config.GETTEXT_PACKAGE);
+		Intl.bindtextdomain(PkgConfig.GETTEXT_PACKAGE, PkgConfig.LOCALEDIR);
+		Intl.bind_textdomain_codeset(PkgConfig.GETTEXT_PACKAGE, "UTF-8");
+		Intl.textdomain(PkgConfig.GETTEXT_PACKAGE);
 
 		var main = new CmdApp (args);
 		set_console_mode (true);

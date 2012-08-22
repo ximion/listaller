@@ -19,7 +19,6 @@
  */
 
 using GLib;
-using Config;
 using Listaller;
 
 public enum LipaRole {
@@ -29,14 +28,14 @@ public enum LipaRole {
 }
 
 public abstract class LipaModule : Object {
-	protected Listaller.Settings liconf;
+	protected Listaller.Config liconf;
 
 	public int error_code { get; set; }
 	protected CmdProgressBar progress_bar;
 
 	public LipaModule () {
 		error_code = 0;
-		liconf = new Listaller.Settings (is_root ());
+		liconf = new Listaller.Config (is_root ());
 		progress_bar = new CmdProgressBar ();
 	}
 

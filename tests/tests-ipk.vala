@@ -46,7 +46,7 @@ void test_ipk_package () {
 	msg ("Package tests");
 
 	// Set up Listaller configuration
-	Listaller.Settings conf = new Listaller.Settings ();
+	Listaller.Config conf = new Listaller.Config ();
 	conf.testmode = true;
 
 	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_install.ipk", null);

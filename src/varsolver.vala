@@ -60,7 +60,7 @@ private class Variable {
 }
 
 private class VarSolver : Object {
-	private Settings conf;
+	private Config conf;
 	private HashMap<string, Variable> pathMap;
 	private delegate string LiConfGetType ();
 	public string swName {get; set; }
@@ -68,7 +68,7 @@ private class VarSolver : Object {
 
 	public VarSolver (string softwareIdName = "") {
 		contained_sysvars = false;
-		conf = new Settings ();
+		conf = new Listaller.Config ();
 
 		swName = softwareIdName;
 		if (swName == "")
@@ -201,7 +201,7 @@ private class VarSolver : Object {
 		return res;
 	}
 
-	public string substitute_vars_auto (string s, Listaller.Settings conf) {
+	public string substitute_vars_auto (string s, Listaller.Config conf) {
 		string res = s;
 		// Substitute vars by config option
 		if (conf.sumode) {
@@ -243,7 +243,7 @@ private class VarSolver : Object {
 		return "";
 	}
 
-	private string find_liappicon (string icon_name, int size, Settings liconf) {
+	private string find_liappicon (string icon_name, int size, Listaller.Config liconf) {
 		string v;
 		if (size == 0)
 			v = "%PIX%";
@@ -257,10 +257,10 @@ private class VarSolver : Object {
 		return "";
 	}
 
-	public string find_icon_in_ivarpaths (string icon_name, Settings? liconf = null) {
-		Settings? conf = liconf;
+	public string find_icon_in_ivarpaths (string icon_name, Config? liconf = null) {
+		Config? conf = liconf;
 		if (conf == null)
-			conf = new Settings (false);
+			conf = new Listaller.Config (false);
 		string fname;
 		fname = find_liappicon (icon_name, 0, conf);
 		if (fname != "")
@@ -289,10 +289,10 @@ private class VarSolver : Object {
 		return icon_name;
 	}
 
-	public string find_exe_in_varpath (string exe_name, Settings? liconf = null) {
-		Settings? conf = liconf;
+	public string find_exe_in_varpath (string exe_name, Config? liconf = null) {
+		Config? conf = liconf;
 		if (conf == null)
-			conf = new Settings (false);
+			conf = new Listaller.Config (false);
 		string fname = Path.build_filename (substitute_vars_auto ("%INST%", conf), exe_name, null);
 		if (FileUtils.test (fname, FileTest.EXISTS)) {
 			return fname;
@@ -301,11 +301,11 @@ private class VarSolver : Object {
 	}
 }
 
-private string autosubst_instvars (string varstr, string swName, Settings? liconf = null) {
+private string autosubst_instvars (string varstr, string swName, Config? liconf = null) {
 	VarSolver vs = new VarSolver (swName);
-	Settings? conf = liconf;
+	Config? conf = liconf;
 	if (conf == null)
-		conf = new Settings (false);
+		conf = new Listaller.Config (false);
  	return vs.substitute_vars_auto (varstr, conf);
 }
 

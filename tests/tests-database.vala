@@ -47,7 +47,7 @@ void software_db_status_changed_cb (DatabaseStatus status, string message) {
 void test_software_db () {
 	bool ret = false;
 
-	Listaller.Settings conf = new Listaller.Settings ();
+	Listaller.Config conf = new Listaller.Config ();
 	conf.testmode = true;
 
 	msg ("Opening new software database connection");

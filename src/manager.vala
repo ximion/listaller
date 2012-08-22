@@ -35,24 +35,24 @@ namespace Listaller {
  * running.
  */
 public class Manager : MessageObject {
-	private Settings conf;
+	private Config conf;
 
 	public signal void status_changed (StatusItem status);
 	public signal void application (AppItem appid);
 
-	public Settings settings {
+	public Listaller.Config settings {
 		get { return conf; }
 		set { conf = value; }
 	}
 
 	/*
-	 * @param: settings A valid LiSettings instance, describing basic settings (or null)
+	 * @param: settings A valid LiListaller.Configinstance, describing basic settings (or null)
 	 */
-	public Manager (Settings? settings) {
+	public Manager (Config? settings) {
 		base ();
 		conf = settings;
 		if (conf == null)
-			conf = new Settings (false);
+			conf = new Listaller.Config (false);
 	}
 
 	private void emit_status (StatusEnum status, string info) {

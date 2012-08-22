@@ -27,12 +27,12 @@ namespace Listaller.Dep {
 
 private class FeedInstaller : MessageObject {
 	private Feed? feed;
-	private Listaller.Settings conf;
+	private Listaller.Config conf;
 	private string tmpdir;
 
 	public ErrorItem? last_error { get; set; }
 
-	public FeedInstaller (Listaller.Settings liconf) {
+	public FeedInstaller (Listaller.Config liconf) {
 		last_error = null;
 		feed = null;
 
