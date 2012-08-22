@@ -12,6 +12,7 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/logging.vala
 	${lisrc}/status.vala
 	${lisrc}/message-object.vala
 	${lisrc}/settings.vala
+	${lisrc}/reporting.vala
 	${lisrc}/application.vala
 	${lisrc}/database-internal.vala
 	${lisrc}/database.vala
