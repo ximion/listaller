@@ -134,7 +134,7 @@ private class VarSolver : Object {
 
 	private Variable add_var (string key, string idsubst, string subst, string susubst) {
 		// make the keyname a keystring
-		string key_str = "%%s%".printf (key);
+		string key_str = "%" + key + "%";
 		Variable v = new Variable ();
 		v.var = key_str;
 		v.id_subst = idsubst;

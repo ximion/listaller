@@ -59,7 +59,7 @@ private class VarSetter : Object {
 
 		value = get_desktopfile_entry (dfile, "Icon");
 		if (value != "") {
-			if (value.has_prefix ("$"))
+			if (value.has_prefix ("%"))
 				dfile.set_string ("Desktop Entry", "Icon", vs.substitute_vars_auto (value, conf));
 
 			// The system should be able to find an icon automatically, so we shouldn't need this hint anymore
@@ -71,7 +71,7 @@ private class VarSetter : Object {
 		value = get_desktopfile_entry (dfile, "Exec");
 		// Process exe filename and append the runapp command
 		if (value != "") {
-			if (value.has_prefix ("$"))
+			if (value.has_prefix ("%"))
 				dfile.set_string ("Desktop Entry", "Exec", "runapp \"" + vs.substitute_vars_auto (value, conf) + "\"");
 			else
 				dfile.set_string ("Desktop Entry", "Exec", "runapp \"" + vs.find_exe_in_varpath (value, conf) + "\"");

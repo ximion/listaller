@@ -155,11 +155,11 @@ public class AppItem : Object {
 				return "";
 			string dfile = _desktop_file;
 			// Check if $APP prefix needs to be added
-			if ( (!dfile.has_prefix ("$")) &&
+			if ( (!dfile.has_prefix ("%")) &&
 				(!dfile.has_prefix ("/")) &&
 				(!dfile.has_prefix ("~")) ) {
 				// If no exact path has been specified, we assume $APP
-				dfile = Path.build_filename ("$APP", dfile, null);
+				dfile = Path.build_filename ("%APP%", dfile, null);
 			}
 			_desktop_file_prefix = fold_user_dir (dfile);
 			return _desktop_file_prefix;
@@ -173,7 +173,7 @@ public class AppItem : Object {
 				if (_desktop_file.has_prefix ("/"))
 					shared = true;
 				// Desktop-file in $APP ==> application not shared
-				if (_desktop_file.has_prefix ("$"))
+				if (_desktop_file.has_prefix ("%"))
 					shared = false;
 			}
 		}

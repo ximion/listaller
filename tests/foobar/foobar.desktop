@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Listaller FooBar
 Comment=Listaller FooBar Test Program
-Exec=$INST/foo
+Exec=%INST%/foo
 Encoding=UTF-8
 Terminal=true
 Type=Application

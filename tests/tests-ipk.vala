@@ -91,7 +91,7 @@ void test_ipk_control_file () {
 	list.add (d);
 
 	d = new IPK.Dependency ("gamma");
-	d.add_component ("$SYS_LIB/gamma.so.4", Deps.ComponentType.SHARED_LIB);
+	d.add_component ("%SYS_LIB%/gamma.so.4", Deps.ComponentType.SHARED_LIB);
 	list.add (d);
 
 	d = new IPK.Dependency ("delta");
@@ -105,7 +105,7 @@ void test_ipk_control_file () {
 	AppItem app = ipkc.get_application ();
 	assert (app.full_name == "echoecho");
 	assert (app.idname == "echo-123");
-	assert (app.desktop_file == "$APP/echo.desktop");
+	assert (app.desktop_file == "%APP%/echo.desktop");
 
 	list = ipkc.get_dependencies ();
 	assert (list[0].full_name == "alpha");
@@ -138,11 +138,11 @@ void test_ipk_filelist_file () {
 	IPK.FileList flist = new IPK.FileList ();
 	string foodir = Utils.real_path (Path.build_filename (datadir, "..", "foobar", null));
 	// Add some files to IPK file list
-	ret = flist.add_file (Path.build_filename (foodir, "autogen.sh", null), "$INST/+junk");
+	ret = flist.add_file (Path.build_filename (foodir, "autogen.sh", null), "%INST%/+junk");
 	assert (ret == true);
-	ret = flist.add_file (Path.build_filename (foodir, "doc", "foo.info", null), "$INST/+junk");
+	ret = flist.add_file (Path.build_filename (foodir, "doc", "foo.info", null), "%INST%/+junk");
 	assert (ret == true);
-	ret = flist.add_file (Path.build_filename (foodir, "foobar.desktop", null), "$APP");
+	ret = flist.add_file (Path.build_filename (foodir, "foobar.desktop", null), "%APP%");
 	assert (ret == true);
 
 	string tmpfile = Path.build_filename (datadir, "files-tmp.list~", null);

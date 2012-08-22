@@ -308,7 +308,7 @@ private class Package : MessageObject {
 		}
 
 		// Store a/the .desktop file, if one is found
-		if ((fe.destination == "$APP") && (fe.fname.has_suffix (".desktop")))
+		if ((fe.destination == "%APP%") && (fe.fname.has_suffix (".desktop")))
 			appInfo.desktop_file = fe.get_full_filename ();
 
 		return ret;
