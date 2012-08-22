@@ -48,8 +48,6 @@ namespace PkPlugin {
 		public void get_requires (PkPlugin.BackendJob job, PackageKit.Bitfield filters, string package_ids, bool recursive);
 		[CCode (cname = "pk_backend_get_roles")]
 		public PackageKit.Bitfield get_roles ();
-		[CCode (cname = "pk_backend_get_simultaneous_mode")]
-		public bool get_simultaneous_mode ();
 		[CCode (cname = "pk_backend_get_update_detail")]
 		public void get_update_detail (PkPlugin.BackendJob job, string package_ids);
 		[CCode (cname = "pk_backend_get_updates")]
@@ -96,8 +94,6 @@ namespace PkPlugin {
 		public void search_groups (PkPlugin.BackendJob job, PackageKit.Bitfield filters, string search);
 		[CCode (cname = "pk_backend_search_names")]
 		public void search_names (PkPlugin.BackendJob job, PackageKit.Bitfield filters, string search);
-		[CCode (cname = "pk_backend_set_simultaneous_mode")]
-		public void set_simultaneous_mode (bool simultaneous);
 		[CCode (cname = "pk_backend_start_job")]
 		public void start_job (PkPlugin.BackendJob job);
 		[CCode (cname = "pk_backend_stop_job")]
