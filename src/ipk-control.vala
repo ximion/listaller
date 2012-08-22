@@ -26,6 +26,9 @@ using Listaller.Utils;
 
 namespace Listaller.IPK {
 
+// We need at least an IPK 1.1 package to process it
+private static const string MINIMUM_IPK_SPEC_VERSION = "1.1";
+
 public errordomain ControlDataError {
 	NO_DOAP,
 	DOAP_INVALID,
@@ -73,7 +76,7 @@ public abstract class Control : Object {
 	public string get_ipk_version () {
 		string s = packSetting.get_value ("Version", false);
 		if (s == "")
-			s = "1.0";
+			s = "1.1";
 
 		return s;
 	}
@@ -175,7 +178,7 @@ public class PackControl : Control {
 	private string doapData;
 
 	public PackControl () {
-		ipkVersion = "1.0";
+		ipkVersion = "1.1";
 	}
 
 	public bool open_control (string fPackSetting, string fDoap, string fDeps) {
@@ -194,7 +197,7 @@ public class PackControl : Control {
 		if (!ret)
 			return false;
 
-		ipkVersion = "1.0";
+		ipkVersion = this.get_ipk_version ();
 
 		return cache_appitem ();
 	}

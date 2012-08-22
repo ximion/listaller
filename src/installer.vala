@@ -94,6 +94,29 @@ public class Setup : MessageObject {
 			initialized = true;
 		inst_progress = 0;
 		full_progress = 0;
+
+		// Check for high-enough IPK version
+		string ipkSpecVersion = ipkp.control.get_ipk_version ();
+		if (ipkSpecVersion != "") {
+			// Check if we have a IPK spec which is incompatible with our Listaller (broken backwards compatibility)
+			string[] ipk_version_parts = ipkSpecVersion.split (".");
+			string[] supported_version_parts = IPK.MINIMUM_IPK_SPEC_VERSION.split (".");
+			if (compare_versions (ipk_version_parts[0], supported_version_parts[0]) > 0) {
+				// We need a newer Listaller to process this...
+				emit_error (ErrorEnum.IPK_NOT_SUPPORTED,
+				    _("This package was built using a more recent version of Listaller.\n" +
+					"Please update your copy of Listaller to be able to install it."));
+				return false;
+			}
+		}
+		if (compare_versions (ipkSpecVersion, IPK.MINIMUM_IPK_SPEC_VERSION) > 0) {
+			// Package is too old... we need a newver version of this...
+			emit_error (ErrorEnum.IPK_NOT_SUPPORTED,
+				    _("This package was built using spec version '%s', but we need at least '%s' or higher to proceed.\n" +
+					"Please ask the package author to rebuild the package using a newer Listaller version.").printf (ipkSpecVersion, IPK.MINIMUM_IPK_SPEC_VERSION));
+			return false;
+		}
+
 		return ret;
 	}
 
@@ -113,7 +136,8 @@ public class Setup : MessageObject {
 
 		// Open & lock database (we need write access here!)
 		if (!db.open_write ()) {
-			emit_error (ErrorEnum.DB_OPEN_FAILED, _("Could not open the software database, maybe it is locked at time.\nPlease close all other running installations to continue!"));
+			emit_error (ErrorEnum.DB_OPEN_FAILED,
+				    _("Could not open the software database, maybe it is locked at time.\nPlease close all other running installations to continue!"));
 			return false;
 		}
 

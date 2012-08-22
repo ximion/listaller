@@ -79,13 +79,13 @@ private class VarSolver : Object {
 
 		/* Define all Listaller pkg variables */
 		// Application installation directory
-		add_var_from_conf ("$INST", Path.build_filename ("appdata", swName, null), conf.appdata_dir, swName);
+		add_var_from_conf ("INST", Path.build_filename ("appdata", swName, null), conf.appdata_dir, swName);
 		// Desktop-file directory
-		add_var_from_conf ("$APP", "desktop", conf.desktop_dir);
+		add_var_from_conf ("APP", "desktop", conf.desktop_dir);
 		// Generic dependency directory (for published dependencies, like shared libs)
-		add_var_from_conf ("$DEP", Path.build_filename ("depend", swName, null), conf.depdata_dir, swName);
+		add_var_from_conf ("DEP", Path.build_filename ("depend", swName, null), conf.depdata_dir, swName);
 		// Private dependency directory: Used only for private libraries
-		add_var_from_conf ("$LIB_PRIVATE", Path.build_filename ("appdata", swName, "_libs", null),
+		add_var_from_conf ("LIB_PRIVATE", Path.build_filename ("appdata", swName, "_libs", null),
 				   conf.appdata_dir, Path.build_filename (swName, "_libs", null));
 
 		/*
@@ -97,13 +97,13 @@ private class VarSolver : Object {
 		bool x = conf.sumode;
 		conf.sumode = false;
 
-		v = add_var ("$SYS_LIB", "_sys_lib", li_build_filename (conf.depdata_dir (), "..", "_syslibs", null), conf.sys_libdir);
+		v = add_var ("SYS_LIB", "_sys_lib", li_build_filename (conf.depdata_dir (), "..", "_syslibs", null), conf.sys_libdir);
 		v.system_var = true;
-		v = add_var ("$SYS_BIN", "_sys_bin", li_build_filename (conf.depdata_dir (), "..", "_sysbin", null), conf.sys_bindir);
+		v = add_var ("SYS_BIN", "_sys_bin", li_build_filename (conf.depdata_dir (), "..", "_sysbin", null), conf.sys_bindir);
 		v.system_var = true;
-		v = add_var ("$SYS_SHARE", "_sys_lib", li_build_filename (conf.depdata_dir (), "..", "_sysshare", null), conf.sys_sharedir);
+		v = add_var ("SYS_SHARE", "_sys_lib", li_build_filename (conf.depdata_dir (), "..", "_sysshare", null), conf.sys_sharedir);
 		v.system_var = true;
-		v = add_var ("$SYS_ETC", "_sys_lib", li_build_filename (conf.depdata_dir (), "..", "_sysetc", null), conf.sys_etcdir);
+		v = add_var ("SYS_ETC", "_sys_lib", li_build_filename (conf.depdata_dir (), "..", "_sysetc", null), conf.sys_etcdir);
 		v.system_var = true;
 
 		conf.sumode = x;
@@ -126,15 +126,17 @@ private class VarSolver : Object {
 		var i_sudir = conf.icon_size_dir (size);
 
 		if (size == 0) {
-			add_var ("$PIX", "icon/common", i_privdir, i_sudir);
+			add_var ("PIX", "icon/common", i_privdir, i_sudir);
 		} else {
-			add_var ("$ICON-" + size.to_string (), "icon/" + size.to_string (), i_privdir, i_sudir);
+			add_var ("ICON-" + size.to_string (), "icon/" + size.to_string (), i_privdir, i_sudir);
 		}
 	}
 
 	private Variable add_var (string key, string idsubst, string subst, string susubst) {
+		// make the keyname a keystring
+		string key_str = "%%s%".printf (key);
 		Variable v = new Variable ();
-		v.var = key;
+		v.var = key_str;
 		v.id_subst = idsubst;
 		v.subst = subst;
 		v.su_subst = susubst;
@@ -160,10 +162,10 @@ private class VarSolver : Object {
 			if (entry.value.system_var)
 				contained_sysvars = true;
 		}
-		if (res.has_prefix ("$")) {
+		if (res.has_prefix ("%")) {
 			// We have a unknown variable - emit a warning and send file to the appdata directory
 			li_warning (_("Package uses custom variables - usually this is not intentional, please contact the package author!"));
-			res = Path.build_filename (pathMap.get ("$INST").su_subst, res.substring (1));
+			res = Path.build_filename (pathMap.get ("%INST%").su_subst, res.substring (1));
 		}
 		return res;
 	}
@@ -175,10 +177,10 @@ private class VarSolver : Object {
 			if (entry.value.system_var)
 				contained_sysvars = true;
 		}
-		if (res.has_prefix ("$")) {
+		if (res.has_prefix ("%")) {
 			// We have a unknown variable - emit a warning and send file to the appdata directory
 			li_warning (_("Package uses custom variables - usually this is not intentional, please contact the package author!"));
-			res = Path.build_filename (pathMap.get ("$INST").subst, res.substring (1));
+			res = Path.build_filename (pathMap.get ("%INST%").subst, res.substring (1));
 		}
 		return res;
 	}
@@ -190,7 +192,7 @@ private class VarSolver : Object {
 			if (entry.value.system_var)
 				contained_sysvars = true;
 		}
-		if (res.has_prefix ("$")) {
+		if (res.has_prefix ("%")) {
 			// We have a unknown var... this should not happen.
 			li_warning (_("Package uses custom variables - usually this is not intentional, please contact the package author!"));
 			res = res.substring (1);
@@ -244,9 +246,9 @@ private class VarSolver : Object {
 	private string find_liappicon (string icon_name, int size, Settings liconf) {
 		string v;
 		if (size == 0)
-			v = "$PIX";
+			v = "%PIX%";
 		else
-			v = "$ICON-%i".printf (size);
+			v = "%ICON-%i".printf (size);
 		string fname = Path.build_filename (substitute_vars_auto (v, liconf), icon_name, null);
 		fname = find_icon_imagefile (fname);
 		if (fname != "") {
@@ -291,7 +293,7 @@ private class VarSolver : Object {
 		Settings? conf = liconf;
 		if (conf == null)
 			conf = new Settings (false);
-		string fname = Path.build_filename (substitute_vars_auto ("$INST", conf), exe_name, null);
+		string fname = Path.build_filename (substitute_vars_auto ("%INST%", conf), exe_name, null);
 		if (FileUtils.test (fname, FileTest.EXISTS)) {
 			return fname;
 		}
