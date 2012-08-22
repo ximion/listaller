@@ -64,7 +64,6 @@ public abstract class MessageObject : Object {
 		MessageItem item = new MessageItem(MessageEnum.WARNING);
 		item.details = msg;
 		warning (msg);
-		li_warning (msg);
 	}
 
 	internal virtual void emit_error (ErrorEnum id, string details) {
@@ -73,16 +72,16 @@ public abstract class MessageObject : Object {
 		item.details = details;
 		error_code (item);
 		if (error_hint_str == "")
-			li_error (details);
+			Report.log_error (details);
 		else
-			li_error ("[%s]:%s".printf (error_hint_str, details));
+			Report.log_error ("[%s]:%s".printf (error_hint_str, details));
 	}
 
 	internal virtual void change_progress (int progress) {
 		if ((progress == 0) || (progress >= progress_main))
 			progress_main = progress;
 		else
-			li_warning ("Progress cannot go down!");
+			warning ("Progress cannot go down!");
 
 		//! debug ("Progress changed: %i", progress);
 		progress_changed (progress_main);

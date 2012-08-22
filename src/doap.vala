@@ -213,7 +213,7 @@ WHERE {
 		try {
 			app.version = get_newest_release_version ();
 		} catch (Error e) {
-			li_error ("Could not fetch version from DOAP! (%s)".printf (e.message));
+			critical ("Could not fetch version from DOAP! (%s)".printf (e.message));
 		}
 
 		// TODO: Fetch all useful data from doap file

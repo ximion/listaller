@@ -424,7 +424,7 @@ public class AppItem : Object {
 				return "";
 			}
 		} catch (Error e) {
-			li_error (_("Could not load desktop file values: %s").printf (e.message));
+			Report.log_warning (_("Could not load desktop file values: %s").printf (e.message));
 			return "";
 		}
 	}
@@ -465,7 +465,7 @@ public class AppItem : Object {
 		try {
 			dfile.load_from_file (fname, KeyFileFlags.NONE);
 		} catch (Error e) {
-			li_error (_("Could not open desktop file: %s").printf (e.message));
+			warning (_("Could not open desktop file: %s").printf (e.message));
 		}
 
 		full_name = get_desktop_file_string (dfile, "Name");
@@ -492,7 +492,7 @@ public class AppItem : Object {
 		try {
 			dfile.load_from_file (fname, KeyFileFlags.NONE);
 		} catch (Error e) {
-			li_error (_("Could not open desktop file: %s").printf (e.message));
+			warning (_("Could not open desktop file: %s").printf (e.message));
 		}
 
 		string cmd = get_desktop_file_string (dfile, "Exec");

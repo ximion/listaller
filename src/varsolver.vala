@@ -164,7 +164,7 @@ private class VarSolver : Object {
 		}
 		if (res.has_prefix ("%")) {
 			// We have a unknown variable - emit a warning and send file to the appdata directory
-			li_warning (_("Package uses custom variables - usually this is not intentional, please contact the package author!"));
+			Report.log_warning (_("Package uses custom variables - usually this is not intentional, please contact the package author!"));
 			res = Path.build_filename (pathMap.get ("%INST%").su_subst, res.substring (1));
 		}
 		return res;
@@ -179,7 +179,7 @@ private class VarSolver : Object {
 		}
 		if (res.has_prefix ("%")) {
 			// We have a unknown variable - emit a warning and send file to the appdata directory
-			li_warning (_("Package uses custom variables - usually this is not intentional, please contact the package author!"));
+			Report.log_warning (_("Package uses custom variables - usually this is not intentional, please contact the package author!"));
 			res = Path.build_filename (pathMap.get ("%INST%").subst, res.substring (1));
 		}
 		return res;
@@ -194,7 +194,7 @@ private class VarSolver : Object {
 		}
 		if (res.has_prefix ("%")) {
 			// We have a unknown var... this should not happen.
-			li_warning (_("Package uses custom variables - usually this is not intentional, please contact the package author!"));
+			Report.log_warning (_("Package uses custom variables - usually this is not intentional, please contact the package author!"));
 			res = res.substring (1);
 		}
 

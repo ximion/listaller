@@ -58,7 +58,7 @@ private bool touch_dir (string dirname) {
 				d.make_directory_with_parents ();
 			}
 		} catch (Error e) {
-			li_error ("Unable to create directories! Error: %s".printf (e.message));
+			warning ("Unable to create directories! Error: %s".printf (e.message));
 			return false;
 		}
 		return true;
@@ -538,7 +538,7 @@ private string concat_binfiles (string afname, string bfname) {
 		fo_stream = f.create(FileCreateFlags.REPLACE_DESTINATION, null);
 	}
 	catch(Error e) {
-		li_error ("Cannot create file. %s\n".printf (e.message));
+		warning ("Cannot create file. %s\n".printf (e.message));
 		return "";
 	}
 

@@ -56,7 +56,7 @@ internal abstract class GPGBasic : Object {
 
 		sig_data = (*dt)->release_and_get_mem (out signature_len);
 		if (sig_data == null) {
-			li_error ("Signature data was NULL!");
+			critical ("Signature data was NULL!");
 			sig_data = "";
 		}
 		return sig_data;

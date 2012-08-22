@@ -267,7 +267,7 @@ private class Package : MessageObject {
 			}
 		}
 		if (Posix.close (fd) != 0)
-			li_warning ("Closing file desriptor failed. %s".printf (strerror (errno)));
+			warning ("Closing of file desriptor failed. %s".printf (strerror (errno)));
 		// Set permissions
 		Posix.chmod (fname_tmp, e.mode ());
 
@@ -370,7 +370,7 @@ private class Package : MessageObject {
 			}
 		}
 		if (Posix.close (fd) != 0)
-			li_warning ("Closing file desriptor failed. %s".printf (strerror (errno)));
+			warning ("Closing of file desriptor failed. %s".printf (strerror (errno)));
 		Posix.chmod (fname, e.mode ());
 
 		return ret;
@@ -447,7 +447,7 @@ private class Package : MessageObject {
 			if (e.pathname () == "_signature") {
 				ret = extract_entry_to (ar, e, wdir);
 				if (!ret) {
-					li_warning (_("Unable to extract signature! Maybe package is not signed."));
+					Report.log_warning (_("Unable to extract signature! Maybe package is not signed."));
 				}
 				break;
 			} else {
@@ -472,7 +472,7 @@ private class Package : MessageObject {
 				sig_text += line + "\n";
 			}
 		} catch (Error e) {
-			li_error (_("Unable to read package signature! Message: %s").printf (e.message));
+			Report.log_error (_("Unable to read package signature! Message: %s").printf (e.message));
 			return null;
 		}
 

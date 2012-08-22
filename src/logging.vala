@@ -86,6 +86,7 @@ private static void li_log_handler_cb (string? log_domain, LogLevelFlags log_lev
 	    log_level == LogLevelFlags.LEVEL_WARNING ||
 	    log_level == LogLevelFlags.LEVEL_ERROR) {
 		stdout.printf ("%c[%dm%s\n%c[%dm", 0x1B, CONSOLE_RED, message, 0x1B, CONSOLE_RESET);
+		// stderr.printf ("%c[%dm%s%c[%dm %s\n", 0x1B, CONSOLE_RED, "[error]:", 0x1B, CONSOLE_RESET, msg);
 	} else {
 		// debug in standard colour
 		stdout.printf ("%c[%dm%s\n%c[%dm", 0x1B, CONSOLE_RESET, message, 0x1B, CONSOLE_RESET);
@@ -95,63 +96,6 @@ private static void li_log_handler_cb (string? log_domain, LogLevelFlags log_lev
 private static void
 li_log_ignore_cb (string? log_domain, LogLevelFlags log_level,
 		    string message) { }
-
-private static HashSet<string>? _limessages = null;
-
-private static void init_limessage () {
-	finish_limessage ();
-	_limessages = new HashSet<string> ();
-}
-
-private static void finish_limessage () {
-	//lock (_limessages) {
-		if (_limessages == null)
-			return;
-		foreach (string s in _limessages) {
-			if (!s.has_prefix ("[error]"))
-				stdout.printf (s + "\n");
-			else
-				stderr.printf (s + "\n");
-		}
-		_limessages = null;
-	//}
-}
-
-private static void li_info (string msg, bool showImmediately = false) {
-	string str = " I:" + " " + msg;
-	//lock (_limessages) {
-		if (_limessages == null)
-			log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_INFO, str);
-		else
-			_limessages.add (str);
-	//}
-}
-
-private static void li_warning (string msg, bool showImmediately = false) {
-	string str = " W:" + " " + msg;
-	if (__debug_errors_fatal)
-		warning (msg);
-
-	//lock (_limessages) {
-		if (_limessages == null)
-			log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_MESSAGE, str);
-		else
-			_limessages.add (str);
-	//}
-}
-
-private static void li_error (string msg, bool showImmediately = false) {
-	if (__debug_errors_fatal)
-		error (msg);
-
-	//lock (_limessages) {
-		if (_limessages == null)
-			stderr.printf ("%c[%dm%s%c[%dm %s\n", 0x1B, CONSOLE_RED, "[error]:", 0x1B, CONSOLE_RESET, msg);
-		else
-			_limessages.add ("[error]: %s".printf (msg));
-	//}
-
-}
 
 namespace Listaller {
 

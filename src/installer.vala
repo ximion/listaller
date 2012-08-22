@@ -374,17 +374,20 @@ public class Setup : MessageObject {
 			return false;
 		}
 
-		// Initialize console message system
-		init_limessage ();
+		// NOTE: We use Listaller Reporting here!
+		Report report;
 
 		if ((!is_root ()) && (conf.sumode == true)) {
 			ret = install_app_shared ();
-			finish_limessage ();
+			report = Report.get_instance ();
+			stdout.printf ("%s\n", report.to_string ());
 			return ret;
 		}
 
 		ret = install_app_normal ();
-		finish_limessage ();
+		report = Report.get_instance ();
+		if (!report.is_empty ())
+			stdout.printf ("%s\n", report.to_string ());
 
 		return ret;
 	}

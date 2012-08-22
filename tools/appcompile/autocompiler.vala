@@ -49,12 +49,17 @@ private class AutoCompiler : Object {
 		if (dir != "")
 			cmd = "make -C %s".printf (dir);
 		// Make it!
-		Process.spawn_command_line_sync	(cmd + " all", null, null, out exit_status);
+		Process.spawn_command_line_sync (cmd + " all",
+						  null,
+						  null,
+						  out exit_status);
 		if (exit_status != 0)
 			return 1;
 		// Install it, if possible
-		Process.spawn_command_line_sync	(cmd + " install DESTDIR=\"" + targetdir + "\"",
-			null, null, out exit_status);
+		Process.spawn_command_line_sync (cmd + " install DESTDIR=\"" + targetdir + "\"",
+						  null,
+						  null,
+						  out exit_status);
 		if (exit_status != 0)
 			return 1;
 		return exit_status;
@@ -136,7 +141,7 @@ private class AutoCompiler : Object {
 
 		targetdir = verify_install_target (targetdir, srcdir);
 		if (targetdir == "") {
-			prerror ("Unable to proceed: IPK source dir not found!");
+			error ("Unable to proceed: IPK source dir not found!");
 			return 1;
 		}
 

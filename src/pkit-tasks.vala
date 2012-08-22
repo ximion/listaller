@@ -158,7 +158,7 @@ private class PkResolver : PkListallerTask {
 		// If there are no files, consider this dependency as "installed"
 		// This is usually an ERROR and might indicate a broken package
 		if (!dep.has_components ()) {
-			li_error ("Dependency %s has no components assigned!".printf (dep.full_name));
+			Report.log_error ("Dependency %s has no components assigned!".printf (dep.full_name));
 			dep.satisfied = true;
 			return true;
 		}

@@ -50,7 +50,7 @@ private class MetaFile : Object {
 			}
 
 		} catch (Error e) {
-			li_error (_("Unable to get meta-information list: %s").printf (e.message));
+			warning (_("Unable to get meta-information list: %s").printf (e.message));
 			content = null;
 			return false;
 		}
@@ -96,7 +96,7 @@ private class MetaFile : Object {
 					data_stream.put_string (line + "\n");
 			}
 		} catch (Error e) {
-			li_warning (_("Unable to write meta information! Message: %s").printf (e.message));
+			warning (_("Unable to write meta information! Message: %s").printf (e.message));
 			return false;
 		}
 		return true;

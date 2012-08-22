@@ -215,7 +215,7 @@ public class PackControl : Control {
 
 	public bool create_new (string? newDoapData, string ipkV) {
 		if ((newDoapData == null) || (newDoapData == "")) {
-			li_error ("Error while processing DOAP data: Data was NULL!");
+			critical ("Error while processing DOAP data: Data was NULL!");
 			return false;
 		}
 

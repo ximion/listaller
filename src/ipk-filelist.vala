@@ -153,7 +153,7 @@ private class FileList : Object {
 				text.add (line);
 			}
 		} catch (Error e) {
-			li_error ("%s".printf (e.message));
+			error ("%s".printf (e.message));
 		}
 
 		string current_dir = "";
@@ -201,22 +201,22 @@ private class FileList : Object {
 			return false;
 
 		{
-		try {
-			var file_stream = file.create (FileCreateFlags.NONE);
+			try {
+				var file_stream = file.create (FileCreateFlags.NONE);
 
-			if (!file.query_exists ()) {
-				warning (_("Unable to create file '%s'!"), file.get_path ());
-				return false;
+				if (!file.query_exists ()) {
+					warning (_("Unable to create file '%s'!"), file.get_path ());
+					return false;
+				}
+				// Write IPK text list to output stream
+				var dos = new DataOutputStream (file_stream);
+				string line;
+				foreach (string s in text) {
+					dos.put_string (s + "\n");
+				}
+			} catch (Error e) {
+				error ("%s".printf (e.message));
 			}
-			// Write IPK text list to output stream
-			var dos = new DataOutputStream (file_stream);
-			string line;
-			foreach (string s in text) {
-				dos.put_string (s + "\n");
-			}
-		} catch (Error e) {
-			li_error ("%s".printf (e.message));
-		}
 		}
 
 		return true;

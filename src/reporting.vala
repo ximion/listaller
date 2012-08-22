@@ -67,11 +67,23 @@ public class Report : Object {
 		return error_received;
 	}
 
+	public bool is_empty () {
+		return lines.length == 0;
+	}
+
 	public void add_message (ReportMessageType mtype, string message) {
 		string prefix = " %s: ".printf (mtype.to_string ());
 		lines.append_val ("%s%s".printf (prefix, message));
-		if (mtype == ReportMessageType.ERROR)
+
+		// Because errors and warnings might be very important, we also show a message directly
+		if (mtype == ReportMessageType.ERROR) {
 			error_received = true;
+			log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_ERROR, message);
+		}
+		if (mtype == ReportMessageType.CRITICAL)
+			log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_CRITICAL, message);
+		if (mtype == ReportMessageType.WARNING)
+			log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_WARNING, message);
 	}
 
 	public void add_info (string message) {
@@ -80,6 +92,10 @@ public class Report : Object {
 
 	public void add_warning (string message) {
 		add_message (ReportMessageType.WARNING, message);
+	}
+
+	public void add_error (string message) {
+		add_message (ReportMessageType.ERROR, message);
 	}
 
 	public string to_string () {
@@ -105,16 +121,20 @@ public class Report : Object {
 		Report.instance = null;
 	}
 
-	public static void new_message (ReportMessageType mtype, string message) {
+	public static void log_message (ReportMessageType mtype, string message) {
 		get_instance ().add_message (mtype, message);
 	}
 
-	public static void new_info (string message) {
+	public static void log_info (string message) {
 		get_instance ().add_info (message);
 	}
 
-	public static void new_warning (string message) {
+	public static void log_warning (string message) {
 		get_instance ().add_warning (message);
+	}
+
+	public static void log_error (string message) {
+		get_instance ().add_error (message);
 	}
 
 	public static void clear_current () {

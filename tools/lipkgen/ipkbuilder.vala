@@ -356,7 +356,7 @@ private class Builder : Object {
 					data_stream.put_string (signature);
 				}
 			} catch (Error e) {
-				li_error (_("Unable to write signature file! Message: %s").printf (e.message));
+				Report.log_error (_("Unable to write signature file! Message: %s").printf (e.message));
 				return false;
 			}
 
@@ -438,7 +438,7 @@ private class Builder : Object {
 		try {
 			ret = ipkCDir.open_dir (srcdir);
 		} catch (Error e) {
-			li_error (_("Unable to build package: %s").printf (e.message));
+			Report.log_error (_("Unable to build package: %s").printf (e.message));
 			return false;
 		}
 		if (!ret)

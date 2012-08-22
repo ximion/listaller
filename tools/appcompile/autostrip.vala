@@ -44,7 +44,7 @@ namespace Listaller.Extra {
 
 			targetdir = verify_install_target (targetdir, srcdir);
 			if (targetdir == "") {
-				prerror ("Unable to proceed: IPK source dir not found!");
+				error ("Unable to proceed: IPK source dir not found!");
 				return 1;
 			}
 

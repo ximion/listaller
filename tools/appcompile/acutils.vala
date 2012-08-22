@@ -20,24 +20,12 @@
 
 namespace Listaller.Extra {
 
-	private void prinfo (string msg) {
-		stdout.printf (" I:" + " " + msg + "\n");
-	}
-
-	private void prwarning (string msg) {
-		stdout.printf (" W:" + " " + msg + "\n");
-	}
-
-	private void prerror (string msg) {
-		stderr.printf ("[error]" + " " + msg + "\n");
-	}
-
 	private string verify_install_target (string insttarget, string srcdir) {
 		string ret = "";
 		if (insttarget == "") {
 			string isdir = IPK.find_ipk_source_dir (srcdir);
 			if (isdir == null) {
-				li_warning ("IPK source dir not found!");
+				warning ("IPK source dir not found!");
 				return "";
 			} else {
 				ret = Path.build_filename (isdir, "inst_target", null);
@@ -45,7 +33,7 @@ namespace Listaller.Extra {
 					ret = Path.build_filename (Environment.get_current_dir (), ret, null);
 			}
 		} else {
-			prwarning (_("Using user-defined install target: %s").printf (insttarget));
+			Report.log_warning (_("Using user-defined install target: %s").printf (insttarget));
 			ret = insttarget;
 		}
 		return ret;

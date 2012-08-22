@@ -48,7 +48,7 @@ private class DependencyScanner : Object {
 		try {
 			var directory = File.new_for_path (dir);
 
-			var enumerator = directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_NAME, 0);
+			var enumerator = directory.enumerate_children (FileAttribute.STANDARD_NAME, 0);
 
 			FileInfo file_info;
 			while ((file_info = enumerator.next_file ()) != null) {

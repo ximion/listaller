@@ -106,7 +106,7 @@ private class GPGSignature : GPGBasic {
 			sigstatus = SignStatus.UNKNOWN;
 			string msg = "Got unknown return status while processing signature: %s | %d".printf (sig_estatus.to_string (), sig_estatus);
 			if (__unittestmode)
-				li_warning (msg);
+				Report.log_warning (msg);
 			else
 				warning (msg);
 		}
@@ -114,7 +114,7 @@ private class GPGSignature : GPGBasic {
 		if (sig->status != GPGError.ErrorCode.NO_ERROR) {
 			string msg = "Unexpected signature status: %s".printf (sig->status.to_string ());
 			if (__unittestmode)
-				li_warning (msg);
+				Report.log_warning (msg);
 			else
 				warning (msg);
 			sig_valid = false;
@@ -126,7 +126,7 @@ private class GPGSignature : GPGBasic {
 		}
 
 		if (sig->validity_reason != GPGError.ErrorCode.NO_ERROR) {
-			li_error ("Unexpected validity reason: %s".printf (sig->validity_reason.to_string ()));
+			Report.log_error ("Unexpected validity reason: %s".printf (sig->validity_reason.to_string ()));
 			return false;
 		}
 
