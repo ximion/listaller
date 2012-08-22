@@ -291,7 +291,7 @@ private class PkInstaller : PkListallerTask {
 			}
 		} else {
 			// If we need to use the native backend plugin proxy
-			res = pkbproxy.run_install_packages (true, pkids);
+			res = pkbproxy.run_install_packages (PackageKit.TransactionFlag.NONE, pkids);
 			if (res == null) {
 				debug ("Native backend PkResults was NULL!");
 				return false;

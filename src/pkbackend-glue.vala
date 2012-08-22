@@ -35,8 +35,8 @@ internal class PkBackendProxy : Object {
 	public delegate unowned PackageKit.Results? WhatProvidesCB (PackageKit.Bitfield filters,
 							   PackageKit.Provides provides,
 							   [CCode (array_length = false, array_null_terminated = true)] string[] search);
-	public delegate unowned PackageKit.Results? InstallPackagesCB (bool only_trusted,
-								[CCode (array_length = false, array_null_terminated = true)] string[] packages);
+	public delegate unowned PackageKit.Results? InstallPackagesCB (PackageKit.Bitfield transaction_flags,
+							   [CCode (array_length = false, array_null_terminated = true)] string[] packages);
 
 	private WhatProvidesCB pk_whatprovides;
 	private InstallPackagesCB pk_installpackages;
@@ -53,16 +53,19 @@ internal class PkBackendProxy : Object {
 		pk_installpackages = call;
 	}
 
-	public unowned PackageKit.Results? run_what_provides (PackageKit.Bitfield filters, PackageKit.Provides provides, [CCode (array_length = false, array_null_terminated = true)] string[] values) {
+	public unowned PackageKit.Results? run_what_provides (PackageKit.Bitfield filters,
+							      PackageKit.Provides provides,
+						             [CCode (array_length = false, array_null_terminated = true)] string[] values) {
 		if (pk_whatprovides == null)
 			return null;
 		return pk_whatprovides (filters, provides, values);
 	}
 
-	public unowned PackageKit.Results? run_install_packages (bool only_trusted, [CCode (array_length = false, array_null_terminated = true)] string[] packages) {
+	public unowned PackageKit.Results? run_install_packages (PackageKit.Bitfield transaction_flags,
+								 [CCode (array_length = false, array_null_terminated = true)] string[] packages) {
 		if (pk_installpackages == null)
 			return null;
-		return pk_installpackages (only_trusted, packages);
+		return pk_installpackages (transaction_flags, packages);
 	}
 
 }

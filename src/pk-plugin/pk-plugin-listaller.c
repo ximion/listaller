@@ -34,12 +34,6 @@ struct PkPluginPrivate {
 	GMainLoop		*loop;
 };
 
-typedef struct {
-	guint finished_id;
-	guint package_id;
-	guint error_code_id;
-} PkPluginSignalData;
-
 /**
  * pk_plugin_reset:
  */
@@ -52,6 +46,9 @@ pk_plugin_reset (PkPlugin *plugin)
 	/* recreate PkResults object */
 	g_object_unref (plugin->priv->backend_results);
 	plugin->priv->backend_results = pk_results_new ();
+
+	/* reset the Job too */
+	pk_backend_reset_job (plugin->backend, plugin->job);
 }
 
 /**
@@ -421,30 +418,31 @@ pk_plugin_backend_error_code_cb (PkBackend *backend,
  * pk_plugin_prepare_backend_call:
  *
  **/
-static PkPluginSignalData*
+static void
 pk_plugin_prepare_backend_call (PkPlugin *plugin)
 {
-	PkPluginSignalData *siginfo;
-	PkBitfield	    backend_signals;
+	PkBitfield backend_signals;
 
-	siginfo = g_slice_new (PkPluginSignalData);
-
-	/* connect backend signals to Listaller PkPlugin */
-	siginfo->finished_id = g_signal_connect (plugin->backend, "finished",
-					G_CALLBACK (pk_plugin_backend_finished_cb), plugin);
-	siginfo->package_id = g_signal_connect (plugin->backend, "package",
-				       G_CALLBACK (pk_plugin_backend_package_cb), plugin);
-	siginfo->error_code_id = g_signal_connect (plugin->backend, "error-code",
-				       G_CALLBACK (pk_plugin_backend_error_code_cb), plugin);
+	/* connect (used) backend signals to Listaller PkPlugin */
+	pk_backend_job_set_vfunc (plugin->job,
+				  PK_BACKEND_SIGNAL_FINISHED,
+				  (PkBackendJobVFunc) pk_plugin_backend_finished_cb,
+				  plugin);
+	pk_backend_job_set_vfunc (plugin->job,
+				  PK_BACKEND_SIGNAL_PACKAGE,
+				  (PkBackendJobVFunc) pk_plugin_backend_package_cb,
+				  plugin);
+	pk_backend_job_set_vfunc (plugin->job,
+				  PK_BACKEND_SIGNAL_ERROR_CODE,
+				  (PkBackendJobVFunc) pk_plugin_backend_error_code_cb,
+				  plugin);
 
 	/* don't forward some events to the transaction, only Listaller should see them */
 	backend_signals = PK_TRANSACTION_ALL_BACKEND_SIGNALS;
 	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_ERROR_CODE);
 	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_PACKAGE);
 	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_FINISHED);
-	pk_transaction_set_signals (plugin->priv->current_transaction, backend_signals);
-
-	return siginfo;
+	pk_transaction_set_signals (plugin->priv->current_transaction, plugin->job, backend_signals);
 }
 
 /**
@@ -452,36 +450,26 @@ pk_plugin_prepare_backend_call (PkPlugin *plugin)
  *
  **/
 static void
-pk_plugin_restore_backend (PkPlugin *plugin, PkPluginSignalData *siginfo)
+pk_plugin_restore_backend (PkPlugin *plugin)
 {
-	/* disconnect the native backend */
-	if (siginfo->package_id > 0)
-		g_signal_handler_disconnect (plugin->backend, siginfo->package_id);
-	if (siginfo->error_code_id > 0)
-		g_signal_handler_disconnect (plugin->backend, siginfo->error_code_id);
-	if (siginfo->finished_id > 0)
-		g_signal_handler_disconnect (plugin->backend, siginfo->finished_id);
-
-	/* connect backend again */
-	pk_transaction_set_signals (plugin->priv->current_transaction, PK_TRANSACTION_ALL_BACKEND_SIGNALS);
-	pk_backend_reset (plugin->backend);
-
-	g_slice_free (PkPluginSignalData, siginfo);
+	/* connect backend-job to current backend again */
+	pk_transaction_set_signals (plugin->priv->current_transaction,
+				     plugin->job,
+				     PK_TRANSACTION_ALL_BACKEND_SIGNALS);
 }
 
 /**
- * pk_backend_request_whatprovides_cb:
+ * pk_backend_job_request_whatprovides_cb:
  *
  * Helper method for a Listaller native PkBackend proxy to do a what-provides request.
  **/
 static PkResults*
-pk_backend_request_whatprovides_cb (PkBitfield filters,
+pk_backend_job_request_whatprovides_cb (PkBitfield filters,
 				PkProvidesEnum provides,
 				gchar** search,
 				PkPlugin *plugin)
 {
 	PkResults *results;
-	PkPluginSignalData *backend_siginfo;
 
 	/* query the native backend for a package provinding X */
 	if (plugin == NULL)
@@ -491,16 +479,20 @@ pk_backend_request_whatprovides_cb (PkBitfield filters,
 
 	/* prepare for native backend call */
 	pk_plugin_reset (plugin);
-	backend_siginfo = pk_plugin_prepare_backend_call (plugin);
+	pk_plugin_prepare_backend_call (plugin);
 
 	/* query the native backend */
-	pk_backend_what_provides (plugin->backend, filters, provides, search);
+	pk_backend_what_provides (plugin->backend,
+				   plugin->job,
+				   filters,
+				   provides,
+				   search);
 
 	/* wait for finished */
 	g_main_loop_run (plugin->priv->loop);
 
 	results = plugin->priv->backend_results;
-	pk_plugin_restore_backend (plugin, backend_siginfo);
+	pk_plugin_restore_backend (plugin);
 
 	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
 
@@ -508,32 +500,34 @@ pk_backend_request_whatprovides_cb (PkBitfield filters,
 }
 
 /**
- * pk_backend_request_installpackages_cb:
+ * pk_backend_job_request_installpackages_cb:
  *
  * Helper method for a Listaller native PkBackend proxy to do a install-packages request.
  **/
 static PkResults*
-pk_backend_request_installpackages_cb (gboolean only_trusted,
+pk_backend_job_request_installpackages_cb (PkBitfield transaction_flags,
 					gchar **package_ids,
 					PkPlugin *plugin)
 {
 	PkResults *results;
-	PkPluginSignalData *backend_siginfo;
 
 	g_debug ("Running install-packages on native backend!");
 
 	/* prepare the backend */
 	pk_plugin_reset (plugin);
-	backend_siginfo = pk_plugin_prepare_backend_call (plugin);
+	pk_plugin_prepare_backend_call (plugin);
 
 	/* query the native backend */
-	pk_backend_install_packages (plugin->backend, only_trusted, package_ids);
+	pk_backend_install_packages (plugin->backend,
+				      plugin->job,
+				      transaction_flags,
+				      package_ids);
 
 	/* wait for finished */
 	g_main_loop_run (plugin->priv->loop);
 
 	results = plugin->priv->backend_results;
-	pk_plugin_restore_backend (plugin, backend_siginfo);
+	pk_plugin_restore_backend (plugin);
 
 	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
 
@@ -567,12 +561,39 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
 	pkbproxy = listaller_pk_backend_proxy_new ();
 	listaller_pk_backend_proxy_set_what_provides (pkbproxy,
-						      (ListallerPkBackendProxyWhatProvidesCB) pk_backend_request_whatprovides_cb,
-						      plugin);
+						(ListallerPkBackendProxyWhatProvidesCB) pk_backend_job_request_whatprovides_cb,
+						plugin);
 	listaller_pk_backend_proxy_set_install_packages (pkbproxy,
-							 (ListallerPkBackendProxyInstallPackagesCB) pk_backend_request_installpackages_cb,
-							 plugin);
+						(ListallerPkBackendProxyInstallPackagesCB) pk_backend_job_request_installpackages_cb,
+						plugin);
 	listaller_set_backend_proxy (pkbproxy);
+
+	/* if we're only simulation, skip Listaller packages */
+	if (pk_bitfield_contain (pk_transaction_get_transaction_flags (transaction),
+				 PK_TRANSACTION_FLAG_ENUM_SIMULATE)) {
+
+		if (role == PK_ROLE_ENUM_INSTALL_FILES) {
+			full_paths = pk_transaction_get_full_paths (transaction);
+			data = pk_transaction_filter_listaller_files (transaction,
+									full_paths);
+			/* We have Listaller packages, so skip this! */
+			/* FIXME: This needs to be smarter - backend needs to Simulate() with remaining pkgs */
+			if (data != NULL)
+				pk_plugin_skip_native_backend (plugin);
+		} else {
+			/* ignore the return value, we can't sensibly do anything */
+			package_ids = pk_transaction_get_package_ids (transaction);
+			data = pk_transaction_filter_listaller_packages (transaction,
+								package_ids);
+
+			/* nothing more to process */
+			package_ids = pk_transaction_get_package_ids (transaction);
+			if (g_strv_length (package_ids) == 0)
+				pk_plugin_skip_native_backend (plugin);
+		}
+
+		goto out;
+	}
 
 	/* handle these before the transaction has been run */
 	role = pk_transaction_get_role (transaction);
@@ -610,33 +631,6 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 		/* nothing more to process */
 		package_ids = pk_transaction_get_package_ids (transaction);
 		if (g_strv_length (package_ids) == 0)
-			pk_plugin_skip_native_backend (plugin);
-		goto out;
-	}
-
-	if (role == PK_ROLE_ENUM_SIMULATE_REMOVE_PACKAGES ||
-	    role == PK_ROLE_ENUM_SIMULATE_INSTALL_PACKAGES) {
-
-		/* ignore the return value, we can't sensibly do anything */
-		package_ids = pk_transaction_get_package_ids (transaction);
-		data = pk_transaction_filter_listaller_packages (transaction,
-							       package_ids);
-
-		/* nothing more to process */
-		package_ids = pk_transaction_get_package_ids (transaction);
-		if (g_strv_length (package_ids) == 0)
-			pk_plugin_skip_native_backend (plugin);
-		goto out;
-	}
-
-	if (role == PK_ROLE_ENUM_SIMULATE_INSTALL_FILES) {
-		full_paths = pk_transaction_get_full_paths (transaction);
-		data = pk_transaction_filter_listaller_files (transaction,
-							    full_paths);
-
-		/* We have Listaller packages, so skip this! */
-		/* FIXME: This needs to be smarter - backend needs to Simulate() with remaining pkgs */
-		if (data != NULL)
 			pk_plugin_skip_native_backend (plugin);
 		goto out;
 	}
@@ -727,7 +721,6 @@ pk_plugin_initialize (PkPlugin *plugin)
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_DETAILS);
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_FILES);
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_INSTALL_FILES);
-	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_SIMULATE_INSTALL_FILES);
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_REMOVE_PACKAGES);
 
 	/* connect Listaller manager signals */
