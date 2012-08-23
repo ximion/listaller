@@ -61,6 +61,7 @@ public class Report : Object {
 	public Report () {
 		lines = new Array<string> ();
 		error_received = false;
+		debug ("New Listaller Report handler created.");
 	}
 
 	public bool contains_error () {
@@ -72,12 +73,15 @@ public class Report : Object {
 	}
 
 	public void add_message (ReportMessageType mtype, string message) {
-		string prefix = " %s: ".printf (mtype.to_string ());
-		lines.append_val ("%s%s".printf (prefix, message));
+		lock (lines) {
+			string prefix = " %s: ".printf (mtype.to_string ());
+			lines.append_val ("%s%s".printf (prefix, message));
+		}
 
 		// Because errors and warnings might be very important, we also show a message directly
 		if (mtype == ReportMessageType.ERROR) {
-			error_received = true;
+			lock (error_received)
+				error_received = true;
 			// LEVEL_ERROR would abort the program, usually. Because errors which were
 			// written to the report aren't that crtical for program execution, we
 			// just use the CRITICAL level here
@@ -103,8 +107,10 @@ public class Report : Object {
 
 	public string to_string () {
 		string str = "";
-		for (uint i=0; i < lines.length; i++) {
-			str += "%s\n".printf (lines.index (i));
+		lock (lines) {
+			for (uint i=0; i < lines.length; i++) {
+				str += "%s\n".printf (lines.index (i));
+			}
 		}
 
 		return str;
