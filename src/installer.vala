@@ -89,9 +89,10 @@ public class Setup : MessageObject {
 
 	public bool initialize () {
 		bool ret = false;
+		initialized = false;
 		ret = ipkp.initialize ();
-		if (ret)
-			initialized = true;
+		if (!ret)
+			return false;
 		inst_progress = 0;
 		full_progress = 0;
 
@@ -117,6 +118,9 @@ public class Setup : MessageObject {
 					"Please ask the package author to rebuild the package using a newer Listaller version.").printf (ipkSpecVersion, IPK.MINIMUM_IPK_SPEC_VERSION));
 			return false;
 		}
+
+		if (ret)
+			initialized = true;
 
 		return ret;
 	}

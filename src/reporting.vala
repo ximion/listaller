@@ -78,7 +78,10 @@ public class Report : Object {
 		// Because errors and warnings might be very important, we also show a message directly
 		if (mtype == ReportMessageType.ERROR) {
 			error_received = true;
-			log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_ERROR, message);
+			// LEVEL_ERROR would abort the program, usually. Because errors which were
+			// written to the report aren't that crtical for program execution, we
+			// just use the CRITICAL level here
+			log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_CRITICAL, message);
 		}
 		if (mtype == ReportMessageType.CRITICAL)
 			log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_CRITICAL, message);
