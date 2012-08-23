@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-05-21 17:08+0200\n"
+"POT-Creation-Date: 2012-08-23 02:11+0200\n"
 "PO-Revision-Date: 2010-09-19 15:47+0000\n"
 "Last-Translator: Monkey <monkey.libre@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -41,6 +41,10 @@ msgstr ""
 msgid "Build IPK package"
 msgstr ""
 
+#, c-format
+msgid "Can't create dbversion: %s"
+msgstr ""
+
 msgid "Copying files to their destination"
 msgstr ""
 
@@ -55,7 +59,7 @@ msgstr ""
 msgid "Could not create file '%s'! File already exists."
 msgstr ""
 
-msgid "Could not create/update software database!"
+msgid "Could not create software database!"
 msgstr ""
 
 #, c-format
@@ -324,9 +328,9 @@ msgstr ""
 msgid "Query returned no results. Maybe this DOAP data is broken?"
 msgstr ""
 
-#, c-format
-msgid "Removal of %s completed successfully!\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "Removal of %s completed successfully!"
+msgstr "¡La aplicación %a se ha instalado con éxito!"
 
 #, c-format
 msgid "Removal of %s failed!"
@@ -426,6 +430,15 @@ msgstr ""
 msgid "This package could be dangerous!"
 msgstr ""
 
+msgid "This package was built using a more recent version of Listaller.\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"This package was built using spec version '%s', but we need at least '%s' or "
+"higher to proceed.\n"
+msgstr ""
+
 msgid "Tried to access locked database! This shouldn't happen."
 msgstr ""
 
@@ -492,15 +505,19 @@ msgstr ""
 msgid "Unable to count applications: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Unable to create database config table: %s"
+msgstr "No se puede sobrescribir el archivo %f."
+
+#, fuzzy, c-format
+msgid "Unable to create database tables: %s"
+msgstr "No se puede sobrescribir el archivo %f."
+
 msgid "Unable to create destination directory."
 msgstr ""
 
 #, c-format
 msgid "Unable to create file '%s'!"
-msgstr ""
-
-#, c-format
-msgid "Unable to create/update database tables: %s"
 msgstr ""
 
 #, c-format
@@ -1077,9 +1094,6 @@ msgstr ""
 #~ "Puede que el paquete IPK esté dañado o no tenga suficientes permisos para "
 #~ "acceder a los archivos/carpetas requeridos."
 
-#~ msgid "The application %a was installed successfully!"
-#~ msgstr "¡La aplicación %a se ha instalado con éxito!"
-
 #~ msgid "The application %a was not installed."
 #~ msgstr "La aplicación %a no ha sido instalada."
 
@@ -1161,9 +1175,6 @@ msgstr ""
 #~ msgstr ""
 #~ "No se pudo cargar el icono de %a. Por favor, informe a los "
 #~ "desarrolladores de Listaller o de esta aplicación."
-
-#~ msgid "Unable to overwrite the file %f."
-#~ msgstr "No se puede sobrescribir el archivo %f."
 
 #~ msgid "Uninstall"
 #~ msgstr "Desinstalar"
