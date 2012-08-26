@@ -37,6 +37,30 @@ public errordomain ControlDataError {
 	UNKNOWN;
 }
 
+[Flags]
+public enum InstallMode {
+	NONE = 0,
+	SHARED,
+	PRIVATE,
+	TEST;
+
+	public inline bool is_all_set (InstallMode flags) {
+		return (this & flags) == flags;
+	}
+
+	public inline bool is_any_set (InstallMode flags) {
+		return (this & flags) != 0;
+	}
+
+        public inline InstallMode set (InstallMode mode) {
+		return (this | mode);
+	}
+
+	public inline InstallMode unset (InstallMode mode) {
+		return (this & ~mode);
+	}
+}
+
 public abstract class Control : Object {
 	internal DoapData doap;
 	internal MetaFile depData;
@@ -104,6 +128,64 @@ public abstract class Control : Object {
 
 	public void set_replaces (string repList) {
 		packSetting.add_value ("Replaces", repList);
+	}
+
+	public void set_install_modes (InstallMode modes) {
+		string modesList = "";
+		if (modes == InstallMode.NONE) {
+			Report.log_error ("Tried to inject no install-modes in IPK control data. This should never happen and might be a bug in Listaller or your packaging. Defaulting to shared-only.");
+			modes = InstallMode.SHARED;
+		}
+
+		if (modes.is_all_set (InstallMode.SHARED))
+			modesList += "Shared";
+		else
+			modesList += "NoShared";
+		modesList += "\n";
+		if (modes.is_all_set (InstallMode.PRIVATE))
+			modesList += "Private";
+		else
+			modesList += "NoPrivate";
+		modesList += "\n";
+		if (modes.is_all_set (InstallMode.TEST))
+			modesList += "Test";
+		else
+			modesList += "NoTest";
+
+		packSetting.add_value ("InstallModes", modesList);
+	}
+
+	public InstallMode get_install_modes () {
+		// we default to shared mode only!
+		InstallMode retFlags = InstallMode.SHARED;
+
+		string modesStr = packSetting.get_value ("InstallModes", false);
+		string[] modesStrV = modesStr.split ("\n");
+		foreach (string s in modesStrV) {
+			string mode_str = s.down ().strip ();
+
+			if (mode_str == "shared")
+				retFlags = retFlags.set (InstallMode.SHARED);
+			else if (mode_str == "noshared")
+				retFlags = retFlags.unset (InstallMode.SHARED);
+
+			if (mode_str == "private")
+				retFlags = retFlags.set (InstallMode.PRIVATE);
+			else if (mode_str == "noprivate")
+				retFlags = retFlags.unset (InstallMode.PRIVATE);
+
+			if (mode_str == "test")
+				retFlags = retFlags.set (InstallMode.TEST);
+			else if (mode_str == "notest")
+				retFlags = retFlags.unset (InstallMode.TEST);
+		}
+
+		if (retFlags == InstallMode.NONE) {
+			Report.log_error ("No install mode was set or settings are invalid. Please fix your IPK package! Defaulting to shared-only.");
+			retFlags = InstallMode.SHARED;
+		}
+
+		return retFlags;
 	}
 
 	public AppItem get_application () {
@@ -266,6 +348,13 @@ public class PackControl : Control {
 		res += null;
 
 		return res;
+	}
+
+	public void update_installmode_data () {
+		// Required to update the install-mode strings and to run tests if the user-data is correct
+		// when building a new IPK package.
+		InstallMode modes = get_install_modes ();
+		set_install_modes (modes);
 	}
 
 #if 0

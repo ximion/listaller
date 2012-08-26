@@ -156,6 +156,24 @@ void test_metafile () {
 	assert (val == "hgdufjhbudj\nhugdvh ushda743\nsuhfusdha7wdwe");
 }
 
+void test_field () {
+	IPK.InstallMode flags = IPK.InstallMode.NONE;
+	assert (flags.is_all_set (IPK.InstallMode.SHARED) == false);
+	assert (flags.is_any_set (IPK.InstallMode.SHARED) == false);
+
+	flags = IPK.InstallMode.SHARED;
+	assert (flags.is_all_set (IPK.InstallMode.PRIVATE) == false);
+	assert (flags.is_all_set (IPK.InstallMode.SHARED) == true);
+	assert (flags.is_any_set (IPK.InstallMode.SHARED | IPK.InstallMode.PRIVATE) == true);
+
+	flags = flags.set (IPK.InstallMode.PRIVATE);
+	assert (flags.is_all_set (IPK.InstallMode.PRIVATE | IPK.InstallMode.SHARED) == true);
+	assert (flags.is_all_set (IPK.InstallMode.SHARED | IPK.InstallMode.TEST) == false);
+
+	flags = flags.unset (IPK.InstallMode.PRIVATE);
+	assert (flags.is_all_set (IPK.InstallMode.PRIVATE | IPK.InstallMode.SHARED) == false);
+}
+
 void test_playground () {
 	Listaller.Config conf = new Listaller.Config ();
 	conf.testmode = true;
@@ -182,6 +200,7 @@ int main (string[] args) {
 	test_metafile ();
 	test_doap ();
 	test_zfeeds ();
+	test_field ();
 	test_playground ();
 
 	Test.run ();

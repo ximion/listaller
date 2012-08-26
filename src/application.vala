@@ -100,7 +100,7 @@ public class AppItem : Object {
 				_idname = string_replace (_appname.down (), "( )", "_");
 			return _idname;
 		}
-		set {
+		internal set {
 			_idname = value;
 			if (_appname.strip () == "")
 				_appname = _idname;
