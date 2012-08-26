@@ -4,6 +4,10 @@
 # Listaller library sources
 src/logging.vala
 src/reporting.vala
+src/config-global.vala
+src/setup-settings.vala
+src/status.vala
+src/utils.vala
 src/application.vala
 src/database.vala
 src/database-internal.vala
@@ -15,9 +19,6 @@ src/ipk-metafile.vala
 src/ipk-control.vala
 src/ipk-filelist.vala
 src/ipk-package.vala
-src/liconfig.vala
-src/status.vala
-src/utils.vala
 src/varsolver.vala
 src/varsetter.vala
 src/manager.vala
