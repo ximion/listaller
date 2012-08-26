@@ -120,16 +120,23 @@ internal class Config : Object {
 	public string tmp_dir () {
 		string ret;
 		//! ret = Environment.get_tmp_dir ();
-		ret = tmpdir;
+		ret = Path.build_filename (tmpdir, "listaller");
+		Utils.create_dir_parents (ret);
+
 		return ret;
 	}
 
-	public string get_unique_tmp_dir (string prefix = "listaller") {
-		string template = Path.build_filename (tmp_dir (), prefix + "-XXXXXX", null);
+	public string get_unique_tmp_dir (string prefix = "") {
+		string px_str = prefix;
+		if (px_str != "")
+			px_str = px_str + "-";
+		string template = Path.build_filename (tmp_dir (), px_str + "XXXXXX", null);
 
 		string res = DirUtils.mkdtemp (template);
-		if (res == null)
+		if (res == null) {
+			critical ("Unable to create tmp-dir! Error: %s", strerror (errno));
 			res = tmp_dir ();
+		}
 		return res;
 	}
 }

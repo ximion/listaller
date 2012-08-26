@@ -123,14 +123,7 @@ public class SetupSettings : Object {
 
 	private void touch_dir (string dirname, string warnmsg = "Error: %s") {
 		if ((shared_mode && Utils.is_root ()) || (!shared_mode)) {
-			File d = File.new_for_path (dirname);
-			try {
-				if (!d.query_exists ()) {
-					d.make_directory_with_parents ();
-				}
-			} catch (Error e) {
-				warning (warnmsg, e.message);
-			}
+			Utils.create_dir_parents (dirname);
 		}
 	}
 
@@ -138,17 +131,23 @@ public class SetupSettings : Object {
 		if (uinsttmp != "")
 			return uinsttmp;
 
-		string template = Path.build_filename (conf.tmp_dir (), "litest-XXXXXX", null);
+		string template = Path.build_filename (conf.tmp_dir (), "testinst-XXXXXX", null);
 
 		string res = DirUtils.mkdtemp (template);
-		if (res == null)
-			res = conf.tmp_dir ();
+		if (res == null) {
+			critical ("Unable to create tmp-dir! Error: %s", strerror (errno));
+			res = Path.build_filename (conf.tmp_dir (), "error-invalid", null);
+		}
 		uinsttmp = res;
 		return uinsttmp;
 	}
 
 	internal void invalidate_tmp_dir () {
-		if (uinsttmp.has_prefix (tmpdir))
+		debug (conf.tmp_dir ());
+		debug (uinsttmp);
+
+		// A little bit of additional security...
+		if (uinsttmp.has_prefix (conf.tmp_dir ()))
 			Utils.delete_dir_recursive (uinsttmp);
 		uinsttmp = "";
 	}

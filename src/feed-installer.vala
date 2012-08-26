@@ -38,7 +38,7 @@ private class FeedInstaller : MessageObject {
 
 		ssettings = setup_settings;
 		var conf = new Config ();
-		tmpdir = conf.get_unique_tmp_dir ();
+		tmpdir = conf.get_unique_tmp_dir ("feedwork");
 	}
 
 	~FeedInstaller () {

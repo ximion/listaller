@@ -50,7 +50,11 @@ private class Package : MessageObject {
 
 		setup_settings = new SetupSettings ();
 		var conf = new Config ();
-		wdir = conf.get_unique_tmp_dir ();
+		string[] tmp_id_parts = Path.get_basename (filename).split (".");
+		string tmp_id = filename;
+		if (tmp_id.length >= 1)
+			tmp_id = tmp_id_parts[0];
+		wdir = conf.get_unique_tmp_dir (tmp_id);
 
 		ipk_valid = false;
 		ipkc = new IPK.PackControl ();
