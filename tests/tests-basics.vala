@@ -43,13 +43,21 @@ void test_basics_error_code_cb (ErrorItem item) {
 	error (item.details);
 }
 
+void test_listaller_config () {
+	// Set up Listaller configuration
+	var conf = new Listaller.Config ();
+
+	// Set up setup-settings
+	var ssettings = new SetupSettings ();
+	string tmp = ssettings.get_unique_install_tmp_dir ();
+	assert (tmp == ssettings.get_unique_install_tmp_dir ());
+	ssettings.invalidate_tmp_dir ();
+	assert (tmp != ssettings.get_unique_install_tmp_dir ());
+}
+
 void test_application_ids () {
 	bool ret = false;
 	msg ("Testing app-ids");
-
-	// Set up Listaller configuration
-	Listaller.Config conf = new Listaller.Config ();
-	conf.testmode = true;
 
 	string foobar_dfile = Path.build_filename (foobar_dir, "foobar.desktop", null);
 	AppItem dummy = new AppItem.from_desktopfile (foobar_dfile);
@@ -175,8 +183,7 @@ void test_field () {
 }
 
 void test_playground () {
-	Listaller.Config conf = new Listaller.Config ();
-	conf.testmode = true;
+	var conf = new Listaller.Config ();
 
 	// Just try something!
 }
@@ -195,6 +202,7 @@ int main (string[] args) {
 	add_log_domain ("LiTest");
 
 	test_utils ();
+	test_listaller_config ();
 	test_application_ids ();
 	test_versions ();
 	test_metafile ();

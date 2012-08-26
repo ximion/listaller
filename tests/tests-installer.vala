@@ -45,20 +45,19 @@ void test_install_package () {
 	bool ret = false;
 	msg ("Installer tests");
 
-	// Set up Listaller configuration
-	Listaller.Config conf = new Listaller.Config ();
-	conf.testmode = true;
-
 	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_install.ipk", null);
 
 	// Excludes stuff like PK dependency installing from testing
 	__unittestmode = true;
 
-	Setup setup = new Setup (ipkfilename, conf);
+	Setup setup = new Setup (ipkfilename);
 	setup.error_code.connect (test_setup_error_code_cb);
 	setup.message.connect (test_setup_message_cb);
 
 	ret = setup.initialize ();
+	assert (ret == true);
+
+	ret = setup.set_install_mode (IPK.InstallMode.TEST);
 	assert (ret == true);
 
 	ret = setup.run_installation ();

@@ -62,7 +62,7 @@ public class LipaInstaller : LipaModule {
 		bool ret;
 		print ("Preparing... Please wait!");
 
-		inst = new Setup (ipkfname, liconf);
+		inst = new Setup (ipkfname);
 		inst.message.connect (setup_message);
 		inst.status_changed.connect (setup_status_changed);
 		inst.progress_changed.connect (setup_progress_changed);
@@ -78,6 +78,16 @@ public class LipaInstaller : LipaModule {
 		if (ipkmeta == null) {
 			error_code = 6;
 			return;
+		}
+
+		if (use_shared_mode) {
+			IPK.InstallMode modes = inst.supported_install_modes ();
+			if (modes.is_all_set (IPK.InstallMode.SHARED))
+				inst.settings.current_mode = IPK.InstallMode.SHARED;
+			else {
+				// TODO: Nicer error-handling
+				error ("You cannot install this package in shared-mode! (Package does not allow it.)");
+			}
 		}
 
 		AppItem appID = ipkmeta.get_application ();

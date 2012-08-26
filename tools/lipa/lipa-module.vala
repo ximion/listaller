@@ -28,14 +28,14 @@ public enum LipaRole {
 }
 
 public abstract class LipaModule : Object {
-	protected Listaller.Config liconf;
+	protected bool use_shared_mode;
 
 	public int error_code { get; set; }
 	protected CmdProgressBar progress_bar;
 
 	public LipaModule () {
 		error_code = 0;
-		liconf = new Listaller.Config (is_root ());
+		use_shared_mode = is_root ();
 		progress_bar = new CmdProgressBar ();
 	}
 

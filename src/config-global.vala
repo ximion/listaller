@@ -32,7 +32,7 @@ private static const string tmpdir_small = "/tmp";
  *
  * Provides global Listaller configuration.
  */
-public class Config : Object {
+internal class Config : Object {
 
 	const string confdir = "/etc/listaller";
 	const string sudbdir = "/var/lib/listaller";

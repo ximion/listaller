@@ -25,7 +25,7 @@ public class RunApp : Object {
 	private Manager limgr;
 
 	public RunApp () {
-		limgr = new Manager (null);
+		limgr = new Manager (true);
 	}
 
 	public int run_application (string commandLine, string ld_env) {

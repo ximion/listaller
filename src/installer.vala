@@ -85,6 +85,19 @@ public class Setup : MessageObject {
 		status_changed (item);
 	}
 
+	public IPK.InstallMode supported_install_modes () {
+		if (!initialized)
+			return IPK.InstallMode.NONE;
+		return ipkp.get_supported_install_modes ();
+	}
+
+	public bool set_install_mode (IPK.InstallMode mode) {
+		if (!initialized)
+			return false;
+
+		return ipkp.set_install_mode (mode);
+	}
+
 	public bool initialize () {
 		bool ret = false;
 		initialized = false;

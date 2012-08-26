@@ -45,18 +45,17 @@ void test_ipk_package () {
 	bool ret = false;
 	msg ("Package tests");
 
-	// Set up Listaller configuration
-	Listaller.Config conf = new Listaller.Config ();
-	conf.testmode = true;
-
 	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_install.ipk", null);
 	msg ("Loading IPK package %s".printf (ipkfilename));
-	IPK.Package ipk = new IPK.Package (ipkfilename, conf);
+
+	IPK.Package ipk = new IPK.Package (ipkfilename);
 	// Connect signal handlers
 	ipk.message.connect (test_ipk_message_cb);
 	ipk.error_code.connect (test_ipk_error_code_cb);
 
 	ret = ipk.initialize ();
+	assert (ret == true);
+	ret = ipk.set_install_mode (IPK.InstallMode.TEST);
 	assert (ret == true);
 
 	AppItem app = ipk.control.get_application ();

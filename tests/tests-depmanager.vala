@@ -24,7 +24,7 @@ using Gee;
 using Listaller;
 
 private string datadir;
-private Listaller.Config conf;
+private SetupSettings ssettings;
 private SoftwareDB sdb;
 
 void msg (string s) {
@@ -95,7 +95,7 @@ void test_dependency_manager () {
 	assert (testA != null);
 
 	string path = depman.get_absolute_library_path (testA);
-	string expectedPath = Path.build_filename (conf.depdata_dir (), testA.idname, "lib", null);
+	string expectedPath = Path.build_filename (ssettings.depdata_dir (), testA.idname, "lib", null);
 	debug (path);
 	assert (path == expectedPath);
 
@@ -129,8 +129,8 @@ void test_packagekit_installer () {
 	IPK.Dependency depMp3Gain = new IPK.Dependency ("Mp3Gain");
 	depMp3Gain.add_component ("/usr/bin/mp3gain", Dep.ComponentType.BINARY);
 
-	Dep.PkInstaller pkit = new Dep.PkInstaller (conf);
-	Dep.PkResolver pkslv = new Dep.PkResolver (conf);
+	Dep.PkInstaller pkit = new Dep.PkInstaller (ssettings);
+	Dep.PkResolver pkslv = new Dep.PkResolver (ssettings);
 	pkit.message.connect (test_solver_message_cb);
 
 	search_install_pkdep (pkit, pkslv, ref depMp3Gain);
@@ -158,7 +158,7 @@ void test_packagekit_installer () {
 
 void test_feed_installer () {
 	msg ("ZI Feed installer tests");
-	Dep.FeedInstaller finst = new Dep.FeedInstaller (conf);
+	Dep.FeedInstaller finst = new Dep.FeedInstaller (ssettings);
 
 	IPK.Dependency test1 = new IPK.Dependency ("feedTest:1.vorb");
 	test1.feed_url = "http://services.sugarlabs.org/libvorbis";
@@ -172,7 +172,7 @@ void test_feed_installer () {
 	assert (test1.full_name == "libvorbis");
 
 	// Other tests might want to install the same stuff, so avoid conflicts.
-	//conf.invalidate_tmp_dir ();
+	//ssettings.invalidate_tmp_dir ();
 }
 
 void test_depsolver () {
@@ -219,10 +219,9 @@ int main (string[] args) {
 	add_log_domain ("LiTest");
 
 	// Set up Listaller configuration & database
-	conf = new Listaller.Config ();
-	conf.testmode = true;
+	ssettings = new SetupSettings (IPK.InstallMode.TEST);
 
-	sdb = new SoftwareDB (conf);
+	sdb = new SoftwareDB (ssettings);
 	sdb.error_code.connect (test_solver_error_code_cb);
 	sdb.message.connect (test_solver_message_cb);
 

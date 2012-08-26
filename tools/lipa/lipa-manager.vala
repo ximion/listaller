@@ -29,7 +29,7 @@ public class LipaManager : LipaModule {
 		base ();
 		show_progress = true;
 
-		mgr = new Manager (liconf);
+		mgr = new Manager (use_shared_mode);
 		mgr.message.connect (manager_message);
 		mgr.error_code.connect (manager_error_code);
 		//! mgr.status_changed.connect (manager_status_changed);

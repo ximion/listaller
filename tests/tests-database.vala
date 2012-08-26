@@ -47,11 +47,10 @@ void software_db_status_changed_cb (DatabaseStatus status, string message) {
 void test_software_db () {
 	bool ret = false;
 
-	Listaller.Config conf = new Listaller.Config ();
-	conf.testmode = true;
+	var setup_settings = new SetupSettings (IPK.InstallMode.TEST);
 
 	msg ("Opening new software database connection");
-	SoftwareDB sdb = new SoftwareDB (conf);
+	SoftwareDB sdb = new SoftwareDB (setup_settings);
 	sdb.error_code.connect (softwaredb_error_code_cb);
 	sdb.message.connect (softwaredb_message_cb);
 
