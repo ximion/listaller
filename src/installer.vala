@@ -34,7 +34,7 @@ namespace Listaller {
  * All methods are syncronous right now.
  */
 public class Setup : MessageObject {
-	private Config conf;
+	private SetupSettings setup_settings;
 	private string fname;
 	private IPK.Package ipkp;
 	private bool initialized;
@@ -46,8 +46,8 @@ public class Setup : MessageObject {
 
 	public signal void status_changed (StatusItem status);
 
-	public Listaller.Config settings {
-		get { return conf; }
+	public SetupSettings settings {
+		get { return setup_settings; }
 	}
 
 	public IPK.Control? control {
@@ -59,16 +59,14 @@ public class Setup : MessageObject {
 		}
 	}
 
-	public Setup (string ipkfilename, Config? settings) {
+	public Setup (string ipkfilename) {
 		base ();
 		pkgReplaces = null;
-		conf = settings;
-		if (conf == null)
-			conf = new Listaller.Config(false);
+		setup_settings = new SetupSettings ();
 
 		fname = ipkfilename;
 		// Set up IPK package instance and connect it with this setup
-		ipkp = new IPK.Package (fname, settings);
+		ipkp = new IPK.Package (fname);
 		connect_with_object_all (ipkp);
 
 		initialized = false;
@@ -134,9 +132,9 @@ public class Setup : MessageObject {
 	private bool install_app_normal () {
 		bool ret = true;
 
-		conf.lock ();
+		setup_settings.lock ();
 		// Create software DB link and connect status handlers
-		SoftwareDB db = new SoftwareDB (conf, is_root ());
+		SoftwareDB db = new SoftwareDB (setup_settings, is_root ());
 		connect_with_object_all (db);
 
 		// Open & lock database (we need write access here!)
@@ -240,7 +238,7 @@ public class Setup : MessageObject {
 		}
 
 		ret = db.add_application_filelist (app, ipkp.get_file_entries ());
-		conf.unlock ();
+		setup_settings.unlock ();
 
 		inst_progress = 100;
 		change_progress (100);
@@ -329,7 +327,7 @@ public class Setup : MessageObject {
 	 */
 	public string? get_replaced_native_packs () {
 		// No superuser-mode -> No need to replace system packages
-		if (!conf.sumode)
+		if (!setup_settings.shared_mode)
 			return null;
 		AppItem? app = get_current_application ();
 
@@ -338,7 +336,7 @@ public class Setup : MessageObject {
 
 		string[] list = app.replaces.split ("\n");
 
-		var pkslv = new Dep.PkResolver (conf);
+		var pkslv = new Dep.PkResolver (setup_settings);
 		string res = "";
 		foreach (string id in list) {
 			string? pkid = pkslv.package_name_for_file (id);
@@ -381,7 +379,7 @@ public class Setup : MessageObject {
 		// NOTE: We use Listaller Reporting here!
 		Report report;
 
-		if ((!is_root ()) && (conf.sumode == true)) {
+		if ((!is_root ()) && (setup_settings.shared_mode == true)) {
 			ret = install_app_shared ();
 			report = Report.get_instance ();
 			stdout.printf ("%s\n", report.to_string ());

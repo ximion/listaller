@@ -29,7 +29,7 @@
 struct PkPluginPrivate {
 	PkTransaction		*current_transaction;
 	ListallerManager	*mgr;
-	ListallerConfig		*conf;
+	ListallerSetupSettings	*setup_settings;
 	PkResults		*backend_results;
 	GMainLoop		*loop;
 };
@@ -296,7 +296,7 @@ pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 	gchar* package_id;
 	ListallerAppItem *app = NULL;
 
-	setup = listaller_setup_new (filename, plugin->priv->conf);
+	setup = listaller_setup_new (filename);
 	g_signal_connect (setup, "error-code",
 			  G_CALLBACK (listaller_error_code_cb), plugin);
 	g_signal_connect (setup, "message",
@@ -712,10 +712,10 @@ pk_plugin_initialize (PkPlugin *plugin)
 {
 	/* create private area */
 	plugin->priv = PK_TRANSACTION_PLUGIN_GET_PRIVATE (PkPluginPrivate);
-	plugin->priv->conf = listaller_config_new (TRUE);
-	plugin->priv->mgr = listaller_manager_new (plugin->priv->conf);
+	plugin->priv->mgr = listaller_manager_new (TRUE);
 	plugin->priv->loop = g_main_loop_new (NULL, FALSE);
 	plugin->priv->backend_results = pk_results_new ();
+	plugin->priv->setup_settings = NULL;
 
 	/* tell PK we might be able to handle these */
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_DETAILS);
@@ -742,7 +742,8 @@ void
 pk_plugin_destroy (PkPlugin *plugin)
 {
 	g_main_loop_unref (plugin->priv->loop);
-	g_object_unref (plugin->priv->conf);
+	if (plugin->priv->setup_settings != NULL)
+		g_object_unref (plugin->priv->setup_settings);
 	g_object_unref (plugin->priv->mgr);
 	g_object_unref (plugin->priv->backend_results);
 }

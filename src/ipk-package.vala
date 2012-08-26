@@ -27,7 +27,6 @@ using Listaller.Utils;
 namespace Listaller.IPK {
 
 private class Package : MessageObject {
-	private Config conf;
 	private string fname;
 	private string wdir;
 	private bool ipk_valid;
@@ -43,13 +42,14 @@ private class Package : MessageObject {
 		get { return ipkc; }
 	}
 
-	public Package (string filename, Config? settings) {
+	public SetupSettings setup_settings { get; private set; }
+
+	public Package (string filename) {
 		fname = filename;
 		ipk_selected_arch_ = "";
 
-		conf = settings;
-		if (conf == null)
-			conf = new Listaller.Config ();
+		setup_settings = new SetupSettings ();
+		var conf = new Config ();
 		wdir = conf.get_unique_tmp_dir ();
 
 		ipk_valid = false;
@@ -193,7 +193,7 @@ private class Package : MessageObject {
 
 		// Some preparation
 
-		string dest = vs.substitute_vars_auto (fe.destination, conf);
+		string dest = vs.substitute_vars_auto (fe.destination, setup_settings);
 		string fname = Path.build_filename (dest, fe.fname, null);
 		string fname_tmp = fname + ".listaller-new";
 
@@ -427,9 +427,35 @@ private class Package : MessageObject {
 		}
 		ar.close ();
 
+		// set sane default setup-settings
+		IPK.InstallMode modes = control.get_install_modes ();
+		if (modes.is_all_set (IPK.InstallMode.SHARED))
+			setup_settings.current_mode = IPK.InstallMode.SHARED;
+		else if (modes.is_all_set (IPK.InstallMode.PRIVATE))
+			setup_settings.current_mode = IPK.InstallMode.PRIVATE;
+		else {
+			warning ("Setup %s does not support shared and private installations! This is usually a bug. Defaulting to test-mode now.", Path.get_basename (fname));
+			setup_settings.current_mode = IPK.InstallMode.TEST;
+		}
+
 		ipk_valid = ret;
 
 		return ret;
+	}
+
+	public IPK.InstallMode get_supported_install_modes () {
+		return control.get_install_modes ();
+	}
+
+	public bool set_install_mode (IPK.InstallMode mode) {
+		IPK.InstallMode modes = get_supported_install_modes ();
+		if (modes.is_all_set (mode)) {
+			setup_settings.current_mode = mode;
+			return true;
+		} else {
+			warning ("Tried to set a install mode which is unsupported by this package!");
+			return false;
+		}
 	}
 
 	private GPGSignature? get_signature () {
@@ -625,7 +651,7 @@ private class Package : MessageObject {
 		}
 
 		// VarSetter to set LI path vars in files
-		VarSetter vset = new VarSetter (conf, appInfo.idname);
+		VarSetter vset = new VarSetter (setup_settings, appInfo.idname);
 		if (ret)
 			vset.execute (fe.fname_installed);
 
@@ -698,7 +724,7 @@ private class Package : MessageObject {
 		}
 
 		// Create new varsetter, so we can set path variables directly in files
-		VarSetter vset = new VarSetter (conf, appInfo.idname);
+		VarSetter vset = new VarSetter (setup_settings, appInfo.idname);
 		// Set variables in external files
 		if (ret)
 			foreach (IPK.FileEntry f in get_file_entries ()) {

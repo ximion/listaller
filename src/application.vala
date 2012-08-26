@@ -89,7 +89,7 @@ public class AppItem : Object {
 	private bool _shared;
 	private AppOrigin _origin;
 	private string _app_id;
-	private Listaller.Config liconf;
+	private SetupSettings setup_settings;
 
 	/**
 	 * Application identifier
@@ -183,7 +183,10 @@ public class AppItem : Object {
 		get { return _shared; }
 		set {
 			_shared = value;
-			liconf.sumode = _shared;
+			if (_shared)
+				setup_settings.current_mode = IPK.InstallMode.SHARED;
+			else
+				setup_settings.current_mode = IPK.InstallMode.PRIVATE; // FIXME
 		}
 	}
 
@@ -219,7 +222,6 @@ public class AppItem : Object {
 	}
 
 	public AppItem.blank () {
-		_shared = false;
 		_idname = "";
 		_appname = "";
 		_idname = "";
@@ -232,7 +234,8 @@ public class AppItem : Object {
 		_desktop_file = "";
 		_website = "";
 		_icon_name = "";
-		liconf = new Listaller.Config (_shared);
+		setup_settings = new SetupSettings ();
+		shared = false;
 		_license = AppLicense () {
 			name = "",
 			text = ""
@@ -437,7 +440,7 @@ public class AppItem : Object {
 		// Resolve variables in desktop_file path
 		VarSolver vs = new VarSolver (idname);
 		string fname = expand_user_dir (desktop_file);
-		fname = vs.substitute_vars_auto (fname, liconf);
+		fname = vs.substitute_vars_auto (fname, setup_settings);
 
 		// Check if file exists
 		if (!FileUtils.test (fname, FileTest.EXISTS))
@@ -502,7 +505,7 @@ public class AppItem : Object {
 		}
 		if (subst_cmd) {
 			VarSolver vs = new VarSolver (idname);
-			cmd = vs.substitute_vars_auto (cmd, liconf);
+			cmd = vs.substitute_vars_auto (cmd, setup_settings);
 		}
 		return cmd;
 	}

@@ -154,17 +154,23 @@ private class InternalDB : Object {
 
 	public signal void message (MessageItem message);
 
-	public InternalDB (bool sumode, bool _testmode = false) {
+	public InternalDB (bool shared_mode, bool testmode = false) {
 		// Create internal dummy configuration to fetch required data
-		var tmpConf = new Listaller.Config (sumode);
-		tmpConf.testmode = _testmode;
+		var tmpSSettings = new SetupSettings ();
+		if (shared_mode)
+			tmpSSettings.current_mode = IPK.InstallMode.SHARED;
+		else
+			tmpSSettings.current_mode = IPK.InstallMode.PRIVATE;
+		// Test mode last to override previous settings if necessary
+		if (testmode)
+			tmpSSettings.current_mode = IPK.InstallMode.TEST;
 
 		// Path with additional data (e.g. the file-list or icons) which is not stored in the SQLite DB
-		regdir = Path.build_filename (tmpConf.appregister_dir (), "info", null);
+		regdir = Path.build_filename (tmpSSettings.appregister_dir (), "info", null);
 		// The database filename
-		dbname = tmpConf.database_file ();
+		dbname = tmpSSettings.database_file ();
 		// Whether we fetch data from the "shared" or "private" application database
-		shared_db = sumode;
+		shared_db = shared_mode;
 		writeable = false;
 	}
 

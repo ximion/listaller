@@ -314,8 +314,8 @@ public class Dependency: Object {
 		return tp;
 	}
 
-	public string get_install_dir_for_setting (Listaller.Config conf) {
-		return Path.build_filename (conf.depdata_dir (), idname, null);
+	public string get_install_dir_for_setting (SetupSettings setup_setting) {
+		return Path.build_filename (setup_setting.depdata_dir (), idname, null);
 	}
 }
 
@@ -351,7 +351,7 @@ private class DepInfoGenerator : Object {
 
 	public DepInfoGenerator () {
 		// Load the default components
-		Listaller.Config conf = new Listaller.Config (true);
+		Listaller.Config conf = new Listaller.Config ();
 		string fname_default = Path.build_filename (conf.conf_dir (), "default-dependencies.list", null);
 		string fname_distro = Path.build_filename (conf.conf_dir (), "dependencies.list", null);
 

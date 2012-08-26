@@ -28,16 +28,17 @@ namespace Listaller {
 
 private class DepManager : MessageObject {
 	private SoftwareDB db;
-	private Listaller.Config conf;
+	private SetupSettings ssettings;
 
 	public DepManager (SoftwareDB lidb) {
 		base ();
 		db = lidb;
-		conf = lidb.get_liconf ();
+		ssettings = db.setup_settings;
+
 		// This should never happen!
-		if (conf == null) {
+		if (ssettings == null) {
 			error ("Listaller config was NULL in DepManager constructor!");
-			conf = new Listaller.Config ();
+			ssettings = new SetupSettings ();
 		}
 	}
 
@@ -83,7 +84,7 @@ private class DepManager : MessageObject {
 		if (!contains_libs)
 			return "";
 
-		string depInstallDir = Path.build_filename (conf.depdata_dir (), dep.idname, null);
+		string depInstallDir = Path.build_filename (ssettings.depdata_dir (), dep.idname, null);
 		// If directory is non-existent, we don't need to continue here. Maybe we have a system library/package installed.'
 		if (!FileUtils.test (depInstallDir, FileTest.EXISTS))
 			return "";

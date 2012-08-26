@@ -41,35 +41,34 @@ private enum ForceDB {
 private class SoftwareDB : MessageObject {
 	private InternalDB? db_shared;
 	private InternalDB? db_priv;
-	private Config conf;
 
 	public ForceDB force_db { get; set; }
+	public SetupSettings setup_settings { get; private set; }
 
 	public signal void application (AppItem appid);
 
-	public SoftwareDB (Listaller.Config liconf, bool include_shared = true) {
+	public SoftwareDB (SetupSettings setup_settings, bool include_shared = true) {
 		base ();
 
 		db_shared = null;
 		db_priv = null;
 		force_db = ForceDB.NONE;
 
-		// We just store the settings, so other objects can fetch them
-		conf = liconf;
-
 		if (include_shared) {
-			db_shared = new InternalDB (true, conf.testmode);
+			db_shared = new InternalDB (true, setup_settings.test_mode);
 
 			/* If we open a shared DB and have root-access, don't open the
 			 * private database. It makes no sense someone is working as root
 			 * and installing private stuff into root's home-dir */
 			if (!is_root ()) {
-				db_priv = new InternalDB (false, conf.testmode);
+				db_priv = new InternalDB (false, setup_settings.test_mode);
 			}
 		} else {
 			// If we only want to open the personal DB, don't touch the shared one
-			db_priv = new InternalDB (false, conf.testmode);
+			db_priv = new InternalDB (false, setup_settings.test_mode);
 		}
+
+		this.setup_settings = setup_settings;
 
 		// Forward messages of the internal DBs to this meta-db
 		if (db_priv != null)
@@ -117,10 +116,6 @@ private class SoftwareDB : MessageObject {
 		}
 
 		return true;
-	}
-
-	public Listaller.Config get_liconf () {
-		return conf;
 	}
 
 	public bool open_read () {

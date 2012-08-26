@@ -25,11 +25,11 @@ using Listaller.Utils;
 namespace Listaller {
 
 private class VarSetter : Object {
-	private Listaller.Config conf;
+	private SetupSettings ssettings;
 	private VarSolver vs;
 
-	public VarSetter (Listaller.Config liconfig, string appIdName) {
-		conf = liconfig;
+	public VarSetter (SetupSettings setup_settings, string appIdName) {
+		ssettings = setup_settings;
 		vs = new VarSolver (appIdName);
 	}
 
@@ -60,11 +60,11 @@ private class VarSetter : Object {
 		value = get_desktopfile_entry (dfile, "Icon");
 		if (value != "") {
 			if (value.has_prefix ("%"))
-				dfile.set_string ("Desktop Entry", "Icon", vs.substitute_vars_auto (value, conf));
+				dfile.set_string ("Desktop Entry", "Icon", vs.substitute_vars_auto (value, ssettings));
 
 			// The system should be able to find an icon automatically, so we shouldn't need this hint anymore
 			/* else
-				dfile.set_string ("Desktop Entry", "Icon", vs.find_icon_in_ivarpaths (value, conf));
+				dfile.set_string ("Desktop Entry", "Icon", vs.find_icon_in_ivarpaths (value, ssettings));
 			*/
 		}
 
@@ -72,9 +72,9 @@ private class VarSetter : Object {
 		// Process exe filename and append the runapp command
 		if (value != "") {
 			if (value.has_prefix ("%"))
-				dfile.set_string ("Desktop Entry", "Exec", "runapp \"" + vs.substitute_vars_auto (value, conf) + "\"");
+				dfile.set_string ("Desktop Entry", "Exec", "runapp \"" + vs.substitute_vars_auto (value, ssettings) + "\"");
 			else
-				dfile.set_string ("Desktop Entry", "Exec", "runapp \"" + vs.find_exe_in_varpath (value, conf) + "\"");
+				dfile.set_string ("Desktop Entry", "Exec", "runapp \"" + vs.find_exe_in_varpath (value, ssettings) + "\"");
 		}
 
 		// Now save the modified file

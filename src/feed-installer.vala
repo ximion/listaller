@@ -27,16 +27,17 @@ namespace Listaller.Dep {
 
 private class FeedInstaller : MessageObject {
 	private Feed? feed;
-	private Listaller.Config conf;
+	private SetupSettings ssettings;
 	private string tmpdir;
 
 	public ErrorItem? last_error { get; set; }
 
-	public FeedInstaller (Listaller.Config liconf) {
+	public FeedInstaller (SetupSettings setup_settings) {
 		last_error = null;
 		feed = null;
 
-		conf = liconf;
+		ssettings = setup_settings;
+		var conf = new Config ();
 		tmpdir = conf.get_unique_tmp_dir ();
 	}
 
@@ -162,7 +163,7 @@ private class FeedInstaller : MessageObject {
 		bool ret = true;
 
 		// Target dependency subdirectory (from DEP installation-var)
-		string dest = dep.get_install_dir_for_setting (conf);
+		string dest = dep.get_install_dir_for_setting (ssettings);
 		// Target filename
 		string fname = Path.build_filename (dest, e.pathname (), null);
 

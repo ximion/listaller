@@ -29,17 +29,17 @@ namespace Listaller {
 private class DepInstaller : MessageObject {
 	private SoftwareDB db;
 	private DepManager depman;
-	private Listaller.Config conf;
+	private SetupSettings ssettings;
 
 	public DepInstaller (SoftwareDB lidb) {
 		base ();
 		db = lidb;
-		conf = lidb.get_liconf ();
+		ssettings = lidb.setup_settings;
 
 		// This should never happen!
-		if (conf == null) {
+		if (ssettings == null) {
 			error ("Listaller config was NULL in DepManager constructor!");
-			conf = new Listaller.Config ();
+			ssettings = new SetupSettings ();
 		}
 		if (!db.database_writeable ()) {
 			critical ("Dependency installer received a read-only database! This won't work if write actions have to be performed!");
@@ -105,6 +105,7 @@ private class DepInstaller : MessageObject {
 		 * This only works for library dependencies!
 		 */
 		ret = false;
+		Config conf = new Config ();
 		foreach (string cmp in dep.raw_complist) {
 			if (dep.component_get_type (cmp) == ComponentType.SHARED_LIB) {
 				string s = dep.component_get_name (cmp);
@@ -134,7 +135,7 @@ private class DepInstaller : MessageObject {
 			return true;
 
 		// Try if we can find native packages providing the dependency
-		var pksolv = new PkResolver (conf);
+		var pksolv = new PkResolver (ssettings);
 		connect_with_object (pksolv, ObjConnectFlags.PROGRESS_TO_SUBPROGRESS);
 
 		ret = pksolv.search_dep_packages (ref dep);
@@ -195,10 +196,10 @@ private class DepInstaller : MessageObject {
 	}
 
 	public bool install_dependency (ref IPK.Dependency dep, bool force_feedinstall = false) {
-		PkInstaller pkinst = new PkInstaller (conf);
+		PkInstaller pkinst = new PkInstaller (ssettings);
 		pkinst.message.connect ( (m) => { this.message (m); } );
 
-		FeedInstaller finst = new FeedInstaller (conf);
+		FeedInstaller finst = new FeedInstaller (ssettings);
 		finst.message.connect ( (m) => { this.message (m); } );
 
 		var di = new DepInfoGenerator ();
@@ -222,10 +223,10 @@ private class DepInstaller : MessageObject {
 	}
 
 	public bool install_dependencies (ref ArrayList<IPK.Dependency> depList, bool force_feedinstall = false) {
-		PkInstaller pkinst = new PkInstaller (conf);
+		PkInstaller pkinst = new PkInstaller (ssettings);
 		pkinst.message.connect ( (m) => { this.message (m); } );
 
-		FeedInstaller finst = new FeedInstaller (conf);
+		FeedInstaller finst = new FeedInstaller (ssettings);
 		finst.message.connect ( (m) => { this.message (m); } );
 
 		preprocess_dependency_list (ref depList);

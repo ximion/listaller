@@ -35,24 +35,26 @@ namespace Listaller {
  * running.
  */
 public class Manager : MessageObject {
-	private Config conf;
+	private SetupSettings ssettings;
 
 	public signal void status_changed (StatusItem status);
 	public signal void application (AppItem appid);
 
-	public Listaller.Config settings {
-		get { return conf; }
-		set { conf = value; }
+	public SetupSettings settings {
+		get { return ssettings; }
+		set { ssettings = value; }
 	}
 
-	/*
-	 * @param: settings A valid LiListaller.Configinstance, describing basic settings (or null)
+	/**
+	 * @param: Whether we are in shared mode or not.
 	 */
-	public Manager (Config? settings) {
+	public Manager (bool shared_mode = true) {
 		base ();
-		conf = settings;
-		if (conf == null)
-			conf = new Listaller.Config (false);
+		ssettings = new SetupSettings ();
+		if (shared_mode)
+			ssettings.current_mode = IPK.InstallMode.SHARED;
+		else
+			ssettings.current_mode = IPK.InstallMode.PRIVATE;
 	}
 
 	private void emit_status (StatusEnum status, string info) {
@@ -62,7 +64,7 @@ public class Manager : MessageObject {
 	}
 
 	private bool init_db (out SoftwareDB sdb, bool writeable = true) {
-		SoftwareDB db = new SoftwareDB (conf, true);
+		SoftwareDB db = new SoftwareDB (ssettings, true);
 		// Connect the database events with this application manager
 		connect_with_object (db, ObjConnectFlags.NONE);
 		db.application.connect ( (a) => { this.application (a); } );
@@ -221,13 +223,14 @@ public class Manager : MessageObject {
 	public bool remove_application (AppItem app) {
 		app.fast_check ();
 
-		bool sumode_old = conf.sumode;
-		if (app.shared != conf.sumode) {
+		IPK.InstallMode mode_old = ssettings.current_mode;
+		if (app.shared != ssettings.shared_mode) {
 			if (app.shared)
 				debug (_("Trying to remove shared application, but AppManager is not in superuser mode!\nSetting AppManager to superuse mode now."));
 			else
 				debug (_("Trying to remove local application, but AppManager is in superuser mode!\nSetting AppManager to local mode now."));
-			conf.sumode = app.shared;
+			if (app.shared)
+				ssettings.current_mode = IPK.InstallMode.SHARED;
 		}
 
 		bool ret;
@@ -239,7 +242,7 @@ public class Manager : MessageObject {
 			ret = remove_application_internal (app);
 		}
 
-		conf.sumode = sumode_old;
+		ssettings.current_mode = mode_old;
 
 		return ret;
 	}

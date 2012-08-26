@@ -37,30 +37,6 @@ public errordomain ControlDataError {
 	UNKNOWN;
 }
 
-[Flags]
-public enum InstallMode {
-	NONE = 0,
-	SHARED,
-	PRIVATE,
-	TEST;
-
-	public inline bool is_all_set (InstallMode flags) {
-		return (this & flags) == flags;
-	}
-
-	public inline bool is_any_set (InstallMode flags) {
-		return (this & flags) != 0;
-	}
-
-        public inline InstallMode set (InstallMode mode) {
-		return (this | mode);
-	}
-
-	public inline InstallMode unset (InstallMode mode) {
-		return (this & ~mode);
-	}
-}
-
 public abstract class Control : Object {
 	internal DoapData doap;
 	internal MetaFile depData;
