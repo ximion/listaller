@@ -52,10 +52,10 @@ internal class Config : Object {
 
 	public Config () {
 		// Append some Debian-specific multiarch paths
-		string tripel = "%s-%s-gnu".printf (Utils.system_machine (), Utils.system_os ());
-		lib_paths += Path.build_filename ("/lib", tripel);
-		lib_paths += Path.build_filename ("/usr", "lib", tripel);
-		lib_paths += Path.build_filename ("/usr", "lib", tripel, "mesa");
+		string triplet = "%s-%s-gnu".printf (Utils.system_machine (), Utils.system_os ());
+		lib_paths += Path.build_filename ("/lib", triplet);
+		lib_paths += Path.build_filename ("/usr", "lib", triplet);
+		lib_paths += Path.build_filename ("/usr", "lib", triplet, "mesa");
 		// null-terminate paths list
 		lib_paths += null;
 	}

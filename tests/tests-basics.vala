@@ -48,7 +48,9 @@ void test_listaller_config () {
 	var conf = new Listaller.Config ();
 
 	// Set up setup-settings
-	var ssettings = new SetupSettings ();
+	var ssettings = new SetupSettings (IPK.InstallMode.TEST);
+	assert (ssettings.test_mode == true);
+
 	string tmp = ssettings.get_unique_install_tmp_dir ();
 	assert (tmp == ssettings.get_unique_install_tmp_dir ());
 	ssettings.invalidate_tmp_dir ();

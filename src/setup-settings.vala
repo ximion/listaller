@@ -64,14 +64,14 @@ public class SetupSettings : Object {
 
 	internal SetupSettings (IPK.InstallMode mode = IPK.InstallMode.NONE) {
 		conf = new Config ();
-		current_mode = IPK.InstallMode.NONE;
+		current_mode = mode;
 
 		unlock (); // Be unlocked by default
 	}
 
 	public IPK.InstallMode current_mode {
 		get {
-			return current_mode;
+			return _current_mode;
 		}
 		internal set {
 			if (can_change ())

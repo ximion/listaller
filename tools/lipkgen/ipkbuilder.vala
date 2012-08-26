@@ -484,7 +484,7 @@ private class Builder : Object {
 			return false;
 
 		// Set/refresh/check install-mode information
-		ictrl.update_installmode_data ();
+		ictrl.set_install_modes (ipkCDir.get_install_modes ());
 
 		// Set package setting information
 		 //! ictrl.set_architectures (ipkCDir.get_architectures ());

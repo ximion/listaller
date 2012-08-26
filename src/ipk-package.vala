@@ -453,7 +453,7 @@ private class Package : MessageObject {
 			setup_settings.current_mode = mode;
 			return true;
 		} else {
-			warning ("Tried to set a install mode which is unsupported by this package!");
+			warning ("Tried to set an install mode which is unsupported by this package!");
 			return false;
 		}
 	}

@@ -2,3 +2,4 @@ Version: 1.1
 
 AutoFindDeps: true
 FilesRoot: %INSTDIR%
+InstallModes: Test
