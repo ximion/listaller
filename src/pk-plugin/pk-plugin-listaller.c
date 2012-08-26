@@ -40,14 +40,14 @@ struct PkPluginPrivate {
 void
 pk_plugin_reset (PkPlugin *plugin)
 {
-	/* reset the native backend */
-	pk_backend_reset (plugin->backend);
+	/* reset the native backend job */
+	pk_backend_job_reset (plugin->job);
 
 	/* recreate PkResults object */
 	g_object_unref (plugin->priv->backend_results);
 	plugin->priv->backend_results = pk_results_new ();
 
-	/* reset the Job too */
+	/* reset the job */
 	pk_backend_reset_job (plugin->backend, plugin->job);
 }
 
@@ -60,11 +60,11 @@ static void
 pk_plugin_skip_native_backend (PkPlugin *plugin)
 {
 	PkExitEnum exit;
-	exit = pk_backend_get_exit_code (plugin->backend);
+	exit = pk_backend_job_get_exit_code (plugin->job);
 
 	/* only skip transaction if we don't have an error already */
-	if (!pk_backend_get_is_error_set (plugin->backend)) {
-		pk_backend_set_exit_code (plugin->backend, PK_EXIT_ENUM_SKIP_TRANSACTION);
+	if (!pk_backend_job_get_is_error_set (plugin->job)) {
+		pk_backend_job_set_exit_code (plugin->job, PK_EXIT_ENUM_SKIP_TRANSACTION);
 	}
 }
 
@@ -144,7 +144,7 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 	guint i;
 
 	g_debug ("listaller: running get_details ()");
-	pk_backend_reset (plugin->backend);
+	pk_backend_job_reset (plugin->job);
 
 	for (i=0; package_ids[i] != NULL; i++) {
 		app = pk_listaller_appitem_from_pkid (package_ids[i]);
@@ -159,7 +159,7 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 		//TODO: Fetch size of installed application too
 
 		/* emit */
-		pk_backend_details (plugin->backend, package_ids[i],
+		pk_backend_job_details (plugin->job, package_ids[i],
 					license.name,
 					PK_GROUP_ENUM_UNKNOWN,
 					description,
@@ -179,7 +179,7 @@ pk_listaller_get_filelist (PkPlugin *plugin, gchar **package_ids)
 	guint i;
 
 	g_debug ("listaller: running get_filelist ()");
-	pk_backend_reset (plugin->backend);
+	pk_backend_job_reset (plugin->job);
 
 	for (i=0; package_ids[i] != NULL; i++) {
 		app = pk_listaller_appitem_from_pkid (package_ids[i]);
@@ -192,7 +192,7 @@ pk_listaller_get_filelist (PkPlugin *plugin, gchar **package_ids)
 			filelist = "ERROR while fetching list of files. (Please report this issue)";
 
 		/* emit */
-		pk_backend_files (plugin->backend, package_ids[i], filelist);
+		pk_backend_job_files (plugin->job, package_ids[i], filelist);
 	};
 }
 
@@ -208,7 +208,7 @@ static void listaller_application_cb (GObject *sender, ListallerAppItem *item, P
 	g_debug ("listaller: new app found -> %s", listaller_app_item_get_appid (item));
 
 	/* emit */
-	pk_backend_package (plugin->backend, PK_INFO_ENUM_INSTALLED, package_id,
+	pk_backend_job_package (plugin->job, PK_INFO_ENUM_INSTALLED, package_id,
 			    listaller_app_item_get_summary (item));
 
 	g_free (package_id);
@@ -219,11 +219,11 @@ static void listaller_error_code_cb (GObject *sender, ListallerErrorItem *error,
 	g_return_if_fail (error != NULL);
 
 	/* don't try to set errors twice */
-	if (pk_backend_get_is_error_set (plugin->backend))
+	if (pk_backend_job_get_is_error_set (plugin->job))
 		return;
 
 	/* emit */
-	pk_backend_error_code (plugin->backend, PK_ERROR_ENUM_INTERNAL_ERROR,
+	pk_backend_job_error_code (plugin->job, PK_ERROR_ENUM_INTERNAL_ERROR,
 				listaller_error_item_get_details (error));
 }
 
@@ -252,11 +252,10 @@ static void listaller_message_cb (GObject *sender, ListallerMessageItem *message
 }
 
 
-static void listaller_progress_change_cb (GObject *sender, gint progress, gint subprogress, PkPlugin *plugin)
+static void listaller_progress_change_cb (GObject *sender, gint progress, PkPlugin *plugin)
 {
 	/* emit */
-	pk_backend_set_percentage (plugin->backend, progress);
-	pk_backend_set_sub_percentage (plugin->backend, subprogress);
+	pk_backend_job_set_percentage (plugin->job, progress);
 }
 
 static void listaller_status_change_cb (GObject *sender, ListallerStatusItem *status, PkPlugin *plugin)
@@ -278,7 +277,7 @@ static void listaller_status_change_cb (GObject *sender, ListallerStatusItem *st
 
 	/* emit */
 	if (pkstatus != PK_STATUS_ENUM_UNKNOWN)
-		pk_backend_set_status (plugin->backend, pkstatus);
+		pk_backend_job_set_status (plugin->job, pkstatus);
 }
 
 /**
@@ -320,9 +319,9 @@ pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 	package_id = pk_listaller_pkid_from_appitem (app);
 	if (package_id == NULL) {
 		g_debug ("listaller: <error> Unable to build package-id from app-id!");
-	} else if (!pk_backend_get_is_error_set (plugin->backend)) {
+	} else if (!pk_backend_job_get_is_error_set (plugin->job)) {
 		/* emit */
-		pk_backend_package (plugin->backend, PK_INFO_ENUM_INSTALLED,
+		pk_backend_job_package (plugin->job, PK_INFO_ENUM_INSTALLED,
 					package_id,
 					listaller_app_item_get_summary (app));
 		g_free (package_id);
@@ -357,10 +356,10 @@ pk_listaller_install_files (PkPlugin *plugin, gchar **filenames)
 }
 
 /**
- * pk_plugin_backend_package_cb:
+ * pk_plugin_backend_job_package_cb:
  **/
 static void
-pk_plugin_backend_package_cb (PkBackend *backend,
+pk_plugin_backend_job_package_cb (PkBackendJob *job,
 		      PkPackage *package,
 		      PkPlugin *plugin)
 {
@@ -368,10 +367,10 @@ pk_plugin_backend_package_cb (PkBackend *backend,
 }
 
 /**
- * pk_plugin_backend_finished_cb:
+ * pk_plugin_backend_job_finished_cb:
  **/
 static void
-pk_plugin_backend_finished_cb (PkBackend *backend,
+pk_plugin_backend_job_finished_cb (PkBackendJob *job,
 		       PkExitEnum exit_enum,
 		       PkPlugin *plugin)
 {
@@ -379,7 +378,7 @@ pk_plugin_backend_finished_cb (PkBackend *backend,
 		return;
 	if (exit_enum != PK_EXIT_ENUM_SUCCESS) {
 		g_warning ("%s failed with exit code: %s",
-			   pk_role_enum_to_string (pk_backend_get_role (backend)),
+			   pk_role_enum_to_string (pk_backend_job_get_role (job)),
 			   pk_exit_enum_to_string (exit_enum));
 	}
 
@@ -391,10 +390,10 @@ pk_plugin_backend_finished_cb (PkBackend *backend,
 }
 
 /**
- * pk_plugin_backend_error_code_cb:
+ * pk_plugin_backend_job_error_code_cb:
  **/
 static void
-pk_plugin_backend_error_code_cb (PkBackend *backend,
+pk_plugin_backend_job_error_code_cb (PkBackendJob *job,
 				PkError *item,
 				PkPlugin *plugin)
 {
@@ -426,15 +425,15 @@ pk_plugin_prepare_backend_call (PkPlugin *plugin)
 	/* connect (used) backend signals to Listaller PkPlugin */
 	pk_backend_job_set_vfunc (plugin->job,
 				  PK_BACKEND_SIGNAL_FINISHED,
-				  (PkBackendJobVFunc) pk_plugin_backend_finished_cb,
+				  (PkBackendJobVFunc) pk_plugin_backend_job_finished_cb,
 				  plugin);
 	pk_backend_job_set_vfunc (plugin->job,
 				  PK_BACKEND_SIGNAL_PACKAGE,
-				  (PkBackendJobVFunc) pk_plugin_backend_package_cb,
+				  (PkBackendJobVFunc) pk_plugin_backend_job_package_cb,
 				  plugin);
 	pk_backend_job_set_vfunc (plugin->job,
 				  PK_BACKEND_SIGNAL_ERROR_CODE,
-				  (PkBackendJobVFunc) pk_plugin_backend_error_code_cb,
+				  (PkBackendJobVFunc) pk_plugin_backend_job_error_code_cb,
 				  plugin);
 
 	/* don't forward some events to the transaction, only Listaller should see them */
@@ -551,9 +550,9 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 	ListallerPkBackendProxy *pkbproxy;
 
-	/* reset the native-backend */
-	pk_backend_reset (plugin->backend);
-	pk_backend_set_status (plugin->backend, PK_STATUS_ENUM_SETUP);
+	/* reset the native-backend job */
+	pk_backend_job_reset (plugin->job);
+	pk_backend_job_set_status (plugin->job, PK_STATUS_ENUM_SETUP);
 
 	/* set the transaction */
 	plugin->priv->current_transaction = transaction;

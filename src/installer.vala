@@ -98,6 +98,13 @@ public class Setup : MessageObject {
 		return ipkp.set_install_mode (mode);
 	}
 
+	public IPK.InstallMode get_install_mode () {
+		if (!initialized)
+			return IPK.InstallMode.NONE;
+
+		return setup_settings.current_mode;
+	}
+
 	public bool initialize () {
 		bool ret = false;
 		initialized = false;
@@ -129,6 +136,9 @@ public class Setup : MessageObject {
 					"Please ask the package author to rebuild the package using a newer Listaller version.").printf (ipkSpecVersion, IPK.MINIMUM_IPK_SPEC_VERSION));
 			return false;
 		}
+
+		// Add original setup settings
+		setup_settings = ipkp.setup_settings;
 
 		if (ret)
 			initialized = true;
