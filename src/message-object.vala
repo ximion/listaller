@@ -31,7 +31,7 @@ protected enum ObjConnectFlags {
 }
 
 /**
- * Providing basic message handling
+ * Class providing basic message handling
  *
  * Base class for all Listaller classes which
  * want to send messages between each other.

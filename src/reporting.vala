@@ -22,6 +22,9 @@ using GLib;
 
 namespace Listaller {
 
+/**
+ * Type of a message written to a Listaller Report
+ */
 public enum ReportMessageType {
 	INFO,
 	SUGGESTION,
@@ -52,6 +55,9 @@ public enum ReportMessageType {
 	}
 }
 
+/**
+ * Report generator
+ */
 public class Report : Object {
 	private static Report instance;
 

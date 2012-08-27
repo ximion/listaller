@@ -32,10 +32,11 @@ namespace Listaller {
  * about the origin of an application
  */
 public enum AppOrigin {
+	ALL,
 	IPK,
 	NATIVE,
-	UNKNOWN,
-	INVALID;
+	EXTERN,
+	UNKNOWN;
 
 	public string to_string () {
 		switch (this) {
@@ -45,11 +46,14 @@ public enum AppOrigin {
 			case NATIVE:
 				return ("package_native");
 
+			case EXTERN:
+				return ("package_extern");
+
 			case UNKNOWN:
 				return ("unknown");
 
 			default:
-				return ("<fatal:origin-not-found>");
+				return ("unknown-origin");
 		}
 	}
 }
@@ -342,12 +346,12 @@ public class AppItem : Object {
 				origin = AppOrigin.NATIVE;
 				break;
 
-			case ("unknown"):
-				origin = AppOrigin.UNKNOWN;
+			case ("package_extern"):
+				origin = AppOrigin.EXTERN;
 				break;
 
 			default:
-				origin = AppOrigin.INVALID;
+				origin = AppOrigin.UNKNOWN;
 				break;
 		}
 	}

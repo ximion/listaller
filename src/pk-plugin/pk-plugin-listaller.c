@@ -103,7 +103,7 @@ pk_listaller_find_applications (PkPlugin *plugin, gchar **values)
 {
 	g_debug ("listaller: searching for applications: %s", values[0]);
 	listaller_manager_find_applications_by_values (plugin->priv->mgr,
-						       LISTALLER_APP_SOURCE_EXTERN,
+						       LISTALLER_APP_ORIGIN_EXTERN,
 						       values,
 						       NULL);
 }
