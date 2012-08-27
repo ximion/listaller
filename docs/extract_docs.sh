@@ -13,6 +13,6 @@ valadoc -b . -o ../docs/api --vapidir=../vapi \
 	--pkg=rdf-minimal \
 	--pkg=packagekit-glib2 \
 	--package-name=listaller \
-	--package-version=0.5.4 \
+	--package-version=0.5.6 \
 	*.vala
 cd ../docs

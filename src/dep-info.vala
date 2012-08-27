@@ -39,6 +39,17 @@ public enum ComponentType {
 namespace Listaller.IPK {
 
 /* A shared resource / external requirement */
+/**
+ * Information about a shared resource
+ *
+ * Dependency objects carry information about shared resources
+ * or external requirements which many applications might need.
+ * Dependencies can be satisfied using native distro packages
+ * (installed by PackageKit) or by using some other methods,
+ * for example installing a feed.
+ * A Dependency object carries all information which caracterizes
+ * a dependency and it's state.
+ */
 public class Dependency: Object {
 	private string _full_name;
 	public string full_name {
@@ -49,15 +60,15 @@ public class Dependency: Object {
 				return "empty";
 			return _full_name;
 		}
-		set {
+		internal set {
 			_full_name = value;
 		}
 	}
-	public string summary { get; set; }
-	public string description { get; set; }
-	public string homepage { get; set; }
-	public string author { get; set; }
-	public string version { get; set; }
+	public string summary { get; internal set; }
+	public string description { get; internal set; }
+	public string homepage { get; internal set; }
+	public string author { get; internal set; }
+	public string version { get; internal set; }
 
 	private bool _satisfied;
 	public bool satisfied {
@@ -75,15 +86,18 @@ public class Dependency: Object {
 			_satisfied = value;
 		}
 	}
-	public string architecture { get; set; } // e.g. amd64
-	private HashSet<string> install_data { get; set; } // The stuff stored as "real" dependency in software DB
-	public bool is_standardlib { get; set; } // Whether this dependency is always satisfied (by default), set by the distributor
+	public string architecture { get; internal set; } // e.g. amd64
+	private HashSet<string> install_data { get; internal set; } // The stuff stored as "real" dependency in software DB
+	/**
+	 * Whether this dependency is always satisfied (by default), set by distribution maintainers
+	 */
+	public bool is_standardlib { get; internal set; }
 
-	public string feed_url { get; set; }
-	private HashSet<string> components { get; set; } // Parts of this dependency (e.g. shlibs, python modules, files, etc.)
+	public string feed_url { get; internal set; }
+	private HashSet<string> components { get; internal set; } // Parts of this dependency (e.g. shlibs, python modules, files, etc.)
 
-	public int64 install_time { get; set; }
-	public string environment { get; set; }
+	public int64 install_time { get; internal set; }
+	public string environment { get; internal set; }
 
 	private string _idname;
 	public string idname {

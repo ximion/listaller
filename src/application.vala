@@ -25,7 +25,7 @@ using Listaller.Utils;
 namespace Listaller {
 
 /**
- * Origin of the AppItem object
+ * Origin of an application
  *
  * Could be from an IPK package, from a native or
  * unknown source. In most cases, you don't care
