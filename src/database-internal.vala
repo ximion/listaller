@@ -40,8 +40,7 @@ private const string DATABASE = ""
 		+ "architecture TEXT NOT NULL, "
 		+ "install_time INTEGER, "
 		+ "dependencies TEXT, "
-		+ "replaces TEXT, "
-		+ "origin TEXT NOT NULL"
+		+ "replaces TEXT"
 		+ "); "
 		+ "CREATE TABLE dependencies ("
 		+ "name TEXT PRIMARY KEY, "
@@ -60,7 +59,7 @@ private const string DATABASE = ""
 		"";
 
 private const string appcols = "name, full_name, version, desktop_file, author, publisher, categories, " +
-			"description, homepage, architecture, install_time, dependencies, replaces, origin";
+			"description, homepage, architecture, install_time, dependencies, replaces";
 private const string depcols = "name, full_name, version, description, author, homepage, architecture, " +
 			"install_time, provided_by, components, environment, dependencies";
 
@@ -77,8 +76,7 @@ private enum AppRow {
 	ARCHITECTURE = 9,
 	INST_TIME = 10,
 	DEPS = 11,
-	REPLACES = 12,
-	ORIGIN = 13;
+	REPLACES = 12;
 }
 
 private enum DepRow {
@@ -244,7 +242,7 @@ private class InternalDB : Object {
 		// InsertApp statement
 		try {
 			db_assert (db.prepare_v2 ("INSERT INTO applications (" + appcols + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_app), "prepare app insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -467,8 +465,6 @@ private class InternalDB : Object {
 
 			db_assert (insert_app.bind_int64 (AppRow.INST_TIME +1, item.install_time), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.ORIGIN +1, item.origin.to_string ()), "assign value");
-
 			db_assert (insert_app.bind_text (AppRow.DEPS +1, item.dependencies), "assign value");
 
 			db_assert (insert_app.bind_text (AppRow.REPLACES +1, item.replaces), "assign value");
@@ -581,10 +577,10 @@ private class InternalDB : Object {
 		}
 
 		item.install_time = stmt.column_int (AppRow.INST_TIME);
-		item.set_origin_from_string (stmt.column_text (AppRow.ORIGIN));
 		item.dependencies = stmt.column_text (AppRow.DEPS);
 		item.replaces = stmt.column_text (AppRow.REPLACES);
 		item.shared = shared_db;
+		item.origin = AppOrigin.IPK;
 
 		return item;
 	}
