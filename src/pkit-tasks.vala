@@ -52,17 +52,22 @@ private errordomain PkError {
  * PackageKit internal API when running as root (and as plugin)
  */
 private abstract class PkListallerTask : MessageObject {
+	public ErrorItem? last_error { get; set; }
+
 	protected SetupSettings ssettings;
 	protected PackageKit.Task? pktask;
 	protected PkBackendProxy? pkbproxy;
 
-	public ErrorItem? last_error { get; set; }
+	private PackageKit.Bitfield supported_roles;
 
 	private new void emit_error (ErrorItem item) { }
 
 	public PkListallerTask (SetupSettings setup_settings) {
 		base ();
 		ssettings = setup_settings;
+
+		var pkcontrol = new PackageKit.Control ();
+		supported_roles = pkcontrol.roles;
 
 		pkbproxy = null;
 		pktask = null;
@@ -91,6 +96,10 @@ private abstract class PkListallerTask : MessageObject {
 		last_error = item;
 		debug ("PkResolver: <error> %s", details);
 	}
+
+	protected bool supported (PackageKit.Role role) {
+		return (supported_roles & role) != 0;
+	}
 }
 
 private class PkResolver : PkListallerTask {
@@ -116,6 +125,12 @@ private class PkResolver : PkListallerTask {
 				libs += dep.component_get_name (s);
 		}
 		libs += null;
+
+		// we can't do anything if PK doesn't support WhatProvides
+		if (!supported (PackageKit.Role.WHAT_PROVIDES)) {
+			Report.log_warning (_("PackageKit backend does not support finding packages by stuff they provide - Installer was unable to use native packages to satisfy dependencies of this application."));
+			return null;
+		}
 
 		PackageKit.Results? res;
 		PackageKit.PackageSack? sack;
@@ -225,6 +240,12 @@ private class PkResolver : PkListallerTask {
 
 		PackageKit.Results? res = null;
 		PackageKit.PackageSack? sack;
+
+		// we can't do anything if PK doesn't support SearchFiles
+		if (!supported (PackageKit.Role.SEARCH_FILE)) {
+			Report.log_warning (_("PackageKit backend does not support searching for files - Installer was unable to use native packages to satisfy dependencies of this application."));
+			return null;
+		}
 
 		if (pkbproxy == null) {
 			try {

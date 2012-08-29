@@ -476,6 +476,7 @@ private class Builder : Object {
 					}
 				}
 			}
+			//! TODO: Remove dependencies which match files installed by this package
 			deps.add_all (list);
 		}
 		ictrl.set_dependencies (deps);
