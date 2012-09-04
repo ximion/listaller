@@ -67,6 +67,7 @@ private abstract class PkListallerTask : MessageObject {
 		ssettings = setup_settings;
 
 		var pkcontrol = new PackageKit.Control ();
+		pkcontrol.get_properties (null);
 		supported_roles = pkcontrol.roles;
 
 		pkbproxy = null;
@@ -98,7 +99,7 @@ private abstract class PkListallerTask : MessageObject {
 	}
 
 	protected bool supported (PackageKit.Role role) {
-		return (supported_roles & role) != 0;
+		return (supported_roles & (1 << role)) > 0;
 	}
 }
 
