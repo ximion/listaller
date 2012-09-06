@@ -33,7 +33,7 @@ git tag -s -f -m "Release 0.5.6" LISTALLER_0_5_6 <gpg password>
 git push --tags
 git push
 
-5. run 'git archive --format=tar --prefix=Listaller-0.5.6/ LISTALLER_0_5_6^{tree} | gzip > Listaller-0.5.6.tar.gz'
+5. run './release.sh --version=0.5.6 --git-tag=LISTALLER_0_5_6 --sign'
 
 6. Upload tarball to Launchpad
 
@@ -46,7 +46,7 @@ git push
 
 9. Upload new html sources from 'website' repo, if there are any
 
-10. Send an email to listaller@googlegroups.com
+10. Send an email to listaller@freelists.org
 
 =================================================
 Listaller 0.5.6 released!
