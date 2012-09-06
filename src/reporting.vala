@@ -63,10 +63,13 @@ public class Report : Object {
 
 	private Array<string> lines; // probably use a HashSet later...
 	private bool error_received;
+	private bool print_fatal;
 
 	public Report () {
 		lines = new Array<string> ();
 		error_received = false;
+		print_fatal = true;
+
 		debug ("New Listaller Report handler created.");
 	}
 
@@ -91,8 +94,12 @@ public class Report : Object {
 			// LEVEL_ERROR would abort the program, usually. Because errors which were
 			// written to the report aren't that crtical for program execution, we
 			// just use the CRITICAL level here
-			log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_CRITICAL, message);
+			if (print_fatal)
+				log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_CRITICAL, message);
 		}
+		if (!print_fatal)
+			return;
+
 		if (mtype == ReportMessageType.CRITICAL)
 			log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_CRITICAL, message);
 		if (mtype == ReportMessageType.WARNING)
@@ -126,6 +133,11 @@ public class Report : Object {
 		lines.set_size (0);
 	}
 
+	public void set_print_fatal (bool print_fatal_msg) {
+		print_fatal = print_fatal_msg;
+		debug ("Changed printing fatal report messages: %i", (int) print_fatal);
+	}
+
 	public static Report get_instance () {
 		if (Report.instance == null)
 			Report.instance = new Report ();
@@ -154,6 +166,10 @@ public class Report : Object {
 
 	public static void clear_current () {
 		get_instance ().clear ();
+	}
+
+	public static void set_print_fatal_msg (bool print_fatal_msg) {
+		get_instance ().set_print_fatal (print_fatal_msg);
 	}
 }
 

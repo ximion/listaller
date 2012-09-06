@@ -61,6 +61,9 @@ void test_dependency_installer () {
 	debug (test1.full_name);
 	assert (test1.full_name == "libgee");
 
+	// disable fatal report messaging for this test
+	Report.set_print_fatal_msg (false);
+
 	// Test 2
 	IPK.Dependency test2 = new IPK.Dependency ("Test:2.vorbis");
 	test2.feed_url = "http://services.sugarlabs.org/libvorbis";
@@ -68,6 +71,9 @@ void test_dependency_installer () {
 	test2.add_component ("nobis.so.0", Dep.ComponentType.SHARED_LIB);
 
 	ret = depinst.install_dependency (ref test2);
+
+	// now re-enable default setting
+	Report.set_print_fatal_msg (false);
 
 	/* We already installed this in a previous test, but did no proper
 	 * registration. So this has to fail because unknown files would be overwritten.
@@ -170,9 +176,6 @@ void test_feed_installer () {
 	}
 	assert (ret == true);
 	assert (test1.full_name == "libvorbis");
-
-	// Other tests might want to install the same stuff, so avoid conflicts.
-	//ssettings.invalidate_tmp_dir ();
 }
 
 void test_depsolver () {
