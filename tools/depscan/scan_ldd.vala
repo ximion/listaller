@@ -23,9 +23,16 @@ using Gee;
 
 private class DepscanLDD : Object, IDepScanEngine {
 	private ArrayList<string> filedeps;
+	private ArrayList<string> project_files;
 
-	public DepscanLDD () {
+	public DepscanLDD (ArrayList<string> available_files) {
 		filedeps = new ArrayList<string> ();
+		project_files = new ArrayList<string> ();
+
+		foreach (string s in available_files) {
+			project_files.add (Path.get_basename (s));
+		}
+
 	}
 
 	public bool fetch_required_files (string binaryname) {
@@ -42,6 +49,7 @@ private class DepscanLDD : Object, IDepScanEngine {
 		}
 		if ((exit_status != 0) || (output == null))
 			return false;
+
 		string[] tmp = output.split ("\n");
 
 		for (int i = 0; i < tmp.length; i++) {
@@ -49,10 +57,14 @@ private class DepscanLDD : Object, IDepScanEngine {
 			string[] dep = h.split ("=>");
 			if (dep.length <= 0)
 				continue;
+
 			h = dep[0].strip ();
-			if (!h.contains ("("))
-				filedeps.add ("%s%s".printf ("lib:", h));
+			if (!h.contains ("(")) {
+				if (project_files.index_of (h) <= 0)
+					filedeps.add ("%s%s".printf ("lib:", h));
+			}
 		}
+
 		return true;
 	}
 

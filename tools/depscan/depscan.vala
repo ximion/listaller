@@ -53,7 +53,7 @@ private class DependencyScanner : Object {
 			FileInfo file_info;
 			while ((file_info = enumerator.next_file ()) != null) {
 				string path = Path.build_filename (dir, file_info.get_name (), null);
-				if ((FileUtils.test (path, FileTest.IS_SYMLINK)) || (file_info.get_is_hidden ()))
+				if (file_info.get_is_hidden ())
 					continue;
 				if ((!FileUtils.test (path, FileTest.IS_REGULAR)) && (recursive)) {
 					ArrayList<string> subdir_list = get_file_list (path);
@@ -80,17 +80,21 @@ private class DependencyScanner : Object {
 
 	private void scan_engine_process (ArrayList<string> files, IDepScanEngine eng) {
 		foreach (string s in files) {
+			// skip all symlinks here, we don't want to check them (but we need them in the list, e.g. for lib symlinks)
+			if (FileUtils.test (s, FileTest.IS_SYMLINK))
+				continue;
+
 			if (eng.can_be_used (s))
-			if (eng.fetch_required_files (s)) {
-				requires.add_all (eng.required_files ());
-			}
+				if (eng.fetch_required_files (s)) {
+					requires.add_all (eng.required_files ());
+				}
 		}
 	}
 
 	public bool compile_required_files_list () {
 		requires.clear ();
 		if (!mtext)
-			stdout.printf ("Please wait...\n");
+			stdout.printf ("%s\r", "Please wait...");
 		ArrayList<string> files;
 		if (FileUtils.test (targetdir, FileTest.IS_REGULAR)) {
 			files = new ArrayList<string> ();
@@ -102,13 +106,16 @@ private class DependencyScanner : Object {
 			return false;
 
 		// Process binaries
-		scan_engine_process (files, new DepscanLDD ());
+		scan_engine_process (files, new DepscanLDD (files));
 
-		stdout.printf ("\r");
-		// TODO: Finish this...
-		foreach (string s in requires) {
-			stdout.printf (s + "\n");
+		if (requires.size == 0) {
+			stdout.printf ("%s\n", "No dependencies found!");
+		} else {
+			foreach (string s in requires) {
+				stdout.printf (s + "\n");
+			}
 		}
+
 		return true;
 	}
 }
