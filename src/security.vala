@@ -94,6 +94,7 @@ public enum SignStatus {
 
 public enum SignTrust {
 	UNKNOWN,
+	BAD_VALUE,
 	UNDEFINED,
 	NEVER,
 	MARGINAL,
@@ -103,7 +104,7 @@ public enum SignTrust {
 	public string to_string() {
 		switch (this) {
 			case UNKNOWN:
-				return _("Validity is unknown");
+				return _("Trust level is unknown");
 
 			case UNDEFINED:
 				return _("Validity is undefined");

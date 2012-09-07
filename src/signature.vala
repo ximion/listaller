@@ -38,52 +38,120 @@ private class GPGSignature : GPGBasic {
 		signtext = sig;
 		sig_valid = false;
 		sigstatus = SignStatus.UNKNOWN;
-		trust_level = SignTrust.UNKNOWN;
+		// we have a marginal trust level by default
+		trust_level = SignTrust.MARGINAL;
 	}
 
-	/*
-	private void set_sigvalidity_from_gpgvalidity (Validity val) {
-		switch (val) {
-			case Validity.UNKNOWN:
-				validity = SignValidity.UNKNOWN;
-				break;
 
-			case Validity.UNDEFINED:
-				validity = SignValidity.UNDEFINED;
-				break;
+	private string signsummary_to_string (Sigsum summary) {
+		string str = "";
+		if ((summary & Sigsum.VALID) > 0)       str += _(" valid");
+		if ((summary & Sigsum.GREEN) > 0)       str += _(" green");
+		if ((summary & Sigsum.RED) > 0)         str += _(" red");
+		if ((summary & Sigsum.KEY_REVOKED) > 0) str += _(" revoked");
+		if ((summary & Sigsum.KEY_EXPIRED) > 0) str += _(" key-expired");
+		if ((summary & Sigsum.SIG_EXPIRED) > 0) str += _(" sig-expired");
+		if ((summary & Sigsum.KEY_MISSING) > 0) str += _(" key-missing");
+		if ((summary & Sigsum.CRL_MISSING) > 0) str += _(" crl-missing");
+		if ((summary & Sigsum.CRL_TOO_OLD) > 0) str += _(" crl-too-old");
+		if ((summary & Sigsum.BAD_POLICY) > 0)  str += _(" bad-policy");
+		if ((summary & Sigsum.SYS_ERROR) > 0)   str += _(" sys-error");
+		if (str == "")
+			str = " ???";
 
-			case Validity.NEVER:
-				validity = SignValidity.NEVER;
-				break;
+		return str;
+	}
 
-			case Validity.MARGINAL:
-				validity = SignValidity.MARGINAL;
-				break;
-
-			case Validity.FULL:
-				validity = SignValidity.FULL;
-				break;
-
-			case Validity.ULTIMATE:
-				validity = SignValidity.ULTIMATE;
-				break;
-
-			default:
-				validity = SignValidity.UNKNOWN;
-				break;
+	private SignTrust sigvalidity_to_trustlevel (Validity validity) {
+		switch (validity) {
+			case Validity.UNKNOWN:   return SignTrust.UNKNOWN;
+			case Validity.UNDEFINED: return SignTrust.UNDEFINED;
+			case Validity.NEVER:     return SignTrust.NEVER;
+			case Validity.MARGINAL:  return SignTrust.MARGINAL;
+			case Validity.FULL:      return SignTrust.FULL;
+			case Validity.ULTIMATE:  return SignTrust.ULTIMATE;
+			default : return SignTrust.BAD_VALUE;
 		}
-	}
-	*/
 
-	private bool process_sig_result (VerifyResult *result) {
+		return SignTrust.BAD_VALUE;
+	}
+
+	private string sigvalidity_to_string (Validity validity) {
+		SignTrust trust = sigvalidity_to_trustlevel (validity);
+		if (trust == SignTrust.BAD_VALUE)
+			return _("[bad validity value]");
+
+		return trust.to_string ();
+	}
+
+
+	private string signature_details_as_string (Signature *sig) {
+		string keyinfo_format = _("status ....: %s\n" +
+			"summary ...:%s\n" +
+			"fingerprint: %s\n" +
+			"created ...: %s\n" +
+			"expires ...: %s\n" +
+			"validity ..: %s\n" +
+			"val.reason : %s\n" +
+			"pubkey algo: %s\n" +
+			"digest algo: %s\n" +
+			"pka address: %s\n" +
+			"pka trust .: %s\n" +
+			"other flags:%s%s\n" +
+			"notations .: %s");
+
+		string sig_timestamp = _("Unknown");
+		string sig_exp_timestamp = _("Unknown");
+		if (sig->timestamp > 0)
+			sig_timestamp = Time.local ((time_t) sig->timestamp).to_string ();
+		if (sig->exp_timestamp > 0)
+			sig_exp_timestamp = Time.local ((time_t) sig->exp_timestamp).to_string ();
+
+		string res_text;
+		res_text = keyinfo_format.printf (sig->status.to_string (),
+							signsummary_to_string (sig->summary),
+							(sig->fpr != null) ? sig->fpr : _("[None]"),
+							sig_timestamp,
+							sig_exp_timestamp,
+							sigvalidity_to_string (sig->validity),
+							sig->status.to_string (),
+							(sig->pubkey_algo > 0) ? get_public_key_algorithm_name (sig->pubkey_algo) : _("Unknown"),
+							(sig->hash_algo > 0) ? get_hash_algorithm_name (sig->hash_algo) : _("Unknown"),
+							(sig->pka_address != null) ? sig->pka_address : _("[None]"),
+							(sig->pka_trust == 0) ? _("n/a") : sig->pka_trust == 1 ? _("bad") : sig->pka_trust == 2 ? _("okay"): _("RFU"),
+							(sig->wrong_key_usage) ? _(" wrong-key-usage") : "", sig->chain_model ? _(" chain-model") : "",
+							(sig->notations != null) ? _("yes") : _("no"));
+
+		return res_text;
+	}
+
+	private bool process_sig_result (VerifyResult *result, Context ctx) {
+		GPGError.ErrorCode err;
 		Signature *sig = result->signatures;
 
 		if ((sig == null) || (sig->next != null)) {
 			warning ("Unexpected number of signatures!");
 			return false;
 		}
-		//sig_summary = sig->summary;
+
 		var sig_estatus = (GPGError.ErrorCode) sig->status;
+
+		// set trust level for this signature
+		trust_level = sigvalidity_to_trustlevel (sig->validity);
+#if 0
+		Key key;
+		err = ctx.get_key (sig->fpr, out key, false);
+		check_gpg_err (err);
+		if (key != null) {
+			debug ("OwnerTrust: %i", (int) key.owner_trust);
+			trust_level = sigvalidity_to_trustlevel (key.owner_trust);
+		} else {
+			debug ("Signature key was NULL!");
+			trust_level = SignTrust.UNKNOWN;
+		}
+#endif
+
+		debug ("Signature Details:\n%s", signature_details_as_string (sig));
 
 		if (sig_estatus == GPGError.ErrorCode.NO_ERROR) {
 			sigstatus = SignStatus.VALID;
@@ -98,7 +166,7 @@ private class GPGSignature : GPGBasic {
 			time_t t = (time_t) sig->exp_timestamp;
 			var time = new DateTime.from_unix_utc (t);
 
-			warning ("Expired signature (since %s)", time.format ("%Y-%m-%d"));
+			Report.log_warning ("Expired signature (since %s)".printf (time.format ("%Y-%m-%d")));
 			sigstatus = SignStatus.SIG_EXPIRED;
 		} else if ((sig_estatus & GPGError.ErrorCode.NO_PUBKEY) > 0) {
 			sigstatus = SignStatus.NO_PUBKEY;
@@ -121,7 +189,7 @@ private class GPGSignature : GPGBasic {
 		}
 
 		if (sig->wrong_key_usage) {
-			warning ("Unexpectedly wrong key usage");
+			Report.log_warning ("Unexpectedly wrong key usage");
 			return false;
 		}
 
@@ -180,17 +248,8 @@ private class GPGSignature : GPGBasic {
 				var t = s->timestamp;
 				var time = new DateTime.from_unix_utc (t);
 
-				stdout.printf("SigSum: %i\n", (int) s->summary);
-				stdout.printf("fpr=%s\n", s->fpr);
-				stdout.printf("status=%d\n", s->status);
-				stdout.printf("timestamp=%s\n", time.format ("%Y-%m-%d"));
-				stdout.printf("wrong_key_usage=%u\n", (uint) s->wrong_key_usage);
-				stdout.printf("pka_trust=%u\n", s->pka_trust);
-				stdout.printf("chain_model=%u\n", (uint) s->chain_model);
-				stdout.printf("validity=%d\n", s->validity);
-				stdout.printf("validity_reason=%d\n", s->validity_reason);
-				stdout.printf("key=%d\n", s->pubkey_algo);
-				stdout.printf("hash=%d\n", s->hash_algo);
+				stdout.printf ("%s\n", signature_details_as_string (s));
+
 				SigNotation *r;
 				for (r = s->notations; r != null; r = r->next) {
 					stdout.printf("notation.name=%s\n", r->name);
@@ -199,7 +258,7 @@ private class GPGSignature : GPGBasic {
 			}
 		}
 
-		process_sig_result (result);
+		process_sig_result (result, ctx);
 		debug ("Signature checked.");
 
 		return true;
@@ -218,4 +277,4 @@ private class GPGSignature : GPGBasic {
 
 }
 
-} // End of namespace
+} // End of namespace: Listaller
