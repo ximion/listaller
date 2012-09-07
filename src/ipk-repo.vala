@@ -27,19 +27,21 @@ namespace Listaller.IPK {
 
 /**
  * A Listaller repo has the following structure:
- * [/]                              - root
- *  reposetting                     - basic repository settings (IPK.MetaFile format)
- *  contents.tar.xz                 - DOAP data collected from all projects in the archive
- *  [appid1]                        - directory named after using AppItem appid
- *    apppackage-1.4_amd64+i386.ipk - optional: the multi-arch IPK package
- *    [amd64]                       - architecture dir
- *      apppackage-1.4_amd64.ipk    - IPK package to install
- *      [delta]                     - directory with package deltas
- *        appid-1.0-to-1.4.deltaipk - deltaIPK packages
- *        ...
- *    [i386]
- *    [all]                         - data for all architectures
- *  [appid2]
+ * [/]                                      - root
+ *  | reposetting                           - basic repository settings (MetaFile format)
+ *  | contents.xz                           - contents of this repository (MetaFile format)
+ *  | [appid1]                              - directory named after using AppItem appid
+ *  |  \| changelog                         - software changelog
+ *  |   | (?)appid1-1.4_amd64+i386.ipk      - optional: the multi-arch IPK package
+ *  |   | (?)appid1.doap                    - optional: application DOAP data (RDF)
+ *  |   | [amd64]                           - architecture dir
+ *  |   |  \| appid1-1.4_amd64.ipk          - IPK package to install
+ *  |   |   | [delta]                       - directory with package deltas
+ *  |   |      \| appid-1.0-to-1.4.deltaipk - deltaIPK packages
+ *  |   |       | ...
+ *  |   | [i386]
+ *  |   | [all]                             - data for all architectures
+ *  | [appid2]
  *    ...
  */
 
