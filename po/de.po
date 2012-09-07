@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-08-23 02:11+0200\n"
+"POT-Creation-Date: 2012-09-07 23:25+0200\n"
 "PO-Revision-Date: 2012-05-21 15:08+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -17,6 +17,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
 "X-Generator: Launchpad (build 15275)\n"
+
+msgid " bad-policy"
+msgstr ""
+
+msgid " chain-model"
+msgstr ""
+
+msgid " crl-missing"
+msgstr ""
+
+msgid " crl-too-old"
+msgstr ""
+
+msgid " green"
+msgstr ""
+
+#, fuzzy
+msgid " key-expired"
+msgstr "Ein Schlüssel ist abgelaufen"
+
+#, fuzzy
+msgid " key-missing"
+msgstr "Öffentlicher Schlüssel fehlt"
+
+msgid " red"
+msgstr ""
+
+msgid " revoked"
+msgstr ""
+
+msgid " sig-expired"
+msgstr ""
+
+msgid " sys-error"
+msgstr ""
+
+msgid " valid"
+msgstr ""
+
+msgid " wrong-key-usage"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -327,6 +368,17 @@ msgstr ""
 "Das Paket benutzt benutzerdefinierte Variablen - normalerweise ist dies "
 "nicht beabsichtigt, benachrichtigen Sie den Autor des Paketes!"
 
+msgid ""
+"PackageKit backend does not support finding packages by stuff they provide - "
+"Installer was unable to use native packages to satisfy dependencies of this "
+"application."
+msgstr ""
+
+msgid ""
+"PackageKit backend does not support searching for files - Installer was "
+"unable to use native packages to satisfy dependencies of this application."
+msgstr ""
+
 #, c-format
 msgid "PackageKit exit code was: %s"
 msgstr "PackageKit Ergebniscode war: %s"
@@ -362,6 +414,9 @@ msgstr ""
 msgid "Query returned no results. Maybe this DOAP data is broken?"
 msgstr ""
 "Die Anfrage hat keine Treffer. Vielleicht sind die DOAP-Daten beschädigt?"
+
+msgid "RFU"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Removal of %s completed successfully!"
@@ -478,6 +533,12 @@ msgstr ""
 msgid "This package could be dangerous!"
 msgstr "Dieses Paket könnte gefährlich sein!"
 
+msgid ""
+"This package is a delta-package, containing software patches. It is usually "
+"distributed via update-services, you can't install it using this tool. "
+"Please obtain a non-delta version of this application!"
+msgstr ""
+
 msgid "This package was built using a more recent version of Listaller.\n"
 msgstr ""
 
@@ -524,6 +585,9 @@ msgstr "Vertrauen ist gering"
 
 msgid "Trust is ultimate."
 msgstr "Vertrauen ist ultimativ"
+
+msgid "Trust level is unknown"
+msgstr ""
 
 msgid ""
 "Trying to remove local application, but AppManager is in superuser mode!\n"
@@ -683,6 +747,10 @@ msgstr ""
 msgid "Unable to write signature file! Message: %s"
 msgstr ""
 
+#, fuzzy
+msgid "Unknown"
+msgstr "Unbekannt."
+
 msgid "Unknown."
 msgstr "Unbekannt."
 
@@ -699,9 +767,6 @@ msgstr ""
 msgid "Validity is undefined"
 msgstr ""
 
-msgid "Validity is unknown"
-msgstr ""
-
 #, c-format
 msgid "We don't know a desktop-file for application '%s'!"
 msgstr "Die Desktop-Datei für die Anwendung '%s' ist unbekannt!"
@@ -713,14 +778,39 @@ msgstr ""
 msgid "ZI XML file '%s' is damaged."
 msgstr ""
 
+msgid "[None]"
+msgstr ""
+
+msgid "[bad validity value]"
+msgstr ""
+
+msgid "bad"
+msgstr ""
+
 #, c-format
 msgid "error: %s"
 msgstr "Fehler: %s"
+
+msgid "n/a"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "okay"
+msgstr ""
 
 msgid "personal"
 msgstr ""
 
 msgid "shared"
+msgstr ""
+
+#, c-format
+msgid "status ....: %s\n"
+msgstr ""
+
+msgid "yes"
 msgstr ""
 
 #~ msgid "%f files will be changed."

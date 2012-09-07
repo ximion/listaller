@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-08-23 02:11+0200\n"
+"POT-Creation-Date: 2012-09-07 23:25+0200\n"
 "PO-Revision-Date: 2009-12-07 23:19+0000\n"
 "Last-Translator: Costales <costales.marcos@gmail.com>\n"
 "Language-Team: Asturian <ast@li.org>\n"
@@ -17,6 +17,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
 "X-Generator: Launchpad (build 15275)\n"
+
+msgid " bad-policy"
+msgstr ""
+
+msgid " chain-model"
+msgstr ""
+
+msgid " crl-missing"
+msgstr ""
+
+msgid " crl-too-old"
+msgstr ""
+
+msgid " green"
+msgstr ""
+
+msgid " key-expired"
+msgstr ""
+
+msgid " key-missing"
+msgstr ""
+
+msgid " red"
+msgstr ""
+
+msgid " revoked"
+msgstr ""
+
+msgid " sig-expired"
+msgstr ""
+
+msgid " sys-error"
+msgstr ""
+
+msgid " valid"
+msgstr ""
+
+msgid " wrong-key-usage"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -297,6 +336,17 @@ msgid ""
 "contact the package author!"
 msgstr ""
 
+msgid ""
+"PackageKit backend does not support finding packages by stuff they provide - "
+"Installer was unable to use native packages to satisfy dependencies of this "
+"application."
+msgstr ""
+
+msgid ""
+"PackageKit backend does not support searching for files - Installer was "
+"unable to use native packages to satisfy dependencies of this application."
+msgstr ""
+
 #, c-format
 msgid "PackageKit exit code was: %s"
 msgstr ""
@@ -326,6 +376,9 @@ msgid "Query returned no results. Maybe there's no release defined?"
 msgstr ""
 
 msgid "Query returned no results. Maybe this DOAP data is broken?"
+msgstr ""
+
+msgid "RFU"
 msgstr ""
 
 #, c-format
@@ -430,6 +483,12 @@ msgstr ""
 msgid "This package could be dangerous!"
 msgstr ""
 
+msgid ""
+"This package is a delta-package, containing software patches. It is usually "
+"distributed via update-services, you can't install it using this tool. "
+"Please obtain a non-delta version of this application!"
+msgstr ""
+
 msgid "This package was built using a more recent version of Listaller.\n"
 msgstr ""
 
@@ -472,6 +531,9 @@ msgid "Trust is marginal"
 msgstr ""
 
 msgid "Trust is ultimate."
+msgstr ""
+
+msgid "Trust level is unknown"
 msgstr ""
 
 msgid ""
@@ -630,6 +692,9 @@ msgstr ""
 msgid "Unable to write signature file! Message: %s"
 msgstr ""
 
+msgid "Unknown"
+msgstr ""
+
 msgid "Unknown."
 msgstr ""
 
@@ -646,9 +711,6 @@ msgstr ""
 msgid "Validity is undefined"
 msgstr ""
 
-msgid "Validity is unknown"
-msgstr ""
-
 #, c-format
 msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
@@ -660,14 +722,39 @@ msgstr ""
 msgid "ZI XML file '%s' is damaged."
 msgstr ""
 
+msgid "[None]"
+msgstr ""
+
+msgid "[bad validity value]"
+msgstr ""
+
+msgid "bad"
+msgstr ""
+
 #, c-format
 msgid "error: %s"
+msgstr ""
+
+msgid "n/a"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "okay"
 msgstr ""
 
 msgid "personal"
 msgstr ""
 
 msgid "shared"
+msgstr ""
+
+#, c-format
+msgid "status ....: %s\n"
+msgstr ""
+
+msgid "yes"
 msgstr ""
 
 #~ msgid "Installation aborted."
