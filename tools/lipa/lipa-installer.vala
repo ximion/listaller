@@ -100,19 +100,30 @@ public class LipaInstaller : LipaModule {
 		// save cursor in new position
 		//print ("%c7", 0x1B);
 
+		bool clear_hint = false;
 		if (licenseLines.length > 1) {
 			print ("%s\n\n", _("License:"));
 			for (int i = 0; i < licenseLines.length; i++) {
-				print ("%s\r\r", licenseLines[i]);
+				if (clear_hint) {
+					stdout.printf ("\r                                  \r");
+					clear_hint = false;
+				}
+				stdout.printf ("%s\n", licenseLines[i]);
 				if ((i % 2) == 1) {
 					Posix.FILE? tty = console_get_tty ();
+					stdout.printf ("\r <<< Press ENTER to continue! >>>\r");
+					clear_hint = true;
 					// TODO: Text does not get erasted for some reason...
 					// => Implement this properly!
-					//print (" <<< Press ENTER to continue! >>>\r");
 					console_wait_for_enter (tty);
 				}
 			}
-			console_get_prompt (_("Do you accept these terms and conditions?"), false, true);
+			ret = console_get_prompt (_("Do you accept these terms and conditions?"), false, true);
+			// if user doesn't agree to the license, we have to exit
+			if (!ret) {
+				stdout.printf ("%s\n", _("You need to agree with the license to install & use the application. Exiting setup now."));
+				return;
+			}
 		}
 
 		// Display security info
