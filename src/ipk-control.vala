@@ -243,7 +243,7 @@ public class PackControl : Control {
 		bool ret;
 		ret = open_packsetting (fPackSetting);
 		if (!ret) {
-			debug ("Unable to load pksetting... Temporary file was: %s", fPackSetting);
+			Report.log_error ("Unable to load pksetting... Temporary file was: %s".printf (fPackSetting));
 			return false;
 		}
 
@@ -293,6 +293,13 @@ public class PackControl : Control {
 
 	private bool has_license_text () {
 		return (appItem.license.text != "") && (appItem.license.name != appItem.license.text);
+	}
+
+	public bool is_delta_pkg () {
+		if (packSetting.get_value ("Type").down () == "delta")
+			return true;
+
+		return false;
 	}
 
 	public bool save_to_dir (string dirPath) {

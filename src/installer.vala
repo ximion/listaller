@@ -137,6 +137,13 @@ public class Setup : MessageObject {
 			return false;
 		}
 
+		if (ipkp.control.is_delta_pkg ()) {
+			// How odd.. User tried to install a delta-IPK, the native installer does not support this
+			emit_error (ErrorEnum.IPK_NOT_SUPPORTED,
+				    _("This package is a delta-package, containing software patches. It is usually distributed via update-services, you can't install it using this tool. Please obtain a non-delta version of this application!"));
+			return false;
+		}
+
 		// Add original setup settings
 		setup_settings = ipkp.setup_settings;
 
