@@ -19,7 +19,6 @@
  */
 
 using GLib;
-using Xml;
 using Gee;
 using Listaller;
 using Listaller.Utils;
@@ -472,4 +471,4 @@ public class ControlDir : Control {
 
 }
 
-} // End of namespace
+} // End of namespace: Listaller.IPK

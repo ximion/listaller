@@ -73,6 +73,7 @@ pkg_check_modules(PACKAGEKIT_PLUGIN REQUIRED packagekit-plugin)
 
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	zfeed.vala
+	ipk-repo.vala
 	dep-manager.vala
 	dep-installer.vala
 	pkbackend-glue.vala
