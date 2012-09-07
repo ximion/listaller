@@ -148,7 +148,8 @@ public class PackSecurity : Object {
 			return SecurityLevel.DANGEROUS;
 
 		// Marginal trust for medium trust level
-		if (signature_trustlevel == SignTrust.MARGINAL)
+		if ((signature_trustlevel == SignTrust.MARGINAL) ||
+		    (signature_trustlevel == SignTrust.UNKNOWN))
 			return SecurityLevel.MEDIUM;
 
 		// Full & ultimate trust will allow a high trust level for this package
