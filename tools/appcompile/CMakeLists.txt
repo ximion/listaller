@@ -14,7 +14,7 @@ set(LIBUILD_SOURCES ${lisrc}/utils.vala
 			${lisrc}/reporting.vala
 			../lipkgen/lpkgutils.vala
 			acutils.vala
-			main.vala
+			appcompile.vala
 			autocompiler.vala
 			autostrip.vala
 )

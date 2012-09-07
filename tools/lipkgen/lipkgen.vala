@@ -1,4 +1,4 @@
-/* main.vala -- Main file for lipkgen
+/* lipkgen.vala -- Main file for lipkgen
  *
  * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *

@@ -1,4 +1,4 @@
-/* main.vala
+/* appcompile.vala
  *
  * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *

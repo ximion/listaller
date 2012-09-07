@@ -3,19 +3,8 @@
 find_package(Vala REQUIRED)
 include("${VALA_USE_FILE}")
 
-find_package(GLIB2 REQUIRED)
-find_package(Gettext REQUIRED)
-find_package(SQLite3 REQUIRED)
-find_package(LibArchive REQUIRED)
-find_package(GPGMe REQUIRED)
-find_library(M_LIB m)
-pkg_check_modules(GEE REQUIRED gee-1.0)
-pkg_check_modules(GIO2 REQUIRED gio-2.0)
-pkg_check_modules(REDLAND REQUIRED redland>=0.4)
-
-set(LIREPO_SOURCES ${LISTALLER_BASE_SOURCES}
-			${lisrc}/ipk-repo.vala
-			ipk-repo-local.vala
+set(LIREPO_SOURCES lirepo.vala
+		ipk-repo-local.vala
 )
 
 include_directories(${CMAKE_BINARY_DIR}
@@ -35,22 +24,23 @@ include_directories(${CMAKE_BINARY_DIR}
 add_definitions("-DG_LOG_DOMAIN=\"RepoTool\"")
 
 # Listaller repo-tool
-vala_add_executable (lirepo ${LIREPO_SOURCES} lirepo.vala
-			PACKAGES ${LISTALLER_BASE_VALA_DEPS}
-			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
+vala_add_executable (lirepo ${LIREPO_SOURCES}
+			PACKAGES ${LISTALLER_BASE_VALA_DEPS} listaller_internal packagekit-glib2
+			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
 )
+
+add_dependencies(lirepo_precompile listaller-glib)
 
 target_link_libraries(lirepo
 		${M_LIB}
 		${GLIB2_LIBRARIES}
 		${GEE_LIBRARIES}
 		${GIO2_LIBRARIES}
-		${SQLITE_LIBRARIES}
 		${LibArchive_LIBRARIES}
 		${LIBXML2_LIBRARIES}
 		${GPGME_VANILLA_LIBRARIES}
-		${PACKAGEKIT_LIBRARIES}
 		${REDLAND_LIBRARIES}
+		listaller-glib
 )
 
 install(TARGETS lirepo DESTINATION bin)
