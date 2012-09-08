@@ -47,7 +47,7 @@ public class LipaInstaller : LipaModule {
 	public void setup_status_changed (StatusItem status) {
 		if (status.status == StatusEnum.INSTALLATION_FINISHED) {
 			progress_bar.end ();
-			print ("Installation completed!\n");
+			print ("%s\n", _("Installation completed!"));
 			setup_running = false;
 		} else if (status.status == StatusEnum.ACTION_STARTED) {
 			setup_running = true;
@@ -111,10 +111,8 @@ public class LipaInstaller : LipaModule {
 				stdout.printf ("%s\n", licenseLines[i]);
 				if ((i % 2) == 1) {
 					Posix.FILE? tty = console_get_tty ();
-					stdout.printf ("\r <<< Press ENTER to continue! >>>\r");
+					stdout.printf (" %s \r", _("<<< Press ENTER to continue! >>>"));
 					clear_hint = true;
-					// TODO: Text does not get erasted for some reason...
-					// => Implement this properly!
 					console_wait_for_enter (tty);
 				}
 			}
