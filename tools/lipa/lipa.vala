@@ -87,12 +87,19 @@ public class CmdApp : Object {
 	}
 
 	[CCode (has_target = false)]
-	public static void handle_SIGINT(int sig_num ){
+	public static void handle_SIGINT (int sig_num ){
 		//stdout.write(STDOUT_FILENO, buffer, strlen(buffer));
+		// Clear line
+		stdout.printf ("                                              \r");
 		stdout.printf ("Terminating...\n");
 		if (lipa != null)
 			lipa.terminate_action ();
-		Posix.exit(0);
+
+		Posix.termios old = {0};
+		Posix.tcgetattr (0, out old);
+		console_termios_restore (old);
+
+		Posix.exit(13);
 	}
 
 	public void run () {
@@ -112,8 +119,8 @@ public class CmdApp : Object {
 		Posix.sigaction_t handler = Posix.sigaction_t ();
 		handler.sa_handler = handle_SIGINT;
 		handler.sa_flags = 0;
-		Posix.sigemptyset(handler.sa_mask);
-		Posix.sigaction(Posix.SIGINT, handler, null);
+		Posix.sigemptyset (handler.sa_mask);
+		Posix.sigaction (Posix.SIGINT, handler, null);
 
 		if (o_mode_install) {
 			if (value == null) {

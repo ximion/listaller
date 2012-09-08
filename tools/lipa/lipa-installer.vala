@@ -60,7 +60,7 @@ public class LipaInstaller : LipaModule {
 
 	public void install_package (string ipkfname) {
 		bool ret;
-		print ("Preparing... Please wait!");
+		print ("Preparing... Please wait!\r");
 
 		inst = new Setup (ipkfname);
 		inst.message.connect (setup_message);

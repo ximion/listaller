@@ -134,12 +134,34 @@ public string? console_readline_unbuffered (string prompt)
 	return str;
 }
 
+public void console_termios_noecho (termios old) {
+	old.c_lflag &= ~ICANON;
+	old.c_lflag &= ~ECHO;
+	old.c_cc[VMIN] = 1;
+	old.c_cc[VTIME] = 0;
+	if (Posix.tcsetattr (0, TCSANOW, old) < 0)
+		GLib.stderr.printf ("tcsetattr ~ICANON\n");
+}
+
+public void console_termios_restore (termios old) {
+	old.c_lflag |= ICANON;
+	old.c_lflag |= ECHO;
+	if (Posix.tcsetattr (0, TCSADRAIN, old) < 0)
+		GLib.stderr.printf ("tcsetattr ICANON\n");
+}
+
 public void console_wait_for_enter (FILE? atty = null) {
 	FILE tty;
 
 	tty = console_get_tty ();
 	if (tty == null)
 		return;
+
+	// prepare termios
+	termios old = {0};
+	if (Posix.tcgetattr (0, out old) < 0)
+		GLib.stderr.printf ("tcgetattr()\n");
+	console_termios_noecho (old);
 
 	while (true) {
 		int c;
@@ -155,6 +177,8 @@ public void console_wait_for_enter (FILE? atty = null) {
 			break;
 		}
 	}
+
+	console_termios_restore (old);
 }
 
 public bool console_get_prompt (string question, bool defaultyes, bool forceanswer = false)
