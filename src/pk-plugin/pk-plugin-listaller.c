@@ -755,5 +755,5 @@ pk_plugin_transaction_content_types (PkPlugin *plugin,
 				     PkTransaction *transaction)
 {
 	pk_transaction_add_supported_content_type (transaction,
-						   "application/x-installation");
+						   "application/x-app-package");
 }

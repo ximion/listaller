@@ -9,15 +9,15 @@ install(FILES package-x-ipk.png
 	DESTINATION share/pixmaps)
 
 # Graphics for "Distribution Tested" button
-install(FILES
-	libutton/left.png
-	libutton/firstblock.png
-	libutton/block.png
-	libutton/lastblock.png
-	DESTINATION share/listaller/graphics/libutton/
-)
-
-install(DIRECTORY libutton/distro
-	DESTINATION share/listaller/graphics/libutton
-	FILES_MATCHING PATTERN "*.png"
-)
+#install(FILES
+#	libutton/left.png
+#	libutton/firstblock.png
+#	libutton/block.png
+#	libutton/lastblock.png
+#	DESTINATION share/listaller/graphics/libutton/
+#)
+#
+#install(DIRECTORY libutton/distro
+#	DESTINATION share/listaller/graphics/libutton
+#	FILES_MATCHING PATTERN "*.png"
+#)
