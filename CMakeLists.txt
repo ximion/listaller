@@ -97,7 +97,7 @@ set(BIN_INSTALL_DIR bin CACHE PATH "Installation directory for executables")
 set(LIB_INSTALL_DIR lib/${CMAKE_LIBRARY_ARCHITECTURE} CACHE PATH "Installation directory for libraries")
 set(INC_INSTALL_DIR include CACHE PATH "Installation directory for headers")
 set(DATA_INSTALL_DIR share/listaller CACHE PATH "Installation directory for data files")
-set(SYSCONF_INSTALL_DIR etc CACHE PATH "Installation directory for system configuration files")
+set(SYSCONF_INSTALL_DIR /etc CACHE PATH "Installation directory for system configuration files")
 
 #
 # Configure files

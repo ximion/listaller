@@ -35,10 +35,11 @@ private static const string tmpdir_small = "/tmp";
 internal class Config : Object {
 	private const string confdir = "/etc/listaller";
 	private const string sudbdir = "/var/lib/listaller";
+	public const string datadir = PkgConfig.DATADIR + "/listaller";
 	private const string su_desktopdir = PkgConfig.PREFIXDIR + "/share/applications";
 	private const string su_icondir = "/usr/share/icons/hicolor";
 	private const string su_pixdir = "/usr/share/pixmaps";
-	private string[] lib_paths = { PkgConfig.PREFIXDIR + "/lib",
+	public string[] lib_paths = { PkgConfig.PREFIXDIR + "/lib",
 					   PkgConfig.PREFIXDIR + "/lib64",
 					   "/lib"};
 
@@ -91,6 +92,10 @@ internal class Config : Object {
 
 	public string shared_db_dir () {
 		return sudbdir;
+	}
+
+	public string data_dir () {
+		return datadir;
 	}
 
 	public string user_db_dir ()  {

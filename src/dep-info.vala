@@ -366,7 +366,7 @@ private class DepInfoGenerator : Object {
 	public DepInfoGenerator () {
 		// Load the default components
 		Listaller.Config conf = new Listaller.Config ();
-		string fname_default = Path.build_filename (conf.conf_dir (), "default-dependencies.list", null);
+		string fname_default = Path.build_filename (conf.data_dir (), "default-dependencies.list", null);
 		string fname_distro = Path.build_filename (conf.conf_dir (), "dependencies.list", null);
 
 		dlist = new ArrayList<IPK.Dependency> ();
