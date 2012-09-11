@@ -208,8 +208,7 @@ private class GPGSignature : GPGBasic {
 		VerifyResult *result;
 		bool ret;
 
-		err = Context.Context (out ctx);
-		ctx.set_protocol (Protocol.OpenPGP);
+		err = new_context (out ctx);
 
 		return_if_fail (check_gpg_err (err));
 

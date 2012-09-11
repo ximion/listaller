@@ -471,24 +471,28 @@ private class Package : MessageObject {
 			return null;
 		}
 
-		weak Entry e;
-		while (ar.next_header (out e) == Result.OK) {
-			// Extract control files
-			if (e.pathname () == "_signature") {
-				ret = extract_entry_to (ar, e, wdir);
-				if (!ret) {
-					Report.log_warning (_("Unable to extract signature! Maybe package is not signed."));
-				}
-				break;
-			} else {
-				ar.read_data_skip ();
-			}
-		}
-		ar.close ();
-		if (!ret)
-			return null;
-
 		var file = File.new_for_path (Path.build_filename (wdir, "_signature", null));
+
+		if (!file.query_exists ()) {
+			weak Entry e;
+			while (ar.next_header (out e) == Result.OK) {
+				// Extract control files
+				if (e.pathname () == "_signature") {
+					ret = extract_entry_to (ar, e, wdir);
+					if (!ret) {
+						Report.log_warning (_("Unable to extract signature! Maybe package is not signed."));
+					}
+					break;
+				} else {
+					ar.read_data_skip ();
+				}
+			}
+			ar.close ();
+			if (!ret)
+				return null;
+		}
+
+		// if the signature is still not extracted, we simply don't have one
 		if (!file.query_exists ()) {
 			return null;
 		}

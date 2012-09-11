@@ -857,7 +857,8 @@ namespace GPG {
 		[CCode (cname = "gpgme_ctx_get_engine_info")]
 		public EngineInfo* get_engine_info();
 
-		public GPGError.ErrorCode set_engine_info(Protocol proto, string file_name, string home_dir);
+		[CCode (cname = "gpgme_ctx_set_engine_info")]
+		public GPGError.ErrorCode set_engine_info(Protocol proto, string file_name, string? home_dir);
 
 		/**
 		 * Delete all signers
@@ -1032,6 +1033,17 @@ namespace GPG {
 
 	[CCode (cname = "gpgme_passphrase_cb_t", has_target = false)]
 	public delegate GPGError.ErrorCode passphrase_callback(void* hook, string uid_hint, string passphrase_info, bool prev_was_bad, int fd);
+
+#if 0
+	/**
+	 * Set the default engine info for the protocol PROTO to the file name
+	 * FILE_NAME and the home directory HOME_DIR.
+	 */
+	[CCode (cname = "gpgme_set_engine_info")]
+	public GPGError.ErrorCode set_engine_info (Protocol proto,
+							string file_name,
+							string? home_dir);
+#endif
 
 	/**
 	 * Get version of libgpgme

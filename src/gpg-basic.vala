@@ -26,9 +26,12 @@ using Listaller.Utils;
 namespace Listaller {
 
 internal abstract class GPGBasic : Object {
+	private string keyring_dir;
 
 	public GPGBasic (Protocol proto) {
 		init_gpgme (proto);
+
+		keyring_dir = Path.build_filename (Config.datadir, "keyring", null);
 	}
 
 	private void init_gpgme (Protocol proto) {
@@ -48,6 +51,18 @@ internal abstract class GPGBasic : Object {
 			return false;
 		}
 		return true;
+	}
+
+	protected GPGError.ErrorCode new_context (out Context ctx, string? home_dir = null) {
+		GPGError.ErrorCode err;
+		string home = home_dir;
+		if (home_dir == null)
+			home = keyring_dir;
+		err = Context.Context (out ctx);
+		ctx.set_protocol (Protocol.OpenPGP);
+		ctx.set_engine_info (Protocol.OpenPGP, "/usr/bin/gpg", home);
+
+		return err;
 	}
 
 	protected string free_data_to_string (Data **dt) {
