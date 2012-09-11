@@ -78,7 +78,7 @@ private abstract class PkListallerTask : MessageObject {
 			if (pkbproxy == null) {
 				// We don't have a PK backend! This must not happen, if we run as root.
 				var msg = _("Could not obtain a PkBackendProxy instance. Maybe the Listaller-PkPlugin is not installed or broken?");
-				set_error (ErrorEnum.UNKNOWN, msg);
+				set_error (ErrorEnum.INTERNAL, msg);
 				critical (msg);
 			}
 		}
@@ -157,7 +157,8 @@ private class PkResolver : PkListallerTask {
 		string[] packages = sack.get_ids ();
 
 		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (packages[0] == null) ) {
-			set_error (ErrorEnum.UNKNOWN, "%s\n%s".printf (_("Unable to find native package for '%s'!").printf (dep.full_name),
+			set_error (ErrorEnum.INTERNAL,
+				   "%s\n%s".printf (_("Unable to find native package for '%s'!").printf (dep.full_name),
 				_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())))
 			);
 			return null;

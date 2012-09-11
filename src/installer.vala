@@ -169,7 +169,7 @@ public class Setup : MessageObject {
 
 		// Open & lock database (we need write access here!)
 		if (!db.open_write ()) {
-			emit_error (ErrorEnum.DB_OPEN_FAILED,
+			emit_error (ErrorEnum.DATABASE_OPEN_FAILED,
 				    _("Could not open the software database, maybe it is locked at time.\nPlease close all other running installations to continue!"));
 			return false;
 		}
@@ -404,6 +404,26 @@ public class Setup : MessageObject {
 			emit_error (ErrorEnum.WRONG_ARCHITECTURE,
 				_("The installer will only work with the %s operating system, but you use '%s'.\nSetup can not continue, sorry.").printf ("Linux", system_os_full ()));
 			return false;
+		}
+
+		// check if admin allowed to install a package of this security level
+		var conf = new Config ();
+		IPK.PackSecurity sec = get_security_info ();
+		string? minSecLevel = conf.installer_get_str ("MinimumTrustLevel");
+		// choose "low" if no value was set
+		if (minSecLevel == null)
+			minSecLevel = "low";
+		var mSecLvl = SecurityLevel.from_string (minSecLevel);
+		var pkgSecLvl = sec.get_level ();
+		if (pkgSecLvl < mSecLvl) {
+			// we are not allowed to install this package!
+			emit_error (ErrorEnum.ACTION_NOT_ALLOWED,
+				    _("You are not allowed to install this package, because it's security level is '%s' and you need at least a package with security-level '%s'.\n" +
+					"Please obtain this application from a safe source with good signature and try again!").printf (pkgSecLvl.to_string (), mSecLvl.to_string ()));
+			// if we're in unittestmode, we need to continue here
+			debug ("Unittestmode: %i", (int) __unittestmode);
+			if ((!__unittestmode) && (settings.current_mode == IPK.InstallMode.TEST))
+				return false;
 		}
 
 		// NOTE: We use Listaller Reporting here!

@@ -74,15 +74,18 @@ public class Manager : MessageObject {
 		sdb = db;
 		if (writeable) {
 			if (!db.open_write ()) {
-				emit_error (ErrorEnum.DB_OPEN_FAILED, _("Unable to open software database for reading & writing!"));
+				emit_error (ErrorEnum.DATABASE_OPEN_FAILED,
+					    _("Unable to open software database for reading & writing!"));
 				return false;
 			}
 		} else {
 			if (!db.open_read ()) {
-				emit_error (ErrorEnum.DB_OPEN_FAILED, _("Unable to open software database for reading only!"));
+				emit_error (ErrorEnum.DATABASE_OPEN_FAILED,
+					    _("Unable to open software database for reading only!"));
 				return false;
 			}
 		}
+
 		return true;
 	}
 
