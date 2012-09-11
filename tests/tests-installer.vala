@@ -38,7 +38,9 @@ void test_setup_message_cb (MessageItem item) {
 void test_setup_error_code_cb (ErrorItem item) {
 	msg ("Received error:");
 	msg (" " + item.to_string ());
-	error (item.details);
+	// skip all permission-errors
+	if (item.error != ErrorEnum.ACTION_NOT_ALLOWED)
+		error (item.details);
 }
 
 void test_install_package () {
@@ -49,6 +51,7 @@ void test_install_package () {
 
 	// Excludes stuff like PK dependency installing from testing
 	__unittestmode = true;
+	Report.set_print_fatal_msg (false);
 
 	Setup setup = new Setup (ipkfilename);
 	setup.error_code.connect (test_setup_error_code_cb);

@@ -67,14 +67,6 @@ vala_add_executable (li-test-ipk ${LIUNITTEST_SOURCES} tests-ipk.vala
 )
 add_test(ipk-test li-test-ipk ${CMAKE_CURRENT_SOURCE_DIR})
 
-# IPK installer tests
-vala_add_executable (li-test-installer ${LIUNITTEST_SOURCES} tests-installer.vala
-				BASE_DIR ${lisrc}
-				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
-				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
-)
-add_test(installer-test li-test-installer ${CMAKE_CURRENT_SOURCE_DIR})
-
 if(TOOLS)
 # Lipkgen tests
 vala_add_executable (li-test-ipkbuild ${LIUNITTEST_SOURCES} tests-ipkbuild.vala
@@ -87,6 +79,14 @@ add_test(ipkbuild-test li-test-ipkbuild ${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_BINARY_DIR}/tools/lipkgen/lipkgen
 )
 endif(TOOLS)
+
+# IPK installer tests
+vala_add_executable (li-test-installer ${LIUNITTEST_SOURCES} tests-installer.vala
+				BASE_DIR ${lisrc}
+				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
+				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
+)
+add_test(installer-test li-test-installer ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Dependency solver tests
 vala_add_executable (li-test-depmanager ${LIUNITTEST_SOURCES} tests-depmanager.vala
