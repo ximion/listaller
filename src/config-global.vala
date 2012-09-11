@@ -33,13 +33,11 @@ private static const string tmpdir_small = "/tmp";
  * Provides global Listaller configuration.
  */
 internal class Config : Object {
-
-	const string confdir = "/etc/listaller";
-	const string sudbdir = "/var/lib/listaller";
-	const string su_instroot = "/opt";
-	const string su_desktopdir = PkgConfig.PREFIXDIR + "/share/applications";
-	const string su_icondir = "/usr/share/icons/hicolor";
-	const string su_pixdir = "/usr/share/pixmaps";
+	private const string confdir = "/etc/listaller";
+	private const string sudbdir = "/var/lib/listaller";
+	private const string su_desktopdir = PkgConfig.PREFIXDIR + "/share/applications";
+	private const string su_icondir = "/usr/share/icons/hicolor";
+	private const string su_pixdir = "/usr/share/pixmaps";
 	private string[] lib_paths = { PkgConfig.PREFIXDIR + "/lib",
 					   PkgConfig.PREFIXDIR + "/lib64",
 					   "/lib"};
@@ -50,6 +48,10 @@ internal class Config : Object {
 	internal const string sys_sharedir = PkgConfig.PREFIXDIR + "/share";
 	internal const string sys_etcdir = "/etc";
 
+	private string su_instroot;
+
+	private KeyFile keyf;
+
 	public Config () {
 		// Append some Debian-specific multiarch paths
 		string triplet = "%s-%s-gnu".printf (Utils.system_machine (), Utils.system_os ());
@@ -58,6 +60,20 @@ internal class Config : Object {
 		lib_paths += Path.build_filename ("/usr", "lib", triplet, "mesa");
 		// null-terminate paths list
 		lib_paths += null;
+
+		// load Listaller config
+		keyf = new KeyFile ();
+		try {
+			keyf.load_from_file (Path.build_filename (conf_dir (), "Listaller.conf", null),
+						KeyFileFlags.NONE);
+		} catch (Error e) {}
+
+		// load install-root
+		try {
+			su_instroot = keyf.get_string ("General", "UseInstallRoot");
+		} catch (Error e) {
+			su_instroot = "/opt";
+		}
 	}
 
 	[CCode (array_length = false, array_null_terminated = true)]
@@ -139,6 +155,51 @@ internal class Config : Object {
 		}
 		return res;
 	}
+
+	public string? installer_get_str (string key) {
+		string? str;
+		try {
+			str = keyf.get_string ("Installer", key);
+		} catch (Error e) {
+			return null;
+		}
+
+		return str;
+	}
+
+	public bool installer_get_bool (string key) {
+		bool ret;
+		try {
+			ret = keyf.get_boolean ("Installer", key);
+		} catch (Error e) {
+			return false;
+		}
+
+		return ret;
+	}
+
+	public string? manager_get_str (string key) {
+		string? str;
+		try {
+			str = keyf.get_string ("Manager", key);
+		} catch (Error e) {
+			return null;
+		}
+
+		return str;
+	}
+
+	public bool manager_get_bool (string key) {
+		bool ret;
+		try {
+			ret = keyf.get_boolean ("Manager", key);
+		} catch (Error e) {
+			return false;
+		}
+
+		return ret;
+	}
+
 }
 
 private bool find_library (string libname, Config conf) {

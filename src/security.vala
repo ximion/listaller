@@ -24,32 +24,42 @@ using Listaller;
 namespace Listaller {
 
 public enum SecurityLevel {
-	UNKNOWN,
-	HIGH,
-	MEDIUM,
+	DANGEROUS,
 	LOW,
-	DANGEROUS;
+	MEDIUM,
+	HIGH;
 
 	public string to_string() {
 		switch (this) {
-			case UNKNOWN:
-				return _("Unknown.");
-
 			case HIGH:
-				return _("Should be safe.");
+				return _("high");
 
 			case MEDIUM:
-				return _("Medium security.");
+				return _("medium");
 
 			case LOW:
-				return _("Low security.");
+				return _("low");
 
 			case DANGEROUS:
-				return _("This package could be dangerous!");
+				return _("dangerous");
 
 			default:
 				return ("Security level is: [%d]").printf((int) this);
 		}
+	}
+
+	public static SecurityLevel from_string (string str) {
+		string s = str.down ();
+		if (s == "high")
+			return LOW;
+		if (s == "medium")
+			return LOW;
+		if (s == "low")
+			return LOW;
+		if (s == "dangerous")
+			return LOW;
+
+		return LOW;
 	}
 }
 
@@ -158,6 +168,26 @@ public class PackSecurity : Object {
 			return SecurityLevel.HIGH;
 
 		return SecurityLevel.LOW;
+	}
+
+	public string get_level_as_string () {
+		SecurityLevel lev = get_level ();
+		switch (lev) {
+			case SecurityLevel.HIGH:
+				return _("Should be safe to use.");
+
+			case SecurityLevel.MEDIUM:
+				return _("Medium security.");
+
+			case SecurityLevel.LOW:
+				return _("Low security.");
+
+			case SecurityLevel.DANGEROUS:
+				return _("This package could be dangerous!");
+
+			default:
+				return ("Security level is: [%d]").printf((int) this);
+		}
 	}
 }
 
