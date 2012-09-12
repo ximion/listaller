@@ -897,7 +897,7 @@ namespace GPG {
 		 * Get key with the fingerprint FPR from the crypto backend.
 		 * If SECRET is true, get the secret key.
 		 */
-		public GPGError.ErrorCode get_key(string fpr, out Key key, bool secret);
+		public GPGError.ErrorCode get_key (string fpr, out Key key, bool secret);
 
 		/**
 		 * process the pending operation and, if hang is true, wait for
@@ -952,6 +952,12 @@ namespace GPG {
 		 * NULL all keys will be exported.
 		 */
 		public GPGError.ErrorCode op_export(string? pattern, ExportMode mode, Data keydata);
+
+		/** Import the keys from the array KEYS into the keyring.  */
+		public GPGError.ErrorCode op_import_keys_start ([CCode (array_length = false)] Key[] keys);
+		public GPGError.ErrorCode op_import_keys ([CCode (array_length = false)] Key[] keys);
+
+
 	}
 
 	/**

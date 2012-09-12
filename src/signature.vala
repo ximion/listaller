@@ -22,10 +22,11 @@ using GLib;
 using GPG;
 using Listaller;
 using Listaller.Utils;
+using Listaller.GPGEx;
 
 namespace Listaller {
 
-private class GPGSignature : GPGBasic {
+private class GPGSignature : Object {
 	private string signtext;
 
 	public SignStatus sigstatus { get; set; }
@@ -33,7 +34,7 @@ private class GPGSignature : GPGBasic {
 	public bool sig_valid { get; set; }
 
 	public GPGSignature (string sig) {
-		base (Protocol.OpenPGP);
+		init_gpgme (Protocol.OpenPGP);
 
 		signtext = sig;
 		sig_valid = false;
@@ -138,18 +139,6 @@ private class GPGSignature : GPGBasic {
 
 		// set trust level for this signature
 		trust_level = sigvalidity_to_trustlevel (sig->validity);
-#if 0
-		Key key;
-		err = ctx.get_key (sig->fpr, out key, false);
-		check_gpg_err (err);
-		if (key != null) {
-			debug ("OwnerTrust: %i", (int) key.owner_trust);
-			trust_level = sigvalidity_to_trustlevel (key.owner_trust);
-		} else {
-			debug ("Signature key was NULL!");
-			trust_level = SignTrust.UNKNOWN;
-		}
-#endif
 
 		debug ("Signature Details:\n%s", signature_details_as_string (sig));
 

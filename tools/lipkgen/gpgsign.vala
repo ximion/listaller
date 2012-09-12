@@ -21,13 +21,14 @@
 using GLib;
 using GPG;
 using Listaller;
+using Listaller.GPGEx;
 
 namespace Listaller {
 
-private class GPGSign : GPGBasic {
+private class GPGSign : Object {
 
 	public GPGSign () {
-		base (Protocol.OpenPGP);
+		init_gpgme (Protocol.OpenPGP);
 	}
 
 	private bool check_result (SignResult *result, SigMode type) {

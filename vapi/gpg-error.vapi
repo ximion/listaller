@@ -406,6 +406,9 @@ namespace GPGError {
 
 		[CCode (cname = "gpgme_strerror")]
 		public unowned string to_string ();
+
+		[CCode (cname = "gpg_err_code")]
+		public ErrorCode code ();
 	}
 
 	[CCode (cname = "gpgme_strsource")]

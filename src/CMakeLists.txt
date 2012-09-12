@@ -25,7 +25,6 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/logging.vala
 	${lisrc}/ipk-control.vala
 	${lisrc}/ipk-package.vala
 	${lisrc}/gpg-basic.vala
-	${lisrc}/signature.vala
 	${lisrc}/security.vala
 	${lisrc}/dep-info.vala
 	${lisrc}/version.vala
@@ -79,6 +78,8 @@ set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	pkbackend-glue.vala
 	pkit-tasks.vala
 	feed-installer.vala
+	signature.vala
+	key-manager.vala
 	manager.vala
 	installer.vala
 )

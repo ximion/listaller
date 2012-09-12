@@ -1,4 +1,4 @@
-/* tests-security.vala
+/* tests-signatures.vala
  *
  * Copyright (C) 2011-2012 Matthias Klumpp
  *
@@ -66,7 +66,7 @@ void test_sign_failing () {
 }
 
 int main (string[] args) {
-	msg ("=== Running Security Tests ===");
+	msg ("=== Running Signature Tests ===");
 	datadir = args[1];
 	assert (datadir != null);
 	foobar_dir = Path.build_filename (datadir, "foobar", null);

@@ -53,7 +53,7 @@ option(VISUAL_LDD "Build the Visual-LDD utility" OFF)
 option(L18N "Enable localization" ON)
 option(TESTS "Enable Listaller's Unit Tests" OFF)
 option(TEST_DEPMANAGER "Test Listaller's dependency solver" OFF)
-option(TEST_SECURITY "Enable Listaller signing/security tests" OFF)
+option(TEST_SIGNING "Enable Listaller signing tests" OFF)
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX

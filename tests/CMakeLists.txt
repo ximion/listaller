@@ -98,13 +98,21 @@ if(TEST_DEPMANAGER)
 	add_test(depmanager-test li-test-depmanager ${CMAKE_CURRENT_SOURCE_DIR})
 endif(TEST_DEPMANAGER)
 
-# Tests of package security (GPG signing etc.)
-vala_add_executable (li-test-security ${LIUNITTEST_SOURCES} ../tools/lipkgen/lpkgutils.vala
-							../tools/lipkgen/gpgsign.vala tests-security.vala
+# Tests of GPG signing
+vala_add_executable (li-test-signatures ${LIUNITTEST_SOURCES} ../tools/lipkgen/lpkgutils.vala
+							../tools/lipkgen/gpgsign.vala tests-signatures.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
 )
-if(TEST_SECURITY)
-	add_test(security-test li-test-security ${CMAKE_CURRENT_SOURCE_DIR})
-endif(TEST_SECURITY)
+if(TEST_SIGNING)
+	add_test(signatures-test li-test-signatures ${CMAKE_CURRENT_SOURCE_DIR})
+endif(TEST_SIGNING)
+
+# GPG Keydatabase tests
+vala_add_executable (li-test-keydb ${LIUNITTEST_SOURCES} tests-keydb.vala
+				BASE_DIR ${lisrc}
+				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
+				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
+)
+add_test(keydb-test li-test-keydb ${CMAKE_CURRENT_SOURCE_DIR})

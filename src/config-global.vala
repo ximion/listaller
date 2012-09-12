@@ -34,14 +34,15 @@ private static const string tmpdir_small = "/tmp";
  */
 internal class Config : Object {
 	private const string confdir = "/etc/listaller";
-	private const string sudbdir = "/var/lib/listaller";
-	public const string datadir = PkgConfig.DATADIR + "/listaller";
+	private const string suworkdir = "/var/lib/listaller";
+	private const string datadir = PkgConfig.DATADIR + "/listaller";
 	private const string su_desktopdir = PkgConfig.PREFIXDIR + "/share/applications";
 	private const string su_icondir = "/usr/share/icons/hicolor";
 	private const string su_pixdir = "/usr/share/pixmaps";
 	public string[] lib_paths = { PkgConfig.PREFIXDIR + "/lib",
 					   PkgConfig.PREFIXDIR + "/lib64",
 					   "/lib"};
+	public const string keyring_dir = suworkdir + "/keyring";
 
 	// System directories
 	internal const string sys_libdir = PkgConfig.LIBDIR;
@@ -91,7 +92,7 @@ internal class Config : Object {
 	}
 
 	public string shared_db_dir () {
-		return sudbdir;
+		return Path.build_filename (suworkdir, "db", null);
 	}
 
 	public string data_dir () {
