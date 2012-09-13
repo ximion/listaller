@@ -67,6 +67,7 @@ public enum SignStatus {
 	UNKNOWN,
 	VALID,
 	KEY_EXPIRED,
+	KEY_MISSING,
 	CERT_REVOKED,
 	SIG_EXPIRED,
 	BAD,
@@ -83,6 +84,9 @@ public enum SignStatus {
 
 			case KEY_EXPIRED:
 				return _("One key has expired");
+
+			case KEY_MISSING:
+				return _("Key is missing");
 
 			case CERT_REVOKED:
 				return _("One key has been revoked");

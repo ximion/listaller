@@ -41,6 +41,21 @@ private void init_gpgme (Protocol proto) {
 	check_gpg_err (err);
 }
 
+private bool write_gpg_config_to_homedir (string homedir) {
+	bool ret;
+	string config = "# Options for GnuPG used by Listaller \n\n" +
+			"no-greeting\n" +
+			"no-permission-warning\n" +
+			"lock-never\n" +
+			"keyserver-options timeout=10\n\n" +
+			"keyserver hkp://keys.gnupg.net\n" +
+			"#keyserver hkp://keyring.debian.org\n\n" +
+			"keyserver-options auto-key-retrieve\n";
+	ret = save_string_to_file (Path.build_filename (homedir, "gpg.conf", null), config);
+
+	return ret;
+}
+
 internal static bool check_gpg_err (GPGError.ErrorCode err) {
 	if (err != GPGError.ErrorCode.NO_ERROR) {
 		warning ("GPGError: %s", err.to_string ());

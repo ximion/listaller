@@ -91,6 +91,7 @@ public class KeyManager : MessageObject {
 
 	internal TmpContext get_tmp_context_with_key (string fpr) {
 		GPGError.ErrorCode err;
+		bool ret;
 		var tmpctx = TmpContext ();
 
 		string template = Path.build_filename (Config.tmpdir_volatile, "ligpgtmp-XXXXXX", null);
@@ -99,12 +100,15 @@ public class KeyManager : MessageObject {
 			error ("Unable to create tmp-dir! Error: %s", GLib.strerror (GLib.errno));
 		}
 		tmpctx.homedir = homedir;
+		write_gpg_config_to_homedir (tmpctx.homedir);
 
-		err = new_context (out tmpctx.context);
+		err = new_context (out tmpctx.context, homedir);
 		return_val_if_fail (check_gpg_err (err), null);
 		tmpctx.context->set_armor (true);
 
-		import_key_internal (tmpctx.context, fpr);
+		ret = import_key_internal (tmpctx.context, fpr);
+		if (!ret)
+			debug ("Unable to import key into temporary dummy keyring!");
 
 		return tmpctx;
 	}

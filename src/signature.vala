@@ -32,13 +32,13 @@ private class GPGSignature : Object {
 
 	public SignStatus sigstatus { get; set; }
 	public SignTrust trust_level { get; set; }
-	public bool sig_valid { get; set; }
+	public bool valid { get; set; }
 
 	public GPGSignature (string sig) {
 		keymgr = new KeyManager ();
 
 		signtext = sig;
-		sig_valid = false;
+		valid = false;
 		sigstatus = SignStatus.UNKNOWN;
 		// we have a marginal trust level by default
 		trust_level = SignTrust.MARGINAL;
@@ -127,25 +127,17 @@ private class GPGSignature : Object {
 		return res_text;
 	}
 
-	private bool process_sig_result (VerifyResult *result, Context ctx) {
+	private bool process_sig_result (Signature *sig, Context ctx) {
 		GPGError.ErrorCode err;
-		Signature *sig = result->signatures;
-
-		if ((sig == null) || (sig->next != null)) {
-			warning ("Unexpected number of signatures!");
-			return false;
-		}
 
 		var sig_estatus = (GPGError.ErrorCode) sig->status;
 
 		// set trust level for this signature
 		trust_level = sigvalidity_to_trustlevel (sig->validity);
 
-		debug ("Signature Details:\n%s", signature_details_as_string (sig));
-
 		if (sig_estatus == GPGError.ErrorCode.NO_ERROR) {
 			sigstatus = SignStatus.VALID;
-			sig_valid = true;
+			valid = true;
 		} else if ((sig_estatus & GPGError.ErrorCode.BAD_SIGNATURE) > 0) {
 			sigstatus = SignStatus.BAD;
 		} else if ((sig_estatus & GPGError.ErrorCode.KEY_EXPIRED) > 0) {
@@ -169,13 +161,23 @@ private class GPGSignature : Object {
 				warning (msg);
 		}
 
+		if ((sig->summary & Sigsum.KEY_MISSING) > 0) {
+			sigstatus = SignStatus.KEY_MISSING;
+		}
+
+		// If we have one of these statuses already, it doesn't make sense to continue here
+		if ((sigstatus == SignStatus.KEY_MISSING) ||
+		    (sigstatus == SignStatus.NO_PUBKEY)) {
+			return false;
+		}
+
 		if (sig->status != GPGError.ErrorCode.NO_ERROR) {
 			string msg = "Unexpected signature status: %s".printf (sig->status.to_string ());
 			if (__unittestmode)
 				Report.log_warning (msg);
 			else
 				warning (msg);
-			sig_valid = false;
+			valid = false;
 		}
 
 		if (sig->wrong_key_usage) {
@@ -191,49 +193,68 @@ private class GPGSignature : Object {
 		return true;
 	}
 
-	private bool check_signature_internal (Context ctx, Data sig, Data dat) {
-		bool ret;
+	private VerifyResult *context_verify (Context ctx, Data sig_data, Data dat) {
 		GPGError.ErrorCode err;
 		VerifyResult *result;
 
-		err = ctx.op_verify (sig, dat, null);
+		err = ctx.op_verify (sig_data, dat, null);
 		if (!check_gpg_err (err))
-			return false;
+			return null;
 		result = ctx.op_verify_result ();
 
 		if (result == null) {
 			critical ("Error communicating with libgpgme: no result record!");
+			return null;
+		}
+
+		return result;
+	}
+
+	private bool check_signature_internal (Data sig_data, Data dat) {
+		bool ret;
+		unowned Context ctx;
+		VerifyResult *result;
+
+		ctx = keymgr.get_main_context ();
+
+		result = context_verify (ctx, sig_data, dat);
+		if (result == null)
+			return false;
+
+		Signature *sig = result->signatures;
+
+		if ((sig == null) || (sig->next != null)) {
+			warning ("Unexpected number of signatures!");
 			return false;
 		}
 
-		if (__unittestmode) {
-			Signature *s = result->signatures;
-			while (s != null) {
-				var t = s->timestamp;
-				var time = new DateTime.from_unix_utc (t);
+		ret = process_sig_result (sig, ctx);
+		if ((!ret) && (sigstatus == SignStatus.KEY_MISSING) && (sig->fpr != null)) {
+			// Key seems to be missing, so fetch it and try again!
+			TmpContext tmpctx = keymgr.get_tmp_context_with_key (sig->fpr);
 
-				stdout.printf ("%s\n", signature_details_as_string (s));
+			sig_data.seek (0, Posix.SEEK_SET);
+			dat.seek (0, Posix.SEEK_SET);
+			result = context_verify (tmpctx.context, sig_data, dat);
+			if (result == null)
+				return false;
+			// now check the result
+			sig = result->signatures;
+			ret = process_sig_result (sig, tmpctx.context);
 
-				SigNotation *r;
-				for (r = s->notations; r != null; r = r->next) {
-					stdout.printf("notation.name=%s\n", r->name);
-				}
-				s = s->next;
-			}
+			// ensure tmp context is deleted properly (I hate this hack...)
+			keymgr.delete_tmp_context (tmpctx);
 		}
 
-		ret = process_sig_result (result, ctx);
+		debug ("Signature Details:\n%s", signature_details_as_string (sig));
 
 		return ret;
 	}
 
 	private bool verify_package_internal (string ctrl_fname) {
-		unowned Context ctx;
 		GPGError.ErrorCode err;
 		Data sig, dt;
 		bool ret;
-
-		ctx = keymgr.get_main_context ();
 
 		err = Data.create (out dt);
 		return_if_fail (check_gpg_err (err));
@@ -250,7 +271,7 @@ private class GPGSignature : Object {
 		sig.seek (0, Posix.SEEK_SET);
 		dt.seek (0, Posix.SEEK_SET);
 
-		check_signature_internal (ctx, sig, dt);
+		check_signature_internal (sig, dt);
 
 		debug ("Signature checked.");
 

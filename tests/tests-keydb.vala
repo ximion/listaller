@@ -31,12 +31,29 @@ void msg (string s) {
 }
 
 void test_keydb () {
+	msg ("~~ Testing KeyDB ~~");
 	KeyManager keymgr = new KeyManager ();
 
 	var k = keymgr.lookup_key ("0xBF4DECEB");
 	assert (k != null);
 	msg (k.uids->name);
 	assert (k.uids->name == "Matthias Klumpp");
+}
+
+void test_signature_validation () {
+	msg ("~~ Testing signature validation ~~");
+	bool ret;
+
+	string sigtext = Utils.load_file_to_string (Path.build_filename (datadir, "sigtest-signature.asc", null));
+	string pkgdata_path = Path.build_filename (datadir, "sigtest-control.tar.xz", null);
+
+	var sign = new GPGSignature (sigtext);
+	ret = sign.verify_package (pkgdata_path);
+	assert (ret == true);
+	assert (sign.valid == true);
+	assert (sign.sigstatus == SignStatus.VALID);
+
+	debug (sign.trust_level.to_string ());
 }
 
 int main (string[] args) {
@@ -55,6 +72,7 @@ int main (string[] args) {
 	add_log_domain ("LiTest");
 
 	test_keydb ();
+	test_signature_validation ();
 
 	Test.run ();
 	return 0;

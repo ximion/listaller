@@ -486,7 +486,7 @@ public static string li_build_filename (string first_element, ...) {
 	return path;
 }
 
-private string? load_file_to_string (string fname) throws IOError {
+internal string? load_file_to_string (string fname) throws IOError {
 	var file = File.new_for_path (fname);
 	if (!file.query_exists ()) {
 		return null;
@@ -566,4 +566,4 @@ private string concat_binfiles (string afname, string bfname) {
 	return f.get_path ();
 }
 
-} // End of namespace
+} // End of namespace: Listaller.Utils
