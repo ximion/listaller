@@ -99,14 +99,14 @@ if(TEST_DEPMANAGER)
 endif(TEST_DEPMANAGER)
 
 # Tests of GPG signing
-vala_add_executable (li-test-signatures ${LIUNITTEST_SOURCES} ../tools/lipkgen/lpkgutils.vala
-							../tools/lipkgen/gpgsign.vala tests-signatures.vala
+vala_add_executable (li-test-signing ${LIUNITTEST_SOURCES} ../tools/lipkgen/lpkgutils.vala
+							../tools/lipkgen/gpgsign.vala tests-signing.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
 )
 if(TEST_SIGNING)
-	add_test(signatures-test li-test-signatures ${CMAKE_CURRENT_SOURCE_DIR})
+	add_test(signatures-test li-test-signing ${CMAKE_CURRENT_SOURCE_DIR})
 endif(TEST_SIGNING)
 
 # GPG Keydatabase tests

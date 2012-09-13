@@ -1,4 +1,4 @@
-/* tests-signatures.vala
+/* tests-signing.vala
  *
  * Copyright (C) 2011-2012 Matthias Klumpp
  *
