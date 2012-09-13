@@ -1,4 +1,4 @@
-/* gpg-basic.vala - Common operations to simplify handling of GPGMe
+/* gpgex.vala - Common operations to simplify handling of GPGMe
  *
  * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *

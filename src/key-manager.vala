@@ -25,6 +25,11 @@ using Listaller.GPGEx;
 
 namespace Listaller {
 
+internal struct TmpContext {
+	Context *context;
+	string homedir;
+}
+
 /**
  * Manage Listaller's GPG-Key database
  *
@@ -41,6 +46,7 @@ public class KeyManager : MessageObject {
 		GPGError.ErrorCode err;
 		err = new_context (out main_ctx);
 		return_if_fail (check_gpg_err (err));
+		main_ctx.set_armor (true);
 	}
 
 	internal Key? lookup_key (string key_fpr) {
@@ -72,17 +78,57 @@ public class KeyManager : MessageObject {
 			}
 		}
 
+		set_context_local (main_ctx);
+
 		return_val_if_fail (check_gpg_err (err), null);
 
 		return key;
 	}
 
-	public bool import_key () {
-		Key[] keyList = {};
+	internal unowned Context get_main_context () {
+		return main_ctx;
+	}
 
-		main_ctx.op_import_keys (keyList);
+	internal TmpContext get_tmp_context_with_key (string fpr) {
+		GPGError.ErrorCode err;
+		var tmpctx = TmpContext ();
 
-		return false;
+		string template = Path.build_filename (Config.tmpdir_volatile, "ligpgtmp-XXXXXX", null);
+		string homedir = DirUtils.mkdtemp (template);
+		if (homedir == null) {
+			error ("Unable to create tmp-dir! Error: %s", GLib.strerror (GLib.errno));
+		}
+		tmpctx.homedir = homedir;
+
+		err = new_context (out tmpctx.context);
+		return_val_if_fail (check_gpg_err (err), null);
+		tmpctx.context->set_armor (true);
+
+		import_key_internal (tmpctx.context, fpr);
+
+		return tmpctx;
+	}
+
+	internal void delete_tmp_context (TmpContext tmpctx) {
+		delete tmpctx.context;
+		Utils.delete_dir_recursive (tmpctx.homedir);
+	}
+
+	private bool import_key_internal (Context ctx, string fpr) {
+		GPGError.ErrorCode err;
+
+		Key? k = lookup_key (fpr);
+		if (k == null)
+			return false;
+		Key[] keyList = {k, null};
+
+		err = ctx.op_import_keys (keyList);
+
+		return check_gpg_err (err);
+	}
+
+	public bool import_key (string fpr) {
+		return import_key_internal (main_ctx, fpr);
 	}
 
 }

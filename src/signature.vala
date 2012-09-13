@@ -28,13 +28,14 @@ namespace Listaller {
 
 private class GPGSignature : Object {
 	private string signtext;
+	private KeyManager keymgr;
 
 	public SignStatus sigstatus { get; set; }
 	public SignTrust trust_level { get; set; }
 	public bool sig_valid { get; set; }
 
 	public GPGSignature (string sig) {
-		init_gpgme (Protocol.OpenPGP);
+		keymgr = new KeyManager ();
 
 		signtext = sig;
 		sig_valid = false;
@@ -190,35 +191,12 @@ private class GPGSignature : Object {
 		return true;
 	}
 
-	private bool verify_package_internal (string ctrl_fname) {
-		Context ctx;
-		GPGError.ErrorCode err;
-		Data sig, dt;
-		VerifyResult *result;
+	private bool check_signature_internal (Context ctx, Data sig, Data dat) {
 		bool ret;
+		GPGError.ErrorCode err;
+		VerifyResult *result;
 
-		err = new_context (out ctx);
-
-		return_if_fail (check_gpg_err (err));
-
-		ctx.set_armor (true);
-
-		err = Data.create (out dt);
-		return_if_fail (check_gpg_err (err));
-
-		ret = read_file_to_data (ctrl_fname, ref dt);
-		if (!ret)
-			return false;
-
-		//err = Data.create_from_memory (out sig, signtext, signtext.length, false);
-		err = Data.create (out sig);
-		read_string_to_data (signtext, ref sig);
-		return_if_fail (check_gpg_err (err));
-
-		sig.seek (0, Posix.SEEK_SET);
-		dt.seek (0, Posix.SEEK_SET);
-
-		err = ctx.op_verify (sig, dt, null);
+		err = ctx.op_verify (sig, dat, null);
 		if (!check_gpg_err (err))
 			return false;
 		result = ctx.op_verify_result ();
@@ -228,8 +206,6 @@ private class GPGSignature : Object {
 			return false;
 		}
 
-		// FIXME: The whole GPGMe code is not working properly...
-		// This codeblock is useful to debug the issue
 		if (__unittestmode) {
 			Signature *s = result->signatures;
 			while (s != null) {
@@ -246,7 +222,36 @@ private class GPGSignature : Object {
 			}
 		}
 
-		process_sig_result (result, ctx);
+		ret = process_sig_result (result, ctx);
+
+		return ret;
+	}
+
+	private bool verify_package_internal (string ctrl_fname) {
+		unowned Context ctx;
+		GPGError.ErrorCode err;
+		Data sig, dt;
+		bool ret;
+
+		ctx = keymgr.get_main_context ();
+
+		err = Data.create (out dt);
+		return_if_fail (check_gpg_err (err));
+
+		ret = read_file_to_data (ctrl_fname, ref dt);
+		if (!ret)
+			return false;
+
+		//err = Data.create_from_memory (out sig, signtext, signtext.length, false);
+		err = Data.create (out sig);
+		read_string_to_data (signtext, ref sig);
+		return_if_fail (check_gpg_err (err));
+
+		sig.seek (0, Posix.SEEK_SET);
+		dt.seek (0, Posix.SEEK_SET);
+
+		check_signature_internal (ctx, sig, dt);
+
 		debug ("Signature checked.");
 
 		return true;

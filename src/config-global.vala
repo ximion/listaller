@@ -24,25 +24,24 @@ using Listaller;
 
 namespace Listaller {
 
-private static const string tmpdir = "/var/tmp";
-private static const string tmpdir_small = "/tmp";
-
 /**
  * Provides Listaller's configuration
  *
  * Provides global Listaller configuration.
  */
 internal class Config : Object {
+	public  const string tmpdir = "/var/tmp";
+	public  const string tmpdir_volatile = "/tmp";
 	private const string confdir = "/etc/listaller";
 	private const string suworkdir = "/var/lib/listaller";
 	private const string datadir = PkgConfig.DATADIR + "/listaller";
 	private const string su_desktopdir = PkgConfig.PREFIXDIR + "/share/applications";
 	private const string su_icondir = "/usr/share/icons/hicolor";
 	private const string su_pixdir = "/usr/share/pixmaps";
-	public string[] lib_paths = { PkgConfig.PREFIXDIR + "/lib",
+	public  string[] lib_paths = { PkgConfig.PREFIXDIR + "/lib",
 					   PkgConfig.PREFIXDIR + "/lib64",
 					   "/lib"};
-	public const string keyring_dir = suworkdir + "/keyring";
+	public  const string keyring_dir = suworkdir + "/keyring";
 
 	// System directories
 	internal const string sys_libdir = PkgConfig.LIBDIR;
