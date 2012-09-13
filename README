@@ -3,7 +3,7 @@ Listaller 0.5.x
 === Compiling instructions ===
 
 To compile Listaller, make sure that you have all required libraries (development files!) installed.
-Then continue.
+Then continue. (the build system will complain about missing dependencies)
 
 You should use CMake directly to build Listaller:
 mkdir build
@@ -16,12 +16,7 @@ Possible flags are:
  -DVISUAL_LDD=ON -- Build the Visual-LDD utility (you need Qt4 for that)
  -DTESTS=ON -- Enable Listaller's basic Unit Tests
  -DTEST_DEPMANAGER=ON -- Enable test for Listaller's dependency solver
- -DTEST_SECURITY=ON -- Enable Listaller signing/security tests
-
-As an alternative, you can also use the prepare script:
-First cd to the source directory and execute
-./prepare <flags>
-Flags are for example "--enable-tests" to enable tests. Check the script for more parameters.
+ -DTEST_SIGNING=ON -- Enable Listaller signing tests
 
 === Installation ===
 
