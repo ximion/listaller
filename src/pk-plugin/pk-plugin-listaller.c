@@ -539,7 +539,7 @@ pk_backend_job_request_installpackages_cb (PkBitfield transaction_flags,
  * Hook for the beginning of a new PkTransaction (where it is not completely set-up)
  */
 void
-pk_plugin_transaction_started (PkPlugin *plugin,
+pk_plugin_transaction_start (PkPlugin *plugin,
 			       PkTransaction *transaction)
 {
 	PkRoleEnum role;
@@ -569,7 +569,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 	/* if we're only simulation, skip Listaller packages */
 	if (pk_bitfield_contain (pk_transaction_get_transaction_flags (transaction),
-				 PK_TRANSACTION_FLAG_ENUM_SIMULATE)) {
+				   PK_TRANSACTION_FLAG_ENUM_SIMULATE)) {
 
 		if (role == PK_ROLE_ENUM_INSTALL_FILES) {
 			full_paths = pk_transaction_get_full_paths (transaction);
