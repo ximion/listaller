@@ -1,10 +1,9 @@
-# CMakeLists for Listaller repository manager
+# CMakeLists for Listaller key manager
 
 find_package(Vala REQUIRED)
 include("${VALA_USE_FILE}")
 
-set(LIREPO_SOURCES lirepo.vala
-		ipk-repo-local.vala
+set(LIKEY_SOURCES likey.vala
 )
 
 include_directories(${CMAKE_BINARY_DIR}
@@ -21,26 +20,23 @@ include_directories(${CMAKE_BINARY_DIR}
 )
 
 # Add log domain
-add_definitions("-DG_LOG_DOMAIN=\"RepoTool\"")
+add_definitions("-DG_LOG_DOMAIN=\"KeyTool\"")
 
-# Listaller repo-tool
-vala_add_executable (lirepo ${LIREPO_SOURCES}
-			PACKAGES ${LISTALLER_BASE_VALA_DEPS} listaller-${LILIBS_VERSION} packagekit-glib2
+# Listaller key-manager
+vala_add_executable (likey ${LIKEY_SOURCES}
+			PACKAGES ${LISTALLER_BASE_VALA_DEPS} listaller_internal packagekit-glib2
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
 )
 
-add_dependencies(lirepo_precompile listaller-glib)
+add_dependencies(likey_precompile listaller-glib)
 
-target_link_libraries(lirepo
+target_link_libraries(likey
 		${M_LIB}
 		${GLIB2_LIBRARIES}
 		${GEE_LIBRARIES}
 		${GIO2_LIBRARIES}
-		${LibArchive_LIBRARIES}
-		${LIBXML2_LIBRARIES}
 		${GPGME_VANILLA_LIBRARIES}
-		${REDLAND_LIBRARIES}
 		listaller-glib
 )
 
-install(TARGETS lirepo DESTINATION bin)
+install(TARGETS likey DESTINATION bin)

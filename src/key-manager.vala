@@ -53,7 +53,7 @@ public class KeyManager : MessageObject {
 		main_ctx.set_armor (true);
 	}
 
-	internal Key? lookup_key (string key_fpr) {
+	internal Key? lookup_key (string key_fpr, bool local = false) {
 		GPGError.ErrorCode err;
 		string fpr = key_fpr;
 		Key key;
@@ -63,7 +63,8 @@ public class KeyManager : MessageObject {
 			fpr = "0x%s".printf (fpr);
 
 		/* using LOCAL and EXTERN together doesn't work for GPG 1.X. Ugh. */
-		set_context_external (main_ctx);
+		if (!local)
+			set_context_external (main_ctx);
 
 		err = main_ctx.get_key (fpr, out key, false);
 		if (err.code () == GPGError.ErrorCode.EOF) {
@@ -84,7 +85,8 @@ public class KeyManager : MessageObject {
 
 		set_context_local (main_ctx);
 
-		return_val_if_fail (check_gpg_err (err), null);
+		if (!check_gpg_err (err))
+			return null;
 
 		return key;
 	}
@@ -137,6 +139,52 @@ public class KeyManager : MessageObject {
 
 	public bool import_key (string fpr) {
 		return import_key_internal (main_ctx, fpr);
+	}
+
+	private string? key_to_string (Key key) {
+		string res = "";
+
+		res += "keyid   : %s\n".printf ((key.subkeys != null) ? key.subkeys.keyid : "?");
+		res += "fpr     : %s\n".printf ((key.subkeys != null) ? key.subkeys.fpr : "?");
+		res += "caps    : %s%s%s%s\n".printf (key.can_encrypt? "e":"",
+							key.can_sign ? "s":"",
+							key.can_certify ? "c":"",
+							key.can_authenticate ? "a":"");
+		res += "flags   :%s%s%s%s%s%s\n".printf (key.secret ? " secret":"",
+							key.revoked ? " revoked":"",
+							key.expired ? " expired":"",
+							key.disabled ? " disabled":"",
+							key.invalid ? " invalid":"",
+							key.is_qualified ? " qualifid":"");
+		res += "\n";
+
+		UserID *uid = key.uids;
+		int nuids = 0;
+		while (uid != null) {
+			res += "userid %d: %s\n".printf (nuids, uid->uid);
+			res += "valid  %d: %s\n".printf (nuids,
+						uid->validity == Validity.UNKNOWN? "unknown":
+						uid->validity == Validity.UNDEFINED? "undefined":
+						uid->validity == Validity.NEVER? "never":
+						uid->validity == Validity.MARGINAL? "marginal":
+						uid->validity == Validity.FULL? "full":
+						uid->validity == Validity.ULTIMATE? "ultimate": "[?]");
+
+			nuids++;
+			uid = uid->next;
+		}
+
+		return res;
+	}
+
+	public string get_key_info (string pattern) {
+		set_context_local (main_ctx);
+
+		Key? k = lookup_key (pattern, true);
+		if (k == null)
+			return _("Key not found!");
+
+		return key_to_string (k);
 	}
 
 }

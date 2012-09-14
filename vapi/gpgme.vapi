@@ -858,7 +858,7 @@ namespace GPG {
 		public EngineInfo* get_engine_info();
 
 		[CCode (cname = "gpgme_ctx_set_engine_info")]
-		public GPGError.ErrorCode set_engine_info(Protocol proto, string file_name, string? home_dir);
+		public GPGError.ErrorCode set_engine_info(Protocol proto, string? file_name, string? home_dir);
 
 		/**
 		 * Delete all signers

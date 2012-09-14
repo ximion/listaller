@@ -1,6 +1,6 @@
-/* lirepo.vala -- Main file for Listaller repository tool
+/* depscan-tool.vala
  *
- * Copyright (C) 2012 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU General Public License Version 3
  *
@@ -19,27 +19,32 @@
  */
 
 using GLib;
-using Listaller;
 
-public class LirepoTool : Object {
+public class DepScanTool : Object {
 	// Cmd options
-	private static string o_repo_dir = "";
 	private static bool o_show_version = false;
+	private static bool o_run_recursive = false;
+	private static bool o_simpletext = false;
 	private static bool o_verbose_mode = false;
+	private static string o_input_path = null;
 
 	public int exit_code { get; set; }
 
 	private const OptionEntry[] options = {
 		{ "version", 'v', 0, OptionArg.NONE, ref o_show_version,
-		N_("Show the application's version"), null },
-		{ "verbose", 0, 0, OptionArg.NONE, ref o_verbose_mode,
+			N_("Show the application's version"), null },
+		{ "recursive", 'r', 0, OptionArg.NONE, ref o_run_recursive,
+			N_("Use recursive mode"), null },
+		{ "simpletext", 0, 0, OptionArg.NONE, ref o_simpletext,
+			N_("Print machine-readable simple text"), null },
+		{ "verbose", 'r', 0, OptionArg.NONE, ref o_verbose_mode,
 			N_("Activate verbose mode"), null },
 		{ null }
 	};
 
-	public LirepoTool (string[] args) {
+	public DepScanTool (string[] args) {
 		exit_code = 0;
-		var opt_context = new OptionContext ("- maintain IPK package repositories.");
+		var opt_context = new OptionContext ("- scan software dependencies.");
 		opt_context.set_help_enabled (true);
 		opt_context.add_main_entries (options, null);
 		try {
@@ -50,23 +55,35 @@ public class LirepoTool : Object {
 			exit_code = 1;
 			return;
 		}
+
+		for (uint i = 1; i < args.length; i++) {
+			string arg = args[i];
+			if (o_input_path == null) {
+				o_input_path = arg;
+			}
+		}
+	}
+
+	private void on_error (string details) {
+		stderr.printf (_("ERROR: %s"), details + "\n");
+		exit_code = 6;
 	}
 
 	public void run () {
-		if (exit_code > 0)
-			return;
-
 		bool done = false;
 		if (o_show_version) {
-			stdout.printf ("lirepo tool, part of Listaller version: %s\n", Listaller.get_full_version_info_str ());
+			stdout.printf ("depscan helper, version: %s\n", PkgConfig.VERSION);
 			return;
 		}
-		// Take directory from options, otherwise use current dir
-		string repodir = o_repo_dir;
-		if (repodir == "")
-			repodir = Environment.get_current_dir ();
+		if ((o_input_path == null) || (o_input_path == "")) {
+			stdout.printf (_("No path given!") + "\n");
+			exit_code = 2;
+			return;
+		}
 
-		//! TODO
+		DependencyScanner scan = new DependencyScanner (o_input_path, o_simpletext);
+		scan.recursive = o_run_recursive;
+		scan.compile_required_files_list ();
 	}
 
 	static int main (string[] args) {
@@ -76,19 +93,13 @@ public class LirepoTool : Object {
 		Intl.bind_textdomain_codeset(PkgConfig.GETTEXT_PACKAGE, "UTF-8");
 		Intl.textdomain(PkgConfig.GETTEXT_PACKAGE);
 
-		var main = new LirepoTool (args);
-		set_console_mode (true);
-		set_verbose_mode (o_verbose_mode);
-		add_log_domain ("lirepo");
+		var main = new DepScanTool (args);
+		Listaller.set_console_mode (true);
+		Listaller.set_verbose_mode (o_verbose_mode);
+		Listaller.add_log_domain ("DepScan");
 
 		// Run the application
 		main.run ();
-
-		// Display final report
-		Report report = Report.get_instance ();
-		if (!report.is_empty ())
-			stdout.printf ("\nRepository Tool Report:\n%s\n", report.to_string ());
-
 		int code = main.exit_code;
 		return code;
 	}

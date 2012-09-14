@@ -22,7 +22,7 @@ using GLib;
 using Listaller;
 using Listaller.Extra;
 
-public class Lipkgen : Object {
+public class LipkgenTool : Object {
 	// Cmd options
 	private static string o_src_dir = "";
 	private static string o_output_dir = "";
@@ -50,7 +50,7 @@ public class Lipkgen : Object {
 		{ null }
 	};
 
-	public Lipkgen (string[] args) {
+	public LipkgenTool (string[] args) {
 		exit_code = 0;
 		var opt_context = new OptionContext ("- build IPK setup packages.");
 		opt_context.set_help_enabled (true);
@@ -138,7 +138,7 @@ public class Lipkgen : Object {
 		Intl.bind_textdomain_codeset(PkgConfig.GETTEXT_PACKAGE, "UTF-8");
 		Intl.textdomain(PkgConfig.GETTEXT_PACKAGE);
 
-		var main = new Lipkgen (args);
+		var main = new LipkgenTool (args);
 		set_console_mode (true);
 		set_verbose_mode (o_verbose_mode);
 		add_log_domain ("lipkgen");

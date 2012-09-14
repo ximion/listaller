@@ -249,6 +249,9 @@ private class GPGSignature : Object {
 
 			// ensure tmp context is deleted properly (I hate this hack...)
 			keymgr.delete_tmp_context (tmpctx);
+		} else {
+			// if key has been found in our trusted-db, we can fully trust it
+			trust_level = SignTrust.FULL;
 		}
 
 		debug ("Signature Details:\n%s", signature_details_as_string (sig));

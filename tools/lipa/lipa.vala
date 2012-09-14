@@ -1,4 +1,4 @@
-/* main.vala -- Listaller command-line tool (main unit)
+/* lipa.vala -- Listaller command-line tool (main unit)
  *
  * Copyright (C) 2010-2012 Matthias Klumpp
  *
@@ -31,7 +31,7 @@ private static const int CONSOLE_MAGENTA = 35;
 private static const int CONSOLE_CYAN    = 36;
 private static const int CONSOLE_WHITE   = 37;
 
-public class CmdApp : Object {
+public class LipaTool : Object {
 	private static bool o_show_version = false;
 	private static bool o_verbose_mode = false;
 
@@ -67,7 +67,7 @@ public class CmdApp : Object {
 		stdout.printf (_("Listaller command-line tool: No command specified.\nRun '%s --help' to see a list of available commands.").printf (args[0]) + "\n");
 	}
 
-	public CmdApp (string[] arguments) {
+	public LipaTool (string[] arguments) {
 		exit_code = 0;
 		var opt_context = new OptionContext ("- Listaller command-line tool.");
 		opt_context.set_help_enabled (true);
@@ -166,7 +166,7 @@ public class CmdApp : Object {
 		Intl.bind_textdomain_codeset(PkgConfig.GETTEXT_PACKAGE, "UTF-8");
 		Intl.textdomain(PkgConfig.GETTEXT_PACKAGE);
 
-		var main = new CmdApp (args);
+		var main = new LipaTool (args);
 		set_console_mode (true);
 		set_verbose_mode (o_verbose_mode);
 		add_log_domain ("Lipa");

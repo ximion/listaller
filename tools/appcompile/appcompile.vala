@@ -21,7 +21,7 @@
 using GLib;
 using Listaller;
 
-public class AppCompile : Object {
+public class AppCompileTool : Object {
 	// Cmd options
 	private static string o_src_dir = "";
 	private static string o_target_dir = "";
@@ -46,7 +46,7 @@ public class AppCompile : Object {
 		{ null }
 	};
 
-	public AppCompile (string[] args) {
+	public AppCompileTool (string[] args) {
 		exit_code = 0;
 		var opt_context = new OptionContext ("- compile software automatically.");
 		opt_context.set_help_enabled (true);
@@ -109,7 +109,7 @@ public class AppCompile : Object {
 		Intl.textdomain(PkgConfig.GETTEXT_PACKAGE);
 
 		// Set everything up...
-		var main = new AppCompile (args);
+		var main = new AppCompileTool (args);
 		set_console_mode (true);
 		set_verbose_mode (o_verbose_mode);
 		add_log_domain ("AppCompile");

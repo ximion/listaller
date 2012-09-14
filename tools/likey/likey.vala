@@ -1,6 +1,6 @@
-/* main.vala
+/* likey.vala -- Manage Listaller's key database
  *
- * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2012 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU General Public License Version 3
  *
@@ -19,32 +19,33 @@
  */
 
 using GLib;
+using Listaller;
 
-public class DepScanCmd : Object {
+public class LikeyTool : Object {
 	// Cmd options
 	private static bool o_show_version = false;
-	private static bool o_run_recursive = false;
-	private static bool o_simpletext = false;
 	private static bool o_verbose_mode = false;
-	private static string o_input_path = null;
+
+	private static string o_lookup_key = null;
+	private static string o_import_key_fpr = null;
 
 	public int exit_code { get; set; }
 
 	private const OptionEntry[] options = {
 		{ "version", 'v', 0, OptionArg.NONE, ref o_show_version,
-			N_("Show the application's version"), null },
-		{ "recursive", 'r', 0, OptionArg.NONE, ref o_run_recursive,
-			N_("Use recursive mode"), null },
-		{ "simpletext", 0, 0, OptionArg.NONE, ref o_simpletext,
-			N_("Print machine-readable simple text"), null },
-		{ "verbose", 'r', 0, OptionArg.NONE, ref o_verbose_mode,
+		N_("Show the application's version"), null },
+		{ "verbose", 0, 0, OptionArg.NONE, ref o_verbose_mode,
 			N_("Activate verbose mode"), null },
+		{ "lookup", 'o', 0, OptionArg.STRING, ref o_lookup_key,
+			N_("Lookup key which matches PATTERN"), N_("PATTERN") },
+		{ "import", 'o', 0, OptionArg.STRING, ref o_import_key_fpr,
+			N_("Import key with fingerprint FPR"), N_("FPR") },
 		{ null }
 	};
 
-	public DepScanCmd (string[] args) {
+	public LikeyTool (string[] args) {
 		exit_code = 0;
-		var opt_context = new OptionContext ("- scan software dependencies.");
+		var opt_context = new OptionContext ("- manage Listaller's GPG trusted key database.");
 		opt_context.set_help_enabled (true);
 		opt_context.add_main_entries (options, null);
 		try {
@@ -55,35 +56,48 @@ public class DepScanCmd : Object {
 			exit_code = 1;
 			return;
 		}
-
-		for (uint i = 1; i < args.length; i++) {
-			string arg = args[i];
-			if (o_input_path == null) {
-				o_input_path = arg;
-			}
-		}
-	}
-
-	private void on_error (string details) {
-		stderr.printf (_("ERROR: %s"), details + "\n");
-		exit_code = 6;
 	}
 
 	public void run () {
+		if (exit_code > 0)
+			return;
+
 		bool done = false;
 		if (o_show_version) {
-			stdout.printf ("depscan helper, version: %s\n", PkgConfig.VERSION);
-			return;
-		}
-		if ((o_input_path == null) || (o_input_path == "")) {
-			stdout.printf (_("No path given!") + "\n");
-			exit_code = 2;
+			stdout.printf ("likey tool, part of Listaller version: %s\n", Listaller.get_full_version_info_str ());
 			return;
 		}
 
-		DependencyScanner scan = new DependencyScanner (o_input_path, o_simpletext);
-		scan.recursive = o_run_recursive;
-		scan.compile_required_files_list ();
+		/** First handle all the read actions which don't require root privileges */
+
+		KeyManager keymgr = new KeyManager ();
+
+		if (o_lookup_key != null) {
+			string key_info;
+			key_info = keymgr.get_key_info (o_lookup_key);
+			stdout.printf ("%s\n", key_info);
+			return;
+		}
+
+		if (!Utils.is_root ()) {
+			stderr.printf ("%s\n", _("You need to be root to change Listaller's key database!"));
+			exit_code = 6;
+			return;
+		}
+
+		if (o_import_key_fpr != null) {
+			bool ret;
+			ret = keymgr.import_key (o_import_key_fpr);
+			if (!ret) {
+				exit_code = 7;
+				stderr.printf ("%s\n", _("Failed to import key with fingerprint '%s'.").printf (o_import_key_fpr));
+				return;
+			}
+
+			stdout.printf ("%s\n", _("Key '%s' imported successfully!").printf (o_import_key_fpr));
+
+			return;
+		}
 	}
 
 	static int main (string[] args) {
@@ -93,13 +107,14 @@ public class DepScanCmd : Object {
 		Intl.bind_textdomain_codeset(PkgConfig.GETTEXT_PACKAGE, "UTF-8");
 		Intl.textdomain(PkgConfig.GETTEXT_PACKAGE);
 
-		var main = new DepScanCmd (args);
-		Listaller.set_console_mode (true);
-		Listaller.set_verbose_mode (o_verbose_mode);
-		Listaller.add_log_domain ("DepScan");
+		var main = new LikeyTool (args);
+		set_console_mode (true);
+		set_verbose_mode (o_verbose_mode);
+		add_log_domain ("lirepo");
 
 		// Run the application
 		main.run ();
+
 		int code = main.exit_code;
 		return code;
 	}
