@@ -43,6 +43,10 @@ public class KeyManager : MessageObject {
 	public KeyManager () {
 		init_gpgme (Protocol.OpenPGP);
 
+		// make sure we have set GPG config
+		write_gpg_config_to_homedir (Config.keyring_dir);
+
+		// create main GPG context
 		GPGError.ErrorCode err;
 		err = new_context (out main_ctx);
 		return_if_fail (check_gpg_err (err));

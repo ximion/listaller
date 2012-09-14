@@ -238,8 +238,13 @@ private class GPGSignature : Object {
 			result = context_verify (tmpctx.context, sig_data, dat);
 			if (result == null)
 				return false;
+
 			// now check the result
 			sig = result->signatures;
+			if ((sig == null) || (sig->next != null)) {
+				warning ("Unexpected number of signatures!");
+				return false;
+			}
 			ret = process_sig_result (sig, tmpctx.context);
 
 			// ensure tmp context is deleted properly (I hate this hack...)

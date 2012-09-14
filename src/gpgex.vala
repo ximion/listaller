@@ -43,6 +43,11 @@ private void init_gpgme (Protocol proto) {
 
 private bool write_gpg_config_to_homedir (string homedir) {
 	bool ret;
+	string gpgconf_fname = Path.build_filename (homedir, "gpg.conf", null);
+
+	if (FileUtils.test (gpgconf_fname, FileTest.EXISTS))
+		return true;
+
 	string config = "# Options for GnuPG used by Listaller \n\n" +
 			"no-greeting\n" +
 			"no-permission-warning\n" +
@@ -51,7 +56,7 @@ private bool write_gpg_config_to_homedir (string homedir) {
 			"keyserver hkp://keys.gnupg.net\n" +
 			"#keyserver hkp://keyring.debian.org\n\n" +
 			"keyserver-options auto-key-retrieve\n";
-	ret = save_string_to_file (Path.build_filename (homedir, "gpg.conf", null), config);
+	ret = save_string_to_file (gpgconf_fname, config);
 
 	return ret;
 }

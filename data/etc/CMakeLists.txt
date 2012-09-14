@@ -12,9 +12,3 @@ install(FILES dependencies.list
 	DESTINATION ${SYSCONF_INSTALL_DIR}/listaller
 	COMPONENT config
 )
-
-# GPG stuff for Listaller keyring
-install(FILES gpg.conf
-	DESTINATION /var/lib/listaller/keyring
-	COMPONENT config
-)
