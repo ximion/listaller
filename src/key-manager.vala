@@ -53,6 +53,32 @@ public class KeyManager : MessageObject {
 		main_ctx.set_armor (true);
 	}
 
+	~KeyManager () {
+		// make sure permissions are okay on exit
+		update_keydb_permissions ();
+	}
+
+	/**
+	 * Fix GPG homedir permissions, so every user is able to read the
+	 * keys which are in our trusted database.
+	 */
+	private void update_keydb_permissions () {
+		// we only set main context permissions if we're root
+		if (!Utils.is_root ())
+			return;
+
+		string fname = Path.build_filename (Config.keyring_dir, "gpg.conf", null);
+		FileUtils.chmod (fname, 444);
+
+		fname = Path.build_filename (Config.keyring_dir, "pubring.gpg", null);
+		FileUtils.chmod (fname, 444);
+
+		fname = Path.build_filename (Config.keyring_dir, "trustdb.gpg", null);
+		FileUtils.chmod (fname, 444);
+
+		// we omit secring.gpg
+	}
+
 	internal Key? lookup_key (string key_fpr, bool local = false) {
 		GPGError.ErrorCode err;
 		string fpr = key_fpr;
@@ -85,7 +111,7 @@ public class KeyManager : MessageObject {
 
 		set_context_local (main_ctx);
 
-		if (!check_gpg_err (err))
+		if (!check_gpg_err (err, false))
 			return null;
 
 		return key;

@@ -48,6 +48,9 @@ private bool write_gpg_config_to_homedir (string homedir) {
 	if (FileUtils.test (gpgconf_fname, FileTest.EXISTS))
 		return true;
 
+	if (!Utils.is_root ())
+		return false;
+
 	string config = "# Options for GnuPG used by Listaller \n\n" +
 			"no-greeting\n" +
 			"no-permission-warning\n" +
@@ -61,11 +64,17 @@ private bool write_gpg_config_to_homedir (string homedir) {
 	return ret;
 }
 
-internal static bool check_gpg_err (GPGError.ErrorCode err) {
+internal static bool check_gpg_err (GPGError.ErrorCode err, bool show_error = true) {
 	if (err != GPGError.ErrorCode.NO_ERROR) {
-		warning ("GPGError: %s", err.to_string ());
+		string msg = "GPGError: %s".printf (err.to_string ());
+		if (show_error)
+			warning (msg);
+		else
+			debug (msg);
+
 		return false;
 	}
+
 	return true;
 }
 

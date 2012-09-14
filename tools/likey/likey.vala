@@ -36,9 +36,9 @@ public class LikeyTool : Object {
 		N_("Show the application's version"), null },
 		{ "verbose", 0, 0, OptionArg.NONE, ref o_verbose_mode,
 			N_("Activate verbose mode"), null },
-		{ "lookup", 'o', 0, OptionArg.STRING, ref o_lookup_key,
+		{ "lookup", 'l', 0, OptionArg.STRING, ref o_lookup_key,
 			N_("Lookup key which matches PATTERN"), N_("PATTERN") },
-		{ "import", 'o', 0, OptionArg.STRING, ref o_import_key_fpr,
+		{ "import", 'i', 0, OptionArg.STRING, ref o_import_key_fpr,
 			N_("Import key with fingerprint FPR"), N_("FPR") },
 		{ null }
 	};
@@ -48,6 +48,12 @@ public class LikeyTool : Object {
 		var opt_context = new OptionContext ("- manage Listaller's GPG trusted key database.");
 		opt_context.set_help_enabled (true);
 		opt_context.add_main_entries (options, null);
+		if (args.length <= 1) {
+			stderr.printf ("No arguments given!\n");
+			exit_code = 1;
+			return;
+		}
+
 		try {
 			opt_context.parse (ref args);
 		} catch (Error e) {
