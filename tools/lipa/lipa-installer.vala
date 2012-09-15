@@ -125,7 +125,7 @@ public class LipaInstaller : LipaModule {
 		}
 
 		// Display security info
-		IPK.PackSecurity sec = inst.get_security_info ();
+		IPK.SecurityInfo sec = inst.get_security_info ();
 		SecurityLevel secLev = sec.get_level ();
 		if (secLev == SecurityLevel.HIGH)
 			print ("%s %c[%dm%s\n%c[%dm", _("Security is:"), 0x1B, CONSOLE_GREEN, "HIGH", 0x1B, CONSOLE_RESET);

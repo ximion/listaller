@@ -408,7 +408,7 @@ public class Setup : MessageObject {
 
 		// check if admin allowed to install a package of this security level
 		var conf = new Config ();
-		IPK.PackSecurity sec = get_security_info ();
+		var sec = get_security_info ();
 		string? minSecLevel = conf.installer_get_str ("MinimumTrustLevel");
 		// choose "low" if no value was set
 		if (minSecLevel == null)
@@ -447,7 +447,7 @@ public class Setup : MessageObject {
 		return ret;
 	}
 
-	public IPK.PackSecurity get_security_info () {
+	public IPK.SecurityInfo get_security_info () {
 		return ipkp.get_security_info ();
 	}
 }

@@ -1,4 +1,4 @@
-/* security.vala
+/* security-info.vala
  *
  * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -145,13 +145,16 @@ public enum SignTrust {
 
 namespace Listaller.IPK {
 
-public class PackSecurity : Object {
+public class SecurityInfo : Object {
 	private weak Package pack;
 
-	public SignStatus signature_status { get; set; }
-	public SignTrust signature_trustlevel { get; set; }
+	public SignStatus signature_status { get; internal set; }
+	public SignTrust signature_trustlevel { get; internal set; }
 
-	internal PackSecurity () {
+	public string signer_name { get; internal set; }
+	public string trust_reason { get; internal set; }
+
+	internal SecurityInfo () {
 	}
 
 	public SecurityLevel get_level () {

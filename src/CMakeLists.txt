@@ -25,7 +25,7 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/logging.vala
 	${lisrc}/ipk-control.vala
 	${lisrc}/ipk-package.vala
 	${lisrc}/gpgex.vala
-	${lisrc}/security.vala
+	${lisrc}/security-info.vala
 	${lisrc}/dep-info.vala
 	${lisrc}/version.vala
 	CACHE INTERNAL "Listaller core source files"

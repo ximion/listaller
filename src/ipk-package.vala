@@ -37,6 +37,7 @@ private class Package : MessageObject {
 	private AppItem appInfo;
 	private const int DEFAULT_BLOCK_SIZE = 65536;
 	private string ipk_selected_arch_;
+	private GPGSignature? gpg_signature;
 
 	public IPK.PackControl control {
 		get { return ipkc; }
@@ -92,6 +93,7 @@ private class Package : MessageObject {
 				    _("Could not read IPK control information! Error: %s").printf (ar.error_string ()));
 			return false;
 		}
+
 		string doapFileName = "";
 		ipk_selected_arch_ = "";
 		string archFListName = "";
@@ -464,8 +466,11 @@ private class Package : MessageObject {
 
 	private GPGSignature? get_signature () {
 		bool ret = false;
-		prepare_extracting ();
+		// return cached signature, if we have one
+		if (gpg_signature != null)
+			return gpg_signature;
 
+		prepare_extracting ();
 		Read ar = open_base_ipk ();
 		if (ar == null) {
 			return null;
@@ -513,16 +518,15 @@ private class Package : MessageObject {
 		GPGSignature sig = new GPGSignature (sig_text);
 		sig.verify_package (Path.build_filename (wdir, "control.tar.xz", null));
 
-		return sig;
+		gpg_signature = sig;
+
+		return gpg_signature;
 	}
 
-	public PackSecurity get_security_info () {
+	public SecurityInfo get_security_info () {
 		GPGSignature? sig = get_signature ();
 
-		//TODO: Remove control.tar.xz on a 'better' place
-		 //FileUtils.remove (Path.build_filename (wdir, "control.tar.xz", null));
-
-		PackSecurity sec = new PackSecurity ();
+		SecurityInfo sec = new SecurityInfo ();
 
 		if (sig == null)
 			return sec;
