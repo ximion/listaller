@@ -27,6 +27,7 @@ namespace Listaller {
 
 internal struct TmpContext {
 	Context *context;
+	Key key;
 	string homedir;
 }
 
@@ -138,7 +139,7 @@ public class KeyManager : MessageObject {
 		return_val_if_fail (check_gpg_err (err), null);
 		tmpctx.context->set_armor (true);
 
-		ret = import_key_internal (tmpctx.context, fpr);
+		ret = import_key_internal (tmpctx.context, fpr, out tmpctx.key);
 		if (!ret)
 			debug ("Unable to import key into temporary dummy keyring!");
 
@@ -150,10 +151,11 @@ public class KeyManager : MessageObject {
 		Utils.delete_dir_recursive (tmpctx.homedir);
 	}
 
-	private bool import_key_internal (Context ctx, string fpr) {
+	private bool import_key_internal (Context ctx, string fpr, out Key key = null) {
 		GPGError.ErrorCode err;
 
 		Key? k = lookup_key (fpr);
+		key = k;
 		if (k == null)
 			return false;
 		Key[] keyList = {k, null};
@@ -164,7 +166,7 @@ public class KeyManager : MessageObject {
 	}
 
 	public bool import_key (string fpr) {
-		return import_key_internal (main_ctx, fpr);
+		return import_key_internal (main_ctx, fpr, null);
 	}
 
 	private string? key_to_string (Key key) {

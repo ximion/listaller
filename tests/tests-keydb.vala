@@ -53,7 +53,11 @@ void test_signature_validation () {
 	assert (sign.valid == true);
 	assert (sign.sigstatus == SignStatus.VALID);
 
-	debug (sign.trust_level.to_string ());
+	debug ("Signature key fingerprint: %s", sign.key_fpr);
+	assert (sign.key_fpr == "D33A3F0CA16B0ACC51A60738494C8A5FBF4DECEB");
+
+	debug ("Signature signer user-ids: \n%s", sign.user_names);
+	debug ("Signature trust level: %s", sign.trust_level.to_string ());
 }
 
 int main (string[] args) {

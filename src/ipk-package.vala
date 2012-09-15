@@ -533,6 +533,10 @@ private class Package : MessageObject {
 		sec.signature_status = sig.sigstatus;
 		sec.signature_trustlevel = sig.trust_level;
 
+		sec.user_names = sig.user_names;
+		sec.key_fpr = sig.key_fpr;
+		sec.trust_reason = sig.trust_reason;
+
 		return sec;
 	}
 

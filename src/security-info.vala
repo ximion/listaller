@@ -151,7 +151,8 @@ public class SecurityInfo : Object {
 	public SignStatus signature_status { get; internal set; }
 	public SignTrust signature_trustlevel { get; internal set; }
 
-	public string signer_name { get; internal set; }
+	public string user_names { get; internal set; }
+	public string key_fpr { get; internal set; }
 	public string trust_reason { get; internal set; }
 
 	internal SecurityInfo () {

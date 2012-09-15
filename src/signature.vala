@@ -34,6 +34,10 @@ private class GPGSignature : Object {
 	public SignTrust trust_level { get; set; }
 	public bool valid { get; set; }
 
+	public string user_names { get; set; }
+	public string key_fpr { get; set; }
+	public string trust_reason { get; set; }
+
 	public GPGSignature (string sig) {
 		keymgr = new KeyManager ();
 
@@ -125,6 +129,28 @@ private class GPGSignature : Object {
 							(sig->notations != null) ? _("yes") : _("no"));
 
 		return res_text;
+	}
+
+	private bool set_info_from_key (Key? key) {
+		if (key == null) {
+			warning ("Key was NULL, cannot set security information!");
+			return false;
+		}
+
+		key_fpr = (key.subkeys != null) ? key.subkeys.fpr : "?";
+
+		string key_usernames = "";
+		UserID *uid = key.uids;
+		int nuids = 0;
+		while (uid != null) {
+			key_usernames += "%d: %s\n".printf (nuids, uid->uid);
+
+			nuids++;
+			uid = uid->next;
+		}
+		user_names = key_usernames;
+
+		return true;
 	}
 
 	private bool process_sig_result (Signature *sig, Context ctx) {
@@ -247,11 +273,14 @@ private class GPGSignature : Object {
 			}
 			ret = process_sig_result (sig, tmpctx.context);
 
+			set_info_from_key (tmpctx.key);
+
 			// ensure tmp context is deleted properly (I hate this hack...)
 			keymgr.delete_tmp_context (tmpctx);
 		} else {
 			// if key has been found in our trusted-db, we can fully trust it
 			trust_level = SignTrust.FULL;
+			set_info_from_key (keymgr.lookup_key (sig->fpr, true));
 		}
 
 		debug ("Signature Details:\n%s", signature_details_as_string (sig));
