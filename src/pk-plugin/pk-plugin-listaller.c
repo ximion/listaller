@@ -223,6 +223,7 @@ static void listaller_error_code_cb (GObject *sender, ListallerErrorItem *error,
 		return;
 
 	/* emit */
+	pk_backend_job_reset (plugin->job);
 	pk_backend_job_error_code (plugin->job, PK_ERROR_ENUM_INTERNAL_ERROR,
 				listaller_error_item_get_details (error));
 }
@@ -422,6 +423,13 @@ pk_plugin_prepare_backend_call (PkPlugin *plugin)
 {
 	PkBitfield backend_signals;
 
+	/* don't forward some events to the transaction, only Listaller should see them */
+	backend_signals = PK_TRANSACTION_ALL_BACKEND_SIGNALS;
+	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_ERROR_CODE);
+	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_PACKAGE);
+	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_FINISHED);
+	pk_transaction_set_signals (plugin->priv->current_transaction, plugin->job, backend_signals);
+
 	/* connect (used) backend signals to Listaller PkPlugin */
 	pk_backend_job_set_vfunc (plugin->job,
 				  PK_BACKEND_SIGNAL_FINISHED,
@@ -435,13 +443,6 @@ pk_plugin_prepare_backend_call (PkPlugin *plugin)
 				  PK_BACKEND_SIGNAL_ERROR_CODE,
 				  (PkBackendJobVFunc) pk_plugin_backend_job_error_code_cb,
 				  plugin);
-
-	/* don't forward some events to the transaction, only Listaller should see them */
-	backend_signals = PK_TRANSACTION_ALL_BACKEND_SIGNALS;
-	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_ERROR_CODE);
-	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_PACKAGE);
-	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_FINISHED);
-	pk_transaction_set_signals (plugin->priv->current_transaction, plugin->job, backend_signals);
 }
 
 /**
@@ -534,12 +535,12 @@ pk_backend_job_request_installpackages_cb (PkBitfield transaction_flags,
 }
 
 /**
- * pk_plugin_started:
+ * pk_plugin_transaction_started:
  *
  * Hook for the beginning of a new PkTransaction (where it is not completely set-up)
  */
 void
-pk_plugin_transaction_start (PkPlugin *plugin,
+pk_plugin_transaction_started (PkPlugin *plugin,
 			       PkTransaction *transaction)
 {
 	PkRoleEnum role;
@@ -600,6 +601,7 @@ pk_plugin_transaction_start (PkPlugin *plugin,
 	    role == PK_ROLE_ENUM_SEARCH_DETAILS) {
 		values = pk_transaction_get_values (transaction);
 		pk_listaller_find_applications (plugin, values);
+
 		goto out;
 	}
 
@@ -617,6 +619,7 @@ pk_plugin_transaction_start (PkPlugin *plugin,
 		package_ids = pk_transaction_get_package_ids (transaction);
 		if (g_strv_length (package_ids) == 0)
 			pk_plugin_skip_native_backend (plugin);
+
 		goto out;
 	}
 
@@ -631,6 +634,7 @@ pk_plugin_transaction_start (PkPlugin *plugin,
 		package_ids = pk_transaction_get_package_ids (transaction);
 		if (g_strv_length (package_ids) == 0)
 			pk_plugin_skip_native_backend (plugin);
+
 		goto out;
 	}
 
@@ -647,8 +651,10 @@ pk_plugin_transaction_start (PkPlugin *plugin,
 		full_paths = pk_transaction_get_full_paths (transaction);
 		if (g_strv_length (full_paths) == 0)
 			pk_plugin_skip_native_backend (plugin);
+
 		goto out;
 	}
+
 	if (role == PK_ROLE_ENUM_REMOVE_PACKAGES) {
 		package_ids = pk_transaction_get_package_ids (transaction);
 		data = pk_transaction_filter_listaller_packages (transaction,
@@ -661,6 +667,7 @@ pk_plugin_transaction_start (PkPlugin *plugin,
 		package_ids = pk_transaction_get_package_ids (transaction);
 		if (g_strv_length (package_ids) == 0)
 			pk_plugin_skip_native_backend (plugin);
+
 		goto out;
 	}
 
