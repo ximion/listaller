@@ -46,6 +46,7 @@ git archive --prefix="Listaller-$LISTALLER_VERSION/" "$GIT_TAG^{tree}" | tar -x 
 # cleanup files which should not go to the release tarball
 find ./release-tar-tmp -name .gitignore -type f -delete
 rm ./release-tar-tmp/release.sh
+rm ./release-tar-tmp/Makefile.in
 rm ./release-tar-tmp/prepare
 
 # create release tarball

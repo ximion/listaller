@@ -420,7 +420,7 @@ private class InternalDB : Object {
 		try {
 			db_assert (res);
 		} catch (Error e) {
-			critical (_("Can't create dbversion: %s").printf (db.errmsg ()));
+			critical ("Can't create database version: %s", db.errmsg ());
 			return false;
 		}
 

@@ -8,12 +8,12 @@ subdir = po
 top_builddir = ..
 
 # These options get passed to xgettext.
-XGETTEXT_OPTIONS = -i -c: -s --keyword=_ --keyword=N_ --keyword=__ --no-wrap --no-location \
+XGETTEXT_OPTIONS = -L C# -i -c: -s --keyword=_ --keyword=N_ --keyword=__ --no-wrap \
 	--package-name="listaller" \
 	--copyright-holder="Matthias Klumpp"
 
-COPYRIGHT_HOLDER = Copyright (c) 2011 Matthias Klumpp
+COPYRIGHT_HOLDER = Copyright (c) 2008-2012 Matthias Klumpp
 
-MSGID_BUGS_ADDRESS = listaller@googlegroups.com
+MSGID_BUGS_ADDRESS = listaller@freelists.org
 
 EXTRA_LOCALE_CATEGORIES =

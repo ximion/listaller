@@ -11,8 +11,14 @@ endif (LC_INTLTOOL_UPDATE STREQUAL "")
 
 set(LPKNAME "listaller")
 
-add_custom_target (nls-update
+add_custom_target (i18n-update
 	${LC_INTLTOOL_UPDATE} -p -g "${LPKNAME}"
+	DEPENDS POTFILES.in
+	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+add_custom_target (i18n-maintain
+	${LC_INTLTOOL_UPDATE} -m "${LPKNAME}"
 	DEPENDS POTFILES.in
 	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
