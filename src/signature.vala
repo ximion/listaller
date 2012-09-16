@@ -51,17 +51,17 @@ private class GPGSignature : Object {
 
 	private string signsummary_to_string (Sigsum summary) {
 		string str = "";
-		if ((summary & Sigsum.VALID) > 0)       str += _(" valid");
-		if ((summary & Sigsum.GREEN) > 0)       str += _(" green");
-		if ((summary & Sigsum.RED) > 0)         str += _(" red");
-		if ((summary & Sigsum.KEY_REVOKED) > 0) str += _(" revoked");
-		if ((summary & Sigsum.KEY_EXPIRED) > 0) str += _(" key-expired");
-		if ((summary & Sigsum.SIG_EXPIRED) > 0) str += _(" sig-expired");
-		if ((summary & Sigsum.KEY_MISSING) > 0) str += _(" key-missing");
-		if ((summary & Sigsum.CRL_MISSING) > 0) str += _(" crl-missing");
-		if ((summary & Sigsum.CRL_TOO_OLD) > 0) str += _(" crl-too-old");
-		if ((summary & Sigsum.BAD_POLICY) > 0)  str += _(" bad-policy");
-		if ((summary & Sigsum.SYS_ERROR) > 0)   str += _(" sys-error");
+		if ((summary & Sigsum.VALID) > 0)       str += " valid";
+		if ((summary & Sigsum.GREEN) > 0)       str += " green";
+		if ((summary & Sigsum.RED) > 0)         str += " red";
+		if ((summary & Sigsum.KEY_REVOKED) > 0) str += " revoked";
+		if ((summary & Sigsum.KEY_EXPIRED) > 0) str += " key-expired";
+		if ((summary & Sigsum.SIG_EXPIRED) > 0) str += " sig-expired";
+		if ((summary & Sigsum.KEY_MISSING) > 0) str += " key-missing";
+		if ((summary & Sigsum.CRL_MISSING) > 0) str += " crl-missing";
+		if ((summary & Sigsum.CRL_TOO_OLD) > 0) str += " crl-too-old";
+		if ((summary & Sigsum.BAD_POLICY) > 0)  str += " bad-policy";
+		if ((summary & Sigsum.SYS_ERROR) > 0)   str += " sys-error";
 		if (str == "")
 			str = " ???";
 
@@ -85,7 +85,7 @@ private class GPGSignature : Object {
 	private string sigvalidity_to_string (Validity validity) {
 		SignTrust trust = sigvalidity_to_trustlevel (validity);
 		if (trust == SignTrust.BAD_VALUE)
-			return _("[bad validity value]");
+			return "[bad validity value]";
 
 		return trust.to_string ();
 	}
@@ -125,7 +125,7 @@ private class GPGSignature : Object {
 							(sig->hash_algo > 0) ? get_hash_algorithm_name (sig->hash_algo) : _("Unknown"),
 							(sig->pka_address != null) ? sig->pka_address : _("[None]"),
 							(sig->pka_trust == 0) ? _("n/a") : sig->pka_trust == 1 ? _("bad") : sig->pka_trust == 2 ? _("okay"): _("RFU"),
-							(sig->wrong_key_usage) ? _(" wrong-key-usage") : "", sig->chain_model ? _(" chain-model") : "",
+							(sig->wrong_key_usage) ? _(" wrong-key-usage") : "", sig->chain_model ? " %s".printf (_("chain-model")) : "",
 							(sig->notations != null) ? _("yes") : _("no"));
 
 		return res_text;

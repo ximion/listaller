@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-09-07 23:25+0200\n"
+"POT-Creation-Date: 2012-09-17 01:00+0200\n"
 "PO-Revision-Date: 2009-05-06 13:36+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,48 +13,15 @@ msgstr ""
 "X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
 "X-Generator: Launchpad (build 15275)\n"
 
-msgid " bad-policy"
-msgstr ""
-
-msgid " chain-model"
-msgstr ""
-
-msgid " crl-missing"
-msgstr ""
-
-msgid " crl-too-old"
-msgstr ""
-
-msgid " green"
-msgstr ""
-
-msgid " key-expired"
-msgstr ""
-
-msgid " key-missing"
-msgstr ""
-
-msgid " red"
-msgstr ""
-
-msgid " revoked"
-msgstr ""
-
-msgid " sig-expired"
-msgstr ""
-
-msgid " sys-error"
-msgstr ""
-
-msgid " valid"
-msgstr ""
-
 msgid " wrong-key-usage"
 msgstr ""
 
 #, c-format
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
+msgstr ""
+
+msgid "<<< Press ENTER to continue! >>>"
 msgstr ""
 
 #, c-format
@@ -218,6 +185,13 @@ msgstr ""
 msgid "Error: %s\n"
 msgstr ""
 
+msgid "FPR"
+msgstr ""
+
+#, c-format
+msgid "Failed to import key with fingerprint '%s'."
+msgstr ""
+
 #, c-format
 msgid "File %s not found or permission denied!"
 msgstr ""
@@ -236,6 +210,9 @@ msgid "IPK package could not be found!"
 msgstr ""
 
 msgid "IPK package output directory"
+msgstr ""
+
+msgid "Import key with fingerprint FPR"
 msgstr ""
 
 msgid "Install an IPK package"
@@ -262,6 +239,16 @@ msgstr ""
 msgid "Installing native packages: %s"
 msgstr ""
 
+#, c-format
+msgid "Key '%s' imported successfully!"
+msgstr ""
+
+msgid "Key is missing"
+msgstr ""
+
+msgid "Key not found!"
+msgstr ""
+
 msgid "License:"
 msgstr ""
 
@@ -275,6 +262,9 @@ msgstr ""
 msgid ""
 "Listaller command-line tool: No command specified.\n"
 "Run '%s --help' to see a list of available commands."
+msgstr ""
+
+msgid "Lookup key which matches PATTERN"
 msgstr ""
 
 msgid "Low security."
@@ -324,6 +314,9 @@ msgid "One key has been revoked"
 msgstr ""
 
 msgid "One key has expired"
+msgstr ""
+
+msgid "PATTERN"
 msgstr ""
 
 msgid ""
@@ -416,7 +409,7 @@ msgstr ""
 msgid "Setup has not been initialized!"
 msgstr ""
 
-msgid "Should be safe."
+msgid "Should be safe to use."
 msgstr ""
 
 msgid "Show the application's version"
@@ -690,9 +683,6 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-msgid "Unknown."
-msgstr ""
-
 msgid "Use recursive mode"
 msgstr ""
 
@@ -714,20 +704,47 @@ msgid "XML file is no valid ZI feed!"
 msgstr ""
 
 #, c-format
+msgid ""
+"You are not allowed to install this package, because it's security level is "
+"'%s' and you need at least a package with security-level '%s'.\n"
+msgstr ""
+
+msgid ""
+"You need to agree with the license to install & use the application. Exiting "
+"setup now."
+msgstr ""
+
+msgid "You need to be root to change Listaller's key database!"
+msgstr ""
+
+#, c-format
 msgid "ZI XML file '%s' is damaged."
 msgstr ""
 
 msgid "[None]"
 msgstr ""
 
-msgid "[bad validity value]"
-msgstr ""
-
 msgid "bad"
 msgstr ""
 
 #, c-format
+msgid "chain-model"
+msgstr ""
+
+msgid "dangerous"
+msgstr ""
+
+#, c-format
 msgid "error: %s"
+msgstr ""
+
+msgid "high"
+msgstr ""
+
+msgid "low"
+msgstr ""
+
+msgid "medium"
 msgstr ""
 
 msgid "n/a"

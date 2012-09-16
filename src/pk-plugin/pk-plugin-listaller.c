@@ -224,6 +224,7 @@ static void listaller_error_code_cb (GObject *sender, ListallerErrorItem *error,
 
 	/* emit */
 	pk_backend_job_reset (plugin->job);
+	pk_transaction_set_signals (plugin->priv->current_transaction, plugin->job, PK_TRANSACTION_ALL_BACKEND_SIGNALS);
 	pk_backend_job_error_code (plugin->job, PK_ERROR_ENUM_INTERNAL_ERROR,
 				listaller_error_item_get_details (error));
 }

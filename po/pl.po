@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lclstrconsts\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-09-07 23:25+0200\n"
+"POT-Creation-Date: 2012-09-17 01:00+0200\n"
 "PO-Revision-Date: 2012-04-13 02:33+0000\n"
 "Last-Translator: Antoni Kudelski <antekk@linux.pl>\n"
 "Language-Team: \n"
@@ -15,49 +15,15 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
 
-msgid " bad-policy"
-msgstr ""
-
-msgid " chain-model"
-msgstr ""
-
-msgid " crl-missing"
-msgstr ""
-
-msgid " crl-too-old"
-msgstr ""
-
-msgid " green"
-msgstr ""
-
-#, fuzzy
-msgid " key-expired"
-msgstr "Jeden klucz wygasł"
-
-msgid " key-missing"
-msgstr ""
-
-msgid " red"
-msgstr ""
-
-msgid " revoked"
-msgstr ""
-
-msgid " sig-expired"
-msgstr ""
-
-msgid " sys-error"
-msgstr ""
-
-msgid " valid"
-msgstr ""
-
 msgid " wrong-key-usage"
 msgstr ""
 
 #, c-format
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
+msgstr ""
+
+msgid "<<< Press ENTER to continue! >>>"
 msgstr ""
 
 #, c-format
@@ -225,6 +191,13 @@ msgstr "Błąd podczas znajdowania plików w katalogu %s:%s"
 msgid "Error: %s\n"
 msgstr "Błąd: %s\n"
 
+msgid "FPR"
+msgstr ""
+
+#, c-format
+msgid "Failed to import key with fingerprint '%s'."
+msgstr ""
+
 #, c-format
 msgid "File %s not found or permission denied!"
 msgstr "Plik %s nie został znaleziony lub brak dostępu!"
@@ -243,6 +216,9 @@ msgid "IPK package could not be found!"
 msgstr "Nie można odszukać pakietu IPK."
 
 msgid "IPK package output directory"
+msgstr ""
+
+msgid "Import key with fingerprint FPR"
 msgstr ""
 
 msgid "Install an IPK package"
@@ -269,6 +245,16 @@ msgstr ""
 msgid "Installing native packages: %s"
 msgstr "Instalacja rodzimych pakietów: %s"
 
+#, c-format
+msgid "Key '%s' imported successfully!"
+msgstr ""
+
+msgid "Key is missing"
+msgstr ""
+
+msgid "Key not found!"
+msgstr ""
+
 msgid "License:"
 msgstr ""
 
@@ -282,6 +268,9 @@ msgstr ""
 msgid ""
 "Listaller command-line tool: No command specified.\n"
 "Run '%s --help' to see a list of available commands."
+msgstr ""
+
+msgid "Lookup key which matches PATTERN"
 msgstr ""
 
 msgid "Low security."
@@ -332,6 +321,9 @@ msgstr "Jeden klucz został unieważniony"
 
 msgid "One key has expired"
 msgstr "Jeden klucz wygasł"
+
+msgid "PATTERN"
+msgstr ""
 
 msgid ""
 "Package uses custom variables - usually this is not intentional, please "
@@ -423,7 +415,8 @@ msgstr ""
 msgid "Setup has not been initialized!"
 msgstr "Ustawienia nie zostały zainicjowane!"
 
-msgid "Should be safe."
+#, fuzzy
+msgid "Should be safe to use."
 msgstr "Powinno być bezpieczne."
 
 msgid "Show the application's version"
@@ -703,9 +696,6 @@ msgstr "Nie można zapisać podpisu pliku ! Wiadomość: %s"
 msgid "Unknown"
 msgstr "Nieznany."
 
-msgid "Unknown."
-msgstr "Nieznany."
-
 msgid "Use recursive mode"
 msgstr ""
 
@@ -727,21 +717,48 @@ msgid "XML file is no valid ZI feed!"
 msgstr ""
 
 #, c-format
+msgid ""
+"You are not allowed to install this package, because it's security level is "
+"'%s' and you need at least a package with security-level '%s'.\n"
+msgstr ""
+
+msgid ""
+"You need to agree with the license to install & use the application. Exiting "
+"setup now."
+msgstr ""
+
+msgid "You need to be root to change Listaller's key database!"
+msgstr ""
+
+#, c-format
 msgid "ZI XML file '%s' is damaged."
 msgstr "Plik ZI XML '%s' jest uszkodzony."
 
 msgid "[None]"
 msgstr ""
 
-msgid "[bad validity value]"
+msgid "bad"
 msgstr ""
 
-msgid "bad"
+#, c-format
+msgid "chain-model"
+msgstr ""
+
+msgid "dangerous"
 msgstr ""
 
 #, c-format
 msgid "error: %s"
 msgstr "błąd: %s"
+
+msgid "high"
+msgstr ""
+
+msgid "low"
+msgstr ""
+
+msgid "medium"
+msgstr ""
 
 msgid "n/a"
 msgstr ""
@@ -765,8 +782,15 @@ msgstr ""
 msgid "yes"
 msgstr ""
 
+#, fuzzy
+#~ msgid " key-expired"
+#~ msgstr "Jeden klucz wygasł"
+
 #~ msgid "Abort"
 #~ msgstr "Porzuć"
+
+#~ msgid "Unknown."
+#~ msgstr "Nieznany."
 
 #~ msgid "Validity is unknown"
 #~ msgstr "Ważność jest nieznana"

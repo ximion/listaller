@@ -11,9 +11,10 @@ src/utils.vala
 src/application.vala
 src/database.vala
 src/database-internal.vala
-src/gpg-basic.vala
+src/key-manager.vala
+src/gpgex.vala
 src/signature.vala
-src/security.vala
+src/security-info.vala
 src/doap.vala
 src/ipk-metafile.vala
 src/ipk-control.vala
@@ -45,8 +46,9 @@ tools/lipkgen/prepare.vala
 tools/lipkgen/lpkgutils.vala
 tools/appcompile/appcompile.vala
 tools/appcompile/autocompiler.vala
-tools/depscan/main.vala
+tools/depscan/depscan-tool.vala
 tools/depscan/depscan.vala
 tools/depscan/scan_ldd.vala
+tools/likey/likey.vala
 # Mimetypes
 data/mime/listaller-ipk.xml.in

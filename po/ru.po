@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@googlegroups.com\n"
-"POT-Creation-Date: 2012-09-07 23:25+0200\n"
+"POT-Creation-Date: 2012-09-17 01:00+0200\n"
 "PO-Revision-Date: 2012-04-13 02:32+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
@@ -13,43 +13,6 @@ msgstr ""
 "X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
 "X-Generator: Launchpad (build 15275)\n"
 
-msgid " bad-policy"
-msgstr ""
-
-msgid " chain-model"
-msgstr ""
-
-msgid " crl-missing"
-msgstr ""
-
-msgid " crl-too-old"
-msgstr ""
-
-msgid " green"
-msgstr ""
-
-#, fuzzy
-msgid " key-expired"
-msgstr "Истёк срок действия ключа"
-
-msgid " key-missing"
-msgstr ""
-
-msgid " red"
-msgstr ""
-
-msgid " revoked"
-msgstr ""
-
-msgid " sig-expired"
-msgstr ""
-
-msgid " sys-error"
-msgstr ""
-
-msgid " valid"
-msgstr ""
-
 msgid " wrong-key-usage"
 msgstr ""
 
@@ -59,6 +22,9 @@ msgid ""
 msgstr ""
 "'%s' не имеет зарегистрированного списка файлов. Возможно, база данных "
 "программ повреждена."
+
+msgid "<<< Press ENTER to continue! >>>"
+msgstr ""
 
 #, c-format
 msgid "A higher version '%s' of this application has already been installed."
@@ -232,6 +198,13 @@ msgstr ""
 msgid "Error: %s\n"
 msgstr "Ошибка: %s\n"
 
+msgid "FPR"
+msgstr ""
+
+#, c-format
+msgid "Failed to import key with fingerprint '%s'."
+msgstr ""
+
 #, c-format
 msgid "File %s not found or permission denied!"
 msgstr "Файл %s не найден или у вас нет прав доступа к нему!"
@@ -251,6 +224,9 @@ msgstr "Пакет IPK не может быть найден!"
 
 msgid "IPK package output directory"
 msgstr "Каталог вывода пакета IPK"
+
+msgid "Import key with fingerprint FPR"
+msgstr ""
 
 msgid "Install an IPK package"
 msgstr ""
@@ -276,6 +252,16 @@ msgstr ""
 msgid "Installing native packages: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Key '%s' imported successfully!"
+msgstr "Приложение %a успешно установлено!"
+
+msgid "Key is missing"
+msgstr ""
+
+msgid "Key not found!"
+msgstr ""
+
 msgid "License:"
 msgstr ""
 
@@ -289,6 +275,9 @@ msgstr ""
 msgid ""
 "Listaller command-line tool: No command specified.\n"
 "Run '%s --help' to see a list of available commands."
+msgstr ""
+
+msgid "Lookup key which matches PATTERN"
 msgstr ""
 
 msgid "Low security."
@@ -339,6 +328,9 @@ msgstr "Один ключ был отозван"
 
 msgid "One key has expired"
 msgstr "Истёк срок действия ключа"
+
+msgid "PATTERN"
+msgstr ""
 
 msgid ""
 "Package uses custom variables - usually this is not intentional, please "
@@ -432,7 +424,8 @@ msgstr ""
 msgid "Setup has not been initialized!"
 msgstr "Программа установки не инициализирована!"
 
-msgid "Should be safe."
+#, fuzzy
+msgid "Should be safe to use."
 msgstr "Должно быть безопасным."
 
 msgid "Show the application's version"
@@ -724,9 +717,6 @@ msgstr ""
 msgid "Unknown"
 msgstr "Неизвестно."
 
-msgid "Unknown."
-msgstr "Неизвестно."
-
 msgid "Use recursive mode"
 msgstr "Использовать рекурсивный режим"
 
@@ -748,21 +738,48 @@ msgid "XML file is no valid ZI feed!"
 msgstr ""
 
 #, c-format
+msgid ""
+"You are not allowed to install this package, because it's security level is "
+"'%s' and you need at least a package with security-level '%s'.\n"
+msgstr ""
+
+msgid ""
+"You need to agree with the license to install & use the application. Exiting "
+"setup now."
+msgstr ""
+
+msgid "You need to be root to change Listaller's key database!"
+msgstr ""
+
+#, c-format
 msgid "ZI XML file '%s' is damaged."
 msgstr ""
 
 msgid "[None]"
 msgstr ""
 
-msgid "[bad validity value]"
+msgid "bad"
 msgstr ""
 
-msgid "bad"
+#, c-format
+msgid "chain-model"
+msgstr ""
+
+msgid "dangerous"
 msgstr ""
 
 #, c-format
 msgid "error: %s"
 msgstr "ошибка: %s"
+
+msgid "high"
+msgstr ""
+
+msgid "low"
+msgstr ""
+
+msgid "medium"
+msgstr ""
 
 msgid "n/a"
 msgstr ""
@@ -785,6 +802,10 @@ msgstr ""
 
 msgid "yes"
 msgstr ""
+
+#, fuzzy
+#~ msgid " key-expired"
+#~ msgstr "Истёк срок действия ключа"
 
 #~ msgid "%f files will be changed."
 #~ msgstr "%f файлы будут изменены."
@@ -1177,6 +1198,9 @@ msgstr ""
 
 #~ msgid "Uninstalling..."
 #~ msgstr "Удаление..."
+
+#~ msgid "Unknown."
+#~ msgstr "Неизвестно."
 
 #~ msgid "Update info:"
 #~ msgstr "Информация об обновлении:"

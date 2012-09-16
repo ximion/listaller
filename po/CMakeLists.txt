@@ -15,9 +15,9 @@ add_custom_target (nls-update
 	${LC_INTLTOOL_UPDATE} -p -g "${LPKNAME}"
 	DEPENDS POTFILES.in
 	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-	)
+)
 
 file (GLOB _translations ${CMAKE_CURRENT_SOURCE_DIR}/*.po)
         gettext_create_translations (${LPKNAME}.pot
 				     ALL ${_translations}
-	)
+)
