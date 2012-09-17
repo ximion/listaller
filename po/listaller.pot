@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: listaller\n"
         "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-        "POT-Creation-Date: 2012-09-17 01:44+0200\n"
+        "POT-Creation-Date: 2012-09-18 00:45+0200\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,10 +15,6 @@ msgstr  "Project-Id-Version: listaller\n"
         "MIME-Version: 1.0\n"
         "Content-Type: text/plain; charset=CHARSET\n"
         "Content-Transfer-Encoding: 8bit\n"
-
-#: ../src/signature.vala:128
-msgid   " wrong-key-usage"
-msgstr  ""
 
 #: ../src/manager.vala:158
 msgid   "'%s' has no file-list registered. The software database might be broken."
@@ -790,10 +786,6 @@ msgstr  ""
 
 #: ../src/signature.vala:127
 msgid   "bad"
-msgstr  ""
-
-#: ../src/signature.vala:128
-msgid   "chain-model"
 msgstr  ""
 
 #: ../src/security-info.vala:44

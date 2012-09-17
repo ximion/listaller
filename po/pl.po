@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lclstrconsts\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2012-09-17 01:43+0200\n"
+"POT-Creation-Date: 2012-09-18 00:45+0200\n"
 "PO-Revision-Date: 2012-04-13 02:33+0000\n"
 "Last-Translator: Antoni Kudelski <antekk@linux.pl>\n"
 "Language-Team: \n"
@@ -14,10 +14,6 @@ msgstr ""
 "X-Generator: Launchpad (build 15275)\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
-
-#: ../src/signature.vala:128
-msgid " wrong-key-usage"
-msgstr ""
 
 #: ../src/manager.vala:158
 msgid ""
@@ -854,10 +850,6 @@ msgstr ""
 
 #: ../src/signature.vala:127
 msgid "bad"
-msgstr ""
-
-#: ../src/signature.vala:128
-msgid "chain-model"
 msgstr ""
 
 #: ../src/security-info.vala:44

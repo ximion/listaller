@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.00b\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2012-09-17 01:43+0200\n"
+"POT-Creation-Date: 2012-09-18 00:45+0200\n"
 "PO-Revision-Date: 2011-02-22 22:07+0000\n"
 "Last-Translator: truri <Unknown>\n"
 "Language-Team: Albanian\n"
@@ -12,10 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
 "X-Generator: Launchpad (build 15275)\n"
-
-#: ../src/signature.vala:128
-msgid " wrong-key-usage"
-msgstr ""
 
 #: ../src/manager.vala:158
 msgid ""
@@ -841,10 +837,6 @@ msgstr ""
 
 #: ../src/signature.vala:127
 msgid "bad"
-msgstr ""
-
-#: ../src/signature.vala:128
-msgid "chain-model"
 msgstr ""
 
 #: ../src/security-info.vala:44

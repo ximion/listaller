@@ -125,7 +125,7 @@ private class GPGSignature : Object {
 							(sig->hash_algo > 0) ? get_hash_algorithm_name (sig->hash_algo) : _("Unknown"),
 							(sig->pka_address != null) ? sig->pka_address : _("[None]"),
 							(sig->pka_trust == 0) ? _("n/a") : sig->pka_trust == 1 ? _("bad") : sig->pka_trust == 2 ? _("okay"): _("RFU"),
-							(sig->wrong_key_usage) ? _(" wrong-key-usage") : "", sig->chain_model ? " %s".printf (_("chain-model")) : "",
+							(sig->wrong_key_usage) ? " wrong-key-usage" : "", sig->chain_model ? " %s".printf ("chain-model") : "",
 							(sig->notations != null) ? _("yes") : _("no"));
 
 		return res_text;
