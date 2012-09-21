@@ -1,6 +1,6 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="relocatable-apps">
 <info>
-  <link type="guide" xref="index"/>
+  <link type="topic" xref="index"/>
 </info>
 
 <title>Guide to making relocatable applications</title>
@@ -64,7 +64,7 @@ In this tutorial, our imaginary developer, Joe, will show you everything he does
 
 <steps>
  <item><p>Generate BinReloc source files</p>
-	<p>Joe <link href="http://listaller.nlinux.org">downloads the BinReloc SDK</link> from the <em>Listaller Tools</em> section of the download page.
+	<p>Joe <link href="http://listaller.tenstral.net">downloads the BinReloc SDK</link> from the <em>Listaller Tools</em> section of the download page.
 		He extracts the archive in his home folder. A folder called <file>binreloc-2.0</file> appears.</p>
 	<listing><code><![CDATA[[joe@localhost /home/joe]$ tar xzf binreloc-2.0.tar.gz
 [joe@localhost /home/joe]$ cd binreloc-2.0</div>]]></code>
