@@ -569,6 +569,9 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 						plugin);
 	listaller_set_backend_proxy (pkbproxy);
 
+	/* get transaction role */
+	role = pk_transaction_get_role (transaction);
+
 	/* if we're only simulation, skip Listaller packages */
 	if (pk_bitfield_contain (pk_transaction_get_transaction_flags (transaction),
 				   PK_TRANSACTION_FLAG_ENUM_SIMULATE)) {
@@ -577,6 +580,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 			full_paths = pk_transaction_get_full_paths (transaction);
 			data = pk_transaction_filter_listaller_files (transaction,
 									full_paths);
+
 			/* We have Listaller packages, so skip this! */
 			/* FIXME: This needs to be smarter - backend needs to Simulate() with remaining pkgs */
 			if (data != NULL)
@@ -588,16 +592,16 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 								package_ids);
 
 			/* nothing more to process */
-			package_ids = pk_transaction_get_package_ids (transaction);
-			if (g_strv_length (package_ids) == 0)
+			if (data != 0)
 				pk_plugin_skip_native_backend (plugin);
 		}
 
 		goto out;
 	}
 
+	g_debug ("Processing transaction");
+
 	/* handle these before the transaction has been run */
-	role = pk_transaction_get_role (transaction);
 	if (role == PK_ROLE_ENUM_SEARCH_NAME ||
 	    role == PK_ROLE_ENUM_SEARCH_DETAILS) {
 		values = pk_transaction_get_values (transaction);
