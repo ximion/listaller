@@ -34,14 +34,16 @@ struct PkPluginPrivate {
 	GMainLoop		*loop;
 };
 
+static void pk_plugin_restore_backend (PkPlugin *plugin);
+
 /**
  * pk_plugin_reset:
  */
 void
 pk_plugin_reset (PkPlugin *plugin)
 {
-	/* reset the native backend job */
-	pk_backend_job_reset (plugin->job);
+	/* reset the native backend */
+	pk_plugin_restore_backend (plugin);
 
 	/* recreate PkResults object */
 	g_object_unref (plugin->priv->backend_results);
@@ -196,7 +198,8 @@ pk_listaller_get_filelist (PkPlugin *plugin, gchar **package_ids)
 	};
 }
 
-static void listaller_application_cb (GObject *sender, ListallerAppItem *item, PkPlugin *plugin)
+static void
+listaller_application_cb (GObject *sender, ListallerAppItem *item, PkPlugin *plugin)
 {
 	gchar *package_id;
 
@@ -214,7 +217,8 @@ static void listaller_application_cb (GObject *sender, ListallerAppItem *item, P
 	g_free (package_id);
 }
 
-static void listaller_error_code_cb (GObject *sender, ListallerErrorItem *error, PkPlugin *plugin)
+static void
+listaller_error_code_cb (GObject *sender, ListallerErrorItem *error, PkPlugin *plugin)
 {
 	g_return_if_fail (error != NULL);
 
@@ -223,13 +227,13 @@ static void listaller_error_code_cb (GObject *sender, ListallerErrorItem *error,
 		return;
 
 	/* emit */
-	pk_backend_job_reset (plugin->job);
-	pk_transaction_set_signals (plugin->priv->current_transaction, plugin->job, PK_TRANSACTION_ALL_BACKEND_SIGNALS);
+	pk_plugin_restore_backend (plugin);
 	pk_backend_job_error_code (plugin->job, PK_ERROR_ENUM_INTERNAL_ERROR,
 				listaller_error_item_get_details (error));
 }
 
-static void listaller_message_cb (GObject *sender, ListallerMessageItem *message, PkPlugin *plugin)
+static void
+listaller_message_cb (GObject *sender, ListallerMessageItem *message, PkPlugin *plugin)
 {
 	ListallerMessageEnum mtype;
 	gchar *text;
@@ -416,21 +420,12 @@ pk_plugin_backend_job_error_code_cb (PkBackendJob *job,
 }
 
 /**
- * pk_plugin_prepare_backend_call:
+ * pk_plugin_redirect_backend_signals:
  *
  **/
 static void
-pk_plugin_prepare_backend_call (PkPlugin *plugin)
+pk_plugin_redirect_backend_signals (PkPlugin *plugin)
 {
-	PkBitfield backend_signals;
-
-	/* don't forward some events to the transaction, only Listaller should see them */
-	backend_signals = PK_TRANSACTION_ALL_BACKEND_SIGNALS;
-	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_ERROR_CODE);
-	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_PACKAGE);
-	pk_bitfield_remove (backend_signals, PK_BACKEND_SIGNAL_FINISHED);
-	pk_transaction_set_signals (plugin->priv->current_transaction, plugin->job, backend_signals);
-
 	/* connect (used) backend signals to Listaller PkPlugin */
 	pk_backend_job_set_vfunc (plugin->job,
 				  PK_BACKEND_SIGNAL_FINISHED,
@@ -453,10 +448,10 @@ pk_plugin_prepare_backend_call (PkPlugin *plugin)
 static void
 pk_plugin_restore_backend (PkPlugin *plugin)
 {
+	pk_backend_job_reset (plugin->job);
 	/* connect backend-job to current backend again */
-	pk_transaction_set_signals (plugin->priv->current_transaction,
-				     plugin->job,
-				     PK_TRANSACTION_ALL_BACKEND_SIGNALS);
+	pk_transaction_signals_reset (plugin->priv->current_transaction,
+				     plugin->job);
 }
 
 /**
@@ -480,7 +475,7 @@ pk_backend_job_request_whatprovides_cb (PkBitfield filters,
 
 	/* prepare for native backend call */
 	pk_plugin_reset (plugin);
-	pk_plugin_prepare_backend_call (plugin);
+	pk_plugin_redirect_backend_signals (plugin);
 
 	/* query the native backend */
 	pk_backend_what_provides (plugin->backend,
@@ -516,7 +511,7 @@ pk_backend_job_request_installpackages_cb (PkBitfield transaction_flags,
 
 	/* prepare the backend */
 	pk_plugin_reset (plugin);
-	pk_plugin_prepare_backend_call (plugin);
+	pk_plugin_redirect_backend_signals (plugin);
 
 	/* query the native backend */
 	pk_backend_install_packages (plugin->backend,

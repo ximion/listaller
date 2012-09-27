@@ -1638,6 +1638,10 @@ namespace PackageKit {
 	public static PackageKit.Network network_enum_from_string (string network);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_network_enum_to_string")]
 	public static unowned string network_enum_to_string (PackageKit.Network network);
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_polkit_agent_close")]
+	public static void polkit_agent_close ();
+	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_polkit_agent_open")]
+	public static int polkit_agent_open ();
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_provides_enum_from_string")]
 	public static PackageKit.Provides provides_enum_from_string (string provides);
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h", cname = "pk_provides_enum_to_string")]

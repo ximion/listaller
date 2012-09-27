@@ -315,12 +315,12 @@ namespace PkPlugin {
 		public void set_package_ids (string package_ids);
 		[CCode (cname = "pk_transaction_set_plugins")]
 		public void set_plugins (GLib.GenericArray<void*> plugins);
-		[CCode (cname = "pk_transaction_set_signals")]
-		public void set_signals (PkPlugin.BackendJob job, PackageKit.Bitfield backend_signals);
 		[CCode (cname = "pk_transaction_set_state")]
 		public bool set_state (PkPlugin.TransactionState state);
 		[CCode (cname = "pk_transaction_set_supported_roles")]
 		public void set_supported_roles (GLib.GenericArray<void*> plugins);
+		[CCode (cname = "pk_transaction_signals_reset")]
+		public void signals_reset (PkPlugin.BackendJob job);
 		[CCode (cname = "pk_transaction_skip_auth_checks")]
 		public void skip_auth_checks (bool skip_checks);
 		[CCode (cname = "pk_transaction_state_to_string")]
@@ -343,8 +343,6 @@ namespace PkPlugin {
 		public void transaction_finished_end (PkPlugin.Transaction transaction);
 		[CCode (cname = "pk_plugin_transaction_finished_results")]
 		public void transaction_finished_results (PkPlugin.Transaction transaction);
-		[CCode (cname = "pk_plugin_transaction_finished_start")]
-		public void transaction_finished_start (PkPlugin.Transaction transaction);
 		[CCode (cname = "pk_plugin_transaction_run")]
 		public void transaction_run (PkPlugin.Transaction transaction);
 		[CCode (cname = "pk_plugin_transaction_started")]
@@ -391,7 +389,6 @@ namespace PkPlugin {
 		TRANSACTION_CONTENT_TYPES,
 		TRANSACTION_RUN,
 		TRANSACTION_STARTED,
-		TRANSACTION_FINISHED_START,
 		TRANSACTION_FINISHED_RESULTS,
 		TRANSACTION_FINISHED_END,
 		DESTROY,

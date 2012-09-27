@@ -153,6 +153,9 @@ pk_transaction_filter_listaller_packages (PkTransaction *transaction,
 	GPtrArray *native = NULL;
 	guint i;
 
+	if (package_ids == NULL)
+		return NULL;
+
 	/* just do a quick pass as an optimisation for the common case */
 	for (i=0; package_ids[i] != NULL; i++) {
 		ret = pk_listaller_is_package (package_ids[i]);
