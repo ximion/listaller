@@ -369,7 +369,7 @@ public class Setup : MessageObject {
 		var pkslv = new Dep.PkResolver (setup_settings);
 		string res = "";
 		foreach (string id in list) {
-			string? pkid = pkslv.package_name_for_file (id);
+			string? pkid = pkslv.find_package_name_for_file (id);
 			if (pkid == null)
 				continue;
 			res = "%s%s\n".printf (res, pkid);

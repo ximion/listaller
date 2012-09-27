@@ -115,17 +115,56 @@ private class PkResolver : PkListallerTask {
 		// TODO
 	}
 
+	private PackageKit.Results find_package_providing_component (PackageKit.Bitfield filter, PackageKit.Provides ctype, string[] comps) {
+		PackageKit.Results res = null;
+
+		if (pkbproxy == null) {
+			try {
+				res  = pktask.what_provides (filter, ctype, comps, null, null);
+
+			} catch (Error e) {
+				debug (e.message);
+			}
+		} else {
+			res = pkbproxy.run_what_provides (filter, ctype, comps);
+			if (res == null) {
+				debug ("Native backend PkResults was NULL!");
+			}
+		}
+		assert (res != null);
+
+		return res;
+	}
+
 	private PackageKit.PackageSack? pkit_pkgs_from_depfiles (IPK.Dependency dep) {
 		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("arch;");
 
 		// We only resolve libraries at time
 		// TODO: Resolve other dependencies too
 		string[] libs = {};
+		string[] python_modules = {};
+		string[] python2_modules = {};
+		string[] files = {};
 		foreach (string s in dep.raw_complist) {
-			if (dep.component_get_type (s) == Dep.ComponentType.SHARED_LIB)
-				libs += dep.component_get_name (s);
+			var ctype = dep.component_get_type (s);
+			var cname = dep.component_get_name (s);
+			switch (ctype) {
+				case ComponentType.SHARED_LIB: libs += cname;
+					break;
+				case ComponentType.PYTHON: python_modules += cname;
+					break;
+				case ComponentType.PYTHON_2: python2_modules += cname;
+					break;
+				case ComponentType.FILE: files += cname;
+					break;
+				default: break;
+			}
+
 		}
 		libs += null;
+		python_modules += null;
+		python2_modules += null;
+		files += null;
 
 		// we can't do anything if PK doesn't support WhatProvides
 		if (!supported (PackageKit.Role.WHAT_PROVIDES)) {
@@ -136,20 +175,12 @@ private class PkResolver : PkListallerTask {
 		PackageKit.Results? res;
 		PackageKit.PackageSack? sack;
 
-		if (pkbproxy == null) {
-			try {
-				res  = pktask.what_provides (filter, PackageKit.Provides.SHARED_LIB, libs, null, null);
-			} catch (Error e) {
-				debug (e.message);
-				return null;
-			}
-		} else {
-			res = pkbproxy.run_what_provides (filter, PackageKit.Provides.SHARED_LIB, libs);
-			if (res == null) {
-				debug ("Native backend PkResults was NULL!");
-				return null;
-			}
-		}
+		res = find_package_providing_component (filter, PackageKit.Provides.SHARED_LIB, libs);
+		if (res.get_exit_code () == PackageKit.Exit.SUCCESS)
+			res  = find_package_providing_component (filter, PackageKit.Provides.PYTHON, python_modules);
+		// TODO: Implement Python3-handling in PK, if necessary!
+		if (res.get_exit_code () == PackageKit.Exit.SUCCESS)
+			res  = find_package_providing_component (filter, PackageKit.Provides.PYTHON, python2_modules);
 
 		sack = res.get_package_sack ();
 		if (sack == null)
@@ -167,7 +198,9 @@ private class PkResolver : PkListallerTask {
 		return sack;
 	}
 
-	/* This method searches for dependency packages & stores them in dep.install_data */
+	/**
+	 * This method searches for dependency packages & stores them in dep.install_data
+	 */
 	public bool search_dep_packages (ref IPK.Dependency dep) {
 		bool ret = true;
 		reset ();
@@ -237,7 +270,7 @@ private class PkResolver : PkListallerTask {
 	 *
 	 * @return Resolved package-id or NULL, if none was found
 	 */
-	public string? package_name_for_file (string fname) throws PkError {
+	public string? find_package_name_for_file (string fname) throws PkError {
 		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("installed;");
 
 		PackageKit.Results? res = null;
