@@ -9,7 +9,7 @@ if (LC_INTLTOOL_MERGE STREQUAL "LC_INTLTOOL_MERGE-NOTFOUND")
 	message (FATAL_ERROR "Intltool was not found! Please install it to continue!")
 endif (LC_INTLTOOL_MERGE STREQUAL "LC_INTLTOOL_MERGE-NOTFOUND")
 
-add_custom_target (merge-l18n ALL
+add_custom_target (merge-l10n ALL
 	${LC_INTLTOOL_MERGE} -x ${CMAKE_SOURCE_DIR}/po
 		${CMAKE_CURRENT_SOURCE_DIR}/listaller-ipk.xml.in
 		${CMAKE_CURRENT_BINARY_DIR}/listaller-ipk.xml

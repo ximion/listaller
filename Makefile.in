@@ -14,11 +14,14 @@ test-verbose:
 translations:
 	$(MAKE) -C ./build translations
 
-i18n-update:
-	$(MAKE) -C ./build i18n-update
+l10n-update:
+	$(MAKE) -C ./build l10n-update
 
-i18n-maintain:
-	$(MAKE) -C ./build i18n-maintain
+l10n-maintain:
+	$(MAKE) -C ./build l10n-maintain
+
+documentation:
+	$(MAKE) -C ./build documentation
 
 clean:
 	$(MAKE) -C ./build clean

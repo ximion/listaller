@@ -10,15 +10,21 @@ mkdir build
 cd build
 cmake .. <flags>
 Possible flags are:
- -DTOOLS=OFF -- Disable building of Listaller's command-line tools (libuild/lipa/etc.)
- -DLIBUILD=ON -- Build the LIBuild facilities
- -DPATCHELF=ON -- Build patchelf utility (we don't use this at time, so you usually don't want to enable it)
- -DVISUAL_LDD=ON -- Build the Visual-LDD utility (you need Qt4 for that)
- -DTESTS=ON -- Enable Listaller's basic Unit Tests
+ -DTOOLS=OFF          -- Disable building of Listaller's command-line tools (libuild/lipa/etc.)
+ -DLIBUILD=ON         -- Build the LIBuild facilities
+ -DPATCHELF=ON        -- Build patchelf utility (we don't use this at time, so you usually don't want to enable it)
+ -DVISUAL_LDD=ON      -- Build the Visual-LDD utility (you need Qt4 for that)
+ -DTESTS=ON           -- Enable Listaller's basic Unit Tests
  -DTEST_DEPMANAGER=ON -- Enable test for Listaller's dependency solver
- -DTEST_SIGNING=ON -- Enable Listaller signing tests
+ -DTEST_SIGNING=ON    -- Enable Listaller signing tests
+ -DAPI_DOCS=ON        -- Add a new target "api-docs" which allows you to build Listaller's source documentation
 
 === Installation ===
 
 To install the compiled binaries and required data files, execute
 "make install" with superuser rights.
+
+=== Building documentation ===
+To recreate Listaller's full documentation in HTML,
+enable the API docs and execute this command:
+make documentation api-docs

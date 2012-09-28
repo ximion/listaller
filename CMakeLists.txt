@@ -50,7 +50,8 @@ option(TOOLS "Build Listaller's non-gui tools" ON)
 option(LIBUILD "Build and install the LIBuild facilities" OFF)
 option(PATCHELF "Build patchelf utility" OFF)
 option(VISUAL_LDD "Build the Visual-LDD utility" OFF)
-option(L18N "Enable localization" ON)
+option(L10N "Enable localization" ON)
+option(API_DOCS "Add target to build API documentation" OFF)
 option(TESTS "Enable Listaller's Unit Tests" OFF)
 option(TEST_DEPMANAGER "Test Listaller's dependency solver" OFF)
 option(TEST_SIGNING "Enable Listaller signing tests" OFF)
@@ -86,7 +87,7 @@ add_custom_target(distclean
 )
 
 #
-# l18n
+# l10n
 #
 find_package (Gettext REQUIRED)
 
@@ -155,6 +156,6 @@ add_subdirectory(docs)
 if(TESTS)
 	add_subdirectory(tests)
 endif(TESTS)
-if (GETTEXT_FOUND AND L18N)
+if (GETTEXT_FOUND AND L10N)
   add_subdirectory(po)
-endif (GETTEXT_FOUND AND L18N)
+endif (GETTEXT_FOUND AND L10N)
