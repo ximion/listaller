@@ -115,8 +115,11 @@ private class PkResolver : PkListallerTask {
 		// TODO
 	}
 
-	private PackageKit.Results find_package_providing_component (PackageKit.Bitfield filter, PackageKit.Provides ctype, string[] comps) {
+	private PackageKit.Results? find_package_providing_component (PackageKit.Bitfield filter, PackageKit.Provides ctype, string[] comps, ref PackageKit.PackageSack result_sack) {
 		PackageKit.Results res = null;
+
+		if ((comps.length == 0) || (comps[0] == null))
+			return null;
 
 		if (pkbproxy == null) {
 			try {
@@ -129,9 +132,19 @@ private class PkResolver : PkListallerTask {
 			res = pkbproxy.run_what_provides (filter, ctype, comps);
 			if (res == null) {
 				debug ("Native backend PkResults was NULL!");
+				return null;
 			}
 		}
 		assert (res != null);
+
+		var sack = res.get_package_sack ();
+		if (sack == null)
+			return res;
+
+		GenericArray<PackageKit.Package> packages = sack.get_array ();
+		for (int i = 0;i < packages.length;i++) {
+			result_sack.add_package (packages.get (i));
+		}
 
 		return res;
 	}
@@ -172,30 +185,32 @@ private class PkResolver : PkListallerTask {
 			return null;
 		}
 
-		PackageKit.Results? res;
-		PackageKit.PackageSack? sack;
+		PackageKit.Results res;
+		PackageKit.Results? new_res = null; // required for workaround to get the correct error-details
+		var result_sack = new PackageKit.PackageSack ();
 
-		res = find_package_providing_component (filter, PackageKit.Provides.SHARED_LIB, libs);
+		res = find_package_providing_component (filter, PackageKit.Provides.SHARED_LIB, libs, ref result_sack);
 		if (res.get_exit_code () == PackageKit.Exit.SUCCESS)
-			res  = find_package_providing_component (filter, PackageKit.Provides.PYTHON, python_modules);
+			new_res  = find_package_providing_component (filter, PackageKit.Provides.PYTHON, python_modules, ref result_sack);
+		if (new_res != null)
+			res = new_res;
 		// TODO: Implement Python3-handling in PK, if necessary!
 		if (res.get_exit_code () == PackageKit.Exit.SUCCESS)
-			res  = find_package_providing_component (filter, PackageKit.Provides.PYTHON, python2_modules);
+			new_res  = find_package_providing_component (filter, PackageKit.Provides.PYTHON, python2_modules, ref result_sack);
+		if (new_res != null)
+			res = new_res;
 
-		sack = res.get_package_sack ();
-		if (sack == null)
-			return null;
-		string[] packages = sack.get_ids ();
+		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (result_sack.get_size () == 0) ) {
+			string message = _("Unable to find native package for '%s'!").printf (dep.full_name);
+			if (res.get_exit_code () != PackageKit.Exit.SUCCESS)
+				message = "%s\n%s".printf (message, _("Details from PackageKit: %s").printf (res.get_error_code ().details));
 
-		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS) || (packages[0] == null) ) {
-			set_error (ErrorEnum.INTERNAL,
-				   "%s\n%s".printf (_("Unable to find native package for '%s'!").printf (dep.full_name),
-				_("PackageKit exit code was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())))
-			);
+			set_error (ErrorEnum.INTERNAL, message);
+
 			return null;
 		}
 
-		return sack;
+		return result_sack;
 	}
 
 	/**
