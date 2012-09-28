@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2012-09-18 00:45+0200\n"
+"POT-Creation-Date: 2012-09-28 23:35+0200\n"
 "PO-Revision-Date: 2012-05-21 15:08+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -194,6 +194,10 @@ msgstr "Datenbank entsperrt"
 msgid "Description:"
 msgstr "Beschreibung:"
 
+#: ../src/pkit-tasks.vala:206
+msgid "Details from PackageKit: %s"
+msgstr ""
+
 #: ../tools/lipa/lipa-installer.vala:119
 msgid "Do you accept these terms and conditions?"
 msgstr "Akzeptieren Sie diese Bedingungen?"
@@ -275,7 +279,7 @@ msgstr "Installation fehlgeschlagen!"
 msgid "Installation of %s"
 msgstr "Installation von %s"
 
-#: ../src/pkit-tasks.vala:312 ../src/pkit-tasks.vala:329
+#: ../src/pkit-tasks.vala:360 ../src/pkit-tasks.vala:377
 msgid "Installation of native packages failed with message: %s"
 msgstr ""
 "Installation eines nativen Paketes ist mit folgender Nachricht "
@@ -285,7 +289,7 @@ msgstr ""
 msgid "Installing"
 msgstr "Installieren..."
 
-#: ../src/pkit-tasks.vala:385
+#: ../src/pkit-tasks.vala:433
 msgid "Installing native packages: %s"
 msgstr "Installiere native Pakete: %s"
 
@@ -392,8 +396,8 @@ msgstr "Ein Schlüssel ist abgelaufen"
 msgid "PATTERN"
 msgstr ""
 
-#: ../src/varsolver.vala:170 ../src/varsolver.vala:185
-#: ../src/varsolver.vala:200
+#: ../src/varsolver.vala:176 ../src/varsolver.vala:191
+#: ../src/varsolver.vala:206
 msgid ""
 "Package uses custom variables - usually this is not intentional, please "
 "contact the package author!"
@@ -401,24 +405,20 @@ msgstr ""
 "Das Paket benutzt benutzerdefinierte Variablen - normalerweise ist dies "
 "nicht beabsichtigt, benachrichtigen Sie den Autor des Paketes!"
 
-#: ../src/pkit-tasks.vala:132
+#: ../src/pkit-tasks.vala:184
 msgid ""
 "PackageKit backend does not support finding packages by stuff they provide - "
 "Installer was unable to use native packages to satisfy dependencies of this "
 "application."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:248
+#: ../src/pkit-tasks.vala:296
 msgid ""
 "PackageKit backend does not support searching for files - Installer was "
 "unable to use native packages to satisfy dependencies of this application."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:162
-msgid "PackageKit exit code was: %s"
-msgstr "PackageKit Ergebniscode war: %s"
-
-#: ../src/pkit-tasks.vala:279
+#: ../src/pkit-tasks.vala:327
 msgid ""
 "PackageKit transaction failed!\n"
 "Exit message was: %s"
@@ -783,7 +783,7 @@ msgid ""
 "architecture."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:161
+#: ../src/pkit-tasks.vala:204
 msgid "Unable to find native package for '%s'!"
 msgstr ""
 
@@ -1252,6 +1252,9 @@ msgstr ""
 #~ msgstr ""
 #~ "Das Paket ist nicht für das aktuelle Release ihrer Linux Distribution "
 #~ "gebaut."
+
+#~ msgid "PackageKit exit code was: %s"
+#~ msgstr "PackageKit Ergebniscode war: %s"
 
 #~ msgid "Password"
 #~ msgstr "Passwort"

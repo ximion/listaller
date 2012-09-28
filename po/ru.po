@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2012-09-18 00:45+0200\n"
+"POT-Creation-Date: 2012-09-28 23:35+0200\n"
 "PO-Revision-Date: 2012-04-13 02:32+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
@@ -184,6 +184,10 @@ msgstr "База данных разблокирована"
 msgid "Description:"
 msgstr ""
 
+#: ../src/pkit-tasks.vala:206
+msgid "Details from PackageKit: %s"
+msgstr ""
+
 #: ../tools/lipa/lipa-installer.vala:119
 msgid "Do you accept these terms and conditions?"
 msgstr ""
@@ -265,7 +269,7 @@ msgstr "Установка не удалась!"
 msgid "Installation of %s"
 msgstr ""
 
-#: ../src/pkit-tasks.vala:312 ../src/pkit-tasks.vala:329
+#: ../src/pkit-tasks.vala:360 ../src/pkit-tasks.vala:377
 msgid "Installation of native packages failed with message: %s"
 msgstr ""
 
@@ -273,7 +277,7 @@ msgstr ""
 msgid "Installing"
 msgstr ""
 
-#: ../src/pkit-tasks.vala:385
+#: ../src/pkit-tasks.vala:433
 msgid "Installing native packages: %s"
 msgstr ""
 
@@ -371,31 +375,27 @@ msgstr "Истёк срок действия ключа"
 msgid "PATTERN"
 msgstr ""
 
-#: ../src/varsolver.vala:170 ../src/varsolver.vala:185
-#: ../src/varsolver.vala:200
+#: ../src/varsolver.vala:176 ../src/varsolver.vala:191
+#: ../src/varsolver.vala:206
 msgid ""
 "Package uses custom variables - usually this is not intentional, please "
 "contact the package author!"
 msgstr ""
 
-#: ../src/pkit-tasks.vala:132
+#: ../src/pkit-tasks.vala:184
 msgid ""
 "PackageKit backend does not support finding packages by stuff they provide - "
 "Installer was unable to use native packages to satisfy dependencies of this "
 "application."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:248
+#: ../src/pkit-tasks.vala:296
 msgid ""
 "PackageKit backend does not support searching for files - Installer was "
 "unable to use native packages to satisfy dependencies of this application."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:162
-msgid "PackageKit exit code was: %s"
-msgstr "Закрылся PackageKit по причине %s"
-
-#: ../src/pkit-tasks.vala:279
+#: ../src/pkit-tasks.vala:327
 msgid ""
 "PackageKit transaction failed!\n"
 "Exit message was: %s"
@@ -755,7 +755,7 @@ msgid ""
 msgstr ""
 "Нет возможности найти соответствующий '%s' для вашей системы/архитектуры."
 
-#: ../src/pkit-tasks.vala:161
+#: ../src/pkit-tasks.vala:204
 msgid "Unable to find native package for '%s'!"
 msgstr "Нет возможности найти родные пакеты для '%s'!"
 
@@ -1167,6 +1167,9 @@ msgstr ""
 
 #~ msgid "Package was not build for your Linux distribution release."
 #~ msgstr "Пакет не был создан для вашего дистрибутива Linux."
+
+#~ msgid "PackageKit exit code was: %s"
+#~ msgstr "Закрылся PackageKit по причине %s"
 
 #~ msgid "Password"
 #~ msgstr "Пароль"

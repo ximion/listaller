@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lclstrconsts\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2012-09-18 00:45+0200\n"
+"POT-Creation-Date: 2012-09-28 23:35+0200\n"
 "PO-Revision-Date: 2012-04-13 02:33+0000\n"
 "Last-Translator: Antoni Kudelski <antekk@linux.pl>\n"
 "Language-Team: \n"
@@ -177,6 +177,10 @@ msgstr "Baza danych odblokowana"
 msgid "Description:"
 msgstr ""
 
+#: ../src/pkit-tasks.vala:206
+msgid "Details from PackageKit: %s"
+msgstr ""
+
 #: ../tools/lipa/lipa-installer.vala:119
 msgid "Do you accept these terms and conditions?"
 msgstr ""
@@ -258,7 +262,7 @@ msgstr "Instalacja nie powiodła się!"
 msgid "Installation of %s"
 msgstr ""
 
-#: ../src/pkit-tasks.vala:312 ../src/pkit-tasks.vala:329
+#: ../src/pkit-tasks.vala:360 ../src/pkit-tasks.vala:377
 msgid "Installation of native packages failed with message: %s"
 msgstr "Instalacja rodzimych pakietów nie powiodła się z komunikatem: %s"
 
@@ -266,7 +270,7 @@ msgstr "Instalacja rodzimych pakietów nie powiodła się z komunikatem: %s"
 msgid "Installing"
 msgstr ""
 
-#: ../src/pkit-tasks.vala:385
+#: ../src/pkit-tasks.vala:433
 msgid "Installing native packages: %s"
 msgstr "Instalacja rodzimych pakietów: %s"
 
@@ -363,31 +367,27 @@ msgstr "Jeden klucz wygasł"
 msgid "PATTERN"
 msgstr ""
 
-#: ../src/varsolver.vala:170 ../src/varsolver.vala:185
-#: ../src/varsolver.vala:200
+#: ../src/varsolver.vala:176 ../src/varsolver.vala:191
+#: ../src/varsolver.vala:206
 msgid ""
 "Package uses custom variables - usually this is not intentional, please "
 "contact the package author!"
 msgstr ""
 
-#: ../src/pkit-tasks.vala:132
+#: ../src/pkit-tasks.vala:184
 msgid ""
 "PackageKit backend does not support finding packages by stuff they provide - "
 "Installer was unable to use native packages to satisfy dependencies of this "
 "application."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:248
+#: ../src/pkit-tasks.vala:296
 msgid ""
 "PackageKit backend does not support searching for files - Installer was "
 "unable to use native packages to satisfy dependencies of this application."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:162
-msgid "PackageKit exit code was: %s"
-msgstr "Kod zakończenia PackageKit był: %s"
-
-#: ../src/pkit-tasks.vala:279
+#: ../src/pkit-tasks.vala:327
 msgid ""
 "PackageKit transaction failed!\n"
 "Exit message was: %s"
@@ -732,7 +732,7 @@ msgid ""
 "architecture."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:161
+#: ../src/pkit-tasks.vala:204
 msgid "Unable to find native package for '%s'!"
 msgstr ""
 
@@ -919,6 +919,9 @@ msgstr ""
 
 #~ msgid "Abort"
 #~ msgstr "Porzuć"
+
+#~ msgid "PackageKit exit code was: %s"
+#~ msgstr "Kod zakończenia PackageKit był: %s"
 
 #~ msgid "Unknown."
 #~ msgstr "Nieznany."
