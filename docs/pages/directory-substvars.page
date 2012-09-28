@@ -1,6 +1,6 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="directory-variables">
 <info>
-  <link type="topic" xref="index"/>
+  <link type="topic" xref="packaging"/>
 </info>
 
 <title>Directory variables used by Listaller</title>

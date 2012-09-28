@@ -1,6 +1,6 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="relocatable-apps">
 <info>
-  <link type="topic" xref="index"/>
+  <link type="topic" xref="app-development"/>
 </info>
 
 <title>Guide to making relocatable applications</title>
@@ -378,7 +378,7 @@ If you want to use <code>KIconLoader</code> to load icons from whever your progr
 
 <section id="more">
 <title>More examples</title>
-<p>The <file>tests</file> folder in the BinReloc source tarball contains more examples about how to use BinReloc.</p>
+<p>The <file>contrib/binreloc/tests</file> folder in the Listaller source tarball contains more examples about how to use BinReloc.</p>
 </section>
 
 
