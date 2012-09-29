@@ -168,8 +168,8 @@ private class FileList : Object {
 				continue;
 			if (s.has_prefix ("#"))
 				continue;
-			if (s.substring (0, 2) == "> ") {
-				current_dir = s.substring (2, s.length - 2);
+			if (s.substring (0, 3) == ":: ") {
+				current_dir = s.substring (3, s.length - 3);
 				continue;
 			}
 			if (current_dir == "")
@@ -224,7 +224,7 @@ private class FileList : Object {
 
 	private int textlist_get_folder_index (ArrayList<string> text, string folder, bool create = false) {
 		// Build folder string
-		string s = "> " + folder;
+		string s = ":: " + folder;
 		int i = text.index_of (s);
 		// Add folder to filelist, if it does not exist
 		if ((create) && (i < 0)) {

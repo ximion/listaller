@@ -1,13 +1,13 @@
 # IPK file list
 
-> %INST%
+:: %INST%
 usr/local/bin/foo
-> %INST%/config
+:: %INST%/config
 usr/local/etc/foo-config
-> %INST%/data
+:: %INST%/data
 usr/local/share/info/foo.info
-> %LIB_PRIVATE%
+:: %LIB_PRIVATE%
 usr/local/lib/*.so.*
 usr/local/lib/*.so
-> %APP%
+:: %APP%
 usr/local/share/applications/foobar.desktop
