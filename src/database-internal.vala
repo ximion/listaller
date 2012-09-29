@@ -39,8 +39,7 @@ private const string DATABASE = ""
 		+ "homepage TEXT, "
 		+ "architecture TEXT NOT NULL, "
 		+ "install_time INTEGER, "
-		+ "dependencies TEXT, "
-		+ "replaces TEXT"
+		+ "dependencies TEXT"
 		+ "); "
 		+ "CREATE TABLE dependencies ("
 		+ "name TEXT PRIMARY KEY, "
@@ -59,7 +58,7 @@ private const string DATABASE = ""
 		"";
 
 private const string appcols = "name, full_name, version, desktop_file, author, publisher, categories, " +
-			"description, homepage, architecture, install_time, dependencies, replaces";
+			"description, homepage, architecture, install_time, dependencies";
 private const string depcols = "name, full_name, version, description, author, homepage, architecture, " +
 			"install_time, provided_by, components, environment, dependencies";
 
@@ -75,8 +74,7 @@ private enum AppRow {
 	HOMEPAGE = 8,
 	ARCHITECTURE = 9,
 	INST_TIME = 10,
-	DEPS = 11,
-	REPLACES = 12;
+	DEPS = 11;
 }
 
 private enum DepRow {
@@ -242,7 +240,7 @@ private class InternalDB : Object {
 		// InsertApp statement
 		try {
 			db_assert (db.prepare_v2 ("INSERT INTO applications (" + appcols + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_app), "prepare app insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -435,6 +433,7 @@ private class InternalDB : Object {
 		if (!database_writeable ()) {
 			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
 		}
+		bool ret = true;
 
 		// Set install timestamp
 		DateTime dt = new DateTime.now_local ();
@@ -467,8 +466,6 @@ private class InternalDB : Object {
 
 			db_assert (insert_app.bind_text (AppRow.DEPS +1, item.dependencies), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.REPLACES +1, item.replaces), "assign value");
-
 			db_assert (insert_app.step (), "execute app insert");
 
 			db_assert (insert_app.reset (), "reset statement");
@@ -476,7 +473,17 @@ private class InternalDB : Object {
 			throw new DatabaseError.ERROR (e.message);
 		}
 
-		return true;
+		string metadir = Path.build_filename (regdir, item.idname, null);
+		create_dir_parents (metadir);
+
+		// Save extra package properties
+		var data = new IPK.MetaFile ();
+		if (item.replaces != null)
+			data.add_value ("Replaces", item.replaces);
+
+		ret = data.save_to_file (Path.build_filename (metadir, "properties", null));
+
+		return ret;
 	}
 
 	public bool add_application_filelist (AppItem aid, Collection<IPK.FileEntry> flist) {
@@ -484,7 +491,6 @@ private class InternalDB : Object {
 			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should not happen)"));
 		}
 		string metadir = Path.build_filename (regdir, aid.idname, null);
-		create_dir_parents (metadir);
 
 		try {
 			var file = File.new_for_path (Path.build_filename (metadir, "files.list", null));
@@ -578,9 +584,16 @@ private class InternalDB : Object {
 
 		item.install_time = stmt.column_int (AppRow.INST_TIME);
 		item.dependencies = stmt.column_text (AppRow.DEPS);
-		item.replaces = stmt.column_text (AppRow.REPLACES);
 		item.shared = shared_db;
 		item.origin = AppOrigin.IPK;
+
+		string metadir = Path.build_filename (regdir, item.idname, null);
+
+		// Load extra package properties
+		var data = new IPK.MetaFile ();
+		data.open_file (Path.build_filename (metadir, "properties", null));
+
+		item.replaces = data.get_value ("Replaces");
 
 		return item;
 	}

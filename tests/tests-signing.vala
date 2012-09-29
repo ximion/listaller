@@ -50,6 +50,8 @@ void test_sign_working () {
 void test_sign_failing () {
 	GPGSign gsig = new GPGSign ();
 
+	Report.set_print_fatal_msg (false);
+
 	string sign_text;
 	gsig.sign_package (Path.build_filename (datadir, "FooBar-1.0_install.ipk", null), out sign_text);
 
