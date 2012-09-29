@@ -85,7 +85,7 @@ private class VarSetter : Object {
 				var file_stream = file.create (FileCreateFlags.NONE);
 
 				if (!file.query_exists ()) {
-					warning (_("Unable to save modified desktop-file!"));
+					warning (_("Unable to save modified desktop-file! %s").printf (_("File does not exist!")));
 					return;
 				}
 
@@ -93,7 +93,7 @@ private class VarSetter : Object {
 				data_stream.put_string (dfile.to_data ());
 			}
 		} catch (Error e) {
-			Report.log_error (_("Unable to save modified desktop-file! Message: %s").printf (e.message));
+			Report.log_error (_("Unable to save modified desktop-file! %s").printf (e.message));
 			return;
 		}
 	}

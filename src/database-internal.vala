@@ -488,7 +488,7 @@ private class InternalDB : Object {
 
 	public bool add_application_filelist (AppItem aid, Collection<IPK.FileEntry> flist) {
 		if (!database_writeable ()) {
-			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should not happen)"));
+			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
 		}
 		string metadir = Path.build_filename (regdir, aid.idname, null);
 
@@ -540,7 +540,7 @@ private class InternalDB : Object {
 				}
 			}
 		} catch (Error e) {
-			throw new DatabaseError.ERROR (_("Unable to fetch application file list! Message: %s").printf (e.message));
+			throw new DatabaseError.ERROR (_("Unable to fetch application file list: %s").printf (e.message));
 		}
 		return flist;
 	}

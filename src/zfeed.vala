@@ -79,7 +79,7 @@ private class Feed : Object {
 	private Xml.Node* interface_node () {
 		Xml.Node* root = xdoc->get_root_element ();
 		if ((root == null) || (root->name != "interface")) {
-			critical (_("XML file is no valid ZI feed!"));
+			critical (_("XML file is not a valid ZI feed!"));
 			return null;
 		}
 		return root;
