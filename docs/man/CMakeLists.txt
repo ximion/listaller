@@ -4,6 +4,7 @@ include (${CMAKE_SOURCE_DIR}/data/cmake/documentation.cmake)
 
 set(manpages "runapp.1"
 	"lipa.1"
+	"likey.1"
 )
 
 if(TOOLS)
