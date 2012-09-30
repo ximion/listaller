@@ -1,6 +1,14 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="directory-variables">
 <info>
-  <link type="topic" xref="packaging"/>
+	<link type="topic" xref="packaging"/>
+
+	<credit type="author">
+		<name>Matthias Klumpp</name>
+		<email>matthias@tenstral.net</email>
+		<years>2012</years>
+	</credit>
+
+	<desc>Information about directory variables used by Listaller</desc>
 </info>
 
 <title>Directory variables used by Listaller</title>
