@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2012-09-28 23:35+0200\n"
+"POT-Creation-Date: 2012-09-29 21:23+0200\n"
 "PO-Revision-Date: 2012-05-21 15:08+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -69,7 +69,7 @@ msgstr ""
 msgid "Could not create file '%s'! File already exists."
 msgstr "Konnte Datei '%s' nicht erstellen! Datei existiert bereits."
 
-#: ../src/database-internal.vala:237
+#: ../src/database-internal.vala:235
 #, fuzzy
 msgid "Could not create software database!"
 msgstr "Konnte Software-Datenbank nicht erstellen/aktualisieren!"
@@ -170,23 +170,23 @@ msgstr "Konnte die Anwendung %s nicht entfernen: Sie ist nicht installiert."
 msgid "DIRECTORY"
 msgstr "VERZEICHNIS"
 
-#: ../src/database-internal.vala:325
+#: ../src/database-internal.vala:323
 msgid "Database action '%s' failed: %s"
 msgstr "Datenbankaktion '%s' ist fehlgeschlagen: %s"
 
-#: ../src/database-internal.vala:130
+#: ../src/database-internal.vala:128
 msgid "Database action failed"
 msgstr "Datenbankaktion fehlgeschlagen."
 
-#: ../src/database-internal.vala:127
+#: ../src/database-internal.vala:125
 msgid "Database action successful"
 msgstr "Datenbankaktion erfolgreich."
 
-#: ../src/database-internal.vala:121
+#: ../src/database-internal.vala:119
 msgid "Database locked"
 msgstr "Datenbank gesperrt"
 
-#: ../src/database-internal.vala:124
+#: ../src/database-internal.vala:122
 msgid "Database unlocked"
 msgstr "Datenbank entsperrt"
 
@@ -240,6 +240,11 @@ msgstr "Datei %s nicht gefunden oder Zugriff verweigert!"
 
 #: ../src/ipk-filelist.vala:142
 msgid "File '%s' doesn't exist."
+msgstr "Datei '%s' existiert nicht."
+
+#: ../src/varsetter.vala:88
+#, fuzzy
+msgid "File does not exist!"
 msgstr "Datei '%s' existiert nicht."
 
 #: ../tools/lipkgen/lipkgen.vala:47
@@ -534,15 +539,15 @@ msgstr "Signatur ist schlecht"
 msgid "Signature is fully valid"
 msgstr "Signatur ist voll gültig."
 
-#: ../src/database-internal.vala:133
+#: ../src/database-internal.vala:131
 msgid "Software database closed"
 msgstr "Softwaredatenbank geschlossen."
 
-#: ../src/database-internal.vala:136
+#: ../src/database-internal.vala:134
 msgid "Software database message (%d)"
 msgstr "Softwaredatenbank Nachricht (%d)"
 
-#: ../src/database-internal.vala:118
+#: ../src/database-internal.vala:116
 msgid "Software database opened"
 msgstr "Softwaredatenbank geöffnet"
 
@@ -622,12 +627,12 @@ msgid ""
 "version."
 msgstr ""
 
-#: ../src/database-internal.vala:225
+#: ../src/database-internal.vala:223
 msgid "Tried to access locked database! This shouldn't happen."
 msgstr ""
 "Versuch, auf gesperrte Datenbank zuzugreifen! Das sollte nicht passieren."
 
-#: ../src/database-internal.vala:335
+#: ../src/database-internal.vala:333
 msgid "Tried to access locked database! This shouldn't happen. Message: %s"
 msgstr ""
 "Versuch, auf gesperrte Datenbank zuzugreifen! Das sollte nicht passieren. "
@@ -649,12 +654,9 @@ msgid ""
 "opened! (maybe a permission problem?)"
 msgstr ""
 
-#: ../src/database-internal.vala:436 ../src/database-internal.vala:836
+#: ../src/database-internal.vala:434 ../src/database-internal.vala:491
+#: ../src/database-internal.vala:849
 msgid "Tried to write on readonly database! (This should never happen)"
-msgstr ""
-
-#: ../src/database-internal.vala:484
-msgid "Tried to write on readonly database! (This should not happen)"
 msgstr ""
 
 #: ../src/security-info.vala:133
@@ -706,12 +708,12 @@ msgstr "Konnte Paket nicht bauen: %s"
 msgid "Unable to count applications: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:415
+#: ../src/database-internal.vala:413
 #, fuzzy
 msgid "Unable to create database config table: %s"
 msgstr "Diese Datei konnte nicht erzeugt werden: %s"
 
-#: ../src/database-internal.vala:395
+#: ../src/database-internal.vala:393
 #, fuzzy
 msgid "Unable to create database tables: %s"
 msgstr "Diese Datei konnte nicht erzeugt werden: %s"
@@ -769,11 +771,7 @@ msgstr ""
 msgid "Unable to fetch application by name: %s"
 msgstr "Dieses Programm konnte anhand seines Namens nicht gefunden werden: %s"
 
-#: ../src/database-internal.vala:537
-msgid "Unable to fetch application file list! Message: %s"
-msgstr ""
-
-#: ../src/database.vala:239
+#: ../src/database.vala:239 ../src/database-internal.vala:543
 msgid "Unable to fetch application file list: %s"
 msgstr ""
 
@@ -819,19 +817,16 @@ msgstr ""
 msgid "Unable to remove application from database: %s"
 msgstr ""
 
-#: ../src/varsetter.vala:88
-msgid "Unable to save modified desktop-file!"
-msgstr ""
-
-#: ../src/varsetter.vala:96
-msgid "Unable to save modified desktop-file! Message: %s"
-msgstr ""
+#: ../src/varsetter.vala:88 ../src/varsetter.vala:96
+#, fuzzy
+msgid "Unable to save modified desktop-file! %s"
+msgstr "Konnte Datei %f nicht überschreiben."
 
 #: ../src/database.vala:334
 msgid "Unable to search application database: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:510
+#: ../src/database-internal.vala:516
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
@@ -869,7 +864,7 @@ msgid "We don't know a desktop-file for application '%s'!"
 msgstr "Die Desktop-Datei für die Anwendung '%s' ist unbekannt!"
 
 #: ../src/zfeed.vala:82
-msgid "XML file is no valid ZI feed!"
+msgid "XML file is not a valid ZI feed!"
 msgstr ""
 
 #: ../src/installer.vala:421
@@ -1067,15 +1062,6 @@ msgstr ""
 #~ "Die folgenden Pakete werden auch entfernt: %pl\n"
 #~ "Wenn Sie nicht sicher sind, ob sie diese Pakete noch benötigen, klicken "
 #~ "Sie \"Nein\"!"
-
-#~ msgid ""
-#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
-#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
-#~ "those packages, press \"No\"!"
-#~ msgstr ""
-#~ "Möchten Sie wirklich \"%p\", welches %a enthält entfernen?\rDie folgenden "
-#~ "Pakete werden auch entfernt: %pl\rWenn Sie nicht sicher sind, ob Sie die "
-#~ "Pakete noch brauchen, klicken Sie \"Nein\"!"
 
 #~ msgid "Do you really want to uninstall %a?"
 #~ msgstr "Möchten Sie %a wirklich deinstallieren?"
@@ -1486,9 +1472,6 @@ msgstr ""
 #~ "Konnte das Symbol von %a nicht laden. Bitte benachrichtigen Sie die "
 #~ "Entwickler von Listaller oder von dieser Anwendung."
 
-#~ msgid "Unable to overwrite the file %f."
-#~ msgstr "Konnte Datei %f nicht überschreiben."
-
 #~ msgid "Uninstall"
 #~ msgstr "Deinstallieren"
 
@@ -1538,6 +1521,20 @@ msgstr ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "
 #~ "system is %y.\n"
 #~ "This package can be converted using \"alien\", but this will take some "
+#~ "time and eventually the application won't work\n"
+#~ "Do you want to convert the package now?"
+#~ msgstr ""
+#~ "Sie möchten ein %x-Paket installieren, aber das Paketmanagementsystem "
+#~ "ihrer Distribution basiert auf %y.\n"
+#~ "Dieses Paket kann mit \"alien\" umgewandeltt werden, dies wird jedoch "
+#~ "einige Zeit benötigen und die installierte Anwendung wird eventuell nicht "
+#~ "funktionieren.\n"
+#~ "Möchten Sie das Paket jetzt umwandeln?"
+
+#~ msgid ""
+#~ "You want to install an %x-Package, but your Linux-Distribution's package "
+#~ "system is %y.\n"
+#~ "This package can be converted using \"alien\", but this will take some "
 #~ "time and eventually the application won't work.\n"
 #~ "Do you want to convert the package now?"
 #~ msgstr ""
@@ -1547,18 +1544,6 @@ msgstr ""
 #~ "einige Zeit dauern und die Anwendung später eventuell nicht "
 #~ "funktionieren.\n"
 #~ "Möchten Sie das paket jetzt umwandeln?"
-
-#~ msgid ""
-#~ "You want to install an %x-Package, but your Linux-Distribution's package "
-#~ "system is %y.\rThis package can be converted using \"alien\", but this "
-#~ "will take some time and eventually the application won't work\rDo you "
-#~ "want to convert the package now?"
-#~ msgstr ""
-#~ "Sie möchten ein %x-Paket installieren, aber das Paketmanagementsystem "
-#~ "ihrer Distribution basiert auf %y.\rDieses Paket kann mit \"alien\" "
-#~ "umgewandeltt werden, dies wird jedoch einige Zeit benötigen und die "
-#~ "installierte Anwendung wird eventuell nicht funktionieren.\rMöchten Sie "
-#~ "das Paket jetzt umwandeln?"
 
 #~ msgid "Your Linux distribution is not supported by Listaller yet!"
 #~ msgstr ""

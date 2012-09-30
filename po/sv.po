@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2012-09-28 23:35+0200\n"
+"POT-Creation-Date: 2012-09-29 21:23+0200\n"
 "PO-Revision-Date: 2012-04-13 02:33+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -64,7 +64,7 @@ msgstr ""
 msgid "Could not create file '%s'! File already exists."
 msgstr "Kunde inte skapa fil '%s'! Filen finns redan."
 
-#: ../src/database-internal.vala:237
+#: ../src/database-internal.vala:235
 #, fuzzy
 msgid "Could not create software database!"
 msgstr "Kunde inte skapa/uppdatera mjukvarudatabasen!"
@@ -153,23 +153,23 @@ msgstr "Kunde inte avinstallera applikation %s. Den är inte installerad."
 msgid "DIRECTORY"
 msgstr "KATALOG"
 
-#: ../src/database-internal.vala:325
+#: ../src/database-internal.vala:323
 msgid "Database action '%s' failed: %s"
 msgstr "Databasåtgärd '%s' misslyckades: %s"
 
-#: ../src/database-internal.vala:130
+#: ../src/database-internal.vala:128
 msgid "Database action failed"
 msgstr "Databasåtgärd misslyckades"
 
-#: ../src/database-internal.vala:127
+#: ../src/database-internal.vala:125
 msgid "Database action successful"
 msgstr "Databasåtgärd lyckad"
 
-#: ../src/database-internal.vala:121
+#: ../src/database-internal.vala:119
 msgid "Database locked"
 msgstr "Databas låst"
 
-#: ../src/database-internal.vala:124
+#: ../src/database-internal.vala:122
 msgid "Database unlocked"
 msgstr "Databas upplåst"
 
@@ -223,6 +223,11 @@ msgstr "Fil %s hittades inte eller åtkomst nekad!"
 
 #: ../src/ipk-filelist.vala:142
 msgid "File '%s' doesn't exist."
+msgstr "Fil '%s' finns inte."
+
+#: ../src/varsetter.vala:88
+#, fuzzy
+msgid "File does not exist!"
 msgstr "Fil '%s' finns inte."
 
 #: ../tools/lipkgen/lipkgen.vala:47
@@ -498,15 +503,15 @@ msgstr ""
 msgid "Signature is fully valid"
 msgstr ""
 
-#: ../src/database-internal.vala:133
+#: ../src/database-internal.vala:131
 msgid "Software database closed"
 msgstr ""
 
-#: ../src/database-internal.vala:136
+#: ../src/database-internal.vala:134
 msgid "Software database message (%d)"
 msgstr ""
 
-#: ../src/database-internal.vala:118
+#: ../src/database-internal.vala:116
 msgid "Software database opened"
 msgstr ""
 
@@ -575,11 +580,11 @@ msgid ""
 "version."
 msgstr ""
 
-#: ../src/database-internal.vala:225
+#: ../src/database-internal.vala:223
 msgid "Tried to access locked database! This shouldn't happen."
 msgstr ""
 
-#: ../src/database-internal.vala:335
+#: ../src/database-internal.vala:333
 msgid "Tried to access locked database! This shouldn't happen. Message: %s"
 msgstr ""
 
@@ -599,12 +604,9 @@ msgid ""
 "opened! (maybe a permission problem?)"
 msgstr ""
 
-#: ../src/database-internal.vala:436 ../src/database-internal.vala:836
+#: ../src/database-internal.vala:434 ../src/database-internal.vala:491
+#: ../src/database-internal.vala:849
 msgid "Tried to write on readonly database! (This should never happen)"
-msgstr ""
-
-#: ../src/database-internal.vala:484
-msgid "Tried to write on readonly database! (This should not happen)"
 msgstr ""
 
 #: ../src/security-info.vala:133
@@ -656,12 +658,12 @@ msgstr ""
 msgid "Unable to count applications: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:415
+#: ../src/database-internal.vala:413
 #, fuzzy
 msgid "Unable to create database config table: %s"
 msgstr "Kunde inte skapa fil '%s'!"
 
-#: ../src/database-internal.vala:395
+#: ../src/database-internal.vala:393
 #, fuzzy
 msgid "Unable to create database tables: %s"
 msgstr "Kunde inte skapa fil '%s'!"
@@ -717,11 +719,7 @@ msgstr ""
 msgid "Unable to fetch application by name: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:537
-msgid "Unable to fetch application file list! Message: %s"
-msgstr ""
-
-#: ../src/database.vala:239
+#: ../src/database.vala:239 ../src/database-internal.vala:543
 msgid "Unable to fetch application file list: %s"
 msgstr ""
 
@@ -767,19 +765,15 @@ msgstr ""
 msgid "Unable to remove application from database: %s"
 msgstr ""
 
-#: ../src/varsetter.vala:88
-msgid "Unable to save modified desktop-file!"
-msgstr ""
-
-#: ../src/varsetter.vala:96
-msgid "Unable to save modified desktop-file! Message: %s"
+#: ../src/varsetter.vala:88 ../src/varsetter.vala:96
+msgid "Unable to save modified desktop-file! %s"
 msgstr ""
 
 #: ../src/database.vala:334
 msgid "Unable to search application database: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:510
+#: ../src/database-internal.vala:516
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
@@ -816,7 +810,7 @@ msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #: ../src/zfeed.vala:82
-msgid "XML file is no valid ZI feed!"
+msgid "XML file is not a valid ZI feed!"
 msgstr ""
 
 #: ../src/installer.vala:421

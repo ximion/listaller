@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2012-09-28 23:35+0200\n"
+"POT-Creation-Date: 2012-09-29 21:23+0200\n"
 "PO-Revision-Date: 2012-04-13 02:32+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: \n"
@@ -64,7 +64,7 @@ msgstr ""
 msgid "Could not create file '%s'! File already exists."
 msgstr "Невозможно создать файл '%s'! Файл уже существует."
 
-#: ../src/database-internal.vala:237
+#: ../src/database-internal.vala:235
 #, fuzzy
 msgid "Could not create software database!"
 msgstr "Невозможно создать или обновить базу данных программ!"
@@ -160,23 +160,23 @@ msgstr "Невозможно деинсталлировать приложени
 msgid "DIRECTORY"
 msgstr "КАТАЛОГ"
 
-#: ../src/database-internal.vala:325
+#: ../src/database-internal.vala:323
 msgid "Database action '%s' failed: %s"
 msgstr "Действие базы данных '%s' прервано: %s"
 
-#: ../src/database-internal.vala:130
+#: ../src/database-internal.vala:128
 msgid "Database action failed"
 msgstr "Действие базы данных прервано"
 
-#: ../src/database-internal.vala:127
+#: ../src/database-internal.vala:125
 msgid "Database action successful"
 msgstr "Действие базы данных выполнено удачно"
 
-#: ../src/database-internal.vala:121
+#: ../src/database-internal.vala:119
 msgid "Database locked"
 msgstr "База данных заблокирована"
 
-#: ../src/database-internal.vala:124
+#: ../src/database-internal.vala:122
 msgid "Database unlocked"
 msgstr "База данных разблокирована"
 
@@ -230,6 +230,11 @@ msgstr "Файл %s не найден или у вас нет прав дост�
 
 #: ../src/ipk-filelist.vala:142
 msgid "File '%s' doesn't exist."
+msgstr "Файл '%s' не существует."
+
+#: ../src/varsetter.vala:88
+#, fuzzy
+msgid "File does not exist!"
 msgstr "Файл '%s' не существует."
 
 #: ../tools/lipkgen/lipkgen.vala:47
@@ -506,15 +511,15 @@ msgstr ""
 msgid "Signature is fully valid"
 msgstr "Подпись полностью достоверна"
 
-#: ../src/database-internal.vala:133
+#: ../src/database-internal.vala:131
 msgid "Software database closed"
 msgstr "База данных программ закрыта"
 
-#: ../src/database-internal.vala:136
+#: ../src/database-internal.vala:134
 msgid "Software database message (%d)"
 msgstr "Сообщение базы данных программ (%d)"
 
-#: ../src/database-internal.vala:118
+#: ../src/database-internal.vala:116
 msgid "Software database opened"
 msgstr "База данных программ открыта"
 
@@ -586,11 +591,11 @@ msgid ""
 "version."
 msgstr ""
 
-#: ../src/database-internal.vala:225
+#: ../src/database-internal.vala:223
 msgid "Tried to access locked database! This shouldn't happen."
 msgstr ""
 
-#: ../src/database-internal.vala:335
+#: ../src/database-internal.vala:333
 msgid "Tried to access locked database! This shouldn't happen. Message: %s"
 msgstr ""
 
@@ -614,12 +619,9 @@ msgstr ""
 "Попытка совершить действие на общей базе данных софта, но база данных не "
 "открыта! (быть может, проблема с правами доступа?)"
 
-#: ../src/database-internal.vala:436 ../src/database-internal.vala:836
+#: ../src/database-internal.vala:434 ../src/database-internal.vala:491
+#: ../src/database-internal.vala:849
 msgid "Tried to write on readonly database! (This should never happen)"
-msgstr ""
-
-#: ../src/database-internal.vala:484
-msgid "Tried to write on readonly database! (This should not happen)"
 msgstr ""
 
 #: ../src/security-info.vala:133
@@ -677,12 +679,12 @@ msgstr ""
 msgid "Unable to count applications: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:415
+#: ../src/database-internal.vala:413
 #, fuzzy
 msgid "Unable to create database config table: %s"
 msgstr "Нет возможности создать/обновить таблицу базы данных: %s"
 
-#: ../src/database-internal.vala:395
+#: ../src/database-internal.vala:393
 #, fuzzy
 msgid "Unable to create database tables: %s"
 msgstr "Нет возможности создать/обновить таблицу базы данных: %s"
@@ -740,11 +742,7 @@ msgstr ""
 msgid "Unable to fetch application by name: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:537
-msgid "Unable to fetch application file list! Message: %s"
-msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
-
-#: ../src/database.vala:239
+#: ../src/database.vala:239 ../src/database-internal.vala:543
 msgid "Unable to fetch application file list: %s"
 msgstr ""
 
@@ -792,19 +790,15 @@ msgstr "Невозможно прочитать подпись пакета! С�
 msgid "Unable to remove application from database: %s"
 msgstr ""
 
-#: ../src/varsetter.vala:88
-msgid "Unable to save modified desktop-file!"
-msgstr ""
-
-#: ../src/varsetter.vala:96
-msgid "Unable to save modified desktop-file! Message: %s"
+#: ../src/varsetter.vala:88 ../src/varsetter.vala:96
+msgid "Unable to save modified desktop-file! %s"
 msgstr ""
 
 #: ../src/database.vala:334
 msgid "Unable to search application database: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:510
+#: ../src/database-internal.vala:516
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
@@ -842,7 +836,7 @@ msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
 #: ../src/zfeed.vala:82
-msgid "XML file is no valid ZI feed!"
+msgid "XML file is not a valid ZI feed!"
 msgstr ""
 
 #: ../src/installer.vala:421
@@ -1025,12 +1019,12 @@ msgstr ""
 #~ msgstr "Вы действительно хотите прервать эту закачку?"
 
 #~ msgid ""
-#~ "Do you really want to remove \"%p\", containing %a?\rThe following package"
-#~ "(s) will be removed also: %pl\rIf you aren't sure that you won't need "
+#~ "Do you really want to remove \"%p\", containing %a?\nThe following package"
+#~ "(s) will be removed also: %pl\nIf you aren't sure that you won't need "
 #~ "those packages, press \"No\"!"
 #~ msgstr ""
-#~ "Вы действительно хотите удалить \"%р\", содержащий %a?\rСледующие пакеты "
-#~ "будут удалены: %PL\rЕсли вы не уверены, что вам не будут нужны эти "
+#~ "Вы действительно хотите удалить \"%р\", содержащий %a?\nСледующие пакеты "
+#~ "будут удалены: %PL\nЕсли вы не уверены, что вам не будут нужны эти "
 #~ "пакеты, нажмите \"Нет\"!"
 
 #~ msgid "Do you really want to uninstall %a?"
@@ -1316,6 +1310,9 @@ msgstr ""
 #~ msgid "This package does not support your Linux distribution."
 #~ msgstr "Этот пакет не поддерживается вашим Linux дистрибутивом."
 
+#~ msgid "Unable to fetch application file list! Message: %s"
+#~ msgstr "Невозможно получить список файлов приложения! Сообщение: %s"
+
 #~ msgid ""
 #~ "Unable to load the icon of %a. Please notify the developers of Listaller "
 #~ "or this application!"
@@ -1370,14 +1367,14 @@ msgstr ""
 
 #~ msgid ""
 #~ "You want to install an %x-Package, but your Linux-Distribution's package "
-#~ "system is %y.\rThis package can be converted using \"alien\", but this "
-#~ "will take some time and eventually the application won't work\rDo you "
+#~ "system is %y.\nThis package can be converted using \"alien\", but this "
+#~ "will take some time and eventually the application won't work\nDo you "
 #~ "want to convert the package now?"
 #~ msgstr ""
 #~ "Вы желаете установить пакет %x, но система пакетов вашего дистрибутива %y."
-#~ "\rЭтот пакет может быть преобразован, используя \"alien\", но это может "
+#~ "\nЭтот пакет может быть преобразован, используя \"alien\", но это может "
 #~ "потребовать некоторое время и приложение может работать некорректно, либо "
-#~ "вообще не работать.\rХотите ли вы преобразовать пакет?"
+#~ "вообще не работать.\nХотите ли вы преобразовать пакет?"
 
 #~ msgid "Your Linux distribution is not supported by Listaller yet!"
 #~ msgstr "Ваш дистрибутив ещё не поддерживается Listaller!"
