@@ -30,14 +30,14 @@ public class LipaManager : LipaModule {
 		show_progress = true;
 
 		mgr = new Manager (use_shared_mode);
-		mgr.message.connect (manager_message);
-		mgr.error_code.connect (manager_error_code);
+		mgr.message.connect (manager_message_cb);
+		mgr.error_code.connect (manager_error_code_cb);
 		//! mgr.status_changed.connect (manager_status_changed);
-		mgr.progress_changed.connect (manager_progress_changed);
+		mgr.progress.connect (manager_progress_cb);
 		mgr.application.connect (manager_new_application);
 	}
 
-	private void manager_error_code (ErrorItem error) {
+	private void manager_error_code_cb (ErrorItem error) {
 		// End progress-bar, if it is shown
 		show_progress = false;
 		progress_bar.end ();
@@ -46,13 +46,13 @@ public class LipaManager : LipaModule {
 		error_code = (int) error.error;
 	}
 
-	private void manager_message (MessageItem message) {
+	private void manager_message_cb (MessageItem message) {
 		stdout.printf ("%s\n", message.details);
 	}
 
-	private void manager_progress_changed (int progress) {
+	private void manager_progress_cb (ProgressItem item) {
 		if (show_progress)
-			progress_bar.set_percentage (progress);
+			progress_bar.set_percentage (item.value);
 	}
 
 	private string app_ownership_str (AppItem app) {

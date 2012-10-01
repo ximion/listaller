@@ -37,9 +37,9 @@ public class LipaInstaller : LipaModule {
 		error_code = (int) error.error;
 	}
 
-	public void setup_progress_changed (int progress) {
+	public void setup_progress (ProgressItem item) {
 		if (setup_running)
-			progress_bar.set_percentage (progress);
+			progress_bar.set_percentage (item.value);
 
 		// TODO: Show item-progress too
 	}
@@ -65,7 +65,7 @@ public class LipaInstaller : LipaModule {
 		inst = new Setup (ipkfname);
 		inst.message.connect (setup_message);
 		inst.status_changed.connect (setup_status_changed);
-		inst.progress_changed.connect (setup_progress_changed);
+		inst.progress.connect (setup_progress);
 		inst.error_code.connect (setup_error_code);
 
 		ret = inst.initialize ();

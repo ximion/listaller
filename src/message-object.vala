@@ -38,17 +38,20 @@ protected enum ObjConnectFlags {
  * (Used e.g. for GUI stuff and in the public API)
  */
 public abstract class MessageObject : Object {
-	private int progress_main;
+	private ProgressItem prog_item;
 	private string error_hint_str;
 
 	public signal void error_code (ErrorItem error);
 	public signal void message (MessageItem message);
-	public signal void progress_changed (int progress);
-	public signal void item_progress_changed (string id, uint progress);
+	public signal void progress (ProgressItem prog);
 
 	public MessageObject () {
-		progress_main = -1;
 		error_hint_str = "";
+		prog_item = null;
+	}
+
+	private void init_progress () {
+		prog_item = new ProgressItem ();
 	}
 
 	internal virtual void emit_message (string msg) {
@@ -70,25 +73,42 @@ public abstract class MessageObject : Object {
 		// Construct error
 		ErrorItem item = new ErrorItem(id);
 		item.details = details;
+
+		// emit
 		error_code (item);
+
 		if (error_hint_str == "")
 			Report.log_error (details);
 		else
 			Report.log_error ("[%s]:%s".printf (error_hint_str, details));
 	}
 
-	internal virtual void change_progress (int progress) {
-		if ((progress == 0) || (progress >= progress_main))
-			progress_main = progress;
-		else
-			warning ("Progress cannot go down!");
+	internal virtual void change_progress (int prog_value) {
+		init_progress ();
+
+		prog_item.prog_type = ProgressEnum.MAIN_PROGRESS;
+		prog_item.item_id = "";
+		if (prog_value == 0) {
+			if ((prog_item.prog_type == ProgressEnum.MAIN_PROGRESS) && (prog_value <= prog_item.value))
+				warning ("Progress cannot go down!");
+			else
+				prog_item.value = prog_value;
+		}
 
 		//! debug ("Progress changed: %i", progress);
-		progress_changed (progress_main);
+		// emit
+		progress (prog_item);
 	}
 
-	internal virtual void change_item_progress (string id, uint progress) {
-		item_progress_changed (id, progress);
+	internal virtual void change_item_progress (string id, uint item_progress) {
+		init_progress ();
+
+		prog_item.prog_type = ProgressEnum.ITEM_PROGRESS;
+		prog_item.item_id = id;
+		prog_item.value = (int) item_progress;
+
+		// emit
+		progress (prog_item);
 	}
 
 	protected void set_error_hint_str (string str) {
@@ -107,8 +127,8 @@ public abstract class MessageObject : Object {
 		});
 
 		if (!(ObjConnectFlags.IGNORE_PROGRESS in flags)) {
-				other_obj.progress_changed.connect ((pA) => {
-					change_progress (pA);
+				other_obj.progress.connect ((pA) => {
+					this.progress (pA);
 				});
 		}
 	}

@@ -72,11 +72,15 @@ public class Setup : MessageObject {
 		initialized = false;
 	}
 
-	internal override void change_progress (int progress) {
-		if (progress >= 0)
-			full_progress = (int) Math.round ((inst_progress + progress) / 2);
+	internal override void change_progress (int prog_value) {
+		if (prog_value >= 0)
+			full_progress = (int) Math.round ((inst_progress + prog_value) / 2);
 
-		progress_changed (full_progress);
+		var prog_item = new ProgressItem ();
+		prog_item.value = full_progress;
+
+		// emit
+		progress (prog_item);
 	}
 
 	private void emit_status (StatusEnum status, string info) {

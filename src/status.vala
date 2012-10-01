@@ -91,6 +91,11 @@ public enum MessageEnum {
 	}
 }
 
+public enum ProgressEnum {
+	MAIN_PROGRESS,
+	ITEM_PROGRESS;
+}
+
 /**
  * Return type describing an error
  */
@@ -100,12 +105,12 @@ public class ErrorItem : Object {
 
 	public ErrorEnum error {
 		get { return _etype; }
-		set { _etype = value; }
+		internal set { _etype = value; }
 	}
 
 	public string details {
 		get { return _details; }
-		set { _details = value; }
+		internal set { _details = value; }
 	}
 
 	public ErrorItem (ErrorEnum type) {
@@ -129,12 +134,12 @@ public class MessageItem : Object {
 
 	public MessageEnum mtype {
 		get { return _mtype; }
-		set { _mtype = value; }
+		internal set { _mtype = value; }
 	}
 
 	public string details {
 		get { return _details; }
-		set { _details = value; }
+		internal set { _details = value; }
 	}
 
 	public MessageItem (MessageEnum type) {
@@ -158,12 +163,12 @@ public class StatusItem : Object {
 
 	public StatusEnum status {
 		get { return _stype; }
-		set { _stype = value; }
+		internal set { _stype = value; }
 	}
 
 	public string info {
 		get { return _info; }
-		set { _info = value; }
+		internal set { _info = value; }
 	}
 
 	public StatusItem (StatusEnum type) {
@@ -172,4 +177,33 @@ public class StatusItem : Object {
 	}
 }
 
-} // End of namespace
+/**
+ * Return type describing progress changes
+ */
+public class ProgressItem : Object {
+	private ProgressEnum _ptype;
+	private string _item_id;
+	private int _progress;
+
+	public ProgressEnum prog_type {
+		get { return _ptype; }
+		internal set { _ptype = value; }
+	}
+
+	public string item_id {
+		get { return _item_id; }
+		internal set { _item_id = value; }
+	}
+
+	public int value {
+		get { return _progress; }
+		internal set { _progress = value; }
+	}
+
+	public ProgressItem () {
+		prog_type = ProgressEnum.MAIN_PROGRESS;
+		_progress = -1;
+	}
+}
+
+} // End of namespace: Listaller

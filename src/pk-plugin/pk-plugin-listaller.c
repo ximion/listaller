@@ -35,6 +35,7 @@ struct PkPluginPrivate {
 };
 
 static void pk_plugin_restore_backend (PkPlugin *plugin);
+static void pk_plugin_redirect_backend_signals (PkPlugin *plugin);
 
 /**
  * pk_plugin_reset:
@@ -210,9 +211,13 @@ listaller_application_cb (GObject *sender, ListallerAppItem *item, PkPlugin *plu
 	}
 	g_debug ("listaller: new app found -> %s", listaller_app_item_get_appid (item));
 
+	pk_plugin_restore_backend (plugin);
+
 	/* emit */
 	pk_backend_job_package (plugin->job, PK_INFO_ENUM_INSTALLED, package_id,
 			    listaller_app_item_get_summary (item));
+
+	pk_plugin_redirect_backend_signals (plugin);
 
 	g_free (package_id);
 }
@@ -226,8 +231,9 @@ listaller_error_code_cb (GObject *sender, ListallerErrorItem *error, PkPlugin *p
 	if (pk_backend_job_get_is_error_set (plugin->job))
 		return;
 
-	/* emit */
 	pk_plugin_restore_backend (plugin);
+
+	/* emit */
 	pk_backend_job_error_code (plugin->job, PK_ERROR_ENUM_INTERNAL_ERROR,
 				listaller_error_item_get_details (error));
 }
@@ -258,13 +264,20 @@ listaller_message_cb (GObject *sender, ListallerMessageItem *message, PkPlugin *
 }
 
 
-static void listaller_progress_change_cb (GObject *sender, gint progress, PkPlugin *plugin)
+static void
+listaller_progress_cb (GObject *sender, ListallerProgressItem *item, PkPlugin *plugin)
 {
+	pk_plugin_restore_backend (plugin);
+
 	/* emit */
-	pk_backend_job_set_percentage (plugin->job, progress);
+	pk_backend_job_set_percentage (plugin->job,
+				       listaller_progress_item_get_value (item));
+
+	pk_plugin_redirect_backend_signals (plugin);
 }
 
-static void listaller_status_change_cb (GObject *sender, ListallerStatusItem *status, PkPlugin *plugin)
+static void
+listaller_status_change_cb (GObject *sender, ListallerStatusItem *status, PkPlugin *plugin)
 {
 	ListallerStatusEnum listatus;
 	PkStatusEnum pkstatus;
@@ -281,9 +294,13 @@ static void listaller_status_change_cb (GObject *sender, ListallerStatusItem *st
 
 	g_debug ("listaller: <status-info> %s", listaller_status_item_get_info (status));
 
+	pk_plugin_restore_backend (plugin);
+
 	/* emit */
 	if (pkstatus != PK_STATUS_ENUM_UNKNOWN)
 		pk_backend_job_set_status (plugin->job, pkstatus);
+
+	pk_plugin_redirect_backend_signals (plugin);
 }
 
 /**
@@ -308,8 +325,8 @@ pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 			  G_CALLBACK (listaller_message_cb), plugin);
 	g_signal_connect (setup, "status-changed",
 			  G_CALLBACK (listaller_status_change_cb), plugin);
-	g_signal_connect (setup, "progress-changed",
-			  G_CALLBACK (listaller_progress_change_cb), plugin);
+	g_signal_connect (setup, "progress",
+			  G_CALLBACK (listaller_progress_cb), plugin);
 
 	/* now intialize the new setup */
 	ret = listaller_setup_initialize (setup);
@@ -733,7 +750,7 @@ pk_plugin_initialize (PkPlugin *plugin)
 	g_signal_connect (plugin->priv->mgr, "error-code", G_CALLBACK (listaller_error_code_cb), plugin);
 	g_signal_connect (plugin->priv->mgr, "message", G_CALLBACK (listaller_message_cb), plugin);
 	g_signal_connect (plugin->priv->mgr, "status-changed", G_CALLBACK (listaller_status_change_cb), plugin);
-	g_signal_connect (plugin->priv->mgr, "progress-changed", G_CALLBACK (listaller_progress_change_cb), plugin);
+	g_signal_connect (plugin->priv->mgr, "progress", G_CALLBACK (listaller_progress_cb), plugin);
 	g_signal_connect (plugin->priv->mgr, "application", G_CALLBACK (listaller_application_cb), plugin);
 
 	/* We want verbose mode! */
