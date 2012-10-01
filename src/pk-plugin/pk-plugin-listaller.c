@@ -270,7 +270,7 @@ listaller_progress_cb (GObject *sender, ListallerProgressItem *item, PkPlugin *p
 	gint value;
 	value = listaller_progress_item_get_value (item);
 
-	if (listaller_progress_item_get_prog_type != LISTALLER_PROGRESS_ENUM_MAIN_PROGRESS)
+	if (listaller_progress_item_get_prog_type (item) != LISTALLER_PROGRESS_ENUM_MAIN_PROGRESS)
 		return;
 
 	pk_plugin_restore_backend (plugin);
