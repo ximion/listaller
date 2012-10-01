@@ -109,8 +109,6 @@ private class DepInstaller : MessageObject {
 		foreach (string cmp in dep.raw_complist) {
 			if (dep.component_get_type (cmp) == ComponentType.SHARED_LIB) {
 				string s = dep.component_get_name (cmp);
-				if (s.has_suffix (".*"))
-					s = s.replace (".*", "");
 				ret = find_library (s, conf);
 				if (!ret) {
 					debug ("Library not found: %s", s);

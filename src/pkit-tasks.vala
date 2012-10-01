@@ -162,7 +162,10 @@ private class PkResolver : PkListallerTask {
 			var ctype = dep.component_get_type (s);
 			var cname = dep.component_get_name (s);
 			switch (ctype) {
-				case ComponentType.SHARED_LIB: libs += cname;
+				case ComponentType.SHARED_LIB:
+					if (cname.has_suffix (".*"))
+						cname = cname.replace (".*", "");
+					libs += cname;
 					break;
 				case ComponentType.PYTHON: python_modules += cname;
 					break;

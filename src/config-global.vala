@@ -211,11 +211,23 @@ private bool find_library (string libname, Config conf) {
 	Posix.Stat? s = null;
 	string[] paths = conf.library_paths ();
 	for (uint i = 0; paths[i] != null; i++) {
-		s = null;
-		string path = Path.build_filename (paths[i], libname);
-		Posix.stat (path, out s);
-		if (s.st_size != 0)
-			return true;
+		if (!FileUtils.test (paths[i], FileTest.EXISTS))
+			continue;
+
+		if (libname.has_suffix (".*")) {
+			var res = Utils.find_files_matching (paths[i], libname);
+			if (res == null)
+				continue;
+			if (res.size > 0)
+				return true;
+		} else {
+			// speed-up non-wildcard searches
+			s = null;
+			string path = Path.build_filename (paths[i], libname);
+			Posix.stat (path, out s);
+			if (s.st_size != 0)
+				return true;
+		}
 	}
 
 	return false;
