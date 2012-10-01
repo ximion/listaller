@@ -1,19 +1,67 @@
 Version 0.5.6
 ~~~~~~~~~~~~~~
- == Still in development ==
 
 Notes:
   * /!\ Please note: We do NOT provide stable API/ABI in the 0.5.x series!
         The 0.5.x series is experimental, we might change the specs at every time.
 
 Features:
-  * ~
+  * Added Visual-LDD code
+  * Enable item_progress instead of subprogress (adopting to PackageKit API)
+  * Update Listaller variable processing & warn about incompatible packages
+  * Add new class to generate useful reports
+  * lipkgen: Use new reporting API to display final report
+  * Use new tmpdir layout for Listaller
+  * More documentation
+  * Prepare package installer for deltaIPK
+  * Improve compile process by sharing precompiled files with Listaller tools
+  * Allow admin to block 3rd-party installs below a defined security level
+  * Add new Listaller configuration system
+  * Move not-changeable data to /usr/share instead of /etc
+  * Allow Listaller to use a shared GPG keyring
+  * Completely rework the way we handle GPG
+  * Add new likey tool to maintain the Listaller key database
+  * Use new, more detailed SecurityInfo
+  * Make signature solving much faster & provide frontends with signer info
 
-Specifications:
-  * ~
+
+Specs & Docs:
+  * Allow fine-grained install-mode setting to IPK packages,
+    default to shared-only
+  * Document install-time directory variables
+  * Added manpage for likey
+  * Update filelist to new IPK1.1 spec
+  * Add documentation about ligcc
+
 
 Bugfixes:
-  * ~
+  * vldd: Remove internal libc ELF headers from vLDD
+  * vldd: Remove read_elf too, we will use depscan instead
+  * Automatically fix licenses
+  * Fix completely outdated build instructions
+  * database: Get rid of dbid and improve other parts of the db
+  * Require newer Vala version (bug #1006147)
+  * Fix typos in libuild Perl modules (bug #1006199)
+  * Update PackageKit API binding
+  * Add interfaces to access PkBackendJob
+  * Port PackageKit plugin to new internal API
+  * Remove old li_log system
+  * Remove origin element from database: This was just legacy
+  * Check if PackageKit backends provide required roles before calling them
+  * Create new script to generate Listaller releases
+  * Fix dependency scanner to check for symlinked libs in project files
+  * Finally fix GPG and package security handling
+  * lipa: Fix license accepting
+  * lipa: Finally fix license info scrolling
+  * Add posibility to fetch GPG-keys on-demand before installing new software
+  * pkplugin: More API adjustments
+  * Add some more simple Python support to depsolver
+  * Don't store "replaces" info in SQLite-db, put it to package extra-info
+  * Install GIR file
+  * lipkgen: Report empty filelists
+  * Improve library search code
+  * Fix architecture confusion
+  * Switch to new progress API
 
 Version 0.5.5
 ~~~~~~~~~~~~~~
