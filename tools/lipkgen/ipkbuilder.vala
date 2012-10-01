@@ -523,7 +523,7 @@ private class Builder : Object {
 			arch = arch.substring (6, arch.last_index_of (".") - 6);
 
 			if (arch == "current")
-				arch = system_machine ();
+				arch = arch_generic (system_machine ());
 			if (arch != "all")
 				archs = "%s%s\n".printf (archs, arch);
 

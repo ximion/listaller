@@ -122,9 +122,9 @@ private class Package : MessageObject {
 					default:
 						if (pName.has_prefix ("files-")) {
 							string arch = pName.substring (6, pName.last_index_of (".") - 6);
-							ipk_selected_arch_ = arch;
-							arch = arch_generic (arch);
+
 							if (arch == arch_generic (system_machine ())) {
+								ipk_selected_arch_ = arch;
 								ret = extract_entry_to (ar, e, wdir);
 								archFListName = pName;
 								break;
@@ -154,11 +154,11 @@ private class Package : MessageObject {
 
 		// Check if architecture is supported
 		string supportedArchs = ipkc.get_architectures ();
-		debug ("Package supported archs: %s\nCurrent machine: %s", supportedArchs, system_machine ());
-		if ((supportedArchs.index_of (system_machine ()) < 0) &&
+		debug ("Package supported archs: %s\nCurrent machine: %s//%s", supportedArchs, system_machine (), arch_generic (system_machine ()));
+		if ((supportedArchs.index_of (arch_generic (system_machine ())) < 0) &&
 		    (supportedArchs.normalize ().down () != "all")) {
 			emit_error (ErrorEnum.WRONG_ARCHITECTURE,
-				_("This package can't be installed on your system architecture (%s)!\nPlease get a package which was built for your machine.").printf (system_machine ()));
+				_("This package can't be installed on your system architecture (%s)!\nPlease get a package which was built for your machine.").printf (arch_generic (system_machine ())));
 			return false;
 		}
 
@@ -554,6 +554,7 @@ private class Package : MessageObject {
 
 		// Only extract data-archives for arch-indep and the current architecture
 		string archDataFName = "";
+		debug ("Selected architecture: %s", ipk_selected_arch_);
 		if (ipk_selected_arch_ != "")
 			archDataFName = "data-%s.tar.xz".printf (ipk_selected_arch_);
 
@@ -687,6 +688,7 @@ private class Package : MessageObject {
 		// Now extract & validate all stuff
 		while (plar.next_header (out e) == Result.OK) {
 			fe = fcache.get (e.pathname ());
+
 			if ((fe != null) && (!fe.is_installed ())) {
 				// File was found, so install it now
 				ret = install_entry_and_validate (fe, plar, e, vs);
@@ -739,14 +741,6 @@ private class Package : MessageObject {
 				return false;
 		}
 
-		// Create new varsetter, so we can set path variables directly in files
-		VarSetter vset = new VarSetter (setup_settings, appInfo.idname);
-		// Set variables in external files
-		if (ret)
-			foreach (IPK.FileEntry f in get_file_entries ()) {
-				vset.execute (f.fname_installed);
-			}
-
 		if ((prog != fcache.size) && (ret == true)) {
 			// Check which files might be missing...
 			string missingFiles = "";
@@ -763,6 +757,14 @@ private class Package : MessageObject {
 
 			ret = false;
 		}
+
+		// Create new varsetter, so we can set path variables directly in files
+		VarSetter vset = new VarSetter (setup_settings, appInfo.idname);
+		// Set variables in external files
+		if (ret)
+			foreach (IPK.FileEntry f in get_file_entries ()) {
+				vset.execute (f.fname_installed);
+			}
 
 		return ret;
 	}
